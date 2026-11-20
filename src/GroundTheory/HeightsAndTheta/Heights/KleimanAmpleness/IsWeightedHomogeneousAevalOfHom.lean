@@ -212,7 +212,7 @@ theorem exists_segreFlat_eq_monomial (m₀ : ℕ) : ∀ (m : K → ℕ) (e : (Σ
       simp [Finsupp.weight_single, blockWeight, Pi.single_apply]
     have he' : Finsupp.weight (blockWeight ι) (e - s) = m + fun _ => m₀ := by
       have h2 := congrArg (Finsupp.weight (blockWeight ι)) (tsub_add_cancel_of_le hse)
-      rw [map_add, he, hws] at h2
+      rw [map_add (f := _), he, hws] at h2
       funext k
       have := congrFun h2 k
       simp only [Pi.add_apply] at this ⊢

@@ -21,7 +21,7 @@ theorem trace_mul_dual {m : ℕ} (b₀ : Module.Basis (Fin m) F E) (i : Fin m) :
   refine ⟨b₀.traceDual i, fun x => ?_⟩
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [add_mul, map_add, hx, hy, Pi.add_apply]
+  | add x y hx hy => simp only [add_mul, map_add (f := _), hx, hy, Pi.add_apply]
   | tmul r x =>
     have h1 := Module.Basis.traceDual_repr_apply b₀.traceDual x i
     rw [Module.Basis.traceDual_traceDual, Algebra.traceForm_apply] at h1

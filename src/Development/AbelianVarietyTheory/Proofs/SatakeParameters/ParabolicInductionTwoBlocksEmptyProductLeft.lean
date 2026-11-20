@@ -55,7 +55,7 @@ theorem ind₂_line_left {r : ℕ} (h : 0 + r = r) {M V : Type} [AddCommGroup M]
           rw [map_mul, Module.End.mul_apply, hg'])⟩
       map_add' := fun v w => Subtype.ext (Subtype.ext (funext fun x => by
         show L (π x (v + w)) = L (π x v) + L (π x w)
-        rw [map_add, map_add]))
+        rw [map_add (f := _), map_add (f := _)]))
       map_smul' := fun c v => Subtype.ext (Subtype.ext (funext fun x => by
         show L (π x ((c : ℂ) • v)) = (c : ℂ) • L (π x v)
         rw [map_smul, map_smul]))

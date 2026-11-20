@@ -123,7 +123,7 @@ theorem exists_mem_stabilizer_toPadicInt_ne_zero [P.IsPrime] (p : ℕ) [Fact p.P
   obtain ⟨h, ⟨hP, hL⟩, hh⟩ := hy
   have hh : Multiplicative.toAdd (degree h) = ofPadics f := hh
   refine ⟨h, hP, hL, fun q ↦ ?_⟩
-  rw [map_mul, toAdd_mul, map_add]
+  rw [map_mul, toAdd_mul, map_add (f := _)]
   change toPadicInt q t₀ + toPadicInt q (Multiplicative.toAdd (degree h)) ≠ 0
   rw [hh, hf]
   by_cases h0 : toPadicInt q t₀ = 0

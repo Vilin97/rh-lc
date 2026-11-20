@@ -35,7 +35,7 @@ private theorem gdet_eq_ofRep {n : ℕ} {A G E S : Type} [CommRing A] [Group G] 
   congr 1
   induction y using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single g s =>
     rw [toT_single, Algebra.TensorProduct.map_tmul, hψ, ← hvr]
     simp [GDet.repAlg]

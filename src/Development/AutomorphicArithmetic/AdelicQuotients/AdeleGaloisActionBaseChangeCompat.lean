@@ -33,9 +33,9 @@ private theorem gal_fst (σ : E ≃ₐ[F] E) (a : 𝔸[E]) : (galAd σ a).1 = ga
   | tmul l x =>
     rw [galAd, galOf_tmul', tensor_fst, tensor_fst, galInf, galOf_tmul']
   | add s t hs ht =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     change ((galAd σ) _).1 + ((galAd σ) _).1 = galInf σ (_ + _)
-    rw [map_add, hs, ht]
+    rw [map_add (f := _), hs, ht]
 
 private theorem gal_atFin (σ : E ≃ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (a : 𝔸[E]) :
     atFin v (galAd σ a) = galFin σ v (atFin v a) := by
@@ -45,7 +45,7 @@ private theorem gal_atFin (σ : E ≃ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) 
   | tmul l x =>
     rw [galAd, galOf_tmul', tensor_atFin, tensor_atFin, galFin, galOf_tmul']
   | add s t hs ht =>
-    simp only [map_add, hs, ht]
+    simp only [map_add (f := _), hs, ht]
 
 private theorem adele_atFin (v : HeightOneSpectrum (𝓞 F)) (a : 𝔸[F]) :
     atFin v (adeleMap F E a) = incFin E v (a.2 v) := by

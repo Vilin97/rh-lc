@@ -37,7 +37,7 @@ def ptModuleWvs (o : Obj b N s) (T : Over S) : Module (𝓞 D.F) (Additive (T �
   add_smul a c g := by
     show Additive.ofMul (g.toMul ≫ o.act.act (algebraMap (𝓞 D.F) D.O (a + c))) =
       Additive.ofMul ((g.toMul ≫ o.act.act (algebraMap (𝓞 D.F) D.O a)) * (g.toMul ≫ o.act.act (algebraMap (𝓞 D.F) D.O c)))
-    rw [map_add, o.act.add, comp_mul]
+    rw [map_add (f := _), o.act.add, comp_mul]
   zero_smul g := by
     show Additive.ofMul (g.toMul ≫ o.act.act (algebraMap (𝓞 D.F) D.O 0)) = Additive.ofMul 1
     rw [map_zero, act_zero_eq_one_wvs, comp_one]

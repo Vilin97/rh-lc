@@ -30,7 +30,7 @@ theorem hatL_map {a b : ℕ} {Λ : Submodule (𝓞 E) (Fin a → E)} {Λ' : Subm
     obtain ⟨y, hy, e⟩ := hf x hx
     exact Submodule.subset_span ⟨y, hy, e⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x z _ _ hx hz => rw [map_add]; exact add_mem hx hz
+  | add x z _ _ hx hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hz
   | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ r hx
 
 open GlobalTheory.Doubling in

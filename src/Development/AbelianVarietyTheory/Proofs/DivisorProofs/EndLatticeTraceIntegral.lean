@@ -57,7 +57,7 @@ theorem isIntegral_of_mapsTo_lattice (Λ : Submodule (𝓞 E) (Fin r → E)) (hf
       rfl
     | add p q hp hq =>
       intro x hx
-      rw [map_add, add_mulVec, hp x hx, hq x hx, map_add]
+      rw [map_add (f := _), add_mulVec, hp x hx, hq x hx, map_add (f := _)]
       rfl
     | monomial n a ih =>
       intro x hx

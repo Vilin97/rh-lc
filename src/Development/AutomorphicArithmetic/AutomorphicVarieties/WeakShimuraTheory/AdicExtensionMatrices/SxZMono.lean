@@ -43,7 +43,7 @@ theorem UpperTheory.V.Ws.sxZMono :
     induction n using Finsupp.induction_linear with
     | zero => rw [map_zero, Finsupp.prod_zero_index]; exact Pm_mem _ _ (one_mem E)
     | add f g hf hg =>
-      rw [map_add, Finsupp.prod_add_index' (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _)]
+      rw [map_add (f := _), Finsupp.prod_add_index' (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _)]
       exact Pm_mul hf hg
     | single s k =>
       rw [Finsupp.prod_single_index (h := fun s k => W.z s ^ k) (pow_zero _), Finsupp.weight_single]

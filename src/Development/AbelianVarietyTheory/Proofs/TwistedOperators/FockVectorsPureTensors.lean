@@ -140,11 +140,11 @@ private theorem constr_opPow_X_mul {X σ : Type} (A : σ → (X → ℂ) → (X 
     exact foldr_mem_of_invariant A Pth hth _ hg
   have hall : ∀ P, Pth (Φ P) := fun P =>
     MvPolynomial.induction_on' P (fun m a => by rw [hmono]; exact hsm a _ (hpow m))
-      (fun p q hp hq => by rw [map_add]; exact hadd _ _ hp hq)
+      (fun p q hp hq => by rw [map_add (f := _)]; exact hadd _ _ hp hq)
   refine MvPolynomial.induction_on' Q (fun u a => ?_) (fun p q hp hq => ?_)
   · rw [MvPolynomial.X, MvPolynomial.monomial_mul, one_mul, hmono, hmono,
       opPow_single_one_add A Pth hth hc y u hg, hAs y a _ (hpow u)]
-  · rw [mul_add, map_add, map_add, hp, hq, hA y _ _ (hall p) (hall q)]
+  · rw [mul_add, map_add (f := _), map_add (f := _), hp, hq, hA y _ _ (hall p) (hall q)]
 
 end Generic
 

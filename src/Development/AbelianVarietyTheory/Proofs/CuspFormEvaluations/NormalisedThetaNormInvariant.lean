@@ -326,7 +326,7 @@ theorem normalised_theta_norm_invariant : ∀ (E : Type) [Field E] [NumberField 
       exact GlobalTheory.torusAt_eps_indep E r X hw x _ A A' γ hγ w hw'
     rw [← hU]
     exact ratio_eq A.T A'.T U hL he A.s_mem A.s_ne A'.s_mem A'.s_ne _
-  · rw [map_add]
+  · rw [map_add (f := _)]
     congr 1
     exact pointwiseNormSq_add_period A.T A.s_mem (γ := fun _ => A.φ u)
       (fun _ => (A.lat _).2 ⟨u, hu, rfl⟩) (fun _ => A.φ v)

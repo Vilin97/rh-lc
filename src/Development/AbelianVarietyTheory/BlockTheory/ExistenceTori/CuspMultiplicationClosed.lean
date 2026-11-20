@@ -24,7 +24,7 @@ def Cusp (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (a : (E →+* ℂ) × ℕ �
     rw [map_zero]
     exact (siegelSpaceAlgebra_holds r ((U σ).X k) (laU (U σ) a n k) (laU (U σ) a n k) 0).1.1⟩
   add_mem' := fun {f g} hf hg => ⟨Submodule.add_mem _ hf.1 hg.1, fun σ hσ k => by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (siegelSpaceAlgebra_holds r ((U σ).X k) (laU (U σ) a n k) (laU (U σ) a n k) 0).1.2.1 _ (hf.2 σ hσ k) _ (hg.2 σ hσ k)⟩
   smul_mem' := fun b f hf => ⟨Submodule.smul_mem _ b hf.1, fun σ hσ k => by
     rw [map_smulₛₗ]

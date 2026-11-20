@@ -65,7 +65,7 @@ variable {K} in
 theorem ringHom_ext {S : Type*} [CommRing S] {u v : CK K →+* S} (hA : ∀ a, u (inC K a) = v (inC K a))
     (hO : ∀ c, u (inI K c) = v (inI K c)) : u = v :=
   RingHom.ext fun x => induction_on x (fun a c => by rw [map_mul, map_mul, hA, hO])
-    fun x y hx hy => by rw [map_add, map_add, hx, hy]
+    fun x y hx hy => by rw [map_add (f := _), map_add (f := _), hx, hy]
 
 section Lift
 
@@ -131,7 +131,7 @@ theorem frobC_ofA (x : AK K) : frobC K (ofA K x) = ofA K (frobq K x) :=
   AinfK.induction_on x (fun a c => by
     simp only [map_mul, ofA_inA, ofA_inO, frobC_inC, frobC_inI, frobq_inA, frobq_inO]
     rw [← RingHom.coe_pow, ← RingHom.coe_pow, phiA_pow_aC])
-    fun x y hx hy => by simp only [map_add, hx, hy]
+    fun x y hx hy => by simp only [map_add (f := _), hx, hy]
 
 variable {K}
 
@@ -149,7 +149,7 @@ theorem galC_inI (g : ↥(GK K)) (c : ↥(OL K)) : galC g (inI K c) = inI K c :=
 theorem galC_ofA (g : ↥(GK K)) (x : AK K) : galC g (ofA K x) = ofA K (gal K g x) :=
   AinfK.induction_on x (fun a c => by
     simp only [map_mul, ofA_inA, ofA_inO, galC_inC, galC_inI, gal_inA, gal_inO, sigA_aC])
-    fun x y hx hy => by simp only [map_add, hx, hy]
+    fun x y hx hy => by simp only [map_add (f := _), hx, hy]
 
 theorem l_dvd_pow {x : Ainf l} (hx : Per.θ l x = 0) : (l : Per.Acris l) ∣ aC l x ^ l := by
   obtain ⟨g, hg, e⟩ := exists_dividedPower_mem_Acris0 l x hx l
@@ -332,11 +332,11 @@ def equivPK : BK K ≃+* PK K :=
       | tmul b c =>
         rw [RingHom.comp_apply, ofPK_tmul, map_mul, toPK_inP, toPK_inK, Algebra.TensorProduct.tmul_mul_tmul,
           mul_one, one_mul, RingHom.id_apply]
-      | add x y hx hy => simp only [map_add, hx, hy])
+      | add x y hx hy => simp only [map_add (f := _), hx, hy])
     (ringHom_extB fun z => induction_on z (fun a c => by
       rw [map_mul, ← inP_algebraMap, ← inK_oK, RingHom.comp_apply, map_mul, toPK_inP, toPK_inK, map_mul, ofPK_tmul,
         ofPK_tmul, map_one, map_one, mul_one, one_mul, RingHom.id_apply])
-      fun x y hx hy => by simp only [map_add, hx, hy])
+      fun x y hx hy => by simp only [map_add (f := _), hx, hy])
 
 variable {K}
 

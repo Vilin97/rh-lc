@@ -17,7 +17,7 @@ private theorem cancel_one {A E : Type} [CommRing A] [Ring E] [Algebra A E] (B :
       Algebra.TensorProduct.map (IsScalarTower.toAlgHom A B S) (AlgHom.id A E) y := by
   induction y with
   | tmul b z => simp [Det.cancel_tmul]
-  | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
+  | add a b ha hb => simp only [tmul_add, map_add (f := _), ha, hb]
 
 private theorem bc_chi {n : ℕ} {A E : Type} [CommRing A] [Ring E] [Algebra A E] (D : Det n A E) (B : Type)
     [CommRing B] [Algebra A B] (y : B ⊗[A] E) : (D.baseChange B).chi y = D.chiS B y := by
@@ -43,7 +43,7 @@ theorem UpperTheory.V.CA.d_bc :
     congr 1
     induction y with
     | tmul b z => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   · unfold Det.lam
     rw [bc_chi_tmul, Polynomial.coeff_map]
     simp

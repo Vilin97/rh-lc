@@ -244,7 +244,7 @@ private theorem spLoc_alg (R : Type) [CommRing R] [IsLocalRing R] [IsNoetherianR
         have hu : Sp.u P ut j i = algebraMap R _ (ut j i) + Sp.mk P ut (MvPowerSeries.X (j, i)) := by
           rw [← (Core.spRoots R q n P ut j).2 i]
           ring
-        rw [AlgHom.comp_apply, hψ, hu, map_add, AlgHom.commutes, hF', hFX]
+        rw [AlgHom.comp_apply, hψ, hu, map_add (f := _), AlgHom.commutes, hF', hFX]
         simp only [t, map_sub, IsScalarTower.toAlgHom_apply]
         rw [← IsScalarTower.algebraMap_apply]
         ring)

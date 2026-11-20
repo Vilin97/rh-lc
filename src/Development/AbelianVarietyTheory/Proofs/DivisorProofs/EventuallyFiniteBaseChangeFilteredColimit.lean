@@ -79,7 +79,7 @@ theorem exists_comb_of_bcPres_eq_zero {n : ℕ} {L : Type} [Fintype L]
       simp only [e, T, MvPolynomial.algebraTensorAlgEquiv_tmul, map_smul, bcPres_map,
         Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
-    | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
   have hmem : e.symm P ∈ RingHom.ker T := by
     rw [RingHom.mem_ker, ← hT, AlgEquiv.apply_symm_apply, hP]
   rw [Algebra.TensorProduct.lTensor_ker _ hφ, hker, Ideal.map_span] at hmem

@@ -162,7 +162,7 @@ theorem isom_iff_model (Dw : Datum H) (V : HSp D) {r : ℕ} (hr : V.rank = r)
       herm (GlobalTheory.RecDict.gmW V hr) (ι x ∘ Fin.cast hr.symm) (ι y ∘ Fin.cast hr.symm)) := by
   have halt : ∀ x y, ((Dw.EF x y : ℤ) : ℚ) = -((Dw.EF y x : ℤ) : ℚ) := fun x y => by
     have h := Dw.alt (x + y)
-    simp only [map_add, LinearMap.add_apply, Dw.alt] at h
+    simp only [map_add (f := _), LinearMap.add_apply, Dw.alt] at h
     have h' : Dw.EF x y = -Dw.EF y x := by linarith
     rw [h', Int.cast_neg]
   simp only [trace_model_eq_trace_hT]

@@ -173,7 +173,7 @@ include h3 h4 h6 hs hp
 theorem node_eq {x y : F} (h : V.toAffine.Equation x y) :
     (ι y - α * ι x) * (ι y - β * ι x) = ι x ^ 3 := by
   have := congrArg ι (origin_eq V h3 h4 h6 h)
-  simp only [map_sub, map_add, map_mul, map_pow] at this
+  simp only [map_sub, map_add (f := _), map_mul, map_pow] at this
   rw [hs, hp] at this
   linear_combination this
 
@@ -223,11 +223,11 @@ theorem nodeVal_triple {x₁ y₁ x₂ y₂ x₃ y₃ : F} (g₁ : V.toAffine.No
   have w1 := congrArg ι v1
   have w2 := congrArg ι v2
   have w3 := congrArg ι v3
-  simp only [map_add, map_sub, map_mul, map_pow, map_zero, map_ofNat, hs, hp] at w1 w2 w3
+  simp only [map_add (f := _), map_sub, map_mul, map_pow, map_zero, map_ofNat, hs, hp] at w1 w2 w3
   have k1 := congrArg ι l1
   have k2 := congrArg ι l2
   have k3 := congrArg ι l3
-  simp only [map_add, map_mul] at k1 k2 k3
+  simp only [map_add (f := _), map_mul] at k1 k2 k3
   have hN : (ι y₁ - α * ι x₁) * (ι y₂ - α * ι x₂) * (ι y₃ - α * ι x₃) = ι ν ^ 3 := by
     rw [k1, k2, k3]
     linear_combination (ι ℓ - α) ^ 3 * w3 + (ι ℓ - α) ^ 2 * ι ν * w2 + (ι ℓ - α) * ι ν ^ 2 * w1
@@ -335,7 +335,7 @@ theorem nodeVal_mem (hσ : σ α = β) (P : V.toAffine.Point) :
   have hσβ : σ β = α := by
     have h1 : σ (α + β) = α + β := by
       rw [← neg_neg (α + β), ← hs, map_neg, AlgEquiv.commutes]
-    rw [map_add, hσ] at h1
+    rw [map_add (f := _), hσ] at h1
     linear_combination h1
   rcases P with _ | ⟨x, y, h⟩
   · simp [nodeVal, normOne]
@@ -372,7 +372,7 @@ def nodeTorusEquiv (hαβ : α ≠ β) (hσ : σ α = β)
     have hσβ : σ β = α := by
       have h1 : σ (α + β) = α + β := by
         rw [← neg_neg (α + β), ← hs, map_neg, AlgEquiv.commutes]
-      rw [map_add, hσ] at h1
+      rw [map_add (f := _), hσ] at h1
       linear_combination h1
     have hu0 : (u : L) ≠ 0 := u.ne_zero
     have hu1 : (1 : L) - u ≠ 0 := sub_ne_zero.2 (fun h => h1 (Units.ext h.symm))
@@ -392,7 +392,7 @@ def nodeTorusEquiv (hαβ : α ≠ β) (hσ : σ α = β)
     have htb : t - β = (α - β) / (1 - u) := by rw [ht]; field_simp; ring
     set x₀ := t₀ ^ 2 + V.a₁ * t₀ - V.a₂
     have hx₀ : ι x₀ = (t - α) * (t - β) := by
-      simp only [x₀, map_sub, map_add, map_mul, map_pow, hs, hp, ht₀]; ring
+      simp only [x₀, map_sub, map_add (f := _), map_mul, map_pow, hs, hp, ht₀]; ring
     have hx0 : x₀ ≠ 0 := by
       intro h0
       have : ι x₀ = 0 := by rw [h0, map_zero]

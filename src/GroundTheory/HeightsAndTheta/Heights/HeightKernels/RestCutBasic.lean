@@ -95,7 +95,7 @@ theorem coeff_psiPolyFun {σ : Type*} (ψ : ℝ →ₗ[ℚ] ℚ) (P : MvPolynomi
 def psiPoly {σ : Type*} (ψ : ℝ →ₗ[ℚ] ℚ) : MvPolynomial σ ℝ →+ MvPolynomial σ ℚ :=
   AddMonoidHom.mk' (psiPolyFun ψ) fun P Q => by
     ext β
-    simp only [coeff_psiPolyFun, MvPolynomial.coeff_add, map_add]
+    simp only [coeff_psiPolyFun, MvPolynomial.coeff_add, map_add (f := _)]
 
 theorem coeff_psiPoly {σ : Type*} (ψ : ℝ →ₗ[ℚ] ℚ) (P : MvPolynomial σ ℝ) (β : σ →₀ ℕ) :
     AddMonoidAlgebra.coeff (psiPoly ψ P) β = ψ (AddMonoidAlgebra.coeff P β) :=

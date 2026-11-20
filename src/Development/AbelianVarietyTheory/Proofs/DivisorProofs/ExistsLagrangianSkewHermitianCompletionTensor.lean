@@ -130,7 +130,7 @@ theorem exists_isLagr_tensor : ∀ (F E : Type) [Field F] [NumberField F] [Field
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [c, Algebra.TensorProduct.map_tmul, hσσ]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hinj : Function.Injective (inclR (Fv F v) : E →+* Fv F v ⊗[F] E) := RingHom.injective _
   have hincl : ∀ y : E, inclR (Fv F v) y = (1 : Fv F v) ⊗ₜ[F] y := fun _ => rfl
   have hδ : (1 : Fv F v) ⊗ₜ[F] (t - σ t) ≠ 0 := by

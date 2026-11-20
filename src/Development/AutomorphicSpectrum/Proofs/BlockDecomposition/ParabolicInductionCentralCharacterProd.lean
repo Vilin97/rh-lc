@@ -64,7 +64,7 @@ theorem piTensor_scalar {Γ X : α → Type} [∀ a, Group (Γ a)] [∀ a, AddCo
     congr 1
     simp only [h]
     exact MultilinearMap.map_smul_univ _ _ _
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
 
 theorem scalar_mem_parab (e : (Σ a, m a) ≃ n) (t : kˣ) :
     Matrix.GeneralLinearGroup.scalar n t ∈ parab k e := by

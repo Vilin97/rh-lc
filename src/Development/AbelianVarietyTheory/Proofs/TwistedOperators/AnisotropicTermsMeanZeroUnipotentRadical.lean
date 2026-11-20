@@ -120,7 +120,7 @@ theorem trace_one_tmul {F E : Type} [Field F] [Field E] [Algebra F E] [Module.Fi
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [LinearMap.baseChange_tmul, Algebra.TensorProduct.tmul_mul_tmul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [Algebra.trace_apply, h, LinearMap.trace_baseChange, Algebra.trace_apply]
 
 theorem sum_eq_trace {m n : ℕ} (A : Matrix (Fin m) (Fin m) D.host.E) (G : Matrix (Fin n) (Fin n) D.host.E)
@@ -343,7 +343,7 @@ theorem exists_central (V : HSp D) (X : Matrix (Fin V.rank) (Fin V.rank) D.host.
     ext i j
     simp only [Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, Y,
       Matrix.conjTranspose_apply]
-    rw [map_add]
+    rw [map_add (f := _)]
     congr 1
     exact cA_one (D := D) V.rank j i
   have h3 : Xᴴ * V.gram * X = 0 := by

@@ -101,7 +101,7 @@ theorem _root_.GroundTheory.Arith.Abelian.Isogeny.pointMap_conj [IsAlgClosed Ω]
     (ψ.conj g).pointMap (galPointsHom F Ω E g R) = galPointsHom F Ω E' g (ψ.pointMap R) := by
   apply Isogeny.pointMap_eq_of_map_translate
   have h := congrArg (galPt E E' g) (ψ.map_translate R)
-  rw [galPt_map_translate, map_add, galPt_val, galPt_constMap] at h
+  rw [galPt_map_translate, map_add (f := _), galPt_val, galPt_constMap] at h
   exact h
 
 end Conj
@@ -141,7 +141,7 @@ theorem isAlgebraic_of_zsmul_eq_zero {n : ℤ} (hn : n ≠ 0) {x y : Ω}
     have e := (equation_iff _ _).mp h.1
     simp only [WeierstrassCurve.baseChange, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂,
       WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆] at e
-    simp only [q, map_sub, map_add, map_mul, map_pow, aeval_X, aeval_C]
+    simp only [q, map_sub, map_add (f := _), map_mul, map_pow, aeval_X, aeval_C]
     show y ^ 2 + (algebraMap F Ω E.a₁ * x + algebraMap F Ω E.a₃) * y -
       (x ^ 3 + algebraMap F Ω E.a₂ * x ^ 2 + algebraMap F Ω E.a₄ * x + algebraMap F Ω E.a₆) = 0
     linear_combination e

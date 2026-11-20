@@ -275,7 +275,7 @@ def ellL : SB (n → k) →ₗ[ℂ] ℂ where
           simp [h, h']
         exact a2 η this t ht
       · exact a1 η h t ht
-    rw [ell_eq hχ μ B h2 _ a1, ell_eq hχ μ B h2 _ a2, ell_eq hχ μ B h2 _ a3, map_add]
+    rw [ell_eq hχ μ B h2 _ a1, ell_eq hχ μ B h2 _ a2, ell_eq hχ μ B h2 _ a3, map_add (f := _)]
     ring
   map_smul' z g := by
     obtain ⟨s, hs⟩ := exists_adm hχ g

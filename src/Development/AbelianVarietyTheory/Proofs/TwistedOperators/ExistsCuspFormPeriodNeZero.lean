@@ -44,12 +44,12 @@ theorem multT_apply_mul_lev {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} {�
       rw [hT.lev w k hk g]; ring
     | add x y hx hy =>
       intro k hk g
-      simp only [map_add, Pi.add_apply]
+      simp only [map_add (f := _), Pi.add_apply]
       rw [hx k hk g, hy k hk g]; ring
   | zero => intro k hk g; simp
   | add T₁ T₂ _ _ h₁ h₂ =>
     intro k hk g
-    simp only [map_add, LinearMap.add_apply, Pi.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply]
     rw [h₁ v k hk g, h₂ v k hk g]; ring
   | smul c T _ h =>
     intro k hk g

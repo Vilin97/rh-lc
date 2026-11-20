@@ -30,7 +30,7 @@ theorem smulLA_mul' (a b : LetA O n) (x : LA W T π' c) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [smulLA_tmul', map_mul, mul_assoc]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 theorem eat_mem (E : ZMod n → Polynomial O) (hπ : π' ∈ W.AΔ) : Formalism.MainNotions.DeltaInvariantLattices.Eat E π' ∈ W.AΔ := by
   intro δ hδ
@@ -54,7 +54,7 @@ theorem filtration_value_local (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Pro
   rintro _ ⟨_, ⟨t, rfl⟩, rfl⟩
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
   | tmul a s =>
     apply Submodule.subset_span
     obtain ⟨⟨y, hy⟩, hys⟩ := Submodule.Quotient.mk_surjective _ (s : LcQ W T π' c)
@@ -100,7 +100,7 @@ theorem R_smul' {b : LetA O n} (hb : b ∈ W.AΔ) {r : LA W T π' c}
     congr 2
     simp only [Subalgebra.coe_mul]
     ring
-  | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
 
 theorem lattice_contains_power_local (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (Eπ : LetA O n) (h' M : ℕ)
     (hEΔ : Eπ ∈ W.AΔ)

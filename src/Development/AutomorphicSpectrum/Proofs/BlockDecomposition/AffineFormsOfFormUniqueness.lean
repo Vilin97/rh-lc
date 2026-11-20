@@ -47,7 +47,7 @@ theorem ring_diff {K A B : Type} [CommRing K] [CommRing A] [CommRing B] [Algebra
   let dl : A →ₗ[K] B ⧸ J' := (Ideal.Quotient.mkₐ K J').toLinearMap ∘ₗ (f'.toLinearMap - f.toLinearMap)
   have hdl : ∀ x, dl x = Ideal.Quotient.mk J' (f' x - f x) := fun x => rfl
   let δ : Derivation K A (B ⧸ J') := Derivation.mk' dl fun x y => by
-    rw [hdl, hdl, hdl, hsm, hsm, ← map_add]
+    rw [hdl, hdl, hdl, hsm, hsm, ← map_add (f := _)]
     refine Ideal.Quotient.eq.2 (?_ : _ ∈ J')
     have := hJ (Ideal.mul_mem_mul (hf x) (hf y))
     convert this using 1
@@ -189,7 +189,7 @@ variable {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {Φ : PDF R C} {F
 
 theorem form_add (E : Frame Φ d) (σ : ∀ T : C, E.D ⟶ T) {j : ℕ} (I : Fin j → Fin d) (x y : Φ.A.obj E.D)
     (s : ComposableArrows C j) : E.form σ I (x + y) s = E.form σ I x s + E.form σ I y s := by
-  simp only [Frame.form, map_add, mul_add]
+  simp only [Frame.form, map_add (f := _), mul_add]
 
 theorem form_smul (E : Frame Φ d) (σ : ∀ T : C, E.D ⟶ T) {j : ℕ} (I : Fin j → Fin d) (r : R) (x : Φ.A.obj E.D)
     (s : ComposableArrows C j) : E.form σ I (r • x) s = r • E.form σ I x s := by

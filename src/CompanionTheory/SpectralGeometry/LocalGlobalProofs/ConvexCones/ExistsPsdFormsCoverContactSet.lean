@@ -59,7 +59,7 @@ theorem isMin2_pullR (e : X ≃ₗ[O] X) {B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ} {
     IsMin2 (pullR e.toLinearMap B) (e.symm y) := by
   intro x
   have := hy (e x)
-  simpa [pullR_apply, map_add] using this
+  simpa [pullR_apply, map_add (f := _)] using this
 
 theorem exists_rcone_cover_contact : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZero O] [Module.Finite ℤ O] (bar : O → O)
     (X : Type) [AddCommGroup X] [Module O X] [Module.Finite O X] [Module.Projective O X] (ι : Type) [Finite ι] (a : ι → X),

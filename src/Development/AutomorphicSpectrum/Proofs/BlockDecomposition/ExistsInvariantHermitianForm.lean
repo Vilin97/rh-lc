@@ -23,9 +23,9 @@ def petersson {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ
     π.V →ₗ[ℂ] π.V →ₗ⋆[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ)
     (fun φ ψ => inner ℂ (toL2ₗ μ π.V hm ψ) (toL2ₗ μ π.V hm φ))
-    (fun φ φ' ψ => by simp only [map_add, inner_add_right])
+    (fun φ φ' ψ => by simp only [map_add (f := _), inner_add_right])
     (fun c φ ψ => by simp only [map_smul, inner_smul_right, smul_eq_mul, RingHom.id_apply])
-    (fun φ ψ ψ' => by simp only [map_add, inner_add_left])
+    (fun φ ψ ψ' => by simp only [map_add (f := _), inner_add_left])
     (fun c φ ψ => by simp only [map_smul, inner_smul_left, smul_eq_mul])
 
 theorem exists_isHerm : GlobalTheory.Published.CuspFormsBoundedGL → ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] (π : CuspSub E a), GlobalTheory.DiscSpec.IsNormalised π → ∃ B : π.V →ₗ[ℂ] π.V →ₗ⋆[ℂ] ℂ, IsHerm π B := by

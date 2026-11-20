@@ -44,7 +44,7 @@ private theorem hom_kill (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure �
       refine ⟨hι.comp φ, ?_, ?_⟩
       · intro a b
         show φ (ι (a * b)) = φ (ι a) + φ (ι b)
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         exact Subtype.ext (h2 a b)
       · intro A hA g' hg'
@@ -123,7 +123,7 @@ theorem UpperTheory.V.X.zOne :
     obtain ⟨c, hc⟩ := pow_cong l (cycZ ℚ Ω l g) e he
     have hA : algebraMap ℤ_[l] O (((cycZ ℚ Ω l g ^ (-(e : ℤ)) : ℤ_[l]ˣ) : ℤ_[l])) =
         1 + (l : O) * algebraMap ℤ_[l] O c := by
-      rw [← map_natCast (algebraMap ℤ_[l] O), ← map_mul, ← hc, ← map_one (algebraMap ℤ_[l] O), ← map_add]
+      rw [← map_natCast (algebraMap ℤ_[l] O), ← map_mul, ← hc, ← map_one (algebraMap ℤ_[l] O), ← map_add (f := _)]
       congr 1
       ring
     rw [act, hA, add_smul, one_smul, mul_comm, mul_smul, Nat.cast_smul_eq_nsmul, hy, smul_zero, add_zero]

@@ -45,21 +45,21 @@ theorem FiniteModuloGeneralEquation.proof : FiniteModuloGeneralEquation.Statemen
       filter_upwards [hpow] with z hz
       simpa [T, D, hs, hs', fs] using hz)
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa [ψ', map_add, map_sum, map_mul, hψf] using this
+      simpa [ψ', map_add (f := _), map_sum, map_mul, hψf] using this
   have R2 : ∀ i c', ψ (hs' c') * ψ (es i) = ∑ j, ψ' (bs i c' j) * ψ (es j) := fun i c' => by
     have := hψeq (hs' c' * es i) (∑ j, analyticAtComp x L (bs i c' j) * es j +
       ∑ a, (⟨kk i c' a, hkk i c' a⟩ : analyticAtSubring x) * fs a) (by
       filter_upwards [hbk i c'] with z hz
       simpa [bs, es, hs', fs] using hz)
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa [ψ', map_add, map_sum, map_mul, hψf] using this
+      simpa [ψ', map_add (f := _), map_sum, map_mul, hψf] using this
   have R3 : ∑ m, ψ' (b1s m) * ψ (es m) = 1 := by
     have := hψeq 1 (∑ m, analyticAtComp x L (b1s m) * es m +
       ∑ a, (⟨k1 a, hk1 a⟩ : analyticAtSubring x) * fs a) (by
       filter_upwards [h1eq] with z hz
       simpa [b1s, es, fs] using hz)
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa [ψ', map_add, map_sum, map_mul, hψf] using this.symm
+      simpa [ψ', map_add (f := _), map_sum, map_mul, hψf] using this.symm
 
   have hMe : (ψ'.mapMatrix M) *ᵥ (fun j => ψ (es j)) = 0 := by
     funext i

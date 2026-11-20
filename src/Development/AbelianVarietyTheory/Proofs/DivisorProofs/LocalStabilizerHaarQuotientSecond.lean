@@ -160,7 +160,7 @@ theorem compFin_cA (v : Pl F) (z : AE F E) : compFin F E v (cA σ z) = sigR (Fv 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem char_trivial (hcm : IsCMExt F E σ) {n : ℕ} (X : Spc F E n) {M : Matrix (Fin n) (Fin n) E}
     (hM : GlobalTheory.AdelicUnimod.Framed (σ : E →+* E) X.Jᵀ M) (v : Pl F) (χ : UAtSub σ X (evFin F v) →* ℝ≥0)

@@ -83,7 +83,7 @@ theorem exists_ratMap {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ 
   choose y z h using h
   have h' : ∀ x, hat (y x, z x) = M.co.e (incM F x) := fun x => (h x).symm
   refine ⟨⟨⟨fun x => (y x, z x), fun a b => hat_injective ?_⟩, fun c a => hat_injective ?_⟩, fun a b hab => ?_, h'⟩
-  · rw [hat_add, h', h', h', ← map_add]
+  · rw [hat_add, h', h', h', ← map_add (f := _)]
     congr 1
     exact Matrix.map_add _ (map_add _) _ _
   · rw [RingHom.id_apply, hat_smul, h', h', incM_smul, LinearEquiv.map_smul]
@@ -127,7 +127,7 @@ theorem isotropic {B : Base F E} {n n₁ d : ℕ} {X : Spc F E n} {X₁ : Spc F 
   have h2 := hc z a'
   have h3 := hc z' a
   rw [hD] at h1 h2 h3 h4
-  simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   linear_combination h1 + h2 - h3 + h4
 
 omit [NumberField F] [NumberField E] in

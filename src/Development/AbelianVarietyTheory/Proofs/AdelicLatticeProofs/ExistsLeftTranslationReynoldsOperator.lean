@@ -16,7 +16,7 @@ theorem evC_ltr (g y : Matrix ι ι ℂ) (f : MvPolynomial (ι × ι) ℂ) :
   induction f using MvPolynomial.induction_on with
   | C a => simp [evC, ltr]
   | add p q hp hq =>
-    simp only [evC, map_add] at hp hq ⊢
+    simp only [evC, map_add (f := _)] at hp hq ⊢
     rw [hp, hq]
   | mul_X p i hp =>
     simp only [evC, map_mul] at hp ⊢

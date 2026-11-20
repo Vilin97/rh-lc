@@ -165,9 +165,9 @@ theorem isUnitDet_frG {e : Formalism.L2.Theta.AE D} {P : Finset (Pl D.host.E)} (
     linear_combination e * h1 + ((Formalism.L2.Theta.mt S g).det * (Formalism.L2.Theta.mt S g⁻¹).det - (Formalism.L2.Theta.mt S g).det -
       (Formalism.L2.Theta.mt S g⁻¹).det + 1) * hee
   refine ⟨?_, ?_, ?_⟩
-  · rw [detIdl_val hee, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, hinf, RingHom.map_one, zero_mul, zero_add, sub_zero]
-  · rw [detIdl_val hee, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, det_frG, add_comm]
-  · rw [hinv, detIdl_val hee, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, ← det_frG S β]
+  · rw [detIdl_val hee, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, hinf, RingHom.map_one, zero_mul, zero_add, sub_zero]
+  · rw [detIdl_val hee, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, det_frG, add_comm]
+  · rw [hinv, detIdl_val hee, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, ← det_frG S β]
     exact add_mem (mul_mem hE (det_mem (isIntM_frG (by rw [map_inv]; exact inv_mem hg)))) (sub_mem (one_mem _) hE)
 
 theorem stdSnd_actO (ν : (Formalism.L2.Theta.AE D)ˣ →* Circle) {e : Formalism.L2.Theta.AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P)

@@ -152,11 +152,11 @@ theorem lev_comm_of_basis {G : Over S} {G' : Over S'} [GrpObj G] [IsCommMonObj G
     simp [U]
   let F₁ : (Fin n → ℤ) →+ Additive (U ⟶ G) :=
     AddMonoidHom.mk' (fun v => Additive.ofMul (Φ (l' (e v)))) (fun v w => by
-      simp only [map_add, hl', Φmul]
+      simp only [map_add (f := _), hl', Φmul]
       rfl)
   let F₂ : (Fin n → ℤ) →+ Additive (U ⟶ G) :=
     AddMonoidHom.mk' (fun v => Additive.ofMul (Ψ (l (e v)))) (fun v w => by
-      simp only [map_add, hl, Ψmul]
+      simp only [map_add (f := _), hl, Ψmul]
       rfl)
   have hF : F₁ = F₂ := by
     ext i

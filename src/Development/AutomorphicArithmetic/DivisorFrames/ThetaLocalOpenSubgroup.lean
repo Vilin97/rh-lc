@@ -37,17 +37,17 @@ private theorem sigR_smul (σ : E →ₐ[F] E) (v : Pl F) (a : Fv F v) (t : Fv F
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul b e => simp [sigR, TensorProduct.smul_tmul']
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 private noncomputable def locY {σ : E →ₐ[F] E} {n d d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W)
     (H' : Plane E d d₁) (v : Pl F) :
     (Fin n → Fv F v ⊗[F] E) →ₗ[Fv F v] (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v) where
   toFun y := GlobalTheory.LatVac.locCo M.co v (yAt H' v y)
   map_add' s t := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     ext i j
-    simp only [yAt, Matrix.vecMulVec_apply, Matrix.add_apply, Pi.add_apply, map_add, add_mul]
+    simp only [yAt, Matrix.vecMulVec_apply, Matrix.add_apply, Pi.add_apply, map_add (f := _), add_mul]
   map_smul' a t := by
     rw [RingHom.id_apply, ← GlobalTheory.VanishLocCont.locCo_smul]
     congr 1
@@ -58,7 +58,7 @@ private noncomputable def locY {σ : E →ₐ[F] E} {n d d₁ : ℕ} {X : Spc F 
 private noncomputable def trY (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v : Pl F)
     (x : Fin n → Fv F v ⊗[F] E) : (Fin n → Fv F v ⊗[F] E) →ₗ[Fv F v] Fv F v where
   toFun y := Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (pairV σ J v x y)
-  map_add' s t := by rw [pairV_add_right, map_add]
+  map_add' s t := by rw [pairV_add_right, map_add (f := _)]
   map_smul' a t := by
     rw [RingHom.id_apply, ← map_smul]
     congr 1

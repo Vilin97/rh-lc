@@ -23,7 +23,7 @@ theorem cA_eq_cAF (σ : E →ₐ[F] E) (z : AF F ⊗[F] E) : cA σ z = cAF σ z 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rfl
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem triple_sum_comm_reverse {ι κ μ M : Type} [Fintype ι] [Fintype κ] [Fintype μ] [AddCommMonoid M] (f : ι → κ → μ → M) :
     ∑ i, ∑ k, ∑ l, f i k l = ∑ l, ∑ k, ∑ i, f i k l := by
@@ -80,7 +80,7 @@ theorem thetaTr_rhoF (σ : E →ₐ[F] E) {nS nT : ℕ} {JS : Matrix (Fin nS) (F
     rw [← map_ofNat (algebraMap F (AF F)) 2, ← map_mul]
     norm_num
   have hf := co.form v w
-  simp only [GlobalTheory.WeilSchrodinger.thetaTr, thetaSum, Darboux.rho, heisOF, schr, symplOHF, ← hs, hf, hhalf, map_add,
+  simp only [GlobalTheory.WeilSchrodinger.thetaTr, thetaSum, Darboux.rho, heisOF, schr, symplOHF, ← hs, hf, hhalf, map_add (f := _),
     Prod.fst_add, Prod.snd_add]
   rw [← tsum_mul_left]
   exact tsum_congr fun x => schr_schr_apply ψ _ _ _ _ _ φ

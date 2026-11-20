@@ -77,7 +77,7 @@ theorem cols_mulVec {E : Type} [Field E] {N n : ℕ} (hN : n + 1 = N) (A : Matri
 
 theorem hform_add_left' {E : Type} [Field E] {n : ℕ} (σ : E →+* E) (J : Matrix (Fin n) (Fin n) E) (x x' y : Fin n → E) :
     Formalism.UG.hform σ J (x + x') y = Formalism.UG.hform σ J x y + Formalism.UG.hform σ J x' y := by
-  simp only [Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hform_add_right' {E : Type} [Field E] {n : ℕ} (σ : E →+* E) (J : Matrix (Fin n) (Fin n) E) (x y y' : Fin n → E) :
     Formalism.UG.hform σ J x (y + y') = Formalism.UG.hform σ J x y + Formalism.UG.hform σ J x y' := by
@@ -317,7 +317,7 @@ theorem exists_integralPendingObject_symmetricFormsLevel : ∀ (D : D7) (u : D.w
       rw [GlobalTheory.coMTS_of_gaInv D u Ch chOf Tf Bm w c B' (hBu w c) hB'eq _ P hPv, hχr]
       exact intSpan_smul' D w _ _ hri P hP
     | zero => rw [map_zero, Pi.zero_apply, map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [map_add, Pi.add_apply, map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _), Pi.add_apply, map_add (f := _)]; exact add_mem hy hz
     | smul a y _ hy =>
       have e : a • y = (a : D.what₂.LL) • y := rfl
       rw [e, LinearMap.map_smulₛₗ, Pi.smul_apply, map_smul]

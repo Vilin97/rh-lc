@@ -134,7 +134,7 @@ theorem endoLog_holds {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [C
   have hlin : ∀ m, φ m = ∑ j, VP.lin1 (φ m) j • (MvPowerSeries.X j : MvPowerSeries (Fin dd) C) := by
     intro m
     refine VP.lin_of_add (φ m) (cφ m) ?_
-    rw [hsub _ (fun k => by rw [map_add, VP.cc_X, VP.cc_X, add_zero]) m, hsub _ (fun _ => VP.cc_X _) m,
+    rw [hsub _ (fun k => by rw [map_add (f := _), VP.cc_X, VP.cc_X, add_zero]) m, hsub _ (fun _ => VP.cc_X _) m,
       hsub _ (fun _ => VP.cc_X _) m]
     exact VP.PhiAt_add Y hε hadd (fun _ => VP.cc_X _) (fun _ => VP.cc_X _) m
   have hP := VP.cc_mapAt hε (VP.cc_exAt Y ha)

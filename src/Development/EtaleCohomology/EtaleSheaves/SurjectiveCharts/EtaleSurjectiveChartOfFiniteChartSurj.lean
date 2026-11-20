@@ -62,7 +62,7 @@ theorem graphPatch : GraphPatch := by
         rw [hr, map_sum]
       have e1 : φ y = 1 := by
         have : φ k = 0 := hk
-        rw [← map_one φ, ← hyk, map_add, this, add_zero]
+        rw [← map_one φ, ← hyk, map_add (f := _), this, add_zero]
       set_option synthInstance.maxHeartbeats 100000 in
         rw [← e1, ← hc, map_sum]
       refine Finset.sum_congr rfl fun h _ => ?_

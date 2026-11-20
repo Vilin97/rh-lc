@@ -79,7 +79,7 @@ private lemma apply_mem_sup_iff_of_apply_mem_iff (h : S.GLV) (A B : Submodule E 
   constructor
   · rintro ⟨y, hy, z, hz, hyz⟩
     refine ⟨h.symm y, (hA _).mp (by simpa using hy), h.symm z, (hB _).mp (by simpa using hz), ?_⟩
-    rw [← map_add, hyz, LinearEquiv.symm_apply_apply]
+    rw [← map_add (f := _), hyz, LinearEquiv.symm_apply_apply]
   · rintro ⟨y, hy, z, hz, rfl⟩
     exact ⟨h y, (hA y).mpr hy, h z, (hB z).mpr hz, (map_add h y z).symm⟩
 
@@ -134,7 +134,7 @@ private lemma eich_apply_apply_of_mem_St {h : S.GLV}
       _root_.GlobalTheory.HL.hf L S.Hm x y := form_apply_apply_of_mem_St S hh
   unfold _root_.GlobalTheory.HL.eich
   rw [hform, hform]
-  simp only [map_add, map_sub, map_smul]
+  simp only [map_add (f := _), map_sub, map_smul]
 
 open ValuativeRel MeasureTheory in
 open scoped Pointwise ENNReal Classical in
@@ -167,7 +167,7 @@ theorem _root_.GlobalTheory.HL.kern_smul_eq : ∀ {F : Type} [Field F] [Valuativ
     simp only [AddSubgroup.mem_prod]
     change (h a, h b) ∈ S.refB J (h • Λ) ∧ h u ∈ S.refU J (h • Λ) ∧ t ∈ S.refT ↔
       (a, b) ∈ S.refB J Λ ∧ u ∈ S.refU J Λ ∧ t ∈ S.refT
-    rw [mem_refB_iff, mem_refB_iff, ← map_add,
+    rw [mem_refB_iff, mem_refB_iff, ← map_add (f := _),
       _root_.GlobalTheory.FrameAct.spanTo_iff S h hh,
       _root_.GlobalTheory.FrameAct.spanTo_iff' S h hh]
     have hth := _root_.GlobalTheory.FrameAct.inTh_iff S h Λ (a + b)

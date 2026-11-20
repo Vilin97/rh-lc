@@ -157,7 +157,7 @@ private theorem sc_add_pk (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (v : Pl F
     (h : Bf_pk σ X W u y = 0) (f) : Sc_pk M ψ v (u + y) f = Sc_pk M ψ v u (Sc_pk M ψ v y f) := by
   have := GlobalTheory.LatVac.DualLoc.evFin_form M.co v u y
   rw [show symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) u y = 0 from h, map_zero] at this
-  rw [Sc_pk, map_add]
+  rw [Sc_pk, map_add (f := _)]
   exact schr_add_of_pk _ this.symm f
 private theorem sc_neg_pk (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (v : Pl F) (u) (f) : Sc_pk M ψ v (-u) (Sc_pk M ψ v u f) = f := by
   rw [Sc_pk, Sc_pk, map_neg]

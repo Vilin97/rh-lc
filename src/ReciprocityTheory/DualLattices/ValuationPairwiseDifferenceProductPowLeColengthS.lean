@@ -50,7 +50,7 @@ theorem infinite_residueField [IsAlgClosed C] :
   have hr := congrArg (IsLocalRing.residue v.valuationSubring) hx
   have hpc := FiniteField.pow_card (IsLocalRing.residue v.valuationSubring ⟨α, hmem⟩)
   rw [← hq] at hpc
-  rw [map_pow, map_add, map_one, hpc] at hr
+  rw [map_pow, map_add (f := _), map_one, hpc] at hr
   have h10 : (1 : IsLocalRing.ResidueField v.valuationSubring) = 0 := by
     have := congrArg (· - IsLocalRing.residue v.valuationSubring ⟨α, hmem⟩) hr
     simpa using this.symm

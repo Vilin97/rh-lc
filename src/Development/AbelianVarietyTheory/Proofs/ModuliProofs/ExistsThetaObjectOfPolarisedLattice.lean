@@ -102,7 +102,7 @@ theorem thetaObject_of_lattice :
     apply LinearMap.restrictScalars_injective ℝ
     refine LinearMap.ext_on hspan ?_
     rintro _ ⟨x, rfl⟩
-    simp [hF, ← map_add, hw]
+    simp [hF, ← map_add (f := _), hw]
   have hmul : act w * act w' = 𝟙 P.A := by
     haveI := P.isAb.comm
     haveI := (hact w).1

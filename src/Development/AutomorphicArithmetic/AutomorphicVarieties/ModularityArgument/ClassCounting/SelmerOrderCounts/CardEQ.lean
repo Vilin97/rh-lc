@@ -86,7 +86,7 @@ theorem UpperTheory.V.ZK.Ct.cardEQ :
       Submodule.mem_sup, Submodule.mem_sup]
     constructor
     · rintro ⟨_, ⟨v, rfl⟩, t, ⟨r, ht⟩, rfl⟩
-      refine ⟨_, ⟨ι v, hr ▸ ⟨v, rfl⟩, rfl⟩, ι t, ⟨r, ?_⟩, by rw [map_add, hδ]⟩
+      refine ⟨_, ⟨ι v, hr ▸ ⟨v, rfl⟩, rfl⟩, ι t, ⟨r, ?_⟩, by rw [map_add (f := _), hδ]⟩
       rw [Submonoid.smul_def] at ht ⊢
       rw [← map_smul, ht, map_zero]
     · rintro ⟨_, ⟨v, hv, rfl⟩, t, ⟨r, ht⟩, h⟩

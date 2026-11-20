@@ -127,7 +127,7 @@ private theorem word_of_comm (hX : GlRel X) (d : ℕ) (M₀ : Matrix (Fin d → 
     obtain ⟨c₂, hc₂, h₂⟩ := hy
     refine ⟨c₁ + c₂, add_mem hc₁ hc₂, ?_⟩
     have : wordMap X d (x + y) - (c₁ + c₂) = (wordMap X d x - c₁) + (wordMap X d y - c₂) := by
-      rw [map_add]; abel
+      rw [map_add (f := _)]; abel
     rw [this]
     exact add_mem h₁ h₂
   | smul a x _ hx =>

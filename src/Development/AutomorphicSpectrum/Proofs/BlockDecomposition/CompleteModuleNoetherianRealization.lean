@@ -26,7 +26,7 @@ theorem span_range_of [Module.Finite B N] :
   | tmul a e =>
     rw [ofTensorProduct_tmul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨e, rfl⟩)
-  | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
 
 variable {I} (T : ℕ → Submodule B N) (hT : ∀ n, I ^ (n + 1) • (⊤ : Submodule B N) ≤ T n)
 

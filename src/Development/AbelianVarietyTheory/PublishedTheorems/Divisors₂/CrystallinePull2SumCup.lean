@@ -22,7 +22,7 @@ theorem cup_add_cup {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] (F : C
     (a b : CatCoh.H1 F) : cup F a b + cup F b a = 0 := by
   obtain ⟨a, rfl⟩ := CatCoh.H1.mk_surjective F a
   obtain ⟨b, rfl⟩ := CatCoh.H1.mk_surjective F b
-  rw [cup_mk, cup_mk, ← map_add]
+  rw [cup_mk, cup_mk, ← map_add (f := _)]
   refine CatCoh.H2.mk_eq_zero.2 ⟨fun T T' φ ↦ -(a.1 T T' φ * b.1 T T' φ), ?_⟩
   funext T T' T'' φ ψ
   simp only [d1_apply, Submodule.coe_add, Pi.add_apply, cupZ_apply, Z1.comp a, Z1.comp b, map_mul, map_neg]
@@ -188,7 +188,7 @@ theorem exists_isCorrForm (C : CupSquare κ t (A ⊗ B)) {P : LB (A ⊗ B).left}
   simp only [Fin.append_left, Fin.append_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun k _ ↦ ?_
   conv_rhs => rw [d (u k), d (v k)]
-  simp only [Submodule.coe_neg, map_neg, LinearMap.neg_apply, map_add, LinearMap.add_apply]
+  simp only [Submodule.coe_neg, map_neg, LinearMap.neg_apply, map_add (f := _), LinearMap.add_apply]
   rw [neg_eq_of_add_eq_zero_right (cup_add_cup _ _ _)]
   abel
 

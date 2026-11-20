@@ -85,13 +85,13 @@ theorem locAt_add {a b : Ω} (ha : a ∈ locAt k x y) (hb : b ∈ locAt k x y) :
   have hhom : (f * s' + s * f').IsHomogeneous (e + e') := (hf.mul hs').add (hs.mul hf')
   have hsum : aeval x f / aeval x s + aeval x f' / aeval x s' =
       aeval x (f * s' + s * f') / aeval x (s * s') := by
-    rw [div_add_div _ _ hsx hsx']; simp only [map_add, map_mul]
+    rw [div_add_div _ _ hsx hsx']; simp only [map_add (f := _), map_mul]
   have hss : aeval y (s * s') ≠ 0 := by rw [map_mul]; exact mul_ne_zero hsy hsy'
   rw [hsum]
   refine ⟨mem_locAt hhom (hs.mul hs') hss, ?_⟩
   rw [redAt_eq hsp hhom (hs.mul hs') hss, redAt_eq hsp hf hs hsy, redAt_eq hsp hf' hs' hsy',
     div_add_div _ _ hsy hsy']
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
 
 theorem locAt_mul {a b : Ω} (ha : a ∈ locAt k x y) (hb : b ∈ locAt k x y) :
     a * b ∈ locAt k x y ∧ redAt k x y (a * b) = redAt k x y a * redAt k x y b := by

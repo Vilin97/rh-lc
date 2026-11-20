@@ -113,7 +113,7 @@ theorem norm_tiltSharp_add_le (x y : K♭) :
     tiltSharp_eq (x := y) (a := c * b) (b := b * d) hbd
       (by rw [map_mul, map_mul, ← h']; ring),
     tiltSharp_eq (x := x + y) (a := a * d + c * b) (b := b * d) hbd
-      (by rw [map_add, map_mul, map_mul, map_mul, ← h, ← h']; ring),
+      (by rw [map_add (f := _), map_mul, map_mul, map_mul, ← h, ← h']; ring),
     norm_div, norm_div, norm_div, max_div_div_right (norm_nonneg _)]
   exact div_le_div_of_nonneg_right (norm_untilt_add_le _ _) (norm_nonneg _)
 

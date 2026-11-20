@@ -55,21 +55,21 @@ omit [NumberField E] in
 theorem act_act (a b : 𝓞 E) (v : ℝ ⊗[ℤ] M) : act M a (act M b v) = act M (a * b) v := by
   induction v using TensorProduct.induction_on with
   | zero => simp
-  | add v w h h' => simp only [map_add, h, h']
+  | add v w h h' => simp only [map_add (f := _), h, h']
   | tmul r x => simp [mul_smul]
 
 omit [NumberField E] in
 theorem act_natCast (n : ℕ) (v : ℝ ⊗[ℤ] M) : act M (n : 𝓞 E) v = (n : ℝ) • v := by
   induction v using TensorProduct.induction_on with
   | zero => simp
-  | add v w h h' => simp only [map_add, h, h', smul_add]
+  | add v w h h' => simp only [map_add (f := _), h, h', smul_add]
   | tmul r x => rw [act_tmul, Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul, TensorProduct.tmul_smul]
 
 omit [NumberField E] in
 theorem act_neg (a : 𝓞 E) (v : ℝ ⊗[ℤ] M) : act M (-a) v = -act M a v := by
   induction v using TensorProduct.induction_on with
   | zero => simp
-  | add v w h h' => simp only [map_add, h, h', neg_add]
+  | add v w h h' => simp only [map_add (f := _), h, h', neg_add]
   | tmul r x => simp [TensorProduct.tmul_neg]
 
 omit [NumberField E] in
@@ -126,22 +126,22 @@ theorem exists_complexStructure (H : Host E) {M : Type} [AddCommGroup M] [Module
     intro a v w
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add v v' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+    | add v v' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
     | tmul r x =>
       induction w using TensorProduct.induction_on with
       | zero => simp
-      | add w w' h h' => simp only [map_add, h, h']
+      | add w w' h h' => simp only [map_add (f := _), h, h']
       | tmul r' y => simp [adj]
   have hpos : ∀ v w, c * EF.baseChange ℝ (act M H.rt v) w = (trForm H).baseChange ℝ
       ((ψ.restrictScalars ℤ).baseChange ℝ v) ((ψ.restrictScalars ℤ).baseChange ℝ w) := by
     intro v w
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add v v' h h' => simp only [map_add, LinearMap.add_apply, mul_add, h, h']
+    | add v v' h h' => simp only [map_add (f := _), LinearMap.add_apply, mul_add, h, h']
     | tmul r x =>
       induction w using TensorProduct.induction_on with
       | zero => simp
-      | add w w' h h' => simp only [map_add, mul_add, h, h']
+      | add w w' h h' => simp only [map_add (f := _), mul_add, h, h']
       | tmul r' y => simp [← hEF, _root_.mul_assoc]
   refine ⟨s⁻¹ • act M H.rt, fun x => ?_, fun x y => ?_, fun x hx => ?_, fun a A t hA ht => ?_⟩
   · simp only [LinearMap.smul_apply, map_smul, hRR, smul_neg, smul_smul]
@@ -210,14 +210,14 @@ theorem exists_datum : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   let EF : LinearMap.BilinForm ℤ 𝔞 := LinearMap.mk₂ ℤ (fun x y => ε * f x y)
     (fun x x' y => by
       apply Int.cast_injective (α := ℚ)
-      rw [Int.cast_add, key, key, key, Submodule.coe_add, add_mul, add_div, map_add, mul_add])
+      rw [Int.cast_add, key, key, key, Submodule.coe_add, add_mul, add_div, map_add (f := _), mul_add])
     (fun c x y => by
       apply Int.cast_injective (α := ℚ)
       rw [smul_eq_mul, Int.cast_mul c, key, key, mul_left_comm (c : ℚ), ← zsmul_eq_mul _ c, ← map_zsmul]
       simp [_root_.mul_assoc, mul_div_assoc])
     (fun x y y' => by
       apply Int.cast_injective (α := ℚ)
-      rw [Int.cast_add, key, key, key, Submodule.coe_add, map_add, mul_add, add_div, map_add, mul_add])
+      rw [Int.cast_add, key, key, key, Submodule.coe_add, map_add (f := _), mul_add, add_div, map_add (f := _), mul_add])
     (fun c x y => by
       apply Int.cast_injective (α := ℚ)
       rw [smul_eq_mul, Int.cast_mul c, key, key, mul_left_comm (c : ℚ), ← zsmul_eq_mul _ c, ← map_zsmul]

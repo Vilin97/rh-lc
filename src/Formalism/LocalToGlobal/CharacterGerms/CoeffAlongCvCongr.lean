@@ -164,7 +164,7 @@ theorem sumV_mem (V : VF C) (g : Fin 2) (hlg0 : ∀ i, MvPowerSeries.constantCoe
       ∑ c : I g, (if X.ty g c = X.ty (1 - g) q then
         X.sg1 (X.u g c) (X.u (1 - g) q) • tyS V.l (fun s => sumV y s (Sum.inl c)) else 0)) = _
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sub, map_sub, map_add, map_add, map_sum, map_sum, htyN N _ m hm,
+      rw [map_sub, map_sub, map_add (f := _), map_add (f := _), map_sum, map_sum, htyN N _ m hm,
       coeff_alongCv_congr hγ0 (fun i => (hγN N i).1) (fun i => hγN' N i) _ m hm]
     congr 1
     refine Finset.sum_congr rfl fun c _ => ?_

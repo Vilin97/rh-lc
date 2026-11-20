@@ -140,9 +140,9 @@ theorem GlobalTheory.EtC.unit_mul_chain_map : ∀ (q : ℕ) [NeZero q] (i k : �
     refine sep (ClsSpec.loc_mono (ClsSpec.loc_and (localization₂ hD x) (localization₂ hD y)) fun V g h => ?_)
     rw [res_add, ha, ha, ha, res_add]
     rcases h with ⟨⟨⟨ζ⟩⟩ | hx, ⟨⟨ζ⟩⟩ | hy⟩
-    · rw [aP s V ζ, aP s V ζ, aP s V ζ, smap_add, map_add]
-    · rw [aP s V ζ, aP s V ζ, aP s V ζ, smap_add, map_add]
-    · rw [aP s V ζ, aP s V ζ, aP s V ζ, smap_add, map_add]
+    · rw [aP s V ζ, aP s V ζ, aP s V ζ, smap_add, map_add (f := _)]
+    · rw [aP s V ζ, aP s V ζ, aP s V ζ, smap_add, map_add (f := _)]
+    · rw [aP s V ζ, aP s V ζ, aP s V ζ, smap_add, map_add (f := _)]
     · rw [aZ s V _ hx, aZ s V _ hy, aZ s V _ (by rw [smap_add, hx, hy, add_zero]), add_zero]
   have aSmul : ∀ (s : ℤ) (U : Scheme.{0}) (r : ULift.{1} (ZMod q)) (x : Sec (D.X s) U), a s U (r • x) = r • a s U x := by
     intro s U r x

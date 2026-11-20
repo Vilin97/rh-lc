@@ -66,7 +66,7 @@ theorem flt_g_pascal (R : Type*) [CommRing R] {σ : Type*} (m be : σ →₀ ℕ
             omega
           · simp only [Finsupp.tsub_apply, Finsupp.add_apply, Finsupp.single_apply, if_neg (Ne.symm hk)]
             omega
-        rw [e2, e3, ← map_add]
+        rw [e2, e3, ← map_add (f := _)]
         congr 1
         push_cast
         ring

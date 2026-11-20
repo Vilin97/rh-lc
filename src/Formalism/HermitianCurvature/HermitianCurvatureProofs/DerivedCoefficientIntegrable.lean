@@ -322,7 +322,7 @@ private theorem le_reduceToBoxes_proof : Formalism.FourierDecayAlt.LE.ReduceToBo
     have habs : ∀ a, |S.P (Y' a)| = sg0 * ∏ s, (Y' a + S.lam s) := fun a => hsg (Y' a) (hY' a)
     simp only [Formalism.FourierDecayAlt.LE.Sys.size, List.map_ofFn, List.prod_ofFn, Function.comp_apply]
     rw [hQ₀]
-    simp only [map_mul, map_prod, map_add, MvPolynomial.eval_C, MvPolynomial.eval_X]
+    simp only [map_mul, map_prod, map_add (f := _), MvPolynomial.eval_C, MvPolynomial.eval_X]
     simp only [habs, Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
     ring
   have hc : (0:ℝ) < ((S.k + 2 * S.r + 1 : ℕ) : ℝ) + 1 := by positivity

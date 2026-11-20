@@ -46,7 +46,7 @@ theorem tw_g_xi : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (bar : 
       add_mem' := fun {x y} hx hy a => by
         obtain ⟨z, hz⟩ := hx a
         obtain ⟨w, hw⟩ := hy a
-        exact ⟨z + w, by push_cast; rw [add_div, add_mul, map_add, hz, hw]⟩
+        exact ⟨z + w, by push_cast; rw [add_div, add_mul, map_add (f := _), hz, hw]⟩
       zero_mem' := fun a => ⟨0, by simp⟩
       smul_mem' := fun r y hy a => by
         obtain ⟨z, hz⟩ := hy (r * a)

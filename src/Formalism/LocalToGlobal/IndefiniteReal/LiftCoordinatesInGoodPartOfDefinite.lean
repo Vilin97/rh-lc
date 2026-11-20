@@ -23,14 +23,14 @@ variable (S : CSD K)
 def csumForm : S.Forms →ₗ⋆[K] S.Forms →ₗ[K] K :=
   LinearMap.mk₂'ₛₗ (starRingEnd K) (RingHom.id K) (fun f g => S.csum (f : S.Cl → S.V) (g : S.Cl → S.V))
     (fun f f' g => by
-      simp only [CSD.csum, Submodule.coe_add, Pi.add_apply, map_add, LinearMap.add_apply, mul_add,
+      simp only [CSD.csum, Submodule.coe_add, Pi.add_apply, map_add (f := _), LinearMap.add_apply, mul_add,
         Finset.sum_add_distrib])
     (fun a f g => by
       simp only [CSD.csum, Submodule.coe_smul, Pi.smul_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
         smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun c _ => by ring)
     (fun f g g' => by
-      simp only [CSD.csum, Submodule.coe_add, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib])
+      simp only [CSD.csum, Submodule.coe_add, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib])
     (fun a f g => by
       simp only [CSD.csum, Submodule.coe_smul, Pi.smul_apply, map_smul, smul_eq_mul, Finset.mul_sum, RingHom.id_apply]
       refine Finset.sum_congr rfl fun c _ => by ring)

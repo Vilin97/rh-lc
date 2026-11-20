@@ -18,7 +18,7 @@ private def Nq (E : Type) [Field E] [NumberField E] : Subgroup (G1 E) where
   carrier := Set.range fun ξ : E => (nU (rt ξ : A E) : G1 E)
   mul_mem' := by
     rintro _ _ ⟨a, rfl⟩ ⟨b, rfl⟩
-    exact ⟨a + b, by simp only [UpperTheory.ConvolutionTheory.R2.rt, map_add, M.nU_add]⟩
+    exact ⟨a + b, by simp only [UpperTheory.ConvolutionTheory.R2.rt, map_add (f := _), M.nU_add]⟩
   one_mem' := ⟨0, by simp only [UpperTheory.ConvolutionTheory.R2.rt, map_zero, M.nU_zero]⟩
   inv_mem' := by
     rintro _ ⟨a, rfl⟩

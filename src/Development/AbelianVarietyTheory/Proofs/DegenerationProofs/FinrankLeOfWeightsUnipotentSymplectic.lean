@@ -106,7 +106,7 @@ theorem exists_binom (q : ℕ) : ∃ v : ℚ[X], (X + 1) ^ q = 1 + X * (C (q : �
     obtain ⟨v, hv⟩ := ih
     refine ⟨C (q : ℚ) + v + X * v, ?_⟩
     rw [pow_succ, hv]
-    simp only [Nat.cast_add, Nat.cast_one, map_add, map_one]
+    simp only [Nat.cast_add, Nat.cast_one, map_add (f := _), map_one]
     ring
 
 section
@@ -121,7 +121,7 @@ theorem graded_comm (T Φ : Module.End 𝕜 V) (q : ℕ) (hq : q ≠ 0) (hT : Is
   set u : ℚ[X] := C (q : ℚ) + X * v with hu
   have h1 : Φ * T = aeval T (X * u) * Φ := by
     have h2 := congrArg (aeval T) hv
-    rw [map_pow, map_add, map_add, map_one, aeval_X] at h2
+    rw [map_pow, map_add (f := _), map_add (f := _), map_one, aeval_X] at h2
     rw [h2, mul_add, add_mul, _root_.mul_one, _root_.one_mul, add_comm Φ] at h
     exact add_right_cancel h
   have h2 : ∀ k : ℕ, Φ * T ^ k = aeval T ((X * u) ^ k) * Φ := by
@@ -152,7 +152,7 @@ theorem graded_comm (T Φ : Module.End 𝕜 V) (q : ℕ) (hq : q ≠ 0) (hT : Is
     rw [mul_pow, map_pow]
     linear_combination X ^ i * hw
   have := congrArg (fun f : Module.End 𝕜 V => f x) (h2 i)
-  simp only [Module.End.mul_apply, h4, map_add, map_mul, map_pow (aeval T) X, aeval_X, aeval_C,
+  simp only [Module.End.mul_apply, h4, map_add (f := _), map_mul, map_pow (aeval T) X, aeval_X, aeval_C,
     LinearMap.add_apply, h3, map_zero, add_zero] at this
   rw [this, LinearMap.smul_apply, LinearMap.map_smul_of_tower, Algebra.algebraMap_eq_smul_one]
   simp

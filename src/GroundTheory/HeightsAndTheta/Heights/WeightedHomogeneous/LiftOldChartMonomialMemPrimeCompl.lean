@@ -232,7 +232,7 @@ theorem exists_clear_denom {c : (k : ι) → Fin (n k + 1)} (hc : P.IsLive c)
     obtain ⟨e, f, hf⟩ := hx
     obtain ⟨e', f', hf'⟩ := hy
     refine ⟨e + e', f * chartMonomial c 1 ^ e' + f' * chartMonomial c 1 ^ e, ?_⟩
-    simp only [map_add, map_mul, map_pow, ← hf, ← hf']
+    simp only [map_add (f := _), map_mul, map_pow, ← hf, ← hf']
     ring
   | neg x _ hx =>
     obtain ⟨e, f, hf⟩ := hx

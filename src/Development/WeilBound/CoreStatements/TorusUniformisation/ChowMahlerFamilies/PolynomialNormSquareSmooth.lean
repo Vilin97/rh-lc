@@ -15,7 +15,7 @@ theorem contDiff_eval (σ : Type) [Fintype σ] (p : MvPolynomial σ ℂ) :
     simp only [MvPolynomial.eval_C]
     exact contDiff_const
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p i hp =>
     simp only [map_mul, MvPolynomial.eval_X]

@@ -59,11 +59,11 @@ theorem scal_om (F : LFlag (VS D) D.R.rS T) (F' F'' : LFlag (VS D) D.R.rS T') (�
   have hu'o : u' ∈ orth (VS D) (Xplus F') := by
     rw [Xplus, mem_orth_Xplus]
     refine ⟨fun b => ?_, ?_⟩
-    · rw [hu', map_add, map_smul, F'.fl.z_orth b, smul_zero, add_zero, hT_swap,
+    · rw [hu', map_add (f := _), map_smul, F'.fl.z_orth b, smul_zero, add_zero, hT_swap,
         hom1X _ (Submodule.subset_span ⟨b, rfl⟩), star_zero]
     · have h1 := q1 (Fin.last _)
       rw [if_pos rfl, hfl'] at h1
-      rw [hu', map_add, map_smul, hz'z', hT_swap, h1, smul_eq_mul]
+      rw [hu', map_add (f := _), map_smul, hz'z', hT_swap, h1, smul_eq_mul]
       field_simp
       ring
   have hu'oX : u' ∈ orth (VS D) (Xsp F') := by
@@ -86,7 +86,7 @@ theorem scal_om (F : LFlag (VS D) D.R.rS T) (F' F'' : LFlag (VS D) D.R.rS T') (�
     ⟨-(om1 - star R1 • F.fl.z), hx0, 0, Submodule.zero_mem _, by rw [hz, hz', hu']; module⟩
   obtain ⟨x, hx, x'', hx'', heq⟩ := hsc u' (Submodule.mem_inf.2 ⟨hu'U, hu'o⟩)
     (Submodule.mem_inf.2 ⟨hβU, hβo⟩) _ _ hsg
-  rw [hz, hz'', hu', map_add, map_smul, hβz] at heq
+  rw [hz, hz'', hu', map_add (f := _), map_smul, hβz] at heq
   have hp : β om1 + x'' = star R1 • F.fl.z - x := by
     have e1 : β om1 + x'' = -(0 - (β om1 + (star D1 / T') • F''.fl.z)) - (star D1 / T') • F''.fl.z + x'' := by
       abel

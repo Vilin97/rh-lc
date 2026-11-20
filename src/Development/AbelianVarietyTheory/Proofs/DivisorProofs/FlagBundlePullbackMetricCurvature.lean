@@ -61,11 +61,11 @@ theorem geoFun_rel (hC : ArCalc) (hq : IsArithVar q d) (hp : IsArithVar p (d + 1
     convert e₂ using 2
     simp [Derivation.leibniz, pderiv_X, Pi.single_apply]
   induction K using MvPolynomial.induction_on' with
-  | add K₁ K₂ e₁ e₂ => rw [mul_add, mul_add, map_add, e₁, e₂, add_zero]
+  | add K₁ K₂ e₁ e₂ => rw [mul_add, mul_add, map_add (f := _), e₁, e₂, add_zero]
   | monomial m a =>
     by_cases hm : m.degree + 1 = d
     · have := key (monomial (m + Finsupp.single 2 1) (a / ((m 2 : ℝ) + 1)))
-        (isHomogeneous_monomial _ (by rw [map_add, Finsupp.degree_single, hm]))
+        (isHomogeneous_monomial _ (by rw [map_add (f := _), Finsupp.degree_single, hm]))
       rw [pderiv_monomial] at this
       convert this using 5
       · simp
@@ -177,7 +177,7 @@ theorem arFun_pow_eq_oddHarm_mul : ArCalc → ∀ (k : Type) [CommRing k] (B Y :
   have eL : Φ5 ((X 3 + X 4 - 2 * X 0) ^ (2 * (l + 1)) * rename (![3, 4, 2] : Fin 3 → Fin 5) M) =
       oddHarm (l + 1) * (2 * ΨB ((X 1 - X 0) ^ (2 * l) * M)) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [pow_expand, add_mul, map_add, er, arFun_base hC hq hp hΦ5, zero_add, Finset.sum_mul, map_sum, oddHarm,
+      rw [pow_expand, add_mul, map_add (f := _), er, arFun_base hC hq hp hΦ5, zero_add, Finset.sum_mul, map_sum, oddHarm,
       Finset.sum_mul]
     refine Finset.sum_congr rfl fun i hi => ?_
     have hi' := Finset.mem_range.1 hi
@@ -209,7 +209,7 @@ theorem arFun_pow_eq_oddHarm_mul : ArCalc → ∀ (k : Type) [CommRing k] (B Y :
         ring
       · refine Finset.sum_congr rfl fun i _ => ?_
         ring
-    rw [e₄, map_add, map_add, map_add, e₁, e₂, e₃]
+    rw [e₄, map_add (f := _), map_add (f := _), map_add (f := _), e₁, e₂, e₃]
     ring
   rw [eL, eR]
 

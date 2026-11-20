@@ -68,7 +68,7 @@ theorem mulTot_X_smul (H : TowerAx ρ res p mm) (e : ℕ) (S : Finset ι) (hS : 
     apply Subtype.ext
     change r • mm j (e + 1) t S y = mm j (e + 1) t S (r • y)
     rw [map_smul]
-  | hadd a b ha hb => rw [smul_add, map_add, map_add, smul_add, ha, hb]
+  | hadd a b ha hb => rw [smul_add, map_add (f := _), map_add (f := _), smul_add, ha, hb]
 
 theorem mulTot_X_pow_smul (H : TowerAx ρ res p mm) (e : ℕ) (S : Finset ι) (hS : S.Nonempty)
     (r : R) (hr : r ∈ Ideal.span (Set.range ρ) ^ (e + 1)) (j : ι) (k : ℕ)

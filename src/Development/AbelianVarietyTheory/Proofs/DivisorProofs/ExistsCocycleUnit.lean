@@ -130,7 +130,7 @@ theorem exists_gtPt_up {T' : Over (Sp R')} (g' : GtPt D' T') : ∃ g : GtPt D (O
       have v₁ := vt' y z J J' hJ hJ'
       have v₂ := vt' y' z J J' hJ hJ'
       have v₃ := vt' (y + y') z J J' hJ hJ'
-      rw [cPoint_add, map_add] at v₃
+      rw [cPoint_add, map_add (f := _)] at v₃
       have e := cv_add g' hJ' y y'
       refine (congrArg₂ (fun a b : (T'.left.presheaf.stalk z)ˣ => a * b) v₃ c).trans
         (Eq.trans ?_ (congrArg₂ (· * ·) v₁ v₂).symm)

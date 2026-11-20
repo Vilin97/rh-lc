@@ -138,8 +138,8 @@ private lemma norm_onto [CompleteSpace K] [CharZero K] (hU : UnrOK K l σ) (ζ :
   refine ⟨x * (1 + t), ?_, ?_, ?_⟩
   · rw [norm_mul, nx, one_mul]
     exact nadd norm_one.le ht.le
-  · simp only [map_mul, map_add, map_one, hst, hx2]
-  · simp only [map_mul, map_add, map_one, hst]
+  · simp only [map_mul, map_add (f := _), map_one, hst, hx2]
+  · simp only [map_mul, map_add (f := _), map_one, hst]
     have : (t ^ 2 + 2 * t) * n = u - n := by rw [htw]; field_simp
     linear_combination this + (1 + t) ^ 2 * hn
 
@@ -149,7 +149,7 @@ private def intFix (hU : UnrOK K l σ) : Subring K where
     rw [norm_mul]; exact mul_le_one₀ ha.1 (norm_nonneg _) hb.1, by
     rw [map_mul, map_mul, ha.2, hb.2]⟩
   one_mem' := ⟨norm_one.le, by rw [map_one, map_one]⟩
-  add_mem' := fun {a b} ha hb => ⟨nadd ha.1 hb.1, by rw [map_add, map_add, ha.2, hb.2]⟩
+  add_mem' := fun {a b} ha hb => ⟨nadd ha.1 hb.1, by rw [map_add (f := _), map_add (f := _), ha.2, hb.2]⟩
   zero_mem' := ⟨by simp, by rw [map_zero, map_zero]⟩
   neg_mem' := fun {a} ha => ⟨by rw [norm_neg]; exact ha.1, by rw [map_neg, map_neg, ha.2]⟩
 

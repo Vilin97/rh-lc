@@ -230,7 +230,7 @@ theorem UpperTheory.unitary_stabilizer_lifts_to_smaller_space :
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [cA, hσ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hkk : mat k * mat k⁻¹ = 1 := k.1.mul_inv
   have hkk' : mat k⁻¹ * mat k = 1 := k.1.inv_mul
   have hu : (mat k)ᵀ * incM F X.J * (mat k).map c = incM F X.J := k.2
@@ -247,7 +247,7 @@ theorem UpperTheory.unitary_stabilizer_lifts_to_smaller_space :
       Matrix.vecMulVec (incV F H.y) (incM F X.J *ᵥ fun i => c (incV F H.x i)) = 1 := by
     rw [hJv, hJv, ← hmul, ← hone, ← p2]
     ext i j
-    simp only [incM, incV, Matrix.vecMulVec_apply, Matrix.map_apply, Matrix.add_apply, map_add, map_mul]
+    simp only [incM, incV, Matrix.vecMulVec_apply, Matrix.map_apply, Matrix.add_apply, map_add (f := _), map_mul]
   have ho : ∀ x : Fin n → E, (∀ u, form σ X.J (H.ι *ᵥ u) x = 0) →
       ∀ u, sqf c (incM F X.J) (incM F H.ι *ᵥ u) (incV F x) = 0 := by
     intro x hx u

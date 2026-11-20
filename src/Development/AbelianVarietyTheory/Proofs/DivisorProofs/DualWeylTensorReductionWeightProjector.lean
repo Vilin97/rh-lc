@@ -35,7 +35,7 @@ theorem wComp_mul_of_weight_zero {σ R M : Type} [CommSemiring R] [AddCommMonoid
     · simp [hq]
     · have h2 := hQ hq
       have hm : x.1 + x.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
-      have e : Finsupp.weight w x.1 = n := by rw [← h, ← hm, map_add, h2, add_zero]
+      have e : Finsupp.weight w x.1 = n := by rw [← h, ← hm, map_add (f := _), h2, add_zero]
       rw [if_pos e]
   · symm
     refine Finset.sum_eq_zero fun x hx => ?_
@@ -44,14 +44,14 @@ theorem wComp_mul_of_weight_zero {σ R M : Type} [CommSemiring R] [AddCommMonoid
     · simp [hq]
     · have h2 := hQ hq
       have hm : x.1 + x.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
-      have e : Finsupp.weight w x.1 ≠ n := by rw [← hm, map_add, h2, add_zero] at h; exact h
+      have e : Finsupp.weight w x.1 ≠ n := by rw [← hm, map_add (f := _), h2, add_zero] at h; exact h
       rw [if_neg e, zero_mul]
 
 theorem blockRed_eq_rename_map (O : Type) [CommRing O] (N : ℕ) {ι : Type} (ϖ : O) (τ : ι) (f : MvPolynomial (Fin N × Fin N) O) :
     blockRed O N ϖ τ f = rename (fun v => ((τ, v) : BVar N ι)) (map (Ideal.Quotient.mk (Ideal.span {ϖ})) f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [blockRed, MvPolynomial.algebraMap_eq]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p v hp => rw [map_mul, hp]; simp [blockRed]
 
 theorem weight_blockW_mapDomain_self (N : ℕ) {ι : Type} [DecidableEq ι] (τ : ι) (d : Fin N × Fin N →₀ ℕ) :

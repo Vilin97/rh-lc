@@ -164,7 +164,7 @@ theorem exists_gauss (σ : ℕ → ℝ) (hσ : ∀ i, min p q ≤ i → σ i = 0
 theorem pderiv_dil (u : Ix p q → ℝ) (l : Ln p q n 0) (P : Pol p q n 0) :
     MvPolynomial.pderiv l (dil n u P) = ((Real.exp (u l.1) : ℝ) : ℂ) • dil n u (MvPolynomial.pderiv l P) := by
   induction P using MvPolynomial.induction_on' with
-  | add P Q hP hQ => simp only [map_add, hP, hQ, smul_add]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ, smul_add]
   | monomial α c =>
     rw [dil_monomial, Derivation.map_smul, MvPolynomial.pderiv_monomial, dil_monomial, smul_smul]
     by_cases h : α l = 0
@@ -494,7 +494,7 @@ theorem covariance (F : FockData T0 T1 T2) (g : T1.G) (Z : Mat p q) (P Q : Pol p
   have hY' := mem_upq_of_adjZ hY
   rw [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, adjZ_add, adjZ_smul,
     adjZ_of_mem (conj_mem_upq T1 g hX'), adjZ_of_mem (conj_mem_upq T1 g hY')]
-  simp only [map_add, map_smul, map_neg, LinearMap.add_apply, LinearMap.smul_apply,
+  simp only [map_add (f := _), map_smul, map_neg, LinearMap.add_apply, LinearMap.smul_apply,
     LinearMap.neg_apply, inner_add_left, inner_add_right, inner_smul_left, inner_smul_right,
     inner_neg_left, covariance_real F g hX', covariance_real F g hY']
   simp
@@ -609,7 +609,7 @@ theorem hasDerivAt_flow (F : FockData T0 T1 T2) (σ : ℕ → ℝ) (Ψ : Pol p q
   have h2 := (h1.exp.ofReal_comp.const_mul (Ψ.coeff α)).fun_smul
     (hasDerivAt_pi_at F (diagonalElement_mem p q σ).1 (MvPolynomial.monomial α 1) t)
   refine h2.congr_deriv ?_
-  rw [map_add, LinearMap.add_apply, act_tanhDiag, map_add, map_add, map_smul, map_smul, smul_add, smul_smul,
+  rw [map_add (f := _), LinearMap.add_apply, act_tanhDiag, map_add (f := _), map_add (f := _), map_smul, map_smul, smul_add, smul_smul,
     Complex.ofReal_mul, mul_assoc]
 
 theorem inner_flow (F : FockData T0 T1 T2) (σ : ℕ → ℝ) (hσ : ∀ i, min p q ≤ i → σ i = 0)

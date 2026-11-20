@@ -58,7 +58,7 @@ theorem GlobalTheory.DetInv.exists_generators_of_charpoly_eq_pow : ∀ (k : Type
       = (LinearMap.range t').mkQ (aeval T' p x) := by
     intro p x
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
     | monomial m c =>
       rw [aeval_monomial, aeval_monomial, Module.End.mul_apply, Module.End.mul_apply,
         Module.algebraMap_end_apply, Module.algebraMap_end_apply, hbm, map_smul]
@@ -91,7 +91,7 @@ theorem GlobalTheory.DetInv.exists_generators_of_charpoly_eq_pow : ∀ (k : Type
     intro p z hz
     induction p using Polynomial.induction_on' with
     | add p q hp hq =>
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact U.add_mem hp hq
     | monomial m c =>
       rw [aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply]
@@ -116,7 +116,7 @@ theorem GlobalTheory.DetInv.exists_generators_of_charpoly_eq_pow : ∀ (k : Type
       obtain ⟨u, hu, w, rfl⟩ := ih v
       obtain ⟨u', hu', w', rfl⟩ := step w
       refine ⟨u + (t' ^ m) u', U.add_mem hu (htm m u' hu'), w', ?_⟩
-      rw [map_add, pow_succ, Module.End.mul_apply, add_assoc]
+      rw [map_add (f := _), pow_succ, Module.End.mul_apply, add_assoc]
   refine eq_top_iff.mpr fun v _ => ?_
   obtain ⟨u, hu, w, rfl⟩ := iter e v
   rw [hte']

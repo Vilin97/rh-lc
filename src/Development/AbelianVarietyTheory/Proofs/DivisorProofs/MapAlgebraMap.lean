@@ -69,7 +69,7 @@ theorem main : ∀ (E Ω : Type) [Field E] [NumberField E] [Field Ω] [Algebra E
       omega
     have := hmem ⟨σ, Weil_le_Dec h σ.2⟩
     rw [hψ, hd, hσ] at this
-    simp only [zpow_zero, mul_one, Units.val_mk0, map_add, map_one] at this
+    simp only [zpow_zero, mul_one, Units.val_mk0, map_add (f := _), map_one] at this
     simpa using LL.1.sub_mem this LL.1.one_mem
   have hall : ∀ x : w.adicCompletion E, j₀.1 x ∈ LL.1 := fun x => by
     rcases eq_or_ne x 0 with rfl | hx

@@ -127,7 +127,7 @@ theorem linkRing
       refine (w.isUnit.map (ρζ ζ)).mul (IsUnit.pow _ ?_)
       rw [isUnit_iff_constantCoeff]
       have h := congrArg constantCoeff (hρζ s hs (ζ : LL) ζ.2)
-      simp only [map_add, map_one, map_mul, constantCoeff_C, constantCoeff_exp, mul_one] at h
+      simp only [map_add (f := _), map_one, map_mul, constantCoeff_C, constantCoeff_exp, mul_one] at h
       rw [eq_sub_of_add_eq' h]
       exact (sub_ne_zero.2 ((hprim s ζ).ne_one (Nat.one_lt_pow (Nat.succ_ne_zero s) hp.one_lt))).isUnit
     · obtain ⟨w', hw'⟩ := hG s'

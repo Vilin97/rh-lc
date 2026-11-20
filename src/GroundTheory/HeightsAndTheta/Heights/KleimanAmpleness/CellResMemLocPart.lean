@@ -117,7 +117,7 @@ theorem cellRes_mem_locPart {J I : ∀ k, Finset (ι k)} (h : cellMon F J ≤ ce
     rw [cellRes_mk h]
     exact Submodule.subset_span ⟨m, ⟨t.1, h t.2⟩, a, ht, hm, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x₁ x₂ _ _ h₁ h₂ => rw [map_add]; exact add_mem h₁ h₂
+  | add x₁ x₂ _ _ h₁ h₂ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
   | smul s x _ h' => rw [cellRes_smul]; exact Submodule.smul_mem _ s h'
 
 theorem cechD_mem_locPart (β : K → ℤ) (n : ℕ) {f : CechC F ι (MRingOver F ι ⧸ mIdealOver F y) n}

@@ -161,11 +161,11 @@ def FmB : (Ψ → Fin (j + j') → ℂ) →ₗ[ℝ] (Ψ → Fin (j + j') → ℂ
 def HrB (R : RiemLat E g Λ) : (Ψ → Fin (j + j') → ℂ) →ₗ[ℝ] (Ψ → Fin (j + j') → ℂ) →ₗ[ℝ] ℝ :=
   LinearMap.mk₂ ℝ (fun y y' => (C.perExt R y ⬝ᵥ R.Hm *ᵥ star (C.perExt R y')).im)
     (fun y z w => by
-      simp only [map_add, add_dotProduct, Complex.add_im])
+      simp only [map_add (f := _), add_dotProduct, Complex.add_im])
     (fun r y w => by
       simp only [map_smul, smul_dotProduct, Complex.smul_im])
     (fun y z w => by
-      simp only [map_add, star_add, mulVec_add, dotProduct_add, Complex.add_im])
+      simp only [map_add (f := _), star_add, mulVec_add, dotProduct_add, Complex.add_im])
     (fun r y w => by
       simp only [map_smul, star_smul, star_trivial, mulVec_smul, dotProduct_smul, Complex.smul_im])
 

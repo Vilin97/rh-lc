@@ -60,11 +60,11 @@ theorem exists_redHom (h𝔪 : 𝔪 ≠ ⊥) : ∃ red : OhE D →+* 𝓞 D.host
     ring
   · rw [← map_zero (Ideal.Quotient.mk 𝔪), key]
     simp
-  · rw [← map_add, key]
+  · rw [← map_add (f := _), key]
     have := add_mem (hr x) (hr y)
     convert this using 1
     push_cast
-    rw [map_add]
+    rw [map_add (f := _)]
     ring
 
 def intMat (N : ℕ) : ↥(intG D N) →* Matrix (Fin N) (Fin N) (OhE D) where

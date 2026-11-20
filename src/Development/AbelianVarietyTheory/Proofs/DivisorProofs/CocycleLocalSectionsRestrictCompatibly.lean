@@ -51,7 +51,7 @@ theorem hSec_res (f : Z1 ((IsTriv s).ι ⋙ O (dp0 R) s)) (g : C0 (OAff s))
     (congrArg (fun m ↦ m.hom.φ u) (aM_resThk T hpq)).symm
   change ρ (secPullA T q (g (op q.1.2)) + fv f (aM T q) - fv f (bM T q)) =
     secPullA T p (g (op p.1.2)) + fv f (aM T p) - fv f (bM T p)
-  rw [map_sub, map_add, e1, e3, map_add, e4]
+  rw [map_sub, map_add (f := _), e1, e3, map_add (f := _), e4]
   linear_combination e2
 
 end GlobalTheory.CechDR.AffLoc

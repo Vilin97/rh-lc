@@ -47,7 +47,7 @@ theorem surjective_of_integral_sq_card : ∀ (R K : Type) [CommRing R] [IsDomain
     clear hc
     have key : z * (1 ⊗ₜ Λ) = algebraMap K _ (Coalgebra.counit (R := K) z) * (1 ⊗ₜ Λ) := by
       induction z with
-      | add u v hu hv => rw [add_mul, hu, hv, map_add, map_add, add_mul]
+      | add u v hu hv => rw [add_mul, hu, hv, map_add (f := _), map_add (f := _), add_mul]
       | tmul k d =>
         rw [Algebra.TensorProduct.tmul_mul_tmul, hΛ d, _root_.mul_one]
         simp [Algebra.TensorProduct.algebraMap_apply, Algebra.TensorProduct.tmul_mul_tmul,
@@ -85,7 +85,7 @@ theorem surjective_of_integral_sq_card : ∀ (R K : Type) [CommRing R] [IsDomain
     rw [hz]
     clear hz
     induction z with
-    | add u v hu hv => simp only [map_add, WithConv.ofConv_add, LinearMap.add_apply, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), WithConv.ofConv_add, LinearMap.add_apply, hu, hv]
     | tmul k d' => simp [bc, CartierDual.apply_bidual_symm]
   have hS : ∀ a : A, HopfAlgebra.antipode K ((1 : K) ⊗ₜ[R] a) = 1 ⊗ₜ HopfAlgebra.antipode R a := by
     intro a

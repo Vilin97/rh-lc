@@ -29,7 +29,7 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E →ₐ[F] E) {M 
 
 theorem hE_add_left (x x' y : Fin M → E) :
     hE σ T (x + x') y = hE σ T x y + hE σ T x' y := by
-  simp only [hE, HeckeCharacterZeroLocus.SiegelWeilU.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hE, HeckeCharacterZeroLocus.SiegelWeilU.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hE_add_right (x y y' : Fin M → E) :
     hE σ T x (y + y') = hE σ T x y + hE σ T x y' := by

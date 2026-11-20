@@ -42,7 +42,7 @@ theorem fis_self_ne_zero {P : MvPolynomial σ ℂ} (hP : P ≠ 0) : fis P P ≠ 
 
 theorem fis_add_right (P Q Q' : MvPolynomial σ ℂ) : fis P (Q + Q') = fis P Q + fis P Q' := by
   unfold fis
-  rw [map_add, ReciprocityTheory.PGsh.fischer_add_right]
+  rw [map_add (f := _), ReciprocityTheory.PGsh.fischer_add_right]
 
 theorem fis_smul_right (c : ℂ) (P Q : MvPolynomial σ ℂ) : fis P (c • Q) = starRingEnd ℂ c * fis P Q := by
   unfold fis
@@ -50,7 +50,7 @@ theorem fis_smul_right (c : ℂ) (P Q : MvPolynomial σ ℂ) : fis P (c • Q) =
 
 theorem fis_add_left (P P' Q : MvPolynomial σ ℂ) : fis (P + P') Q = fis P Q + fis P' Q := by
   unfold fis
-  rw [map_add, ReciprocityTheory.PGsh.fischer_add_left]
+  rw [map_add (f := _), ReciprocityTheory.PGsh.fischer_add_left]
 
 theorem fis_smul_left (c : ℂ) (P Q : MvPolynomial σ ℂ) : fis (c • P) Q = c * fis P Q := by
   unfold fis

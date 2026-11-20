@@ -93,7 +93,7 @@ theorem jetsIntegral_linAt [Fintype σ] [Fintype κ] (c : σ → κ → ℂ_[p])
     obtain ⟨β, rfl⟩ : ∃ β, α = β + Finsupp.single x 1 := ⟨α - Finsupp.single x 1, (tsub_add_cancel_of_le hle).symm⟩
     rw [jetAt_add_single, pderiv_linAt]
     refine ih _ (hc x G hG) β ?_
-    rw [map_add, Finsupp.degree_single] at hn
+    rw [map_add (f := _), Finsupp.degree_single] at hn
     omega
 
 end Formal
@@ -178,7 +178,7 @@ theorem keeps_add {v w : D.what₂.Tau × Fin N' × Fin N → ℂ_[p]} (hv : Kee
   have h2 := hw G hG
   rw [jetsInt_iff] at h1 h2 ⊢
   intro l hl
-  rw [dirDer_add, LinearMap.add_apply, map_add, map_add]
+  rw [dirDer_add, LinearMap.add_apply, map_add (f := _), map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (h1 l hl) (h2 l hl))
 
 theorem keeps_smul {c : ℂ_[p]} (hc : ‖c‖ ≤ 1) {v : D.what₂.Tau × Fin N' × Fin N → ℂ_[p]} (hv : Keeps D lam Y v) :

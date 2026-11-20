@@ -191,7 +191,7 @@ theorem pull_inv_cls_of_fibres (hsee : ∀ (R : Type) [CommRing R] [IsReduced R]
       pull (r ≫ (GrpObj.inv : A ⟶ A).left) (cls N hN) - pull r (cls N hN) := by
     intro Y r
     rw [cls_linComb hN, Fin.sum_univ_two]
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, one_smul, neg_smul, pull_id, map_add, map_neg,
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, one_smul, neg_smul, pull_id, map_add (f := _), map_neg,
       ← pull_comp, sub_eq_add_neg]
   have hR : Out.Rigidified A (LB.LinComb N ![(GrpObj.inv : A ⟶ A).left, 𝟙 A.left] ![1, -1]) := by
     unfold Out.Rigidified
@@ -281,7 +281,7 @@ theorem exists_descended_of (hsee : ∀ (R : Type) [CommRing R] [IsReduced R] (A
         (((m : ℤ) + 1) / 2) • pull (r ≫ (GrpObj.inv : A ⟶ A).left) (cls N hN) := by
     intro Y r
     rw [cls_linComb hN, Fin.sum_univ_two]
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, pull_id, map_add, map_zsmul, ← pull_comp]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, pull_id, map_add (f := _), map_zsmul, ← pull_comp]
   have hfibc : ∀ {K : Type} [Field K] [IsAlgClosed K] (x : R →+* K) (Pl : Out.PolAV (Sp K))
       (φ : Pl.A.left ⟶ A.left), IsGrpPullback Pl.A A (spMap x) φ → LBIso (lbPow Pl.L (m ^ 2)) (M.pull φ) →
       pull φ (cls _ hL) = cls Pl.L Pl.7 := by

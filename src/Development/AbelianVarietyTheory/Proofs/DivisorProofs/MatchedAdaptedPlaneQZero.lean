@@ -75,7 +75,7 @@ theorem unfold : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField
       (G.M.I om Φ h - c * G.M'.I om' Φ' h) * (starRingEnd ℂ) (C₀ * thetaSum F (e (om (g, h) Φ₁))) +
         (G.M.I om Φ h - c * G.M'.I om' Φ' h) * (starRingEnd ℂ) (∑' w, T (γ w * h)) := by
     intro h
-    rw [integral_const_mul, integral_conj, hct1 μN 𝓕N hN h𝓕N hmass h, map_add, mul_add]
+    rw [integral_const_mul, integral_conj, hct1 μN 𝓕N hN h𝓕N hmass h, map_add (f := _), mul_add]
   haveI : SigmaCompactSpace (UA σ G.W.J) := inferInstance
   haveI : SigmaFinite μ := inferInstance
   haveI : SFinite μ := instSFiniteOfSigmaFinite

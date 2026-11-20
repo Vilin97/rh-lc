@@ -69,7 +69,7 @@ theorem exists_fj_of_exUp {ρ : ℕ} (h1 : 1 ≤ ρ) (h2 : ρ < c) {ψ : AddChar
     ∫ β, Φ₀.1 β * B φ (σ (colE c (ρ + 1) β) v) ∂(Measure.pi fun _ => ν)
   have fadd1 : ∀ φ φ' v Φ₀, f (φ + φ') v Φ₀ = f φ v Φ₀ + f φ' v Φ₀ := by
     intro φ φ' v Φ₀
-    simp only [f, map_add, LinearMap.add_apply, mul_add]
+    simp only [f, map_add (f := _), LinearMap.add_apply, mul_add]
     exact integral_add (hI φ v Φ₀) (hI φ' v Φ₀)
   have fsmul1 : ∀ (z : ℂ) φ v Φ₀, f (z • φ) v Φ₀ = z • f φ v Φ₀ := by
     intro z φ v Φ₀
@@ -77,7 +77,7 @@ theorem exists_fj_of_exUp {ρ : ℕ} (h1 : 1 ≤ ρ) (h2 : ρ < c) {ψ : AddChar
     rw [← integral_const_mul]; congr 1; funext β; ring
   have fadd2 : ∀ φ v v' Φ₀, f φ (v + v') Φ₀ = f φ v Φ₀ + f φ v' Φ₀ := by
     intro φ v v' Φ₀
-    simp only [f, map_add, mul_add]
+    simp only [f, map_add (f := _), mul_add]
     exact integral_add (hI φ v Φ₀) (hI φ v' Φ₀)
   have fsmul2 : ∀ (z : ℂ) φ v Φ₀, f φ (z • v) Φ₀ = z • f φ v Φ₀ := by
     intro z φ v Φ₀

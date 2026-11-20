@@ -507,7 +507,7 @@ private theorem redP_eq_one_of_intAt_q_pow_inv_mul_sub_one (hq : ((q : ℕ) : �
   obtain ⟨r', s', hs', hr'⟩ := h
   have hq0' : ((q : E) ^ cc) ≠ 0 := pow_ne_zero _ hq0
   have h1 : algebraMap (𝓞 E) E s' * x = algebraMap (𝓞 E) E (s' + ((q : ℕ) : 𝓞 E) ^ cc * r') := by
-    rw [map_add, map_mul, map_pow, map_natCast, ← hr']
+    rw [map_add (f := _), map_mul, map_pow, map_natCast, ← hr']
     calc algebraMap (𝓞 E) E s' * x
         = algebraMap (𝓞 E) E s' + ((q : E) ^ cc * ((q : E) ^ cc)⁻¹) * (algebraMap (𝓞 E) E s' * (x - 1)) := by
           rw [mul_inv_cancel₀ hq0', one_mul]; ring
@@ -515,7 +515,7 @@ private theorem redP_eq_one_of_intAt_q_pow_inv_mul_sub_one (hq : ((q : ℕ) : �
   have hmem : ((q : ℕ) : 𝓞 E) ^ cc * r' ∈ P.asIdeal :=
     P.asIdeal.mul_mem_right _ (P.asIdeal.pow_mem_of_mem hq cc (by omega))
   have h2 := reduction_spec P hs' h1
-  rw [map_add, Ideal.Quotient.eq_zero_iff_mem.mpr hmem, add_zero] at h2
+  rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.mpr hmem, add_zero] at h2
   have hs0 : Ideal.Quotient.mk P.asIdeal s' ≠ 0 := by
     rwa [Ne, Ideal.Quotient.eq_zero_iff_mem]
   have h3 : Ideal.Quotient.mk P.asIdeal s' * (redP P x - 1) = 0 := by

@@ -45,7 +45,7 @@ def stage {A : PAlg l} {T : Type} [CommRing T] (φ : A.A →+* T) {m : ℕ} (e :
     simp only [map_mul]
   map_zero' := by simp only [map_zero, mul_zero, Finset.sum_const_zero]
   map_add' f g := by
-    simp only [map_add, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem stage_apply {A : PAlg l} {T : Type} [CommRing T] (φ : A.A →+* T) {m : ℕ} (e : ZMod (l ^ m) → T)
     (he : CompleteOrthogonalIdempotents e) (f : (A.cont ℤ_[l]).A) :

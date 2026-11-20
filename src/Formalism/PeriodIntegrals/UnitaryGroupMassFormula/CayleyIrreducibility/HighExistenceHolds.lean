@@ -37,7 +37,7 @@ theorem tgood_mul (w : σ → ℕ) (c : ℕ) {d₁ d₂ : ℕ} {F G : Polynomial
   have h1 := hF x.1 y.1 (left_ne_zero_of_mul hy0)
   have h2 := hG x.2 y.2 (right_ne_zero_of_mul hy0)
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx hy
-  rw [← hx, ← hy, map_add, ← h1, ← h2]
+  rw [← hx, ← hy, map_add (f := _), ← h1, ← h2]
   ring
 
 theorem tgood_one (w : σ → ℕ) (c : ℕ) : TGood w c 0 (1 : Polynomial (MvPolynomial σ ℂ)) := by

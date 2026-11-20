@@ -57,7 +57,7 @@ theorem exists_vec_ann (γ : Matrix (Fin n) (Fin n) K) (hs : γ.charpoly.Separab
       apply hu
       have h1 : (aeval γ (s * p + t * h)).mulVec w = w := by
         rw [hst]; simp
-      rw [map_add, Matrix.add_mulVec, act_mul, act_mul, hpw, hh] at h1
+      rw [map_add (f := _), Matrix.add_mulVec, act_mul, act_mul, hpw, hh] at h1
       simpa using h1.symm
     have hpa : ¬ p ∣ a := by
       rintro ⟨c, rfl⟩
@@ -86,7 +86,7 @@ theorem exists_cyclic_vec (γ : Matrix (Fin n) (Fin n) K) (hs : γ.charpoly.Sepa
   refine ⟨v, ?_⟩
   let L : K[X] →ₗ[K] (Fin n → K) :=
     { toFun := fun p => (aeval γ p).mulVec v
-      map_add' := fun a b => by rw [map_add, Matrix.add_mulVec]
+      map_add' := fun a b => by rw [map_add (f := _), Matrix.add_mulVec]
       map_smul' := fun c a => by rw [map_smul, Matrix.smul_mulVec]; rfl }
   let φ : degreeLT K n →ₗ[K] (Fin n → K) := L.domRestrict (degreeLT K n)
   have hinj : Function.Injective φ := by

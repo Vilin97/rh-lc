@@ -90,7 +90,7 @@ theorem pullSchLI : PositivityTheory.GramSchwartzFunctions.PullSchLI := by
     refine ⟨U.comap (mulR D m C), hUo.preimage (continuous_mulR D m C), fun u hu h0 x => ?_⟩
     have h0' : (mulR D m C u).map (infPart D) = 0 := by
       rw [mulR_apply, Matrix.map_mul, h0, Matrix.zero_mul]
-    rw [hpull, hpull, map_add, hU _ hu h0']
+    rw [hpull, hpull, map_add (f := _), hU _ hu h0']
   · obtain ⟨K, hK, hKs⟩ := hsupp
     obtain ⟨s, hs, hfs⟩ := exists_finPart_section D
     have h1 : ∀ y : Matrix (Fin m) (Fin n) (Af D.host.F ⊗[D.host.F] D.host.E), (y.map s).map (finPart D) = y :=
@@ -106,6 +106,6 @@ theorem pullSchLI : PositivityTheory.GramSchwartzFunctions.PullSchLI := by
   · intro k L hL hLinj x
     obtain ⟨g, hg⟩ := hsch k ((mulR D m C).comp L) (isRealParam_mulR_comp D C L hL)
       (injective_comp D C Dm hCD L hLinj) (mulR D m C x)
-    exact ⟨g, fun t => by rw [hg, hpull, map_add, AddMonoidHom.comp_apply]⟩
+    exact ⟨g, fun t => by rw [hg, hpull, map_add (f := _), AddMonoidHom.comp_apply]⟩
 
 end GlobalTheory.CompanionTheory.PullSch

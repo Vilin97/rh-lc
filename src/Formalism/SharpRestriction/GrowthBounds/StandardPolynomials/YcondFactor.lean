@@ -28,7 +28,7 @@ theorem HomW.mul {φ : MonH X →+ ℕ} {d d' : ℕ} {P Q : RHH O X} (hP : HomW 
   classical
   intro m hm
   obtain ⟨a, ha, b, hb, rfl⟩ := Finset.mem_add.mp (support_mul P Q hm)
-  rw [map_add, hP a ha, hQ b hb]
+  rw [map_add (f := _), hP a ha, hQ b hb]
 
 theorem HomW.one (φ : MonH X →+ ℕ) : HomW φ 0 (1 : RHH O X) := by
   classical

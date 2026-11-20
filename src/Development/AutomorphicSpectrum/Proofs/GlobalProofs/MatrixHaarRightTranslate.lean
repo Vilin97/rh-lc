@@ -123,7 +123,7 @@ theorem map_eq_smul (hLF : LF O ϖ nrm q) {n m : ℕ} {dx : Measure (Matrix (Fin
     rw [Measure.map_map (measurable_const_add g) hφm]
     have hfun : ((g + ·) ∘ φ) = φ ∘ (φ.symm g + ·) := by
       funext x
-      simp [map_add]
+      simp [map_add (f := _)]
     rw [hfun, ← Measure.map_map hφm (measurable_const_add _), map_add_left_eq_self]
   have hν : ((dx (φ ⁻¹' intMat O n m))⁻¹ • Measure.map φ dx) (intMat O n m) = 1 := by
     rw [Measure.smul_apply, Measure.map_apply hφm hopen.measurableSet, smul_eq_mul,

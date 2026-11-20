@@ -24,7 +24,7 @@ theorem map_rowSubK {R S : Type} [CommRing R] [CommRing S] (j : R →+* S) (o : 
     map j (rowSubK o P) = rowSubK (fun τ => (o τ).map j) (map j P) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [rowSubK, MvPolynomial.algebraMap_eq]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
   | mul_X p v hp =>
     simp only [map_mul, hp]
     congr 1

@@ -165,7 +165,7 @@ theorem exists_char_of_not_mem {G : Type} [CommGroup G] (N : Subgroup G) (hN : �
   refine ⟨{ toFun := fun g => ZMod.toCircle (φ (Additive.ofMul (QuotientGroup.mk g : G ⧸ N)))
             map_one' := by simp
             map_mul' := fun g g' => by
-              rw [QuotientGroup.mk_mul, ofMul_mul, map_add, AddChar.map_add_eq_mul] }, fun g hg => ?_, ?_⟩
+              rw [QuotientGroup.mk_mul, ofMul_mul, map_add (f := _), AddChar.map_add_eq_mul] }, fun g hg => ?_, ?_⟩
   · show ZMod.toCircle (φ (Additive.ofMul (QuotientGroup.mk g : G ⧸ N))) = 1
     rw [(QuotientGroup.eq_one_iff g).2 hg]
     simp

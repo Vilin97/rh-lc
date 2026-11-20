@@ -49,7 +49,7 @@ theorem isSymCoc_of_isAdd : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpOb
       have h4 := hfg E E' φ (w ≫ fst _ _) (w ≫ snd _ _ ≫ fst A A)
       rw [_root_.mul_assoc] at h2
       simp only [MonObj.comp_mul] at h2 h3
-      simp only [k, Fn1.zero, Category.assoc, map_sub, map_add, MonObj.comp_mul]
+      simp only [k, Fn1.zero, Category.assoc, map_sub, map_add (f := _), MonObj.comp_mul]
       linear_combination h2 - h1 - h3 + h4
     obtain ⟨r, hr⟩ := GlobalTheory.T.natural_pointwiseCochain_const_of_globalSections_base R (A ⊗ (A ⊗ A)) Unit (whole _) (by simp [whole])
       (GlobalTheory.globalFns_holds (Sp R) (A ⊗ (A ⊗ A))

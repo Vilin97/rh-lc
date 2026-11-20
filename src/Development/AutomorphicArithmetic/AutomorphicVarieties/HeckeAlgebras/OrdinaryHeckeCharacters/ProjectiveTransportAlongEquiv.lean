@@ -19,7 +19,7 @@ private theorem UpperTheory.V.Hi.projective_transport_along_equiv {Λ₀ Λ V₀
   let ρ'' : Representation Λ₀ Q V₀ :=
     { toFun := fun q =>
         { toFun := fun v => φ (ρ' q (φ.symm v))
-          map_add' := fun x y => by simp only [map_add]
+          map_add' := fun x y => by simp only [map_add (f := _)]
           map_smul' := fun a v => by rw [hφ', map_smul, hφ]; rfl }
       map_one' := by ext v; simp
       map_mul' := fun g h => by ext v; simp }
@@ -33,7 +33,7 @@ private theorem UpperTheory.V.Hi.projective_transport_along_equiv {Λ₀ Λ V₀
     intro r x
     induction r using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [add_smul, map_add, map_add, add_smul, ha, hb]
+    | add a b ha hb => rw [add_smul, map_add (f := _), map_add (f := _), add_smul, ha, hb]
     | single g a =>
       have hE : E (MonoidAlgebra.single g a) = MonoidAlgebra.single g (e.symm a) := by
         simp [E]

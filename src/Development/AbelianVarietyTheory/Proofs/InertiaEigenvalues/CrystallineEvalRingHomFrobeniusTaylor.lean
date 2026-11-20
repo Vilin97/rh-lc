@@ -201,7 +201,7 @@ theorem shP_frobS_X :
     shP a sh (inclS t K (frobS l a X)) = iotaP K t ((Polynomial.C Polynomial.X + Polynomial.X) ^ l) := by
   have := charZero_K (l := l) (K := K)
   funext τ
-  rw [map_pow, map_add, Pi.pow_apply, Pi.add_apply, iotaP_C, rhoK_X, iotaP_X, frobS_X, map_pow, map_pow,
+  rw [map_pow, map_add (f := _), Pi.pow_apply, Pi.add_apply, iotaP_C, rhoK_X, iotaP_X, frobS_X, map_pow, map_pow,
     Pi.pow_apply]
   change sh (toAc t K X τ : K⟦X⟧) ^ l = _
   rw [show (toAc t K X τ : K⟦X⟧) = X from PowerSeries.ext fun n => by
@@ -229,7 +229,7 @@ theorem evE_shP (x : (Wq l a)⟦X⟧) (hx : shP a sh (inclS t K (frobS l a x)) �
   have hφX : φ X = ψ X := by
     change evE t ϖ g ⟨shP a sh (inclS t K (frobS l a X)), shP_mem t sh hsh _⟩ =
       ainfToAcris l (WittVector.frobenius (Per.σA (g : GQ l) (ϖ.ev a X)))
-    rw [evE_of_eq t ϖ g _ _ (shP_frobS_X t sh hsh), map_pow, map_add, fP_C, fP_X, Polynomial.coe_X, PiSys.ev_X,
+    rw [evE_of_eq t ϖ g _ _ (shP_frobS_X t sh hsh), map_pow, map_add (f := _), fP_C, fP_X, Polynomial.coe_X, PiSys.ev_X,
       PiSys.gal_teich, frobenius_teich_mul, map_pow, map_mul, map_mul, map_add, map_one]
     ring
   have h := ringHom_ext_of_sep ψ φ (fun w => (hφC w).symm) hφX.symm (fun y hy => sep_teich_acris ϖ y fun n =>
@@ -288,7 +288,7 @@ theorem bivariateFrobenius_bivariateEmbedding_X : frob2 φ₂ (iotaP K t Polynom
   funext τ
   change φ₂ (iotaP K t Polynomial.X (τ - 1)) = _
   rw [iotaP_X, φ₂_X sh hsh φ₂ hφC hφsh]
-  simp only [map_sub, map_pow, map_add, Pi.sub_apply, Pi.pow_apply, Pi.add_apply, iotaP_C, iotaP_X, rhoK_X]
+  simp only [map_sub, map_pow, map_add (f := _), Pi.sub_apply, Pi.pow_apply, Pi.add_apply, iotaP_C, iotaP_X, rhoK_X]
 
 theorem evE_frob2 : (evE t ϖ g).comp ((frob2 φ₂).restrict (PPd t K e) (PPd t K e)
     fun _ hF => bivariateFrobenius_mem_dividedSubring t sh hsh φ₂ hφC hφsh hF) = (frobC l).toRingHom.comp (evE t ϖ g) := by
@@ -315,13 +315,13 @@ theorem evE_frob2 : (evE t ϖ g).comp ((frob2 φ₂).restrict (PPd t K e) (PPd t
         GlobalTheory.AcrisPrism.frobC_ainfToAcris, frobenius_teich, map_pow]
   have h := Polynomial.ringHom_ext (f := H₁) (g := H₂) (fun q => RingHom.congr_fun hC q) (by
     refine key _ _ (bivariateFrobenius_bivariateEmbedding_X t sh hsh φ₂ hφC hφsh) ?_
-    rw [map_sub, map_pow, map_pow, map_add, fP_C, fP_X, Polynomial.coe_X, PiSys.ev_X,
+    rw [map_sub, map_pow, map_pow, map_add (f := _), fP_C, fP_X, Polynomial.coe_X, PiSys.ev_X,
       GlobalTheory.AcrisPrism.frobC_ainfToAcris]
     have e1 : WittVector.frobenius (ϖ.mu (g : GQ l) * ϖ.teich) =
         ((1 + ϖ.mu (g : GQ l)) * ϖ.teich) ^ l - ϖ.teich ^ l := by
       rw [show ϖ.mu (g : GQ l) * ϖ.teich = (1 + ϖ.mu (g : GQ l)) * ϖ.teich - ϖ.teich by ring, map_sub,
         frobenius_teich_mul, frobenius_teich]
-    rw [e1, map_sub, map_pow, map_pow, map_mul, map_mul, map_add, map_one]
+    rw [e1, map_sub, map_pow, map_pow, map_mul, map_mul, map_add (f := _), map_one]
     ring)
   exact RingHom.congr_fun h b
 
@@ -401,7 +401,7 @@ theorem evE_taylor (F : ZMod a → K⟦X⟧⟦X⟧) (hF : F ∈ PPd t K e)
   have hcoef : ∀ τ i, coeff i (F τ) = coeff i (p τ) + (l : K⟦X⟧) ^ r * coeff i (h τ) := fun τ i => by
     have h1 := congrFun hFeq τ
     simp only [Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.natCast_apply] at h1
-    rw [h1, map_add, ← map_natCast (C : K⟦X⟧ →+* K⟦X⟧⟦X⟧), ← map_pow, coeff_C_mul]
+    rw [h1, map_add (f := _), ← map_natCast (C : K⟦X⟧ →+* K⟦X⟧⟦X⟧), ← map_pow, coeff_C_mul]
   have hSh : ∀ τ i, (X : K⟦X⟧) ^ i * ((i.factorial : K⟦X⟧) * coeff i (h τ)) ∈ S O K e := fun τ i =>
     mul_mem (pow_mem HasU.X_mem i) (GlobalTheory.T.factorial_mul_coeff_mem_dividedPowerSeriesSubring l a e O K t h hh τ i)
   have hSp : ∀ τ i, (X : K⟦X⟧) ^ i * ((i.factorial : K⟦X⟧) * coeff i (p τ)) ∈ S O K e := fun τ i => by
@@ -421,13 +421,13 @@ theorem evE_taylor (F : ZMod a → K⟦X⟧⟦X⟧) (hF : F ∈ PPd t K e)
         simp only [Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.natCast_apply, Subalgebra.coe_add,
           Subalgebra.coe_mul, Subalgebra.coe_pow, SubringClass.coe_natCast]
         rw [hcoef]; ring)
-    rw [e1, map_add, map_mul, map_pow, map_natCast]
+    rw [e1, map_add (f := _), map_mul, map_pow, map_natCast]
   have hEsplit : (1 : O) ⊗ₜ[ℤ_[l]] evE t ϖ g ⟨F, hF⟩ = (1 : O) ⊗ₜ[ℤ_[l]] evE t ϖ g ⟨p, hp'⟩ +
       (l : OCr l O) ^ r * (1 : O) ⊗ₜ[ℤ_[l]] evE t ϖ g ⟨h, hh'⟩ := by
     have e1 : (⟨F, hF⟩ : PPd t K e) = ⟨p, hp'⟩ + (l : PPd t K e) ^ r * ⟨h, hh'⟩ := Subtype.ext (by simpa using hFeq)
-    rw [e1, map_add, map_mul, map_pow, map_natCast]
+    rw [e1, map_add (f := _), map_mul, map_pow, map_natCast]
     change j _ = j _ + _ * j _
-    rw [map_add, map_mul, map_pow, map_natCast]
+    rw [map_add (f := _), map_mul, map_pow, map_natCast]
   refine ⟨b.natDegree + 1, fun n hn => ⟨(1 : O) ⊗ₜ[ℤ_[l]] evE t ϖ g ⟨h, hh'⟩ -
     ∑ i ∈ Finset.range n, ϖ.muDiv a O g i * ϖ.iC t K (fun τ => ⟨_, hSh τ i⟩), ?_⟩⟩
   have hz := taylor_poly t ϖ g b p hp' N hN hpb hSp n (by omega)

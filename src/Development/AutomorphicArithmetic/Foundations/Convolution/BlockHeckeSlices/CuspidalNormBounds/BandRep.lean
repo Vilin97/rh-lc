@@ -94,7 +94,7 @@ theorem UpperTheory.ConvolutionTheory.BW.bandRep :
       obtain ⟨β, rfl⟩ := exists_add_of_le hle
       have hβ : β.degree = k := by
         have := hα
-        rw [map_add, Finsupp.degree_single] at this
+        rw [map_add (f := _), Finsupp.degree_single] at this
         omega
       obtain ⟨w, hw, hzw⟩ := ih β hβ (𝔞.Z x y)
       refine ⟨w, ?_, ?_⟩

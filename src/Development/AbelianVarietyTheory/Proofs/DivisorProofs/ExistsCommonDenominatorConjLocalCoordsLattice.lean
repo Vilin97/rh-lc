@@ -43,7 +43,7 @@ theorem exists_common_denom_conj_coords : ∀ (F E : Type) [Field F] [NumberFiel
       obtain ⟨a, ha⟩ := hx i
       obtain ⟨b, hb⟩ := hy i
       refine ⟨a + b, ?_⟩
-      rw [Matrix.mulVec_add, Pi.add_apply, map_add, mul_add, ha, hb]
+      rw [Matrix.mulVec_add, Pi.add_apply, map_add (f := _), mul_add, ha, hb]
       push_cast
       rfl
     | smul c x _ hx =>

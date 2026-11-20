@@ -57,7 +57,7 @@ theorem aeval_map_mulVec_mem {O : Type} [CommRing O] [Algebra O K] (M : Submodul
   induction r using Polynomial.induction_on' with
   | add p q hp hq =>
     intro v hv
-    rw [Polynomial.map_add, map_add, Matrix.add_mulVec]
+    rw [Polynomial.map_add (f := _), map_add (f := _), Matrix.add_mulVec]
     exact add_mem (hp v hv) (hq v hv)
   | monomial k a =>
     intro v hv

@@ -87,7 +87,7 @@ theorem red_two_sub : red (2 - ζO) = 0 := by
   rw [map_sub, map_ofNat, red_ζO, sub_self]
 
 theorem red_cO_two_add : red (cO (2 + ζO)) = 0 := by
-  rw [map_add, map_ofNat, cO, RingHom.coe_coe, cO_ζO, map_add, map_neg, map_ofNat, red_ζO, add_neg_cancel]
+  rw [map_add (f := _), map_ofNat, cO, RingHom.coe_coe, cO_ζO, map_add (f := _), map_neg, map_ofNat, red_ζO, add_neg_cancel]
 
 theorem red_cO_two_sub : red (cO (2 - ζO)) = 4 := by
   rw [map_sub, map_ofNat, cO, RingHom.coe_coe, cO_ζO, map_sub, map_neg, map_ofNat, red_ζO]; decide
@@ -156,11 +156,11 @@ theorem trace_ii : Algebra.trace ℚ Qi ii = 0 := by
 theorem trace_coord (a b : ℚ) : Algebra.trace ℚ Qi ((a : Qi) + b * ii) = 2 * a := by
   have ha : (a : Qi) = algebraMap ℚ Qi a := (eq_ratCast _ a).symm
   have hb : (b : Qi) = algebraMap ℚ Qi b := (eq_ratCast _ b).symm
-  rw [map_add, ha, hb, ← Algebra.smul_def, map_smul, trace_ii, smul_zero, add_zero,
+  rw [map_add (f := _), ha, hb, ← Algebra.smul_def, map_smul, trace_ii, smul_zero, add_zero,
     Algebra.trace_algebraMap, finrank_Qi, nsmul_eq_mul]; norm_num
 
 theorem cc_coord (a b : ℚ) : IsCMField.complexConj Qi ((a : Qi) + b * ii) = a - b * ii := by
-  simp [map_add, map_mul, map_ratCast, cc_ii]; ring
+  simp [map_add (f := _), map_mul, map_ratCast, cc_ii]; ring
 
 @[instance_reducible] def starQi : StarRing Qi where
   star := IsCMField.complexConj Qi
@@ -174,9 +174,9 @@ theorem star_eq (x : Qi) : star x = IsCMField.complexConj Qi x := rfl
 
 def ψ : LinearMap.BilinForm ℚ Qi :=
   LinearMap.mk₂ ℚ (fun x y => Algebra.trace ℚ Qi (-ii / 2 * x * IsCMField.complexConj Qi y))
-    (fun x x' y => by simp only [mul_add, add_mul, map_add])
+    (fun x x' y => by simp only [mul_add, add_mul, map_add (f := _)])
     (fun r x y => by rw [mul_smul_comm, smul_mul_assoc, map_smul])
-    (fun x y y' => by simp only [map_add, mul_add])
+    (fun x y y' => by simp only [map_add (f := _), mul_add])
     (fun r x y => by rw [map_rat_smul, mul_smul_comm, map_smul])
 
 theorem ψ_apply (x y : Qi) : ψ x y = Algebra.trace ℚ Qi (-ii / 2 * x * IsCMField.complexConj Qi y) := rfl
@@ -278,9 +278,9 @@ theorem coe_eq_repr (x : Λ) : (x : Qi) = ((bΛ.repr x 0 : ℤ) : Qi) + ((bΛ.re
 
 def E : LinearMap.BilinForm ℤ Λ :=
   LinearMap.mk₂ ℤ (fun x y => bΛ.repr x 1 * bΛ.repr y 0 - bΛ.repr x 0 * bΛ.repr y 1)
-    (fun x x' y => by simp only [map_add, Finsupp.add_apply]; ring)
+    (fun x x' y => by simp only [map_add (f := _), Finsupp.add_apply]; ring)
     (fun r x y => by simp only [map_smul, Finsupp.smul_apply, smul_eq_mul]; ring)
-    (fun x y y' => by simp only [map_add, Finsupp.add_apply]; ring)
+    (fun x y y' => by simp only [map_add (f := _), Finsupp.add_apply]; ring)
     (fun r x y => by simp only [map_smul, Finsupp.smul_apply, smul_eq_mul]; ring)
 
 theorem E_apply (x y : Λ) : E x y = bΛ.repr x 1 * bΛ.repr y 0 - bΛ.repr x 0 * bΛ.repr y 1 := rfl
@@ -298,7 +298,7 @@ theorem bijective_of_gram {R M : Type} [CommRing R] [AddCommGroup M] [Module R M
   have key : ∀ m j, B m (b j) = b.repr m 0 * B (b 0) (b j) + b.repr m 1 * B (b 1) (b j) := by
     intro m j
     conv_lhs => rw [← b.sum_repr m]
-    simp only [Fin.sum_univ_two, map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
+    simp only [Fin.sum_univ_two, map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
   constructor
   · intro m m' h
     have e0 := key m 0

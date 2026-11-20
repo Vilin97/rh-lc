@@ -20,7 +20,7 @@ theorem mapOp_apply {A : Type} (φ : A → A) (m : ℕ) (F : (Fin m → A) → �
 theorem kill_one {A : Type} (φ : A → A) (m : ℕ) (E : (Fin m → A) → ℂ) (Λ z : ℂ)
     (hE : ∀ y, E (fun i => φ (y i)) = Λ * E y) :
     aeval (mapOp φ m) (gpoly Λ) (fun y => (z * E y).re) = 0 := by
-  simp only [gpoly, map_add, map_sub, map_mul, aeval_X, aeval_C, map_pow]
+  simp only [gpoly, map_add (f := _), map_sub, map_mul, aeval_X, aeval_C, map_pow]
   funext y
   simp only [LinearMap.add_apply, LinearMap.sub_apply, Module.End.mul_apply, pow_two,
     Module.algebraMap_end_apply, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, mapOp_apply,

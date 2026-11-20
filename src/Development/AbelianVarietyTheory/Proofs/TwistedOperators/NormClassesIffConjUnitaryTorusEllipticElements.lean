@@ -34,7 +34,7 @@ theorem comm_of_alpha (f : (k ⊗[F] Fld P) →ₗ[k ⊗[F] E] (k ⊗[F] Fld P))
         rw [mul_assoc, ha, hb, mul_assoc]
       add_mem' := fun {a b} ha hb y => by
         simp only [Set.mem_setOf_eq] at *
-        rw [add_mul, map_add, ha, hb, add_mul]
+        rw [add_mul, map_add (f := _), ha, hb, add_mul]
       algebraMap_mem' := fun a y => by
         rw [← Algebra.smul_def, map_smul, Algebra.smul_def] }
   have h1 : ∀ l : Fld P, (1 : k) ⊗ₜ[F] l ∈ S := by
@@ -78,7 +78,7 @@ theorem trBase_perfect [NumberField E] (w : k ⊗[F] Fld P) (hw : ∀ y, trBase 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | add u v hu hv =>
-      simp only [add_mul, map_add, Finset.sum_add_distrib, hu, hv]
+      simp only [add_mul, map_add (f := _), Finset.sum_add_distrib, hu, hv]
     | tmul a l =>
       have hl : ∑ i, Algebra.trace E (Fld P) (l * b i) • d i = l := by
         conv_rhs => rw [← d.sum_repr l]

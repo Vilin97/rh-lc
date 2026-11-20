@@ -31,7 +31,7 @@ theorem span_span {V₀ V₁ V₂ : Type} [AddCommGroup V₁] [Module Ω' V₁] 
       exact AddSubgroup.subset_closure ⟨_, RC.mul_mem ht (hR a ha), _, ⟨e, he, rfl⟩, rfl⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add, smul_add]
+      rw [map_add (f := _), smul_add]
       exact add_mem hx hy
     | neg x _ hx =>
       rw [map_neg, smul_neg]
@@ -137,7 +137,7 @@ theorem map_mem_chartRing (y : (Σ k, J k) → Ω) (c : ∀ k, J k) {a : Ω} (ha
   | algebraMap o =>
     rw [← IsScalarTower.algebraMap_apply O Ω Ω', IsScalarTower.algebraMap_apply O O' Ω']
     exact Subalgebra.algebraMap_mem _ _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
 
 theorem chart_shift {ι : Type} (x : ι → Ω') {s t : ι} (hs : x s ≠ 0) (ht : x t ≠ 0) {a : Ω'}

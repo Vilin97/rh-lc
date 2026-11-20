@@ -161,7 +161,7 @@ theorem heisDer_om {χS χT : (AE D)ˣ →* Circle} {ω : GA D V × GA D W →* 
   change Formalism.IndefR.Datum.dRho (heisO ψ V W) θ a.1 _ (ω (g, h) f) = _
   rw [← e, dRho_eq_sum_heisDer hω.std hθ hf]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_add, map_smul]
+    simp only [map_sum, map_add (f := _), map_smul]
 
 theorem norm_moveDir_le (θ : InfFam D) (τ : D.what₂.Tau) (g : GA D V) (h : GA D W) (i0 : Fin W.rank) (j0 : Fin V.rank)
     (b : Bool) (i : Fin W.rank) (j : Fin V.rank) :

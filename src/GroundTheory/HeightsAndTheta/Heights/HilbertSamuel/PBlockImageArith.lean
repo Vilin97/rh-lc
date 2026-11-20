@@ -29,7 +29,7 @@ theorem ringKrullDim_eq (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k,
   rw [CoordinateConeArithVar.mCoordIdeal_ratioPtL y c hc] at htr
   rw [IntDomainDim.proof (MRing ι ⧸ mCoordIdeal y)
     (CoordinateConeArithVar.algebraMap_injective _ hhor), htr]
-  simp only [map_add, map_natCast]
+  simp only [map_add (f := _), map_natCast]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 
@@ -55,7 +55,7 @@ theorem aeval_mem (F : IntermediateField ℚ Ω) (w : (Σ k, ι k) → Ω) (hw :
     aeval w f ∈ F := by
   induction f using MvPolynomial.induction_on with
   | C a => rw [aeval_C, algebraMap_int_eq, eq_intCast]; exact intCast_mem F a
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | mul_X p q hp => rw [map_mul, aeval_X]; exact mul_mem hp (hw q)
 
 omit [Fintype K] [CharZero Ω] in

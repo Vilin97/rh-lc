@@ -123,11 +123,11 @@ theorem isDatum_dRho_heisO : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ :
         Bs.ψ (⅟(2 : AF D.host.F) * ((M.co.e u).1 ⬝ᵥ (M.co.e u').2 - (M.co.e u').1 ⬝ᵥ (M.co.e u).2)) *
           M.co.rho Bs.ψ (u + u') (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure g φ) x := by
       intro x
-      simp only [GlobalTheory.WeilM.Darboux.rho, map_add]
+      simp only [GlobalTheory.WeilM.Darboux.rho, map_add (f := _)]
       exact schr_schr_apply Bs.ψ _ _ _ x
     rw [hL t]
     simp only [heisO]
-    rw [← map_add, ← hfΦ (u + u')]
+    rw [← map_add (f := _), ← hfΦ (u + u')]
     simp only [GlobalTheory.WeilM.thetaSum, e1, tsum_mul_left]
     rw [symplOH, hform, h2]
 

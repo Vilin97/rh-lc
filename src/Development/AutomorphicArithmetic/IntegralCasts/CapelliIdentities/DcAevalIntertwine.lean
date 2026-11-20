@@ -16,7 +16,7 @@ theorem UpperTheory.Reformulated.B.Qj10.dc_aeval_intertwine.{u_1, u_2} :
       intro x
       rw [pow_succ, pow_succ, Module.End.mul_apply, Module.End.mul_apply, ih, h]
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial n a =>
     simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply,
       map_smul, hpow]

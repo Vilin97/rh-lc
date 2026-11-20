@@ -62,7 +62,7 @@ theorem exists_lift {Λ : Type} [CommRing Λ] [Algebra ℤ_[p] Λ] [Module.Finit
   · apply hinj; rw [hf]; simp
   · intro x y; apply hinj; rw [map_mul, hf, hf, hf]; simp
   · apply hinj; rw [hf]; simp
-  · intro x y; apply hinj; rw [map_add, hf, hf, hf]; simp
+  · intro x y; apply hinj; rw [map_add (f := _), hf, hf, hf]; simp
   · ext a
     apply hinj
     exact (hf _).trans (apply_algebraMap t a)

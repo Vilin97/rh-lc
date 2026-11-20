@@ -28,7 +28,7 @@ theorem norm_ev_intAf_le {i : E →+* PadicAlgCl l} {ev : FiniteAdeleRing (𝓞 
       exact h.2.1 _ y.2
   | zero => simp
   | one => simp
-  | add x y _ _ hx hy => rw [map_add, map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   | neg x _ hx => rwa [map_neg, map_neg, norm_neg]
   | mul x y _ _ hx hy => rw [map_mul, map_mul, norm_mul]; exact mul_le_one₀ hx (norm_nonneg _) hy
 

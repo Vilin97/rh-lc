@@ -178,7 +178,7 @@ theorem eval_conj {σ : Type} (g : MvPolynomial σ ℤ) (w : σ → ℂ) :
       starRingEnd ℂ (eval w (map (Int.castRingHom ℂ) g)) := by
   induction g using MvPolynomial.induction_on with
   | C n => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp => simp only [map_mul, hp, map_X, eval_X]
 
 theorem conj_mem_mcPts (hm : w ∈ mcPts (mCoordIdeal y)) :

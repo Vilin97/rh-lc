@@ -80,7 +80,7 @@ theorem isAffineOpen_nonzeroLocus_add {s t : M.Sec} (hs : IsAffineOpen (nonzeroL
     {ProjSpace.secRatio (s + t) s, ProjSpace.secRatio (s + t) t} ?_ ?_
   · have h : ProjSpace.secRatio (s + t) s + ProjSpace.secRatio (s + t) t = 1 := by
       refine (ProjSpace.eq_secRatio (s + t) (s + t) fun l => ?_).trans (ProjSpace.secRatio_self _)
-      rw [map_add, add_mul, ← ProjSpace.secRatio_spec, ← ProjSpace.secRatio_spec, LB.add_f, map_add]
+      rw [map_add (f := _), add_mul, ← ProjSpace.secRatio_spec, ← ProjSpace.secRatio_spec, LB.add_f, map_add (f := _)]
     rw [Ideal.eq_top_iff_one, ← h]
     exact add_mem (Ideal.subset_span (by simp)) (Ideal.subset_span (by simp))
   · rintro _ (rfl | rfl) <;>
@@ -249,7 +249,7 @@ theorem germ_mem_span (s : ι → Γ(F, ⊤)) {V : X.Opens} {x : X} (hx : x ∈ 
     obtain ⟨i, rfl⟩ := h
     exact Submodule.subset_span ⟨i, (germ_resM le_top hx _).symm⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add _ _ _ _ h h' => rw [map_add]; exact add_mem h h'
+  | add _ _ _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
   | smul a _ _ h => rw [germ_smul]; exact Submodule.smul_mem _ _ h
 
 theorem epi_iff_spanStalks [Finite ι] (φ : freeModule X ι ⟶ F) :

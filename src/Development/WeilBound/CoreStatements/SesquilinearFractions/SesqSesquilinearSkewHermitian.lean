@@ -44,7 +44,7 @@ theorem trace_mul_sesq_eq_form (D : Datum H) (a : 𝓞 E) (x y : D.La) :
 
 theorem Datum_EF_antisymm (D : Datum H) (x y : D.La) : D.EF y x = -D.EF x y := by
   have h := D.alt (x + y)
-  simp only [map_add, LinearMap.add_apply, D.alt x, D.alt y, zero_add, add_zero] at h
+  simp only [map_add (f := _), LinearMap.add_apply, D.alt x, D.alt y, zero_add, add_zero] at h
   linarith
 
 theorem Host_bar_bar (a : 𝓞 E) : H.bar (H.bar a) = a := by
@@ -74,9 +74,9 @@ theorem sesq_sesquilinear_properties (D : Datum H) :
       ∀ δ ∈ differentIdeal ℤ (𝓞 E), ∀ x y, ∃ b : 𝓞 E, (δ : E) * sesq D x y = b := by
   refine ⟨trace_mul_sesq_eq_form D, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro x x' y
-    simp only [sesq, smul_add, map_add, LinearMap.add_apply, Int.cast_add, add_mul, Finset.sum_add_distrib]
+    simp only [sesq, smul_add, map_add (f := _), LinearMap.add_apply, Int.cast_add, add_mul, Finset.sum_add_distrib]
   · intro x y y'
-    simp only [sesq, map_add, Int.cast_add, add_mul, Finset.sum_add_distrib]
+    simp only [sesq, map_add (f := _), Int.cast_add, add_mul, Finset.sum_add_distrib]
   · intro a x y
     apply eq_of_trace_pairing_eq
     intro c

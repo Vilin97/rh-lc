@@ -168,7 +168,7 @@ theorem finRing_sig (b : AF D.host.F ⊗[D.host.F] D.host.E) :
       Formalism.UG.sigR D.sp.cm.sig (Formalism.L2.Herm.Af D.host.F) (finRing D b) := by
   induction b using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero, RingHom.map_zero]
-  | add c d hc hd => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingHom.map_add, hc, hd]
+  | add c d hc hd => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), hc, hd]
   | tmul a e => rfl
 
 theorem finE_mem_UA (g : GA D V) : finE V g ∈ UA D.sp.cm V.gram := by
@@ -264,7 +264,7 @@ theorem mem_St_red {N : ℕ} (β x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F
   have h4 : (N : kP PP) = 0 := by
     rw [← map_natCast (Ideal.Quotient.mk PP.asIdeal)]
     exact Ideal.Quotient.eq_zero_iff_mem.2 hP
-  rw [h2, map_add, map_mul, map_natCast, h4, zero_mul, zero_add, Matrix.one_apply, Matrix.one_apply]
+  rw [h2, map_add (f := _), map_mul, map_natCast, h4, zero_mul, zero_add, Matrix.one_apply, Matrix.one_apply]
   split_ifs
   · exact map_one _
   · exact map_zero _

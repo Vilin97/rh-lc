@@ -100,7 +100,7 @@ theorem flowTie_of_onOrbit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     obtain ⟨m₁, hm₁⟩ := (hla _).1 l1
     obtain ⟨m₂, hm₂⟩ := (hla _).1 (hLM v)
     refine ⟨gam.symm (m₁ - m₂), gam.injective ?_⟩
-    rw [hgm, map_add, map_nsmul, gam.apply_symm_apply, hm₂, nsmul_sub]
+    rw [hgm, map_add (f := _), map_nsmul, gam.apply_symm_apply, hm₂, nsmul_sub]
     exact hm₁.trans (by abel)
   have hlevA : ∀ v, ∃ e, gm (Uw.F.t Ha.i v) = Uw.F.t (Uw.ik k) v + l.A • e := by
     intro v
@@ -114,7 +114,7 @@ theorem flowTie_of_onOrbit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     obtain ⟨m₁, hm₁⟩ := (hla _).1 l1
     obtain ⟨m₂, hm₂⟩ := (hla _).1 (hLA v)
     refine ⟨gam.symm (m₁ - m₂), gam.injective ?_⟩
-    rw [hgm, map_add, map_nsmul, gam.apply_symm_apply, hm₂, nsmul_sub]
+    rw [hgm, map_add (f := _), map_nsmul, gam.apply_symm_apply, hm₂, nsmul_sub]
     exact hm₁.trans (by abel)
   obtain ⟨-, p2⟩ := point_exp_eq_of_isometry_levels hK Uw.F Ha.i (Uw.ik k) (Ha.Pw w₁) (Uw.Pm k ⟨_, hs₁⟩) gm L hpq
     hσ hty hlevA (Ha.period w₁ hw1) (Uw.period k _) hEF hlev hP
@@ -189,7 +189,7 @@ theorem flowTie_of_onOrbit : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
       rw [gm.apply_symm_apply] at a1
       have a2 := hP (nn (gm.symm v))
       show L (Ha.Pw w (gm.symm v)) = _
-      rw [hlin w w₁, map_add, map_smul, ← a1, ← a2]
+      rw [hlin w w₁, map_add (f := _), map_smul, ← a1, ← a2]
       rfl
     obtain ⟨hxw, hPw'⟩ := GlobalTheory.ArcFlow.flow_period Uw hσ hU k hκ nn' ξ' hξ'0 sE hbe.1 hform' x₀ (w - w₁) Pw' hPer hPx
     have heq : (U.X k).flow ξ' (fun τ => (w - w₁) * ((τ.1 sE).re : ℂ)) x₀.1 =

@@ -232,7 +232,7 @@ theorem exists_kappa (D : D7) (N N' r : ℕ) (b₀ : Fin r → Matrix (Fin N') (
         rw [hv', map_mul, norm_mul, map_natCast, norm_nat_coprime hs, one_mul]
       rw [← h1, ← hv']
       refine hv v (fun x => norm_nonneg (f x)) (fun x y => ?_) (fun c => norm_int_le f c) _ hsu fun x hxI => ?_
-      · simp only [hv', map_add]; exact IsUltrametricDist.norm_add_le_max _ _
+      · simp only [hv', map_add (f := _)]; exact IsUltrametricDist.norm_add_le_max _ _
       · obtain ⟨s', c, hs', e⟩ := hx x hxI
         rw [h1, hv']
         have h2 := congrArg (fun y => ‖f y‖) e

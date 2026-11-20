@@ -168,7 +168,7 @@ theorem solve_mat [Fact l.Prime] (D T : Matrix (Fin 2) (Fin 2) (ZMod (l * M₀))
 theorem dn_vecMul (x : Row (l * M₀)) (Z : Matrix (Fin 2) (Fin 2) (ZMod (l * M₀))) :
     dn l M₀ (x ᵥ* Z) = dn l M₀ x ᵥ* Z.map (ZMod.castHom (dvd_mul_left M₀ l) (ZMod M₀)) := by
   ext j
-  simp only [dn, Matrix.vecMul, dotProduct, Fin.sum_univ_two, map_add, map_mul, Matrix.map_apply]
+  simp only [dn, Matrix.vecMul, dotProduct, Fin.sum_univ_two, map_add (f := _), map_mul, Matrix.map_apply]
 
 theorem solve_rows [Fact l.Prime] (x y x' y' : Row (l * M₀))
     (hD : ((x 0).val : ZMod l) * ((y 1).val : ZMod l) - ((x 1).val : ZMod l) * ((y 0).val : ZMod l) ≠ 0)
@@ -262,7 +262,7 @@ theorem wt_red [Fact l.Prime] {n : ℕ} (hl : l ^ n ∣ M₀) (h : N * M₀ ∣ 
       ZMod.castHom h (ZMod (N * M₀)) (((Matrix.GeneralLinearGroup.det m)⁻¹ : (ZMod (N * (l * M₀)))ˣ) : ZMod (N * (l * M₀))) := by
     rw [red_det, ← map_inv]; rfl
   rw [← Ideal.mem_span_singleton, ← Ideal.Quotient.eq, e2, red_coe]
-  simp only [Matrix.map_apply, map_mul, map_pow, map_add, e]
+  simp only [Matrix.map_apply, map_mul, map_pow, map_add (f := _), e]
 
 theorem sum_fibre [Fact l.Prime] (hN : Nat.Coprime l N) (hl : l ∣ M₀) (h : N * M₀ ∣ N * (l * M₀)) (x y : Row (l * M₀))
     (hD : ((x 0).val : ZMod l) * ((y 1).val : ZMod l) - ((x 1).val : ZMod l) * ((y 0).val : ZMod l) ≠ 0)

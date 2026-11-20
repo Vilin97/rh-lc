@@ -35,7 +35,7 @@ theorem coeff_coefMap (c : L →+ K) (p : MvPolynomial I L) (m : I →₀ ℕ) :
 
 theorem coefMap_add (c : L →+ K) (p q : MvPolynomial I L) : coefMap c (p + q) = coefMap c p + coefMap c q := by
   ext m
-  simp only [coeff_coefMap, MvPolynomial.coeff_add, map_add]
+  simp only [coeff_coefMap, MvPolynomial.coeff_add, map_add (f := _)]
 
 theorem coefMap_zero (c : L →+ K) : coefMap c (0 : MvPolynomial I L) = 0 := by
   ext m
@@ -126,7 +126,7 @@ theorem coefMap_rhoC {c : ℂ →+ X.K} (hc : ∀ k a, c (σ k * a) = k * c a) (
       rfl
     · rintro x y ⟨u, hu, hu'⟩ ⟨v, hv, hv'⟩
       refine ⟨u + v, by rw [coefMap_add, ← hu, ← hv]; rfl, ?_⟩
-      rw [map_add, coefMap_add, hu', hv', map_add]
+      rw [map_add (f := _), coefMap_add, hu', hv', map_add (f := _)]
       rfl
     · intro a v
       refine ⟨c a • v, (coefMap_smul_map hc a v.1).symm, ?_⟩
@@ -185,7 +185,7 @@ theorem toCForm_span_of_span (hX : X.Ok) {J : Type*} {φ : J → (formGSD (squar
   induction hψ using Submodule.span_induction with
   | mem x hx => obtain ⟨j, rfl⟩ := hx; exact Submodule.subset_span ⟨j, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 def basisCForm (hX : X.Ok) {J : Type*} (b : Module.Basis J X.K (formGSD (squarePk X lam L) Λ).EqFun) :

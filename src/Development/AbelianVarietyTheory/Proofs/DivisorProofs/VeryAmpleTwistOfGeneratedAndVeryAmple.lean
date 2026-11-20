@@ -232,12 +232,12 @@ theorem veryAmpleBy_tw_of_generated : ∀ (R : Type) [CommRing R] (X : Scheme.{0
         refine ⟨MvPolynomial.C c₀, ?_⟩
         rw [MvPolynomial.eval₂Hom_C, MvPolynomial.eval₂Hom_C]
         simp only [AbLaw.cst, RingHom.comp_apply, rs_rs]
-      | add F G hF hG => rw [map_add, map_add]; exact Subring.add_mem _ hF hG
+      | add F G hF hG => rw [map_add (f := _), map_add (f := _)]; exact Subring.add_mem _ hF hG
       | mul_X F l hF =>
         rw [map_mul, map_mul]
         refine Subring.mul_mem _ hF ⟨MvPolynomial.X (e.symm ((e j).1, l)), ?_⟩
         simp only [MvPolynomial.eval₂Hom_X', e.apply_symm_apply, o', map_one, _root_.one_mul]
-    | add P Q hP hQ => rw [map_add]; exact Subring.add_mem _ hP hQ
+    | add P Q hP hQ => rw [map_add (f := _)]; exact Subring.add_mem _ hP hQ
     | mul_X P c hP =>
       rw [map_mul]
       refine Subring.mul_mem _ hP ⟨MvPolynomial.X (e.symm (c, (e j).2)), ?_⟩

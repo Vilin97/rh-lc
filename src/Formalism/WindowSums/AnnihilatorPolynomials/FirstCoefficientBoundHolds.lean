@@ -33,7 +33,7 @@ lemma mk_self (ϖ : O) : Ideal.Quotient.mk (Ideal.span {ϖ}) ϖ = 0 :=
 lemma residue_map_p1_eq (ℓ : ℕ) (ε u : PowerSeries O) :
     PowerSeries.map (Ideal.Quotient.mk (Ideal.span {(ℓ : O)})) (p1 ℓ ε u) =
       PowerSeries.map (Ideal.Quotient.mk (Ideal.span {(ℓ : O)})) u * PowerSeries.X ^ ℓ := by
-  rw [p1, map_add, map_mul, map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X, mk_self,
+  rw [p1, map_add (f := _), map_mul, map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X, mk_self,
     map_zero, zero_mul, zero_add]
 
 variable [IsDomain O] [IsDiscreteValuationRing O]
@@ -99,7 +99,7 @@ lemma core {ℓ : ℕ} [Fact ℓ.Prime] (hℓ : Irreducible (ℓ : O)) (ε u : P
   have key := congrArg (fun f => PowerSeries.coeff (r + ℓ * j0) (φ f)) hE2
   have hR : PowerSeries.coeff (r + ℓ * j0) (φ (a' * P ^ y + b * L)) = 0 := by
     have h1 : ℓ * (j0 + 1) ≤ ℓ * y := Nat.mul_le_mul_left ℓ (by omega)
-    rw [map_add, map_mul, map_mul, map_pow, hPdef, residue_map_p1_eq, hφL, mul_zero, add_zero, mul_pow,
+    rw [map_add (f := _), map_mul, map_mul, map_pow, hPdef, residue_map_p1_eq, hφL, mul_zero, add_zero, mul_pow,
       ← pow_mul, ← mul_assoc, PowerSeries.coeff_mul_X_pow', if_neg]
     intro h2
     rw [Nat.mul_succ] at h1

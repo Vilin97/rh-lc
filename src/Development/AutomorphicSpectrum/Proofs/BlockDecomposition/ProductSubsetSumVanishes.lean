@@ -126,7 +126,7 @@ theorem eval_field {K : Type*} [Field K] [IsAlgClosed K] (r : ℕ) (hr : 0 < r) 
   have hαc : Multiset.card α = r := by rw [← hd, hα, natDegree_prod_X_add_C]
   have hβc : Multiset.card β = Q.natDegree := by rw [hβ, natDegree_prod_X_add_C]
   refine ⟨α + β, by rw [Multiset.card_add, hαc, hβc], ?_, ?_⟩
-  · rw [Multiset.map_add, Multiset.prod_add, ← hα, ← hβ]
+  · rw [Multiset.map_add (f := _), Multiset.prod_add, ← hα, ← hβ]
   · have hc : P.coeff (r - 1) = α.sum := by
       rw [hα, Multiset.prod_X_add_C_coeff _ (by omega), hαc, show r - (r - 1) = 1 by omega,
         esymm_one_eq_sum]

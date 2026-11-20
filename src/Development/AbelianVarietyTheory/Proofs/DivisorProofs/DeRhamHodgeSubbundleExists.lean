@@ -27,7 +27,7 @@ theorem exists_sub_of_affine {X : Scheme.{0}} {F : X.Modules}
       s ∈ C.sec V ↔ s ∈ N V hV := by
   let S : ∀ U : X.Opens, Submodule Γ(X, U) Γ(F, U) := fun U =>
     { carrier := {s | ∀ (V : X.Opens) (hV : IsAffineOpen V) (h : V ≤ U), resM F h s ∈ N V hV}
-      add_mem' := fun hs ht V hV h => by rw [map_add]; exact add_mem (hs V hV h) (ht V hV h)
+      add_mem' := fun hs ht V hV h => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hs V hV h) (ht V hV h)
       zero_mem' := fun V hV h => by rw [map_zero]; exact zero_mem _
       smul_mem' := fun a s hs V hV h => by
         rw [resM_smul]; exact Submodule.smul_mem _ _ (hs V hV h) }
@@ -79,7 +79,7 @@ theorem exists_pow_smul_mem_span {R R' : Type} {M M' : Type*} [CommRing R] [Comm
     obtain ⟨z, rfl⟩ := hf.2 y
     induction z with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
     | tmul c m =>
       rw [liftSemi_tmul, map_smulₛₗ, ← hΦ]
       refine Submodule.smul_mem _ _ ⟨Φ m, Submodule.subset_span ⟨m, rfl⟩, 1, ?_⟩

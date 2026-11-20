@@ -52,7 +52,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O
       induction y using TensorProduct.induction_on with
       | zero => simp only [map_zero, smul_zero]
       | tmul v z => exact tmul_smul o ((1 : O) ⊗ₜ[ℤ_[l]] v : OW l O) z
-      | add y y' hy hy' => simp only [map_add, smul_add, hy, hy']
+      | add y y' hy hy' => simp only [map_add (f := _), smul_add, hy, hy']
     have h4 := (congrArg (kappa T) h3).trans (hk _)
     rewrite [← hcJ, ← hcJ, hJ, hJ]
     exact h4

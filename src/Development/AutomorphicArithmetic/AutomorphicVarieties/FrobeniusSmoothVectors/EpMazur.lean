@@ -99,7 +99,7 @@ private theorem small {O : Type} [CommRing O] [IsLocalRing O] (h2 : IsUnit (2 : 
           rintro y z ⟨hy, hy'⟩ ⟨hz, hz'⟩
           refine ⟨Ideal.add_mem _ hy hz, ?_⟩
           have : (⟨y + z, Ideal.add_mem _ hy hz⟩ : ↥(RingHom.ker p)) = ⟨y, hy⟩ + ⟨z, hz⟩ := rfl
-          rw [this, map_add, hy', hz', add_zero]
+          rw [this, map_add (f := _), hy', hz', add_zero]
         zero_mem' := ⟨Ideal.zero_mem _, by
           have : (⟨0, Ideal.zero_mem _⟩ : ↥(RingHom.ker p)) = 0 := rfl
           rw [this, map_zero]⟩
@@ -184,7 +184,7 @@ theorem UpperTheory.V.Fr.ep_mazur :
     rw [sg1, neg_one_mul] at hpb
     rw [hty, map_sub]
     conv_rhs => rw [hy]
-    rw [map_add, map_add, hpa, hpb, sub_eq_add_neg]
+    rw [map_add (f := _), map_add (f := _), hpa, hpb, sub_eq_add_neg]
   have hτk : ∀ y ∈ RingHom.ker P.p, τ0 y ∈ RingHom.ker P.p := by
     intro y hy
     rw [RingHom.mem_ker] at hy ⊢

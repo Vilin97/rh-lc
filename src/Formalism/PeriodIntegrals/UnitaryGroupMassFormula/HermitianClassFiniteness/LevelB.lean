@@ -52,7 +52,7 @@ theorem lvB_lat_up (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.FG) :
     | zero => intro i; simp
     | add x y _ _ hx hy =>
       intro i
-      simp only [Pi.add_apply, map_add, mul_add]
+      simp only [Pi.add_apply, map_add (f := _), mul_add]
       exact add_mem (hx i) (hy i)
     | smul a x _ hx =>
       intro i

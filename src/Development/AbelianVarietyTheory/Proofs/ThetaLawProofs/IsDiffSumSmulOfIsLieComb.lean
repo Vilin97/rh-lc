@@ -31,7 +31,7 @@ theorem snd_dualLift_sum {k : ℕ} (c : Fin k → R) (t : Fin k → Fin n → R)
       exact (congrArg TrivSqZeroExt.snd this).trans rfl
     simp only [h, mul_zero, Finset.sum_const_zero]
   | add p q hp hq =>
-    simp only [map_add, TrivSqZeroExt.snd_add, hp, hq, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), TrivSqZeroExt.snd_add, hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p j hp =>
     have h : ∀ s : Fin n → R,
         (dualLift s (Ideal.Quotient.mk _ (p * MvPolynomial.X j))).snd =

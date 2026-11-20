@@ -222,7 +222,7 @@ theorem derivedActionSpan_isKStableOn (hσ : Formalism.MainNotions.S.IsURepOn (F
         dS σ (ReciprocityTheory.ChartRestriction.DS.S7.cpart1 ε (Matrix.single c d 1)) w +
           Complex.I • dS σ (ReciprocityTheory.ChartRestriction.DS.S7.cpart2 ε (Matrix.single c d 1)) w :=
       smE_apply hσ' ⟨w, hS w hw⟩ c d
-    rw [e, map_add, map_smul]
+    rw [e, map_add (f := _), map_smul]
     exact add_mem (part _ (inG_first_chart_piece _) w hw) (Submodule.smul_mem _ _ (part _ (inG_second_chart_piece _) w hw))
   have hle : derivedActionSpan S hS ≤ (derivedActionSpan S hS).comap ((σ g : H →L[ℂ] H) : H →ₗ[ℂ] H) := by
     refine iSup_le fun c => iSup_le fun d => ?_

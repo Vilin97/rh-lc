@@ -65,7 +65,7 @@ theorem lob_of {N : ℕ} {b : 𝓞 E} {A : Matrix (Fin N) (Fin N) E} (hA : IsLoU
     have := congrFun (congrFun h i) j
     simp only [Matrix.sub_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul] at this
     show algebraMap (𝓞 E) E ((1 + b • Y) i j) = A i j
-    rw [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul]
+    rw [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
     by_cases hij : i = j
     · subst hij
       rw [Matrix.one_apply_eq] at this ⊢
@@ -89,7 +89,7 @@ theorem upb_of {N : ℕ} {b : 𝓞 E} {A : Matrix (Fin N) (Fin N) E} (hA : IsUpU
     have := congrFun (congrFun h i) j
     simp only [Matrix.sub_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul] at this
     show algebraMap (𝓞 E) E ((1 + b • Y) i j) = A i j
-    rw [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul]
+    rw [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
     by_cases hij : i = j
     · subst hij
       rw [Matrix.one_apply_eq] at this ⊢

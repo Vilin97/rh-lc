@@ -34,7 +34,7 @@ theorem exists_monomial_mixExpansion {σ : Type} [Fintype σ] (d : ℕ) :
       ⟨s - Finsupp.single i 1, (tsub_add_cancel_of_le hle).symm⟩
     have hdeg : s'.degree = d := by
       have e : (s' + Finsupp.single i 1).degree = s'.degree + 1 := by
-        rw [Finsupp.degree_eq_weight_one, map_add]
+        rw [Finsupp.degree_eq_weight_one, map_add (f := _)]
         simp [Finsupp.weight_apply, Finsupp.sum_single_index]
       omega
     obtain ⟨G', hG', hG'h⟩ := ih s' hdeg

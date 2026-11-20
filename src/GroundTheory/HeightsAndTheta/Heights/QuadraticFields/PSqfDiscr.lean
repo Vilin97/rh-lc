@@ -33,7 +33,7 @@ theorem coords_of_isIntegral (hsq : Squarefree d) (hx : x ^ 2 = -(d : K)) {a b :
   have hnm : IsIntegral ℤ (algebraMap ℚ K (a ^ 2 + d * b ^ 2)) := by
     have e : algebraMap ℚ K (a ^ 2 + d * b ^ 2) =
         y * (algebraMap ℚ K a - algebraMap ℚ K b * x) := by
-      rw [map_add, map_mul, map_pow, map_pow, ← hdK, hy_def]
+      rw [map_add (f := _), map_mul, map_pow, map_pow, ← hdK, hy_def]
       linear_combination (algebraMap ℚ K b) ^ 2 * hx
     rw [e]; exact hy.mul hc
   obtain ⟨N, hN⟩ := exists_int_of_isIntegral _ hnm
@@ -89,7 +89,7 @@ theorem exists_int_coords (hsq : Squarefree d) (hd4 : d % 4 = 3) (hx : x ^ 2 = -
   apply RingOfIntegers.ext
   rw [hab]
   change _ = algebraMap (𝓞 K) K (m • (1 : 𝓞 K) + B • omega hd4 hx)
-  rw [map_add, map_zsmul, map_zsmul, map_one, ← RingOfIntegers.coe_eq_algebraMap, coe_omega,
+  rw [map_add (f := _), map_zsmul, map_zsmul, map_one, ← RingOfIntegers.coe_eq_algebraMap, coe_omega,
     zsmul_eq_mul, zsmul_eq_mul]
   have ha : algebraMap ℚ K a = (A : K) / 2 := by
     rw [eq_div_iff two_ne_zero, ← map_intCast (algebraMap ℚ K), ← hA]; simp [mul_comm]
@@ -127,10 +127,10 @@ theorem discr_eq (hsq : Squarefree d) (hd4 : d % 4 = 3) (hx : x ^ 2 = -(d : K)) 
   have c := conj_alt_bis (K := K) hd hx
   have t1 : Algebra.trace ℚ K 1 = 2 := trace_eq_of _ _ (by rw [map_one, map_ofNat]; norm_num)
   have tω : Algebra.trace ℚ K ((1 + x) / 2) = 1 :=
-    trace_eq_of _ _ (by rw [map_div₀, map_add, map_one, c, map_one, map_ofNat]; ring)
+    trace_eq_of _ _ (by rw [map_div₀, map_add (f := _), map_one, c, map_one, map_ofNat]; ring)
   have tω2 : Algebra.trace ℚ K ((1 + x) / 2 * ((1 + x) / 2)) = (1 - d) / 2 :=
     trace_eq_of _ _ (by
-      rw [map_mul, map_div₀, map_add, map_one, c, map_ofNat, map_div₀, map_sub, map_one,
+      rw [map_mul, map_div₀, map_add (f := _), map_one, c, map_ofNat, map_div₀, map_sub, map_one,
         map_natCast, map_ofNat]
       linear_combination (1 / 2 : K) * hx)
   rw [t1, tω, tω2] at h1

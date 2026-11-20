@@ -48,7 +48,7 @@ theorem skew_of_isFilLift : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.
     ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
   have z : φ' d d' = 0 := van d hd d' hd'
   rw [dx, dy] at z
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul,
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul,
     e' _ _ _ _ hxc hyc, e' _ _ _ _ hx₁c hyc, e' _ _ _ _ hxc hy₁c, e' _ _ _ _ hx₁c hy₁c] at z
   have z2 := congrArg TrivSqZeroExt.snd z
   simp [TrivSqZeroExt.algebraMap_eq_inl] at z2

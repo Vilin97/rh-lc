@@ -53,7 +53,7 @@ theorem continuous_first_orbit_map : Continuous (p1 (F := F) (E := E) R1 R2) := 
     | zero => simp
     | tmul a m =>
       simp [crd, p1, Algebra.TensorProduct.basis_repr_tmul]
-    | add x y hx hy => simp only [map_add, Pi.add_apply, Prod.fst_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, Prod.fst_add, hx, hy]
   rw [show p1 (F := F) (E := E) R1 R2 = fun x =>
       (crd (F := F) (E := E) R1).symm (fun i => (crd (F := F) (E := E) (R1 × R2) x i).1) from funext key]
   exact (continuous_crd_symm R1).comp
@@ -70,7 +70,7 @@ theorem continuous_p2 : Continuous (p2 (F := F) (E := E) R1 R2) := by
     | zero => simp
     | tmul a m =>
       simp [crd, p2, Algebra.TensorProduct.basis_repr_tmul]
-    | add x y hx hy => simp only [map_add, Pi.add_apply, Prod.snd_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, Prod.snd_add, hx, hy]
   rw [show p2 (F := F) (E := E) R1 R2 = fun x =>
       (crd (F := F) (E := E) R2).symm (fun i => (crd (F := F) (E := E) (R1 × R2) x i).2) from funext key]
   exact (continuous_crd_symm R2).comp

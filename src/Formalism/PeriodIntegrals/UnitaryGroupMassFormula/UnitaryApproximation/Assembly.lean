@@ -176,7 +176,7 @@ theorem cayleyStep : CayleyStep := by
     have hl := local_unit (h2u v0) _ _ _ _ hXP hΔ hWu
     have hmap : (1 + X'.map (PI.UnitaryApproxDefs.inclE (F := F) (v0.adicCompletion F))).det =
         PI.UnitaryApproxDefs.inclE (F := F) (v0.adicCompletion F) (1 + X').det := by
-      rw [RingHom.map_det, map_add, map_one]; rfl
+      rw [RingHom.map_det, map_add (f := _), map_one]; rfl
     rw [hmap] at hl
     refine isUnit_iff_ne_zero.mpr fun h0 => ?_
     rw [h0, map_zero, isUnit_zero_iff] at hl
@@ -193,7 +193,7 @@ theorem cayleyStep : CayleyStep := by
       (1 + X'.map (PI.UnitaryApproxDefs.inclE (F := F) (v.adicCompletion F))) =
       1 - X'.map (PI.UnitaryApproxDefs.inclE (F := F) (v.adicCompletion F)) := by
     have := congrArg (PI.UnitaryApproxDefs.inclE (F := F) (v.adicCompletion F)).mapMatrix hγQ
-    simpa [map_mul, map_add, map_sub, map_one] using this
+    simpa [map_mul, map_add (f := _), map_sub, map_one] using this
   have herr := local_err (h2u v) _ _ _ _ _ _ hXP hΔ hN hγR
   rw [← herr] at hMC
   exact MC_entries hMC i j

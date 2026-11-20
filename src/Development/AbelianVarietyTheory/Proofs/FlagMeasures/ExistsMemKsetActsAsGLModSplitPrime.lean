@@ -19,7 +19,7 @@ theorem sigR_sigR_af (I : AutInst) (x : I.E ⊗[I.F] Af I.F) :
   | zero => simp
   | tmul a b =>
     simp [Formalism.UG.sigR, Formalism.BasicNotions.CMData.sig]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem isHerm_af (I : AutInst) :
     Formalism.UG.IsHerm (Formalism.UG.sigR I.cm.sig (Af I.F)) (I.J.map (Formalism.UG.inclE (F := I.F) (Af I.F))) := by

@@ -37,7 +37,7 @@ theorem analyticAt_eval_comp {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ
   induction (map (Int.castRingHom ℂ) f) using MvPolynomial.induction_on with
   | C a => simpa using analyticAt_const
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p i hp =>
     simp only [map_mul, eval_X]

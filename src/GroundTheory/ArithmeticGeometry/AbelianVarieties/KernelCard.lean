@@ -26,7 +26,7 @@ theorem exists_equation_of_Ψ₂Sq_ne_zero [IsSepClosed F] {x : F} (hx : W.Ψ₂
     have hD0 : b ^ 2 + 4 * c ≠ 0 := hD ▸ hx
     refine ⟨C (-4 * (b ^ 2 + 4 * c)⁻¹), C (b ^ 2 + 4 * c)⁻¹ * (C 2 * X + C b), ?_⟩
     have e : (C 2 * X + C b) ^ 2 - 4 * q = C (b ^ 2 + 4 * c) := by
-      simp only [q, map_add, map_pow, map_mul, map_ofNat]; ring
+      simp only [q, map_add (f := _), map_pow, map_mul, map_ofNat]; ring
     calc C (-4 * (b ^ 2 + 4 * c)⁻¹) * q + C (b ^ 2 + 4 * c)⁻¹ * (C 2 * X + C b) * (C 2 * X + C b)
         = C (b ^ 2 + 4 * c)⁻¹ * ((C 2 * X + C b) ^ 2 - 4 * q) := by
           simp only [map_mul, map_neg, map_ofNat]; ring

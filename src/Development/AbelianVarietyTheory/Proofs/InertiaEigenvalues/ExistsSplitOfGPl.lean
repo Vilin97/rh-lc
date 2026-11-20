@@ -43,7 +43,7 @@ theorem exists_int_off (z : AL L) : ∃ S : Finset (HeightOneSpectrum (𝓞 (max
     obtain ⟨S', Y', hY', h'⟩ := hy
     refine ⟨S ∪ S', Y + Y', add_mem hY hY', fun w hw => ?_⟩
     rw [Finset.mem_union, not_or] at hw
-    rw [map_add, map_add, h w hw.1, h' w hw.2]
+    rw [map_add (f := _), map_add (f := _), h w hw.1, h' w hw.2]
   | tmul x a =>
     obtain ⟨m, hm, o, ho⟩ := GlobalTheory.FinTypCount.exists_nat_smul_int x
     have hm' : (m : maximalRealSubfield L) ≠ 0 := Nat.cast_ne_zero.2 hm.ne'
@@ -64,7 +64,7 @@ theorem mem_ALint_of_comp (z : AL L) (h : ∀ w, ∃ Y ∈ ALint L, ReciprocityT
     apply eq_zero_of_compAt
     intro w
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sub, map_add, map_sum]
+      rw [map_sub, map_add (f := _), map_sum]
     simp only [map_mul, compAt_tmul]
     by_cases hw : w ∈ S
     · rw [Finset.sum_eq_single w (fun v _ hv => by rw [sgl_ne L v 1 (Ne.symm hv), TensorProduct.tmul_zero, mul_zero])

@@ -299,10 +299,10 @@ def wToC : WW p →+* ℂ_[p] where
     · obtain ⟨b, hb⟩ := hz
       obtain ⟨b', hb'⟩ := hz'
       refine ⟨b + b', ?_⟩
-      rw [IntermediateField.coe_add, hb, hb', ← map_add]
+      rw [IntermediateField.coe_add, hb, hb', ← map_add (f := _)]
       exact congrArg _ (id_add x x' b b' ((p : WW p) ^ N))
     · have : wFun p x + wFun p x' - phi p (z + z') = (wFun p x - phi p z) + (wFun p x' - phi p z') := by
-        rw [map_add]; ring
+        rw [map_add (f := _)]; ring
       rw [this]
       exact nadd p (wFun_spec p x hz) (wFun_spec p x' hz')
   map_mul' := fun x x' => wFun_eq p fun N => by

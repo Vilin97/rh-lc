@@ -151,7 +151,7 @@ theorem trace_mem {x : Fv F v ⊗[F] E} (hx : x ∈ OEv (E := E) v) :
     rw [map_zero]
     exact (v.adicCompletionIntegers F).zero_mem
   | add y z _ _ hy hz =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hy hz
   | smul c y _ hy =>
     rw [show c • y = (c : Fv F v) • y from rfl, map_smul, smul_eq_mul]
@@ -174,7 +174,7 @@ theorem trace_v (σ : E →ₐ[F] E) (hinv : ∀ y, σ (σ y) = y) (hnt : ∃ x,
         ext k
         simp
       rw [h, LinearMap.trace_baseChange]
-    rw [ht, ← inclR_alg v, trace_eq_add σ hinv hnt hfin e, map_add]
+    rw [ht, ← inclR_alg v, trace_eq_add σ hinv hnt hfin e, map_add (f := _)]
     rfl
   have hL : (Algebra.linearMap (Fv F v) (Fv F v ⊗[F] E)) ∘ₗ
         (Algebra.trace (Fv F v) (Fv F v ⊗[F] E)) =

@@ -27,7 +27,7 @@ theorem piTensor_twist (ρ : ∀ a, Representation ℂ (Γ a) (X a)) (χ : ∀ a
     congr 1
     simp only [twist_apply]
     rw [MultilinearMap.map_smul_univ, Units.coe_prod]
-  | add y₁ y₂ h₁ h₂ => rw [map_add, map_add, h₁, h₂, smul_add]
+  | add y₁ y₂ h₁ h₂ => rw [map_add (f := _), map_add (f := _), h₁, h₂, smul_add]
 
 end Tensor
 
@@ -52,7 +52,7 @@ theorem evT_idem (hs : ∀ a, IsSmooth (π a))
     evT ev (piTensor π μ (idem (isSmooth_piTensor hs) hC v)) = evT ev (piTensor π μ v) := by
   let Φ : (⨂[ℂ] a, X a) →ₗ[ℂ] ((∀ a, GL (Fin (N a)) (w.adicCompletion E)) → ℂ) :=
     { toFun := fun y ν => evT ev (piTensor π ν y)
-      map_add' := fun y y' => funext fun ν => by simp [map_add]
+      map_add' := fun y y' => funext fun ν => by simp [map_add (f := _)]
       map_smul' := fun r y => funext fun ν => by simp [map_smul] }
   have hΦs : ∀ y, Φ y ∈ smoothPart (rightReg ℂ (∀ a, GL (Fin (N a)) (w.adicCompletion E)) ℂ) := fun y =>
     mem_smoothPart_of_nhds (Filter.mem_of_superset ((isSmooth_piTensor hs y).mem_nhds (by simp)) fun g hg =>
@@ -138,7 +138,7 @@ theorem isSatVecGL_of_levi (hs : ∀ a, IsSmooth (π a)) (S : Fin c → Multiset
         rw [← sub_eq_zero]
         refine eq_zero_of_apply_one (stdBlocks N h) (sub_mem (by rw [← hKO]; exact hf) (add_mem hf₁ hf₂)) ?_
         show f.1.1 1 - (f₁.1.1 1 + f₂.1.1 1) = 0
-        rw [hf1, e₁, e₂, map_add, sub_self]
+        rw [hf1, e₁, e₂, map_add (f := _), sub_self]
       obtain ⟨H₁, C₁⟩ := ih₁ f₁ hf₁' e₁
       obtain ⟨H₂, C₂⟩ := ih₂ f₂ hf₂' e₂
       refine ⟨fun ϖ hϖ j hj => ?_, fun h0 => ?_⟩

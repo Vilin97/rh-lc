@@ -202,7 +202,7 @@ theorem vDeg_rel_of_hom {W W' : Z.X.Modules} (u : W' ⟶ W) [IsIso (Z.genRes.map
   obtain rfl : k = l + n - m := by rw [hr]; abel
   have hd' : ofEff d = ofEff a + ofEff c - ofEff b := by rw [hs]; abel
   rw [hd'] at E ⊢
-  simp only [map_add, map_sub, add_mul, sub_mul, LinearMap.add_apply, LinearMap.sub_apply] at E ⊢
+  simp only [map_add (f := _), map_sub, add_mul, sub_mul, LinearMap.add_apply, LinearMap.sub_apply] at E ⊢
   linarith
 
 theorem exists_flagPair_ofHom {W W' : Z.X.Modules} {ψ : Z.GenIso W W'} {N : ℕ} (R : FlagPair ψ N)

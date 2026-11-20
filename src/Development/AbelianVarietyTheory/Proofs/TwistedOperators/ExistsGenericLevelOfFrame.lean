@@ -37,7 +37,7 @@ theorem exists_residueChar {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ϖ
   · intro s t
     obtain ⟨x, rfl⟩ := hsurj s
     obtain ⟨y, rfl⟩ := hsurj t
-    rw [← map_add, hf, hf, hf, ← AddChar.map_add_eq_mul]
+    rw [← map_add (f := _), hf, hf, hf, ← AddChar.map_add_eq_mul]
     congr 1
     push_cast
     ring

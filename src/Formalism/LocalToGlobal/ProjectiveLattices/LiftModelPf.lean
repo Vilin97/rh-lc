@@ -48,7 +48,7 @@ theorem ιW_Jid {z : ↥(Frac0 (xplus X E hM) la G.w)} (hz : z ∈ Jid (xplus X 
   induction hz using Submodule.span_induction with
   | mem x hx => obtain ⟨i, rfl⟩ := hx; exact Ideal.subset_span ⟨i, rfl⟩
   | zero => rw [ZeroMemClass.coe_zero, map_zero]; exact Ideal.zero_mem _
-  | add x z _ _ hx hz => rw [Subalgebra.coe_add, map_add]; exact Ideal.add_mem _ hx hz
+  | add x z _ _ hx hz => rw [Subalgebra.coe_add, map_add (f := _)]; exact Ideal.add_mem _ hx hz
   | smul a x _ hx => rw [smul_eq_mul, Subalgebra.coe_mul, map_mul]; exact Ideal.mul_mem_left _ _ hx
 
 theorem RGW_hd (β : Idx D j G.N →₀ ℕ) (r : LamL (hsW hw)) (hr : r ∈ RGW hw) : hdL (hsW hw) β r ∈ RGW hw :=

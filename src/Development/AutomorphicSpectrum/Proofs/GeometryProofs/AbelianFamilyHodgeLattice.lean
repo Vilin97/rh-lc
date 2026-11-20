@@ -48,7 +48,7 @@ theorem eig_sum_zero {K V O I : Type} [Field K] [AddCommGroup V] [Module K V] [C
         have e : ∑ u ∈ A, (σ u a - σ t a) • f u =
             ρ a (f t + ∑ u ∈ A, f u) - σ t a • (f t + ∑ u ∈ A, f u) := by
           set_option synthInstance.maxHeartbeats 100000 in
-            rw [map_add, map_sum, mem_eig (hf t (Finset.mem_insert_self _ _)) a, smul_add, Finset.smul_sum]
+            rw [map_add (f := _), map_sum, mem_eig (hf t (Finset.mem_insert_self _ _)) a, smul_add, Finset.smul_sum]
           simp only [sub_smul, Finset.sum_sub_distrib]
           rw [Finset.sum_congr rfl fun u hu => (mem_eig (hf u (Finset.mem_insert_of_mem hu)) a).symm]
           abel
@@ -72,7 +72,7 @@ def modelOfEquiv {S : Scheme.{0}} {R : Type} [CommRing R] {G : Over S} [GrpObj G
   onto v hv := by
     obtain ⟨w, h⟩ := M.onto v hv
     exact ⟨e.symm w, by simpa using h⟩
-  add v w := by rw [map_add, M.add]
+  add v w := by rw [map_add (f := _), M.add]
   smul c v := by rw [map_smul, M.smul]
 
 theorem exists_basis_of_base {S : Scheme.{0}} {G : Over S} [GrpObj G] [Smooth G.hom] {R C : Type} [CommRing R]

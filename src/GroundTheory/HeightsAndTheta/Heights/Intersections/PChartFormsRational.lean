@@ -108,7 +108,7 @@ theorem ChartFormsRational.proof : ChartFormsRational.Statement := by
   have hexp : ∀ k q, φ k (bb q) = e.repr (bb q) 0 * φ k (e 0) + e.repr (bb q) 1 * φ k (e 1) := by
     intro k q
     have h := congrArg (φ k) (e.sum_repr (bb q))
-    rw [Fin.sum_univ_two, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul] at h
+    rw [Fin.sum_univ_two, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul] at h
     exact h.symm
   have hDD : (φ k₀ (e 0) * φ k₁ (e 1) - φ k₁ (e 0) * φ k₀ (e 1)) * Db = x i ^ 2 * m := by
     have h2 : x i ^ 2 * m = φ k₀ (bb 0) * φ k₁ (bb 1) - φ k₀ (bb 1) * φ k₁ (bb 0) := by

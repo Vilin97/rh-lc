@@ -25,10 +25,10 @@ theorem ck_flagPair_rank_two : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscr
     (fun D y => GlobalTheory.T.flag_pair_capDeg_difference_zero O p B hB W W' ψ R R' D y)
     (fun y => GlobalTheory.T.flag_pair_divisor_capDeg_vanish O p B hB W W' ψ R R' y)
   · have h3 := congrArg firstChernPic (R.fl.cls_det.symm.trans R'.fl.cls_det)
-    simp only [Fin.sum_univ_two, map_add, firstChernPic_class] at h3
+    simp only [Fin.sum_univ_two, map_add (f := _), firstChernPic_class] at h3
     exact h3
   · change GlobalTheory.Vert.Model.toQ (R.div 0).cls + GlobalTheory.Vert.Model.toQ (R.div 1).cls =
       GlobalTheory.Vert.Model.toQ (R'.div 0).cls + GlobalTheory.Vert.Model.toQ (R'.div 1).cls
-    rw [← map_add, ← map_add, GlobalTheory.T.flag_pair_divisor_class_sum O B W W' ψ R, GlobalTheory.T.flag_pair_divisor_class_sum O B W W' ψ R']
+    rw [← map_add (f := _), ← map_add (f := _), GlobalTheory.T.flag_pair_divisor_class_sum O B W W' ψ R, GlobalTheory.T.flag_pair_divisor_class_sum O B W W' ψ R']
 
 end GlobalTheory.FlagRankTwo

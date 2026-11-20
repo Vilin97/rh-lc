@@ -69,7 +69,7 @@ theorem UpperTheory.Reformulated.B.AdicDensityOfPresentationSubalgebra.pi_dense 
     · have he : W.π (algebraMap O _ c + ∑ i, g i * MvPowerSeries.X i)
           - (algebraMap O R c + ∑ i, a i * W.z i) = ∑ i, (W.π (g i) - a i) * W.z i := by
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [map_add, AlgHom.commutes, map_sum, add_sub_add_left_eq_sub, ← Finset.sum_sub_distrib]
+          rw [map_add (f := _), AlgHom.commutes, map_sum, add_sub_add_left_eq_sub, ← Finset.sum_sub_distrib]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [map_mul, sub_mul]
         rfl

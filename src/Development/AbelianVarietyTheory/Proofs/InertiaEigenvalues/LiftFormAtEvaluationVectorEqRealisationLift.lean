@@ -28,12 +28,12 @@ theorem eMt_fix (D : D7) (μ : D.what₂.Tup) (j : ℕ) (x : D.what₂.MtL μ j)
       rw [← hv]
       exact LinearMap.congr_fun (D.what₂.eMt_idem μ j) _
     | zero => rw [map_zero, map_zero]
-    | add a b _ _ ha hb => rw [map_add, map_add, ha, hb]
+    | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     | smul c a _ ha => rw [Idx.smul_def, LinearMap.map_smulₛₗ, map_smul, ha]
   induction hx using Submodule.span_induction with
   | mem z hz => exact hL z hz
   | zero => rw [map_zero, map_zero]
-  | add a b _ _ ha hb => rw [map_add, map_add, ha, hb]
+  | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   | smul c a _ ha => rw [LinearMap.map_smulₛₗ, map_smul, ha]
 
 variable {D : D7} {X : RealSide D} {X0 : BaseLevelRowSide D} (Y : GlobalTheory.Mem.R3.Read (A3 := X.A3) X.R.toRealDat X.F.lv2 X0)

@@ -99,5 +99,5 @@ theorem GlobalTheory.Obs.additiveClassDegreeTwo_vanish_affineBases : PrimitiveEx
   suffices h : c' = 0 by rw [h, map_zero]
   refine hP R R₁ q hq A g hA hg c' c₁ c₂ ?_ hc₁.symm hc₂.symm
   refine pairTo_injective R₁ _ _ G H K₀ le₀ (hr _).2 hH.1 ?_
-  rw [pairTo_pairPull, pairTo_pairRes, map_add, hc, ← pairTo_pairPull R₁ (overW (fst A A)) G H K₁ le₁,
+  rw [pairTo_pairPull, pairTo_pairRes, map_add (f := _), hc, ← pairTo_pairPull R₁ (overW (fst A A)) G H K₁ le₁,
     ← pairTo_pairPull R₁ (overW (snd A A)) G H K₂ le₂, ← hc₁, ← hc₂, pairTo_pairRes, pairTo_pairRes]

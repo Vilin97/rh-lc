@@ -367,7 +367,7 @@ theorem fin_small_gen {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (Z :
       rw [this]
       exact S.algebraMap_mem a
     | add P Q hP hQ =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact S.add_mem hP hQ
     | mul_X P i hP =>
       rw [map_mul, map_mul]

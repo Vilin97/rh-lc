@@ -43,7 +43,7 @@ theorem padicInt_mem (A : Subring LL) (hA : IsOpen (A : Set LL)) (u : ℤ_[l]) :
     calc ‖(w : ℚ_[l])‖ * ‖(l : ℚ_[l])‖ ^ n ≤ 1 * ‖(l : ℚ_[l])‖ ^ n :=
           mul_le_mul_of_nonneg_right (PadicInt.norm_le_one w) (by positivity)
       _ < ε := by rwa [one_mul]
-  rw [hu, map_add, map_natCast]
+  rw [hu, map_add (f := _), map_natCast]
   exact A.add_mem (natCast_mem A _) h1
 
 end Open

@@ -100,7 +100,7 @@ theorem qc_resY_zero (A : Type) [CommRing A] (r : ℕ) : resY A r 0 = 0 := by
 
 theorem qc_resY_add (A : Type) [CommRing A] (r : ℕ) (s t : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) A) :
     resY A r (s + t) = resY A r s + resY A r t := by
-  simp only [resY, map_add]
+  simp only [resY, map_add (f := _)]
 
 theorem qc_resY_smul (A : Type) [CommRing A] (r : ℕ) (c : A) (s : MvPolynomial (Fin (r + 1 + 1) × Fin (r + 1 + 1)) A) :
     resY A r (c • s) = c • resY A r s := by

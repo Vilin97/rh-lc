@@ -171,7 +171,7 @@ private theorem hy3_lemma_14 (H : D.Hyp) {y : Fin r → n → A} (hy : ∀ a, Is
 theorem ext_Xp_f (H : D.Hyp) {Φ Ψ : (n → A) →ₗ[A] (n → A)} (h1 : ∀ v, Xp D v → Φ v = Ψ v)
     (h2 : ∀ a, Φ (D.f a) = Ψ (D.f a)) (v : n → A) : Φ v = Ψ v := by
   have e1 : v = (v - D.pXv v) + D.pXv v := (sub_add_cancel v _).symm
-  rw [e1, map_add, map_add, h1 _ (xp_sub_pXv H v)]
+  rw [e1, map_add (f := _), map_add (f := _), h1 _ (xp_sub_pXv H v)]
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [pXvap_lemma_11, map_sum, map_smul, h2]
@@ -208,7 +208,7 @@ theorem sL_span {x : n → A} (hx : x ∈ Submodule.span A (Set.range D.e)) : sL
 
 theorem pWp_sL_f (c : Fin r) : pWp D (sL D half y (D.f c)) = y c := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [sL_f H hy, map_add, pWp_f H, zero_add, uv, map_add, pWp_of_isWp (hy c), map_sum]
+    rw [sL_f H hy, map_add (f := _), pWp_f H, zero_add, uv, map_add (f := _), pWp_of_isWp (hy c), map_sum]
   simp [pWp_e H]
 
 theorem h_tV_right (x x' : n → A) :

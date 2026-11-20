@@ -50,7 +50,7 @@ theorem Near.prod {σ : Type} {k : ℕ} {a b : σ → MvPowerSeries τ S}
   | zero => simpa using Near.one k
   | add f g hf hg =>
     rw [Finsupp.prod_add_index' (by simp) (by simp [pow_add]),
-      Finsupp.prod_add_index' (by simp) (by simp [pow_add]), map_add]
+      Finsupp.prod_add_index' (by simp) (by simp [pow_add]), map_add (f := _)]
     exact hf.mul hg
   | single s n =>
     rw [Finsupp.prod_single_index (by simp), Finsupp.prod_single_index (by simp),
@@ -109,7 +109,7 @@ def intSub (τ : Type) : Subring (MvPowerSeries τ C) where
     classical
     intro α; unfold IsIntV; rw [coeff_one]; split_ifs <;> simp
   add_mem' := by
-    intro f g hf hg α; unfold IsIntV; rw [map_add]
+    intro f g hf hg α; unfold IsIntV; rw [map_add (f := _)]
     exact le_trans (le_min (hf α) (hg α)) (v.map_add _ _)
   zero_mem' := by intro α; unfold IsIntV; simp
   neg_mem' := by intro f hf α; unfold IsIntV; rw [map_neg, v.map_neg]; exact hf α

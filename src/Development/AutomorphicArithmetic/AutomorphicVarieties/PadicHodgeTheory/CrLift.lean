@@ -39,7 +39,7 @@ private theorem lift_lower {R S : Type} [CommRing R] [CommRing S] (f : R →+* S
     exact h0 a b h
   · refine Units.ext (Matrix.ext fun a b => ?_)
     change f ((Matrix.of X + 1) a b) = _
-    rw [Matrix.add_apply, map_add, Matrix.of_apply, hX, Matrix.sub_apply, Matrix.one_apply, Matrix.one_apply]
+    rw [Matrix.add_apply, map_add (f := _), Matrix.of_apply, hX, Matrix.sub_apply, Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp
 
 theorem UpperTheory.V.Loc.crLift :

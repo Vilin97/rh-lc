@@ -89,7 +89,7 @@ theorem exists_haar_fundamentalDomain_one_plane : ∀ (F E : Type) [Field F] [Nu
     have hA₂ : coA σ Y.J H m ∈ C₁ := ha₂ ▸ ha₁
     have htr₂ : Algebra.trace (AF F) (AE F E) (coC σ Y.J H m) ∈ C₃ := by
       refine ⟨_, hx, ?_⟩
-      rw [hc₂, map_add, htr2, ← hTdef]
+      rw [hc₂, map_add (f := _), htr2, ← hTdef]
       show (2 : AF F) * (⅟(2 : AF F) * T - algebraMap F (AdeleRing (𝓞 F) F) x) = _
       rw [mul_sub, ← mul_assoc, mul_invOf_self', one_mul, map_neg]
       ring

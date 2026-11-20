@@ -51,7 +51,7 @@ theorem HasTameExp.add {κ κ' : Type} [Fintype κ] [Fintype κ'] {T : ((κ → 
   · rintro (j | j)
     · exact hk₁ j
     · exact hk₂ j
-  · rw [pureA_add, map_add, e₁, e₂, Fintype.sum_sum_type]
+  · rw [pureA_add, map_add (f := _), e₁, e₂, Fintype.sum_sum_type]
     rfl
 
 theorem HasTameExp.smul {κ κ' : Type} [Fintype κ] [Fintype κ'] {T : ((κ → AF F) → ℂ) →ₗ[ℂ] ((κ' → AF F) → ℂ)}

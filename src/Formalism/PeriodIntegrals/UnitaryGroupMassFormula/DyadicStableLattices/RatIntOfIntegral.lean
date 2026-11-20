@@ -66,7 +66,7 @@ theorem repr_int (d : ℕ) (hd : Squarefree d) (hdm : d + 1 = 4 * m) (z : Kq m)
     have h := hz.mul hstar
     have e : (⟨a, b⟩ : Kq m) * star ⟨a, b⟩ = algebraMap ℚ (Kq m) (a ^ 2 + a * b + m * b ^ 2) := by
       rw [QuadraticAlgebra.mul_star]
-      simp only [← map_mul, ← map_add, ← map_sub]
+      simp only [← map_mul, ← map_add (f := _), ← map_sub]
       congr 1
       ring
     rw [e] at h

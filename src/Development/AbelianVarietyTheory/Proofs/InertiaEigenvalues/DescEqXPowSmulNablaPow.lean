@@ -24,7 +24,7 @@ theorem desc_eq_X_pow_smul_nabla_pow {O K : Type} [CommRing O] [NormedField K] [
     | zero => intro w; simp
     | succ j ih =>
       intro w
-      rw [pow_succ', Module.End.mul_apply, ih, map_add, hX, map_nsmul, pow_succ' C.nabla (j + 1),
+      rw [pow_succ', Module.End.mul_apply, ih, map_add (f := _), hX, map_nsmul, pow_succ' C.nabla (j + 1),
         Module.End.mul_apply, pow_succ' C.nabla j, Module.End.mul_apply, succ_nsmul]
       abel
   induction k generalizing v with

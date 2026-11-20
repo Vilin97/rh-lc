@@ -11,7 +11,7 @@ theorem qW_polar_eq_sum_add_transpose {s : ℕ} (W : Matrix (Fin s) (Fin s) ℤ)
   have h : ∑ u, ∑ v, W u v * β (z u) (y v) = ∑ u, ∑ v, W v u * β (y u) (z v) := by
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun u _ => Finset.sum_congr rfl fun v _ => by rw [hβ]
-  simp only [qW, Pi.add_apply, map_add, LinearMap.add_apply, mul_add, add_mul, Finset.sum_add_distrib,
+  simp only [qW, Pi.add_apply, map_add (f := _), LinearMap.add_apply, mul_add, add_mul, Finset.sum_add_distrib,
     Matrix.add_apply, Matrix.transpose_apply, h]
   ring
 

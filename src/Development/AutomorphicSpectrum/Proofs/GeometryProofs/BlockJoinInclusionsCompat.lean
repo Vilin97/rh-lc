@@ -14,7 +14,7 @@ theorem mConeMap_rename {K : Type} {ι : K → Type} {K' : Type} {ι' : K' → T
     mConeMap y (rename v f) = rename κ (mConeMap (y ∘ v) f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp, rename_X]
     congr 1

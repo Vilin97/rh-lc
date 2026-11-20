@@ -60,7 +60,7 @@ theorem smul_mem_range_lTensor_of_lTensor_eq_zero :
       obtain ⟨y, hy⟩ := h1 z z.2 (k + 1)
       exact ⟨n ⊗ₜ y, by simp [hy, TensorProduct.tmul_smul]⟩
     | add a b ha hb =>
-      rw [map_add, smul_add]
+      rw [map_add (f := _), smul_add]
       exact Submodule.add_mem _ ha hb
   rw [hrk k, mul_smul, mul_smul, ← hu]
   exact Submodule.smul_mem _ _ (h7 u)

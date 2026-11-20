@@ -20,7 +20,7 @@ theorem map_starT {A R' C : Type} [CommRing A] [Algebra ℚ A] [CommRing R'] [Al
   | zero => simp
   | tmul r x =>
     rw [starT_tmul, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, starT_tmul]; rfl
-  | add x y hx hy => simp only [map_add, MulOpposite.unop_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), MulOpposite.unop_add, hx, hy]
 
 theorem map_conj_ext {p : ℕ} [Fact p.Prime] (G : HTGroup p) (K : Type) [Field K] [Algebra ℚ K] {L : Type} [Field L]
     [Algebra ℚ L] (ι : L →ₐ[ℚ] G.C) (c : L →ₐ[ℚ] L) (β₁ : G.Cˣ)
@@ -35,7 +35,7 @@ theorem map_conj_ext {p : ℕ} [Fact p.Prime] (G : HTGroup p) (K : Type) [Field 
       Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one, AlgHom.id_apply,
       AlgHom.id_apply, hc]
     rfl
-  | add x y hx hy => simp only [map_add, MulOpposite.unop_add, hx, hy, mul_add, add_mul]
+  | add x y hx hy => simp only [map_add (f := _), MulOpposite.unop_add, hx, hy, mul_add, add_mul]
 
 theorem map_invol {K L : Type} [Field K] [Algebra ℚ K] [Field L] [Algebra ℚ L] (c : L →ₐ[ℚ] L)
     (hcc : ∀ x, c (c x) = x) (z : K ⊗[ℚ] L) :
@@ -43,7 +43,7 @@ theorem map_invol {K L : Type} [Field K] [Algebra ℚ K] [Field L] [Algebra ℚ 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r x => rw [Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, hcc]; rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem selfDual_conj_eq_one {R A B : Type*} [CommRing R] [Ring A] [Algebra R A] [CommRing B] [Algebra R B]
     (ι : B →+* A) (hιR : ∀ r, ι (algebraMap R B r) = algebraMap R A r) (σ : A →+* Aᵐᵒᵖ) (cc : B →+* B) (β₁ : Aˣ)

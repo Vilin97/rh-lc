@@ -38,7 +38,7 @@ theorem measure_eq_card_mul_measure_ker {A Q : Type*} [AddGroup A] [TopologicalS
         add_neg_cancel_left _ _⟩
       have : (⟨-(t (φ ⟨y, hy⟩) : A) + y, L.add_mem (L.neg_mem (t _).2) hy⟩ : L) =
           -t (φ ⟨y, hy⟩) + ⟨y, hy⟩ := rfl
-      rw [this, map_add, map_neg, ht, neg_add_cancel]
+      rw [this, map_add (f := _), map_neg, ht, neg_add_cancel]
     · rintro ⟨q, n, hn, rfl⟩
       obtain ⟨hnL, -⟩ := (hmemN n).1 hn
       exact L.add_mem (t q).2 hnL
@@ -199,7 +199,7 @@ def residueAt (v : HeightOneSpectrum (𝓞 K)) :
     rw [← map_zero (IsLocalRing.residue (v.adicCompletionIntegers K))]
     rfl
   map_add' a b := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     rfl
 
 theorem residueAt_surjective (v : HeightOneSpectrum (𝓞 K)) :

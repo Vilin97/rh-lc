@@ -179,7 +179,7 @@ theorem Sch_ext {c : B → A → k} {A₀ : AddSubgroup A} {f g : Sch c A₀ →
     rw [e, map_zero, map_zero]
   | add x y hx hy ihx ihy =>
     have e : (⟨x + y, Submodule.add_mem _ hx hy⟩ : Sch c A₀) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-    rw [e, map_add, map_add, ihx, ihy]
+    rw [e, map_add (f := _), map_add (f := _), ihx, ihy]
   | smul r x hx ih =>
     have e : (⟨r • x, Submodule.smul_mem _ r hx⟩ : Sch c A₀) = r • ⟨x, hx⟩ := rfl
     rw [e, map_smul, map_smul, ih]
@@ -366,7 +366,7 @@ theorem rhoA_mem (c : B → A → k) (A₀ : AddSubgroup A) (a : A) : ∀ Φ ∈
     rw [rhoA_gen]
     exact gen_mem c A₀ _ _
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ ihx ihy => rw [map_add]; exact Submodule.add_mem _ ihx ihy
+  | add x y _ _ ihx ihy => rw [map_add (f := _)]; exact Submodule.add_mem _ ihx ihy
   | smul r x _ ih => rw [map_smul]; exact Submodule.smul_mem _ r ih
 
 theorem rhoB_mem (c : B → A → k) (hc : IsBichar c) (A₀ : AddSubgroup A) (b : B) :
@@ -379,7 +379,7 @@ theorem rhoB_mem (c : B → A → k) (hc : IsBichar c) (A₀ : AddSubgroup A) (b
     rw [rhoB_gen c hc]
     exact Submodule.smul_mem _ _ (gen_mem c A₀ _ _)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ ihx ihy => rw [map_add]; exact Submodule.add_mem _ ihx ihy
+  | add x y _ _ ihx ihy => rw [map_add (f := _)]; exact Submodule.add_mem _ ihx ihy
   | smul r x _ ih => rw [map_smul]; exact Submodule.smul_mem _ r ih
 
 theorem xi_intersection_holds : XiInter := by

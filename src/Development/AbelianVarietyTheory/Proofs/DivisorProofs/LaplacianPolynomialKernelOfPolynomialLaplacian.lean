@@ -39,7 +39,7 @@ theorem aeval_intertwine {M N : Type*} [AddCommGroup M] [Module ℂ M] [AddCommG
     | zero => intro x; rfl
     | succ n ih => intro x; rw [pow_succ', pow_succ', Module.End.mul_apply, Module.End.mul_apply, h, ih]
   induction p using Polynomial.induction_on' with
-  | add p q hp' hq' => simp only [map_add, LinearMap.add_apply, hp', hq']
+  | add p q hp' hq' => simp only [map_add (f := _), LinearMap.add_apply, hp', hq']
   | monomial n c =>
     simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply, map_smul, hp]
 

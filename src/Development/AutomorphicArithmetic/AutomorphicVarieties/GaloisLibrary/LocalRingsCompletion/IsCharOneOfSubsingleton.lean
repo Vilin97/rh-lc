@@ -60,7 +60,7 @@ def lift (I : Ideal R) [IsAdicComplete I R] (x : I) : O⟦X⟧ →ₐ[O] R where
     have h1 := (exists_lim I x (f + g)).choose_spec n
     have := (I ^ n).sub_mem ((I ^ n).sub_mem h1 ((exists_lim I x f).choose_spec n))
       ((exists_lim I x g).choose_spec n)
-    rw [map_add, map_add] at this
+    rw [map_add (f := _), map_add (f := _)] at this
     convert this using 1
     ring
   commutes' r := eq_of_sub_mem_pow I fun n => by
@@ -98,7 +98,7 @@ theorem algHom_ext (I : Ideal R) [IsHausdorff I R] {φ ψ : O⟦X⟧ →ₐ[O] R
     simpa using DFunLike.congr_fun this (trunc n f)
   have : φ f - ψ f = φ X ^ n * (φ g - ψ g) := by
     rw [sub_eq_iff_eq_add.1 hg]
-    simp only [map_add, map_mul, map_pow, hp, h]
+    simp only [map_add (f := _), map_mul, map_pow, hp, h]
     ring
   rw [this]
   exact Ideal.mul_mem_right _ _ (Ideal.pow_mem_pow hI n)

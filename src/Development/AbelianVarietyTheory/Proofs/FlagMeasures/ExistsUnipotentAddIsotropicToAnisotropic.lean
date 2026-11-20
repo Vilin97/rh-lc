@@ -156,7 +156,7 @@ theorem zstep : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] {
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible 𝒪[F]
   obtain ⟨c, hcO, hc⟩ := (GlobalTheory.UnramOrder.order_facts M.L ϖ hϖ).1 (-t)
   have hc1 : c + M.L.cj c + H.h (y : V) y = 0 := by
-    rw [hc, ht, ← map_add]
+    rw [hc, ht, ← map_add (f := _)]
     simp
   have hc2 : M.L.cj c + c + H.h (y : V) y = 0 := by rw [← hc1]; ring
   have hcjO : M.L.cj c ∈ M.L.O := GlobalTheory.UnramOrder.cj_mem M.L hcO

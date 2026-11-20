@@ -65,7 +65,7 @@ def intS : Subring E where
     obtain ⟨r, s, hs, h⟩ := ha
     obtain ⟨r', s', hs', h'⟩ := hb
     refine ⟨s' * r + s * r', s * s', nm_mul P hs hs', ?_⟩
-    rw [map_add, map_mul, map_mul, map_mul, ← h, ← h']
+    rw [map_add (f := _), map_mul, map_mul, map_mul, ← h, ← h']
     ring
   zero_mem' := ⟨0, 1, one_nm P, by simp⟩
   neg_mem' := by
@@ -93,9 +93,9 @@ def redH : intS P →+* 𝓞 E ⧸ P.asIdeal where
     obtain ⟨r', s', hs', h'⟩ := b.2
     show redP P (a.1 + b.1) = redP P a.1 + redP P b.1
     refine redP_eq P (r := s' * r + s * r') (s := s * s') (nm_mul P hs hs') ?_ ?_
-    · rw [map_add, map_mul, map_mul, map_mul, ← h, ← h']
+    · rw [map_add (f := _), map_mul, map_mul, map_mul, ← h, ← h']
       ring
-    · rw [map_add, map_mul, map_mul, map_mul, ← reduction_spec P hs h, ← reduction_spec P hs' h']
+    · rw [map_add (f := _), map_mul, map_mul, map_mul, ← reduction_spec P hs h, ← reduction_spec P hs' h']
       ring
 
 lemma reduction_one₂ : redP P (1 : E) = 1 := (redH P).map_one

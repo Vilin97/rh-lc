@@ -52,7 +52,7 @@ theorem uW_line (l : Fin m) (x : Fin m → ℂ) (a : ℂ) (t : ℝ) :
   have key : (star (x l) + (t : ℂ) * star a)⁻¹ =
       (x l + t * a) * (((Complex.normSq (x l + t * a))⁻¹ : ℝ) : ℂ) := by
     have e : star (x l) + (t : ℂ) * star a = (starRingEnd ℂ) (x l + t * a) := by
-      simp [Complex.star_def, map_add, map_mul, Complex.conj_ofReal]
+      simp [Complex.star_def, map_add (f := _), map_mul, Complex.conj_ofReal]
     rw [e, Complex.inv_def, Complex.conj_conj, Complex.normSq_conj]
   unfold uW
   rw [hprod, hl, key, mul_inv, Complex.ofReal_mul]

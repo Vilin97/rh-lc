@@ -51,7 +51,7 @@ theorem norm_ev_latHat_le_one (inc : E →+* PadicAlgCl l)
   | zero => simp
   | add y w _ _ hy hw =>
     show ‖ev (y a + w a)‖ ≤ 1
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hy hw)
   | neg y _ hy =>
     show ‖ev (-(y a))‖ ≤ 1
@@ -111,7 +111,7 @@ theorem norm_ev_hLat_le_one (V : Formalism.BasicNotions.TH.HSp D) (hL0 : V.L0 = 
         (fun i => (1 : FiniteAdeleRing (𝓞 D.host.F) D.host.F) ⊗ₜ[D.host.F] x i) +
           (fun i => (1 : FiniteAdeleRing (𝓞 D.host.F) D.host.F) ⊗ₜ[D.host.F] w i) := by
       funext i; simp [TensorProduct.tmul_add]
-    rw [e, Matrix.mulVec_add, Pi.add_apply, map_add]
+    rw [e, Matrix.mulVec_add, Pi.add_apply, map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hw)
   | smul r x _ hx =>
     have e : (fun i => (1 : FiniteAdeleRing (𝓞 D.host.F) D.host.F) ⊗ₜ[D.host.F] (r • x) i) =

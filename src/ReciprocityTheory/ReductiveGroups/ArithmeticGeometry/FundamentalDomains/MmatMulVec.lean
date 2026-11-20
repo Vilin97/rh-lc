@@ -48,7 +48,7 @@ theorem Mmat_map (u : Fin 2 → Fin r → E) (β : Matrix (Fin 2) (Fin 2) E) (τ
   ext a j
   by_cases h : a = j <;>
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [h, Matrix.map_apply, Data.Mmat, Data.zmat, Data.embH, Data.emb, map_add, map_mul, map_sum,
+      simp [h, Matrix.map_apply, Data.Mmat, Data.zmat, Data.embH, Data.emb, map_add (f := _), map_mul, map_sum,
       X.tau_kappa0 τ, cc, NumberField.IsCMField.complexEmbedding_complexConj] <;> ring
 
 theorem embH_add (β β' : Matrix (Fin 2) (Fin 2) E) : X.embH (β + β') = X.embH β + X.embH β' := by
@@ -85,7 +85,7 @@ private lemma herm_smul_left_fundamental_domains (G : Matrix (Fin r) (Fin r) E) 
 
 private lemma herm_add_right_fundamental_domains' (G : Matrix (Fin r) (Fin r) E) (x y z : Fin r → E) :
     herm G x (y + z) = herm G x y + herm G x z := by
-  simp only [herm, Pi.add_apply, cc, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [herm, Pi.add_apply, cc, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 private lemma herm_smul_right_eq_cc_mul' (G : Matrix (Fin r) (Fin r) E) (c : E) (x z : Fin r → E) :
     herm G x (c • z) = cc c * herm G x z := by

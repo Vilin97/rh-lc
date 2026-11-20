@@ -479,7 +479,7 @@ theorem typeProj_comm_later (LL : Letters N) (j j' : ℕ) (hjj : j ≤ j') (T : 
     (P : MvPolynomial (Fin N × Fin r) ℚ_[p] →ₗ[ℚ_[p]] MvPolynomial (Fin N × Fin r) ℚ_[p])
     (hP : IsTypeProj p LL j univ T P) (c d : Fin r) (x : MvPolynomial (Fin N × Fin r) ℚ_[p]) :
     P (glAct p LL j' c d x) = glAct p LL j' c d (P x) := by
-  rw [glAct_split LL j j' c d, LinearMap.add_apply, LinearMap.add_apply, map_add,
+  rw [glAct_split LL j j' c d, LinearMap.add_apply, LinearMap.add_apply, map_add (f := _),
     typeProj_glActC LL j univ T P hP c (Finset.mem_univ _) d (Finset.mem_univ _) x,
     typeProj_commC LL j univ T P hP (glRest p LL j j' c d) (fun a _ b _ y => glRest_comm LL j j' hjj c d a b y) x]
 

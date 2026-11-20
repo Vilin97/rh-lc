@@ -114,7 +114,7 @@ theorem exists_lb_hermitian : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCo
       rw [← Category.assoc, hp, a.mul]
     rw [key]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Category.assoc, hq, lam_comm _ (snd G G ≫ _), hφ, ← map_add, ← map_sum]
+      simp only [Category.assoc, hq, lam_comm _ (snd G G ≫ _), hφ, ← map_add (f := _), ← map_sum]
     change _ = φ (h m n)
     congr 1
     have E := herm_expand bar h hadd hsmul hsym P m n

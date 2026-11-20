@@ -91,7 +91,7 @@ theorem exists_dual_pair {A S W R V ι : Type} [CommRing A] [CommRing S] [CommRi
       map_smul' := fun r x => by
         refine hgen (fun r => ν j (r • x) = r * ν j x) (by simp) (fun w f => ?_) (fun r r' h h' => ?_) r
         · simp only [mul_smul, hνW, hνA, mul_assoc]
-        · simp only [add_smul, map_add, add_mul, h, h'] }
+        · simp only [add_smul, map_add (f := _), add_mul, h, h'] }
   have hμ : ∀ j x, μ j x = ν j x := fun _ _ => rfl
   refine ⟨fun k => β k, μ, fun k => ((hM _).1 (β k).2).1, fun j k => ?_, fun x => ?_,
     fun x hx j => ⟨_, hν j x hx⟩⟩
@@ -232,7 +232,7 @@ theorem TWmap_smul {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[
   | zero => simp only [smul_zero, map_zero]
   | tmul w x =>
     simp only [TWmap, smul_tmul', TensorProduct.map_tmul, AlgHom.toLinearMap_apply, smul_eq_mul, map_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem exists_frobMat_eq {n : ℕ} (X Y : Fin n → Fin n → ZMod a → invE l e (A O K))
     (h : ∀ i j, ∑ m, ϖ.iW t K (X i m) * ϖ.iW t K (Y m j) = if i = j then 1 else 0) :
@@ -453,7 +453,7 @@ theorem kappa_smul {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[
   | tmul w' x =>
     rw [smul_tmul', kappa_tmul, kappa_tmul, smul_tmul', smul_eq_mul, smul_eq_mul,
       Algebra.TensorProduct.tmul_mul_tmul, one_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K] in
 
@@ -466,7 +466,7 @@ theorem kappa_frob {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul w' x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def mulZ {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[l] K O) (c : O) :
     letI := zlLat T
@@ -486,7 +486,7 @@ theorem kappa_mulZ {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[
   induction y using TensorProduct.induction_on with
   | zero => simp only [smul_zero, map_zero]
   | tmul w' x => exact tmul_smul c _ x
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem exists_ident_of_basis {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[l] K O) {M : Type}
     [AddCommGroup M] [Module (Wq l a)⟦X⟧ M] {q : ℕ} (β : Module.Basis (Fin q) (Wq l a)⟦X⟧ M) :

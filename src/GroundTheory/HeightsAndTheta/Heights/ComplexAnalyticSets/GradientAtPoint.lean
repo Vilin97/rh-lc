@@ -20,7 +20,7 @@ theorem grad_apply (p : MvPolynomial σ ℂ) (i : σ) : grad w p i = eval w (pde
 theorem grad_mul (a b : MvPolynomial σ ℂ) :
     grad w (a * b) = eval w a • grad w b + eval w b • grad w a := by
   ext i
-  simp only [grad_apply, Derivation.leibniz, smul_eq_mul, map_add, map_mul, Pi.add_apply, Pi.smul_apply]
+  simp only [grad_apply, Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, Pi.add_apply, Pi.smul_apply]
 
 theorem grad_C (c : ℂ) : grad w (C c : MvPolynomial σ ℂ) = 0 := by
   ext i
@@ -61,7 +61,7 @@ theorem sub_C_eval_mem_span (p : MvPolynomial σ ℂ) :
   induction p using MvPolynomial.induction_on with
   | C a => simp
   | add p q hp hq =>
-    rw [map_add, map_add, show p + q - (C (eval w p) + C (eval w q)) = (p - C (eval w p)) + (q - C (eval w q)) by
+    rw [map_add (f := _), map_add (f := _), show p + q - (C (eval w p) + C (eval w q)) = (p - C (eval w p)) + (q - C (eval w q)) by
       ring]
     exact Ideal.add_mem _ hp hq
   | mul_X p i hp =>
@@ -86,7 +86,7 @@ theorem grad_eq_zero_of_mem_sq {p : MvPolynomial σ ℂ}
   rw [pow_two] at hp
   refine Submodule.mul_induction_on hp (fun a ha b hb => ?_) (fun x y hx hy => ?_)
   · rw [grad_mul, RingHom.mem_ker.1 ha, RingHom.mem_ker.1 hb, zero_smul, zero_smul, add_zero]
-  · rw [map_add, hx, hy, add_zero]
+  · rw [map_add (f := _), hx, hy, add_zero]
 
 theorem sub_linPart_mem_sq [Fintype σ] {p : MvPolynomial σ ℂ}
     (hp : p ∈ RingHom.ker (eval w : MvPolynomial σ ℂ →+* ℂ)) :

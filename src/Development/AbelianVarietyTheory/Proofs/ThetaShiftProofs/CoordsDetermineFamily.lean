@@ -44,7 +44,7 @@ theorem holAt_of_coords (ht : EmbedsBy f t) {y : Sp ℂ ⟶ Y} (hy : ∀ v, x v 
     exact (HolHom.valR_appLE (x v) f ⊤ _ le_top a hv).trans (by rw [hy])
   | add p q hp hq =>
     refine (hp.add hq).congr_of_eventuallyEq (hev.mono fun v hv => ?_)
-    simp only [valAt'_eq_valR, HolHom.valR_eq _ _ hv, map_add, Pi.add_apply]
+    simp only [valAt'_eq_valR, HolHom.valR_eq _ _ hv, map_add (f := _), Pi.add_apply]
   | mul_X p l hp =>
     refine (hp.mul ((hd l).fun_mul ((hd m).fun_inv hm.ne_zero))).congr_of_eventuallyEq
       ((hev.and hne).mono fun v hv => ?_)

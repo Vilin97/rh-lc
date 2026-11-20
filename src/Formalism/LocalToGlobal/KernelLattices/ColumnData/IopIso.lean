@@ -43,7 +43,7 @@ def cf (T : Tor D) (x y : VC D N N') : ℂ :=
 
 private theorem Hf_add_right_lemma (T : Tor D) (x y y' : VC D N N') :
     Hf D T x (y + y') = Hf D T x y + Hf D T x y' := by
-  rw [Hf_herm T (y + y') x, Hf_add_left T y y' x, map_add, ← Hf_herm T y x, ← Hf_herm T y' x]
+  rw [Hf_herm T (y + y') x, Hf_add_left T y y' x, map_add (f := _), ← Hf_herm T y x, ← Hf_herm T y' x]
 
 theorem U_U (T : Tor D) (x y : VC D N N') (G : VC D N N' → ℂ) (z : VC D N N') :
     U D T x (U D T y G) z = cf T x y * U D T (x + y) G z := by
@@ -306,7 +306,7 @@ theorem sqrt_d_pos (D : Car) : 0 < Real.sqrt D.host.d := by
 
 theorem Hf_add_right (T : Tor D) (x y y' : VC D N N') :
     Hf D T x (y + y') = Hf D T x y + Hf D T x y' := by
-  rw [Hf_herm T (y + y') x, Hf_add_left T y y' x, map_add, ← Hf_herm T y x, ← Hf_herm T y' x]
+  rw [Hf_herm T (y + y') x, Hf_add_left T y y' x, map_add (f := _), ← Hf_herm T y x, ← Hf_herm T y' x]
 
 theorem Hf_self_im (T : Tor D) (x : VC D N N') : (Hf D T x x).im = 0 := by
   have h := congrArg Complex.im (Hf_herm T x x)

@@ -25,7 +25,7 @@ theorem hE_smul_right (c : E) (x y : Fin M → E) : hE σ J x (c • y) = c * hE
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 theorem hE_add_left (x y z : Fin M → E) : hE σ J (x + y) z = hE σ J x z + hE σ J y z := by
-  simp only [hE_eq_sum, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hE_eq_sum, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hE_smul_left (c : E) (x y : Fin M → E) : hE σ J (c • x) y = σ c * hE σ J x y := by
   simp only [hE_eq_sum, Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum]

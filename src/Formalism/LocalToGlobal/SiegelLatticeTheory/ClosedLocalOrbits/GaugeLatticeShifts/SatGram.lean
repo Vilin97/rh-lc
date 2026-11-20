@@ -222,7 +222,7 @@ theorem psiEf_zero : X.psiEf 0 = 1 := X.psiEf_int 0 (zero_mem _)
 
 theorem psiLoc_add (v : HeightOneSpectrum (𝓞 X.B.I.F)) (a b : v.adicCompletion X.B.I.F) :
     psiLoc X v (a + b) = psiLoc X v a * psiLoc X v b := by
-  simp only [psiLoc, map_add, TensorProduct.tmul_add, mul_add, Formalism.L2.SG.HidaSetting.divN, X.psiEf_add]
+  simp only [psiLoc, map_add (f := _), TensorProduct.tmul_add, mul_add, Formalism.L2.SG.HidaSetting.divN, X.psiEf_add]
 
 theorem psiLoc_zero (v : HeightOneSpectrum (𝓞 X.B.I.F)) : psiLoc X v 0 = 1 := by
   simp only [psiLoc, map_zero, TensorProduct.tmul_zero, mul_zero, Formalism.L2.SG.HidaSetting.divN, psiEf_zero]
@@ -274,7 +274,7 @@ def psiV (v : gPl X) : AddChar (IsLocalRing.ResidueField ↥(v.1.adicCompletionI
     rw [this]; push_cast; exact psiLoc_zero v.1
   map_add_eq_mul' a b := by
     have := psiLoc_wd hU v (liftR v (a + b)) (liftR v a + liftR v b)
-      (by rw [liftR_spec, map_add, liftR_spec, liftR_spec])
+      (by rw [liftR_spec, map_add (f := _), liftR_spec, liftR_spec])
     rw [this]; push_cast; exact psiLoc_add v.1 _ _
 
 theorem psiV_apply (v : gPl X) (o : ↥(v.1.adicCompletionIntegers X.B.I.F)) :

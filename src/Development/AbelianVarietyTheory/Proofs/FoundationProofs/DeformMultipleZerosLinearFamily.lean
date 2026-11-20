@@ -64,7 +64,7 @@ lemma dvd_step {m : ℕ} (hm : 1 ≤ m) (y g S S' : PowerSeries k) (y0 c A : k)
           + (g * S - PowerSeries.C (PowerSeries.constantCoeff g * A)))
         + PowerSeries.X ^ (n + 1 + 1) * (y * r + PowerSeries.X ^ n *
           (g * PowerSeries.C c + PowerSeries.X * g * r)) := by
-    rw [hS', map_add]; ring
+    rw [hS', map_add (f := _)]; ring
   rw [heq]
   refine dvd_add ?_ (dvd_mul_right _ _)
   rw [pow_succ]

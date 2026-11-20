@@ -505,7 +505,7 @@ def chartRing (I : Chart x) : Subalgebra S Ω where
     refine ⟨f * s' + s * f', s * s', e + e', mul_mem hs hs', (hf.mul hse').add (hse.mul hf'),
       hse.mul hse', ?_⟩
     rw [div_add_div _ _ (eval_ne_zero_of_mem_monos I hs) (eval_ne_zero_of_mem_monos I hs')]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
   zero_mem' := ⟨0, 1, 0, one_mem _, isHomogeneous_zero _ _ _, isHomogeneous_one _ _, by simp⟩
   algebraMap_mem' r := ⟨C r, 1, 0, one_mem _, isHomogeneous_C _ _, isHomogeneous_one _ _, by
     simp [aeval_C]⟩
@@ -959,7 +959,7 @@ theorem aeval_genericPt (f : Poly k N) :
   | C a =>
     rw [aeval_C, IsScalarTower.algebraMap_apply k (Poly k N) (FractionRing (Poly k N))]
     rfl
-  | add p q hp hq => rw [map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p i hp => rw [map_mul, map_mul, hp, aeval_X, genericPt]
 
 theorem primeOf_genericPt : primeOf (S := k) (genericPt k N) = ⊥ := by

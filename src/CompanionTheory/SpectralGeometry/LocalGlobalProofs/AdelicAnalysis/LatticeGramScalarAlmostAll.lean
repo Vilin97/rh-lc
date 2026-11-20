@@ -102,7 +102,7 @@ theorem good_trans : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
     | tmul a e =>
       show a ⊗ₜ[F] σ (σ e) = a ⊗ₜ[F] e
       rw [hinv]
-    | add p q hp hq => rw [map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
   have hc : ∀ c : Fv F v, c ∈ v.adicCompletionIntegers F → c ⊗ₜ[F] (1 : E) ∈ O := by
     intro c hcv
     refine (hO _).2 fun k => ?_

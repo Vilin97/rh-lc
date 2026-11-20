@@ -27,7 +27,7 @@ theorem mem_of_forall_mem_sup {C : Type} [CommRing C] [IsLocalRing C] [IsNoether
     intro n
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 (h n)
     have e : Submodule.mkQ I (a + b) = b • Submodule.mkQ I 1 := by
-      rw [map_add, ← map_smul, smul_eq_mul, mul_one, (Submodule.Quotient.mk_eq_zero I).2 ha |> (Submodule.mkQ_apply I a).trans,
+      rw [map_add (f := _), ← map_smul, smul_eq_mul, mul_one, (Submodule.Quotient.mk_eq_zero I).2 ha |> (Submodule.mkQ_apply I a).trans,
         zero_add]
     rw [e]
     exact Submodule.smul_mem_smul hb trivial
@@ -91,7 +91,7 @@ theorem mem_map_of_approx {Z S : Scheme.{0}} (π : S ⟶ Z) [IsProper π] (I : S
   refine mem_of_forall_mem_sup _ _ fun n => ?_
   obtain ⟨b, hb, c, hc, hbc⟩ := Submodule.mem_sup.1 (H (q v) ψ hψ hψc n)
   have e2 : α.hom F = (q.stalkMap v).hom b + ((q.stalkMap v).hom c + α.hom (F - i (a n))) := by
-    rw [← add_assoc, ← map_add, hbc, ← hc', map_sub]; ring
+    rw [← add_assoc, ← map_add (f := _), hbc, ← hc', map_sub]; ring
   rw [e2]
   exact Submodule.add_mem_sup (GlobalTheory.VanStalk.map_le_stalkId_comap q I v (Ideal.mem_map_of_mem _ hb))
     (add_mem (map_mem_pow _ hc) (map_mem_pow _ (ha n)))
@@ -151,7 +151,7 @@ theorem exists_correction : ∀ (Z S : Scheme.{0}) [IsIntegral Z] [IsIntegral S]
         spMap ev ≫ Z.fromSpecStalk z = ξ ≫ π → Set.range (jK V ≫ ξ) ⊆ U →
         ev f ∈ idlAlong E.idealSheaf ξ ⊔ ((maximalIdeal _).map ev) ^ e}
       add_mem' := fun ha hb V _ _ _ _ hV ξ ev h1 h2 h3 => by
-        rw [map_add]; exact add_mem (ha V hV ξ ev h1 h2 h3) (hb V hV ξ ev h1 h2 h3)
+        rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha V hV ξ ev h1 h2 h3) (hb V hV ξ ev h1 h2 h3)
       zero_mem' := fun V _ _ _ _ hV ξ ev h1 h2 h3 => by rw [map_zero]; exact zero_mem _
       smul_mem' := fun c a ha V _ _ _ _ hV ξ ev h1 h2 h3 => by
         rw [smul_eq_mul, map_mul]; exact Ideal.mul_mem_left _ _ (ha V hV ξ ev h1 h2 h3) }

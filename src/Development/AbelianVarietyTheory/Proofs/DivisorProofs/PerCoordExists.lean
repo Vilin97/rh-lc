@@ -87,7 +87,7 @@ theorem perCoord_exists : ∀ (O : Type) [Ring O] (bar : O → O) (g : ℕ) (ρ 
   refine ⟨Cof ⁻¹' U, Q, Z, s, ε, hUo.preimage hCofc, hε, ⟨fun b hb => hQper b hb, fun x => ?_⟩, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · let F : (Fin d → ℂ) →ₗ[ℂ] (Fin g → ℂ) :=
       { toFun := fun b => Cof b *ᵥ star (P₀ x)
-        map_add' := fun b b' => by simp only [Cof, map_add, Matrix.add_mul, transpose_add, add_mulVec]
+        map_add' := fun b b' => by simp only [Cof, map_add (f := _), Matrix.add_mul, transpose_add, add_mulVec]
         map_smul' := fun c b => by
           simp only [Cof, map_smul, Matrix.smul_mul, transpose_smul, smul_mulVec, RingHom.id_apply] }
     have hF : Differentiable ℂ (fun b => F b) := (LinearMap.toContinuousLinearMap F).differentiable

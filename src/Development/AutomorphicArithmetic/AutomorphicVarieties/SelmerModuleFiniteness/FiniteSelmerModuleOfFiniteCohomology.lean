@@ -51,7 +51,7 @@ theorem UpperTheory.finite_selmerModule_of_finite_cohomology :
       (fun y => ⟨fun g => a.e.symm (y.1 g), ⟨(y.2.1.comp a.e.symm).continuous, ?_⟩⟩) ?_
     · intro g k
       have := y.2.2 g k
-      simp only [this, map_add, hrepv, LinearEquiv.symm_apply_apply]
+      simp only [this, map_add (f := _), hrepv, LinearEquiv.symm_apply_apply]
     · intro y y' hyy
       apply Subtype.ext
       funext g

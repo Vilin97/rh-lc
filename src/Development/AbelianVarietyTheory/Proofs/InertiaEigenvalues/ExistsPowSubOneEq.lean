@@ -24,7 +24,7 @@ theorem exists_pow_sub_one_eq {O : Type} [CommRing O] {n l : ℕ} (hl : l.Prime)
   obtain ⟨c, hc⟩ := dvd_sub_pow_of_dvd_sub h2 M
   refine ⟨aeval u c, ?_⟩
   have h3 := congrArg (aeval u) hc
-  simp only [map_sub, map_pow, map_add, map_one, aeval_X, h1, add_zero, one_pow, map_mul, map_natCast] at h3
+  simp only [map_sub, map_pow, map_add (f := _), map_one, aeval_X, h1, add_zero, one_pow, map_mul, map_natCast] at h3
   rw [pow_add, pow_mul, h3, Algebra.smul_def, map_pow, map_natCast]
 
 theorem eq_one_of_wild {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]

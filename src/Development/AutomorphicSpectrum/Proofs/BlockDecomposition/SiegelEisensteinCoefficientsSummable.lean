@@ -29,7 +29,7 @@ namespace GlobalTheory.CompanionTheory.WSum
 variable {D : D7} {r : ℕ}
 
 theorem halfTr_add (x y : AE D) : halfTr (x + y) = halfTr x + halfTr y := by
-  simp only [halfTr, trA, map_add, mul_add]
+  simp only [halfTr, trA, map_add (f := _), mul_add]
 
 theorem halfTr_zero : halfTr (0 : AE D) = 0 := by
   simp only [halfTr, trA, map_zero, mul_zero]

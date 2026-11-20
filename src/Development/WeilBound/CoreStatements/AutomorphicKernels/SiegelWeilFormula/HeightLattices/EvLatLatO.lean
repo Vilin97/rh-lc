@@ -74,7 +74,7 @@ theorem ev_OE (x : AF F ⊗[F] E) : ∀ᶠ v : HeightOneSpectrum (𝓞 F) in cof
     exact OE_mul v (AddSubgroup.subset_closure ⟨evFin F v a, ha, 1, by simp⟩) he
   | add x y hx hy =>
     filter_upwards [hx, hy] with v h1 h2
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem h1 h2
 
 theorem ev_OE_latO {k : ℕ} (bs : Module.Basis (Fin k) F E) : ∀ᶠ v : HeightOneSpectrum (𝓞 F) in cofinite,

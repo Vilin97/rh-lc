@@ -214,7 +214,7 @@ private theorem coeff_bind_scale {σ : Type} [Fintype σ] (c : ℂ) (P : MvPolyn
     · subst h
       ring
     · simp
-  · simp only [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  · simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq, mul_add]
 
 private theorem degree_of_scale {σ : Type} [Fintype σ] (P Δ : MvPolynomial σ ℂ) (n : ℕ) (x0 : σ → ℂ)
     (hx0 : MvPolynomial.eval x0 Δ ≠ 0)

@@ -33,7 +33,7 @@ theorem isBaseChange_glob1 (R : Type) [CommRing R] (C : Type) [Category.{0} C] (
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     | tmul b w =>
       have : ∑ i, Φ.δ i T (w.1 T) ⊗ₜ[R] Φ.w i = (1 : S) ⊗ₜ[R] w := by
         conv_rhs => rw [hsum w]

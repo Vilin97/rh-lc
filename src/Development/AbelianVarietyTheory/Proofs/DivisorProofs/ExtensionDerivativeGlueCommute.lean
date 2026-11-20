@@ -220,7 +220,7 @@ theorem vacS_eventually_std : ∀ {F E : Type} [Field F] [NumberField F] [Field 
       exact mul_mem hai (h1 g hg k)
     | zero => intro k; simp only [map_zero, Prod.fst_zero, Pi.zero_apply]; exact zero_mem _
     | add z z' _ _ h h' =>
-      intro k; simp only [map_add, Prod.fst_add, Pi.add_apply]; exact add_mem (h k) (h' k)
+      intro k; simp only [map_add (f := _), Prod.fst_add, Pi.add_apply]; exact add_mem (h k) (h' k)
     | neg z _ h => intro k; simp only [map_neg, Prod.fst_neg, Pi.neg_apply]; exact neg_mem (h k)
   have hset : latS σ X W H H' v = {y | ∀ k, y k ∈ v.adicCompletionIntegers F} := by
     ext y

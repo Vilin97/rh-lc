@@ -72,8 +72,8 @@ theorem exists_ext (k R K : Type) [CommRing k] [CommRing R] [Field K] (ρ : R �
     ∃ D : (letI := α.toAlgebra; Derivation k K K), ∀ r, D (ρ r) = ρ (d r) := by
   letI := ρ.toAlgebra
   obtain ⟨δ, hδ, hδρ⟩ := Formalism.L2.Pj.GenericSectionMinimum.IsDer.ofLoc (A := R) (B := K) (nonZeroDivisors R) (fun r => ρ (d r))
-    (fun x y => by rw [map_add, map_add]) (fun x y => by
-      rw [Derivation.leibniz, map_add, smul_eq_mul, smul_eq_mul, map_mul, map_mul]; rfl)
+    (fun x y => by rw [map_add (f := _), map_add (f := _)]) (fun x y => by
+      rw [Derivation.leibniz, map_add (f := _), smul_eq_mul, smul_eq_mul, map_mul, map_mul]; rfl)
   have hα : ∀ a, δ (α a) = 0 := fun a => by
     rw [← hκ a]
     exact (hδρ (κ a)).trans (by rw [hd, map_zero])

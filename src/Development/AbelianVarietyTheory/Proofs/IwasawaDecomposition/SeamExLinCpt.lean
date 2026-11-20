@@ -53,7 +53,7 @@ theorem seam_nonempty (D : D7) (Bs : DefBase D.what₂.LL) (A : DefAmb Bs) (X : 
             cφ_eq := hφ
             cF_eq := fun y => seamEx_lin_cpt _ _ y
             eR_eq := fun y => ?_ }⟩
-  · rw [← map_add]
+  · rw [← map_add (f := _)]
     congr 1
     funext i
     simp [cjv]

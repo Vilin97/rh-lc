@@ -448,7 +448,7 @@ theorem sum_norm_bdd : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
           rw [← (hs _ Φ.2).tsum_add (hs _ Φ'.2)]
           congr 1
           funext w
-          rw [← hLwe w _ (Φ + Φ').2, ← hLwe w _ Φ.2, ← hLwe w _ Φ'.2, Submodule.coe_add, map_add]
+          rw [← hLwe w _ (Φ + Φ').2, ← hLwe w _ Φ.2, ← hLwe w _ Φ'.2, Submodule.coe_add, map_add (f := _)]
           ring
         map_smul' := fun a Φ => by
           simp only [RingHom.id_apply, smul_eq_mul]

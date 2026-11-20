@@ -32,7 +32,7 @@ def phiL {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] (Fr k : Mat n →
     Mat n →ₗ[ℝ] (V →L[ℂ] V) where
   toFun X := fderiv ℝ Fr 1 X * k w + Ld X k w
   map_add' X Y := by
-    simp only [Ld, map_add, add_mul, Matrix.add_mul, neg_add]
+    simp only [Ld, map_add (f := _), add_mul, Matrix.add_mul, neg_add]
     abel
   map_smul' r X := by
     simp only [Ld, map_smul, smul_mul_assoc, Matrix.smul_mul, RingHom.id_apply, smul_add, smul_neg]
@@ -187,7 +187,7 @@ theorem halfOne_of (hH : HbFacts) (hF : FrameDer) (hO : ∀ n, IsOpen (cone n)) 
     first
       | rw [two_smul] at h5
       | rw [two_nsmul] at h5
-    rw [hc2, map_add] at h5
+    rw [hc2, map_add (f := _)] at h5
     have hder : (fderiv ℝ F x) (x * (x⁻¹ * hb i * xᴴ⁻¹))
         = Fr x * φ (x⁻¹ * hb i * xᴴ⁻¹) * Γ * T * Fr y⁻¹ :=
       h1 n lam E Fr ε ι S Γ T hcx k hk d y hd hyG x hxG _

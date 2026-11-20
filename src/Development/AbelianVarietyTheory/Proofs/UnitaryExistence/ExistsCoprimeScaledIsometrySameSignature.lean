@@ -114,7 +114,7 @@ theorem exists_unitary_congr_pi {K T : Type} [Field K] [CharZero K] {A : T → T
     (hext _ _ fun v => by rw [map_mul, map_one, hmk, hmk, Units.mul_inv])
     (hext _ _ fun v => by rw [map_mul, map_mul]; exact hu v) lam hlam
     ((Matrix.isUnit_iff_isUnit_det _).2 (Matrix.isUnit_det_of_right_inverse (B := mk w) (hext _ _ fun v => by
-      rw [map_mul, map_add, map_one]; exact hw v)))
+      rw [map_mul, map_add (f := _), map_one]; exact hw v)))
     (d1 * d2) (by positivity)
   refine ⟨γ, hγ, fun v => ?_⟩
   have e1 : γ.map (φ v) * ((u v)⁻¹).1 - 1 = (d1 * d2) • ev v X := by
@@ -123,7 +123,7 @@ theorem exists_unitary_congr_pi {K T : Type} [Field K] [CharZero K] {A : T → T
     exact this
   have h3 : ∀ i j, (ev v ((d1 • mk fun v => ((P v)⁻¹).1) * X * (d2 • mk fun v => (P v).1) + 1)) i j ∈ B v := fun i j =>
     (hOm _).1 (add_mem (mul_mem (mul_mem h1 hX) h2) (one_mem _) i j) v
-  rw [map_add, map_one, map_mul, map_mul, map_nsmul, map_nsmul, hmk, hmk] at h3
+  rw [map_add (f := _), map_one, map_mul, map_mul, map_nsmul, map_nsmul, hmk, hmk] at h3
   rw [sub_eq_iff_eq_add.1 e1, mul_add, add_mul, mul_one, Units.inv_mul]
   simpa only [smul_mul_assoc, mul_smul_comm, smul_smul, mul_comm d2 d1] using h3
 
@@ -135,7 +135,7 @@ theorem infinite_norm_one (E : Type) [Field E] [NumberField E] [IsCMField E] :
     {x : E | x * cc x = 1}.Infinite := by
   obtain ⟨θ, h0, hθ⟩ := exists_imaginary_integer E
   have hc : ∀ k : ℤ, IsCMField.complexConj E (1 + (k * θ : E)) = 1 - (k * θ) := fun k => by
-    rw [map_add, map_one, map_mul, map_intCast, show IsCMField.complexConj E θ = -θ from hθ]
+    rw [map_add (f := _), map_one, map_mul, map_intCast, show IsCMField.complexConj E θ = -θ from hθ]
     ring
   have hne : ∀ k : ℤ, 1 + (k * θ : E) ≠ 0 := fun k hk => by
     have := hc k
@@ -262,7 +262,7 @@ theorem exists_coprime_scaled_isometry : ∀ (E : Type) [Field E] [NumberField E
       rw [hk, Nat.cast_mul, mul_comm, mul_smul, Nat.cast_smul_eq_nsmul _ (m y)]
       exact Submodule.smul_mem _ _ (hmem _)
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, smul_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _), smul_add]; exact Submodule.add_mem _ ha hb
     | smul c a _ ha => rw [map_smul, smul_comm]; exact Submodule.smul_mem _ _ ha
   let g : D₁.La →ₗ[𝓞 E] LinearMap.range φ₂ := ((N : 𝓞 E) • φ).codRestrict _ hmem
   let f : D₁.La →ₗ[𝓞 E] D₂.La := (LinearEquiv.ofInjective φ₂ hinj₂).symm.toLinearMap ∘ₗ g

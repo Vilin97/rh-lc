@@ -236,7 +236,7 @@ theorem surjective_succ
   have e := tateCompactDualityMap_δ φ ψ D t hS hT h₁ h₀ q y
   change tateCompactDualityMap φ ψ D h₁ t M ((δ hS r (r + 1) rfl).hom q) y = _ at e
   have hχy : χ ((tateCompactδRes φ ψ hT s).hom y) = ν y := congrArg (fun f => f y) hχ
-  rw [map_add, map_zsmul, AddMonoidHom.add_apply, AddMonoidHom.smul_apply, e, hq,
+  rw [map_add (f := _), map_zsmul, AddMonoidHom.add_apply, AddMonoidHom.smul_apply, e, hq,
     neg_neg_one_pow_zsmul_zsmul]
   change _ + χ ((tateCompactδRes φ ψ hT s).hom y) = l y
   rw [hχy, hν, AddMonoidHom.sub_apply, add_sub_cancel]

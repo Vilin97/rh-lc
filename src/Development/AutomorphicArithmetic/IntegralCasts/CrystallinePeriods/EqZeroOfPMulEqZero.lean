@@ -160,7 +160,7 @@ theorem hom_ext {B : Type*} [CommRing B] [IsHausdorff (span {(p : B)}) B] {f g :
   rw [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top, Ideal.span_singleton_pow,
     Ideal.mem_span_singleton]
   refine ⟨f y - g y, ?_⟩
-  simp only [map_add, map_mul, map_pow, map_natCast, h]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast, h]
   ring
 
 theorem exists_quot (u : Ainf p R) (hu : Ainf.theta p R u = 1) (n : ℕ) :
@@ -170,7 +170,7 @@ theorem exists_quot (u : Ainf p R) (hu : Ainf.theta p R u = 1) (n : ℕ) :
     AcrisZero.gamma (k + 1) (u - 1) (by simp [hu]), ?_, ?_⟩
   · apply Subtype.ext
     have := mul_sum_descFactorial (p ^ n) (algebraMap (Ainf p R) (AinfInv p R) (u - 1))
-    rw [← map_one (algebraMap (Ainf p R) (AinfInv p R)), ← map_add, sub_add_cancel, map_one,
+    rw [← map_one (algebraMap (Ainf p R) (AinfInv p R)), ← map_add (f := _), sub_add_cancel, map_one,
       Nat.cast_pow] at this
     simp only [MulMemClass.coe_mul, SubmonoidClass.coe_pow, SubringClass.coe_natCast,
       AddSubmonoidClass.coe_finsetSum, AcrisZero.coe_gamma, AinfInv.gamma,
@@ -200,7 +200,7 @@ theorem log_mul (u v : Ainf p R) (hu : Ainf.theta p R u = 1) (hv : Ainf.theta p 
   refine ext_eval fun n => ?_
   obtain ⟨a, ha, ha'⟩ := exists_quot u hu n
   obtain ⟨b, hb, hb'⟩ := exists_quot v hv n
-  rw [map_add, ha', hb', eval_log_of_mul_eq _ huv n (a + b + p ^ n * a * b), ← map_add,
+  rw [map_add (f := _), ha', hb', eval_log_of_mul_eq _ huv n (a + b + p ^ n * a * b), ← map_add (f := _),
     Ideal.Quotient.eq, AcrisZero.mem_span_pow_iff]
   · exact ⟨a * b, by ring⟩
   · rw [map_mul, mul_pow, eq_add_of_sub_eq ha.symm, eq_add_of_sub_eq hb.symm]

@@ -63,7 +63,7 @@ theorem Q_chart (y : (Σ k, ι k) → Ω) (c : (k : K) → ι k) (hc : (∏ k, y
     obtain ⟨d', g', h', hg', hh', h0', e'⟩ := h2
     refine ⟨d + d', g * h' + h * g', h * h', hom_add (hom_mul hg hh') (hom_mul hh hg'), hom_mul hh hh', ?_, ?_⟩
     · rw [map_mul]; exact mul_ne_zero h0 h0'
-    · simp only [map_add, map_mul, e, e']; ring
+    · simp only [map_add (f := _), map_mul, e, e']; ring
   | mul a b _ _ h1 h2 =>
     obtain ⟨d, g, h, hg, hh, h0, e⟩ := h1
     obtain ⟨d', g', h', hg', hh', h0', e'⟩ := h2
@@ -92,14 +92,14 @@ theorem aeval_mem [CharZero Ω] (F : IntermediateField ℚ Ω) {σ : Type} (r : 
     (g : MvPolynomial σ ℤ) : aeval r g ∈ F := by
   induction g using MvPolynomial.induction_on with
   | C n => simp
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | mul_X p i hp => rw [map_mul, aeval_X]; exact mul_mem hp (hr i)
 
 theorem aeval_map (i : Ω →+* Ω') {σ : Type} (r : σ → Ω) (g : MvPolynomial σ ℤ) :
     aeval (fun p => i (r p)) g = i (aeval r g) := by
   induction g using MvPolynomial.induction_on with
   | C n => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p j hp => simp only [map_mul, hp, aeval_X]
 
 theorem blockFnField_eq [CharZero Ω'] (i : Ω →+* Ω') (y : (Σ k, ι k) → Ω) (hb : Birational y)
@@ -144,7 +144,7 @@ theorem mCoordIdeal_map (i : Ω →+* Ω') (y : (Σ k, ι k) → Ω) :
     unfold mConeMap
     induction s using MvPolynomial.induction_on with
     | C n => simp
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p j hp => simp only [map_mul, hp, aeval_X, map_C, map_X]
   ext s
   simp only [mCoordIdeal, RingHom.mem_ker, key]

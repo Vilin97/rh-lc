@@ -22,7 +22,7 @@ theorem finiteDimensional_of_finite {A B F K : Type} [CommRing A] [CommRing B] [
     induction ha using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact M.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact M.add_mem hx hy
     | smul b x _ hx =>
       obtain ⟨c, hc⟩ := hB b
       rw [Algebra.smul_def, map_mul, RingHom.algebraMap_toAlgebra, ← hc, ← Algebra.smul_def]

@@ -32,6 +32,6 @@ theorem hodgeTateSetting_ainfTower_of_isPrimitiveRoot : ∀ (p : ℕ) [Fact p.Pr
     | tmul x y =>
       have h : ∀ (x : ℤ_[p]) (y : OE), sigE p OE (x ⊗ₜ[ℤ] y) = x ⊗ₜ[ℤ] star y := fun _ _ => rfl
       rw [h, h, star_star]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 end GlobalTheory.ChF

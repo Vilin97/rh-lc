@@ -98,7 +98,7 @@ theorem sum_norm_bdd : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
     have m1 := hEv.maps _ (GlobalTheory.HeisSchA.rho_mem_schA M B.ψ hψ (Matrix.vecMulVec (incV F ξ) (incV F H'.y)) Φ hΦ)
     have m2 := hEv.maps _ (GlobalTheory.HeisSchA.rho_mem_schA M B.ψ hψ (Matrix.vecMulVec (incV F ξ) (incV F H'.y)) Φ' hΦ')
     simp only [hl]
-    rw [rho_lin, map_add, map_smul, GlobalTheory.WeilM.thetaSum_add F (Submodule.smul_mem _ a m1) m2, GlobalTheory.WeilM.thetaSum_smul]
+    rw [rho_lin, map_add (f := _), map_smul, GlobalTheory.WeilM.thetaSum_add F (Submodule.smul_mem _ a m1) m2, GlobalTheory.WeilM.thetaSum_smul]
   have ladd : ∀ ξ, ∀ Φ ∈ schA F (Fin n × Fin d), ∀ Φ' ∈ schA F (Fin n × Fin d), l ξ (Φ + Φ') = l ξ Φ + l ξ Φ' := by
     intro ξ Φ hΦ Φ' hΦ'
     simpa using lin ξ Φ hΦ Φ' hΦ' 1
@@ -158,7 +158,7 @@ theorem sum_norm_bdd : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
     obtain ⟨s₀, C, hC0, hC⟩ := hA g hg
     refine ⟨SchwartzMap.mkCLMtoNormedSpace (σ := RingHom.id ℂ) (fun f => Lc ⟨pureA F f g, hmem f⟩) ?_ ?_ ?_, fun f => ?_⟩
     · intro f₁ f₂
-      rw [← map_add]
+      rw [← map_add (f := _)]
       congr 1
       apply Subtype.ext
       funext x

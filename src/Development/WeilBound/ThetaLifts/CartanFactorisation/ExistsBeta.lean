@@ -101,7 +101,7 @@ theorem I_add' (hp : IsPair B M χX χW om r s r' s') {𝓒} (hc : Cls B M om �
     M.I om (Φ + Ψ) = M.I om Φ + M.I om Ψ := by
   funext h
   have e : ∀ g, theta om (Φ + Ψ) g h = theta om Φ g h + theta om Ψ g h := fun g => by
-    simp only [theta, map_add]
+    simp only [theta, map_add (f := _)]
     exact thetaSum_add F (hp.weil.isUSplitting.pres _ _ (hc.sch hΦ)) (hp.weil.isUSplitting.pres _ _ (hc.sch hΨ))
   simp only [Model.I, e, Pi.add_apply]
   exact integral_add (hc.conv _ hΦ h) (hc.conv _ hΨ h)

@@ -224,7 +224,7 @@ theorem exists_homs (hinj : Function.Injective (algebraMap O K)) {X ι ρ τ : T
     refine uniq _ _ (fun j => ψχ j (a + b)) (fun j => ψχ j a + ψχ j b) ?_
     rw [← h _ (A.add_mem a.2 b.2), Pi.add_apply, Matrix.map_add _ (map_add _), Matrix.mul_add, Matrix.add_mul,
       h _ a.2, h _ b.2, Matrix.fromBlocks_add]
-    simp [Matrix.map_add]
+    simp [Matrix.map_add (f := _)]
   have halg : ∀ c : O, ψρ (algebraMap O _ c) = algebraMap O _ c ∧ ∀ j, ψχ j (algebraMap O _ c) = c := by
     intro c
     refine uniq _ _ (fun j => ψχ j (algebraMap O _ c)) (fun _ => c) ?_

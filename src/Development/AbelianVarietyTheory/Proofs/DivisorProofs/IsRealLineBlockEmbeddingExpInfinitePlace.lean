@@ -118,7 +118,7 @@ theorem compInf_eq_infComp (w : InfinitePlace F) (z : AF F ⊗[F] E) :
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a x => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 omit [NumberField E] in
 
@@ -127,7 +127,7 @@ theorem compInf_sigR (σ : E →ₐ[F] E) (w : InfinitePlace F) (z : AF F ⊗[F]
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a x => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 omit [NumberField F] [Algebra F E] in
 
@@ -175,7 +175,7 @@ theorem map_compInf_infGL {Φ : AF F ⊗[F] E ≃+* AdeleRing (𝓞 E) E} {j : A
     rw [compInf_eq_infComp, key]
     change infComp w' (j.symm (infEq E (y.1 a b - (1 : Matrix (Fin d) (Fin d) (Cinf E)) a b))) = 0
     rw [hcv, map_mul, map_mul, map_mul, hw, mul_zero]
-  simp only [Matrix.map_apply, hx, map_add, h0, add_zero]
+  simp only [Matrix.map_apply, hx, map_add (f := _), h0, add_zero]
   by_cases hab : a = b
   · subst hab; simp
   · simp [Matrix.one_apply_ne hab]

@@ -78,7 +78,7 @@ theorem exists_invariant_pairing : ∀ (n : ℕ) (ι : Type) [Fintype ι] [Decid
       intro x u
       induction u using PiTensorProduct.induction_on with
       | smul_tprod c y => rw [map_smul, map_smul, map_smul, hpure]
-      | add a a' ha ha' => rw [map_add, map_add, map_add, ha, ha']
+      | add a a' ha ha' => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, ha']
     have h1 : ∀ x, ((B.comp (Formalism.L2.DIV.rhoK lam g)).compl₂ (wtOp ℂ n mu sh g)) (GlobalTheory.CoefIrred.tenMul lam x) = Bm x := by
       intro x
       refine LinearMap.ext fun u => ?_

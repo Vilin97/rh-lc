@@ -13,7 +13,7 @@ theorem projective_of_addEquiv {A S T M : Type} [CommRing A] [CommRing S] [AddCo
     (hE : ∀ (x : A) (m : M), E (x • m) = σ (Ideal.Quotient.mk I x) • E m) :
     Module.Projective (A ⧸ I) ((A ⧸ I) ⊗[A] M) := by
   let u : (A ⧸ I) ⊗[A] M →+ T := TensorProduct.liftAddHom
-    (AddMonoidHom.mk' (fun b => AddMonoidHom.mk' (fun m => σ b • E m) fun m m' => by rw [map_add, smul_add])
+    (AddMonoidHom.mk' (fun b => AddMonoidHom.mk' (fun m => σ b • E m) fun m m' => by rw [map_add (f := _), smul_add])
       fun b b' => AddMonoidHom.ext fun m => by simp [add_smul])
     fun r b m => by
       change σ (r • b) • E m = σ b • E (r • m)
@@ -26,14 +26,14 @@ theorem projective_of_addEquiv {A S T M : Type} [CommRing A] [CommRing S] [AddCo
   have left : ∀ t, (1 : A ⧸ I) ⊗ₜ[A] E.symm (u t) = t := fun t => by
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add s t hs ht => rw [map_add, map_add, TensorProduct.tmul_add, hs, ht]
+    | add s t hs ht => rw [map_add (f := _), map_add (f := _), TensorProduct.tmul_add, hs, ht]
     | tmul b m => rw [hu, key]
   have right : ∀ t, u ((1 : A ⧸ I) ⊗ₜ[A] E.symm t) = t := fun t => by
     rw [hu, map_one, one_smul, AddEquiv.apply_symm_apply]
   have lin : ∀ (c : A ⧸ I) t, u (c • t) = σ c • u t := fun c t => by
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add s t hs ht => rw [smul_add, map_add, map_add, smul_add, hs, ht]
+    | add s t hs ht => rw [smul_add, map_add (f := _), map_add (f := _), smul_add, hs, ht]
     | tmul b m => rw [TensorProduct.smul_tmul', hu, hu, smul_eq_mul, map_mul, mul_smul]
   haveI := RingHomInvPair.of_ringEquiv σ
   haveI := RingHomInvPair.of_ringEquiv_symm σ
@@ -80,7 +80,7 @@ theorem projective_of_twist : ∀ (A R : Type) [CommRing A] [CommRing R] [Algebr
           e ((Ideal.Quotient.mk _ r : R ⧸ Ideal.span {algebraMap A R a}) • x) = r • e x →
           e ((Ideal.Quotient.mk _ r : R ⧸ Ideal.span {algebraMap A R a}) • y) = r • e y →
           e ((Ideal.Quotient.mk _ r : R ⧸ Ideal.span {algebraMap A R a}) • (x + y)) = r • e (x + y) :=
-        fun x y hx hy => by rw [smul_add, map_add, map_add, smul_add, hx, hy]
+        fun x y hx hy => by rw [smul_add, map_add (f := _), map_add (f := _), smul_add, hx, hy]
       exact h x y hx hy
     | tmul b y =>
       obtain ⟨r', rfl⟩ := Ideal.Quotient.mk_surjective (I := Ideal.span {algebraMap A R a}) b

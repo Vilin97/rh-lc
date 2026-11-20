@@ -12,7 +12,7 @@ variable {V : Type} [AddCommGroup V] [Module AA V] [Module A V] [IsScalarTower A
 def extMap (f : V →ₗ[O] V) (g : AA →ₐ[O] AA) (w : V) : V × AA →ₗ[O] V × AA where
   toFun p := (f p.1 + g p.2 • w, g p.2)
   map_add' p p' := by
-    simp only [Prod.fst_add, Prod.snd_add, map_add, add_smul, Prod.mk_add_mk, Prod.mk.injEq,
+    simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), add_smul, Prod.mk_add_mk, Prod.mk.injEq,
       and_true]
     abel
   map_smul' c p := by

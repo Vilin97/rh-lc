@@ -62,7 +62,7 @@ theorem fintrans : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype
       map_zero' := by
         simp only [finiteAdelesVecPairAsAdeles_zero, map_zero]; rfl
       map_add' := fun a b => by
-        simp only [finiteAdelesVecPairAsAdeles_add, map_add]; rfl }
+        simp only [finiteAdelesVecPairAsAdeles_add, map_add (f := _)]; rfl }
   have hg : ∀ m', finE2 F (g m') = B.symm (finE2 F m') := by
     intro m'
     rw [finiteAdelesVecPairAsAdeles_eq_idempotent_smul F κ m', map_smul, finiteAdeleIdempotent_smul_eq_finiteAdelesVecPair]

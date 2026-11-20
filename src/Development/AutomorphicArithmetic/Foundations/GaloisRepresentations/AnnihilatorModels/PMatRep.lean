@@ -41,7 +41,7 @@ theorem UpperTheory.Gal.crystallineComparison.matRep_of :
       rw [map_smul, Algebra.smul_def]
       ring
     | add x y hx hy =>
-      simp only [map_add, mul_add, Finset.sum_add_distrib, hx, hy, Pi.add_apply]
+      simp only [map_add (f := _), mul_add, Finset.sum_add_distrib, hx, hy, Pi.add_apply]
   have hL : ∀ t : S, ∑ i, z i t • φ.symm (Pi.single i 1) = (1 : B) ⊗ₜ t := by
     intro t
     apply φ.injective

@@ -124,7 +124,7 @@ theorem exists_mem_maximalIdeal {C : UCompact Xo c} (X₁ : USetup C) (p : ℕ) 
   obtain ⟨v, hv⟩ := exists_shortest τ.q τ.pos X₁.S.N α₀
   have hne : α₀ + X₁.S.N • v ≠ 0 := fun h0 => hnd ⟨-(j (e v)), by
     have h1 := congrArg (fun s => j (e s)) h0
-    simp only [α₀, map_add, map_nsmul, AddEquiv.apply_symm_apply, map_zero] at h1
+    simp only [α₀, map_add (f := _), map_nsmul, AddEquiv.apply_symm_apply, map_zero] at h1
     rw [smul_neg]
     exact eq_neg_of_add_eq_zero_left h1⟩
   have hqle : τ.q (α₀ + X₁.S.N • v) ≤ t.sc * t.T.be x' x' / 2 := by

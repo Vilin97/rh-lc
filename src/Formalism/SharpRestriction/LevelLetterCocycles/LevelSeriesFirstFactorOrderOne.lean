@@ -58,7 +58,7 @@ theorem cc_lev_ps (Ti : Formalism.MainNotions.UnusedSlot80.LevE.Comparison₂ W 
   obtain ⟨s', rfl⟩ : ∃ s', s = s' + 1 := ⟨s - 1, by omega⟩
   rw [pow_succ', pow_mul, hζ.pow_eq_one, one_pow]
   unfold qA
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
   have h0 := Formalism.MainNotions.UnusedSlot80.LevE.level_one_uniformizer_coeff_vanish hR (a - ((s' + 1 : ℕ) : ZMod n)) 1 0 (by omega)
   rw [pow_one, PowerSeries.coeff_zero_eq_constantCoeff_apply] at h0
   rw [h0, zero_add]

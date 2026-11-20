@@ -253,7 +253,7 @@ theorem exists_opInt (π : G → (H →L[ℂ] H)) (hiso : ∀ g x, ‖π g x‖ 
       map_add' := fun a b => by
         unfold rrd_vec
         rw [← integral_add (rrd_int hiso hmeas hf a) (rrd_int hiso hmeas hf b)]
-        congr 1; funext g; rw [map_add, smul_add]
+        congr 1; funext g; rw [map_add (f := _), smul_add]
       map_smul' := fun c a => by
         unfold rrd_vec
         rw [RingHom.id_apply, ← integral_smul]

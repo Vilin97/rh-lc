@@ -47,7 +47,7 @@ def mapF (f : A →+* B) (x : W2 l A) : W2 l B := ⟨f x.fst, f x.snd⟩
 theorem mapF_add (f : A →+* B) (x y : W2 l A) : mapF f (x + y) = mapF f x + mapF f y :=
   W2.ext (map_add f _ _) (by
     change f (x.snd + y.snd - cc l x.fst y.fst) = f x.snd + f y.snd - cc l (f x.fst) (f y.fst)
-    rw [map_sub, map_add, map_cc])
+    rw [map_sub, map_add (f := _), map_cc])
 
 theorem mapF_mul (f : A →+* B) (x y : W2 l A) : mapF f (x * y) = mapF f x * mapF f y :=
   W2.ext (map_mul f _ _) (by
@@ -146,7 +146,7 @@ def deltaStructureOfWittLengthTwoSection (s : A →+* W2 l A) (h : ∀ a, (s a).
   δ_one := by rw [map_one]; rfl
   δ_mul a b := by rw [map_mul]; exact (congrArg₂ (fun x y => x ^ l * (s b).snd + y ^ l * (s a).snd +
     (l : A) * (s a).snd * (s b).snd) (h a) (h b))
-  δ_add a b := by rw [map_add]; exact (congrArg₂ (fun x y => (s a).snd + (s b).snd - cc l x y) (h a) (h b))
+  δ_add a b := by rw [map_add (f := _)]; exact (congrArg₂ (fun x y => (s a).snd + (s b).snd - cc l x y) (h a) (h b))
   φ := W2.ghHom.comp s
   φ_eq a := congrArg (fun x => x ^ l + (l : A) * (s a).snd) (h a)
 

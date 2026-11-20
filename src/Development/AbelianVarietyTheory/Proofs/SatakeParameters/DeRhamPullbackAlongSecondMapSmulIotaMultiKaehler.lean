@@ -32,7 +32,7 @@ theorem tD_comp (φ : E →ₗ[k] E') (w : ι → Module.End k E) (w' : ι → M
   have h1 := wd_comp φ w w' h c
   funext t
   have h2 := congrFun h1 t
-  simp only [tD, LinearMap.add_apply, Pi.add_apply, map_add, LinearMap.pi_apply, LinearMap.smul_apply,
+  simp only [tD, LinearMap.add_apply, Pi.add_apply, map_add (f := _), LinearMap.pi_apply, LinearMap.smul_apply,
     LinearMap.comp_apply, LinearMap.proj_apply, map_zsmul] at h2 ⊢
   rw [h2, ← LinearMap.comp_apply φ κ, hκ, LinearMap.comp_apply]
 
@@ -124,7 +124,7 @@ theorem gY_actZ (j2 : K →ₐ[ℂ] K') (y : K ⊗[ℂ] K) :
       Module.endTensorEndAlgHom_apply, TensorProduct.AlgebraTensorModule.map_tmul, Algebra.lsmul_coe,
       Algebra.TensorProduct.productMap_apply_tmul, IsScalarTower.coe_toAlgHom', gY_smul_tmul]
   | add y y' hy hy' =>
-    rw [map_add, map_add, map_add, LinearMap.comp_add, hy, hy', LinearMap.add_comp]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.comp_add, hy, hy', LinearMap.add_comp]
 
 theorem gY_XZ (j2 : K →ₐ[ℂ] K') (l : Fin (d + 1)) : gY j2 ∘ₗ XZ F K x l = XY x l ∘ₗ gY j2 := by
   apply TensorProduct.ext'
@@ -208,10 +208,10 @@ theorem gY_omB (j2 : K →ₐ[ℂ] K') (I J : Finset (Fin (d + 1))) (p q : ℕ) 
         funext j
         refine Fin.addCases (fun i => ?_) (fun i => ?_) j <;> simp
     | zero => simp
-    | add y z _ _ hy hz => rw [TensorProduct.add_tmul, map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [TensorProduct.add_tmul, map_add (f := _)]; exact add_mem hy hz
     | smul c y _ hy => rw [← TensorProduct.smul_tmul', map_smul]; exact Submodule.smul_mem _ _ hy
   | zero => simp
-  | add y z _ _ hy hz => rw [TensorProduct.tmul_add, map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [TensorProduct.tmul_add, map_add (f := _)]; exact add_mem hy hz
   | smul c y _ hy => rw [TensorProduct.tmul_smul, map_smul]; exact Submodule.smul_mem _ _ hy
 
 theorem omB_eq_zero (hK : IsFinCover ℂ K x) (B : Subalgebra ℂ K) (a : ℕ) (ha : d < a) (n : DR ℂ K)

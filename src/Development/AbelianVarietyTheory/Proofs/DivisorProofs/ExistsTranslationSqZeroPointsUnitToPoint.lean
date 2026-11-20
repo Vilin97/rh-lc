@@ -144,7 +144,7 @@ theorem tau_natural (A : Over (Sp R)) [GrpObj A] {B M : Type} [CommRing B] [Alge
       (α : B →+* B').comp (TrivSqZeroExt.fstHom B B M).toRingHom := by
     ext x
     conv_lhs => rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq x]
-    simp [map_add, hβ.1, hβ.2]
+    simp [map_add (f := _), hβ.1, hβ.2]
   let b : ovT R B' M' ⟶ ovT R B M := Over.homMk (spMap β) (by
     show spMap β ≫ spMap _ = spMap _
     rw [← GlobalTheory.Cris.spMap_comp, hβT])

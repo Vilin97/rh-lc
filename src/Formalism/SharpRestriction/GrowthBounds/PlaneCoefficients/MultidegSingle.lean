@@ -206,7 +206,7 @@ theorem lkVars : LkVars := by
     intro F
     induction F using MvPolynomial.induction_on with
     | C a => rw [MvPolynomial.algHom_C]; exact Subalgebra.algebraMap_mem _ a
-    | add f g hf hg => rw [map_add]; exact Subalgebra.add_mem _ hf hg
+    | add f g hf hg => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hf hg
     | mul_X f u hf => rw [map_mul]; exact Subalgebra.mul_mem _ hf (hX u)
   intro F v hv
   exact (mem_supported.1 (hall F)) (Finset.mem_coe.2 hv)

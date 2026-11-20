@@ -80,7 +80,7 @@ theorem exists_comb : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolo
       zero_mem' := ⟨0, by simp, fun Tm _ => by simp [comb]⟩
       add_mem' := by
         rintro a b ⟨c, h1, h2⟩ ⟨c', h1', h2'⟩
-        refine ⟨c + c', fun w hw => ?_, fun Tm h => by rw [map_add, comb_add, h2 Tm h, h2' Tm h]⟩
+        refine ⟨c + c', fun w hw => ?_, fun Tm h => by rw [map_add (f := _), comb_add, h2 Tm h, h2' Tm h]⟩
         exact (Finset.mem_union.1 (Finsupp.support_add hw)).elim (h1 w) (h1' w)
       smul_mem' := by
         rintro a b ⟨c, h1, h2⟩

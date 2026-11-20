@@ -83,7 +83,7 @@ lemma exists_period {x : ℂ_[l]} (hx : x ∈ ringA l) :
     obtain ⟨k1, k2⟩ := key _ _ f g h1 h2
     refine ⟨f * g, Nat.mul_pos hf hg, ?_⟩
     have : (⟨x + y, add_mem hx hy⟩ : ringA l) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-    rw [this, map_add, add_pow_char_pow, k1, k2]
+    rw [this, map_add (f := _), add_pow_char_pow, k1, k2]
   · rintro x hx ⟨f, hf, h1⟩
     refine ⟨f, hf, ?_⟩
     have : (⟨-x, neg_mem hx⟩ : ringA l) = -⟨x, hx⟩ := rfl

@@ -61,7 +61,7 @@ theorem acts_pure {κ : Type} [Fintype κ] (T : ((κ → AF F) → ℂ) → (κ 
   refine hT (fun x => ∏ᶠ v, φ v fun i => evFin F v (x i)) ⟨?_, ?_⟩
   · intro x z hz
     have hzi : ∀ i, At (evI F) (z i) := fun i u hu => congrFun (hz u hu) i
-    simp only [Pi.add_apply, map_add, evFin_eq_zero_of_atI (hzi _), add_zero]
+    simp only [Pi.add_apply, map_add (f := _), evFin_eq_zero_of_atI (hzi _), add_zero]
   · exact GlobalTheory.TensUniq.pure_mem_schA f φ hSB hstd
 
 theorem one_mem_uAt {n : ℕ} (X : Spc F E n) {R : Type} [Zero R] (ev : AF F → R) : (1 : UA σ X.J) ∈ UAt σ X ev := by
@@ -110,7 +110,7 @@ theorem so_fin (hK : KP) (B : Base F E) (G : Geo σ a a') (X : Chars F E) (om : 
         exact GlobalTheory.T.triple_local_action_at_special_place hK F E σ B a a' G X om om' hT h hh (φ B.v₁) hv₁ φ₁ hφ₁ hact
       · rw [Function.update_of_ne hv]; exact hv₁
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem polData_cpt (B : Base F E) (G : Geo σ a a') (X : Chars F E) (om : Rep σ G.V G.W) (om' : Rep σ G.V' G.W)
@@ -134,7 +134,7 @@ theorem polData_cpt (B : Base F E) (G : Geo σ a a') (X : Chars F E) (om : Rep �
     rw [acts_pure (om' (1, k)) f f₁ hact φ hSB hstd]
     exact Submodule.subset_span ⟨f₁, (hCpt k hk f hf).2 f₁ hact, φ, hSB, hev, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 end GlobalTheory.ThKDataStab

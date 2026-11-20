@@ -75,7 +75,7 @@ theorem hO_add_left' (S T : HSp D) (x x' y : WO S T) : hO S T (x + x') y = hO S 
 
 theorem symplO_add_left' (S T : HSp D) (x x' y : WO S T) :
     symplO S T (x + x') y = symplO S T x y + symplO S T x' y := by
-  unfold symplO; rw [hO_add_left', mul_add, map_add]
+  unfold symplO; rw [hO_add_left', mul_add, map_add (f := _)]
 
 theorem symplO_zero_left' (S T : HSp D) (y : WO S T) : symplO S T 0 y = 0 := by
   have h := symplO_add_left' S T 0 0 y
@@ -171,7 +171,7 @@ theorem isModel_boxT : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topol
       rw [hTP]
       exact o''.isThetaFunO_boxT (h₂.theta a) (hL.theta b)
     | zero => rw [map_zero]; exact isThetaFunO_zero' ψ S X
-    | add x y _ _ hx hy => rw [map_add]; exact isThetaFunO_add' hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact isThetaFunO_add' hx hy
     | smul c x _ hx => rw [map_smul]; exact isThetaFunO_smul' c hx
   · have hΦ' : Φ' = comapH (Homeomorph.addRight x) Φ := Subtype.ext (funext h)
     subst hΦ'

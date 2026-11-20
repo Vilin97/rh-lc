@@ -24,7 +24,7 @@ def unitQProds : Submonoid (LetA O n) where
   mul_mem' := by
     rintro a b ⟨u, J, rfl⟩ ⟨u', J', rfl⟩
     refine ⟨u * u', J + J', ?_⟩
-    rw [Multiset.map_add, Multiset.prod_add, Units.val_mul]
+    rw [Multiset.map_add (f := _), Multiset.prod_add, Units.val_mul]
     ring
 
 theorem ps_mem_unitQProds (hs : W.s = 1) (hq : ∃ w : (LetA O n)ˣ, W.q = (w : LetA O n) * (W.π₀ + ((PD.p : ℕ) : LetA O n)))

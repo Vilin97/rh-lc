@@ -297,7 +297,7 @@ noncomputable def pairL (G : Matrix κ κ ℤ) (ω : Module.Basis (InfinitePlace
   toFun y q := Algebra.trace ℚ F (BF G (a • y) (Pi.single q.2 (ω q.1)))
   map_add' x y := by
     funext q
-    simp only [BF, smul_add, add_dotProduct, map_add, Pi.add_apply]
+    simp only [BF, smul_add, add_dotProduct, map_add (f := _), Pi.add_apply]
   map_smul' c x := by
     funext q
     simp only [BF, smul_comm a c, smul_dotProduct, map_smul, Pi.smul_apply, RingHom.id_apply]

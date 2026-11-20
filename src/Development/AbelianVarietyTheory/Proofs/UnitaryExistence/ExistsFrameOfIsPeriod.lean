@@ -221,7 +221,7 @@ theorem im_form_eq (A : ι → Matrix (Fin r) (Fin r) ℂ) (s : ι → ℝ) (Hm 
       exact h x y
     | zero => simp
     | add _ _ _ _ h1 h2 =>
-      simp only [star_add, mulVec_add, dotProduct_add, Complex.add_im, map_add, h1, h2, mul_add,
+      simp only [star_add, mulVec_add, dotProduct_add, Complex.add_im, map_add (f := _), h1, h2, mul_add,
         Finset.sum_add_distrib]
     | smul c _ _ h1 =>
       simp only [star_smul, star_trivial, mulVec_smul, dotProduct_smul, Complex.smul_im, map_smul, h1,
@@ -229,7 +229,7 @@ theorem im_form_eq (A : ι → Matrix (Fin r) (Fin r) ℂ) (s : ι → ℝ) (Hm 
       exact Finset.sum_congr rfl fun _ _ => by ring
   | zero => simp
   | add _ _ _ _ h1 h2 =>
-    simp only [add_dotProduct, Complex.add_im, map_add, h1, h2, mul_add, Finset.sum_add_distrib]
+    simp only [add_dotProduct, Complex.add_im, map_add (f := _), h1, h2, mul_add, Finset.sum_add_distrib]
   | smul c _ _ h1 =>
     simp only [smul_dotProduct, Complex.smul_im, map_smul, h1, smul_eq_mul, Finset.mul_sum]
     exact Finset.sum_congr rfl fun _ _ => by ring

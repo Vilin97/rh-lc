@@ -47,7 +47,7 @@ theorem datum_eq_tensorHalf {D : D7} {S T : HSp D} (βS : GL (Fin S.rank) (EAf D
     fun x => GlobalTheory.ExportSeries.RestrictHalfModel.isHalf_smul (by rw [← map_mul, heQ]) x
   funext x
   rw [tensorHalf_apply]
-  have hc : cA D (eg + eQ) = cA D eQ + cA D eg := by rw [map_add, add_comm]
+  have hc : cA D (eg + eQ) = cA D eQ + cA D eg := by rw [map_add (f := _), add_comm]
   by_cases hx : IsHalf (cA D (eg + eQ)) x
   · have hx' : IsHalf (cA D eQ + cA D eg) x := hc ▸ hx
     rw [if_pos hx', mul_one]
@@ -110,7 +110,7 @@ theorem isThetaAt_vP_twoStep : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl
     (GlobalTheory.PlaceVec.frMapAdj_add _ _ _ _) (GlobalTheory.PlaceVec.frMapAdj_up _ _ _ _) (GlobalTheory.PlaceVec.frMapAdj_down _ _ _ _)
     (R.Q t) (fun y => omegaQ (R.Q t) (Wc D i).rank (R.xiR t) (-1) y) fun y y' h => GlobalTheory.PlaceVec.omegaQ_congr _ _ _ _ h
   obtain ⟨⟨Te, hTe1⟩, hTe2⟩ := hTe
-  have hc : cA D (eg + eQ) = cA D eQ + cA D eg := by rw [map_add, add_comm]
+  have hc : cA D (eg + eQ) = cA D eQ + cA D eg := by rw [map_add (f := _), add_comm]
   have hc' : cA D (eg + eQ) = cA D eg + cA D eQ := map_add _ _ _
   have hm1 := GlobalTheory.TwoStepModel.isPlaceModel_comp_tensorHalf hcQ hcg hQg hΛ hSBg (hc ▸ hTe1)
   have hm2 := GlobalTheory.ExportSeries.isPlaceModel_comp_restrictHalf hcg hcQ hgQ' hΛ (hc' ▸ hTe1)

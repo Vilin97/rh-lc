@@ -34,7 +34,7 @@ theorem exists_psi : ∃ ψ : k⸨X⸩ →ₗ[k] k⸨X⸩, ∀ x, ι (ψ x) = ps
   choose ψ hψ using this
   refine ⟨⟨⟨ψ, fun x y => ι.injective ?_⟩, fun c x => ι.injective ?_⟩, hψ⟩
   · change ι _ = ι _
-    simp only [map_add, hψ]
+    simp only [map_add (f := _), hψ]
   · change lin ι (ψ (c • x)) = lin ι (c • ψ x)
     rw [map_smul, lin_apply, lin_apply, hψ, hψ, ← map_smul, ← lin_apply ι, map_smul, lin_apply]
 
@@ -185,7 +185,7 @@ theorem exists_Psi [FiniteDimensional k⸨X⸩ V] {σ : k⸨X⸩ →ₐ[k] k⸨X
   let b := Module.finBasis k⸨X⸩ V
   obtain ⟨c, hc⟩ := exists_pull_basis hf ht b
   refine ⟨⟨⟨fun x => ∑ i, ψ (c.repr x i) • b i, fun x y => ?_⟩, fun r x => ?_⟩, fun a x => ?_⟩
-  · simp only [map_add, Finsupp.add_apply, add_smul, Finset.sum_add_distrib]
+  · simp only [map_add (f := _), Finsupp.add_apply, add_smul, Finset.sum_add_distrib]
   · simp only [RingHom.id_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← smul_one_smul k⸨X⸩ r x, map_smul, Finsupp.smul_apply, smul_assoc, one_smul, map_smul, smul_assoc]
@@ -227,7 +227,7 @@ theorem pull_span {σ : k⸨X⸩ →ₐ[k] k⸨X⸩} (hσ : ∀ a : k⟦X⟧, �
     induction hx using Submodule.span_induction with
     | mem y hy => obtain ⟨j, rfl⟩ := hy; exact Submodule.subset_span ⟨j, hc j⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul a y _ hy =>
       obtain ⟨e, he⟩ := hσ a
       rw [← algebraMap_smul k⸨X⸩ a y, hf]

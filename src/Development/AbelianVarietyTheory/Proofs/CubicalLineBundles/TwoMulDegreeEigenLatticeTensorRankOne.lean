@@ -62,7 +62,7 @@ theorem form_eq_of_span {K V L I : Type} [Field K] [AddCommGroup V] [Module K V]
     induction hw using Submodule.span_induction with
     | mem v hv => obtain ⟨y, rfl⟩ := hv; exact hz y
     | zero => simpa using h.smul_right s 0 (Φ z) 0
-    | add u v _ _ hu hv => simp only [map_add, h.add_right, hu, hv, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+    | add u v _ _ hu hv => simp only [map_add (f := _), h.add_right, hu, hv, Pi.add_apply, mul_add, Finset.sum_add_distrib]
     | smul r u _ hu =>
       rw [map_smul, h.smul_right, hu, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => by simp; ring
@@ -120,7 +120,7 @@ theorem exists_eigenline {E K O L V I : Type} [Field E] [NumberField E] [IsCMFie
       ∑ i, b s i * (starRingEnd ℂ (s (ev a i)) * s (ev a' i))) (fun a => w • a) (s (τ₀ w)) (hw s)
       (fun a a' a'' => ?_) (fun a a' => ?_) (fun a a' => ?_) (fun a => ?_) a a'
     · simp only [hΦ]
-      simp only [map_add, h.add_right, hev, mul_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), h.add_right, hev, mul_add, Finset.sum_add_distrib]
       ring
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sub, h.conj_symm, map_sum]
@@ -167,7 +167,7 @@ theorem exists_eigenline {E K O L V I : Type} [Field E] [NumberField E] [IsCMFie
       simp [hev, Algebra.smul_def]
     | zero => simp only [Pi.zero_apply, mul_zero, map_zero]; exact (map_zero Φ).symm
     | add u v _ _ hu hv =>
-      rw [map_add, map_add, hu, hv, ← map_add]
+      rw [map_add (f := _), map_add (f := _), hu, hv, ← map_add (f := _)]
       congr 1
       funext i
       simp [mul_add]
@@ -225,10 +225,10 @@ theorem two_mul_deg_eigLat : ThetaUnifAV → Out.Laws → ∀ (E : Type) [Field 
       rw [hτ₀w, ← hτ, ← hτ']
       have h3 := congrArg σ h2
       have h4 := congrArg τ' h2
-      simp only [map_mul, map_add, map_one, map_ofNat] at h3 h4
+      simp only [map_mul, map_add (f := _), map_one, map_ofNat] at h3 h4
       linear_combination (h3 - h4 + hσ) / 2
     obtain ⟨m, rfl, -⟩ := existsUnique_coord H k
-    simp only [map_add, map_mul, map_intCast, ← hw]
+    simp only [map_add (f := _), map_mul, map_intCast, ← hw]
     simp [wK]
   obtain ⟨𝔞, e, β, h𝔞, he, hrange, hβc, hβ, hform, hnorm⟩ := GlobalTheory.T.exists_fractionalIdeal_traceForm_rank_one E H D ε hK hrk hKF hpos
   obtain ⟨k, hk, hku, -, -, -, -, N, xs, ys, hdual⟩ := GlobalTheory.T.exists_unique_cmHermitianLatticeForm E H D ε
@@ -282,7 +282,7 @@ theorem two_mul_deg_eigLat : ThetaUnifAV → Out.Laws → ∀ (E : Type) [Field 
       have h3 := congrArg (s.comp τ') h2
       have h4 := congrArg (s.comp τ') (HostModel.coe_sq_eq_neg H.rt_sq)
       have h5 : s (τ' (H.w0 : E)) = s (τ₀ (wK H)) := congrArg s (hext τ' rfl (wK H))
-      simp only [map_mul, map_add, map_one, map_ofNat, map_pow, map_neg, map_natCast, RingHom.comp_apply] at h3 h4
+      simp only [map_mul, map_add (f := _), map_one, map_ofNat, map_pow, map_neg, map_natCast, RingHom.comp_apply] at h3 h4
       have h6 := congrArg Complex.im h3
       have h7 := congrArg Complex.re h4
       have h8 : (0 : ℝ) < H.d := by exact_mod_cast H.d_prime.pos

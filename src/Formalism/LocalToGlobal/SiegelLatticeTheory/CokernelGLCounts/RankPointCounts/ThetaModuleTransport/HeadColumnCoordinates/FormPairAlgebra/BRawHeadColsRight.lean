@@ -73,7 +73,7 @@ theorem bRaw_add_right (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) O) (y y' z' : Fin
   unfold bRaw
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
-  simp [map_add, add_mul]
+  simp [map_add (f := _), add_mul]
 
 theorem bRaw_smul_right (Z : Matrix (Fin (r + 1)) (Fin (r + 1)) O) (c : O) (y y' : Fin (r + 1) → O) :
     bRaw O cj Z y (c • y') = cj (c : E) * bRaw O cj Z y y' := by

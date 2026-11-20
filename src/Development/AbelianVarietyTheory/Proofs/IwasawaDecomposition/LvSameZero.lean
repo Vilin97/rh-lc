@@ -284,7 +284,7 @@ theorem locW_of_map {LL : Type} [Field LL] [NumberField LL] (Pl : Rows.Places LL
   induction hx using Submodule.span_induction with
   | mem z hz => exact Submodule.subset_span (hg z hz)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | smul r a _ ha =>
     rw [Subring.smul_def, map_smul]
     exact Submodule.smul_mem _ r ha

@@ -67,7 +67,7 @@ def idealD (p : ℕ) (M : Submodule R (N → C)) (K : Submodule F N) (t : N) (χ
       simp only [Pi.add_apply]; ring
     · exact Submodule.add_mem _ (h2 k hk) (h2' k hk)
     · convert Submodule.add_mem _ h3 h3' using 1
-      simp only [Pi.add_apply, map_add]; ring
+      simp only [Pi.add_apply, map_add (f := _)]; ring
   zero_mem' := ⟨0, Submodule.zero_mem _, fun _ _ => by simp, fun _ _ => by simp, by simp⟩
   smul_mem' := by
     rintro r c ⟨g, hg, h1, h2, h3⟩

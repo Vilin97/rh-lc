@@ -68,7 +68,7 @@ theorem pureTensor_compAt {D : D7} {S T : HSp D} (C : Ctx S T) (h : GA D S) {B :
       rw [MvPolynomial.smul_eq_C_mul, mul_one]
     rw [e, map_smul, map_smul, map_smul, map_one (ColChange.sub C h), (Lc 1).2.2.1, (L1 1).2.2.1]
   next p q hp hq =>
-    rw [map_add, map_add, map_add, hp, hq]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   next p v hp =>
     set_option synthInstance.maxHeartbeats 100000 in
       rw [mul_comm p, (Lc p).2.1 v, hp, key _ (L1 (ColChange.sub C h p)).1 v, map_mul, hX, Finset.sum_mul, map_sum]

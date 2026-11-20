@@ -39,7 +39,7 @@ def gramCore {ι : Type} [Fintype ι] (G : Matrix ι ι ℝ) (hG : G.PosDef) : I
     · have h := hG.dotProduct_mulVec_pos hx
       rw [star_trivial] at h
       exact h.le
-  add_left x y z := by simp only [map_add, add_dotProduct]
+  add_left x y z := by simp only [map_add (f := _), add_dotProduct]
   smul_left x y r := by simp only [map_smul, smul_dotProduct, conj_trivial, smul_eq_mul]
   definite x h := by
     by_contra hx

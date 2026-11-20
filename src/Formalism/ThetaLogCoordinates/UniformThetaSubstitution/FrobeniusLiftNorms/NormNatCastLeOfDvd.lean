@@ -141,7 +141,7 @@ lemma shiftPoly_lowPoly (b : κ → Lw → K) (Q : MvPolynomial Lw K) :
   unfold shiftPoly lowPoly
   induction Q using MvPolynomial.induction_on with
   | C a => simp [MvPolynomial.algebraMap_eq]
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | mul_X f x hf =>
     simp only [map_mul, hf]
     set_option synthInstance.maxHeartbeats 100000 in
@@ -176,7 +176,7 @@ lemma agree_mul {D : ℕ} {f f' g g' : MvPowerSeries σ K} (hf : Agree D f f') (
   rw [MvPowerSeries.coeff_mul, MvPowerSeries.coeff_mul]
   refine Finset.sum_congr rfl fun x hx => ?_
   have hx' := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
-  have hd : x.1.degree + x.2.degree = n.degree := by rw [← hx', map_add]
+  have hd : x.1.degree + x.2.degree = n.degree := by rw [← hx', map_add (f := _)]
   rw [hf _ (by omega), hg _ (by omega)]
 
 lemma agree_pow {D : ℕ} {f f' : MvPowerSeries σ K} (hf : Agree D f f') (i : ℕ) :

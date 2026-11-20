@@ -55,13 +55,13 @@ theorem sqrt_sq (d : ℕ) : ((Real.sqrt d : ℝ) : ℂ) ^ 2 = d := by
 
 theorem trace_eq (d : ℕ) (m k : ℤ) :
     ((m : ℂ) + k * omegaK d) + conj ((m : ℂ) + k * omegaK d) = ((2 * m + k : ℤ) : ℂ) := by
-  rw [map_add, map_mul, map_intCast, map_intCast, conj_omega]
+  rw [map_add (f := _), map_mul, map_intCast, map_intCast, conj_omega]
   push_cast
   ring
 
 theorem diff_sq (d : ℕ) (m k : ℤ) :
     (((m : ℂ) + k * omegaK d) - conj ((m : ℂ) + k * omegaK d)) ^ 2 = -((d * k ^ 2 : ℤ) : ℂ) := by
-  rw [map_add, map_mul, map_intCast, map_intCast, conj_omega]
+  rw [map_add (f := _), map_mul, map_intCast, map_intCast, conj_omega]
   have hs := sqrt_sq d
   unfold omegaK
   push_cast
@@ -70,7 +70,7 @@ theorem diff_sq (d : ℕ) (m k : ℤ) :
 theorem isQInt_conj {d : ℕ} {x : ℂ} (h : IsQInt d x) : IsQInt d (conj x) := by
   obtain ⟨m, k, rfl⟩ := h
   refine ⟨m + k, -k, ?_⟩
-  rw [map_add, map_mul, map_intCast, map_intCast, conj_omega]
+  rw [map_add (f := _), map_mul, map_intCast, map_intCast, conj_omega]
   push_cast
   ring
 
@@ -181,7 +181,7 @@ theorem norm_omega_le (ι : ℂ ≃+* ℂ_[p]) {d : ℕ} (hd : d % 8 = 7) : ‖�
 
 theorem norm_qint_le (ι : ℂ ≃+* ℂ_[p]) {d : ℕ} (hd : d % 8 = 7) {x : ℂ} (hx : IsQInt d x) : ‖ι x‖ ≤ 1 := by
   obtain ⟨m, k, rfl⟩ := hx
-  rw [map_add, map_mul, map_intCast, map_intCast]
+  rw [map_add (f := _), map_mul, map_intCast, map_intCast]
   refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (IsUltrametricDist.norm_intCast_le_one _ m) ?_)
   rw [norm_mul]
   exact mul_le_one₀ (IsUltrametricDist.norm_intCast_le_one _ k) (norm_nonneg _) (norm_omega_le ι hd)
@@ -481,7 +481,7 @@ theorem split_bound_of_xi_lemmas (h1 : XiEt) (h2 : XiConn) : SelfDualLatticeThet
         have htr := trace_eq dK m k
         rw [← hmk] at htr
         have h3 : ‖((2 * m + k : ℤ) : ℂ_[p])‖ < 1 := by
-          rw [← map_intCast ι, ← htr, map_add]
+          rw [← map_intCast ι, ← htr, map_add (f := _)]
           exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt hlt' hlt)
         exact hT (dvd_of_norm_lt _ h3)
       · exact h'

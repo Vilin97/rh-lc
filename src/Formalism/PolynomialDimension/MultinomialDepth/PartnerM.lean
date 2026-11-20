@@ -754,7 +754,7 @@ private theorem coeff_XD_lemma (v : Fin N × Fin r) (x : MvPolynomial (Fin N × 
       · subst h; ring
       · simp
   · rename_i f g hf hg
-    simp only [map_add, mul_add, MvPolynomial.coeff_add, hf, hg]
+    simp only [map_add (f := _), mul_add, MvPolynomial.coeff_add, hf, hg]
 
 theorem coeff_cartan (LL : Letters N) (j : ℕ) (c : Fin r) (x : MvPolynomial (Fin N × Fin r) ℚ_[p])
     (m : Fin N × Fin r →₀ ℕ) : AddMonoidAlgebra.coeff (glAct p LL j c c x) m = ((wt LL j c m : ℤ) : ℚ_[p]) * AddMonoidAlgebra.coeff x m := by
@@ -896,9 +896,9 @@ private theorem pderiv_pderiv_lemma [DecidableEq σ] (i j : σ) (g : MvPolynomia
     · rw [pderiv_X_of_ne h, map_zero]
   apply MvPolynomial.induction_on g
   · intro a; simp
-  · intro p q hp hq; simp only [map_add, hp, hq]
+  · intro p q hp hq; simp only [map_add (f := _), hp, hq]
   · intro p n hp
-    simp only [Derivation.leibniz, smul_eq_mul, map_add, hp, hX, mul_zero, zero_add, add_zero]
+    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), hp, hX, mul_zero, zero_add, add_zero]
     ring
 
 theorem comm_XD [DecidableEq σ] (u v u' v' : σ) (g : MvPolynomial σ k) :

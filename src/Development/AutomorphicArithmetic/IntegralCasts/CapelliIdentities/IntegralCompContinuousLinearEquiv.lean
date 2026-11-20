@@ -262,7 +262,7 @@ theorem UpperTheory.Reformulated.B.Yzb9.existsUnique_of_equiv :
   have hf : Continuous f := ψ.continuous.comp he
   have hf' : Continuous f.symm := he'.comp ψ.symm.continuous
   obtain ⟨T, hT⟩ := UpperTheory.Reformulated.B.Yzb9.exists_strictHenselian_absolutely_closed_local_ring (fun u v => l (f.symm u) (f.symm v))
-    (fun u u' v => by simp only [map_add, hadd]) (fun u v => hsym _ _)
+    (fun u u' v => by simp only [map_add (f := _), hadd]) (fun u v => hsym _ _)
     (fun v => (hcont _).comp hf')
     (fun u hu => by
       have : f.symm u = 0 := hnd _ (fun y => by

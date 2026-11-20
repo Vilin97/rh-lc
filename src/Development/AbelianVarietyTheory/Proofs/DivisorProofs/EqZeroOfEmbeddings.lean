@@ -39,7 +39,7 @@ theorem exists_functional {T M Ω : Type} [CommRing T] [IsLocalRing T] [AddCommG
     push Not at hcon
     exact hq ((Module.forall_dual_apply_eq_zero_iff (ResidueField T) _).mp hcon)
   refine ⟨LinearMap.mk (AddHom.mk (fun m => algebraMap (ResidueField T) Ω (f (Submodule.Quotient.mk m)))
-    (fun a b => by simp only [Submodule.Quotient.mk_add, map_add])) (fun a m => ?_), ?_⟩
+    (fun a b => by simp only [Submodule.Quotient.mk_add, map_add (f := _)])) (fun a m => ?_), ?_⟩
   · have hs : (Submodule.Quotient.mk (a • m) : M ⧸ N) = residue T a • Submodule.Quotient.mk m := rfl
     simp only [RingHom.id_apply]
     rw [hs, map_smul, smul_eq_mul, map_mul, Algebra.smul_def, IsScalarTower.algebraMap_apply T (ResidueField T) Ω a]
@@ -187,7 +187,7 @@ theorem div_span (hinj : Function.Injective (algebraMap T F₁)) {c₀ : O →+*
     apply mul_left_cancel₀ hϖ
     rw [← hr]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hr', map_add, map_sum, map_mul, add_mul, Finset.sum_add_distrib, Finset.sum_mul, mul_add, Finset.mul_sum]
+      simp only [hr', map_add (f := _), map_sum, map_mul, add_mul, Finset.sum_add_distrib, Finset.sum_mul, mul_add, Finset.mul_sum]
     congr 1
     · rw [Finset.sum_comm]
       refine Finset.sum_congr rfl fun t _ => ?_

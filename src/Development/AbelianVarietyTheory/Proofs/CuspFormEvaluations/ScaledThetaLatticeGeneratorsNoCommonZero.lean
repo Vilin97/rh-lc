@@ -25,7 +25,7 @@ theorem semilinear_eq_zero_of_span_smul {O K L M ι : Type} [CommRing O] [Field 
     induction hg using Submodule.span_induction with
     | mem x hx => obtain ⟨i, rfl⟩ := hx; exact hw i
     | zero => exact map_zero φ
-    | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | smul a x _ hx => rw [← algebraMap_smul K a x, map_smulₛₗ, hx, smul_zero]
   have h2 := h1 _ hf
   rw [← algebraMap_smul K s f, map_smulₛₗ, smul_eq_mul] at h2
@@ -66,7 +66,7 @@ theorem noCommonZero_of_tiedW : Formalism.MainNotions.ModuliIntegralCharts.H1.Ch
     by_contra h'
     exact hno ⟨i, h'⟩
   have hadd : ∀ F F' : T.R j, rdU (T.U j T.σ₀) (F + F') k x = rdU (T.U j T.σ₀) F k x + rdU (T.U j T.σ₀) F' k x :=
-    fun F F' => by rw [map_add]; rfl
+    fun F F' => by rw [map_add (f := _)]; rfl
   have hsmul : ∀ (a : T.Q.c.F) (F : T.R j), rdU (T.U j T.σ₀) (a • F) k x = T.σ₀ a * rdU (T.U j T.σ₀) F k x :=
     fun a F => by rw [map_smulₛₗ]; rfl
   exact hf0 (eq_zero_of_span_eq_WWc (recPJ h j hj) wL G.w S.sW hs hG.1 T.σ₀

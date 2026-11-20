@@ -198,7 +198,7 @@ theorem ct_ct {a b : ℕ} (A : Matrix (Fin a) (Fin b) (EAf D)) : ct (ct A) = A :
   change cF D (cF D (A i j)) = A i j
   induction A i j using TensorProduct.induction_on with
   | zero => simp only [RingHom.map_zero]
-  | add a b ha hb => simp only [RingHom.map_add, ha, hb]
+  | add a b ha hb => simp only [RingHom.map_add (f := _), ha, hb]
   | tmul y e => exact congrArg (· ⊗ₜ[D.host.F] e) (star_star y)
 
 theorem int_of_int_adj {F : Frame S T} (hF : F.Good) {x : WO S T} (h : IsIntM (frMapAdj S T F.βS F.βT x)) :

@@ -14,12 +14,12 @@ theorem coords_one_tmul_smul {R O W T ι : Type} [CommRing R] [CommRing O] [Alge
     GlobalTheory.WeakTop.coords W O b (((1 : O) ⊗ₜ[R] w) • z) i = w * GlobalTheory.WeakTop.coords W O b z i := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [smul_add, map_add, Pi.add_apply, hx, hy, mul_add]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), Pi.add_apply, hx, hy, mul_add]
   | tmul r t =>
     induction r using TensorProduct.induction_on with
     | zero => simp
     | add x y hx hy =>
-      simp only [add_tmul, smul_add, map_add, Pi.add_apply, hx, hy, mul_add]
+      simp only [add_tmul, smul_add, map_add (f := _), Pi.add_apply, hx, hy, mul_add]
     | tmul a w' =>
       rw [TensorProduct.smul_tmul', smul_eq_mul, Algebra.TensorProduct.tmul_mul_tmul, one_mul,
         coords_tmul, coords_tmul]

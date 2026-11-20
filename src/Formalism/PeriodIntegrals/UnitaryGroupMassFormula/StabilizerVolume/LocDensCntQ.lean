@@ -49,7 +49,7 @@ private theorem isQuadInv_and_bijective_of_not_isSquare (k K : Type) [Field k] [
   have h2K : (2 : K) ≠ 0 := by
     intro h
     have h11 : algebraMap k K (1 + 1) = 0 := by
-      rw [map_add, map_one]
+      rw [map_add (f := _), map_one]
       linear_combination h
     have h11' : (1 + 1 : k) = 0 := (algebraMap k K).injective (h11.trans (map_zero _).symm)
     exact h2 (by linear_combination h11')

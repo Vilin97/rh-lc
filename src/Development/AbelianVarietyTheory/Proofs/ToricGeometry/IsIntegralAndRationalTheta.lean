@@ -254,8 +254,8 @@ theorem exists_algHom (j : MvPolynomial (Fin n) ℂ →ₐ[ℂ] A) (a : A)
       map_one' := by simpa using key2 1
       map_zero' := by simpa using key2 0
       map_add' := fun b b' => by
-        rw [← add_div, ← map_add, key (R (b + b')) (R b + R b') (by
-          rw [map_add, hR', hR', hR', mul_add])]
+        rw [← add_div, ← map_add (f := _), key (R (b + b')) (R b + R b') (by
+          rw [map_add (f := _), hR', hR', hR', mul_add])]
       map_mul' := fun b b' => by
         have := key (Polynomial.C q * R (b * b')) (R b * R b') (by
           rw [map_mul, map_mul, hR', hR', hR', hψq]; ring)
@@ -293,7 +293,7 @@ theorem growth_mv (q : MvPolynomial (Fin n) ℂ) :
     obtain ⟨C', m', hC', h'⟩ := hq
     refine ⟨C + C', m + m', by positivity, fun x => ?_⟩
     have h1 : (1 : ℝ) ≤ 1 + ‖x‖ := by simp
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
     refine (norm_add_le _ _).trans (add_le_add ((h x).trans ?_) ((h' x).trans ?_))
     · gcongr; omega
     · gcongr; omega
@@ -340,7 +340,7 @@ theorem growth_root (s : Polynomial (MvPolynomial (Fin n) ℂ)) (hs : s.Monic) :
 theorem analyticAt_eval (r : Polynomial (MvPolynomial (Fin n) ℂ)) (w : (Fin n → ℂ) × ℂ) :
     AnalyticAt ℂ (fun w : (Fin n → ℂ) × ℂ => (r.map (MvPolynomial.eval w.1)).eval w.2) w := by
   induction r using Polynomial.induction_on' with
-  | add p q hp hq => simpa only [Polynomial.map_add, Polynomial.eval_add] using hp.fun_add hq
+  | add p q hp hq => simpa only [Polynomial.map_add (f := _), Polynomial.eval_add] using hp.fun_add hq
   | monomial k c =>
     simp only [Polynomial.map_monomial, Polynomial.eval_monomial]
     refine AnalyticAt.fun_mul ?_ (analyticAt_snd.fun_pow k)

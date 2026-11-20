@@ -471,7 +471,7 @@ theorem rd_cmap (X : Mat n) (A : V →L[ℂ] V') (x : Sm n V) : cmap A (rd X x) 
 
 theorem T_intertw (α : Sm n V →ₗ[ℂ] Sm n V') (h : ∀ X x, α (rd X x) = rd X (α x)) (s : Bool) (Z : Mat n) (x : Sm n V) :
     α (T s Z x) = T s Z (α x) := by
-  simp only [T, LinearMap.smul_apply, LinearMap.add_apply, map_smul, map_add, h]
+  simp only [T, LinearMap.smul_apply, LinearMap.add_apply, map_smul, map_add (f := _), h]
 
 theorem T_expand (s : Bool) (Z : Mat n) : (T s Z : Module.End ℂ (Sm n V)) =
     ∑ a, ∑ b, kap s (Z a b) • eM V n s a b := by
@@ -499,7 +499,7 @@ theorem tr_T_other (s : Bool) (m : ℕ) (Z : Mat n) (x : Sm n V) :
   exact (LinearMap.congr_fun this y).symm
 
 theorem tr_rd (s : Bool) (m : ℕ) (X : Mat n) (x : Sm n V) : rd X (tr V n s m x) = tr V n s m (rd X x) := by
-  rw [rd_split s X, LinearMap.add_apply, LinearMap.add_apply, map_add, tr_T_other]
+  rw [rd_split s X, LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), tr_T_other]
   congr 1
   exact LinearMap.congr_fun (tr_T_same s m X) x
 

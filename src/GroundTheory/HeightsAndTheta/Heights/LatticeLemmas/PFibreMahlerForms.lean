@@ -165,7 +165,7 @@ theorem fibreGen_surjective (h : HermitianMetric F W) (σ : F →+* ℂ) {n : �
         rw [fibreVec, ← map_smul, smul_tmul', complex_smul_def, mul_one, AlgEquiv.apply_symm_apply]
       rw [this]
       exact T.smul_mem _ (hvec e)
-    | add x y hx hy => rw [map_add]; exact T.add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact T.add_mem hx hy
   obtain ⟨x, hx⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).mp hξ
   exact ⟨x, hx⟩
 
@@ -174,7 +174,7 @@ variable {K : Type} [Field K] [NumberField K] [Algebra F K]
 def archLin (h : HermitianMetric F W) (τ : K →+* ℂ) (yv : DualVec F W K) :
     FibreSpace h (τ.comp (algebraMap F K)) →ₗ[ℂ] ℂ where
   toFun ξ := (ofComplex _).symm (archFunctional τ yv ((FibreSpace.equiv h _).symm ξ))
-  map_add' x y := by simp only [map_add]
+  map_add' x y := by simp only [map_add (f := _)]
   map_smul' c x := by
     rw [map_smul]
     generalize (FibreSpace.equiv h _).symm x = y
@@ -185,7 +185,7 @@ def archLin (h : HermitianMetric F W) (τ : K →+* ℂ) (yv : DualVec F W K) :
         complex_smul_def, map_mul, AlgEquiv.symm_apply_apply, RingHom.id_apply, smul_eq_mul,
         mul_assoc]
     | add x y hx hy =>
-      simp only [smul_add, map_add, hx, hy, RingHom.id_apply, smul_eq_mul, mul_add]
+      simp only [smul_add, map_add (f := _), hx, hy, RingHom.id_apply, smul_eq_mul, mul_add]
 
 theorem archLin_fibreVec (h : HermitianMetric F W) (τ : K →+* ℂ) (yv : DualVec F W K) (e : W) :
     archLin h τ yv (fibreVec h (τ.comp (algebraMap F K)) e) = τ (yv e) := by

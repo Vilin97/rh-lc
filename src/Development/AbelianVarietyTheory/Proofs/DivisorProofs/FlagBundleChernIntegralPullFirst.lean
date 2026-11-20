@@ -24,7 +24,7 @@ variable {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n) {ι : Type
 
 theorem evalF_add' (P Q : MvPolynomial ι ℝ) : evalF A w (P + Q) = evalF A w P + evalF A w Q := by
   funext x
-  simp only [evalF, fld, map_add, Pi.add_apply, AddMemClass.coe_add]
+  simp only [evalF, fld, map_add (f := _), Pi.add_apply, AddMemClass.coe_add]
 
 theorem evalF_mul' (P Q : MvPolynomial ι ℝ) : evalF A w (P * Q) = evalF A w P * evalF A w Q := by
   funext x
@@ -47,7 +47,7 @@ theorem evalF_aeval_self (s : ι → MvPolynomial ι ℝ) (hs : ∀ i, fld A (w 
     (P : MvPolynomial ι ℝ) : evalF A w P = evalF A w (aeval s P) := by
   induction P using MvPolynomial.induction_on with
   | C r => simp [evalF_C']
-  | add P Q hP hQ => rw [map_add, evalF_add', evalF_add', hP, hQ]
+  | add P Q hP hQ => rw [map_add (f := _), evalF_add', evalF_add', hP, hQ]
   | mul_X P i hP => rw [map_mul, evalF_mul', evalF_mul', hP, aeval_X, evalF_X', hs]
 
 end Alg
@@ -67,7 +67,7 @@ theorem pullback_evalF (f : M' → M) (hf : A.IsHolo A' f) (s : ι → MvPolynom
   have hp := ((GlobalTheory.T.smoothForms_calculus_holomorphicAtlas M n A).2.2.2.2 M' n' A' f hf)
   induction P using MvPolynomial.induction_on with
   | C r => rw [evalF_C', aeval_C, algebraMap_eq, evalF_C', (hp.2 (r : ℂ) 1 1).2.2.1, hp.1]
-  | add P Q hP hQ => rw [evalF_add', (hp.2 1 _ _).1, hP, hQ, map_add, evalF_add']
+  | add P Q hP hQ => rw [evalF_add', (hp.2 1 _ _).1, hP, hQ, map_add (f := _), evalF_add']
   | mul_X P i hP => rw [evalF_mul', (hp.2 1 _ _).2.1, hP, evalF_X', hs, map_mul, aeval_X, evalF_mul']
 
 end Pull
@@ -80,7 +80,7 @@ theorem dvd_aeval_sub (P : MvPolynomial (Fin 5) ℝ) : (X 4 - X 0 : MvPolynomial
   induction P using MvPolynomial.induction_on with
   | C r => simp
   | add P Q hP hQ =>
-    rw [map_add, map_add, add_sub_add_comm]
+    rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
     exact dvd_add hP hQ
   | mul_X P i hP =>
     have hi : (X 4 - X 0 : MvPolynomial (Fin 5) ℝ) ∣ subQ i - subB i := by

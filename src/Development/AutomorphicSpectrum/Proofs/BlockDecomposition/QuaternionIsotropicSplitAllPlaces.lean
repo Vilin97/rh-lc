@@ -193,7 +193,7 @@ theorem un_zero (n : Q d β F) : un n (0 : R) = 1 := by simp [un]
 
 theorem qn_un (n : Q d β F) (h0 : n.re = 0) (hn : qn n = 0) (c : R) : qn (un n c) = 1 := by
   have h := congrArg (algebraMap F R) hn
-  simp only [qn, h0, map_add, map_sub, map_mul, map_pow, map_zero, Algebra.algebraMap_self,
+  simp only [qn, h0, map_add (f := _), map_sub, map_mul, map_pow, map_zero, Algebra.algebraMap_self,
     RingHom.id_apply] at h
   have h0' : algebraMap F R n.re = 0 := by rw [h0, map_zero]
   simp only [qn, un, rat, qmap]
@@ -307,9 +307,9 @@ theorem dense_add (s : Pl F) :
     (fun u _ => ⟨isOpen_interior, ⟨proj u c, mem_interior_iff_mem_nhds.2 (hU u)⟩⟩)
   have hproj : ∀ u, u ≠ s → proj u (algebraMap F (AF F) t + inc s (proj s c - algebraMap F (Kp s) t)) =
       algebraMap F (Kp u) t := fun u hu => by
-    rw [map_add, proj_inc_ne hu, add_zero, AlgHom.commutes]
+    rw [map_add (f := _), proj_inc_ne hu, add_zero, AlgHom.commutes]
   have hs : proj s (algebraMap F (AF F) t + inc s (proj s c - algebraMap F (Kp s) t)) = proj s c := by
-    rw [map_add, proj_inc_same, AlgHom.commutes]
+    rw [map_add (f := _), proj_inc_same, AlgHom.commutes]
     ring
   refine ⟨algebraMap F (AF F) t + inc s (proj s c - algebraMap F (Kp s) t),
     hy _ (fun u hu => ?_) (fun v hv => ?_), ⟨t, _, rfl⟩⟩

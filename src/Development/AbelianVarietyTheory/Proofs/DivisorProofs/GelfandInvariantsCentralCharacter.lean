@@ -52,7 +52,7 @@ theorem main_succ (A : Type) [Ring A] [Algebra ℂ A] (m : ℕ) (F : Fin (m+1) �
     intro w
     have h1 := congrArg φ (GlobalTheory.T.traced_qminor_comatrix_truncated_inverse A m F hF w N)
     rw [← GlobalTheory.T.qdet_add_one_sub_eq_sum_qminor', hR] at h1
-    simp only [hq, ← Algebra.smul_def, map_add, map_smul, smul_eq_mul, hRp] at h1
+    simp only [hq, ← Algebra.smul_def, map_add (f := _), map_smul, smul_eq_mul, hRp] at h1
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [mul_sum, map_sum, map_smul, map_sub, smul_eq_mul, hφa] at h1
     rw [mul_sum]

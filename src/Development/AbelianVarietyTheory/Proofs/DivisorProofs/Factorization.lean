@@ -53,7 +53,7 @@ theorem exists_lift_sys : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (h₀ : Mod
     obtain ⟨w₁, hw₁, e₁⟩ := hy
     obtain ⟨w₂, hw₂, e₂⟩ := hz
     refine ⟨w₁ + w₂, add_mem hw₁ hw₂, ?_⟩
-    rw [← hiA, ← hiA, map_add, map_add, map_add, map_add, hiA, hiA, hiA, hiA, e₁, e₂, smul_add]
+    rw [← hiA, ← hiA, map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hiA, hiA, hiA, hiA, e₁, e₂, smul_add]
     abel
   | smul c y _ hy =>
     obtain ⟨w, hw, e⟩ := hy

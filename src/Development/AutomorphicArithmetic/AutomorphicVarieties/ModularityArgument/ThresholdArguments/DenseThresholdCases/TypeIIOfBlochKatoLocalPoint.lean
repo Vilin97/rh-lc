@@ -115,6 +115,6 @@ theorem UpperTheory.V.Z.Kato.WeilSphericalRecords.bloch_kato_selmer_vanishes_of_
     (bloch_kato_nonpositive_weight hC D 0 le_rfl _ zC (fun g => pC_mem (γ g)) bC)
   refine (mem_coboundaries1 _ _).2 ⟨sA xA + (2⁻¹ : PadicAlgCl l) • sB 1 x1 + (2⁻¹ : PadicAlgCl l) • sB (-1) x2 + pC xC, fun g => ?_⟩
   rw [decomp (2⁻¹ : PadicAlgCl l) (by norm_num) (γ g), hxA g, hx1 g, hx2 g, hxC g]
-  simp only [map_sub, map_add, map_smul, eA', eB1', eB2', eC', smul_sub]
+  simp only [map_sub, map_add (f := _), map_smul, eA', eB1', eB2', eC', smul_sub]
   abel
 end

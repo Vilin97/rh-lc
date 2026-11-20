@@ -68,7 +68,7 @@ def lieL (h : V →ₗ⋆[K] V →ₗ[K] K) (A B : Submodule R V) : AddSubgroup 
     refine ⟨fun x y => ?_, fun x hx => B.add_mem (h2 x hx) (k2 x hx)⟩
     have a := h1 x y
     have b := k1 x y
-    simp only [LinearMap.add_apply, map_add]
+    simp only [LinearMap.add_apply, map_add (f := _)]
     linear_combination a + b
   neg_mem' := by
     rintro X ⟨h1, h2⟩

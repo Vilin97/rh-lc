@@ -24,7 +24,7 @@ theorem isBaseChange_of_isBaseChange_quotient :
     | tmul a m =>
       rw [LinearMap.baseChange_tmul, IsBaseChange.equiv_tmul, IsBaseChange.equiv_tmul]
       rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
   have hfun : ⇑(w.baseChange (S ⧸ 𝔞)) = hg.equiv.symm ∘ hgw.equiv := by
     funext z
     simp [← heq z]

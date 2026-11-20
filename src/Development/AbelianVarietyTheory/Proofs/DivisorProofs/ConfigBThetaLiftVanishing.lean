@@ -67,7 +67,7 @@ theorem exists_qProd_eq_zero {V : Type} [AddCommGroup V] [Module ℂ V] {ι : Ty
       exacts [hs q h, ht q h]
     · have e : qProd B (s ++ t) = qProd B s * qProd B t := by
         simp [qProd, List.prod_append]
-      rw [map_add, e, Module.End.mul_apply _ _ y, hty, map_zero, add_zero, (qProd_commute B hc s t).eq,
+      rw [map_add (f := _), e, Module.End.mul_apply _ _ y, hty, map_zero, add_zero, (qProd_commute B hc s t).eq,
         Module.End.mul_apply, hsx, map_zero]
   | smul a x _ hx =>
     obtain ⟨s, hs, hsx⟩ := hx
@@ -99,7 +99,7 @@ theorem disjoint_span_span {P : Type} [AddCommGroup P] [Module ℂ P] (V : Submo
     induction hz using Submodule.span_induction with
     | mem x hx => exact hx.2
     | zero => intro i; simp
-    | add x y _ _ hx hy => intro i; rw [map_add, hx, hy, smul_add]
+    | add x y _ _ hx hy => intro i; rw [map_add (f := _), hx, hy, smul_add]
     | smul a x _ hx => intro i; rw [map_smul, hx, smul_comm]
   have hv' : ∀ i, B i v = lam i • v := fun i => Subtype.ext (htw0 _ hz i)
   obtain ⟨s, hs, hsv⟩ := exists_qProd_eq_zero B lam hc hv
@@ -209,8 +209,8 @@ theorem twPart_disjoint_offPart_beta : GlobalTheory.ThK.KP → ∀ (F E : Type) 
     choose g hgP hgx using onto'
     refine ⟨{ toFun := fun x => R.p' (A' (g x)), map_add' := ?_, map_smul' := ?_ }, ?_⟩
     · intro x y
-      rw [← map_add, ← map_add]
-      exact wd _ (hgP _) _ (add_mem (hgP x) (hgP y)) (by rw [hgx, map_add, hgx, hgx])
+      rw [← map_add (f := _), ← map_add (f := _)]
+      exact wd _ (hgP _) _ (add_mem (hgP x) (hgP y)) (by rw [hgx, map_add (f := _), hgx, hgx])
     · intro c x
       rw [RingHom.id_apply, ← map_smul, ← map_smul]
       exact wd _ (hgP _) _ (Submodule.smul_mem _ c (hgP x)) (by rw [hgx, map_smul, hgx])

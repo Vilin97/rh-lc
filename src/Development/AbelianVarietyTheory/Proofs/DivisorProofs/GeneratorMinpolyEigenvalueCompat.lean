@@ -16,7 +16,7 @@ theorem spanEquivariant_aeval_map_apply {E : Type} [Field E] [NumberField E] {V 
     rw [eq_ratCast (algebraMap ℚ ℂ), eq_ratCast (algebraMap ℚ E), h]
   | add p q hp hq =>
     intro x
-    simp only [Polynomial.map_add, map_add, LinearMap.add_apply, hp, hq, add_mul]
+    simp only [Polynomial.map_add (f := _), map_add (f := _), LinearMap.add_apply, hp, hq, add_mul]
   | monomial n c ih =>
     intro x
     have e1 : (C c * X ^ (n + 1) : ℚ[X]) = (C c * X ^ n) * X := by ring

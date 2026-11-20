@@ -41,7 +41,7 @@ theorem mem_orth_sup {U U' : Submodule E S.V} {v : S.V} :
     rw [mem_orth] at h1 h2 ⊢
     intro x hx
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hx
-    rw [map_add, LinearMap.add_apply, h1 a ha, h2 b hb, add_zero]
+    rw [map_add (f := _), LinearMap.add_apply, h1 a ha, h2 b hb, add_zero]
 
 theorem mem_orth_span {s : Set S.V} {v : S.V} :
     v ∈ orth S (Submodule.span E s) ↔ ∀ x ∈ s, S.hT x v = 0 := by
@@ -50,7 +50,7 @@ theorem mem_orth_span {s : Set S.V} {v : S.V} :
   induction hx using Submodule.span_induction with
   | mem x hx => exact h x hx
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply, hx, hy, add_zero]
   | smul c x _ hx => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hx, smul_zero]
 
 theorem mem_orth_span_singleton {z v : S.V} :

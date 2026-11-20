@@ -67,7 +67,7 @@ theorem lpTw_foldr (D : D7) (w : PlE D.host) {β : Type*} (f : β → D.naut.LP 
 theorem map_list_sum {α γ : Type*} (h : α → γ) :
     ∀ L : List (Multiset α), L.sum.map h = (L.map fun x => x.map h).sum
   | [] => by simp
-  | x :: L => by simp [Multiset.map_add, map_list_sum h L]
+  | x :: L => by simp [Multiset.map_add (f := _), map_list_sum h L]
 
 theorem le_list_sum {α : Type*} {x : Multiset α} : ∀ {L : List (Multiset α)}, x ∈ L → x ≤ L.sum
   | [], hx => by simp at hx

@@ -17,7 +17,7 @@ theorem map_sigR {A B : Type} [CommRing A] [Algebra F A] [CommRing B] [Algebra F
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_JR {A B : Type} [CommRing A] [Algebra F A] [CommRing B] [Algebra F B] (p : A →ₐ[F] B)
     (J : Matrix (Fin r) (Fin r) E) :

@@ -98,9 +98,9 @@ theorem not_isRoot_cofactor : ∀ (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E), I
       obtain ⟨f, z, hz, hy⟩ := hgen y'
       have hy' : y' = f.eval₂ φO s + z := by
         apply IsFractionRing.injective K'.O K'.E
-        rw [hy, map_add, Polynomial.hom_eval₂, hspec]
+        rw [hy, map_add (f := _), Polynomial.hom_eval₂, hspec]
       have hres : IsLocalRing.residue K'.O y' = f.eval₂ (ψ.comp (IsLocalRing.residue K.O)) sb := by
-        rw [hy', map_add, (IsLocalRing.residue_eq_zero_iff z).2 hz, add_zero, Polynomial.hom_eval₂]
+        rw [hy', map_add (f := _), (IsLocalRing.residue_eq_zero_iff z).2 hz, add_zero, Polynomial.hom_eval₂]
         congr 1
       have hev := Polynomial.hom_eval₂ f (ψ.comp (IsLocalRing.residue K.O))
         ((F ^ m : k' →ₐ[k] k') : k' →+* k') sb

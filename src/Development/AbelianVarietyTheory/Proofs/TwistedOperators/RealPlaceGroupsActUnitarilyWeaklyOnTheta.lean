@@ -84,7 +84,7 @@ theorem weaklyContinuous_unitaryAction_of_realUnitaryHom (hω : IsWeilDatumO ψ 
     (hd : ∀ X : Mn n, Xᴴ * G + G * X = 0 → ∀ P, ∃ F', DerAll ψ ω (fun t => γ (NormedSpace.exp (t • X))) (pt P) F') :
     L2UnitaryRepresentationData G (fun g F => ω (γ g) F) pt (ipTh μ 𝓕) (thetaSpace ψ S T) where
   mem := hpt
-  pt_lin := fun z P Q => by rw [map_add, map_smul]
+  pt_lin := fun z P Q => by rw [map_add (f := _), map_smul]
   ip_lin := fun z F hF F' hF' E hE => by
     rw [ipTh_eq, ipTh_eq, ipTh_eq, ipO_add_left hω.std hμ h𝓕 (theta_smul z hF) hF' hE, ipO_smul_left]
   ip_symm := fun F _ E _ => by rw [ipTh_eq, ipTh_eq, ipO_conj]
@@ -99,7 +99,7 @@ theorem weaklyContinuous_unitaryAction_of_realUnitaryHom (hω : IsWeilDatumO ψ 
     rw [ipTh_eq, ipO_self, sqNormIntegralFundamentalDomain_eq_l2Norm_sq μ 𝓕 hc, Complex.ofReal_re]
     exact lt_of_le_of_ne (sq_nonneg _) (fun h => h0 (by rw [← h]; simp))
   stable := fun g _ F hF => hω.om_pres _ F hF
-  lin := fun g _ z F _ F' _ => by simp only [map_add, map_smul]
+  lin := fun g _ z F _ F' _ => by simp only [map_add (f := _), map_smul]
   one := fun F _ => by
     show ω (γ 1) F = F
     rw [h1, map_one]

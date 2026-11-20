@@ -516,7 +516,7 @@ theorem GlobalTheory.RowStab.middle_bottom_layers : ∀ (K V : Type) [Field K] [
       set ib := s (N.ist b) - N.ist b
       set ia := s (N.ist a) - N.ist a
       rw [e1, e2] at hiso ⊢
-      simp only [map_add, LinearMap.add_apply, star_add, H.herm] at hiso ⊢
+      simp only [map_add (f := _), LinearMap.add_apply, star_add, H.herm] at hiso ⊢
       simp only [N.ist_iso b a hb ha, N.ist_iso a b ha hb, hX, zero_add, add_zero] at hiso ⊢
       linear_combination hiso
   ·

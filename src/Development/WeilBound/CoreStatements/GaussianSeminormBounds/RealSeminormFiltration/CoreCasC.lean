@@ -80,7 +80,7 @@ theorem cas_tensor {K I J : Type} [Fintype K] [Fintype I] [DecidableEq I] [Finty
             W (Function.update (Function.update u i j) i' j') x)) := by
     intro k u x
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hc, map_add, map_sum, map_smul, add_assoc]
+      simp only [hc, map_add (f := _), map_sum, map_smul, add_assoc]
   have hΨ' : ∀ u v, φ (W u (ι v)) = ⟪Ψ u, v⟫_ℂ := fun u v => (hΨ u v).symm
   have hΨe : ∀ k u v, φ (W u (e k (ι v))) = ⟪Ψ u, ρ k v⟫_ℂ := by
     intro k u v
@@ -104,7 +104,7 @@ theorem cas_tensor {K I J : Type} [Fintype K] [Fintype I] [DecidableEq I] [Finty
     have h := hφ w (Ψ w)
     have h' := hA w (Ψ w)
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sub, LinearMap.sum_apply, map_sum, Module.End.mul_apply, hk, map_add, map_smul,
+      simp only [map_sub, LinearMap.sum_apply, map_sum, Module.End.mul_apply, hk, map_add (f := _), map_smul,
       smul_eq_mul, hΨ', hΨe, h3, Matrix.conjTranspose_apply, starRingEnd_apply, star_star,
       Finset.mul_sum, mul_add, Finset.sum_add_distrib] at h
     simp only [PositivityTheory.KReal.positionA, sum_inner, inner_smul_left, h3, Matrix.conjTranspose_apply,

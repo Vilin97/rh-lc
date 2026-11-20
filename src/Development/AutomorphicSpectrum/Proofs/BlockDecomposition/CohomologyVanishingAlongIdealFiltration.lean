@@ -112,7 +112,7 @@ theorem exists_seq (a : ℕ → IdF A) {n : ℕ} (h : ∀ k, Subsingleton (CH.H 
     induction k with
     | zero => simp [w]
     | succ k ih =>
-      rw [Finset.sum_range_succ, map_add, ← sub_sub, ← ih]
+      rw [Finset.sum_range_succ, map_add (f := _), ← sub_sub, ← ih]
   rw [← e]
   exact (w k).2.1
 

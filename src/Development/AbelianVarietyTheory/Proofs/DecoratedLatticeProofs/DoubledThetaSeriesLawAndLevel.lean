@@ -28,10 +28,10 @@ variable {D : D7} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (T : HSp D)
 def bt (x y : Mx D T.rank ρ) : AF D.host.F := symplOH S T (d.extX T x) (d.extY T y)
 
 theorem bt_add_left (x x' y : Mx D T.rank ρ) : bt d T (x + x') y = bt d T x y + bt d T x' y := by
-  rw [bt, map_add, GlobalTheory.OrientedHeis.symplOH_add_left]; rfl
+  rw [bt, map_add (f := _), GlobalTheory.OrientedHeis.symplOH_add_left]; rfl
 
 theorem bt_add_right (x y y' : Mx D T.rank ρ) : bt d T x (y + y') = bt d T x y + bt d T x y' := by
-  rw [bt, map_add, GlobalTheory.OrientedHeis.symplOH_add_right]; rfl
+  rw [bt, map_add (f := _), GlobalTheory.OrientedHeis.symplOH_add_right]; rfl
 
 theorem bt_zero_right (x : Mx D T.rank ρ) : bt d T x 0 = 0 := by
   rw [bt, map_zero, GlobalTheory.FinTranslate.symplOH_zero_right]

@@ -117,7 +117,7 @@ theorem UpperTheory.exists_totally_imaginary_generator_of_isCMField :
       obtain ⟨a, ha⟩ := ihx
       obtain ⟨b, hb⟩ := ihy
       refine ⟨a + b, fun φ => ?_⟩
-      rw [map_add, ha, hb, ← map_add, ← map_add]
+      rw [map_add (f := _), ha, hb, ← map_add (f := _), ← map_add (f := _)]
       rfl
     | inv x hx ihx =>
       obtain ⟨a, ha⟩ := ihx

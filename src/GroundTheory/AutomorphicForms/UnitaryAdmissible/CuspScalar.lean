@@ -34,7 +34,7 @@ theorem uActionCusp_mem (u : UEnv K n) {φ : cuspForms K n}
     rw [map_mul, map_mul, Module.End.mul_apply]
     exact ha (hb hφ)
   | add a b ha hb =>
-    rw [map_add, map_add, LinearMap.add_apply]
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply]
     exact U.add_mem (ha hφ) (hb hφ)
 
 theorem archTraceForm_AdLie (g : archGroup K n) (X Y : (isExpLieAlgebra K n).lieSubalgebra) :
@@ -115,7 +115,7 @@ theorem exists_uActionCusp_eq_smul (hirr : (cuspSubmodule K n U hρ hσ hτ).IsI
             show uActionCusp K n (u * z) (v : cuspForms K n) = _
             rw [map_mul, Module.End.mul_apply]
           | zero => rw [map_zero]; exact S₀.zero_mem
-          | add x y _ _ hx hy => rw [map_add]; exact S₀.add_mem hx hy
+          | add x y _ _ hx hy => rw [map_add (f := _)]; exact S₀.add_mem hx hy
           | smul a x _ hx => rw [map_smul]; exact S₀.smul_mem a hx
         intro w hw
         exact key _ hw)
@@ -212,7 +212,7 @@ theorem aeval_laplacian_eq_zero {d : ℕ}
           (uActionCusp K n (UniversalEnvelopingAlgebra.ι ℝ (b i)) ψ) := by
       show uActionCusp K n (laplacianU K n b) ψ = _
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [laplacianU_eq_casimir_add b ε, map_add, LinearMap.add_apply, hω _ hψ, map_sum,
+        rw [laplacianU_eq_casimir_add b ε, map_add (f := _), LinearMap.add_apply, hω _ hψ, map_sum,
         LinearMap.sum_apply]
       congr 1
       refine Finset.sum_congr rfl fun i _ => ?_

@@ -55,7 +55,7 @@ def fixField (X : Tower Ω ε) : IntermediateField Ω X.K where
     classical
     rintro a b ⟨E, hE⟩ ⟨F, hF⟩
     refine ⟨E ∪ F, fun s hs => ?_⟩
-    rw [map_add, hE s (fun x hx => hs x (Finset.mem_union_left _ hx)),
+    rw [map_add (f := _), hE s (fun x hx => hs x (Finset.mem_union_left _ hx)),
       hF s (fun x hx => hs x (Finset.mem_union_right _ hx))]
   algebraMap_mem' c := ⟨{c}, fun s hs => gal_algebraMap X s c (hs c (Finset.mem_singleton_self c))⟩
   inv_mem' := by
@@ -158,7 +158,7 @@ theorem kmap_sub_mem_A (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (c : X.Khat l)
     refine ⟨E ∪ F, fun s hs => ?_⟩
     have := Submodule.add_mem _ (hE s fun x hx => hs x (Finset.mem_union_left _ hx))
       (hF s fun x hx => hs x (Finset.mem_union_right _ hx))
-    rw [map_add]
+    rw [map_add (f := _)]
     convert this using 1
     abel
   | smul r a _ ha =>
@@ -217,7 +217,7 @@ theorem galB_cont : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure �
     refine ⟨E ∪ F, fun s hs u => ?_⟩
     have := Submodule.add_mem _ (hE s (fun x hx => hs x (Finset.mem_union_left _ hx)) u)
       (hF s (fun x hx => hs x (Finset.mem_union_right _ hx)) u)
-    rw [map_add]
+    rw [map_add (f := _)]
     convert this using 1
     simp only [LinearMap.sub_apply, Pi.add_apply, Pi.sub_apply]
     abel

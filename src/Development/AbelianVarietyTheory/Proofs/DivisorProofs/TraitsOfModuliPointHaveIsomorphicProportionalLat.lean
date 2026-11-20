@@ -80,7 +80,7 @@ theorem GlobalTheory.UPoinc.uTraitUniqSt_holds : UTraitUniqSt := by
   have hs' : ∀ a b, T'.be a b = T'.be b a := fun a b => (mem_levelForms.1 T'.lev).1 a b
   refine ⟨e, fun a b => ?_⟩
   have h := diag (a + b)
-  simp only [map_add, LinearMap.add_apply] at h
+  simp only [map_add (f := _), LinearMap.add_apply] at h
   have ha := diag a
   have hb := diag b
   rw [hs b a, hs' (e b) (e a)] at h

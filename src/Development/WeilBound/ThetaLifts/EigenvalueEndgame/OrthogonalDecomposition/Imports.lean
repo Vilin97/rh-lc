@@ -46,7 +46,7 @@ theorem decomp (ρ : H → Module.End ℂ P) (c : H → Module.End ℂ Q) [Nontr
         | grade0 z => simp [eP, eQ]
         | grade1 h => simpa [eP, eQ] using hU i h y
         | mul a b ha hb => rw [mul_smul, mul_smul, ha, hb]
-        | add a b ha hb => rw [add_smul, add_smul, map_add, ha, hb] }
+        | add a b ha hb => rw [add_smul, add_smul, map_add (f := _), ha, hb] }
   let T : (Fin m → P) →ₗ[A] Q := ∑ i, V i ∘ₗ LinearMap.proj i
   have hT : T (fun i => z i • x i) = ∑ i, z i • (g i : Q) := by
     simp only [T, LinearMap.sum_apply, hx, ← map_smul]

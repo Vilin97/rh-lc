@@ -104,7 +104,7 @@ private theorem type_zero {F : Type} [Field F] [NumberField F] [IsTotallyReal F]
   have hy : ∀ φ : F →+* ℂ, φ (y : F) = (((1 + M * ((T + t : ℕ) : ℝ)) + c φ : ℝ) : ℂ) := fun φ => by
     simp only [y, c]
     push_cast
-    simp only [hre, map_add, map_mul, map_one, map_natCast]
+    simp only [hre, map_add (f := _), map_mul, map_one, map_natCast]
     ring
   obtain ⟨w⟩ : Nonempty (InfinitePlace F) := inferInstance
   have hy0 : (y : F) ≠ 0 := fun e => (hpos t w.embedding).ne' (by
@@ -182,7 +182,7 @@ private theorem chars_of_red {Γ : Type} [Group Γ] [TopologicalSpace Γ] {k : T
     field_simp
   rw [e1, e2, Matrix.charpoly_fin_two, t]
   conv_lhs => rw [u]
-  rw [← u, map_add]
+  rw [← u, map_add (f := _)]
   conv_lhs => enter [2]; rw [u, map_mul]
   ring
 

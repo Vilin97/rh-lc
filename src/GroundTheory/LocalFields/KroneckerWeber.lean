@@ -137,7 +137,7 @@ theorem val_pow_smul (n : ℕ)
   | zero => simp
   | succ n ih =>
     rw [pow_succ, mul_smul, ih, lubinTate_uniformizer_smul_val, psEval_polynomial]
-    simp only [multiplicativeLTPoly, Polynomial.map_sub, Polynomial.map_pow, Polynomial.map_add, Polynomial.map_one,
+    simp only [multiplicativeLTPoly, Polynomial.map_sub, Polynomial.map_pow, Polynomial.map_add (f := _), Polynomial.map_one,
       Polynomial.map_X, map_sub, map_pow, map_add, map_one, aeval_X]
     rw [add_sub_cancel, ← pow_mul, ← pow_succ']
 

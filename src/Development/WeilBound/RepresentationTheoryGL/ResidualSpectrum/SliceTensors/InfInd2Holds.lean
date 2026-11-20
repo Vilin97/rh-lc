@@ -15,7 +15,7 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
 theorem prod_shift (M₁ M₂ : Multiset ℂ) (z₁ z₂ u : ℂ) (r s : ℕ) :
     (((M₁.map (· + z₁)).map (u - (s : ℂ) / 2 + ·)).prod * ((M₂.map (· + z₂)).map (u + (r : ℂ) / 2 + ·)).prod) =
       ((M₁.map (· + (z₁ - (s : ℂ) / 2)) + M₂.map (· + (z₂ + (r : ℂ) / 2))).map (u + ·)).prod := by
-  rw [Multiset.map_add, Multiset.prod_add, Multiset.map_map, Multiset.map_map, Multiset.map_map, Multiset.map_map]
+  rw [Multiset.map_add (f := _), Multiset.prod_add, Multiset.map_map, Multiset.map_map, Multiset.map_map, Multiset.map_map]
   congr 2
   · exact Multiset.map_congr rfl fun x _ => by simp only [Function.comp_apply]; ring
   · exact Multiset.map_congr rfl fun x _ => by simp only [Function.comp_apply]; ring

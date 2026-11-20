@@ -40,7 +40,7 @@ theorem vecLat_zero (T : Tens D D' W) (y y' : D'.X) : vecLat T 0 y y' = 0 := by
 theorem vecLat_rosVec (T : Tens D D' W) (A A' : Matrix (Fin r) (Fin r) ℤ) (y y' : D'.X) (a : Fin 6) (i : Fin r) :
     vecLat T (rosVec A A' a i) y y' = T.xe (rosLat T A A' y y' a) i := by
   fin_cases a <;>
-    simp [vecLat, rosVec, rosLat, axv, azv, xv, zv, GlobalTheory.TensAct.xe_latAct, map_add, Pi.single_apply,
+    simp [vecLat, rosVec, rosLat, axv, azv, xv, zv, GlobalTheory.TensAct.xe_latAct, map_add (f := _), Pi.single_apply,
       Finset.sum_add_distrib, add_smul, ite_smul]
 
 theorem logHom_lam (T : Tens D D' W) (hB : D.TauBimult) {z : (TK R).left} {J} (hJ : Good D.P.L z J)
@@ -52,7 +52,7 @@ theorem logHom_lam (T : Tens D D' W) (hB : D.TauBimult) {z : (TK R).left} {J} (h
     rw [add_zero, mul_inv_cancel, _root_.one_mul] at e
     exact inv_mul_eq_one.mp e
   have h0 : vecLat T (0 : Vec r) y y' = 0 := vecLat_zero T y y'
-  simp only [lam, map_add, map_sub, logHom_single, vecLat_add]
+  simp only [lam, map_add (f := _), map_sub, logHom_single, vecLat_add]
   rw [h0, vecLat_add]
   rw [GlobalTheory.TauBalBox.tau_val D hJ, hk]
   simp only [ofMul_mul, ofMul_inv, inv_inv]

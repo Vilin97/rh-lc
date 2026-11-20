@@ -80,7 +80,7 @@ theorem mk_add (d : Darboux B κ) (y y' : (κ → mixedEmbedding.mixedSpace F) �
     mk d (y + y') = mk d y + mk d y' := by
   show d.e.symm (GlobalTheory.RealLift.ptAt (y.1 + y'.1) 0, GlobalTheory.RealLift.ptAt (y.2 + y'.2) 0) =
     d.e.symm (GlobalTheory.RealLift.ptAt y.1 0, GlobalTheory.RealLift.ptAt y.2 0) + d.e.symm (GlobalTheory.RealLift.ptAt y'.1 0, GlobalTheory.RealLift.ptAt y'.2 0)
-  rw [ptAt_add, ptAt_add, ← map_add]
+  rw [ptAt_add, ptAt_add, ← map_add (f := _)]
   rfl
 
 theorem mk_zero (d : Darboux B κ) : mk d (0 : (κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixedSpace F)) = 0 := by
@@ -197,7 +197,7 @@ theorem exists_bridge : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
       map_add' := fun y y' => by
         funext w
         ext i j
-        simp only [mk_add, Matrix.map_apply, Matrix.add_apply, map_add, Pi.add_apply]
+        simp only [mk_add, Matrix.map_apply, Matrix.add_apply, map_add (f := _), Pi.add_apply]
       map_smul' := fun r y => by
         funext w
         rw [mk_smul_real, GlobalTheory.T.realScalarArchimedeanAdele_smul_matrix_realPlace σ τ hcm (mk d y) r w]

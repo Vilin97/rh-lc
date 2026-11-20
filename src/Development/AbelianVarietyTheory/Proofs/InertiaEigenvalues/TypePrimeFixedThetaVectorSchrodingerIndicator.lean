@@ -192,7 +192,7 @@ theorem thPVec_shape : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFa
                 adjCo φ S T (frCo φ βS) (frCo φ βT) (cA D e • t) a b - adjCo φ S T (frCo φ βS) (frCo φ βT) x₀ a b := by
               have := congrArg (fun M => M a b) (GlobalTheory.PlaceVec.frMapAdj_add S T βS βT (cA D e • t - x₀) x₀)
               simp only [sub_add_cancel, Matrix.add_apply] at this
-              simp only [GlobalTheory.AdjVecLocal.adjCo_eq S T βS βT φ hφ, Matrix.map_apply, this, map_add]
+              simp only [GlobalTheory.AdjVecLocal.adjCo_eq S T βS βT φ hφ, Matrix.map_apply, this, map_add (f := _)]
               ring
             obtain ⟨h, hh⟩ := hent a b
             have hmem : adjCo φ S T (frCo φ βS) (frCo φ βT) t a b - (if a.val = b.val then 1 else 0) ∈

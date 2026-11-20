@@ -26,7 +26,7 @@ def pullLat (w : Pl E) {K : GlobalTheory.UnitLemma.UQ} (B : GlobalTheory.UnitLem
     simp
   add_mem' := by
     intro a b ha hb c i
-    rw [smul_add, map_add, Matrix.mulVec_add, Pi.add_apply]
+    rw [smul_add, map_add (f := _), Matrix.mulVec_add, Pi.add_apply]
     exact add_mem (ha c i) (hb c i)
   smul_mem' := by
     intro c' a ha c i

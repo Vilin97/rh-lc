@@ -43,7 +43,7 @@ theorem exists_trace_one (P : HeightOneSpectrum (𝓞 E)) (hin : ∃ x : 𝓞 E,
     rw [e]
     exact sub_mem h2 (Ideal.mul_mem_left _ _ h1)
   have e1 : ((u : E) + star (u : E)) = algebraMap (𝓞 E) E (u + cO E u) := by
-    rw [map_add, algebraMap_cO]
+    rw [map_add (f := _), algebraMap_cO]
   have hv : P.valuation E ((u : E) + star (u : E)) = 1 := by
     rw [e1]; exact (P.valuation_eq_one_iff_notMem (K := E)).2 hu
   have hne : ((u : E) + star (u : E)) ≠ 0 := by
@@ -77,7 +77,7 @@ theorem exists_unif_star (P : HeightOneSpectrum (𝓞 E)) (hP : conjPrime₂ P =
   have hfix : ∀ r : 𝓞 E, star ((r + cO E r : 𝓞 E) : E) = ((r + cO E r : 𝓞 E) : E) := by
     intro r
     change star (algebraMap (𝓞 E) E (r + cO E r)) = algebraMap (𝓞 E) E (r + cO E r)
-    rw [map_add, algebraMap_cO, star_add, star_star, add_comm]
+    rw [map_add (f := _), algebraMap_cO, star_add, star_star, add_comm]
   by_cases h1 : P.valuation E (r1 : E) = WithZero.exp (-1 : ℤ)
   · exact ⟨r1, hfix a, h1⟩
   by_cases h2 : P.valuation E (r2 : E) = WithZero.exp (-1 : ℤ)
@@ -88,7 +88,7 @@ theorem exists_unif_star (P : HeightOneSpectrum (𝓞 E)) (hP : conjPrime₂ P =
   have key : (x : E) * (r1 : E) - (r2 : E) = ((x : E) - star (x : E)) * star (a : E) := by
     change algebraMap (𝓞 E) E x * algebraMap (𝓞 E) E (a + cO E a) - algebraMap (𝓞 E) E (x * a + cO E (x * a)) =
       (algebraMap (𝓞 E) E x - star (algebraMap (𝓞 E) E x)) * star (algebraMap (𝓞 E) E a)
-    simp only [map_add, map_mul, algebraMap_cO, star_mul]
+    simp only [map_add (f := _), map_mul, algebraMap_cO, star_mul]
     ring
   have hvx : P.valuation E ((x : E) - star (x : E)) = 1 := by
     have e : ((x : E) - star (x : E)) = -(algebraMap (𝓞 E) E (cO E x - x)) := by
@@ -171,7 +171,7 @@ theorem mem_localization_iff_of_isUnimodular {n : ℕ} (P : HeightOneSpectrum (�
       ring
     | zero => simp
     | add x z _ _ hx hz =>
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact add_mem hx hz
     | smul r x _ hx =>
       rw [← algebraMap_smul E r x, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply,

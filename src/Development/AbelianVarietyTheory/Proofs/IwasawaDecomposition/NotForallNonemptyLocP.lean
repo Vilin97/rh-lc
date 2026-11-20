@@ -61,7 +61,7 @@ theorem pureT_mlin [DecidableEq ι] {s ξ : ∀ i, N i} (h : Restr s ξ) (v : ι
   rw [Submodule.coe_add, Submodule.coe_smul, coe_pureT (restr_update h v _), coe_pureT (restr_update h v _),
     coe_pureT (restr_update h v _)]
   funext l
-  simp only [Pi.add_apply, Pi.smul_apply, evFam_update h, map_add, map_smul, smul_eq_mul]
+  simp only [Pi.add_apply, Pi.smul_apply, evFam_update h, map_add (f := _), map_smul, smul_eq_mul]
   ring
 
 theorem pureT_span (s : ∀ i, N i) :

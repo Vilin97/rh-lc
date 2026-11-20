@@ -100,7 +100,7 @@ theorem trdeg_semigroupAlgebra_top :
     refine ⟨j, ⟨Finsupp.equivFunOnFinite.symm fun i => (b.repr m i + j).toNat, ?_⟩⟩
     apply b.repr.injective
     ext i
-    rw [repr_natCombination, map_add, map_nsmul, Finsupp.add_apply, Finsupp.smul_apply,
+    rw [repr_natCombination, map_add (f := _), map_nsmul, Finsupp.add_apply, Finsupp.smul_apply,
       hrepr_u, Finsupp.mapRange_apply, Finsupp.coe_equivFunOnFinite_symm]
     have hle : (b.repr m i).natAbs ≤ j :=
       Finset.single_le_sum (f := fun i => (b.repr m i).natAbs) (fun _ _ => Nat.zero_le _)

@@ -46,7 +46,7 @@ def tame : Submodule ℂ (Sm E a) where
   carrier := {ψ | ∀ l : List (Lie E a), ((l.map (lie E a)).prod ψ).1 ∈ growth E a}
   zero_mem' l := by simp
   add_mem' {ψ ψ'} h h' l := by
-    rw [map_add, Submodule.coe_add]
+    rw [map_add (f := _), Submodule.coe_add]
     exact add_mem (h l) (h' l)
   smul_mem' c ψ h l := by
     rw [map_smul, Submodule.coe_smul]

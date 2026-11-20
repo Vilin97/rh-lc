@@ -79,7 +79,7 @@ theorem mul_cA_mem {v : Pl D} {𝔞 : FI D} {y : D.host.E}
     rw [e, GlobalTheory.IdVGen.incA_mul_tmul, ← hb]
     exact GlobalTheory.IdVGen.gen_mem_intAt hα h0 b
   | zero => rw [RingHom.map_zero, mul_zero]; exact GlobalTheory.IdVGen.intAt_zero' v
-  | add a b _ _ ha hb => rw [RingHom.map_add, mul_add]; exact GlobalTheory.IdVGen.intAt_add' ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (f := _), mul_add]; exact GlobalTheory.IdVGen.intAt_add' ha hb
   | neg a _ ha => rw [RingHom.map_neg, mul_neg]; exact GlobalTheory.IdVGen.intAt_neg' ha
 
 theorem exists_int_mul (y : D.host.E) : ∃ t : 𝓞 D.host.F, t ≠ 0 ∧ ∃ b : 𝓞 D.host.E,
@@ -97,7 +97,7 @@ theorem one_eq_sum (T : Finset (Pl D)) :
       evalV D.host.F w (∑ v ∈ T, ePl D (· = v) + ePl D (· ∉ T)) := by
     intro w
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_one, map_add, map_sum]
+      rw [map_one, map_add (f := _), map_sum]
     simp only [evalV_ePl]
     by_cases hw : w ∈ T <;> simp [hw]
   exact RestrictedProduct.ext _ _ fun w => key w

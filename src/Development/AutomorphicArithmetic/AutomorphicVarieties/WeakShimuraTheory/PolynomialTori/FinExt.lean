@@ -46,7 +46,7 @@ theorem UpperTheory.V.Ws.Po.finExt :
       rw [map_zero]
       exact zero_mem _
     | add x z _ _ hx hz =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hz
     | smul a x _ hx =>
       rw [map_smul, Algebra.smul_def]

@@ -93,7 +93,7 @@ theorem exists_admissible_eq_lagrangian_integral : ∀ (F E : Type) [Field F] [N
   refine ⟨SchwartzMap.mkCLMtoNormedSpace (σ := RingHom.id ℂ) (fun f => L ⟨pureA F f g, hmem f⟩)
     (fun f f' => ?_) (fun a f => ?_) ⟨Finset.Iic (k, 0), c * ν.real 𝓕, mul_nonneg hc measureReal_nonneg, fun f => ?_⟩,
     fun f => ?_⟩
-  · rw [← map_add]
+  · rw [← map_add (f := _)]
     congr 1
     exact Subtype.ext (funext fun x => by simp [pureA, add_mul])
   · rw [RingHom.id_apply, ← map_smul]

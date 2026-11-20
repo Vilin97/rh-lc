@@ -63,7 +63,7 @@ theorem UpperTheory.V.Cj.H.absProj :
       have hv : (R g) ↑v ∈ D := hD g v v.2
       have h1 : (R g) (↑(A v) + (Complex.I * ↑(s k)) • ↑v)
           = ↑(A ⟨(R g) ↑v, hv⟩) + (Complex.I * ↑(s k)) • ↑(⟨(R g) ↑v, hv⟩ : ↥D) := by
-        rw [map_add, map_smul, hAR g v]
+        rw [map_add (f := _), map_smul, hAR g v]
       simp only [ContinuousLinearMap.sub_apply, ContinuousLinearMap.comp_apply]
       rw [h1, hTinv k ⟨(R g) ↑v, hv⟩, hTinv k v]
       simp
@@ -94,7 +94,7 @@ theorem UpperTheory.V.Cj.H.absProj :
     exact hTR k g w
   · intro k v
     have h := hTinv k v
-    rw [map_add, map_smul] at h
+    rw [map_add (f := _), map_smul] at h
     rw [ContinuousLinearMap.smul_apply]
     exact (eq_sub_of_add_eq h).symm
   · intro w

@@ -30,7 +30,7 @@ def pullHopf {N X : Type} [AddCommGroup N] [Fintype N] [DecidableEq N] [AddCommG
     rw [← SecondCohomologyLattice.map_tensorSpan (⇑ψ) AA.carrier]
     refine ⟨addPull R N f, AA.comul f hf, ?_⟩
     funext x
-    simp [addPull, LinearMap.funLeft_apply, map_add]
+    simp [addPull, LinearMap.funLeft_apply, map_add (f := _)]
   antipode := by
     rintro _ ⟨f, hf, rfl⟩
     exact ⟨fun x => f (-x), AA.antipode f hf, funext fun x => by simp [LinearMap.funLeft_apply]⟩

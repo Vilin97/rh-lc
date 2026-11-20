@@ -63,7 +63,7 @@ theorem rowGen_cofAct (R : Type) [CommRing R] (n : ℕ) (a b : Fin n) (hab : a �
     rw [e1, AlgHom.commutes, AlgHom.commutes, AlgHom.commutes, Polynomial.algebraMap_apply,
       Polynomial.map_C, Polynomial.C_comp]
     exact congrArg Polynomial.C ((cofAct R n).commutes x).symm
-  | add p q hp hq => simp only [map_add, hp, hq, Polynomial.map_add, Polynomial.add_comp]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, Polynomial.map_add (f := _), Polynomial.add_comp]
   | mul_X p v hp =>
     simp only [map_mul, hp, Polynomial.map_mul, Polynomial.mul_comp]
     refine congrArg₂ (· * ·) rfl ?_

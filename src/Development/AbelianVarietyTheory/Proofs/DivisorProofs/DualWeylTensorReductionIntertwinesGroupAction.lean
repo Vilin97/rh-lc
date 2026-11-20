@@ -46,6 +46,6 @@ theorem GlobalTheory.HighWtEmb.redT_grp : ∀ (O : Type) [CommRing O] (N : ℕ) 
     refine Finset.prod_congr rfl fun τ _ => ?_
     rw [h1.2 τ]
     exact blockRed_rowAct O N ϖ τ _ _ rfl _
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end

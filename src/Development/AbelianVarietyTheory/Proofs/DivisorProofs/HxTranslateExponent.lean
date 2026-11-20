@@ -56,10 +56,10 @@ theorem reads_heisO_finOf : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : 
   obtain ⟨v, hv⟩ : ∃ v : WO V W, ratW W V γ = v + u := ⟨ratW W V γ - u, (sub_add_cancel _ _).symm⟩
   have hvf : v.map (finPart D) = 0 := by
     have h := hu.2
-    rw [hv, Matrix.map_add _ (finPart D).map_add] at h
+    rw [hv, Matrix.map_add _ (finPart D).map_add (f := _)] at h
     exact left_eq_add.1 (h.trans (add_comm _ _))
   have hvi : v.map (infPart D) = (ratW W V γ).map (infPart D) := by
-    rw [hv, Matrix.map_add _ (infPart D).map_add, hu.1, add_zero]
+    rw [hv, Matrix.map_add _ (infPart D).map_add (f := _), hu.1, add_zero]
   obtain ⟨w', hw'⟩ : ∃ w' : WO V W, w = w' + v := ⟨w - v, (sub_add_cancel _ _).symm⟩
   have hw'f : w'.map (finPart D) = 0 := by
     have h := hw

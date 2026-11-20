@@ -78,7 +78,7 @@ theorem tauF_sigR (I : AutInst) (x : Formalism.MainNotions.GlobalTheoryTheory.Ge
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a y => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, Formalism.UG.sigR, tauF_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem cT_map_tau (I : AutInst)
     (M : Matrix (Fin I.n) (Fin I.n) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF I.F ⊗[I.F] I.E)) :

@@ -187,7 +187,7 @@ theorem exists_adjoin {R : Type} [CommRing R] [IsDomain R] {F : Type} [Field F] 
     | algebraMap r =>
       have e : φ.hom (algebraMap R B r) = algebraMap (FractionRing R) F (algebraMap R _ r) := congr($hc r)
       rw [e]; exact K.algebraMap_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   have e : (ιE R K F).left ≫ Spec.map (CommRingCat.ofHom (φ.hom.codRestrict K hm)) ≫ i = b.left := by
     refine Eq.trans ?_ hφa

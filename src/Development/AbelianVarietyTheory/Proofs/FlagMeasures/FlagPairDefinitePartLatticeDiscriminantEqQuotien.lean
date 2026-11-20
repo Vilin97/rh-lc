@@ -108,7 +108,7 @@ theorem perp_prim (H : HermSpace K V) [IsTotallyComplex K] {M : Submodule (𝓞 
     have h0 := ((hW y).1 hy.1).2
     obtain ⟨c, hc⟩ := Submodule.mem_one.1 (hint m' hm' z hzM)
     rw [← e'] at h0
-    simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, hz, o1 i hi z hzS, smul_eq_mul, ← hc] at h0
+    simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, hz, o1 i hi z hzS, smul_eq_mul, ← hc] at h0
     have ht : t = algebraMap (𝓞 K) K c * (T : K)⁻¹ := by
       field_simp
       linear_combination -h0

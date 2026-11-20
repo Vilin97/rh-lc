@@ -97,7 +97,7 @@ theorem last_unit_holds : LastUnit := by
     have hAu := unit_part hCM hFix h𝔭 hU0 (ha0 i)
     have hAd := mem_SP_of_inP (K := K) hU0 (inP_vF (K := K) h𝔭 (ha0 i))
     have hs := mem_SP_of_inP (K := K) hU0 (hpair i hv)
-    rw [map_add] at hs
+    rw [map_add (f := _)] at hs
     set A := algebraMap F K (a i : F)
     set C := algebraMap F K (c (τ i))
     set P := algebraMap F K (π : F)

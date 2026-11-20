@@ -21,7 +21,7 @@ theorem tensorMap_id_iterate_eq_self {R A B : Type*} [CommRing R] [CommRing A] [
     intro k x y
     induction k with
     | zero => rfl
-    | succ k ih => rw [Function.iterate_succ_apply', ih, map_add, Function.iterate_succ_apply',
+    | succ k ih => rw [Function.iterate_succ_apply', ih, map_add (f := _), Function.iterate_succ_apply',
         Function.iterate_succ_apply']
   have hzero : ∀ k, (⇑e)^[k] (0 : A ⊗[R] B) = 0 := by
     intro k

@@ -42,7 +42,7 @@ theorem stable_sym_mem (F : IntermediateField ℚ ℂ) (L : PeriodPair) (ι : Ty
   · obtain ⟨e, a, b, -, g⟩ := key σ hσ
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]
-    simp only [map_div₀, map_add, map_mul, map_pow, map_neg, map_ofNat, a, b, g]
+    simp only [map_div₀, map_add (f := _), map_mul, map_pow, map_neg, map_ofNat, a, b, g]
     exact Equiv.sum_comp e (fun i ↦ (3 * L.weierstrassP (T i) ^ 2 + -L.g₂ / 4) / (2 * (L.derivWeierstrassP (T i) / 2)))
   · obtain ⟨e, a, -, c, -⟩ := key σ hσ
     rw [map_prod]; simp only [map_sub, a, c h2]

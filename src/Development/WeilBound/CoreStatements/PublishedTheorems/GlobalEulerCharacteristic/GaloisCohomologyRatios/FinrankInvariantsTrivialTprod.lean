@@ -58,7 +58,7 @@ theorem finrank_invariants_trivial_tprod {k Γ N : Type} [CommRing k] [Group Γ]
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a n => simp [eT, Representation.tprod_apply]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Helpers
 

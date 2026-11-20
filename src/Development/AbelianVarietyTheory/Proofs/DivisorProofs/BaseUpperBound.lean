@@ -125,7 +125,7 @@ theorem exists_trace_eq (hC : GlobalTheory.Hk3.Core R F) (hG : QGuard R) (hV : V
   have hω := isWeil_of_kerDat hBo hK hχ
   have hW : IsWeilDatumO B.F.ψ (Vc D i) (Wc D i) _ _ ω := hω
   obtain ⟨m, hm⟩ := GlobalTheory.FreeBlockTwist.inCoefLat_pow R i (hC.lev.βV i) (GlobalTheory.SplitLinear.suppAt_inv hs) (p := N) fun PP hPP => by
-    rw [RingHom.map_add, RingHom.map_add, (GlobalTheory.FreeBlockTwist.cpt_sum ha PP).2 fun h => hPP (hNQ PP h), zero_add,
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _), (GlobalTheory.FreeBlockTwist.cpt_sum ha PP).2 fun h => hPP (hNQ PP h), zero_add,
       GlobalTheory.StdFrames.toEAf_cA]
     exact GlobalTheory.StdFrames.cpt_sg_eq_zero ((GlobalTheory.FreeBlockTwist.cpt_sum ha _).2 fun h =>
       hPP ((GlobalTheory.StdFrames.natCast_mem_cP PP N).1 (hNQ _ h)))
@@ -187,7 +187,7 @@ theorem mem_span_coefLat (hC : GlobalTheory.Hk3.Core R F) (hBo : BaseOf R i B)
     rw [map_smul, hsc, inv_smul_smul₀ hc, e, ← Scale.coefFn_map, MvPolynomial.map_map, Scale.coefFn_map]
     rfl
   | zero => rw [map_zero, map_zero, smul_zero]; exact zero_mem _
-  | add _ _ _ _ h1 h2 => rw [map_add, map_add, smul_add]; exact add_mem h1 h2
+  | add _ _ _ _ h1 h2 => rw [map_add (f := _), map_add (f := _), smul_add]; exact add_mem h1 h2
   | smul a y _ h1 =>
     rw [← algebraMap_smul D.what₂.LL a y, map_smulₛₗ, map_smul, smul_comm]
     exact Submodule.smul_mem _ (⟨_, hO' a⟩ : O') h1
@@ -314,7 +314,7 @@ theorem isUnit_ownAt (c : NChoice D) (w : D.what₂.places.Pl) : IsUnit ((ownAt 
     by_contra h0
     obtain ⟨a, b, hab⟩ := Nat.isCoprime_iff_coprime.2 hco
     have h2 := congrArg (Int.castRingHom (D.ntw.O (c.twI w))) hab
-    simp only [map_add, map_mul, map_natCast, map_one] at h2
+    simp only [map_add (f := _), map_mul, map_natCast, map_one] at h2
     exact (IsLocalRing.maximalIdeal.isMaximal _).ne_top ((Ideal.eq_top_iff_one _).2
       (h2 ▸ add_mem (Ideal.mul_mem_left _ _ h0) (Ideal.mul_mem_left _ _ (D.ntw.O_l _))))
   simpa using h1.map (algebraMap _ (c.Oe w))
@@ -445,7 +445,7 @@ theorem realBase_le (hr : p.Rows) (hm : RecTies p) (hw : D.plEq w ∈ p.R.twPl) 
       congr 1
       exact mul_right_eq_self₀.2 (Or.inl (map_one (ρ.e _ _)))
     | zero => rw [map_zero, map_zero, smul_zero]; exact (congrArg Ψ rd.map_zero).trans Ψ.map_zero
-    | add u v _ _ hu hv => rw [map_add, map_add, smul_add, ← hu, ← hv, ← Ψ.map_add]; exact congrArg Ψ (rd.map_add _ _)
+    | add u v _ _ hu hv => rw [map_add (f := _), map_add (f := _), smul_add, ← hu, ← hv, ← Ψ.map_add (f := _)]; exact congrArg Ψ (rd.map_add _ _)
     | smul c u _ hu =>
       rw [map_smul, evW_smul, smul_comm, ← hu, ← he1, hΨ, ← readExt_smul]
       exact congrArg _ (rd.map_smulₛₗ _ _)
@@ -462,7 +462,7 @@ theorem realBase_le (hr : p.Rows) (hm : RecTies p) (hw : D.plEq w ∈ p.R.twPl) 
     | add _ _ _ _ h1 h2 =>
       obtain ⟨t, m1, e1⟩ := h1
       obtain ⟨t', m2, e2⟩ := h2
-      exact ⟨t + t', add_mem m1 m2, by rw [Ψ.map_add, e1, e2]; exact (LinearMap.map_add _ _ _).symm⟩
+      exact ⟨t + t', add_mem m1 m2, by rw [Ψ.map_add (f := _), e1, e2]; exact (LinearMap.map_add _ _ _).symm⟩
     | smul a Q _ h1 =>
       obtain ⟨t, m1, e1⟩ := h1
       obtain ⟨_, o, rfl⟩ := a

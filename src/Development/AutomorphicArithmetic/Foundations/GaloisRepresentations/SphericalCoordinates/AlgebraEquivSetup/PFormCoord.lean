@@ -36,13 +36,13 @@ theorem UpperTheory.Gal.W2.Seed.pFormCoord :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add x₁ x₂ h₁ h₂ =>
-    simp only [map_add, LinearMap.add_apply, h₁, h₂, Pi.add_apply, mul_add, add_mul, Complex.add_re,
+    simp only [map_add (f := _), LinearMap.add_apply, h₁, h₂, Pi.add_apply, mul_add, add_mul, Complex.add_re,
       Finset.sum_add_distrib]
   | tmul r a =>
     induction y using TensorProduct.induction_on with
     | zero => simp
     | add y₁ y₂ h₁ h₂ =>
-      simp only [map_add, h₁, h₂, Pi.add_apply, mul_add, Complex.add_re, Finset.sum_add_distrib]
+      simp only [map_add (f := _), h₁, h₂, Pi.add_apply, mul_add, Complex.add_re, Finset.sum_add_distrib]
     | tmul s b =>
       rw [LinearMap.BilinForm.baseChange_tmul, zsmul_eq_mul, hkey, Finset.sum_mul]
       refine Finset.sum_congr rfl fun k _ => ?_

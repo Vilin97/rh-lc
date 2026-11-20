@@ -34,7 +34,7 @@ theorem admissibleChernForm_kills_grassmannianRelationCopies : ∀ (E : Type) [F
       have hm : Dw.mult (conjEmb τ.1) = Dw.q := GlobalTheory.PointChern.mult_of_not_mem Dw (GlobalTheory.AllWt.conj_not_mem τ)
       exact h3 _ _ (by simp only [renVar]; simp only [Bool.false_eq_true, if_false]; omega) r
   | zero => intro r; simp
-  | add x y _ _ hx hy => intro r; rw [map_add, mul_add, map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => intro r; rw [map_add (f := _), mul_add, map_add (f := _), hx, hy, add_zero]
   | smul a x _ hx => intro r; rw [smul_eq_mul, map_mul (ren τ) a x, ← mul_assoc]; exact hx _
 
 end GlobalTheory.GrassTop

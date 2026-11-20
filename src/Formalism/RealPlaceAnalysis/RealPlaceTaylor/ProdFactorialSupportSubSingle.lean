@@ -102,7 +102,7 @@ lemma fischerInner_pderiv_left [DecidableEq σ] (v : σ) (f g : MvPolynomial σ 
     · have : v ∈ u.support := Finsupp.mem_support_iff.mpr hv
       rw [if_pos this, prod_factorial_support_sub_single u v hv]
       push_cast; ring
-  | add p q hp hq => rw [map_add, fischerInner_add_left, fischerInner_add_left, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), fischerInner_add_left, fischerInner_add_left, hp, hq]
 
 lemma fischerInner_X_mul_left [DecidableEq σ] (v : σ) (f g : MvPolynomial σ ℂ) :
     fockF (X v * f) g = fockF f (pderiv v g) := by

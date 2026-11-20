@@ -358,7 +358,7 @@ theorem adele_hom_ext {F E F' E' : Type} [Field F] [NumberField F] [Field E] [Nu
     rw [← e, ← smul_mul_assoc, TensorProduct.smul_tmul', nsmul_eq_mul,
       mul_inv_cancel₀ (Nat.cast_ne_zero.2 hN.ne'), ← Algebra.TensorProduct.one_def, one_mul]
   refine ⟨f r - g r, sub_mem (hf r hr) (hg r hr), ?_⟩
-  rw [e2, map_nsmul, map_nsmul, map_add, map_add, h, ← smul_sub, add_sub_add_left_eq_sub]
+  rw [e2, map_nsmul, map_nsmul, map_add (f := _), map_add (f := _), h, ← smul_sub, add_sub_add_left_eq_sub]
 
 end Adele
 
@@ -374,7 +374,7 @@ theorem mem_of_mem_span {R R' : Type} [CommRing R] [CommRing R'] {n m : ℕ} {S 
   induction hw using Submodule.span_induction with
   | mem x hx => exact hX x hx
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul c a _ ha =>
     rw [Subring.smul_def, hΨ]
     exact L.smul_mem ⟨_, hρ _ c.2⟩ ha

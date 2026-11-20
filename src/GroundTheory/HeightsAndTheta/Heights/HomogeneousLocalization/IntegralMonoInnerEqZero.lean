@@ -186,11 +186,11 @@ lemma fsFibreInner_eq {K : Type} [Field K] [NumberField K] {N : ℕ} (n : ℕ) {
   have hN : ∀ w, fsFibreNorm n ρ x w = ‖fsFrameCoord n ρ x w‖ * κ := fun w => by
     rw [fsFibreNorm, hκ, mul_div_assoc]
   unfold fsFibreInner
-  simp only [hN, map_add, map_sub, map_smul, smul_eq_mul]
+  simp only [hN, map_add (f := _), map_sub, map_smul, smul_eq_mul]
   set p := fsFrameCoord n ρ x s
   set q := fsFrameCoord n ρ x t
   push_cast
-  simp only [mul_pow, ← Complex.conj_mul', map_add, map_sub, map_mul, Complex.conj_I]
+  simp only [mul_pow, ← Complex.conj_mul', map_add (f := _), map_sub, map_mul, Complex.conj_I]
   linear_combination ((κ : ℂ) ^ 2 * (starRingEnd ℂ q * p - starRingEnd ℂ p * q) / 2) * Complex.I_sq
 
 theorem fsFibreInner_monomial (h : FSCoord.Statement.{0}) {K : Type} [Field K] [NumberField K]

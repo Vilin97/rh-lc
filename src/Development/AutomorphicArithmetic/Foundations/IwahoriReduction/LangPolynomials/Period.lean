@@ -32,7 +32,7 @@ private theorem ringHom_algebraMap_padicInt_eq {l : ℕ} [Fact (Nat.Prime l)] {R
     rw [hw]
     ring
   rw [SModEq.zero, smul_eq_mul, Ideal.mul_top, Ideal.span_singleton_pow, Ideal.mem_span_singleton, hz]
-  simp only [map_add, map_mul, map_pow, map_natCast]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast]
   exact ⟨f (algebraMap ℤ_[l] R w) - algebraMap ℤ_[l] R w, by ring⟩
 
 private theorem transpose_leftMulMatrix_mul_structure_mul_eq {l : ℕ} [Fact (Nat.Prime l)] {S : Type} [CommRing S] [Algebra ℤ_[l] S] {d : ℕ}

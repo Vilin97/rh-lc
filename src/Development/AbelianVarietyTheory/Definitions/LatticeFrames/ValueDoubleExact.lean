@@ -184,7 +184,7 @@ def SplitPt.idele (p : SplitPt D k) : kˣ →* (AE D)ˣ :=
     { toFun := fun a => 1 + p.sec (a - 1)
       map_one' := by rw [sub_self, map_zero, add_zero]
       map_mul' := fun a b => by
-        rw [show a * b - 1 = (a - 1) + (b - 1) + (a - 1) * (b - 1) by ring, map_add, map_add, p.sec_mul]
+        rw [show a * b - 1 = (a - 1) + (b - 1) + (a - 1) * (b - 1) by ring, map_add (f := _), map_add (f := _), p.sec_mul]
         ring }
 
 theorem SplitPt.idele_val (p : SplitPt D k) (a : kˣ) : (p.idele a : AE D) = 1 - p.e + p.sec a := by
@@ -194,7 +194,7 @@ theorem SplitPt.idele_val (p : SplitPt D k) (a : kˣ) : (p.idele a : AE D) = 1 -
 
 theorem SplitPt.pr_idele (p : SplitPt D k) (a : kˣ) : p.pr (p.idele a) = a := by
   change p.pr (1 + p.sec (a - 1)) = _
-  rw [map_add, map_one, p.pr_sec, add_sub_cancel]
+  rw [map_add (f := _), map_one, p.pr_sec, add_sub_cancel]
 
 def IsGlueConst (p : ι → SplitPt D k) (q : Unif k) (I : List ι) (N : ℕ) {r : ℕ} (μ : Fin r → ((AE D)ˣ →* Circle)) (c : ℂ) : Prop :=
   ∃ (a : ℤ) (m : Fin r → ℤ), c = (I.map fun i => ((resCard k : ℂ) ^ N - 1) * ((√(resCard k : ℝ) : ℝ) : ℂ) ^ a *

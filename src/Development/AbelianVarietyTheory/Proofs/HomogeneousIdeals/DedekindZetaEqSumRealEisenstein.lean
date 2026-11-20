@@ -298,7 +298,7 @@ theorem discr_eq_neg_of_sq_eq (h2 : finrank ℚ K = 2) (hsq : Squarefree d) (hd 
     ⟨Polynomial.X ^ 2 - Polynomial.X + Polynomial.C (k + 1 : ℤ), by monicity!, by simpa using hw⟩
   let w : 𝓞 K := ⟨_, hi⟩
   have hw' : w ^ 2 - w + (k + 1) = 0 := RingOfIntegers.coe_injective (by
-    simp only [map_add, map_sub, map_pow, map_natCast, map_one, map_zero]
+    simp only [map_add (f := _), map_sub, map_pow, map_natCast, map_one, map_zero]
     exact hw)
   obtain ⟨b, t, n, h0, hb, hD⟩ := exists_basis h2
   have e := eq_coord b h0 w

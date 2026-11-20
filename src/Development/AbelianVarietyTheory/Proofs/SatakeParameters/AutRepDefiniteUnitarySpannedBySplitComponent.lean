@@ -63,7 +63,7 @@ theorem span_comp_of_split : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
       exact le_iSup (fun f : {f : σ.V →ₗ[ℂ] (UA E a → ℂ) // (∀ v, f v ∈ U) ∧ ∀ (x : locU a w) v,
         f (σ.ρ (cLoc w x) v) = RU E a x (f v)} => LinearMap.range f.1) f ⟨_, rfl⟩
     · simp
-    · intro ψ₁ ψ₂ h₁ h₂; rw [map_add]; exact add_mem h₁ h₂
+    · intro ψ₁ ψ₂ h₁ h₂; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
 
   have hcen : ∀ y : UA E a, (∀ z ∈ locU a w, y * z = z * y) → ∀ ψ ∈ S, RU E a y ψ ∈ S := by
     intro y hy ψ hψ
@@ -79,7 +79,7 @@ theorem span_comp_of_split : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
       exact le_iSup (fun f : {f : σ.V →ₗ[ℂ] (UA E a → ℂ) // (∀ v, f v ∈ U) ∧ ∀ (x : locU a w) v,
         f (σ.ρ (cLoc w x) v) = RU E a x (f v)} => LinearMap.range f.1) f' ⟨v, rfl⟩
     · simp
-    · intro ψ₁ ψ₂ h₁ h₂; rw [map_add]; exact add_mem h₁ h₂
+    · intro ψ₁ ψ₂ h₁ h₂; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
   have hstab : ∀ g, ∀ ψ ∈ S, RU E a g ψ ∈ S := by
     intro g ψ hψ
     obtain ⟨x, hx, y, rfl, hy⟩ := exists_locU_mul_comm a w hw g

@@ -526,7 +526,7 @@ theorem exists_hom {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F
   have hχ : ∀ g, (χ g : ZMod (l ^ k)) = PadicInt.toZModPow k (cycZ F Ω l g.1 : ℤ_[l]ˣ) :=
     fun _ => rfl
   have hκ : ∀ g h, κ (g * h) = κ g + (χ g : ZMod (l ^ k)) * κ h := fun g h => by
-    simp only [κ, hχ, Subgroup.coe_mul, kummer_mul, ← map_mul, ← map_add]
+    simp only [κ, hχ, Subgroup.coe_mul, kummer_mul, ← map_mul, ← map_add (f := _)]
     congr 1; ring
   have ho : IsOpen {g : Dec (F := F) A | κ g = 0} := by
     have e : {g : Dec (F := F) A | κ g = 0} = Subtype.val ⁻¹'

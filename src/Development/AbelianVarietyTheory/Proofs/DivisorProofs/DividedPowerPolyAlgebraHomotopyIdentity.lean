@@ -40,7 +40,7 @@ theorem homotopy_identity : ∀ (R B : Type) [CommRing R] [CommRing B] [Algebra 
     | h b => rw [g.mDR_algebraMap, hε.mDR_algebraMap, hεb]
     | hd b => rw [g.mDR_ι, hε.mDR_ι, g.m1_D, hε.m1_D, hεb]
     | hm x y hx hy => rw [map_mul, map_mul, hx, hy]
-    | ha x y hx hy => rw [map_add, map_add, hx, hy]
+    | ha x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hεD1 : hε.mDR (ι1 (D R Q.P (Q.e 1))) = 0 := by
     rw [hε.mDR_ι, hε.m1_D, hε1, Derivation.map_zero, map_zero]
 
@@ -68,7 +68,7 @@ theorem homotopy_identity : ∀ (R B : Type) [CommRing R] [CommRing B] [Algebra 
     intro x y hx hy
     have := add_mem hx hy
     convert this using 1
-    simp only [map_add, hot_add]
+    simp only [map_add (f := _), hot_add]
     abel
   ·
     intro n α

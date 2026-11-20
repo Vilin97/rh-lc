@@ -344,9 +344,9 @@ theorem isSSRep_of_prod {Γ k : Type} [Group Γ] [Field k] {n a b : ℕ} {ρ : �
     · apply e.injective
       have h2' : (e w).2 + c₂ = (e v).2 := h2
       ext1
-      · simp only [map_add, e.apply_symm_apply, Prod.fst_add]
+      · simp only [map_add (f := _), e.apply_symm_apply, Prod.fst_add]
         rw [add_assoc, h1]; abel
-      · simp only [map_add, e.apply_symm_apply, Prod.snd_add]
+      · simp only [map_add (f := _), e.apply_symm_apply, Prod.snd_add]
         rw [add_zero, h2']
 
 theorem exists_sum_rep {Γ k : Type} [Group Γ] [TopologicalSpace Γ] [Field k] [TopologicalSpace k] {a b : ℕ}

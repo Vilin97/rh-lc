@@ -37,7 +37,7 @@ theorem bLie_mem_W_and_tateGt (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsA
       algebraMap O C (TensorProduct.rid ℤ_[p] O ((B.flip (c t)).baseChange O z)) := fun z t => by
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
     | tmul a s =>
       rw [LinearMap.baseChange_tmul, Point.inclT_tmul, Point.pairV_tmul, LinearMap.baseChange_tmul,
         LinearMap.flip_apply, hBc, TensorProduct.rid_tmul, _root_.mul_one, Algebra.smul_def,
@@ -52,7 +52,7 @@ theorem bLie_mem_W_and_tateGt (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsA
     fun z x' => by
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, Submodule.coe_add, Pi.add_apply, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), Submodule.coe_add, Pi.add_apply, hx, hy]
       | tmul a s =>
         rw [LinearMap.baseChange_tmul, Point.al_tmul, hodgeTateLinear_tmul, map_smul, map_smul,
           map_smul, ← hodgeTate_tateMap, ← h3, ← hcφ, hl]
@@ -67,7 +67,7 @@ theorem bLie_mem_W_and_tateGt (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsA
   · clear hξ0 hξ h2 h5
     induction ξ using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
     | tmul a s =>
       rw [LinearMap.baseChange_tmul, Point.inclT_tmul]
       exact Submodule.tmul_mem_baseChange_of_mem _ (e s).2

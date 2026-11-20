@@ -93,13 +93,13 @@ def bcAct' (q : ℕ) (act : Multiplicative (ZMod q) →* (D ≃ₐ[B] D)) :
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul b x => simp [Algebra.TensorProduct.congr_apply]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   map_mul' g h := by
     apply AlgEquiv.ext; intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul b x => simp [Algebra.TensorProduct.congr_apply, AlgEquiv.mul_apply]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 instance : Algebra B₁ (BC β D) := inferInstanceAs (Algebra (Over β) (Over β ⊗[B] D))
 
@@ -370,7 +370,7 @@ theorem reduce_sub_glue_mem {T O : Type} [CommRing T] [CommRing O] [IsLocalRing 
         RingHom.id_apply, ← map_sub, ← neg_sub, ← Polynomial.coeff_zero_eq_eval_zero, hr, map_neg, map_mul]
       exact I.neg_mem_iff.2 (I.mul_mem_right _ (Ideal.subset_span rfl))
     rw [h1, h2]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 end GlobalTheory.KeyOriginBC
 
 namespace GlobalTheory.KeyOriginBC
@@ -509,7 +509,7 @@ theorem isZTorsor_bc {B B₁ : Type} [CommRing B] [CommRing B₁] (β : B →+* 
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul b x => rw [hact']; simp [bcAct', Algebra.TensorProduct.congr_apply]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   subst he
   exact htor'
 end GlobalTheory.KeyOriginBC

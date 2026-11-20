@@ -102,7 +102,7 @@ private lemma L_mem {n : ℕ} (I : Ideal A) (L : D →ₗ[A] (Fin n → A)) (x :
     | zero => intro d i; simp
     | add y z _ _ hy hz =>
       intro d i
-      rw [mul_add, map_add]
+      rw [mul_add, map_add (f := _)]
       exact I.add_mem (hy d i) (hz d i)
     | smul e y _ hy =>
       intro d i
@@ -182,7 +182,7 @@ theorem UpperTheory.exists_factorization_near_root_of_unity_henselian :
     refine ⟨a, ha, b, hb, c, hc, ?_⟩
     rw [← Ideal.Quotient.eq_zero_iff_mem]
     rw [hT't] at hk
-    simp only [map_sub, map_add, map_mul, map_pow, map_natCast]
+    simp only [map_sub, map_add (f := _), map_mul, map_pow, map_natCast]
     rw [hk]
     ring
   choose a ha b hb c hc hkey using hdec

@@ -121,7 +121,7 @@ theorem coeff_rhoVr_mem {E : Type} [Field E] (emb : ι → E →+* ℂ) (lam : �
       rw [map_C, Formalism.GradedWeylDivisibility.blockAct, aeval_C]
       exact ⟨C a, by rw [map_C]; rfl⟩
     | add p q hp hq =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem hp hq
     | mul_X p w hp =>
       rw [map_mul, map_mul, map_X]

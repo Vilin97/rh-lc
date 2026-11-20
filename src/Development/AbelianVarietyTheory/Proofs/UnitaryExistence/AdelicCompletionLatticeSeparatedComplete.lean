@@ -210,7 +210,7 @@ private theorem exists_limit_in_hat_of_cauchy_nsmul {m : ℕ} {e : Fin m → Fin
     | succ t ih =>
       show _root_.GlobalTheory.AdLat.Complete.comb e
         (a₀ + ∑ j ∈ Finset.range (t + 1), (j + 1).factorial • c j) = _
-      rw [Finset.sum_range_succ, ← add_assoc, map_add,
+      rw [Finset.sum_range_succ, ← add_assoc, map_add (f := _),
         show a₀ + ∑ j ∈ Finset.range t, (j + 1).factorial • c j = A t from rfl, ih, map_nsmul,
         hcx t]
   have hAint : ∀ t k v, A t k v ∈ v.adicCompletionIntegers F := by
@@ -256,7 +256,7 @@ private theorem exists_limit_in_hat_of_cauchy_nsmul {m : ℕ} {e : Fin m → Fin
   rw [Nat.mul_div_cancel' hdN] at hxw
   refine ⟨w + _root_.GlobalTheory.AdLat.Complete.comb e a,
     add_mem hw (comb_mem_hat_of_integral hmem ha), ?_⟩
-  rw [hyA, map_add, map_nsmul, hA, hxw, smul_add, add_assoc]
+  rw [hyA, map_add (f := _), map_nsmul, hA, hxw, smul_add, add_assoc]
 
 open NumberField IsDedekindDomain in
 open scoped TensorProduct Matrix nonZeroDivisors in

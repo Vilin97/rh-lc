@@ -77,9 +77,9 @@ theorem UpperTheory.V.Cj.H.gardFacts :
     exact MemLp.zero
   | add φ ψ _ _ h h' =>
     refine ⟨lev_of (Filter.inter_mem (lev_nhds h.1) (lev_nhds h'.1)) fun k hk => ?_, ?_, grow_lin h.2.2.1 h'.2.2.1,
-      fun X => by rw [map_add]; exact add_mem (h.2.2.2.1 X) (h'.2.2.2.1 X),
-      fun g => by rw [map_add]; exact add_mem (h.2.2.2.2 g) (h'.2.2.2.2 g)⟩
-    · rw [map_add, hk.1, hk.2]
+      fun X => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (h.2.2.2.1 X) (h'.2.2.2.1 X),
+      fun g => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (h.2.2.2.2 g) (h'.2.2.2.2 g)⟩
+    · rw [map_add (f := _), hk.1, hk.2]
     · simpa only [one_smul] using ((clFacts E a μ).1 φ ψ 1 1 h.2.1 h'.2.1).1
   | smul s φ _ h =>
     refine ⟨lev_of (lev_nhds h.1) fun k hk => ?_, ?_, grow_smul s h.2.2.1,

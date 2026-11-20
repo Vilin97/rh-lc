@@ -25,7 +25,7 @@ theorem ringHom_ext_of_sep_galPer {R B : Type} [CommRing R] [CommRing B] {f g : 
   ext1 a
   rw [← sub_eq_zero]
   refine hsep _ fun n => ?_
-  rw [a.eq_X_pow_mul_shift_add_trunc n, map_add, map_add, hp, map_mul, map_mul, map_pow, map_pow, ← hX]
+  rw [a.eq_X_pow_mul_shift_add_trunc n, map_add (f := _), map_add (f := _), hp, map_mul, map_mul, map_pow, map_pow, ← hX]
   exact ⟨_, by rw [add_sub_add_right_eq_sub, ← mul_sub]⟩
 
 theorem mat_mul_right_cancel_galPer {R : Type} [CommRing R] [IsDomain R] {n : Type} [Fintype n] [DecidableEq n]

@@ -103,7 +103,7 @@ theorem sum_aeval_const {l : ℕ} (hl : l.Prime) (k : ℕ) {O R : Type} [CommRin
   | add r s hr hs =>
     obtain ⟨c, hc⟩ := hr
     obtain ⟨d, hd⟩ := hs
-    exact ⟨c + d, by simp only [map_add, Finset.sum_add_distrib, hc, hd]⟩
+    exact ⟨c + d, by simp only [map_add (f := _), Finset.sum_add_distrib, hc, hd]⟩
   | monomial j x =>
     obtain ⟨c, hc⟩ := sum_pow_int hl k ht j
     refine ⟨x * c, ?_⟩
@@ -116,7 +116,7 @@ theorem coe_lvlPoly (l : ℕ) (O : Type) [CommRing O] (k : ℕ) :
     ((lvlPoly l O k : Polynomial O) : O⟦X⟧) = lvl l O k := by
   have := map_sum (Polynomial.coeToPowerSeries.ringHom (R := O))
     (fun i => ((1 + Polynomial.X : Polynomial O) ^ l ^ k) ^ i) (Finset.range l)
-  simp only [map_pow, map_add, map_one, Polynomial.coeToPowerSeries.ringHom_apply,
+  simp only [map_pow, map_add (f := _), map_one, Polynomial.coeToPowerSeries.ringHom_apply,
     Polynomial.coe_X] at this
   exact this
 
@@ -203,7 +203,7 @@ theorem exists_const_of_lvl_invariant {l : ℕ} [Fact l.Prime] {O : Type} [CommR
       exact this
     have e2 := (hz _).2 (hb a ha')
     rw [hbr] at e2
-    simp only [map_sub, map_add, map_mul, e1, (hz _).2 dvd_rfl, zero_mul, add_zero,
+    simp only [map_sub, map_add (f := _), map_mul, e1, (hz _).2 dvd_rfl, zero_mul, add_zero,
       sub_eq_zero] at e2
     rw [← e2, GlobalTheory.NB.LT.algHom_coe, act_nat_X, ← Polynomial.aeval_algHom_apply,
       Polynomial.aeval_comp]

@@ -32,7 +32,7 @@ private theorem sep {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGrou
       (IsLocallyConstant.iff_continuous _).2 QuotientGroup.continuous_mk
     exact this.comp (fun y => c (Additive.ofMul y))
   · intro x y
-    simp only [QuotientGroup.mk_mul, ofMul_mul, map_add]
+    simp only [QuotientGroup.mk_mul, ofMul_mul, map_add (f := _)]
   · intro x hx
     have : (x : G ⧸ N) = 1 := (QuotientGroup.eq_one_iff x).2 (hKN hx)
     simp only [this, ofMul_one, map_zero]

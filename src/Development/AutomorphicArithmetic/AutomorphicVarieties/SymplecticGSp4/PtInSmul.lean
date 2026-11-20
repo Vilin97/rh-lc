@@ -30,7 +30,7 @@ private theorem ptIn_prj (c : Fin 4 → R) (X : M4 R) (i : Fin 4) :
       Polynomial.aeval (f.mapMatrix X) (p.map f) = f.mapMatrix (Polynomial.aeval X p) := by
     intro p
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => rw [Polynomial.map_add, map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [Polynomial.map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | monomial n a =>
       rw [Polynomial.map_monomial, Polynomial.aeval_monomial, Polynomial.aeval_monomial, map_mul, map_pow,
         Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one, ptIn_smul, map_one]
@@ -56,7 +56,7 @@ private theorem ptIn_span (r : H →* M4 R) {X : M4 R} (h : X ∈ Submodule.span
     obtain ⟨g, rfl⟩ := hx
     exact Submodule.subset_span ⟨g, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [ptIn_smul]; exact Submodule.smul_mem _ _ hx
 
 end Gen
@@ -75,7 +75,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.ptIn :
     exact h
   have hh : D.hEl (mapRep (y : R →+* K) ρ.hom) = (y : R →+* K).mapMatrix (D.hEl ρ.hom) := by
     unfold Raw.hEl
-    rw [map_add, ptIn_smul, hy, ptIn_rep, ptIn_rep]
+    rw [map_add (f := _), ptIn_smul, hy, ptIn_rep, ptIn_rep]
   refine ⟨hm, fun A hA g hg hg1 => ?_, ⟨fun i j hij => ?_, ?_, ?_⟩, ⟨fun g => hm g, ?_⟩, fun p hp => ⟨fun g => hm g, fun g hg => ?_⟩,
     fun i => ?_, fun K' _ _ f => ⟨R, inferInstance, inferInstance, inferInstance, ρ, f.comp y, hpt, rfl⟩⟩
   · rw [ptIn_rep, he.unr A hA g hg hg1, map_one]

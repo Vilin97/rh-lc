@@ -272,7 +272,7 @@ theorem apply_contract {ξ : ∀ v, V v} {l : ∀ v, Dual ℂ (V v)}
     · rw [contract, evalForm, lift.tprod, lift.tprod]
       show l v (restrictedIndicator ξ x • _) = restrictedIndicator ξ x • _
       simp [restrictedIndicator_of_not hx]
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 end Lift
 
@@ -306,7 +306,7 @@ theorem range_finiteEmbed_le (ξ : ∀ v, V v) (T : Finset ι) :
   | smul_tprod c y =>
     rw [map_smul, finiteEmbed_tprod]
     exact Submodule.smul_mem _ _ (tprod_mem_restrictedTensor (isRestricted_extend ξ T y))
-  | add a b ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
 
 theorem extend_restrict {ξ x : ∀ v, V v} {T : Finset ι} (h : ∀ v ∉ T, x v = ξ v) :
     extend ξ T (fun v => x v) = x := by

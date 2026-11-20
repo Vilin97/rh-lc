@@ -89,7 +89,7 @@ theorem _root_.GlobalTheory.CM.GenFib.exists_lieRep_eigLat (K : Type) [Field K]
     · intro a
       simp
     · intro x y _ _ hx hy a
-      rw [map_add, hx, hy, smul_add]
+      rw [map_add (f := _), hx, hy, smul_add]
     · intro k x _ hx a
       rw [map_smul, hx, smul_comm]
   · intro hc

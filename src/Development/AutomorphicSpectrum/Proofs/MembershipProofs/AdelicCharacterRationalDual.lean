@@ -39,7 +39,7 @@ theorem comb_of_basis : ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace ℝ V
     refine h2 (fun i => m (e i)) (P f) (P g) fun x => ?_
     rw [hP, hP, h]
     congr 1
-    rw [map_add, hsum]
+    rw [map_add (f := _), hsum]
     simp
   obtain ⟨a, ha⟩ := GlobalTheory.CompanionTheory.DiracComb.eq_mul_comb _ (T.comp P) hA hC
   refine ⟨a, fun f => ?_⟩
@@ -325,7 +325,7 @@ theorem pureA_add_rat {κ : Type} (f : (κ → mixedEmbedding.mixedSpace F) → 
   unfold pureA
   congr 2
   funext i
-  rw [Pi.add_apply, Pi.add_apply, InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp, ← map_add]
+  rw [Pi.add_apply, Pi.add_apply, InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp, ← map_add (f := _)]
   rfl
 
 theorem pureA_mem {κ : Type} [Fintype κ] (f : SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ)
@@ -464,7 +464,7 @@ theorem level_span
   | add g g' _ _ h h' =>
     have e : pureA F f (g + g') = pureA F f g + pureA F f g' := by funext x; simp [pureA, mul_add]
     rw [e]
-    exact ⟨add_mem h.1 h'.1, by rw [map_add, thetaAdd F h.1 h'.1, h.2, h'.2, mul_add]⟩
+    exact ⟨add_mem h.1 h'.1, by rw [map_add (f := _), thetaAdd F h.1 h'.1, h.2, h'.2, mul_add]⟩
   | smul a g _ h =>
     have e : pureA F f (a • g) = a • pureA F f g := by funext x; simp [pureA, mul_left_comm]
     rw [e]
@@ -509,7 +509,7 @@ theorem theta_unique : ∀ (F : Type) [Field F] [NumberField F] [LocallyCompactS
       obtain ⟨M, hM, h⟩ := h
       obtain ⟨M', hM', h'⟩ := h'
       refine ⟨M * M', Nat.mul_pos hM hM', fun N hN hd => ?_⟩
-      rw [map_add, thetaAdd F hΦ hΨ, h N hN ((dvd_mul_right _ _).trans hd),
+      rw [map_add (f := _), thetaAdd F hΦ hΨ, h N hN ((dvd_mul_right _ _).trans hd),
         h' N hN ((dvd_mul_left _ _).trans hd), mul_add]
     | smul a Φ _ h =>
       obtain ⟨M, hM, h⟩ := h

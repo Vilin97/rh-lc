@@ -39,7 +39,7 @@ theorem coeff_X_mul_pderiv' (i : σ) (p : MvPolynomial σ k) (m : σ →₀ ℕ)
     · subst h; rfl
     · simp
   · intro p q hp hq
-    simp only [map_add, mul_add, MvPolynomial.coeff_add, hp, hq, add_mul]
+    simp only [map_add (f := _), mul_add, MvPolynomial.coeff_add, hp, hq, add_mul]
 
 theorem euler_w_of_biHom {a b : ℕ} {g : MvPolynomial σ k} (h : BiHom w e a b g) :
     (∑ c, X (w c) * pderiv (w c) g) = (a : k) • g := by
@@ -126,7 +126,7 @@ theorem F_S_mul (hw : Function.Injective w) (he : Function.Injective e) (hwe : �
       = ∑ c, (g + (X (w c) * pderiv (w c) g + X (e c) * pderiv (e c) g) +
           (∑ d, X (w d) * X (e d)) * pderiv (w c) (pderiv (e c) g)) := by
         refine Finset.sum_congr rfl (fun c _ => ?_)
-        rw [h1, map_add, h2, h3]
+        rw [h1, map_add (f := _), h2, h3]
         ring
     _ = (∑ _c : Fin r, g) + ((∑ c, X (w c) * pderiv (w c) g) + ∑ c, X (e c) * pderiv (e c) g) +
           (∑ d, X (w d) * X (e d)) * ∑ c, pderiv (w c) (pderiv (e c) g) := by

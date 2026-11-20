@@ -56,7 +56,7 @@ theorem transcendental_bcEmb {z : E.toAffine.FunctionField} (hz : Transcendental
     | algebraMap x =>
       rw [ι.commutes, IsScalarTower.algebraMap_apply F F' K']
       exact A.algebraMap_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | inv x _ hx => rw [map_inv₀]; exact inv_mem hx
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let g : F⟮z⟯ →+* A :=
@@ -204,9 +204,9 @@ theorem bcDiff_omegaAt (P : (E'.baseChange E.toAffine.FunctionField).toAffine.Po
         bcEmb (F' := F') E (E'.baseChange E.toAffine.FunctionField).a₄ := ((bcEmb (F' := F') E).commutes E'.a₄).symm
     refine (omegaAt_some_eq (E'.baseChange F') _ ?_ ?_).symm
     · rw [c1, c3, ← bcDiff_D, ← s, bcDiff_smul]
-      simp only [map_add, map_mul, map_ofNat]
+      simp only [map_add (f := _), map_mul, map_ofNat]
     · rw [c1, c2, c4, ← bcDiff_D, ← t, bcDiff_smul]
-      simp only [map_add, map_sub, map_mul, map_pow, map_ofNat]
+      simp only [map_add (f := _), map_sub, map_mul, map_pow, map_ofNat]
 
 variable (E) in
 

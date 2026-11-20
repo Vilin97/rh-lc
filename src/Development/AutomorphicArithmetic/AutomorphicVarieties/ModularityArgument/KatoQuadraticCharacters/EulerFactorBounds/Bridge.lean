@@ -53,7 +53,7 @@ theorem sBridge : SBridge := by
       rw [cmul, cmul, c1, c2, mul_comm (cycM M s), inv_mul_cancel_right] at h
       exact mul_eq_left.1 h
     have h1 := hgal τ _ _ (hz σ hfix)
-    rw [map_add, map_sub, ← hmul, e, hmul] at h1
+    rw [map_add (f := _), map_sub, ← hmul, e, hmul] at h1
     have h2 := hT (fun z => z = t) (u σ) τ
     have p2 : (fun z : (ZMod M)ˣ => z * cycM M τ = t) = fun z => z = 1 := by
       funext z
@@ -69,7 +69,7 @@ theorem sBridge : SBridge := by
     have h5 := eqv.trans (eqv.symm h2) (eqv.trans h3 (hadd _ _ _ _ (eqv.refl _) (hadd _ _ _ _ h4 (eqv.refl _)).2).1)
     have h6 := eqv.trans h1 (hadd _ _ _ _ h5 (eqv.refl _)).1
     convert h6 using 1
-    rw [map_add]
+    rw [map_add (f := _)]
     abel
   refine ⟨fun t => ∑ v ∈ Finset.univ.filter (fun v => π v = t), B v, fun t => isum _ _ _ fun v _ => hB v, fun s t => ?_⟩
   have h := hsum _ (Finset.univ.filter (fun v => π v = t)) _ _ fun v _ => key s v

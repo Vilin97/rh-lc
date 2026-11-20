@@ -111,7 +111,7 @@ theorem heckeOp_mul_apply {a b : G}
       rw [h1, map_sub, map_sub, ← Module.End.mul_apply, ← map_mul, ← hka, map_mul,
         Module.End.mul_apply, fixedProj_apply_act hρ hKc hKo hk, sub_self]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
     | smul c x _ hx => rw [map_smul, map_smul, hx, smul_zero]
   have := hkill _ hspan
   rw [map_sub, map_sub, sub_eq_zero] at this

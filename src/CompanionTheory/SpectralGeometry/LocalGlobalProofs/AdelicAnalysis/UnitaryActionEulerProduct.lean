@@ -33,7 +33,7 @@ theorem repr_incl_mul {d : ℕ} (b : Module.Basis (Fin d) F E) (e : E) (y : R �
   induction y using TensorProduct.induction_on with
   | zero => simp
   | add x y hx hy =>
-    simp only [mul_add, map_add, Finsupp.add_apply, hx, hy, Finset.sum_add_distrib]
+    simp only [mul_add, map_add (f := _), Finsupp.add_apply, hx, hy, Finset.sum_add_distrib]
   | tmul r e' =>
     have h1 : inclR R e * (r ⊗ₜ[F] e') = r ⊗ₜ[F] (e * e') := by
       simp [inclR]

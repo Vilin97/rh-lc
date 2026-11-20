@@ -79,7 +79,7 @@ theorem hasFDerivAt_coord (hψ : IsStdChar D ψ (-1)) {M : (Fin k → ℝ) →+ 
     rw [heisO, hp, ← mul_assoc, ← Complex.exp_add]
     have : (s : ℂ) * -ph + s * ph = 0 := by ring
     rw [this, Complex.exp_zero, one_mul]
-    simp only [N, x, AddMonoidHom.comp_apply, rayHom, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_add, add_assoc]
+    simp only [N, x, AddMonoidHom.comp_apply, rayHom, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_add (f := _), add_assoc]
   rw [eq] at h1
   have hz : N 0 = 0 := map_zero N
   have h3 : HasDerivAt (fun s : ℝ => Complex.exp ((s : ℂ) * -ph) * heisO ψ S T (N s) g x)
@@ -107,7 +107,7 @@ theorem contDiff_integral (hψ : IsStdChar D ψ (-1)) {X : Type} [MeasurableSpac
   let a : Fin k → (Fin k → ℝ) → ℂ := fun i t => lam (b i) + phase lam S T (M (Pi.single i 1)) (M t)
   have ha : ∀ i y t, phase lam S T (M (Pi.single i 1)) (q y + M t) = a i t := by
     intro i y t
-    rw [map_add]
+    rw [map_add (f := _)]
     congr 1
     show lam (symplOH S T (q y) (M (Pi.single i 1))) = lam (b i)
     rw [hb]
@@ -217,7 +217,7 @@ theorem res_smooth : ∀ (D : D7) (V V' W : HSp D) (r : ℕ) (C : Matrix (Fin V.
   show ∫ y in 𝓨, f (isoPart V W C y + midPart V V' W B (w + L t)) ∂μ = _
   refine integral_congr_ae (ae_of_all _ fun y => ?_)
   show f (isoPart V W C y + mid (w + L t)) = f (isoPart V W C y + midPart V V' W B w + mid (L t))
-  rw [map_add, add_assoc]
+  rw [map_add (f := _), add_assoc]
   rfl
 
 end GlobalTheory.TowerSmooth

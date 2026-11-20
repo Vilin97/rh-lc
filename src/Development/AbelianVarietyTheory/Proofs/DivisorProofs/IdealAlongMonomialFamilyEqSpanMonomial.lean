@@ -34,7 +34,7 @@ theorem s_ne_zero {V : Type} [CommRing V] [IsDomain V] [IsLocalRing V] (Cm : Glo
     have h1 := h (a + b)
     have h2 := h a
     have h3 := h b
-    simp only [map_add, LinearMap.add_apply] at h1
+    simp only [map_add (f := _), LinearMap.add_apply] at h1
     rw [hsym b a] at h1
     simp only [LinearMap.zero_apply]
     omega

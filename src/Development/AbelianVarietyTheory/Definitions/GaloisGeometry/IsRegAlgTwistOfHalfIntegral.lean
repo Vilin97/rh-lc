@@ -130,7 +130,7 @@ theorem infOfWeight_liftWeight {n : ℕ} (lam : DomWeight n) (t : ℤ) (ht : ∀
     simp only [liftWeight, f, Function.comp, Fin.valEmbedding_apply]
     push_cast
     ring
-  rw [h1, Multiset.range_add, Multiset.map_add, Multiset.map_map]
+  rw [h1, Multiset.range_add, Multiset.map_add (f := _), Multiset.map_map]
   congr 1
   · rw [← Finset.range_val, ← Nat.Iio_eq_range, ← Fin.map_valEmbedding_univ, Finset.map_val, Multiset.map_map, infOfWeight,
       Multiset.map_map]

@@ -17,7 +17,7 @@ theorem sigR_sigR (h : IsCMExt F E σ) (y : Fv F v ⊗[F] E) :
     sigR (Fv F v) σ (sigR (Fv F v) σ y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e =>
     change a ⊗ₜ[F] σ (σ e) = _
     rw [cm_conj_conj h]
@@ -119,7 +119,7 @@ theorem exists_dom (ρ : Fv F v ⊗[F] E →ₐ[Fv F v] Fv F v) (S : Finset (Fv 
       induction hy using Submodule.span_induction with
       | mem x hx => exact hc x hx
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
       | smul a x _ hx => rw [Subring.smul_def, smul_eq_mul, map_mul, hx, mul_zero]
     exact (hwu.map ρ).ne_zero (h0 w hw)
   obtain ⟨j0, hj0, hj0'⟩ := hex

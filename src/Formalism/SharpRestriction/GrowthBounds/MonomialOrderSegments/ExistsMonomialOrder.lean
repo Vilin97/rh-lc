@@ -121,7 +121,7 @@ theorem vG_mul (F G : MvPolynomial σ K) : vG v (F * G) = vG v F + vG v G := by
     have l1 := hαmin x.1 hx1
     have l2 := hβmin x.2 hx2
     have hs : m.toSyn x.1 + m.toSyn x.2 = m.toSyn α0 + m.toSyn β0 := by
-      rw [← map_add, ← map_add, hsum]
+      rw [← map_add (f := _), ← map_add (f := _), hsum]
     have e1 : m.toSyn x.1 = m.toSyn α0 := by
       rcases lt_or_eq_of_le l1 with h | h
       · exact absurd hs (ne_of_gt (add_lt_add_of_lt_of_le h l2))

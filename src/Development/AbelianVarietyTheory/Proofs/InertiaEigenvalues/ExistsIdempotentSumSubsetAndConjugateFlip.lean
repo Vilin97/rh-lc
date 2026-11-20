@@ -63,7 +63,7 @@ theorem idemSum_sub_and_flip : ∀ (D : D7) (e : AE D) (P T : Finset (Formalism.
   · generalize (∑ a ∈ T, es a) = t at h1 h2 hTT ⊢
     have h4 : cA D t * cA D e = cA D t := by rw [← map_mul, h1]
     have h5 : cA D t * cA D t = cA D t := by rw [← map_mul, h2]
-    rw [map_add, map_sub, Formalism.L2.Theta.cA_cA]
+    rw [map_add (f := _), map_sub, Formalism.L2.Theta.cA_cA]
     linear_combination h0 - (-(e) * h4 + cA D t * h0) + h1 - (-(cA D e) * h1 + t * h0)
       + 2 * hTT - h2 + h4 - h5
 

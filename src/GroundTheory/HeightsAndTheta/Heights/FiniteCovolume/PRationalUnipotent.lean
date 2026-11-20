@@ -17,7 +17,7 @@ namespace RationalUnipotent
 def unipMap (h : HermitianForm F E W) (x₀ y : W) (c : E) : W →ₗ[E] W where
   toFun x := x + (h.toSesq x₀ x * c - h.toSesq y x) • x₀ + h.toSesq x₀ x • y
   map_add' a b := by
-    simp only [map_add]
+    simp only [map_add (f := _)]
     module
   map_smul' r a := by
     simp only [map_smul, smul_eq_mul, RingHom.id_apply]
@@ -45,7 +45,7 @@ theorem unipMap_unipMap (h : HermitianForm F E W) {x₀ y : W} {c : E}
     (hc : c + conj F E c = -h.toSesq y y) (x : W) :
     unipMap h x₀ y c (unipMap h x₀ (-y) (conj F E c) x) = x := by
   have hy' : h.toSesq y x₀ = 0 := by rw [sesq_swap, hy, map_zero]
-  simp only [unipMap_apply, map_add, map_smul, map_neg, LinearMap.neg_apply, hx₀, hy, hy']
+  simp only [unipMap_apply, map_add (f := _), map_smul, map_neg, LinearMap.neg_apply, hx₀, hy, hy']
   have key : h.toSesq x₀ x * conj F E c - -h.toSesq y x +
       (h.toSesq x₀ x * c - (h.toSesq y x + -(h.toSesq x₀ x * h.toSesq y y))) = 0 := by
     linear_combination h.toSesq x₀ x * hc
@@ -56,7 +56,7 @@ theorem sesq_unipMap (h : HermitianForm F E W) {x₀ y : W} {c : E}
     (hc : c + conj F E c = -h.toSesq y y) (x x' : W) :
     h.toSesq (unipMap h x₀ y c x) (unipMap h x₀ y c x') = h.toSesq x x' := by
   have hy' : h.toSesq y x₀ = 0 := by rw [sesq_swap, hy, map_zero]
-  simp only [unipMap_apply, map_add, map_smul, smul_eq_mul, LinearMap.add_apply,
+  simp only [unipMap_apply, map_add (f := _), map_smul, smul_eq_mul, LinearMap.add_apply,
     sesq_smul_left, hx₀, hy, hy', map_sub, map_mul, mul_zero, add_zero]
   rw [sesq_swap h x x₀, sesq_swap h x y]
   linear_combination conj F E (h.toSesq x₀ x) * h.toSesq x₀ x' * hc

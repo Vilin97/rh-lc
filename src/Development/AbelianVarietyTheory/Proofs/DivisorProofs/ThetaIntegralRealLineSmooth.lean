@@ -34,7 +34,7 @@ theorem exists_der_both (hKP : GlobalTheory.ThK.KP) (hT : IsTriple B G X om om')
     obtain ⟨x₁, hx₁, px, ex⟩ := ihx
     obtain ⟨y₁, hy₁, py, ey⟩ := ihy
     refine ⟨x₁ + y₁, add_mem hx₁ hy₁, fun z => ?_, fun g h => ?_⟩
-    · simp only [map_add, Pi.add_apply]
+    · simp only [map_add (f := _), Pi.add_apply]
       exact (px z).add (py z)
     · rw [GlobalTheory.ThKDer.theta_add hT (hle hx₁) (hle hy₁)]
       simp only [GlobalTheory.ThKDer.theta_add hT (hle hx) (hle hy)]

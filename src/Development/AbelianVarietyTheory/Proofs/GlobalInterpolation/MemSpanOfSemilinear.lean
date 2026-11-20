@@ -49,7 +49,7 @@ theorem mem_span_of_semilinear {B K O Kf V W ι : Type*} [CommRing B] [IsDomain 
     induction hy' using Submodule.span_induction with
     | mem z hz => obtain ⟨i, rfl⟩ := hz; exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add z z' _ _ h h' => rw [map_add]; exact Submodule.add_mem _ h h'
+    | add z z' _ _ h h' => rw [map_add (f := _)]; exact Submodule.add_mem _ h h'
     | smul a z _ h =>
       obtain ⟨o, ho⟩ := (hσ (algebraMap B K a)).2 ⟨a, rfl⟩
       rw [← algebraMap_smul K a z, hφ, ← ho, algebraMap_smul]

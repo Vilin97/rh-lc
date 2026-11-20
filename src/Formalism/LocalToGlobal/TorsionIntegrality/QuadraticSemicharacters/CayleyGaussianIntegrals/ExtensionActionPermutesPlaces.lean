@@ -29,7 +29,7 @@ theorem diagonalTerm : DiagTerm := by
   have hw : conj (H v z) = H v z - 2 * Complex.I * ((H v z).im : ℂ) := by
     apply Complex.ext <;> simp
     all_goals ring
-  simp only [map_add, LinearMap.add_apply, hc, hw, altE]
+  simp only [map_add (f := _), LinearMap.add_apply, hc, hw, altE]
   ring
 
 theorem kernelTermShift : TermShift := by
@@ -41,7 +41,7 @@ theorem kernelTermShift : TermShift := by
     simp only [termT, phiC, gq, opU, kerK, cayC, wt_eq_cexp H hH, LinearEquiv.symm_apply_apply]
     simp only [← Complex.exp_add, mul_assoc]
     congr 2
-    simp only [hA, LinearEquiv.symm_apply_apply, map_sub, map_add, map_smul, LinearMap.sub_apply,
+    simp only [hA, LinearEquiv.symm_apply_apply, map_sub, map_add (f := _), map_smul, LinearMap.sub_apply,
       LinearMap.add_apply, LinearMap.smul_apply, hi, smul_eq_mul]
     ring
   · obtain ⟨y, rfl⟩ : ∃ y, z = δ y := ⟨δ.symm z, by simp⟩

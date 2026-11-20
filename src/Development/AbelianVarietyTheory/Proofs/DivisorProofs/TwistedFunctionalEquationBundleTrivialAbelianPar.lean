@@ -134,7 +134,7 @@ theorem exists_gen_twist [IsLocalRing R] (a : D.P.A ⟶ D.P.A) [IsMonHom a] (n j
         c (T ≫ DVR.cP D _ β).left ^ (-(-1) : ℤ) * c (T ≫ (1 : D.P.A ⟶ D.P.A)).left ^ (-1 : ℤ) * c (T ≫ a).left ^ (-j)) = 1 := by
     rw [i₀, i₁, i₂, i₃, i₄]
     apply Additive.ofMul.injective
-    simp only [ofMul_mul, ofMul_zpow, k₁, k₂, e, e₃, ofMul_one, map_add, map_zsmul]
+    simp only [ofMul_mul, ofMul_zpow, k₁, k₂, e, e₃, ofMul_one, map_add (f := _), map_zsmul]
     module
   refine (hc _ _ _).2 ?_
   rw [Fintype.prod_sum_type, Fin.prod_univ_five, Fin.prod_univ_five]

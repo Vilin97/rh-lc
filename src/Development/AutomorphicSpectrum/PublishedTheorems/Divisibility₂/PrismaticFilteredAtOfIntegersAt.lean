@@ -111,7 +111,7 @@ theorem exists_padic_of_eigen [IsDomain (PreTilt O p)] {ε : PreTilt O p}
     { carrier := {a | WittVector.frobenius a = WittVector.frobenius (xi ε) * a}
       add_mem' := fun {a b} ha hb => by
         simp only [Set.mem_ofPred_eq] at ha hb ⊢
-        rw [map_add, ha, hb, mul_add]
+        rw [map_add (f := _), ha, hb, mul_add]
       zero_mem' := by simp
       smul_mem' := fun c a ha => by
         simp only [Set.mem_ofPred_eq] at ha ⊢

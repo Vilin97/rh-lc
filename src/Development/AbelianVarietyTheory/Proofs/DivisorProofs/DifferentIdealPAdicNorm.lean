@@ -23,7 +23,7 @@ def smallIdeal : Ideal (𝓞 E) where
   add_mem' := by
     intro a b ha hb
     change ‖((φ (a + b) : ↥(intO ℂ_[p])) : ℂ_[p])‖ < 1
-    rw [map_add, Subring.coe_add]
+    rw [map_add (f := _), Subring.coe_add]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
   zero_mem' := by
     change ‖((φ 0 : ↥(intO ℂ_[p])) : ℂ_[p])‖ < 1

@@ -30,7 +30,7 @@ theorem char_eq_one_of_local (ψ : AddChar (AF D.host.F) ℂ) (hψ : Continuous 
         congr 1
         refine RestrictedProduct.ext _ _ fun w => ?_
         change evalV D.host.F w (sglS (insert v A)) = evalV D.host.F w (sglS A + ePl D (· = v))
-        rw [map_add, evalV_sglS, evalV_sglS, evalV_ePl]
+        rw [map_add (f := _), evalV_sglS, evalV_sglS, evalV_ePl]
         by_cases hw : w = v
         · subst hw; simp [hv]
         · simp [hw]

@@ -90,7 +90,7 @@ theorem σA_mem (bk : BK K) (g : GQ l) (n M : ℕ) (a : Ainf l)
       rw [← RingHom.mem_ker, ← bk.span_ev]; exact Ideal.mem_span_singleton_self _
     rw [this, map_zero]
   obtain ⟨w, hw⟩ := hE
-  rw [map_add, map_mul, map_mul, map_pow, map_pow, map_natCast, hw, mul_pow]
+  rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, map_natCast, hw, mul_pow]
   refine Ideal.add_mem _ (Ideal.mem_sup_left (Ideal.mem_span_singleton'.2 ⟨_, rfl⟩)) (Ideal.mem_sup_right ?_)
   exact Ideal.mem_span_singleton.2 ⟨Per.σA g z * w ^ M, by ring⟩
 

@@ -20,7 +20,7 @@ theorem map_skew (ρ : A →+* C) (μ : C →+ A) (hμs : ∀ y, μ (star y) = s
     (H.map ρ * Y + Yᴴ * H.map ρ).map μ = H * Y.map μ + (Y.map μ)ᴴ * H := by
   ext i l
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_add, map_sum, hμm,
+    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_add (f := _), map_sum, hμm,
     conjTranspose_apply]
   congr 1
   refine Finset.sum_congr rfl fun k _ => ?_

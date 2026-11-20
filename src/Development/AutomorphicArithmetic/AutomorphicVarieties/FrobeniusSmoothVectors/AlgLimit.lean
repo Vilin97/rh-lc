@@ -33,7 +33,7 @@ theorem UpperTheory.V.Fr.alg_limit :
         exact ⟨c * c', fun N => by simp only [map_mul, hc, hc']⟩
       add_mem' := by
         rintro a b ⟨c, hc⟩ ⟨c', hc'⟩
-        exact ⟨c + c', fun N => by simp only [map_add, hc, hc']⟩
+        exact ⟨c + c', fun N => by simp only [map_add (f := _), hc, hc']⟩
       algebraMap_mem' := fun a => ⟨algebraMap O C a, fun N => by
         rw [AlgHom.commutes, ← IsScalarTower.algebraMap_apply]
         rfl⟩ }
@@ -44,7 +44,7 @@ theorem UpperTheory.V.Fr.alg_limit :
         exact ⟨c * c', fun N => by simp only [map_mul, hc, hc']⟩
       add_mem' := by
         rintro a b ⟨c, hc⟩ ⟨c', hc'⟩
-        exact ⟨c + c', fun N => by simp only [map_add, hc, hc']⟩
+        exact ⟨c + c', fun N => by simp only [map_add (f := _), hc, hc']⟩
       algebraMap_mem' := fun a => ⟨algebraMap O D a, fun N => by
         rw [AlgHom.commutes]
         rfl⟩ }

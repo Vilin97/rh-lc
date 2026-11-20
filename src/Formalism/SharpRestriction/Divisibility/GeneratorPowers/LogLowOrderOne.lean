@@ -118,7 +118,7 @@ private lemma lin_subst_lemma_3 {σ τ : Type} [Fintype σ] {a : σ → MvPowerS
     simp only [map_smul]
     simp only [coe_substAlgHom, subst_X ha, sub_add_cancel]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hsplit, map_add, hS (Finsupp.single w 1) (by simp), zero_add, map_sum]
+    rw [hsplit, map_add (f := _), hS (Finsupp.single w 1) (by simp), zero_add, map_sum]
   simp only [map_smul, smul_eq_mul]
 
 theorem dLin_logOf (G : FGLaw S d) : ReciprocityTheory.ChartRestriction.G.TB.dLin (fun i => ReciprocityTheory.ChartRestriction.G.TB.LogPf.logOf G i) = 1 := by
@@ -226,7 +226,7 @@ private lemma exp_split_lemma_4 {σ : Type} {B : MvPowerSeries σ S} (hB2 : Low 
       PowerSeries.mk (fun n => algebraMap ℚ S (1 / ((n + 2).factorial : ℚ))) := by
     ext n
     rcases n with _ | _ | n <;> simp [PowerSeries.coeff_X_pow_mul', PowerSeries.coeff_X, PowerSeries.coeff_one]
-  rw [hexp, ← PowerSeries.coe_substAlgHom hB, map_add, map_add, map_mul, map_pow, map_one,
+  rw [hexp, ← PowerSeries.coe_substAlgHom hB, map_add (f := _), map_add (f := _), map_mul, map_pow, map_one,
     PowerSeries.coe_substAlgHom, PowerSeries.subst_X hB]
   have h4 : Low (2 + 2 + 0) (B ^ 2 * PowerSeries.subst B
       (PowerSeries.mk (fun n => algebraMap ℚ S (1 / ((n + 2).factorial : ℚ))))) := by
@@ -262,7 +262,7 @@ theorem psTrunc_two_twist (G : FGLaw S d) (c : Fin d → Fin d → S) :
         MvPolynomial (Fin 2 × Fin d) S) : MvPowerSeries (Fin 2 × Fin d) S) =
       1 + ∑ i, ∑ l, c i l • (X ((0 : Fin 2), i) * X ((1 : Fin 2), l)) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_add, map_one, map_sum]
+      rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_add (f := _), map_one, map_sum]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_mul, MvPolynomial.coeToMvPowerSeries.ringHom_apply, MvPolynomial.coe_C,
       MvPolynomial.coe_X, MvPowerSeries.smul_eq_C_mul]
@@ -315,7 +315,7 @@ theorem psTrunc_two_twist (G : FGLaw S d) (c : Fin d → Fin d → S) :
     have h := hdiff e (by omega)
     rwa [map_sub, sub_eq_zero] at h
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [if_neg hd, ← MvPolynomial.coeff_coe, hcoe, map_add, map_sum]
+    · rw [if_neg hd, ← MvPolynomial.coeff_coe, hcoe, map_add (f := _), map_sum]
     have h2 : 2 < e.degree := by omega
     have hz : ∀ a b : Fin 2 × Fin d, coeff e (X a * X b : MvPowerSeries (Fin 2 × Fin d) S) = 0 :=
       fun a b => hXX a b e h2

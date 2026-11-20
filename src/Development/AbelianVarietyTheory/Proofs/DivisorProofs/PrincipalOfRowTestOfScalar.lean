@@ -23,7 +23,7 @@ theorem tw_span_top (s : Bool) {E : Type} [NormedAddCommGroup E] [InnerProductSp
     induction hy using Submodule.span_induction with
     | mem y hy => obtain ⟨i, rfl⟩ := hy; exact Submodule.subset_span ⟨i, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul a y _ hy => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
   exact key _ hx
 

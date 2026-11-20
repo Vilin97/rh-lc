@@ -32,7 +32,7 @@ theorem filDR_succ_le (τ : K →ₐ[Qp] LL) (a : ℤ) : FildR PD ρ τ (a + 1) 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => exact ⟨v ⊗ₜ[Qp] ⟨b.1, PD.Fil_anti a b.2⟩, rfl⟩
-  | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
 
 variable [FiniteDimensional LL ↥(DdR PD ρ)]
 

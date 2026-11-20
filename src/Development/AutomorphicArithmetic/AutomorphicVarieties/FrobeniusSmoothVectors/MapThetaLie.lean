@@ -9,7 +9,7 @@ variable {O : Type} [CommRing O] [IsLocalRing O] {C : Type} [CommRing C] [Algebr
 
 private theorem evk_add {x y : C} (hx : x ∈ K) (hy : y ∈ K) :
     evK K u (x + y) = evK K u x + evK K u y := by
-  rw [evK_of_mem u hx, evK_of_mem u hy, evK_of_mem u (K.add_mem hx hy), ← map_add]
+  rw [evK_of_mem u hx, evK_of_mem u hy, evK_of_mem u (K.add_mem hx hy), ← map_add (f := _)]
   rfl
 
 private theorem evk_sub {x y : C} (hx : x ∈ K) (hy : y ∈ K) :

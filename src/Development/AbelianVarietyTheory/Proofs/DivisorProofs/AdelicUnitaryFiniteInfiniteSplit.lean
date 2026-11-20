@@ -48,7 +48,7 @@ theorem prU_mem {e : A} (he : IsIdempotentElem e) (c : R →ₐ[A] R) (J : Matri
   have hg' : (g : Matrix ι ι R)ᵀ * J * (g : Matrix ι ι R).map c = J := hg
   show (pr e (g : Matrix ι ι R))ᵀ * J * (pr e (g : Matrix ι ι R)).map c = J
   have hm : (pr e (g : Matrix ι ι R)).map c = pr e ((g : Matrix ι ι R).map c) := by
-    ext i j; simp [pr, Matrix.one_apply, map_add, map_smul]; split_ifs <;> simp
+    ext i j; simp [pr, Matrix.one_apply, map_add (f := _), map_smul]; split_ifs <;> simp
   rw [hm]
   simp only [pr, Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_one, Matrix.add_mul, Matrix.mul_add,
     Matrix.smul_mul, Matrix.mul_smul, smul_smul, smul_add, Matrix.mul_one, Matrix.one_mul, he.eq, h1, h2, h3, zero_smul,

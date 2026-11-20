@@ -135,7 +135,7 @@ private theorem gysin_chase_identity {E X Y B W₁ B₁ : Spc} (πX : X ⟶ E) (
       (by push_cast; ring) (by push_cast; ring) : Ht q B n i) = 0 := by
     rw [pull_c, pull_u, UpperTheory.pull_cupPow_eq_cupPow_pull q g₁ ξ 1 iB, hg, cpow_zero_one, map_zero, c_zero]
   calc pull _ (g₁ ≫ p) _ _ y0 = pull _ g₁ _ _ (pull _ β _ _ x) := by
-        rw [hy, map_add, e1, add_zero, pull_comp]
+        rw [hy, map_add (f := _), e1, add_zero, pull_comp]
     _ = pull _ b₁ _ _ (pull _ f₁ _ _ x) := by rw [← pull_comp, h₁, pull_comp]
     _ = pull _ ((b₁ ≫ f₁) ≫ πY) _ _ a0 := by rw [← ha, ← pull_comp, Category.assoc]
     _ = pull _ (g₁ ≫ p) _ _ (pull _ πX _ _ a0) := by

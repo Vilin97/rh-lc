@@ -72,7 +72,7 @@ def maxUnramifiedFrobeniusHom : K₀ →ₐ[ℚ_[p]] K₀ where
   map_zero' := algebraMap_maxUnramified_injective K (by
     rw [← phiPlus_algebraMap_maxUnramifiedFrobeniusFun]; simp only [map_zero])
   map_add' a b := algebraMap_maxUnramified_injective K (by
-    rw [← phiPlus_algebraMap_maxUnramifiedFrobeniusFun, map_add, map_add, map_add, phiPlus_algebraMap_maxUnramifiedFrobeniusFun,
+    rw [← phiPlus_algebraMap_maxUnramifiedFrobeniusFun, map_add (f := _), map_add (f := _), map_add (f := _), phiPlus_algebraMap_maxUnramifiedFrobeniusFun,
       phiPlus_algebraMap_maxUnramifiedFrobeniusFun])
   commutes' q := algebraMap_maxUnramified_injective K (by
     rw [← phiPlus_algebraMap_maxUnramifiedFrobeniusFun, algebraMap_maxUnramified_padic, phiPlus_algebraMap_padic])

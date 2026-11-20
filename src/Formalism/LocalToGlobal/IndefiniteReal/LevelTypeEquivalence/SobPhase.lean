@@ -20,7 +20,7 @@ theorem psi_real (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1)) :
   let Λ : Ainf D.host.F →+ ℂ :=
     { toFun := fun y => 2 * Real.pi * Complex.I * ((-1 : ℤ) : ℂ) * ∑ ρ, θ ρ (y ⊗ₜ[D.host.F] (1 : D.host.E))
       map_zero' := by simp
-      map_add' := fun y y' => by simp only [TensorProduct.add_tmul, map_add, Finset.sum_add_distrib]; ring }
+      map_add' := fun y y' => by simp only [TensorProduct.add_tmul, map_add (f := _), Finset.sum_add_distrib]; ring }
   refine ⟨Λ, ?_, fun z hz => ?_⟩
   · show Continuous fun y => 2 * Real.pi * Complex.I * ((-1 : ℤ) : ℂ) * ∑ ρ, θ ρ (y ⊗ₜ[D.host.F] (1 : D.host.E))
     exact continuous_const.mul (continuous_finset_sum _ fun ρ _ => (hθ ρ).2)

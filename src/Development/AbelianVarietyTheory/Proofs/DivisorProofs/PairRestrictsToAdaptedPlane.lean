@@ -28,7 +28,7 @@ theorem rho_comp {R : Type} [CommRing R] [Invertible (2 : R)] {V : Type} [AddCom
     simp only [dotProduct_add, add_dotProduct]
     linear_combination (⅟(2 : R)) * h - (w.1 ⬝ᵥ w'.2) * h2
   simp only [Darboux.rho]
-  rw [hs, map_add]
+  rw [hs, map_add (f := _)]
   have := d.form w w'
   rw [h] at this
   exact sub_eq_zero.mp this.symm
@@ -105,7 +105,7 @@ theorem span_A {n d₂ : ℕ} (H : Plane E n d₂)
   obtain ⟨a, b, v, h⟩ := hE (fun j => if i = j then 1 else 0)
   refine ⟨inclR (AF F) a, inclR (AF F) b, incV F v, funext fun j => ?_⟩
   have hj := congrArg (inclR (F := F) (AF F)) (congrFun h j)
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, RingHom.map_mulVec] at hj
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, RingHom.map_mulVec] at hj
   simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   convert hj using 1
   · split_ifs <;> simp

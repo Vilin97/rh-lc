@@ -61,7 +61,7 @@ private theorem conj_of_trace {G K : Type} [Group G] [Field K] {n : ℕ} (ρ₁ 
     intro a
     induction a using MonoidAlgebra.induction_on with
     | of g => rw [e1, e2, hf]
-    | add a b ha hb => simp only [map_add, Matrix.trace_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Matrix.trace_add, ha, hb]
     | smul c a ha => simp only [map_smul, Matrix.trace_smul, ha]
   have hker : ∀ a, R₂ a = 0 → R₁ a = 0 := by
     intro a ha
@@ -156,10 +156,10 @@ theorem UpperTheory.V.Fr.of_trace :
       fun g => by rw [hform, one_smul]).resolve_right fun ha => ?_
     rcases hn with rfl | rfl
     · refine not_alt h2K' ρ'.r hs' fun g x => ?_
-      rw [← ρ'.pol, ← map_mul, ← map_mul, ← hφ, ← hφ, ← hφ, ← hφ, ← map_add, ← map_mul]
+      rw [← ρ'.pol, ← map_mul, ← map_mul, ← hφ, ← hφ, ← hφ, ← hφ, ← map_add (f := _), ← map_mul]
       congr 1
       apply hinj
-      rw [map_add, map_mul, htr, htr, htr, htr, map_mul, map_mul, ← Matrix.trace_add, ← Matrix.mul_add,
+      rw [map_add (f := _), map_mul, htr, htr, htr, htr, map_mul, map_mul, ← Matrix.trace_add, ← Matrix.mul_add,
         alt_two h2K P _ _ hP ha (hPr g), Matrix.mul_smul, Matrix.mul_one, Matrix.trace_smul, smul_eq_mul]
     · have hd := congrArg Matrix.det ha
       rw [Matrix.det_transpose, Matrix.det_neg, Fintype.card_fin] at hd

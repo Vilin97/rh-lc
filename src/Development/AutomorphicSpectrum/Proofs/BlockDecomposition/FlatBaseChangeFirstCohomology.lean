@@ -71,19 +71,19 @@ theorem flat_coh [Module.Flat R R'] {A₀ A₁ A₂ B₀ B₁ B₂ : Type} [AddC
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul r x => simp [ta, ta₂, c₁]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have comm₀ : ∀ t, (d₀' (e₀ t)).1 = e₁ (Z.subtype.baseChange R' (d₀.baseChange R' t)) := fun t ↦ by
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul r x => simp [ta, ta₀, c₀]
-    | add x y hx hy => simp only [map_add, Submodule.coe_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Submodule.coe_add, hx, hy]
   have mem : ∀ t, e₁ (Z.subtype.baseChange R' t) ∈ Z' := fun t ↦ by
     rw [hZ', ← comm₁]
     have : ∀ t, d₁.baseChange R' (Z.subtype.baseChange R' t) = 0 := fun t ↦ by
       induction t using TensorProduct.induction_on with
       | zero => simp
       | tmul r x => simp [(hZ _).1 x.2]
-      | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
     rw [this, map_zero]
   let g : R' ⊗[R] Z →ₗ[R'] Z' :=
     LinearMap.codRestrict Z' (e₁.toLinearMap ∘ₗ Z.subtype.baseChange R') mem
@@ -102,7 +102,7 @@ theorem flat_coh [Module.Flat R R'] {A₀ A₁ A₂ B₀ B₁ B₂ : Type} [AddC
       apply Subtype.ext
       simp [hg, ta]
     | add x y hx hy =>
-      rw [map_add, map_add, hx, hy, map_add]; rfl
+      rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]; rfl
   have hLs : Function.Surjective L := fun c' ↦ by
     obtain ⟨z', rfl⟩ := Submodule.Quotient.mk_surjective _ c'
     have hex : Function.Exact Z.subtype d₁ := fun x ↦ by
@@ -144,7 +144,7 @@ theorem flat_coh [Module.Flat R R'] {A₀ A₁ A₂ B₀ B₁ B₂ : Type} [AddC
         have : (LinearMap.range d₀).mkQ (d₀ x) = 0 :=
           (Submodule.Quotient.mk_eq_zero _).2 ⟨x, rfl⟩
         simp [this]
-      | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
     exact this _
   exact ⟨LinearEquiv.ofBijective L ⟨hLi, hLs⟩, hL⟩
 
@@ -183,7 +183,7 @@ theorem flat_base_change_first_cohomology [Module.Flat R R'] [Finite C] [∀ T T
     simp only [LinearMap.codRestrict_apply, amitsur_d0_apply, map_sub, m.naturality]
   · intro x
     funext T T' T'' φ ψ
-    simp only [d1_apply, map_sub, map_add, m.naturality]
+    simp only [d1_apply, map_sub, map_add (f := _), m.naturality]
   · intro z z' h
     have : m.coef.pullbackOneCocycle z = z' := Subtype.ext h.symm
     rw [← this]

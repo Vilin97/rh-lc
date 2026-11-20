@@ -235,7 +235,7 @@ theorem up_cauchy (hd : d.AxH 𝒜) (hdel : 1 ≤ d.del) (c : ι) (F1 : MvPolyno
         · exact P'.2.2 s h
       have hER : Ey (D := d.D) (fun j => (P : Ω c →+* ℂ) (y j)) R =
           Ey (D := d.D) (fun j => (P : Ω c →+* ℂ) (y j)) (MvPolynomial.map sg (mapK Q)) := by
-        simp only [R, map_add, map_mul, hRQ, ← map_evW_eq (P : Ω c →+* ℂ) sg hP, hF1, map_zero,
+        simp only [R, map_add (f := _), map_mul, hRQ, ← map_evW_eq (P : Ω c →+* ℂ) sg hP, hF1, map_zero,
           zero_mul, add_zero]
       have hC := coeff_Ey_le R hRx hRu (fun j => (P : Ω c →+* ℂ) (y j)) β
       rw [hER] at hC

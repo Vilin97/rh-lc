@@ -54,7 +54,7 @@ private theorem krylov_det_ne_zero {F : Type*} [Field F] {n : ℕ} {M : Matrix (
     exact absurd hdeg (not_lt.2 this)
   obtain ⟨a, b, hab⟩ := (hM.coprime_iff_not_dvd).2 hnd
   have h1 := congrArg (aeval M) hab
-  rw [map_add, map_mul, Matrix.aeval_self_charpoly, mul_zero, zero_add, mul_comm b p, map_mul, map_one, hpa] at h1
+  rw [map_add (f := _), map_mul, Matrix.aeval_self_charpoly, mul_zero, zero_add, mul_comm b p, map_mul, map_one, hpa] at h1
   apply hx
   rw [← vecMul_one x, ← h1, ← vecMul_vecMul, hc0, zero_vecMul]
 

@@ -135,7 +135,7 @@ theorem cleanSpan : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type)
   obtain ⟨κ, hκ⟩ := hex
   let S : Submodule ℂ (WO (Vc D i) (Wc D i) → ℂ) :=
     { carrier := {φ | TypeVec R i t φ}
-      add_mem' := fun {a b} ha hb => ⟨theta_add ha.1 hb.1, fun j hj => by rw [map_add, ha.2 j hj, hb.2 j hj, smul_add]⟩
+      add_mem' := fun {a b} ha hb => ⟨theta_add ha.1 hb.1, fun j hj => by rw [map_add (f := _), ha.2 j hj, hb.2 j hj, smul_add]⟩
       zero_mem' := ⟨by simpa using theta_smul (0 : ℂ) hf.1, fun j hj => by rw [map_zero, smul_zero]⟩
       smul_mem' := fun c a ha => ⟨theta_smul c ha.1, fun j hj => by
         rw [map_smul, ha.2 j hj, smul_comm]⟩ }

@@ -113,7 +113,7 @@ variable {σ τ K : Type} [Field K]
 
 theorem subst_add' {b : σ → MvPowerSeries τ K} (hb : MvPowerSeries.HasSubst b) (f g : MvPowerSeries σ K) :
     MvPowerSeries.subst b (f + g) = MvPowerSeries.subst b f + MvPowerSeries.subst b g := by
-  rw [← MvPowerSeries.coe_substAlgHom hb, map_add]
+  rw [← MvPowerSeries.coe_substAlgHom hb, map_add (f := _)]
 
 theorem subst_sub' {b : σ → MvPowerSeries τ K} (hb : MvPowerSeries.HasSubst b) (f g : MvPowerSeries σ K) :
     MvPowerSeries.subst b (f - g) = MvPowerSeries.subst b f - MvPowerSeries.subst b g := by

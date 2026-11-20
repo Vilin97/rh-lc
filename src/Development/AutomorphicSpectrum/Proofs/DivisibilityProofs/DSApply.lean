@@ -36,9 +36,9 @@ variable (F) in
 def trL (κ : Type) [Fintype κ] : (κ → mixedEmbedding.mixedSpace F) →L[ℝ] (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ :=
   LinearMap.toContinuousBilinearMap (LinearMap.mk₂ ℝ
     (fun x y : κ → mixedEmbedding.mixedSpace F => Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (∑ i, x i * y i))
-    (fun x x' y => by rw [← map_add, ← Finset.sum_add_distrib]; simp only [Pi.add_apply, add_mul])
+    (fun x x' y => by rw [← map_add (f := _), ← Finset.sum_add_distrib]; simp only [Pi.add_apply, add_mul])
     (fun c x y => by rw [← map_smul, Finset.smul_sum]; simp only [Pi.smul_apply, smul_mul_assoc])
-    (fun x y y' => by rw [← map_add, ← Finset.sum_add_distrib]; simp only [Pi.add_apply, mul_add])
+    (fun x y y' => by rw [← map_add (f := _), ← Finset.sum_add_distrib]; simp only [Pi.add_apply, mul_add])
     (fun c x y => by rw [← map_smul, Finset.smul_sum]; simp only [Pi.smul_apply, mul_smul_comm]))
 
 variable (F) in

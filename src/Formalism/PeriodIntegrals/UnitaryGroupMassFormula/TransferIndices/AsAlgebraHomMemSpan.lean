@@ -22,7 +22,7 @@ theorem asAlgebraHom_mem_span (τ : Representation K G W) (z : MonoidAlgebra K G
     τ.asAlgebraHom z w ∈ Submodule.span K (Set.range fun x => τ x w) := by
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => rw [map_add, LinearMap.add_apply]; exact add_mem ha hb
+  | add a b ha hb => rw [map_add (f := _), LinearMap.add_apply]; exact add_mem ha hb
   | single x r =>
     rw [Representation.asAlgebraHom_single, LinearMap.smul_apply]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨x, rfl⟩)

@@ -108,7 +108,7 @@ theorem GlobalTheory.Mean4O.CombGen.lnAdl_comb_change : ∀ (F : Type) [Field F]
       (q : ℝ) * Real.log ‖ratVal (fM * gM⁻¹) z‖ - ∑ i, (b i : ℝ) * Real.log ‖ratVal (f i * (g i)⁻¹) z‖ := by
     rw [← logNormAt_mkAt z _ hh, eS, ← logNormAt_mkAt z _ hk, ← logNormAt_mkAt z _ huM]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [ofMul_div, ofMul_mul, ofMul_pow, ofMul_prod, ofMul_zpow, map_sub, map_add, map_nsmul, map_sum, map_zsmul,
+      simp only [ofMul_div, ofMul_mul, ofMul_pow, ofMul_prod, ofMul_zpow, map_sub, map_add (f := _), map_nsmul, map_sum, map_zsmul,
       nsmul_eq_mul, zsmul_eq_mul, logNormAt_mkAt]
     rfl
   have e1 := lnN_eq_add hpM hfM

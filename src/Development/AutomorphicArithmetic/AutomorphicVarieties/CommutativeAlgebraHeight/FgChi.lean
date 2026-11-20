@@ -57,7 +57,7 @@ theorem UpperTheory.V.CA.f_gma :
     rw [Ideal.mem_bot] at hz
     have h1 := congrFun (congrArg π hz) i
     have hi' : π x i ≠ 0 := hi
-    simp only [map_sub, map_add, map_mul, map_one, map_zero, hy, Pi.sub_apply, Pi.add_apply, Pi.mul_apply,
+    simp only [map_sub, map_add (f := _), map_mul, map_one, map_zero, hy, Pi.sub_apply, Pi.add_apply, Pi.mul_apply,
       Pi.one_apply, Pi.zero_apply] at h1
     rw [mul_assoc, neg_mul, inv_mul_cancel₀ hi'] at h1
     simp at h1

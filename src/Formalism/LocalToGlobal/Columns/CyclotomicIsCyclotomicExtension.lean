@@ -329,7 +329,7 @@ def hz (a b : ℤ) : 𝓞 (hostFields H ι LL hE).E :=
 
 theorem conjO_hz (hd : 0 < H.d) (a b : ℤ) : (hostFields H ι LL hE).conjO (hz H ι LL hE a b) = hz H ι LL hE a (-b) := by
   unfold hz
-  rw [map_add, map_mul, map_intCast, map_intCast, conjO_hwO H ι LL hE hd]
+  rw [map_add (f := _), map_mul, map_intCast, map_intCast, conjO_hwO H ι LL hE hd]
   push_cast
   ring
 
@@ -361,7 +361,7 @@ theorem hz_Kq (a b : ℤ) : ((hz H ι LL hE a b : 𝓞 (hostFields H ι LL hE).E
       (a : (hostFields H ι LL hE).E) + (b : (hostFields H ι LL hE).E) * hwE H ι LL hE := by
     rw [RingOfIntegers.coe_eq_algebraMap]
     unfold hz
-    rw [map_add, map_mul, map_intCast, map_intCast]
+    rw [map_add (f := _), map_mul, map_intCast, map_intCast]
     rfl
   rw [h]
   exact add_mem (intCast_mem _ a) (mul_mem (intCast_mem _ b) (hwE_Kq H ι LL hE))

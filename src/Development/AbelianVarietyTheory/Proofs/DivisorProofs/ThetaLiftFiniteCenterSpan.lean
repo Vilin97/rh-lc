@@ -66,7 +66,7 @@ theorem zfin_pure (hσ : ∀ x, σ (σ x) = x) (hKP : GlobalTheory.ThK.KP) (hT :
       map_add' := fun g g' => funext fun x => by
         have := congrFun (lin _ (hD _ g.2) _ (hD _ g'.2) 1) ((toGAd hσ G.W.J hc).symm x)
         rw [one_smul, one_smul] at this
-        rw [Submodule.coe_add, map_add]
+        rw [Submodule.coe_add, map_add (f := _)]
         exact this
       map_smul' := fun r g => funext fun x => by
         have := congrFun (lin _ (hD _ g.2) 0 (zero_mem _) r) ((toGAd hσ G.W.J hc).symm x)

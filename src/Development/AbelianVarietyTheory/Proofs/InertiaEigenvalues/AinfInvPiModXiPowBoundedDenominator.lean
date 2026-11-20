@@ -149,13 +149,13 @@ theorem _root_.GlobalTheory.Adopt.ainf_invPi_mod_xi_pow_bounded_denominator : �
     rw [← map_pow, Ideal.Quotient.eq_zero_iff_mem]
     exact Ideal.subset_span (by simp)
   have hu : IsUnit (q (1 + AI.π₁ * w)) := by
-    rw [map_add, map_one, map_mul]
+    rw [map_add (f := _), map_one, map_mul]
     exact IsNilpotent.isUnit_one_add ⟨k, by rw [mul_pow, hπ, zero_mul]⟩
   have hneg : (-(q AI.π₁ ^ (l - 1))) ^ n = 0 := by
     rw [neg_pow, ← pow_mul, pow_eq_zero_of_le hk hπ, mul_zero]
   have hsum := (Commute.all (q AI.ξ) (-(q AI.π₁ ^ (l - 1)))).add_pow_eq_zero_of_add_le_succ_of_pow_eq_zero
     hξ hneg (k := n + M - 1) (by omega)
-  rw [← sub_eq_add_neg, congrArg q hw, map_add, map_pow, add_sub_cancel_left, map_mul,
+  rw [← sub_eq_add_neg, congrArg q hw, map_add (f := _), map_pow, add_sub_cancel_left, map_mul,
     mul_pow] at hsum
   rw [map_pow, map_natCast]
   exact ((hu.pow _).mul_left_eq_zero).1 hsum

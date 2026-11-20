@@ -69,8 +69,8 @@ theorem density {G H ι : Type} [Group G] [Fintype ι] [NormedAddCommGroup H] [I
         rw [← hback g u, hin]
         exact Submodule.inner_right_of_mem_orthogonal (hS _ u hu) (S.sub_starProjection_mem_orthogonal x)
       have h3 : amp (π g) x = amp (π g) (S.starProjection x) + amp (π g) (x - S.starProjection x) := by
-        rw [← map_add, add_sub_cancel]
-      rw [h3, map_add, Submodule.starProjection_eq_self_iff.2 h1,
+        rw [← map_add (f := _), add_sub_cancel]
+      rw [h3, map_add (f := _), Submodule.starProjection_eq_self_iff.2 h1,
         (Submodule.starProjection_apply_eq_zero_iff S).2 h2, add_zero]
     have hcomp : ∀ i j, ∃ c : ℂ, ∀ y : H,
         (S.starProjection (WithLp.toLp 2 (Pi.single j y))).ofLp i = c • y := by
@@ -183,7 +183,7 @@ theorem density_sob {n : ℕ} {ε : Fin n → Bool} {H ι : Type} [Fintype ι] [
     let Gl : H →ₗ[ℂ] H :=
       { toFun := gard ε σ φ
         map_add' := fun w w' => by
-          simp only [gard, map_add, smul_add]
+          simp only [gard, map_add (f := _), smul_add]
           exact MeasureTheory.integral_add (hint w) (hint w')
         map_smul' := fun c w => by
           simp only [gard, map_smul, RingHom.id_apply]

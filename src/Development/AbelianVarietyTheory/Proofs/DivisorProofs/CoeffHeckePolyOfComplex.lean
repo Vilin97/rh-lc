@@ -281,7 +281,7 @@ theorem exists_isMultIP (h : HM.Is U fun T T' => c * ipM M μ 𝓕 T T') (x y : 
   obtain ⟨b, hb⟩ := hd y
   obtain ⟨s, hs⟩ := hd (x + y)
   obtain ⟨t, ht⟩ := hd (x + Complex.I • y)
-  rw [map_add] at hs ht
+  rw [map_add (f := _)] at hs ht
   rw [map_smul] at ht
   exact ⟨_, GlobalTheory.SchurPolar.exists_of_diag M μ 𝓕 _ _ ha hb hs ht⟩
 

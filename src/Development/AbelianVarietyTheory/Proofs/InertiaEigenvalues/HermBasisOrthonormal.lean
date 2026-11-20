@@ -13,7 +13,7 @@ variable {K : UQ} (B : InvAlg K)
 
 theorem herm_add_right (x y z₁ z₂ : B.A) : B.herm x y (z₁ + z₂) = B.herm x y z₁ + B.herm x y z₂ := by
   unfold InvAlg.herm
-  rw [map_add, mul_add, map_add]
+  rw [map_add (f := _), mul_add, map_add (f := _)]
 
 theorem herm_zero_right (x y : B.A) : B.herm x y 0 = 0 := by
   unfold InvAlg.herm
@@ -76,7 +76,7 @@ theorem herm_basis_orthonormal : ∀ (K : UQ) (B : InvAlg K) (x w : B.A), B.σ B
     | mem y hy => obtain ⟨l, rfl⟩ := hy; exact hpow l
     | zero => intro i; simp [herm_zero_right]
     | add y z _ _ hy hz =>
-      intro i; rw [add_mul, herm_add_right, hy i, hz i, map_add, Finsupp.add_apply, map_add]
+      intro i; rw [add_mul, herm_add_right, hy i, hz i, map_add (f := _), Finsupp.add_apply, map_add (f := _)]
     | smul a y _ hy =>
       intro i; rw [smul_mul_assoc, herm_smul_right', hy i, LinearEquiv.map_smul, Finsupp.smul_apply, smul_eq_mul,
         RingEquiv.map_mul K.c]

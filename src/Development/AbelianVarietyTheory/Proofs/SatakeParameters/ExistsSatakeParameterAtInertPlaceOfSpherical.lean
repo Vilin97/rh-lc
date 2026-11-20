@@ -107,7 +107,7 @@ theorem exists_satAt : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n
   let V : Submodule ℂ (GAf L n → π.W) :=
     { carrier := {f | f ∈ π.S ∧ ∀ κ ∈ U, NG.rt L n κ f = f}
       zero_mem' := ⟨π.S.zero_mem, fun κ _ => map_zero _⟩
-      add_mem' := fun ha hb => ⟨π.S.add_mem ha.1 hb.1, fun κ hκ => by rw [map_add, ha.2 κ hκ, hb.2 κ hκ]⟩
+      add_mem' := fun ha hb => ⟨π.S.add_mem ha.1 hb.1, fun κ hκ => by rw [map_add (f := _), ha.2 κ hκ, hb.2 κ hκ]⟩
       smul_mem' := fun c f hf => ⟨π.S.smul_mem c hf.1, fun κ hκ => by rw [map_smul, hf.2 κ hκ]⟩ }
   haveI : FiniteDimensional ℂ π.W := π.alg.1
   haveI : FiniteDimensional ℂ V := by

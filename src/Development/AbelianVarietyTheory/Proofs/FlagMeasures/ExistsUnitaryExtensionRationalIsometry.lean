@@ -28,7 +28,7 @@ theorem form_ext_left {D : D7} (Z : LocDat D) (p : PlF D) (g : Vp D p ≃ₗ[(D.
   | zero =>
     rw [map_zero, (locH Z p).h_zero_left, (locH Z p).h_zero_left]
   | add y y' _ _ hy hy' =>
-    rw [map_add, (locH Z p).h_add_left, (locH Z p).h_add_left, hy, hy']
+    rw [map_add (f := _), (locH Z p).h_add_left, (locH Z p).h_add_left, hy, hy']
   | smul a y _ hy =>
     rw [map_smul, (locH Z p).h_smul_left, (locH Z p).h_smul_left, hy]
 

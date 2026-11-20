@@ -55,7 +55,7 @@ theorem pullLat_stable_iff_cong : ∀ (E : Type) [Field E] [NumberField E] [IsCM
   have hkey : ∀ y, ψ (B.g * y) = et⁻¹ • (γ.val *ᵥ ψ y - ψ y) := by
     intro y
     have h1 := hmul y
-    rw [hu, add_mul, one_mul, mul_assoc, map_add, IsScalarTower.algebraMap_apply K.O K.E B.A, ← Algebra.smul_def,
+    rw [hu, add_mul, one_mul, mul_assoc, map_add (f := _), IsScalarTower.algebraMap_apply K.O K.E B.A, ← Algebra.smul_def,
       hsemi, het] at h1
     rw [← h1, add_sub_cancel_left, smul_smul, inv_mul_cancel₀ het0, one_smul]
   have hmem : ∀ (h : GLw n w) y, y ∈ pullLat w B ψ h ↔

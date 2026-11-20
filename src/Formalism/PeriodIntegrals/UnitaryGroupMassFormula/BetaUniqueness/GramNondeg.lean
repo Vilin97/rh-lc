@@ -142,7 +142,7 @@ theorem coeffs_zero {T T' : E} (F : FlagG S r T) (F' : FlagG S r T') (c c' : Fin
       (Zhat F F' *ᵥ c') a := by
     intro a
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hw, map_add, map_sum, map_sum, ← self_sum F c a]
+      rw [hw, map_add (f := _), map_sum, map_sum, ← self_sum F c a]
     simp only [map_smul, smul_eq_mul]
     congr 1
     simp only [mulVec, dotProduct, Zhat, brS]
@@ -151,7 +151,7 @@ theorem coeffs_zero {T T' : E} (F : FlagG S r T) (F' : FlagG S r T') (c c' : Fin
       (Pi.single (Fin.last r) (-T' * c' (Fin.last r)) : Fin (r + 1) → E) b := by
     intro b
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hw, map_add, map_sum, map_sum, ← self_sum F' c' b]
+      rw [hw, map_add (f := _), map_sum, map_sum, ← self_sum F' c' b]
     simp only [map_smul, smul_eq_mul]
     congr 1
     simp only [mulVec, dotProduct, conjTranspose_apply, Zhat, brS]

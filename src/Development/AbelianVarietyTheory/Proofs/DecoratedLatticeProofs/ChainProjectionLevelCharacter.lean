@@ -35,8 +35,8 @@ theorem multT_val {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (θ : InfFam
       ring
   | add x y hx hy =>
     refine ⟨fun γ hγ g => ?_, fun k hk g => ?_⟩
-    · rw [map_add, Pi.add_apply, Pi.add_apply, hx.1 γ hγ g, hy.1 γ hγ g]
-    · rw [map_add, Pi.add_apply, Pi.add_apply, hx.2 k hk g, hy.2 k hk g]
+    · rw [map_add (f := _), Pi.add_apply, Pi.add_apply, hx.1 γ hγ g, hy.1 γ hγ g]
+    · rw [map_add (f := _), Pi.add_apply, Pi.add_apply, hx.2 k hk g, hy.2 k hk g]
       ring
 
 end GlobalTheory.StepLevelP.IoLevPf

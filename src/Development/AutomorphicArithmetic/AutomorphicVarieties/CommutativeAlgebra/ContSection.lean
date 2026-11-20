@@ -173,5 +173,5 @@ theorem UpperTheory.V.Alg.cont_section :
     rw [h4]
     exact Ideal.pow_le_pow_right (le_max_left _ _) hv
   · show p (base _ + w g) = x g
-    rw [map_add, hwp]
+    rw [map_add (f := _), hwp]
     ring

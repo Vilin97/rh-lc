@@ -32,7 +32,7 @@ theorem corr_crysRedMor_iff (A₀ : Over (Sp k)) [GrpObj A₀] (hA : IsAbelianSc
     obtain ⟨z, rfl⟩ := hm.2 c'
     induction z with
     | zero => simp only [map_zero]
-    | add x x' hx hx' => simp only [map_add, hx, hx']
+    | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
     | tmul r c =>
       rw [liftSemi_tmul]
       have h1 := (GlobalTheory.Published.GrothendieckMessing.crysRedMor (divided₂ (GlobalTheory.FODef.sqZero k V)) rfl A₀).pull.map_smulₛₗ r

@@ -24,7 +24,7 @@ theorem iotaO_toOB (C : GlobalTheory.MemLoc.Core l) (x : OCr l O) :
   | tmul o w =>
     exact congrArg (fun y : Per.BdR l => o ⊗ₜ[ℤ_[l]] y)
       ((C.ι_j w).trans (by rw [eq_crisP C.j_cris]; rfl))
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem iotaO_iSl {e : ℕ} [NeZero e] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
     {K : Type} [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K] [NormedAlgebra ℚ_[l] K]

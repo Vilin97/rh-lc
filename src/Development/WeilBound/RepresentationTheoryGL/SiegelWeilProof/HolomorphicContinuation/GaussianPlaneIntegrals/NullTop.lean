@@ -98,7 +98,7 @@ theorem integrable_evX_gs (P : PX m n) : ∀ {c : ℝ}, 0 < c → Integrable (fu
     intro c hc
     have e : (fun x => evX (p + q) x * gs c x) = fun x => evX p x * gs c x + evX q x * gs c x := by
       funext x
-      simp only [evX, map_add, add_mul]
+      simp only [evX, map_add (f := _), add_mul]
     rw [e]
     exact (hp hc).add (hq hc)
   | mul_X p k hp =>
@@ -130,7 +130,7 @@ theorem mom_add {c : ℝ} (hc : 0 < c) (R1 R2 P : PX m n) :
   unfold mom
   have h : ∀ x, evX ((R1 + R2) * P) x * gs c x = evX (R1 * P) x * gs c x + evX (R2 * P) x * gs c x := by
     intro x
-    simp only [evX, add_mul, map_add]
+    simp only [evX, add_mul, map_add (f := _)]
   simp_rw [h]
   exact integral_add (integrable_evX_gs _ hc) (integrable_evX_gs _ hc)
 

@@ -47,7 +47,7 @@ theorem GlobalTheory.latticeMap_liftBaseChange_injective_saturated :
       ∃ x', x = (l : ℤ_[l]) • x' := by
     intro x t hx
     obtain ⟨h, y, rfl⟩ := exists_one_tmul_add_smul l H x
-    rw [map_add, map_smul, hF] at hx
+    rw [map_add (f := _), map_smul, hF] at hx
     have h1 : φ h = (l : ℤ_[l]) • (t - F y) := by rw [smul_sub, ← hx]; abel
     obtain ⟨h', rfl⟩ := hsat h _ h1
     refine ⟨(1 : ℤ_[l]) ⊗ₜ h' + y, ?_⟩

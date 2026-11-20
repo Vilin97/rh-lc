@@ -65,7 +65,7 @@ theorem PhiData.p_two_eq_l_mul_phi_eps_add_phi_u_mul : P.p 2 = C (l : O) * P.φ 
   have h1 : P.p 1 = P.φ X := rfl
   rw [h]
   conv_lhs => rw [P.first_partial_unit_eq_exp]
-  rw [map_add, map_mul, map_mul, map_pow, P.φ_C_l, ← h1]
+  rw [map_add (f := _), map_mul, map_mul, map_pow, P.φ_C_l, ← h1]
 
 theorem PhiData.map_p (s : ℕ) : ∃ w : (IsLocalRing.ResidueField O)⟦X⟧, IsUnit w ∧
     (P.p s).map (IsLocalRing.residue O) = w * X ^ (l ^ s) := by

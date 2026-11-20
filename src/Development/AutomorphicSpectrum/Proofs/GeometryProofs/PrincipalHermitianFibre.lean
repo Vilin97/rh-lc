@@ -70,11 +70,11 @@ theorem exists_metric [Module.Finite (𝓞 L) V] [Module.Projective (𝓞 L) V]
   change h _ (e _ _) (e _ _) = starRingEnd ℂ (h σ (e σ x) (e σ y))
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]
   | tmul z a =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add c d hc' hd => simp only [map_add, ← hc', ← hd]
+    | add c d hc' hd => simp only [map_add (f := _), ← hc', ← hd]
     | tmul w b =>
       rw [tm σ z a, tm σ w b, conjMap_smul, conjMap_smul, cm, cm]
       simp only [map_smul, map_smulₛₗ, LinearMap.smul_apply, hc, smul_eq_mul, map_mul, Complex.conj_conj, RingHom.id_apply]
@@ -114,7 +114,7 @@ theorem exists_fibre_equiv {S : Scheme.{0}} (G : Over S) [GrpObj G] [Smooth G.ho
     | tmul z a =>
       rw [TensorProduct.smul_tmul', he, he, complex_smul_def, map_mul, mul_smul]
       simp
-    | add a b ha hb' => rw [smul_add, map_add, map_add, ha, hb', smul_add]
+    | add a b ha hb' => rw [smul_add, map_add (f := _), map_add (f := _), ha, hb', smul_add]
   · exact (he 1 a).trans (by simp)
 
 theorem spectrumMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :

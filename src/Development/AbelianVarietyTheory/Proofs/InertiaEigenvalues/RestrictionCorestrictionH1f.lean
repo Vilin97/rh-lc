@@ -23,7 +23,7 @@ def trCochain (ι : G →* G') [Fintype (G' ⧸ ι.range)] (T : LocLat G' Qp LL 
     T.ρ (g • q).out (f (Function.invFun ι ((g • q).out⁻¹ * g * q.out)))
   map_add' f f' := by
     funext g
-    simp only [Pi.add_apply, map_add, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), Finset.sum_add_distrib]
   map_smul' a f := by
     funext g
     simp only [Pi.smul_apply, LinearMap.map_smul_of_tower, RingHom.id_apply, Finset.smul_sum]
@@ -156,7 +156,7 @@ theorem actVB_res (PD : PeriodData G Qp K₀ K B BdR) (PD' : PeriodData G' Qp K�
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB, hact]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem coreCor_of_isOpen [IsTopologicalGroup G'] (PD : PeriodData G Qp K₀ K B BdR)
     (PD' : PeriodData G' Qp K₀' K' B BdR) (ι : G →* G') (hι : Continuous ι)

@@ -29,7 +29,7 @@ def padicEnd (p : ℕ) [Fact p.Prime] (M : Type) [AddCommGroup M] (hM : ∀ x : 
   map_add' a b := by
     ext x
     change (PadicInt.toZMod (a + b)).val • x = (PadicInt.toZMod a).val • x + (PadicInt.toZMod b).val • x
-    rw [map_add, ZMod.val_add, ← nsmul_eq_mod_nsmul _ (hM x), add_nsmul]
+    rw [map_add (f := _), ZMod.val_add, ← nsmul_eq_mod_nsmul _ (hM x), add_nsmul]
 
 lemma padicEnd_apply (p : ℕ) [Fact p.Prime] (M : Type) [AddCommGroup M] (hM : ∀ x : M, p • x = 0)
     (c : ℤ_[p]) (x : M) : padicEnd p M hM c x = (PadicInt.toZMod c).val • x := rfl
@@ -106,7 +106,7 @@ lemma padic_mul_eq {p : ℕ} [Fact p.Prime] {R : Type} [CommRing R] (t : ℤ_[p]
   have hc : c = d * p + ((PadicInt.toZMod c).val : ℤ_[p]) := by rw [hd]; ring
   rw [nsmul_eq_mul] at hi ⊢
   conv_lhs => rw [hc]
-  rw [map_add, map_mul, map_natCast, map_natCast, add_mul, _root_.mul_assoc, hi, mul_zero, zero_add]
+  rw [map_add (f := _), map_mul, map_natCast, map_natCast, add_mul, _root_.mul_assoc, hi, mul_zero, zero_add]
 
 theorem main :
   (∀ {R₀ : Type} [CommRing R₀] {g : ℕ} (B : BX R₀) (O : LAlg R₀) (gb : Module.Basis (Fin g) R₀ B.gg) (O₀ : Type) [CommRing O₀] (f : O₀ → OEnd B O) (p : ℕ) [Fact p.Prime] [Algebra ℤ_[p] (O : Type)] (dL : O₀ →+* Matrix (Fin g) (Fin g) (O : Type)),
@@ -159,7 +159,7 @@ theorem main :
           kerMul π (s.1 (complMat p dL a k l)) i + kerMul π (s.1 (complMat p dL b k l)) i :=
         fun k => Subtype.ext (by simp [kerMul, add_mul])
       simp only [this, TensorProduct.tmul_add, Finset.sum_add_distrib]
-      rw [map_add (B.tg π hπ), ← ha, ← hb, map_add]
+      rw [map_add (B.tg π hπ), ← ha, ← hb, map_add (f := _)]
       rfl
   have key2 : ∀ a {R S : LAlg R₀} (s : LHom O R) (π : LHom R S) (hπ : π.SqZero) (l : Fin g)
       (i : π.ker) (hi : p • i = 0),
@@ -177,7 +177,7 @@ theorem main :
   refine ⟨{ act := fun a S s => complEnd f p s (hf s) a
             act_one := fun S s x => by rw [map_one]; rfl
             act_mul := fun a b S s x => by rw [map_mul]; rfl
-            act_add := fun a b S s x => by rw [map_add]; rfl
+            act_add := fun a b S s x => by rw [map_add (f := _)]; rfl
             act_nat := ?_
             actL := L
             act_tg := ?_ }, complMat p dL, complMat_tmul p dL, ?_,
@@ -190,9 +190,9 @@ theorem main :
     | zero => simp
     | tmul c a => rw [complEnd_tmul, complEnd_tmul, map_nsmul, (f a).nat]
     | add a b ha hb =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       change B.map φ ((complEnd f p s (hf s) a x : B.G S) + (complEnd f p s (hf s) b x : B.G S)) = _
-      rw [map_add, ha, hb]
+      rw [map_add (f := _), ha, hb]
       rfl
   · intro a R S s π hπ w i hi
     have hr : ∀ l, p • (gb.repr w l • i) = 0 := fun l => by rw [smul_comm, hi, smul_zero]

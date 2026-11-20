@@ -31,7 +31,7 @@ theorem exists_algHom_end_of_span_intertwiners :
     intro f a w
     induction a using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hx, hy, map_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hx, hy, map_add (f := _)]
     | single g c =>
       simp only [Representation.asAlgebraHom_single, LinearMap.smul_apply, map_smul]
       congr 1
@@ -65,7 +65,7 @@ theorem exists_algHom_end_of_span_intertwiners :
     rw [hΦ]
     induction a using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add x y hx hy => rw [map_add]; exact hx.add_right hy
+    | add x y hx hy => rw [map_add (f := _)]; exact hx.add_right hy
     | single g c =>
       rw [Representation.asAlgebraHom_single]
       exact (hT g).smul_right c

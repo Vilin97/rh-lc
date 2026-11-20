@@ -77,7 +77,7 @@ theorem form_res (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) (J : Matrix (Fin 1)
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [sigR, hσσ]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hsj : sigR (Fv F v) σ (inclR (Fv F v) (J 0 0)) = inclR (Fv F v) (J 0 0) := by
     simp [sigR, inclR, hj0]
   set Q := sigR (Fv F v) σ z * inclR (Fv F v) (J 0 0) * z with hQ

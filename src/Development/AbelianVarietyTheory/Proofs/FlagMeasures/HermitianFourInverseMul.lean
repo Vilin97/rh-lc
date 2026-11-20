@@ -155,7 +155,7 @@ theorem inner_spec (g : Fin (r + 1) → S.V) (gs : Fin r → S.V) (Λ : Submodul
         Finset.mem_univ, if_true, hg, Finset.sum_const_zero, sub_self]
     | zero => exact ⟨fun j => by simp [hf], map_zero _⟩
     | add u v _ _ hu hv =>
-      exact ⟨fun j => by rw [hf_add_left, hu.1, hv.1, add_zero], by rw [map_add, hu.2, hv.2, add_zero]⟩
+      exact ⟨fun j => by rw [hf_add_left, hu.1, hv.1, add_zero], by rw [map_add (f := _), hu.2, hv.2, add_zero]⟩
     | smul c u _ hu =>
       exact ⟨fun j => by rw [hf_smul_left, hu.1, mul_zero], by rw [map_smul, hu.2, smul_zero]⟩
   have hlast : g (Fin.last r) ∈ innerOf S g gs Λ := (hmemA _).2 ⟨fun j => hg _ j, hC _ (hgΛ _)⟩

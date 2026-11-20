@@ -204,7 +204,7 @@ theorem unit_prim_rho {U : Unf Xo c σ r} {k : U.Comp} {x : (U.X k).dom} {W : Un
   simp only [tyAct, Pi.add_apply, ← add_mul]
   have h := congrArg (fun t : 𝓞 E => tyW W i (t : E)) (CVA.cmHostUnit_add_conj_eq_one H)
   push_cast at h
-  simp only [map_add, map_one] at h
+  simp only [map_add (f := _), map_one] at h
   rw [h, one_mul]
 
 theorem unit_ad_rho {U : Unf Xo c σ r} {k : U.Comp} {x : (U.X k).dom} {W : UnfAt U k x} (Wu : UnitAt W)

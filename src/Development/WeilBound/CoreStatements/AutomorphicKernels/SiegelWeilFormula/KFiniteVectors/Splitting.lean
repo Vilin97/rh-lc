@@ -18,7 +18,7 @@ theorem splitting (d : SD σ) : IsSplitting (adeleClass F) d.B.ψ d.dd (actB (cA
 
 theorem imp (d : SD σ) (k : d.G) :
     Box.Imp d.B.ψ (d.om k) fun w => d.dd.e (actB (cA σ) k (d.dd.e.symm w)) :=
-  ⟨(splitting d).pres k, (splitting d).adm k, fun w w' => by simp only [actB, map_add, Matrix.add_mul],
+  ⟨(splitting d).pres k, (splitting d).adm k, fun w w' => by simp only [actB, map_add (f := _), Matrix.add_mul],
     fun c w => by simp only [actB, map_smul, Matrix.smul_mul], fun w φ hφ => by
       have := (splitting d).impl k (d.dd.e.symm w) φ hφ
       rwa [Darboux.rho, LinearEquiv.apply_symm_apply] at this⟩
@@ -44,7 +44,7 @@ theorem D_kfS {u : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)} (hu : At (ev
       obtain ⟨v, hv, x, hx, rfl⟩ := hz
       exact Submodule.subset_span ⟨_, Box.at_actB k hv, _, h2 k hk x hx, om_D k hv (h0 hx)⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add _ _ _ _ i j => rw [map_add]; exact add_mem i j
+    | add _ _ _ _ i j => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem i j
     | smul c _ _ i => rw [map_smul]; exact Submodule.smul_mem _ _ i
 
 theorem vac_kfS (θ : InfinitePlace F → Matrix (Fin d.m) (Fin d.m) ℂ)

@@ -242,7 +242,7 @@ private theorem sys_ext_of_split {G : GDatum} {p : ℕ} {f : ℕ → G.La →+ G
         have h2 : Dv (Q n) (e₂ n • f (Q n) (x - y₀)) := Dv.of_int (hQ n hn) _
         have h3 : Dv (Q n) (f (Q n) y₀ - κ • x) := dv_of_eq ⟨z₀, hy⟩
         convert Dv.add (Dv.add h1 h2) h3 using 1
-        simp only [map_add, map_zsmul, map_sub, he₂ n hn]
+        simp only [map_add (f := _), map_zsmul, map_sub, he₂ n hn]
         module
   · intro n hn hnp x
     apply eq_of_dv

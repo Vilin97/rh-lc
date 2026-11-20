@@ -170,7 +170,7 @@ theorem lin_of_summable {F E : Type} [Field F] [NumberField F] [Field E] [Number
   refine ⟨fun Ψ hΨ Ψ' hΨ' => ?_, fun c Ψ => ?_⟩
   · have h : ∀ w, thetaSum F (e (M.co.rho ψ (u w) (Ψ + Ψ'))) =
         thetaSum F (e (M.co.rho ψ (u w) Ψ)) + thetaSum F (e (M.co.rho ψ (u w) Ψ')) := fun w => by
-      rw [rho_add, map_add]
+      rw [rho_add, map_add (f := _)]
       exact GlobalTheory.WeilM.thetaSum_add F (he _ (GlobalTheory.HeisSchA.rho_mem_schA M ψ hψ _ Ψ hΨ))
         (he _ (GlobalTheory.HeisSchA.rho_mem_schA M ψ hψ _ Ψ' hΨ'))
     rw [tsum_congr h]

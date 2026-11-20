@@ -193,7 +193,7 @@ theorem acts_lin (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.P
       a • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v) φ₁ R + b • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v) ψ₁ R := by
     funext x; simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
   have key : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v) χ R = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v) (a • φ₁ + b • ψ₁) R := by
-    rw [← hχ R (hR _ hs), e, map_add, map_smul, map_smul, h₁ R (hR φ hφ), h₂ R (hR ψ hψ), e']
+    rw [← hχ R (hR _ hs), e, map_add (f := _), map_smul, map_smul, h₁ R (hR φ hφ), h₂ R (hR ψ hψ), e']
   have hχe : χ = a • φ₁ + b • ψ₁ := by
     funext t
     have hz : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (evFin F v) (fun i => GlobalTheory.LatVac.liftV v (t i)) := by
@@ -258,7 +258,7 @@ theorem ext_hom {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] (S : Subm
   let f : G → Module.End ℂ V := fun g => S.subtype ∘ₗ (ρ g) ∘ₗ P + (LinearMap.id - S.subtype ∘ₗ P)
   have hf : ∀ g x, f g x = (ρ g (P x) : V) + (x - P x) := fun g x => rfl
   have hPf : ∀ g x, P (f g x) = ρ g (P x) := by
-    intro g x; rw [hf, map_add, map_sub, hP, hP, sub_self, add_zero]
+    intro g x; rw [hf, map_add (f := _), map_sub, hP, hP, sub_self, add_zero]
   refine ⟨{ toFun := f, map_one' := ?_, map_mul' := ?_ }, ?_⟩
   · refine LinearMap.ext fun x => ?_
     rw [hf, map_one, Module.End.one_apply, Module.End.one_apply]

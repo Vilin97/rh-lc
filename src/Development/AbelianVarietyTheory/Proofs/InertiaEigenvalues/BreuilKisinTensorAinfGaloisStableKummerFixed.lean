@@ -35,7 +35,7 @@ theorem kappa_act {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[l
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul w x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem kappa_smul' {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_[l] K O) (w : WCb l) :
     letI := zlLat T
@@ -47,7 +47,7 @@ theorem kappa_smul' {G : Type} [Group G] [TopologicalSpace G] (T : LocLat G ℚ_
   | tmul w' x =>
     rw [smul_tmul', kappa_tmul, kappa_tmul, smul_tmul', smul_eq_mul, smul_eq_mul,
       Algebra.TensorProduct.tmul_mul_tmul, one_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 variable (P : PhiMod O K l e a ι)
 
@@ -115,7 +115,7 @@ theorem add_step {P : PhiMod O K l e a ι} {T : Lat a O K ϖ} (I : Ident t ϖ P 
       I.j (v + v') = kappa T (j (z + z')) := by
   letI := zlLat T
   intro j z z' v v' hv hw
-  rw [I.j.map_add, hv, hw, j.map_add, (kappa T).map_add]
+  rw [I.j.map_add (f := _), hv, hw, j.map_add (f := _), (kappa T).map_add (f := _)]
 
 theorem smul_step {P : PhiMod O K l e a ι} {T : Lat a O K ϖ} (I : Ident t ϖ P T) (E : FCrys l ↥(OL (ϖ.field a))) :
     letI := zlLat T

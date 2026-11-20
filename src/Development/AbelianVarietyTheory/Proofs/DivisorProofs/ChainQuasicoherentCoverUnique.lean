@@ -35,7 +35,7 @@ theorem span_pullbackSections {X Y : Scheme.{0}} (f : X ⟶ Y) (G : Y.Modules) [
     induction hs using Submodule.span_induction with
     | mem s hs => exact Submodule.subset_span ⟨s, hs, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | smul a b _ hb => rw [pullbackSections_smul]; exact Submodule.smul_mem _ _ hb
   | smul a b hb => exact Submodule.smul_mem _ _ hb
   | add a b ha hb => exact add_mem ha hb
@@ -58,7 +58,7 @@ theorem map_act : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationR
       rw [hl, hl₀, ← hl]
       exact congrArg l (pullback_map_app_pullbackSections f.f (Lie.ρ a : Lie.V ⟶ Lie.V) le_rfl s).symm
     | zero => simp only [map_zero]
-    | add x y _ _ hx hy => simp only [map_add, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
     | smul r y _ hy => rw [map_smulₛₗ, map_smul, map_smul, map_smulₛₗ, hy]
   refine GlobalTheory.RingChain.MapDown.map_down p h o _ _ _ _ (g U) (g U) (RingHom.id _) (RingHom.id _) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     D D (C U) (C U) (M a) l m l.toAddMonoidHom m l₀ m₀ l' m' _ rfl rfl (hf.map_cst U π) hd hp

@@ -35,12 +35,12 @@ theorem UpperTheory.V.Pa.prAdd :
     have : b = c := S.U.inj (e.symm.trans e')
     rw [this]; exact hc
   refine ⟨h1, h2, fun a a' => key _ _ _ ?_, fun b a => key _ _ _ ?_, fun a a' => ?_, hi, ?_⟩
-  · rw [map_add, Submodule.coe_add]
+  · rw [map_add (f := _), Submodule.coe_add]
     linear_combination - h1 a - h1 a'
   · rw [map_mul, Submodule.coe_smul, Algebra.smul_def, Algebra.smul_def, ← mul_add, h1]
   · obtain ⟨c, -, e⟩ := S.U.mul_mem _ (S.pr1 a).2 _ (S.pr1 a').2
     have := key (a * a') (S.pr0 a * S.pr0 a' + c) (S.pr0 a • S.pr1 a' + S.pr0 a' • S.pr1 a) (by
-      rw [map_add, map_mul, Submodule.coe_add, Submodule.coe_smul, Submodule.coe_smul, Algebra.smul_def,
+      rw [map_add (f := _), map_mul, Submodule.coe_add, Submodule.coe_smul, Submodule.coe_smul, Algebra.smul_def,
         Algebra.smul_def, ← e]
       have e1 := h1 a
       have e2 := h1 a'

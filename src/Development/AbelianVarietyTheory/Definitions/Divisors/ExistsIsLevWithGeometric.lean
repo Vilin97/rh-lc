@@ -44,7 +44,7 @@ theorem modN_of_dvd {k m : ℕ} (h : k ∣ m) {a : Dw.La} (ha : Dw.ModN m a) : D
 theorem modN_of_forall_dvd {k : ℕ} (hk : 0 < k) {a : Dw.La} (h : ∀ y, (k : ℤ) ∣ Dw.EF a y) : Dw.ModN k a := by
   choose f hf using h
   have hk' : (k : ℤ) ≠ 0 := by exact_mod_cast hk.ne'
-  let g : Dw.La →+ ℤ := AddMonoidHom.mk' f fun x y => mul_left_cancel₀ hk' (by rw [mul_add, ← hf, ← hf, ← hf, map_add])
+  let g : Dw.La →+ ℤ := AddMonoidHom.mk' f fun x y => mul_left_cancel₀ hk' (by rw [mul_add, ← hf, ← hf, ← hf, map_add (f := _)])
   obtain ⟨b, hb⟩ := Dw.unimod.2 g.toIntLinearMap
   refine ⟨b, Dw.unimod.1 (LinearMap.ext fun y => ?_)⟩
   rw [map_nsmul, hb, hf, LinearMap.smul_apply, nsmul_eq_mul]
@@ -56,7 +56,7 @@ theorem dvd_EF_sub {k : ℕ} {a a' b b' : Dw.La} (ha : Dw.ModN k (a - a')) (hb :
   obtain ⟨y, hy⟩ := hb
   rw [sub_eq_iff_eq_add.1 hx, sub_eq_iff_eq_add.1 hy]
   refine ⟨Dw.EF x (k • y + b') + Dw.EF a' y, ?_⟩
-  simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
+  simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
   ring
 
 theorem zpow_congr {G : Type} [CommGroup G] {ζ : G} {k : ℕ} (h : ζ ^ k = 1) {a b : ℤ} (hab : (k : ℤ) ∣ a - b) :
@@ -245,7 +245,7 @@ theorem exists_isLevWith_geometric {k : ℕ} (hk : k ∣ l.M) {K : Type} [Field 
     obtain ⟨y, hy⟩ := modN_of_dvd hk (smul_modN hf (Submodule.smul_mem_smul hf' (Submodule.mem_top (x := b))))
     refine ⟨(1 - m : 𝓞 E) • x + (m * m - m : 𝓞 E) • y, ?_⟩
     rw [smul_add, smul_comm k, smul_comm k, ← hx, ← hy, ← Nat.cast_smul_eq_nsmul (𝓞 E), hs]
-    simp only [map_add, map_mul, map_sub, map_one, map_natCast]
+    simp only [map_add (f := _), map_mul, map_sub, map_one, map_natCast]
     module
   have hEF : ∀ a b : Dw.La, I.ζ k ^ Dw.EF (s • a) (s • b) = ζ ^ Dw.EF a b := fun a b => by
     rw [Dw.adj, ← mul_smul, zpow_congr (I.ζ_prim k hk0).pow_eq_one

@@ -76,7 +76,7 @@ theorem Good.add {D : Derivation ℂ R R} {P Q u v : R} (hP : Good D P u) (hQ : 
   refine ⟨⟨N₁ ⊔ N₂, inferInstance, add_mem (Submodule.mem_sup_left m₁) (Submodule.mem_sup_right m₂), ?_⟩, fun l => ?_⟩
   · intro y hy
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem (Submodule.mem_sup_left (s₁ a ha)) (Submodule.mem_sup_right (s₂ b hb))
   · simpa [mul_add] using (h₁ l).add (h₂ l)
 
@@ -104,7 +104,7 @@ theorem Good.mul {D : Derivation ℂ R R} {P Q u v : R} (hP : Good D P u) (hQ : 
     | mem_mul_mem a ha b hb =>
       rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, mul_comm b]
       exact add_mem (Submodule.mul_mem_mul ha (s₂ b hb)) (Submodule.mul_mem_mul (s₁ a ha) hb)
-    | add x _ y _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x _ y _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · have hv : v ∈ N₂ := mem_of_sum h₂ m₂ s₂
     obtain ⟨π, hπ⟩ := LinearMap.exists_leftInverse_of_injective N₂.subtype (Submodule.ker_subtype N₂)
     let b := Module.finBasis ℂ N₂
@@ -144,7 +144,7 @@ theorem isExp_of_gens {σ : Type} (D : Derivation ℂ (MvPolynomial σ ℂ) (MvP
       have := Good.const D a
       rwa [show algebraMap ℂ (MvPolynomial σ ℂ) a = MvPolynomial.C a from rfl, ← MvPolynomial.algebraMap_eq,
         AlgHom.commutes] at *
-    | add p q hp hq => rw [map_add]; exact hp.add hq
+    | add p q hp hq => rw [map_add (f := _)]; exact hp.add hq
     | mul_X p i hp => rw [map_mul]; exact hp.mul (h i)
   exact fun v l => (g v).2 l
 

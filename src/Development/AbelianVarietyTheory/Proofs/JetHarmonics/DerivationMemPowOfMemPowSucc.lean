@@ -18,7 +18,7 @@ theorem derivation_mem_pow_of_mem_pow_succ {k A : Type} [CommRing k] [CommRing A
       · have h := Ideal.mul_mem_mul hb (ih a ha)
         rwa [← pow_succ'] at h
     · intro y z hy hz
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Ideal.add_mem _ hy hz
 
 example : ∀ {k A : Type} [inst : CommRing k] [inst_1 : CommRing A] [inst_2 : Algebra k A] (D : Derivation k A A) (I : Ideal A) (n : ℕ), ∀ x ∈ I ^ (n + (1 : ℕ)), (D : A → A) x ∈ I ^ n :=

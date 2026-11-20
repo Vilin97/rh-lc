@@ -268,7 +268,7 @@ theorem gS_one_ne_zero {ψl : k → ℂ} (hadd : ∀ x y, ψl (x + y) = ψl x * 
       intro x
       have hmk : Ideal.Quotient.mk (IsLocalRing.maximalIdeal 𝒪[k] ^ c) (Quotient.out (x + tb)) =
           Ideal.Quotient.mk (IsLocalRing.maximalIdeal 𝒪[k] ^ c) (Quotient.out x + (⟨t, ht1⟩ : 𝒪[k])) := by
-        rw [map_add]
+        rw [map_add (f := _)]
         rw [show Ideal.Quotient.mk (IsLocalRing.maximalIdeal 𝒪[k] ^ c) (Quotient.out (x + tb)) = x + tb from
             Quotient.out_eq _,
           show Ideal.Quotient.mk (IsLocalRing.maximalIdeal 𝒪[k] ^ c) (Quotient.out x) = x from Quotient.out_eq _]
@@ -466,7 +466,7 @@ theorem gauss_ne_zero : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddChar (
     intro a b
     have harg : (LinearMap.inr F (Ainf F) (Af F)) ((singleFin v) (a + b)) =
         (LinearMap.inr F (Ainf F) (Af F)) ((singleFin v) a) + (LinearMap.inr F (Ainf F) (Af F)) ((singleFin v) b) := by
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
     exact (congrArg ψ harg).trans (ψ.map_add_eq_mul _ _)
   have hO : ∀ a : Fv F v, valuation (Fv F v) a ≤ 1 → psiLoc ψ v a = 1 := by
     intro a ha

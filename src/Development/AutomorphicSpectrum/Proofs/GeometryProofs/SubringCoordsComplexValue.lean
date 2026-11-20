@@ -51,10 +51,10 @@ variable {i : Ω →+* Ω'} {W : Subring Ω'} {φ : W →+* ℂ} {ξ : Spec (Com
 theorem QV.add {a b : Ω} (ha : QV i W φ ξ z a) (hb : QV i W φ ξ z b) : QV i W φ ξ z (a + b) := by
   obtain ⟨h1, v1⟩ := ha
   obtain ⟨h2, v2⟩ := hb
-  have hm : i (a + b) ∈ W := by rw [map_add]; exact W.add_mem h1 h2
+  have hm : i (a + b) ∈ W := by rw [map_add (f := _)]; exact W.add_mem h1 h2
   refine ⟨hm, ?_⟩
   have e : (⟨i (a + b), hm⟩ : W) = ⟨_, h1⟩ + ⟨_, h2⟩ := Subtype.ext (by simp)
-  rw [e, map_add]
+  rw [e, map_add (f := _)]
   exact add_val v1 v2
 
 theorem QV.mul {a b : Ω} (ha : QV i W φ ξ z a) (hb : QV i W φ ξ z b) : QV i W φ ξ z (a * b) := by

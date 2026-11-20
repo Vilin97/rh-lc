@@ -164,7 +164,7 @@ theorem lower (C : LocCmpT l P AI H F) (h : Good K s LL) (T : Lt K LL) (hT : IsC
     apply Subtype.ext
     change _ = (x : (H.W K s LL h).DD T) + (letπ : AA K LL) • y
     rw [← hxy]; simp
-  rw [h2, map_add] at h1
+  rw [h2, map_add (f := _)] at h1
   have h3 : ex C h T i 1 x k + ex C h T i 1 ((letπ : AA K LL) • ⟨y, hy⟩) k =
       (algebraMap ↥(OL LL) ↥LL.1 ((H.W K s LL h).χΓ (H.W K s LL h).gam : ↥(OL LL))) ^ k •
         ex C h T i 1 x k := h1

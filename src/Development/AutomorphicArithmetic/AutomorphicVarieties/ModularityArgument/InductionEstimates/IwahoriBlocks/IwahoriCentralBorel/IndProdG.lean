@@ -254,7 +254,7 @@ private theorem prodStep (P : Subgroup A) (j : H →* B) (hj : Topology.IsEmbedd
     { carrier := {v | ∀ h, j h ∈ U → y (h, 1) (f v) = f v}
       add_mem' := by
         intro a b ha hb h hh
-        rw [map_add, map_add, ha h hh, hb h hh]
+        rw [map_add (f := _), map_add (f := _), ha h hh, hb h hh]
       zero_mem' := by intro h _; simp
       smul_mem' := by
         intro c a ha h hh

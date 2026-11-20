@@ -74,7 +74,7 @@ theorem length_eq : Module.length O' A' = Module.length O' (O' ⊗[O] A) := by
     | tmul c x =>
       simp only [hF, S.p_inc, ← TensorProduct.smul_tmul]
       rw [← TensorProduct.sum_tmul, b.sum_repr]
-    | add x y hx hy => simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib, hx, hy]
   refine (LinearEquiv.ofBijective F ⟨fun s t h => ?_, fun x => ⟨∑ a, b a ⊗ₜ[O] S.p a x, ?_⟩⟩).length_eq.symm
   · rw [← hl s, ← hl t, h]
   set_option synthInstance.maxHeartbeats 100000 in
@@ -138,7 +138,7 @@ theorem compat_span (T : Set A) : S.Compat (Submodule.span O T) (Submodule.span 
         rw [S.p_inc]
         exact Submodule.smul_mem _ _ (Submodule.subset_span hy)
       | zero => simp
-      | add x y _ _ hx hy => intro c a; rw [smul_add, map_add]; exact add_mem (hx c a) (hy c a)
+      | add x y _ _ hx hy => intro c a; rw [smul_add, map_add (f := _)]; exact add_mem (hx c a) (hy c a)
       | smul d x _ hx => intro c a; rw [smul_smul]; exact hx _ a
     simpa using this 1
   · intro hx
@@ -147,7 +147,7 @@ theorem compat_span (T : Set A) : S.Compat (Submodule.span O T) (Submodule.span 
       induction hy using Submodule.span_induction with
       | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
       | smul d x _ hx => rw [S.inc_smul]; exact Submodule.smul_mem _ _ hx
     rw [← S.sum_p x]
     exact Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ (this _ (hx a))
@@ -166,14 +166,14 @@ theorem compatible_cocycles : (S.pi Γ).Compat (Z1 ρ) (Z1 ρ') := by
   · intro hf a
     refine ⟨(continuous_of_discreteTopology (f := S.p a)).comp hf.1, fun g h => ?_⟩
     change S.p a (f (g * h)) = S.p a (f g) + ρ g (S.p a (f h))
-    rw [hf.2, map_add, he]
+    rw [hf.2, map_add (f := _), he]
   · intro hf
     refine ⟨?_, fun g h => S.ext_p fun a => ?_⟩
     · have : f = fun g => ∑ a, b a • S.inc (S.p a (f g)) := by funext g; rw [S.sum_p]
       rw [this]
       exact continuous_finset_sum _ fun a _ =>
         ((continuous_of_discreteTopology (f := S.inc)).comp (hf a).1).const_smul (b a)
-    · rw [map_add, he]; exact (hf a).2 g h
+    · rw [map_add (f := _), he]; exact (hf a).2 g h
 
 theorem compatible_coboundaries : (S.compatible_cocycles he).sub.Compat ((B1 ρ).comap (Z1 ρ).subtype)
     ((B1 ρ').comap (Z1 ρ').subtype) := by

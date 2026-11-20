@@ -52,7 +52,7 @@ theorem exists_levi_proj (hσ : IsCMExt F E σ) {n n₁ : ℕ} (Y : Spc F E n) (
     rw [cA_incV, cA_incV, incM_mulVec', incM_mulVec', incM_vmv, incM_vmv, incM_mul]
     have e1 : incM F (vecMulVec H.x (Y.J *ᵥ (⇑σ ∘ H.y))) + incM F (H.ι * π) - incM F (vecMulVec H.y (Y.J *ᵥ (⇑σ ∘ H.x))) =
         incM F (vecMulVec H.x (Y.J *ᵥ (⇑σ ∘ H.y)) + H.ι * π - vecMulVec H.y (Y.J *ᵥ (⇑σ ∘ H.x))) := by
-      ext i j; simp only [incM, Matrix.map_apply, Matrix.add_apply, Matrix.sub_apply, map_add, map_sub]
+      ext i j; simp only [incM, Matrix.map_apply, Matrix.add_apply, Matrix.sub_apply, map_add (f := _), map_sub]
     rw [e1, hfr]; ext i j; simp [incM, Matrix.one_apply]
   have hgram' : (incM F H.ι)ᵀ * incM F Y.J * (incM F H.ι).map c = incM F Y₁.J := by
     rw [incM_map, incM_transpose, incM_mul, incM_mul, hgram]

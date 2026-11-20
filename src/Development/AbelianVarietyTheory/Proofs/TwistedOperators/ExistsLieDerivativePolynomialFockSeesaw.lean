@@ -42,7 +42,7 @@ theorem exists_lie_deriv_pol : ∀ {F E : Type} [Field F] [NumberField F] [Field
         rintro f g ⟨hf, hf1, f', hf', hf2⟩ ⟨hg, hg1, g', hg', hg2⟩
         refine ⟨add_mem hf hg, by simpa using hf1.add hg1, f' + g', add_mem hf' hg', fun x => ?_⟩
         show HasDerivAt (fun t => T t (f + g) x) ((f' + g') x) 0
-        simp only [map_add, SchwartzMap.add_apply]
+        simp only [map_add (f := _), SchwartzMap.add_apply]
         exact (hf2 x).add (hg2 x)
       smul_mem' := by
         rintro c f ⟨hf, hf1, f', hf', hf2⟩
@@ -65,7 +65,7 @@ theorem exists_lie_deriv_pol : ∀ {F E : Type} [Field F] [NumberField F] [Field
     { toFun := d
       map_add' := fun f g => huniq _ _ _ (hd (f + g)) (fun x => by
         show HasDerivAt (fun t => T t ((f : SInf F (Fin a × Fin (a + a'))) + g) x) ((d f + d g) x) 0
-        simp only [map_add, SchwartzMap.add_apply]
+        simp only [map_add (f := _), SchwartzMap.add_apply]
         exact (hd f x).add (hd g x))
       map_smul' := fun c f => huniq _ _ _ (hd (c • f)) (fun x => by simpa using (hd f x).const_mul c) }
   obtain ⟨δ, hδ⟩ := LinearMap.exists_extend δ₀

@@ -38,7 +38,7 @@ def gBig {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} (B : Base D cc δ) (n 
   map_add' x y := by
     funext p
     show B.gC ((fun w => x (p.1, w)) + (fun w => y (p.1, w))) p.2 = _
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   map_smul' c x := by
     funext p
     show B.gC (c • (fun w => x (p.1, w))) p.2 = _

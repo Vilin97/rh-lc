@@ -32,5 +32,5 @@ theorem GlobalTheory.BK.BKDat.phi_sub_sub_mem_xi : ∀ (O K : Type) [CommRing O]
   have hxi : σ - s = D.xi (red w) := by
     rw [PhiMod.xi_apply, ← hwc, hw, LinearEquiv.apply_symm_apply]
   refine ⟨d + D.phiD (red w) - red w, ?_⟩
-  rw [map_sub, map_add, ← PhiMod.phi_xi, ← hxi, ← hd, map_sub]
+  rw [map_sub, map_add (f := _), ← PhiMod.phi_xi, ← hxi, ← hd, map_sub]
   abel

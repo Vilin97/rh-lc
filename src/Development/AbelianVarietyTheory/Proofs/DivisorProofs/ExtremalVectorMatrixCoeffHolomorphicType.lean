@@ -106,7 +106,7 @@ theorem derC_coef {q : ι → ℕ} {x₀ : ι → Mt n} (h : ∀ τ, OrthFr (Hm 
     abel_nf
     simp
   unfold derC dRepC
-  rw [der_coef hσ hv τ hA hu, der_coef hσ hv τ hB hu, map_add, map_smul, inner_add_right, inner_smul_right]
+  rw [der_coef hσ hv τ hA hu, der_coef hσ hv τ hB hu, map_add (f := _), map_smul, inner_add_right, inner_smul_right]
   ring
 
 theorem killedFn_coef {q : ι → ℕ} {x₀ : ι → Mt n} {w : ι → Fin n → ℤ} (h : ∀ τ, OrthFr (Hm τ) (q τ) (x₀ τ))

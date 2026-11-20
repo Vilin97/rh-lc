@@ -32,7 +32,7 @@ theorem eval_toWt {Ψ : Type} {N : ℕ} (lam : Ψ × Fin N → ℝ) (P : MvPolyn
   unfold PB.toWt
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp => simp only [map_mul, hp, aeval_X, eval_X, PB.gap]
 
 theorem eval_degPoly_comap_some {e : ℕ} {σ : Type} [Fintype σ] (S : PB.AnSys e (Option σ)) (c : σ → ℝ) :

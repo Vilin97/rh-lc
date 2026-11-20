@@ -17,7 +17,7 @@ variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 def chi (ψ : AddChar (Ad E) ℂ) (w : Pl E) : AddChar (w.adicCompletion E) ℂ where
   toFun y := ψ (sFin E (sLoc E w y))
   map_zero_eq_one' := by simp only [map_zero, AddChar.map_zero_eq_one]
-  map_add_eq_mul' x y := by simp only [map_add, AddChar.map_add_eq_mul]
+  map_add_eq_mul' x y := by simp only [map_add (f := _), AddChar.map_add_eq_mul]
 
 theorem chi_apply (ψ : AddChar (Ad E) ℂ) (w : Pl E) (y : w.adicCompletion E) :
     chi ψ w y = ψ (sFin E (sLoc E w y)) := rfl

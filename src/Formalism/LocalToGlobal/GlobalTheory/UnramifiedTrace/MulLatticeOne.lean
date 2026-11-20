@@ -43,7 +43,7 @@ theorem pt_agree1 (T : Forms0 D u) (v : (D.mem u).A.vT) (c : (D.mem u).C.cls 0)
     rw [smul_add, smul_comm s1 (((D.mem u).A.T : ℕ) : 𝓞 D.host.E), smul_comm s1 e]
   have hp : T.lv0.prk v c ⟨_, hY⟩ = T.atT.res v e • y := by
     have h := congrArg (T.lv0.prk v c) e0
-    rw [T.lv0.prk_smul, map_add, T.lv0.prk_smul, hTl0, zero_add, hy1, smul_comm] at h
+    rw [T.lv0.prk_smul, map_add (f := _), T.lv0.prk_smul, hTl0, zero_add, hy1, smul_comm] at h
     exact smul_right_injective _ (res_ne T hs1) h
   rw [hp, map_smul, map_smul, h1, h3]
 

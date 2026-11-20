@@ -311,7 +311,7 @@ theorem UpperTheory.V.Pa.B2.transl :
         rw [dY, ← ha, ← Submodule.coe_sub, ← Submodule.coe_sub, ← hE]
         congr 1
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [map_add, map_sum, map_smul, smul_sub, Finset.sum_sub_distrib]
+          simp only [map_add (f := _), map_sum, map_smul, smul_sub, Finset.sum_sub_distrib]
         abel
       show (∀ i j, j < i → (k.wi1 X v * (((Ψ (G.φ v g) : W2 n x.A X k.g x.a) : Matrix (Fin n) (Fin n) (DD X k.g)) - _) *
         k.w1 X v) i j = 0) ∧ (_ → ∀ i, (k.wi1 X v * (((Ψ (G.φ v g) : W2 n x.A X k.g x.a) :

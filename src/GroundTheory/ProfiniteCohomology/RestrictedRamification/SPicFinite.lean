@@ -150,7 +150,7 @@ theorem closure_range_sPicGen : AddSubgroup.closure (Set.range (sPicGen S)) = �
   obtain ⟨D, rfl⟩ := QuotientAddGroup.mk'_surjective (divS S).range c
   induction D using Finsupp.induction_linear with
   | zero => rw [map_zero]; exact zero_mem _
-  | add f g hf hg => rw [map_add]; exact add_mem hf hg
+  | add f g hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
   | single v m =>
     rw [← Finsupp.smul_single_one, map_zsmul]
     refine AddSubgroup.zsmul_mem _ ?_ m

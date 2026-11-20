@@ -254,7 +254,7 @@ theorem geo_cob : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∃ c : ℕ, ∀ (Ω
       ((w'S * zi * ((lq g).val : integralClosure (O0 p) Ω)) * hwwi) • D z -
       ((w'S * zi * ((lq g).val : integralClosure (O0 p) Ω)) * hqL) • D z
   have e1 := congrArg σ hxy
-  rw [map_nsmul, hση, map_add, hσ, hσ, map_mul, map_mul, hgz, hgzi, hgqn, hgqi] at e1
+  rw [map_nsmul, hση, map_add (f := _), hσ, hσ, map_mul, map_mul, hgz, hgzi, hgqn, hgqi] at e1
   rw [← Nat.cast_smul_eq_nsmul (integralClosure (O0 p) Ω), Nat.cast_pow] at e1 hxy
   have hdiff : ((gS x - x - (p : integralClosure (O0 p) Ω) ^ c * wS * Aval) * zi) • D z +
       ((gS y0 - y0) * qi) • D qn = 0 := by

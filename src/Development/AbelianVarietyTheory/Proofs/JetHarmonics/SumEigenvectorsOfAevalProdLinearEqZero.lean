@@ -35,7 +35,7 @@ theorem sum_eigenvectors_of_aeval_prod_linear_eq_zero :
       have h2 := congrArg (Polynomial.aeval (-Ω)) key
       rw [map_mul, map_mul, h, mul_zero] at h2
       have h3 := congrArg (fun f : Module.End ℂ N => f w) h2
-      simp only [map_add, Polynomial.aeval_X, Polynomial.aeval_C, Module.End.mul_apply,
+      simp only [map_add (f := _), Polynomial.aeval_X, Polynomial.aeval_C, Module.End.mul_apply,
         LinearMap.add_apply, LinearMap.neg_apply, Module.algebraMap_end_apply,
         LinearMap.zero_apply] at h3
       exact (neg_add_eq_zero.mp h3)

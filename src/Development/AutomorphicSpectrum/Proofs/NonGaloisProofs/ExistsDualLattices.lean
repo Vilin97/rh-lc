@@ -237,7 +237,7 @@ theorem exists_stable (hO : IsOpen (Set.range (algebraMap O LL)))
       refine Submodule.subset_span ⟨(h * g, i), ?_⟩
       simp [map_mul, Module.End.mul_apply]
     | zero => simp
-    | add x z _ _ hx hz => rw [map_add]; exact T.add_mem hx hz
+    | add x z _ _ hx hz => rw [map_add (f := _)]; exact T.add_mem hx hz
     | smul c x _ hx =>
       rw [LinearMap.map_smul_of_tower]
       exact T.smul_mem c hx

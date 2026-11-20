@@ -19,7 +19,7 @@ theorem fderiv_eval_single {σ : Type} [Fintype σ] [DecidableEq σ] (g : MvPoly
   | add p q hp hq =>
     have hp' := (AnalyticOnNhd.eval_mvPolynomial (𝕜 := ℂ) p z trivial).differentiableAt
     have hq' := (AnalyticOnNhd.eval_mvPolynomial (𝕜 := ℂ) q z trivial).differentiableAt
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [fderiv_fun_add hp' hq']
     simp [hp, hq]
   | mul_X p j hp =>

@@ -17,7 +17,7 @@ private theorem re_mul' (a b : A ℚ) :
 
 private theorem re_add' (a b : A ℚ) :
     UpperTheory.ConvolutionTheory.RankTwoDescent.re (a + b) = UpperTheory.ConvolutionTheory.RankTwoDescent.re a + UpperTheory.ConvolutionTheory.RankTwoDescent.re b := by
-  simp only [UpperTheory.ConvolutionTheory.RankTwoDescent.re, map_add, Pi.add_apply]
+  simp only [UpperTheory.ConvolutionTheory.RankTwoDescent.re, map_add (f := _), Pi.add_apply]
 
 private theorem pInf_id' (u : (TR.Rinf ℚ)ˣ) : TR.pInf ℚ (TR.infId ℚ u).val = u.val := by
   change TR.pInf ℚ (1 - TR.sInf ℚ 1 + TR.sInf ℚ _) = _

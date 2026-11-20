@@ -106,7 +106,7 @@ theorem clear_denom : ∀ {V W K : Type} [Field K] (g : MvPolynomial V K) (f : W
     obtain ⟨q1, k1, h1⟩ := hp
     obtain ⟨q2, k2, h2⟩ := hq
     refine ⟨q1 * g ^ k2 + q2 * g ^ k1, k1 + k2, fun x hx => ?_⟩
-    rw [map_add, map_add, map_mul, map_mul, map_pow, map_pow, ← h1 x hx, ← h2 x hx]
+    rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, ← h1 x hx, ← h2 x hx]
     ring
   | mul_X p w hp =>
     obtain ⟨q1, k1, h1⟩ := hp
@@ -189,7 +189,7 @@ theorem generic_vanish [Nonempty (L →+* K)] (P : MvPolynomial ((L →+* K) × 
   have hd : ∀ y σ, MvPolynomial.eval y (d σ) = (1 + (skewPoly L K n σ).map (MvPolynomial.eval y)).det := by
     intro y σ
     simp only [d]
-    rw [RingHom.map_det, map_add, map_one, RingHom.mapMatrix_apply]
+    rw [RingHom.map_det, map_add (f := _), map_one, RingHom.mapMatrix_apply]
   have hg : ∀ y, MvPolynomial.eval y g = ∏ σ, MvPolynomial.eval y (d σ) := fun y => map_prod _ _ _
   have hev : ∀ y, (∀ σ, MvPolynomial.eval y (d σ) ≠ 0) → ∀ p : (L →+* K) × Fin n × Fin n,
       MvPolynomial.eval y (f p) / MvPolynomial.eval y g =
@@ -206,7 +206,7 @@ theorem generic_vanish [Nonempty (L →+* K)] (P : MvPolynomial ((L →+* K) × 
       have e : (MvPolynomial.eval y).mapMatrix ((1 - skewPoly L K n p.1) * (1 + skewPoly L K n p.1).adjugate) =
           (1 - (skewPoly L K n p.1).map (MvPolynomial.eval y)) *
             (1 + (skewPoly L K n p.1).map (MvPolynomial.eval y)).adjugate := by
-        rw [map_mul, map_sub, map_one, RingHom.map_adjugate, map_add, map_one]; rfl
+        rw [map_mul, map_sub, map_one, RingHom.map_adjugate, map_add (f := _), map_one]; rfl
       exact congrFun (congrFun e _) _
     simp only [f]
     rw [map_mul, hN, hsplit, mul_div_mul_right _ _ hE, hd]

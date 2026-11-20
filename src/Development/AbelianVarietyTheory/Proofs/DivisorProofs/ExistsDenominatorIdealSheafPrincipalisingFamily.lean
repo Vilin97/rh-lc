@@ -191,11 +191,11 @@ theorem exists_dvd_of_effCartier [Fintype ι] {Y' : Scheme.{0}} [IsIntegral Y'] 
     | add x y _ _ hx hy =>
       obtain ⟨C, hC, hC'⟩ := hx
       obtain ⟨D, hD, hD'⟩ := hy
-      refine ⟨C + D, by rw [map_add, hC, hD, ← Finset.sum_add_distrib]; simp only [Pi.add_apply, mul_add],
+      refine ⟨C + D, by rw [map_add (f := _), hC, hD, ← Finset.sum_add_distrib]; simp only [Pi.add_apply, mul_add],
         fun i j => ?_⟩
       obtain ⟨r, hr⟩ := hC' i j
       obtain ⟨r', hr'⟩ := hD' i j
-      exact ⟨r + r', by simp only [Pi.add_apply, mul_add, hr, hr', map_add]⟩
+      exact ⟨r + r', by simp only [Pi.add_apply, mul_add, hr, hr', map_add (f := _)]⟩
     | smul c x _ hx =>
       obtain ⟨C, hC, hC'⟩ := hx
       refine ⟨fun j => φ c * C j, ?_, fun i j => ?_⟩

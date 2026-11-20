@@ -59,7 +59,7 @@ theorem taylor_X {K : Type} [Field K] [CharZero K] (sh : K⟦X⟧ →+* K⟦X⟧
       intro h0
       have := congrArg (constantCoeff : K⟦X⟧ →+* K) h0
       simp [Nat.factorial_ne_zero] at this
-    rw [map_add, coeff_C, coeff_X, if_neg (by omega), if_neg (by omega), add_zero]
+    rw [map_add (f := _), coeff_C, coeff_X, if_neg (by omega), if_neg (by omega), add_zero]
     exact (mul_eq_zero.1 h).resolve_left hne
 
 end GlobalTheory.TaylorStrat

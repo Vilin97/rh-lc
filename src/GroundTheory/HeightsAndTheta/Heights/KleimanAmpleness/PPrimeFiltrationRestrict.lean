@@ -64,7 +64,7 @@ theorem RegularAt.add {a a' : Ω} (h : RegularAt hj ψ a) (h' : RegularAt hj ψ 
     simp only [Subalgebra.coe_mul, Subalgebra.coe_add, ← hbc, ← hbc']
     ring
   refine ⟨⟨_, _, hcc, he⟩, ?_⟩
-  rw [residueAt_eq hj ψ hcc he, residueAt_eq hj ψ hc hbc, residueAt_eq hj ψ hc' hbc', map_add,
+  rw [residueAt_eq hj ψ hcc he, residueAt_eq hj ψ hc hbc, residueAt_eq hj ψ hc' hbc', map_add (f := _),
     map_mul, map_mul, map_mul, div_add_div _ _ hc hc']
   ring
 
@@ -160,7 +160,7 @@ theorem exists_generator_at {Q0 Q1 : Submodule (chartRing S x (singleChart hj)) 
       obtain ⟨c, hc⟩ := Submodule.mem_one.mp hmn
       exact ⟨c, hc, H m hm n hn c hc⟩
     · rintro a b ⟨c, hc, hc0⟩ ⟨d, hd, hd0⟩
-      exact ⟨c + d, by rw [Subalgebra.coe_add, hc, hd], by rw [map_add, hc0, hd0, add_zero]⟩
+      exact ⟨c + d, by rw [Subalgebra.coe_add, hc, hd], by rw [map_add (f := _), hc0, hd0, add_zero]⟩
   have : c = 1 := Subtype.ext hc
   rw [this, map_one] at hψc
   exact one_ne_zero hψc

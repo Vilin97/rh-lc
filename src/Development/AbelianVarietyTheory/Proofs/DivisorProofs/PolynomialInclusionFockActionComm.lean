@@ -47,7 +47,7 @@ theorem polIncl_omE (a : Ix P Q) (c d : Ix R S) (f : Pol P Q R S) :
     polIncl P Q r₀ s₀ (omE (a, c) (a, d) f) =
       omE (a, skipIx r₀ s₀ c) (a, skipIx r₀ s₀ d) (polIncl P Q r₀ s₀ f) := by
   unfold omE
-  simp only [LinearMap.add_apply, Module.End.mul_apply, map_add, polIncl_raiB, polIncl_lowB, Prod.mk.injEq, true_and,
+  simp only [LinearMap.add_apply, Module.End.mul_apply, map_add (f := _), polIncl_raiB, polIncl_lowB, Prod.mk.injEq, true_and,
     (skipIx_injective r₀ s₀).eq_iff]
   split_ifs <;> simp
 

@@ -73,7 +73,7 @@ theorem exists_local_lift_det : ∀ {D : D7} {V : HSp D} {β : GL (Fin V.rank) (
   have hκd := hκ
   rw [← hp] at hκ
   have hf : finSw D (e + cA D e) = p + Formalism.UG.sigR D.sp.cm.sig (Formalism.L2.Herm.Af D.host.F) p := by
-    rw [RingHom.map_add, finSw_cA, hp]
+    rw [RingHom.map_add (f := _), finSw_cA, hp]
   have hSt : finE V κ ∈ St β :=
     mem_St_of_part D.sp.cm.sig V.gram Λ β hB.1 (hatL_selfDual hB) p u hpp (sigR_int p.2) Y hu' (finE V κ)
       (finE_mem_UA V κ) _ hf hsf hκ

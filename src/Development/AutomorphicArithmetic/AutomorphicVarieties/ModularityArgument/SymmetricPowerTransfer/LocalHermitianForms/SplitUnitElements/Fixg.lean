@@ -122,7 +122,7 @@ theorem UpperTheory.V.Z.Sym.Loc.One.fixg :
         · simp [hij]
       have hR : R i (Q x i) = a • R i 1 + b • R i w := by
         show P.symm (G *ᵥ Pi.single i (Q x i)) = a • R i 1 + b • R i w
-        rw [hsp, Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul, map_add, map_smul, map_smul,
+        rw [hsp, Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul, map_add (f := _), map_smul, map_smul,
           ← algebra_compatible_smul, ← algebra_compatible_smul]
       rw [hR]
       exact add_mem (Submodule.smul_mem _ _ (Submodule.subset_span h1S))
@@ -147,7 +147,7 @@ theorem UpperTheory.V.Z.Sym.Loc.One.fixg :
       | add z v _ _ hz hv =>
         intro i
         show IsInt O ((M *ᵥ P (z + v)) i)
-        rw [map_add, Matrix.mulVec_add]
+        rw [map_add (f := _), Matrix.mulVec_add]
         exact (hz i).add (hv i)
       | smul a z _ hz =>
         intro i

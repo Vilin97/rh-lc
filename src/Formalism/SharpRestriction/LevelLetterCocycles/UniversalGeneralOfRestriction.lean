@@ -341,7 +341,7 @@ theorem ιV_inj : Function.Injective (ιV PD (LL := LL) (V := V)) := by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [ιV]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   intro x y hxy
   rw [h, h] at hxy
   exact Module.Flat.lTensor_preserves_injective_linearMap (M := V) _ PD.ι_inj hxy
@@ -352,7 +352,7 @@ theorem φVB_inj : Function.Injective (φVB PD (LL := LL) (V := V)) := by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [φVB]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   intro x y hxy
   rw [h, h] at hxy
   exact Module.Flat.lTensor_preserves_injective_linearMap (M := V) _ PD.φ_inj hxy
@@ -382,7 +382,7 @@ theorem filV_sep (x : V ⊗[Qp] BdR) (h : ∀ a, x ∈ FilV PD (LL := LL) (V := 
         LinearMap.rTensor_tmul, TensorProduct.lid_tmul]
       exact ((PD.Fil a).restrictScalars Qp).smul_mem _ f.2
     | add x y hx hy =>
-      rw [map_add, map_add, map_add]
+      rw [map_add (f := _), map_add (f := _), map_add (f := _)]
       exact (PD.Fil a).add_mem hx hy
   obtain ⟨z, hz⟩ := h a
   rw [← hz]
@@ -2409,7 +2409,7 @@ theorem section_restriction_first [IsDomain O] [Fintype (K →ₐ[Qp] LL)] (hinj
     apply cancel_unit W (unit_prod W hR (A.len c)
       (fun s => A.Hs c (A.len c) s - eMM A (A.ty (c - (s : ZMod n)))))
     rw [← qQ_def]
-    simp only [pow_zero, Finset.prod_const_one, mul_one, map_mul, map_add, map_pow]
+    simp only [pow_zero, Finset.prod_const_one, mul_one, map_mul, map_add (f := _), map_pow]
     linear_combination (-(ιE ((PD.p : ℕ) : LetA O n)) ^ κ * f k +
         ιE (letE c) * ιE ((PD.p : ℕ) : LetA O n) ^ A.σ PD.p * fp k +
         ιE (letE c) * ιE W.π₀ * ιE (abelian₂ W A c (A.len c)) * ιE t) * hLQ' -

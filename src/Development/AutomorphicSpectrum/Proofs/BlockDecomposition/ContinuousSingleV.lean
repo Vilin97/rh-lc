@@ -76,8 +76,8 @@ def placeMapFin (v : HeightOneSpectrum (𝓞 F)) : PlaceMap F (Fv F v) where
       map_add' := by
         intro x y
         refine adele_ext ?_ (finAdele_ext fun w => ?_)
-        · rw [map_add, fstA_pairA, fstA_pairA, fstA_pairA, add_zero]
-        · rw [map_add, sndA_pairA, sndA_pairA, sndA_pairA, map_add]
+        · rw [map_add (f := _), fstA_pairA, fstA_pairA, fstA_pairA, add_zero]
+        · rw [map_add (f := _), sndA_pairA, sndA_pairA, sndA_pairA, map_add (f := _)]
           by_cases h : w = v
           · subst h
             simp only [StrongApprox.evalV_single_same]
@@ -142,9 +142,9 @@ def placeMapInf (w : InfinitePlace F) : PlaceMap F w.Completion where
       map_add' := by
         intro x y
         refine adele_ext ?_ ?_
-        · rw [map_add, fstA_pairA, fstA_pairA, fstA_pairA]
+        · rw [map_add (f := _), fstA_pairA, fstA_pairA, fstA_pairA]
           exact Pi.single_add (f := fun u : InfinitePlace F => u.Completion) w x y
-        · rw [map_add, sndA_pairA, sndA_pairA, sndA_pairA, add_zero]
+        · rw [map_add (f := _), sndA_pairA, sndA_pairA, sndA_pairA, add_zero]
       map_mul' := by
         intro x y
         refine adele_ext ?_ ?_

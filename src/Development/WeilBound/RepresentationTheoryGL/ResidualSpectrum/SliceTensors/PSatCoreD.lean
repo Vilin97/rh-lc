@@ -41,7 +41,7 @@ theorem exists_tensor {c : ℕ} {n : Fin c → ℕ} (U : ∀ i, Submodule ℂ (S
   | add x y _ _ hx hy =>
     obtain ⟨v, hv⟩ := hx
     obtain ⟨v', hv'⟩ := hy
-    exact ⟨v + v', fun m => by rw [Pi.add_apply, hv, hv', map_add]⟩
+    exact ⟨v + v', fun m => by rw [Pi.add_apply, hv, hv', map_add (f := _)]⟩
   | smul a x _ hx =>
     obtain ⟨v, hv⟩ := hx
     exact ⟨a • v, fun m => by rw [Pi.smul_apply, hv, map_smul, smul_eq_mul]⟩

@@ -54,7 +54,7 @@ def Charts.tenZ (p : Λ →+ D) : Z1 (K.Ten D) :=
   ⟨fun _ T' f ↦ algebraMap D (T'.ten D) (p f.deg), fun T T' T'' f f' ↦ by
     change algebraMap D (T''.ten D) (p (f.deg + f'.deg)) =
       Charts.Hom.ten D f' (algebraMap D _ _) + algebraMap D (T''.ten D) _
-    rw [AlgHom.commutes, map_add, map_add]⟩
+    rw [AlgHom.commutes, map_add (f := _), map_add (f := _)]⟩
 
 variable (π : D →ₐ[ℂ] ℂ)
 
@@ -89,7 +89,7 @@ theorem _root_.GlobalTheory.AnPer.Charts.Hom.red_ten
     congr 1
     exact ((_root_.GlobalTheory.AnPer.Charts.Hom.φc f).commutes
       (π d)).symm
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 set_option autoImplicit false in
 open TopologicalSpace Filter Topology TensorProduct in
@@ -135,7 +135,7 @@ private theorem sub_one_tmul_red_mem_map_ker (T : K.Obj) (x : T.ten D) :
     refine Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ ?_)
     rw [RingHom.mem_ker, map_sub, AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply, sub_self]
   | add x y hx hy =>
-    rw [map_add, tmul_add, add_sub_add_comm]
+    rw [map_add (f := _), tmul_add, add_sub_add_comm]
     exact add_mem hx hy
 
 set_option autoImplicit false in

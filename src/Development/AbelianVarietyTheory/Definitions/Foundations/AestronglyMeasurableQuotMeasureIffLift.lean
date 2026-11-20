@@ -601,7 +601,7 @@ theorem continuous_R (F : L2 Γ μ) : Continuous fun g => R Γ μ g F := by
     exact union_subset ((key g g₀).trans (image_mono subset_union_left))
       ((key g₀ g).trans (image_mono subset_union_right))
   · intro f g hf hg _ h1 h2
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact h1.add h2
   · refine isClosed_of_closure_subset fun F hF => ?_
     refine TendstoUniformly.continuous (F := fun F' g => R Γ μ g F') (p := 𝓝 F) ?_

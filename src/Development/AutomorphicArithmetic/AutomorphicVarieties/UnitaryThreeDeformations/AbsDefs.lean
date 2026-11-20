@@ -50,7 +50,7 @@ variable {O R : Type} [CommRing O] [CommRing R] [Algebra O R] (W : WPres O ℤ R
 
 theorem π_mem_A (f : FA O W.wt) : W.π (ser f) ∈ W.A := by
   refine Submodule.iSup_induction (WPres.free O W.wt).part (motive := fun g => W.π g ∈ W.A) f.2 (fun j g hg => ?_)
-    (by simp) (fun a b ha hb => by rw [map_add]; exact add_mem ha hb)
+    (by simp) (fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb)
   rw [free_part] at hg
   exact W.part_le_A ⟨g, hg, rfl⟩
 

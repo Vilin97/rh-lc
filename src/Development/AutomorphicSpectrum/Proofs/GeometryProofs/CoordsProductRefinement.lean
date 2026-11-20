@@ -251,7 +251,7 @@ theorem mem_of_regular [Finite κ'] (hgen : IsCptGen ξ) (hU : IsAffineOpen U)
     { carrier := {r | val ξ U hξ r * a ∈ B}
       add_mem' := fun {u v} hu hv => by
         change val ξ U hξ (u + v) * a ∈ B
-        rw [map_add, add_mul]
+        rw [map_add (f := _), add_mul]
         exact add_mem hu hv
       zero_mem' := by
         change val ξ U hξ 0 * a ∈ B

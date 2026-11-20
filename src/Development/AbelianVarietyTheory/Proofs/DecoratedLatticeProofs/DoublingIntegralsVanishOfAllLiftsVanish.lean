@@ -147,7 +147,7 @@ theorem kills_of_noLift : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (A W : H
         hup f₁ h₁, zero_mul]
     | zero => simp
     | add x y hx hy ihx ihy =>
-      simp only [map_add, Pi.add_apply, mul_add]
+      simp only [map_add (f := _), Pi.add_apply, mul_add]
       rw [integral_add (hintθ x (hMθ x hx)) (hintθ y (hMθ y hy)), ihx, ihy, add_zero]
     | smul a x hx ih =>
       simp only [map_smul, Pi.smul_apply, smul_eq_mul]

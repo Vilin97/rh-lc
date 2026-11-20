@@ -16,7 +16,7 @@ theorem map_mulLeft {O R M : Type} [CommRing O] [CommRing R] [Algebra O R] [AddC
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [TensorProduct.smul_tmul']
-  | add x y hx hy => rw [map_add, smul_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy]
 
 section Generic
 

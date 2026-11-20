@@ -42,7 +42,7 @@ theorem hcProjLin_mem_polyLE {d : ℕ} {u : U n} (hu : u ∈ filt d) : hcProjLin
     obtain ⟨m, -, -, hm, rfl⟩ := hx
     exact hcProjLin_canon_mem_polyLE hm
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ r hx
 
 theorem totalDegree_hcProjLin_le {d : ℕ} {u : U n} (hu : u ∈ filt d) :

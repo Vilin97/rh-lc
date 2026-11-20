@@ -70,7 +70,7 @@ theorem norm_cast_eq (K : Type) [Field K] [NumberField K] (p : ℕ) {x y : 𝓞 
     simp
   have hmat : (Int.castRingHom (ZMod p)).mapMatrix (Algebra.leftMulMatrix b x) =
       (Int.castRingHom (ZMod p)).mapMatrix (Algebra.leftMulMatrix b y) := by
-    rw [hx, map_add, map_mul, map_add, map_mul, h0, zero_mul, add_zero]
+    rw [hx, map_add (f := _), map_mul, map_add (f := _), map_mul, h0, zero_mul, add_zero]
   rw [Algebra.norm_eq_matrix_det b, Algebra.norm_eq_matrix_det b]
   have e1 := RingHom.map_det (Int.castRingHom (ZMod p)) (Algebra.leftMulMatrix b x)
   have e2 := RingHom.map_det (Int.castRingHom (ZMod p)) (Algebra.leftMulMatrix b y)

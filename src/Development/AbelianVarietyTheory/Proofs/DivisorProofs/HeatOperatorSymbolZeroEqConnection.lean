@@ -293,7 +293,7 @@ theorem core {R : Type} [CommRing R] {k : Type} [Field k] [CharZero k] (A : Over
       ((trF fam es (x ≫ π₁) z (fun k => J ((x ≫ π₁) ≫ fam k)) t)⁻¹).val = 1 := Units.mul_inv _
   rw [gs_cstD, gs_cstD, sa, sb, sc, hA', hFz]
   simp only [hgw]
-  rw [prod3, htr1, htr2, Units.val_mul, Units.val_mul, hKprod, map_mul, map_add, map_one, hinr, hinr]
+  rw [prod3, htr1, htr2, Units.val_mul, Units.val_mul, hKprod, map_mul, map_add (f := _), map_one, hinr, hinr]
   simp only [map_neg]
   exact final_alg _ _ _ _ _ _ _ _ _ _ _ hU hH hEE
 

@@ -18,9 +18,9 @@ namespace UpperTheory.Reformulated.B.SesquilinearFlipConj.Helpers
 private noncomputable def flipConj {V : Type} [AddCommGroup V] [Module ℂ V]
     (B : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ) : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun v w => starRingEnd ℂ (B w v))
-    (by intro v₁ v₂ w; simp [map_add])
+    (by intro v₁ v₂ w; simp [map_add (f := _)])
     (by intro c v w; simp [map_smulₛₗ, smul_eq_mul])
-    (by intro v w₁ w₂; simp [map_add])
+    (by intro v w₁ w₂; simp [map_add (f := _)])
     (by intro c v w; simp [map_smulₛₗ, smul_eq_mul])
 
 private theorem flipConj_apply {V : Type} [AddCommGroup V] [Module ℂ V]
@@ -66,7 +66,7 @@ theorem UpperTheory.Reformulated.B.SesquilinearFlipConj.main :
       simp only [LinearMap.smul_apply, smul_eq_mul, hBinv]
   · refine ⟨B + flipConj B, hH, ?_, ?_⟩
     · intro v w
-      simp only [LinearMap.add_apply, flipConj_apply, map_add, Complex.conj_conj]
+      simp only [LinearMap.add_apply, flipConj_apply, map_add (f := _), Complex.conj_conj]
       ring
     · intro g v w
       simp only [LinearMap.add_apply, flipConj_apply, hBinv]

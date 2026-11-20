@@ -43,7 +43,7 @@ theorem AlgLe.add {x y : ℂ} {t : ℝ} (h : AlgLe lam x t) (h' : AlgLe lam y t)
   lift x to Qbar using hx
   lift y to Qbar using hy
   refine ⟨add_mem x.2 y.2, ?_⟩
-  rw [← AddMemClass.coe_add, lamC_coe, map_add]
+  rw [← AddMemClass.coe_add, lamC_coe, map_add (f := _)]
   rw [lamC_coe] at h h'
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le h h')
 
@@ -233,7 +233,7 @@ theorem U_pullB (h : TraceMapNormalisation D) (cc : Ideal (𝓞 D.host.K)) (δ :
   funext z
   unfold U U1 pullB
   rw [Hf_sum, Hf_sum, Finset.prod_mul_distrib, ← Complex.exp_sum]
-  simp only [← coordL_apply, map_add, coordL_sum h cc δ hb]
+  simp only [← coordL_apply, map_add (f := _), coordL_sum h cc δ hb]
   congr 2
   simp only [Finset.sum_div, Finset.mul_sum, ← Finset.sum_sub_distrib, tor0]
   refine Finset.sum_congr rfl fun j _ => ?_

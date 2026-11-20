@@ -21,7 +21,7 @@ private theorem cA_inclR' (σ : E →ₐ[F] E) (a : E) : cA σ (inclR (F := F) (
 
 private theorem hA_add_right' (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v w w' : Fin n → AE F E) :
     hA σ J v (w + w') = hA σ J v w + hA σ J v w' := by
-  simp only [hA, Pi.add_apply, map_add]
+  simp only [hA, Pi.add_apply, map_add (f := _)]
   rw [show (fun i => cA σ (w i) + cA σ (w' i)) = (fun i => cA σ (w i)) + fun i => cA σ (w' i) from rfl,
     Matrix.mulVec_add, dotProduct_add]
 

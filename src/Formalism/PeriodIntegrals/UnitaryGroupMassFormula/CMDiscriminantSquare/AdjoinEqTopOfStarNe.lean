@@ -42,7 +42,7 @@ theorem minpoly_eq_of_star_ne {F E : Type} [Field F] [Field E] [StarRing E] [Alg
   have hmon : (X ^ 2 - C s * X + C n : F[X]).Monic := by monicity!
   have hdeg : (X ^ 2 - C s * X + C n : F[X]).natDegree = 2 := by compute_degree!
   have hroot : aeval x (X ^ 2 - C s * X + C n : F[X]) = 0 := by
-    simp only [map_add, map_sub, map_mul, map_pow, aeval_X, aeval_C, hs, hn]
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, aeval_X, aeval_C, hs, hn]
     ring
   have hint : IsIntegral F x := Algebra.IsIntegral.isIntegral x
   have h2 : 2 ≤ (minpoly F x).natDegree := by

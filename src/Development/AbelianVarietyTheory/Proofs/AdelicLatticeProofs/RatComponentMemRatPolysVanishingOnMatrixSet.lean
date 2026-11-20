@@ -41,9 +41,9 @@ theorem exists_component_mem_vanI_of_mem_span {ι : Type} [Fintype ι] [Decidabl
       have h1 : ev a g = 0 := ha g hg
       have h2 : ev b g = 0 := hb g hg
       simp only [ev] at h1 h2 ⊢
-      rw [map_add, h1, h2, add_zero]
+      rw [map_add (f := _), h1, h2, add_zero]
     refine ⟨a + b, hvan, fun m => ?_⟩
-    rw [MvPolynomial.coeff_add, ha', hb', MvPolynomial.coeff_add, mul_add, map_add]
+    rw [MvPolynomial.coeff_add, ha', hb', MvPolynomial.coeff_add, mul_add, map_add (f := _)]
   | smul a x _ hx =>
     intro c
     obtain ⟨f', hf', h'⟩ := hx (c * a)

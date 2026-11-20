@@ -56,7 +56,7 @@ theorem conj_mem_of {e e' : AE D} {w w' : HeightOneSpectrum (𝓞 D.host.E)} (h 
   have hB : finPart D (cA D e' * incA D ((x : D.host.E)⁻¹)) ∉ intAE D := by
     intro hB
     apply hN
-    rw [hsplit, map_add]
+    rw [hsplit, map_add (f := _)]
     refine add_mem hA ?_
     rw [map_mul]; exact GlobalTheory.FinPl.FrameLat.mul_mem_intAE he hB
   have hC : cA D e' * incA D ((x : D.host.E)⁻¹) = cA D (e' * incA D ((x' : D.host.E)⁻¹)) := by

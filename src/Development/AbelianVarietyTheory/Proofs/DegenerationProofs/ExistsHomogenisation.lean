@@ -19,7 +19,7 @@ theorem exists_homogenisation {k J : Type} [Field k] (i : J) (P : MvPolynomial J
     obtain ⟨n, Q, hQ⟩ := h
     obtain ⟨n', Q', hQ'⟩ := h'
     refine ⟨n + n', MvPolynomial.X i ^ n' * Q + MvPolynomial.X i ^ n * Q', fun w hw => ?_⟩
-    simp only [map_add, map_mul, map_pow, MvPolynomial.eval_X, hQ w hw, hQ' w hw]
+    simp only [map_add (f := _), map_mul, map_pow, MvPolynomial.eval_X, hQ w hw, hQ' w hw]
     ring
   | mul_X P j h =>
     obtain ⟨n, Q, hQ⟩ := h

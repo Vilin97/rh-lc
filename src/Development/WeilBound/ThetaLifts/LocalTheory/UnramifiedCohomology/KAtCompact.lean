@@ -129,7 +129,7 @@ theorem part_levi {a : AF F} (ha : a * a = a) {t : (AE F E)ˣ} {g : UA σ Y₁.J
     simp only [partI, add_smul, smul_assoc, one_smul]
   · rw [part_vec, h.2.1]
     change _ = cA σ (a • (t⁻¹).1 + (1 - a) • 1) • _
-    simp only [map_add, map_smul, map_one, add_smul, smul_assoc, one_smul]
+    simp only [map_add (f := _), map_smul, map_one, add_smul, smul_assoc, one_smul]
   · simp only [mat_partU, Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul, h.2.2, Matrix.one_mul, Matrix.mul_one]
 
 theorem part_unip {a : AF F} (ha : a * a = a) {u : UA σ Y.J} (h : u ∈ unip σ Y H) : partU ha u ∈ unip σ Y H := by

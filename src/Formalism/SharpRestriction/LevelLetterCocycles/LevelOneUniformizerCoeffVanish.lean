@@ -81,7 +81,7 @@ theorem level_one_uniformizer_coeff_vanish (hR : Formalism.MainNotions.UnusedSlo
   obtain ⟨E, hE0, -, hE⟩ := W.lev_π c 1 ⟨0, by simp⟩
   have hπ : PowerSeries.constantCoeff (W.lev c 1 letπ) = 0 := by
     have := congrArg PowerSeries.constantCoeff hE
-    rw [map_add, map_one, map_mul, PowerSeries.constantCoeff_C, hE0, mul_one] at this
+    rw [map_add (f := _), map_one, map_mul, PowerSeries.constantCoeff_C, hE0, mul_one] at this
     linear_combination this
   obtain ⟨q₁, hq₁⟩ := PowerSeries.X_dvd_iff.2 hπ
   obtain ⟨w, hw⟩ := (Formalism.MainNotions.UnusedSlot80.SatW.ring_clauses W hR).1
@@ -177,7 +177,7 @@ theorem hor_exp [IsDomain O] (Ti : Comparison₂ W levB) (hR : Formalism.MainNot
     have hLB : LB 0 (levB T c' 1 ⟨x', hx'N⟩) := fun k hk => by
       rw [← hx'l]; exact Ti.hneg T hTc c' _ k hk
     have hvan := smulS_vanish hLB (level_one_uniformizer_coeff_vanish hR c' M) k hk
-    simp only [e1, map_add, Pi.add_apply, levB_smul W levB Ti.hEq Ti.hsupp, hvan, add_zero] at h1
+    simp only [e1, map_add (f := _), Pi.add_apply, levB_smul W levB Ti.hEq Ti.hsupp, hvan, add_zero] at h1
     have h2 : ((algebraMap O LL (W.χΓ W.gam : O)) ^ k - 1) • levB T c' 1 ⟨Hh, hHN⟩ k = 0 := by
       rw [sub_smul, ← h1, one_smul, sub_self]
     exact (smul_eq_zero.1 h2).resolve_left (sub_ne_zero.2 (chi_pow_ne hH hCA T hTc c' k hpos))
@@ -472,7 +472,7 @@ theorem hneg_of (hs : W.s = 1) {Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Pro
     have hX1 : W.X = letπ := by simp [LocWach.X, hs]
     obtain ⟨E, hE0, -, hE⟩ := W.lev_π i 1 ⟨0, by simp⟩
     have := congrArg PowerSeries.constantCoeff hE
-    rw [map_add, map_one, map_mul, PowerSeries.constantCoeff_C, hE0, mul_one] at this
+    rw [map_add (f := _), map_one, map_mul, PowerSeries.constantCoeff_C, hE0, mul_one] at this
     rw [hX1]
     linear_combination this
   have hcl := ((h4 T hT).1 i 1 ⟨0, by simp⟩ hX).1 ((letE i : LetA O n) • x) k

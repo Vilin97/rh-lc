@@ -115,7 +115,7 @@ theorem per_eq_zero_of_kF : GlobalTheory.Published.CuspRapidDecay → GlobalTheo
   let Λ : SmT M →ₗ[ℂ] ℂ :=
     { toFun := fun b => ∫ x, y b (e x) * u x ∂ν
       map_add' := fun b c => by
-        simp only [map_add, Pi.add_apply, add_mul]
+        simp only [map_add (f := _), Pi.add_apply, add_mul]
         exact integral_add (hint b) (hint c)
       map_smul' := fun c b => by
         simp only [map_smul, Pi.smul_apply, smul_eq_mul, RingHom.id_apply, mul_assoc]

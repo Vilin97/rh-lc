@@ -74,7 +74,7 @@ theorem hermitianDivisible_eq_smul (D : Formalism.BasicNotions.D7) {T : D.host.E
       abel
     rw [ex a, ex b] at hxx
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_smul, hee, mul_zero,
+      simp only [map_add (f := _), map_sum, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, map_smul, hee, mul_zero,
       Finset.sum_const_zero, add_zero, hβ, hβ', starRingEnd_apply] at hxx
     linear_combination hxx
   ext a b
@@ -106,7 +106,7 @@ private theorem exists_nat_mul_alM_mul_isIntegral_of_fr_mem (D : Formalism.Basic
       rw [map_zero, mul_zero]
       exact isIntegral_zero
     | add y z _ _ hy hz =>
-      rw [map_add, mul_add]
+      rw [map_add (f := _), mul_add]
       exact hy.add hz
     | smul o y _ hy =>
       rw [← algebraMap_smul D.host.E o y, map_smul, smul_eq_mul, mul_left_comm]

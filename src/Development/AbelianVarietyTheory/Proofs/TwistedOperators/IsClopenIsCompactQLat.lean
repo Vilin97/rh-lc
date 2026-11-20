@@ -78,7 +78,7 @@ theorem cosetInd_eq (q : Unif k) (f : Module.Dual 𝓀[k] (Red L)) (η : n → k
   · have : q.1 • η = F + q.1 • (η - q.inv • F) := by rw [smul_sub, q.smul_inv_smul]; abel
     rw [this, add_dotProduct, smul_dotProduct, ← hs]
     rfl
-  · rw [map_add, map_mul, (residue_eq_zero_iff _).2 q.mem_max, zero_mul, add_zero, e]
+  · rw [map_add (f := _), map_mul, (residue_eq_zero_iff _).2 q.mem_max, zero_mul, add_zero, e]
 
 end Duals
 
@@ -412,7 +412,7 @@ theorem lastPair_hasVal (q : Unif k) (L : Submodule 𝒪[k] (n'' → k)) [L.IsLa
     refine ⟨hL, s + q.1 * ⟨_, ht⟩, ?_, ?_⟩
     · change (s : k) + q.1 * (v (Sum.inr 0) - s * q.inv) = q.1 * v (Sum.inr 0)
       linear_combination (-(s : k)) * hq
-    · rw [map_add, map_mul, (residue_eq_zero_iff _).2 q.mem_max, zero_mul, add_zero]
+    · rw [map_add (f := _), map_mul, (residue_eq_zero_iff _).2 q.mem_max, zero_mul, add_zero]
   · rintro ⟨hL, s, hs, rfl⟩
     refine ⟨s, rfl, hL, ?_⟩
     have : v (Sum.inr 0) - s * q.inv = 0 := by
@@ -508,7 +508,7 @@ theorem lift_datumHat {π : Representation ℂ (GL n' k) M} {θ : M →ₗ[ℂ] 
   have h0 := lift_latInd P hφ he (hP.symm ▸ hθ)
   rw [← map_smul, datumHat_mul q LY L'' x' η hψ]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_smul, map_add, map_sum, h0 LY, fun Q : Pair k n => h0 Q.ker, smul_zero, zero_add,
+    simp only [map_smul, map_add (f := _), map_sum, h0 LY, fun Q : Pair k n => h0 Q.ker, smul_zero, zero_add,
     fun Q => lift_mainDatum q (resChar ψ hψ q) (resUnit ε) he hθ Q hP hP']
 
 end Last

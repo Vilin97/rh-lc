@@ -87,7 +87,7 @@ def kerAevalEquivPi {F : Type} [Field F] {V : Type} [AddCommGroup V] [Module F V
     apply Subtype.ext
     change φ (Module.AEval'.of g ((x : V) + y)) i =
       φ (Module.AEval'.of g x) i + φ (Module.AEval'.of g y) i
-    rw [map_add, map_add, Pi.add_apply]
+    rw [map_add (f := _), map_add (f := _), Pi.add_apply]
   map_smul' c x := by
     funext i
     apply Subtype.ext

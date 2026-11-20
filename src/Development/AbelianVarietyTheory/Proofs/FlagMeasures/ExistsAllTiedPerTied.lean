@@ -283,22 +283,22 @@ theorem fj_conv {L : HSp D} (d : FJDat L A B ι) (c : Frame A B ι d.eM) (Φ φ 
 theorem besVal_add_left (d : BesDat A B ι) (φ φ' F) :
     besVal Wl d (φ + φ') F = besVal Wl d φ F + besVal Wl d φ' F :=
   atFrame_add fun c => iterated_add (bes_conv Wl hg d c φ F) (bes_conv Wl hg d c φ' F) fun g n => by
-    simp only [besFun, map_add, Pi.add_apply, star_add]; ring
+    simp only [besFun, map_add (f := _), Pi.add_apply, star_add]; ring
 
 theorem besVal_add_right (d : BesDat A B ι) (φ F F') :
     besVal Wl d φ (F + F') = besVal Wl d φ F + besVal Wl d φ F' :=
   atFrame_add fun c => iterated_add (bes_conv Wl hg d c φ F) (bes_conv Wl hg d c φ F') fun g n => by
-    simp only [besFun, map_add, Pi.add_apply]; ring
+    simp only [besFun, map_add (f := _), Pi.add_apply]; ring
 
 theorem fjVal_add_left {L : HSp D} (d : FJDat L A B ι) (Φ φ φ' F) :
     fjVal Wl d Φ (φ + φ') F = fjVal Wl d Φ φ F + fjVal Wl d Φ φ' F :=
   atFrame_add fun c => iterated_add (fj_conv Wl hg d c Φ φ F) (fj_conv Wl hg d c Φ φ' F) fun g n => by
-    simp only [FJDat.perFun, map_add, Pi.add_apply, star_add]; ring
+    simp only [FJDat.perFun, map_add (f := _), Pi.add_apply, star_add]; ring
 
 theorem fjVal_add_right {L : HSp D} (d : FJDat L A B ι) (Φ φ F F') :
     fjVal Wl d Φ φ (F + F') = fjVal Wl d Φ φ F + fjVal Wl d Φ φ F' :=
   atFrame_add fun c => iterated_add (fj_conv Wl hg d c Φ φ F) (fj_conv Wl hg d c Φ φ F') fun g n => by
-    simp only [FJDat.perFun, map_add, Pi.add_apply]; ring
+    simp only [FJDat.perFun, map_add (f := _), Pi.add_apply]; ring
 
 omit hg
 

@@ -58,7 +58,7 @@ theorem der_comm_of_ne : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
       Commute (D Z) (D' Z') := fun hγ hδ => PlaceComm.der_comm_lines h hw hD hD' hγ hδ
   have key : Commute (D X) (D' X') := by
     rw [hX, hX']
-    rw [map_add, map_add, LinearMap.map_smul D Complex.I _, LinearMap.map_smul D' Complex.I _]
+    rw [map_add (f := _), map_add (f := _), LinearMap.map_smul D Complex.I _, LinearMap.map_smul D' Complex.I _]
     exact ((c e1 f1).add_right ((c e1 f2).smul_right Complex.I)).add_left
       (((c e2 f1).add_right ((c e2 f2).smul_right Complex.I)).smul_left Complex.I)
   exact key.eq

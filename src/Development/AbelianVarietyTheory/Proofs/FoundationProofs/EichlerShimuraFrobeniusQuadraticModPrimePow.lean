@@ -29,7 +29,7 @@ theorem map_mem_smul_top {R A B : Type} [CommRing R] [AddCommGroup A] [Module R 
     φ x ∈ I • (⊤ : Submodule R B) := by
   refine Submodule.smul_induction_on hx (fun r hr y _ => ?_) (fun y z hy hz => ?_)
   · rw [map_smul]; exact Submodule.smul_mem_smul hr Submodule.mem_top
-  · rw [map_add]; exact Submodule.add_mem _ hy hz
+  · rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 theorem exists_frobV {q : ℕ} (hq : 0 < q) {s : Ω ≃ₐ[ℚ] Ω} (h : FrobAt q s) : ∃ V, ES.FrobV V q s := by
   obtain ⟨V, hV, hs⟩ := h
@@ -314,13 +314,13 @@ theorem eichlerShimura_B_mod : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAl
     induction hb' using Submodule.span_induction with
     | mem x hx => exact hS ⟨x, hx⟩ q hq (fun h => hqS.1 ⟨_, Finset.mem_univ _, h⟩) s hs
     | zero => intro u; rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => intro u; rw [map_add]; exact Submodule.add_mem _ (hx u) (hy u)
+    | add x y _ _ hx hy => intro u; rw [map_add (f := _)]; exact Submodule.add_mem _ (hx u) (hy u)
     | smul a x _ hx => intro u; rw [map_smul]; exact Submodule.smul_mem _ _ (hx u)
   have hcomm : X.heckeT N l q (X.galB l s b) = X.galB l s (X.heckeT N l q b) :=
     GlobalTheory.T.hecke_operator_comm_galois_action_modular_tower ε X hε hj N l w hl2 hN hNl hw (Letter.T q) hadm s b hb
   have e : X.galB l s (X.galB l s b) - X.heckeT N l q (X.galB l s b) + ((q : ℤ_[l]) ^ (w + 1)) • X.diam N l q b =
       X.galB l s (L b) := by
-    simp only [L, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_add,
+    simp only [L, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.comp_apply, map_add (f := _),
       map_sub, map_smul, galB_galB_symm, hcomm]
   rw [e]
   exact map_mem_smul_top _ (X.kmap l (X.gal s)) (hL _)

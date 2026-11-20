@@ -65,7 +65,7 @@ theorem repr_Pt (x y : Fv F v) :
   have h1 : (Algebra.TensorProduct.basis (Fv F v) A.c).repr (y ⊗ₜ A.δ) = Finsupp.single 1 y := by
     rw [← A.hc1, Algebra.TensorProduct.basis_repr_tmul, A.c.repr_self]
     simp [Finsupp.mapRange_single]
-  rw [map_add, h0, h1]
+  rw [map_add (f := _), h0, h1]
 
 theorem Xc_Pt (x y : Fv F v) : Xc v A (Pt v A x y) = x := by
   rw [Xc, repr_Pt]; simp
@@ -125,10 +125,10 @@ theorem repr_incl (e : E) (j : Fin 2) :
   simp
 
 theorem Xc_add (z w : Fv F v ⊗[F] E) : Xc v A (z + w) = Xc v A z + Xc v A w := by
-  rw [Xc, Xc, Xc, map_add, Finsupp.add_apply]
+  rw [Xc, Xc, Xc, map_add (f := _), Finsupp.add_apply]
 
 theorem Yc_add (z w : Fv F v ⊗[F] E) : Yc v A (z + w) = Yc v A z + Yc v A w := by
-  rw [Yc, Yc, Yc, map_add, Finsupp.add_apply]
+  rw [Yc, Yc, Yc, map_add (f := _), Finsupp.add_apply]
 
 theorem Xc_neg (z : Fv F v ⊗[F] E) : Xc v A (-z) = -Xc v A z := by
   rw [Xc, Xc, map_neg, Finsupp.neg_apply]
@@ -216,7 +216,7 @@ def rho : lamC v A hD →+* K where
       red_add v (mul_mem hz.1 hw.2) (mul_mem hz.2 hw.1), red_mul v hz.1 hw.1,
       red_mul v (mul_mem hz.2 hw.2) hD, red_mul v hz.2 hw.2, red_mul v hz.1 hw.2,
       red_mul v hz.2 hw.1]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     linear_combination (-(algebraMap _ K (red v (Yc v A z)) * algebraMap _ K (red v (Yc v A w)))) * hr
   map_zero' := by
     simp only [ZeroMemClass.coe_zero, Xc_zero, Yc_zero, red_zero, map_zero, zero_mul, add_zero]
@@ -226,7 +226,7 @@ def rho : lamC v A hD →+* K where
     rw [mem_lamC] at hz hw
     simp only [AddMemClass.coe_add, Xc_add, Yc_add]
     rw [red_add v hz.1 hw.1, red_add v hz.2 hw.2]
-    simp only [map_add]
+    simp only [map_add (f := _)]
     ring
 
 theorem rho_apply (z : lamC v A hD) : rho v A hD r hr z =
@@ -236,7 +236,7 @@ theorem rho_sig (σ' : K ≃ₐ[𝓞 F ⧸ v.asIdeal] K) (hσr : σ' r = -r)
     (z : lamC v A hD) : rho v A hD r hr (sigC v A hD z) = σ' (rho v A hD r hr z) := by
   have hz := z.2
   rw [mem_lamC] at hz
-  rw [rho_apply, rho_apply, coe_sigC, Xc_sig, Yc_sig, red_neg v hz.2, map_add, map_mul,
+  rw [rho_apply, rho_apply, coe_sigC, Xc_sig, Yc_sig, red_neg v hz.2, map_add (f := _), map_mul,
     AlgEquiv.commutes, AlgEquiv.commutes, hσr, map_neg]
   ring
 

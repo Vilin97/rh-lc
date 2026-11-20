@@ -51,7 +51,7 @@ theorem map_psumC {R S : Type*} [CommRing R] [CommRing S] (φ : R →+* S) (p : 
   unfold psumC
   induction psumQ n k using MvPolynomial.induction_on
   next a => simp
-  next P1 P2 h1 h2 => simp only [map_add, h1, h2]
+  next P1 P2 h1 h2 => simp only [map_add (f := _), h1, h2]
   next P1 i h1 => simp [h1, Polynomial.coeff_map]
 
 theorem sum_roots_pow {K : Type*} [Field K] (p : Polynomial K) (hm : p.Monic)

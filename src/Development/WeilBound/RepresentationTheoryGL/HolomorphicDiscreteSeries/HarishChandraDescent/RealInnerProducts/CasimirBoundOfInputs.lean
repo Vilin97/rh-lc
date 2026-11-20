@@ -95,7 +95,7 @@ theorem comm_uOp {f : Module.End ℂ M} (hf : ∀ x, f (Ω x) = Ω (f x)) (κ : 
 
 theorem comm_bOp {f : Module.End ℂ M} (hf : ∀ x, f (Ω x) = Ω (f x)) (κ R : ℝ) (x : M) :
     f (bOp Ω κ R x) = bOp Ω κ R (f x) := by
-  rw [bOp_apply, bOp_apply, map_add, map_smul, comm_uOp hf, comm_uOp hf]
+  rw [bOp_apply, bOp_apply, map_add (f := _), map_smul, comm_uOp hf, comm_uOp hf]
 
 end Ops
 

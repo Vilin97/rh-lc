@@ -27,7 +27,7 @@ private theorem px_chi (ρ : G →* Matrix (Fin n) (Fin n) A) (y : MonoidAlgebra
       (Polynomial.C : A →+* Polynomial A).mapMatrix (MonoidAlgebra.lift A _ G ρ y) := by
     induction y using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => ext i j : 2; simp [W.GDet.repAlg]
   rw [map_sub, h]
   ext i j : 2

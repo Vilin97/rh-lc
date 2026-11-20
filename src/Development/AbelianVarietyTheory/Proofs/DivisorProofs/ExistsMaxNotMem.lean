@@ -64,7 +64,7 @@ theorem wStable_sup (B : Base F E) (om : Rep σ Y W) (D : Submodule ℂ (Fn F n 
     WStable B om D (N₁ ⊔ N₂) := by
   refine ⟨fun v g hg Φ hΦ => ?_, fun γ hγ Φ hΦ Φ₁ hΦ₁ hd => ?_, fun k hk Φ hΦ => ?_⟩
   · obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hΦ
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (h₁.fin v g hg y hy) (h₂.fin v g hg z hz)
   · obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hΦ
     obtain ⟨y₁, hy₁D, hy₁⟩ := hD γ hγ y (hN₁ hy)
@@ -77,7 +77,7 @@ theorem wStable_sup (B : Base F E) (om : Rep σ Y W) (D : Submodule ℂ (Fn F n 
     rw [e]
     exact Submodule.add_mem_sup (h₁.lie γ hγ y hy y₁ hy₁D hy₁) (h₂.lie γ hγ z hz z₁ hz₁D hz₁)
   · obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hΦ
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (h₁.cpt k hk y hy) (h₂.cpt k hk z hz)
 
 theorem CoinvLe.mono {B : Base F E} {om : Rep σ Y W} {D N N' : Submodule ℂ (Fn F n d)} (h : CoinvLe B om D N)

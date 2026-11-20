@@ -207,7 +207,7 @@ theorem _root_.GlobalTheory.HL.CompLat.main : ∀ {F : Type} [Field F] [Valuativ
     change ((Submodule.linearProjOfIsCompl S.W0 S.ME hcompl.symm y : S.V)) = w
     have e1 := Submodule.linearProjOfIsCompl_apply_left hcompl.symm ⟨w, h1⟩
     have e2 := Submodule.linearProjOfIsCompl_apply_right hcompl.symm ⟨y - w, hXME⟩
-    rw [hy', map_add]
+    rw [hy', map_add (f := _)]
     erw [e1, e2]
     simp
   obtain ⟨b', hb', hQb⟩ := _root_.GlobalTheory.OrderBasis.order_basis L b hb Q hFG hspan

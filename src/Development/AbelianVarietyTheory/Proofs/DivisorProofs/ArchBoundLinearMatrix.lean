@@ -40,7 +40,7 @@ theorem linMap_archBound : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
       algebraMap (AF F) (AE F E) (v.2 i) * f (e2 i) k l) := by
     conv_lhs => rw [hvdec]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_add, LinearMap.map_smul, Matrix.sum_apply, Matrix.add_apply, Matrix.smul_apply]
+      simp only [map_sum, map_add (f := _), LinearMap.map_smul, Matrix.sum_apply, Matrix.add_apply, Matrix.smul_apply]
     simp only [Algebra.smul_def]
   have h1 : ‖piInf τ (f v k l)‖ ≤ B * S w τ k l := by
     set_option synthInstance.maxHeartbeats 100000 in
@@ -48,7 +48,7 @@ theorem linMap_archBound : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     refine (norm_sum_le _ _).trans ?_
     rw [Finset.mul_sum]
     refine Finset.sum_le_sum fun i _ => ?_
-    rw [map_add, map_mul, map_mul, piInf_algebraMap, piInf_algebraMap, mul_add]
+    rw [map_add (f := _), map_mul, map_mul, piInf_algebraMap, piInf_algebraMap, mul_add]
     refine (norm_add_le _ _).trans (add_le_add ?_ ?_) <;> rw [norm_mul]
     · exact mul_le_mul_of_nonneg_right (hv w i).1 (norm_nonneg _)
     · exact mul_le_mul_of_nonneg_right (hv w i).2 (norm_nonneg _)

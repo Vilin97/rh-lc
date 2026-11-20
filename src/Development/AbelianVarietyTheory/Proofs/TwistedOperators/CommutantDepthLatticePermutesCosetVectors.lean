@@ -33,7 +33,7 @@ theorem map_smul_sub (e : AE D) (a b : homLat Λ Λ') : e • ((a - b : homLat �
 
 theorem map_smul_add (e : AE D) (a b : homLat Λ Λ') : e • ((a + b : homLat Λ Λ') : Matrix (Fin m) (Fin n) D.host.E).map (incA D) =
     e • (a : Matrix (Fin m) (Fin n) D.host.E).map (incA D) + e • (b : Matrix (Fin m) (Fin n) D.host.E).map (incA D) := by
-  rw [Submodule.coe_add, Matrix.map_add _ (incA D).map_add, smul_add]
+  rw [Submodule.coe_add, Matrix.map_add _ (incA D).map_add (f := _), smul_add]
 
 theorem mk_sub' (a b : homLat Λ Λ') : Cos.mk 𝔪 (a - b) = (Submodule.Quotient.mk a - Submodule.Quotient.mk b :
     homLat Λ Λ' ⧸ (𝔪 • ⊤ : Submodule (𝓞 D.host.E) (homLat Λ Λ'))) :=

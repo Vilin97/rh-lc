@@ -46,7 +46,7 @@ theorem choose_zero (hd : PhiData q Z Z' φ e) (hN : 0 < N) :
   have hadd : ∀ a b : k, (a + b) ^ q = a ^ q + b ^ q := by
     intro a b
     apply hfinj
-    rw [hfq, map_add, map_add, hfq, hfq]
+    rw [hfq, map_add (f := _), map_add (f := _), hfq, hfq]
   refine ⟨hq, fun i hi1 hi2 => ?_⟩
   have hP : ((X + 1 : k[X]) ^ q - X ^ q - 1) = 0 := by
     apply Polynomial.funext

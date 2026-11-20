@@ -15,7 +15,7 @@ theorem algEquiv_apply_eq_of_mem_adjoin {F M : Type*} [Field F] [Field M] [Algeb
   induction hx using IntermediateField.adjoin_induction with
   | mem x hx => exact hS x hx
   | algebraMap c => exact τ.commutes c
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | inv x _ hx => rw [map_inv₀, hx]
   | mul x y _ _ hx hy => rw [map_mul, hx, hy]
 

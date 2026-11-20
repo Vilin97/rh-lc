@@ -80,7 +80,7 @@ theorem exact_hom_one [IsNoetherianRing R] (N : Ideal R) (hN : N ≤ maximalIdea
       refine ⟨t, ht, fun f hf => ⟨f ∘ₗ k₁, LinearMap.ext fun x => ?_⟩⟩
       have h1 : f ((C.d (i - 1) i).hom (k₀ x)) = 0 := LinearMap.congr_fun hf (k₀ x)
       have h2 := congrArg f (hk x)
-      rw [map_add, h1, zero_add, map_smul] at h2
+      rw [map_add (f := _), h1, zero_add, map_smul] at h2
       exact h2
     · obtain ⟨s, hs, hsp⟩ := Set.not_subset.mp hNp
       exact ⟨s, hsp, fun f _ => ⟨0, by ext x; simp [hM s hs]⟩⟩
@@ -187,7 +187,7 @@ theorem injective_of_exact {A : Type} [CommRing A] [IsLocalRing A] [IsNoetherian
         fun u v hu hv => ?_
     · rw [LinearMap.map_smul_of_tower, smul_tmul, ← Algebra.algebraMap_eq_smul_one, Ideal.Quotient.algebraMap_eq,
         Ideal.Quotient.eq_zero_iff_mem.2 hr, tmul_zero]
-    · rw [map_add, add_tmul, hu, hv, add_zero]
+    · rw [map_add (f := _), add_tmul, hu, hv, add_zero]
   have h6 := lTensor_injective_of_exact_of_exact_of_rTensor_injective
     (f₁ := Z.subtype.restrictScalars A) (f₂ := (e.toLinearMap ∘ₗ Z.mkQ).restrictScalars A)
     (g₁ := (maximalIdeal A).subtype) (g₂ := (maximalIdeal A).mkQ)

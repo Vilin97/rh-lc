@@ -17,7 +17,7 @@ theorem eval_aeval' {ι κ : Type} (g : ι → MvPolynomial κ k) (x : κ → k)
     eval x (aeval g Q) = eval (fun ℓ => eval x (g ℓ)) Q := by
   induction Q using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p ℓ hp => simp only [map_mul, hp, aeval_X, eval_X]
 
 theorem rowInv_map [Infinite k] (io : k →+* K) {P : MvPolynomial (Letter Ty r n) k} (hP : RowInv r n k P) :
@@ -38,7 +38,7 @@ theorem rowInv_map [Infinite k] (io : k →+* K) {P : MvPolynomial (Letter Ty r 
     intro Q
     induction Q using MvPolynomial.induction_on with
     | C a => simp [ψ]
-    | add p q hp hq => simp only [Polynomial.map_add, map_add, hp, hq]
+    | add p q hp hq => simp only [Polynomial.map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p ℓ hp =>
       simp only [map_mul, hp, map_X, aeval_X]
       congr 1

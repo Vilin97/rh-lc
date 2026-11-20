@@ -166,7 +166,7 @@ theorem exists_norm_one [CharZero F] (L : LocE F E) (t s : E) (ht : IsUnit t) (h
     linear_combination (algebraMap F E e * (algebraMap F E r ^ 2 - δ * δ) + 1) * he2
   have hT : L.cj u * s + u * L.cj s = algebraMap F E (e * ((r ^ 2 + D) * A - 2 * r * B)) := by
     rw [hcu, hu]
-    simp only [map_sub, map_add, map_mul, map_pow, map_ofNat, hA, hB, ← hδ2]
+    simp only [map_sub, map_add (f := _), map_mul, map_pow, map_ofNat, hA, hB, ← hδ2]
     ring
   have hcb : L.cj (algebraMap F E τ - L.cj u * s) = algebraMap F E τ - u * L.cj s := by
     simp [L.cj_cj]
@@ -174,7 +174,7 @@ theorem exists_norm_one [CharZero F] (L : LocE F E) (t s : E) (ht : IsUnit t) (h
   refine ⟨u, huu, ?_, ?_⟩
   · have : (algebraMap F E τ - L.cj u * s) * (algebraMap F E τ - u * L.cj s) =
         algebraMap F E (τ ^ 2 + N - τ * (e * ((r ^ 2 + D) * A - 2 * r * B))) := by
-      rw [map_sub, map_add, map_mul (algebraMap F E), ← hT, hN, map_pow]
+      rw [map_sub, map_add (f := _), map_mul (algebraMap F E), ← hT, hN, map_pow]
       linear_combination s * L.cj s * huu
     refine isUnit_of_mul_isUnit_left (y := algebraMap F E τ - u * L.cj s) ?_
     rw [this]

@@ -84,7 +84,7 @@ theorem exists_eq_add_nsmul {D : Datum H} {l : Level H} {Xo : Moduli D l} {σ : 
   have h0 : (m : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hm.ne'
   have e : F.ex i P ((m : ℂ)⁻¹ • P t) = F.ex i P ((m : ℂ)⁻¹ • P w) := Over.OverMorphism.ext h
   have e' := F.ex_add i P hP ((m : ℂ)⁻¹ • P (w - t)) ((m : ℂ)⁻¹ • P t)
-  rw [← smul_add, ← map_add, sub_add_cancel, e] at e'
+  rw [← smul_add, ← map_add (f := _), sub_add_cancel, e] at e'
   obtain ⟨x, hx⟩ := (F.ex_ker i P hP _).1 (mul_eq_right.1 e'.symm)
   refine ⟨x, ?_⟩
   rw [← sub_eq_iff_eq_add']

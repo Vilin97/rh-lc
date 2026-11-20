@@ -217,7 +217,7 @@ theorem exists_res_degree (hRes : ResExistsStatement) {K₀ K : Type} [Fintype K
         exact analyticOnNhd_const
       · rename_i p q hp hq
         intro j
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact (hp j).add (hq j)
       · rename_i p i hp
         intro j

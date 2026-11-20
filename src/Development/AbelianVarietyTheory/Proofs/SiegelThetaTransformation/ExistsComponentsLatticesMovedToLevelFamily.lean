@@ -214,4 +214,4 @@ theorem GlobalTheory.Dict.exists_components_tied : ∀ (E : Type) [Field E] [Num
       refine ⟨_, Lev.mem_mapL.1 hu, ?_⟩
       rw [← Lev.lin_apply, Lev.lin_mul, Lev.lin_mul]
       have e'' : Lev.lin g' (Lev.lin (ga k) (W.mark k a)) = Lev.lin (ga k') (W.mark k' a) + l.M • u := e'
-      rw [e'', map_add, Lev.lin_inv, map_nsmul]
+      rw [e'', map_add (f := _), Lev.lin_inv, map_nsmul]

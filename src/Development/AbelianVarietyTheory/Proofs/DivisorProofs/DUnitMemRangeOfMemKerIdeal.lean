@@ -27,7 +27,7 @@ theorem dUnit_mem_range_of_mem_kerIdeal (g : D →ₐc[R] C) {c : C} (hc : c ∈
     simpa using ha'
   | zero => exact ⟨map_zero _, by rw [dUnit, map_zero]; exact zero_mem _⟩
   | add x y _ _ hx hy =>
-    exact ⟨by rw [map_add, hx.1, hy.1, add_zero], by rw [dUnit, map_add]; exact add_mem hx.2 hy.2⟩
+    exact ⟨by rw [map_add (f := _), hx.1, hy.1, add_zero], by rw [dUnit, map_add (f := _)]; exact add_mem hx.2 hy.2⟩
   | smul a x _ hx =>
     refine ⟨by rw [smul_eq_mul, map_mul, hx.1, mul_zero], ?_⟩
     rw [smul_eq_mul, dUnit, AugCot.d_mul, hx.1, zero_smul, add_zero]
@@ -129,7 +129,7 @@ theorem omegaLevel_surjective (n : ℕ) : Function.Surjective (G.omegaLevel n) :
     obtain ⟨v, hv⟩ := ih (cotMap (G.res n) x)
     obtain ⟨w, hw⟩ := key n (x - v.1 (n + 1)) (by rw [map_sub, v.2 n, ← hv]; exact sub_self _)
     refine ⟨w + v, ?_⟩
-    rw [map_add, omegaLevel_apply, omegaLevel_apply, hw, sub_add_cancel]
+    rw [map_add (f := _), omegaLevel_apply, omegaLevel_apply, hw, sub_add_cancel]
 
 theorem exists_sub_pow_smul_val_succ (n : ℕ) (w : G.omega) (hw : w.1 n = 0) :
     ∃ v : G.omega, (w - (p : O) ^ n • v).1 (n + 1) = 0 := by

@@ -90,7 +90,7 @@ theorem UpperTheory.V.Pa.Core.tupPi :
       rw [MvPowerSeries.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply]
     have h4 : Sp.u _ _ j i - algebraMap O (Spo A) (A.ut j i) =
         (Sp.mk _ _).restrictScalars O (MvPowerSeries.X (j, i)) := by
-      simp only [Sp.u, map_add, AlgHom.restrictScalars_apply]
+      simp only [Sp.u, map_add (f := _), AlgHom.restrictScalars_apply]
       rw [add_sub_right_comm, sub_eq_zero.mpr, zero_add]
       rw [hC, AlgHom.commutes, ← IsScalarTower.algebraMap_apply O B (Spo A)]
     rw [h4]

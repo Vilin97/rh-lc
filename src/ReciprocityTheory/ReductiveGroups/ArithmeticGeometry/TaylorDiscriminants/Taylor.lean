@@ -152,7 +152,7 @@ theorem coeff_tay (θ : (Fin g → ℂ) → ℂ) (s : Multiset (Fin g → ℂ)) 
 theorem dirs_add_single (n : Fin 1 × Fin g →₀ ℕ) (p : Fin 1 × Fin g) :
     dirs (n + Finsupp.single p 1) = Pi.single p.2 1 ::ₘ dirs n := by
   first
-  | (simp only [dirs, map_add, Finsupp.toMultiset_single, one_nsmul, Multiset.map_add, Multiset.map_singleton]
+  | (simp only [dirs, map_add (f := _), Finsupp.toMultiset_single, one_nsmul, Multiset.map_add (f := _), Multiset.map_singleton]
      rw [add_comm, Multiset.singleton_add])
   | simp [dirs, Finsupp.toMultiset_add, add_comm]
 
@@ -217,7 +217,7 @@ theorem toMultiset_map_eq {ι : Type} [Fintype ι] (u : ι → Fin g → ℂ) (m
   refine Finsupp.induction_linear m ?_ ?_ ?_
   · simp
   · intro f₁ f₂ h₁ h₂
-    rw [map_add, Multiset.map_add, h₁, h₂]
+    rw [map_add (f := _), Multiset.map_add (f := _), h₁, h₂]
     simp [Multiset.replicate_add, Finset.sum_add_distrib]
   · intro a b
     rw [Finsupp.toMultiset_single, Multiset.map_nsmul, Multiset.map_singleton, Multiset.nsmul_singleton]

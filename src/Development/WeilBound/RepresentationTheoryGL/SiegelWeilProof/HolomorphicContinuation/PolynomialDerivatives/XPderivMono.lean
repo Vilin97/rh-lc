@@ -45,7 +45,7 @@ theorem dop_split (ε : Fin m → Bool) (c : ℝ) (a b : Fin m) {f g : PX m n} (
       simp only [Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm, Finset.smul_sum, neg_mul, mul_neg,
         neg_smul, ← Finset.sum_neg_distrib, ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
-      rw [hL, map_add, hL2 _ f, hL2 _ g, partial_deriv_zero_second_family ε (k := (a, i, true)) (by simp [inF1, ha]) hg,
+      rw [hL, map_add (f := _), hL2 _ f, hL2 _ g, partial_deriv_zero_second_family ε (k := (a, i, true)) (by simp [inF1, ha]) hg,
         partial_deriv_zero_second_family ε (k := (b, i, false)) (by simp [inF1, hb]) hg]
       simp only [mul_zero, zero_add, add_zero, zero_mul, map_zero, smul_eq_C_mul]
       ring

@@ -39,7 +39,7 @@ theorem GlobalTheory.HeightCounting.FormsStep.hkStab_of_ringSpec_of_subset : ∀
         refine ho ▸ Submodule.smul_mem _ o ?_
         exact Submodule.subset_span ⟨⟨y, hMW y hy⟩, hy, hw _⟩
       | zero => intro a; rw [smul_zero, map_zero]; exact zero_mem _
-      | add y z _ _ hy hz => intro a; rw [smul_add, map_add]; exact add_mem (hy a) (hz a)
+      | add y z _ _ hy hz => intro a; rw [smul_add, map_add (f := _)]; exact add_mem (hy a) (hz a)
       | smul a' y _ hy => intro a; rw [smul_smul]; exact hy _
     intro y hy
     simpa using key y hy 1
@@ -108,7 +108,7 @@ theorem GlobalTheory.HeightCounting.FormsStep.hkStab_of_ringSpec_of_subset : ∀
       simpa only [map_smul] using hc0 a
   | zero => simp
   | add o o' _ _ ho ho' =>
-    simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add]
+    simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add (f := _)]
     exact add_mem ho ho'
   | smul r o _ ho =>
     simp only [Pi.smul_apply, smul_eq_mul, mul_smul, ← Finset.smul_sum, LinearMap.map_smul_of_tower]

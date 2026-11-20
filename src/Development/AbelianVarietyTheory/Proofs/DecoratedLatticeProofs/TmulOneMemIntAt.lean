@@ -45,7 +45,7 @@ theorem intAt_zero : (0 : AE D) ∈ intAt D (· = v) :=
 
 theorem intAt_add {a b : AE D} (ha : a ∈ intAt D (· = v)) (hb : b ∈ intAt D (· = v)) :
     a + b ∈ intAt D (· = v) :=
-  ⟨add_mem ha.1 hb.1, by rw [(finPart D).map_add]; exact add_mem ha.2 hb.2⟩
+  ⟨add_mem ha.1 hb.1, by rw [(finPart D).map_add (f := _)]; exact add_mem ha.2 hb.2⟩
 
 theorem intAt_neg {a : AE D} (ha : a ∈ intAt D (· = v)) : -a ∈ intAt D (· = v) :=
   ⟨neg_mem ha.1, by rw [(finPart D).map_neg]; exact neg_mem ha.2⟩

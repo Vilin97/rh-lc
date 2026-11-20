@@ -145,7 +145,7 @@ theorem coeff_normalize (p : LaurentRing n) (l : Fin n → ℤ) :
   classical
   induction p using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add p p' hp hp' => rw [map_add, coeff_add, coeff_add, Finsupp.add_apply, Finsupp.add_apply, hp,
+  | add p p' hp hp' => rw [map_add (f := _), coeff_add, coeff_add, Finsupp.add_apply, Finsupp.add_apply, hp,
       hp', mul_add]
   | single m c =>
     rw [normalize_single, coeff_single, coeff_single, Finsupp.single_apply, Finsupp.single_apply]

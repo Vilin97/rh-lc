@@ -65,7 +65,7 @@ theorem mem_span_bc_of_free [Module.Free R X] [Module.Finite R X]
     refine Submodule.subset_span ⟨exteriorPower.alternatingMapLinearEquiv.symm m, ?_⟩
     simp [bc]
   | smul s L h => rw [map_smul]; exact Submodule.smul_mem _ _ h
-  | add a b ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
 
 end General
 

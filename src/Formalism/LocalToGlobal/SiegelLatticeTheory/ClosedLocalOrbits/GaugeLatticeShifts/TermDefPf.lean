@@ -289,7 +289,7 @@ theorem frame_sub_mem_span {T : E} {F : LFlag S r T} {n : S.V ≃ₗ[E] S.V} (hn
         exact F.fl.z_orth i
       · simp
       · intro x y _ _ hx hy
-        simp [map_add, hx, hy]
+        simp [map_add (f := _), hx, hy]
       · intro c x _ hx
         simp [hx]
     have := hn.2.2 _ hz

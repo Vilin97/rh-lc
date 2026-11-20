@@ -174,7 +174,7 @@ theorem prV_comm {D : D7} (v : GlobalTheory.FinPl.Pl D) (y : Af D.host.F ⊗[D.h
   induction y using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero, RingHom.map_zero, RingHom.map_zero]
   | tmul x y => rfl
-  | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy]
 
 theorem prV_eq_zero {D : D7} {Q : GlobalTheory.FinPl.Pl D → Prop} {x : AE D} (hx : x ∈ GlobalTheory.FinPl.idAt D Q) {v : GlobalTheory.FinPl.Pl D} (hv : ¬ Q v) :
     Formalism.UG.prV (E := D.host.E) v (toEAf D x) = 0 := by
@@ -195,7 +195,7 @@ theorem finM_map_prV {D : D7} (S : HSp D) {n : ℕ} (hn : S.rank = n) {Q : Globa
     rw [Matrix.sub_apply, sub_add_cancel]
   simp only [finM, Matrix.map_apply, Matrix.reindex_apply, Matrix.submatrix_apply, finCongr_refl, Equiv.refl_symm,
     Equiv.refl_apply]
-  rw [e1, RingHom.map_add, RingHom.map_add, key, zero_add, Matrix.one_apply, Matrix.one_apply]
+  rw [e1, RingHom.map_add (f := _), RingHom.map_add (f := _), key, zero_add, Matrix.one_apply, Matrix.one_apply]
   split_ifs <;> simp
 
 variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)}

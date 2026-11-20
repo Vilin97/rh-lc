@@ -26,7 +26,7 @@ private theorem one_kills {E : Type} [Field E] [NumberField E] [IsTotallyComplex
       LinearMap.smul_apply, LinearMap.id_apply, TensorProduct.smul_tmul, ← TensorProduct.tmul_add, neg_smul, neg_add_cancel,
       TensorProduct.tmul_zero]
   | zero => exact map_zero _
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul c x _ hx => rw [map_smul, hx, smul_zero]
 
 private theorem d_basic {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}

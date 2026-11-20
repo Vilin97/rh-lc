@@ -42,7 +42,7 @@ theorem rescale_mem {ι κ : Type} [Finite κ] (K0 : Subfield K) (bS : Module.Ba
     obtain ⟨i, rfl⟩ := hx
     exact Submodule.subset_span ⟨i, by simp⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _)]; exact add_mem hx hy
   | smul r x _ hx =>
     rw [Subfield.smul_def, map_smul, map_smul]
     exact Submodule.smul_mem _ r hx
@@ -59,11 +59,11 @@ theorem rescale_pair [StarRing K] {κ : Type} (b : κ → V) (σ : K →+* ℂ) 
       obtain ⟨a', rfl⟩ := hy
       exact hp a a'
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, inner_add_right, hx, hy, map_add, map_add]
+    | add x y _ _ hx hy => rw [map_add (f := _), inner_add_right, hx, hy, map_add (f := _), map_add (f := _)]
     | smul r x _ hx =>
       rw [Subfield.smul_def, LinearMap.map_smulₛₗ, inner_smul_right, hx, map_smul, smul_eq_mul, map_mul]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, inner_add_left, hx, hy, map_add, LinearMap.add_apply, map_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), inner_add_left, hx, hy, map_add (f := _), LinearMap.add_apply, map_add (f := _)]
   | smul r x _ hx =>
     rw [Subfield.smul_def, LinearMap.map_smulₛₗ, inner_smul_left, hx, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
       smul_eq_mul, map_mul, ← r.2 σ]

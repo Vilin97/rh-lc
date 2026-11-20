@@ -23,7 +23,7 @@ private noncomputable def cvRep (σ : ℂ ≃+* ℂ) {G V : Type} [Group G] [Add
     (ρ : Representation ℂ G V) : Representation ℂ G (Cv σ V) where
   toFun g :=
     { toFun := fun v => toCv σ V (ρ g ((toCv σ V).symm v))
-      map_add' := fun x y => by simp only [map_add]
+      map_add' := fun x y => by simp only [map_add (f := _)]
       map_smul' := fun c x => congrArg (toCv σ V) (map_smul (ρ g) (σ.symm c) ((toCv σ V).symm x)) }
   map_one' := LinearMap.ext fun v => by simp
   map_mul' x y := LinearMap.ext fun v => by

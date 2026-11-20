@@ -84,7 +84,7 @@ theorem exists_eq_vec (g : Spec (.of (DualNumber R)) ⟶ scheme W)
   have hw : (φ.hom (originW W)).fst = 0 := (RingHom.congr_fun ha _).trans (originAug_originW W)
   have hw0 : φ.hom (originW W) = 0 := by
     have e := congrArg φ.hom ((equation_origin_iff _ _ _).mp (equation_originZ_originW W))
-    simp only [map_add, map_mul, map_pow] at e
+    simp only [map_add (f := _), map_mul, map_pow] at e
     ext
     · exact hw
     · rw [e]

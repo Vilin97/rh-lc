@@ -71,7 +71,7 @@ theorem hform_smul_left {n : ℕ} (σ : E →+* E) (J : Matrix (Fin n) (Fin n) E
 
 theorem hform_add_left {n : ℕ} (σ : E →+* E) (J : Matrix (Fin n) (Fin n) E) (x x' y : Fin n → E) :
     hform σ J (x + x') y = hform σ J x y + hform σ J x' y := by
-  simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hform_zero_left {n : ℕ} (σ : E →+* E) (J : Matrix (Fin n) (Fin n) E) (y : Fin n → E) :
     hform σ J 0 y = 0 := by
@@ -104,7 +104,7 @@ theorem dualSet_le_locP {n : ℕ} (σ : E →+* E) (e : 𝓞 E ≃+* 𝓞 E)
     | add x x' _ _ hx hx' =>
       obtain ⟨r, hr⟩ := hx
       obtain ⟨r', hr'⟩ := hx'
-      rw [hform_add_left, ← hr, ← hr', ← map_add]
+      rw [hform_add_left, ← hr, ← hr', ← map_add (f := _)]
       exact ⟨_, rfl⟩
     | smul c x _ hx =>
       obtain ⟨r, hr⟩ := hx

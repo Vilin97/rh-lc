@@ -120,7 +120,7 @@ theorem exists_approx (S : Finset (HeightOneSpectrum (𝓞 F))) (N : 𝓞 F) (hN
       have : algebraMap F (u.adicCompletion F) ((N : F) * k) =
           algebraMap F (u.adicCompletion F) (N : F) *
             algebraMap F (u.adicCompletion F) (k - f / N) + algebraMap F (u.adicCompletion F) f := by
-        rw [← map_mul, ← map_add]
+        rw [← map_mul, ← map_add (f := _)]
         congr 1
         field_simp
         ring

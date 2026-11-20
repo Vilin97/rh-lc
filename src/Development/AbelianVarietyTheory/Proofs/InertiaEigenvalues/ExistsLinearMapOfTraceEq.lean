@@ -17,7 +17,7 @@ theorem ker_le_ker_of_trace_eq {Γ R : Type} [Monoid Γ] [CommRing R] {n : ℕ}
     intro c g
     induction c using Finsupp.induction_linear with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, add_mul, add_mul, Matrix.trace_add, Matrix.trace_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), add_mul, add_mul, Matrix.trace_add, Matrix.trace_add, hx, hy]
     | single x c =>
       simp only [ha, hb, Finsupp.linearCombination_single, Matrix.smul_mul, Matrix.trace_smul, ← map_mul, h]
   intro c hc
@@ -110,7 +110,7 @@ theorem exists_linearMap_of_trace_eq {Γ R : Type} [Monoid Γ] [CommRing R] {n :
   induction hX using Submodule.span_induction with
   | mem X hX => obtain ⟨g', rfl⟩ := hX; rw [← map_mul, hφg, hφg, map_mul]
   | zero => simp
-  | add x y _ _ hx hy => rw [mul_add, map_add, map_add, mul_add, hx, hy]
+  | add x y _ _ hx hy => rw [mul_add, map_add (f := _), map_add (f := _), mul_add, hx, hy]
   | smul t x _ hx => rw [Matrix.mul_smul, map_smul, map_smul, Matrix.mul_smul, hx]
 
 theorem exists_gl_conj_of_trace_eq :

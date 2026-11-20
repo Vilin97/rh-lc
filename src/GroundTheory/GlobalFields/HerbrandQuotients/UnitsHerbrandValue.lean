@@ -19,7 +19,7 @@ theorem piScalarRight_baseChange_funPermRep {G X : Type*} [Group G] [MulAction G
   | tmul r f =>
     funext x
     simp [LinearMap.baseChange_tmul, TensorProduct.piScalarRightHom_tmul, funPermRep_apply]
-  | add y z hy hz => rw [map_add, map_add, hy, hz, map_add, map_add]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, map_add (f := _), map_add (f := _)]
 
 def logLatticeProdMap : logLattice L × ℤ →ₗ[ℤ] (InfinitePlace L → ℝ) :=
   (logLattice L).subtype.coprod (LinearMap.toSpanSingleton ℤ (InfinitePlace L → ℝ) 1)
@@ -115,7 +115,7 @@ theorem cycHerbrand_logLatticeRep_mul_card {σ : L ≃ₐ[K] L} (hσ : ∀ g, g 
     | tmul r x =>
       rw [LinearMap.baseChange_tmul, LinearMap.liftBaseChange_tmul, LinearMap.liftBaseChange_tmul,
         map_smul, logLatticeProdMap_comm]
-    | add y z hy hz => rw [map_add, map_add, hy, hz, map_add, map_add]
+    | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, map_add (f := _), map_add (f := _)]
   have he : ∀ (g : L ≃ₐ[K] L) y, e ((((logLatticeRep K L).prod
       (Representation.trivial ℤ (L ≃ₐ[K] L) ℤ)) g).baseChange ℝ y) =
       (funPermRep ℤ (L ≃ₐ[K] L) (InfinitePlace L) g).baseChange ℝ (e y) := by

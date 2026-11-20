@@ -55,7 +55,7 @@ theorem tmul_of_pull_eq_zero : ∀ (R R' R₀ : Type) [CommRing R] [CommRing R']
     rw [smul_sub, smul_add, e, sub_self]
   let c₀ : Z1 (OPre φ₀ s₀) := ⟨fun U V a ↦ preα φ₀ s s₀ V (f U V a), fun U V W a b ↦ by
     have e := ((hsec W).2.2.2 _).2 (hz a b)
-    rw [map_sub, map_add, nat₀] at e
+    rw [map_sub, map_add (f := _), nat₀] at e
     exact (sub_eq_zero.1 e).symm⟩
   obtain ⟨u, hu⟩ := hb₀.1.2 (H1.mk _ c₀)
   refine ⟨u, f, c', hc', ?_, (hred₀.1 f u).2 ⟨c₀, fun _ _ _ ↦ rfl, hu.symm⟩⟩

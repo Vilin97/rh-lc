@@ -24,7 +24,7 @@ theorem one_add_X_mul_deriv_log : (1 + X : PowerSeries K) * derivative K (log K)
     field_simp
     ring
   ext n
-  rw [add_mul, one_mul, map_add]
+  rw [add_mul, one_mul, map_add (f := _)]
   rcases n with _ | n
   · simp [hd]
   · rw [coeff_succ_X_mul, hd, hd, coeff_one]
@@ -32,7 +32,7 @@ theorem one_add_X_mul_deriv_log : (1 + X : PowerSeries K) * derivative K (log K)
 
 theorem one_add_X_subst {ι : Type} {a : MvPowerSeries ι K} (ha : HasSubst a) :
     (1 + X : PowerSeries K).subst a = 1 + a := by
-  rw [← coe_substAlgHom ha, map_add, map_one, coe_substAlgHom, subst_X ha]
+  rw [← coe_substAlgHom ha, map_add (f := _), map_one, coe_substAlgHom, subst_X ha]
 
 theorem one_add_mul_deriv_log_subst {ι : Type} {a : MvPowerSeries ι K} (ha : HasSubst a) :
     (1 + a) * (derivative K (log K)).subst a = 1 := by
@@ -104,7 +104,7 @@ private theorem eq_zero_of_one_add_X_mul_derivative_eq_self {F : PowerSeries K}
   | zero => simpa using h0
   | succ n ih =>
     have hn := congrArg (coeff n) h
-    rw [add_mul, one_mul, map_add, PowerSeries.coeff_derivative] at hn
+    rw [add_mul, one_mul, map_add (f := _), PowerSeries.coeff_derivative] at hn
     rcases n with _ | m
     · rw [coeff_zero_X_mul] at hn
       simpa [ih] using hn
@@ -119,7 +119,7 @@ theorem exp_subst_log : (exp K).subst (log K) = 1 + X := by
     rw [derivative_subst_eq_chain_rule hl, derivative_exp_eq_exp]
   rw [← sub_eq_zero]
   apply eq_zero_of_one_add_X_mul_derivative_eq_self
-  · rw [map_sub, hE, map_add, Derivation.map_one_eq_zero, derivative_X, zero_add, mul_sub, mul_one,
+  · rw [map_sub, hE, map_add (f := _), Derivation.map_one_eq_zero, derivative_X, zero_add, mul_sub, mul_one,
       mul_left_comm, one_add_X_mul_deriv_log, mul_one]
   · rw [map_sub, constantCoeff_powerSeries_subst_eq _ hl]
     simp
@@ -158,7 +158,7 @@ private theorem eq_zero_of_forall_pderiv_eq_self {σ : Type} {u : MvPowerSeries 
         omega
       · omega
     have hadd : (m + Finsupp.single i 1).degree = m.degree + 1 := by
-      rw [map_add, Finsupp.degree_single]
+      rw [map_add (f := _), Finsupp.degree_single]
     have hdeg : m.degree = N := by
       rw [← hnm] at hadd
       omega

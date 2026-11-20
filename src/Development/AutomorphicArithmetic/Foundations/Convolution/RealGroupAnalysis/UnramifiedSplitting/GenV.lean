@@ -93,7 +93,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.genV :
   have pa : ∀ k i l, p k i l = cp v (k i l) := fun _ _ _ => rfl
   have pj : ∀ x, p (j x) = x := fun x => by
     ext i k : 1
-    rw [pa, je, map_add, sc]
+    rw [pa, je, map_add (f := _), sc]
     fin_cases i <;> fin_cases k <;> simp
   have cm : ∀ x k, p k = 1 → j x * k = k * j x := fun x k hk => by
     have hk' : ∀ i l y, k i l * sg v y = sg v ((1 : Matrix (Fin 2) (Fin 2) (Kv v)) i l * y) := fun i l y => by

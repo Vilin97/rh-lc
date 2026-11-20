@@ -134,7 +134,7 @@ private theorem minus_positive_of_parts_lemma_3 {k r m : ℕ} (hm : m + 2 ≤ r)
     (fun b x => hS b (x : B') x.2) hy1 hy2
   have hmap : ∀ n (hn : n ≤ r), (S.val (C3.AAv k r E' y n hn ℓ)) = C3.AAv k r E0 y n hn ℓ := fun n hn =>
     map_AAv S.val k r E' y n hn ℓ
-  simp only [La', LinearMap.comp_apply, AlgHom.toLinearMap_apply, map_mul, map_add, AlgHom.commutes] at key
+  simp only [La', LinearMap.comp_apply, AlgHom.toLinearMap_apply, map_mul, map_add (f := _), AlgHom.commutes] at key
   rw [hmap, hmap, hmap] at key
   rw [map_add (algebraMap ℂ B')]
   exact key
@@ -293,7 +293,7 @@ theorem _root_.Formalism.FourierDecayAlt.P.minus_positive_of_parts : MinusPosOfP
     rw [Nat.cast_sub (by omega)]
     push_cast
     ring
-  rw [E1, E2, E3, E4, key, mul_add, map_add, ← Algebra.commutes, ← Algebra.smul_def, map_smul, hc]
+  rw [E1, E2, E3, E4, key, mul_add, map_add (f := _), ← Algebra.commutes, ← Algebra.smul_def, map_smul, hc]
   module
 
 end Formalism.FourierDecayAlt.P.CutHL.MPos

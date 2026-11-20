@@ -31,7 +31,7 @@ theorem exists_intMap_of_unr (hU : IsUnrExt K K' d φ) :
     { toFun := f, map_one' := inj (by simp only [hf, map_one]),
       map_mul' := fun a b => inj (by simp only [hf, map_mul]),
       map_zero' := inj (by simp only [hf, map_zero]),
-      map_add' := fun a b => inj (by simp only [hf, map_add]) }
+      map_add' := fun a b => inj (by simp only [hf, map_add (f := _)]) }
   exact ⟨ψ, hf⟩
 
 theorem exists_int_basis_of_unr (K K' : UQ) (d : ℕ) (φ : K.E →+* K'.E) (hU : IsUnrExt K K' d φ) :

@@ -115,7 +115,7 @@ theorem UpperTheory.V.CA.cl_bc :
       refine ⟨a + b, ?_⟩
       have e3 : x + y - algebraMap O' (TensorProduct O O' R) (a + b) =
           (x - algebraMap O' (TensorProduct O O' R) a) + (y - algebraMap O' (TensorProduct O O' R) b) := by
-        rw [map_add]
+        rw [map_add (f := _)]
         ring
       rw [e3]
       exact add_mem ha hb

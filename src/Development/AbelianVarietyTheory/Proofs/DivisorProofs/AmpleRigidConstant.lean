@@ -156,7 +156,7 @@ theorem constSt : ConstSt := by
       refine Eq.symm ((gs_appLE f _ z ⊤ _ le_top hi _).trans
         ((gs_pull _ (⊤ : (Spec (CommRingCat.of K)).Opens).ι z ⊤ trivial c').trans ?_))
       rw [Category.assoc, morphismRestrict_ι, ← Category.assoc, hf, Over.w]
-    | add p p' h h' => rw [map_add, map_add]; exact add_mem h h'
+    | add p p' h h' => rw [map_add (f := _), map_add (f := _)]; exact add_mem h h'
     | mul_X p j h => rw [map_mul, map_mul, MvPolynomial.eval₂Hom_X']; exact mul_mem h (hrj j)
   obtain ⟨p, hp⟩ := exists_factor f w A.hom hk _ hD z hi (fun a => by
     obtain ⟨c, hc⟩ := hall a

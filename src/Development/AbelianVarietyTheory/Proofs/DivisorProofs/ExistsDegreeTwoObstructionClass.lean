@@ -75,8 +75,8 @@ theorem exists_isOb2 : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Ide
       have k4 := hzK T' T'' T''' b c
       unfold Aug.KerQ at k1 k2 k3 k4 ⊢
       rw [em]
-      simp only [map_sub, map_add, k1, k2, k3, k4, sub_self, add_zero]
-    · rw [em, map_sub, map_add, map_add, ← (nat.1 _), hzσ, hzσ, hzσ, hzσ, w.2 a, key, sub_self]
+      simp only [map_sub, map_add (f := _), k1, k2, k3, k4, sub_self, add_zero]
+    · rw [em, map_sub, map_add (f := _), map_add (f := _), ← (nat.1 _), hzσ, hzσ, hzσ, hzσ, w.2 a, key, sub_self]
   exact ⟨H2.mk _ ⟨_, hZ⟩, θ, σ, ⟨_, hZ⟩, hθ, hσ, rfl, fun T T' T'' a b ↦ ⟨hzK T T' T'' a b, hzσ T T' T'' a b⟩⟩
 
 end GlobalTheory.Obs

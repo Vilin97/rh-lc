@@ -105,7 +105,7 @@ theorem chart_equiv (α : T → k) (M : T → Fin 1 → k) (hα : Submodule.span
     · have hC : (C a : MRing (stackedBlocks T)) = (a : MRing (stackedBlocks T)) := eq_intCast C a
       rw [hC, map_intCast, ← zsmul_one]
       exact Submodule.smul_mem _ _ hOne
-    · rw [map_add]; exact Submodule.add_mem _ hp hq
+    · rw [map_add (f := _)]; exact Submodule.add_mem _ hp hq
     · rw [map_mul]
       refine hMul _ _ hp ?_
       rcases v with ⟨⟨⟨⟩⟩ | ⟨⟨⟩⟩, t⟩

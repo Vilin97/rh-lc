@@ -34,7 +34,7 @@ def jc (y x : Mx D ρ p) : hermA D ρ :=
     show adj _ = _
     have : adj ((HMul.hMul y (adj x) : Mx D ρ ρ) + (HMul.hMul x (adj y) : Mx D ρ ρ)) = adj (HMul.hMul y (adj x) : Mx D ρ ρ) + adj (HMul.hMul x (adj y) : Mx D ρ ρ) := by
       ext i j
-      simp only [adj, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, map_add]
+      simp only [adj, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, map_add (f := _)]
     rw [this, key, key, add_comm]⟩
 
 def dsum (ψ : AddChar (AF D.host.F) ℂ) (b₀ : HermE D ρ) (Φ : Mx D ρ p → ℂ) (x y : Mx D ρ p) : ℂ :=

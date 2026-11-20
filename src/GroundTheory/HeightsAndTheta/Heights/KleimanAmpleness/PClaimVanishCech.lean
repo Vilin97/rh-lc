@@ -128,7 +128,7 @@ theorem subsingleton_H_one_of_quot (F G : SubSystem S x E)
     exact hιinj (1 + 1) (h2.trans (LinearMap.map_zero _).symm)
   obtain ⟨v, hv⟩ := hG g hdg
   refine ⟨w + (Cech.mapC (R := S) (G := fun I => ↥(G.sub I)) (G' := fun I => ↥(F.sub I)) ι 0 v), ?_⟩
-  rw [map_add, ← hιd, hv, hg, add_sub_cancel]
+  rw [map_add (f := _), ← hιd, hv, hg, add_sub_cancel]
 
 end General
 

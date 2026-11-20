@@ -49,7 +49,7 @@ theorem snd_val_affine {R' : Type} [CommRing R'] [Algebra R R'] (U : X.affineOpe
       map_mul' := fun a b ↦ by
         ext
         · simp
-        · simp only [TrivSqZeroExt.snd_mul, hop, map_add, map_smul, TrivSqZeroExt.snd_add,
+        · simp only [TrivSqZeroExt.snd_mul, hop, map_add (f := _), map_smul, TrivSqZeroExt.snd_add,
             TrivSqZeroExt.snd_inl, TrivSqZeroExt.snd_inr, TrivSqZeroExt.fst_add,
             TrivSqZeroExt.fst_inl, TrivSqZeroExt.fst_inr, smul_eq_mul, Algebra.smul_def]
           simp [MulOpposite.smul_eq_mul_unop]

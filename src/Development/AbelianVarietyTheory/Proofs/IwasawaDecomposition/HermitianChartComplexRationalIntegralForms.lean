@@ -159,13 +159,13 @@ theorem map_mem_RatPol (lam : ι → DomWeight n) {F : MvPolynomial (ι × Fin n
       rw [← Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, Formalism.GradedWeylDivisibility.lclosedeq_hw_map, ← Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map,
         Formalism.GradedWeylDivisibility.lclosedeq_hw_map]
      | zero => rw [map_zero]; exact AddSubgroup.zero_mem _
-     | add y z _ _ hy hz => rw [map_add]; exact AddSubgroup.add_mem _ hy hz
+     | add y z _ _ hy hz => rw [map_add (f := _)]; exact AddSubgroup.add_mem _ hy hz
      | smul c y _ hy =>
       rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
       exact smul_mem_RatPol s lam c hy
     exact key _ h2
   | zero => rw [map_zero]; exact AddSubgroup.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact AddSubgroup.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact AddSubgroup.add_mem _ hx hy
   | smul c x _ hx =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
     exact smul_mem_RatPol s lam c hx

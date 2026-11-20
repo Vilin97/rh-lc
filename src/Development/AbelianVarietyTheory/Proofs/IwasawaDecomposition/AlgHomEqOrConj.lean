@@ -29,7 +29,7 @@ theorem algHom_eq_or_conj {K : Type} [Field K] [Algebra L⁺ K] (i j : L →ₐ[
   have hdec : ∀ x : L, ∃ a b : L, cc a = a ∧ cc b = b ∧ x = a + b * δ := by
     intro x
     refine ⟨(x + cc x) / 2, (x - cc x) / (2 * δ), ?_, ?_, ?_⟩
-    · rw [map_div₀, map_add, IsCMField.complexConj_apply_apply, map_ofNat, add_comm]
+    · rw [map_div₀, map_add (f := _), IsCMField.complexConj_apply_apply, map_ofNat, add_comm]
     · rw [map_div₀, map_sub, IsCMField.complexConj_apply_apply, map_mul, map_ofNat, hcδ]
       field_simp
       ring
@@ -43,11 +43,11 @@ theorem algHom_eq_or_conj {K : Type} [Field K] [Algebra L⁺ K] (i j : L →ₐ[
   · left
     ext x
     obtain ⟨a, b, ha, hb, rfl⟩ := hdec x
-    rw [map_add, map_add, map_mul, map_mul, hfix a ha, hfix b hb, h]
+    rw [map_add (f := _), map_add (f := _), map_mul, map_mul, hfix a ha, hfix b hb, h]
   · right
     intro x
     obtain ⟨a, b, ha, hb, rfl⟩ := hdec x
-    rw [map_add, map_add, map_mul, map_mul, hfix a ha, hfix b hb, h, ha, hb, hcδ, map_add, map_mul,
+    rw [map_add (f := _), map_add (f := _), map_mul, map_mul, hfix a ha, hfix b hb, h, ha, hb, hcδ, map_add (f := _), map_mul,
       map_neg]
 
 open NumberField IsDedekindDomain in

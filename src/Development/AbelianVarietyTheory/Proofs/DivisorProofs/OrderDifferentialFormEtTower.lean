@@ -35,7 +35,7 @@ def coeffHom (δ : Derivation k R S) : R →+* TrivSqZeroExt S S where
   map_zero' := by ext <;> simp only [fst_add, fst_inl, fst_inr, snd_add, snd_inl, snd_inr, map_zero,
     add_zero, fst_zero, snd_zero]
   map_add' a b := by
-    ext <;> simp only [fst_add, fst_inl, fst_inr, snd_add, snd_inl, snd_inr, map_add, add_zero,
+    ext <;> simp only [fst_add, fst_inl, fst_inr, snd_add, snd_inl, snd_inr, map_add (f := _), add_zero,
       zero_add]
 
 def polyHom (δ : Derivation k R S) (v : Fin r → S) : MvPolynomial (Fin r) R →+* TrivSqZeroExt S S :=
@@ -64,7 +64,7 @@ def polyDer (δ : Derivation k R S) (v : Fin r → S) : Derivation k (MvPolynomi
   toFun p := snd (polyHom δ v p)
   map_add' p q := by
     show snd (polyHom δ v (p + q)) = snd (polyHom δ v p) + snd (polyHom δ v q)
-    rw [map_add, snd_add]
+    rw [map_add (f := _), snd_add]
   map_smul' c p := by
     show snd (polyHom δ v (c • p)) = c • snd (polyHom δ v p)
     rw [Algebra.smul_def, map_mul, TrivSqZeroExt.snd_mul, polyHom_fst, MvPolynomial.algebraMap_apply,
@@ -188,7 +188,7 @@ theorem exists_basis_kaehler (σ : K →+* S) (hσR : ∀ a : R, σ (algebraMap 
     | C a =>
       rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
       exact hC a
-    | add p q hp hq => rw [map_add, map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _)]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul, Derivation.leibniz]
       refine add_mem (Submodule.smul_mem _ _ (Submodule.subset_span ⟨Fin.castAdd n i, ?_⟩))
@@ -199,7 +199,7 @@ theorem exists_basis_kaehler (σ : K →+* S) (hσR : ∀ a : R, σ (algebraMap 
     obtain ⟨t, rfl⟩ := (tensorKaehlerEquivOfFormallyEtale k A S).surjective ω
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | tmul s m =>
       rw [tensorKaehlerEquivOfFormallyEtale_apply, KaehlerDifferential.mapBaseChange_tmul]
       refine Submodule.smul_mem _ _ ?_
@@ -211,7 +211,7 @@ theorem exists_basis_kaehler (σ : K →+* S) (hσR : ∀ a : R, σ (algebraMap 
         rw [KaehlerDifferential.map_D]
         exact hA p
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
       | smul a m _ hm =>
         rw [map_smul, ← algebraMap_smul S]
         exact Submodule.smul_mem _ _ hm

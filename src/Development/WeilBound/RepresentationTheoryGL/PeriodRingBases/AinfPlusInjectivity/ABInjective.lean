@@ -88,7 +88,7 @@ def rep (l : ℕ) [Fact l.Prime] : Subring (B l) where
   add_mem' := by
     rintro _ _ ⟨a, k, rfl⟩ ⟨b, j, rfl⟩
     refine ⟨a * (l : AInf ℂ_[l] l) ^ j + b * (l : AInf ℂ_[l] l) ^ k, k + j, ?_⟩
-    rw [map_add, map_mul, map_mul, map_pow, map_pow, map_natCast]
+    rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, map_natCast]
     calc aB l a * u l ^ k + aB l b * u l ^ j =
         aB l a * (l : B l) ^ j * u l ^ j * u l ^ k + aB l b * (l : B l) ^ k * u l ^ k * u l ^ j := by
           rw [pow_u, pow_u]

@@ -27,7 +27,7 @@ theorem rigid_of_congr {Λ : Type} [AddCommGroup Λ] (B : Λ →+ Λ →+ ℝ) (
     have : B (M • e) (M • e) = (M : ℝ) * (M * B e e) := by
       simp only [map_nsmul, AddMonoidHom.nsmul_apply, nsmul_eq_mul]
     rw [← this, he']
-    simp only [map_sub, map_add, AddMonoidHom.sub_apply, AddMonoidHom.add_apply, iso]
+    simp only [map_sub, map_add (f := _), AddMonoidHom.sub_apply, AddMonoidHom.add_apply, iso]
     ring
   have hM' : (3 : ℝ) ≤ M := by exact_mod_cast hM
   have hlt : B e e < B z z := by
@@ -52,9 +52,9 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {g : ℕ} {Λ : Type
 
 def reForm (R : RiemLat E g Λ) : Λ →+ Λ →+ ℝ :=
   AddMonoidHom.mk' (fun x => AddMonoidHom.mk' (fun y => (R.ip (R.P x) (R.P y)).re) fun y y' => by
-    simp only [map_add, PeriodIso.ip_add_right', Complex.add_re]) fun x x' => by
+    simp only [map_add (f := _), PeriodIso.ip_add_right', Complex.add_re]) fun x x' => by
     ext y
-    simp only [map_add, PeriodIso.ip_add_left', Complex.add_re, AddMonoidHom.mk'_apply, AddMonoidHom.add_apply]
+    simp only [map_add (f := _), PeriodIso.ip_add_left', Complex.add_re, AddMonoidHom.mk'_apply, AddMonoidHom.add_apply]
 
 theorem reForm_apply (R : RiemLat E g Λ) (x y : Λ) : reForm R x y = (R.ip (R.P x) (R.P y)).re := rfl
 

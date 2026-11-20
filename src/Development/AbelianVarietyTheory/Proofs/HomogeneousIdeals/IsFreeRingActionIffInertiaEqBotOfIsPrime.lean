@@ -86,7 +86,7 @@ theorem exists_galoisMap_separating [Finite G] (P : Ideal A) (H : Set G)
       obtain ⟨f, hf, hf'⟩ := hy
       refine ⟨e + f, by simp [he, hf], fun h hh ↦ ?_⟩
       have := P.add_mem (he' h hh) (hf' h hh)
-      simp only [map_add, Pi.add_apply]
+      simp only [map_add (f := _), Pi.add_apply]
       convert this using 1
       ring
     | smul r x _ hx =>
@@ -481,7 +481,7 @@ theorem bijective_galoisMap (h : IsFreeRingAction G A) :
       intro z
       induction z with
       | add x y hx hy =>
-        simp only [map_add, Pi.add_apply, mul_add, Finset.sum_add_distrib, TensorProduct.add_tmul,
+        simp only [map_add (f := _), Pi.add_apply, mul_add, Finset.sum_add_distrib, TensorProduct.add_tmul,
           hx, hy]
       | tmul a b =>
         conv_rhs => rw [← sum_smul_sum_smul_eq hs hs' b, TensorProduct.tmul_sum]
@@ -539,7 +539,7 @@ theorem isBaseChange_invariants (h : IsFreeRingAction G A) :
       ⟨fun m ↦ ∑ p ∈ s, p.1 ⊗ₜ[B] moduleTrace G B M (p.2 • m), fun z ↦ ?_, fun m ↦ ?_⟩
     · induction z with
       | add x y hx hy =>
-        simp only [map_add, smul_add, TensorProduct.tmul_add, Finset.sum_add_distrib] at hx hy ⊢
+        simp only [map_add (f := _), smul_add, TensorProduct.tmul_add, Finset.sum_add_distrib] at hx hy ⊢
         rw [hx, hy]
       | tmul a x =>
         conv_rhs => rw [← sum_smul_sum_smul_eq hs hs' a, TensorProduct.sum_tmul]
@@ -603,7 +603,7 @@ theorem existsUnique_equivariant_extension
     rw [hx, hf]
     exact ((φ x).2 g).symm
   | smul a m hm => simp only [smul_distrib_smul g a, LinearMap.map_smul, hm]
-  | add x y hx hy => rw [smul_add, map_add, map_add, smul_add, hx, hy]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), smul_add, hx, hy]
 
 end FullyFaithful
 
@@ -641,7 +641,7 @@ theorem bijective_toInvariantsTensor_of_sum_eq_one [Fintype G] {c : A}
   have hτ : ∀ z : A ⊗[B] N, (1 : A) ⊗ₜ[B] τ z = ∑ g : G, g • z := by
     intro z
     induction z with
-    | add x y hx hy => simp only [map_add, TensorProduct.tmul_add, hx, hy, smul_add,
+    | add x y hx hy => simp only [map_add (f := _), TensorProduct.tmul_add, hx, hy, smul_add,
         Finset.sum_add_distrib]
     | tmul a n =>
       simp only [τ, LinearMap.comp_apply, LinearMap.rTensor_tmul, LinearEquiv.coe_coe,

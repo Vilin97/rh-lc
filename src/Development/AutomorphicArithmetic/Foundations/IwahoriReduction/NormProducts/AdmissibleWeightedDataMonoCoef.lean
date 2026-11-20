@@ -119,7 +119,7 @@ theorem exists_finset_unif [IsAlgClosure ℚ Ω] {T Q : Type} [Finite T] [Semino
     induction hy' using Submodule.span_induction with
     | mem z hz => exact hfix z hz
     | zero => exact map_zero s'
-    | add u v _ _ hu hv => rw [map_add, hu, hv]
+    | add u v _ _ hu hv => rw [map_add (f := _), hu, hv]
     | smul a u _ hu => rw [map_smul, hu]
   exact (hEsub hmem x s).le
 

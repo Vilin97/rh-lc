@@ -88,7 +88,7 @@ theorem chart_alt_bis {K A : Type} [Field K] [CommRing A] [Algebra K A] (d : ℕ
       { toFun := fun a => fderiv ℂ (fun b => Ψ b a) b₀ v
         map_zero' := by simp
         map_add' := fun a a' => by
-          simp only [map_add]
+          simp only [map_add (f := _)]
           rw [fderiv_fun_add (dA a) (dA a')]; rfl }
     have hδ := H δ (fun a a' => by
         show fderiv ℂ (fun b => Ψ b (a * a')) b₀ v = _

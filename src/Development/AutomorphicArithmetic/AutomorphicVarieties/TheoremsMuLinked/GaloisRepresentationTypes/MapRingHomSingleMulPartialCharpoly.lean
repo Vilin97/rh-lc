@@ -56,7 +56,7 @@ private theorem comap_tr {H : Type} [Group H] (D : GDet n R H) (φ : G →* H)
     · simp
     · induction z using MonoidAlgebra.induction_linear with
       | zero => simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | single g r => simp
   simp only [GDet.tr, GDet.lam, hc]
 
@@ -71,7 +71,7 @@ private theorem ofRep_comap' {H : Type} [Group H] (ρ : G →* Matrix (Fin n) (F
   congr 1
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single g r => simp [GDet.repAlg]
 
 private theorem mapRingHom_single_mul_partial_charpoly {S : Type} [CommRing S] (f : R →+* S) (E : ℕ) (ph ta : G) (u : Fin n → R) (i : Fin n) :
@@ -98,7 +98,7 @@ private theorem kill_tr {O X : Type} [CommRing O] [Algebra O R] [AddCommGroup X]
   simp only [ht] at h ⊢
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb, add_zero]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb, add_zero]
   | single g a =>
     have : MonoidAlgebra.mapRingHom G (algebraMap O R) (MonoidAlgebra.single g a) =
         algebraMap O R a • MonoidAlgebra.single g (1 : R) := by
@@ -169,7 +169,7 @@ theorem UpperTheory.V.Th.count :
   let δs : A.R →ₗ[O] Om O m := Algebra.linearMap O (Om O m) ∘ₗ δ0 ∘ₗ A.β.toLinearMap
   have hδs_apply : ∀ a, δs a = algebraMap O (Om O m) (δ0 (A.β a)) := fun _ => rfl
   have hδs : IsDer (x.comp A.β) δs := fun a a' => by
-    simp only [hδs_apply, map_mul, hδ0 _ _, map_add, smul_eq_mul, AlgHom.comp_apply, Algebra.smul_def]
+    simp only [hδs_apply, map_mul, hδ0 _ _, map_add (f := _), smul_eq_mul, AlgHom.comp_apply, Algebra.smul_def]
   let ι := Option (Fin D ⊕ Fin T.q × Fin n)
   let e : ι → A.R →ₗ[O] Om O m := fun a => a.elim δs δ
   have he : ∀ a, IsDer (x.comp A.β) (e a) := fun a => by

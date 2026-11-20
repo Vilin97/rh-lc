@@ -17,7 +17,7 @@ theorem algHom_C (φ : PowerSeries O →ₐ[O] PowerSeries O) (a : O) : φ (C a)
 theorem algHom_eq_const_add (φ : PowerSeries O →ₐ[O] PowerSeries O) (h : PowerSeries O) :
     φ h = C (constantCoeff h) + φ X * φ (mk fun p => coeff (p + 1) h) := by
   conv_lhs => rw [PowerSeries.eq_shift_mul_X_add_const h]
-  rw [map_add, map_mul, algHom_C]
+  rw [map_add (f := _), map_mul, algHom_C]
   ring
 
 theorem order_map_toNat_of_isDistinguishedAt {I : Ideal O} (hI : I ≠ ⊤) {E : Polynomial O}
@@ -227,7 +227,7 @@ theorem mem_span_of_frobenius_mem_span : Descent := by
     · intro hn
       exact absurd (Finset.mem_univ _) hn
   have hs : ∑ i, φ (h i) * X ^ (i : ℕ) = 0 := by
-    simp only [h, map_sub, map_add, map_mul, algHom_C, sub_mul, add_mul, Finset.sum_sub_distrib,
+    simp only [h, map_sub, map_add (f := _), map_mul, algHom_C, sub_mul, add_mul, Finset.sum_sub_distrib,
       Finset.sum_add_distrib]
     rw [e1, e2, e3]
     linear_combination hαβ

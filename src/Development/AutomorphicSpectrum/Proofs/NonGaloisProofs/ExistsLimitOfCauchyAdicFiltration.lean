@@ -64,7 +64,7 @@ theorem Sol.proj {w : G × G → ↥L.T} {n : ℕ} {c : G → ↥L.T ⧸ pw L ϖ
     Sol L ϖ w n fun g => proj L ϖ n (c g) := by
   refine ⟨hc.1.comp _, fun g h => ?_⟩
   have h1 := congrArg (CobDetect.proj L ϖ n) (hc.2 g h)
-  rw [map_add, map_sub, proj_mk] at h1
+  rw [map_add (f := _), map_sub, proj_mk] at h1
   rw [← h1]
   obtain ⟨y, hy⟩ := Submodule.Quotient.mk_surjective _ (c h)
   beta_reduce

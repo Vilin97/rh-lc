@@ -21,7 +21,7 @@ variable {X : Scheme.{0}} {L : LB X} {k : Type} [Field k] [Algebra k Γ(X, ⊤)]
 def vanishAt (x : X) : Submodule k V where
   carrier := {w | x ∉ nonzeroLocus (φ w)}
   add_mem' := fun {a b} ha hb hx => by
-    rw [map_add] at hx
+    rw [map_add (f := _)] at hx
     exact (nonzeroLocus_add_le _ _ hx).elim ha hb
   zero_mem' := fun hx => by
     rw [map_zero] at hx
@@ -93,7 +93,7 @@ def combMap {k : Type} [Field k] (S : LinSys k) {D : ℕ} (s : Fin D → Fin S.N
     (Fin D → k) →ₛₗ[algebraMap k Γ(S.Y, ⊤)] S.L.Sec where
   toFun c := S.comb (∑ j, c j • s j)
   map_add' a b := by
-    simp only [LinSys.comb, Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add]
+    simp only [LinSys.comb, Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add (f := _)]
   map_smul' a b := by
     simp only [LinSys.comb, Pi.smul_apply, smul_eq_mul, mul_smul, ← Finset.smul_sum, map_mul]
 

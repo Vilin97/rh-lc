@@ -67,7 +67,7 @@ private theorem filV_antitone' {a b : ℤ} (h : b ≤ a) :
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul v y => simpa using tmul_mem_filV_of_mem_fil PD b v (fil_antitone' PD h y.2)
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 open TensorProduct in
 variable {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
@@ -107,7 +107,7 @@ private theorem mulVR_mulVR' (β γ : BdR) (x : T.V ⊗[Qp] BdR) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v y => simp only [mulVR_tmul', mul_assoc]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 open TensorProduct in
 variable {G : Type} [Group G] [TopologicalSpace G] {Qp : Type} [Field Qp] {BdR : Type}
@@ -123,7 +123,7 @@ private theorem mulVR_mem_compKer (ι : LL →ₐ[Qp] BdR) (β : BdR) {x : T.V �
     refine ⟨c, _root_.Formalism.BasicNotions.mulVR T β y, ?_⟩
     rw [map_sub, LinearMap.map_smul, mulVR_mulVR', mulVR_mulVR', mul_comm]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [LinearMap.map_smul]; exact Submodule.smul_mem _ c hx
 
 open TensorProduct in
@@ -144,7 +144,7 @@ private theorem mulRight_mem_filV_lemma_4 {G : Type} [Group G] [TopologicalSpace
     simp only [AlgebraTensorModule.map_tmul, LinearMap.id_apply, Submodule.coe_subtype,
       mulVR_tmul']
     exact tmul_mem_filV_of_mem_fil PD _ v (PD.Fil_mul _ _ _ _ hβ y.2)
-  | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
 
 open TensorProduct in
 variable {G : Type} [Group G] [TopologicalSpace G] {Qp : Type} [Field Qp] {BdR : Type}
@@ -155,7 +155,7 @@ private theorem mulVR_add' (β γ : BdR) (x : T.V ⊗[Qp] BdR) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v y => simp only [mulVR_tmul', add_mul, TensorProduct.tmul_add]
-  | add x y hx hy => simp only [map_add, hx, hy]; abel
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]; abel
 
 open TensorProduct in
 variable {G : Type} [Group G] [TopologicalSpace G] {Qp : Type} [Field Qp] {BdR : Type}
@@ -165,7 +165,7 @@ private theorem mulVR_zero' (x : T.V ⊗[Qp] BdR) : _root_.Formalism.BasicNotion
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v y => simp only [mulVR_tmul', zero_mul, TensorProduct.tmul_zero]
-  | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
 
 open TensorProduct in
 variable {G : Type} [Group G] [TopologicalSpace G] {Qp : Type} [Field Qp] {BdR : Type}
@@ -246,7 +246,7 @@ theorem _root_.GlobalTheory.HWL.Cmp.filt_expansion_component : ∀ {G : Type} [G
       _root_.Formalism.BasicNotions.mulVR T β x ∈ C ⊔ _root_.Formalism.WeaklyAdmissibleFiltrations.FilV PD (LL := LL) (V := T.V) (q + n) := by
     intro β q n x hβ hx
     obtain ⟨y, hy, y', hy', rfl⟩ := Submodule.mem_sup.mp hx
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (mulVR_mem_compKer T ι β hy) (mulRight_mem_filV_lemma_4 PD T hβ hy')
   have hsupmono : ∀ {m n : ℤ}, n ≤ m → C ⊔ _root_.Formalism.WeaklyAdmissibleFiltrations.FilV PD (LL := LL) (V := T.V) m ≤
       C ⊔ _root_.Formalism.WeaklyAdmissibleFiltrations.FilV PD (LL := LL) (V := T.V) n := fun h => sup_le_sup_left (filV_antitone' PD h) _

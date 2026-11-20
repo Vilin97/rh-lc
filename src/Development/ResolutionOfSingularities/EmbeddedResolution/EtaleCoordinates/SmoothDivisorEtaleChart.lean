@@ -24,7 +24,7 @@ private theorem one_mem_of_mul_mem_of_dual_derivations {k : Type u} [Field k] {B
       (Ideal.Quotient.mk I) (δ (c * f)) =
         (Ideal.Quotient.mk I) c * (Ideal.Quotient.mk I) (δ f) := by
     intro δ c
-    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, hπf,
+    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, hπf,
       zero_mul, add_zero]
   have k11 : (Ideal.Quotient.mk I) a * (Ideal.Quotient.mk I) (δ₁ f) = 1 := by
     rw [← key δ₁ a, ← hy₁, e11, map_one]

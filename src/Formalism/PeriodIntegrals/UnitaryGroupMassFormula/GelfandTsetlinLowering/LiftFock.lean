@@ -314,7 +314,7 @@ theorem fockDetect_of (h3 : PI.HwIrred) (hD : EqvDiv) : FockDetect := by
       zero_mem' := by simp [fockF]
       add_mem' := by
         intro a b ha hb
-        simp only [Set.mem_ofPred_eq, map_add] at *
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
         unfold fockF at *
         rw [← zero_add (0 : ℂ)]
         nth_rewrite 1 [← ha]

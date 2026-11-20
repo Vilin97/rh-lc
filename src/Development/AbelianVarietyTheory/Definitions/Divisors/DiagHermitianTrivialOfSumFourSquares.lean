@@ -360,7 +360,7 @@ theorem not_cube (b : QI) : b ^ 3 ≠ 5 * (2 + gi) := by
   have e1 := congrArg Padic.valuation hpm
   rw [Padic.valuation_mul hp0 hm0, v5] at e1
   have e2 := congrArg (fun z => (gaussianToQFive z).valuation) h
-  simp only [map_pow, map_mul, map_add, map_ofNat] at e2
+  simp only [map_pow, map_mul, map_add (f := _), map_ofNat] at e2
   rw [Padic.valuation_pow, ← hs, Padic.valuation_mul h5 hp0, v5] at e2
   rw [Padic.norm_le_one_iff_val_nonneg] at hp hm
   push_cast at e2
@@ -417,7 +417,7 @@ theorem diagHermitian_trivial_of_sumFourSquares (R : Type) [CommRing R] [Algebra
     refine ⟨?_, ?_, ?_, ?_, ?_⟩ <;> ext s t <;> fin_cases s <;> fin_cases t <;>
       simp [u, i, j, k, H3, conj_gi] <;> norm_num
   obtain ⟨su, si, sj, sk, sH⟩ := s
-  simp only [e, map_add, map_one, MulOpposite.unop_add, MulOpposite.unop_one, starT_tmul, mul_add, mul_one,
+  simp only [e, map_add (f := _), map_one, MulOpposite.unop_add, MulOpposite.unop_one, starT_tmul, mul_add, mul_one,
     Algebra.TensorProduct.tmul_mul_tmul, one_mul, su, si, sj, sk]
   congr 3
   rw [sH, TensorProduct.tmul_sub, TensorProduct.tmul_sub, TensorProduct.tmul_neg, ← Algebra.TensorProduct.one_def,

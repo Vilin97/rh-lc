@@ -11,7 +11,7 @@ open scoped Classical
 
 private lemma cw_add' {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (w : InfinitePlace F) (a b : A F) :
     cw w (a + b) = cw w a + cw w b := by
-  simp [cw, map_add]
+  simp [cw, map_add (f := _)]
 
 private lemma cw_mul' {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (w : InfinitePlace F) (a b : A F) :
     cw w (a * b) = cw w a * cw w b := by

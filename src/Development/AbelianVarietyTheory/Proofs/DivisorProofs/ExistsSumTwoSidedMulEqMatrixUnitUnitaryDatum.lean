@@ -61,7 +61,7 @@ theorem exists_sum_mul_mul_eq_matrixUnit (n : ℕ) (hn : 0 < n) (hC : Module.fin
       rw [hΦ, hΦ, ← mul_assoc, hcomm _ _ a.2 s.2, mul_assoc, mul_assoc, mul_assoc]
     | add t u ht hu =>
       intro s x
-      simp only [map_add, LinearMap.add_apply, ht, hu, mul_add]
+      simp only [map_add (f := _), LinearMap.add_apply, ht, hu, mul_add]
   let W : Submodule F (Module.End F C) :=
     { carrier := {f | ∀ (s : S) (x : C), f ((s : C) * x) = (s : C) * f x}
       add_mem' := by

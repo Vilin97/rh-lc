@@ -50,5 +50,5 @@ theorem UpperTheory.exists_finite_sections_determining_ringHom_of_smooth :
   induction ha using Algebra.adjoin_induction with
   | mem b hb => exact hx b hb
   | algebraMap r => exact hO r
-  | add b c _ _ hb hc => rw [map_add, map_add, hb, hc]
+  | add b c _ _ hb hc => rw [map_add (f := _), map_add (f := _), hb, hc]
   | mul b c _ _ hb hc => rw [map_mul, map_mul, hb, hc]

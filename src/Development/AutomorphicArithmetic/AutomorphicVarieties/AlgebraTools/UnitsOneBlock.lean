@@ -49,7 +49,7 @@ theorem UpperTheory.V.AlgebraTools.units_one_block :
   have hfadd : ∀ y z, f (y + z) = f y + f z := by
     intro y z
     ext i j
-    simp only [f, Matrix.of_apply, Matrix.add_apply, mul_add, add_mul, map_add]
+    simp only [f, Matrix.of_apply, Matrix.add_apply, mul_add, add_mul, map_add (f := _)]
   have hfsmul : ∀ (r : B) y, f (r • y) = r • f y := by
     intro r y
     ext i j

@@ -19,7 +19,7 @@ theorem jetAug_mk (p : MvPolynomial ι K) :
   show (MvPolynomial.aeval fun _ : ι => (0 : K)) p = MvPolynomial.constantCoeff p
   induction p using MvPolynomial.induction_on with
   | C c => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.constantCoeff_X]
 
 theorem constantCoeff_of_mem_orig {p : MvPolynomial ι K} (hp : p ∈ orig K ι) : MvPolynomial.constantCoeff p = 0 := by
@@ -55,7 +55,7 @@ theorem isUnit_of_jetAug (a : Jet K ι m) (h : (jetAug : Jet K ι m →ₐ[K] K)
   have hsplit : Ideal.Quotient.mk (orig K ι ^ (m + 1)) p =
       Ideal.Quotient.mk (orig K ι ^ (m + 1)) (MvPolynomial.C c) +
         Ideal.Quotient.mk (orig K ι ^ (m + 1)) (p - MvPolynomial.C c) := by
-    rw [← map_add, add_sub_cancel]
+    rw [← map_add (f := _), add_sub_cancel]
   rw [hsplit]
   exact hnil.isUnit_add_left_of_commute hu (Commute.all _ _)
 
@@ -66,7 +66,7 @@ theorem jetAug_jetMap {ι' : Type} (φ : ι → MvPolynomial ι' K) (hφ : ∀ i
     intro ι' φ hφ q
     induction q using MvPolynomial.induction_on with
     | C c => simp [MvPolynomial.aeval_C]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p i hp =>
       simp only [map_mul, MvPolynomial.aeval_X, hp, MvPolynomial.constantCoeff_X, mul_zero,
         constantCoeff_of_mem_orig (hφ i)]

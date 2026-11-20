@@ -107,7 +107,7 @@ def flt_lift {B : Type*} [CommRing B] {σ : Type*} (Fl : flt_Fil B) (wt : (σ �
     have hx' : x.1 + x.2 = m := by simpa using hx
     have := Fl.mul_mem (ha x.1) (hb x.2)
     have e1 : t - wt x.1 + (u - wt x.2) = t + u - wt m := by
-      rw [← hx', map_add]; ring
+      rw [← hx', map_add (f := _)]; ring
     rwa [e1] at this
   one_mem := by
     classical
@@ -159,7 +159,7 @@ theorem flt_hom_monomial {B₀ B' : Type*} [CommRing B₀] [CommRing B'] {σ : T
   · intro a b f _ _ ih
     have e : monomial (Finsupp.single a b + f) (1 : B₀) = monomial (Finsupp.single a b) 1 * monomial f 1 := by
       rw [monomial_mul, one_mul]
-    rw [e, ← X_pow_eq_monomial, map_mul, map_pow, map_add]
+    rw [e, ← X_pow_eq_monomial, map_mul, map_pow, map_add (f := _)]
     refine Fl'.mul_mem ?_ ih
     have hp := flt_pow_mem Fl' (hX a) b
     have e2 : Finsupp.single a b = b • Finsupp.single a 1 := by simp
@@ -331,7 +331,7 @@ theorem flt_valS_add {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} [NeZero n] 
   obtain ⟨h1, h2⟩ := le_min_iff.1 ht
   simp only [sub_zero]
   rw [flt_le_valS] at h1 h2 ⊢
-  rw [map_add]
+  rw [map_add (f := _)]
   exact AddSubgroup.add_mem _ h1 h2
 
 theorem flt_lam1S_add {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} [NeZero n] (LL : Letters ι) (S : Set ι)
@@ -342,7 +342,7 @@ theorem flt_lam1S_add {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} [NeZero n]
   obtain ⟨h1, h2⟩ := max_le_iff.1 hM
   simp only [add_zero]
   rw [flt_lam1S_le] at h1 h2 ⊢
-  rw [map_add]
+  rw [map_add (f := _)]
   exact AddSubgroup.add_mem _ h1 h2
 
 theorem flt_valS_mul_ge {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} [NeZero n] (LL : Letters ι) (S : Set ι)

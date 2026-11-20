@@ -54,7 +54,7 @@ theorem tr_add {k k' : Type} [Field k] [CharP k p] [PerfectRing k p] [Field k']
   obtain ⟨hb, lb, a1, b1⟩ := h1
   obtain ⟨_, mb, a2, b2⟩ := h2
   refine ⟨hb, lb + mb, fun x => ?_, fun y => ?_⟩
-  · rw [LinearMap.add_apply, a1, a2, LinearMap.add_apply, map_add]
+  · rw [LinearMap.add_apply, a1, a2, LinearMap.add_apply, map_add (f := _)]
   · rw [LinearMap.add_apply, b1, b2, LinearMap.add_apply]
 
 theorem tr_smul {k k' : Type} [Field k] [CharP k p] [PerfectRing k p] [Field k']

@@ -16,7 +16,7 @@ namespace GlobalTheory.GaussExt.UnitIdx
 variable (F : Type) [Field F] [NumberField F] [NumberField.IsTotallyReal F]
 
 theorem aeval_neg_ii : aeval (-ii F) (X ^ 2 + 1 : F[X]) = 0 := by
-  simp only [map_add, map_pow, aeval_X, map_one, neg_sq, ii_sq F]; ring
+  simp only [map_add (f := _), map_pow, aeval_X, map_one, neg_sq, ii_sq F]; ring
 
 def conj : Ext F →ₐ[F] Ext F := AdjoinRoot.liftAlgHom (X ^ 2 + 1 : F[X]) (Algebra.ofId F (Ext F)) (-ii F)
   (by have := aeval_neg_ii F; rwa [aeval_def] at this)
@@ -52,7 +52,7 @@ theorem ii_ne_zero : ii F ≠ 0 := by
 theorem mem_range_of_conj_eq (x : Ext F) (hx : conj F x = x) : ∃ a : F, algebraMap F (Ext F) a = x := by
   obtain ⟨a, b, rfl⟩ := exists_repr F x
   refine ⟨a, ?_⟩
-  simp only [map_add, map_mul, conj_algebraMap, conj_ii] at hx
+  simp only [map_add (f := _), map_mul, conj_algebraMap, conj_ii] at hx
   have h2 : (2 : Ext F) * algebraMap F (Ext F) b * ii F = 0 := by linear_combination -hx
   have hb : algebraMap F (Ext F) b = 0 := by
     rcases mul_eq_zero.1 h2 with h | h

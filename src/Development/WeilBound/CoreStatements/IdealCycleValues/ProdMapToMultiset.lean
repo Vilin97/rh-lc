@@ -31,7 +31,7 @@ theorem evL_rename (e : σ → σ') (φ : (σ' →₀ ℕ) → ℝ) (H : MvPolyn
     evL φ (rename e H) = evL (fun μ => φ (μ.mapDomain e)) H := by
   refine MvPolynomial.induction_on' H (fun μ c => ?_) (fun p q hp hq => ?_)
   · rw [rename_monomial, evL_monomial, evL_monomial]
-  · rw [map_add, map_add, map_add, hp, hq]
+  · rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 theorem classes_mapDomain (e : σ → σ') (cls : σ' → G) (μ : σ →₀ ℕ) :
     ((μ.mapDomain e).toMultiset.map cls).toList = (μ.toMultiset.map (cls ∘ e)).toList := by
@@ -41,7 +41,7 @@ theorem classes_add_perm (cls : σ → G) (ν μ : σ →₀ ℕ) (Q : List G) :
     (((ν + μ).toMultiset.map cls).toList ++ Q).Perm
       ((ν.toMultiset.map cls).toList ++ ((μ.toMultiset.map cls).toList ++ Q)) := by
   rw [← Multiset.coe_eq_coe, ← Multiset.coe_add, ← Multiset.coe_add, ← Multiset.coe_add]
-  simp only [Multiset.coe_toList, map_add, Multiset.map_add, add_assoc]
+  simp only [Multiset.coe_toList, map_add (f := _), Multiset.map_add (f := _), add_assoc]
 
 theorem evL_mul (n : List G → ℝ) (hp : ∀ l l', l.Perm l' → n l = n l') (cls : σ → G)
     (H P : MvPolynomial σ ℝ) (Q : List G) :
@@ -54,9 +54,9 @@ theorem evL_mul (n : List G → ℝ) (hp : ∀ l l', l.Perm l' → n l = n l') (
     · simp only [monomial_mul, evL_monomial]
       rw [hp _ _ (classes_add_perm cls ν μ Q)]
       ring
-    · rw [add_mul, map_add, ih1, ih2, map_add]
+    · rw [add_mul, map_add (f := _), ih1, ih2, map_add (f := _)]
       ring
-  · rw [mul_add, map_add, ih1, ih2, map_add]
+  · rw [mul_add, map_add (f := _), ih1, ih2, map_add (f := _)]
 
 theorem evL_mul_X (n : List G → ℝ) (hp : ∀ l l', l.Perm l' → n l = n l') (cls : σ → G)
     (H : MvPolynomial σ ℝ) (i : σ) (Q : List G) :

@@ -27,7 +27,7 @@ theorem measurableSet_box (F : Type) [Field F] [NumberField F] (κ : Type) [Meas
 
 theorem evalV_add_singleFin_ne {F : Type} [Field F] [NumberField F] {v w : HeightOneSpectrum (𝓞 F)} (h : v ≠ w)
     (a : Af F) (t : Fv F w) : evalV F v (a + singleFin w t) = evalV F v a := by
-  rw [map_add, evalV_singleFin_ne h, add_zero]
+  rw [map_add (f := _), evalV_singleFin_ne h, add_zero]
 
 theorem finPart (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] [MeasurableSpace (κ → Af F)] [BorelSpace (κ → Af F)]
     [∀ v : HeightOneSpectrum (𝓞 F), MeasurableSpace (κ → Fv F v)] [∀ v : HeightOneSpectrum (𝓞 F), BorelSpace (κ → Fv F v)]

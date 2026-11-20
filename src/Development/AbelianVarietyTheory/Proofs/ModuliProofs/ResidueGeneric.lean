@@ -77,7 +77,7 @@ theorem clear_denom {o σ R L : Type} [CommRing o] [CommRing R] [CommRing L] (β
     obtain ⟨r, m, h1⟩ := hp
     obtain ⟨r', m', h2⟩ := hq
     refine ⟨r * t ^ m' + r' * t ^ m, m + m', ?_⟩
-    rw [MvPolynomial.eval₂_add, map_add, map_mul, map_mul, ← h1, ← h2, map_pow, map_pow]
+    rw [MvPolynomial.eval₂_add, map_add (f := _), map_mul, map_mul, ← h1, ← h2, map_pow, map_pow]
     ring
   | mul_X p a hp =>
     obtain ⟨r, m, h1⟩ := hp

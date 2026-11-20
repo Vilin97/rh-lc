@@ -60,7 +60,7 @@ theorem eta_kummer_galoisInvariant : ∀ (K Ω : Type) [Field K] [CharZero K] [F
         · exact h1
         · exact h2
       | algebraMap r => exact g.commutes r
-      | add u v _ _ hu hv => rw [map_add, hu, hv]
+      | add u v _ _ hu hv => rw [map_add (f := _), hu, hv]
       | inv u _ hu => rw [map_inv₀, hu]
       | mul u v _ _ hu hv => rw [map_mul, hu, hv]
   have kα0 : ∀ g ∈ E.fixingSubgroup, kum (N := N) ζ α g = 0 := fun g hg => (hαker g).2 ((memH g).1 hg).1

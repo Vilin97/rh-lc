@@ -35,7 +35,7 @@ def subV (k : Type) [CommRing k] (V : Set σ) : Subalgebra k (MvPowerSeries σ k
     change OnV V g at hg
     change OnV V (f + g)
     intro e he i hi
-    rw [map_add] at he
+    rw [map_add (f := _)] at he
     by_cases h : coeff e f = 0
     · rw [h, zero_add] at he
       exact hg e he i hi

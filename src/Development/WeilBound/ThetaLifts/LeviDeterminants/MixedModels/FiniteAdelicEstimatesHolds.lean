@@ -39,7 +39,7 @@ def locT (v : Pl F) (T : ((κ → AF F) × (κ → AF F)) →ₗ[AF F] ((κ → 
     ((κ → Fv F v) × (κ → Fv F v)) →ₗ[Fv F v] ((κ → Fv F v) × (κ → Fv F v)) where
   toFun y := locW v (T (liftW v y))
   map_add' y y' := by
-    rw [← locW_add, ← map_add]
+    rw [← locW_add, ← map_add (f := _)]
     congr 2
     exact Prod.ext (funext fun _ => map_add _ _ _) (funext fun _ => map_add _ _ _)
   map_smul' c y := by
@@ -93,7 +93,7 @@ theorem locT_int (T : ((κ → AF F) × (κ → AF F)) →ₗ[AF F] ((κ → AF 
     · rw [map_smul, locW_smul, evFin_liftV]
       exact ⟨fun j => mul_mem (hc i) ((hz i).1 j), fun j => mul_mem (hc i) ((hz i).2 j)⟩
   change locW v (T (liftW v y)) ∈ _
-  rw [e, map_add, locW_add]
+  rw [e, map_add (f := _), locW_add]
   exact add_mem (hs _ _ hy.1 h1) (hs _ _ hy.2 h2)
 
 theorem schr_std {ψ : AddChar (AF F) ℂ} (hψ : PsiUnr ψ v) (h2 : (2 : Fv F v)⁻¹ ∈ v.adicCompletionIntegers F) {y} (hy : y ∈ intW (κ := κ) v) :

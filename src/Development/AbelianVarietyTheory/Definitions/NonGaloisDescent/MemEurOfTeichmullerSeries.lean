@@ -357,7 +357,7 @@ def E0loc : Subalgebra ℤ_[l] (WCb l) where
   add_mem' := by
     rintro x y ⟨a, m, h⟩ ⟨b, n, h'⟩
     refine ⟨a * PowerSeries.X ^ n + b * PowerSeries.X ^ m, m + n, ?_⟩
-    simp only [map_add, map_mul, map_pow, ← h, ← h']
+    simp only [map_add (f := _), map_mul, map_pow, ← h, ← h']
     ring
   mul_mem' := by
     rintro x y ⟨a, m, h⟩ ⟨b, n, h'⟩
@@ -431,7 +431,7 @@ theorem map_mem_E0_phi (hX : IsUnit (inclW l (io PowerSeries.X))) (σ : WCb l �
     rw [← hσ]; exact (hX.map σ).exists_right_inv
   refine map_mem_E0 σ _ hσ ⟨u, ?_, hu⟩ hx
   have hwl : inclW l (io PowerSeries.X) ^ l * w ^ l = 1 := by rw [← mul_pow, hw, one_pow]
-  simp only [h, map_add, map_mul, map_pow, map_natCast] at hu
+  simp only [h, map_add (f := _), map_mul, map_pow, map_natCast] at hu
   have h1 : inclW l (io PowerSeries.X) ^ l * u ∈ clAlg (E0 io) :=
     inv_mem_clAlg (r := -(inclW l (io r) * w ^ l))
       ((E0 io).neg_mem ((E0 io).mul_mem (io_mem_E0 io _) ((E0 io).pow_mem (inv_X_mem_E0 io hw) l)))
@@ -490,7 +490,7 @@ private theorem map_smul_gen {O R M : Type} [CommRing O] [CommRing R] [Algebra O
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a t => simp [TensorProduct.smul_tmul']
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 private theorem smul_mem_gen {Z O W M : Type} [CommRing Z] [CommRing O] [CommRing W] [Algebra Z O]
     [Algebra Z W] [AddCommGroup M] [Module O M] (S : Subalgebra Z W) (o : O) {w : W} (hw : w ∈ S)
@@ -518,13 +518,13 @@ private theorem map_map_gen {Z O W M : Type} [CommRing Z] [CommRing O] [CommRing
       (TensorProduct.map (Algebra.TensorProduct.map (AlgHom.id O O) d).toLinearMap k y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul r t =>
     simp only [TensorProduct.map_tmul, h2]
     congr 1
     induction r using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul o w => simp [h1]
 
 private theorem map_comm_gen {O R M M' : Type} [CommRing O] [CommRing R] [Algebra O R] [AddCommGroup M]
@@ -534,7 +534,7 @@ private theorem map_comm_gen {O R M M' : Type} [CommRing O] [CommRing R] [Algebr
       TensorProduct.map LinearMap.id f (TensorProduct.map a.toLinearMap g y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul r t => simp [h]
 
 @[reducible] def leftModuleGen (O R M : Type) [CommRing O] [CommRing R] [Algebra O R] [AddCommGroup M]

@@ -40,7 +40,7 @@ theorem projective_baseChange_presentation_matrix : ∀ (R B M : Type) [CommRing
             Finset.sum_mul, mul_comm, mul_left_comm]
         rw [this]
         exact Submodule.sum_mem _ fun b _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨b, rfl⟩)
-    | add a b ha hb => rw [map_add, map_add]; exact N.add_mem ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact N.add_mem ha hb
   have hπv : ∀ a, πB (v a - Pi.single a 1) = 0 := by
     intro a
     have h1 : πB (v a) = (1 : B) ⊗ₜ[R] π (Pi.single a 1) := LinearMap.congr_fun hi _

@@ -74,7 +74,7 @@ theorem exists_int_approx (x : F) (hx : p.valuation F x ≤ 1) :
   have hsF : algebraMap (𝓞 F) F (s : 𝓞 F) ≠ 0 :=
     (map_ne_zero_iff _ (IsFractionRing.injective (𝓞 F) F)).2 hs0
   have key : IsLocalization.mk' F b s - algebraMap (𝓞 F) F c = IsLocalization.mk' F r s := by
-    rw [IsFractionRing.mk'_eq_div, IsFractionRing.mk'_eq_div, ← hyr, map_add, map_mul]
+    rw [IsFractionRing.mk'_eq_div, IsFractionRing.mk'_eq_div, ← hyr, map_add (f := _), map_mul]
     field_simp
     ring
   rw [key, HeightOneSpectrum.valuation_of_mk', div_lt_one₀ (zero_lt_iff.mpr hvs)]

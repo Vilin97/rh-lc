@@ -48,7 +48,7 @@ def chainVecs {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (π : Represe
     (∀ i : Fin s, InPar (r + i * t) (red g n h : Mt g n)) →
     (∀ i : Fin s, br (r + i * t) t (red g n h : Mt g n) = (y i : Mt g t)) →
     π (inc g n h) v = ((∏ i, χ i (Matrix.GeneralLinearGroup.det (y i)) : ℂˣ) : ℂ) • v}
-  add_mem' := fun {a b} ha hb h y h1 h2 h3 => by rw [map_add, ha h y h1 h2 h3, hb h y h1 h2 h3, smul_add]
+  add_mem' := fun {a b} ha hb h y h1 h2 h3 => by rw [map_add (f := _), ha h y h1 h2 h3, hb h y h1 h2 h3, smul_add]
   zero_mem' := fun h y _ _ _ => by rw [map_zero, smul_zero]
   smul_mem' := fun c v hv h y h1 h2 h3 => by rw [map_smul, hv h y h1 h2 h3, smul_comm]
 

@@ -99,7 +99,7 @@ theorem exists_unique_eigen_sum : ∀ {E : Type} [Field E] [NumberField E] [IsCM
   have heig : ∀ (μ : c.F) (x : V), A x = φ μ • x → ∀ p : Polynomial c.F, ev p x = φ (p.eval μ) • x := by
     intro μ x hx p
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => rw [map_add, LinearMap.add_apply, hp, hq, eval_add, map_add, add_smul]
+    | add p q hp hq => rw [map_add (f := _), LinearMap.add_apply, hp, hq, eval_add, map_add (f := _), add_smul]
     | monomial k a =>
       have hk : ∀ k : ℕ, (A ^ k) x = φ μ ^ k • x := by
         intro k

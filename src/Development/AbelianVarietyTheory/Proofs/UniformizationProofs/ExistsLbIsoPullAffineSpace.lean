@@ -35,7 +35,7 @@ theorem exists_pairing_notMem {A M : Type} [CommRing A] [AddCommGroup M] [Module
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul φ m => simpa using h φ m
-  | add x y hx hy => rw [map_add]; exact P.add_mem hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact P.add_mem hx hy
 
 theorem exists_generator_away {A B M σ : Type} [CommRing A] [IsDomain A] [IsIntegrallyClosed A]
     [CommRing B] (E : MvPolynomial σ A ≃+* B) [AddCommGroup M] [Module B M] [Module.Invertible B M]

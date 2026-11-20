@@ -15,7 +15,7 @@ open GlobalTheory.OrientedHeis HypDec
 variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ}
 
 theorem symplOH_add_self (S T : HSp D) (x y : WO S T) : symplOH S T x y + symplOH S T x y = symplO S T x y := by
-  rw [symplOH, ← add_mul, ← map_add, add_halves, map_one, one_mul]
+  rw [symplOH, ← add_mul, ← map_add (f := _), add_halves, map_one, one_mul]
 
 theorem smul_cancel {R : Type} [CommRing R] {n k l : ℕ} {a c : R} (h : a * c = 1) (P G : Matrix (Fin n) (Fin n) R)
     (hP : P * G = 1) (y : Matrix (Fin n) (Fin k) R) (b : Matrix (Fin k) (Fin l) R) :

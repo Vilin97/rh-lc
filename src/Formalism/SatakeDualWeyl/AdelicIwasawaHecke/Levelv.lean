@@ -404,7 +404,7 @@ theorem level_subgroup_commute : Formalism.UG.LevelVComm := by
       rw [nsmul_eq_mul]
       push_cast at this ⊢
       linear_combination -this
-    rw [← hα, hαβ, map_add, map_nsmul]
+    rw [← hα, hαβ, map_add (f := _), map_nsmul]
     exact hZ3 b _ hα'Z _ (hZ2 b hb _ (levelv_phi_mem v β))
   refine levelv_relIndex_ne_zero _ _ f ?_
   intro a ha b hb hab

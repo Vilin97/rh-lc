@@ -32,7 +32,7 @@ theorem spl_unitary {e : AF F} (he : e * e = e) (J A : Matrix (Fin n) (Fin n) (A
   have h3 : (1 - e) * (1 - e) = 1 - e := by rw [sub_mul, one_mul, h1, sub_zero]
   have hm : (spl e A).map (cA σ) = e • A.map (cA σ) + (1 - e) • 1 := by
     ext i j
-    simp only [spl, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add, map_smul, Matrix.one_apply]
+    simp only [spl, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _), map_smul, Matrix.one_apply]
     split_ifs <;> simp
   rw [hm, spl, Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_smul, Matrix.transpose_one]
   simp only [Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul, smul_add, smul_smul, Matrix.one_mul, Matrix.mul_one, he, h1, h2, h3, zero_smul, add_zero, zero_add, hA]

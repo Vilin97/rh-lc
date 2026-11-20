@@ -52,7 +52,7 @@ theorem mul_mem_latV {S : HSp D} {L : Lat S} {P : Pl D → Prop} {w : AE D} (hw 
     subst ha
     let Φ : Af D.host.F ⊗[D.host.F] D.host.E →+ (Fin S.rank → AE D) :=
       AddMonoidHom.mk' (fun c i => GlobalTheory.LatticeStable.liftFin D (c * (β ⊗ₜ[D.host.F] (1 * x i))))
-        fun c c' => funext fun i => by rw [add_mul, LinearMap.map_add]; rfl
+        fun c c' => funext fun i => by rw [add_mul, LinearMap.map_add (f := _)]; rfl
     have hle : intAE D ≤ (latV S L P).comap Φ := by
       refine (AddSubgroup.closure_le _).2 ?_
       rintro _ ⟨γ, hγ, o, rfl⟩

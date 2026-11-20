@@ -111,7 +111,7 @@ variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E]
 theorem locE_decomp (L : LocE F E) [CharZero F] {δ : E} (hcj : L.cj δ = -δ) {d : F} (hd0 : d ≠ 0)
     (hd : δ * δ = algebraMap F E d) (x : E) :
     ∃ a b : F, x = algebraMap F E a + algebraMap F E b * δ := by
-  have h1 : L.cj (x + L.cj x) = x + L.cj x := by rw [map_add, L.cj_cj, add_comm]
+  have h1 : L.cj (x + L.cj x) = x + L.cj x := by rw [map_add (f := _), L.cj_cj, add_comm]
   obtain ⟨A, hA⟩ := (L.cj_fix _).mp h1
   have h2 : L.cj ((x - L.cj x) * δ) = (x - L.cj x) * δ := by
     rw [map_mul, map_sub, L.cj_cj, hcj]; ring
@@ -152,7 +152,7 @@ theorem locE_qbasis (L : LocE F E) [IsNonarchimedeanLocalField F] [CharZero F] :
         have : algebraMap F E (a1 + a2) + algebraMap F E (((c1 + c2 : 𝒪[F]) : F) * e) * δ =
             (algebraMap F E a1 + algebraMap F E ((c1 : F) * e) * δ) +
               (algebraMap F E a2 + algebraMap F E ((c2 : F) * e) * δ) := by
-          push_cast; simp only [map_add, add_mul, map_mul]; ring
+          push_cast; simp only [map_add (f := _), add_mul, map_mul]; ring
         rw [this]; exact add_mem h1 h2
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := by
@@ -167,7 +167,7 @@ theorem locE_qbasis (L : LocE F E) [IsNonarchimedeanLocalField F] [CharZero F] :
       ∃ c : 𝒪[F], c ∈ I ∧ (c : F) * e = b := by
     intro x hx a b hxab
     have hm : (x - L.cj x) * δ = algebraMap F E (2 * b * d) := by
-      rw [hxab, map_add, map_mul, hcj, AlgEquiv.commutes, AlgEquiv.commutes, map_mul, map_mul, ← hd,
+      rw [hxab, map_add (f := _), map_mul, hcj, AlgEquiv.commutes, AlgEquiv.commutes, map_mul, map_mul, ← hd,
         map_ofNat]; ring
     have hmem : 2 * b * d ∈ 𝒪[F] := by
       rw [← locE_algMap_mem L, ← hm]
@@ -203,7 +203,7 @@ theorem locE_qbasis (L : LocE F E) [IsNonarchimedeanLocalField F] [CharZero F] :
     have h2u : IsUnit (2 : E) := by
       have := ((IsUnit.mk0 (2 : F) two_ne_zero).map (algebraMap F E)); rwa [map_ofNat] at this
     exact (h2u.mul_right_eq_zero).mp this
-  have hfixT : L.cj (ω + L.cj ω) = ω + L.cj ω := by rw [map_add, L.cj_cj, add_comm]
+  have hfixT : L.cj (ω + L.cj ω) = ω + L.cj ω := by rw [map_add (f := _), L.cj_cj, add_comm]
   obtain ⟨T, hT⟩ := (L.cj_fix _).mp hfixT
   have hfixN : L.cj (ω * L.cj ω) = ω * L.cj ω := by rw [map_mul, L.cj_cj, mul_comm]
   obtain ⟨Nn, hN⟩ := (L.cj_fix _).mp hfixN
@@ -275,8 +275,8 @@ theorem QBasis.normE {L : LocE F E} (Q : QBasis L) (a b : F) :
       algebraMap F E (a * a + (Q.t : F) * a * b + (Q.n : F) * b * b) := by
   have hn := Q.hn
   rw [Q.hcj] at hn
-  rw [map_add, map_mul, AlgEquiv.commutes, AlgEquiv.commutes, Q.hcj]
-  simp only [map_add, map_mul]
+  rw [map_add (f := _), map_mul, AlgEquiv.commutes, AlgEquiv.commutes, Q.hcj]
+  simp only [map_add (f := _), map_mul]
   linear_combination (algebraMap F E b * algebraMap F E b) * hn
 
 theorem QBasis.disc_unit {L : LocE F E} (Q : QBasis L) : IsUnit (Q.t * Q.t - 4 * Q.n) := by
@@ -291,7 +291,7 @@ theorem QBasis.disc_unit {L : LocE F E} (Q : QBasis L) : IsUnit (Q.t * Q.t - 4 *
       algebraMap F E (Q.t : F) + 2 * algebraMap F E (a : F) := by
     have e1F : (p1 : F) * (ϖ : F) = (Q.t : F) + 2 * (a : F) := by
       have := congrArg Subtype.val hp1; push_cast at this; exact this
-    rw [← map_mul, e1F, map_add, map_mul, map_ofNat]
+    rw [← map_mul, e1F, map_add (f := _), map_mul, map_ofNat]
   have e2 : algebraMap F E (p2 : F) * algebraMap F E (ϖ : F) =
       algebraMap F E (a : F) * algebraMap F E (a : F) - algebraMap F E (Q.n : F) := by
     have e2F : (p2 : F) * (ϖ : F) = (a : F) * (a : F) - (Q.n : F) := by
@@ -340,12 +340,12 @@ theorem QBasis.trace_nondeg {L : LocE F E} (Q : QBasis L) {ϖ : 𝒪[F]} {x : E}
   have i1 : (2 * (a : F) + (b : F) * (Q.t : F)) = (ϖ : F) * (z1 : F) := by
     apply (algebraMap F E).injective
     rw [← hz1, one_mul, hab, map_add L.cj, map_mul L.cj, AlgEquiv.commutes, AlgEquiv.commutes, Q.hcj]
-    simp only [map_add, map_mul, map_ofNat]; ring
+    simp only [map_add (f := _), map_mul, map_ofNat]; ring
   have i2 : ((a : F) * (Q.t : F) + (b : F) * ((Q.t : F) * (Q.t : F) - 2 * (Q.n : F))) =
       (ϖ : F) * (z2 : F) := by
     apply (algebraMap F E).injective
     rw [← hz2, hab, map_mul L.cj, map_add L.cj, map_mul L.cj, AlgEquiv.commutes, AlgEquiv.commutes, Q.hcj]
-    simp only [map_add, map_mul, map_sub, map_ofNat]
+    simp only [map_add (f := _), map_mul, map_sub, map_ofNat]
     linear_combination (2 * algebraMap F E (b : F)) * hn
   obtain ⟨u, hu⟩ := Q.disc_unit
   have hinv : ((u⁻¹ : (𝒪[F])ˣ) : F) * ((Q.t : F) * (Q.t : F) - 4 * (Q.n : F)) = 1 := by

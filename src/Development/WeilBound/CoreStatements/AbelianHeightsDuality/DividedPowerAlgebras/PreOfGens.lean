@@ -139,7 +139,7 @@ theorem pre_of_gens (B ι : Type) [CommRing B] (x : ι → B) (g : ι → ℕ �
   · intro n y hy z hz
     obtain ⟨c, rfl⟩ := (hJ y).1 hy
     obtain ⟨c', rfl⟩ := (hJ z).1 hz
-    simp only [← map_add, hγ, Φadd, coeff_mul]
+    simp only [← map_add (f := _), hγ, Φadd, coeff_mul]
   · intro n a y hy
     obtain ⟨c, rfl⟩ := (hJ y).1 hy
     rw [← smul_eq_mul, ← map_smul, hγ, hγ, Φsm, coeff_rescale]

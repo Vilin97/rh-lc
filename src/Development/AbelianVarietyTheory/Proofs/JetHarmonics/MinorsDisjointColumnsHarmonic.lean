@@ -33,7 +33,7 @@ theorem _root_.GlobalTheory.minorHarm_pderiv_eq_zero {σ k : Type*} [CommRing k]
     obtain ⟨s, hs, rfl⟩ := hx
     exact MvPolynomial.pderiv_X_of_ne (fun h => hv (h ▸ hs))
   | algebraMap r => rw [MvPolynomial.algebraMap_eq, MvPolynomial.pderiv_C]
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | mul x y _ _ hx hy => rw [MvPolynomial.pderiv_mul, hx, hy]; simp
 
 open MvPowerSeries in
@@ -51,7 +51,7 @@ private theorem pderiv_mem_supported' {σ k : Type*} [CommRing k] {S : Set σ}
     · rw [Pi.single_eq_of_ne' h]; exact Subalgebra.zero_mem _
   | algebraMap r =>
     rw [MvPolynomial.algebraMap_eq, MvPolynomial.pderiv_C]; exact Subalgebra.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Subalgebra.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hx hy
   | mul x y hx' hy' hx hy =>
     rw [MvPolynomial.pderiv_mul]
     exact Subalgebra.add_mem _ (Subalgebra.mul_mem _ hx hy') (Subalgebra.mul_mem _ hx' hy)

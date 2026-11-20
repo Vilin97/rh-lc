@@ -32,7 +32,7 @@ theorem h_sum_right {ι : Type} (s : Finset ι) (x : n → A) (v : ι → n → 
 
 theorem h_add_left (x x' y : n → A) :
     Formalism.UG.hform σ J (x + x') y = Formalism.UG.hform σ J x y + Formalism.UG.hform σ J x' y := by
-  simp only [Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem h_smul_left (x y : n → A) (a : A) :
     Formalism.UG.hform σ J (a • x) y = σ a * Formalism.UG.hform σ J x y := by

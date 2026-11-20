@@ -63,7 +63,7 @@ theorem slice {θ : InfFam D} (hθ : IsInfFam θ) {V : HSp D} {τ : D.what₂.Ta
     obtain ⟨Q₁, h₁⟩ := hF
     obtain ⟨Q₂, h₂⟩ := hG
     refine ⟨Q₁ + Q₂, fun u => ?_⟩
-    simp only [Pi.add_apply, h₁, h₂, evX, map_add]
+    simp only [Pi.add_apply, h₁, h₂, evX, map_add (f := _)]
     ring
   | smul a F _ hF =>
     obtain ⟨Q, h⟩ := hF

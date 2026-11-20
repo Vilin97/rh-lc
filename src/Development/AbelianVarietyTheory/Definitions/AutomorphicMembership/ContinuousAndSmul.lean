@@ -40,7 +40,7 @@ theorem polMat_form {b : Matrix (Fin d) (Fin d) ℂ} (hb : b.IsHermitian) :
     rw [h]
     refine Complex.conj_eq_iff_re.1 ?_
     have h' (i j) : starRingEnd ℂ (b i j) = b j i := hb.apply j i
-    simp only [map_add, map_mul, h', Complex.conj_conj]
+    simp only [map_add (f := _), map_mul, h', Complex.conj_conj]
     ring
   have e₁ := e 1
   have e₂ := e (-1)

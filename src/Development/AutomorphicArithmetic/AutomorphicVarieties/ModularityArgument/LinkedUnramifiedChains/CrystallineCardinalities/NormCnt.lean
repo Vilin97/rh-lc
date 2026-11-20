@@ -122,7 +122,7 @@ private def zlGrp {l : ℕ} [Fact l.Prime] {κ : Type} [Field κ] (F : Frame l �
   add_mem' := by
     rintro x y ⟨⟨a1, a2⟩, a3⟩ ⟨⟨b1, b2⟩, b3⟩
     refine ⟨⟨a1.add b1, fun s t => ?_⟩, fun v => (Z v).add_mem (a3 v) (b3 v)⟩
-    simp only [Pi.add_apply, a2, b2, map_add]; abel
+    simp only [Pi.add_apply, a2, b2, map_add (f := _)]; abel
   zero_mem' := ⟨⟨IsLocallyConstant.const 0, by simp⟩, fun v => (Z v).zero_mem⟩
   neg_mem' := by
     rintro x ⟨⟨a1, a2⟩, a3⟩

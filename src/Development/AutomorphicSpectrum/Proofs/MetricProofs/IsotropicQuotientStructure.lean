@@ -43,7 +43,7 @@ theorem span_period (R : RiemLat E g Λ) {I : Submodule (𝓞 E) Λ} {k : ℕ} {
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
     | add x y hx' hy' hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ (hx ((hI x).2 hx')) (hy ((hI y).2 hy'))
     | smul a x hx' hx =>
       rw [map_zsmul]
@@ -169,7 +169,7 @@ theorem exists_univ_quot : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   have hπadd : ∀ x ∈ D, ∀ y ∈ D, π (x + y) = π x + π y := by
     intro x hx y hy
     apply hinj
-    rw [hπ _ (D.add_mem hx hy), map_add, map_add, map_add, hπ x hx, hπ y hy]
+    rw [hπ _ (D.add_mem hx hy), map_add (f := _), map_add (f := _), map_add (f := _), hπ x hx, hπ y hy]
   have hπsmul : ∀ (a : 𝓞 E), ∀ x ∈ D, a • x ∈ D ∧ π (a • x) = a • π x := by
     intro a x hx
     refine ⟨hDsmul a x hx, hinj ?_⟩
@@ -214,7 +214,7 @@ theorem exists_univ_quot : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
         exact Submodule.subset_span ⟨_, I.smul_mem _ hv, rfl⟩
       | zero => simp
       | add w w' _ _ h h' =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ h h'
       | smul c w _ h =>
         rw [map_smul]

@@ -27,7 +27,7 @@ private def restrEmb (hv : v.Integers O) (φ : E →ₐ[ℚ] C) : 𝓞 E →+* O
     rw [map_mul]; simp only [(exists_lift_val hv φ _).choose_spec]; simp)
   map_zero' := hv.hom_inj (by rw [(exists_lift_val hv φ _).choose_spec]; simp)
   map_add' a b := hv.hom_inj (by
-    rw [map_add]; simp only [(exists_lift_val hv φ _).choose_spec]; simp)
+    rw [map_add (f := _)]; simp only [(exists_lift_val hv φ _).choose_spec]; simp)
 
 private theorem restrEmb_spec (hv : v.Integers O) (φ : E →ₐ[ℚ] C) (a : 𝓞 E) :
     algebraMap O C (restrEmb hv φ a) = φ (a : E) :=
@@ -45,7 +45,7 @@ private theorem sig_sig (x : ℤ_[p] ⊗[ℤ] R) : sig p R (sig p R x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sig]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 private def sigEquiv : (ℤ_[p] ⊗[ℤ] R) ≃ₐ[ℤ_[p]] (ℤ_[p] ⊗[ℤ] R) :=
   AlgEquiv.ofAlgHom (sig p R) (sig p R) (AlgHom.ext sig_sig) (AlgHom.ext sig_sig)
@@ -136,7 +136,7 @@ private theorem tauExt_comp_star_eq_tauExt_sig {p : ℕ} [Fact p.Prime] {R : Typ
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [tauExt, sig, starRingEnd_apply]
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 private theorem eq_zero_or_one_of_idempotent_integers {C : Type} [Field C] {v : Valuation C NNReal} {O : Type} [CommRing O]
     [Algebra O C] (hv : v.Integers O) (x : O) (hx : x * x = x) : x = 0 ∨ x = 1 := by
@@ -329,7 +329,7 @@ theorem UpperTheory.discr_CMDatum_eq_prod_places :
           exact hss τ
       have := congrArg (tauExt τ) h2
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, map_sum, map_one] at this
+        rw [map_add (f := _), map_sum, map_sum, map_one] at this
       simp only [he0, hb0, Finset.sum_const_zero, add_zero] at this
       exact hO this
     have hinj : Function.Injective (UpperTheory.PlacesDiscr.restrEmb hv (E := E)) := by

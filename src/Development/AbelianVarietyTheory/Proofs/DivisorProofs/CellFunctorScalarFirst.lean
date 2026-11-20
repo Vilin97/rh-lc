@@ -20,7 +20,7 @@ theorem extTensor_detRep_apply (u v : ℕ) (χ₁ χ₂ : kˣ →* ℂˣ) (g1 : 
       ((χ₁ (GeneralLinearGroup.det g1) * χ₂ (GeneralLinearGroup.det g2) : ℂˣ) : ℂ) • y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | tmul a b =>
     rw [extTensor_tmul]
     simp only [detRep, ofChar_apply, Units.val_mul]

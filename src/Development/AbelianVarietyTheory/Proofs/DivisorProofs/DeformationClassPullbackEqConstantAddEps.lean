@@ -22,7 +22,7 @@ theorem exists_const_add_eps_const {K : Type} [Field K] {A : Over (Sp K)} [GrpOb
     obtain ⟨a, b, e⟩ := hx
     obtain ⟨a', b', e'⟩ := hy
     refine ⟨a + a', b + b', ?_⟩
-    rw [map_add, e, e', map_add, map_add, smul_add]
+    rw [map_add (f := _), e, e', map_add (f := _), map_add (f := _), smul_add]
     abel
   | tmul r c =>
     refine ⟨r.fst • c, r.snd • c, ?_⟩
@@ -50,7 +50,7 @@ theorem liftMor_pull_eq_const_add_eps : GlobalTheory.Published.AbelianDeRham →
   have red : (redMor A).pull ((liftMor (epsDP K) h).pull x) = (fibMor h).pull x :=
     GrpMor.pull_pull (liftMor (epsDP K) h) (redMor A) (fibMor h) (fun _ => rfl) (by simp) x
   have ra : (fibMor h).pull x = a := by
-    rw [← red, e, map_add, LinearMap.map_smulₛₗ, redMor_constMor, redMor_constMor]
+    rw [← red, e, map_add (f := _), LinearMap.map_smulₛₗ, redMor_constMor, redMor_constMor]
     have : (TrivSqZeroExt.fstHom K K K).toRingHom (DualNumber.eps : DualNumber K) = 0 := rfl
     rw [this, zero_smul, add_zero]
   exact ⟨b, by rw [ra]; exact e⟩

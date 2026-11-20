@@ -69,7 +69,7 @@ theorem lieModel_of_isLieBasis {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj
            onto := fun w hw => by
              obtain ⟨x, hx⟩ := M.onto w hw
              exact ⟨φ.symm x, by simpa using hx⟩
-           add := fun a b => by rw [map_add, M.add]
+           add := fun a b => by rw [map_add (f := _), M.add]
            smul := fun c a => by rw [map_smul, M.smul] }⟩
 
 theorem card_eq_of_isLieBasis {G : Over (Sp ℂ)} [GrpObj G] [IsCommMonObj G] {n m : ℕ}

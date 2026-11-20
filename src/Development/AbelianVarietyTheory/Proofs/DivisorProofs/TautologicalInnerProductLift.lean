@@ -130,7 +130,7 @@ theorem quotMap_comb (j : Fin 2) {V : (PSpace ℤ 1).Opens} (h : V ≤ chart ℤ
   have e₁ : quotMap.app V (eV V 1) = ratioOn V j h 0 • resM Q h (LB.chartSec (O1_isLB ℤ 1) j) := by
     rw [quotMap_eV, ← resM_X'_eq j 0 h]
     rfl
-  rw [map_add, Scheme.Modules.Hom.app_smul, Scheme.Modules.Hom.app_smul, e₀, e₁, sub_smul, mul_smul, mul_smul,
+  rw [map_add (f := _), Scheme.Modules.Hom.app_smul, Scheme.Modules.Hom.app_smul, e₀, e₁, sub_smul, mul_smul, mul_smul,
     smul_neg, sub_eq_add_neg, add_comm]
 
 theorem quotMap_v (j : Fin 2) : quotMap.app _ (v j) = 0 := by
@@ -144,7 +144,7 @@ theorem map_s (j : Fin 2) : (kernel.ι quotMap).app _ (s j) = v j :=
 
 theorem resM_v (j : Fin 2) {V : (PSpace ℤ 1).Opens} (h : V ≤ chart ℤ 1 j) :
     resM E h (v j) = ratioOn V j h 0 • eV V 0 + ratioOn V j h 1 • eV V 1 := by
-  rw [v, map_add, resM_smul, resM_smul, resM_resM, resM_resM]
+  rw [v, map_add (f := _), resM_smul, resM_smul, resM_resM, resM_resM]
   rfl
 
 theorem kernel_ι_app_smul_resM_s (j : Fin 2) {V : (PSpace ℤ 1).Opens} (h : V ≤ chart ℤ 1 j) (c : Γ(PSpace ℤ 1, V)) :

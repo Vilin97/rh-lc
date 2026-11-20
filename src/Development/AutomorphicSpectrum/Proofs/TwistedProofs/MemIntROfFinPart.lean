@@ -33,7 +33,7 @@ theorem infPart_cA (z : AE D) : infPart D (cA D z) = sigR (Ainf D.host.F) D.sp.c
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem compAt_mulM {m k n : ℕ} (θ : InfFam D) (τ : D.what₂.Tau) (A : Mx D m k) (B : Mx D k n) :
     compAt θ τ (mul A B) = compAt θ τ A * compAt θ τ B := by

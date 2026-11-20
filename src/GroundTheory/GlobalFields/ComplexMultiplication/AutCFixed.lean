@@ -89,7 +89,7 @@ theorem infinite_range_apply_of_transcendental {x : Ω} (hx : Transcendental ℚ
     induction n with
     | zero => simp
     | succ n ih =>
-      rw [pow_succ', AlgEquiv.mul_apply, ih, map_add, hσ, map_natCast]
+      rw [pow_succ', AlgEquiv.mul_apply, ih, map_add (f := _), hσ, map_natCast]
       push_cast; ring
   refine Set.infinite_of_injective_forall_mem (f := fun n : ℕ => x + n) ?_ fun n =>
     ⟨(σ ^ n).toRingEquiv, hpow n⟩

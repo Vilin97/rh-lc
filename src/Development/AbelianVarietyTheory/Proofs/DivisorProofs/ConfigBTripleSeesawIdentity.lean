@@ -79,7 +79,7 @@ def lagr (M : Model σ X W) (M₁ : Model σ X₁ W₁) (H : Plane E n n₁) (H'
     Submodule F ((Fin n × Fin d → F) × (Fin n × Fin d → F)) where
   carrier := {w | IsMixed M₁ H H' (M.co.e.symm (GlobalTheory.MixedLagr.hat w))}
   zero_mem' := by simpa [GlobalTheory.MixedLagr.hat_zero] using (isMixed_zero (M₁ := M₁) (H := H) (H' := H'))
-  add_mem' := fun ha hb => by simpa [Set.mem_setOf_eq, GlobalTheory.MixedLagr.hat_add, map_add] using ha.add hb
+  add_mem' := fun ha hb => by simpa [Set.mem_setOf_eq, GlobalTheory.MixedLagr.hat_add, map_add (f := _)] using ha.add hb
   smul_mem' := fun c a ha => by
     show IsMixed M₁ H H' (M.co.e.symm (GlobalTheory.MixedLagr.hat (c • a)))
     rw [GlobalTheory.MixedLagr.hat_smul, LinearEquiv.map_smul]
@@ -134,7 +134,7 @@ theorem symp_mixed (hJ : Y.J = X.J) (hH : H.IsAdapted σ B Y X₁ j₀ j₁) (hH
   have h5 := hCB z v'
   have h6 := hCB z' v
   rw [← hQ] at hAA hBB hCC h1 h2 h3 h4 h5 h6
-  simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   linear_combination hAA + hBB + hCC + h1 - h2 + h3 - h4 + h5 - h6
 
 theorem form_zero_left {m : ℕ} (J : Matrix (Fin m) (Fin m) E) (c : Fin m → E) : form σ J 0 c = 0 := by
@@ -176,7 +176,7 @@ theorem le_finrank_lagr (hH : H.IsAdapted σ B Y X₁ j₀ j₁) (hH' : H'.IsAda
         rw [Matrix.add_mul, Matrix.vecMulVec_mul, Matrix.vecMul_transpose, add_assoc]
       rw [hG]
       ext i j
-      simp only [incM, incV, Matrix.map_apply, Matrix.add_apply, Matrix.vecMulVec_apply, map_add, map_mul]
+      simp only [incM, incV, Matrix.map_apply, Matrix.add_apply, Matrix.vecMulVec_apply, map_add (f := _), map_mul]
   have hGinj : ∀ p, G p = 0 → p = 0 := by
     rintro ⟨y, v, z⟩ h
     change Matrix.vecMulVec y H'.x + (Matrix.vecMulVec H.x v + H.ι * (z : Matrix (Fin n₁) (Fin d₁) E)) * H'.ιᵀ = 0 at h
@@ -259,7 +259,7 @@ theorem unique (hB : B.IsGood σ) (hJ : Y.J = X.J) (hH : H.IsAdapted σ B Y X₁
       M.co.rho B.ψ (m + m') φ = M.co.rho B.ψ m (M.co.rho B.ψ m' φ) := by
     intro m m' hm hm' φ
     change schr B.ψ (M.co.e _) φ = schr B.ψ (M.co.e _) (schr B.ψ (M.co.e _) φ)
-    rw [GlobalTheory.MixedLagr.schr_comp, symp_mixed hJ hH hH' M hm hm', mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add]
+    rw [GlobalTheory.MixedLagr.schr_comp, symp_mixed hJ hH hH' M hm hm', mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add (f := _)]
   have hinvL : ∀ l : Fn F n d →ₗ[ℂ] ℂ, (∀ u ∈ isoA (F := F) H H', ∀ Φ ∈ schA F (Fin n × Fin d), l (M.co.rho B.ψ u Φ) = l Φ) →
       (∀ z : Matrix (Fin n₁) (Fin d₁) (AE F E), (M₁.co.e z).1 = 0 → ∀ Φ ∈ schA F (Fin n × Fin d),
         l (M.co.rho B.ψ (incM F H.ι * z * (incM F H'.ι)ᵀ) Φ) = l Φ) →

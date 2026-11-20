@@ -63,7 +63,7 @@ theorem LawD.map (hF : FrobField K l σ) (h : LawD lam Φ) :
     exact h1 e
   · have h1 := congrArg (MvPowerSeries.map σ) h.log
     unfold atX atY at h1 ⊢
-    rw [map_add] at h1
+    rw [map_add (f := _)] at h1
     erw [PowerSeries.map_subst (HasSubst.of_constantCoeff_zero h.Φ0),
       PowerSeries.map_subst (HasSubst.of_constantCoeff_zero (MvPowerSeries.constantCoeff_X 0)),
       PowerSeries.map_subst (HasSubst.of_constantCoeff_zero (MvPowerSeries.constantCoeff_X 1)),

@@ -204,7 +204,7 @@ theorem finiteDimensional_L_add_single (D : Divisor k K) (v : Place k K)
   let φ : L E →ₗ[k] v.ResidueField :=
     { toFun := fun z => IsLocalRing.residue v.ring ⟨t * z, hmem z⟩
       map_add' := fun a b => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         ext
         simp [mul_add]
@@ -293,7 +293,7 @@ theorem finiteDimensional_L_of_le_of_deg_lt (n : ℕ) :
     obtain ⟨hfin, hle⟩ := finiteDimensional_L_add_single E' v
     rw [← hE] at hfin hle
     refine ⟨hfin, ?_⟩
-    have hdeg : deg E = deg E' + v.deg := by rw [hE, map_add, deg_single, one_mul]
+    have hdeg : deg E = deg E' + v.deg := by rw [hE, map_add (f := _), deg_single, one_mul]
     have : (finrank k (L E) : ℤ) ≤ finrank k (L E') + v.deg := by exact_mod_cast hle
     omega
 

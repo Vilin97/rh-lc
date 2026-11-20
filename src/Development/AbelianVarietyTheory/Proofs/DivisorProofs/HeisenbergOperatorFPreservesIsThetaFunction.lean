@@ -97,7 +97,7 @@ theorem smul_eq_zero_of_infF {a : AEF F E} (h : infPartF F E a = 0) : eInfF F �
     intro a
     induction a using TensorProduct.induction_on with
     | zero => simp only [smul_zero, map_zero]
-    | add a b ha hb => rw [smul_add, ha, hb, RingHom.map_add, map_add]
+    | add a b ha hb => rw [smul_add, ha, hb, RingHom.map_add (f := _), map_add (f := _)]
     | tmul a x =>
       rw [TensorProduct.smul_tmul']
       have : eInfF F • a = LinearMap.inl F (Ainf F) (Af F) (fstA F a) := Prod.ext (one_mul _) (zero_mul _)
@@ -108,7 +108,7 @@ theorem smul_eq_zero_of_infF {a : AEF F E} (h : infPartF F E a = 0) : eInfF F �
 theorem cAF_smul (σ : E →ₐ[F] E) (c : AF F) (a : AEF F E) : cAF σ (c • a) = c • cAF σ a := by
   induction a using TensorProduct.induction_on with
   | zero => simp only [smul_zero, map_zero]
-  | add a b ha hb => rw [smul_add, RingHom.map_add, RingHom.map_add, ha, hb, smul_add]
+  | add a b ha hb => rw [smul_add, RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb, smul_add]
   | tmul a x => rfl
 
 theorem continuous_cAF (σ : E →ₐ[F] E) : Continuous (cAF σ : AEF F E → AEF F E) := by
@@ -120,12 +120,12 @@ variable (σ : E →ₐ[F] E) {nS nT : ℕ} (JS : Matrix (Fin nS) (Fin nS) E) (J
 theorem symplOHF_add_left (x x' y : WOF F E nS nT) :
     symplOHF σ JS JT xi0 (x + x') y = symplOHF σ JS JT xi0 x y + symplOHF σ JS JT xi0 x' y := by
   unfold symplOHF symplOF hOF
-  simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem symplOHF_add_right (x y y' : WOF F E nS nT) :
     symplOHF σ JS JT xi0 x (y + y') = symplOHF σ JS JT xi0 x y + symplOHF σ JS JT xi0 x y' := by
   unfold symplOHF symplOF hOF
-  simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add]
+  simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem symplOHF_smul_left (c : AF F) (x y : WOF F E nS nT) :
     symplOHF σ JS JT xi0 (c • x) y = c * symplOHF σ JS JT xi0 x y := by
@@ -198,7 +198,7 @@ theorem isThetaFunOF_heisOF : ∀ (F E : Type) [Field F] [NumberField F] [Field 
       AddMonoidHom.mk' (fun u => symplOHF σ JS JT ξ₀ u w₀ - symplOHF σ JS JT ξ₀ w₀ u)
         (fun a b => by simp only [symplOHF_add_left, symplOHF_add_right]; ring)
     let g : WOF F E nS nT →+ AF F :=
-      AddMonoidHom.mk' (fun u => pairA F 0 (c u).2) (fun a b => by rw [map_add]; exact Prod.ext (add_zero 0).symm rfl)
+      AddMonoidHom.mk' (fun u => pairA F 0 (c u).2) (fun a b => by rw [map_add (f := _)]; exact Prod.ext (add_zero 0).symm rfl)
     let Kψ : AddSubgroup (AF F) :=
       { carrier := {x | ψ x = 1}
         zero_mem' := ψ.map_zero_eq_one
@@ -247,7 +247,7 @@ theorem isThetaFunOF_heisOF : ∀ (F E : Type) [Field F] [NumberField F] [Field 
   · exact (hc.comp (continuous_symplOHF_left σ JS JT ξ₀ w₀)).mul (hf.cont.comp (continuous_id.add continuous_const))
   · have hχ : ContDiff ℝ ∞ fun t => ψ (symplOHF σ JS JT ξ₀ (L t) w₀) := by
       refine contDiff_char _ (hc.comp ((continuous_symplOHF_left σ JS JT ξ₀ w₀).comp hL)) (fun s t => ?_) ?_
-      · rw [map_add, symplOHF_add_left, AddChar.map_add_eq_mul]
+      · rw [map_add (f := _), symplOHF_add_left, AddChar.map_add_eq_mul]
       · rw [map_zero, symplOHF_zero_left, ψ.map_zero_eq_one]
     have : (fun t => heisOF σ JS JT ξ₀ ψ w₀ f (w + L t)) =
         fun t => ψ (symplOHF σ JS JT ξ₀ w w₀) * (ψ (symplOHF σ JS JT ξ₀ (L t) w₀) * f (w + w₀ + L t)) := by

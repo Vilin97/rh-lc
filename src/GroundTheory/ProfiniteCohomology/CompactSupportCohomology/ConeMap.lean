@@ -90,7 +90,7 @@ theorem mapF_comm (α : K ⟶ K') (β : L ⟶ L') (w : f ≫ β = α ≫ f') (n 
         (shiftNegOneD L' n).hom ((shiftNegOneMapF β n).hom p.2) =
       (shiftNegOneMapF β (n + 1)).hom (shiftNegOneSucc L n ((f.f n).hom p.1) +
         (shiftNegOneD L n).hom p.2)
-    rw [map_add, shiftNegOneMapF_succ_apply, hβ, hom_apply_hom_apply_eq_of_comp_eq wn p.1]
+    rw [map_add (f := _), shiftNegOneMapF_succ_apply, hβ, hom_apply_hom_apply_eq_of_comp_eq wn p.1]
 
 noncomputable def map (α : K ⟶ K') (β : L ⟶ L') (w : f ≫ β = α ≫ f') :
     mappingCoconeNat f ⟶ mappingCoconeNat f' :=

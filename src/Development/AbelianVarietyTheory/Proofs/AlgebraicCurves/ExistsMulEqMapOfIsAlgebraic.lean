@@ -124,7 +124,7 @@ private lemma genericSection_baseChange_surjective_ker_lemma (K Ω : Type) [Fiel
       congr 1
       rw [hcomp, hsh]
       rfl
-    | add z w hz hw => rw [map_add, map_add, hz, hw, map_add, map_add]
+    | add z w hz hw => rw [map_add (f := _), map_add (f := _), hz, hw, map_add (f := _), map_add (f := _)]
   have hinj : Function.Injective (algebraMap P OmS) := IsFractionRing.injective P (FractionRing P)
   have hX : ∀ q, Φ₀ (algebraMap KTp KTf (X q) ⊗ₜ (1 : Ω)) =
       algebraMap P OmS (_root_.GlobalTheory.sPolyImg j₀ x q) := by
@@ -140,7 +140,7 @@ private lemma genericSection_baseChange_surjective_ker_lemma (K Ω : Type) [Fiel
         show Φ₀ _ = _
         rw [hΦ₀, map_one, one_mul, IsScalarTower.algebraMap_apply Ω P OmS]
         rfl
-      | add p q hp hq => rw [map_add]; exact add_mem hp hq
+      | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
       | mul_X p s hp =>
         rw [map_mul]
         refine mul_mem hp ?_
@@ -183,7 +183,7 @@ private lemma genericSection_baseChange_surjective_ker_lemma (K Ω : Type) [Fiel
         obtain ⟨c₂, hc₂, w₂, h₂⟩ := hw
         refine ⟨c₁ * c₂, mul_ne_zero hc₁ hc₂, (c₂ ⊗ₜ 1) * w₁ + (c₁ ⊗ₜ 1) * w₂, ?_⟩
         have h₃ : ∀ c : KTp, ι (c ⊗ₜ (1 : Ω)) = algebraMap KTp KTf c ⊗ₜ (1 : Ω) := fun c => rfl
-        simp only [map_add, map_mul]
+        simp only [map_add (f := _), map_mul]
         rw [← h₁, ← h₂, e, h₃, h₃]
         ring
     obtain ⟨c, hc, w, hw⟩ := hden z

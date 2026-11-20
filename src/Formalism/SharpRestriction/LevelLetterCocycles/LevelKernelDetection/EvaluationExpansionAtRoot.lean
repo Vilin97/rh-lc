@@ -34,7 +34,7 @@ theorem evaluation_comm_tensor {LL D ι : Type} [Field LL] [AddCommGroup D] [Mod
   | tmul d f =>
     rw [TensorProduct.comm_tmul, evaluation_tmul, TensorProduct.piScalarRight_apply,
       TensorProduct.piScalarRightHom_tmul]
-  | add z z' hz hz' => rw [map_add, map_add, hz, hz', map_add, Pi.add_apply]
+  | add z z' hz hz' => rw [map_add (f := _), map_add (f := _), hz, hz', map_add (f := _), Pi.add_apply]
 
 variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
     [Algebra Qp K₀] [Algebra Qp K] [Algebra K₀ K] [IsScalarTower Qp K₀ K]

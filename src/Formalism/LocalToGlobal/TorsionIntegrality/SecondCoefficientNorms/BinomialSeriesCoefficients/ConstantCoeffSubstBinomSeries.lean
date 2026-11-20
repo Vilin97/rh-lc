@@ -43,7 +43,7 @@ def binomSeries (z : K) : PowerSeries K := PowerSeries.mk (binom z)
 theorem binomSeries_ode (z : K) :
     (1 + PowerSeries.X) * PowerSeries.derivative (R := K) (binomSeries z) = z • binomSeries z := by
   ext n
-  rw [add_mul, one_mul, map_add, PowerSeries.coeff_derivative, PowerSeries.coeff_smul]
+  rw [add_mul, one_mul, map_add (f := _), PowerSeries.coeff_derivative, PowerSeries.coeff_smul]
   cases n with
   | zero =>
     have h := binom_succ z 0

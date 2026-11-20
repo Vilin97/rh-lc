@@ -27,7 +27,7 @@ theorem cD_cons (hP : IsPsiFor ε lam T Ψ) (p : Fin n × Fin n) (w : List (Fin 
 theorem cD_add (hP : IsPsiFor ε lam T Ψ) (u v : T.V) :
     ∀ w : List (Fin n × Fin n), cD hP w (u + v) = cD hP w u + cD hP w v
   | [] => Subtype.ext (datumEmbedding_add hP T.w u v)
-  | p :: w => by rw [cD_cons, cD_cons, cD_cons, cD_add hP u v w, map_add]
+  | p :: w => by rw [cD_cons, cD_cons, cD_cons, cD_add hP u v w, map_add (f := _)]
 
 theorem cD_smul (hP : IsPsiFor ε lam T Ψ) (c : ℂ) (v : T.V) :
     ∀ w : List (Fin n × Fin n), cD hP w (c • v) = c • cD hP w v

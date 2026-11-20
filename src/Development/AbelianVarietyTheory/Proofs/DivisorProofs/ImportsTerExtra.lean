@@ -38,7 +38,7 @@ theorem main : ∀ {K : Type} [inst : Field K] [NumberField K] [inst_2 : StarRin
     rw [hc, Algebra.smul_def]
   | zero => simp
   | add u w _ _ hu hw =>
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact Submodule.add_mem _ hu hw
   | smul r u _ hu =>
     obtain ⟨r', hr'⟩ := star_int r

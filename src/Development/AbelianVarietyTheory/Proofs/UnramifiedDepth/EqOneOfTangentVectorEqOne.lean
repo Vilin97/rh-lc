@@ -46,7 +46,7 @@ theorem isLocalRing_trunc : IsLocalRing (AdjoinRoot ((X : Polynomial Ω) ^ p)) :
   have hn : IsNilpotent (AdjoinRoot.mk ((X : Polynomial Ω) ^ p) (X * f.divX)) := by
     refine ⟨p, ?_⟩
     rw [map_mul, mul_pow, AdjoinRoot.mk_X, root_pow_eq_zero, zero_mul]
-  rw [← X_mul_divX_add f, map_add]
+  rw [← X_mul_divX_add f, map_add (f := _)]
   by_cases hc : f.coeff 0 = 0
   · right
     rw [hc, C_0, map_zero, add_zero]

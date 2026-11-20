@@ -148,7 +148,7 @@ private theorem exists_max_entry {B A K G : Type} [CommRing B] [CommRing A] [Alg
       | mem x hx => exact hUm x hx
       | zero => simpa using hm
       | add x y _ _ hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
       | smul b x _ hx =>
         rw [Algebra.smul_def, map_mul, norm_mul]
@@ -269,7 +269,7 @@ theorem UpperTheory.V.J.scale :
       exact hy1 _
     · intro x y hx hy ihx ihy
       show ‖ξ' (⟨x, hx⟩ + ⟨y, hy⟩)‖ ≤ 1
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ihx ihy)
     · intro x y hx hy ihx ihy
       show ‖ξ' (⟨x, hx⟩ * ⟨y, hy⟩)‖ ≤ 1

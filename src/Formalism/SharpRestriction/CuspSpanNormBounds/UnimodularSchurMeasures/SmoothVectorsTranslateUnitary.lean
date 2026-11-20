@@ -24,7 +24,7 @@ theorem smooth_vectors_add {v1 v2 : H} (h1 : v1 ∈ smoothVecs (k := k) (r := r)
   have a1 : σ g v1 = F1 g := e1 g hg.1 hgU
   have a2 : σ g v2 = F2 g := e2 g hg.2 hgU
   show σ g (v1 + v2) = F1 g + F2 g
-  rw [map_add, a1, a2]
+  rw [map_add (f := _), a1, a2]
 
 theorem smooth_vectors_smul (c : ℂ) {v : H} (h1 : v ∈ smoothVecs (k := k) (r := r) σ) :
     c • v ∈ smoothVecs (k := k) (r := r) σ := by

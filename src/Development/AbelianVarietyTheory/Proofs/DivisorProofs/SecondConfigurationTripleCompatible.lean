@@ -72,7 +72,7 @@ theorem comp_ev_mem_adm {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Spc F E d} {X
     refine ⟨T₁ + T₂, fun f => ?_⟩
     have : pureA F (f : (Fin n × Fin d → mixedEmbedding.mixedSpace F) → ℂ) (p + q) = pureA F f p + pureA F f q := by
       funext x; simp [pureA, mul_add]
-    rw [this, map_add, h₁, h₂, ContinuousLinearMap.add_apply]
+    rw [this, map_add (f := _), h₁, h₂, ContinuousLinearMap.add_apply]
   | smul c p _ hp =>
     obtain ⟨T, hT⟩ := hp
     refine ⟨c • T, fun f => ?_⟩

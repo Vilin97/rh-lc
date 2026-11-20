@@ -52,7 +52,7 @@ include hs
 theorem zzMinus_firstProj (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (T T' : F) :
     (ZZm g Zh T T').map (p1 g) = (g.q : F)⁻¹ • Zh.map (p1 g) := by
   ext b a
-  simp only [ZZm, Matrix.map_apply, Matrix.add_apply, Matrix.of_apply, map_add, Matrix.smul_apply,
+  simp only [ZZm, Matrix.map_apply, Matrix.add_apply, Matrix.of_apply, map_add (f := _), Matrix.smul_apply,
     smul_eq_mul, adeleInfiniteComponent_apply]
   rw [zz_comp hs, e_cor]
   simp only [ind, AlgEquiv.apply_symm_apply]
@@ -61,7 +61,7 @@ theorem zzMinus_firstProj (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (T T' : F)
 theorem zzMinus_secondProj (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (T T' : F) :
     (ZZm g Zh T T').map (p2 g) = -(g.q : F)⁻¹ • (Zh.map (p2 g)).transpose := by
   ext b a
-  simp only [ZZm, Matrix.map_apply, Matrix.add_apply, Matrix.of_apply, map_add, Matrix.smul_apply,
+  simp only [ZZm, Matrix.map_apply, Matrix.add_apply, Matrix.of_apply, map_add (f := _), Matrix.smul_apply,
     smul_eq_mul, adele_ext_components, Matrix.transpose_apply]
   rw [zz_comp hs, e_cor]
   simp only [ind, AlgEquiv.apply_symm_apply]

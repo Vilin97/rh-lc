@@ -65,7 +65,7 @@ theorem eq_zero_of_mem (n : ∀ i, S.N i) (r : ℕ) :
           simp
         · simp [Function.update_of_ne hji, Pi.single_eq_of_ne hji]
       have e : sumMap S n = sumMap S (Function.update n i 0) + S.ν i (n i) := by
-        rw [← sumMap_single, ← map_add, ← hn]
+        rw [← sumMap_single, ← map_add (f := _), ← hn]
       rw [eq_sub_of_add_eq' e.symm]
       exact sub_mem h hs
 
@@ -82,7 +82,7 @@ theorem exists_sumMap (k : ℕ) : ∀ r, r + k = m → ∀ x ∈ pdP γ r, ∃ n
     obtain ⟨n₀, hn⟩ := S.surj ⟨r, hlt⟩ x hx
     obtain ⟨n, hn'⟩ := ih (r + 1) (by omega) _ hn
     refine ⟨n + Pi.single ⟨r, hlt⟩ n₀, ?_⟩
-    rw [map_add, sumMap_single, hn']
+    rw [map_add (f := _), sumMap_single, hn']
     exact sub_add_cancel _ _
 
 theorem sumMap_bij : Function.Bijective (sumMap S) := by
@@ -138,7 +138,7 @@ theorem coord_tensEquiv (i : Fin m) (z : ∀ i, S.N i ⊗[O] Γ) :
       simp only [coord, LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply]
       rfl
     rw [e, LinearMap.rTensor_tmul, e', piLeft_tmul_apply]
-  | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
 
 theorem coord_map_eq_zero (i : Fin m) {r : ℕ} (hi : (i : ℕ) < r) {w : A ⊗[O] Γ}
     (hw : w ∈ (pdP γ r).map (Algebra.TensorProduct.includeLeftRingHom (R := O) (A := A) (B := Γ))) :
@@ -154,11 +154,11 @@ theorem coord_map_eq_zero (i : Fin m) {r : ℕ} (hi : (i : ℕ) < r) {w : A ⊗[
             = (a * p) ⊗ₜ[O] x := by
           simp [Algebra.TensorProduct.tmul_mul_tmul]
         rw [e, LinearMap.rTensor_tmul, coord_eq_zero S i hi (Ideal.mul_mem_left _ _ hp), TensorProduct.zero_tmul]
-      | add a b ha hb => rw [add_mul, map_add, ha, hb, add_zero]
+      | add a b ha hb => rw [add_mul, map_add (f := _), ha, hb, add_zero]
     · intro c
       simp
     · intro u v _ _ hu hv c
-      rw [mul_add, map_add, hu, hv, add_zero]
+      rw [mul_add, map_add (f := _), hu, hv, add_zero]
     · intro b u _ hu c
       rw [smul_eq_mul, ← mul_assoc]
       exact hu _
@@ -177,7 +177,7 @@ theorem single_mem_map (i : Fin m) {r : ℕ} (hi : r ≤ (i : ℕ)) (t : S.N i �
     rw [e]
     exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ (dividedPowerFiltration_le hi (S.mem i n)))
   | add a b ha hb =>
-    rw [Pi.single_add, map_add]
+    rw [Pi.single_add, map_add (f := _)]
     exact add_mem ha hb
 
 theorem tensEquiv_mem_iff (r : ℕ) (z : ∀ i, S.N i ⊗[O] Γ) :

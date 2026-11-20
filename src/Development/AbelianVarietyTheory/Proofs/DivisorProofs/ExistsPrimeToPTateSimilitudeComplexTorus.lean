@@ -94,7 +94,7 @@ theorem exists_tateIsoO_of_period : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (
     rw [smul_comm, hsm n hn]
   have hshift : ∀ n : ℕ, 0 < n → ∀ a c : D'.La, e ((n : ℂ)⁻¹ • Q (a + n • c)) = e ((n : ℂ)⁻¹ • Q a) := by
     intro n hn a c
-    rw [map_add, smul_add, hadd, map_nsmul, hsm' n hn, (hker _).2 ⟨c, rfl⟩, _root_.mul_one]
+    rw [map_add (f := _), smul_add, hadd, map_nsmul, hsm' n hn, (hker _).2 ⟨c, rfl⟩, _root_.mul_one]
   let ev : ℕ → D.La → (Over.mk (spMap j) ⟶ A) := fun n a =>
     if 0 < n ∧ n.Coprime p then π (e ((n : ℂ)⁻¹ • Q (f n a))) else 1
   have hev : ∀ n, 0 < n → n.Coprime p → ∀ a, ev n a = π (e ((n : ℂ)⁻¹ • Q (f n a))) :=
@@ -114,7 +114,7 @@ theorem exists_tateIsoO_of_period : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (
             isom := fun n hn hc a b => ?_ }, fun y => ?_⟩
   · by_cases h : 0 < n ∧ n.Coprime p
     · have hf : f n (a + b) = f n a + f n b := (f n).map_add a b
-      rw [hev n h.1 h.2, hev n h.1 h.2, hev n h.1 h.2, hf, map_add, smul_add, hadd, map_mul]
+      rw [hev n h.1 h.2, hev n h.1 h.2, hev n h.1 h.2, hf, map_add (f := _), smul_add, hadd, map_mul]
     · rw [hev' n h, hev' n h, hev' n h, _root_.mul_one]
   · by_cases h : 0 < n ∧ n.Coprime p
     · rw [hev n h.1 h.2, hev n h.1 h.2]

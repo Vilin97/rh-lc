@@ -51,7 +51,7 @@ theorem exists_affine_scalar : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocal
       2 * (k : Γ(Y.H.left, Y.q.left ⁻¹ᵁ V)) * constFn Y.H.hom _ (ℓ α) +
         2 * (k : Γ(Y.H.left, Y.q.left ⁻¹ᵁ V)) ^ 2 * constFn Y.H.hom _ π +
         2 * (k : Γ(Y.H.left, Y.q.left ⁻¹ᵁ V)) * constFn Y.H.hom _ π' := by
-    simp only [constFn, map_add, map_mul, map_pow, map_natCast, map_ofNat]
+    simp only [constFn, map_add (f := _), map_mul, map_pow, map_natCast, map_ofNat]
   simp only [hc]
   have hl := hℓ α V f hf
   unfold op

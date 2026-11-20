@@ -230,7 +230,7 @@ theorem tensor_ringHom_ext {A B : Type} [CommRing A] [Algebra O A] [Ring B] {f g
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul k a => exact h k a
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 def tmap {A A' : Type} [CommRing A] [Algebra O A] [CommRing A'] [Algebra O' A']
     (ο : O →+* O') (κ : K →+* K') (hκ : κ.comp (algebraMap O K) = (algebraMap O' K').comp ο)

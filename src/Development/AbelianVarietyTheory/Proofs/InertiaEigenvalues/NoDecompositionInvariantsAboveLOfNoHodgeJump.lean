@@ -104,7 +104,7 @@ theorem isJumpV_zero_of_invariant [CharZero Qp] (ρ : Representation LL G V) (x 
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul v c => simpa [m] using ((PD.Fil (0 + 1)).restrictScalars Qp).smul_mem (φ (f v)) c.2
-    | add a b ha hb => simpa only [map_add] using Submodule.add_mem _ ha hb
+    | add a b ha hb => simpa only [map_add (f := _)] using Submodule.add_mem _ ha hb
   have h1 := hm w
   rw [hw] at h1
   have h2 : m y = algebraMap K BdR (∑ i, φ (τ (b' i)) • b i) := by

@@ -62,7 +62,7 @@ theorem shift_decay_lin {B : Base F E} {n d n₁ d₁ r s i₀ i₁ j₀ j₁ : 
   let L : (AE F E)ˣ → SInf F (Fin n × Fin d) →L[ℂ] SInf F (Fin n × Fin d) := fun l =>
     { toFun := fun f => locOpInf (M.co.rho B.ψ (partInf F (shiftB σ H H' l))) f
       map_add' := fun f g => by
-        rw [(locOpInf_rho_eq hψ hM _ (f + g)).2, (locOpInf_rho_eq hψ hM _ f).2, (locOpInf_rho_eq hψ hM _ g).2, map_add]
+        rw [(locOpInf_rho_eq hψ hM _ (f + g)).2, (locOpInf_rho_eq hψ hM _ f).2, (locOpInf_rho_eq hψ hM _ g).2, map_add (f := _)]
       map_smul' := fun c f => by
         rw [(locOpInf_rho_eq hψ hM _ (c • f)).2, (locOpInf_rho_eq hψ hM _ f).2, map_smul, RingHom.id_apply]
       cont := GlobalTheory.ArchWeilCont.continuous_locOpInf_rho M.co hψ _ }

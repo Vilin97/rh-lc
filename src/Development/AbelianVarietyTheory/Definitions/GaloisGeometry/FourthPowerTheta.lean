@@ -212,7 +212,7 @@ theorem tens_std (p : ℕ) [Fact p.Prime] (L : PeriodPair) (ι : ℂ ≃+* ℂ_[
 
 theorem conj_omegaK (d : ℕ) : conj (omegaK d) = (1 - Complex.I * ((Real.sqrt d : ℝ) : ℂ)) / 2 := by
   unfold omegaK
-  rw [map_div₀, map_add, map_mul, map_one, Complex.conj_I, Complex.conj_ofReal, Complex.conj_ofNat]
+  rw [map_div₀, map_add (f := _), map_mul, map_one, Complex.conj_I, Complex.conj_ofReal, Complex.conj_ofNat]
   ring
 
 theorem half_notMem {a : ℕ} {b c : ℤ} {d : ℕ} (ha : 0 < a) (hd : 0 < d) (lam : ℂ) (hlam : lam ≠ 0)

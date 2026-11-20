@@ -40,7 +40,7 @@ theorem IsTgLift.mul_left (hy : IsTgLift A N x y) (n : N) (g : G) :
 theorem IsTgLift.tgDiff_mul_right (hy : IsTgLift A N x y) (g h : G) (n : N) :
     tgDiff A y g (h * n) = tgDiff A y g h := by
   simp only [tgDiff]
-  rw [hy.mul_right, ← mul_assoc, hy.mul_right, map_add, ← Module.End.mul_apply, ← map_mul]
+  rw [hy.mul_right, ← mul_assoc, hy.mul_right, map_add (f := _), ← Module.End.mul_apply, ← map_mul]
   abel
 
 theorem IsTgLift.tgDiff_mul_left (hx : IsCocycleOne A N x) (hy : IsTgLift A N x y) (g : G) (n : N)
@@ -51,14 +51,14 @@ theorem IsTgLift.tgDiff_mul_left (hx : IsCocycleOne A N x) (hy : IsTgLift A N x 
   have hc := hy.conj h n
   have : A.ρ (g * n) (y h) = A.ρ g (A.ρ n (y h)) := by rw [map_mul]; rfl
   rw [this, show A.ρ n (y h) = y h + (A.ρ h (x (GroundTheory.GroupCoh.conjHom N h n)) - x n) by
-    rw [hc]; abel, map_add, map_sub, map_mul (A.ρ) g h, Module.End.mul_apply]
+    rw [hc]; abel, map_add (f := _), map_sub, map_mul (A.ρ) g h, Module.End.mul_apply]
   abel
 
 theorem IsTgLift.tgDiff_mem_invariants (hx : IsCocycleOne A N x) (hy : IsTgLift A N x y)
     (g h : G) (n : N) : A.ρ n (tgDiff A y g h) = tgDiff A y g h := by
   have e1 : tgDiff A y (n * g) h = A.ρ n (tgDiff A y g h) := by
     simp only [tgDiff]
-    rw [mul_assoc, hy.mul_left, hy.mul_left, map_mul, Module.End.mul_apply, map_add, map_sub]
+    rw [mul_assoc, hy.mul_left, hy.mul_left, map_mul, Module.End.mul_apply, map_add (f := _), map_sub]
     abel
   have e2 : (n : G) * g = g * (GroundTheory.GroupCoh.conjHom N g n : G) := by
     simp only [GroundTheory.GroupCoh.coe_conjHom_apply]; group

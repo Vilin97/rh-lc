@@ -190,7 +190,7 @@ theorem pair_tens (hp : AllPlus M) (hsm : ∀ τ, M.sm τ = ⊤) (hinj : Functio
     have := hpr.2 τ _ (hp.unfr_mem τ u) (c.ρ (atTau θ V τ (unfr M τ u))⁻¹ w) v y rfl
     rw [GlobalTheory.DefiniteEnd.rho_inv_cancel] at this
     rw [map_smul, map_smul, map_smul, e, this]
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem pair_bijective (hθ : IsInfFam θ) (hp : AllPlus M) (hc : c.Is) (hpr : IsDualPair θ M c pr) :
     Function.Bijective pr := by
@@ -257,7 +257,7 @@ theorem exists_form (hθ : IsInfFam θ) (hp : AllPlus M) (hc : c.Is) (hpr : IsDu
       have := (mult_value_left_cont_level θ M _ _ _ ((mem_multT θ M _ _ _).1 hT) v).2.2 k hk g
       rw [map_smul, Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm]
       exact congrArg (r * ·) this
-    | add x y hx hy => rw [map_add, Pi.add_apply, Pi.add_apply, hx, hy, mul_add]
+    | add x y hx hy => rw [map_add (f := _), Pi.add_apply, Pi.add_apply, hx, hy, mul_add]
   let U : Submonoid (GA D V) :=
     { carrier := {a | ∀ h, Ψ (h * a) = c.ρ a⁻¹ (Ψ h)}
       one_mem' := fun h => by rw [mul_one, inv_one, map_one]; rfl

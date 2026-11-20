@@ -33,7 +33,7 @@ theorem line_move (hθ : IsInfFam θ) {k l m n : ℕ} (P : Mx D k m) (Q : Mx D n
   let L : ℝ →+ Mx D k l :=
     { toFun := fun t => P ⬝ lineAt θ τ z t ⬝ Q
       map_zero' := by rw [AddMonoidHom.map_zero, Matrix.mul_zero, Matrix.zero_mul]
-      map_add' := fun s t => by rw [AddMonoidHom.map_add, Matrix.mul_add, Matrix.add_mul] }
+      map_add' := fun s t => by rw [AddMonoidHom.map_add (f := _), Matrix.mul_add, Matrix.add_mul] }
   have hL' : IsLineAt θ τ (compAt θ τ P ⬝ z ⬝ compAt θ τ Q) L := by
     refine ⟨(continuous_const.matrix_mul hL.1).matrix_mul continuous_const, fun t => ?_, fun t τ' => ?_⟩
     · show (P ⬝ lineAt θ τ z t ⬝ Q : Mx D k l).map (finPart D) = 0

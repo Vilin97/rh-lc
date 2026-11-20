@@ -184,9 +184,9 @@ theorem span_jset (P : Pol p q r s) (hP : P ∈ Submodule.span ℂ (Jset p q r s
   | add x y _ _ hx hy =>
     obtain ⟨a1, a2, a3, a4⟩ := (key x).1 hx
     obtain ⟨b1, b2, b3, b4⟩ := (key y).1 hy
-    exact (key (x + y)).2 ⟨fun i j => by rw [map_add, a1, b1, add_zero],
-      fun i j => by rw [map_add, a2, b2, add_zero], fun k l => by rw [map_add, a3, b3, add_zero],
-      fun k l => by rw [map_add, a4, b4, add_zero]⟩
+    exact (key (x + y)).2 ⟨fun i j => by rw [map_add (f := _), a1, b1, add_zero],
+      fun i j => by rw [map_add (f := _), a2, b2, add_zero], fun k l => by rw [map_add (f := _), a3, b3, add_zero],
+      fun k l => by rw [map_add (f := _), a4, b4, add_zero]⟩
   | smul c x _ hx =>
     obtain ⟨a1, a2, a3, a4⟩ := (key x).1 hx
     exact (key (c • x)).2 ⟨fun i j => by rw [map_smul, a1, smul_zero],

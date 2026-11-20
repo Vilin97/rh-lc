@@ -48,7 +48,7 @@ theorem logDer_extend_chartRing : ∀ (E : Type) [Field E] [NumberField E] [IsCM
       rw [this]
       exact Ideal.mem_map_of_mem _ (D.2.2 r hr)
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact Ideal.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Ideal.add_mem _ hy hz
     | smul c y hy' hy =>
       rw [smul_eq_mul, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
       exact Ideal.add_mem _ (Ideal.mul_mem_left _ _ hy) (Ideal.mul_mem_right _ _ hy')

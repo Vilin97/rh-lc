@@ -111,7 +111,7 @@ variable {C : Type} [Field C] (V : VF C) {O : Type} [CommRing O] {A : Type}
 def depthIdeal (em : A → O →+* C) (hi : ∀ a x, V.Ge 0 (em a x)) (w : ℝ) : Ideal O where
   carrier := {x | ∀ a, V.Ge w (em a x)}
   zero_mem' := fun a => by simpa using VF.Ge.zero w
-  add_mem' := fun hx hy a => by rw [map_add]; exact (hx a).add (hy a)
+  add_mem' := fun hx hy a => by rw [map_add (f := _)]; exact (hx a).add (hy a)
   smul_mem' := fun c x hx a => by rw [smul_eq_mul, map_mul]; exact (hi a c).mul_int (hx a)
 
 def resIdeal (em : O →+* C) (hi : ∀ x, V.Ge 0 (em x)) : Ideal O where
@@ -222,7 +222,7 @@ theorem exists_root {E : Type} [Field E] [NumberField E] {C : Type} [Field C] [C
     have := ((hζ a 0).mono (by simp)).add (hi a (z (e * 0)))
     simpa using this
   have h3 : V.Ge n (em a (z (e * n) * s (z (e * n)) + 1)) := he n (hz1 _) a
-  rw [map_add, map_mul, map_one, ← hconj] at h3
+  rw [map_add (f := _), map_mul, map_one, ← hconj] at h3
   have h4 := (h3.add (hint.mul_int (hζ (a + hd) n))).add ((hi (a + hd) (z (e * n))).mul_int (hζ a n))
   convert h4 using 1
   ring
@@ -402,7 +402,7 @@ def ker (V : VF C) {R : Type} [CommRing R] (f : R →+* C) (hf : ∀ x, V.Ge 0 (
   carrier := {x | V.MM (f x)}
   add_mem' := fun {a b} ha hb => by
     show V.MM (f (a + b))
-    rw [map_add]; exact mm_add ha hb
+    rw [map_add (f := _)]; exact mm_add ha hb
   zero_mem' := by
     show V.MM (f 0)
     simp [VF.MM]

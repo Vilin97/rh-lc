@@ -56,7 +56,7 @@ theorem psiInf_of_trace (g : ℕ) (a b : K) (k : ℤ) (hk : Algebra.trace ℚ K 
     psiInf g (-(star a + b)) = 1 := by
   unfold psiInf
   have htr : Algebra.trace ℚ K (-(star a + b)) = -((g : ℚ) * k) := by
-    rw [map_neg, map_add, trace_star, ← map_add, hk]
+    rw [map_neg, map_add (f := _), trace_star, ← map_add (f := _), hk]
   rw [htr]
   by_cases hg : (g : ℂ) = 0
   · simp [hg]

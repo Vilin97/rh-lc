@@ -40,7 +40,7 @@ theorem detLine_coord : ∀ (C : Type) [Field C] (O : Type) [CommRing O] [Algebr
           AlternatingMap.map_eq_zero_of_not_injective _ _ (fun h => hinj (Function.Injective.of_comp h)),
           zero_smul]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, add_smul, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), add_smul, hx, hy]
     | smul a x _ hx => rw [map_smul, smul_eq_mul, mul_smul, hx]
   let δ : detLine C ρ σ N ≃ₗ[C] C :=
     { f with
@@ -64,7 +64,7 @@ theorem detLine_coord : ∀ (C : Type) [Field C] (O : Type) [CommRing O] [Algebr
       simp [RingHom.mapMatrix_apply, hg]
     | zero => exact ⟨0, by simp⟩
     | add x y _ _ hx hy =>
-      rw [map_add]; exact Subring.add_mem _ hx hy
+      rw [map_add (f := _)]; exact Subring.add_mem _ hx hy
     | smul a x _ hx =>
       rw [← algebraMap_smul C a x, map_smul, smul_eq_mul]
       exact Subring.mul_mem _ ⟨a, rfl⟩ hx

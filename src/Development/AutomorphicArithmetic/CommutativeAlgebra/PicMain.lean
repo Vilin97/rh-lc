@@ -19,7 +19,7 @@ theorem Rel.congr {A : Type} [CommRing A] {z : P.S1.obj (CommRingCat.of A)} {M M
     | zero => simp
     | tmul c m => simp [LinearMap.liftBaseChange_tmul]
     | add x y hx hy =>
-      simp only [Function.comp_apply, map_add] at hx hy ⊢
+      simp only [Function.comp_apply, map_add (f := _)] at hx hy ⊢
       rw [hx, hy]
   refine Triv.mk ht.dw ht.hg (fun m => ht.ht (e.symm m)) ?_
   rw [hfun]

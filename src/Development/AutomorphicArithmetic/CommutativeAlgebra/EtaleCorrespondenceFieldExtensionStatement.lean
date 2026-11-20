@@ -38,7 +38,7 @@ private theorem fin_of_const {R E Q : Type} [CommRing R] [CommRing E] [Algebra R
       obtain ⟨i, rfl⟩ := hy
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add a b _ _ iha ihb => rw [map_add]; exact Submodule.add_mem _ iha ihb
+    | add a b _ _ iha ihb => rw [map_add (f := _)]; exact Submodule.add_mem _ iha ihb
     | smul r y _ ih =>
       obtain ⟨c, hc'⟩ := hc r
       rw [hπ, hc', ← Algebra.smul_def]
@@ -69,7 +69,7 @@ private theorem rA_const {F Q : Type} [Field F] [Algebra ℂ F] [CommRing Q] [Al
   | add a b ha hb iha ihb =>
     obtain ⟨c₁, e₁⟩ := iha
     obtain ⟨c₂, e₂⟩ := ihb
-    exact ⟨c₁ + c₂, by rw [map_add, ← e₁, ← e₂]; exact map_add ψ ⟨a, ha⟩ ⟨b, hb⟩⟩
+    exact ⟨c₁ + c₂, by rw [map_add (f := _), ← e₁, ← e₂]; exact map_add ψ ⟨a, ha⟩ ⟨b, hb⟩⟩
   | mul a b ha hb iha ihb =>
     obtain ⟨c₁, e₁⟩ := iha
     obtain ⟨c₂, e₂⟩ := ihb

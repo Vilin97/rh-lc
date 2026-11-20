@@ -62,7 +62,7 @@ theorem aeval_mem (N : Submodule ℤ_[ℓ] D) (γ : D →ₗ[ℤ_[ℓ]] D) (h : 
     exact N.smul_mem a hn
   | add p q hp hq =>
     intro n hn
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact N.add_mem (hp n hn) (hq n hn)
   | monomial k a ih =>
     intro n hn

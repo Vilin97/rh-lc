@@ -152,7 +152,7 @@ theorem leviV_re_eq {f : V n → ℝ} {x : V n} (hf : ContDiffAt ℝ 2 f x) (ξ 
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun k _ => ?_
-  simp only [map_add, map_sub, map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.sub_apply,
+  simp only [map_add (f := _), map_sub, map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.sub_apply,
     ContinuousLinearMap.smul_apply, smul_eq_mul]
   ring
 

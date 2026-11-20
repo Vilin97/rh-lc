@@ -84,7 +84,7 @@ theorem hsymm_fin_succ (k c : ℕ) :
     hsymm (Fin (k + 1)) ℤ (c + 1) =
       X (Fin.last k) * hsymm (Fin (k + 1)) ℤ c + rename Fin.castSucc (hsymm (Fin k) ℤ (c + 1)) := by
   have h := congrArg (rename (finSuccEquivLast (n := k)).symm) (hsymm_option_succ (Fin k) c)
-  rw [rename_hsymm, map_add, map_mul, rename_X, rename_hsymm, rename_rename] at h
+  rw [rename_hsymm, map_add (f := _), map_mul, rename_X, rename_hsymm, rename_rename] at h
   rw [h]
   have e1 : (finSuccEquivLast (n := k)).symm none = Fin.last k := finSuccEquivLast_symm_none
   have e2 : (finSuccEquivLast (n := k)).symm ∘ some = Fin.castSucc :=

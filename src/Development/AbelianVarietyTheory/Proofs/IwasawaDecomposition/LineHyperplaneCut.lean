@@ -20,7 +20,7 @@ theorem action_mem (ρ : O →+* Module.End K L) (P : Submodule K L)
   | tmul r a => intro x hx; rw [tensorAction_tmul]; exact P.smul_mem _ (hP a x hx)
   | add s t hs ht =>
     intro x hx
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact P.add_mem (hs x hx) (ht x hx)
 
 theorem action_eigen_right (ρ : O →+* Module.End K L) (χ : O →+* K) (ε : K ⊗[ℤ] O)
@@ -45,7 +45,7 @@ theorem twist_twist (c : O →+* O) (hcc : ∀ a, c (c a) = a) (t : K ⊗[ℤ] O
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul r a => simp [twist, hcc]
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
 
 theorem form_action (ρ : O →+* Module.End K L) (c : O →+* O) (B : LinearMap.BilinForm K L)
     (hadj : ∀ a x y, B x (ρ a y) = B (ρ (c a) x) y) (t : K ⊗[ℤ] O) (x y : L) :
@@ -53,7 +53,7 @@ theorem form_action (ρ : O →+* Module.End K L) (c : O →+* O) (B : LinearMap
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul r a => simp [twist, hadj]
-  | add s t hs ht => simp only [map_add, LinearMap.add_apply, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, hs, ht]
 
 theorem finrank_ker_add_one {V : Type} [AddCommGroup V] [Module K V] [FiniteDimensional K V]
     (f : V →ₗ[K] K) (hf : f ≠ 0) :
@@ -99,7 +99,7 @@ theorem line_hyperplane_cut (K : Type) [Field K] (O : Type) [CommRing O] (L : Ty
       rw [this]
       exact Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self _)
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
   have hline : M ⊓ E = K ∙ T n₀ := by
     apply le_antisymm
@@ -109,13 +109,13 @@ theorem line_hyperplane_cut (K : Type) [Field K] (O : Type) [CommRing O] (L : Ty
       have h1 : T m' ∈ M' := action_mem ρ M' hM' ε m' hm'
       have h2 : T m ∈ M := action_mem ρ M hM ε m hm
       have h3 : T m' ∈ M := by
-        have : T m' = T (m + m') - T m := by rw [map_add]; abel
+        have : T m' = T (m + m') - T m := by rw [map_add (f := _)]; abel
         rw [this]
         exact M.sub_mem hxM h2
       have h4 : T m' = 0 := by
         have : T m' ∈ M ⊓ M' := ⟨h3, h1⟩
         rwa [hMM.inf_eq_bot, Submodule.mem_bot] at this
-      rw [map_add, h4, add_zero]
+      rw [map_add (f := _), h4, add_zero]
       exact hTM m hm
     · rw [Submodule.span_singleton_le_iff_mem]
       exact ⟨action_mem ρ M hM ε n₀ hn₀, n₀, rfl⟩
@@ -156,7 +156,7 @@ theorem line_hyperplane_cut (K : Type) [Field K] (O : Type) [CommRing O] (L : Ty
         rw [← h1, action_eigen_left ρ χ ε hε, map_smul, hy0, smul_zero]
       | zero => simp [LinearMap.BilinForm.IsOrtho]
       | add u v _ _ hu hv =>
-        simp only [LinearMap.BilinForm.IsOrtho, map_add, LinearMap.add_apply] at *
+        simp only [LinearMap.BilinForm.IsOrtho, map_add (f := _), LinearMap.add_apply] at *
         rw [hu, hv, add_zero]
       | smul r u _ hu =>
         simp only [LinearMap.BilinForm.IsOrtho, map_smul, LinearMap.smul_apply] at *

@@ -84,7 +84,7 @@ theorem exists_cusp_reading_ne_zero (w : WeightFamilies.Wt D j) (σ : T.Q.c.F �
       add_mem' := by
         intro a b ha hb
         show rdU (T.U j σ) (a.1 + b.1 : T.R j) k (x k) = 0
-        rw [map_add]
+        rw [map_add (f := _)]
         show rdU (T.U j σ) (a.1 : T.R j) k (x k) + rdU (T.U j σ) (b.1 : T.R j) k (x k) = 0
         rw [ha, hb, add_zero]
       smul_mem' := by

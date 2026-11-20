@@ -43,7 +43,7 @@ theorem exists_rep (hinj : ∀ x ∈ W, cls h x = 0 → x = 0) (S : Submodule �
   let g : LinearMap.range T →ₗ[ℂ] ℂ :=
     { toFun := fun m => conj (f (e.symm m).1)
       map_add' := fun m m' => by
-        rw [map_add, Submodule.coe_add, hadd _ (e.symm m).2 _ (e.symm m').2, map_add]
+        rw [map_add (f := _), Submodule.coe_add, hadd _ (e.symm m).2 _ (e.symm m').2, map_add (f := _)]
       map_smul' := fun c m => by
         rw [map_smul, Submodule.coe_smul, hsmul c _ (e.symm m).2, map_mul, Complex.conj_conj]
         rfl }
@@ -206,13 +206,13 @@ theorem exists_repV (h1 : PairLin) (h2 : PairRt) (hinj : ∀ x ∈ W, cls h x = 
   have hS'W : S' ≤ W := hS'V.trans hVW
   have hSL : ∀ l ∈ L, ∀ s ∈ S', finRep E N l s ∈ S' := fun l hl s hs => by
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hs
-    rw [map_add]
+    rw [map_add (f := _)]
     refine add_mem (Submodule.mem_sup_left (finRep_mem_orbitSpan hl hy)) (Submodule.mem_sup_right ?_)
     rw [hz.2.1 l hl]
     exact hz
   have hSK : ∀ k, ∀ s ∈ S', cptRep E N k s ∈ S' := fun k s hs => by
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hs
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem (Submodule.mem_sup_left (cptRep_mem_orbitSpan k hy))
       (Submodule.mem_sup_right ⟨hV (.cpt k) z hz.1, cptRep_mem_typePart hz.2 k⟩)
   obtain ⟨p, hpS, hp⟩ := exists_rep h hinj S' hS'W (fun s => pr χ.1 s.1) (hadd S' hS'W) (hsm S' hS'W)

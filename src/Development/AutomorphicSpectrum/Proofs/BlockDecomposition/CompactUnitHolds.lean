@@ -68,7 +68,7 @@ theorem isUnitarisable_of_embedding (hc : ∃ C : Set G, IsCompact C ∧ ∀ g, 
         apply Lp.ext
         filter_upwards [(hm (v + w)).coeFn_toL2, (hm v).coeFn_toL2, (hm w).coeFn_toL2,
           Lp.coeFn_add (hm v).toL2 (hm w).toL2] with q h1 h2 h3 h4
-        rw [h1, h4, Pi.add_apply, h2, h3, map_add]
+        rw [h1, h4, Pi.add_apply, h2, h3, map_add (f := _)]
         rfl
       map_smul' := fun c v => by
         apply Lp.ext

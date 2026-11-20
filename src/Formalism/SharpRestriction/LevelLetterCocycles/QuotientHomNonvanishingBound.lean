@@ -158,7 +158,7 @@ def Z1urD {V : Type} [AddCommGroup V] [Module LL V] [Module O V] [IsScalarTower 
   add_mem' := by
     rintro a b ⟨x, hx⟩ ⟨y, hy⟩
     refine ⟨x + y, fun g hg => ?_⟩
-    simp only [Pi.add_apply, hx g hg, hy g hg, map_add]
+    simp only [Pi.add_apply, hx g hg, hy g hg, map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨x, hx⟩

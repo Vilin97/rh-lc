@@ -176,7 +176,7 @@ theorem exists_half_abstract' {F T T' : Type} [Field F] [NumberField F] [CommRin
   rintro e ⟨he1, he2, v, η, ⟨α, rfl, hα1, hα0⟩, he3⟩
   obtain ⟨a, b, hab⟩ := hdec e
   have hce : c e = j a - j b * δ := by
-    rw [hab, map_add, map_mul, hcj, hcj, hcδ]; ring
+    rw [hab, map_add (f := _), map_mul, hcj, hcj, hcδ]; ring
   have he4 : c e * c e = c e := by rw [← map_mul, he1]
   obtain ⟨B, hB⟩ : ∃ B : AF F, B = 2 * algebraMap F (AF F) (d : F) * b := ⟨_, rfl⟩
   have hjB : j B = δ * (e - c e) := by

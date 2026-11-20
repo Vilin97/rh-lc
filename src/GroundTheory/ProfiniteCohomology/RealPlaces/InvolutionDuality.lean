@@ -22,7 +22,7 @@ theorem mem_traceSub {σ : M →+ M} {x : M} : x ∈ traceSub σ ↔ ∃ y, y + 
 theorem traceSub_le_fixedSub {σ : M →+ M} (hσ : ∀ x, σ (σ x) = x) : traceSub σ ≤ fixedSub σ := by
   intro x hx
   obtain ⟨y, rfl⟩ := mem_traceSub.1 hx
-  rw [mem_fixedSub, map_add, hσ, add_comm]
+  rw [mem_fixedSub, map_add (f := _), hσ, add_comm]
 
 abbrev tateQuot (σ : M →+ M) : Type _ :=
   fixedSub σ ⧸ (traceSub σ).addSubgroupOf (fixedSub σ)
@@ -43,10 +43,10 @@ theorem mem_fixedSub_dualInv_iff {σ : M →+ M} (f : M →+ QZ) :
   · intro h y
     have e := DFunLike.congr_fun h y
     rw [dualInv_apply] at e
-    rw [map_add, ← e, neg_add_cancel]
+    rw [map_add (f := _), ← e, neg_add_cancel]
   · intro h
     ext y
-    rw [dualInv_apply, neg_eq_iff_add_eq_zero, add_comm, ← map_add]
+    rw [dualInv_apply, neg_eq_iff_add_eq_zero, add_comm, ← map_add (f := _)]
     exact h y
 
 def fixedPair (σ : M →+ M) : fixedSub σ →+ fixedSub (dualInv σ) →+ QZ where
@@ -188,13 +188,13 @@ def tateQuotCongr (e : M ≃+ N) {σ : M →+ M} {τ : N →+ N} (he : ∀ x, e 
       obtain ⟨z, hz⟩ := mem_traceSub.1 hx
       refine mem_traceSub.2 ⟨e z, ?_⟩
       show e z + τ (e z) = e (x : M)
-      rw [← he, ← map_add, hz]
+      rw [← he, ← map_add (f := _), hz]
     · intro hy
       refine ⟨(fixedSubCongr e he).symm y, ?_, AddEquiv.apply_symm_apply _ _⟩
       obtain ⟨z, hz⟩ := mem_traceSub.1 hy
       refine mem_traceSub.2 ⟨e.symm z, ?_⟩
       apply e.injective
-      rw [map_add, he, e.apply_symm_apply, hz]
+      rw [map_add (f := _), he, e.apply_symm_apply, hz]
       change (y : N) = e (e.symm (y : N))
       rw [e.apply_symm_apply])
 

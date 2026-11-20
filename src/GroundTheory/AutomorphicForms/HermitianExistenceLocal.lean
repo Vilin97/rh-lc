@@ -130,7 +130,7 @@ def HermitianForm.ofGram (H : Matrix ι ι A) (hH : IsHermitianFor (conjHom F A)
   toSesq := LinearMap.mk₂'ₛₗ (conjHom F A) (RingHom.id A)
     (fun x y => ∑ i, ∑ j, conj F A (x i) * H i j * y j)
     (fun x x' y => by
-      simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib])
+      simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib])
     (fun c x y => by
       simp only [Pi.smul_apply, smul_eq_mul, map_mul, conjHom_apply, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring)

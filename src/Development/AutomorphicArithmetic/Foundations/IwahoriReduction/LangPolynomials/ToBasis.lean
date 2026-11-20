@@ -89,7 +89,7 @@ private theorem logd {Ω : Type} [Field Ω] {ι : Type} (S : Finset ι) (P : ι 
 private theorem pv_mem {Ω : Type} [Field Ω] [Algebra ℚ Ω] {A : ValuationSubring Ω} (P : Polynomial (R0 A)) {z : Ω} (hz : z ∈ A) :
     (P.map (R0 A).subtype).eval z ∈ A := by
   induction P using Polynomial.induction_on' with
-  | add p q hp hq => rw [Polynomial.map_add, Polynomial.eval_add]; exact A.add_mem _ _ hp hq
+  | add p q hp hq => rw [Polynomial.map_add (f := _), Polynomial.eval_add]; exact A.add_mem _ _ hp hq
   | monomial n a =>
     rw [Polynomial.map_monomial, Polynomial.eval_monomial]
     exact A.mul_mem _ _ a.2.1 (A.toSubring.pow_mem hz n)
@@ -98,7 +98,7 @@ private theorem pv_conj {Ω : Type} [Field Ω] [Algebra ℚ Ω] {A : ValuationSu
     {s : G ℚ Ω} (hs : s ∈ Ine (F := ℚ) A) :
     (P.map (R0 A).subtype).eval (s z) = s ((P.map (R0 A).subtype).eval z) := by
   induction P using Polynomial.induction_on' with
-  | add p q hp hq => rw [Polynomial.map_add, Polynomial.eval_add, Polynomial.eval_add, map_add, hp, hq]
+  | add p q hp hq => rw [Polynomial.map_add (f := _), Polynomial.eval_add, Polynomial.eval_add, map_add (f := _), hp, hq]
   | monomial n a =>
     rw [Polynomial.map_monomial, Polynomial.eval_monomial, Polynomial.eval_monomial, map_mul, map_pow]
     congr 1

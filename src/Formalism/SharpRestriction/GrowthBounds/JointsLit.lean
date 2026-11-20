@@ -205,7 +205,7 @@ theorem span_image_spanA (c : LatCmp D) (u : D.what₂.Word) (w : D.what₂.plac
   induction hx using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     have e : a • x = (algebraMap (𝓞 D.what₂.LL) D.what₂.LL a) • x := (algebraMap_smul D.what₂.LL a x).symm
     rw [e, c.cmp_smul]

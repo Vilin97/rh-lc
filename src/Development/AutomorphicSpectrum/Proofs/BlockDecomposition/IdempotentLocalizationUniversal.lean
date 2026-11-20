@@ -163,7 +163,7 @@ theorem val_quot (A : PAlg l) {e : A.A} (he : IsIdempotentElem e) (h : A.VAL) : 
   have hpi : (obj A he).pi = Ideal.Quotient.mk (Ideal.span {1 - e}) A.pi := rfl
   rw [hpi] at hab
   have hab' : Ideal.Quotient.mk (Ideal.span {1 - e}) (a * f + b * g) = Ideal.Quotient.mk (Ideal.span {1 - e}) (A.pi ^ N) := by
-    rw [map_add, map_mul, map_mul, map_pow]; exact hab
+    rw [map_add (f := _), map_mul, map_mul, map_pow]; exact hab
   rw [mk_eq_iff he] at hab'
   have hmem : A.pi ^ N ∈ Ideal.span {e * f + (1 - e), e * g} := by
     refine Ideal.mem_span_pair.2 ⟨e * a + (1 - e) * A.pi ^ N, b, ?_⟩
@@ -176,11 +176,11 @@ theorem val_quot (A : PAlg l) {e : A.A} (he : IsIdempotentElem e) (h : A.VAL) : 
   · obtain ⟨c, hc⟩ := Ideal.mem_span_singleton.1 h1
     refine Ideal.mem_span_singleton.2 ⟨Ideal.Quotient.mk _ c, ?_⟩
     have := congrArg (Ideal.Quotient.mk (Ideal.span {1 - e})) hc
-    simpa only [map_mul, map_add, map_sub, map_one, mk_e, sub_self, add_zero, one_mul] using this
+    simpa only [map_mul, map_add (f := _), map_sub, map_one, mk_e, sub_self, add_zero, one_mul] using this
   · obtain ⟨c, hc⟩ := Ideal.mem_span_singleton.1 h2
     refine Ideal.mem_span_singleton.2 ⟨Ideal.Quotient.mk _ c, ?_⟩
     have := congrArg (Ideal.Quotient.mk (Ideal.span {1 - e})) hc
-    simpa only [map_mul, map_add, map_sub, map_one, mk_e, sub_self, add_zero, one_mul] using this
+    simpa only [map_mul, map_add (f := _), map_sub, map_one, mk_e, sub_self, add_zero, one_mul] using this
 
 variable {A B : PAlg l}
 

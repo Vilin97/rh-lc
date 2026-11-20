@@ -51,8 +51,8 @@ theorem extH_mapH {g : HA (AF F) σ J} (hg : At (evFin F v) ((HA.mat (AF F) σ J
   have key := GlobalTheory.UnitaryInjAtPlace.eq_tensAt_of_at v _ hx
   change (1 - tensAt E v 1) * (1 : Matrix (Fin n) (Fin n) (AE F E)) r s + tensAt E v (compFin F E v x) = x
   have hc : compFin F E v x = compFin F E v (x - (1 : Matrix (Fin n) (Fin n) (AE F E)) r s) +
-      compFin F E v ((1 : Matrix (Fin n) (Fin n) (AE F E)) r s) := by rw [← map_add, sub_add_cancel]
-  rw [hc, map_add, ← key]
+      compFin F E v ((1 : Matrix (Fin n) (Fin n) (AE F E)) r s) := by rw [← map_add (f := _), sub_add_cancel]
+  rw [hc, map_add (f := _), ← key]
   by_cases h : r = s
   · subst h
     simp only [Matrix.one_apply_eq, map_one]

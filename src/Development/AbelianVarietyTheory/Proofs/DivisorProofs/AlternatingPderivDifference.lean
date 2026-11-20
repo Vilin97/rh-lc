@@ -108,7 +108,7 @@ theorem exists_antideriv (n : ℕ) (ψ : MvPolynomial (Fin (n + 1)) ℝ →ₗ[�
     refine alt_monomial_eq_zero' ψ hψ β _ hji' ?_
     rw [h2 j hji hji', expo_apply, hje]
     omega
-  rw [hJ, map_add, hR0, add_zero, map_smul, prod_neg_X_pow_eq_monomial, expo_apply, smul_eq_mul]
+  rw [hJ, map_add (f := _), hR0, add_zero, map_smul, prod_neg_X_pow_eq_monomial, expo_apply, smul_eq_mul]
   have := (τ.symm i).isLt
   congr 3
   push_cast [Nat.cast_sub (by omega : (τ.symm i : ℕ) ≤ n)]

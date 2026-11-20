@@ -140,12 +140,12 @@ private theorem zig_lin (s t : ℂ) (q : ℕ) : ∀ (k : ℕ) (u u' : List Γ �
   | zero =>
     intro k u u' c c' h h' x hx
     simp only [Pi.add_apply, Pi.smul_apply, h x hx, h' x hx]
-    rw [← map_smul, ← map_smul, ← map_add]
+    rw [← map_smul, ← map_smul, ← map_add (f := _)]
   | succ q ih =>
     rintro k u u' c c' ⟨b, h1, h2, h3⟩ ⟨b', h1', h2', h3'⟩
     refine ⟨s • b + t • b', fun γ x hx => ?_, fun x hx => ?_, ?_⟩
-    · simp only [Pi.add_apply, Pi.smul_apply, map_add, map_smul, h1 γ x hx, h1' γ x hx]
-    · simp only [Pi.add_apply, Pi.smul_apply, map_add, map_smul, h2 x hx, h2' x hx]
+    · simp only [Pi.add_apply, Pi.smul_apply, map_add (f := _), map_smul, h1 γ x hx, h1' γ x hx]
+    · simp only [Pi.add_apply, Pi.smul_apply, map_add (f := _), map_smul, h2 x hx, h2' x hx]
     · rw [hd_lin]
       exact ih _ _ _ _ _ h3 h3'
 

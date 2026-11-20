@@ -141,7 +141,7 @@ theorem exists_fracData_of_mem_chartRingZ (c : ∀ k, ι k) (hc : ∀ k, y ⟨k,
     · refine homog_add (homog_mul hF1 (homog_cmon c d2)) ?_
       rw [add_comm d1 d2]
       exact homog_mul hF2 (homog_cmon c d1)
-    · rw [map_add, map_mul, map_mul, hv1, hv2, aeval_cmon, aeval_cmon, prod_pow_add]
+    · rw [map_add (f := _), map_mul, map_mul, hv1, hv2, aeval_cmon, aeval_cmon, prod_pow_add]
       ring
   | mul x z _ _ hx hz =>
     obtain ⟨e1, F1, d1, hF1, hd1, hv1⟩ := hx
@@ -269,14 +269,14 @@ theorem IsRep.add {T : Submonoid (MRingOver S ι)} {x x' : LocalizedModule T (MR
   · have := hd1 k
     simp only [Pi.add_apply, Nat.cast_add]
     omega
-  · rw [map_add, map_mul, map_mul, aeval_cmon, aeval_cmon, hv1, hv2, prod_pow_add]
+  · rw [map_add (f := _), map_mul, map_mul, aeval_cmon, aeval_cmon, hv1, hv2, prod_pow_add]
     ring
   · rw [LocalizedModule.mk_add_mk]
     have hs : (⟨_, h1⟩ * ⟨_, h2⟩ : T) = ⟨_, hT⟩ :=
       Subtype.ext (by simp only [Submonoid.coe_mul, cmon_add, map_mul])
     rw [hs]
     congr 1
-    simp only [Submonoid.smul_def, smul_mk, map_add, map_mul]
+    simp only [Submonoid.smul_def, smul_mk, map_add (f := _), map_mul]
 
 theorem IsRep.mul {T : Submonoid (MRingOver S ι)} {x x' : LocalizedModule T (MRingOver S ι ⧸ idealOver y S)}
     {c : ∀ k, ι k} {s s' : Ω} {a b : K → ℤ} (hx : IsRep y S T x c s a) (hx' : IsRep y S T x' c s' b) :

@@ -141,7 +141,7 @@ def act (hG : IsLinRed (UJset ε)) (hrep : Formalism.QuantumDeterminants.IsCRepO
   map_add' Y Z := by
     refine LinearMap.ext fun x => Subtype.ext ?_
     show dRep π (projL ε (Y + Z)) x = dRep π (projL ε Y) x + dRep π (projL ε Z) x
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (GlobalTheory.T.derived_action_additive hG hrep x.2 x.2 (projL_mem ε Y) (projL_mem ε Z)).1
   map_smul' r Y := by
     refine LinearMap.ext fun x => Subtype.ext ?_

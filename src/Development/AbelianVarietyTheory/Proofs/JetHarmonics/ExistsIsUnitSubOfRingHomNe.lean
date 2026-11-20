@@ -21,7 +21,7 @@ theorem _root_.GlobalTheory.exists_isUnit_sub_of_ringHom_ne : ∀ (A O : Type) [
     | zero => simp
     | add y z _ _ hy hz =>
         have : σ (y + z) - σ' (y + z) = (σ y - σ' y) + (σ z - σ' z) := by
-          rw [map_add, map_add]; ring
+          rw [map_add (f := _), map_add (f := _)]; ring
         rw [this]
         exact J.add_mem hy hz
     | smul n y _ hy =>

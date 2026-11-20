@@ -92,7 +92,7 @@ theorem topSep_of_classicalTheorems : GlobalTheory.FunPr.Hypotheses₂ → TopSe
       rw [map_smul, hTt]
       exact (contLeft _).smul_mem r (GlobalTheory.Core.Mi.SepPer.mult_mem_contLeft W.θ MB ∅ 1 hT'm u)
     | add x y hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (contLeft _).add_mem hx hy
   have pv_add : ∀ ξ ξ', pairVec (coefPlus G W.θ) (ξ + ξ') Ψ = pairVec (coefPlus G W.θ) ξ Ψ + pairVec (coefPlus G W.θ) ξ' Ψ := by
     intro ξ ξ'; funext h; simp [pairVec_apply]
@@ -114,13 +114,13 @@ theorem topSep_of_classicalTheorems : GlobalTheory.FunPr.Hypotheses₂ → TopSe
   intro Wt _ _ π e he τ x v
   have hE : ∀ (y y' : Wt τ), e (PiTensorProduct.tprod ℂ (Function.update x τ (y + y'))) =
       e (PiTensorProduct.tprod ℂ (Function.update x τ y)) + e (PiTensorProduct.tprod ℂ (Function.update x τ y')) := by
-    intro y y'; rw [MultilinearMap.map_update_add, map_add]
+    intro y y'; rw [MultilinearMap.map_update_add, map_add (f := _)]
   have hEs : ∀ (a : ℂ) (y : Wt τ), e (PiTensorProduct.tprod ℂ (Function.update x τ (a • y))) =
       a • e (PiTensorProduct.tprod ℂ (Function.update x τ y)) := by
     intro a y; rw [MultilinearMap.map_update_smul, map_smul]
   have hV : ∀ (u u' : MB.sm τ), F' (PiTensorProduct.tprod ℂ (Function.update v τ (u + u'))) =
       F' (PiTensorProduct.tprod ℂ (Function.update v τ u)) + F' (PiTensorProduct.tprod ℂ (Function.update v τ u')) := by
-    intro u u'; rw [MultilinearMap.map_update_add, map_add]
+    intro u u'; rw [MultilinearMap.map_update_add, map_add (f := _)]
   have hVs : ∀ (a : ℂ) (u : MB.sm τ), F' (PiTensorProduct.tprod ℂ (Function.update v τ (a • u))) =
       a • F' (PiTensorProduct.tprod ℂ (Function.update v τ u)) := by
     intro a u; rw [MultilinearMap.map_update_smul, map_smul]

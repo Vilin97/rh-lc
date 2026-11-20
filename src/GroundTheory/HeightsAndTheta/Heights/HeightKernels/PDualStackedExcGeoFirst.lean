@@ -42,7 +42,7 @@ theorem mem_dual_of {F F' : HermLattice K i} (hle : F'.lattice ≤ F.lattice)
   rw [dotProduct_add, dotProduct_smul]
   obtain ⟨r, hr⟩ := hψ z hz
   obtain ⟨s, hs⟩ := hψy
-  exact ⟨r + μ * s, by rw [map_add, map_mul, hr, hs, Algebra.smul_def]⟩
+  exact ⟨r + μ * s, by rw [map_add (f := _), map_mul, hr, hs, Algebra.smul_def]⟩
 
 theorem exists_sub_mem_dual {F F' : HermLattice K i} (hlt : F'.lattice < F.lattice)
     (hcov : ∀ N : Submodule (𝓞 K) (Fin i → K), F'.lattice ≤ N → N ≤ F.lattice → N = F'.lattice ∨ N = F.lattice)

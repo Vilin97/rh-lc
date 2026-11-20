@@ -61,7 +61,7 @@ theorem sqToBase_tensorHom {T : Scheme.{0}} {X Y : Over S} (f : X ⟶ Y) (s : T 
 
 theorem lam_add_cls {T : Scheme.{0}} {C D : Over T} [GrpObj C] (c d : Pic C.left) (x y : D ⟶ C) :
     lam (c + d) x y = lam c x y + lam d x y := by
-  simp only [lam, map_add]
+  simp only [lam, map_add (f := _)]
   abel
 
 theorem relAmple_of_isLimit {T : Scheme.{0}} [IsAffine T] {C B₁ B₂ : Over T} [GrpObj C] [GrpObj B₁]
@@ -98,10 +98,10 @@ theorem isPrincipalPol_tensor {A B : Over S} [GrpObj A] [GrpObj B] (hA : IsAbeli
     (h₁ : IsPrincipalPol A c₁) (h₂ : IsPrincipalPol B c₂) :
     IsPrincipalPol (A ⊗ B) (pull (fst A B ⊗ₘ fst A B).left c₁ + pull (snd A B ⊗ₘ snd A B).left c₂) := by
   refine ⟨?_, ?_, fun Ω _ _ s => ?_⟩
-  · rw [map_add, ← CechPic.pull_comp, ← CechPic.pull_comp, ← Over.comp_left, ← Over.comp_left,
+  · rw [map_add (f := _), ← CechPic.pull_comp, ← CechPic.pull_comp, ← Over.comp_left, ← Over.comp_left,
       lift_one_id_tensorHom, lift_one_id_tensorHom, Over.comp_left, Over.comp_left, CechPic.pull_comp,
       CechPic.pull_comp, h₁.1, h₂.1, map_zero, map_zero, add_zero]
-  · rw [map_add, ← CechPic.pull_comp, ← CechPic.pull_comp, ← Over.comp_left, ← Over.comp_left,
+  · rw [map_add (f := _), ← CechPic.pull_comp, ← CechPic.pull_comp, ← Over.comp_left, ← Over.comp_left,
       lift_id_one_tensorHom, lift_id_one_tensorHom, Over.comp_left, Over.comp_left, CechPic.pull_comp,
       CechPic.pull_comp, h₁.2.1, h₂.2.1, map_zero, map_zero, add_zero]
   · obtain ⟨L₁, hL₁, a₁, k₁, e₁⟩ := h₁.2.2 Ω s
@@ -113,7 +113,7 @@ theorem isPrincipalPol_tensor {A B : Over S} [GrpObj A] [GrpObj B] (hA : IsAbeli
       (PolPull.isAbelianScheme_of_isGrpPullback hB (isGrpPullback_pullback B s))
       ((Over.pullback s).map (fst A B)) ((Over.pullback s).map (snd A B)) hq hL₁ a₁ k₁ hL₂ a₂ k₂
     refine ⟨L, hL, a, k, ?_⟩
-    rw [e, map_add, ← CechPic.pull_comp, ← CechPic.pull_comp, sqToBase_tensorHom, sqToBase_tensorHom,
+    rw [e, map_add (f := _), ← CechPic.pull_comp, ← CechPic.pull_comp, sqToBase_tensorHom, sqToBase_tensorHom,
       CechPic.pull_comp, CechPic.pull_comp, e₁, e₂]
 
 end GlobalTheory.PPAS.ProdMk

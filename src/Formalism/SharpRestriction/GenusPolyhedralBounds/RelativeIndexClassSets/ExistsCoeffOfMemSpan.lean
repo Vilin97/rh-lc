@@ -385,7 +385,7 @@ theorem exists_coeff_of_mem_span {x : ↥(Vw X la G.N (addL wF wL T))}
       · exact hc i m h
       · exact hc' i m h
     · rw [Submodule.coe_add, hxc, hyc, ← Finset.sum_add_distrib]
-      exact Finset.sum_congr rfl fun i _ => by rw [Pi.add_apply, map_add]
+      exact Finset.sum_congr rfl fun i _ => by rw [Pi.add_apply, map_add (f := _)]
   | smul a x _ hx =>
     obtain ⟨c, hc, hxc⟩ := hx
     refine ⟨a • c, fun i m hm => hc i m (support_smul hm), ?_⟩

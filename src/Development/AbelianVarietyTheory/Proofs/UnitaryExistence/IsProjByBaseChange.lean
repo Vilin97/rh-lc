@@ -67,7 +67,7 @@ theorem GlobalTheory.AbLaw.isProjBy_baseChange : ∀ (R R' : Type) [CommRing R] 
       induction F using MvPolynomial.induction_on with
       | C c => exact ⟨MvPolynomial.C (g c), by
           rw [MvPolynomial.eval₂Hom_C, MvPolynomial.eval₂Hom_C, ap_cst, sq.w, cst_comp_specMap]⟩
-      | add F G hF hG => rw [map_add, map_add]; exact Subring.add_mem _ hF hG
+      | add F G hF hG => rw [map_add (f := _), map_add (f := _)]; exact Subring.add_mem _ hF hG
       | mul_X F i hF =>
         rw [map_mul, map_mul]
         refine Subring.mul_mem _ hF ⟨MvPolynomial.X i, ?_⟩

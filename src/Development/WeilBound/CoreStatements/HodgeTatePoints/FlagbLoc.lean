@@ -85,7 +85,7 @@ theorem apply_mem_of_span (R : Subring Ω) (w : Module.Dual Ω L) (s : Set L) (h
   induction he using Submodule.span_induction with
   | mem x hx => exact h x hx
   | zero => rw [map_zero]; exact R.zero_mem
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx =>
     have : w (c • x) = (c : Ω) * w x := map_smul w (c : Ω) x
     rw [this]; exact mul_mem c.2 hx

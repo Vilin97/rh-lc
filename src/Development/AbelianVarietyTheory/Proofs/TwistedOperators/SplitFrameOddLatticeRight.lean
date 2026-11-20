@@ -62,7 +62,7 @@ theorem pair_rat_int {T : HSp D} {LT : Lat T} (hT : IsSelfDualC T LT) {P : Globa
     exact mul_mem (pr_one_int p hα) (GlobalTheory.LocMod.FullLatFrame.pr_int_mem p b)
   | zero => simp
   | add x y _ _ hx hy =>
-    simp only [Pi.add_apply, RingHom.map_add, mul_add, Finset.sum_add_distrib]; exact add_mem hx hy
+    simp only [Pi.add_apply, RingHom.map_add (f := _), mul_add, Finset.sum_add_distrib]; exact add_mem hx hy
   | neg x _ hx =>
     simp only [Pi.neg_apply, RingHom.map_neg, mul_neg, Finset.sum_neg_distrib]; exact neg_mem hx
 
@@ -101,7 +101,7 @@ theorem pair_int {S T : HSp D} {LS : Lat S} {LT : Lat T} (hS : IsSelfDualC S LS)
     simp only [this, zero_mul, Finset.sum_const_zero, RingHom.map_zero]; exact zero_mem _
   | add u v _ _ hx hy =>
     have : ∀ j m, (u + v) j m = u j m + v j m := fun _ _ => rfl
-    simp only [this, RingHom.map_add, add_mul, Finset.sum_add_distrib]; exact add_mem hx hy
+    simp only [this, RingHom.map_add (f := _), add_mul, Finset.sum_add_distrib]; exact add_mem hx hy
   | neg u _ hx =>
     have : ∀ j m, (-u) j m = -u j m := fun _ _ => rfl
     simp only [this, RingHom.map_neg, neg_mul, Finset.sum_neg_distrib]; exact neg_mem hx
@@ -119,7 +119,7 @@ theorem Bd.mul {I J : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E} {c d : k} (h 
     obtain ⟨z', hz', e'⟩ := h' b hb
     exact ⟨z * z', mul_mem hz hz', by rw [star_mul', RingHom.map_mul, RingHom.map_mul, e, e']; ring⟩
   · rintro a b ⟨z, hz, e⟩ ⟨z', hz', e'⟩
-    exact ⟨z + z', add_mem hz hz', by rw [star_add, RingHom.map_add, RingHom.map_add, e, e']; ring⟩
+    exact ⟨z + z', add_mem hz hz', by rw [star_add, RingHom.map_add (f := _), RingHom.map_add (f := _), e, e']; ring⟩
 
 theorem Bd.one : Bd p 1 1 := fun x hx => by
   obtain ⟨o, rfl⟩ := (FractionalIdeal.mem_one_iff _).1 hx
@@ -191,7 +191,7 @@ theorem bd_of_mul {I : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E} (h0 : I ≠ 
       obtain ⟨z, hz, e⟩ := h b hb
       exact ⟨_, mul_mem (hV a ha) hz, by rw [star_mul', (incA D).map_mul, p.pr.map_mul, e]; ring⟩
     · rintro a b ⟨z, hz, e⟩ ⟨z', hz', e'⟩
-      exact ⟨z + z', add_mem hz hz', by rw [star_add, (incA D).map_add, p.pr.map_add, add_mul, e, e']; ring⟩
+      exact ⟨z + z', add_mem hz hz', by rw [star_add, (incA D).map_add (f := _), p.pr.map_add (f := _), add_mul, e, e']; ring⟩
   rwa [star_one, RingHom.map_one, RingHom.map_one, one_mul] at key
 
 variable {T : Type} {L : LevCh D T} {sc : Consts}

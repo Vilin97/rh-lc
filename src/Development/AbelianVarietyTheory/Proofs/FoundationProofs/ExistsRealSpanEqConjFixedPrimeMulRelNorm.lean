@@ -129,7 +129,7 @@ theorem fixed_mem_range (hq : IsQuad δ θ σ) (x : E) (hx : σ x = x) : ∃ a :
     have := hq.sq
     rw [zero_pow two_ne_zero, eq_comm, map_eq_zero] at this
     exact hq.nonsq (this ▸ IsSquare.zero)
-  rw [map_add, map_mul, σ.commutes, σ.commutes, hq.conj] at hx
+  rw [map_add (f := _), map_mul, σ.commutes, σ.commutes, hq.conj] at hx
   have : algebraMap F E b * θ = 0 := by linear_combination (-1 / 2 : E) * hx
   exact ⟨a, by rw [this, add_zero]⟩
 
@@ -199,7 +199,7 @@ theorem exists_fixed_uniformizer (hq : IsQuad δ θ σ) (s : 𝓞 E ≃+* 𝓞 E
   have hπ2 : π ∉ w.asIdeal ^ 2 := by
     rw [← w.intValuation_le_pow_iff_mem, hπ, WithZero.exp_le_exp]; norm_num
   by_cases h1 : π + s π ∈ w.asIdeal ^ 2
-  · refine ⟨y * π + s (y * π), by rw [map_add, hss, add_comm], hchar _
+  · refine ⟨y * π + s (y * π), by rw [map_add (f := _), hss, add_comm], hchar _
       (add_mem (Ideal.mul_mem_left _ _ hπ1) (hP _ (Ideal.mul_mem_left _ _ hπ1))) fun h2 => ?_⟩
     have h3 : (y - s y) * π ∈ w.asIdeal ^ 2 := by
       have : (y - s y) * π = (y * π + s (y * π)) - s y * (π + s π) := by
@@ -209,7 +209,7 @@ theorem exists_fixed_uniformizer (hq : IsQuad δ θ σ) (s : 𝓞 E ≃+* 𝓞 E
     rw [← w.intValuation_le_pow_iff_mem, map_mul, hπ,
       (w.intValuation_eq_one_iff).2 hy, one_mul, WithZero.exp_le_exp] at h3
     norm_num at h3
-  · exact ⟨π + s π, by rw [map_add, hss, add_comm], hchar _ (add_mem hπ1 (hP _ hπ1)) h1⟩
+  · exact ⟨π + s π, by rw [map_add (f := _), hss, add_comm], hchar _ (add_mem hπ1 (hP _ hπ1)) h1⟩
 
 theorem exists_mul_sq_integral (t : F) (ht : t ≠ 0) : ∃ (b : F) (u : 𝓞 E), b ≠ 0 ∧ u ≠ 0 ∧
     algebraMap F E (t * b ^ 2) = u ∧ ∀ (v : HeightOneSpectrum (𝓞 F)) (m : ℤ),
@@ -358,7 +358,7 @@ theorem exists_span_eq_prime_mul_norm : ∀ (D : D7) (P : Ideal (𝓞 D.host.E))
         (IsCMField.complexConj_eq_self_iff D.host.E _).1 ?_⟩,
         ⟨(x - IsCMField.complexConj D.host.E x) / (2 * D.host.sqrtMinusD),
         (IsCMField.complexConj_eq_self_iff D.host.E _).1 ?_⟩, ?_⟩
-      · rw [map_div₀, map_add, IsCMField.complexConj_apply_apply, map_ofNat, add_comm]
+      · rw [map_div₀, map_add (f := _), IsCMField.complexConj_apply_apply, map_ofNat, add_comm]
       · rw [map_div₀, map_sub, IsCMField.complexConj_apply_apply, map_mul, map_ofNat, hθc]
         field_simp
         ring
@@ -382,7 +382,7 @@ theorem exists_span_eq_prime_mul_norm : ∀ (D : D7) (P : Ideal (𝓞 D.host.E))
     have h3 : embT D τ = embT D τ' := by
       refine RingHom.ext fun x => ?_
       obtain ⟨a, b, rfl⟩ := hq.span x
-      rw [map_add, map_add, map_mul, map_mul, ← hr, ← hr, ← hr, ← hr, h, h1, h2]
+      rw [map_add (f := _), map_add (f := _), map_mul, map_mul, ← hr, ← hr, ← hr, ← hr, h, h1, h2]
     exact D.eTau.injective (Subtype.ext (hE.1.1 h3))
   obtain ⟨τ₀⟩ : Nonempty D.what₂.Tau := ⟨D.eTau.symm ⟨1, by simp [Formalism.HC.Frame.Psi]⟩⟩
   obtain ⟨t, B, ht, htf, hB⟩ := exists_span_eq hq s hs (r τ₀) (fun x t B ht hx hB hρ => by

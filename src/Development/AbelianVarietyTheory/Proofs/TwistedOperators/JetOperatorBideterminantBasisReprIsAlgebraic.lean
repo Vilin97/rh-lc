@@ -37,7 +37,7 @@ theorem aeval_mem {σ τ : Type} {p : MvPolynomial σ ℂ} (hp : p ∈ algPol σ
   obtain ⟨q, rfl⟩ := hp
   induction q using MvPolynomial.induction_on with
   | C a => exact ⟨C a, by simp [algebraMap_eq]⟩
-  | add p q hp hq => rw [map_add, map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _)]; exact add_mem hp hq
   | mul_X p v hp => rw [map_mul, map_mul, map_X, aeval_X]; exact mul_mem hp (hg v)
 
 theorem bVVfun_mem {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n) (j : VVIdx lam) :

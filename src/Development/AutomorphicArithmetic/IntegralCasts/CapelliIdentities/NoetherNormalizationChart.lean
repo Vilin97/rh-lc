@@ -25,7 +25,7 @@ private lemma shear_comp (b : ℕ) (c d : A) (h : c + d = 0) :
   cases i using Fin.cases with
   | zero => simp [shear_zero]
   | succ i =>
-    rw [AlgHom.comp_apply, shear_succ, map_add, map_mul, map_pow, shear_zero, shear_succ,
+    rw [AlgHom.comp_apply, shear_succ, map_add (f := _), map_mul, map_pow, shear_zero, shear_succ,
       algHom_C, algebraMap_eq, add_assoc, ← add_mul, ← C_add, h]
     simp
 

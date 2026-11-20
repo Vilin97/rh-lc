@@ -153,7 +153,7 @@ variable {W} {U V : (scheme W).Opens}
 
 theorem resG_originCofactor (hU : U ≤ coordOpen W 1) (h : V ≤ U) :
     resG _ h (originCofactor W U hU) = originCofactor W V (h.trans hU) := by
-  simp only [originCofactor, map_add, map_sub, map_mul, map_pow, map_one, resG_constOn,
+  simp only [originCofactor, map_add (f := _), map_sub, map_mul, map_pow, map_one, resG_constOn,
     resG_ratioOn]
 
 theorem ratioOn_mul_originCofactor (hU : U ≤ coordOpen W 1) :
@@ -200,7 +200,7 @@ theorem originOpen_sup_coordOpen_two : originOpen W ⊔ coordOpen W 2 = ⊤ := b
     (γ (constOn W _ W.a₂ * ratio W 1 0 + constOn W _ W.a₄ * ratio W 1 2 - constOn W _ W.a₁))
     (γ (constOn W _ W.a₆ * ratio W 1 2 - constOn W _ W.a₃))
     (by rw [← map_mul, ratioOn_mul_originCofactor, map_pow])
-    (by rw [← map_mul, ← map_mul, ← map_add, ← map_add, ← map_one γ, originCofactor]
+    (by rw [← map_mul, ← map_mul, ← map_add (f := _), ← map_add (f := _), ← map_one γ, originCofactor]
         congr 1
         ring) with h | h
   · exact Or.inl (((scheme W).mem_basicOpen _ x hx).2 h)
@@ -482,7 +482,7 @@ theorem exists_eq_constOn (f₀ : Γ(scheme W, originOpen W)) (f₁ : Γ(scheme 
       rw [h, Finset.sum_disjSum]
       refine congrArg₂ (· * ·) rfl (Eq.symm ?_)
       change ψ _ = _
-      rw [map_add, WeierstrassCurve.Affine.CoordinateRing.smul,
+      rw [map_add (f := _), WeierstrassCurve.Affine.CoordinateRing.smul,
         WeierstrassCurve.Affine.CoordinateRing.smul, mul_one, map_mul, hψ, hψ, hψy, Finset.sum_mul]
       simp only [Sum.elim_inl, Sum.elim_inr, resG_constOn, mul_assoc])
   have hq : q = 0 := by
@@ -531,7 +531,7 @@ variable {R' : Type} [CommRing R'] {W' : WeierstrassCurve R'} (f : R →+* R') (
 theorem mapHom_app_originCofactor {U : (scheme W).Opens} (hU : U ≤ coordOpen W 1) :
     ((mapHom W f h).app U).hom (originCofactor W U hU) = originCofactor W' (mapHom W f h ⁻¹ᵁ U)
       (((mapHom W f h).preimage_mono hU).trans (mapHom_preimage_coordOpen W f h 1).le) := by
-  simp only [originCofactor, map_add, map_sub, map_mul, map_pow, map_one, mapHom_app_constOn,
+  simp only [originCofactor, map_add (f := _), map_sub, map_mul, map_pow, map_one, mapHom_app_constOn,
     mapHom_app_ratioOn]
   subst h
   rfl
@@ -723,7 +723,7 @@ example (hP : IsUnimodularSol ((⟨0, 0, 1, -1, 0⟩ : WeierstrassCurve ℚ).map
   have h₀ := evalPt_ptHom_ratioOn_mul _ _ hP le_rfl h 0
   have h₂ := evalPt_ptHom_ratioOn_mul _ _ hP le_rfl h 2
   simp only [Matrix.cons_val_zero, Matrix.cons_val, Matrix.cons_val_one] at h₀ h₂
-  simp only [originCofactor, map_add, map_sub, map_mul, map_pow, map_one, map_zero, map_neg]
+  simp only [originCofactor, map_add (f := _), map_sub, map_mul, map_pow, map_one, map_zero, map_neg]
   rw [eq_div_of_mul_eq (by norm_num) h₀, eq_div_of_mul_eq (by norm_num) h₂]
   norm_num
 

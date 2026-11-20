@@ -44,20 +44,20 @@ theorem dLine_add_line (hψ : IsStdChar D ψ (-1)) {S T : HSp D} {L L' : ℝ →
   obtain ⟨lam, hl, hlam⟩ := exists_log hψ
   have hS : Continuous (L + L') := hL.add hL'
   have hS0 : ∀ t, ((L + L') t).map (finPart D) = 0 := fun t => by
-    rw [AddMonoidHom.add_apply, Matrix.map_add _ (finPart D).map_add, hL0 t, hL0' t, add_zero]
+    rw [AddMonoidHom.add_apply, Matrix.map_add _ (finPart D).map_add (f := _), hL0 t, hL0' t, add_zero]
   funext w
   rw [Pi.add_apply, dLine_apply' h hl hlam hS hS0 hf, dLine_apply' h hl hlam hL hL0 hf, dLine_apply' h hl hlam hL' hL0' hf,
     AddMonoidHom.add_apply, map_add, ContinuousLinearMap.map_add]
   have e : phase lam S T (L 1 + L' 1) w = phase lam S T (L 1) w + phase lam S T (L' 1) w := by
     show lam (symplOH S T w (L 1 + L' 1)) = lam (symplOH S T w (L 1)) + lam (symplOH S T w (L' 1))
-    rw [symplOH_add_right, map_add]
+    rw [symplOH_add_right, map_add (f := _)]
   rw [e]
   ring
 
 variable {W A A' : HSp D} (d : OrthDec W A (GlobalTheory.ChiGrid.negSp A')) (S : HSp D)
 
 theorem inl_fst_add_inr_snd (x : WO W S) : inlH d S (fstH d S x) + inrH d S (sndH d S x) = x := by
-  rw [inlH_apply, inrH_apply, fstH_apply, sndH_apply, ← map_add, Prod.mk_add_mk, add_zero, zero_add]
+  rw [inlH_apply, inrH_apply, fstH_apply, sndH_apply, ← map_add (f := _), Prod.mk_add_mk, add_zero, zero_add]
   have : GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.dagger S A' (GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.dagger A' S (d.resS S x).2) = (d.resS S x).2 :=
     GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.dagger_dagger A' S _
   rw [this, Prod.mk.eta, AddEquiv.symm_apply_apply]

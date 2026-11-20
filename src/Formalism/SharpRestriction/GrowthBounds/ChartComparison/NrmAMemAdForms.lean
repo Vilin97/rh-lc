@@ -228,7 +228,7 @@ variable {T : ℕ} {bad : Set (HeightOneSpectrum (𝓞 D.host.F))} {i : ℕ} {hi
 
 def embCh (β : Ch) : (M.lat i).V →ₛₗ[D.what₂.embLL] ({c // chOf c = β} → Fr D i hi → ℂ) where
   toFun x := fun cl z => M.emb i x cl.1 (eY.symm z)
-  map_add' x y := by funext cl z; rw [map_add]; rfl
+  map_add' x y := by funext cl z; rw [map_add (f := _)]; rfl
   map_smul' a x := by funext cl z; rw [LinearMap.map_smulₛₗ]; rfl
 
 def embN (β : Ch) (X : DetTw (K β).lev (embT D) (cTw D i)) :

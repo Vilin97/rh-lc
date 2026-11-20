@@ -64,7 +64,7 @@ def homInto (S₀ : Set (Sp E a)) (g : Sp E b →ₗ[E] Sp E b) (N : Submodule (
   carrier := {z | ∀ y ∈ S₀, g (z y) ∈ N}
   zero_mem' := fun y _ => by simp
   add_mem' := fun {z z'} hz hz' y hy => by
-    rw [LinearMap.add_apply, map_add]; exact N.add_mem (hz y hy) (hz' y hy)
+    rw [LinearMap.add_apply, map_add (f := _)]; exact N.add_mem (hz y hy) (hz' y hy)
   smul_mem' := fun c z hz y hy => by
     rw [LinearMap.smul_apply, LinearMap.map_smul_of_tower]; exact N.smul_mem _ (hz y hy)
 
@@ -86,7 +86,7 @@ theorem apply_mem_of_mem_locP {S₀ : Set (Sp E a)} {g : Sp E b →ₗ[E] Sp E b
     induction hw using Submodule.span_induction with
     | mem w hw => exact hz w hw
     | zero => simp
-    | add u v _ _ hu hv => rw [map_add, map_add]; exact N.add_mem hu hv
+    | add u v _ _ hu hv => rw [map_add (f := _), map_add (f := _)]; exact N.add_mem hu hv
     | smul c u _ hu => rw [LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower]; exact N.smul_mem _ hu
   refine ⟨s * t, P.asIdeal.primeCompl.mul_mem hs ht, ?_⟩
   have := h _ hy

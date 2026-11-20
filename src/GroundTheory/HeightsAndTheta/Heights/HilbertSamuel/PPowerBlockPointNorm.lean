@@ -121,7 +121,7 @@ theorem pn_aeval_mem {S : Type*} [CommRing S] (T : Subalgebra ℤ S) {σ : Type*
     rw [aeval_C]
     exact T.algebraMap_mem r
   | add f g hf hg =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact T.add_mem hf hg
   | mul_X f p hf =>
     rw [map_mul, aeval_X]

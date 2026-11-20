@@ -72,9 +72,9 @@ theorem UpperTheory.V.CA.d_closed :
         (algebraMap A (MvPolynomial (Fin k) A)) =
         (algebraMap (A ⧸ I ^ N) (MvPolynomial (Fin k) (A ⧸ I ^ N))).comp (Ideal.Quotient.mk (I ^ N)) :=
       RingHom.ext fun a => by simp
-    rw [map_add, map_one, map_mul, mapR_comp, h3, ← mapR_comp, h2] at h1
+    rw [map_add (f := _), map_one, map_mul, mapR_comp, h3, ← mapR_comp, h2] at h1
     rw [← h1, sub_self, MvPolynomial.coeff_zero]
   refine (d_toDet D y).2.2.2.1 (d_kills_poly D.toDet y Set.univ Submodule.span_univ fun k h _ => ?_)
   change D.D _ (ofT A G _ _) = 1
-  rw [map_add, map_one, map_mul, ofT_tmul, one_smul]
+  rw [map_add (f := _), map_one, map_mul, ofT_tmul, one_smul]
   exact key2 k _

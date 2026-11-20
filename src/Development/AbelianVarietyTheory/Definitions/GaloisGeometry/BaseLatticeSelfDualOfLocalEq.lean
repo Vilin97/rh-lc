@@ -91,7 +91,7 @@ theorem base_free (hs : SplitInt v spl) (hd : ∀ a : v.adicCompletion F, spl ((
       intro a
       have e : (fun b => (spl ((x + y) b)).1) = (fun b => (spl (x b)).1) + (fun b => (spl (y b)).1) := by
         funext b
-        simp only [Pi.add_apply, map_add, Prod.fst_add]
+        simp only [Pi.add_apply, map_add (f := _), Prod.fst_add]
       rw [e, Matrix.mulVec_add]
       exact add_mem (ihx a) (ihy a)
     | smul s x _ ih =>

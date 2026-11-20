@@ -39,8 +39,8 @@ private lemma coord_shift (w w' : InfinitePlace F) (i j : Fin 4) (v : V4 F) (t :
   · subst h
     by_cases h' : w' = w
     · subst h'
-      simp [map_add, infiniteProjection_placeEmbed]
-    · simp [map_add, infiniteProjection_placeEmbed, h', Pi.single_eq_of_ne h']
+      simp [map_add (f := _), infiniteProjection_placeEmbed]
+    · simp [map_add (f := _), infiniteProjection_placeEmbed, h', Pi.single_eq_of_ne h']
   · simp [h, Pi.single_eq_of_ne h]
 
 private lemma lin_der (a c : ℂ) : HasDerivAt (fun t : ℝ => a + c * (t : ℂ)) c 0 := by
@@ -91,7 +91,7 @@ private lemma Qf_mem (δ : F) : Qf δ ∈ UpperTheory.ConvolutionTheory.R2.polyF
     funext v
     have h2 : ∀ x, TR.pInf F (2 : A F) x = 2 := fun x => by
       rw [map_ofNat]; rfl
-    simp [Qf, Finset.sum_apply, map_add, map_mul, map_sub, map_pow, h2]
+    simp [Qf, Finset.sum_apply, map_add (f := _), map_mul, map_sub, map_pow, h2]
   rw [e]
   refine sum_mem fun w _ => ?_
   exact add_mem (add_mem (pow_mem (coord_mem 0 w) 2) (pow_mem (coord_mem 1 w) 2))

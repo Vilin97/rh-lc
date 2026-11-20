@@ -66,7 +66,7 @@ private theorem exists_sch {F : Type} [Field F] [NumberField F] [IsTotallyReal F
     refine Finset.sum_congr rfl fun w _ => ?_
     have hs : ∀ i, (T (infPartPi v) (i, w)) ^ 2 = k (i, w) * TR.pInf F (v i) w ^ 2 := fun i => by
       rw [hT, coordLin_apply, mixed_coord, mul_pow, Real.sq_sqrt (hk _).le]
-    simp only [hs, Fin.sum_univ_four, k, map_add, map_mul, map_sub, map_pow, map_ofNat, Pi.add_apply,
+    simp only [hs, Fin.sum_univ_four, k, map_add (f := _), map_mul, map_sub, map_pow, map_ofNat, Pi.add_apply,
       Pi.mul_apply, Pi.sub_apply, Pi.pow_apply, Pi.ofNat_apply]
     simp
     ring

@@ -85,11 +85,11 @@ theorem exists_mem_glLatCong {u : kˣ} (hu : valuation k (u : k) < 1) {M : Matri
       rw [IsLocalRing.residue_eq_zero_iff, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff,
         Valuation.Integer.not_isUnit_iff_valuation_lt_one]
       exact (hM r j).trans_lt hu
-    rw [map_add, this]; simp
+    rw [map_add (f := _), this]; simp
   obtain ⟨w, hw⟩ := hK
   have hv : (Matrix.GeneralLinearGroup.map (algebraMap 𝒪[k] k) w).val = 1 + M := by
     show (algebraMap 𝒪[k] k).mapMatrix w.val = _
-    rw [hw, map_add, map_one]; rfl
+    rw [hw, map_add (f := _), map_one]; rfl
   refine ⟨_, GlobalTheory.FunObj.GivenAdm.mem_glLatCong.2 ⟨⟨w, rfl⟩, ?_⟩, hv⟩
   rw [hv, add_sub_cancel_left]
   exact hM

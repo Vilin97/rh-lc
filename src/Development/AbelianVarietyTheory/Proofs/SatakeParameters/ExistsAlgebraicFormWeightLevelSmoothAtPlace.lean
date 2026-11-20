@@ -62,7 +62,7 @@ theorem exists_algForm_ofType : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     { carrier := {ψ | ∀ k ∈ K, RU E n k ψ = ψ}
       add_mem' := fun {x y} hx hy k hk => by
         simp only [Set.mem_setOf_eq] at hx hy ⊢
-        rw [map_add, hx k hk, hy k hk]
+        rw [map_add (f := _), hx k hk, hy k hk]
       zero_mem' := fun k _ => map_zero _
       smul_mem' := fun r ψ h k hk => by
         simp only [Set.mem_setOf_eq] at h ⊢

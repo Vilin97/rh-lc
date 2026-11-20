@@ -56,7 +56,7 @@ theorem span : ∀ (l : ℕ) [Fact l.Prime] (G : Type) [Group G] [TopologicalSpa
     intro g h k
     rw [← PadicInt.ext_of_toZModPow]
     intro n
-    simpa only [map_sub, map_add, map_mul, map_zero] using (hG n).1.2 g h k
+    simpa only [map_sub, map_add (f := _), map_mul, map_zero] using (hG n).1.2 g h k
   refine ⟨⟨continuous_subtype_val.comp hcc, fun g h k => ?_⟩, fun z hz hzc => ?_⟩
   · have e := congrArg (fun a : ℤ_[l] => (a : ℚ_[l])) (hcoc g h k)
     push_cast at e
@@ -83,7 +83,7 @@ theorem span : ∀ (l : ℕ) [Fact l.Prime] (G : Type) [Group G] [TopologicalSpa
         (PadicInt.toZModPow r (χ p.1 : ℤ_[l]) * b p.2 - b (p.1 * p.2) + b p.1) := fun r =>
     (hG r).2.1 _ ((IsLocallyConstant.iff_continuous _).2 ((continuous_reduction r).comp hwc))
       fun g k m => by
-        simpa only [map_sub, map_add, map_mul, map_zero] using
+        simpa only [map_sub, map_add (f := _), map_mul, map_zero] using
           congrArg (PadicInt.toZModPow r) (hwcoc g k m)
   choose X B hB hXB using hlev
   have hred : ∀ r, PadicInt.toZModPow r (((X r).val : ℕ) : ℤ_[l]) = X r := fun r => by
@@ -102,7 +102,7 @@ theorem span : ∀ (l : ℕ) [Fact l.Prime] (G : Type) [Group G] [TopologicalSpa
         (PadicInt.toZModPow r (χ p.1 : ℤ_[l]) * ψ (B (r + 1) p.2) - ψ (B (r + 1) (p.1 * p.2)) +
           ψ (B (r + 1) p.1)) := by
       have := congrArg ψ (hXB (r + 1) p)
-      simpa only [map_add, map_sub, map_mul, hψ] using this
+      simpa only [map_add (f := _), map_sub, map_mul, hψ] using this
     have e2 := hXB r p
     show PadicInt.toZModPow r (c p) * (ψ (X (r + 1)) - X r) =
       PadicInt.toZModPow r (χ p.1 : ℤ_[l]) * (B r p.2 - ψ (B (r + 1) p.2)) -

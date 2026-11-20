@@ -228,12 +228,12 @@ theorem lam_factor {M₀ M : LB A.left} (hM : M.IsLB) (u₀ : HolUnif A M₀ g) 
       Complex.exp (↑Real.pi * hf Hm (sumL g I v) (sumL g I w) +
         ↑Real.pi / 2 * hf Hm (sumL g I w) (sumL g I w)) * u.fr (j I) (sumL g I (v + w)) := by
     intro I
-    rw [chi, dif_pos (sumL_mem u₀ u hex I hw), map_add]
+    rw [chi, dif_pos (sumL_mem u₀ u hex I hw), map_add (f := _)]
     exact hF.2.2 ⟨_, sumL_mem u₀ u hex I hw⟩ (j I) _ (lam_chart u₀ u hex j v hv I)
   have hne : ∀ I, u.fr (j I) (sumL g I (v + w)) ≠ 0 := by
     intro I
     refine u.fr_ne _ _ ?_
-    rw [map_add, ex_add_mem u _ (sumL_mem u₀ u hex I hw)]
+    rw [map_add (f := _), ex_add_mem u _ (sumL_mem u₀ u hex I hw)]
     exact lam_chart u₀ u hex j v hv I
   obtain ⟨hl, hr⟩ := (mem_sqLat _ _).1 hw
   have hl' := (mem_iff u₀ u hex _).2 hl
@@ -272,7 +272,7 @@ def twistMap (Fl : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) : (Fin (g + g) �
   map_add' v w := by
     funext q
     refine Fin.addCases (fun k => ?_) (fun k => ?_) q <;>
-      simp only [Fin.append_left, Fin.append_right, map_add, Pi.add_apply]
+      simp only [Fin.append_left, Fin.append_right, map_add (f := _), Pi.add_apply]
   map_smul' c v := by
     funext q
     refine Fin.addCases (fun k => ?_) (fun k => ?_) q <;>
@@ -326,7 +326,7 @@ theorem GlobalTheory.TorusRM.lbIso_lam_pull_of_selfAdjoint : ∀ (g : ℕ) (A : 
     exact h
   have fac1 := lam_factor hM₁ u₁ u₁ rfl hF₁ (p.1 PUnit.unit) (twistMap Fl z) (twistMap Fl w) hwt hc1
   have fac2 := lam_factor hM₂ u₁ u₂ hex hF₂ p.2 z w hw' hz2
-  rw [halfL_twist, halfL_twist, halfR_twist, halfR_twist, ← map_add] at fac1
+  rw [halfL_twist, halfL_twist, halfR_twist, halfR_twist, ← map_add (f := _)] at fac1
   have hE : (hf H₁ (halfL g z) (Fl (halfR g w)) + hf H₁ (Fl (halfR g z)) (halfL g w) +
       hf H₁ (halfL g w) (Fl (halfR g w))) =
       hf H₂ (halfL g z) (halfR g w) + hf H₂ (halfR g z) (halfL g w) + hf H₂ (halfL g w) (halfR g w) := by

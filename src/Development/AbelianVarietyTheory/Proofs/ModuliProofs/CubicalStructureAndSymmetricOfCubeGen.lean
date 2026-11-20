@@ -40,7 +40,7 @@ theorem surjective_appTop {X : Scheme.{0}} (P : Over X) (e : 𝟙_ (Over X) ⟶ 
   refine ⟨(e.left.appLE (P.hom ⁻¹ᵁ ⊤) ⊤ hle).hom u, ?_⟩
   have h1 := GlobalTheory.eq_one_of_appLE_section_eq_one X P e.left he hs hg ⟨hr, hab⟩ ⊤
     (1 + u - (P.hom.app ⊤).hom ((e.left.appLE (P.hom ⁻¹ᵁ ⊤) ⊤ hle).hom u)) hle
-    (by rw [map_sub, map_add, map_one, hφψ]; ring)
+    (by rw [map_sub, map_add (f := _), map_one, hφψ]; ring)
   linear_combination -h1
 
 variable {S : Scheme.{0}} {A : Over S} [GrpObj A] [IsCommMonObj A]

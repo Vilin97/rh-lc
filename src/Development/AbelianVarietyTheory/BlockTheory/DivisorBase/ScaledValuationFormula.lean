@@ -34,7 +34,7 @@ def dualCoord {d : ℕ} (MM : Submodule (𝓞 K) (Fin d → K)) : Submodule (�
     rintro y z hy hz x hx
     obtain ⟨a, ha⟩ := hy x hx
     obtain ⟨c, hc⟩ := hz x hx
-    exact ⟨a + c, by rw [map_add, ha, hc, add_dotProduct]⟩
+    exact ⟨a + c, by rw [map_add (f := _), ha, hc, add_dotProduct]⟩
   smul_mem' := by
     rintro r y hy x hx
     obtain ⟨a, ha⟩ := hy x hx

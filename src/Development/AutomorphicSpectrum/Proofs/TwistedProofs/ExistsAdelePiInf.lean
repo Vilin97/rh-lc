@@ -55,7 +55,7 @@ theorem exists_adele_piInf : ∀ {F E : Type} [Field F] [NumberField F] [Field E
         piInf (emb w) (ofInf c ⊗ₜ[F] y) = ((e w (c w) : ℝ) : ℂ) * (emb w).1 y := fun c y => by
       rw [← he]
       rfl
-    rw [map_add, hc, hc]
+    rw [map_add (f := _), hc, hc]
     simp only [(e w).apply_symm_apply, map_one, mul_one]
     apply Complex.ext
     · simp only [Complex.add_re, Complex.ofReal_re, Complex.re_ofReal_mul, r]; ring

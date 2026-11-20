@@ -54,7 +54,7 @@ theorem exists_rational_solution {F K V : Type} [Field F] [Field K] [Algebra F K
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [φ, Pi.map_apply, hS, map_sum, map_smul, Pi.add_apply, Pi.sub_apply,
       Finset.sum_apply, Pi.smul_apply, smul_eq_mul, map_add, map_sub, map_mul, mul_comm]
-  · rw [← hS, map_add, map_sub, hST _ ⟨b, rfl⟩, hST _ hz, sub_self, zero_add]
+  · rw [← hS, map_add (f := _), map_sub, hST _ ⟨b, rfl⟩, hST _ hz, sub_self, zero_add]
 
 theorem functional_of_tmul {F E K : Type} [Field F] [Field E] [Field K] [Algebra F E] [Algebra F K]
     {n k : ℕ} (s : Fin k → Fin n → E) (z : Fin n → E) (a : Fin k → K)

@@ -50,7 +50,7 @@ theorem cc_serAlong_eq {ι κ : Type} [Finite ι] (e : ι → κ) (f : MvPowerSe
   have h0 : constantCoeff (f - C (constantCoeff f)) = 0 := by simp
   conv_lhs => rw [h]
   unfold serAlong
-  rw [subst_add (hsX e), subst_C, map_add, constantCoeff_C]
+  rw [subst_add (hsX e), subst_C, map_add (f := _), constantCoeff_C]
   have := cc_serAlong e h0
   unfold serAlong at this
   rw [this, add_zero]
@@ -177,7 +177,7 @@ theorem biextension_relation_of_exp_spec (hE : ExpSpec) (hP : BiextensionPointsI
   have hrΨ0 : constantCoeff (-serAlong (Sum.inr : _ → ZV d N0 N1 ⊕ τ) Ψ) = 0 := by
     rw [map_neg, cc_serAlong _ hΨ0, neg_zero]
   have hnT0 : constantCoeff (-T) = 0 := by
-    rw [hT, neg_add, map_add, hlB0, hrΨ0, add_zero]
+    rw [hT, neg_add, map_add (f := _), hlB0, hrΨ0, add_zero]
   refine ⟨mvExp (T - subst Y Φ) * subst Y U0,
     Formalism.InvariantFactorPaths.G7.LogarithmEquivalence.integral_mul' hTΦ.2 (Formalism.InvariantFactorPaths.G7.LogarithmEquivalence.integral_subst' hY0 hYi hU0), ?_⟩
   intro g hg0 hgE

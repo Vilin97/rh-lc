@@ -30,7 +30,7 @@ theorem ctrl_apply (F : Fin m → X.Fn Ω (W.d + 1)) (g : Ga × Gp) (i : Fin m) 
 
 def Lat (Λ : Submodule O Ω) : Submodule O (Fin m → X.Fn Ω (W.d + 1)) where
   carrier := {F | ∀ i g k, X.unt m W F i g k ∈ Λ}
-  add_mem' h h' i g k := by rw [map_add]; exact add_mem (h i g k) (h' i g k)
+  add_mem' h h' i g k := by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (h i g k) (h' i g k)
   zero_mem' i g k := by rw [map_zero]; exact zero_mem _
   smul_mem' c F h i g k := by
     rw [LinearMap.map_smul_of_tower]; exact Λ.smul_mem c (h i g k)

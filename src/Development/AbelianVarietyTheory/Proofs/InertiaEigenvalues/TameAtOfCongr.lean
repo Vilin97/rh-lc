@@ -148,7 +148,7 @@ theorem locK_congr_conj (δ : Twist D Circle) (hδ : δ.Good) (χ : Formalism.L2
     have h1 : ((δ.chi x : Circle) : ℂ) = ((χ.locK P k : ℂˣ) : ℂ) :=
       hc.2 P _ (GlobalTheory.HeckeDetChar.isPlIdem he) k x (locU_val hee k)
     have hxz : cA D (x : AE D) = (z : AE D) := by
-      rw [locU_val, locE, hz, RingHom.map_add, RingHom.map_one, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hcc,
+      rw [locU_val, locE, hz, RingHom.map_add (f := _), RingHom.map_one, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hcc,
         GlobalTheory.MovedIdem.cA_incA, hk, star_star]
     have hfix : cA D ((x * z : (AE D)ˣ) : AE D) = ((x * z : (AE D)ˣ) : AE D) := by
       rw [Units.val_mul, RingHom.map_mul, hxz, ← hxz, GlobalTheory.MovedIdem.cA_cA, mul_comm]

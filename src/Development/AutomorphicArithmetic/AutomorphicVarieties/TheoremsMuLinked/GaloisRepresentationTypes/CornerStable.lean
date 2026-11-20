@@ -166,7 +166,7 @@ private theorem fin (P : LocalPublishedTheorems) (hφ : IsOpenEmbedding φ)
       refine ⟨X + Matrix.single i j m, fun g q hq => ?_⟩
       have e : (y g - (adGL r g (X + Matrix.single i j m) - (X + Matrix.single i j m))) q.1 q.2 =
           (y g - (adGL r g X - X)) q.1 q.2 - (adGL r g (Matrix.single i j m) q.1 q.2 - Matrix.single i j m q.1 q.2) := by
-        simp only [map_add, Matrix.sub_apply, Matrix.add_apply]
+        simp only [map_add (f := _), Matrix.sub_apply, Matrix.add_apply]
         ring
       rw [e]
       rcases Finset.mem_insert.1 hq with rfl | hq
@@ -280,14 +280,14 @@ private theorem desc [T2Space G] (r : G →* GL (Fin n) (PadicAlgCl l))
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [actC, hf]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have key' : ∀ g (y : Matrix (Fin n) (Fin n) E ⊗[ℚ_[l]] Bcr l),
       LinearMap.rTensor (Bcr l) i (actC φ (adGL s) g y) = actC φ (adGL r) g (LinearMap.rTensor (Bcr l) i y) := by
     intro g y
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [actC, hi]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   set x := ∑ p ∈ S, p.1 ⊗ₜ[ℚ_[l]] p.2 with hxd
   have hix : LinearMap.rTensor (Bcr l) i (LinearMap.rTensor (Bcr l) f x) = x := by
     set_option synthInstance.maxHeartbeats 100000 in
@@ -307,7 +307,7 @@ private theorem desc [T2Space G] (r : G →* GL (Fin n) (PadicAlgCl l))
   refine ⟨E, inferInstance, s, fun g => f (y g), hs, hi, hcE, ⟨?_, fun g h => ?_⟩, _, hx'⟩
   · refine continuous_matrix fun a b => continuous_induced_rng.2 ((hcc.matrix_elem a b).congr fun g => ?_)
     exact (congrFun (congrFun (hcE g) a) b).symm
-  · exact (congrArg f (hcoc g h)).trans (by rw [map_add, hf])
+  · exact (congrArg f (hcoc g h)).trans (by rw [map_add (f := _), hf])
 
 private theorem bar (P : LocalPublishedTheorems) (hφ : IsOpenEmbedding φ) {r : G →* GL (Fin n) (PadicAlgCl l)}
     {κ : Fin n → G →* (PadicAlgCl l)ˣ}

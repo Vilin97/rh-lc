@@ -32,7 +32,7 @@ theorem exists_numberField_factor (k : IntermediateField ℚ ℂ) [FiniteDimensi
     | algebraMap r =>
       change ψ (α r) ∈ K₁
       rw [hψ]; exact hk (j r).2
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   refine ⟨K₁, hk, ψ.codRestrict K₁ hmem, IntermediateField.finiteDimensional_sup _ _, ?_, ?_⟩
   · ext a

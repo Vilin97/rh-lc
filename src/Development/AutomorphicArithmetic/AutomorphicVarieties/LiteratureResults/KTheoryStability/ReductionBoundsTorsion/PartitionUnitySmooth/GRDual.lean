@@ -220,7 +220,7 @@ theorem pf_GRDual : GRDual := by
         exact zpow_le_zpow_right₀ (by norm_num) (by omega)
       have h0 : evR z (∑ᶠ v : Lat L N, rho (q h v / 4 ^ k) • rk h v) = 0 := by
         refine finsum_induction (fun x => evR z x = 0) (map_zero _)
-          (fun x y hx hy => by rw [map_add, hx, hy, add_zero]) fun v => ?_
+          (fun x y hx hy => by rw [map_add (f := _), hx, hy, add_zero]) fun v => ?_
         rw [map_smul, smul_eq_mul]
         by_cases hv : f ⬝ᵥ v = 0
         · refine mul_eq_zero_of_right _ ?_
@@ -255,7 +255,7 @@ theorem pf_GRDual : GRDual := by
           mul_le_mul b1 hmC hm0 (mul_nonneg (abs_nonneg _) hD.le)
       _ = _ := by have := hD.ne'; clear * - this; generalize lamD h = x at *; field_simp
   have hR : (star y ⬝ᵥ (mat (ret μ h) w *ᵥ y)).re ≤ (12 * C1 * |C2| + 32) * s / m := by
-    rw [← hzz, ← evR_apply, ret, map_add, map_smul, smul_eq_mul, evR_apply z h, hzs]
+    rw [← hzz, ← evR_apply, ret, map_add (f := _), map_smul, smul_eq_mul, evR_apply z h, hzs]
     have : μ h * s ≤ 12 * C1 * |C2| * s / m := by
       rw [le_div_iff₀ hmp]
       exact (mul_right_comm _ _ _).trans_le (mul_le_mul_of_nonneg_right hμm hs0)

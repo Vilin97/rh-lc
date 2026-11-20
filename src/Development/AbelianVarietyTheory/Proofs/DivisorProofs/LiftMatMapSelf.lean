@@ -20,7 +20,7 @@ theorem map_cA {R : Type} [CommRing R] [Algebra F R] (f : AF F →ₐ[F] R) (σ 
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_unit {A B : Type} [CommRing A] [CommRing B] {m : ℕ} (ρ : A →+* B) (c : A → A) (c' : B → B)
     (hc : ∀ y, ρ (c y) = c' (ρ y)) (M J : Matrix (Fin m) (Fin m) A) :

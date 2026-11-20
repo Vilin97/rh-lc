@@ -61,7 +61,7 @@ theorem exists_den_of_mem_map (I D : Ideal (MvPolynomial (Fin m) ℂ)) (t : Fin 
     · rintro x y _ _ ⟨a, ha, b, hb, hab⟩ ⟨c, hc, d, hd, hcd⟩
       refine ⟨a * d + c * b, D.add_mem (D.mul_mem_right _ ha) (D.mul_mem_right _ hc), b * d,
         by simpa using ⟨hb, hd⟩, ?_⟩
-      simp only [map_add, map_mul, ← hab, ← hcd]
+      simp only [map_add (f := _), map_mul, ← hab, ← hcd]
       ring
     · rintro c x _ ⟨a, ha, b, hb, hab⟩
       obtain ⟨u, v, hv, huv⟩ := exists_mk_locRing I t c

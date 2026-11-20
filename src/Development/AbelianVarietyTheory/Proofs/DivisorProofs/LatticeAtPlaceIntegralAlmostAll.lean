@@ -82,7 +82,7 @@ theorem param {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : Pl F) {kx ky : �
     | add x y _ _ hx hy =>
       obtain ⟨a, rfl⟩ := hx
       obtain ⟨b, rfl⟩ := hy
-      exact ⟨a + b, by simp only [Pi.add_apply, AddMemClass.coe_add, map_add, add_smul, Finset.sum_add_distrib]⟩
+      exact ⟨a + b, by simp only [Pi.add_apply, AddMemClass.coe_add, map_add (f := _), add_smul, Finset.sum_add_distrib]⟩
     | neg x _ hx =>
       obtain ⟨a, rfl⟩ := hx
       exact ⟨-a, by simp only [Pi.neg_apply, NegMemClass.coe_neg, map_neg, neg_smul, Finset.sum_neg_distrib]⟩
@@ -192,7 +192,7 @@ theorem darboux_rat_surj : ∀ {F E : Type} [Field F] [NumberField F] [Field E] 
   have hadd : ∀ x x' : Matrix (Fin n) (Fin d) E, ry (x + x') = ry x + ry x' ∧ rz (x + x') = rz x + rz x' := by
     intro x x'
     have h := congrArg co.e (show incM F (x + x') = incM F x + incM F x' from Matrix.map_add _ (map_add _) _ _)
-    rw [map_add, hr, hr, hr] at h
+    rw [map_add (f := _), hr, hr, hr] at h
     refine ⟨funext fun i => hinj ?_, funext fun i => hinj ?_⟩
     · have := congrArg (fun p => p.1 i) h; simpa using this
     · have := congrArg (fun p => p.2 i) h; simpa using this
@@ -224,7 +224,7 @@ theorem darboux_rat_surj : ∀ {F E : Type} [Field F] [NumberField F] [Field E] 
   have hfp : ∀ p : (κ → F) × (κ → F), f p = ∑ i, p.1 i * α i + ∑ i, p.2 i * β i := by
     intro p
     have hp : p = LinearMap.inl F _ _ p.1 + LinearMap.inr F _ _ p.2 := by ext <;> simp
-    rw [hp, map_add, ← LinearMap.comp_apply, ← LinearMap.comp_apply, LinearMap.pi_apply_eq_sum_univ (f ∘ₗ _) p.1,
+    rw [hp, map_add (f := _), ← LinearMap.comp_apply, ← LinearMap.comp_apply, LinearMap.pi_apply_eq_sum_univ (f ∘ₗ _) p.1,
       LinearMap.pi_apply_eq_sum_univ (f ∘ₗ LinearMap.inr F _ _) p.2]
     simp [α, β, smul_eq_mul]
   let φA : ((κ → AF F) × (κ → AF F)) →ₗ[AF F] AF F :=
@@ -239,7 +239,7 @@ theorem darboux_rat_surj : ∀ {F E : Type} [Field F] [NumberField F] [Field E] 
     intro u v
     rw [hfp]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [φA, map_add, map_sum, map_mul]
+      simp [φA, map_add (f := _), map_sum, map_mul]
   let Φ : Matrix (Fin n) (Fin d) (AE F E) →ₗ[AF F] AF F := φA ∘ₗ co.e.toLinearMap
   have hΦ : Φ = 0 := by
     have hle : Submodule.span (AF F) (Set.range (incM F : Matrix (Fin n) (Fin d) E → Matrix (Fin n) (Fin d) (AE F E)))

@@ -144,7 +144,7 @@ private theorem sq_of_trace [IsLocalHom (algebraMap O A)] (h : UnitaryThreeInert
     (ht : (r g).mat 0 0 + (r g).mat 2 2 = 0) : ((barChar O Ψ g : (ResidueField O)ˣ) : ResidueField O) ^ 2 = -1 := by
   obtain ⟨a, b, -⟩ := red_ent h g
   have e := congrArg (residue A) ht
-  rw [map_add, a, b, ← map_add, ← map_add, map_zero, residue_eq_zero_iff, mem_maximalIdeal, map_mem_nonunits_iff,
+  rw [map_add (f := _), a, b, ← map_add (f := _), ← map_add (f := _), map_zero, residue_eq_zero_iff, mem_maximalIdeal, map_mem_nonunits_iff,
     ← mem_maximalIdeal, ← residue_eq_zero_iff, map_add] at e
   have e2 : residue O (Ψ g) * residue O ((Ψ g)⁻¹ : Oˣ) = 1 := by rw [← map_mul, Units.mul_inv, map_one]
   show residue O (Ψ g) ^ 2 = -1

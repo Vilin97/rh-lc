@@ -130,7 +130,7 @@ theorem main : LL → TwistBCSpanStatement → TWM.VRatioGtStatement → TWState
           have h1 := hQ1 (-mu) fun e => hχ (by rw [e, smul_zero, add_zero])
           rw [v.map_mul, e]
           refine le_trans ?_ (add_le_add (bd S₁ n₁ _) (bo S₂ n₂ _))
-          rw [← WithTop.coe_add, WithTop.coe_le_coe, hQj, ← QForm.Q_neg hϖ D hQ mu, map_add, map_nsmul, nsmul_eq_mul]
+          rw [← WithTop.coe_add, WithTop.coe_le_coe, hQj, ← QForm.Q_neg hϖ D hQ mu, map_add (f := _), map_nsmul, nsmul_eq_mul]
           have h2 := hQs (-mu)
           have h3 := hlow κ₀
           have h4 := mul_le_mul_of_nonneg_left (hlow (-mu)) hj0.le

@@ -268,7 +268,7 @@ theorem theta_split_inc : ∀ (F : Type) [Field F] [NumberField F] [LocallyCompa
       rw [← Matrix.transpose_map, ← Matrix.map_mul, hd']
       exact Submodule.subset_span ⟨_, ⟨z₀, rfl⟩, rfl⟩
     | zero => rw [Matrix.zero_mul, map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [Matrix.add_mul, map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [Matrix.add_mul, map_add (f := _)]; exact add_mem hx hy
     | smul r x _ hx => rw [Matrix.smul_mul, map_smul]; exact Submodule.smul_mem _ _ hx
   have hlam := GlobalTheory.T.lagrangian_stabilizer_character_trivial F E c ξ β ν JB Cy hq hB hL lam.toHomUnits (by
     intro p t hpt

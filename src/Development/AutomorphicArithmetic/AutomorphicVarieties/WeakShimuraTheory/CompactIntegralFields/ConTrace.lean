@@ -79,7 +79,7 @@ private theorem con_block {K Γ : Type} [Field K] [Group Γ] (r : Γ →* M4 K)
     rw [cp] at hg
     obtain ⟨u, v, huv⟩ := (IsRelPrime.of_squarefree_mul hg).isCoprime
     have := congrArg (aeval (B g0)) huv
-    rw [map_add, map_mul, map_mul, Matrix.aeval_self_charpoly, mul_zero, add_zero, map_one] at this
+    rw [map_add (f := _), map_mul, map_mul, Matrix.aeval_self_charpoly, mul_zero, add_zero, map_one] at this
     exact IsUnit.of_mul_eq_one_right _ this
   have key : ∀ y, (aeval (B g0) (A g0).charpoly * B y).trace =
       (r (g0 * g0 * y)).trace - (A g0).trace * (r (g0 * y)).trace + (A g0).det * (r y).trace := fun y => by

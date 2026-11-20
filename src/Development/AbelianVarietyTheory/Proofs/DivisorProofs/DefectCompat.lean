@@ -38,7 +38,7 @@ theorem defect_compat : ∀ (p : ℕ) [Fact p.Prime] (O E : Type) [CommRing O] [
     (by rw [← pow_succ]; exact hs')
   haveI := hF.complete
   refine ⟨c.ev (n + 1) s₁, ?_⟩
-  rw [h, map_add, map_smul, (T.ev_subst_natMultiple_prime_pow_constant p O G d c n).2.2, Nat.cast_pow]
+  rw [h, map_add (f := _), map_smul, (T.ev_subst_natMultiple_prime_pow_constant p O G d c n).2.2, Nat.cast_pow]
   exact add_comm _ _
 
 end GlobalTheory.QLog

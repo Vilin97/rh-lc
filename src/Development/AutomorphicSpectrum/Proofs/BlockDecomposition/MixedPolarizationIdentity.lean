@@ -152,7 +152,7 @@ section Lin
 variable {κ : Type} [Fintype κ]
 
 theorem lin_add (a b : κ → ℤ) : lin (fun o => ((a + b) o : ℝ)) = lin (fun o => (a o : ℝ)) + lin (fun o => (b o : ℝ)) := by
-  simp only [lin, Pi.add_apply, Int.cast_add, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [lin, Pi.add_apply, Int.cast_add, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem lin_elim_zero (n : κ → ℤ) :
     lin (fun o : Option κ => (((o.elim 0 n : ℤ)) : ℝ)) = rename some (lin fun i => (n i : ℝ)) := by
@@ -195,7 +195,7 @@ theorem polar : Polar := by
         by_cases h : i = j
         · subst h; simp
         · simp [Function.update_of_ne h]
-      rw [e, e, e, ← map_add, ← add_mul]
+      rw [e, e, e, ← map_add (f := _), ← add_mul]
       congr 2
       exact lin_add b c
     · intro a j b c

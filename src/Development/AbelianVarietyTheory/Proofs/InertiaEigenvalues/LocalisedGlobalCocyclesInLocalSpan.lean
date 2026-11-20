@@ -47,7 +47,7 @@ theorem factor {O K Γ X W : Type} [CommRing O] [IsNoetherianRing O] [Field K] [
       exact Y0.sub_mem (Submodule.subset_span ⟨_, rfl⟩) (Submodule.subset_span ⟨_, rfl⟩)
     | zero => simp
     | add a b _ _ ha hb =>
-      rw [mul_add, map_add, map_add, map_add, ha.2, hb.2]
+      rw [mul_add, map_add (f := _), map_add (f := _), map_add (f := _), ha.2, hb.2]
       exact ⟨Y0.add_mem ha.1 hb.1, rfl⟩
     | smul c a _ ha =>
       rw [mul_smul_comm, map_smul, map_smul, map_smul, ha.2]

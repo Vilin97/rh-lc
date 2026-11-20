@@ -125,7 +125,7 @@ theorem cHess_adjugate_piola (D : ℕ) (u : V D → ℂ) (z : V D) (hu : ContDif
       calc _ = ReciprocityTheory.L2DbarEstimates.I.macofRow (B z) i ((1 / 2 : ℂ) •
             ((fun b => B' i b (EuclideanSpace.single l 1))
               + Complex.I • (fun b => B' i b (Complex.I • EuclideanSpace.single l 1)))) := by
-            rw [map_smul, map_add, map_smul]
+            rw [map_smul, map_add (f := _), map_smul]
             simp only [ReciprocityTheory.L2DbarEstimates.I.macofRow_apply]
         _ = t l i := by
             rw [ht]

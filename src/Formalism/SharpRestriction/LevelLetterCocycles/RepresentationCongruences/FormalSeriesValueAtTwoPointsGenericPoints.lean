@@ -247,7 +247,7 @@ theorem content_p1_pow_X_pow_eq_zero (hl : (l : O) ∈ IsLocalRing.maximalIdeal 
     have hϖ0 : IsLocalRing.residue O ϖ = 0 := (IsLocalRing.residue_eq_zero_iff ϖ).mpr
       ((IsLocalRing.mem_maximalIdeal ϖ).mpr (mem_nonunits_iff.mpr hϖ.not_isUnit))
     have hm := congrArg (PowerSeries.map (IsLocalRing.residue O)) hac
-    simp only [map_add, map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X, hϖ0, map_zero,
+    simp only [map_add (f := _), map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X, hϖ0, map_zero,
       zero_pow hk0.ne', mul_zero, zero_add, residue_map_p1_eq hl hp] at hm
     have e1 : (PowerSeries.map (IsLocalRing.residue O) u * X ^ l) ^ y =
         PowerSeries.map (IsLocalRing.residue O) u ^ y * X ^ (l * y) := by ring
@@ -273,7 +273,7 @@ theorem content_X_pow_p1_pow_eq_zero (hl : (l : O) ∈ IsLocalRing.maximalIdeal 
     have hϖ0 : IsLocalRing.residue O ϖ = 0 := (IsLocalRing.residue_eq_zero_iff ϖ).mpr
       ((IsLocalRing.mem_maximalIdeal ϖ).mpr (mem_nonunits_iff.mpr hϖ.not_isUnit))
     have hm := congrArg (PowerSeries.map (IsLocalRing.residue O)) hac
-    simp only [map_add, map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X, hϖ0, map_zero,
+    simp only [map_add (f := _), map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X, hϖ0, map_zero,
       zero_pow hk0.ne', mul_zero, zero_add, residue_map_p1_eq hl hp] at hm
     have e1 : (PowerSeries.map (IsLocalRing.residue O) u * X ^ l) ^ y =
         PowerSeries.map (IsLocalRing.residue O) u ^ y * X ^ (l * y) := by ring

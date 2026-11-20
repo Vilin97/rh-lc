@@ -357,7 +357,7 @@ theorem start_is_frame : StartFrame := by
   · intro Y hY _
     simp only [lift0, Matrix.map_apply, one_mul, mul_one, Formalism.FourierDecayAlt.Fr.FrameData.l, Formalism.FourierDecayAlt.Fr.kapL]
     rw [hst.low Y hY]
-    simp only [io, map_mul, map_add]
+    simp only [io, map_mul, map_add (f := _)]
 
 theorem frame_module_of_word : WordJoint := by
   intro A S _ _ _ _ _ _ r L st w

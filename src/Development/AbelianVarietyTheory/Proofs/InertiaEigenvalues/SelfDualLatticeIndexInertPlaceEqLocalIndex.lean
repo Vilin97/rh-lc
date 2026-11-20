@@ -38,7 +38,7 @@ theorem relIndex_map_of_proj_left {X Y : Type} [AddCommGroup X] [AddCommGroup Y]
     rwa [map_sub, sub_eq_zero] at this
   have hy' : (x - P x) + P y ∈ A := add_mem (sub_mem hx (hPA x hx)) (hPA y hy)
   have hMy : M ((x - P x) + P y - y) = 0 := by
-    rw [map_sub, map_add, map_sub, hMP, hMP]; abel
+    rw [map_sub, map_add (f := _), map_sub, hMP, hMP]; abel
   have h2 : P ((x - P x) + P y) = P y := by
     have := hK _ hMy
     rwa [map_sub, sub_eq_zero] at this

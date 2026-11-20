@@ -36,7 +36,7 @@ theorem thetaIntegral_linear_of_triple : ∀ (F E : Type) [Field F] [NumberField
     funext h
     have e : ∀ g, theta om' (Φ + c • Ψ) g h = theta om' Φ g h + c * theta om' Ψ g h := fun g => by
       have e1 : theta om' (Φ + c • Ψ) g h = theta om' Φ g h + theta om' (c • Ψ) g h := by
-        simp only [theta, map_add]
+        simp only [theta, map_add (f := _)]
         exact thetaSum_add F (pres _ Φ hΦS) (pres _ (c • Ψ) hcΨS)
       have e2 : theta om' (c • Ψ) g h = c * theta om' Ψ g h := by
         simp only [theta, map_smul]

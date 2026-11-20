@@ -165,7 +165,7 @@ theorem exists_lin {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (S : Module.End �
   have h : ∀ f : SInf F κ, ∀ g ∈ SB (κ → Af F), S (pureA F f g) = pureA F (T f) g := fun f g hg => by
     rw [apply_pure hψ S hS f h₀ h₁ hg, show ⇑(T f) = _ from funext (hT f)]
   refine ⟨⟨⟨T, fun a b => DFunLike.coe_injective (pureA_inj h₁ ?_)⟩, fun c a => DFunLike.coe_injective (pureA_inj h₁ ?_)⟩, h⟩
-  · rw [← h _ _ h₀, show ⇑(a + b) = ⇑a + ⇑b from rfl, pureA_add, map_add, h _ _ h₀, h _ _ h₀, ← pureA_add]
+  · rw [← h _ _ h₀, show ⇑(a + b) = ⇑a + ⇑b from rfl, pureA_add, map_add (f := _), h _ _ h₀, h _ _ h₀, ← pureA_add]
     rfl
   · rw [← h _ _ h₀, show ⇑(c • a) = c • ⇑a from rfl, pureA_smul, map_smul, h _ _ h₀, ← pureA_smul]
     rfl

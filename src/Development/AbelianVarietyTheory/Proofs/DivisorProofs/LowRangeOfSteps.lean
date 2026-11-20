@@ -35,7 +35,7 @@ def kfin : Submodule ℂ ((κ → AF F) → ℂ) where
         Submodule.span ℂ {X | ∃ k ∈ K, X = om (1, k) Φ} ⊔ Submodule.span ℂ {X | ∃ k ∈ K, X = om (1, k) Ψ} :=
       Submodule.span_le.2 (by
         rintro _ ⟨k, hk, rfl⟩
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem_sup (Submodule.subset_span ⟨k, hk, rfl⟩) (Submodule.subset_span ⟨k, hk, rfl⟩))
     exact Submodule.finiteDimensional_of_le h
   smul_mem' := by

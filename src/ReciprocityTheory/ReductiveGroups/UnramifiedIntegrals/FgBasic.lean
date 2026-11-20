@@ -51,7 +51,7 @@ theorem divByMv_zero (x : K) : DivByMv x (0 : MvPowerSeries ι K) := by
 theorem divByMv_add {x : K} {F G : MvPowerSeries ι K} (hF : DivByMv x F) (hG : DivByMv x G) :
     DivByMv x (F + G) := by
   intro d
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hF d) (hG d))
 theorem divByMv_sub {x : K} {F G : MvPowerSeries ι K} (hF : DivByMv x F) (hG : DivByMv x G) :
     DivByMv x (F - G) := by

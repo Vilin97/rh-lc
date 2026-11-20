@@ -165,7 +165,7 @@ def lagCo (co : Darboux (symp c ξ JA JB) κ) (C : Matrix β ν E) : Submodule k
   zero_mem' := ⟨0, by simp⟩
   add_mem' := by
     rintro _ _ ⟨z, rfl⟩ ⟨z', rfl⟩
-    exact ⟨z + z', by simp only [Matrix.add_mul, map_add]⟩
+    exact ⟨z + z', by simp only [Matrix.add_mul, map_add (f := _)]⟩
   smul_mem' := by
     rintro a _ ⟨z, rfl⟩
     exact ⟨a • z, by simp only [Matrix.smul_mul, map_smul]⟩
@@ -186,7 +186,7 @@ theorem finrank_lagCo [DecidableEq β] [DecidableEq ν] (co : Darboux (symp c ξ
   have hu : u = u * M.toRows₁ᵀ * Cᵀ + u * M.toRows₂ᵀ * Cxᵀ := by
     rw [Matrix.mul_assoc, Matrix.mul_assoc, ← Matrix.mul_add, ← Matrix.transpose_mul, ← Matrix.transpose_mul,
       ← Matrix.transpose_add, h1, Matrix.transpose_one, Matrix.mul_one]
-  rw [hu, map_add]
+  rw [hu, map_add (f := _)]
   exact Submodule.add_mem_sup ⟨_, rfl⟩ ⟨_, rfl⟩
 
 end Pair

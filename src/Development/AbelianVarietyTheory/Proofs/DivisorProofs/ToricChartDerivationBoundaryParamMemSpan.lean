@@ -46,7 +46,7 @@ theorem deriv_bdParam_mem_span : ∀ (A : Type) [CommRing A] (k : Type) [Field k
       rw [hD]
       exact Ideal.mem_map_of_mem ψ (hI a ha)
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Ideal.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Ideal.add_mem _ hx hy
     | smul r x hxm hx =>
       rw [smul_eq_mul, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
       exact Ideal.add_mem _ (Ideal.mul_mem_left _ r hx)

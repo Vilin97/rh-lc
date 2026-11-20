@@ -68,7 +68,7 @@ theorem diag_coords_of_holomorphic_lattice_family : ∀ (Ω : Type) [NormedAddCo
       · simp only [Pi.single_eq_same, Pi.add_apply, Pi.smul_apply, Complex.real_smul, mul_one]
         exact (Complex.re_add_im y).symm
       · simp [h]
-    rw [hy, map_add, map_smul, map_smul, hα, hβ]
+    rw [hy, map_add (f := _), map_smul, map_smul, hα, hβ]
     simp only [Pi.add_apply, Pi.smul_apply, Complex.real_smul]
     have hc : starRingEnd ℂ y = (y.re : ℂ) - (y.im : ℂ) * Complex.I := by
       apply Complex.ext <;> simp

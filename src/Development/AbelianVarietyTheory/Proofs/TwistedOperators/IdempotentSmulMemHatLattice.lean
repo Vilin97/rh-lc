@@ -115,7 +115,7 @@ theorem v_le_of_mem_latO_idLat (hS : IsSelfDualC S ΛS) {βS : GL (Fin S.rank) (
   set B : WithZero (Multiplicative ℤ) := WithZero.exp (-(k : ℤ)) with hB
   let p : WO S T → Prop := fun u => ∀ a b, Valued.v (cpt (D := D) w (Comparison₂.fr βT βS (u.map (toEAf D)) a b)) ≤ B
   have hadd : ∀ x y, p x → p y → p (x + y) := fun x y hx hy a b => by
-    rw [Matrix.map_add _ (toEAf D).map_add, Comparison₂.fr_add, Matrix.add_apply, RingHom.map_add]
+    rw [Matrix.map_add _ (toEAf D).map_add (f := _), Comparison₂.fr_add, Matrix.add_apply, RingHom.map_add (f := _)]
     exact Valuation.map_add_le _ (hx a b) (hy a b)
   have hneg : ∀ x, p x → p (-x) := fun x hx a b => by
     rw [Matrix.map_neg _ (toEAf D).map_neg, fr_neg, Matrix.neg_apply, RingHom.map_neg, Valuation.map_neg]
@@ -146,7 +146,7 @@ theorem v_le_of_mem_latO_idLat (hS : IsSelfDualC S ΛS) {βS : GL (Fin S.rank) (
         rw [Comparison₂.fr, Matrix.mul_zero, Matrix.zero_mul]]
       simp
     · intro x y _ _ hx hy a b
-      rw [genMap_add, Matrix.map_add _ (eToEAf D).map_add, Comparison₂.fr_add, Matrix.add_apply, RingHom.map_add]
+      rw [genMap_add, Matrix.map_add _ (eToEAf D).map_add (f := _), Comparison₂.fr_add, Matrix.add_apply, RingHom.map_add (f := _)]
       exact Valuation.map_add_le _ (hx a b) (hy a b)
     · intro o x _ hx a b
       rw [show o • x = (algebraMap (𝓞 D.host.E) D.host.E o) • x from (algebraMap_smul _ _ _).symm, genMap_smul,

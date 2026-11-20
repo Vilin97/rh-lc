@@ -465,7 +465,7 @@ theorem final_eq {V : Submodule ℂ (G3K K → ℂ)} (hV : WhAK V) {W : G3K K �
       simp only [diaK, map_mul]
     rw [hQ, hm, hdu, hdd]
     simp only [mul_assoc]
-  rw [key, hV.psi W hW, hV.cen W hW, ← map_add, psi_rat, one_mul]
+  rw [key, hV.psi W hW, hV.cen W hW, ← map_add (f := _), psi_rat, one_mul]
 
 theorem hGen_of' (h1 : MajU K) (h1' : MajV K) (h2 : ContW K) : HGen K := by
   intro V hV W hW ξ hξ0 hξ1 g

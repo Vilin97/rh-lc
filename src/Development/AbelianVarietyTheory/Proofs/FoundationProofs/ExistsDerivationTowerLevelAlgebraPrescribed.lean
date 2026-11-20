@@ -95,7 +95,7 @@ theorem exists_der_gen (z q : S) (μ ν : M)
   · intro x hx y hy
     obtain ⟨f, rfl⟩ := exists_evalBivariatePolynomialAt_of_mem_adjoin z q hx
     obtain ⟨g, rfl⟩ := exists_evalBivariatePolynomialAt_of_mem_adjoin z q hy
-    rw [← map_add, key, key, key, map_add, snd_add]
+    rw [← map_add (f := _), key, key, key, map_add (f := _), snd_add]
   · intro x hx y hy
     obtain ⟨f, rfl⟩ := exists_evalBivariatePolynomialAt_of_mem_adjoin z q hx
     obtain ⟨g, rfl⟩ := exists_evalBivariatePolynomialAt_of_mem_adjoin z q hy
@@ -166,7 +166,7 @@ theorem kap_eq (T : Tower p Ω) (n : ℕ) (ι : On p n →ₐ[O0 p] Ω) (hι : I
     apply Polynomial.ringHom_ext
     · intro g
       induction g using Polynomial.induction_on' with
-      | add g h hg hh => rw [C_add, map_add, map_add, hg, hh]
+      | add g h hg hh => rw [C_add, map_add (f := _), map_add (f := _), hg, hh]
       | monomial k c =>
         rw [← C_mul_X_pow_eq_monomial, C_mul, C_pow]
         simp only [RingHom.coe_comp, Function.comp_apply, map_mul, map_pow, AlgHom.toRingHom_eq_coe,

@@ -87,7 +87,7 @@ private theorem occ_abs (hu : ∀ a b, u (a * b) = u a * u b) (hc : Continuous u
   let c : ℝ → ℂ := fun t => Complex.exp (Complex.I * ((((n : ℤ) + 2 * q : ℤ) : ℂ) * t))
   let ρ : Submodule ℂ H :=
     { carrier := {x | x ∈ τ ∧ ∀ t : ℝ, R (u (tC t t)) x = c t • x}
-      add_mem' := fun {x y} hx hy => ⟨τ.add_mem hx.1 hy.1, fun t => by rw [map_add, hx.2, hy.2, smul_add]⟩
+      add_mem' := fun {x y} hx hy => ⟨τ.add_mem hx.1 hy.1, fun t => by rw [map_add (f := _), hx.2, hy.2, smul_add]⟩
       zero_mem' := ⟨τ.zero_mem, fun t => by simp⟩
       smul_mem' := fun a x hx => ⟨τ.smul_mem a hx.1, fun t => by rw [map_smul, hx.2, smul_comm]⟩ }
   have hρτ : ρ ≤ τ := fun x hx => hx.1

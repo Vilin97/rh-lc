@@ -47,7 +47,7 @@ theorem exists_coord {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
       ∀ a i, φ (Submodule.Quotient.mk a) i = GlobalTheory.GeoActCompare.resI F I hI (ρ a i) := by
   let φ₀ : La →ₗ[𝓞 E] (Fin n → 𝓞 E ⧸ I) :=
     { toFun := fun a i => GlobalTheory.GeoActCompare.resI F I hI (ρ a i)
-      map_add' := fun a b => funext fun i => by rw [map_add, Pi.add_apply, map_add]; rfl
+      map_add' := fun a b => funext fun i => by rw [map_add (f := _), Pi.add_apply, map_add (f := _)]; rfl
       map_smul' := fun b a => funext fun i => by
         rw [h1, Pi.smul_apply, smul_eq_mul, map_mul, GlobalTheory.GeoActCompare.resI_oToS]
         exact (Algebra.smul_def _ _).symm }
@@ -57,7 +57,7 @@ theorem exists_coord {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     refine ⟨a, funext fun i => ?_⟩
     have e1 := congrArg (GlobalTheory.GeoActCompare.resI F I hI) (congrFun e i)
     have e2 : ((M : ℕ) : 𝓞 E ⧸ I) = 0 := by rw [← map_natCast (Ideal.Quotient.mk I), Ideal.Quotient.eq_zero_iff_mem.2 hM]
-    rw [GlobalTheory.GeoActCompare.resI_oToS, hu, Pi.add_apply, map_add, Pi.smul_apply, map_nsmul, nsmul_eq_mul, e2, zero_mul,
+    rw [GlobalTheory.GeoActCompare.resI_oToS, hu, Pi.add_apply, map_add (f := _), Pi.smul_apply, map_nsmul, nsmul_eq_mul, e2, zero_mul,
       add_zero] at e1
     exact e1.symm
   have hk : I • (⊤ : Submodule (𝓞 E) La) = LinearMap.ker φ₀ := by

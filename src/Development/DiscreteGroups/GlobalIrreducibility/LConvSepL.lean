@@ -64,9 +64,9 @@ theorem lam_add (hψ : Continuous ψ) {I : (GL (Fin m) k → ℂ) →ₗ[ℂ] �
     {B : WT (m := m) ψ →ₗ⋆[ℂ] WT (m := m) ψ →ₗ[ℂ] ℂ} (hB : IsInvForm (rhoW ψ) B) (y z : WT (m := m) ψ) :
     lam ψ hψ I B (y + z) = lam ψ hψ I B y + lam ψ hψ I B z := by
   obtain ⟨K, hK, hKf⟩ := exists_good_fix hψ y z
-  rw [lam_eq hψ hI hB hK (fun κ hκ => by rw [map_add, (hKf κ hκ).1, (hKf κ hκ).2]),
+  rw [lam_eq hψ hI hB hK (fun κ hκ => by rw [map_add (f := _), (hKf κ hκ).1, (hKf κ hκ).2]),
     lam_eq hψ hI hB hK (fun κ hκ => (hKf κ hκ).1), lam_eq hψ hI hB hK (fun κ hκ => (hKf κ hκ).2)]
-  simp only [lamK, map_add, LinearMap.add_apply, add_div]
+  simp only [lamK, map_add (f := _), LinearMap.add_apply, add_div]
 
 theorem lam_smul (hψ : Continuous ψ) {I : (GL (Fin m) k → ℂ) →ₗ[ℂ] ℂ} (hI : PosInt I)
     {B : WT (m := m) ψ →ₗ⋆[ℂ] WT (m := m) ψ →ₗ[ℂ] ℂ} (hB : IsInvForm (rhoW ψ) B) (a : ℂ) (y : WT (m := m) ψ) :

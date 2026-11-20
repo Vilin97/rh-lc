@@ -80,7 +80,7 @@ theorem exists_finset_coeff_mem_closure :
       v = PowerSeries.mk fun k => PowerSeries.coeff (n + k) b := ⟨_, rfl⟩
   have hbuv : b = u + PowerSeries.X ^ n * v := by
     ext k
-    rw [map_add, PowerSeries.coeff_X_pow_mul', hu, hv]
+    rw [map_add (f := _), PowerSeries.coeff_X_pow_mul', hu, hv]
     simp only [PowerSeries.coeff_mk]
     by_cases h1 : k < n
     · rw [if_pos h1, if_neg (by omega), add_zero]
@@ -108,7 +108,7 @@ theorem exists_finset_coeff_mem_closure :
       PowerSeries.X ^ (n + n) * (k * v ^ 2 - w * v) := by
     rw [hk]; ring
   have hc2 := congrArg (PowerSeries.coeff (n + m)) key
-  rw [map_zero, map_add, map_add, PowerSeries.coeff_X_pow_mul', PowerSeries.coeff_X_pow_mul',
+  rw [map_zero, map_add (f := _), map_add (f := _), PowerSeries.coeff_X_pow_mul', PowerSeries.coeff_X_pow_mul',
     if_pos (by omega), if_neg (by omega), add_zero, Nat.add_sub_cancel_left] at hc2
   have hFv : PowerSeries.coeff m (F * v) = c * PowerSeries.coeff n b := by
     rw [PowerSeries.coeff_mul, Finset.sum_eq_single (m, 0)]

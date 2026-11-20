@@ -100,7 +100,7 @@ theorem block_forms : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Number
       rw [map_zero]
       exact isAut_const σ J K 0
     | add a b _ _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       simpa using (hAut _ _ ha hb).1 1 1
     | smul c a _ ha =>
       rw [map_smul]
@@ -140,7 +140,7 @@ theorem block_forms : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Number
   choose fU hfU using hS8
   have hccU : ∀ u w : U, ∀ a b : ℂ, cc (Ttot ((a • u + b • w : U) : Fin m → V)) = a • cc (Ttot u) + b • cc (Ttot w) := by
     intro u w a b
-    rw [Submodule.coe_add, Submodule.coe_smul, Submodule.coe_smul, map_add, map_smul, map_smul]
+    rw [Submodule.coe_add, Submodule.coe_smul, Submodule.coe_smul, map_add (f := _), map_smul, map_smul]
     exact hccl _ _ (hAutU u u.2) (hAutU w w.2) a b
   let Λ₀ : U →ₗ[ℂ] GlobalTheory.CuspRep.Sm E d :=
     { toFun := fU

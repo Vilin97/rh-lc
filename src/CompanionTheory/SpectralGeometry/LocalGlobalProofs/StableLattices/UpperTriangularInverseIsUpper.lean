@@ -12,7 +12,7 @@ variable {L V ι : Type} [Field L] [AddCommGroup V] [Module L V] [Fintype ι]
 
 def low (wt : ι → ℕ) (P : ι → Module.End L V) (m : ℕ) : Submodule L V where
   carrier := {x | ∀ i, m ≤ wt i → P i x = 0}
-  add_mem' {x y} hx hy i hi := by rw [map_add, hx i hi, hy i hi, add_zero]
+  add_mem' {x y} hx hy i hi := by rw [map_add (f := _), hx i hi, hy i hi, add_zero]
   zero_mem' i _ := map_zero _
   smul_mem' c x hx i hi := by rw [map_smul, hx i hi, smul_zero]
 

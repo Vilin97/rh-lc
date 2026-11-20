@@ -60,7 +60,7 @@ namespace GlobalTheory.TorusFormPf
 
 theorem lattice_add {E : Type} [Field E] [NumberField E] {c : Ideal (OF E)} {y : (Af E)ˣ} {x x' : E}
     (hx : x ∈ lattice c y) (hx' : x' ∈ lattice c y) : x + x' ∈ lattice c y := by
-  simp only [lattice, Set.mem_setOf_eq, map_add, add_mul] at *
+  simp only [lattice, Set.mem_setOf_eq, map_add (f := _), add_mul] at *
   exact Subring.add_mem _ hx hx'
 
 theorem lattice_smul {E : Type} [Field E] [NumberField E] {c : Ideal (OF E)} {y : (Af E)ˣ} {x : E}
@@ -76,7 +76,7 @@ theorem torusForm : TorusForm := by
     intro j x; rw [← he]; exact Complex.conj_ofReal _
   set D : E → Fin (Module.finrank ℚ (FR E)) → ℂ := fun x j ↦ defCoord φ z x (U.e j) with hD
   have hDadd : ∀ x x', D (x + x') = D x + D x' := by
-    intro x x'; funext j; simp only [hD, defCoord, map_add, Pi.add_apply]; ring
+    intro x x'; funext j; simp only [hD, defCoord, map_add (f := _), Pi.add_apply]; ring
   have hDsmul : ∀ (a : FR E) x, D ((a : E) * x) = fun j ↦ (e j a : ℂ) * D x j := by
     intro a x; funext j; simp only [hD, defCoord, map_mul]; rw [hreal j a, ← he]; ring
   have hact : ∀ (a : 𝓞 (FR E)) w, U.u.ex (fun j ↦ (e j (a : FR E) : ℂ) * w j) = U.u.ex w ≫ X.rm.act a := by
@@ -142,7 +142,7 @@ theorem torusForm : TorusForm := by
       have : (U.h (U.e j) : ℂ) * ((((e j 0 : ℝ) : ℂ) * A j + ((e j ((x : FR E) * β₀) : ℝ) : ℂ) * B j) *
           starRingEnd ℂ (((e j m₀ : ℝ) : ℂ) * A j + ((e j 0 : ℝ) : ℂ) * B j)) =
           ((U.h (U.e j) * e j (x : FR E) * e j β₀ * e j m₀ : ℝ) : ℂ) * (B j * starRingEnd ℂ (A j)) := by
-        simp only [map_zero, map_mul, map_add, Complex.ofReal_zero, Complex.conj_ofReal, zero_mul, zero_add, add_zero]
+        simp only [map_zero, map_mul, map_add (f := _), Complex.ofReal_zero, Complex.conj_ofReal, zero_mul, zero_add, add_zero]
         push_cast; ring
       rw [this, Complex.im_ofReal_mul]; ring
     simp only [hl] at htr

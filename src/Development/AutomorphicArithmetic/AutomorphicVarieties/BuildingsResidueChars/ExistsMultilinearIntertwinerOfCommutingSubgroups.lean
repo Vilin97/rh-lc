@@ -8,7 +8,7 @@ private def eqv {Γ X Y : Type} [Group Γ] [AddCommGroup X] [Module ℂ X] [AddC
   carrier := {f | ∀ g v, f (σ g v) = ρ g (f v)}
   add_mem' := by
     intro a b ha hb g v
-    simp only [LinearMap.add_apply, map_add, ha g v, hb g v]
+    simp only [LinearMap.add_apply, map_add (f := _), ha g v, hb g v]
   zero_mem' := by intro g v; simp
   smul_mem' := by
     intro c a ha g v

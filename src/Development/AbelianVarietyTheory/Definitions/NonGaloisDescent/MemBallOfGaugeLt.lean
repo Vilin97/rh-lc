@@ -300,7 +300,7 @@ theorem _root_.GlobalTheory.BSP.norm_preMap_le [hl : Fact l.Prime] (f : A →+* 
       exact hle
     | zero => simpa using hr
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (_root_.GlobalTheory.BSP.gauge_add_le_max l u' ρ' _ _).trans (max_le hx hy)
     | smul a x _ hx =>
       rw [Algebra.smul_def, map_mul, _root_.GlobalTheory.BSP.preMap_alg]

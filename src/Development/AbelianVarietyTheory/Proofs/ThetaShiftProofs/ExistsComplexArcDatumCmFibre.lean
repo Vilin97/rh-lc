@@ -226,7 +226,7 @@ theorem exists_holUnif_of_exp (hT : ThetaUnifAV) {S : Scheme.{0}} {G : Over S} [
     Submodule.ext hΛ, ⟨herm, pos, fun l => hAH.2.2.1 _, fun l i z hz => ?_⟩, fun j hj => ?_, fun j θ hθ => ?_, hex⟩
   · have := hAH.2.2.2 ⟨F l, l.2⟩ i (F z) hz
     change u.fr i (F z) / 1 = _ * Complex.exp (_ * hermForm Hm z l + _ * hermForm Hm l l) * (u.fr i (F (z + l)) / 1)
-    rw [div_one, div_one, map_add, ← hH, ← hH]
+    rw [div_one, div_one, map_add (f := _), ← hH, ← hH]
     exact this
   · change u.fr _ (F 0) / 1 = _
     rw [map_zero, div_one]
@@ -237,7 +237,7 @@ theorem exists_holUnif_of_exp (hT : ThetaUnifAV) {S : Scheme.{0}} {G : Over S} [
         have a : ∀ v, F (T.symm v) = v := T.apply_symm_apply
         simp only [← hH, a] at h
         beta_reduce
-        rw [map_add]
+        rw [map_add (f := _)]
         exact h⟩
     refine ⟨s, fun i z hz => ?_⟩
     have := hs i (T z) hz

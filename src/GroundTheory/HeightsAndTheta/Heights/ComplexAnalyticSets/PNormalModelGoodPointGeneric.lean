@@ -184,7 +184,7 @@ theorem NormalModelGoodPointGeneric.proof (h₁ : NormalCodimOneCompleteIntersec
     have hle : L ⊔ Ideal.span {F} ≤ RingHom.ker (eval w) := by
       refine sup_le (fun p hp ↦ RingHom.mem_ker.mpr (hwW p (hW.1.2 hp))) (Ideal.span_le.mpr (by simpa using h0))
     exact RingHom.mem_ker.mp (hle hp)
-  rw [hsplit W ((hmemT W).mpr hW), map_add, hwW _ (hrest W hW), add_zero, map_mul] at hFw
+  rw [hsplit W ((hmemT W).mpr hW), map_add (f := _), hwW _ (hrest W hW), add_zero, map_mul] at hFw
   exact hβ W hW w hwW (left_ne_zero_of_mul hFw)
 
 end

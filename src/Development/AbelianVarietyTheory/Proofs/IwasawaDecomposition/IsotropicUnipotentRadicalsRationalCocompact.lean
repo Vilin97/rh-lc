@@ -26,7 +26,7 @@ theorem cay_unitary (hm : ∀ x y, st (x * y) = st y * st x) (hi : ∀ x, st (st
     have := congrArg st a2
     rwa [hm, map_sub, h1, hy, sub_neg_eq_add] at this
   have c1 : st ((1 + y) * G) * ((1 + y) * G) = 1 := by
-    rw [hm, map_add, h1, hy]
+    rw [hm, map_add (f := _), h1, hy]
     calc st G * (1 + -y) * ((1 + y) * G) = (st G * (1 + y)) * ((1 - y) * G) := by noncomm_ring
       _ = 1 := by rw [a1, b1, one_mul]
   have c2 : ((1 + y) * G) * ((1 - y) * st G) = 1 := by
@@ -63,7 +63,7 @@ theorem compact_mod_of_filtration [TopologicalSpace S] [IsTopologicalRing S] (S�
   have hhx : ∀ x, h * x + h * x = x := fun x => by rw [← add_mul, hh, one_mul]
   have hhN : ∀ i, ∀ x ∈ N i, h * x ∈ N i := fun i x hx => by
     have : h * x = p i (h * x) := by
-      conv_lhs => rw [← hpf i x hx, ← hhx x, map_add, mul_add, hhx]
+      conv_lhs => rw [← hpf i x hx, ← hhx x, map_add (f := _), mul_add, hhx]
     rw [this]; exact hpN _ _
   have hle0 : ∀ i, N i ≤ N 0 := fun i => by
     induction i with
@@ -538,7 +538,7 @@ theorem closure_radSet_cocompact {r : ℕ} (C : Matrix (Fin V.rank) (Fin r) E) (
     (Matrix.scalar _ (φ (1 / 2))) (Set.pi Set.univ fun _ => Set.pi Set.univ fun _ => K) hcont
     (adj_mul hc V) (adj_adj hc V) hst0
     ⟨Matrix.scalar _ (1 / 2), by ext i j; by_cases h : i = j <;> simp [h]⟩
-    (by rw [← map_add, ← map_add, add_halves, map_one, map_one])
+    (by rw [← map_add (f := _), ← map_add (f := _), add_halves, map_one, map_one])
     (fun x => (Matrix.scalar_commute _ (fun _ => Commute.all _ _) x).eq)
     (isCompact_univ_pi fun _ => isCompact_univ_pi fun _ => hK)
     (fun X => by

@@ -111,7 +111,7 @@ theorem UpperTheory.Gal.productCup_of_system.resVal_of :
       have hz' := hmemB z ((hspan z).2 hz)
       have h1 : (⟨algebraMap F K (y + z), h⟩ : rB ℂ K (xv x) {0}) = ⟨_, hy'⟩ + ⟨_, hz'⟩ :=
         Subtype.ext (map_add _ _ _)
-      rw [h1, map_add, map_add, ihy hy', ihz hz']
+      rw [h1, map_add (f := _), map_add (f := _), ihy hy', ihz hz']
     | smul r y hy ihy =>
       intro h
       have hy' := hmemB y ((hspan y).2 hy)

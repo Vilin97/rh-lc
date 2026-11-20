@@ -66,7 +66,7 @@ theorem rho_add (ψ : AddChar (AF F) ℂ) (M : Model σ X W) (w w' : Matrix (Fin
     (h : (M.co.e w).1 ⬝ᵥ (M.co.e w').2 - (M.co.e w').1 ⬝ᵥ (M.co.e w).2 = 0) (φ : Fn F n d) :
     M.co.rho ψ (w + w') φ = M.co.rho ψ w (M.co.rho ψ w' φ) := by
   change schr ψ (M.co.e _) φ = schr ψ (M.co.e _) (schr ψ (M.co.e _) φ)
-  rw [GlobalTheory.MixedLagr.schr_comp, h, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add]
+  rw [GlobalTheory.MixedLagr.schr_comp, h, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add (f := _)]
 
 theorem symp_isMixed {B : Base F E} {H' : Plane E d d₁} {i₀ i₁ : ℕ} (hH : H'.IsAdapted σ B W W₁ i₀ i₁)
     (M₁ : Model σ V₁ W) (M₂ : Model σ V₁ W₁) {z z' : Matrix (Fin d₂) (Fin d) (AE F E)} (h : IsMixed M₂ H' z)
@@ -82,7 +82,7 @@ theorem symp_isMixed {B : Base F E} {H' : Plane E d d₁} {i₀ i₁ : ℕ} (hH 
   have h4 := GlobalTheory.T.symplectic_form_restricted_plane F E σ d₂ d d₁ V₁.J W.J W₁.J H'.ι hH.gram y y'
   rw [M₂.co.form, hy, hy', zero_dotProduct, zero_dotProduct, sub_zero] at h4
   rw [hD] at h1 h2 h3 h4
-  simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   linear_combination h1 + h2 - h3 + h4
 
 def Q (M₂ : Model σ V₁ W₁) (H : Plane E n d₂) (H' : Plane E d d₁) (m : Matrix (Fin n) (Fin d) (AE F E)) : Prop :=
@@ -116,7 +116,7 @@ theorem symp_Q {B : Base F E} {H' : Plane E d d₁} {i₀ i₁ : ℕ} (hH : H'.I
       simp only [symp, hTens_eq, GlobalTheory.MixedLagrXPlain.piece_ii hgram]
     rw [this, M₁.co.form, symp_isMixed hH M₁ M₂ hz hz']
   rw [← hQ] at h1 h2 h3 h4
-  simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   linear_combination h1 + h2 - h3 + h4
 
 open GlobalTheory.MixedLagrX in
@@ -192,7 +192,7 @@ theorem exists_lagr {B : Base F E} (hB : B.IsGood σ) {H' : Plane E d d₁} {i�
       rwa [e1, LinearEquiv.symm_apply_apply] at h
     · rw [incM_one, Matrix.transpose_one, Matrix.mul_one, ← incM_mul]
       ext i j
-      simp only [incM, incV, Matrix.map_apply, Matrix.add_apply, Matrix.vecMulVec_apply, map_add, map_mul]
+      simp only [incM, incV, Matrix.map_apply, Matrix.add_apply, Matrix.vecMulVec_apply, map_add (f := _), map_mul]
   have hiso : ∀ a ∈ LinearMap.range T, ∀ b ∈ LinearMap.range T, a.1 ⬝ᵥ b.2 = b.1 ⬝ᵥ a.2 := by
     intro a ha b hb
     obtain ⟨m, hm, ea⟩ := hQ a ha

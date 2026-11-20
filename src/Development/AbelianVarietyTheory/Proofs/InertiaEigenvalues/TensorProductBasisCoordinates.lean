@@ -36,7 +36,7 @@ theorem GlobalTheory.tensorBasisCoords : ∀ (F : Type) [Field F] (B : Type) [Co
       simp only [map_smul, Finsupp.smul_apply, smul_eq_mul]
       exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
     | add y z hy hz =>
-      rw [map_add, hadd, hy, hz, hadd, ← Matrix.mulVec_add]
+      rw [map_add (f := _), hadd, hy, hz, hadd, ← Matrix.mulVec_add]
       congr 1
       funext i
-      simp [map_add]
+      simp [map_add (f := _)]

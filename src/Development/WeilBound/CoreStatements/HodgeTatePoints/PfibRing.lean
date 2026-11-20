@@ -45,7 +45,7 @@ theorem lTensor_map_injective {R A M : Type*} [CommRing R] [CommRing A] [Algebra
       TensorProduct.rid R M (p.subtype.lTensor M y) := by
     intro y
     induction y with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul m r => simp [hφ, c]
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx
@@ -69,13 +69,13 @@ theorem exists_of_lTensor_eq {F G N : Type} [AddCommGroup F] [Module A F] [AddCo
       (snd A F G ∘ₗ (ker (f.coprod g)).subtype).lTensor M z = y := by
   have hex := lTensor_exact M (f.coprod g).exact_subtype_ker_map hs
   have h0 : (f.coprod g).lTensor M ((inl A F G).lTensor M x + (inr A F G).lTensor M y) = 0 := by
-    rw [map_add, ← lTensor_comp_apply, ← lTensor_comp_apply, coprod_inl, coprod_inr, h]
+    rw [map_add (f := _), ← lTensor_comp_apply, ← lTensor_comp_apply, coprod_inl, coprod_inr, h]
   obtain ⟨z, hz⟩ := (hex _).mp h0
   refine ⟨z, ?_, ?_⟩
-  · rw [lTensor_comp_apply, hz, map_add, ← lTensor_comp_apply, ← lTensor_comp_apply,
+  · rw [lTensor_comp_apply, hz, map_add (f := _), ← lTensor_comp_apply, ← lTensor_comp_apply,
       fst_comp_inl, fst_comp_inr]
     simp
-  · rw [lTensor_comp_apply, hz, map_add, ← lTensor_comp_apply, ← lTensor_comp_apply,
+  · rw [lTensor_comp_apply, hz, map_add (f := _), ← lTensor_comp_apply, ← lTensor_comp_apply,
       snd_comp_inl, snd_comp_inr]
     simp
 
@@ -180,7 +180,7 @@ theorem relationsLift_of_injective {J : Ideal A}
     exact ⟨(a, ⟨c, hc⟩), rfl⟩
   have h0 : f'.lTensor M x + g.lTensor M (-y) = 0 := by
     apply h J' le_sup_right
-    rw [map_add, ← lTensor_comp_apply, ← lTensor_comp_apply, map_zero, map_neg]
+    rw [map_add (f := _), ← lTensor_comp_apply, ← lTensor_comp_apply, map_zero, map_neg]
     change f.lTensor M x + -(J.subtype.lTensor M y) = 0
     rw [hy', add_neg_cancel]
   obtain ⟨z, hz, -⟩ := exists_of_lTensor_eq f' g hs x (-y) h0

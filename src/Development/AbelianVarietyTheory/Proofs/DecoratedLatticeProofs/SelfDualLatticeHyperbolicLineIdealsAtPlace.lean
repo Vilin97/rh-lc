@@ -145,7 +145,7 @@ theorem principal_of_dense {E : Type} [Field E] [NumberField E] {A : Type} [Comm
         rw [RingHom.map_zero, zero_mul]; exact zero_mem _
       add_mem' := fun {a b} ha hb => by
         change ι (a + b) * (ν * ε) ∈ I
-        rw [RingHom.map_add, add_mul]; exact add_mem ha hb
+        rw [RingHom.map_add (f := _), add_mul]; exact add_mem ha hb
       smul_mem' := fun r o ho => by
         change ι (r * o) * (ν * ε) ∈ I
         have h := hmod _ (hint r) _ ho

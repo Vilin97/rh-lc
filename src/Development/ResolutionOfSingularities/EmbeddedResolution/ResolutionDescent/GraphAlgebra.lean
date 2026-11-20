@@ -68,7 +68,7 @@ private theorem graphAlgebraAeval_map_C (f : τ → MvPolynomial σ R) (p : MvPo
   | C r =>
       simp only [MvPolynomial.map_C, graphAlgebraAeval_C, MvPolynomial.aeval_C,
         MvPolynomial.algebraMap_eq]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, MvPolynomial.map_X, hp, graphAlgebraAeval_X]
 
 theorem graphAlgebraAeval_graphRelation (f : τ → MvPolynomial σ R) (i : τ) :
@@ -99,7 +99,7 @@ private theorem graphAlgebraAeval_eq_graphAlgebraEquiv_graphSubstitutionHom (f :
     graphAlgebraAeval f p = graphAlgebraEquiv f (graphSubstitutionHom f p) := by
   induction p using MvPolynomial.induction_on with
   | C a => rw [graphAlgebraAeval_C, graphSubstitutionHom_C]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X q i hq => simp only [map_mul, hq, graphAlgebraAeval_X, graphSubstitutionHom_X]
 
 private theorem C_sub_map_C_aeval_mem_graphRelationIdeal (f : τ → MvPolynomial σ R) (a : MvPolynomial τ R) :
@@ -122,7 +122,7 @@ private theorem C_sub_map_C_aeval_mem_graphRelationIdeal (f : τ → MvPolynomia
               (MvPolynomial.aeval f p))
             + (MvPolynomial.C q - MvPolynomial.map (MvPolynomial.C : R →+* MvPolynomial τ R)
               (MvPolynomial.aeval f q)) := by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         ring
       rw [key]
       exact Ideal.add_mem _ hp hq
@@ -154,7 +154,7 @@ private theorem sub_map_C_mem_graphRelationIdeal (f : τ → MvPolynomial σ R)
           = (p - MvPolynomial.map (MvPolynomial.C : R →+* MvPolynomial τ R) (graphSubstitutionHom f p))
             + (q - MvPolynomial.map (MvPolynomial.C : R →+* MvPolynomial τ R)
                 (graphSubstitutionHom f q)) := by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         ring
       rw [key]
       exact Ideal.add_mem _ hp hq

@@ -73,7 +73,7 @@ theorem span_inf_eigSp : ∀ (F : Type) [Field F] [NumberField F] (Ω Ω' : Type
         rw [hjP]
         exact Submodule.subset_span ⟨P e, Submodule.mem_inf.2 ⟨hPL e he, hPeig e⟩, rfl⟩
       | zero => rw [map_zero]; exact Submodule.zero_mem _
-      | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+      | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
       | smul r y _ hy =>
         have h1 : P' (r • y) = r • P' y := by
           rw [Subring.smul_def, Subring.smul_def, map_smul]

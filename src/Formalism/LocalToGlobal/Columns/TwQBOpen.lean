@@ -203,7 +203,7 @@ theorem qbOpen : QOpen (qbLoc hc Θ hQ hΘ) where
       Subring.mul_mem _ (Subring.mul_mem _ hw (Subring.prod_mem _ fun P' _ => glo_algMap_int _ _))
         ((((qbLoc hc Θ hQ hΘ).sp_int P _).1 (afsplit_prV_int (qv F P.1) _ (sa i j).2)).1), ?_⟩
     show f (prV (E := E) (qv F P.1) ((u : Matrix (Fin n) (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) i j)) - (1 : Matrix (Fin n) (Fin n) _) i j = _
-    rw [hu i j, map_add, map_add, map_mul, map_mul]
+    rw [hu i j, map_add (f := _), map_add (f := _), map_mul, map_mul]
     have e4 : f (prV (E := E) (qv F P.1) ((1 : Matrix (Fin n) (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) i j)) = (1 : Matrix (Fin n) (Fin n) _) i j := by
       rw [Matrix.one_apply, Matrix.one_apply]; split_ifs <;> simp
     rw [e4, add_sub_cancel_left]

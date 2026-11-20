@@ -226,9 +226,9 @@ theorem solve {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)} {χ : GQ l
       have := hs.1
       exact pow_le_of_le_one (norm_nonneg _) norm_l_lt.le (by omega)
   · intro h hh
-    rw [map_add, hfix h (hinf_le_gj K s hh), map_mul (act h) _ (v 0), hfix2 h (hinf_le_gj K s hh),
+    rw [map_add (f := _), hfix h (hinf_le_gj K s hh), map_mul (act h) _ (v 0), hfix2 h (hinf_le_gj K s hh),
       (GlobalTheory.T.cyclotomicTower_fixed_iff_mem_completedIntegers l act ha K _ (ohat_norm K hvO)).2 hvO h hh]
-  · rw [map_add, hfix γ hγ.1, map_mul (act γ) _ (v 0), hfix2 γ hγ.1]
+  · rw [map_add (f := _), hfix γ hγ.1, map_mul (act γ) _ (v 0), hfix2 γ hγ.1]
     have e : chiC χ j γ * act γ (v 0) = v 0 + (ζ - 1) * x := by rw [← hv3]; ring
     have e1 : (l : PadicComplex l) ^ n / (chiC χ j γ - 1) * (chiC χ j γ - 1) = l ^ n :=
       div_mul_cancel₀ _ hu0
@@ -278,7 +278,7 @@ theorem pow_kills_cyclotomic_H1 (l : ℕ) [Fact l.Prime] (act : GQ l →* (Padic
     exact mul_le_one₀ (pow_le_one₀ (norm_nonneg _) norm_l_lt.le) (norm_nonneg _) (hx 0)
   · have := key g hg
     simp only [hc1def] at this
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
     linear_combination this
 
 end GlobalTheory.Cyc.TwistKill

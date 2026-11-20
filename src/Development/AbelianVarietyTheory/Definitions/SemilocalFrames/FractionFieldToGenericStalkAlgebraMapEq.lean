@@ -235,7 +235,7 @@ theorem isUnit_tmod (ν : ℤ) (s : ℕ) (p : HeightOneSpectrum (𝓞 F)) (t : E
 
 theorem tmod_add (ν : ℤ) (s : ℕ) (p : HeightOneSpectrum (𝓞 F)) (t t' : E) :
     X.tmod ν s p (t + t') = X.tmod ν s p t + X.tmod ν s p t' := by
-  simp only [tmod_eq, map_add, mul_add]
+  simp only [tmod_eq, map_add (f := _), mul_add]
 
 theorem tmod_sub (ν : ℤ) (s : ℕ) (p : HeightOneSpectrum (𝓞 F)) (t t' : E) :
     X.tmod ν s p (t - t') = X.tmod ν s p t - X.tmod ν s p t' := by

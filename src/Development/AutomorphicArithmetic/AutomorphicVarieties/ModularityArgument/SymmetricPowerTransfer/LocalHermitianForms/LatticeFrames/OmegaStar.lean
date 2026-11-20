@@ -73,7 +73,7 @@ theorem poly_mem {W : Type} [AddCommGroup W] [Module K W] [Module O W] [IsScalar
   obtain ⟨u2, hu2⟩ := h2
   have e1 : (algebraMap O K ↑u)⁻¹ = algebraMap O K ↑u⁻¹ := (map_units_inv (algebraMap O K) u).symm
   have e2 : (algebraMap O K ↑u * (2 + algebraMap O K ↑u))⁻¹ = algebraMap O K ↑(u * u2)⁻¹ := by
-    rw [map_units_inv, Units.val_mul, map_mul, hu2, map_add, map_ofNat]
+    rw [map_units_inv, Units.val_mul, map_mul, hu2, map_add (f := _), map_ofNat]
   have e3 : algebraMap O K ↑u ^ 2 - 2 = algebraMap O K (↑u ^ 2 - 2) := by
     rw [map_sub, map_pow, map_ofNat]
   rw [e1, e2, e3, algebraMap_smul, algebraMap_smul, algebraMap_smul]
@@ -293,7 +293,7 @@ theorem fix_down (L : IsLoc O Δ) (hσ : Δ * σ ^ 2 = algebraMap O K ε) (h1 : 
           algebraMap O K ↑h2u⁻¹ • ((Mu U a, Mu U b) + (Mu U a, -Mu U b)) := by
         rw [Prod.mk_add_mk, add_neg_cancel, ← two_smul K (Mu U a), Prod.smul_mk, smul_smul, hK, one_smul,
           smul_zero]
-      rw [e, map_smul, map_add, algebraMap_smul]
+      rw [e, map_smul, map_add (f := _), algebraMap_smul]
       exact M.smul_mem _ (M.add_mem hAx hφx)
     · have e : ((0, -Mu U b) : (K × Etau K τ) × (K × Etau K τ)) =
           algebraMap O K ↑h2u⁻¹ • ((Mu U a, -Mu U b) - (Mu U a, Mu U b)) := by
@@ -388,7 +388,7 @@ theorem fix_down (L : IsLoc O Δ) (hσ : Δ * σ ^ 2 = algebraMap O K ε) (h1 : 
       have hv' : mkL Δ σ (v, 0) ∈ M := hv
       have hw' : mkL Δ σ (w, 0) ∈ M := hw
       have key := M.add_mem hv' (hswap2 w hw')
-      rw [← map_add, Prod.mk_add_mk, add_zero, zero_add] at key
+      rw [← map_add (f := _), Prod.mk_add_mk, add_zero, zero_add] at key
       exact key
 
 end UpperTheory.V.Z.Sym.Loc.CP

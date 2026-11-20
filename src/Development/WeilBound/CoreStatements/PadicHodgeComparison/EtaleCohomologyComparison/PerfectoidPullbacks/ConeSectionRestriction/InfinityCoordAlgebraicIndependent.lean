@@ -281,7 +281,7 @@ theorem infinityCoord_localization (t : Fin (n + 1) → Rˣ) (ht : AlgebraicInde
       obtain ⟨f2, e2, h2⟩ := hy
       refine ⟨f1 * ∏ j : Fin n, MvPolynomial.X j.succ ^ e2 j + f2 * ∏ j : Fin n, MvPolynomial.X j.succ ^ e1 j,
         e1 + e2, ?_⟩
-      simp only [map_add, map_mul, map_prod, map_pow, MvPolynomial.aeval_X, Pi.add_apply, pow_add,
+      simp only [map_add (f := _), map_mul, map_prod, map_pow, MvPolynomial.aeval_X, Pi.add_apply, pow_add,
         Finset.prod_mul_distrib]
       rw [← h1, ← h2]; ring
     | smul c x _ hx =>

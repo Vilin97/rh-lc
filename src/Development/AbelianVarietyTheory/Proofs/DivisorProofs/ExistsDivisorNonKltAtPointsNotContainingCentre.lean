@@ -28,7 +28,7 @@ theorem qNum_principal_add_nsmul {X : Scheme.{0}} [IsIntegral X] [IsLocallyNoeth
   refine ⟨1, CartierDiv.principal g + l • A, one_pos, CartierDiv.mem_sections_iff_eff.1 hg, rfl, ?_⟩
   intro C hC
   have e1 : toPic (CartierDiv.principal g + l • A) = l • cls N hN.isLB := by
-    rw [map_add, map_nsmul, toPic_principal, e, zero_add]
+    rw [map_add (f := _), map_nsmul, toPic_principal, e, zero_add]
   have e2 : cls (toLB (CartierDiv.principal g + l • A)) (isLB_toLB _) =
       cls (lbPow N l) (isLB_lbPow hN.isLB l) := by
     rw [← toPic_apply, e1, GlobalTheory.CechPic.cls_lbPow hN.isLB]

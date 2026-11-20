@@ -117,7 +117,7 @@ theorem UpperTheory.V.Th.Coc.smat :
       map_add' := by
         intro a b
         ext i j
-        simp only [Matrix.of_apply, Matrix.add_apply, mul_add, add_mul, map_add]
+        simp only [Matrix.of_apply, Matrix.add_apply, mul_add, add_mul, map_add (f := _)]
       map_smul' := by
         intro r a
         ext i j

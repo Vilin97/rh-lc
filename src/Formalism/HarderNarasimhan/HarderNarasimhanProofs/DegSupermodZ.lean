@@ -121,7 +121,7 @@ theorem orthogonal_starProjection_comp_of_le {U W : Submodule ℝ E} (hUW : U �
   calc Wᗮ.starProjection (Uᗮ.starProjection x)
       = Wᗮ.starProjection (U.starProjection x) + Wᗮ.starProjection (Uᗮ.starProjection x) := by
         rw [h2, zero_add]
-    _ = Wᗮ.starProjection x := by rw [← map_add, h1]
+    _ = Wᗮ.starProjection x := by rw [← map_add (f := _), h1]
 
 theorem mem_of_orthogonal_starProjection_eq_zero {W : Submodule ℝ E} {x : E}
     (h : Wᗮ.starProjection x = 0) : x ∈ W := by
@@ -257,7 +257,7 @@ theorem degree_supermodular_integral : DegSupermodZ := by
         quot B (satur B (A ⊓ B)) := Submodule.mem_map.2 ⟨b, hb, rfl⟩
     refine ⟨⟨_, hpb⟩, Subtype.ext ?_⟩
     rw [hg]
-    simp only [LinearMap.coe_restrictScalars, ContinuousLinearMap.coe_coe, map_add, hPU0 a ha,
+    simp only [LinearMap.coe_restrictScalars, ContinuousLinearMap.coe_coe, map_add (f := _), hPU0 a ha,
       zero_add]
     exact orthogonal_starProjection_comp_of_le hspan b
   let φ := LinearEquiv.ofBijective g ⟨hinj, hsurj⟩

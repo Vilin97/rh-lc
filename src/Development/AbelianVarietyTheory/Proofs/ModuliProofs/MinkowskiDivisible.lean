@@ -18,7 +18,7 @@ theorem iterate_eq (f g : A →+ A) (hfg : ∀ z, f z = z + g z) (y : A) (hy : g
   induction n with
   | zero => simp
   | succ n ih =>
-    rw [Function.iterate_succ_apply', ih, map_add, map_add, map_nsmul, map_nsmul, hfg y,
+    rw [Function.iterate_succ_apply', ih, map_add (f := _), map_add (f := _), map_nsmul, map_nsmul, hfg y,
       hfg (g y), hfg (g (g y)), hy, Nat.choose_succ_succ' n 1, Nat.choose_one_right]
     simp only [add_nsmul, smul_add, one_nsmul, add_zero]
     abel

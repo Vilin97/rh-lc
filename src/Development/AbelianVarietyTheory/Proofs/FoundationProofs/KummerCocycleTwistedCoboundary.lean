@@ -336,7 +336,7 @@ theorem coker_part (hp : p ≠ 2) (hΩ : IsClo p Ω) (T : Tower p Ω) (k : ℕ) 
   · have := cong_mul_left (hr.pow 3) (bG g hg)
     have e := cong_add this (cong_refl k (g (r ^ 3 * (π ^ 2 * x1 + w)) - r ^ 3 * (π ^ 2 * x1 + w)))
     refine cong_congr ?_ (by ring) e
-    simp only [hb, ha1, map_mul, map_pow, map_add, hrG g hg, hπdef, fix_pi T hg, hpr]
+    simp only [hb, ha1, map_mul, map_pow, map_add (f := _), hrG g hg, hπdef, fix_pi T hg, hpr]
     ring
 
 theorem kern_part (hp : p ≠ 2) (hΩ : IsClo p Ω) (T : Tower p Ω) (k : ℕ) (hk : 1 ≤ k)

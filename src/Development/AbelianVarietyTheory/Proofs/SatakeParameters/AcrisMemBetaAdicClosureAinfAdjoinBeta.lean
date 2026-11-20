@@ -16,9 +16,9 @@ theorem acris_mem_clos : ∀ (l : ℕ) [Fact l.Prime] (j : Per.Acris l →+* Per
   obtain ⟨a, ha⟩ := hN z
   refine ⟨algebraMap (Per.AinfP l) (Per.BdRp l) ((s : Per.AinfP l) + algebraMap (Per.Ainf l) (Per.AinfP l) a),
     ⟨_, add_mem (hS s) (Subalgebra.algebraMap_mem _ a), rfl⟩, ?_⟩
-  rw [← Ideal.mem_span_singleton, ← hF, GlobalTheory.RingIface.mem_filtration_iff_mem_kerTheta_pow, map_sub, map_add, map_add, map_mul, map_pow,
+  rw [← Ideal.mem_span_singleton, ← hF, GlobalTheory.RingIface.mem_filtration_iff_mem_kerTheta_pow, map_sub, map_add (f := _), map_add (f := _), map_mul, map_pow,
     map_natCast, hj.on0, ev_algebraMap, ev_algebraMap]
-  rw [ha, map_add]
+  rw [ha, map_add (f := _)]
   ring
 
 end GlobalTheory.Pst.StLat

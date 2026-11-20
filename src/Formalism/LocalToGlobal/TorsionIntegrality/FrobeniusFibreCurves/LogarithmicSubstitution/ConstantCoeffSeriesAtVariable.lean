@@ -239,7 +239,7 @@ theorem law_coeff_one_subst {K : Type} [Field K] (l D : PowerSeries K)
     have e : g = PowerSeries.C (PowerSeries.constantCoeff g) +
         (g - PowerSeries.C (PowerSeries.constantCoeff g)) := by ring
     conv_lhs => rw [e]
-    rw [PowerSeries.subst_add hs, map_add, PowerSeries.subst_C]
+    rw [PowerSeries.subst_add hs, map_add (f := _), PowerSeries.subst_C]
     have := PowerSeries.constantCoeff_subst_eq_zero (a := D) hD
       (g - PowerSeries.C (PowerSeries.constantCoeff g)) (by simp)
     erw [this, add_zero]
@@ -261,7 +261,7 @@ theorem formal_halving_exists : HalfExists := by
     have e := law_subst h (PowerSeries.X : PowerSeries K) PowerSeries.X hX hX
     rw [eX] at e
     have e' := congrArg (PowerSeries.coeff 1) e
-    rw [law_coeff_one_subst l D hD0, map_add, hl1] at e'
+    rw [law_coeff_one_subst l D hD0, map_add (f := _), hl1] at e'
     linear_combination e'
   obtain ⟨X', hX0, hXi, hXT, -⟩ := Formalism.HermitianLattices.ExpSeriesBivariate.integralInverse_statement K Unit (fun _ => D)
     (Matrix.of fun _ _ => (2 : K)⁻¹) (fun _ => hD0) (fun _ => hDi)

@@ -45,7 +45,7 @@ lemma bs_map_weyl {r n : ℕ} (hn : n ≤ r) (ν : Fin n → ℕ) (f : MvPolynom
     rw [← lclosedeq_applyWord_map, lclosedeq_hw_map]
     exact Submodule.subset_span ⟨w, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx =>
     rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hx
@@ -312,11 +312,11 @@ theorem branch_isometry : BranchIsometry := by
   have H : BsForm sg D := by
     refine ⟨?_, ?_, ?_, ?_, ?_⟩
     · intro p p' q
-      simp only [D, map_add, fischerInner_add_left]; ring
+      simp only [D, map_add (f := _), fischerInner_add_left]; ring
     · intro c p q
       simp only [D, map_smul, bs_fock_smul_left]; ring
     · intro p q q'
-      simp only [D, map_add, fischerInner_add_right]; ring
+      simp only [D, map_add (f := _), fischerInner_add_right]; ring
     · intro c p q
       simp only [D, map_smul, bs_fock_smul_right]; ring
     · intro g p hp q hq

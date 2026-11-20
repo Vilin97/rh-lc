@@ -20,7 +20,7 @@ theorem idl_top : idl (⊤ : Ideal (𝓞 E)) = 1 := by
   rw [idl, ← Ideal.one_eq_top, normalizedFactors_one]; simp
 
 theorem idl_mul {I J : Ideal (𝓞 E)} (hI : I ≠ ⊥) (hJ : J ≠ ⊥) : idl (I * J) = idl I * idl J := by
-  rw [idl, normalizedFactors_mul hI hJ, Multiset.map_add, Multiset.prod_add]; rfl
+  rw [idl, normalizedFactors_mul hI hJ, Multiset.map_add (f := _), Multiset.prod_add]; rfl
 
 theorem nf_prime (v : HeightOneSpectrum (𝓞 E)) : normalizedFactors v.asIdeal = {v.asIdeal} := by
   rw [normalizedFactors_irreducible v.irreducible, normalize_eq]

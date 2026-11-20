@@ -152,7 +152,7 @@ theorem nb_stab_gen (R : Type) [CommRing R] [Algebra R K] (lam : ι → DomWeigh
     refine Submodule.subset_span ⟨fun τ => sqAct K n (lam τ) (g τ) (F τ), fun τ => h τ _ (hF τ), ?_⟩
     exact actTen K ι n lam g F
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul r x _ hx => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ _ hx
 
 theorem nb_map_detPow {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (g : GL (Fin n) R) (e : ℤ) :
@@ -209,7 +209,7 @@ theorem nb_blockAct_smul (lam : ι → DomWeight n) (c : K) (A : ι → Matrix (
     rw [(Formalism.GradedWeylDivisibility.blockActTensor K K ι n n _).1 τ (F τ), (Formalism.GradedWeylDivisibility.blockActTensor K K ι n n _).1 τ (F τ),
       nb_rowAct_smul c (A τ) _ _ (hF τ), map_smul]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, smul_add]
   | smul r x _ hx => rw [map_smul, map_smul, hx, smul_comm]
 
 end Scale

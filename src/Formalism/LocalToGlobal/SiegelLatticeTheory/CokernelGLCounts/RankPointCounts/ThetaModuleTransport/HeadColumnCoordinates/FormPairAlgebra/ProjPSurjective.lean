@@ -156,7 +156,7 @@ def adjL (γ : MbMod Z₁ ≃ₗ[O] MbMod Z₂) (hb : γ (bCls Z₁) = bCls Z₂
   map_add' y' z' := by
     funext b
     apply Subtype.ext
-    simp [adjV, adjVal, adjW, bRaw_add_right, map_add, mul_add, Finset.sum_add_distrib]
+    simp [adjV, adjVal, adjW, bRaw_add_right, map_add (f := _), mul_add, Finset.sum_add_distrib]
   map_smul' c y' := by
     funext b
     apply Subtype.ext
@@ -241,7 +241,7 @@ theorem adjV_comp (γ : MbMod Z₁ ≃ₗ[O] MbMod Z₂) (hb : γ (bCls Z₁) = 
     show adjVal O cj δ x b - _ = _
     rw [adjVal, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [adjW, hA1, hn a, bRaw_add_left, bRaw_mulVec O cj Z₁ hu₁, map_add]
+    rw [adjW, hA1, hn a, bRaw_add_left, bRaw_mulVec O cj Z₁ hu₁, map_add (f := _)]
     simp only [m]
     ring
   rw [Submodule.Quotient.eq, hdiff]

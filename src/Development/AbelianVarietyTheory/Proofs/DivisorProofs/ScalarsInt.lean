@@ -83,7 +83,7 @@ theorem scalars_int {R : Type} [CommRing R] [IsDomain R] {X : Type} [AddCommGrou
   have κ0 : κ 0 = 1 := by simp [κ]
   have κc : ∀ x y w, κ (x + y + w) * κ x * κ y * κ w = κ (x + y) * κ (x + w) * κ (y + w) := fun x y w => by
     apply Additive.ofMul.injective
-    simp only [κ, ofMul_mul, ofMul_toMul, map_add, LinearMap.add_apply]
+    simp only [κ, ofMul_mul, ofMul_toMul, map_add (f := _), LinearMap.add_apply]
     abel
   have κi : ∀ x, ∃ s : R, (κ x : FractionRing R) = algebraMap R _ s := fun x => by
     by_cases hx : x = 0

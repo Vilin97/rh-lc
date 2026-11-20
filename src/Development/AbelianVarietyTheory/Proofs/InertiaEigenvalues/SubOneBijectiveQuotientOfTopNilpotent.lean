@@ -15,7 +15,7 @@ theorem sub_one_bijective_quotient_of_topNilpotent :
     induction m with
     | zero => simp
     | succ m ih =>
-      rw [Finset.sum_range_succ, map_add, Function.iterate_succ_apply']
+      rw [Finset.sum_range_succ, map_add (f := _), Function.iterate_succ_apply']
       have hsplit : ∀ a b : N, Φ a + Φ b - (a + b) = (Φ a - a) + (Φ b - b) := fun a b => by abel
       rw [hsplit, ih]
       abel
@@ -96,7 +96,7 @@ theorem sub_one_bijective_quotient_of_topNilpotent :
       M.neg_mem (M.add_mem (sum_mem fun i _ => hiterM i y hyM) hsM), d + d', D.add_mem hd hd', r, ?_⟩
     have hT := htel y j
     generalize ∑ i ∈ Finset.range j, Φ^[i] y = T at hT ⊢
-    rw [← hr, map_neg, map_add, he, show Φ^[j] y = Φ T - T + y by rw [hT]; abel]
+    rw [← hr, map_neg, map_add (f := _), he, show Φ^[j] y = Φ T - T + y by rw [hT]; abel]
     abel
   choose! Z hZM Dd hDd R hR using step1
   have hRM : ∀ y ∈ M, R y ∈ M := by
@@ -133,7 +133,7 @@ theorem sub_one_bijective_quotient_of_topNilpotent :
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_nsmul, smul_sub]
     have hWe : W = ∑ i ∈ Finset.range k, p ^ i • Z (R^[i] y) + p ^ k • r := by rw [← hr]; abel
-    rw [hWe, map_add, map_nsmul, smul_sub (p ^ k) (R^[k] y), smul_sub (p ^ k) (Φ r), ← hexp k, ← hsum]
+    rw [hWe, map_add (f := _), map_nsmul, smul_sub (p ^ k) (R^[k] y), smul_sub (p ^ k) (Φ r), ← hexp k, ← hsum]
     abel
   exact ⟨hsurj, hinj⟩
 

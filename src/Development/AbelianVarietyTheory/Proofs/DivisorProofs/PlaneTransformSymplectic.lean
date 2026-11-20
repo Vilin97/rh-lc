@@ -157,13 +157,13 @@ theorem form_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
     intro z z'
     have e1 := GlobalTheory.ThK.Adapt.conj_pair (cA σ) hc hsW (fun j => z (.inr 0) j) (fun j => z' (.inr 1) j)
     have e2 := GlobalTheory.ThK.Adapt.conj_pair (cA σ) hc hsX (fun i => z (.inl i) (.inr 0)) (fun i => z' (.inl i) (.inr 1))
-    rw [map_add, e1, e2]
+    rw [map_add (f := _), e1, e2]
     ring
   have htr := GlobalTheory.VacCocycle.trace_conj (R := AF F) (cA σ) hc
   rw [hpq, hpq, sum_sI_mul_pairI σ X W X₁ W₁ H H' hGX hGW, sum_sI_mul_pairI σ X W X₁ W₁ H H' hGX hGW, ← hkey (coefLin (F := F) H H' w) (coefLin (F := F) H H' w'), htr]
   unfold symp
   rw [hT, hL, hR]
-  rw [← map_sub, ← map_add]
+  rw [← map_sub, ← map_add (f := _)]
   refine congrArg (Algebra.trace (AF F) (AE F E)) ?_
   show _ = _ + -1 * hTens (cA σ) (incM F X₁.J) (incM F W₁.J) ((coefLin H H' w).submatrix Sum.inl Sum.inl)
     ((coefLin H H' w').submatrix Sum.inl Sum.inl)

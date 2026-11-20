@@ -62,7 +62,7 @@ theorem tz_support [DecidableEq I] (Z : Matrix I I ℂ) (d : I → ℂ) (M : (I 
       simp only [Pi.mul_apply, Pi.smul_apply, smul_eq_mul]
       ring
     have := h (Complex.I • z)
-    rw [e, tz_I, tz_I, map_smul, map_add] at this
+    rw [e, tz_I, tz_I, map_smul, map_add (f := _)] at this
     exact smul_right_injective _ Complex.I_ne_zero this
   have h1 : ∀ z : I → ℂ, d * z - Z *ᵥ star (d * z) = M z - M (Z *ᵥ star z) := by
     intro z
@@ -116,13 +116,13 @@ theorem tz_unique [DecidableEq I] (S : Set (I → ℂ)) (hS : Submodule.span ℝ
     funext a
     have a1 := congrFun (hall z) a
     have a2 := congrFun (h2 z) a
-    simp only [tz, map_sub, map_add, Pi.sub_apply, Pi.add_apply] at a1 a2
+    simp only [tz, map_sub, map_add (f := _), Pi.sub_apply, Pi.add_apply] at a1 a2
     linear_combination (a1 + a2) / 2
   have h4 : ∀ z : I → ℂ, Z *ᵥ star z = Z' *ᵥ star z := by
     intro z
     apply A.injective
     have := h2 z
-    rw [map_add, map_add, h3 z] at this
+    rw [map_add (f := _), map_add (f := _), h3 z] at this
     rw [h3 (Z' *ᵥ star z)]
     exact add_left_cancel this
   ext i k
@@ -190,7 +190,7 @@ theorem member {E : Type} [Field E] [NumberField E] [IsCMField E] {g : ℕ} {Λ 
   let P : Λ →+ (Fin g → ℂ) :=
     { toFun := fun x => tz Z (R₁.P x)
       map_zero' := by simp [tz]
-      map_add' := fun x y => by rw [map_add, tz_add] }
+      map_add' := fun x y => by rw [map_add (f := _), tz_add] }
   refine ⟨{ free := R₁.free, fin := R₁.fin, rank := R₁.rank, form := R₁.form, alt := R₁.alt, unimod := R₁.unimod,
             adj := R₁.adj, P := P, Hm := (1 - Zᴴ * Z)⁻¹, herm := hinv.isHermitian, pos := ?_, im := ?_, B := R₁.B,
             act := ?_ }, rfl, rfl, rfl, fun _ => rfl⟩

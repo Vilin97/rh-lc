@@ -64,11 +64,11 @@ theorem coefEquiv_comm (A : Matrix (Fin k) (Fin k) LL) (β : BB →ₗ[Qp] BB)
     coefEquiv ((actT A β).baseChange LL' x) = actT (A.map (algebraMap LL LL')) β (coefEquiv x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c y =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y z hy hz => simp only [tmul_add, map_add, hy, hz]
+    | add y z hy hz => simp only [tmul_add, map_add (f := _), hy, hz]
     | tmul v b =>
       rw [LinearMap.baseChange_tmul]
       simp only [actT, AlgebraTensorModule.map_tmul, coefEquiv_tmul, Matrix.toLin'_apply]

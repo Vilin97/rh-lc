@@ -96,7 +96,7 @@ theorem mem_rel_of_isKFinVec : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (A 
   have swAdd : ∀ {u v}, IsThetaFunO ψ (dblSp A) B u → IsThetaFunO ψ (dblSp A) B v →
       swSec A B om ν 𝓨 (u + v) = swSec A B om ν 𝓨 u + swSec A B om ν 𝓨 v := by
     intro u v hu hv; funext x
-    simp only [swSec, GlobalTheory.IndefiniteRowSideFullHecke.SphericalZero.evZero, map_add, Pi.add_apply]
+    simp only [swSec, GlobalTheory.IndefiniteRowSideFullHecke.SphericalZero.evZero, map_add (f := _), Pi.add_apply]
     exact integral_add
       (GlobalTheory.Core.Rk.IP.swSec_integrable_continuous D ψ A B χ om hom ν 𝓨 hν _ (hom.om_pres _ _ hu)).1
       (GlobalTheory.Core.Rk.IP.swSec_integrable_continuous D ψ A B χ om hom ν 𝓨 hν _ (hom.om_pres _ _ hv)).1

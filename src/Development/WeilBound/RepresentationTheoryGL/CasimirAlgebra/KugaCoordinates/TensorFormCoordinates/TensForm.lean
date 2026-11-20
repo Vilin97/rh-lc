@@ -23,7 +23,7 @@ lemma ec_lTensor (T : Matrix (Fin d) (Fin d) ℂ) (x : V ⊗[ℂ] (Fin d → ℂ
   | tmul φ v =>
     simp [Matrix.mulVec, dotProduct, Finset.sum_smul, mul_smul]
   | add x y hx hy =>
-    simp only [map_add, Pi.add_apply, hx, hy, smul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Pi.add_apply, hx, hy, smul_add, Finset.sum_add_distrib]
 
 end
 

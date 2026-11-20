@@ -44,7 +44,7 @@ theorem om_order (hu : (p : R) ∈ nonunits R) :
   haveI : CharP (PowerSeries (R ⧸ Ideal.span {(p : R)})) p :=
     charP_of_injective_ringHom (f := PowerSeries.C) PowerSeries.C_injective p
   have : (om p : PowerSeries R).map (Ideal.Quotient.mk (Ideal.span {(p : R)})) = X ^ p := by
-    simp only [om, map_sub, map_pow, map_add, map_one, PowerSeries.map_X]
+    simp only [om, map_sub, map_pow, map_add (f := _), map_one, PowerSeries.map_X]
     rw [add_pow_char]; simp
   rw [this, order_X_pow]; simp
 
@@ -57,7 +57,7 @@ theorem om_div (hu : (p : R) ∈ nonunits R) : (om p : PowerSeries R).IsWeierstr
   rw [this]; exact isUnit_one
 
 theorem phi_split (c : R) (g : PowerSeries R) : phi p hp.out.pos (C c + X * g) = C c + om p * phi p hp.out.pos g := by
-  rw [map_add, map_mul, phi_X]
+  rw [map_add (f := _), map_mul, phi_X]
   congr 1
   exact (phi (R := R) p hp.out.pos).commutes c
 
@@ -205,7 +205,7 @@ theorem _root_.GlobalTheory.Col.Model.indep (hu : (p : R) ∈ nonunits R) (g : F
       rw [hD, smul_add, smul_smul, ← pow_succ] at hψ
       have h0 : ∑ i, expand p hp.out.ne_zero
           (g i + ((p : R) ^ (k + 1)) • PowerSeries.mk fun n => coeff (p * n + i) D) * X ^ (i : ℕ) = 0 := by
-        simp only [map_add, map_smul, add_mul, smul_mul_assoc, Finset.sum_add_distrib, ← Finset.smul_sum,
+        simp only [map_add (f := _), map_smul, add_mul, smul_mul_assoc, Finset.sum_add_distrib, ← Finset.smul_sum,
           sum_expand_mk_coeff_mul_X_pow_eq, hw]
         exact hψ
       refine ⟨fun i => -PowerSeries.mk fun n => coeff (p * n + i) D, fun i => ?_⟩
@@ -238,7 +238,7 @@ theorem _root_.GlobalTheory.Col.Model.spans (hu : (p : R) ∈ nonunits R) (h : P
   set ψ : (Fin p → R⟦X⟧) → R⟦X⟧ := fun g => ∑ i, _root_.GlobalTheory.Col.phi p hp.out.pos (g i) * X ^ (i : ℕ)
     with hψdef
   have ψ_add : ∀ a b, ψ (a + b) = ψ a + ψ b := fun a b => by
-    simp only [hψdef, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [hψdef, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
   have ψ_smul : ∀ (c : R) a, ψ (c • a) = c • ψ a := fun c a => by
     simp only [hψdef, Pi.smul_apply, map_smul, smul_mul_assoc, Finset.smul_sum]
   have ψ_zero : ψ 0 = 0 := by simp [hψdef]
@@ -276,7 +276,7 @@ theorem _root_.GlobalTheory.Col.Model.spans (hu : (p : R) ∈ nonunits R) (h : P
       rw [Finset.sum_range_add_sum_Ico _ hab]
     rw [hsplit]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Pi.add_apply, Finset.sum_apply, Pi.smul_apply, map_add, map_sum, coeff_smul, smul_eq_mul,
+      simp only [Pi.add_apply, Finset.sum_apply, Pi.smul_apply, map_add (f := _), map_sum, coeff_smul, smul_eq_mul,
       sub_add_cancel_left]
     refine ⟨-∑ k ∈ Finset.Ico a b, (p : R) ^ (k - a) * coeff n (G (hs k) i), ?_⟩
     rw [mul_neg, Finset.mul_sum]

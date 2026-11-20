@@ -18,7 +18,7 @@ theorem hA_add_right (y z z' : VA I) : hA I y (z + z') = hA I y z + hA I y z' :=
   simp only [hA, Formalism.UG.hform, Pi.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem hA_add_left (y y' z : VA I) : hA I (y + y') z = hA I y z + hA I y' z := by
-  simp only [hA, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hA, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hA_sub_right (y z z' : VA I) : hA I y (z - z') = hA I y z - hA I y z' := by
   simp only [hA, Formalism.UG.hform, Pi.sub_apply, mul_sub, Finset.sum_sub_distrib]

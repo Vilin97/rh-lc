@@ -99,7 +99,7 @@ theorem polyVal_rename (A : List (K → ℤ) → ℤ) (cls : τ → K → ℤ) (
     rw [rename_monomial, polyVal_monomial, polyVal_monomial]
     unfold classList
     rw [← Finsupp.toMultiset_map, Multiset.map_map]
-  | add p q hp hq => rw [map_add, polyVal_add, polyVal_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), polyVal_add, polyVal_add, hp, hq]
 
 end PolyValues
 

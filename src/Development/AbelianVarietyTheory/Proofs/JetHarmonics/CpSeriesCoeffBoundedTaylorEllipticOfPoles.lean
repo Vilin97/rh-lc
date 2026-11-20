@@ -106,7 +106,7 @@ theorem bdd_hat_of_ell : ∀ (q : ℕ) [Fact q.Prime] (M : Mdl q) (ℓ : ℂ_[q]
     bd_one_mul (bd_one_mul (bd_mono (bd_C _) (hint i)) (bd_X_pow _)) (bd_one_pow hxs i)
   have hS0 : ‖constantCoeff S‖ = 1 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hS, Finset.sum_range_succ, map_add, map_sum, Finset.sum_eq_zero, zero_add]
+      rw [hS, Finset.sum_range_succ, map_add (f := _), map_sum, Finset.sum_eq_zero, zero_add]
     · have : D.coeff m = 1 := by rw [← hdeg]; exact hmon.coeff_natDegree
       simp [this, hx0]
     · intro i hi

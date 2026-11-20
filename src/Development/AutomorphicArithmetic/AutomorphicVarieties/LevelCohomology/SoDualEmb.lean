@@ -30,7 +30,7 @@ theorem UpperTheory.V.X.So.dualEmb :
     have hy : y = ((PadicInt.toZModPow r y).val : ℤ_[l]) + (l : ℤ_[l]) ^ r * t := by
       rw [← ht]; ring
     conv_lhs => rw [hy]
-    rw [map_add, map_mul, map_pow, map_natCast, map_natCast, add_smul, kill, add_zero,
+    rw [map_add (f := _), map_mul, map_pow, map_natCast, map_natCast, add_smul, kill, add_zero,
       Nat.cast_smul_eq_nsmul O, map_nsmul, nsmul_eq_mul, ZMod.natCast_zmod_val]
   refine ⟨{ toFun := fun φ => c φ • w, map_zero' := ?_, map_add' := ?_ }, ?_, ?_, ?_⟩
   · show c 0 • w = 0
@@ -47,7 +47,7 @@ theorem UpperTheory.V.X.So.dualEmb :
     have e1 := hc (φ + ψ) m
     have e2 := hc φ m
     have e3 := hc ψ m
-    rw [add_smul, map_add, ← e1, ← e2, ← e3]
+    rw [add_smul, map_add (f := _), ← e1, ← e2, ← e3]
     exact TDual.add_apply φ ψ m
   · rw [injective_iff_map_eq_zero]
     intro φ hφ

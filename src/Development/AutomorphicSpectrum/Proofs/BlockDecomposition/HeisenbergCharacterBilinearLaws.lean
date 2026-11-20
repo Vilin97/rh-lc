@@ -22,7 +22,7 @@ theorem trA_add (a b : AE D) : trA (a + b) = trA a + trA b := map_add (Algebra.t
 theorem pr_add_left (b₀ : HermE D ρ) (x x' y : Mx D ρ p) : pr b₀ (x + x') y = pr b₀ x y + pr b₀ x' y := by
   have h : adj (x + x') = adj x + adj x' := by
     ext i j
-    simp only [adj, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, map_add]
+    simp only [adj, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, map_add (f := _)]
   simp only [pr, h]
   exact Matrix.add_mul _ _ _
 

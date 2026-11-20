@@ -10,7 +10,7 @@ noncomputable def hYYLeft (D : D7) {N N' : ℕ} (y : Matrix (Fin N') (Fin N) D.h
     Matrix (Fin N') (Fin N) D.host.E →ₗ[D.host.K] D.host.K where
   toFun x := hYY D x y
   map_add' x x' := by
-    simp only [hYY, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add]
+    simp only [hYY, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)]
   map_smul' c x := by
     simp only [hYY, Matrix.smul_apply, smul_mul_assoc, RingHom.id_apply]
     rw [← map_smul, Finset.smul_sum]

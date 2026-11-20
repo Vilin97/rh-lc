@@ -257,7 +257,7 @@ theorem backward [IsIntegrallyClosed R] [IsNoetherianRing R] (hs : Function.Inje
     simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, LinearMap.add_apply, LinearMap.smul_apply] at a3
     rw [a1, a3] at a2
     simp only [LinearMap.add_apply, LinearMap.smul_apply]
-    rw [a2, hd, hu', map_add, map_nsmul]
+    rw [a2, hd, hu', map_add (f := _), map_nsmul]
   · intro e v hv he
     obtain ⟨l, rfl⟩ := M₀'.onto v hv
     have : e = j' l := M'.inj (Over.OverMorphism.ext (he.trans (hj' l).symm))

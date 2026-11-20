@@ -147,7 +147,7 @@ theorem exists_orth_gen (hS : IsHermSemilocal S) (hπ : IsUnif S π) :
         rw [← hzs]
         exact mem_spanS z k
       exact spanS_induction (x := y) (p := fun v => h f v = 0) (map_zero _)
-        (fun a b ha hb => by rw [map_add, ha, hb, add_zero])
+        (fun a b ha hb => by rw [map_add (f := _), ha, hb, add_zero])
         (fun c _ a ha => by rw [map_smul, ha, smul_zero]) hf0 (z k) hzk
     refine ⟨(Fin.cons f z : Fin (m + 1) → V), ?_, ?_⟩
     · intro i j hij

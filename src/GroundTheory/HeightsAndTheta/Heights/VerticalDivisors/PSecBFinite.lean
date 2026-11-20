@@ -104,8 +104,8 @@ theorem finite_of_pow_mem {R : Type*} [CommRing R] {n : ℕ} (Q : Ideal (MvPolyn
       refine Submodule.smul_mem _ _ (ih _ ?_ _ le_rfl)
       have hm' : m.degree ≤ (q j).totalDegree := le_totalDegree hm
       have hqj := hq j
-      rw [map_add, Finsupp.degree_single] at hs
-      rw [map_add]
+      rw [map_add (f := _), Finsupp.degree_single] at hs
+      rw [map_add (f := _)]
       omega
   refine ⟨(Submodule.fg_def).mpr ⟨S, Set.finite_range _, ?_⟩⟩
   rw [eq_top_iff]
@@ -215,7 +215,7 @@ theorem specHom_rename_inl (e : ℕ) {n : ℕ} (v : HeightOneSpectrum (𝓞 K))
   rw [specHom, coe_eval₂Hom, eval₂_rename, Sum.elim_comp_inl]
   induction p using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => rw [eval₂_add, hp, hq, map_add]
+  | add p q hp hq => rw [eval₂_add, hp, hq, map_add (f := _)]
   | mul_X p i hp => rw [eval₂_mul, hp, eval₂_X, map_mul, map_X]
 
 omit [NumberField K] in
@@ -235,7 +235,7 @@ theorem specHom_rename_inr (e : ℕ) {n : ℕ} (v : HeightOneSpectrum (𝓞 K))
     rw [rename_C, rename_C, specHom, eval₂Hom_C, RingHom.comp_apply,
       IsScalarTower.algebraMap_apply (𝓞 K) (MvPolynomial (Par e n) (𝓞 K)) (ParDVR e n v),
       MvPolynomial.algebraMap_eq]
-  | add p q hp hq => rw [map_add, map_add, map_add, map_add, hp, hq, C_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq, C_add]
   | mul_X p ij hp =>
     rw [map_mul, map_mul, map_mul, map_mul, hp, C_mul, rename_X, rename_X]
     congr 1
@@ -345,7 +345,7 @@ theorem SecBFinite.proof (hIN : IncidenceNull.Statement) (hCT : ChartTorsion.Sta
     · have hXM : homogeneousComponent (M + 1) (X j ^ (M + 1) : MvPolynomial (Fin n) (ParDVR e n v)) =
           X j ^ (M + 1) := homogeneousComponent_eq_self (isHomogeneous_X_pow _ _)
       have h2 := congrArg (homogeneousComponent (M + 1)) hab
-      rw [map_add, homogeneousComponent_mul_of_deg_one _ (chartForm (parY e n v)) (isHomogeneous_linForm _), hXM] at h2
+      rw [map_add (f := _), homogeneousComponent_mul_of_deg_one _ (chartForm (parY e n v)) (isHomogeneous_linForm _), hXM] at h2
       have ha' : homogeneousComponent (M + 1) a ∈
           modelR e I v ⊔ Ideal.span (Set.range (secForm (parY e n v))) :=
         homogeneousComponent_mem_of_mem hJ0 ha _

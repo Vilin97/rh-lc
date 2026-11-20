@@ -15,7 +15,7 @@ theorem hasFDerivAt_mv (q : MvPolynomial ι K) {h : V → ι → ℂ} {z0 : V} {
   induction q using MvPolynomial.induction_on with
   | C a => simpa using hasFDerivAt_const (σ a) z0
   | add p q hp hq =>
-    simp only [eval₂_add, map_add, add_smul, Finset.sum_add_distrib]
+    simp only [eval₂_add, map_add (f := _), add_smul, Finset.sum_add_distrib]
     exact hp.add hq
   | mul_X p i hp =>
     simp only [eval₂_mul, eval₂_X]
@@ -62,7 +62,7 @@ theorem hasFDerivAt_eval₂ (P : Polynomial (MvPolynomial ι K)) {h : V → ι �
   | add p q hp hq =>
     simp only [Polynomial.eval₂_add]
     refine (hp.add hq).congr_fderiv ?_
-    simp only [map_add, Polynomial.eval₂_add, xTerm_add, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Polynomial.eval₂_add, xTerm_add, add_smul, Finset.sum_add_distrib]
     abel
   | monomial n c =>
     simp only [Polynomial.eval₂_monomial]

@@ -39,7 +39,7 @@ theorem pairing_mixLat (hσ : ∀ x, σ (σ x) = x) (hv : ∀ x, Valued.v (σ x)
     · rw [hbi.1 h2, map_zero, mul_zero]; exact zero_mem _
     exact mul_mem (hai.2 (by omega) (by omega)) (hs _ (hbi.2 (by omega) (by omega)))
   have hi : δ * ∑ i, ∑ j, a i j * σ (b i.rev j.rev) ∈ intL L := mul_mem (mem_intL.2 hδ.le) hS
-  exact hψ0 _ (add_mem hi (hs _ hi)) (by rw [map_add, hσ, add_comm])
+  exact hψ0 _ (add_mem hi (hs _ hi)) (by rw [map_add (f := _), hσ, add_comm])
 
 theorem exists_bad_entry (x : Matrix (Fin n') (Fin n) L)
     (hx : ¬ ∃ a ∈ mixLat L n' n, x - a ∈ intMat L (Fin n') (Fin n)) :

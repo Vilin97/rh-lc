@@ -114,7 +114,7 @@ theorem eq_single_of_degree_eq_one {e : σ →₀ ℕ} (h : e.degree = 1) : ∃ 
   have hsum : e = (e - Finsupp.single j 1) + Finsupp.single j 1 := (tsub_add_cancel_of_le hle).symm
   have hd : (e - Finsupp.single j 1).degree = 0 := by
     have h2 := congrArg Finsupp.degree hsum
-    rw [map_add, Finsupp.degree_single, h] at h2
+    rw [map_add (f := _), Finsupp.degree_single, h] at h2
     omega
   rw [Finsupp.degree_eq_zero_iff] at hd
   rw [hsum, hd, zero_add]

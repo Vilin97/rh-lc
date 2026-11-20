@@ -219,7 +219,7 @@ theorem isDerivAt0_of_isPullback {Z : Scheme.{0}} {φ : Y ⟶ Z} {s : Y ⟶ Sp �
   | one => exact hconst _ 1 (fun z hz => valAt'_one _ hz) (by simp)
   | add x y _ _ hx hy =>
     simp only [valAt'_add]
-    exact ⟨hx.1.add hy.1, by rw [jet_add w hx.1 hy.1, map_add, hx.2, hy.2]⟩
+    exact ⟨hx.1.add hy.1, by rw [jet_add w hx.1 hy.1, map_add (f := _), hx.2, hy.2]⟩
   | neg x _ hx =>
     simp only [valAt'_neg]
     exact ⟨hx.1.neg, by rw [jet_neg w, map_neg, hx.2]⟩

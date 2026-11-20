@@ -50,7 +50,7 @@ theorem corr_mul {A B A' B'} (h : CorrFI ι A B) (h' : CorrFI ι A' B') : CorrFI
       exact FractionalIdeal.mul_mem_mul ((h a).1 ha) ((h' a').1 ha')
     · intro x x' hx hx'
       show ι (x + x') ∈ B * B'
-      rw [map_add]
+      rw [map_add (f := _)]
       exact FractionalIdeal.mem_coe.1 (add_mem (FractionalIdeal.mem_coe.2 hx) (FractionalIdeal.mem_coe.2 hx'))
   · intro hy
     have key : ι.symm (ι y) ∈ A * A' := by
@@ -61,7 +61,7 @@ theorem corr_mul {A B A' B'} (h : CorrFI ι A B) (h' : CorrFI ι A' B') : CorrFI
         exact FractionalIdeal.mul_mem_mul ((corr_symm ι h b).2 hb) ((corr_symm ι h' b').2 hb')
       · intro x x' hx hx'
         show ι.symm (x + x') ∈ A * A'
-        rw [map_add]
+        rw [map_add (f := _)]
         exact FractionalIdeal.mem_coe.1 (add_mem (FractionalIdeal.mem_coe.2 hx) (FractionalIdeal.mem_coe.2 hx'))
     rwa [RingEquiv.symm_apply_apply] at key
 
@@ -272,7 +272,7 @@ theorem crd_cinv (x : Fin X.B.I.n → X.B.I.E) : crd X (cinv X x) = x := by
     Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true, RingEquiv.symm_apply_apply]
 
 theorem cinv_add (x y : Fin X.B.I.n → X.B.I.E) : cinv X (x + y) = cinv X x + cinv X y := by
-  simp only [cinv, Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+  simp only [cinv, Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
 
 theorem cinv_zero : cinv X 0 = 0 := by
   simp [cinv]
@@ -291,7 +291,7 @@ theorem cinv_osmul (o : 𝓞 X.B.I.E) (x : Fin X.B.I.n → X.B.I.E) :
 
 theorem crd_add (x y : (VS D).V) : crd X (x + y) = crd X x + crd X y := by
   funext i
-  simp [crdOf, map_add]
+  simp [crdOf, map_add (f := _)]
 
 theorem crd_zero : crd X 0 = 0 := by
   funext i

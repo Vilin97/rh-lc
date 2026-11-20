@@ -36,7 +36,7 @@ def inv0 : Submodule ℤ_[ℓ] (Fin r → R.OC) where
   carrier := {v | ∀ g, repS R S 0 g v = v}
   add_mem' := by
     intro a b ha hb g
-    rw [map_add, ha g, hb g]
+    rw [map_add (f := _), ha g, hb g]
   zero_mem' := fun g => map_zero _
   smul_mem' := by
     intro t a ha g

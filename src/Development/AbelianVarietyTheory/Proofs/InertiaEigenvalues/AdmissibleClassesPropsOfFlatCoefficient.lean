@@ -182,7 +182,7 @@ theorem lTensor_twCoef (χ : G →* Oˣ) {X X' : Type} [AddCommGroup X] [Module 
   induction m using TensorProduct.induction_on with
   | zero => simp
   | tmul m x => simp only [twCoef, coefRep_tmul, LinearMap.lTensor_tmul]
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
 theorem exists_coefH1_mk (χ : G →* Oˣ) {X X' : Type} [AddCommGroup X] [Module O X] [AddCommGroup X']
     [Module O X'] (f : X →ₗ[O] X') (z : ↥(Z1 (twCoef W χ X) ⊤)) :
@@ -278,7 +278,7 @@ theorem admissible_of_twist_trivial_tensor {X : Type} [AddCommGroup X] [Module O
   | tmul a x =>
     simp only [GalData.Wchi, coefRep_tmul, TensorProduct.lid_tmul, Formalism.GaloisCohomology.scalRep_apply, GalData.chi_one,
       twistRep_apply, Representation.trivial_apply, smul_eq_mul, mul_smul]
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
 end Classes
 

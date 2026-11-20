@@ -40,6 +40,6 @@ theorem intertwiner_EB_of_stabiliser : ∀ (V₁ : Type) [NormedAddCommGroup V�
   have p2 := intertwiner_dOp_of_stabiliser T h₁ h₂ hT lz.2 le.2.2 v
   show T (ecOp π₁ (unitB (Hpk k r) B a b) v) = ecOp π₂ (unitB (Hpk k r) B a b) (T v)
   unfold ecOp
-  simp only [_root_.add_apply, _root_.smul_apply, map_add, map_smul, p1, p2]
+  simp only [_root_.add_apply, _root_.smul_apply, map_add (f := _), map_smul, p1, p2]
 
 end GlobalTheory

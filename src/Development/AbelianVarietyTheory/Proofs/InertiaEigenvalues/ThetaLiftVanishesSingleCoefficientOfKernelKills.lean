@@ -127,7 +127,7 @@ theorem pureTensor_sum {ι : Type} (s : Finset ι) (P : ι → PolF D (Wc D i).r
 theorem phi_add_w (x : LowT (R.MW i (sg0 D A))) (w w' : (R.cV i).W) :
     phi R i t x (w + w') = phi R i t x w + phi R i t x w' := by
   unfold phi
-  rw [map_add, pureTensor_add]
+  rw [map_add (f := _), pureTensor_add]
 
 theorem phi_smul_w (x : LowT (R.MW i (sg0 D A))) (c : ℂ) (w : (R.cV i).W) :
     phi R i t x (c • w) = c • phi R i t x w := by
@@ -137,7 +137,7 @@ theorem phi_smul_w (x : LowT (R.MW i (sg0 D A))) (c : ℂ) (w : (R.cV i).W) :
 theorem fockVectorOfTensor_add_tensor (x x' : LowT (R.MW i (sg0 D A))) (w : (R.cV i).W) :
     phi R i t (x + x') w = phi R i t x w + phi R i t x' w := by
   unfold phi
-  rw [map_add, LinearMap.add_apply, pureTensor_add]
+  rw [map_add (f := _), LinearMap.add_apply, pureTensor_add]
 
 theorem fockVectorOfTensor_smul_tensor (c : ℂ) (x : LowT (R.MW i (sg0 D A))) (w : (R.cV i).W) :
     phi R i t (c • x) w = c • phi R i t x w := by

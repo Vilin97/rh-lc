@@ -49,7 +49,7 @@ private theorem res_map {R : Type} [CommRing R] {F G : Shv R} (φ : F ⟶ G) {V 
 
 private theorem res_add {R : Type} [CommRing R] {F : Shv R} {V U : Scheme.{0}} (g : V ⟶ U) (a b : Sec F U) :
     Sec.res g (a + b) = Sec.res g a + Sec.res g b := by
-  simp only [Sec.res, map_add]
+  simp only [Sec.res, map_add (f := _)]
 
 private theorem map_nsmul' {R : Type} [CommRing R] {F G : Shv R} (φ : F ⟶ G) {U : Scheme.{0}} (c : ℕ)
     (a : Sec F U) : Sec.map φ (c • a) = c • Sec.map φ a :=

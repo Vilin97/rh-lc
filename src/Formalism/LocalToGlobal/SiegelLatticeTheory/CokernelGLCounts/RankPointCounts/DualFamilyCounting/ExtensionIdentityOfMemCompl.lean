@@ -183,7 +183,7 @@ theorem extId_mem (hs : h.IsSymm) (hc : IsCompl U (orthK h U)) {g : ↥(orthK h 
   have o1 : ∀ {x y : V}, x ∈ U → y ∈ orthK h U → h x y = 0 := fun hx hy => mem_orthK.mp hy _ hx
   have o2 : ∀ {x y : V}, x ∈ U → y ∈ orthK h U → h y x = 0 := fun {x y} hx hy => by
     rw [← hs.eq x y, o1 hx hy, map_zero]
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   rw [hg', o1 hu (g ⟨w', hw'⟩).2, o2 hu' (g ⟨w, hw⟩).2, o1 hu hw', o2 hu' hw]
 
 theorem map_orthK {g : V ≃ₗ[K] V} (hg : g ∈ isomFix h U) :
@@ -213,7 +213,7 @@ theorem extId_restr (hc : IsCompl U (orthK h U)) {g : V ≃ₗ[K] V} (hg : g ∈
   apply LinearEquiv.ext
   intro v
   obtain ⟨u, hu, w, hw, rfl⟩ := exists_add hc v
-  rw [extId_add hc _ hu hw, restr_apply, map_add, hg.2 u hu]
+  rw [extId_add hc _ hu hw, restr_apply, map_add (f := _), hg.2 u hu]
 
 theorem restr_extId (hs : h.IsSymm) (hc : IsCompl U (orthK h U))
     {g : ↥(orthK h U) ≃ₗ[K] ↥(orthK h U)} (hg : g ∈ Formalism.HermitianLatticesTheory.isom (formOn h (orthK h U))) :

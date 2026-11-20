@@ -21,7 +21,7 @@ def qb_evL (M : GLMod n) (F : Type) [CommRing F] (nu : Fin n → ℤ) : (M.ι �
   toFun := qb_ev M F nu
   map_add' x y := by
     funext i
-    simp only [qb_ev_apply, Pi.add_apply, map_add, mul_add, sum_add_distrib]
+    simp only [qb_ev_apply, Pi.add_apply, map_add (f := _), mul_add, sum_add_distrib]
   map_smul' a x := by
     funext i
     simp only [qb_ev_apply, Pi.smul_apply, smul_eq_mul, map_mul, RingHom.id_apply, mul_sum]

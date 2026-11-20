@@ -40,7 +40,7 @@ theorem mem_sup_ker {c : ι}
       obtain ⟨s2, g2, hs2, hg2, e2⟩ := ih2
       refine ⟨s1 * s2, s2 * g1 + s1 * g2, fun h => (hQ.mem_or_mem h).elim hs1 hs2,
         J.add_mem (J.mul_mem_left _ hg1) (J.mul_mem_left _ hg2), ?_⟩
-      rw [map_mul, map_add, map_mul, map_mul, ← e1, ← e2]
+      rw [map_mul, map_add (f := _), map_mul, map_mul, ← e1, ← e2]
       ring
     | smul r y _ ih =>
       obtain ⟨s, g, hs, hg, e⟩ := ih

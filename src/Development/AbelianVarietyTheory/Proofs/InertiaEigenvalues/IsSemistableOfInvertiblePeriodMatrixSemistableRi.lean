@@ -45,10 +45,10 @@ theorem isSst_of_periodMatrix : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (A
         simp only [hM, Matrix.mulVec, dotProduct, Matrix.map_apply, Algebra.smul_def, map_mul, AlgHom.commutes,
         map_sum, Finset.sum_mul, mul_assoc]
     | add x y hx hy =>
-      rw [map_add, map_add, hx, hy, ← Matrix.mulVec_add]
+      rw [map_add (f := _), map_add (f := _), hx, hy, ← Matrix.mulVec_add]
       congr 1
       funext i
-      simp [map_add]
+      simp [map_add (f := _)]
 
   have hmv : ∀ (g : ↥(GK K)) (w : n → Bst P),
       (fun i => actSt P (g : GQ l) (((Q : Matrix n n (Bst P)) *ᵥ w) i)) =

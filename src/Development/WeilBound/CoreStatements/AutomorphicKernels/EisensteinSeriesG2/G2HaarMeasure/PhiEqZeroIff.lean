@@ -24,7 +24,7 @@ def phi (c : B →+* B) (J X : Matrix n n B) : Matrix n n B := Xᵀ * J + J * X.
 
 theorem blk_map (c : B →+* B) (X : Matrix n n B) : (blk X).map c = blk (X.map c) := by
   have e : ∀ M : Matrix n n B, M.map c = c.mapMatrix M := fun _ => rfl
-  simp only [blk, fromBlocks_map, e, map_add, map_sub, map_neg, map_one]
+  simp only [blk, fromBlocks_map, e, map_add (f := _), map_sub, map_neg, map_one]
 
 theorem blk_form (c : B →+* B) (J X : Matrix n n B) :
     (blk X)ᵀ * GlobalTheory.WeilM.dbl J * (blk X).map c =
@@ -163,7 +163,7 @@ theorem unip_iff_blk (M : Matrix (n ⊕ n) (n ⊕ n) B) :
 
 theorem blk_map' {B' : Type} [CommRing B'] (f : B →+* B') (X : Matrix n n B) : (blk X).map f = blk (X.map f) := by
   have e : ∀ M : Matrix n n B, M.map f = f.mapMatrix M := fun _ => rfl
-  simp only [blk, fromBlocks_map, e, map_add, map_sub, map_neg, map_one]
+  simp only [blk, fromBlocks_map, e, map_add (f := _), map_sub, map_neg, map_one]
 
 theorem proj_map {B' : Type} [CommRing B'] (f : B →+* B') (c : B →+* B) (c' : B' →+* B')
     (hf : ∀ x, f (c x) = c' (f x)) (J K : Matrix n n B) (h : B) (X : Matrix n n B) :

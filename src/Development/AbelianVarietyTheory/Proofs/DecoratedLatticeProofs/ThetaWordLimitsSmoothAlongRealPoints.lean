@@ -51,7 +51,7 @@ theorem sm_of_tendstoUniformly_words {G R A : Type} [AddCommGroup G] [NormedAddC
     rw [add_zero] at this
     have e2 : (fun y : R => g l j (w + ι x + ι y)) = fun y => g l j (w + ι (x + y)) := by
       funext y
-      rw [map_add, add_assoc]
+      rw [map_add (f := _), add_assoc]
     rw [← this, e2]
     ring
   rw [e]

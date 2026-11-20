@@ -204,7 +204,7 @@ theorem IsOrth.sub_mem_span {𝔞 : Submodule ℝ (A0 k)} {X : Finset (SV k) →
   rw [aP, ← insert_erase hu, coe_insert, Set.image_insert_eq, Submodule.mem_span_insert, insert_erase hu] at hm
   obtain ⟨c, y, hy, e⟩ := hm
   refine Submodule.mem_span_singleton.2 ⟨c, ?_⟩
-  rw [e, map_add, map_smul, show pr (P.erase u) y = y from Submodule.starProjection_eq_self_iff.2 hy] at h0
+  rw [e, map_add (f := _), map_smul, show pr (P.erase u) y = y from Submodule.starProjection_eq_self_iff.2 hy] at h0
   rw [e, rt, wt, smul_sub, sub_eq_add_neg, neg_eq_of_add_eq_zero_right h0]
 
 theorem IsOrth.isGMFam {𝔞 : Submodule ℝ (A0 k)} {X : Finset (SV k) → A0 k} (h : IsOrth 𝔞 X) : IsGMFam 𝔞 (expFam X) :=

@@ -70,7 +70,7 @@ theorem UpperTheory.V.Loc.bkAbove :
       induction w using TensorProduct.induction_on with
       | zero => simp
       | tmul v b => simp [actC]
-      | add u v hu hv => simp only [map_add, hu, hv]
+      | add u v hu hv => simp only [map_add (f := _), hu, hv]
     · intro g h
       simp [actC, hc.2 (p g) (p h), TensorProduct.add_tmul]
     · rintro g ⟨h, hh⟩

@@ -206,7 +206,7 @@ theorem pre_period (HT : TiltLeaf) (K : FinExt l) (χ : ↥(GK K) →* (↥K.1)�
       · intro n
         have h := hD.2.2.2.1 n
         have h2 := congrArg (UniformSpace.Completion.coeRingHom : Om l →+* ℂ_[l]) h
-        rw [map_add, map_mul, map_pow] at h2
+        rw [map_add (f := _), map_mul, map_pow] at h2
         have e : thB l ϖ = (((π : ↥K.1) : Om l) : ℂ_[l]) := by
           rw [← hϖe, thB_rB, hμ]; rfl
         rw [e]

@@ -88,7 +88,7 @@ theorem exists_series_of_compatible : ∀ (p : ℕ) (O σ : Type) [CommRing O] [
   have hER := hN R hR
   have hsplit : E n μ - t n = E n R + (p : A n) ^ m * E n Q := by
     have hμeq : μ = h (m + N + n) + ((p : O) ^ m • Q + R) := by simp only [R]; abel
-    rw [hμeq, map_add, map_add, hj, map_smul, Algebra.smul_def, map_pow, map_natCast]
+    rw [hμeq, map_add (f := _), map_add (f := _), hj, map_smul, Algebra.smul_def, map_pow, map_natCast]
     ring
   rw [hsplit]
   exact dvd_add hER (dvd_mul_right _ _)

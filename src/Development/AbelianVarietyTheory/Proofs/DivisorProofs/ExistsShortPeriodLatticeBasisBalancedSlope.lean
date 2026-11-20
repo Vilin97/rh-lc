@@ -31,9 +31,9 @@ theorem exists_shortBasis : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     rw [← H.bar_eq, HostModel.bar_rt]; simp
   have hw : (H.w0 : E) + IsCMField.complexConj E (H.w0 : E) = 1 := by
     have h2 : (2 : E) * (H.w0 : E) = 1 + (H.rt : E) := by
-      simpa only [map_mul, map_add, map_one, map_ofNat] using congrArg (algebraMap (𝓞 E) E) H.two_weight_eq_one_add_root
+      simpa only [map_mul, map_add (f := _), map_one, map_ofNat] using congrArg (algebraMap (𝓞 E) E) H.two_weight_eq_one_add_root
     have h3 := congrArg (IsCMField.complexConj E) h2
-    rw [map_mul, map_add, map_one, map_ofNat, hrt] at h3
+    rw [map_mul, map_add (f := _), map_one, map_ofNat, hrt] at h3
     linear_combination (h2 + h3) / 2
   have hne : ∃ z : E, IsCMField.complexConj E z ≠ z := by
     by_contra! h

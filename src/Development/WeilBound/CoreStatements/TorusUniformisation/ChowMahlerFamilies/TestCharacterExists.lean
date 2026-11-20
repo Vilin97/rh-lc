@@ -95,7 +95,7 @@ theorem core (p : ℕ) [Fact p.Prime] {R : Type} [CommRing R] [IsDomain R] [IsLo
   refine ⟨σ', ee, fun a b => ?_, key, fun τ => ?_⟩
   · rw [hσ, hσ, hσ]
     refine fund hpp n.ne_zero (hn ▸ hroot _ _) (hn ▸ hroot _ _) (hn ▸ hroot _ _) ?_
-    rw [← IsLocalRing.residue_eq_zero_iff, map_sub, map_sub, hχ, hχ, hχ, map_add]
+    rw [← IsLocalRing.residue_eq_zero_iff, map_sub, map_sub, hχ, hχ, hχ, map_add (f := _)]
     ring
   · ext a
     rw [← key, pow_succ, pow_mul, MulChar.pow_apply' _ hpp.ne_zero, ← key, ← map_pow]

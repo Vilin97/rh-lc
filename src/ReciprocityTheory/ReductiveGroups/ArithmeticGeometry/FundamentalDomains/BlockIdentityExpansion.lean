@@ -106,7 +106,7 @@ private lemma ppos_smul_fundamental_domains (X : Data E r) (x : Frame X.Ψ r) (�
 private lemma hermC_add_right_fundamental_domains (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (u v v' : Fin r → ℂ) :
     hermC τ G u (v + v') = hermC τ G u v + hermC τ G u v' := by
   unfold hermC
-  simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem key (X : DataX E r) (ξ : Fin r → E) (z0 x0 : Frame X.Ψ r)
     (f : X.Ψ → Fin (r - 2) → Fin r → ℂ) (h1 : X.Ψ → Matrix (Fin r) (Fin r) ℂ) (δ : ℝ)

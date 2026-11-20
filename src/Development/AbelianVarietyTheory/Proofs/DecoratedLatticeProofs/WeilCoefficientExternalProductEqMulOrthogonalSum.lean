@@ -60,7 +60,7 @@ theorem wcoef_boxT : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (A B W H : HS
     · refine ⟨⟨o.resT A h, AddSubgroup.mem_prod.2 ((o.mem_ratL_resT A h).1 h.2)⟩, Subtype.ext ?_⟩
       exact (o.resT A).symm_apply_apply h
     · change o.resT A ((o.resT A).symm (γ : WO A W × WO A H) + x) = (γ : WO A W × WO A H) + o.resT A x
-      rw [map_add, AddEquiv.apply_symm_apply]
+      rw [map_add (f := _), AddEquiv.apply_symm_apply]
   have hvol : μ' (em ⁻¹' (𝓕W ×ˢ 𝓕H)) = 1 := by
     rw [← em.map_apply, hmp.map_eq, Measure.prod_prod, cW.2.2, cH.2.2, one_mul]
   have hcov : IsCovolOne (ratL B A) μ' (em ⁻¹' (𝓕W ×ˢ 𝓕H)) := ⟨inferInstance, hP, hvol⟩

@@ -137,7 +137,7 @@ private theorem ae_comb {ψ : AdelicGLn.AdelicGL E n → ℂ} (hψ : IsLeftInvar
     simp only [map_zero]
     exact Lp.coeFn_zero _ _ _
   | add x y hx hy =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (Lp.coeFn_add _ _).trans (hx.add hy)
   | single k c =>
     simp only [Finsupp.linearCombination_single]

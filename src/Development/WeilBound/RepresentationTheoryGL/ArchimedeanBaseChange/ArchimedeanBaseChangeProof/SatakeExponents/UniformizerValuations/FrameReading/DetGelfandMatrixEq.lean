@@ -12,7 +12,7 @@ namespace GelfH
 def qm (S : Multiset ℂ) : ℂ[X] := (S.map fun c => 1 - C c * X).prod
 
 theorem qm_add (S T : Multiset ℂ) : qm (S + T) = qm S * qm T := by
-  simp [qm, Multiset.map_add, Multiset.prod_add]
+  simp [qm, Multiset.map_add (f := _), Multiset.prod_add]
 
 theorem one_sub_eq (c : ℂ) (hc : c ≠ 0) : (1 - C c * X : ℂ[X]) = C (-c) * (X - C c⁻¹) := by
   rw [mul_sub, ← C_mul, neg_mul, mul_inv_cancel₀ hc]

@@ -20,7 +20,7 @@ private theorem chi_map_eq_map_chi_mapRingHom {n : ℕ} {B K Γ : Type} [CommRin
     · simp [φ]
     · induction z using MonoidAlgebra.induction_linear with
       | zero => simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | single g b => simp [φ, MonoidAlgebra.mapRingHom_single]
   have h := D.nat B[X] K[X] φ (MonoidAlgebra.single 1 X - MonoidAlgebra.mapRingHom Γ C z)
   rw [e] at h
@@ -33,7 +33,7 @@ private theorem chi_ofRep_eq_charpoly_lift {n : ℕ} {K Γ : Type} [CommRing K] 
       (C : K →+* K[X]).mapMatrix (MonoidAlgebra.lift K (Matrix (Fin n) (Fin n) K) Γ σ w) := by
     induction w using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g b =>
       simp only [W.GDet.repAlg, MonoidAlgebra.mapRingHom_single, MonoidAlgebra.lift_single]
       ext i j
@@ -56,7 +56,7 @@ private theorem chi_map {n : ℕ} {O B K Γ : Type} [CommRing O] [CommRing B] [C
       MonoidAlgebra.mapRingHom Γ (algebraMap O K) y := by
     induction y using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g b => simp [MonoidAlgebra.mapRingHom_single]
   rw [e, MonoidAlgebra.lift_mapRingHom_algebraMap]
 
@@ -67,10 +67,10 @@ private theorem lift_diag {n : ℕ} {O K Γ : Type} [CommRing O] [CommRing K] [A
   induction y using MonoidAlgebra.induction_linear with
   | zero => simp
   | add a b ha hb =>
-    rw [map_add, ha, hb, Matrix.diagonal_add]
+    rw [map_add (f := _), ha, hb, Matrix.diagonal_add]
     congr 1
     funext i
-    rw [map_add]
+    rw [map_add (f := _)]
   | single g b =>
     ext i j
     simp [W.diagRep, MonoidAlgebra.lift_single, Matrix.diagonal_apply]

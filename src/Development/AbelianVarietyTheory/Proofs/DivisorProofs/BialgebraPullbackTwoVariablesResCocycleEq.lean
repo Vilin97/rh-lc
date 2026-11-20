@@ -40,14 +40,14 @@ theorem Dat.pullTwo_res_coc (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
     induction u using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [L, Rt]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hid : ∀ u : G.A n ⊗[R] G.A n,
       Algebra.TensorProduct.lift L Rt (fun _ _ ↦ Commute.all _ _) u = u := by
     intro u
     induction u using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [L, Rt]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hmul : (toConv (L.comp (G.res n : G.A (n + 1) →ₐ[R] G.A n)) *
       toConv (Rt.comp (G.res n : G.A (n + 1) →ₐ[R] G.A n))).ofConv =
       (toConv L * toConv Rt).ofConv.comp (G.res n : G.A (n + 1) →ₐ[R] G.A n) :=

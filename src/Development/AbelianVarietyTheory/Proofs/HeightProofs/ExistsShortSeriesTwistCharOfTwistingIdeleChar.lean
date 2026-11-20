@@ -65,7 +65,7 @@ theorem exists_rat {D : D7} (x : (AfE D)ˣ) (a : D.host.E) (h : (x : AfE D) = 1 
       rw [h] at this
       rw [h]
       exact this
-    rw [map_add, map_one, map_add, map_add, map_one, mul_add, h1, ← hx, mul_one, add_comm]
+    rw [map_add (f := _), map_one, map_add (f := _), map_add (f := _), map_one, mul_add, h1, ← hx, mul_one, add_comm]
 
 theorem cong_div {D : D7} (N : ℕ) (y : (AfE D)ˣ) (hu : IntUnit y) (hy : CongOne N y) :
     CongOne N (y / cjFin D y) ∧ NormOne (y / cjFin D y) := by

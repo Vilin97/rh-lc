@@ -26,7 +26,7 @@ theorem isAdIso_eq_afIso (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
       show ι (y ⊗ₜ[F] 1) = afIso F E (y ⊗ₜ[F] 1)
       rw [hι.1, afIso_tmul_one]
     have hd2 : d = (N : P.adicCompletion E) * (ι r P - afIso F E r P) := by
-      rw [hd, e, map_add, map_add, h1, map_mul, map_mul, map_natCast, map_natCast]
+      rw [hd, e, map_add (f := _), map_add (f := _), h1, map_mul, map_mul, map_natCast, map_natCast]
       rw [ev, ev, evm, evm, evn]
       ring
     have hr1 : Valued.v (ι r P) ≤ 1 := (hι.2 r).1 hr P

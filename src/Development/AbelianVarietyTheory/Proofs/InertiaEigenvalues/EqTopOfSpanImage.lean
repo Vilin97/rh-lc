@@ -115,7 +115,7 @@ theorem mem_radical_of_mem {O E : Type} [CommRing O] [IsNoetherianRing O] [CommR
     rw [PowerSeries.isUnit_iff_constantCoeff]
     simpa using hk
   have he := PowerSeries.eq_shift_mul_X_pow_add_trunc k f
-  rw [he, map_add] at hf
+  rw [he, map_add (f := _)] at hf
   have h3 := m.sub_mem hf ht
   rw [add_sub_cancel_right, map_mul, map_pow] at h3
   exact hm (Ideal.eq_top_of_isUnit_mem _ h3 ((hu.map ψ).mul (hX.pow k)))
@@ -343,7 +343,7 @@ theorem exact_of_tie (hm : ∀ m : Ideal W.EE, m.IsMaximal → m.map E.ioE.toRin
       rw [hmap, Submodule.comap_top, sup_eq_left.2 hk] at this
       exact this.symm
     obtain ⟨_, ⟨t, rfl⟩, _, ⟨z, rfl⟩, rfl⟩ := Submodule.mem_sup.1 (htop ▸ Submodule.mem_top (x := y))
-    rw [map_add, hcomp, hs', zero_add] at hy
+    rw [map_add (f := _), hcomp, hs', zero_add] at hy
     exact ⟨t, by rw [hy, map_zero, add_zero]⟩
   · rintro ⟨x, rfl⟩
     exact hcomp x

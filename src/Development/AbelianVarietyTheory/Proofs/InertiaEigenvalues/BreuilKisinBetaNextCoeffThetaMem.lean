@@ -106,11 +106,11 @@ theorem GlobalTheory.BKLim.beta_step : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt 
         bk.ev bk.E ^ i * (w ^ i * (P a c * σ (bk.ev (δ c b)))) := by
       intro c
       rw [hβe]
-      simp only [map_add, map_mul, map_pow, map_natCast, hσE]
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast, hσE]
       ring
     rw [Finset.sum_congr rfl (fun c _ => e1 c), Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum,
       ← Finset.mul_sum, hβe a b]
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
     ring
   have hDγ : ∀ a b, bk.ev bk.E ^ i ∣ ∑ c, P a c * σ (bk.ev (γ c b)) - bk.ev (γ a b) := by
     intro a b
@@ -133,7 +133,7 @@ theorem GlobalTheory.BKLim.beta_step : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt 
     exact (mul_dvd_mul_iff_left (pow_ne_zero i (evE_ne_zero bk))).1 h1
   rw [← theta_eq_zero_iff] at hX
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [σ, map_add, map_sub, map_mul, map_pow, map_natCast, map_sum, GlobalTheory.BKLim.BetaBd.θ_σA_ev, hP,
+    simp only [σ, map_add (f := _), map_sub, map_mul, map_pow, map_natCast, map_sum, GlobalTheory.BKLim.BetaBd.θ_σA_ev, hP,
     ite_mul, one_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, if_true] at hX
   refine ⟨-Per.θ l (η p q), ?_⟩
   simp only [Matrix.of_apply]

@@ -26,7 +26,7 @@ theorem archInc_snd (y : κ → mixedEmbedding.mixedSpace F) (i : κ) : (archInc
 theorem archInc_add (y y' : κ → mixedEmbedding.mixedSpace F) : archInc F (y + y') = archInc F y + archInc F y' := by
   funext i
   simp only [archInc, Pi.add_apply]
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
   rfl
 
 end GlobalTheory.SobClass
@@ -76,7 +76,7 @@ theorem continuous_slice {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) (
         (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F (x i).1) + y := by
       intro y; funext i
       show InfiniteAdeleRing.ringEquiv_mixedSpace F ((x i).1 + (archInc F y i).1) = _
-      simp [archInc, map_add]
+      simp [archInc, map_add (f := _)]
     have e2 : ∀ y : κ → mixedEmbedding.mixedSpace F, (fun i => ((x + archInc F y) i).2) = fun i => (x i).2 := by
       intro y; funext i
       show (x i).2 + (archInc F y i).2 = _

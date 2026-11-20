@@ -209,7 +209,7 @@ theorem integral_quotient_holds : IntegralQuotient := by
       simp [ψ]
     | add p q hp hq =>
       intro m hm
-      rw [map_add, map_add, LinearMap.add_apply, add_smul, hp m hm, hq m hm]
+      rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, add_smul, hp m hm, hq m hm]
     | mul_X p a hp =>
       intro m hm
       rw [map_mul, map_mul, hφX, Module.End.mul_apply, hχ τ a m hm, hp _ ((Mt τ).smul_mem _ hm), smul_smul]
@@ -235,7 +235,7 @@ theorem integral_quotient_holds : IntegralQuotient := by
   have hA : φ (AAp.eval W0) = w ^ n • (1 : Module.End O M) + ∑ a : Fin n, w ^ a.val • c a := by
     have hW : φ W0 = algebraMap O (Module.End O M) w := by rw [hW0]; exact φ.commutes w
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hAAp, eval_add, eval_pow, eval_X, eval_finsetSum, eval_mul, eval_C, map_add, map_pow, map_sum,
+      simp only [hAAp, eval_add, eval_pow, eval_X, eval_finsetSum, eval_mul, eval_C, map_add (f := _), map_pow, map_sum,
       map_mul, hφX, hW]
     congr 1
     · rw [← map_pow, Algebra.algebraMap_eq_smul_one]
@@ -250,10 +250,10 @@ theorem integral_quotient_holds : IntegralQuotient := by
       rw [hact τ _ m hm, ← eval₂_at_apply, ← eval_map, hRem τ, eval_zero, zero_smul]
     calc Dn.eval w • m = (algebraMap O (Module.End O M) (Dn.eval w)) m := by rw [Module.algebraMap_end_apply]
       _ = φ (DnA.eval W0) m := by rw [hD]
-      _ = _ := by rw [hdivid, map_add, map_mul, LinearMap.add_apply, h0, zero_add, Module.End.mul_apply, hA]
+      _ = _ := by rw [hdivid, map_add (f := _), map_mul, LinearMap.add_apply, h0, zero_add, Module.End.mul_apply, hA]
   · simp
   · intro x y hx hy
-    rw [smul_add, map_add, map_add, hx, hy]
+    rw [smul_add, map_add (f := _), map_add (f := _), hx, hy]
 
 end Formalism.CohomologicalDescent.Symmetrization
 
@@ -1055,7 +1055,7 @@ theorem symMap_firstPositionRemainder_eq (n : ℕ) (v0 : R × P) (z : Tens R P S
   rw [contraction_remainder_eq]
   unfold firstPositionRemainder
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sub, map_sum, map_add, Finset.sum_add_distrib]
+    simp only [map_sub, map_sum, map_add (f := _), Finset.sum_add_distrib]
   have h : ∀ t : Fin n, S.mu n (flippedLetterTerm S n v0 z t) =
       S.mu n (contr k t.succ v0 (permY k (Equiv.swap 0 t.succ) z)) := by
     cases n with
@@ -1091,7 +1091,7 @@ theorem contract_zero_tailRemainder (m : ℕ) (v v0 : R × P) (z : Tens R P S.W 
     contr k 0 v (tailRemainder S (m + 1) v0 z) = raisingRemainder S m v0 (contr k 0 v z) := by
   unfold tailRemainder raisingRemainder
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sub, map_sum, map_add, map_smul, contract_zero_contract_succ_comm, contract_zero_positionCasimir_succ,
+    simp only [map_sub, map_sum, map_add (f := _), map_smul, contract_zero_contract_succ_comm, contract_zero_positionCasimir_succ,
     contract_zero_permSecond_swap_succ]
 
 theorem raising_symMap_eq_one_level_down : ∀ (n : ℕ) (v0 : R × P) (z : Tens R P S.W (n + 1)),
@@ -1100,7 +1100,7 @@ theorem raising_symMap_eq_one_level_down : ∀ (n : ℕ) (v0 : R × P) (z : Tens
   induction n with
   | zero =>
     intro v0 z
-    rw [raising_symMap_succ_eq, raisingRemainder_eq_first_add_tail, map_add, symMap_firstPositionRemainder_eq, add_comm]
+    rw [raising_symMap_succ_eq, raisingRemainder_eq_first_add_tail, map_add (f := _), symMap_firstPositionRemainder_eq, add_comm]
     congr 1
     have h1 : tailRemainder S 0 v0 z = 0 := by simp [tailRemainder]
     rw [h1, map_zero]
@@ -1111,7 +1111,7 @@ theorem raising_symMap_eq_one_level_down : ∀ (n : ℕ) (v0 : R × P) (z : Tens
     rw [h2, map_zero]
   | succ m ih =>
     intro v0 z
-    rw [raising_symMap_succ_eq, raisingRemainder_eq_first_add_tail, map_add, symMap_firstPositionRemainder_eq, add_comm]
+    rw [raising_symMap_succ_eq, raisingRemainder_eq_first_add_tail, map_add (f := _), symMap_firstPositionRemainder_eq, add_comm]
     congr 1
     rw [symMap_succ_eq_sum_contract S m 0]
     refine Finset.sum_congr rfl fun v _ => ?_
@@ -1167,7 +1167,7 @@ theorem raisingRemainder_of_perm_invariant (n : ℕ) (v : R × P) (z : Tens R P 
   rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, jucysMurphy_last_eq, ← smul_sub]
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sub, map_add, map_sum]
+    simp only [map_sub, map_add (f := _), map_sum]
   abel
 
 end Set4
@@ -1729,7 +1729,7 @@ theorem coefficient_operators_hold : CoeffOps := by
   · intro t z
     rw [jucysMurphyProduct_expand_coeff]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, LinearMap.sum_apply, map_add,
+      simp only [LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, LinearMap.sum_apply, map_add (f := _),
       map_smul, map_sum, h1, ← hp]
   · intro L hL a y hy m
     let abelian₂ : AddSubgroup (Tens R P M n) :=

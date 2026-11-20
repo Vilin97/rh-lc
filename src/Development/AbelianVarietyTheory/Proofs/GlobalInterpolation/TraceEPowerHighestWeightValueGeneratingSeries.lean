@@ -72,7 +72,7 @@ theorem hcTelescope (R : Type) [CommRing R] (N : ℕ) (μ : Fin N → R) :
     rw [hgt] at h
     have IH := ih (by omega)
     rw [hS, Finset.sum_insert hnot, Finset.prod_insert hnot, Finset.prod_insert hnot]
-    rw [map_add, map_one]
+    rw [map_add (f := _), map_one]
     linear_combination (1 - PowerSeries.C (shift R μ i) * PowerSeries.X - PowerSeries.X) * IH
       - PowerSeries.X * (∏ j ∈ Finset.univ.filter (fun j : Fin N => N - d ≤ j.val), (1 - PowerSeries.C (shift R μ j) * PowerSeries.X)) * h
 

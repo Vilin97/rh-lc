@@ -87,10 +87,10 @@ theorem okpTwo_holds (D : D7) : OkpTwo D := by
         | (show (2 : ℂ) = ((1 : Qbar) : ℂ) + ((1 : Qbar) : ℂ); norm_num)
         | (push_cast; norm_num)
         | rfl)
-    rw [e, map_add, map_one] <;> norm_num
+    rw [e, map_add (f := _), map_one] <;> norm_num
   have hc : D.host.conj (2 : D.host.E) = 2 := by
     first
-      | (rw [show (2 : D.host.E) = 1 + 1 by norm_num, map_add, map_one])
+      | (rw [show (2 : D.host.E) = 1 + 1 by norm_num, map_add (f := _), map_one])
       | exact map_ofNat _ 2
   have hz : (((2 : NumberField.RingOfIntegers D.host.K) : D.host.K) : D.host.E) = 2 := by
     rw [show (2 : NumberField.RingOfIntegers D.host.K) = 1 + 1 by norm_num]
@@ -100,7 +100,7 @@ theorem okpTwo_holds (D : D7) : OkpTwo D := by
       | norm_num
   have hφ : D.host.φ₀ (2 : D.host.E) = 2 := by
     first
-      | (rw [show (2 : D.host.E) = 1 + 1 by norm_num, map_add, map_one]; norm_num)
+      | (rw [show (2 : D.host.E) = 1 + 1 by norm_num, map_add (f := _), map_one]; norm_num)
       | simp
   unfold OKp
   refine subset_closure ⟨2, ?_⟩

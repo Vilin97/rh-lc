@@ -89,7 +89,7 @@ theorem exists_norm_over_extension (H : GlobalTheory.Published.HasseNormSt) (F :
       (by simpa using hα) (by simpa using hβ) (by simpa using hγ)
       (by rw [← map_pow, hs]; simp only [map_mul]) (by simpa using h0) ?_
     have := congrArg φ h
-    simpa only [map_add, map_sub, map_mul, map_pow, hφ, map_zero] using this
+    simpa only [map_add (f := _), map_sub, map_mul, map_pow, hφ, map_zero] using this
 
 theorem isotropic_four (H : GlobalTheory.Published.HasseNormSt) (F : Type) [Field F] [NumberField F]
     (a : Fin 4 → F) (ha : ∀ i, a i ≠ 0)
@@ -182,12 +182,12 @@ theorem exists_value_isSquare_div (F : Type) [Field F] [NumberField F] {a a' : F
       (algebraMap F _ a * p v ^ 2 + algebraMap F _ a' * q v ^ 2) - 1) <
         Valued.v (4 : v.1.adicCompletion F) := by
     intro v
-    simp only [map_add, map_mul, map_pow]
+    simp only [map_add (f := _), map_mul, map_pow]
     exact Set.mem_iInter.1 hT v
   replace hR : ∀ σ : F →+* ℝ,
       0 < σ (a * x ^ 2 + a' * y ^ 2) / (σ a * p' σ ^ 2 + σ a' * q' σ ^ 2) := by
     intro σ
-    simp only [map_add, map_mul, map_pow]
+    simp only [map_add (f := _), map_mul, map_pow]
     exact Set.mem_iInter.1 hR σ
   by_cases h0 : a * x ^ 2 + a' * y ^ 2 = 0
   · refine ⟨1, 0, by simpa using ha, fun v => ?_, fun σ => ?_⟩

@@ -42,7 +42,7 @@ private theorem expand_small {O : Type} [CommRing O] [IsLocalRing O] {ι : Type}
   · ext a b
     have := congrFun (congrFun hh a) b
     simp only [map_apply] at this
-    rw [map_apply, Matrix.add_apply, map_add, z2, add_zero, this]
+    rw [map_apply, Matrix.add_apply, map_add (f := _), z2, add_zero, this]
 
 open Matrix Classical in
 private theorem inv_supp {O : Type} [CommRing O] {ι X : Type} [Fintype ι] [DecidableEq ι] [AddCommGroup X] {w : ι → X}
@@ -179,7 +179,7 @@ private theorem good_zero (j : X) : Good I W j fun _ : S => 0 :=
 
 private theorem good_add {j : X} {f g : S → A} (hf : Good I W j f) (hg : Good I W j g) :
     Good I W j fun s => f s + g s :=
-  ⟨fun N => by simp only [map_add]; exact (hf.1 N).add (hg.1 N), fun s => add_mem (hf.2 s) (hg.2 s)⟩
+  ⟨fun N => by simp only [map_add (f := _)]; exact (hf.1 N).add (hg.1 N), fun s => add_mem (hf.2 s) (hg.2 s)⟩
 
 private theorem good_sub {j : X} {f g : S → A} (hf : Good I W j f) (hg : Good I W j g) :
     Good I W j fun s => f s - g s :=

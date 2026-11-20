@@ -67,7 +67,7 @@ theorem Compat.on {V : X.Opens} {s : ∀ α, κ α → Γ(X, V ⊓ U α)} (hs : 
 def secGroup (V : X.Opens) : AddSubgroup (∀ α, κ α → Γ(X, V ⊓ U α)) where
   carrier := {s | Compat U κ g V s}
   add_mem' := fun {s t} hs ht α β k => by
-    simp only [Pi.add_apply, map_add, hs α β k, ht α β k, mul_add, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), hs α β k, ht α β k, mul_add, Finset.sum_add_distrib]
   zero_mem' := fun α β k => by
     simp only [Pi.zero_apply, map_zero, mul_zero, Finset.sum_const_zero]
   neg_mem' := fun {s} hs α β k => by
@@ -89,7 +89,7 @@ instance secGroupModule (V : X.Opens) : Module Γ(X, V) (secGroup U κ g V) wher
   smul_add a s t := Subtype.ext <| funext fun α => funext fun k => mul_add _ _ _
   add_smul a b s := Subtype.ext <| funext fun α => funext fun k => by
     change rs _ (a + b) * s.1 α k = rs _ a * s.1 α k + rs _ b * s.1 α k
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
   zero_smul s := Subtype.ext <| funext fun α => funext fun k => by
     change rs _ 0 * s.1 α k = 0
     rw [map_zero, zero_mul]
@@ -406,7 +406,7 @@ def cochainEquiv (n : ℕ) : K.X n ≃+ Cochain (modulesAb (toMod U V.κ V.g)).o
     funext i
     refine sec_ext_coord (isCoc V) (inter_le' i 0) fun k => ?_
     change _ = coord (inter_le' i 0) (secOf V n x i + secOf V n y i) k
-    rw [map_add, Pi.add_apply, coord_secOf, coord_secOf, coord_secOf, map_add, Pi.add_apply,
+    rw [map_add (f := _), Pi.add_apply, coord_secOf, coord_secOf, coord_secOf, map_add (f := _), Pi.add_apply,
       Pi.add_apply, map_add]
 
 theorem cochainEquiv_δ (n : ℕ) (j : Fin (n + 2)) (x : K.X n) (i : Fin (n + 2) → ι) :
@@ -545,7 +545,7 @@ def restrictVB (hUW : ∀ α, U α ≤ W) (V : VB str U K) :
         exact toY_ofY W _ _ _
       map_add' := fun x y => by
         funext i k
-        simp only [map_add, Pi.add_apply] }
+        simp only [map_add (f := _), Pi.add_apply] }
   e_smul n a c x i k := by
     change toY W _ (V.e n a (c • x) i k) = _ * toY W _ (V.e n a x i k)
     rw [V.e_smul, map_mul, toY_str W (image_capO W hUW i)]

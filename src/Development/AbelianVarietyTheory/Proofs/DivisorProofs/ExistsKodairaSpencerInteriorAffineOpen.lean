@@ -67,7 +67,7 @@ theorem exists_derivation_transport {A B : Type} [CommRing A] [CommRing B] (e : 
   let f : B →ₗ[ℤ] B :=
     { toFun := fun b => e (D (e.symm b)), map_add' := fun a b => by simp, map_smul' := fun k b => by simp }
   refine ⟨{ toLinearMap := f, map_one_eq_zero' := by simp [f], leibniz' := fun a b => ?_ }, fun r => by simp [f]⟩
-  simp only [f, LinearMap.coe_mk, AddHom.coe_mk, map_mul, Derivation.leibniz, smul_eq_mul, map_add,
+  simp only [f, LinearMap.coe_mk, AddHom.coe_mk, map_mul, Derivation.leibniz, smul_eq_mul, map_add (f := _),
     RingEquiv.apply_symm_apply]
 
 end GlobalTheory.KSInterior

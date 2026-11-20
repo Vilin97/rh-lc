@@ -39,7 +39,7 @@ theorem ext_bc (hf : Function.Bijective (liftSemi f)) {N : Type*} [AddCommGroup 
   refine LinearMap.ext fun c ↦ ?_
   obtain ⟨z, rfl⟩ := hf.2 c
   induction z with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x c => rw [liftSemi_tmul, map_smul, map_smul, h c]
 
 theorem ext_corr [Module.Finite R M] [Module.Projective R M] (hf : Function.Bijective (liftSemi f))

@@ -57,7 +57,7 @@ private lemma phi_inj {σ : R ≃ₐ[k] R} {q : ℕ} (h : IsGal σ q) : Function
     induction z using TensorProduct.induction_on with
     | zero => simp
     | add u v hu hv =>
-      simp only [map_add, Pi.add_apply, mul_add, Finset.sum_add_distrib, TensorProduct.add_tmul, hu, hv]
+      simp only [map_add (f := _), Pi.add_apply, mul_add, Finset.sum_add_distrib, TensorProduct.add_tmul, hu, hv]
     | tmul a b =>
       choose t ht using fun i => tr_mem h (y i * b)
       have hb := expand h.pos hs b

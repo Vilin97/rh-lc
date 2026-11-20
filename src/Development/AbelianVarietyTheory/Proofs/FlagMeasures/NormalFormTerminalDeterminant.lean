@@ -252,7 +252,7 @@ theorem del_sup (H : HermSpace K V) (M : Submodule (𝓞 K) V) (I : Submodule K 
       rw [mem_dual_iff] at hs
       refine ⟨Submodule.add_mem_sup hs.1 hi, fun x hx => ?_⟩
       obtain ⟨m, hm, i', hi', rfl⟩ := Submodule.mem_sup.1 hx
-      rw [map_add, hI' i' hi' _ (Submodule.add_mem_sup hs.1 hi), add_zero, map_add, LinearMap.add_apply,
+      rw [map_add (f := _), hI' i' hi' _ (Submodule.add_mem_sup hs.1 hi), add_zero, map_add (f := _), LinearMap.add_apply,
         hI i hi m (Submodule.mem_sup_left (Submodule.subset_span hm)), add_zero]
       exact hs.2 m hm
   have key : ∀ {A B : Submodule (𝓞 K) V}, A ≤ rs (𝓞 K) (Submodule.span K (M : Set V)) →
@@ -345,13 +345,13 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
     have a : ∀ y ∈ S, H.B y x' = 0 := fun y hy => by
       obtain ⟨u, hu, u', hu', rfl⟩ := Submodule.mem_sup.1 hy
       have := h u (Submodule.mem_sup_left hu)
-      rw [map_add, LinearMap.add_apply, iso_X N.F hu (Submodule.mem_sup_left hx), zero_add] at this
-      rw [map_add, LinearMap.add_apply, sw _ _ this, iso_X N.F' hx' (Submodule.mem_sup_left hu'), zero_add]
+      rw [map_add (f := _), LinearMap.add_apply, iso_X N.F hu (Submodule.mem_sup_left hx), zero_add] at this
+      rw [map_add (f := _), LinearMap.add_apply, sw _ _ this, iso_X N.F' hx' (Submodule.mem_sup_left hu'), zero_add]
     have b := a _ hz
     rw [map_sub, LinearMap.sub_apply, iso_X N.F' hx' (Submodule.mem_sup_right (Submodule.mem_span_singleton_self _)),
       map_smul, LinearMap.smul_apply, zero_sub, neg_eq_zero, smul_eq_mul, mul_eq_zero, or_iff_right hc0] at b
     have c : H.B N.F.z (x + x') = 0 := by
-      rw [map_add, b, iso_X N.F hx (Submodule.mem_sup_right (Submodule.mem_span_singleton_self _)), add_zero]
+      rw [map_add (f := _), b, iso_X N.F hx (Submodule.mem_sup_right (Submodule.mem_span_singleton_self _)), add_zero]
     have d := sw _ _ (h _ hz)
     rw [map_sub, LinearMap.sub_apply, map_smul, LinearMap.smul_apply, c, smul_zero, sub_zero] at d
     intro w hw
@@ -391,7 +391,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
     have lS : A ⊔ A' ≤ rs (𝓞 K) S := sup_le (fun x hx => Submodule.mem_sup_left (S := N.F.X) hx.2)
       (fun x hx => Submodule.mem_sup_right (T := N.F'.X) hx.2)
     have lΛ : A ⊔ A' ≤ Λ := sup_le inf_le_left inf_le_left
-    rw [map_add H.B m i, LinearMap.add_apply, o1 i hi _ (S.add_mem (lS hm') (hIS hi')), add_zero, map_add,
+    rw [map_add H.B m i, LinearMap.add_apply, o1 i hi _ (S.add_mem (lS hm') (hIS hi')), add_zero, map_add (f := _),
       ← H.herm i' m, o1 i' hi' m (lS hm), star_zero, add_zero]
     have : m ∈ dual H Λ := hU.2.symm ▸ lΛ hm
     exact ((mem_dual_iff H Λ m).1 this).2 m' (lΛ hm')

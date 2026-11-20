@@ -59,7 +59,7 @@ theorem col_mem {N : Submodule ℂ A} {s X k V W : A} {E : SlopeTestRemainingCho
     (io s * ((io X + io k * E) * io V + io W) : SlopeTestRemainingChoices S A) e e' ∈ N := by
   have key : io s * ((io X + io k * E) * io V + io W) =
       (io (s * (X * V + W)) : SlopeTestRemainingChoices S A) + io (s * k) * E * io V := by
-    simp only [io, map_mul, map_add]; noncomm_ring
+    simp only [io, map_mul, map_add (f := _)]; noncomm_ring
   rw [key, Matrix.add_apply]
   refine N.add_mem (io_mem h1 e e') ?_
   have : (io (s * k) * E * io V : SlopeTestRemainingChoices S A) e e' = s * k * E e e' * V := by

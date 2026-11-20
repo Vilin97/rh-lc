@@ -76,7 +76,7 @@ theorem cobOne_eq_zero_iff (b : CartierDual R D) : cobOne R _ b = 0 ↔
     ∀ x y : D, b (x * y) = Coalgebra.counit (R := R) x * b y + Coalgebra.counit (R := R) y * b x := by
   rw [cobOne_apply, sub_sub, sub_eq_zero, CartierDual.comul_eq_iff]
   refine forall₂_congr fun x y ↦ ?_
-  rw [map_add, LinearMap.add_apply, CartierDual.pair_tmul_tmul, CartierDual.pair_tmul_tmul,
+  rw [map_add (f := _), LinearMap.add_apply, CartierDual.pair_tmul_tmul, CartierDual.pair_tmul_tmul,
     CartierDual.one_apply, CartierDual.one_apply, eq_comm, add_comm, mul_comm (b x)]
 
 def epsPoint (b : CartierDual R D) (hb : cobOne R _ b = 0) : D →ₐ[R] DualNumber R :=
@@ -139,7 +139,7 @@ theorem pairsTo_epsPoint [Fact p.Prime] (hC : GlobalTheory.Published.CubeTheorem
   have hf : ∀ z, (f z).fst = TensorProduct.rid R _ ((1 : CartierDual R (ℬ.A 1)).ofConv.lTensor _ z) ∧
       (f z).snd = TensorProduct.rid R _ (b.ofConv.lTensor _ z) := fun z ↦ by
     induction z with
-    | add x y hx hy => simp only [map_add, TrivSqZeroExt.fst_add, TrivSqZeroExt.snd_add, hx, hy, and_self]
+    | add x y hx hy => simp only [map_add (f := _), TrivSqZeroExt.fst_add, TrivSqZeroExt.snd_add, hx, hy, and_self]
     | tmul x y =>
       simp [f, EpsWeil.epsMap, DualNumber.lift_apply_apply, TrivSqZeroExt.algebraMap_eq_inl', fst_epsPoint,
         snd_epsPoint, Algebra.smul_def, mul_comm, CartierDual.one_apply]
@@ -207,7 +207,7 @@ theorem vecExtMap_bijective (hK : (p : K) = 0)
     let b : CartierDual K (𝒜.A 1) := WithConv.toConv (l ∘ₗ AugCot.d (Bialgebra.counitAlgHom K _))
     have hb₀ : cobOne K _ b = 0 := (cobOne_eq_zero_iff b).2 fun a a' ↦ by
       change l (AugCot.d _ (a * a')) = _
-      rw [AugCot.d_mul, map_add, map_smul, map_smul]
+      rw [AugCot.d_mul, map_add (f := _), map_smul, map_smul]
       rfl
     obtain ⟨x', hx'⟩ := exists_of_cobOne_eq_zero (G := 𝒜.dual) hb₀
     obtain ⟨y, rfl⟩ := 𝒜.dual.rigToExt_surjective x'

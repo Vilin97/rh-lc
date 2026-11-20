@@ -305,7 +305,7 @@ variable (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant]
 def fixedPart (H : Submodule ℂ (L2 (latticeGL E a) μ)) (U : Subgroup (GL (Fin a) (Af E))) :
     Submodule ℂ (L2 (latticeGL E a) μ) where
   carrier := {F | F ∈ H ∧ ∀ u ∈ U, R (latticeGL E a) μ (finGL E a u) F = F}
-  add_mem' := fun h h' => ⟨H.add_mem h.1 h'.1, fun u hu => by rw [map_add, h.2 u hu, h'.2 u hu]⟩
+  add_mem' := fun h h' => ⟨H.add_mem h.1 h'.1, fun u hu => by rw [map_add (f := _), h.2 u hu, h'.2 u hu]⟩
   zero_mem' := ⟨H.zero_mem, fun _ _ => map_zero _⟩
   smul_mem' := fun c _ h => ⟨H.smul_mem c h.1, fun u hu => by rw [map_smul, h.2 u hu]⟩
 

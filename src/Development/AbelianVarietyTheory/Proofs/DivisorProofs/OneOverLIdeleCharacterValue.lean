@@ -65,7 +65,7 @@ theorem exists_detGen_wedge_val_le : GlobalTheory.Published.AbelianDeRham → �
         show φ (U.e k) (a : E) * (x : ℂ) = j (φK (U.e k) (a : E) * algebraMap R (FractionRing R) x)
         rw [map_mul, hj, ← hφK (U.e k)]
         rfl
-      | add x z hx hz => rw [map_add, map_add, hx, hz, map_add]
+      | add x z hx hz => rw [map_add (f := _), map_add (f := _), hx, hz, map_add (f := _)]
     rw [h2, ht i (φK (U.e k))]
     by_cases h : U.e k = i
     · subst h

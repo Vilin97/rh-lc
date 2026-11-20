@@ -92,7 +92,7 @@ theorem loc_prjG (T : Finset (Pl E)) (g : GL (Fin n) (FiniteAdeleRing (𝓞 E) E
   rw [loc_val]
   have he : pLoc E w (idem E T) = if w ∈ T then 1 else 0 := rfl
   change pLoc E w ((idem E T • g.1 + (1 - idem E T) • (1 : Matrix (Fin n) (Fin n) (FiniteAdeleRing (𝓞 E) E))) i j) = _
-  rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul,
+  rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul,
     map_sub, map_one, he]
   split_ifs with h
   · rw [one_mul, sub_self, zero_mul, add_zero, loc_val]

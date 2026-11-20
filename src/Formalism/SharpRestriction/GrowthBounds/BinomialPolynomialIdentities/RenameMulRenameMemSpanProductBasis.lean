@@ -113,10 +113,10 @@ theorem rename_mul_rename_mem_span_productBasis (R : Type) [CommRing R] (N r K :
       exact Submodule.subset_span
         ⟨⟨((P1.mu, I'), (P2.mu, I'')), ⟨b', b'', hb, ⟨P1, rfl⟩, ⟨P2, rfl⟩⟩, hI', hI''⟩, rfl⟩
     | zero => rw [map_zero, mul_zero]; exact Submodule.zero_mem _
-    | add a b _ _ ha hb => rw [map_add, mul_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _), mul_add]; exact Submodule.add_mem _ ha hb
     | smul c a _ ha => rw [map_smul, mul_smul_comm]; exact Submodule.smul_mem _ _ ha
   | zero => rw [map_zero, zero_mul]; exact Submodule.zero_mem _
-  | add a b _ _ ha hb => rw [map_add, add_mul]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _), add_mul]; exact Submodule.add_mem _ ha hb
   | smul c a _ ha => rw [map_smul, smul_mul_assoc]; exact Submodule.smul_mem _ _ ha
 
 theorem headVar_injective (N r K : ℕ) : Function.Injective (plVar (N := N) (r := r) (K := K)) := by

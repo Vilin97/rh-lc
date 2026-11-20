@@ -56,7 +56,7 @@ theorem depth_le (hl : l.Prime) (h : ModuliIntegralCharts.LinkConditions D P) (a
         _ = _ := one_mul _
     | zero => rw [map_zero, norm_zero]; exact (Real.rpow_pos_of_pos hl0 _).le
     | add u v _ _ hu hv =>
-      rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hu hv)
+      rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hu hv)
     | neg u _ hu => rwa [map_neg, norm_neg]
   have ub : (l : ℝ) ^ (-b) ≤ (l : ℝ) ^ (-a) / ‖t‖ := hb.2 (by
     rintro _ ⟨v, hv', rfl⟩

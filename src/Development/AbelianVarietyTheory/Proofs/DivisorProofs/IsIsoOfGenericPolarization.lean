@@ -45,7 +45,7 @@ theorem exists_integral_of_local {R D : Type} [CommRing R] [CommRing D] [Bialgeb
       zero_mem' := ⟨0, fun d => by simp, by simp⟩
       add_mem' := by
         rintro a b ⟨Λ, hΛ, ha⟩ ⟨Λ', hΛ', hb⟩
-        exact ⟨Λ + Λ', fun d => by rw [mul_add, mul_add, hΛ, hΛ'], by rw [map_add, ha, hb, add_mul]⟩
+        exact ⟨Λ + Λ', fun d => by rw [mul_add, mul_add, hΛ, hΛ'], by rw [map_add (f := _), ha, hb, add_mul]⟩
       smul_mem' := by
         rintro c a ⟨Λ, hΛ, ha⟩
         refine ⟨c • Λ, fun d => by rw [mul_smul_comm, mul_smul_comm, hΛ], ?_⟩
@@ -64,7 +64,7 @@ def cotBC (R k : Type) [CommRing R] [CommRing k] [Algebra R k] (A : Type) [CommR
     (AugCot.congr (AlgEquiv.refl : (k ⊗[R] A) ≃ₐ[k] (k ⊗[R] A)) (by
       refine AlgHom.ext fun x => ?_
       induction x with
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul r a => simp [Algebra.smul_def, mul_comm]))).symm
 
 def cotDualBC (R k : Type) [CommRing R] [CommRing k] [Algebra R k] (A : Type) [CommRing A] [HopfAlgebra R A]
@@ -74,7 +74,7 @@ def cotDualBC (R k : Type) [CommRing R] [CommRing k] [Algebra R k] (A : Type) [C
     (AugCot.congr (CartierDual.baseChange R k A).toAlgEquiv (by
       refine AlgHom.ext fun x => ?_
       induction x with
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul r φ => simp [Algebra.TensorProduct.one_def, Algebra.smul_def, mul_comm]))).symm
 
 theorem finrank_cot_le {p : ℕ} {R : Type} [CommRing R] (G : PDivGroup p R) (k : Type) [Field k] [Algebra R k]

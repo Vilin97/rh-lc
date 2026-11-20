@@ -339,7 +339,7 @@ theorem baseChange_comm {O Fm R' : Type} [CommRing O] [CommRing R'] [Algebra O R
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul f a => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem rTensor_lTensor_comm {O Fm L L' : Type} [CommRing O] [AddCommGroup Fm] [Module O Fm]
     [AddCommGroup L] [Module O L] [AddCommGroup L'] [Module O L'] (A : Module.End O Fm) (φ : L →ₗ[O] L')
@@ -347,7 +347,7 @@ theorem rTensor_lTensor_comm {O Fm L L' : Type} [CommRing O] [AddCommGroup Fm] [
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul f a => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem rTensor_PqTw (i : X.Tw) (j : ℕ) (b : Bool) (Q : Finset (PlE D.host)) (M : ℕ) (P : PlE D.host)
     (γ : DelQM D.host (X.l i) Q M) (A : Module.End (X.O i) (Y.Fm i j b))
@@ -356,7 +356,7 @@ theorem rTensor_PqTw (i : X.Tw) (j : ℕ) (b : Bool) (Q : Finset (PlE D.host)) (
     A.rTensor _ (PqTw Y i j b Q M P γ x) = PqTw Y i j b Q M P γ (A.rTensor _ x) := by
   unfold PqTw
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [LinearMap.add_apply, Module.End.one_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add,
+    simp only [LinearMap.add_apply, Module.End.one_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add (f := _),
     map_sum, map_smul]
   congr 1
   refine Finset.sum_congr rfl fun k hk => ?_
@@ -367,7 +367,7 @@ theorem rTensor_PqTw (i : X.Tw) (j : ℕ) (b : Bool) (Q : Finset (PlE D.host)) (
     simp only [TensorProduct.map_tmul, LinearMap.rTensor_tmul]
     congr 1
     exact LinearMap.congr_fun (hA k hk) f
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Asm0
 
@@ -495,7 +495,7 @@ theorem proj_PqTw (i : X.Tw) (j : ℕ) (b : Bool) {Q' Q : Finset (PlE D.host)} (
       PqTw Y i j b Q' M P (resD (X.l i) h M γ) ((projA i h M).toLinearMap.lTensor (Y.Fm i j b) w) := by
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x lam =>
     unfold PqTw
     set_option synthInstance.maxHeartbeats 100000 in
@@ -662,7 +662,7 @@ theorem crd_add [Module.Flat O Λ] {w w' : Fm ⊗[O] Λ} (h : IntIn B Λ w) (h' 
     crd β Λ (w + w') = crd β Λ w + crd β Λ w' := by
   obtain ⟨W, rfl⟩ := h
   obtain ⟨W', rfl⟩ := h'
-  rw [← map_add, crd_rTensor, crd_rTensor, crd_rTensor, map_add]
+  rw [← map_add (f := _), crd_rTensor, crd_rTensor, crd_rTensor, map_add (f := _)]
 
 theorem crd_smul [Module.Flat O Λ] (c : O) {w : Fm ⊗[O] Λ} (h : IntIn B Λ w) :
     crd β Λ (c • w) = c • crd β Λ w := by
@@ -696,7 +696,7 @@ theorem eq_sum_crdB (W : B ⊗[O] Λ) : W = ∑ t, β t ⊗ₜ[O] crdB β Λ W t
     conv_lhs => rw [hx, hy]
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun t _ => ?_
-    rw [map_add, Pi.add_apply, TensorProduct.tmul_add]
+    rw [map_add (f := _), Pi.add_apply, TensorProduct.tmul_add]
 
 theorem crd_lTensor [Module.Flat O Λ] {Λ' : Type} [CommRing Λ'] [Algebra O Λ'] [Module.Flat O Λ']
     (φ : Λ →ₐ[O] Λ') {w : Fm ⊗[O] Λ} (h : IntIn B Λ w) :
@@ -714,7 +714,7 @@ theorem crd_lTensor [Module.Flat O Λ] {Λ' : Type} [CommRing Λ'] [Algebra O Λ
   induction W using TensorProduct.induction_on with
   | zero => simp
   | tmul x lam => simp [crdB_tmul]
-  | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
 
 def matB (T : Module.End O Fm) (hT : B.map T ≤ B) : Matrix (Fin d) (Fin d) O :=
   LinearMap.toMatrix β β (T.restrict fun x hx => hT ⟨x, hx, rfl⟩)
@@ -731,7 +731,7 @@ theorem crd_map [Module.Flat O Λ] (T : Module.End O Fm) (hT : B.map T ≤ B) (l
     induction W using TensorProduct.induction_on with
     | zero => simp
     | tmul x mu => simp [hTB]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [e, crd_rTensor, crd_rTensor]
   refine ⟨⟨_, rfl⟩, ?_⟩
   clear e
@@ -750,7 +750,7 @@ theorem crd_map [Module.Flat O Λ] (T : Module.End O Fm) (hT : B.map T ≤ B) (l
     simp only [Algebra.smul_def, map_mul]
     ring
   | add x y hx hy =>
-    simp only [map_add, Pi.add_apply, hx, hy, Matrix.mulVec_add]
+    simp only [map_add (f := _), Pi.add_apply, hx, hy, Matrix.mulVec_add]
 
 theorem crd_poly [Module.Flat O Λ] (s : Finset ℕ) (c : ℕ → O) (T : ℕ → Module.End O Fm)
     (hT : ∀ k, B.map (T k) ≤ B) (lam : ℕ → Λ) {w : Fm ⊗[O] Λ} (h : IntIn B Λ w) :
@@ -1298,7 +1298,7 @@ theorem det_isUnit_of_eigen {d : ℕ} {ι : Type} (Tm : ι → Matrix (Fin d) (F
     res.mapMatrix (1 + ∑ a ∈ s, c a • Tm a) with hPb
   have hPb' : Pb = 1 + ∑ a ∈ s, res (c a) • res.mapMatrix (Tm a) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hPb, map_add, map_one, map_sum]
+      rw [hPb, map_add (f := _), map_one, map_sum]
     refine congrArg (1 + ·) (Finset.sum_congr rfl fun a _ => ?_)
     ext x y
     simp [RingHom.mapMatrix_apply]
@@ -1372,7 +1372,7 @@ theorem det_isUnit_of_eigen {d : ℕ} {ι : Type} (Tm : ι → Matrix (Fin d) (F
   rw [hPv] at hsc
   have h0 := (smul_eq_zero.1 hsc.symm).resolve_right hv
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_one, map_sum]
+    rw [map_add (f := _), map_one, map_sum]
   rw [← h0]
   congr 1
   refine Finset.sum_congr rfl fun a _ => ?_
@@ -1538,7 +1538,7 @@ theorem mem_smul_iff_repr {O Fm : Type} [CommRing O] [AddCommGroup Fm] [Module O
       · rintro x z ⟨hx, h1⟩ ⟨hz, h2⟩
         refine ⟨B.add_mem hx hz, fun t => ?_⟩
         have : (⟨x + z, B.add_mem hx hz⟩ : B) = ⟨x, hx⟩ + ⟨z, hz⟩ := rfl
-        rw [this, map_add, Finsupp.add_apply]
+        rw [this, map_add (f := _), Finsupp.add_apply]
         exact I.add_mem (h1 t) (h2 t)
     obtain ⟨_, h1⟩ := key
     exact h1
@@ -1683,7 +1683,7 @@ theorem mem_baseChange_of_smul {O K Fm R' : Type} [CommRing O] [IsDomain O] [Fie
       congr 1
       show (algebraMap O K c0)⁻¹ • (c0 • f) = f
       rw [← algebraMap_smul K c0 f, smul_smul, inv_mul_cancel₀ hc', one_smul]
-    | add x y hx hy => rw [smul_add, map_add, hx, hy]
+    | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy]
   rwa [h3 t] at h2
 
 theorem mem_of_intIn_tmul_one {O Fm Λ : Type} [CommRing O] [AddCommGroup Fm] [Module O Fm] [CommRing Λ]
@@ -1699,7 +1699,7 @@ theorem mem_of_intIn_tmul_one {O Fm Λ : Type} [CommRing O] [AddCommGroup Fm] [M
       have : ρ (B.subtype.rTensor Λ (y ⊗ₜ lam)) = φ lam • (y : Fm) := by simp [ρ]
       rw [this]
       exact B.smul_mem _ y.2
-    | add a b ha hb => rw [map_add, map_add]; exact B.add_mem ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact B.add_mem ha hb
   rw [← h1, ← hW]
   exact h2 W
 
@@ -2318,7 +2318,7 @@ theorem exists_primitive_at {R Ω : Type} (F : Type) [CommRing R] [IsDedekindDom
         rw [← hc]
         exact (FractionalIdeal.mem_coeIdeal _).2 ⟨c, hcP, rfl⟩
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add, add_mul]; exact Submodule.add_mem _ ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _), add_mul]; exact Submodule.add_mem _ ha hb
       | smul r a _ ha =>
         rw [smul_eq_mul, map_mul, mul_assoc, ← Algebra.smul_def]
         exact Submodule.smul_mem _ r ha
@@ -2421,9 +2421,9 @@ theorem exists_mul_integral {x : Ω} (hx : A.valuation x ≤ 1) :
         · exact (natDegree_C_mul_X_pow_le _ _).trans (by omega)
       · have h1 : aeval x g = aeval x g.eraseLead + (c : Ω) * x ^ d := by
           conv_lhs => rw [← eraseLead_add_C_mul_X_pow g]
-          rw [map_add, map_mul, aeval_C, map_pow, aeval_X]
+          rw [map_add (f := _), map_mul, aeval_C, map_pow, aeval_X]
           rfl
-        rw [map_add, map_mul, aeval_C, map_pow, aeval_X]
+        rw [map_add (f := _), map_mul, aeval_C, map_pow, aeval_X]
         have h2 : (algebraMap (integralClosure R Ω) Ω) y * x ^ (d - 1) = (c : Ω) * x ^ d := by
           show (c : Ω) * x * x ^ (d - 1) = (c : Ω) * x ^ d
           rw [mul_assoc, ← pow_succ', Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.2 hd0)]

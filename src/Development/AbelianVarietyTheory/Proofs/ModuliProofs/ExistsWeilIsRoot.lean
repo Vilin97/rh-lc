@@ -50,7 +50,7 @@ theorem existsUnique_label {M Q : Type} [AddCommGroup M] [Group Q] {m n : ℕ} (
   have : NeZero n := ⟨hn.ne'⟩
   have key : ∀ u v : Fin m → ℤ, ev (bas u) = ev (bas v) ↔ ∀ i, (u i : ZMod n) = v i := by
     intro u v
-    have e : ev (bas u) = ev (bas (u - v)) * ev (bas v) := by rw [← add, ← map_add, sub_add_cancel]
+    have e : ev (bas u) = ev (bas (u - v)) * ev (bas v) := by rw [← add, ← map_add (f := _), sub_add_cancel]
     rw [e, mul_eq_right, ker]
     constructor
     · rintro ⟨b, hb⟩ i

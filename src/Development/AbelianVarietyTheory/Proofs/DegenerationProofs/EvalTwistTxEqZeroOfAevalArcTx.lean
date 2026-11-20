@@ -25,10 +25,10 @@ theorem AbsSumAt.add {u : C} {f g : PowerSeries C} {a b : C} (hf : AbsSumAt u f 
     AbsSumAt u (f + g) (a + b) := by
   constructor
   · refine (hf.1.add hg.1).of_nonneg_of_le (fun _ => norm_nonneg _) fun n => ?_
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
     exact norm_add_le _ _
   · rw [← hf.2, ← hg.2, ← hf.1.of_norm.tsum_add hg.1.of_norm]
-    simp only [map_add, add_mul]
+    simp only [map_add (f := _), add_mul]
 
 theorem AbsSumAt.mul {u : C} {f g : PowerSeries C} {a b : C} (hf : AbsSumAt u f a) (hg : AbsSumAt u g b) :
     AbsSumAt u (f * g) (a * b) := by
@@ -66,7 +66,7 @@ private theorem absSumAt_add {u : C} {f g : PowerSeries C} {a b : C}
     _root_.GlobalTheory.BddArc.AbsSumAt u (f + g) (a + b) := by
   have h : ∀ n, PowerSeries.coeff n (f + g) * u ^ n =
       PowerSeries.coeff n f * u ^ n + PowerSeries.coeff n g * u ^ n := fun n => by
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
   refine ⟨?_, ?_⟩
   · refine Summable.of_nonneg_of_le (fun n => norm_nonneg _) (fun n => ?_) (Summable.add hf.1 hg.1)
     rw [h]
@@ -101,7 +101,7 @@ theorem _root_.GlobalTheory.BddArc.AbsSumAt.aeval {u : C} {ι : Type} {f : ι �
     rw [MvPolynomial.aeval_C, MvPolynomial.eval_C]
     exact absSumAt_algebraMap u c
   | add p q hp hq =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact absSumAt_add hp hq
   | mul_X p i hp =>
     rw [map_mul, map_mul, MvPolynomial.aeval_X, MvPolynomial.eval_X]

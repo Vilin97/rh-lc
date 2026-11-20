@@ -37,7 +37,7 @@ theorem exists_mapH1_eq {M' M M'' : Type} [AddCommGroup M'] [Module O M'] [AddCo
   · funext x
     change π' x.1 (w x.2) - w (x.1 * x.2) + w x.1 = 0
     apply hfi
-    rw [map_add, map_sub, hf, hw, hw, hw, cocycle_mul, map_zero, map_mul]
+    rw [map_add (f := _), map_sub, hf, hw, hw, hw, cocycle_mul, map_zero, map_mul]
     simp only [map_sub, Module.End.mul_apply]
     abel
   · refine (Submodule.Quotient.eq _).mpr ⟨-b, Submodule.mem_top, ?_⟩
@@ -130,7 +130,7 @@ theorem cls_eq_zero [IsDomain O] [IsDiscreteValuationRing O] {lam : O} (hl : Irr
           induction m using TensorProduct.induction_on with
           | zero => simp
           | tmul a x => simp [coefRep_tmul]
-          | add a b ha hb => simp only [map_add, ha, hb])
+          | add a b ha hb => simp only [map_add (f := _), ha, hb])
         ((LinearMap.range f).mkQ.lTensor M) _
         (Module.Flat.lTensor_preserves_injective_linearMap f hfi)
         (LinearMap.lTensor_surjective M (Submodule.mkQ_surjective _))

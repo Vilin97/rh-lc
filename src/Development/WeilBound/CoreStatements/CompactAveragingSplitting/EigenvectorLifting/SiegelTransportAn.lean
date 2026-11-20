@@ -90,16 +90,16 @@ theorem star_mem {X : Type} [TopologicalSpace X] {φ : X → ℂ} (h : φ ∈ SB
 
 def conjL {X : Type} (l : (X → ℂ) →ₗ[ℂ] ℂ) : (X → ℂ) →ₗ[ℂ] ℂ where
   toFun φ := star (l (star φ))
-  map_add' φ φ' := by rw [star_add, map_add, star_add]
+  map_add' φ φ' := by rw [star_add, map_add (f := _), star_add]
   map_smul' a φ := by rw [star_smul, map_smul, star_smul, star_star]; rfl
 
 def boxL {A : Type} (l : ((κ → A) → ℂ) →ₗ[ℂ] ℂ) (l' : ((κ' → A) → ℂ) →ₗ[ℂ] ℂ) : ((κ ⊕ κ' → A) → ℂ) →ₗ[ℂ] ℂ where
   toFun Φ := l' fun y => l fun x => Φ (Sum.elim x y)
   map_add' Φ Ψ := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     funext y
-    rw [Pi.add_apply, ← map_add]
+    rw [Pi.add_apply, ← map_add (f := _)]
     rfl
   map_smul' a Φ := by
     rw [RingHom.id_apply, ← map_smul]

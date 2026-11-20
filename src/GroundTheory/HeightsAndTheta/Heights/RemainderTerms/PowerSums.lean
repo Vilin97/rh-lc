@@ -116,7 +116,7 @@ theorem constantCoeff_powerSumHom (N : ℕ) (S : MvPolynomial (Fin N) ℚ) :
     constantCoeff (powerSumHom N S) = constantCoeff S := by
   induction S using MvPolynomial.induction_on with
   | C a => simp [powerSumHom]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, powerSumHom, aeval_X, constantCoeff_X, mul_zero]
     simp [psum, constantCoeff_X]

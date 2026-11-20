@@ -167,8 +167,8 @@ theorem al₀_cochar (e : LieG (GmO O)) (he : dlogT e = 1) (t : P.T) :
   obtain ⟨c, hc⟩ := pow_dvd_sub_digit n a
   have h4 : algebraMap ℤ_[p] O a = (digit n a : O) + (p : O) ^ n * algebraMap ℤ_[p] O c := by
     refine (congrArg _ (eq_add_of_sub_eq' hc)).trans ?_
-    rw [map_add, map_mul, map_pow, map_natCast, map_natCast]
-  rw [h4, map_add, map_mul, map_pow, map_natCast, map_natCast, hR, zero_mul, add_zero]
+    rw [map_add (f := _), map_mul, map_pow, map_natCast, map_natCast]
+  rw [h4, map_add (f := _), map_mul, map_pow, map_natCast, map_natCast, hR, zero_mul, add_zero]
   refine Eq.trans ?_ (h3.symm.trans ?_)
   · rw [TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl, TrivSqZeroExt.snd_inr, zero_add]
     rfl

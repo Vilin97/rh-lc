@@ -42,7 +42,7 @@ theorem goodR_sum {D : D7} (h0 : SumRepresentations.tie0 D) {i : D.nd.Loc} {a b 
     obtain ⟨d, r, j⟩ := u w hw n1
     obtain ⟨d', r', j'⟩ := u' w hw n2
     refine ⟨(k1 w hw).2 ⟨d, d'⟩, by rw [k2 w (Or.inr d) (Or.inr d')]; exact r.sum h0.1 r', fun τ hτ => ?_⟩
-    rw [k3 τ (fun w' h' => by rw [ind_unique hτ h']; exact ⟨d, d'⟩), Multiset.map_add, j τ hτ, j' τ hτ]
+    rw [k3 τ (fun w' h' => by rw [ind_unique hτ h']; exact ⟨d, d'⟩), Multiset.map_add (f := _), j τ hτ, j' τ hτ]
 
 theorem goodR_char {D : D7} (h0 : SumRepresentations.tie0 D) {i : D.nd.Loc} {a : ℕ} {p q : ∀ w, D.naut.LP w}
     {m : (D.host.E →+* ℂ) → Multiset ℂ} {c : (D.host.E →+* ℂ) → ℂ} (ha : GoodR' D i a p m)

@@ -71,8 +71,8 @@ theorem integralExp_zero {ι : Type} : E0 p (0 : MvPowerSeries ι (K0 p)) := by
 theorem integralExp_add {ι : Type} {f g : MvPowerSeries ι (K0 p)} (hf : E0 p f) (hg : E0 p g) : E0 p (f + g) := by
   obtain ⟨hf0, h, hh0, hfe⟩ := hf
   obtain ⟨hg0, h', hh0', hge⟩ := hg
-  refine ⟨by rw [map_add, hf0, hg0, add_zero], h + h' + h * h', by simp [hh0, hh0'], ?_⟩
-  rw [expK_add hf0 hg0, hfe, hge, map_add, map_add, map_mul]
+  refine ⟨by rw [map_add (f := _), hf0, hg0, add_zero], h + h' + h * h', by simp [hh0, hh0'], ?_⟩
+  rw [expK_add hf0 hg0, hfe, hge, map_add (f := _), map_add (f := _), map_mul]
   ring
 
 theorem integralExp_sum {ι α : Type} (s : Finset α) (f : α → MvPowerSeries ι (K0 p)) (h : ∀ a ∈ s, E0 p (f a)) :
@@ -104,7 +104,7 @@ theorem integralExp_rename {κ σ : Type} [Finite κ] (φ : κ → σ) {f : MvPo
   refine ⟨MvPowerSeries.constantCoeff_subst_eq_zero haK hXK hf0, ren φ h,
     MvPowerSeries.constantCoeff_subst_eq_zero haW hXW hh0, ?_⟩
   unfold ren
-  rw [← th_subst_expK _ hXK hf0, hfe, ← MvPowerSeries.coe_substAlgHom haK, map_add, map_one,
+  rw [← th_subst_expK _ hXK hf0, hfe, ← MvPowerSeries.coe_substAlgHom haK, map_add (f := _), map_one,
     MvPowerSeries.coe_substAlgHom haK, MvPowerSeries.map_subst haW]
   simp only [MvPowerSeries.map_X]
 
@@ -120,7 +120,7 @@ theorem exp_neg_integral {ι : Type} {f : MvPowerSeries ι (K0 p)} (hf : E0 p f)
         ((1 + h) * MvPowerSeries.invOfUnit (1 + h) 1) := by rw [hinv, map_one, mul_one]
     _ = (expK (-f) * expK f) * MvPowerSeries.map (algebraMap (WW p) (K0 p))
         (MvPowerSeries.invOfUnit (1 + h) 1) := by
-      rw [hfe, map_mul, map_add, map_one]
+      rw [hfe, map_mul, map_add (f := _), map_one]
       ring
     _ = _ := by rw [hneg, one_mul]
 

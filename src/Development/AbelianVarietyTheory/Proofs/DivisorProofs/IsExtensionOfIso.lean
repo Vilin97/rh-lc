@@ -22,7 +22,7 @@ theorem tensorAct_comp {F G : X.Modules} {ρ : O →+* End F} {ρ' : O →+* End
   induction x with
   | tmul c a => rw [act_tensorAct_tmul, act_tensorAct_tmul, Linear.smul_comp, Linear.comp_smul, h a]
   | add x y hx hy =>
-    simp only [act, map_add] at hx hy ⊢
+    simp only [act, map_add (f := _)] at hx hy ⊢
     rw [Preadditive.add_comp, Preadditive.comp_add, hx, hy]
 
 variable [DecidableEq κ] (hτ : IsSplitBy τ)

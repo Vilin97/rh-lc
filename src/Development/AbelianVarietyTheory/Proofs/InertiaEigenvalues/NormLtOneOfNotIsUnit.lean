@@ -381,7 +381,7 @@ theorem isTiltOf_add {x y : PreTilt O l} {v u : ℕ → O} (hx : IsTiltOf f π x
   intro n
   obtain ⟨a, ha, ha'⟩ := hx n
   obtain ⟨b, hb, hb'⟩ := hy n
-  refine ⟨a + b, by rw [map_add, ha, hb, map_add], ?_⟩
+  refine ⟨a + b, by rw [map_add (f := _), ha, hb, map_add (f := _)], ?_⟩
   have := (span {π}).add_mem ha' hb'
   convert this using 1
   ring

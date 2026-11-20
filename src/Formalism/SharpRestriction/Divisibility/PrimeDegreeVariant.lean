@@ -729,7 +729,7 @@ theorem thetaUpInV0_level_of (Y : Prov D X) (hc : D.ntypes.e0 ∈ Subalgebra.cen
     · intro a b ha hb v
       have ha' := ha v
       have hb' := hb v
-      rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, map_add, ha', hb']
+      rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), ha', hb']
     · intro r a ha v
       have ha' := ha v
       rw [map_smul, map_smul, LinearMap.smul_apply, LinearMap.smul_apply, LinearMap.map_smul, ha']
@@ -812,7 +812,7 @@ theorem comm_alg {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [
   · intro a b ha hb x
     have ha' := ha x
     have hb' := hb x
-    rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, map_add, ha', hb']
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), ha', hb']
   · intro r a ha x
     have ha' := ha x
     rw [map_smul, map_smul, LinearMap.smul_apply, LinearMap.smul_apply, LinearMap.map_smul, ha']
@@ -1391,7 +1391,7 @@ theorem l1cSharp_of (Y : Prov D X) (hc : IdempotentCentral D) (h1 : Conclusion1 
       exact eK μ g σ0
     · simp
     · intro a b _ _ ha hb
-      rw [map_add, map_add, ha, hb, smul_add]
+      rw [map_add (f := _), map_add (f := _), ha, hb, smul_add]
     · intro t a _ ha
       rw [map_smul, map_smul, ha, smul_comm]
   have es : ∀ μ σ, (RowSide.sharp D).iota μ ((RowSide.sharp D).thetaUp μ (D.what₂.onb σ)) =

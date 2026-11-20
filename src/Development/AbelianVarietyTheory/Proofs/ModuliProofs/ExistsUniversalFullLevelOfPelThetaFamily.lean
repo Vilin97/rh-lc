@@ -53,7 +53,7 @@ theorem existsUnique_coeff {A : Type} [CommGroup A] (bas : (Fin (2 * g) → ℤ)
     have e₁ : ∏ i, u (bas (Pi.single i 1)) ^ (c i).val = u (bas fun i => ((c i).val : ℤ)) := by
       rw [map_bas bas u hu]; simp only [zpow_natCast]
     have e₂ := hu (bas (v - fun i => ((c i).val : ℤ))) (bas fun i => ((c i).val : ℤ))
-    rw [← map_add, sub_add_cancel] at e₂
+    rw [← map_add (f := _), sub_add_cancel] at e₂
     rw [e₁, e₂, right_eq_mul, hk]
     constructor
     · rintro ⟨y, hy⟩
@@ -181,7 +181,7 @@ theorem exists_level {n N : ℕ} {a : J → 𝓞 E} {bas : (Fin (2 * g) → ℤ)
     rw [← MonObj.comp_pow, ← MonObj.pow_comp, T.torsion, MonObj.one_comp, MonObj.comp_one]
   let lv : D.La → (𝟙_ (Over S) ⟶ t.G) := fun x => ∏ i, q i ^ bas.symm x i
   have hadd : ∀ x y, lv (x + y) = lv x * lv y := fun x y => by
-    simp only [lv, map_add, Pi.add_apply, zpow_add, Finset.prod_mul_distrib]
+    simp only [lv, map_add (f := _), Pi.add_apply, zpow_add, Finset.prod_mul_distrib]
   have hlv : ∀ i, lv (bas (Pi.single i 1)) = q i := fun i => by
     simp only [lv, LinearEquiv.symm_apply_apply]
     rw [Finset.prod_eq_single i (fun j _ hj => by simp [Pi.single_eq_of_ne hj]) (by simp)]

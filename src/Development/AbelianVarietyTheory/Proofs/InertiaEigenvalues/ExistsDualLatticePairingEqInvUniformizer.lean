@@ -61,7 +61,7 @@ theorem exists_form_of_not_mem {T : Submodule O V} (hT : IsLatticeIn T) {v : V} 
       · exact Submodule.mem_one.2 ⟨1, map_one _⟩
       · exact Submodule.zero_mem _
     | zero => intro j; simp
-    | add x y _ _ hx hy => intro j; rw [map_add, Finsupp.add_apply]; exact Submodule.add_mem _ (hx j) (hy j)
+    | add x y _ _ hx hy => intro j; rw [map_add (f := _), Finsupp.add_apply]; exact Submodule.add_mem _ (hx j) (hy j)
     | smul a x _ hx =>
       intro j
       rw [← algebraMap_smul (FractionRing O) a x, map_smul, Finsupp.smul_apply, algebraMap_smul]

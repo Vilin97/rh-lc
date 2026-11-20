@@ -556,7 +556,7 @@ theorem span_charL2_dense :
       obtain ⟨χ, rfl⟩ := hy
       exact Submodule.subset_span ⟨χ, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ c hy
   have h1 : Set.range (ContinuousMap.toLp 2 μ ℂ : C(C, ℂ) →L[ℂ] Lp ℂ 2 μ) ⊆
       ((Submodule.span ℂ (Set.range (charL2 (C := C) μ))).topologicalClosure : Set (Lp ℂ 2 μ)) := by

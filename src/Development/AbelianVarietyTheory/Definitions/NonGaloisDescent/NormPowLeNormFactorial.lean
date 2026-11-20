@@ -50,7 +50,7 @@ theorem tendsto_coeff_mul {w : ℕ → ℝ} (hw : ∀ n, 0 ≤ w n) (hm : ∀ i 
 
 theorem norm_coeff_add_le {w : ℕ → ℝ} (hw : ∀ n, 0 ≤ w n) (f g : K⟦X⟧) (n : ℕ) :
     ‖coeff n (f + g)‖ * w n ≤ max (‖coeff n f‖ * w n) (‖coeff n g‖ * w n) := by
-  rw [← max_mul_of_nonneg _ _ (hw n), map_add]
+  rw [← max_mul_of_nonneg _ _ (hw n), map_add (f := _)]
   exact mul_le_mul_of_nonneg_right (IsUltrametricDist.norm_add_le_max _ _) (hw n)
 
 theorem norm_natCast_le_of_dvd {a b : ℕ} (h : a ∣ b) : ‖(b : K)‖ ≤ ‖(a : K)‖ := by
@@ -98,7 +98,7 @@ def A : Subalgebra O K⟦X⟧ where
     simpa using norm_coeff_mul_le (w := fun _ => 1) (fun _ => zero_le_one) (fun _ _ => by simp)
       zero_le_one zero_le_one (f := f) (g := g) (by simpa using hf) (by simpa using hg) n
   add_mem' {f g} hf hg n := by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf n) (hg n))
   algebraMap_mem' c n := by
     rw [algebraMap_eq_C, coeff_C]

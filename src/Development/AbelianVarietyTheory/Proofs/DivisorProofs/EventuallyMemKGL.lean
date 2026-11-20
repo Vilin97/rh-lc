@@ -38,7 +38,7 @@ theorem map_prjG (T : Finset (Pl E)) (x : GL (Fin n) (FiniteAdeleRing (𝓞 E) E
     rw [if_pos hw]
   show pLoc E w ((idem E T • x.val + (1 - idem E T) • (1 : Matrix (Fin n) (Fin n) (FiniteAdeleRing (𝓞 E) E))) i j) =
     pLoc E w (x.val i j)
-  simp [Matrix.add_apply, Matrix.smul_apply, map_add, map_mul, map_sub, he]
+  simp [Matrix.add_apply, Matrix.smul_apply, map_add (f := _), map_mul, map_sub, he]
 
 theorem mem_orb_iff {u w : Pl E} : w ∈ (orb E u : Set (Pl E)) ↔
     w.under (𝓞 (maximalRealSubfield E)) = u.under (𝓞 (maximalRealSubfield E)) := by

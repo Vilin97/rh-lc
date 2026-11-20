@@ -34,7 +34,7 @@ theorem sub_C_eval_mem_span {n : ℕ} (p : Fin n → ℂ) (f : MvPolynomial (Fin
   | C a => simp
   | add f g hf hg =>
     have : f + g - C (eval p (f + g)) = (f - C (eval p f)) + (g - C (eval p g)) := by
-      simp only [map_add]; ring
+      simp only [map_add (f := _)]; ring
     rw [this]; exact add_mem hf hg
   | mul_X f i hf =>
     have : f * X i - C (eval p (f * X i)) =

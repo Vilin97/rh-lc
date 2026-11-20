@@ -17,9 +17,9 @@ private theorem elementaryAct_map_mul (a b : Fin n) (s : ℂ) : Formalism.Graded
       ((Polynomial.aeval (C s : MvPolynomial (Fin n × Fin n) ℂ)).restrictScalars ℂ).comp (Formalism.GradedWeylDivisibility.rowGen ℂ (n := n) a b) := by
   apply MvPolynomial.algHom_ext
   rintro ⟨p, q⟩
-  simp only [Formalism.GradedWeylDivisibility.rowAct, Formalism.GradedWeylDivisibility.rowGen, MvPolynomial.aeval_X, AlgHom.comp_apply, AlgHom.restrictScalars_apply, map_add]
+  simp only [Formalism.GradedWeylDivisibility.rowAct, Formalism.GradedWeylDivisibility.rowGen, MvPolynomial.aeval_X, AlgHom.comp_apply, AlgHom.restrictScalars_apply, map_add (f := _)]
   rw [Polynomial.aeval_C]
-  simp only [Matrix.transpose_apply, Matrix.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Matrix.transpose_apply, Matrix.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
   congr 1
   · rw [Finset.sum_eq_single p]
     · simp
@@ -155,7 +155,7 @@ theorem fderiv_single (lam : Fin n → ℤ) (a b : Fin n) (z : ℂ) :
   have h2 := hasDerivAt_pi.1 (hasDerivAt_pi.1 h1 i) j
   rw [← (line_deriv lam a b i j z).unique h2, qP_eval_zero, qP_deriv_zero]
   change _ = z * Cxc.extL lam i (Et lam a b ((wb lam j : Formalism.BasicNotions.nablaSq ℂ n (dw lam)) : MvPolynomial (Fin n × Fin n) ℂ))
-  rw [Et, Matrix.add_apply, LinearMap.add_apply, map_add, Matrix.smul_apply, Matrix.one_apply]
+  rw [Et, Matrix.add_apply, LinearMap.add_apply, map_add (f := _), Matrix.smul_apply, Matrix.one_apply]
   split_ifs with hab
   · simp
     ring

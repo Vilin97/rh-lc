@@ -59,7 +59,7 @@ theorem exists_type (T : Matrix (Fin N) (Fin N) ℂ → (E →L[ℂ] E))
   · right
     refine Submodule.eq_of_le_of_finrank_le hle' (hmin _ ⟨hle'.trans hle, hst', v₁, h₁, h0, fun θ hθ => ?_⟩)
     have h := hw θ hθ
-    rw [map_add, smul_add] at h
+    rw [map_add (f := _), smul_add] at h
     rw [← sub_eq_zero]
     refine (Submodule.disjoint_def.1 S'.orthogonal_disjoint) _
       (S'.sub_mem (hst' _ hθ _ h₁) (S'.smul_mem _ h₁)) ?_

@@ -54,7 +54,7 @@ theorem eq_top_of_translates (h1 : LowSm M) (h2 : GlobalTheory.IndefiniteRowSide
       rw [hU.1.2 _ (kset_uj hg) _ (kset_uj hk)]
       rfl
     · rw [map_zero]; exact P.zero_mem
-    · intro x y _ _ hx hy; rw [map_add]; exact P.add_mem hx hy
+    · intro x y _ _ hx hy; rw [map_add (f := _)]; exact P.add_mem hx hy
     · intro a x _ hx; rw [map_smul]; exact P.smul_mem a hx
   have hP : P = lowKSub (M.ε τ) (M.lam τ) (M.σ τ) := by
     refine ((h2 τ).2.2.1 P hPle hst).resolve_left fun h0 => hv ?_

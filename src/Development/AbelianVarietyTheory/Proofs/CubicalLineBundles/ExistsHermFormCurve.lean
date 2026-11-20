@@ -168,7 +168,7 @@ theorem exists_isExp_of_isTen : ThetaUnifAV → Out.Laws → ∀ (E : Type) [Fie
   have hsemi : ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (f : D.La →+ V), (∀ a, f (H.w0 • a) = ω • f a) →
       ∀ (o : OK H) a, f (o • a) = τ₀ o • f a := fun V _ _ f hf o a => by
     obtain ⟨m, n, rfl⟩ := hgen o
-    rw [add_smul, mul_smul, Int.cast_smul_eq_zsmul, Int.cast_smul_eq_zsmul, map_add, map_zsmul, map_zsmul,
+    rw [add_smul, mul_smul, Int.cast_smul_eq_zsmul, Int.cast_smul_eq_zsmul, map_add (f := _), map_zsmul, map_zsmul,
       show wK H • a = H.w0 • a from rfl, hf]
     simp [hτ, add_smul, mul_smul, Int.cast_smul_eq_zsmul]
   obtain ⟨rig, hrig⟩ := T.pol.rigid
@@ -205,7 +205,7 @@ theorem exists_isExp_of_isTen : ThetaUnifAV → Out.Laws → ∀ (E : Type) [Fie
     rw [hFz, hFz, one_smul, one_smul, LinearMap.smul_apply, ← map_smul, e, hH₁] at this
     have e' : h a b = (((ε : ℤ) * (D.EF (H.w0 • a) b - D.EF a b) : ℤ) : OK H) +
         (((ε : ℤ) * D.EF a b : ℤ) : OK H) * wK H := Subtype.ext (hh a b)
-    rw [this, e', map_add, map_mul, map_intCast, map_intCast, hτ, map_one, _root_.mul_one, Complex.div_ofReal_im]
+    rw [this, e', map_add (f := _), map_mul, map_intCast, map_intCast, hτ, map_one, _root_.mul_one, Complex.div_ofReal_im]
     simp only [Complex.mul_im, Complex.add_im, Complex.intCast_im, Complex.intCast_re, Complex.re_ofNat,
       Complex.im_ofNat]
     push_cast
@@ -257,7 +257,7 @@ theorem exists_isExp_of_isTen : ThetaUnifAV → Out.Laws → ∀ (E : Type) [Fie
       map_one' := ext _ _ fun a => by rw [hRP, one_smul]; rfl
       map_mul' := fun s s' => ext _ _ fun a => by rw [Module.End.mul_apply, hRP, hRP, hRP, mul_smul] }
     fun s s' => ext _ _ fun a => (hRP _ _).trans (by
-      rw [add_smul, map_add, ← hRP, ← hRP]; rfl)
+      rw [add_smul, map_add (f := _), ← hRP, ← hRP]; rfl)
   obtain ⟨g, B, ty, hB⟩ := exists_diagonal_coordinates r
   have hΛP : ∀ v, v ∈ u.Λ ↔ v ∈ P.range := fun v => (hex v).symm.trans (hker v)
   obtain ⟨e, he, heB⟩ := exists_isExp T D u hAH.1 hAH.2.1 P hi hΛP hform (fun k a b c hk hc => by

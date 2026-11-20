@@ -237,7 +237,7 @@ theorem comulMap_y' (f : R ⊗[O] R →ₐ[O] B) (φ ψ : R →ₐ[O] B) (h₁ :
       simp only [AlgHom.comp_apply, Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
       generalize h.comulMap a = c
       induction c with
-      | add c d hc hd => simp only [add_tmul, map_add, hc, hd]
+      | add c d hc hd => simp only [add_tmul, map_add (f := _), hc, hd]
       | tmul b c => simp [k]))
     (h.inj (by
       rw [h.comulMap_y' _ ((Algebra.ofId O _).comp h.counitMap) (Algebra.TensorProduct.lid O R).symm

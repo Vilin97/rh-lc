@@ -96,7 +96,7 @@ theorem liftWeyl (p q w : ℕ) (lam2 : Fin q → ℕ) (ha : Antitone lam2) (hb :
   | add x y _ _ hx hy =>
     obtain ⟨d1, h1, e1⟩ := hx
     obtain ⟨d2, h2, e2⟩ := hy
-    exact ⟨d1 + d2, Submodule.add_mem _ h1 h2, by rw [map_add, map_add, e1, e2]⟩
+    exact ⟨d1 + d2, Submodule.add_mem _ h1 h2, by rw [map_add (f := _), map_add (f := _), e1, e2]⟩
   | smul c x _ hx =>
     obtain ⟨d1, h1, e1⟩ := hx
     exact ⟨c • d1, Submodule.smul_mem _ c h1, by rw [map_zsmul, map_zsmul, e1]⟩

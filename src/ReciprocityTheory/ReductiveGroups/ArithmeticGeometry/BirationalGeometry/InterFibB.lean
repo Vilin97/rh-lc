@@ -132,7 +132,7 @@ theorem comp_mul_homog {σ : Type*} {M : Type*} [AddCancelCommMonoid M] [Decidab
     · have hwb := hψ hb
       have hsum : Finsupp.weight w ab.1 + Finsupp.weight w ab.2 = Finsupp.weight w x := by
         have hab' : ab.1 + ab.2 = x := by simpa using hab
-        rw [← map_add, hab']
+        rw [← map_add (f := _), hab']
       have ha : Finsupp.weight w ab.1 = n := by
         rw [hwb, hx] at hsum
         exact add_right_cancel hsum
@@ -147,7 +147,7 @@ theorem comp_mul_homog {σ : Type*} {M : Type*} [AddCancelCommMonoid M] [Decidab
         apply hx
         have hwb := hψ hb
         have hab' : ab.1 + ab.2 = x := by simpa using hab
-        rw [← hab', map_add, ha, hwb]
+        rw [← hab', map_add (f := _), ha, hwb]
     · simp
 
 end ReciprocityTheory.ChartRestriction.G.Geo

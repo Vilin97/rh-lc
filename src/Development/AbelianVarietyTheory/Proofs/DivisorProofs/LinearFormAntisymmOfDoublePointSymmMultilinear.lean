@@ -34,7 +34,7 @@ private theorem exists_fin_sum_single_eq_of_degree_eq {κ : Type} :
     have hsplit : m - Finsupp.single x 1 + Finsupp.single x 1 = m := tsub_add_cancel_of_le hle
     have hdeg : (m - Finsupp.single x 1).degree = n := by
       have h := congrArg Finsupp.degree hsplit
-      rw [map_add, Finsupp.degree_single, hm] at h
+      rw [map_add (f := _), Finsupp.degree_single, hm] at h
       omega
     obtain ⟨s, hs⟩ := ih _ hdeg
     refine ⟨Fin.cons x s, ?_⟩
@@ -110,7 +110,7 @@ theorem _root_.GlobalTheory.FlagPush.MultiLevel.antisymm_of_multilinear : ∀ (�
     have h1 : T (Fin.cons (v b) (v ∘ s')) = 0 := by rw [← Fin.comp_cons]; exact hv _
     have h2 : T (Fin.cons (v a) (v ∘ s')) = 0 := by rw [← Fin.comp_cons]; exact hv _
     rw [hw, hcons, h1, hua]
-    simp only [← MultilinearMap.curryLeft_apply, map_add, MultilinearMap.add_apply] at h2 ⊢
+    simp only [← MultilinearMap.curryLeft_apply, map_add (f := _), MultilinearMap.add_apply] at h2 ⊢
     rw [h2]
     abel
   have hdiff : ∀ x : κ, ∃ ε : ℤ, u (Equiv.swap a b x) - v x = ε • w := by

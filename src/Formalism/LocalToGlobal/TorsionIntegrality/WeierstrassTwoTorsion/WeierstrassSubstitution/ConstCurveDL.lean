@@ -48,7 +48,7 @@ theorem fwAt_sig : fwAt (curveL W) (sig he X) (sig he (wSer W)) = sig he (fw W) 
     WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆]
 
 theorem fuAt_sig : fuAt (curveL W) (sig he X) (sig he (wSer W)) = sig he (fu W) := by
-  simp only [fuAt, fu, map_add, map_mul, map_pow, map_ofNat, sig_C,
+  simp only [fuAt, fu, map_add (f := _), map_mul, map_pow, map_ofNat, sig_C,
     WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₄]
 
 theorem wEq_sig : WEq (curveL W) (sig he X) (sig he (wSer W)) := by
@@ -56,7 +56,7 @@ theorem wEq_sig : WEq (curveL W) (sig he X) (sig he (wSer W)) := by
       + C W.a₄ * X * wSer W ^ 2 + C W.a₆ * wSer W ^ 3 :=
     (Formalism.ELL.wSeriesUnique K W).choose_spec.1.2
   have h := congrArg (sig he) hw
-  simp only [map_add, map_mul, map_pow, sig_C] at h
+  simp only [map_add (f := _), map_mul, map_pow, sig_C] at h
   simp only [WEq, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃,
     WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆]
   exact h
@@ -67,7 +67,7 @@ theorem isFlowUW_sig (hc : ∀ f : K⟦X⟧, derivative K (f.subst e) = (D W f).
       + C W.a₄ * X * wSer W ^ 2 + C W.a₆ * wSer W ^ 3 :=
     (Formalism.ELL.wSeriesUnique K W).choose_spec.1.2
   have hd := congrArg (derivative K) hw
-  simp only [map_add, Derivation.leibniz, Derivation.leibniz_pow, PowerSeries.derivative_C,
+  simp only [map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, PowerSeries.derivative_C,
     PowerSeries.derivative_X, smul_eq_mul, nsmul_eq_mul] at hd
   have hDw : D W (wSer W) = fu W := by
     rw [D, Derivation.smul_apply, smul_eq_mul, fw, fu]

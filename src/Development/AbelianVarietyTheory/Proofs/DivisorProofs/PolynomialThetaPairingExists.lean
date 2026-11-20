@@ -137,7 +137,7 @@ theorem pd_pd (v w : Formalism.IndefR.Datum.FVar D b a) (P : PolF D b a) :
   | C c => simp
   | add p q hp hq => simp [hp, hq]
   | mul_X p j hp =>
-    rw [mul_comm, pd_X, pd_X, map_add, map_add, pd_X, pd_X, hp]
+    rw [mul_comm, pd_X, pd_X, map_add (f := _), map_add (f := _), pd_X, pd_X, hp]
     split_ifs <;> simp [add_assoc, add_comm, add_left_comm]
 
 theorem rai_rai (i l : Fin b) (j k : Fin a) :
@@ -477,7 +477,7 @@ theorem exists_lie_parts {n : ℕ} (ε : Fin n → Bool) (N : Matrix (Fin n) (Fi
       Matrix.zero_apply, ← starRingEnd_apply, map_div₀, map_add, map_mul, conj_conj, hc, h2, conj_I]
     linear_combination (-I * (s i) * starRingEnd ℂ (N i j) / 2) * hs j + (I * N j i * s j / 2) * hs i
   · ext i j
-    simp only [Matrix.add_apply, Matrix.smul_apply, map_apply, of_apply, smul_eq_mul, map_div₀, map_add, map_sub, map_mul,
+    simp only [Matrix.add_apply, Matrix.smul_apply, map_apply, of_apply, smul_eq_mul, map_div₀, map_add (f := _), map_sub, map_mul,
       conj_conj, hc, h2, conj_I]
     linear_combination ((N i j + s i * starRingEnd ℂ (N j i) * s j) / 2) * I_mul_I
   · simp only [Matrix.trace, diag_apply, of_apply, Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_neg_distrib]
@@ -516,11 +516,11 @@ theorem comp_quad (A : Fr M) (B : Fr X) (eT : D.what₂.Tau → ℚ) (τ : D.wha
   have h5 : q (fockS τ (sgA A τ) (B.ε τ) (Matrix.single j k 1) P) =
       (-((eT τ : ℂ) * (Matrix.single j k (1 : ℂ)).trace)) • q P := by
     conv_lhs => rw [h3, fockS_add_smul]
-    rw [LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul, key _ h1, key _ h2, smul_smul, ← add_smul,
+    rw [LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul, key _ h1, key _ h2, smul_smul, ← add_smul,
       ← mul_neg, ← h4]
     congr 1
     ring
-  rw [fockS_single, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add, map_smul,
+  rw [fockS_single, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add (f := _), map_smul,
     ← eq_sub_iff_add_eq, ← sub_smul] at h5
   rw [LinearMap.comp_apply, LinearMap.smul_apply, h5]
   congr 1

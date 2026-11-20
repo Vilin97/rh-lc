@@ -49,7 +49,7 @@ theorem expS_eq {σ : Type} (f : MvPowerSeries σ (K0 p)) (hf : MvPowerSeries.co
 
 theorem expS_add' {σ : Type} (f g : MvPowerSeries σ (K0 p)) (hf : MvPowerSeries.constantCoeff f = 0)
     (hg : MvPowerSeries.constantCoeff g = 0) : expS p (f + g) = expS p f * expS p g := by
-  rw [expS_eq f hf, expS_eq g hg, expS_eq (f + g) (by rw [map_add, hf, hg, add_zero])]
+  rw [expS_eq f hf, expS_eq g hg, expS_eq (f + g) (by rw [map_add (f := _), hf, hg, add_zero])]
   exact Formalism.HermitianLattices.ExpSeriesBivariate.ExpSeriesAddition.expS_add f g hf hg
 
 theorem expS_zero' {σ : Type} : expS p (0 : MvPowerSeries σ (K0 p)) = 1 := by
@@ -289,7 +289,7 @@ theorem coord (hl : 2 ≤ l) (f f' : ι → n → MaximalUnramifiedExtension l) 
   unfold hypLin
   rw [← MvPowerSeries.coe_substAlgHom hasSubst_single_var_log, ← MvPowerSeries.coe_substAlgHom hasSubst_renS]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_add, map_mul]
+    simp only [map_sum, map_add (f := _), map_mul]
   simp only [MvPowerSeries.coe_substAlgHom hasSubst_single_var_log, MvPowerSeries.coe_substAlgHom hasSubst_renS,
     MvPowerSeries.subst_C, MvPowerSeries.subst_X hasSubst_single_var_log]
   rw [Fintype.sum_sum_type, sum_extended_index, sum_extended_index, ← Finset.sum_add_distrib]
@@ -478,9 +478,9 @@ theorem z_add {ι : Type} [Finite ι] {d1 d2 : MvPowerSeries ι (K0 p)} (h1 : Si
   obtain ⟨c2, u2, hu2, e2⟩ := h2
   have hc1 : MvPowerSeries.constantCoeff d1 = 0 := c1
   have hc2 : MvPowerSeries.constantCoeff d2 = 0 := c2
-  refine ⟨by rw [map_add, hc1, hc2, add_zero], u1 + u2 + u1 * u2, by simp [hu1, hu2], ?_⟩
+  refine ⟨by rw [map_add (f := _), hc1, hc2, add_zero], u1 + u2 + u1 * u2, by simp [hu1, hu2], ?_⟩
   rw [inParam_add, expS_add' _ _ (cc_inParam d1 hc1) (cc_inParam d2 hc2), e1, e2]
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   ring
 
 theorem z_neg {ι : Type} [Finite ι] {d : MvPowerSeries ι (K0 p)} (h : Simeq p d 0) : Simeq p (-d) 0 := by
@@ -500,7 +500,7 @@ theorem z_neg {ι : Type} [Finite ι] {d : MvPowerSeries ι (K0 p)} (h : Simeq p
         = expS p (-inParam p d) * (MvPowerSeries.map (algebraMap (WW p) (K0 p)) (1 + u) *
             MvPowerSeries.map (algebraMap (WW p) (K0 p)) v) := by rw [← map_mul, hv, map_one, mul_one]
       _ = (expS p (-inParam p d) * (1 + MvPowerSeries.map (algebraMap (WW p) (K0 p)) u)) *
-            MvPowerSeries.map (algebraMap (WW p) (K0 p)) v := by rw [map_add, map_one, mul_assoc]
+            MvPowerSeries.map (algebraMap (WW p) (K0 p)) v := by rw [map_add (f := _), map_one, mul_assoc]
       _ = MvPowerSeries.map (algebraMap (WW p) (K0 p)) v := by rw [hinv, one_mul]
   rw [inParam_neg, hx, map_sub, map_one, add_sub_cancel]
 
@@ -774,7 +774,7 @@ theorem first_kernel_general_iff : FirstKernelGeneratorIff := by
     ring
   rw [key, inParamK_mul, inParamK_map, inParam_expS _ hD0, hv]
   refine intR_mul hU fun n => ?_
-  rw [MvPowerSeries.coeff_map, ← map_one (MvPowerSeries.map (algebraMap (WW p) (K0 p))), ← map_add,
+  rw [MvPowerSeries.coeff_map, ← map_one (MvPowerSeries.map (algebraMap (WW p) (K0 p))), ← map_add (f := _),
     MvPowerSeries.coeff_map]
   exact hW _
 

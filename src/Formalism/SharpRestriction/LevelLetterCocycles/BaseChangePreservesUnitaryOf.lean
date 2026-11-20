@@ -38,7 +38,7 @@ theorem lkd_local (P : LocPrime l) (LL : FinExt l) : IsLocalRing ↥(OL LL) := b
   have ha' := lkd_pos P LL a ha
   have hb' := lkd_pos P LL b hb
   have h0 := zl_v_unit P LL hu.unit
-  rw [IsUnit.unit_spec, map_add] at h0
+  rw [IsUnit.unit_spec, map_add (f := _)] at h0
   have h1 := AddValuation.map_add (P.v LL) (algebraMap ↥(OL LL) ↥LL.1 a)
     (algebraMap ↥(OL LL) ↥LL.1 b)
   rw [h0] at h1
@@ -378,7 +378,7 @@ theorem liftb_aeval_mem {R D : Type} [CommRing R] [AddCommGroup D] [Module R D] 
   induction P using Polynomial.induction_on' with
   | add p q hp hq =>
     intro x hx
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact N.add_mem (hp x hx) (hq x hx)
   | monomial k a =>
     intro x hx
@@ -393,7 +393,7 @@ theorem liftb_aeval_res {D : Type} [AddCommGroup D] [Module O D] [Module ℤ_[�
     Polynomial.aeval (f.restrictScalars ℤ_[ℓ]) P y =
       Polynomial.aeval f (P.map (algebraMap ℤ_[ℓ] O)) y := by
   induction P using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, Polynomial.map_add, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), Polynomial.map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial k a =>
     rw [Polynomial.map_monomial, Polynomial.aeval_monomial, Polynomial.aeval_monomial,
       Module.End.mul_apply, Module.End.mul_apply, Module.algebraMap_end_apply,
@@ -891,7 +891,7 @@ theorem lifta_interA (W : LocWach PD LL O v n) (h9 : P9π₀ W) (a : LetA O n) (
       rw [this, map_mul, PowerSeries.constantCoeff_X, zero_mul]
     have e3 : PowerSeries.constantCoeff (f i) = 0 := by
       have := congrArg PowerSeries.constantCoeff e1
-      rw [e2, map_add, map_mul, h0 i, zero_mul, zero_add, PowerSeries.constantCoeff_C] at this
+      rw [e2, map_add (f := _), map_mul, h0 i, zero_mul, zero_add, PowerSeries.constantCoeff_C] at this
       exact this.symm
     rw [e3, map_zero, add_zero] at e1
     exact e1
@@ -1222,7 +1222,7 @@ theorem lifta_ring_of (W : LocWach PD LL O v n) (h9 : P9π₀ W) : lifta_Ring W 
     rw [this]
     exact W.AΔ.sub_mem (lifta_γΔ W _ _ hπΔ) hπΔ
   · have h1 : W.γA W.gam (qp W) = W.γA W.gam W.π₀ + ((PD.p : ℕ) : LetA O n) := by
-      rw [qp, map_add, map_natCast]
+      rw [qp, map_add (f := _), map_natCast]
     have h2 : W.γA W.gam W.π₀ = W.π₀ + (wγ : LetA O n) * W.π₀ * qp W := by rw [← hwγ]; ring
     rw [h1, h2]
     simp only [qp]
@@ -1576,7 +1576,7 @@ theorem lifta_JSet_eq (jumps : Finset ℤ) (M : ℕ) : Formalism.RepresentationB
 
 def lifta_Inv (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) : Submodule O (W.DD T) where
   carrier := {x | ∀ δ ∈ W.DelF, W.γD T δ x = x}
-  add_mem' := fun ha hb δ hδ => by rw [map_add, ha δ hδ, hb δ hδ]
+  add_mem' := fun ha hb δ hδ => by rw [map_add (f := _), ha δ hδ, hb δ hδ]
   zero_mem' := fun δ _ => map_zero _
   smul_mem' := fun c x hx δ hδ => by rw [map_smul, hx δ hδ]
 
@@ -1883,7 +1883,7 @@ theorem lone_coord_actB {ι : Type} (b : Basis ι Qp V) (i : ι) (g : G) (x : V 
   | tmul l c =>
     rw [lone_actB_tmul PD ρ hρ, lone_coord_tmul, lone_coord_tmul]
     exact (((PD.actB g).toAlgHom.toLinearMap).restrictScalars Qp).map_smul _ _ |>.symm
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 include hρ in
 theorem lone_coord_actdR {ι : Type} (b : Basis ι Qp V) (i : ι) (g : G) (x : V ⊗[Qp] BdR) :
@@ -1893,7 +1893,7 @@ theorem lone_coord_actdR {ι : Type} (b : Basis ι Qp V) (i : ι) (g : G) (x : V
   | tmul l c =>
     rw [lone_actdR_tmul PD ρ hρ, lone_coord_tmul, lone_coord_tmul]
     exact (((PD.actdR g).toAlgHom.toLinearMap).restrictScalars Qp).map_smul _ _ |>.symm
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def lone_map : V ⊗[Qp] K₀ →ₗ[LL] V ⊗[Qp] B :=
   AlgebraTensorModule.lTensor LL V ((Algebra.linearMap K₀ B).restrictScalars Qp)
@@ -1931,7 +1931,7 @@ theorem lone_Dcris_eq [FiniteDimensional Qp V] :
     | tmul l k =>
       simp only [lone_map, AlgebraTensorModule.lTensor_tmul, lone_actB_tmul PD ρ hρ]
       simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 include PD in
 theorem lone_map_injective :
@@ -1996,7 +1996,7 @@ theorem lone_coord_FilV {ι : Type} (b : Basis ι Qp V) (i : ι) (a : ℤ) (x : 
     rw [AlgebraTensorModule.map_tmul, lone_coord_tmul]
     exact ((PD.Fil a).restrictScalars Qp).smul_mem _ f.2
   | add y z hy hz =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact (PD.Fil a).add_mem hy hz
 
 include hρ in
@@ -2282,7 +2282,7 @@ def lext_rep {T U : LocLat G Qp LL O} (lam : U.V →ₗ[LL] LL) (c : G → T.V)
     intro z
     rw [Module.End.mul_apply, lext_act_apply, lext_act_apply, lext_act_apply, hc, map_mul]
     ext
-    · simp only [Module.End.mul_apply, map_add, map_smul, smul_add]
+    · simp only [Module.End.mul_apply, map_add (f := _), map_smul, smul_add]
       abel
     · rfl
 
@@ -2420,7 +2420,7 @@ theorem lext_funct (ρ : Representation LL G V) (ρ' : Representation LL G V') (
   induction m using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => simp only [lext_act_tmul, lext_mapB_tmul, hf]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem lext_mul_tmul (κ : K₀) (x : V) (b : B) :
     mulVB (K₀ := K₀) (B := B) (V := V) (LL := LL) κ (x ⊗ₜ[Qp] b) =
@@ -2433,7 +2433,7 @@ theorem lext_act_mul (ρ : Representation LL G V) (g : G) (κ : K₀) (m : V ⊗
   induction m using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => simp only [lext_act_tmul, lext_mul_tmul, map_mul, AlgEquiv.commutes]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 def lext_coord {ι : Type} (b : Module.Basis ι Qp U) (i : ι) : U ⊗[Qp] B →ₗ[Qp] B :=
   (TensorProduct.lid Qp B).toLinearMap ∘ₗ LinearMap.rTensor B (b.coord i)
@@ -2462,7 +2462,7 @@ theorem lext_coord_act {ι : Type} (b : Module.Basis ι Qp U) (i : ι) (ρU : Re
   | tmul l c =>
     rw [lext_act_tmul, hU, lext_coord_tmul, lext_coord_tmul]
     exact (((PD.actB g).toAlgHom.toLinearMap).restrictScalars Qp).map_smul _ _ |>.symm
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem lext_fin [FiniteDimensional LL V] (ρ : Representation LL G V) (h : IsCrys PD ρ) :
     Module.Finite LL ↥(Dcris PD ρ) := by
@@ -2501,13 +2501,13 @@ theorem lext_crys [FiniteDimensional Qp LL] [FiniteDimensional LL V] [FiniteDime
     induction m using TensorProduct.induction_on with
     | zero => simp
     | tmul x b => simp [hiB, hrB, lext_mapB_tmul]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hpi : ∀ m, pB (iB m) = 0 := by
     intro m
     induction m using TensorProduct.induction_on with
     | zero => simp
     | tmul x b => simp [hiB, hpB, lext_mapB_tmul]
-    | add a b ha hb => simp only [map_add, ha, hb, add_zero]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, add_zero]
   have hsum : ∀ z, iB (rB z) + sB (pB z) = z := by
     intro z
     induction z using TensorProduct.induction_on with
@@ -2517,7 +2517,7 @@ theorem lext_crys [FiniteDimensional Qp LL] [FiniteDimensional LL V] [FiniteDime
       congr 1
       simp
     | add a b ha hb =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       conv_rhs => rw [← ha, ← hb]
       abel
   have hiE : ∀ g m, iB (actVB PD ρ g m) = actVB PD ρp g (iB m) :=
@@ -2652,21 +2652,21 @@ theorem lker_mapB_comp (f : V₀ →ₗ[LL] V₁) (g : V₁ →ₗ[LL] V₂) (m 
   induction m using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => simp only [lext_mapB_tmul, LinearMap.comp_apply]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem lker_mapB_id (m : V₀ ⊗[Qp] B) :
     lext_mapB (Qp := Qp) (B := B) (LinearMap.id : V₀ →ₗ[LL] V₀) m = m := by
   induction m using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => simp only [lext_mapB_tmul, LinearMap.id_apply]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem lker_mapB_add (f g : V₀ →ₗ[LL] V₁) (m : V₀ ⊗[Qp] B) :
     lext_mapB (Qp := Qp) (B := B) (f + g) m = lext_mapB f m + lext_mapB g m := by
   induction m using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => simp only [lext_mapB_tmul, LinearMap.add_apply, TensorProduct.add_tmul]
-  | add a b ha hb => simp only [map_add, ha, hb]; abel
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]; abel
 
 theorem lker_crys [FiniteDimensional LL V₀] [FiniteDimensional LL V₁] [FiniteDimensional LL V₂]
     (ρ₀ : Representation LL G V₀) (ρ₁ : Representation LL G V₁) (ρ₂ : Representation LL G V₂)
@@ -2828,7 +2828,7 @@ theorem lker_lat_split {T₁ T₂ : LocLat G Qp LL O} (F : LatHom T₁.L T₂.L)
         apply Subtype.ext
         change ((a + b : ↥T₁.L.T) : T₁.V) - ((σ (φ (a + b)) : ↥T₁.L.T) : T₁.V) =
           ((a : T₁.V) - ((σ (φ a) : ↥T₁.L.T) : T₁.V)) + ((b : T₁.V) - ((σ (φ b) : ↥T₁.L.T) : T₁.V))
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
         push_cast
         abel
       map_smul' := fun c a => by
@@ -3016,7 +3016,7 @@ theorem lreg_X (W : LocWach PD LL O v n) (k : ℕ) :
     have hdiff : W.φA letπ - letπ ^ PD.p = ((PD.p : ℕ) : LetA O n) * (letπ * w) := by
       rw [hφπ]; ring
     refine ⟨letπ * w * c + W.φA r, ?_⟩
-    rw [pow_succ', AlgHom.mul_apply, hr, map_add, map_mul, map_pow, map_natCast]
+    rw [pow_succ', AlgHom.mul_apply, hr, map_add (f := _), map_mul, map_pow, map_natCast]
     have : W.φA letπ ^ (PD.p ^ k) = (letπ ^ PD.p : LetA O n) ^ (PD.p ^ k) +
         ((PD.p : ℕ) : LetA O n) * (letπ * w) * c := by
       rw [← hdiff, ← hc]; ring
@@ -3051,7 +3051,7 @@ theorem lreg_Q (W : LocWach PD LL O v n) :
     exact hr₀
   refine ⟨(W.φA ^ (W.s - 1)) (fun _ => r₀), ?_⟩
   unfold LocWach.Q LocWach.X
-  rw [hq, map_add, map_mul, map_natCast]
+  rw [hq, map_add (f := _), map_mul, map_natCast]
 
 theorem lreg_mul_single (c : LetA O n) (i : ZMod n) (y : PowerSeries O) :
     c * (Pi.single i y : LetA O n) = Pi.single i (c i * y) := by
@@ -3215,7 +3215,7 @@ def gradedIdeal (ϖ : O) (k : ℕ) : Ideal (PowerSeries O) where
   carrier := {f | ∀ j, coeff j f ∈ Ideal.span {ϖ} ^ (k - j)}
   add_mem' := by
     intro a b ha hb j
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Ideal.add_mem _ (ha j) (hb j)
   zero_mem' := by
     intro j
@@ -3556,7 +3556,7 @@ theorem hstr_CompleteB (W : LocWach PD LL O v n) [IsAdicComplete (hstrI₀ O PD.
       rw [← he' y, hstr_syn_smul, he]
       exact Ideal.mul_mem_right _ _ (hstr_eval_mem κ.1 k ha)
     · intro y z hy hz κ
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Ideal.add_mem _ (hy κ) (hz κ)
   · rw [← he' x]
     show (∑ κ : (Σ i, Fin (r i)), (Pi.single κ.1 (e x κ) : LetA O n) •
@@ -3621,7 +3621,7 @@ theorem hstra_abs {A' R D ι₁ ι₂ : Type} [CommRing A'] [CommRing R] [AddCom
         intro j _
         have : (fun i : ι₂ => (c + c') (j, i)) =
             ((fun i => c (j, i)) + fun i => c' (j, i) : ι₂ → R) := rfl
-        rw [this, map_add, add_smul] }
+        rw [this, map_add (f := _), add_smul] }
   have hg : ∀ c, g c = ∑ j, Θ (fun i => c (j, i)) • bM j := fun _ => rfl
   have hgc : ∀ c, ((g c : ↥N') : D) = ∑ j, Θ (fun i => c (j, i)) • b j := by
     intro c
@@ -3666,7 +3666,7 @@ theorem hstra_abs {A' R D ι₁ ι₂ : Type} [CommRing A'] [CommRing R] [AddCom
       rw [← hge y, hsmul, heg]
       exact Ideal.mul_mem_right _ _ (hf κ.2)
     · intro y z hy hz κ
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Ideal.add_mem _ (hy κ) (hz κ)
   · rw [← hge x, hg]
     refine Submodule.sum_mem _ (fun j _ => Submodule.smul_mem_smul ?_ trivial)
@@ -3698,11 +3698,11 @@ theorem hstra_algHom_ext (F G : PowerSeries O →ₐ[O] PowerSeries O)
     have e1 : F f = F g * (F PowerSeries.X) ^ (k + 1) +
         F ((f.trunc (k + 1) : Polynomial O) : PowerSeries O) := by
       conv_lhs => rw [hf]
-      rw [map_add, map_mul, map_pow]
+      rw [map_add (f := _), map_mul, map_pow]
     have e2 : G f = G g * (G PowerSeries.X) ^ (k + 1) +
         G ((f.trunc (k + 1) : Polynomial O) : PowerSeries O) := by
       conv_lhs => rw [hf]
-      rw [map_add, map_mul, map_pow]
+      rw [map_add (f := _), map_mul, map_pow]
     have e3 : F f - G f = (F g - G g) * (F PowerSeries.X) ^ (k + 1) := by
       rw [e1, e2, hpoly, ← hX]
       ring
@@ -4353,10 +4353,10 @@ theorem lqb_lifts (W : LocWach PD LL O v n) (hp : PD.p = ℓ) (u : ℤ_[ℓ]ˣ)
   refine ⟨y', z', hy', hz', (liftb_mem_Z1D W T₁ y' z').2 hd', ?_, ?_⟩
   · have : y' = W.map ι a + (PD.p ^ Formalism.LIFT.eU PD.p M W.s (JSet jumps M) : ℕ) • y₁ := by
       rw [ha']; abel
-    rw [this, map_add, hE.2, zero_add, map_nsmul, hπy₁, smul_smul, ← pow_add, add_comm]
+    rw [this, map_add (f := _), hE.2, zero_add, map_nsmul, hπy₁, smul_smul, ← pow_add, add_comm]
   · have : z' = W.map ι b + (PD.p ^ Formalism.LIFT.eU PD.p M W.s (JSet jumps M) : ℕ) • (W.X • m₁) := by
       rw [hb']; abel
-    rw [this, map_add, hE.2, zero_add, map_nsmul, hπz₁, smul_smul, ← pow_add, add_comm]
+    rw [this, map_add (f := _), hE.2, zero_add, map_nsmul, hπz₁, smul_smul, ← pow_add, add_comm]
 
 def lqb_HLeft (W : LocWach PD LL O v n) : Prop :=
   ∀ (T₀ T₁ T₂ : LocLat G Qp LL O) (ι : LatHom T₀.L T₁.L) (π : LatHom T₁.L T₂.L),

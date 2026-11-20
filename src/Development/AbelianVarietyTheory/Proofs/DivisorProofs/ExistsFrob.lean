@@ -70,7 +70,7 @@ theorem iff_univ (f : A →+* A ⧸ Ideal.span {(p : A)}) (hf : ∀ a, f a = Ide
     obtain ⟨e, he⟩ := h f hf
     refine ⟨fun y => ?_, fun a x => ?_, ?_, fun P _ _ τ hp hτ => ?_⟩
     · obtain ⟨t, rfl⟩ := e.surjective y
-      refine ind f (fun t => (p : A) • e t = 0) (by simp) (fun s t hs ht => by rw [map_add, smul_add, hs, ht, add_zero])
+      refine ind f (fun t => (p : A) • e t = 0) (by simp) (fun s t hs ht => by rw [map_add (f := _), smul_add, hs, ht, add_zero])
         (fun a x => ?_) t
       rw [he, ← mul_smul, ← he, Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _))]
       exact (congrArg e (TensorProduct.zero_tmul _ _)).trans (map_zero e)
@@ -79,16 +79,16 @@ theorem iff_univ (f : A →+* A ⧸ Ideal.span {(p : A)}) (hf : ∀ a, f a = Ide
     · refine eq_top_iff.2 fun y _ => ?_
       obtain ⟨t, rfl⟩ := e.surjective y
       refine ind f (fun t => e t ∈ Submodule.span A (Set.range σ)) (by simp)
-        (fun s t hs ht => by rw [map_add]; exact add_mem hs ht) (fun a x => ?_) t
+        (fun s t hs ht => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hs ht) (fun a x => ?_) t
       rw [he]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨x, rfl⟩)
     · obtain ⟨u, hu⟩ := lift f hf τ hp hτ
       have key : ∀ a x, u (e.symm (a • σ x)) = a • τ x := fun a x => (congrArg u (e.symm_apply_eq.2 (he a x).symm)).trans (hu a x)
-      refine ⟨{ toFun := fun y => u (e.symm y), map_add' := fun y z => by rw [map_add, map_add], map_smul' := fun a y => ?_ },
+      refine ⟨{ toFun := fun y => u (e.symm y), map_add' := fun y z => by rw [map_add (f := _), map_add (f := _)], map_smul' := fun a y => ?_ },
         fun x => ?_⟩
       · obtain ⟨t, rfl⟩ := e.surjective y
         refine ind f (fun t => u (e.symm (a • e t)) = a • u (e.symm (e t))) (by simp)
-          (fun s t hs ht => by rw [map_add, smul_add, map_add, map_add, hs, ht, map_add, map_add, smul_add]) (fun b x => ?_) t
+          (fun s t hs ht => by rw [map_add (f := _), smul_add, map_add (f := _), map_add (f := _), hs, ht, map_add (f := _), map_add (f := _), smul_add]) (fun b x => ?_) t
         rw [he, ← mul_smul, key, key, mul_smul]
       · simpa using key 1 x
   · rintro ⟨hp, hσ, hsp, hU⟩ f' hf'
@@ -105,7 +105,7 @@ theorem iff_univ (f : A →+* A ⧸ Ideal.span {(p : A)}) (hf : ∀ a, f a = Ide
       (fun a x => (tmul_smul f' hf a 1 x).trans (hk _ _ _).symm)
     have hgu : ∀ t, g (u t) = t := fun t => by
       refine ind f' (fun t => g (u t) = t) (by rw [map_zero, map_zero])
-        (fun s t hs ht => by rw [map_add, map_add, hs, ht]) (fun a x => ?_) t
+        (fun s t hs ht => by rw [map_add (f := _), map_add (f := _), hs, ht]) (fun a x => ?_) t
       rw [hu, map_smul, hg]
       exact (hk a 1 x).trans (by rw [mul_one])
     refine ⟨AddEquiv.ofBijective u ⟨fun s t h => by rw [← hgu s, h, hgu], fun y => ?_⟩, hu⟩
@@ -116,7 +116,7 @@ theorem iff_univ (f : A →+* A ⧸ Ideal.span {(p : A)}) (hf : ∀ a, f a = Ide
         exact (congrArg u this).trans (by rw [map_zero, smul_zero])
       · have : a • (s + t : T) = a • (s : T) + a • (t : T) := smul_add a (s : T) t
         refine (congrArg u this).trans ?_
-        rw [map_add, map_add, smul_add, hs, ht]
+        rw [map_add (f := _), map_add (f := _), smul_add, hs, ht]
       · exact (hu (a * b) x).trans (by rw [hu, mul_smul])
     induction hy using Submodule.span_induction with
     | mem y h => obtain ⟨x, rfl⟩ := h; exact ⟨k 1 x, (hu 1 x).trans (one_smul _ _)⟩
@@ -159,7 +159,7 @@ theorem comp [Fact p.Prime] (k k' : ℕ) {σ : M →+ N} {τ : N →+ N'} (h : U
     induction hy using Submodule.span_induction with
     | mem y h => obtain ⟨x, rfl⟩ := h; exact Submodule.subset_span ⟨x, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     | smul a y _ hy => rw [h'.2.1]; exact Submodule.smul_mem _ _ hy
   · obtain ⟨f, hf⟩ := exists_frob A p k'
     have tors : Module.IsTorsionBySet A P (Ideal.span {(p : A)}) := by

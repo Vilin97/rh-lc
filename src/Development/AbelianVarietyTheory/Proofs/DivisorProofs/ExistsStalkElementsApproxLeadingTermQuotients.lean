@@ -340,7 +340,7 @@ theorem exists_elements : ∀ g : ℕ, 1 ≤ g → ∀ n : ℕ, 3 ≤ n → Odd 
     have h4 := sub_mem h2 (Ideal.mem_sup_right h1)
     rw [h3]
     convert h4 using 1
-    rw [map_add]
+    rw [map_add (f := _)]
     ring
 
 end GlobalTheory.CoverElements

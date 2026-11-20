@@ -35,7 +35,7 @@ theorem sum_section {M Q : Type} [AddCommGroup M] [AddCommGroup Q] [Fintype Q] (
     ∑ q, χ (Z q) = 0 := by
   have h1 : ∀ q, χ (Z (q + π m)) = χ m * χ (Z q) := fun q => by
     have e : Z (q + π m) = (Z (q + π m) - (m + Z q)) + (m + Z q) := by abel
-    rw [e, hadd, hker _ (by rw [map_sub, map_add, hZ, hZ]; abel), one_mul, hadd]
+    rw [e, hadd, hker _ (by rw [map_sub, map_add (f := _), hZ, hZ]; abel), one_mul, hadd]
   have h2 : ∑ q, χ (Z q) = χ m * ∑ q, χ (Z q) := by
     rw [Finset.mul_sum, ← Equiv.sum_comp (Equiv.addRight (π m)) (fun q => χ (Z q))]
     exact Finset.sum_congr rfl fun q _ => h1 q
@@ -159,7 +159,7 @@ theorem reads_level : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam
         have h3 := sum_section π (fun q => ⟨2 • z q, nsmul_mem (hzY q) 2⟩) hπ
           (fun w => ψ (symplO S T t (GlobalTheory.VacUnique.finRat S T (-w.1))))
           (fun x y => by
-            rw [Submodule.coe_add, neg_add, map_add, GlobalTheory.PlaceModel.symplO_add_right, AddChar.map_add_eq_mul])
+            rw [Submodule.coe_add, neg_add, map_add (f := _), GlobalTheory.PlaceModel.symplO_add_right, AddChar.map_add_eq_mul])
           (fun x hx => GlobalTheory.LatVac.char_sympl_eq_one hψ hSd hTd h1.1 (hπ0 x hx)) (m := ⟨-w, neg_mem hw⟩)
           (by simpa only [neg_neg] using hw1)
         simp only [smul_neg]

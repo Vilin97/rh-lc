@@ -162,7 +162,7 @@ theorem theta_one {K : Type} [Field K] {n d : ℕ} {A : Type} [CommRing A] [Alge
         simp [poly]
       rw [this]
       exact Subalgebra.algebraMap_mem _ _
-    | add p q hp hq => rw [map_add]; exact Subalgebra.add_mem _ hp hq
+    | add p q hp hq => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hp hq
     | mul_X p e hp =>
       rw [map_mul]
       refine Subalgebra.mul_mem _ hp ?_

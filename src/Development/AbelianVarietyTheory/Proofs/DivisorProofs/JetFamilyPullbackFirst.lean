@@ -77,7 +77,7 @@ theorem GlobalTheory.LatJet.baseChange_liftFil : GlobalTheory.Published.AbelianD
     obtain ⟨z, rfl⟩ := hbc.2 c
     induction z with
     | zero => simp
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | tmul r c₀ => rw [liftSemi_tmul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨c₀, rfl⟩)
   have key : ∀ x₀ ∈ Fil X₀.A, ∀ x, m.Corr x₀ x →
       ∃ d ∈ liftFil J'.κ hi'.grp, IsJetElt J' X₁ N₁ mor' x d := by
@@ -101,11 +101,11 @@ theorem GlobalTheory.LatJet.baseChange_liftFil : GlobalTheory.Published.AbelianD
             (by simp) c₀).symm
       rw [e1, hd', hd₀ c₀, hx c₀]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_mul, map_algebraMap σ J J' τ hτ, map_t σ J J' τ hτ,
+        simp only [map_add (f := _), map_sum, map_mul, map_algebraMap σ J J' τ hτ, map_t σ J J' τ hτ,
         fun i ↦ hN i x₀ x hx c₀]
     | zero => simp
     | add a b _ _ ha hb =>
-      simp only [map_add, ha, hb, Finset.sum_add_distrib, mul_add]
+      simp only [map_add (f := _), ha, hb, Finset.sum_add_distrib, mul_add]
       ring
     | smul r a _ ha =>
       simp only [map_smulₛₗ, LinearMap.map_smul, smul_eq_mul, ha, map_mul, mul_add, Finset.mul_sum,
@@ -125,7 +125,7 @@ theorem GlobalTheory.LatJet.baseChange_liftFil : GlobalTheory.Published.AbelianD
       obtain ⟨a, ha, ha'⟩ := hx
       obtain ⟨b, hb, hb'⟩ := hy
       refine ⟨a + b, add_mem ha hb, fun c ↦ ?_⟩
-      simp only [LinearMap.add_apply, ha' c, hb' c, map_add, Finset.sum_add_distrib, mul_add]
+      simp only [LinearMap.add_apply, ha' c, hb' c, map_add (f := _), Finset.sum_add_distrib, mul_add]
       ring
     | smul r x _ hx =>
       obtain ⟨a, ha, ha'⟩ := hx

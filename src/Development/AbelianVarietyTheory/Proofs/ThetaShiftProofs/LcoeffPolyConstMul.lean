@@ -72,8 +72,8 @@ theorem exists_subst {ι K₁ L S : Type} [Field K₁] [Field L] [CommRing S] (i
   | add P Q hP hQ =>
     obtain ⟨P₁, h1, h2⟩ := hP
     obtain ⟨Q₁, h3, h4⟩ := hQ
-    exact ⟨P₁ + Q₁, by rw [map_add, map_add, h1, h3], fun m => by
-      rw [lcoeffPoly_add, lcoeffPoly_add, map_add, h2, h4]⟩
+    exact ⟨P₁ + Q₁, by rw [map_add (f := _), map_add (f := _), h1, h3], fun m => by
+      rw [lcoeffPoly_add, lcoeffPoly_add, map_add (f := _), h2, h4]⟩
 
 theorem eval_subst {ι K₁ L K : Type} [Field K₁] [Field L] [Field K] (io : K₁ →+* L) (ιT : L →+* K)
     (q : ι → MvPolynomial ι L) (Y : ι → K) (R : MvPolynomial ι K₁) :
@@ -82,7 +82,7 @@ theorem eval_subst {ι K₁ L K : Type} [Field K₁] [Field L] [Field K] (io : K
         (MvPolynomial.map (ιT.comp io) R) := by
   induction R using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p x hp => simp only [map_mul, hp, MvPolynomial.eval₂Hom_X', MvPolynomial.map_X, MvPolynomial.eval_X]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H}

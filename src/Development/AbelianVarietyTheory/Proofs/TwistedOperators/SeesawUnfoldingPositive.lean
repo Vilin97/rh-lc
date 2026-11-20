@@ -101,13 +101,13 @@ theorem exists_lineDeriv (hPr : GlobalTheory.FunPr.Hypotheses₂) {B : Base F E}
     obtain ⟨a₂, ha₂, hpa, hta⟩ := ha
     obtain ⟨b₂, hb₂, hpb, htb⟩ := hb
     refine ⟨a₂ + b₂, add_mem ha₂ hb₂, fun x => ?_, fun u => ?_⟩
-    · simp only [map_add, Pi.add_apply]
+    · simp only [map_add (f := _), Pi.add_apply]
       exact (hpa x).add (hpb x)
     · have e : (fun t : ℝ => thetaSum F (G.M.co.rho B.ψ u (om (1, γ (Multiplicative.ofAdd t)) (a₁ + b₁)))) =
           fun t => thetaSum F (G.M.co.rho B.ψ u (om (1, γ (Multiplicative.ofAdd t)) a₁)) +
             thetaSum F (G.M.co.rho B.ψ u (om (1, γ (Multiplicative.ofAdd t)) b₁)) := by
         funext t
-        rw [map_add, GlobalTheory.SquareAgree.CoinvPass.rho_add', thetaSum_add F (hrs u _ (hsch _ _ (hAD ha₁)))
+        rw [map_add (f := _), GlobalTheory.SquareAgree.CoinvPass.rho_add', thetaSum_add F (hrs u _ (hsch _ _ (hAD ha₁)))
           (hrs u _ (hsch _ _ (hAD hb₁)))]
       rw [e, GlobalTheory.SquareAgree.CoinvPass.rho_add', thetaSum_add F (hrs u _ (hAD ha₂)) (hrs u _ (hAD hb₂))]
       exact (hta u).add (htb u)

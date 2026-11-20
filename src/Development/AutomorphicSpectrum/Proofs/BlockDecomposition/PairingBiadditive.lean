@@ -33,13 +33,13 @@ theorem psiFin_add' (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) �
 theorem hR_add_left {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [CommRing R] [Algebra F R]
     (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E) (x x' y : Fin M → R ⊗[F] E) :
     hR R σ J (x + x') y = hR R σ J x y + hR R σ J x' y := by
-  simp [hR, Formalism.UG.hform, Pi.add_apply, map_add, Matrix.mulVec_add, Matrix.add_mulVec, dotProduct_add,
+  simp [hR, Formalism.UG.hform, Pi.add_apply, map_add (f := _), Matrix.mulVec_add, Matrix.add_mulVec, dotProduct_add,
     add_dotProduct, Finset.sum_add_distrib, add_mul, mul_add]
 
 theorem hR_add_right {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [CommRing R] [Algebra F R]
     (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E) (x y y' : Fin M → R ⊗[F] E) :
     hR R σ J x (y + y') = hR R σ J x y + hR R σ J x y' := by
-  simp [hR, Formalism.UG.hform, Pi.add_apply, map_add, Matrix.mulVec_add, Matrix.add_mulVec, dotProduct_add,
+  simp [hR, Formalism.UG.hform, Pi.add_apply, map_add (f := _), Matrix.mulVec_add, Matrix.add_mulVec, dotProduct_add,
     add_dotProduct, Finset.sum_add_distrib, add_mul, mul_add]
 
 theorem pairB_add : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
@@ -63,7 +63,7 @@ theorem pairB_add : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
     simp only [gram2, Pi.add_apply, Matrix.add_apply]
     exact hR_add_right _ σ J _ _ _
   refine ⟨fun X X' Y => ?_, fun X Y Y' => ?_⟩
-  · simp only [pairB, hg1, Matrix.mul_add, Matrix.trace_add, map_add, psiFin_add']
-  · simp only [pairB, hg2, Matrix.mul_add, Matrix.trace_add, map_add, psiFin_add']
+  · simp only [pairB, hg1, Matrix.mul_add, Matrix.trace_add, map_add (f := _), psiFin_add']
+  · simp only [pairB, hg2, Matrix.mul_add, Matrix.trace_add, map_add (f := _), psiFin_add']
 
 end GlobalTheory.CompanionTheory.SiegelND.Integ.Weyl.PairAdd

@@ -111,7 +111,7 @@ def tI (I : MaximalSpectrum R) (x : V →ₗ[R] V) : k :=
   lam (k := k) I (LinearMap.trace (R ⧸ I.asIdeal) _ (xq I.asIdeal x))
 
 theorem tI_add (I : MaximalSpectrum R) (x y : V →ₗ[R] V) : tI (k := k) I (x + y) = tI I x + tI I y := by
-  simp only [tI, xq_add, map_add]
+  simp only [tI, xq_add, map_add (f := _)]
 
 theorem tI_smul (I : MaximalSpectrum R) (c : k) (x : V →ₗ[R] V) : tI (k := k) I (c • x) = c • tI I x := by
   simp only [tI, xq_smul, map_smul, smul_eq_mul]

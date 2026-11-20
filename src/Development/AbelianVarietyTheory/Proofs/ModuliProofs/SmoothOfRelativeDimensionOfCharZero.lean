@@ -308,7 +308,7 @@ theorem exists_siegPre_of_fullObj : Out.Laws → Out.Laws2 → ∀ (E : Type) [F
             rig₂ := (cls_eq_zero_iff (pull_isLB (isLB_lam hLB) _)).1 ((cls_lam_pull hLB _ _).trans (lam_one_right _ _))
             symm := lam_symm hLB
             lev := fun a => lev (bas a)
-            lev_add := fun a c => by rw [map_add, F.add]
+            lev_add := fun a c => by rw [map_add (f := _), F.add]
             lev_tors := fun a => tors _
             geom := ?_ }, 𝟙 _, 𝟙 _, ⟨?_, eq_one_of_lam_triv hLB P.rigid F.ktriv⟩, isGrpPullback_id _,
     ⟨by simp, by simp⟩, ?_, fun a => Category.comp_id _⟩
@@ -325,7 +325,7 @@ theorem exists_siegPre_of_fullObj : Out.Laws → Out.Laws2 → ∀ (E : Type) [F
       obtain ⟨-, I, -, hev⟩ := geo k' x' w' hw'
       have card := (hL.mulN T P N hodd.pos).2.2.2.2
       refine onto_of_card (pow_ne_zero _ hN) (l := fun a => toUnit (Over.mk x') ≫ lev (bas a))
-        (fun a c => by rw [map_add, F.add, MonObj.comp_mul]) (fun a c => by rw [map_add, F.add, MonObj.comp_mul])
+        (fun a c => by rw [map_add (f := _), F.add, MonObj.comp_mul]) (fun a c => by rw [map_add (f := _), F.add, MonObj.comp_mul])
         (fun a => (ker k' x' a).trans (ker k x a).symm)
         (fun a => by rw [← MonObj.comp_pow, tors, MonObj.comp_one]) (fun y => ?_)
         (card k' x' (Nat.cast_ne_zero.2 hN)) (card k x (by simpa using (hNO.map w).ne_zero))

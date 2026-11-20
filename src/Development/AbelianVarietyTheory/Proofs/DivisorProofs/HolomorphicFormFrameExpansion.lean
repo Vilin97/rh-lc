@@ -263,9 +263,9 @@ theorem exists_extension (D : D7) (θ : InfFam D) (V : HSp D) (r : ℕ) (hr : V.
     exact h1.hasFDerivWithinAt.congr key (key 0 h0)
   · intro τ c d hcd Z hZ Z' hZ' e
     obtain ⟨ρ, rfl⟩ := σsurj τ
-    have e1 : toLie R x σ Z = toLie R x σ (unitFr (σ ρ) c d) := by rw [← e, map_add, hI Z' hZ', add_zero]
+    have e1 : toLie R x σ Z = toLie R x σ (unitFr (σ ρ) c d) := by rw [← e, map_add (f := _), hI Z' hZ', add_zero]
     have e2 : toLie R x σ Z' = -toLie R x σ (Complex.I • unitFr (σ ρ) c d) := by
-      rw [← e, smul_add, smul_smul, Complex.I_mul_I, neg_one_smul, map_add, hI Z hZ, map_neg, zero_add, neg_neg]
+      rw [← e, smul_add, smul_smul, Complex.I_mul_I, neg_one_smul, map_add (f := _), hI Z hZ, map_neg, zero_add, neg_neg]
     have at1 : ∀ Y : LieN V, (∀ ρ', ρ' ≠ ρ → (Y ρ').1 = 0) → Y = atPlace V ρ ⟨(Y ρ).1, (Y ρ).2⟩ := by
       intro Y hY
       funext ρ'

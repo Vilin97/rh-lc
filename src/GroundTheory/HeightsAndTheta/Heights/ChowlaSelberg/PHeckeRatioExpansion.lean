@@ -146,7 +146,7 @@ theorem proof (hR : IntSeriesRing.Statement) (hI : IntSeriesInv.Statement)
     rw [hnp, esymm_cons_succ, hY, esymm_map_div, esymm_map_div, hE₁ t ht0 htle,
       hE₀ t ht0 htle, htq, hΔ τ, hΔ (mulPoint _ τ), hmulp,
       ← (hexp p hpne D hDp).2 q hqR.le]
-    simp only [Φ, map_add, map_mul, map_pow, map_natCast]
+    simp only [Φ, map_add (f := _), map_mul, map_pow, map_natCast]
     simp only [hφ, intSeriesEval_X]
     rw [← hq]
     rw [eq_inv_of_mul_eq_one_right hDV', inv_pow]

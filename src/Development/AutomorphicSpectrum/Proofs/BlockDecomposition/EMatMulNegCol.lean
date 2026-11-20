@@ -157,7 +157,7 @@ theorem sigR_sigR (σ : E →ₐ[F] E) (h : ∀ e, σ (σ e) = e) (x : R ⊗[F] 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [sigR, h]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem isCompact_tupIn [TopologicalSpace (R ⊗[F] E)] {M n : ℕ} {L : Set (R ⊗[F] E)} (hL : IsCompact L) :
     IsCompact (tupIn (M := M) (n := n) R L) := by

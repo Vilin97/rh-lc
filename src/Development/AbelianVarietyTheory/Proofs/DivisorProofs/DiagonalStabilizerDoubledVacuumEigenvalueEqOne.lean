@@ -128,7 +128,7 @@ theorem val_det_le_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl 
       exact Finset.le_sup (f := fun q : (Fin d → E) × Fin d => Valued.v (algebraMap E (w.adicCompletion E) (q.1 q.2)))
         (b := (y, i)) (Finset.mem_product.2 ⟨hy, Finset.mem_univ _⟩)
     | zero => simp
-    | add x y _ _ hx hy => rw [Pi.add_apply, map_add]; exact Valued.v.map_add_le hx hy
+    | add x y _ _ hx hy => rw [Pi.add_apply, map_add (f := _)]; exact Valued.v.map_add_le hx hy
     | smul c x _ hx =>
       have hc : Valued.v (algebraMap E (w.adicCompletion E) (c : E)) ≤ 1 :=
         GlobalTheory.AdeleBaseChange.algebraMap_int_mem c w
@@ -142,7 +142,7 @@ theorem val_det_le_one {d : ℕ} (W : Spc F E d) (hL : W.L.IsLattice E) {v : Pl 
       rw [Pi.smul_apply, Algebra.smul_def, map_mul, map_mul, piE_algebraMap hw, piE_inclR]
       exact (mul_le_mul' (complMap_mem hw ha) (hLb y hy i)).trans_eq (one_mul _)
     | zero => simp
-    | add x y _ _ hx hy => rw [Pi.add_apply, map_add]; exact Valued.v.map_add_le hx hy
+    | add x y _ _ hx hy => rw [Pi.add_apply, map_add (f := _)]; exact Valued.v.map_add_le hx hy
     | neg x _ hx => rw [Pi.neg_apply, map_neg, Valuation.map_neg]; exact hx
   have hc : ∀ j : Fin d, ∃ c : E, c ≠ 0 ∧ Pi.single j c ∈ W.L := fun j => by
     have h1 : (Pi.single j 1 : Fin d → E) ∈ Submodule.span E (W.L : Set (Fin d → E)) := by

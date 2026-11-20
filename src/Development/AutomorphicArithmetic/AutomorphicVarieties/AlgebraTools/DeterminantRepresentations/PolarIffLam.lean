@@ -32,7 +32,7 @@ private theorem star_single_X_sub_mapRingHom_C {l : ℕ} [Fact l.Prime] (F : GFr
   have hmap : MonoidAlgebra.mapRingHom F.G₀ C (F.star O R n x) = F.star O R[X] n (MonoidAlgebra.mapRingHom F.G₀ C x) := by
     induction x using MonoidAlgebra.induction_linear with
     | zero => rw [hz, map_zero, hz]
-    | add a b ha hb => rw [hadd, map_add, ha, hb, map_add, hadd]
+    | add a b ha hb => rw [hadd, map_add (f := _), ha, hb, map_add (f := _), hadd]
     | single h r =>
       rw [hs, MonoidAlgebra.mapRingHom_single, MonoidAlgebra.mapRingHom_single, hs, map_mul, he]
   rw [hsub, hone, hmap]

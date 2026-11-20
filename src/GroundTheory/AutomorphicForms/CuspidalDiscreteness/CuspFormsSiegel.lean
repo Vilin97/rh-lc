@@ -25,7 +25,7 @@ theorem conj_unipGL_eq_archExp {r : ℕ} (x : AdelicGLn.AdelicGL K n) (P : UPos 
   refine Subtype.ext (Units.ext ?_)
   rw [coe_expG_top, exp_eq_one_add_of_mul_self_eq_zero (conjArch_mul_conjArch x P P)]
   show archMat K n ((g : AdelicGLn.AdelicGL K n) : Matrix (Fin n) (Fin n) 𝔸[K]) = _
-  rw [hg, coe_conj_unipGL, map_add, map_one]
+  rw [hg, coe_conj_unipGL, map_add (f := _), map_one]
   rfl
 
 theorem exists_norm_le_siegel_root {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : φ ∈ cuspForms K n)

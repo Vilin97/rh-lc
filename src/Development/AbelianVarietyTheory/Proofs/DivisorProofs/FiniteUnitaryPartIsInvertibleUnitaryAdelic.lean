@@ -63,7 +63,7 @@ theorem isUA_finHom : ∀ (D : D7) (V : Formalism.BasicNotions.TH.HSp D) (g : GA
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a t => simp [φ, sigR, GlobalTheory.AdLat.sg, hc]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hJ : (JR (AF D.host.F) V.gram).map φ =
       V.gram.map fun t => ((1 : Af D.host.F) ⊗ₜ[D.host.F] t : Af D.host.F ⊗[D.host.F] D.host.E) := by
     ext a b

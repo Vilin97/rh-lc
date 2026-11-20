@@ -46,7 +46,7 @@ theorem absNorm_le_sq {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) (v : HeightOne
       induction w using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [sigR]
-      | add y z hy hz => simp only [map_add, hy, hz]
+      | add y z hy hz => simp only [map_add (f := _), hy, hz]
     rw [e2]
     exact le_absFin F v _ x
   rw [← e1, hN, sq]

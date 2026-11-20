@@ -38,7 +38,7 @@ theorem isLocalRing_of_cof {J : Type} [SmallCategory J] [IsFiltered J] (D : J �
   have : Nontrivial c.pt := ω.domain_nontrivial
   refine IsLocalRing.of_nonunits_add (fun a b ha hb hab => ?_)
   have := hab.map ω
-  rw [map_add, key a ha, key b hb, add_zero] at this
+  rw [map_add (f := _), key a ha, key b hb, add_zero] at this
   exact not_isUnit_zero this
 
 open Polynomial in
@@ -50,7 +50,7 @@ theorem poly_rep {J : Type} [SmallCategory J] [IsFiltered J] (D : J ⥤ CommRing
     obtain ⟨j2, P2, rfl⟩ := hq
     refine ⟨IsFiltered.max j1 j2, P1.map (D.map (IsFiltered.leftToMax j1 j2)).hom +
       P2.map (D.map (IsFiltered.rightToMax j1 j2)).hom, ?_⟩
-    rw [Polynomial.map_add, Polynomial.map_map, Polynomial.map_map, ← CommRingCat.hom_comp,
+    rw [Polynomial.map_add (f := _), Polynomial.map_map, Polynomial.map_map, ← CommRingCat.hom_comp,
       ← CommRingCat.hom_comp, c.w, c.w]
   | monomial n a =>
     obtain ⟨j, f, rfl⟩ := Limits.Concrete.isColimit_exists_rep D hc a

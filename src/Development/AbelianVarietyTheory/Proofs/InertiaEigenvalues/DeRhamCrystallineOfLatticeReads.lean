@@ -33,12 +33,12 @@ theorem exists_read_map {Γ : Type} [Group Γ] {a d : ℕ} (ρ : Γ →* GL (Fin
     simp only [Φ, Finset.smul_sum, Pi.smul_apply, smul_eq_mul, map_mul, mul_smul, algebraMap_smul]
   have hΦa : ∀ x y, Φ (x + y) = Φ x + Φ y := by
     intro x y
-    simp only [Φ, Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+    simp only [Φ, Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
   let F : (Fin d → ℚ_[l]) →ₗ[ℚ_[l]] (Fin a → ↥L.1) :=
     { toFun := fun x i => p ((Φ x *ᵥ w) i)
       map_add' := by
         intro x y; funext i
-        simp only [hΦa, Matrix.add_mulVec, Pi.add_apply, map_add]
+        simp only [hΦa, Matrix.add_mulVec, Pi.add_apply, map_add (f := _)]
       map_smul' := by
         intro c x; funext i
         have h1 : ((Φ (c • x)) *ᵥ w) i = c • ((Φ x *ᵥ w) i) := by
@@ -107,7 +107,7 @@ theorem crys_pass (T : LocTied l P AI) (K L : FinExt l) {V : Type} [AddCommGroup
       induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul b w => simp [GlobalTheory.RegularRing.sig_tmul, hFe]
-      | add z z' hz hz' => simp only [map_add, hz, hz']
+      | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
     rw [← hc, hy g]
   have h1 : Submodule.span P.R.B (DcrisK₀ (P.PD K) ρq : Set (P.R.B ⊗[ℚ_[l]] V)) ≤
       (Submodule.span P.R.B (DcrisK₀ (P.PD K) R : Set (P.R.B ⊗[ℚ_[l]] (Fin a → ↥L.1)))).comap
@@ -147,13 +147,13 @@ theorem dr_pass (T : LocTied l P AI) (K L : FinExt l) {LL0 : Type} [Field LL0] [
       induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul u c' => simp [E]
-      | add z z' hz hz' => simp only [map_add, hz, hz']
+      | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
     have hg : ∀ g z, E (actVdR (P.PD K) ρ0 g z) = actVdR (P.PD K) R g (E z) := by
       intro g z
       induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul u c' => simp [E, actVdR, hFe]
-      | add z z' hz hz' => simp only [map_add, hz, hz']
+      | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
     refine ⟨m, b, fun i => E (dd i), fun i => ?_, ?_⟩
     · have h1 := hd i
       simp only [DdR, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply,
@@ -196,7 +196,7 @@ theorem dr_pass_rat (T : LocTied l P AI) (K L : FinExt l) {V : Type} [AddCommGro
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => rfl
-    | add x z hx hz => rw [map_add, map_add, hx, hz]
+    | add x z hx hz => rw [map_add (f := _), map_add (f := _), hx, hz]
   have hmem : ∀ x : V ⊗[ℚ_[l]] P.R.BdR, x ∈ DdR (P.PD K) ρ' ↔ x ∈ DdR (P.PD K) ρq := by
     intro x
     simp only [DdR, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply,

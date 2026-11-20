@@ -63,10 +63,10 @@ theorem monomial_split {α β : Type} (m : α ⊕ β →₀ ℕ) :
 theorem jetLin_mul (J : (DVar ι a b →₀ ℕ) → K) (p : Pol K ι b) (q : MvPolynomial (DVar ι a b) K) :
     jetLin J (rename Sum.inl p * rename Sum.inr q) = tabFn J q • p := by
   induction p using MvPolynomial.induction_on' with
-  | add p p' h h' => rw [map_add, add_mul, map_add, h, h', smul_add]
+  | add p p' h h' => rw [map_add (f := _), add_mul, map_add (f := _), h, h', smul_add]
   | monomial m c =>
     induction q using MvPolynomial.induction_on' with
-    | add q q' h h' => rw [map_add, mul_add, map_add, h, h', map_add, add_smul]
+    | add q q' h h' => rw [map_add (f := _), mul_add, map_add (f := _), h, h', map_add (f := _), add_smul]
     | monomial m' c' =>
       have e : ∀ {σ : Type} (m : σ →₀ ℕ) (c : K), (monomial m c : MvPolynomial σ K) = c • monomial m 1 := fun m c => by
         rw [smul_monomial, smul_eq_mul, mul_one]
@@ -151,7 +151,7 @@ theorem map_jetMap {L : Type} [Field L] (σ : K →+* L) (J : (DVar ι a b →�
     map σ (jetMap J n P) = jetMap (fun m => σ (J m)) n (map σ P) := by
   have h1 : ∀ Q, map σ (jetLin J Q) = jetLin (fun m => σ (J m)) (map σ Q) := fun Q => by
     induction Q using MvPolynomial.induction_on' with
-    | add p p' h h' => simp only [map_add, h, h']
+    | add p p' h h' => simp only [map_add (f := _), h, h']
     | monomial m c =>
       have e : ∀ {M : Type} [Field M] {σ : Type} (m : σ →₀ ℕ) (c : M), (monomial m c : MvPolynomial σ M) = c • monomial m 1 :=
         fun m c => by rw [smul_monomial, smul_eq_mul, mul_one]
@@ -160,7 +160,7 @@ theorem map_jetMap {L : Type} [Field L] (σ : K →+* L) (J : (DVar ι a b →�
   have h2 : ∀ Q, map σ (subD K ι a b Q) = subD L ι a b (map σ Q) := fun Q => by
     induction Q using MvPolynomial.induction_on with
     | C c => simp [subD]
-    | add p q h h' => simp only [map_add, h, h']
+    | add p q h h' => simp only [map_add (f := _), h, h']
     | mul_X p v h =>
       simp only [map_mul, h, map_X]
       congr 1
@@ -179,7 +179,7 @@ theorem map_blockAct {L : Type} [Field L] (σ : K →+* L) (g : ι → Matrix (F
     map σ (Formalism.GradedWeylDivisibility.blockAct K g P) = Formalism.GradedWeylDivisibility.blockAct L (fun τ => (g τ).map σ) (map σ P) := by
   induction P using MvPolynomial.induction_on with
   | C c => simp
-  | add p q h h' => simp only [map_add, h, h']
+  | add p q h h' => simp only [map_add (f := _), h, h']
   | mul_X p v h =>
     simp only [map_mul, h, map_X]
     simp [Formalism.GradedWeylDivisibility.blockAct]

@@ -97,11 +97,11 @@ private theorem bc_anti {R A M : Type} [CommRing R] [CommRing A] [AddCommGroup M
     B.baseChange A x y = -B.baseChange A y x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb, neg_add]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb, neg_add]
   | tmul a m =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add c d hc hd => simp only [map_add, LinearMap.add_apply, hc, hd, neg_add]
+    | add c d hc hd => simp only [map_add (f := _), LinearMap.add_apply, hc, hd, neg_add]
     | tmul c n =>
       rw [LinearMap.BilinForm.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul, h m n, mul_comm a,
         neg_smul]
@@ -110,7 +110,7 @@ private theorem E_anti {p : ℕ} [Fact p.Prime] (D : Datum p) (x y : ℝ ⊗[ℚ
     (D.EF.baseChange ℚ).baseChange ℝ x y = -(D.EF.baseChange ℚ).baseChange ℝ y x := by
   refine bc_anti _ (bc_anti _ fun a b => ?_) x y
   have h := D.alt (a + b)
-  simp only [map_add, LinearMap.add_apply, D.alt a, D.alt b, zero_add, add_zero] at h
+  simp only [map_add (f := _), LinearMap.add_apply, D.alt a, D.alt b, zero_add, add_zero] at h
   exact eq_neg_of_add_eq_zero_right h
 
 private theorem E_adj {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (L : Link D G)
@@ -120,16 +120,16 @@ private theorem E_adj {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (L 
   induction c using TensorProduct.induction_on with
   | zero => simp
   | add a b ha hb =>
-    simp only [map_add, LinearMap.add_apply, MulOpposite.unop_add, ha, hb]
+    simp only [map_add (f := _), LinearMap.add_apply, MulOpposite.unop_add, ha, hb]
   | tmul r d =>
     rw [starT_tmul]
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]
     | tmul s u =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | tmul t v =>
         rw [actOn_tt, actOn_tt, LinearMap.BilinForm.baseChange_tmul,
           LinearMap.BilinForm.baseChange_tmul, L.adj d u v]
@@ -162,7 +162,7 @@ theorem UpperTheory.exists_real_period_iso_of_polarized_lattice :
   have hΦO : ∀ (b : D.O) u, Φ ((actQ D b).baseChange ℝ u) = ρ b *ᵥ Φ u := fun b u => by
     induction u using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy, Matrix.mulVec_add]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, Matrix.mulVec_add]
     | tmul r v => rw [LinearMap.baseChange_tmul, hΦt, hΦt, hPqO, Matrix.mulVec_smul]
   let A : Module.End ℝ (ℝ ⊗[ℚ] VQ D) :=
     Φ.symm.toLinearMap ∘ₗ (Algebra.lsmul ℝ ℝ (Fin D.g → ℂ) Complex.I) ∘ₗ Φ.toLinearMap
@@ -224,7 +224,7 @@ theorem UpperTheory.exists_real_period_iso_of_polarized_lattice :
       have a2 := sym x y
       have a3 := sym y x
       have a4 := symm' x y
-      rw [map_add, LinearMap.add_apply, map_add]
+      rw [map_add (f := _), LinearMap.add_apply, map_add (f := _)]
       linarith
     have h1 : (starT G.star ℝ b).unop + b = 0 := hinj (by
       rw [map_zero]

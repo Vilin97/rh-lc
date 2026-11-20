@@ -21,7 +21,7 @@ private theorem span_map {C C' K K' : Type} [CommRing C] [CommRing C'] [CommRing
   induction hx using Submodule.span_induction with
   | mem x hx => exact hs x hx
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [Algebra.smul_def, map_mul, h, ← Algebra.smul_def]; exact M.smul_mem _ hx
 
 private theorem lc_of {X A B : Type} [TopologicalSpace X] {u : X → A} {v : X → B} (hu : IsLocallyConstant u)
@@ -58,7 +58,7 @@ theorem UpperTheory.V.Fr.frobenius_corner_cone_map :
     refine Submodule.smul_induction_on hxy (fun a ha z hz => ?_) (fun a b ha hb => ?_)
     · rw [Algebra.smul_def a z, map_mul, h, ← Algebra.smul_def (φ a) (f z)]
       exact Submodule.smul_mem_smul (pow_map φ N ha) (hsp i j z hz)
-    · rw [map_add]; exact add_mem ha hb
+    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   · obtain ⟨χ, h1, h2⟩ := H.psi
     refine ⟨fun v i g => φ (χ v i g), fun v i => ⟨fun N => ?_, fun g => ?_⟩, fun v i g => ?_⟩
     · refine lc_of ((h1 v i).1 N) fun x y hxy => ?_

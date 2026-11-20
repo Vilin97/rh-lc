@@ -256,7 +256,7 @@ private theorem monomial_smul_mem_add_degree (s : ι →₀ ℕ) (a : R) :
   · intro i k s _ _ ih n m hm
     rw [MvPolynomial.monomial_single_add, mul_smul]
     have e : n + ((Finsupp.single i k + s).degree : ℤ) = n + s.degree + k := by
-      rw [map_add, Finsupp.degree_single]
+      rw [map_add (f := _), Finsupp.degree_single]
       push_cast
       ring
     rw [e]
@@ -399,7 +399,7 @@ private theorem eventually_mem_of_homogeneous_mem_of_X_smul_mem [Finite ι] [Mod
   let Q : Submodule k M :=
     { carrier := {x | x ∈ B ∧ ∀ n, b < n → proj ℳ n x ∈ A}
       add_mem' := fun {x y} hx hy => ⟨B.add_mem hx.1 hy.1, fun n hn => by
-        rw [map_add]
+        rw [map_add (f := _)]
         exact A.add_mem (hx.2 n hn) (hy.2 n hn)⟩
       zero_mem' := ⟨B.zero_mem, fun n _ => by
         rw [map_zero]
@@ -454,7 +454,7 @@ private theorem finrank_graded_inf_add_eq_of_X_smul_comap [Finite ι] [Module.Fi
       obtain ⟨hy, hyn⟩ := Submodule.mem_inf.1 hy
       obtain ⟨a, ha, z, hz, rfl⟩ := Submodule.mem_sup.1 hy
       obtain ⟨b, hb, rfl⟩ := Submodule.mem_map.1 hz
-      rw [← proj_of_mem ℳ hyn, map_add]
+      rw [← proj_of_mem ℳ hyn, map_add (f := _)]
       refine Submodule.add_mem_sup (Submodule.mem_inf.2 ⟨hA _ a ha, proj_mem ℳ _ a⟩) ?_
       refine Submodule.mem_map.2 ⟨proj ℳ n b, Submodule.mem_inf.2 ⟨hB n b hb, proj_mem ℳ n b⟩, ?_⟩
       have := proj_X_smul ℳ hX i (n + 1) b
@@ -518,7 +518,7 @@ theorem exists_polynomial_subquotient [Finite ι] [Module.Finite (MvPolynomial �
       intro n m hm
       obtain ⟨a, ha, z, hz, rfl⟩ := Submodule.mem_sup.1 hm
       obtain ⟨b, hb, rfl⟩ := Submodule.mem_map.1 hz
-      rw [map_add, LinearMap.lsmul_apply, proj_X_smul ℳ hX i n b]
+      rw [map_add (f := _), LinearMap.lsmul_apply, proj_X_smul ℳ hX i n b]
       exact Submodule.add_mem_sup (hA n a ha) (Submodule.mem_map_of_mem (hB (n - 1) b hb))
     have hsB' : ∀ j ∉ s, ∀ m ∈ B, (MvPolynomial.X j : MvPolynomial ι k) • m ∈ A ⊔ B.map (LinearMap.lsmul (MvPolynomial ι k) M (MvPolynomial.X i)) := by
       intro j hj m hm

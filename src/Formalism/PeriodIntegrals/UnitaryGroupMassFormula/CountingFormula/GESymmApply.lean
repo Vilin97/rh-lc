@@ -116,7 +116,7 @@ theorem u_X (hu : ∀ a v, hWb D F0 a (u v) = (VS D).hT (sE a : (VS D).V) v) {x 
 theorem u_gF (hsE : ∀ a, (Submodule.Quotient.mk (sE a) : WbQ D F0) = a)
     (hu : ∀ a v, hWb D F0 a (u v) = (VS D).hT (sE a : (VS D).V) v) (σ : WbQ D F0 ≃ₗ[D.host.E] WbQ D F0)
     (v : (VS D).V) : u (gF D F0 sE u σ v) = σ (u v) := by
-  rw [gF_apply, map_add, u_sE hsE hu]
+  rw [gF_apply, map_add (f := _), u_sE hsE hu]
   abel
 
 theorem gF_symm (hsE : ∀ a, (Submodule.Quotient.mk (sE a) : WbQ D F0) = a)
@@ -153,7 +153,7 @@ theorem gF_isom (hsE : ∀ a, (Submodule.Quotient.mk (sE a) : WbQ D F0) = a)
   have h3 : ∀ c c', (VS D).hT (sE c : (VS D).V) (sE c' : (VS D).V) = hWb D F0 c c' := by
     intro c c'
     rw [h2, u_sE hsE hu]
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   rw [h3, h1, h2]
   simp only [map_sub, LinearMap.sub_apply, hσ]
   ring

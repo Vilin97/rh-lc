@@ -120,7 +120,7 @@ theorem exists_unit_value [IsDomain (IsLocalRing.ResidueField O ⊗[K] A)]
     induction u' using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [m]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Gauss
 
@@ -214,7 +214,7 @@ theorem unit_eq_one {K A : Type} [Field K] [CommRing A] [Algebra K A] [IsDomain 
         simp [θ]
       rw [this, ← IsScalarTower.algebraMap_apply, hσ, Algebra.TensorProduct.lift_tmul]
       rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have e₂ : ∀ t, Algebra.TensorProduct.lift (AlgHom.id K F)
       ((IsScalarTower.toAlgHom K Ω F).comp ((Algebra.ofId K Ω).comp ε))
         (fun _ _ => Commute.all _ _) (σ t) = j (p₂ t) := by
@@ -225,7 +225,7 @@ theorem unit_eq_one {K A : Type} [Field K] [CommRing A] [Algebra K A] [IsDomain 
       rw [hp₂, map_mul, j.commutes, mul_comm, hσ, Algebra.TensorProduct.lift_tmul,
         IsScalarTower.algebraMap_apply K Ω F]
       rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   obtain ⟨c, hc⟩ := value_mem_range H ι ((Algebra.ofId K Ω).comp ε) (σ u) (hu.map σ)
     (by rw [e₂, h₂, map_one])
   rw [e₁] at hc
@@ -242,7 +242,7 @@ theorem unit_eq_one {K A : Type} [Field K] [CommRing A] [Algebra K A] [IsDomain 
     | tmul a b =>
       rw [hp₁, map_mul, ι.commutes]
       rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hc1 : c = 1 := by
     have := congrArg q hc'
     rwa [e₃, h₁, map_one, q.commutes] at this

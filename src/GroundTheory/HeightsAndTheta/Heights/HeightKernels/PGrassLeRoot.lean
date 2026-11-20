@@ -21,7 +21,7 @@ theorem map_cone {R S : Type*} [CommRing R] [CommRing S] (φ : R →+* S) (y : (
     (g : MRing ι) : MvPolynomial.map φ (cone y g) = cone (fun p => φ (y p)) g := by
   induction g using MvPolynomial.induction_on with
   | C a => simp [cone]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p n hp => rw [map_mul, map_mul, map_mul, hp]; simp [cone]
 
 theorem eval_grassPolyCoord {f j m : ℕ} (ζ : Fin f → Matrix (Fin j) (Fin m) ℂ)

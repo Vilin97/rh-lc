@@ -87,7 +87,7 @@ theorem contDiff_of_heis_closed : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ),
     · have e : (fun s : ℝ => f (u + L (t + s • Pi.single i 1))) = fun s => f ((u + L t) + M s) := by
         funext s
         have : E s = s • Pi.single i 1 := rfl
-        rw [map_add, add_assoc, ← this]
+        rw [map_add (f := _), add_assoc, ← this]
         rfl
       rw [e]
       convert hasDerivAt_line h hψ hM hMf (hD (u + L t)) using 1

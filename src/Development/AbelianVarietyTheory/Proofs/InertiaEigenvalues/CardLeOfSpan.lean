@@ -188,7 +188,7 @@ theorem J_φ {φ : Rk →ₐ[k] Rk} (hφ : ∀ w, φ (ρ w) = ρ (φR w)) (T : L
   induction E.jD T x using TensorProduct.induction_on with
   | zero => simp
   | tmul a t => simp [TWmap, hφ]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem J_act {a : G → (Rk →ₐ[k] Rk)} (ha : ∀ g w, a g (ρ w) = ρ (gR g w)) (T : LocLat G Qp LL O) (A : Ob k G)
     (q : ↥T.L.T →ₗ[O] (Fin A.m → k)) (hq : Onto T A q) (g : G) (x : W.DD T) :
@@ -199,7 +199,7 @@ theorem J_act {a : G → (Rk →ₐ[k] Rk)} (ha : ∀ g w, a g (ρ w) = ρ (gR g
   | tmul a t =>
     have : q (T.actT g t) = A.ρ g (q t) := hq.2 g t
     simp [TWact, ha, this]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem J_map {T T' : LocLat G Qp LL O} (f : LatHom T.L T'.L) {m m' : ℕ} (q : ↥T.L.T →ₗ[O] (Fin m → k))
     (q' : ↥T'.L.T →ₗ[O] (Fin m' → k)) (g : (Fin m → k) →ₗ[k] (Fin m' → k))
@@ -210,7 +210,7 @@ theorem J_map {T T' : LocLat G Qp LL O} (f : LatHom T.L T'.L) {m m' : ℕ} (q : 
   | zero => simp
   | tmul a t =>
     rw [TensorProduct.map_tmul, redT_tmul, redT_tmul, LinearMap.baseChange_tmul, h t _ rfl]; rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem J_comp (T : LocLat G Qp LL O) {m m' : ℕ} (q : ↥T.L.T →ₗ[O] (Fin m → k))
     (q' : ↥T.L.T →ₗ[O] (Fin m' → k)) (g : (Fin m → k) →ₗ[k] (Fin m' → k)) (h : ∀ x, q' x = g (q x))
@@ -225,7 +225,7 @@ theorem J_span (T : LocLat G Qp LL O) {m : ℕ} (q : ↥T.L.T →ₗ[O] (Fin m �
     induction hy using Submodule.span_induction with
     | mem y hy => obtain ⟨x, rfl⟩ := hy; exact Submodule.subset_span ⟨x, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul w y _ hy => rw [redT_smul]; exact Submodule.smul_mem _ _ hy
   have := key ((1 : RW) ⊗ₜ[O] t) (by rw [E.jD_span]; trivial)
   rwa [redT_tmul, map_one] at this

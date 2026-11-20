@@ -38,7 +38,7 @@ theorem extract (W' : Submodule ℂ (Module.Dual ℂ V)) (φ : Module.Dual ℂ V
         simp [Algebra.algebraMap_eq_smul_one, LinearMap.sum_apply, map_sum, ← ht]
     rw [e]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [hR, eval_finsetSum, map_sum, map_add, map_sub, map_smul]
+      simp [hR, eval_finsetSum, map_sum, map_add (f := _), map_sub, map_smul]
   have hR0 : R = 0 := Polynomial.funext fun Y => by
     rw [hRe, hW' _ (h Y)]; simp
   have hc : R.coeff (m - 1) = 0 := by rw [hR0]; simp
@@ -56,7 +56,7 @@ theorem extract (W' : Submodule ℂ (Module.Dual ℂ V)) (φ : Module.Dual ℂ V
     refine LinearMap.ext fun v => ?_
     simp [ht, Algebra.algebraMap_eq_smul_one]
   rw [et]
-  simp only [map_sub, map_add, map_smul, smul_eq_mul]
+  simp only [map_sub, map_add (f := _), map_smul, smul_eq_mul]
   linear_combination hc
 
 end Extract
@@ -106,9 +106,9 @@ theorem actL_comm {E : Fin n → Fin n → Module.End ℂ M} (hE : GlRel E) (Y Z
   · intro p q hp hq
     have e1 : actL E (p + q) * actL E Z - actL E Z * actL E (p + q) =
         (actL E p * actL E Z - actL E Z * actL E p) + (actL E q * actL E Z - actL E Z * actL E q) := by
-      rw [map_add, add_mul, mul_add]; abel
+      rw [map_add (f := _), add_mul, mul_add]; abel
     have e2 : actL E ((p + q) * Z - Z * (p + q)) = actL E (p * Z - Z * p) + actL E (q * Z - Z * q) := by
-      rw [← map_add]; congr 1; rw [add_mul, mul_add]; abel
+      rw [← map_add (f := _)]; congr 1; rw [add_mul, mul_add]; abel
     rw [e1, e2, hp, hq]
   · intro i j x
     refine Matrix.induction_on' Z ?_ ?_ ?_
@@ -117,11 +117,11 @@ theorem actL_comm {E : Fin n → Fin n → Module.End ℂ M} (hE : GlRel E) (Y Z
       have e1 : actL E (Matrix.single i j x) * actL E (p + q) - actL E (p + q) * actL E (Matrix.single i j x) =
           (actL E (Matrix.single i j x) * actL E p - actL E p * actL E (Matrix.single i j x)) +
             (actL E (Matrix.single i j x) * actL E q - actL E q * actL E (Matrix.single i j x)) := by
-        rw [map_add, add_mul, mul_add]; abel
+        rw [map_add (f := _), add_mul, mul_add]; abel
       have e2 : actL E (Matrix.single i j x * (p + q) - (p + q) * Matrix.single i j x) =
           actL E (Matrix.single i j x * p - p * Matrix.single i j x) +
             actL E (Matrix.single i j x * q - q * Matrix.single i j x) := by
-        rw [← map_add]; congr 1; rw [add_mul, mul_add]; abel
+        rw [← map_add (f := _)]; congr 1; rw [add_mul, mul_add]; abel
       rw [e1, e2, hp, hq]
     · intro k l y
       have hm : ∀ (a b c d : Fin n) (x y : ℂ), Matrix.single a b x * Matrix.single c d y =

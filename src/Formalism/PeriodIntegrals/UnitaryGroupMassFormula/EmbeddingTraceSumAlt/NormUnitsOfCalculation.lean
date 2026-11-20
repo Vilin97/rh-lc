@@ -56,7 +56,7 @@ theorem tauFun_spec (hfix : ∀ a : E, star a = a ↔ a ∈ (algebraMap F E).ran
 def tau (hfix : ∀ a : E, star a = a ↔ a ∈ (algebraMap F E).range) : E →ₗ[F] F where
   toFun := tauFun hfix
   map_add' x y := (algebraMap F E).injective (by
-    rw [map_add, tauFun_spec, tauFun_spec, tauFun_spec, star_add]; ring)
+    rw [map_add (f := _), tauFun_spec, tauFun_spec, tauFun_spec, star_add]; ring)
   map_smul' a x := (algebraMap F E).injective (by
     rw [RingHom.id_apply, smul_eq_mul, map_mul, tauFun_spec, tauFun_spec, Algebra.smul_def,
       star_mul, (hfix (algebraMap F E a)).2 ⟨a, rfl⟩]
@@ -132,7 +132,7 @@ theorem tT_mem (τ : E →ₗ[F] F)
       rw [← hd]
       exact mul_mem (alg_int_mem F d) b.2
     | add w w' hw hw' =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem hw hw'
   have hle : IntAf F E ≤ (Algebra.TensorProduct.productMap f g).range.toSubring := by
     refine Subring.closure_le.2 ?_
@@ -168,7 +168,7 @@ end Tens
 def sHom (I : AutInst) : I.E →+ ℝ :=
   AddMonoidHom.mk' (fun x => ∑ v, 2 * (I.φ v x).re) (by
     intro x y
-    simp only [map_add, Complex.add_re, mul_add, Finset.sum_add_distrib])
+    simp only [map_add (f := _), Complex.add_re, mul_add, Finset.sum_add_distrib])
 
 theorem add_star_eq (z : ℂ) : z + star z = ((2 * z.re : ℝ) : ℂ) := by
   rw [Complex.star_def]
@@ -193,7 +193,7 @@ theorem sHom_int (I : AutInst) (x : I.E)
   apply Complex.ofReal_injective
   have h2 : ∀ v, I.φ v x + star (I.φ v x) = v.embedding (algebraMap (𝓞 I.F) I.F d) := by
     intro v
-    rw [hd, ← I.φ_over, tau_apply, map_add, I.cm.cmUnram.2.1 (I.φ v) x]
+    rw [hd, ← I.φ_over, tau_apply, map_add (f := _), I.cm.cmUnram.2.1 (I.φ v) x]
     rfl
   rw [sHom_coe, Finset.sum_congr rfl (fun v _ => h2 v), hn]
   simp
@@ -225,7 +225,7 @@ theorem norm_units_of_calculation : Target := by
     simpa [g0] using this
   refine ⟨fun z => ((AddCircle.toCircle (-(h (π z))) : Circle) : ℂ), ?_, ?_, ?_⟩
   · intro z w
-    simp only [map_add, neg_add, AddCircle.toCircle_add, Circle.coe_mul]
+    simp only [map_add (f := _), neg_add, AddCircle.toCircle_add, Circle.coe_mul]
   · intro z hz
     have hz0 : π z = 0 := (QuotientAddGroup.eq_zero_iff z).2 hz
     simp only [hz0, map_zero, neg_zero]

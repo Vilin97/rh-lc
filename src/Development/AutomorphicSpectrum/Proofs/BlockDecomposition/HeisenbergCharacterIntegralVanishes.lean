@@ -28,7 +28,7 @@ theorem trA_algebraMap_half [Nontrivial (AF D.host.F)] (t : AF D.host.F) :
   have h2 : Module.finrank D.host.F D.host.E = 2 := Algebra.IsQuadraticExtension.finrank_eq_two _ _
   show Algebra.trace (AF D.host.F) (AE D) (algebraMap (AF D.host.F) (AE D)
     (algebraMap D.host.F (AF D.host.F) (1 / 2) * t)) = t
-  rw [Algebra.trace_algebraMap, Module.finrank_baseChange, h2, two_nsmul, ← add_mul, ← map_add]
+  rw [Algebra.trace_algebraMap, Module.finrank_baseChange, h2, two_nsmul, ← add_mul, ← map_add (f := _)]
   norm_num
 
 theorem exists_chv_ne_one (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsCharAF D.host.F ψ) (b₀ : HermE D ρ)

@@ -31,7 +31,7 @@ theorem exists_norm_eq_neg_one (K : Type) [Field K] (l : ℕ) (hl : l.Prime) (h2
   simp only [Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_pow, Polynomial.eval_X,
     Polynomial.eval_C] at hab
   have := congrArg (ZMod.castHom (dvd_refl l) K) hab
-  simp only [map_add, map_mul, map_pow, map_neg, map_one, map_intCast, map_zero] at this
+  simp only [map_add (f := _), map_mul, map_pow, map_neg, map_one, map_intCast, map_zero] at this
   rw [hdd] at this
   linear_combination this
 
@@ -93,12 +93,12 @@ theorem exists_norm_congr (h2 : V.l ≠ 2) (t : C) (ht : V.v t = 0) (htl : V.MM 
   have h1 : φ T ≠ 0 := by
     rw [Ne, hφ]; simp [T, VF.MM, ht]
   have h3 : φ T ^ V.l = -φ T := by
-    rw [← add_eq_zero_iff_eq_neg, ← map_pow, ← map_add, hφ]
+    rw [← add_eq_zero_iff_eq_neg, ← map_pow, ← map_add (f := _), hφ]
     simpa [T] using htl
   obtain ⟨a, b, hab⟩ := exists_norm_eq_neg_one K V.l V.l_prime h2 (φ T) h1 h3
   refine ⟨a, b, ?_⟩
   have : φ ((a : V.RR) ^ 2 - (b : V.RR) ^ 2 * T ^ 2 + 1) = 0 := by
-    simp only [map_add, map_sub, map_mul, map_pow, map_intCast, map_one, hab]; ring
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_intCast, map_one, hab]; ring
   rw [hφ] at this
   simpa [T] using this
 
@@ -186,8 +186,8 @@ theorem exists_pair [IsAlgClosed C] (h2 : V.l ≠ 2) (O : Type) [CommRing O] [St
     convert this using 2; ring
   obtain ⟨a, b, hab⟩ := exists_norm_congr h2 t hx htl
   set w : O := a + b * (x - star x) with hw
-  have w0 : em 0 w = a + b * t := by rw [hw, map_add, map_mul, d0]; simp
-  have w1 : em 1 w = a - b * t := by rw [hw, map_add, map_mul, d1]; simp [sub_eq_add_neg]
+  have w0 : em 0 w = a + b * t := by rw [hw, map_add (f := _), map_mul, d0]; simp
+  have w1 : em 1 w = a - b * t := by rw [hw, map_add (f := _), map_mul, d1]; simp [sub_eq_add_neg]
   set u : C := -((a : C) ^ 2 - (b : C) ^ 2 * t ^ 2) with hu
   have hwu : ∀ c, em (c + 1) w * em c w = -u := by
     intro c

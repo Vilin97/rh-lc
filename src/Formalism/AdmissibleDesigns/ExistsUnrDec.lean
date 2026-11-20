@@ -56,7 +56,7 @@ theorem unrHom (l : K.Col i dc) : KFin.UnrHom i dc l := by
     exists_unr_dec (F := D.host.E) (K.Aw i dc (K.colIdx i dc l)) (col_hp i dc l)
   refine ⟨fun g => algebraMap ℤ_[D.nd.l i] (D.nd.O i) (χ g), ⟨fun g h => ?_, fun g hg => ?_, fun hn => ?_⟩, g1, ?_⟩
   · show algebraMap ℤ_[D.nd.l i] (D.nd.O i) (χ (g * h)) = _ + _
-    rw [hm, map_add]
+    rw [hm, map_add (f := _)]
   · have hg' : ((g : D.nd.Om ≃ₐ[D.host.E] D.nd.Om)) ∈ Ine (F := D.host.E) (K.Aw i dc (K.colIdx i dc l)) :=
       Subgroup.mem_subgroupOf.1 hg
     show algebraMap ℤ_[D.nd.l i] (D.nd.O i) (χ g) = 0

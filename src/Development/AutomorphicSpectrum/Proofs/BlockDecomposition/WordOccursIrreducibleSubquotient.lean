@@ -36,7 +36,7 @@ theorem exists_lift_twKer {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ 
     obtain ⟨x1, hx1, rfl⟩ := ha
     obtain ⟨x2, hx2, rfl⟩ := hb
     refine ⟨x1 + x2, add_mem hx1 hx2, ?_⟩
-    simp only [hfL, map_add]
+    simp only [hfL, map_add (f := _)]
   | smul c a _ ha =>
     obtain ⟨x1, hx1, rfl⟩ := ha
     refine ⟨c • x1, Submodule.smul_mem _ c hx1, ?_⟩

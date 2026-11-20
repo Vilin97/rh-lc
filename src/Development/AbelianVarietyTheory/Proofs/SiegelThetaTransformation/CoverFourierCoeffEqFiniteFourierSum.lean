@@ -379,7 +379,7 @@ theorem map_mem_smul {L : Lt E r} {f : Dw.La →ₗ[𝓞 E] (Fin r → E)} (hf :
     {a : Dw.La} (ha : a ∈ 𝔞 • (⊤ : Submodule (𝓞 E) Dw.La)) : f a ∈ 𝔞 • L := by
   refine Submodule.smul_induction_on ha (fun t ht v _ => ?_) (fun u v hu hv => ?_)
   · rw [map_smul]; exact Submodule.smul_mem_smul ht (hf v)
-  · rw [map_add]; exact add_mem hu hv
+  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
 
 variable {l : Geo.Tor.Level H} {Xo : Moduli Dw l} {c : Coeff l}
 
@@ -502,7 +502,7 @@ theorem w_eq_sum : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : H
         have : (d.pd : E) ≠ 0 := by exact_mod_cast hpd
         rw [hlev.2.1]; funext j; simp; field_simp
       rw [this, hz, hδJ, LinearMap.smul_apply, Nat.cast_smul_eq_nsmul]
-      simp only [TensLat.EF_eq_bilin, map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply]
+      simp only [TensLat.EF_eq_bilin, map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply]
     have e3 : ex (EF X (δ (x0 b)) (((l.M : E)⁻¹) • mk₂ (a b))) = ex (EF X (δ (x0 b)) (((l.M : E)⁻¹) • mk (a b))) := by
       refine ex_congr ?_
       obtain ⟨u, hu, e⟩ := hov _ (ha b)
@@ -510,7 +510,7 @@ theorem w_eq_sum : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : H
       have : ((l.M : E)⁻¹) • mk₂ (a b) = ((l.M : E)⁻¹) • mk (a b) + u := by
         have : (l.M : E) ≠ 0 := by exact_mod_cast hM
         rw [e]; funext j; simp; field_simp
-      exact ⟨j, by rw [← hj, this]; simp only [TensLat.EF_eq_bilin, map_add, add_sub_cancel_left]⟩
+      exact ⟨j, by rw [← hj, this]; simp only [TensLat.EF_eq_bilin, map_add (f := _), add_sub_cancel_left]⟩
     rw [e1, e2, ex_add, e3, ex_nsmul, ex, ex, ← hδ.pair _ _ (Submodule.smul_mono_left (hT.m ▸ h𝔐) (ha b)),
       ← hδ₂.pair _ _ (ha b), ← zpow_natCast (_ ^ (_ : ℤ)), ← _root_.zpow_mul, mul_comm _ (l.M : ℤ), _root_.zpow_mul,
       zpow_natCast]
@@ -538,7 +538,7 @@ theorem w_eq_sum : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : H
       refine ⟨-(k * j), ?_⟩
       rw [Nat.cast_smul_eq_nsmul] at hj
       rw [this, Int.cast_neg, Int.cast_mul, ← hj]
-      simp only [TensLat.EF_eq_bilin, map_add, map_nsmul, map_zsmul, LinearMap.add_apply, LinearMap.smul_apply]
+      simp only [TensLat.EF_eq_bilin, map_add (f := _), map_nsmul, map_zsmul, LinearMap.add_apply, LinearMap.smul_apply]
       simp
   · congr 1
     · exact datF_congr D h𝔐 hn fun b => (cong_iff hL le_rfl (Submodule.smul_le_right (hww b))).2 (hww b)

@@ -39,7 +39,7 @@ def formCoch (n : ℕ) : (Glob.formCos q U a).X n →+ Cochain (modulesAb (Globa
     rfl
   map_add' c c' := by
     funext i
-    rw [show (c + c') i = c i + c' i from rfl, map_add, map_add]
+    rw [show (c + c') i = c i + c' i from rfl, map_add (f := _), map_add (f := _)]
     rfl
 
 theorem formCoch_d (n : ℕ) (c : (Glob.formCos q U a).X n) :

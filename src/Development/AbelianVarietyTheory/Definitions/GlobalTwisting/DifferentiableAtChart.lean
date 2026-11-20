@@ -303,7 +303,7 @@ theorem glRel_Eop (τ : E →+* ℂ) : Formalism.REAL.GlRel (Eop (a := a) τ) :=
   have h4 := lieS_comm i j k l (idIm τ) (idIm τ)
   have e : ∀ p q : Fin a, Eop τ p q = lieS E a p q (idRe τ * idRe τ) - lieS E a p q (idIm τ * idIm τ) +
       Complex.I • (lieS E a p q (idRe τ * idIm τ) + lieS E a p q (idIm τ * idRe τ)) := fun p q => by
-    rw [← map_sub, ← map_add, (id_idem τ).1, (id_idem τ).2, Eop]
+    rw [← map_sub, ← map_add (f := _), (id_idem τ).1, (id_idem τ).2, Eop]
   rw [e i l, e k j]
   simp only [Eop, smul_mul_assoc, mul_smul_comm, add_mul, mul_add, smul_add, smul_smul]
   have hI : Complex.I * Complex.I = -1 := Complex.I_mul_I

@@ -24,7 +24,7 @@ theorem koszul_relations_among_variables :
     induction P using MvPolynomial.induction_on with
     | C a => simp [R]
     | add p q hp hq =>
-      rw [map_add, map_add, add_sub_add_comm]; exact dvd_add hp hq
+      rw [map_add (f := _), map_add (f := _), add_sub_add_comm]; exact dvd_add hp hq
     | mul_X p k hp =>
       rw [map_mul, map_mul]
       have e : R i p * R i (X k) - R (i + 1) p * R (i + 1) (X k)

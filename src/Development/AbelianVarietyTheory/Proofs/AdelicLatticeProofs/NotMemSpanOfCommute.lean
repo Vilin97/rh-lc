@@ -38,7 +38,7 @@ theorem notMem_span_of_commute {V : Type} [AddCommGroup V] [Module ℂ V] (G : S
       obtain ⟨A, hA, ha⟩ := hx
       obtain ⟨B, hB, hb⟩ := hy
       refine ⟨A * B, mul_mem hA hB, ?_⟩
-      rw [map_add]
+      rw [map_add (f := _)]
       nth_rewrite 1 [(h2 A hA B hB).eq]
       rw [Module.End.mul_apply, Module.End.mul_apply, ha, hb, map_zero, map_zero, add_zero]
     | smul c x _ hx =>

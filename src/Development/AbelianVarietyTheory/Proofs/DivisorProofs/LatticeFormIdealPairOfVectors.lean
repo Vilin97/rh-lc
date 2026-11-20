@@ -32,7 +32,7 @@ theorem lattice_eq_ideal_sum_and_mul_eq :
   intro F V _ _ _ _ hV B hB L _ hadd hsmul J hJ hJs v w hv I K hI hK hw hwL
   have hvw : B v w = -1 := by
     have h := hB (v + w)
-    simp only [map_add, LinearMap.add_apply, hB, hw] at h
+    simp only [map_add (f := _), LinearMap.add_apply, hB, hw] at h
     linear_combination h
   have hmem : ∀ x, x ∈ L ↔ ∃ a ∈ I, ∃ t ∈ K, x = a • v + t • w := by
     intro x

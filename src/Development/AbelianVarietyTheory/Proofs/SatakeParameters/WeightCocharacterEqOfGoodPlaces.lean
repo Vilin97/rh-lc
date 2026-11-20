@@ -112,7 +112,7 @@ theorem mult_lev {V : HSp D} {S : D.what₂.Tau → SPar} (θ : D.what₂.Tau �
     ext v h
     rw [rRep_apply, hx.lev v k hk h, h1, one_mul]
   | zero => exact map_zero _
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul a x _ hx => rw [map_smul, hx]
 
 theorem mem_partFull {V : HSp D} {S : D.what₂.Tau → SPar} (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ))

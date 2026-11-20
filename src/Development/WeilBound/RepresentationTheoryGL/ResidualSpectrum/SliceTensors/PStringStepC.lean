@@ -120,7 +120,7 @@ theorem perm_of (hR : GlobalTheory.Published.JacquetShalikaRigidity) {a₁ a₂ 
   have hT : (∑ i, B₁.map (· * (GlobalTheory.CuspRep.Model.absC E (x i)).val w)) +
       ∑ j, B₂.map (· * (GlobalTheory.CuspRep.Model.absC E (y j)).val w) = BV := by
     apply Multiset.map_injective (f := fun b : ℂˣ => (b : ℂ)) Units.val_injective
-    rw [e, Multiset.map_add, map_fsum, map_fsum]
+    rw [e, Multiset.map_add (f := _), map_fsum, map_fsum]
     congr 1 <;> refine Finset.sum_congr rfl fun i _ => ?_ <;> rw [Multiset.map_map] <;>
       refine Multiset.map_congr rfl fun b _ => ?_ <;> simp [StrStepB.absC_val]
   have hm : ∀ (C : Multiset ℂˣ) (u : ℂˣ), C.map (fun b => (star b)⁻¹) = C →
@@ -133,7 +133,7 @@ theorem perm_of (hR : GlobalTheory.Published.JacquetShalikaRigidity) {a₁ a₂ 
   calc _ = BV := hT
     _ = BV.map (fun b => (star b)⁻¹) := hV.symm
     _ = _ := by
-      rw [← hT, Multiset.map_add, map_fsum, map_fsum]
+      rw [← hT, Multiset.map_add (f := _), map_fsum, map_fsum]
       simp only [hm B₁ _ hh₁, hm B₂ _ hh₂, hinv_absC]
 
 end PositivityTheory.Rg.Rs.StrStepC

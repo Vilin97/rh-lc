@@ -113,7 +113,7 @@ theorem inv_span [IsFractionRing G.O G.Kf] (w : HeightOneSpectrum (𝓞 LL))
     { carrier := {Q | MvPolynomial.map e Q ∈ G.P.HtupW L0}
       add_mem' := by
         intro Q Q' h h'
-        simp only [Set.mem_ofPred_eq, map_add] at h h' ⊢
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at h h' ⊢
         exact Submodule.add_mem _ h h'
       zero_mem' := by
         simp only [Set.mem_ofPred_eq, map_zero]
@@ -131,7 +131,7 @@ theorem inv_span [IsFractionRing G.O G.Kf] (w : HeightOneSpectrum (𝓞 LL))
   let Ur : Submodule LL (MvPolynomial (Σ v : Fin G.P.nV, Fin (G.P.n' v) × (Fin (G.P.m + 1) × Fin (G.P.m + 1))) LL) :=
     { carrier := {Q | InvAt G i L0 (MvPolynomial.map e Q)}
       add_mem' := fun {Q Q'} h h' γ hγ => by
-        rw [map_add, map_add, smul_add, h γ hγ, h' γ hγ]
+        rw [map_add (f := _), map_add (f := _), smul_add, h γ hγ, h' γ hγ]
       zero_mem' := fun γ _ => by rw [map_zero, map_zero, smul_zero]
       smul_mem' := fun a Q h γ hγ => by
         show ((G.lev i).χ γ : G.O) • (G.lev i).actX γ (MvPolynomial.map e (a • Q)) = MvPolynomial.map e (a • Q)

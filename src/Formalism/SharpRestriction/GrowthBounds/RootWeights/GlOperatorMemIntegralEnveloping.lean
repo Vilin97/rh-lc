@@ -98,7 +98,7 @@ theorem enveloping_coordinate_separates [NeZero n] [CharZero (KK O)] {E : GLOps 
       sub_mem (hW'st a a w' hw') (Submodule.smul_mem W' _ hw')
     have hsum : (E a a w - (lam a : KK O) • w) + (E a a w' - (lam a : KK O) • w') = 0 := by
       have h2 := hvw a
-      rw [← hvs, map_add, smul_add] at h2
+      rw [← hvs, map_add (f := _), smul_add] at h2
       rw [sub_add_sub_comm, h2, sub_self]
     have hneg : E a a w - (lam a : KK O) • w ∈ W' := by
       rw [eq_neg_of_add_eq_zero_left hsum]

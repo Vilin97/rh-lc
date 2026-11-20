@@ -130,7 +130,7 @@ theorem perCoord_factorsThrough (f : 𝓢(E, ℂ)) :
     exact zsmul_mem (basis_mem b i) _
   change per L f ((b.ofZLatticeBasis ℝ L).equivFun.symm x) =
     per L f ((b.ofZLatticeBasis ℝ L).equivFun.symm y)
-  rw [hy, LinearEquiv.map_add]
+  rw [hy, LinearEquiv.map_add (f := _)]
   exact (per_add f _ hmem).symm
 
 def perTorus (f : 𝓢(E, ℂ)) : C(UnitAddTorus ι, ℂ) :=

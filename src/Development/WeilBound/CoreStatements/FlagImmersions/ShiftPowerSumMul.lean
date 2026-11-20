@@ -36,7 +36,7 @@ theorem pa_degFl_sum_pderiv {Ψ : Type} [Fintype Ψ] [DecidableEq Ψ] {N : ℕ} 
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     ring
   simp_rw [hd, Finset.sum_add_distrib, ← Finset.mul_sum]
-  rw [hlin, map_add, ← hlin, ← hlin, degFl_power_sum_mul Ψ N τ k _ hk, add_zero]
+  rw [hlin, map_add (f := _), ← hlin, ← hlin, degFl_power_sum_mul Ψ N τ k _ hk, add_zero]
   by_cases h : σ = τ
   · subst h
     simp only [pa_pderiv_pk, if_true]

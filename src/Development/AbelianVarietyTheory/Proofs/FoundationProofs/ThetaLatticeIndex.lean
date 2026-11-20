@@ -206,7 +206,7 @@ def cjL (L : Lat D N) : Lat D N where
   carrier := {y | cj D N y ∈ L}
   add_mem' := fun {a b} ha hb => by
     change cj D N (a + b) ∈ L
-    rw [map_add]; exact L.add_mem ha hb
+    rw [map_add (f := _)]; exact L.add_mem ha hb
   zero_mem' := by
     change cj D N 0 ∈ L
     rw [map_zero]; exact L.zero_mem

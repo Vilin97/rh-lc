@@ -65,7 +65,7 @@ theorem compAt_supp {D : D7} (θ : InfFam D) {e : AE D} (he : infPart D e = 0) {
     rw [hk a b, Matrix.sub_apply, sub_add_cancel]
   have h2 := congrFun (congrFun h1 a) b
   simp only [compAt, Matrix.map_apply] at h2 ⊢
-  have h0 : infPart D (e + cA D e) = 0 := by rw [RingHom.map_add, he, GlobalTheory.PlaceDatum.infPart_cA he, add_zero]
+  have h0 : infPart D (e + cA D e) = 0 := by rw [RingHom.map_add (f := _), he, GlobalTheory.PlaceDatum.infPart_cA he, add_zero]
   rw [e1, RingHom.map_add (infPart D), RingHom.map_mul (infPart D), h0, zero_mul, zero_add, h2]
 
 theorem suppAt_one' {D : D7} (e : AE D) (V : HSp D) : SuppAt e V 1 := fun i j => by

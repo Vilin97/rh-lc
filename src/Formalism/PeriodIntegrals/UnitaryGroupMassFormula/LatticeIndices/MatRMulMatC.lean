@@ -66,7 +66,7 @@ private theorem isUnit_of_mul_eq_one_add_smul_maximalIdeal {ι : Type*} [Fintype
     rw [h]
     ext i j
     have h0 : IsLocalRing.residue A g = 0 := (IsLocalRing.residue_eq_zero_iff g).mpr hg
-    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, h0,
+    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, h0,
       zero_mul, add_zero, Matrix.one_apply]
     split_ifs <;> simp
   have h1 : IsUnit (R * C).det := by
@@ -134,7 +134,7 @@ theorem adapt_of_eps (hθ : IsSplitEquiv X p θ) (hε : θ (epsP X p) = (1, 0)) 
     have hgA' : (OvA X p).subtype (gA X p) = ((gOf p : ℕ) : FpX X p) := hgA
     refine Matrix.ext fun s t => ?_
     rw [(matR_mul_matC X p θ Q s t).trans (hz s t)]
-    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul,
+    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul,
       Matrix.one_apply, hgA']
     split_ifs <;> simp [Zi]
   have hU : IsUnit Ci := isUnit_of_mul_eq_one_add_smul_maximalIdeal (gA X p) hg Ri Ci Zi hRC

@@ -25,13 +25,13 @@ theorem liftX_mul (f g : PS k 1 d) : liftX k (f * g) = liftX k f * liftX k g := 
 theorem Dof_add (F : Fin d → PS k 2 d) (u u' : Fin d → k) (f : PS k 1 d) :
     Dof F (u + u') f = Dof F u f + Dof F u' f := by
   unfold Dof
-  simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem nabla_add (B : FB R d O) (h : PS k 2 d) (m : ℕ) (u u' φ φ' : Fin d → k) (G : AA k d) :
     nabla k B h m (u + u') (φ + φ') G = nabla k B h m u φ G + nabla k B h m u' φ' G := by
   first
   | (unfold nabla Dx
-     simp only [Pi.add_apply, Prod.fst_add, Prod.snd_add, map_add, add_mul, mul_add, Finset.sum_add_distrib, Dof_add,
+     simp only [Pi.add_apply, Prod.fst_add, Prod.snd_add, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib, Dof_add,
        liftX_add, smul_add, add_smul]
      ring)
   | (unfold nabla
@@ -42,7 +42,7 @@ def nablaL (B : FB R d O) (h : PS k 2 d) (m : ℕ) (u φ : Fin d → k) : Module
   toFun := nabla k B h m u φ
   map_add' G G' := by
     unfold nabla Dx
-    simp only [map_add, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
     ring
   map_smul' c G := by
     unfold nabla Dx

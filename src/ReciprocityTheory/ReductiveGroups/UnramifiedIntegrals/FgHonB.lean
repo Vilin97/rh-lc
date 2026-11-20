@@ -159,7 +159,7 @@ theorem partialYAtZero_sub (F G : MvPowerSeries (Fin 2) K) : d2 (F - G) = d2 F -
 
 theorem partialYAtZero_add (F G : MvPowerSeries (Fin 2) K) : d2 (F + G) = d2 F + d2 G := by
   ext n
-  simp only [d2, PowerSeries.coeff_mk, map_add]
+  simp only [d2, PowerSeries.coeff_mk, map_add (f := _)]
 
 theorem LawD.evalYZero_eq (h : LawD lam Φ) : ev0 Φ = X := by
   have hc : constantCoeff (ev0 Φ) = 0 := by

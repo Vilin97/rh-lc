@@ -39,7 +39,7 @@ private theorem star_star_monoidAlgebra (R : Type) [CommRing R] [Algebra O R] (n
   induction y using MonoidAlgebra.induction_linear with
   | zero => simp [GFrame.star]
   | add x y hx hy =>
-    simp only [GFrame.star, map_add, MulOpposite.unop_add] at hx hy ⊢
+    simp only [GFrame.star, map_add (f := _), MulOpposite.unop_add] at hx hy ⊢
     rw [hx, hy]
   | single g a =>
     show MulOpposite.unop (F.starOp O R n (MulOpposite.unop (F.starOp O R n (MonoidAlgebra.single g a)))) =
@@ -69,7 +69,7 @@ private theorem pk_bc (R B : Type) [CommRing R] [Algebra O R] [CommRing B] [Alge
   induction y using MonoidAlgebra.induction_linear with
   | zero => simp [GFrame.star]
   | add x y hx hy =>
-    simp only [map_add, GFrame.star, MulOpposite.unop_add] at hx hy ⊢
+    simp only [map_add (f := _), GFrame.star, MulOpposite.unop_add] at hx hy ⊢
     rw [hx, hy]
   | single g b =>
     show _ = MulOpposite.unop (F.starOp O B n (MonoidAlgebra.single g b))

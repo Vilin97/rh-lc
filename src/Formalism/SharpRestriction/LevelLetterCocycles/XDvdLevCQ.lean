@@ -50,9 +50,9 @@ theorem X_dvd_levC_q (i : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p) (hp 
     PowerSeries.X ∣ levC W i ζ W.q₀ := by
   obtain ⟨E, hE0, _, hX⟩ := levC_X W i ζ hζ
   have h := congrArg (levC W i ζ) W.q₀_def
-  simp only [map_mul, map_sub, map_pow, map_add, map_one, hX] at h
+  simp only [map_mul, map_sub, map_pow, map_add (f := _), map_one, hX] at h
   have h2 := congrArg PowerSeries.constantCoeff h
-  simp only [map_mul, map_sub, map_pow, map_add, map_one, PowerSeries.constantCoeff_C, hE0] at h2
+  simp only [map_mul, map_sub, map_pow, map_add (f := _), map_one, PowerSeries.constantCoeff_C, hE0] at h2
   rw [PowerSeries.X_dvd_iff]
   have h3 : (ζ - 1) * PowerSeries.constantCoeff (levC W i ζ W.q₀) = 0 := by
     linear_combination h2 + hζ.pow_eq_one
@@ -85,7 +85,7 @@ theorem residue_q₀ [IsLocalRing O] (hp : PD.p.Prime) (hpm : ((PD.p : ℕ) : O)
     | exact (CharP.charP_iff_prime_eq_zero hp).mpr hK
     | exact (charP_iff_prime_eq_zero hp).mpr hK
   have h := congrArg (PowerSeries.map (IsLocalRing.residue O)) W.q₀_def
-  simp only [map_mul, map_sub, map_pow, map_add, map_one, PowerSeries.map_X] at h
+  simp only [map_mul, map_sub, map_pow, map_add (f := _), map_one, PowerSeries.map_X] at h
   rw [add_pow_char, one_pow, add_sub_cancel_left] at h
   have h2 : PowerSeries.X * PowerSeries.map (IsLocalRing.residue O) W.q₀ =
       PowerSeries.X * PowerSeries.X ^ (PD.p - 1) := by
@@ -98,7 +98,7 @@ private theorem eq_of_mul_mul_eq_of_det_ne_zero (i : ZMod n) (ζ : LL) (hζ : Is
   obtain ⟨E, hE0, hE1, hX⟩ := levC_X W i ζ hζ
   obtain ⟨w, hw⟩ := X_dvd_levC_q W i ζ hζ hp
   have h1 := congrArg (levC W i ζ) W.q₀_def
-  simp only [map_mul, map_sub, map_pow, map_add, map_one, hX, hw] at h1
+  simp only [map_mul, map_sub, map_pow, map_add (f := _), map_one, hX, hw] at h1
   have e : (PowerSeries.C ζ * E) ^ PD.p = E ^ PD.p := by
     first
     | rw [mul_pow, ← map_pow, hζ.pow_eq_one, map_one, one_mul]
@@ -177,7 +177,7 @@ private theorem q0_dvd_of_X_dvd_levC_primitive_roots [IsLocalRing O] [IsAdicComp
       · intro k c _
         simp [hC, hX, hE0]
     have h1 := hv ζ hζ
-    rw [heq, map_add, map_mul] at h1
+    rw [heq, map_add (f := _), map_mul] at h1
     have h3 := dvd_mul_of_dvd_left (X_dvd_levC_q W i ζ hζ hp.two_le) (levC W i ζ q)
     have h2 := (dvd_add_right h3).mp h1
     rw [PowerSeries.X_dvd_iff, key] at h2

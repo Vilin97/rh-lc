@@ -10,7 +10,7 @@ variable {B Q : Type} [CommRing B] [CommRing Q] [Algebra B Q]
 
 def coeffIdeal (τ : Type) (J : Ideal B) : Ideal (MvPowerSeries τ B) where
   carrier := {w | ∀ α, coeff α w ∈ J}
-  add_mem' ha hb α := by rw [map_add]; exact J.add_mem (ha α) (hb α)
+  add_mem' ha hb α := by rw [map_add (f := _)]; exact J.add_mem (ha α) (hb α)
   zero_mem' α := by rw [map_zero]; exact J.zero_mem
   smul_mem' c x hx α := by
     classical
@@ -22,7 +22,7 @@ def scaledIdeal (τ : Type) (K : Ideal B) (c : Q) : Ideal (MvPowerSeries τ B) w
   add_mem' {x y} hx hy γ := by
     obtain ⟨a, ha, ea⟩ := hx γ
     obtain ⟨b, hb, eb⟩ := hy γ
-    exact ⟨a + b, K.add_mem ha hb, by rw [map_add, map_add, mul_add, ea, eb, map_add]⟩
+    exact ⟨a + b, K.add_mem ha hb, by rw [map_add (f := _), map_add (f := _), mul_add, ea, eb, map_add (f := _)]⟩
   zero_mem' γ := ⟨0, K.zero_mem, by simp⟩
   smul_mem' r x hx γ := by
     classical
@@ -99,7 +99,7 @@ theorem subst_sub_in : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [CommRing B] 
   rw [map_sub, coeff_subst hsU, coeff_subst hsV,
     ← finsum_sub_distrib (coeff_subst_finite hsU f γ) (coeff_subst_finite hsV f γ)]
   refine finsum_induction (fun q => ∃ b ∈ J * N, q = algebraMap B Q b) ⟨0, Submodule.zero_mem _, by simp⟩
-    (fun x y ⟨a, ha, ea⟩ ⟨b, hb, eb⟩ => ⟨a + b, Submodule.add_mem _ ha hb, by rw [ea, eb, map_add]⟩)
+    (fun x y ⟨a, ha, ea⟩ ⟨b, hb, eb⟩ => ⟨a + b, Submodule.add_mem _ ha hb, by rw [ea, eb, map_add (f := _)]⟩)
     (fun d => ?_)
   have hprod : ∀ w : σ → MvPowerSeries τ B,
       (d.prod fun s e => up Q w s ^ e) = map (algebraMap B Q) (∏ i, w i ^ d i) := by

@@ -47,7 +47,7 @@ theorem UpperTheory.V.Th.pairP :
     { toFun := fun X =>
         { toFun := fun Y => τ (X * Y).trace
           map_zero' := by simp
-          map_add' := fun Y Y' => by rw [Matrix.mul_add, trace_add, map_add] }
+          map_add' := fun Y Y' => by rw [Matrix.mul_add, trace_add, map_add (f := _)] }
       map_zero' := by ext Y; simp
       map_add' := fun X X' => by ext Y; simp [Matrix.add_mul] }
   have hb : ∀ X Y, b X Y = τ (X * Y).trace := fun _ _ => rfl

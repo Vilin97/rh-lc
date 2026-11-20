@@ -489,7 +489,7 @@ theorem fockInner_smul_left (c : 𝕜) (P Q : MvPolynomial σ 𝕜) :
 
 theorem fockInner_add_right (P Q Q' : MvPolynomial σ 𝕜) :
     fockInner P (Q + Q') = fockInner P Q + fockInner P Q' := by
-  simp only [fockInner, MvPolynomial.coeff_add, map_add, mul_add, sum_add_distrib]
+  simp only [fockInner, MvPolynomial.coeff_add, map_add (f := _), mul_add, sum_add_distrib]
 
 theorem fockInner_smul_right (c : 𝕜) (P Q : MvPolynomial σ 𝕜) :
     fockInner P (c • Q) = starRingEnd 𝕜 c * fockInner P Q := by
@@ -525,7 +525,7 @@ theorem fockInner_X_mul_left (i : σ) (P Q : MvPolynomial σ 𝕜) :
   | monomial α c =>
     rw [X, monomial_mul, one_mul, fockInner_monomial_left, fockInner_monomial_left, coeff_pderiv,
       add_comm _ α, multiFactorial_add_single]
-    simp only [Nat.cast_mul, Nat.cast_add, Nat.cast_one, map_mul, map_add, map_natCast, map_one]
+    simp only [Nat.cast_mul, Nat.cast_add, Nat.cast_one, map_mul, map_add (f := _), map_natCast, map_one]
     ring
   | add P P' h h' => rw [mul_add, fockInner_add_left, fockInner_add_left, h, h']
 

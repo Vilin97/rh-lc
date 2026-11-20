@@ -35,7 +35,7 @@ theorem RestCutPrimeEq.proof : RestCutPrimeEq.Statement := by
     have hI' : I (lieClass f j k (m - 1) σ * Q τ m) = (εf (m - 1) σ : ℝ) *
         (c * (RestTerms.flagIntegral f (r + a)
           (RestTerms.smallPowerSum f r a cs (m - 1) σ.1 * Q₀ m τ) : ℝ)) := by
-      rw [hlief, add_mul, mul_assoc, mul_assoc, C_mul', C_mul', map_add, LinearMap.map_smul,
+      rw [hlief, add_mul, mul_assoc, mul_assoc, C_mul', C_mul', map_add (f := _), LinearMap.map_smul,
         LinearMap.map_smul, hkill, ht, smul_eq_mul, smul_eq_mul, mul_zero, add_zero]
     rw [hI', RestTerms.restTerm]
     push_cast

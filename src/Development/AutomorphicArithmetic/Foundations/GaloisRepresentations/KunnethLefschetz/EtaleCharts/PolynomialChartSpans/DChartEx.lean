@@ -57,7 +57,7 @@ private theorem alg_core {D : ℕ} (u : Fin D → B)
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => rw [hρ]; simp [mulQ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   obtain ⟨t', ht0, ht1⟩ := (Algebra.FormallyUnramified.iff_exists_tensorProduct (R := P) (S := B)).1 inferInstance
   obtain ⟨t, ht⟩ := Ideal.Quotient.mk_surjective (ρ t')
   refine ⟨t, ?_, fun x hx => ?_⟩
@@ -89,7 +89,7 @@ private theorem alg2 {T : Type} [CommRing T] [Algebra R T] (a b : B →ₐ[R] T)
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [ma, mb]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   refine ⟨Algebra.TensorProduct.productMap a b t, by rw [hm, ht1], fun x hx => ?_⟩
   obtain ⟨y, rfl⟩ := hφ.2 x
   rw [hm] at hx

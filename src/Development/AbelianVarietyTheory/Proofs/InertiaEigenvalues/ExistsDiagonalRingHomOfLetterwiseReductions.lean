@@ -61,7 +61,7 @@ theorem exists_diagonal_ringHom_of_letterwise_reductions :
     apply hext
     intro i
     have h := hk i (s i a + s i b)
-    rw [map_add, hs, hs, map_add] at h
+    rw [map_add (f := _), hs, hs, map_add (f := _)] at h
     rw [h, mul_add, mul_add, hk0, hk0]
 
 end GlobalTheory

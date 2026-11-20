@@ -45,7 +45,7 @@ theorem map_mem_pow (c : K →+* K) {𝔞 𝔟 : Submodule (𝓞 K) K} (h : ∀ 
     rw [pow_succ] at *
     refine Submodule.mul_induction_on hx (fun a ha b hb => ?_) (fun a b ha hb => ?_)
     · rw [map_mul]; exact Submodule.mul_mem_mul (map_mem_pow c h n a ha) (h b hb)
-    · rw [map_add]; exact add_mem ha hb
+    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
 
 theorem exists_pow_eq_span_normOne (c : K →+* K) (hc : ∀ x, c (c x) = x) {𝔞 𝔟 : Submodule (𝓞 K) K}
     (hb : ∀ x, x ∈ 𝔟 ↔ c x ∈ 𝔞) (h : 𝔞 * 𝔟 = 1) :
@@ -98,7 +98,7 @@ theorem norm_int_le (a : 𝓞 K) : ‖ψ (a : K)‖ ≤ 1 := norm_le_one_of_isIn
 def ball (r : ℝ) (hr : 0 ≤ r) : Submodule (𝓞 K) K where
   carrier := {x | ‖ψ x‖ ≤ r}
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_ofPred_eq, map_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
   zero_mem' := by simpa using hr
   smul_mem' := fun c a ha => by

@@ -35,7 +35,7 @@ def goodS (T' : Subalgebra O (X' → O)) : Subring (PowerSeries (X' → Fraction
     · exact Subring.one_mem _
     · exact Subring.zero_mem _
   add_mem' {a b} ha hb n := by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Subring.add_mem _ (ha n) (hb n)
   zero_mem' n := by
     rw [map_zero]

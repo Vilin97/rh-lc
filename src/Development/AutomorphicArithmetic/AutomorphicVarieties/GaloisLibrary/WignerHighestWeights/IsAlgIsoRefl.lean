@@ -157,14 +157,14 @@ variable [IsTotallyComplex E]
 
 def lieA (π : CuspSub E a) (Ξ : AlgRep E a) : Lie E a →ₗ[ℝ] Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ)) where
   toFun X := (lieOp π X).rTensor _
-  map_add' X Y := by simp only [map_add, LinearMap.rTensor_add]
+  map_add' X Y := by simp only [map_add (f := _), LinearMap.rTensor_add]
   map_smul' c X := by
     rw [map_smul, RingHom.id_apply, ← algebraMap_smul ℂ c (lieOp π X),
       ← algebraMap_smul ℂ c (LinearMap.rTensor _ _ : Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))), LinearMap.rTensor_smul]
 
 def lieB (π : CuspSub E a) (Ξ : AlgRep E a) : Lie E a →ₗ[ℝ] Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ)) where
   toFun X := (Matrix.toLin' (Ξ.dmat X)).lTensor _
-  map_add' X Y := by simp only [map_add, LinearMap.lTensor_add]
+  map_add' X Y := by simp only [map_add (f := _), LinearMap.lTensor_add]
   map_smul' c X := by
     rw [map_smul, RingHom.id_apply, ← algebraMap_smul ℂ c (Ξ.dmat X),
       ← algebraMap_smul ℂ c (LinearMap.lTensor _ _ : Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))), map_smul,

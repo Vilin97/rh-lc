@@ -17,7 +17,7 @@ def twOut {n : ℕ} (f : (Fin n → O) →ₗ[O] L) : (Fin n → O) →ₗ[O] Tw
     have : (fun i => s ((v + w) i)) = (fun i => s (v i)) + (fun i => s (w i)) := by
       funext i; simp
     show f (fun i => s ((v + w) i)) = f (fun i => s (v i)) + f (fun i => s (w i))
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
   map_smul' c v := by
     have : (fun i => s ((c • v) i)) = s c • (fun i => s (v i)) := by
       funext i; simp

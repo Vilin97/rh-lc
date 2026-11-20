@@ -52,7 +52,7 @@ theorem GlobalTheory.Core.Rk.regRes_linear : ∀ (D : D7) (ψ : AddChar (AF D.ho
       rw [← mul_add, ← MeasureTheory.integral_add (hconv f hf g s hs).to_average (hconv f' hf' g s hs).to_average]
       congr 1
       refine congrArg _ (funext fun q => ?_)
-      simp only [AutomorphicL2Unitary.descend, thetaKO, map_add, LinearMap.add_apply, Pi.add_apply, add_mul]
+      simp only [AutomorphicL2Unitary.descend, thetaKO, map_add (f := _), LinearMap.add_apply, Pi.add_apply, add_mul]
     exact (((hcoef f hf g).add (hcoef f' hf' g)).congr e).laurent_eq
   · have e : EqRight (fun s => c * regInt omh mW θ τ d₀ b' zH P f g s) (regInt omh mW θ τ d₀ b' zH P (c • f) g) := by
       refine ⟨0, fun s _ => ?_⟩

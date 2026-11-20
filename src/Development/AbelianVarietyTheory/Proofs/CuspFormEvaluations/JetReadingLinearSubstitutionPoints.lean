@@ -64,7 +64,7 @@ def flatL {n n' g : ℕ} (B : (Fin n' → Fin g → ℂ) →ₗ[ℂ] (Fin n → 
       map_add' := fun v w => by
         funext k
         have : colsOf n' g (v + w) = colsOf n' g v + colsOf n' g w := rfl
-        rw [this, map_add]; rfl
+        rw [this, map_add (f := _)]; rfl
       map_smul' := fun c v => by
         funext k
         have : colsOf n' g (c • v) = c • colsOf n' g v := rfl

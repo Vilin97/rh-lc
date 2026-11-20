@@ -56,13 +56,13 @@ theorem schwartz_gaussian_of_fderiv_eq_linear_mul {V : Type} [NormedAddCommGroup
   have hadd : ∀ x a b, P (a + b) x = P a x + P b x := by
     intro x a b
     apply mul_right_cancel₀ (hne x)
-    rw [add_mul, ← hP, ← hP, ← hP, map_add]
+    rw [add_mul, ← hP, ← hP, ← hP, map_add (f := _)]
   have hsmul : ∀ x (c : ℝ) a, P (c • a) x = c • P a x := by
     intro x c a
     apply mul_right_cancel₀ (hne x)
     rw [smul_mul_assoc, ← hP, ← hP, map_smul]
   let Q : V →ₗ[ℝ] V →ₗ[ℝ] ℂ := LinearMap.mk₂ ℝ (fun x y => -(1 / 2 * P y x))
-    (fun a b y => by rw [map_add]; ring)
+    (fun a b y => by rw [map_add (f := _)]; ring)
     (fun c a y => by rw [map_smul]; simp only [Complex.real_smul]; ring)
     (fun x a b => by rw [hadd]; ring)
     (fun c x a => by rw [hsmul]; simp only [Complex.real_smul]; ring)

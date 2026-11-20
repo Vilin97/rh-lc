@@ -87,10 +87,10 @@ theorem UpperTheory.frame_criterion_residual :
       induction z using MonoidAlgebra.induction_linear with
       | zero => simp
       | add x y hx hy =>
-        rw [map_add, hx, hy, Matrix.diagonal_add]
+        rw [map_add (f := _), hx, hy, Matrix.diagonal_add]
         congr 1
         ext i
-        simp [map_add]
+        simp [map_add (f := _)]
       | single g b =>
         ext i j
         simp [f, W.GDet.repAlg, W.diagRep, MonoidAlgebra.lift_single, Matrix.diagonal_apply]
@@ -107,7 +107,7 @@ theorem UpperTheory.frame_criterion_residual :
       | zero => simp [W.GFrame.star]
       | add x y hx hy =>
         have hadd : G.star O B n (x + y) = G.star O B n x + G.star O B n y := by simp [W.GFrame.star]
-        rw [hadd, map_add, map_add, hx, hy]
+        rw [hadd, map_add (f := _), map_add (f := _), hx, hy]
       | single g b =>
         rw [hs1 g b, MonoidAlgebra.lift_single, MonoidAlgebra.lift_single, smul_eq_mul, smul_eq_mul, mul_assoc]
         congr 1

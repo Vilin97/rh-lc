@@ -63,7 +63,7 @@ theorem span_eigSum_le (j : V →ₛₗ[σ] W) {op : I → Module.End K V} {opC 
     · rw [iSup_neg hs, Submodule.mem_bot] at hv
       rw [hv, map_zero]
       exact Submodule.zero_mem _
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact Submodule.add_mem _ ha hb
 
 theorem eigSum_le_span [FiniteDimensional K V] [FiniteDimensional ℂ W] (j : V →ₛₗ[σ] W) {op : I → Module.End K V}
@@ -78,7 +78,7 @@ theorem eigSum_le_span [FiniteDimensional K V] [FiniteDimensional ℂ W] (j : V 
     rintro _ ⟨v, rfl⟩
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1
       ((isCompl_eigSum hc hs (fun s => Q fun i => σ (s i))).sup_eq_top ▸ (Submodule.mem_top : v ∈ (⊤ : Submodule K V)))
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem (Submodule.mem_sup_left (Submodule.subset_span ⟨a, ha, rfl⟩))
       (Submodule.mem_sup_right (Submodule.subset_span ⟨b, hb, rfl⟩))
   have hd := (disjoint_eigSum hcC (C := Q) (C' := fun y => ¬ Q y) fun _ h h' => h' h).mono_right hB

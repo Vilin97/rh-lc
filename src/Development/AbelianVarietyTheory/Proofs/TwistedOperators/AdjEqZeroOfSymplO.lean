@@ -149,7 +149,7 @@ theorem eq_zero_of_trace_mul {F E R : Type} [Field F] [Field E] [Algebra F E] [F
     intro k z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy, add_mul]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy, add_mul]
     | tmul a e =>
       rw [Algebra.TensorProduct.tmul_mul_tmul, tr, Algebra.TensorProduct.basis_repr_tmul]
       simp [b', LinearMap.BilinForm.dualBasis_repr_apply, Algebra.traceForm_apply]
@@ -217,7 +217,7 @@ theorem mean_smul {μ : Measure (Mx D m n)} {𝓕 : Set (Mx D m n)} (h : IsCovol
   rw [heq] at h3 hcov
   rw [← h3]
   refine (covolOne_integral_eq h hcov (fun a => φ (e a)) fun γ hγ a => ?_).symm
-  rw [map_add]
+  rw [map_add (f := _)]
   exact hφ _ ((hΓ γ).2 hγ) _
 
 end Mean

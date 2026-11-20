@@ -16,14 +16,14 @@ private theorem act_eq (x : C ⊗[A] C) :
     GlobalTheory.FlatDescent.act A C C x = Algebra.TensorProduct.lmul' A x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul p q => simp
 
 private theorem lTensor_theta (g x : C ⊗[A] C) :
     ((theta g).restrictScalars A).lTensor C x = c12 A C x * c23 A C g := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, add_mul, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), add_mul, hx, hy]
   | tmul p q =>
     simp [smul_eq_left_inclusion, Algebra.TensorProduct.tmul_mul_tmul]
 
@@ -31,7 +31,7 @@ private theorem lTensor_mk (x : C ⊗[A] C) :
     (TensorProduct.mk A C C 1).lTensor C x = c13 A C x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul p q => simp
 
 private theorem isDescentDatum_theta (g : C ⊗[A] C)

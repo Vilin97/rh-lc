@@ -33,7 +33,7 @@ theorem coef_deriv (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D E)
 theorem act_cpart (E : Fin n → Fin n → Module.End ℂ D) (Z : Matrix (Fin n) (Fin n) ℂ) (m : D) :
     actM E Z m = actM E (cpart1 ε Z) m + Complex.I • actM E (cpart2 ε Z) m := by
   have h : actL E Z = actL E (cpart1 ε Z) + Complex.I • actL E (cpart2 ε Z) := by
-    rw [← map_smul, ← map_add, ta_cpart_sum]
+    rw [← map_smul, ← map_add (f := _), ta_cpart_sum]
   exact congrArg (fun A : Module.End ℂ D => A m) h
 
 theorem eq_zero_of_coef (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D E) {V : Submodule ℂ D}
@@ -46,7 +46,7 @@ theorem eq_zero_of_coef (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D
         fun _ => 0 := funext fun t => hm _ (ta_inUJ_mul_exp ε hg hX t) v'
     rw [this]; exact hasDerivAt_const _ _
   have hN : ∀ a b, ∀ m ∈ N, E a b m ∈ N := fun a b m hm g hg v' => by
-    rw [← actM_single E a b, act_cpart (ε := ε), Submodule.coe_add, Submodule.coe_smul, map_add,
+    rw [← actM_single E a b, act_cpart (ε := ε), Submodule.coe_add, Submodule.coe_smul, map_add (f := _),
       map_smul, inner_add_right, inner_smul_right, hNr _ (ta_inG_cpart1 ε _) m hm g hg v',
       hNr _ (ta_inG_cpart2 ε _) m hm g hg v']
     simp

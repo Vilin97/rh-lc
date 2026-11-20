@@ -92,11 +92,11 @@ theorem thk_K_of_Row {g : GL (Fin n) Rv} (hU : g ∈ UPts hc.sig (1 : Matrix (Fi
     rw [Matrix.one_apply_eq] at e1 e2
     have e3 : (g : Matrix (Fin n) (Fin n) Rv) (lastIdx n) (lastIdx n) - 1 =
         ιv (star pE) * sigR hc.sig (v.adicCompletion F) s2 := by
-      rw [h3, sub_eq_iff_eq_add.1 e2, map_add, map_mul, map_one, rll_sigV_incl, add_sub_cancel_right]
+      rw [h3, sub_eq_iff_eq_add.1 e2, map_add (f := _), map_mul, map_one, rll_sigV_incl, add_sub_cancel_right]
     obtain ⟨a, b, hab⟩ := h.cop
     have hab' : ιv (algebraMap (𝓞 E) E a) * ιv pE + ιv (algebraMap (𝓞 E) E b) * ιv (star pE) = 1 := by
       have h4 := congrArg (fun t => ιv (algebraMap (𝓞 E) E t)) hab
-      simp only [map_add, map_mul, map_one] at h4
+      simp only [map_add (f := _), map_mul, map_one] at h4
       exact h4
     have es : s = ιv (star pE) * (ιv (algebraMap (𝓞 E) E a) * sigR hc.sig (v.adicCompletion F) s2 + ιv (algebraMap (𝓞 E) E b) * s) := by
       calc s = (ιv (algebraMap (𝓞 E) E a) * ιv pE + ιv (algebraMap (𝓞 E) E b) * ιv (star pE)) * s := by rw [hab', one_mul]

@@ -343,7 +343,7 @@ theorem star (hE : GlRel E) {m : Fin (N + 1) → ℂ} {v : V} (hv : v ∈ CapSp 
   have h2 := detCov E hE hv hX u x
   have lin : (u • Th E u X - Th E u (KK E X)) x = Th E u ((u - (N : ℂ)) • X + EE E X) x - Th E u X x := by
     rw [KK_apply]
-    simp only [map_add, map_sub, map_smul, Pi.add_apply, Pi.sub_apply, Pi.smul_apply]
+    simp only [map_add (f := _), map_sub, map_smul, Pi.add_apply, Pi.sub_apply, Pi.smul_apply]
     first
       | module
       | (simp only [sub_smul, add_smul, one_smul]; abel)
@@ -438,7 +438,7 @@ theorem covUp_succ (η : Fin (N + 1) → Module.End ℂ V) (hE : GlRel E) (hη :
     first
       | rw [Module.End.mul_apply] at h1
       | rw [LinearMap.mul_apply] at h1
-    rw [map_add, Polynomial.aeval_X, Polynomial.aeval_C, LinearMap.add_apply,
+    rw [map_add (f := _), Polynomial.aeval_X, Polynomial.aeval_C, LinearMap.add_apply,
       Module.algebraMap_end_apply] at h1
     rw [hYdef, neg_smul]
     exact eq_neg_of_add_eq_zero_left h1

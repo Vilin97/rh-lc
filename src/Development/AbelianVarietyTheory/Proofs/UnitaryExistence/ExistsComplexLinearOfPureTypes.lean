@@ -71,7 +71,7 @@ theorem _root_.GlobalTheory.CompRat.exists_complex_linear_of_pure_types : ∀ (E
     have rz' : r (H.rt0 • P z) = H.rt0 • r (P z) := by
       rw [neg_smul, map_neg, neg_smul, neg_inj] at rz
       exact rz
-    simp only [map_add, smul_add, ry, rz']
+    simp only [map_add (f := _), smul_add, ry, rz']
   have hrot : ∀ v, r (H.rt0 • v) = H.rt0 • r v := by
     have hext : r.comp (H.rt0 • LinearMap.id) = (H.rt0 • LinearMap.id).comp r :=
       LinearMap.ext_on_range hs fun a => by simpa using hkey a
@@ -82,7 +82,7 @@ theorem _root_.GlobalTheory.CompRat.exists_complex_linear_of_pure_types : ∀ (E
     have hc : c = ((c.re - c.im / H.rt0.im * H.rt0.re : ℝ) : ℂ) +
         ((c.im / H.rt0.im : ℝ) : ℂ) * H.rt0 := by
       apply Complex.ext <;> simp <;> field_simp <;> ring
-    rw [hc, add_smul, mul_smul, Complex.coe_smul, Complex.coe_smul, map_add, map_smul, map_smul,
+    rw [hc, add_smul, mul_smul, Complex.coe_smul, Complex.coe_smul, map_add (f := _), map_smul, map_smul,
       hrot, add_smul, mul_smul, Complex.coe_smul, Complex.coe_smul]
   have hl : ∀ v, r' (r v) = v := by
     have hext : r'.comp r = LinearMap.id :=

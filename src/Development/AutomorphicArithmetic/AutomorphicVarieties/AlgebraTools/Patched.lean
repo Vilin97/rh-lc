@@ -73,7 +73,7 @@ private theorem ker_tensor (a : Ideal R) (t : X →ₗ[R] X') (ht : Function.Sur
         rw [LinearMap.lTensor_tmul, Submodule.coe_subtype]
         have hx : (x : X) ∈ (a • ⊤ : Submodule R X) := hk ▸ x.2
         exact one_tmul_mem S a hx s
-      | add x y hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     · intro hw
       have hle : (a.map (algebraMap R S) • ⊤ : Submodule S (S ⊗[R] X)) ≤
           LinearMap.ker (t.baseChange S) := by

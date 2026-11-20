@@ -167,10 +167,10 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.vfDer :
     have hi := congrFun hf i
     refine TR.ad_ext ?_ ?_
     · have h : ∀ x, TR.pInf F (TR.sInf F x) = x := fun x => (TR.infEq F).symm_apply_apply x
-      rw [map_add, h]
+      rw [map_add (f := _), h]
       simp [a, a0]
     · have h0 : ∀ x, pFin F (TR.sInf F x) = 0 := fun _ => rfl
-      rw [map_add, h0, add_zero]
+      rw [map_add (f := _), h0, add_zero]
       exact hi
   · intro τ
     rw [hm_der (pl F τ) a (fun i w => d w i) _ _ (hHm τ) (hQ τ) (fun i => hd _ i)]

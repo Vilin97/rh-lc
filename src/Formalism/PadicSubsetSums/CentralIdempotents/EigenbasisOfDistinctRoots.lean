@@ -93,7 +93,7 @@ def eqvSpace {G V ι : Type} [Monoid G] [AddCommGroup V] [Module ℂ V] (ρ : Re
   carrier := {x | ∀ u, ρ (emb u) x = χ u • x}
   add_mem' := by
     intro x y hx hy u
-    rw [map_add, hx u, hy u, smul_add]
+    rw [map_add (f := _), hx u, hy u, smul_add]
   zero_mem' := by
     intro u
     rw [map_zero, smul_zero]

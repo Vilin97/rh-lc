@@ -36,7 +36,7 @@ theorem exists_admissible_lift : ∀ {F E : Type} [Field F] [NumberField F] [Fie
 
   have hX' : (X₁.map c)ᵀ * S.map c + S.map c * X₂.map c = 0 := by
     have := congrArg (fun A => A.map c) hX
-    simpa [Matrix.map_add, Matrix.map_mul, Matrix.transpose_map] using this
+    simpa [Matrix.map_add (f := _), Matrix.map_mul, Matrix.transpose_map] using this
   rw [hc] at hS
   have key₁ : M₁ᵀ * J₁ + J₁ * M₂ = 0 := by
     have e : M₁ᵀ * J₁ + J₁ * M₂ = C₁ᵀ * ((X₁.map c)ᵀ * S.map c + S.map c * X₂.map c) * C₂ := by
@@ -85,10 +85,10 @@ theorem exists_admissible_lift : ∀ {F E : Type} [Field F] [NumberField F] [Fie
     have hcomp₂ : (Y.map (cA σ)).map π₂ = M₁ := by
       rw [← hY1]; ext i j; simp [h21]
     have hQ1 : Q.map π₁ = 0 := by
-      rw [hQ, Matrix.map_add, Matrix.map_mul, Matrix.map_mul, Matrix.transpose_map, hY1, hcomp₁, ← hJ₁, key₁]
+      rw [hQ, Matrix.map_add (f := _), Matrix.map_mul, Matrix.map_mul, Matrix.transpose_map, hY1, hcomp₁, ← hJ₁, key₁]
       exact fun a b => map_add π₁ a b
     have hQ2 : Q.map π₂ = 0 := by
-      rw [hQ, Matrix.map_add, Matrix.map_mul, Matrix.map_mul, Matrix.transpose_map, hY2, hcomp₂, hJ₂, key₂]
+      rw [hQ, Matrix.map_add (f := _), Matrix.map_mul, Matrix.map_mul, Matrix.transpose_map, hY2, hcomp₂, hJ₂, key₂]
       exact fun a b => map_add π₂ a b
     ext i j
     apply inj

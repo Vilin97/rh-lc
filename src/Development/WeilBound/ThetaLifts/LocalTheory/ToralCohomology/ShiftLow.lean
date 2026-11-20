@@ -33,7 +33,7 @@ theorem gen_le {act : A →ₗ[ℂ] Module.End ℂ M} (h : Lie act) {g q l : Sub
   have Q : ∀ n, St act q (filt act l V n) → ∀ Z ∈ g, ∀ x ∈ filt act l V n, act Z x ∈ filt act l V (n + 1) := by
     intro n hn Z hZ x hx
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 (hs hZ)
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact add_mem (mono n (hn a ha x hx)) (up n b hb x hx)
   have P : ∀ n, St act q (filt act l V n) := by
     intro n
@@ -162,7 +162,7 @@ theorem alg_sup {r r₁ r₂ : I → I → Prop} (h : ∀ a b, r a b → r₁ a 
 
 def stab (act : (ι → Matrix I I ℂ) →ₗ[ℂ] Module.End ℂ M) (N : Submodule ℂ M) : Submodule ℂ (ι → Matrix I I ℂ) where
   carrier := {Z | ∀ x ∈ N, act Z x ∈ N}
-  add_mem' := fun {a b} ha hb x hx => by rw [map_add, LinearMap.add_apply]; exact add_mem (ha x hx) (hb x hx)
+  add_mem' := fun {a b} ha hb x hx => by rw [map_add (f := _), LinearMap.add_apply]; exact add_mem (ha x hx) (hb x hx)
   zero_mem' := fun x _ => by simp
   smul_mem' := fun c a ha x hx => by rw [map_smul, LinearMap.smul_apply]; exact N.smul_mem c (ha x hx)
 

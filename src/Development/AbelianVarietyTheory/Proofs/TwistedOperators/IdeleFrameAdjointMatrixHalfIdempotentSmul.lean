@@ -15,7 +15,7 @@ variable {D : D7}
 theorem cA_cA (z : AE D) : cA D (cA D z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero]
-  | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy]
   | tmul a x =>
     change a ⊗ₜ[D.host.F] star (star x) = _
     rw [star_star]

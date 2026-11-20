@@ -53,7 +53,7 @@ variable {Rl cG} {S : NX.RatDat D.ntw} (YS : NX.NExpRealS Rl cG S)
 def evW (j : Fin D.R.m) : S.WL ((j : ℕ) + 1) →+ (GA D (Wc D j) → ℂ) where
   toFun x := (Rl.HW j (sg0 D A3.A)).e ((Rl.FW j).j (sg0 D A3.A) ((YS.fi j).e x)) (v₀ j _)
   map_zero' := by rw [map_zero, map_zero, map_zero]; rfl
-  map_add' x y := by rw [map_add, map_add, map_add]; rfl
+  map_add' x y := by rw [map_add (f := _), map_add (f := _), map_add (f := _)]; rfl
 
 theorem evW_smul (j : Fin D.R.m) (c : D.what₂.LL) (x : S.WL ((j : ℕ) + 1)) :
     evW YS v₀ j (c • x) = D.what₂.embLL c • evW YS v₀ j x := by
@@ -84,7 +84,7 @@ theorem evK_tmul (a : NX.KB S i b) (f : NX.FmK S ((j : ℕ) + 1)) :
 def realRd (ν : ℂ) : Rd ρ D.nexp i j b where
   toFun f := ν⁻¹ • evK YS v₀ hρ i j b (YS.eF i _ b (Nat.le_add_left _ _) j.2 f)
   map_add' f f' := by
-    rw [map_add, ← smul_add]
+    rw [map_add (f := _), ← smul_add]
     exact congrArg _ ((evK YS v₀ hρ i j b).map_add _ _)
   map_smul' c f := by
     rw [map_smul, smul_comm]
@@ -94,7 +94,7 @@ def realRd (ν : ℂ) : Rd ρ D.nexp i j b where
         evK YS v₀ hρ i j b (c • x) = ρ.e i b c • evK YS v₀ hρ i j b x := fun c x => by
       induction x using TensorProduct.induction_on with
       | zero => rw [smul_zero, map_zero, smul_zero]
-      | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+      | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
       | tmul a f =>
         rw [TensorProduct.smul_tmul', evK_tmul, evK_tmul, smul_smul]
         exact congrArg (· • _) (map_mul (ρ.e i b) c a)

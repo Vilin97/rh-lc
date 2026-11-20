@@ -17,10 +17,10 @@ theorem dense_ker_of_bounded {A R C Q : Type} [CommRing A] [CommRing R] [CommRin
   obtain ⟨s, z, rfl⟩ := hd x (N + 1)
   obtain ⟨a, ha⟩ := hb z
   refine ⟨s + (p : R) * α a, (p : C) ^ N * z - i (α a), ?_, ?_⟩
-  · rw [map_add, map_mul, map_pow, map_natCast] at hx
-    rw [map_add, map_mul, map_natCast, map_add, map_mul, map_natCast, ← ha, ← hx]
+  · rw [map_add (f := _), map_mul, map_pow, map_natCast] at hx
+    rw [map_add (f := _), map_mul, map_natCast, map_add (f := _), map_mul, map_natCast, ← ha, ← hx]
     ring
-  · rw [map_add, map_mul, map_natCast]
+  · rw [map_add (f := _), map_mul, map_natCast]
     ring
 
 theorem ev_algebraMap (l : ℕ) [Fact l.Prime] (n : ℕ) (a : Per.AinfP l) :

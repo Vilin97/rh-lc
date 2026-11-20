@@ -107,7 +107,7 @@ def wLat (σ : D.host.E →+* ℂ) : AddSubgroup ((htpTrue ct).TC y) where
   zero_mem' := ⟨0, fun _ _ => by simp, fun _ => by simp⟩
   add_mem' := fun ⟨l, hl, e⟩ ⟨l', hl', e'⟩ => ⟨l + l', fun v hv =>
     (IsUltrametricDist.norm_add_le_max (S := ↥y.C.S) _ _).trans (max_le (hl v hv) (hl' v hv)),
-    fun t => by rw [map_add, LinearMap.add_apply, e, e', LinearMap.add_apply]⟩
+    fun t => by rw [map_add (f := _), LinearMap.add_apply, e, e', LinearMap.add_apply]⟩
   neg_mem' := fun ⟨l, hl, e⟩ => ⟨-l, fun v hv => (norm_neg _).trans_le (hl v hv),
     fun t => by rw [map_neg, LinearMap.neg_apply, e, LinearMap.neg_apply]⟩
 

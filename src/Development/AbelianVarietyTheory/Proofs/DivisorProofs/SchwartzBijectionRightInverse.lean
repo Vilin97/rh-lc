@@ -135,7 +135,7 @@ theorem image_mem_nhds [CompleteSpace E] [(𝓝 (0 : E)).IsCountablyGenerated] [
     | succ n ih =>
       show r n - T (x n) = _
       rw [ih]
-      simp only [s, Finset.sum_range_succ, map_add]
+      simp only [s, Finset.sum_range_succ, map_add (f := _)]
       abel
   have htail : ∀ n m, ∑ j ∈ Finset.Ico m (m + n), x j ∈ U (m + 1) :=
     sum_Ico_mem (U := fun k => U (k + 1)) (fun k => h0 _) (fun k => hadd (k + 1)) hx

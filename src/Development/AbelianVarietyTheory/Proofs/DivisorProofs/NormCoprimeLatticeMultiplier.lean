@@ -88,7 +88,7 @@ theorem mem_of_approx {K E : Type} [Field K] [NumberField K] [Field E] [NumberFi
     rw [hzK]; linear_combination (-(((t⁻¹ : (Af K)ˣ) : Af K) * algebraMap K (Af K) m - 1)) * eK
   have e2 : Ui * M = 1 + (k : Af E) * ((j : Af E) * Z) := by
     have := congrArg (finiteAdeleMap K E) e2K
-    rw [map_mul, map_add, map_one, map_mul, map_natCast, finiteAdeleMap_algebraMap] at this
+    rw [map_mul, map_add (f := _), map_one, map_mul, map_natCast, finiteAdeleMap_algebraMap] at this
     have hUi' : Ui = finiteAdeleMap K E ((t⁻¹ : (Af K)ˣ) : Af K) := by rw [hUi, ← map_inv]; rfl
     rw [hUi', hM, this, hZ]
     push_cast

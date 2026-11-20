@@ -57,7 +57,7 @@ lemma IsPD.add {N : ℕ} {f f' : UG N → ℂ} (hf : IsPD f) (hf' : IsPD f') : I
   obtain ⟨k, P, hP⟩ := hf
   obtain ⟨k', P', hP'⟩ := hf'
   refine ⟨k + k', P * detP N ^ k' + P' * detP N ^ k, fun g => ?_⟩
-  simp only [map_add, map_mul, map_pow, eval_detP, ← hP g, ← hP' g]
+  simp only [map_add (f := _), map_mul, map_pow, eval_detP, ← hP g, ← hP' g]
   ring
 
 lemma IsPD.mul {N : ℕ} {f f' : UG N → ℂ} (hf : IsPD f) (hf' : IsPD f') : IsPD (fun g => f g * f' g) := by

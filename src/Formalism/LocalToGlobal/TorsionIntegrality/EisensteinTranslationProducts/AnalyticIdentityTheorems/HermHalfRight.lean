@@ -11,7 +11,7 @@ lemma herm_add_left (L : PeriodPair) (x y w : ℂ) : herm L (x + y) w = herm L x
   simp only [herm]; ring
 
 lemma herm_add_right (L : PeriodPair) (x y w : ℂ) : herm L w (x + y) = herm L w x + herm L w y := by
-  simp only [herm, map_add]; ring
+  simp only [herm, map_add (f := _)]; ring
 
 lemma herm_neg_left (L : PeriodPair) (x w : ℂ) : herm L (-x) w = -herm L x w := by
   simp only [herm]; ring
@@ -105,7 +105,7 @@ theorem th0Basic_of (hb : SgStarBasic) (hq : SgStarQuasi) (hi : AltEInt) : Theta
         = Complex.exp ((Real.pi : ℂ) * herm L (z - t) (t + t) + (Real.pi : ℂ) * herm L (t + t) (t + t) / 2)
           * Complex.exp (-(Real.pi : ℂ) * herm L z t) := by
       rw [← Complex.exp_add]; congr 1
-      simp only [herm, map_add, map_neg, map_sub]; ring
+      simp only [herm, map_add (f := _), map_neg, map_sub]; ring
     rw [h1, h3]
     linear_combination (-sgStar L (z - t) / sgStar L t) * key
   · intro z
@@ -123,7 +123,7 @@ theorem th0Basic_of (hb : SgStarBasic) (hq : SgStarQuasi) (hi : AltEInt) : Theta
           * Complex.exp ((Real.pi : ℂ) * herm L z ω + (Real.pi : ℂ) * herm L ω ω / 2)
           * Complex.exp (-(Real.pi : ℂ) * herm L z t) := by
       rw [he]; simp only [← Complex.exp_add]; congr 1
-      simp only [herm, map_add] at hsw ⊢
+      simp only [herm, map_add (f := _)] at hsw ⊢
       linear_combination ((Real.pi : ℂ) / 2) * hsw
     rw [thetaZero_periodLattice_eq L t (z + ω), thetaZero_periodLattice_eq L t z, show z + ω + t = (z + t) + ω by ring, hq L ω (z + t) hω']
     linear_combination (semiChar L ω * sgStar L (z + t) / sgStar L t) * key
@@ -137,7 +137,7 @@ theorem th0LogDeriv_of (hl : SigmaLogDeriv) (he : EtaSplit) (hzq : ZetaQuasi)
   have hζ : wZeta L t = s2 L * t + ((Real.pi : ℂ) / (area L : ℂ)) * conj t := by
     have h1 := hzq L (t + t) (-t) hω (by rwa [neg_mem_iff])
     rw [show -t + (t + t) = t by ring, hzo, he] at h1
-    simp only [map_add] at h1
+    simp only [map_add (f := _)] at h1
     linear_combination h1 / 2
   have hd1 : HasDerivAt (fun w => wSigma L (w + t)) (wZeta L (z + t) * wSigma L (z + t)) z := by
     have := (hl L (z + t) hzt).comp z ((hasDerivAt_id' z).add_const t)

@@ -36,7 +36,7 @@ theorem eu_equiv (A : V ≃L[ℂ] V) (s : Bool) (a b : Fin n) (f : Mat n → V) 
   unfold Eu
   rw [rd_equiv, rd_equiv]
   funext x
-  by_cases hs : s = true <;> simp [hs, map_add, map_smul]
+  by_cases hs : s = true <;> simp [hs, map_add (f := _), map_smul]
 
 theorem epow_equiv (A : V ≃L[ℂ] V) (s : Bool) (m : ℕ) : ∀ (a b : Fin n) (f : Mat n → V),
     Epow s m a b (fun x => A (f x)) = fun x => A (Epow s m a b f x) := by
@@ -66,7 +66,7 @@ theorem om_equiv (A : V ≃L[ℂ] V) (f : Mat n → V) : Om (fun x => A (f x)) =
   unfold Om
   rw [gel_equiv, gel_equiv]
   funext x
-  simp [map_add, map_nsmul]
+  simp [map_add (f := _), map_nsmul]
 
 theorem zop_equiv (A : V ≃L[ℂ] V) : ∀ (w : List (Bool × ℕ)) (f : Mat n → V),
     zOp w (fun x => A (f x)) = fun x => A (zOp w f x) := by

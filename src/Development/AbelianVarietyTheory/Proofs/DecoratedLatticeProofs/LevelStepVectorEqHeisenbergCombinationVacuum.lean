@@ -70,7 +70,7 @@ theorem isSBHalf_stepDatumQ (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin 
 
 theorem comb_add' (ψ : AddChar (AF D.host.F) ℂ) {S T : HSp D} (c c' : WO S T →₀ ℂ) (f : WO S T → ℂ) :
     comb ψ S T (c + c') f = comb ψ S T c f + comb ψ S T c' f := by
-  rw [GlobalTheory.FinPl.DatumBack.comb_eq_lc, GlobalTheory.FinPl.DatumBack.comb_eq_lc, GlobalTheory.FinPl.DatumBack.comb_eq_lc, map_add]
+  rw [GlobalTheory.FinPl.DatumBack.comb_eq_lc, GlobalTheory.FinPl.DatumBack.comb_eq_lc, GlobalTheory.FinPl.DatumBack.comb_eq_lc, map_add (f := _)]
 
 theorem comb_smul' (ψ : AddChar (AF D.host.F) ℂ) {S T : HSp D} (a : ℂ) (c : WO S T →₀ ℂ) (f : WO S T → ℂ) :
     comb ψ S T (a • c) f = a • comb ψ S T c f := by
@@ -197,7 +197,7 @@ theorem exists_comb_of_isThetaAt {S T : HSp D} (ψ : AddChar (AF D.host.F) ℂ)
     obtain ⟨c, hc, hc'⟩ := hg
     obtain ⟨c', hd, hd'⟩ := hg'
     refine ⟨c + c', mem_of_mem_support_add hc hd, ?_⟩
-    rw [LinearMap.map_add, hc', hd', comb_add']
+    rw [LinearMap.map_add (f := _), hc', hd', comb_add']
   | smul a g _ hg =>
     obtain ⟨c, hc, hc'⟩ := hg
     refine ⟨a • c, mem_of_mem_support_smul a hc, ?_⟩

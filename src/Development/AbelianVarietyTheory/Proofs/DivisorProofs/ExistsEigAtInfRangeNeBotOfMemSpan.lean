@@ -49,7 +49,7 @@ theorem exists_eigAt_inf_range_ne_bot_of_mem_span :
         exact le_iSup₂_of_le (f := fun (z : I → ℂ) (_ : z ≠ x) => eigAt T z) _ hne le_rfl
           (map_mem_eigAt_of_semilinear σ j op T hT y _ hev)
     | zero => rw [map_zero, map_zero]; exact Submodule.zero_mem _
-    | add a b _ _ ha hb => rw [map_add, map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ ha hb
   have hw' : w ∈ ⨆ (z : I → ℂ) (_ : z ≠ x), eigAt T z := by
     refine Submodule.span_le.2 ?_ hw
     rintro _ ⟨_, ⟨v, rfl⟩, rfl⟩

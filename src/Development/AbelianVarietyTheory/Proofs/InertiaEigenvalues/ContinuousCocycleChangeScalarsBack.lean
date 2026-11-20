@@ -64,7 +64,7 @@ theorem unrAt_eq_top {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra
     have h4 := hc φ' φ'⁻¹
     rw [mul_inv_cancel, hc1] at h4
     have h5 : c.1 (φ' * ι γ' * φ'⁻¹) = rho φ (c.1 (ι γ')) := by
-      rw [mul_assoc, hc, hc, htriv _ (show ((ι γ' : Dec (F := F) A) : G F Ω) ∈ Ine (F := F) A from hγ.1), map_add,
+      rw [mul_assoc, hc, hc, htriv _ (show ((ι γ' : Dec (F := F) A) : G F Ω) ∈ Ine (F := F) A from hγ.1), map_add (f := _),
         add_left_comm, ← h4, add_zero]
     exact congrArg Multiplicative.ofAdd (hφ φ hφ' _ (h5.symm.trans h3.symm))
   have hall : Ine (F := F) A ≤ f.ker.map (Ine (F := F) A).subtype := by
@@ -129,7 +129,7 @@ theorem exists_equiv_of_surjective {Λ Λ' V W W' : Type} [CommRing Λ] [CommRin
     { toFun := fun x => ⟨f (e ⟨x.1, (hK _).1 x.2⟩).1, (hS _).2 (Subtype.prop _)⟩
       map_add' := fun x y => Subtype.ext (by
         change _ = f _ + f _
-        rw [← map_add, ← Submodule.coe_add, ← map_add]; rfl)
+        rw [← map_add (f := _), ← Submodule.coe_add, ← map_add (f := _)]; rfl)
       map_smul' := fun a x => Subtype.ext (by
         obtain ⟨a, rfl⟩ := hπ a
         change _ = π a • f _

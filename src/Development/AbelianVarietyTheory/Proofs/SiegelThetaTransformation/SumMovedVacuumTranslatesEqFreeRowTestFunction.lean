@@ -305,7 +305,7 @@ theorem mem_moved (hy : y ∈ tens Λ' ((Ideal.span {2} * conjI D.𝔪) • L))
       exact Ideal.isCoprime_iff_exists.2 ⟨_, 𝔞.mul_mem_left x ha, m, hm, e⟩
     obtain ⟨x, m, hm, e⟩ := Lev.cop_iff.1 h3
     exact Lev.cop_iff.2 ⟨Lev.bar x, Lev.bar m, Lev.mem_conjI.1 hm, by
-      rw [← map_mul, ← map_add, e, map_one]⟩
+      rw [← map_mul, ← map_add (f := _), e, map_one]⟩
   obtain ⟨s, hs, h⟩ := loc_tens (y := lowD r n ((α : E) / cc (α : E)) * y) (𝔟 := D.𝔪) hΛ hM
     (near_of_mem hL) fun k => by
       rw [lowD_row]

@@ -79,9 +79,9 @@ def ρ (hPW : P ≤ W) : degZeroLoc P {W} →+* FractionRing (MRing ι F ⧸ W) 
     have hgg : g * g' ∉ W := fun h => (Ideal.IsPrime.mem_or_mem ‹_› h).elim hg hg'
     rw [res_eq hPW hg hx, res_eq hPW hg' hy, res_eq (f := f * g' + g * f') hPW hgg
       (by rw [Subalgebra.coe_add, hx, hy, div_add_div _ _ (fr_ne_zero P fun h => hg (hPW h))
-        (fr_ne_zero P fun h => hg' (hPW h))]; simp only [map_add, map_mul]),
+        (fr_ne_zero P fun h => hg' (hPW h))]; simp only [map_add (f := _), map_mul]),
       div_add_div _ _ (fr_ne_zero W hg) (fr_ne_zero W hg')]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
 
 theorem ρ_apply (hPW : P ≤ W) (x : degZeroLoc P {W}) : ρ hPW x = res P W x := rfl
 

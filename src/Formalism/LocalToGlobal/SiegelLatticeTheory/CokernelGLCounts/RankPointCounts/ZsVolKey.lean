@@ -61,7 +61,7 @@ theorem eq_sL (F : Formalism.MainNotions.S.FlagG S r T) (F' : Formalism.MainNoti
       obtain ⟨l, rfl⟩ := hv
       exact hy l
     | zero => rw [map_zero, LinearMap.zero_apply]
-    | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+    | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
     | smul a v _ hv => rw [map_smulₛₗ, LinearMap.smul_apply, hv, smul_zero]
   have hpre : ∀ l, ∃ w ∈ Submodule.span E (Set.range (gg F F')), s w = gg F F' l := by
     intro l
@@ -111,7 +111,7 @@ theorem eq_sL (F : Formalism.MainNotions.S.FlagG S r T) (F' : Formalism.MainNoti
   have hx : x = (x - ∑ m, cOf (gg F F') x m • gg F F' m) + ∑ m, cOf (gg F F') x m • gg F F' m := by
     rw [sub_add_cancel]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hx, map_add, map_add, map_sum, map_sum, hsy, sL_perp (F := F) (F' := F') hG _ hy]
+    rw [hx, map_add (f := _), map_add (f := _), map_sum, map_sum, hsy, sL_perp (F := F) (F' := F') hG _ hy]
   congr 1
   exact Finset.sum_congr rfl fun m _ => by rw [map_smul, map_smul, hframe m]
 

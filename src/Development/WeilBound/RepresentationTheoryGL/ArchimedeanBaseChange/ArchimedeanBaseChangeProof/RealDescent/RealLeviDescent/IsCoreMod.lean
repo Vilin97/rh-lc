@@ -29,7 +29,7 @@ variable {U : Type} [NormedAddCommGroup U] [InnerProductSpace ℂ U] (π : G n �
 def invSp (E : KMod n) : Submodule ℂ ((E.V →L[ℂ] ℂ) →L[ℂ] U) where
   carrier := {t | IsInvT π E t}
   add_mem' {a b} ha hb k ξ := by
-    simp only [ContinuousLinearMap.add_apply, map_add]
+    simp only [ContinuousLinearMap.add_apply, map_add (f := _)]
     rw [ha k ξ, hb k ξ]
   zero_mem' k ξ := by simp
   smul_mem' c a ha k ξ := by
@@ -95,7 +95,7 @@ structure IsCoreMod (χ : Inf n) (E1 E2 : Fin n → Fin n → Module.End ℂ V)
 def invA (σ : Matrix.unitaryGroup (Fin n) ℂ →* (V →ₗ[ℂ] V)) (E : KMod n) : Submodule ℂ ((E.V →L[ℂ] ℂ) →ₗ[ℂ] V) where
   carrier := {t | ∀ k ξ, t (ξ ∘L E.ρ k⁻¹) = σ k (t ξ)}
   add_mem' {a b} ha hb k ξ := by
-    simp only [LinearMap.add_apply, map_add]
+    simp only [LinearMap.add_apply, map_add (f := _)]
     rw [ha k ξ, hb k ξ]
   zero_mem' k ξ := by simp
   smul_mem' c a ha k ξ := by
@@ -110,8 +110,8 @@ def flipA (E : KMod n) (A : V →ₗ[ℂ] V) (T : E.V →L[ℂ] E.V) :
 
 def hwSp (E1 E2 : Fin n → Fin n → Module.End ℂ V) (μ : Fin n → ℝ) : Submodule ℂ V where
   carrier := {v | Formalism.REAL.KHighest (fun _ => true) (kF E1 E2) μ v}
-  add_mem' {x y} hx hy := ⟨fun a => by rw [map_add, hx.1 a, hy.1 a, smul_add],
-    fun a b hab he => by rw [map_add, hx.2 a b hab he, hy.2 a b hab he, add_zero]⟩
+  add_mem' {x y} hx hy := ⟨fun a => by rw [map_add (f := _), hx.1 a, hy.1 a, smul_add],
+    fun a b hab he => by rw [map_add (f := _), hx.2 a b hab he, hy.2 a b hab he, add_zero]⟩
   zero_mem' := ⟨fun a => by simp, fun a b _ _ => by simp⟩
   smul_mem' c x hx := ⟨fun a => by rw [map_smul, hx.1 a, smul_comm], fun a b hab he => by rw [map_smul, hx.2 a b hab he, smul_zero]⟩
 

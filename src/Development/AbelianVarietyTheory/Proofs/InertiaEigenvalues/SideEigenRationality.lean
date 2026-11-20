@@ -76,7 +76,7 @@ theorem charpoly_pt : ∀ (D : D7) (i : D.nd.Loc) (x : D.nd.X i) (ρ : G D.host.
   rw [hcomp]
   unfold heckePol sysPol
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum]
+    rw [Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum]
   congr 1
   refine Finset.sum_congr rfl fun k hk => ?_
   obtain ⟨hk1, hk2⟩ := Finset.mem_Icc.1 hk

@@ -32,7 +32,7 @@ theorem GlobalTheory.PerQ.ptT_forms_built : ∀ {B : Base} {X : PreX B.toPre} (I
     | add a b _ _ ha hb =>
       obtain ⟨y, e⟩ := ha
       obtain ⟨z, e'⟩ := hb
-      exact ⟨y + z, by rw [map_add, map_add, map_add, map_add, e, e']⟩
+      exact ⟨y + z, by rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), e, e']⟩
     | smul r a _ ha =>
       obtain ⟨y, e⟩ := ha
       refine ⟨r • y, ?_⟩

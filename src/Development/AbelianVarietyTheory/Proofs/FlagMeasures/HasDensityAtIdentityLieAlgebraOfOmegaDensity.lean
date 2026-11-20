@@ -255,8 +255,8 @@ def cplxIsom (e : Fin P ⊕ Fin Q ≃ Fin n) :
     WithLp 2 (lieE (UH (form e)) × lieE (UH (form e))) →ₗᵢ[ℝ] EuclideanSpace ℝ (Fin n × Fin n × Bool) where
   toFun p := coord e (((lieCoord e).symm p.fst).1 + Complex.I • ((lieCoord e).symm p.snd).1)
   map_add' p q := by
-    rw [← map_add]; congr 1
-    simp only [WithLp.add_fst, WithLp.add_snd, map_add, Submodule.coe_add, smul_add]
+    rw [← map_add (f := _)]; congr 1
+    simp only [WithLp.add_fst, WithLp.add_snd, map_add (f := _), Submodule.coe_add, smul_add]
     abel
   map_smul' c p := by
     rw [RingHom.id_apply, ← map_smul]; congr 1

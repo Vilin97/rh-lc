@@ -38,7 +38,7 @@ def realLocalization (ι : LocalEmbeddings K) {r : ℕ} (hr : 1 ≤ r) :
     rfl
   map_add' x y := by
     funext v
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rfl
 
 theorem bijective_realComponents {r : ℕ} (hr : 3 ≤ r) :

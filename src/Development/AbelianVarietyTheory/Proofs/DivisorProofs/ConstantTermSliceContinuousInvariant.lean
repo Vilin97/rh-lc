@@ -28,7 +28,7 @@ theorem setIntegral_comp_contAddEquiv {X : Type} [AddCommGroup X] [TopologicalSp
     h𝓕.image_of_equiv m.toEquiv (MeasurePreserving.symm m ⟨m.measurable, rfl⟩).quasiMeasurePreserving e
       fun n x => by
         change T (T.symm n + x) = n + T x
-        rw [map_add, T.apply_symm_apply]
+        rw [map_add (f := _), T.apply_symm_apply]
   have hD2 : IsAddFundamentalDomain N 𝓕 (μ.map m) :=
     h𝓕.mono (Measure.absolutelyContinuous_isAddHaarMeasure _ _)
   have hinv : ∀ (n : N) (x : X), f (n +ᵥ x) = f x := fun n x => hf n n.2 x

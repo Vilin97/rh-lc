@@ -256,8 +256,8 @@ def liftSub (k : ℕ) (Z Z' : Matrix (Fin n) (Fin n) K) (φ : coker R Z ≃ₗ[R
   carrier := {p | LiftRel R k Z Z' φ p.1 p.2}
   add_mem' := by
     rintro p q ⟨h1, h2⟩ ⟨h3, h4⟩
-    exact ⟨by simp only [Prod.fst_add, Prod.snd_add, Submodule.Quotient.mk_add, map_add, h1, h3],
-      fun j hj => by simp only [Prod.fst_add, Prod.snd_add, map_add, h2 j hj, h4 j hj]⟩
+    exact ⟨by simp only [Prod.fst_add, Prod.snd_add, Submodule.Quotient.mk_add, map_add (f := _), h1, h3],
+      fun j hj => by simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), h2 j hj, h4 j hj]⟩
   zero_mem' := ⟨by simp, fun j _ => by simp⟩
   smul_mem' := by
     rintro r p ⟨h1, h2⟩

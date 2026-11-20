@@ -63,7 +63,7 @@ theorem neg_one_not_mem_normGroup {K L : Type} [Field K] [NumberField K] [Field 
       (InfinitePlace.isReal_mk_iff.2 (ComplexEmbedding.isReal_iff.2 (RingHom.ext fun x => ?_)))
     change starRingEnd ℂ (τ x) = τ x
     rw [← b.sum_repr x, Fin.sum_univ_two, h0, Algebra.smul_def, Algebra.smul_def]
-    simp only [map_add, map_mul, map_one, hτ, h3, Complex.conj_ofReal]
+    simp only [map_add (f := _), map_mul, map_one, hτ, h3, Complex.conj_ofReal]
   rw [mem_normGroup_iff_form b h0 h1]
   rintro ⟨x, y, hxy⟩
   let f := InfinitePlace.Completion.ringEquivRealOfIsReal hw

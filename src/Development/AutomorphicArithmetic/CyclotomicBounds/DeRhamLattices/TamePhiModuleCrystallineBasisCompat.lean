@@ -68,7 +68,7 @@ theorem _root_.UpperTheory.KN.tame_phiModule_crystalline_basis_compat :
     | zero => simp only [map_zero]
     | tmul s x =>
       simp only [TWincl, TensorProduct.map_tmul, AlgHom.toLinearMap_apply, LinearMap.id_apply, iotaO_toB]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have h6 := h5 z
   rw [← h3, ← h4, BasisCoord.tWincl_smul', BasisCoord.tWincl_smul', iotaO_toB, map_mul, map_mul, mul_smul,
     map_pow, map_pow, ← hED] at h6

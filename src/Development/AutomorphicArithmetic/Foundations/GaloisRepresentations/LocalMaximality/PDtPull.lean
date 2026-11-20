@@ -116,7 +116,7 @@ theorem UpperTheory.Gal.productCup_of_system.dtPull_of :
       ext m l
       change ev (⟨g m l, hgl m l⟩ + ∑ l', ⟨tt K' x l', hle (htB l')⟩ * ⟨c m l' l, hcl m l' l⟩) = A e m l
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, hge]
+        rw [map_add (f := _), map_sum, hge]
       simp only [map_mul, ht0, zero_mul, Finset.sum_const_zero, add_zero]
     have hD : ∀ m, D ℂ K' (j2 (tt K x m)) = ∑ l, (ah m l : K') • D ℂ K' (tt K' x l) := by
       intro m

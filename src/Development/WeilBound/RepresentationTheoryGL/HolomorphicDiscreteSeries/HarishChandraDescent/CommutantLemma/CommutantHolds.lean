@@ -65,7 +65,7 @@ theorem commutant_holds : Commutant := by
   rw [smE_apply hρ, smE_apply hρ]
   change T (dS ρ (S7.cpart1 ε (single a b 1)) ↑x + Complex.I • dS ρ (S7.cpart2 ε (single a b 1)) ↑x) =
     dS ρ (S7.cpart1 ε (single a b 1)) (T ↑x) + Complex.I • dS ρ (S7.cpart2 ε (single a b 1)) (T ↑x)
-  rw [map_add, map_smul, dS_map hρ T hT (SmDerA.inG_cpart1 ε _) hxs,
+  rw [map_add (f := _), map_smul, dS_map hρ T hT (SmDerA.inG_cpart1 ε _) hxs,
     dS_map hρ T hT (SmDerA.inG_cpart2 ε _) hxs]
 
 end PositivityTheory.RgHe3

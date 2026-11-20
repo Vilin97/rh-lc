@@ -47,7 +47,7 @@ theorem odd_coeff_lam {e : PowerSeries K} (h : ∀ n : ℕ, Odd n → PowerSerie
   have h2 : n ≠ 2 := by
     rintro rfl
     exact absurd hn (by decide)
-  rw [lam, map_add, PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow, if_neg h2, mul_zero, add_zero,
+  rw [lam, map_add (f := _), PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow, if_neg h2, mul_zero, add_zero,
     dblInt, PowerSeries.coeff_mk]
   split_ifs with h1
   · rfl
@@ -67,7 +67,7 @@ theorem rescale_wTr (W : WeierstrassCurve K) (x0 y0 : K) (hE : W.toAffine.Equati
   have hX : ((-1 : K) • (PowerSeries.X : PowerSeries K)) = -PowerSeries.X := by
     rw [neg_smul, one_smul]
   unfold wTr
-  rw [map_add, rescale_C_eq, PowerSeries.rescale_eq_subst,
+  rw [map_add (f := _), rescale_C_eq, PowerSeries.rescale_eq_subst,
     PowerSeries.subst_comp_subst_apply he (PowerSeries.HasSubst.smul_X' (-1 : K)), hX,
     (Formalism.L2.Th1.A.logNeg K W).2, ← PowerSeries.subst_comp_subst_apply hi he,
     Formalism.L2.Th1.A.plusNeg K W x0 y0 hE, negY_two W x0 y0 h2]
@@ -84,7 +84,7 @@ theorem fact_coeff_lam (e : PowerSeries K) (s2 : K) (n : ℕ) :
   have h1 : ((n : K) + 2) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero (n + 1)
   have h2 : ((n : K) + 1) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
   have h3 : ¬ (n + 2 < 2) := by omega
-  rw [lam, map_add, PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow, dblInt, PowerSeries.coeff_mk,
+  rw [lam, map_add (f := _), PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow, dblInt, PowerSeries.coeff_mk,
     if_neg h3, Nat.add_sub_cancel, Nat.factorial_succ, Nat.factorial_succ]
   by_cases h0 : n = 0
   · subst h0
@@ -121,14 +121,14 @@ theorem jetsIn1_lam {R : Subring K} (W : WeierstrassCurve K) (hW : CoeffIn R W) 
   | 2 =>
     have h := fact_coeff_lam (wTr W x0 y0) s2 0
     rw [zero_add] at h
-    rw [h, if_pos rfl, Nat.factorial_zero, Nat.cast_one, one_mul, wTr, map_add,
+    rw [h, if_pos rfl, Nat.factorial_zero, Nat.cast_one, one_mul, wTr, map_add (f := _),
       PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_zero_eq_constantCoeff_apply,
       JetSubstitutionLemmas.cc_subst1 (Formalism.L2.Th1.A.expSpec K W).1, (Formalism.L2.Th1.A.plusFlow K W x0 y0 hE).2.1,
       PowerSeries.constantCoeff_C]
     exact hs
   | k + 3 =>
     have h := fact_coeff_lam (wTr W x0 y0) s2 (k + 1)
-    rw [h, if_neg (Nat.succ_ne_zero k), add_zero, wTr, map_add, PowerSeries.coeff_C,
+    rw [h, if_neg (Nat.succ_ne_zero k), add_zero, wTr, map_add (f := _), PowerSeries.coeff_C,
       if_neg (Nat.succ_ne_zero k), add_zero]
     exact hj (k + 1)
 
@@ -227,16 +227,16 @@ theorem wpShift_eq {K : Type} [Field K] [CharZero K] (W : WeierstrassCurve K) (x
   rw [negY_two W x0 y0 h2] at hD
   set L : PowerSeries K := 2 • lam (wpReg W) s2 + 2 • (-(lam (wTr W x0 y0) s2)) with hL
   have cL : PowerSeries.constantCoeff L = 0 := by
-    rw [hL, map_add, map_nsmul, map_nsmul, map_neg, constantCoeff_lam, constantCoeff_lam]
+    rw [hL, map_add (f := _), map_nsmul, map_nsmul, map_neg, constantCoeff_lam, constantCoeff_lam]
     simp
   have cL' : PowerSeries.constantCoeff (PowerSeries.derivative (R := K) L) = 0 := by
-    rw [hL, map_add, map_nsmul, map_nsmul, map_neg, map_add, map_nsmul, map_nsmul, map_neg,
+    rw [hL, map_add (f := _), map_nsmul, map_nsmul, map_neg, map_add (f := _), map_nsmul, map_nsmul, map_neg,
       constantCoeff_derivative_lam, constantCoeff_derivative_lam]
     simp
   have dL : PowerSeries.derivative (R := K) (PowerSeries.derivative (R := K) L) =
       2 * wpReg W - wTr W x0 y0 - wTr W x0 y0 := by
     rw [hL]
-    simp only [map_add, map_nsmul, map_neg, derivative2_lam]
+    simp only [map_add (f := _), map_nsmul, map_neg, derivative2_lam]
     simp only [nsmul_eq_mul]
     push_cast
     ring

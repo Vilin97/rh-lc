@@ -51,7 +51,7 @@ theorem vhol_diff_fock {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {s 
     simp only [MvPolynomial.algHom_C]
     exact differentiableOn_const _
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (hp x).add (hq x)
   | mul_X p v hp =>
     have e1 : ∀ z, Formalism.GradedWeylDivisibility.blockAct ℂ (U z) (p * MvPolynomial.X v) =

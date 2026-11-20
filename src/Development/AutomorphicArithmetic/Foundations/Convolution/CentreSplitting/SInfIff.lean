@@ -18,7 +18,7 @@ private theorem UpperTheory.ConvolutionTheory.Dp.sInfIff_uC {E : Type} [Field E]
     (p q : UEnv E n) (ψ : cuspForms E n) :
     Cm.uC E n ((1 : ℂ) ⊗ₜ p + Complex.I ⊗ₜ q) (Cm.ofCusp E n ψ) =
       Cm.ofCusp E n (uActionCusp E n p ψ + Complex.I • uActionCusp E n q ψ) := by
-  rw [map_add, map_add, map_smul, Cm.ofCusp_uAction, Cm.ofCusp_uAction, Cm.uC_tmul, Cm.uC_tmul, one_smul]
+  rw [map_add (f := _), map_add (f := _), map_smul, Cm.ofCusp_uAction, Cm.ofCusp_uAction, Cm.uC_tmul, Cm.uC_tmul, one_smul]
   rfl
 
 theorem UpperTheory.ConvolutionTheory.Dp.sInfIff :

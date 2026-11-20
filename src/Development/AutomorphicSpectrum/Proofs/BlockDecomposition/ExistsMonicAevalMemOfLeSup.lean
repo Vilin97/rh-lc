@@ -21,7 +21,7 @@ theorem exists_monic_aeval_mem_of_le_sup {R : Type*} [Ring R] [Algebra ℂ R] (A
     refine ⟨v, hv, ?_⟩
     change I.mkQ v = I.mkQ (Polynomial.aeval z p)
     have hi0 : I.mkQ i = 0 := by simpa using hi
-    rw [← e, map_add, hi0, add_zero]
+    rw [← e, map_add (f := _), hi0, add_zero]
   let g : Polynomial ℂ →ₗ[ℂ] V.map I.mkQ := f.codRestrict _ hf
   have hnot : ¬ Function.Injective g := fun hinj =>
     Polynomial.not_finite (R := ℂ) (Module.Finite.of_injective g hinj)

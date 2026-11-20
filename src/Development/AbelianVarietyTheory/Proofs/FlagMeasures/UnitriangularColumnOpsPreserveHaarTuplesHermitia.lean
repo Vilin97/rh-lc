@@ -75,7 +75,7 @@ theorem map_add_nilpotent_of_compactOpen {G : Type*} [AddCommGroup G] [Topologic
       invFun := (∑ j ∈ Finset.range m, (-N) ^ j : Module.End ℤ G)
       left_inv := fun x => LinearMap.congr_fun h1 x
       right_inv := fun x => LinearMap.congr_fun h2 x
-      map_add' := fun x y => by rw [map_add]; abel
+      map_add' := fun x y => by rw [map_add (f := _)]; abel
       continuous_toFun := continuous_id.add hNc
       continuous_invFun := hinv }
   have hLB : L ⁻¹' (B : Set G) = B := by

@@ -116,7 +116,7 @@ theorem hecke_comm (σ : G → G) (hσ : ∀ x y, σ (x * y) = σ y * σ x) (hσ
     | of g =>
       rw [map_mul, map_mul, antiLift_idem σ hσ hσσ J χ hJ, antiLift_of, ← MulOpposite.op_mul,
         ← MulOpposite.op_mul, ← mul_assoc, key]
-    | add x y hx hy => rw [mul_add, add_mul, map_add, hx, hy, MulOpposite.op_add]
+    | add x y hx hy => rw [mul_add, add_mul, map_add (f := _), hx, hy, MulOpposite.op_add]
     | smul r x hx => rw [mul_smul_comm, smul_mul_assoc, map_smul, hx, MulOpposite.op_smul]
   have h := map_mul (antiLift σ hσ) (twistedIdem J χ * MonoidAlgebra.of ℂ G g * twistedIdem J χ)
     (twistedIdem J χ * MonoidAlgebra.of ℂ G g' * twistedIdem J χ)

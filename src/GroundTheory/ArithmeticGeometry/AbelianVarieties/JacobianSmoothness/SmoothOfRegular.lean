@@ -56,10 +56,10 @@ def cotD : P →ₗ[k] (maximalIdeal P).Cotangent where
   toFun x := (maximalIdeal P).toCotangent ⟨x - algebraMap k P (valueAt hres x),
     sub_valueAt_mem hsurj hres x⟩
   map_add' x y := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     ext
-    simp only [map_add, Submodule.coe_add]
+    simp only [map_add (f := _), Submodule.coe_add]
     ring
   map_smul' c x := by
     rw [RingHom.id_apply]

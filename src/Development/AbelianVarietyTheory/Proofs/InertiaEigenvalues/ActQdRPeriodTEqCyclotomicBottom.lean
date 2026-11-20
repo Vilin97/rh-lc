@@ -55,7 +55,7 @@ theorem _root_.GlobalTheory.DeRhamCompare.comm_mp (b : R) (x : V ⊗[Qp] R) :
   | zero => simp
   | tmul v r =>
     simp [_root_.GlobalTheory.IndefiniteRowSideFullHecke.JumpMultiplicityDual.mulPeriod, TensorProduct.smul_tmul', smul_eq_mul]
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
 
 theorem finite_of_finrank_eq [FiniteDimensional LL V] (S : Submodule LL (V ⊗[Qp] R)) {n : ℕ}
     (hn : 0 < n) (h : finrank LL S = n * finrank LL V) : FiniteDimensional LL S := by
@@ -114,7 +114,7 @@ theorem _root_.GlobalTheory.DeRhamCompare.mulK_mem (c : K) (x : V ⊗[Qp] BdR) (
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v r => simp [_root_.Formalism.WeaklyAdmissibleFiltrations.actVdR, _root_.GlobalTheory.IndefiniteRowSideFullHecke.JumpMultiplicityDual.mulPeriod]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   rw [key, hx g]
 
 theorem mulK₀_mem (c : K₀) (x : V ⊗[Qp] B) (hx : x ∈ Dcris PD ρ) :
@@ -126,7 +126,7 @@ theorem mulK₀_mem (c : K₀) (x : V ⊗[Qp] B) (hx : x ∈ Dcris PD ρ) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [mp_tmul, actVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 open Module in
 open TensorProduct in
@@ -173,7 +173,7 @@ theorem FilV_induction {a : ℤ} {p : V ⊗[Qp] BdR → Prop} (h0 : p 0)
   induction y using TensorProduct.induction_on with
   | zero => simpa using h0
   | tmul v b => simpa using ht v b b.2
-  | add x y hx hy => rw [map_add]; exact ha _ _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact ha _ _ hx hy
 
 open Module in
 open TensorProduct in
@@ -222,7 +222,7 @@ def DdRK : Submodule K (BdR ⊗[Qp] V) where
   carrier := {y | (TensorProduct.comm Qp V BdR).symm y ∈ DdR PD ρ}
   zero_mem' := by simp
   add_mem' := fun hx hy => by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact Submodule.add_mem _ hx hy
   smul_mem' := fun c y hy => by
     obtain ⟨x, rfl⟩ := (TensorProduct.comm Qp V BdR).surjective y
@@ -234,7 +234,7 @@ def DcrisK : Submodule K₀ (B ⊗[Qp] V) where
   carrier := {y | (TensorProduct.comm Qp V B).symm y ∈ Dcris PD ρ}
   zero_mem' := by simp
   add_mem' := fun hx hy => by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact Submodule.add_mem _ hx hy
   smul_mem' := fun c y hy => by
     obtain ⟨x, rfl⟩ := (TensorProduct.comm Qp V B).surjective y
@@ -286,7 +286,7 @@ theorem ιV_mp (c : B) (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [mp_tmul, ιV]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Comparison
 

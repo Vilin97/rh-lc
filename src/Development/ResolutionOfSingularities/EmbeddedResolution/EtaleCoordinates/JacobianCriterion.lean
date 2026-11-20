@@ -44,7 +44,7 @@ private theorem D_mem_span_range_D_X (K : Type*) [CommRing K] (σ : Type*)
     rw [← MvPolynomial.algebraMap_eq, Derivation.map_algebraMap]
     exact Submodule.zero_mem _
   · rename_i p q hp hq
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hp hq
   · rename_i p i hp
     rw [Derivation.leibniz]

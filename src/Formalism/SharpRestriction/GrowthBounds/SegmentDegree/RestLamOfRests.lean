@@ -55,7 +55,7 @@ theorem lam_map_phc {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {n' r
     MvPolynomial.map f (X.phc p K R (j.val : ℤ) P) = lam_ph (X.lamG K) (X.lamE p K) j (MvPolynomial.map f P) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [Dat.phc, lam_ph]
-  | add u v hu hv => simp only [map_add, hu, hv]
+  | add u v hu hv => simp only [map_add (f := _), hu, hv]
   | mul_X q v h =>
     simp only [map_mul, h, map_X]
     simp [Dat.phc, lam_ph, Dat.lamG, Dat.lamE]

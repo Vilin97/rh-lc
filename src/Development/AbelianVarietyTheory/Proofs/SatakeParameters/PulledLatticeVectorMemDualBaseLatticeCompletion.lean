@@ -26,7 +26,7 @@ theorem prV_sigR {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
     prV (E := E) v (sigR σ (FiniteAdeleRing (𝓞 F) F) x) = sigR σ (v.adicCompletion F) (prV (E := E) v x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
   | tmul a b => simp [prV, sigR]
 
 theorem bc_prV_mem_UPts {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

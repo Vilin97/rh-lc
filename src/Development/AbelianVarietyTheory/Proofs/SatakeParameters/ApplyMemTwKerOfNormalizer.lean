@@ -318,10 +318,10 @@ theorem exists_lift {Z : Fin n → Fin n → Prop} (hZ : ∀ i l j, Z i l → Z 
     by rw [show (1 - Y) * (1 + Y) = 1 - Y * Y by noncomm_ring, hYY, sub_zero]⟩, Units.ext ?_, ?_, ?_⟩
   · have : (IsLocalRing.residue 𝒪[k]).mapMatrix Y = u.val - 1 := by ext i j; exact hL _
     show (IsLocalRing.residue 𝒪[k]).mapMatrix (1 + Y) = u.val
-    rw [map_add, map_one, this, add_sub_cancel]
+    rw [map_add (f := _), map_one, this, add_sub_cancel]
   · intro i j h
     show ((algebraMap 𝒪[k] k).mapMatrix (1 + Y) - 1) i j = 0
-    rw [map_add, map_one, add_sub_cancel_left]
+    rw [map_add (f := _), map_one, add_sub_cancel_left]
     simp [hYz i j h]
   · intro i j h
     show ((algebraMap 𝒪[k] k).mapMatrix (1 - Y) - 1) i j = 0
@@ -766,7 +766,7 @@ theorem eventually_mem_twKer {v : V} (hv : v ∈ twKer π (unipRad k e) 1) :
   | zero => simp
   | add x y _ _ hx hy =>
     filter_upwards [hx, hy] with M h1 h2
-    rw [map_add]; exact add_mem h1 h2
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
   | smul a x _ hx =>
     filter_upwards [hx] with M h1
     rw [map_smul]; exact Submodule.smul_mem _ a h1

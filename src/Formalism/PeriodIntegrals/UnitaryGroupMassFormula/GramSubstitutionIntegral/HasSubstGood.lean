@@ -74,7 +74,7 @@ theorem lg_pt (hD : Data l ex ph) {x : MvPowerSeries σ ℂ_[p]} (hx : MvPowerSe
 theorem cc_add (hD : Data l ex ph) {a b : MvPowerSeries σ ℂ_[p]} (ha : MvPowerSeries.constantCoeff a = 0)
     (hb : MvPowerSeries.constantCoeff b = 0) : MvPowerSeries.constantCoeff (add l ex a b) = 0 := by
   show MvPowerSeries.constantCoeff (pt ex (lg l a + lg l b)) = 0
-  exact cc_pt hD (by rw [map_add, cc_lg hD ha, cc_lg hD hb, add_zero])
+  exact cc_pt hD (by rw [map_add (f := _), cc_lg hD ha, cc_lg hD hb, add_zero])
 
 theorem cc_mulBy (hD : Data l ex ph) (c : ℂ_[p]) {a : MvPowerSeries σ ℂ_[p]}
     (ha : MvPowerSeries.constantCoeff a = 0) : MvPowerSeries.constantCoeff (mulBy l ex c a) = 0 := by
@@ -102,13 +102,13 @@ theorem subst_phAt (hs : MvPowerSeries.HasSubst s) {a : MvPowerSeries τ ℂ_[p]
 
 private theorem subst_add_gram_substitution_integral (hs : MvPowerSeries.HasSubst s) (f g : MvPowerSeries τ ℂ_[p]) :
     MvPowerSeries.subst s (f + g) = MvPowerSeries.subst s f + MvPowerSeries.subst s g := by
-  rw [← MvPowerSeries.coe_substAlgHom hs, map_add]
+  rw [← MvPowerSeries.coe_substAlgHom hs, map_add (f := _)]
 
 theorem subst_add' (hD : Data l ex ph) (hs : MvPowerSeries.HasSubst s) {a b : MvPowerSeries τ ℂ_[p]}
     (ha : MvPowerSeries.constantCoeff a = 0) (hb : MvPowerSeries.constantCoeff b = 0) :
     MvPowerSeries.subst s (add l ex a b) = add l ex (MvPowerSeries.subst s a) (MvPowerSeries.subst s b) := by
   have hab : MvPowerSeries.constantCoeff (lg l a + lg l b) = 0 := by
-    rw [map_add, cc_lg hD ha, cc_lg hD hb, add_zero]
+    rw [map_add (f := _), cc_lg hD ha, cc_lg hD hb, add_zero]
   show MvPowerSeries.subst s (pt ex (lg l a + lg l b)) =
     pt ex (lg l (MvPowerSeries.subst s a) + lg l (MvPowerSeries.subst s b))
   rw [subst_pt hs hab, subst_add_gram_substitution_integral hs, subst_lg hD hs ha, subst_lg hD hs hb]

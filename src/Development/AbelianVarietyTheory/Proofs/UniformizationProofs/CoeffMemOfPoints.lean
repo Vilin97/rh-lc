@@ -39,7 +39,7 @@ theorem map_mapDomain (s : M → N) (F : AddMonoidAlgebra B N →+* C) (G : AddM
     F (AddMonoidAlgebra.mapDomain s a) = G a := by
   induction a using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => rw [AddMonoidAlgebra.mapDomain_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [AddMonoidAlgebra.mapDomain_add, map_add (f := _), map_add (f := _), ha, hb]
   | single m b => rw [AddMonoidAlgebra.mapDomain_single, h]
 
 theorem hom_eq (F G : AddMonoidAlgebra B M →+* C)
@@ -47,7 +47,7 @@ theorem hom_eq (F G : AddMonoidAlgebra B M →+* C)
     F a = G a := by
   induction a using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   | single m b => exact h m b
 
 theorem ev_eq_zero (κ : B →+* C) (c : Multiplicative M →* Cˣ) (a : AddMonoidAlgebra B M)

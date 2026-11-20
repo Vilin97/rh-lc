@@ -28,7 +28,7 @@ theorem infSpan_stable (φ : UA E n → ℂ) (k : infU E n) : ∀ ψ ∈ infSpan
     rw [RU_RU]
     exact mem_infSpan φ (k * l)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add _ _ _ _ h₁ h₂ => rw [map_add]; exact Submodule.add_mem _ h₁ h₂
+  | add _ _ _ _ h₁ h₂ => rw [map_add (f := _)]; exact Submodule.add_mem _ h₁ h₂
   | smul c _ _ h => rw [map_smul]; exact Submodule.smul_mem _ c h
 
 def finStab (φ : UA E n → ℂ) : Subgroup (finU E n) where
@@ -71,7 +71,7 @@ theorem isAutFormU_of_mem (hc : ∀ k : infU E n, ∀ g ∈ finU E n, k.1 * g = 
       obtain ⟨l, rfl⟩ := h
       rw [RU_RU, ← hc l k.1 k.2, ← RU_RU, show RU E n k φ = φ from hk]
     | zero => rw [map_zero]
-    | add _ _ _ _ h₁ h₂ => rw [map_add, h₁, h₂]
+    | add _ _ _ _ h₁ h₂ => rw [map_add (f := _), h₁, h₂]
     | smul c _ _ h => rw [map_smul, h]
   · have := hφ.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := infSpan φ) (Submodule.span_le.2 ?_)

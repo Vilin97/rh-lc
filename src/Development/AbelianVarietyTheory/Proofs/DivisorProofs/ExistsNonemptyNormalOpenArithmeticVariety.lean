@@ -31,7 +31,7 @@ theorem exists_mul_isInteger (A K : Type*) [CommRing A] [IsDomain A] [Field K] [
     | add x y _ _ hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨c, hc⟩ := hy
-      exact ⟨a + c, by rw [map_add, ha, hc, Subalgebra.coe_add, smul_add]⟩
+      exact ⟨a + c, by rw [map_add (f := _), ha, hc, Subalgebra.coe_add, smul_add]⟩
     | smul r x _ hx =>
       obtain ⟨a, ha⟩ := hx
       refine ⟨r * a, ?_⟩

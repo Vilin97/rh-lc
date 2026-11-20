@@ -260,7 +260,7 @@ theorem xN_not_mem_twist (p : ℕ) {W : Ideal (MRing ι)} (hW : W ≠ ⊤) :
     · rw [Ideal.span_le, Set.singleton_subset_iff]
       show quad p ∈ (Ideal.span {(Polynomial.X : Polynomial (MRing ι ⧸ W)) ^ 2}).comap θ
       rw [Ideal.mem_comap]
-      simp only [quad, map_add, map_mul, map_pow, h1, h2]
+      simp only [quad, map_add (f := _), map_mul, map_pow, h1, h2]
       simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, mul_zero, add_zero]
       exact Ideal.mem_span_singleton_self _
   intro hx

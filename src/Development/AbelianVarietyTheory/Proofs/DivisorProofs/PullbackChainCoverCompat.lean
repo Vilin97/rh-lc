@@ -57,7 +57,7 @@ theorem span_eq {A Bp R : Type} [CommRing A] [CommRing Bp] [CommRing R] (g : A �
       | add _ _ _ _ h1 h2 =>
         obtain ⟨x, e, m⟩ := h1
         obtain ⟨x', e', m'⟩ := h2
-        exact ⟨x + x', by rw [map_add, map_add, e, e'], by rw [map_add]; exact add_mem m m'⟩
+        exact ⟨x + x', by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), e, e'], by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem m m'⟩
       | smul c _ _ h1 =>
         obtain ⟨x, e, m⟩ := h1
         exact ⟨c • x, by rw [map_smul, map_smul, e], by rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ m⟩
@@ -95,8 +95,8 @@ theorem span_eq {A Bp R : Type} [CommRing A] [CommRing Bp] [CommRing R] (g : A �
       | add _ _ _ _ h1 h2 =>
         obtain ⟨x, e, m⟩ := h1
         obtain ⟨x', e', m'⟩ := h2
-        exact ⟨x + x', by rw [Submodule.Quotient.mk_add, map_add, e, e'],
-          by rw [Submodule.coe_add, map_add]; exact add_mem m m'⟩
+        exact ⟨x + x', by rw [Submodule.Quotient.mk_add, map_add (f := _), e, e'],
+          by rw [Submodule.coe_add, map_add (f := _)]; exact add_mem m m'⟩
       | smul c _ _ h1 =>
         obtain ⟨x, e, m⟩ := h1
         exact ⟨c • x, by rw [Submodule.Quotient.mk_smul, map_smul, e],

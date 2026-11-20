@@ -42,7 +42,7 @@ theorem rho_add_diag [Invertible (2 : R)] {d : Darboux (symp (R := R) c ξ JA JB
     (hdd : IsDblCoord c ξ JA JB d dd) (ψ : AddChar R ℂ) (A A' : Matrix α β S) (φ : (κ ⊕ κ → R) → ℂ) :
     dd.rho ψ (A * (diagCols β : Matrix (β ⊕ β) β S)ᵀ + A' * (diagCols β : Matrix (β ⊕ β) β S)ᵀ) φ =
       dd.rho ψ (A * (diagCols β : Matrix (β ⊕ β) β S)ᵀ) (dd.rho ψ (A' * (diagCols β : Matrix (β ⊕ β) β S)ᵀ) φ) := by
-  simp only [Darboux.rho, map_add]
+  simp only [Darboux.rho, map_add (f := _)]
   exact GlobalTheory.MixXEvUniq.schr_add ψ _ _ (iso_diag hdd A A') φ
 
 end Alg

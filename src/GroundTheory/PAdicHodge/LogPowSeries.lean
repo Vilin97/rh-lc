@@ -20,7 +20,7 @@ theorem coeff_one_add_X_pow_sub_one_pow_of_lt {R : Type*} [CommRing R] (q : ℕ)
 theorem one_add_X_mul_mk_neg_one_pow :
     (1 + X : ℚ⟦X⟧) * mk (fun n => algebraMap ℚ ℚ ((-1 : ℚ) ^ n)) = 1 := by
   ext n
-  rw [add_mul, one_mul, map_add]
+  rw [add_mul, one_mul, map_add (f := _)]
   rcases n with _ | n
   · simp
   · rw [coeff_succ_X_mul, coeff_mk, coeff_mk, coeff_one, if_neg n.succ_ne_zero]
@@ -36,7 +36,7 @@ theorem PowerSeries.log_subst_one_add_X_pow_sub_one (q : ℕ) :
   set G : ℚ⟦X⟧ := mk fun n => algebraMap ℚ ℚ ((-1 : ℚ) ^ n)
   have hG : (1 + U) * G.subst U = 1 := by
     have h := congrArg (substAlgHom (R := ℚ) hs) one_add_X_mul_mk_neg_one_pow
-    rw [map_mul, map_add, map_one] at h
+    rw [map_mul, map_add (f := _), map_one] at h
     simp only [coe_substAlgHom] at h
     rwa [subst_X hs] at h
   have h1U : 1 + U = (1 + X) ^ q := by rw [hU]; ring
@@ -49,7 +49,7 @@ theorem PowerSeries.log_subst_one_add_X_pow_sub_one (q : ℕ) :
       rcases q with _ | q
       · simp [hU]
       · have hdU : d⁄dX ℚ U = ((q + 1 : ℕ) : ℚ⟦X⟧) * (1 + X) ^ q := by
-          rw [hU, map_sub, derivative_pow, Derivation.map_one_eq_zero, sub_zero, map_add,
+          rw [hU, map_sub, derivative_pow, Derivation.map_one_eq_zero, sub_zero, map_add (f := _),
             Derivation.map_one_eq_zero, derivative_X, zero_add, mul_one, Nat.add_sub_cancel]
         rw [hdU]
         have hc : d⁄dX ℚ ((q + 1 : ℕ) : ℚ⟦X⟧) = 0 := by

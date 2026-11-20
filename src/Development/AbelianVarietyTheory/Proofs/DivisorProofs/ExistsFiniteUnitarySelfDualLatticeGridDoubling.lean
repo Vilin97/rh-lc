@@ -38,7 +38,7 @@ theorem Clears.mul {a b : EAf D} {I J : FI D} (h : Clears a I) (h' : Clears b J)
   refine FractionalIdeal.mul_induction_on (C := fun x => eToEAf D x * (a * b) ∈ GlobalTheory.StdFrames.OA D) hx
     (fun c hc d hd => ?_) (fun c d hc hd => ?_)
   · rw [map_mul, mul_mul_mul_comm]; exact mul_mem (h c hc) (h' d hd)
-  · rw [map_add, add_mul]; exact add_mem hc hd
+  · rw [map_add (f := _), add_mul]; exact add_mem hc hd
 
 theorem Clears.conj {a : EAf D} {I J : FI D} (h : Clears a I) (h' : StarLE J I) : Clears (sg D a) J := by
   intro c hc
@@ -85,10 +85,10 @@ theorem exists_gen (B : Ideal (𝓞 D.host.E)) (hB : B ≠ ⊥) : ∃ a a' : EAf
     rw [← map_mul, mul_inv_cancel₀ hβE, map_one]
   have c1 : ∀ (x : D.host.E) (Q : Pl D.host.E), B ≤ Q.asIdeal →
       cpt Q (f * eToEAf D x + (1 - f)) = algebraMap _ _ x := fun x Q hQ => by
-    rw [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, h1 Q hQ, cpt_rat]; simp
+    rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, h1 Q hQ, cpt_rat]; simp
   have c0 : ∀ (x : D.host.E) (Q : Pl D.host.E), ¬ B ≤ Q.asIdeal →
       cpt Q (f * eToEAf D x + (1 - f)) = 1 := fun x Q hQ => by
-    rw [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, h0 Q hQ]; simp
+    rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, h0 Q hQ]; simp
   refine ⟨f * eToEAf D β + (1 - f), f * eToEAf D (β : D.host.E)⁻¹ + (1 - f), ?_, fun c hc => ?_, fun c hc => ?_,
     fun Q hQ => c0 _ Q fun h => hQ (Ideal.dvd_iff_le.2 h)⟩
   · exact mix_inv hff hinv
@@ -150,9 +150,9 @@ theorem exists_twist (D : D7) : ∃ U : AE D, U * cA D U = 1 ∧ infPart D U = 1
   obtain ⟨z, hz, hz'⟩ := (comp_toAd D).surj (toAd D (a' * sg D a - 1))
   have e1 : toEAf D (1 + z) = a' * sg D a := by
     have : toEAf D z = a' * sg D a - 1 := GlobalTheory.AdeleBaseChange.map_injective (toAd_spec D) hz'
-    rw [RingHom.map_add, RingHom.map_one, this]; ring
+    rw [RingHom.map_add (f := _), RingHom.map_one, this]; ring
   have e2 : toEAf D (cA D (1 + z)) = sg D a' * a := by rw [GlobalTheory.StdFrames.toEAf_cA, e1, RingHom.map_mul, sg_sg]
-  have e3 : infPart D (1 + z) = 1 := by rw [RingHom.map_add, RingHom.map_one, hz, add_zero]
+  have e3 : infPart D (1 + z) = 1 := by rw [RingHom.map_add (f := _), RingHom.map_one, hz, add_zero]
   have ha' : sg D a * sg D a' = 1 := by rw [← RingHom.map_mul, ha, RingHom.map_one]
   refine ⟨1 + z, (comp_toAd D).ext' ?_ fun Q => ?_, e3, ?_, ?_, fun Q hQ => ?_⟩
   · rw [RingHom.map_mul, (parts_cA _).1, e3, RingHom.map_one, RingHom.map_one, one_mul]
@@ -213,7 +213,7 @@ theorem smul_mem_latO {S T : HSp D} {LS : Submodule (𝓞 D.host.E) (Fin S.rank 
         have h4 : (eToEAf D c * toEAf D U) • (fun i => (d • t) i ⊗ₜ[D.host.F] α : Fin T.rank → EAf D) ∈
             Formalism.L2.Herm.hatL (F := D.host.F) LT' := h2
         rwa [h3, smul_smul, mul_comm (eToEAf D c * toEAf D U), ← mul_assoc, ← RingHom.map_mul] at h4
-      · rw [RingHom.map_add, add_mul, add_smul]; exact add_mem hx hy
+      · rw [RingHom.map_add (f := _), add_mul, add_smul]; exact add_mem hx hy
     rwa [RingHom.map_one, one_mul] at key
   | zero => rw [smul_zero]; exact zero_mem _
   | add y z _ _ hy hz => rw [smul_add]; exact add_mem hy hz

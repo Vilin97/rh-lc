@@ -65,10 +65,10 @@ theorem _root_.GlobalTheory.KZ.SSAdm.lift_sub_smul_mem {f : _root_.GlobalTheory.
       exact ⟨fun y hy => W.smul_mem r hy, W.zero_mem⟩
     | add P Q _ _ hP hQ =>
       refine ⟨fun y hy => ?_, ?_⟩
-      · rw [map_add, LinearMap.add_apply]
+      · rw [map_add (f := _), LinearMap.add_apply]
         exact W.add_mem (hP.1 y hy) (hQ.1 y hy)
       · convert W.add_mem hP.2 hQ.2 using 1
-        simp only [map_add, LinearMap.add_apply, add_smul]
+        simp only [map_add (f := _), LinearMap.add_apply, add_smul]
         abel
     | mul P Q _ _ hP hQ =>
       refine ⟨fun y hy => ?_, ?_⟩

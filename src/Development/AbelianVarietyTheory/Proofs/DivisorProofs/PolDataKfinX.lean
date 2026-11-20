@@ -39,7 +39,7 @@ theorem polData_kfinX : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numb
     obtain ⟨S₁, h₁, k₁⟩ := hx
     obtain ⟨S₂, h₂, k₂⟩ := hy
     exact ⟨S₁ ⊔ S₂, inferInstance, fun k hk => by
-      rw [map_add]; exact Submodule.add_mem_sup (k₁ k hk) (k₂ k hk)⟩
+      rw [map_add (f := _)]; exact Submodule.add_mem_sup (k₁ k hk) (k₂ k hk)⟩
   | smul c x _ hx =>
     obtain ⟨S, h, k₁⟩ := hx
     exact ⟨S, h, fun k hk => by rw [map_smul]; exact Submodule.smul_mem _ c (k₁ k hk)⟩

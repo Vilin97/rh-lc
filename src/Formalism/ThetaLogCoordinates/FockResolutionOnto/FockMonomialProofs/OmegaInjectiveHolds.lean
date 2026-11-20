@@ -73,7 +73,7 @@ theorem compL_intertwine (T : MvPolynomial σ k →ₗ[k] MvPolynomial σ k) (Pr
     (h2 : ∀ x ∈ restrictSupport k {m | ¬ Pr' m}, T x ∈ restrictSupport k {m | ¬ Pr m}) (x : MvPolynomial σ k) :
     compL k Pr (T x) = T (compL k Pr' x) := by
   conv_lhs => rw [← compL_add_not Pr' x]
-  rw [map_add, map_add, compL_of_mem Pr _ (h1 _ (compL_mem Pr' x)),
+  rw [map_add (f := _), map_add (f := _), compL_of_mem Pr _ (h1 _ (compL_mem Pr' x)),
     compL_of_not Pr _ (h2 _ (compL_mem (fun m => ¬ Pr' m) x)), add_zero]
 
 theorem XDXD (u v : σ) (huv : u ≠ v) (z : MvPolynomial σ k) (cu cv : k) (hu : X u * pderiv u z = cu • z)
@@ -285,7 +285,7 @@ theorem eJ_cw_lt (s t : Fin r) (hs : s ∈ Cs) (ht : t ∈ Cs) (hst : s < t) (γ
   have h0 := hk s t ⟨hs, ht, hst⟩
   rw [glAct_succ LL hv] at h0
   have h1 := congrArg (cw p K γ) h0
-  rw [map_add, map_zero, cw_glAct, cw_WD] at h1
+  rw [map_add (f := _), map_zero, cw_glAct, cw_WD] at h1
   exact eq_neg_of_add_eq_zero_left h1
 
 include hv hx in
@@ -294,7 +294,7 @@ theorem eJ_cw_diag (s : Fin r) (hs : s ∈ Cs) (γ : Fin r → ℤ) :
   have h0 := cartan_eigC LL (K + 1) Cs th x (Submodule.mem_inf.mp hx).1 s hs
   rw [glAct_succ LL hv] at h0
   have h1 := congrArg (cw p K γ) h0
-  rw [map_add, map_smul, cw_glAct, cw_WD, shiftW_self, WD_cw] at h1
+  rw [map_add (f := _), map_smul, cw_glAct, cw_WD, shiftW_self, WD_cw] at h1
   rw [Int.cast_sub, sub_smul, ← h1]
   abel
 
@@ -643,7 +643,7 @@ theorem omega_comm (LL : Letters (K + 1)) (hv : LL.vec (Fin.last K) = true) (ρ 
     have h1 := raising_comm_holds p K r LL c (univ.erase ρ) a s t (dW p K a z) hv hs ht
     have h2 : dW p K a (glAct p LL (K + 1) s t z) =
         glAct p LL (K + 1) s t (dW p K a z) + (if s = a then dW p K t z else 0) := pderiv_glAct LL hv s t a z
-    rw [h2, map_add, ← h1]
+    rw [h2, map_add (f := _), ← h1]
     split_ifs <;> simp
   unfold Omega
   set_option synthInstance.maxHeartbeats 100000 in

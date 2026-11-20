@@ -92,7 +92,7 @@ theorem eigLat_isFlagVBOn_of_pull_char0 : ∀ (E : Type) [Field E] [NumberField 
         exact he
       · simp only [map_zero]
         exact zero_mem _
-      · simp only [map_add]
+      · simp only [map_add (f := _)]
         exact add_mem hx hy
     refine le_antisymm ?_ (hle s)
     rintro x ⟨hx1, hx2⟩

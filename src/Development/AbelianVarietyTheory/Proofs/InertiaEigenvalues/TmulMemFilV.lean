@@ -33,7 +33,7 @@ theorem act_mul (g : G) (c : K) (x : V ⊗[Qp] BdR) :
     actVdR PD ρ g (mulVdR (K := K) (LL := LL) c x) = mulVdR (K := K) (LL := LL) c (actVdR PD ρ g x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v z => simp [mulVdR, actVdR]
 
 theorem mul_mem_DdR (c : K) {x : V ⊗[Qp] BdR} (hx : x ∈ DdR PD ρ) :
@@ -52,7 +52,7 @@ theorem mul_mem_FilV (a : ℤ) (c : K) {x : V ⊗[Qp] BdR} (hx : x ∈ FilV PD (
   obtain ⟨w, rfl⟩ := hx
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => simp only [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | tmul v z =>
     simp only [TensorProduct.AlgebraTensorModule.map_tmul, LinearMap.id_apply,
       Submodule.subtype_apply]
@@ -64,7 +64,7 @@ theorem mul_mul (c c' : K) (x : V ⊗[Qp] BdR) :
       mulVdR (K := K) (LL := LL) (c * c') x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v z => simp only [mulVdR_tmul, map_mul, mul_assoc]
 
 theorem mul_add' (c c' : K) (x : V ⊗[Qp] BdR) :
@@ -72,21 +72,21 @@ theorem mul_add' (c c' : K) (x : V ⊗[Qp] BdR) :
       mulVdR (K := K) (LL := LL) c x + mulVdR (K := K) (LL := LL) c' x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]; abel
-  | tmul v z => simp only [mulVdR_tmul, map_add, add_mul, TensorProduct.tmul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]; abel
+  | tmul v z => simp only [mulVdR_tmul, map_add (f := _), add_mul, TensorProduct.tmul_add]
 
 theorem mul_smul' (r : Qp) (c : K) (x : V ⊗[Qp] BdR) :
     mulVdR (K := K) (LL := LL) (r • c) x = r • mulVdR (K := K) (LL := LL) c x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
   | tmul v z =>
     simp only [mulVdR_tmul]
     rw [← TensorProduct.tmul_smul, ← Algebra.smul_def, ← Algebra.smul_def, smul_assoc]
 
 def projMap (τ : K →ₐ[Qp] LL) (x : V ⊗[Qp] BdR) : K ⊗[Qp] K →ₗ[Qp] V ⊗[Qp] BdR :=
   TensorProduct.lift (LinearMap.mk₂ Qp (fun a c => τ a • mulVdR (K := K) (LL := LL) c x)
-    (fun a a' c => by rw [map_add, add_smul])
+    (fun a a' c => by rw [map_add (f := _), add_smul])
     (fun r a c => by rw [map_smul, smul_assoc])
     (fun a c c' => by rw [mul_add', smul_add])
     (fun r a c => by rw [mul_smul', smul_comm]))
@@ -120,7 +120,7 @@ theorem coordMap_mem (f : V →ₗ[Qp] Qp) (a : ℤ) {x : V ⊗[Qp] BdR}
   obtain ⟨w, rfl⟩ := hx
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => simp only [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | tmul v z =>
     simp only [coordMap, TensorProduct.AlgebraTensorModule.map_tmul, LinearMap.id_apply,
       Submodule.subtype_apply, LinearMap.comp_apply, TensorProduct.map_tmul,

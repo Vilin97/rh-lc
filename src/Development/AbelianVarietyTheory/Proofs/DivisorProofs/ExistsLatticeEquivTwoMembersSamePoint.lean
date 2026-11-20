@@ -46,7 +46,7 @@ theorem LatTo.symm' {V₀ : Type} [CommRing V₀] [IsDomain V₀] [IsLocalRing V
     have e : mu' = K mu + (X₁.S.r * X₁.S.N) • w := funext fun u => by simpa using hw u
     refine ⟨K.symm w v, ?_⟩
     have e' : K.symm mu' = mu + (X₁.S.r * X₁.S.N) • K.symm w := by
-      rw [e, map_add, K.symm_apply_apply, map_nsmul]
+      rw [e, map_add (f := _), K.symm_apply_apply, map_nsmul]
     exact congrFun e' v
 
 theorem closed_over {V : Type} [CommRing V] [IsDomain V] [IsLocalRing V] {ev : X₁.M.Z.presheaf.stalk z₁ →+* V}

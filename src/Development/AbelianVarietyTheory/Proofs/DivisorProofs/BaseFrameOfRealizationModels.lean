@@ -116,7 +116,7 @@ theorem conj_eq (hH : Hm.IsHermitian) (hd : Hm.det ≠ 0) (hP : P.det ≠ 0) (ha
     exact sub_eq_zero.2 (smul_right_injective _ hz1 this)
   have h2 : ∀ x y : Fin n → ℂ, L (vecMulVec x (star y)) = 0 := fun x y => by
     rw [polar]
-    simp only [map_smul, map_add, map_sub, h1, sub_zero, smul_zero, add_zero]
+    simp only [map_smul, map_add (f := _), map_sub, h1, sub_zero, smul_zero, add_zero]
   have h3 : ∀ W, L W = 0 := fun W => by
     rw [Matrix.matrix_eq_sum_single W]
     set_option synthInstance.maxHeartbeats 100000 in

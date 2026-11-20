@@ -94,7 +94,7 @@ theorem exists_res {t : kˣ} (ht : IsUnif t) : ∃ α : AddChar (kP PP) ℂ,
   refine ⟨{ toFun := fun u => ψ (((t⁻¹ : kˣ) : k) * prO q (l u))
             map_zero_eq_one' := by rw [wd _ 0 (by rw [hl, map_zero])]; simp
             map_add_eq_mul' := fun a b => by
-              rw [wd _ (l a + l b) (by rw [map_add, hl, hl, hl]), map_add, mul_add, AddChar.map_add_eq_mul, Circle.coe_mul] },
+              rw [wd _ (l a + l b) (by rw [map_add (f := _), hl, hl, hl]), map_add (f := _), mul_add, AddChar.map_add_eq_mul, Circle.coe_mul] },
     fun z => congrArg (fun c : Circle => (c : ℂ)) (wd _ z (hl _)).symm⟩
 
 include h in
@@ -113,7 +113,7 @@ theorem exists_near {y : k} (hy : valuation k y ≤ 1) : ∃ z, valuation k (y -
     ((q.pr.comp (incA D)).map_mul _ _).symm.trans (congrArg (q.pr.comp (incA D)) e)
   obtain ⟨t, p, hp, htp⟩ := PP.isMaximal.exists_inv hs
   refine ⟨t * r, ?_⟩
-  have e2 : prO q t * prO q s + prO q p = 1 := by rw [← map_mul, ← map_add, htp, map_one]
+  have e2 : prO q t * prO q s + prO q p = 1 := by rw [← map_mul, ← map_add (f := _), htp, map_one]
   have e3 : y - prO q (t * r) = (ofSplit q).pr a * prO q p - ((ofSplit q).pr a - y) := by
     rw [map_mul, ← e']
     linear_combination (-(ofSplit q).pr a) * e2

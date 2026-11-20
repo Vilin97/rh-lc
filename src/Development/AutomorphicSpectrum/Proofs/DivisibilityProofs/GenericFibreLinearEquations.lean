@@ -22,7 +22,7 @@ theorem exists_int_poly {σ : Type} (p : MvPolynomial σ ℚ) :
     obtain ⟨n, f, hn, hf⟩ := hp
     obtain ⟨m, g, hm, hg⟩ := hq
     refine ⟨n * m, C m * f + C n * g, mul_ne_zero hn hm, ?_⟩
-    simp only [map_add, map_mul, hf, hg, map_C, Int.coe_castRingHom, Int.cast_mul]
+    simp only [map_add (f := _), map_mul, hf, hg, map_C, Int.coe_castRingHom, Int.cast_mul]
     ring
   | mul_X p i hp =>
     obtain ⟨n, f, hn, hf⟩ := hp
@@ -186,7 +186,7 @@ theorem aeval_xP [Fintype K] (j : K → FlBlock Ψ N) (f : MRing (PIdx j)) :
     aeval (xP j) f = algebraMap _ (CF Ψ N K) (mConeMap (yPart j) f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p q hp =>
     simp only [map_mul, hp, aeval_X]
     simp only [mConeMap, aeval_X, xP_eq, map_mul]

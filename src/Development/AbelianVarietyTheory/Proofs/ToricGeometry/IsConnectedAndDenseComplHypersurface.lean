@@ -17,7 +17,7 @@ theorem eval_mvPolynomialOnLine {d : ℕ} (q : MvPolynomial (Fin d) ℂ) (a b : 
   unfold mvPolynomialOnLine
   induction q using MvPolynomial.induction_on with
   | C c => simp
-  | add p r hp hr => rw [map_add, Polynomial.eval_add, hp, hr, map_add]
+  | add p r hp hr => rw [map_add (f := _), Polynomial.eval_add, hp, hr, map_add (f := _)]
   | mul_X p i hp =>
     simp only [map_mul, Polynomial.eval_mul, hp, MvPolynomial.aeval_X, MvPolynomial.eval_X,
       Polynomial.eval_add, Polynomial.eval_C, Polynomial.eval_X, Pi.add_apply, Pi.smul_apply,

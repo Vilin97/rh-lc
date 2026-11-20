@@ -160,7 +160,7 @@ theorem exDer_holds {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [Com
   have hZex : Z0 (![Y.ex] : Fin 1 → Pt C 1 dd) := z0_1 _ Y.ex_const
   have hQ : Z0 ((![pt C dd 0, 0] : Fin 2 → Pt C 1 dd)) := z0_p0 _ (z0_pt 0)
   have hS0 : ∀ m, constantCoeff (pt C (n := 2) dd 0 m + pt C dd 1 m) = 0 := fun m => by
-    rw [map_add, z0_pt, z0_pt, add_zero]
+    rw [map_add (f := _), z0_pt, z0_pt, add_zero]
   have hZS : Z0 (![fun m => pt C (n := 2) dd 0 m + pt C dd 1 m] : Fin 1 → Pt C 2 dd) := z0_1 _ hS0
   have hA0 : ∀ m, constantCoeff (comp1 Y.ex (pt C (n := 2) dd 0) m) = 0 := fun m =>
     const_ev (z0_1 _ (z0_pt 0)) (Y.ex_const m)
@@ -195,7 +195,7 @@ theorem exDer_holds {C : Type} [Field C] [CharZero C] {V : VF C} {O : Type} [Com
         ((![fun m => pt C (n := 2) dd 0 m + pt C dd 1 m] : Fin 1 → Pt C 2 dd) 0 m) =
         pderiv C ((1 : Fin 2), i) (pt C (n := 2) dd 1 m) := fun m => by
       show pderiv C _ (pt C (n := 2) dd 0 m + pt C dd 1 m) = _
-      rw [map_add, pderiv_pt_ne (by decide) i m, zero_add]
+      rw [map_add (f := _), pderiv_pt_ne (by decide) i m, zero_add]
     simp only [e0]
     rw [sum_pderiv_pt 1 i, ev_ev hZS hQ]
     have e : (fun k m => ev (n := 1) (![pt C dd 0, 0] : Fin 2 → Pt C 1 dd)

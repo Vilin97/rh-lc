@@ -91,7 +91,7 @@ theorem ga_induction (P : Γ((gaObj (Sp R)).left, ⊤) → Prop) (h0 : ∀ r, P 
         (gaObj (Sp R)).hom.appTop.hom s := by
       simp [cst]
     rwa [e] at h
-  | add p q hp hq => rw [map_add]; exact ha _ _ hp hq
+  | add p q hp hq => rw [map_add (f := _)]; exact ha _ _ hp hq
   | mul_X p i hp =>
     rw [map_mul, MvPolynomial.eval₂Hom_X']
     obtain rfl : i = 0 := Subsingleton.elim _ _
@@ -145,7 +145,7 @@ def gaExp {n : ℕ} {B : Set (Fin n → ℂ)} {ψ : (Fin n → ℂ) → (R →+*
       exact (hψ.2 r).comp differentiableOn_fst fun x hx => hx.1
     · simp only [ev_crd]
       fun_prop
-    · simp only [map_add]; exact ha.add hb
+    · simp only [map_add (f := _)]; exact ha.add hb
     · simp only [map_mul]; exact ha.mul hb
   diff b _ a := by
     obtain rfl : a = 0 := Subsingleton.elim _ _
@@ -167,7 +167,7 @@ def gaExp {n : ℕ} {B : Set (Fin n → ℂ)} {ψ : (Fin n → ℂ) → (R →+*
         have : fderiv ℂ (fun z : Fin 1 → ℂ => z 0) 0 = ContinuousLinearMap.proj 0 :=
           (ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : Fin 1 => ℂ) 0).fderiv
         ext <;> simp [GlobalTheory.FibreDeriv.jet, this]
-      · simp only [map_add]
+      · simp only [map_add (f := _)]
         exact ⟨ha.1.add hb.1, by rw [GlobalTheory.FibreDeriv.jet_add _ ha.1 hb.1, ha.2, hb.2]⟩
       · simp only [map_mul]
         exact ⟨ha.1.mul hb.1, by rw [GlobalTheory.FibreDeriv.jet_mul _ ha.1 hb.1, ha.2, hb.2]⟩

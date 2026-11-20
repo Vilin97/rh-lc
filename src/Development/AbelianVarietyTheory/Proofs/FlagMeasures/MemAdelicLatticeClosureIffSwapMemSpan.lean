@@ -65,7 +65,7 @@ theorem int_smul_mem (t : E ⊗[F] Af F) (ht : t ∈ Formalism.MainNotions.S.Int
       simpa using gen_smul_mem L b hb 1 y hy
   | zero => intro y _; rw [map_zero, zero_smul]; exact zero_mem _
   | one => intro y hy; rw [map_one, one_smul]; exact hy
-  | add s u _ _ hs hu => intro y hy; rw [map_add, add_smul]; exact add_mem (hs y hy) (hu y hy)
+  | add s u _ _ hs hu => intro y hy; rw [map_add (f := _), add_smul]; exact add_mem (hs y hy) (hu y hy)
   | neg s _ hs => intro y hy; rw [map_neg, neg_smul]; exact neg_mem (hs y hy)
   | mul s u _ _ hs hu => intro y hy; rw [map_mul, mul_smul]; exact hs _ (hu y hy)
 

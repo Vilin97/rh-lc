@@ -102,7 +102,7 @@ theorem gr_isGenAt : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (Com
       rw [map_zero]
       exact zero_mem _
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
     | smul a x _ hx =>
       show g ((a : Ω) • x) ∈ regAt ξ p

@@ -83,7 +83,7 @@ theorem exists_global (n : ℕ) : ∀ (t : Fin n → L.Sec) (F : Y.Modules) (j�
         obtain ⟨W, hW, m, hm⟩ := hf y
         refine ⟨W, hW, fun i => (Twist.map (lbZPow L l) (cutπ F hL (t 0))).app W (m i.succ), ?_⟩
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [← app_res, hm, Fin.sum_univ_succ, map_add, (hex W).apply_apply_eq_zero, zero_add, map_sum]
+          rw [← app_res, hm, Fin.sum_univ_succ, map_add (f := _), (hex W).apply_apply_eq_zero, zero_add, map_sum]
         exact Finset.sum_congr rfl fun i _ => nat _ _ _
     have hlift : ∀ i, ∃ u : Γ(GlobalTheory.twistZ F L l, ⊤),
         (Twist.map (lbZPow L l) (cutπ F hL (t 0))).app ⊤ u = m' i := fun i => by

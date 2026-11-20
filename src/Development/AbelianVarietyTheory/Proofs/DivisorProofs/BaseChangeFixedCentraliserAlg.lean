@@ -23,7 +23,7 @@ theorem GlobalTheory.FinClsLoc.baseChange_fixedCentraliser_alg :
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul k l => simp
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hex : Function.Exact ι.toLinearMap (phi G β Y ((β⁻¹ : G.Cˣ) : G.C)) := by
     intro c
     change _ ↔ c ∈ Set.range ι

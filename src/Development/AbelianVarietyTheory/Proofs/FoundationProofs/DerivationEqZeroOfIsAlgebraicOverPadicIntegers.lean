@@ -29,7 +29,7 @@ theorem der_eval₂ (E : Derivation ℤ Ω Ω)
     (x : Ω) (Q : ℤ_[p][X]) :
     E (eval₂ (phiZ p Ω) x Q) = eval₂ (phiZ p Ω) x (derivative Q) * E x := by
   induction Q using Polynomial.induction_on' with
-  | add P Q hP hQ => rw [eval₂_add, map_add, hP, hQ, derivative_add, eval₂_add, add_mul]
+  | add P Q hP hQ => rw [eval₂_add, map_add (f := _), hP, hQ, derivative_add, eval₂_add, add_mul]
   | monomial n c =>
     have hc : E (phiZ p Ω c) = 0 := hE c
     rw [eval₂_monomial, Derivation.leibniz, Derivation.leibniz_pow, hc, smul_zero, add_zero,

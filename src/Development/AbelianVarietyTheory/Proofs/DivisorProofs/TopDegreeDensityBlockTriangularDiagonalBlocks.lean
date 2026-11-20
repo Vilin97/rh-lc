@@ -20,7 +20,7 @@ theorem eval_zero_of_const {A : Type} [CommRing A] [Algebra ℂ A] (l : A →ₗ
   have hc : Continuous fun x : ℂ => l (Q.eval (algebraMap ℂ A x)) := by
     clear h
     induction Q using Polynomial.induction_on' with
-    | add p q hp hq => simp only [Polynomial.eval_add, map_add]; exact hp.add hq
+    | add p q hp hq => simp only [Polynomial.eval_add, map_add (f := _)]; exact hp.add hq
     | monomial k a =>
       have : (fun x : ℂ => l ((Polynomial.monomial k a).eval (algebraMap ℂ A x))) = fun x => x ^ k * l a := by
         funext x

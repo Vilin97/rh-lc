@@ -344,7 +344,7 @@ theorem support_in_orbit_closure (h1 : ZNClosed (k := k)) (h2 : FibZN (k := k)) 
   have e : f = (fun q => W.indicator 1 q * f q) + (fun q => Wᶜ.indicator 1 q * f q) := by
     funext q
     by_cases hq : q ∈ W <;> simp [hq]
-  rw [e, map_add]
+  rw [e, map_add (f := _)]
   have z1 : ξ (fun q => W.indicator 1 q * f q) = 0 := by
     refine hs _ hf1 fun q hq => ?_
     have : q ∉ W := fun hqW => hWF hqW hq

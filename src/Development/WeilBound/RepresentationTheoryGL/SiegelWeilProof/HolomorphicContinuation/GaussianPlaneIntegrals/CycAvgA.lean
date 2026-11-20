@@ -43,7 +43,7 @@ theorem evX_subR (u : Matrix (Fin m) (Fin m) ℂ) (P : PX m n) (x : Fin m → Fi
     evX (subR u P) x = evX P (act u x) := by
   induction P using MvPolynomial.induction_on
   next c => simp [evX_eq]
-  next p q hp hq => simp only [evX_eq, map_add] at *; rw [hp, hq]
+  next p q hp hq => simp only [evX_eq, map_add (f := _)] at *; rw [hp, hq]
   next p k hp =>
     simp only [evX_eq, map_mul] at *
     rw [hp, eval_pt_var, eval_X]

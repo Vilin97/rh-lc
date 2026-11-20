@@ -55,7 +55,7 @@ theorem isDist_XP (i j : ℕ) : IsDist ((X : PowerSeries O) ^ i * Br.P.p 1 ^ j) 
       exact (IsLocalRing.residue_eq_zero_iff _).mpr Br.P.hl
     rw [← map_natCast (PowerSeries.C (R := IsLocalRing.ResidueField O)), h1, map_zero]
   have hm : (Br.P.φ X).map (IsLocalRing.residue O) = (Br.P.u.map (IsLocalRing.residue O)) * X ^ PD.p := by
-    rw [hφX, map_add, map_mul, map_mul, map_pow, map_sub, PowerSeries.map_X, map_natCast, hp0, sub_zero,
+    rw [hφX, map_add (f := _), map_mul, map_mul, map_pow, map_sub, PowerSeries.map_X, map_natCast, hp0, sub_zero,
       add_zero, mul_assoc, ← pow_succ', Nat.sub_add_cancel hp1]
   have hu0 : Br.P.u.map (IsLocalRing.residue O) ≠ 0 :=
     (Br.P.hu.map (PowerSeries.map (IsLocalRing.residue O))).ne_zero

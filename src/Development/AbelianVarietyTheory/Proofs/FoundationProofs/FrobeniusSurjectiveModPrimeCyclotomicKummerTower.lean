@@ -67,7 +67,7 @@ theorem frob_surj_adjoin_tower : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field
   | algebraMap r =>
     obtain ⟨g, h, rfl⟩ := GlobalTheory.T.pAdicCompletionLaurent_eq_sum_pthPowers_mod_p p r
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, map_mul, map_natCast]
+      rw [map_add (f := _), map_sum, map_mul, map_natCast]
     refine isPthPowerModP_add_p_mul S ?_ ?_
     · refine Finset.sum_induction _ (IsPowModP S p) (fun a b ha hb => isPthPowerModP_add S hpp ha hb)
         (isPthPowerModP_zero S hpp) ?_

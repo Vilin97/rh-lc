@@ -174,7 +174,7 @@ lemma exists_conj_mat {ϖ : O} {w : Lˣ} (hw : (w : L) = algebraMap O L ϖ) (y :
     simp
   have hγL : (inL γ : GL (Ix n) L).1 = 1 + (algebraMap O L ϖ) ^ 2 • f A' := by
     have : (inL γ : GL (Ix n) L).1 = f γ.1 := rfl
-    rw [this, hγ', map_add, map_one]
+    rw [this, hγ', map_add (f := _), map_one]
     congr 1
     ext i j
     simp [f]
@@ -182,7 +182,7 @@ lemma exists_conj_mat {ϖ : O} {w : Lˣ} (hw : (w : L) = algebraMap O L ϖ) (y :
     rw [← Units.val_mul, inv_mul_cancel]
     rfl
   refine ⟨1 + Em * A' * Ep, ?_⟩
-  rw [Units.val_mul, Units.val_mul, hγL, map_add, map_one, map_mul, map_mul, hEp, hEm,
+  rw [Units.val_mul, Units.val_mul, hγL, map_add (f := _), map_one, map_mul, map_mul, hEp, hEm,
     mul_add, add_mul, mul_one, hXX, ← hw]
   congr 1
   simp [f, smul_smul, pow_two, Matrix.mul_assoc]

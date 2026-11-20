@@ -74,7 +74,7 @@ theorem hasse_norm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r :
   have hx2 : x = (a : Fld Q) ^ 2 - d * b ^ 2 := by
     have := congrArg Subtype.val hab
     simpa using this
-  rw [map_add, map_mul, GlobalTheory.TraceClasses.invol_coe, GlobalTheory.TraceClasses.invol_coe,
+  rw [map_add (f := _), map_mul, GlobalTheory.TraceClasses.invol_coe, GlobalTheory.TraceClasses.invol_coe,
     GlobalTheory.TraceClasses.invol_theta Q hθ, hx2, hd]
   ring
 

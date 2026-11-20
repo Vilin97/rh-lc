@@ -69,7 +69,7 @@ theorem neg_at_real {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
       show (r : ℂ) * τ.1 (σ e) = starRingEnd ℂ ((r : ℂ) * τ.1 e)
       rw [hcm.2.2.2, map_mul, Complex.conj_ofReal]
       rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   obtain ⟨z, hz⟩ := hδ ℝ 0 1
   have h2 := congrArg Φ hz
   rw [map_mul, hconj, Complex.mul_conj, Algebra.TensorProduct.algebraMap_apply,

@@ -43,7 +43,7 @@ theorem value_decay {κ κ₁ ι : Type} [Fintype κ] [Fintype κ₁] [Fintype �
     obtain ⟨D, hD⟩ := hb
     refine ⟨C + D, fun x hx => le_trans ?_ (add_le_add (hC x hx) (hD x hx))⟩
     change ‖e (schrL ψ _ (a + b)) y‖ * _ ≤ ‖e (schrL ψ _ a) y‖ * _ + ‖e (schrL ψ _ b) y‖ * _
-    rw [map_add, map_add, ← add_mul]
+    rw [map_add (f := _), map_add (f := _), ← add_mul]
     gcongr
     exact norm_add_le _ _
   | smul c a _ ha =>

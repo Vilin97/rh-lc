@@ -294,7 +294,7 @@ def perCl (h : F.Ok) {ι : Type} [Fintype ι] (ℓ : F.Cl → ι → (F.V →ₛ
   letI := h.fintypeCl
   LinearMap.mk₂ ℂ (fun Φ z => ∑ c : F.Cl,
       ((Nat.card (MulAction.stabilizer (F.G c.1) (F.rep c)) : ℕ) : ℂ)⁻¹ * ∑ a, z a * E.extend (ℓ c a) (Φ c))
-    (fun Φ Φ' z => by simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib])
+    (fun Φ Φ' z => by simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib])
     (fun a Φ z => by
       simp only [Pi.smul_apply, map_smul, smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun b _ => ?_

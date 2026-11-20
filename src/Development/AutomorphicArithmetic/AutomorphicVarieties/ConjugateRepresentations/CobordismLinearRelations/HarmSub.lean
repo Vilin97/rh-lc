@@ -19,7 +19,7 @@ private theorem rT_adj (r : ℝ) (x : GL (Fin a) (Af E)) (X : Lie E a) (m : Sm E
     clear h1
     induction m using TensorProduct.induction_on with
     | zero => simp
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
     | tmul φ v => simp
   rw [smAdj, adj_apply, adj_apply, map_sub, map_sub, h1, h2, LinearMap.map_smul_of_tower]
 
@@ -35,7 +35,7 @@ private theorem cocl_comb {q : ℕ} (s : ℂ) {ω η : Geo.Co Ξ q} (hω : Coclo
     have h1 := DFunLike.congr_fun (show del _ e ω = 0 from hω) X
     have h2 := DFunLike.congr_fun (show del _ e η = 0 from hη) X
     rw [del_apply, AlternatingMap.zero_apply] at h1 h2 ⊢
-    simp only [ap, map_add, map_smul, Finset.sum_add_distrib, h2, add_zero, ← Finset.smul_sum, h1, smul_zero]
+    simp only [ap, map_add (f := _), map_smul, Finset.sum_add_distrib, h2, add_zero, ← Finset.smul_sum, h1, smul_zero]
 
 private theorem cocl_zero {q : ℕ} : Coclosed (smAdj Ξ r) e (0 : Geo.Co Ξ q) := by
   cases q with

@@ -20,7 +20,7 @@ theorem piInf_conj (hσ : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E 
   congr 1
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e => rfl
 
 theorem cont_piInf {w : InfinitePlace F} (τ : EmbOver E w) : Continuous (piInf τ : AE F E → ℂ) := by
@@ -104,7 +104,7 @@ theorem exists_inhabitant (hσ : IsCMExt F E σ) :
   · intro k γ hγ g
     have e := fun i j => GlobalTheory.UAut.Model.isSm_entry (J := δ • (big F δ).J.map σ) hσ τ i j k γ hγ g
     simp only [arch_entry] at e
-    simp only [Matrix.det_fin_three, map_add, map_sub, map_mul]
+    simp only [Matrix.det_fin_three, map_add (f := _), map_sub, map_mul]
     fun_prop
   · intro v hv k γ hγ g
     obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.1 hv

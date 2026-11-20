@@ -215,7 +215,7 @@ theorem local_all (H U : Subgroup G) [U.Normal] (hUH : U ≤ H) (σ : Representa
     refine ⟨y₁ + y₂, Submodule.add_mem _ m₁ m₂, fun b k hk => ?_, fun g hg => ?_⟩
     · have e : (y₁ + y₂).1.1.1 ((b : G) * c * k)
           = y₁.1.1.1 ((b : G) * c * k) + y₂.1.1.1 ((b : G) * c * k) := rfl
-      rw [e, a₁ b k hk, a₂ b k hk, map_add]
+      rw [e, a₁ b k hk, a₂ b k hk, map_add (f := _)]
     · have e : (y₁ + y₂).1.1.1 g = y₁.1.1.1 g + y₂.1.1.1 g := rfl
       rw [e, b₁ g hg, b₂ g hg, add_zero]
   | smul t p _ hp =>

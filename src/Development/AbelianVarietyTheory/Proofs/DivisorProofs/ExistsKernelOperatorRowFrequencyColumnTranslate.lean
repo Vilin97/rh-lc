@@ -160,7 +160,7 @@ theorem dualVecInf_spec (ζ : (Fin n → Cinf E) →L[ℝ] ℝ) (v : Fin n → C
   have h1 : ζ v = ∑ j, ∑ w, ((v j w).re * ζ (unitVecInf j w 1) + (v j w).im * ζ (unitVecInf j w Complex.I)) := by
     calc ζ v = ζ (∑ j, ∑ w, ((v j w).re • unitVecInf j w 1 + (v j w).im • unitVecInf j w Complex.I)) :=
           congrArg ζ (eq_sum_unitVecInf v)
-      _ = _ := by simp only [map_sum, map_add, map_smul, smul_eq_mul]
+      _ = _ := by simp only [map_sum, map_add (f := _), map_smul, smul_eq_mul]
   rw [h1, Finset.sum_comm]
   simp only [Finset.sum_apply, Pi.mul_apply, Complex.re_sum, dualVecInf_apply, Finset.mul_sum, ← Finset.sum_neg_distrib]
   refine Finset.sum_congr rfl fun w _ => Finset.sum_congr rfl fun j _ => ?_
@@ -295,7 +295,7 @@ theorem exists_kerOpInf_rowFreq_colGL : ∀ (E : Type) [Field E] [NumberField E]
         ContinuousLinearMap.inl ℝ Z V z +
           ContinuousLinearMap.inr ℝ Z V (rowCutInf ρ (g : Matrix (Fin n) (Fin n) (Cinf E))) := by
       simp
-    rw [hsplit, map_add, AddChar.map_add_eq_mul, Circle.coe_mul]
+    rw [hsplit, map_add (f := _), AddChar.map_add_eq_mul, Circle.coe_mul]
     simp only [η', ContinuousLinearMap.comp_apply]
     ring
 

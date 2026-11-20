@@ -70,7 +70,7 @@ theorem sigR_mem {y : Af D.host.F ⊗[D.host.F] D.host.E} (hy : y ∈ intAE D) :
     obtain ⟨y, hy⟩ := conj_int x
     exact AddSubgroup.subset_closure ⟨a, ha, y, by rw [hy]; rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
 
 theorem finPart_cA (z : AE D) :
@@ -78,20 +78,20 @@ theorem finPart_cA (z : AE D) :
   induction z using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero, RingHom.map_zero]
   | tmul a x => rfl
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingHom.map_add, ha, hb]
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
 
 theorem infPart_cA (z : AE D) :
     infPart D (cA D z) = sigR (Ainf D.host.F) D.sp.cm.sig (infPart D z) := by
   induction z using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero, RingHom.map_zero]
   | tmul a x => rfl
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingHom.map_add, ha, hb]
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
 
 theorem cA_cA (z : AE D) : cA D (cA D z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero]
   | tmul a x => exact congrArg (fun y : D.host.E => a ⊗ₜ[D.host.F] y) (star_star x)
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, ha, hb]
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
 
 theorem cA_alg (a : AF D.host.F) :
     cA D (algebraMap (AF D.host.F) (AE D) a) = algebraMap (AF D.host.F) (AE D) a :=
@@ -116,12 +116,12 @@ theorem trace_mem (z : AE D) : ∃ a, z + cA D z = algebraMap (AF D.host.F) (AE 
     obtain ⟨t, ht⟩ : ∃ t : D.host.F, algebraMap _ _ t = x + D.sp.cm.sig x := by
       apply (D.sp.cm.fixed _).1
       change D.sp.cm.sig _ = _
-      rw [map_add, show D.sp.cm.sig (D.sp.cm.sig x) = x from star_star x, add_comm]
+      rw [map_add (f := _), show D.sp.cm.sig (D.sp.cm.sig x) = x from star_star x, add_comm]
     exact ⟨t • a, tmul_trace a x _ t ht⟩
   | add a b ha hb =>
     obtain ⟨s, hs⟩ := ha
     obtain ⟨t, ht⟩ := hb
-    exact ⟨s + t, by rw [RingHom.map_add, RingHom.map_add, ← hs, ← ht, add_add_add_comm]⟩
+    exact ⟨s + t, by rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ← hs, ← ht, add_add_add_comm]⟩
 
 theorem one_int : (1 : Af D.host.F ⊗[D.host.F] D.host.E) ∈ intAE D :=
   AddSubgroup.subset_closure ⟨1, fun w => by rw [map_one]; exact one_mem _, 1, rfl⟩
@@ -260,14 +260,14 @@ theorem exists_unit_root {v : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D.host
   have h3 : (η * X + (1 - η)) * (η * Y + (1 - η)) = 1 := by
     linear_combination (X * Y - X - Y + 1) * hεε' + h1
   have h4 : ∀ Z, finPart D Z ∈ intAE D → finPart D (η * Z + (1 - η)) ∈ intAE D := fun Z hZ => by
-    rw [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
+    rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
     exact add_mem (GlobalTheory.HostAdeleIso.intAE_mul_mem D hεf hZ) (sub_mem hone hεf)
   refine ⟨⟨_, _, h3, by rw [mul_comm, h3]⟩, ?_, ?_, ?_, h4 X hx, h4 Y hy⟩
   · change η * X + (1 - η) = u * cA D (η * X + (1 - η))
-    rw [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hc]
+    rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hc]
     linear_combination η * h2 + hs
   · change infPart D (η * X + (1 - η)) = 1
-    rw [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hεi]
+    rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hεi]
     ring
   · change η * (η * X + (1 - η) - 1) = η * X + (1 - η) - 1
     linear_combination (X - 1) * hεε'

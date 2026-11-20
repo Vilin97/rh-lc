@@ -95,7 +95,7 @@ private theorem absSpec2 {A O Ω : Type} [CommRing A] [IsCNL A] [CommRing O] [Is
         rw [Submodule.coe_smul, map_smul, ← algebraMap_smul Ω s]
         exact Submodule.smul_mem _ _ hn
       · intro n₁ n₂ h₁ h₂
-        rw [Submodule.coe_add, map_add]
+        rw [Submodule.coe_add, map_add (f := _)]
         exact add_mem h₁ h₂
     · rw [Submodule.span_le]
       rintro _ ⟨f, hf, rfl⟩
@@ -143,7 +143,7 @@ private theorem absSpec2 {A O Ω : Type} [CommRing A] [IsCNL A] [CommRing O] [Is
   · intro K f hf f' hf'
     obtain ⟨h1, h2⟩ := hgood K f hf
     obtain ⟨h3, h4⟩ := hgood K f' hf'
-    exact hsp (f + f') K _ (add_mem h1 h3) (by rw [map_add, h2, h4, map_add])
+    exact hsp (f + f') K _ (add_mem h1 h3) (by rw [map_add (f := _), h2, h4, map_add (f := _)])
   · intro K f hf b
     obtain ⟨h1, h2⟩ := hgood K f hf
     exact hsp (b • f) K _ (Submodule.smul_mem _ _ h1) (by rw [map_smul, h2, map_smul, algebraMap_smul])

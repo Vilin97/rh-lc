@@ -11,7 +11,7 @@ private theorem ac_mul {S A : Type} [TopologicalSpace S] [CommRing A] {I : Ideal
     ∀ a b, AdicCont I fun s => (M s * N s) a b := by
   intro a b n
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Matrix.mul_apply, map_sum, map_mul, Fin.sum_univ_four, map_add]
+    simp only [Matrix.mul_apply, map_sum, map_mul, Fin.sum_univ_four, map_add (f := _)]
   exact ((((hM a 0 n).mul (hN 0 b n)).add ((hM a 1 n).mul (hN 1 b n))).add ((hM a 2 n).mul (hN 2 b n))).add
     ((hM a 3 n).mul (hN 3 b n))
 

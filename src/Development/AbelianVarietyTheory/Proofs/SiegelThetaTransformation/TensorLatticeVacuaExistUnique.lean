@@ -294,7 +294,7 @@ theorem Good.vac (hs : IsSympl X bas) (hA : Good X w A) : ∃ v : TF n g, IsVac 
     intro p hp p' hp'
     obtain ⟨y, hy, rfl⟩ := AddSubgroup.mem_map.1 hp
     obtain ⟨y', hy', rfl⟩ := AddSubgroup.mem_map.1 hp'
-    rw [← map_add, hee, hee, hee, (hA.2.2 y hy).2 y' hy', om_crdHom hs]
+    rw [← map_add (f := _), hee, hee, hee, (hA.2.2 y hy).2 y' hy', om_crdHom hs]
     congr 2
     push_cast; ring
   have hord : ∃ m : ℕ, 0 < m ∧ ∀ p ∈ A.map (crdHom hs), epsW X w (e.symm (m • p)) = 1 := by

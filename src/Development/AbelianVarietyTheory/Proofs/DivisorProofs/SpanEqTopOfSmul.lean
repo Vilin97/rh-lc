@@ -82,7 +82,7 @@ theorem exists_lagrangian (hτ : ∀ x, τ (τ x) = x) (hN : ∀ z, τ z = z →
   let φ : V → V →ₗ[k] k := fun y => { toFun := f y, map_add' := hadd y, map_smul' := hsm y }
   have hφ : ∀ y x, φ y x = f y x := fun _ _ => rfl
   have hadd' : ∀ y y' x, f (y + y') x = f y x + f y' x := by
-    intro y y' x; rw [hsy x (y + y'), hadd, map_add, ← hsy, ← hsy]
+    intro y y' x; rw [hsy x (y + y'), hadd, map_add (f := _), ← hsy, ← hsy]
   have hsm' : ∀ (a : k) y x, f (a • y) x = τ a * f y x := by
     intro a y x; rw [hsy x (a • y), hsm, map_mul, ← hsy]
   have hz : ∀ x y, f x y = 0 → f y x = 0 := fun x y h => by rw [hsy, h, map_zero]
@@ -224,7 +224,7 @@ theorem conj_mul_mem {σ : E →+* E} {A b : FractionalIdeal (𝓞 E)⁰ E} (hA 
   intro z hz
   refine FractionalIdeal.mul_induction_on (C := fun z => σ z ∈ A * b) hz (fun t ht u hu => ?_) (fun x y hx hy => ?_)
   · rw [map_mul]; exact FractionalIdeal.mul_mem_mul (hA t ht) (hb u hu)
-  · rw [map_add]; exact add_mem' _ hx hy
+  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem' _ hx hy
 
 theorem conj_inv_mem {σ : E →+* E} (hσ : ∀ x, σ (σ x) = x) {A : FractionalIdeal (𝓞 E)⁰ E} (hA0 : A ≠ 0)
     (hA : ∀ z ∈ A, σ z ∈ A) : ∀ z ∈ A⁻¹, σ z ∈ A⁻¹ := by
@@ -270,7 +270,7 @@ theorem HasModular.scale (hσ : ∀ x, σ (σ x) = x) (hadd : ∀ y x x', h y (x
     HasModular h (A * b * b') := by
   obtain ⟨L, hfg, hsp, hL⟩ := hA
   have hadd' : ∀ y y' x, h (y + y') x = h y x + h y' x := by
-    intro y y' x; rw [hsy x (y + y'), hadd, map_add, ← hsy, ← hsy]
+    intro y y' x; rw [hsy x (y + y'), hadd, map_add (f := _), ← hsy, ← hsy]
   have hsm' : ∀ (a : E) y x, h (a • y) x = σ a * h y x := by
     intro a y x; rw [hsy x (a • y), hsm, map_mul, ← hsy]
   have h0 : ∀ y, h y 0 = 0 := fun y => by simpa using hsm y 0 0
@@ -330,10 +330,10 @@ theorem exists_multiplier (hσ : ∀ x, σ (σ x) = x) {A : FractionalIdeal (�
   have key : ∀ t : 𝓞 E, t * a + conjO σ t * a' ∉ p →
       ∃ s : E, σ s = s ∧ s ∈ A⁻¹ ∧ ∃ z ∈ A, ∃ a : 𝓞 E, a ∉ p ∧ algebraMap (𝓞 E) E a = s * z := by
     intro t ht
-    refine ⟨algebraMap (𝓞 E) E t * s + σ (algebraMap (𝓞 E) E t * s), by rw [map_add, hσ, add_comm], ?_, z, hz, _, ht, ?_⟩
+    refine ⟨algebraMap (𝓞 E) E t * s + σ (algebraMap (𝓞 E) E t * s), by rw [map_add (f := _), hσ, add_comm], ?_, z, hz, _, ht, ?_⟩
     · refine add_mem' _ (int_mul_mem _ _ hs) ?_
       rw [map_mul, map_algebraMap]; exact int_mul_mem _ _ hs'
-    · rw [map_add, map_mul, map_mul, map_mul, ha, ha', map_algebraMap]; ring
+    · rw [map_add (f := _), map_mul, map_mul, map_mul, ha, ha', map_algebraMap]; ring
   by_cases h1 : 1 * a + conjO σ 1 * a' ∈ p
   · refine key θ fun h2 => ?_
     have h3 : (conjO σ θ - θ) * a ∈ p := by
@@ -363,7 +363,7 @@ theorem HasModular.inert (hσ : ∀ x, σ (σ x) = x) (hadd : ∀ y x x', h y (x
     · intro hap
       obtain ⟨y, i, hi, e⟩ := hp.exists_inv ha₀p
       have e' := congrArg (algebraMap (𝓞 E) E) e
-      rw [map_add, map_mul, map_one, ha₀] at e'
+      rw [map_add (f := _), map_mul, map_one, ha₀] at e'
       have : z = algebraMap (𝓞 E) E y * (z₀ * algebraMap (𝓞 E) E a) + z * algebraMap (𝓞 E) E i := by
         rw [ha]; linear_combination (-z) * e'
       rw [this]
@@ -377,7 +377,7 @@ theorem HasModular.inert (hσ : ∀ x, σ (σ x) = x) (hadd : ∀ y x x', h y (x
   have hLL : ∀ y x : L, h y x ∈ A := fun y x => (hL x).1 x.2 y y.2
   choose g hg using fun y x : L => hint _ (hLL y x)
   have gadd : ∀ y x x', g y (x + x') = g y x + g y x' := fun y x x' => hinj (by
-    rw [map_add, hg, hg, hg, Submodule.coe_add, hadd, mul_add])
+    rw [map_add (f := _), hg, hg, hg, Submodule.coe_add, hadd, mul_add])
   have gsm : ∀ y (o : 𝓞 E) x, g y (o • x) = o * g y x := fun y o x => hinj (by
     rw [map_mul, hg, hg, Submodule.coe_smul, ← algebraMap_smul E o, hsm]; ring)
   have gsy : ∀ x y, g y x = conjO σ (g x y) := fun x y => hinj (by
@@ -423,7 +423,7 @@ theorem HasModular.inert (hσ : ∀ x, σ (σ x) = x) (hadd : ∀ y x x', h y (x
     (by
       intro y x x'
       obtain ⟨y, rfl⟩ := hπ y; obtain ⟨x, rfl⟩ := hπ x; obtain ⟨x', rfl⟩ := hπ x'
-      rw [← map_add, hf, hf, hf, gadd, map_add])
+      rw [← map_add (f := _), hf, hf, hf, gadd, map_add (f := _)])
     (by
       intro y a x
       obtain ⟨y, rfl⟩ := hπ y; obtain ⟨x, rfl⟩ := hπ x; obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective a
@@ -557,7 +557,7 @@ theorem HasModular.one (hσ : ∀ x, σ (σ x) = x) (hadd : ∀ y x x', h y (x +
     intro z hz
     refine FractionalIdeal.mul_induction_on (C := fun z => σ z ∈ b * b') hz (fun t ht u hu => ?_) (fun x y hx hy => ?_)
     · rw [map_mul, mul_comm (σ t)]; exact FractionalIdeal.mul_mem_mul (h2 u hu) (h1 t ht)
-    · rw [map_add]; exact add_mem' _ hx hy
+    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem' _ hx hy
   have hB0 : A * b * b' ≠ 0 := mul_ne_zero (mul_ne_zero hA0 hb) hb'
   have hBσ : ∀ z ∈ A * b * b', σ z ∈ A * b * b' := by
     rw [mul_assoc]; exact conj_mul_mem hAσ hbb

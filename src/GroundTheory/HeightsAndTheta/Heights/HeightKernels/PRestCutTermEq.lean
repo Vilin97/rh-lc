@@ -71,11 +71,11 @@ theorem RestCutTermEq.proof (h₁ : RestCutRealSyzygy.Statement) (h₂ : RestCut
   have hsplit : restTransport f j k (j + k) e G * Q τ m =
       restRename f j k (j + k) e (map (algebraMap ℚ ℝ) G * R m τ) +
         restRename f j k (j + k) e (map (algebraMap ℚ ℝ) (G * Q₀ m τ)) := by
-    rw [← map_add, hR]
+    rw [← map_add (f := _), hR]
     simp only
     rw [map_mul (map (algebraMap ℚ ℝ)) G, ← mul_add, sub_add_cancel, map_mul, hpr]
     rfl
-  rw [hsplit, map_add, hcomp _ ?_, hcomp _ ?_, hzero, (h₂ f (j + k)).1]
+  rw [hsplit, map_add (f := _), hcomp _ ?_, hcomp _ ?_, hzero, (h₂ f (j + k)).1]
   · ring
   · rw [← hdeg]; exact ((hG.mul hQ₀m).map _)
   · rw [← hdeg]

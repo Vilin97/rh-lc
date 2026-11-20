@@ -31,7 +31,7 @@ private lemma map_zero_eq_one_of_additive_to_group {Γ : Type} [Group Γ] {V : T
       obtain ⟨N₁, h₁, k₁⟩ := hx
       obtain ⟨N₂, h₂, k₂⟩ := hy
       refine ⟨N₁ ⊓ N₂, inferInstance, fun N' _ hle hn => ?_⟩
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       rw [k₁ N' (hle.trans inf_le_left) hn, k₂ N' (hle.trans inf_le_right) hn, add_zero]
     | smul a x _ hx =>
       obtain ⟨N₁, h₁, k₁⟩ := hx
@@ -123,6 +123,6 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.heckeSim
   have hw0 : w = 0 := by
     refine map_zero_eq_one_of_additive_to_group σ Z hZN w hw fun u => ?_
     have := hvfix u u.2
-    rw [map_add, hQfix q hq u u.2] at this
+    rw [map_add (f := _), hQfix q hq u u.2] at this
     exact add_left_cancel this
   simpa [hw0] using hq

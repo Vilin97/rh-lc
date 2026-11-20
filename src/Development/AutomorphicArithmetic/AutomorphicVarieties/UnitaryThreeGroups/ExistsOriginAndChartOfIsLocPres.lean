@@ -12,7 +12,7 @@ private theorem lc_wcomp_mul (O : Type) [CommRing O] {σ X : Type} [AddCommGroup
     have hp' := Finset.HasAntidiagonal.mem_antidiagonal.1 hp
     by_cases h2 : Finsupp.weight wt p.2 = w
     · rw [coeff_wcomp, if_pos]
-      rw [← h, ← hp', map_add, h2, add_sub_cancel_right]
+      rw [← h, ← hp', map_add (f := _), h2, add_sub_cancel_right]
     · rw [he _ h2, mul_zero, mul_zero]
   · symm
     refine Finset.sum_eq_zero fun p hp => ?_
@@ -21,7 +21,7 @@ private theorem lc_wcomp_mul (O : Type) [CommRing O] {σ X : Type} [AddCommGroup
     · rw [coeff_wcomp, if_neg, zero_mul]
       intro h1
       apply h
-      rw [← hp', map_add, h1, h2, sub_add_cancel]
+      rw [← hp', map_add (f := _), h1, h2, sub_add_cancel]
     · rw [he _ h2, mul_zero]
 
 private theorem lc_wcomp_self (O : Type) [CommRing O] {σ X : Type} [AddCommGroup X] (wt : σ → X)

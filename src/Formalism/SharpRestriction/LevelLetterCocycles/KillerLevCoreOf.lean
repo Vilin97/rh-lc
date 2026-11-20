@@ -115,7 +115,7 @@ theorem inId_add {a : ZMod n} {e : ℕ} {α : ℕ → ℤ} {f g : W.EE} (hf : In
   obtain ⟨u, hu, hfu⟩ := hf
   obtain ⟨u', hu', hgu⟩ := hg
   refine ⟨u + u', Subalgebra.add_mem _ hu hu', ?_⟩
-  rw [mul_add, hfu, hgu, ← map_add]; congr 1; ring
+  rw [mul_add, hfu, hgu, ← map_add (f := _)]; congr 1; ring
 
 theorem inId_mulι {a : ZMod n} {e : ℕ} {α : ℕ → ℤ} {f : W.EE} (hf : InId W a e α f) {c : LetA O n}
     (hc : c ∈ W.AΔ) : InId W a e α (ιE c * f) := by
@@ -187,7 +187,7 @@ theorem inId_aeval (hS : PsStable W) {a : ZMod n} {e : ℕ} {α : ℕ → ℤ} (
   induction P using Polynomial.induction_on with
   | C c => intro f hf; rw [Polynomial.aeval_C]; exact inId_smul W hf c
   | add p q hp hq =>
-    intro f hf; rw [map_add, LinearMap.add_apply]; exact inId_add W (hp f hf) (hq f hf)
+    intro f hf; rw [map_add (f := _), LinearMap.add_apply]; exact inId_add W (hp f hf) (hq f hf)
   | monomial k c ih =>
     intro f hf
     rw [pow_succ, ← mul_assoc, map_mul, Module.End.mul_apply, Polynomial.aeval_X]

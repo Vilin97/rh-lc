@@ -18,7 +18,7 @@ theorem map_tail (Ψ : Γ →+* Γ) (g : L → L) (hred : ∀ x, T.red (Ψ x) = 
     (hπ : Ψ T.π = T.π) (hteich : ∀ c, Ψ (T.teich c) = T.teich (g c)) (x : Γ) :
     Ψ (T.tail x) = T.tail (Ψ x) := by
   have h1 := congrArg Ψ (T.eq_teich_add_π_mul_tail x)
-  rw [map_add, map_mul, hteich, hπ] at h1
+  rw [map_add (f := _), map_mul, hteich, hπ] at h1
   have h2 := T.eq_teich_add_π_mul_tail (Ψ x)
   rw [hred] at h2
   have hz : (Ψ (T.tail x) - T.tail (Ψ x)) * T.π = 0 := by linear_combination h2 - h1
@@ -49,7 +49,7 @@ theorem map_normPt (Ψ : Γ →+* Γ) (g : L → L) (hred : ∀ x, T.red (Ψ x) 
       _ = (T.vInv hη : Γ) := by rw [← mul_assoc, mul_comm (Ψ _), e1, one_mul]
   have hc : T.coeff (η : Γ) 0 = g (T.coeff (ξ : Γ) 0) := by
     rw [coeff_zero, coeff_zero, hξη, hred]
-  rw [normPt, normPt, map_add, map_one, map_mul, hB, hinv, normU, normU, map_mul, hteich, hv, hc]
+  rw [normPt, normPt, map_add (f := _), map_one, map_mul, hB, hinv, normU, normU, map_mul, hteich, hv, hc]
 
 theorem normPt_eq_mul_of_assoc {ξ η : T.int} (hξ : T.IsPrimOne ξ) (hη : T.IsPrimOne η) {u : T.int}
     (hu : IsUnit u) (h : (η : Γ) = u * ξ) :

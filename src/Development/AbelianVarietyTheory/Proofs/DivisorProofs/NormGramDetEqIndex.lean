@@ -103,7 +103,7 @@ theorem dual_step (M : Submodule (𝓞 F) V) (x : V) :
     · rintro ⟨h1, h2⟩ z hz
       obtain ⟨m, hm, w, hw, rfl⟩ := Submodule.mem_sup.1 hz
       obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hw
-      rw [map_add, LinearMap.map_smul_of_tower]
+      rw [map_add (f := _), LinearMap.map_smul_of_tower]
       exact add_mem (h2 m hm) (Submodule.smul_mem _ c h1)
   rw [e1, e2, AddSubgroup.inf_relIndex_right, AddSubgroup.relIndex_comap]
   refine inv_relIndex_dvd _ _ ?_

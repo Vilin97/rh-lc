@@ -46,7 +46,7 @@ theorem ChowDegreeClosedPoint.proof (hField : ClosedPointChartField.Statement)
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simp; rfl
-    | add p q hp hq => rw [map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p j hp => rw [map_mul, map_mul, hp, aeval_X]
   have hξi : ξ i = 1 := by
     have : X i - 1 ∈ J := Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)

@@ -201,7 +201,7 @@ theorem coordEq_const_add : ∀ {R : Type} [CommRing R] [IsDomain R] {Q : DegPre
     rw [e₁, s1, s2, ← s3, ← s4, ← s5, s6, δ'1]
   have E := dlog_const_add π δ δmul _ _ _ _ (GlobalTheory.TorusModel.cv_add (Y.Φ Y.H (𝟙 _)) hJ α β) _ _ _
     (key α c₁ H₁) (key β c₂ H₂) (key (α + β) c₃ H₃) hθ
-  rw [cst_eq_cstH, cst_eq_cstH, cst_eq_cstH, ← map_add] at E
+  rw [cst_eq_cstH, cst_eq_cstH, cst_eq_cstH, ← map_add (f := _)] at E
   exact (cstH (b ≫ A₀.hom) z).injective E
 
 end GlobalTheory.HeatConn

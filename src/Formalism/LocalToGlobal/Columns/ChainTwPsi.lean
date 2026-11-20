@@ -256,7 +256,7 @@ theorem twJ_of_close (sharp : Bool) {j : ℕ} {P : HeightOneSpectrum (𝓞 X.E)}
     have : h' v = h v + q • w v := by
       show h' v = h v + q • (q⁻¹ • (h' v - h v))
       rw [smul_smul, mul_inv_cancel₀ hq0, one_smul, add_sub_cancel]
-    rw [this, map_add, map_smul]
+    rw [this, map_add (f := _), map_smul]
     simp
   have hκi : ∀ v, (h⁻¹ * h')⁻¹ v = v - q • h'⁻¹ (w v) := fun v => by
     show (h'⁻¹ * h) v = _

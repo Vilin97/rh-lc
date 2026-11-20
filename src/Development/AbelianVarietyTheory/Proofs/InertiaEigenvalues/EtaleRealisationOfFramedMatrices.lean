@@ -27,7 +27,7 @@ theorem equivFun_frob {T : Type} [AddCommGroup T] [Module ℤ_[l] T] {ι : Type}
   | tmul a t =>
     rw [TensorProduct.map_tmul, Module.Basis.baseChange_repr_tmul, Module.Basis.baseChange_repr_tmul,
       map_smul, AlgHom.toLinearMap_apply, LinearMap.id_apply]
-  | add y z hy hz => rw [map_add, map_add, map_add, Finsupp.add_apply, Finsupp.add_apply, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), map_add (f := _), Finsupp.add_apply, Finsupp.add_apply, map_add (f := _), hy, hz]
 
 theorem equivFun_map {T : Type} [AddCommGroup T] [Module ℤ_[l] T] {ι : Type} [Fintype ι] [DecidableEq ι]
     (b : Module.Basis ι ℤ_[l] T) (s : WCb l ≃ₐ[ℤ_[l]] WCb l) (r : T →ₗ[ℤ_[l]] T) (y : WCb l ⊗[ℤ_[l]] T) :
@@ -44,7 +44,7 @@ theorem equivFun_map {T : Type} [AddCommGroup T] [Module ℤ_[l] T] {ι : Type} 
       simp only [Module.Basis.baseChange_repr_tmul, Matrix.mulVec, dotProduct, map_smul, Algebra.smul_def,
       Finset.sum_mul, map_mul, mul_assoc, map_sum, AlgEquiv.commutes]
   | add y z hy hz =>
-    simp only [map_add, Finsupp.add_apply, hy, hz, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Finsupp.add_apply, hy, hz, mul_add, Finset.sum_add_distrib]
 
 theorem algEquiv_mulVec {R A : Type} [CommSemiring R] [CommRing A] [Algebra R A] {n : Type} [Fintype n]
     (s : A ≃ₐ[R] A) (U : Matrix n n A) (v : n → A) (i : n) :

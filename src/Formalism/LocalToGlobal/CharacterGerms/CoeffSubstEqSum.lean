@@ -211,7 +211,7 @@ theorem TendsS.unique {f : ℕ → MvPowerSeries σ C} {F G : MvPowerSeries σ C
 theorem TendsS.add {f g : ℕ → MvPowerSeries σ C} {F G : MvPowerSeries σ C} (hf : TendsS V f F)
     (hg : TendsS V g G) : TendsS V (fun n => f n + g n) (F + G) := by
   intro μ
-  simpa only [map_add] using (hf μ).add (hg μ)
+  simpa only [map_add (f := _)] using (hf μ).add (hg μ)
 
 theorem TendsS.sub {f g : ℕ → MvPowerSeries σ C} {F G : MvPowerSeries σ C} (hf : TendsS V f F)
     (hg : TendsS V g G) : TendsS V (fun n => f n - g n) (F - G) := by
@@ -266,7 +266,7 @@ theorem Ord.mul {k k' : ℕ} {f g : MvPowerSeries σ C} (hf : Ord k f) (hg : Ord
   intro p hp
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
   have hd : Finsupp.degree p.1 + Finsupp.degree p.2 = Finsupp.degree μ := by
-    rw [← hp, map_add]
+    rw [← hp, map_add (f := _)]
   by_cases h1 : Finsupp.degree p.1 < k
   · rw [hf p.1 h1, zero_mul]
   · have h2 : Finsupp.degree p.2 < k' := by omega

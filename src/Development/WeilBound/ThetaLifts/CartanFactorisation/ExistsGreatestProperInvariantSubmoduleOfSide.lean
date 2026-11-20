@@ -166,7 +166,7 @@ theorem one_of {p q r s : ℕ} {c : ℂ} (τ : ℚ) {La : Ix r s → ℚ} (h : S
   have sj : Function.Surjective (thMkC p q r s c) := Submodule.mkQ_surjective _
   have ak : ∀ W x, thMkC p q r s c (fockAct2 p q r s W x) =
       thAct p q r s c τ W (thMkC p q r s c x) - ((τ : ℂ) * W.trace) • thMkC p q r s c x := fun W x => by
-    rw [thAct_mk, twAct_apply, map_add, map_smul, add_sub_cancel_right]
+    rw [thAct_mk, twAct_apply, map_add (f := _), map_smul, add_sub_cancel_right]
   refine ⟨K.comap (thMkC p q r s c), fun e => h1 (eq_top_iff.2 fun y _ => ?_), fun W x hx => ?_, fun N hN hs => ?_,
     fun β b1 b2 b3 x hx => ?_⟩
   · obtain ⟨x, rfl⟩ := sj y
@@ -203,7 +203,7 @@ theorem one_of {p q r s : ℕ} {c : ℂ} (τ : ℚ) {La : Ix r s → ℚ} (h : S
     have := h4 β' (fun a b u v => by
       obtain ⟨u, rfl⟩ := sj u
       obtain ⟨v, rfl⟩ := sj v
-      rw [thAct_mk, thAct_mk, hβ', hβ', twAct_apply, twAct_apply, map_add, map_add, LinearMap.add_apply, b3, map_smul (β u),
+      rw [thAct_mk, thAct_mk, hβ', hβ', twAct_apply, twAct_apply, map_add (f := _), map_add (f := _), LinearMap.add_apply, b3, map_smul (β u),
         LinearMap.map_smulₛₗ β, mul_add]
       congr 1
       by_cases e : a = b

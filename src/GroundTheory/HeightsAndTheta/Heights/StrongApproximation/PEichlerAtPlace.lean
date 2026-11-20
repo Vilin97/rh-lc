@@ -90,7 +90,7 @@ theorem proof (hPM : PlaceMaps.Statement) : EichlerAtPlace.Statement := by
     refine ⟨singleV E v ∘ u, singleV E v c', ?_, ?_, ?_, key a u c'⟩
     · rw [hf_single_incl c v hsi J, hua, map_zero]
     · rw [hf_single_incl c v hsi J, hub, map_zero]
-    · rw [hf_single_single c v hsi hmul hsig J, hsig, ← map_add, ← map_add]
+    · rw [hf_single_single c v hsi hmul hsig J, hsig, ← map_add (f := _), ← map_add (f := _)]
       exact (congrArg (singleV E v) hc').trans (map_zero _)
   rcases hg with hg | hg
   · exact Or.inl (along e f hg)

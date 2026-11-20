@@ -248,7 +248,7 @@ theorem tie_idCell_row (Λ : Submodule (𝓞 E) S.V) {T T' : E} (F : LFlag S r T
     have e3 := F.fl.z_orth a
     have hsplit : S.hT (F.fl.e a) F'.fl.z = S.hT (F.fl.e a) F.fl.z +
         S.hT (F.fl.e a) (n F.fl.z - F.fl.z) - S.hT (F.fl.e a) (n F.fl.z - F'.fl.z) := by
-      rw [← map_add, ← map_sub]
+      rw [← map_add (f := _), ← map_sub]
       congr 1
       abel
     rw [hsplit, e1, e2, e3]
@@ -262,7 +262,7 @@ theorem tie_idCell_row (Λ : Submodule (𝓞 E) S.V) {T T' : E} (F : LFlag S r T
     have e1 := hX _ (hXa _ h1)
     have hsplit : S.hT (F.fl.e a) (n (F.fl.e c)) = S.hT (F.fl.e a) (F.fl.e c) +
         S.hT (F.fl.e a) (n (F.fl.e c) - F.fl.e c) := by
-      rw [← map_add]
+      rw [← map_add (f := _)]
       congr 1
       abel
     rw [hsplit, e1, F.fl.e_iso a c, add_zero]
@@ -412,7 +412,7 @@ theorem tie_gram_det_ne {E : Type} [Field E] [NumberField E] [StarRing E] (S : F
       obtain ⟨i, rfl⟩ := hz
       exact hcol i
     | zero => rw [map_zero, LinearMap.zero_apply]
-    | add u w _ _ hu hw => rw [map_add, LinearMap.add_apply, hu, hw, add_zero]
+    | add u w _ _ hu hw => rw [map_add (f := _), LinearMap.add_apply, hu, hw, add_zero]
     | smul c u _ hu => rw [map_smulₛₗ, LinearMap.smul_apply, hu, smul_zero]
   have hy0 : ∑ j, v j • S.frame j = 0 := S.nondeg.2 _ hall
   exact hv0 (funext (Fintype.linearIndependent_iff.mp S.frame.linearIndependent v hy0))

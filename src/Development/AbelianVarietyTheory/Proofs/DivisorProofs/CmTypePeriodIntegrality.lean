@@ -39,7 +39,7 @@ theorem exists_scaled_image {E : Type} [Field E] [NumberField E] [IsCMField E] {
     · intro x y hx hy
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [LinearMap.map_add, LinearMap.map_add, LinearMap.map_add, ha, hb]⟩
+      exact ⟨a + b, by rw [LinearMap.map_add (f := _), LinearMap.map_add (f := _), LinearMap.map_add (f := _), ha, hb]⟩
   obtain ⟨m, hm⟩ := key _ (hD h)
   refine ⟨m, ?_⟩
   rw [hm, LinearMap.map_smul, LinearMap.map_smul_of_tower, algebraMap_smul]

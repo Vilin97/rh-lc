@@ -61,7 +61,7 @@ theorem nV_eq (R : Ranks) : (R.nV : ℚ) = (R.k : ℚ) + R.m - 1 + R.t := by
   ring
 
 theorem lamWt_eq : lamWt P a = (fullPar P a).map (· - 1 / 2) := by
-  simp only [lamWt, fullPar, sigPar, runPar, Multiset.map_add, Multiset.map_map]
+  simp only [lamWt, fullPar, sigPar, runPar, Multiset.map_add (f := _), Multiset.map_map]
   congr 1
   · congr 1
     · refine Multiset.map_congr rfl fun i _ => ?_

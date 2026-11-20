@@ -22,7 +22,7 @@ theorem aeval_aeval' {K : Type*} [CommRing K] [Algebra ℂ K] (g : σ → K) (φ
     (f : MvPolynomial σ ℂ) : aeval g (aeval φ f) = aeval (fun v => aeval g (φ v)) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add f h hf hh => simp only [map_add, hf, hh]
+  | add f h hf hh => simp only [map_add (f := _), hf, hh]
   | mul_X f w hf => simp only [map_mul, aeval_X, hf]
 
 theorem aeval_killS_empty (f : MvPolynomial σ ℂ) : aeval (killS (∅ : Set σ)) f = f := by

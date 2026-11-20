@@ -93,7 +93,7 @@ theorem conj_zero_mem (x : AK K) (hx : thetaK K x = 0) :
       congr 1
       · exact congrArg _ (GlobalTheory.MemLoc.TFil.j_alg C.j_cris a)
       · exact hC.o _)
-      fun x y hx hy => by simp only [map_add, hx, hy]
+      fun x y hx hy => by simp only [map_add (f := _), hx, hy]
   rw [T.fil, hA]
   refine GlobalTheory.MemLoc.TiedUnif.alg_mem_FilD 1 (((thetaD_props l).2.1 _).1 ?_)
   rw [GlobalTheory.CrisToDR.thetaD_psiA, hx]

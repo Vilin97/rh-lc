@@ -20,7 +20,7 @@ lemma tD_smul (τ : Ks ≃ₐ[LL] Ks) (k : Ks) (v : Ks ⊗[LL] D) :
     first
       | simp [tD, TensorProduct.smul_tmul']
       | simp only [tD, TensorProduct.smul_tmul', LinearMap.rTensor_tmul, AlgEquiv.toLinearMap_apply, smul_eq_mul, map_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 lemma tD_mem (τ : Ks ≃ₐ[LL] Ks) (X : Submodule LL D) {v : Ks ⊗[LL] D}
     (hv : v ∈ X.baseChange Ks) : tD D τ v ∈ X.baseChange Ks := by
@@ -37,7 +37,7 @@ lemma tD_mem (τ : Ks ≃ₐ[LL] Ks) (X : Submodule LL D) {v : Ks ⊗[LL] D}
   · simp only [map_zero]
     exact Submodule.zero_mem _
   · intro x y _ _ hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   · intro a x _ hx
     rw [tD_smul]
@@ -55,7 +55,7 @@ lemma mem_bc_iff (X : Submodule LL D) (v : Ks ⊗[LL] D) :
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [TensorProduct.smul_tmul']
-    | add a b ha hb => simp only [smul_add, map_add, ha, hb]
+    | add a b ha hb => simp only [smul_add, map_add (f := _), ha, hb]
   constructor
   · intro hv
     have hv' := hv
@@ -84,7 +84,7 @@ lemma mem_bc_iff (X : Submodule LL D) (v : Ks ⊗[LL] D) :
               rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]]
            exact Submodule.smul_mem _ a (Submodule.subset_span ⟨b, b.2, rfl⟩))
     | add a b ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ ha hb
 
 lemma q_tD (X : Submodule LL D) (τ : Ks ≃ₐ[LL] Ks) (v : Ks ⊗[LL] D) :
@@ -92,7 +92,7 @@ lemma q_tD (X : Submodule LL D) (τ : Ks ≃ₐ[LL] Ks) (v : Ks ⊗[LL] D) :
   induction v using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul x d => simp [tD]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 lemma coord_tD {ι : Type*} (b : Module.Basis ι LL D) (τ : Ks ≃ₐ[LL] Ks) (y : Ks ⊗[LL] D) (i : ι) :
     (Algebra.TensorProduct.basis Ks b).repr (tD D τ y) i =
@@ -103,7 +103,7 @@ lemma coord_tD {ι : Type*} (b : Module.Basis ι LL D) (τ : Ks ≃ₐ[LL] Ks) (
     first
       | simp [tD, Algebra.TensorProduct.basis_repr_tmul]
       | simp [tD]
-  | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), Finsupp.add_apply, hy, hz]
 
 lemma fixed_const (T : Set (Ks ≃ₐ[LL] Ks))
     (hT : ∀ x : Ks, (∀ τ ∈ T, τ x = x) → ∃ c : LL, algebraMap LL Ks c = x)
@@ -176,7 +176,7 @@ lemma tD_comm (σ τ : Ks ≃ₐ[LL] Ks) (h : ∀ x, σ (τ x) = τ (σ x)) (v :
   induction v using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul x d => rw [tD_tmul, tD_tmul, tD_tmul, tD_tmul, h]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end tensor
 
@@ -222,7 +222,7 @@ lemma aeval_mem (T : Module.End LL W) (p : Submodule LL W) (hp : ∀ v ∈ p, T 
     | zero => intro w hw; rw [pow_zero]; exact hw
     | succ n ih => intro w hw; rw [pow_succ']; exact hp _ (ih w hw)
   induction P using Polynomial.induction_on' with
-  | add P Q hP hQ => rw [map_add, LinearMap.add_apply]; exact p.add_mem hP hQ
+  | add P Q hP hQ => rw [map_add (f := _), LinearMap.add_apply]; exact p.add_mem hP hQ
   | monomial n a =>
     rw [Polynomial.aeval_monomial]
     first
@@ -488,7 +488,7 @@ lemma pAct_sub (Lev : Level LL Ks Δ) (P : Polynomial LL) (f g : Amb LL Ks D) :
 lemma aeval_fix {W : Type} [AddCommGroup W] [Module LL W] (T : Module.End LL W) (v : W)
     (h : T v = v) (P : Polynomial LL) : Polynomial.aeval T P v = P.eval 1 • v := by
   induction P using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, LinearMap.add_apply, hp, hq, Polynomial.eval_add, add_smul]
+  | add p q hp hq => rw [map_add (f := _), LinearMap.add_apply, hp, hq, Polynomial.eval_add, add_smul]
   | monomial n a =>
     rw [Polynomial.aeval_monomial, Polynomial.eval_monomial, one_pow, mul_one]
     first

@@ -69,7 +69,7 @@ theorem resS_eq_zero_iff_cpt (w : Pl D.host.E) (s : OA D) :
       exact (hv x).2 hx
     · simp
     · intro a b _ _ ha hb
-      rw [Subring.coe_add, RingHom.map_add]
+      rw [Subring.coe_add, RingHom.map_add (f := _)]
       exact Valuation.map_add_lt _ ha hb
     · intro c a _ ha
       rw [smul_eq_mul, Subring.coe_mul, RingHom.map_mul, Valuation.map_mul]
@@ -343,7 +343,7 @@ theorem hA_add_left (x x' y : Fin V.rank → EAf D) : hA V (x + x') y = hA V x y
   simp only [hA, Formalism.UG.hform, Pi.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem hA_add_right (x y y' : Fin V.rank → EAf D) : hA V x (y + y') = hA V x y + hA V x y' := by
-  simp only [hA, Formalism.UG.hform, Pi.add_apply, RingHom.map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hA, Formalism.UG.hform, Pi.add_apply, RingHom.map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hA_smul_left (a : EAf D) (x y : Fin V.rank → EAf D) : hA V (a • x) y = a * hA V x y := by
   simp only [hA, Formalism.UG.hform, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]

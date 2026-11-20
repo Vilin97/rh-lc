@@ -80,7 +80,7 @@ private theorem emb_ext (D : Dat F E) {τ τ' : E →+* ℂ} (h : τ.comp (algeb
   have hc : ∀ c : F, τ (algebraMap F E c) = τ' (algebraMap F E c) := fun c => RingHom.congr_fun h c
   refine RingHom.ext fun x => ?_
   rw [← D.b.sum_repr x, Fin.sum_univ_two, D.b0, D.b1]
-  simp only [Algebra.smul_def, map_add, map_mul, map_one, hc, hθ]
+  simp only [Algebra.smul_def, map_add (f := _), map_mul, map_one, hc, hθ]
 
 private theorem conj_comp (τ : E →+* ℂ) :
     (ComplexEmbedding.conjugate τ).comp (algebraMap F E) = τ.comp (algebraMap F E) := by
@@ -181,7 +181,7 @@ private theorem term (Y : Lie E 2) (hY : (Matrix.of Y).trace = 0) (ψ' : S4 F) (
     ∑ i, ∑ j, coord τ (Y i j) * (O.dE D τ i j ψ').1 v = -T D O v Y ψ' τ := by
   have tr : coord τ (Y 0 0) + coord τ (Y 1 1) = 0 := by
     rw [Matrix.trace_fin_two] at hY
-    rw [← map_add]
+    rw [← map_add (f := _)]
     have : Y 0 0 + Y 1 1 = 0 := hY
     rw [this, map_zero]
   simp only [dE_apply, T, Fin.sum_univ_two, Matrix.mul_apply, Matrix.map_apply, Matrix.of_apply]

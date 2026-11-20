@@ -120,7 +120,7 @@ theorem std_step {A DD : Type} [CommRing A] [AddCommGroup DD] [Module A DD] (N :
       refine ⟨m + m', key ▸ Subtype.mem _, fun k hk => ?_⟩
       have : (⟨Q ^ (m + m') • (z + z'), key ▸ Subtype.mem _⟩ : ↥N) =
           Q ^ m' • (⟨_, hm⟩ : ↥N) + Q ^ m • (⟨_, hm'⟩ : ↥N) := Subtype.ext key
-      rw [this, map_add, hsm, hsm, Pi.add_apply, conv_van _ hz k hk, conv_van _ hz' k hk, add_zero]
+      rw [this, map_add (f := _), hsm, hsm, Pi.add_apply, conv_van _ hz k hk, conv_van _ hz' k hk, add_zero]
     | smul a z _ hz =>
       obtain ⟨m, hm, hz⟩ := hz
       have key : Q ^ m • (a • z) = ((a • (⟨_, hm⟩ : ↥N) : ↥N) : DD) := by
@@ -150,7 +150,7 @@ theorem std_step {A DD : Type} [CommRing A] [AddCommGroup DD] [Module A DD] (N :
       rw [heφ x m hm, ← conv_mul _ _ (tw_van c Φ (hv' x)), mul_assoc, hw, mul_one,
         tw_conv hc Φ a (hv' x)]
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add f g _ _ hf hg => rw [map_add]; exact Submodule.add_mem _ hf hg
+    | add f g _ _ hf hg => rw [map_add (f := _)]; exact Submodule.add_mem _ hf hg
     | smul a f _ hf => rw [map_smul]; exact Submodule.smul_mem _ a hf
   intro f
   constructor

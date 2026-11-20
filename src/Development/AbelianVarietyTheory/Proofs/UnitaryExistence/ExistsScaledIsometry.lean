@@ -49,7 +49,7 @@ theorem exists_nat_smul_mem {E : Type} [Field E] [NumberField E] {M₁ M₂ V : 
     rw [hk, Nat.cast_mul, mul_comm, mul_smul]
     exact Submodule.smul_mem _ _ (hmem _)
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, smul_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _), smul_add]; exact Submodule.add_mem _ ha hb
   | smul c a _ ha => rw [map_smul, smul_comm]; exact Submodule.smul_mem _ _ ha
 
 theorem exists_scaled_isometry : GlobalTheory.Published.HasseNormSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (D₁ D₂ : Datum H), D₁.p = D₂.p → D₁.q = D₂.q → ∃ (N : ℕ) (f : D₁.La →ₗ[𝓞 E] D₂.La), 0 < N ∧ Function.Injective f ∧ ∀ x y, D₂.EF (f x) (f y) = (N : ℤ) ^ 2 * D₁.EF x y := by

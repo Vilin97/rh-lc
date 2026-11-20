@@ -122,7 +122,7 @@ theorem pderivIter_add_index {F : (ι → 𝕜) → V} {a : ι → 𝕜} (h : An
   rw [pderivIter, pderivIter, pderivIter, ← pderivList_append]
   refine pderivList_perm h ?_
   rw [← Multiset.coe_eq_coe, ← Multiset.coe_add]
-  simp only [Multiset.coe_toList, map_add]
+  simp only [Multiset.coe_toList, map_add (f := _)]
 
 end Analytic
 

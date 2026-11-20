@@ -54,7 +54,7 @@ def mulLin {L D : LB Y} (s : LB.Sec D) : SecOnR f L ⊤ →ₗ[K] SecOnR f (tens
       change @Eq Γ(Y, L.U p.1 ⊓ D.U p.2) (rs Y _ ((SecOnR.topEquiv f L (a + b)).f p.1) * rs Y inf_le_right (s.f p.2))
         (rs Y inf_le_left ((SecOnR.topEquiv f L a).f p.1) * rs Y inf_le_right (s.f p.2) +
           rs Y inf_le_left ((SecOnR.topEquiv f L b).f p.1) * rs Y inf_le_right (s.f p.2))
-      rw [GlobalTheory.VeryAmpleGrowth.top_add, map_add]
+      rw [GlobalTheory.VeryAmpleGrowth.top_add, map_add (f := _)]
       exact add_mul _ _ _)
     (fun c a (p : L.ι × D.ι) => by
       change @Eq Γ(Y, L.U p.1 ⊓ D.U p.2) (rs Y inf_le_left ((SecOnR.topEquiv f L (c • a)).f p.1) * rs Y inf_le_right (s.f p.2))

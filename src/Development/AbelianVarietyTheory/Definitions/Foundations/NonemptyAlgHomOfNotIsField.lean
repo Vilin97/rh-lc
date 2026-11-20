@@ -31,7 +31,7 @@ theorem splitProj_comp (τ : E →ₐ[F] Fv F v) (σ : E →ₐ[F] E) (y : Fv F 
     splitProj (τ.comp σ) y = splitProj τ (sigR _ σ y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e => rfl
 
 theorem continuous_splitProj (τ : E →ₐ[F] Fv F v) : Continuous (splitProj τ) :=
@@ -141,7 +141,7 @@ theorem finEmb_ofId_comp (τ : E →ₐ[F] Fv F v) (y : Fv F v ⊗[F] E) :
       algebraMap (Fv F v) (FvBar F v) (splitProj τ y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e => simp
 
 theorem nnnorm_le_one_iff_mem {a : Fv F v} : ‖a‖₊ ≤ 1 ↔ a ∈ v.adicCompletionIntegers F :=
@@ -283,7 +283,7 @@ theorem splitPrime_comp_ne (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) : spli
       rw [splitProj_tmul, splitProj_tmul, ← mul_sub, map_mul, ← sub_sub_sub_cancel_right _ _
         (algebraMap (𝓞 F) (Fv F v) c)]
       exact lt_of_le_of_lt (mul_le_of_le_one_left' ha) (Valuation.map_sub_lt _ hc h1)
-    · rw [map_add, map_add, add_sub_add_comm]; exact Valuation.map_add_lt _ hy hz
+    · rw [map_add (f := _), map_add (f := _), add_sub_add_comm]; exact Valuation.map_add_lt _ hy hz
     · rwa [map_neg, map_neg, neg_sub_neg, Valuation.map_sub_swap]
   simpa using key _ (splitIdem_mem h τ)
 

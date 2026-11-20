@@ -118,7 +118,7 @@ theorem sum_at (β γ : ℂ_[p] × ℂ_[p]) (iγ : IntegralMv (mulBy l ex γ.1 (
     ring
   rw [e]
   refine sTrans hE (sAdd hE (sAdd hE (sTrans hE S1 htr) nβ) nγ) (sOfEq hE ?_)
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   ring
 
 end

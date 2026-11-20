@@ -27,7 +27,7 @@ theorem hA_add_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E
 
 theorem hA_add_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (U V V' : Fin n → AE F E) :
     hA σ J U (V + V') = hA σ J U V + hA σ J U V' := by
-  simp only [hA, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hA, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hA_neg_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (U V : Fin n → AE F E) :
     hA σ J (-U) V = -hA σ J U V := by

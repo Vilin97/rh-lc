@@ -33,7 +33,7 @@ private theorem valAt'_comp_lemma {Y Z : Scheme.{0}} (x : Sp ℂ ⟶ Y) (φ : Y 
 theorem ptDer_push {X Y : Scheme.{0}} (y : Sp ℂ ⟶ X) (f : X ⟶ Y) (δ : ∀ W : X.Opens, Γ(X, W) → ℂ) (h : PtDer y δ) :
     PtDer (y ≫ f) (fun W a => δ (f ⁻¹ᵁ W) ((f.app W).hom a)) where
   add W hW a b := by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact h.add (f ⁻¹ᵁ W) hW _ _
   mul W hW a b := by
     rw [map_mul, valAt'_comp_lemma y f W a, valAt'_comp_lemma y f W b]
@@ -113,7 +113,7 @@ theorem comm_of_endo : ∀ (P₀ : Out.PolAV (Sp ℂ)) (u : HolUnif P₀.A P₀.
     rw [← u.ker, hF, (u.ker l).2 hl, hone]
   have hexF : ∀ z, ∀ l ∈ u.Λ, u.ex (F (z + l)) = u.ex (F z) := by
     intro z l hl
-    rw [map_add]
+    rw [map_add (f := _)]
     exact ex_add_lattice u _ _ (hFl l hl)
   have hdom : ∀ W z, z ∈ dom u m (f ⁻¹ᵁ W) ↔ F z ∈ dom u m W := by
     intro W z
@@ -170,23 +170,23 @@ theorem comm_of_endo : ∀ (P₀ : Out.PolAV (Sp ℂ)) (u : HolUnif P₀.A P₀.
         show ⊤ ≤ ((u.ex (F (z + l))).left ≫ m) ⁻¹ᵁ W
         rw [hexF z l hl]
         exact hz
-      rw [hw (z + l) (Set.mem_univ _) W a hz', map_add, fderiv_fn_add_lattice u m W a (F z) (F l) hFl']
+      rw [hw (z + l) (Set.mem_univ _) W a hz', map_add (f := _), fderiv_fn_add_lattice u m W a (F z) (F l) hFl']
     · intro W a hz
       have hzf : z ∈ dom u m (f ⁻¹ᵁ W) := (hdom W z).2 hz
       have e1 := hKS.per ⟨F l, hFl'⟩ W a (F z) hz
       have e2 := hKS.per ⟨l, hl⟩ (f ⁻¹ᵁ W) ((f.app W).hom a) z hzf
       have hd0 := hw z (Set.mem_univ _) W a hz
       show s (F (z + l)) W a - s (z + l) (f ⁻¹ᵁ W) ((f.app W).hom a) = _
-      rw [map_add, e1, e2, hfd W a z hz]
+      rw [map_add (f := _), e1, e2, hfd W a z hz]
       show _ = fderiv ℂ (fn u m W a) (F z) (w z + (Θ.mulVec (star (F l)) - F (Θ.mulVec (star l))))
-      rw [ContinuousLinearMap.comp_apply, LinearMap.coe_toContinuousLinearMap', map_add, map_sub, ← hd0]
+      rw [ContinuousLinearMap.comp_apply, LinearMap.coe_toContinuousLinearMap', map_add (f := _), map_sub, ← hd0]
       ring
 
   have hc_add : ∀ v v' : Fin P₀.g → ℂ,
       Θ.mulVec (star (F (v + v'))) - F (Θ.mulVec (star (v + v'))) =
         (Θ.mulVec (star (F v)) - F (Θ.mulVec (star v))) + (Θ.mulVec (star (F v')) - F (Θ.mulVec (star v'))) := by
     intro v v'
-    rw [map_add, star_add, star_add, Matrix.mulVec_add, Matrix.mulVec_add, map_add]
+    rw [map_add (f := _), star_add, star_add, Matrix.mulVec_add, Matrix.mulVec_add, map_add (f := _)]
     abel
   have hc_smul : ∀ (a : ℂ) (v : Fin P₀.g → ℂ),
       Θ.mulVec (star (F (a • v))) - F (Θ.mulVec (star (a • v))) =

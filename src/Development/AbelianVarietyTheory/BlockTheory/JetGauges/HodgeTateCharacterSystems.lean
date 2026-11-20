@@ -71,7 +71,7 @@ lemma dAt_add (a b : LocRing G) : dAt G (a + b) = dAt G a + dAt G b := by
       ⟨a - algebraMap O (LocRing G) (aug G a), sub_aug_mem G a⟩ +
         ⟨b - algebraMap O (LocRing G) (aug G b), sub_aug_mem G b⟩ := by
     apply Subtype.ext
-    simp only [map_add, Submodule.coe_add]
+    simp only [map_add (f := _), Submodule.coe_add]
     ring
   rw [e]
   exact map_add _ _ _
@@ -104,7 +104,7 @@ lemma dAt_mul (a b : LocRing G) : dAt G (a * b) = aug G a • dAt G b + aug G b 
     exact Ideal.mul_mem_mul ha hb
   rw [e]
   show (augIdeal G).toCotangent (_ + _ + _) = aug G a • (augIdeal G).toCotangent _ + aug G b • (augIdeal G).toCotangent _
-  rw [map_add, map_add, hz, add_zero, map_smul, map_smul, algebraMap_smul, algebraMap_smul]
+  rw [map_add (f := _), map_add (f := _), hz, add_zero, map_smul, map_smul, algebraMap_smul, algebraMap_smul]
 
 variable {G} in
 

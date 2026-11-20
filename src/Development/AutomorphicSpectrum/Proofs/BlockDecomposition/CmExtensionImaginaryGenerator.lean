@@ -46,7 +46,7 @@ theorem cm_exists_sqrt_nonsquare : ∀ {F E : Type} [Field F] [NumberField F] [F
       simpa [Algebra.smul_def] using hst
     have hσ' : algebraMap F E s - algebraMap F E t * ξ = 0 := by
       have := congrArg σ hst'
-      simpa [map_add, map_mul, AlgHom.commutes, hσξ, sub_eq_add_neg] using this
+      simpa [map_add (f := _), map_mul, AlgHom.commutes, hσξ, sub_eq_add_neg] using this
     have hs : algebraMap F E s = 0 := by
       have : 2 * algebraMap F E s = 0 := by linear_combination hst' + hσ'
       exact (mul_eq_zero.mp this).resolve_left h2E
@@ -63,7 +63,7 @@ theorem cm_exists_sqrt_nonsquare : ∀ {F E : Type} [Field F] [NumberField F] [F
     simpa [Algebra.smul_def] using hc
   have hc'' : algebraMap F E (c 0) - algebraMap F E (c 1) * ξ = ξ ^ 2 := by
     have := congrArg σ hc'
-    simpa [map_add, map_mul, map_pow, AlgHom.commutes, hσξ, sub_eq_add_neg] using this
+    simpa [map_add (f := _), map_mul, map_pow, AlgHom.commutes, hσξ, sub_eq_add_neg] using this
   have hb : algebraMap F E (c 1) * ξ = 0 := by
     have : 2 * (algebraMap F E (c 1) * ξ) = 0 := by linear_combination hc' - hc''
     exact (mul_eq_zero.mp this).resolve_left h2E

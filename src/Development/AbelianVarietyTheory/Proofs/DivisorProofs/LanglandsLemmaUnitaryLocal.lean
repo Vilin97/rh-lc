@@ -193,7 +193,7 @@ theorem polyAt_leftTr_cuspComp_eq_zero : ∀ (F E : Type) [Field F] [NumberField
 
   let Tt : (Fin m → V) → GAd σ J → ℂ := fun u => ∑ j, T j (u j)
   have Tt_lin : ∀ (a b : ℂ) u w, Tt (a • u + b • w) = a • Tt u + b • Tt w := fun a b u w => by
-    simp only [Tt, Pi.add_apply, Pi.smul_apply, map_add, map_smul, Finset.sum_add_distrib, Finset.smul_sum]
+    simp only [Tt, Pi.add_apply, Pi.smul_apply, map_add (f := _), map_smul, Finset.sum_add_distrib, Finset.smul_sum]
   have Tt_tr : ∀ g y, IsCompAt σ J t B g y → ∀ u, Tt (fun j => π g (u j)) = fun z => Tt u (z * emb σ J v y) :=
     fun g y hy u => by
       funext z

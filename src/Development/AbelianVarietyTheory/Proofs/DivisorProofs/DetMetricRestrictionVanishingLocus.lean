@@ -51,9 +51,9 @@ theorem exists_unimodular {L' V : X.Modules} {l' : L' ⟶ V} (hL' : IsVB L' 1) (
     exact this.symm
   have h3 : resM V hWc (l'.app c.U (c.e 0)) =
       v • (resG X hWU α • resM V hWU f₁ + resG X hWU β • resM V hWU f₂) := by
-    rw [← app_resM, h2, Scheme.Modules.Hom.app_smul, app_resM, e, map_add, resM_smul, resM_smul]
+    rw [← app_resM, h2, Scheme.Modules.Hom.app_smul, app_resM, e, map_add (f := _), resM_smul, resM_smul]
   refine ⟨_, hWU, ⟨hx, hc⟩, v * ψ (resM V hWU f₁), v * ψ (resM V hWU f₂), ?_⟩
-  rw [h3, map_smul, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul] at h1
+  rw [h3, map_smul, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul] at h1
   rw [← h1]
   ring
 
@@ -86,7 +86,7 @@ theorem isUnit_app (i : Z ⟶ X) {U : X.Opens} {α β : Γ(X, U)} (hβ : i.app U
     exact this
   have hu : IsUnit (X.presheaf.germ W (i z) hW (resG X h α * a + resG X h β * b)) := by
     rw [e, map_one]; exact isUnit_one
-  rw [map_add, map_mul, map_mul] at hu
+  rw [map_add (f := _), map_mul, map_mul] at hu
   rcases IsLocalRing.isUnit_or_isUnit_of_isUnit_add hu with h₁ | h₁
   · have h₂ := isUnit_of_mul_isUnit_left h₁
     refine (X.mem_basicOpen _ _ hz).2 ?_
@@ -130,7 +130,7 @@ theorem exists_unit [IsIntegral Z] (hS : (ShortComplex.mk l m w).ShortExact) (hL
     · have := isFrame_res_one (e := fun k => m.app a.U (a.t k)) a.ht hU
       simpa only [app_resM] using this
     · change m.app _ (l'.app _ _) = _
-      rw [e, map_add, Scheme.Modules.Hom.app_smul, Scheme.Modules.Hom.app_smul, app_resM, hlm, map_zero,
+      rw [e, map_add (f := _), Scheme.Modules.Hom.app_smul, Scheme.Modules.Hom.app_smul, app_resM, hlm, map_zero,
         smul_zero, zero_add]
   obtain ⟨u, hu⟩ := isUnit_app i hβ fun x hx =>
     exists_unimodular hL' hl' (isFrame_res_one c.isFrame hc) e hx
@@ -175,11 +175,11 @@ theorem unit_cocycle (hS : (ShortComplex.mk l m w).ShortExact) (i : Z ⟶ X)
   have hv : l'.app T (resM L' hTc (c.e 0)) = resG X h₁ α • resM V hTa (l.app a.U (a.e 0)) +
       resG X h₁ β • resM V hTa (a.t 0) := by
     have := congrArg (resM V h₁) e
-    simpa only [app_resM, resM_resM, map_add, resM_smul] using this
+    simpa only [app_resM, resM_resM, map_add (f := _), resM_smul] using this
   have hv₂ : l'.app T (resM L' hTc₂ (c₂.e 0)) = resG X h₂ α₂ • resM V hTa₂ (l.app a₂.U (a₂.e 0)) +
       resG X h₂ β₂ • resM V hTa₂ (a₂.t 0) := by
     have := congrArg (resM V h₂) e₂
-    simpa only [app_resM, resM_resM, map_add, resM_smul] using this
+    simpa only [app_resM, resM_resM, map_add (f := _), resM_smul] using this
   have hgv : resM L' hTc₂ (c₂.e 0) = g.val • resM L' hTc (c.e 0) := by
     have := congrArg (resM L' hg) (resM_det_g c c₂)
     rw [resM_resM, resM_smul, resM_resM] at this
@@ -198,14 +198,14 @@ theorem unit_cocycle (hS : (ShortComplex.mk l m w).ShortExact) (i : Z ⟶ X)
       rw [← app_resM, hfv, Scheme.Modules.Hom.app_smul, app_resM]
     rw [hv₂, e₄, hv] at e₃
     have := congrArg ψ e₃
-    simp only [map_add, map_smul, hA, hB, smul_eq_mul, mul_zero, add_zero, mul_one] at this
+    simp only [map_add (f := _), map_smul, hA, hB, smul_eq_mul, mul_zero, add_zero, mul_one] at this
     exact this
   have hZ₁ : i ⁻¹ᵁ T ≤ i ⁻¹ᵁ (a.U ⊓ c.U) := fun _ hz => h₁ hz
   have hZ₂ : i ⁻¹ᵁ T ≤ i ⁻¹ᵁ (a₂.U ⊓ c₂.U) := fun _ hz => h₂ hz
   have E₀ : pullU i T g * res hZ₁ u = res hZ₂ u₂ * pullU i T f := by
     refine Units.ext ?_
     have := congrArg (i.app T) key₀
-    simp only [map_add, map_mul, app_resG, hβ₂, map_zero, zero_mul, add_zero, ← hu, ← hu₂] at this
+    simp only [map_add (f := _), map_mul, app_resG, hβ₂, map_zero, zero_mul, add_zero, ← hu, ← hu₂] at this
     exact this
   have E : res hZ₁ u = pullU i T f * (pullU i T g)⁻¹ * res hZ₂ u₂ := by
     have e₅ : res hZ₁ u = (pullU i T g)⁻¹ * (res hZ₂ u₂ * pullU i T f) := by rw [← E₀, inv_mul_cancel_left]

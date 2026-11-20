@@ -87,7 +87,7 @@ variable {W : Type} [AddCommGroup W] [Module K W] (T : W ≃ₗ[K] VV K lam)
 def omegaV : Module.Dual K W →ₛₗ[e] Module.Dual ℂ (VV ℂ lam) where
   toFun f := (bC e lam).constr ℂ fun i => e (f (T.symm (bVV K lam i)))
   map_add' f g := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
   map_smul' c f := by
     rw [← map_smul]

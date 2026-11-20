@@ -23,13 +23,13 @@ theorem extMul_eq (b : M →ₗ[O] M' →ₗ[O] M'') (u : R ⊗[O] M) (w : R ⊗
   induction u using TensorProduct.induction_on with
   | zero => simp [UnitDualParts.extMul, TensorLatticeUnitPart.extBil]
   | add x y hx hy =>
-    simp only [UnitDualParts.extMul, TensorLatticeUnitPart.extBil, add_tmul, map_add] at hx hy ⊢
+    simp only [UnitDualParts.extMul, TensorLatticeUnitPart.extBil, add_tmul, map_add (f := _)] at hx hy ⊢
     rw [hx, hy]
   | tmul r a =>
     induction w using TensorProduct.induction_on with
     | zero => simp [UnitDualParts.extMul, TensorLatticeUnitPart.extBil]
     | add x y hx hy =>
-      simp only [UnitDualParts.extMul, TensorLatticeUnitPart.extBil, tmul_add, map_add] at hx hy ⊢
+      simp only [UnitDualParts.extMul, TensorLatticeUnitPart.extBil, tmul_add, map_add (f := _)] at hx hy ⊢
       rw [hx, hy]
     | tmul r' a' => rw [UnitDualParts.extMul_tmul, TensorLatticeUnitPart.extBil_tmul, TensorProduct.lift.tmul]
 
@@ -58,7 +58,7 @@ theorem tensorB_comp (f : V →ₗ[LL] V') (g : V' →ₗ[LL] V'') (x : V ⊗[Qp
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [CrystallineSubrepresentation.tensorB]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem tensorB_id (x : V ⊗[Qp] B) :
     CrystallineSubrepresentation.tensorB (Qp := Qp) (B := B) (LinearMap.id : V →ₗ[LL] V) x = x := by
@@ -69,7 +69,7 @@ theorem tensorB_zero (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [CrystallineSubrepresentation.tensorB]
-  | add a b ha hb => simp only [map_add, ha, hb, add_zero]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb, add_zero]
 
 theorem tensorB_add (f g : V →ₗ[LL] V') (x : V ⊗[Qp] B) :
     CrystallineSubrepresentation.tensorB (Qp := Qp) (B := B) (f + g) x =
@@ -77,7 +77,7 @@ theorem tensorB_add (f g : V →ₗ[LL] V') (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [CrystallineSubrepresentation.tensorB, add_tmul]
-  | add a b ha hb => simp only [map_add, ha, hb]; abel
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]; abel
 
 theorem coe_DcrisMap {ρ : Representation LL G V} {ρ' : Representation LL G V'} {f : V →ₗ[LL] V'}
     (hf : CrystallineSubrepresentation.IsEquivariant ρ ρ' f) (x : ↥(Dcris PD ρ)) :
@@ -344,7 +344,7 @@ theorem tensor_iff (E : EtTie W RA RW inclR φR gR πA) :
         induction w using TensorProduct.induction_on with
         | zero => simp
         | tmul x y => rw [hν]; exact Submodule.subset_span ⟨x, x.2, y, y.2, rfl⟩
-        | add a b ha hb => rw [map_add, Submodule.coe_add]; exact Submodule.add_mem _ ha hb
+        | add a b ha hb => rw [map_add (f := _), Submodule.coe_add]; exact Submodule.add_mem _ ha hb
       · rw [Submodule.span_le]
         rintro z ⟨x, hx, y, hy, rfl⟩
         have := hν ⟨x, hx⟩ ⟨y, hy⟩
@@ -373,10 +373,10 @@ theorem exists_dualEquiv {A R D D' : Type} [CommRing A] [CommRing R] [Algebra A 
     intro a x y
     rw [← algebraMap_smul R a y, map_smul, smul_eq_mul]
   let d : ↥N' →ₗ[A] ↥N →ₗ[A] A := LinearMap.mk₂ A (fun y x => c y y.2 x x.2)
-    (fun y y' x => hinj (by rw [map_add, ← hc, ← hc, ← hc, Submodule.coe_add, map_add]))
+    (fun y y' x => hinj (by rw [map_add (f := _), ← hc, ← hc, ← hc, Submodule.coe_add, map_add (f := _)]))
     (fun a y x => hinj (by rw [smul_eq_mul, map_mul, ← hc, ← hc, Submodule.coe_smul, hr]))
     (fun y x x' => hinj (by
-      rw [map_add, ← hc, ← hc, ← hc, Submodule.coe_add, map_add, LinearMap.add_apply]))
+      rw [map_add (f := _), ← hc, ← hc, ← hc, Submodule.coe_add, map_add (f := _), LinearMap.add_apply]))
     (fun a y x => hinj (by rw [smul_eq_mul, map_mul, ← hc, ← hc, Submodule.coe_smul, hl]))
   have hd : ∀ (x : ↥N) (y : ↥N'), b (x : D) (y : D') = algebraMap A R (d y x) :=
     fun x y => hc y y.2 x x.2

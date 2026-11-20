@@ -65,7 +65,7 @@ theorem principal_lift_forms_eq_good_forms : ∀ {D : D7} {G : Type} [Group G] [
       have h0 : ⟪LinearMap.adjoint ((R.toCx3 F).θ' i t) ((R.toCx3 F).θ' i t k), k⟫_ℂ = 0 := (Submodule.mem_orthogonal _ _).1 hk _ ⟨_, rfl⟩
       rw [LinearMap.adjoint_inner_left] at h0
       exact inner_self_eq_zero.1 h0
-    rw [hak, map_add, hk0, add_zero]
+    rw [hak, map_add (f := _), hk0, add_zero]
     have hZeq : (((LinearMap.range (LinearMap.adjoint ((R.toCx3 F).θ' i t))).comap ((R.toCx3 F).jL i t)) ⊓
         LinearMap.range (opF (A3.A.fam.L i t).r (idemOf A3.A.X)) : Submodule _ _) =
         LinearMap.range ((A3.A.fam.L i t).toF (A3.A.fam.lvlA ⊥ 1) ((R.toCx3 F).Zl i t)) := by

@@ -237,7 +237,7 @@ theorem exists_coboundary (hv : IsLieBasis v) (hJ : J ^ 2 = ⊥)
     intro i
     have h := congrArg (fun z => ((kerEquiv hv (map_algebraMap_sq hJ) (Additive.ofMul z) i :
       AddMonoidAlgebra A (X × (X × X))))) hδ
-    simp only [ofMul_div, ofMul_mul, ofMul_one, map_sub, map_add, map_zero, Pi.sub_apply,
+    simp only [ofMul_div, ofMul_mul, ofMul_one, map_sub, map_add (f := _), map_zero, Pi.sub_apply,
       Pi.add_apply, Pi.zero_apply, AddSubgroupClass.coe_sub, AddMemClass.coe_add,
       ZeroMemClass.coe_zero] at h
     rw [kerEquiv_pullKer hv hJ, kerEquiv_pullKer hv hJ, kerEquiv_pullKer hv hJ,
@@ -262,7 +262,7 @@ theorem exists_coboundary (hv : IsLieBasis v) (hJ : J ^ 2 = ⊥)
   apply Subtype.ext
   have e2 : (⇑(AddMonoidHom.inl X X + AddMonoidHom.inr X X) : X → X × X) = fun y => (y, y) :=
     funext fun y => by simp
-  simp only [ofMul_div, ofMul_mul, map_sub, map_add, Pi.sub_apply, Pi.add_apply,
+  simp only [ofMul_div, ofMul_mul, map_sub, map_add (f := _), Pi.sub_apply, Pi.add_apply,
     AddSubgroupClass.coe_sub, AddMemClass.coe_add]
   rw [kerEquiv_pullKer hv hJ, kerEquiv_pullKer hv hJ, kerEquiv_pullKer hv hJ]
   simp only [ofMul_toMul, AddEquiv.apply_symm_apply, e2]

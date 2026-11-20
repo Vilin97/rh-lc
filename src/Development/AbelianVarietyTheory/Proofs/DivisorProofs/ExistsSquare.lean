@@ -66,7 +66,7 @@ theorem sig_nat {p : ℕ} (hp : (p : R) = 0) {f : Fn1 A} {g : Fn2 A} (hf : IsCoc
   have e : θ.comp (Algebra.ofId R D') = Algebra.ofId R D'' := Subsingleton.elim _ _
   rw [e, MonObj.comp_one] at h3
   rw [hz] at h1
-  simp only [sig, map_add, map_sub]
+  simp only [sig, map_add (f := _), map_sub]
   linear_combination -h1 + h2 - h3
 
 theorem chi_indep [IsCommMonObj A] {p : ℕ} (hp : (p : R) = 0) {g : Fn2 A} (hg : IsSymCoc g)

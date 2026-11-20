@@ -84,10 +84,10 @@ theorem smul_mem_range (ε : ℤˣ) {a : D.La} (ha : a ∈ lat hP (((ε : ℤ) :
   have hw := period_w0_smul hP ha
   rcases sq_eq_sq_iff_eq_or_eq_neg.1 hs with h | h
   · refine ⟨m • a + n • H.w0 • a, ?_⟩
-    rw [map_add, map_zsmul, map_zsmul, hw, h]
+    rw [map_add (f := _), map_zsmul, map_zsmul, hw, h]
     funext j; simp; ring
   · refine ⟨m • a + n • (a - H.w0 • a), ?_⟩
-    rw [map_add, map_zsmul, map_zsmul, map_sub, hw, h]
+    rw [map_add (f := _), map_zsmul, map_zsmul, map_sub, hw, h]
     funext j; simp; ring
 
 theorem eq_zero_of_opposite_sign {ρ : ℂ} (hρ : ρ ≠ 0) {a : D.La} (ha : a ∈ lat hP ρ)
@@ -157,7 +157,7 @@ theorem isPeriod_of_coord (D : Datum H) {g : ℕ} (ty : Fin g → (E →+* ℂ))
   let P : D.La →+ (Fin g → ℂ) :=
     { toFun := fun x => e (1 ⊗ₜ x)
       map_zero' := by simp
-      map_add' := fun x y => by rw [TensorProduct.tmul_add, map_add] }
+      map_add' := fun x y => by rw [TensorProduct.tmul_add, map_add (f := _)] }
   have hP : ∀ x, P x = e (1 ⊗ₜ x) := fun _ => rfl
   let b := Module.Free.chooseBasis ℤ D.La
   let c := (b.baseChange ℝ).map e
@@ -182,16 +182,16 @@ theorem isPeriod_of_coord (D : Datum H) {g : ℕ} (ty : Fin g → (E →+* ℂ))
     exact ⟨b i, (hc i).symm⟩
   · have halt0 : ∀ x y, D.EF x y = -D.EF y x := fun x y => by
       have := D.alt (x + y)
-      simp only [map_add, LinearMap.add_apply, D.alt] at this
+      simp only [map_add (f := _), LinearMap.add_apply, D.alt] at this
       linarith
     have halt : ∀ x y, D.EF.baseChange ℝ x y = -D.EF.baseChange ℝ y x := fun x y => by
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add x x' h h' => simp only [map_add, LinearMap.add_apply, h, h']; ring
+      | add x x' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']; ring
       | tmul r x =>
         induction y using TensorProduct.induction_on with
         | zero => simp
-        | add y y' h h' => simp only [map_add, LinearMap.add_apply, h, h']; ring
+        | add y y' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']; ring
         | tmul r' y => simp [halt0 x y, mul_comm]
     have hs : ∀ z, e.symm (Complex.I • z) = J (e.symm z) := fun z => by
       rw [e.symm_apply_eq, heJ, e.apply_symm_apply]
@@ -212,9 +212,9 @@ theorem scale_tmul (s t r : ℝ) (u : HypLattice H) :
 theorem scale_scale {s t : ℝ} (h : s * t = 1) (x) : scale H s t (scale H t s x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul r u =>
-    rw [scale_tmul, map_add, map_smul, map_smul, scale_tmul, scale_tmul]
+    rw [scale_tmul, map_add (f := _), map_smul, map_smul, scale_tmul, scale_tmul]
     simp only [Prod.mk_zero_zero, TensorProduct.tmul_zero, smul_zero, add_zero, zero_add, smul_smul, h, mul_comm t s,
       one_smul, ← TensorProduct.tmul_add, Prod.mk_add_mk]
 
@@ -222,11 +222,11 @@ theorem form_scale {s t : ℝ} (h : s * t = 1) (x y) :
     (hypForm H).baseChange ℝ (scale H s t x) (scale H s t y) = (hypForm H).baseChange ℝ x y := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul r u =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul r' v =>
       simp [scale_tmul]
       linear_combination ((ConjDual.toDual H u.2 v.1 : ℤ) - (ConjDual.toDual H v.2 u.1 : ℤ) : ℝ) * r * r' * h
@@ -271,7 +271,7 @@ theorem exists_period_both_types (H : Host E) : ∃ (g : ℕ) (ty : Fin g → (E
       have e₁ := he a (x.1, 0) i
       have e₂ := he a (0, x.2) i
       simp only [Prod.smul_mk, smul_zero] at e₁ e₂
-      simp only [LinearEquiv.trans_apply, hT, scale_tmul, map_add, map_smul, Pi.add_apply, Pi.smul_apply,
+      simp only [LinearEquiv.trans_apply, hT, scale_tmul, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply,
         Complex.real_smul, Prod.smul_fst, Prod.smul_snd, e₁, e₂]
       ring)
   refine ⟨g, ty, P, hP, hty, fun ε hε => ?_⟩
@@ -296,7 +296,7 @@ theorem exists_period_both_types (H : Host E) : ∃ (g : ℕ) (ty : Fin g → (E
     have e₁ := he (δ * H.rt) (1, 0) j
     simp only [Prod.smul_mk, smul_zero] at e₁
     rw [hPe]
-    simp only [LinearEquiv.trans_apply, hT, scale_tmul, map_add, LinearEquiv.map_smul, Pi.add_apply, Pi.smul_apply,
+    simp only [LinearEquiv.trans_apply, hT, scale_tmul, map_add (f := _), LinearEquiv.map_smul, Pi.add_apply, Pi.smul_apply,
       Complex.real_smul, ← hypJ_inl, heJ, smul_eq_mul] at e₁ ⊢
     rw [e₁]
     push_cast

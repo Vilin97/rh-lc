@@ -151,7 +151,7 @@ def toPi : M ⟶ (Scheme.Modules.pushforward f).obj (pi (tensorStalk f M)) :=
         Γ(pi (tensorStalk f M), f ⁻¹ᵁ V))
       map_add' := fun s t => funext fun x => by
         show oneTmul f M x.1 (M.presheaf.germ V (f x.1) x.2 (s + t)) = _
-        rw [map_add, oneTmul_add]; rfl
+        rw [map_add (f := _), oneTmul_add]; rfl
       map_smul' := fun r s => funext fun x => by
         exact oneTmul_germ_smul f M r s x.1 x.2 })
     fun i s => funext fun x => oneTmul_germ_res f M i s x.1 x.2

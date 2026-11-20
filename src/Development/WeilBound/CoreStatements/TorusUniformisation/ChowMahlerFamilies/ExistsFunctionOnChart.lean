@@ -47,7 +47,7 @@ theorem overring {R₀ R Ω : Type} [CommRing R₀] [IsDomain R₀] [CommRing R]
       map_one' := hinj (by rw [hφ, map_one, map_one])
       map_zero' := hinj (by rw [hφ, map_zero, map_zero])
       map_mul' := fun a b => hinj (by rw [hφ, map_mul, map_mul, hφ, hφ])
-      map_add' := fun a b => hinj (by rw [hφ, map_add, map_add, hφ, hφ]) }
+      map_add' := fun a b => hinj (by rw [hφ, map_add (f := _), map_add (f := _), hφ, hφ]) }
   have hf : ∀ x, algebraMap R Ω (f x) = algebraMap R₀ Ω x := hφ
   clear_value f
   have hfi : Function.Injective f := fun a b h => IsFractionRing.injective R₀ Ω (by rw [← hf, ← hf, h])

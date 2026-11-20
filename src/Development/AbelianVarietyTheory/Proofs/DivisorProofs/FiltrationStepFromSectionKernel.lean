@@ -85,7 +85,7 @@ lemma filt_map {m m' : ℕ} (T : V →ₗ[ℂ] V)
   intro v hv
   have hv' : v ∈ ⨆ j : Fin (m + 1), LinearMap.range (phiN act N j) := hv
   refine Submodule.iSup_induction (fun j : Fin (m + 1) => LinearMap.range (phiN act N j))
-    (motive := fun v => T v ∈ filt act N m') hv' ?_ (by simp) (fun x y hx hy => by rw [map_add]; exact add_mem hx hy)
+    (motive := fun v => T v ∈ filt act N m') hv' ?_ (by simp) (fun x y hx hy => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy)
   rintro j _ ⟨Ψ, rfl⟩
   set_option synthInstance.maxHeartbeats 100000 in
     rw [phiN_apply, map_sum]

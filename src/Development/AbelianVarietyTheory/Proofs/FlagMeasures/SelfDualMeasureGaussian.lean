@@ -275,7 +275,7 @@ theorem exists_coord_space : ∀ (I : AutInst) (θ : InfinitePlace I.F → (Ainf
     rw [← Matrix.mulVec_add]
     congr 1
     funext i
-    simp [map_add]
+    simp [map_add (f := _)]
   · exact continuous_pi fun v => Continuous.matrix_mulVec continuous_const (continuous_pi fun i =>
       (continuous_apply v).comp (Ψ.continuous.comp ((continuous_apply i).comp (continuous_apply 0))))
   · exact continuous_pi fun _ => continuous_pi fun i => Ψ.symm.continuous.comp (continuous_pi fun v =>
@@ -346,7 +346,7 @@ theorem trace_form : ∀ (I : AutInst) (v : InfinitePlace I.F) (θ : Ainf I.F �
       have hs : sigR (Ainf I.F) I.cm.sig (r ⊗ₜ[I.F] e) = r ⊗ₜ[I.F] I.cm.sig e := by
         simp [sigR, Algebra.TensorProduct.map_tmul]
       rw [hs, hmul r (I.cm.sig e), hmul r e, map_mul, tmul_one_conj_real I v θ hθ r, hconj]
-    | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
   have htr1 : ∀ e : I.E, Algebra.trace (Ainf I.F) (Ainf I.F ⊗[I.F] I.E) ((1 : Ainf I.F) ⊗ₜ[I.F] e) =
       algebraMap I.F (Ainf I.F) (Algebra.trace I.F I.E e) := by
@@ -358,7 +358,7 @@ theorem trace_form : ∀ (I : AutInst) (v : InfinitePlace I.F) (θ : Ainf I.F �
       induction w using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [Algebra.TensorProduct.tmul_mul_tmul, LinearMap.baseChange_tmul]
-      | add a b ha hb => rw [map_add, map_add, ha, hb]
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     rw [Algebra.trace_apply, hl, LinearMap.trace_baseChange, Algebra.trace_apply]
   have hA : ∀ z : Ainf I.F ⊗[I.F] I.E,
       θ (Algebra.trace (Ainf I.F) (Ainf I.F ⊗[I.F] I.E) z ⊗ₜ[I.F] (1 : I.E)) =
@@ -382,7 +382,7 @@ theorem trace_form : ∀ (I : AutInst) (v : InfinitePlace I.F) (θ : Ainf I.F �
         rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one]
       rw [htr, hsplit, map_mul, hal, hmul r e, map_mul, tmul_one_conj_real I v θ hθ r]
       ring
-    | add a b ha hb => rw [map_add, TensorProduct.add_tmul, map_add, ha, hb, map_add, map_add]; ring
+    | add a b ha hb => rw [map_add (f := _), TensorProduct.add_tmul, map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]; ring
   rw [hA]
 
   have hC : θ (hR (Ainf I.F) I.cm.sig I.J x y) =

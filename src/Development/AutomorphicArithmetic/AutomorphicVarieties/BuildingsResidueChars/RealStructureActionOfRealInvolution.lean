@@ -23,7 +23,7 @@ theorem UpperTheory.real_structure_action_of_real_involution :
           intro a b
           apply Subtype.ext
           simp only [Submodule.coe_add]
-          rw [← actL_apply, ← actL_apply, ← actL_apply, map_add]
+          rw [← actL_apply, ← actL_apply, ← actL_apply, map_add (f := _)]
         map_smul' := by
           intro c a
           apply Subtype.ext

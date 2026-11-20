@@ -31,7 +31,7 @@ def SuppOn (π : σ → Pl) (v : Pl) : Subring (MvPowerSeries σ R) where
     · exact absurd rfl hm
   add_mem' := by
     intro f g hf hg m hm x hx
-    rw [map_add] at hm
+    rw [map_add (f := _)] at hm
     by_cases h : MvPowerSeries.coeff m f = 0
     · rw [h, zero_add] at hm; exact hg m hm x hx
     · exact hf m h x hx

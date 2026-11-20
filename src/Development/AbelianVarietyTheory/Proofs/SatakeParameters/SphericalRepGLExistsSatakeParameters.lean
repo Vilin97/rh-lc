@@ -30,7 +30,7 @@ theorem exists_eigenform {G V : Type} [Group G] [TopologicalSpace G] [IsTopologi
       have e2 := Submodule.projectionOnto_apply_right hc ⟨b, hb⟩
       have e3 := Submodule.projectionOnto_apply_left hc (σ g ⟨a, ha⟩)
       have e4 := Submodule.projectionOnto_apply_right hc ⟨ρ g b, T.apply_mem_toSubmodule g hb⟩
-      simp only [LinearMap.comp_apply, map_add]
+      simp only [LinearMap.comp_apply, map_add (f := _)]
       rw [e1, e2, e4, map_zero]
       exact congrArg (· + 0) e3⟩
   have hp : ∀ x : fixed ρ H, p x.1 = x := fun x => Submodule.projectionOnto_apply_left hc x

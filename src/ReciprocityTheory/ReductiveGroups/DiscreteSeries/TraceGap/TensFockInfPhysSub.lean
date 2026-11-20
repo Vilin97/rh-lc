@@ -73,7 +73,7 @@ theorem tensFock_inf_physSub (L : Submodule ℂ N) :
         simp only [physFock, Submodule.mem_iInf, LinearMap.mem_ker] at hf
         simp only [TensorProduct.map_tmul, cmT, LinearMap.id_apply, Submodule.coe_subtype, hf j b hjb,
           TensorProduct.tmul_zero]
-      | add x x' hx hx' => rw [map_add, map_add, hx, hx', add_zero]
+      | add x x' hx hx' => rw [map_add (f := _), map_add (f := _), hx, hx', add_zero]
 
 end Supp
 
@@ -100,7 +100,7 @@ theorem str_tensFock_physSub (hD : IsDerivedOn ε σ D E) {k : Matrix (Fin n) (F
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul l f => rfl
-    | add x x' hx hx' => rw [map_add, map_add, hx, hx', map_add, map_add]
+    | add x x' hx hx' => rw [map_add (f := _), map_add (f := _), hx, hx', map_add (f := _), map_add (f := _)]
   have hconj : (gradT ∘ₗ wK hD hk).restrict hY0 = e.conj (TensorProduct.map sL fP) := by
     apply LinearMap.ext
     intro y

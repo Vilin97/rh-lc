@@ -114,7 +114,7 @@ theorem GlobalTheory.GrassModel.trace_pow_blockPoly_add_trace_pow_neg_blockPolyB
     ext i j; simp
   apply Subtype.val_injective
   show (EvenPart n).val (_ + _) = (EvenPart n).val 0
-  rw [map_add, map_zero, hneg, ← Matrix.trace_transpose (( -_ ) ^ _), Matrix.transpose_pow,
+  rw [map_add (f := _), map_zero, hneg, ← Matrix.trace_transpose (( -_ ) ^ _), Matrix.transpose_pow,
     Matrix.transpose_neg, val_trace, val_trace, val_pow, val_pow, hL]
   rw [show (-Matrix.transpose ((blockPolyBar e).map (toEven n))).map (EvenPart n).val = -(B * A) by
     rw [← hD]; ext i j; simp]

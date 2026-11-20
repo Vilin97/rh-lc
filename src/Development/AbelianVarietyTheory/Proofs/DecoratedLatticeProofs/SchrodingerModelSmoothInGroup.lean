@@ -67,7 +67,7 @@ theorem Induced.add (hω : IsWeilDatumO ψ S T χS χT om) {R R' : (GA D S → �
   beta_reduce
   rw [e₁ L hL, e₂ L hL]
   funext g
-  rw [map_add, hL.1 _ _ (hω.om_pres _ _ h₁) (hω.om_pres _ _ h₂)]
+  rw [map_add (f := _), hL.1 _ _ (hω.om_pres _ _ h₁) (hω.om_pres _ _ h₂)]
   rfl
 
 section Mix

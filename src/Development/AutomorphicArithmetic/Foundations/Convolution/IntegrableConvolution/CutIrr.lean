@@ -49,7 +49,7 @@ theorem UpperTheory.ConvolutionTheory.L1.cutIrr :
         exact Submodule.subset_span ⟨g * γ, by simp [UnitaryRep.map_mul_apply]⟩
       | zero => simp
       | add x y _ _ hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact S.add_mem hx hy
       | smul a x _ hx =>
         rw [map_smul]
@@ -85,7 +85,7 @@ theorem UpperTheory.ConvolutionTheory.L1.cutIrr :
         exact h2 _ (P.smul_mem c hwP)
       | zero => simp
       | add x y _ _ hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact P.add_mem hx hy
       | smul a x _ hx =>
         rw [map_smul]

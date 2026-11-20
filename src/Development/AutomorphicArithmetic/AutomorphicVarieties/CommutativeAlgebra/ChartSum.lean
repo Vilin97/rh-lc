@@ -36,7 +36,7 @@ private theorem mul_mem_wtPart' {ι A G : Type} [CommRing A] [AddCommGroup G] (w
   · have hc : Finsupp.weight w' c ≠ j := by
       intro hc
       apply hn
-      rw [← hbc', map_add, hb, hc]
+      rw [← hbc', map_add (f := _), hb, hc]
     rw [hq' c hc, mul_zero]
   · rw [hp' b hb, zero_mul]
 
@@ -304,7 +304,7 @@ theorem UpperTheory.V.Alg.chart_sum :
       have hm := GlobalTheory.algHom_mem_pow_of_le_order Φ hΦg hord
       have h2 := GlobalTheory.mem_germIdeal_pow_iff.mp hm (Finsupp.single i 1) (by simp)
       have h3 := hf1 i
-      rw [show g = ℓ + (g - ℓ) by ring, map_add, map_add, h2, add_zero] at h3
+      rw [show g = ℓ + (g - ℓ) by ring, map_add (f := _), map_add (f := _), h2, add_zero] at h3
       exact h3
     let ℓv : ∀ v, MvPowerSeries (WB v).σ O := fun v =>
       ∑ s, coeff (Finsupp.single (e ⟨v, s⟩) 1) g • MvPowerSeries.X s
@@ -367,7 +367,7 @@ theorem UpperTheory.V.Alg.chart_sum :
       set_option synthInstance.maxHeartbeats 100000 in
         rw [hℓsum, map_sum]
       exact Submodule.sum_mem _ (fun v _ => hv v)
-    rw [show g = ℓ + (g - ℓ) by ring, map_add]
+    rw [show g = ℓ + (g - ℓ) by ring, map_add (f := _)]
     exact Submodule.add_mem _ hl hq
   · intro v s
     rw [WPres.z, hψ, hΦX, hae]

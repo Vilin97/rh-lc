@@ -54,7 +54,7 @@ def graph (φ : M₂ →ₗ[O] A₁ ⧸ M₁) : Submodule O (A₁ × A₂) where
     refine ⟨M₂.add_mem hx hy, ?_⟩
     have e : (⟨x + y, M₂.add_mem hx hy⟩ : M₂) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
     simp only [Prod.fst_add, Prod.snd_add] at *
-    rw [e, map_add, Submodule.Quotient.mk_add, ha, hb]
+    rw [e, map_add (f := _), Submodule.Quotient.mk_add, ha, hb]
   zero_mem' := ⟨M₂.zero_mem, by
     have e : (⟨0, M₂.zero_mem⟩ : M₂) = 0 := rfl
     simp only [Prod.fst_zero, Prod.snd_zero]

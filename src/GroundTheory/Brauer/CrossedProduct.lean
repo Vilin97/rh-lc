@@ -45,15 +45,15 @@ theorem mulCoeff_assoc (hf : IsMulCocycle₂ f) (x y z : (L ≃ₐ[K] L) →₀ 
     mulCoeff f (mulCoeff f x y) z = mulCoeff f x (mulCoeff f y z) := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, AddMonoidHom.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), AddMonoidHom.add_apply, hx, hx']
   | single σ a =>
   induction y using Finsupp.induction_linear with
   | zero => simp
-  | add y y' hy hy' => simp only [map_add, AddMonoidHom.add_apply, hy, hy']
+  | add y y' hy hy' => simp only [map_add (f := _), AddMonoidHom.add_apply, hy, hy']
   | single τ b =>
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add z z' hz hz' => simp only [map_add, hz, hz']
+  | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
   | single ρ c =>
   simp only [mulCoeff_single_single, mul_assoc, AlgEquiv.mul_apply, map_mul]
   congr 1
@@ -65,11 +65,11 @@ theorem mulCoeff_smul_left (c : L) (x y : (L ≃ₐ[K] L) →₀ L) :
     mulCoeff f (c • x) y = c • mulCoeff f x y := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x x' hx hx' => simp only [smul_add, map_add, AddMonoidHom.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [smul_add, map_add (f := _), AddMonoidHom.add_apply, hx, hx']
   | single σ a =>
   induction y using Finsupp.induction_linear with
   | zero => simp
-  | add y y' hy hy' => simp only [smul_add, map_add, hy, hy']
+  | add y y' hy hy' => simp only [smul_add, map_add (f := _), hy, hy']
   | single τ b =>
   simp only [Finsupp.smul_single, smul_eq_mul, mulCoeff_single_single, mul_assoc]
 
@@ -77,11 +77,11 @@ theorem mulCoeff_smul_right (c : K) (x y : (L ≃ₐ[K] L) →₀ L) :
     mulCoeff f x (c • y) = c • mulCoeff f x y := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x x' hx hx' => simp only [smul_add, map_add, AddMonoidHom.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [smul_add, map_add (f := _), AddMonoidHom.add_apply, hx, hx']
   | single σ a =>
   induction y using Finsupp.induction_linear with
   | zero => simp
-  | add y y' hy hy' => simp only [smul_add, map_add, hy, hy']
+  | add y y' hy hy' => simp only [smul_add, map_add (f := _), hy, hy']
   | single τ b =>
   simp only [Finsupp.smul_single, mulCoeff_single_single, Algebra.smul_def, map_mul,
     AlgEquiv.commutes]
@@ -92,7 +92,7 @@ theorem one_mulCoeff (hf : IsMulCocycle₂ f) (x : (L ≃ₐ[K] L) →₀ L) :
     mulCoeff f (Finsupp.single 1 (((f (1, 1))⁻¹ : Lˣ) : L)) x = x := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
   | single τ b =>
   simp only [mulCoeff_single_single, map_one_fst_of_isMulCocycle₂ hf, one_mul,
     AlgEquiv.one_apply]
@@ -102,7 +102,7 @@ theorem mulCoeff_one (hf : IsMulCocycle₂ f) (x : (L ≃ₐ[K] L) →₀ L) :
     mulCoeff f x (Finsupp.single 1 (((f (1, 1))⁻¹ : Lˣ) : L)) = x := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, AddMonoidHom.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), AddMonoidHom.add_apply, hx, hx']
   | single σ a =>
   rw [mulCoeff_single_single, map_one_snd_of_isMulCocycle₂ hf σ, mul_one, val_smul_units, mul_assoc,
     ← map_mul, Units.inv_mul, map_one, mul_one]
@@ -175,7 +175,7 @@ instance instRing : Ring (CrossedProduct hf) where
   mul_one x := CrossedProduct.ext (mulCoeff_one hf _)
   left_distrib x y z := CrossedProduct.ext (map_add (mulCoeff f x.coeff) _ _)
   right_distrib x y z := CrossedProduct.ext (by
-    simp only [coeff_mul, coeff_add, map_add, AddMonoidHom.add_apply])
+    simp only [coeff_mul, coeff_add, map_add (f := _), AddMonoidHom.add_apply])
   zero_mul x := CrossedProduct.ext (by simp only [coeff_mul, coeff_zero, map_zero,
     AddMonoidHom.zero_apply])
   mul_zero x := CrossedProduct.ext (by simp only [coeff_mul, coeff_zero, map_zero])

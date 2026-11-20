@@ -80,7 +80,7 @@ private theorem exists_ext (ρ : Representation R G M) (hρ : ContAction ρ) {U'
       rw [map_mul]
       apply mul_left_cancel (a := s)
       rw [← e1, ← mul_assoc, ← e0]
-    rw [ht, hcz, map_add, eg, map_mul, Module.End.mul_apply, add_assoc]
+    rw [ht, hcz, map_add (f := _), eg, map_mul, Module.End.mul_apply, add_assoc]
   have hL0 : ∀ (u : U') (g : U), y0 (Subgroup.inclusion h u * g) = z.1 u + ρ u (y0 g) := by
     intro u g
     obtain ⟨u', hu'⟩ := exists_inclusion_mul_eq_mul_inclusion_of_normal h u g
@@ -109,7 +109,7 @@ private theorem exists_ext (ρ : Representation R G M) (hρ : ContAction ρ) {U'
     have hcomm : ∀ x : M, ρ s (ρ (conjHom U' (s : G) u : G) x) = ρ u (ρ s x) := by
       intro x
       rw [← Module.End.mul_apply, ← map_mul, hsc, map_mul, Module.End.mul_apply]
-    rw [ht, hcz, map_add, hc, hcomm, map_add]
+    rw [ht, hcz, map_add (f := _), hc, hcomm, map_add (f := _)]
     abel
   have hc1 : ∀ u : U', ρ u (y0 1) = y0 1 := by
     intro u
@@ -165,7 +165,7 @@ private theorem exists_infl (ρ : Representation R G M) {U' U : Subgroup G} [U'.
     intro a b u
     simp only [hF]
     rw [← mul_assoc, hR, hR]
-    simp only [map_add, Subgroup.coe_mul, map_mul, Module.End.mul_apply]
+    simp only [map_add (f := _), Subgroup.coe_mul, map_mul, Module.End.mul_apply]
     abel
   have hFl : ∀ (a b : U) (u : U'), F (a * Subgroup.inclusion h u) b = F a b := by
     intro a b u
@@ -188,7 +188,7 @@ private theorem exists_infl (ρ : Representation R G M) {U' U : Subgroup G} [U'.
       rw [hL]
       abel
     calc ρ u (F a b) = F (Subgroup.inclusion h u * a) b := by
-          simp only [hF, map_add, map_sub, e1, mul_assoc]
+          simp only [hF, map_add (f := _), map_sub, e1, mul_assoc]
           simp only [Subgroup.coe_mul, Subgroup.coe_inclusion, map_mul, Module.End.mul_apply]
           abel
       _ = F (a * Subgroup.inclusion h v) b := by rw [hv]
@@ -218,7 +218,7 @@ private theorem exists_infl (ρ : Representation R G M) {U' U : Subgroup G} [U'.
   show ρ a (W (QuotientGroup.mk b, QuotientGroup.mk c) : M) - (W (QuotientGroup.mk (a * b), QuotientGroup.mk c) : M)
     + (W (QuotientGroup.mk a, QuotientGroup.mk (b * c)) : M) - (W (QuotientGroup.mk a, QuotientGroup.mk b) : M) = 0
   rw [hW, hW, hW, hW]
-  simp only [hF, map_add, map_sub, Subgroup.coe_mul, map_mul, Module.End.mul_apply, mul_assoc]
+  simp only [hF, map_add (f := _), map_sub, Subgroup.coe_mul, map_mul, Module.End.mul_apply, mul_assoc]
   abel
 
 omit [IsTopologicalGroup G] [DiscreteTopology M] in

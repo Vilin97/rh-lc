@@ -41,7 +41,7 @@ theorem fockAct2_mem_harmTy (x : ℚ) (Y : Mat R S) (hY : IsKC Y) {f : Formalism
       simp only [Module.End.mul_apply] at e
       rw [e, hg.2 X hX, map_smul]
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 section Tens
@@ -61,7 +61,7 @@ theorem atPl_mem_tensHarm (x : InfinitePlace F → ℚ) (w : InfinitePlace F) (Y
       · simpa [Function.update_of_ne h] using hf i
     · simp [atPl, PiTensorProduct.map_tprod]
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 theorem genOp_mem_tensHarm (x : InfinitePlace F → ℚ) (c : InfinitePlace F → ℂ) (Yg : InfinitePlace F → Mat R S)

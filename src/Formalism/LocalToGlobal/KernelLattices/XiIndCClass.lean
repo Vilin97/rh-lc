@@ -157,7 +157,7 @@ def HV (sc : ℝ) : Sesq (VV ι a b) :=
     (by intro x y w; simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, mul_add])
     (by intro c x w; simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply, Finset.mul_sum]
         refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)
-    (by intro x y w; simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib])
+    (by intro x y w; simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib])
     (by intro c x w; simp only [Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum]
         refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)
 

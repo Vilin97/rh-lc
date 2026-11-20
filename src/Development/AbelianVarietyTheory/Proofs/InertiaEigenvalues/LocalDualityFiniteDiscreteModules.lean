@@ -26,10 +26,10 @@ variable {R R' : Type} [CommRing R] [CommRing R'] {D : Type} [Group D] [Topologi
 def cocycleEquiv : Z1 ρ ≃+ Z1 ρ' where
   toFun z := ⟨fun g => e (z.1 g), continuous_of_discreteTopology.comp z.2.1, fun g h => by
     beta_reduce
-    rw [z.2.2, map_add, he]⟩
+    rw [z.2.2, map_add (f := _), he]⟩
   invFun z := ⟨fun g => e.symm (z.1 g), continuous_of_discreteTopology.comp z.2.1, fun g h => by
     apply e.injective
-    rw [map_add, he]
+    rw [map_add (f := _), he]
     simp only [AddEquiv.apply_symm_apply]
     exact z.2.2 g h⟩
   left_inv z := Subtype.ext (funext fun g => e.symm_apply_apply _)
@@ -148,7 +148,7 @@ theorem perp_iff {n : ℕ} [NeZero n] {k : Type} [Field k] (ι : ZMod n →+* k)
       t (P (x.1 g) (ρ' g (y.1 h))) + t (P (ρ g (x.1 h)) (y.1 g)) +
       ((μ (φ g) : (ZMod n)ˣ) : ZMod n) * t (P (x.1 h) (y.1 h)) := fun x g h => by
     rw [x.2.2, y.2.2, ← ht, ← hP]
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     ring
   have cb : ∀ x : Z1 ρ, Continuous fun g => t (P (x.1 g) (y.1 g)) := fun x =>
     (continuous_of_discreteTopology (f := fun p : M × M' => t (P p.1 p.2))).comp
@@ -189,14 +189,14 @@ theorem perp_iff {n : ℕ} [NeZero n] {k : Type} [Field k] (ι : ZMod n →+* k)
         change P (a j • x.1 g) _ = _
         rw [map_smul, LinearMap.smul_apply, smul_eq_mul]
       rw [e2] at e1
-      rw [e1, hχ, ← hι, ← hι, map_add, map_sub, map_mul]
+      rw [e1, hχ, ← hι, ← hι, map_add (f := _), map_sub, map_mul]
       ring
   · intro H x hx
     induction x using Submodule.Quotient.induction_on with | H x =>
     obtain ⟨x, rfl⟩ := E.surjective x
     obtain ⟨f, hf1, hf2⟩ := H x ((hL _ _ (hE _)).2 hx)
     refine (hcup x).2 ⟨fun g => t (f g), (hf1.comp t).continuous, fun g h => ?_⟩
-    rw [hf2, map_add, map_sub, ht]
+    rw [hf2, map_add (f := _), map_sub, ht]
 
 theorem exists_descent {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω]
     [IsAlgClosure F Ω] {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [Module R M]

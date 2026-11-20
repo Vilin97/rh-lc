@@ -27,13 +27,13 @@ theorem infPart_finIncl (y : Af D.host.F ⊗[D.host.F] D.host.E) : infPart D (fi
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul β x => rw [finIncl_tmul]; exact infPart_pair β x
-  | add y z hy hz => rw [LinearMap.map_add, RingHom.map_add, hy, hz, add_zero]
+  | add y z hy hz => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hy, hz, add_zero]
 
 theorem finPart_finIncl (y : Af D.host.F ⊗[D.host.F] D.host.E) : finPart D (finIncl D y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul β x => rw [finIncl_tmul]; exact finPart_pair β x
-  | add y z hy hz => rw [LinearMap.map_add, RingHom.map_add, hy, hz]
+  | add y z hy hz => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hy, hz]
 
 theorem eq_finIncl {z : AE D} (hz : infPart D z = 0) : z = finIncl D (finPart D z) := by
   rw [← sub_eq_zero]
@@ -64,7 +64,7 @@ theorem finIncl_mul_mem {S T : HSp D} (LS : GlobalTheory.FinPl.Lat S) (LT : Glob
     ext i j; simp
   | add y z _ _ hy hz =>
     convert add_mem hy hz using 1
-    ext i j; simp only [Matrix.of_apply, Matrix.add_apply, LinearMap.map_add, add_mul]
+    ext i j; simp only [Matrix.of_apply, Matrix.add_apply, LinearMap.map_add (f := _), add_mul]
   | neg y _ hy =>
     convert neg_mem hy using 1
     ext i j; simp only [Matrix.of_apply, Matrix.neg_apply, LinearMap.map_neg, neg_mul]

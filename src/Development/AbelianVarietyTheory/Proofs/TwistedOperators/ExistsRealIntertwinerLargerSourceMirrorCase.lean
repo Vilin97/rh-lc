@@ -55,9 +55,9 @@ theorem exists_isCoverIt_swap (p q r s : ℕ) (T₀ : GrpData (p * r + q * s) (p
   have hsw : ∀ P, sw P = MvPolynomial.rename Prod.swap P := fun _ => rfl
   let B : Pol r s p q →ₗ[ℂ] R₁.U.H →ₛₗ[starRingEnd ℂ] R₂.U.H :=
     LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun P x => A x (F.ι (sw P)))
-      (fun P Q x => by simp only [map_add])
+      (fun P Q x => by simp only [map_add (f := _)])
       (fun c P x => by simp only [map_smul, RingHom.id_apply])
-      (fun P x x' => by simp only [A, map_add, ContinuousLinearMap.add_apply])
+      (fun P x x' => by simp only [A, map_add (f := _), ContinuousLinearMap.add_apply])
       (fun c P x => by simp only [A, map_smul, map_smulₛₗ, ContinuousLinearMap.smul_apply])
   have hB : ∀ P x, B P x = A x (F.ι (sw P)) := fun _ _ => rfl
   obtain ⟨-, hd1, hd2⟩ := GlobalTheory.T.fock_derived_actions_tensor_members p q r s T₀ T₁ T₂ F

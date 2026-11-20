@@ -39,7 +39,7 @@ theorem mem_E_iff {S : Set (End K V)} (ψ : Algebra.adjoin O S →ₐ[O] O) (z :
       simp [pt, algebraMap_smul, Module.algebraMap_end_apply]
     | add x y hx hy ihx ihy =>
       change (x + y) z = pt ψ (⟨x, hx⟩ + ⟨y, hy⟩) • z
-      simp only [pt, map_add, LinearMap.add_apply, add_smul] at ihx ihy ⊢
+      simp only [pt, map_add (f := _), LinearMap.add_apply, add_smul] at ihx ihy ⊢
       rw [ihx, ihy]
     | mul x y hx hy ihx ihy =>
       change (x * y) z = pt ψ (⟨x, hx⟩ * ⟨y, hy⟩) • z
@@ -159,7 +159,7 @@ theorem mem_heckeEig_iff (i : D.nd.Loc) (x : D.nd.X i)
       have m1 : g ∈ D.nd.T i := D.nd.T_gen i ▸ hg1
       have m2 : g' ∈ D.nd.T i := D.nd.T_gen i ▸ hg2
       have e : (⟨g + g', hg⟩ : D.nd.T i) = ⟨g, m1⟩ + ⟨g', m2⟩ := rfl
-      rw [e, map_add, LinearMap.baseChange_add, LinearMap.add_apply, ih1 m1, ih2 m2, Pi.add_apply, map_add,
+      rw [e, map_add (f := _), LinearMap.baseChange_add, LinearMap.add_apply, ih1 m1, ih2 m2, Pi.add_apply, map_add (f := _),
         add_smul]
     | mul g g' hg1 hg2 ih1 ih2 =>
       intro hg

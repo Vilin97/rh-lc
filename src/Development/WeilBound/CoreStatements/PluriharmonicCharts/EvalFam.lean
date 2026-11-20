@@ -250,7 +250,7 @@ theorem exists_res {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι 
       obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.1 ha
       have hb0 := R.coord_mem_zero (idx x₀) hys b hb
       have := congrArg (eval (R.coord (idx x₀) y)) hab
-      rw [map_add, map_mul, h0, mul_zero, zero_add, hb0, map_mul] at this
+      rw [map_add (f := _), map_mul, h0, mul_zero, zero_add, hb0, map_mul] at this
       exact (mul_eq_zero.1 this.symm).resolve_left hh
   · intro G a _ hG
     have hmem : bind₁ (R.lift (idx x₀)) G ∈ R.bd (idx x₀) := by
@@ -276,7 +276,7 @@ theorem exists_res {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι 
       have hh : eval (R.coord (idx x₀) y) d.h ≠ 0 := (hψs hy).1.2.2
       have hb0 := R.coord_mem_zero (idx x₀) hys b hb
       have := congrArg (eval (R.coord (idx x₀) y)) hab
-      rw [map_add, map_mul, hb0, add_zero, map_mul] at this
+      rw [map_add (f := _), map_mul, hb0, add_zero, map_mul] at this
       show eval (fun q => eval (R.coord (idx x₀) y) (R.lift (idx x₀) q)) G = _
       rw [← ReciprocityTheory.AnForm.R.eval_bind_one, hmono y hy, div_mul_eq_mul_div, eq_div_iff hh]
       linear_combination (-1 : ℂ) * this

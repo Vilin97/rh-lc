@@ -113,7 +113,7 @@ lemma sum_factor {ι' : Type*} (W : R) (π : R →+* R') (s : Finset ι') (e : �
     obtain ⟨u, h3, h4⟩ := H m (Finset.mem_insert_self m s)
     refine ⟨(-1) ^ e m * u + Y, ?_, ?_⟩
     · rw [Finset.sum_insert hm, h1, mul_assoc, h3]; ring
-    · rw [Finset.sum_insert hm, ← h2, map_add, map_mul, h4, map_pow, map_neg, map_one]; ring
+    · rw [Finset.sum_insert hm, ← h2, map_add (f := _), map_mul, h4, map_pow, map_neg, map_one]; ring
 
 lemma colStep_factor (W : R) (π : R →+* R') (c : ℤ) (hP hN : ℕ) (hne : hP ≠ hN) (y : Fin k → R)
     (V : Finset (Fin k) → R) (n' : Fin k → R') (S' : Finset (Fin k) → R')

@@ -151,7 +151,7 @@ theorem DatLoc.invOn {Ξ : Formalism.L2.Col.HomE D.host.E a b → ℂ} (h : DatL
     rw [dif_pos hx]
     exact congrArg Ξ (hinj hx.choose_spec)
   rintro _ ⟨x, -, rfl⟩ _ - ⟨m, hm, rfl⟩
-  rw [← map_add, hon, hon]
+  rw [← map_add (f := _), hon, hon]
   exact h.add_halfBO x m hm
 
 end DatLocApi

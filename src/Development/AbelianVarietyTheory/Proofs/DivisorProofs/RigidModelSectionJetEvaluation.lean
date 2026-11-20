@@ -150,7 +150,7 @@ theorem epsMap_epsIncl (f : R →+* R') {k : ℕ} (a : Fin k) :
   have h := fun r => RingHom.congr_fun (epsMap_algebraMap f (k := k)) r
   simp only [RingHom.comp_apply] at h
   have he : epsMap f k (eps R a) = eps R' a := by rw [eps, epsMap_mk, map_X, eps]
-  rw [epsIncl_apply, epsIncl_apply, map_add, map_mul, h, h, he]
+  rw [epsIncl_apply, epsIncl_apply, map_add (f := _), map_mul, h, h, he]
   simp [Chart.dualMapR]
 
 theorem ker_aug_le {k : ℕ} (q : Ideal (EpsAlg R k)) [hq : q.IsPrime] :

@@ -259,7 +259,7 @@ theorem GlobalTheory.StepZeroNorm.integral_rd_eq_inner : ∀ (D : D7) (u : D.wha
     exact h2
   · intro z f f' g
     have e : (fun x => (z • f + f') (F.val0.eY x)) = z • (fun x => f (F.val0.eY x)) + fun x => f' (F.val0.eY x) := rfl
-    simp only [e, map_add, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply]
+    simp only [e, map_add (f := _), LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply]
   · intro z f g g'
     have e : (fun x => (z • g + g') (F.val0.eY x)) = z • (fun x => g (F.val0.eY x)) + fun x => g' (F.val0.eY x) := rfl
-    simp only [e, map_add, map_smul, smul_eq_mul]
+    simp only [e, map_add (f := _), map_smul, smul_eq_mul]

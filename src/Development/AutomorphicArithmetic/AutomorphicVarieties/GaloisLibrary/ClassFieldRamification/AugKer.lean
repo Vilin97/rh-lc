@@ -12,7 +12,7 @@ theorem UpperTheory.V.CF.augKer :
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
     | add x y hx hy =>
-      rw [map_add, map_add, add_sub_add_comm]
+      rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
       exact add_mem hx hy
     | single g r =>
       rw [aug_single]

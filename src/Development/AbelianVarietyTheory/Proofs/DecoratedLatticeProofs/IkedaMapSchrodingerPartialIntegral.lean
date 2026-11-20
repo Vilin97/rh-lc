@@ -46,7 +46,7 @@ def chi (ψ : AddChar (AF D.host.F) ℂ) {k ρ : ℕ} (M : Matrix (Fin k) (Fin �
 
 theorem chi_add {k ρ : ℕ} (M : Matrix (Fin k) (Fin ρ) D.host.E) (z z' : Mx D k ρ) :
     chi ψ M (z + z') = chi ψ M z * chi ψ M z' := by
-  simp only [chi, adj_add, Matrix.add_mul, Matrix.trace_add, mul_add, map_add, AddChar.map_add_eq_mul]
+  simp only [chi, adj_add, Matrix.add_mul, Matrix.trace_add, mul_add, map_add (f := _), AddChar.map_add_eq_mul]
 
 theorem chi_rat (hψ : IsCharAF D.host.F ψ) {k ρ : ℕ} (M γ : Matrix (Fin k) (Fin ρ) D.host.E) : chi ψ M (rat γ) = 1 := by
   rw [chi, ← rat_conjTranspose, ← rat_mul, trace_rat, ← map_mul, trace_incA]
@@ -302,7 +302,7 @@ theorem inner_mean (hψ : IsStdChar D ψ (-1)) (v : GlobalTheory.Unf.VolM D T.ra
         Matrix.mul_add, add_assoc]
     rw [← e1, ← h]
     refine tsum_congr fun η => ?_
-    rw [← mul_assoc, ← AddChar.map_add_eq_mul, ← symplO_add_right, ← map_add, add_comm (rat d.i₀ ⬝ b),
+    rw [← mul_assoc, ← AddChar.map_add_eq_mul, ← symplO_add_right, ← map_add (f := _), add_comm (rat d.i₀ ⬝ b),
       map_add (e.extX T), ← Check.symplOH_add_self, ← Check.symplOH_add_self, GlobalTheory.OrientedHeis.symplOH_add_left, h0,
       add_zero]
     rfl

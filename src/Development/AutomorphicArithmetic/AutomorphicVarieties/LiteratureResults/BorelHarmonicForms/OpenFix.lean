@@ -39,7 +39,7 @@ theorem UpperTheory.V.Lit.Bor.sqMem :
     rw [map_zero]
     exact ⟨by simp, fun _ _ _ => rfl, MeasureTheory.MemLp.zero⟩
   | add φ ψ _ _ h h' =>
-    rw [map_add]
+    rw [map_add (f := _)]
     refine ⟨open_fix (finRep E a) _ (h.1.inter h'.1) ⟨by simp, by simp⟩ ?_,
       fun γ hγ g => congrArg₂ (· + ·) (h.2.1 γ hγ g) (h'.2.1 γ hγ g), h.2.2.add h'.2.2⟩
     rintro k ⟨h1, h2⟩

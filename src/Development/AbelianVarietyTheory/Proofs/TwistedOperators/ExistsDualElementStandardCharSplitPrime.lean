@@ -35,7 +35,7 @@ theorem toEAf_lift (r : Formalism.IndefR.Datum.EAf D) : toEAf D (lift D r) = r :
 
 theorem lift_add (r s : Formalism.IndefR.Datum.EAf D) : lift D (r + s) = lift D r + lift D s := by
   unfold lift
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
 
 theorem finPart_eq_zero_of_toEAf {z : AE D} (h : toEAf D z = 0) : finPart D z = 0 := by
   rw [GlobalTheory.AdForm.toEAf_eq_comm] at h
@@ -96,7 +96,7 @@ theorem comp_lift_mul (he : SplitAt D v e) (r s : Formalism.IndefR.Datum.EAf D) 
 
 theorem comp_lift_add (he : SplitAt D v e) (r s : Formalism.IndefR.Datum.EAf D) :
     comp he (lift D (r + s)) = comp he (lift D r) + comp he (lift D s) := by
-  rw [lift_add, RingHom.map_add]
+  rw [lift_add, RingHom.map_add (f := _)]
 
 theorem val_lt_one (PP : Pl D.host.E) (hI : Formalism.L2.NTheta.IsIdemAt e PP) (he : SplitAt D v e)
     (r : Formalism.L2.Herm.intAf D.host.F D.host.E) (hr : Formalism.L2.DIV.resS D.host.F PP r = 0) :

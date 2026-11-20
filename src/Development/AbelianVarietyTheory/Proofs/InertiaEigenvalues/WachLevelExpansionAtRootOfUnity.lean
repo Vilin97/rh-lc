@@ -43,7 +43,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
     (W : LocWach PD LL O v n)
 
 theorem φA_one_add : W.φA (1 + letπ) = (1 + letπ) ^ PD.p := by
-  rw [map_add, map_one, W.φA_π]
+  rw [map_add (f := _), map_one, W.φA_π]
   funext i
   have := W.q₀_def
   simp only [Pi.add_apply, Pi.mul_apply, Pi.one_apply, Pi.pow_apply, letπ, LocWach.q]
@@ -56,7 +56,7 @@ theorem φA_pow_one_add (k : ℕ) : (W.φA ^ k) (1 + letπ) = (1 + letπ) ^ (PD.
     rw [pow_succ, AlgHom.mul_apply, φA_one_add, map_pow, ih, ← pow_mul, ← pow_succ]
 
 theorem X_eq : W.X = (1 + letπ) ^ (PD.p ^ (W.s - 1)) - 1 := by
-  rw [← φA_pow_one_add W, map_add, map_one, LocWach.X]
+  rw [← φA_pow_one_add W, map_add (f := _), map_one, LocWach.X]
   ring
 
 theorem q_eq : W.q = ∑ k ∈ Finset.range PD.p, (1 + letπ : LetA O n) ^ k := by
@@ -102,7 +102,7 @@ theorem lev_values [CharZero LL] (i : ZMod n) (ζ : LL) (hζ : ∃ j : ℕ, IsPr
   have hU1 : derivative LL U = U := by
     rw [hUdef, Derivation.leibniz, hE1, derivative_C]
     simp
-  have hlevU : W.lev i ζ (1 + letπ) = U := by rw [map_add, map_one, hE]
+  have hlevU : W.lev i ζ (1 + letπ) = U := by rw [map_add (f := _), map_one, hE]
   have hc1 : ∀ m : ℕ, m ≠ 0 → coeff 1 (U ^ m - 1) ≠ 0 := by
     intro m hm
     rw [map_sub, coeff_one_pow_of_deriv U hU1, hU0, coeff_one]

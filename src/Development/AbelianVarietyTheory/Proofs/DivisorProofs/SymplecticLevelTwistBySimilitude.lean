@@ -57,7 +57,7 @@ theorem sympCond_twist : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [
   refine ⟨fun u c => ?_, fun u => ?_, fun k _ _ x β' z' hx' hz' => ?_⟩
   · rw [tw, tw, tw, ← hadd]
     apply per
-    rw [reduceMod_liftMod, redAdd, redAdd, reduceMod_liftMod, reduceMod_liftMod, map_add]
+    rw [reduceMod_liftMod, redAdd, redAdd, reduceMod_liftMod, reduceMod_liftMod, map_add (f := _)]
   · rw [tw]; exact htor _
   ·
     set β : cycAway M →+* k := (Spec.preimage (x ≫ t₁)).hom with hβdef

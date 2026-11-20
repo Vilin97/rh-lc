@@ -26,14 +26,14 @@ private theorem UpperTheory.Reformulated.B.Qf34.taylor {k B : Type*} [CommRing k
   induction p using MvPolynomial.induction_on with
   | C a => simp [MvPolynomial.algHom_C]
   | add p q hp hq =>
-    simp only [map_add, add_mul, Finset.sum_add_distrib, ← hp, ← hq]
+    simp only [map_add (f := _), add_mul, Finset.sum_add_distrib, ← hp, ← hq]
     ring
   | mul_X p i hp =>
     have e : ∀ l, φ (pderiv l (p * X i)) * (φ (X l) - ψ (X l)) =
         φ (X i) * (φ (pderiv l p) * (φ (X l) - ψ (X l))) +
           (if l = i then φ p * (φ (X i) - ψ (X i)) else 0) := by
       intro l
-      rw [pderiv_mul, map_add, map_mul, map_mul]
+      rw [pderiv_mul, map_add (f := _), map_mul, map_mul]
       split_ifs with hl
       · subst hl
         rw [pderiv_X_self, map_one]

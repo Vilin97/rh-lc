@@ -33,7 +33,7 @@ theorem piW_cA {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] 
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem piW_incl {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {v : Pl F}
     (τ : E →ₐ[F] Fv F v) (e : E) : piW τ (inclR (F := F) (AF F) e) = τ e := by
@@ -271,7 +271,7 @@ theorem soLoc_stable : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Num
     have et : ∀ (ψ₁ ψ₂ : (Fin a' × Fin (a + a') → Fv F B.v₁) → ℂ), tens (evFin F B.v₁) (c • ψ₁ + ψ₂) r =
         c • tens (evFin F B.v₁) ψ₁ r + tens (evFin F B.v₁) ψ₂ r := fun ψ₁ ψ₂ => by
       funext x; simp only [tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
-    rw [← (hS _ hsum).2 r r0, et, map_add, map_smul, (hS φ hφ).2 r r1, (hS φ' hφ').2 r r2, et]
+    rw [← (hS _ hsum).2 r r0, et, map_add (f := _), map_smul, (hS φ hφ).2 r r1, (hS φ' hφ').2 r r2, et]
   have hψ : Continuous B.ψ := hT.base.std.1
   have atAct : ∀ (γ : Matrix (Fin a') (Fin (a + a')) (AE F E)), At (evFin F B.v₁) γ →
       At (evFin F B.v₁) (GlobalTheory.WeilM.actAB (cA σ) (k, (1 : UA σ G.W.J)) γ) := by
@@ -313,7 +313,7 @@ theorem soLoc_stable : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Num
           (fun (φ : (Fin a' × Fin (a + a') → Fv F B.v₁) → ℂ) (Z : Matrix (Fin a') (Fin (a + a')) (Fv F B.v₁)) => ι (S φ) (((g⁻¹ : GL (Fin a') (Fv F B.v₁)).val)ᵀ * Z)) y := by
     intro x hx y hy c
     funext Z
-    simp only [hlin x hx y hy c, map_add, map_smul, Pi.add_apply, Pi.smul_apply]
+    simp only [hlin x hx y hy c, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply]
   have htr2 : ∀ C, ∀ x ∈ SB (Fin a' × Fin (a + a') → Fv F B.v₁),
       GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt B.ψ B.v₁) (wT C) x ∈ SB (Fin a' × Fin (a + a') → Fv F B.v₁) ∧
       ι (GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt B.ψ B.v₁) (wT C) x) = (fun Z => ι x (Z + C)) ∧

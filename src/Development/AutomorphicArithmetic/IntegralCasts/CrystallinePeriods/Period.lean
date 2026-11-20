@@ -55,7 +55,7 @@ theorem Acris.logTeich_padicPow (η : tateModule p R) (a : ℤ_[p]) :
   have ha : algebraMap ℤ_[p] (Acris p R) a =
       (a.appr k : Acris p R) + (p : Acris p R) ^ k * algebraMap ℤ_[p] (Acris p R) b := by
     conv_lhs => rw [← sub_add_cancel a (a.appr k), hb]
-    rw [map_add, map_mul, map_pow, map_natCast, map_natCast, add_comm]
+    rw [map_add (f := _), map_mul, map_pow, map_natCast, map_natCast, add_comm]
   rw [hη', Acris.logTeich_mul, Acris.logTeich_pow, Acris.logTeich_pow, ha, Nat.cast_pow]
   ring
 
@@ -202,19 +202,19 @@ variable [IsDomain R] [CharZero R] [ValuationRing R]
 
 def toPolynomial (ϖ : PFlat p R) : Bst p R →ₐ[Bcris p R] (Bcris p R)[X] :=
   { lift (C : Bcris p R →+* (Bcris p R)[X]) (fun ϖ' => C (Bcris.logTeich (ϖ'.div ϖ)) + X)
-      (fun η ϖ' => by rw [PFlat.twist_div_eq, Bcris.logTeich_mul, map_add, add_assoc]) with
+      (fun η ϖ' => by rw [PFlat.twist_div_eq, Bcris.logTeich_mul, map_add (f := _), add_assoc]) with
     commutes' := fun x => lift_algebraMap _ _ _ x }
 
 theorem toPolynomial_logFlat (ϖ ϖ' : PFlat p R) :
     toPolynomial ϖ (logFlat ϖ') = C (Bcris.logTeich (ϖ'.div ϖ)) + X :=
   lift_logFlat (C : Bcris p R →+* (Bcris p R)[X]) (fun ϖ' => C (Bcris.logTeich (ϖ'.div ϖ)) + X)
-    (fun η ϖ' => by rw [PFlat.twist_div_eq, Bcris.logTeich_mul, map_add, add_assoc]) ϖ'
+    (fun η ϖ' => by rw [PFlat.twist_div_eq, Bcris.logTeich_mul, map_add (f := _), add_assoc]) ϖ'
 
 def polynomialEquiv (ϖ : PFlat p R) : (Bcris p R)[X] ≃ₐ[Bcris p R] Bst p R :=
   AlgEquiv.ofAlgHom (aeval (logFlat ϖ)) (toPolynomial ϖ)
     (AlgHom.coe_ringHom_injective (hom_ext (fun x => by simp) (fun ϖ' => by
       change aeval (logFlat ϖ) (toPolynomial ϖ (logFlat ϖ')) = logFlat ϖ'
-      rw [toPolynomial_logFlat, map_add, aeval_C, aeval_X, ← logFlat_twist, PFlat.twist_div])))
+      rw [toPolynomial_logFlat, map_add (f := _), aeval_C, aeval_X, ← logFlat_twist, PFlat.twist_div])))
     (Polynomial.algHom_ext (by simp [toPolynomial_logFlat]))
 
 theorem polynomialEquiv_apply (ϖ : PFlat p R) (f : (Bcris p R)[X]) :

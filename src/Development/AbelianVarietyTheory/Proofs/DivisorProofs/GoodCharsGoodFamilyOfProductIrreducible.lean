@@ -36,7 +36,7 @@ theorem irreducible_of_surjective {k G V : Type} [Field k] [Group G] [AddCommGro
     clear hw ha
     induction a using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add x y hx hy => rw [map_add, LinearMap.add_apply]; exact S.toSubmodule.add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _), LinearMap.add_apply]; exact S.toSubmodule.add_mem hx hy
     | single t c =>
       rw [Representation.asAlgebraHom_single, LinearMap.smul_apply]
       exact S.toSubmodule.smul_mem _ (S.apply_mem_toSubmodule t hv)

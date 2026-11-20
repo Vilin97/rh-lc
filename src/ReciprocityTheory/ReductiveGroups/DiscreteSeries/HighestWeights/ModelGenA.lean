@@ -208,7 +208,7 @@ theorem pre_dτ_bracket_single {a b c d : Fin n} (hab : ε a = ε b) (hcd : ε c
     dτ (Matrix.single a b 1) * dτ (Matrix.single c d 1) -
         dτ (Matrix.single c d 1) * dτ (Matrix.single a b 1) =
       dτ (Matrix.single a b 1 * Matrix.single c d 1 - Matrix.single c d 1 * Matrix.single a b 1) := by
-  rw [single_eq_kp a b, single_eq_kp c d, brk_expand, map_add, map_add, map_smul, map_smul,
+  rw [single_eq_kp a b, single_eq_kp c d, brk_expand, map_add (f := _), map_add (f := _), map_smul, map_smul,
     brk_expand, map_add, map_add, map_add, map_smul, map_smul, map_smul,
     pre_dτ_bracket τ dτ hder (inK_hermitian_unit hab) (inK_hermitian_unit hcd), pre_dτ_bracket τ dτ hder (inK_hermitian_unit hab) (inK_skew_hermitian_unit hcd),
     pre_dτ_bracket τ dτ hder (inK_skew_hermitian_unit hab) (inK_hermitian_unit hcd), pre_dτ_bracket τ dτ hder (inK_skew_hermitian_unit hab) (inK_skew_hermitian_unit hcd)]
@@ -216,7 +216,7 @@ theorem pre_dτ_bracket_single {a b c d : Fin n} (hab : ε a = ε b) (hcd : ε c
 include hder in
 theorem pre_star_dτ_single {a b : Fin n} (hab : ε a = ε b) :
     star (dτ (Matrix.single a b 1)) = dτ (Matrix.single b a 1) := by
-  rw [single_eq_kp a b, single_eq_kp' a b, map_add, map_smul, map_add, map_smul, map_neg, star_add,
+  rw [single_eq_kp a b, single_eq_kp' a b, map_add (f := _), map_smul, map_add (f := _), map_smul, map_neg, star_add,
     star_smul, pre_star_dτ τ dτ hder (inK_hermitian_unit hab), pre_star_dτ τ dτ hder (inK_skew_hermitian_unit hab)]
   simp [Complex.conj_I]
 

@@ -524,7 +524,7 @@ theorem lead_kap (n : ℕ) (p : Ty P → ℂ[X]) (c : Ty P → ℂ) (hp : ∀ π
     exact e π
   show kap P (fun π => (p π).eval Y) = _
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [e2, map_add, map_smul, map_sum]
+    rw [e2, map_add (f := _), map_smul, map_sum]
   simp only [map_smul]
 
 theorem lead_prod (s : Finset ℕ) :

@@ -58,7 +58,7 @@ theorem descent : ∀ (A B D : Type) [CommRing A] [CommRing B] [CommRing D] (f :
     · conv_lhs => rw [← hx x]
       rw [hdec]; simp only [hWB']
     · conv_lhs => rw [hy, hz]
-      simp only [map_add, Pi.add_apply, add_smul, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Pi.add_apply, add_smul, Finset.sum_add_distrib]
     · conv_lhs => rw [hy]
       simp only [map_smul, Pi.smul_apply, smul_eq_mul, mul_smul, Finset.smul_sum]
   have hp : ∀ z i, p (WB z i) = WD (u₁ z) i := by
@@ -66,7 +66,7 @@ theorem descent : ∀ (A B D : Type) [CommRing A] [CommRing B] [CommRing D] (f :
     refine induction hu (fun z => ∀ i, p (WB z i) = WD (u₁ z) i) (fun x i => ?_)
       (fun y z hy hz i => ?_) (fun b y hy i => ?_) z
     · rw [← h₁, hWD', hWB']
-    · simp only [map_add, Pi.add_apply, hy, hz]
+    · simp only [map_add (f := _), Pi.add_apply, hy, hz]
     · simp only [map_smul, LinearMap.map_smulₛₗ, Pi.smul_apply, smul_eq_mul, map_mul, hy]
   have hq : ∀ z i, q (WB z i) = WD (u₂ z) i := by
     intro z
@@ -74,7 +74,7 @@ theorem descent : ∀ (A B D : Type) [CommRing A] [CommRing B] [CommRing D] (f :
       (fun y z hy hz i => ?_) (fun b y hy i => ?_) z
     · rw [← h₂, hWD', hWB']
       exact (RingHom.congr_fun hpq (g x i)).symm
-    · simp only [map_add, Pi.add_apply, hy, hz]
+    · simp only [map_add (f := _), Pi.add_apply, hy, hz]
     · simp only [map_smul, LinearMap.map_smulₛₗ, Pi.smul_apply, smul_eq_mul, map_mul, hy]
   refine ⟨fun x y hxy => ?_, fun z hz => ?_⟩
   · have hg : g x = g y := funext fun i => hf (by rw [← hWB', ← hWB', hxy])

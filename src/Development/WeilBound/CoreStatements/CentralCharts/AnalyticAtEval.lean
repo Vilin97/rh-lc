@@ -42,7 +42,7 @@ theorem analyticAt_eval {A : Type} {n : ℕ} {q : (Fin n → ℂ) → A → ℂ}
     simp only [MvPolynomial.map_C, MvPolynomial.eval_C]
     exact analyticAt_const
   | add p r hp hr =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hr
   | mul_X p i hp =>
     simp only [map_mul, MvPolynomial.map_X, MvPolynomial.eval_X]
@@ -74,7 +74,7 @@ private theorem valAt_add_lemma_12 {z : Spec (CommRingCat.of ℂ) ⟶ X} {a b : 
     (h : ValAt ξ z a r) (h' : ValAt ξ z b s) : ValAt ξ z (a + b) (r + s) := by
   obtain ⟨hz, s1, hs, hs'⟩ := h
   obtain ⟨hz', s2, ht, ht'⟩ := h'
-  refine ⟨hz, s1 + s2, by rw [map_add, hs, ht], ?_⟩
+  refine ⟨hz, s1 + s2, by rw [map_add (f := _), hs, ht], ?_⟩
   rw [← hs', ← ht']
   exact map_add _ s1 s2
 
@@ -285,7 +285,7 @@ theorem exists_emb (𝔐 : HodgeCpt Y S y) {z : Spec (CommRingCat.of ℂ) ⟶ �
       map_one' := hu _ _ (by rw [map_one]; simpa using valAt_intCast_lemma_13 (ξ := 𝔐.ξ) h0 1)
       map_mul' := fun a b => hu _ _ (by rw [map_mul]; exact valAt_mul_lemma_2 (hsv a) (hsv b))
       map_zero' := hu _ _ (by rw [map_zero]; simpa using valAt_intCast_lemma_13 (ξ := 𝔐.ξ) h0 0)
-      map_add' := fun a b => hu _ _ (by rw [map_add]; exact valAt_add_lemma_12 (hsv a) (hsv b)) }
+      map_add' := fun a b => hu _ _ (by rw [map_add (f := _)]; exact valAt_add_lemma_12 (hsv a) (hsv b)) }
   exact ⟨s, hsv⟩
 
 theorem exists_emb_fam (𝔐 : HodgeCpt Y S y) {n : ℕ} {gm : (Fin n → ℂ) → (Σ k, J k) → ℂ}

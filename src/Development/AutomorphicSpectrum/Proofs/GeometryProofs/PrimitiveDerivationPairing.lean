@@ -29,7 +29,7 @@ noncomputable def dualDer (f : A) (hf : comul (R := k) f = f ⊗ₜ[k] (1 : A) +
         CartierDual.pair k A A (a ⊗ₜ (CartierDual.transpose (LinearMap.mulLeft k f) b)) t := by
       intro t
       induction t with
-      | add x y hx hy => simp only [mul_add, map_add, hx, hy]; ring
+      | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]; ring
       | tmul c d => simp [add_mul]
     have h2 := h (comul (R := k) c)
     rw [← hf, ← Bialgebra.comul_mul] at h2
@@ -238,7 +238,7 @@ theorem isHopfIdeal_span {f : A}
       Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mem_span_singleton_self f)
     have : (Algebra.TensorProduct.map (Ideal.Quotient.mkₐ k (Ideal.span {f}))
         (Ideal.Quotient.mkₐ k (Ideal.span {f}))) (comul (R := k) (a * f)) = 0 := by
-      rw [Bialgebra.comul_mul, map_mul, hf', map_add]
+      rw [Bialgebra.comul_mul, map_mul, hf', map_add (f := _)]
       simp [hz]
     exact this
   · intro x hx
@@ -259,7 +259,7 @@ theorem isCocomm_quot (I : Ideal A) [I.IsHopfIdeal k] [Coalgebra.IsCocomm k A] :
   conv_rhs => rw [← h]
   generalize comul (R := k) a = t
   induction t with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a b => simp
 end
 

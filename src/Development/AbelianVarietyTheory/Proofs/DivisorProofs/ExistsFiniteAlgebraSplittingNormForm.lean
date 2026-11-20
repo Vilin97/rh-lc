@@ -93,7 +93,7 @@ theorem exists_finite_split_normForm : ∀ (A B K L : Type) [CommRing A] [IsDoma
     induction hy using Submodule.span_induction with
     | mem z hz => exact Algebra.subset_adjoin ⟨(j, ⟨z, hz⟩), rfl⟩
     | zero => simp
-    | add u v _ _ hu hv => rw [map_add]; exact R.add_mem hu hv
+    | add u v _ _ hu hv => rw [map_add (f := _)]; exact R.add_mem hu hv
     | smul a u _ hu => rw [map_smul]; exact R.smul_mem hu a
   let σ : Fin (Module.finrank K L) → (B →+* R) := fun j => ((F j).codRestrict R (hmem j)).toRingHom
   have hinjAΩ : Function.Injective (algebraMap A (AlgebraicClosure K)) := by

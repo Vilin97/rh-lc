@@ -61,7 +61,7 @@ private theorem val_one_add {L : Type} [Field L] [NumberField L] (N : ℕ) (hN :
     have := congrArg (algebraMap (𝓞 L) L) this
     rwa [hcoe, map_neg, map_one] at this
   have : (1 + z : L) = algebraMap (𝓞 L) L (1 + zi) := by
-    rw [map_add, map_one, hcoe]
+    rw [map_add (f := _), map_one, hcoe]
   rw [this, IsDedekindDomain.HeightOneSpectrum.valuation_of_algebraMap,
     IsDedekindDomain.HeightOneSpectrum.intValuation_eq_one_iff_mem_primeCompl]
   exact hmem
@@ -97,7 +97,7 @@ theorem UpperTheory.exists_unit_eq_rootOfUnity_mul_conj_phase_one :
     have hconj : H.conj z = z⁻¹ := (UpperTheory.rootOfUnity_galois_action_CMDatum _ H.toHostAx z hz).2.1
     have hz0 : z ≠ 0 := UpperTheory.root_ne_zero hz
     refine ⟨Units.mk0 (1 + z) hδ, ?_, ?_, ?_⟩
-    · rw [Units.val_mk0, map_add, map_one, hconj]
+    · rw [Units.val_mk0, map_add (f := _), map_one, hconj]
       field_simp
       ring
     · intro P hP

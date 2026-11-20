@@ -64,7 +64,7 @@ variable {R R' : Type} [CommRing R] [CommRing R'] {Γ : Type} [Group Γ] [Topolo
 def cocycleMapOfEquivariant : Z1 rho →+ Z1 rho' where
   toFun z := ⟨fun g => u (z.1 g), hu.comp z.2.1, fun g h => by
     beta_reduce
-    rw [z.2.2, map_add, he]⟩
+    rw [z.2.2, map_add (f := _), he]⟩
   map_add' z w := Subtype.ext (funext fun g => map_add u _ _)
   map_zero' := Subtype.ext (funext fun g => map_zero u)
 
@@ -134,7 +134,7 @@ theorem addH1_mem_bkOn (v : PlE D.host) (x : H1 ((repOn ρ (1 : GE N →* Kˣ) K
       change f (t * (z : ↥(DecV N v) → Fin r → K) g a) = _
       rw [hz, algebraMap_smul, algebraMap_smul, mul_smul_comm, map_smul]
     | zero => rw [smul_zero, map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [smul_add, map_add]; exact Submodule.add_mem _ (hx t) (hy t)
+    | add x y _ _ hx hy => rw [smul_add, map_add (f := _)]; exact Submodule.add_mem _ (hx t) (hy t)
     | smul a x _ hx => rw [smul_smul]; exact hx _
   · rw [Submodule.mem_bot] at hx ⊢
     rw [hx, map_zero]

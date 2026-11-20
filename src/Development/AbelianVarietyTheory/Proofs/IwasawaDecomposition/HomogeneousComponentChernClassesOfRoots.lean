@@ -28,6 +28,6 @@ theorem homogeneousComponent_chernRoots {ι : Type} (m : ι → ℕ) (Q : MvPoly
     rw [homogeneousComponent_of_mem (chernRoots_monomial_isHomogeneous m s c),
       weightedHomogeneousComponent_of_mem (isWeightedHomogeneous_monomial _ _ _ rfl)]
     split_ifs <;> simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 end GlobalTheory.GrassComp

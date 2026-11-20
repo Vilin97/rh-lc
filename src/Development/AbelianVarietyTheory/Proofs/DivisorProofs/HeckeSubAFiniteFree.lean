@@ -16,7 +16,7 @@ def heckeSubA {b : Base D R} {M : ℕ} {s : S ⟶ Sp R} (o : Obj b M s) (f : D.L
   one_mem' := ⟨0, by rw [map_zero, smul_zero, eta_zero]⟩
   mul_mem' := by
     rintro _ _ ⟨x, rfl⟩ ⟨y, rfl⟩
-    exact ⟨x + y, by rw [map_add, smul_add, o.eta_add]⟩
+    exact ⟨x + y, by rw [map_add (f := _), smul_add, o.eta_add]⟩
   inv_mem' := by
     rintro _ ⟨x, rfl⟩
     exact ⟨-x, by rw [map_neg, smul_neg, eta_neg]⟩
@@ -72,7 +72,7 @@ theorem heckeSubA_finite_free (b : Base D R) (f : D.La →+ D.La) (k N : ℕ) (h
       simp only [LinearMap.smul_apply, LinearMap.id_apply, natCast_zsmul] at hz
       rw [hz]; abel
     show o.eta (N • f (σ (Submodule.Quotient.mk x))) = o.eta (N • f x)
-    rw [hz', map_add, map_nsmul, smul_add, smul_smul, o.eta_add, o.eta_ker, _root_.mul_one]
+    rw [hz', map_add (f := _), map_nsmul, smul_add, smul_smul, o.eta_add, o.eta_ker, _root_.mul_one]
   · intro κ _ _ x h hh h1
     obtain ⟨x0, rfl⟩ := hh
     have hβ : x ≫ s = spMap (Spec.preimage (x ≫ s)).hom := (Spec.map_preimage _).symm

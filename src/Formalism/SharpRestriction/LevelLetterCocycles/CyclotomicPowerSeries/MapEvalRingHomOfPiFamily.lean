@@ -127,7 +127,7 @@ private theorem cyclotomic_comp_pow_dvd_of_X_pow_dvd {O LL : Type} [CommRing O] 
     rw [algHom_coe_eq_aeval, Polynomial.aeval_comp]
     have h1 : Polynomial.aeval (ρ ζ X) (Polynomial.X + 1 : Polynomial O) =
         C ζ * PowerSeries.exp LL := by
-      rw [map_add, Polynomial.aeval_X, map_one, add_comm]
+      rw [map_add (f := _), Polynomial.aeval_X, map_one, add_comm]
       exact hρ ζ hζ
     rw [h1, hcyc]
     exact hw
@@ -150,7 +150,7 @@ private theorem cyclotomic_comp_pow_dvd_of_X_pow_dvd {O LL : Type} [CommRing O] 
     rw [constantCoeff_piAlgHom]
     have h : constantCoeff (1 + ρ i.1 X) = constantCoeff (C i.1 * PowerSeries.exp LL) := by
       rw [hρ i.1 i.2]
-    rw [map_add, map_one, map_mul, constantCoeff_C, hexp0, mul_one] at h
+    rw [map_add (f := _), map_one, map_mul, constantCoeff_C, hexp0, mul_one] at h
     linear_combination h
   have hroots : ∀ r : Polynomial LL,
       Polynomial.aeval (constantCoeff (piAlgHom (fun i : {ζ : LL // IsPrimitiveRoot ζ n} => ρ i.1) X)) r = 0 →
@@ -158,7 +158,7 @@ private theorem cyclotomic_comp_pow_dvd_of_X_pow_dvd {O LL : Type} [CommRing O] 
     intro r hr
     have hmap : ((Polynomial.cyclotomic n O).comp (Polynomial.X + 1)).map (algebraMap O LL) =
         (Polynomial.cyclotomic n LL).comp (Polynomial.X + 1) := by
-      rw [Polynomial.map_comp, Polynomial.map_cyclotomic, Polynomial.map_add, Polynomial.map_X,
+      rw [Polynomial.map_comp, Polynomial.map_cyclotomic, Polynomial.map_add (f := _), Polynomial.map_X,
         Polynomial.map_one]
     rw [hmap]
     apply cyclotomic_comp_dvd n hn ζ₀ hζ₀ r

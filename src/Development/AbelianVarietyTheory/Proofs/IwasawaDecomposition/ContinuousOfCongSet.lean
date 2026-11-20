@@ -161,7 +161,7 @@ def evP (P : HeightOneSpectrum (𝓞 E)) : AfE F E →+* P.adicCompletion E wher
   map_one' := by rw [map_one]; rfl
   map_mul' a b := by rw [map_mul]; rfl
   map_zero' := by rw [map_zero]; rfl
-  map_add' a b := by rw [map_add]; rfl
+  map_add' a b := by rw [map_add (f := _)]; rfl
 
 theorem le_exp_neg_one {γ : WithZero (Multiplicative ℤ)} (h : γ < 1) : γ ≤ WithZero.exp (-((1 : ℕ) : ℤ)) := by
   rcases eq_or_ne γ 0 with rfl | h0

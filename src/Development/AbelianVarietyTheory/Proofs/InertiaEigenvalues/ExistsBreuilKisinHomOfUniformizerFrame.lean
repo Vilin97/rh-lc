@@ -86,7 +86,7 @@ theorem pow_mem_of_eq_sub {A S : Type} [CommRing A] [CommRing S] {I J : Ideal A}
   rw [map_pow, map_sub, map_mul, map_natCast, hx, hE] at a2
   obtain ⟨t, ht⟩ := Ideal.Quotient.mk_surjective (τ q)
   have h1 : Ideal.Quotient.mk I (v ^ e + (l : A) * t) = 0 := by
-    rw [map_add, map_pow, map_mul, map_natCast, ht, a2]
+    rw [map_add (f := _), map_pow, map_mul, map_natCast, ht, a2]
     ring
   have h2 := hIJ (Ideal.Quotient.eq_zero_iff_mem.1 h1)
   have h3 : (l : A) * t ∈ J := Ideal.mul_mem_right _ _ hl

@@ -47,7 +47,7 @@ theorem exists_finite_trait_extension : ∀ (R W R₁ : Type) [CommRing R] [IsDo
     induction hx using Submodule.span_induction with
     | mem y hy => exact hmem _ (Finset.mem_image_of_mem _ hy) (hint y)
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact W₁.add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact W₁.add_mem hy hz
     | smul a y _ hy =>
       rw [Algebra.smul_def, map_mul]
       refine W₁.mul_mem ?_ hy

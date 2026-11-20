@@ -55,7 +55,7 @@ theorem scaleSub_pow_mem (c : S) (k : ℕ) (P : MvPolynomial ρ S) (hP : P ∈ o
       | add x y _ _ hx hy =>
         have e : scaleSub c (a * (x + y)) - c ^ (k + 1) • (a * (x + y)) =
             (scaleSub c (a * x) - c ^ (k + 1) • (a * x)) + (scaleSub c (a * y) - c ^ (k + 1) • (a * y)) := by
-          simp only [mul_add, map_add, smul_add]
+          simp only [mul_add, map_add (f := _), smul_add]
           abel
         rw [e]
         exact Ideal.add_mem _ hx hy
@@ -75,7 +75,7 @@ theorem scaleSub_pow_mem (c : S) (k : ℕ) (P : MvPolynomial ρ S) (hP : P ∈ o
         exact Ideal.mul_mem_mul (scaleSub_sub_mem_orig c f) hax
     · have e : scaleSub c (x + y) - c ^ (k + 1) • (x + y) =
           (scaleSub c x - c ^ (k + 1) • x) + (scaleSub c y - c ^ (k + 1) • y) := by
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
         abel
       rw [e]
       exact Ideal.add_mem _ hx hy

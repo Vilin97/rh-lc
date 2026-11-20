@@ -196,7 +196,7 @@ lemma norm_finsum_le' {α : Type*} {g : α → K} {C : ℝ} (hC : 0 ≤ C) (hg :
 
 theorem dv_add {c : K} {A B : MvPowerSeries ι K} (hA : DivByMv c A) (hB : DivByMv c B) :
     DivByMv c (A + B) := fun d => by
-  rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hA d) (hB d))
+  rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hA d) (hB d))
 
 theorem dv_neg {c : K} {A : MvPowerSeries ι K} (hA : DivByMv c A) :
     DivByMv c (-A) := fun d => by rw [map_neg, norm_neg]; exact hA d
@@ -479,10 +479,10 @@ theorem step_inv (hS : LTSetting K p q π) (he : IsLTSeries q π e) (he' : IsLTS
   have hlowc : Low (N + 1) (corr e e' π N P) := by
     intro d hd; rw [coeff_corr, if_neg (by omega)]
   refine ⟨⟨?_, ?_, ?_, ?_⟩, hlowc⟩
-  · rw [map_add, h.1, ← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hlowc 0 (by simp),
+  · rw [map_add (f := _), h.1, ← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hlowc 0 (by simp),
       add_zero]
   · intro d
-    rw [map_add]
+    rw [map_add (f := _)]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (h.2.1 d) ?_)
     rw [coeff_corr]
     split_ifs
@@ -490,9 +490,9 @@ theorem step_inv (hS : LTSetting K p q π) (he : IsLTSeries q π e) (he' : IsLTS
       exact div_le_one_of_le₀ (defect_divBy hS he he' h.1 h.2.1 d) (norm_nonneg _)
     · simp
   · intro i
-    rw [map_add, h.2.2.1 i, hlowc _ (by rw [Finsupp.degree_single]; omega), add_zero]
+    rw [map_add (f := _), h.2.2.1 i, hlowc _ (by rw [Finsupp.degree_single]; omega), add_zero]
   · have hP'0 : MvPowerSeries.constantCoeff (P + corr e e' π N P) = 0 := by
-      rw [map_add, h.1, ← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hlowc 0 (by simp),
+      rw [map_add (f := _), h.1, ← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hlowc 0 (by simp),
         add_zero]
     have hdiff : Low (N + 1) (P + corr e e' π N P - P) := by
       rw [add_sub_cancel_left]; exact hlowc
@@ -588,7 +588,7 @@ theorem uniq (hS : LTSetting K p q π) (he : IsLTSeries q π e) (he' : IsLTSerie
           obtain ⟨r, hr⟩ := le_iff_exists_add.mp hle
           have : r.degree = 0 := by
             have := congrArg Finsupp.degree hr
-            rw [map_add, Finsupp.degree_single] at this
+            rw [map_add (f := _), Finsupp.degree_single] at this
             omega
           rw [(Finsupp.degree_eq_zero_iff r).mp this, add_zero, hdi] at hr
           exact hr

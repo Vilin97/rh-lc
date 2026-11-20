@@ -369,7 +369,7 @@ theorem UpperTheory.Reformulated.B.CoboundaryOfGenerator.aux2.{u_1, u_2, u_3} :
   obtain ⟨hc, hf⟩ := hf
   obtain ⟨hc', hf'⟩ := hf'
   refine ⟨hc.add hc', fun g h => ?_⟩
-  simp only [Pi.add_apply, hf g h, hf' g h, map_add]
+  simp only [Pi.add_apply, hf g h, hf' g h, map_add (f := _)]
   abel
 
 theorem UpperTheory.Reformulated.B.CoboundaryOfGenerator.aux3.{u_1, u_2, u_3} :

@@ -43,7 +43,7 @@ theorem affineGerm_eq_eval₂ {σ : Type} [Fintype σ] {d : ℕ} (w : σ → ℂ
       Germ.coeRingHom _ (fun z : σ → ℂ => z i) + Germ.coeRingHom _ ((fun _ : Fin d → ℂ => c) ∘ A) =
     Germ.coeRingHom _ (fun z : σ → ℂ => L z + c)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [← map_mul, ← map_sum, ← map_add]
+    simp only [← map_mul, ← map_sum, ← map_add (f := _)]
   congr 1
   funext z
   have hL := (L : (σ → ℂ) →ₗ[ℂ] ℂ).pi_apply_eq_sum_univ z
@@ -119,7 +119,7 @@ theorem germ_division_after_coordinates (hD : WeierstrassDivision.Statement)
     ∑ j : Fin n, Germ.coeRingHom _ ((fun u => a j (u - π w)) ∘ π) *
       Germ.coeRingHom _ (fun z : σ → ℂ => T z + -T w) ^ (j : ℕ)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [← map_mul, ← map_pow, ← map_sum, ← map_add]
+    simp only [← map_mul, ← map_pow, ← map_sum, ← map_add (f := _)]
   refine Germ.coe_eq.2 ?_
   filter_upwards [hev'] with z hz
   simp [hz, Finset.sum_apply]
@@ -220,7 +220,7 @@ theorem isFiniteGermProjection_comp {σ τ : Type} [Fintype σ] [Fintype τ] (w 
         exact hb
       have h0 := Ideal.Quotient.eq_zero_iff_mem.2 hS
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, map_pow] at h0
+        rw [map_add (f := _), map_sum, map_pow] at h0
       simp only [map_mul, map_pow] at h0
       rw [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finsetSum]
       simp only [Polynomial.eval₂_mul, Polynomial.eval₂_C, Polynomial.eval₂_X_pow]

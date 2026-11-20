@@ -28,7 +28,7 @@ theorem asModule_equiv {M N : Type} [AddCommGroup M] [Module O M] [AddCommGroup 
   rw [Representation.asModuleEquiv_map_smul, Representation.asModuleEquiv_map_smul, LinearEquiv.apply_symm_apply]
   induction r using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]
   | single g a => simp [he]
 
 theorem sameSS_of_surj [IsDomain O] [IsDiscreteValuationRing O] [IsFractionRing O LL] {lam : O}
@@ -437,7 +437,7 @@ theorem exists_mu {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup 
   let z₁ : G →* Multiplicative M := MonoidHom.mk' (fun g => Multiplicative.ofAdd (z g)) fun g h => congrArg _ (hm g h)
   let z₂ : G →* Multiplicative M := MonoidHom.mk'
     (fun g => Multiplicative.ofAdd (algebraMap ℤ_[l] O (w (ν g)) • z F)) fun g h => by
-      rw [← ofAdd_add, ← add_smul, ← map_add]
+      rw [← ofAdd_add, ← add_smul, ← map_add (f := _)]
       refine congrArg _ (hcong _ _ ⟨w (ν g) * w (ν h), mul_left_cancel₀ h0 ?_⟩)
       have := map_mul κ (ν g) (ν h)
       rw [← map_mul, hw, hw, hw] at this

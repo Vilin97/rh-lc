@@ -106,7 +106,7 @@ theorem fmat_mulVec_mem_wLf (w : HeightOneSpectrum (𝓞 D.host.E)) {k : X.B.I.G
     | add a b _ _ ha hb =>
       intro c
       have e : incl X.B.I (c • (a + b)) = incl X.B.I (c • a) + incl X.B.I (c • b) := by
-        rw [smul_add]; funext i; simp only [incl, Pi.add_apply, map_add]
+        rw [smul_add]; funext i; simp only [incl, Pi.add_apply, map_add (f := _)]
       rw [e, Matrix.mulVec_add]; exact add_mem (ha c) (hb c)
     | smul d a _ ha =>
       intro c

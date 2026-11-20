@@ -210,7 +210,7 @@ theorem algEquiv_apply_eq_tau_of_galE_eq_art0 (ι : L →ₐ[ℚ] Cond.Cyc (2 ^ 
       have hN : ∀ w : L, w ^ 2 ^ (e + 2) = 1 → ι w ^ (2 ^ (e + 2) * q * d) = 1 := by
         intro w hw
         rw [pow_mul, pow_mul, ← map_pow, hw, map_one, one_pow, one_pow]
-      rw [h1, hval, Cond.pow_mod_of hz, Cond.pow_mod_of hz', map_add, map_add, map_add, map_pow, map_pow,
+      rw [h1, hval, Cond.pow_mod_of hz, Cond.pow_mod_of hz', map_add (f := _), map_add (f := _), map_add (f := _), map_pow, map_pow,
         hτ _ (hN _ hz), hτ _ (hN _ hz')]
     · subst hy
       show ι ((σ (aE ζ y b) : hostE ζ y b) : L) = τ (ι y)

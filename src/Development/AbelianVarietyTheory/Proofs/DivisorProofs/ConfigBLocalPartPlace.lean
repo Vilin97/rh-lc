@@ -44,9 +44,9 @@ theorem locPart_inv (B : Base F E) {n d n₁ d₁ : ℕ} {X : Spc F E n} {W : Sp
     rw [add_zero, RingEquiv.apply_symm_apply]
   have h0 : ∀ w a, evFin F w (GlobalTheory.HeisSchA.mk a 0) = 0 := fun w a => map_zero (evalV F w)
   have hv : ∀ t, (fun i => evFin F v (pt t i)) = t := fun t => funext fun i => by
-    simp only [pt, map_add, h0, GlobalTheory.LatVac.evFin_liftV, zero_add]
+    simp only [pt, map_add (f := _), h0, GlobalTheory.LatVac.evFin_liftV, zero_add]
   have hw : ∀ t w, w ≠ v → (fun i => evFin F w (pt t i)) = 0 := fun t w hw => funext fun i => by
-    simp only [pt, map_add, h0, zero_add]
+    simp only [pt, map_add (f := _), h0, zero_add]
     exact evalV_singleFin_ne hw _
   have hupd : ∀ χ : ∀ w : Pl F, (Fin n × Fin d → Fv F w) → ℂ, (∀ w, χ w ∈ SB _) → ∀ φ ∈ SB (Fin n × Fin d → Fv F v),
       ∀ w, Function.update χ v φ w ∈ SB _ := by

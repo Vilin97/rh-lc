@@ -235,7 +235,7 @@ theorem exists_plane_equiv {B : Base F E} {X : Spc F E n} {W : Spc F E d} {W₁ 
       simp [Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two, frame, incM, incV, Matrix.vecMulVec_apply, add_assoc]
     refine ⟨fun i => Y i (.inr 1), funext fun k => ?_⟩
     have h5 := congrFun (congrArg Prod.fst (congrArg co.e hu)) ((idx hd).symm (.inr k))
-    rw [map_add, map_add, LinearEquiv.apply_symm_apply] at h5
+    rw [map_add (f := _), map_add (f := _), LinearEquiv.apply_symm_apply] at h5
     simp only [Prod.fst_add, Pi.add_apply, hlow, hx, Pi.zero_apply, zero_add, Equiv.apply_symm_apply, Sum.elim_inr] at h5
     exact h5.symm
 

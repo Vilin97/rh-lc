@@ -44,7 +44,7 @@ theorem exists_specialise_ne_zero : ∀ (F S T : Type) [Field F] [Infinite F] (R
     intro P
     induction P using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p i hp =>
       rw [map_mul, map_mul, map_mul, hp]
       cases i <;> simp

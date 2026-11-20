@@ -23,7 +23,7 @@ theorem hf_add_left (D : D7) (T : Tor D) {N N' : ℕ} (a b c : VC D N N') :
 
 theorem hf_add_right (D : D7) (T : Tor D) {N N' : ℕ} (a b c : VC D N N') :
     Hf D T a (b + c) = Hf D T a b + Hf D T a c := by
-  simp only [Hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib, add_div]
+  simp only [Hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib, add_div]
 
 theorem wd_wd (D : D7) (T : Tor D) {N N' : ℕ} (a b : VC D N N') :
     ∃ φ : ℂ, ∀ F, Wd D T a (Wd D T b F) = φ • Wd D T (a + b) F := by

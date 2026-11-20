@@ -40,7 +40,7 @@ def blk : (R ⊗[ℚ] D) × R →+* Matrix (Fin (Module.finrank ℚ D + 1)) (Fin
     congr 1
     simp [blk0]
   map_add' z w := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     simp [blk0, Matrix.fromBlocks_add]
 
@@ -92,7 +92,7 @@ theorem repr_map (f : R →ₐ[ℚ] R') (x : R ⊗[ℚ] D) (k : Fin (Module.finr
   | tmul r m =>
     simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, Algebra.TensorProduct.basis_repr_tmul,
       Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul, map_mul, AlgHom.commutes]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 theorem lreg_map (f : R →ₐ[ℚ] R') (a : R ⊗[ℚ] D) :
     lreg D R' (Algebra.TensorProduct.map f (AlgHom.id ℚ D) a) = f.toRingHom.mapMatrix (lreg D R a) := by
@@ -150,7 +150,7 @@ theorem starT_tmap (f : R →ₐ[ℚ] R') (x : R ⊗[ℚ] D) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r m => simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, starT_tmul]
-  | add x y hx hy => simp only [map_add, MulOpposite.unop_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), MulOpposite.unop_add, hx, hy]
 
 variable (R) in
 

@@ -107,7 +107,7 @@ theorem map_mem_kSpan_of_mem {v w : E} (hw : w ∈ π.kSpan K v) (k : K) : π k 
     rw [← map_mul_apply]
     exact Submodule.subset_span ⟨k * k', by simp⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem kSpan_le_of_mem {v w : E} (hw : w ∈ π.kSpan K v) : π.kSpan K w ≤ π.kSpan K v := by
@@ -140,7 +140,7 @@ def kFiniteVectors : Submodule ℂ E where
     rw [kSpan, Submodule.span_le]
     rintro _ ⟨k, rfl⟩
     show π k (v + w) ∈ _
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (π.map_mem_kSpan K v k) (π.map_mem_kSpan K w k)
   smul_mem' c v hv := by
     change FiniteDimensional ℂ (π.kSpan K v) at hv

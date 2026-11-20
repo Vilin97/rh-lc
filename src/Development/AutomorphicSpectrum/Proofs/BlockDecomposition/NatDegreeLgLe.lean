@@ -82,7 +82,7 @@ theorem map_Lg {S' : Type*} [CommRing S'] [Algebra ℚ S'] (f : S →+* S') (N :
 theorem map_FF {S' : Type*} [CommRing S'] [Algebra ℚ S'] (f : S →+* S') (N : ℕ) (x y : S) :
     f (FF N x y) = FF N (f x) (f y) := by
   unfold FF
-  rw [map_sub, map_sub, map_Lg, map_Lg, map_Lg, map_add, map_add, map_mul]
+  rw [map_sub, map_sub, map_Lg, map_Lg, map_Lg, map_add (f := _), map_add (f := _), map_mul]
 
 theorem Lg_sub {T : Subring S} {u : S} (h : DP T u) {N M : ℕ} (hNM : N ≤ M) :
     ∃ c ∈ T, large₂ M u - large₂ N u = (N.factorial : S) * c := by
@@ -142,8 +142,8 @@ theorem pow_dvd_FF {R : Type*} [CommRing R] [Algebra ℚ R] {t a b : R} (ha : t 
     exact pow_dvd_pow_of_dvd hu _
   have hz : t ∣ a + b + a * b := dvd_add (dvd_add ha hb) (ha.mul_right b)
   have key := truncEval_log_mul (hpow a ha) (hpow b hb) (hpow _ hz) (by
-    rw [map_add, map_add, map_mul]; ring)
-  rw [Lg_eq_truncEval, Lg_eq_truncEval, Lg_eq_truncEval, ← map_Lg, ← map_Lg, ← map_Lg, ← map_add,
+    rw [map_add (f := _), map_add (f := _), map_mul]; ring)
+  rw [Lg_eq_truncEval, Lg_eq_truncEval, Lg_eq_truncEval, ← map_Lg, ← map_Lg, ← map_Lg, ← map_add (f := _),
     Ideal.Quotient.eq] at key
   have : FF M a b ∈ J := by
     have e : FF M a b = large₂ M (a + b + a * b) - (large₂ M a + large₂ M b) := by unfold FF; ring

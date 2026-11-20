@@ -216,7 +216,7 @@ theorem fourG_act_pt_eq_fourK : ∀ (F E : Type) [NontriviallyNormedField F] [No
     show f' (act g (pt A hG lam x y)) * A.psiK ψ (b * y + x * c) = G (e₁ x) (e₂ y)
     simp only [G]
     congr 1
-    rw [Et.psiK, map_add, ← hB, ← hB, dotProduct_comm (e₁ b), dotProduct_comm (e₁ x)]
+    rw [Et.psiK, map_add (f := _), ← hB, ← hB, dotProduct_comm (e₁ b), dotProduct_comm (e₁ x)]
   rw [lhs, rhs]
   have inner : ∀ x, ∫ y, G (e₁ x) (e₂ y) ∂μK = c₂ * ∫ y, G (e₁ x) y ∂ν := fun x => h₂ (fun y => G (e₁ x) y)
   rw [integral_congr_ae (Eventually.of_forall inner), integral_const_mul, h₁ (fun x => ∫ y, G x y ∂ν)]

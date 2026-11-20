@@ -35,7 +35,7 @@ theorem inner_of_normSq (u : E →ₗ[ℂ] H) (n : ℝ) (h : ∀ x, ‖u x‖ ^ 
   have h' : ∀ z, ((‖u z‖ : ℝ) : ℂ) ^ 2 = (n : ℂ) * ((‖z‖ : ℝ) : ℂ) ^ 2 := fun z => by exact_mod_cast h z
   have e1 := inner_eq_sum_norm_sq_div_four (𝕜 := ℂ) (u x) (u y)
   have e2 := inner_eq_sum_norm_sq_div_four (𝕜 := ℂ) x y
-  rw [← map_smul, ← map_add, ← map_add, ← map_sub, ← map_sub] at e1
+  rw [← map_smul, ← map_add (f := _), ← map_add (f := _), ← map_sub, ← map_sub] at e1
   rw [e1, e2]
   have h1 := h' (x + y)
   have h2 := h' (x - y)

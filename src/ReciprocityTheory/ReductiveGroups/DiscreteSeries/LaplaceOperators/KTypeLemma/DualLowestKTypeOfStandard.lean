@@ -66,7 +66,7 @@ theorem phiR_G {ε : Fin n → Bool} {X : Matrix (Fin n) (Fin n) ℂ} (hX : inG 
     inG ε (phiR X) := by
   have h : Xᴴ * Jm (ε ∘ Fin.rev) + Jm (ε ∘ Fin.rev) * X = 0 := hX
   show (phiR X)ᴴ * Jm ε + Jm ε * phiR X = 0
-  rw [← phiR_conjT, ← phiR_J, ← map_mul, ← map_mul, ← map_add, h, map_zero]
+  rw [← phiR_conjT, ← phiR_J, ← map_mul, ← map_mul, ← map_add (f := _), h, map_zero]
 
 theorem actM_tw {M : Type*} [AddCommGroup M] [Module ℂ M] {ε : Fin n → Bool}
     (E : Fin n → Fin n → Module.End ℂ M) {X : Matrix (Fin n) (Fin n) ℂ} (hX : inG (ε ∘ Fin.rev) X) :
@@ -165,7 +165,7 @@ theorem dualLowestKType_of_standard (hK : EigenspaceWeightConeStandard n) : Eige
     rw [← hW] at k2
     obtain ⟨c₁, c₂, hne, heq⟩ := K2 _ _ h1' h2' k1 k2
     refine ⟨c₁, c₂, hne, twT_eq_zero (ε := ε) ?_⟩
-    rw [map_add, map_smul, map_smul]
+    rw [map_add (f := _), map_smul, map_smul]
     exact heq
 
 end ReciprocityTheory.ChartRestriction.DS.Lap.LemK.TwistedDualLemmas

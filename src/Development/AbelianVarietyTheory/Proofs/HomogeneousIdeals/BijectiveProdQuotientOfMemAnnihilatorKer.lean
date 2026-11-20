@@ -52,7 +52,7 @@ theorem mem_coactionWeightSpace_iff_dualContraction [Module.Finite R C] [Module.
 private theorem tensorToHom_rTensor (f : M →ₗ[R] M') (x : M ⊗[R] C) (w : CartierDual R C) :
     tensorToHom R M' C (f.rTensor C x) w = f (tensorToHom R M C x w) := by
   induction x with
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul n m => simp
 
 theorem dualContraction_map {ρ : M →ₗ[R] M ⊗[R] C} {ρ' : M' →ₗ[R] M' ⊗[R] C} {f : M →ₗ[R] M'}
@@ -74,19 +74,19 @@ private theorem tensorToHom_assoc_rTensor (ρ : M →ₗ[R] M ⊗[R] C) (φ ψ :
     tensorToHom R M (C ⊗[R] C) (TensorProduct.assoc R M C C (ρ.rTensor C x))
       (toConv (pair R C C (φ ⊗ₜ ψ))) = dualContraction ρ φ (tensorToHom R M C x ψ) := by
   induction x with
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul m c =>
     rw [LinearMap.rTensor_tmul, tensorToHom_tmul, map_smul, dualContraction_apply]
     generalize ρ m = s
     induction s with
-    | add x y hx hy => simp only [map_add, LinearMap.add_apply, add_tmul, smul_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, add_tmul, smul_add, hx, hy]
     | tmul m' c' => simp [smul_smul, mul_comm]
 
 private theorem tensorToHom_lTensor_comul (φ ψ : CartierDual R C) (x : M ⊗[R] C) :
     tensorToHom R M (C ⊗[R] C) ((comul : C →ₗ[R] C ⊗[R] C).lTensor M x)
       (toConv (pair R C C (φ ⊗ₜ ψ))) = tensorToHom R M C x (φ * ψ) := by
   induction x with
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul m c => rw [LinearMap.lTensor_tmul, tensorToHom_tmul, tensorToHom_tmul, mul_apply]
 
 theorem IsCoaction.dualContraction_one {ρ : M →ₗ[R] M ⊗[R] C} (h : IsCoaction ρ) :
@@ -240,7 +240,7 @@ theorem sum_mem_annihilator_ker {G : Type*} [Group G] [Fintype G] {ε : D →ₐ
     rw [hy, one_smul, Finset.mul_sum]
     exact Fintype.sum_equiv (Equiv.mulLeft g) _ _ fun g' => by simp
   | zero => simp
-  | add a b _ _ ha hb => rw [add_mul, ha, hb, map_add, add_smul]
+  | add a b _ _ ha hb => rw [add_mul, ha, hb, map_add (f := _), add_smul]
   | smul r a _ ha => rw [smul_mul_assoc, ha, map_smul, smul_assoc]
 
 end Augmented
@@ -331,7 +331,7 @@ theorem bijective_prod_quotient_of_mem_annihilator_ker {ε : A →ₐ[R] R} {e :
     refine ⟨a + (r - ε a) • e, Prod.ext ?_ ?_⟩
     · simp [he1]
     · change Ideal.Quotient.mkₐ R (Ideal.span {e}) (a + (r - ε a) • e) = _
-      rw [map_add, map_smul, h0, smul_zero, add_zero]; rfl
+      rw [map_add (f := _), map_smul, h0, smul_zero, add_zero]; rfl
 
 theorem existsUnique_mem_annihilator_ker [Algebra.FormallyUnramified R A]
     [Algebra.EssFiniteType R A] (ε : A →ₐ[R] R) :
@@ -340,7 +340,7 @@ theorem existsUnique_mem_annihilator_ker [Algebra.FormallyUnramified R A]
     fun _ _ => Commute.all _ _
   have hπ (t : A ⊗[R] A) : ε (π t) = ε (Algebra.TensorProduct.lmul' R t) := by
     induction t with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a b => simp [π, Algebra.ofId_apply]
   have he : π (Algebra.FormallyUnramified.elem R A) ∈ (RingHom.ker ε).annihilator :=
     mem_annihilator_ker_iff.2 fun w => by
@@ -388,7 +388,7 @@ theorem one_tmul_mem_annihilator_ker {ε : D →ₐ[R] R} {Λ : D}
     (1 : K) ⊗ₜ[R] Λ ∈ (RingHom.ker (augmentationBaseChange K ε)).annihilator := by
   refine mem_annihilator_ker_iff.2 fun w => ?_
   induction w with
-  | add a b ha hb => rw [add_mul, ha, hb, map_add, add_smul]
+  | add a b ha hb => rw [add_mul, ha, hb, map_add (f := _), add_smul]
   | tmul k d =>
     rw [Algebra.TensorProduct.tmul_mul_tmul, mem_annihilator_ker_iff.1 hΛ,
       augmentationBaseChange_tmul, smul_tmul', ← smul_tmul]
@@ -474,7 +474,7 @@ theorem dualContraction_baseChange [AddCommMonoid H] [Module R H] {ρ : M →ₗ
   rw [dualContraction_apply, dualContraction_apply, (LinearEquiv.eq_symm_apply _).2 (hj m)]
   generalize ρ m = x
   induction x with
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul n h => simp
 
 variable [Semiring H] [Bialgebra R H] [Module.Finite R H] [Module.Projective R H] [IsCocomm R H]
@@ -488,7 +488,7 @@ theorem baseChange_one_tmul_mem_annihilator_ker {Λ : CartierDual R H}
   rw [counitAlgHom_cartierDual_apply, ← baseChangeLinear_mul, ← map_smul]
   congr 1
   induction x with
-  | add a b ha hb => rw [add_mul, ha, hb, map_add, ofConv_add, LinearMap.add_apply, add_smul]
+  | add a b ha hb => rw [add_mul, ha, hb, map_add (f := _), ofConv_add, LinearMap.add_apply, add_smul]
   | tmul k d =>
     rw [Algebra.TensorProduct.tmul_mul_tmul, mem_annihilator_ker_iff.1 hΛ,
       counitAlgHom_cartierDual_apply, Algebra.TensorProduct.one_def, baseChangeLinear_tmul_tmul,

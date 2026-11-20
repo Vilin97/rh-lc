@@ -59,7 +59,7 @@ theorem stab_comap_of_thetaSubInf : ∀ (F E : Type) [Field F] [NumberField F] [
     exact (N.add_mem_iff_left (N.smul_mem _ hy)).1 hmem
   intro Z y hy
   obtain ⟨A, hA, B, hB, rfl⟩ := GlobalTheory.T.exists_indefiniteUnitaryLieAlg_add_I_smul_eq _ _ Z
-  rw [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply]
+  rw [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply]
   exact add_mem (key A hA y hy) (Submodule.smul_mem _ _ (key B hB y hy))
 
 end GlobalTheory.HoweD

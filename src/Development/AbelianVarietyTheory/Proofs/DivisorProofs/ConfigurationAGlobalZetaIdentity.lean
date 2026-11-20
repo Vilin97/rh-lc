@@ -348,7 +348,7 @@ theorem _root_.GlobalTheory.T.configuration_a_global_zeta_identity : GlobalTheor
       rfl
     intro v
     rw [twPart, hs, Submodule.span_eq]
-    simp only [Submodule.mem_inf, Submodule.mem_iInf, Module.End.mem_eigenspace_iff, cen, map_add, LinearMap.add_apply]
+    simp only [Submodule.mem_inf, Submodule.mem_iInf, Module.End.mem_eigenspace_iff, cen, map_add (f := _), LinearMap.add_apply]
     refine and_congr_right fun hv => forall_congr' fun w => ⟨fun h => ?_, fun h => ?_⟩
     · exact top_of_sum _ _ _ _ (hwt w r₀ s₀ hv) h
     · rw [h.1, h.2, add_smul]

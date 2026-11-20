@@ -32,7 +32,7 @@ theorem isLattice_sup {X Y : Submodule K V} (hc : IsCompl X Y) {A B : Submodule 
 theorem prO_sup {X Y : Submodule K V} (hc : IsCompl X Y) {A B : Submodule (𝓞 K) V}
     (hA : ∀ x ∈ A, x ∈ X) (hB : ∀ y ∈ B, y ∈ Y) {z : V} (hz : z ∈ A ⊔ B) : prO hc z ∈ A := by
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hz
-  rw [map_add, prO_apply, prO_apply, Submodule.projection_apply_of_mem_left hc (hA a ha),
+  rw [map_add (f := _), prO_apply, prO_apply, Submodule.projection_apply_of_mem_left hc (hA a ha),
     (Submodule.projection_apply_eq_zero_iff hc).2 (hB b hb), add_zero]
   exact ha
 

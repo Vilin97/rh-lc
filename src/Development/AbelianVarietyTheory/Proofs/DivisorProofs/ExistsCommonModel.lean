@@ -86,7 +86,7 @@ theorem tensComp_map {C D : Type} [AddCommGroup C] [Module Qp C] [AddCommGroup D
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp [h]
-  | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
 
 end Tensor
 

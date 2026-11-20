@@ -37,7 +37,7 @@ def lattice₂ (v : Pl D.host.F) : AddSubgroup (Matrix (Fin n) (Fin k) (AE D)) w
   carrier := {u | At (evFin D.host.F v) u ∧ m u ∈ Λ}
   zero_mem' := ⟨fun u _ => smul_zero u, by rw [map_zero]; exact zero_mem _⟩
   add_mem' := fun {a b} ha hb => ⟨fun u hu => by rw [smul_add, ha.1 u hu, hb.1 u hu, add_zero],
-    by rw [map_add]; exact add_mem ha.2 hb.2⟩
+    by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha.2 hb.2⟩
   neg_mem' := fun {a} ha => ⟨fun u hu => by rw [smul_neg, ha.1 u hu, neg_zero], by rw [map_neg]; exact neg_mem ha.2⟩
 
 def genP (v : Pl D.host.F) : Set (Matrix (Fin n) (Fin k) (AE D)) :=
@@ -114,7 +114,7 @@ theorem thM_rho (hB : ∀ x y, sy Xs Ws x y = symplO S T (m x) (m y)) (ψ : AddC
   have h := hB (m.symm x) u
   rw [m.apply_symm_apply] at h
   unfold heisO symplOH thM
-  rw [map_add, m.symm_apply_apply, ← h, GlobalTheory.BigDat.invOf_two]
+  rw [map_add (f := _), m.symm_apply_apply, ← h, GlobalTheory.BigDat.invOf_two]
   rfl
 
 theorem thM_smul (ψ : AddChar (AF D.host.F) ℂ) (c : ℂ) (Φ : (Fin n × Fin k → AF D.host.F) → ℂ) :
@@ -184,7 +184,7 @@ theorem graphP_snd {ε : AE D} {Tm : (WO S T → ℂ) →ₗ[ℂ] (WO S T → �
   induction hp using Submodule.span_induction with
   | mem p h => obtain ⟨Φ, -, rfl⟩ := h; rfl
   | zero => exact (map_zero Tm).symm
-  | add p q _ _ hp hq => rw [Prod.snd_add, Prod.fst_add, map_add, hp, hq]
+  | add p q _ _ hp hq => rw [Prod.snd_add, Prod.fst_add, map_add (f := _), hp, hq]
   | smul c p _ hp => rw [Prod.smul_snd, Prod.smul_fst, map_smul, hp]
 
 theorem mem_graphP_of_intertwines {ε : AE D} {Tm : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ)} (ψ : AddChar (AF D.host.F) ℂ) (χ : WO S T → ℂ)
@@ -333,7 +333,7 @@ theorem exists_pure (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) {Bs : Base
       have := mem_graphP_of_intertwines _ Bs.ψ (fun _ => 1) (m x) (m x) (fun Φ hΦ => by
         simp only [one_mul]
         exact ⟨GlobalTheory.BigDat.GraphHeis.sb_trans_latO hS.1 hT.1 hinf hΦ hx', hTm.trans Φ hΦ _ hx'⟩) hp.2
-      simp only [one_mul, map_add, LinearEquiv.symm_apply_apply] at this
+      simp only [one_mul, map_add (f := _), LinearEquiv.symm_apply_apply] at this
       rwa [← thM_rho m Mo hB] at this⟩)
     (fun i _ y hy p hp => ⟨GlobalTheory.HeisSchA.rho_mem_schA Mo Bs.ψ hstd y _ hp.1, by
       have hy' : IsHalf (cA D ε) (m y) := (isHalf_m m).2

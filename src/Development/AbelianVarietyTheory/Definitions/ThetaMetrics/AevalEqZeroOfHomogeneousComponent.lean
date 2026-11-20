@@ -101,7 +101,7 @@ theorem exists_C_mul_X_pow_mem {R Ω σ : Type*} [CommRing R] [Field Ω] [IsAlgC
       have := h1 _ (I.mul_mem_left (monomial c 1) hg)
       rwa [map_mul, map_monomial, map_one] at this
     | zero => simp
-    | add x y _ _ hx hy => intro c; rw [mul_add, map_add]; exact T.add_mem (hx c) (hy c)
+    | add x y _ _ hx hy => intro c; rw [mul_add, map_add (f := _)]; exact T.add_mem (hx c) (hy c)
     | smul a x _ hx =>
       intro c
       induction a using MvPolynomial.induction_on' with
@@ -111,7 +111,7 @@ theorem exists_C_mul_X_pow_mem {R Ω σ : Type*} [CommRing R] [Field Ω] [IsAlgC
           simp
         rw [this, map_smul]
         exact T.smul_mem _ (hx _)
-      | add p q hp hq => rw [add_smul, mul_add, map_add]; exact T.add_mem hp hq
+      | add p q hp hq => rw [add_smul, mul_add, map_add (f := _)]; exact T.add_mem hp hq
   have hT : T = ⊤ := by
     rw [eq_top_iff, ← (Pi.basisFun Ω n).span_eq, Submodule.span_le]
     rintro _ ⟨a, rfl⟩

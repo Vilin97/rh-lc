@@ -48,7 +48,7 @@ theorem eq_iff_comb_eq_zero {R : Type} [CommRing R] [IsDomain R] {X Y Y' : Schem
   have ha' : algebraMap R (FractionRing R) r' ≠ 0 := (map_ne_zero_iff _ (IsFractionRing.injective R _)).2 hr'
   have key : pullOver L ε hp hφ (r' • τ + (-r) • τ') =
       (algebraMap R (FractionRing R) r * algebraMap R (FractionRing R) r') • (t - t') := by
-    rw [map_add, map_smulₛₗ, map_smulₛₗ, E, E', map_neg, smul_smul, smul_smul, smul_sub, sub_eq_add_neg,
+    rw [map_add (f := _), map_smulₛₗ, map_smulₛₗ, E, E', map_neg, smul_smul, smul_smul, smul_sub, sub_eq_add_neg,
       ← neg_smul, neg_mul, mul_comm (algebraMap R (FractionRing R) r')]
   have main : t = t' ↔ r' • τ + (-r) • τ' = 0 := by
     constructor

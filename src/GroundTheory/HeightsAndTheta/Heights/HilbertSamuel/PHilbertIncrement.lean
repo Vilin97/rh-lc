@@ -92,7 +92,7 @@ theorem isMultiHomogIdeal_sup_X {q : Ideal (MRing ι F)} (hq : IsMultiHomogIdeal
   obtain ⟨t, rfl⟩ := Ideal.mem_span_singleton'.mp hy
   have hX : IsMultiHomog (X v : MRing ι F) (blockWeight ι v) :=
     isWeightedHomogeneous_X F (blockWeight ι) v
-  rw [map_add, GroundTheory.Heights₂.Heights.FieldNumbers.HilbExactDivide.component_mul_form hX t n]
+  rw [map_add (f := _), GroundTheory.Heights₂.Heights.FieldNumbers.HilbExactDivide.component_mul_form hX t n]
   refine Ideal.add_mem _ (Ideal.mem_sup_left (hq p hp n)) ?_
   split_ifs
   · exact Ideal.mem_sup_right (Ideal.mem_span_singleton'.mpr ⟨_, rfl⟩)

@@ -91,7 +91,7 @@ theorem isClosedEmbedding_jHom (e : n ⊕ n ≃ Fin m) : Topology.IsClosedEmbedd
 def dLin (e : n ⊕ n ≃ Fin m) : Matrix n n ℂ →ₗ[ℝ] Matrix (Fin m) (Fin m) ℂ where
   toFun X := blk e (X, -Xᵀ)
   map_add' X Y := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     simp [Matrix.transpose_add, add_comm]
   map_smul' r X := by
     ext i j

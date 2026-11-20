@@ -32,7 +32,7 @@ theorem five_bij {A1 A2 A3 A4 A5 B1 B2 B3 B4 B5 : Type*} [AddCommGroup A1] [AddC
     obtain ⟨b2, hb2⟩ := (hg3 _).1 e3
     obtain ⟨a2, rfl⟩ := h2.2 b2
     refine ⟨a3 + f2 a2, ?_⟩
-    rw [map_add, ← c2, hb2]
+    rw [map_add (f := _), ← c2, hb2]
     abel
 
 theorem mono_sch_open {X : Scheme.{0}} (U : X.Opens) : Mono (sch.map U.ι) := by

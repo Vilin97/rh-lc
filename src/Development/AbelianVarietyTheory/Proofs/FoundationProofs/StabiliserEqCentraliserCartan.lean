@@ -145,7 +145,7 @@ theorem infProj_fst (τ : EmbOver E w) (y : AF F ⊗[F] E) :
     infProj τ (Algebra.TensorProduct.map (fstA F) (AlgHom.id F E) y) = infEmb τ (compInf F E w y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x y => rfl
 
 theorem frame_local_iff (h : IsCMExt F E σ) (τ : EmbOver E w) (J : Matrix (Fin n) (Fin n) E)

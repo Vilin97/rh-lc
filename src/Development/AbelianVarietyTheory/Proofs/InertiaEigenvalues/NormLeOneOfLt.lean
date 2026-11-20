@@ -57,7 +57,7 @@ theorem GlobalTheory.PZ.ltData_tilt_hyps : ∀ (l : ℕ) [Fact l.Prime] (K : Fin
   have hc : ‖c‖ ≤ 1 := (GlobalTheory.RingBasics.mem_OC _).1 (intToOC K π).2
   have hrelC : ∀ n, c * (z (n + 1) : ℂ_[l]) + (z (n + 1) : ℂ_[l]) ^ q = (z n : ℂ_[l]) := fun n => by
     have := congrArg (algebraMap (Om l) ℂ_[l]) (hrel n)
-    rw [map_add, map_mul, map_pow] at this; exact this
+    rw [map_add (f := _), map_mul, map_pow] at this; exact this
   have hnorm : ∀ n, ‖(z n : ℂ_[l])‖ ≤ 1 := by
     intro n
     induction n with
@@ -71,7 +71,7 @@ theorem GlobalTheory.PZ.ltData_tilt_hyps : ∀ (l : ℕ) [Fact l.Prime] (K : Fin
       intro i
       have e1 : ltSeries K π = PowerSeries.C π * PowerSeries.X ^ 1 + PowerSeries.X ^ q := by
         rw [pow_one]; rfl
-      rw [e1, map_add, PowerSeries.coeff_C_mul_X_pow, PowerSeries.coeff_X_pow]
+      rw [e1, map_add (f := _), PowerSeries.coeff_C_mul_X_pow, PowerSeries.coeff_X_pow]
       split_ifs with h1 h2 h2 <;> first | (exfalso; omega) | (subst_vars; simp [v, hcdef, coe_intToOC])
     simp_rw [hcoef]
     show HasSum _ (z n : ℂ_[l])

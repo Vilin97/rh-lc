@@ -339,7 +339,7 @@ theorem Qf_kill (y : Fin n → ℤ) {g : Mat n} (hg : g ∈ GLs n) (a b : Fin n)
   have h1 := Qf_skew y hg s1
   have h2 := Qf_skew y hg s2
   rw [Matrix.mul_sub, map_sub] at h1
-  rw [Matrix.mul_add, map_add] at h2
+  rw [Matrix.mul_add, map_add (f := _)] at h2
   simp only [Eu, Rd, Pi.smul_apply, Pi.add_apply, smul_eq_mul, if_true, Bool.false_eq_true, if_false]
   linear_combination (1 / 2 : ℂ) * h1 - (Complex.I / 2) * h2
 

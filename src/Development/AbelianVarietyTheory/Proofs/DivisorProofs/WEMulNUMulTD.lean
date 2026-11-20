@@ -76,7 +76,7 @@ def bchar (μ₁ μ₂ : kˣ →* ℂˣ) (a d : kˣ) : ℂ :=
 theorem ev_add {μ₁ μ₂ : kˣ →* ℂˣ} (f f' : PSp μ₁ μ₂) (g : GL (Fin (1 + 1)) k) :
     ev (f + f') g = ev f g + ev f' g := by
   show TensorProduct.lid ℂ ℂ (f.1.1 g + f'.1.1 g) = _
-  rw [map_add]; rfl
+  rw [map_add (f := _)]; rfl
 
 theorem ev_smul {μ₁ μ₂ : kˣ →* ℂˣ} (c : ℂ) (f : PSp μ₁ μ₂) (g : GL (Fin (1 + 1)) k) :
     ev (c • f) g = c * ev f g := by
@@ -152,7 +152,7 @@ theorem ev_bor {μ₁ μ₂ : kˣ →* ℂˣ} (f : PSp μ₁ μ₂) (a d : kˣ) 
       Units.val_mul, smul_eq_mul]
     ring
   | add y z hy hz =>
-    rw [map_add, map_add, map_add, hy, hz, mul_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hy, hz, mul_add]
 
 def evL (μ₁ μ₂ : kˣ →* ℂˣ) (g : GL (Fin (1 + 1)) k) : PSp μ₁ μ₂ →ₗ[ℂ] ℂ where
   toFun f := ev f g

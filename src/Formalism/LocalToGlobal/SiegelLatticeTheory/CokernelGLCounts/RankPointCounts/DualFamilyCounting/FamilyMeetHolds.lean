@@ -69,7 +69,7 @@ theorem family_meet_holds : FamMeet := by
       intro i hi
       have h0 := congrArg (h (w (τ i))) (hz.symm.trans hz0)
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_zero, map_add, map_sum, map_sum] at h0
+        rw [map_zero, map_add (f := _), map_sum, map_sum] at h0
       simp only [LinearMap.map_smul, smul_eq_mul] at h0
       rw [Finset.sum_eq_single i, Finset.sum_eq_single (τ i)] at h0
       · have hc := hwc (τ i)

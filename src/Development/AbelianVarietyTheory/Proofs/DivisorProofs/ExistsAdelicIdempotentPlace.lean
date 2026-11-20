@@ -21,7 +21,7 @@ open GlobalTheory.EmbChart
 
 theorem one_add_atPlace_mul {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) (x y : Fv F v) :
     (1 + atPlace v (x - 1)) * (1 + atPlace v (y - 1)) = 1 + atPlace v (x * y - 1) := by
-  rw [add_mul, one_mul, atPlace_mul_right, map_add, map_one, evFin_atPlace, add_assoc, ← map_add]
+  rw [add_mul, one_mul, atPlace_mul_right, map_add (f := _), map_one, evFin_atPlace, add_assoc, ← map_add (f := _)]
   congr 2; ring
 
 theorem one_add_atPlace_pow {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) (x : Fv F v) (N : ℕ) :

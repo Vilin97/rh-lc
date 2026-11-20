@@ -128,7 +128,7 @@ private theorem heisO_homMap (ψ : AddChar (AF D.host.F) ℂ) (ε : Bool) (IS : 
     cases ε
     · exact hO_homMap IS IT w u
     · exact (GlobalTheory.Grid.hO_neg S' T' _ _).trans ((congrArg Neg.neg (hO_homMap IS IT w u)).trans (GlobalTheory.Grid.hO_neg S T _ _).symm)
-  simp only [heisO, trH, ← map_add, AddEquiv.symm_apply_apply, symplOH, symplO, e]
+  simp only [heisO, trH, ← map_add (f := _), AddEquiv.symm_apply_apply, symplOH, symplO, e]
 
 private theorem lineAt_spec {θ : InfFam D} (hθ : IsInfFam θ) {m n : ℕ} (τ : D.what₂.Tau) (z : Matrix (Fin m) (Fin n) ℂ) :
     IsLineAt θ τ z (lineAt θ τ z) :=

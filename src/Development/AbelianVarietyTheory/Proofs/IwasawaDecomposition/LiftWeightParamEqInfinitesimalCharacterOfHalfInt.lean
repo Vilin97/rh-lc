@@ -88,7 +88,7 @@ def qv (R : Ranks) (h : HCParam R) (j : Fin R.m) : Multiset ℚ :=
 theorem paramV_eq (R : Ranks) (h : HCParam R) (j : Fin R.m) (sh : ℂ) :
     NG.paramV R h j sh = (qv R h j).map (fun q : ℚ => (q : ℂ) - sh) := by
   unfold NG.paramV qv
-  simp only [Multiset.map_add, Multiset.map_map]
+  simp only [Multiset.map_add (f := _), Multiset.map_map]
   congr 1
   · congr 1
     all_goals refine Multiset.map_congr rfl fun i _ => ?_

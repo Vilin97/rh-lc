@@ -155,7 +155,7 @@ theorem deg_mu (j n : ℕ) (G : RP Ψ N) :
     rw [hc] at hd
     linear_combination G * hd
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [e, degFl_eq, degFl_eq, map_add, map_sum, Finset.sum_eq_zero, add_zero]
+    rw [e, degFl_eq, degFl_eq, map_add (f := _), map_sum, Finset.sum_eq_zero, add_zero]
   intro τ _
   exact Formalism.L2.Geo.flag_integral_kills_power_sums Ψ N τ 1 le_rfl _
 
@@ -195,7 +195,7 @@ theorem deg_d_test (τ : Ψ) (j : ℕ) (S : Finset (Fin N)) (c : ℝ)
   unfold testPoly testDeg
   rw [Derivation.leibniz, Derivation.leibniz_pow, hc, d_fib τ j S hS, ← degFl_C_mul]
   congr 1
-  simp only [smul_zero, zero_add, smul_eq_mul, nsmul_eq_mul, Nat.add_sub_cancel, map_mul, map_add, map_one,
+  simp only [smul_zero, zero_add, smul_eq_mul, nsmul_eq_mul, Nat.add_sub_cancel, map_mul, map_add (f := _), map_one,
     map_natCast]
   push_cast
   ring

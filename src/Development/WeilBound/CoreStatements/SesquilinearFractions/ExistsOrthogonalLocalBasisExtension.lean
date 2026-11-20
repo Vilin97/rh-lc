@@ -23,7 +23,7 @@ theorem family_orthogonal_sum_injective (D : Datum H) {p : ℕ} (x' : Fin p → 
     (c : Fin p → 𝓞 E) (z : orthogonalFamilyAlt D x') (h : familyCombination D x' c + (z : D.La) = 0) : c = 0 ∧ z = 0 := by
   have hadd : ∀ u v w : D.La, sesq D u (v + w) = sesq D u v + sesq D u w := by
     intro u v w
-    simp only [sesq, map_add, Int.cast_add, add_mul, Finset.sum_add_distrib]
+    simp only [sesq, map_add (f := _), Int.cast_add, add_mul, Finset.sum_add_distrib]
   have hcomb : familyCombination D x' c = ∑ a, c a • x' a := rfl
   have hv : (gramE D x') *ᵥ (fun a => IsCMField.complexConj E ((c a : 𝓞 E) : E)) = 0 := by
     funext b

@@ -260,7 +260,7 @@ theorem isGKEndo_eeF {ε : Fin n → Bool} {σ : Matrix (Fin n) (Fin n) ℂ → 
           E a b (E r c (f r)) + ((if c = a then E r b (f r) else 0) - (if b = r then E a c (f r) else 0))
             + (if r = a then E a c (f b) else 0) := by
         intro r
-        rw [map_add, hc r c a b (f r)]
+        rw [map_add (f := _), hc r c a b (f r)]
         by_cases h : r = a
         · rw [if_pos h, if_pos h, h]
         · rw [if_neg h, if_neg h, map_zero]

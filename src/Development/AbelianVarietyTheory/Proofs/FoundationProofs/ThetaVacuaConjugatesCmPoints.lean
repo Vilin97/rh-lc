@@ -134,7 +134,7 @@ theorem nsmul_mem_LaS {T : Tor D} (hT : Good D T)
     induction hy using AddSubgroup.closure_induction with
     | mem z hz => exact AddSubgroup.subset_closure ⟨w, hw, z, hz, rfl⟩
     | zero => rw [map_zero, smul_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [map_add, smul_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _), smul_add]; exact add_mem hy hz
     | neg y _ hy => rw [map_neg, smul_neg]; exact neg_mem hy
   unfold LaB at hx
   induction hx using AddSubgroup.closure_induction with

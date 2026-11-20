@@ -25,7 +25,7 @@ variable {K K' : Type} [Field K] [Field K'] (φ : K →+* K') {I : Type} [Fintyp
 
 def upL : VV K lam →ₛₗ[φ] VV K' lam where
   toFun := CoefExt.up φ lam
-  map_add' x y := Subtype.ext (by simp [CoefExt.up, map_add])
+  map_add' x y := Subtype.ext (by simp [CoefExt.up, map_add (f := _)])
   map_smul' a x := Subtype.ext (by simp [CoefExt.up, smul_eq_C_mul, map_mul, map_C])
 
 theorem upL_apply (v : VV K lam) : upL φ lam v = CoefExt.up φ lam v := rfl

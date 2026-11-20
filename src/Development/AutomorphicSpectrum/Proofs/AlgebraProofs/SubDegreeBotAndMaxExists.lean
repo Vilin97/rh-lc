@@ -18,7 +18,7 @@ def latOf (i : C.I) {n : ℕ} (b : Module.Basis (Fin n) K V) : AddSubgroup V whe
   carrier := {x | ∀ q, C.v i (b.repr x q) ≤ 1}
   zero_mem' := fun q => by simp
   add_mem' := fun {x y} hx hy q => by
-    rw [map_add, Finsupp.add_apply]; exact (C.v i).map_add_le (hx q) (hy q)
+    rw [map_add (f := _), Finsupp.add_apply]; exact (C.v i).map_add_le (hx q) (hy q)
   neg_mem' := fun {x} hx q => by
     rw [map_neg, Finsupp.neg_apply, Valuation.map_neg]; exact hx q
 

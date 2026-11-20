@@ -119,7 +119,7 @@ theorem iXY_mem_of_split {T : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (he : F0.e 
     refine eq_zero_of_span_F D (YS_le D hy) fun i => ?_
     have h1 := hX _ hx i
     have h2 : (hS D).hT (D.sp.hypE i) (D.sp.iXY 0 p) = 0 := hT_swap (D.sp.hyp_orthX i p).1
-    rw [map_sub, map_add, map_add, h2, hX a haX i, hwE i] at h1
+    rw [map_sub, map_add (f := _), map_add (f := _), h2, hX a haX i, hwE i] at h1
     simpa using h1
   subst hy0
   have h3 : w - D.sp.iXY 0 p ∈ F0.X := by
@@ -162,7 +162,7 @@ theorem exists_lift {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (he : F0.e = 
     have h1 := hf2 (p + q) b
     have h2 := hf2 p b
     have h3 := hf2 q b
-    simp only [Submodule.coe_add, map_add, map_sub, LinearMap.add_apply, LinearMap.sub_apply] at h1 h2 h3 ⊢
+    simp only [Submodule.coe_add, map_add (f := _), map_sub, LinearMap.add_apply, LinearMap.sub_apply] at h1 h2 h3 ⊢
     linear_combination h1 - h2 - h3
   · show f (c • p) = c • f p
     have e1 : c • f p = algebraMap _ D.host.E c • f p := (algebraMap_smul D.host.E c (f p)).symm
@@ -173,7 +173,7 @@ theorem exists_lift {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (he : F0.e = 
     have h1 := hf2 (c • p) b
     have h2 := hf2 p b
     rw [e2] at h1
-    simp only [map_add, map_sub, map_smul, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply,
+    simp only [map_add (f := _), map_sub, map_smul, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply,
       LinearMap.smul_apply, smul_eq_mul] at h1 h2 ⊢
     linear_combination h1 - (starRingEnd D.host.E) (algebraMap _ D.host.E c) * h2
 

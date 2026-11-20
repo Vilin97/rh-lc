@@ -57,7 +57,7 @@ theorem isAlgebraic_of_finiteType_of_comap_eq_bot
       · exact Algebra.subset_adjoin (Finset.mem_coe.2 (Finset.mem_image_of_mem _ (Finset.mem_coe.1 hy)))
       · rw [← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply R K T]
         exact Subalgebra.algebraMap_mem _ _
-      · rw [map_add]; exact add_mem ha hb
+      · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
       · rw [map_mul]; exact mul_mem ha hb
     have he : IsLocalization.mk' T x (⟨algebraMap R S r, ⟨r, hr, rfl⟩⟩ : M)
         = algebraMap K T (IsLocalization.mk' K (1 : R) (⟨r, hr⟩ : nonZeroDivisors R)) * algebraMap S T x := by

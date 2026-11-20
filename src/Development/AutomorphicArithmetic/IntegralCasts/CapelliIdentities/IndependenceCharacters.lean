@@ -21,7 +21,7 @@ theorem UpperTheory.Reformulated.B.LinearIndependentOfDistinctEigensystems.indep
       have h1 : g a • lam a i • v a + ∑ j ∈ s, g j • lam j i • v j = 0 := by
         have := congrArg (T i) hg
         set_option synthInstance.maxHeartbeats 100000 in
-          simpa only [map_add, map_sum, map_smul, map_zero, hT] using this
+          simpa only [map_add (f := _), map_sum, map_smul, map_zero, hT] using this
       have h2 : g a • lam a i • v a + ∑ j ∈ s, g j • lam a i • v j = 0 := by
         have := congrArg (fun x => lam a i • x) hg
         simpa only [smul_add, Finset.smul_sum, smul_zero, smul_comm (lam a i)] using this

@@ -330,7 +330,7 @@ theorem latticeHerglotzBound_statement : Formalism.FourierDecayAlt.crystallineCo
       rw [← hκ z hz]
       rfl
     simp only [hN']
-    rw [e1, map_add, hz₀', ContinuousLinearEquiv.apply_symm_apply, ContinuousLinearEquiv.apply_symm_apply]
+    rw [e1, map_add (f := _), hz₀', ContinuousLinearEquiv.apply_symm_apply, ContinuousLinearEquiv.apply_symm_apply]
     congr 1
     abel
   rw [Finset.sum_congr rfl hL] at H

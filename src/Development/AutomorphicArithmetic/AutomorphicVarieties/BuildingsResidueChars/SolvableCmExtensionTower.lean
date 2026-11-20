@@ -34,7 +34,7 @@ private theorem rc_of_intermediateField_stable_under_complexConj {F M : Type} [F
       left_inv := fun x => Subtype.ext (IsCMField.complexConj_apply_apply M x)
       right_inv := fun x => Subtype.ext (IsCMField.complexConj_apply_apply M x)
       map_mul' := fun x y => Subtype.ext (by simp [map_mul])
-      map_add' := fun x y => Subtype.ext (by simp [map_add]) }
+      map_add' := fun x y => Subtype.ext (by simp [map_add (f := _)]) }
   let σ : Gal(K/ℚ) := τ.toRatAlgEquiv
   have hσ : ∀ x : K, ((σ x : K) : M) = IsCMField.complexConj M x := fun x => rfl
   have hconj : ∀ φ : K →+* ℂ, ComplexEmbedding.IsConj φ σ := by

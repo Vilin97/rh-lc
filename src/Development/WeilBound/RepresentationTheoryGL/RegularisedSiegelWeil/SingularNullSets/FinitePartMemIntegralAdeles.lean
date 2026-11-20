@@ -42,7 +42,7 @@ theorem crd_cv (v : Pl D) (z : AE D) (k : Fin (Module.finrank D.host.F D.host.E)
 theorem finPart_plc_mem (v : Pl D) {t : Fv D.host.F v ⊗[D.host.F] D.host.E} (ht : t ∈ intLoc D.host.F D.host.E v) :
     finPart D (plc D.host.E v t) ∈ intAE D := by
   refine intLoc_induction (p := fun t => finPart D (plc D.host.E v t) ∈ intAE D) (fun a ha x => ?_) (by simp)
-    (fun y z hy hz => by rw [LinearMap.map_add, RingHom.map_add]; exact add_mem hy hz)
+    (fun y z hy hz => by rw [LinearMap.map_add (f := _), RingHom.map_add (f := _)]; exact add_mem hy hz)
     (fun y hy => by rw [LinearMap.map_neg, RingHom.map_neg]; exact neg_mem hy) ht
   rw [plc_tmul]
   refine AddSubgroup.subset_closure ⟨(iV v a).2, fun w => ?_, x, rfl⟩
@@ -110,7 +110,7 @@ theorem finPart_mem (z : AE D) (hz : ∀ v, cv D v z ∈ intLoc D.host.F D.host.
   have e : z = (z - ∑ v ∈ hfin.toFinset, plc D.host.E v (cv D v z)) + ∑ v ∈ hfin.toFinset, plc D.host.E v (cv D v z) :=
     (sub_add_cancel _ _).symm
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [e, RingHom.map_add, map_sum]
+    rw [e, RingHom.map_add (f := _), map_sum]
   exact add_mem h1 (sum_mem fun v _ => finPart_plc_mem v (hz v))
 
 theorem infPart_eq_one {z : AE D} (h : ∀ w, compInf D.host.F D.host.E w z = 1) : infPart D z = 1 := by

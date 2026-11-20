@@ -43,7 +43,7 @@ theorem exists_factor {R T C : Type} [CommRing R] [CommRing T] [CommRing C] (f :
     (hf : Function.Injective f) (g : T →+* C) (h : ∀ t, ∃ r, f r = g t) : ∃ k : T →+* R, ∀ t, f (k t) = g t := by
   choose k hk using h
   exact ⟨⟨⟨⟨k, hf (by rw [hk, map_one, map_one])⟩, fun a b => hf (by simp only [hk, map_mul])⟩,
-    hf (by rw [hk, map_zero, map_zero]), fun a b => hf (by simp only [hk, map_add])⟩, hk⟩
+    hf (by rw [hk, map_zero, map_zero]), fun a b => hf (by simp only [hk, map_add (f := _)])⟩, hk⟩
 
 abbrev baseMap {A : Type} [CommRing A] {G : Scheme.{0}} (g : G ⟶ Spec (CommRingCat.of A)) (V : G.Opens) :
     A →+* Γ(G, V) := ((Scheme.ΓSpecIso (CommRingCat.of A)).inv ≫ g.appLE ⊤ V le_top).hom
@@ -373,7 +373,7 @@ theorem exists_units_hom [Module.Free ℤ X] (h : ∀ χ, χ ∈ unitWts i V) :
     { carrier := {χ | IsWt i V (l χ).toMul.val χ}
       add_mem' := fun {a b} ha hb => by
         change IsWt i V (l (a + b)).toMul.val _
-        rw [map_add]; exact IsWt.mul ha hb
+        rw [map_add (f := _)]; exact IsWt.mul ha hb
       zero_mem' := by
         change IsWt i V (l 0).toMul.val _
         rw [map_zero]; exact isWt_one

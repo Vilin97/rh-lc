@@ -49,7 +49,7 @@ theorem cmHost_rootZero_im_ne_zero (H : Host E) : H.rt0.im ≠ 0 := by
 
 theorem map_wE (τ : E →+* ℂ) (hτ : τ (H.rt : E) = H.rt0) (s : ℤ × ℤ) : τ (wE H s : E) = wC H s := by
   have h := congrArg (fun a : 𝓞 E => τ (a : E)) H.two_weight_eq_one_add_root
-  simp only [map_mul, map_add, map_one, map_ofNat] at h
+  simp only [map_mul, map_add (f := _), map_one, map_ofNat] at h
   have h' : τ (H.w0 : E) = (1 + H.rt0) / 2 := by
     rw [← hτ]; linear_combination h / 2
   simp [wE, wC, h']

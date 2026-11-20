@@ -75,7 +75,7 @@ theorem constTerm_lift : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Num
       (G.M.I om Φ h - c * G.M'.I om' Φ' h) * (starRingEnd ℂ) (∑' w, T (γ w * h)) := by
     intro h
     simp only [Θ]
-    rw [integral_const_mul, integral_conj, hct' μN 𝓕N hμN h𝓕N h1 h, map_add, map_mul]
+    rw [integral_const_mul, integral_conj, hct' μN 𝓕N hμN h𝓕N h1 h, map_add (f := _), map_mul]
     ring
   have hK : Integrable (fun h => ∫ u in 𝓕N, Θ u h ∂μN) (μ.restrict 𝓕) := hint'.integral_prod_right
   have hA : Integrable (fun h => starRingEnd ℂ C₀ * ((G.M.I om Φ h - c * G.M'.I om' Φ' h) *

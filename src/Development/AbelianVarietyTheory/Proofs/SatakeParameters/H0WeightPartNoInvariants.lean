@@ -29,7 +29,7 @@ theorem toPi_WpK (i : N.Loc) (ρ : G H.E N.Om →* GL (Fin R.r) (N.O i)) (g : G 
     toPi N i (Glob.WpK N i ρ g t) = (GlobalTheory.IndefiniteRowSideFullHecke.NoLocalInvariantsRankParts.matW N i ρ g).mulVec (toPi N i t) := by
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, Matrix.mulVec_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, Matrix.mulVec_add]
   | tmul v k =>
     have h1 : Glob.WpK N i ρ g (v ⊗ₜ k) = (Glob.Wp N i ρ g v) ⊗ₜ k := by
       simp [Glob.WpK, coefRep, Representation.tprod_apply]

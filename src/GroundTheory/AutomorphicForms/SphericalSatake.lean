@@ -219,7 +219,7 @@ def satakeHom : SphericalHecke μ (F := F) (n := n) →ₐ[ℂ] LaurentRing n wh
   map_one' := eq_of_forall_evalAt fun w => by simp only [evalAt_satake, map_one]
   map_mul' a b := eq_of_forall_evalAt fun w => by simp only [evalAt_satake, map_mul]
   map_zero' := eq_of_forall_evalAt fun w => by simp only [evalAt_satake, map_zero]
-  map_add' a b := eq_of_forall_evalAt fun w => by simp only [evalAt_satake, map_add]
+  map_add' a b := eq_of_forall_evalAt fun w => by simp only [evalAt_satake, map_add (f := _)]
   commutes' c := eq_of_forall_evalAt fun w => by simp only [evalAt_satake, AlgHom.commutes]
 
 theorem satakeHom_apply (h : SphericalHecke μ (F := F) (n := n)) : satakeHom μ h = satake μ h := rfl

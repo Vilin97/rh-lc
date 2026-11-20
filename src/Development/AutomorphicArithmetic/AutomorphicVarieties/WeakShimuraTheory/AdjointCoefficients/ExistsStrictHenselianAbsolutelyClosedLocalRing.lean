@@ -110,7 +110,7 @@ theorem UpperTheory.V.Ws.X1.obCor :
       simp only [mul_assoc]
     rw [hf]
     simp only
-    rw [sub_mul, mul_sub, mul_sub, TT, Tl, Tr, rtres, rtres, e, e', map_sub, map_add]
+    rw [sub_mul, mul_sub, mul_sub, TT, Tl, Tr, rtres, rtres, e, e', map_sub, map_add (f := _)]
     abel
   have fone : f 1 = 1 := by
     have hu : adj (f 1) * f 1 = 1 := by

@@ -51,7 +51,7 @@ theorem single_mem (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (a d : ℕ) 
       · exact D.host.AA0.zero_mem
     · rw [← ptHom_smul, Matrix.smul_single, smul_eq_mul, mul_smul_comm]
   | zero => rw [smul_zero, Matrix.single_zero, map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [smul_add, Matrix.single_add, map_add]; exact add_mem (hx r) (hy r)
+  | add x y _ _ hx hy => rw [smul_add, Matrix.single_add, map_add (f := _)]; exact add_mem (hx r) (hy r)
   | smul s x _ hx => rw [smul_smul]; exact hx _
 
 theorem La0_eq_map (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (a d : ℕ) :

@@ -23,7 +23,7 @@ theorem mem_hermO_iff (S : HermR (Fv F v) σ a) :
 
 theorem crdS_add (S T : HermR (Fv F v) σ a) (i j : Fin a) (k : Fin d) :
     crdS b v σ a (S + T) i j k = crdS b v σ a S i j k + crdS b v σ a T i j k := by
-  simp [crdS, Matrix.add_apply, map_add]
+  simp [crdS, Matrix.add_apply, map_add (f := _)]
 
 theorem crdS_smul (t : Fv F v) (S : HermR (Fv F v) σ a) (i j : Fin a) (k : Fin d) :
     crdS b v σ a (t • S) i j k = t * crdS b v σ a S i j k := by
@@ -39,7 +39,7 @@ def redH : (hermO b v σ a) →+
     rw [show (⟨0, _⟩ : v.adicCompletionIntegers F) = 0 from rfl, map_zero]
   map_add' S T := by
     funext i j k
-    simp only [Pi.add_apply, ← map_add]
+    simp only [Pi.add_apply, ← map_add (f := _)]
     congr 1
     ext
     simp [crdS_add]

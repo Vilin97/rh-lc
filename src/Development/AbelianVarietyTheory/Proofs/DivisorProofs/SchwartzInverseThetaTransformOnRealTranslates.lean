@@ -119,7 +119,7 @@ theorem continuous_mixedSpace_symm : Continuous (InfiniteAdeleRing.ringEquiv_mix
 theorem embR_add {N : ℕ} (a b : Fin N → mixedEmbedding.mixedSpace F) :
     (embR (a + b) : Fin N → AF F) = embR a + embR b := by
   funext i
-  simp only [embR, Pi.add_apply, map_add]
+  simp only [embR, Pi.add_apply, map_add (f := _)]
   exact (congrArg (pairA F _) (add_zero (0 : Af F))).symm.trans rfl
 
 theorem embR_zero {N : ℕ} : (embR (0 : Fin N → mixedEmbedding.mixedSpace F) : Fin N → AF F) = 0 := by

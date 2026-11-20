@@ -73,7 +73,7 @@ theorem IsExp.coeff {σ : Type} {y : σ → C} {F : MvPowerSeries σ C} (h : IsE
       rw [Finsupp.single_le_iff]
       simp at hw; omega
     have hd : m'.degree = n := by
-      rw [map_add, Finsupp.degree_single] at hm; omega
+      rw [map_add (f := _), Finsupp.degree_single] at hm; omega
     have h1 := congrArg (MvPowerSeries.coeff m') (h.2 w)
     rw [coeff_pderiv, coeff_smul] at h1
     have h2 : mfact (m' + Finsupp.single w 1) = (m' w + 1) * mfact m' := by
@@ -115,7 +115,7 @@ theorem isExp_mvExp [CharZero C] {σ : Type} [Fintype σ] (y : σ → C) :
       · simp [smul_eq_C_mul]
       · intro b _ hb; simp [pderiv_X_of_ne hb]
       · simp
-    rw [coeff_pderiv, coeff_smul, coeff_mvExp, coeff_mvExp, map_add, Finsupp.degree_single,
+    rw [coeff_pderiv, coeff_smul, coeff_mvExp, coeff_mvExp, map_add (f := _), Finsupp.degree_single,
       Finset.sum_range_succ', Finset.mul_sum, add_mul, Finset.sum_mul]
     have h0 : MvPowerSeries.coeff (m + Finsupp.single w 1)
         ((∑ x, y x • (X x : MvPowerSeries σ C)) ^ 0) = 0 := by

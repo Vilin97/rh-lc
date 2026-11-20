@@ -174,7 +174,7 @@ theorem mCoordIdeal_yPt : mCoordIdeal (ι := PBlk 1) yPt = ⊥ := by
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [mConeMap]
-    | add p q hp hq => rw [map_add, hp, hq, map_add, map_add]
+    | add p q hp hq => rw [map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
     | mul_X p n hp => simp [mConeMap, yPt] at hp ⊢; rw [hp]
   have hinj : Function.Injective (mConeMap (ι := PBlk 1) yPt) := by
     intro f g hfg

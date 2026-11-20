@@ -53,7 +53,7 @@ theorem mcomps_add {x y : D} (hx : MComps ε Φ N'' ℓ x) (hy : MComps ε Φ N'
   obtain ⟨m, hm, rfl⟩ := hx
   obtain ⟨m', hm', rfl⟩ := hy
   refine ⟨m + m', fun j => N''.add_mem (hm j) (hm' j), ?_⟩
-  simp [map_add, smul_add, sum_add_distrib]
+  simp [map_add (f := _), smul_add, sum_add_distrib]
 
 variable (hΦ : ∀ (a : A) (x : D'), Φ (a • x) = φA a • Φ x)
 include hΦ
@@ -172,7 +172,7 @@ theorem lemma_three_a_holds : Lemma3a := by
         intro a b ha hb n hn
         obtain ⟨x, hx, hfx⟩ := ha n hn
         obtain ⟨y, hy, hfy⟩ := hb n hn
-        exact ⟨x + y, (W₁.N i).add_mem hx hy, by rw [map_add, hfx, hfy, add_smul]⟩
+        exact ⟨x + y, (W₁.N i).add_mem hx hy, by rw [map_add (f := _), hfx, hfy, add_smul]⟩
       zero_mem' := fun n _ => ⟨0, (W₁.N i).zero_mem, by simp⟩
       smul_mem' := by
         intro r a ha n hn

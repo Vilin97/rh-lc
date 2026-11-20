@@ -75,7 +75,7 @@ theorem GlobalTheory.LieDisc.hAdj_algebra : ∀ (E : Type) [Field E] [NumberFiel
       intro u w
       rw [adj1, herm_eq_dot, herm_eq_dot, herm_eq_dot, ← dotProduct_add, ← mulVec_add]
       congr 2
-      ext b; simp [add_mulVec, cc, map_add]
+      ext b; simp [add_mulVec, cc, map_add (f := _)]
     constructor
     · intro hs
       have hv : ∀ w, (hAdj G Y + Y) *ᵥ w = 0 := by

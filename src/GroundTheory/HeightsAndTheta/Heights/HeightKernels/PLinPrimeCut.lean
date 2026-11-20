@@ -96,7 +96,7 @@ theorem C_mul_u_mem {m : ℕ} (α : T → k) (M : T → Fin m → k) (hα : Subm
     obtain ⟨t, rfl⟩ := hy
     exact ⟨graphFirst t, LinPrimeExample.linPointMap_first α M t⟩
   | zero => simp only [map_zero, zero_mul]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add, add_mul]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _), add_mul]; exact add_mem hy hz
   | smul a y _ hy => rw [map_zsmul, smul_mul_assoc]; exact zsmul_mem hy a
 
 theorem X_some_eq {m : ℕ} (M : T → Fin m → k) (hM : LinFormsIndep M) (j : Fin m) :

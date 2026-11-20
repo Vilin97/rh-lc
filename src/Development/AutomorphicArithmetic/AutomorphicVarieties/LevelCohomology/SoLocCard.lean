@@ -28,7 +28,7 @@ private theorem card_linearMap_zmod_eq_card (n : ℕ) [NeZero n] (N : Type) [Add
       simp [φ, smul_add, AddChar.map_add_eq_mul]
     let g : AddChar N ℂ → (N →ₗ[ZMod n] ZMod n) := fun ψ =>
       AddMonoidHom.toZModLinearMap n (AddMonoidHom.mk' (fun x => AddChar.zmodAddEquiv.symm (φ ψ x))
-        (fun x y => by rw [hφ, map_add]))
+        (fun x y => by rw [hφ, map_add (f := _)]))
     have hg : Function.Injective g := by
       intro ψ ψ' h
       ext x

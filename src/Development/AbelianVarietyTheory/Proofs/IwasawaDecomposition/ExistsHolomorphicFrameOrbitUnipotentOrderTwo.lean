@@ -69,7 +69,7 @@ theorem LinGrowth.sq_eq_zero {N : ℕ} {n : Matrix (Fin N) (Fin N) ℂ} (h : Lin
       intro k hk1
       have h1 := hC k
       have e : ((k : ℂ) * (k - 1) / 2) * L (n ^ 2 *ᵥ v) = L ((1 + n) ^ k *ᵥ v) - L v - k * L (n *ᵥ v) := by
-        rw [hk]; simp only [map_add, map_smul, smul_eq_mul]; ring
+        rw [hk]; simp only [map_add (f := _), map_smul, smul_eq_mul]; ring
       have hk' : (1 : ℝ) ≤ k := by exact_mod_cast hk1
       have e' : ‖((k : ℂ) * (k - 1) / 2)‖ = (k : ℝ) * (k - 1) / 2 := by
         rw [show ((k : ℂ) * (k - 1) / 2) = (((k : ℝ) * (k - 1) / 2 : ℝ) : ℂ) by push_cast; ring, Complex.norm_real,

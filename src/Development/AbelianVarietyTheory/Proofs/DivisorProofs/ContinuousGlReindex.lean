@@ -266,8 +266,8 @@ theorem exists_form (hK : KP) {B : Base F E} {Mo : Model σ X W} {χX χW : Chr 
     funext g
     simp only [thLift_def, theta, Pi.add_apply, ← integral_add (intg g u.1 u.2 Φ.1 Φ.2) (intg g u.1 u.2 Ψ.1 Ψ.2)]
     refine integral_congr_ae (Eventually.of_forall fun h => ?_)
-    simp only [Submodule.coe_add, map_add]
-    rw [thetaSum_add F (pres _ _ Φ.2) (pres _ _ Ψ.2), map_add, mul_add]
+    simp only [Submodule.coe_add, map_add (f := _)]
+    rw [thetaSum_add F (pres _ _ Φ.2) (pres _ _ Ψ.2), map_add (f := _), mul_add]
   · intro c u Φ
     funext g
     simp only [thLift_def, theta, Pi.smul_apply, smul_eq_mul, ← integral_const_mul]
@@ -508,7 +508,7 @@ theorem smAdm_of_locType (hK : KP) {B : Base F E} {Mo : Model σ X W} {χX χW :
       | add y z _ _ hy hz =>
         refine mem_of_superset (inter_mem hy hz) fun g hg => ?_
         show ζ g (y + z) = y + z
-        rw [map_add, show ζ g y = y from hg.1, show ζ g z = z from hg.2]
+        rw [map_add (f := _), show ζ g y = y from hg.1, show ζ g z = z from hg.2]
       | smul c y _ hy =>
         refine mem_of_superset hy fun g hg => ?_
         show ζ g (c • y) = c • y

@@ -130,7 +130,7 @@ theorem ComplementLattice.proof (h : HermitianForm F E W) [FiniteDimensional E W
       have key : h.toSesq (n • (y' : W)) x = h.toSesq (y' : W) (n • x - a • v₀ - b • w₀) := by
         rw [map_nsmul, LinearMap.smul_apply, ← map_nsmul]
         conv_lhs => rw [hnx]
-        rw [map_add, map_add, map_smul, map_smul, e1, e2]
+        rw [map_add (f := _), map_add (f := _), map_smul, map_smul, e1, e2]
         simp
       rw [key]
       have := hy' ⟨_, hmem⟩ hzLa

@@ -14,7 +14,7 @@ def sqzPoint (φ : O →+* C) (n : ι → C) (hn : ∀ a b, n a * n b = 0) :
   map_one' := by simp
   map_zero' := by simp
   map_add' x y := by
-    simp only [fst_add, snd_add, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [fst_add, snd_add, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
     ring
   map_mul' x y := by
     have hcross : (∑ i, φ (x.snd i) * n i) * (∑ j, φ (y.snd j) * n j) = 0 := by
@@ -28,7 +28,7 @@ def sqzPoint (φ : O →+* C) (n : ι → C) (hn : ∀ a b, n a * n b = 0) :
     have h1 : ∑ i, φ ((x * y).snd i) * n i
         = φ x.fst * ∑ i, φ (y.snd i) * n i + φ y.fst * ∑ i, φ (x.snd i) * n i := by
       rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
-      exact Finset.sum_congr rfl fun i _ => by rw [hs, map_add, map_mul, map_mul]; ring
+      exact Finset.sum_congr rfl fun i _ => by rw [hs, map_add (f := _), map_mul, map_mul]; ring
     rw [h1, fst_mul, map_mul]
     linear_combination (-1 : C) * hcross
 

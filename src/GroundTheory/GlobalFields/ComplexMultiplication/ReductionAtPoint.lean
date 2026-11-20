@@ -95,13 +95,13 @@ theorem app_genericPoint_add_constMap [PerfectField F] [IsAlgClosed Ω] (φ : Is
   have e1 : Point.map ι (genericPoint E + constMap E E.toAffine.FunctionField R) =
       ((genericPoint (E.baseChange Ω) + constMap (E.baseChange Ω) K' Rω :
         ((E.baseChange Ω).baseChange K').toAffine.Point) : (E.baseChange K').toAffine.Point) := by
-    rw [map_add, map_bcEmb_genericPoint, map_constMap, ← constMap_constMap_baseChange Ω E R]
+    rw [map_add (f := _), map_bcEmb_genericPoint, map_constMap, ← constMap_constMap_baseChange Ω E R]
     rfl
   have hX' := isGenPt_of_isGenPt_baseChange Ω _ hX
   apply Point.map_injective (W' := E') ι
   rw [Isogeny.map_app]
   refine (app_eq e1 _ hX').trans ?_
-  rw [← isogBaseChange_app Ω φ _ hX hX', h1, map_add, map_constMap,
+  rw [← isogBaseChange_app Ω φ _ hX hX', h1, map_add (f := _), map_constMap,
     ← constMap_constMap_baseChange Ω (E := E) E' (pointHomOver Ω φ R)]
   rfl
 
@@ -165,7 +165,7 @@ theorem reduceFF_genericPoint_add_constMap (R : (W.baseChange K).toAffine.Point)
       genericPoint (W.map (residue 𝒪)) +
         constMap (W.map (residue 𝒪)) (W.map (residue 𝒪)).toAffine.FunctionField
           (reducePoint K W R) := by
-  rw [map_add, reduceFF_genericPoint, reduceFF_constMap]
+  rw [map_add (f := _), reduceFF_genericPoint, reduceFF_constMap]
 
 set_option maxHeartbeats 1000000 in
 
@@ -186,7 +186,7 @@ theorem reduceIsogeny_app_add_constMap (φ : Isogeny (W.baseChange K) (W'.baseCh
     exact isGenPt_genericPoint_add_constMap _ _
   have key := reduceFF_map_genEval K W W W' (isGenPt_genericPoint_add_constMap _ R) hR' φ.1
   have h2 := congrArg (reduceFF K W W') h
-  rw [map_add, reduceFF_constMap] at h2
+  rw [map_add (f := _), reduceFF_constMap] at h2
   rw [reduceIsogeny_val, ← h2]
   unfold Isogeny.app at key ⊢
   rw [key, reduceIsogeny_val, genEval_congr _ (reduceFF_genericPoint_add_constMap K W R) hR']

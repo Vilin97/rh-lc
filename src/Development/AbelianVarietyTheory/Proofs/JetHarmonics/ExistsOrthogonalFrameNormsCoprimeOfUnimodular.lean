@@ -149,7 +149,7 @@ open scoped ComplexConjugate BigOperators ComplexOrder in
 variable {g : ℕ} in
 private lemma beta_add_right' (d : ℕ) {H : Matrix (Fin g) (Fin g) ℂ} (hH : H.IsHermitian)
     (x y z : Fin g → ℂ) : _root_.Formalism.L2.Ker.JMB.beta d H x (y + z) = _root_.Formalism.L2.Ker.JMB.beta d H x y + _root_.Formalism.L2.Ker.JMB.beta d H x z := by
-  rw [← conj_beta_eq_beta_swap d hH, _root_.GlobalTheory.MomOne.OrthFrame.beta_add_left, map_add, conj_beta_eq_beta_swap d hH,
+  rw [← conj_beta_eq_beta_swap d hH, _root_.GlobalTheory.MomOne.OrthFrame.beta_add_left, map_add (f := _), conj_beta_eq_beta_swap d hH,
     conj_beta_eq_beta_swap d hH]
 
 open scoped ComplexConjugate BigOperators ComplexOrder in
@@ -309,8 +309,8 @@ private lemma exists_orthogonal_vector_norm_coprime {q : ℕ} (hq : q.Prime) (S 
     intro y hy z hz
     have hpol := div_mem_of_norms_dvd_lemma_9 hd hk hq hqd hH.1 (hint _ (hPL y hy) _ (hPL z hz))
       (hdivall y hy) (hdivall z hz)
-      (by rw [← map_add]; exact hdivall _ (S.La.add_mem hy hz))
-      (by rw [← LinearMap.map_smul, ← map_add]; exact hdivall _ (S.La.add_mem hy (hω z hz)))
+      (by rw [← map_add (f := _)]; exact hdivall _ (S.La.add_mem hy hz))
+      (by rw [← LinearMap.map_smul, ← map_add (f := _)]; exact hdivall _ (S.La.add_mem hy (hω z hz)))
     rw [hPP] at hpol
     exact div_mem_OK_of_mul_div_mem_of_coprime hd hq (hint _ (hPL y hy) z hz) hpol hAq
   have hdivL : ∀ y ∈ S.La, (q : ℂ)⁻¹ • P y ∈ S.La := by

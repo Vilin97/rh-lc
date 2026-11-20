@@ -180,7 +180,7 @@ theorem orth {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [FiniteDimens
       simp [riem]
   · obtain ⟨hlin, -, hinj, γ', hγ'⟩ := key P hP
     have hsplit : ∀ u w, dflat τ P (u, w) = dflat τ P (u, 0) + flatOf (τ P.1) w := fun u w => by
-      rw [← hlin, ← map_add]
+      rw [← hlin, ← map_add (f := _)]
       simp
     have huniq : ∀ u w, dflat τ P (u, w) = 0 → w = γ' u := fun u w h => by
       have h2 := hγ' u

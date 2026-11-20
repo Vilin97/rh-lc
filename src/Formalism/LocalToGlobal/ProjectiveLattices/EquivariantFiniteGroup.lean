@@ -121,7 +121,7 @@ theorem l2Norm_smul_alt {X : Comp → Data E r} (rd : C →ₛₗ[σ] FDSec X) (
 theorem L2Norm_add_le {X : Comp → Data E r} (rd : C →ₛₗ[σ] FDSec X) (dict : GA D V → Σ c, Frame (X c).Ψ r)
     (mu : GA D V → ℂ) (h : JMemL2 V σ rd dict mu) (f g : C) :
     l2NormAlt V σ rd dict mu h (f + g) ≤ l2NormAlt V σ rd dict mu h f + l2NormAlt V σ rd dict mu h g := by
-  simp only [l2NormAlt, map_add]
+  simp only [l2NormAlt, map_add (f := _)]
   exact norm_add_le _ _
 
 def JInj {X : Comp → Data E r} (rd : C →ₛₗ[σ] FDSec X) (dict : GA D V → Σ c, Frame (X c).Ψ r)

@@ -91,7 +91,7 @@ theorem LD.mul {U W : ℝ → Sch l →L[ℂ] Sch l} {P Q : Sch l → Sch l} {t�
   have h2 : HasDerivAt (fun t : ℝ => (t - t₀) • schwartzToL2 l (U t (Q f))) (schwartzToL2 l (U t₀ (Q f))) t₀ := by
     simpa using ((hasDerivAt_id t₀).sub_const t₀).fun_smul (hU (Q f))
   have h3 := (h1.fun_add h2).fun_add (hU (W t₀ f))
-  rw [zero_add, ← map_add, add_comm (U t₀ (Q f))] at h3
+  rw [zero_add, ← map_add (f := _), add_comm (U t₀ (Q f))] at h3
   refine h3.congr_of_eventuallyEq (.of_forall fun t => ?_)
   simp only [ContinuousLinearMap.mul_apply, map_sub, map_smul]
   simp only [csmul]
@@ -120,7 +120,7 @@ theorem LD.differentiableAt {V : ℝ → Sch l →L[ℂ] Sch l} {Q : Sch l → S
       filter_upwards [h] with t ht
       exact weyl_step (ht w) A f
     · intro A B hA hB f
-      simp only [ContinuousLinearMap.add_apply, map_add]
+      simp only [ContinuousLinearMap.add_apply, map_add (f := _)]
       exact (hA f).add (hB f)
     · intro c A hA f
       simp only [ContinuousLinearMap.smul_apply, map_smul]
@@ -151,7 +151,7 @@ theorem LD.hasDerivAt {V : ℝ → Sch l →L[ℂ] Sch l} {Q : Sch l →L[ℂ] S
       · filter_upwards [h] with t ht
         exact weyl_step (ht w) A f
     · intro A B hA hB f
-      simp only [ContinuousLinearMap.add_apply, map_add]
+      simp only [ContinuousLinearMap.add_apply, map_add (f := _)]
       exact (hA f).add (hB f)
     · intro c A hA f
       simp only [ContinuousLinearMap.smul_apply, map_smul]

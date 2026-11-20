@@ -51,7 +51,7 @@ theorem exists_secVal_eq {U : X.Opens} (hU : IsAffineOpen U) (hg : genPt ξ ∈ 
     { carrier := {r | ∃ f, ρ f = ρ r * a}
       add_mem' := by
         rintro r s ⟨f, hf⟩ ⟨g, hg⟩
-        exact ⟨f + g, by rw [map_add, map_add, hf, hg, add_mul]⟩
+        exact ⟨f + g, by rw [map_add (f := _), map_add (f := _), hf, hg, add_mul]⟩
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := by
         rintro r s ⟨f, hf⟩

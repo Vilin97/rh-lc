@@ -26,7 +26,7 @@ theorem act_nsmul (oa : D.OAct O) (w : O) (n : ℕ) : oa.onB.act ((n : O) * w) =
       rw [_root_.mul_one]; exact h.symm
     exact _root_.mul_left_cancel h2
   | succ n ih =>
-    rw [Nat.cast_succ, add_mul, _root_.one_mul, oa.onB.map_add, ih, pow_succ]
+    rw [Nat.cast_succ, add_mul, _root_.one_mul, oa.onB.map_add (f := _), ih, pow_succ]
     rfl
 
 theorem ppow {K U : Type} [Fintype K] [CommGroup U] (q : K → U) (e : K → ℤ) (n : ℕ) {c : U} (h : ∏ i, q i ^ e i = c) :

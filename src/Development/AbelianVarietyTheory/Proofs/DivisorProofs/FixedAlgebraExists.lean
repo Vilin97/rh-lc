@@ -19,7 +19,7 @@ theorem fixed_algebra_exists : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (β 
   have hshmul : ∀ x y : G.C, sh G (x * y) = sh G y * sh G x := by
     intro x y; simp only [sh, map_mul, MulOpposite.unop_mul]
   have hshadd : ∀ x y : G.C, sh G (x + y) = sh G x + sh G y := by
-    intro x y; simp only [sh, map_add, MulOpposite.unop_add]
+    intro x y; simp only [sh, map_add (f := _), MulOpposite.unop_add]
   have hshalg : ∀ q : ℚ, sh G (algebraMap ℚ G.C q) = algebraMap ℚ G.C q := by
     intro q
     have h := RingHom.congr_fun (RingHom.ext_rat (G.star.comp (algebraMap ℚ G.C)) (algebraMap ℚ G.Cᵐᵒᵖ)) q

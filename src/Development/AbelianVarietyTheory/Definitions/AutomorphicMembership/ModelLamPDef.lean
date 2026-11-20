@@ -92,7 +92,7 @@ theorem stdJ_basis {L : Type} [Field L] (σ : L →+* ℂ) (n : ℕ) {κ : Type}
       induction hx using Submodule.span_induction with
       | mem y hy => obtain ⟨i, rfl⟩ := hy; exact Submodule.subset_span ⟨i, rfl⟩
       | zero => simp
-      | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+      | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
       | smul c y _ hy => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
     rw [eq_top_iff, ← (EuclideanSpace.basisFun (Fin n) ℂ).toBasis.span_eq, Submodule.span_le]
     rintro _ ⟨i, rfl⟩
@@ -114,7 +114,7 @@ theorem chain_lin {R : Ranks} {ι : Type} [Fintype ι] {hc : ι → HCParam R} (
   | succ j ih =>
     refine ⟨fun x y => ?_, fun c x => ?_⟩
     · show C.Klin j _ = C.Klin j _ + C.Klin j _
-      rw [ih.map_add, map_add]
+      rw [ih.map_add (f := _), map_add (f := _)]
     · show C.Klin j _ = c • C.Klin j _
       rw [ih.map_smul, map_smul]
 
@@ -199,7 +199,7 @@ def model {C : Cols B} {d : C.Tup → ℕ} (h : Fits C d) (n n₀ a : ℕ) : Row
   Bu_linL u F := by
     refine ⟨fun x y => ?_, fun c x => ?_⟩
     · show (C.mem u).P.Ptil (Formalism.ThetaLiftIndependence.chainOpM (C.mem u).C.wt (C.mem u).C.Kmap B.R.m (x.1 + y.1)) _ = _
-      rw [(chain_lin _ _).map_add]
+      rw [(chain_lin _ _).map_add (f := _)]
       simp [PeriodMap.Ptil, PeriodMap.PtilCol, ColumnChain.col]
     · show (C.mem u).P.Ptil (Formalism.ThetaLiftIndependence.chainOpM (C.mem u).C.wt (C.mem u).C.Kmap B.R.m (c • x.1)) _ = _
       rw [(chain_lin _ _).map_smul]

@@ -76,7 +76,7 @@ theorem soLoc_iff : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFi
   · rintro ⟨-, ι₂, hι₂, hvan⟩ Y hY
     obtain ⟨hT₂, hM₂, -, -⟩ := hA ι₂ hι₂
     obtain ⟨c, hc⟩ := GlobalTheory.LinSchur.eq_smul_of_commute (GlobalTheory.WeilM.SB (Fin a' × Fin (a + a') → Fv F B.v₁)) (GlobalTheory.LatVac.psiAt B.ψ B.v₁) hψc hψ1 ι₂ ι
-      hι₂.bij (fun x _ y _ c => by rw [map_add, map_smul])
+      hι₂.bij (fun x _ y _ c => by rw [map_add (f := _), map_smul])
       (fun C => GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt B.ψ B.v₁) (wT C))
       (fun l => GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt B.ψ B.v₁) (wM l))
       (fun C x hx => ⟨GlobalTheory.SchrSB.schr_mem_SB B.ψ hT.base.std.1 B.v₁ _ x hx, hT₂ C x hx, hTι C x hx⟩)

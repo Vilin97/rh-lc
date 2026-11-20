@@ -139,7 +139,7 @@ variable {A : Type} [CommRing A] {n : ℕ}
 
 theorem hform_add_left (σ : A →+* A) (J : Matrix (Fin n) (Fin n) A) (x x' y : Fin n → A) :
     Formalism.UG.hform σ J (x + x') y = Formalism.UG.hform σ J x y + Formalism.UG.hform σ J x' y := by
-  simp only [Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hform_zero_left (σ : A →+* A) (J : Matrix (Fin n) (Fin n) A) (y : Fin n → A) :
     Formalism.UG.hform σ J 0 y = 0 := by
@@ -325,7 +325,7 @@ theorem mem_dual_iff {V : HSp D} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank →
       rw [← hform_eq_sum]; exact hv y hy
     · exact ⟨0, by simp⟩
     · rintro a b _ _ ⟨s, hs⟩ ⟨t, ht⟩
-      exact ⟨s + t, by rw [map_add, hs, ht]; simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib]⟩
+      exact ⟨s + t, by rw [map_add (f := _), hs, ht]; simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib]⟩
     · rintro c a _ ⟨s, hs⟩
       exact ⟨c * s, by
         rw [map_mul, hs]; simp only [Pi.smul_apply, Algebra.smul_def, Finset.mul_sum, mul_assoc]⟩
@@ -481,7 +481,7 @@ theorem exists_local_lift {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}
   have hsf := supp_fin V (f := e + cA D e) hs
   rw [← hp] at hκ
   have hf : finSw D (e + cA D e) = p + Formalism.UG.sigR D.sp.cm.sig (Formalism.L2.Herm.Af D.host.F) p := by
-    rw [RingHom.map_add, finSw_cA, hp]
+    rw [RingHom.map_add (f := _), finSw_cA, hp]
   have hSt : finE V κ ∈ St β :=
     mem_St_of_part D.sp.cm.sig V.gram Λ β hB.1 (hatL_selfDual hB) p u hpp (sigR_int p.2) Y hu' (finE V κ)
       (finE_mem_UA V κ) _ hf hsf hκ

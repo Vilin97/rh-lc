@@ -17,7 +17,7 @@ theorem tensor_projective_dvd_of_coord_dvd :
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul m n => simp [finsuppTensorFinsupp'_apply_apply, dualDistrib_apply]
-    | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   set f := finsuppTensorFinsupp' O M N (TensorProduct.map s s' z) with hfdef
   have hdiv : ∀ p, a ∣ f p := fun p => by rw [hfdef, hf]; exact h _ _
   choose c hc using hdiv

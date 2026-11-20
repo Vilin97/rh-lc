@@ -50,7 +50,7 @@ private theorem rep_retr (σ : Representation ℂ Γ X) (hσ : σ.IsIrreducible)
           ⟨f.1, fun g => LinearMap.ext (f.2 g)⟩) ⟨v, rfl⟩
       · simp
       · intro a b ha hb
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem ha hb)
   obtain ⟨T, h2⟩ := key x hx
   let T' := (Representation.IntertwiningMap.equivLinearMapAsModule τ σ).symm T

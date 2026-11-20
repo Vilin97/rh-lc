@@ -7,7 +7,7 @@ theorem sumAlgEquiv_rename_inr_eq_C {σ : Type} {L : ℕ} (q : MvPolynomial σ �
     MvPolynomial.sumAlgEquiv ℂ (Fin L) σ (MvPolynomial.rename Sum.inr q) = MvPolynomial.C q := by
   induction q using MvPolynomial.induction_on with
   | C a => simp [sumAlgEquiv_C_inl]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp => simp only [map_mul, hp, rename_X, sumAlgEquiv_X_inr]
 
 theorem coeff_sumAlgEquiv_mkDerivation_gen {σ : Type} {L : ℕ}
@@ -25,9 +25,9 @@ theorem coeff_sumAlgEquiv_mkDerivation_gen {σ : Type} {L : ℕ}
     split_ifs
     · exact (D.map_algebraMap a).symm
     · simp
-  | add p q hp hq => simp only [map_add, MvPolynomial.coeff_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq]
   | mul_X p i hp =>
-    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, map_mul, MvPolynomial.coeff_add]
+    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, map_mul, MvPolynomial.coeff_add]
     rcases i with j | v
     · simp only [mkDerivation_X, Sum.elim_inl, map_zero, mul_zero, coeff_zero, zero_add,
         sumAlgEquiv_X_inl]

@@ -107,7 +107,7 @@ example : ¬ Coset (g := 1) 3 9 (fun a : Ix 1 (9 ^ 2) => if a = 0 then (1 : ℚ)
   intro h0
   have h1 := congrFun h0 0
   have h2 := congrArg (ZMod.castHom (show 3 ∣ 9 ^ 2 by norm_num) (ZMod 3)) h1
-  simp only [Pi.add_apply, Pi.smul_apply, map_add, map_one, map_nsmul, Pi.zero_apply, map_zero] at h2
+  simp only [Pi.add_apply, Pi.smul_apply, map_add (f := _), map_one, map_nsmul, Pi.zero_apply, map_zero] at h2
   revert h2
   generalize (ZMod.castHom (show 3 ∣ 9 ^ 2 by norm_num) (ZMod 3)) (c 0) = z
   revert z; decide

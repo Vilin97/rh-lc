@@ -207,7 +207,7 @@ theorem rows_le_of {B : Base} {C : Cols B} {W : RowsRest B C} (S : SStage B C W)
     refine ⟨fun i => by rw [S.sEE.norm_map]; exact W.onb.orthonormal.1 i, fun i k hik => ?_⟩
     have h0 : inner ℂ (W.onb i) (W.onb k) = 0 := W.onb.orthonormal.2 hik
     have key : ∀ z : ℂ, ‖S.sEE (W.onb i) + starRingEnd ℂ z • S.sEE (W.onb k)‖ = ‖W.onb i + z • W.onb k‖ := fun z => by
-      rw [← S.sEE.norm_map, map_add, map_smulₛₗ]
+      rw [← S.sEE.norm_map, map_add (f := _), map_smulₛₗ]
     have k1 := congrArg (· ^ 2) (key 1)
     have k2 := congrArg (· ^ 2) (key Complex.I)
     simp only [@norm_add_sq ℂ, inner_smul_right, h0, norm_smul, S.sEE.norm_map] at k1 k2

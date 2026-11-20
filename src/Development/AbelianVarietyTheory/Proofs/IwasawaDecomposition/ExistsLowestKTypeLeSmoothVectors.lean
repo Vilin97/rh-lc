@@ -138,7 +138,7 @@ theorem exists_smooth_ktype {n : ℕ} {ε : Fin n → Bool} {H : Type} [NormedAd
       map_add' := by
         intro s t
         rw [← integral_add (hint s) (hint t)]
-        simp only [Submodule.coe_add, map_add, smul_add]
+        simp only [Submodule.coe_add, map_add (f := _), smul_add]
       map_smul' := by
         intro c s
         rw [RingHom.id_apply, ← integral_smul]

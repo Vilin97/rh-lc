@@ -54,7 +54,7 @@ theorem isL_add_of_equiv_prod₂ : LanglandsMultisegments → StandardCosocleGL 
   rintro hM hS k _ _ _ _ _ r t σ τ π 𝔪 𝔫 h1 h2 ⟨e⟩
   obtain ⟨y, hy⟩ := exists_isL (N := r + t) hS (𝔪 := 𝔪 + 𝔫)
     (fun Δ hΔ => (Multiset.mem_add.1 hΔ).elim (exists_isLSeg_of_isL h1) (exists_isLSeg_of_isL h2))
-    (by rw [Multiset.map_add, Multiset.sum_add, deg_of_isL h1, deg_of_isL h2])
+    (by rw [Multiset.map_add (f := _), Multiset.sum_add, deg_of_isL h1, deg_of_isL h2])
   have hd : ∑ a, (![IrrGL.of σ.ρ σ.smooth σ.irr, IrrGL.of τ.ρ τ.smooth τ.irr] a).1 = r + t := Fin.sum_univ_two _
   obtain ⟨φ⟩ := nonempty_prod₂_equiv_prodIrr σ.ρ σ.smooth σ.irr τ.ρ τ.smooth τ.irr hd
   have ψ := IrrGL.equivOf y.ρ y.smooth y.irr

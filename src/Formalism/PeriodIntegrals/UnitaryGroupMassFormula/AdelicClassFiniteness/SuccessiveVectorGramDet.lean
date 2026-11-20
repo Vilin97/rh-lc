@@ -23,14 +23,14 @@ theorem gd_star_rat (q : ℚ) : star ((q : E)) = (q : E) := by
 
 def gdLeft (y : Fin m → E) : (Fin m → E) →ₗ[ℚ] ℚ where
   toFun x := Algebra.trace ℚ E (hform (starRingEnd E) J x y)
-  map_add' x x' := by rw [hform_add_left', map_add]
+  map_add' x x' := by rw [hform_add_left', map_add (f := _)]
   map_smul' q x := by
     rw [gd_qsmul, hform_smul_left', gd_star_rat, RingHom.id_apply, smul_eq_mul, ← Rat.smul_def, map_smul,
       smul_eq_mul]
 
 def gdRight (x : Fin m → E) : (Fin m → E) →ₗ[ℚ] ℚ where
   toFun y := Algebra.trace ℚ E (hform (starRingEnd E) J x y)
-  map_add' y y' := by rw [hform_add_right', map_add]
+  map_add' y y' := by rw [hform_add_right', map_add (f := _)]
   map_smul' q y := by
     rw [gd_qsmul, hform_smul_right', RingHom.id_apply, smul_eq_mul, ← Rat.smul_def, map_smul, smul_eq_mul]
 

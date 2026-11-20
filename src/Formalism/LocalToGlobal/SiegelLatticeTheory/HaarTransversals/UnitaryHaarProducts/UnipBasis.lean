@@ -162,7 +162,7 @@ def cE : (Fin X.B.I.n → X.B.I.E) →ₗ[X.B.I.E] (Kap X → X.B.I.E) where
         Subtype.ext (pW_add X x y)
       show (wb X).repr ⟨pW X (x + y), pW_mem X (x + y)⟩ i =
         (wb X).repr ⟨pW X x, pW_mem X x⟩ i + (wb X).repr ⟨pW X y, pW_mem X y⟩ i
-      rw [this, map_add]
+      rw [this, map_add (f := _)]
       rfl
     · simp [hE_add_right]
   map_smul' c x := by

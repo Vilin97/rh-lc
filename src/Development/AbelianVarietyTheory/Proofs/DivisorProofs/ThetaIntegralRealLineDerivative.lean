@@ -37,7 +37,7 @@ theorem smul_tensNU_inl (u : AF F) (hu : evI F u = 0) (z : Ainf F ⊗[F] E) :
   have h1 : fstA F u = 0 := (InfiniteAdeleRing.ringEquiv_mixedSpace F).injective (by rw [map_zero]; exact hu)
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, smul_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
   | tmul a e =>
     have key : ∀ b : AF F, b.2 = 0 → ∀ e : E, u • (b ⊗ₜ[F] e) = 0 := fun b hb e => by
       rw [TensorProduct.smul_tmul']
@@ -126,7 +126,7 @@ theorem derR_mem_polData : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
       obtain ⟨Ψ₂, m₂, d₂⟩ := h₂
       refine ⟨Ψ₁ + Ψ₂, add_mem m₁ m₂, fun y => ?_⟩
       have h := (d₁ y).add (d₂ y)
-      simp only [map_add, Pi.add_apply]
+      simp only [map_add (f := _), Pi.add_apply]
       exact h
     | smul r Φ₁ _ h₁ =>
       obtain ⟨Ψ₁, m₁, d₁⟩ := h₁

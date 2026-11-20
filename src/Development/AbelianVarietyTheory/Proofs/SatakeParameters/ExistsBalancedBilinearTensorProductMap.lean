@@ -39,11 +39,11 @@ theorem baseBil_left (β : D₁ →ₗ[LL] D₂ →ₗ[LL] D₃) (f₁ : Module.
     baseBil F β (f₁.baseChange F w) z = f₃.baseChange F (baseBil F β w z) := by
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add w w' hw hw' => simp [map_add, LinearMap.add_apply, hw, hw']
+  | add w w' hw hw' => simp [map_add (f := _), LinearMap.add_apply, hw, hw']
   | tmul a x =>
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add z z' hz hz' => simp only [map_add, hz, hz']
+    | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
     | tmul b y => simp [LinearMap.baseChange_tmul, baseBil_tmul, h]
 
 theorem baseBil_right (β : D₁ →ₗ[LL] D₂ →ₗ[LL] D₃) (f₂ : Module.End LL D₂) (f₃ : Module.End LL D₃)
@@ -51,11 +51,11 @@ theorem baseBil_right (β : D₁ →ₗ[LL] D₂ →ₗ[LL] D₃) (f₂ : Module
     baseBil F β w (f₂.baseChange F z) = f₃.baseChange F (baseBil F β w z) := by
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add w w' hw hw' => simp [map_add, LinearMap.add_apply, hw, hw']
+  | add w w' hw hw' => simp [map_add (f := _), LinearMap.add_apply, hw, hw']
   | tmul a x =>
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add z z' hz hz' => simp only [map_add, hz, hz']
+    | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
     | tmul b y => simp [LinearMap.baseChange_tmul, baseBil_tmul, h]
 
 end GlobalTheory.LetterDescent

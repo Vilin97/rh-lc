@@ -175,7 +175,7 @@ theorem resFunctor_map_zmodMulPairing_comp {U V : OpenSubgroup G} (hVU : V ≤ U
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a d => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [CompactSpace G] in
 
@@ -317,7 +317,7 @@ theorem resTensorIso_inv_comp_resFunctor_map_evalPairing (S : Subgroup G)
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a f => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 namespace DualityHypotheses
 

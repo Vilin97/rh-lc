@@ -126,7 +126,7 @@ def cobLev (ρ : Representation O G M) (c : O) (hlc : ∀ m : M, IsLocallyConsta
       abel⟩
   map_add' a b := Subtype.ext (funext fun g => Lev.ext (by
     show ρ g (a.1 + b.1) - (a.1 + b.1) = (ρ g a.1 - a.1) + (ρ g b.1 - b.1)
-    rw [map_add]; abel))
+    rw [map_add (f := _)]; abel))
   map_smul' r a := Subtype.ext (funext fun g => Lev.ext (by
     show ρ g (r • a.1) - r • a.1 = r • (ρ g a.1 - a.1)
     rw [map_smul, smul_sub]))

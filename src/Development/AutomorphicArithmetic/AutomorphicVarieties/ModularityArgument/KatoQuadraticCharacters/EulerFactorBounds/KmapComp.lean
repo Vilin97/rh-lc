@@ -72,8 +72,8 @@ theorem sApi : SApi := by
     fun a b h u => ev_succ _ _ _ (h u), fun a b u => ev_zero _ _, fun s t a => ?_, fun a => ?_⟩
   · rw [sub_self, map_zero]
   · rw [← neg_sub, map_neg, hab u, neg_zero]
-  · rw [← sub_add_sub_cancel (a u) (b u) (c u), map_add, hab u, hbc u, add_zero]
-  · rw [Pi.add_apply, Pi.add_apply, add_sub_add_comm, map_add, h u, h' u, add_zero]
+  · rw [← sub_add_sub_cancel (a u) (b u) (c u), map_add (f := _), hab u, hbc u, add_zero]
+  · rw [Pi.add_apply, Pi.add_apply, add_sub_add_comm, map_add (f := _), h u, h' u, add_zero]
   · rw [Pi.sub_apply, Pi.sub_apply, sub_sub_sub_comm, map_sub, h u, h' u, sub_zero]
   · rw [Pi.smul_apply, Pi.smul_apply, ← smul_sub, map_smul, h u, smul_zero]
   set_option synthInstance.maxHeartbeats 100000 in

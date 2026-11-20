@@ -41,7 +41,7 @@ theorem coeff_eq_zero_of_simple_pole {R B C κ : Type*} [CommRing R] [CommRing B
       have hca : c a = 0 := by
         have := congrArg ε key
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [map_add, map_sum, map_mul, map_mul, map_pow, hz, zero_pow (by omega), zero_mul, hρ, hε,
+          rw [map_add (f := _), map_sum, map_mul, map_mul, map_pow, hz, zero_pow (by omega), zero_mul, hρ, hε,
           mul_one, Finset.sum_eq_zero, add_zero] at this
         · exact this
         · intro k hk

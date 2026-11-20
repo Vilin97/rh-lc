@@ -140,4 +140,4 @@ theorem UpperTheory.exists_tensor_dual_embedding_of_hasWeightAt :
       congr 1
       rw [hΦ, hμ x hx, hD, dualDistrib_comp_map, ← hD, hΦ]
       simp only [map_inv (cEmb _), hκ]
-    | add a b ha hb => simp only [map_add, LinearMap.add_comp, Pi.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), LinearMap.add_comp, Pi.add_apply, ha, hb]

@@ -1244,7 +1244,7 @@ theorem pert_unit (ϖ : R) (hu : ∀ r : R, IsUnit (1 + ϖ * r)) {N : ℕ}
     have hz : (Ideal.Quotient.mk (Ideal.span {ϖ})).mapMatrix (ϖ • M) = 0 := by
       ext i j
       simp [h0]
-    rw [map_add, map_one, hz, add_zero, Matrix.det_one]
+    rw [map_add (f := _), map_one, hz, add_zero, Matrix.det_one]
   obtain ⟨a, ha⟩ := Ideal.mem_span_singleton'.1 (Ideal.Quotient.eq.1 hq)
   have e : (1 + ϖ • M).det = 1 + ϖ * a := by linear_combination -ha
   rw [e]

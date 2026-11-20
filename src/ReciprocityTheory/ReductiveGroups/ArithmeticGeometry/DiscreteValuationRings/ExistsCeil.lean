@@ -19,13 +19,13 @@ theorem reps_X {X : Type} [AddCommGroup X] [Module.Free ℤ X] [Module.Finite �
       exact Int.emod_lt_of_pos _ hk0
     · apply b.equivFun.injective
       funext i
-      simp only [map_add, map_nsmul, LinearEquiv.apply_symm_apply, Pi.add_apply, nsmul_eq_mul]
+      simp only [map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply, Pi.add_apply, nsmul_eq_mul]
       rw [Int.toNat_of_nonneg (Int.emod_nonneg _ hk0.ne')]
       exact Int.emod_add_mul_ediv _ _
   · intro a a' μ μ' h
     funext i
     have e := congrFun (congrArg b.equivFun h) i
-    simp only [map_add, map_nsmul, LinearEquiv.apply_symm_apply, Pi.add_apply, nsmul_eq_mul, Pi.mul_apply,
+    simp only [map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply, Pi.add_apply, nsmul_eq_mul, Pi.mul_apply,
       Pi.natCast_apply] at e
     have e' := congrArg (fun t => t % (k : ℤ)) e
     rw [Int.add_mul_emod_self_left, Int.add_mul_emod_self_left] at e'

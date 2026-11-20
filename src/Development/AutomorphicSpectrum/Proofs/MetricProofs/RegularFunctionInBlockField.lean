@@ -93,7 +93,7 @@ theorem algebraMap_mem_blockFnField :
       rw [MvPolynomial.aeval_C, algebraMap_int_eq, eq_intCast]
       exact intCast_mem _ a
     | add p q hp hq =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hp hq
     | mul_X p n hp =>
       rw [map_mul, MvPolynomial.aeval_X]

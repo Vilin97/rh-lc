@@ -46,10 +46,10 @@ private theorem xdual_comp {F Ω : Type} [Field F] [NumberField F] [Field Ω] [A
   have h0 : ∀ a, ι a = 0 ↔ a = 0 := fun a => map_eq_zero_iff ι hι
   constructor
   · rintro ⟨h1, h2, h3, h4⟩
-    exact ⟨h1.comp ι, fun a b => by simp only [h2, map_add], fun A u h => (h0 _).2 (h3 A u h),
+    exact ⟨h1.comp ι, fun a b => by simp only [h2, map_add (f := _)], fun A u h => (h0 _).2 (h3 A u h),
       fun A hA u h => (h0 _).2 (h4 A hA u h)⟩
   · rintro ⟨h1, h2, h3, h4⟩
-    exact ⟨IsLocallyConstant.desc φ ι h1 hι, fun a b => hι (by rw [map_add]; exact h2 a b),
+    exact ⟨IsLocallyConstant.desc φ ι h1 hι, fun a b => hι (by rw [map_add (f := _)]; exact h2 a b),
       fun A u h => (h0 _).1 (h3 A u h), fun A hA u h => (h0 _).1 (h4 A hA u h)⟩
 
 theorem UpperTheory.V.Tower.rankXRk :

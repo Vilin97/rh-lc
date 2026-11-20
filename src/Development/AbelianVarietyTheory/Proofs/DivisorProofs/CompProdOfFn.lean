@@ -30,7 +30,7 @@ theorem dual_apply {R S : Type} [CommRing R] [CommRing S] (f : DualNumber R →+
   have hz : z = TrivSqZeroExt.inl z.fst + TrivSqZeroExt.inl z.snd * DualNumber.eps := by
     ext <;> simp
   conv_lhs => rw [hz]
-  rw [map_add, map_mul]
+  rw [map_add (f := _), map_mul]
 
 theorem comp_prod_ofFn {C : Type*} [Category C] [CartesianMonoidalCategory C] {M A B : C} [MonObj M]
     (k : A ⟶ B) : ∀ {m : ℕ} (u : Fin m → (B ⟶ M)), k ≫ (List.ofFn u).prod = (List.ofFn fun i => k ≫ u i).prod

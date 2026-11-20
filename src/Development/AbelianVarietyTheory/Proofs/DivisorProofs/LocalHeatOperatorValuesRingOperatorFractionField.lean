@@ -68,7 +68,7 @@ theorem value_opV_ringOp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       ringOp ⇑dt0 (fun b => ⇑(δL b)) (iota.mapMatrix Θ₁) (fun a => iota (u a)) (ψ (pf i0)) (ψ (pf' i0)) k (ψ F) := by
     intro F
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [GlobalTheory.HeatV.opV, ringOp, map_add, map_sub, map_mul, map_sum, map_natCast, map_ofNat, map_pow, hd0, hdd,
+      simp only [GlobalTheory.HeatV.opV, ringOp, map_add (f := _), map_sub, map_mul, map_sum, map_natCast, map_ofNat, map_pow, hd0, hdd,
       hc', rsT_self, RingHom.mapMatrix_apply, Matrix.map_apply]
   obtain ⟨ω', hω'⟩ := GlobalTheory.T.exists_sectionValue_in_frame_localRing_point t.G.left t.PP.L t.PP.isLB Ω x' g hg k σ'
   refine ⟨ω', hω', ?_⟩

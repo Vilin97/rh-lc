@@ -20,7 +20,7 @@ theorem iotaF_props : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (v : AwayP p)
   · intro z x
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [map_add]; exact ha.add_left hb
+    | add a b ha hb => rw [map_add (f := _)]; exact ha.add_left hb
     | tmul a f =>
       induction x using TensorProduct.induction_on with
       | zero => exact Commute.zero_right _

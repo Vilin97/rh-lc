@@ -444,11 +444,11 @@ private theorem ne_quad (S : Fr.Space c.O F n) (ξ : S.A →ₐ[c.O] Qbar l) (h�
   · have e : res c.O S.R ((S.aB (g * g) k : S.B) : S.R) =
         res c.O S.R ((S.aB g k : S.B) : S.R) * res c.O S.R ((S.aB g k : S.B) : S.R) := by
       rw [res_aB, res_aB, Subgroup.coe_mul, map_mul, mul_zpow, Units.val_mul]
-    simp only [Subalgebra.coe_add, Subalgebra.coe_sub, Subalgebra.coe_mul, map_add, map_sub, map_mul, e]
+    simp only [Subalgebra.coe_add, Subalgebra.coe_sub, Subalgebra.coe_mul, map_add (f := _), map_sub, map_mul, e]
     have e2 : ∀ z β β' : ResidueField c.O, z * z - (β + β') * z + β * β' = (z - β) * (z - β') := fun _ _ _ => by ring
     rw [e2]
     exact mul_ne_zero (sub_ne_zero.2 hb.symm) (sub_ne_zero.2 hb'.symm)
-  · simp only [map_add, map_sub, map_mul, inc_aB]
+  · simp only [map_add (f := _), map_sub, map_mul, inc_aB]
     rw [← map_mul (ptRep S ξ).r]
     exact h1
 

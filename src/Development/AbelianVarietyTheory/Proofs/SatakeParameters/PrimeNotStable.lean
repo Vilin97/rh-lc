@@ -72,11 +72,11 @@ theorem approx {F E K : Type} [Field F] [Field E] [Algebra F E] [Field K] [Algeb
     refine ⟨x1 + x2, ?_, ?_⟩
     · have : (s ((x1 + x2) ⊗ₜ[F] (1 : K))).1 - (s (t1 + t2)).1 =
           ((s (x1 ⊗ₜ[F] (1 : K))).1 - (s t1).1) + ((s (x2 ⊗ₜ[F] (1 : K))).1 - (s t2).1) := by
-        rw [TensorProduct.add_tmul, map_add, map_add, Prod.fst_add, Prod.fst_add]; ring
+        rw [TensorProduct.add_tmul, map_add (f := _), map_add (f := _), Prod.fst_add, Prod.fst_add]; ring
       rw [this]; exact Valuation.map_add_lt _ a1 a2
     · have : (s ((x1 + x2) ⊗ₜ[F] (1 : K))).2 - (s (t1 + t2)).2 =
           ((s (x1 ⊗ₜ[F] (1 : K))).2 - (s t1).2) + ((s (x2 ⊗ₜ[F] (1 : K))).2 - (s t2).2) := by
-        rw [TensorProduct.add_tmul, map_add, map_add, Prod.snd_add, Prod.snd_add]; ring
+        rw [TensorProduct.add_tmul, map_add (f := _), map_add (f := _), Prod.snd_add, Prod.snd_add]; ring
       rw [this]; exact Valuation.map_add_lt _ b1 b2
 
 theorem exists_frac {S K : Type} [CommRing S] [IsDedekindDomain S] [Field K] [Algebra S K] [IsFractionRing S K]
@@ -206,7 +206,7 @@ theorem prime_not_stable : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   have hσs : ∀ s : 𝓞 E, s ∉ P.asIdeal → σO s ∉ P.asIdeal := by
     intro s hs hs'
     obtain ⟨t, i, hi, hti⟩ := P.isMaximal.exists_inv hs
-    have h1 : σO t * σO s + σO i = 1 := by rw [← map_mul, ← map_add, hti, map_one]
+    have h1 : σO t * σO s + σO i = 1 := by rw [← map_mul, ← map_add (f := _), hti, map_one]
     have h2 : (1 : 𝓞 E) ∈ P.asIdeal := h1 ▸ add_mem (Ideal.mul_mem_left _ _ hs') (hσP i hi)
     exact P.isPrime.ne_top ((Ideal.eq_top_iff_one _).2 h2)
 

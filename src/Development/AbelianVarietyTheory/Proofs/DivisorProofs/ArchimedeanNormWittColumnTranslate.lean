@@ -27,7 +27,7 @@ theorem sigR_sigR {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) (R : Type) [CommRi
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [sigR, sigma_sigma hcm]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem sigR_inclR (σ : E →ₐ[F] E) (R : Type) [CommRing R] [Algebra F R] (e : E) :
     sigR R σ (inclR (F := F) R e) = inclR (F := F) R (σ e) := by
@@ -54,7 +54,7 @@ theorem sum_expand {A : Type} [CommRing A] (s : A →+* A) (hs : ∀ x, s (s x) 
       (B *ᵥ v) i * s ((B *ᵥ v) i) + c * (s ((B *ᵥ v) i) * (B *ᵥ u) i) +
         s c * ((B *ᵥ v) i * s ((B *ᵥ u) i)) + c * s c * ((B *ᵥ u) i * s ((B *ᵥ u) i)) := by
     intro i
-    rw [Matrix.mulVec_add, Matrix.mulVec_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul]
+    rw [Matrix.mulVec_add, Matrix.mulVec_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
     ring
   simp_rw [key, Finset.sum_add_distrib, ← Finset.mul_sum, hT, hT']
   ring
@@ -90,7 +90,7 @@ theorem archimedean_norm_add_smul_first_column : ∀ (F E : Type) [Field F] [Num
   have hv : (fun i => compInf F E w (GlobalTheory.EisMidHt.adVec F (y + c • GlobalTheory.EisMidHt.firstColumn X) i)) =
       (fun i => inclR (F := F) w.Completion (y i)) +
         inclR (F := F) w.Completion c • (fun i => inclR (F := F) w.Completion (X i 0)) := by
-    funext i; simp [compInf_adVec, GlobalTheory.EisMidHt.firstColumn, map_add, map_mul]
+    funext i; simp [compInf_adVec, GlobalTheory.EisMidHt.firstColumn, map_add (f := _), map_mul]
   have hv1 : (fun i => compInf F E w (GlobalTheory.EisMidHt.adVec F y i)) = fun i => inclR (F := F) w.Completion (y i) := by
     funext i; exact compInf_adVec w y i
   have hv2 : (fun i => compInf F E w (GlobalTheory.EisMidHt.adVec F (GlobalTheory.EisMidHt.firstColumn X) i)) =
@@ -130,7 +130,7 @@ theorem archimedean_norm_add_smul_first_column : ∀ (F E : Type) [Field F] [Num
           ∑ i, Algebra.norm w.Completion ((B *ᵥ fun i => inclR (F := F) w.Completion (X i 0)) i) := by
     apply (algebraMap w.Completion (w.Completion ⊗[F] E)).injective
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_mul, map_sum, GlobalTheory.Doubling.algebraMap_norm_eq hcm]
+      simp only [map_add (f := _), map_mul, map_sum, GlobalTheory.Doubling.algebraMap_norm_eq hcm]
     exact sum_expand _ hs B _ _ _ hT
   rw [hsum]
   set φ := InfinitePlace.Completion.ringEquivRealOfIsReal hr
@@ -142,7 +142,7 @@ theorem archimedean_norm_add_smul_first_column : ∀ (F E : Type) [Field F] [Num
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]; exact Finset.sum_nonneg fun i _ => (GlobalTheory.PoleFactor.norm_completion_tensor_pos hcm w hr _).1
   have hq := (GlobalTheory.PoleFactor.norm_completion_tensor_pos hcm w hr (inclR (F := F) w.Completion c)).1
-  rw [hn, hn, hn, hn, map_add, map_mul, abs_of_nonneg (add_nonneg (hp _) (mul_nonneg hq (hp _))),
+  rw [hn, hn, hn, hn, map_add (f := _), map_mul, abs_of_nonneg (add_nonneg (hp _) (mul_nonneg hq (hp _))),
     abs_of_nonneg (hp _), abs_of_nonneg hq, abs_of_nonneg (hp _)]
 
 end GlobalTheory.ArchOrth

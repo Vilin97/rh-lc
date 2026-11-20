@@ -76,7 +76,7 @@ lemma genus_one (D : D7) (L : PeriodPair) (Λ : AddSubgroup ℂ) (h : ∀ z, z �
   have hsc : starRingEnd ℂ s = s := Complex.conj_ofReal _
   have hw0 : w0 D = (1 + Complex.I * s) / 2 := rfl
   have hw0c : starRingEnd ℂ (w0 D) = (1 - Complex.I * s) / 2 := by
-    rw [hw0, map_div₀, map_add, map_mul, hsc, Complex.conj_I, map_one, map_ofNat]; ring
+    rw [hw0, map_div₀, map_add (f := _), map_mul, hsc, Complex.conj_I, map_one, map_ofNat]; ring
   have hq : w0 D ^ 2 - w0 D + 2 * m = 0 := by
     rw [hw0]
     linear_combination (s ^ 2 / 4) * Complex.I_sq - (1 / 4) * hs2 - (1 / 4) * hm'
@@ -138,7 +138,7 @@ lemma genus_one (D : D7) (L : PeriodPair) (Λ : AddSubgroup ℂ) (h : ∀ z, z �
   have hab' := congrArg (starRingEnd ℂ) hab
   have hcd' := congrArg (starRingEnd ℂ) hcd
   have huv' := congrArg (starRingEnd ℂ) huv
-  simp only [map_add, map_mul, map_intCast, map_ofNat, hw0c] at hab' hcd' huv'
+  simp only [map_add (f := _), map_mul, map_intCast, map_ofNat, hw0c] at hab' hcd' huv'
   have h3 : ¬ (2 ∣ u * a + v * c ∧ 2 ∣ u * b + v * d) := by
     rw [← half_mem L, ← h]
     convert ht.2.1 using 2
@@ -155,7 +155,7 @@ lemma genus_one (D : D7) (L : PeriodPair) (Λ : AddSubgroup ℂ) (h : ∀ z, z �
   have hp := even_im_hermitian_sub a b c d u v x y (2 * m) e (by simp) he had r1.1 h3 h4
   refine ⟨e * ((x * a + y * c) * y - (x * b + y * d) * x), ?_, fun z => ?_⟩
   · rw [hw0] at hab hcd
-    simp only [map_add, map_mul, map_intCast]
+    simp only [map_add (f := _), map_mul, map_intCast]
     field_simp
     push_cast
     apply mul_left_cancel₀ Complex.I_ne_zero
@@ -168,7 +168,7 @@ lemma genus_one (D : D7) (L : PeriodPair) (Λ : AddSubgroup ℂ) (h : ∀ z, z �
         (x * L.ω₁ + y * L.ω₂) * starRingEnd ℂ t) / (area Λ : ℂ)) = (-1) ^ ((-e) * (x * v - y * u)) := by
       rw [← Complex.exp_pi_mul_I, ← Complex.exp_int_mul]
       congr 1
-      simp only [map_add, map_mul, map_intCast]
+      simp only [map_add (f := _), map_mul, map_intCast]
       field_simp
       push_cast
       linear_combination (-(x * v - y * u) / 2 : ℂ) * hS

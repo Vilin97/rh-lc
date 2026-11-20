@@ -42,9 +42,9 @@ theorem delAt_add {v : V n} {F G : V n → Alt n} (hF : ∀ S, DifferentiableAt 
   rw [← mul_add]
   congr 1
   refine (bas n).ext_elem fun S => ?_
-  rw [map_add, Finsupp.add_apply, repr_coefwise, repr_coefwise, repr_coefwise, ← ContinuousLinearMap.add_apply,
+  rw [map_add (f := _), Finsupp.add_apply, repr_coefwise, repr_coefwise, repr_coefwise, ← ContinuousLinearMap.add_apply,
     ← del_add (hF S) (hG S)]
-  simp only [map_add, Finsupp.add_apply]
+  simp only [map_add (f := _), Finsupp.add_apply]
 
 theorem sum_symm_dz {s : Fin n → Fin n → ℂ} (hs : ∀ a c, s a c = s c a) :
     ∑ a, ∑ c, s a c • (dz a * dz c : Alt n) = 0 := by
@@ -72,7 +72,7 @@ theorem delAt_pull_of_contDiffAt {φ : V n → V m} {v : V n} (hφ : ContDiffAt 
     simp only [hP, AlgHom.commutes]
     simp [delAt, coefwise]
   have hadd (a b : Alt m) (ha : P a) (hb : P b) : P (a + b) := by
-    simp only [hP, map_add] at ha hb ⊢
+    simp only [hP, map_add (f := _)] at ha hb ⊢
     rw [delAt_add (hd a) (hd b), ha, hb, add_zero]
   have hmul (a b : Alt m) (ha : P a) (hb : P b) : P (a * b) := by
     simp only [hP, map_mul] at ha hb ⊢

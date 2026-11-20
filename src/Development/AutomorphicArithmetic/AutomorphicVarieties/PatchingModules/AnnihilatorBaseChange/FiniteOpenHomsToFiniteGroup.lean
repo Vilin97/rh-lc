@@ -297,7 +297,7 @@ theorem UpperTheory.V.Pa.Core.rrEx :
       rw [hFX]
       rfl
     · show F (algebraMap O (MvPowerSeries σ R₁) (A.ut j i) + MvPowerSeries.X (Sum.inr (Sum.inl (j, i)))) = t'.U j i
-      rw [map_add, AlgHom.commutes, hFX]
+      rw [map_add (f := _), AlgHom.commutes, hFX]
       show algebraMap O R' (A.ut j i) + (t'.U j i - algebraMap O R' (A.ut j i)) = t'.U j i
       ring
     · show F (MvPowerSeries.X (Sum.inr (Sum.inr (j, i)))) = t'.y j i
@@ -323,6 +323,6 @@ theorem UpperTheory.V.Pa.Core.rrEx :
       · have h4 : G (algebraMap O (MvPowerSeries σ R₁) (A.ut j i) +
             MvPowerSeries.X (Sum.inr (Sum.inl (j, i)))) = t'.U j i := g4 j i
         show G (MvPowerSeries.X (Sum.inr (Sum.inl (j, i)))) = t'.U j i - algebraMap O R' (A.ut j i)
-        rw [← h4, map_add, AlgHom.commutes]
+        rw [← h4, map_add (f := _), AlgHom.commutes]
         ring
       · exact g5 j i

@@ -62,7 +62,7 @@ theorem smul_map_mem {K : Type} [CommRing K] (O : AddSubgroup K) (G : Set (MvPol
   induction hg using Submodule.span_induction with
   | mem x hx => exact AddSubgroup.subset_closure ⟨r, hr, x, hx, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, smul_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact add_mem hx hy
   | smul z x _ hx =>
     rw [map_zsmul, smul_comm]
     exact zsmul_mem hx z
@@ -76,7 +76,7 @@ theorem map_mem {L K : Type} [CommRing L] [CommRing K] (φ : L →+* K) {O : Set
     rw [map_smul_map]
     exact AddSubgroup.subset_closure ⟨φ r, h r hr, g, hg, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem of_map_mem {L K : Type} [CommRing L] [CommRing K] (φ : L →+* K) (hφ : Function.Injective φ)

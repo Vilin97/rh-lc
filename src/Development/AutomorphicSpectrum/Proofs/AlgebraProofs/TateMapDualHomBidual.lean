@@ -162,7 +162,7 @@ theorem dlog_lagrangian : FarguesHodgeTate → ∀ (p : ℕ) [Fact p.Prime] (C :
   have hκ0 : κ ≠ 0 := fun h => hκ.1 (by rw [h, map_zero])
   have hskew : ∀ x y, B x y = - B y x := fun x y => by
     have h1 := halt (x + y)
-    simp only [map_add, LinearMap.add_apply, halt, zero_add, add_zero] at h1
+    simp only [map_add (f := _), LinearMap.add_apply, halt, zero_add, add_zero] at h1
     exact eq_neg_of_add_eq_zero_right h1
   let e : G.Tate ≃ₗ[ℤ_[p]] G.dual.Tate := LinearEquiv.ofBijective _ hbij
   let L : O ⊗[ℤ_[p]] G.Tate ≃ₗ[O] O ⊗[ℤ_[p]] G.dual.Tate := e.baseChange ℤ_[p] O _ _
@@ -211,7 +211,7 @@ theorem dlog_lagrangian : FarguesHodgeTate → ∀ (p : ℕ) [Fact p.Prime] (C :
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, neg_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), neg_add]
     | tmul c t =>
       have h1 : omegaMap G G.dual lam (hodgeTate G t) = - dlog G (tateMap G G.dual O lam t) := by
         rw [hodgeTate_apply, ← dlog_tateMap,

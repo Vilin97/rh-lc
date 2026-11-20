@@ -149,7 +149,7 @@ theorem exists_torus_exp (Y : Type) [AddCommGroup Y] [Module.Free ℤ Y] [Module
       refine GlobalTheory.ThetaValueCont.isHolTo_spMap isOpen_univ _ fun a => ?_
       induction a using AddMonoidAlgebra.induction_linear with
       | zero => simp only [map_zero]; exact differentiableOn_const _
-      | add a b ha hb => simp only [map_add]; exact ha.add hb
+      | add a b ha hb => simp only [map_add (f := _)]; exact ha.add hb
       | single x r =>
         exact (((hd x).cexp).const_mul (r.down : ℂ)).differentiableOn.congr fun s _ => expRing_single _ _ _
     refine GlobalTheory.HolHom.isHolTo_of_holAt isOpen_univ fun z _ => ?_

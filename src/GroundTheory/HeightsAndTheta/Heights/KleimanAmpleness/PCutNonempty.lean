@@ -45,7 +45,7 @@ theorem coe_aeval_ratio_mul_mem_span {L : SubSystem k x Ω} {s : Ω} {j : Fin (N
     field_simp
   | zero => simp
   | add a b _ _ ha hb =>
-    rw [map_add, Subalgebra.coe_add, add_mul]
+    rw [map_add (f := _), Subalgebra.coe_add, add_mul]
     exact Submodule.add_mem _ ha hb
   | smul g z _ hz =>
     rw [smul_eq_mul, map_mul, Subalgebra.coe_mul, mul_assoc]
@@ -69,7 +69,7 @@ theorem sub_le_twist_sup_span {pp : Ideal (Poly k N)}
     rw [div_self hj, one_pow]
   have hsplit : ℓ = ((aeval (ratio (S := k) hj) p : chartRing k x (singleChart hj)) : Ω) * ℓ +
       ((aeval (ratio (S := k) hj) z : chartRing k x (singleChart hj)) : Ω) * ℓ := by
-    rw [← add_mul, ← Subalgebra.coe_add, ← map_add, hpz, h1, one_mul]
+    rw [← add_mul, ← Subalgebra.coe_add, ← map_add (f := _), hpz, h1, one_mul]
   rw [hsplit]
   refine Submodule.add_mem_sup (Submodule.subset_span ?_) (coe_aeval_ratio_mul_mem_span hj hz hℓ)
   exact ⟨_, coe_aeval_ratio_mem_idealMod hh hj hp, ℓ, hℓ, rfl⟩

@@ -108,7 +108,7 @@ lemma pair_abs {La d : ℝ} (y y' : ℕ) (hy : Real.log (y : ℝ) ≤ La) (hLa :
 
 lemma phRows_add (s t : Multiset ℕ) : phRows (s + t) = phRows s + phRows t := by
   unfold phRows
-  rw [Multiset.map_add, Multiset.sum_add]
+  rw [Multiset.map_add (f := _), Multiset.sum_add]
 
 lemma phRows_cons (a : ℕ) (s : Multiset ℕ) : phRows (a ::ₘ s) = ph (a : ℝ) + phRows s := by
   unfold phRows
@@ -123,7 +123,7 @@ lemma phRows_univ {n : ℕ} (g : Fin n → ℕ) :
 lemma logFactRows_add (s t : Multiset ℕ) :
     logFactRows (s + t) = logFactRows s + logFactRows t := by
   unfold logFactRows
-  rw [Multiset.map_add, Multiset.sum_add]
+  rw [Multiset.map_add (f := _), Multiset.sum_add]
 
 lemma logFactRows_univ {n : ℕ} (g : Fin n → ℕ) :
     logFactRows (Finset.univ.val.map g) = ∑ i, Real.log ((g i).factorial : ℝ) := by

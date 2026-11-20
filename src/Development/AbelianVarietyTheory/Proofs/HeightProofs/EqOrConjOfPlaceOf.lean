@@ -28,7 +28,7 @@ theorem map_tensNU_zero (φ : R' →ₐ[F] R'') (j : R →ₗ[F] R') (hj : ∀ a
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [h]
-  | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
 
 theorem map_tensNU_self (φ : R' →ₐ[F] R) (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j b)
     (h : ∀ a, φ (j a) = a) (z : R ⊗[F] E) :
@@ -36,7 +36,7 @@ theorem map_tensNU_self (φ : R' →ₐ[F] R) (j : R →ₗ[F] R') (hj : ∀ a b
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [h]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mat_mapH (φ : R →ₐ[F] R') (g : HA R σ J) (r s : Fin M) :
     (HA.mat R' σ J (mapH σ J φ g)).1 r s =
@@ -50,14 +50,14 @@ theorem mat_extH (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j b) (g :
 theorem mapH_extH_zero (φ : R' →ₐ[F] R'') (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j b)
     (h : ∀ a, φ (j a) = 0) (g : HA R σ J) : mapH σ J φ (extH σ J j hj g) = 1 := by
   refine HA_ext σ J fun r s => ?_
-  rw [mat_mapH, mat_extH, map_add, map_mul, map_sub, map_tensNU_zero φ j hj h, map_tensNU_zero φ j hj h]
+  rw [mat_mapH, mat_extH, map_add (f := _), map_mul, map_sub, map_tensNU_zero φ j hj h, map_tensNU_zero φ j hj h]
   show _ = (1 : Matrix (Fin M) (Fin M) (R'' ⊗[F] E)) r s
   by_cases e : r = s <;> simp [Matrix.one_apply, e]
 
 theorem mapH_extH_self (φ : R' →ₐ[F] R) (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j b)
     (h : ∀ a, φ (j a) = a) (g : HA R σ J) : mapH σ J φ (extH σ J j hj g) = g := by
   refine HA_ext σ J fun r s => ?_
-  rw [mat_mapH, mat_extH, map_add, map_mul, map_sub, map_tensNU_self φ j hj h, map_tensNU_self φ j hj h]
+  rw [mat_mapH, mat_extH, map_add (f := _), map_mul, map_sub, map_tensNU_self φ j hj h, map_tensNU_self φ j hj h]
   simp
 
 variable [TopologicalSpace R] [IsTopologicalRing R] [TopologicalSpace R'] [IsTopologicalRing R']
@@ -166,7 +166,7 @@ theorem isInfEmb_unique (τ : E →+* ℂ) (θ θ' : Ainf F ⊗[F] E →+* ℂ) 
     have e : a ⊗ₜ[F] x = (a ⊗ₜ[F] (1 : E)) * ((1 : Ainf F) ⊗ₜ[F] x) := by
       rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
     rw [e, map_mul, map_mul, h.1, h'.1, congrFun key a]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem infMat_infEmb (τ : E →+* ℂ) (g : GA hc V) :
     Formalism.MainNotions.StandardLattice.infMat hc.sig V.gram (infEmb hc τ) g = (realComp hc V τ g).1.1 := rfl
@@ -221,7 +221,7 @@ theorem infTens_ext {z z' : Ainf F ⊗[F] E} (h : ∀ w : InfinitePlace F,
       conv_lhs => rw [this]
       exact TensorProduct.sum_tmul _ _ _
     | add x y hx hy =>
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       rw [← hx, ← hy]
   rw [key z, key z']
   exact Finset.sum_congr rfl fun w _ => by rw [h w]
@@ -253,7 +253,7 @@ theorem eq_or_conj_of_placeOf {τ τ' : E →+* ℂ} (h : placeOf F τ = placeOf
     exact h0 (RingHom.ext hcon)
   have a1 := hfix (x + star x) (by simp [add_comm])
   have a2 := hfix ((x - star x) * (x - star x)) (by simp only [star_mul, star_sub, star_star]; ring)
-  simp only [map_add, map_mul, map_sub] at a1 a2
+  simp only [map_add (f := _), map_mul, map_sub] at a1 a2
   have a3 : τ x - τ (star x) = -(τ' x - τ' (star x)) := by
     rcases mul_self_eq_mul_self_iff.1 a2 with e | e
     · exact absurd (by linear_combination (a1 + e) / 2) hx
@@ -262,7 +262,7 @@ theorem eq_or_conj_of_placeOf {τ τ' : E →+* ℂ} (h : placeOf F τ = placeOf
   ext y
   have b1 := hfix (y + star y) (by simp [add_comm])
   have b2 := hfix ((y - star y) * (x - star x)) (by simp only [star_mul, star_sub, star_star]; ring)
-  simp only [map_add, map_mul, map_sub] at b1 b2
+  simp only [map_add (f := _), map_mul, map_sub] at b1 b2
   rw [a3] at b2
   have b3 : τ y - τ (star y) = -(τ' y - τ' (star y)) :=
     mul_right_cancel₀ a4 (by linear_combination -b2)

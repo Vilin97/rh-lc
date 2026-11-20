@@ -48,7 +48,7 @@ theorem exists_open_fix_algF {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : Inf
     obtain ⟨U, hU, h⟩ := hx
     obtain ⟨U', hU', h'⟩ := hy
     refine ⟨U ⊓ U', by rw [Subgroup.coe_inf]; exact hU.inter hU', fun k hk hkf => ?_⟩
-    rw [map_add, h k (Subgroup.mem_inf.1 hk).1 hkf, h' k (Subgroup.mem_inf.1 hk).2 hkf]
+    rw [map_add (f := _), h k (Subgroup.mem_inf.1 hk).1 hkf, h' k (Subgroup.mem_inf.1 hk).2 hkf]
   | smul c x _ hx =>
     obtain ⟨U, hU, h⟩ := hx
     exact ⟨U, hU, fun k hk hkf => by rw [map_smul, h k hk hkf]⟩

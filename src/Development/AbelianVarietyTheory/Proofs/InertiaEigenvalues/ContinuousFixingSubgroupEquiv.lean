@@ -223,7 +223,7 @@ theorem step_of_duality (χ ψ : G →* ℤ_[l]ˣ) (N : ℕ)
   have hz : (fun p => π (d p)) ∈ Z2 ((charRep (redChar ψ (N + 1))).comp (MonoidHom.id G)) := by
     refine ⟨(continuous_toZModPow _).comp hd.1, fun g h k => ?_⟩
     have h1 := congrArg π (hd.2 g h k)
-    simp only [charRep_apply, map_sub, map_add, map_mul, map_zero] at h1
+    simp only [charRep_apply, map_sub, map_add (f := _), map_mul, map_zero] at h1
     exact h1
   have hx : (π ((l : ℤ_[l]) ^ N)) • (Submodule.Quotient.mk ⟨_, hz⟩ :
       H2 ((charRep (redChar ψ (N + 1))).comp (MonoidHom.id G))) = 0 := by
@@ -241,7 +241,7 @@ theorem step_of_duality (χ ψ : G →* ℤ_[l]ˣ) (N : ℕ)
   rw [← Ideal.mem_span_singleton, ← PadicInt.ker_toZModPow, RingHom.mem_ker, ← hπ]
   have h1 := congrFun hcd (g, h)
   change π (ψ g : ℤ_[l]) * c h - c (g * h) + c g = π ((l : ℤ_[l]) ^ N) * π (d (g, h)) at h1
-  simp only [d1_apply, charRep_apply, map_sub, map_add, map_mul π, map_natCast,
+  simp only [d1_apply, charRep_apply, map_sub, map_add (f := _), map_mul π, map_natCast,
     ZMod.natCast_zmod_val]
   rw [h1, sub_self]
 

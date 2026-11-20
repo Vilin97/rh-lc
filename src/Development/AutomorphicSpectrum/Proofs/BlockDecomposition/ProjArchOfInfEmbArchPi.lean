@@ -166,7 +166,7 @@ theorem map_evW_fst (w : InfinitePlace F) (z : AF F ⊗[F] E) :
       (Algebra.TensorProduct.map (fstA F) (AlgHom.id F E) z) = compInf F E w z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e => rfl
 
 theorem tens_prod_ext {F E A B : Type} [Field F] [Field E] [Algebra F E] [CommRing A] [CommRing B] [Algebra F A]
@@ -183,7 +183,7 @@ theorem tens_prod_ext {F E A B : Type} [Field F] [Field E] [Algebra F E] [CommRi
     induction z with
     | tmul x y => simp [← TensorProduct.add_tmul]
     | add x y hx hy =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [add_add_add_comm, ← hx, ← hy]
   rw [hz z, hz z', a, b]
 

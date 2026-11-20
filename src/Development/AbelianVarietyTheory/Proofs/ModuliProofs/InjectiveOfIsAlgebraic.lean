@@ -320,11 +320,11 @@ theorem exists_level (I : TateIsoQ D P oa F') (eta : D.La → QkPt P F l.M) (eta
       rw [← map_smul]
       exact (equiv_iff_cls hB oa _ _).1 (hM _ (Submodule.smul_mem_smul hm Submodule.mem_top))
   refine ⟨{ eta := eta', etaA := etaA
-            eta_add := fun a a' => (add_iff_ext hB oa f hf _ _ _).2 (by rw [eM, eM, eM, map_add, smul_add])
+            eta_add := fun a a' => (add_iff_ext hB oa f hf _ _ _).2 (by rw [eM, eM, eM, map_add (f := _), smul_add])
             eta_lin := fun x a => (act_iff_ext hB oa f hf _ _ _).2 (by rw [eM, eM, map_smul, smul_comm])
             eta_ker := fun a => ?_
             eta_onto := fun p hp => ?_
-            etaA_add := fun a a' => (add_iff_ext hB oa f hf _ _ _).2 (by rw [eA, eA, eA, map_add])
+            etaA_add := fun a a' => (add_iff_ext hB oa f hf _ _ _).2 (by rw [eA, eA, eA, map_add (f := _)])
             etaA_lin := fun x a => (act_iff_ext hB oa f hf _ _ _).2 (by rw [eA, eA, map_smul])
             etaA_ker := fun a => by rw [zero_iff_ext hB oa f hf, eA, evLin_eq_zero]
             etaA_onto := fun p => (evLin_onto hB I l.A_pos (qkExt hB f hf p)).imp fun a k =>

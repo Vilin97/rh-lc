@@ -119,7 +119,7 @@ theorem arch_bump_trig : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [F
   obtain ⟨s, c, hb, hl⟩ := exists_bounded_trig 0 χ
     (fun w => Complex.continuous_exp.comp (continuous_const.mul (Complex.continuous_ofReal.comp
       (hT.comp (continuous_id.dotProduct continuous_const)))))
-    (fun a b x => by simp only [χ, dotProduct_add, map_add, Complex.ofReal_add, mul_add, Complex.exp_add])
+    (fun a b x => by simp only [χ, dotProduct_add, map_add (f := _), Complex.ofReal_add, mul_add, Complex.exp_add])
     (fun x => by simp [χ])
     (fun a x => by simp [χ, Complex.norm_exp])
     exists_char_ne f f.continuous (fun u => hf u)

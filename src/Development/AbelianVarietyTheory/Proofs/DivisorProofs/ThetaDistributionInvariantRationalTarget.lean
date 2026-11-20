@@ -63,7 +63,7 @@ theorem exists_idempotentUnitEmbeddings_character_relation {R E H : Type} [CommR
   have e1 := cut_add h1 h3 h2 h4 (i u)
   have e3 : (cut ε h1 (i (star u)) : R) = σ (cut _ h3 (i u) : R) := by
     show ε * j (star (u : E)) + (1 - ε) = σ (σ ε * j u + (1 - σ ε))
-    rw [map_add, map_mul, map_sub, map_one, hσ, hj]
+    rw [map_add (f := _), map_mul, map_sub, map_one, hσ, hj]
   have e2 := hη (cut _ h3 (i u)) (cut _ h3 (i u) * cut ε h1 (i (star u))) (by rw [Units.val_mul, e3])
   show η (cut _ h4 (i u)) * η (cut ε h1 (i (star u))) = η (cut ε h1 (i u))
   rw [e1, map_mul, mul_assoc, ← map_mul, e2, mul_one]
@@ -309,7 +309,7 @@ theorem exists_cartan_refl (V : HSp D) (x : Fin V.rank → D.host.E) (c : D.host
   refine ⟨s, h1, ?_⟩
   have e : (1 + c • Matrix.vecMulVec x (star x ᵥ* V.gram)).map (tauE D τ) =
       1 + tauE D τ c • Matrix.vecMulVec (tauE D τ ∘ x) (star (tauE D τ ∘ x) ᵥ* gramAt D V τ) := by
-    rw [← RingHom.mapMatrix_apply, map_add, map_one, e0]
+    rw [← RingHom.mapMatrix_apply, map_add (f := _), map_one, e0]
     congr 1
     ext i j
     show tauE D τ (c * (x i * (star x ᵥ* V.gram) j)) = _

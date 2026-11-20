@@ -47,7 +47,7 @@ theorem exists_avg_form {H : Type} [Group H] [TopologicalSpace H] [IsTopological
     (hc v v').integrable_of_hasCompactSupport (isClosed_tsupport _).isCompact
   refine ⟨LinearMap.mk₂ ℂ (fun v v' => ∫ k, Λ (ρ k⁻¹ v) * Λ' (ρ' k⁻¹ v') ∂κ) ?_ ?_ ?_ ?_, fun v v' => rfl, ?_⟩
   · intro v₁ v₂ v'
-    simp only [map_add, add_mul]
+    simp only [map_add (f := _), add_mul]
     exact integral_add (hint _ _) (hint _ _)
   · intro c v v'
     simp only [map_smul, smul_eq_mul]
@@ -56,7 +56,7 @@ theorem exists_avg_form {H : Type} [Group H] [TopologicalSpace H] [IsTopological
     funext k
     ring
   · intro v v₁ v₂
-    simp only [map_add, mul_add]
+    simp only [map_add (f := _), mul_add]
     exact integral_add (hint _ _) (hint _ _)
   · intro c v v'
     simp only [map_smul, smul_eq_mul]

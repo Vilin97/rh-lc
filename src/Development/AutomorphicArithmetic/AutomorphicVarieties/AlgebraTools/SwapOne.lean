@@ -47,14 +47,14 @@ private theorem step {R : Type} [CommRing R] [IsDomain R] {n : ℕ} {q : R} {H :
   · have e1 : (C q * rename (swap a c) y + (C q - 1) * (X a * z) : MvPolynomial (Fin n) R) =
         q • rename (swap a c) y + (q - 1) • (X a * z) := by
       rw [smul_eq_C_mul, smul_eq_C_mul, map_sub, map_one]
-    rw [hT, e1, map_add, map_smul, map_smul, add_mul, add_mul, mul_assoc, swap_one b h, mul_smul_comm,
+    rw [hT, e1, map_add (f := _), map_smul, map_smul, add_mul, add_mul, mul_assoc, swap_one b h, mul_smul_comm,
       smul_mul_assoc q]
   · have hne : algebraMap (MvPolynomial (Fin n) R) K (X a - X c) ≠ 0 := by
       rw [Ne, map_eq_zero_iff _ (IsFractionRing.injective _ K), sub_eq_zero]
       exact fun e => hac (X_injective e)
     have hz' := congrArg (algebraMap (MvPolynomial (Fin n) R) K) hz
     rw [div_mul_eq_mul_div, div_mul_eq_mul_div, ← add_div, eq_div_iff hne]
-    simp only [map_add, map_mul, map_sub, map_one] at hz' ⊢
+    simp only [map_add (f := _), map_mul, map_sub, map_one] at hz' ⊢
     linear_combination (algebraMap (MvPolynomial (Fin n) R) K (C q) - 1) *
       algebraMap (MvPolynomial (Fin n) R) K (X a) * hz'
 

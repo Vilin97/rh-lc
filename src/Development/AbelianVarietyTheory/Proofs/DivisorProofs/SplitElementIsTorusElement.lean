@@ -77,7 +77,7 @@ theorem isIdTorusElt_of_isSplitElt {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r :
     (fun a => by
       induction a using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (sigma_sigma h x))
     ((c1 J).trans (congrArg (adMat F) (Matrix.ext fun i j => hJ.1 i j)))
     ((c2 X X).trans (hW.xx ▸ Matrix.map_zero _ (map_zero _))) ((c2 Y Y).trans (hW.yy ▸ Matrix.map_zero _ (map_zero _)))
@@ -124,7 +124,7 @@ theorem isIdTorusElt_of_isSplitElt {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {r :
         change ψ (m.1 i j) = (1 : Matrix (Fin n) (Fin n) _) i j
         rw [he]
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [Matrix.add_apply, Matrix.mul_apply (N := cT _ _ * _), mul_diagonal, map_add, map_sum, map_mul, map_sub,
+          simp only [Matrix.add_apply, Matrix.mul_apply (N := cT _ _ * _), mul_diagonal, map_add (f := _), map_sum, map_mul, map_sub,
           h1, h2, map_one, sub_self, mul_zero, zero_mul, Finset.sum_const_zero, add_zero, Matrix.one_apply, apply_ite ψ,
           map_zero])
       rw [e1, e2]

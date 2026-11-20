@@ -25,5 +25,5 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.completeFin :
     | add a b ha hb =>
       obtain ⟨u, hu⟩ := ha
       obtain ⟨v, hv⟩ := hb
-      exact ⟨u + v, by rw [map_add, map_add, hu, hv]⟩
+      exact ⟨u + v, by rw [map_add (f := _), map_add (f := _), hu, hv]⟩
   exact { toIsHausdorff := hH, toIsPrecomplete := hP }

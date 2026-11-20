@@ -109,7 +109,7 @@ theorem actK_mul_apply (π : Representation ℂ (GL (Fin n) ℚ_[g]) V) {v : V} 
   | single x c =>
     induction b using MonoidAlgebra.induction_linear with
     | zero => simp [actK_zero]
-    | add b b' hb hb' => simp only [mul_add, actK_add, hb, hb', LinearMap.add_apply, map_add]
+    | add b b' hb hb' => simp only [mul_add, actK_add, hb, hb', LinearMap.add_apply, map_add (f := _)]
     | single y d =>
       rw [MonoidAlgebra.single_mul_single, actK_single, actK_single, actK_single]
       simp only [LinearMap.smul_apply, map_smul, lift_mul_apply π hv, smul_smul, mul_comm]

@@ -155,7 +155,7 @@ theorem contract_twoMap (χ : CartierDual R B) (u : B ⊗[R] B) :
     TensorProduct.rid K _ ((CartierDual.baseChange R K B ((1 : K) ⊗ₜ χ)).ofConv.lTensor _ (twoMap (K := K) B u)) =
       (1 : K) ⊗ₜ[R] TensorProduct.rid R _ (χ.ofConv.lTensor _ u) := by
   induction u with
-  | add x y hx hy => simp only [map_add, hx, hy, tmul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, tmul_add]
   | tmul a b =>
     have := CartierDual.baseChange_tmul_tmul K 1 1 χ b
     rw [twoMap_tmul, LinearMap.lTensor_tmul, LinearMap.lTensor_tmul, rid_tmul, rid_tmul]
@@ -167,7 +167,7 @@ theorem contract_map {D C : Type} [CommRing D] [Algebra K D] [CommRing C] [Algeb
     κ (TensorProduct.rid K _ ((ψ ∘ₗ κ.toLinearMap).lTensor _ u)) =
       TensorProduct.rid K _ (ψ.lTensor _ (Algebra.TensorProduct.map κ κ u)) := by
   induction u with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a b => simp
 
 end Algebra

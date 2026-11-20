@@ -62,7 +62,7 @@ theorem piTensor_leviProj (g : (Σ i, c i) ≃ Unit) (ψ : α → kˣ →* ℂˣ
       rw [detChar_apply, det_eq_one_of_ne g hb, map_one, Units.val_one]
     · simp
   induction w using PiTensorProduct.induction_on with
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul_tprod r x =>
     rw [map_smul, piTensor_tprod, smul_comm, ← hd, ← MultilinearMap.map_smul_univ]
     congr 2

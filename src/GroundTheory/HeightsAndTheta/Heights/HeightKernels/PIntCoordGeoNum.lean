@@ -98,7 +98,7 @@ theorem red_substR (p : ℕ) (A : Matrix T T₂ ℤ) (f : MRingOver ℤ (dualBlo
       substR (ZMod p) A (MvPolynomial.map (Int.castRingHom (ZMod p)) f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [substR]
-  | add f g hf hg => rw [map_add, map_add, hf, hg, map_add, map_add]
+  | add f g hf hg => rw [map_add (f := _), map_add (f := _), hf, hg, map_add (f := _), map_add (f := _)]
   | mul_X f q hf =>
     rw [map_mul, map_mul, hf, map_mul, map_mul, map_X]
     congr 1

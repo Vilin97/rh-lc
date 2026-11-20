@@ -36,7 +36,7 @@ theorem exists_label : ∀ (o' Ω : Type) [CommRing o'] [Field Ω] [Algebra o' �
     { toFun := fun χ => w ^ (lam (Multiplicative.toAdd χ)).val
       map_one' := by simp
       map_mul' := fun a b => by
-        rw [toAdd_mul, map_add, ZMod.val_add, ← pow_eq_pow_mod _ hw, pow_add] }
+        rw [toAdd_mul, map_add (f := _), ZMod.val_add, ← pow_eq_pow_mod _ hw, pow_add] }
   have hτ : τ ^ (S.r * S.N) = 1 := by
     refine MonoidHom.ext fun χ => ?_
     rw [MonoidHom.pow_apply, MonoidHom.one_apply]

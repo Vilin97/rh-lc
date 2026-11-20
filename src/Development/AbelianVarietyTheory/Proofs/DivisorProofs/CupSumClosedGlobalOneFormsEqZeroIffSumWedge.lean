@@ -72,7 +72,7 @@ theorem cupSum_eq_zero_iff_wsum_eq_zero (R : Type) [CommRing R] (C : Type) [Cate
       simp only [θ, map_sub, p1_D]
       have hgT : g T' = mp F φ (g T) + (cz.1.1 T T' φ - e.1 T T' φ) := by rw [← hg' T T' φ]; abel
       rw [ha T T' φ, cechDeRhamTotalCocyclesOne.conn cz φ, hgT]
-      simp only [map_add, map_sub]
+      simp only [map_add (f := _), map_sub]
       abel
     have hθc : (⟨θ, hθ⟩ : Glob1 F) ∈ Closed1 F := hc ▸ Submodule.mem_top
     funext T

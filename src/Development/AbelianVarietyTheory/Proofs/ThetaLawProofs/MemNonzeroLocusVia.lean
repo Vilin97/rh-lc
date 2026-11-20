@@ -69,7 +69,7 @@ theorem snd_map {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') (F : D
     (a : DualNumber R) : (F a).snd = f a.snd := by
   have : a = algebraMap R _ a.fst + algebraMap R _ a.snd * DualNumber.eps := by
     ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
-  conv_lhs => rw [this, map_add, map_mul, h₁, h₁, h₂]
+  conv_lhs => rw [this, map_add (f := _), map_mul, h₁, h₁, h₂]
   simp [TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem snd_pow_mul {R : Type} [CommRing R] (a b : DualNumber R) (n : ℕ) (hb : b.fst = 0) :

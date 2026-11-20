@@ -51,7 +51,7 @@ theorem exists_normOne_mul_compact : ∀ (K : Type) [NontriviallyNormedField K] 
     rw [this]; linear_combination -he.eq - hes
   have hσf : σ f = f := by
     have h := congrArg σ hsum
-    rw [map_add, map_add, hσσ, map_one] at h
+    rw [map_add (f := _), map_add (f := _), hσσ, map_one] at h
     linear_combination h - hsum
   letI : ContinuousStar K := ⟨(Isometry.of_dist_eq fun x y => by
     rw [dist_eq_norm, dist_eq_norm, ← star_sub, hK]).continuous⟩
@@ -107,7 +107,7 @@ theorem exists_normOne_mul_compact : ∀ (K : Type) [NontriviallyNormedField K] 
       (σ zi * σ z') * hss + σ e * hsz1 + (σ zi + σ z') * hse + hf.eq + hsum
   have hprod' : tiA * tA = 1 := by rw [mul_comm]; exact hprod
   have hσt : σ tA = tiA := by
-    rw [htA, htiA]; simp only [map_add, map_mul, hσσ, hσf]; ring
+    rw [htA, htiA]; simp only [map_add (f := _), map_mul, hσσ, hσf]; ring
   let t : GL (Fin n) K := ⟨tA, tiA, congrArg Subtype.val hprod, congrArg Subtype.val hprod'⟩
   have hinvu : ((u⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) = ((zi * σ zi : A) : Matrix (Fin n) (Fin n) K) := by
     apply Units.inv_eq_of_mul_eq_one_right

@@ -67,7 +67,7 @@ theorem exists_const (i : X.Tw) (M : ℕ) (ι : Type) [Fintype ι] (x : abelian�
     obtain ⟨b, hb⟩ := hq
     refine ⟨a + b, ?_⟩
     have := add_mem ha hb
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     convert this using 1
     ring
   | mul_X p q _ =>

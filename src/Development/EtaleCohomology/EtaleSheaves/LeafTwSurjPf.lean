@@ -14,7 +14,7 @@ theorem mem_add {U : Over (Spec (CommRingCat.of B))} (s t : ToType ((Pr q k _).o
     Presheaf.imageSieve (cmap ζ k) (s + t) ∈ Scheme.etaleTopology.over _ U := by
   refine GrothendieckTopology.superset_covering _ ?_ (GrothendieckTopology.intersection_covering _ hs ht)
   rintro V f ⟨⟨a, ha⟩, ⟨b, hb⟩⟩
-  exact ⟨a + b, by rw [map_add, ha, hb, map_add]⟩
+  exact ⟨a + b, by rw [map_add (f := _), ha, hb, map_add (f := _)]⟩
 
 theorem mem_smul {U : Over (Spec (CommRingCat.of B))} (c : ULift.{1} (ZMod q)) (s : ToType ((Pr q k _).obj (op U)))
     (hs : Presheaf.imageSieve (cmap ζ k) s ∈ Scheme.etaleTopology.over _ U) :

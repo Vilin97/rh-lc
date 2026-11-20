@@ -41,7 +41,7 @@ theorem cA_eq_sigR (σ : E →ₐ[F] E) (x : AE F E) : cA σ x = sigR (AF F) σ 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem UG_eq_HR (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) :
     UG (cA σ) (incM F J) = HR (AF F) σ Jᵀ := by

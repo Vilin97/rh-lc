@@ -41,9 +41,9 @@ theorem finrank_add_finrank_orthogonal [FiniteDimensional E W] {h : W →ₗ[E] 
 
 def form (h : W →ₗ[E] W →ₛₗ[σ] E) : (W × W) →ₗ[E] (W × W) →ₛₗ[σ] E :=
   LinearMap.mk₂'ₛₗ (RingHom.id E) σ (fun p q => h p.1 q.1 - h p.2 q.2)
-    (fun p p' q => by simp only [Prod.fst_add, Prod.snd_add, map_add, LinearMap.add_apply]; ring)
+    (fun p p' q => by simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), LinearMap.add_apply]; ring)
     (fun c p q => by simp [mul_sub])
-    (fun p q q' => by simp only [Prod.fst_add, Prod.snd_add, map_add]; ring)
+    (fun p q q' => by simp only [Prod.fst_add, Prod.snd_add, map_add (f := _)]; ring)
     (fun c p q => by simp [mul_sub])
 
 @[simp] theorem form_apply (h : W →ₗ[E] W →ₛₗ[σ] E) (p q : W × W) :
@@ -240,7 +240,7 @@ theorem map_prodMap_transvection {ξ : W} (hξ : ξ ∈ left I) (b : E) {u : W �
   · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro v hv
     have h0 : h (u v) ξ = 0 := by simp [hv]
-    rw [hu, map_add, LinearMap.add_apply, map_smul, LinearMap.smul_apply,
+    rw [hu, map_add (f := _), LinearMap.add_apply, map_smul, LinearMap.smul_apply,
       left_isotropic hI ξ hξ ξ hξ, smul_zero, add_zero] at h0
     rw [hu, h0] at hv
     simpa using hv

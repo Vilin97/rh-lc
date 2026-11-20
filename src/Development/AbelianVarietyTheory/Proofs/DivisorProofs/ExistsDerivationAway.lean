@@ -79,8 +79,8 @@ theorem deriv_ext_basicOpen : ∀ (X : Scheme.{0}) (U W : X.affineOpens) (hWU : 
   have hloc : letI := φ.toAlgebra; IsLocalization.Away f Γ(Sp R, U'.1) :=
     (isAffineOpen_top (Sp R)).isLocalization_basicOpen f
   obtain ⟨D'', hD''⟩ := exists_derivation_away φ f hloc (fun r => e.inv.hom (D' (e.hom.hom r)))
-    (fun x y => by simp only [map_add]) (fun x y => by
-      simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add]
+    (fun x y => by simp only [map_add (f := _)]) (fun x y => by
+      simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add (f := _)]
       simp)
   refine ⟨D'', hD'', ?_⟩
 
@@ -131,7 +131,7 @@ theorem deriv_ext_basicOpen : ∀ (X : Scheme.{0}) (U W : X.affineOpens) (hWU : 
   obtain ⟨a, M, hM⟩ := key θ
   have e2 := congrArg (fun x => D'' (ψW x)) hM
   have e3 := congrArg (fun x => ψW (DW x)) hM
-  simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add] at e2 e3
+  simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add (f := _)] at e2 e3
   rw [hres, hres] at e2
   have hu : IsUnit (ψW (resUW (h ^ M))) := by rw [hψ, map_pow]; exact hunit.pow M
   exact hu.mul_left_cancel (by linear_combination e2 - e3)

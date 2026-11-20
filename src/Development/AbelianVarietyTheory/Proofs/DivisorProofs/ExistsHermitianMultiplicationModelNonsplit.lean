@@ -223,7 +223,7 @@ theorem exists_isModel : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
 
   let lam : B.A →ₗ[K.E] K.E :=
     { toFun := fun a => e.symm (stdH w (ψ a) v)
-      map_add' := by intro a b; rw [map_add, stdH_add_left, map_add]
+      map_add' := by intro a b; rw [map_add (f := _), stdH_add_left, map_add (f := _)]
       map_smul' := by
         intro r a
         rw [hψs, stdH_smul_left, map_mul, RingEquiv.symm_apply_apply]

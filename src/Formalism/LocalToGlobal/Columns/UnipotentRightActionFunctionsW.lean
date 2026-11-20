@@ -195,7 +195,7 @@ def GSD.wmCls {K : Type} [Field K] [NumberField K] [StarRing K] (S S' : GSD K) (
     ∑ c, (((S.toCSD h).wt c : K))⁻¹ • k (S.outSec.rep c) d' ((φ : S.D → S.V) (S.outSec.rep c))
   map_add' φ ψ := by
     funext d'
-    simp only [Submodule.coe_add, Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib]
+    simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
   map_smul' c φ := by
     funext d'
     simp only [Submodule.coe_smul, Pi.smul_apply, map_smul, RingHom.id_apply, Finset.smul_sum]
@@ -225,7 +225,7 @@ def GSD.wmIpL {K : Type} [Field K] [NumberField K] [StarRing K] (S : GSD K) (h :
   LinearMap.mk₂'ₛₗ (starRingEnd K) (RingHom.id K) (fun φ ψ => S.ip h φ ψ)
     (by
       intro φ φ' ψ
-      simp only [GSD.ip, GSD.ipOf, CSD.csum, Submodule.coe_add, Pi.add_apply, map_add, LinearMap.add_apply, mul_add,
+      simp only [GSD.ip, GSD.ipOf, CSD.csum, Submodule.coe_add, Pi.add_apply, map_add (f := _), LinearMap.add_apply, mul_add,
         Finset.sum_add_distrib])
     (by
       intro c φ ψ
@@ -235,7 +235,7 @@ def GSD.wmIpL {K : Type} [Field K] [NumberField K] [StarRing K] (S : GSD K) (h :
       ring)
     (by
       intro φ ψ ψ'
-      simp only [GSD.ip, GSD.ipOf, CSD.csum, Submodule.coe_add, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib])
+      simp only [GSD.ip, GSD.ipOf, CSD.csum, Submodule.coe_add, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib])
     (by
       intro c φ ψ
       simp only [GSD.ip, GSD.ipOf, CSD.csum, Submodule.coe_smul, Pi.smul_apply, map_smul, smul_eq_mul, Finset.mul_sum,

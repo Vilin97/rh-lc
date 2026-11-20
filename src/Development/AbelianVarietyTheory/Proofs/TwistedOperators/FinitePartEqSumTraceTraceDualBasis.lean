@@ -50,7 +50,7 @@ theorem coords_gen (F E : Type) [Field F] [NumberField F] [Field E] [Algebra F E
     rw [TensorProduct.tmul_sum]
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [mul_comm, ← Algebra.smul_def, TensorProduct.smul_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy, mul_add, ← Finset.sum_add_distrib, TensorProduct.add_tmul]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add, ← Finset.sum_add_distrib, TensorProduct.add_tmul]
 
 end GlobalTheory.TwistCoords
 

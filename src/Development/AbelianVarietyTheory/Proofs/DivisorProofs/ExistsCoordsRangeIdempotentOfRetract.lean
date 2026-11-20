@@ -40,7 +40,7 @@ theorem idem_retract_coords : ∀ {C : Type} [CommRing C] [IsLocalRing C] (I : I
     { toFun := fun w => β.coord k ⟨s (p w), mem w⟩
       map_add' := by
         intro a c
-        rw [← map_add]; congr 1; ext1; simp
+        rw [← map_add (f := _)]; congr 1; ext1; simp
       map_smul' := by
         intro c w
         have e : (⟨s (p (c • w)), mem _⟩ : P) = (Ideal.Quotient.mk I c) • ⟨s (p w), mem w⟩ := by

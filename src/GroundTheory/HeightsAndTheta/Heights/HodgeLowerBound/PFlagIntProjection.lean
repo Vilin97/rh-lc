@@ -64,7 +64,7 @@ theorem muPoly_rename (w : Ψ → Perm (Fin N)) (hw : IsBlockPerm Ψ N j w) :
 def flagIntMul (Q : RootPoly Ψ N) : RootPoly Ψ N →ₗ[ℚ] ℚ where
   toFun P := flagInt Ψ N (Q * P)
   map_add' P P' := by
-    simp only [flagInt, antisym, mul_add, map_add, smul_add, Finset.sum_add_distrib, MvPolynomial.coeff_add]
+    simp only [flagInt, antisym, mul_add, map_add (f := _), smul_add, Finset.sum_add_distrib, MvPolynomial.coeff_add]
   map_smul' c P := by
     simp only [flagInt, antisym, mul_smul_comm, map_smul, smul_comm _ c, ← Finset.smul_sum, coeff_smul,
       smul_eq_mul, RingHom.id_apply]

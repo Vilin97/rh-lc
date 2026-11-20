@@ -14,7 +14,7 @@ open Formalism.L2
 
 theorem paramV_half (R : Ranks) (h : HCParam R) (j : Fin R.m) :
     NG.paramV R h j (1 / 2) = (param h j).map (fun p => ((p - 1 / 2 : ℚ) : ℂ)) := by
-  simp only [NG.paramV, param, run, Multiset.map_add, Multiset.map_map]
+  simp only [NG.paramV, param, run, Multiset.map_add (f := _), Multiset.map_map]
   congr 1
   · congr 1
     · refine Multiset.map_congr rfl fun x _ => ?_

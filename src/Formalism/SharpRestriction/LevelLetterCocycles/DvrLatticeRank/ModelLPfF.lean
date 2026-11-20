@@ -53,7 +53,7 @@ theorem nl_smulA {b : LetA O n} (hb : b ∈ W.AΔ) {x : LA W T π' c} (hx : x �
     refine Submodule.subset_span ⟨m, _, y, MLE.rep_smul W T π' Eπ h' c hr hb, fun τ ζ hpt => ?_⟩
     exact MLB.goodF_mul W T c ζ τ h' b _ y (hg τ ζ hpt)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul o x _ hx => rw [LinearMap.map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem expS_alg_mul (ζ : LL) (o : O) {m : ℕ} (a : Fin m → LetA O n) (y : Fin m → W.DD T) :

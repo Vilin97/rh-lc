@@ -39,7 +39,7 @@ theorem exists_lastMax {w : ℕ → ℝ} (hw : Tendsto w atTop (𝓝 0)) {n₀ :
 private theorem coeff_E_mul' {K : Type} [NormedField K] [IsUltrametricDist K] (l e : ℕ)
     (h : K⟦X⟧) (n : ℕ) :
     coeff n (E K l e * h) = (if e ≤ n then coeff (n - e) h else 0) + (l : K) * coeff n h := by
-  rw [E, add_mul, map_add, coeff_X_pow_mul', ← map_natCast (C : K →+* K⟦X⟧) l, coeff_C_mul]
+  rw [E, add_mul, map_add (f := _), coeff_X_pow_mul', ← map_natCast (C : K →+* K⟦X⟧) l, coeff_C_mul]
 
 variable {K : Type} [NormedField K] [IsUltrametricDist K] (l e : ℕ) [Fact l.Prime]
   [NormedAlgebra ℚ_[l] K] [NeZero e]

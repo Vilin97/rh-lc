@@ -204,7 +204,7 @@ theorem phiVal_pull (hG : GlobalFnsSt) {k : ℕ} (p₀ : QkPt D F k) (p₀' : Qk
   obtain ⟨Ω, hΩ⟩ : ∃ Ω : (T' ⟶ D'.P.A) → (T'.left.presheaf.stalk z)ˣ,
       Ω = fun x => gw hD.w x.left z (J (x.left ≫ (hD.e.hom.left ≫ pullback.fst D.P.A.hom (specOf φ)))) (J' x.left) := ⟨_, rfl⟩
   have hb := hg.1
-  have e := H (hD.xe α) (hD.xe (α + p₀'.y)) (by rw [map_add, hy, AddEquiv.apply_symm_apply]) _ (liftB hT hΘ₁ ρ) z J hJ
+  have e := H (hD.xe α) (hD.xe (α + p₀'.y)) (by rw [map_add (f := _), hy, AddEquiv.apply_symm_apply]) _ (liftB hT hΘ₁ ρ) z J hJ
   have v₂ := sval_rel hD hT hΘ₁ hΘ₂ _ _ _ (H₂ (α + p₀'.y)) ρ hJ hJ' Ω hΩ
   have v₁ := sval_rel hD hT hΘ₁ hΘ₂ _ _ _ (H₁ α) (ρ ≫ DegPre.trPt D' F p₀'.g.b) hJ hJ' Ω hΩ
   let σ : T' ⟶ TF (R := R') F := ρ ≫ fst _ _

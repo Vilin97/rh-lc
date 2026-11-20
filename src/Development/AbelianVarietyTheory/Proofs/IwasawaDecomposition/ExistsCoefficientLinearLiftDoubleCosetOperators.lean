@@ -128,7 +128,7 @@ theorem heckeLift (D : D7) (M : MtFam D) (C : NChoice D) (tup : D.what₂.Tup �
       Mw.real (D.what₂.jMt (D.what₂.muTw w) (j' + 1) (T0 x + T0 y))
     have := Plin _ (hTS (D.what₂.jMt (D.what₂.muTw w) (j' + 1) x)) _ (hTS (D.what₂.jMt (D.what₂.muTw w) (j' + 1) y)) 1
     rw [one_smul, one_smul] at this
-    rw [hT0, map_add, map_add, map_add, map_add, hT0, hT0, this]
+    rw [hT0, map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hT0, hT0, this]
   have hsmul : ∀ (a : D.what₂.LL) x, T0 (a • x) = a • T0 x := by
     intro a x
     apply hRJ

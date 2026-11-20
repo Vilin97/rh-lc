@@ -15,7 +15,7 @@ open scoped ComplexOrder
 def conjEnd (g : ℕ) : Module.End ℂ (Fin g → ℂ) →+* Module.End ℂ (Fin g → ℂ) where
   toFun f :=
     { toFun := fun x => star (f (star x))
-      map_add' := fun x y => by simp only [star_add, map_add]
+      map_add' := fun x y => by simp only [star_add, map_add (f := _)]
       map_smul' := fun c x => by simp only [star_smul, map_smul, star_star, RingHom.id_apply] }
   map_one' := by ext x; simp
   map_mul' f f' := by ext x; simp
@@ -70,7 +70,7 @@ theorem differentiableOn_conj {n g : ℕ} {U U' : Set (Fin n → ℂ)} {f : (Fin
   obtain ⟨L, hL⟩ := hf (star t) (hU t ht)
   let L' : (Fin n → ℂ) →L[ℂ] (Fin g → ℂ) :=
     { toFun := fun v => star (L (star v))
-      map_add' := fun x y => by simp only [star_add, map_add]
+      map_add' := fun x y => by simp only [star_add, map_add (f := _)]
       map_smul' := fun c x => by simp only [star_smul, map_smul, star_star, RingHom.id_apply]
       cont := continuous_star.comp (L.continuous.comp continuous_star) }
   refine ⟨L', ?_⟩
@@ -158,7 +158,7 @@ theorem eqvBy_conj {R₁ R₂ R₁' R₂' : RiemLat E g Λ} {γ : Λ ≃ₗ[𝓞
   let e' : (Fin g → ℂ) ≃ₗ[ℂ] (Fin g → ℂ) :=
     { toFun := fun x => star (e (star x))
       invFun := fun x => star (e.symm (star x))
-      map_add' := fun x y => by simp only [star_add, map_add]
+      map_add' := fun x y => by simp only [star_add, map_add (f := _)]
       map_smul' := fun c x => by simp only [star_smul, map_smul, star_star, RingHom.id_apply]
       left_inv := fun x => by simp
       right_inv := fun x => by simp }

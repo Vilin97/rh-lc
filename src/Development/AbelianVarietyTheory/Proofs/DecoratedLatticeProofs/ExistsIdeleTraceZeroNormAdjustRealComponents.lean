@@ -60,9 +60,9 @@ private theorem scal_gen (σ : E →ₐ[F] E) (μ : E) (hμ : μ ≠ 0)
   let U : (AF F ⊗[F] E)ˣ := ⟨x, x', hxx, by rw [mul_comm]; exact hxx⟩
 
   have hshape : ∀ y, c (e * a + (1 - e) * y) = e * a + (1 - e) * c y := by
-    intro y; rw [map_add, map_mul, map_mul, map_sub, map_one, hce, hca]
+    intro y; rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, hce, hca]
   have hread : ∀ w y, compInf F E w (e * a + (1 - e) * y) = r w ⊗ₜ[F] (1 : E) := by
-    intro w y; rw [map_add, map_mul, map_mul, map_sub, map_one, hie, hia]; ring
+    intro w y; rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, hie, hia]; ring
   let M : (AF F ⊗[F] E)ˣ := Units.map (inclR (AF F) : E →+* AF F ⊗[F] E).toMonoidHom (Units.mk0 μ hμ)
   let P : (AF F ⊗[F] E)ˣ := U * Units.map c.toMonoidHom U
   refine ⟨U, M * P⁻¹, ?_, ?_, ?_⟩
@@ -75,7 +75,7 @@ private theorem scal_gen (σ : E →ₐ[F] E) (μ : E) (hμ : μ ≠ 0)
       _ = inclR (AF F) μ := by rw [h1, mul_one]; rfl
   · intro v
     change compFin F E v x = _
-    rw [hx, map_add, map_mul, map_mul, map_sub, map_one, hfe]; ring
+    rw [hx, map_add (f := _), map_mul, map_mul, map_sub, map_one, hfe]; ring
   · intro w
     set φ := compInf F E w with hφ
     set ρ : w.Completion ⊗[F] E := r w ⊗ₜ[F] (1 : E) with hρdef

@@ -98,7 +98,7 @@ theorem rank_factorIdem {γ : GL (Fin n) E} (hA : ClauseAlg σ J γ) (hP : Claus
     | zero => simp
     | tmul a p =>
       simp [ψ, incl, plusTensor, Algebra.TensorProduct.productMap_apply_tmul, Algebra.smul_def, mul_comm]; rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hψb : Function.Bijective ψ := by
     have : (ψ : E ⊗[F] P → L) = plusTensor σ J (γ : Matrix (Fin n) (Fin n) E) ∘ TensorProduct.comm F E P :=
       funext hψ
@@ -121,7 +121,7 @@ theorem rank_factorIdem {γ : GL (Fin n) E} (hA : ClauseAlg σ J γ) (hP : Claus
         refine ⟨a • ((((e.symm (Pi.single i x) : P) : L) : Matrix (Fin n) (Fin n) E) *ᵥ v), ?_⟩
         rw [hΦt, Matrix.mulVecLin_apply, Matrix.mulVec_smul, Matrix.mulVec_mulVec, factorIdem_mul]
         simp
-      | add x y hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     · rintro _ ⟨w, rfl⟩
       obtain ⟨l, rfl⟩ := hv.2 w
       obtain ⟨s, rfl⟩ := hψb.2 l
@@ -136,7 +136,7 @@ theorem rank_factorIdem {γ : GL (Fin n) E} (hA : ClauseAlg σ J γ) (hP : Claus
         change _ = factorIdem e i *ᵥ ((((a • (p : L)) : L) : Matrix (Fin n) (Fin n) E) *ᵥ v)
         rw [hc, Matrix.smul_mulVec, Matrix.mulVec_smul, Matrix.mulVec_mulVec, factorIdem_mul]
       | add x y hx hy =>
-        rw [map_add, map_add, map_add]; exact add_mem hx hy
+        rw [map_add (f := _), map_add (f := _), map_add (f := _)]; exact add_mem hx hy
   rw [Matrix.rank, ← hrange, LinearMap.finrank_range_of_inj hΦ]
 
 end GlobalTheory.FactorSplit

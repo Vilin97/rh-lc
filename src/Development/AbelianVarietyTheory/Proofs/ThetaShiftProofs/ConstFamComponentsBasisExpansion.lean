@@ -45,7 +45,7 @@ theorem finite_form_le {Y : Type} [AddCommGroup Y] [Module.Finite ℤ Y] (q : Li
   have a₂ := h0 (y + (y + (4 * n + 1) • v))
   have a₃ : q y y ≤ n := hy
   have a₄ : q (y + (4 * n + 1) • v) (y + (4 * n + 1) • v) ≤ n := hy'
-  simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul] at a₂ a₄
+  simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul] at a₂ a₄
   push_cast at a₂ a₄
   have a₅ : (0 : ℤ) ≤ n := Int.natCast_nonneg n
   nlinarith [mul_nonneg (mul_nonneg a₅ a₅) a₁.le, mul_nonneg a₅ a₁.le, mul_nonneg a₅ (sub_nonneg.2 (Int.add_one_le_of_lt a₁))]
@@ -64,7 +64,7 @@ theorem finite_expo_lt (α : a.D₀.X) (n : ℤ) : {mu | expo a j α mu < n}.Fin
     · exact (a.be_pos mu h).le
   have h₅ : a.be mu mu ≤ j * a.be mu mu := le_mul_of_one_le_left h₄ (by exact_mod_cast hj)
   show a.be (mu + α) (mu + α) ≤ _
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   omega
 
 include hj in
@@ -77,7 +77,7 @@ theorem exists_expo_bound (α : a.D₀.X) : ∃ m₀ : ℕ, ∀ m, m₀ ≤ m �
   · omega
 
 theorem map_add_nsmul (e : a.D₀.X ≃ₗ[𝓞 E] P.toPre.X) (α mu : a.D₀.X) : e (α + j • mu) = e α + j • e mu := by
-  rw [map_add, map_nsmul]
+  rw [map_add (f := _), map_nsmul]
 
 theorem eq_or_off (e : a.D₀.X ≃ₗ[𝓞 E] P.toPre.X) (j : ℕ) (α : a.D₀.X) (χ : P.toPre.X) :
     (∃ mu, e (α + j • mu) = χ) ∨ ∀ mu, e α + j • mu ≠ χ := by

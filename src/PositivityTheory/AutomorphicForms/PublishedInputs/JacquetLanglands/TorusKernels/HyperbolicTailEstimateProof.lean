@@ -73,7 +73,7 @@ theorem zfinV {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (k : Infini
   have hcap : ∀ v u, ∃ c : ℂ, TR.cap v u φ = c • φ := fun v u => by
     have h0 : Eop v 0 0 φ + Eop v 1 1 φ = 0 := by
       classical
-      rw [← lie_scalar hω hc (Pi.single v 1), TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add]
+      rw [← lie_scalar hω hc (Pi.single v 1), TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add (f := _)]
       congr 2
       ext i j
       fin_cases i <;> fin_cases j <;> simp
@@ -187,7 +187,7 @@ theorem kfin (hB : B1b) (k : InfinitePlace F → ℕ) (f : X (InfinitePlace F) �
       (gv v (Unitary.toUnits r)).val i 1 * (gv v (Unitary.toUnits r)).val j 1 = if i = j then 1 else 0 := by
     intro v i j
     have h := congrArg (fun m => (Pi.evalRingHom (fun _ : InfinitePlace F => ℝ) v) (m i j)) r.2.2
-    simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.star_apply, map_add, map_mul, Matrix.one_apply] at h
+    simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.star_apply, map_add (f := _), map_mul, Matrix.one_apply] at h
     rw [apply_ite (Pi.evalRingHom (fun _ : InfinitePlace F => ℝ) v), map_one, map_zero] at h
     exact h
   generalize Unitary.toUnits r = x at hr ⊢

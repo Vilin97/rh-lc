@@ -16,7 +16,7 @@ theorem prV_sigR {F E : Type} [Field F] [NumberField F] [CommRing E] [Algebra F 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul e a => simp [prV, sigR, evalV, Algebra.TensorProduct.map_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem prV_inclE {F E : Type} [Field F] [NumberField F] [CommRing E] [Algebra F E]
     (v : HeightOneSpectrum (𝓞 F)) (e : E) :

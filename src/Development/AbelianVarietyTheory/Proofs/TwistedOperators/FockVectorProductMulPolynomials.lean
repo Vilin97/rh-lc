@@ -78,7 +78,7 @@ theorem fockVector_product_mul_polynomials (hψ : IsStdChar D ψ (-1)) (hθ : Is
       rw [MvPolynomial.rename_C, ← mul_one (MvPolynomial.C a), ptF_C, ptF_one, ← mul_one (MvPolynomial.C a), ptF_C, ptF_one]
       funext x; simp only [box2, Pi.smul_apply, smul_eq_mul]; ring
     | add p q hp hq =>
-      rw [map_add, ptF_add, ptF_add, ← hp, ← hq]
+      rw [map_add (f := _), ptF_add, ptF_add, ← hp, ← hq]
       funext x; simp only [box2, Pi.add_apply]; ring
     | mul_X p v hp =>
       obtain ⟨τ, i, j⟩ := v
@@ -92,7 +92,7 @@ theorem fockVector_product_mul_polynomials (hψ : IsStdChar D ψ (-1)) (hθ : Is
   have hg' := ptF_theta hψ hθ A B' hg Q
   induction P using MvPolynomial.induction_on with
   | C a => rw [MvPolynomial.rename_C, ptF_C, ← H, ← mul_one (MvPolynomial.C a), ptF_C, ptF_one, externalProductOnHermitianSum_smul_left]
-  | add p q hp hq => rw [map_add, add_mul, ptF_add, ptF_add, ← hp, ← hq, externalProductOnHermitianSum_add_left]
+  | add p q hp hq => rw [map_add (f := _), add_mul, ptF_add, ptF_add, ← hp, ← hq, externalProductOnHermitianSum_add_left]
   | mul_X p v hp =>
     obtain ⟨τ, i, j⟩ := v
     rw [map_mul, MvPolynomial.rename_X, mul_comm (MvPolynomial.rename _ p), mul_assoc, ptF_X_mul hψ hθ A _ hfg, ← hp,
@@ -136,7 +136,7 @@ theorem exists_adj_equiv (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (A : Fr
       (fun y => ptF ψ θ B A g P (adjM S U y)) = ptF ψ θ (GlobalTheory.SquareComm.frSgn true A) B (fun y => g (adjM S U y)) (J P) := by
   obtain ⟨j, hjs, hj⟩ := fock_dag D ψ θ hψ hθ U S B A
   have cc : (starRingEnd ℂ).comp (starRingEnd ℂ) = RingHom.id ℂ := RingHom.ext fun z => Complex.conj_conj z
-  refine ⟨⟨⟨fun P => MvPolynomial.map (starRingEnd ℂ) (j P), fun P Q => by rw [map_add, map_add]⟩, fun c P => ?_⟩,
+  refine ⟨⟨⟨fun P => MvPolynomial.map (starRingEnd ℂ) (j P), fun P Q => by rw [map_add (f := _), map_add (f := _)]⟩, fun c P => ?_⟩,
     fun Q => ⟨j.symm (MvPolynomial.map (starRingEnd ℂ) Q), ?_⟩, fun g hg P => ?_⟩
   · show MvPolynomial.map _ (j (c • P)) = c • MvPolynomial.map _ (j P)
     rw [hjs, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, Complex.conj_conj, MvPolynomial.smul_eq_C_mul]
@@ -176,7 +176,7 @@ theorem exists_rd_equiv (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (A : Fr 
     erw [← mul_one (MvPolynomial.C a), ptF_C, ptF_one]
     rfl
   | add p q hp hq =>
-    rw [map_add, ptF_add, ptF_add, ← hp, ← hq]
+    rw [map_add (f := _), ptF_add, ptF_add, ← hp, ← hq]
     rfl
   | mul_X p v hp =>
     obtain ⟨τ, i, j⟩ := v
@@ -352,7 +352,7 @@ theorem fock_datum {θ : InfFam D} (hθ : IsInfFam θ) (ε : Bool) (A : Fr S) (B
   have L := GlobalTheory.SquareAgree.isDatum_linear M Bs.ψ hstd cS
   have lin : ∀ (c : ℂ) P f P' f', FockRel M Bs.ψ θ ε A B cS f₀ P f → FockRel M Bs.ψ θ ε A B cS f₀ P' f' →
       FockRel M Bs.ψ θ ε A B cS f₀ (P + c • P') (f + c • f') := fun c P f P' f' h h' φ h1 h2 F hF => by
-    rw [GlobalTheory.BigNZ.DatReal.pure_add, GlobalTheory.BigNZ.DatReal.pure_smul, map_add, map_smul]
+    rw [GlobalTheory.BigNZ.DatReal.pure_add, GlobalTheory.BigNZ.DatReal.pure_smul, map_add (f := _), map_smul]
     exact L.2 _ _ _ _ c (h φ h1 h2 F hF) (h' φ h1 h2 F hF)
   have zero : FockRel M Bs.ψ θ ε A B cS f₀ 0 0 := fun φ _ _ F _ => by
     rw [GlobalTheory.BigNZ.DatReal.pure_zero, map_zero]; exact L.1

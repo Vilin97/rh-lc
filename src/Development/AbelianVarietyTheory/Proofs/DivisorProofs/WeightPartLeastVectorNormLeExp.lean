@@ -64,7 +64,7 @@ theorem main : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (
     rw [← hχ, eq_comm, QuotientAddGroup.eq]
     refine ⟨j.symm w, ?_⟩
     simp only [nsmulAddMonoidHom_apply] at hw ⊢
-    rw [← map_nsmul, hw, map_add, map_neg, j.symm_apply_apply]
+    rw [← map_nsmul, hw, map_add (f := _), map_neg, j.symm_apply_apply]
   have hker : yy.ker = l.yy.ker := by
     ext b
     simp only [AddMonoidHom.mem_ker]
@@ -91,7 +91,7 @@ theorem main : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (
     · exact hex.choose_spec.1
     · exact zero_mem _
   have key := ubound (S := D.X.S.rechart c₀ hc R' fg frac hth hev) u l hint (m := D.m) D.sq (hlift a ν hν) (fun v => by
-      rw [hq, hq, map_add, map_nsmul, j.apply_symm_apply]
+      rw [hq, hq, map_add (f := _), map_nsmul, j.apply_symm_apply]
       exact mul_le_mul_of_nonneg_left (Int.cast_le.2 (hmin _ ⟨j v, rfl⟩)) c.scale_pos.le)
     (T := D.X.S.TT D.X.M (y (cPt p))) (by rw [← hker, hHH]; rfl) (GSum.wtChar D _ a) (fun _ => rfl) hmem D.X.ρ.i₀
   rw [hq, j.apply_symm_apply, hy₀] at key

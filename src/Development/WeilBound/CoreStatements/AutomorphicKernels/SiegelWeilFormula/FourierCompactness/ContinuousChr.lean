@@ -46,7 +46,7 @@ theorem lamBd : LamBd := by
       Matrix (Fin d.n) (Fin d.n) (AE F E)) * β.1))))
   have hχadd : ∀ β γ, χ (β + γ) = χ β * χ γ := by
     intro β γ
-    simp only [χ, AddSubgroup.coe_add, Matrix.mul_add, Matrix.trace_add, map_add, neg_add]
+    simp only [χ, AddSubgroup.coe_add, Matrix.mul_add, Matrix.trace_add, map_add (f := _), neg_add]
     exact AddChar.map_add_eq_mul _ _ _
   have hχns : ∀ (k : ℕ) β, χ (k • β) = χ β ^ k := by
     intro k β

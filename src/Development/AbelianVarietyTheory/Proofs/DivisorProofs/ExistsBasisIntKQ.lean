@@ -60,7 +60,7 @@ variable {p β γ}
 
 theorem intCoord_add {z w : A ⊗[ℚ_[p]] B} (hz : IntCoord p β γ z) (hw : IntCoord p β γ w) :
     IntCoord p β γ (z + w) := fun k => by
-  rw [map_add, Finsupp.add_apply]
+  rw [map_add (f := _), Finsupp.add_apply]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hz k) (hw k))
 
 theorem intCoord_smul {z : A ⊗[ℚ_[p]] B} (hz : IntCoord p β γ z) {c : ℚ_[p]} (hc : ‖c‖ ≤ 1) :

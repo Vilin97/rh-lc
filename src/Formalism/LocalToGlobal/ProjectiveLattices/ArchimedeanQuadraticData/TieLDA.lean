@@ -202,7 +202,7 @@ theorem length_quot_eq (X Y : Submodule R U) (hX : X.FG) (hYX : Y ≤ X) :
         rw [Phi_tmul]
         exact Submodule.smul_mem _ t (Submodule.subset_span ⟨(y : X), y.2, rfl⟩)
       | add a c ha hc =>
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
         exact Submodule.add_mem _ ha hc
   have hmap : ((Submodule.span T (tm K K₁ '' (Y : Set U))).comap
       (Submodule.span T (tm K K₁ '' (X : Set U))).subtype).map (e1.symm : _ →ₗ[T] _) = LinearMap.range ι' := by
@@ -236,12 +236,12 @@ theorem span_inf_eq (X : Submodule R U) (hX : X.FG) (W : Submodule K U) :
             TensorProduct.tmul_zero]
         · simp
         · intro a b _ _ ha hb
-          rw [map_add, ha, hb, add_zero]
+          rw [map_add (f := _), ha, hb, add_zero]
         · intro c a _ ha
           rw [map_smul, ha, smul_zero]
       · simp
       · intro a b _ _ ha hb
-        rw [map_add, ha, hb, add_zero]
+        rw [map_add (f := _), ha, hb, add_zero]
       · intro t a _ ha
         show W.mkQ.baseChange K₁ ((t : K₁) • a) = 0
         rw [map_smul, ha, smul_zero]
@@ -259,7 +259,7 @@ theorem span_inf_eq (X : Submodule R U) (hX : X.FG) (W : Submodule K U) :
         rw [map_smul, LinearMap.baseChange_tmul]
         rfl
       | add a c ha hc =>
-        rw [map_add, map_add, map_add, map_add, ha, hc]
+        rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ha, hc]
     have hw0 : g.baseChange T w = 0 := by
       apply Phi_injective T hRT Xb (hX.map _)
       rw [hsq, map_zero]
@@ -281,7 +281,7 @@ theorem span_inf_eq (X : Submodule R U) (hX : X.FG) (W : Submodule K U) :
         exact (Submodule.Quotient.mk_eq_zero W).1 h'
       exact Submodule.smul_mem _ t (Submodule.subset_span ⟨(y : X), ⟨(y : X).2, hyW⟩, rfl⟩)
     | add a c ha hc =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact Submodule.add_mem _ ha hc
   · rw [Submodule.span_le]
     rintro _ ⟨x, ⟨hxX, hxW⟩, rfl⟩

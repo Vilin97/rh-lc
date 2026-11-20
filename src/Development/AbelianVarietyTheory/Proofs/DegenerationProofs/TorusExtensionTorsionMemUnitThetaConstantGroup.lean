@@ -128,7 +128,7 @@ theorem fromGt_mem_unitGrp : LL → TwistBCSpanStatement → TWM.VRatioGtStateme
     rw [hd, _root_.mul_comm, mul_smul, mul_smul, ← e₄, this, smul_zero]
   refine ⟨⟨w, wm⟩, ?_⟩
   show Additive.toMul (φ t) = Additive.toMul (φ a) * Additive.toMul (φ ⟨w, wm⟩) ^ n
-  rw [← toMul_nsmul, ← map_nsmul, ← toMul_add, ← map_add,
+  rw [← toMul_nsmul, ← map_nsmul, ← toMul_add, ← map_add (f := _),
     show n • (⟨w, wm⟩ : (nsmulAddMonoidHom m : GtPtF D.toPre F →+ GtPtF D.toPre F).ker) = t - a from
       Subtype.ext e₄.symm, add_sub_cancel]
 

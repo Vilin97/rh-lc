@@ -25,11 +25,11 @@ theorem exists_isotropic_partner (h : HermitianForm F E V) (U : Submodule E V) {
   obtain ⟨c, hc⟩ := exists_trace_eq_one (F := F) (E := E)
   have hc1 : c + conj F E c = 1 := by rw [add_conj, hc, map_one]
   refine ⟨s₀ + (-(c * algebraMap F E e₀)) • r, fun u => ?_, ?_⟩
-  · rw [map_add, LinearMap.add_apply, h.toSesq_smul_left, hr u u.2, mul_zero, add_zero, hs₀u]
+  · rw [map_add (f := _), LinearMap.add_apply, h.toSesq_smul_left, hr u u.2, mul_zero, add_zero, hs₀u]
   · have h1 : h.toSesq s₀ r = 1 := by rw [← hμ, ← hs₀u]
     have h2 : h.toSesq r s₀ = 1 := by rw [← h.conj_toSesq, h1, map_one]
     have h3 : h.toSesq r r = 0 := hr r hrU
-    simp only [map_add, LinearMap.add_apply, h.toSesq_smul_left, h.toSesq_smul_right, h1, h2, h3]
+    simp only [map_add (f := _), LinearMap.add_apply, h.toSesq_smul_left, h.toSesq_smul_right, h1, h2, h3]
     rw [← he₀, map_neg, map_mul, conj_algebraMap]
     linear_combination (-(algebraMap F E e₀)) * hc1
 
@@ -110,13 +110,13 @@ theorem exists_extend [FiniteDimensional E V] (h : HermitianForm F E V) (U : Sub
   have hL : ∀ (u v : U) (a b : E), h.toSesq (f u + a • s') (f v + b • s') =
       h.toSesq u v + b * conj F E (μ u) + conj F E a * μ v := by
     intro u v a b
-    simp only [map_add, LinearMap.add_apply, h.toSesq_smul_left, h.toSesq_smul_right, hfh, hss']
+    simp only [map_add (f := _), LinearMap.add_apply, h.toSesq_smul_left, h.toSesq_smul_right, hfh, hss']
     rw [← h.conj_toSesq s' (f u), hs'' u, hs'' v]
     ring
   have hR : ∀ (u v : U) (a b : E), h.toSesq ((u : V) + a • s) ((v : V) + b • s) =
       h.toSesq u v + b * conj F E (μ u) + conj F E a * μ v := by
     intro u v a b
-    simp only [map_add, LinearMap.add_apply, h.toSesq_smul_left, h.toSesq_smul_right, hss]
+    simp only [map_add (f := _), LinearMap.add_apply, h.toSesq_smul_left, h.toSesq_smul_right, hss]
     rw [← h.conj_toSesq s (u : V), hs u, hs v]
     ring
   have hf₀inj : Function.Injective f₀ := by
@@ -125,7 +125,7 @@ theorem exists_extend [FiniteDimensional E V] (h : HermitianForm F E V) (U : Sub
     rw [hf₀] at hp
     have ha : a = 0 := by
       have h1 := congrArg (h.toSesq (f ⟨r, hrU⟩)) hp
-      rw [map_add, h.toSesq_smul_right, hfh, hr u u.2, zero_add, map_zero,
+      rw [map_add (f := _), h.toSesq_smul_right, hfh, hr u u.2, zero_add, map_zero,
         ← h.conj_toSesq s', hs'', hμ, map_one, mul_one] at h1
       exact h1
     subst ha

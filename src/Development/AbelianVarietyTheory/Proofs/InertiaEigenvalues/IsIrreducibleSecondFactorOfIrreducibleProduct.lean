@@ -156,13 +156,13 @@ theorem isIrreducible_of_prod₂ : ∀ (k : Type) [Field k] [ValuativeRel k] [To
       exact ⟨σ₀ ((leviTwo k (Fin r) (Fin t)).symm l).1 x ⊗ₜ
         ⟨τ ((leviTwo k (Fin r) (Fin t)).symm l).2 w, hS _ _ w.2⟩, by simp [ρ']⟩
     | add a b ha hb =>
-      rw [map_add, map_add]; exact add_mem ha hb
+      rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
   have hLR : ∀ y ∈ R, L y ∈ S := by
     rintro _ ⟨z, rfl⟩
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul x w => rw [LinearMap.lTensor_tmul, hL]; exact S.smul_mem _ w.2
-    | add a b ha hb => rw [map_add, map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
   let Y : Submodule ℂ (IndSp (two (stdSum (rfl : r + t = r + t))) ρ') :=
     { carrier := {f | ∀ g, f.1.1 g ∈ R}
       add_mem' := fun ha hb g => add_mem (ha g) (hb g)

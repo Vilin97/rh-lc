@@ -118,7 +118,7 @@ theorem UpperTheory.V.Br.charOf :
   refine ⟨χ, fun t ht => ?_, fun u hu d hd => ?_⟩
   · classical
     have h0 : lie ℚ 2 (toL (Matrix.scalar (Fin 2) (Pi.single Rat.infinitePlace 1))) φ = 0 := by
-      rw [← hE Rat.infinitePlace, TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add]
+      rw [← hE Rat.infinitePlace, TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add (f := _)]
       congr 2
       ext i j v
       rw [Subsingleton.elim v Rat.infinitePlace]

@@ -29,7 +29,7 @@ theorem smooth_closed : ∀ {n : ℕ} {G : Set (Matrix (Fin n) (Fin n) ℂ)} {H 
   refine ⟨?_, ?_, ?_⟩
   · rintro u v ⟨Fu, hFu, hu⟩ ⟨Fv, hFv, hv⟩
     refine ⟨fun z => Fu z + Fv z, hFu.add hFv, fun z hz => ?_⟩
-    rw [map_add, hu z hz, hv z hz]
+    rw [map_add (f := _), hu z hz, hv z hz]
   · rintro c v ⟨Fv, hFv, hv⟩
     refine ⟨fun z => c • Fv z, hFv.const_smul c, fun z hz => ?_⟩
     rw [map_smul, hv z hz]

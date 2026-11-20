@@ -32,7 +32,7 @@ theorem heisFun_fou : ∀ (F : Type) [Field F] [CharZero F] [ValuativeRel F] [To
   congr 1
   rw [← mul_assoc, ← mul_assoc, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul]
   congr 2
-  simp only [map_add, map_neg, LinearMap.add_apply, LinearMap.neg_apply, hsym y x₁, hsym y₁ x₁]
+  simp only [map_add (f := _), map_neg, LinearMap.add_apply, LinearMap.neg_apply, hsym y x₁, hsym y₁ x₁]
   ring
 
 end GlobalTheory.KSp

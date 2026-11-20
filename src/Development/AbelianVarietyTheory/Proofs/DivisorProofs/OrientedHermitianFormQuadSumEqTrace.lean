@@ -209,7 +209,7 @@ theorem symp_eq (t : T) (e : Num G i j) (Γ : Geo G i j) (hW₁ : Γ.V'.J = (-1 
   unfold symp symplO
   rw [hA, hB1, hB2]
   conv_rhs => arg 2; rw [← GlobalTheory.DualPairCheck.trace_cA]
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
   have h1 := trace_first (cA D) ((spW₁ G i j).gram.map (incA D)) (((spW₁ G i j).gram⁻¹).map (incA D))
     ((spV G i j).gram.map (incA D)) (gram_conj_transpose _) (inv_mul_gram _) (colV e x) (colV e x')

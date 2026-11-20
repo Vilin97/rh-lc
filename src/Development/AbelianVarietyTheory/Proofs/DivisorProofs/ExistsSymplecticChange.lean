@@ -54,7 +54,7 @@ theorem exists_symplectic_hom {M g : ℕ} {G : Type} [CommGroup G] {R : Type} [C
   obtain ⟨bas, hb⟩ := exists_equiv_omegaStd (Matrix.toBilin' (Matrix.of (Out.stdSymp g))) (LinearEquiv.refl ℤ _)
     (fun i j => by simp [Matrix.toBilin'_single])
   refine ⟨fun a => ∏ i, x i ^ bas a i,
-    fun a b => by simp only [map_add, Pi.add_apply, _root_.zpow_add, Finset.prod_mul_distrib], fun a b => ?_⟩
+    fun a b => by simp only [map_add (f := _), Pi.add_apply, _root_.zpow_add, Finset.prod_mul_distrib], fun a b => ?_⟩
   rw [← hb, Matrix.toBilin'_apply]
   have s := map_prod (zpowersHom Rˣ ζ) (fun p : Fin (2 * g) × Fin (2 * g) =>
     Multiplicative.ofAdd (bas a p.1 * Out.stdSymp g p.1 p.2 * bas b p.2)) Finset.univ
@@ -177,7 +177,7 @@ theorem sq_eq_one_of_translDiff (c : SiegPre h n ζ s) (hc : c.Principal) {F : T
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one, one_smul, neg_smul] at e
   rw [← Hom.mul_def] at e
   have e' := congrArg (pull (lift (snd c.A (Over.mk t)) (fst c.A (Over.mk t))).left) e
-  rw [map_zero, map_add, map_neg, ← pull_comp, ← pull_comp, ← Over.comp_left, ← Over.comp_left, MonObj.comp_mul,
+  rw [map_zero, map_add (f := _), map_neg, ← pull_comp, ← pull_comp, ← Over.comp_left, ← Over.comp_left, MonObj.comp_mul,
     lift_fst_assoc, lift_snd, dg, dg, pull_mul_left c hc, sy _ (_ * _), sy _ (_ * _), pull_mul_left c hc,
     pull_mul_left c hc, ← comp_lift, Over.comp_left, pull_comp, x0, map_zero] at e'
   refine hc.2 _ _ ((cls_eq_zero_iff (pull_isLB hL _)).1 ?_)

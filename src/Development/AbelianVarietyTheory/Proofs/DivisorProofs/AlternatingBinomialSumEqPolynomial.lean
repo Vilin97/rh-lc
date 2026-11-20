@@ -141,7 +141,7 @@ theorem eval_map_aeval (P : MvPolynomial (Fin 2) ℝ) (z : Fin 2 → ℂ) :
       eval ![z 0 + z 1, z 0 * z 1] (P.map (algebraMap ℝ ℂ)) := by
   induction P using MvPolynomial.induction_on with
   | C r => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp, aeval_X, map_X, eval_X]
     fin_cases i <;> simp
@@ -150,7 +150,7 @@ theorem eval_aeval_sym (P : MvPolynomial (Fin 2) ℝ) (x : Fin 2 → ℝ) :
     eval x (aeval ![X 0 + X 1, X 0 * X 1] P : MvPolynomial (Fin 2) ℝ) = eval ![x 0 + x 1, x 0 * x 1] P := by
   induction P using MvPolynomial.induction_on with
   | C r => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp, aeval_X, eval_X]
     fin_cases i <;> simp

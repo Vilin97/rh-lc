@@ -36,7 +36,7 @@ theorem mul_tmul_eq_zero {F A B E : Type} [Field F] [CommRing A] [CommRing B] [C
     intro a
     induction a using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [add_mul, ha, hb, map_add, add_mul, map_add]
+    | add a b ha hb => rw [add_mul, ha, hb, map_add (f := _), add_mul, map_add (f := _)]
     | tmul x e =>
       rw [Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.tmul_mul_tmul,
         Algebra.TensorProduct.tmul_mul_tmul, TensorProduct.map_tmul]
@@ -141,7 +141,7 @@ theorem om_real_Th : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ om : GA D S �
     (fun φ ψ hφ hψ => by
       have h1 := hA _ (hadd _ _ hφ hψ)
       refine ((L _ hdom' _ h1.1).1 _ (hadd _ _ (hA φ hφ).1 (hA ψ hψ).1)).2 ?_
-      rw [← h1.2, ((L _ hdom _ hφ).1 _ hψ).1, map_add, (hA φ hφ).2, (hA ψ hψ).2,
+      rw [← h1.2, ((L _ hdom _ hφ).1 _ hψ).1, map_add (f := _), (hA φ hφ).2, (hA ψ hψ).2,
         ((L _ hdom' _ (hA φ hφ).1).1 _ (hA ψ hψ).1).1])
     (fun a φ hφ => by
       have h1 := hA _ (hsm a _ hφ)

@@ -155,7 +155,7 @@ private theorem signedChainData_fdig_add {p : ℕ} {O : Type} [CommRing O] [IsDo
     fdig_eq_sum_C_coeff_mul_prod_of_support_subset Dt rho G (F.support ∪ G.support) Finset.subset_union_right,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl (fun mo _ => ?_)
-  rw [MvPolynomial.coeff_add, map_add, add_mul]
+  rw [MvPolynomial.coeff_add, map_add (f := _), add_mul]
 
 theorem fdigSum : FdigSum := by
   intro p O _ _ _ r J Dt rho α s f

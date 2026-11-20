@@ -45,7 +45,7 @@ theorem loe_trans {Y : Finset α} {A B C : α → α → ℂ} (h1 : Loe Y A B) (
   have a := h1.1 x hx y hy
   have b := h2.1 x hx y hy
   have : C y x - A y x = (C y x - B y x) + (B y x - A y x) := by ring
-  rw [this, a, b, ← map_add]; ring_nf
+  rw [this, a, b, ← map_add (f := _)]; ring_nf
 
 theorem loe_zero_of_psd {Y : Finset α} {B : α → α → ℂ} (h : TB.PSDOn Y B) : Loe Y (fun _ _ => 0) B := by
   unfold Loe; simpa using h
@@ -120,7 +120,7 @@ theorem loe_add {Y : Finset α} {A B A' B' : α → α → ℂ} (h : Loe Y A B) 
   refine ⟨fun x hx y hy => ?_, fun c => ?_⟩
   · have a := h.1 x hx y hy; have b := h'.1 x hx y hy
     have : B y x + B' y x - (A y x + A' y x) = (B y x - A y x) + (B' y x - A' y x) := by ring
-    rw [this, a, b, ← map_add]; ring_nf
+    rw [this, a, b, ← map_add (f := _)]; ring_nf
   · have e : ∀ K K' : α → α → ℂ, PBA.qf Y (fun x y => K x y + K' x y) c = PBA.qf Y K c + PBA.qf Y K' c := by
       intro K K'; unfold PBA.qf; simp only [← Finset.sum_add_distrib]
       exact Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ => by ring

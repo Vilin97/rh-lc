@@ -21,7 +21,7 @@ theorem UpperTheory.central_char_sq_eq_of_isSelfDualBy :
       rw [hk, ← f.2, hc, map_smul]
     · simp
     · intro x y hx hy
-      rw [map_add, hx, hy, smul_add]
+      rw [map_add (f := _), hx, hy, smul_add]
   have hop : ∀ φ : π.V, π.op (.fin k) φ = c • φ := fun φ => hact φ
   obtain ⟨φ, hφ⟩ := exists_ne (0 : π.V)
   obtain ⟨ψ, hψ⟩ : ∃ ψ, B φ ψ ≠ 0 := by

@@ -30,7 +30,7 @@ theorem exists_norm_one_add_smul (r : 𝒪[K]) (a : 𝒪[L]) :
   let b := Module.Free.chooseBasis 𝒪[K] 𝒪[L]
   refine ⟨(Matrix.det (1 + (X : 𝒪[K][X]) • (Algebra.leftMulMatrix b a).map C)).divX.divX.eval r,
     ?_⟩
-  rw [Algebra.norm_eq_matrix_det b, map_add, map_one, map_smul, Matrix.det_one_add_smul,
+  rw [Algebra.norm_eq_matrix_det b, map_add (f := _), map_one, map_smul, Matrix.det_one_add_smul,
     Algebra.trace_eq_matrix_trace b]
   ring
 

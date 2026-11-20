@@ -34,8 +34,8 @@ theorem idem_mul_eq {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v : HeightOneSpect
     congrArg (fun x => (matHom _ σ J x).1 i j) e
   rw [← sub_eq_zero, ← add_eq_right (b := 1)]
   refine Model.adTens_eq_one (fun w => ?_) fun u => ?_
-  · rw [map_add, map_sub, map_mul, map_mul, c0, map_one]; simp
-  · rw [map_add, map_sub, map_mul, map_mul, map_one]
+  · rw [map_add (f := _), map_sub, map_mul, map_mul, c0, map_one]; simp
+  · rw [map_add (f := _), map_sub, map_mul, map_mul, map_one]
     by_cases hu : u = v
     · subst hu; rw [e']; simp
     · rw [c2 u hu]; simp

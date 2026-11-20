@@ -78,7 +78,7 @@ theorem ldV_eq_fderiv {k r : ℕ} (X g : B.Mat k r) (f : B.Mat k r → E)
 theorem eabH_eq_fderiv (H g : Matrix (Fin n) (Fin n) ℂ) (a b : Fin n) (f : Matrix (Fin n) (Fin n) ℂ → E)
     (hf : DifferentiableAt ℂ f g) : EabH H a b f g = fderiv ℂ f g (g * Matrix.single a b 1) := by
   unfold EabH
-  rw [rdV_eq_fderiv _ _ _ hf, rdV_eq_fderiv _ _ _ hf, ← map_smul, ← map_add, ← Matrix.mul_smul, ← Matrix.mul_add]
+  rw [rdV_eq_fderiv _ _ _ hf, rdV_eq_fderiv _ _ _ hf, ← map_smul, ← map_add (f := _), ← Matrix.mul_smul, ← Matrix.mul_add]
   congr 2
   unfold hpart1 hpart2
   rw [smul_smul]

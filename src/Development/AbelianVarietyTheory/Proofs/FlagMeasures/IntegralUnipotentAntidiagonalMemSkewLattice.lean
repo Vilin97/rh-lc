@@ -95,7 +95,7 @@ private lemma map_mem_differentIdeal_pow_of_involutive {E : Type} [Field E] [Num
       rw [map_mul]
       exact FractionalIdeal.mul_mem_mul (ih hi) (map_mem_differentIdeal_of_involutive t ht hj)
     · intro a b ha hb
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ ha hb
 
 open NumberField IsDedekindDomain MeasureTheory Matrix in

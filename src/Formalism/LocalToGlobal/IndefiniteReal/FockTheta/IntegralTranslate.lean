@@ -126,7 +126,7 @@ theorem skew_core {ψ : AddChar (AF D.host.F) ℂ} (hstd : IsStdChar D ψ (-1)) 
     have h2 := h0.comp_sub_const t t
     have e : (fun s : ℝ => G (w + L s)) = fun s => G (w + L t + L (s - t)) := by
       funext s
-      rw [add_assoc, ← map_add, add_sub_cancel]
+      rw [add_assoc, ← map_add (f := _), add_sub_cancel]
     rw [e]
     exact h2
 

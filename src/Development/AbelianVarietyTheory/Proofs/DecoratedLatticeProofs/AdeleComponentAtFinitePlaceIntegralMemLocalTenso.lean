@@ -16,7 +16,7 @@ theorem compAt_mem_intV_of_intAt : ∀ (D : D7) (v : Pl D) (a : AE D), a ∈ int
     apply AddSubgroup.subset_closure
     exact ⟨_, hα v, x, rfl⟩
   | zero => rw [RingHom.map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [RingHom.map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (f := _)]; exact add_mem hy hz
   | neg y _ hy => rw [RingHom.map_neg]; exact neg_mem hy
 
 end GlobalTheory.FixedUnitNorm

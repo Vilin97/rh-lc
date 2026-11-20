@@ -75,7 +75,7 @@ theorem exists_reading (P : ClassPres ι S σ ρ J χ) {C M : Type} [Field C] [A
       ∀ (f : S.Forms) c, rd f (P.y c) = Λ (P.y c)⁻¹ (θ (P.coef ((f : S.Cl → S.V) c))) := by
   let rd : S.Forms →ₛₗ[e0] (G → M) :=
     { toFun := fun f g => Λ g⁻¹ (θ (P.extL f g))
-      map_add' := fun f f' => by funext g; simp only [map_add, Pi.add_apply]
+      map_add' := fun f f' => by funext g; simp only [map_add (f := _), Pi.add_apply]
       map_smul' := fun a f => by
         funext g
         simp only [map_smulₛₗ, Pi.smul_apply, hs, ← h, RingEquiv.symm_apply_apply, RingHom.id_apply] }

@@ -182,7 +182,7 @@ theorem good_mul (hC : Q.InCurve) {T : ℕ} {f : ↥(Frac0 X la G.w)} (hf : IntD
   have hq2 : (q.2.sum fun _ n => n) ≤ a0 D j T - 1 := by
     rw [mem_antidiagonal] at hq
     rw [PI.HJP.sum_eq_degree] at hβ ⊢
-    have : Finsupp.degree β = Finsupp.degree q.1 + Finsupp.degree q.2 := by rw [← hq, map_add]
+    have : Finsupp.degree β = Finsupp.degree q.1 + Finsupp.degree q.2 := by rw [← hq, map_add (f := _)]
     omega
   have := hx q.2 hq2 ζ
   rwa [rD_eq G la q.2 x (hP q.2 _ x.2)] at this

@@ -36,7 +36,7 @@ theorem ker_zero (Y : Pend X) (j : ℕ) (La : X.Lt j) (La' : X.Lt (j + 1)) : Y.k
 
 theorem ker_add (Y : Pend X) (j : ℕ) (La : X.Lt j) (La' : X.Lt (j + 1)) (G1 G2 : (X.Pj j).Xsp) :
     Y.ker j La La' (G1 + G2) = Y.ker j La La' G1 + Y.ker j La La' G2 := by
-  simp only [Pend.ker, Pend.kerF, map_add, LinearMap.add_apply, smul_add]
+  simp only [Pend.ker, Pend.kerF, map_add (f := _), LinearMap.add_apply, smul_add]
 
 theorem ker_smul (Y : Pend X) (j : ℕ) (La : X.Lt j) (La' : X.Lt (j + 1)) (a : X.G.Kf) (G : (X.Pj j).Xsp) :
     Y.ker j La La' (a • G) = a • Y.ker j La La' G := by
@@ -65,7 +65,7 @@ theorem body_of_span (Y : Pend X) (j : ℕ) (cK : Y.Kc) (S : Set (X.Fm j))
     simp only [map_zero, Pi.zero_apply, ker_zero, smul_zero, Finset.sum_const_zero]
   | add x y _ _ hx hy =>
     intro c' L' hL
-    simp only [map_add, Pi.add_apply, ker_add, smul_add, Finset.sum_add_distrib, hx c' L' hL, hy c' L' hL]
+    simp only [map_add (f := _), Pi.add_apply, ker_add, smul_add, Finset.sum_add_distrib, hx c' L' hL, hy c' L' hL]
   | smul a x _ hx =>
     intro c' L' hL
     simp only [map_smul, Pi.smul_apply, ker_smul]
@@ -102,7 +102,7 @@ theorem admissible_third_of_forms : Adm3bOf := by
     rw [hC j hj y]
     exact hUp j hj _
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 section Rec

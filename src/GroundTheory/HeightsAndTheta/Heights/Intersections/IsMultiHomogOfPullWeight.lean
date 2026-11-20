@@ -151,7 +151,7 @@ theorem exists_elim {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} {P' :
           simp
         rw [e]
         exact Subalgebra.algebraMap_mem _ _
-      | add p q hp hq => rw [map_add]; exact add_mem hp hq
+      | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
       | mul_X p i hp => rw [map_mul, aeval_X]; exact mul_mem hp (hρ i)
     exact this g
   have hT := aeval_eq_coordProd_mul hg c y' hyc
@@ -230,7 +230,7 @@ theorem eval_eq_zero {v : (Σ k, ι k) → (Σ k', ι' k')} {P' : Ideal (MRing �
   have h0 := hz'.2 _ hE
   rw [Finset.sum_range_succ'] at h0
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_mul, map_pow, hgz, ne_eq, Nat.succ_ne_zero, not_false_eq_true, zero_pow,
+    simp only [map_add (f := _), map_sum, map_mul, map_pow, hgz, ne_eq, Nat.succ_ne_zero, not_false_eq_true, zero_pow,
     zero_mul, mul_zero, Finset.sum_const_zero, zero_add, pow_zero, one_mul, Nat.sub_zero] at h0
   have hT : eval z' (map (Int.castRingHom ℂ) (∏ k', (X ⟨k', c k'⟩ : MRing ι') ^ d k')) ≠ 0 := by
     rw [map_prod, map_prod]

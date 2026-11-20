@@ -52,7 +52,7 @@ private theorem toAdele_cj (z : AE (maximalRealSubfield E) E) :
     toAdele _ E (cA (cj E) z) = GlobalTheory.UnitaryBC.conjAd E (toAdele _ E z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x =>
     change toAdele _ E (a ⊗ₜ[maximalRealSubfield E] (IsCMField.complexConj E x)) = _
     rw [GlobalTheory.UnitaryHeckeBaseChange.toAdele_tmul, GlobalTheory.UnitaryHeckeBaseChange.toAdele_tmul, map_mul, conjAd_adeleMap,
@@ -174,7 +174,7 @@ private theorem piInf_eq [IsCMField E] {w : InfinitePlace F} (τ : EmbOver E w) 
     piInf τ z = coord τ.1 (pInf E (toAdele F E z)) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x =>
     rw [GlobalTheory.UnitaryHeckeBaseChange.toAdele_tmul, map_mul, map_mul, coord_adeleMap, GlobalTheory.CuspRep.coord_algebraMap]
     rfl
@@ -188,7 +188,7 @@ private theorem piW_eq {v : Pl F} (t : E →ₐ[F] Fv F v) (z : AE F E) :
     complMap (splitPrime_under t) (piW t z) = pLoc E (splitPrime t) (pFin E (toAdele F E z)) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x =>
     have e : piW t (a ⊗ₜ[F] x) = a.2 v * t x := rfl
     rw [e, map_mul, GlobalTheory.LFun.SplitTie.complMap_apply_emb t, complMap_at, GlobalTheory.UnitaryHeckeBaseChange.toAdele_tmul, map_mul, map_mul]

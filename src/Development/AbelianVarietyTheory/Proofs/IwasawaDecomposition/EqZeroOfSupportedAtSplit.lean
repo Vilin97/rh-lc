@@ -42,7 +42,7 @@ private theorem eq_zero_of_compAt_eq_zero_of_proj_conj_eq_zero {L : Type} [Field
   have hw' : ∀ w, w ≠ s.v → a w = 0 ∧ c w = 0 := fun w hne =>
     _root_.GlobalTheory.tensor_decomp_eq_zero b _ _
       (by simpa [_root_.ReciprocityTheory.Aut.compAt, evalAt_apply'] using hw w hne)
-  simp only [map_add, _root_.ReciprocityTheory.Aut.SplitPlace.proj, _root_.ReciprocityTheory.Aut.conjAL] at h₁ h₂
+  simp only [map_add (f := _), _root_.ReciprocityTheory.Aut.SplitPlace.proj, _root_.ReciprocityTheory.Aut.conjAL] at h₁ h₂
   simp [evalAt_apply'] at h₁ h₂
   set σ := IsCMField.complexConj L
   have hΔ : s.i (b 0 * σ (b 1) - b 1 * σ (b 0)) ≠ 0 := by

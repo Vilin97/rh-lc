@@ -186,7 +186,7 @@ private theorem exists_norm_one {K C : Type} [Field K] [NumberField K] [Nontrivi
       exact lt_of_le_of_ne (norm_int_le j _) (h i)
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt hx hy)
     | smul s x _ hx =>
       rw [smul_eq_mul, map_mul, map_mul, norm_mul]

@@ -181,7 +181,7 @@ def psiZero {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ϖ : kˣ} (hϖ : 
     simp
   map_add_eq_mul' x y := by
     rw [← AddChar.map_add_eq_mul, ← add_div, ← Subring.coe_add]
-    exact psi_congr hψ hϖ (by simp only [map_add, Function.surjInv_eq (IsLocalRing.residue_surjective (R := 𝒪[k]))])
+    exact psi_congr hψ hϖ (by simp only [map_add (f := _), Function.surjInv_eq (IsLocalRing.residue_surjective (R := 𝒪[k]))])
 
 theorem psiZero_residue {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {ϖ : kˣ} (hϖ : IsUnif ϖ) (u : 𝒪[k]) :
     psiZero hψ hϖ (IsLocalRing.residue 𝒪[k] u) = ψ ((u : k) / ϖ) :=

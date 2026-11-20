@@ -74,7 +74,7 @@ theorem ratOf_add {W : Y.Opens} (σ τ : Γ(twist (GlobalTheory.structureModule 
   by_cases hW : genericPoint Y ∈ W
   · have h : genericPoint Y ∈ W ⊓ (toLB D).U (genChart D) := ⟨hW, genChart_mem D⟩
     apply mul_right_cancel₀ (Units.ne_zero (genChart D).1.2)
-    rw [add_mul, ratOf_mul _ _ h, ratOf_mul _ _ h, ratOf_mul _ _ h, ← map_add]
+    rw [add_mul, ratOf_mul _ _ h, ratOf_mul _ _ h, ratOf_mul _ _ h, ← map_add (f := _)]
     congr 1
   · simp [ratOf, dif_neg hW]
 
@@ -189,7 +189,7 @@ theorem fnOf_funOf {V : X.Opens} (hV : genericPoint X ∈ V)
 
 theorem funOf_add {V : X.Opens} (σ τ : Γ(twist (GlobalTheory.structureModule Y) (toLB D), s ⁻¹ᵁ V)) :
     funOf hbij hReg V (σ + τ) = funOf hbij hReg V σ + funOf hbij hReg V τ :=
-  GlobalTheory.Cartier.fn_ext fun hV => by rw [map_add, fnOf_funOf, fnOf_funOf, fnOf_funOf, ratOf_add, map_add]
+  GlobalTheory.Cartier.fn_ext fun hV => by rw [map_add (f := _), fnOf_funOf, fnOf_funOf, fnOf_funOf, ratOf_add, map_add (f := _)]
 
 theorem funOf_smul {V : X.Opens} (a : Γ(X, V))
     (σ : Γ(twist (GlobalTheory.structureModule Y) (toLB D), s ⁻¹ᵁ V)) :
@@ -277,7 +277,7 @@ theorem pushforward_twist_iso_idealModule : ∀ (X Y : Scheme.{0}) [IsIntegral X
         Γ(idealModule J, V) := fun V =>
     { toFun := l V
       map_add' := fun σ τ => hι V (by
-        simp only [map_add, hl]
+        simp only [map_add (f := _), hl]
         exact funOf_add hbij hReg (tw s D σ) (tw s D τ))
       map_smul' := fun a σ => hι V (by
         simp only [Scheme.Modules.Hom.app_smul, LinearEquiv.map_smul, hl, smul_eq_mul,

@@ -139,7 +139,7 @@ lemma isBaseChangeSection_specMap {A R : CommRingCat.{u}} (φ : A ⟶ R) (N : (S
   let f : Γ(N, ⊤) →ₗ[Γ(Spec A, ⊤)] Γ((Scheme.Modules.pushforward g).obj P, ⊤) :=
     { toFun := fun n => e.symm (ψ n)
       map_add' := fun x y => by
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
         rfl
       map_smul' := fun a x => by
         rw [hψ, map_smul]

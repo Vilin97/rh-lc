@@ -43,7 +43,7 @@ theorem smallExt_fibre_ring : ∀ (C : Type) [CommRing C] [IsLocalRing C] (e : C
       map_zero' := by simp
       map_add' := by
         intro x y
-        simp only [Subring.coe_add, Prod.fst_add, Prod.snd_add, TrivSqZeroExt.snd_add, map_add]
+        simp only [Subring.coe_add, Prod.fst_add, Prod.snd_add, TrivSqZeroExt.snd_add, map_add (f := _)]
         ring
       map_mul' := by
         rintro ⟨⟨a, x⟩, hx⟩ ⟨⟨b, y⟩, hy⟩
@@ -52,7 +52,7 @@ theorem smallExt_fibre_ring : ∀ (C : Type) [CommRing C] [IsLocalRing C] (e : C
         obtain ⟨c, hc⟩ := residue_surjective (R := C) x.snd
         obtain ⟨d, hd⟩ := residue_surjective (R := C) y.snd
         show a * b + φ (x * y).snd = (a + φ x.snd) * (b + φ y.snd)
-        rw [DualNumber.snd_mul, ← hx', ← hy', ← hc, ← hd, ← map_mul, ← map_mul, ← map_add, hφ, hφ, hφ]
+        rw [DualNumber.snd_mul, ← hx', ← hy', ← hc, ← hd, ← map_mul, ← map_mul, ← map_add (f := _), hφ, hφ, hφ]
         linear_combination (-(c * d)) * hee }
   have hσ : ∀ x : P, σ x = x.1.1 + φ x.1.2.snd := fun _ ↦ rfl
   have hσi : σ.comp i = RingHom.id C := by

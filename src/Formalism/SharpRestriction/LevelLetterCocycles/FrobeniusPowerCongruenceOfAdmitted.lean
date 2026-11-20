@@ -70,7 +70,7 @@ theorem laurentBounded_zero_of_trivial_twist (hs : W.s = 1) {Pt : ZMod n → LL 
   have hcc : PowerSeries.constantCoeff (W.lev i 1 W.X) = 0 := by
     rw [hX]
     have := congrArg PowerSeries.constantCoeff hF
-    rw [map_add, map_one, map_mul, PowerSeries.constantCoeff_C, hF0, one_mul] at this
+    rw [map_add (f := _), map_one, map_mul, PowerSeries.constantCoeff_C, hF0, one_mul] at this
     linear_combination this
   have h0 := ((h4.1 i 1 ⟨0, by simp⟩ hcc).1 x k).2 hk
   refine rk_ιV_inj PD (LL := LL) (V := T.V) ?_
@@ -119,7 +119,7 @@ theorem rescale_ne_zero (hp : (PD.p : LL) ≠ 0) {f : PowerSeries LL} (hf : f �
 theorem cc_levπ1 (i : ZMod n) : PowerSeries.constantCoeff (W.lev i 1 letπ) = 0 := by
   obtain ⟨F, hF0, -, hF⟩ := W.lev_π i 1 ⟨0, by simpa using IsPrimitiveRoot.one⟩
   have := congrArg PowerSeries.constantCoeff hF
-  rw [map_add, map_one, map_mul, PowerSeries.constantCoeff_C, hF0, one_mul] at this
+  rw [map_add (f := _), map_one, map_mul, PowerSeries.constantCoeff_C, hF0, one_mul] at this
   linear_combination this
 
 theorem cc_levπ₀1 (hR : RingA W) (h2 : 2 ≤ PD.p) (i : ZMod n) :
@@ -140,7 +140,7 @@ theorem levQ_ne (hA : Formalism.MainNotions.LiftingTheory.CaseA W) (hR : RingA W
   · intro h0
     have := congrArg PowerSeries.constantCoeff h0
     have e : Formalism.MainNotions.LiftingTheory.qp W = W.π₀ + ((PD.p : ℕ) : LetA O n) := rfl
-    rw [e, map_add, map_natCast, map_add, cc_levπ₀1 hR PD.hp.two_le, map_natCast, map_zero, zero_add] at this
+    rw [e, map_add (f := _), map_natCast, map_add (f := _), cc_levπ₀1 hR PD.hp.two_le, map_natCast, map_zero, zero_add] at this
     exact hp this
   · obtain ⟨⟨u, hu, he⟩, -, -⟩ := expRing_of W hR hA i ζ hζ
     rw [he]

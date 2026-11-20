@@ -154,7 +154,7 @@ theorem nabs_uniformiser {ϖ : 𝒪[k]} (hϖ : Irreducible ϖ) {x : kˣ} (hx : (
   have hS : ∀ (r : 𝓀[k]) (y : 𝒪[k]), (y : k) ∈ S r ↔ IsLocalRing.residue _ y = r := by
     intro r y
     have := mem_cball_uniformiser hϖ hx (-(l r) + y)
-    rw [← IsLocalRing.residue_eq_zero_iff, map_add, map_neg, hl, neg_add_eq_zero, eq_comm] at this
+    rw [← IsLocalRing.residue_eq_zero_iff, map_add (f := _), map_neg, hl, neg_add_eq_zero, eq_comm] at this
     simpa [S] using this
   have hsub : ∀ r, S r ⊆ (𝒪[k] : Set k) := by
     intro r z hz

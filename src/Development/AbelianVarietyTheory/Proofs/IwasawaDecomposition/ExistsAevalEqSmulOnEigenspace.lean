@@ -85,7 +85,7 @@ open NumberField IsDedekindDomain Polynomial Module in
 private lemma commute_aeval_of_commute_lemma_4 {V : Type} [AddCommGroup V] [Module ℂ V]
     {S T : Module.End ℂ V} (hST : Commute S T) (p : ℂ[X]) : Commute S (aeval T p) := by
   induction p using Polynomial.induction_on' with
-  | add p r hp hr => rw [map_add]; exact hp.add_right hr
+  | add p r hp hr => rw [map_add (f := _)]; exact hp.add_right hr
   | monomial n x => rw [aeval_monomial]; exact (Algebra.commute_algebraMap_right x S).mul_right (hST.pow_right n)
 
 open NumberField IsDedekindDomain Polynomial Module in

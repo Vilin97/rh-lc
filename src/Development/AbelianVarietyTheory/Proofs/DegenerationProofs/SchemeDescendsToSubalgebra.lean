@@ -417,7 +417,7 @@ theorem scheme_descends_to_subalgebra :
     induction hx using Algebra.adjoin_induction with
     | mem x hx => exact hW (by simpa using ⟨x, hx, rfl⟩)
     | algebraMap r => simp
-    | add x y _ _ hx hy => rw [map_add]; exact W.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact W.add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact W.mul_mem hx hy
   have e : spMap W.val.toRingHom ≫ spMap (f.codRestrict W hf) = spMap f := by
     rw [← Spec.map_comp]

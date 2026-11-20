@@ -36,7 +36,7 @@ theorem isCrys_twist (ht : TensorCrys PD LL) (hq : QuotCrys PD LL)
   · intro g x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul v y =>
       rw [Representation.tprod_apply, TensorProduct.map_tmul, hf, hf, hν, hρ, map_smul, map_smul,
         smul_eq_mul, mul_smul]

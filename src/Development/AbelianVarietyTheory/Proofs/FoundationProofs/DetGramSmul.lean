@@ -79,7 +79,7 @@ theorem red_inf (E : Type) [Field E] [NumberField E] (R : Type) [NormedCommRing 
   let φ : (Fin n → E) →ₗ[ℤ] EuclideanSpace ℝ (Fin (finrank ℝ (Fin n → R))) := AddMonoidHom.toIntLinearMap
     { toFun := fun x => ε ((fun i => τ (x i)) ᵥ* g.1)
       map_zero' := by simp [← Pi.zero_def]
-      map_add' := fun x y => by rw [← map_add, ← add_vecMul]; simp [← Pi.add_def] }
+      map_add' := fun x y => by rw [← map_add (f := _), ← add_vecMul]; simp [← Pi.add_def] }
   have hφ : ∀ x, φ x = ε ((fun i => τ (x i)) ᵥ* g.1) := fun _ => rfl
   have hφu : LinearIndependent ℝ fun k => φ (u k) :=
     (GlobalTheory.T.linearIndependent_vecMul_of_span_rat' E R τ hτ hd n _ u (Fintype.card_fin _) hu' g).map' ε.toLinearEquiv.toLinearMap ε.toLinearEquiv.ker

@@ -13,7 +13,7 @@ private theorem decomposition_fixes_sqrt {Ω : Type} [Field Ω] [CharZero Ω] (B
     (hx : x ^ 2 = ((1 + 4 * k : ℤ) : Ω)) (hk : B.valuation (k : Ω) < 1) {s : G ℚ Ω} (hs : s ∈ Dec (F := ℚ) B) : s x = x := by
   refine (galois_sqrt_sign s hx).resolve_right fun h => ?_
   set y : Ω := (1 + x) / 2 with hy
-  have h1 : s y = 1 - y := by rw [hy, map_div₀, map_add, map_one, h, map_ofNat]; ring
+  have h1 : s y = 1 - y := by rw [hy, map_div₀, map_add (f := _), map_one, h, map_ofNat]; ring
   have h2 : y * (1 - y) = -k := by
     push_cast at hx
     rw [hy]; linear_combination (-1 / 4 : Ω) * hx

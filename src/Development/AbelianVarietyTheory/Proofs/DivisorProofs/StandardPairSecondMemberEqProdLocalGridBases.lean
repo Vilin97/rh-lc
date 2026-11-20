@@ -80,7 +80,7 @@ theorem isUnitDet_prod {e : AE D} {S : Finset (Pl D.host.E)} (he : IsIdemSum e S
     (hu : ∀ w : S, (u w : Kw (D := D) w.1) = cpt (D := D) w.1 N.det)
     (hv : ∀ w : S, Valued.v (u w : Kw (D := D) w.1) = 1) : IsUnitDet e N (∏ w : S, locIdele D.host.F w.1 (u w)) := by
   refine ⟨infPart_prod_locIdele S u, cpt_ext fun Q => ?_, ?_⟩
-  · rw [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
+  · rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
     by_cases hQ : Q ∈ S
     · rw [(cpt_prod_locIdele S u Q).1 hQ, (cpt_idemSum he Q).1 hQ, hu, sub_self, zero_add, one_mul]
     · rw [(cpt_prod_locIdele S u Q).2 hQ, (cpt_idemSum he Q).2 hQ, sub_zero, zero_mul, add_zero]
@@ -113,7 +113,7 @@ theorem v_det_of_isUnitDet {e : AE D} {S : Finset (Pl D.host.E)} (he : IsIdemSum
     {N : Matrix (Fin k) (Fin k) (EAf D)} {x : (AE D)ˣ} (hx : IsUnitDet e N x) {w : Pl D.host.E} (hw : w ∈ S)
     (hN : Valued.v (cpt (D := D) w N.det) ≤ 1) : Valued.v (cpt (D := D) w N.det) = 1 := by
   have h1 : cpt (D := D) w (toEAf D (x : AE D)) = cpt (D := D) w N.det := by
-    rw [hx.2.1, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, (cpt_idemSum he w).1 hw, sub_self,
+    rw [hx.2.1, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, (cpt_idemSum he w).1 hw, sub_self,
       zero_add, one_mul]
   have h2 : Valued.v (cpt (D := D) w (toEAf D ((x⁻¹ : (AE D)ˣ) : AE D))) ≤ 1 := (mem_OA_iff _).1 hx.2.2 w
   have h3 : Valued.v (cpt (D := D) w N.det) * Valued.v (cpt (D := D) w (toEAf D ((x⁻¹ : (AE D)ˣ) : AE D))) = 1 := by

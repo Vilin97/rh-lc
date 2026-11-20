@@ -68,7 +68,7 @@ theorem sumV_shift {F : Type} [Field F] (v : AddValuation F (WithTop ℚ)) {X : 
     SumV v (fun p : {p : X × X // h p.1 + p.2 = α} => B₁ p.1.1 * C₂ p.1.2 - B₂ p.1.1 * C₁ p.1.2) 0 := by
   refine sumV_equiv v (Equiv.subtypeEquiv ((Equiv.addRight y).prodCongr (Equiv.addRight y')) fun p => ?_) (fun p => ?_)
     (H (α - h y - y'))
-  · simp only [Equiv.prodCongr_apply, Prod.map_fst, Prod.map_snd, Equiv.coe_addRight, map_add]
+  · simp only [Equiv.prodCongr_apply, Prod.map_fst, Prod.map_snd, Equiv.coe_addRight, map_add (f := _)]
     constructor
     · intro e; rw [show α = α - h y - y' + h y + y' by abel, ← e]; abel
     · intro e; rw [← e]; abel
@@ -170,7 +170,7 @@ theorem main : LL → TwistBCSpanStatement → TWM.VRatioGtStatement → TWState
     (fun a b => by rw [QForm.bHom_apply, QForm.bOf]; ring) (QForm.two_Q_eq hϖ D hQ)
     (fun a ha => QForm.Q_pos hϖ D hQ ha) (k • l') k hk p₀.y
   let p₁ : QkPt D.toPre F k := qkMk hB (p₀.y + k • z) (p₀.g + iota hB F z)
-    (by rw [nsmul_add, qk_nsmul hB, map_add, map_nsmul])
+    (by rw [nsmul_add, qk_nsmul hB, map_add (f := _), map_nsmul])
   have hp₁ : QkToAkU U.toUnifPre F k p₁ (x ≫ E.aA) :=
     (f₁ _ _).2 (hp₀.symm.trans ((f₃ _ _).2 ((equiv_iff hB _ _).2 ⟨z, rfl, rfl⟩)))
   let d : GtPtF D.toPre F := g' - p₁.g

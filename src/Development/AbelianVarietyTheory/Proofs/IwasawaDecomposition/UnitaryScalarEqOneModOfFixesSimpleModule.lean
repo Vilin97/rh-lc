@@ -42,7 +42,7 @@ theorem eq_one_add_of_fixes : ∀ {F E : Type} [Field F] [NumberField F] [Field 
     key (T : intV E v) _ (by simp) (by rw [Nat.cast_smul_eq_nsmul, ← hM, card_nsmul_eq_zero'])
   have hrel : d₂ * d₁ = 1 + (T : v.adicCompletionIntegers F) * c₁ := by
     have h := congrArg (fun x => (s x).1) hc
-    simp only [map_mul, map_add, map_one, map_natCast, hs.2.1] at h
+    simp only [map_mul, map_add (f := _), map_one, map_natCast, hs.2.1] at h
     exact Subtype.ext (by simpa [hd₁, hd₂, hc₁, swapR] using h)
   have m2 : d₂ - 1 ∈ IsLocalRing.maximalIdeal (v.adicCompletionIntegers F) := by
     have : d₂ - 1 = (T : v.adicCompletionIntegers F) * c₁ - d₂ * (d₁ - 1) := by
@@ -62,7 +62,7 @@ theorem eq_one_add_of_fixes : ∀ {F E : Type} [Field F] [NumberField F] [Field 
       have h := congrArg Subtype.val hb₂
       push_cast at h
       exact h
-    rw [map_add, map_one, map_mul, map_natCast, s.apply_symm_apply]
+    rw [map_add (f := _), map_one, map_mul, map_natCast, s.apply_symm_apply]
     refine Prod.ext ?_ ?_
     · simpa using sub_eq_iff_eq_add'.1 e1
     · simpa using sub_eq_iff_eq_add'.1 e2

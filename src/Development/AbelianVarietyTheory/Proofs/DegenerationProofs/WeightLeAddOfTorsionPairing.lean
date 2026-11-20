@@ -205,7 +205,7 @@ theorem finrank_le_ker_add (l : ℕ) [Fact l.Prime] {T : Type} [AddCommGroup T]
       obtain ⟨t, ht, rfl⟩ := hv
       rw [hΦ', hW t ht, map_nsmul, Nat.cast_smul_eq_nsmul]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | smul a x _ hx => rw [map_smul, hx, smul_comm]
   · intro v hv
     obtain ⟨s, t, ht, rfl⟩ := hfix v hv
@@ -301,13 +301,13 @@ theorem le_add_of_pairing (M A : Type) [AddCommGroup M] [AddCommGroup A] (l q g 
   have bsk : ∀ x y, b y x = - b x y := fun x y => hext' _ _ fun n => by
     rw [map_neg, hb, hb, hsk n _ _ (htor _ x) (htor _ y)]
   have badd : ∀ x x' y, b (x + x') y = b x y + b x' y := fun x x' y => hext' _ _ fun n => by
-    rw [map_add, hb, hb, hb, map_add, (he1 n _ _ _ (htor _ x) (htor _ x') (htor _ y)).1]
+    rw [map_add (f := _), hb, hb, hb, map_add (f := _), (he1 n _ _ _ (htor _ x) (htor _ x') (htor _ y)).1]
   have bsm : ∀ (r : ℤ_[l]) x y, b (r • x) y = r • b x y := fun r x y => hext' _ _ fun n => by
     rw [hs', hb, hb, hs, hsm n _ _ _ (htor _ x) (htor _ y)]
   let φ : T' ≃ₗ[ℤ_[l]] ℤ_[l] := LinearEquiv.ofFinrankEq T' ℤ_[l] (by rw [hrk', finrank_self])
   let B : LinearMap.BilinForm ℤ_[l] T := LinearMap.mk₂ ℤ_[l] (fun x y => φ (b x y))
-    (fun x x' y => by rw [badd, map_add]) (fun r x y => by rw [bsm, map_smul])
-    (fun x y y' => by rw [bsk (y + y'), badd, bsk y x, bsk y' x, neg_add, map_add])
+    (fun x x' y => by rw [badd, map_add (f := _)]) (fun r x y => by rw [bsm, map_smul])
+    (fun x y y' => by rw [bsk (y + y'), badd, bsk y x, bsk y' x, neg_add, map_add (f := _)])
     (fun r x y => by rw [bsk (r • y), bsm, bsk y x, ← smul_neg, map_smul])
   have hBb : ∀ x y, B x y = φ (b x y) := fun _ _ => rfl
   obtain ⟨S', hS'⟩ := exists_lift l π h1 h0 hs hu S
@@ -329,7 +329,7 @@ theorem le_add_of_pairing (M A : Type) [AddCommGroup M] [AddCommGroup A] (l q g 
     simpa using (hker 1 _).1 this
   let W' : Submodule ℤ_[l] T :=
     { carrier := {x | ∀ n, π n x ∈ W}
-      add_mem' := fun hx hy n => by rw [map_add]; exact W.add_mem (hx n) (hy n)
+      add_mem' := fun hx hy n => by rw [map_add (f := _)]; exact W.add_mem (hx n) (hy n)
       zero_mem' := fun n => by rw [map_zero]; exact W.zero_mem
       smul_mem' := fun r x hx n => by rw [hs]; exact W.nsmul_mem (hx n) _ }
   have hfixH : ∀ x, S' x = x → ∀ n, π n (c • x) ∈ H := fun x hx n => by

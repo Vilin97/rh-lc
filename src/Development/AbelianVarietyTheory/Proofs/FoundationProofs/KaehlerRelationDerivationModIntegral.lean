@@ -30,9 +30,9 @@ theorem kaehler_rel_isInt (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algeb
   let L : On p n →ₗ[O0 p] Ω ⧸ N :=
     { toFun := fun u => N.mkQ (D (ι u))
       map_add' := fun u v => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         refine key _ _ ?_
-        rw [map_add]
+        rw [map_add (f := _)]
         exact int_congr (hD.1 _ (hι u) _ (hι v)) (by ring)
       map_smul' := fun r u => by
         simp only [RingHom.id_apply]
@@ -42,7 +42,7 @@ theorem kaehler_rel_isInt (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algeb
         exact hD.alg_mul hS r (hι u) }
   let d : Derivation (O0 p) (On p n) (Ω ⧸ N) := Derivation.mk' L (fun u v => by
     show N.mkQ (D (ι (u * v))) = u • N.mkQ (D (ι v)) + v • N.mkQ (D (ι u))
-    rw [← LinearMap.map_smul, ← LinearMap.map_smul, ← map_add]
+    rw [← LinearMap.map_smul, ← LinearMap.map_smul, ← map_add (f := _)]
     refine key _ _ ?_
     rw [hsm, hsm, map_mul]
     exact int_congr (hD.2.1 _ (hι u) _ (hι v)) (by ring))
@@ -50,8 +50,8 @@ theorem kaehler_rel_isInt (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algeb
       N.mkQ (D (ι u)) := fun u => by
     rw [Derivation.liftKaehlerDifferential_comp_D]; rfl
   have h2 := congrArg d.liftKaehlerDifferential hrel
-  simp only [map_add, LinearMap.map_smul, hd] at h2
-  rw [← LinearMap.map_smul, ← LinearMap.map_smul, ← LinearMap.map_smul, ← map_add,
+  simp only [map_add (f := _), LinearMap.map_smul, hd] at h2
+  rw [← LinearMap.map_smul, ← LinearMap.map_smul, ← LinearMap.map_smul, ← map_add (f := _),
     ← sub_eq_zero, ← map_sub, ← LinearMap.mem_ker, N.ker_mkQ, memN, hsm, hsm, hsm] at h2
   exact int_congr h2 (by ring)
 

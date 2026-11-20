@@ -49,7 +49,7 @@ theorem exists_sub_polyGerm_mem (hH : HolGermPointIdealSpan.Statement) (k : ℕ)
         obtain ⟨q1, h1⟩ := h1
         obtain ⟨q2, h2⟩ := h2
         refine ⟨q1 + q2, ?_⟩
-        rw [map_add]
+        rw [map_add (f := _)]
         convert add_mem h1 h2 using 1
         ring
       | smul a x hx h =>
@@ -65,7 +65,7 @@ theorem exists_sub_polyGerm_mem (hH : HolGermPointIdealSpan.Statement) (k : ℕ)
         rw [pow_succ']
         exact Ideal.mul_mem_mul (sub_polyGerm_C_mem w a) hx'
     obtain ⟨q', hq'⟩ := step _ hq
-    exact ⟨q + q', by rw [map_add, ← sub_sub]; exact hq'⟩
+    exact ⟨q + q', by rw [map_add (f := _), ← sub_sub]; exact hq'⟩
 
 variable (I : Ideal (MvPolynomial σ ℂ))
 
@@ -81,7 +81,7 @@ theorem exists_sub_polyGerm_mem_of_mem_map (hH : HolGermPointIdealSpan.Statement
     obtain ⟨i1, hi1, h1⟩ := h1
     obtain ⟨i2, hi2, h2⟩ := h2
     refine ⟨i1 + i2, I.add_mem hi1 hi2, ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     convert add_mem h1 h2 using 1
     ring
   | smul a x _ h =>
@@ -143,7 +143,7 @@ theorem psi_injective (hH : HolGermPointIdealSpan.Statement) (hP : PolyGermPoint
     ring
   have hq := hP σ w k (q - i) hqi
   have e : q = (q - i) + i := by ring
-  rw [Ideal.Quotient.eq_zero_iff_mem, polyPointIdeal, ← Ideal.map_pow, e, map_add,
+  rw [Ideal.Quotient.eq_zero_iff_mem, polyPointIdeal, ← Ideal.map_pow, e, map_add (f := _),
     Ideal.Quotient.eq_zero_iff_mem.2 hi, add_zero]
   exact Ideal.mem_map_of_mem _ hq
 

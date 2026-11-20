@@ -125,7 +125,7 @@ theorem exists_split_inert_factor : ∀ (D : D7) {a : ℕ} (k : GA D a), k ∈ i
   have h1' : sgA D ε * sgA D ε = sgA D ε := by rw [← map_mul, h1]
   generalize hη : sgA D ε = η at hηε hηm h1' h2 h3 ⊢
   have hPP : (ε + η) * (ε + η) = ε + η := by linear_combination h1 + h1' + 2 * h2
-  have hPs : sgA D (ε + η) = ε + η := by rw [map_add, hη, hηε, add_comm]
+  have hPs : sgA D (ε + η) = ε + η := by rw [map_add (f := _), hη, hηε, add_comm]
   have hPm : ε + η ∈ OhE D := add_mem hε hηm
   have h1m : (1 : Matrix (Fin a) (Fin a) (AE D)).map (sgA D) = 1 := Matrix.map_one _ (map_zero _) (map_one _)
   obtain ⟨ks, hks1, hks2⟩ := exists_glue_left hPP g

@@ -46,7 +46,7 @@ theorem repr_tensorMap (f : R →ₐ[F] S) (z : R ⊗[F] E) (k : κ) :
   | zero => simp
   | tmul r e =>
     simp [Algebra.TensorProduct.basis_repr_tmul, Finsupp.mapRange_apply]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 omit [Algebra.IsQuadraticExtension F E] [Fintype ι] [DecidableEq ι] in
 

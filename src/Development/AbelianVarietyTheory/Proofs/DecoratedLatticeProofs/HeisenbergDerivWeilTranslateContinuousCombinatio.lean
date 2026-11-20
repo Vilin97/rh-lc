@@ -52,7 +52,7 @@ theorem dLine_eq_sum (hψ : IsStdChar D ψ (-1)) {θ : GlobalTheory.IndefiniteRo
   obtain ⟨lam, hl, hlam⟩ := exists_log hψ
   funext w
   let A : RW T S →+ ℂ := AddMonoidHom.mk' (fun v => lam (symplOH S T w (iotaW σ T S v))) fun u v => by
-    rw [map_add, symplOH_add_right, map_add]
+    rw [map_add (f := _), symplOH_add_right, map_add (f := _)]
   have hA : Continuous A := hl.comp (continuous_symplOH S T continuous_const (h.continuous_iota T S))
   let A' : RW T S →L[ℝ] ℂ := A.toRealLinearMap hA
   let B : RW T S →L[ℝ] ℂ := fderiv ℝ (fun x => f (w + iotaW σ T S x)) 0
@@ -94,7 +94,7 @@ theorem dLine_om_comb : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp
     show piW θ T S (iotaW σ T S ((1 : ℝ) • b i)) = b i
     rw [h.pi_iota, one_smul]
   let Mp : GA D S × GA D T → ℝ →+ WO S T := fun p =>
-    AddMonoidHom.mk' (fun s => actO S T p.1⁻¹ p.2⁻¹ (M s)) fun s t => by rw [map_add, actO_add]
+    AddMonoidHom.mk' (fun s => actO S T p.1⁻¹ p.2⁻¹ (M s)) fun s t => by rw [map_add (f := _), actO_add]
   have hMp : ∀ p, Continuous (Mp p) := fun p =>
     (continuous_const.matrix_mul hM).matrix_mul continuous_const
   have hMp0 : ∀ p t, (Mp p t).map (finPart D) = 0 := fun p t => by

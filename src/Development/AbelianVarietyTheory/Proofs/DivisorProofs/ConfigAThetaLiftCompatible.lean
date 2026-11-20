@@ -138,7 +138,7 @@ theorem levi_comm {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H' : Pla
     rw [Matrix.mul_assoc, hkι, ← Matrix.mul_assoc, hzι, h1, Matrix.mul_one]
   have hPι : P * incM F H'.ι = 0 := by rw [hP, Matrix.sub_mul, e1, e2, sub_self]
   have iadd : ∀ v w : Fin d → E, incV F (v + w) = incV F v + incV F w := by
-    intro v w; funext i; simp [incV, map_add]
+    intro v w; funext i; simp [incV, map_add (f := _)]
   have ismul : ∀ (c : E) (v : Fin d → E), incV F (c • v) = inclR (F := F) (AF F) c • incV F v := by
     intro c v; funext i; simp [incV, map_mul]
   have imul : ∀ u : Fin d₁ → E, incV F (H'.ι *ᵥ u) = incM F H'.ι *ᵥ incV F u := by

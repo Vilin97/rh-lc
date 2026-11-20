@@ -26,12 +26,12 @@ private theorem exists_extend {M V E : Type} [AddCommGroup M] [AddCommGroup V] [
   refine ⟨AddMonoidHom.mk' (fun w => ((m w : ℚ)⁻¹) • P (u w)) ?_, ?_⟩
   · intro a b
     have hab : (m a * m b) • (a + b) = j (m b • u a + m a • u b) := by
-      rw [map_add, map_nsmul, map_nsmul, ← h a, ← h b, smul_add, mul_smul, mul_smul,
+      rw [map_add (f := _), map_nsmul, map_nsmul, ← h a, ← h b, smul_add, mul_smul, mul_smul,
         smul_comm (m a) (m b) a]
     have hk := key (a + b) (m a * m b) _ (mul_ne_zero (hm a) (hm b)) hab
     have hma : (m a : ℚ) ≠ 0 := by exact_mod_cast hm a
     have hmb : (m b : ℚ) ≠ 0 := by exact_mod_cast hm b
-    rw [hk, map_add, map_nsmul, map_nsmul, smul_add, ← Nat.cast_smul_eq_nsmul ℚ, ← Nat.cast_smul_eq_nsmul ℚ,
+    rw [hk, map_add (f := _), map_nsmul, map_nsmul, smul_add, ← Nat.cast_smul_eq_nsmul ℚ, ← Nat.cast_smul_eq_nsmul ℚ,
       smul_smul, smul_smul]
     push_cast
     congr 2 <;> field_simp

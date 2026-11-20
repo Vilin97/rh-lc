@@ -22,7 +22,7 @@ theorem finite_comm_creation : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ
   refine ⟨⟨hom.om_pres _ f hf.1, fun τ z => ?_⟩, fun P => ⟨?_, ?_⟩⟩
   · have h0 := hf.2 τ z
     unfold annih at h0 ⊢
-    rw [e, e, ← map_smul, ← map_add, h0, map_zero]
+    rw [e, e, ← map_smul, ← map_add (f := _), h0, map_zero]
   · refine (GlobalTheory.OrientedHeis.om_pureTensorO D ψ θ S T μ μ om hom hθ (fun _ => 1) (fun _ => 1) (fun _ => 1) (fun _ => 1)
       (fun _ => 1) (fun _ => 1) (fun _ => 1) (fun _ => 1) g h ?_ ?_ ?_ ?_ f hf.1 P).1 <;> intro τ
     · rw [GlobalTheory.OrientedHeis.compAt_mt_of_mem_GfC θ S hg]

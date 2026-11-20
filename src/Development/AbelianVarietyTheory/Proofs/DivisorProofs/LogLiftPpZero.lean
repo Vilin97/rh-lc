@@ -25,7 +25,7 @@ lemma logLift_mul (hπ : IsFlatLift p π) {g g' : K} (hg : LogLift p π F s (A :
   refine ⟨z * z', by simp [hz, hz'], fun i hi => ?_⟩
   obtain ⟨w, hw, hFw⟩ := hF i hi
   obtain ⟨w', hw', hFw'⟩ := hF' i hi
-  refine ⟨w + w', by rw [map_add]; exact A.add_mem hw hw', ?_⟩
+  refine ⟨w + w', by rw [map_add (f := _)]; exact A.add_mem hw hw', ?_⟩
   rw [map_mul, hFw, hFw', mul_pow]
   linear_combination (z ^ p * z' ^ p * w * w') * hpp
 

@@ -19,7 +19,7 @@ variable {D : D7} {T : Top D} (h : LawsP T) (j : ℕ) (hj : InR D j)
 def rdRing : T.R j →+* (DomPt T j → ℂ) where
   toFun f y := rdU (T.U j T.σ₀) f y.1 y.2.1
   map_zero' := by funext y; rw [map_zero]; rfl
-  map_add' f g := by funext y; rw [map_add]; rfl
+  map_add' f g := by funext y; rw [map_add (f := _)]; rfl
   map_mul' f g := by funext y; rw [rdU_mul]; rfl
   map_one' := by
     funext y
@@ -36,7 +36,7 @@ theorem evG_smul (a : T.Q.c.F) (F : AddMonoidAlgebra (T.R j) (Deg D j)) :
     evG h j hj (a • F) = T.σ₀ a • evG h j hj F := by
   induction F using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add F G hF hG => rw [smul_add, map_add, map_add, hF, hG, smul_add]
+  | add F G hF hG => rw [smul_add, map_add (f := _), map_add (f := _), hF, hG, smul_add]
   | single m f =>
     rw [AddMonoidAlgebra.smul_single, evG_single, evG_single]
     funext y
@@ -172,7 +172,7 @@ theorem mono_mem_deep (u : WeightFamilies.Wt D j) (a : ℕ) (β : Fin (WeightFam
   · rw [hsp]
     refine ⟨_, isHomogeneous_monomial c ?_, rfl⟩
     have := congrArg Finsupp.degree hsum
-    rw [map_add] at this
+    rw [map_add (f := _)] at this
     omega
   · have := mon_eq R φ w t hs α 0
     rw [pow_zero, mul_one] at this
@@ -235,7 +235,7 @@ theorem anFacts_of_poly (hφ : Function.Injective φ) (x0 : R.Y) (hx : ∀ p, φ
       exact (mem_support_iff.1 hβ) (hq.coeff_eq_zero hc)
     rw [MvPolynomial.X, monomial_mul]
     refine mono_mem_deep R φ hsp w t hs _ _ _ _ ?_ ?_
-    · rw [map_add, add_zero, hn, hd]; simp [add_comm]
+    · rw [map_add (f := _), add_zero, hn, hd]; simp [add_comm]
     · by_contra hc
       have h2 : tl β = 0 := by
         have : tl β ≤ tl (Finsupp.single 0 1 + β) := Finset.sum_le_sum fun i _ => by simp
@@ -347,7 +347,7 @@ theorem hN_norm (j : ℕ) (_ : InR D j) (w : WeightFamilies.Wt D j) (σ : B₀.K
   smul a f _ := by simp [hN, Finset.mul_sum]
   add f _ g _ := by
     rw [hN, hN, hN, ← Finset.sum_add_distrib]
-    exact Finset.sum_le_sum fun m _ => by rw [MvPolynomial.coeff_add, map_add]; exact norm_add_le _ _
+    exact Finset.sum_le_sum fun m _ => by rw [MvPolynomial.coeff_add, map_add (f := _)]; exact norm_add_le _ _
 
 theorem hC_fd (j : ℕ) (_ : InR D j) (w : WeightFamilies.Wt D j) : FiniteDimensional B₀.KO (hC B₀ j w) :=
   Module.Finite.iff_fg.2 (homogeneousSubmodule_fg _ _ _)
@@ -397,7 +397,7 @@ theorem evalEmbedding_smul {n : ℕ} {M : Type} [AddCommMonoid M] (a : K) (F : A
     evP σ n M (a • F) = σ a • evP σ n M F := by
   induction F using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add F G hF hG => rw [smul_add, map_add, map_add, hF, hG, smul_add]
+  | add F G hF hG => rw [smul_add, map_add (f := _), map_add (f := _), hF, hG, smul_add]
   | single m f =>
     rw [AddMonoidAlgebra.smul_single, evalEmbedding_single, evalEmbedding_single, ← map_smul, smul_eq_C_mul, smul_eq_C_mul, map_mul, map_C]
 

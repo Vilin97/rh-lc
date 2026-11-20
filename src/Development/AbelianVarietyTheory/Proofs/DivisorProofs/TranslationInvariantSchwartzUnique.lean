@@ -54,7 +54,7 @@ theorem eq_of_fourier_zero {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V]
     apply hμ (-T.symm w)
     ext x
     simp only [Ci, SchwartzMap.compCLMOfContinuousLinearEquiv_apply, Function.comp_apply]
-    rw [SchwartzMap.compSubConstCLM_apply, map_add, map_neg, ContinuousLinearEquiv.apply_symm_apply, sub_eq_add_neg]
+    rw [SchwartzMap.compSubConstCLM_apply, map_add (f := _), map_neg, ContinuousLinearEquiv.apply_symm_apply, sub_eq_add_neg]
   have := GlobalTheory.T.schwartz_functional_depends_on_value_at_zero ℓ hinv (𝓕 (C f)) (𝓕 (C g)) hfg
   rwa [hℓ, hℓ] at this
 

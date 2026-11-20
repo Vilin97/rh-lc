@@ -101,7 +101,7 @@ theorem bddAct_of_isIntegral {O : Type} [CommRing O] (bar : O → O) (hmul : ∀
     intro u v
     refine sq_le_of_forall_nonneg fun s t => ?_
     have := hpsd (s • u + t • v)
-    simp only [map_add, map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hβ.1 v u] at this
+    simp only [map_add (f := _), map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hβ.1 v u] at this
     linarith
   have hF : ∀ k, β (c ^ k • x) (c ^ k • x) = β x ((bar c * c) ^ k • x) := by
     intro k

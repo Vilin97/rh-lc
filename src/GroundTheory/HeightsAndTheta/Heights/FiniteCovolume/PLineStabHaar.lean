@@ -48,7 +48,7 @@ theorem LineStabHaar.two_le_finrank {h : HermitianForm F E W} (v : Basis ι E W)
   have hli : LinearIndependent E ![x₀, w₀] := by
     refine LinearIndependent.pair_iff.2 fun s t hst => ?_
     have e := congrArg (h.toSesq x₀) hst
-    rw [map_add, map_smul, map_smul, hp.1, hp.2.2, map_zero, smul_zero, zero_add, smul_eq_mul,
+    rw [map_add (f := _), map_smul, map_smul, hp.1, hp.2.2, map_zero, smul_zero, zero_add, smul_eq_mul,
       mul_one] at e
     subst e
     rw [zero_smul, add_zero, smul_eq_zero] at hst

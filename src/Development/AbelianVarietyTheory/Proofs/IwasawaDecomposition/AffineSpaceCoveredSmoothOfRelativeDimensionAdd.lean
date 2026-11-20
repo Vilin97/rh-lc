@@ -76,7 +76,7 @@ theorem AffCover.smoothOfRelativeDimension {M : RatModel F Ω} {M' : RatModel F 
       rw [Subalgebra.mem_toSubring]
       induction P using MvPolynomial.induction_on with
       | C a => rw [MvPolynomial.eval₂Hom_C]; exact Algebra.subset_adjoin (Or.inl (hm a))
-      | add P Q hP hQ => rw [map_add]; exact add_mem hP hQ
+      | add P Q hP hQ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hP hQ
       | mul_X P i hP =>
         rw [map_mul, MvPolynomial.eval₂Hom_X']
         exact mul_mem hP (Algebra.subset_adjoin (Or.inr ⟨i, rfl⟩))

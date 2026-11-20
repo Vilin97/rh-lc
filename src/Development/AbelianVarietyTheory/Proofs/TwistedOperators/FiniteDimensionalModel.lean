@@ -131,7 +131,7 @@ theorem swap_mem_int {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     have := mul_mem h1 h2
     rwa [Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one] at this
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem eventually_conj {R R' : Type} [CommRing R] [TopologicalSpace R] [IsTopologicalRing R] [CommRing R'] {n : ℕ}

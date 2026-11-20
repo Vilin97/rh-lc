@@ -127,7 +127,7 @@ def weightedEmbed (c : InfinitePlace E → ℝ) : E →+ EuclideanSpace ℝ (Inf
     simp
   map_add' a b := by
     ext p
-    simp only [map_add, Complex.add_re, Complex.add_im, PiLp.add_apply]
+    simp only [map_add (f := _), Complex.add_re, Complex.add_im, PiLp.add_apply]
     split_ifs <;> ring
 
 variable (W) in

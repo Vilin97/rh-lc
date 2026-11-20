@@ -37,7 +37,7 @@ theorem E_lift {X Y : Type*} (L : ℝ → (X → ℂ) →ₗ[ℂ] (X → ℂ)) (
       rw [hLL]
       exact Submodule.subset_span ⟨u + t, rfl⟩
     | zero => rw [map_zero]; exact W.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact W.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact W.add_mem hx hy
     | smul a x _ hx => rw [map_smul]; exact W.smul_mem a hx
   have hL : ∀ s t, ∀ w ∈ W, L s (L t w) = L t (L s w) := fun s t w _ => by rw [hLL, hLL, add_comm]
   have hB0 : B 0 = 0 := by

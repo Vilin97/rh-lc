@@ -187,12 +187,12 @@ theorem exists_coordMap (bas : Module.Basis (Fin N) Ω V) (hbas : ∀ q, bas q =
       map_zero' := by funext q; simp [rs_zero hPQ]
       map_add' := fun m m' => by
         funext q
-        simp only [AddSubgroup.coe_add, map_add, Pi.add_apply]
+        simp only [AddSubgroup.coe_add, map_add (f := _), Pi.add_apply]
         exact rs_add hPQ (hmem m q) (hmem m' q) }
   let Φ₀ : FractionRing (MRingOver (kap O) ι ⧸ Q) ⊗[ℤ] stalk O x Q B →ₗ[ℤ]
       (Fin N → FractionRing (MRingOver (kap O) ι ⧸ Q)) :=
     TensorProduct.lift (LinearMap.mk₂ ℤ (fun r m => r • ψ m) (fun r r' m => add_smul r r' (ψ m))
-      (fun c r m => smul_assoc c r (ψ m)) (fun r m m' => by rw [map_add, smul_add])
+      (fun c r m => smul_assoc c r (ψ m)) (fun r m m' => by rw [map_add (f := _), smul_add])
       (fun c r m => by rw [map_zsmul, smul_comm]))
   have hΦ₀ : ∀ r m, Φ₀ (r ⊗ₜ m) = r • ψ m := fun r m => TensorProduct.lift.tmul r m
   let Φ : FractionRing (MRingOver (kap O) ι ⧸ Q) ⊗[ℤ] stalk O x Q B →ₗ[FractionRing (MRingOver (kap O) ι ⧸ Q)]
@@ -203,7 +203,7 @@ theorem exists_coordMap (bas : Module.Basis (Fin N) Ω V) (hbas : ∀ q, bas q =
         induction t using TensorProduct.induction_on with
         | zero => simp
         | tmul r m => rw [TensorProduct.smul_tmul', hΦ₀, hΦ₀, smul_eq_mul, mul_smul]; rfl
-        | add u v hu hv => rw [smul_add, map_add, map_add, hu, hv, smul_add] }
+        | add u v hu hv => rw [smul_add, map_add (f := _), map_add (f := _), hu, hv, smul_add] }
   have hΦ : ∀ r m, Φ (r ⊗ₜ m) = r • ψ m := hΦ₀
   have hker : Submodule.span _ (resRel O x Q B) ≤ LinearMap.ker Φ := by
     rw [Submodule.span_le]

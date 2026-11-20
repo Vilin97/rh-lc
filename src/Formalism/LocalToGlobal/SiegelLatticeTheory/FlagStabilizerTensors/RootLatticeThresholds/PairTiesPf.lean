@@ -178,11 +178,11 @@ theorem sg_map (δ : S.V ≃ₗ[E] S.V) (hδ : δ ∈ Formalism.HermitianLattice
   · rintro ⟨_, ⟨x, hx, rfl⟩, _, ⟨x', hx', rfl⟩, h⟩
     refine ⟨x, hx, x', hx', ?_⟩
     have h2 := congrArg δ.symm h
-    simpa [Formalism.L2.SG.Saturated.mapL, map_add, map_sub, map_smul] using h2
+    simpa [Formalism.L2.SG.Saturated.mapL, map_add (f := _), map_sub, map_smul] using h2
   · rintro ⟨x, hx, x', hx', h⟩
     refine ⟨δ x, ⟨x, hx, rfl⟩, δ x', ⟨x', hx', rfl⟩, ?_⟩
     have h2 := congrArg δ h
-    simpa [Formalism.L2.SG.Saturated.mapL, map_add, map_sub, map_smul] using h2
+    simpa [Formalism.L2.SG.Saturated.mapL, map_add (f := _), map_sub, map_smul] using h2
 
 theorem scal_map_fwd {Λ : Submodule (𝓞 E) S.V} {F : LFlag S r T} {F' F'' : LFlag S r T'} (δ B : S.V ≃ₗ[E] S.V)
     (hδ : δ ∈ Formalism.HermitianLatticesTheory.isom S.hT) (hS : IsScalar Λ F F' F'' B) :

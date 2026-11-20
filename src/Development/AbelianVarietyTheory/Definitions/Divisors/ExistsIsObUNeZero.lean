@@ -25,7 +25,7 @@ theorem sig_mem (L : Pre I π F) (α : Aug I π R₁) (T : C) {σ : R₁ ⊗[R�
     obtain ⟨b, rfl⟩ := L.surj T b
     rw [hσ, Algebra.smul_def]
     exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ (α.mem x))
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 theorem sig_nat (L : Pre I π F) (α : Aug I π R₁) {σ : ∀ T, R₁ ⊗[R₀] F.obj T →+ L.B T} (hσ : ∀ T, α.IsSig (L.p T) (σ T))
     {T T' : C} (a : T ⟶ T') (y : R₁ ⊗[R₀] F.obj T) : σ T' (extHom R₁ (mp F a) y) = L.ρ a (σ T y) := by
@@ -34,7 +34,7 @@ theorem sig_nat (L : Pre I π F) (α : Aug I π R₁) {σ : ∀ T, R₁ ⊗[R₀
   | tmul x b =>
     obtain ⟨b, rfl⟩ := L.surj T b
     rw [Algebra.TensorProduct.map_tmul, ← L.nat, hσ, hσ, map_smul]; rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem kerQ_nat (α : Aug I π R₁) {T T' : C} (a : T ⟶ T') {y : R₁ ⊗[R₀] F.obj T} (hy : α.KerQ y) :
     α.KerQ (extHom R₁ (mp F a) y) := by
@@ -43,7 +43,7 @@ theorem kerQ_nat (α : Aug I π R₁) {T T' : C} (a : T ⟶ T') {y : R₁ ⊗[R�
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x b => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   exact (this y).trans (by rw [show Algebra.TensorProduct.map α.q (AlgHom.id R₀ (F.obj T)) y = 0 from hy, map_zero])
 
 theorem sig_surj (L : Pre I π F) (α : Aug I π R₁) (T : C) {σ : R₁ ⊗[R₀] F.obj T →+ L.B T} (hσ : α.IsSig (L.p T) σ)
@@ -59,7 +59,7 @@ theorem sig_surj (L : Pre I π F) (α : Aug I π R₁) (T : C) {σ : R₁ ⊗[R�
       intro b
       obtain ⟨s, h1, h2⟩ := hx b
       obtain ⟨t, h3, h4⟩ := hy b
-      exact ⟨s + t, (map_add _ _ _).trans (by rw [h1, h3, add_zero]), by rw [map_add, h2, h4, mul_add]⟩
+      exact ⟨s + t, (map_add _ _ _).trans (by rw [h1, h3, add_zero]), by rw [map_add (f := _), h2, h4, mul_add]⟩
     | smul a x _ hx => exact fun b ↦ by simpa [mul_assoc] using hx (b * a)
   simpa using key 1
 
@@ -113,16 +113,16 @@ theorem isObU_unique (L : Pre I π F) (α : Aug I π R₁) {u : ∀ (T T' : C) (
   refine sub_eq_zero.1 (sig_inj α (L.p T'') (L.semi _) (L.surj _) (hσ T'') ?_ ?_)
   · change Algebra.TensorProduct.map α.q (AlgHom.id R₀ _) (extHom R₁ (mp F b) (f T T' a) - f T T'' (a ≫ b) + f T' T'' b -
       (z.1 T T' T'' a b - z'.1 T T' T'' a b)) = 0
-    rw [map_sub, map_sub, map_add, map_sub, kerQ_nat α b (hq T T' a), hq, hq, (hz T T' T'' a b).1, (hz' T T' T'' a b).1]
+    rw [map_sub, map_sub, map_add (f := _), map_sub, kerQ_nat α b (hq T T' a), hq, hq, (hz T T' T'' a b).1, (hz' T T' T'' a b).1]
     simp
   · change σ T'' (extHom R₁ (mp F b) (f T T' a) - f T T'' (a ≫ b) + f T' T'' b -
       (z.1 T T' T'' a b - z'.1 T T' T'' a b)) = 0
     have e := (hz T T' T'' a b).2
     have e' := (hz' T T' T'' a b).2
-    rw [hf', hf', hf', map_mul, map_add, map_one, ← sig_nat L α hσ] at e
+    rw [hf', hf', hf', map_mul, map_add (f := _), map_one, ← sig_nat L α hσ] at e
     have m := fun x y ↦ mul_eq_zero_of_mem (map_sq hI (L.B T'')) (sig_mem L α T'' (hσ T'') x) (sig_mem L α T'' (hσ T'') y)
     refine (v' T T'' (a ≫ b)).mul_left_inj.1 ?_
-    rw [map_sub, map_sub, map_add, map_sub]
+    rw [map_sub, map_sub, map_add (f := _), map_sub]
     have m1 := m (extHom R₁ (mp F b) (f T T' a)) (f T' T'' b)
     have m2 := m (extHom R₁ (mp F b) (f T T' a)) (z'.1 T T' T'' a b)
     have m3 := m (f T' T'' b) (z'.1 T T' T'' a b)
@@ -161,12 +161,12 @@ theorem exists_isObU (hs : Function.Surjective π) (L : Pre I π F) (hL : L.IsFu
   refine sub_eq_zero.1 (sig_inj α (L.p T''') (L.semi _) (L.surj _) (hσ T''') ?_ ?_)
   · change Algebra.TensorProduct.map α.q (AlgHom.id R₀ _) (extHom R₁ (mp F c) (z T T' T'' a b) + z T T'' T''' (a ≫ b) c -
       (z T T' T''' a (b ≫ c) + z T' T'' T''' b c)) = 0
-    rw [map_sub, map_add, map_add, kerQ_nat α c (hq _ _ _ a b), hq, hq, hq]
+    rw [map_sub, map_add (f := _), map_add (f := _), kerQ_nat α c (hq _ _ _ a b), hq, hq, hq]
     simp
   · change σ T''' (extHom R₁ (mp F c) (z T T' T'' a b) + z T T'' T''' (a ≫ b) c -
       (z T T' T''' a (b ≫ c) + z T' T'' T''' b c)) = 0
     have e1 := congrArg (L.ρ c) (hz' _ _ _ a b)
-    rw [map_mul, map_mul, map_add, map_one, ← sig_nat L α hσ, ← hL] at e1
+    rw [map_mul, map_mul, map_add (f := _), map_one, ← sig_nat L α hσ, ← hL] at e1
     have e2 := hz' _ _ _ (a ≫ b) c
     have e3 := hz' _ _ _ a (b ≫ c)
     have e4 := hz' _ _ _ b c
@@ -175,7 +175,7 @@ theorem exists_isObU (hs : Function.Surjective π) (L : Pre I π F) (hL : L.IsFu
     have m1 := n (extHom R₁ (mp F c) (z T T' T'' a b)) (z T T'' T''' (a ≫ b) c)
     have m2 := n (z T T' T''' a (b ≫ c)) (z T' T'' T''' b c)
     refine (v T T''' (a ≫ b ≫ c)).mul_left_inj.1 ?_
-    rw [map_sub, map_add, map_add]
+    rw [map_sub, map_add (f := _), map_add (f := _)]
     generalize σ T''' (extHom R₁ (mp F c) (z T T' T'' a b)) = x1 at *
     generalize σ T''' (z T T'' T''' (a ≫ b) c) = x2 at *
     generalize σ T''' (z T T' T''' a (b ≫ c)) = x3 at *

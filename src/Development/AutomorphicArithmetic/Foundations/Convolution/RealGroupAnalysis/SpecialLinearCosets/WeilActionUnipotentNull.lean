@@ -132,7 +132,7 @@ theorem UpperTheory.ConvolutionTheory.R2.I.actN :
     intro i
     rw [hX]
     change cp v (X i + sg v (d i)) = _
-    rw [map_add, scp]
+    rw [map_add (f := _), scp]
   constructor
   · funext i
     change D.act (nbar D v θ s)⁻¹ X i - sg v (cp v (D.act (nbar D v θ s)⁻¹ X i)) = X i - sg v (cp v (X i))

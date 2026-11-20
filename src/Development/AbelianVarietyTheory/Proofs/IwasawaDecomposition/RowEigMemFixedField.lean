@@ -191,7 +191,7 @@ theorem exists_boundAt (hG : Formalism.L2.SG.ConcreteSettingExists.GapHyp D) (R 
     exact FiniteDimensional.span_of_finite Ks (Set.finite_range b)
   let ι : (R.FW i).WK →ₛₗ[(sg0 D A3.A).comp (algebraMap Ks D.what₂.LL)] MMap (R.MW i (sg0 D A3.A)) :=
     { toFun := fun x => (R.HW i (sg0 D A3.A)).e ((R.FW i).j (sg0 D A3.A) x)
-      map_add' := fun x y => by rw [Submodule.coe_add, map_add, map_add]
+      map_add' := fun x y => by rw [Submodule.coe_add, map_add (f := _), map_add (f := _)]
       map_smul' := fun a x => by rw [Submodule.coe_smul, ← algebraMap_smul D.what₂.LL a, map_smulₛₗ, map_smul]; rfl }
   let κ := {t : ℕ × PlE D.host × GA D (Wc D i) × Finset (GA D (Wc D i)) // HkAt R.C i t.1 t.2.1 t.2.2.1 t.2.2.2}
   obtain ⟨S, h1, h2⟩ := exists_finset_eig _ ι

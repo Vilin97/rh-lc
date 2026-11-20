@@ -29,7 +29,7 @@ theorem pinv_le_one (p : ℕ) : (p : ℝ)⁻¹ ≤ 1 := Nat.cast_inv_le_one p
 
 theorem integral_add {f g : MvPowerSeries ι K} (hf : Integral f) (hg : Integral g) :
     Integral (f + g) := fun n => by
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf n) (hg n))
 
 theorem integral_neg {f : MvPowerSeries ι K} (hf : Integral f) : Integral (-f) := fun n => by
@@ -86,12 +86,12 @@ theorem cg_symm {p : ℕ} {f g : MvPowerSeries ι K} (h : Cg p f g) : Cg p g f :
 
 theorem cg_trans {p : ℕ} {f g k : MvPowerSeries ι K} (h1 : Cg p f g) (h2 : Cg p g k) :
     Cg p f k := fun n => by
-  rw [← sub_add_sub_cancel f g k, map_add]
+  rw [← sub_add_sub_cancel f g k, map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (h1 n) (h2 n))
 
 theorem cg_add {p : ℕ} {f g f' g' : MvPowerSeries ι K} (h1 : Cg p f g) (h2 : Cg p f' g') :
     Cg p (f + f') (g + g') := fun n => by
-  rw [add_sub_add_comm, map_add]
+  rw [add_sub_add_comm, map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (h1 n) (h2 n))
 
 theorem cg_sub {p : ℕ} {f g f' g' : MvPowerSeries ι K} (h1 : Cg p f g) (h2 : Cg p f' g') :
@@ -109,14 +109,14 @@ theorem cg_sum {p : ℕ} {α : Type} (s : Finset α) (F G : α → MvPowerSeries
 theorem integral_of_cg {p : ℕ} {f g : MvPowerSeries ι K} (h : Cg p f g) (hg : Integral g) :
     Integral f := fun n => by
   have e : f = (f - g) + g := by ring
-  rw [e, map_add]
+  rw [e, map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans
     (max_le ((h n).trans (pinv_le_one p)) (hg n))
 
 theorem cg_mul {p : ℕ} {f g f' g' : MvPowerSeries ι K} (hf : Integral f) (hg' : Integral g')
     (h1 : Cg p f g) (h2 : Cg p f' g') : Cg p (f * f') (g * g') := fun n => by
   have e : f * f' - g * g' = f * (f' - g') + g' * (f - g) := by ring
-  rw [e, map_add]
+  rw [e, map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans
     (max_le (small_mul (pinv_nonneg p) hf h2 n) (small_mul (pinv_nonneg p) hg' h1 n))
 

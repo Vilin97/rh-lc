@@ -52,7 +52,7 @@ theorem gam_unit (π' : LetA O n) (E : ZMod n → Polynomial O) {s' : ℕ} (hs' 
       show PowerSeries.constantCoeff ((w0 : LetA O n) i * PowerSeries.X ^ s') = 0
       rw [map_mul, map_pow, PowerSeries.constantCoeff_X, zero_pow (by omega), mul_zero]
     show IsUnit (PowerSeries.constantCoeff (1 + (w2 : LetA O n) i * π' i * G i))
-    rw [map_add, map_one, map_mul, map_mul, h0, mul_zero, zero_mul, add_zero]
+    rw [map_add (f := _), map_one, map_mul, map_mul, h0, mul_zero, zero_mul, add_zero]
     exact isUnit_one
   · funext i
     rw [Pi.mul_apply, hG i, hw2]

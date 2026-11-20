@@ -10,7 +10,7 @@ namespace GlobalTheory.CompanionTheory.HeckeEigenspaces
 theorem exists_closed_common_ker {X : Type} [NormedAddCommGroup X] [NormedSpace ℂ X] (𝒯 : Set (X →L[ℂ] X)) :
     ∃ Y : Submodule ℂ X, IsClosed (Y : Set X) ∧ ∀ φ, φ ∈ Y ↔ ∀ T ∈ 𝒯, T φ = 0 := by
   refine ⟨{ carrier := {φ | ∀ T ∈ 𝒯, T φ = 0}
-            add_mem' := fun {x y} hx hy T hT => by rw [map_add, hx T hT, hy T hT, add_zero]
+            add_mem' := fun {x y} hx hy T hT => by rw [map_add (f := _), hx T hT, hy T hT, add_zero]
             zero_mem' := fun T _ => map_zero T
             smul_mem' := fun c x hx T hT => by rw [map_smul, hx T hT, smul_zero] }, ?_, fun _ => Iff.rfl⟩
   have e : ({φ | ∀ T ∈ 𝒯, T φ = 0} : Set X) = ⋂ T ∈ 𝒯, T ⁻¹' {0} := by

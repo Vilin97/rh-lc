@@ -18,7 +18,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem incV_add {k : ℕ} (x y : Fin k → E) :
     GlobalTheory.ThK.incV F (x + y) = GlobalTheory.ThK.incV F x + GlobalTheory.ThK.incV F y := by
   funext i
-  simp [GlobalTheory.ThK.incV, map_add]
+  simp [GlobalTheory.ThK.incV, map_add (f := _)]
 
 theorem incV_zero {k : ℕ} : GlobalTheory.ThK.incV F (0 : Fin k → E) = 0 := by
   funext i

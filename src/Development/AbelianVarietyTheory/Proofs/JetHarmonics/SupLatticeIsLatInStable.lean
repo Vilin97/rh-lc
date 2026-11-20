@@ -36,7 +36,7 @@ theorem spanK_span (z : (Fin n → K) ≃ₗ[K] K ⊗[F] C) (s : Set C) :
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      simp only [TensorProduct.tmul_add, map_add]
+      simp only [TensorProduct.tmul_add, map_add (f := _)]
       exact Submodule.add_mem _ hx hy
     | smul r x _ hx =>
       have hi : IsIntegral ℤ (algebraMap F K (r : F)) :=
@@ -61,7 +61,7 @@ theorem spanK_isLatIn (z : (Fin n → K) ≃ₗ[K] K ⊗[F] C) (M : Submodule (�
       | mem x hx => exact Submodule.subset_span (Submodule.subset_span ⟨x, hx, rfl⟩)
       | zero => simp
       | add x y _ _ hx hy =>
-        simp only [TensorProduct.tmul_add, map_add]
+        simp only [TensorProduct.tmul_add, map_add (f := _)]
         exact Submodule.add_mem _ hx hy
       | smul r x _ hx =>
         rw [coord_one_tmul_smul]
@@ -77,7 +77,7 @@ theorem spanK_isLatIn (z : (Fin n → K) ≃ₗ[K] K ⊗[F] C) (M : Submodule (�
       rw [e, map_smul]
       exact Submodule.smul_mem _ _ (h1 f)
     | add x y hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ (hx trivial) (hy trivial)
 
 end General

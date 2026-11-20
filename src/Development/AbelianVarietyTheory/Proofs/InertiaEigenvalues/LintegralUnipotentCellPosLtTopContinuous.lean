@@ -125,7 +125,7 @@ theorem exists_rat_mul_entries_mem {K : Set (Ad E)} (hK : ∀ x : Ad E, ∃ y : 
             if j = ⟨m, hm⟩ then (if (i : ℕ) < m then -algebraMap E (Ad E) (y i) else 0) else 0) := by
           ext i j : 1
           change algebraMap E (Ad E) ((GlobalTheory.JSW.colGL m fun i => -y i).val i j) = _
-          simp only [GlobalTheory.JSW.colGL, Matrix.add_apply, Matrix.of_apply, map_add, Matrix.one_apply, Fin.ext_iff]
+          simp only [GlobalTheory.JSW.colGL, Matrix.add_apply, Matrix.of_apply, map_add (f := _), Matrix.one_apply, Fin.ext_iff]
           split_ifs <;> simp_all
         rw [Units.val_mul, e1, add_mul, one_mul, Matrix.add_apply, Matrix.mul_apply]
         simp only [Matrix.of_apply, ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]

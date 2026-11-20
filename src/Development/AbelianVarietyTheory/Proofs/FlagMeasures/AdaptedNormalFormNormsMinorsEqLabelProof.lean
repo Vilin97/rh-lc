@@ -62,7 +62,7 @@ theorem T_eq {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module K V] {
   have hG : G.e (Fin.last r) = F.e (Fin.last r) + x := by rw [hxdef]; abel
   have h1 := G.zz
   rw [hG] at h1
-  simp only [map_add, LinearMap.add_apply, hxz, hzx, hxx, F.zz, add_zero] at h1
+  simp only [map_add (f := _), LinearMap.add_apply, hxz, hzx, hxx, F.zz, add_zero] at h1
   exact (neg_inj.1 h1).symm
 
 end GlobalTheory.TypeAsm.HasLabelling

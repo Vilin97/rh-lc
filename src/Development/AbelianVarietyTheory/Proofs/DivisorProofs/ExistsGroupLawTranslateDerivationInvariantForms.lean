@@ -52,7 +52,7 @@ theorem dVal_semiDerHom (σ : C →ₐ[R] E) (θ : Ω[C⁄R] →ₗ[R] E) (hθ :
     rw [dVal_smul_left, dVal_D, hθ, fst_semiDerHom]
     simp [semiDerHom]
   | h0 => simp
-  | ha x y hx hy => rw [map_add, map_add, hx, hy]
+  | ha x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 end Alg
 end GlobalTheory.InvForm

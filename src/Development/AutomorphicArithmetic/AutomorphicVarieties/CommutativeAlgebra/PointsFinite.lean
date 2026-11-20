@@ -117,7 +117,7 @@ private theorem pf_prod {X σ S : Type} [AddCommGroup X] [CommRing S] (wt : σ �
   | zero => simp
   | add f g hf hg =>
     rw [Finsupp.prod_add_index' (by simp) (fun _ _ _ => pow_add _ _ _),
-      Finsupp.prod_add_index' (by simp) (fun _ _ _ => pow_add _ _ _), hf, hg, map_add, ofAdd_add,
+      Finsupp.prod_add_index' (by simp) (fun _ _ _ => pow_add _ _ _), hf, hg, map_add (f := _), ofAdd_add,
       map_mul, Units.val_mul]
     ring
   | single i k =>
@@ -262,7 +262,7 @@ private theorem pf_agree (hι : Function.Injective ι)
         (x - algebraMap O _ (constantCoeff b)) (by
           rw [map_sub, AlgHom.commutes, ← hx]; rfl)
       refine ⟨c + algebraMap O B (constantCoeff b), ?_, ?_⟩
-      · rw [map_add, hc, AlgHom.commutes, map_sub, AlgHom.commutes]
+      · rw [map_add (f := _), hc, AlgHom.commutes, map_sub, AlgHom.commutes]
         simp
       · rw [map_sub, AlgHom.commutes, sub_sub, add_comm] at hc'
         rwa [pow_succ]
@@ -300,7 +300,7 @@ private theorem pf_factor [DecidableEq X] (hι : Function.Injective ι)
   refine ⟨f, AlgHom.ext fun x => ?_⟩
   induction x using DirectSum.Decomposition.inductionOn W.gr with
   | zero => rw [map_zero, map_zero]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   | @homogeneous j x =>
     obtain ⟨x, hx⟩ := x
     rw [act_of_mem W.gr t ξ hx]

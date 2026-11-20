@@ -71,12 +71,12 @@ theorem exists_form (N : Submodule ℂ M) (sch : Submodule ℂ A) (s : Submodule
     rw [this]
   refine ⟨LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun Ψ Ψ' => L (T (j Ψ).1) (U (j Ψ').1)) ?_ ?_ ?_ ?_, ?_⟩
   · intro x y z
-    rw [map_add, Submodule.coe_add, map_add, add₁ _ (hT _ (j x).2) _ (hT _ (j y).2) _ (hU _ (j z).2)]
+    rw [map_add (f := _), Submodule.coe_add, map_add (f := _), add₁ _ (hT _ (j x).2) _ (hT _ (j y).2) _ (hU _ (j z).2)]
   · intro c x z
     rw [map_smul, Submodule.coe_smul, map_smul, smul₁]
     rfl
   · intro x y z
-    rw [map_add, Submodule.coe_add, map_add, add₂ _ (hT _ (j x).2) _ (hU _ (j y).2) _ (hU _ (j z).2)]
+    rw [map_add (f := _), Submodule.coe_add, map_add (f := _), add₂ _ (hT _ (j x).2) _ (hU _ (j y).2) _ (hU _ (j z).2)]
   · intro c x z
     rw [map_smul, Submodule.coe_smul, map_smul, smul₂]
     rfl
@@ -362,9 +362,9 @@ theorem form_of_span (hKP : KP) (hT : IsTriple B G X om om') {f : UA σ G.W.J �
       L x (Φ + Φ₂) = L x Φ + L x Φ₂ := by
     intro x hx Φ hΦ Φ₂ hΦ₂
     have hK : ∀ h, K (Φ + Φ₂) h = K Φ h + K Φ₂ h := fun h => by
-      simp only [K, map_add]
+      simp only [K, map_add (f := _)]
       exact thetaSum_add F (he.maps _ (pres _ _ hΦ)) (he.maps _ (pres _ _ hΦ₂))
-    simp only [L, hK, map_add, mul_add]
+    simp only [L, hK, map_add (f := _), mul_add]
     exact integral_add (hint x hx Φ hΦ) (hint x hx Φ₂ hΦ₂)
   have smul₂ : ∀ (c : ℂ) x Φ, L x (c • Φ) = starRingEnd ℂ c * L x Φ := by
     intro c x Φ

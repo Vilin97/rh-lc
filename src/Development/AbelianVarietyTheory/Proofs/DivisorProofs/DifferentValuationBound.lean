@@ -15,7 +15,7 @@ def ball (hw : IsNonarchimedean w) (φ : E →+* K) (m : ℝ) (hm : 0 ≤ m) : A
   add_mem' := by
     intro a b ha hb
     change w (φ (a + b)) ≤ m
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (hw _ _).trans (max_le ha hb)
   zero_mem' := by
     change w (φ 0) ≤ m
@@ -60,7 +60,7 @@ def smallIdeal (hw : IsNonarchimedean w) (φ : E →+* K) : Ideal (𝓞 E) where
   add_mem' := by
     intro a b ha hb
     change w (φ (algebraMap (𝓞 E) E (a + b))) < 1
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact (hw _ _).trans_lt (max_lt ha hb)
   zero_mem' := by
     change w (φ (algebraMap (𝓞 E) E 0)) < 1
@@ -258,7 +258,7 @@ theorem abs_traceDual : ∀ (E : Type) [Field E] [NumberField E] [IsGalois ℚ E
       rw [map_mul, map_mul]
       exact mul_le_mul (hall d hd) (abs_le_of_mem_traceDual hw φ hm hk hc) (w.nonneg _) hT0.le
     · intro x y hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (hw _ _).trans (max_le hx hy)
   rw [map_one, map_one] at key
   rw [← mul_one T⁻¹, inv_mul_le_iff₀ hT0]

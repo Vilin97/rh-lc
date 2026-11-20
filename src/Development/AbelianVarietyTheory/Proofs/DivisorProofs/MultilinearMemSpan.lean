@@ -196,7 +196,7 @@ theorem map_idx_eq (hO : Function.Injective (algebraMap O C)) {i : K →+* C} {j
         obtain ⟨c, hc⟩ := hle z (fun a => γ (x a)) fun a => hz.ge (Submodule.subset_span ⟨_, hx a, rfl⟩)
         exact Submodule.mem_span_singleton.2 ⟨c, by rw [hΔ, hc]⟩
       | zero => simp
-      | add _ _ _ _ h₁ h₂ => rw [map_add]; exact add_mem h₁ h₂
+      | add _ _ _ _ h₁ h₂ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
       | smul r _ _ h₁ => exact Set.mem_of_eq_of_mem (hΔs _ _) (Submodule.smul_mem _ _ h₁)
     · rintro _ rfl
       refine Submodule.span_mono ?_ (multilinear_mem_span (D.toMultilinearMap.restrictScalars O)
@@ -215,7 +215,7 @@ theorem map_idx_eq (hO : Function.Injective (algebraMap O C)) {i : K →+* C} {j
     refine (hN'.ge.trans (Submodule.span_le.2 ?_)) (Submodule.mem_span_singleton_self _)
     rintro _ ⟨t, ht, rfl⟩
     refine Submodule.smul_induction_on (p := fun t => Δ t ∈ Submodule.map (Algebra.linearMap O C) ((idx K n L N).map j))
-      (detSpan_le_idx_smul n h hL hr ht) (fun r hr t ht => ?_) fun _ _ h₁ h₂ => by rw [map_add]; exact add_mem h₁ h₂
+      (detSpan_le_idx_smul n h hL hr ht) (fun r hr t ht => ?_) fun _ _ h₁ h₂ => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
     obtain ⟨c, hc⟩ := hone t ht
     exact ⟨j r * c, Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem j hr), by
       refine Eq.trans ?_ (hΔs _ _).symm
@@ -342,7 +342,7 @@ theorem norm_of_map_eq_span {K : Type} [Field K] [NumberField K] {ℓ : ℕ} [Fa
       rw [map_zero, norm_zero]
       positivity
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
     | smul c x _ hx =>
       rw [smul_eq_mul, map_mul, norm_mul]

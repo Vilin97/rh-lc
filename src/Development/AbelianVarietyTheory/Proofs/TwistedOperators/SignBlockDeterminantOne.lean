@@ -116,7 +116,7 @@ theorem lowVanishFock (h1 : GlobalTheory.Published.DiscreteSeriesCover) (h2 : Gl
       beta_reduce
       rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_left_comm, rTr, mul_one]
       rfl
-    | add x y hx hy => simp only [map_add, Pi.add_apply, mul_add]; exact hx.add hy
+    | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, mul_add]; exact hx.add hy
   obtain ⟨B, hB⟩ := exists_trilinear ν 𝓕 (fun g h => LinearMap.proj 0 ∘ₗ ω' (g, h)) pt (MultT θ M' J χ) hint
   let G : PolF D W.rank V'.rank →ₗ[ℂ] SmT M' →ₗ[ℂ] (GA D V' → ℂ) :=
     B.compr₂ (LinearMap.applyₗ (⟨F, hF⟩ : MultT θ M' J χ))

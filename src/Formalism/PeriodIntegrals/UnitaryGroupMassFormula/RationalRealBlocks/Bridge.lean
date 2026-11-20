@@ -31,7 +31,7 @@ theorem eval_map_rowAct {LL : Type} [Field LL] (φ : LL →+* ℂ) {k : ℕ} (g 
       eval (fun x => (g.map φ * z) x.1 x.2) (MvPolynomial.map φ F) := by
   induction F using MvPolynomial.induction_on with
   | C a => simp [Formalism.GradedWeylDivisibility.rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp]
     congr 1

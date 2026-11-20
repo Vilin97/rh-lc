@@ -149,7 +149,7 @@ theorem deg_inj (e : DCx.AugRow A K) (a : ℕ) (hb : Function.Injective (e.edge.
         Submodule.add_mem _ hsT fun p q hpq => hy p q (by omega)
       refine ⟨⟨_, hyT⟩, Subtype.ext ?_⟩
       change K.D (K.sgl 0 m w + y) = (e.edge.f (m + 1) c).1
-      rw [map_add, hDy, hxdef]
+      rw [map_add (f := _), hDy, hxdef]
       abel
   have h1 : e.edge.mapH a (A.cls c hc) = 0 := by
     rw [P.mapH_cls _ a c hc hz]
@@ -170,7 +170,7 @@ theorem extend (a : ℕ) (h : Ex K a) (y₀ : K.X 0 a) (hy : K.dv 0 a y₀ = 0) 
     set x₁ := K.sgl 0 (m + 1) y₀ + K.sgl 1 m z with hx₁
     set c := K.sgl 2 m (K.dh 1 m z) with hc
     have hDx₁ : K.D x₁ = c := by
-      rw [hx₁, map_add, K.D_sgl, K.D_sgl, hy, hz']
+      rw [hx₁, map_add (f := _), K.D_sgl, K.D_sgl, hy, hz']
       simp [hc]
     have hc0 : ∀ q, c 0 q = 0 := fun q => K.sgl_ne _ (Or.inl (by omega))
     have hc1 : ∀ q, c 1 q = 0 := fun q => K.sgl_ne _ (Or.inl (by omega))

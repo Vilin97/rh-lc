@@ -40,7 +40,7 @@ theorem exists_sub_component_mem {I : Ideal (MRing ι F)} (hI : IsMultiHomogIdea
     IsWeightedHomogeneous.weightedHomogeneousComponent_same hf
   have e : a + t * s - weightedHomogeneousComponent (blockWeight ι) n (t * s) =
       weightedHomogeneousComponent (blockWeight ι) n a := by
-    rw [sub_eq_iff_eq_add, ← map_add, h1]
+    rw [sub_eq_iff_eq_add, ← map_add (f := _), h1]
   rw [e]
   exact hI a ha n
 

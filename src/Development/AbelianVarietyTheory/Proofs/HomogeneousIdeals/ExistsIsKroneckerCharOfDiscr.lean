@@ -47,7 +47,7 @@ theorem exists_ringHom (b : Basis (Fin 2) ℤ R) (h0 : b 0 = 1) {t n : ℤ}
     intro x y
     have : (x + y * b 1 : R) = x • b 0 + y • b 1 := by simp [h0]
     rw [this]
-    rw [map_add, map_smul, map_smul]
+    rw [map_add (f := _), map_smul, map_smul]
     simp [f]
   refine ⟨(AlgHom.ofLinearMap f (by simpa using hf 1 0) fun x y => ?_).toRingHom,
     by simpa using hf 0 1⟩

@@ -507,7 +507,7 @@ private lemma hT_decMap_eq_add_hT_cplMap (D : D7) {T : D.host.E} (F0 : FlagG (VS
     (VS D).hT (decMap F0 (w, q)) (decMap F0 (w', q')) =
       (D.sp.X 0).hT w w' + (VS D).hT (cplMap F0 q) (cplMap F0 q') := by
   rw [decMap_apply, decMap_apply]
-  simp only [map_add, LinearMap.add_apply, iota_isom, iota_cpl he hz, hT_swap (VS D) (iota_cpl he hz w' q),
+  simp only [map_add (f := _), LinearMap.add_apply, iota_isom, iota_cpl he hz, hT_swap (VS D) (iota_cpl he hz w' q),
     zero_add, add_zero]
 
 abbrev hat (g : (D.sp.X 0).V ≃ₗ[D.host.E] (D.sp.X 0).V) :
@@ -639,7 +639,7 @@ theorem exists_res {γ} (hγ : γ ∈ stabF D F0) : ∃ g ∈ Formalism.Hermitia
   intro p
   obtain ⟨w, c⟩ := p
   have hh : hat g (w, c) = (g₀ w, c) := rfl
-  rw [hh, sumMap_apply, sumMap_apply, map_add, map_smul, hγz]
+  rw [hh, sumMap_apply, sumMap_apply, map_add (f := _), map_smul, hγz]
   have h5 : γ (D.sp.iXY 0 w) + c • F0.z - (D.sp.iXY 0 (g₀ w) + c • F0.z) =
       γ (D.sp.iXY 0 w) - D.sp.iXY 0 (g₀ w) := by abel
   rw [h5]

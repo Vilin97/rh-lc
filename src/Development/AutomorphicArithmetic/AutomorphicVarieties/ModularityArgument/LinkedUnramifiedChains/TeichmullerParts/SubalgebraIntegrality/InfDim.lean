@@ -17,7 +17,7 @@ variable {G X D Y : Type} [Group G] [AddCommGroup X] [Module ℂ X] [AddCommGrou
 
 private def eqv (R : Representation ℂ G X) (Gi : Subgroup G) (τ : G → Module.End ℂ D) : Submodule ℂ (D →ₗ[ℂ] X) where
   carrier := {Φ | ∀ x ∈ Gi, ∀ v, R x (Φ v) = Φ (τ x v)}
-  add_mem' ha hb x hx v := by simp only [LinearMap.add_apply, map_add, ha x hx, hb x hx]
+  add_mem' ha hb x hx v := by simp only [LinearMap.add_apply, map_add (f := _), ha x hx, hb x hx]
   zero_mem' x _ v := by simp
   smul_mem' c Φ h x hx v := by simp only [LinearMap.smul_apply, map_smul, h x hx]
 
@@ -36,7 +36,7 @@ private theorem sum_zero {R : Representation ℂ G X} {Gi : Subgroup G} {τ : G 
       rw [← h1]
       exact Finset.sum_congr rfl fun i _ => (hΦ i x x.2 _).symm
     | zero => simp
-    | add a a' _ _ h1 h2 => simp only [LinearMap.add_apply, map_add, Finset.sum_add_distrib, h1, h2, add_zero]
+    | add a a' _ _ h1 h2 => simp only [LinearMap.add_apply, map_add (f := _), Finset.sum_add_distrib, h1, h2, add_zero]
     | smul c a _ h1 => simp only [LinearMap.smul_apply, map_smul, ← Finset.smul_sum, h1, smul_zero]
   ext v
   have h1 := key ((b.coord j).smulRight v)
@@ -343,7 +343,7 @@ theorem UpperTheory.V.Z.J.D.infDim :
   let tf : (Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ) →ₗ[ℂ]
       Module.Dual ℂ (⨂[ℂ] e : Emb l (fun v : V.frame.Vl => s.w v.1), nablaSq ℂ n (lam e.res)) →ₗ[ℂ] (UA L n → ℂ) :=
     LinearMap.mk₂ ℂ (toForm ι e)
-      (fun F F' ℓ => funext fun g => by simp only [toForm, Pi.add_apply, map_add])
+      (fun F F' ℓ => funext fun g => by simp only [toForm, Pi.add_apply, map_add (f := _)])
       (fun a F ℓ => funext fun g => by simp only [toForm, Pi.smul_apply, map_smul])
       (fun F ℓ ℓ' => funext fun g => by simp only [toForm, Pi.add_apply, LinearMap.add_apply])
       (fun a F ℓ => funext fun g => by simp only [toForm, Pi.smul_apply, LinearMap.smul_apply])

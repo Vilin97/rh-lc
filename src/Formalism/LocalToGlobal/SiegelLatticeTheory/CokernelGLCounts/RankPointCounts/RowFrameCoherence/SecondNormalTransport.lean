@@ -127,7 +127,7 @@ theorem ylift_rev (hTh : Th Λ F F' F'' β = Hp Λ F F') {y : S.V} (hy : y ∈ Y
     PI.UnitaryGroupMassFormula.ScalEquivGen.memOrthQ.mp (PI.UnitaryGroupMassFormula.ScalEquivGen.orthAntiQ (PI.UnitaryGroupMassFormula.ScalEquivGen.XspLeXplusQ F) hy2) _ hp.1.2
   show S.hT p.1 y = 0
   have e : p.1 = (p.1 - p.2) + p.2 := by abel
-  rw [e, map_add, LinearMap.add_apply, e1, e2, add_zero]
+  rw [e, map_add (f := _), LinearMap.add_apply, e1, e2, add_zero]
 
 variable (hΛ : Submodule.IsLattice E Λ) (hz : F.zt = F.fl.z) (hz' : F'.zt = F'.fl.z) (hz'' : F''.zt = F''.fl.z)
 include hΛ hz hz' hz''
@@ -274,16 +274,16 @@ theorem secondNormal_transport (hT' : T' ≠ 0) (hi : β ∈ Formalism.Hermitian
   have hzz'' : S.hT F''.fl.z F''.fl.z = S.hT F'.fl.z F'.fl.z := by rw [← hβz, hi]
   have k1 : ∀ b, S.hT (F''.fl.e b) (a • F.fl.z + -x₃) = 0 := by
     intro b
-    rw [hx2, map_add, map_add, map_smul, (orth_xplus_iff F'').1 hbyO |>.1 b, F''.fl.z_orth b,
+    rw [hx2, map_add (f := _), map_add (f := _), map_smul, (orth_xplus_iff F'').1 hbyO |>.1 b, F''.fl.z_orth b,
       e_X F''.fl b hx'', smul_zero, zero_add, add_zero]
   have k2 : S.hT F''.fl.z (a • F.fl.z + -x₃) = 1 := by
-    rw [hx2, map_add, map_add, map_smul, (orth_xplus_iff F'').1 hbyO |>.2, z_X F''.fl hx'', hzz'', smul_eq_mul,
+    rw [hx2, map_add (f := _), map_add (f := _), map_smul, (orth_xplus_iff F'').1 hbyO |>.2, z_X F''.fl hx'', hzz'', smul_eq_mul,
       hc, inv_mul_cancel₀ hzz, zero_add, add_zero]
   refine ⟨fun b => ?_, ?_, ?_⟩
   · rw [hswap, k1 b, star_zero]
   · rw [hswap, k2, star_one]
   · have hs : β.symm F''.fl.z = F'.fl.z := by rw [← hβz]; simp
-    rw [hx2, map_add, map_add, map_smul, LinearEquiv.symm_apply_apply, hs, hy]
+    rw [hx2, map_add (f := _), map_add (f := _), map_smul, LinearEquiv.symm_apply_apply, hs, hy]
     have : x₁ - c • F'.fl.z + c • F'.fl.z + β.symm x'' - x₁ = β.symm x'' := by abel
     rw [this]
     exact symm_X hβe hx''

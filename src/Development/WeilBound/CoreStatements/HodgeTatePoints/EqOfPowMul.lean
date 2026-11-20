@@ -19,7 +19,7 @@ def splitEquiv {N N₁ N₂ : Type} [AddCommGroup N] [AddCommGroup N₁] [AddCom
   invFun x := (π₁ x, π₂ x)
   left_inv z := by simp [h11, h22, h12, h21]
   right_inv x := hsum x
-  map_add' a b := by simp only [Prod.fst_add, Prod.snd_add, map_add]; abel
+  map_add' a b := by simp only [Prod.fst_add, Prod.snd_add, map_add (f := _)]; abel
 
 theorem ret_colen {C : Type} [Field C] {v : Valuation C NNReal} {R : Type} [CommRing R]
     [Algebra R C] {N : Type} [AddCommGroup N] [Fintype N] [DecidableEq N]

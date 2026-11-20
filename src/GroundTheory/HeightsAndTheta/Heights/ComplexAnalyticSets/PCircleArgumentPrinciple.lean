@@ -138,7 +138,7 @@ theorem CircleArgumentPrinciple.factorisation {h : ℂ → ℂ} {O : Set ℂ} {c
     induction S using Finset.induction_on with
     | empty => simp
     | insert b T hb ih =>
-      rw [Finset.sum_insert hb, Finset.prod_insert hb, Multiset.map_add, Multiset.prod_add, ih,
+      rw [Finset.sum_insert hb, Finset.prod_insert hb, Multiset.map_add (f := _), Multiset.prod_add, ih,
         Multiset.map_replicate, Multiset.prod_replicate]
   have hPdiff : Differentiable ℂ P := by
     simp only [hPdef]

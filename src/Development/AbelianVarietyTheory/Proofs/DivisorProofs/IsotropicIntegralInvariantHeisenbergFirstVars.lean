@@ -56,7 +56,7 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (v : Pl F) (κ : Type) [
   intro F _ _ v κ _ ψ μ _ N ν hν j hj y₀ φ₁ φ₂
   unfold lagInt
   have h1 : ∀ y, diagW ψ μ (boxFun (schr ψ (j y₀) φ₁) φ₂) (j y) = diagW ψ μ (boxFun φ₁ φ₂) (j (y + y₀)) := fun y => by
-    rw [diagW_schr F v κ ψ μ _ _ (hj y y₀), map_add]
+    rw [diagW_schr F v κ ψ μ _ _ (hj y y₀), map_add (f := _)]
   simp only [h1]
   letI : MeasurableSpace (Fin N → Fv F v) := borel _
   haveI : BorelSpace (Fin N → Fv F v) := ⟨rfl⟩

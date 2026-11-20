@@ -53,7 +53,7 @@ theorem hom_ext {Q : Type w'} [AddCommGroup Q] {a b : (∀ i, N i ⊗[R] M i) �
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul n x => exact h i n x
-  | add s t hs ht => rw [Pi.single_add, map_add, map_add, hs, ht]
+  | add s t hs ht => rw [Pi.single_add, map_add (f := _), map_add (f := _), hs, ht]
 
 theorem tens_iff {p : ∀ i, N i → M i → P} (hp : Bal R p) :
     Tens R (N := N) (M := M) (M' := P) p ↔ Function.Bijective (gmap hp) := by

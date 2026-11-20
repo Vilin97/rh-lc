@@ -152,7 +152,7 @@ theorem deh_sub_mem (S : Ideal (MvPolynomial (Σ k, ι k) ℂ)) (p : (k : K) →
     rw [e, bind₁_C_right, sub_self]
     exact zero_mem _
   | add g h hg hh =>
-    rw [map_add, map_add, add_sub_add_comm]
+    rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
     exact add_mem hg hh
   | mul_X g q hg =>
     rw [map_mul, map_mul, bind₁_X_right]

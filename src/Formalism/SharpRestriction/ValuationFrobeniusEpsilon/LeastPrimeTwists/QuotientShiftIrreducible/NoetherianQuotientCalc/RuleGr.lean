@@ -24,7 +24,7 @@ theorem isInternal_comap (f : P →ₗ[B] M) (hf : Function.Injective f)
     induction y using DirectSum.induction_on with
     | zero => simp
     | of i x => simp [DirectSum.map_of, φ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   constructor
   · intro y y' h
     have h1 : DirectSum.map φ y = DirectSum.map φ y' :=
@@ -64,7 +64,7 @@ theorem isInternal_map (g : M →ₗ[B] P) (hg : Function.Surjective g)
     induction y using DirectSum.induction_on with
     | zero => simp
     | of i x => simp [DirectSum.map_of, φ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   constructor
   · rw [injective_iff_map_eq_zero]
     intro y hy

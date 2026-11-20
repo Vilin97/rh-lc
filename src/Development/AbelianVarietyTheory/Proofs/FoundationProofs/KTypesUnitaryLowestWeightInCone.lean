@@ -123,7 +123,7 @@ lemma exists_down {act : Mat p q →ₗ[ℂ] Module.End ℂ V} (hL : IsLieAct ac
       exact Submodule.mem_iSup_of_mem (⟨_, inCone_step ν.2 i j⟩ : {ν // InCone ν μ})
         (wt_shift hL _ _ hy)
     · intro y z hy hz
-      rw [map_add]; exact Submodule.add_mem _ hy hz
+      rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 lemma wt_orth {act : Mat p q →ₗ[ℂ] Module.End ℂ V} {H : Type} [NormedAddCommGroup H]
     [InnerProductSpace ℂ H] (E : V →ₗ[ℂ] H)
@@ -167,7 +167,7 @@ theorem cone : ∀ (p q : ℕ) (M : GKMod p q) (H : Type) [NormedAddCommGroup H]
     · intro ν y hy
       exact wt_orth E hadj (fun h : ν.1 = Λ => hcone (h ▸ ν.2)) hy he.1
     · intro y z hy hz
-      rw [map_add, inner_add_left, hy, hz, add_zero]
+      rw [map_add (f := _), inner_add_left, hy, hz, add_zero]
   let r : Ix p q → ℕ := Sum.elim (fun i => q + i.1) (fun j => j.1)
   have hr : Function.Injective r := by
     rintro (a | a) (b | b) h <;> simp only [r, Sum.elim_inl, Sum.elim_inr] at h

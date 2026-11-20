@@ -154,7 +154,7 @@ theorem red_Q {l : ℕ} [Fact l.Prime] [CharP k l] (hp : PD.p = l) (hs : W.s = 1
     rfl
   have h := congrArg (PowerSeries.map (algebraMap O k)) W.q₀_def
   have : CharP k⟦X⟧ l := charP_of_injective_algebraMap (algebraMap k k⟦X⟧).injective l
-  simp only [map_mul, map_sub, map_pow, map_add, map_one, PowerSeries.map_X, hp] at h
+  simp only [map_mul, map_sub, map_pow, map_add (f := _), map_one, PowerSeries.map_X, hp] at h
   rw [add_pow_char, one_pow, add_sub_cancel_left] at h
   rw [hQ]
   apply mul_left_cancel₀ (PowerSeries.X_ne_zero (R := k))

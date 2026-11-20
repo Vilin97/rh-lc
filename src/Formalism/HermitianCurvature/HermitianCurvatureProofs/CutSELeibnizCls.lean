@@ -100,9 +100,9 @@ theorem slDom_add (hμ : B.IsHaarOn (Glev k r (Fin.last r)) μ) {Φ Ψ : RadSp k
     have hs := hadd Φ Ψ (Φ + Ψ) p hΦ hΨ (add_mem hΦ hΨ)
     have hd := hsub Φ Ψ (Φ - Ψ) p hΦ hΨ (sub_mem hΦ hΨ)
     have e1 : pairAt μ Φ (Φ + Ψ) p = pairAt μ Φ Φ p + pairAt μ Φ Ψ p := by
-      rw [hconj, hadd Φ Ψ Φ p hΦ hΨ hΦ, map_add, ← hconj, ← hconj]
+      rw [hconj, hadd Φ Ψ Φ p hΦ hΨ hΦ, map_add (f := _), ← hconj, ← hconj]
     have e2 : pairAt μ Ψ (Φ + Ψ) p = pairAt μ Ψ Φ p + pairAt μ Ψ Ψ p := by
-      rw [hconj, hadd Φ Ψ Ψ p hΦ hΨ hΨ, map_add, ← hconj, ← hconj]
+      rw [hconj, hadd Φ Ψ Ψ p hΦ hΨ hΨ, map_add (f := _), ← hconj, ← hconj]
     have e3 : pairAt μ Φ (Φ - Ψ) p = pairAt μ Φ Φ p - pairAt μ Φ Ψ p := by
       rw [hconj, hsub Φ Ψ Φ p hΦ hΨ hΦ, map_sub, ← hconj, ← hconj]
     have e4 : pairAt μ Ψ (Φ - Ψ) p = pairAt μ Ψ Φ p - pairAt μ Ψ Ψ p := by
@@ -153,7 +153,7 @@ def sgSub (hμ : B.IsHaarOn (Glev k r (Fin.last r)) μ) : Submodule ℂ (RadSp k
   add_mem' := by
     rintro Φ Ψ ⟨h1, h1'⟩ ⟨h2, h2'⟩
     refine ⟨(lcSub k r z z' π π').add_mem h1 h2, fun js => ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     exact slDom_add μ l c hμ (wOp_lc X l js Φ h1) (wOp_lc X l js Ψ h2) (h1' js) (h2' js)
   smul_mem' := by
     rintro a Φ ⟨h1, h1'⟩

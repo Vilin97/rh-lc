@@ -323,7 +323,7 @@ def brauerPrimaryOutside : AddSubgroup (cohomology (unitsLimitRep K) 2) where
     · have h1 : ℓ ^ (m + n) • a = 0 := by rw [pow_add, mul_comm, mul_smul, hm, smul_zero]
       have h2 : ℓ ^ (m + n) • b = 0 := by rw [pow_add, mul_smul, hn, smul_zero]
       rw [smul_add, h1, h2, add_zero]
-    · rw [map_add, DFinsupp.add_apply, ha' v hv, hb' v hv, add_zero]
+    · rw [map_add (f := _), DFinsupp.add_apply, ha' v hv, hb' v hv, add_zero]
   zero_mem' := ⟨⟨0, smul_zero _⟩, fun v _ => by rw [map_zero, DFinsupp.zero_apply]⟩
   neg_mem' {a} ha := by
     obtain ⟨⟨m, hm⟩, ha'⟩ := ha
@@ -384,7 +384,7 @@ def localPrimaryKernel : AddSubgroup (⨁ v : Place K.1, localGaloisCohomology K
       have h2 : ℓ ^ (m + n) • b = 0 := by rw [pow_add, mul_smul, hn, smul_zero]
       rw [smul_add, h1, h2, add_zero]
     · rw [DFinsupp.add_apply, ha' v hv, hb' v hv, add_zero]
-    · rw [map_add, ha'', hb'', add_zero]
+    · rw [map_add (f := _), ha'', hb'', add_zero]
   zero_mem' := ⟨⟨0, smul_zero _⟩, fun v _ => DFinsupp.zero_apply _, map_zero _⟩
   neg_mem' {a} ha := by
     obtain ⟨⟨m, hm⟩, ha', ha''⟩ := ha

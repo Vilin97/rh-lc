@@ -192,7 +192,7 @@ theorem neighbourConstruct_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSym
       rw [e]
       exact rmul _ _ (F2 b hb p hp) (F3 a ha q hq)
     · intro u v hu hv
-      rw [map_add, mul_add]
+      rw [map_add (f := _), mul_add]
       exact radd _ _ hu hv
 
   set Lx := neighbourCore h P L x with hLxdef
@@ -266,7 +266,7 @@ theorem neighbourConstruct_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSym
     obtain ⟨hy'L, t', ht', hty'⟩ := (memLx y').mp hy'
     have e : h (a • x + y) (b • x + y') =
         star a * b * h x x + star a * h x y' + b * h y x + h y y' := by
-      simp only [map_add, LinearMap.add_apply, hsl, hsr]; ring
+      simp only [map_add (f := _), LinearMap.add_apply, hsl, hsr]; ring
     rw [e, hsymm x y, ← hty, ← hty', ← hσ]
     refine radd _ _ (radd _ _ (radd _ _ (F4 a ha b hb) (F3 a ha t' ht')) ?_) (hLL y hyL y' hy'L)
     rw [mul_comm]; exact F2 b hb (σ t) ((hcmem t).mp ht)
@@ -280,7 +280,7 @@ theorem neighbourConstruct_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSym
     let g : L →ₗ[R] R :=
       { toFun := fun y => φ y.1
         map_add' := fun y y' => hinj (by
-          rw [map_add, hφ _ (y + y').2, hφ _ y.2, hφ _ y'.2, Submodule.coe_add, map_add])
+          rw [map_add (f := _), hφ _ (y + y').2, hφ _ y.2, hφ _ y'.2, Submodule.coe_add, map_add (f := _)])
         map_smul' := fun r y => hinj (by
           rw [hφ _ (r • y).2, RingHom.id_apply, smul_eq_mul, map_mul, hφ _ y.2,
             Submodule.coe_smul, rs, hsr]) }
@@ -361,7 +361,7 @@ theorem neighbourConstruct_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSym
         refine ⟨e' * v + w, ?_⟩
         have : c' = algebraMap R K (e' * b + i) * c' := by rw [hei, map_one, one_mul]
         rw [this]
-        simp only [map_add, map_mul]
+        simp only [map_add (f := _), map_mul]
         rw [hv, hw]; ring
       · intro hb
         obtain ⟨v, hv⟩ := F2 c' hc'I b hb

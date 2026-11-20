@@ -194,7 +194,7 @@ theorem deg_aeval [IsIntegral X] {L : ι → HermLB p} {Φ : MvPolynomial ι ℝ
     | monomial d c =>
       rw [map_monomial, ← mul_one (algebraMap ℚ ℝ c), ← smul_eq_mul, ← smul_monomial, map_smul, h₀, algebraMap_smul,
         ← map_smul, ← map_smul, smul_monomial, smul_eq_mul, mul_one]
-    | add P Q hP hQ => simp only [map_add, hP, hQ]
+    | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
   have h₂ : Ψ - Φ = 0 := Model.eq_zero_of_pow (D + 1) _ (fun m => ?_) fun P e he hP => ?_
   · rw [h₁, sub_eq_zero.1 h₂]
   · have e : lin (fun i => (m i : ℝ)) ^ (D + 1) = map (algebraMap ℚ ℝ) ((∑ i, m i • MvPolynomial.X i) ^ (D + 1)) := by

@@ -96,8 +96,8 @@ def gcr (h : Inv q E) : DirectSum.GCommRing (A q E) where
     exact Sigma.ext (add_comm i j) (gmul_comm hr a b)
   mul_zero a := by simp only [gmul, map_zero, cast_zero]
   zero_mul b := by simp only [gmul, map_zero, AddMonoidHom.zero_apply, cast_zero]
-  mul_add a b c := by simp only [gmul, map_add, cast_add]
-  add_mul a b c := by simp only [gmul, map_add, AddMonoidHom.add_apply, cast_add]
+  mul_add a b c := by simp only [gmul, map_add (f := _), cast_add]
+  add_mul a b c := by simp only [gmul, map_add (f := _), AddMonoidHom.add_apply, cast_add]
   natCast n := n • gone q E
   natCast_zero := zero_smul _ _
   natCast_succ n := succ_nsmul _ _
@@ -186,7 +186,7 @@ theorem etale_even_cohomology_graded_commRing_of_cup_ring_axioms (hn : DivisorNa
         by_cases hjk : j = k
         · subst hjk; rw [DirectSum.of_eq_same, DirectSum.of_eq_same]
         · rw [DirectSum.of_eq_of_ne _ _ _ (Ne.symm hjk), DirectSum.of_eq_of_ne _ _ _ (Ne.symm hjk), map_zero]
-      | add x y hx hy => simp only [map_add, hx, hy] }⟩
+      | add x y hx hy => simp only [map_add (f := _), hx, hy] }⟩
 
 theorem LeafRing_of (hn : LeafA6nat) (hr : LeafA6ring) : LeafRing := etale_even_cohomology_graded_commRing_of_cup_ring_axioms hn hr
 

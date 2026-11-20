@@ -186,7 +186,7 @@ theorem gen_detI {P : HeightOneSpectrum (𝓞 E)} {N : Submodule (𝓞 E) (Sp E 
         rw [← Finset.prod_erase_mul _ s (Finset.mem_univ i), mul_smul]
         exact N.smul_mem _ (hs' i)
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add, smul_add]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _), smul_add]; exact add_mem ha hb
       | smul c a _ ha =>
         rw [← algebraMap_smul E c a, map_smul, algebraMap_smul, smul_comm]
         exact N.smul_mem _ ha

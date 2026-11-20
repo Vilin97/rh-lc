@@ -21,7 +21,7 @@ noncomputable def stPairs {l : ℕ} [Fact l.Prime] (P : LocPrime l) {K : FinExt 
   add_mem' := by
     rintro a b ⟨ha, hx⟩ ⟨hb, hy⟩
     refine ⟨(continuousCocycles ρ).add_mem ha hb, fun g => ?_⟩
-    simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, add_tmul, hx, hy, map_add]
+    simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, add_tmul, hx, hy, map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, hx⟩

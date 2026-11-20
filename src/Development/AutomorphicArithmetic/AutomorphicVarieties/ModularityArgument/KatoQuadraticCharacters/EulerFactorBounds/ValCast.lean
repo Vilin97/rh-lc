@@ -44,7 +44,7 @@ private theorem term {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ �
         k' • X.kmap l (X.gal s) (clsK X l n (slD X N (f : X.K)))) := by
     rw [smul_sub, smul_smul]
     abel
-  rw [hsplit, map_add, map_smul, hApi (k * c) k' _ h, add_zero]
+  rw [hsplit, map_add (f := _), map_smul, hApi (k * c) k' _ h, add_zero]
   convert smul_zero k using 2
 
 private theorem dvd_iff (l : ℕ) [Fact l.Prime] (n : ℕ) (k k' : ℤ_[l]) :
@@ -124,7 +124,7 @@ theorem UpperTheory.V.Z.Kato.Nb.sXiTw :
     rw [hgr x m, hgr y m]
     refine term X l n N hN s _ _ _ _ ?_
     rw [dvd_iff]
-    simp only [map_sub, map_mul, map_pow, map_add, map_natCast, (hent 0).1, (hent 0).2]
+    simp only [map_sub, map_mul, map_pow, map_add (f := _), map_natCast, (hent 0).1, (hent 0).2]
     have hdl : Units.map (ZMod.castHom hlM (ZMod (l ^ n)) : ZMod M →* ZMod (l ^ n)) d = cycM (l ^ n) s :=
       (hcyc M s).2.2.2.2 (l ^ n) hlM
     have hχ : PadicInt.toZModPow n (((cyclotomicCharacter Ω l) s.toRingEquiv : ℤ_[l]ˣ) : ℤ_[l]) =

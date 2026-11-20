@@ -26,7 +26,7 @@ theorem posIdele_exp (u : ℝ) :
   refine Units.ext (ad_ext ?_ ?_)
   · have h : ∀ x, pInf E (sInf E x) = x := fun x => (infEq E).symm_apply_apply x
     change _ = pInf E (1 - sInf E 1 + sInf E _)
-    simp only [map_add, map_sub, map_one, h, sub_self, zero_add]
+    simp only [map_add (f := _), map_sub, map_one, h, sub_self, zero_add]
     funext w
     have hc := IsTotallyComplex.isComplex w
     have hw : ¬ w.IsReal := InfinitePlace.not_isReal_iff_isComplex.2 hc

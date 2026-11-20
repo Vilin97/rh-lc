@@ -214,7 +214,7 @@ theorem exists_theta (hH : Hm.PosDef) (Λ : AddSubgroup (Fin g → ℂ)) [hd : D
   · funext x
     obtain ⟨x, rfl⟩ := Φ.surjective x
     exact congrFun h x
-  · simp only [map_add]
+  · simp only [map_add (f := _)]
     rw [hs' _ (hYb ▸ (hb a).2 ha), hΦ, hΦ]
     congr 3
     push_cast; ring

@@ -25,7 +25,7 @@ lemma comps_eq {f : O⟦X⟧} {c : Fin l → O⟦X⟧}
 lemma comps_add (f f' : O⟦X⟧) :
     comps l hl φ hφ (f + f') = comps l hl φ hφ f + comps l hl φ hφ f' := by
   apply comps_eq
-  simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   rw [← comps_spec l hl φ hφ f, ← comps_spec l hl φ hφ f']
 
 lemma comps_zero : comps l hl φ hφ (0 : O⟦X⟧) = 0 := by

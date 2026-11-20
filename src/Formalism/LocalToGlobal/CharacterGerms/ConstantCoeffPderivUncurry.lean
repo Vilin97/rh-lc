@@ -53,7 +53,7 @@ theorem exp_unique (y : τ → K) (Ψ : MvPowerSeries τ K) (h0 : MvPowerSeries.
           omega
         · simp [Ne.symm hx]
       have hdeg : m'.degree = n := by
-        rw [map_add, Finsupp.degree_single] at hm
+        rw [map_add (f := _), Finsupp.degree_single] at hm
         omega
       have hne : ((m' w : K) + 1) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero (m' w)
       have e1 := step w m'

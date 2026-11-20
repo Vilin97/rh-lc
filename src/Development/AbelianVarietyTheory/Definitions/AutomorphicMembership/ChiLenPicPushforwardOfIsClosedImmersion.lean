@@ -291,14 +291,14 @@ theorem capDeg_vp_eq_sum (p d : ℕ) (D : Z.VDivQ) (Q : PicSym Z.X) : Z.capDeg_v
     have : a ⊗ₜ[ℤ] D = a • toQ D := by simp [toQ, smul_tmul']
     simp only [this, map_smul, LinearMap.smul_apply, capDeg_vp_toQ, vResQ_toQ, Model.capDeg_vp_toQ, vDeg_apply,
       Finset.sum_div, Finset.smul_sum]
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb, Finset.sum_add_distrib]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb, Finset.sum_add_distrib]
 
 theorem capDeg_vp_eq_zero (p : ℕ) {d n : ℕ} (D : Z.VDivQ) (hn : n ≠ d) {x : PicSym Z.X}
     (hx : x ∈ symDeg (SmallPic Z.X) n) : Z.capDeg_vp p d D x = 0 := by
   induction D using TensorProduct.induction_on with
   | zero => simp
   | tmul a D => simp [capDeg_vp, vDeg_eq_zero D hn hx]
-  | add a b ha hb => rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+  | add a b ha hb => rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
 
 theorem vDeg_prod {d : ℕ} {D : Z.VDivZ} {I : ∀ C, (Z.comp C).effVert} (h : ∀ C, Z.vRes C D = Model.ofEff (I C))
     (L : Fin d → FinLB Z.X) : Z.vDeg d D (∏ i, (L i).c1) =

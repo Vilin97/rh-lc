@@ -57,7 +57,7 @@ def qAlg (ε : Fin n → Bool) (W : Flag n a) : Subalgebra ℂ (Matrix (Fin n) (
   add_mem' {X Y} hX hY i y hy := by
     refine ⟨?_, ?_⟩
     · rw [Matrix.add_mulVec]; exact (W i).add_mem (hX i y hy).1 (hY i y hy).1
-    · rw [map_add, Matrix.add_mulVec]; exact (W i).add_mem (hX i y hy).2 (hY i y hy).2
+    · rw [map_add (f := _), Matrix.add_mulVec]; exact (W i).add_mem (hX i y hy).2 (hY i y hy).2
   algebraMap_mem' c i y hy := by
     have e : algebraMap ℂ (Matrix (Fin n) (Fin n) ℂ) c = c • (1 : Matrix (Fin n) (Fin n) ℂ) := Algebra.algebraMap_eq_smul_one c
     refine ⟨?_, ?_⟩

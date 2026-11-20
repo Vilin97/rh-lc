@@ -27,7 +27,7 @@ private theorem ex_core {B A : Type} [CommRing B] [CommRing A] [Algebra B A] (�
     · intro x y hx hy
       obtain ⟨c, hc, hxc⟩ := hx
       obtain ⟨d, hd, hyd⟩ := hy
-      exact ⟨c + d, p.add_mem hc hd, by rw [map_add, hxc, hyd, map_add]⟩
+      exact ⟨c + d, p.add_mem hc hd, by rw [map_add (f := _), hxc, hyd, map_add (f := _)]⟩
   have hdisj : Disjoint ((Ideal.map (algebraMap B A) p : Ideal A) : Set A)
       (Algebra.algebraMapSubmonoid A p.primeCompl : Set A) := by
     rw [Set.disjoint_left]

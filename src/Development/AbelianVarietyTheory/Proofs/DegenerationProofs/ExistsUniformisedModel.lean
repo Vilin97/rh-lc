@@ -35,7 +35,7 @@ theorem exists_finite_factor {R : Type} [CommRing R] [Algebra.FiniteType ℤ R] 
       exact IntermediateField.subset_adjoin _ _
         (Finset.mem_coe.2 (Finset.mem_union_left _ (Finset.mem_image_of_mem _ hx)))
     | algebraMap n => rw [eq_intCast, map_intCast]; exact intCast_mem K n
-    | add a b _ _ ha hb => rw [map_add]; exact K.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact K.add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact K.mul_mem ha hb
   exact ⟨K, hK, y₀.codRestrict K hy, fun _ => rfl, fun x hx =>
     IntermediateField.subset_adjoin _ _ (Finset.mem_coe.2 (Finset.mem_union_right _ hx))⟩

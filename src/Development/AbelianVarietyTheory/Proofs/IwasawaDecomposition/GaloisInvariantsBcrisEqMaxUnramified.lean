@@ -102,7 +102,7 @@ theorem mem_range (hu : ∀ c : U, ι (u c) = O c) (hφ : ∀ c : U, φ (u c) = 
     intro p
     induction p using Polynomial.induction_on' with
     | add p q hp hq =>
-      simp only [eval_add, map_add, add_mul, Finset.sum_add_distrib]
+      simp only [eval_add, map_add (f := _), add_mul, Finset.sum_add_distrib]
       exact add_mem hp hq
     | monomial n a =>
       simp only [eval_monomial, map_mul, mul_assoc, ← Finset.mul_sum]
@@ -176,7 +176,7 @@ theorem invariants_Bcris : ∀ (l : ℕ) [Fact l.Prime], ∀ (C : Core l) (K : F
   let S : AddSubgroup (Per.Bcris l) :=
     { carrier := {x | ∀ g ∈ GK K, Per.σB g x = x}
       zero_mem' := fun g _ => map_zero _
-      add_mem' := fun {x y} hx hy g hg => by rw [map_add, hx g hg, hy g hg]
+      add_mem' := fun {x y} hx hy g hg => by rw [map_add (f := _), hx g hg, hy g hg]
       neg_mem' := fun {x} hx g hg => by rw [map_neg, hx g hg] }
   have hS : ∀ x ∈ S, Per.φB l x ∈ S := fun x hx g hg => by rw [← hcomm, hx g hg]
   have hO' : ∀ x ∈ S, ∃ y ∈ K.1, C.ι x = O y := by

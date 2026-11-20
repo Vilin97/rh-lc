@@ -155,7 +155,7 @@ theorem mem_span_mu_of_forall {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
     rw [mem_kerThetaFrob]
     intro n
     have h := hx n
-    rw [hxv, map_add, map_add, map_mul, map_mul, map_mul, map_mul,
+    rw [hxv, map_add (f := _), map_add (f := _), map_mul, map_mul, map_mul, map_mul,
       fontaineTheta_frobenius_pow_mu hε, mul_zero, zero_add, map_natCast, map_natCast,
       mul_eq_zero] at h
     exact h.resolve_right hp0

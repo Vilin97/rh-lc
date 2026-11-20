@@ -36,7 +36,7 @@ theorem norm_modEq (H : Host R) (π : 𝓞 H.E) {T N : ℕ} (hN : N ≠ 0)
     simp only [map_mul, map_sub, map_one, map_natCast] at this
     linear_combination -this
   have hci : IsIntegral ℤ (H.conj (a : H.E)) := hyi.map ((H.conj : H.E →+* H.E).toIntAlgHom)
-  rw [hπ, map_add, map_mul, map_one, map_natCast] at hn
+  rw [hπ, map_add (f := _), map_mul, map_one, map_natCast] at hn
   set z : H.E := a + H.conj (a : H.E) + N * (a * H.conj (a : H.E)) with hz
   have hzi : IsIntegral ℤ z :=
     (hyi.add hci).add ((isIntegral_natCast (R := ℤ) (B := H.E) N).mul (hyi.mul hci))

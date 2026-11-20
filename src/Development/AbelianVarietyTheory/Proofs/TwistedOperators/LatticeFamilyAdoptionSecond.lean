@@ -138,7 +138,7 @@ theorem range_ext (A : Module.End K Fm) :
   · rintro _ ⟨z, rfl⟩
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | tmul x m =>
       rw [ext_tmul]
       have : x ⊗ₜ[O] A m = x • ((1 : K'') ⊗ₜ[O] A m) := by
@@ -290,7 +290,7 @@ theorem isLatIn_span (σ : LL →+* K'') (hint : ∀ a : 𝓞 LL, ∃ r : Oe, σ
       induction hx using Submodule.span_induction with
       | mem x h => exact Submodule.subset_span (by simpa using ⟨x, h, rfl⟩)
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
       | smul a x _ hx =>
         obtain ⟨r, hr⟩ := hint a
         have : eM (a • x) = r • eM x := by
@@ -309,7 +309,7 @@ theorem isLatIn_span (σ : LL →+* K'') (hint : ∀ a : 𝓞 LL, ∃ r : Oe, σ
       induction hv using Submodule.span_induction with
       | mem x h => exact Submodule.subset_span (Submodule.subset_span ⟨x, h, rfl⟩)
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
       | smul a x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
     have hx' : x ∈ VV := hx
     rw [← hVV] at hx'
@@ -419,7 +419,7 @@ theorem isKsForm_of_iso {A : FormsL LL Ks WL W G} {A' : FormsL LL Ks' WL' W' G'}
       obtain ⟨k, rfl⟩ := h
       exact Submodule.subset_span ⟨k, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul c x _ hx =>
       have h1 : c • x = algebraMap Ks LL (I.eK.symm c) • x := by
         rw [← I.eK_LL, RingEquiv.apply_symm_apply, algebraMap_smul]

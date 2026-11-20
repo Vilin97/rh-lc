@@ -66,7 +66,7 @@ theorem exists_pairV_inclT {w : P.V} (hw : w ∈ P.latT) (x : O ⊗[ℤ_[p]] P.T
   | add x y hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by simp only [map_add, ha, hb]⟩
+    exact ⟨a + b, by simp only [map_add (f := _), ha, hb]⟩
   | tmul a t =>
     obtain ⟨d, hd⟩ := (P.mem_latT_iff w).1 hw t
     refine ⟨a * d, ?_⟩

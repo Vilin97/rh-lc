@@ -17,7 +17,7 @@ private theorem tr_map {f : V →ₗ[A] V} {f' : V' →ₗ[A] V'} (h : ∀ x, e 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp [tr, h]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem tr_range (b : B →ₗ[Q] B') (x : V ⊗[Q] B') :
     tr B' e x ∈ LinearMap.range (AlgebraTensorModule.map (LinearMap.id : V' →ₗ[A] V') b) ↔
@@ -34,12 +34,12 @@ private theorem tr_smul {K : Type} [AddCommGroup K] [Module Q K] (s : K →ₗ[Q
       (TensorProduct.map (Algebra.lsmul Q Q V' : A →ₐ[Q] Module.End Q V').toLinearMap s)) c (tr B e x) := by
   induction c using TensorProduct.induction_on with
   | zero => simp
-  | add c d hc hd => simp only [map_add, LinearMap.add_apply, hc, hd]
+  | add c d hc hd => simp only [map_add (f := _), LinearMap.add_apply, hc, hd]
   | tmul a k =>
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v c => simp [tr]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Gen
 

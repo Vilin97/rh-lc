@@ -283,7 +283,7 @@ theorem isProdField_fractionRing (K : Type) [Field K] [Algebra ℂ K] [IsDomain 
       intro z
       induction z using TensorProduct.induction_on with
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
       | tmul x y =>
         rw [show x ⊗ₜ[ℂ] y = (x ⊗ₜ[ℂ] (1 : K)) * ((1 : K) ⊗ₜ[ℂ] y) by simp, map_mul]
         exact mul_mem (IntermediateField.subset_adjoin _ _ (Or.inl ⟨x, rfl⟩))
@@ -370,7 +370,7 @@ abbrev polyRing (d : ℕ) : Subalgebra ℂ (Fn d) := Algebra.adjoin ℂ (Set.ran
 theorem algebraMap_mem (d : ℕ) (p : MvPolynomial (Fin d) ℂ) : algebraMap _ (Fn d) p ∈ polyRing d := by
   induction p using MvPolynomial.induction_on with
   | C c => exact (polyRing d).algebraMap_mem c
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | mul_X p l hp => rw [map_mul]; exact mul_mem hp (Algebra.subset_adjoin ⟨l, rfl⟩)
 
 instance isFractionRing (d : ℕ) : IsFractionRing (polyRing d) (Fn d) :=

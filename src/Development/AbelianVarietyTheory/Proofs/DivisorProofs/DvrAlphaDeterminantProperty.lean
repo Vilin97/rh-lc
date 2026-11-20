@@ -46,7 +46,7 @@ theorem exists_poly_of_elt (α : Λ) (hα : Algebra.adjoin ℤ_[p] {α} = ⊤) (
   | add x y hx hy =>
     obtain ⟨P, hP⟩ := hx
     obtain ⟨Q, hQ⟩ := hy
-    exact ⟨P + Q, fun σ f hf => by rw [map_add, hP σ f hf, hQ σ f hf, Polynomial.eval_add]⟩
+    exact ⟨P + Q, fun σ f hf => by rw [map_add (f := _), hP σ f hf, hQ σ f hf, Polynomial.eval_add]⟩
 
 theorem exists_elt_of_poly (hθ : Function.Surjective (WittVector.fontaineTheta O p)) (α : Λ)
     (P : Polynomial O) : ∃ r : RL p O Λ, ∀ (σ : Λ →+* O) (f : RL p O Λ →+* O), IsTheta σ f → f r = P.eval (σ α) := by
@@ -54,7 +54,7 @@ theorem exists_elt_of_poly (hθ : Function.Surjective (WittVector.fontaineTheta 
   | add P Q hP hQ =>
     obtain ⟨r, hr⟩ := hP
     obtain ⟨s, hs⟩ := hQ
-    exact ⟨r + s, fun σ f hf => by rw [map_add, hr σ f hf, hs σ f hf, Polynomial.eval_add]⟩
+    exact ⟨r + s, fun σ f hf => by rw [map_add (f := _), hr σ f hf, hs σ f hf, Polynomial.eval_add]⟩
   | monomial n c =>
     obtain ⟨a, ha⟩ := hθ c
     exact ⟨a ⊗ₜ[ℤ_[p]] (α ^ n), fun σ f hf => by rw [hf, ha, map_pow, Polynomial.eval_monomial]⟩

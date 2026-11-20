@@ -153,7 +153,7 @@ theorem mem_latHat_iff {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}
       show ∑ i, V.frame.repr x i • V.frame i ∈ V.L0
       rw [V.frame.sum_repr]; exact hx
     | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
     | neg x _ hx => simp only [Pi.neg_apply, map_neg]; exact neg_mem hx
   · intro hz
     have key : ∀ y ∈ AddSubgroup.closure (GlobalTheory.AdelicLatMove.pureSet Λ), (fun i => (sw D).symm (y i)) ∈ latHat V := by
@@ -166,7 +166,7 @@ theorem mem_latHat_iff {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}
         rw [V.frame.repr_sum_self]
         rfl
       | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+      | add x y _ _ hx hy => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
       | neg x _ hx => simp only [Pi.neg_apply, map_neg]; exact neg_mem hx
     have := key _ (GlobalTheory.AdelicLatMove.mem_closure_of_mem_hatL Λ _ hz)
     simpa only [RingEquiv.symm_apply_apply] using this
@@ -207,7 +207,7 @@ def fvec (V : HSp D) {La : Type} [AddCommGroup La] [Module (𝓞 D.host.E) La]
     (ι : La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)) : La →+ (Fin V.rank → Af D.host.F ⊗[D.host.F] D.host.E) :=
   AddMonoidHom.mk' (fun a => finVec V (ι a)) fun a b => by
     funext i
-    simp only [finVec, map_add, Pi.add_apply, TensorProduct.tmul_add]
+    simp only [finVec, map_add (f := _), Pi.add_apply, TensorProduct.tmul_add]
 
 theorem fvec_smul (V : HSp D) {La : Type} [AddCommGroup La] [Module (𝓞 D.host.E) La]
     (ι : La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)) (b : 𝓞 D.host.E) (a : La) :
@@ -269,7 +269,7 @@ theorem lift_one_congr {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}
       (((GlobalTheory.MarkCoset.latG_spec D V 1).1 _).1 (hι.2 ▸ LinearMap.mem_range_self ι x))
   · rintro x x' ⟨w, hw, e⟩ ⟨w', hw', e'⟩
     refine ⟨w + w', add_mem hw hw', ?_⟩
-    rw [smul_add, ← e, ← e', map_add, Matrix.mulVec_add]
+    rw [smul_add, ← e, ← e', map_add (f := _), Matrix.mulVec_add]
     abel
 
 theorem congr_of_lifts {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)}

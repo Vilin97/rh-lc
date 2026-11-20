@@ -74,7 +74,7 @@ theorem mCoordIdeal_le_imageZ {Ω₀ Ω : Type} [Field Ω₀] [Field Ω] (i : Ω
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [mConeMap, Φ]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p n hp =>
       obtain ⟨k, a⟩ := n
       simp only [map_mul, hp, rename_X]

@@ -48,7 +48,7 @@ theorem projMatrix_abstract {S : Type} [CommRing S] {P₀ P₁ P₂ F₀ F₁ G�
     rw [hw, map_zero] at e₂ e₁ e₀
     obtain ⟨x, hx⟩ := (hex _).mp e₂.symm
     refine ⟨s₀ x + q₀ w, ?_⟩
-    have hp : p₀ (s₀ x + q₀ w) = x := by rw [map_add, h₀, ← e₀, add_zero]
+    have hp : p₀ (s₀ x + q₀ w) = x := by rw [map_add (f := _), h₀, ← e₀, add_zero]
     rw [← hi (D₀ _), hq₁, hq₀, hp, hx, ← sub_eq_zero.mp e₁.symm, add_sub_cancel_left, hi]
 
 theorem projMatrix_mulVec {R : Type} [CommRing R] (R' : Type) [CommRing R'] [Algebra R R']
@@ -58,7 +58,7 @@ theorem projMatrix_mulVec {R : Type} [CommRing R] (R' : Type) [CommRing R'] [Alg
       TensorProduct.piScalarRight R R' R' (Fin b) (f.baseChange R' x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Matrix.mulVec_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Matrix.mulVec_add, hx, hy]
   | tmul r y =>
     ext i
     have hy : f y = (LinearMap.toMatrix' f).mulVec y := by
@@ -77,7 +77,7 @@ theorem projMatrix_sum {R : Type} [CommRing R] (R' : Type) [CommRing R'] [Algebr
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add x y hx hy =>
-    simp only [map_add, Pi.add_apply, TensorProduct.add_tmul, Finset.sum_add_distrib, hx, hy]
+    simp only [map_add (f := _), Pi.add_apply, TensorProduct.add_tmul, Finset.sum_add_distrib, hx, hy]
   | tmul r y =>
     have hy : p y = ∑ k, y k • p (Pi.single k 1) := by
       set_option synthInstance.maxHeartbeats 100000 in
@@ -121,7 +121,7 @@ theorem exists_matrices_of_projective_complex :
   have hq₁ : q₁ ∘ₗ f₀ = s₁ ∘ₗ d₀ ∘ₗ p₀ := LinearMap.ext fun x => by simp [q₁, f₀]
   have hq₀ : q₀ ∘ₗ f₀ = LinearMap.id - s₀ ∘ₗ p₀ := LinearMap.ext fun x => by simp [q₀, f₀]
   have hi : i₁ ∘ₗ q₁ + i₀ ∘ₗ q₀ = LinearMap.id := LinearMap.ext fun x => by
-    simp [q₀, q₁, i₀, i₁, ← map_add]
+    simp [q₀, q₁, i₀, i₁, ← map_add (f := _)]
   have hr₂ : r₂ ∘ₗ f₁ = d₁ ∘ₗ p₁ ∘ₗ q₁ := LinearMap.ext fun x => by simp [r₂, f₁, h₂']
   have hr₁ : r₁ ∘ₗ f₁ = q₁ - s₁ ∘ₗ p₁ ∘ₗ q₁ := LinearMap.ext fun x => by simp [r₁, f₁, q₁]
   have hr₀ : r₀ ∘ₗ f₁ = p₀ ∘ₗ q₀ := LinearMap.ext fun x => by simp [r₀, f₁, q₀, h₀']

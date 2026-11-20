@@ -67,7 +67,7 @@ private theorem level_field {n h : ℕ} {k G : Type} [Field k] [Group G] [Topolo
     obtain ⟨x, rfl⟩ := hsurj q
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [map_add]; exact add_mem (ha trivial) (hb trivial)
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha trivial) (hb trivial)
     | single g a =>
       have : MonoidAlgebra.single g a = a • MonoidAlgebra.single g (1 : k) := by simp
       rw [this, map_smul]

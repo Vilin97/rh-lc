@@ -71,7 +71,7 @@ theorem heisO_slice (ψ : AddChar (AF D.host.F) ℂ) (o : OrthDec S A B) (u : WO
     heisO ψ A T u (slA o g) = slA o (heisO ψ S T ((o.resS T).symm (u, 0)) g) := by
   funext w
   simp only [slA, heisO]
-  rw [o.symplOH_resS T, ← map_add, Prod.mk_add_mk, add_zero]
+  rw [o.symplOH_resS T, ← map_add (f := _), Prod.mk_add_mk, add_zero]
   simp only [AddEquiv.apply_symm_apply, symplOH_zero_left, add_zero]
 
 theorem dRho_slice (ψ : AddChar (AF D.host.F) ℂ) {θ : InfFam D} (hθ : IsInfFam θ) (o : OrthDec S A B)
@@ -178,7 +178,7 @@ theorem isSobForm_slice {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} (hθ : 
     IsSobForm ψ θ S T fun f => om p (fun u => f ((o.resS T).symm (u, 0))) 0 where
   add f g _ _ := by
     show om p (slA o f + slA o g) 0 = _
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   smul c f _ := by
     show om p (c • slA o f) 0 = _
     rw [map_smul]; rfl

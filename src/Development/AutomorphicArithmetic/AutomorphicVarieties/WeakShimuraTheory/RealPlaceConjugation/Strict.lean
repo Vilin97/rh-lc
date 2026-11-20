@@ -83,7 +83,7 @@ theorem UpperTheory.V.Ws.card_cocycles_vanishing_on_inertia_le_pow :
       refine ⟨?_, ?_, ?_, ?_⟩
       · exact (hlc.comp_continuous continuous_subtype_val).comp (fun m => c i m)
       · intro a e
-        rw [Subgroup.coe_mul, hcoc, hK a a.2, map_add]
+        rw [Subgroup.coe_mul, hcoc, hK a a.2, map_add (f := _)]
       · intro A u hu
         have hin : (u : G F Ω) ∈ ineOff F Ω 1 := by
           show ∃ A, _

@@ -125,7 +125,7 @@ theorem exists_skewLat_trProj_eq (hr : r ≠ 0) (hU : Unr E) {G : Matrix (Fin r)
   obtain ⟨t, ht, ht1⟩ := GlobalTheory.T.exists_integral_trace_one_unramified E hU
   set s := c₀ + cc c₀ with hsdef
   set c := c₀ - s * t with hcdef
-  have hccs : cc s = s := by rw [hsdef]; simp only [cc, map_add, IsCMField.complexConj_apply_apply]; ring
+  have hccs : cc s = s := by rw [hsdef]; simp only [cc, map_add (f := _), IsCMField.complexConj_apply_apply]; ring
   have hcc : cc c = -c := by
     have e1 : cc c = cc c₀ - s * cc t := by
       rw [hcdef]; simp only [cc, map_sub, map_mul] at hccs ⊢; rw [hccs]

@@ -130,7 +130,7 @@ theorem exists_measure_of_bounded_moments :
   let L : C(Fin g → ℤ_[q], ℂ_[q]) →ₗ[ℂ_[q]] ℂ_[q] :=
     { toFun := fun F => ∑' n, c n * D n F
       map_add' := fun F G => by
-        simp only [map_add, mul_add]
+        simp only [map_add (f := _), mul_add]
         exact (hs F).tsum_add (hs G)
       map_smul' := fun r F => by
         simp only [map_smul, smul_eq_mul, RingHom.id_apply]

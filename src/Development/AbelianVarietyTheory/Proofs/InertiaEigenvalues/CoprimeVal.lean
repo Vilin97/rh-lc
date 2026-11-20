@@ -117,7 +117,7 @@ theorem ev_act_X {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomain O] [
       ← PadicInt.ker_toZMod, RingHom.mem_ker, map_sub, map_natCast, hd, ZMod.natCast_zmod_val,
       sub_self]
   have h2 := map_dvd φ (dvd_bin_sub (O := O) 1 δ d h1)
-  have h3 : φ (1 + X) = ζ ^ b.val := by rw [map_add, map_one, hφ]; ring
+  have h3 : φ (1 + X) = ζ ^ b.val := by rw [map_add (f := _), map_one, hφ]; ring
   rw [map_sub, map_pow, h3, map_one, pow_one, ← pow_mul, mul_comm, pow_mul, hζ, one_pow, sub_self,
     zero_dvd_iff, map_sub, sub_eq_zero, bin_nat, map_pow, h3] at h2
   rw [act_X, map_sub, map_one, h2, ZMod.val_mul, ← pow_eq_pow_mod _ hζ, pow_mul]

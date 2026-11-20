@@ -75,7 +75,7 @@ theorem epsZero_spMap (hF : ∀ a, F (algebraMap k _ a) = algebraMap k' _ (r a))
   change (F a).fst = r a.fst
   have : a = algebraMap k _ a.fst + algebraMap k _ a.snd * DualNumber.eps := by
     ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
-  conv_lhs => rw [this, map_add, map_mul, hF, hF, he]
+  conv_lhs => rw [this, map_add (f := _), map_mul, hF, hF, he]
   simp [TrivSqZeroExt.algebraMap_eq_inl]
 
 variable {G₂ : Over (Sp k')} [GrpObj G₂] {ψ : G₂.left ⟶ G.left}

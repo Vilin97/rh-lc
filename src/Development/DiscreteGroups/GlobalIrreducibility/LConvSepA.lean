@@ -69,15 +69,15 @@ def formI (I : (GL (Fin m) k → ℂ) →ₗ[ℂ] ℂ) : WT (m := m) ψ →ₗ�
   LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (pairI I)
     (fun x x' y => by
       simp only [pairI]
-      rw [← map_add]; congr 1; funext g
-      simp only [Submodule.coe_add, Pi.add_apply, map_add]; ring)
+      rw [← map_add (f := _)]; congr 1; funext g
+      simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _)]; ring)
     (fun c x y => by
       simp only [pairI]
       rw [← map_smul]; congr 1; funext g
       simp only [Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, map_mul]; ring)
     (fun x y y' => by
       simp only [pairI]
-      rw [← map_add]; congr 1; funext g
+      rw [← map_add (f := _)]; congr 1; funext g
       simp only [Submodule.coe_add, Pi.add_apply]; ring)
     (fun c x y => by
       simp only [pairI]

@@ -366,7 +366,7 @@ theorem digitPart_dg (ρ : D.Tau → Fin D.r → ℕ) (f : D.EA → K) (G : MvPo
     by_cases h : D.InClass p ρ α
     · rw [if_pos h, if_pos h, Formalism.MainNotions.PlaneGram.dg_monomial, D.emb_liftE p ρ α h]
     · rw [if_neg h, if_neg h, map_zero]
-  · rw [map_add, digitPart_add, digitPart_add, map_add, h₁, h₂]
+  · rw [map_add (f := _), digitPart_add, digitPart_add, map_add (f := _), h₁, h₂]
 
 theorem cge_digitPart (v : AddValuation K (WithTop ℚ)) (ρ : D.Tau → Fin D.r → ℕ) {a : ℝ}
     {G : MvPolynomial (D.OL × Fin D.r) K} (hG : cge v a G) : cge v a (D.digitPart p ρ G) := by
@@ -518,10 +518,10 @@ theorem digitPart_appL {I : Type} [Fintype I] (hP : 0 < D.P p t) (ρ'' : D.Tau �
   · rw [Formalism.MainNotions.PlaneGram.appL, Formalism.MainNotions.PlaneGram.lsup_monomial, digitPart_smul, Formalism.MainNotions.PlaneGram.appMon, digitPart_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun s _ => ?_
     exact digitPart_approx_term_lemma_4 D p t hP ρ'' (cls s) (cf s) (ρ' s) (δ s) (κ s) α c
-  · rw [map_add, digitPart_add, h₁, h₂, ← Finset.sum_add_distrib]
+  · rw [map_add (f := _), digitPart_add, h₁, h₂, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun s _ => ?_
     by_cases h : (fun a => ρ' s a % D.P p t) = ρ'' t
-    · rw [if_pos h, if_pos h, if_pos h, digitPart_add, map_add]
+    · rw [if_pos h, if_pos h, if_pos h, digitPart_add, map_add (f := _)]
     · rw [if_neg h, if_neg h, if_neg h, add_zero]
 
 end TwistData

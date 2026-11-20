@@ -77,7 +77,7 @@ theorem omHT_eq (σ : E →+* C) :
 
 theorem e_skew (x y : V) : P.e x y = - P.e y x := by
   have h := P.alt (x + y)
-  simp only [map_add, LinearMap.add_apply, P.alt, zero_add, add_zero] at h
+  simp only [map_add (f := _), LinearMap.add_apply, P.alt, zero_add, add_zero] at h
   exact eq_neg_of_add_eq_zero_right h
 
 theorem dualLat_flip : dualLat P.e.flip P.T = P.T := by

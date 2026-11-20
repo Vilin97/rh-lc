@@ -211,7 +211,7 @@ theorem exists_action_model_of_isColimit : ∀ (J : Type) [SmallCategory J] [IsF
     (AlgEquiv.algHomUnitsEquiv _ _).toMonoidHom.comp σ'.toHomUnits, e, fun g x => ?_⟩
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul s b =>
     rw [bcAct_tmul, he, he, map_mul, AlgEquiv.commutes]
     congr 1

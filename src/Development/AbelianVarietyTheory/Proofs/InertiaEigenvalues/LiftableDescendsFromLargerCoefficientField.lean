@@ -36,7 +36,7 @@ theorem blochKatoCocycle_comp_equivariant_map
   have hz : (fun g => φ (c g)) ∈ continuousCocycles ρ' := by
     refine ⟨hc.comp hc1, fun g h => ?_⟩
     change φ (c (g * h)) = φ (c g) + ρ' g (φ (c h))
-    rw [hc2, map_add, he]
+    rw [hc2, map_add (f := _), he]
   refine ⟨⟨hz, fun g _ => hT _ (hc3 g (Set.mem_univ g))⟩, hz, LinearMap.rTensor B φ x, fun g => ?_⟩
   have key : ∀ y : V ⊗[Qp] B, LinearMap.rTensor B φ (actVB PD ρ g y) =
       actVB PD ρ' g (LinearMap.rTensor B φ y) := by
@@ -44,7 +44,7 @@ theorem blochKatoCocycle_comp_equivariant_map
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [actVB, he]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   rw [← key, ← map_sub, ← hx, LinearMap.rTensor_tmul]
 
 theorem liftF_of_retract
@@ -78,7 +78,7 @@ theorem liftF_of_retract
   have h2 := congrArg R₂ (congrFun hsum g)
   change R₂ (F'.f (d g) + (σ₂ g y - y)) = R₂ (((PD.p : O') ^ e) • ι (c g)) at h2
   change F.f (R₁ (d g)) + (ρ₂ g (R₂ y) - R₂ y) = ((PD.p : O) ^ e) • c g
-  rw [← Nat.cast_pow, Nat.cast_smul_eq_nsmul, map_nsmul, hret, map_add, map_sub, hF, R₂e] at h2
+  rw [← Nat.cast_pow, Nat.cast_smul_eq_nsmul, map_nsmul, hret, map_add (f := _), map_sub, hF, R₂e] at h2
   rw [← Nat.cast_pow, Nat.cast_smul_eq_nsmul, h2]
 
 end General

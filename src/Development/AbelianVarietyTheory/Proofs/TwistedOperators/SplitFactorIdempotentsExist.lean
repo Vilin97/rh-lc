@@ -84,7 +84,7 @@ theorem splitIdempotents : SplitIdempotents := by
   · have hi' : u i ⊗ₜ[F] (b 0) + v i ⊗ₜ[F] b 1 = 0 := by
       rw [h0]; exact (smul_eq_zero.1 hi).resolve_left (inv_ne_zero two_ne_zero)
     have h2 := congrArg (fun x => (Algebra.TensorProduct.basis P b).repr x 0) hi'
-    simp only [map_add, Finsupp.add_apply, Algebra.TensorProduct.basis_repr_tmul] at h2
+    simp only [map_add (f := _), Finsupp.add_apply, Algebra.TensorProduct.basis_repr_tmul] at h2
     have h3 : u i = 0 := by simpa using h2
     have h4 := congrFun (e.symm.injective (h3.trans (map_zero e.symm).symm)) i.1
     simp at h4

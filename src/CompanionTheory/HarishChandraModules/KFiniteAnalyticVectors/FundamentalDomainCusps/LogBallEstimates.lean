@@ -43,7 +43,7 @@ theorem dual_rep (E : Type) [Field E] [NumberField E] (n : ℕ) : ∃ D : ℕ, 1
       { toFun := fun u => Algebra.trace ℚ E (c ⬝ᵥ fun j => (u j : E))
         map_zero' := by simp [dotProduct]
         map_add' := fun u u' => by
-          rw [← map_add, ← dotProduct_add]
+          rw [← map_add (f := _), ← dotProduct_add]
           congr 2 }
     have hAB : A = B := LinearMap.pi_ext' fun j => (RingOfIntegers.basis E).ext fun k => by
       show ((g (Pi.single j (RingOfIntegers.basis E k)) : ℤ) : ℚ) =
@@ -200,7 +200,7 @@ theorem covolume_orthogonal_complement : Transp → CovPerp := by
   let co : (Fin I.n → 𝓞 I.E) → Fin I.n → I.E := fun u i => u i
   let ι : (Fin I.n → 𝓞 I.E) →ₗ[ℤ] VR I := AddMonoidHom.toIntLinearMap (AddMonoidHom.mk'
     (fun u => toV I (vecAt I y (co u))) fun u u' => by
-      rw [← map_add]
+      rw [← map_add (f := _)]
       congr 1
       funext v
       rw [show co (u + u') = co u + co u' from rfl]

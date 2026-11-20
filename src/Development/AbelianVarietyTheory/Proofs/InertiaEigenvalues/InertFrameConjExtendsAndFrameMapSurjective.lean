@@ -84,7 +84,7 @@ theorem cT_mul_self_of_frame {K : Type} [Field K] {n : ℕ} (σ : K →+* K) (b 
 
 theorem eq_of_norms {K : Type} [Field K] (σ : K →+* K) (Y Y' : K) (hne : Y ≠ Y') (h1 : σ Y * Y = σ Y' * Y')
     (h2 : σ (Y + 1) * (Y + 1) = σ (Y' + 1) * (Y' + 1)) : σ Y = Y' := by
-  rw [map_add, map_add, map_one] at h2
+  rw [map_add (f := _), map_add (f := _), map_one] at h2
   have h3 : σ Y + Y = σ Y' + Y' := by linear_combination h2 - h1
   have h4 : σ Y * (Y - Y') = Y' * (Y - Y') := by linear_combination h1 - Y' * h3
   exact mul_right_cancel₀ (sub_ne_zero.2 hne) h4
@@ -168,9 +168,9 @@ theorem GlobalTheory.InertFrameConj.conj_and_surjective : ∀ (L : Type) [Field 
       intro y hy
       refine eq_of_norms Dv.σw _ _ (fun h => hy (hinj h)) (hpair y hy) ?_
       have hy1 : y + 1 ≠ IsCMField.complexConj L (y + 1) := by
-        rw [map_add, map_one]; exact fun h => hy (add_right_cancel h)
+        rw [map_add (f := _), map_one]; exact fun h => hy (add_right_cancel h)
       have := hpair (y + 1) hy1
-      simpa only [map_add, map_one] using this
+      simpa only [map_add (f := _), map_one] using this
     obtain ⟨t, ht⟩ : ∃ t : L, t ≠ IsCMField.complexConj L t := by
       by_contra hc
       push_neg at hc
@@ -178,9 +178,9 @@ theorem GlobalTheory.InertFrameConj.conj_and_surjective : ∀ (L : Type) [Field 
     intro x
     by_cases hx : x = IsCMField.complexConj L x
     · have hxt : x + t ≠ IsCMField.complexConj L (x + t) := by
-        rw [map_add, ← hx]; exact fun h => ht (add_left_cancel h)
+        rw [map_add (f := _), ← hx]; exact fun h => ht (add_left_cancel h)
       have h1 := hone _ hxt
-      rw [map_add, map_add, map_add, map_add, hone t ht, ← hx] at h1
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hone t ht, ← hx] at h1
       rw [← hx]
       exact add_right_cancel h1
     · exact hone x hx

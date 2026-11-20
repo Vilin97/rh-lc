@@ -39,14 +39,14 @@ private theorem sl_rTensor_apply {A B : Type} [AddCommGroup A] [Module ℂ A] [A
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul u v => rw [LinearMap.rTensor_tmul, sl_tmul, sl_tmul, map_smul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem sr_lTensor_apply {A B : Type} [AddCommGroup A] [Module ℂ A] [AddCommGroup B] [Module ℂ B]
     (l : A →ₗ[ℂ] ℂ) (T : B →ₗ[ℂ] B) (x : A ⊗[ℂ] B) : sr l (LinearMap.lTensor A T x) = T (sr l x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul u v => rw [LinearMap.lTensor_tmul, sr_tmul, sr_tmul, map_smul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem mem_range_rTensor_subtype_of_forall_sl_coord_mem {A B ι : Type} [AddCommGroup A] [Module ℂ A] [AddCommGroup B] [Module ℂ B]
     (𝒞 : Module.Basis ι ℂ B) (U : Submodule ℂ A) (x : A ⊗[ℂ] B) (h : ∀ i, sl (𝒞.coord i) x ∈ U) :
@@ -152,7 +152,7 @@ theorem invBox : InvBox := by
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero, Pi.zero_apply]
     | tmul F w => rw [LinearMap.lTensor_tmul, hΨt, hΨt, LinearMap.lTensor_tmul]
-    | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
   have hΨr : ∀ k x i, Ψ (LinearMap.rTensor W' (T k) x) i =
       ∑ j, (τ₀ k : Matrix (Fin m) (Fin m) ℂ) i j • LinearMap.rTensor W' (ρ k) (Ψ x j) := by
     intro k x i
@@ -160,7 +160,7 @@ theorem invBox : InvBox := by
     | zero => simp only [map_zero, Pi.zero_apply, smul_zero, Finset.sum_const_zero]
     | tmul F w =>
       simp only [LinearMap.rTensor_tmul, hΨt, hT, TensorProduct.sum_tmul, TensorProduct.smul_tmul']
-    | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy, smul_add, Finset.sum_add_distrib]
+    | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy, smul_add, Finset.sum_add_distrib]
   let ι : ↥(inv1 K₁ τ₀ ρ) ⊗[ℂ] ↥(fixd κ K₂ ⊓ ePart κ a N : Submodule ℂ W') →ₗ[ℂ] (Fin m → W ⊗[ℂ] W') :=
     Ψ.toLinearMap ∘ₗ TensorProduct.map (inv1 K₁ τ₀ ρ).subtype (fixd κ K₂ ⊓ ePart κ a N).subtype
   have hinj : Function.Injective ι :=
@@ -211,7 +211,7 @@ theorem invBox : InvBox := by
     · rintro _ ⟨t, rfl⟩
       induction t using TensorProduct.induction_on with
       | zero => rw [map_zero]; exact zero_mem _
-      | add s t hs ht => rw [map_add]; exact add_mem hs ht
+      | add s t hs ht => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hs ht
       | tmul v w =>
         have hv := (hV1 v).1 v.2
         obtain ⟨hw1, hw2⟩ := (hV2 w).1 w.2

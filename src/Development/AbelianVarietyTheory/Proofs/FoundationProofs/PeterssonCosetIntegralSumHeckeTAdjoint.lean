@@ -328,7 +328,7 @@ theorem pet_heckeT_adj : ∀ (N l q : ℕ) (k : ℤ) (σ σ' : SL(2, ℤ)), 0 < 
   have e1 := quotInt_petersson_eq_add_of_hecke_sum (G0 gs') (Ga fs) (Gb f) (hT gs') eTf
   have e2 := quotInt_petersson_eq_add_of_hecke_sum (G0 f) (Ga gs) (Gb g) (hT f) eTg
   have e1' := congrArg conj e1
-  rw [map_add, map_mul, map_mul, ← B_symm, ← B_symm, ← B_symm, Complex.conj_natCast, map_one] at e1'
+  rw [map_add (f := _), map_mul, map_mul, ← B_symm, ← B_symm, ← B_symm, Complex.conj_natCast, map_one] at e1'
   have a1 := B_adj (H := H) hq.pos (by rw [dg_det, one_mul]) (dg_fin H 1 q hb) (dg_fin' H 1 q hb) (G0 f) (G0 g)
     (Ga f) (Gb g) (by rw [dg_mul, mul_one])
   have a2 := B_adj (H := H) hq.pos (by rw [dg_det, mul_one]) (dg_fin H q 1 ha) (dg_fin' H q 1 ha) (G0 f) (G0 gs)

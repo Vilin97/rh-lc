@@ -44,7 +44,7 @@ theorem dual_family (R K : Type) {V : Type} [CommRing R] [IsDedekindDomain R] [F
     conv_lhs => rw [← h2]
     exact Finset.sum_congr rfl fun i _ => by rw [hf i ⟨x, hx⟩, algebraMap_smul]
   | zero => simp
-  | add x y _ _ hx hy => simp only [map_add, add_smul, Finset.sum_add_distrib, ← hx, ← hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, ← hx, ← hy]
   | smul a x _ hx => simp only [map_smul, smul_eq_mul, mul_smul, ← Finset.smul_sum, ← hx]
 
 open GlobalTheory.CompanionTheory.FinHeis in

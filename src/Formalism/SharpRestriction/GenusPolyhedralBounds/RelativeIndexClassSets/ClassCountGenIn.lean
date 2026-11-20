@@ -405,7 +405,7 @@ theorem wac_norm_one_infinite {F E : Type} [Field F] [CharZero F] [Field E] [Alg
     intro a h
     apply hne a
     have := congrArg σ h
-    rw [map_add, AlgHom.commutes, hσσ, map_zero] at this
+    rw [map_add (f := _), AlgHom.commutes, hσσ, map_zero] at this
     exact this
   let f : F → E := fun a => (algebraMap F E a + θ) / (algebraMap F E a + σ θ)
   have hinj : Function.Injective f := by
@@ -420,7 +420,7 @@ theorem wac_norm_one_infinite {F E : Type} [Field F] [CharZero F] [Field E] [Alg
   refine (Set.infinite_range_of_injective hinj).mono ?_
   rintro _ ⟨a, rfl⟩
   simp only [f, Set.mem_ofPred_eq]
-  rw [map_div₀, map_add, map_add, AlgHom.commutes, hσσ]
+  rw [map_div₀, map_add (f := _), map_add (f := _), AlgHom.commutes, hσσ]
   field_simp [hne a, hne' a]
 
 theorem wac_artinian (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
@@ -505,7 +505,7 @@ theorem wac_sig_S (σ : E →ₐ[F] E) (s : E ⊗[F] v.adicCompletion F)
       exact Subring.subset_closure (Or.inr ⟨⟨y, hy⟩, rfl⟩)
   · rw [map_zero]; exact zero_mem _
   · rw [map_one]; exact one_mem _
-  · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
+  · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · intro x _ hx; rw [map_neg]; exact neg_mem hx
   · intro x y _ _ hx hy; rw [map_mul]; exact mul_mem hx hy
 
@@ -574,7 +574,7 @@ theorem wac_dense (a : E ⊗[F] v.adicCompletion F) (r : 𝓞 F) (hr : r ≠ 0) 
     obtain ⟨e1, s1, hs1, h1⟩ := ha
     obtain ⟨e2, s2, hs2, h2⟩ := hb
     refine ⟨e1 + e2, s1 + s2, add_mem hs1 hs2, ?_⟩
-    rw [map_add, mul_add, ← h1, ← h2]
+    rw [map_add (f := _), mul_add, ← h1, ← h2]
     ring
 
 def wacF (E : Type) [Field E] [NumberField E] [Algebra F E] :

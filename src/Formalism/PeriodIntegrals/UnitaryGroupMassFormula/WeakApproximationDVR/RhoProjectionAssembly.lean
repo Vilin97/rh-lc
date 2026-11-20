@@ -58,7 +58,7 @@ theorem rho_projection_assembly : Assembly := by
   let e : ι → E := fun i => z i ^ r * (1 + z i ^ r)⁻¹
   refine ⟨∑ i, e i * y i, fun j => ?_⟩
   have he : ∀ i, iw j (e i) = iw j (z i) ^ r * (1 + iw j (z i) ^ r)⁻¹ := by
-    intro i; simp [e, map_mul, map_pow, map_inv₀, map_add, map_one]
+    intro i; simp [e, map_mul, map_pow, map_inv₀, map_add (f := _), map_one]
 
   have hT : ∀ i, PI.WADVR.Sm (Q j) (ϖ j) K
       ((iw j (e i) - if i = j then 1 else 0) * iw j (y i)) := by

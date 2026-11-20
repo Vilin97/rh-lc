@@ -67,9 +67,9 @@ theorem sgOf_defect (B : FB R d O) (h : PS k 2 d) (hc : B.IsCanonGauge k h) (i :
     gt_const_ev _ (pair_points_zero_constant (constantCoeff_up_eq_zero₂ ha) (gp_pt 2)) h h0
   have hD := GlobalTheory.FormalCalc.pderiv_formalExp (f := ev ![up (pt k d 0), pt k d 2] h +
       ev ![up (pt k d 1), pt k d 2] h - ev ![up (B.FK k), pt k d 2] h)
-    (by rw [map_sub, map_add, c _ (hp 0), c _ (hp 1), c _ hF]; simp) ((2 : Fin 3), i)
+    (by rw [map_sub, map_add (f := _), c _ (hp 0), c _ (hp 1), c _ hF]; simp) ((2 : Fin 3), i)
   rw [← hE] at hD
-  rw [hD, gt_ev_mul _ hDown, sigma_defect_eval_phase_one, one_mul, map_sub, map_add, gt_ev_sub _ hDown,
+  rw [hD, gt_ev_mul _ hDown, sigma_defect_eval_phase_one, one_mul, map_sub, map_add (f := _), gt_ev_sub _ hDown,
     gt_ev_add _ hDown, dz_right _ _ (hp 0), dz_right _ _ (hp 1), dz_right _ _ hF,
     ev_sgOf _ _ _ hF, ev_sgOf _ _ _ (hp 0), ev_sgOf _ _ _ (hp 1)]
   ring

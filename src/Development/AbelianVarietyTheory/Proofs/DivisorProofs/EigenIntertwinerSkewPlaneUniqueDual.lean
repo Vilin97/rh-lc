@@ -37,7 +37,7 @@ theorem rest_pure (g : SInf F κ) (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (
   refine finprod_congr fun v => ?_
   congr 1
   funext i
-  rw [Pi.add_apply, map_add, evFin_eq_zero_of_at z hz v i, add_zero]
+  rw [Pi.add_apply, map_add (f := _), evFin_eq_zero_of_at z hz v i, add_zero]
 
 theorem eq_of_pure_std (g g' : SInf F κ)
     (h : pure g (fun v => Set.indicator {x : κ → Fv F v | ∀ i, x i ∈ v.adicCompletionIntegers F} 1) =

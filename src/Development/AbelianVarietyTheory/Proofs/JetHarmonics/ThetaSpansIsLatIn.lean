@@ -34,7 +34,7 @@ theorem spanK_fg_of_subset [Module (𝓞 F) C] [IsScalarTower (𝓞 F) F C] (N :
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      simp only [TensorProduct.tmul_add, map_add]
+      simp only [TensorProduct.tmul_add, map_add (f := _)]
       exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       have e : z.symm (1 ⊗ₜ[F] (a • x)) =
@@ -57,7 +57,7 @@ theorem span_spanK_eq_top (s : Set C) (hs : Submodule.span F s = ⊤) :
     | mem x hx => exact Submodule.subset_span (Submodule.subset_span ⟨x, hx, rfl⟩)
     | zero => simp
     | add x y _ _ hx hy =>
-      simp only [TensorProduct.tmul_add, map_add]
+      simp only [TensorProduct.tmul_add, map_add (f := _)]
       exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       rw [TensorProduct.tmul_smul, ← algebraMap_smul K, map_smul]
@@ -73,7 +73,7 @@ theorem span_spanK_eq_top (s : Set C) (hs : Submodule.span F s = ⊤) :
     rw [e, map_smul]
     exact Submodule.smul_mem _ _ (h1 f)
   | add x y hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ (hx trivial) (hy trivial)
 
 end General

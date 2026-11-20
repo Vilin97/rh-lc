@@ -42,10 +42,10 @@ theorem pderiv_rowAct (g : ∀ σ, Matrix (Fin (r σ)) (Fin (r σ)) k) (σ : T) 
     · simp [h]
   induction Q using MvPolynomial.induction_on with
   | C c => simp [rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq, smul_add, Finset.sum_add_distrib]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, smul_add, Finset.sum_add_distrib]
   | mul_X p s hp =>
     rw [map_mul, pderiv_mul, hp, hX]
-    simp only [pderiv_mul, map_add, map_mul, smul_add, Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum,
+    simp only [pderiv_mul, map_add (f := _), map_mul, smul_add, Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum,
       smul_mul_assoc, mul_smul_comm]
 
 theorem mem_harmK_iff (cc : T → T) (isX : T → Prop) (P : MvPolynomial (Letter T r n) k) :
@@ -97,7 +97,7 @@ theorem fisch_monomial (m : σ →₀ ℕ) (a : ℚ) (Q : MvPolynomial σ ℚ) :
 theorem fisch_mul_X (P Q : MvPolynomial σ ℚ) (v : σ) : fisch (P * X v) Q = fisch P (pderiv v Q) := by
   classical
   induction P using MvPolynomial.induction_on' with
-  | add p q hp hq => simp only [add_mul, map_add, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => simp only [add_mul, map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial m a =>
     rw [X, monomial_mul, mul_one, fisch_monomial, fisch_monomial, coeff_pderiv]
     have : ((m + Finsupp.single v 1).prod fun _ e => e.factorial : ℕ) =
@@ -138,7 +138,7 @@ theorem fisch_rowAct (g : ∀ σ, Matrix (Fin (r σ)) (Fin (r σ)) ℚ) (P Q : M
     have e : rowAct g (C c : MvPolynomial (Letter T r n) ℚ) = C c := by simp [rowAct]
     rw [e, C_apply, fisch_monomial, fisch_monomial]
     exact congrArg (fun x => c * (_ * x)) (congrArg (fun f => f Q) key).symm
-  | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
   | mul_X p s hp =>
     obtain ⟨σ, i, b⟩ := s
     set_option synthInstance.maxHeartbeats 100000 in
@@ -158,7 +158,7 @@ theorem weight_lt_mul {p q : MvPolynomial σ k} {a b : ℕ} (hp : ∀ m ∈ p.su
   obtain ⟨x, hx, y, hy, rfl⟩ := Finset.mem_add.1 (support_mul p q hm)
   have := hp x hx
   have := hq y hy
-  rw [map_add]
+  rw [map_add (f := _)]
   omega
 
 theorem weight_lt_monomial (f : MvPolynomial σ k →ₐ[k] MvPolynomial σ k)
@@ -183,7 +183,7 @@ theorem weight_lt_monomial (f : MvPolynomial σ k →ₐ[k] MvPolynomial σ k)
       rw [this, map_mul]
       ring
     rw [e] at hm'
-    rw [map_add]
+    rw [map_add (f := _)]
     rcases Finset.mem_union.1 (support_add hm') with h | h
     · exact weight_lt_mul w h₁ (fun m hm => (h₂ m hm).le) _ h
     · rcases Finset.mem_union.1 (support_add h) with h | h
@@ -282,7 +282,7 @@ theorem RowStable.component_mem [Infinite k] {U : Submodule k (MvPolynomial (Let
           rw [monomial_mul, mul_one]
         have e2 : (monomial (Finsupp.weight w (m₁ + m₂)) 1 : MvPolynomial (Σ σ, Fin (r σ)) k) =
             monomial (Finsupp.weight w m₁) 1 * monomial (Finsupp.weight w m₂) 1 := by
-          rw [monomial_mul, mul_one, map_add]
+          rw [monomial_mul, mul_one, map_add (f := _)]
         rw [e1, e2, map_mul, map_mul, h₁, h₂, smul_mul_smul_comm]
       | single ℓ e =>
         rw [← C_mul_X_pow_eq_monomial, map_mul, map_pow, hX, Finsupp.weight_single]
@@ -396,7 +396,7 @@ theorem map_rowAct {K : Type} [Field K] (φ : k →+* K) (g : ∀ σ, Matrix (Fi
     map φ (rowAct g P) = rowAct (fun σ => φ.mapMatrix (g σ)) (map φ P) := by
   induction P using MvPolynomial.induction_on with
   | C c => simp [rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p s hp => simp [hp, rowAct_X]
 
 theorem rowInv_map [Infinite k] {K : Type} [Field K] (φ : k →+* K) {P : MvPolynomial (Letter T r n) k}
@@ -411,7 +411,7 @@ theorem rowInv_map [Infinite k] {K : Type} [Field K] (φ : k →+* K) {P : MvPol
     intro Q
     induction Q using MvPolynomial.induction_on with
     | C c => simp [rowShift]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p s hp => simp only [map_mul, hp, map_X, eval₂Hom_X']
   rw [e, this, map_eq_eval₂Hom_C_comp]
 

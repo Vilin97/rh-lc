@@ -52,7 +52,7 @@ theorem pow_mem {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
     rw [Fin.sum_univ_succ, hz1, one_mul] at h
     change eval (fun a => segre z (σ a)) f = 0
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [f, Gx, map_sub, map_add, map_pow, map_sum, map_mul, eval_X, eval_rename, hw,
+      simp only [f, Gx, map_sub, map_add (f := _), map_pow, map_sum, map_mul, eval_X, eval_rename, hw,
       eval_linPoly, hA, chartProjMatrix_mulVec]
     rw [h]
     simp [Equiv.apply_symm_apply, mul_comm]
@@ -73,7 +73,7 @@ theorem pow_mem {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
   have hcomp : homogeneousComponent r f =
       X a ^ r - ∑ j : Fin e, homogeneousComponent (r - 1) (Gx j.succ) * linPoly A j := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [f, map_sub, map_add, map_sum, hX, h0, zero_add,
+      simp only [f, map_sub, map_add (f := _), map_sum, hX, h0, zero_add,
       homogeneousComponent_mul_of_isHomogeneous_right _ _ (isHomogeneous_linPoly A _), h1, if_true]
   have hmem : homogeneousComponent r f + ∑ j : Fin e, homogeneousComponent (r - 1) (Gx j.succ) * linPoly A j ∈
       leadIdeal J ⊔ linIdeal A :=

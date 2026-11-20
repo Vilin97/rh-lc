@@ -107,7 +107,7 @@ theorem exists_orth_of_types (Z : Submodule ℂ M) (q : M → M → ℂ)
       let L' : T →ₗ[ℂ] M :=
         { toFun := c
           map_add' := fun s t => uniq _ (hL (s + t)) _ _ (hc _) (by
-            rw [map_add]; exact Padd _ (hL s) _ (hL t) _ _ (hc s) (hc t))
+            rw [map_add (f := _)]; exact Padd _ (hL s) _ (hL t) _ _ (hc s) (hc t))
           map_smul' := fun d t => uniq _ (hL (d • t)) _ _ (hc _) (by
             rw [map_smul]; exact Psmul d _ (hL t) _ (hc t)) }
       refine ⟨c t, Submodule.subset_span ⟨L', fun s => hUZ (hc s).1, fun k s s' h => ?_, t, rfl⟩, hc t⟩

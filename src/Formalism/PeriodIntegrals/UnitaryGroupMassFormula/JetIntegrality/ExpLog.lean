@@ -116,13 +116,13 @@ theorem pderiv_expMv {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff f = 0) (
   have h1 : coeff α (pderiv ℂ_[p] i (expMv f)) =
       coeff α (pderiv ℂ_[p] i (expT f (Finsupp.degree α + 1 + 1))) := by
     rw [coeff_pderiv, coeff_pderiv, coeff_expMv_eq_expT hf]
-    rw [map_add, Finsupp.degree_single]; omega
+    rw [map_add (f := _), Finsupp.degree_single]; omega
   rw [h1, pderiv_expT, coeff_mul, coeff_mul]
   refine Finset.sum_congr rfl fun x hx => ?_
   congr 1
   refine (coeff_expMv_eq_expT hf ?_).symm
   have := congrArg Finsupp.degree (Finset.HasAntidiagonal.mem_antidiagonal.1 hx)
-  rw [map_add] at this; omega
+  rw [map_add (f := _)] at this; omega
 
 theorem constantCoeff_expMv (f : MvPowerSeries σ ℂ_[p]) : constantCoeff (expMv f) = 1 := by
   rw [← coeff_zero_eq_constantCoeff_apply, coeff_expMv]

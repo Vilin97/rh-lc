@@ -38,7 +38,7 @@ theorem comp_aeval_esymm (r j : ℕ) (P : MvPolynomial (Fin r) ℚ) :
     homogeneousComponent j (aeval (fun i : Fin r => esymm (Fin r) ℚ (i + 1)) P) =
       aeval (fun i : Fin r => esymm (Fin r) ℚ (i + 1)) (weightedHomogeneousComponent (fun i : Fin r => (i : ℕ) + 1) j P) := by
   induction P using MvPolynomial.induction_on' with
-  | add P Q hP hQ => simp only [map_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
   | monomial d c =>
     have h1 : (monomial d c : MvPolynomial (Fin r) ℚ).IsWeightedHomogeneous (fun i : Fin r => (i : ℕ) + 1)
         (Finsupp.weight (fun i : Fin r => (i : ℕ) + 1) d) := isWeightedHomogeneous_monomial _ _ _ rfl

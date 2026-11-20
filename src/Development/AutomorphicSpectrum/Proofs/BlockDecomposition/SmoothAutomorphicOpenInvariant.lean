@@ -68,7 +68,7 @@ theorem conj_unipGL_eq_archExp {r : ℕ} (x : AdelicGLn.AdelicGL K n) (P : UPos 
   rw [coe_expG_top, exp_eq_one_add_of_mul_self_eq_zero (conjArch_mul_conjArch x P P)]
   change archMat K n ((x⁻¹ * unipGL P * x : AdelicGLn.AdelicGL K n) :
     Matrix (Fin n) (Fin n) 𝔸[K]) = _
-  rw [coe_conj_unipGL, map_add, map_one]
+  rw [coe_conj_unipGL, map_add (f := _), map_one]
   rfl
 
 theorem norm_le_of_altSum_inf {φ : AdelicGLn.AdelicGL K n → ℂ} (hφc : Continuous φ)

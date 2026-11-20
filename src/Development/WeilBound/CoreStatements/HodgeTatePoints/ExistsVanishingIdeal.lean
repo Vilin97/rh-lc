@@ -61,7 +61,7 @@ theorem exists_vanishing_ideal
           fun h => (hp.out.dvd_mul.1 h).elim h1 h1',
           hom_add (hom_nat_mul _ (hom_mul h2 (hom_mon _ _))) (hom_nat_mul _ (hom_mul (hom_mon _ _) h2')),
           add_mem (W.mul_mem_left _ (W.mul_mem_right _ h3)) (W.mul_mem_left _ (W.mul_mem_left _ h3')), ?_⟩
-        simp only [map_add, map_mul, map_natCast, aeval_mon_const, ← h4, ← h4']
+        simp only [map_add (f := _), map_mul, map_natCast, aeval_mon_const, ← h4, ← h4']
         push_cast; ring
       smul_mem' := by
         rintro u v ⟨n', d', g', h1', h2', h3', h4'⟩

@@ -46,9 +46,9 @@ theorem isValueAt_add {x : (Σ k, ι k) → Ω} {s t : Ω} {z : (Σ k, ι k) →
   · rw [add_comm d d']
     exact isMultiHomog_mul hg' hh
   · rw [map_mul]; exact mul_ne_zero hy hy'
-  · simp only [map_add, map_mul, heq, heq']; ring
+  · simp only [map_add (f := _), map_mul, heq, heq']; ring
   · simp only [map_mul]; exact mul_ne_zero hz0 hz0'
-  · simp only [map_add, map_mul]
+  · simp only [map_add (f := _), map_mul]
     field_simp
 
 theorem regAt_mul {x : (Σ k, ι k) → Ω} {z : (Σ k, ι k) → ℂ} {s t : Ω}
@@ -70,7 +70,7 @@ theorem regAt_add {x : (Σ k, ι k) → Ω} {z : (Σ k, ι k) → ℂ} {s t : Ω
     fun hm => ((isPrime_mCoordIdeal z).mem_or_mem hm).elim hn hn', ?_⟩
   · rw [add_comm d d']
     exact isMultiHomog_mul hg' hh
-  · simp only [map_add, map_mul, heq, heq']; ring
+  · simp only [map_add (f := _), map_mul, heq, heq']; ring
 
 theorem one_notMem_mCoordIdeal (z : (Σ k, ι k) → ℂ) : (1 : MRing ι) ∉ mCoordIdeal z :=
   (Ideal.ne_top_iff_one _).1 (isPrime_mCoordIdeal z).ne_top

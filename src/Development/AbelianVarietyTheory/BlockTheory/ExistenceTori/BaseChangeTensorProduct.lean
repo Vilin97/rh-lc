@@ -38,7 +38,7 @@ def bcMap (hσ : ∀ a, σ' (algebraMap K L a) = σ a) (f : C →ₛₗ[σ] W) :
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul t F => rw [TensorProduct.smul_tmul', bcAdd_tmul, bcAdd_tmul, smul_eq_mul, map_mul, mul_smul]
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 end BaseChange
 

@@ -447,7 +447,7 @@ noncomputable def mb_L (x : Bool × Mat k r) : mbV k r →L[ℝ] mbV k r :=
     { toFun := fun v => (mb_e k r).symm (dirv x (mb_e k r v))
       map_add' := fun a b => by
         obtain ⟨b0, X⟩ := x
-        cases b0 <;> simp [dirv, Matrix.mul_add, Matrix.add_mul, map_add] <;> abel
+        cases b0 <;> simp [dirv, Matrix.mul_add, Matrix.add_mul, map_add (f := _)] <;> abel
       map_smul' := fun c a => by
         obtain ⟨b0, X⟩ := x
         cases b0 <;> simp [dirv, map_smul] }

@@ -58,7 +58,7 @@ theorem homogenize_slP (w : ℕ) (g : Matrix (Fin 2) (Fin 2) ℤ) (p : ℂ[X]) :
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [polySlash_apply, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    simp only [map_mul, map_pow, map_add, MvPolynomial.aeval_C, MvPolynomial.aeval_X, Matrix.cons_val_zero,
+    simp only [map_mul, map_pow, map_add (f := _), MvPolynomial.aeval_C, MvPolynomial.aeval_X, Matrix.cons_val_zero,
       Matrix.cons_val_one, mul_one, ← C_eq_algebraMap, smul_eq_C_mul]
 
 theorem polySlash_polySlash (w : ℕ) (g h : Matrix (Fin 2) (Fin 2) ℤ) (p : ℂ[X]) :
@@ -66,7 +66,7 @@ theorem polySlash_polySlash (w : ℕ) (g h : Matrix (Fin 2) (Fin 2) ℤ) (p : �
   set_option synthInstance.maxHeartbeats 100000 in
     rw [polySlash_eq_aeval w h, homogenize_slP, polySlash_apply, map_sum]
   refine Finset.sum_congr rfl fun i _ => ?_
-  simp only [map_mul, map_pow, map_add, MvPolynomial.aeval_C, MvPolynomial.aeval_X, Matrix.cons_val_zero,
+  simp only [map_mul, map_pow, map_add (f := _), MvPolynomial.aeval_C, MvPolynomial.aeval_X, Matrix.cons_val_zero,
       Matrix.cons_val_one, ← C_eq_algebraMap, smul_eq_C_mul, Matrix.mul_apply, Fin.sum_univ_two, Int.cast_add,
       Int.cast_mul]
   congr 3 <;> ring

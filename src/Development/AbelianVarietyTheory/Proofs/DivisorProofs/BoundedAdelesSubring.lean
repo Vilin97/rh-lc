@@ -33,12 +33,12 @@ theorem neg_mem_bddA {S : Finset (Pl F)} {c : ℝ≥0} {z : AE F E} (hz : z ∈ 
 theorem add_mem_bddA {S : Finset (Pl F)} {c : ℝ≥0} {x y : AE F E} (hx : x ∈ bddA E S c)
     (hy : y ∈ bddA E S c) : x + y ∈ bddA E S (c + c) := by
   refine ⟨fun v => ?_, fun w τ => ?_⟩
-  · rw [map_add]
+  · rw [map_add (f := _)]
     refine (absFin_add_le F v _ _).trans ((max_le (hx.1 v) (hy.1 v)).trans ?_)
     split_ifs
     · exact le_add_self
     · exact le_rfl
-  · rw [map_add, map_add]
+  · rw [map_add (f := _), map_add (f := _)]
     exact (nnnorm_add_le _ _).trans (add_le_add (hx.2 w τ) (hy.2 w τ))
 
 theorem mul_mem_bddA {S : Finset (Pl F)} {c : ℝ≥0} {x y : AE F E} (hx : x ∈ bddA E S c)

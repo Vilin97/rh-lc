@@ -53,7 +53,7 @@ def HSmap {F F' : Shv R} (g : F ⟶ F') (n : ℕ) (X : Scheme.{0}) : HS R F n X 
 instance (N : Submonoid (ULift.{1} R)) : (locModule N).Additive where
   map_add {A B f g} := by
     apply ModuleCat.hom_ext
-    simp only [locModule, ModuleCat.hom_add, ModuleCat.hom_ofHom, map_add]
+    simp only [locModule, ModuleCat.hom_add, ModuleCat.hom_ofHom, map_add (f := _)]
     rfl
 
 instance (N : Submonoid (ULift.{1} R)) : (loc N).Additive := by

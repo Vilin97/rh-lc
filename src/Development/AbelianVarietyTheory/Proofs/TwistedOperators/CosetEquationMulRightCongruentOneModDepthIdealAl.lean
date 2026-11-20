@@ -42,7 +42,7 @@ theorem infPart_idemSum {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e 
   induction P using Finset.induction_on with
   | empty => rw [Finset.sum_empty, RingHom.map_zero]
   | insert a s ha ih =>
-    rw [Finset.sum_insert ha, RingHom.map_add, GlobalTheory.SplitScalar.infPart_splitIdem (hes a (Finset.mem_insert_self a s)).1,
+    rw [Finset.sum_insert ha, RingHom.map_add (f := _), GlobalTheory.SplitScalar.infPart_splitIdem (hes a (Finset.mem_insert_self a s)).1,
       ih fun PP hPP => hes PP (Finset.mem_insert_of_mem hPP), add_zero]
 
 def finLift {m n : ℕ} (c : Matrix (Fin m) (Fin n) D.host.E) : Mx D m n :=

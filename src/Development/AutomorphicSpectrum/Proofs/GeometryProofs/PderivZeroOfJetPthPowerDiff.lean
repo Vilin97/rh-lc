@@ -17,7 +17,7 @@ private theorem coeff_mul_eq_zero_of_order_two_of_degree_le_two {σ k : Type} [C
   refine Finset.sum_eq_zero fun x hx => ?_
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx
   have h2 : x.2.degree ≤ e.degree := by
-    rw [← hx, map_add]; exact Nat.le_add_left _ _
+    rw [← hx, map_add (f := _)]; exact Nat.le_add_left _ _
   rw [ha x.2 (lt_of_le_of_lt h2 he), mul_zero]
 
 private theorem coeff_eq_zero_of_mem_span_X_pow_of_degree_lt {σ k : Type} [CommRing k] :
@@ -46,7 +46,7 @@ private theorem coeff_eq_zero_of_mem_span_X_pow_of_degree_lt {σ k : Type} [Comm
         rw [MvPolynomial.coeff_X']
         split_ifs with hxi
         · have hx1 : x.1.degree + 1 = e.degree := by
-            rw [← hx, map_add, ← hxi, Finsupp.degree_single]
+            rw [← hx, map_add (f := _), ← hxi, Finsupp.degree_single]
           rw [ih r hr x.1 (by omega), zero_mul]
         · rw [mul_zero]
       · rw [mul_zero]; exact K.zero_mem
@@ -62,14 +62,14 @@ theorem pderiv_eq_zero_of_jet_pow_sub : ∀ (k : Type) [Field k] (p : ℕ) [Fact
   obtain ⟨P, rfl⟩ := Ideal.Quotient.mk_surjective v
   have hmem : psTrunc (e.degree + 1) F + psTrunc (e.degree + 1) f - P ^ p ∈
       orig k (Fin 1 × Fin d) ^ (e.degree + 1 + 1) := by
-    rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_add, map_pow]
+    rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_add (f := _), map_pow]
     have h1 : psJet (e.degree + 1) F =
         Ideal.Quotient.mk (orig k (Fin 1 × Fin d) ^ (e.degree + 1 + 1)) (psTrunc (e.degree + 1) F) := rfl
     have h2 : psJet (e.degree + 1) f =
         Ideal.Quotient.mk (orig k (Fin 1 × Fin d) ^ (e.degree + 1 + 1)) (psTrunc (e.degree + 1) f) := rfl
     rw [← h1, ← h2, hv]; ring
   have hdeg : (e + Finsupp.single q 1).degree < e.degree + 1 + 1 := by
-    rw [map_add, Finsupp.degree_single]; omega
+    rw [map_add (f := _), Finsupp.degree_single]; omega
   have hz := coeff_eq_zero_of_mem_span_X_pow_of_degree_lt (e.degree + 1 + 1) _ hmem (e + Finsupp.single q 1) hdeg
   have hbd : ∀ i, (e + Finsupp.single q 1 : Fin 1 × Fin d →₀ ℕ) i ≤ (e + Finsupp.single q 1).degree := by
     intro i
@@ -79,11 +79,11 @@ theorem pderiv_eq_zero_of_jet_pow_sub : ∀ (k : Type) [Field k] (p : ℕ) [Fact
     constructor
     · refine ⟨fun i => ⟨(e + Finsupp.single q 1 : Fin 1 × Fin d →₀ ℕ) i, ?_⟩, ?_⟩
       · have := hbd i
-        rw [map_add, Finsupp.degree_single] at this
+        rw [map_add (f := _), Finsupp.degree_single] at this
         omega
       · ext i; simp
     · show (e + Finsupp.single q 1).degree ≤ e.degree + 1
-      rw [map_add, Finsupp.degree_single]
+      rw [map_add (f := _), Finsupp.degree_single]
   have htr : ∀ g : MvPowerSeries (Fin 1 × Fin d) k,
       AddMonoidAlgebra.coeff (psTrunc (e.degree + 1) g) (e + Finsupp.single q 1) =
         MvPowerSeries.coeff (e + Finsupp.single q 1) g := by
@@ -93,8 +93,8 @@ theorem pderiv_eq_zero_of_jet_pow_sub : ∀ (k : Type) [Field k] (p : ℕ) [Fact
     rw [MvPolynomial.coe_pow, Derivation.leibniz_pow, ← Nat.cast_smul_eq_nsmul k, CharP.cast_eq_zero, zero_smul]
   have hG : MvPowerSeries.pderiv (R := k) q F = MvPowerSeries.pderiv (R := k) q
       (F + f - ((P ^ p : MvPolynomial (Fin 1 × Fin d) k) : MvPowerSeries (Fin 1 × Fin d) k)) := by
-    rw [map_sub, map_add, hf q, hpow, add_zero, sub_zero]
-  rw [hG, MvPowerSeries.coeff_pderiv, map_zero, map_sub, map_add, MvPolynomial.coeff_coe, ← htr F, ← htr f,
+    rw [map_sub, map_add (f := _), hf q, hpow, add_zero, sub_zero]
+  rw [hG, MvPowerSeries.coeff_pderiv, map_zero, map_sub, map_add (f := _), MvPolynomial.coeff_coe, ← htr F, ← htr f,
     ← MvPolynomial.coeff_add, ← MvPolynomial.coeff_sub, hz, zero_mul]
 
 end GlobalTheory.CompanionTheory.Ar.Coc

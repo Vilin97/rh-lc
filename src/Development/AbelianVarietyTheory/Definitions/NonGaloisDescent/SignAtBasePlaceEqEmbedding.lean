@@ -42,7 +42,7 @@ theorem tens_ext {P : Type} [AddCommGroup P] {f g : K ⊗[R] M →+ P} (h : ∀ 
     induction z using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero]
     | tmul a x => exact h a x
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem symm_smul {r : R ≃+* R'} {φ : M ≃+ M'} (hφ : ∀ c x, φ (c • x) = r c • φ x) (c : R') (x : M') :
     φ.symm (c • x) = r.symm c • φ.symm x :=
@@ -63,7 +63,7 @@ theorem map_mem_of_span {f : M →+ M'} {r : R → R'} (hf : ∀ c x, f (c • x
   induction hx using Submodule.span_induction with
   | mem x h => exact hs x h
   | zero => rw [map_zero]; exact B.zero_mem
-  | add x y _ _ hx hy => rw [map_add]; exact B.add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact B.add_mem hx hy
   | smul c x _ hx => rw [hf]; exact B.smul_mem _ hx
 
 end Tensor

@@ -37,7 +37,7 @@ theorem qkPt_finite_reps : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre 
   have hδk : ∀ p, k • δ p = 0 := by
     intro p
     simp only [δ, smul_sub, GlobalTheory.TorusExt.qk_nsmul hB, ← map_nsmul, hzOf]
-    rw [map_add, map_neg]; abel
+    rw [map_add (f := _), map_neg]; abel
   have hδb : ∀ p, (δ p).b ^ k = 1 := by
     intro p
     rw [← GlobalTheory.TorusExt.nsmul_b, hδk p, GlobalTheory.TorusExt.zero_b]

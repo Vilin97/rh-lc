@@ -272,7 +272,7 @@ theorem finite_integralClosure_of_coneHom [IsDomain o] [IsNoetherianRing o] [IsI
       obtain ⟨n, p', hp⟩ := hp
       obtain ⟨m, q', hq⟩ := hq
       refine ⟨n + m, p' * MvPolynomial.X s₀ ^ m + q' * MvPolynomial.X s₀ ^ n, ?_⟩
-      simp only [map_add, map_mul, map_pow, hp, hq, hX]
+      simp only [map_add (f := _), map_mul, map_pow, hp, hq, hX]
       ring
     | mul_X p s hp =>
       obtain ⟨n, p', hp⟩ := hp

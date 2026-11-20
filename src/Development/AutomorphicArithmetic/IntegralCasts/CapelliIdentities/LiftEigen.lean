@@ -25,5 +25,5 @@ theorem UpperTheory.Reformulated.B.R4.lift_eigen :
       rw [hb]; abel
     have hcomm : ρ t (ρ s y) = ρ s (ρ t y) := by
       rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, mul_comm]
-    rw [map_sub, map_smul, hcomm, hty, map_add, map_smul, map_smul, hv s]
+    rw [map_sub, map_smul, hcomm, hty, map_add (f := _), map_smul, map_smul, hv s]
     module

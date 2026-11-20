@@ -149,12 +149,12 @@ theorem exists_move : ∀ {D : D7} (V : HSp D), V.gram = 1 → ∀ (e : AE D), G
   · refine mem_St V g β₀ β₁ h₀ h₁ (toEAf D e) (toEAf D (cA D e)) (GlobalTheory.IdemFin.toEAf_mem_intAf_of_idem he)
       (GlobalTheory.IdemFin.toEAf_mem_intAf_of_idem hc) ?_ ?_
     · ext i j
-      simp only [hg, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Matrix.transpose_apply, map_add,
+      simp only [hg, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Matrix.transpose_apply, map_add (f := _),
         map_mul, map_sub, map_one, GlobalTheory.AdelicLatMove.toEAf_cA, Matrix.of_apply, hP, hQ]
       rw [Matrix.one_apply, Matrix.one_apply]
       split_ifs <;> simp
     · ext i j
-      simp only [hgi, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Matrix.transpose_apply, map_add,
+      simp only [hgi, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Matrix.transpose_apply, map_add (f := _),
         map_mul, map_sub, map_one, GlobalTheory.AdelicLatMove.toEAf_cA, Matrix.of_apply, hP, hQ]
       rw [Matrix.one_apply, Matrix.one_apply]
       split_ifs <;> simp

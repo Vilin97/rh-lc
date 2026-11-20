@@ -100,7 +100,7 @@ theorem UpperTheory.V.Fr.adjoin_image_in_residue_range :
       exact ⟨_, rfl⟩
     | add x y hx hy ihx ihy =>
       show φ (⟨x, hDA hx⟩ + ⟨y, hDA hy⟩) ∈ f.range
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem ihx ihy
     | mul x y hx hy ihx ihy =>
       show φ (⟨x, hDA hx⟩ * ⟨y, hDA hy⟩) ∈ f.range

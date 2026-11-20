@@ -280,7 +280,7 @@ def pairs (g : M' →ₗ[MRingOver S ι] M) (𝓜 : (K → ℤ) → Submodule S 
   carrier := {p | p.1 ∈ KH.cechCc ι 𝓜 c n ∧ p.2 ∈ KH.cechZc ι 𝓜' c (n + 1) ∧
     KH.cechD S ι M n p.1 = KH.cechMap S ι g (n + 1) p.2}
   add_mem' := fun {p q} hp hq => ⟨add_mem hp.1 hq.1, add_mem hp.2.1 hq.2.1, by
-    rw [Prod.fst_add, Prod.snd_add, map_add, map_add, hp.2.2, hq.2.2]⟩
+    rw [Prod.fst_add, Prod.snd_add, map_add (f := _), map_add (f := _), hp.2.2, hq.2.2]⟩
   zero_mem' := ⟨zero_mem _, zero_mem _, by rw [Prod.fst_zero, Prod.snd_zero, map_zero, map_zero]⟩
   smul_mem' := fun s p hp => ⟨Submodule.smul_mem _ s hp.1, Submodule.smul_mem _ s hp.2.1, by
     rw [Prod.smul_fst, Prod.smul_snd, LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower, hp.2.2]⟩

@@ -145,7 +145,7 @@ theorem kap_mem (b : Bool) (α : OK H) : kap ty H b α ∈ quadRing (H := H) := 
     let f : 𝓞 E →+* ℂ := (ty j).comp (algebraMap (𝓞 E) E)
     have hw : f H.w0 = (1 + sgnRt H b) / 2 := by
       have e := congrArg f H.two_weight_eq_one_add_root
-      simp only [map_mul, map_add, map_one, map_ofNat] at e
+      simp only [map_mul, map_add (f := _), map_one, map_ofNat] at e
       have : f H.rt = sgnRt H b := hj
       rw [this] at e
       field_simp

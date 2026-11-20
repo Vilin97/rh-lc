@@ -21,7 +21,7 @@ theorem repr_incl {κ : Type} (tb : Module.Basis κ O M) (incl : RA →ₐ[O] RW
   induction u using TensorProduct.induction_on with
   | zero => simp
   | tmul r t => simp [Algebra.TensorProduct.basis_repr_tmul]
-  | add a b ha hb => simp only [map_add, Finsupp.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), Finsupp.add_apply, ha, hb]
 
 theorem map_smul_left (f : RW →ₐ[O] RW) (r : RW) (z : RW ⊗[O] M) :
     TensorProduct.map f.toLinearMap (LinearMap.id : M →ₗ[O] M) (r • z) =
@@ -29,7 +29,7 @@ theorem map_smul_left (f : RW →ₐ[O] RW) (r : RW) (z : RW ⊗[O] M) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x t => simp [TensorProduct.smul_tmul']
-  | add a b ha hb => rw [smul_add, map_add, ha, hb, map_add, smul_add]
+  | add a b ha hb => rw [smul_add, map_add (f := _), ha, hb, map_add (f := _), smul_add]
 
 theorem mem_range_of_frob {κ : Type} [Fintype κ] (tb : Module.Basis κ O M) (incl : RA →ₐ[O] RW)
     (φ : RW →ₐ[O] RW)
@@ -48,7 +48,7 @@ theorem mem_range_of_frob {κ : Type} [Fintype κ] (tb : Module.Basis κ O M) (i
     (Matrix.of fun k _ => ta.repr w' k) (by
       ext k u
       have h1 := congrArg (fun x => tt.repr x k) h
-      simp only [map_add, map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul] at h1
+      simp only [map_add (f := _), map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul] at h1
       rw [htt, GlobalTheory.Sandwich.repr_phi, repr_incl, ← htt, ← hta] at h1
       rw [Matrix.map_one _ (map_zero _) (map_one _), Matrix.mul_one, Matrix.diagonal_map (map_zero _)]
       simp only [Matrix.map_apply, Matrix.of_apply, Matrix.add_apply, Matrix.diagonal_mul]

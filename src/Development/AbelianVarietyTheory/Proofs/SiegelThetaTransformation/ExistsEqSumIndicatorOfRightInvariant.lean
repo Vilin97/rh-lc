@@ -22,7 +22,7 @@ theorem exists_injective_comp_eq_of_surjective {k V W : Type*} [Field k] [AddCom
     (Submodule.ker_subtype _)
   have hgs : ∀ w, g (s w) = w := fun w => LinearMap.congr_fun hs w
   have key : ∀ v, g (s (f v) + (θ (p v) : V)) = f v := fun v => by
-    rw [map_add, hgs, (θ (p v)).2, add_zero]
+    rw [map_add (f := _), hgs, (θ (p v)).2, add_zero]
   refine ⟨s ∘ₗ f + (LinearMap.ker g).subtype ∘ₗ θ.toLinearMap ∘ₗ p, ?_, LinearMap.ext key⟩
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro v hv
@@ -343,7 +343,7 @@ theorem exists_eq_sum_indicator_of_right_invariant {a b : O} (ha : a ≠ 0) (hb 
     (fun z y => by
       have : (f a)⁻¹ • (z + (a * b) • y).map f = (f a)⁻¹ • z.map f + f b • y.map f := by
         ext i j
-        simp only [Matrix.smul_apply, Matrix.map_apply, Matrix.add_apply, smul_eq_mul, map_add,
+        simp only [Matrix.smul_apply, Matrix.map_apply, Matrix.add_apply, smul_eq_mul, map_add (f := _),
           map_mul]
         field_simp
       rw [this, hper _ (y.map f) fun i j => ⟨y i j, rfl⟩])

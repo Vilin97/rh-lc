@@ -108,7 +108,7 @@ theorem om_cosetV_block : ∀ (D : D7) (δ t0 : ℂ), Crv D ⊤ δ → ∀ {a d 
   have hc1 : CloseTo D ⊤ m₁ ((1 : GA D a) : GL (Fin a) (AE D)) (h : GL (Fin d) (AE D)) x₀ (z + w) := by
     have h3 := (hz.of_dvd (m := m₁) (dvd_mul_right _ _)).add hw
     have key : z.map (inc D) - Y₂ + (w.map (inc D) - (Y₁ - Y₂)) = (z + w).map (inc D) - Y₁ := by
-      ext i j; simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.map_apply, map_add]; abel
+      ext i j; simp only [Matrix.add_apply, Matrix.sub_apply, Matrix.map_apply, map_add (f := _)]; abel
     rw [key] at h3
     intro i j
     obtain ⟨y, hy, e⟩ := h3 i j

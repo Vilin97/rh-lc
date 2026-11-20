@@ -222,7 +222,7 @@ theorem exists_coord {ι : Type} [Fintype ι] (b : Module.Basis ι (W0 K) ↥(OL
     rw [Algebra.smul_def, map_mul, map_mul, inC_wA, algebraMap_WO, mul_assoc]⟩)
     fun x y ⟨a, ha⟩ ⟨a', ha'⟩ => ⟨a + a', by
       rw [ha, ha', ← Finset.sum_add_distrib]
-      exact Finset.sum_congr rfl fun i _ => by rw [Pi.add_apply, map_add, add_mul]⟩
+      exact Finset.sum_congr rfl fun i _ => by rw [Pi.add_apply, map_add (f := _), add_mul]⟩
 
 variable {B : Type} [CommRing B] [Algebra ℚ_[l] B] [Algebra ↥(K0 K) B] [IsScalarTower ℚ_[l] ↥(K0 K) B]
 
@@ -308,7 +308,7 @@ theorem toLine_map (s : B →ₐ[F] B) (x : K ⊗[F] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul c y => simp [toLine]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem toLine_mul (b : B) (x : K ⊗[F] B) :
     toLine F K B (((1 : K) ⊗ₜ[F] b) * x) =
@@ -317,7 +317,7 @@ theorem toLine_mul (b : B) (x : K ⊗[F] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul c y => simp [toLine]
-  | add x y hx hy => simp only [mul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]
 
 theorem map_pow_id {V : Type} [AddCommGroup V] [Module K V] [Module F V] [IsScalarTower F K V] (s : B →ₐ[F] B)
     (n : ℕ) : (AlgebraTensorModule.map (LinearMap.id : V →ₗ[K] V) s.toLinearMap : V ⊗[F] B →ₗ[K] V ⊗[F] B) ^ n =
@@ -347,7 +347,7 @@ theorem exists_dcris {G E D : Type} [Group G] [Field E] [Algebra F E] [Algebra E
   · induction w using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul x y => simp [φVB, mulVB, PD.φ_K₀]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · rw [mulVB, ← toLine_mul, hvc, map_smul]
   · rw [φVB, map_pow_id, ← toLine_map, h1, map_smul]
   · rw [hmem] at hw ⊢
@@ -357,7 +357,7 @@ theorem exists_dcris {G E D : Type} [Group G] [Field E] [Algebra F E] [Algebra E
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul x y => simp [φVB, actVB, PD.φ_comm]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · rw [hmem]
     intro g
     have h3 : actVB PD ρ g = (((χ g)⁻¹ : Kˣ) : K) •

@@ -65,7 +65,7 @@ theorem gauss_phase : ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (H : Sesq V
     intro x hx y hy
     have e : (H (B (x + y)) (x + y)).im + (H x y).im =
         (H (B x) x).im + (H (B y) y).im + 2 * (H (B x) y).im := by
-      simp only [map_add, LinearMap.add_apply, Complex.add_im, ← hadj x y]; ring
+      simp only [map_add (f := _), LinearMap.add_apply, Complex.add_im, ← hadj x y]; ring
     have e' := congrArg ex e
     rw [ex_add, ex_add, ex_add] at e'
     simp only [ph, hadd' x hx y hy]
@@ -91,7 +91,7 @@ theorem gauss_phase : ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (H : Sesq V
     rw [hph _ (hmem y hy) x hx, hphA y hy, hB2, hm, ex_two, one_mul, mul_one]
   let φ : Λ'.addSubgroupOf Λ →+ Λ := AddMonoidHom.mk'
     (fun y => ⟨((y : Λ) : V) - a ((y : Λ) : V), hmem _ y.2⟩)
-    (fun y z => Subtype.ext (by simp only [AddSubgroup.coe_add, map_add]; abel))
+    (fun y z => Subtype.ext (by simp only [AddSubgroup.coe_add, map_add (f := _)]; abel))
   have hφ : ∀ y, ((φ y : Λ) : V) = ((y : Λ) : V) - a ((y : Λ) : V) := fun _ => rfl
   have hinj : Function.Injective φ := by
     intro y z h
@@ -160,7 +160,7 @@ theorem gauss_phase : ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (H : Sesq V
       simp only [← QuotientAddGroup.mk_add, ← QuotientAddGroup.mk_zero, hf, AddSubgroup.coe_add,
         AddSubgroup.coe_zero]
       rw [hph _ (Λ.add_mem x.2 y.2) _ z.2, hph _ y.2 _ z.2, hph _ x.2 _ z.2, hph0]
-      simp only [map_add, LinearMap.add_apply, Complex.add_im, mul_add, ex_add]
+      simp only [map_add (f := _), LinearMap.add_apply, Complex.add_im, mul_add, ex_add]
       ring
 
 end GlobalTheory.UnitaryTheta.GaussPhase

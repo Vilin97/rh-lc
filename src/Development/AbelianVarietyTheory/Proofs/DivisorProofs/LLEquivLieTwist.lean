@@ -65,7 +65,7 @@ theorem exists_addEquiv {A R B M L Q : Type} [CommRing A] [CommRing R] [CommRing
     | add x y hx hy =>
       obtain ⟨m, rfl⟩ := hx
       obtain ⟨m', rfl⟩ := hy
-      exact ⟨m + m', by rw [map_add, tmul_add]⟩
+      exact ⟨m + m', by rw [map_add (f := _), tmul_add]⟩
   have h1 : ∀ m, F ((1 : B) ⊗ₜ[R] t m) = π m := fun m => by rw [← map_one q, hF, one_smul, hl]
   refine ⟨AddEquiv.ofBijective F ⟨(injective_iff_map_eq_zero _).2 fun z h => ?_, fun x => ?_⟩, hF⟩
   · obtain ⟨m, rfl⟩ := hz z
@@ -74,7 +74,7 @@ theorem exists_addEquiv {A R B M L Q : Type} [CommRing A] [CommRing R] [CommRing
     refine Submodule.smul_induction_on (p := fun x => (1 : B) ⊗ₜ[R] t x = 0) hm (fun a ha m _ => ?_)
       fun x y hx hy => ?_
     · rw [← hsm, hs, show ψ a = 0 from ha, map_zero, zero_mul, zero_tmul]
-    · rw [map_add, tmul_add, hx, hy, add_zero]
+    · rw [map_add (f := _), tmul_add, hx, hy, add_zero]
   · obtain ⟨m, rfl⟩ := hπ x
     exact ⟨_, h1 m⟩
 

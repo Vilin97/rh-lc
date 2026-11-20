@@ -30,7 +30,7 @@ theorem span_MK_eq_top_alt {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : F
     induction hg using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span (himg ▸ ⟨x, hx, rfl⟩)
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
   obtain ⟨n, b, hbW, -, -, -, hbL⟩ := p.fw.ks i
   rw [eq_top_iff, ← hbL, Submodule.span_le]

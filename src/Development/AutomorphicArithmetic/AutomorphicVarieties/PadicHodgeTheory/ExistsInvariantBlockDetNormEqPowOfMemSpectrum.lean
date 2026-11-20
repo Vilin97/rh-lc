@@ -14,7 +14,7 @@ private theorem aeval_mul_eq_mul_aeval_of_semiconj {K : Type} [Field K] {d r : �
     (q : Polynomial K) : Polynomial.aeval F q * Y = Y * Polynomial.aeval F' q := by
   induction q using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, map_add, Matrix.add_mul, Matrix.mul_add, hp, hq]
+    rw [map_add (f := _), map_add (f := _), Matrix.add_mul, Matrix.mul_add, hp, hq]
   | monomial n c =>
     have hpow : ∀ m : ℕ, F ^ m * Y = Y * F' ^ m := by
       intro m

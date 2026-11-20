@@ -156,7 +156,7 @@ theorem flatW' : FlatW'Statement p O := by
       have := p_mul_eq_zero _ (h1.symm.trans h2)
       linear_combination this
     refine ⟨Ideal.Quotient.mk I c, ?_⟩
-    rw [hpc, h3, map_add, map_mul, map_mul, hTI]
+    rw [hpc, h3, map_add (f := _), map_mul, map_mul, hTI]
     ring
   refine ⟨?_, ?_, hann, ?_⟩
   · apply le_antisymm

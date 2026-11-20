@@ -37,7 +37,7 @@ private theorem rho_add {p h o : ℕ} {A R : Type} [CommRing A] [CommRing R] [Al
     (k : C.ρ (1 ⊗ₜ s) = Submodule.Quotient.mk (Submodule.Quotient.mk y))
     (k' : C.ρ (1 ⊗ₜ s') = Submodule.Quotient.mk (Submodule.Quotient.mk y')) :
     C.ρ (1 ⊗ₜ (s + s')) = Submodule.Quotient.mk (Submodule.Quotient.mk (y + y')) := by
-  rw [TensorProduct.tmul_add, map_add, k, k']; rfl
+  rw [TensorProduct.tmul_add, map_add (f := _), k, k']; rfl
 
 private theorem rho_zero {p h o : ℕ} {A R : Type} [CommRing A] [CommRing R] [Algebra A R] {π : R} {γ : ℕ → R}
     {Lie Om : Type} [AddCommGroup Lie] [Module R Lie] [AddCommGroup Om] [Module A Om]
@@ -105,9 +105,9 @@ theorem rUp_of_le : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuatio
     obtain ⟨x, y, h1, h2, h3⟩ := ih
     obtain ⟨x', y', h1', h2', h3'⟩ := ih'
     refine ⟨x + x', y + y', ?_, ?_, ?_⟩
-    · rw [map_add, map_add, ← h1, ← h1']; rfl
+    · rw [map_add (f := _), map_add (f := _), ← h1, ← h1']; rfl
     · exact rho_add _ s s' y y' h2 h2'
-    · rw [map_add, map_add, map_add, h3, h3']
+    · rw [map_add (f := _), map_add (f := _), map_add (f := _), h3, h3']
 
 end GlobalTheory.ChainDesc
 

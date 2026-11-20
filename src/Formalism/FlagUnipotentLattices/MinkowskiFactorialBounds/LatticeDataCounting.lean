@@ -294,7 +294,7 @@ theorem dualGen_span (h : U →ₗ[E] U →ₗ⋆[E] E) (M N : Submodule (𝓞 E
   obtain ⟨a, ha, y, hy, rfl⟩ := Submodule.mem_sup.mp (hM hm)
   obtain ⟨b, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun (𝓞 E)).mp hy
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum]
+    rw [map_add (f := _), map_sum]
   refine (algebraMap (𝓞 E) E).range.add_mem (hx'N a ha) (Subring.sum_mem _ fun i _ => ?_)
   rw [← algebraMap_smul E (b i) (s i), LinearMap.map_smulₛₗ, starRingEnd_apply, smul_eq_mul]
   exact (algebraMap (𝓞 E) E).range.mul_mem (star_mem (b i)) (hφx' i)

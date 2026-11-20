@@ -58,7 +58,7 @@ theorem evalV_hyb (S : Finset (HeightOneSpectrum (𝓞 F))) (y g : Af F) (u : He
     evalV F u (hyb S y g) = if u ∈ S then evalV F u y else evalV F u g := by
   unfold hyb
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum]
+    rw [map_add (f := _), map_sum]
   split_ifs with hu
   · rw [Finset.sum_eq_single u (fun v _ hv => evalV_singleFin_ne (Ne.symm hv) _) (fun h => absurd hu h),
       evalV_singleFin_self]

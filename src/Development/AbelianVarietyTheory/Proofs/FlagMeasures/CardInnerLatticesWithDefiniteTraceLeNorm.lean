@@ -101,13 +101,13 @@ theorem count (T : ℕ) (hT : T ≠ 0) (hz : H.B z z = -(T : K)) (M₁ : Submodu
       have h4 : m = (m - a • y₁) + (algebraMap (𝓞 K) K a) • y₁ := by rw [algebraMap_smul]; abel
       generalize m - a • y₁ = m₀ at h2 h3 h4
       rw [h4]
-      simp only [map_add, LinearMap.add_apply, map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, h3, e₁',
+      simp only [map_add (f := _), LinearMap.add_apply, map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, h3, e₁',
         smul_eq_mul]
       convert h2 using 1
       ring
     obtain ⟨a, ha⟩ := Submodule.mem_one.1 (h₁.int hm h₁.z_mem)
     refine ⟨y, -H.B y y₁, a, fun _ => ⟨hy, e, hm, ?_⟩⟩
-    rw [ha, map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, e, hz, smul_eq_mul]
+    rw [ha, map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, e, hz, smul_eq_mul]
     ring
   choose y u a hyu using key
   let I : Ideal (𝓞 K) := Ideal.span {(T : 𝓞 K)}

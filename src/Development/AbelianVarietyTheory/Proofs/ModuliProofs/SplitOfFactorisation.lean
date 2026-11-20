@@ -396,7 +396,7 @@ theorem finrank_K_le : Module.finrank ℚ (hostTo H).K ≤ 2 := by
   have hm : (Polynomial.X ^ 2 + Polynomial.C (H.d : ℚ)).Monic := by monicity!
   have := minpoly.min ℚ (H.rt : E) hm (by
     have := (hostTo H).s_sq
-    simp only [map_add, map_pow, Polynomial.aeval_X, map_natCast]
+    simp only [map_add (f := _), map_pow, Polynomial.aeval_X, map_natCast]
     exact add_eq_zero_iff_eq_neg.2 this)
   rw [Polynomial.degree_X_pow_add_C two_pos] at this
   exact Polynomial.natDegree_le_iff_degree_le.2 this

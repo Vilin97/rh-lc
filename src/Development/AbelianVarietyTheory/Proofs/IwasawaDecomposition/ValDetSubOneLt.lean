@@ -92,7 +92,7 @@ theorem val_le_of_mem_hatL (P : HeightOneSpectrum (𝓞 E)) {y : Fin n → AfE F
     exact P.valuation_le_one r
   | zero => simp
   | add a b _ _ ha hb =>
-    rw [Pi.add_apply, map_add]
+    rw [Pi.add_apply, map_add (f := _)]
     exact Valuation.map_add_le _ ha hb
   | smul c a _ ha =>
     show Valued.v (adAt F P (c.1 * a i)) ≤ 1

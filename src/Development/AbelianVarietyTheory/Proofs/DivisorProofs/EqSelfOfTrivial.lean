@@ -97,7 +97,7 @@ theorem _root_.GlobalTheory.LatticeRep.IsLatRep.fix_of_map_le (h : _root_.Global
 theorem IsLatRep.eq_self_of_trivial (h : IsLatSystem σ w γ W lam A ρ) (hO : IsLatRep W lam A ρ Om) {g : Γ}
     (hg : ∀ x, ρ g x = x) (m : M) : Om g m = m := by
   refine transl_induction h.2.2.2.1 (p := fun m => Om g m = m) (fun x v hv => ?_) (map_zero _)
-    (fun a b ha hb => by rw [map_add, ha, hb]) (fun c a ha => by rw [map_smul, ha]) m
+    (fun a b ha hb => by rw [map_add (f := _), ha, hb]) (fun c a ha => by rw [map_smul, ha]) m
   rw [hO.1, hg, hO.fix_of_map_le h _ hv]
   rintro _ ⟨a, ha, rfl⟩
   rw [hg]; exact ha
@@ -134,7 +134,7 @@ theorem _root_.GlobalTheory.LatticeRep.IsLatRep.comm (h : _root_.GlobalTheory.La
     unfold _root_.GlobalTheory.FinWeil.normOp
     rw [map_smul, map_sumOp_of_commute φ (h.2.2.2.2.2 g) hφ]
   · simp
-  · simp only [map_add, ha, hb]
+  · simp only [map_add (f := _), ha, hb]
   · simp only [map_smul, ha]
 
 theorem IsLatRep.exists_stab (h : IsLatSystem σ w γ W lam A ρ) (hO : IsLatRep W lam A ρ Om) (m : M) :
@@ -150,7 +150,7 @@ theorem IsLatRep.exists_stab (h : IsLatSystem σ w γ W lam A ρ) (hO : IsLatRep
   · obtain ⟨s, hs, h1⟩ := ha
     obtain ⟨t, ht, h2⟩ := hb
     exact ⟨s ∪ t, hs.union ht, fun g hg hx => by
-      rw [map_add, h1 g hg fun x hx' => hx x (Or.inl hx'), h2 g hg fun x hx' => hx x (Or.inr hx')]⟩
+      rw [map_add (f := _), h1 g hg fun x hx' => hx x (Or.inl hx'), h2 g hg fun x hx' => hx x (Or.inr hx')]⟩
   · obtain ⟨s, hs, h1⟩ := ha
     exact ⟨s, hs, fun g hg hx => by rw [map_smul, h1 g hg hx]⟩
 

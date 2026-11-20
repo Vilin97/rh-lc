@@ -37,19 +37,19 @@ theorem conjugation_involutive (σ : E →ₐ[F] E) (hσ : IsConjOf σ) (R : Typ
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul e r => rw [tensor_conjugation_tmul, tensor_conjugation_tmul, hσ.2.1]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem add_conjugation_mem_range (σ : E →ₐ[F] E) (hσ : IsConjOf σ) (R : Type) [CommRing R] [Algebra F R] (z : E ⊗[F] R) :
     z + sigR σ R z ∈ (Algebra.TensorProduct.includeRight : R →ₐ[F] E ⊗[F] R).range := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul e r =>
-    obtain ⟨a, ha⟩ := hσ.2.2 (e + σ e) (by rw [map_add, hσ.2.1, add_comm])
+    obtain ⟨a, ha⟩ := hσ.2.2 (e + σ e) (by rw [map_add (f := _), hσ.2.1, add_comm])
     refine ⟨a • r, ?_⟩
     show (1 : E) ⊗ₜ[F] (a • r) = e ⊗ₜ[F] r + sigR σ R (e ⊗ₜ[F] r)
     rw [tensor_conjugation_tmul, ← TensorProduct.add_tmul, ← ha, ← TensorProduct.smul_tmul, Algebra.algebraMap_eq_smul_one]
   | add x y hx hy =>
-    have : x + y + sigR σ R (x + y) = (x + sigR σ R x) + (y + sigR σ R y) := by rw [map_add]; ring
+    have : x + y + sigR σ R (x + y) = (x + sigR σ R x) + (y + sigR σ R y) := by rw [map_add (f := _)]; ring
     rw [this]; exact add_mem hx hy
 
 theorem conjugation_fixed_mem_range [CharZero F] (σ : E →ₐ[F] E) (hσ : IsConjOf σ) (R : Type) [CommRing R] [Algebra F R]
@@ -80,7 +80,7 @@ theorem hilbert90_quadratic_field (σ : E →ₐ[F] E) (hσ : IsConjOf σ) (d : 
     have : d = -1 := by linear_combination h
     rw [hθ, this]; ring
   · refine ⟨1 + d, h, ?_⟩
-    rw [map_add, map_one]
+    rw [map_add (f := _), map_one]
     linear_combination -hd
 
 end Gen
@@ -228,7 +228,7 @@ theorem adele_conjugation_involutive (σ : E →ₐ[F] E) (h : ∀ e, σ (σ e) 
   · intro e a
     rw [conjugation_tmul, conjugation_tmul, h]
   · intro x y hx hy
-    rw [map_add, map_add, hx, hy]
+    rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem adele_trace_from_base (σ : E →ₐ[F] E) (h : ∀ e, σ (σ e) = e)
     (hf : ∀ e, σ e = e → ∃ a : F, algebraMap F E a = e) (z : AfE F E) :
@@ -236,14 +236,14 @@ theorem adele_trace_from_base (σ : E →ₐ[F] E) (h : ∀ e, σ (σ e) = e)
   induction z using TensorProduct.induction_on with
   | zero => exact ⟨0, by simp⟩
   | tmul e a =>
-    obtain ⟨c, hc⟩ := hf (e + σ e) (by rw [map_add, h, add_comm])
+    obtain ⟨c, hc⟩ := hf (e + σ e) (by rw [map_add (f := _), h, add_comm])
     refine ⟨c • a, ?_⟩
     rw [conjugation_tmul, ← TensorProduct.add_tmul, ← hc, TensorProduct.tmul_smul, TensorProduct.smul_tmul',
       Algebra.algebraMap_eq_smul_one]
   | add x y hx hy =>
     obtain ⟨s, hs⟩ := hx
     obtain ⟨t, ht⟩ := hy
-    exact ⟨s + t, by rw [TensorProduct.tmul_add, hs, ht, map_add]; ring⟩
+    exact ⟨s + t, by rw [TensorProduct.tmul_add, hs, ht, map_add (f := _)]; ring⟩
 
 theorem finite_adele_is_unit (a : 𝔸) (h0 : ∀ v, a v ≠ 0)
     (h1 : ∀ᶠ v : HeightOneSpectrum (𝓞 F) in Filter.cofinite, Valued.v (a v) = 1) : IsUnit a := by
@@ -321,7 +321,7 @@ theorem unitary_one_mem_range_norm_quotient (σ : E →ₐ[F] E) (hσ : IsConjOf
       show evalV F v m = evalV F v ep * (2 + evalV F v T) +
         (1 - evalV F v ep) * (algebraMap F (v.adicCompletion F) (-D) * (2 - evalV F v T))
       rw [hmdef]
-      simp only [map_add, map_mul, map_sub, map_one, map_ofNat, AlgHom.commutes]
+      simp only [map_add (f := _), map_mul, map_sub, map_one, map_ofNat, AlgHom.commutes]
     rw [h1, hep]
     split_ifs <;> simp
   have h4 : ∀ v : HeightOneSpectrum (𝓞 F), (4 : v.adicCompletion F) ≠ 0 := by
@@ -385,14 +385,14 @@ theorem unitary_one_mem_range_norm_quotient (σ : E →ₐ[F] E) (hσ : IsConjOf
   obtain ⟨X, hX⟩ : ∃ X : AfE F E, X = p * (1 + Y) + (1 - p) * t * (1 - Y) := ⟨_, rfl⟩
   have hsX : sigR σ 𝔸 X = p * (1 + Y') - (1 - p) * t * (1 - Y') := by
     rw [hX]
-    simp only [map_add, map_mul, map_sub, map_one, hsp, hst, hsY]
+    simp only [map_add (f := _), map_mul, map_sub, map_one, hsp, hst, hsY]
     ring
   have hYX : Y * sigR σ 𝔸 X = X := by
     rw [hsX, hX]
     linear_combination (p + (1 - p) * t) * hYY
   have him : iR m = p * (2 + (Y + Y')) + (1 - p) * (-d * (2 - (Y + Y'))) := by
     rw [hmdef, hpdef, hddef, ← hT']
-    simp only [map_add, map_mul, map_sub, map_one, map_ofNat, map_neg]
+    simp only [map_add (f := _), map_mul, map_sub, map_one, map_ofNat, map_neg]
   have hXX : X * sigR σ 𝔸 X = iR m := by
     rw [him, hsX, hX]
     linear_combination ((1 + Y) * (1 + Y') - (-t * (1 + Y) * (1 - Y') + t * (1 - Y) * (1 + Y'))
@@ -437,7 +437,7 @@ def c_lat (x : (AfE F E)ˣ) : Submodule (𝓞 E) E where
   carrier := {e | ((x⁻¹ : (AfE F E)ˣ) : AfE F E) * ιE e ∈ RInt F E}
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_ofPred_eq, map_add, mul_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _), mul_add] at *
     exact add_mem ha hb
   zero_mem' := by
     simp only [Set.mem_ofPred_eq, map_zero, mul_zero]
@@ -537,7 +537,7 @@ theorem c_inv_pow_mem (x : (AfE F E)ˣ) (k : ℕ) : ∀ y ∈ (c_lat x) ^ k,
         rw [map_mul]; ring
       rw [this]; exact mul_mem (ih m hm) hn
     · intro a b ha hb
-      rw [map_add, mul_add]; exact add_mem ha hb
+      rw [map_add (f := _), mul_add]; exact add_mem ha hb
 
 theorem c_class (x : (AfE F E)ˣ) :
     ∃ e : Eˣ, x ^ Fintype.card (ClassGroup (𝓞 E)) * (ratId F E e)⁻¹ ∈ intU F E := by
@@ -853,7 +853,7 @@ theorem b_map_shape (I : Ideal (𝓞 E)) (D : 𝓞 F) (hD0 : D ≠ 0)
   | add x y _ _ hx hy =>
     obtain ⟨c, hc, t, rfl⟩ := hx
     obtain ⟨c', hc', t', rfl⟩ := hy
-    exact ⟨c + c', I.add_mem hc hc', t + t', by rw [map_add]; ring⟩
+    exact ⟨c + c', I.add_mem hc hc', t + t', by rw [map_add (f := _)]; ring⟩
   | smul a x _ hx =>
     obtain ⟨c, hc, t, rfl⟩ := hx
     obtain ⟨b, t', rfl⟩ := b_approx D hD0 a
@@ -966,7 +966,7 @@ theorem b_mkU_supp (v : HeightOneSpectrum (𝓞 F)) (b : 𝓞 E) (u : (RInt F E)
   show prV (E := E) v' ((u : RInt F E) : AfE F E) = 1
   rw [hu]
   show prV (E := E) v' (((toRInt F E b : RInt F E) : AfE F E) * afsplitEps E v + (1 - afsplitEps E v)) = 1
-  rw [map_add, map_mul, map_sub, afsplit_prV_eps_ne v v' hv', mul_zero, map_one, sub_zero, zero_add]
+  rw [map_add (f := _), map_mul, map_sub, afsplit_prV_eps_ne v v' hv', mul_zero, map_one, sub_zero, zero_add]
 
 theorem b_exists_mul (v : HeightOneSpectrum (𝓞 F)) (b : 𝓞 E)
     (hb : ∀ P : HeightOneSpectrum (𝓞 E), P.asIdeal.under (𝓞 F) = v.asIdeal → b ∉ P.asIdeal) :
@@ -1675,7 +1675,7 @@ theorem d_finrank_of_conj {F E : Type} [Field F] [CharZero F] [Field E] [Algebra
     rw [hf] at hab
     have hab' : algebraMap F E a - b • θ = 0 := by
       have := congrArg σ hab
-      rw [map_add, map_smul, hσθ, AlgHom.commutes, map_zero, smul_neg] at this
+      rw [map_add (f := _), map_smul, hσθ, AlgHom.commutes, map_zero, smul_neg] at this
       rw [sub_eq_add_neg]
       exact this
     have ha : algebraMap F E a = 0 := by
@@ -1688,7 +1688,7 @@ theorem d_finrank_of_conj {F E : Type} [Field F] [CharZero F] [Field E] [Algebra
     rfl
   have hsurj : Function.Surjective f := by
     intro e
-    obtain ⟨a, ha⟩ := hfix (e + σ e) (by rw [map_add, hinv]; ring)
+    obtain ⟨a, ha⟩ := hfix (e + σ e) (by rw [map_add (f := _), hinv]; ring)
     obtain ⟨b, hb⟩ := hfix ((e - σ e) / θ) (by
       rw [map_div₀, map_sub, hinv, hσθ, div_neg, ← neg_div, neg_sub])
     refine ⟨(a / 2, b / 2), ?_⟩

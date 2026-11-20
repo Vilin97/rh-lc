@@ -234,7 +234,7 @@ def evHom (I : ∀ k, Finset (ι k)) (hI : NonzeroOn y I) :
         have hs0 := aeval_ne_zero_of_mem hI s.2
         have hs0' := aeval_ne_zero_of_mem hI s'.2
         rw [LocalizedModule.mk_add_mk, ev_mk, ev_mk, ev_mk]
-        simp only [Submonoid.smul_def, map_add, evQ_smul, Submonoid.coe_mul, map_mul]
+        simp only [Submonoid.smul_def, map_add (f := _), evQ_smul, Submonoid.coe_mul, map_mul]
         field_simp
 
 theorem evHom_mk (I : ∀ k, Finset (ι k)) (hI : NonzeroOn y I) (m : MRingOver ℚ ι ⧸ KH.genIdeal y)

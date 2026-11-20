@@ -48,7 +48,7 @@ theorem eid (hC : CupLaws) (hS : Slant) (P : HTPre l K) {M : Model l K} (hM : M.
       simp [th]
     rw [split, map_sub, sub_eq_zero, Dt.dec] at hk
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, AddMonoidHom.add_apply, AddMonoidHom.finsetSum_apply] at hk
+      simp only [map_add (f := _), map_sum, AddMonoidHom.add_apply, AddMonoidHom.finsetSum_apply] at hk
     have e1 : ∀ s, P.h Dt.S.P A (2 + 2 * d) (Dt.S.P.toV (2 + 2 * d) (Dt.ab₀ s)) (th hC Dt.S sl ψ (Dt.S.pl₁ a' n x)) =
         if h : 0 = n then kap hC P x φ' (Dt.a₀ s) * P.h M β n (M.toV n (castT h (Dt.b₀ s))) ψ else 0 :=
       fun s => t1 hC P hM Dt.S x hA φ' ψ sl hsl' (Dt.a₀ s) (Dt.b₀ s) (Dt.ab₀ s) (Dt.cup₀ s) rfl

@@ -17,7 +17,7 @@ theorem UpperTheory.V.Th.Coc.liftConj :
     rw [hρ, hbm, hbm]
   set P := bar X (Q : Matrix (Fin n) (Fin n) O) with hPdef
   set Pi := bar X ((Q⁻¹ : GL (Fin n) O) : Matrix (Fin n) (Fin n) O) with hPidef
-  refine ⟨AddMonoidHom.mk' (fun a => P * d a * Pi) (fun a b => by rw [map_add, mul_add, add_mul]), ?_, fun a => rfl⟩
+  refine ⟨AddMonoidHom.mk' (fun a => P * d a * Pi) (fun a b => by rw [map_add (f := _), mul_add, add_mul]), ?_, fun a => rfl⟩
   constructor
   · intro a b
     simp only [AddMonoidHom.mk'_apply]

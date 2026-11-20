@@ -74,7 +74,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.lieLift :
     rw [this, neg_one_smul, sub_eq_add_neg]
   have hlhs : (lie E 2 (Y + zE s) Φ).1 h = lift W M f.1 (O.dL D Y φ) h +
       lift W M (TR.lie F 2 (zF (trI F s)) f).1 φ h := by
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     change (lie E 2 Y Φ).1 h + (lie E 2 (zE s) Φ).1 h = _
     rw [hL, hZ]
   rw [hlhs, e1, ladd f hf _ hd _ (Submodule.smul_mem _ _ hS), lsmul, sumP _ _ _ (fun τ => hh _), e2,
@@ -83,7 +83,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.lieLift :
   have hHh : ∀ w, lift W M f.1 (O.h w φ) h =
       -(lift W M (TR.Eop w 0 0 f).1 φ h - lift W M (TR.Eop w 1 1 f).1 φ h) := fun w => by
     rw [hH w h, eMinus]; rfl
-  simp only [hHh, map_add, add_mul, Finset.mul_sum]
+  simp only [hHh, map_add (f := _), add_mul, Finset.mul_sum]
   rw [add_assoc, ← Finset.sum_add_distrib]
   congr 1
   refine Finset.sum_congr rfl fun τ _ => ?_

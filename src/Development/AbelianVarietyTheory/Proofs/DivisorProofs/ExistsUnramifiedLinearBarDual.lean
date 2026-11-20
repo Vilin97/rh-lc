@@ -91,7 +91,7 @@ theorem transfer : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field 
     intro g φ hφ φ' hφ' c
     have hm : c • φ + φ' ∈ SB (Fin a' × Fin (a + a') → Fv F v) := Submodule.add_mem _ (Submodule.smul_mem _ c hφ) hφ'
     apply eqR
-    rw [← hSR g _ hm, tensLin, map_add, map_smul, hSR g φ hφ, hSR g φ' hφ', tensLin]
+    rw [← hSR g _ hm, tensLin, map_add (f := _), map_smul, hSR g φ hφ, hSR g φ' hφ', tensLin]
   have h2 : ∀ g g', ∀ φ ∈ SB (Fin a' × Fin (a + a') → Fv F v), S (g * g') φ = S g (S g' φ) := by
     intro g g' φ hφ
     apply eqR
@@ -171,7 +171,7 @@ theorem transfer : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field 
       have hι₂' : G.M'.IsLinBar B'.ψ B'.τ₁ 1 1 ι₂ := hι₂
       obtain ⟨hT₂, hM₂, -, -⟩ := hA ι₂ hι₂'
       obtain ⟨c, hc⟩ := GlobalTheory.T.eq_smul_of_commute_heisenberg_linearModel_schwartzBruhat (SB (Fin a' × Fin (a + a') → Fv F v)) (GlobalTheory.LatVac.psiAt B'.ψ B'.v₁) hψc hψ1 ι₂ ι
-        hι₂.bij (fun x _ y _ c => by rw [map_add, map_smul])
+        hι₂.bij (fun x _ y _ c => by rw [map_add (f := _), map_smul])
         (fun C => GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt B'.ψ B'.v₁) (wT C))
         (fun l => GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt B'.ψ B'.v₁) (wM l))
         (fun C x hx => ⟨GlobalTheory.T.schrodinger_preserves_schwartz_bruhat B.ψ hT.base.std.1 v _ x hx, hT₂ C x hx, hTι C x hx⟩)

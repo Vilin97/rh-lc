@@ -226,7 +226,7 @@ def cols {V : Type} [AddCommGroup V] [Module ℂ V] (Kl : Subgroup ↥(Hp (Af F)
   carrier := {φ | ∀ (γ : ↥(HF σ J P f)) (x : ↥(Hp (Af F) σ J P f)) (κ : ↥Kl),
     φ (ratH (Af F) σ J P f γ * x * κ) = (((ψ κ)⁻¹ : ℂˣ) : ℂ) • π (ratH (Ainf F) σ J P f γ) (φ x)}
   zero_mem' := fun γ x κ => by simp
-  add_mem' := fun {a b} ha hb γ x κ => by simp only [Pi.add_apply, ha γ x κ, hb γ x κ, map_add, smul_add]
+  add_mem' := fun {a b} ha hb γ x κ => by simp only [Pi.add_apply, ha γ x κ, hb γ x κ, map_add (f := _), smul_add]
   smul_mem' := fun c a ha γ x κ => by
     simp only [Pi.smul_apply, ha γ x κ, map_smul]; rw [smul_comm]
 

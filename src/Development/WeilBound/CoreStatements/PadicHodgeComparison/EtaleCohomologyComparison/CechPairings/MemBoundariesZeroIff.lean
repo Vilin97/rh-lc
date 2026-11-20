@@ -115,8 +115,8 @@ noncomputable def dZ (f : Cx.Hom K L (RingHom.id R)) (g : Cx.Hom L M (RingHom.id
     have c₁ := conn_cyc f hf _ _ h₁
     have c₂ := conn_cyc f hf _ _ h₂
     rw [dfun_spec f g hf hfg hg _ _ y₁ x₁ c₁ e₁ h₁, dfun_spec f g hf hfg hg _ _ y₂ x₂ c₂ e₂ h₂,
-      dfun_spec f g hf hfg hg _ _ (y₁ + y₂) (x₁ + x₂) (by rw [map_add, c₁, c₂, add_zero])
-        (by rw [map_add, e₁, e₂]; rfl) (by rw [map_add, map_add, h₁, h₂])]
+      dfun_spec f g hf hfg hg _ _ (y₁ + y₂) (x₁ + x₂) (by rw [map_add (f := _), c₁, c₂, add_zero])
+        (by rw [map_add (f := _), e₁, e₂]; rfl) (by rw [map_add (f := _), map_add (f := _), h₁, h₂])]
     rfl
   map_smul' r m := by
     obtain ⟨y, x, e, h⟩ := lift_ex f g hfg hg m.1 m.2
@@ -409,7 +409,7 @@ theorem CrystallineSemistableComparison.P.res_2of3 : ∀ {R : Type} [CommRing R]
     obtain ⟨a0, ha0'⟩ := ka2 k hkc
     have e1 : b (i a0) = s • (s • y - b x') := by rw [hab, ha0', map_smul, hk]
     refine ⟨s • i a0 + s • s • x', ?_⟩
-    simp only [map_add, map_smul]
+    simp only [map_add (f := _), map_smul]
     rw [e1, pow3, smul_sub, smul_sub, sub_add_cancel]
   · have hMk := (kill_iff _ _).1 (mc3 n) (g.mapH (n + 1) z)
     rw [← map_smul (g.mapH (n + 1))] at hMk

@@ -127,7 +127,7 @@ theorem lTensor_injective_of {M N : Type} [AddCommGroup M] [Module R M] [AddComm
       obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective a
       rw [LinearMap.lTensor_tmul, TensorProduct.quotTensorEquivQuotSMul_mk_tmul,
         TensorProduct.quotTensorEquivQuotSMul_mk_tmul, Submodule.mapQ_apply, map_smul]
-    | add s t hs ht => rw [map_add, map_add, hs, ht, map_add, map_add]
+    | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht, map_add (f := _), map_add (f := _)]
   intro s t hst
   apply eM.injective
   apply hq

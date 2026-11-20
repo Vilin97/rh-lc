@@ -101,7 +101,7 @@ theorem toGAd_mem_infPts (hσ : ∀ x, σ (σ x) = x) {d : ℕ} (W : Spc F E d) 
       ((show AF F from ((0, 1) : Ainf F × Af F)) • z) = Algebra.TensorProduct.map (sndA F) (AlgHom.id F E) z := fun z => by
     induction z using TensorProduct.induction_on with
     | zero => rw [smul_zero]
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy]
     | tmul a b =>
       rw [TensorProduct.smul_tmul', Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, smul_eq_mul, map_mul]
       exact congrArg (· ⊗ₜ[F] _) (one_mul _)

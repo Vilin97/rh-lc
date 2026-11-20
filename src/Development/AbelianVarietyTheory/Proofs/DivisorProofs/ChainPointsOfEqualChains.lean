@@ -45,7 +45,7 @@ theorem exists_chain_parts {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValua
     fun τ M hM => GlobalTheory.T.idempotent_decomposition_dual_basis b ev cf hev hcard' τ M hM
   have hP := fun τ => GlobalTheory.T.idempotent_projection_functor_linear_exact (fun k => B.const (cf τ k)) b (hidem τ)
   have hc : ∀ τ k, ∃ v : Γ(B.X, ⊤), B.const (cf (φ τ) k) = B.const (cf τ k) ^ p + p * v := fun τ k =>
-    (hfr τ k).elim fun v e => ⟨B.const v, by rw [e]; simp only [Model.const, map_add, map_pow, map_mul, map_natCast]⟩
+    (hfr τ k).elim fun v e => ⟨B.const v, by rw [e]; simp only [Model.const, map_add (f := _), map_pow, map_mul, map_natCast]⟩
   obtain ⟨Ch, -, -, hCh⟩ := GlobalTheory.T.exact_functor_equivariant_chain p Q φ (fun τ => partF (fun k => B.const (cf τ k)) b)
     (fun τ M g _ => (hP τ).1 M g) (fun τ => (hP τ).2.1) (fun τ _ _ f hM hN => (hP τ).2.2.1 f hM hN)
     (fun τ E => GlobalTheory.T.idempotent_projection_vector_bundle_rank (fun k => B.const (cf τ k)) b (hidem τ) E)

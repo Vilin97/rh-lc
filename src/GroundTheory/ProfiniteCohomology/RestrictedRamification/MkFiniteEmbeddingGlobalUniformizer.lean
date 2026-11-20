@@ -172,7 +172,7 @@ theorem placeInv_gsLocalRes_of_bock (t : sInvariantSubgroup ℚ̄ S)
           ((t : (maxUnramifiedOutside K.1 ℚ̄ S)ˣ) ^ bockInt (zmodCocycleHom z) g h)⁻¹) +
         bockInt (zmodCocycleHom z) g h • Additive.ofMul (t : (maxUnramifiedOutside K.1 ℚ̄ S)ˣ) := by
       rw [← ofMul_zpow, ← ofMul_mul, inv_mul_cancel_right, ofMul_toMul]
-    rw [e, map_add, map_zsmul, ordEmb_eq_zero_of_mem S ι hv hu, zero_add, ordEmb_eq_ordAbove S ι hv _ t.2,
+    rw [e, map_add (f := _), map_zsmul, ordEmb_eq_zero_of_mem S ι hv hu, zero_add, ordEmb_eq_ordAbove S ι hv _ t.2,
       smul_eq_mul]
   have hbv : ordEmb S ι hv (Additive.ofMul (Units.map (algebraMap K.1 (maxUnramifiedOutside K.1 ℚ̄ S)).toMonoidHom
       (globalUniformizer v ^ ordAbove S v (t : (maxUnramifiedOutside K.1 ℚ̄ S)ˣ)))) =

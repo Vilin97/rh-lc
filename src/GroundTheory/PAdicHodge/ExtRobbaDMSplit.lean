@@ -74,7 +74,7 @@ def bigPart (θ : ℝ) (b : T.B) : T.B :=
   algebraMap Γ T.B (T.splitB θ (T.num b)) * IsLocalization.Away.invSelf T.π ^ T.den b
 
 theorem smallPart_add_bigPart (θ : ℝ) (b : T.B) : T.smallPart θ b + T.bigPart θ b = b := by
-  rw [smallPart, bigPart, ← add_mul, ← map_add, T.splitS_add_splitB, ← T.eq_num_mul]
+  rw [smallPart, bigPart, ← add_mul, ← map_add (f := _), T.splitS_add_splitB, ← T.eq_num_mul]
 
 theorem mul_pow_eq_of_invSelf {x : Γ} (N : ℕ) :
     (algebraMap Γ T.B x * IsLocalization.Away.invSelf T.π ^ N) * algebraMap Γ T.B T.π ^ N =

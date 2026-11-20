@@ -49,7 +49,7 @@ theorem vol_inv (H1 : Out.Laws) (H2 : Out.Laws2) (K : Type) [Field K] [IsAlgClos
   have hc := cls_graphLB P.isLB _ N hB
   rw [← hs] at hc
   refine ⟨(cls_eq_iff hB (pull_isLB hB _)).1 ?_, fun e he => ?_⟩
-  · rw [cls_pull hB, hc, map_add, map_nsmul, ← hs]
+  · rw [cls_pull hB, hc, map_add (f := _), map_nsmul, ← hs]
   · have h0 : SectionsHaveFiniteDimension P.A.hom (lbPow P.L (N * 2 * e)) ((N * 2 * e) ^ P.g) :=
       GlobalTheory.PowSec.exists_basis_sections H1.globalSectionsRank K P (N * 2 * e) (Nat.succ_le_of_lt (by positivity))
     rw [← mul_pow]

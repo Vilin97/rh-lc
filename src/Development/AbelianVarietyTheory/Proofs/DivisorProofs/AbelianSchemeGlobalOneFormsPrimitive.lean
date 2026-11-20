@@ -33,7 +33,7 @@ theorem primF_of_abelian (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (g
     obtain ⟨h1, h2, -, h4, h5, -⟩ := hax a
     obtain ⟨k1, k2, -, k4, k5, -⟩ := hax b
     have hf : f (a, b) = pF (fst A A) a + pF (snd A A) b := by simp [f]
-    rw [hr, hf, map_add, map_add, h1, k2, h4, k5, add_zero, zero_add]
+    rw [hr, hf, map_add (f := _), map_add (f := _), h1, k2, h4, k5, add_zero, zero_add]
   have hbij := GlobalTheory.T.bijective_of_split_injective_fgProjectiveConstantRank R _ _ (g + g) hM hN f r hrf
   have hrinj : Function.Injective r := by
     intro y y' h

@@ -71,9 +71,9 @@ theorem Pi_comp (H : D.Hyp) {S S' : (n → A) →ₗ[A] (n → A)} (hS : ∀ a, 
     (hS' : D.FixEZ S') (hU' : D.Uni S') (v : n → A) :
     D.Pi S (D.Pi S' v) = D.Pi (S ∘ₗ S') v := by
   have h1 : D.pU (D.Pi S' v) = D.pU v := by
-    rw [Pi_apply, map_add, pU_pU H, pU_of_isW (isW_pW H _), add_zero]
+    rw [Pi_apply, map_add (f := _), pU_pU H, pU_of_isW (isW_pW H _), add_zero]
   have h2 : D.pW (D.Pi S' v) = D.pW (S' (D.pW v)) := by
-    rw [Pi_apply, map_add, pW_pU H, pW_pW H, zero_add]
+    rw [Pi_apply, map_add (f := _), pW_pU H, pW_pW H, zero_add]
   rw [Pi_apply D S, h1, h2, complement_proj_image hS' hU' (isW_pW H v), map_sub, S_pX hS, map_sub, pW_pX H,
     sub_zero, Pi_apply]
   rfl
@@ -118,9 +118,9 @@ theorem Pi_uni (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ S) 
       h_pX_left (he hw'), h_pX_left (fun b => h_e_pX H b _), h_pX_right H (he hw), hU]
     ring
   have hp : ∀ v, D.pU (D.Pi S v) = D.pU v := fun v => by
-    rw [Pi_apply, map_add, pU_pU H, pU_of_isW (isW_pW H _), add_zero]
+    rw [Pi_apply, map_add (f := _), pU_pU H, pU_of_isW (isW_pW H _), add_zero]
   have hq : ∀ v, D.pW (D.Pi S v) = D.pW (S (D.pW v)) := fun v => by
-    rw [Pi_apply, map_add, pW_pU H, pW_pW H, zero_add]
+    rw [Pi_apply, map_add (f := _), pW_pU H, pW_pW H, zero_add]
   rw [h_dec H (D.Pi S x), hp, hp, hq, hq, hW _ _ (isW_pW H x) (isW_pW H y), ← h_dec H]
 
 theorem Pi_of_fix (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ S)
@@ -139,7 +139,7 @@ theorem Pi_of_fix (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ 
     rw [pU_apply, a1, a2, a3]; rfl
   have h2 : S (D.pU v) = D.pU v := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [pU_apply, map_add, map_add, S_pX hS.1, pXv_apply, pz_apply, map_sum, map_smul, hS.2]
+      rw [pU_apply, map_add (f := _), map_add (f := _), S_pX hS.1, pXv_apply, pz_apply, map_sum, map_smul, hS.2]
     simp only [map_smul, hf]
   have h3 : S (D.pW v) = S v - D.pU v := by rw [pW_apply, map_sub, h2]
   rw [Pi_apply, h3, pW_apply, map_sub, h1, pU_pU H]
@@ -152,7 +152,7 @@ theorem pW_span (H : D.Hyp) {x : n → A} (hx : x ∈ Submodule.span A (Set.rang
     obtain ⟨a, rfl⟩ := hy
     exact pW_e H a
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul c x _ hx => rw [map_smul, hx, smul_zero]
 
 theorem pX_mem_span (u : n → A) : D.pX u ∈ Submodule.span A (Set.range D.e) := by
@@ -165,7 +165,7 @@ theorem Pi_of_N (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)}
   have hw := isW_pW H v
   have h1 : D.pW (S (D.pW v)) = D.pW v := by
     have e1 : S (D.pW v) = D.pW v + (S (D.pW v) - D.pW v) := by abel
-    rw [e1, map_add, pW_pW H, pW_span H (hN _ hw.1), add_zero]
+    rw [e1, map_add (f := _), pW_pW H, pW_span H (hN _ hw.1), add_zero]
   rw [Pi_apply, h1, pW_apply]
   abel
 
@@ -175,10 +175,10 @@ theorem Pi_N_part (H : D.Hyp) {S Si : (n → A) →ₗ[A] (n → A)} (hS : D.Fix
     S (D.Pi Si v) - v ∈ Submodule.span A (Set.range D.e) := by
   have hw := isW_pW H v
   have hpU : S (D.pU v) = D.pU v := by
-    rw [pU_apply, map_add, map_add, S_pX hS.1, pXv_apply, pz_apply, map_smul, hS.2]
+    rw [pU_apply, map_add (f := _), map_add (f := _), S_pX hS.1, pXv_apply, pz_apply, map_smul, hS.2]
     simp [hv]
   have key : S (D.Pi Si v) - v = -D.pX (Si (D.pW v)) := by
-    rw [Pi_apply, complement_proj_image hSi hUi hw, map_add, map_sub, hSSi, S_pX hS.1, hpU, pW_apply]
+    rw [Pi_apply, complement_proj_image hSi hUi hw, map_add (f := _), map_sub, hSSi, S_pX hS.1, hpU, pW_apply]
     abel
   rw [key]
   exact Submodule.neg_mem _ (pX_mem_span _)

@@ -28,7 +28,7 @@ theorem pair_nondeg (l : ℕ) [Fact l.Prime] (c : Coef l) (n : ℕ) (b : Qn c n)
     { toFun := q
       map_add' := fun x y => by
         apply mul_left_cancel₀ hl
-        rw [← hq, mul_add, map_add, hq, hq, mul_add]
+        rw [← hq, mul_add, map_add (f := _), hq, hq, mul_add]
       map_smul' := fun r x => by
         apply mul_left_cancel₀ hl
         rw [← hq, mul_smul_comm, map_smul, hq, RingHom.id_apply, smul_eq_mul, smul_eq_mul]

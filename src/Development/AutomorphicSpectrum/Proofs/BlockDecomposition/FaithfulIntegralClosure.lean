@@ -134,7 +134,7 @@ theorem exists_den {R S L : Type*} [CommRing R] [CommRing S] [IsDomain S] [Field
   | add y z _ _ hy hz =>
     obtain ⟨y', hy'⟩ := hy
     obtain ⟨z', hz'⟩ := hz
-    exact ⟨y' + z', by rw [map_add, map_add, mul_add, hy', hz', map_add]⟩
+    exact ⟨y' + z', by rw [map_add (f := _), map_add (f := _), mul_add, hy', hz', map_add (f := _)]⟩
   | smul r y _ hy =>
     obtain ⟨y', hy'⟩ := hy
     obtain ⟨r', hr'⟩ := hE r
@@ -142,7 +142,7 @@ theorem exists_den {R S L : Type*} [CommRing R] [CommRing S] [IsDomain S] [Field
     have e1 : algebraMap S L (r • y) = algebraMap R L r * algebraMap S L y := by
       rw [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply]
     rw [e1, Derivation.leibniz, hr', smul_eq_mul, smul_eq_mul]
-    simp only [map_add, map_mul, ← IsScalarTower.algebraMap_apply, ← hy']
+    simp only [map_add (f := _), map_mul, ← IsScalarTower.algebraMap_apply, ← hy']
     ring
 
 section dvr2

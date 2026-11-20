@@ -18,7 +18,7 @@ theorem overK_of_sqrt {D : D7} (σ : D.what₂.LL →+* ℂ)
   induction hx' using IntermediateField.adjoin_induction with
   | mem x hx => rw [Set.mem_singleton_iff.1 hx]; exact h
   | algebraMap q => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   | inv x _ hx => rw [map_inv₀, map_inv₀, map_inv₀, hx]
   | mul x y _ _ hx hy => rw [map_mul, map_mul, map_mul, hx, hy]
 

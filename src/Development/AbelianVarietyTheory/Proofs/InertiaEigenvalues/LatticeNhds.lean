@@ -59,7 +59,7 @@ theorem as_one [Module.Flat Z O] (f : W →ₐ[Z] W) (h1 : ∀ y, ∃ b, f b - b
   have e : ∀ b, Algebra.TensorProduct.map (AlgHom.id O O) f b = f.toLinearMap.lTensor O b := fun b => by
     induction b using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     | tmul x y => rfl
   refine ⟨fun y => by simpa only [e] using k1 y, fun b hb => ?_⟩
   obtain ⟨x, rfl⟩ := k2 b (by rw [← e, hb])
@@ -67,7 +67,7 @@ theorem as_one [Module.Flat Z O] (f : W →ₐ[Z] W) (h1 : ∀ y, ∃ b, f b - b
   clear hb
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   | tmul x y =>
     rw [LinearMap.lTensor_tmul, TensorProduct.rid_tmul, Algebra.linearMap_apply,
       Algebra.algebraMap_eq_smul_one, ← TensorProduct.smul_tmul]
@@ -89,7 +89,7 @@ theorem as_two [Module.Flat Z O] [Module.Flat O P] (f : W →ₐ[Z] W) (h1 : ∀
   clear hb
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, TensorProduct.tmul_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), TensorProduct.tmul_add, hx, hy]
   | tmul x y =>
     rw [LinearMap.rTensor_tmul, TensorProduct.lid_tmul, Algebra.linearMap_apply,
       Algebra.algebraMap_eq_smul_one, TensorProduct.smul_tmul]
@@ -110,7 +110,7 @@ theorem cob_two [Module.Free Z O] [Module.Finite Z O] [Module.Free O P] [Module.
         (Algebra.TensorProduct.map (AlgHom.id O O) (a h) β) := fun g h β => by
     induction β using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul x y => simp [amul]
   refine avg_cob l 𝓕 (fun g β => Algebra.TensorProduct.map (AlgHom.id O O) (a g) β)
     (fun g => (TensorProduct.map (Algebra.TensorProduct.map (AlgHom.id O O) (a g)).toLinearMap
@@ -118,12 +118,12 @@ theorem cob_two [Module.Free Z O] [Module.Finite Z O] [Module.Free O P] [Module.
     (fun U hU => ?_) (fun g => (1 : O ⊗[Z] W) ⊗ₜ[O] c g) (fun g h => ?_) (fun r => ?_)
   · induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul x y => simp only [LinearMap.toAddMonoidHom_coe, TensorProduct.map_tmul,
         AlgHom.toLinearMap_apply, amul', ρmul]
   · induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
     | tmul x y => simp only [LinearMap.toAddMonoidHom_coe, TensorProduct.map_tmul,
         AlgHom.toLinearMap_apply, TensorProduct.smul_tmul', smul_eq_mul, map_mul]
   · obtain ⟨N, h1, h2, h3, S, h4, β, h5, h6⟩ := htr U hU

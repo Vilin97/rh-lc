@@ -61,9 +61,9 @@ theorem UpperTheory.exists_regular_parameters_of_reduced_quotient :
       obtain ⟨c2, h2⟩ := ihz hz1
       refine ⟨c1 + c2, ?_⟩
       have : ι ⟨y + z, hy⟩ = ι ⟨y, hy1⟩ + ι ⟨z, hz1⟩ := by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         rfl
-      rw [this, map_add, h1, h2, map_add]
+      rw [this, map_add (f := _), h1, h2, map_add (f := _)]
     | mul y z hy1 hz1 ihy ihz =>
       obtain ⟨c1, h1⟩ := ihy hy1
       obtain ⟨c2, h2⟩ := ihz hz1

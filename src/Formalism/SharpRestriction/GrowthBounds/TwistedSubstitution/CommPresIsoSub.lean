@@ -34,7 +34,7 @@ theorem E_pres_isoSub (a b : Fin n) (mu : Fin n → ℤ) : ∀ x ∈ isoSub E mu
     apply Submodule.subset_span
     exact ⟨E a b * u, umon_mul_E E u hu a b, v, hv, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ c hy
 
 theorem comm_pres_isoSub (A : Module.End K V) (hA : ∀ a b, A * E a b = E a b * A) (mu : Fin n → ℤ) :
@@ -65,7 +65,7 @@ theorem comm_pres_isoSub (A : Module.End K V) (hA : ∀ a b, A * E a b = E a b *
           simpa only [Module.End.mul_apply] using (congrArg (fun f => f v) (hA a b)).symm
         rw [hc, hv.2.2 a b hab, map_zero]
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ c hy
 
 theorem comm_isoProj (A : Module.End K V) (hA : ∀ mu, ∀ x ∈ isoSub E mu, A x ∈ isoSub E mu)

@@ -26,13 +26,13 @@ theorem eq_zero_of_add_mul_ii {x y : F}
       rw [map_div₀, map_neg, eq_div_iff hy']
       linear_combination h
     have h2 : algebraMap F (Ext F) ((-x / y) ^ 2 + 1) = 0 := by
-      rw [map_add, map_pow, ← hi, ii_sq, map_one]; ring
+      rw [map_add (f := _), map_pow, ← hi, ii_sq, map_one]; ring
     have h3 : (-x / y) ^ 2 + 1 = 0 := (map_eq_zero _).1 h2
     obtain ⟨τ⟩ : Nonempty (F →+* ℝ) := by
       obtain ⟨φ⟩ := (inferInstance : Nonempty (F →+* ℂ))
       exact ⟨(IsTotallyReal.complexEmbedding_isReal φ).embedding⟩
     have h4 := congrArg τ h3
-    rw [map_add, map_pow, map_one, map_zero] at h4
+    rw [map_add (f := _), map_pow, map_one, map_zero] at h4
     nlinarith [sq_nonneg (τ (-x / y))]
   refine ⟨?_, hy⟩
   rw [hy, map_zero, zero_mul, add_zero] at h

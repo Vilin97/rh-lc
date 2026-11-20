@@ -54,7 +54,7 @@ theorem rootFactor_mul_not (p : ℂ[X]) (hp : p.Monic) (Q : ℂ → Prop) :
     rootFactor p Q * rootFactor p (fun τ => ¬ Q τ) = p := by
   have h : ((p.roots.filter Q).map fun τ => X - C τ).prod *
       ((p.roots.filter fun τ => ¬ Q τ).map fun τ => X - C τ).prod = p := by
-    rw [← Multiset.prod_add, ← Multiset.map_add, Multiset.filter_add_not]
+    rw [← Multiset.prod_add, ← Multiset.map_add (f := _), Multiset.filter_add_not]
     exact prod_multiset_X_sub_C_of_monic_of_roots_card_eq hp (splits_iff_card_roots.1 (IsAlgClosed.splits p))
   unfold rootFactor
   convert h

@@ -39,7 +39,7 @@ theorem univChart_of_standardSmooth (G : Over (Spec (CommRingCat.of R))) [GrpObj
   have hπ : ∀ m : ℕ, ∃ π : S →ₐ[R] JetR R (Fin n) m, (jetAug R (Fin n) m).comp π = ε ∧
       ∀ i, π (sX R i) = algebraMap R _ (ε (sX R i)) + zR m i := fun m =>
     etale_exists (n := n) ε (jetAug R (Fin n) m) (ker_jetAug_nil (Fin n) m) _ (fun i => by
-      rw [map_add, AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply, jetAug_zR, add_zero])
+      rw [map_add (f := _), AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply, jetAug_zR, add_zero])
   choose π hπaug hπX using hπ
   refine ⟨fun m => spMap (π m) ≫ j, fun m => ?_, fun m => ?_, ?_⟩
   · rw [← Category.assoc, spMap_comp]
@@ -49,7 +49,7 @@ theorem univChart_of_standardSmooth (G : Over (Spec (CommRingCat.of R))) [GrpObj
       exact hπaug (m + 1)
     · exact hπaug m
     · intro i
-      rw [AlgHom.comp_apply, hπX, hπX, map_add, AlgHom.commutes]
+      rw [AlgHom.comp_apply, hπX, hπX, map_add (f := _), AlgHom.commutes]
       rfl
   · have e : (jetZeroR R (Fin n) m).comp (π m) = (Algebra.ofId R _).comp ε := by
       refine etale_ext (n := n) ε (jetAug R (Fin n) 0) (ker_jetAug_nil (Fin n) 0) _ _ ?_ ?_ ?_
@@ -58,7 +58,7 @@ theorem univChart_of_standardSmooth (G : Over (Spec (CommRingCat.of R))) [GrpObj
       · ext s
         simp
       · intro i
-        rw [AlgHom.comp_apply, hπX, map_add, AlgHom.commutes, AlgHom.comp_apply, jetZero_zR, add_zero]
+        rw [AlgHom.comp_apply, hπX, map_add (f := _), AlgHom.commutes, AlgHom.comp_apply, jetZero_zR, add_zero]
         rfl
     rw [← Category.assoc, spMap_comp, e, ← spMap_comp, Category.assoc, hε, comp_one']
   · intro A _ _ aug m hJ y hy
@@ -79,7 +79,7 @@ theorem univChart_of_standardSmooth (G : Over (Spec (CommRingCat.of R))) [GrpObj
       · rw [← AlgHom.comp_assoc, hψaug]
         exact hπaug m
       · intro i
-        rw [AlgHom.comp_apply, hπX, map_add, AlgHom.commutes, jetLift_zR, add_sub_cancel]
+        rw [AlgHom.comp_apply, hπX, map_add (f := _), AlgHom.commutes, jetLift_zR, add_sub_cancel]
     refine ⟨ψ, ⟨hψaug, ?_⟩, ?_⟩
     · rw [← Category.assoc, spMap_comp, hψπ]
     · rintro ψ₂ ⟨_, h2⟩
@@ -89,7 +89,7 @@ theorem univChart_of_standardSmooth (G : Over (Spec (CommRingCat.of R))) [GrpObj
       intro i
       rw [jetLift_zR]
       have := AlgHom.congr_fun h4 (sX R i)
-      rw [AlgHom.comp_apply, hπX, map_add, AlgHom.commutes] at this
+      rw [AlgHom.comp_apply, hπX, map_add (f := _), AlgHom.commutes] at this
       rw [← this, add_sub_cancel_left]
 
 theorem univChart_baseChange (G : Over (Spec (CommRingCat.of R))) [GrpObj G] (n : ℕ)

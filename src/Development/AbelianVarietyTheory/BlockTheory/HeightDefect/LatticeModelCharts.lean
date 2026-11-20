@@ -72,7 +72,7 @@ theorem exists_smallField {p : ℕ} (F : CF p) (h : #F.C ≤ 𝔠) :
   have hiso : Isometry e := AddMonoidHomClass.isometry_of_norm e fun x => (hn x).symm
   haveI : IsUltrametricDist S :=
     IsUltrametricDist.isUltrametricDist_of_forall_norm_add_le_max_norm fun x y => by
-      rw [hn, hn, hn, map_add]; exact IsUltrametricDist.norm_add_le_max _ _
+      rw [hn, hn, hn, map_add (f := _)]; exact IsUltrametricDist.norm_add_le_max _ _
   haveI : IsAlgClosed S := IsAlgClosed.of_ringEquiv F.C S e.symm
   haveI : CompleteSpace S := (IsometryEquiv.mk e.toEquiv hiso).completeSpace
   haveI : CharZero S := (e : S →+* F.C).charZero
@@ -221,7 +221,7 @@ theorem evalU_unique (V : Type) [CommRing V] [IsLocalRing V] [IsAdicComplete (Is
     | succ n ih =>
       intro f
       rw [PowerSeries.eq_X_mul_shift_add_const f]
-      simp only [map_add, map_mul, hφ, hψ, hφ', hψ', add_sub_add_right_eq_sub, ← mul_sub]
+      simp only [map_add (f := _), map_mul, hφ, hψ, hφ', hψ', add_sub_add_right_eq_sub, ← mul_sub]
       rw [pow_succ']
       exact Ideal.mul_mem_mul hπ (ih _)
   refine RingHom.ext fun f => sub_eq_zero.1 ?_

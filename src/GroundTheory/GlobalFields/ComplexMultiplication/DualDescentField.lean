@@ -15,7 +15,7 @@ theorem eq_zero_of_aeval_genX_add_mul_genY {K : Type*} [Field K] (V : Weierstras
     {P Q : K[X]} (h : aeval (genX V) P + aeval (genX V) Q * genY V = 0) : P = 0 ∧ Q = 0 := by
   apply CoordinateRing.smul_basis_eq_zero (W' := V.toAffine)
   apply IsFractionRing.injective V.toAffine.CoordinateRing V.toAffine.FunctionField
-  rw [map_zero, ← h, map_add, Algebra.smul_def, Algebra.smul_def, mul_one, map_mul,
+  rw [map_zero, ← h, map_add (f := _), Algebra.smul_def, Algebra.smul_def, mul_one, map_mul,
     genX_eq, aeval_algebraMap_apply, aeval_algebraMap_apply, aeval_X_left_apply,
     aeval_X_left_apply, ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
   rfl
@@ -35,7 +35,7 @@ theorem bcEmb_algebraMap_smul_basis (p q : F[X]) :
       (algebraMap F[X] W.toAffine.CoordinateRing t) = aeval (genX W) t := by
     intro t
     rw [← IsScalarTower.algebraMap_apply, genX_eq, aeval_algebraMap_apply, aeval_X_left_apply]
-  rw [map_add, Algebra.smul_def, Algebra.smul_def, mul_one, map_add, map_mul, e, e,
+  rw [map_add (f := _), Algebra.smul_def, Algebra.smul_def, mul_one, map_add (f := _), map_mul, e, e,
     show algebraMap W.toAffine.CoordinateRing W.toAffine.FunctionField
       (CoordinateRing.mk W.toAffine Y) = genY W from rfl, map_mul, ← aeval_algHom_apply,
     ← aeval_algHom_apply, bcEmb_genX, bcEmb_genY, aeval_map_algebraMap, aeval_map_algebraMap]

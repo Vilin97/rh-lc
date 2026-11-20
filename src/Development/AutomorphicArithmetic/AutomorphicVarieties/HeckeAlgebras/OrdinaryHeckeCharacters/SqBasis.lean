@@ -132,7 +132,7 @@ theorem sqBasis (O K : Type) [CommRing O] [IsDomain O] [Field K] [Algebra O K] (
       apply Subtype.ext
       rw [sqRep_coe, hbc, ← map_sqAct, e]
       simp [hbc, smul_eq_C_mul, Finset.mul_sum, mul_assoc]
-    rw [this, map_add, b.repr_self, Finsupp.add_apply, congrFun (b.repr_sum_self _) i, Finsupp.single_apply]
+    rw [this, map_add (f := _), b.repr_self, Finsupp.add_apply, congrFun (b.repr_sum_self _) i, Finsupp.single_apply]
     simp only [eq_comm]
   · intro g hg j
     have : ℓ (sqRep K n lam g (b j)) = (∏ i, g.val i i ^ ((rowWt k0.1 i : ℤ) + lam.detShift)) * ℓ (b j) := by

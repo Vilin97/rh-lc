@@ -94,7 +94,7 @@ theorem smul_mem_hatA_of_int {S T : HSp D} {A : AddSubgroup (Matrix (Fin S.rank)
       | add x x' _ _ hx hx' =>
         convert add_mem hx hx' using 1
         ext i j
-        rw [Matrix.add_apply, Matrix.of_apply, Matrix.of_apply, Matrix.of_apply, add_mul, LinearMap.map_add]
+        rw [Matrix.add_apply, Matrix.of_apply, Matrix.of_apply, Matrix.of_apply, add_mul, LinearMap.map_add (f := _)]
       | neg x _ hx =>
         convert neg_mem hx using 1
         ext i j

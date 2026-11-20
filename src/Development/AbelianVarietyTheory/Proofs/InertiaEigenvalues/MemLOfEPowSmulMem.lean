@@ -304,7 +304,7 @@ private lemma exists_eq_prime_mul_of_eisenstein_mul {g h : PowerSeries K}
     exact hg _
   · ext m
     have key := congrArg (coeff (m + e)) hgh
-    simp only [_root_.GlobalTheory.BK.E, add_mul, map_add,
+    simp only [_root_.GlobalTheory.BK.E, add_mul, map_add (f := _),
       coeff_X_pow_mul', le_add_iff_nonneg_left, zero_le, if_true, Nat.add_sub_cancel] at key
     rw [← map_natCast (PowerSeries.C (R := K)), coeff_C_mul, coeff_C_mul] at key
     rw [← map_natCast (PowerSeries.C (R := K)), coeff_C_mul, coeff_mk]

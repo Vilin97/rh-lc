@@ -36,7 +36,7 @@ theorem exists_map_compFin (v : Pl F) {d m : ℕ} (Cy : Matrix (Fin d) (Fin m) (
     | add x y hx hy =>
       obtain ⟨p, hp⟩ := hx
       obtain ⟨q, hq⟩ := hy
-      exact ⟨p + q, by rw [map_add, hp, hq]⟩
+      exact ⟨p + q, by rw [map_add (f := _), hp, hq]⟩
   choose f hf using hs
   exact ⟨Cy.map f, by ext i j; simp [hf]⟩
 

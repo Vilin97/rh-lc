@@ -72,7 +72,7 @@ theorem eq_sum_of_isIntegral_genericChart : ∀ (R : Type) [CommRing R] [IsDomai
     rw [Fin.sum_univ_one]
     exact Algebra.IsPushout.equiv_tmul _ _ _ _ c (b : Γ(Sp (FractionRing R), M.gp ⁻¹ᵁ U))
   | add u v hu hv =>
-    rw [map_add, Subalgebra.coe_add, map_add]
+    rw [map_add (f := _), Subalgebra.coe_add, map_add (f := _)]
     exact sumForm_add _ _ _ hu hv
 
 end GlobalTheory.Mum

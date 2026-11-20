@@ -37,7 +37,7 @@ def capSub {h : V →ₗ[E] V →ₗ⋆[E] E} {O : Subring E} {abelian₂ : AddS
   add_mem' := by
     intro a b ha hb
     show j (a + b) ∈ Z
-    rw [map_add]; exact Z.add_mem ha hb
+    rw [map_add (f := _)]; exact Z.add_mem ha hb
   zero_mem' := by
     show j 0 ∈ Z
     rw [map_zero]; exact Z.zero_mem
@@ -52,7 +52,7 @@ def dualIn (h : V →ₗ[E] V →ₗ⋆[E] E) (O : Subring E) (abelian₂ : AddS
   add_mem' := by
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
     refine ⟨Z.add_mem ha hb, fun w hw hz => ?_⟩
-    rw [map_add]; exact O.add_mem (ha' w hw hz) (hb' w hw hz)
+    rw [map_add (f := _)]; exact O.add_mem (ha' w hw hz) (hb' w hw hz)
   zero_mem' := ⟨Z.zero_mem, fun w _ _ => by rw [map_zero]; exact O.zero_mem⟩
   neg_mem' := by
     rintro a ⟨ha, ha'⟩

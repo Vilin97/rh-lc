@@ -42,7 +42,7 @@ def SecM (L : LB A.left) (a : ℤ) (T : Over S) :
         (LPow A L a T).U i ⊓ (LPow A L a T).U j ≤ (LPow A L a T).U j)).op).hom (f j)}
   add_mem' := by
     intro f f' hf hf' i j
-    simp only [Pi.add_apply, map_add, hf i j, hf' i j, mul_add]
+    simp only [Pi.add_apply, map_add (f := _), hf i j, hf' i j, mul_add]
   zero_mem' := by
     intro i j
     simp

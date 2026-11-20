@@ -78,7 +78,7 @@ theorem lastBi_heis (ψ : AddChar (AF D.host.F) ℂ) {V₀ A L S X T L'' : HSp D
     (hτ : τᴴ * (L.gram * τ) = (-(D.host.xi0 * star D.host.xi0)) • L''.gram) (a : WO A S) (x : WO S X) (Ξ Φ₂) (u v) :
     heisO ψ A S a (fun u' => heisO ψ S X x (lastBi o o'' τ Ξ Φ₂ u') v) u =
       lastBi o o'' τ (heisO ψ V₀ S ((o.resS S).symm (a, kap τ S (o''.resT S x).2)) Ξ) (heisO ψ S T (o''.resT S x).1 Φ₂) u v := by
-  simp only [heisO, lastBi, OrthDec.boxT, map_add, Prod.fst_add, Prod.snd_add, kap_add]
+  simp only [heisO, lastBi, OrthDec.boxT, map_add (f := _), Prod.fst_add, Prod.snd_add, kap_add]
   rw [o.symplOH_resS, o''.symplOH_resT, ← map_add (o.resS S).symm]
   simp only [AddEquiv.apply_symm_apply, symplOH_kap τ hτ, AddChar.map_add_eq_mul, Prod.mk_add_mk]
   ring

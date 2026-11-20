@@ -48,7 +48,7 @@ theorem apol_monomial_left (Q : MvPolynomial S ℝ) (m : S →₀ ℕ) (c : ℝ)
     by_cases h : m = u
     · subst h; simp; ring
     · rw [if_neg h, if_neg (Ne.symm h)]; simp
-  | add p q hp hq => rw [map_add, hp, hq, MvPolynomial.coeff_add]; ring
+  | add p q hp hq => rw [map_add (f := _), hp, hq, MvPolynomial.coeff_add]; ring
 
 theorem apol_lin (c : S → ℝ) (P Q : MvPolynomial S ℝ) :
     apol ((∑ s, C (c s) * X s) * P) Q = apol P (∑ s, c s • pderiv s Q) := by
@@ -62,7 +62,7 @@ theorem apol_lin (c : S → ℝ) (P Q : MvPolynomial S ℝ) :
     · simp [h]
     · rw [if_pos (by simpa using h), facM_sub u s h]; ring
   | add p q hp hq =>
-    simp only [map_add, smul_add, Finset.sum_add_distrib, hp, hq]
+    simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, hp, hq]
 
 def dirD (c : S → ℝ) : Derivation ℝ (MvPolynomial S ℝ) (MvPolynomial S ℝ) := ∑ s, c s • pderiv s
 
@@ -94,9 +94,9 @@ theorem iter_mul (l F : A) (c : ℝ) (hl : D l = algebraMap ℝ A c) (n : ℕ) :
   induction n with
   | zero => simp [hl, Algebra.smul_def]; ring
   | succ n ih =>
-    rw [Function.iterate_succ_apply', ih, map_add, Derivation.map_smul, Derivation.leibniz, hl,
+    rw [Function.iterate_succ_apply', ih, map_add (f := _), Derivation.map_smul, Derivation.leibniz, hl,
       ← Function.iterate_succ_apply' D (n + 1), ← Function.iterate_succ_apply' D n]
-    simp only [Algebra.smul_def, smul_eq_mul, map_mul, map_add, map_one, Nat.cast_add, Nat.cast_one, Algebra.algebraMap_self, RingHom.id_apply]
+    simp only [Algebra.smul_def, smul_eq_mul, map_mul, map_add (f := _), map_one, Nat.cast_add, Nat.cast_one, Algebra.algebraMap_self, RingHom.id_apply]
     ring
 
 theorem iter_prod {κ : Type} (T : Finset κ) (l : κ → A) (W : A) (c : ℝ) (hW : D W = 0)

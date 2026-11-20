@@ -329,7 +329,7 @@ theorem toEAf_cA (z : AE D) : toEAf D (cA D z) = sg D (toEAf D z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a x => rfl
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, ha, hb, RingHom.map_add, RingHom.map_add]
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb, RingHom.map_add (f := _), RingHom.map_add (f := _)]
 
 theorem sg_sg (z : Ef D) : sg D (sg D z) = z := by
   induction z using TensorProduct.induction_on with
@@ -337,7 +337,7 @@ theorem sg_sg (z : Ef D) : sg D (sg D z) = z := by
   | tmul x a =>
     change star (star x) ⊗ₜ[D.host.F] a = _
     rw [star_star]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem cP_cP (Q : Pl D.host.E) : cP (cP Q) = Q := by
   refine HeightOneSpectrum.ext (Ideal.ext fun x => ?_)

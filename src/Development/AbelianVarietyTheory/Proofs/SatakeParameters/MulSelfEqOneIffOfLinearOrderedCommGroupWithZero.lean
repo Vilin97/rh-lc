@@ -49,7 +49,7 @@ theorem residual_rep_mul (σ : L →+* L) (δ : L) (ψ : AddChar L ℂ) (x y : L
   show ψ (bb σ δ w x) * (ψ (bb σ δ (w + x) y) * φ (w + x + y)) = ψ (bb σ δ x y) * (ψ (bb σ δ w (x + y)) * φ (w + (x + y)))
   rw [← mul_assoc, ← mul_assoc, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul, add_assoc]
   congr 2
-  simp only [bb, map_add, map_mul]; ring
+  simp only [bb, map_add (f := _), map_mul]; ring
 
 open Classical in
 
@@ -65,7 +65,7 @@ theorem weil_rep_mem_module (σ : L →+* L) (δ : L) (ψ : AddChar L ℂ) (x : 
     rw [residual_rep_mul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
 
 def sub0 (u : L) : Module.End ℂ (L → ℂ) where
@@ -131,7 +131,7 @@ theorem translate_mem_weil_module (h : IsUnramInv ϖ σ q) {u : L} (hu : σ u * 
     rw [translate_weil_rep_comm σ h.1 δ ψ hu, translate_vacuum_unit (v_of_norm h.2.1 hu)]
     exact Submodule.subset_span ⟨_, rfl⟩
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
 
 variable (σ δ ψ) in

@@ -30,7 +30,7 @@ def shiftA {S A B : HSp D} (o : OrthDec S A B) (T : HSp D) (g : GA D A) (h : GA 
   toFun w := (o.resS T).symm (actO A T g⁻¹ h⁻¹ (o.resS T w).1, (o.resS T w).2)
   map_zero' := by simp [actO_eq]
   map_add' x y := by
-    rw [map_add, Prod.fst_add, Prod.snd_add, ← map_add]
+    rw [map_add (f := _), Prod.fst_add, Prod.snd_add, ← map_add (f := _)]
     congr 1
     simp [actO_eq, Matrix.mul_add, Matrix.add_mul]
 
@@ -90,7 +90,7 @@ theorem half (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S A B T : HSp D) (o : Or
       simp only [heisO, shiftA_apply, Pi.smul_apply, smul_eq_mul]
       rw [o.symplOH_resS]
       simp only [AddEquiv.apply_symm_apply]
-      rw [← map_add, Prod.mk_add_mk, AddChar.map_add_eq_mul]
+      rw [← map_add (f := _), Prod.mk_add_mk, AddChar.map_add_eq_mul]
       ring
     show om (g, h) (fun u => heisO ψ S T (shiftA o T g h w) F ((o.resS T).symm (u, (o.resS T x).2))) (o.resS T x).1 = _
     rw [hin, map_smul, hom.om_heis g h _ _ hG, actO_shift]
@@ -111,7 +111,7 @@ theorem half (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S A B T : HSp D) (o : Or
       obtain ⟨δ, hδ⟩ := hb'
       have hδ' : ratW T S δ = (o.resS T).symm (0, (o.resS T (ratW T S γ)).2) := hδ
       have e : (o.resS T).symm (u, (o.resS T (ratW T S γ)).2) = ratW T S δ + (o.resS T).symm (u, 0) := by
-        rw [hδ', ← map_add, Prod.mk_add_mk, zero_add, add_zero]
+        rw [hδ', ← map_add (f := _), Prod.mk_add_mk, zero_add, add_zero]
       rw [e, hF.quasi δ, hδ', o.symplOH_resS]
       simp only [AddEquiv.apply_symm_apply, symplOH_zero_left', symplOH_zero_right', add_zero, neg_zero,
         AddChar.map_zero_eq_one, one_mul]

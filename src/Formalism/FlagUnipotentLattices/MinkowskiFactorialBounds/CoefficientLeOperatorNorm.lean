@@ -1385,7 +1385,7 @@ theorem coefficient_isometry : CoeffIso := by
     rintro _ ⟨c, rfl⟩
     induction c using Finsupp.induction_linear with
     | zero => simp
-    | add c d hc hd => simp only [map_add, hc, hd]
+    | add c d hc hd => simp only [map_add (f := _), hc, hd]
     | single h a =>
       rw [hs₂, map_smul, map_smul, map_smul, map_smul, ← hmul₂, horb, horb, hmul₁]
   · apply Set.Subset.antisymm

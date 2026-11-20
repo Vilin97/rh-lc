@@ -90,7 +90,7 @@ theorem maxCuspsA_zMatE_map (X : Data E r) (e : Fin ρ → Fin r → E) (τ : E 
     | simp [cc]
   ext k l
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [zMatE, zMatC, Matrix.map_apply, Matrix.of_apply, map_add, map_sum, map_mul, hτ]
+    simp only [zMatE, zMatC, Matrix.map_apply, Matrix.of_apply, map_add (f := _), map_sum, map_mul, hτ]
   split_ifs <;> simp
 
 theorem maxCuspsA_zAct_int (X : Data E r) (cu : CuspFD X ρ) (hb : IsZBasis X cu (zBas X cu))

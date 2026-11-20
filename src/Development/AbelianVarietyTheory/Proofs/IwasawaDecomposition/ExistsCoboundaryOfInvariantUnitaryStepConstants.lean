@@ -246,7 +246,7 @@ theorem exists_aniso (hs : ∀ x, s (s x) = x) {n : ℕ} {J : Matrix (Fin (n + 1
   have h0 : J = 0 := by
     ext i j
     have := h (Pi.single i (J i j) + Pi.single j 1)
-    simp only [hform, Pi.add_apply, map_add, add_mul, mul_add, Finset.sum_add_distrib] at this
+    simp only [hform, Pi.add_apply, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib] at this
     simp [Pi.single_apply, apply_ite s, hd] at this
     rw [← hJ.1 j i] at this
     have h2 : (2 : E) * (s (J i j) * J i j) = 0 := by linear_combination this
@@ -277,7 +277,7 @@ theorem quad_hform {V : Type} [AddCommGroup V] [Module E V] {n : ℕ} (J : Matri
     (f : V →ₗ[E] (Fin n → E)) : Quad fun z => hform s J (f z) (f z) := by
   intro u v
   refine ⟨hform s J (f u) (f v) + hform s J (f v) (f u), fun t => ?_⟩
-  simp only [hform, map_add, map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_mul, map_natCast,
+  simp only [hform, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_mul, map_natCast,
     Finset.sum_mul, add_mul, ← Finset.sum_add_distrib]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
 

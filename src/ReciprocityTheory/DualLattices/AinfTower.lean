@@ -94,7 +94,7 @@ lemma ker_pi (n : ℕ) : RingHom.ker (piRing p O hv ε hε n) = span {xiR p O ε
     rw [Ideal.mem_span_singleton']
     refine ⟨Ideal.Quotient.mk _ (Ideal.Quotient.mk _ c), ?_⟩
     rw [ha]
-    simp only [xiR, map_add, map_mul, map_pow, map_natCast, hpR', mul_zero, add_zero]
+    simp only [xiR, map_add (f := _), map_mul, map_pow, map_natCast, hpR', mul_zero, add_zero]
   · rw [Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe, RingHom.mem_ker, xiR, piRing_mk,
       theta_xi p O hv ε hε, map_zero]
 
@@ -122,7 +122,7 @@ lemma R'n_local (n : ℕ) : IsLocalRing (R'n p O ε n) := by
     exact isUnit_of_mul_isUnit_left h2
   refine IsLocalRing.of_isUnit_or_isUnit_one_sub_self (fun a => ?_)
   have h : piRing p O hv ε hε n a + piRing p O hv ε hε n (1 - a) = 1 := by
-    rw [← map_add, add_sub_cancel, map_one]
+    rw [← map_add (f := _), add_sub_cancel, map_one]
   rcases IsLocalRing.isUnit_or_isUnit_of_add_one h with h | h
   · exact Or.inl (key a h)
   · exact Or.inr (key _ h)
@@ -168,7 +168,7 @@ def nuR (n : ℕ) : R'n p O ε n := Ideal.Quotient.mk _ (Ideal.Quotient.mk _ (nu
 lemma zv_pow (n : ℕ) :
     zv p O ε n ^ p ^ (n + 1) = 1 + nuR p O ε n * xiR p O ε n := by
   unfold zv nuR xiR
-  rw [← map_pow, ← map_pow, ← map_pow, root_pow, teich_eps p O hv ε hε, map_add, map_add, map_one,
+  rw [← map_pow, ← map_pow, ← map_pow, root_pow, teich_eps p O hv ε hε, map_add (f := _), map_add (f := _), map_one,
     map_one, map_mul, map_mul]
 
 lemma zv_unit (n : ℕ) : IsUnit (zv p O ε n) := by
@@ -183,7 +183,7 @@ lemma zeta_unit (n : ℕ) : IsUnit (zetaV p O ε n) := by
   have hne : p ^ (n + 1) ≠ 0 := pow_ne_zero _ hp.out.ne_zero
   have h : zetaV p O ε n ^ p ^ (n + 1) = 1 := by
     unfold zetaV
-    rw [← map_pow, ← map_pow, root_pow, teich_eps p O hv ε hε, map_add, map_one, map_mul,
+    rw [← map_pow, ← map_pow, root_pow, teich_eps p O hv ε hε, map_add (f := _), map_one, map_mul,
       theta_xi p O hv ε hε, mul_zero, add_zero]
   refine IsUnit.of_mul_eq_one (zetaV p O ε n ^ (p ^ (n + 1) - 1)) ?_
   rw [← pow_succ', Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.2 hne), h]

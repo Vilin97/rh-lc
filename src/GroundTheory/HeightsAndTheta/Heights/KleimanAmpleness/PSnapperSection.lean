@@ -98,8 +98,8 @@ theorem idealMod_sup_le (pp pp' : Ideal (Poly k N)) (hh : ∀ f ∈ pp, ∀ d : 
   rintro _ ⟨f, m, e, hf, hm, hfe, hme, rfl⟩
   obtain ⟨g, hg, z, hz, hgz⟩ := Submodule.mem_sup.mp hf
   have hfe' : f = homogeneousComponent e g + homogeneousComponent e z := by
-    rw [← map_add, hgz, homogeneousComponent_eq_self hfe]
-  rw [SetLike.mem_coe, hfe', map_add, add_div]
+    rw [← map_add (f := _), hgz, homogeneousComponent_eq_self hfe]
+  rw [SetLike.mem_coe, hfe', map_add (f := _), add_div]
   exact Submodule.add_mem_sup
     (Submodule.subset_span ⟨_, m, e, hh g hg e, hm, homogeneousComponent_isHomogeneous _ _, hme, rfl⟩)
     (Submodule.subset_span ⟨_, m, e, hh' z hz e, hm, homogeneousComponent_isHomogeneous _ _, hme, rfl⟩)
@@ -154,7 +154,7 @@ theorem SnapperSection.proof (hA : SnapperQuotAdd.Statement.{u, w, w})
   have hJh : ∀ f ∈ pp ⊔ Zs, ∀ d : ℕ, homogeneousComponent d f ∈ pp ⊔ Zs := by
     intro f hf d
     obtain ⟨g, hg, z, hz, rfl⟩ := Submodule.mem_sup.mp hf
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (hh g hg d) (hZh z hz d)
   obtain ⟨F₁, hF₁def⟩ : ∃ F₁ : LineBundle k x, F₁ = (twistBundle k x a).tensorProd D := ⟨_, rfl⟩
   have hF₁sub : ∀ I, F₁.sub I = D.sub I * (twistSys k x a).sub I := fun I => by

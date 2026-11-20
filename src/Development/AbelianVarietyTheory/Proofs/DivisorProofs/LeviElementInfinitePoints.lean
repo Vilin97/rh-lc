@@ -78,14 +78,14 @@ theorem compInf_cA (σ : E →ₐ[F] E) (w : InfinitePlace F) (b : AE F E) :
     compInf F E w (cA σ b) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ (compInf F E w b) := by
   induction b using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e => rfl
 
 theorem compFin_cA (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (b : AE F E) :
     compFin F E v (cA σ b) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ (compFin F E v b) := by
   induction b using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e => rfl
 
 theorem piInf_cA {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) (b : AE F E) :

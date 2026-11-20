@@ -36,7 +36,7 @@ theorem orthSum_apply (V W : HSpace E) (x y : V.V × W.V) :
 @[reducible] def hsum (V W : HSpace E) : HSpace E where
   V := V.V × W.V
   hT := Formalism.E.orthSum V.hT W.hT
-  herm := ⟨fun x y => by rw [orthSum_apply, orthSum_apply, map_add, V.herm.eq, W.herm.eq]⟩
+  herm := ⟨fun x y => by rw [orthSum_apply, orthSum_apply, map_add (f := _), V.herm.eq, W.herm.eq]⟩
   nondeg := ⟨fun x h => Prod.ext (V.nondeg.1 _ fun y => by simpa [orthSum_apply] using h (y, 0))
       (W.nondeg.1 _ fun y => by simpa [orthSum_apply] using h (0, y)),
     fun x h => Prod.ext (V.nondeg.2 _ fun y => by simpa [orthSum_apply] using h (y, 0))

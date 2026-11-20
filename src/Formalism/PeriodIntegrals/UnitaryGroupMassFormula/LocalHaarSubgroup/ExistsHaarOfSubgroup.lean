@@ -159,13 +159,13 @@ theorem exists_sq [Module.Free K V] (hr : Module.finrank K V = 2) [IsReduced V] 
     rw [← map_ofNat ι 2, ← map_mul]; congr 1; field_simp
   set θ1 := θ0 - ι (β / 2) with hθ1def
   have hθ1 : θ1 * θ1 = ι (α + (β / 2) ^ 2) := by
-    rw [hθ1def, map_add, map_pow]
+    rw [hθ1def, map_add (f := _), map_pow]
     linear_combination hsq + θ0 * h2
   have hθ1r : θ1 ∉ ι.range := by
     rintro ⟨c, hc⟩
     apply hθ0
     refine ⟨c + β / 2, ?_⟩
-    rw [map_add, hc, hθ1def]; ring
+    rw [map_add (f := _), hc, hθ1def]; ring
   have hd1 : α + (β / 2) ^ 2 ≠ 0 := by
     intro h0
     rw [h0, map_zero] at hθ1

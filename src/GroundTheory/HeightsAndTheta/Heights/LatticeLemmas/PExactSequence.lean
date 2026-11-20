@@ -33,7 +33,7 @@ theorem quotFibreMap_mkQ_of_orthogonal (σ : K →+* ℂ) (x : Fibre σ M.carrie
     abel
   change Vᗮ.starProjection
       (FibreSpace.equiv M.metric σ (fibreMap σ (quotSection M F hF) (fibreMap σ F.mkQ x))) = _
-  rw [hsplit, map_add, Submodule.starProjection_orthogonal_apply_eq_zero hz, add_zero,
+  rw [hsplit, map_add (f := _), Submodule.starProjection_orthogonal_apply_eq_zero hz, add_zero,
     Submodule.starProjection_eq_self_iff.mpr hx]
 
 def subQuotExtension : HermitianExtension (M.sub F) M (M.quot F hF) where

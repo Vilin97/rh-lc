@@ -65,7 +65,7 @@ theorem eq_zero_of_span {r : ℕ} (τ : E →+* ℂ) (Λ : Set (Fin r → E)) (h
     | add v w _ _ hv hw =>
       have := ha (fun n => τ (v n)) (fun n => τ (w n))
       rw [hv, hw, add_zero] at this
-      simp only [Pi.add_apply, map_add]; exact this
+      simp only [Pi.add_apply, map_add (f := _)]; exact this
     | smul a v _ hv =>
       have := hs (τ a) (fun n => τ (v n))
       rw [hv, mul_zero] at this
@@ -142,7 +142,7 @@ theorem flatCoord_eq {p q r g : ℕ} (ε : Fin q ⊕ Fin p ≃ Fin r) (τ : E �
     refine eq_zero_of_span τ _ hφ (fun u => ∑ b, hermC τ G (col X (ε (.inl b))) u * (Hm *ᵥ star (P b₀)) (jw b) -
         ∑ b, conj ((X⁻¹ *ᵥ u) (ε (.inr b)) * (Hm *ᵥ star (P b₀)) (jv b)) -
         2 * Complex.I * conj (τ ξ) * hermC τ G (Data.emb τ (φ b₀)) u) (fun u v => ?_) (fun s u => ?_) ?_ u
-    · simp only [UnitFrame.hermC_eq, star_add, Matrix.mulVec_add, dotProduct_add, add_mul, Pi.add_apply, map_add,
+    · simp only [UnitFrame.hermC_eq, star_add, Matrix.mulVec_add, dotProduct_add, add_mul, Pi.add_apply, map_add (f := _),
         Finset.sum_add_distrib]
       ring
     · simp only [UnitFrame.hermC_eq, star_smul, Matrix.mulVec_smul, dotProduct_smul, Pi.smul_apply, smul_eq_mul,

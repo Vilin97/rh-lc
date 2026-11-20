@@ -97,7 +97,7 @@ def shP (T : X.Vpi u →ₗ[ℂ] (Hinf X u × Hfin X u → ℂ)) (h : Hfin X u) 
 
 theorem rieszVector_add (T T' : X.Vpi u →ₗ[ℂ] (Hinf X u × Hfin X u → ℂ)) (h : Hfin X u) :
     shP X u (T + T') h = shP X u T h + shP X u T' h := by
-  simp only [shP, LinearMap.comp_add, map_add]
+  simp only [shP, LinearMap.comp_add, map_add (f := _)]
 
 theorem rieszVector_smul (c : ℂ) (T : X.Vpi u →ₗ[ℂ] (Hinf X u × Hfin X u → ℂ)) (h : Hfin X u) :
     shP X u (c • T) h = (starRingEnd ℂ c) • shP X u T h := by

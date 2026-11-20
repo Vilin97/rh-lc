@@ -56,7 +56,7 @@ theorem UpperTheory.V.Ws.sxPreLine :
       · exact ⟨_, (hr _ _ _).symm⟩
       · exact ⟨_, (hn _ _ _).symm⟩
     | algebraMap b => exact ⟨_, (hB' b).symm⟩
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   obtain ⟨g, hg⟩ := preLine_desc f j hj hrange
   refine ⟨g, ?_, fun b hb => hj ?_⟩

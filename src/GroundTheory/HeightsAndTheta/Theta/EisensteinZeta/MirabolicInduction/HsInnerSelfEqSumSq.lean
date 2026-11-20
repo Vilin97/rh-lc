@@ -405,7 +405,7 @@ theorem card_place (τ : Fin F.f) : Fintype.card {l // F.place l = τ} = F.r ^ 2
   let toC : indefiniteUnitaryLieAlgebra (F.p τ) (F.q τ) →ₗ[ℝ] ({l // F.place l = τ} → ℝ) :=
     { toFun := fun X l => tInner (F.E l τ) X
       map_add' := fun X Y => by
-        funext l; simp only [Submodule.coe_add, Pi.add_apply, ← tInnerR_apply, map_add]
+        funext l; simp only [Submodule.coe_add, Pi.add_apply, ← tInnerR_apply, map_add (f := _)]
       map_smul' := fun c X => by
         funext l
         simp only [SetLike.val_smul, RingHom.id_apply, Pi.smul_apply, ← tInnerR_apply, map_smul] }

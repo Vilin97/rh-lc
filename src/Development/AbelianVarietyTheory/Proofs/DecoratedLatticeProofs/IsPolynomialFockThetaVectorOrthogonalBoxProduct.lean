@@ -81,7 +81,7 @@ theorem lineAt_mul_left (hθ : IsInfFam θ) {k m n : ℕ} (p : Mx D k m) (τ : D
   let L : ℝ →+ Mx D k n :=
     { toFun := fun t => HMul.hMul p (lineAt θ τ z t)
       map_zero' := by rw [AddMonoidHom.map_zero, Matrix.mul_zero]
-      map_add' := fun s t => by rw [AddMonoidHom.map_add, Matrix.mul_add] }
+      map_add' := fun s t => by rw [AddMonoidHom.map_add (f := _), Matrix.mul_add] }
   have hL' : IsLineAt θ τ (Formalism.IndefR.Datum.compAt θ τ p * z) L := by
     refine ⟨continuous_const.matrix_mul hL.1, fun t => ?_, fun t τ' => ?_⟩
     · show (HMul.hMul p (lineAt θ τ z t) : Mx D k n).map (finPart D) = 0

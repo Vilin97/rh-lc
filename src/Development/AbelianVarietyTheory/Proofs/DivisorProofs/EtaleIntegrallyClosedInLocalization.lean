@@ -68,7 +68,7 @@ theorem etale_integrallyClosed_localization : ∀ (S E : Type) [CommRing S] [IsD
     | add u v hu hv =>
       obtain ⟨a, ha⟩ := hu
       obtain ⟨b, hb⟩ := hv
-      exact ⟨a + b, by rw [map_add, Subalgebra.coe_add, ha, hb, TensorProduct.add_tmul]⟩
+      exact ⟨a + b, by rw [map_add (f := _), Subalgebra.coe_add, ha, hb, TensorProduct.add_tmul]⟩
   obtain ⟨b, hb⟩ := key y
   refine ⟨b, ?_⟩
   have : e.symm x = algebraMap E T b := by

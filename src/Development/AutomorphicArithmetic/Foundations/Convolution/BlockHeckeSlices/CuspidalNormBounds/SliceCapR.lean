@@ -84,11 +84,11 @@ private theorem exists_form (hr : 0 < r) {Φ ψ : Sm E r} (hΦ : Umg Φ) (hψ : 
   refine ⟨LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun a a' => pr (uC E r a Φ).1 (uC E r a' ψ).1)
     (fun a b a' => ?_) (fun c a a' => ?_) (fun a a' b' => ?_) (fun c a a' => ?_), fun _ _ => rfl⟩
   · refine Eq.trans ?_ (integral_add (hi a a') (hi b a'))
-    simp only [pr, onQ, map_add, LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, add_mul]
+    simp only [pr, onQ, map_add (f := _), LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, add_mul]
   · refine Eq.trans ?_ (integral_const_mul c _)
     simp only [pr, onQ, map_smul, LinearMap.smul_apply, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, mul_assoc]
   · refine Eq.trans ?_ (integral_add (hi a a') (hi a b'))
-    simp only [pr, onQ, map_add, LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, mul_add]
+    simp only [pr, onQ, map_add (f := _), LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, mul_add]
   · refine Eq.trans ?_ (integral_const_mul (starRingEnd ℂ c) _)
     simp only [pr, onQ, map_smul, LinearMap.smul_apply, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, map_mul, mul_left_comm]
 
@@ -147,16 +147,16 @@ private theorem gz_eq (hr : 0 < r) (τ : E →+* ℂ) (i k : Fin r) : ∃ X Y : 
     toL (Matrix.single i k (atEmb τ Complex.I)), ?_, ?_, ?_, ?_⟩
   · simp only [Pi.sub_apply, map_sub, Finset.sum_sub_distrib, hs, tr_one]
     split_ifs
-    · simp only [Pi.add_apply, map_add, Finset.sum_add_distrib, tr_zL hr]; norm_num
+    · simp only [Pi.add_apply, map_add (f := _), Finset.sum_add_distrib, tr_zL hr]; norm_num
     · simp
   · rw [hs, tr_I, ite_self]
   · rw [gz, genC, UpperTheory.V.AlgRepEndIrreducible.eL, map_sub]
     split_ifs
-    · rw [map_add]; module
+    · rw [map_add (f := _)]; module
     · simp
   · rw [gz, genC, UpperTheory.V.AlgRepEndIrreducible.eL, map_sub, atEmb_conj, atEmb_conj, map_one, Complex.conj_I, e, map_neg]
     split_ifs
-    · rw [map_add]; module
+    · rw [map_add (f := _)]; module
     · simp
 
 private theorem glRel_gz (τ : E →+* ℂ) : Formalism.REAL.GlRel (gz (r := r) τ) := by
@@ -210,7 +210,7 @@ private theorem adj {S : Set (Pl E)} (b : Blo S r) (τ : E →+* ℂ) (c : ℂ) 
       obtain ⟨X, Y, hX, hY, e1, e2⟩ := gz_eq b.pos τ i k
       change B (gz τ i k * a) a' = -B a (gz (ComplexEmbedding.conjugate τ) i k * a')
       rw [e1, e2]
-      simp only [smul_mul_assoc, sub_mul, add_mul, map_smul, map_sub, map_add, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+      simp only [smul_mul_assoc, sub_mul, add_mul, map_smul, map_sub, map_add (f := _), LinearMap.map_smulₛₗ, LinearMap.smul_apply,
         LinearMap.sub_apply, hreal X hX, hreal Y hY, smul_eq_mul, Complex.conj_I, map_div₀, map_one, Complex.conj_ofNat]
       ring) c a 1
   rw [← UpperTheory.V.Fb.map_qdet, ← UpperTheory.V.Fb.map_qdet, hB, hB, map_one] at h
@@ -321,7 +321,7 @@ theorem UpperTheory.ConvolutionTheory.BW.sliceCapR :
   have h3 : ∀ (P : Polynomial ℂ) G, ρ (Polynomial.aeval (j1 E r s) P G) = Polynomial.aeval (j0 E r) P (ρ G) := fun P => by
     induction P using Polynomial.induction_on with
     | C a => intro G; simp
-    | add p q hp hq => intro G; simp only [map_add, LinearMap.add_apply, hp, hq]
+    | add p q hp hq => intro G; simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
     | monomial n a h =>
       intro G
       simp only [pow_succ, ← mul_assoc, map_mul _ _ Polynomial.X, Polynomial.aeval_X, Module.End.mul_apply, h, h2]

@@ -29,7 +29,7 @@ theorem exists_max_of_int (D : D7) {v : FinPl D} (g : D.host.E →+* Fv D.host.F
     induction ha using Submodule.span_induction with
     | mem a ha => exact hmax a ha
     | zero => simp only [map_zero, zero_le]
-    | add x y _ _ hx hy => rw [map_add]; exact Valuation.map_add_le _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Valuation.map_add_le _ hx hy
     | smul o x _ hx =>
       rw [show o • x = (o : D.host.E) * x from rfl, map_mul, Valuation.map_mul]
       exact (mul_le_of_le_one_left' (hg o)).trans hx

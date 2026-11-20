@@ -143,7 +143,7 @@ theorem isField_dE (hdd : ∀ a, IsField ⊤ (dd a)) (i : h.J) : IsField (h.W i)
     simp only [dE, h₀.2.1 W hW, e]
     ring
   set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [dE, h₀.2.2 W W' hWW hW, fun a => (hdd a).2.2 W W' hWW le_top, map_add, map_sum, map_mul,
+    · simp only [dE, h₀.2.2 W W' hWW hW, fun a => (hdd a).2.2 W W' hWW le_top, map_add (f := _), map_sum, map_mul,
       GlobalTheory.KS.GlueDer.res_const]
 
 theorem map_op (e : ℕ) (hν : ν * e = 1) (i : h.J) (O : G.left.Opens) (hO : O ≤ h.W i) {A : Type} [CommRing A]
@@ -157,7 +157,7 @@ theorem map_op (e : ℕ) (hν : ν * e = 1) (i : h.J) (O : G.left.Opens) (hO : O
         ← map_natCast (Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom, ← map_mul, ← map_mul, hν, map_one, map_one]
     simpa using congrArg π this
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [op, dE, pE, GlobalTheory.KS.GlueDer.rsT_eq hO, map_add, map_sub, map_mul, map_sum, hΘ, zero_mul,
+    simp only [op, dE, pE, GlobalTheory.KS.GlueDer.rsT_eq hO, map_add (f := _), map_sub, map_mul, map_sum, hΘ, zero_mul,
     Finset.sum_const_zero, sub_zero, map_ofNat, map_natCast, map_pow, GlobalTheory.KS.GlueDer.res_const]
   linear_combination (-2 * ∑ a, π (constFn G.hom O (h.u a)) * π (dd a O f) -
     2 * (e : A) * π (resG G.left hO (h.p' i)) * π f) * h1
@@ -273,7 +273,7 @@ theorem IsFibre.dE_agree [CharZero K] {Z : Scheme.{0}} {a : Z ⟶ Y.H.left} {b :
   have := AbConst.lift_agree h hF.field i i' U hU (gsH a z U hz)
     (by simpa only [map_ofNat] using (two_ne_zero (α := K)).isUnit.map (cstH (b ≫ A₀.hom) z))
     (fun a' b' => by rw [← gs_eq_gsH, hF.gs_const w z U hz, hF.symb, cst_eq_cstH, map_zero]) f
-  simp only [gs_eq_gsH a z U hz, dE, map_add, this]
+  simp only [gs_eq_gsH a z U hz, dE, map_add (f := _), this]
 
 theorem IsFibre.T_zero {α : Q.X} {T : A₀.left ⟶ A₀.left} (h₁ : T ≫ m₀ = m₀ ≫ Q.famφB α 0) (h₂ : T ≫ A₀.hom = A₀.hom) :
     T = 𝟙 _ :=

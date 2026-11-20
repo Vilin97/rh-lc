@@ -98,7 +98,7 @@ theorem exists_ext (T : Ob k G) (z : G → Fin T.m → k) (hz : ∀ g h, z (g * 
     simp at this
   · rw [he']
     change _ = e (0, 1) + e (z g, 0)
-    rw [← map_add]
+    rw [← map_add (f := _)]
     simp
 
 variable [TopologicalSpace G]
@@ -139,7 +139,7 @@ theorem exists_ext_Ea (hs : Function.Surjective (algebraMap O k)) (hk : ∀ x, a
       IsExt T E (fun g => φ ((z : G → M ⊗[O] X) g)) ∧
       ∀ g x, e (twistRep (Ea W χ ha z) χ⁻¹ g x) = E.ρ g (e x) := by
   obtain ⟨E, e, hE, he⟩ := exists_ext T (fun g => φ ((z : G → M ⊗[O] X) g)) (fun g h => by
-    rw [cocycle_mul, map_add, hφ])
+    rw [cocycle_mul, map_add (f := _), hφ])
   have hker : Ideal.span {lam ^ 1} = LinearMap.ker (Algebra.linearMap O k) := by
     ext x
     rw [pow_one, Ideal.mem_span_singleton, ← hk]
@@ -156,7 +156,7 @@ theorem exists_ext_Ea (hs : Function.Surjective (algebraMap O k)) (hk : ∀ x, a
     simp
   rw [h1]
   change e (φ _, ψ _) = E.ρ g (e (φ _, ψ _))
-  rw [he, map_add, hφ, map_smul, hψ, algebraMap_smul]
+  rw [he, map_add (f := _), hφ, map_smul, hψ, algebraMap_smul]
 
 omit [TopologicalSpace G] in
 
@@ -172,7 +172,7 @@ theorem exists_coef_equiv {M : Type} [AddCommGroup M] [Module O M] (W : Represen
   | tmul m y =>
     obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective y
     rw [coefRep_tmul, hφ, hφ, he, LinearMap.map_smul_of_tower]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem exists_independent_admissible_cocycles_residue {Qp K₀ K : Type} [Field Qp] [Field K₀] [Field K]
     [Algebra Qp K₀] [Algebra Qp K] [Algebra K₀ K] [IsScalarTower Qp K₀ K]

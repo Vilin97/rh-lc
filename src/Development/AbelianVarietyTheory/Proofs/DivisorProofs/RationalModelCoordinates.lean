@@ -27,7 +27,7 @@ theorem ratCoord_linear_injective : ∀ (F E : Type) [Field F] [NumberField F] [
   have hadd : ∀ x x' : Matrix (Fin n) (Fin d) E, incM F (x + x') = incM F x + incM F x' := by
     intro x x'
     ext i j
-    simp [incM, Matrix.map_apply, map_add]
+    simp [incM, Matrix.map_apply, map_add (f := _)]
   have hsmul : ∀ (c : F) (x : Matrix (Fin n) (Fin d) E), incM F (c • x) = algebraMap F (AF F) c • incM F x := by
     intro c x
     ext i j
@@ -40,7 +40,7 @@ theorem ratCoord_linear_injective : ∀ (F E : Type) [Field F] [NumberField F] [
   refine ⟨{ toFun := fun x => (y x, z x), map_add' := ?_, map_smul' := ?_ }, ?_, hg⟩
   · intro x x'
     apply hinj
-    rw [hat_add, hg, hg, hg, hadd, map_add]
+    rw [hat_add, hg, hg, hg, hadd, map_add (f := _)]
   · intro c x
     apply hinj
     rw [RingHom.id_apply, hat_smul, hg, hg, hsmul, LinearEquiv.map_smul]

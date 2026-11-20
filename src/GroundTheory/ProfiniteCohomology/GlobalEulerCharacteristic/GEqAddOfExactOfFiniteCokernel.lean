@@ -177,7 +177,7 @@ theorem exists_logLatticeProd_real_equiv :
     | tmul r x =>
       rw [LinearMap.baseChange_tmul, LinearMap.liftBaseChange_tmul, LinearMap.liftBaseChange_tmul,
         map_smul, logLatticeProdMap_comm]
-    | add y z hy hz => rw [map_add, map_add, hy, hz, map_add, map_add]
+    | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, map_add (f := _), map_add (f := _)]
   refine ⟨e, fun g y ↦ ?_⟩
   apply P.injective
   simp only [e, LinearEquiv.trans_apply, LinearEquiv.apply_symm_apply]

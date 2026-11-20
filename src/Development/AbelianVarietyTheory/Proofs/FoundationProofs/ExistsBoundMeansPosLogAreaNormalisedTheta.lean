@@ -221,7 +221,7 @@ theorem not_mem_lattice_of_isCMTorsionBasePoint {D : D7} {Λ : AddSubgroup ℂ} 
       simp [Polynomial.eval₂_sub, Polynomial.eval₂_add, hc]⟩
   have h1 : D.host.φ₀ ((1 + D.host.sqrtMinusD) / 2) * t ∈ Λ :=
     hO ⟨⟨_, hmem⟩, (isIntegral_algHom_iff (D.host.K.val.toRingHom.toIntAlgHom) Subtype.val_injective).1 hint⟩ t ht
-  rw [map_div₀, map_add, map_one, map_ofNat] at h1
+  rw [map_div₀, map_add (f := _), map_one, map_ofNat] at h1
   have h2 : D.host.φ₀ D.host.sqrtMinusD ^ 2 = (Complex.I * (Real.sqrt D.host.d : ℂ)) ^ 2 := by
     rw [← map_pow, hs, mul_pow, Complex.I_sq, ← Complex.ofReal_pow, Real.sq_sqrt (Nat.cast_nonneg _)]
     simp

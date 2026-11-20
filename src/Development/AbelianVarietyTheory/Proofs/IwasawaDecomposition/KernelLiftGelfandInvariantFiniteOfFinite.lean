@@ -57,7 +57,7 @@ theorem lift_add_left (hθ : IsInfFam θ) (hκ : IsKerSys θ V W κ) (hq : IsQuo
     (hF : F ∈ Decay θ V) (f f' : M) : lift κ μ 𝓕 (f + f') F = lift κ μ 𝓕 f F + lift κ μ 𝓕 f' F := by
   have I := (GlobalTheory.T.thetaKernelLift_converges_continuous_growth_deriv D θ hθ V W M κ hκ μ 𝓕 hq F hF).1
   funext h
-  simp only [lift, map_add, Pi.add_apply, add_mul]
+  simp only [lift, map_add (f := _), Pi.add_apply, add_mul]
   exact integral_add (I f h) (I f' h)
 
 theorem lift_add_right (hθ : IsInfFam θ) (hκ : IsKerSys θ V W κ) (hq : IsQuot V μ 𝓕) {F F' : GA D V → ℂ}
@@ -96,7 +96,7 @@ theorem Compat.add (hθ : IsInfFam θ) (hκ : IsKerSys θ V W κ) (hq : IsQuot V
     Compat θ κ μ 𝓕 fun φ => S φ + T φ := fun f => by
   obtain ⟨f', a, b⟩ := hS f
   obtain ⟨f'', c, d⟩ := hT f
-  exact ⟨f' + f'', fun g => by simp only [a, c, map_add, Pi.add_apply],
+  exact ⟨f' + f'', fun g => by simp only [a, c, map_add (f := _), Pi.add_apply],
     fun F hF => by simp only [b F hF, d F hF, lift_add_left hθ hκ hq hF]⟩
 
 theorem Compat.smul (c : ℂ) {T : (GA D W → ℂ) → (GA D W → ℂ)} (hT : Compat θ κ μ 𝓕 T) :

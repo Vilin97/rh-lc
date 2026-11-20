@@ -27,7 +27,7 @@ private theorem cont_sum {Γ k : Type} [Group Γ] [TopologicalSpace Γ] [IsTopol
 
 private theorem unrPol_add (S : Multiset ℂ) (c : ℂ) (m : ℤ) :
     unrPol (S + {c}) m = unrPol S m * unrPol {c} m := by
-  simp only [unrPol, Multiset.map_add, Multiset.prod_add]
+  simp only [unrPol, Multiset.map_add (f := _), Multiset.prod_add]
 
 private theorem unrPol_single_ne (c : ℂ) (m : ℤ) : unrPol {c} m ≠ 0 := by
   simp only [unrPol, Multiset.map_singleton, Multiset.prod_singleton]

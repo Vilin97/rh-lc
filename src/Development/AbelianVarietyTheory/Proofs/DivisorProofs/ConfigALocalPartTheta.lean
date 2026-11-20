@@ -45,7 +45,7 @@ theorem infUnipA : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field 
     · have h : ∀ w i, evFin F w (z i) = 0 := fun w i => by
         rw [← partInf_of_at hz, partInf, Pi.smul_apply, smul_eq_mul, map_mul,
           show evFin F w (realAd F 1) = 0 from map_zero (evalV F w), zero_mul]
-      simp only [Pi.add_apply, map_add, h, add_zero]
+      simp only [Pi.add_apply, map_add (f := _), h, add_zero]
     · exact GlobalTheory.TensUniq.pure_mem_schA f G.M.vac hvacSB hM.std
   have h1 : om (u, 1) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f G.M.vac) = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (locOpInf (om (u, 1)) f) G.M.vac := hA _ hRest
   have hc : ∀ᶠ v in cofinite, G.M.vac v = G.M.vac v := Eventually.of_forall fun _ => rfl

@@ -76,18 +76,18 @@ theorem idem_eq_zero (ι : B →+* R) (τ : B) (hu : IsUnit (ι τ)) (hinj : Fun
   obtain ⟨r0, hr0⟩ := hsat (c * ε - τ * a) r (by rw [map_sub, har, map_mul]; ring)
   have h1 : c * ε = τ * a + (p : B) * r0 := hinj (by
     rw [har]
-    simp only [map_add, map_mul, map_natCast, hr0]
+    simp only [map_add (f := _), map_mul, map_natCast, hr0]
     ring)
   have h2 : (p : B) * ε = τ * (d * a) + (p : B) * (d * r0) := by
     linear_combination d * h1 + ε * hcd
   have h3 := congrArg ι h2
-  simp only [map_add, map_mul, map_natCast] at h3
+  simp only [map_add (f := _), map_mul, map_natCast] at h3
   obtain ⟨s, hs⟩ := hsat (d * a) (↑u⁻¹ * (ι ε - ι d * ι r0)) (by
     rw [map_mul]
     linear_combination (-(↑u⁻¹ : R)) * h3 - ι d * ι a * hinv)
   have h5 : ε = d * r0 + τ * s := by
     have h4 : ι ε = ι (d * r0 + τ * s) := by
-      rw [map_add, map_mul, map_mul, hs]
+      rw [map_add (f := _), map_mul, map_mul, hs]
       linear_combination -(ι ε - ι d * ι r0) * hinv2
     exact hinj h4
   obtain ⟨k, hk⟩ := sub_dvd_pow_sub_pow (d * r0 + τ * s) (d * r0) (N + 1)
@@ -105,7 +105,7 @@ theorem idem_eq_zero (ι : B →+* R) (τ : B) (hu : IsUnit (ι τ)) (hinj : Fun
       linear_combination -e2 + hk2 + k2 * h6
     refine ⟨τ * (s * k) ^ (m + 1), ι (w * r0 ^ (N + 1) * k2), ?_⟩
     have e4 := congrArg ι e3
-    simpa only [map_add, map_mul, map_pow, map_natCast] using e4
+    simpa only [map_add (f := _), map_mul, map_pow, map_natCast] using e4
   obtain ⟨r1, hr1⟩ := hnear (ι ε) hN
   obtain ⟨e5, he5⟩ := hsat ε r1 hr1
   have h7 : ε = (p : B) * e5 := hinj (by rw [map_mul, map_natCast, he5, hr1])
@@ -179,7 +179,7 @@ theorem near_series (ι : B →+* R) (io : LetA O n →+* B) (hu : IsUnit (ι (i
         (p : LetA O n) * a2 := by
       rw [← hs]; exact h12
     have E2 := congrArg (fun z => ι (io z)) h12'
-    simp only [map_add, map_mul, map_pow, map_natCast] at E2
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast] at E2
     have hVm : (↑u⁻¹ : R) ^ m * ι (io letπ) ^ m = 1 := by
       rw [← mul_pow, ← hu', Units.inv_mul, one_pow]
     have hnear1 : Near ι p (ι (io letπ)) 1 (ι (io fun i => PowerSeries.C (c i))) := by
@@ -220,7 +220,7 @@ theorem near_closed (ι : B →+* R) (io : LetA O n →+* B) (al : LetA O n →+
     obtain ⟨a1, a2, ha⟩ := near_series ι io ⟨u, hu'⟩ h0 (m + k) a
       ⟨b, r2 * ι (io letπ) ^ k - j r, by linear_combination -E1 + ι (io letπ) ^ k * hb⟩
     have E2 := congrArg (fun z => ι (io z)) ha
-    simp only [map_add, map_mul, map_pow, map_natCast] at E2
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast] at E2
     have hV : (↑u⁻¹ : R) ^ k * ι (io letπ) ^ k = 1 := by
       rw [← mul_pow, ← hu', Units.inv_mul, one_pow]
     refine ⟨a1, ↑u⁻¹ ^ k * (ι (io a2) + j r), ?_⟩
@@ -255,7 +255,7 @@ theorem near_closed (ι : B →+* R) (io : LetA O n →+* B) (al : LetA O n →+
     rw [hy]
     exact Near.add (he M) ⟨io (-tM), _, rfl⟩
   refine ⟨e 0 + al σ, r0, ?_⟩
-  rw [map_add, hj]
+  rw [map_add (f := _), hj]
   linear_combination hr0
 
 def perf (j : E →+* R) (φ : R →+* R) (hφ : ∀ e, ∃ e', φ (j e) = j e') (p : ℕ) : Subring R where
@@ -269,7 +269,7 @@ def perf (j : E →+* R) (φ : R →+* R) (hφ : ∀ e, ∃ e', φ (j e) = j e')
     rintro x y ⟨n, hx⟩ ⟨m, hy⟩
     obtain ⟨e, r, h⟩ := GlobalTheory.DecomplMat.iterate_persist j φ hφ (le_max_left n m) hx
     obtain ⟨e', r', h'⟩ := GlobalTheory.DecomplMat.iterate_persist j φ hφ (le_max_right n m) hy
-    exact ⟨max n m, e + e', r + r', by rw [iterate_map_add, h, h', map_add]; ring⟩
+    exact ⟨max n m, e + e', r + r', by rw [iterate_map_add, h, h', map_add (f := _)]; ring⟩
   mul_mem' := by
     rintro x y ⟨n, hx⟩ ⟨m, hy⟩
     obtain ⟨e, r, h⟩ := GlobalTheory.DecomplMat.iterate_persist j φ hφ (le_max_left n m) hx

@@ -57,7 +57,7 @@ theorem isThetaFunO_tr {V V' : HSp D} (I : IsoMat V V') (S : HSp D) {ψ : AddCha
   · obtain ⟨w, rfl⟩ := (I.phi S).surjective w
     have e : ratW V' S γ = I.phi S (ratW V S (I.Q * γ)) := by
       rw [IsoMat.phi_ratW, ← Matrix.mul_assoc, I.PQ, Matrix.one_mul]
-    rw [e, ← map_add, I.symplOH_phi]
+    rw [e, ← map_add (f := _), I.symplOH_phi]
     simp only [IsoMat.trW, AddEquiv.symm_apply_apply]
     exact hf.quasi _ _
   · obtain ⟨U, hU, e⟩ := hf.level

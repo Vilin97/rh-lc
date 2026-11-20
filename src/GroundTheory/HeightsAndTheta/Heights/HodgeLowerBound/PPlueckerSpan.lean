@@ -127,7 +127,7 @@ theorem proof : PlueckerSpan.Statement := by
         (∏ a, Pl.gvar τ (headIdx (step_le i) a) (c a)) *
           algebraMap Ω Pl.ΩY (φ (exteriorPower.ιMulti Ω _ (Pl.e τ ∘ c)))
       map_add' := fun φ ψ => by
-        simp only [LinearMap.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+        simp only [LinearMap.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
       map_smul' := fun x φ => by
         simp only [LinearMap.smul_apply, smul_eq_mul, map_mul, RingHom.id_apply, Algebra.smul_def,
           Finset.mul_sum]

@@ -42,7 +42,7 @@ private theorem one_add_X_mul_deriv_log :
     (1 + PowerSeries.X) * PowerSeries.derivative (R := A) (PowerSeries.log A) = 1 := by
   rw [PowerSeries.deriv_log]
   ext n
-  rw [add_mul, one_mul, map_add]
+  rw [add_mul, one_mul, map_add (f := _)]
   cases n with
   | zero => simp
   | succ n => simp [PowerSeries.coeff_succ_X_mul, PowerSeries.coeff_one, pow_succ]
@@ -51,7 +51,7 @@ theorem mul_pderiv_formalLog {g : MvPowerSeries σ A} (hg : constantCoeff g = 1)
     g * pderiv (R := A) i (formalLog g) = pderiv (R := A) i g := by
   have hs := hasSubst_sub_one hg
   have h := congrArg (PowerSeries.substAlgHom (R := A) hs) (one_add_X_mul_deriv_log (A := A))
-  rw [map_mul, map_add, map_one, PowerSeries.substAlgHom_X, add_sub_cancel,
+  rw [map_mul, map_add (f := _), map_one, PowerSeries.substAlgHom_X, add_sub_cancel,
     PowerSeries.coe_substAlgHom] at h
   rw [formalLog, pderiv_powerSeries_subst hs, ← mul_assoc, h, map_sub, pderiv_one, sub_zero,
     one_mul]
@@ -89,7 +89,7 @@ theorem formalExp_add {f g : MvPowerSeries σ A} (hf : constantCoeff f = 0)
     (hg : constantCoeff g = 0) : formalExp (f + g) = formalExp f * formalExp g := by
   refine (eq_formalExp_of_pderiv (by simp [hf, hg])
     (by simp [constantCoeff_formalExp hf, constantCoeff_formalExp hg]) fun i => ?_).symm
-  rw [Derivation.leibniz, pderiv_formalExp hf, pderiv_formalExp hg, map_add, smul_eq_mul,
+  rw [Derivation.leibniz, pderiv_formalExp hf, pderiv_formalExp hg, map_add (f := _), smul_eq_mul,
     smul_eq_mul]
   ring
 
@@ -101,7 +101,7 @@ theorem formalLog_mul {f g : MvPowerSeries σ A} (hf : constantCoeff f = 1)
     (hg : constantCoeff g = 1) : formalLog (f * g) = formalLog f + formalLog g := by
   refine (eq_formalLog_of_pderiv (by simp [hf, hg])
     (by simp [constantCoeff_formalLog hf, constantCoeff_formalLog hg]) fun i => ?_).symm
-  rw [Derivation.leibniz, ← mul_pderiv_formalLog hf, ← mul_pderiv_formalLog hg, map_add,
+  rw [Derivation.leibniz, ← mul_pderiv_formalLog hf, ← mul_pderiv_formalLog hg, map_add (f := _),
     smul_eq_mul, smul_eq_mul]
   ring
 

@@ -23,7 +23,7 @@ theorem framepf_smulLA_eq (π' : LetA O n) (c : ZMod n) (a : LetA O n) (z : W.EE
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul e ℓ => rw [framepf_smulLA_tmul, TensorProduct.smul_tmul', smul_eq_mul]
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
 
 variable (Bs : FramepfBas W T) (π' : LetA O n) (c : ZMod n)
     (hπ0 : ∀ j, PowerSeries.constantCoeff (π' j) = 0)

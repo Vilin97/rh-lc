@@ -25,7 +25,7 @@ theorem smul_eq_zero_of_inf {a : AE D} (h : infPart D a = 0) : eInf D • a = 0 
     intro a
     induction a using TensorProduct.induction_on with
     | zero => simp only [smul_zero, map_zero]
-    | add a b ha hb => rw [smul_add, ha, hb, RingHom.map_add, map_add]
+    | add a b ha hb => rw [smul_add, ha, hb, RingHom.map_add (f := _), map_add (f := _)]
     | tmul a x =>
       rw [TensorProduct.smul_tmul']
       have : eInf D • a = LinearMap.inl D.host.F (Ainf D.host.F) (Af D.host.F) (fstA D.host.F a) :=
@@ -41,7 +41,7 @@ theorem smul_eq_self_of_fin {a : AE D} (h : finPart D a = 0) : eInf D • a = a 
     intro a
     induction a using TensorProduct.induction_on with
     | zero => simp only [smul_zero, map_zero]
-    | add a b ha hb => rw [smul_add, ha, hb, RingHom.map_add, map_add]
+    | add a b ha hb => rw [smul_add, ha, hb, RingHom.map_add (f := _), map_add (f := _)]
     | tmul a x =>
       rw [TensorProduct.smul_tmul']
       have : (1 - eInf D) • a = LinearMap.inr D.host.F (Ainf D.host.F) (Af D.host.F) (sndA D.host.F a) :=
@@ -55,18 +55,18 @@ theorem smul_eq_self_of_fin {a : AE D} (h : finPart D a = 0) : eInf D • a = a 
 theorem cA_smul (c : AF D.host.F) (a : AE D) : cA D (c • a) = c • cA D a := by
   induction a using TensorProduct.induction_on with
   | zero => simp only [smul_zero, map_zero]
-  | add a b ha hb => rw [smul_add, RingHom.map_add, RingHom.map_add, ha, hb, smul_add]
+  | add a b ha hb => rw [smul_add, RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb, smul_add]
   | tmul a x => rfl
 
 variable (S T : HSp D)
 
 theorem symplOH_add_left (x x' y : WO S T) : symplOH S T (x + x') y = symplOH S T x y + symplOH S T x' y := by
   unfold symplOH symplO hO
-  simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem symplOH_add_right (x y y' : WO S T) : symplOH S T x (y + y') = symplOH S T x y + symplOH S T x y' := by
   unfold symplOH symplO hO
-  simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add]
+  simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem symplOH_smul_left (c : AF D.host.F) (x y : WO S T) : symplOH S T (c • x) y = c * symplOH S T x y := by
   have h : hO S T (c • x) y = c • hO S T x y := by

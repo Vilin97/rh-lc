@@ -24,7 +24,7 @@ lemma prod_weight (d : (Σ k, ι k) →₀ ℕ) :
     rw [Finsupp.prod_add_index' (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _)]
     have h1 : ((Finsupp.single v b).prod fun x n => (X x.1 : MvPolynomial K ℂ) ^ n) = X v.1 ^ b :=
       Finsupp.prod_single_index (pow_zero _)
-    rw [h1, ih, map_add]
+    rw [h1, ih, map_add (f := _)]
     simp only [Pi.add_apply, pow_add, Finset.prod_mul_distrib]
     congr 1
     simp [blockWeight, Pi.single_apply, Finsupp.weight_apply]

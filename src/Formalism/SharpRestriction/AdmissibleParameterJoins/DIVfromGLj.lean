@@ -52,7 +52,7 @@ theorem pair_loc (D : D7) (w : D.what₂.places.Pl) (k : ℤ) {V : Type} [AddCom
   | add x y _ _ hx hy =>
     obtain ⟨a, ha, hav⟩ := hx
     obtain ⟨b, hb, hbv⟩ := hy
-    refine ⟨a + b, by rw [map_add, ha, hb, hadd], ?_⟩
+    refine ⟨a + b, by rw [map_add (f := _), ha, hb, hadd], ?_⟩
     exact le_trans (le_min hav hbv) (AddValuation.map_add _ _ _)
   | smul c x _ hx =>
     obtain ⟨a, ha, hav⟩ := hx

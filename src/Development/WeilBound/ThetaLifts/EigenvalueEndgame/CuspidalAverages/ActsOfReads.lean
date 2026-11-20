@@ -180,9 +180,9 @@ theorem exists_loc (hT : ThetaBasic) (hp : IsPair B M χX χW om r s r' s') {C :
     funext h
     have e : ∀ g, theta om (insertLocal v Φ (j φ) + insertLocal v Φ (j φ')) g h =
         theta om (insertLocal v Φ (j φ)) g h + theta om (insertLocal v Φ (j φ')) g h := fun g => by
-      simp only [theta, map_add]
+      simp only [theta, map_add (f := _)]
       exact thetaSum_add F (hp.weil.isUSplitting.pres _ _ (hs a)) (hp.weil.isUSplitting.pres _ _ (hs b))
-    simp only [map_add, Model.I, e, Pi.add_apply]
+    simp only [map_add (f := _), Model.I, e, Pi.add_apply]
     exact integral_add (hc _ a h) (hc _ b h)
   · let g₀ := Matrix.GeneralLinearGroup.mkOfDetNeZero γ.1ᵀ (by rw [Matrix.det_transpose]; exact γ.det_ne_zero)
     obtain ⟨g, hg, e⟩ := s1 g₀
@@ -234,7 +234,7 @@ theorem uAt_one : (1 : UA σ W.J) ∈ UAt σ W (evFin F v) := fun u _ => by
 
 variable (v sec) in
 
-def sA : Fv F v →+ AE F E := AddMonoidHom.mk' (fun x => sgl v x • sec (1, 0)) fun x y => by rw [map_add, add_smul]
+def sA : Fv F v →+ AE F E := AddMonoidHom.mk' (fun x => sgl v x • sec (1, 0)) fun x y => by rw [map_add (f := _), add_smul]
 
 theorem sA_at (x : Fv F v) : At (evFin F v) (sA v sec x) := at_sgl_smul _ _
 
@@ -312,11 +312,11 @@ theorem transv {g : UA σ W.J} (hg : g ∈ UAt σ W (evFin F v)) {x : Fin d → 
     refine At.kd_sub (fun u hu => ?_) (at_mul_r (sA_at _) _)
     rw [← Pi.smul_apply, ← Matrix.smul_mulVec, hg u hu, Matrix.zero_mulVec, Pi.zero_apply]
   · rw [map_sub, k, ← cp_val, e]
-    simp only [incV, (h.inc _).1, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, sA_fst h, Matrix.add_mulVec,
+    simp only [incV, (h.inc _).1, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, sA_fst h, Matrix.add_mulVec,
       Matrix.one_mulVec, Matrix.vecMulVec_mulVec, op_smul_eq_mul]
     ring
   · rw [map_sub, k, snd_fix h hd g]
-    · simp only [incV, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, sA_snd h, zero_mul, add_zero, sub_self]
+    · simp only [incV, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, sA_snd h, zero_mul, add_zero, sub_self]
     · have : (fun a => t (x a)) ⬝ᵥ W.J.map t *ᵥ (fun b => piW (t.comp σ) (incV F z b)) = 0 := by
         have := congrArg t hz
         simpa [form, dotProduct, Matrix.mulVec, incV, (h.inc _).2] using this

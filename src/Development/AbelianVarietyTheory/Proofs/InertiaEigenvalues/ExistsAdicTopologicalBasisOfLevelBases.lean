@@ -15,7 +15,7 @@ variable {A L Q : Type} [CommRing A] [CommRing L] [CommRing Q] (s : A →+* L) (
 def lsum (c : ι →₀ A) : L := c.sum fun k a => s a * m k
 
 theorem lsum_add (c c' : ι →₀ A) : lsum s m (c + c') = lsum s m c + lsum s m c' :=
-  Finsupp.sum_add_index' (fun _ => by simp) (fun _ _ _ => by rw [map_add, add_mul])
+  Finsupp.sum_add_index' (fun _ => by simp) (fun _ _ _ => by rw [map_add (f := _), add_mul])
 
 theorem lsum_sub (c c' : ι →₀ A) : lsum s m (c - c') = lsum s m c - lsum s m c' :=
   Finsupp.sum_sub_index (fun _ _ _ => by rw [map_sub, sub_mul])
@@ -106,7 +106,7 @@ theorem GlobalTheory.BSP.exists_topBasis_of_levels (A : Type) [CommRing A] (L : 
       refine ⟨c + c', ?_, ?_⟩
       · unfold IsApprox at hc hc' ⊢
         have e : x + y - i (lsum s m (c + c')) = (x - i (lsum s m c)) + (y - i (lsum s m c')) := by
-          rw [lsum_add, map_add]; ring
+          rw [lsum_add, map_add (f := _)]; ring
         rw [e]; exact add_mem hc hc'
       · have := add_mem (hC x k n c hc) (hC y k n c' hc')
         convert this using 1; simp only [Finsupp.add_apply]; ring)

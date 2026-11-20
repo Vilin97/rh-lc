@@ -71,7 +71,7 @@ private theorem exists_compl {Γ κ V : Type*} [Group Γ] [Field κ] [AddCommGro
     have hX : ∀ h ∈ H, ∀ v ∈ U.comap (σ g) ⊔ W, σ h v ∈ U.comap (σ g) ⊔ W := by
       intro h hh v hv
       obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hv
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem_sup (hU' h hh a ha) (hWst h hh b hb)
     have hle : U ≤ (U.comap (σ g) ⊔ W).comap (σ g⁻¹) := fun u hu =>
       Submodule.mem_sup_left (hback u hu)

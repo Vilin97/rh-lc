@@ -78,7 +78,7 @@ theorem normOneGen_of_idem (c : R →+* R) (hK : ∀ a : K, c (algebraMap K R a)
   have hff : f * f = f := by rw [hf, ← map_mul, he]
   have hcf : c f = e := by
     have h := congrArg c hs
-    rw [map_add, map_one] at h
+    rw [map_add (f := _), map_one] at h
     have : c f = 1 - f := by rw [← h]; ring
     rw [this, ← hs]; ring
   have he0 : e ≠ 0 := by
@@ -109,7 +109,7 @@ theorem normOneGen_of_idem (c : R →+* R) (hK : ∀ a : K, c (algebraMap K R a)
   obtain ⟨p₁, p₂, hp⟩ := hsp p
   have hba : a = b := by
     have h := hcα
-    rw [hab, map_add, map_mul, map_mul, hK, hK, hcf, ← hf] at h
+    rw [hab, map_add (f := _), map_mul, map_mul, hK, hK, hcf, ← hf] at h
     have h' := congrArg (fun t => t * e) h
     have : algebraMap K R (a - b) * e = 0 := by
       rw [map_sub]
@@ -132,7 +132,7 @@ theorem normOneGen_of_idem (c : R →+* R) (hK : ∀ a : K, c (algebraMap K R a)
       (algebraMap K R m⁻¹ * algebraMap K R p₂) * hff +
       (algebraMap K R m * algebraMap K R p₂ + algebraMap K R m⁻¹ * algebraMap K R p₁) * hz
   refine ⟨algebraMap K R m * e + algebraMap K R m⁻¹ * f, ?_, ?_, ?_⟩
-  · simp only [map_add, map_mul, hK, hcf]
+  · simp only [map_add (f := _), map_mul, hK, hcf]
     rw [← hf]
     linear_combination (algebraMap K R m * algebraMap K R m⁻¹) * he +
       (algebraMap K R m * algebraMap K R m⁻¹) * hff +
@@ -142,7 +142,7 @@ theorem normOneGen_of_idem (c : R →+* R) (hK : ∀ a : K, c (algebraMap K R a)
     convert this using 1
     simp only [map_sub]; ring
   · rw [hμp, hab]
-    simp only [map_add, map_mul, hK, hcf]
+    simp only [map_add (f := _), map_mul, hK, hcf]
     have := hunit (2 * a - m * p₁ - m⁻¹ * p₂) (2 * a - m * p₁ - m⁻¹ * p₂) c3 c3
     convert this using 1
     simp only [map_sub, map_mul, map_ofNat]; ring

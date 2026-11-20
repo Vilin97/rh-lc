@@ -48,7 +48,7 @@ lemma part2 {A : Type 1} [CommRing A] (c d e : ℕ → A) (hc : c 0 = 1) (hd : d
     have h2 := nser_spec d hd
     linear_combination (mk d) * h1 + (mk c) * h2
   show coeff k (nser e) = coeff k (nser c) + coeff k (nser d)
-  rw [key, map_add]
+  rw [key, map_add (f := _)]
 
 lemma geom {A : Type 1} [CommRing A] (x : A) : mk (fun k => x ^ k) * (1 - C x * X) = 1 := by
   ext n

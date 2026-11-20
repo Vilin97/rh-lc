@@ -200,7 +200,7 @@ theorem ptOver_pt (σ : F →+* ℂ) : PtOver (pt F) (RingHom.id F) σ (fun p =>
   have e : ∀ g : MRing (Idx F), evC (fun p => σ (pt F p)) g = σ (aeval (pt F) g) := fun g => by
     induction g using MvPolynomial.induction_on with
     | C a => simp [evC]
-    | add p q hp hq => simp only [evC, map_add] at *; rw [hp, hq]
+    | add p q hp hq => simp only [evC, map_add (f := _)] at *; rw [hp, hq]
     | mul_X p i hp => simp only [evC, map_mul, map_X, eval_X, aeval_X] at *; rw [hp]
   refine ⟨⟨fun k => ⟨none, by cases k; simp [pt_none]⟩, fun f hf => ?_⟩, fun a d g h _ _ H => by
     rw [e, e, H, map_mul]; rfl⟩
@@ -208,7 +208,7 @@ theorem ptOver_pt (σ : F →+* ℂ) : PtOver (pt F) (RingHom.id F) σ (fun p =>
   have e2 : ∀ g : MRing (Idx F), eval (fun _ : Unit => (1 : F)) (mConeMap (pt F) g) = aeval (pt F) g := fun g => by
     induction g using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p i hp => rw [map_mul, map_mul, hp, map_mul]; simp [mConeMap]
   have := e f
   rw [← e2, hf'] at this

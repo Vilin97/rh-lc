@@ -15,7 +15,7 @@ theorem Hf_add_left (x y z : EuclideanSpace ℂ ι) : Hf (x + y) z = Hf x z + Hf
   simp only [Hf, PiLp.add_apply, add_mul, Finset.sum_add_distrib]
 
 theorem Hf_add_right (x y z : EuclideanSpace ℂ ι) : Hf z (x + y) = Hf z x + Hf z y := by
-  simp only [Hf, PiLp.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Hf, PiLp.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem Hf_neg_left (x z : EuclideanSpace ℂ ι) : Hf (-x) z = -Hf x z := by
   simp only [Hf, PiLp.neg_apply, neg_mul, Finset.sum_neg_distrib]

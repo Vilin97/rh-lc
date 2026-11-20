@@ -159,7 +159,7 @@ noncomputable def htTrace (D : Datum p) : D.O →+ ℤ where
     have : DistribMulAction.toLinearMap ℤ D.La (a + b) =
         DistribMulAction.toLinearMap ℤ D.La a + DistribMulAction.toLinearMap ℤ D.La b := by
       ext y; exact add_smul _ _ _
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
 
 theorem htTrace_mul_comm (D : Datum p) (a b : D.O) : htTrace D (a * b) = htTrace D (b * a) := by
   haveI := D.freeLa; haveI := D.finLa

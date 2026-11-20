@@ -156,7 +156,7 @@ theorem decomp : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ
   · intro w hw
     have hw' : w ≠ v := by simpa using hw
     ext i j
-    rw [Matrix.map_apply, gaFold_val, fold_apply, map_add, map_mul, map_mul, map_sub, map_one,
+    rw [Matrix.map_apply, gaFold_val, fold_apply, map_add (f := _), map_mul, map_mul, map_sub, map_one,
       compAt_idemAt_ne L v hw', compAt_one_apply]
     simp
   · refine ⟨gaFold_mem_Umax L he' hσ' hei' c hc.1, fun i j => ?_⟩
@@ -172,11 +172,11 @@ theorem decomp : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ
       apply eq_zero_of_compAt
       intro w
       rcases eq_or_ne w v with rfl | hw
-      · rw [map_sub, map_add, map_mul, map_mul, map_sub, map_one, compAt_idemAt_self]
+      · rw [map_sub, map_add (f := _), map_mul, map_mul, map_sub, map_one, compAt_idemAt_self]
         ring
       · have h := congrFun (congrFun (hx w (by simpa using hw)) i) j
         rw [Matrix.map_apply] at h
-        rw [map_sub, map_add, map_mul, map_mul, map_sub, map_one, compAt_idemAt_ne L v hw,
+        rw [map_sub, map_add (f := _), map_mul, map_mul, map_sub, map_one, compAt_idemAt_ne L v hw,
           compAt_one_apply, h]
         ring
     apply Subtype.ext; apply Units.ext

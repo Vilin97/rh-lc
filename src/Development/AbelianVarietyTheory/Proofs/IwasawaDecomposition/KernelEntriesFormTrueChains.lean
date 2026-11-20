@@ -216,7 +216,7 @@ theorem eval_aeval' {σ τ R : Type} [CommRing R] (f : τ → R) (g : σ → MvP
     MvPolynomial.eval f (MvPolynomial.aeval g P) = MvPolynomial.eval (fun k => MvPolynomial.eval f (g k)) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p k hp => simp only [map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.eval_X]
 
 theorem qbar_of_numberField (M : IntermediateField ℚ ℂ) [NumberField M] (s : M) : (s : ℂ) ∈ Qbar :=

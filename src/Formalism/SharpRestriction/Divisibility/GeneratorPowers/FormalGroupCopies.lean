@@ -190,7 +190,7 @@ theorem dpoly_add (P Q : MvPolynomial ι R) (g : PS R n d) :
     dpoly_sup F cp u P (P.support ∪ Q.support) Finset.subset_union_left,
     dpoly_sup F cp u Q (P.support ∪ Q.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl (fun mm _ => ?_)
-  rw [MvPolynomial.coeff_add, map_add, add_mul]
+  rw [MvPolynomial.coeff_add, map_add (f := _), add_mul]
 
 theorem dpoly_monomial (mm : ι →₀ ℕ) (a : R) (g : PS R n d) :
     DpolyN F cp u (MvPolynomial.monomial mm a) g = C a * DmonN F cp u mm g := by

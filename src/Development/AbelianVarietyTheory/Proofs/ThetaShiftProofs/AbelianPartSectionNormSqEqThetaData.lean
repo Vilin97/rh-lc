@@ -248,7 +248,7 @@ theorem form_eq {n g : ℕ} {τ : Matrix (Fin n) (Fin n) ℂ} {c₁ c₂ : Fin n
         have e2 := e (x + l)
         have e3 := hθ ⟨F l, hΛ l⟩ (F x)
         have e4 := hl₀ l x
-        rw [map_add, e3] at e2
+        rw [map_add (f := _), e3] at e2
         have h4 : χ ⟨F l, hΛ l⟩ ≠ 0 := norm_ne_zero_iff.1 (by rw [hχ]; exact one_ne_zero)
         simp only [hsub]
         have e5 : ∀ a b a' b' : ℂ, Complex.exp (Real.pi * (a - a') + Real.pi / 2 * (b - b')) =
@@ -471,7 +471,7 @@ theorem norm_eq : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberFie
   have hi2 : ∀ z, Θ.h *ᵥ (Θ.h⁻¹ *ᵥ z) = z := fun z => by
     rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hh, Matrix.one_mulVec]
   have hP : ∀ t, F (Ha.Pw w t) = F (Ha.P₀ t) := fun t => by
-    rw [Ha.Pw_eq, map_add, map_smul, F0 _ fun s => hG1 _ (Ha.shift s t).1, smul_zero, add_zero]
+    rw [Ha.Pw_eq, map_add (f := _), map_smul, F0 _ fun s => hG1 _ (Ha.shift s t).1, smul_zero, add_zero]
   have hS : ∀ k ∈ Θ.S, F (Θ.h⁻¹ *ᵥ Pi.single k 1) = 0 := fun k hk => by
     rw [← (Θ.per w k).1, hi1, hP]
     have h1 := (Ha.riemann _).1 ((Θ.orth (Pi.single (.inl k) 1)).2 ⟨fun k' => by simp, fun k' hk' => by
@@ -492,7 +492,7 @@ theorem norm_eq : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberFie
       by_cases h : k ∈ Θ.S <;> simp [ext, h, Finset.sum_apply, Pi.single_apply]
     conv_rhs => rw [h1]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [Matrix.mulVec_add, map_add, Matrix.mulVec_sum, map_sum, Finset.sum_eq_zero fun k hk => by
+      rw [Matrix.mulVec_add, map_add (f := _), Matrix.mulVec_sum, map_sum, Finset.sum_eq_zero fun k hk => by
       rw [Matrix.mulVec_smul, map_smul, hS k hk, smul_zero], add_zero]
     rfl
   have hinj : Function.Injective fun i => (e i).1 := Subtype.val_injective.comp e.injective

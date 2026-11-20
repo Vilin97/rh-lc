@@ -40,7 +40,7 @@ theorem exists_fixAll_cusp (π : CuspSub E n) (Kf : ∀ w : Pl E, Subgroup (GLw 
       { carrier := {χ | ∀ u ∉ insert w S, FixAt Kf u χ.1}
         add_mem' := fun {a b} ha hb u hu k hk => by
           show finRep E n _ (a.1 + b.1) = a.1 + b.1
-          rw [map_add, ha u hu k hk, hb u hu k hk]
+          rw [map_add (f := _), ha u hu k hk, hb u hu k hk]
         zero_mem' := fun u _ k _ => map_zero _
         smul_mem' := fun c a ha u hu k hk => by
           show finRep E n _ (c • a.1) = c • a.1

@@ -312,7 +312,7 @@ theorem coeff_l_mulCv_frob (Y : FBChart C V O dd) {γ : Fin dd → PowerSeries C
     conv_lhs => rw [hsplit]
     rw [MvPowerSeries.subst_add hG, MvPowerSeries.subst_add hG]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [eP, map_add, map_add, hA2', add_zero, hD3, map_sum]
+    rw [eP, map_add (f := _), map_add (f := _), hA2', add_zero, hD3, map_sum]
   have e : ∀ (a : C) (s t : Fin dd → C),
       a + ∑ i, s i - ∑ i, t i = a + ∑ i, (s i - t i) := fun a s t => by
     rw [Finset.sum_sub_distrib]

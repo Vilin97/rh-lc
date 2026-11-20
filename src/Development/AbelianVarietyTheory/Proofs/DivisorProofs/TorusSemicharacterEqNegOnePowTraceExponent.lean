@@ -140,9 +140,9 @@ theorem embT_c_add_conj (τ : D.what₂.Tau) :
       -1 / (((Ideal.absNorm D.host.ccK : ℕ) : ℂ) * (Complex.I * (Real.sqrt D.host.d : ℂ))) *
         ((1 + Complex.I * (Real.sqrt D.host.d : ℂ)) / 2) ^ 2 := by
     unfold Formalism.BasicNotions.Host.xi0
-    simp only [map_mul, map_div₀, map_neg, map_one, map_natCast, map_pow, map_add, map_ofNat, embT_sqrt]
+    simp only [map_mul, map_div₀, map_neg, map_one, map_natCast, map_pow, map_add (f := _), map_ofNat, embT_sqrt]
   rw [e]
-  simp only [map_mul, map_div₀, map_neg, map_one, map_pow, map_add, map_natCast, Complex.conj_I,
+  simp only [map_mul, map_div₀, map_neg, map_one, map_pow, map_add (f := _), map_natCast, Complex.conj_I,
     Complex.conj_ofReal, map_ofNat]
   field_simp
   ring_nf

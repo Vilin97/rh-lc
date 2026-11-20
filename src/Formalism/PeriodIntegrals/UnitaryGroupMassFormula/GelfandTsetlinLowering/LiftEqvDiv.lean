@@ -43,7 +43,7 @@ lemma sqAct_tv {r : ℕ} (ν : DomWeight r) (a b : Fin r) (hab : a ≠ b) (t : �
   rw [hdet, one_zpow, Units.val_one, one_smul, hu, wlocal_E_transpose]
   induction f using MvPolynomial.induction_on
   next c => simp [Formalism.GradedWeylDivisibility.rowAct, Formalism.GradedWeylDivisibility.rowGen]
-  next p q hp hq => simp only [map_add, Polynomial.eval_add, hp, hq]
+  next p q hp hq => simp only [map_add (f := _), Polynomial.eval_add, hp, hq]
   next p v hp =>
     rw [map_mul, map_mul, Polynomial.eval_mul, hp]
     congr 1

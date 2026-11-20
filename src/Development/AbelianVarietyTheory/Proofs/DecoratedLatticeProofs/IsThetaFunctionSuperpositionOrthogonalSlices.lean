@@ -36,7 +36,7 @@ variable {S A B T : HSp D} (o : OrthDec S A B)
 
 theorem symm_add (r u : WO A T) (y : WO B T) :
     (o.resS T).symm (u + r, y) = (o.resS T).symm (u, y) + (o.resS T).symm (r, 0) := by
-  rw [← map_add]; simp
+  rw [← map_add (f := _)]; simp
 
 theorem sympl_ext_right (r u : WO A T) (y : WO B T) :
     symplOH S T ((o.resS T).symm (u, y)) ((o.resS T).symm (r, 0)) = symplOH A T u r := by

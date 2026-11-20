@@ -27,7 +27,7 @@ theorem xiL_expand {V : Type} [AddCommGroup V] [Module ℂ V] (H : Sesq V) (α :
       Complex.exp (-(Real.pi : ℂ) * H z (x + y) - (Real.pi : ℂ) * H (x + y) (x + y) / 2) := by
     rw [← Complex.exp_add, ← Complex.exp_add]
     congr 1
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     ring
   have he : e (z + x + y) = e (z + (x + y)) := by rw [add_assoc]
   rw [he]
@@ -299,7 +299,7 @@ theorem la_le_lamK (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (N : Submodule (𝓞 
         Submodule.subset_span ⟨_, Submodule.subset_span ⟨c, hc, t, ht, rfl⟩, Matrix.toLin' A, toLin_mem N N' h, rfl⟩, ?_⟩
       rw [embH_smul_eq_smul_emV, matH_toLin]
     | zero => rw [smul_zero, map_zero, smul_zero]; exact zero_mem _
-    | add x y _ _ h1 h2 => rw [smul_add, map_add, smul_add]; exact add_mem h1 h2
+    | add x y _ _ h1 h2 => rw [smul_add, map_add (f := _), smul_add]; exact add_mem h1 h2
     | smul ρ A _ h =>
       rw [smul_comm, KS.emV_smulO, ← KS.opM_smul]
       exact lamK_stable cc δ N N' ρ h
@@ -311,7 +311,7 @@ theorem la_le_lamK (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (N : Submodule (𝓞 
       obtain ⟨t, ht, A₀, hA₀, rfl⟩ := h
       exact key4 c hc t ht A₀ hA₀
     | zero => rw [map_zero, smul_zero]; exact zero_mem _
-    | add x y _ _ h1 h2 => rw [map_add, smul_add]; exact add_mem h1 h2
+    | add x y _ _ h1 h2 => rw [map_add (f := _), smul_add]; exact add_mem h1 h2
     | smul ρ A _ h =>
       rw [KS.emV_smulO, ← KS.opM_smul]
       exact lamK_stable cc δ N N' ρ h

@@ -70,7 +70,7 @@ def comp (g₁ g₂ : IntSim D p) : IntSim D p where
     obtain ⟨b₂, d₂, h₂⟩ := g₂.onto n h b₁
     refine ⟨b₂, g₂.k • d₁ + g₁.g n d₂, ?_⟩
     simp only [LinearMap.comp_apply]
-    rw [h₂, map_add, map_nsmul, map_nsmul, h₁]
+    rw [h₂, map_add (f := _), map_nsmul, map_nsmul, h₁]
     module
 
 theorem scalar_k (D : Datum F) (m : ℕ) (hm : m.Coprime p) : (scalar D m hm).k = m := rfl

@@ -87,7 +87,7 @@ theorem inv_kummerCup : ∀ (K Ω : Type) [Field K] [ValuativeRel K] [Topologica
     let u : Ωˣ := Units.map (algebraMap K Ω : K →* Ω) a
     have key := kummer_key ζ y u g hζ (show (u : Ω) = (y : Ω) ^ n from hy.symm) (hκ g)
       (show (κ g * χ h).val = ((κ g).val * (χ h).val) % n from ZMod.val_mul _ _) hsum
-    rw [map_add, cochainOf_add, Pi.add_apply, ez, hwc, em]
+    rw [map_add (f := _), cochainOf_add, Pi.add_apply, ez, hwc, em]
     exact key
   have e1 : cohomologyULiftIntAddEquiv (galUnits.{0} K Ω) 2 (cohomologyπ _ 2 x) =
       cohomologyπ (galUnitsZ K Ω) 2 z :=
@@ -95,14 +95,14 @@ theorem inv_kummerCup : ∀ (K Ω : Type) [Field K] [ValuativeRel K] [Topologica
   have e2 : brauerInv K Ω (cohomologyπ _ 2 x) = brauerInvZ K Ω (cohomologyπ (galUnitsZ K Ω) 2 z) := by
     rw [← e1, brauerInvZ_cohomologyULiftIntAddEquiv]
   have e3 : cohomologyπ (galUnitsZ K Ω) 2 z + galCupClass K Ω ψ a = 0 := by
-    rw [galCupClass, ← hw, ← map_add]
+    rw [galCupClass, ← hw, ← map_add (f := _)]
     exact hz
   have e4 := brauerInvZ_galCupClass_liftNormal ψ a
   have e5 : ψ (Additive.ofMul ((localArtinMap K Ω a).liftNormal Ω)) = zmodToQZ n 1 := by
     change zmodToQZ n (χ ((localArtinMap K Ω a).liftNormal Ω)) = _
     rw [hdeg _ (unramifiedDegree_liftNormal_localArtinMap hord)]
   have e6 := congrArg (brauerInvZ K Ω) e3
-  rw [map_add, map_zero, e4, e5] at e6
+  rw [map_add (f := _), map_zero, e4, e5] at e6
   rw [e2]
   exact eq_neg_of_add_eq_zero_left e6
 

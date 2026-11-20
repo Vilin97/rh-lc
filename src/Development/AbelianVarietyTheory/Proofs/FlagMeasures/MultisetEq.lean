@@ -144,7 +144,7 @@ theorem multiset_eq {n : ℕ} (f g f' g' : Fin n → ℂ)
   have hr : ∀ p q : Fin n → ℂ, ((∏ a, (X - C (p a))) * ∏ a, ((X : ℂ[X]) - C (q a))).roots =
       univ.val.map p + univ.val.map q := by
     intro p q
-    rw [← Polynomial.roots_multiset_prod_X_sub_C (univ.val.map p + univ.val.map q), Multiset.map_add,
+    rw [← Polynomial.roots_multiset_prod_X_sub_C (univ.val.map p + univ.val.map q), Multiset.map_add (f := _),
       Multiset.prod_add, Multiset.map_map, Multiset.map_map]
     rfl
   rw [← hr, ← hr, hP]
@@ -170,7 +170,7 @@ theorem sep {n : ℕ} (l l' : Fin n → ℂ) :
       rw [← Polynomial.coeToPowerSeries.ringHom_apply, map_prod]
       simp
     simp only [Polynomial.coe_mul, hcoe]
-    simp only [Function.comp, map_add, map_one]
+    simp only [Function.comp, map_add (f := _), map_one]
     rw [← g1, ← g2]
     ring
   · rintro ⟨s, rfl⟩

@@ -21,7 +21,7 @@ theorem isCh_one {Γ P : Subgroup G} {c : G → ℂ} (h : IsCh Γ P c) : c 1 = 1
 
 def fixSp (K Q : Subgroup G) (π : Q →* G') (c₀ : G → ℂ) (ρ : K →* (W →L[ℂ] W)) : Submodule ℂ W where
   carrier := {w | ∀ r : K, ∀ hr : (r : G) ∈ Q, π ⟨r, hr⟩ = 1 → c₀ r • ρ r w = w}
-  add_mem' := fun {a b} ha hb r hr h1 => by rw [map_add, smul_add, ha r hr h1, hb r hr h1]
+  add_mem' := fun {a b} ha hb r hr h1 => by rw [map_add (f := _), smul_add, ha r hr h1, hb r hr h1]
   zero_mem' := fun r _ _ => by simp
   smul_mem' := fun a w hw r hr h1 => by rw [map_smul, smul_comm, hw r hr h1]
 

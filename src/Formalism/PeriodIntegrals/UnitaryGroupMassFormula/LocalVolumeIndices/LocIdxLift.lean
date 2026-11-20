@@ -25,7 +25,7 @@ theorem LocIdxLift_tV_theta_same (p : HeightOneSpectrum (𝓞 I.F)) (t : Fv I.F 
     rw [TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul]
     show evalV I.F p (singleV I.F p a) ⊗ₜ[I.F] e = a ⊗ₜ[I.F] e
     rw [Comp_evalV, Comp_single_same]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem LocIdxLift_tV_theta_ne (p v : HeightOneSpectrum (𝓞 I.F)) (h : v ≠ p) (t : Fv I.F p ⊗[I.F] I.E) :
     tV I v (thetaP I p t) = 0 := by
@@ -37,7 +37,7 @@ theorem LocIdxLift_tV_theta_ne (p v : HeightOneSpectrum (𝓞 I.F)) (h : v ≠ p
     rw [TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul]
     show evalV I.F v (singleV I.F p a) ⊗ₜ[I.F] e = 0
     rw [Comp_evalV, Comp_single_ne I p v h, TensorProduct.zero_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 theorem LocIdxLift_inj (t : Af I.F ⊗[I.F] I.E) (h : ∀ v, tV I v t = 0) : t = 0 := by
   have h0 := PI.FinKW.local_vector_injective I ((Algebra.TensorProduct.comm I.F I.E (Af I.F)).symm t) (fun v => by
@@ -65,14 +65,14 @@ def liftM (p : HeightOneSpectrum (𝓞 I.F)) (Y : Matrix (Fin I.n) (Fin I.n) (Fv
 theorem LocIdxLift_liftM_same (p : HeightOneSpectrum (𝓞 I.F))
     (Y : Matrix (Fin I.n) (Fin I.n) (Fv I.F p ⊗[I.F] I.E)) : (liftM I p Y).map (tV I p) = Y := by
   ext i j
-  simp only [liftM, Matrix.map_apply, Matrix.add_apply, map_add, LocIdxLift_tV_theta_same,
+  simp only [liftM, Matrix.map_apply, Matrix.add_apply, map_add (f := _), LocIdxLift_tV_theta_same,
     Matrix.sub_apply, Matrix.one_apply]
   split_ifs <;> simp
 
 theorem LocIdxLift_liftM_ne (p v : HeightOneSpectrum (𝓞 I.F)) (h : v ≠ p)
     (Y : Matrix (Fin I.n) (Fin I.n) (Fv I.F p ⊗[I.F] I.E)) : (liftM I p Y).map (tV I v) = 1 := by
   ext i j
-  simp only [liftM, Matrix.map_apply, Matrix.add_apply, map_add, LocIdxLift_tV_theta_ne I p v h, add_zero,
+  simp only [liftM, Matrix.map_apply, Matrix.add_apply, map_add (f := _), LocIdxLift_tV_theta_ne I p v h, add_zero,
     Matrix.one_apply]
   split_ifs <;> simp
 

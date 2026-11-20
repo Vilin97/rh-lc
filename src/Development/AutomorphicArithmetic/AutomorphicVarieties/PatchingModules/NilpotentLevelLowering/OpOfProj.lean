@@ -19,7 +19,7 @@ private theorem opOf_proj {Λ Γ Q M : Type} [CommRing Λ] [Group Γ] [Group Q] 
   have key : ∀ a : MonoidAlgebra Λ Q, ρ'.asAlgebraHom (σ a) = ρ.asAlgebraHom a := fun a => by
     induction a using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
     | single g c => simp [σ, ρ']
   haveI := RingHomInvPair.of_ringEquiv σ
   haveI := RingHomInvPair.of_ringEquiv_symm σ
@@ -93,7 +93,7 @@ private theorem opOf_tr {Λ R G P Γ σ : Type} [CommRing Λ] [CommRing R] [Alge
       congr 1
       refine Fintype.sum_equiv (Equiv.mulRight (e (γ p))) _ _ fun g => ?_
       rw [Equiv.coe_mulRight, map_mul, Module.End.mul_apply])
-    rw [hY, map_add] at h4
+    rw [hY, map_add (f := _)] at h4
     exact add_eq_left.1 h4
 
 private theorem opOf_gen {l q n : ℕ} (hl : l.Prime) (a : Fin q → ℕ) :

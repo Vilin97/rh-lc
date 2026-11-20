@@ -195,7 +195,7 @@ theorem _root_.GlobalTheory.torusAtExists_of_parts :
             (fun τ : X.Ψ => _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ.1 u) + (fun τ : X.Ψ => _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ.1 v) := by
           funext τ a
           simp [_root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb]
-        simp only [h, map_add] }
+        simp only [h, map_add (f := _)] }
   have hφ : ∀ v, φ v = Φ (fun τ => _root_.ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ.1 v) := fun v => rfl
   have hsmul : ∀ (α : 𝓞 E) (v : Fin r → E), α • v = (α : E) • v := fun α v => by
     funext i
@@ -245,7 +245,7 @@ theorem _root_.GlobalTheory.torusAtExists_of_parts :
       rw [hsmul]
       rfl
     have hsplit : φ (w0 • v) = φ ((w0 - w') • v) + φ (w' • v) := by
-      rw [← map_add, ← add_smul, sub_add_cancel]
+      rw [← map_add (f := _), ← add_smul, sub_add_cancel]
     rw [← hφact, ← hφact, hsplit, _root_.GlobalTheory.TorusAtAssembly.im_Hf_add_right, himφ, himφ, himφ, hsub]
     have hkR := congrArg (fun q : ℚ => (q : ℝ)) hk
     push_cast at hkR

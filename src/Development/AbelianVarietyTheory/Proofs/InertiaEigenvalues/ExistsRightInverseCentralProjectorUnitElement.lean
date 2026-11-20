@@ -115,7 +115,7 @@ theorem exists_rightInv_uElt : ∀ {G : Type} [Group G] [Fintype G] (U : Subgrou
     have hTw : Representation.asAlgebraHom τ.ρ w =
         Representation.asAlgebraHom τ.ρ (cU U f) * Representation.asAlgebraHom τ.ρ e + 1 -
           Representation.asAlgebraHom τ.ρ e := by
-      rw [hw, uElt, map_add, map_mul, map_sub, map_one, add_sub_assoc]
+      rw [hw, uElt, map_add (f := _), map_mul, map_sub, map_one, add_sub_assoc]
     rw [hμ, hμ0, zero_smul, hν] at hTw
     have hν01 : ν * (ν - 1) = 0 := by linear_combination hνν
     rcases mul_eq_zero.mp hν01 with h0 | h0

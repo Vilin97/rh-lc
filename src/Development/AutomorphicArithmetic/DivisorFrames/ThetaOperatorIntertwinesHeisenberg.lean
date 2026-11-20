@@ -28,7 +28,7 @@ private theorem thetaSum_rho_rho' {F : Type} [Field F] [NumberField F] {U : Type
     (Φ : (κ → AF F) → ℂ) (x y : U) :
     GlobalTheory.WeilM.thetaSum F (co.rho ψ x (co.rho ψ y Φ)) =
       ψ (⅟(2 : AF F) * B x y) * GlobalTheory.WeilM.thetaSum F (co.rho ψ (x + y) Φ) := by
-  simp only [GlobalTheory.WeilM.Darboux.rho, schr_schr', GlobalTheory.WeilM.thetaSum, map_add, Pi.smul_apply, smul_eq_mul, tsum_mul_left,
+  simp only [GlobalTheory.WeilM.Darboux.rho, schr_schr', GlobalTheory.WeilM.thetaSum, map_add (f := _), Pi.smul_apply, smul_eq_mul, tsum_mul_left,
     co.form]
 
 private theorem exists_co' {D : D7} {ε : Bool} {S X : HSp D} {d : ℕ} (e : Fin d ≃ Fin X.rank)

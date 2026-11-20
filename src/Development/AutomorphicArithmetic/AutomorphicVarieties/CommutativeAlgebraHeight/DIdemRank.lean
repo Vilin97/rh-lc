@@ -13,7 +13,7 @@ private theorem determinant_evaluation_aeval {n : ℕ} {A E : Type} [CommRing A]
 private theorem coeff_aeval_C_mul_X' {A : Type} [CommRing A] (P : A[X]) (a : A[X]) (j : ℕ) :
     (aeval (Polynomial.C a * Polynomial.X : A[X][X]) P).coeff j = Polynomial.C (P.coeff j) * a ^ j := by
   induction P using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, Polynomial.coeff_add, hp, hq, Polynomial.coeff_add, map_add, add_mul]
+  | add p q hp hq => rw [map_add (f := _), Polynomial.coeff_add, hp, hq, Polynomial.coeff_add, map_add (f := _), add_mul]
   | monomial i c =>
     have e1 : aeval (Polynomial.C a * Polynomial.X : A[X][X]) (monomial i c) =
         Polynomial.C (Polynomial.C c * a ^ i) * Polynomial.X ^ i := by

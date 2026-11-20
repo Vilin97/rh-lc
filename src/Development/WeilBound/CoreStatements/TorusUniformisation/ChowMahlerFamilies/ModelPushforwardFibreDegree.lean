@@ -63,7 +63,7 @@ theorem Rep.add (hp : ∀ W ∈ 𝒲, W.IsPrime) {z z' : L} {F G F' G' : MRing �
   refine ⟨⟨b + b', IsWeightedHomogeneous.add (IsWeightedHomogeneous.mul hF hG')
     (IsWeightedHomogeneous.mul hG hF'), IsWeightedHomogeneous.mul hG hG'⟩, (h.mul hp h').ne,
     (h.mul hp h').avoid, ?_⟩
-  rw [h.eq, h'.eq, map_add, map_mul, map_mul, map_mul, div_add_div _ _ h.ne h'.ne]
+  rw [h.eq, h'.eq, map_add (f := _), map_mul, map_mul, map_mul, div_add_div _ _ h.ne h'.ne]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in
 theorem rep_C (hp : ∀ W ∈ 𝒲, W.IsPrime) (r : R) : Rep φ 𝒲 (φ (C r)) (C r) 1 :=
@@ -121,7 +121,7 @@ theorem exists_ev (hp : ∀ W ∈ 𝒲, W.IsPrime) {E : Type} [Field E] (ψ : MR
     rw [wd (hz (a * b)) ((hz a).mul hp (hz b)), map_mul, map_mul, div_mul_div_comm]
   · rw [wd (hz 0) (show Rep φ 𝒲 _ (C 0) 1 by simpa using rep_C (φ := φ) hp 0)]; simp
   · intro a b
-    rw [wd (hz (a + b)) ((hz a).add hp (hz b)), map_add, map_mul, map_mul, map_mul,
+    rw [wd (hz (a + b)) ((hz a).add hp (hz b)), map_add (f := _), map_mul, map_mul, map_mul,
       div_add_div _ _ (hne (hz a)) (hne (hz b))]
 
 def ffield (φ : MRing ι R →+* L) : Subfield L where
@@ -579,7 +579,7 @@ theorem Setup.exists_centre (S : Setup φ P 𝒲) (V : ValuationSubring L) (hV :
     intro p
     induction p using MvPolynomial.induction_on with
     | C a => rw [dehom, eval₂Hom_C]; exact hV a
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p v hp =>
       rw [map_mul]
       refine mul_mem hp ?_
@@ -684,7 +684,7 @@ theorem Setup.finite (S : Setup φ P 𝒲) (hne : 𝒲.Nonempty) {A : Subring L}
       refine ⟨d * d', hnm h1 h1', D.mul_mem h2 h2', ?_⟩
       have e : ((d * d' : loc φ 𝒲) : L) * dehom φ (c W) (p + q) =
           (d : L) * dehom φ (c W) p * d' + d * (d' * dehom φ (c W) q) := by
-        rw [map_add, Subring.coe_mul]; ring
+        rw [map_add (f := _), Subring.coe_mul]; ring
       rw [e]
       exact D.add_mem (D.mul_mem h3 h2') (D.mul_mem h2 h3')
     | mul_X p v hp =>
@@ -1016,7 +1016,7 @@ theorem ffield_aeval {O : Type} [CommRing O] [Algebra O L] (y : (Σ k, ι k) →
       | C a =>
         rw [dehom, eval₂Hom_C, RingHom.comp_apply, hC]
         exact Subfield.subset_closure (Or.inl ⟨a, rfl⟩)
-      | add p q hp hq => rw [map_add]; exact add_mem hp hq
+      | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
       | mul_X p v hp =>
         rw [map_mul]
         refine mul_mem hp ?_

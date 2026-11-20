@@ -186,7 +186,7 @@ theorem exists_sqrt_half [IsTotallyReal F] (w : InfinitePlace F) :
   refine ⟨e.symm (√2)⁻¹ ⊗ₜ 1, ?_, by simp [sigR]⟩
   have h : (√2)⁻¹ * (√2)⁻¹ + (√2)⁻¹ * (√2)⁻¹ = (1 : ℝ) := by
     rw [← mul_inv, Real.mul_self_sqrt (by norm_num)]; norm_num
-  rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, ← TensorProduct.add_tmul, ← map_mul, ← map_add, h, map_one]
+  rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, ← TensorProduct.add_tmul, ← map_mul, ← map_add (f := _), h, map_one]
   rfl
 
 omit [NumberField E] in
@@ -233,7 +233,7 @@ theorem compInf_sigR (w : InfinitePlace F) (z : AF F ⊗[F] E) :
     compInf F E w (sigR _ σ z) = sigR _ σ (compInf F E w z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a b => rfl
 
 omit [NumberField E] in

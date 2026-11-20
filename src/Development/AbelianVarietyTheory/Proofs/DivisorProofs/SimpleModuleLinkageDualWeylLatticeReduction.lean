@@ -50,8 +50,8 @@ theorem pure_step {O : Type} [CommRing O] {N : ℕ} {ι : Type} [DecidableEq ι]
     obtain ⟨y₁, hy₁, he₁⟩ := h₁ x
     obtain ⟨y₂, hy₂, he₂⟩ := h₂ x
     refine ⟨y₁ + y₂, ?_, ?_⟩
-    · rw [Submodule.coe_add, hy₁, hy₂, map_add, LinearMap.add_apply]
-    · rw [map_add, map_add, LinearMap.add_apply, he₁, he₂, MultilinearMap.map_update_add]
+    · rw [Submodule.coe_add, hy₁, hy₂, map_add (f := _), LinearMap.add_apply]
+    · rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, he₁, he₂, MultilinearMap.map_update_add]
 
 theorem scalar_of {O : Type} [CommRing O] {N : ℕ} {ι : Type} [DecidableEq ι] (τ : ι)
     (lam : ι → ℕ → ℕ) (P : ι → (Fin N → ℕ) → Module.End O (NablaT O N lam))
@@ -119,7 +119,7 @@ theorem compat {O : Type} [CommRing O] {N : ℕ} {ι : Type} [DecidableEq ι] {l
     exact h₁ _ _ (h₂ z y h)
   | add Φ₁ Φ₂ h₁ h₂ =>
     intro z y h
-    rw [map_add, map_add, add_smul, map_add, LinearMap.add_apply, h₁ z y h, h₂ z y h, Submodule.Quotient.mk_add]
+    rw [map_add (f := _), map_add (f := _), add_smul, map_add (f := _), LinearMap.add_apply, h₁ z y h, h₂ z y h, Submodule.Quotient.mk_add]
 
 theorem dvd_of_smul_eq_zero {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {V : Type}
     [AddCommGroup V] [Module O V] {ϖ : O} (hϖ : Irreducible ϖ) (d : O) (y : V)

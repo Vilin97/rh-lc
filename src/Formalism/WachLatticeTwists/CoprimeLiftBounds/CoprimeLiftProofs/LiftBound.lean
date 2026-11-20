@@ -31,7 +31,7 @@ theorem colRho : StatColRho := by
       have := key g g.2
       simp only [map_smul, ← Finset.smul_sum]
       exact this)
-  rw [map_add, mkQ_cobZ, add_zero] at hz
+  rw [map_add (f := _), mkQ_cobZ, add_zero] at hz
   exact hz
 
 theorem liftBound : StatLiftBound := by

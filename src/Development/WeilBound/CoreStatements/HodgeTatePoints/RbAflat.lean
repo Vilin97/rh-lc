@@ -87,7 +87,7 @@ theorem Phi_mem_linFun [Fact p.Prime] [CharP F p] (hinj : Function.Injective (al
   rw [Phi_apply, Phi_apply, Phi_apply, ← map_sub, ← map_sub, mem_pInt_iff hinj,
     ← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib]
   refine Ideal.sum_mem _ fun j _ => ?_
-  rw [← mul_sub, ← mul_sub, map_add, Finsupp.add_apply]
+  rw [← mul_sub, ← mul_sub, map_add (f := _), Finsupp.add_apply]
   exact Ideal.mul_mem_left _ _ (FundGen.frob_pow_additive p F σ hσ _ _ _)
 
 theorem pFun_le_addFun : pFun (C := C) R p N ≤ addFun R p N := fun g hg x y =>

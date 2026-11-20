@@ -39,13 +39,13 @@ theorem part_eq_of_congMod : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Ma
     have key : eStd D.X.S.g _ (t : D.X.S.Gam) (D.m • a) =
         eStd D.X.S.g _ (t : D.X.S.Gam) (D.m • a') + (D.m * D.m) • eStd D.X.S.g _ (t : D.X.S.Gam) b := by
       rw [hsplit]
-      simp only [← eStdBilin_apply, map_add, map_nsmul, ht, smul_zero, add_zero]
+      simp only [← eStdBilin_apply, map_add (f := _), map_nsmul, ht, smul_zero, add_zero]
     have hN : ZMod.castHom (dvd_mul_left D.X.S.N D.X.S.r) (ZMod D.X.S.N)
         ((D.m * D.m) • eStd D.X.S.g _ (t : D.X.S.Gam) b) = 0 := by
       rw [map_nsmul, ← sq, ← D.sq, nsmul_eq_mul, ZMod.natCast_self, zero_mul]
     show ZMod.castHom (dvd_mul_left D.X.S.N D.X.S.r) (ZMod D.X.S.N) (eStd D.X.S.g _ (t : D.X.S.Gam) (D.m • a)) =
       ZMod.castHom (dvd_mul_left D.X.S.N D.X.S.r) (ZMod D.X.S.N) (eStd D.X.S.g _ (t : D.X.S.Gam) (D.m • a'))
-    rw [key, map_add, hN, add_zero]
+    rw [key, map_add (f := _), hN, add_zero]
   simp only [part, hw']
 
 end GlobalTheory.Poinc.GSum

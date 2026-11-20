@@ -209,7 +209,7 @@ theorem sig_mem (w : HeightOneSpectrum (𝓞 D.host.E)) {c : X.B.I.E ⊗[X.B.I.F
     rw [X.ιE_conj, hab, ← star_conj, ← GlobalTheory.SumWCompare.cj_coe]
     exact (X.ιE.apply_symm_apply _).symm
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul r a _ ha =>
     show sigA X.B.I ((r : X.B.I.E ⊗[X.B.I.F] Formalism.MainNotions.S.Af X.B.I.F) * a) ∈ _
     rw [map_mul]

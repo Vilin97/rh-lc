@@ -277,7 +277,7 @@ theorem intS_inv [Fintype σ] (Φ t : σ → MvPowerSeries σ C) (hΦ0 : ∀ x, 
         subst t (Φ x - ∑ y, L x y • (X y : MvPowerSeries σ C)) := by
       conv_lhs => rw [show Φ x = (∑ y, L x y • (X y : MvPowerSeries σ C)) +
         (Φ x - ∑ y, L x y • (X y : MvPowerSeries σ C)) by ring]
-      rw [← coe_substAlgHom hts, map_add]
+      rw [← coe_substAlgHom hts, map_add (f := _)]
     have e2 : subst t (∑ y, L x y • (X y : MvPowerSeries σ C)) = ∑ y, L x y • t y := by
       set_option synthInstance.maxHeartbeats 100000 in
         rw [← coe_substAlgHom hts, map_sum]
@@ -306,7 +306,7 @@ theorem intS_inv [Fintype σ] (Φ t : σ → MvPowerSeries σ C) (hΦ0 : ∀ x, 
         intro x
         have hc := congrArg (coeff μ) (hsplit x)
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [map_add, map_sum] at hc
+          rw [map_add (f := _), map_sum] at hc
         simp only [coeff_smul] at hc
         have hmv : (Matrix.mulVec L fun y => coeff μ (t y)) x = ∑ y, L x y * coeff μ (t y) := rfl
         have hval : (Matrix.mulVec L fun y => coeff μ (t y)) x = coeff μ (X x : MvPowerSeries σ C) -

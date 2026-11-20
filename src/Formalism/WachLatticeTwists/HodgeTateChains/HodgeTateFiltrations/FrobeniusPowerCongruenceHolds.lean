@@ -27,7 +27,7 @@ theorem idealStep : StatIdealStep := by
         rw [e2, pow_add]
         exact Ideal.mul_mem_mul hx (h1 y hy)
     · intro x y hx hy
-      have e : σ (x + y) - (x + y) = (σ x - x) + (σ y - y) := by rw [map_add]; ring
+      have e : σ (x + y) - (x + y) = (σ x - x) + (σ y - y) := by rw [map_add (f := _)]; ring
       rw [e]
       exact Ideal.add_mem _ hx hy
 
@@ -44,7 +44,7 @@ theorem filtStep : StatFiltStep := by
       rw [← Submodule.smul_assoc, smul_eq_mul, ← pow_succ] at h
       exact h
   · intro x y hx hy
-    have e : γ (x + y) - (x + y) = (γ x - x) + (γ y - y) := by rw [map_add]; abel
+    have e : γ (x + y) - (x + y) = (γ x - x) + (γ y - y) := by rw [map_add (f := _)]; abel
     rw [e]
     exact Submodule.add_mem _ hx hy
 

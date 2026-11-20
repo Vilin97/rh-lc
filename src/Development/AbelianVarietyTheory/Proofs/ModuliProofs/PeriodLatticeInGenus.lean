@@ -38,7 +38,7 @@ theorem exists_lift (I' : TateIso D' k Q act e) (I : TateIso D k Q act e) {n : �
   let φ : D.La →ₗ[𝓞 E] D'.La ⧸ N :=
     { toFun := fun a => N.mkQ (s a)
       map_add' := fun a b => by
-        rw [← map_add, hN, I'.add, hs, hs, hs, I.add]
+        rw [← map_add (f := _), hN, I'.add, hs, hs, hs, I.add]
       map_smul' := fun c a => by
         rw [RingHom.id_apply, ← map_smul, hN, I'.lin, hs, hs, I.lin] }
   have := D.proj
@@ -147,7 +147,7 @@ noncomputable def periodTateIso {E : Type} [Field E] [NumberField E] [IsCMField 
   ζ_prim _ hn := expRoot_prim hn
   ζ_pow _ _ hn hm := expRoot_pow hn hm
   ev n x := u.ex ((n : ℂ)⁻¹ • Q x)
-  add n a b := by rw [map_add, smul_add, u.ex_add]
+  add n a b := by rw [map_add (f := _), smul_add, u.ex_add]
   lin n c a := hact c n a
   ker n hn a := by
     have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'

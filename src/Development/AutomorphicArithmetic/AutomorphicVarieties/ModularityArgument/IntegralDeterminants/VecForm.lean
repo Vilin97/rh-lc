@@ -11,7 +11,7 @@ open scoped Classical
 private noncomputable def fixW {E : Type} [Field E] [NumberField E] [IsCMField E] (n : ℕ)
     (w : HeightOneSpectrum (𝓞 E)) : Submodule ℂ (UA E n → ℂ) where
   carrier := {ψ | ∀ y ∈ locU n w, cLoc w y ∈ GlobalTheory.LFun.KGL w n → RU E n y ψ = ψ}
-  add_mem' ha hb y hy hk := by rw [map_add, ha y hy hk, hb y hy hk]
+  add_mem' ha hb y hy hk := by rw [map_add (f := _), ha y hy hk, hb y hy hk]
   zero_mem' _ _ _ := map_zero _
   smul_mem' c _ ha y hy hk := by rw [map_smul, ha y hy hk]
 

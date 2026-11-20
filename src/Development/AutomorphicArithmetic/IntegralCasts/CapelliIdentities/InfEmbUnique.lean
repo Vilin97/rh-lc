@@ -57,7 +57,7 @@ theorem UpperTheory.Reformulated.B.Qf27.infEmb_unique :
   refine RingHom.ext fun z ↦ ?_
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul a x =>
     have e : a ⊗ₜ[F] x = (a ⊗ₜ[F] (1 : E)) * ((1 : UpperTheory.Reformulated.B.Qf27.Ainf F) ⊗ₜ[F] x) := by
       rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]

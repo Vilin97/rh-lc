@@ -166,7 +166,7 @@ theorem mem_span_of_map_eq_zero (R A B D : Type) [CommRing R] [CommRing A] [Comm
       (mapBaseChange_surjective R A B hs) v).mp hv'
     clear hv hv'
     induction w with
-    | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
     | tmul d w =>
       obtain ⟨y, hy⟩ := (exact_kerCotangentToTensor_mapBaseChange R A B hs w.1).mp w.2
       obtain ⟨y, rfl⟩ := Ideal.toCotangent_surjective _ y
@@ -203,7 +203,7 @@ theorem mem_span_of_residue {A D k M I I' : Type} [CommRing A] [CommRing D] [IsL
     | add x y hx hy =>
       obtain ⟨x', hx⟩ := hx
       obtain ⟨y', hy⟩ := hy
-      exact ⟨x' + y', by rw [map_add, hx, hy, smul_add]⟩
+      exact ⟨x' + y', by rw [map_add (f := _), hx, hy, smul_add]⟩
     | tmul d m =>
       obtain ⟨e, he⟩ := hk d.1 d.2
       exact ⟨e ⊗ₜ m, by

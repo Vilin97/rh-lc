@@ -24,7 +24,7 @@ theorem stage_int [IsIntegrallyClosed R] {z : S ⊗[R] FractionRing R} (hz : IsI
   | add x y hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+    exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
   | tmul x y =>
     obtain ⟨r, hr⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral (R := R) y.2
     refine ⟨r • x, ?_⟩
@@ -40,7 +40,7 @@ theorem stage_den (z : S ⊗[R] FractionRing R) :
     obtain ⟨r, a, hr, ha⟩ := hx
     obtain ⟨s, b, hs, hb⟩ := hy
     refine ⟨r * s, algebraMap R S s * a + algebraMap R S r * b, mul_ne_zero hr hs, ?_⟩
-    simp only [map_add, map_mul, ha, hb]
+    simp only [map_add (f := _), map_mul, ha, hb]
     ring
   | tmul x y =>
     obtain ⟨a, b, hb, rfl⟩ := IsFractionRing.div_surjective (A := R) y

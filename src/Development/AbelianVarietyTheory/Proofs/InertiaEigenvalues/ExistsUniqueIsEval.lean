@@ -55,7 +55,7 @@ theorem Tends.add {s t : ℕ → B} {y w : B} (h : Tends p i s y) (h' : Tends p 
   refine ⟨max N N', fun n hn => ?_⟩
   obtain ⟨z, hz⟩ := hN n (le_of_max_le_left hn)
   obtain ⟨z', hz'⟩ := hN' n (le_of_max_le_right hn)
-  exact ⟨z + z', by rw [mul_add, map_add, ← hz, ← hz']; ring⟩
+  exact ⟨z + z', by rw [mul_add, map_add (f := _), ← hz, ← hz']; ring⟩
 
 theorem Tends.mul_left (hp : IsUnit (p : B)) {c : B} (hc : ∃ (D : ℕ) (z : C), (p : B) ^ D * c = i z)
     {s : ℕ → B} {y : B} (h : Tends p i s y) : Tends p i (fun n => c * s n) (c * y) := fun r => by
@@ -168,7 +168,7 @@ theorem IsEval.add {L L' : PowerSeries K} {x y y' : B} (h : IsEval p i κ L x y)
     IsEval p i κ (L + L') x (y + y') := by
   have := Tends.add h h'
   intro r
-  simpa only [psum, map_add, add_mul, sum_add_distrib] using this r
+  simpa only [psum, map_add (f := _), add_mul, sum_add_distrib] using this r
 
 theorem pow_sub_dvd (u : PowerSeries A) {x y d : C} {n : ℕ} (hx : d ∣ x ^ n)
     (hy : d ∣ y - ∑ j ∈ range n, o (coeff j u) * x ^ j) (k : ℕ) :

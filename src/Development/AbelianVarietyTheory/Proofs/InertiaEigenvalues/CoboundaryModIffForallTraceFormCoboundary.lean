@@ -66,7 +66,7 @@ theorem cobO_iff_forall_lam : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K :
     obtain ⟨w, hw⟩ := h2 (o * o')
     rw [hφ, hφ, hφ, actZ, ← Submodule.Quotient.mk_sub, ← Submodule.Quotient.mk_add, Submodule.Quotient.eq, memZ]
     refine ⟨w, ?_⟩
-    rw [← hw, map_mul, ho', mul_sub, mul_add, mul_sub, map_sub, map_add, map_sub, lamc]
+    rw [← hw, map_mul, ho', mul_sub, mul_add, mul_sub, map_sub, map_add (f := _), map_sub, lamc]
   · intro H
     choose Fz hFzc hFz using fun i => Submodule.mem_map.1 (H (f i))
     choose Ft hFt using fun i g => Submodule.Quotient.mk_surjective L1Z.T (Fz i g)
@@ -108,7 +108,7 @@ theorem cobO_iff_forall_lam : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K :
         ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_mul, ho, Algebra.smul_def]
-      simp only [map_sub, map_add, map_mul]
+      simp only [map_sub, map_add (f := _), map_mul]
       ring
 
 end GlobalTheory

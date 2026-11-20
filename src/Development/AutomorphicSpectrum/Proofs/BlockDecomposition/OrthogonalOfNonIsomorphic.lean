@@ -27,7 +27,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {N : ℕ}
 
 def fixS (V : Submodule ℂ (Sm E N)) (L : Subgroup (GL (Fin N) (Af E))) : Submodule ℂ (Sm E N) where
   carrier := {x | x ∈ V ∧ ∀ u ∈ L, finRep E N u x = x}
-  add_mem' := fun {x y} hx hy => ⟨V.add_mem hx.1 hy.1, fun u hu => by rw [map_add, hx.2 u hu, hy.2 u hu]⟩
+  add_mem' := fun {x y} hx hy => ⟨V.add_mem hx.1 hy.1, fun u hu => by rw [map_add (f := _), hx.2 u hu, hy.2 u hu]⟩
   zero_mem' := ⟨V.zero_mem, fun u _ => map_zero _⟩
   smul_mem' := fun c x hx => ⟨V.smul_mem c hx.1, fun u hu => by rw [map_smul, hx.2 u hu]⟩
 
@@ -132,7 +132,7 @@ theorem isoV_of_ne (μ : Measure (GA E N)) [μ.IsHaarMeasure] [μ.IsMulRightInva
     { toFun := fun x => ⟨T x, hTm x⟩
       map_add' := fun x y => Subtype.ext (uniq _ (hTm _) _ (V'.add_mem (hTm x) (hTm y)) fun z hz => by
         rw [← hT _ z hz]
-        simp only [Submodule.coe_add, map_add, inner_add_right]
+        simp only [Submodule.coe_add, map_add (f := _), inner_add_right]
         rw [← hT x z hz, ← hT y z hz])
       map_smul' := fun c x => Subtype.ext (uniq _ (hTm _) _ (V'.smul_mem c (hTm x)) fun z hz => by
         rw [← hT _ z hz]

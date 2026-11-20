@@ -168,7 +168,7 @@ private theorem lapL_mul (f g : FR n) :
   simp only [lapL]
   rw [sum_mul, mul_sum, ← sum_add_distrib, ← sum_add_distrib]
   refine sum_congr rfl fun a _ => ?_
-  simp only [lapD_mul, map_add]
+  simp only [lapD_mul, map_add (f := _)]
   ring
 
 private theorem rt_sum (g : Fin n → FR n) (i j : Fin n) :

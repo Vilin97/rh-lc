@@ -150,7 +150,7 @@ theorem latticeLink_of_blockFor : GlobalTheory.Published.BhattScholzeCrystalline
       simp only [labels, glue_inc hH]
       exact U_block hOk τ' s hs
     · have hp := congrArg (Polynomial.map (ZMod.castHom (dvd_refl l) F)) (hLk τ').2.2.2
-      simp only [Polynomial.map_prod, Polynomial.map_add, Polynomial.map_X, Polynomial.map_C] at hp
+      simp only [Polynomial.map_prod, Polynomial.map_add (f := _), Polynomial.map_X, Polynomial.map_C] at hp
       simp only [map_intCast] at hp
       have e1 : ∀ a : Fin P.Nr, (((W.U P τ' (a : ℕ) + (1 - (P.Nr : ℤ)) : ℤ) : F)) =
           ((((W.lam τ' a : ℤ) - ((a : ℕ) : ℤ) : ℤ)) : F) := by

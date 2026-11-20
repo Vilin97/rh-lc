@@ -20,15 +20,15 @@ theorem hO_add_left (x x' y : WO S T) : hO S T (x + x') y = hO S T x y + hO S T 
 
 theorem hO_add_right (x y y' : WO S T) : hO S T x (y + y') = hO S T x y + hO S T x y' := by
   unfold hO
-  simp only [Matrix.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [Matrix.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 theorem symplO_add_left (x x' y : WO S T) : symplO S T (x + x') y = symplO S T x y + symplO S T x' y := by
   unfold symplO
-  rw [hO_add_left, mul_add, map_add]
+  rw [hO_add_left, mul_add, map_add (f := _)]
 
 theorem symplO_add_right (x y y' : WO S T) : symplO S T x (y + y') = symplO S T x y + symplO S T x y' := by
   unfold symplO
-  rw [hO_add_right, mul_add, map_add]
+  rw [hO_add_right, mul_add, map_add (f := _)]
 
 theorem symplO_zero_left (y : WO S T) : symplO S T 0 y = 0 := by
   have h := symplO_add_left S T 0 0 y
@@ -106,7 +106,7 @@ theorem symplOH_swap (x y : WO S T) : symplOH S T y x = -symplOH S T x y := by
 
 theorem symplOH_two (x y : WO S T) : symplOH S T x y + symplOH S T x y = symplO S T x y := by
   unfold symplOH
-  rw [← add_mul, ← map_add]
+  rw [← add_mul, ← map_add (f := _)]
   norm_num
 
 theorem ratW_add (a b : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :

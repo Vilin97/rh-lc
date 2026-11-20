@@ -62,7 +62,7 @@ lemma coeff_term (P : MvPolynomial (Fin k) K) (m g g' : Fin k →₀ ℕ) :
     simp only [coeff_monomial, sumElim_inj, mul_one]
     by_cases h1 : u = m <;> by_cases h2 : g' = g <;> simp [h1, h2]
   next p q hp hq =>
-    rw [map_add, add_mul, MvPolynomial.coeff_add, hp, hq]
+    rw [map_add (f := _), add_mul, MvPolynomial.coeff_add, hp, hq]
     split_ifs <;> simp [MvPolynomial.coeff_add]
 
 lemma mono_val (g : Fin k →₀ ℕ) :
@@ -154,7 +154,7 @@ lemma degree_sub_add (g : Fin k →₀ ℕ) (a b : Fin k) (hb : g b ≠ 0) :
     rw [Finsupp.degree_eq_sum]
     simp [Finsupp.single_apply]
   conv_rhs => rw [← tsub_add_cancel_of_le hle]
-  rw [map_add, map_add, hs, hs]
+  rw [map_add (f := _), map_add (f := _), hs, hs]
 
 lemma Ed_val (a b : Fin k) (F : ↥(homogeneousSubmodule (Fin k) K d)) :
     (Formalism.MainNotions.TestSideCounting.Ed K k d a b F : MvPolynomial (Fin k) K) = X a * pderiv b (F : MvPolynomial (Fin k) K) :=

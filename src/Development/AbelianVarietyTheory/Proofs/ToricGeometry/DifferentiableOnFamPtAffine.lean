@@ -230,7 +230,7 @@ theorem differentiableOn_famPt_affine {U : A.left.Opens} (hU : IsAffineOpen U)
         simp only [evalPt'_eq _ (hE z hz), map_one]
       add_mem' := fun {a b} ha hb lam => by
         refine ((ha lam).add (hb lam)).congr fun z hz => ?_
-        simp only [evalPt'_eq _ (hE z hz), map_add, Pi.add_apply]
+        simp only [evalPt'_eq _ (hE z hz), map_add (f := _), Pi.add_apply]
       zero_mem' := fun lam => by
         refine (differentiableOn_const (0 : ℂ)).congr fun z hz => ?_
         simp only [evalPt'_eq _ (hE z hz), map_zero]

@@ -48,7 +48,7 @@ theorem smul_eq_zero_of_finPart_eq_zero (t : AE D) (ht : finPart D t = 0) (a : A
       rw [h1, hab]
       rfl
     | add s₁ s₂ h₁ h₂ =>
-      rw [smul_add, h₁, h₂, LinearMap.map_add, LinearMap.map_add]
+      rw [smul_add, h₁, h₂, LinearMap.map_add (f := _), LinearMap.map_add (f := _)]
   rw [key, hfL, ht, LinearMap.map_zero]
 
 theorem arch_symm_lineAt : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (ε : Bool) (S X : HSp D) {d : ℕ} (e : Fin X.rank ≃ Fin d)

@@ -37,7 +37,7 @@ theorem exists_compact_of_bounded : ∀ (F E : Type) [Field F] [NumberField F] [
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
   rw [e z]
   exact hR w
 

@@ -35,7 +35,7 @@ def infiniteTrace : InfiniteAdeleRing K →+ ℝ where
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun w _ => ?_
     show (w.mult : ℝ) * (extensionEmbedding w (x w + y w)).re = _
-    rw [map_add, Complex.add_re, mul_add]
+    rw [map_add (f := _), Complex.add_re, mul_add]
 
 theorem infiniteTrace_apply (x : InfiniteAdeleRing K) :
     infiniteTrace K x = ∑ w : InfinitePlace K, (w.mult : ℝ) * (extensionEmbedding w (x w)).re :=
@@ -277,14 +277,14 @@ def adelicChar : AddChar 𝔸[K] Circle where
     obtain ⟨ky, hy⟩ := exists_sub_mem_finiteInvDifferent y.2
     have hxy : (x + y).2 - algebraMap K _ (kx + ky) ∈ finiteInvDifferent K := by
       have := add_mem hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       convert this using 1
       rw [adeleRing_add_snd]
       abel
     rw [adelicCharFun_eq _ hxy, adelicCharFun_eq _ hx, adelicCharFun_eq _ hy,
       ← AddChar.map_add_eq_mul]
     congr 1
-    simp only [adeleRing_add_fst, map_add, map_sub]
+    simp only [adeleRing_add_fst, map_add (f := _), map_sub]
     ring
 
 theorem adelicChar_apply (x : 𝔸[K]) : adelicChar K x = adelicCharFun K x := rfl

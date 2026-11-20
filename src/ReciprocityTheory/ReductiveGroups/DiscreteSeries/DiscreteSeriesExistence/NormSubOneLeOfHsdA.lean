@@ -142,7 +142,7 @@ theorem cvA_zero_fun (v : H) : cvA ε σ 0 v = 0 := by
 theorem cvA_add_vec (hσ : IsURepOn (UJset ε) σ) {α : Matrix (Fin n) (Fin n) ℂ → ℂ} (hα : Continuous α)
     (hαc : HasCompactSupport α) (v w : H) :
     cvA ε σ α (v + w) = cvA ε σ α v + cvA ε σ α w := by
-  simp only [cvA, map_add, smul_add]
+  simp only [cvA, map_add (f := _), smul_add]
   exact integral_add (integrable_cvA hσ hα hαc v) (integrable_cvA hσ hα hαc w)
 
 theorem cvA_smul_vec (α : Matrix (Fin n) (Fin n) ℂ → ℂ) (c : ℂ) (v : H) :

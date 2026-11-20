@@ -68,7 +68,7 @@ theorem lTensor_TWmap {T Y : LocLat G Qp LL O} (ι : LatHom T.L Y.L) (f : RW →
   induction b using TensorProduct.induction_on with
   | zero => simp
   | tmul a t => simp [TWmap]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem lTensor_TWact {T Y : LocLat G Qp LL O} (ι : LatHom T.L Y.L) (f : RW →ₐ[O] RW) (g : G)
     (b : TW RW T) : (onT ι).lTensor RW (TWact f T g b) = TWact f Y g ((onT ι).lTensor RW b) := by
@@ -78,7 +78,7 @@ theorem lTensor_TWact {T Y : LocLat G Qp LL O} (ι : LatHom T.L Y.L) (f : RW →
     simp only [TWact, TensorProduct.map_tmul, LinearMap.lTensor_tmul]
     congr 1
     exact Subtype.ext (ι.equiv g t)
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem generic [T2Space LL] [IsTopologicalRing LL] (E : EtTie W RA RW inclR φR gR πA)
     (hinj : Function.Injective (algebraMap O RW))

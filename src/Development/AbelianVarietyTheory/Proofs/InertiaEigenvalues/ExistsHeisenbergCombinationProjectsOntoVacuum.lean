@@ -196,7 +196,7 @@ theorem GlobalTheory.VacDensity.proj : ∀ (D : D7) (ψ : AddChar (AF D.host.F) 
       have h1 : infPart D (w i j) = 0 := congrFun (congrFun hw i) j
       have h2 : infPart D (w' i j) = 0 := congrFun (congrFun hw' i) j
       show infPart D (w i j + w' i j) = 0
-      rw [RingHom.map_add, h1, h2, add_zero]
+      rw [RingHom.map_add (f := _), h1, h2, add_zero]
     · rw [GlobalTheory.LatVac.symplO_add_right, AddChar.map_add_eq_mul, hA u hu h0, hA' u hu h0, one_mul]
   obtain ⟨ℓ, hℓ⟩ : ∃ ℓ : Module.Dual ℂ (WO S T → ℂ), ℓ v = 1 := by
     obtain ⟨f, hf⟩ : ∃ f : Module.Dual ℂ (WO S T → ℂ), f v ≠ 0 := by

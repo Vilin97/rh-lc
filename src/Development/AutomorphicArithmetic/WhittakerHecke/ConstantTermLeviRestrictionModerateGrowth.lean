@@ -80,7 +80,7 @@ private theorem uc_slice (f : Fin r ↪ Fin (r + s)) (g : GA E (r + s)) (u : UC 
   | add x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, fun F => by rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, map_add, ha, hb]⟩
+    exact ⟨a + b, fun F => by rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), ha, hb]⟩
   | mul x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy

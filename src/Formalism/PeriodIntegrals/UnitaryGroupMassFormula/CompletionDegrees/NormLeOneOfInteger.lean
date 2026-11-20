@@ -29,7 +29,7 @@ def plIdeal {l : ℕ} [Fact l.Prime] {E : Type} [Field E] [NumberField E] (φ : 
     change ‖φ (algebraMap (𝓞 E) E (a + b))‖ < 1
     change ‖φ (algebraMap (𝓞 E) E a)‖ < 1 at ha
     change ‖φ (algebraMap (𝓞 E) E b)‖ < 1 at hb
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact lt_of_le_of_lt (PadicAlgCl.isNonarchimedean l _ _) (max_lt ha hb)
   smul_mem' c {a} ha := by
     change ‖φ (algebraMap (𝓞 E) E (c * a))‖ < 1

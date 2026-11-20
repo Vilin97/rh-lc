@@ -177,7 +177,7 @@ theorem evC_subst (G : Fin M → MRing ι) (z : (Σ k, ι k) → ℂ) (F : MRing
   induction F using MvPolynomial.induction_on with
   | C a => simp [evC, subst]
   | add p q hp hq =>
-    simp only [evC, map_add] at hp hq ⊢
+    simp only [evC, map_add (f := _)] at hp hq ⊢
     rw [hp, hq]
   | mul_X p n hp =>
     simp only [evC, map_mul] at hp ⊢

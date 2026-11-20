@@ -47,7 +47,7 @@ theorem exists_irreducible_subquotient_of_ne_zero : ∀ (G V : Type) [Group G] [
   let T : Subrepresentation ρ := ⟨N, fun g v hv => hNst g v hv⟩
   let S : Subrepresentation ρ := ⟨N ⊔ O, fun g v hv => by
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hv
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (hNst g a ha) (hOst g b hb)⟩
   have hxS : x ∈ S.toSubmodule := Submodule.mem_sup_right hxO
   have hcov : T ⋖ S := by

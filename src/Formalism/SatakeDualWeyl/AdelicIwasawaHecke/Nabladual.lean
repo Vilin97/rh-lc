@@ -57,7 +57,7 @@ theorem degree_eq_one_iff (d : n →₀ ℕ) : d.degree = 1 ↔ ∃ i, d = Finsu
       (add_tsub_cancel_of_le hsle).symm
     have hdeg : (d - Finsupp.single i 1).degree = 0 := by
       have := congrArg Finsupp.degree hsplit
-      rw [map_add, Finsupp.degree_single] at this
+      rw [map_add (f := _), Finsupp.degree_single] at this
       omega
     rw [Finsupp.degree_eq_zero_iff] at hdeg
     refine ⟨i, ?_⟩

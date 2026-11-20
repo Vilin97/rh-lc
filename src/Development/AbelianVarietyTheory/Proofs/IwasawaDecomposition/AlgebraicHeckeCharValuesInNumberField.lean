@@ -84,7 +84,7 @@ theorem locK_pow (χ : HChar L) (w : HeightOneSpectrum (𝓞 L)) :
   obtain ⟨b, rfl⟩ := Ideal.mem_span_singleton'.1 hx
   have hu : IsUnit (Ideal.Quotient.mk (w.asIdeal ^ n) a) := by
     refine IsUnit.of_mul_eq_one_right (Ideal.Quotient.mk _ b) ?_
-    rw [← map_mul, ← (Ideal.Quotient.mk _).map_one, ← hxy, map_add, Ideal.Quotient.eq_zero_iff_mem.2 hy, add_zero]
+    rw [← map_mul, ← (Ideal.Quotient.mk _).map_one, ← hxy, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hy, add_zero]
   obtain ⟨u, hu⟩ := hu
   have h1 : a ^ Nat.card (𝓞 L ⧸ w.asIdeal ^ n)ˣ - 1 ∈ w.asIdeal ^ n := by
     rw [← Ideal.Quotient.eq, map_pow, ← hu, ← Units.val_pow_eq_pow_val, pow_card_eq_one', map_one, Units.val_one]

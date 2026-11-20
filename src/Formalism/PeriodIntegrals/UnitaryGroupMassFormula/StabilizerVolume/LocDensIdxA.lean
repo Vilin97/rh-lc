@@ -39,7 +39,7 @@ theorem crd_sigR (y : Fv F v ⊗[F] E) (k : Fin d) :
     refine Finset.sum_congr rfl fun l _ => ?_
     ring
   | add x y hx hy =>
-    rw [map_add, map_add, Finsupp.add_apply, hx, hy, map_add]
+    rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, hx, hy, map_add (f := _)]
     simp only [Finsupp.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem eventually_int (x : F) :
@@ -87,7 +87,7 @@ theorem fix2 {F : Type} [Field F] (C : Matrix (Fin 2) (Fin 2) F) (hC : C ≠ 1) 
         algebraMap F K ((C - 1) i 1) * algebraMap F K (u 1) = 0 := by
       have := hrow F u (by simpa using hCu)
       have := congrArg (algebraMap F K) this
-      simpa [map_add, map_mul] using this
+      simpa [map_add (f := _), map_mul] using this
     rcases hab with ha | hb
     · have hA : algebraMap F K ((C - 1) i 0) ≠ 0 := (map_ne_zero _).2 ha
       apply mul_left_cancel₀ hA

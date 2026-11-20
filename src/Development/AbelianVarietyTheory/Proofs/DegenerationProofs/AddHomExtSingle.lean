@@ -82,7 +82,7 @@ theorem test_weights : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] 
     obtain ⟨β, hβ⟩ := QuotientAddGroup.mk_surjective (τ.yy x)
     obtain ⟨v, hv⟩ := exists_min τ.q τ.pos S.N β
     refine ⟨_, hv, ?_⟩
-    rw [map_add, hwt, add_zero]
+    rw [map_add (f := _), hwt, add_zero]
     have := addHom_ext_single ((τ.wt β).comp E.symm.toAddMonoidHom) (c.comp E.symm.toAddMonoidHom) fun i => by
       have h1 := τ.wt_eq x β hβ.symm (E.symm (Pi.single i 1))
       have h2 : eStd S.g _ (E.symm (Pi.single i 1) : S.Gam) x = _ := hx i
@@ -136,7 +136,7 @@ theorem test_weights : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] 
       · rw [hwt]
         rfl
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, AddMonoidHom.add_apply, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), AddMonoidHom.add_apply, hx, hy, add_zero]
     | neg x _ hx => rw [map_neg, AddMonoidHom.neg_apply, hx, neg_zero]
 
 end GlobalTheory.ZH

@@ -44,7 +44,7 @@ def addCob {K Γ A : Type} [CommRing K] [Group Γ] [TopologicalSpace Γ] [Topolo
     obtain ⟨a, ha, h1⟩ := hz lam
     obtain ⟨a', ha', h2⟩ := hz' lam
     refine ⟨a + a', ha.add ha', fun g h => ?_⟩
-    simp only [Submodule.coe_add, Pi.add_apply, map_add, h1, h2]
+    simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _), h1, h2]
     ring
   smul_mem' := fun k z hz lam => hz (lam.comp (AddMonoidHom.mulLeft k))
 
@@ -78,7 +78,7 @@ include hl hμ
 theorem exists_push (z : Z2 μ) (lam : K →+ ZMod (l ^ 1)) : ∃ w : Z2 (muLoc F l 1 A), ∀ g h, w.1 (g, h) = lam (z.1 (g, h)) := by
   refine ⟨⟨fun p => lam (z.1 p), continuous_of_discreteTopology.comp z.2.1, fun g h k => ?_⟩, fun _ _ => rfl⟩
   have e := congrArg lam (z.2.2 g h k)
-  rw [map_sub, map_add, map_sub, hμ, map_padic_mul φ hl, map_zero] at e
+  rw [map_sub, map_add (f := _), map_sub, hμ, map_padic_mul φ hl, map_zero] at e
   exact e
 
 theorem coboundaries_le_cyclotomic_additive : (B2 μ).comap (Z2 μ).subtype ≤
@@ -86,7 +86,7 @@ theorem coboundaries_le_cyclotomic_additive : (B2 μ).comap (Z2 μ).subtype ≤
   rintro z ⟨c, hc, e⟩ lam
   refine ⟨fun g => lam (c g), continuous_of_discreteTopology.comp hc, fun g h => ?_⟩
   have e' : z.1 (g, h) = μ g (c h) - c (g * h) + c g := (congrFun e (g, h)).symm
-  rw [e', map_add, map_sub, hμ, map_padic_mul φ hl]
+  rw [e', map_add (f := _), map_sub, hμ, map_padic_mul φ hl]
 
 end Galois
 

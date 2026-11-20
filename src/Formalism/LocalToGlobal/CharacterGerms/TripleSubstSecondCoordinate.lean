@@ -21,7 +21,7 @@ private theorem coeff_mul_eq_zero_of_degree_lt_add_character_germs {σ : Type} {
   rw [MvPowerSeries.coeff_mul]
   refine Finset.sum_eq_zero fun x hx => ?_
   replace hx := Finset.HasAntidiagonal.mem_antidiagonal.mp hx
-  have hdeg : x.1.degree + x.2.degree = a.degree := by rw [← hx, map_add]
+  have hdeg : x.1.degree + x.2.degree = a.degree := by rw [← hx, map_add (f := _)]
   by_cases h1 : x.1.degree < k
   · rw [hp _ h1, zero_mul]
   · rw [hq _ (by omega), mul_zero]
@@ -50,7 +50,7 @@ private theorem coeff_mvExp_eq_sum_range_of_degree_le {σ : Type} {f : MvPowerSe
 theorem exp_add {σ : Type} {f g : MvPowerSeries σ C} (hf : MvPowerSeries.constantCoeff f = 0)
     (hg : MvPowerSeries.constantCoeff g = 0) : mvExp (f + g) = mvExp f * mvExp g := by
   ext m
-  have hfg : MvPowerSeries.constantCoeff (f + g) = 0 := by rw [map_add, hf, hg, add_zero]
+  have hfg : MvPowerSeries.constantCoeff (f + g) = 0 := by rw [map_add (f := _), hf, hg, add_zero]
   set N := m.degree with hN
   have hT : ∀ i j : ℕ, N < i + j → MvPowerSeries.coeff m (f ^ i * g ^ j) = 0 :=
     fun i j h => coeff_mul_eq_zero_of_degree_lt_add_character_germs (coeff_pow_eq_zero_of_degree_lt_character_germs' hf i) (coeff_pow_eq_zero_of_degree_lt_character_germs' hg j) m (by omega)
@@ -90,7 +90,7 @@ theorem exp_add {σ : Type} {f g : MvPowerSeries σ C} (hf : MvPowerSeries.const
             ((i.factorial : C) * (j.factorial : C)) := by
       intro x hx
       replace hx := Finset.HasAntidiagonal.mem_antidiagonal.mp hx
-      have hd : x.1.degree + x.2.degree = N := by rw [hN, ← hx, map_add]
+      have hd : x.1.degree + x.2.degree = N := by rw [hN, ← hx, map_add (f := _)]
       rw [coeff_mvExp_eq_sum_range_of_degree_le hf x.1 N (by omega), coeff_mvExp_eq_sum_range_of_degree_le hg x.2 N (by omega), Finset.sum_mul_sum]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [div_mul_div_comm]
@@ -233,12 +233,12 @@ theorem second_partial_law_at_points : MvPowerSeries.subst (P3 a b c) Y.B.ph2 =
   rw [toK_eq, ev_pt_pair Y, ev_pt_pair Y, ev_pt_pair Y, addOf_eq] at hg
   have hcc : MvPowerSeries.constantCoeff (hAt Y (pt C dd 0) (pt C dd 1) + hAt Y (pt C dd 0) (pt C dd 2) -
       hAt Y (pt C dd (0 : Fin 3)) (addAt Y (pt C dd 1) (pt C dd 2))) = 0 := by
-    rw [map_sub, map_add, cc_hAt Y (hp 0) (hp 1), cc_hAt Y (hp 0) (hp 2),
+    rw [map_sub, map_add (f := _), cc_hAt Y (hp 0) (hp 1), cc_hAt Y (hp 0) (hp 2),
       cc_hAt Y (hp 0) (cc_addAt Y (hp 1) (hp 2))]
     simp
   rw [hg, expS_eq _ hcc, subst_exp hP3 hcc]
   congr 1
-  rw [← MvPowerSeries.coe_substAlgHom (hasSubst_of_Z0 hP3), map_sub, map_add, MvPowerSeries.coe_substAlgHom]
+  rw [← MvPowerSeries.coe_substAlgHom (hasSubst_of_Z0 hP3), map_sub, map_add (f := _), MvPowerSeries.coe_substAlgHom]
   rw [hAt_subst Y hP3 (hp 0) (hp 1), hAt_subst Y hP3 (hp 0) (hp 2),
     hAt_subst Y hP3 (hp 0) (cc_addAt Y (hp 1) (hp 2))]
   have haddS : (fun i => MvPowerSeries.subst (P3 a b c) (addAt Y (pt C dd (1 : Fin 3)) (pt C dd 2) i)) =
@@ -303,11 +303,11 @@ theorem pair_id {X Z : Fin dd → MvPowerSeries τ C} (hX : ∀ i, MvPowerSeries
     rw [map_sub, cc_hAt Y hwX hZ, cc_hAt Y hX hbZ, sub_zero]
   have h3 : MvPowerSeries.constantCoeff (hAt Y X (actAt Y Y.w0 Z) + hAt Y X (actAt Y (star Y.w0) Z) -
       hAt Y X Z) = 0 := by
-    rw [map_sub, map_add, cc_hAt Y hX hwZ, cc_hAt Y hX hbZ, cc_hAt Y hX hZ]
+    rw [map_sub, map_add (f := _), cc_hAt Y hX hwZ, cc_hAt Y hX hbZ, cc_hAt Y hX hZ]
     simp
   have h12 : MvPowerSeries.constantCoeff ((hAt Y Z (actAt Y Y.w0 X) - hAt Y (actAt Y Y.w0 X) Z) +
       (hAt Y (actAt Y Y.w0 X) Z - hAt Y X (actAt Y (star Y.w0) Z))) = 0 := by
-    rw [map_add, h1, h2, add_zero]
+    rw [map_add (f := _), h1, h2, add_zero]
   have hsy : MvPowerSeries.subst (P2 (actAt Y Y.w0 X) Z) Y.B.sy =
       mvExp (hAt Y Z (actAt Y Y.w0 X) - hAt Y (actAt Y Y.w0 X) Z) := by
     first

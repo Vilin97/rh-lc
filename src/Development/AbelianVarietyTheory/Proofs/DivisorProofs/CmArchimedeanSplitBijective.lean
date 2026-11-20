@@ -25,7 +25,7 @@ theorem infTensor_bijective :
     | zero => funext w; simp
     | add x y hx hy =>
       funext w
-      rw [P.map_add, Pi.add_apply, ← congrFun hx w, ← congrFun hy w]
+      rw [P.map_add (f := _), Pi.add_apply, ← congrFun hx w, ← congrFun hy w]
       exact map_add _ x y
     | tmul a x => rfl
   have : (fun (y : InfiniteAdeleRing F ⊗[F] E) (w : InfinitePlace F) =>
@@ -61,7 +61,7 @@ theorem splitHom_bijective : ∀ (F E : Type) [Field F] [NumberField F] [Field E
       congr 1
       induction z using TensorProduct.induction_on with
       | zero => rw [map_zero]; erw [map_zero]
-      | add x y hx hy => rw [map_add, hx, hy]; erw [map_add, map_add]
+      | add x y hx hy => rw [map_add (f := _), hx, hy]; erw [map_add (f := _), map_add (f := _)]
       | tmul a x => rfl
     · change finPart F E z = Algebra.TensorProduct.comm F (FiniteAdeleRing (𝓞 F) F) E (e z).2
       rw [(he z).2]

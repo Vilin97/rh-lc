@@ -107,7 +107,7 @@ theorem applyD_add {σ τ Kc : Type} [Field Kc] (P Q : MvPolynomial σ (MvPolyno
     applyD_eq_sum P f (P.support ∪ Q.support) Finset.subset_union_left,
     applyD_eq_sum Q f (P.support ∪ Q.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun n _ => ?_
-  rw [MvPolynomial.coeff_add, map_add, smul_add]
+  rw [MvPolynomial.coeff_add, map_add (f := _), smul_add]
 
 theorem applyD_zero {σ τ Kc : Type} [Field Kc] (f : MvPowerSeries σ Kc) :
     applyD (0 : MvPolynomial σ (MvPolynomial τ ℤ)) f = 0 := by
@@ -138,7 +138,7 @@ theorem applyAt0_add (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[p]) (P Q 
     applyAt0_eq_sum Th P (P.support ∪ Q.support) Finset.subset_union_left,
     applyAt0_eq_sum Th Q (P.support ∪ Q.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun n _ => ?_
-  rw [← map_add, MvPolynomial.coeff_add, Int.cast_add, add_mul, add_mul]
+  rw [← map_add (f := _), MvPolynomial.coeff_add, Int.cast_add, add_mul, add_mul]
 
 def psi {σ τ : Type} (zi : Lt × Fin N0 × Fin N1 → σ) (fi : Lt × ℕ × Fin N0 → τ) :
     MvPolynomial (product_zeroth_first_parts.XZ Lt N0 N1) ℤ →+* MvPolynomial σ (MvPolynomial τ ℤ) :=
@@ -185,7 +185,7 @@ theorem map_applyD_psi {σ τ : Type} (zi : Lt × Fin N0 × Fin N1 → σ) (fi :
     (G : MvPolynomial (product_zeroth_first_parts.XZ Lt N0 N1) ℤ) :
     MvPolynomial.map (k0ToC p) (applyD (psi zi fi G) f) = MvPolynomial.rename fi (product_zeroth_first_parts.applyAt0 N0 N1 p Th G) := by
   induction G using MvPolynomial.induction_on' with
-  | add P Q hP hQ => rw [map_add, applyD_add, applyAt0_add, map_add, map_add, hP, hQ]
+  | add P Q hP hQ => rw [map_add (f := _), applyD_add, applyAt0_add, map_add (f := _), map_add (f := _), hP, hQ]
   | monomial μ c =>
     rw [psi_monomial, applyD_eq_sum _ f _ MvPolynomial.support_monomial_subset,
       applyAt0_eq_sum Th _ _ MvPolynomial.support_monomial_subset, Finset.sum_singleton, Finset.sum_singleton,

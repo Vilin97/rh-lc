@@ -24,7 +24,7 @@ theorem T_mul (c : 𝔸) (z : 𝒜) : adelstabT F E (((1 : E) ⊗ₜ[F] c) * z) 
   | zero => simp
   | tmul e a =>
     simp [adelstabT, Algebra.TensorProduct.tmul_mul_tmul, mul_smul_comm]
-  | add x y hx hy => rw [mul_add, map_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [mul_add, map_add (f := _), map_add (f := _), hx, hy, mul_add]
 
 theorem T_int (z : 𝒜) (hz : ∀ v, prV (E := E) v z ∈ SV E v) : adelstabT F E z ∈ intAd F := by
   intro v
@@ -51,7 +51,7 @@ theorem expand {ι : Type} [Fintype ι] [DecidableEq ι] (β : Module.Basis ι F
     conv_lhs => rw [hx, hy]
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [mul_add, map_add, TensorProduct.tmul_add]
+    rw [mul_add, map_add (f := _), TensorProduct.tmul_add]
 
 theorem exists_den : ∃ d : ℤ, d ≠ 0 ∧ ∀ z : 𝒜, (∀ v, prV (E := E) v z ∈ SV E v) →
     inclE (F := F) 𝔸 (d : E) * z ∈ 𝒮 := by

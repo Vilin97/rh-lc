@@ -201,8 +201,8 @@ theorem mem_range_of_norm_le_one_at_points_away : ∀ (F : Type) [Field F] [Numb
   obtain ⟨α, β, hαβ⟩ := hcopP
   refine ⟨α * c + β * a0, ?_⟩
   have hαβ' : algebraMap A L α * algebraMap A L s + algebraMap A L β * algebraMap A L (p : A) ^ n = 1 := by
-    rw [← map_pow, ← map_mul, ← map_mul, ← map_add, hαβ, map_one]
-  rw [map_add, map_mul, map_mul]
+    rw [← map_pow, ← map_mul, ← map_mul, ← map_add (f := _), hαβ, map_one]
+  rw [map_add (f := _), map_mul, map_mul]
   linear_combination (-(algebraMap A L α)) * hsc + (-(algebraMap A L β)) * ha0 + x * hαβ'
 
 end GlobalTheory

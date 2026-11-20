@@ -55,7 +55,7 @@ theorem exists_move (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : ∀ x y, star (h x 
   have l1 : ∀ x ∈ Λ, h v x - (h u x - h u' x) ∈ I := by
     intro x hx
     have : h v x - (h u x - h u' x) = θ * (h w x - (h u x - h u' x)) := by
-      simp only [hv, map_add, map_sub, LinearMap.map_smulₛₗ, LinearMap.sub_apply, LinearMap.add_apply,
+      simp only [hv, map_add (f := _), map_sub, LinearMap.map_smulₛₗ, LinearMap.sub_apply, LinearMap.add_apply,
         LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, hθ, map_one]
       ring
     rw [this]
@@ -63,7 +63,7 @@ theorem exists_move (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : ∀ x y, star (h x 
   have l2 : ∀ x ∈ Λ, h x v - h x w ∈ I := by
     intro x hx
     have : h x v - h x w = θ * (h x (u - u') - h x w) := by
-      simp only [hv, map_add, map_smul, smul_eq_mul]
+      simp only [hv, map_add (f := _), map_smul, smul_eq_mul]
       ring
     rw [this]
     exact hI' _ (A.sub_mem (hh _ hx _ (Λ.sub_mem hu hu')) (hh _ hx _ hw)) _ hθI
@@ -159,7 +159,7 @@ theorem exists_idem {P : Ideal (𝓞 K)} (hP : P.IsMaximal) (hc : conjIdeal (K :
   have := hP.coprime_of_ne hm hc.symm
   obtain ⟨e, he, f, hf, hef⟩ := Submodule.mem_sup.1 (this ▸ Submodule.mem_top : (1 : 𝓞 K) ∈ P ⊔ P.comap (cj K))
   refine ⟨e, he, ?_⟩
-  have : 1 - cj K e = cj K f := by rw [← map_one (cj K), ← hef, map_add]; ring
+  have : 1 - cj K e = cj K f := by rw [← map_one (cj K), ← hef, map_add (f := _)]; ring
   rw [this]
   exact hf
 
@@ -327,9 +327,9 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
     by_cases a : h u' w₁ ∈ locId P
     · by_cases b : h u w₂ ∈ locId P
       · refine ⟨w₁ + w₂, Submodule.add_mem _ hw₁ hw₂, fun H => k₁ ?_, fun H => k₂ ?_⟩
-        · rw [map_add] at H
+        · rw [map_add (f := _)] at H
           simpa using Submodule.sub_mem _ H b
-        · rw [map_add] at H
+        · rw [map_add (f := _)] at H
           simpa using Submodule.sub_mem _ H a
       · exact ⟨w₂, hw₂, b, k₂⟩
     · exact ⟨w₁, hw₁, k₁, a⟩

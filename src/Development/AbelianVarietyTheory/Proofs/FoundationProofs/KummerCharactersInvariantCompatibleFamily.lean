@@ -76,7 +76,7 @@ theorem GlobalTheory.KZ.H3.kum_family : ∀ (Ω : Type) [Field Ω] [Algebra ℚ 
     refine ⟨M, hM, fun δ hδ δ' hδ' => ?_⟩
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [hQ i δ hδ δ' hδ', map_add, add_mul]
+    rw [hQ i δ hδ δ' hδ', map_add (f := _), add_mul]
   · intro n γ hγ
     have hdet : (0 : ℤ) < (γ : Matrix (Fin 2) (Fin 2) ℤ).det := by rw [γ.det_coe]; exact one_pos
     have hK : ∀ i, Kum X l n (c i)

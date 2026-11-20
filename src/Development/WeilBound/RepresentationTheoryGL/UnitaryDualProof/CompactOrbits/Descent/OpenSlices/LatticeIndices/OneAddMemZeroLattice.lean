@@ -41,7 +41,7 @@ theorem exists_unit {m : ℕ} (hm : 1 ≤ m) {a : Matrix (Fin n) (Fin n) k}
     rw [Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp
   have hdet : IsUnit (1 + B).det := by
-    rw [← IsLocalRing.residue_ne_zero_iff_isUnit, RingHom.map_det, map_add, map_one]
+    rw [← IsLocalRing.residue_ne_zero_iff_isUnit, RingHom.map_det, map_add (f := _), map_one]
     have h0 : (IsLocalRing.residue 𝒪[k]).mapMatrix B = 0 := by
       ext i j
       rw [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.zero_apply]

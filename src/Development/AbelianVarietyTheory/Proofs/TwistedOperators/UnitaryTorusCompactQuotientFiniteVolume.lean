@@ -77,7 +77,7 @@ theorem swapE_sigR (P : PPol σ r) (u : Fld P ⊗[F] AF F) :
   induction u using TensorProduct.induction_on with
   | zero => simp
   | tmul x a => simp [swapE, Formalism.UG.sigR, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem swapE_inclE (P : PPol σ r) (β : Fld P) :
     swapE P (Formalism.UG.inclE (F := F) (AF F) β) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR (AF F) β := by

@@ -21,7 +21,7 @@ theorem eval_aeval_gen {σ κ : Type} (g : κ → ℂ) (φ : σ → MvPolynomial
     MvPolynomial.eval g (MvPolynomial.aeval φ Q) = MvPolynomial.eval (fun s => MvPolynomial.eval g (φ s)) Q := by
   induction Q using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p s hp => rw [map_mul, map_mul, aeval_X, map_mul, hp, eval_X]
 
 open Classical in

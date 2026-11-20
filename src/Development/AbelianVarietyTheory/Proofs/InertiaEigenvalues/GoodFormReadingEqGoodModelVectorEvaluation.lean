@@ -21,7 +21,7 @@ variable {D : D7} {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 I0 T : Type}
 def jH (j : Fin D.R.m) : S.WL ((j : ℕ) + 1) →+ (Rl.HW j (sg0 D A3.A)).H where
   toFun x := (Rl.FW j).j (sg0 D A3.A) ((YS.fi j).e x)
   map_zero' := by rw [map_zero, map_zero]
-  map_add' x y := by rw [map_add, map_add]
+  map_add' x y := by rw [map_add (f := _), map_add (f := _)]
 
 theorem jH_smul (j : Fin D.R.m) (c : D.what₂.LL) (x : S.WL ((j : ℕ) + 1)) :
     jH YS j (c • x) = D.what₂.embLL c • jH YS j x := by
@@ -55,14 +55,14 @@ theorem evK_eq (v₀ : ∀ (j : Fin D.R.m) (σ : D.what₂.LL →+* ℂ), (Rl.MW
     evK YS v₀ hρ i j b t = (Rl.HW j (sg0 D A3.A)).e (evH YS hρ i j b t) (v₀ j _) := by
   induction t using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero]; rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]; rfl
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]; rfl
   | tmul a f => rw [evK_tmul, evH_tmul, map_smul]; rfl
 
 theorem evH_smul (c : NX.KB S i b) (t : NX.KB S i b ⊗[S.Ks] NX.FmK S ((j : ℕ) + 1)) :
     evH YS hρ i j b (c • t) = ρ.e i b c • evH YS hρ i j b t := by
   induction t using TensorProduct.induction_on with
   | zero => rw [smul_zero, map_zero, smul_zero]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
   | tmul a f =>
     rw [TensorProduct.smul_tmul', evH_tmul, evH_tmul, smul_smul]
     exact congrArg (· • _) (map_mul (ρ.e i b) c a)

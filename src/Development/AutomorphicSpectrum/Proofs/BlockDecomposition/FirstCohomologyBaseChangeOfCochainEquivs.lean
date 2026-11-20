@@ -53,8 +53,8 @@ theorem h1_baseChange (R R' C : Type) [CommRing R] [CommRing R'] [Algebra R R'] 
       obtain ⟨za, ha1, ha2⟩ := ha
       obtain ⟨zb, hb1, hb2⟩ := hb
       refine ⟨za + zb, ?_, ?_⟩
-      · simp only [map_add, Submodule.coe_add, ha1, hb1]
-      · simp only [map_add, ha2, hb2]
+      · simp only [map_add (f := _), Submodule.coe_add, ha1, hb1]
+      · simp only [map_add (f := _), ha2, hb2]
   have bc : ∀ x, (d0 F).lTensor R' x = (d0 F).baseChange R' x := fun x ↦ by
     rw [LinearMap.baseChange_eq_ltensor]
   have hsurj : Function.Surjective Φ := by
@@ -74,7 +74,7 @@ theorem h1_baseChange (R R' C : Type) [CommRing R] [CommRing R'] [Algebra R R'] 
     rw [h2, H1.mk_eq_mk]
     refine ⟨-E₀ y, ?_⟩
     have e := congrArg E₁ hty
-    rw [LinearEquiv.apply_symm_apply, map_add, bc, h01, ← h1] at e
+    rw [LinearEquiv.apply_symm_apply, map_add (f := _), bc, h01, ← h1] at e
     rw [← e, map_neg]
     abel
   have hinjΦ : Function.Injective Φ := by

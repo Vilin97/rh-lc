@@ -101,7 +101,7 @@ theorem exists_isTranslA : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type)
       lie := hlie
       lieRank := hlieR
       eta := fun x => o.eta (f x) ≫ ψ
-      eta_add := fun x y => by rw [map_add, o.eta_add, mul_comp]
+      eta_add := fun x y => by rw [map_add (f := _), o.eta_add, mul_comp]
       eta_lin := fun c' x => by
         show o.eta (f (c' • x)) ≫ ψ = (o.eta (f x) ≫ ψ) ≫ act'.act c'
         obtain ⟨z, hz⟩ := hlin (N * k) hNk hNkp c' x

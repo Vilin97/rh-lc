@@ -171,7 +171,7 @@ theorem b_mul_ordEval {k AA M : Type} [CommRing k] [Ring AA] [Algebra k AA] [Add
     congr 1
     ring
   | add P Q hP hQ =>
-    rw [ordEval_add, mul_add, hP, hQ, map_add, ordEval_add, add_mul]
+    rw [ordEval_add, mul_add, hP, hQ, map_add (f := _), ordEval_add, add_mul]
     abel
 
 theorem bComm_holds : BComm := by

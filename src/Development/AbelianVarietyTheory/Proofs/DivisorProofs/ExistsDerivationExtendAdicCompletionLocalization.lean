@@ -39,7 +39,7 @@ theorem derivation_extend_completion_localization_atPrime (S : Type) [CommRing S
       (AdicCompletion.evalₐ (maximalIdeal (Localization.AtPrime P)) (n + 1) y)
     obtain ⟨t, ht⟩ := Ideal.Quotient.mk_surjective
       (AdicCompletion.evalₐ (maximalIdeal (Localization.AtPrime P)) (n + 1) z)
-    rw [BK.evalₐ_complDerFun _ D' (r := r + t) (by rw [map_add, map_add, hr, ht]), map_add,
+    rw [BK.evalₐ_complDerFun _ D' (r := r + t) (by rw [map_add (f := _), map_add (f := _), hr, ht]), map_add (f := _),
       map_add, map_add, BK.evalₐ_complDerFun _ D' hr.symm, BK.evalₐ_complDerFun _ D' ht.symm]
   refine ⟨intDerivationOfLeibniz
     { toFun := BK.complDerFun (maximalIdeal (Localization.AtPrime P)) D'

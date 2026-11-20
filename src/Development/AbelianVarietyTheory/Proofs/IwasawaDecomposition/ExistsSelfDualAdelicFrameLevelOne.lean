@@ -105,7 +105,7 @@ theorem mem_integral_adelic_lattice_iff (z : RA F E) :
       have := mul_mem h1 h2
       rwa [Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one] at this
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
   · intro hz
     have key : ∀ t ∈ Formalism.L2.Herm.intAf F E, (Algebra.TensorProduct.comm F _ E).symm t ∈
@@ -118,7 +118,7 @@ theorem mem_integral_adelic_lattice_iff (z : RA F E) :
         · exact tmul_mem_adelicCompletion_of_integral F b.2 (FractionalIdeal.one_mem_one _)
       | zero => rw [map_zero]; exact zero_mem _
       | one => rw [map_one]; exact one_tmul_mem_adelicCompletionOfElementSet F (FractionalIdeal.one_mem_one _)
-      | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
       | neg a _ ha => rw [map_neg]; exact neg_mem ha
       | mul a b _ _ ha hb =>
         rw [map_mul]

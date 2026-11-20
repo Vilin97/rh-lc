@@ -85,7 +85,7 @@ theorem SpherePhase.proof (h1 : SphereLawBasic.Statement) (h2 : SphereLawUnitary
     fun θ z ↦ rfl
   have hRa : ∀ θ z, coordAlong p (R θ z) = Complex.exp (θ * Complex.I) * coordAlong p z := by
     intro θ z
-    rw [← hL, hR, map_add, map_smul, smul_eq_mul, hL, hL, hpp]
+    rw [← hL, hR, map_add (f := _), map_smul, smul_eq_mul, hL, hL, hpp]
     ring
   have hRw : ∀ θ z, R θ z - coordAlong p (R θ z) • p = z - coordAlong p z • p := by
     intro θ z

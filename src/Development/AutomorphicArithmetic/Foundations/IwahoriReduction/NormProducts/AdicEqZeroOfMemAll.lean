@@ -20,7 +20,7 @@ private theorem UpperTheory.Kd.K4.mittagLeffler_algebraic (C B : ℕ → Type) [
     refine ⟨b', ?_⟩
     have := (N k k).add_mem (hP _ _ _ hb1) hb2
     convert this using 1
-    simp only [map_add, map_sub, hd, hb']
+    simp only [map_add (f := _), map_sub, hd, hb']
     abel
   choose st hst using step
   let b : ∀ k, B k := fun k => Nat.rec (motive := B) 0 st k
@@ -46,7 +46,7 @@ private theorem UpperTheory.Kd.K4.mittagLeffler_algebraic (C B : ℕ → Type) [
       obtain ⟨a', ha'⟩ := h1 r m
       refine ⟨a + a', ?_⟩
       convert (N r n).add_mem (hN r _ _ hm ha') ha using 1
-      simp only [map_add]
+      simp only [map_add (f := _)]
       abel
   have hB : ∀ n j r, n ≤ r + j → ∃ a, Q j r - (F r n + d r a) ∈ N r n := by
     intro n j
@@ -56,7 +56,7 @@ private theorem UpperTheory.Kd.K4.mittagLeffler_algebraic (C B : ℕ → Type) [
       obtain ⟨a, ha⟩ := hF r n r hr
       refine ⟨a + b r, ?_⟩
       convert ha using 1
-      simp only [map_add, hQ0]
+      simp only [map_add (f := _), hQ0]
       abel
     | succ j ih =>
       intro r hr
@@ -64,7 +64,7 @@ private theorem UpperTheory.Kd.K4.mittagLeffler_algebraic (C B : ℕ → Type) [
       obtain ⟨a', ha'⟩ := h2 r n
       refine ⟨a' + p r a, ?_⟩
       convert (N r n).add_mem (hP _ _ _ ha) ha' using 1
-      simp only [map_add, map_sub, hQs, hd]
+      simp only [map_add (f := _), map_sub, hQs, hd]
       abel
   choose β hβ using fun r n => hB n n r (by omega)
   refine ⟨β, fun r n => ?_, fun r n => ?_⟩
@@ -154,7 +154,7 @@ theorem UpperTheory.Kd.K4.ml3 :
       map_zero' := by funext s x; simp
       map_add' := fun a b => by
         funext s x
-        simp only [Pi.add_apply, map_add]
+        simp only [Pi.add_apply, map_add (f := _)]
         abel }
   have hp : ∀ r, Function.Surjective (p r) := by
     intro r b
@@ -195,7 +195,7 @@ theorem UpperTheory.Kd.K4.ml3 :
         ((Y r - (F r n + d r (β r n))) (s * t) x - (Y r - (F r n + d r (β r n))) s x -
           σ s ((Y r - (F r n + d r (β r n))) t (x * κ r s))) := by
       have hdv : ∀ s x, d r (β r n) s x = σ s (β r n (x * κ r s)) - β r n x := fun _ _ => rfl
-      simp only [Pi.sub_apply, Pi.add_apply, hdv, map_sub, map_add, map_mul, mul_assoc, Module.End.mul_apply]
+      simp only [Pi.sub_apply, Pi.add_apply, hdv, map_sub, map_add (f := _), map_mul, mul_assoc, Module.End.mul_apply]
       abel
     rw [e]
     exact (D n).add_mem ((UpperTheory.Kd.K4.mem_adicPower_iff l n _).2 (hFz r n s t x))

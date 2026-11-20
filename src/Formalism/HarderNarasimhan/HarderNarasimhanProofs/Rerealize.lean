@@ -100,7 +100,7 @@ theorem covol_rk_eq (α : G →+ E) (β : G →+ F) (hn : ∀ g, ‖β g‖ = �
       map_add' := fun y z => by
         apply Subtype.ext
         show β (ex (y + z)).choose = β (ex y).choose + β (ex z).choose
-        rw [← map_add]
+        rw [← map_add (f := _)]
         exact eq_of_eq α β hn
           (by simp [(ex (y + z)).choose_spec.2, (ex y).choose_spec.2, (ex z).choose_spec.2]) }
   have hval : ∀ (y : (H.map α).toIntSubmodule) (g : G), α g = (y : E) → ((τf y : (H.map β).toIntSubmodule) : F) = β g := fun y g hg =>

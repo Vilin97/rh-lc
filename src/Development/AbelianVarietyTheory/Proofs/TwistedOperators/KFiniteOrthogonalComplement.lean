@@ -106,8 +106,8 @@ theorem cdom_of_not_le_orthogonal (hK : ∀ k ∈ Kset ε, ∀ v, ‖ρ k v‖ =
   have comm : ∀ k ∈ Kset ε, ∀ x, S.starProjection (ρ k x) = ρ k (S.starProjection x) := by
     intro k hk x
     have hx : ρ k x = ρ k (S.starProjection x) + ρ k (x - S.starProjection x) := by
-      rw [← map_add, add_sub_cancel]
-    rw [hx, map_add, Submodule.starProjection_eq_self_iff.2 (hS.2.1 k hk _ (starProjection_mem S x)),
+      rw [← map_add (f := _), add_sub_cancel]
+    rw [hx, map_add (f := _), Submodule.starProjection_eq_self_iff.2 (hS.2.1 k hk _ (starProjection_mem S x)),
       (Submodule.starProjection_apply_eq_zero_iff S).2 (hSo k hk _ (Submodule.sub_starProjection_mem_orthogonal x)),
       add_zero]
   refine hS.2.2.2.2 μ _ (starProjection_mem S v) hPv ?_

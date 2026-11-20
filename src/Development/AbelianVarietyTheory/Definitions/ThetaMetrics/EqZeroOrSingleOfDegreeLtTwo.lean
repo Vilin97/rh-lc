@@ -148,7 +148,7 @@ private theorem Close.prod {k : ℕ} {a b : σ → MvPowerSeries τ S}
   | single_add i e d _ _ ih =>
     rw [Finsupp.prod_add_index' (by simp) (fun _ _ _ => pow_add _ _ _),
       Finsupp.prod_add_index' (by simp) (fun _ _ _ => pow_add _ _ _),
-      Finsupp.prod_single_index (by simp), Finsupp.prod_single_index (by simp), map_add,
+      Finsupp.prod_single_index (by simp), Finsupp.prod_single_index (by simp), map_add (f := _),
       Finsupp.degree_single]
     exact Close.mul (close_pow_of_close_one (h i)) ih
 
@@ -224,7 +224,7 @@ theorem coeff_single_subst [Fintype σ] {a : σ → MvPowerSeries τ S}
   classical
   have ha' : HasSubst a := hasSubst_of_constantCoeff_zero ha
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [subst_eq_linear_add ha' f, map_add, coeff_single_subst_eq_zero_of_linear_coeff_zero ha, add_zero, map_sum]
+    rw [subst_eq_linear_add ha' f, map_add (f := _), coeff_single_subst_eq_zero_of_linear_coeff_zero ha, add_zero, map_sum]
   · rfl
   · intro j
     set_option synthInstance.maxHeartbeats 100000 in

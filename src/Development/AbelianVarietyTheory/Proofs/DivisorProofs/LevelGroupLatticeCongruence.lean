@@ -29,7 +29,7 @@ theorem det_quot_eq {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] (I :
     intro v hv i
     refine Submodule.smul_induction_on hv (fun r hr m _ => ?_) (fun x y hx hy => ?_)
     · rw [map_smul]; exact I.mul_mem_right _ hr
-    · rw [map_add]; exact I.add_mem hx hy
+    · rw [map_add (f := _)]; exact I.add_mem hx hy
   have hli : LinearIndependent (R ⧸ I) (fun j => q (a j)) := by
     rw [Fintype.linearIndependent_iff]
     intro g hg i
@@ -155,7 +155,7 @@ theorem det_sub_mem_completedIdeal_of_level (F : Type) {E : Type} [Field F] [Num
         funext i
         apply RingOfIntegers.coe_injective
         have := hφ0 (v + w) i
-        rw [map_add, map_add, Finsupp.add_apply, mul_add, ← hφ0, ← hφ0] at this
+        rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, mul_add, ← hφ0, ← hφ0] at this
         simpa using this
       map_smul' := fun r v => by
         funext i
@@ -257,7 +257,7 @@ theorem det_sub_mem_completedIdeal_of_level (F : Type) {E : Type} [Field F] [Num
       rw [adCoord_smul]
       exact hmul _ _ _ (one_tmul_mem_adelicCompletionOfElementSet F (FractionalIdeal.mem_coeIdeal_of_mem _ hb)) _ (key z hz i)
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
   have hmono : ∀ {A B : FractionalIdeal (𝓞 E)⁰ E}, A ≤ B → ∀ {z : RA F E}, z ∈ hat1 F (A : Set E) →
       z ∈ hat1 F (B : Set E) := by

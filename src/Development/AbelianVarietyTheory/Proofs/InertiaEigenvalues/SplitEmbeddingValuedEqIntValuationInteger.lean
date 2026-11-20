@@ -215,7 +215,7 @@ theorem absFin_idemAt {e : AE D} {P : HeightOneSpectrum (𝓞 D.host.E)} (he : I
     simpa using this
   have hval : Valued.v (π (u : AE D)) = P.valuation D.host.E (m : D.host.E) := by
     have e1 : π (u : AE D) = (π.comp (incA D)) (((m : 𝓞 D.host.E)) : D.host.E) := by
-      rw [hu, map_add, map_mul, map_sub, map_one, GlobalTheory.SplitLinear.chart_e hee hπ, one_mul, sub_self, add_zero]
+      rw [hu, map_add (f := _), map_mul, map_sub, map_one, GlobalTheory.SplitLinear.chart_e hee hπ, one_mul, sub_self, add_zero]
       simp
     rw [e1, valued_eq_intValuation v _ P hφ hP _ hm', ← P.valuation_of_algebraMap (K := D.host.E)]
     simp

@@ -21,7 +21,7 @@ theorem dvd_iff_of_completion {A R : Type} [CommRing A] [CommRing R] [Algebra A 
   obtain ⟨x', y, hy⟩ := LatDescent.adic_surj A q (ec.symm r)
   obtain ⟨b, hb⟩ := LatDescent.adic_inj A q (x - a * x') (algebraMap A _ a * y) (ec.injective (by
     have h1 := congrArg ec hy
-    rw [ec.apply_symm_apply, map_add, map_mul, he, he] at h1
+    rw [ec.apply_symm_apply, map_add (f := _), map_mul, he, he] at h1
     rw [map_mul, map_mul, he, he, he, map_sub, map_mul, hr, h1]; ring))
   exact ⟨x' + t * b, by rw [mul_add, ← mul_assoc, ← ht, ← hb]; ring⟩
 

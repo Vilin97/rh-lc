@@ -162,7 +162,7 @@ theorem mem_of_latC {d : Fin n → C} (hd : d ∈ latC j (lieCoordLat t hx b)) :
       obtain ⟨v, hv⟩ := h
       obtain ⟨v', hv'⟩ := h'
       refine ⟨v + v', ?_⟩
-      rw [map_add, hv, hv', ← Finset.sum_add_distrib]
+      rw [map_add (f := _), hv, hv', ← Finset.sum_add_distrib]
       exact Finset.sum_congr rfl fun i _ => (add_smul _ _ _).symm
     | smul a _ _ h =>
       obtain ⟨v, hv⟩ := h

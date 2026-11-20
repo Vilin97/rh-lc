@@ -45,7 +45,7 @@ private theorem frame_ex {V : Type} [AddCommGroup V] [Module ℂ V] (S : Submodu
         show B ((x : V) + y) z = B x z + B y z
         have h := hlin _ z.2 _ x.2 _ y.2 1
         rw [one_smul, one_mul] at h
-        rw [← hsym _ z.2 _ (S.add_mem x.2 y.2), h, map_add, hsym _ z.2 _ x.2, hsym _ z.2 _ y.2]
+        rw [← hsym _ z.2 _ (S.add_mem x.2 y.2), h, map_add (f := _), hsym _ z.2 _ x.2, hsym _ z.2 _ y.2]
       smul_left := fun x y r => by
         show B (r • (x : V)) y = conj r * B x y
         have h := hlin _ y.2 _ x.2 _ S.zero_mem r

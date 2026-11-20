@@ -47,7 +47,7 @@ theorem coprime_absNorm (F : Type) [Field F] [NumberField F] (l : ℕ) (hl : l.P
   have hz0 : Ideal.Quotient.mk K z = 0 := Ideal.Quotient.eq_zero_iff_mem.2 hz
   have hu : (l : 𝓞 F ⧸ K) * Ideal.Quotient.mk K w = 1 := by
     have := congrArg (Ideal.Quotient.mk K) hyz
-    rw [map_add, hz0, add_zero, map_one, map_mul, map_natCast] at this
+    rw [map_add (f := _), hz0, add_zero, map_one, map_mul, map_natCast] at this
     rw [mul_comm]; exact this
   have hlx : l • x = 0 := hx ▸ addOrderOf_nsmul_eq_zero x
   have hx0 : x = 0 := by

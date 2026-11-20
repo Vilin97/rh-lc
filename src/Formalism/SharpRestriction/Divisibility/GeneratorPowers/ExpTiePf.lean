@@ -110,8 +110,8 @@ private lemma psJet_add_lemma_7 {R κ : Type} [CommRing R] [Fintype κ] [Decidab
     (f g : MvPowerSeries κ R) : psJet m (f + g) = psJet m f + psJet m g := by
   have h := mk_eq_psJet_lemma_6 m (psTrunc m f + psTrunc m g) (f + g) (by
     intro e he
-    rw [MvPolynomial.coeff_add, coeff_psTrunc_lemma_2 m f e he, coeff_psTrunc_lemma_2 m g e he, map_add])
-  rw [← h, map_add]
+    rw [MvPolynomial.coeff_add, coeff_psTrunc_lemma_2 m f e he, coeff_psTrunc_lemma_2 m g e he, map_add (f := _)])
+  rw [← h, map_add (f := _)]
   all_goals rfl
 
 private lemma psJet_eq_zero_lemma_8 {R κ : Type} [CommRing R] [Fintype κ] [DecidableEq κ] (m : ℕ)
@@ -213,7 +213,7 @@ theorem jetSubstPS_psJet {S : Type} [CommRing S] {d N : ℕ} (φ : Fin d → MvP
       · intro e _
         rw [← coe_C_lemma_12, MvPolynomial.coeff_coe]
     next p q hp hq =>
-      rw [map_add, map_add, hp, hq, MvPolynomial.coe_add, map_add, psJet_add_lemma_7]
+      rw [map_add (f := _), map_add (f := _), hp, hq, MvPolynomial.coe_add, map_add (f := _), psJet_add_lemma_7]
     next p n hp =>
       rw [map_mul, map_mul, hp, MvPolynomial.coe_mul, map_mul, psJet_mul_lemma_4]
       congr 1
@@ -260,7 +260,7 @@ theorem jetSubstPS_psJet {S : Type} [CommRing S] {d N : ℕ} (φ : Fin d → MvP
           MvPowerSeries (Fin 1 × Fin d) S) +
         MvPowerSeries.substAlgHom hs (f - ((psTrunc m f : MvPolynomial (Fin 1 × Fin d) S) :
           MvPowerSeries (Fin 1 × Fin d) S)) := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     ring
   rw [e3, e4, psJet_add_lemma_7, psJet_eq_zero_lemma_8 m _ hvan, add_zero, ← hpoly]

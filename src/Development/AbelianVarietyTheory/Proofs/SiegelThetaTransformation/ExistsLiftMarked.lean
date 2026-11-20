@@ -83,7 +83,7 @@ theorem exists_emb {l : Geo.Tor.Level H} {L : Lt E r} {mk : Dw.La →ₗ[𝓞 E]
       obtain ⟨b, -, hb⟩ := modN_of_mem_half l hu ha
       refine ⟨a, (Submodule.Quotient.eq _).2 (mem_mults.2 ⟨-(mk b + t), L.neg_mem (L.add_mem (h.mem b) ht), ?_⟩)⟩
       have : a = u • a + v • a := by rw [← add_smul, huv, one_smul]
-      have e : mk a = l.M • mk b + mk (v • a) := by rw [← map_nsmul, ← hb, ← map_add, ← this]
+      have e : mk a = l.M • mk b + mk (v • a) := by rw [← map_nsmul, ← hb, ← map_add (f := _), ← this]
       show mk (v • a) - (mk a + l.M • t) = _
       rw [e, smul_neg, smul_add]
       abel
@@ -124,8 +124,8 @@ theorem exists_aut {l l₂ : Geo.Tor.Level H} (hd : l.Dvd l₂) {L : Lt E r} {mk
     obtain ⟨b, -, hb⟩ := modN_of_mem_half l₂ hu ha
     obtain ⟨b', -, hb'⟩ := modN_of_mem_half l₂ hu ha'
     refine ⟨t + mk₃ b' - mk₂ b, L.sub_mem (L.add_mem ht (h₃.mem _)) (h₂.mem _), ?_⟩
-    have g₂ : mk₂ a = l₂.M • mk₂ b + mk₂ (v • a) := by rw [← map_nsmul, ← hb, ← map_add, ← hs]
-    have g₃ : mk₃ (liftLa k a) = l₂.M • mk₃ b' + mk₃ (v • liftLa k a) := by rw [← map_nsmul, ← hb', ← map_add, ← hs]
+    have g₂ : mk₂ a = l₂.M • mk₂ b + mk₂ (v • a) := by rw [← map_nsmul, ← hb, ← map_add (f := _), ← hs]
+    have g₃ : mk₃ (liftLa k a) = l₂.M • mk₃ b' + mk₃ (v • liftLa k a) := by rw [← map_nsmul, ← hb', ← map_add (f := _), ← hs]
     rw [g₂, g₃, smul_sub, smul_add, ← e]
     abel
 

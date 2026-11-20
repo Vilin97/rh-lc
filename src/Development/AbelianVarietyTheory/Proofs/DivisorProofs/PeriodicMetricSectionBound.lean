@@ -187,9 +187,9 @@ theorem vanish : ∀ {g : ℕ} (T : Matrix (Fin g) (Fin g) ℂ) (hT : GlobalTheo
   have hFper : ∀ i, ∀ l ∈ M, ∀ x, F i (x + l) = F i x := by
     rintro (a | a) l hl x
     · show (1 / 2 : ℂ) * Fa a (φ (x + l)) = (1 / 2 : ℂ) * Fa a (φ x)
-      rw [map_add, hφx l, hFa_per a l hl]
+      rw [map_add (f := _), hφx l, hFa_per a l hl]
     · show -(Complex.I / 2) * Fa a (φ (x + l)) = -(Complex.I / 2) * Fa a (φ x)
-      rw [map_add, hφx l, hFa_per a l hl]
+      rw [map_add (f := _), hφx l, hFa_per a l hl]
   have hqF : ∀ x, ((q (φ x)) : ℂ) = ∑ i, fderiv ℝ (F i) x (y i) := by
     intro x
     rw [hdiv, Fintype.sum_sum_type, ← Finset.sum_add_distrib]

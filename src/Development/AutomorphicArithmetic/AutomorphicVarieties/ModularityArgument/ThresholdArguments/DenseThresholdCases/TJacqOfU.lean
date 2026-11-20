@@ -38,7 +38,7 @@ private theorem fixed_coinv {A V : Type} [CommGroup A] [AddCommGroup V] [Module 
       obtain ⟨r, hr, e⟩ := ha
       obtain ⟨s, hs, e'⟩ := hb
       refine ⟨r * s, by simp [hr, hs], ?_⟩
-      rw [map_add, map_mul, Module.End.mul_apply, Module.End.mul_apply, e', map_zero, add_zero, ← Module.End.mul_apply,
+      rw [map_add (f := _), map_mul, Module.End.mul_apply, Module.End.mul_apply, e', map_zero, add_zero, ← Module.End.mul_apply,
         ← map_mul, mul_comm, map_mul, Module.End.mul_apply, e, map_zero]
     | smul c a _ ha =>
       obtain ⟨r, hr, e⟩ := ha
@@ -184,7 +184,7 @@ private theorem not_mem_ker (O : Subring K) (π : Kˣ) (hπ : (π : K) ∈ O) (h
     | zero => simp
     | add a b _ _ ha hb =>
       filter_upwards [ha, hb] with j h h'
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem h h'
     | smul c a _ ha =>
       filter_upwards [ha] with j h

@@ -163,7 +163,7 @@ theorem tensor_unit_eq_one {K A B : Type} [Field K] [IsAlgClosed K] [CommRing A]
     intro z
     induction z with
     | tmul x y => simp [hj, Algebra.ofId_apply, ← IsScalarTower.algebraMap_apply]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hco : ∀ i, ∃ k : K, (Algebra.TensorProduct.basis A b).repr u i = algebraMap K A k := by
     intro i
     obtain ⟨k, hk⟩ := mem_range_of_forall_valuationSubring (K := K)

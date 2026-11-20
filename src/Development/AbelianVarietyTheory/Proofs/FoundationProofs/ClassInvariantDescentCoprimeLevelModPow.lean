@@ -205,7 +205,7 @@ def levSub (X : Tower Ω ε) (M : ℕ) : Subfield X.K where
   carrier := {f | Lev X M f}
   mul_mem' := fun ha hb γ hγ => by rw [map_mul, ha γ hγ, hb γ hγ]
   one_mem' := fun γ _ => map_one _
-  add_mem' := fun ha hb γ hγ => by rw [map_add, ha γ hγ, hb γ hγ]
+  add_mem' := fun ha hb γ hγ => by rw [map_add (f := _), ha γ hγ, hb γ hγ]
   zero_mem' := fun γ _ => map_zero _
   neg_mem' := fun ha γ hγ => by rw [map_neg, ha γ hγ]
   inv_mem' := fun a ha γ hγ => by rw [map_inv₀, ha γ hγ]

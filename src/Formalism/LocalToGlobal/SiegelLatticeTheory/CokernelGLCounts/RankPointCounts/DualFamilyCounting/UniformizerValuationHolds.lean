@@ -106,7 +106,7 @@ theorem mul_inv_pow_mem {P : Ideal (𝓞 K)} {π : K}
       rw [map_mul, pow_succ, mul_inv]
       convert hxy using 1
       ring
-    · rw [map_add, add_mul]
+    · rw [map_add (f := _), add_mul]
       exact (locRing P).add_mem hu hw
 
 theorem unifVal_at {P : Ideal (𝓞 K)} (hP : P.IsMaximal) :

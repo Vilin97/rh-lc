@@ -26,7 +26,7 @@ theorem redL_of_mem (c : Coef l) {x : Qbar l} (h : x ∈ c.O) :
 
 theorem redL_add (c : Coef l) {x y : Qbar l} (hx : x ∈ c.O) (hy : y ∈ c.O) :
     redL c (x + y) = redL c x + redL c y := by
-  rw [redL_of_mem c hx, redL_of_mem c hy, redL_of_mem c (c.O.add_mem hx hy), ← map_add]; rfl
+  rw [redL_of_mem c hx, redL_of_mem c hy, redL_of_mem c (c.O.add_mem hx hy), ← map_add (f := _)]; rfl
 
 theorem redL_sub (c : Coef l) {x y : Qbar l} (hx : x ∈ c.O) (hy : y ∈ c.O) :
     redL c (x - y) = redL c x - redL c y := by

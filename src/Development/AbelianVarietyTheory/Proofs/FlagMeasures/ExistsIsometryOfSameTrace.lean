@@ -156,7 +156,7 @@ theorem exists_isometry_of_same_trace : ∀ {F : Type} [Field F] [ValuativeRel F
     rw [h1]
     exact L.O.sub_mem (hint hLb _ (hc'b j) _ (hc'b k)) (hint hLa _ (hc j) _ (hc k))
   have hHc : ∀ j k, L.cj (H k j) = H j k := fun j k => by
-    simp only [H, map_add, hcj]; ring
+    simp only [H, map_add (f := _), hcj]; ring
   let d : Fin m → Fin n → E := fun j => d₀ j - ∑ l, (τ * H j l) • b l
   have hd : ∀ j, d j ∈ X := fun j =>
     X.sub_mem (hd₀ j) (X.sum_mem fun l _ => X.smul_mem _ (hbm l).2)

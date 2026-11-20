@@ -190,7 +190,7 @@ theorem exists_root_same_value : ∀ (D : D7) (c : (AE D)ˣ →* Circle), IsHeck
   have hrt : (1 + d) * h2 = 1 + (N : AE D) * ((d - 1) * hK) := by
     linear_combination (-(d - 1)) * hNK + h2m
   have hroot : (1 + d) * h2 = d * sigR (AF D.host.F) D.sp.cm.sig ((1 + d) * h2) := by
-    rw [map_mul, map_add, map_one, hσ2]
+    rw [map_mul, map_add (f := _), map_one, hσ2]
     linear_combination (-h2) * hnorm
 
   have hv : ∀ P : HeightOneSpectrum (𝓞 D.host.E),
@@ -217,7 +217,7 @@ theorem exists_root_same_value : ∀ (D : D7) (c : (AE D)ˣ →* Circle), IsHeck
         _ = 1 := by rw [mul_comm, hvK]
     refine ⟨ht1, ?_⟩
     change Valued.v (φ ((1 + d) * h2)) = 1
-    rw [hrt, map_add, map_one, map_mul, map_natCast]
+    rw [hrt, map_add (f := _), map_one, map_mul, map_natCast]
     apply Valuation.map_one_add_of_lt
     rw [map_mul]
     calc Valued.v ((N : P.adicCompletion D.host.E)) * Valued.v (φ ((d - 1) * hK))
@@ -226,7 +226,7 @@ theorem exists_root_same_value : ∀ (D : D7) (c : (AE D)ˣ →* Circle), IsHeck
   have hinfr : infPart D ((1 + d) * h2) = 1 := by
     have := congrArg (infPart D) h2m
     rw [map_mul, map_ofNat, map_one] at this
-    rw [map_mul, map_add, map_one, hinf]
+    rw [map_mul, map_add (f := _), map_one, hinf]
     linear_combination this
   have hru : IsUnit ((1 + d) * h2) := isUnit_of_parts D _ hinfr (fun P => (hv P).2)
   have hcr : c hru.unit = 1 := by
@@ -243,7 +243,7 @@ theorem exists_root_same_value : ∀ (D : D7) (c : (AE D)ˣ →* Circle), IsHeck
       rw [map_mul, map_mul] at h3
       rw [h3, mul_one] at e2
       exact e2.le
-    · rw [IsUnit.unit_spec, hrt, map_add, map_one, add_sub_cancel_left, map_mul, map_natCast, nsmul_eq_mul]
+    · rw [IsUnit.unit_spec, hrt, map_add (f := _), map_one, add_sub_cancel_left, map_mul, map_natCast, nsmul_eq_mul]
   refine ⟨x * hru.unit, ?_, ?_⟩
   · unfold IsDetRoot at hx ⊢
     have hmt : (matHom V (g * w)).1.det =

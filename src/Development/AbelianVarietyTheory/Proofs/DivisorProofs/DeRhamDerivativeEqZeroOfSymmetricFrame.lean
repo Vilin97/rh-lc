@@ -33,11 +33,11 @@ theorem dOne_eq_sum_of_frame {B : Type} [CommRing B] [Algebra ℂ B] {g : ℕ}
   induction ξ using ind1 with
   | h0 => simp
   | ha x y hx hy =>
-    rw [map_add, hx, hy, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), hx, hy, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun b _ ↦ ?_
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun c _ ↦ ?_
-    rw [map_add, map_add, add_smul]
+    rw [map_add (f := _), map_add (f := _), add_smul]
   | h x y =>
     have hD : ∀ z : B, D ℂ B z = ∑ a, d a z • ω a := fun z ↦ by
       simpa only [Derivation.liftKaehlerDifferential_comp_D] using hf (D ℂ B z)

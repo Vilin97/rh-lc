@@ -25,7 +25,7 @@ theorem cmpD_add {x y : W.DD T} (hx : x ∈ W.N T) (hy : y ∈ W.N T) :
     Formalism.MainNotions.ArcLiftingSetup.cmpD W T (x + y) = Formalism.MainNotions.ArcLiftingSetup.cmpD W T x + Formalism.MainNotions.ArcLiftingSetup.cmpD W T y := by
   rw [Formalism.MainNotions.UnusedSlot80.ArcF.cmpD_of_mem W T hx, Formalism.MainNotions.UnusedSlot80.ArcF.cmpD_of_mem W T hy,
     Formalism.MainNotions.UnusedSlot80.ArcF.cmpD_of_mem W T ((W.N T).add_mem hx hy)]
-  rw [← map_add]
+  rw [← map_add (f := _)]
   rfl
 
 theorem cmpD_sum {ι : Type} (s : Finset ι) (y : ι → W.DD T) (hy : ∀ k ∈ s, y k ∈ W.N T) :

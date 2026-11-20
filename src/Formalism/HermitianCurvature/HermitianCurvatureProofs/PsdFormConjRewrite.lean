@@ -282,7 +282,7 @@ theorem psd_kernel_hermitian (F : Finset α) (k : α → α → ℂ) (h : A5.IsP
   have hS : ∀ a, (B a a).im = 0 := fun a => (h a).1
   have hexp : ∀ a b, B (a + b) (a + b) = B a a + B b b + (B a b + B b a) := by
     intro a b
-    simp only [hB, Pi.add_apply, map_add, ← Finset.sum_add_distrib]
+    simp only [hB, Pi.add_apply, map_add (f := _), ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun u _ => Finset.sum_congr rfl fun v _ => ?_
     ring
   have hpol : ∀ a b, (B a b + B b a).im = 0 := by

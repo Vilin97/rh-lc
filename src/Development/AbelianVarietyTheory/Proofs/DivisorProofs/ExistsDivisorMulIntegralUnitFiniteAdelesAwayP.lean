@@ -18,7 +18,7 @@ open scoped TensorProduct
 namespace GlobalTheory.AfUnitSplit
 
 theorem isInt_add' {p : ℕ} {a b : AfP p} (ha : IsIntAf a) (hb : IsIntAf b) : IsIntAf (a + b) := fun v => by
-  rw [map_add]; exact add_mem (ha v) (hb v)
+  rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
 
 theorem isInt_sub' {p : ℕ} {a b : AfP p} (ha : IsIntAf a) (hb : IsIntAf b) : IsIntAf (a - b) := fun v => by
   rw [map_sub]; exact sub_mem (ha v) (hb v)

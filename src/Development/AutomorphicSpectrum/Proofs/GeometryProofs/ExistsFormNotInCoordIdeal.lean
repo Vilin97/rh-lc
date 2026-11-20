@@ -36,7 +36,7 @@ theorem exists_form (c : ∀ k, J k) (g : MRing J) :
       exact homog_mul hG' (homog_cMon c m)
     · have hadd : ∏ k, v ⟨k, c k⟩ ^ (m + n) k = (∏ k, v ⟨k, c k⟩ ^ m k) * ∏ k, v ⟨k, c k⟩ ^ n k := by
         simp [pow_add, Finset.prod_mul_distrib]
-      rw [hadd, map_add, map_add, map_mul, map_mul, aeval_cMon, aeval_cMon, ← ea L v hv, ← eb L v hv]
+      rw [hadd, map_add (f := _), map_add (f := _), map_mul, map_mul, aeval_cMon, aeval_cMon, ← ea L v hv, ← eb L v hv]
       ring
   | mul_X a p ha =>
     obtain ⟨m, G, hG, ea⟩ := ha
@@ -134,7 +134,7 @@ theorem exists_ev_eq {ξ : Spec (CommRingCat.of Ω) ⟶ X} {U : X.Opens} (hU : I
     { carrier := {s | ∃ r, a * ev ξ U h s = ev ξ U h r}
       add_mem' := by
         rintro s t ⟨r, hr⟩ ⟨r', hr'⟩
-        exact ⟨r + r', by rw [map_add, map_add, mul_add, hr, hr']⟩
+        exact ⟨r + r', by rw [map_add (f := _), map_add (f := _), mul_add, hr, hr']⟩
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := by
         rintro t s ⟨r, hr⟩

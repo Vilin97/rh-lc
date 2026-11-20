@@ -15,7 +15,7 @@ variable {k : Type} [Field k]
 theorem const_hom (σ : k⟦X⟧ →ₐ[k] k⟦X⟧) (h : X ∣ σ X) (a : k⟦X⟧) : constantCoeff (σ a) = constantCoeff a := by
   obtain ⟨c, hc⟩ := h
   have hC : σ (C (constantCoeff a)) = C (constantCoeff a) := σ.commutes _
-  conv_lhs => rw [eq_X_mul_shift_add_const a, map_add, map_mul, hc, hC]
+  conv_lhs => rw [eq_X_mul_shift_add_const a, map_add (f := _), map_mul, hc, hC]
   simp
 
 theorem dvd_hom_sub (σ : k⟦X⟧ →ₐ[k] k⟦X⟧) (n : ℕ) (h : X ^ n ∣ σ X - X) (a : k⟦X⟧) : X ^ n ∣ σ a - a := by
@@ -29,7 +29,7 @@ theorem dvd_hom_sub (σ : k⟦X⟧ →ₐ[k] k⟦X⟧) (n : ℕ) (h : X ^ n ∣ 
       set s : k⟦X⟧ := mk fun p => coeff (p + 1) a
       have ha : a = X * s + C (constantCoeff a) := eq_X_mul_shift_add_const a
       have : σ a - a = (σ X - X) * σ s + X * (σ s - s) := by
-        conv_lhs => rw [ha, map_add, map_mul, hC]
+        conv_lhs => rw [ha, map_add (f := _), map_mul, hC]
         ring
       rw [this]
       refine dvd_add (((pow_dvd_pow _ hm).trans h).mul_right _) ?_
@@ -58,7 +58,7 @@ theorem mem_range_of_step (σ : k⟦X⟧ →ₐ[k] k⟦X⟧) (h : X ∣ σ X) (S
       have : σ (A b) - b.1 = σ X * (σ (A (T' b)) - (T' b).1) := by
         have e1 := congrArg σ (hA b)
         have e2 : b.1 = C (c b.1 b.2) + σ X * (T' b).1 := hb' b.1 b.2
-        rw [map_add, map_mul, hC] at e1
+        rw [map_add (f := _), map_mul, hC] at e1
         linear_combination e1 - e2
       rw [this, pow_succ']
       exact mul_dvd_mul h (ih _)
@@ -145,7 +145,7 @@ instance charP_powerSeries : CharP k⟦X⟧ l := charP_of_injective_algebraMap (
 theorem hom_opp' (σ : k⟦X⟧ →ₐ[k] k⟦X⟧) (t : ℤ_[l]) (h : σ X = onePlusPow k l t - 1) (z : ℤ_[l]) :
     σ (onePlusPow k l z) = onePlusPow k l (t * z) := by
   have hX : X ∣ σ X := h ▸ opp_dvd t
-  have h' : σ (1 + X) = onePlusPow k l t := by rw [map_add, map_one, h]; ring
+  have h' : σ (1 + X) = onePlusPow k l t := by rw [map_add (f := _), map_one, h]; ring
   have key : ∀ N : ℕ, X ^ N ∣ σ (onePlusPow k l z) - onePlusPow k l (t * z) := by
     intro N
     obtain ⟨w, hw⟩ := Ideal.mem_span_singleton.1 (PadicInt.appr_spec N z)
@@ -171,7 +171,7 @@ def trace (m : ℤ_[l]) : k⟦X⟧ := 1 + ∑ z ∈ mu l, onePlusPow k l (m * z)
 theorem hom_trace (σ : k⟦X⟧ →ₐ[k] k⟦X⟧) (t : ℤ_[l]) (h : σ X = onePlusPow k l t - 1) (m : ℤ_[l]) :
     σ (trace k l m) = trace k l (t * m) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [trace, map_add, map_one, map_sum, hom_opp' σ t h, mul_assoc]
+    simp only [trace, map_add (f := _), map_one, map_sum, hom_opp' σ t h, mul_assoc]
 
 theorem trace_mul {t : ℤ_[l]} (ht : t ^ (l - 1) = 1) (m : ℤ_[l]) : trace k l (t * m) = trace k l m := by
   have := sum_mu_mul (fun z => onePlusPow k l (m * z)) ht

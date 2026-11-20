@@ -129,7 +129,7 @@ theorem fin_of_mem {e : AEF F E} (he : IsSplitIdemF σ e) {u : WOF F E nS nT} (h
     u.map (infPartF F E) = 0 := by
   obtain ⟨h1, h2, v, ε, hpl, hsum⟩ := he
   have hs := congrArg (infPartF F E) hsum
-  rw [map_add, GlobalTheory.WeilPartsF.infPartF_placeIdem hpl] at hs
+  rw [map_add (f := _), GlobalTheory.WeilPartsF.infPartF_placeIdem hpl] at hs
   have hc : infPartF F E (cAF σ e) = 0 := by
     have a1 : infPartF F E (cAF σ e) * infPartF F E (cAF σ e) = infPartF F E (cAF σ e) := by
       rw [← map_mul, ← map_mul, h1]

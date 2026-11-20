@@ -129,7 +129,7 @@ private theorem afsplitIE_mem_OAd' (v : HeightOneSpectrum (𝓞 F)) {a : E ⊗[F
     rw [Algebra.TensorProduct.one_def, afsplitIE_tmul]
     exact Subring.subset_closure (Or.inr ⟨⟨_, hone⟩, rfl⟩)
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Subring.add_mem _ hx hy
   | neg x _ hx =>
     rw [map_neg]
@@ -290,7 +290,7 @@ private theorem sigR_mem_intAE' (σ : E →ₐ[F] E) {a : E ⊗[F] Ad F} (ha : a
 
 private theorem hform_add_left_flag_measures {A : Type} [CommRing A] {ι : Type} [Fintype ι] (τ : A →+* A)
     (J : Matrix ι ι A) (u w x : ι → A) : hform τ J (u + w) x = hform τ J u x + hform τ J w x := by
-  simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 private theorem hform_smul_left_flag_measures' {A : Type} [CommRing A] {ι : Type} [Fintype ι] (τ : A →+* A)
     (J : Matrix ι ι A) (a : A) (u x : ι → A) : hform τ J (a • u) x = τ a * hform τ J u x := by

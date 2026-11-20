@@ -141,7 +141,7 @@ theorem cA_cA_of (hσ : ∀ x, σ (σ x) = x) (z : AE F E) : cA σ (cA σ z) = z
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem cv_incV (w : Fin n → E) : cv (cA σ).toRingHom (incV F w) = incV F (fun i => σ (w i)) := by
   ext i; exact cA_inclR (w i)

@@ -126,7 +126,7 @@ private theorem leib {ι E E' E'' : Type} [LinearOrder ι] [AddCommGroup E] [Mod
     have c5 : GlobalTheory.cubeSign v j = GlobalTheory.cubeSign t j := by
       have : v.filter (· < j) = t.filter (· < j) := by ext y; grind
       simp only [GlobalTheory.cubeSign, this]
-    rw [← hs, hA, hB, ev, map_add, LinearMap.add_apply, c4, c5, map_zsmul, LinearMap.smul_apply, smul_add]
+    rw [← hs, hA, hB, ev, map_add (f := _), LinearMap.add_apply, c4, c5, map_zsmul, LinearMap.smul_apply, smul_add]
     abel
   have lhs : ∑ i ∈ t, GlobalTheory.cubeSign t i • cupE μ a b (t.erase i) =
       ∑ j ∈ t, ∑ i ∈ t.erase j, GlobalTheory.cubeSign t i •
@@ -256,7 +256,7 @@ theorem UpperTheory.Gal.productCup_of_system.rCup_of :
       rw [pow_add, pow_add _ n, mul_right_comm, hs1]
       ring
     have hz := congrArg (fun m => ((-1 : ℤ) ^ (p * (J.card + L.card))) • μ m (x (I.filter (i ≤ ·)))) h0
-    simp only [Pi.zero_apply, map_zero, LinearMap.zero_apply, smul_zero, map_add, LinearMap.add_apply, map_zsmul,
+    simp only [Pi.zero_apply, map_zero, LinearMap.zero_apply, smul_zero, map_add (f := _), LinearMap.add_apply, map_zsmul,
       LinearMap.smul_apply, smul_add, smul_smul] at hz
     simp only [smul_smul, hs1, hs2]
     exact hz.symm

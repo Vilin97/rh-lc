@@ -59,7 +59,7 @@ theorem resid_at_w : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.L2.
   rw [hsum, GlobalTheory.T.symmetricFrame_weightedEdgeSum_reindex _ D.R.rS D.R.k D.R.r (rank_eq D) (side X w) (fun i j => φ (N i j))]
   unfold argS
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, map_sum]
+    rw [map_add (f := _), map_sum, map_sum]
   congr 1
   · refine Finset.sum_congr rfl fun a _ => ?_
     rw [hφ]

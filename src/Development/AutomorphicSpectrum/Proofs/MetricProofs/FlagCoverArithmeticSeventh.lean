@@ -39,7 +39,7 @@ theorem exists_analytic_zero (f : W × ℂ → ℂ) (p : W × ℂ) (hf : Analyti
         (u, (0 : ℂ)) + ((c - A (u, 0)) / A ((0 : W), (1 : ℂ))) • ((0 : W), (1 : ℂ)) := by simp
     refine Prod.ext rfl ?_
     show A _ = c
-    rw [h3, map_add, map_smul, smul_eq_mul, div_mul_cancel₀ _ hd]
+    rw [h3, map_add (f := _), map_smul, smul_eq_mul, div_mul_cancel₀ _ hd]
     ring
   let Le := ContinuousLinearEquiv.ofBijective Lm (LinearMap.ker_eq_bot.mpr hinj)
     (LinearMap.range_eq_top.mpr hsurj)
@@ -126,7 +126,7 @@ theorem exists_sep_poly {Ω : Type} [Field Ω] [CharZero Ω] {L L' : Intermediat
   · rw [Polynomial.coeff_map]; exact SetLike.coe_mem _
   · rw [Polynomial.coeff_map]; exact SetLike.coe_mem _
   · have := congrArg (Polynomial.map (algebraMap L Ω)) hab
-    simpa [Polynomial.map_add, Polynomial.map_mul, Polynomial.derivative_map] using this
+    simpa [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.derivative_map] using this
   · have h := congrArg (algebraMap (IntermediateField.extendScalars hle) Ω) (minpoly.aeval L t')
     rw [map_zero, ← Polynomial.aeval_algebraMap_apply] at h
     rw [Polynomial.eval_map_algebraMap]
@@ -244,7 +244,7 @@ theorem exists_rep {Ω : Type} [Field Ω] [CharZero Ω] (y : (Σ k, ι k) → Ω
       isMultiHomog_mul hh hh', ?_, ?_⟩
     · rw [add_comm d d']; exact isMultiHomog_mul hg' hh
     · rw [map_mul]; exact mul_ne_zero hy hy'
-    · simp only [map_add, map_mul, he, he']; ring
+    · simp only [map_add (f := _), map_mul, he, he']; ring
   | inv a _ ha =>
     by_cases h0 : a = 0
     · rw [h0, _root_.inv_zero]; exact zero_rep

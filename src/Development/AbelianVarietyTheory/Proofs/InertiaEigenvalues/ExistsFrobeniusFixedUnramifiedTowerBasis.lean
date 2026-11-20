@@ -96,7 +96,7 @@ def frFixed (l : ℕ) [Fact l.Prime] (r : ℕ) : IntermediateField ℚ_[l] ↥(M
   add_mem' := by
     intro a b ha hb
     simp only [Set.mem_setOf_eq] at *
-    rw [map_add, ha, hb]
+    rw [map_add (f := _), ha, hb]
   algebraMap_mem' := fun q => by
     show (frobUr l ^ r) (algebraMap ℚ_[l] ↥(MaximalUnramifiedExtension l) q) = _
     exact AlgHom.commutes _ q

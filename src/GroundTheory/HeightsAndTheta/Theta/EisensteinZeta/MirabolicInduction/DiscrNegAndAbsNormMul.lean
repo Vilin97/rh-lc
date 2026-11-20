@@ -144,12 +144,12 @@ theorem discr_neg_and_absNorm_mul (hK : Module.finrank ℚ K = 2) (σ : K →+* 
     intro x hx
     obtain ⟨m, n, hmn⟩ := mem_latticeOf.mp (hmem x hx)
     refine ⟨m, n, σ.injective (mul_left_cancel₀ hc ?_)⟩
-    rw [hmn, map_add, map_mul, map_mul, map_intCast, map_intCast]
+    rw [hmn, map_add (f := _), map_mul, map_mul, map_intCast, map_intCast]
     linear_combination (-(m : ℂ)) * hα - (n : ℂ) * hβ
   have hind : ∀ m n : ℤ, (m : K) * α + n * β = 0 → m = 0 ∧ n = 0 := by
     intro m n h
     have h2 := congrArg (fun x => c * σ x) h
-    simp only [map_add, map_mul, map_intCast, map_zero, mul_zero] at h2
+    simp only [map_add (f := _), map_mul, map_intCast, map_zero, mul_zero] at h2
     have h3 : (m : ℂ) + n * (τ : ℂ) = ((0 : ℤ) : ℂ) + ((0 : ℤ) : ℂ) * (τ : ℂ) := by
       push_cast
       linear_combination h2 - (m : ℂ) * hα - (n : ℂ) * hβ

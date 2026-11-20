@@ -122,7 +122,7 @@ theorem _root_.GlobalTheory.RealWeil.Vacuum.norm_line (hJ : ∀ x, J (J x) = -x)
 def rot [FiniteDimensional ℝ V] (hJ : ∀ x, J (J x) = -x) (θ : ℝ) : V ≃ₗᵢ[ℝ] V :=
   LinearIsometry.toLinearIsometryEquiv
     { toFun := fun u => line J u (circleMap 0 1 θ)
-      map_add' := fun x y => by simp only [line_apply, map_add, smul_add]; abel
+      map_add' := fun x y => by simp only [line_apply, map_add (f := _), smul_add]; abel
       map_smul' := fun a x => by simp only [line_apply, map_smul, smul_add, RingHom.id_apply, smul_comm a]
       norm_map' := fun u => norm_line hJ u θ } rfl
 
@@ -155,7 +155,7 @@ private theorem omJ_line_line_eq {J : V ≃ₗᵢ[ℝ] V} (hJ : ∀ x, J (J x) =
       (_root_.GlobalTheory.RealWeil.Vacuum.line J u η) = ‖u‖ ^ 2 * (ζ.im * η.re - ζ.re * η.im) := by
   have h0 := inner_self_complexStructure_eq_zero hJ u
   unfold _root_.GlobalTheory.RealWeil.omJ
-  simp only [_root_.GlobalTheory.RealWeil.Vacuum.line_apply, map_add, map_smul, hJ, inner_add_left,
+  simp only [_root_.GlobalTheory.RealWeil.Vacuum.line_apply, map_add (f := _), map_smul, hJ, inner_add_left,
     inner_add_right, real_inner_smul_left, real_inner_smul_right, inner_neg_right,
     real_inner_comm u (J u), h0, LinearIsometryEquiv.inner_map_map, real_inner_self_eq_norm_sq]
   ring
@@ -187,7 +187,7 @@ private theorem differentiable_gaussian_mul_orbit_line {J : V ≃ₗᵢ[ℝ] V} 
       _ = I • D z := by rw [e, smul_neg, neg_smul, neg_neg]
   have key : ∀ η : ℂ, D (_root_.GlobalTheory.RealWeil.Vacuum.line J u η) = η • D u := by
     intro η
-    rw [_root_.GlobalTheory.RealWeil.Vacuum.line_apply, map_add, map_smul, map_smul, hDJ,
+    rw [_root_.GlobalTheory.RealWeil.Vacuum.line_apply, map_add (f := _), map_smul, map_smul, hDJ,
       ← Complex.coe_smul η.re, ← Complex.coe_smul η.im, smul_smul (η.im : ℂ) I, ← add_smul,
       Complex.re_add_im]
   have hψ0 : HasDerivAt ψ (D u) 0 := by
@@ -213,7 +213,7 @@ private theorem differentiable_gaussian_mul_orbit_line {J : V ≃ₗᵢ[ℝ] V} 
         (cexp (Real.pi * ‖u‖ ^ 2 * ((starRingEnd ℂ) ζ * η)) •
           ρ (_root_.GlobalTheory.RealWeil.Vacuum.line J u ζ) (ψ η)) := by
     intro ζ η
-    simp only [hψ, map_add, map_smul]
+    simp only [hψ, map_add (f := _), map_smul]
     rw [hmul, smul_smul, smul_smul, smul_smul, ← exp_add, ← exp_add, ← exp_add]
     congr 2
     have e := gaussian_exponent_add_eq (‖u‖ ^ 2) _ ζ η (omJ_line_line_eq hJ u ζ η)

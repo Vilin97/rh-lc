@@ -23,7 +23,7 @@ theorem ext_one_tmul {X Y : Type*} [AddCommGroup X] [Module S X] [AddCommGroup Y
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul s x => rw [tmul_eq_smul_one_tmul, map_smul, map_smul, h]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 variable {X Y X' Y' : Type*} [AddCommGroup X] [Module S X] [AddCommGroup Y] [Module S Y]
   [AddCommGroup X'] [Module S' X'] [AddCommGroup Y'] [Module S' Y']
@@ -93,7 +93,7 @@ def subEquiv (E : S' ⊗[S] X ≃ₗ[S'] X') (D : Submodule S X) (D' : Submodule
           Submodule.coe_subtype, LinearEquiv.coe_coe]
         rw [tmul_eq_smul_one_tmul, map_smul]
         exact D'.smul_mem s (h₁ x.1 x.2)
-      | add a b ha hb => rw [map_add]; exact D'.add_mem ha hb)
+      | add a b ha hb => rw [map_add (f := _)]; exact D'.add_mem ha hb)
       (h₂.trans (Submodule.span_le.mpr (by
         rintro _ ⟨x, hx, rfl⟩
         exact ⟨1 ⊗ₜ ⟨x, hx⟩, by simp⟩)))))
@@ -317,7 +317,7 @@ theorem map_poly_smul (p : Poly S N) (m : M) : f (p • m) = pmap S S' N p • f
       _ = (C (algebraMap S S' a) : Poly S' N) • f m := by
           rw [← algebraMap_smul (Poly S' N) (algebraMap S S' a) (f m), MvPolynomial.algebraMap_eq]
       _ = pmap S S' N (C a) • f m := by rw [MvPolynomial.map_C]
-  · rw [add_smul, map_add, hp, hq, map_add, add_smul]
+  · rw [add_smul, map_add (f := _), hp, hq, map_add (f := _), add_smul]
   · rw [mul_smul, hp, hX, map_mul, MvPolynomial.map_X, mul_smul]
 
 omit [Module S M'] [IsScalarTower S S' M'] in
@@ -352,7 +352,7 @@ def gLoc (I : Finset (Fin (N + 1))) : LocMod S N M I →+ LocMod S' N M' I :=
         gRaw f hX I (LocalizedModule.mk m s) + gRaw f hX I (LocalizedModule.mk m' s')
       rw [LocalizedModule.mk_add_mk, gRaw_mk, gRaw_mk, gRaw_mk, LocalizedModule.mk_add_mk]
       congr 1
-      · simp only [map_add, Submonoid.smul_def, map_poly_smul f hX]
+      · simp only [map_add (f := _), Submonoid.smul_def, map_poly_smul f hX]
       · exact Subtype.ext (by simp only [Submonoid.coe_mul, map_mul]))
 
 theorem gLoc_mk (I : Finset (Fin (N + 1))) (m : M) (s : monos (S := S) I) :
@@ -394,7 +394,7 @@ theorem bij_of_tmul (hf : IsBaseChange S' f) (I : Finset (Fin (N + 1)))
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rw [LinearMap.lTensor_tmul, hL, hL, tsm_apply, gLoc_psmul, smul_comm']
-    | add z₁ z₂ h₁ h₂ => rw [map_add, map_add, h₁, h₂, map_add, smul_add]
+    | add z₁ z₂ h₁ h₂ => rw [map_add (f := _), map_add (f := _), h₁, h₂, map_add (f := _), smul_add]
   have F5 : ∀ w, L (LinearMap.lTensor S' lm w) = lmk I (hf.equiv w) 1 := by
     intro w
     induction w using TensorProduct.induction_on with
@@ -403,7 +403,7 @@ theorem bij_of_tmul (hf : IsBaseChange S' f) (I : Finset (Fin (N + 1)))
       rw [LinearMap.lTensor_tmul, hL, lm_apply, gLoc_mk, IsBaseChange.equiv_tmul, lmk_smul]
       congr 1
       exact Subtype.ext (map_one _)
-    | add w₁ w₂ h₁ h₂ => rw [map_add, map_add, h₁, h₂, map_add, lmk_add]
+    | add w₁ w₂ h₁ h₂ => rw [map_add (f := _), map_add (f := _), h₁, h₂, map_add (f := _), lmk_add]
   have F6 : ∀ u w, hf.equiv (LinearMap.lTensor S' (msm u) w) = pmap S S' N u • hf.equiv w := by
     intro u w
     induction w using TensorProduct.induction_on with
@@ -411,7 +411,7 @@ theorem bij_of_tmul (hf : IsBaseChange S' f) (I : Finset (Fin (N + 1)))
     | tmul a m =>
       rw [LinearMap.lTensor_tmul, IsBaseChange.equiv_tmul, IsBaseChange.equiv_tmul, msm_apply,
         map_poly_smul f hX, smul_comm']
-    | add w₁ w₂ h₁ h₂ => rw [map_add, map_add, h₁, h₂, map_add, smul_add]
+    | add w₁ w₂ h₁ h₂ => rw [map_add (f := _), map_add (f := _), h₁, h₂, map_add (f := _), smul_add]
   have F7 : ∀ t ∈ monos (S := S) I, Function.Injective (LinearMap.lTensor S' (tsm t)) := by
     intro t ht
     have hb : Function.Bijective (tsm t) := by
@@ -447,7 +447,7 @@ theorem bij_of_tmul (hf : IsBaseChange S' f) (I : Finset (Fin (N + 1)))
         simp only [LinearMap.comp_apply, tsm_apply, mul_comm t₁ t₂, mul_smul]
       have e2 : tsm (t₁ * t₂) = tsm t₁ ∘ₗ tsm t₂ := LinearMap.ext fun x => by
         simp only [LinearMap.comp_apply, tsm_apply, mul_smul]
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       congr 1
       · rw [e1, LinearMap.lTensor_comp_apply, hw₁, ← LinearMap.lTensor_comp_apply, F3,
           LinearMap.lTensor_comp_apply]
@@ -483,7 +483,7 @@ theorem bij_of_tmul (hf : IsBaseChange S' f) (I : Finset (Fin (N + 1)))
       | add z₁ z₂ h₁ h₂ =>
         obtain ⟨w₁, hw₁⟩ := h₁
         obtain ⟨w₂, hw₂⟩ := h₂
-        exact ⟨w₁ + w₂, by rw [map_add, hw₁, hw₂, map_add, lmk_add]⟩
+        exact ⟨w₁ + w₂, by rw [map_add (f := _), hw₁, hw₂, map_add (f := _), lmk_add]⟩
     obtain ⟨w, hw⟩ := key (hf.equiv.symm m')
     exact ⟨w, by rw [hw, LinearEquiv.apply_symm_apply]⟩
 
@@ -564,7 +564,7 @@ theorem piece_le_span (a : ℤ) : 𝓜'.piece a ≤ Submodule.span S' (f '' (�
         exact (Submodule.mem_iSup_of_mem b (Submodule.subset_span ⟨m, hm, rfl⟩) :
           f m ∈ ⨆ b, W b)
       exact h1 ⟨m, by rw [𝓜.isInternal.submodule_iSup_eq_top]; trivial, rfl⟩
-    | add z₁ z₂ h₁ h₂ => rw [map_add]; exact Submodule.add_mem _ h₁ h₂
+    | add z₁ z₂ h₁ h₂ => rw [map_add (f := _)]; exact Submodule.add_mem _ h₁ h₂
   intro y hy
   have hy' : y ∈ W a ⊔ ⨆ b, ⨆ (_ : b ≠ a), W b := by
     rw [← iSup_split_single, htop]; trivial
@@ -591,7 +591,7 @@ theorem gLoc_mem_degLoc (c : ℤ) (I : StdCell N) (x : LocMod S N M I.1) (hx : x
     exact Submodule.subset_span ⟨f m, ⟨pmap S S' N s, pmap_mem_monos s.2⟩, a, e, hdeg a m hm,
       hs.map _, hae, rfl⟩
   · rw [map_zero]; exact Submodule.zero_mem _
-  · intro x y _ _ hx hy; rw [map_add]; exact Submodule.add_mem _ hx hy
+  · intro x y _ _ hx hy; rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   · intro r x _ hx; rw [gLoc_smul]; exact Submodule.smul_mem _ _ hx
 
 include hf hdeg in

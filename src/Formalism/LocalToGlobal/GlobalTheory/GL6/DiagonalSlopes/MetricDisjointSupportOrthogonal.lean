@@ -73,7 +73,7 @@ theorem metric_disjoint_support_orthogonal (Tf : Forms0 D u) : MetricOrthogonalC
       fnOf _ (shiftOf (lamT u 0)) 1 (MvPolynomial.map D.what₂.embLL (Px c + MvPolynomial.C a * Py c))
         ((Tf.val 0 (Nat.zero_le _) rfl).eY z) := by
     intro a c z
-    rw [map_add, Pi.add_apply, Pi.add_apply, hPx, hay, map_add, map_add, Pi.add_apply]
+    rw [map_add (f := _), Pi.add_apply, Pi.add_apply, hPx, hay, map_add (f := _), map_add (f := _), Pi.add_apply]
   have key : ∀ a : D.what₂.LL, (majAt ((D.fm u).lat 0).b ((D.fm u).lat 0).X v (x + a • y) (x + a • y)).re =
       (majAt ((D.fm u).lat 0).b ((D.fm u).lat 0).X v x x).re + (majAt ((D.fm u).lat 0).b ((D.fm u).lat 0).X v (a • y) (a • y)).re := by
     intro a

@@ -54,7 +54,7 @@ theorem splitEquiv_conjBase (z : R ⊗[F] (F × F)) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r x => simp [conj_prod]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, Prod.swap_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), Prod.swap_add]
 
 theorem splitFst_conjBase (z : R ⊗[F] (F × F)) :
     splitFst F R (conjBase F (F × F) R z) = splitSnd F R z := by
@@ -77,7 +77,7 @@ theorem splitFst_tensorMap {S : Type*} [CommRing S] [Algebra F S] (f : R →ₐ[
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r x => simp [splitFst_apply]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 

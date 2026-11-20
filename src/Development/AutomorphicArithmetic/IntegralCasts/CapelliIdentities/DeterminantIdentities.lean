@@ -23,7 +23,7 @@ private theorem core1 {B Γ F A : Type} [CommRing B] [Monoid Γ] [Ring F] [Algeb
       rw [mul_neg_geom_sum, h0, sub_zero]
     refine ⟨(∑ k ∈ Finset.range N, (T ^ (e + 1) • y₁) ^ k) * (z + T ^ e • (y₁ * y₂)), ?_⟩
     rw [mul_sub, mul_smul_comm, map_mul, ← mul_assoc, h1, one_mul]
-    simp only [map_add, map_smul, map_mul, mul_sub, sub_mul, mul_one, one_mul, smul_add, smul_smul,
+    simp only [map_add (f := _), map_smul, map_mul, mul_sub, sub_mul, mul_one, one_mul, smul_add, smul_smul,
       smul_mul_smul_comm, ← pow_add]
     rw [show e + 2 + e = e + 1 + (e + 1) by ring]
     abel
@@ -105,7 +105,7 @@ private theorem core2 {n : ℕ} {P A C Γ : Type} [CommRing P] [CommRing A] [Com
     clear h1
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb, Matrix.map_add ι (map_add ι)]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, Matrix.map_add ι (map_add ι)]
     | single g r =>
       rw [MonoidAlgebra.mapRingHom_single, hΦ]
       ext i j
@@ -132,7 +132,7 @@ private theorem map_dom {B C H G : Type} [CommRing B] [CommRing C] [Group H] [Gr
     MonoidAlgebra.mapRingHom H f (x.mapDomain s) = (MonoidAlgebra.mapRingHom G f x).mapDomain s := by
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, MonoidAlgebra.mapDomain_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), MonoidAlgebra.mapDomain_add, ha, hb]
   | single g r => simp
 
 private theorem dom_dom {C H G K : Type} [CommRing C] (s : G → H) (t : H → K) (x : MonoidAlgebra C G) :
@@ -289,7 +289,7 @@ private theorem proj {n : ℕ} {A C C' H Γ : Type} [CommRing A] [CommRing C] [C
   congr 1
   induction y using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, MonoidAlgebra.mapDomain_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), MonoidAlgebra.mapDomain_add, ha, hb]
   | single g r =>
     ext i j
     have := congrFun (congrFun (ht g) i) j

@@ -30,7 +30,7 @@ theorem exists_hermitianPairing_eq_im_mul_pureType {D : Datum H} {g : ℕ} {ty :
   obtain ⟨Hm, hH, hpos, hEF⟩ := hP.2.2.2.2
   have hw0 : Pe (H.w0 • x) = ω • Pe x := by
     have e : (2 : ℂ) • Pe (H.w0 • x) = (2 : ℂ) • ω • Pe x := by
-      rw [two_smul, ← map_add, ← add_smul, ← two_mul, H.two_weight_eq_one_add_root, add_smul, one_smul, map_add,
+      rw [two_smul, ← map_add (f := _), ← add_smul, ← two_mul, H.two_weight_eq_one_add_root, add_smul, one_smul, map_add (f := _),
         PureType.period_rt_smul hP hx]
       funext k
       simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]

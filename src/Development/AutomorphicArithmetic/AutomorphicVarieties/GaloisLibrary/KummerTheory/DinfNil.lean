@@ -183,7 +183,7 @@ theorem UpperTheory.V.Kum.dinfNil :
   let J : Ideal (Polynomial ℤ) :=
     { carrier := {p | Polynomial.aeval Tm p φ = 0}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add, LinearMap.add_apply] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _), LinearMap.add_apply] at *
         rw [ha, hb, add_zero]
       zero_mem' := by simp
       smul_mem' := fun c p hp => by
@@ -191,7 +191,7 @@ theorem UpperTheory.V.Kum.dinfNil :
         rw [hp, map_zero] }
   have hB : (Polynomial.X + 1) ^ q - 1 ∈ J := by
     show (Polynomial.aeval Tm ((Polynomial.X + 1) ^ q - 1)) φ = 0
-    simp only [map_sub, map_pow, map_add, Polynomial.aeval_X, map_one]
+    simp only [map_sub, map_pow, map_add (f := _), Polynomial.aeval_X, map_one]
     rw [show Tm + 1 = ρ γ from sub_add_cancel _ _, ← map_pow, LinearMap.sub_apply,
       Module.End.one_apply, sub_eq_zero]
     funext x
@@ -207,7 +207,7 @@ theorem UpperTheory.V.Kum.dinfNil :
     intro i
     have hmap : Polynomial.map (Int.castRingHom (ZMod l))
         ((Polynomial.X + 1) ^ q - Polynomial.X ^ q - 1) = 0 := by
-      simp only [Polynomial.map_sub, Polynomial.map_pow, Polynomial.map_add, Polynomial.map_X,
+      simp only [Polynomial.map_sub, Polynomial.map_pow, Polynomial.map_add (f := _), Polynomial.map_X,
         Polynomial.map_one]
       rw [hqdef, add_pow_char_pow, one_pow]
       ring

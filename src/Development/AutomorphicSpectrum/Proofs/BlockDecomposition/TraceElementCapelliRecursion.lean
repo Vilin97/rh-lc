@@ -57,7 +57,7 @@ theorem etr_apply_of_eigen : ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (m :
         ← sum_smul, map_add, map_smul, Module.End.mul_apply, Module.algebraMap_end_apply, map_smul]
       simp
     rw [h2] at h1
-    simp only [LinearMap.add_apply, Module.End.mul_apply, Module.algebraMap_end_apply, map_add, map_smul,
+    simp only [LinearMap.add_apply, Module.End.mul_apply, Module.algebraMap_end_apply, map_add (f := _), map_smul,
       LinearMap.sub_apply, map_sub, smul_eq_mul] at h1
     rw [← polyOf_eval, ← hRp, ← hPqe] at h1
     simp only [hPv] at h1

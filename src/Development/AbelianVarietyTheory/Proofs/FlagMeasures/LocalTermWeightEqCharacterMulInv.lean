@@ -34,7 +34,7 @@ theorem map_lowSpan {f : Fin (r + 1) → V} {g : V ≃ₗ[E] V} (hg : IsTriW f g
     have := add_mem h2 h1
     simpa using this
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 theorem exists_pre_lowSpan {f : Fin (r + 1) → V} {g : V ≃ₗ[E] V} (hg : IsTriW f g) :
@@ -178,7 +178,7 @@ theorem coef_eq {H : Loc.HermSp M V} (Fr : LocNG.FrameD H r) {n : ℕ} (Hm : Mat
       rw [Fr.h_es i j]
       simp [Fin.castSucc_inj]
   | zero => rw [H.h_zero_left, map_zero, hf_zero_left']
-  | add x y _ _ hx hy => rw [H.h_add_left, map_add, hf_add_left', hx, hy]
+  | add x y _ _ hx hy => rw [H.h_add_left, map_add (f := _), hf_add_left', hx, hy]
   | smul a x _ hx => rw [H.h_smul_left, map_smul, hf_smul_left', hx]
 
 end Loc

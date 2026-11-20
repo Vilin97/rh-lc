@@ -35,7 +35,7 @@ theorem GlobalTheory.Phase.polyDeriv_pushLet_eq_hAct : ∀ (E : Type) [Field E] 
     intro Q
     induction Q using MvPolynomial.induction_on with
     | C x => simp
-    | add P Q hP hQ => simp only [map_add, hP, hQ]
+    | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
     | mul_X P v hP =>
       simp only [map_mul, hP]
       congr 1

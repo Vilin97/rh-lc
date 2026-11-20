@@ -36,7 +36,7 @@ private theorem coneMap_monomial_one (y : κ → Ω) (s : κ →₀ ℕ) :
   induction s using Finsupp.induction with
   | zero => simp [coneMap]
   | single_add a b f _ _ ih =>
-    rw [MvPolynomial.monomial_single_add, map_mul, ih, map_add, Finsupp.degree_single]
+    rw [MvPolynomial.monomial_single_add, map_mul, ih, map_add (f := _), Finsupp.degree_single]
     simp only [coneMap, map_mul, map_pow, MvPolynomial.aeval_X, pow_add, mul_pow]
     ring
 
@@ -153,7 +153,7 @@ private theorem sec_le_iSup (x : κ → Ω) (e : Fin (D + 1) → κ) (N : κ →
     set d' := d - Finsupp.single i (N i)
     have hdd : d = d' + Finsupp.single i (N i) :=
       (tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr hi)).symm
-    have hdeg' : d'.degree + N i = n := by rw [← hd, hdd, map_add, Finsupp.degree_single]
+    have hdeg' : d'.degree + N i = n := by rw [← hd, hdd, map_add (f := _), Finsupp.degree_single]
     have hm : MvPolynomial.monomial (d' + Finsupp.single i (N i)) (1 : ℤ) =
         MvPolynomial.monomial d' 1 * MvPolynomial.X i ^ N i := by
       rw [MvPolynomial.X_pow_eq_monomial, MvPolynomial.monomial_mul, mul_one]

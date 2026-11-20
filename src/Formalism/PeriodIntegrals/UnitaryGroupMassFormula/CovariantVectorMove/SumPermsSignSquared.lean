@@ -61,7 +61,7 @@ theorem midV (hy : ∀ a b c, E a b * y c - y c * E a b = if a = c then -y b els
   simp only [Tm, symV]
   split_ifs at h ⊢
   all_goals
-    simp only [map_add, map_one, mul_add, add_mul, mul_one, zero_add, add_zero, h, c2]
+    simp only [map_add (f := _), map_one, mul_add, add_mul, mul_one, zero_add, add_zero, h, c2]
     try noncomm_ring
 
 theorem stepV (hy : ∀ a b c, E a b * y c - y c * E a b = if a = c then -y b else 0)

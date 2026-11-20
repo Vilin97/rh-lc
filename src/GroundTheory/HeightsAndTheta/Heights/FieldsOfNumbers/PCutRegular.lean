@@ -114,7 +114,7 @@ theorem isMultiHomogIdeal_sup_span {P : Ideal (MRing ι F)} (hP : IsMultiHomogId
   intro f hf b
   obtain ⟨a, ha, t', ht', rfl⟩ := Submodule.mem_sup.mp hf
   obtain ⟨t, rfl⟩ := Ideal.mem_span_singleton'.mp ht'
-  rw [map_add, HilbExactDivide.component_mul_form hs]
+  rw [map_add (f := _), HilbExactDivide.component_mul_form hs]
   refine Ideal.add_mem _ (Ideal.mem_sup_left (hP a ha b)) ?_
   split_ifs
   · exact Ideal.mem_sup_right (Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self s))

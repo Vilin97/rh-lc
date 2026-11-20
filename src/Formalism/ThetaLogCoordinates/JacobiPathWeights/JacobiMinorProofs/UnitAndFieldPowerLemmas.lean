@@ -321,12 +321,12 @@ theorem good_smul_add (k : Type) [Field k] (isVec : ℕ → Bool) (i : ℕ) (θ 
   · intro t ht
     have h := (cornerValSubmodule k ℕ Empty n isVec {j : ℕ | j < i} (t : WithTop ℤ) ⊥ c (rename Sum.inl G)
       (rename Sum.inl H)).1 (hG.1 t ht) (hH.1 t ht)
-    rw [valP, map_add, map_smul]
+    rw [valP, map_add (f := _), map_smul]
     exact h
   · intro t ht
     have h := (cornerValSubmodule k ℕ Empty n isVec {j : ℕ | j < i} ⊤ (t : WithBot ℤ) c (rename Sum.inl G)
       (rename Sum.inl H)).2 (hG.2 t ht) (hH.2 t ht)
-    rw [lamP, map_add, map_smul]
+    rw [lamP, map_add (f := _), map_smul]
     exact h
 
 theorem mem_span_inter {k V ι κ : Type*} [Field k] [AddCommGroup V] [Module k V] {v : ι → V}

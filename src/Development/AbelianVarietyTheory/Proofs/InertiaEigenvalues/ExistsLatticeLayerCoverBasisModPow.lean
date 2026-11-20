@@ -72,7 +72,7 @@ theorem coordsB {Γ : Type} [Group Γ] {a d : ℕ} {ρ : Γ →* GL (Fin d) ℤ_
   induction f using Finsupp.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    rw [map_add, hf, hg, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), hf, hg, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← add_smul, Finsupp.sum_add_index' (by simp) (by intros; ring)]
   | single h c =>
@@ -101,7 +101,7 @@ theorem layer : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] [Topological
       rw [sumZ, map_sub, map_smul, hH', sub_self])
     rw [sumZ, sumZ, map_sub, map_smul, lpow_smul] at hf'
     refine ⟨fun i => (f' + H').sum fun h c => c * ∑ j, ((ρ h : GL (Fin d) ℤ_[l]) : Matrix (Fin d) (Fin d) ℤ_[l]) i j * e j, ?_⟩
-    rw [← coordsB hR (f' + H'), map_add, lpow_smul, smul_add, ← hf', sub_add_cancel]
+    rw [← coordsB hR (f' + H'), map_add (f := _), lpow_smul, smul_add, ← hf', sub_add_cancel]
   have hdec : ∀ s, ∃ (F : Γ →₀ ℤ_[l]) (y : Fin m → Matrix (Fin a) (Fin a) (Om l)), y ∈ latL t M ∧ bb s = Finsupp.linearCombination ℤ_[l] (tup ρs) F + y := by
     intro s
     obtain ⟨x, hx, y, hy, hxy⟩ := Submodule.mem_sup.1 (hbbmem s)

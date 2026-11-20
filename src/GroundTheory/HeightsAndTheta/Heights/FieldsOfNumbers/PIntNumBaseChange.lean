@@ -79,7 +79,7 @@ theorem coeffForm_mem (φ : F' →ₗ[F] F) {I : Ideal (MvPolynomial σ F)} {f :
     · intro c
       simp
     · intro x y _ _ hx hy c
-      rw [mul_add, map_add]
+      rw [mul_add, map_add (f := _)]
       exact I.add_mem (hx c) (hy c)
     · intro a x _ hx c
       rw [smul_eq_mul, ← mul_assoc]

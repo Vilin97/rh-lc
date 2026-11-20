@@ -41,10 +41,10 @@ theorem mem_int_of_map_mem_int (ψ : Γ →+* Γ) (g : L →+* L) (hg : ∀ c, �
     rwa [show T.red t = T.coeff y n0 from rfl] at this
   have hX : ψ y - ψ (T.partialSum y n0) =
       T.π ^ n0 * (u ^ n0 * T.teich (g (T.coeff y n0)) + T.π * (u ^ (n0 + 1) * ψ (T.tail t))) := by
-    have e : ψ y = ψ (T.partialSum y n0) + ψ (T.π ^ n0 * t) := by rw [← map_add, ← hy']
+    have e : ψ y = ψ (T.partialSum y n0) + ψ (T.π ^ n0 * t) := by rw [← map_add (f := _), ← hy']
     have hψt : ψ t = T.teich (g (T.coeff y n0)) + T.π * u * ψ (T.tail t) := by
       conv_lhs => rw [ht]
-      rw [map_add, map_mul, hteich, hπ]
+      rw [map_add (f := _), map_mul, hteich, hπ]
     rw [e, add_sub_cancel_left, map_mul, map_pow, hπ, hψt]
     ring
   have hXint : ψ y - ψ (T.partialSum y n0) ∈ T.int := sub_mem hy hA
@@ -53,7 +53,7 @@ theorem mem_int_of_map_mem_int (ψ : Γ →+* Γ) (g : L →+* L) (hg : ∀ c, �
   have := T.coeff_π_pow_mul_add n0
     (u ^ n0 * T.teich (g (T.coeff y n0)) + T.π * (u ^ (n0 + 1) * ψ (T.tail t))) 0
   rw [zero_add] at this
-  rw [this, coeff_zero, map_add, map_mul, map_mul, map_pow, red_teich, red_π, zero_mul, add_zero,
+  rw [this, coeff_zero, map_add (f := _), map_mul, map_mul, map_pow, red_teich, red_π, zero_mul, add_zero,
     norm_mul, norm_pow, hu1, one_pow, one_mul] at hc
   exact absurd ((hg _).1 hc) (not_le.2 hn0)
 
@@ -165,7 +165,7 @@ theorem exists_intFrob_near (n : ℕ) (z : normInteger K) :
     obtain ⟨x', hx'⟩ := exists_intFrob_approx p σ hσn a hσr hϖ n _ hw
     refine ⟨x + x', ?_⟩
     have e : σ ((x + x' : normInteger K) : K) - z = σ x' - ((z - intFrob σ hσn x : normInteger K) : K) := by
-      push_cast; rw [map_add, coe_intFrob]; ring
+      push_cast; rw [map_add (f := _), coe_intFrob]; ring
     rw [e]; exact hx'
 
 include hσn hσr hϖ in

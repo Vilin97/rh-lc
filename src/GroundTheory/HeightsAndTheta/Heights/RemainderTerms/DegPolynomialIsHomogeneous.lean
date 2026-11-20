@@ -48,7 +48,7 @@ theorem lieClass_reduce (f j k : ℕ) (hf : 1 ≤ f) (bot : Bool)
         ∑ b : Fin k, X (σ.1, Fin.natAdd j b) ^ (m - 1) := by
     unfold IndefiniteRowSideFullHecke.RestTerms.psumAt
     exact Fin.sum_univ_add _
-  rw [hsplit, add_mul, map_add] at hkill
+  rw [hsplit, add_mul, map_add (f := _)] at hkill
   obtain ⟨τ', b⟩ := σ
   rcases Nat.even_or_odd (m - 1) with he | ho
   · cases bot <;> cases b <;>

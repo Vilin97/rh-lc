@@ -27,7 +27,7 @@ theorem saturated_fg_of_powerTorsion_ker_coker :
     | add a b _ _ ha hb =>
       obtain ⟨ta, hta, ea⟩ := ha
       obtain ⟨tb, htb, eb⟩ := hb
-      exact ⟨ta + tb, add_mem hta htb, by rw [map_add, ea, eb, smul_add]⟩
+      exact ⟨ta + tb, add_mem hta htb, by rw [map_add (f := _), ea, eb, smul_add]⟩
     | smul c a _ ha =>
       obtain ⟨t, ht, et⟩ := ha
       exact ⟨c • t, Submodule.smul_mem _ _ ht, by rw [map_smul, et, smul_comm]⟩

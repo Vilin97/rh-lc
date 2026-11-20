@@ -14,7 +14,7 @@ private theorem UpperTheory.ring_hom_eisenstein_coeff {K : Type} [Field K] [Char
     rw [zpow_neg, zpow_neg, map_inv₀, hz]
   unfold eisF const0 coefPos
   split_ifs
-  · simp only [map_div₀, map_mul, map_add, map_sub, map_one, map_ofNat, h]
+  · simp only [map_div₀, map_mul, map_add (f := _), map_sub, map_one, map_ofNat, h]
   · simp only [map_ratCast]
   · simp only [map_neg, map_ratCast]
   set_option synthInstance.maxHeartbeats 100000 in

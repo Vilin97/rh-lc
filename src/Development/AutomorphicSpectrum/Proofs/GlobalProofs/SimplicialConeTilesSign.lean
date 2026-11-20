@@ -243,7 +243,7 @@ theorem tile_of_card_lt [DecidableEq V] (P : ConvexCone ℚ V) (l : V →ₗ[ℚ
       hP (Finset.mem_coe.mpr (Finset.mem_insert_of_mem (Finset.mem_insert_of_mem hx)))
     have hcP : (-l w) • u + (l u) • w ∈ P := P.add_mem (P.smul_mem ha hPu) (P.smul_mem hb hPw)
     have hlc : l ((-l w) • u + (l u) • w) = 0 := by
-      simp only [map_add, map_smul, smul_eq_mul]; ring
+      simp only [map_add (f := _), map_smul, smul_eq_mul]; ring
     obtain ⟨hcr, hcu, hcw, hli1, hli2, hli3⟩ := StellarLI.main u w r (-l w) (l u) ha hb huw hur hwr hli
     generalize hcdef : (-l w) • u + (l u) • w = c at hcP hlc hcr hcu hcw hli1 hli2 hli3
     have hc' : c = (-l w) • u + (l u) • w := hcdef.symm

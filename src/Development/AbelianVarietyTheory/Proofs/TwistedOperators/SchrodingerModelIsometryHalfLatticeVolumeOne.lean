@@ -216,7 +216,7 @@ theorem placeModel_isometry : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ 
       exact GlobalTheory.ThetaClosed.isThetaFunO_heisO_all hψ
         (GlobalTheory.ThetaClosed.isThetaFunO_heisO_all hψ (base_theta hB) x) y
     | zero => exact ⟨by rw [map_zero]; exact GlobalTheory.WeilVacMove.isTheta_zero, zero_mem _⟩
-    | add _ _ _ _ p q => exact ⟨by rw [map_add]; exact GlobalTheory.WeilVacMove.isTheta_add p.1 q.1, add_mem p.2 q.2⟩
+    | add _ _ _ _ p q => exact ⟨by rw [map_add (f := _)]; exact GlobalTheory.WeilVacMove.isTheta_add p.1 q.1, add_mem p.2 q.2⟩
     | smul c _ _ p =>
       exact ⟨by rw [map_smul]; exact GlobalTheory.WeilVacMove.isTheta_smul c p.1, Submodule.smul_mem _ c p.2⟩
   have int : ∀ Ψ ∈ Submodule.span ℂ W, ∀ Ψ' ∈ Submodule.span ℂ W,
@@ -238,13 +238,13 @@ theorem placeModel_isometry : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ 
     | zero_left => simp [ipO]
     | zero_right => simp [ipO]
     | add_left x y z hx hy hz p q =>
-      rw [map_add, ((I _ _ (good x hx).1 (good z hz).1).2.2.2.1 _ (good y hy).1).1, mul_add, p, q,
+      rw [map_add (f := _), ((I _ _ (good x hx).1 (good z hz).1).2.2.2.1 _ (good y hy).1).1, mul_add, p, q,
         ← integral_add (int x hx z hz) (int y hy z hz)]
       simp only [Pi.add_apply, add_mul]
     | add_right x y z hx hy hz p q =>
-      rw [map_add, ((I _ _ (good y hy).1 (good x hx).1).2.2.2.1 _ (good z hz).1).2, mul_add, p, q,
+      rw [map_add (f := _), ((I _ _ (good y hy).1 (good x hx).1).2.2.2.1 _ (good z hz).1).2, mul_add, p, q,
         ← integral_add (int x hx y hy) (int x hx z hz)]
-      simp only [Pi.add_apply, map_add, mul_add]
+      simp only [Pi.add_apply, map_add (f := _), mul_add]
     | smul_left c x y hx hy p =>
       rw [map_smul, ((I _ _ (good x hx).1 (good y hy).1).2.2.1 c).1, mul_left_comm, p, ← integral_const_mul]
       simp only [Pi.smul_apply, smul_eq_mul, mul_assoc]

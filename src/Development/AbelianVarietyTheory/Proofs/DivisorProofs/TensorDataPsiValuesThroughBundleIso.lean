@@ -78,7 +78,7 @@ theorem tau_m (ν : NumOf D F N) (z : Sp F) (a b : N.X) :
   have hG := good_of ν z
   unfold DegPre.tau DegPre.rigK
   rw [val_mul hG, val_mul hG, val_mul hG, val_inv, val_inv, val_inv, rig_val ν z]
-  rw [NumD.τ, map_div, map_div, psi_m ν z, psi_m ν z, psi_m ν z, map_add]
+  rw [NumD.τ, map_div, map_div, psi_m ν z, psi_m ν z, psi_m ν z, map_add (f := _)]
   apply Additive.ofMul.injective
   simp only [ofMul_mul, ofMul_div, ofMul_inv]
   abel

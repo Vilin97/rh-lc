@@ -347,7 +347,7 @@ theorem exists_conj_eq_mul {z : ℂ} (hz : z * conj z = 1) : ∃ u : ℂ, u ≠ 
     rw [h2, Complex.conj_I]
     ring
   · refine ⟨1 + conj z, h, ?_⟩
-    rw [map_add, map_one, Complex.conj_conj]
+    rw [map_add (f := _), map_one, Complex.conj_conj]
     linear_combination -hz
 
 variable (v w)

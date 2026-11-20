@@ -59,7 +59,7 @@ def pullAct {p : ℕ} [Fact p.Prime] {D : GlobalTheory.UPel.HT.Datum p} {S : Sch
   one := by rw [map_one, act.one, CategoryTheory.Functor.map_id]
   mul a b := by rw [mul_comm a b, map_mul, act.mul, Functor.map_comp]
   add a b := by
-    rw [map_add, act.add]
+    rw [map_add (f := _), act.add]
     exact map_mul (Over.pullback t).homMonoidHom _ _
 
 theorem isIsogDeg_intAct : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Datum p) (R : Type) [CommRing R]

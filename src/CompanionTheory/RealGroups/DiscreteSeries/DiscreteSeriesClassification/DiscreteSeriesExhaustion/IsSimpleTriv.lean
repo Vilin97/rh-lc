@@ -43,7 +43,7 @@ theorem glRel_tensE (X : GMod n) : GlRel (tensE X) := by
   refine LinearMap.ext fun u => funext fun i => ?_
   have e : ∀ (p : Prop) [Decidable p] (T : Module.End ℂ (Fin n → X.V)),
       (if p then T else 0) u i = if p then T u i else 0 := fun p _ T => by split_ifs <;> simp
-  simp only [LinearMap.sub_apply, Module.End.mul_apply, Pi.sub_apply, e, tensE_apply, map_add]
+  simp only [LinearMap.sub_apply, Module.End.mul_apply, Pi.sub_apply, e, tensE_apply, map_add (f := _)]
   rw [comm_apply X a b c d (u i)]
   by_cases h1 : i = a <;> by_cases h2 : i = c <;> by_cases h3 : b = c <;> by_cases h4 : d = a <;>
     simp_all <;> abel
@@ -60,7 +60,7 @@ theorem om_apply (X : GMod n) (u : Fin n → X.V) (b : Fin n) : om X u b = ∑ a
 theorem commute_om (X : GMod n) (c d : Fin n) : Commute (tensE X c d) (om X) := by
   refine LinearMap.ext fun u => funext fun b => ?_
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Module.End.mul_apply, tensE_apply, om_apply, map_sum, map_add, sum_add_distrib]
+    simp only [Module.End.mul_apply, tensE_apply, om_apply, map_sum, map_add (f := _), sum_add_distrib]
   simp only [comm_apply X c d _ b, sum_sub_distrib, sum_add_distrib, apply_ite (X.E _ b), map_zero]
   by_cases h : b = c <;> simp [h]
 

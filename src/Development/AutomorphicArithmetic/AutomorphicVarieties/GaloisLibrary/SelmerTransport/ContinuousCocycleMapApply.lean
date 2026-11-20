@@ -66,7 +66,7 @@ variable {R G M : Type} [CommRing R] [Group G] [TopologicalSpace G] [AddCommGrou
 def continuousCocycleMap : Z1U ρ U →ₗ[R] Z1U ρ' U where
   toFun z := ⟨fun u => j (z.1 u), (continuous_of_discreteTopology (f := j)).comp z.2.1, fun g h => by
     show j _ = j _ + ρ' g (j _)
-    rw [z.2.2, map_add, ← hj]
+    rw [z.2.2, map_add (f := _), ← hj]
     rfl⟩
   map_add' _ _ := Subtype.ext (funext fun _ => map_add j _ _)
   map_smul' _ _ := Subtype.ext (funext fun _ => map_smul j _ _)
@@ -137,7 +137,7 @@ theorem coordSum_z1Map_surjective [DiscreteTopology M'] (hb : IsBaseChange O j) 
     (continuous_of_discreteTopology (f := fun m => e.symm m i)).comp y.2.1, fun g h => ?_⟩, ?_⟩
   · have : e.symm (y.1 (g * h)) = e.symm (y.1 g) + fun i => ρ g (e.symm (y.1 h) i) := by
       apply hb.1
-      rw [map_add, ← map_coordSum b j (ρ g) (ρ' g) (hj g), he, he, he]
+      rw [map_add (f := _), ← map_coordSum b j (ρ g) (ρ' g) (hj g), he, he, he]
       exact y.2.2 g h
     exact congrFun this i
   · exact Subtype.ext (funext fun u => (coordSum_z1Map ρ ρ' j hj U b _ u).trans (he _))

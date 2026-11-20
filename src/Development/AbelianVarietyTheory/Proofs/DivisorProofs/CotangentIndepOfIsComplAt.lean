@@ -24,7 +24,7 @@ theorem cotangent_indep_of_isComplAt : ∀ (W : Type) [CommRing W] [IsLocalRing 
   let δ : MvPolynomial I W → ResidueField R := fun f => residue R (ψ (MvPolynomial.pderiv (ι₀ k) f))
   have hπP : ∀ p ∈ P, residue R (ψ p) = 0 := fun p hp => (residue_eq_zero_iff _).2 hp
   have hδmul : ∀ a b, δ (a * b) = residue R (ψ a) * δ b + residue R (ψ b) * δ a := by
-    intro a b; simp only [δ, Derivation.leibniz, smul_eq_mul, map_add, map_mul]
+    intro a b; simp only [δ, Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul]
   have hδadd : ∀ a b, δ (a + b) = δ a + δ b := by intro a b; simp [δ]
   let K : Ideal (MvPolynomial I W) :=
     { carrier := {x | x ∈ P ∧ δ x = 0}
@@ -73,7 +73,7 @@ theorem cotangent_indep_of_isComplAt : ∀ (W : Type) [CommRing W] [IsLocalRing 
       intro r
       obtain ⟨t₁, h₁, h₁'⟩ := hx r
       obtain ⟨t₂, h₂, h₂'⟩ := hy r
-      exact ⟨t₁ + t₂, by rw [map_add, h₁, h₂]; ring, by rw [map_add, h₁', h₂', add_zero]⟩
+      exact ⟨t₁ + t₂, by rw [map_add (f := _), h₁, h₂]; ring, by rw [map_add (f := _), h₁', h₂', add_zero]⟩
     | smul a x _ hx =>
       intro r
       obtain ⟨t, h₁, h₂⟩ := hx (r * a)

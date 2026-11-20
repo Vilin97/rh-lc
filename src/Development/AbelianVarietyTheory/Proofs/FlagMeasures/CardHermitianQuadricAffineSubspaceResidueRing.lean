@@ -123,7 +123,7 @@ theorem quad_count {B : Type} [CommRing B] [Fintype B] (c : B →+* B) (hc : ∀
             simpa only [hc, Pi.zero_apply, map_zero] using this
       rw [h0, sub_self, norm_zero]
       positivity
-    · have hu : IsUnit (a + c a) := hf _ (by rw [map_add, hc, add_comm])
+    · have hu : IsUnit (a + c a) := hf _ (by rw [map_add (f := _), hc, add_comm])
         (fun h => ha (by linear_combination h))
       have h1 := GlobalTheory.T.norm_gauss_sum_hermitian_form_linear_le c hc q hq hB χ hχ hχc n a hu (∑ i, c (s i) • x i)
       have h2 : F (a, s) = χ (-(a * t + ∑ i, s i * g i)) *

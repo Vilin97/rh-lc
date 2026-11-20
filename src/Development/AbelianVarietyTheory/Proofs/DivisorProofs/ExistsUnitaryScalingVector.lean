@@ -27,7 +27,7 @@ lemma form_smul_left (c : E) (u w : Fin n → E) : form σ J (c • u) w = c * f
   simp [form, smul_dotProduct]
 
 lemma form_add_right (u v w : Fin n → E) : form σ J u (v + w) = form σ J u v + form σ J u w := by
-  simp only [form, Pi.add_apply, map_add]
+  simp only [form, Pi.add_apply, map_add (f := _)]
   rw [show (fun i => σ (v i) + σ (w i)) = (fun i => σ (v i)) + (fun i => σ (w i)) from rfl, Matrix.mulVec_add,
     dotProduct_add]
 

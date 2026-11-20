@@ -44,7 +44,7 @@ theorem evG_mul (hre : X.Realises G e τ) (n : ℕ) (s t : LevGrp La p n) (g : G
     pair (evG e n s) (evG e n t) (comul (R := O) g) = evG e n (s * t) g := by
   obtain ⟨a, rfl⟩ := lev_surjective p n s
   obtain ⟨b, rfl⟩ := lev_surjective p n t
-  rw [← lev_add, evG_lev hre, evG_lev hre, evG_lev hre, map_add]
+  rw [← lev_add, evG_lev hre, evG_lev hre, evG_lev hre, map_add (f := _)]
   exact (AlgHom.convMul_apply ((τ a).conv n) ((τ b).conv n) g).symm
 
 def pullA {φ : La →+ La} {dφ : L →ₗ[O] L} (h : X.Acts φ dφ) (n : ℕ) : G.A n →ₐ[O] G.A n :=

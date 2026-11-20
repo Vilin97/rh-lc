@@ -51,7 +51,7 @@ theorem cw_one {q : Type} [DecidableEq q] (w : InfinitePlace F) : d.cw w (1 : Ma
 
 theorem cw_atM (w w' : InfinitePlace F) (Z : Matrix p p ℂ) : d.cw w' (atM d w Z) = fam w Z w' := by
   ext i j
-  simp only [SD.cw, Matrix.map_apply, atM, Matrix.of_apply, map_add, sc_pi, Place.piInf_finOne, add_zero]
+  simp only [SD.cw, Matrix.map_apply, atM, Matrix.of_apply, map_add (f := _), sc_pi, Place.piInf_finOne, add_zero]
 
 theorem fin_atM (w : InfinitePlace F) (Z : Matrix p p ℂ) : finOne F • atM d w Z = finOne F • (1 : Matrix p p (AE F E)) := by
   ext i j

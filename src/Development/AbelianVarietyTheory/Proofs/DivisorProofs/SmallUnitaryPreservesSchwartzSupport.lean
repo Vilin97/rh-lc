@@ -44,7 +44,7 @@ theorem infOne_smul_tensor (m : AE F E) :
   | tmul a x =>
     rw [TensorProduct.smul_tmul', Algebra.TensorProduct.map_tmul, TensorProduct.map_tmul, smul_eq_mul, infOne_mul]
     rfl
-  | add x y hx hy => rw [smul_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem infOne_smul_sub_one {d : ℕ} (A : Matrix (Fin d) (Fin d) (AE F E))
     (h : A.map (Algebra.TensorProduct.map (fstA F) (AlgHom.id F E)) = 1) : infOne F • (A - 1) = 0 := by
@@ -129,7 +129,7 @@ theorem smallAct : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
   have hB : e (e.symm w * (mat k - 1)ᵀ) = Φ (k, g (fun i => (w.1 i).2, fun i => (w.2 i).2)) := by
     show _ = e (e.symm (g (fun i => (w.1 i).2, fun i => (w.2 i).2)) * (mat k - 1)ᵀ)
     conv_lhs => rw [hw]
-    rw [map_add, LinearEquiv.map_smul, Matrix.add_mul, Matrix.smul_mul, hkill, add_zero]
+    rw [map_add (f := _), LinearEquiv.map_smul, Matrix.add_mul, Matrix.smul_mul, hkill, add_zero]
   have hmem := hk _ ⟨_, Set.mk_mem_prod hw1 hw2, rfl⟩
   rw [← hB] at hmem
   refine ⟨fun i => ⟨?_, ?_⟩, hmem.1, hmem.2⟩

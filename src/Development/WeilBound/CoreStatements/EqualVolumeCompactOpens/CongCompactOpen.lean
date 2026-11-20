@@ -48,7 +48,7 @@ theorem eich_root {E : Type} [Field E] [CharZero E] {N : ℕ} {σ : E →+* E} {
   refine ⟨_, ⟨t • u, t * (c + h / 2) - t ^ 2 * h / 2, by rw [hf_smul_left, hue, mul_zero],
     by rw [hf_smul_left, huf, mul_zero], ?_, rfl⟩, ?_⟩
   · rw [hf_smul_left, hf_smul_right, ← hh]
-    simp only [map_sub, map_mul, map_add, map_div₀, map_pow, hσt, hσh, hσ2]
+    simp only [map_sub, map_mul, map_add (f := _), map_div₀, map_pow, hσt, hσh, hσ2]
     linear_combination t * hc
   · rw [hpow, ht, mul_inv_cancel₀ hn', one_smul]
     congr 1

@@ -24,7 +24,7 @@ noncomputable def actL {K : Type} [Field K] (P : PolAV (Sp K)) (k : ℕ)
   toFun w := SecMod.mk _ (SecM.toSec P.A (ρ θ (SecM.ofSec P.A w.sec)))
   map_add' a b := by
     show SecMod.mk _ (SecM.toSec P.A (ρ θ (SecM.ofSec P.A a.sec + SecM.ofSec P.A b.sec))) = _
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   map_smul' c w := by
     show SecMod.mk _ (SecM.toSec P.A (ρ θ ((Scheme.ΓSpecIso (CommRingCat.of K)).symm.commRingCatIsoToRingEquiv c • SecM.ofSec P.A w.sec))) = _
     rw [map_smul]; rfl

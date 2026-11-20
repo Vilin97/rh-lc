@@ -100,7 +100,7 @@ theorem planeLie_smul (a : GaussianInt) (v : GaussianInt × GaussianInt) :
   ring
 
 theorem planeLie_add (v w : GaussianInt × GaussianInt) : planeLie (v + w) = planeLie v + planeLie w := by
-  simp only [planeLie, Prod.fst_add, Prod.snd_add, map_add]
+  simp only [planeLie, Prod.fst_add, Prod.snd_add, map_add (f := _)]
   ring
 
 theorem planeForm_I (v : GaussianInt × GaussianInt) :

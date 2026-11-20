@@ -72,7 +72,7 @@ theorem mem_smul_locF_iff_repr {𝔭 : Ideal (𝓞 F)} [𝔭.IsPrime] (b : Basis
       exact (inP_jK hr).mul (l := 0) ((mem_locF_iff_repr b y).1 hy i)
     | add y _ z _ hy hz =>
       intro i
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (hy i).add (hz i)
   · intro hx
     rw [← b.sum_equivFun x]

@@ -104,7 +104,7 @@ theorem filtLaurent_shift_line : ∀ (L : Type) [Field L] (M : Type) [AddCommGro
           refine Finset.sum_congr rfl fun j hj => ?_
           have hj' : j ≤ l := Nat.lt_succ_iff.1 (Finset.mem_range.1 hj)
           have : K + ((l - j : ℕ) : ℤ) = K + l - j := by omega
-          simp only [map_add, map_smul, coeff_mk, this, smul_eq_mul]
+          simp only [map_add (f := _), map_smul, coeff_mk, this, smul_eq_mul]
         · intro j hj
           by_contra hj'
           have hj'' : l + 1 ≤ j := by simpa using hj'

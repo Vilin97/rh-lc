@@ -28,7 +28,7 @@ theorem extS_iSup_le {J : Sort*} (S : J → Submodule K W) :
   rintro _ ⟨y, rfl⟩
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add y z hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | tmul c s =>
     obtain ⟨s, hs⟩ := s
     rw [LinearMap.baseChange_tmul]

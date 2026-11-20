@@ -60,7 +60,7 @@ theorem toOB_mem_filO (C : GlobalTheory.MemLoc.Core l) (x : OCr l O) : toOB l O 
     refine Submodule.smul_mem _ o (Submodule.subset_span ⟨acrisToBcris l w, ?_, rfl⟩)
     rw [mem_FilD_zero_iff]
     exact ⟨C.j w, C.ι_j w⟩
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 theorem pow_mem_filO_zero (C : GlobalTheory.MemLoc.Core l) {x : OB l O} (hx : x ∈ filO O C 0) (n : ℕ) :
     x ^ n ∈ filO O C 0 := by

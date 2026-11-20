@@ -319,7 +319,7 @@ theorem conj_isAH (h : IsGrpPullback A' A cj φ) {L : LB A.left} {g : ℕ} (u : 
   · have e := h₄ ⟨star l.1, l.2⟩ (J PUnit.unit) (star z) ((top_le_tw_pull h L _ J).1 hz)
     show star (u.fr _ (star z)) = _ * star (u.fr _ (star (z + l.1)))
     rw [e, form_star, form_star, star_add]
-    simp only [Complex.star_def, map_mul, ← Complex.exp_conj, map_add, map_div₀, Complex.conj_ofReal, map_ofNat]
+    simp only [Complex.star_def, map_mul, ← Complex.exp_conj, map_add (f := _), map_div₀, Complex.conj_ofReal, map_ofNat]
 
 def twVec (h : IsGrpPullback A' A cj φ) (v : epsR ℂ ⟶ A) : epsR ℂ ⟶ A' :=
   Over.homMk (dj ≫ v.left ≫ inv φ) (by

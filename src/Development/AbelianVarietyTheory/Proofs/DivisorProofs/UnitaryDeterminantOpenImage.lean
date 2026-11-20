@@ -22,7 +22,7 @@ theorem continuous_atPlace : Continuous (atPlace (F := F) v) :=
 theorem continuous_linear_prod (f : Fv F v × Fv F v →ₗ[Fv F v] Fv F v) : Continuous f := by
   have e : ∀ p : Fv F v × Fv F v, f p = p.1 * f (1, 0) + p.2 * f (0, 1) := by
     intro p
-    rw [← smul_eq_mul, ← smul_eq_mul, ← map_smul, ← map_smul, ← map_add]
+    rw [← smul_eq_mul, ← smul_eq_mul, ← map_smul, ← map_smul, ← map_add (f := _)]
     congr 1
     ext <;> simp
   have : (f : Fv F v × Fv F v → Fv F v) = fun p => p.1 * f (1, 0) + p.2 * f (0, 1) := funext e

@@ -44,14 +44,14 @@ theorem tensV_onB (T : End ℚ_[l] (Bst P)) (x : V ⊗[ℚ_[l]] Bst P) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem tensV_stRep (hf : ∀ g v, f (ρ g v) = ρ' g (f v)) (g : ↥(GK K)) (x : V ⊗[ℚ_[l]] Bst P) :
     tensV P f (stRep P ρ g x) = stRep P ρ' g (tensV P f x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [hf]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {ρ ρ' f}
 

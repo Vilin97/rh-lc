@@ -53,7 +53,7 @@ def derOf (c : B →+* TrivSqZeroExt B M) (h1 : ∀ b, (c b).fst = b)
   toFun b := (c b).snd
   map_add' a b := by
     show (c (a + b)).snd = (c a).snd + (c b).snd
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   map_smul' r b := by
     simp only [RingHom.id_apply, Algebra.smul_def, map_mul, h2, TrivSqZeroExt.snd_mul, TrivSqZeroExt.fst_inl,
       TrivSqZeroExt.snd_inl, op_smul_eq_smul, smul_zero, add_zero]

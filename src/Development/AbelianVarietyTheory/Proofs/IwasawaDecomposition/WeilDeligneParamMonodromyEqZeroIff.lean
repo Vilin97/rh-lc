@@ -48,7 +48,7 @@ theorem exists_exp_eq {R : Type*} [Ring R] [Algebra ℚ R] {u : R} (hu : IsNilpo
   obtain ⟨y, hy, e⟩ := exists_exp_eq_comm k (AdjoinRoot.root (X ^ (k + 1) : ℚ[X])) (by
     rw [← AdjoinRoot.mk_X, ← map_pow, AdjoinRoot.mk_self])
   refine ⟨f y, hy.map f, ?_⟩
-  rw [← map_exp hy f, e, map_add, map_one, hf, add_sub_cancel]
+  rw [← map_exp hy f, e, map_add (f := _), map_one, hf, add_sub_cancel]
 
 theorem exists_pow_unipotent {K n : Type*} [Field K] [IsAlgClosed K] [Fintype n] [DecidableEq n]
     {P M : GL n K} {q : ℕ} (hq : 1 < q) (hPM : P * M * P⁻¹ = M ^ q) :

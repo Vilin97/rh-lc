@@ -169,7 +169,7 @@ theorem cloud_node_projection_norm : ∀ (M : Type) [NormedAddCommGroup M] [Inne
       rw [hp, hx₀]
       exact hcomp s c d
     | zero => intro d; rw [map_zero]; exact L0 _
-    | add x y _ _ hx hy => intro d; rw [map_add]; exact Ladd _ _ _ (hx d) (hy d)
+    | add x y _ _ hx hy => intro d; rw [map_add (f := _)]; exact Ladd _ _ _ (hx d) (hy d)
     | smul a x _ hx => intro d; rw [map_smul]; exact Lsmul _ _ _ (hx d)
   have hres := fun x (hx : x ∈ VV) =>
     GlobalTheory.T.splitCasimir_resolvent_circle_bounds M n ε E μ kk (j + 2) bv (e x) hM hS (by omega) (hlev x hx)

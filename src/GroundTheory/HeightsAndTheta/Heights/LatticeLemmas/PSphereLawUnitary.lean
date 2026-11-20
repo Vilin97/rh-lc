@@ -18,7 +18,7 @@ def rowMap {N : ℕ} (k : ℕ) (U : (Fin N → ℂ) →ₗ[ℂ] (Fin N → ℂ))
     have : (fun j ↦ (u + v) (ij.1, j)) = (fun j ↦ u (ij.1, j)) + fun j ↦ v (ij.1, j) := rfl
     change U (fun j ↦ (u + v) (ij.1, j)) ij.2 =
       U (fun j ↦ u (ij.1, j)) ij.2 + U (fun j ↦ v (ij.1, j)) ij.2
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
     rfl
   map_smul' r u := by
     funext ij

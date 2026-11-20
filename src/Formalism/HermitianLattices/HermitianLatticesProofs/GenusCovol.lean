@@ -223,7 +223,7 @@ def genusCovol_tdual (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (𝓞 K) 
     intro a b ha hb x hx
     obtain ⟨z1, h1⟩ := ha x hx
     obtain ⟨z2, h2⟩ := hb x hx
-    exact ⟨z1 + z2, by rw [map_add, map_add, h1, h2]; push_cast; ring⟩
+    exact ⟨z1 + z2, by rw [map_add (f := _), map_add (f := _), h1, h2]; push_cast; ring⟩
   zero_mem' := fun x _ => ⟨0, by simp⟩
   smul_mem' := by
     intro r y hy x hx

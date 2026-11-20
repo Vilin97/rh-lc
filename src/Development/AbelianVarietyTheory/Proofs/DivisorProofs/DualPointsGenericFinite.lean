@@ -91,6 +91,6 @@ theorem isReduced_of_dualNumber_points_trivial : ∀ (R K : Type) [CommRing R] [
     have : x ⊗ₜ[Localization.Away r] c = x • ((1 : K) ⊗ₜ c) := by
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     rw [this, D.map_smul, h1, smul_zero]; rfl
-  | add x y hx hy => rw [map_add, hx, hy]; simp
+  | add x y hx hy => rw [map_add (f := _), hx, hy]; simp
 
 end GlobalTheory

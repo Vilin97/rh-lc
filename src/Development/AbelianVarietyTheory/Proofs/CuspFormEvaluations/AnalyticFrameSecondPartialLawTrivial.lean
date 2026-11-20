@@ -66,7 +66,7 @@ theorem jetN_coord {n g : ℕ} (m : ℕ) (i : Fin n) (j : Fin g) :
 theorem jetN_coord_add {n g : ℕ} (m : ℕ) (i i' : Fin n) (j : Fin g) :
     jetN m (fun w : Fin n → Fin g → ℂ => w i j + w i' j) =
       Ideal.Quotient.mk _ (MvPolynomial.X (i, j) + MvPolynomial.X (i', j)) := by
-  rw [map_add, ← jetN_coord, ← jetN_coord, jetN, jetN, jetN, ← map_add]
+  rw [map_add (f := _), ← jetN_coord, ← jetN_coord, jetN, jetN, jetN, ← map_add (f := _)]
   exact congrArg _ (jetOf_add m (contDiff_apply ℂ (fun _ => ℂ) (finProdFinEquiv (i, j))).contDiffAt
       (contDiff_apply ℂ (fun _ => ℂ) (finProdFinEquiv (i', j))).contDiffAt)
 

@@ -60,7 +60,7 @@ theorem div_mul_mem_SP_of_mem {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {
   refine Submodule.mul_induction_on hx' (fun y hy y' hy' => ?_) (fun u v hu hv => ?_)
   · rw [map_mul, mul_div_mul_comm]
     exact mul_mem ((div_mem_SP_iff h𝔭 hd _).2 hy) ((div_mem_SP_iff h𝔭 hd' _).2 hy')
-  · rw [map_add, add_div]; exact add_mem hu hv
+  · rw [map_add (f := _), add_div]; exact add_mem hu hv
 
 theorem div_mem_SP_of_sub {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {d : 𝓞 F} (hd : d ≠ 0) {z w : 𝓞 K}
     {k : ℕ} (hk : vF 𝔭 d ≤ k) (h : z - w * ι d ∈ extP K 𝔭 ^ k) :

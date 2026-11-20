@@ -106,7 +106,7 @@ theorem kerCore_holds : KerCoreStatement := by
         AlgHom.comp_apply]
       congr 1
       exact (σ.apply_symm_apply _).symm
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   have hstab : ∀ σ : L ≃ₐ[K] L, ∀ x ∈ Kc, galAct σ x ∈ Kc := by
     intro σ x hx
     rw [Submodule.mem_iInf] at hx ⊢

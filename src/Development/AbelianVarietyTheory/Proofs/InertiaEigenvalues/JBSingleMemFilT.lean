@@ -59,8 +59,8 @@ theorem smul_TWincl_mem_filT (C : GlobalTheory.MemLoc.Core l) (T : LocLat G ℚ_
       refine Submodule.smul_mem _ o (Submodule.subset_span ⟨d * Per.aB l w, x, ?_, rfl⟩)
       rw [map_mul, ι_aB, mul_comm, ← Algebra.smul_def]
       exact Submodule.smul_mem _ _ hd
-    | add c c' hc hc' => rw [map_add, mul_add, add_tmul]; exact add_mem hc hc'
-  | add z z' hz hz' => rw [map_add, smul_add]; exact add_mem hz hz'
+    | add c c' hc hc' => rw [map_add (f := _), mul_add, add_tmul]; exact add_mem hc hc'
+  | add z z' hz hz' => rw [map_add (f := _), smul_add]; exact add_mem hz hz'
 
 end Tensor
 

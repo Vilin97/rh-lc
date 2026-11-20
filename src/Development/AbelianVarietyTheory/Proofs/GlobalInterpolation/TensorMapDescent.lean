@@ -52,7 +52,7 @@ theorem map_mem_VV {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n)
     rw [h]
     exact ten_mem lam _ fun τ => Formalism.GradedWeylDivisibility.dualWeylMap K K' φ n n _ _ (hf τ)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hx
@@ -119,7 +119,7 @@ theorem fockB_projVV [CharZero K] (sg : ι → DomWeight n) (F y : Pol K ι n) (
   induction hy using Submodule.span_induction with
   | mem x hx => obtain ⟨k, rfl⟩ := hx; exact fockB_projVV_basis sg F k
   | zero => simp
-  | add x y _ _ hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | smul c x _ hx => simp only [map_smul, LinearMap.smul_apply, hx]
 
 theorem projVV_map [CharZero K] [CharZero K'] (sg : ι → DomWeight n) (F : Pol K ι n) :
@@ -144,7 +144,7 @@ theorem coefLast_map (b : ι → Fin n → ℕ) (F : Pol K ι N) :
     split_ifs
     · simp [smul_monomial, map_monomial]
     · simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem xiBr_map (lam : DomWeight N) (sg : DomWeight n) : map φ (Br.xiBr K hN lam sg) = Br.xiBr K' hN lam sg := by
   simp only [Br.xiBr, Br.zMinor, map_prod, map_mul, map_pow, fk_map_initMinor, Formalism.GradedWeylDivisibility.lclosedeq_lpMinor_map]

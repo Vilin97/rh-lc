@@ -67,7 +67,7 @@ theorem piTensor_rename (hf : StrictMono f) (hs : Function.Surjective f) {X : γ
     piTensor (fun c' => σ (f c')) (fun c' => g (f c')) (kappa hf hs X w) = kappa hf hs X (piTensor σ g w) := by
   induction w using PiTensorProduct.induction_on with
   | smul_tprod r x => simp only [map_smul, kappa_tprod, piTensor_tprod]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.SmGL.BlockRename
 

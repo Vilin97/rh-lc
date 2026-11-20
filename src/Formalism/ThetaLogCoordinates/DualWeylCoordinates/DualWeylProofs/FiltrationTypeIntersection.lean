@@ -83,7 +83,7 @@ theorem qd_ph_type (hA : LemmaA) {M : GLMod n} (CF : ColFam M) : ∀ (N : ℕ) (
     intro j hj w
     obtain ⟨w', hw', he⟩ := qd_gen (CF.mu j) w
     have hsplit : qd_phQ CF j w = qd_phQ CF j w' + qd_phQ CF j (w - w') := by
-      rw [← map_add, add_sub_cancel]
+      rw [← map_add (f := _), add_sub_cancel]
     rw [hsplit]
     apply Submodule.add_mem
     · have : Submodule.span ℚ (Set.range (qd_gcan (CF.mu j))) ≤

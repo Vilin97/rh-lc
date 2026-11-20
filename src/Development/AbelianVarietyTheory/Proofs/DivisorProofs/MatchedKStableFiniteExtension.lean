@@ -75,7 +75,7 @@ theorem exists_kStable_compl_fockDeg : GlobalTheory.ThK.KP → ∀ (F E : Type) 
     have hinner : ∀ g h, inner ℂ (ι (A g)) (ι (A h)) = inner ℂ (ι g) (ι h) := by
       intro g h
       rw [inner_eq_sum_norm_sq_div_four, inner_eq_sum_norm_sq_div_four]
-      simp only [← map_add, ← map_sub, ← map_smul, hnorm]
+      simp only [← map_add (f := _), ← map_sub, ← map_smul, hnorm]
     have hAS : ∀ s ∈ S, A s ∈ S := fun s hs => hS k hk s hs (A s) (hA s)
     let AS : S →ₗ[ℂ] S := A.restrict hAS
     have hinj : Function.Injective AS := by

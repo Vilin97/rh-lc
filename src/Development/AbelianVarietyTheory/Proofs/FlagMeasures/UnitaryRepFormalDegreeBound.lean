@@ -149,7 +149,7 @@ theorem orbit_stable {ρ : G → (H →L[ℂ] H)} (hρ : IsURep ρ) (w : H) (x :
     obtain ⟨g, rfl⟩ := hy
     exact Submodule.subset_span ⟨x * g, act_mul hρ x g w⟩
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | smul a b _ hb => rw [map_smul]; exact Submodule.smul_mem _ _ hb
 
 theorem form_add_le {V : Type} [AddCommGroup V] [Module ℂ V] (I : V →ₗ⋆[ℂ] V →ₗ[ℂ] ℂ) (h : ∀ x, 0 ≤ I x x)
@@ -157,7 +157,7 @@ theorem form_add_le {V : Type} [AddCommGroup V] [Module ℂ V] (I : V →ₗ⋆[
     (I ((a : ℂ) • x + (b : ℂ) • y) ((a : ℂ) • x + (b : ℂ) • y)).re ≤
       2 * a ^ 2 * (I x x).re + 2 * b ^ 2 * (I y y).re := by
   have h1 := (Complex.nonneg_iff.1 (h ((a : ℂ) • x - (b : ℂ) • y))).1
-  simp only [map_add, map_sub, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply,
+  simp only [map_add (f := _), map_sub, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply,
     map_smul, smul_eq_mul, Complex.conj_ofReal, Complex.add_re, Complex.sub_re, Complex.re_ofReal_mul,
     RingHom.id_apply] at h1 ⊢
   nlinarith
@@ -195,7 +195,7 @@ theorem exists_form (ρ : G → (H →L[ℂ] H)) (ν : Measure G) (V : Submodule
   · simp only [Submodule.coe_add, inner_add_left]
     exact integral_add (hi _ x.2 _ y.2) (hi _ x'.2 _ y.2)
   · simp only [Submodule.coe_smul, inner_smul_left, smul_eq_mul, integral_const_mul]
-  · simp only [Submodule.coe_add, map_add, inner_add_right]
+  · simp only [Submodule.coe_add, map_add (f := _), inner_add_right]
     exact integral_add (hi _ x.2 _ y.2) (hi _ x.2 _ y'.2)
   · simp only [Submodule.coe_smul, map_smul, inner_smul_right, smul_eq_mul, RingHom.id_apply, integral_const_mul]
 

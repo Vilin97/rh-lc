@@ -228,11 +228,11 @@ theorem invForm {U T T' : URep k r} {P : Mx k r} (hP : IsCayleyU k r ε P) (i : 
   unfold BranchingSupport.IsInvForm
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro x hx x' hx' y hy
-    simp only [ext1_add' T hx hx', map_add, formT_add_right]
+    simp only [ext1_add' T hx hx', map_add (f := _), formT_add_right]
   · intro a x hx y hy
     simp only [ext1_smul T a hx, map_smul, formT_smul_right]
   · intro x hx y hy y' hy'
-    simp only [ext1_add' T' hy hy', map_add, formT_add_left]
+    simp only [ext1_add' T' hy hy', map_add (f := _), formT_add_left]
   · intro a x hx y hy
     simp only [ext1_smul T' a hy, map_smul, formT_smul_left]
   · intro g hg x hx y hy

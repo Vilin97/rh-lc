@@ -188,7 +188,7 @@ private lemma pairing_mem_intV_of_mem_dualSet (σ : E →ₐ[F] E) (w : HeightOn
   | zero => simp
   | add a b _ _ ha hb =>
     convert add_mem ha hb using 1
-    simp [map_add, add_mul, Finset.sum_add_distrib]
+    simp [map_add (f := _), add_mul, Finset.sum_add_distrib]
   | smul c a _ ha =>
     convert mul_mem (sigR_mem_intV' σ w c.2) ha using 1
     simp [Subring.smul_def, map_mul, Finset.mul_sum, mul_assoc]

@@ -74,11 +74,11 @@ private theorem hermForm_adj_of_im_span' {g : ℕ} (s : Set (Fin g → ℂ)) (hs
   refine sub_eq_zero.mp (form_eq_zero_of_im_span' s hs
     (fun z w => hermForm Hm (A z) w - hermForm Hm z (A' w)) ?_ ?_ ?_ ?_ ?_ z w)
   · intro z z' w
-    simp only [map_add, l1]; ring
+    simp only [map_add (f := _), l1]; ring
   · intro r z w
     simp only [map_smul, l2]; ring
   · intro z w w'
-    simp only [map_add, l3]; ring
+    simp only [map_add (f := _), l3]; ring
   · intro r z w
     simp only [hr, map_smul, l4]; ring
   · intro z hz w hw

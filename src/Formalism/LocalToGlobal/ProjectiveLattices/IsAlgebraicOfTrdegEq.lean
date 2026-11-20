@@ -29,7 +29,7 @@ theorem homQ_add {x : Fin N → L} {f g : L} (hf : HomQ K x f) (hg : HomQ K x g)
   obtain ⟨e', A', B', hA', hB', hBx', rfl⟩ := hg
   exact ⟨e + e', A * B' + B * A', B * B', (hA.mul hB').add (hB.mul hA'), hB.mul hB',
     by rw [map_mul]; exact mul_ne_zero hBx hBx',
-    by rw [map_add, map_mul, map_mul, map_mul, div_add_div _ _ hBx hBx']⟩
+    by rw [map_add (f := _), map_mul, map_mul, map_mul, div_add_div _ _ hBx hBx']⟩
 
 theorem homQ_inv {x : Fin N → L} {f : L} (hf : HomQ K x f) : HomQ K x f⁻¹ := by
   obtain ⟨e, A, B, hA, hB, hBx, rfl⟩ := hf

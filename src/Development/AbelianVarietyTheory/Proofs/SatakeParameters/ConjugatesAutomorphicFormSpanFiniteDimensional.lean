@@ -107,7 +107,7 @@ theorem exists_conj_polys (σ : ℂ ≃+* ℂ) {N : ℕ} {p : infU E n → ℂ} 
     obtain ⟨f', hf', hf⟩ := hf
     obtain ⟨g', hg', hg⟩ := hg
     exact ⟨f' + g', add_mem hf' hg', fun γ hγ k hk => by
-      rw [Pi.add_apply, Pi.add_apply, map_add, hf γ hγ k hk, hg γ hγ k hk]⟩
+      rw [Pi.add_apply, Pi.add_apply, map_add (f := _), hf γ hγ k hk, hg γ hγ k hk]⟩
   | smul c f _ hf =>
     obtain ⟨f', hf', hf⟩ := hf
     exact ⟨σ c • f', Submodule.smul_mem _ _ hf', fun γ hγ k hk => by

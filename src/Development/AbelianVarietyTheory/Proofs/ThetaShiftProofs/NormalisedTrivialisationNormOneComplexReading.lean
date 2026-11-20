@@ -45,7 +45,7 @@ def abLift : (Fin A.gB → ℂ) →ₗ[ℝ] A.V where
   toFun z :=
     ({ toFun := fun x => -(A.H (A.ct x) z / (2 * Complex.I))
        map_zero' := by simp
-       map_add' := fun x x' => by simp only [map_add, AnArc.H_add_left]; ring }, z)
+       map_add' := fun x x' => by simp only [map_add (f := _), AnArc.H_add_left]; ring }, z)
   map_add' z z' := by
     refine Prod.ext (AddMonoidHom.ext fun x => ?_) rfl
     change -(A.H (A.ct x) (z + z') / (2 * Complex.I)) =
@@ -126,7 +126,7 @@ theorem normOne_of_tauCan : Known → ∀ (E : Type) [Field E] [NumberField E] [
     have h0 := hP 0 v
     have h1 := hP 1 v
     rw [Ha.Pw_eq, AnArc.Pw_apply] at h0 h1
-    simp only [zero_smul, add_zero, one_smul, map_add] at h0 h1
+    simp only [zero_smul, add_zero, one_smul, map_add (f := _)] at h0 h1
     rw [h0] at h1
     exact add_left_cancel h1
   have hNP : Ha.N v = Ha.Pw w (gam.symm (Λ.A.nn (gam v))) := by

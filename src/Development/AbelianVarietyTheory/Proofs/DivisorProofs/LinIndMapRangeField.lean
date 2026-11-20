@@ -41,7 +41,7 @@ def bc : NablaT O N lam →ₛₗ[φ] NablaT K N lam :=
         have hu : ∀ z, (fun τ => dwMap φ N (res N (lam τ)) (Function.update m i z τ)) =
             Function.update (fun τ => dwMap φ N (res N (lam τ)) (m τ)) i (dwMap φ N _ z) :=
           fun z => funext fun τ => Function.apply_update (fun τ => dwMap φ N (res N (lam τ))) m i z τ
-        simp only [hu, map_add, MultilinearMap.map_update_add]
+        simp only [hu, map_add (f := _), MultilinearMap.map_update_add]
       map_update_smul' := fun m i c x => by
         have hu : ∀ z, (fun τ => dwMap φ N (res N (lam τ)) (Function.update m i z τ)) =
             Function.update (fun τ => dwMap φ N (res N (lam τ)) (m τ)) i (dwMap φ N _ z) :=
@@ -112,7 +112,7 @@ theorem repr_of_basis {O K M M' P : Type} [CommRing O] [Field K] [AddCommGroup M
   let g : M →ₛₗ[φ] (P →₀ K) :=
     { toFun := fun x => Finsupp.mapRange φ φ.map_zero (BO.repr x)
       map_add' := fun x y => by
-        rw [map_add]; exact Finsupp.mapRange_add (fun a b => map_add φ a b) _ _
+        rw [map_add (f := _)]; exact Finsupp.mapRange_add (fun a b => map_add φ a b) _ _
       map_smul' := fun c x => by
         ext p; simp }
   have : (BK.repr.toLinearMap.comp f : M →ₛₗ[φ] (P →₀ K)) = g := by
@@ -209,7 +209,7 @@ theorem latN_iff {l : ℕ} [Fact l.Prime] {ι : Type} [DecidableEq ι] {N : ℕ}
       rw [LinearMap.map_smulₛₗ, bc_tprod]
       exact AddSubgroup.subset_closure ⟨r, fun τ => dwMap F.emb N _ (m τ), fun τ => ⟨m τ, (m τ).2, rfl⟩, rfl⟩
     | add a b ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem ha hb
 
 theorem latD_iff {l : ℕ} [Fact l.Prime] {ι : Type} [DecidableEq ι] {N : ℕ} (F : GlobalTheory.ExpFrame.Frame l ι N)
@@ -246,7 +246,7 @@ theorem latD_iff {l : ℕ} [Fact l.Prime] {ι : Type} [DecidableEq ι] {N : ℕ}
       exact AddSubgroup.subset_closure ⟨r, fun τ => dwMap F.emb N _ (m τ),
         fun τ => ⟨((m τ : dualWeyl F.O N N (res N (lam τ))) : MvPolynomial (Fin N × Fin N) F.O), (m τ).2, rfl⟩, rfl⟩
     | add a b ha hb =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem ha hb
 
 theorem rowAct_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {r n : ℕ}
@@ -254,7 +254,7 @@ theorem rowAct_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {r n 
     MvPolynomial.map φ (rowAct R M f) = rowAct S (M.map φ) (MvPolynomial.map φ f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp, map_X]
     congr 1
@@ -286,7 +286,7 @@ theorem bc_grp {O K : Type} [CommRing O] [CommRing K] (φ : O →+* K) (N : ℕ)
     funext τ
     apply Subtype.ext
     simp only [Formalism.UG.dualWeylRep_apply, dwMap_coe, dwAct_map]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end Main
 

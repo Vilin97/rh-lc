@@ -116,7 +116,7 @@ theorem mk_logTermJ_add_sub {x δ : AInf K p} (hx : x ∈ pdIdeal K p) (hδ : δ
         algebraMap (AInf K p) 𝔸 ((-x) ^ n * δ) := by
     rw [map_mul, map_pow, map_neg, neg_pow (algebraMap (AInf K p) 𝔸 x), ← factorial_mul_dpow]
     ring
-  rw [e, map_add, map_mul, hS, mul_zero, zero_add]
+  rw [e, map_add (f := _), map_mul, hS, mul_zero, zero_add]
 
 theorem mk_sum_logTermJ_mul_sub {x k : AInf K p} (hx : x ∈ pdIdeal K p) (hk : k ∈ RingHom.ker θ)
     (hz : x + (1 + x) * k ∈ pdIdeal K p) (N : ℕ) :
@@ -178,7 +178,7 @@ theorem iotaQ_two_log {k : AInf K p} (hk : k ∈ RingHom.ker θ) :
   rw [iotaQ_log, Finset.sum_range_succ, Finset.sum_range_one, logTermZero, logTermZero]
   simp only [Subalgebra.coe_mul, Subalgebra.coe_pow, Subalgebra.coe_neg, Subalgebra.coe_one,
     SubringClass.coe_natCast, coe_dpowZero]
-  rw [map_add, map_mul (Ideal.Quotient.mk (kerAway K p ^ 2)) _ (dpow (1 + 1) k),
+  rw [map_add (f := _), map_mul (Ideal.Quotient.mk (kerAway K p ^ 2)) _ (dpow (1 + 1) k),
     mk_dpow_eq_zero hk (show 2 ≤ 1 + 1 from le_refl _), mul_zero, add_zero, zero_add, dpow_one]
   simp
 

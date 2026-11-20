@@ -70,7 +70,7 @@ theorem exists_prim (Ω₀ Ω : Type) [Field Ω₀] [Field Ω] [CharZero Ω] [Al
     rw [aeval_def, eval₂_map]
   refine ⟨a, cf, G, Q, ⟨u, v, ?_⟩, fun F => ?_, fun s => ?_, ?_, ?_⟩
   · apply map_injective i hi
-    rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, ← derivative_map, hm, hu, hv, huv,
+    rw [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, ← derivative_map, hm, hu, hv, huv,
       Polynomial.map_one]
   · rw [hev, ← map_dvd_map i hi (mon_monic a), hm, minpoly.dvd_iff]
   · rw [eval₂_low, ← hcf s]

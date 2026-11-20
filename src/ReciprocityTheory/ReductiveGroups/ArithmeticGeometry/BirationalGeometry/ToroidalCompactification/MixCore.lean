@@ -331,7 +331,7 @@ theorem mix_obj (hG : GlobalFnsSt) {D : Datum H} {l : Level H} {B : Type} [CommR
   · exact fun x hx => hx e he
   · intro x hx
     have h1 : o.t.act.act (H.bar e) * o.t.act.act (H.bar w) = 𝟙 _ := by
-      rw [← o.t.act.add, ← map_add, hew, map_one, o.t.act.one]
+      rw [← o.t.act.add, ← map_add (f := _), hew, map_one, o.t.act.one]
     have h2 := congrArg (fun u => x ≫ u) h1
     simp only [comp_mul, hx _ hbw, _root_.mul_one, Category.comp_id] at h2
     exact h2

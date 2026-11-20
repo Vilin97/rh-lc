@@ -154,7 +154,7 @@ theorem awayW_s_mem {y : WL l (Ob l)} (hy : y ∈ ACris.ACrisZero ℂ_[l] l) : a
     have := awayW_dpw A.s k (ACris.isUnit_natCast (K := ℂ_[l]) (p := l) k.factorial_ne_zero) (xi0 l)
     exact this ▸ A.dpw_xi_mem k
   | algebraMap x => rw [awayW_algebraMap]; exact Subalgebra.algebraMap_mem _ _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 def cris0 : Acris0 l →+* A.Acr0 :=
@@ -212,7 +212,7 @@ theorem PdOk.mem {f : A.A →+* B.A} (h : PdOk f) {y : WL l A.A} (hy : y ∈ A.A
     have := awayW_dpw f k (A.isUnit_natCast k.factorial_ne_zero) A.xi
     exact this ▸ h k
   | algebraMap x => rw [awayW_algebraMap]; exact Subalgebra.algebraMap_mem _ _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 def PdOk.acr0 {f : A.A →+* B.A} (h : PdOk f) : A.Acr0 →+* B.Acr0 :=

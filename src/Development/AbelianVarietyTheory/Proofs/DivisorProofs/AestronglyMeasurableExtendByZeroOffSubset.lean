@@ -129,7 +129,7 @@ theorem GlobalTheory.HCA.solSet_closed_submodule :
     · intro u v hu hv
       rw [key] at hu hv ⊢
       intro i φ h
-      rw [map_add, hu i φ h, hv i φ h, add_zero]
+      rw [map_add (f := _), hu i φ h, hv i φ h, add_zero]
     · intro c u hu
       rw [key] at hu ⊢
       intro i φ h

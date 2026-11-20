@@ -141,7 +141,7 @@ theorem pure_subst {g : X → ℂ} (c : ι → κ → μ → ℂ) (e : ι → κ
     rw [← mul_one (MvPolynomial.C a), MvPolynomial.C_mul', map_smul, GlobalTheory.FockIndep.pure_one]
   induction Q using MvPolynomial.induction_on with
   | C a => rw [hC, MvPolynomial.algHom_C, MvPolynomial.algebraMap_eq, hC]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [mul_comm, hX', hp, map_mul, MvPolynomial.aeval_X, hA _ _ (hm _)]
     set_option synthInstance.maxHeartbeats 100000 in

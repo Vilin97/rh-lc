@@ -12,7 +12,7 @@ private theorem UpperTheory.ConvolutionTheory.FX.aeval_single_zero {ι ι' : Typ
   | C a =>
     rw [aeval_C, aeval_C]
     rfl
-  | add p r hp hr => rw [map_add, map_add, hp, hr, AddMonoidAlgebra.single_add]
+  | add p r hp hr => rw [map_add (f := _), map_add (f := _), hp, hr, AddMonoidAlgebra.single_add]
   | mul_X p i hp =>
     rw [map_mul, map_mul, hp, aeval_X, aeval_X, AddMonoidAlgebra.single_mul_single, add_zero]
 
@@ -67,7 +67,7 @@ theorem UpperTheory.ConvolutionTheory.FX.piece_ren :
   obtain ⟨ha', h0', hs'⟩ := UpperTheory.ConvolutionTheory.FX.piece_add ι' k
   induction f using AddMonoidAlgebra.induction_linear with
   | zero => rw [map_zero, h0, h0', map_zero]
-  | add f g hf hg => rw [map_add, ha, ha', map_add, hf, hg]
+  | add f g hf hg => rw [map_add (f := _), ha, ha', map_add (f := _), hf, hg]
   | single v p =>
     set_option synthInstance.maxHeartbeats 100000 in
       rw [UpperTheory.ConvolutionTheory.FX.ren_single, hs, hs', map_sum]

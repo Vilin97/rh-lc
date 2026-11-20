@@ -139,7 +139,7 @@ theorem φVB_inj' (T : LocLat G Qp LL O) : Function.Injective (φVB PD (LL := LL
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x b => simp [φVB]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hi : Function.Injective PD.φ.toLinearMap := PD.φ_inj
   intro a b hab
   rw [h, h] at hab

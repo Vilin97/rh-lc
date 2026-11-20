@@ -108,7 +108,7 @@ theorem params_eq {q r t : ℕ} (hq : q ≠ 0) {B B' : Multiset ℂˣ} (hB : B.c
     unfold heckePolyOf
     exact Finset.sum_congr rfl fun k hk => by
       rw [h k (Nat.lt_succ_iff.1 (Finset.mem_range.1 hk))]) e
-  rw [← eval_heckePolyOf hq hB, e1, eval_mul, eval_comp, eval_heckePolyOf hq hB', Multiset.map_add, Multiset.prod_add]
+  rw [← eval_heckePolyOf hq hB, e1, eval_mul, eval_comp, eval_heckePolyOf hq hB', Multiset.map_add (f := _), Multiset.prod_add]
   congr 1
   · rw [Multiset.map_map, Multiset.map_map]
     refine congrArg Multiset.prod (Multiset.map_congr rfl fun b _ => ?_)
@@ -212,7 +212,7 @@ theorem match_pos {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {χS χT : (AE 
   have hx' : ((Units.map (cA D).toMonoidHom x : (AE D)ˣ) : AE D) =
       cA D e * incA D ((Formalism.DivisionValues.cO D.host.E ϖ : 𝓞 D.host.E) : D.host.E) + (1 - cA D e) := by
     show cA D (x : AE D) = _
-    rw [hx, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
+    rw [hx, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
     rfl
   have hM := ((GlobalTheory.Hk3.SplitMatch.match_split ψ S T χS χT om _ hW (by rw [hcc]; exact hc.symm) hS' hT').2
     _ _ _ t he' h1' h2' hx').2 hr k hk

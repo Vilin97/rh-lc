@@ -43,7 +43,7 @@ private theorem homogeneousComponent_mem_span_map_homogeneous {σ K L : Type} [F
     rw [homogeneousComponent_map_algebraMap]
     exact Submodule.subset_span ⟨_, ⟨hP q hq n, homogeneousComponent_mem n q⟩, rfl⟩
   | zero => simp
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ c hy
 
 open MvPolynomial Filter in

@@ -76,7 +76,7 @@ theorem exists_crystalline_epsilon_combination {l : ℕ} [Fact l.Prime] {a e : �
       PowerSeries.C (PowerSeries.C (algebraMap O K o)) * lam₀ y τ i) ?_ ?_ ?_ ?_ y
     · intro τ i; simp
     · intro y z hy hz τ i
-      simp only [map_add, Pi.add_apply, hy, hz, mul_add]
+      simp only [map_add (f := _), Pi.add_apply, hy, hz, mul_add]
     · intro r y hy τ i
       rw [map_smul, hl₀, hl₀, hy]; ring
     · intro x τ i
@@ -91,7 +91,7 @@ theorem exists_crystalline_epsilon_combination {l : ℕ} [Fact l.Prime] {a e : �
   have hSadd : ∀ y z, (∀ τ, lam₀ y τ = ε τ *ᵥ lam₁ y τ) → (∀ τ, lam₀ z τ = ε τ *ᵥ lam₁ z τ) →
       ∀ τ, lam₀ (y + z) τ = ε τ *ᵥ lam₁ (y + z) τ := by
     intro y z hy hz τ
-    simp only [map_add, Pi.add_apply, hy, hz, Matrix.mulVec_add]
+    simp only [map_add (f := _), Pi.add_apply, hy, hz, Matrix.mulVec_add]
   have hSs : ∀ (r : PP.A) y, (∀ τ, lam₀ y τ = ε τ *ᵥ lam₁ y τ) →
       ∀ τ, lam₀ (r • y) τ = ε τ *ᵥ lam₁ (r • y) τ := by
     intro r y hy τ

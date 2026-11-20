@@ -36,7 +36,7 @@ lemma isWH_rename {N N' n : ℕ} (hN : N ≤ N') (ν : Fin N → ℕ) (F : MvPol
       (blockWt N' n) (extW ν) := by
   induction hF using IsWeightedHomogeneous.induction_on with
   | zero => rw [map_zero]; exact isWeightedHomogeneous_zero R _ _
-  | add p q hp hq ihp ihq => rw [map_add]; exact ihp.add ihq
+  | add p q hp hq ihp ihq => rw [map_add (f := _)]; exact ihp.add ihq
   | monomial d r hr =>
     rw [rename_monomial]
     apply isWeightedHomogeneous_monomial

@@ -193,7 +193,7 @@ theorem endSpanned_of_isoSub {Γ L : Type} [Group Γ] [Field L] {a : ℕ} (τ : 
       refine ⟨by rw [Matrix.add_mulVec]; exact W.add_mem h1 h2, ?_⟩
       have : (⟨(x + y).mulVec v, by rw [Matrix.add_mulVec]; exact W.add_mem h1 h2⟩ : W) = ⟨_, h1⟩ + ⟨_, h2⟩ := by
         ext1; simp [Matrix.add_mulVec]
-      rw [this, map_add, Submodule.coe_add, e1, e2, Matrix.add_mulVec]
+      rw [this, map_add (f := _), Submodule.coe_add, e1, e2, Matrix.add_mulVec]
     | smul c x hx' hx =>
       intro v
       obtain ⟨h1, e1⟩ := hx v

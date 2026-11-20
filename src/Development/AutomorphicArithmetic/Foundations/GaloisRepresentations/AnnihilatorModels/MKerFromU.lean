@@ -32,7 +32,7 @@ private instance sc_hom (o : Obj b N s) (x : 𝓞 D.F) : IsMonHom (sc o x) := o.
 
 private theorem sc_add (o : Obj b N s) (x y : 𝓞 D.F) : sc o (x + y) = sc o x * sc o y := by
   show o.act.act (algebraMap (𝓞 D.F) D.O (x + y)) = _
-  rw [map_add]
+  rw [map_add (f := _)]
   exact o.act.add _ _
 
 private theorem sc_mul (o : Obj b N s) (x y : 𝓞 D.F) : sc o (x * y) = sc o y ≫ sc o x := by

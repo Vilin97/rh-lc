@@ -23,7 +23,7 @@ private theorem exists_types {G H : Type} [Group G] [Group H] (i : H →* G) (W 
     induction t using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
     | tmul l w => exact ⟨l ⊗ₜ ρ k' w, funext fun k => congrArg l (hρ k k' w).symm⟩
-    | add s t hs ht => rw [map_add]; exact add_mem hs ht
+    | add s t hs ht => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hs ht
   · exact ⟨((LinearMap.proj g).comp W.subtype) ⊗ₜ ⟨f, hf⟩, rfl⟩
 
 private theorem exists_types' {G H : Type} [Group G] [Group H] (i : H →* G) (C : Subgroup G) (hi : ∀ k, i k ∈ C) (f : G → ℂ)
@@ -48,7 +48,7 @@ private theorem exists_monic {M : Type} [AddCommGroup M] [Module ℂ M] (T : Mod
   have key : ∀ q : Polynomial ℂ, Polynomial.aeval T q x = (Polynomial.aeval (T.restrict hW) q ⟨x, hx⟩ : W) := by
     intro q
     induction q using Polynomial.induction_on' with
-    | add q r hq hr => simp only [map_add, LinearMap.add_apply, hq, hr, Submodule.coe_add]
+    | add q r hq hr => simp only [map_add (f := _), LinearMap.add_apply, hq, hr, Submodule.coe_add]
     | monomial n c =>
       simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply, Submodule.coe_smul,
         Module.End.pow_restrict n hW, LinearMap.restrict_apply]
@@ -84,7 +84,7 @@ private theorem bdd_span {K : Type} [Field K] [NumberField K] {n : ℕ} (f : arc
         obtain ⟨y, hy, rfl⟩ := hψ
         exact Submodule.subset_span ⟨z * y, mul_mem hz hy, by simp only [map_mul, Module.End.mul_apply]⟩
       | zero => rw [map_zero]; exact zero_mem _
-      | add _ _ _ _ a b => rw [map_add]; exact add_mem a b
+      | add _ _ _ _ a b => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b
       | smul c _ _ a => rw [map_smul]; exact Submodule.smul_mem _ c a
     · rintro _ rfl
       exact ⟨1, one_mem _, by simp only [map_one, Module.End.one_apply]⟩

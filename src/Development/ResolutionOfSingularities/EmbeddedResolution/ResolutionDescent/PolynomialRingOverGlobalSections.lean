@@ -60,7 +60,7 @@ theorem specToAffineSpaceExtendCoords_appTop_mvPolynomial (k : Type u) [Field k]
       rw [mvPolynomialToSumCoordinateRing_C, h1]
       simp
   | add p q hp hq =>
-      simp only [map_add, MvPolynomial.eval₂_add, hp, hq]
+      simp only [map_add (f := _), MvPolynomial.eval₂_add, hp, hq]
   | mul_X p i hp =>
       simp only [map_mul, MvPolynomial.eval₂_mul, mvPolynomialToSumCoordinateRing_X, hp,
         specToAffineSpaceExtendCoords_appTop_coord_inr, MvPolynomial.map_X, MvPolynomial.eval₂_X]

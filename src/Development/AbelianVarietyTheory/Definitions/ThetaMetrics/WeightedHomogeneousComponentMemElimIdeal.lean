@@ -50,7 +50,7 @@ def elimIdeal (p : Ideal (MvPolynomial σ K)) : Ideal (MvPolynomial (β × σ) K
     have := Ideal.add_mem _ (Ideal.mul_mem_right (C (X j ^ n)) _ (hm j))
       (Ideal.mul_mem_right (C (X j ^ m)) _ (hn j))
     convert this using 1
-    simp only [map_add, map_pow]
+    simp only [map_add (f := _), map_pow]
     ring
   smul_mem' := by
     rintro c f ⟨m, hm⟩
@@ -134,7 +134,7 @@ theorem exists_pow_mul_sub_rename_mem {R : Type*} [CommRing R] (u : σ → R) (j
     have := Ideal.add_mem _ (Ideal.mul_mem_right (C (u j ^ n)) _ hf)
       (Ideal.mul_mem_right (C (u j ^ m)) _ hg)
     convert this using 1
-    simp only [map_add, map_mul, map_pow, rename_C]
+    simp only [map_add (f := _), map_mul, map_pow, rename_C]
     ring
   | mul_X f v hf =>
     obtain ⟨m, f', hf⟩ := hf

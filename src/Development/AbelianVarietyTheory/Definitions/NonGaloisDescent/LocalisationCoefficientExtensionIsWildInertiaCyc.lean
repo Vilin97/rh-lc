@@ -70,7 +70,7 @@ theorem heckePol_map (a : LocExt N₀ N₁ A₀ A₁ i₀ i₁) (x : N₁.X i₁
     heckePol N₁ i₁ x w = (heckePol N₀ i₀ (a.e x) w).map a.φ := by
   unfold heckePol
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [Polynomial.map_add, Polynomial.map_pow, map_X, Polynomial.map_sum]
+    rw [Polynomial.map_add (f := _), Polynomial.map_pow, map_X, Polynomial.map_sum]
   congr 1
   refine Finset.sum_congr rfl fun k hk => ?_
   rw [Finset.mem_Icc] at hk

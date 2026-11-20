@@ -39,7 +39,7 @@ theorem GlobalTheory.gram_det_ne_zero_of_ker_orth {K : Type} [Field K] (σ : K �
     obtain ⟨z, y, hAy, rfl⟩ := hdec v
     have h1 := horth x z hAx
     have h2 := hy y (by rw [LinearMap.mem_ker, Matrix.toLin'_apply]; exact hAy)
-    simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib, h1, h2, add_zero]
+    simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, h1, h2, add_zero]
   apply hx0
   funext k
   have := hall (Pi.single k 1)

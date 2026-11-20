@@ -78,7 +78,7 @@ namespace GlobalTheory.KSBaseChange
 
 theorem valR_add_of_le {A : Type} [CommRing A] {Z : Scheme.{0}} (x : Sp A ⟶ Z) (O : Z.Opens)
     (h : ⊤ ≤ x ⁻¹ᵁ O) (a b : Γ(Z, O)) : valR x O (a + b) = valR x O a + valR x O b := by
-  simp only [valR, dif_pos h, map_add]
+  simp only [valR, dif_pos h, map_add (f := _)]
 
 theorem valR_zero' {A : Type} [CommRing A] {Z : Scheme.{0}} (x : Sp A ⟶ Z) (O : Z.Opens) :
     valR x O 0 = 0 := by

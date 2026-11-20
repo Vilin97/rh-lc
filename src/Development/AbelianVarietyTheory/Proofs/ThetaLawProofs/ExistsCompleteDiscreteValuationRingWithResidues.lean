@@ -101,7 +101,7 @@ theorem exists_step (r : O →+* Ω) (hr : RingHom.ker r = maximalIdeal O) (a : 
       obtain ⟨f, rfl⟩ := AdjoinRoot.mk_surjective x
       rw [RingHom.mem_ker, AdjoinRoot.lift_mk] at hx
       obtain ⟨g, h, rfl⟩ := hgen f hx
-      rw [map_add, map_mul, AdjoinRoot.mk_self, zero_mul, zero_add, map_mul, AdjoinRoot.mk_C]
+      rw [map_add (f := _), map_mul, AdjoinRoot.mk_self, zero_mul, zero_add, map_mul, AdjoinRoot.mk_C]
       exact Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _)
     · rw [Ideal.span_singleton_le_iff_mem, RingHom.mem_ker, AdjoinRoot.lift_of, hrπ]
   have hreg : ∀ x, AdjoinRoot.of G π * x = 0 → x = 0 := by

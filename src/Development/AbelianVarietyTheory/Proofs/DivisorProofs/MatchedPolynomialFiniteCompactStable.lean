@@ -60,7 +60,7 @@ theorem finite (hK : KP) (hM : IsMatched B G X om om' R Rf) (Φ : (Fin a × Fin 
       · exact GlobalTheory.T.triple_local_action_at_special_place hK F E σ B a a' G X om om' hM.triple (h B.v₁) (hh B.v₁).1 (φ B.v₁) hv₁ (φ₁ B.v₁)
           (h1 B.v₁).1 (h1 B.v₁).2
     · rw [map_zero]; exact zero_mem _
-    · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
+    · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     · intro c x _ hx; rw [map_smul]; exact Submodule.smul_mem _ c hx
   · obtain ⟨T, hXT, hOn⟩ := (PolynomialMatching.polMatch_iff B G X R Rf Φ Φ').1 hPM
     have hins : ∀ U : Finset (Pl F), PolynomialMatching.PolMatchOn B G X R Rf (T ∪ U) Φ Φ' := by
@@ -160,7 +160,7 @@ theorem archimedean (hM : IsMatched B G X om om' R Rf) (Φ : (Fin a × Fin (a + 
       rw [hpure' f φ hφ hcof]
       exact Submodule.subset_span ⟨T' f, φ, hφ, hcof, hv₁, rfl⟩
     · rw [map_zero]; exact zero_mem _
-    · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
+    · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     · intro c x _ hx; rw [map_smul]; exact Submodule.smul_mem _ c hx
   · obtain ⟨w₀⟩ : Nonempty (F →+* ℂ) := inferInstance
     have hdet : ∀ {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (f : E →+* ℂ) (c : ℂ) (r s : ℕ), c ≠ 0 →
@@ -183,7 +183,7 @@ theorem archimedean (hM : IsMatched B G X om om' R Rf) (Φ : (Fin a × Fin (a + 
       (fun f f₁ => f₁ = T f) (fun f f₁ => f₁ = T' f) hM.real.quot.onto (fun f hf => ⟨T f, hpol f hf, rfl⟩)
       (fun φ _ ψ _ φ₁ ψ₁ h₁ h₂ c c' => by
         show c • φ₁ + c' • ψ₁ = T (c • φ + c' • ψ)
-        rw [h₁, h₂, map_add, map_smul, map_smul])
+        rw [h₁, h₂, map_add (f := _), map_smul, map_smul])
       (show (0 : SInf F (Fin a' × Fin (a + a'))) = T' 0 from (map_zero T').symm)
       (fun f hf f' hf' f₁ _ f₁' _ h₁ h₂ he => by
         subst h₁ h₂

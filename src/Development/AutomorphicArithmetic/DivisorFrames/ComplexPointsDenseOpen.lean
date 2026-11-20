@@ -17,7 +17,7 @@ private theorem one_tmul_mem_nonZeroDivisors {k A : Type} [CommRing k] [CommRing
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp
-    | add x y hx hy => rw [map_add, hx, hy, mul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, mul_add]
   rw [mem_nonZeroDivisors_iff_left]
   intro x hx
   apply h2

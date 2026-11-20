@@ -58,7 +58,7 @@ theorem padicInt_ringHom_eq {A : Type} [CommRing A] {J : Ideal A} [IsHausdorff J
   obtain ⟨v, hv⟩ := Ideal.mem_span_singleton'.1 (PadicInt.appr_spec n u)
   have hu : u = ((u.appr n : ℕ) : ℤ_[p]) + v * (p : ℤ_[p]) ^ n := by linear_combination -hv
   have e : φ u - ψ u = (φ v - ψ v) * (p : A) ^ n := by
-    rw [hu]; simp only [map_add, map_mul, map_pow, map_natCast]; ring
+    rw [hu]; simp only [map_add (f := _), map_mul, map_pow, map_natCast]; ring
   rw [e]
   exact Ideal.mul_mem_left _ _ (Ideal.pow_mem_pow hp n)
 
@@ -97,7 +97,7 @@ theorem hf_C_eq_of_pair : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K
   induction hw using Submodule.span_induction with
   | mem x hx => obtain ⟨y, rfl⟩ := hx; exact hT y
   | zero => simp
-  | add x y _ _ hx hy => simp only [map_add, hx, hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
   | smul c x _ hx => rw [Algebra.smul_def]; simp only [map_mul, hx, hZ]
 
 end GlobalTheory.BSP

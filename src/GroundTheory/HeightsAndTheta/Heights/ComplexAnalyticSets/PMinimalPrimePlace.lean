@@ -106,7 +106,7 @@ theorem exists_fracMap_unit [IsNoetherianRing A] [IsReduced A] [IsDomain B] (π 
   · have h := congrArg (fracMap π hker)
       (IsLocalization.mk'_spec (FractionRing A) s (⟨s + t, hw⟩ : nonZeroDivisors A))
     rw [map_mul, IsLocalization.map_eq, IsLocalization.map_eq] at h
-    simp only [map_add, hπt, add_zero] at h
+    simp only [map_add (f := _), hπt, add_zero] at h
     have hne : algebraMap B (FractionRing B) (π s) ≠ 0 := fun h0 ↦ hπs (hinj (by rw [h0, map_zero]))
     exact mul_right_cancel₀ hne (h.trans (one_mul _).symm)
   · intro z hz
@@ -127,7 +127,7 @@ theorem exists_fracMap_unit [IsNoetherianRing A] [IsReduced A] [IsDomain B] (π 
     refine ⟨IsLocalization.mk' (FractionRing A) (a * s) (⟨c * s + t, hst c hcp⟩ : nonZeroDivisors A), ?_⟩
     rw [IsLocalization.map_mk', IsLocalization.mk'_eq_iff_eq]
     congr 1
-    simp only [map_mul, map_add, hπt, add_zero, hc]
+    simp only [map_mul, map_add (f := _), hπt, add_zero, hc]
     ring
 
 theorem isIntegral_mul_of_fracMap [IsDomain B] (π : A →+* B) (hπ : Function.Surjective π)

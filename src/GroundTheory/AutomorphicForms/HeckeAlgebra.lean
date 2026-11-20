@@ -223,7 +223,7 @@ theorem heckeAct_add_left {f₁ f₂ : G → ℂ} (hf₁ : f₁ ∈ locallyConst
     (hf₂ : f₂ ∈ locallyConstantCompactSupport G ℂ ℂ) {v : V} (hv : v ∈ smoothVectors ρ) :
     heckeAct μ ρ (f₁ + f₂) v = heckeAct μ ρ f₁ v + heckeAct μ ρ f₂ v := by
   refine eq_of_forall_dual fun φ => ?_
-  rw [map_add, dual_heckeAct μ (add_mem hf₁ hf₂) hv, dual_heckeAct μ hf₁ hv,
+  rw [map_add (f := _), dual_heckeAct μ (add_mem hf₁ hf₂) hv, dual_heckeAct μ hf₁ hv,
     dual_heckeAct μ hf₂ hv, ← integral_add (integrable_mul_of_mem hf₁ (continuous_dual_orbit hv φ))
       (integrable_mul_of_mem hf₂ (continuous_dual_orbit hv φ))]
   simp only [Pi.add_apply, add_mul]
@@ -243,10 +243,10 @@ theorem heckeAct_add_right {f : G → ℂ} (hf : f ∈ locallyConstantCompactSup
     {v w : V} (hv : v ∈ smoothVectors ρ) (hw : w ∈ smoothVectors ρ) :
     heckeAct μ ρ f (v + w) = heckeAct μ ρ f v + heckeAct μ ρ f w := by
   refine eq_of_forall_dual fun φ => ?_
-  rw [map_add, dual_heckeAct μ hf (add_mem hv hw), dual_heckeAct μ hf hv, dual_heckeAct μ hf hw,
+  rw [map_add (f := _), dual_heckeAct μ hf (add_mem hv hw), dual_heckeAct μ hf hv, dual_heckeAct μ hf hw,
     ← integral_add (integrable_mul_of_mem hf (continuous_dual_orbit hv φ))
       (integrable_mul_of_mem hf (continuous_dual_orbit hw φ))]
-  simp only [map_add, mul_add]
+  simp only [map_add (f := _), mul_add]
 
 theorem heckeAct_smul_right {f : G → ℂ} (hf : f ∈ locallyConstantCompactSupport G ℂ ℂ) (c : ℂ)
     {v : V} (hv : v ∈ smoothVectors ρ) : heckeAct μ ρ f (c • v) = c • heckeAct μ ρ f v := by

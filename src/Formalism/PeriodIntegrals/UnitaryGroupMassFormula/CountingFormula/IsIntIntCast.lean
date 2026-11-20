@@ -44,7 +44,7 @@ theorem reduceRep (N : ℕ) (hN : 0 < N) : ∃ Rep : Set K, Rep.Finite ∧ (∀ 
     obtain ⟨t, ht⟩ := Ideal.mem_span_singleton'.1 hmem
     refine ⟨algebraMap (𝓞 K) K t, algebraMap (𝓞 K) K (σ q), isInt_O _, ⟨q, rfl⟩, ?_⟩
     have e : oo = t * N + σ q := by rw [ht]; ring
-    rw [e, map_add, map_mul, map_natCast]
+    rw [e, map_add (f := _), map_mul, map_natCast]
     ring
 
 end PI.UnitaryGroupMassFormula.CntFormula

@@ -117,7 +117,7 @@ theorem exists_hatPt_of_mem_latO : ∀ {D : D7} (S T : HSp D) (r : D.host.E) (LB
   · rw [Matrix.zero_apply, map_zero, mul_zero]
     exact inHat_zero _
   · intro x y hx hy
-    rw [Matrix.add_apply, map_add, mul_add]
+    rw [Matrix.add_apply, map_add (f := _), mul_add]
     exact hx.add hy
   · intro x hx
     rw [Matrix.neg_apply, map_neg, mul_neg]

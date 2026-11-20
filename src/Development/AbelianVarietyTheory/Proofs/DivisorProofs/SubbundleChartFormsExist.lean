@@ -21,7 +21,7 @@ variable {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [NormedSpace ℝ 
 
 theorem angleForm_add (n : ℕ) (a a' : E → ℝ) (q : E → ℂ) (ξ η z : E) :
     angleForm n a a' q (ξ + η) z = angleForm n a a' q ξ z + angleForm n a a' q η z := by
-  simp only [angleForm, map_add, map_sub, map_mul]
+  simp only [angleForm, map_add (f := _), map_sub, map_mul]
   ring
 
 def angleLin (n : ℕ) (a a' : E → ℝ) (q : E → ℂ) (z : E) : E →ₗ[ℂ] ℂ where

@@ -56,13 +56,13 @@ theorem rigExtMap_zero' {X Y : PDivGroup p k} : rigExtMap (0 : X ⟶ Y) = 0 := b
 theorem rig_split₀ {G G₀ G₁ : PDivGroup p k} (i₀ : G₀ ⟶ G) (q₀ : G ⟶ G₀) (q₁ : G ⟶ G₁)
     (h₀ : i₀ ≫ q₀ = 𝟙 G₀) (z : i₀ ≫ q₁ = 0) (r₀ : G₀.RigExt) (r₁ : G₁.RigExt) :
     rigExtMap i₀ (rigExtMap q₀ r₀ + rigExtMap q₁ r₁) = r₀ := by
-  rw [LinearMap.map_add, rigExtMap_rigExtMap, rigExtMap_rigExtMap, h₀, z, rigExtMap_zero', rigExtMap_id]
+  rw [LinearMap.map_add (f := _), rigExtMap_rigExtMap, rigExtMap_rigExtMap, h₀, z, rigExtMap_zero', rigExtMap_id]
   simp
 
 theorem rig_split₁ {G G₀ G₁ : PDivGroup p k} (i₁ : G₁ ⟶ G) (q₀ : G ⟶ G₀) (q₁ : G ⟶ G₁)
     (h₁ : i₁ ≫ q₁ = 𝟙 G₁) (z : i₁ ≫ q₀ = 0) (r₀ : G₀.RigExt) (r₁ : G₁.RigExt) :
     rigExtMap i₁ (rigExtMap q₀ r₀ + rigExtMap q₁ r₁) = r₁ := by
-  rw [LinearMap.map_add, rigExtMap_rigExtMap, rigExtMap_rigExtMap, h₁, z, rigExtMap_zero', rigExtMap_id]
+  rw [LinearMap.map_add (f := _), rigExtMap_rigExtMap, rigExtMap_rigExtMap, h₁, z, rigExtMap_zero', rigExtMap_id]
   simp
 
 def redSum {W : Type} [CommRing W] (τ : W →+* k) {M₀ M₁ : Type} [AddCommGroup M₀] [Module W M₀]

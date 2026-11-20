@@ -21,7 +21,7 @@ theorem T_phi_expand {W A C₀ : Type} [CommRing W] [CommRing A] [CommRing C₀]
     | zero => simp
     | tmul x' y =>
       rw [TensorProduct.smul_tmul', hD, hD, smul_eq_mul, map_mul, TensorProduct.smul_tmul', smul_eq_mul]
-    | add v₁ v₂ h₁ h₂ => rw [smul_add, map_add, map_add, h₁, h₂, smul_add]
+    | add v₁ v₂ h₁ h₂ => rw [smul_add, map_add (f := _), map_add (f := _), h₁, h₂, smul_add]
   have hTt : ∀ (g : Module.Dual K₀ (K₀ ⊗[W] L)) (a : A) (y : L),
       T c k hk g (a ⊗ₜ y) = c a * k (g (1 ⊗ₜ y)) := fun g a y => rfl
   induction z using TensorProduct.induction_on with
@@ -42,8 +42,8 @@ theorem T_phi_expand {W A C₀ : Type} [CommRing W] [CommRing A] [CommRing C₀]
     rw [map_smul, smul_eq_mul, map_mul]
     ring
   | add z₁ z₂ h₁ h₂ =>
-    rw [map_add, map_add, h₁, h₂, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), map_add (f := _), h₁, h₂, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun s _ => ?_
-    rw [map_add, map_add, add_mul]
+    rw [map_add (f := _), map_add (f := _), add_mul]
 
 end GlobalTheory.CompanionTheory.FrobPairing

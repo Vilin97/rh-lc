@@ -47,7 +47,7 @@ theorem plane_closure : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul r y => simp [c, sigR, hσσ]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hcT : ∀ {m p : Type} (P : Matrix m p E), Formalism.UG.cT c (P.map ιR) = (Formalism.UG.cT (σ : E →+* E) P).map ιR := by
     intro m p P; ext i j; simp [Formalism.UG.cT, hcR]
   have hBA : B * A = 1 := by

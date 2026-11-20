@@ -40,7 +40,7 @@ theorem exists_prod_op {X : ℕ → Type} (A : ∀ j, (X j → ℂ) →ₗ[ℂ] 
         funext u
         have e : (fun x => (F + G) (Function.update u j x)) =
             (fun x => F (Function.update u j x)) + (fun x => G (Function.update u j x)) := rfl
-        rw [e, map_add]
+        rw [e, map_add (f := _)]
         rfl
       map_smul' := fun c F => by
         funext u

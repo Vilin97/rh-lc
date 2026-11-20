@@ -16,7 +16,7 @@ theorem UpperTheory.Reformulated.B.Gwa5.aux2 :
         b ∈ {v : V | ∀ (h : ↥H), ((ρ : G → V →ₗ[k] V) (↑h : G) : V → V) v = (↑((χ : ↥H → kˣ) h) : k) • v} →
           ∀ (h : ↥H), ((ρ : G → V →ₗ[k] V) (↑h : G) : V → V) (a + b) = (↑((χ : ↥H → kˣ) h) : k) • (a + b) := by
   intro k G V _ _ _ _ ρ H χ a b ha hb h
-  rw [map_add, smul_add, ha h, hb h]
+  rw [map_add (f := _), smul_add, ha h, hb h]
 
 theorem UpperTheory.Reformulated.B.Gwa5.aux3 :
     ∀ {k G V : Type} [inst : Field k] [inst_1 : Group G] [inst_2 : AddCommGroup V] [inst_3 : _root_.Module k V]

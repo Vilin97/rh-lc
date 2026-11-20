@@ -35,7 +35,7 @@ theorem coeff_eq_zero (ρ₁ ρ₂ : G →* Matrix (Fin r) (Fin r) K) (h₁ : Su
     intro a
     induction a using MonoidAlgebra.induction_on with
     | of g => simp [hR₁, hR₂, hf]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | smul c a ha => simp only [map_smul, ha]
   have hker : ∀ a, R₂ a = 0 → R₁ a = 0 := by
     intro a ha

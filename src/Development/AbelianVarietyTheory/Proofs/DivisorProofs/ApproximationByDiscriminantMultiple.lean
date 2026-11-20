@@ -15,7 +15,7 @@ theorem ev_invForm_scale {ι : Type} [Fintype ι] [DecidableEq ι] {N : ℕ} (j 
     (lam : ι → Fin N → ℝ) :
     ev lam (invForm j (fun τ => k * al τ) (fun τ => k * be τ)) = k * ev lam (invForm j al be) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [ev, invForm, map_sum, map_add, map_mul, eval_C, Finset.mul_sum]
+    simp only [ev, invForm, map_sum, map_add (f := _), map_mul, eval_C, Finset.mul_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
   ring
 

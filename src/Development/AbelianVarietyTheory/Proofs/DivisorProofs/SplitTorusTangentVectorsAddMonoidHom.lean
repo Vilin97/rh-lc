@@ -38,7 +38,7 @@ noncomputable def phi (l : X →+ k) : Multiplicative X →* Γ((epsPt (𝟙 (Sp
   (Units.map (Scheme.ΓSpecIso (CommRingCat.of (DualNumber k))).inv.hom.toMonoidHom).comp
     { toFun := fun χ => epsUnit (l χ.toAdd)
       map_one' := by ext <;> simp [epsUnit]
-      map_mul' := fun a b => by rw [toAdd_mul, map_add, epsUnit_add] }
+      map_mul' := fun a b => by rw [toAdd_mul, map_add (f := _), epsUnit_add] }
 
 noncomputable def tanPt (l : X →+ k) : epsPt (𝟙 (Sp k)) ⟶ splitTorus (Sp k) X :=
   (splitTorusPointsEquiv (Sp k) X (epsPt (𝟙 (Sp k)))).symm (phi l)

@@ -25,7 +25,7 @@ def awayPart (N : ℕ) (w : HeightOneSpectrum (𝓞 E)) (g : GA E N) : GA E N :=
 def fixedSub {G X : Type} [Group G] [AddCommGroup X] [Module ℂ X] (ρ : Representation ℂ G X) (C : Subgroup G) :
     Submodule ℂ X where
   carrier := {v | ∀ c ∈ C, ρ c v = v}
-  add_mem' := fun {u v} hu hv c hc => by rw [map_add, hu c hc, hv c hc]
+  add_mem' := fun {u v} hu hv c hc => by rw [map_add (f := _), hu c hc, hv c hc]
   zero_mem' := fun c _ => map_zero _
   smul_mem' := fun z v hv c hc => by rw [map_smul, hv c hc]
 

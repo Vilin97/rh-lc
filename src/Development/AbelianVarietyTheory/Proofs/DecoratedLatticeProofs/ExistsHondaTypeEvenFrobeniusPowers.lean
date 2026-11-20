@@ -121,7 +121,7 @@ theorem cob_degree : ∀ (K : Type) [NormedField K] [IsUltrametricDist K] (l : �
     convert a2 using 2
     rw [fadd]; ring
   have key := norm_coeff_subst_sub (norm_nonneg (l : K)) (Pts.constantCoeff_fadd hp h0 h1)
-    (by rw [map_add, h0, h1, add_zero]) hord hf.2.2 h d (by rwa [hdeg])
+    (by rw [map_add (f := _), h0, h1, add_zero]) hord hf.2.2 h d (by rwa [hdeg])
   have hch : MvPowerSeries.coeff d ((MvPowerSeries.X (0 : Fin 2) + MvPowerSeries.X (1 : Fin 2) :
       MvPowerSeries (Fin 2) K) ^ n) = (n.choose k : K) := by
     rw [← MvPolynomial.coe_X, ← MvPolynomial.coe_X, ← MvPolynomial.coe_add, ← MvPolynomial.coe_pow,

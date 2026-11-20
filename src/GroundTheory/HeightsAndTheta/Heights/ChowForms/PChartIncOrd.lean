@@ -170,7 +170,7 @@ theorem bwd_fwd : (bwd I t e).comp (fwd I t e) = RingHom.id _ := by
   refine MvPolynomial.ringHom_ext (fun q => ?_) (fun ij => ?_)
   · simp [fwd, bwd, back_toInc]
   · obtain ⟨i, m⟩ := ij
-    simp only [RingHom.comp_apply, fwd_X, map_add, map_mul, bwd, eval₂Hom_C, eval₂Hom_X',
+    simp only [RingHom.comp_apply, fwd_X, map_add (f := _), map_mul, bwd, eval₂Hom_C, eval₂Hom_X',
       RingHom.id_apply, chartX_apply, rename_C, back_mk, back₀_C, back₀_inr, genSubst]
     ring
 

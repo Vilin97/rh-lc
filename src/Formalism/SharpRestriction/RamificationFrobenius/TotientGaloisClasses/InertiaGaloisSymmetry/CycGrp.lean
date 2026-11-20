@@ -469,7 +469,7 @@ theorem decomp_typeI : ∀ (l : ℕ), l.Prime → l ∣ H.QS * H.q →
   have hσω : σ • ω = 1 - ω := by
     apply NumberField.RingOfIntegers.ext
     show σ (ω : H.E) = 1 - (ω : H.E)
-    rw [hωc, map_div₀, map_add, map_one, hσX, show σ (2 : H.E) = 2 from map_ofNat σ 2]
+    rw [hωc, map_div₀, map_add (f := _), map_one, hσX, show σ (2 : H.E) = 2 from map_ofNat σ 2]
     ring
   have hprod : (ω - ((a + 1 : ℤ) : 𝓞 H.E)) * (ω - (1 - ((a + 1 : ℤ) : 𝓞 H.E))) =
       -((l : ℤ) : 𝓞 H.E) * ((k * c : ℤ) : 𝓞 H.E) := by

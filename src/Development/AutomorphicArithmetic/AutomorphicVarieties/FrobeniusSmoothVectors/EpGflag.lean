@@ -121,7 +121,7 @@ theorem UpperTheory.V.Fr.ep_gflag :
     exact fun i j hij => this hij
   have hσYσYi : σ.mapMatrix Y * σ.mapMatrix Yi = 1 := by rw [← map_mul, hYYi, map_one]
   have hYeq : h * σ.mapMatrix Y = Y * D := by
-    rw [hY, map_add, map_one, map_mul, hσD, Matrix.mul_add, Matrix.mul_one, Matrix.add_mul,
+    rw [hY, map_add (f := _), map_one, map_mul, hσD, Matrix.mul_add, Matrix.mul_one, Matrix.add_mul,
       Matrix.one_mul, ← Matrix.mul_assoc, hhσh, Matrix.one_mul, Matrix.mul_assoc, hDD,
       Matrix.mul_one, add_comm]
   have hGP : h * σ.mapMatrix G = G * P := by

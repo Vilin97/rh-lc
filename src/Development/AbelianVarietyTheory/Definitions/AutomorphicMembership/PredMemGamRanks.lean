@@ -152,7 +152,7 @@ def Fi : Submodule ℂ (S.Cl → Fr emb σ n → ℂ) where
   carrier := {φ | ∀ c, φ c ∈ ValC (Gr emb σ n) lam ∧ ∀ g : S.Stab c, S.tr emb σ c.1 g.1 (φ c) = φ c}
   add_mem' := by
     intro a b ha hb c
-    exact ⟨Submodule.add_mem _ (ha c).1 (hb c).1, fun g => by rw [Pi.add_apply, map_add, (ha c).2 g, (hb c).2 g]⟩
+    exact ⟨Submodule.add_mem _ (ha c).1 (hb c).1, fun g => by rw [Pi.add_apply, map_add (f := _), (ha c).2 g, (hb c).2 g]⟩
   zero_mem' := fun c => ⟨Submodule.zero_mem _, fun g => map_zero _⟩
   smul_mem' := by
     intro r a ha c
@@ -514,7 +514,7 @@ def Mt : Submodule ℂ (∀ b, Q.S'.D b → Pol ℂ ι (R.N R.m - 1)) where
     intro F G hF hG b d
     refine ⟨Submodule.add_mem _ (hF b d).1 (hG b d).1, fun g hg => ?_⟩
     simp only [Pi.add_apply]
-    rw [(hF b d).2 g hg, (hG b d).2 g hg, map_add, smul_add]
+    rw [(hF b d).2 g hg, (hG b d).2 g hg, map_add (f := _), smul_add]
   zero_mem' := fun b d => ⟨Submodule.zero_mem _, fun g _ => by simp⟩
   smul_mem' := by
     intro r F hF b d

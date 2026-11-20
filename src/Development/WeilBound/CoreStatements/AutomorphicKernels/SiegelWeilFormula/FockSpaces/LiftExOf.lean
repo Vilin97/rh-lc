@@ -27,13 +27,13 @@ theorem linLift (hB : TBij) (d : SD σ) {V : Type} [AddCommGroup V] [Module ℂ 
   choose φ0 hφ0 using fun v => (hB F E σ d).2.1 (t v) (ht v)
   refine ⟨{ toFun := φ0, map_add' := fun v v' => ?_, map_smul' := fun a v => ?_ }, fun v => hφ0 v⟩
   · refine T_inj hB d (hφ0 (v + v')).1 (d.sch.add_mem (hφ0 v).1 (hφ0 v').1) ?_
-    rw [T_add, (hφ0 _).2, (hφ0 _).2, (hφ0 _).2, map_add]
+    rw [T_add, (hφ0 _).2, (hφ0 _).2, (hφ0 _).2, map_add (f := _)]
   · refine T_inj hB d (hφ0 (a • v)).1 (d.sch.smul_mem a (hφ0 v).1) ?_
     rw [RingHom.id_apply, T_smul, (hφ0 _).2, (hφ0 _).2, map_smul]
 
 theorem fP_add {m n : ℕ} (P Q : PX m n) : fP (P + Q) = fP P + fP Q := by
   funext u
-  simp only [fP, evX, map_add, Pi.add_apply, add_mul]
+  simp only [fP, evX, map_add (f := _), Pi.add_apply, add_mul]
 
 theorem fP_smul {m n : ℕ} (a : ℂ) (P : PX m n) : fP (a • P) = a • fP P := by
   funext u

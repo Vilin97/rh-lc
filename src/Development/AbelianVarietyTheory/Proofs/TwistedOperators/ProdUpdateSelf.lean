@@ -30,7 +30,7 @@ def contrM (φ : ∀ j, K j →ₗ[ℂ] ℂ) (s : Finset ι) (i : ι) (hi : i �
     by_cases h : j = i
     · subst h
       simp only [prod_update_self φ s j hi, Function.update_self, smul_add]
-    · simp only [prod_update_mem φ s j (hs j h), Function.update_of_ne (Ne.symm h), map_add, add_mul, add_smul]
+    · simp only [prod_update_mem φ s j (hs j h), Function.update_of_ne (Ne.symm h), map_add (f := _), add_mul, add_smul]
   map_update_smul' v j c x := by
     by_cases h : j = i
     · subst h

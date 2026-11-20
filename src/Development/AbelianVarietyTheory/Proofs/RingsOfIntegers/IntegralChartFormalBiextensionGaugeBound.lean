@@ -27,7 +27,7 @@ theorem constantCoeff_gauge {R K O : Type} [CommRing R] [CommRing K] [Algebra â„
   have hdec : h = MvPowerSeries.C c + (h - MvPowerSeries.C c) := by ring
   have hrest : MvPowerSeries.constantCoeff (h - MvPowerSeries.C c) = 0 := by simp [hc]
   have key := congrArg MvPowerSeries.constantCoeff hh.ax0
-  rw [ev, hdec, MvPowerSeries.subst_add hsub, map_add,
+  rw [ev, hdec, MvPowerSeries.subst_add hsub, map_add (f := _),
     MvPowerSeries.constantCoeff_subst_eq_zero hsub hz hrest] at key
   simpa using key
 

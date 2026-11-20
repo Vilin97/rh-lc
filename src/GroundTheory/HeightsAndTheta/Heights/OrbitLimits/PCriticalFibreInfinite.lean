@@ -77,7 +77,7 @@ theorem CriticalFibreInfinite.proof : CriticalFibreInfinite.Statement := by
   have hLA : ∀ p : ℂ × (Fin r → ℂ), Λ (fderiv ℂ f s (A' p)) = p.2 := by
     intro p
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hA', map_add, map_add, map_smul, map_smul, hw', smul_zero, zero_add, map_sum, map_sum]
+      rw [hA', map_add (f := _), map_add (f := _), map_smul, map_smul, hw', smul_zero, zero_add, map_sum, map_sum]
     simp only [map_smul, hΛv]
     ext i
     simp [Finset.sum_apply, Pi.single_apply]

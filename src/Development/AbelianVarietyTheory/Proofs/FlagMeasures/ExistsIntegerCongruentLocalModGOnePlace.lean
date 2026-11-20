@@ -72,7 +72,7 @@ private lemma exists_smul_sub_eq_gS_mul_mem_O (D : D7) (p : PlF D) (f : (D.s.atP
     ring
   conv_lhs => rw [hsplit]
   rw [hu]
-  simp only [map_add, map_mul, map_natCast, map_intCast]
+  simp only [map_add (f := _), map_mul, map_natCast, map_intCast]
   ring
 
 private lemma exists_pow_mul_finset_sum_mem_subring (D : D7) (p : PlF D) (x : (D.s.atP p).Ep) :
@@ -90,7 +90,7 @@ private lemma exists_pow_mul_finset_sum_mem_subring (D : D7) (p : PlF D) (x : (D
     obtain ⟨b₁, o₁, ho₁, h₁⟩ := ih
     obtain ⟨b₂, o₂, ho₂, h₂⟩ := exists_smul_sub_eq_gS_mul_mem_O D p (w i) i
     refine ⟨b₂ + b₁, o₂ + o₁, add_mem ho₂ ho₁, ?_⟩
-    rw [Finset.sum_insert hi, map_add, mul_add, ← h₁, ← h₂]
+    rw [Finset.sum_insert hi, map_add (f := _), mul_add, ← h₁, ← h₂]
     ring
 
 private lemma exists_intValuation_sub_one_le_and_le_elsewhere (D : D7) (p : PlF D) (r : 𝓞 D.host.F) (hr : r ≠ 0) :
@@ -170,7 +170,7 @@ theorem exists_int_congr_gS : ∀ (D : D7) (p : PlF D) (c : (D.s.atP p).Ep), c �
       sub_mem (mul_mem (algebraMap_mem_O_of_mem_integer' D p β hβ) hb₀) ho₀, ?_⟩
     have ht : (D.s.atP p).ιF (t : D.host.F) = (D.s.atP p).ιF ((gS D : ℕ) : D.host.F) * β + 1 := by
       rw [← hβe, map_sub, map_one]; ring
-    rw [hιa p, ht, map_add, map_mul, map_one, map_natCast, map_natCast, map_natCast]
+    rw [hιa p, ht, map_add (f := _), map_mul, map_one, map_natCast, map_natCast, map_natCast]
     have : c = (D.s.atP p).ιE b₀ + ((gS D : ℕ) : (D.s.atP p).Ep) * o₀ := by
       rw [← map_natCast (D.s.atP p).ιE, ← h₀]; ring
     rw [this]

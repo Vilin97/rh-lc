@@ -55,7 +55,7 @@ theorem fock_map_of_ccr_dep : ∀ {V : Type} [AddCommGroup V] [Module ℂ V] {W 
     set_option synthInstance.maxHeartbeats 100000 in
       rw [heisOp_eq_sum_mul_pderiv, ← hL, map_sum]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [LinearMap.sum_apply, map_sum, map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply]
+      simp only [LinearMap.sum_apply, map_sum, map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply]
     simp only [hL]
     refine Finset.sum_congr rfl fun l _ => ?_
     obtain ⟨hX, hY⟩ := hθ' w l T

@@ -74,7 +74,7 @@ theorem cmHostUnit_add_conj_eq_one (H : Host E) : H.w0 + H.bar H.w0 = 1 := by
     · exact h
   have h2 : 2 * H.bar H.w0 = 1 - H.rt := by
     have := congrArg H.bar H.two_weight_eq_one_add_root
-    rw [map_mul, map_add, map_one, hb, map_ofNat] at this
+    rw [map_mul, map_add (f := _), map_one, hb, map_ofNat] at this
     rw [this]; ring
   have h3 : (2 : 𝓞 E) * (H.w0 + H.bar H.w0) = 2 * 1 := by
     rw [mul_add, H.two_weight_eq_one_add_root, h2]; ring

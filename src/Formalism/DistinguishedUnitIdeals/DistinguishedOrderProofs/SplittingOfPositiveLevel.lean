@@ -55,7 +55,7 @@ theorem phiIt_add (i : ZMod n) (k : ℕ) (u v : V) :
     L.phiIt i k (u + v) = L.phiIt i k u + L.phiIt i k v := by
   induction k with
   | zero => rfl
-  | succ k ih => rw [phiIt_succ, ih, map_add]; rfl
+  | succ k ih => rw [phiIt_succ, ih, map_add (f := _)]; rfl
 
 theorem phiIt_map_zero (i : ZMod n) (k : ℕ) : L.phiIt i k (0 : V) = 0 := by
   induction k with
@@ -138,7 +138,7 @@ theorem gam_pull (h1 : ∀ i, ∀ v ∈ L.N i, L.γ i v - v ∈ sm X (L.N i)) (c
     rw [gam_phiIt L c _ k rfl]
     exact mem_pull L c k (gam_N L h1 c hu)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx => rw [L.γ_semi]; exact Submodule.smul_mem _ _ hx
 
 theorem gam_sm_pull (h1 : ∀ i, ∀ v ∈ L.N i, L.γ i v - v ∈ sm X (L.N i)) (c : ZMod n) (k : ℕ)

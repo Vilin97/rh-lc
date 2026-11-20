@@ -52,13 +52,13 @@ private theorem killed_of_mem_iSup {G V U ι J : Type} [Group G] [AddCommGroup V
         refine ⟨v, fun h => hv (by rw [h, map_zero]; exact zero_mem _), fun j => ?_⟩
         have h4 : S j v ∈ W.comap (f i) := by
           have h5 := hK j
-          rw [← e, map_add] at h5
+          rw [← e, map_add (f := _)] at h5
           rw [Submodule.mem_comap, hTS, eq_neg_of_add_eq_zero_right h5]
           exact neg_mem (hT W hW j x hx)
         rwa [hc, Submodule.mem_bot] at h4
       · refine ih _ (fun g y hy => ?_) h3 h2
         obtain ⟨x, hx, _, ⟨v, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hy
-        rw [map_add, ← hf]
+        rw [map_add (f := _), ← hf]
         exact Submodule.add_mem_sup (hW g x hx) ⟨_, rfl⟩
   exact key s ⊥ (fun g x hx => by simp_all) (by simpa using h0) (by simpa using hs)
 

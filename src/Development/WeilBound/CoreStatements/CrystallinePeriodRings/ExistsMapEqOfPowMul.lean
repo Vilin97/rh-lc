@@ -101,7 +101,7 @@ def pullHom {B C E : Type} [CommRing B] [Field C] [Field E] (ι : B →+* E)
     rw [map_mul ι, (hf _).choose_spec, (hf _).choose_spec, (hf _).choose_spec, map_mul])
   map_zero' := hι (by rw [(hf _).choose_spec, map_zero, map_zero])
   map_add' x y := hι (by
-    rw [map_add ι, (hf _).choose_spec, (hf _).choose_spec, (hf _).choose_spec, map_add])
+    rw [map_add ι, (hf _).choose_spec, (hf _).choose_spec, (hf _).choose_spec, map_add (f := _)])
 
 theorem map_pullHom {B C E : Type} [CommRing B] [Field C] [Field E] (ι : B →+* E)
     (hι : Function.Injective ι) (f : C →+* E) (hf : ∀ c, ∃ b, ι b = f c) (c : C) :

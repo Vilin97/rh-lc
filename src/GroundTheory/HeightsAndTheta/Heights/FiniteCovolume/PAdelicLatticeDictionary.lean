@@ -23,7 +23,7 @@ def coordSpan (c : F) : (ι × κ → 𝓞 F) →ₗ[ℤ] W :=
     { toFun := fun z => ∑ a : ι × κ, (algebraMap F E (c⁻¹ * algebraMap (𝓞 F) F (z a)) * b a.2) • v a.1
       map_zero' := by simp
       map_add' := fun z z' => by
-        simp only [Pi.add_apply, map_add, mul_add, add_mul, add_smul, Finset.sum_add_distrib] }
+        simp only [Pi.add_apply, map_add (f := _), mul_add, add_mul, add_smul, Finset.sum_add_distrib] }
 
 theorem mem_range_coordSpan {c : F} (hc : c ≠ 0) {x : W}
     (hx : ∀ i k, IsIntegral ℤ (c * b.repr (v.repr x i) k)) :

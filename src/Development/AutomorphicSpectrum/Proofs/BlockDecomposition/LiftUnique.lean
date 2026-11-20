@@ -74,7 +74,7 @@ theorem lift_unique {I' : Ideal R'} {J : Ideal D} {B : Type} [CommRing B]
       change φ₂ (Ideal.Quotient.mk _ ((1 : R') ⊗ₜ[R] x)) = _ at e2
       change φ₂ (Ideal.Quotient.mk _ (r ⊗ₜ[R] x)) = φ (Ideal.Quotient.mk _ (r ⊗ₜ[R] x))
       rw [hφ, t, map_mul, map_mul, e1, e2]
-    · simp only [RingHom.comp_apply, map_add] at hu hv ⊢
+    · simp only [RingHom.comp_apply, map_add (f := _)] at hu hv ⊢
       rw [hu, hv]
 
 end Ring

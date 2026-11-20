@@ -37,7 +37,7 @@ def posCone (F : Type) [Field F] [NumberField F] : ConvexCone ℚ F where
     exact mul_pos (by exact_mod_cast hc) (hx σ)
   add_mem' := by
     intro x hx y hy σ
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_pos (hx σ) (hy σ)
 
 def congSubgroup {F : Type} [Field F] [NumberField F] (𝔣 : Ideal (𝓞 F)) : Subgroup (𝓞 F)ˣ where

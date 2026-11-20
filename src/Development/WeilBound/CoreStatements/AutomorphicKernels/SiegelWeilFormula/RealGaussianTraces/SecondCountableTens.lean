@@ -298,7 +298,7 @@ theorem exists_map_eq_smul {G W : Type} [AddCommGroup G] [TopologicalSpace G]
   haveI : ContinuousAdd G := by
     refine ⟨?_⟩
     have h : (fun p : G × G => p.1 + p.2) = fun p => e.symm (e p.1 + e p.2) := by
-      funext p; rw [← map_add, ContinuousAddEquiv.symm_apply_apply]
+      funext p; rw [← map_add (f := _), ContinuousAddEquiv.symm_apply_apply]
     rw [h]
     exact e.symm.continuous.comp ((e.continuous.comp continuous_fst).add (e.continuous.comp continuous_snd))
   haveI : (μ.map e).IsAddHaarMeasure :=

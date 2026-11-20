@@ -136,13 +136,13 @@ theorem coeff_mem {F : Type} [Field F] (A : Subring F) (hfrac : ∀ a : F, ∃ d
   have key : (⟨d, hd⟩ : A) • x = (⟨d * C, hdC⟩ : A) • β j + ∑ l, (⟨d * f l, hdf l⟩ : A) • β l := hinj (by
     have hx : io x = C • io (β j) + ∑ l, f l • io (β l) := by rw [← hfe]; abel
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, hsm, hsm, hx, smul_add, Finset.smul_sum, smul_smul]
+      rw [map_add (f := _), map_sum, hsm, hsm, hx, smul_add, Finset.smul_sum, smul_smul]
     congr 1
     refine Finset.sum_congr rfl fun l _ => ?_
     rw [hsm, smul_smul])
   have e := congrArg (fun t : A => (t : F)) (congrArg g key)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_smul, smul_eq_mul, Subring.coe_add, Subring.coe_mul,
+    simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, Subring.coe_add, Subring.coe_mul,
     AddSubmonoidClass.coe_finset_sum, hg] at e
   have hfj : f j = 0 := hf0 j (by simp)
   have hs : ∑ l, d * f l * (if l = j then n else 0) = 0 := by

@@ -134,7 +134,7 @@ theorem jeq_bil_of_double [Algebra ℚ k] (m : ℕ) (g : PS k 2 d)
         exact hex (exists_single (hc 0) (hc 1))
       obtain ⟨j, hj⟩ := this
       have := h j e he
-      rw [coeff_double, map_add] at this
+      rw [coeff_double, map_add (f := _)] at this
       exact eq_zero_of_double hj this
     rw [hz]
     symm

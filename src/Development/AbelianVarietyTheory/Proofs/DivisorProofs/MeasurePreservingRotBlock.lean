@@ -173,7 +173,7 @@ theorem eval_along {S : Type} [CommRing S] (φ : R →+* S) (d : ι → R) (z : 
     ((along d f).map (eval₂Hom φ z)).eval t = eval₂Hom φ (fun p => z p + t * φ (d p)) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [along_C]
-  | add p q hp hq => rw [along_add, Polynomial.map_add, Polynomial.eval_add, hp, hq, map_add]
+  | add p q hp hq => rw [along_add, Polynomial.map_add (f := _), Polynomial.eval_add, hp, hq, map_add (f := _)]
   | mul_X p i hp =>
     rw [along_mul, Polynomial.map_mul, Polynomial.eval_mul, hp, map_mul, along_X]
     congr 1
@@ -199,13 +199,13 @@ theorem linSubst_coeff_along (w : Matrix (Fin N) (Fin n) R) (b : Fin B) (k : Fin
   have key : (along (inBlock b (w.col k)) f).map ψ = along (inBlock b (Pi.single k 1)) (ψ f) := by
     induction f using MvPolynomial.induction_on with
     | C a => simp [along_C, ψ]
-    | add p q hp hq => rw [along_add, Polynomial.map_add, hp, hq, map_add, along_add]
+    | add p q hp hq => rw [along_add, Polynomial.map_add (f := _), hp, hq, map_add (f := _), along_add]
     | mul_X p i hp =>
       rw [along_mul, Polynomial.map_mul, hp, map_mul, along_mul, along_X]
       congr 1
       have e1 : ψ (X i) = ∑ k, C (w i.2 k) * X (i.1, k) := by simp [ψ]
       have e2 : ∀ c, ψ (C c) = C c := fun c => by simp [ψ]
-      rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C, Polynomial.map_C, Polynomial.map_X, e1, e2,
+      rw [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C, Polynomial.map_C, Polynomial.map_X, e1, e2,
         along_sum]
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [along_mul, along_C, along_X, mul_add, Finset.sum_add_distrib, map_sum, map_mul, ← mul_assoc,
@@ -303,7 +303,7 @@ theorem eval_linSubst_map {K : Type} [Field K] {B N : ℕ} (σ : K →+* ℂ) (A
     eval z (linSubst A (MvPolynomial.map σ g)) = eval₂Hom σ (fun q => A.mulVec (fun i => z (q.1, i)) q.2) g := by
   induction g using MvPolynomial.induction_on with
   | C a => simp [linSubst]
-  | add p q hp hq => simp only [linSubst, map_add] at hp hq ⊢; rw [hp, hq]
+  | add p q hp hq => simp only [linSubst, map_add (f := _)] at hp hq ⊢; rw [hp, hq]
   | mul_X p i hp =>
     simp only [linSubst, map_mul] at hp ⊢
     rw [hp]
@@ -379,7 +379,7 @@ theorem formHeight_zero_ge {K : Type} [Field K] [NumberField K] {B N n : ℕ} (h
       clear hm hP hL0 ha' hs hf hf0
       induction f using MvPolynomial.induction_on with
       | C a => exact along_C _ _
-      | add p q hp hq => rw [along_add, hp, hq, map_add]
+      | add p q hp hq => rw [along_add, hp, hq, map_add (f := _)]
       | mul_X p i hp => rw [along_mul, hp, along_X]; simp [inBlock]
     rw [this, Polynomial.natDegree_C])
   have hih := ih (∑ i, a' i) (by omega) a' _ hL0 ha' rfl

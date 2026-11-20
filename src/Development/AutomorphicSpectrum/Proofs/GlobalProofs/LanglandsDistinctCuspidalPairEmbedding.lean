@@ -162,7 +162,7 @@ theorem piTensor_scalar {α : Type} [Fintype α] {Γ X : α → Type} [∀ a, Gr
     (h : ∀ a v, ρ a (g a) v = c a • v) (y : ⨂[ℂ] a, X a) : piTensor ρ g y = (∏ a, c a) • y := by
   classical
   induction y using PiTensorProduct.induction_on with
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul_tprod r y =>
     rw [map_smul, smul_comm, piTensor_tprod, ← MultilinearMap.map_smul_univ]
     congr 2

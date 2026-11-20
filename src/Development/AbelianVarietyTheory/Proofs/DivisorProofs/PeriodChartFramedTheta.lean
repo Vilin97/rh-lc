@@ -265,7 +265,7 @@ theorem inducesPolarisation : ∀ (k : Type) [CommRing k] (S : Scheme.{0}) (p : 
     mul_ne_zero (fun e => by simpa [e] using hAH.2.2.1 ⟨_, hlat l hl⟩) (Complex.exp_ne_zero _), fun z => ?_⟩
   obtain ⟨i, hi⟩ := PullHermitian.exists_chart ((u.ex (F z)).left ≫ φ) L.isLB
   have hper : u.ex (F (z + per (τ b) l)) = u.ex (F z) := by
-    rw [map_add, u.ex_add, (u.ker _).2 (hlat l hl), _root_.mul_one]
+    rw [map_add (f := _), u.ex_add, (u.ker _).2 (hlat l hl), _root_.mul_one]
   have hi' : ⊤ ≤ ((u.ex (F (z + per (τ b) l))).left ≫ φ) ⁻¹ᵁ L.B.U i := by rwa [hper]
   have h1 := hAH.2.2.2 ⟨_, hlat l hl⟩ (fun _ => i) (F z) (PullHermitian.wchart_of _ L.B φ i hi)
   have h2 : fr i (b, z) = j l (b, z) * fr i (b, z + per (τ b) l) :=
@@ -273,7 +273,7 @@ theorem inducesPolarisation : ∀ (k : Type) [CommRing k] (S : Scheme.{0}) (p : 
   have n := u.fr_ne (fun _ => i) _ (PullHermitian.wchart_of _ L.B φ i hi')
   rw [hrφ i z hi, hrφ i _ hi', h1] at h2
   rw [← hform, ← hform]
-  rw [map_add] at n h2
+  rw [map_add (f := _)] at n h2
   refine mul_right_cancel₀ n ?_
   simp only [HermFrame.form, Complex.exp_add] at h2 ⊢
   linear_combination -h2

@@ -84,7 +84,7 @@ theorem exists_bound_deg_sub_finrank_L :
   have hl : (l : ℤ) = deg A₁ := Int.toNat_of_nonneg (deg_nonneg hA₁)
   set El : Divisor k K := l • B + C with hEl
   have hdegEl : deg El = l * n + deg C := by
-    rw [hEl, map_add, map_nsmul, hdegB, nsmul_eq_mul]
+    rw [hEl, map_add (f := _), map_nsmul, hdegB, nsmul_eq_mul]
   have hkey := key l
   have hle : El - A₁ ≤ El := sub_le_self _ hA₁
   have h2 := finrank_L_le_of_le hle
@@ -104,7 +104,7 @@ theorem exists_bound_deg_sub_finrank_L :
     rw [this]
     exact hzL
   have hlD₁ : finrank k (L D₁) = finrank k (L A₁) := finrank_L_add_divisor A₁ (inv_ne_zero hz0)
-  have hdegD₁ : deg D₁ = deg A₁ := by rw [hD₁, map_add, deg_divisor, add_zero]
+  have hdegD₁ : deg D₁ = deg A₁ := by rw [hD₁, map_add (f := _), deg_divisor, add_zero]
   have h3 := deg_sub_finrank_L_mono hD₁El
   rw [hlD₁, hdegD₁] at h3
   linarith

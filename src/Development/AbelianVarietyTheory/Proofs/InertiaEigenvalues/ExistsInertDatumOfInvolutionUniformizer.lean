@@ -59,7 +59,7 @@ theorem exists_inertDatum_of : ∀ (L : Type) [Field L] [NumberField L] [IsCMFie
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · intro x
     rw [GlobalTheory.InertDatumExist.mem_tensInt_iff, GlobalTheory.LFun.InertChart.mem_intLoc_iff hw hunder, hO]
     exact Iff.rfl

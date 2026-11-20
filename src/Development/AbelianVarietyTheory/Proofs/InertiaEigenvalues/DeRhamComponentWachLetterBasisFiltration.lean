@@ -56,7 +56,7 @@ theorem exists_proj {F K L M : Type} [Field F] [Field K] [Field L] [Algebra F K]
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a c => rw [hΨ]; exact hα _ _ (hβ _ _ hx)
-    | add y z hy hz => rw [map_add]; exact N.add_mem hy hz
+    | add y z hy hz => rw [map_add (f := _)]; exact N.add_mem hy hz
 
 theorem indep_of_span {L R D : Type} [Field L] [CommRing R] (ι : L → R) [AddCommGroup D] [Module L D]
     [FiniteDimensional L D] {n : ℕ} (hn : finrank L D = n) (A : D →+ (Fin n → R))
@@ -105,7 +105,7 @@ theorem muHom_apply (b : R) (x : V ⊗[Qp] R) : muHom Qp V R b x = mu Qp LL V b 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => rfl
-  | add y z hy hz => rw [map_add, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
 
 theorem mu_mu (b c : R) (x : V ⊗[Qp] R) : mu Qp LL V b (mu Qp LL V c x) = mu Qp LL V (b * c) x := by
   simp only [← muHom_apply, map_mul, Module.End.mul_apply]
@@ -142,14 +142,14 @@ theorem coords_smul {n : ℕ} (v : Basis (Fin n) LL V) (ι : LL →ₐ[Qp] R) (c
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => funext j; simp [smul_tmul', coords_tmul, mul_assoc]
-  | add y z hy hz => rw [smul_add, map_add, map_add, hy, hz, smul_add]
+  | add y z hy hz => rw [smul_add, map_add (f := _), map_add (f := _), hy, hz, smul_add]
 
 theorem coords_mu {n : ℕ} (v : Basis (Fin n) LL V) (ι : LL →ₐ[Qp] R) (c : R) (x : V ⊗[Qp] R) :
     coords v ι (mu Qp LL V c x) = c • coords v ι x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => funext j; simp [mu_tmul, coords_tmul, mul_left_comm]
-  | add y z hy hz => rw [map_add, map_add, map_add, hy, hz, smul_add]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), map_add (f := _), hy, hz, smul_add]
 
 theorem coords_surj {n : ℕ} (v : Basis (Fin n) LL V) (ι : LL →ₐ[Qp] R) :
     Function.Surjective (coords v ι) := by
@@ -198,7 +198,7 @@ theorem iota_mem (x : T.V ⊗[Qp] B) (hx : x ∈ Dcris PD T.ρ) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp [ιV, actVdR, actVB, PD.ι_comm]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem iota_mu (c : K₀) (x : T.V ⊗[Qp] B) :
     ιV PD (LL := LL) (V := T.V) (mu Qp LL T.V (algebraMap K₀ B c) x) =
@@ -207,7 +207,7 @@ theorem iota_mu (c : K₀) (x : T.V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp [ιV, mu_tmul]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem mu_mem_Dcris (c : K₀) (x : T.V ⊗[Qp] B) (hx : x ∈ Dcris PD T.ρ) :
     mu Qp LL T.V (algebraMap K₀ B c) x ∈ Dcris PD T.ρ := by
@@ -218,7 +218,7 @@ theorem mu_mem_Dcris (c : K₀) (x : T.V ⊗[Qp] B) (hx : x ∈ Dcris PD T.ρ) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp [actVB, mu_tmul]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 abbrev others (τ : K →ₐ[Qp] LL) : Submodule LL (T.V ⊗[Qp] BdR) :=
   ⨆ (τ' : K →ₐ[Qp] LL) (_ : τ' ≠ τ), DdRE PD T.ρ τ'
@@ -305,7 +305,7 @@ theorem coords_ker {n : ℕ} (v : Basis (Fin n) LL T.V) (ι : LL →ₐ[Qp] BdR)
     rw [map_sub, coords_smul]
     exact sub_eq_zero.2 (coords_mu v ι (ι c) y).symm
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul c x _ hx => rw [coords_smul, hx, smul_zero]
 
 theorem indep (τ : K →ₐ[Qp] LL) (ι : LL →ₐ[Qp] BdR) (hι : ∀ c, ι (τ c) = algebraMap K BdR c)
@@ -332,7 +332,7 @@ theorem indep (τ : K →ₐ[Qp] LL) (ι : LL →ₐ[Qp] BdR) (hι : ∀ c, ι (
       rw [coords_mu]
       refine Submodule.smul_mem _ _ ?_
       obtain ⟨_, ⟨x, hx, rfl⟩, u, hu, e⟩ := Submodule.mem_sup.1 (hle (hw i))
-      rw [← e, map_add, coords_ker T v ι u (others_le_compKer PD T τ ι hι hu), add_zero]
+      rw [← e, map_add (f := _), coords_ker T v ι u (others_le_compKer PD T τ ι hι hu), add_zero]
       exact Submodule.subset_span ⟨⟨x, hx⟩, rfl⟩)
     (fun a => ⟨d a, hd a⟩) (LinearIndependent.of_comp D.subtype hli)
   refine Fintype.linearIndependent_iff.1 hl b ?_ a
@@ -353,7 +353,7 @@ theorem act_compKer (g : G) (ι ι' : LL →ₐ[Qp] BdR) (h : ∀ c, PD.actdR g 
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVdR, mulVR, h]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   exact this hx
 
 theorem act_FilV (g : G) (a : ℤ) (x : T.V ⊗[Qp] BdR) (hx : x ∈ FilV PD (LL := LL) (V := T.V) a) :
@@ -362,7 +362,7 @@ theorem act_FilV (g : G) (a : ℤ) (x : T.V ⊗[Qp] BdR) (hx : x ∈ FilV PD (LL
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => exact ⟨T.ρ g v ⊗ₜ ⟨PD.actdR g b.1, PD.Fil_G g a _ b.2⟩, rfl⟩
-  | add y z hy hz => rw [map_add, map_add]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 theorem mu_FilV (a : ℤ) (c : BdR) (hc : ∀ b ∈ PD.Fil a, c * b ∈ PD.Fil a) (x : T.V ⊗[Qp] BdR)
     (hx : x ∈ FilV PD (LL := LL) (V := T.V) a) :
@@ -371,7 +371,7 @@ theorem mu_FilV (a : ℤ) (c : BdR) (hc : ∀ b ∈ PD.Fil a, c * b ∈ PD.Fil a
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => exact ⟨v ⊗ₜ ⟨c * b.1, hc _ b.2⟩, rfl⟩
-  | add y z hy hz => rw [map_add, map_add]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 theorem mem_FilV_of_comp {E : Type} [Field E] [Algebra Qp E] [Algebra K E] [Algebra E BdR]
     [IsScalarTower Qp E BdR] [IsScalarTower K E BdR] [FiniteDimensional Qp LL]
@@ -402,9 +402,9 @@ theorem mem_FilV_of_comp {E : Type} [Field E] [Algebra Qp E] [Algebra K E] [Alge
         rw [map_sub, h3, h2]
         exact sub_eq_zero.2 (h4 σ (σ c) y).symm
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
       | smul c x _ hx => rw [h3, hx, smul_zero]
-    rw [← (mem_DdR PD T y).1 hy1 g, ← e1, map_add, map_add, hk _ hu', zero_add]
+    rw [← (mem_DdR PD T y).1 hy1 g, ← e1, map_add (f := _), map_add (f := _), hk _ hu', zero_add]
     exact h5 (FilV PD (LL := LL) (V := T.V) a).toAddSubgroup
       (fun c x hx => mu_FilV PD T a _ (hFil c) x hx) (fun c x hx => Submodule.smul_mem _ c hx) σ _
       (act_FilV PD T g a w hw)

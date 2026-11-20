@@ -174,7 +174,7 @@ theorem isFockVacAt_iff (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) {G : BB ψ
   refine forall_congr' fun y => ?_
   have e : ∀ w, ev _ _ w (dH (rhoV hψ σ S T) (atPl τ y) G + Complex.I • dH (rhoV hψ σ S T) (atPl τ (J y)) G) =
       annih (heisO ψ S T) θ τ J y G.1 w := fun w => by
-    rw [map_add, map_smul, coe_dH_atPl h hψ hG, coe_dH_atPl h hψ hG]
+    rw [map_add (f := _), map_smul, coe_dH_atPl h hψ hG, coe_dH_atPl h hψ hG]
     rfl
   refine ⟨fun hv => QB_ext fun w => ?_, fun hv => funext fun w => ?_⟩
   · rw [← ev_apply, e, hv]
@@ -299,7 +299,7 @@ theorem line (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) {X F₀ : BB ψ S T} 
         exact hann y
       · have hd : ∀ y, dH (rhoV hψ σ S T) (atPl τ' y) (A X) = A (dH (rhoV hψ σ S T) (atPl τ' y) X) := fun y =>
           dH_comm_line A _ (fun t => hA _ fun v f => by rw [smul_atPl, rhoV_comm h hψ ht]) sm hs
-        rw [hd, hd, ← map_smul, ← map_add,
+        rw [hd, hd, ← map_smul, ← map_add (f := _),
           (isFockVacAt_iff h hψ sm τ' _).1 (hx.2.2 τ' fun e => ht (Sum.inr_injective e)) y, map_zero]
   exact ⟨a, QB_ext fun w => congrFun ha w⟩
 

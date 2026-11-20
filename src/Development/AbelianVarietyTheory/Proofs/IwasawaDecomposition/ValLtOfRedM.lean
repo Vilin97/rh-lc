@@ -386,7 +386,7 @@ theorem isPtOf_mul (hQ : Q = ∅) {g k : GL (Fin n) (AfE F E)} {p : DecoF E n ST
       rw [hpull]
       show _ = _ + (((k⁻¹).1 - 1) *ᵥ pullV g x) i
       rw [Matrix.sub_mulVec, Matrix.one_mulVec, Pi.sub_apply, add_sub_cancel]
-    rw [e, map_add, add_sub_right_comm]
+    rw [e, map_add (f := _), add_sub_right_comm]
     refine Valuation.map_add_lt _ hv ?_
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum]

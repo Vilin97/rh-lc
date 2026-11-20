@@ -211,7 +211,7 @@ theorem _root_.GlobalTheory.NormBall.exists_normBall : ∀ (F : Type) [Field F] 
     intro a b
     apply hinj
     rw [hE.algebraMap_norm]
-    simp only [Algebra.smul_def, mul_one, map_add, map_mul, AlgHom.commutes, hneg, map_sub,
+    simp only [Algebra.smul_def, mul_one, map_add (f := _), map_mul, AlgHom.commutes, hneg, map_sub,
       map_pow]
     linear_combination (-(algebraMap F E b) ^ 2) * hdδ
   obtain ⟨bs, hb0, hb1⟩ := hE.basis

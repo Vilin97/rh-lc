@@ -55,13 +55,13 @@ theorem pderiv_expMv (k : σ) {f : MvPowerSeries σ ℂ_[p]} (hf : constantCoeff
   classical
   ext α
   have hdeg : (α + Finsupp.single k 1).degree ≤ α.degree + 1 := by
-    rw [map_add]
+    rw [map_add (f := _)]
     simp
   rw [coeff_pderiv, coeff_expMv_eq_ts hf hdeg, ← coeff_pderiv, pderiv_ts, coeff_mul, coeff_mul]
   refine Finset.sum_congr rfl fun q hq => ?_
   have hq' : q.1 + q.2 = α := by simpa using hq
   have hle : q.1.degree ≤ α.degree := by
-    rw [← hq', map_add]
+    rw [← hq', map_add (f := _)]
     omega
   rw [coeff_expMv_eq_ts hf hle]
 

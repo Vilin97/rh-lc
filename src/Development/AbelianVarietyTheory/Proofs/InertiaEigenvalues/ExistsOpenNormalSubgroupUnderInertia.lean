@@ -75,7 +75,7 @@ theorem exists_eps : ∃ K : Subgroup (GE N), IsOpen (K : Set (GE N)) ∧ (∀ a
   obtain ⟨c, hc⟩ := (PadicInt.norm_lt_one_iff_dvd _).1 hg
   apply Units.ext
   change IsLocalRing.residue (X.O0 i) (algebraMap ℤ_[X.l i] (X.O0 i) (cycZ D.host.E N.Om (X.l i) g : ℤ_[X.l i]ˣ)) = 1
-  rw [sub_eq_iff_eq_add.1 hc, map_add, map_add, map_one, map_one, map_mul, map_natCast, map_mul,
+  rw [sub_eq_iff_eq_add.1 hc, map_add (f := _), map_add (f := _), map_one, map_one, map_mul, map_natCast, map_mul,
     (IsLocalRing.residue_eq_zero_iff _).2 (l_mem X i), zero_mul, zero_add]
 
 theorem not_mem_two {p q : ℕ} (hp : p.Prime) (hq : q.Prime) (hne : p ≠ q) (v : PlE D.host)

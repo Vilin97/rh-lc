@@ -48,7 +48,7 @@ theorem eq_zero_of_sum_mem_span : ∀ (E : Type) [Field E] [NumberField E] (V : 
       exact W.smul_mem _ (Submodule.subset_span ⟨i, rfl⟩)
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact W.add_mem hx hy
     | neg x _ hx =>
       rw [map_neg]

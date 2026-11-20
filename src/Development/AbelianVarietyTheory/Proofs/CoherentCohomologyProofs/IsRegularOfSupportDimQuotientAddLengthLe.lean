@@ -66,7 +66,7 @@ theorem flat_of_basis_mod_pow [IsNoetherianRing A] (B : Type*) [CommRing B] [IsN
     intro w
     induction w using Finsupp.induction_linear with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | single s j => simp [μ, φ]
   obtain ⟨c, hc⟩ := I.exists_pow_inf_eq_pow_smul (M := A) J
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
@@ -79,7 +79,7 @@ theorem flat_of_basis_mod_pow [IsNoetherianRing A] (B : Type*) [CommRing B] [IsN
     obtain ⟨_, ⟨w, rfl⟩, v, hv, rfl⟩ := Submodule.mem_sup.mp h1
     refine add_mem ?_ (Submodule.smul_mono_left (Ideal.pow_le_pow_right (by omega)) hv)
     have h2 : μ (φ w) ∈ (I ^ (n + c) • ⊤ : Submodule A M) := by
-      rw [map_add, add_eq_zero_iff_eq_neg] at hμt
+      rw [map_add (f := _), add_eq_zero_iff_eq_neg] at hμt
       rw [hμt, neg_mem_iff]
       have := Submodule.mem_map_of_mem (f := μ) hv
       rw [Submodule.map_smul''] at this
@@ -120,7 +120,7 @@ theorem IsQuasiRegularSeq.flat_of_isMaximal [IsNoetherianRing A] (B : Type*) [Co
     induction z using Finsupp.induction_linear with
     | zero => simp
     | add x y hx hy =>
-      rw [map_add, Submodule.Quotient.mk_add, hx, hy, Finsupp.mapRange_add (map_add _), map_add]
+      rw [map_add (f := _), Submodule.Quotient.mk_add, hx, hy, Finsupp.mapRange_add (map_add _), map_add (f := _)]
     | single s a => simp [hm, ← Ideal.Quotient.algebraMap_eq]
   refine flat_of_basis_mod_pow B hI m ?_ fun n z hz s => ?_
   · rw [eq_top_iff]

@@ -164,7 +164,7 @@ theorem conjBase_conjBase (z : R ⊗[K] E) : conjBase K E R (conjBase K E R z) =
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => rw [conjBase_tmul, conjBase_tmul, conj_conj]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem conjMat_mul_self : conjMat b R * conjMat b R = 1 := by
   ext k l

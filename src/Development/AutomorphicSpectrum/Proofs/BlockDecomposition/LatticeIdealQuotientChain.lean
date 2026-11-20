@@ -38,7 +38,7 @@ theorem exists_rep_B (x : B) (hx : x ∈ Lat.sub f ξ l M) : ∃ a : W, x - f a 
     obtain ⟨b, hb⟩ := hy
     refine ⟨a + b, ?_⟩
     have h := Ideal.add_mem _ ha hb
-    have e : x + y - f (a + b) = x - f a + (y - f b) := by rw [map_add]; ring
+    have e : x + y - f (a + b) = x - f a + (y - f b) := by rw [map_add (f := _)]; ring
     rw [e]; exact h
   | neg x _ hx =>
     obtain ⟨a, ha⟩ := hx

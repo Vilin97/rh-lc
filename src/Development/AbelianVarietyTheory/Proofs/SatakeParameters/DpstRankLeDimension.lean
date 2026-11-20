@@ -27,7 +27,7 @@ theorem tensV_eq_rTensor {V' : Type} [AddCommGroup V'] [Module LL V'] [Module �
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.Pst.DmapNonzero
 
@@ -70,7 +70,7 @@ theorem GlobalTheory.Pst.DmapNonzero.exists_dmap_ne_zero : ∀ {l : ℕ} [Fact l
     exact ⟨⟨z, hzD⟩, Subtype.ext hz'⟩
   let jU : DpstUr P ρS →ₗ[↥(MaximalUnramifiedExtension l)] DpstUr P ρ :=
     { toFun := fun x => toUr P ρ (j ((toUr P ρS).symm x))
-      map_add' := fun x y => by simp only [map_add]
+      map_add' := fun x y => by simp only [map_add (f := _)]
       map_smul' := fun c x => dmap_mulD P hfS c ((toUr P ρS).symm x) }
   have hjU : Function.Surjective jU := fun y => by
     obtain ⟨x, hx⟩ := hsurj ((toUr P ρ).symm y)

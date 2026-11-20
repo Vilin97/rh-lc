@@ -117,10 +117,10 @@ theorem psi_split (a : Ad E) :
     psi a = GlobalTheory.WhitBump.psiInf (pInf E a) * GlobalTheory.WhitBump.psiFin (pFin E a) := by
   have e : a = sInf E (pInf E a) + sFin E (pFin E a) := by
     refine ad_ext ?_ ?_
-    · rw [map_add]
+    · rw [map_add (f := _)]
       change pInf E a = (infEq E).symm (infEq E (pInf E a)) + (infEq E).symm 0
       simp
-    · rw [map_add]
+    · rw [map_add (f := _)]
       change pFin E a = 0 + pFin E a
       simp
   rw [psi]

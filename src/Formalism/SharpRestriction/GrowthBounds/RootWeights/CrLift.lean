@@ -88,7 +88,7 @@ theorem cr_CR [CharZero K] [FiniteDimensional K V] (E : GLOps n K V) (hR : Satis
     intro a b hab
     set z := E a b x' with hz
     have hzW2 : z ∈ W2 := by
-      have : z = E a b x + E a b (x' - x) := by rw [hz, ← map_add]; congr 1; abel
+      have : z = E a b x + E a b (x' - x) := by rw [hz, ← map_add (f := _)]; congr 1; abel
       rw [this]; exact W2.add_mem (hup a b hab) (hW2st a b _ h1)
     have hzwt : z ∈ weightSp E (mu + rootW a b) := v2rep_shift E hR a b mu x' h3
     set w1 := T z - ((cr_c mu : ℤ) : K) • z with hw1

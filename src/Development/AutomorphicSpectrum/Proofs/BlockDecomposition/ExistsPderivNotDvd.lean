@@ -83,7 +83,7 @@ theorem finite_frac {A B F L : Type*} [CommRing A] [IsDomain A] [CommRing B] [Is
       simp only [Finset.coe_image]
       exact ⟨s, hs, rfl⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact W.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact W.add_mem ha hb
     | smul r a _ ha =>
       have h1 : algebraMap B L (r • a) = algebraMap F L (algebraMap A F r) * algebraMap B L a := by
         rw [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply,

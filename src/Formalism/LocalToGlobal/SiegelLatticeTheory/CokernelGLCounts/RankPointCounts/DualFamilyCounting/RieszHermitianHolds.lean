@@ -124,13 +124,13 @@ theorem projOnto_of (hS : SummandLoc) (hR : RieszH) : ProjOnto := by
     apply hnd
     intro z
     have ez := Submodule.projection_add_projection_eq_self hc z
-    rw [← ez, map_add]
+    rw [← ez, map_add (f := _)]
     have h1 : h w (Y.projection X hc.symm z) = 0 := hXY w hwX _ (Submodule.projection_apply_mem _ z)
     have hzX : X.projection Y hc z ∈ X := Submodule.projection_apply_mem hc z
     have ex := Submodule.projection_add_projection_eq_self hc x
     have e3 : h (X.projection Y hc z) (X.projection Y hc x) = h (X.projection Y hc z) x := by
       conv_rhs => rw [← ex]
-      rw [map_add, hXY _ hzX _ (Submodule.projection_apply_mem _ x), add_zero]
+      rw [map_add (f := _), hXY _ hzX _ (Submodule.projection_apply_mem _ x), add_zero]
     have h2 : h (X.projection Y hc z) w = 0 := by
       rw [hw, map_sub, e3, key, hπid _ hzX, sub_self]
     rw [h1, add_zero, ← hs.eq (X.projection Y hc z) w, h2, map_zero]

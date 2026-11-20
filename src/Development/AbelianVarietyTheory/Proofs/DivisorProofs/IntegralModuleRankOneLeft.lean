@@ -13,7 +13,7 @@ theorem capelli_tm_sub_eq {A : Type} [Ring A] [Algebra ℂ A] {n : ℕ} (E : Fin
     (a b : Fin n) :
     Formalism.REAL.Tm E (w - x) a b = w • (if a = b then (1 : A) else 0) + Formalism.REAL.Tm E (-x) a b := by
   unfold Formalism.REAL.Tm
-  split_ifs <;> simp [Algebra.smul_def, sub_eq_add_neg, map_add, add_assoc]
+  split_ifs <;> simp [Algebra.smul_def, sub_eq_add_neg, map_add (f := _), add_assoc]
 
 theorem mul_single_mul_eq_vecMulVec {n : ℕ} (P P' : Matrix (Fin n) (Fin n) ℂ) (a b : Fin n) :
     P * Matrix.single a b 1 * P' = vecMulVec (fun i => P i a) (fun j => P' b j) := by

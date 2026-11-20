@@ -114,7 +114,7 @@ private lemma low_mul_lemma {τ : Type} {F G : MvPowerSeries τ R} {p q : ℕ}
     | exact (map_add Finsupp.degree x.1 x.2).symm
     | exact (Finsupp.degree_add x.1 x.2).symm
     | simp [Finsupp.degree, Finsupp.sum_add_index']
-    | (simp only [Finsupp.degree_eq_weight_one, map_add])
+    | (simp only [Finsupp.degree_eq_weight_one, map_add (f := _)])
   by_cases h1 : x.1.degree < p
   · rw [hF _ h1, zero_mul]
   · rw [hG _ (by omega), mul_zero]
@@ -147,7 +147,7 @@ theorem psJet_mul {ι : Type} [Fintype ι] [DecidableEq ι] (m : ℕ) (f g : MvP
     first
     | (congr 1; ring)
     | exact congrArg _ (by ring)
-  rw [hcoe, map_sub, map_add, h1, h2, h3, add_zero, sub_zero]
+  rw [hcoe, map_sub, map_add (f := _), h1, h2, h3, add_zero, sub_zero]
 
 theorem psJet_one {ι : Type} [Fintype ι] [DecidableEq ι] (m : ℕ) :
     psJet m (1 : MvPowerSeries ι R) = 1 := by
@@ -205,7 +205,7 @@ theorem aeval_coe_comp {σ τ : Type} (A : σ → MvPolynomial τ R) (P : MvPoly
     | (rw [MvPolynomial.aeval_C, MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq,
         MvPolynomial.coe_C]; rfl)
     | (ext n; simp [MvPowerSeries.coeff_C, MvPolynomial.coeff_C, MvPolynomial.algebraMap_eq])
-  next p q hp hq => simp only [map_add, MvPolynomial.coe_add, hp, hq]
+  next p q hp hq => simp only [map_add (f := _), MvPolynomial.coe_add, hp, hq]
   next p i hp => simp only [map_mul, MvPolynomial.aeval_X, MvPolynomial.coe_mul, hp]
 
 private lemma low_pow_lemma_2 {τ : Type} {F : MvPowerSeries τ R}
@@ -243,7 +243,7 @@ private lemma low_aeval_lemma_4 {σ τ : Type} (n : ℕ) (a b : σ → MvPowerSe
     intro e he
     have h1 := hp e he
     have h2 := hq e he
-    simp only [map_add, map_sub] at h1 h2 ⊢
+    simp only [map_add (f := _), map_sub] at h1 h2 ⊢
     linear_combination h1 + h2
   next p i hp =>
     intro e he
@@ -251,7 +251,7 @@ private lemma low_aeval_lemma_4 {σ τ : Type} (n : ℕ) (a b : σ → MvPowerSe
     have key : MvPolynomial.aeval a p * a i - MvPolynomial.aeval b p * b i =
         (MvPolynomial.aeval a p - MvPolynomial.aeval b p) * a i +
           MvPolynomial.aeval b p * (a i - b i) := by ring
-    rw [key, map_add]
+    rw [key, map_add (f := _)]
     have h1 := low_mul_lemma (G := a i) (q := 0) hp (fun d hd => absurd hd (Nat.not_lt_zero _)) e
       (by omega)
     have h2 := low_mul_lemma (F := MvPolynomial.aeval b p) (p := 0)
@@ -328,6 +328,6 @@ theorem psJet_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] [Fintype τ] [D
     first
     | (congr 1; linear_combination hsplit)
     | exact congrArg _ (by linear_combination hsplit)
-  rw [hcoe, map_sub, map_add, hA, hsr e he, hT, add_zero, sub_zero]
+  rw [hcoe, map_sub, map_add (f := _), hA, hsr e he, hT, add_zero, sub_zero]
 
 end Formalism.MainNotions.ModuliIntegralCharts.H1.FBIdJet

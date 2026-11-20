@@ -83,9 +83,9 @@ private lemma extP_comap_eq_inf_conjIdeal_of_isMaximal (hK : Formalism.Hermitian
     obtain ⟨θ, t, ht, hθ⟩ := hK.2.2 P hP
     have htc : t = conjO K θ := RingOfIntegers.ext (by rw [coe_conjO_eq_star]; exact ht)
     subst htc
-    obtain ⟨a, ha⟩ := exists_algebraMap_eq_of_conjO_eq hF (x + conjO K x) (by rw [map_add, conjO_conjO_unimodular_class_representatives, add_comm])
+    obtain ⟨a, ha⟩ := exists_algebraMap_eq_of_conjO_eq hF (x + conjO K x) (by rw [map_add (f := _), conjO_conjO_unimodular_class_representatives, add_comm])
     obtain ⟨b, hb⟩ := exists_algebraMap_eq_of_conjO_eq hF (conjO K θ * x + θ * conjO K x)
-      (by rw [map_add, map_mul, map_mul, conjO_conjO_unimodular_class_representatives, conjO_conjO_unimodular_class_representatives, add_comm])
+      (by rw [map_add (f := _), map_mul, map_mul, conjO_conjO_unimodular_class_representatives, conjO_conjO_unimodular_class_representatives, add_comm])
     obtain ⟨g, hg⟩ := exists_algebraMap_eq_of_conjO_eq hF ((θ - conjO K θ) * (θ - conjO K θ))
       (by rw [map_mul, map_sub, conjO_conjO_unimodular_class_representatives]; ring)
     have ha𝔭 : a ∈ P.comap (algebraMap (𝓞 F) (𝓞 K)) := by
@@ -99,7 +99,7 @@ private lemma extP_comap_eq_inf_conjIdeal_of_isMaximal (hK : Formalism.Hermitian
     obtain ⟨e, i, hi, hei⟩ := h𝔭.exists_inv hg𝔭
     have hEI : algebraMap (𝓞 F) (𝓞 K) e * ((θ - conjO K θ) * (θ - conjO K θ)) +
         algebraMap (𝓞 F) (𝓞 K) i = 1 := by
-      rw [← hg, ← map_mul, ← map_add, hei, map_one]
+      rw [← hg, ← map_mul, ← map_add (f := _), hei, map_one]
     have hx_eq : x = algebraMap (𝓞 F) (𝓞 K) e * (θ - conjO K θ) * θ * algebraMap (𝓞 F) (𝓞 K) a -
         algebraMap (𝓞 F) (𝓞 K) e * (θ - conjO K θ) * algebraMap (𝓞 F) (𝓞 K) b +
         algebraMap (𝓞 F) (𝓞 K) i * x := by

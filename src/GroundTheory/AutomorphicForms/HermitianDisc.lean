@@ -134,7 +134,7 @@ def diagForm {ι : Type*} [Fintype ι] [DecidableEq ι] (a : ι → Fˣ) :
     HermitianForm F E (ι → E) where
   toSesq := LinearMap.mk₂'ₛₗ (conjHom F E) (RingHom.id E)
     (fun x y => ∑ i, conj F E (x i) * algebraMap F E (a i) * y i)
-    (fun x x' y => by simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib])
+    (fun x x' y => by simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib])
     (fun c x y => by
       simp only [Pi.smul_apply, smul_eq_mul, map_mul, conjHom_apply, Finset.mul_sum]
       exact Finset.sum_congr rfl fun i _ => by ring)

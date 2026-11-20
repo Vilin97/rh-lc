@@ -43,12 +43,12 @@ theorem exists_obRel_of_dRel : ∀ (R : Type) [CommRing R] (C : Type) [Category.
     intro T T' φ
     rw [hfD φ, hsum φ]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [ω', map_add, map_sum, oneFormsMapOfFunctorMorphism_smul, ← (Φ.w _).2 φ, sub_smul, Finset.sum_sub_distrib]
+      simp only [ω', map_add (f := _), map_sum, oneFormsMapOfFunctorMorphism_smul, ← (Φ.w _).2 φ, sub_smul, Finset.sum_sub_distrib]
     abel
   have hglob : ∀ ⦃T T' : C⦄ (φ : T ⟶ T'),
       dOne R (F.obj T') (ω' T') = pOm F 2 φ (dOne R (F.obj T) (ω' T)) := by
     intro T T' φ
-    rw [hconn φ, map_add, dOne_D, add_zero, pOm_dOne]
+    rw [hconn φ, map_add (f := _), dOne_D, add_zero, pOm_dOne]
   obtain ⟨m, u, v, hζ⟩ := GlobalTheory.T.globalTwoForm_eq_sumWedgeGlobalOneForms R C F ⟨N, ⟨Φ⟩⟩ h0 (fun T ↦ dOne R (F.obj T) (ω' T)) hglob
   exact ⟨m, u, v, f, ω', hf, hconn, fun T ↦ congrFun hζ T⟩
 

@@ -55,7 +55,7 @@ theorem exists_dual_elements :
   intro R A _ _ _ r g E v φ h1 h2 h3 h4
   let D : Fin g → A →+ Localization.Away r := fun a =>
     AddMonoidHom.mk' (fun x => TrivSqZeroExt.snd (v a x)) (fun x y => by
-      rw [map_add, TrivSqZeroExt.snd_add])
+      rw [map_add (f := _), TrivSqZeroExt.snd_add])
   have hD : ∀ a x, D a x = TrivSqZeroExt.snd (v a x) := fun _ _ => rfl
   have hDmul : ∀ a x y, D a (x * y) = E x * D a y + E y * D a x := by
     intro a x y

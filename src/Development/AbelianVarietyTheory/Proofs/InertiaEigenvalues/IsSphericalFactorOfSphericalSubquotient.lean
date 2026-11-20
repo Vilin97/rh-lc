@@ -266,7 +266,7 @@ private theorem exists_fixed_ne_zero_of_piTensor_fixed {Γ X : α → Type} [∀
         show (B a).repr ((∏ b ∈ S, (B b).repr (x b) (t b)) • x a) (t a) = _
         rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
         exact Finset.prod_erase_mul _ _ (Finset.mem_univ a)
-      | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz]
+      | add y z hy hz => simp only [map_add (f := _), Finsupp.add_apply, hy, hz]
     rw [← key, hy, map_zero, Finsupp.zero_apply]
   have hequi : ∀ (κ : Γ a) y, C' (piTensor ρ (Pi.mulSingle a κ) y) = ρ a κ (C' y) := by
     intro κ y
@@ -280,7 +280,7 @@ private theorem exists_fixed_ne_zero_of_piTensor_fixed {Γ X : α → Type} [∀
       congr 1
       exact Finset.prod_congr rfl fun b hb => by
         rw [Pi.mulSingle_eq_of_ne (Finset.ne_of_mem_erase hb), map_one, Module.End.one_apply]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   refine ⟨C' w, GlobalTheory.Parabolic.mem_fixed.2 fun κ hκ => ?_, fun h => ht (hC w h)⟩
   rw [← hequi]
   congr 1
@@ -346,7 +346,7 @@ private theorem exists_parInd_fixed_ne_zero_of_subquotient (e : (Σ a, m a) ≃ 
       refine Submodule.subset_span ⟨κ, f x, ?_⟩
       rw [map_sub, map_smul, f.isIntertwining]
     · simp
-    · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
+    · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     · intro c x _ hx; rw [map_smul]; exact Submodule.smul_mem _ _ hx
   have h1 : u - u' ∈ twKer S.toRepresentation (KO k n) 1 := by
     rw [← GlobalTheory.LocGL.idem_eq_zero_iff hS hK, map_sub, GlobalTheory.LocGL.idem_of_mem hS hK hu'fix, ← hu', sub_self]

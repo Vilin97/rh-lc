@@ -100,7 +100,7 @@ theorem exists_unit_coords : ∀ {E : Type} [Field E] [NumberField E] [IsCMField
     ∏ i, τ i ^ ((n : ℤ) * (ε (.inl i) : LinearMap.BilinForm ℤ X) a b)
   have Ms (a b) : M a b = M b a := Finset.prod_congr rfl fun i _ => by rw [(ε (.inl i)).2.1 a b]
   have Ma (a a' b) : M (a + a') b = M a b * M a' b := by
-    simp only [M, map_add, LinearMap.add_apply, mul_add, zpow_add, Finset.prod_mul_distrib]
+    simp only [M, map_add (f := _), LinearMap.add_apply, mul_add, zpow_add, Finset.prod_mul_distrib]
   have Mb (x : 𝓞 E) (a b) : M (x • a) b = M a (H.bar x • b) :=
     Finset.prod_congr rfl fun i _ => by rw [(ε (.inl i)).2.2 x a b]
   have hmem := mem_of_diag H.bar hw φ.range (fun a b => q a b / M a b)

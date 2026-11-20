@@ -38,7 +38,7 @@ private theorem map_eq_of_linear {O σ B : Type} [CommRing O] [IsLocalRing O] [F
         simp
   have h3 : ∀ g ∈ maximalIdeal (MvPowerSeries σ O) ^ 2, a g = b g := fun g hg => by
     rw [pow_two] at hg
-    refine Submodule.mul_induction_on hg (fun x hx y hy => ?_) fun x y hx hy => by rw [map_add, map_add, hx, hy]
+    refine Submodule.mul_induction_on hg (fun x hx y hy => ?_) fun x y hx hy => by rw [map_add (f := _), map_add (f := _), hx, hy]
     have hb : b y ∈ maximalIdeal B := by simpa using sub_mem (ha y hy) (hN (hab y))
     have e1 := hk _ (ha x hx) _ (hab y)
     have e2 := hk _ hb _ (hab x)

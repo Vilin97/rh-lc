@@ -138,7 +138,7 @@ theorem isIntegral_xr (hfd : FiniteDimensional (Kp X la N) (OsK X la w)) (k : Fi
       rw [← IsScalarTower.algebraMap_apply (X.Ol la) (X.Kl la) (Kp X la N), ← MvPolynomial.algebraMap_eq,
         ← IsScalarTower.algebraMap_apply (X.Ol la) (Pol X la N) (Op X la N),
         ← IsScalarTower.algebraMap_apply (X.Ol la) (Op X la N) (Kp X la N)]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p q hp =>
       simp only [map_mul, hp, MvPolynomial.map_X, MvPolynomial.aeval_X]
       rfl
@@ -233,7 +233,7 @@ theorem isIntegral_xr (hfd : FiniteDimensional (Kp X la N) (OsK X la w)) (k : Fi
       intro Q
       induction Q using MvPolynomial.induction_on with
       | C c => rw [MvPolynomial.aeval_C]; exact Sa.algebraMap_mem c
-      | add p q hp hq => rw [map_add]; exact Sa.add_mem hp hq
+      | add p q hp hq => rw [map_add (f := _)]; exact Sa.add_mem hp hq
       | mul_X p q hp => rw [map_mul, MvPolynomial.aeval_X]; exact Sa.mul_mem hp (Algebra.subset_adjoin ⟨q, rfl⟩)
     letI : Algebra (Pol X la N) (OsK X la w ⧸ m) :=
       ((algebraMap (Op X la N) (OsK X la w ⧸ m)).comp (algebraMap (Pol X la N) (Op X la N))).toAlgebra

@@ -102,7 +102,7 @@ theorem expand_mk {N : AddSubgroup T} {bar : O → O} {nrm : O → S} {φ : M �
     · refine Finset.sum_congr rfl fun e _ => Finset.sum_congr rfl fun e' _ => ?_
       rw [H.adj, smul_smul]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sum, Finset.sum_congr rfl fun i _ => e1 i, Finset.sum_add_distrib, map_add, map_sum,
+    rw [map_sum, Finset.sum_congr rfl fun i _ => e1 i, Finset.sum_add_distrib, map_add (f := _), map_sum,
     map_sum]
   congr 1
   · rw [Finset.sum_comm]

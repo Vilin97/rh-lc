@@ -94,7 +94,7 @@ theorem lo_add {φ ψ : Sm E N} (h : LO φ) (h' : LO ψ) : LO (φ + ψ) := by
   · have h1 : finRep E N k φ = φ := hk.1
     have h2 : finRep E N k ψ = ψ := hk.2
     change finRep E N k (φ + ψ) = φ + ψ
-    rw [map_add, h1, h2]
+    rw [map_add (f := _), h1, h2]
 
 theorem lo_smul {φ : Sm E N} (h : LO φ) (c : ℂ) : LO (c • φ) := by
   refine ⟨fun γ g => ?_, isOpen_stab_of_mem_nhds _ _ (Filter.mem_of_superset (h.2.mem_nhds (by simp)) fun k hk => ?_)⟩

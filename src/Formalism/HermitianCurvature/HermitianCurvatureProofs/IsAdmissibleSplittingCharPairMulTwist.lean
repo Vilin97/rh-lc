@@ -836,7 +836,7 @@ def Gs (s : ℝ) : A P (DQ P) := sc P (DQ P) ((DQ P).fnP (GpD P s) (GpD P s))
 theorem sc_mul (a b : (DQ P).Pr) : sc P (DQ P) a * sc P (DQ P) b = sc P (DQ P) (a * b) := by
   unfold sc; rw [map_mul]
 theorem sc_add (a b : (DQ P).Pr) : sc P (DQ P) a + sc P (DQ P) b = sc P (DQ P) (a + b) := by
-  unfold sc; rw [map_add]
+  unfold sc; rw [map_add (f := _)]
 theorem sc_diag (w : (DQ P).Pr) : sc P (DQ P) w = Matrix.diagonal fun _ => w := by
   unfold sc; rw [Matrix.scalar_apply]
 theorem alg_diag (z : ℂ) : algebraMap ℂ (A P (DQ P)) z = Matrix.diagonal fun _ => algebraMap ℂ (DQ P).Pr z := by
@@ -1076,7 +1076,7 @@ theorem Tl_affine (l : Fin P.r) : ∃ u v : Matrix (Fin 2) (Fin 2) (A P (DQ P)),
   refine ⟨!![1, 0; 0, 0], L.Tl Y0 l, fun s => ?_⟩
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [LevelData.Tl, map_add, Algebra.algebraMap_eq_smul_one] <;> abel
+    simp [LevelData.Tl, map_add (f := _), Algebra.algebraMap_eq_smul_one] <;> abel
 
 theorem Tprod_poly : PolyIn (fun s : ℂ => L.Tprod (Y0 + s)) P.r := by
   have h := polyIn_list_prod ((List.ofFn fun l : Fin P.r => fun s : ℂ => L.Tl (Y0 + s) l).reverse)
@@ -1093,7 +1093,7 @@ theorem Ahat_poly : PolyIn (fun s : ℂ => L.Ahat (Y0 + s)) P.r :=
 
 theorem lowering_affine : ∃ u v : A P (DQ P), ∀ s : ℂ, L.l0 (Y0 + s) = s • u + v := by
   refine ⟨-(L.ζb * L.GGi), L.l0 Y0, fun s => ?_⟩
-  simp only [LevelData.l0, map_add, Algebra.algebraMap_eq_smul_one, add_mul, smul_mul_assoc, one_mul, smul_neg]
+  simp only [LevelData.l0, map_add (f := _), Algebra.algebraMap_eq_smul_one, add_mul, smul_mul_assoc, one_mul, smul_neg]
   abel
 
 theorem raising_operator_polynomial : PolyIn (fun s : ℂ => L.R0 (Y0 + s)) (P.r + 1) := by
@@ -5349,7 +5349,7 @@ theorem letterSum_eq : ∀ (w v : List (Letter ℂ S)) (Y : ℂ),
   | l :: w, v, Y => by
     ext e e' : 2
     rw [letterSum, Matrix.add_apply, Matrix.smul_apply, eU_mult_apply, letterSum_eq w (v ++ [l]) Y]
-    simp only [Matrix.of_apply, lsS, Algebra.smul_def, map_add, map_mul]
+    simp only [Matrix.of_apply, lsS, Algebra.smul_def, map_add (f := _), map_mul]
 
 end AuxEnt
 
@@ -12833,7 +12833,7 @@ theorem Tvl_affine (l : Fin P.r) : ∃ u v : Matrix (Fin 2) (Fin 2) (A P (DQ P))
   refine ⟨!![1, 0; 0, 0], L.Tvl Y0 l, fun s => ?_⟩
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [LevelData.Tvl, map_add, Algebra.algebraMap_eq_smul_one] <;> abel
+    simp [LevelData.Tvl, map_add (f := _), Algebra.algebraMap_eq_smul_one] <;> abel
 
 theorem Tvprod_poly : PolyIn (fun s : ℂ => L.Tvprod (Y0 + s)) P.r := by
   have h := polyIn_list_prod ((List.ofFn fun l : Fin P.r => fun s : ℂ => L.Tvl (Y0 + s) l).reverse)
@@ -12850,7 +12850,7 @@ theorem Ahatv_poly : PolyIn (fun s : ℂ => L.Ahatv (Y0 + s)) P.r :=
 
 theorem raising_constant_affine : ∃ u v : A P (DQ P), ∀ s : ℂ, L.m0 (Y0 + s) = s • u + v := by
   refine ⟨-(L.ζ * L.GGi), L.m0 Y0, fun s => ?_⟩
-  simp only [LevelData.m0, map_add, map_sub, Algebra.algebraMap_eq_smul_one, add_mul, sub_mul, smul_mul_assoc,
+  simp only [LevelData.m0, map_add (f := _), map_sub, Algebra.algebraMap_eq_smul_one, add_mul, sub_mul, smul_mul_assoc,
     one_mul, smul_neg, add_smul, sub_smul]
   abel
 
@@ -13873,7 +13873,7 @@ theorem raising_constant_gamma_shift (Y : ℂ) : L.m0 (Y + 1) * L.GG = L.GG * L.
   have hζ' : L.GG * (L.ζ * L.GGi) = L.ζ := by
     rw [← mul_assoc, fc L (m_GG L) (m_ζ L), mul_assoc, L.GG_GGi, mul_one]
   have e : algebraMap ℂ A (Y + 1 - 1 / 2) = algebraMap ℂ A (Y - 1 / 2) + 1 := by
-    rw [← map_one (algebraMap ℂ A), ← map_add]; congr 1; ring
+    rw [← map_one (algebraMap ℂ A), ← map_add (f := _)]; congr 1; ring
   rw [sub_mul, neg_mul, L.nabs_GG, mul_assoc (algebraMap ℂ A _), hζ, mul_sub, mul_neg, ← mul_assoc L.GG,
     ← Algebra.commutes, mul_assoc, hζ', e, add_mul, one_mul]
   abel
@@ -13890,7 +13890,7 @@ theorem star_lowering_constant (y : ℂ) : star (L.l0 y) = L.m0 (starRingEnd ℂ
   have hc : L.GGi * L.ζ = L.ζ * L.GGi := fc L (m_GGi L) (m_ζ L)
   rw [hc, ← Algebra.commutes]
   congr 3
-  simp only [map_add, map_div₀, map_one, map_ofNat]
+  simp only [map_add (f := _), map_div₀, map_one, map_ofNat]
   ring
 
 theorem star_raising (y : ℂ) : star (L.R0 y) = L.R0v (starRingEnd ℂ y) := by
@@ -14626,7 +14626,7 @@ theorem PR_var : PR (fun s : ℝ => algebraMap ℂ R (s : ℂ)) 1 :=
 
 theorem PR_alg_affine (c : ℂ) : PR (fun s : ℝ => algebraMap ℂ R ((s : ℂ) + c)) 1 := by
   have := PR_add PR_var (PR_mono (PR_const (algebraMap ℂ R c)) (Nat.zero_le 1))
-  simpa [map_add] using this
+  simpa [map_add (f := _)] using this
 
 theorem PR_prod {R : Type} [CommRing R] [Algebra ℂ R] {ι : Type} (s : Finset ι) (f : ι → ℝ → R) (d : ι → ℕ)
     (h : ∀ i ∈ s, PR (f i) (d i)) : PR (fun x => ∏ i ∈ s, f i x) (∑ i ∈ s, d i) := by
@@ -16243,7 +16243,7 @@ theorem ipA_add_right {f g1 g2 : M.Ty P → SmQ P.r P.TT}
   rw [← integral_add (h1 π) (h2 π)]
   congr 1; funext q
   show evQ P (f π) q * conj (evQ P (g1 π) q + evQ P (g2 π) q) = _
-  rw [map_add, mul_add]
+  rw [map_add (f := _), mul_add]
 
 theorem ipA_smul_right (c : ℂ) (f g : M.Ty P → SmQ P.r P.TT) :
     ipA P f (fun π => c • g π) = conj c * ipA P f g := by
@@ -16281,7 +16281,7 @@ theorem QA_add {a w1 w2 : A P (DQ P)} (h1 : QA L j a w1) (h2 : QA L j a w2) : QA
   refine ⟨fun π => ?_, fun π => ?_, ?_⟩
   · rw [F.actA_add]; exact ((i1 π).add (i2 π)).congr (Filter.Eventually.of_forall fun q => by
       show _ = evQ P (actA P a j π) q * conj (evQ P (actA P w1 j π) q + evQ P (actA P w2 j π) q)
-      rw [map_add, mul_add]; rfl)
+      rw [map_add (f := _), mul_add]; rfl)
   · rw [star_add, add_mul, F.actA_add]; exact ((k1 π).add (k2 π)).congr (Filter.Eventually.of_forall fun q => by
       show _ = (evQ P (actA P (star w1 * a) j π) q + evQ P (actA P (star w2 * a) j π) q) * _
       rw [add_mul]; rfl)
@@ -16654,7 +16654,7 @@ theorem ipA_add_right {f g1 g2 : M.Ty P → SmQ P.r P.TT}
   rw [← integral_add (h1 π) (h2 π)]
   congr 1; funext q
   show evQ P (f π) q * conj (evQ P (g1 π) q + evQ P (g2 π) q) = _
-  rw [map_add]; ring
+  rw [map_add (f := _)]; ring
 
 theorem ipA_smul_right (c : ℂ) (f g : M.Ty P → SmQ P.r P.TT) :
     ipA P f (fun π => c • g π) = conj c * ipA P f g := by
@@ -16743,7 +16743,7 @@ theorem canonical_sum_integrable {m : ℕ} (hD : JDecay P L j m) (hA : JAdj P L 
         funext q; rw [F.actA_add]
         show evQ P (actA P a j π) q * conj (evQ P (actA P (c • (β * s * W.prod)) j π) q +
           evQ P (actA P (canonSum ts) j π) q) = _
-        rw [map_add]; ring
+        rw [map_add (f := _)]; ring
       rw [e]; exact (iA π).add (i1 π)
     · have e : (fun q => evQ P (actA P (star (c • (β * s * W.prod) + canonSum ts) * a) j π) q * conj (evQ P (j π) q)) =
           fun q => evQ P (actA P (star (c • (β * s * W.prod)) * a) j π) q * conj (evQ P (j π) q) +

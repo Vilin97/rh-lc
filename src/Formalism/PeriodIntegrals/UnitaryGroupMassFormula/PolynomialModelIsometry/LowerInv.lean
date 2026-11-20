@@ -163,7 +163,7 @@ theorem lower_triangular_invariance : LowerInv := by
     rw [← hp c, hQ, Matrix.smul_single, smul_eq_mul, mul_one]
   choose pp hpp using hex
   have hadd : ∀ y z : S, pp (y + z) = pp y + pp z := fun y z => Polynomial.funext fun c => by
-    rw [Polynomial.eval_add, hpp, hpp, hpp, map_add, inner_add_right]
+    rw [Polynomial.eval_add, hpp, hpp, hpp, map_add (f := _), inner_add_right]
   have hsmul : ∀ (r : ℂ) (y : S), pp (r • y) = Polynomial.C r * pp y := fun r y =>
     Polynomial.funext fun c => by
       rw [Polynomial.eval_mul, Polynomial.eval_C, hpp, hpp, map_smul, inner_smul_right]

@@ -47,7 +47,7 @@ theorem dDR_mem_rel {x : DR R B} (hx : x ∈ rel R δ) : dDR R B x ∈ rel R δ 
   · rw [map_zero]
     exact Ideal.zero_mem _
   · intro y z _ _ hy hz
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Ideal.add_mem _ hy hz
   · intro c y hy' hy
     rw [smul_eq_mul, dDR_mul]
@@ -82,7 +82,7 @@ theorem mDR_mem_rel {x : DR R B} (hx : x ∈ rel R δ) : h.mDR x ∈ rel R' δ' 
   · rw [map_zero]
     exact Ideal.zero_mem _
   · intro y z _ _ hy hz
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Ideal.add_mem _ hy hz
   · intro c y _ hy
     rw [smul_eq_mul, map_mul]

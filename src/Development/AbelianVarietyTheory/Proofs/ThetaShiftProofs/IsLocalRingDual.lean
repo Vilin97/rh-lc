@@ -249,7 +249,7 @@ theorem valR_oneAdd (a : A) : valR (𝟙 _) ⊤ (oneAdd a).val = 1 + TrivSqZeroE
 theorem existsUnique_tan [IsLocalRing A] (φ : D.X →+ A) : ∃! ν : Out.GtPt D (epsR A),
     GtTanR ν ∧ ν.b = Out.DegPre.zeroT D (epsR A) ∧ ∀ x, Dlog ν x (φ x) := by
   obtain ⟨ν, hb, hv⟩ := exists_pt (D := D) (T := epsR A) (fun x => oneAdd (φ x)) fun x y => by
-    rw [map_add, oneAdd_add]
+    rw [map_add (f := _), oneAdd_add]
   refine ⟨ν, ⟨?_, hb, fun x => (dlog_iff_hasVal ν hb x (hv x) _).2 (by rw [valR_oneAdd]; simp)⟩, ?_⟩
   · obtain ⟨g₀, h₀, v₀⟩ := exists_pt (D := D) (T := Over.mk (𝟙 (Sp A))) (fun _ => 1) fun _ _ => (_root_.mul_one _).symm
     refine ⟨g₀, ⟨h₀, fun x => corr_of_val D.P.isLB fun y J hJ => ?_⟩, ?_, fun x => corr_of_val D.P.isLB fun y J hJ => ?_⟩

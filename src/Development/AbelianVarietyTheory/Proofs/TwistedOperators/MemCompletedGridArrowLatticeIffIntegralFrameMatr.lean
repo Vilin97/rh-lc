@@ -60,7 +60,7 @@ theorem int_of_mem_latO (hS : IsSelfDualC S ΛS) {βS : GL (Fin S.rank) (EAf D)}
     Valued.v (cpt (D := D) w (Comparison₂.fr βT βS (u.map (toEAf D)) a b)) ≤ 1 := by
   let p : WO S T → Prop := fun u => ∀ a b, Valued.v (cpt (D := D) w (Comparison₂.fr βT βS (u.map (toEAf D)) a b)) ≤ 1
   have hadd : ∀ x y, p x → p y → p (x + y) := fun x y hx hy a b => by
-    rw [Matrix.map_add _ (toEAf D).map_add, Comparison₂.fr_add, Matrix.add_apply, RingHom.map_add]
+    rw [Matrix.map_add _ (toEAf D).map_add (f := _), Comparison₂.fr_add, Matrix.add_apply, RingHom.map_add (f := _)]
     exact Valuation.map_add_le _ (hx a b) (hy a b)
   have hneg : ∀ x, p x → p (-x) := fun x hx a b => by
     rw [Matrix.map_neg _ (toEAf D).map_neg, fr_neg, Matrix.neg_apply, RingHom.map_neg, Valuation.map_neg]

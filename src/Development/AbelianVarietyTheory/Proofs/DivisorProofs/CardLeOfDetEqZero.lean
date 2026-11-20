@@ -187,7 +187,7 @@ theorem exists_nat_step (S : Subgroup (LevelAut Dw l)) (v w : Rul Xo c) {W : Com
     rw [levDet, AlgHom.map_det]
     congr 1
     ext g g'
-    simp only [Matrix.map_apply, AlgHom.mapMatrix_apply, levMat_apply, map_add, map_smul, Matrix.add_apply,
+    simp only [Matrix.map_apply, AlgHom.mapMatrix_apply, levMat_apply, map_add (f := _), map_smul, Matrix.add_apply,
       Matrix.smul_apply, smul_eq_mul]
     rw [Algebra.smul_def]
   let B : Finset (Comp Xo c) := Finset.univ.biUnion fun γ : S =>

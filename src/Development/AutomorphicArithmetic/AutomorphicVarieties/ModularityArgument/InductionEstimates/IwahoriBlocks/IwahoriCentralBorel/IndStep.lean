@@ -34,7 +34,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.indStep 
         simp [extTensor]
       rw [h1, hLa, hLa, hE, hE, ← he, h2]
       rfl
-    | add x x' hx hx' => simp only [map_add, Pi.add_apply, hx, hx']
+    | add x x' hx hx' => simp only [map_add (f := _), Pi.add_apply, hx, hx']
   have hsurj : ∀ z ∈ IndF P.subtype (y.comp (MonoidHom.inl P Γ)) ⊤, ∃ x, L x = z := by
     intro z hz
     have hlaw : ∀ (p : P) g, z (p * g) = y (p, 1) (z g) := hz.1.2

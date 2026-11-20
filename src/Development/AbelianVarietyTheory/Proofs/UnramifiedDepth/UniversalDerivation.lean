@@ -150,7 +150,7 @@ def sqMap (u : M →ₗ[(O : Type)] M') : LHom (sqAlg O M) (sqAlg O M') :=
   sqLift (sqProj O M) (u.toAddMonoidHom.comp SqExt.sndHom)
     (fun f f' => by
       refine (congrArg u (SqExt.snd_mul (O := (O : Type)) (M := M) f f')).trans ?_
-      rw [map_add, map_smul, map_smul]; rfl)
+      rw [map_add (f := _), map_smul, map_smul]; rfl)
     (fun _ => map_zero u)
 
 lemma map_sqMap_tg (B : BX R₀) {ι : Type} [Fintype ι] (w : ι → B.gg) (m : ι → M)

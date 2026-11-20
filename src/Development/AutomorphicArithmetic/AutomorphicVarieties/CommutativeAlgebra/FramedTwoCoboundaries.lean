@@ -169,9 +169,9 @@ def H1c : Submodule k ((Γ → M) × (F.T → M)) where
   add_mem' := by
     rintro x y ⟨a1, a2, a3, a4, a5⟩ ⟨b1, b2, b3, b4, b5⟩
     refine ⟨a1.add b1, fun s t => ?_, fun q n h => ?_, fun v s => ?_, ?_⟩
-    · simp only [Prod.fst_add, Pi.add_apply, a2, b2, map_add]; abel
+    · simp only [Prod.fst_add, Pi.add_apply, a2, b2, map_add (f := _)]; abel
     · simp [a3 q n h, b3 q n h]
-    · simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, a4, b4, map_add]; abel
+    · simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, a4, b4, map_add (f := _)]; abel
     · simp [a5, b5]
   zero_mem' := ⟨IsLocallyConstant.const 0, by simp, by simp, by simp, rfl⟩
   smul_mem' := by
@@ -193,10 +193,10 @@ def framedTwoCocycles : Submodule k (F.C2 M) where
     rintro x y ⟨a1, a2, a3, a4, a5, a6⟩ ⟨b1, b2, b3, b4, b5, b6⟩
     refine ⟨a1.add b1, fun v => (a2 v).add (b2 v), fun q => (a3 q).add (b3 q), fun s t u => ?_, fun v s t => ?_,
       fun q s t => ?_⟩
-    · simp only [Prod.fst_add, Pi.add_apply, map_add]
+    · simp only [Prod.fst_add, Pi.add_apply, map_add (f := _)]
       rw [add_add_add_comm, a4, b4, add_add_add_comm]
-    · simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, a5, b5, dOne, map_add]; abel
-    · simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, a6, b6, dOne, map_add]; abel
+    · simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, a5, b5, dOne, map_add (f := _)]; abel
+    · simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, a6, b6, dOne, map_add (f := _)]; abel
   zero_mem' := ⟨IsLocallyConstant.const 0, fun _ => IsLocallyConstant.const 0, fun _ => IsLocallyConstant.const 0,
     by simp, by simp [dOne], by simp [dOne]⟩
   smul_mem' := by

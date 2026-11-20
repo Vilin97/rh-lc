@@ -51,7 +51,7 @@ theorem Approx.add {x y : A} {f g : ι → S} (hx : Approx s I b x f) (hy : Appr
   · have h1 := hx.approx n (F ∪ G) fun i hi => hF i fun h => hi (Finset.mem_union_left _ h)
     have h2 := hy.approx n (F ∪ G) fun i hi => hG i fun h => hi (Finset.mem_union_right _ h)
     convert add_mem h1 h2 using 1
-    simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
     ring
 
 theorem Approx.mul {x : A} {f : ι → S} (hx : Approx s I b x f) (a : S) :
@@ -105,7 +105,7 @@ theorem exists_step (hsp : ∀ x : A, ∃ a : ι →₀ S, x - a.sum (fun i y =>
   have Tadd : ∀ y y', T y → T y' → T (y + y') := by
     rintro y y' ⟨a, ha, hy⟩ ⟨a', ha', hy'⟩
     refine ⟨a + a', fun i => add_mem (ha i) (ha' i), ?_⟩
-    rw [Finsupp.sum_add_index' (fun _ => by simp) (fun _ _ _ => by rw [map_add, add_mul])]
+    rw [Finsupp.sum_add_index' (fun _ => by simp) (fun _ _ _ => by rw [map_add (f := _), add_mul])]
     convert add_mem hy hy' using 1
     ring
   have T1 : ∀ t ∈ I ^ n, ∀ w : A, T (s t * w) := by

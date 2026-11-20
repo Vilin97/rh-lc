@@ -75,7 +75,7 @@ theorem box_fourier {ψ : AddChar (Ad E) ℂ} (hψ : ∀ x, ‖ψ x‖ = 1) (_hc
           ψ (sFin E (∑ j, (f + Pi.single i a : Fin k → Af E) j * z j)) =
         ψ (sFin E (a * z i)) * ((((boxL (L : Set (Af E)) c).indicator (fun _ => (1 : ℝ)) f : ℝ) : ℂ) *
           ψ (sFin E (∑ j, f j * z j))) := fun f => by
-      rw [sum_add_single, map_add, AddChar.map_add_eq_mul]
+      rw [sum_add_single, map_add (f := _), AddChar.map_add_eq_mul]
       by_cases hf : f ∈ boxL (L : Set (Af E)) c
       · rw [Set.indicator_of_mem ((boxL_add_single L c f i ha).2 hf), Set.indicator_of_mem hf]
         ring

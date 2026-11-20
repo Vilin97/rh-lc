@@ -35,7 +35,7 @@ theorem mem_localNorms_of_liftUF_eq (hC : GlobalTheory.Published.QuadraticClassF
       GlobalTheory.QuadSymbol.eta F E (u.adicCompletion F) (GlobalTheory.QuadSymbol.finDiag F t u) = 1 := by
     intro u hu
     have := map_div_mem_normGroup (evFin F u) _ t z h 1 (by
-      rw [liftUF_val, map_add, map_one,
+      rw [liftUF_val, map_add (f := _), map_one,
         show evFin F u (GlobalTheory.LatVac.liftV v ((a : Fv F v) - 1)) = 0 from evalV_singleFin_ne hu _, add_zero]
       rfl)
     rw [mul_one, inv_mem_iff] at this
@@ -44,7 +44,7 @@ theorem mem_localNorms_of_liftUF_eq (hC : GlobalTheory.Published.QuadraticClassF
       GlobalTheory.QuadSymbol.eta F E w.Completion (GlobalTheory.QuadSymbol.infDiag F t w) = 1 := by
     intro w
     have := map_div_mem_normGroup (evInf F w) _ t z h 1 (by
-      rw [liftUF_val, map_add, map_one,
+      rw [liftUF_val, map_add (f := _), map_one,
         show evInf F w (GlobalTheory.LatVac.liftV v ((a : Fv F v) - 1)) = 0 from map_zero (GlobalTheory.AutFunCompare.evW w), add_zero]
       rfl)
     rw [mul_one, inv_mem_iff] at this
@@ -53,7 +53,7 @@ theorem mem_localNorms_of_liftUF_eq (hC : GlobalTheory.Published.QuadraticClassF
   rw [Finset.prod_eq_one fun w _ => hinf w, mul_one, finprod_eq_single _ v hfin] at hP
   have ht := GlobalTheory.QuadSymbol.eta_eq_one_iff.1 hP
   have hv := map_div_mem_normGroup (evFin F v) _ t z h a (by
-    rw [liftUF_val, map_add, map_one, GlobalTheory.LatVac.evFin_liftV, add_sub_cancel])
+    rw [liftUF_val, map_add (f := _), map_one, GlobalTheory.LatVac.evFin_liftV, add_sub_cancel])
   have := mul_mem ht hv
   rw [show GlobalTheory.QuadSymbol.finDiag F t v = GlobalTheory.QuadSymbol.toUnits F (Fv F v) t from rfl, mul_inv_cancel_left] at this
   exact this

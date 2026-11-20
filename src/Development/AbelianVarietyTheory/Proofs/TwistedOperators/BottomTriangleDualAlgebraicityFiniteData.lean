@@ -179,7 +179,7 @@ theorem eventually_fix (hW : IsWeilDatumO ψ S T χS χT om)
     obtain ⟨y, rfl⟩ := hx
     exact htr y.1 y.2
   | zero => exact Filter.Eventually.of_forall fun k _ => map_zero _
-  | add a b _ _ ha hb => filter_upwards [ha, hb] with k h1 h2 hk; rw [map_add, h1 hk, h2 hk]
+  | add a b _ _ ha hb => filter_upwards [ha, hb] with k h1 h2 hk; rw [map_add (f := _), h1 hk, h2 hk]
   | smul c a _ ha => filter_upwards [ha] with k h1 hk; rw [map_smul, h1 hk]
 
 theorem exists_cong_of_eventually {P : GA D T → Prop} (h : ∀ᶠ k in 𝓝 (1 : GA D T), k ∈ GfC T → P k) :

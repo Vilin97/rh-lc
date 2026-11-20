@@ -138,7 +138,7 @@ theorem rtInf_mem_archKSpan (k : archCompact K n) {ψ : archSmooth K n} (hψ : �
     rw [rtInf_rtInf]
     exact Submodule.subset_span ⟨k * k', rfl⟩
   · rw [map_zero]; exact Submodule.zero_mem _
-  · intro x y _ _ hx hy; rw [map_add]; exact Submodule.add_mem _ hx hy
+  · intro x y _ _ hx hy; rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   · intro c x _ hx; rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem finiteDimensional_archKSpan (hK : IsKFinite (φ : AdelicGLn.AdelicGL K n → ℂ)) :
@@ -226,7 +226,7 @@ theorem finiteDimensional_zkArchSpan (hK : IsKFinite (φ : AdelicGLn.AdelicGL K 
   · intro x hx
     exact Submodule.mem_iSup_of_mem ⟨x, hx⟩ (Submodule.subset_span ⟨z, hz, rfl⟩)
   · rw [map_zero]; exact Submodule.zero_mem _
-  · intro x y _ _ hx hy; rw [map_add]; exact Submodule.add_mem _ hx hy
+  · intro x y _ _ hx hy; rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   · intro c x _ hx; rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem exists_aeval_laplacian_sliceL_eq_zero_of_isSmoothKZ {φ : AdelicGLn.AdelicGL K n → ℂ}
@@ -283,7 +283,7 @@ theorem exists_aeval_laplacian_sliceL_eq_zero_of_isSmoothKZ {φ : AdelicGLn.Adel
     · rintro _ ⟨z, hz, ψ, hψ, rfl⟩
       exact hgen z hz ψ hψ
     · rw [map_zero]; exact Submodule.zero_mem _
-    · intro x y _ _ hx hy; rw [map_add]; exact Submodule.add_mem _ hx hy
+    · intro x y _ _ hx hy; rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     · intro c x _ hx; rw [map_smul]; exact Submodule.smul_mem _ c hx
   obtain ⟨P, hPm, hPd, hP⟩ := exists_monic_aeval_apply_eq_zero (uAction (laplacianU K n b))
     (zkArchSpan φ') hV (self_mem_zkArchSpan φ')

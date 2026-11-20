@@ -26,7 +26,7 @@ theorem exists_hermFam_met : ∀ (D : D7) (O : Setup D) (x : ToroidalCompactific
   let B : ∀ σ : K →+* ℂ, (Fin n → K) → TanM ((z0 σ).1 ≫ genι O.s.T.Z) O.s.T.Z.t.G := fun σ w =>
     bcTan σ (Category.assoc (spMap σ) yK (genι O.s.T.Z)).symm (∑ i, w i • b i)
   have hBadd : ∀ σ w w', B σ (w + w') = B σ w + B σ w' := fun σ w w' => by
-    simp only [B, Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add]
+    simp only [B, Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add (f := _)]
   have hBsmul : ∀ σ (a : K) w, B σ (a • w) = σ a • B σ w := fun σ a w => by
     simp only [B, Pi.smul_apply, smul_eq_mul, mul_smul, ← Finset.smul_sum, map_smulₛₗ]
   have hBsum : ∀ σ w, B σ w = ∑ k, σ (w k) • bcTan σ (Category.assoc (spMap σ) yK (genι O.s.T.Z)).symm (b k) :=
@@ -34,7 +34,7 @@ theorem exists_hermFam_met : ∀ (D : D7) (O : Setup D) (x : ToroidalCompactific
   have hh : ∀ σ : K →+* ℂ, IsBlockMetric (x.met (σ.comp fK) (z0 σ)) := fun σ =>
     (x.met_smooth (σ.comp fK)).1 (z0 σ)
   refine ⟨{ form := fun σ u v => x.met (σ.comp fK) (z0 σ) (B σ v) (B σ u),
-            add_right := fun σ u v w => by simp only [hBadd, map_add, LinearMap.add_apply],
+            add_right := fun σ u v w => by simp only [hBadd, map_add (f := _), LinearMap.add_apply],
             smul_right := fun σ a u v => by simp only [hBsmul, map_smul, LinearMap.smul_apply, smul_eq_mul],
             conj_symm := fun σ u v => ((hh σ).1 _ _).symm,
             posDef := fun σ m v hv => ?_ }, ?_⟩

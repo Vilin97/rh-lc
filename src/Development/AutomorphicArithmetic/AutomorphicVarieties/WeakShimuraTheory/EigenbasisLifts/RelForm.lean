@@ -72,7 +72,7 @@ theorem UpperTheory.V.Ws.Eb.relForm :
     | of g =>
       simp only [MonoidAlgebra.of_apply, rf_rep_single, one_smul]
       exact hsingle g
-    | add x y hx hy => simp only [map_add, trace_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), trace_add, hx, hy]
     | smul a x hx => simp only [map_smul, trace_smul, hx]
   have hsurj : Function.Surjective (W.GDet.repAlg (W.mat ρ) A) := by
     intro M

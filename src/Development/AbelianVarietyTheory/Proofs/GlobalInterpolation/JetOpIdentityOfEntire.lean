@@ -19,7 +19,7 @@ variable {K : Type} [Field K] {ι : Type} [Fintype ι] {a b : ℕ}
 omit [Fintype ι] in
 theorem jetLin_add (J J' : (DVar ι a b →₀ ℕ) → K) : jetLin (J + J') = jetLin J + jetLin J' := by
   refine (basisMonomials ((ι × Fin b × Fin b) ⊕ DVar ι a b) K).ext fun m => ?_
-  simp only [jetLin, LinearMap.add_apply, Module.Basis.constr_basis, Pi.add_apply, map_add]
+  simp only [jetLin, LinearMap.add_apply, Module.Basis.constr_basis, Pi.add_apply, map_add (f := _)]
 
 omit [Fintype ι] in
 theorem jetLin_smul (c : K) (J : (DVar ι a b →₀ ℕ) → K) : jetLin (c • J) = c • jetLin J := by
@@ -31,7 +31,7 @@ def jetOpL (lam : ι → DomWeight a) (lam' : ι → DomWeight b) (n : ι → �
   toFun J := jetOp lam lam' J n
   map_add' J J' := by
     ext1 F
-    simp only [jetOp, jetMap, jetLin_add, LinearMap.comp_apply, LinearMap.add_apply, map_add]
+    simp only [jetOp, jetMap, jetLin_add, LinearMap.comp_apply, LinearMap.add_apply, map_add (f := _)]
   map_smul' c J := by
     ext1 F
     simp only [jetOp, jetMap, jetLin_smul, LinearMap.comp_apply, LinearMap.smul_apply, map_smul, RingHom.id_apply]

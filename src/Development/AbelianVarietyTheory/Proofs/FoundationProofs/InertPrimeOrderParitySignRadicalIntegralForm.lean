@@ -126,7 +126,7 @@ theorem split_part (g : GA D N) {x : (AE D)ˣ}
     ring
   · rw [Units.val_mul, det_cutG, ← hdef]
     change e * x + (1 - e) * 1 = _ * sgA D (e * x + (1 - e) * 1)
-    rw [map_add, map_mul, map_mul, map_sub, map_one, h2]
+    rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, h2]
     linear_combination e * hxv + (d + sgA D x - 1 - d * sgA D x) * h1
 
 include h2 h3 in
@@ -165,7 +165,7 @@ end Idem
 theorem exists_idem (D : D7) : ∃ e : AE D, e * e = e ∧ sgA D e = e ∧
     ∀ q : ℕ, q.Prime → (InertQ D q → ZeroAt D q e) ∧ (¬ InertQ D q → ZeroAt D q (1 - e)) := by
   obtain ⟨ε, -, a1, a2, h3⟩ := exists_half_idem D
-  refine ⟨_, ?_, by rw [map_add, sgA_sgA, add_comm], h3⟩
+  refine ⟨_, ?_, by rw [map_add (f := _), sgA_sgA, add_comm], h3⟩
   have a3 : sgA D ε * sgA D ε = sgA D ε := by rw [← map_mul, a1]
   linear_combination a1 + a3 + 2 * a2
 

@@ -43,7 +43,7 @@ private theorem exists_aut_fix (N M : ℕ) (hN : 0 < N) (hM : 0 < M) (u : ℕ) (
       rw [hs z (by show z ^ (N * M) = 1; rw [mul_comm, pow_mul, hz', one_pow]),
         pow_eq_pow_of_modEq hu1 hz', pow_one]
     | algebraMap r => exact s.commutes r
-    | add a b _ _ ha hb => rw [map_add, ha, hb]
+    | add a b _ _ ha hb => rw [map_add (f := _), ha, hb]
     | inv a _ ha => rw [map_inv₀, ha]
     | mul a b _ _ ha hb => rw [map_mul, ha, hb]
 

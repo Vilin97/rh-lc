@@ -426,7 +426,7 @@ theorem om_reads_projA : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : Inf
     have o2 : cA D a * cA D a = cA D a := by rw [← RingHom.map_mul, o1]
     have o5 : cA D a' * cA D a' = cA D a' := by rw [← RingHom.map_mul, o4]
     have o8 : cA D a * cA D a' = 0 := by rw [← RingHom.map_mul, o7, RingHom.map_zero]
-    rw [RingHom.map_add] at h3
+    rw [RingHom.map_add (f := _)] at h3
     have o9 : a * cA D a' = 0 := by
       linear_combination (a * cA D a') * h3 - (cA D a' * (cA D a + cA D a')) * o1 -
         (cA D a' * (cA D a + cA D a')) * o7 - a * o8 - a * o5
@@ -435,12 +435,12 @@ theorem om_reads_projA : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : Inf
       rwa [RingHom.map_mul, cA_cA, RingHom.map_zero] at this
     have o6 : a' * cA D a' = 0 := by linear_combination h3 - o3 - o9 - o10
     have hε : (a + cA D a) * (a + cA D a) = a + cA D a := by linear_combination o1 + o2 + 2 * o3
-    have hcε : cA D (a + cA D a) = a + cA D a := by rw [RingHom.map_add, cA_cA, add_comm]
+    have hcε : cA D (a + cA D a) = a + cA D a := by rw [RingHom.map_add (f := _), cA_cA, add_comm]
     obtain ⟨h₀, e₀⟩ := exists_part V hε hcε h
     obtain ⟨h', e'⟩ := exists_part V (ε := 1 - (a + cA D a)) (by linear_combination hε)
       (by rw [RingHom.map_sub, RingHom.map_one, hcε]) h
     have hsupp' := (suppAt_iff _ _ _).1 hsupp
-    rw [RingHom.map_add] at hsupp'
+    rw [RingHom.map_add (f := _)] at hsupp'
     obtain ⟨b1, b2, b3, b4, b5, b6⟩ := alg_parts o1 o2 o3 o4 o5 o6 o7 o8 o9 o10 hsupp' e₀ e'
     obtain ⟨y₀, hy₀⟩ := exists_detAt V o1 h₀
     obtain ⟨y', hy'⟩ := exists_detAt V o4 h'

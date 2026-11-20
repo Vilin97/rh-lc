@@ -39,7 +39,7 @@ theorem sb_C (c d : k) : sb k c (PowerSeries.C d) = PowerSeries.C d := by
 theorem sb_key (c : k) : sb k c (PowerSeries.X * inv1 k (-c)) = PowerSeries.X := by
   have hv := powerSeries_oneAddConstMulX_mul_inv k c
   have hs0 := congrArg (sb k c) (powerSeries_oneAddConstMulX_mul_inv k (-c))
-  simp only [map_mul, map_add, map_one, sb_C, sb_X, map_neg] at hs0
+  simp only [map_mul, map_add (f := _), map_one, sb_C, sb_X, map_neg] at hs0
   rw [map_mul, sb_X]
   linear_combination (PowerSeries.X * inv1 k c * PowerSeries.C c * PowerSeries.X * sb k c (inv1 k (-c))
       + PowerSeries.X) * hv + PowerSeries.X * inv1 k c * (1 + PowerSeries.C c * PowerSeries.X) * hs0
@@ -133,7 +133,7 @@ theorem sb_sub (a : k⟦X⟧) : ∃ b : k⟦X⟧, sb k 1 a - a = PowerSeries.X *
   refine ⟨inv1 k 1 * sb k 1 (PowerSeries.mk fun p => PowerSeries.coeff (p + 1) a)
     - PowerSeries.mk fun p => PowerSeries.coeff (p + 1) a, ?_⟩
   conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const a]
-  rw [map_add, map_mul, sb_X, sb_C]
+  rw [map_add (f := _), map_mul, sb_X, sb_C]
   ring
 
 theorem nab_coe (a : k⟦X⟧) : ∃ b : k⟦X⟧, nab (lin (gA k)) (a : k⸨X⸩) = b := by
@@ -151,7 +151,7 @@ theorem g_vinv : gE k (vv k)⁻¹ = (vv k)⁻¹ + 1 := by
     rw [← map_mul, ← map_one (HahnSeries.ofPowerSeries ℤ k)]
     congr 1
     simpa using powerSeries_oneAddConstMulX_mul_inv k 1
-  have h3 : ((1 + PowerSeries.X : k⟦X⟧) : k⸨X⸩) = 1 + vv k := by rw [map_add, map_one, vv_eq]
+  have h3 : ((1 + PowerSeries.X : k⟦X⟧) : k⸨X⸩) = 1 + vv k := by rw [map_add (f := _), map_one, vv_eq]
   rw [h3] at h2
   rw [map_inv₀, h1, mul_inv, ← eq_inv_of_mul_eq_one_left h2, mul_add, mul_one,
     inv_mul_cancel₀ (vv_ne k)]
@@ -166,7 +166,7 @@ theorem decomp {y : k⸨X⸩} (hy : y ∈ lat k (-1)) :
   obtain ⟨b, rfl⟩ := mem_lat.mp hy
   refine ⟨PowerSeries.constantCoeff b, PowerSeries.mk fun p => PowerSeries.coeff (p + 1) b, ?_⟩
   conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const b]
-  rw [map_add, map_mul, ← vv_eq, HahnSeries.ofPowerSeries_C, smul_eq, algebraMap_eq, zpow_neg_one]
+  rw [map_add (f := _), map_mul, ← vv_eq, HahnSeries.ofPowerSeries_C, smul_eq, algebraMap_eq, zpow_neg_one]
   linear_combination ((PowerSeries.mk fun p => PowerSeries.coeff (p + 1) b : k⟦X⟧) : k⸨X⸩) *
     mul_inv_cancel₀ (vv_ne k)
 
@@ -191,7 +191,7 @@ theorem step (x c : k) (b : k⟦X⟧) : ∃ b' : k⟦X⟧,
       = ((1 - x) * c) • (vv k)⁻¹ + b' := by
   obtain ⟨b₁, hb₁⟩ := nab_coe (k := k) b
   refine ⟨b₁ - PowerSeries.C x * b, ?_⟩
-  rw [LinearMap.sub_apply, Module.algebraMap_end_apply, map_add, map_smul, nab_vinv, hb₁]
+  rw [LinearMap.sub_apply, Module.algebraMap_end_apply, map_add (f := _), map_smul, nab_vinv, hb₁]
   simp only [smul_eq k, algebraMap_eq, map_sub, map_mul, map_one, HahnSeries.ofPowerSeries_C]
   ring
 
@@ -212,7 +212,7 @@ theorem condC : CondC (lin (gA k)) (lat k (-1)) := by
   intro y hy
   obtain ⟨c, b, rfl⟩ := decomp hy
   obtain ⟨b₁, hb₁⟩ := nab_coe (k := k) b
-  rw [map_add, map_smul, nab_vinv, hb₁]
+  rw [map_add (f := _), map_smul, nab_vinv, hb₁]
   exact Submodule.add_mem _ (Submodule.smul_of_tower_mem _ c vinv_mem) (coe_mem b₁)
 
 theorem sen_one : sen (lin (gA k)) (lat k (-1)) 1 = 1 := by

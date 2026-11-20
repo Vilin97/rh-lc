@@ -110,7 +110,7 @@ theorem mu_double (D : D7) (p : ℕ) [Fact p.Prime] (cc : Ideal (𝓞 D.host.K))
     rw [GlobalTheory.ThetaTransl.cval, lamC_eq hι (hU _ hv2), hdup, map_mul, map_neg, map_pow]
   have hsqι := congrArg ι hsq
   have hdblι := congrArg ι hdbl
-  simp only [map_mul, map_pow, map_sub, map_add, map_ofNat, map_div₀] at hsqι hdblι
+  simp only [map_mul, map_pow, map_sub, map_add (f := _), map_ofNat, map_div₀] at hsqι hdblι
   rw [← hx] at hψ hφ
   set P := ι (wpF g.abelian₂ v)
   set P₂ := ι (wpF g.abelian₂ (2 * v))
@@ -165,7 +165,7 @@ theorem mu_two_tors (D : D7) (p : ℕ) [Fact p.Prime] (cc : Ideal (𝓞 D.host.K
     rw [GlobalTheory.ThetaTransl.cval, lamC_eq hι (hU v hv)]
   have hfι := congrArg ι hf
   have h8ι := congrArg ι h8
-  simp only [map_mul, map_pow, map_sub, map_add, map_ofNat, map_div₀, map_zero, map_one] at hfι h8ι
+  simp only [map_mul, map_pow, map_sub, map_add (f := _), map_ofNat, map_div₀, map_zero, map_one] at hfι h8ι
   rw [← hx] at hψ hφ
   rw [hfι, mul_zero] at hψ
   rw [hfι, mul_zero, sub_zero] at hφ

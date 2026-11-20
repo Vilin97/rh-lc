@@ -94,7 +94,7 @@ theorem map_saturationByPowers_of_flat {A B : Type*} [CommRing A] [CommRing B] [
           Ideal.mul_mem_right b _ (Ideal.mem_map_of_mem (algebraMap A B) hcc)
         simpa [Algebra.smul_def] using h2
     | add z₁ z₂ h₁ h₂ =>
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
         exact Ideal.add_mem _ h₁ h₂
   have hy2 : y = TensorProduct.rid A B (LinearMap.lTensor B (LinearMap.ker u).subtype w) := by
     rw [hw]

@@ -257,7 +257,7 @@ theorem generic (b : Module.Basis ι O T) (c : Module.Basis κ Z T) (ρ : H →*
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul r' t => simp only [TensorProduct.smul_tmul', hτ, smul_eq_mul, map_mul]
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   let bM := Algebra.TensorProduct.basis (O ⊗[Z] W) b
   have hbM : ∀ i, bM i = 1 ⊗ₜ[O] b i := fun i => Algebra.TensorProduct.basis_apply b i
   let J := mult ((O ⊗[Z] W) ⊗[O] T) (p : O ⊗[Z] W)
@@ -399,7 +399,7 @@ theorem base (hF : FaithH AI) {H : Type} [Group H] (f : H →* GQ l) (hf : ∀ h
     { carrier := {x | ∀ ν ∈ N, AI.actT (f ν) x = x}
       mul_mem' := fun hx hy ν hν => by rw [map_mul, hx ν hν, hy ν hν]
       one_mem' := fun ν _ => map_one _
-      add_mem' := fun hx hy ν hν => by rw [map_add, hx ν hν, hy ν hν]
+      add_mem' := fun hx hy ν hν => by rw [map_add (f := _), hx ν hν, hy ν hν]
       zero_mem' := fun ν _ => map_zero _
       neg_mem' := fun hx ν hν => by rw [map_neg, hx ν hν] }
   let s : H ⧸ N → A →+* Cb l := fun q =>

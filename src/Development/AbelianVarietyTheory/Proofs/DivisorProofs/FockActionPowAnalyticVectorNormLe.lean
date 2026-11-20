@@ -87,7 +87,7 @@ theorem omE_bound (h : IsFockIP ι) (l l' : Ln p q r s) (d : ℕ) (P : Pol p q r
   split_ifs
   · rw [LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply]
     refine ⟨(totalDegree_add _ _).trans (max_le h1 ((totalDegree_smul_le _ _).trans (by omega))), ?_⟩
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
     refine (norm_add_le _ _).trans ?_
     rw [norm_smul]
     have : ‖(1 / 2 : ℂ)‖ = 1 / 2 := by simp

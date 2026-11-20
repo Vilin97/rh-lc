@@ -137,7 +137,7 @@ theorem RespectsAdd.add {Q₁ Q₂ : (E'.baseChange E.toAffine.FunctionField).to
   intro L _ _ _ u₁ v₁ u₂ v₂ u₃ v₃ k₁ k₂ k₃ t₁ t₂ t₃ hs
   have e₁ := h₁ L u₁ v₁ u₂ v₂ u₃ v₃ k₁ k₂ k₃ t₁ t₂ t₃ hs
   have e₂ := h₂ L u₁ v₁ u₂ v₂ u₃ v₃ k₁ k₂ k₃ t₁ t₂ t₃ hs
-  simp only [ratMapValue, map_add] at e₁ e₂ ⊢
+  simp only [ratMapValue, map_add (f := _)] at e₁ e₂ ⊢
   rw [e₁, e₂]
   abel
 
@@ -317,7 +317,7 @@ theorem exists_map_eq_of_not_isGenPt (E : WeierstrassCurve F) {L : Type*} [Field
             C (c ^ 3 + E.a₂ * c ^ 2 + E.a₄ * c + E.a₆) : F[X]).natDegree = 2 := by
           compute_degree!
         omega
-      · simp only [map_sub, map_add, map_mul, map_pow, aeval_X, aeval_C, hc]
+      · simp only [map_sub, map_add (f := _), map_mul, map_pow, aeval_X, aeval_C, hc]
         linear_combination heq
     obtain ⟨d, hd⟩ := exists_algebraMap_eq_of_isAlgebraic' hyalg
     have hcd : E.toAffine.Nonsingular c d := by
@@ -348,7 +348,7 @@ theorem isGenPt_neg {L : Type*} [Field L] [Algebra F L] [DecidableEq L]
 omit [IsAlgClosed F] [DecidableEq F] in
 theorem isGenPt_add_self {L : Type*} [Field L] [Algebra F L] [DecidableEq L]
     {P : (E.baseChange L).toAffine.Point} (hP : IsGenPt E P) : IsGenPt E (P + P) := by
-  rw [← map_genEval_genericPoint E P hP, ← map_add]
+  rw [← map_genEval_genericPoint E P hP, ← map_add (f := _)]
   exact isGenPt_map E _ (by rw [← two_zsmul]; exact (mulIsogeny E 2 two_ne_zero).isGenPt)
 
 omit [IsAlgClosed F] [DecidableEq F] in

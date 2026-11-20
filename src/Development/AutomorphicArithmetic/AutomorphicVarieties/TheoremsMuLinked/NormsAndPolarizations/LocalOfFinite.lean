@@ -61,7 +61,7 @@ theorem UpperTheory.V.Th.Nm.redOf :
       simp [UpperTheory.V.Alg.res, (IsLocalRing.residue_eq_zero_iff _).2 ha]
     have hm1 : residue c'.O (y (z - algebraMap c.O R a)) = 0 :=
       (IsLocalRing.residue_eq_zero_iff _).2 (hym _ ha)
-    rw [hz, map_add, map_add, map_add, hm1, hm0, hyalg, AlgHom.commutes, ← hf]
+    rw [hz, map_add (f := _), map_add (f := _), map_add (f := _), hm1, hm0, hyalg, AlgHom.commutes, ← hf]
     simp [ResidueField.algebraMap_eq]
   have hresid : ∀ w : c'.O, res c'.O c'.O w = residue c'.O w := by
     intro w

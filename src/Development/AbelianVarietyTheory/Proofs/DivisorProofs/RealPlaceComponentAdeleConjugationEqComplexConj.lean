@@ -18,7 +18,7 @@ theorem piInf_cA_eq_star : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     | zero => simp
     | tmul a x =>
       simp [cA, compInf, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, Algebra.TensorProduct.map_tmul]
-    | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
   change infEmb τ (compInf F E w (cA σ z)) = star (infEmb τ (compInf F E w z))
   rw [hcomp, ← GlobalTheory.AdelicU.infEmb_sigR hσ τ]

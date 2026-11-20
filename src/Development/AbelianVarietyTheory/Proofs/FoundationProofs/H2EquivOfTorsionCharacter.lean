@@ -189,7 +189,7 @@ theorem Gen.step [ContinuousMul G] (hχ : Continuous fun g => (χ g : ℤ_[l])) 
   refine ⟨_, h'.twist hχ hu (β := fun g => (((b g).val : ℕ) : ℤ_[l]))
     (hb.comp fun a => ((a.val : ℕ) : ℤ_[l])), fun p => ?_⟩
   rw [dvd_iff_toZModPow, ← hπ]
-  simp only [cob, smul_eq_mul, map_sub, map_add, map_mul π, map_natCast, ZMod.natCast_zmod_val, hx p,
+  simp only [cob, smul_eq_mul, map_sub, map_add (f := _), map_mul π, map_natCast, ZMod.natCast_zmod_val, hx p,
     sub_self]
 
 theorem exists_lim (a : ℕ → ℤ_[l]) (h : ∀ n, (l : ℤ_[l]) ^ n ∣ a (n + 1) - a n) :
@@ -230,7 +230,7 @@ theorem IsCoc.map {N : Type} [AddCommGroup N] [Module ℤ_[l] N] (f : M →ₗ[�
     (h : IsCoc χ z) : IsCoc χ fun p => f (z p) :=
   ⟨h.1.comp f, fun g k m => by
     have e := congrArg f (h.2 g k m)
-    simpa only [map_sub, map_add, map_smul, map_zero] using e⟩
+    simpa only [map_sub, map_add (f := _), map_smul, map_zero] using e⟩
 
 theorem finite_span (htor : ∀ a : M, ∃ r : ℕ, (l : ℤ_[l]) ^ r • a = 0) {S : Set M} (hS : S.Finite) :
     ∃ r : ℕ, Finite (Submodule.span ℤ_[l] S) ∧
@@ -451,7 +451,7 @@ theorem exists_ringHom (hO : GoodO (Qp := ℚ_[l]) LL O) :
       rw [eq_add_of_sub_eq hw]
       push_cast
       rw [← eq_add_of_sub_eq hw]
-    rw [map_add, ho, mul_one, h1, map_add, map_natCast, map_natCast]
+    rw [map_add (f := _), ho, mul_one, h1, map_add (f := _), map_natCast, map_natCast]
   choose f hf using h
   exact ⟨{ toFun := f
            map_one' := hinj (by simp [hf])

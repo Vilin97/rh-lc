@@ -114,7 +114,7 @@ def splitDarboux {JA : Matrix α α (R × R)} {JB : Matrix β β (R × R)} (hA :
       invFun := fun v => of fun i j =>
         ((flat σ).symm v.1 i j, ((cmp₁ JA)⁻¹ * (flat σ).symm v.2 * ((cmp₁ JB)⁻¹)ᵀ : Matrix α β R) i j)
       map_add' := fun x y => by
-        rw [Prod.mk_add_mk, ← map_add, ← map_add, ← Matrix.add_mul, ← Matrix.mul_add]; rfl
+        rw [Prod.mk_add_mk, ← map_add (f := _), ← map_add (f := _), ← Matrix.add_mul, ← Matrix.mul_add]; rfl
       map_smul' := fun a x => by
         rw [RingHom.id_apply, Prod.smul_mk, ← map_smul, ← map_smul, ← Matrix.smul_mul, ← Matrix.mul_smul]; rfl
       left_inv := fun x => by
@@ -231,7 +231,7 @@ theorem splitOm_rho [Invertible (2 : R)] (m : Rˣ →* ℝ≥0) (χ : (R × R)ˣ
     rw [rel']
   have eX : flat σ ((flat σ).symm (u + flat σ (cmp₁ w * (ugFst JB h).valᵀ)) * ((ugFst JB h)⁻¹).valᵀ) =
       flat σ ((flat σ).symm u * ((ugFst JB h)⁻¹).valᵀ) + flat σ (cmp₁ w) := by
-    rw [map_add, LinearEquiv.symm_apply_apply, Matrix.add_mul, Matrix.mul_assoc, ← Matrix.transpose_mul, hinv,
+    rw [map_add (f := _), LinearEquiv.symm_apply_apply, Matrix.add_mul, Matrix.mul_assoc, ← Matrix.transpose_mul, hinv,
       Matrix.transpose_one, Matrix.mul_one, map_add]
   have eP : u ⬝ᵥ flat σ (cmp₁ JA * (cmp₂ w * (cmp₂ ((h : GL β (R × R)) : Matrix β β (R × R)))ᵀ) * (cmp₁ JB)ᵀ) +
         ⅟2 * flat σ (cmp₁ w * (ugFst JB h).valᵀ) ⬝ᵥ flat σ (cmp₁ JA * (cmp₂ w * (cmp₂ ((h : GL β (R × R)) : Matrix β β (R × R)))ᵀ) * (cmp₁ JB)ᵀ) =

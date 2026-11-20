@@ -34,7 +34,7 @@ theorem coeff_one_wU : coeff 1 (wU W) = W.a₁ := by
   have h : wU W = 1 + X * (C W.a₁ * wU W + X * (C W.a₂ * wU W + C W.a₃ * X * wU W ^ 2
       + C W.a₄ * X ^ 2 * wU W ^ 2 + C W.a₆ * X ^ 4 * wU W ^ 3)) := by
     linear_combination wU_eq W
-  rw [h, map_add, coeff_succ_X_mul]
+  rw [h, map_add (f := _), coeff_succ_X_mul]
   simp [(w_eq_X_pow_mul W).2, coeff_one]
 
 theorem fw_mul_om : fw W * om W = 1 := (unitSpec R W).2.1
@@ -219,7 +219,7 @@ theorem substAlgHom_comp_point {τ : Type*} {a : τ → MvPowerSeries σ R} (ha 
 theorem equation_point {s : MvPowerSeries σ R} (hs : PowerSeries.HasSubst s) :
     (seriesCurve W σ).Equation (point W s) := by
   have h := congrArg (PowerSeries.substAlgHom (R := R) hs) (w_eq W)
-  simp only [map_add, map_mul, map_pow, PowerSeries.substAlgHom_X] at h
+  simp only [map_add (f := _), map_mul, map_pow, PowerSeries.substAlgHom_X] at h
   simp only [PowerSeries.coe_substAlgHom, PowerSeries.subst_C] at h
   rw [equation_iff]
   simp only [point, fin3_def_ext, WeierstrassCurve.map]
@@ -230,7 +230,7 @@ theorem neg_point {s : MvPowerSeries σ R} (hs : PowerSeries.HasSubst s) :
       (-1 + C W.a₁ * s + C W.a₃ * (wSer W).subst s) • point W ((iSer W).subst s) := by
   have h₁ := congrArg (PowerSeries.substAlgHom (R := R) hs) (inv_mul_den W)
   have h₂ := congrArg (PowerSeries.substAlgHom (R := R) hs) (w_inv_mul_den W)
-  simp only [map_add, map_mul, map_neg, map_one, PowerSeries.substAlgHom_X] at h₁ h₂
+  simp only [map_add (f := _), map_mul, map_neg, map_one, PowerSeries.substAlgHom_X] at h₁ h₂
   simp only [PowerSeries.coe_substAlgHom, PowerSeries.subst_C, PowerSeries.subst_comp_subst_apply
     (PowerSeries.HasSubst.of_constantCoeff_zero' (coeff_inv W).1) hs] at h₁ h₂
   ext1 i

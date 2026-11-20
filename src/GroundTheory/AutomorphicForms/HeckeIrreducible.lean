@@ -183,7 +183,7 @@ variable (I : Submodule (HeckeAlgebraLevel μ K hKc hKo) (HeckeAlgebraLevel μ K
 def heckeKernel : Submodule ℂ (HeckeAlgebra μ) where
   carrier := {φ | ∀ g, cornerₗ hKc hKo (leftReg μ g φ) ∈ I}
   add_mem' {a b} ha hb g := by
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact I.add_mem (ha g) (hb g)
   zero_mem' g := by
     rw [map_zero, map_zero]
@@ -234,7 +234,7 @@ def toFixedQuot :
     HeckeAlgebraLevel μ K hKc hKo →ₗ[HeckeAlgebraLevel μ K hKc hKo] fixedVectors (quotRep hKc hKo I) K where
   toFun h := ⟨(heckeKernel hKc hKo I).mkQ (h : HeckeAlgebra μ), fun k hk => by
     rw [quotRep_mkQ, mem_fixedVectors_leftReg.2 (fun k' hk' x => apply_mul_left hKc hKo h hk' x) k hk]⟩
-  map_add' a b := Subtype.ext (by simp only [val_add, map_add, Submodule.coe_add])
+  map_add' a b := Subtype.ext (by simp only [val_add, map_add (f := _), Submodule.coe_add])
   map_smul' a h := Subtype.ext (by
     simp only [RingHom.id_apply, coe_smul_fixedVectors]
     rw [heckeAct_quotRep]
@@ -301,7 +301,7 @@ theorem isIrreducible_quotRep (hI : IsCoatom I) : (quotRep hKc hKo I).IsIrreduci
       let I' : Submodule (HeckeAlgebraLevel μ K hKc hKo) (HeckeAlgebraLevel μ K hKc hKo) :=
         { carrier := {h | (toFixedQuot hKc hKo I h : HeckeAlgebra μ ⧸ heckeKernel hKc hKo I) ∈ X}
           add_mem' := fun {a b} ha hb => by
-            simp only [mem_setOf_eq, map_add, Submodule.coe_add]
+            simp only [mem_setOf_eq, map_add (f := _), Submodule.coe_add]
             exact X.toSubmodule.add_mem ha hb
           zero_mem' := by
             simp only [mem_setOf_eq, map_zero, ZeroMemClass.coe_zero]

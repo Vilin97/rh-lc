@@ -22,5 +22,5 @@ theorem UpperTheory.ConvolutionTheory.BW.cuspUmg :
     rw [uC_tmul, mul_assoc]
     exact (norm_mul c _).le.trans (mul_le_mul_of_nonneg_left (hC g) (norm_nonneg c))
   | add x y hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hx.add hy

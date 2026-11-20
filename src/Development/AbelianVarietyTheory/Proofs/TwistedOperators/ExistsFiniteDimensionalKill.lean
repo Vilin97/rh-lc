@@ -131,7 +131,7 @@ theorem exists_finiteDimensional_kill {r s : ℕ} {T₂ : GrpData r s} (R₂ : D
   let φ : Pol p q r s →ₗ[ℂ] R₂.HK.V :=
     { toFun := fun Q => ∑ j, l (B Q (b j)) • b j
       map_add' := fun Q Q' => by
-        simp only [map_add, LinearMap.add_apply, add_smul, Finset.sum_add_distrib]
+        simp only [map_add (f := _), LinearMap.add_apply, add_smul, Finset.sum_add_distrib]
       map_smul' := fun c Q => by
         simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply, Finset.smul_sum,
           mul_smul] }
@@ -163,7 +163,7 @@ theorem exists_finiteDimensional_kill {r s : ℕ} {T₂ : GrpData r s} (R₂ : D
     intro Z hKZ Q
     obtain ⟨X1, Y1, hX1, hY1, hK, rfl⟩ := exists_real_parts Z
     obtain ⟨hKX, hKY⟩ := hK hKZ
-    simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, hequ1 X1 hX1 hKX,
+    simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, hequ1 X1 hX1 hKX,
       hequ1 Y1 hY1 hKY]
   have hφE : φ P ∈ E := hE φ hequ P hPW
   rw [← hrep P y hyY]
@@ -175,7 +175,7 @@ private theorem contrR_map_id {A B : Type} [AddCommGroup A] [Module ℂ A] [AddC
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp
-  | add z z' hz hz' => rw [map_add, map_add, hz, hz', map_add]
+  | add z z' hz hz' => rw [map_add (f := _), map_add (f := _), hz, hz', map_add (f := _)]
 
 private theorem contrR_neg' {A B : Type} [AddCommGroup A] [Module ℂ A] [AddCommGroup B]
     [Module ℂ B] (l : B →ₗ[ℂ] ℂ) (z : TensorProduct ℂ A B) :
@@ -183,7 +183,7 @@ private theorem contrR_neg' {A B : Type} [AddCommGroup A] [Module ℂ A] [AddCom
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [neg_smul]
-  | add z z' hz hz' => rw [map_add, map_add, hz, hz', neg_add]
+  | add z z' hz hz' => rw [map_add (f := _), map_add (f := _), hz, hz', neg_add]
 
 theorem exists_tensor_map : ∀ (p q r s : ℕ) (T₂ : GrpData r s) (R₂ : DSRep T₂), AdmGK R₂.HK → ∀ (N : Type) [AddCommGroup N] [Module ℂ N] (B : Pol p q r s →ₗ[ℂ] R₂.HK.V →ₛₗ[starRingEnd ℂ] N), (∀ Z ∈ upq r s, ∀ P y, B (fockAct2 p q r s Z P) y + B P (R₂.HK.act Z y) = 0) → ∃ f : Pol p q r s →ₗ[ℂ] TensorProduct ℂ N R₂.HK.V, (∀ Y, f ∘ₗ fockAct2 p q r s Y = TensorProduct.map LinearMap.id (R₂.HK.act Y) ∘ₗ f) ∧ (∀ P y, B P y = TensorProduct.rid ℂ N (TensorProduct.map LinearMap.id (innerₛₗ ℂ (R₂.ι y) ∘ₗ R₂.ι) (f P))) ∧ ∀ (c : Module.End ℂ (Pol p q r s)) (a : Module.End ℂ N), (∀ P y, B (c P) y = a (B P y)) → f ∘ₗ c = TensorProduct.map a LinearMap.id ∘ₗ f := by
   intro p q r s T₂ R₂ hA N _ _ B hB
@@ -225,7 +225,7 @@ theorem exists_tensor_map : ∀ (p q r s : ℕ) (T₂ : GrpData r s) (R₂ : DSR
     rw [LinearMap.map_smulₛₗ, contrR_tmul, hm, inner_conj_symm]
   choose F hF using hex
   have hadd : ∀ P Q, F (P + Q) = F P + F Q := fun P Q => huniq _ _ fun y => by
-    rw [map_add, ← hF, ← hF, ← hF, map_add, LinearMap.add_apply]
+    rw [map_add (f := _), ← hF, ← hF, ← hF, map_add (f := _), LinearMap.add_apply]
   have hsmul : ∀ (c : ℂ) P, F (c • P) = c • F P := fun c P => huniq _ _ fun y => by
     rw [map_smul, ← hF, ← hF, map_smul, LinearMap.smul_apply]
   let f : Pol p q r s →ₗ[ℂ] TensorProduct ℂ N R₂.HK.V :=
@@ -245,7 +245,7 @@ theorem exists_tensor_map : ∀ (p q r s : ℕ) (T₂ : GrpData r s) (R₂ : DSR
   refine ⟨f, fun Y => ?_, fun P y => hF P y, fun c a hca => ?_⟩
   · obtain ⟨X1, Y1, hX1, hY1, -, hY⟩ := exists_real_parts Y
     refine LinearMap.ext fun P => ?_
-    rw [LinearMap.comp_apply, LinearMap.comp_apply, hf, hf, hY, map_add, map_smul,
+    rw [LinearMap.comp_apply, LinearMap.comp_apply, hf, hf, hY, map_add (f := _), map_smul,
       LinearMap.add_apply, LinearMap.smul_apply, hadd, hsmul, hupq X1 hX1, hupq Y1 hY1, map_add,
       map_smul, TensorProduct.map_add_right, TensorProduct.map_smul_right, LinearMap.add_apply,
       LinearMap.smul_apply]

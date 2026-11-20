@@ -40,7 +40,7 @@ theorem map_aeval_int {σ A B : Type*} [CommRing A] [CommRing B] {instA : Algebr
     φ (aeval x F) = aeval (fun j ↦ φ (x j)) F := by
   induction F using MvPolynomial.induction_on with
   | C a => simp only [eq_intCast, map_intCast]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p j hp => simp only [map_mul, hp, aeval_X]
 
 theorem aeval_eq_eval₂_cast {σ A : Type*} [CommRing A] {_ : Algebra ℤ A} (x : σ → A)

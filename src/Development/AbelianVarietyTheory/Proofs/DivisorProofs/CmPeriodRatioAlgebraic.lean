@@ -412,7 +412,7 @@ theorem descends_of_mem_span (hp : IsGrpPullback X.A X₀.A (spMap σ) p) (κ : 
     simp only [one_smul] at h
     convert h using 1
     ext j
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     ring
   | smul a x _ hx => exact hsm a x hx
 

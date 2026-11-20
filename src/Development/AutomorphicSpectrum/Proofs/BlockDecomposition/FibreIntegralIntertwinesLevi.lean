@@ -59,7 +59,7 @@ theorem clT_extTensor (τ : Representation ℂ (Mir k i) V) (σ : Representation
     clT τ W (extTensor τ σ (uM k i x, 1) z) = clT τ W z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
   | tmul a b =>
     have hq : (twKer τ (MirUin k i) 1).mkQ (τ (uM k i x) a) = (twKer τ (MirUin k i) 1).mkQ a := by
       refine (Submodule.Quotient.eq _).2 (Submodule.subset_span ⟨⟨_, uM_mem k i x⟩, a, ?_⟩)

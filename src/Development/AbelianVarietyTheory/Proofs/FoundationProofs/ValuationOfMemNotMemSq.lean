@@ -24,7 +24,7 @@ theorem parts_extZero (y : Af F ⊗[F] E) :
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero, and_self]
   | tmul a x => exact ⟨TensorProduct.zero_tmul _ _, rfl⟩
-  | add a b ha hb => simp only [map_add, ha.1, ha.2, hb.1, hb.2, add_zero, and_self]
+  | add a b ha hb => simp only [map_add (f := _), ha.1, ha.2, hb.1, hb.2, add_zero, and_self]
 
 theorem comp_finComp : Comp (finComp F E) := by
   let c := (Algebra.TensorProduct.comm F E (Af F)).toRingEquiv
@@ -59,18 +59,18 @@ theorem parts_locIdele (P : HeightOneSpectrum (𝓞 E)) (u : (P.adicCompletion E
       extZero F E ((finAdEquiv F E).symm (GlobalTheory.CMVal.single P u : FiniteAdeleRing (𝓞 E) E)) := rfl
   rw [e]
   constructor
-  · rw [RingHom.map_add, RingHom.map_sub, RingHom.map_one, (parts_extZero _).1, (parts_extZero _).1, sub_zero, add_zero]
+  · rw [RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_one, (parts_extZero _).1, (parts_extZero _).1, sub_zero, add_zero]
   · change toFinAd F E (finPart F E _) = _
-    rw [RingHom.map_add, RingHom.map_sub, RingHom.map_one, (parts_extZero _).2, (parts_extZero _).2, sub_self, zero_add]
+    rw [RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_one, (parts_extZero _).2, (parts_extZero _).2, sub_self, zero_add]
     exact (finAdEquiv F E).apply_symm_apply _
 
 theorem comp_glue {P : HeightOneSpectrum (𝓞 E)} {e : AE F E} (he : IsDelta (finComp F E) P e) (a : AE F E) :
     infPart F E (e * a + (1 - e)) = 1 ∧ finComp F E (e * a + (1 - e)) P = finComp F E a P ∧
       ∀ Q, Q ≠ P → finComp F E (e * a + (1 - e)) Q = 1 := by
   have h : ∀ Q, finComp F E (e * a + (1 - e)) Q = finComp F E e Q * finComp F E a Q + (1 - finComp F E e Q) :=
-    fun Q => by rw [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one]; rfl
+    fun Q => by rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one]; rfl
   refine ⟨?_, ?_, fun Q hQ => ?_⟩
-  · rw [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, he.1, zero_mul, sub_zero, zero_add]
+  · rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, he.1, zero_mul, sub_zero, zero_add]
   · rw [h, he.2.1, one_mul, sub_self, add_zero]
   · rw [h, he.2.2 Q hQ, zero_mul, sub_zero, zero_add]
 

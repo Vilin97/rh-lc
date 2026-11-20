@@ -65,7 +65,7 @@ theorem pair_mul [IsCocomm k D] (a a' : D →ₗ[k] R) (β : Du k D →ₐ[k] R)
       simp only [TensorProduct.map_tmul, LinearMap.mul'_apply, Algebra.smul_def, map_mul]
       ring
     | add x y hx hy =>
-      simp only [map_add, add_smul, Finset.sum_add_distrib, hx, hy]
+      simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, hx, hy]
   have key2 : ∀ j l, β (cc j) * β (cc l) = ∑ i,
       (LinearMap.mul' k k (TensorProduct.map (b.coord j) (b.coord l) (comul (R := k) (b i)))) • β (cc i) := by
     intro j l

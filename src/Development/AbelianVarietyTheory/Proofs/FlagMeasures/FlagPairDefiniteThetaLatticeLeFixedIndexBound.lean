@@ -102,7 +102,7 @@ theorem radical (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (N : NF H r
   refine ⟨le_sup_right, fun x hx => ⟨fun hx0 => ?_, fun hxI y hy => h2 y hy x hxI⟩⟩
   obtain ⟨a, ha, i, hi, rfl⟩ := Submodule.mem_sup.1 hx
   have haa := hx0 a (Submodule.mem_sup_left ha)
-  rw [map_add, LinearMap.add_apply, h2 a (Submodule.mem_sup_left ha) i hi, add_zero] at haa
+  rw [map_add (f := _), LinearMap.add_apply, h2 a (Submodule.mem_sup_left ha) i hi, add_zero] at haa
   obtain ⟨τ⟩ : Nonempty (K →+* ℂ) := inferInstance
   have ha0 : a = 0 := by
     by_contra hne

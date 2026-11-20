@@ -163,7 +163,7 @@ theorem detPair_apply (χ₁ χ₂ : kˣ →* ℂˣ) (u v : ℕ) (g : Levi k (Tw
     simp only [detRep, ofChar_apply, detChar_apply]
     rw [← smul_eq_mul, ← smul_eq_mul (a := ((χ₂ _ : ℂˣ) : ℂ)), ← TensorProduct.smul_tmul',
       TensorProduct.tmul_smul, smul_smul, mul_comm]
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
 
 omit [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem modExp_bool_false (n : Bool → Type) [∀ a, Fintype (n a)] :

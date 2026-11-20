@@ -22,7 +22,7 @@ def realQb (τ : Qb →+* ℂ) : Fld where
   add_mem' := by
     intro a b ha hb
     show starRingEnd ℂ (τ (a + b)) = τ (a + b)
-    rw [map_add, map_add, show starRingEnd ℂ (τ a) = τ a from ha, show starRingEnd ℂ (τ b) = τ b from hb]
+    rw [map_add (f := _), map_add (f := _), show starRingEnd ℂ (τ a) = τ a from ha, show starRingEnd ℂ (τ b) = τ b from hb]
   inv_mem' := by
     intro a ha
     show starRingEnd ℂ (τ a⁻¹) = τ a⁻¹

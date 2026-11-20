@@ -24,7 +24,7 @@ private theorem dm_transv (S : Type) [CommRing S] [Algebra k S] {i j : ι} (hij 
     rw [← nat]
     congr 1
     ext a b
-    simp only [Matrix.transvection, Matrix.map_apply, Matrix.add_apply, Matrix.one_apply, Matrix.single_apply, map_add]
+    simp only [Matrix.transvection, Matrix.map_apply, Matrix.add_apply, Matrix.one_apply, Matrix.single_apply, map_add (f := _)]
     split_ifs <;> simp
   have hu : IsUnit (F k[X] (Matrix.transvection i j X)) := by
     refine IsUnit.of_mul_eq_one (F k[X] (Matrix.transvection i j (-X))) ?_
@@ -123,7 +123,7 @@ private theorem dm_rep (S : Type) [CommRing S] [Algebra k S] (y : S ⊗[k] Matri
     matrixEquivTensor ι k S (Det.repS (AlgHom.id k _) S y) = y := by
   rw [← AlgEquiv.eq_symm_apply]
   induction y with
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul s x =>
     rw [Det.repS_tmul, matrixEquivTensor_apply_symm]
     ext a b

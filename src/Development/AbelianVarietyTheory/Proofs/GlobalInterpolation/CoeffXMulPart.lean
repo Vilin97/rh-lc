@@ -74,7 +74,7 @@ theorem main : ∀ (O : Type) [inst : CommRing O] (a n : ℕ) (f : MvPowerSeries
     rw [coeff_part]
     split_ifs
     · apply hf
-      rw [map_add, degree_single]; omega
+      rw [map_add (f := _), degree_single]; omega
     · rfl
 
 end GlobalTheory.PowerSeriesCoeffSum

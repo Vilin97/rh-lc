@@ -98,7 +98,7 @@ theorem exists_integer_adjoin_eq_top : ∃ x : 𝒪[L], Algebra.adjoin 𝒪[K] {
     · obtain ⟨ϖ, hϖ⟩ := exists_irreducible 𝒪[L]
       have hϖ1 : addVal 𝒪[L] ϖ = 1 := addVal_uniformizer hϖ
       refine ⟨x₀ + ϖ, ?_, ?_⟩
-      · rw [map_add, hx₀, (residue_eq_zero_iff ϖ).mpr hϖ.not_isUnit, add_zero]
+      · rw [map_add (f := _), hx₀, (residue_eq_zero_iff ϖ).mpr hϖ.not_isUnit, add_zero]
       obtain ⟨k, hk⟩ := binomExpansion (P₀.map (algebraMap 𝒪[K] 𝒪[L])) x₀ ϖ
       rw [eval_map_algebraMap, eval_map_algebraMap, derivative_map, eval_map_algebraMap] at hk
       have hϖm : ϖ ∈ IsLocalRing.maximalIdeal 𝒪[L] := hϖ.not_isUnit

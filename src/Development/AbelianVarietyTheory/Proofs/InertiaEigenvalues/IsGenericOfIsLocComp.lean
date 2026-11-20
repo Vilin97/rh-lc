@@ -97,7 +97,7 @@ def locPsi (hψ : StdPsi ψ) (w : HeightOneSpectrum (𝓞 E)) : AddChar (w.adicC
   map_add_eq_mul' x y := by
     apply Circle.ext
     change ψ (sFin E (sLoc E w (x + y))) = ψ (sFin E (sLoc E w x)) * ψ (sFin E (sLoc E w y))
-    rw [map_add, map_add, AddChar.map_add_eq_mul]
+    rw [map_add (f := _), map_add (f := _), AddChar.map_add_eq_mul]
 
 theorem coe_locPsi (hψ : StdPsi ψ) (w : HeightOneSpectrum (𝓞 E)) (y : w.adicCompletion E) :
     (locPsi hψ w y : ℂ) = ψ (sFin E (sLoc E w y)) := rfl

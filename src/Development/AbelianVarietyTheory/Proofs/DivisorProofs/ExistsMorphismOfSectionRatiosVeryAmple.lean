@@ -76,7 +76,7 @@ theorem ratMap_gs_eval₂ {K : Type} [CommRing K] {Z S S' : Scheme.{0}} {Idx : T
     gs g₁ w U₁ (MvPolynomial.eval₂Hom f₁ r₁ P) = gs g₂ w U₂ (MvPolynomial.eval₂Hom f₂ r₂ P) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp only [MvPolynomial.eval₂Hom_C]; exact hc a
-  | add p q hp hq => rw [map_add, map_add, gs_add _ _ _ hw₁, gs_add _ _ _ hw₂, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), gs_add _ _ _ hw₁, gs_add _ _ _ hw₂, hp, hq]
   | mul_X p n hp => rw [map_mul, map_mul, gs_mul _ _ _ hw₁, gs_mul _ _ _ hw₂, hp, MvPolynomial.eval₂Hom_X',
       MvPolynomial.eval₂Hom_X', hr n]
 

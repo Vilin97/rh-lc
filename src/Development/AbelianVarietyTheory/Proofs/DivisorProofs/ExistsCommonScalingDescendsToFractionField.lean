@@ -75,7 +75,7 @@ theorem repr_semilinear {Idx : Type} (B : Module.Basis Idx F W) (τ : F →+* F)
     rw [hg, B.repr_self, Finsupp.single_apply]
     split_ifs <;> simp
   | zero => simp
-  | add x y _ _ hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   | smul c x _ hx =>
     rw [map_smulₛₗ, map_smul, map_smul, Finsupp.smul_apply, Finsupp.smul_apply, smul_eq_mul, smul_eq_mul, hx,
       map_mul]

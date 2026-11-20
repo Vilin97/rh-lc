@@ -55,7 +55,7 @@ theorem val_le_of_mem (P : HeightOneSpectrum (𝓞 E)) (n : ℕ) (z : RInt F E)
   | zero =>
     rw [Subring.coe_zero, map_zero, afsplit_zero_apply, map_zero]; exact zero_le
   | add x y _ _ hx hy =>
-    rw [Subring.coe_add, map_add, afsplit_add_apply]
+    rw [Subring.coe_add, map_add (f := _), afsplit_add_apply]
     exact Valuation.map_add_le _ hx hy
   | smul a x _ hx =>
     rw [smul_eq_mul, Subring.coe_mul, map_mul, afsplit_mul_apply, map_mul]

@@ -37,7 +37,7 @@ theorem lT_of {x : H} (hx : IsSm σ x) : lT σ l x = l ⟨x, hx⟩ := by
 
 theorem lT_add {x y : H} (hx : IsSm σ x) (hy : IsSm σ y) :
     lT σ l (x + y) = lT σ l x + lT σ l y := by
-  rw [lT_of hx, lT_of hy, lT_of ((hGL2.smoothVectors (πσ σ)).add_mem hx hy), ← map_add]; rfl
+  rw [lT_of hx, lT_of hy, lT_of ((hGL2.smoothVectors (πσ σ)).add_mem hx hy), ← map_add (f := _)]; rfl
 
 theorem lT_smul {x : H} (hx : IsSm σ x) (c : ℂ) : lT σ l (c • x) = c * lT σ l x := by
   rw [lT_of hx, lT_of ((hGL2.smoothVectors (πσ σ)).smul_mem c hx), ← smul_eq_mul, ← map_smul]; rfl
@@ -58,7 +58,7 @@ variable {σ l}
 
 theorem Wt_add {u v : H} (hu : IsSm σ u) (hv : IsSm σ v) (t : ℝ) :
     Wt σ l (u + v) t = Wt σ l u t + Wt σ l v t := by
-  simp only [Wt, map_add]
+  simp only [Wt, map_add (f := _)]
   exact lT_add (isSm_map σ hu _) (isSm_map σ hv _)
 
 theorem Wt_smul {u : H} (hu : IsSm σ u) (c : ℂ) (t : ℝ) : Wt σ l (c • u) t = c * Wt σ l u t := by
@@ -200,7 +200,7 @@ theorem exp_two_mul_I (θ : ℝ) :
 theorem Rop_mem {k : ℤ} {u : H} (hu : IsSm σ u) (hk : u ∈ weightSpace σ k) :
     Rop σ u ∈ weightSpace σ (k + 2) := by
   intro θ
-  simp only [Rop, map_add, map_smul, map_dπ hu, Ad_kMat_lH, Ad_kMat_lS, hk θ, dπ_smul_vec hu,
+  simp only [Rop, map_add (f := _), map_smul, map_dπ hu, Ad_kMat_lH, Ad_kMat_lS, hk θ, dπ_smul_vec hu,
     dπ_sub_left, dπ_add_left, dπ_smul_left]
   have hchi : chi (k + 2) θ = chi k θ * ((Real.cos (2 * θ) : ℂ) + (Real.sin (2 * θ) : ℂ) * I) := by
     rw [← exp_two_mul_I, chi, chi, ← Complex.exp_add]; congr 1; push_cast; ring

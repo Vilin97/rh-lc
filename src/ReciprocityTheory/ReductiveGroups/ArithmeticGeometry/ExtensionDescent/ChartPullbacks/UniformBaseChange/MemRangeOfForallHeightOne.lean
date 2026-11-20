@@ -17,7 +17,7 @@ def denIdeal {ι : Type*} (x : ι → K) : Ideal A where
     intro a b ha hb i
     obtain ⟨u, hu⟩ := ha i
     obtain ⟨v, hv⟩ := hb i
-    exact ⟨u + v, by rw [map_add, hu, hv, map_add, add_mul]⟩
+    exact ⟨u + v, by rw [map_add (f := _), hu, hv, map_add (f := _), add_mul]⟩
   zero_mem' := fun i => ⟨0, by simp⟩
   smul_mem' := by
     intro c a ha i

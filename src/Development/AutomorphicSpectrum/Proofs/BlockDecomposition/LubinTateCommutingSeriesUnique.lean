@@ -15,7 +15,7 @@ theorem map_ltIter {A A' : Type} [CommRing A] [CommRing A'] (g : A →+* A') (a 
     g (ltIter a q n x) = ltIter (g a) q n (g x) := by
   induction n with
   | zero => simp [ltIter]
-  | succ n ih => rw [ltIter_succ, ltIter_succ, map_add, map_mul, map_pow, ih]
+  | succ n ih => rw [ltIter_succ, ltIter_succ, map_add (f := _), map_mul, map_pow, ih]
 
 theorem ltIter_congr {A : Type} [CommRing A] (w s : A) (q : ℕ) (hq : (q : A) = w * s) (a b c : A)
     (h : a - b = w * c) (n : ℕ) : ∃ d, ltIter w q n a - ltIter w q n b = w ^ (n + 1) * d := by
@@ -97,7 +97,7 @@ theorem nev_step {y : C} (hy : IsNilpotent y) (π : R) (q : ℕ) (hq : q ≠ 0) 
   rw [subst_lt hs, subst_lt hΦ] at e1
   have e3 : (PowerSeries.C (algebraMap R C π) * PowerSeries.C y + PowerSeries.C y ^ q : PowerSeries C)
       = PowerSeries.C (algebraMap R C π * y + y ^ q) := by
-    simp only [map_add, map_mul, map_pow]
+    simp only [map_add (f := _), map_mul, map_pow]
   rw [e3] at e1
   have e4 := congrArg (PowerSeries.constantCoeff (R := C)) e1
   simpa [nev] using e4
@@ -258,7 +258,7 @@ theorem finiteRing_sq_sub_mul_sq_eq_of_card {R C : Type} [CommRing R] [CommRing 
       push_cast
       rw [hQ', hv', hϖ', ha']
       linear_combination hQa
-    rw [e, map_add, map_mul, map_pow, hwm1, zero_mul, add_zero, map_ltIter, hw]
+    rw [e, map_add (f := _), map_mul, map_pow, hwm1, zero_mul, add_zero, map_ltIter, hw]
   have e2 : mk R' = ltIter (algebraMap R C π) q m (mk u') := by
     have e : R' = ltIter ϖ' q m u' + ϖ' ^ (m + 1) * b' := by
       apply Subtype.ext
@@ -269,7 +269,7 @@ theorem finiteRing_sq_sub_mul_sq_eq_of_card {R C : Type} [CommRing R] [CommRing 
       have e4 := congrArg σ hQa
       rw [map_sub, map_mul, map_pow, hσϖ, e3] at e4
       linear_combination e4
-    rw [e, map_add, map_mul, map_pow, hwm1, zero_mul, add_zero, map_ltIter, hw]
+    rw [e, map_add (f := _), map_mul, map_pow, hwm1, zero_mul, add_zero, map_ltIter, hw]
   have hfin : nev (mk Q') φ = mk R' := by rw [e1, e2]; exact key
   have hnQ : IsNilpotent (mk Q') := by rw [e1]; exact nil_ltIter _ hq0 (hn m) m
   obtain ⟨N2, hN2⟩ := hnQ

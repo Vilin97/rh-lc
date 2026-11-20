@@ -78,7 +78,7 @@ theorem thetaSum_op {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ
   have hcomp := GlobalTheory.MixedVec.admissible_of_local_operator e hloc lθ hlθ
   obtain ⟨c, hc⟩ := GlobalTheory.ThetaFunctionalUnique.main F ψ hψ κ (fun Φ => thetaSum F (e Φ))
     (fun Φ hΦ Ψ hΨ => by
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact GlobalTheory.WeilM.thetaSum_add F (hmaps Φ hΦ) (hmaps Ψ hΨ))
     (fun c Φ _ => by simp only [map_smul]; exact GlobalTheory.WeilM.thetaSum_smul F c (e Φ))
     (fun g hg => by
@@ -305,7 +305,7 @@ theorem exists_mixed {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
       ext i j
       simp [Matrix.mul_apply, Fintype.sum_sum_type, Fin.sum_univ_two, frame, incM, incV, Matrix.vecMulVec_apply, add_assoc]
     have h5 := congrArg Prod.snd (congrArg co.e hu)
-    rw [map_add, map_add, LinearEquiv.apply_symm_apply] at h5
+    rw [map_add (f := _), map_add (f := _), LinearEquiv.apply_symm_apply] at h5
     simp only [Prod.snd_add, hlow, (hy _).1, add_zero] at h5
     have hz : (co₂.e (Y.submatrix id .inl)).2 = 0 := by
       funext k

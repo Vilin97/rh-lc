@@ -24,7 +24,7 @@ theorem eval_shiftPoly (b : K → ℤ) (p : MvPolynomial K ℚ) (x : K → ℚ) 
     eval x (shiftPoly b p) = eval (fun k => x k - b k) p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [shiftPoly]
-  | add p q hp hq => simp only [shiftPoly, map_add] at hp hq ⊢; rw [hp, hq]
+  | add p q hp hq => simp only [shiftPoly, map_add (f := _)] at hp hq ⊢; rw [hp, hq]
   | mul_X p k hp => simp only [shiftPoly, map_mul] at hp ⊢; rw [hp]; simp
 
 theorem monomial_good (b : K → ℤ) (s : K →₀ ℕ) (a : ℚ) :

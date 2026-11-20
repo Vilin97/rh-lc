@@ -23,7 +23,7 @@ theorem exists_isMat_of_equivariant (p : ℕ) [Fact p.Prime] (O : Type) [CommRin
       have : (a ⊗ₜ[ℤ_[p]] l : RL p O Λ) = algebraMap (Ainf p O) (RL p O Λ) a * ((1 : Ainf p O) ⊗ₜ[ℤ_[p]] l) := by
         simp [Algebra.TensorProduct.algebraMap_apply, Algebra.TensorProduct.tmul_mul_tmul]
       rw [this, mul_smul, mul_smul, algebraMap_smul, algebraMap_smul, L'.map_smul, hl]
-    | add x y hx hy => rw [add_smul, add_smul, L'.map_add, hx, hy]
+    | add x y hx hy => rw [add_smul, add_smul, L'.map_add (f := _), hx, hy]
   let L : (Fin N → RL p O Λ) →ₗ[RL p O Λ] (Fin N → RL p O Λ) :=
     { toFun := L'
       map_add' := L'.map_add

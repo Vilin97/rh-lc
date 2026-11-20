@@ -41,7 +41,7 @@ theorem sq_ne_prime (h2 : Module.finrank ℚ K = 2) (hD : discr K = -d) (φ : K 
     nlinarith [mul_self_nonneg (φ a).im]
   have h3 := norm_int_eq h2 hD φ (a + 1)
   rw [Complex.sq_norm, Complex.normSq_apply] at h3
-  simp only [map_add, map_one, Complex.add_re, Complex.add_im, Complex.one_re, Complex.one_im, hi] at h3
+  simp only [map_add (f := _), map_one, Complex.add_re, Complex.add_im, Complex.one_re, Complex.one_im, hi] at h3
   generalize Algebra.norm ℤ (a + 1) = m at h3
   rw [hi] at hre
   have h4 : Irrational (φ a).re := by

@@ -236,7 +236,7 @@ theorem cusp_re (I : OrthIn) (p : IsPair B M χ χ' om r s r' s') (h0 : min r s 
       have hrest : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rest (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F) (⇑f)
           (fun x => ∏ᶠ v, φ v fun i => GlobalTheory.AdelicU.evFin F v (x i)) := by
         refine ⟨fun x z hz => ?_, hxs⟩
-        simp only [Pi.add_apply, map_add, evFin_eq_zero_of_At_evI z hz, add_zero]
+        simp only [Pi.add_apply, map_add (f := _), evFin_eq_zero_of_At_evI z hz, add_zero]
       have h2 : (om (g, h)) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f φ) = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure (T f) φ := hTa.2 f _ hrest
       rw [h2]
       exact Submodule.subset_span ⟨T f, by rw [← hmapT]; exact Submodule.mem_map_of_mem hf, φ, hφ, hv, rfl⟩
@@ -244,7 +244,7 @@ theorem cusp_re (I : OrthIn) (p : IsPair B M χ χ' om r s r' s') (h0 : min r s 
       rw [map_zero]
       exact zero_mem _
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
     | smul a x _ hx =>
       rw [map_smul]

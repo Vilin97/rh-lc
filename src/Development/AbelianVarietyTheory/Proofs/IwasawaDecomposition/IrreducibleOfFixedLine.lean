@@ -170,7 +170,7 @@ theorem exists_rep [MeasurableSpace G] [BorelSpace G] [T2Space G] (μ : Measure 
         exact integral_nonneg fun x => sq_nonneg _
       add_left := fun f f' f'' => by
         rw [← integral_add (hi f f'') (hi f' f'')]
-        simp only [Submodule.coe_add, Pi.add_apply, map_add, add_mul]
+        simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _), add_mul]
       smul_left := fun f f' r => by
         rw [← integral_const_mul]
         simp only [Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, map_mul, mul_assoc]

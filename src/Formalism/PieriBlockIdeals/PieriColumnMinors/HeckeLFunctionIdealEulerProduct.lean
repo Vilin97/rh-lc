@@ -199,14 +199,14 @@ theorem evaluation_congruence_holds : EvalCong := by
     linear_combination h2
   refine ⟨⟨-constantCoeff q, hc⟩, ?_⟩
   intro k _ red hred
-  rw [hc, map_add, map_mul, hred, zero_mul, add_zero]
+  rw [hc, map_add (f := _), map_mul, hred, zero_mul, add_zero]
 
 theorem linear_division_evaluation_holds : LinDivisionEval := by
   intro O _ _ _ _ _ _ _ c a f f₁ hn hf
   have hx : PowerSeries.HasEval c := hn
   have hc : Continuous (RingHom.id O) := continuous_id
   have h2 := congrArg (PowerSeries.eval₂Hom hc hx) hf
-  rw [map_add, map_mul, map_sub] at h2
+  rw [map_add (f := _), map_mul, map_sub] at h2
   simp only [PowerSeries.coe_eval₂Hom, eval₂_C, eval₂_X, RingHom.id_apply, sub_self,
     zero_mul, zero_add] at h2
   exact h2
@@ -217,7 +217,7 @@ theorem gamma_mod_q_holds : GammaModQ := by
   refine ⟨X * q + C (Th a b), ?_⟩
   have h1 : (1 : Matrix (Fin n) (Fin n) O⟦X⟧) a b = C ((1 : Matrix (Fin n) (Fin n) O) a b) := by
     by_cases hab : a = b <;> simp [hab, Matrix.one_apply]
-  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, h1, map_add, map_mul]
+  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, h1, map_add (f := _), map_mul]
   linear_combination X * hq
 
 theorem derivation_linear_holds : DLinear := by
@@ -244,7 +244,7 @@ theorem dbar_coordinates_hold : DbarCoord := by
       rw [X_dvd_iff, map_sub, constantCoeff_C, sub_self]
     have e : y = C (constantCoeff y) + X * g := by rw [← hg]; ring
     rw [e, hadd, hmul, hC, hX]
-    rw [map_add, map_add, coeff_C, if_neg one_ne_zero, zero_add, zero_add]
+    rw [map_add (f := _), map_add (f := _), coeff_C, if_neg one_ne_zero, zero_add, zero_add]
     rw [mul_assoc, show (1 : ℕ) = 0 + 1 from rfl, coeff_succ_X_mul, coeff_succ_X_mul,
       coeff_zero_eq_constantCoeff_apply, coeff_zero_eq_constantCoeff_apply, map_mul, hcc0]
     simp
@@ -259,7 +259,7 @@ theorem dbar_coordinates_hold : DbarCoord := by
     | (funext i; simp only [Matrix.mulVec, dotProduct, Matrix.smul_apply, smul_eq_mul, Pi.smul_apply,
         Finset.mul_sum, mul_assoc])
   rw [Matrix.add_mulVec, Matrix.one_mulVec, hsm]
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_sub, map_add]
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_sub, map_add (f := _)]
   rw [h1, show (1 : ℕ) = 0 + 1 from rfl, coeff_succ_X_mul, coeff_zero_eq_constantCoeff_apply]
   first
   | (simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Matrix.map_apply, hcc0]; ring)
@@ -417,7 +417,7 @@ theorem gammaSeries_zero_eq {k : Type} [CommRing k] (un : k⟦X⟧) :
 
 theorem coeff_one_add_X_mul_add_X_sq_mul {k : Type} [CommRing k] (x y z : k⟦X⟧) (hx : coeff 1 x = 0) :
     coeff 1 (x + X * y + X ^ 2 * z) = constantCoeff y := by
-  rw [map_add, map_add, hx, zero_add]
+  rw [map_add (f := _), map_add (f := _), hx, zero_add]
   first
   | (rw [show (1 : ℕ) = 0 + 1 from rfl, coeff_succ_X_mul, coeff_X_pow_mul', if_neg (by norm_num),
       add_zero, coeff_zero_eq_constantCoeff_apply])
@@ -435,7 +435,7 @@ theorem theta_diagonal_holds : ThetaDiag := by
       rw [X_dvd_iff, map_sub, constantCoeff_C, sub_self]
     have e : y = C (constantCoeff y) + X * q := by rw [← hq]; ring
     rw [e, hadd, hmul, hC, hX]
-    rw [map_add, map_add, coeff_C, if_neg one_ne_zero, zero_add, zero_add]
+    rw [map_add (f := _), map_add (f := _), coeff_C, if_neg one_ne_zero, zero_add, zero_add]
     rw [mul_assoc, e1, e1, map_mul, hcc0]
     simp
   have hc1 : ∀ f q : k⟦X⟧, coeff 1 (f * q) = coeff 1 f * constantCoeff q + constantCoeff f * coeff 1 q := by
@@ -454,7 +454,7 @@ theorem theta_diagonal_holds : ThetaDiag := by
   set V := hV.unit with hVdef
   have hV0 : constantCoeff (V : k⟦X⟧) = 1 := by rw [IsUnit.unit_spec]; simp
   have hV1' : coeff 1 (V : k⟦X⟧) = constantCoeff un := by
-    rw [IsUnit.unit_spec, map_add, coeff_one, if_neg one_ne_zero, zero_add, mul_comm, e1]
+    rw [IsUnit.unit_spec, map_add (f := _), coeff_one, if_neg one_ne_zero, zero_add, mul_comm, e1]
   have hgs : gamSer 0 un = X * (V : k⟦X⟧) := by rw [gammaSeries_zero_eq, IsUnit.unit_spec]
   have hVcc : ∀ m : ℤ, constantCoeff ((V ^ m : (k⟦X⟧)ˣ) : k⟦X⟧) = 1 := by
     intro m
@@ -512,7 +512,7 @@ theorem theta_diagonal_holds : ThetaDiag := by
       constantCoeff (w : k⟦X⟧) * coeff 1 ((w⁻¹ : (k⟦X⟧)ˣ) : k⟦X⟧) = 0 := by
     rw [← hc1, Units.mul_inv, coeff_one, if_neg one_ne_zero]
   have hC1 : coeff 1 (1 + X * g) = constantCoeff g := by
-    rw [map_add, coeff_one, if_neg one_ne_zero, zero_add, e1]
+    rw [map_add (f := _), coeff_one, if_neg one_ne_zero, zero_add, e1]
   have hC0 : constantCoeff (1 + X * g) = 1 := by simp
   rw [hc]
   refine ⟨?_, ?_⟩
@@ -533,7 +533,7 @@ theorem theta_base_change_holds : ThetaBaseChange := by
       rw [X_dvd_iff, map_sub, constantCoeff_C, sub_self]
     have e : y = C (constantCoeff y) + X * q := by rw [← hq]; ring
     rw [e, hadd, hmul, hC, hX]
-    rw [map_add, map_add, coeff_C, if_neg one_ne_zero, zero_add, zero_add]
+    rw [map_add (f := _), map_add (f := _), coeff_C, if_neg one_ne_zero, zero_add, zero_add]
     rw [mul_assoc, e1, e1, map_mul, hcc0]
     simp
   have hc1 : ∀ f q : k⟦X⟧, coeff 1 (f * q) = coeff 1 f * constantCoeff q + constantCoeff f * coeff 1 q := by
@@ -675,7 +675,7 @@ theorem reduction_log_unit_pow_eq (l : ℕ) [Fact l.Prime] [Algebra ℤ_[l] O] [
       linear_combination h3
   obtain ⟨t, ht⟩ := ht
   rw [ht]
-  simp only [map_add, map_mul, map_neg, map_intCast, map_natCast, CharP.cast_eq_zero, zero_mul,
+  simp only [map_add (f := _), map_mul, map_neg, map_intCast, map_natCast, CharP.cast_eq_zero, zero_mul,
     add_zero]
   ring
 
@@ -786,7 +786,7 @@ theorem theta_diagonal_entry_eq (l h : ℕ) [Fact l.Prime] [IsDomain O] [Algebra
   show coeff 1 (W.Gam i (W.pos s) (W.pos s)) = _
   rw [hcc1]
   unfold WLat.unbar
-  rw [constantCoeff_map_eq, constantCoeff_map_eq, hD, he, map_add, map_mul, map_natCast,
+  rw [constantCoeff_map_eq, constantCoeff_map_eq, hD, he, map_add (f := _), map_mul, map_natCast,
     CharP.cast_eq_zero, zero_mul, add_zero]
   push_cast
   ring
@@ -1044,7 +1044,7 @@ theorem order_descent_holds : OrderDescent := by
     obtain ⟨f₁, a, rfl⟩ := (linear_division_holds O I x hx).1 m
     have h1 : (X : L⟦X⟧) ∣ jj ((X - C x) * f₁ + C a) :=
       dvd_trans (dvd_pow_self _ (Nat.succ_ne_zero S)) hm
-    rw [map_add, map_mul, hj, hC] at h1
+    rw [map_add (f := _), map_mul, hj, hC] at h1
     have h2 : (X : L⟦X⟧) ∣ C (em a) :=
       (dvd_add_right ((dvd_mul_right _ _).mul_right _)).1 h1
     have h3 : em a = 0 := by
@@ -1052,7 +1052,7 @@ theorem order_descent_holds : OrderDescent := by
       simpa using this
     have h4 : a = 0 := hem (by simpa using h3)
     subst h4
-    rw [map_add, map_mul, hj, map_zero, map_zero, add_zero, pow_succ', mul_assoc] at hm
+    rw [map_add (f := _), map_mul, hj, map_zero, map_zero, add_zero, pow_succ', mul_assoc] at hm
     have h5 : (X : L⟦X⟧) ^ S ∣ ((w⁻¹ : (L⟦X⟧)ˣ) : L⟦X⟧) * jj f₁ :=
       (mul_dvd_mul_iff_left PowerSeries.X_ne_zero).1 hm
     rw [Units.dvd_mul_left] at h5
@@ -1120,7 +1120,7 @@ theorem localization_facts_hold : LocFacts := by
       rw [PowerSeries.isUnit_iff_constantCoeff]
       have e : (X - C (ζ ^ b' - 1) : O⟦X⟧) = (X - C (ζ ^ b - 1)) + C (ζ ^ b - ζ ^ b') := by
         rw [map_sub, map_sub, map_sub]; ring
-      rw [e, map_add, hj, hC, map_add, map_mul, constantCoeff_X, zero_mul, zero_add,
+      rw [e, map_add (f := _), hj, hC, map_add (f := _), map_mul, constantCoeff_X, zero_mul, zero_add,
         constantCoeff_C]
       refine IsUnit.mk0 _ ?_
       intro h0
@@ -1140,7 +1140,7 @@ theorem localization_facts_hold : LocFacts := by
   · intro y a hya
     obtain ⟨s, hs⟩ := hya
     have hy : y = (X - C (l : O)) * s + C a := by linear_combination hs
-    rw [hy, ← pi0SubstHom_apply, map_add, map_mul, pi0SubstHom_apply, pi0SubstHom_apply,
+    rw [hy, ← pi0SubstHom_apply, map_add (f := _), map_mul, pi0SubstHom_apply, pi0SubstHom_apply,
       pi0SubstHom_apply, inc_X_sub_l_eq_q0, pi0Subst_C, map_add, map_mul, hzq, hC, map_add, map_mul,
       map_mul, constantCoeff_X, zero_mul, zero_mul, zero_add, constantCoeff_C]
 
@@ -1284,8 +1284,8 @@ theorem weight_lattice_of_norm : LatWOfN := by
       congr 1
       funext j
       have := congrArg (fun z => em (algebraMap ℤ_[l] O z)) (hunit j)
-      simp only [map_mul, map_pow, map_add, map_one, map_natCast] at this
-      simp only [map_mul, map_add, map_one, map_natCast]
+      simp only [map_mul, map_pow, map_add (f := _), map_one, map_natCast] at this
+      simp only [map_mul, map_add (f := _), map_one, map_natCast]
       exact this
     calc (1 + (l : O) • N.Th i).map em * (G : Matrix (Fin n) (Fin n) L⟦X⟧).map constantCoeff
         = (1 + (l : O) • N.Th i).map em * (G : Matrix (Fin n) (Fin n) L⟦X⟧).map constantCoeff *

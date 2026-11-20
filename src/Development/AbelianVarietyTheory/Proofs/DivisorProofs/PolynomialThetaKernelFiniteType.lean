@@ -43,7 +43,7 @@ theorem I_add_so (hP : GlobalTheory.ThK.KP) (hT : IsTriple B G X om om') {Ψ₁ 
   have s₁ := GlobalTheory.ThKContSmall.so_le_schA hT.geo.hM' _ h₁
   have s₂ := GlobalTheory.ThKContSmall.so_le_schA hT.geo.hM' _ h₂
   have e : ∀ g, theta om' (Ψ₁ + Ψ₂) g h = theta om' Ψ₁ g h + theta om' Ψ₂ g h := fun g => by
-    simp only [theta, map_add]
+    simp only [theta, map_add (f := _)]
     exact GlobalTheory.WeilM.thetaSum_add F (hT.weil'.isUSplitting.pres _ _ s₁) (hT.weil'.isUSplitting.pres _ _ s₂)
   simp only [Model.I, e, Pi.add_apply]
   exact integral_add (conv_so hP hT h₁ h) (conv_so hP hT h₂ h)

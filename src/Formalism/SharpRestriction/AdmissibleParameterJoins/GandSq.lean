@@ -53,13 +53,13 @@ theorem phAt_subst {c : σ → MvPowerSeries τ ℂ_[p]} (hc : HasSubst c) {a : 
 theorem add_subst (hex : PowerSeries.constantCoeff g.ex = 0) {c : σ → MvPowerSeries τ ℂ_[p]} (hc : HasSubst c)
     {a b : MvPowerSeries σ ℂ_[p]} (ha : constantCoeff a = 0) (hb : constantCoeff b = 0) :
     subst c (g.add a b) = g.add (subst c a) (subst c b) := by
-  have h0 : constantCoeff (g.lg a + g.lg b) = 0 := by rw [map_add, cc_lg g ha, cc_lg g hb, add_zero]
+  have h0 : constantCoeff (g.lg a + g.lg b) = 0 := by rw [map_add (f := _), cc_lg g ha, cc_lg g hb, add_zero]
   show subst c (g.pt (g.lg a + g.lg b)) = g.pt (g.lg (subst c a) + g.lg (subst c b))
-  rw [pt_subst g hc h0, ← coe_substAlgHom hc, map_add, coe_substAlgHom, lg_subst g hc ha, lg_subst g hc hb]
+  rw [pt_subst g hc h0, ← coe_substAlgHom hc, map_add (f := _), coe_substAlgHom, lg_subst g hc ha, lg_subst g hc hb]
 
 theorem cc_add (hex : PowerSeries.constantCoeff g.ex = 0) {a b : MvPowerSeries σ ℂ_[p]} (ha : constantCoeff a = 0)
     (hb : constantCoeff b = 0) : constantCoeff (g.add a b) = 0 :=
-  cc_pt g hex (by rw [map_add, cc_lg g ha, cc_lg g hb, add_zero])
+  cc_pt g hex (by rw [map_add (f := _), cc_lg g ha, cc_lg g hb, add_zero])
 
 theorem be_subst (hex : PowerSeries.constantCoeff g.ex = 0) {c : σ → MvPowerSeries τ ℂ_[p]} (hc : HasSubst c)
     {a b : MvPowerSeries σ ℂ_[p]} (ha : constantCoeff a = 0) (hb : constantCoeff b = 0) :

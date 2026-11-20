@@ -181,7 +181,7 @@ theorem FinTyp.rank_le_aleph0 : ∀ {L : Type} [Field L] [NumberField L] [IsCMFi
       obtain ⟨h', rfl⟩ := hx
       exact Submodule.subset_span ⟨h * h', rt_mul h h' f⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
   have hfT : f ∈ T := Submodule.subset_span ⟨1, by funext x; simp [rt]⟩
   have hT : T = π.S := by

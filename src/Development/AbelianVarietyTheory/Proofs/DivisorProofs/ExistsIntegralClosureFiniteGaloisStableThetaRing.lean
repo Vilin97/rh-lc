@@ -76,7 +76,7 @@ theorem exists_integralClosure_finite : ∀ {o₁ Ω₁ : Type} [CommRing o₁] 
           simp only [RingHom.comp_apply] at this
           rw [← this]
           exact A.algebraMap_mem _
-        | add x y _ _ hx hy => rw [map_add]; exact A.add_mem hx hy
+        | add x y _ _ hx hy => rw [map_add (f := _)]; exact A.add_mem hx hy
         | mul x y _ _ hx hy => rw [map_mul]; exact A.mul_mem hx hy
       suffices key : ∀ y : C, y ∈ Submodule.span R₁ (t : Set C) → (y : Ω₂) ∈ A from
         fun x hx => key ⟨x, hx⟩ (ht ▸ Submodule.mem_top)

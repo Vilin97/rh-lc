@@ -50,8 +50,8 @@ def LevWt (A : AllTied D X Ap) (V : HSp D) (N : ℕ)
   add_mem' := by
     intro F G hF hG
     refine ⟨fun g hg => ?_, fun τ z hz => ?_⟩
-    · rw [map_add, hF.1 g hg, hG.1 g hg]
-    · rw [map_add, hF.2 τ z hz, hG.2 τ z hz, smul_add]
+    · rw [map_add (f := _), hF.1 g hg, hG.1 g hg]
+    · rw [map_add (f := _), hF.2 τ z hz, hG.2 τ z hz, smul_add]
   zero_mem' := by
     refine ⟨fun g _ => map_zero _, fun τ z _ => ?_⟩
     rw [map_zero, smul_zero]

@@ -83,7 +83,7 @@ private theorem exists_section_mod_maximalIdeal_sq (k : Type*) [CommRing k] (A :
     rw [← IsLocalRing.residue_eq_zero_iff, map_sub, sub_eq_zero, ← hρmk (w a), hw a,
       hσ (IsLocalRing.residue A a)]
   · intro a b
-    rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_add, hw a, hw b, hw (a + b), map_add,
+    rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_add (f := _), hw a, hw b, hw (a + b), map_add (f := _),
       map_add, sub_self]
   · intro c a
     have hres : IsLocalRing.residue A (c • a) = c • IsLocalRing.residue A a := by
@@ -126,7 +126,7 @@ private theorem mem_maximalIdeal_sq_of_tmul_D_eq_zero (k : Type*) [CommRing k] (
         = Ideal.toCotangent (IsLocalRing.maximalIdeal A) ⟨a - w a, h1 a⟩
           + Ideal.toCotangent (IsLocalRing.maximalIdeal A) ⟨b - w b, h1 b⟩ := by
     intro a b
-    rw [← map_add]
+    rw [← map_add (f := _)]
     refine hco _ _ _ _ ?_
     show a + b - w (a + b) - ((a - w a) + (b - w b)) ∈ IsLocalRing.maximalIdeal A ^ 2
     have heq : a + b - w (a + b) - ((a - w a) + (b - w b)) = w a + w b - w (a + b) := by ring
@@ -155,7 +155,7 @@ private theorem mem_maximalIdeal_sq_of_tmul_D_eq_zero (k : Type*) [CommRing k] (
         = a • Ideal.toCotangent (IsLocalRing.maximalIdeal A) ⟨b - w b, h1 b⟩
           + b • Ideal.toCotangent (IsLocalRing.maximalIdeal A) ⟨a - w a, h1 a⟩ := by
     intro a b
-    rw [← map_smul, ← map_smul, ← map_add]
+    rw [← map_smul, ← map_smul, ← map_add (f := _)]
     refine hco _ _ _ _ ?_
     show a * b - w (a * b) - (a • (b - w b) + b • (a - w a))
       ∈ IsLocalRing.maximalIdeal A ^ 2

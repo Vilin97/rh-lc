@@ -33,7 +33,7 @@ theorem GlobalTheory.Mum.TensTor.qkAdd_of_components : ∀ (R : Type) [CommRing 
       refine Subtype.ext (Prod.ext ?_ ?_)
       · apply Multiplicative.toAdd.injective
         apply ν.eX.injective
-        rw [hX.1, hxy, ← (hPs i).1, ← (hQs i).1, ← map_add]
+        rw [hX.1, hxy, ← (hPs i).1, ← (hQs i).1, ← map_add (f := _)]
         rfl
       · exact (gAdd _ _ _ _ _ _ (hPs i).2 (hQs i).2 hX.2).1 hxg
     rw [← hXeq]
@@ -51,7 +51,7 @@ theorem GlobalTheory.Mum.TensTor.qkAdd_of_components : ∀ (R : Type) [CommRing 
     | succ n ih => rw [succ_nsmul, he, ih, succ_nsmul]
   obtain ⟨x', hx'⟩ := (gQ' k).2.1 (P' * Q')
   refine ⟨x', ?_, ?_, ?_⟩
-  · rw [← hx'.1, ← hP'.1, ← hQ'.1, ← map_add]
+  · rw [← hx'.1, ← hP'.1, ← hQ'.1, ← map_add (f := _)]
     rfl
   · exact (gAdd' _ _ _ _ _ _ hP'.2 hQ'.2 hx'.2).2 rfl
   · refine ((gQ' k).2.2 x' s' (P' * Q') S' hx' hS').2 ⟨z', ?_, ?_⟩

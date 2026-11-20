@@ -84,7 +84,7 @@ private theorem IsCoc.tr_bd [Fintype X] {a : G → X → X} {c : G → X → M} 
   refine LinearMap.congr_fun (ext1 (f := (bd A M m).comp (tr A a c (m + 1)))
     (f' := (tr A a c m).comp (bd A G m)) fun g => ?_) z
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [LinearMap.comp_apply, tr_single, bd_single, map_sum, map_add, map_smul, Finset.sum_add_distrib,
+    simp only [LinearMap.comp_apply, tr_single, bd_single, map_sum, map_add (f := _), map_smul, Finset.sum_add_distrib,
     Finset.smul_sum, h.contract, h.tail]
   congr 1
   · exact Equiv.sum_comp (h.perm (g 0)) fun x => Finsupp.single (term a c x fun i => g i.succ) (1 : A)
@@ -374,7 +374,7 @@ private theorem theta_add [Finite k] [Finite V] [Finite W] (hk : (Nat.card k : A
     · simp only [if_neg h, if_neg (show ¬(u • y).1 = 0 from (smul_ne_zero_iff_ne u).2 h)]
       exact lam_homog _ _ h
   have hs : ∀ g (y : V × W), (sumRep ρ σ g)⁻¹ y = ((ρ g)⁻¹ y.1, (σ g)⁻¹ y.2) := fun g y => rfl
-  rw [theta_cm ht _ hl hz, theta_cm ht _ lam_homog hz, theta_cm ht _ lam_homog hz, ← map_add, ← tr_sum,
+  rw [theta_cm ht _ hl hz, theta_cm ht _ lam_homog hz, theta_cm ht _ lam_homog hz, ← map_add (f := _), ← tr_sum,
     tr_pull (MonoidHom.id _) pr (a' := fun g => Sum.map (la ρ g) (la σ g))
       (c' := fun g => Sum.elim (lc ρ (lam k V) g) (lc σ (lam k W) g)), cm_id]
   · intro g x

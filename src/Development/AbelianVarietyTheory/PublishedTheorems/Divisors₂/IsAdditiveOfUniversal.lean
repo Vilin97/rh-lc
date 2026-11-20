@@ -59,7 +59,7 @@ theorem isAdditive_of_universal {M : LB (A ⊗ T).left} (hM : M.IsLB)
   refine (isAdditive_iff hM).2 fun Y a a' t ↦ ?_
   have e := congrArg (CechPic.pull (lift a (lift a' t)).left)
     ((cls_eq_iff (pull_isLB hM _) (isLB_tens (pull_isLB hM _) (pull_isLB hM _))).2 h)
-  rw [cls_tens (pull_isLB hM _) (pull_isLB hM _), map_add, cls_ev hM, cls_ev hM, cls_ev hM] at e
+  rw [cls_tens (pull_isLB hM _) (pull_isLB hM _), map_add (f := _), cls_ev hM, cls_ev hM, cls_ev hM] at e
   simpa only [pull_evc, MonObj.comp_mul, lift_fst, lift_snd_assoc, lift_snd] using e
 
 theorem IsAdditive.evc_one {M : LB (A ⊗ T).left} (hM : M.IsLB) (h : IsAdditive M) (t : Y ⟶ T) :

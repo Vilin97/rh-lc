@@ -19,7 +19,7 @@ variable {R : Type} [CommRing R] [Invertible (2 : R)] {V : Type} [AddCommGroup V
 
 theorem rho_rho (a b : V) (Φ : (κ → R) → ℂ) : d.rho ψ a (d.rho ψ b Φ) = ψ (⅟(2 : R) * B a b) • d.rho ψ (a + b) Φ := by
   funext x
-  simp only [Darboux.rho, schr, Pi.smul_apply, smul_eq_mul, ← mul_assoc, ← AddChar.map_add_eq_mul, map_add, d.form,
+  simp only [Darboux.rho, schr, Pi.smul_apply, smul_eq_mul, ← mul_assoc, ← AddChar.map_add_eq_mul, map_add (f := _), d.form,
     Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add, add_assoc]
   congr 2
   have h : ⅟(2 : R) * 2 = 1 := invOf_mul_self _
@@ -50,9 +50,9 @@ theorem rho_rho_of (a b : V) (h : B a b = 0) (Φ : (κ → R) → ℂ) : d.rho �
   rw [rho_rho, h, mul_zero, AddChar.map_zero_eq_one, one_smul]
 
 def formL : V →ₗ[R] V →ₗ[R] R :=
-  LinearMap.mk₂ R B (fun a b c => by simp only [d.form, map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]; ring)
+  LinearMap.mk₂ R B (fun a b c => by simp only [d.form, map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]; ring)
     (fun c a b => by simp only [d.form, map_smul, Prod.smul_fst, Prod.smul_snd, smul_dotProduct, dotProduct_smul, smul_eq_mul]; ring)
-    (fun a b c => by simp only [d.form, map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]; ring)
+    (fun a b c => by simp only [d.form, map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]; ring)
     (fun c a b => by simp only [d.form, map_smul, Prod.smul_fst, Prod.smul_snd, smul_dotProduct, dotProduct_smul, smul_eq_mul]; ring)
 
 theorem form_eq (a b : V) : B a b = formL d a b := rfl
@@ -251,7 +251,7 @@ theorem rho_rat (h : IsStd B.ψ) (hP : Polar σ X W X₁ W₁ ι ι' I u z) (x :
         (M.co.rho B.ψ (incM F ι * incM F x₁ * (incM F ι')ᵀ) Φ)) := by
   obtain ⟨a, b, x₁, rfl⟩ := hP.span x
   refine ⟨a, b, x₁, fun Φ => ?_⟩
-  rw [rho_rho_of _ _ _ _ (sy_lin_zm M hP _ _), rho_rho, form_eq M.co, map_add, ← form_eq M.co, ← form_eq M.co,
+  rw [rho_rho_of _ _ _ _ (sy_lin_zm M hP _ _), rho_rho, form_eq M.co, map_add (f := _), ← form_eq M.co, ← form_eq M.co,
     show symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) _ _ = _ from sy_lin_um M hP _ _, show symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) _ _ = _ from sy_lin_uz M hP.toDual _ _, add_zero,
     show ⅟(2 : AF F) * -((fun j => algebraMap F (AF F) (a j)) ⬝ᵥ fun j => algebraMap F (AF F) (b j)) =
       algebraMap F (AF F) (2⁻¹ * -(a ⬝ᵥ b)) by

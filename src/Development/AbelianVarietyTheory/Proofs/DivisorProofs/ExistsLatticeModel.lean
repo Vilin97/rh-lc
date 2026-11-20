@@ -141,7 +141,7 @@ def secModule (U : X.Opens) : Module Γ(X, U) (secGrp M U) where
       smul_add]
   add_smul a b s := sec_ext M fun h => by
     change (smulSec hM U (a + b) s : V) = ((smulSec hM U a s + smulSec hM U b s : secGrp M U) : V)
-    rw [AddSubgroup.coe_add, val_smulSec hM h, val_smulSec hM h, val_smulSec hM h, map_add, add_smul]
+    rw [AddSubgroup.coe_add, val_smulSec hM h, val_smulSec hM h, val_smulSec hM h, map_add (f := _), add_smul]
   zero_smul s := sec_ext M fun h => by
     change (smulSec hM U 0 s : V) = ((0 : secGrp M U) : V)
     rw [val_smulSec hM h, map_zero, zero_smul, ZeroMemClass.coe_zero]

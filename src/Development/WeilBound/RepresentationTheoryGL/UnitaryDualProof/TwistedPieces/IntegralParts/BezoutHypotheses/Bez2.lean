@@ -36,7 +36,7 @@ theorem bez2 {M : Type*} [AddCommGroup M] [Module ℂ M] (K : Submodule ℂ M) (
     exact hab x hx y hy (by linarith)
   obtain ⟨u, v, huv⟩ := hcop
   have key := congrArg (fun p => (aeval (R : Module.End ℂ M) p) ζ) huv
-  simp only [map_add, map_mul, map_one, LinearMap.add_apply, Module.End.mul_apply, Module.End.one_apply] at key
+  simp only [map_add (f := _), map_mul, map_one, LinearMap.add_apply, Module.End.mul_apply, Module.End.one_apply] at key
   rw [← key]
   refine K.add_mem (aeval_mem K R hK u _ ?_) (aeval_mem K R hK v _ ?_)
   · rw [aeval_prod_lin R γ b]; exact h1

@@ -354,7 +354,7 @@ theorem continuousAt_lsub {σ : Type} [Fintype σ] (M : ℂ → Matrix σ σ ℂ
     exact continuousAt_const
   | add p q hp hq =>
     intro ξ
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (hp ξ).add (hq ξ)
   | mul_X p v hp =>
     intro ξ
@@ -485,7 +485,7 @@ theorem orth_end {V G : Type} [AddCommGroup V] [Module ℂ V] [Group G] [Star G]
     | mem _ h => obtain ⟨g, rfl⟩ := h; exact hcmp g
     | zero => simp
     | add x y _ _ h1 h2 =>
-      rw [map_add, map_add, mul_add, mul_add, add_sub_add_comm, h1, h2, add_zero]
+      rw [map_add (f := _), map_add (f := _), mul_add, mul_add, add_sub_add_comm, h1, h2, add_zero]
     | smul c x _ h1 =>
       rw [map_smul, map_smul, smul_eq_mul, smul_eq_mul, mul_left_comm, mul_left_comm A, ← mul_sub, h1, mul_zero]
   have hstab : ∀ g, ∀ Q ∈ Submodule.span ℂ (Set.range fun g => T g Δ),
@@ -495,7 +495,7 @@ theorem orth_end {V G : Type} [AddCommGroup V] [Module ℂ V] [Group G] [Star G]
       obtain ⟨g', rfl⟩ := h
       exact Submodule.subset_span ⟨g * g', by simp [map_mul]⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+    | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
     | smul c x _ h1 => rw [map_smul]; exact Submodule.smul_mem _ _ h1
   have hz : ∀ g, L Δ (T g P) = 0 := fun g => by
     have h1 := hcmpH _ (hstab g P hP)
@@ -505,7 +505,7 @@ theorem orth_end {V G : Type} [AddCommGroup V] [Module ℂ V] [Group G] [Star G]
     induction hQ using Submodule.span_induction with
     | mem _ h => obtain ⟨g, rfl⟩ := h; beta_reduce; rw [hadj]; exact hz _
     | zero => simp
-    | add x y _ _ h1 h2 => rw [map_add, LinearMap.add_apply, h1, h2, add_zero]
+    | add x y _ _ h1 h2 => rw [map_add (f := _), LinearMap.add_apply, h1, h2, add_zero]
     | smul c x _ h1 => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, h1, smul_zero]
   exact hpos _ (hall P hP)
 

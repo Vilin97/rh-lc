@@ -594,8 +594,8 @@ theorem idem_orth {P Q : HeightOneSpectrum (𝓞 F) → Prop} (h : ∀ v, P v �
 
 theorem idem_sum {P Q : HeightOneSpectrum (𝓞 F) → Prop} (h : ∀ v, P v → ¬ Q v) :
     idem (fun v => ¬ P v ∧ ¬ Q v) + idem P + idem Q = idem fun _ => True := by
-  refine adele_ext (by simp only [map_add, fst_idem, add_zero]) fun v => ?_
-  simp only [map_add, snd_idem]
+  refine adele_ext (by simp only [map_add (f := _), fst_idem, add_zero]) fun v => ?_
+  simp only [map_add (f := _), snd_idem]
   rw [idemF_pos (P := fun _ => True) trivial]
   by_cases hv : P v
   · rw [idemF_neg (h v hv), idemF_pos hv, idemF_neg (by simp [hv]), add_zero, zero_add]
@@ -606,9 +606,9 @@ theorem idem_sum {P Q : HeightOneSpectrum (𝓞 F) → Prop} (h : ∀ v, P v →
 def intOn (P : HeightOneSpectrum (𝓞 F) → Prop) : AddSubgroup (AF F) where
   carrier := {a | fstA F a = 0 ∧ sndA F a ∈ intAf F ∧ ∀ v, ¬ P v → evalV F v (sndA F a) = 0}
   zero_mem' := ⟨map_zero _, fun v => by rw [map_zero, map_zero]; exact zero_mem _, fun v _ => by rw [map_zero, map_zero]⟩
-  add_mem' := fun {a b} ha hb => ⟨by rw [map_add, ha.1, hb.1, add_zero],
-    fun v => by rw [map_add, map_add]; exact add_mem (ha.2.1 v) (hb.2.1 v),
-    fun v hv => by rw [map_add, map_add, ha.2.2 v hv, hb.2.2 v hv, add_zero]⟩
+  add_mem' := fun {a b} ha hb => ⟨by rw [map_add (f := _), ha.1, hb.1, add_zero],
+    fun v => by rw [map_add (f := _), map_add (f := _)]; exact add_mem (ha.2.1 v) (hb.2.1 v),
+    fun v hv => by rw [map_add (f := _), map_add (f := _), ha.2.2 v hv, hb.2.2 v hv, add_zero]⟩
   neg_mem' := fun {a} ha => ⟨by rw [map_neg, ha.1, neg_zero],
     fun v => by rw [map_neg, map_neg]; exact neg_mem (ha.2.1 v),
     fun v hv => by rw [map_neg, map_neg, ha.2.2 v hv, neg_zero]⟩

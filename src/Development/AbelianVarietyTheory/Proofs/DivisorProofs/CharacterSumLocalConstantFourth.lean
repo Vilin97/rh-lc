@@ -49,7 +49,7 @@ theorem locSmall_om {a b : ℕ} {e e' : ℕ → ℤ} (cq sq : K) (χ : (𝓞 E �
     rw [← h4]
     congr 1
     refine LinearMap.ext fun y => ?_
-    simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul]
+    simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul]
   · unfold Loc.om
     rw [GlobalTheory.LastSteps.locChar_unit cq χ hu, GlobalTheory.LastSteps.locChar_unit cq χ hu', GlobalTheory.LastSteps.vP_unit hu,
       GlobalTheory.LastSteps.vP_unit hu']

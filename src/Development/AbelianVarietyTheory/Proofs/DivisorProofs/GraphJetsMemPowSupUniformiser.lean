@@ -35,7 +35,7 @@ theorem ker_productMap_le_span {κ κ' : Type} [Field κ] [Field κ'] [Algebra �
       have e : x + y - 1 ⊗ₜ Algebra.TensorProduct.productMap ρ (AlgHom.id ℂ κ') (x + y) =
           (x - 1 ⊗ₜ Algebra.TensorProduct.productMap ρ (AlgHom.id ℂ κ') x) +
             (y - 1 ⊗ₜ Algebra.TensorProduct.productMap ρ (AlgHom.id ℂ κ') y) := by
-        rw [map_add, TensorProduct.tmul_add]
+        rw [map_add (f := _), TensorProduct.tmul_add]
         abel
       rw [e]
       exact add_mem hx hy

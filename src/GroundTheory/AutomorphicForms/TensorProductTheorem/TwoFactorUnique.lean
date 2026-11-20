@@ -63,7 +63,7 @@ theorem exists_contractLeft_ne_zero {z : V₁ ⊗[ℂ] V₂} (hz : z ≠ 0) :
     induction z' using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [contractLeft_tmul, contractRight_tmul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rwa [key]
 
 theorem contractRight_outerTensor (π₁ : Representation ℂ M₁ V₁) (π₂ : Representation ℂ M₂ V₂)
@@ -72,7 +72,7 @@ theorem contractRight_outerTensor (π₁ : Representation ℂ M₁ V₁) (π₂ 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [outerTensor_tmul, contractRight_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem contractLeft_outerTensor (π₁ : Representation ℂ M₁ V₁) (π₂ : Representation ℂ M₂ V₂)
     (l : Dual ℂ V₁) (b : M₂) (z : V₁ ⊗[ℂ] V₂) :
@@ -80,7 +80,7 @@ theorem contractLeft_outerTensor (π₁ : Representation ℂ M₁ V₁) (π₂ :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [outerTensor_tmul, contractLeft_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem tmul_ne_zero_of {x : V₁} {y : V₂} (hx : x ≠ 0) (hy : y ≠ 0) : x ⊗ₜ[ℂ] y ≠ 0 := by
   obtain ⟨l, hl⟩ : ∃ l : Dual ℂ V₂, l y ≠ 0 := by

@@ -26,7 +26,7 @@ theorem repr_map {F E A B ι : Type} [Field F] [Field E] [Algebra F E] [CommRing
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [Algebra.TensorProduct.basis_repr_tmul]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 theorem coord_eq_zero {F E A B ι : Type} [Field F] [Field E] [Algebra F E] [CommRing A] [CommRing B] [Algebra F A] [Algebra F B]
     (b : Module.Basis ι F E) (φ : A →ₐ[F] B) (z : A ⊗[F] E) (h : Algebra.TensorProduct.map φ (AlgHom.id F E) z = 0) (i : ι) :
@@ -107,7 +107,7 @@ theorem exists_op {G W : Type} [Group G] [NormedAddCommGroup W] [InnerProductSpa
     ∃ U : Module.End ℂ M.H, ∀ f, M.e (U f) = Bridge.dcOp B (M.e f) := by
   choose u hu using h
   refine ⟨⟨⟨u, fun f g => hM ?_⟩, fun c f => hM ?_⟩, hu⟩
-  · rw [map_add, hu, hu, hu, map_add]
+  · rw [map_add (f := _), hu, hu, hu, map_add (f := _)]
     funext x
     simp [Bridge.dcOp, Finset.sum_add_distrib]
   · rw [RingHom.id_apply, map_smul, hu, hu, map_smul]

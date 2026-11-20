@@ -60,7 +60,7 @@ theorem exists_mem_of_surjective {M M'' : Type} [AddCommGroup M] [Module (MRingO
       obtain ⟨y₂, hy₂, e₂⟩ := h₂
       refine ⟨y₁ + y₂, add_mem hy₁ hy₂, ?_⟩
       have : h (x₁ + x₂) - h (y₁ + y₂) = (h x₁ - h y₁) + (h x₂ - h y₂) := by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         abel
       rw [this]
       exact add_mem e₁ e₂
@@ -122,7 +122,7 @@ theorem locMap_mem_locPart {M N : Type} [AddCommGroup M] [Module (MRingOver S ι
     rw [lmap_mk]
     exact GenSESStep.mk_mem_locPart _ t a ht (hg _ m hm)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul s x _ hx => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ s hx
 
 theorem cechMap_mem_cechZc {M N : Type} [AddCommGroup M] [Module (MRingOver S ι) M] [Module S M]

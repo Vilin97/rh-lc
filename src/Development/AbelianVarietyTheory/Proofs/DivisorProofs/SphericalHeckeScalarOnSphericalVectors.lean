@@ -45,7 +45,7 @@ theorem avg (ρ : G →* Module.End ℂ M) (K : Subgroup G) {ι : Type} (s : Fin
 
 def fixS (ρ : G →* Module.End ℂ M) (S : Submodule ℂ M) (K : Subgroup G) : Submodule ℂ M where
   carrier := {x | x ∈ S ∧ ∀ k ∈ K, ρ k x = x}
-  add_mem' := fun {x y} hx hy => ⟨S.add_mem hx.1 hy.1, fun k hk => by rw [map_add, hx.2 k hk, hy.2 k hk]⟩
+  add_mem' := fun {x y} hx hy => ⟨S.add_mem hx.1 hy.1, fun k hk => by rw [map_add (f := _), hx.2 k hk, hy.2 k hk]⟩
   zero_mem' := ⟨S.zero_mem, fun k _ => map_zero _⟩
   smul_mem' := fun c x hx => ⟨S.smul_mem c hx.1, fun k hk => by rw [map_smul, hx.2 k hk]⟩
 
@@ -136,14 +136,14 @@ theorem abs_scalar (ρ : G →* Module.End ℂ M) (S : Submodule ℂ M) (hS : �
   refine ⟨c, ?_⟩
   let W1 : Submodule ℂ M :=
     { carrier := {x | x ∈ F ∧ T x = c • x}
-      add_mem' := fun {x y} hx hy => ⟨F.add_mem hx.1 hy.1, by rw [map_add, hx.2, hy.2, smul_add]⟩
+      add_mem' := fun {x y} hx hy => ⟨F.add_mem hx.1 hy.1, by rw [map_add (f := _), hx.2, hy.2, smul_add]⟩
       zero_mem' := ⟨F.zero_mem, by rw [map_zero, smul_zero]⟩
       smul_mem' := fun a x hx => ⟨F.smul_mem a hx.1, by rw [map_smul, hx.2, smul_comm]⟩ }
   let W2 : Submodule ℂ M :=
     { carrier := {x | ∃ y ∈ F, x = T y - c • y}
       add_mem' := by
         rintro _ _ ⟨y, hy, rfl⟩ ⟨y', hy', rfl⟩
-        exact ⟨y + y', F.add_mem hy hy', by rw [map_add, smul_add]; abel⟩
+        exact ⟨y + y', F.add_mem hy hy', by rw [map_add (f := _), smul_add]; abel⟩
       zero_mem' := ⟨0, F.zero_mem, by rw [map_zero, smul_zero, sub_zero]⟩
       smul_mem' := by
         rintro a _ ⟨y, hy, rfl⟩

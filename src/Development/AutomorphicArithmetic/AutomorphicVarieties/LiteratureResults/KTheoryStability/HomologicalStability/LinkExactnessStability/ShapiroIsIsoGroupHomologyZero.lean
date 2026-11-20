@@ -96,7 +96,7 @@ theorem GlobalTheory.HomStab.isIso_map_ptMap_zero : ∀ (k G H X : Type) [CommRi
     | add u w hu hw =>
       obtain ⟨a, ha⟩ := hu
       obtain ⟨b, hb⟩ := hw
-      exact ⟨a + b, by rw [map_add, ha, hb, map_add]⟩
+      exact ⟨a + b, by rw [map_add (f := _), ha, hb, map_add (f := _)]⟩
     | single y a =>
       refine ⟨(groupHomology.H0π (Rep.res φ A)).hom (A.ρ (s y)⁻¹ a), ?_⟩
       rw [key, ← permInv (s y), act, hs, ← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one,

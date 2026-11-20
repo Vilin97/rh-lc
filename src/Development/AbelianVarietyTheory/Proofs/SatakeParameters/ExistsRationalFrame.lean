@@ -27,7 +27,7 @@ theorem exists_place {K : Type} [Field K] [NumberField K] (ψ : K →+* ℂ_[l])
     { carrier := {a | ‖ψ (a : K)‖ < 1}
       add_mem' := fun {a b} ha hb => by
         have e : ((a + b : 𝓞 K) : K) = (a : K) + (b : K) := by simp
-        simp only [Set.mem_ofPred_eq, e, map_add] at *
+        simp only [Set.mem_ofPred_eq, e, map_add (f := _)] at *
         exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
       zero_mem' := by simp
       smul_mem' := fun c a ha => by

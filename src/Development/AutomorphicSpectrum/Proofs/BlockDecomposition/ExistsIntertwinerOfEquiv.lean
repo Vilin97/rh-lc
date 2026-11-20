@@ -79,7 +79,7 @@ variable {V : Type} [AddCommGroup V] [Module ℂ V] (ψ : AddChar k Circle) {n :
 
 theorem betaFun_add (a b : V) (g : Mir k (n + 1)) :
     betaFun ψ τ (a + b) g = betaFun ψ τ a g + betaFun ψ τ b g := by
-  simp only [betaFun, map_add, Submodule.Quotient.mk_add]
+  simp only [betaFun, map_add (f := _), Submodule.Quotient.mk_add]
 
 theorem betaFun_smul (c : ℂ) (a : V) (g : Mir k (n + 1)) :
     betaFun ψ τ (c • a) g = c • betaFun ψ τ a g := by

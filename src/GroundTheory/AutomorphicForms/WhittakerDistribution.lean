@@ -451,7 +451,7 @@ theorem cell_relevant (hψ : Continuous ψ₀) (hψ₁ : ψ₀ ≠ 1) {g : GL (F
   have hWσ : ∀ r ∈ W, sigmaL r ∈ W := by
     intro r hr
     obtain ⟨r₁, hr₁, r₂, hr₂, rfl⟩ := Submodule.mem_sup.1 hr
-    rw [map_add]
+    rw [map_add (f := _)]
     refine add_mem (le_sup_left (b := supportedIn U ⊓ vanishingOn (cellLe g)) ?_)
       (le_sup_right (a := relSpan (chi (n := n) ψ₀) U) ⟨hsU hr₂.1, fun x hx => ?_⟩)
     · have := sigmaL_mem_relSpan ψ₀ hr₁
@@ -563,7 +563,7 @@ theorem cell_relevant (hψ : Continuous ψ₀) (hψ₁ : ψ₀ ≠ 1) {g : GL (F
     refine hvan hk.1 fun z hz => ?_
     rw [hk.2 z (hOC z hz).2, hk.2 _ (hOC _ (hσO z hz)).2]
   have e : f - sigmaL f = (r - sigmaL r) + c • (f₀ - sigmaL f₀) + (k - sigmaL k) := by
-    rw [← hpk, ← hrq, map_add, map_add, map_smul, smul_sub]
+    rw [← hpk, ← hrq, map_add (f := _), map_add (f := _), map_smul, smul_sub]
     abel
   rw [e]
   refine add_mem (add_mem (le_sup_left (b := supportedIn U ⊓ vanishingOn C)
@@ -628,7 +628,7 @@ theorem exists_good_nhds (hψ : Continuous ψ₀) (hψ₁ : ψ₀ ≠ 1) (x : GL
       ⟨hk.1.1, fun y hy => ⟨hk.1.2 hy, fun hyC => hy (hk.2 y hyC)⟩⟩
     have hkgood := (mem_goodSub ψ₀).1 (hgood hk')
     have hneg : sigmaL r + sigmaL k = -(r + k) := by
-      rw [← map_add, hrk, map_sub, sigmaL_sigmaL]
+      rw [← map_add (f := _), hrk, map_sub, sigmaL_sigmaL]
       abel
     have hsum : k + sigmaL k ∈ rel n ψ₀ := by
       have e : k + sigmaL k = -(r + sigmaL r) := by
@@ -676,7 +676,7 @@ theorem exists_good_nhds (hψ : Continuous ψ₀) (hψ₁ : ψ₀ ≠ 1) (x : GL
       ⟨hk.1.1, fun y hy => ⟨hk.1.2 hy, fun hyC => hy (hk.2 y hyC)⟩⟩
     rw [mem_goodSub]
     have e : r + k - sigmaL (r + k) = (r - sigmaL r) + (k - sigmaL k) := by
-      rw [map_add]
+      rw [map_add (f := _)]
       abel
     rw [e]
     exact add_mem (sub_mem (hRR hr) (hσR hr)) ((mem_goodSub ψ₀).1 (hgood hk'))
@@ -735,7 +735,7 @@ theorem distribution_sigma_invariant (hψ : Continuous ψ₀) (hψ₁ : ψ₀ �
       have : (⟨x + y, rel_le ψ₀ (add_mem hx hy)⟩ :
           locallyConstantCompactSupport (GL (Fin n) F) ℂ ℂ) =
           ⟨x, rel_le ψ₀ hx⟩ + ⟨y, rel_le ψ₀ hy⟩ := rfl
-      rw [this, map_add, ihx, ihy, add_zero]
+      rw [this, map_add (f := _), ihx, ihy, add_zero]
     | smul c x hx ihx =>
       have : (⟨c • x, rel_le ψ₀ (Submodule.smul_mem _ c hx)⟩ :
           locallyConstantCompactSupport (GL (Fin n) F) ℂ ℂ) = c • ⟨x, rel_le ψ₀ hx⟩ := rfl

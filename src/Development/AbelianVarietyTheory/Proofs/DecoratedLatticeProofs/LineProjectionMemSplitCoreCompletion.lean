@@ -89,7 +89,7 @@ theorem pr_coeff_mem (hsum : IsSumFrame o ζ α α₀) (hlat : α₀.IsLat M (la
       rw [Matrix.mulVec_mulVec, Matrix.mul_assoc, α.bb', Matrix.mul_one]
     rw [h1]
     funext r
-    rw [hmdec r, RingHom.map_add, RingHom.map_mul, RingHom.map_mulVec, Pi.add_apply]
+    rw [hmdec r, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_mulVec, Pi.add_apply]
     congr 1
     simp only [Matrix.mulVec, dotProduct, Matrix.replicateCol_apply, Fin.sum_univ_one, Function.comp_apply, y,
       Sum.elim_inr]

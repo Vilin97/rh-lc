@@ -356,7 +356,7 @@ theorem contDiff_toLp_omS
     simp only [ContinuousLinearMap.zero_apply]
     exact contDiff_const
   · intro A B hA hB f
-    simp only [ContinuousLinearMap.add_apply, map_add]
+    simp only [ContinuousLinearMap.add_apply, map_add (f := _)]
     exact (hA f).add (hB f)
   · intro c A hA f
     simp only [ContinuousLinearMap.smul_apply, map_smul]
@@ -415,7 +415,7 @@ theorem hasDerivAt_toLp_omS
     simp only [ContinuousLinearMap.zero_apply, map_zero]
     exact hasDerivAt_const _ _
   · intro A B hA hB f
-    simp only [ContinuousLinearMap.add_apply, map_add]
+    simp only [ContinuousLinearMap.add_apply, map_add (f := _)]
     exact (hA f).add (hB f)
   · intro c A hA f
     simp only [ContinuousLinearMap.smul_apply, map_smul]

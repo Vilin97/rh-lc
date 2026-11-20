@@ -52,6 +52,6 @@ theorem UpperTheory.V.Th.fixCnt :
     rw [e]
     exact Submodule.smul_mem_smul h1 Submodule.mem_top
   · intro h
-    refine Submodule.smul_induction_on h (fun a ha Y _ => ?_) fun a b ha hb => by rw [map_add, ha, hb, add_zero]
+    refine Submodule.smul_induction_on h (fun a ha Y _ => ?_) fun a b ha hb => by rw [map_add (f := _), ha, hb, add_zero]
     ext i j
     exact Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mul_mem_right _ _ ha)

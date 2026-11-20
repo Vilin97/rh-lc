@@ -309,7 +309,7 @@ theorem psi_symplO (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) (w : WO S T) (x
 def realLine (σ : (D.what₂.Tau → ℂ) →+ AE D) (S T : HSp D) (z : RW T S) : ℝ →+ WO S T where
   toFun t := iotaW σ T S (t • z)
   map_zero' := by rw [zero_smul, map_zero]
-  map_add' a b := by rw [add_smul, map_add]
+  map_add' a b := by rw [add_smul, map_add (f := _)]
 
 theorem isRealDir_realLine (h : Chart θ σ) (z : RW T S) : Formalism.L2.Theta.IsRealDir T S (realLine σ S T z) :=
   ⟨(h.continuous_iota T S).comp (continuous_id.smul continuous_const), fun t => h.real_iota T S _⟩
@@ -377,7 +377,7 @@ theorem exists_coords (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1
     let Λ : Matrix (Fin T.rank) (Fin S.rank) D.host.E →+ ℝ :=
       { toFun := fun l => omO S T (z (y - y')) (z l)
         map_zero' := by rw [map_zero, map_zero]
-        map_add' := fun a b => by rw [map_add, map_add] }
+        map_add' := fun a b => by rw [map_add (f := _), map_add (f := _)] }
     have h1 : ∀ i, Λ (lam i) = 0 := fun i => by
       have := congrFun hyy i
       show omO S T (z (y - y')) (z (lam i)) = 0

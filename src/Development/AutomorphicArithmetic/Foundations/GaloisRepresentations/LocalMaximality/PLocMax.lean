@@ -51,10 +51,10 @@ private theorem exists_const_sub_mem_span_tco_of_mem_rA {F L : Type} [Field F] [
   | add f g _ _ ihf ihg =>
     obtain ⟨c, hb, h⟩ := ihf
     obtain ⟨c', hb', h'⟩ := ihg
-    refine ⟨c + c', by rw [map_add]; exact Subalgebra.add_mem _ hb hb', ?_⟩
+    refine ⟨c + c', by rw [map_add (f := _)]; exact Subalgebra.add_mem _ hb hb', ?_⟩
     convert Ideal.add_mem _ h h' using 1
     apply Subtype.ext
-    simp only [map_add, Subalgebra.coe_sub, Subalgebra.coe_add, Subalgebra.coe_algebraMap]
+    simp only [map_add (f := _), Subalgebra.coe_sub, Subalgebra.coe_add, Subalgebra.coe_algebraMap]
     ring
   | mul f g _ _ ihf ihg =>
     obtain ⟨c, hb, h⟩ := ihf

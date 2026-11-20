@@ -44,7 +44,7 @@ theorem range_le {n : ℕ} {R : Type} [CommRing R] (β : cycAway n →+* R) (S�
   | zero => exact (congrArg (· ∈ S₀) (map_zero β)).mpr S₀.zero_mem
   | one => exact (congrArg (· ∈ S₀) (map_one β)).mpr S₀.one_mem
   | add y z hy hz ihy ihz =>
-    have e : β ⟨y + z, Subring.add_mem _ hy hz⟩ = β ⟨y, hy⟩ + β ⟨z, hz⟩ := by rw [← map_add]; rfl
+    have e : β ⟨y + z, Subring.add_mem _ hy hz⟩ = β ⟨y, hy⟩ + β ⟨z, hz⟩ := by rw [← map_add (f := _)]; rfl
     rw [e]; exact S₀.add_mem ihy ihz
   | neg y hy ihy =>
     have e : β ⟨-y, Subring.neg_mem _ hy⟩ = -β ⟨y, hy⟩ := by rw [← map_neg]; rfl

@@ -562,7 +562,7 @@ theorem isIrreducible : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSp
       (detChar (Fin 1) ξ g.2 : ℂ) • π' g.1 (TensorProduct.rid ℂ V' y) := by
     intro g y
     induction y with
-    | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
     | tmul v a => simp [detRep, smul_smul]
   have hσ : ∀ y, extTensor π' (detRep (Fin 1) ξ) (1, GeneralLinearGroup.scalar (Fin 1) ϖ) y =
       (ξ ϖ : ℂ) • y := fun y => (TensorProduct.rid ℂ V').injective (by

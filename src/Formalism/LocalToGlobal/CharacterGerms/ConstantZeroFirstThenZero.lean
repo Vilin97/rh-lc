@@ -218,7 +218,7 @@ theorem mms_dA (hF : ∀ i, IntS V (G.F i)) (hc : IntS V c) (hlin : ∀ j : Fin 
         ext <;> simp [hmem, h0]
       have hdeg : p.1.degree < n := by
         have hd := congrArg Finsupp.degree hmem
-        rw [map_add] at hd
+        rw [map_add (f := _)] at hd
         have : p.2.degree ≠ 0 := fun h0 => h2 ((Finsupp.degree_eq_zero_iff _).1 h0)
         omega
       exact mm_mul_ge (ih _ hdeg p.1 rfl r) (hMint i r p.2)

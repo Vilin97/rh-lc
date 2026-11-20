@@ -105,7 +105,7 @@ theorem exists_carriesCusp {A : FormsL LL T.Q.c.F WL W G} {ι : Cusp T j w →�
       nrm := fun lp y x => T.nrmM j lp y (u x : T.R j)
       nrm_nonneg := fun lp y x => (nrmM_laws T j lp y).1 _
       nrm_zero := fun lp y => by rw [map_zero]; exact (nrmM_laws T j lp y).2.1
-      nrm_add := fun lp y x x' => by rw [map_add]; exact (nrmM_laws T j lp y).2.2.1 _ _
+      nrm_add := fun lp y x x' => by rw [map_add (f := _)]; exact (nrmM_laws T j lp y).2.2.1 _ _
       nrm_smul := fun lp y a x => by rw [u.map_smul]; exact (nrmM_laws T j lp y).2.2.2 _ _
       towKs := A.towKs, ρ := A.ρ, chi := A.chi, j := A.j }
   have hc : CarriesCusp T j w A' ι := ⟨h.1, rfl, fun lp f hf => forall_congr' fun y => by

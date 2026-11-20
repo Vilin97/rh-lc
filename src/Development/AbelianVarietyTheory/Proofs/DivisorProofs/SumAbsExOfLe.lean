@@ -144,7 +144,7 @@ theorem pairV_inclT {w : P.V} (hw : w ∈ P.latT) (s : O ⊗[ℤ_[p]] P.T) :
     P.pairV w (P.inclT s) ∈ (algebraMap O C).range := by
   induction s using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
   | tmul c t =>
     obtain ⟨b, hb⟩ := (P.mem_latT_iff w).1 hw t
     have : (algebraMap O C c ⊗ₜ t : P.V) = algebraMap O C c • (1 : C) ⊗ₜ t := by
@@ -158,7 +158,7 @@ theorem actV_mem (a : Λ) (x : P.V) (hx : x ∈ P.latT) : P.actV a x ∈ P.latT 
   obtain ⟨s, rfl⟩ := hx
   induction s using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
   | tmul c t => exact ⟨c ⊗ₜ P.actT a t, by rw [P.inclT_tmul, P.inclT_tmul]; rfl⟩
 
 variable [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O]

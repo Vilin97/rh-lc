@@ -23,8 +23,8 @@ theorem tensor_component_ne_zero_iff (F : Type) [Field F] (X C : Type) [Finite C
     { toFun := p c
       map_add' := fun s t => hext _ _ fun x => by
         by_cases hx : cl x = c
-        · rw [map_add, (hp c _ x).1 hx, (hp c _ x).1 hx, (hp c _ x).1 hx, map_add]
-        · rw [map_add, (hp c _ x).2 hx, (hp c _ x).2 hx, (hp c _ x).2 hx, add_zero]
+        · rw [map_add (f := _), (hp c _ x).1 hx, (hp c _ x).1 hx, (hp c _ x).1 hx, map_add (f := _)]
+        · rw [map_add (f := _), (hp c _ x).2 hx, (hp c _ x).2 hx, (hp c _ x).2 hx, add_zero]
       map_smul' := fun r s => hext _ _ fun x => by
         by_cases hx : cl x = c
         · rw [RingHom.id_apply, map_smul, (hp c _ x).1 hx, (hp c _ x).1 hx, map_smul]

@@ -66,7 +66,7 @@ def H (a b : ℤ) : AddSubgroup X.functionField where
   add_mem' {f g} hf hg x i j hi hj := by
     obtain ⟨u, hu⟩ := hf x i j hi hj
     obtain ⟨v, hv⟩ := hg x i j hi hj
-    exact ⟨u + v, by rw [map_add, hu, hv]; simp only [loc]; ring⟩
+    exact ⟨u + v, by rw [map_add (f := _), hu, hv]; simp only [loc]; ring⟩
   neg_mem' {f} hf x i j hi hj := by
     obtain ⟨u, hu⟩ := hf x i j hi hj
     exact ⟨-u, by rw [map_neg, hu]; simp only [loc]; ring⟩

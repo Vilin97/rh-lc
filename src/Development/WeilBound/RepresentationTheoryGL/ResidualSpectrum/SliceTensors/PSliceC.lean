@@ -103,7 +103,7 @@ theorem C_gen (M : ι → Module.End ℂ U) (hc : ∀ i j, Commute (M i) (M j)) 
       Module.End.one_apply, map_sub, hinv i _ (C_pow_mem hgP m' _ y.2), sub_self]
   have hkv : (k : U) + r = v := congrArg Subtype.val hkr
   have hΦk : Φ (k : U) ≠ 0 := by
-    intro h0; apply hΦv; rw [← hkv, map_add, h0, hΦr, add_zero]
+    intro h0; apply hΦv; rw [← hkv, map_add (f := _), h0, hΦr, add_zero]
   have hkQ : (k : U) ∈ Q := by
     refine Submodule.mem_inf.2 ⟨k.2, ?_⟩
     rw [LinearMap.mem_ker, ← C_restrict_pow hgP, LinearMap.mem_ker.1 hk, Submodule.coe_zero]

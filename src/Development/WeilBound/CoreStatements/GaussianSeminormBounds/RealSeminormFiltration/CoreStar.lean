@@ -107,7 +107,7 @@ theorem star_th {p q r s : ℕ} (c τ : ℂ) (c0 τ0 : ℚ) (hc : c = c0) (hτ :
         refine th_small c c0 hc e ?_ (low_homog a b hg)
         rw [← hd]; push_cast; linarith
     refine ⟨_, second_action_add_lowering hab hg, ?_⟩
-    rw [map_add, hlow, add_zero, thAct_mk, twAct_apply, star_trace, if_neg hne]
+    rw [map_add (f := _), hlow, add_zero, thAct_mk, twAct_apply, star_trace, if_neg hne]
     simp
   obtain ⟨y, hy, rfl⟩ := th_next c c0 hc d0 hd hx1
   let D : Module.End ℂ (Pol p q r s) := casK (units (twAct p q r s τ)) - (t : ℂ) • 1

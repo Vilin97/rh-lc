@@ -290,7 +290,7 @@ lemma coe_Eh (P : MvPolynomial (Fin n) R) :
   | C a =>
     rw [MvPolynomial.aeval_C, MvPowerSeries.algebraMap_apply]
     simp [Eh]
-  | add p q hp hq => rw [map_add, MvPolynomial.coe_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coe_add, hp, hq, map_add (f := _)]
   | mul_X p j hp =>
     rw [map_mul, MvPolynomial.coe_mul, hp, map_mul]
     congr 1

@@ -274,10 +274,10 @@ theorem kA_xL {E1 E2 : Fin n → Fin n → Module.End ℂ V} (hP : IsPairA E1 E2
     (LinearMap.congr_fun (hP.2.2 l.2.1.1 l.2.1.2 c c) x).symm
   simp only [xL, alL]
   cases hl : l.1
-  · simp only [kA, pA, Bool.false_eq_true, if_false, LinearMap.add_apply, map_add]
+  · simp only [kA, pA, Bool.false_eq_true, if_false, LinearMap.add_apply, map_add (f := _)]
     rw [g1, g2, c1, c2]
     module
-  · simp only [kA, pA, if_true, LinearMap.add_apply, LinearMap.sub_apply, map_add, map_sub]
+  · simp only [kA, pA, if_true, LinearMap.add_apply, LinearMap.sub_apply, map_add (f := _), map_sub]
     rw [g1, g2, c1, c2]
     module
 
@@ -293,7 +293,7 @@ theorem ftL_bdL {E1 E2 : Fin n → Fin n → Module.End ℂ V} (hP : IsPairA E1 
           liftL n (xL E1 E2 l) (FtL E1 E2 c y) + (alL l c : ℂ) • liftL n (xL E1 E2 l) y := by
         intro y
         funext A
-        simp only [FtL_apply, liftL_apply, Pi.add_apply, Pi.smul_apply, map_add, map_smul, kA_xL hP]
+        simp only [FtL_apply, liftL_apply, Pi.add_apply, Pi.smul_apply, map_add (f := _), map_smul, kA_xL hP]
         module
       simp only [Module.End.mul_apply]
       rw [e, FtL_ann, map_sub, map_smul, sub_add_cancel]
@@ -352,13 +352,13 @@ theorem kA_comm {E1 E2 : Fin n → Fin n → Module.End ℂ V} (hP : IsPairA E1 
       simpa [sub_eq_zero] using this
   have c1 : ∀ v, E1 c c (E2 d d v) = E2 d d (E1 c c v) := fun v => LinearMap.congr_fun (hP.2.2 c c d d) v
   have c2 : ∀ v, E1 d d (E2 c c v) = E2 c c (E1 d d v) := fun v => LinearMap.congr_fun (hP.2.2 d d c c) v
-  simp only [kA, LinearMap.add_apply, map_add, g hP.1, g hP.2.1, c1, c2]
+  simp only [kA, LinearMap.add_apply, map_add (f := _), g hP.1, g hP.2.1, c1, c2]
   abel
 
 theorem FtL_commute {E1 E2 : Fin n → Fin n → Module.End ℂ V} (hP : IsPairA E1 E2) (c d : Fin n) :
     Commute (FtL E1 E2 c) (FtL E1 E2 d) := by
   refine LinearMap.ext fun x => funext fun A => ?_
-  simp only [Module.End.mul_apply, FtL_apply, map_add, map_smul, kA_comm hP c d, smul_add, smul_smul,
+  simp only [Module.End.mul_apply, FtL_apply, map_add (f := _), map_smul, kA_comm hP c d, smul_add, smul_smul,
     mul_comm (wtL A c : ℂ)]
   abel
 

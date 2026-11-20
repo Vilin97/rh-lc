@@ -13,7 +13,7 @@ theorem heisO_resS_symm_zero {V₀ A L : HSp D} (ψ : AddChar (AF D.host.F) ℂ)
     heisO ψ V₀ S ((o.resS S).symm (a, 0)) f ((o.resS S).symm (u, x)) =
       ψ (symplOH A S u a) * f ((o.resS S).symm (u + a, x)) := by
   have h1 : (o.resS S).symm (u, x) + (o.resS S).symm (a, 0) = (o.resS S).symm (u + a, x) := by
-    rw [← map_add]; simp
+    rw [← map_add (f := _)]; simp
   simp only [heisO]
   rw [o.symplOH_resS, AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply, symplOH_zero_right, add_zero, h1]
 
@@ -22,7 +22,7 @@ theorem heisO_resT_symm_zero {T A L : HSp D} (ψ : AddChar (AF D.host.F) ℂ) (o
     heisO ψ S T ((o.resT S).symm (b, 0)) f ((o.resT S).symm (v, x)) =
       ψ (symplOH S A v b) * f ((o.resT S).symm (v + b, x)) := by
   have h1 : (o.resT S).symm (v, x) + (o.resT S).symm (b, 0) = (o.resT S).symm (v + b, x) := by
-    rw [← map_add]; simp
+    rw [← map_add (f := _)]; simp
   simp only [heisO]
   rw [o.symplOH_resT, AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply, symplOH_zero_right, add_zero, h1]
 

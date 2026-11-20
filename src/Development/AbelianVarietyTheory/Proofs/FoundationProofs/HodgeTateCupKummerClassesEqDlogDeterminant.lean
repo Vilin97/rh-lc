@@ -17,7 +17,7 @@ theorem map_mk_mem {n : ℕ} (f : On p n →ₐ[O0 p] Ω) (S : Subalgebra (O0 p)
   have hC : ∀ Q : Polynomial (O0 p), f (Ideal.Quotient.mk (towerIdeal p n) (C Q)) ∈ S := by
     intro Q
     induction Q using Polynomial.induction_on' with
-    | add a b ha hb => rw [map_add, map_add, map_add]; exact S.add_mem ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _)]; exact S.add_mem ha hb
     | monomial j b =>
       rw [← C_mul_X_pow_eq_monomial, map_mul, map_mul, map_mul, map_pow, map_pow, map_pow]
       refine S.mul_mem ?_ (S.pow_mem hx j)
@@ -25,7 +25,7 @@ theorem map_mk_mem {n : ℕ} (f : On p n →ₐ[O0 p] Ω) (S : Subalgebra (O0 p)
       rw [e, f.commutes]
       exact S.algebraMap_mem b
   induction P using Polynomial.induction_on' with
-  | add a b ha hb => rw [map_add, map_add]; exact S.add_mem ha hb
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact S.add_mem ha hb
   | monomial j Q =>
     rw [← C_mul_X_pow_eq_monomial, map_mul, map_mul, map_pow, map_pow]
     exact S.mul_mem (hC Q) (S.pow_mem hy j)
@@ -183,7 +183,7 @@ theorem coef_int' {T : Tower p Ω} {n : ℕ} {ι : On p n →ₐ[O0 p] Ω} (hι 
 theorem coef_fix {T : Tower p Ω} {n : ℕ} {ι : On p n →ₐ[O0 p] Ω} (hι : IsEmb T n ι) {g : Gal p Ω}
     (hg : g ∈ Gn T n) (k : ℤ) (β : On p n) :
     g (ι β + (k : Ω) * T.ζ n / (T.ζ n - 1)) = ι β + (k : Ω) * T.ζ n / (T.ζ n - 1) := by
-  rw [map_add, map_div₀, map_mul, map_sub, map_one, map_intCast, fix_emb hι hg, (mem_Gn.mp hg).1]
+  rw [map_add (f := _), map_div₀, map_mul, map_sub, map_one, map_intCast, fix_emb hι hg, (mem_Gn.mp hg).1]
 
 theorem cup_kummer_dlog : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∃ c : ℕ, ∀ (Ω : Type) [Field Ω] [Algebra (O0 p) Ω], IsClo p Ω →
   ∀ (T : Tower p Ω) (n : ℕ), 1 ≤ n → ∀ ι : On p n →ₐ[O0 p] Ω, IsEmb T n ι →
@@ -221,7 +221,7 @@ theorem cup_kummer_dlog : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∃ c : ℕ,
   have hne := zeta_sub_one_ne T hn
   have e : ι (fPi p n k l α β α' β') / (T.ζ n - 1) =
       ι α * (ι β' + (l : Ω) * T.ζ n / (T.ζ n - 1)) - (ι β + (k : Ω) * T.ζ n / (T.ζ n - 1)) * ι α' := by
-    simp only [fPi, map_sub, map_mul, map_add, map_intCast, map_one, hι.1]
+    simp only [fPi, map_sub, map_mul, map_add (f := _), map_intCast, map_one, hι.1]
     field_simp
     ring
   simp only [cochainExtendByZeroSubgroup_of_mem _ hg, cochainExtendByZeroSubgroup_of_mem _ hh, e]

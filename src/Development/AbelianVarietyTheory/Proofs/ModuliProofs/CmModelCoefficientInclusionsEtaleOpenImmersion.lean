@@ -36,7 +36,7 @@ theorem etale_of_adjoin_root_of_unity {R B : Type} [CommRing R] [CommRing B] [Is
   obtain ⟨g, hg⟩ := minpoly.isIntegrallyClosed_dvd hint hroot
   have hd : IsUnit (aeval x (derivative (minpoly R x))) := by
     have h2 := congrArg (fun p => aeval x (derivative p)) hg
-    simp only [derivative_mul, map_add, map_mul, minpoly.aeval, zero_mul, add_zero, derivative_sub,
+    simp only [derivative_mul, map_add (f := _), map_mul, minpoly.aeval, zero_mul, add_zero, derivative_sub,
       derivative_X_pow, derivative_C, sub_zero, aeval_C, map_pow, aeval_X, map_natCast] at h2
     have hxu : IsUnit x := IsUnit.of_pow_eq_one h1 hn.ne'
     exact isUnit_of_mul_isUnit_left (h2 ▸ hu.mul (hxu.pow _))
@@ -179,9 +179,9 @@ theorem isIntegrallyClosed_closure (d : ℕ) (hd : d.Prime) (h4 : d % 4 = 3) (r 
   obtain ⟨a, b, hab⟩ := hform x x.2
   obtain ⟨a', b', hab'⟩ := hform y y.2
   have hcw : starRingEnd ℂ w = 1 - w := by
-    rw [hw, map_div₀, map_add, hc, map_one, map_ofNat]; ring
+    rw [hw, map_div₀, map_add (f := _), hc, map_one, map_ofNat]; ring
   have hN : (y : ℂ) * starRingEnd ℂ y = ((a' ^ 2 + a' * b' + b' ^ 2 * m : ℤ) : ℂ) := by
-    rw [hab', map_add, map_mul, hcw, map_intCast, map_intCast]
+    rw [hab', map_add (f := _), map_mul, hcw, map_intCast, map_intCast]
     push_cast
     linear_combination (-(b' : ℂ) ^ 2) * hw2
   have hcy : starRingEnd ℂ y ≠ 0 := by simpa using hy
@@ -191,7 +191,7 @@ theorem isIntegrallyClosed_closure (d : ℕ) (hd : d.Prime) (h4 : d % 4 = 3) (r 
     refine ⟨((a * (a' + b') + b * b' * m : ℤ) : ℚ) / N, ((a' * b - a * b' : ℤ) : ℚ) / N, ?_⟩
     have : (x : ℂ) / y = x * starRingEnd ℂ y / N := by
       rw [← hN]; field_simp
-    rw [this, hab, hab', map_add, map_mul, hcw, map_intCast, map_intCast]
+    rw [this, hab, hab', map_add (f := _), map_mul, hcw, map_intCast, map_intCast]
     push_cast
     field_simp
     linear_combination (-(b * b' : ℂ)) * hw2

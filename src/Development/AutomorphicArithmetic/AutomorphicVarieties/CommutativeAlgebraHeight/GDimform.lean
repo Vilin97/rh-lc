@@ -38,7 +38,7 @@ private theorem height_ker_add {B C : Type} [CommRing B] [IsDomain B] [CommRing 
     | C a =>
       rw [MvPolynomial.algebraMap_def, MvPolynomial.map_C, MvPolynomial.algHom_C, MvPolynomial.algHom_C,
         ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | mul_X a i ha =>
       simp only [map_mul, ha]
       rw [MvPolynomial.algebraMap_def, MvPolynomial.map_X]

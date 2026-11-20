@@ -58,7 +58,7 @@ theorem defect_mem_B_iff {R : Type} [CommRing R] {G : Type} [Group G] [Topologic
       rw [Finset.sum_congr rfl fun g _ => ha g]
       simp
     refine ⟨u • b.1 ![g₀] + v • a, ?_⟩
-    simp only [map_add, map_zsmul]
+    simp only [map_add (f := _), map_zsmul]
     rw [Finset.sum_add_distrib, ← Finset.smul_sum, ← Finset.smul_sum, ← h1, h3, smul_smul, smul_smul, ← add_smul,
       huv, one_smul]
   · rintro ⟨y, rfl⟩
@@ -94,7 +94,7 @@ theorem exists_lift_layer [(subG p K L).Normal] (χ : charGrp (GK p K)) (hχ : T
   have key : ∀ g : GK p K, χ.1 (Additive.ofMul (QuotientGroup.mk g : GalLK p K L).out) = χ.1 (Additive.ofMul g) := by
     intro g
     obtain ⟨h, hh⟩ := QuotientGroup.mk_out_eq_mul (subG p K L) g
-    rw [hh, ofMul_mul, map_add, hχ h.1 h.2, add_zero]
+    rw [hh, ofMul_mul, map_add (f := _), hχ h.1 h.2, add_zero]
   refine ⟨fun q => (χ.1 (Additive.ofMul q.out)).out, fun s => ?_, fun g => ?_⟩
   · rw [← QuotientGroup.isOpenQuotientMap_mk.isQuotientMap.isOpen_preimage]
     have h1 : IsLocallyConstant fun g : GK p K => (χ.1 (Additive.ofMul g)).out :=

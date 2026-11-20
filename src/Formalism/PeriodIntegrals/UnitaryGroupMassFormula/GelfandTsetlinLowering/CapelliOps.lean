@@ -58,9 +58,9 @@ theorem deriv_rowGen (R : Type) [CommRing R] {r m : ℕ} (a b : Fin r) (f : MvPo
     have : rowGen R a b (C c : MvPolynomial (Fin r × Fin m) R) = Polynomial.C (C c) := by
       simp [rowGen]
     rw [this, Polynomial.derivative_C, mul_zero]
-  | add p q hp hq => rw [map_add, Polynomial.derivative_add, mul_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), Polynomial.derivative_add, mul_add, hp, hq, map_add (f := _), map_add (f := _)]
   | mul_X p v hp =>
-    rw [map_mul, Polynomial.derivative_mul, mul_add, pol_mul, map_add, map_mul, map_mul, ← hp, pol_X]
+    rw [map_mul, Polynomial.derivative_mul, mul_add, pol_mul, map_add (f := _), map_mul, map_mul, ← hp, pol_X]
     have hg : (if a = b then 1 + Polynomial.X else 1) * Polynomial.derivative (rowGen R a b (X v)) =
         rowGen R a b (if v.1 = b then X (a, v.2) else 0) := by
       rw [rowGen_X']

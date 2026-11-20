@@ -286,7 +286,7 @@ noncomputable def tensorEquivExtendScalars (M : ModuleCat.{u} R) :
         s • TensorProduct.congr e (LinearEquiv.refl R M) x
       induction x with
       | tmul a m => rfl
-      | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add] }
+      | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add] }
 
 noncomputable def homologyBaseChange (K : HomologicalComplex (ModuleCat.{u} R) c) (p : ι) :
     S ⊗[R] (K.homology p : ModuleCat R) →ₗ[S]

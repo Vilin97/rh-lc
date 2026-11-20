@@ -97,9 +97,9 @@ theorem Ψ_one : Ψ φ 1 = 1 := by
 
 theorem Φ_rat (y : ℍ[F, a, b]) : Φ φ (rat y) = (φ y).map (algebraMap F (AF F)) := by
   conv_rhs => rw [decomp y]
-  simp only [Φ_apply, map_add, map_smul, map_one, Matrix.map_add, map_smul_F, Matrix.map_one _ (map_zero _) (map_one (algebraMap F (AF F)))]
+  simp only [Φ_apply, map_add (f := _), map_smul, map_one, Matrix.map_add (f := _), map_smul_F, Matrix.map_one _ (map_zero _) (map_one (algebraMap F (AF F)))]
   ext i j
-  simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, Matrix.one_apply, smul_eq_mul, map_add, map_mul, rat]
+  simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, Matrix.one_apply, smul_eq_mul, map_add (f := _), map_mul, rat]
   split_ifs <;> simp
 
 theorem Φ_Ψ (m : Matrix (Fin 2) (Fin 2) (AF F)) : Φ φ (Ψ φ m) = m := by
@@ -129,7 +129,7 @@ theorem det_Φ (hφ : ∀ x, (φ x).det = nrm x) (x : DA F a b) : (Φ φ x).det 
     intro y; rw [← hφ y, RingHom.map_det]; rfl
   have hd2 : ∀ y z : ℍ[F, a, b], ((φ y).map (algebraMap F (AF F)) + (φ z).map (algebraMap F (AF F))).det
       = algebraMap F (AF F) (nrm (y + z)) := by
-    intro y z; rw [← Matrix.map_add _ (map_add _), ← map_add]; exact hd _
+    intro y z; rw [← Matrix.map_add _ (map_add _), ← map_add (f := _)]; exact hd _
   have h1 : (1 : Matrix (Fin 2) (Fin 2) (AF F)) = (φ 1).map (algebraMap F (AF F)) := by
     rw [map_one, Matrix.map_one _ (map_zero _) (map_one _)]
   rw [Φ_apply, h1, det_four]

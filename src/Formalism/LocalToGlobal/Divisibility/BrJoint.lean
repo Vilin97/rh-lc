@@ -27,7 +27,7 @@ private theorem map_intCast_mem_delSq {N : ℕ} (lam : DomWeight N) (f : MvPolyn
     rw [map_zero]
     exact Submodule.zero_mem _
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]

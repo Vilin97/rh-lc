@@ -161,7 +161,7 @@ theorem loc_of_parts
         GlobalTheory.WeilM.SB (Matrix (Fin a) (Fin (a + b)) k)) = ⟨omA ν β g 1 Ψ, omA_mem_SB ν β g 1 hΨ⟩ - ⟨Ψ, hΨ⟩ := rfl
     rw [e2, map_sub, sub_eq_zero]
     exact h1 g ⟨Ψ, hΨ⟩ _ Ψ₂ rfl
-  rw [e, map_add, LinearMap.add_apply, hA, zero_add]
+  rw [e, map_add (f := _), LinearMap.add_apply, hA, zero_add]
   simpa [firstVar] using hB
 
 end GlobalTheory.LiftLowerLoc

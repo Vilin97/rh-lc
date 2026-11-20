@@ -46,26 +46,26 @@ theorem mB_mul (b b' : B) (x : V ⊗[Qp] B) : mB LL (b * b') x = mB LL b (mB LL 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp [mul_assoc]
-  | add a c ha hc => simp only [map_add, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), ha, hc]
 
 theorem mB_add (b b' : B) (x : V ⊗[Qp] B) : mB LL (b + b') x = mB LL b x + mB LL b' x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp [add_mul, tmul_add]
-  | add a c ha hc => simp only [map_add, ha, hc]; abel
+  | add a c ha hc => simp only [map_add (f := _), ha, hc]; abel
 
 theorem mB_one (x : V ⊗[Qp] B) : mB LL (1 : B) x = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp
-  | add a c ha hc => simp only [map_add, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), ha, hc]
 
 theorem comm_smulB (b : B) (x : B ⊗[Qp] V) :
     TensorProduct.comm Qp B V (b • x) = mB LL b (TensorProduct.comm Qp B V x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul b v => simp [TensorProduct.smul_tmul']
-  | add a c ha hc => simp only [smul_add, map_add, ha, hc]
+  | add a c ha hc => simp only [smul_add, map_add (f := _), ha, hc]
 
 def mK (ρ : Representation LL G V) (c : K₀) : ↥(Dcris PD ρ) →ₗ[LL] ↥(Dcris PD ρ) :=
   (mB LL (algebraMap K₀ B c)).restrict (fun x hx => by
@@ -88,7 +88,7 @@ theorem cmp_ind {ρ : Representation LL G V} (h : Function.Bijective (Crystallin
   | tmul b d =>
     rw [CrystallineSubrepresentation.comparison_tmul, comm_smulB (LL := LL)]
     exact hb b ⟨_, d.2⟩
-  | add a c ha hc => simpa only [map_add] using hadd _ _ ha hc
+  | add a c ha hc => simpa only [map_add (f := _)] using hadd _ _ ha hc
 
 theorem cmp_lift {ρ : Representation LL G V} (h : Function.Bijective (CrystallineSubrepresentation.comparison PD ρ))
     {Z : Type} [AddCommGroup Z] (f : B → ↥(Dcris PD ρ) → Z)
@@ -148,11 +148,11 @@ theorem exists_proj {ρ : Representation LL G V} (h : Function.Bijective (Crysta
     rw [this]; ext; simp [mB_one]
   · induction x using cmp_ind PD h with
     | h0 => simp
-    | hadd x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | hadd x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
     | hb b d => rw [← map_smul, ← Submodule.coe_smul, hπ, hπ, map_smul]
   · induction x using cmp_ind PD h with
     | h0 => simp
-    | hadd x y hx hy => simp only [map_add, hx, hy]
+    | hadd x y hx hy => simp only [map_add (f := _), hx, hy]
     | hb b d =>
       rw [← mB_mul, hπ, hπ, ← Algebra.smul_def, map_smul]
       ext
@@ -162,22 +162,22 @@ theorem prod_mB_left (b : B) (x : V ⊗[Qp] B) (y : V' ⊗[Qp] B) :
     CrystallineSubrepresentation.prodB (LL := LL) (mB LL b x ⊗ₜ[LL] y) = mB LL b (CrystallineSubrepresentation.prodB (x ⊗ₜ[LL] y)) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, add_tmul, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), add_tmul, ha, hc]
   | tmul v c =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, tmul_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), tmul_add, ha, hc]
     | tmul v' c' => simp [CrystallineSubrepresentation.prodB_tmul, mul_assoc]
 
 theorem prod_mB_right (b : B) (x : V ⊗[Qp] B) (y : V' ⊗[Qp] B) :
     CrystallineSubrepresentation.prodB (LL := LL) (x ⊗ₜ[LL] mB LL b y) = mB LL b (CrystallineSubrepresentation.prodB (x ⊗ₜ[LL] y)) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, add_tmul, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), add_tmul, ha, hc]
   | tmul v c =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, tmul_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), tmul_add, ha, hc]
     | tmul v' c' => simp [CrystallineSubrepresentation.prodB_tmul, mul_left_comm]
 
 theorem act_prod (ρ : Representation LL G V) (ρ' : Representation LL G V') (g : G)
@@ -186,11 +186,11 @@ theorem act_prod (ρ : Representation LL G V) (ρ' : Representation LL G V') (g 
       CrystallineSubrepresentation.prodB (actVB PD ρ g x ⊗ₜ[LL] actVB PD ρ' g y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, add_tmul, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), add_tmul, ha, hc]
   | tmul v c =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, tmul_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), tmul_add, ha, hc]
     | tmul v' c' => simp [CrystallineSubrepresentation.prodB_tmul, actVB]
 
 theorem prod_mem {ρ : Representation LL G V} {ρ' : Representation LL G V'}
@@ -210,7 +210,7 @@ theorem range_le {ρ : Representation LL G V} {ρ' : Representation LL G V'} :
   rintro _ ⟨w, rfl⟩
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => rw [map_add]; exact Submodule.add_mem _ ha hc
+  | add a c ha hc => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hc
   | tmul x y => rw [mulDcris_tmul]; exact prod_mem PD x y
 
 theorem range_eq {ρ : Representation LL G V} {ρ' : Representation LL G V'}
@@ -227,12 +227,12 @@ theorem range_eq {ρ : Representation LL G V} {ρ' : Representation LL G V'}
     induction x using cmp_ind PD h with
     | h0 => simp
     | hadd a c ha hc =>
-      simp only [add_tmul, map_add, Submodule.coe_add]; exact Submodule.add_mem _ ha hc
+      simp only [add_tmul, map_add (f := _), Submodule.coe_add]; exact Submodule.add_mem _ ha hc
     | hb b d =>
       induction y using cmp_ind PD h' with
       | h0 => simp
       | hadd a c ha hc =>
-        simp only [tmul_add, map_add, Submodule.coe_add]; exact Submodule.add_mem _ ha hc
+        simp only [tmul_add, map_add (f := _), Submodule.coe_add]; exact Submodule.add_mem _ ha hc
       | hb b' d' =>
         rw [prod_mB_left, prod_mB_right, ← mB_mul]
         have := hπ (b * b') ⟨_, prod_mem PD d d'⟩
@@ -244,12 +244,12 @@ theorem range_eq {ρ : Representation LL G V} {ρ' : Representation LL G V'}
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, Submodule.coe_add]; exact Submodule.add_mem _ ha hc
+    | add a c ha hc => simp only [map_add (f := _), Submodule.coe_add]; exact Submodule.add_mem _ ha hc
     | tmul u b =>
       induction u using TensorProduct.induction_on with
       | zero => simp
       | add a c ha hc =>
-        simp only [add_tmul, map_add, Submodule.coe_add]; exact Submodule.add_mem _ ha hc
+        simp only [add_tmul, map_add (f := _), Submodule.coe_add]; exact Submodule.add_mem _ ha hc
       | tmul v v' =>
         have := key (v ⊗ₜ b) (v' ⊗ₜ 1)
         rwa [CrystallineSubrepresentation.prodB_tmul, mul_one] at this
@@ -278,46 +278,46 @@ theorem ker_eq {ρ : Representation LL G V} {ρ' : Representation LL G V'}
     rw [← sub_eq_zero, ← map_sub]
     exact (Submodule.Quotient.mk_eq_zero _).2 (bal_mem PD c x y)
   have e1 := fun x : V ⊗[Qp] B => cmp_lift PD h' (fun b d' => q (π (mB LL b x) ⊗ₜ d'))
-    (fun m m' n => by simp only [mB_add, map_add, add_tmul])
-    (fun m n n' => by simp only [map_add, tmul_add])
+    (fun m m' n => by simp only [mB_add, map_add (f := _), add_tmul])
+    (fun m n n' => by simp only [map_add (f := _), tmul_add])
     (fun c b d => by rw [mB_mul, hπc, hq])
   choose γ hγ using e1
   have γadd : ∀ x x' y, γ (x + x') y = γ x y + γ x' y := by
     intro x x' y
     induction y using cmp_ind PD h' with
     | h0 => simp
-    | hadd a c ha hc => simp only [map_add, ha, hc]; abel
-    | hb b d => simp only [hγ, map_add, add_tmul]
+    | hadd a c ha hc => simp only [map_add (f := _), ha, hc]; abel
+    | hb b d => simp only [hγ, map_add (f := _), add_tmul]
   have γsmul : ∀ (a : LL) x y, γ (a • x) y = γ x (a • y) := by
     intro a x y
     induction y using cmp_ind PD h' with
     | h0 => simp
-    | hadd a c ha hc => simp only [smul_add, map_add, ha, hc]
+    | hadd a c ha hc => simp only [smul_add, map_add (f := _), ha, hc]
     | hb b d =>
       rw [← map_smul, ← Submodule.coe_smul, hγ, hγ, map_smul, hπa, smul_tmul]
   have γB : ∀ (b : B) x y, γ (mB LL b x) y = γ x (mB LL b y) := by
     intro a x y
     induction y using cmp_ind PD h' with
     | h0 => simp
-    | hadd a c ha hc => simp only [map_add, ha, hc]
+    | hadd a c ha hc => simp only [map_add (f := _), ha, hc]
     | hb b d => rw [← mB_mul, hγ, hγ, ← mB_mul, mul_comm]
   have e2 := fun b : B => exists_liftAdd (R := LL)
     (fun (v : V) (v' : V') => γ (v ⊗ₜ[Qp] b) (v' ⊗ₜ[Qp] (1 : B)))
     (fun m m' n => by simp only [add_tmul, γadd])
-    (fun m n n' => by simp only [add_tmul, map_add])
+    (fun m n n' => by simp only [add_tmul, map_add (f := _)])
     (fun r m n => by rw [← smul_tmul', γsmul, smul_tmul'])
   choose Φ₁ hΦ₁ using e2
   obtain ⟨Φ, hΦ⟩ := exists_liftAdd (R := Qp) (fun (u : V ⊗[LL] V') (b : B) => Φ₁ b u)
-    (fun m m' n => by simp only [map_add])
+    (fun m m' n => by simp only [map_add (f := _)])
     (fun u b b' => by
       induction u using TensorProduct.induction_on with
       | zero => simp
-      | add a c ha hc => simp only [map_add, ha, hc]; abel
+      | add a c ha hc => simp only [map_add (f := _), ha, hc]; abel
       | tmul v v' => simp only [hΦ₁, tmul_add, γadd])
     (fun r u b => by
       induction u using TensorProduct.induction_on with
       | zero => simp
-      | add a c ha hc => simp only [smul_add, map_add, ha, hc]
+      | add a c ha hc => simp only [smul_add, map_add (f := _), ha, hc]
       | tmul v v' => rw [smul_tmul', hΦ₁, hΦ₁, smul_tmul])
   have γ0 : ∀ y, γ 0 y = 0 := fun y => by
     have := γadd 0 0 y
@@ -327,18 +327,18 @@ theorem ker_eq {ρ : Representation LL G V} {ρ' : Representation LL G V'}
     intro x y
     induction x using TensorProduct.induction_on with
     | zero => simp [γ0]
-    | add a c ha hc => simp only [map_add, add_tmul, ha, hc, γadd]
+    | add a c ha hc => simp only [map_add (f := _), add_tmul, ha, hc, γadd]
     | tmul v c =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add a c ha hc => simp only [map_add, tmul_add, ha, hc]
+      | add a c ha hc => simp only [map_add (f := _), tmul_add, ha, hc]
       | tmul v' c' =>
         rw [CrystallineSubrepresentation.prodB_tmul, hΦ, hΦ₁, mul_comm, ← mB_tmul (LL := LL), γB, mB_tmul, mul_one]
   have hall : ∀ w, Φ (TensorMultiplication.mulDcris PD ρ ρ' w) = q w := by
     intro w
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
     | tmul x y =>
       rw [mulDcris_tmul, hprod, ← mB_one (LL := LL) (y : V' ⊗[Qp] B), hγ, mB_one, hid]
   intro w hw
@@ -362,7 +362,7 @@ theorem unit_eq : Dcris PD (Representation.trivial LL G LL) =
       intro f g y
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add a c ha hc => simp only [map_add, ha, hc]
+      | add a c ha hc => simp only [map_add (f := _), ha, hc]
       | tmul a b =>
         simp only [ctr, actVB]
         simp
@@ -374,7 +374,7 @@ theorem unit_eq : Dcris PD (Representation.trivial LL G LL) =
       intro f y
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add a c ha hc => simp only [map_add, ha, hc]
+      | add a c ha hc => simp only [map_add (f := _), ha, hc]
       | tmul a b => simp [ctr]
     have hsep : ∀ y : LL ⊗[Qp] B, (∀ f, ctr f y = 0) → y = 0 := by
       intro y hy
@@ -388,7 +388,7 @@ theorem unit_eq : Dcris PD (Representation.trivial LL G LL) =
         intro y
         induction y using TensorProduct.induction_on with
         | zero => simp
-        | add a c ha hc => simp only [map_add, Finsupp.add_apply, ha, hc]
+        | add a c ha hc => simp only [map_add (f := _), Finsupp.add_apply, ha, hc]
         | tmul a b => simp [ctr]
       simp [this, hy]
     refine ⟨LinearMap.lTensor LL r x, ?_⟩
@@ -404,7 +404,7 @@ theorem unit_eq : Dcris PD (Representation.trivial LL G LL) =
   · rintro ⟨y, rfl⟩ g
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
     | tmul a b => simp [actVB]
 
 variable (LL V) in
@@ -433,18 +433,18 @@ theorem actKK_mul (τ : K₀ →ₐ[Qp] LL) (s t : K₀ ⊗[Qp] K₀) (x : V ⊗
     actKK LL V τ (s * t) x = actKK LL V τ s (actKK LL V τ t x) := by
   induction s using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [add_mul, map_add, LinearMap.add_apply, ha, hc]
+  | add a c ha hc => simp only [add_mul, map_add (f := _), LinearMap.add_apply, ha, hc]
   | tmul a c =>
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [mul_add, map_add, LinearMap.add_apply, ha, hc]
+    | add a c ha hc => simp only [mul_add, map_add (f := _), LinearMap.add_apply, ha, hc]
     | tmul a' c' => simp [actKK_tmul, mB_mul, smul_smul, mul_comm]
 
 theorem actKK_mem (ρ : Representation LL G V) (τ : K₀ →ₐ[Qp] LL) (t : K₀ ⊗[Qp] K₀)
     (x : V ⊗[Qp] B) (hx : x ∈ Dcris PD ρ) : actKK LL V τ t x ∈ Dcris PD ρ := by
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => rw [map_add, LinearMap.add_apply]; exact Submodule.add_mem _ ha hc
+  | add a c ha hc => rw [map_add (f := _), LinearMap.add_apply]; exact Submodule.add_mem _ ha hc
   | tmul a c => rw [actKK_tmul]; exact Submodule.smul_mem _ _ (mK PD ρ c ⟨x, hx⟩).2
 
 theorem actKK_eigen (τ : K₀ →ₐ[Qp] LL) (t : K₀ ⊗[Qp] K₀) (x : V ⊗[Qp] B)
@@ -452,7 +452,7 @@ theorem actKK_eigen (τ : K₀ →ₐ[Qp] LL) (t : K₀ ⊗[Qp] K₀) (x : V ⊗
     actKK LL V τ t x = τ (Algebra.TensorProduct.lmul' Qp t) • x := by
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, LinearMap.add_apply, ha, hc, add_smul]
+  | add a c ha hc => simp only [map_add (f := _), LinearMap.add_apply, ha, hc, add_smul]
   | tmul a c => simp [actKK_tmul, hx, smul_smul]
 
 theorem prod_actKK_left (τ : K₀ →ₐ[Qp] LL) (t : K₀ ⊗[Qp] K₀) (x : V ⊗[Qp] B) (y : V' ⊗[Qp] B) :
@@ -460,7 +460,7 @@ theorem prod_actKK_left (τ : K₀ →ₐ[Qp] LL) (t : K₀ ⊗[Qp] K₀) (x : V
       actKK LL (V ⊗[LL] V') τ t (CrystallineSubrepresentation.prodB (x ⊗ₜ[LL] y)) := by
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, LinearMap.add_apply, add_tmul, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), LinearMap.add_apply, add_tmul, ha, hc]
   | tmul a c => rw [actKK_tmul, actKK_tmul, ← smul_tmul', map_smul, prod_mB_left]
 
 theorem prod_actKK_right (τ : K₀ →ₐ[Qp] LL) (t : K₀ ⊗[Qp] K₀) (x : V ⊗[Qp] B) (y : V' ⊗[Qp] B) :
@@ -468,7 +468,7 @@ theorem prod_actKK_right (τ : K₀ →ₐ[Qp] LL) (t : K₀ ⊗[Qp] K₀) (x : 
       actKK LL (V ⊗[LL] V') τ t (CrystallineSubrepresentation.prodB (x ⊗ₜ[LL] y)) := by
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, LinearMap.add_apply, tmul_add, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), LinearMap.add_apply, tmul_add, ha, hc]
   | tmul a c => rw [actKK_tmul, actKK_tmul, tmul_smul, map_smul, prod_mB_right]
 
 theorem letter_of_ker [Algebra.IsSeparable Qp K₀]
@@ -518,13 +518,13 @@ theorem letter_of_ker [Algebra.IsSeparable Qp K₀]
     intro w
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
     | tmul x y => rfl
   have hpi : ∀ w, TensorProduct.map p p' (TensorProduct.map i i' w) = w := by
     intro w
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
     | tmul x y =>
       rw [map_tmul, map_tmul]
       congr 1
@@ -548,7 +548,7 @@ theorem letter_of_ker [Algebra.IsSeparable Qp K₀]
   · rintro _ ⟨w, rfl⟩
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => rw [map_add]; exact Submodule.add_mem _ ha hc
+    | add a c ha hc => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hc
     | tmul x y =>
       rw [mem_DcrisL]
       refine ⟨prod_mem PD (i x) (i' y), fun c => ?_⟩
@@ -563,7 +563,7 @@ theorem letter_of_ker [Algebra.IsSeparable Qp K₀]
     clear hz hz2
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
     | tmul x y =>
       change CrystallineSubrepresentation.prodB (LL := LL) (actKK LL V τ t (x : V ⊗[Qp] B) ⊗ₜ[LL]
         actKK LL V' τ t (y : V' ⊗[Qp] B)) = _

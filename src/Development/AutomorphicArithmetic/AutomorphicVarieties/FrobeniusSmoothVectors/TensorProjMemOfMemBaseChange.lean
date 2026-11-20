@@ -30,7 +30,7 @@ private theorem rank_eq_of_scalar_extension_data {H H' : Type} [AddCommGroup H] 
     induction hh using Submodule.span_induction with
     | mem x hx => obtain ⟨j, rfl⟩ := hx; exact Submodule.subset_span ⟨j, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a x _ hx => rw [hι]; exact Submodule.smul_mem _ _ hx
   rw [← (Module.Basis.mk hli hsp).mk_eq_rank'', ← e.mk_eq_rank'']
 

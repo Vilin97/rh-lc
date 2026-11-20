@@ -109,7 +109,7 @@ private theorem sb_cosInd (hc : D.host.ccK = ⊤) (hS : S.gram = 1) {e : AE D} {
     have h7 : ∀ i j, toEAf D ((t + n • u) i j) ∈ idGrp 𝔪 ↔ toEAf D (t i j) ∈ idGrp 𝔪 := fun i j => by
       have := inId_of_mem hc hS h h1 i j
       rw [h6 i j] at this
-      rw [Matrix.add_apply, RingHom.map_add]
+      rw [Matrix.add_apply, RingHom.map_add (f := _)]
       exact add_mem_cancel_right this
     rw [cosInd_zero, cosInd_zero]
     simp only [half_add h6, h7]
@@ -265,7 +265,7 @@ theorem _root_.GlobalTheory.T.cosetIndicator_reads_as_translate_curveTheta : ∀
     funext t
     have h2 : ∀ i j, toEAf D ((t + e • finTens 1 (-z) : WO S T) i j) = toEAf D (t i j) - toEAf D e * eToEAf D (z i j) :=
       fun i j => by
-        rw [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, RingHom.map_add, RingHom.map_mul, sub_eq_add_neg, ← mul_neg,
+        rw [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, RingHom.map_add (f := _), RingHom.map_mul, sub_eq_add_neg, ← mul_neg,
           ← RingHom.map_neg]
         rfl
     rw [cosInd_zero]
@@ -279,9 +279,9 @@ theorem _root_.GlobalTheory.T.cosetIndicator_reads_as_translate_curveTheta : ∀
   have hx := GlobalTheory.LatticeStable.smul_mem_latO D S T _ _ _ _ hei _ hu
   have h5 : incA D (μ : D.host.E) • u = e • u + 2 • (n • (2 • (s • u))) := by
     refine Matrix.ext fun i j => GlobalTheory.SplitScalar.adele_ext ?_ ?_
-    · simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, nsmul_eq_mul, RingHom.map_add, RingHom.map_mul, hu0,
+    · simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, nsmul_eq_mul, RingHom.map_add (f := _), RingHom.map_mul, hu0,
         mul_zero, add_zero]
-    · simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, nsmul_eq_mul, RingHom.map_add, RingHom.map_mul, hμ,
+    · simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, nsmul_eq_mul, RingHom.map_add (f := _), RingHom.map_mul, hμ,
         map_natCast]
       push_cast
       ring
@@ -289,7 +289,7 @@ theorem _root_.GlobalTheory.T.cosetIndicator_reads_as_translate_curveTheta : ∀
   rw [hfd _ hl, ← h5] at h6
   have h7 : ψ (symplOH S T (e • u) (2 • (n • (2 • (s • u))))) = 1 := by
     have h8 : ∀ x w : WO S T, symplOH S T x (2 • w) = symplO S T x w := fun x w => by
-      rw [two_nsmul, symplOH, symplO_add_right, mul_add, ← add_mul, ← RingHom.map_add, add_halves, RingHom.map_one, one_mul]
+      rw [two_nsmul, symplOH, symplO_add_right, mul_add, ← add_mul, ← RingHom.map_add (f := _), add_halves, RingHom.map_one, one_mul]
     rw [h8]
     exact char_sympl_eq_one hs.std (sdC_std hs.gS) (sdC_std hs.gT) hx (nsmul_mem hl n)
   rw [h6, h7, one_smul]

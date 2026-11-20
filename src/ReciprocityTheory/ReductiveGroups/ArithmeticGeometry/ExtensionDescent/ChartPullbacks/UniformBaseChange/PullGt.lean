@@ -215,14 +215,14 @@ lemma ψB_left_inv : (ψR xe).comp (ψR xe.symm) = RingHom.id _ := by
   refine RingHom.ext fun x => ?_
   induction x using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add a c ha hc => rw [map_add, map_add, ha, hc]
+  | add a c ha hc => rw [map_add (f := _), map_add (f := _), ha, hc]
   | single a r => simp [ψB, AddMonoidAlgebra.mapDomainBialgHom, AddMonoidAlgebra.mapDomainAlgHom_apply]
 
 lemma ψB_right_inv : (ψR xe.symm).comp (ψR xe) = RingHom.id _ := by
   refine RingHom.ext fun x => ?_
   induction x using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add a c ha hc => rw [map_add, map_add, ha, hc]
+  | add a c ha hc => rw [map_add (f := _), map_add (f := _), ha, hc]
   | single a r => simp [ψB, AddMonoidAlgebra.mapDomainBialgHom, AddMonoidAlgebra.mapDomainAlgHom_apply]
 
 lemma specψ_left : (specψ xe).left = Spec.map (CommRingCat.ofHom (ψR xe)) := rfl

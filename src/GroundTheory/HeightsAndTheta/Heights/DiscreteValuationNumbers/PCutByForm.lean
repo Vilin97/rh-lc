@@ -33,7 +33,7 @@ theorem isMultiHomogIdeal_sup_span_of_form {R : Type*} [CommRing R] {K : Type*} 
     {c : K → ℕ} (hs : IsMultiHomog s c) : IsMultiHomogIdeal (I ⊔ Ideal.span {s}) := by
   intro f hf b
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hf
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Ideal.add_mem _ (Ideal.mem_sup_left (hI y hy b))
     (Ideal.mem_sup_right (weightedHomogeneousComponent_mem_span_of_isMultiHomog hs hz b))
 

@@ -78,7 +78,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 def perp (D : Datum H) (Hh : Submodule (𝓞 E) D.La) : Submodule (𝓞 E) D.La where
   carrier := {v | ∀ t ∈ Hh, D.EF t v = 0}
   zero_mem' t _ := map_zero _
-  add_mem' {v v'} hv hv' t ht := by rw [map_add, hv t ht, hv' t ht, add_zero]
+  add_mem' {v v'} hv hv' t ht := by rw [map_add (f := _), hv t ht, hv' t ht, add_zero]
   smul_mem' a v hv t ht := by
     have h := D.adj (H.bar a) t v
     rw [hv _ (Hh.smul_mem _ ht)] at h

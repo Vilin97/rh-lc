@@ -94,7 +94,7 @@ def garding (hσ : IsURepOn (UJset ε) σ) (hφ : Continuous φ) (hφc : HasComp
   toFun w := ∫ g : Formalism.REAL.UJ ε, φ (umat g) • σ (umat g) w ∂(Formalism.REAL.muG ε)
   map_add' w w' := by
     rw [← integral_add (integrable_garding hσ hφ hφc w) (integrable_garding hσ hφ hφc w')]
-    simp only [map_add, smul_add]
+    simp only [map_add (f := _), smul_add]
   map_smul' c w := by
     rw [RingHom.id_apply, ← integral_smul]
     simp only [map_smul, smul_comm c]

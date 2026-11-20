@@ -24,7 +24,7 @@ def core (F : Type) [Field F] [Algebra F L] (W₁ W₂ : ValuationSubring L) : S
     rw [map_mul]; exact ⟨mul_mem (ha σ).1 (hb σ).1, mul_mem (ha σ).2 (hb σ).2⟩
   one_mem' σ := by rw [map_one]; exact ⟨one_mem _, one_mem _⟩
   add_mem' ha hb σ := by
-    rw [map_add]; exact ⟨add_mem (ha σ).1 (hb σ).1, add_mem (ha σ).2 (hb σ).2⟩
+    rw [map_add (f := _)]; exact ⟨add_mem (ha σ).1 (hb σ).1, add_mem (ha σ).2 (hb σ).2⟩
   zero_mem' σ := by rw [map_zero]; exact ⟨zero_mem _, zero_mem _⟩
   neg_mem' ha σ := by rw [map_neg]; exact ⟨neg_mem (ha σ).1, neg_mem (ha σ).2⟩
 

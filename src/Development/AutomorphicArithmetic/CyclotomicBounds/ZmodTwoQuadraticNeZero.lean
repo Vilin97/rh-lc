@@ -113,7 +113,7 @@ theorem card_quot_ne_two (P : HeightOneSpectrum (𝓞 H.E)) : Nat.card (𝓞 H.E
   let z : 𝓞 H.E := ⟨_, hi⟩
   have hz : z ^ 2 - z + ((2 * k + 1 : ℕ) : 𝓞 H.E) = 0 := by
     apply RingOfIntegers.ext
-    simp only [map_add, map_sub, map_pow, map_natCast, map_zero]
+    simp only [map_add (f := _), map_sub, map_pow, map_natCast, map_zero]
     exact hx
   haveI := P.isPrime
   haveI : Finite (𝓞 H.E ⧸ P.asIdeal) := Nat.finite_of_card_ne_zero (by omega)
@@ -121,7 +121,7 @@ theorem card_quot_ne_two (P : HeightOneSpectrum (𝓞 H.E)) : Nat.card (𝓞 H.E
   haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let e := ZMod.ringEquivOfPrime (𝓞 H.E ⧸ P.asIdeal) Nat.prime_two (Nat.card_eq_fintype_card.symm.trans hc)
   have h := congrArg (fun t => e.symm (Ideal.Quotient.mk P.asIdeal t)) hz
-  simp only [map_add, map_sub, map_pow, map_natCast, map_zero] at h
+  simp only [map_add (f := _), map_sub, map_pow, map_natCast, map_zero] at h
   generalize e.symm (Ideal.Quotient.mk P.asIdeal z) = u at h
   push_cast at h
   have h2 : (2 : ZMod 2) = 0 := rfl

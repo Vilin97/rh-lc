@@ -19,9 +19,9 @@ theorem star_smul_vec [hU : Unram F E] {r : ℕ} (a : F) (c : Fin r → E) : sta
 
 def trForm [Unram F E] (r : ℕ) : LinearMap.BilinForm F (Fin r → E) :=
   LinearMap.mk₂ F (fun c b => Algebra.trace F E (star c ⬝ᵥ b))
-    (fun c c' b => by simp only [star_add, add_dotProduct, map_add])
+    (fun c c' b => by simp only [star_add, add_dotProduct, map_add (f := _)])
     (fun a c b => by simp only [star_smul_vec, smul_dotProduct, map_smul])
-    (fun c b b' => by simp only [dotProduct_add, map_add])
+    (fun c b b' => by simp only [dotProduct_add, map_add (f := _)])
     (fun a c b => by simp only [dotProduct_smul, map_smul])
 
 theorem trForm_apply [Unram F E] {r : ℕ} (c b : Fin r → E) :

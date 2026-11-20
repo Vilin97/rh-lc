@@ -140,7 +140,7 @@ theorem mixM_mem {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {e : AF F} (he : e * e
   have hT : (mixM e (mat g))ᵀ = e • (mat g)ᵀ + (1 - e) • (1 : Matrix (Fin n) (Fin n) (AE F E)) := by
     rw [mixM, transpose_add, transpose_smul, transpose_smul, transpose_one]
   have hc : (mixM e (mat g)).map (cA σ) = e • (mat g).map (cA σ) + (1 - e) • (1 : Matrix (Fin n) (Fin n) (AE F E)) := by
-    rw [← AlgHom.mapMatrix_apply, mixM, map_add, map_smul, map_smul, map_one, AlgHom.mapMatrix_apply]
+    rw [← AlgHom.mapMatrix_apply, mixM, map_add (f := _), map_smul, map_smul, map_one, AlgHom.mapMatrix_apply]
   rw [hT, hc, split (incM F J), mix_mul he, mix_mul he, hg, one_mul, mul_one]
 
 def mixU {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (e : AF F) (he : e * e = e) (g : UA σ J) : UA σ J :=
@@ -213,15 +213,15 @@ theorem factor_away : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
       fstA F e₁ = 1 ∧ fstA F e₂ = 0 ∧ (∀ w ∈ S, evFin F w (e₁ + e₂) = 1) ∧ (∀ w ∉ S, evFin F w (e₁ + e₂) = 0) :=
     ⟨idemInf F, idemSet S, idemInf_mul_self, idemSet_mul_self S, idemInf_mul_idemSet S, fun u hu => mul_idemInf_of_evI hu,
       fun u hu => mul_idemSet_of hu, fstA_idemInf, fstA_idemSet S,
-      fun w hw => by rw [map_add, evFin_idemInf, evFin_idemSet_mem hw, zero_add],
-      fun w hw => by rw [map_add, evFin_idemInf, evFin_idemSet_not_mem hw, zero_add]⟩
+      fun w hw => by rw [map_add (f := _), evFin_idemInf, evFin_idemSet_mem hw, zero_add],
+      fun w hw => by rw [map_add (f := _), evFin_idemInf, evFin_idemSet_not_mem hw, zero_add]⟩
   obtain ⟨e, he⟩ : ∃ e, e₁ + e₂ = e := ⟨_, rfl⟩
   have hee : e * e = e := by
     rw [← he, add_mul, mul_add, mul_add, h11, h22, h12, mul_comm e₂ e₁, h12, zero_add, add_zero]
   have h33 : (1 - e) * (1 - e) = 1 - e := by rw [sub_mul, one_mul, mul_sub, mul_one, hee, sub_self, sub_zero]
   have he3 : e * (1 - e) = 0 := by rw [mul_sub, mul_one, hee, sub_self]
   have hevI : evI F (1 - e) = 0 := by
-    rw [evI_eq, map_sub, map_one, ← he, map_add, hfst1, hfst2, add_zero, sub_self, map_zero]
+    rw [evI_eq, map_sub, map_one, ← he, map_add (f := _), hfst1, hfst2, add_zero, sub_self, map_zero]
   rw [he] at hevS hevN
   have hevS' : ∀ w ∈ S, evFin F w (1 - e) = 0 := fun w hw => by rw [map_sub, map_one, hevS w hw, sub_self]
   refine ⟨S, mixU e₁ h11 g, mixU e₂ h22 g, mixU (1 - e) h33 g, mixU e₁ h11 h, mixU e₂ h22 h, mixU (1 - e) h33 h,

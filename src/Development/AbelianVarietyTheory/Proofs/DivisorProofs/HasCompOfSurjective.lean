@@ -70,7 +70,7 @@ theorem contractLeft_map {W' M' : Type} [AddCommGroup W'] [Module ℂ W'] [AddCo
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [contractLeft_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem contractRight_map {W' M' : Type} [AddCommGroup W'] [Module ℂ W'] [AddCommGroup M'] [Module ℂ M']
     (l : Dual ℂ M') (A : W →ₗ[ℂ] W') (B : M →ₗ[ℂ] M') (t : W ⊗[ℂ] M) :
@@ -78,14 +78,14 @@ theorem contractRight_map {W' M' : Type} [AddCommGroup W'] [Module ℂ W'] [AddC
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [contractRight_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_smulRight (l : Dual ℂ W) (y : W) (t : W ⊗[ℂ] M) :
     TensorProduct.map (l.smulRight y) LinearMap.id t = y ⊗ₜ contractLeft l t := by
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul x m => simp [contractLeft_tmul, TensorProduct.smul_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy, TensorProduct.tmul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, TensorProduct.tmul_add]
 
 theorem exists_split {ρ : Representation ℂ Γ V} (hρ : ρ.IsIrreducible) {σ : Representation ℂ Γ W}
     (hσ : σ.IsIrreducible) (hs : ∀ T : End ℂ W, (∀ g, T * σ g = σ g * T) → ∃ c : ℂ, T = c • 1) {e : Γ →* Γ}
@@ -104,7 +104,7 @@ theorem exists_split {ρ : Representation ℂ Γ V} (hρ : ρ.IsIrreducible) {σ
       rw [TensorProduct.map_tmul, hev, hev]
       change ρ ((e g)⁻¹ * g) (u.1 (σ g x)) = _
       rw [u.2 g x, rep_mul, (hc g g).eq, mul_inv_cancel_left]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hsurj : Function.Surjective ev := by
     rcases ((GlobalTheory.CuspRep.isIrreducible_iff ρ).1 hρ).2 (LinearMap.range ev) (by
       rintro g _ ⟨t, rfl⟩
@@ -234,7 +234,7 @@ theorem finrank_fixed_split {ρ : Representation ℂ Γ V} {σ : Representation 
       induction t using TensorProduct.induction_on with
       | zero => simp
       | tmul x y => simp [j, mem_fix.1 x.2 g hg, mem_fix.1 y.2 g hg]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [hr, LinearEquiv.finrank_map_eq, LinearMap.finrank_range_of_inj hj, Module.finrank_tensorProduct]
 
 def HasComp (ρ : Representation ℂ Γ V) (e : Γ →* Γ) (L : Subgroup Γ) (d : ℕ) : Prop :=

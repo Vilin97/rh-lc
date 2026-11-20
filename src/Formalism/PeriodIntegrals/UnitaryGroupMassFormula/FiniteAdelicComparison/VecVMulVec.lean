@@ -22,7 +22,7 @@ theorem psiV_tauF (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F))
       AlgHom.comp_apply, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe, Algebra.TensorProduct.comm_tmul,
       Algebra.TensorProduct.map_tmul]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem vecV_mulVec (I : AutInst) (h : HAd I) (v : HeightOneSpectrum (𝓞 I.F))
     (x : Fin I.n → I.E ⊗[I.F] Formalism.MainNotions.S.Af I.F) :

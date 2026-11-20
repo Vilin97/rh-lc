@@ -217,7 +217,7 @@ theorem exists_pol (hL : Out.Laws) (hA : IsAbelianScheme A) (Q : Out.PolAV (Sp K
     rw [cls_linComb Q.isLB, Fin.sum_univ_two] at t₁
     simp only [Matrix.cons_val_zero, Matrix.cons_val_one, neg_smul, one_smul, pull_id] at t₁
     have t₂ := congrArg (pull z.left) t₁
-    rw [map_add, map_neg, map_zsmul, map_zero, ← pull_comp, ← Over.comp_left, MonObj.comp_pow, Category.comp_id,
+    rw [map_add (f := _), map_neg, map_zsmul, map_zero, ← pull_comp, ← Over.comp_left, MonObj.comp_pow, Category.comp_id,
       pow_two z, add_neg_eq_zero] at t₂
     have t₃ : pull (1 : T ⟶ Q.A).left (cls Q.L Q.isLB) = 0 := by
       rw [Hom.one_def, Over.comp_left, pull_comp, pic_local (R := K) (pull η[Q.A].left _), map_zero]

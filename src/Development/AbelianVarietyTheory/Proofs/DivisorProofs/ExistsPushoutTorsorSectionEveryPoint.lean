@@ -63,7 +63,7 @@ theorem map_val {D' F G : Type} [CommRing D'] [Algebra R D'] [CommRing F] [Algeb
     (h : ρ.comp φ = φ'.comp ψ) (g₁ : F →ₐ[R] G) :
     g₁ (val b z₀ a ρ φ' z) = val b z₀ a (g₁.comp ρ) (g₁.comp φ') z := by
   unfold val
-  rw [map_add, ← hb.1 F G g₁ _ (val_tors ψ x z₀ hz₀ φ z hz ρ φ' h), MonObj.comp_mul, GrpObj.comp_inv,
+  rw [map_add (f := _), ← hb.1 F G g₁ _ (val_tors ψ x z₀ hz₀ φ z hz ρ φ' h), MonObj.comp_mul, GrpObj.comp_inv,
     ← Category.assoc, ← Category.assoc, spOver_comp, spOver_comp]
   rfl
 
@@ -147,7 +147,7 @@ theorem isSec_sec : IsSec n b x (sec hb ψ x z₀ hz₀ a ha hψ) := by
     refine isVal_unique ψ z₀ a hψ φ _ (sec_spec hb ψ x z₀ hz₀ a ha hψ _ _ hzw) ?_
     intro F _ _ ρ φ' h
     have tw : (spOver ρ ≫ w) ^ n = 1 := by rw [← MonObj.comp_pow, hw, MonObj.comp_one]
-    rw [map_add, sec_spec hb ψ x z₀ hz₀ a ha hψ φ z hz F ρ φ' h, ← hb.1 D' F ρ w hw]
+    rw [map_add (f := _), sec_spec hb ψ x z₀ hz₀ a ha hψ φ z hz F ρ φ' h, ← hb.1 D' F ρ w hw]
     unfold val
     rw [add_assoc, ← hb.2 F _ _ (val_tors ψ x z₀ hz₀ φ z hz ρ φ' h) tw, MonObj.comp_mul, _root_.mul_right_comm]
 

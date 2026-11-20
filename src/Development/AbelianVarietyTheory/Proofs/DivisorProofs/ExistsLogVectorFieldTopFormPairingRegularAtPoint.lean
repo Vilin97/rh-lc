@@ -114,7 +114,7 @@ theorem derivation_mem_map {k R A : Type} [CommRing k] [CommRing R] [CommRing A]
     rw [hδ]
     exact Ideal.mem_map_of_mem _ (hd r hr)
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x hx0 hx =>
     rw [smul_eq_mul, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     exact add_mem (Ideal.mul_mem_left _ _ hx) (Ideal.mul_mem_right _ _ hx0)

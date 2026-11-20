@@ -15,7 +15,7 @@ theorem esymm_deg_zero (s : Multiset ℂ) : s.esymm 0 = 1 := by
 
 theorem esymm_cons_succ (x : ℂ) (s : Multiset ℂ) (k : ℕ) :
     (x ::ₘ s).esymm (k + 1) = s.esymm (k + 1) + x * s.esymm k := by
-  simp only [Multiset.esymm, Multiset.powersetCard_cons, Multiset.map_add, Multiset.sum_add,
+  simp only [Multiset.esymm, Multiset.powersetCard_cons, Multiset.map_add (f := _), Multiset.sum_add,
     Multiset.map_map, Function.comp_def, Multiset.prod_cons, Multiset.sum_map_mul_left]
 
 theorem esymm_top (s : Multiset ℂ) (k : ℕ) (hk : Multiset.card s = k) : s.esymm k = s.prod := by

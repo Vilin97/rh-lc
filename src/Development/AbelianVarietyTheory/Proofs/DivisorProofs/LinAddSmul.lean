@@ -9,7 +9,7 @@ namespace GlobalTheory.PolarNum
 
 theorem lin_add_smul {κ : Type} [Fintype κ] (a b : κ → ℝ) (t : ℝ) :
     lin (b + t • a) = C t * lin a + lin b := by
-  simp only [lin, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, Finset.mul_sum,
+  simp only [lin, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, Finset.mul_sum,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   ring

@@ -44,7 +44,7 @@ theorem proj_comm {S S' : Subrepresentation π} (h : IsCompl S S') (g : G) (v : 
     rw [htop]
     exact Submodule.mem_top
   obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.mp hv
-  simp only [map_add, proj_left h hx, proj_right h hy, proj_left h (S.apply_mem_toSubmodule g hx),
+  simp only [map_add (f := _), proj_left h hx, proj_right h hy, proj_left h (S.apply_mem_toSubmodule g hx),
     proj_right h (S'.apply_mem_toSubmodule g hy), add_zero]
 
 end Proj

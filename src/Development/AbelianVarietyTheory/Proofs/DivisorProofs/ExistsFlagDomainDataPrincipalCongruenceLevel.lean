@@ -19,7 +19,7 @@ theorem herm_add_left (G : Matrix (Fin r) (Fin r) E) (x x' y : Fin r → E) :
 
 theorem herm_add_right (G : Matrix (Fin r) (Fin r) E) (x y y' : Fin r → E) :
     herm G x (y + y') = herm G x y + herm G x y' := by
-  simp only [herm, cc, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [herm, cc, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem herm_smul_left (G : Matrix (Fin r) (Fin r) E) (c : 𝓞 E) (x y : Fin r → E) :
     herm G (c • x) y = (c : E) * herm G x y := by

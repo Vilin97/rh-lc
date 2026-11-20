@@ -113,7 +113,7 @@ theorem exists_move (hM : ∀ i j, star (M j i) = M i j) (h1 : θ * θ = 1) (h2 
   have ep : ∀ x, θ *ᵥ (x + θ *ᵥ x) = (1 : ℂ) • (x + θ *ᵥ x) := fun x => by rw [mulVec_add, hθθ, one_smul, add_comm]
   have em : ∀ x, θ *ᵥ (x - θ *ᵥ x) = (-1 : ℂ) • (x - θ *ᵥ x) := fun x => by rw [mulVec_sub, hθθ, neg_one_smul, neg_sub]
   obtain ⟨κ₁, a1, a2, a3, a4⟩ := exists_refl hM h1 h2 h3 (Or.inl rfl) (ep v) (ep w) (by
-    simp only [map_add, LinearMap.add_apply, hθ, hs, e, ew, ew'])
+    simp only [map_add (f := _), LinearMap.add_apply, hθ, hs, e, ew, ew'])
   obtain ⟨κ₂, b1, b2, b3, b4⟩ := exists_refl hM h1 h2 h3 (Or.inr rfl) (em v) (em w) (by
     simp only [map_sub, LinearMap.sub_apply, hθ, hs, e, ew, ew'])
   refine ⟨κ₂ * κ₁, t, by exact_mod_cast ht.ne', iso_of_hf fun x y => ?_, b2.mul_left a2, ?_⟩

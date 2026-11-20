@@ -16,8 +16,8 @@ theorem sq_sub_smul_derivation_eq_zero {A B M : Type*} [CommRing A] [CommRing B]
     obtain ⟨a, rfl⟩ := hfix x hx
     exact D.map_algebraMap a
   have h1 : ∀ x, D (σ x) = -D x := fun x => by
-    have h := h0 (x + σ x) (by rw [map_add, hσ, add_comm])
-    rw [map_add] at h
+    have h := h0 (x + σ x) (by rw [map_add (f := _), hσ, add_comm])
+    rw [map_add (f := _)] at h
     exact eq_neg_of_add_eq_zero_right h
   have h2 : ∀ x, (x - σ x) • D x = 0 := fun x => by
     have h := h0 (σ x * x) (by rw [map_mul, hσ, mul_comm])
@@ -25,8 +25,8 @@ theorem sq_sub_smul_derivation_eq_zero {A B M : Type*} [CommRing A] [CommRing B]
     rw [← neg_sub, neg_smul, h, neg_zero]
   have h3 : (w - σ w) • D b + (b - σ b) • D w = 0 := by
     have h := h2 (w + b)
-    have e : w + b - σ (w + b) = (w - σ w) + (b - σ b) := by rw [map_add]; ring
-    rw [e, map_add, add_smul, smul_add, smul_add, h2, h2, zero_add, add_zero] at h
+    have e : w + b - σ (w + b) = (w - σ w) + (b - σ b) := by rw [map_add (f := _)]; ring
+    rw [e, map_add (f := _), add_smul, smul_add, smul_add, h2, h2, zero_add, add_zero] at h
     exact h
   have h4 := congrArg (fun m => (w - σ w) • m) h3
   simp only [smul_add, smul_zero] at h4
@@ -96,7 +96,7 @@ theorem sub_complexConj_eq_of_two_mul {w x : 𝓞 E} {n : ℕ} (hx : x ^ 2 = -(n
     have h : (x : E) ^ 2 = -(n : E) := coe_sq_eq_neg hx
     exact complexConj_eq_neg_of_sq_eq_neg h
   have h := congrArg (IsCMField.ringOfIntegersComplexConj E) hw
-  rw [map_mul, map_add, map_one, hx', map_ofNat] at h
+  rw [map_mul, map_add (f := _), map_one, hx', map_ofNat] at h
   apply mul_left_cancel₀ (two_ne_zero : (2 : 𝓞 E) ≠ 0)
   linear_combination hw - h
 
@@ -241,7 +241,7 @@ theorem _root_.GlobalTheory.HostModel.unramified_E21_over_maximalRealSubfield : 
   have hconj := ringOfIntegersComplexConj_zeta21_eq_pow_twenty
   have hζ21 : ζ ^ 21 = 1 := hz.pow_eq_one
   obtain ⟨t, ht⟩ := (IsCMField.ringOfIntegersComplexConj_eq_self_iff _root_.GlobalTheory.HostModel.E21 (ζ + ζ ^ 20)).mp (by
-    rw [map_add, map_pow, hconj, ← pow_mul]
+    rw [map_add (f := _), map_pow, hconj, ← pow_mul]
     linear_combination (ζ ^ 379 + ζ ^ 358 + ζ ^ 337 + ζ ^ 316 + ζ ^ 295 + ζ ^ 274 + ζ ^ 253 +
       ζ ^ 232 + ζ ^ 211 + ζ ^ 190 + ζ ^ 169 + ζ ^ 148 + ζ ^ 127 + ζ ^ 106 + ζ ^ 85 + ζ ^ 64 +
       ζ ^ 43 + ζ ^ 22 + ζ) * hζ21)
@@ -259,7 +259,7 @@ theorem _root_.GlobalTheory.HostModel.unramified_E21_over_maximalRealSubfield : 
       rw [← pow_succ', hζ21]
       exact D.map_one_eq_zero
     rw [Derivation.leibniz] at hprod
-    rw [map_add] at hDt
+    rw [map_add (f := _)] at hDt
     have key : (ζ - ζ ^ 20) • D ζ = 0 := by
       have e : (ζ - ζ ^ 20) • D ζ = ζ • (D ζ + D (ζ ^ 20)) - (ζ • D (ζ ^ 20) + ζ ^ 20 • D ζ) := by
         rw [sub_smul, smul_add]

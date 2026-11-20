@@ -79,7 +79,7 @@ theorem glueConv_holds (M : Model F E) (r : ℕ) : GlueConv M r := by
       add_mem' := by
         rintro _ _ ⟨m, w, h, rfl⟩ ⟨m', w', h', rfl⟩
         refine ⟨m + m', w + w', ?_, ?_⟩
-        · rw [ddMk_add, map_add, h, h', dwMk_add]
+        · rw [ddMk_add, map_add (f := _), h, h', dwMk_add]
         · simp only [Submodule.coe_add]; abel
       zero_mem' := ⟨0, 0, by rw [ddMk_zero, map_zero, dwMk_zero], by simp⟩
       smul_mem' := by
@@ -221,7 +221,7 @@ theorem glueConv_holds (M : Model F E) (r : ℕ) : GlueConv M r := by
       have hA := iha has wa hwa.symm
       have hB := ihb hbs wb hwb.symm
       have e0 : (⟨a + b, hy⟩ : ↥(MMsharp H t)) = ⟨a, has⟩ + ⟨b, hbs⟩ := rfl
-      rw [e0, ddMk_add, map_add, ← hwa, ← hwb, ← dwMk_add, dwMk_eq_iff] at hw
+      rw [e0, ddMk_add, map_add (f := _), ← hwa, ← hwb, ← dwMk_add, dwMk_eq_iff] at hw
       have e : a + b + (w : V) = (a + wa) + (b + wb) + ((w : V) - ↑(wa + wb)) := by
         simp only [Submodule.coe_add]; abel
       rw [e]

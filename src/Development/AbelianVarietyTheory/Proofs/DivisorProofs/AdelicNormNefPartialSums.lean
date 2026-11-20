@@ -54,7 +54,7 @@ theorem nefOver_of_icls {k : Type} [CommRing k] {X : Scheme.{0}} {p : X ⟶ Sp k
     rintro ⟨L⟩ ⟨L'⟩
     exact HtTensCurve.topSelf_one_pull_tens hproj hd i L.isLB L'.isLB)
   have e := congrArg G h
-  rw [map_nsmul, map_add, nsmul_eq_mul] at e
+  rw [map_nsmul, map_add (f := _), nsmul_eq_mul] at e
   have h₁ : 0 ≤ G A.icls := hA Z i κ hd
   have h₂ : 0 ≤ G B.icls := hB Z i κ hd
   change 0 ≤ G L.icls

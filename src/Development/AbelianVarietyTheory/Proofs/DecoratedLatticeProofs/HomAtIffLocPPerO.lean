@@ -69,7 +69,7 @@ theorem homAt_iff_locP_perO : ∀ (D : D7) (S T : HSp D) (SS : Finset (Formalism
           rw [LinearMap.smul_apply, smul_smul, hs, ← Finset.mul_prod_erase gens sg hg, mul_comm]
         rw [e]; exact N'.smul_mem _ (hsg g hg).2
       | zero => rw [map_zero]; exact N'.zero_mem
-      | add y z _ _ h1 h2 => rw [map_add]; exact N'.add_mem h1 h2
+      | add y z _ _ h1 h2 => rw [map_add (f := _)]; exact N'.add_mem h1 h2
       | smul o y _ h => rw [LinearMap.map_smul_of_tower]; exact N'.smul_mem _ h
     exact ⟨s, hsP, Submodule.subset_span ⟨1, Formalism.L2.Pj.one_mem_inverse_halfDifferent D, s • x, hsx, (one_smul _ _).symm⟩⟩
   · intro hx P hP y hy

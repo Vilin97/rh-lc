@@ -51,7 +51,7 @@ theorem mem_HfQ_iff (L : Lattice (O := O) ρ) (hρ : ∀ m, Continuous fun g => 
     obtain ⟨_, ⟨a0, ha0, rfl⟩, _, ⟨xb, rfl⟩, rfl⟩ := Submodule.mem_sup.1 h
     obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ xb
     refine ⟨a0 + latticeCoboundaryCocycle PD L hρ x, (finiteCocycles PD ρ).add_mem ha0.2 (coboundary_mem_blochKato_cocycles PD (x : V) (hρ x)), ?_⟩
-    rw [map_add, lattice_reduction_coboundary_mem_cocycles PD L hρ I hI x]
+    rw [map_add (f := _), lattice_reduction_coboundary_mem_cocycles PD L hρ I hI x]
     rfl
   · rintro ⟨a, ha, rfl⟩
     exact Submodule.mem_sup_left ⟨a, ⟨a.2, ha⟩, rfl⟩

@@ -76,7 +76,7 @@ theorem exists_root_one (Ω : Type) [Field Ω] (p : ℕ) [hp : Fact p.Prime] [Ch
       simp only [map_sub, map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_X, map_one] at this
       rw [hf, ← this]; ring
     have hx' : g (AdjoinRoot.mk P q) = 0 := hx
-    rw [h1, map_add, map_mul, map_sub, hgr, map_one, sub_self, zero_mul, add_zero, hg] at hx'
+    rw [h1, map_add (f := _), map_mul, map_sub, hgr, map_one, sub_self, zero_mul, add_zero, hg] at hx'
     rw [h1, Ideal.add_eq_sup]
     exact Submodule.add_mem_sup (Ideal.mem_map_of_mem _ hx')
       (Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _))

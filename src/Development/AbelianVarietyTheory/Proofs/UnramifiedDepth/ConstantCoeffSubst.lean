@@ -136,7 +136,7 @@ theorem constantCoeff_subst (g : κ → κ → R) (Q : MvPolynomial κ R) :
     constantCoeff (subst g Q) = constantCoeff Q := by
   induction Q using MvPolynomial.induction_on with
   | C a => rw [subst_C]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp [subst_X]
 
 theorem pderiv_subst (g : κ → κ → R) (j : κ) (Q : MvPolynomial κ R) :
@@ -144,7 +144,7 @@ theorem pderiv_subst (g : κ → κ → R) (j : κ) (Q : MvPolynomial κ R) :
   classical
   induction Q using MvPolynomial.induction_on with
   | C a => simp [subst_C]
-  | add p q hp hq => simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p k hp =>
     have h1 : pderiv j (subst g (X k)) = C (g k j) := by
       set_option synthInstance.maxHeartbeats 100000 in
@@ -162,13 +162,13 @@ theorem pderiv_subst (g : κ → κ → R) (j : κ) (Q : MvPolynomial κ R) :
     rw [map_mul, pderiv_mul, h1, hp, ← h2, Finset.sum_mul, ← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl
     intro i _
-    simp only [pderiv_mul, map_add, map_mul, mul_add, mul_assoc]
+    simp only [pderiv_mul, map_add (f := _), map_mul, mul_add, mul_assoc]
 
 theorem pair_subst (g : κ → κ → R) (P Q : MvPolynomial κ R) :
     pair P (subst g Q) = pair (subst (fun i j => g j i) P) Q := by
   induction P using MvPolynomial.induction_on generalizing Q with
   | C a => rw [subst_C, pair_C_left, pair_C_left, constantCoeff_subst]
-  | add p q hp hq => rw [map_add, pair_add_left, pair_add_left, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), pair_add_left, pair_add_left, hp, hq]
   | mul_X p k hp =>
     rw [pair_mul_X, pderiv_subst, pair_sum_right, map_mul, subst_X, Finset.mul_sum, pair_sum_left]
     apply Finset.sum_congr rfl

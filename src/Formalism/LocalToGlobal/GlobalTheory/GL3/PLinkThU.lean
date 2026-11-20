@@ -32,7 +32,7 @@ private theorem sS_swap (z w : VC D N N') : sS w z = (starRingEnd ℂ) (sS z w) 
 
 private theorem sS_add (z x : VC D N N') :
     sS (z + x) (z + x) = sS z z + sS z x + sS x z + sS x x := by
-  simp only [sS, Pi.add_apply, map_add, add_mul, mul_add, Finset.sum_add_distrib]
+  simp only [sS, Pi.add_apply, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib]
   ring
 
 private theorem re_Hf_add (T : Tor D) (z x : VC D N N') :
@@ -154,7 +154,7 @@ theorem embT_K (τ : D.what₂.Tau) (x : D.host.E) (hx : x ∈ D.host.K) :
     induction hx' using IntermediateField.adjoin_induction with
     | mem y hy => rw [Set.mem_singleton_iff.mp hy]; exact hb
     | algebraMap r => rw [eq_ratCast (algebraMap ℚ D.host.E) r]; exact map_ratCast σ r
-    | add y z _ _ h1 h2 => rw [map_add, h1, h2]
+    | add y z _ _ h1 h2 => rw [map_add (f := _), h1, h2]
     | inv y _ h1 => rw [map_inv₀, h1]
     | mul y z _ _ h1 h2 => rw [map_mul, h1, h2]
   show D.host.φ₀ (σ x) = _

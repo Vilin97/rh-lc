@@ -31,7 +31,7 @@ theorem norm_for_all_alpha : NormAllAlpha := by
     have : ∀ x y : Q, (x - y) + (x - y) = (x + x) - (y + y) := by intro x y; abel
     rw [this, e3, e4, smul_add, sub_self]
   have e6 : nm (α + α') = nm α + nm α' + tr (star α * α') := by
-    apply hinj; simp only [map_add, hnm, htr, star_add, star_mul, star_star]; ring
+    apply hinj; simp only [map_add (f := _), hnm, htr, star_add, star_mul, star_star]; ring
   rw [e1, e2, e5, hα, hα', e6, add_smul, add_smul]
 
 end Formalism.HermitianLattices.IntegralLatticeDensity

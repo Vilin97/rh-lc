@@ -29,4 +29,4 @@ theorem UpperTheory.Reformulated.B.IntegralClosureCriterionSecond.okc_of :
     D.host.sqd_sq _ (u : D.host.K).2 hint
   have hs : D.host.φ₀ D.host.sqd = UpperTheory.Reformulated.B.IntegralClosureCriterionSecond.be D := D.host.φ₀_mem
   refine ⟨x, y, hxy, ?_⟩
-  rw [hz, map_div₀, map_add, map_mul, map_intCast, map_intCast, hs, map_ofNat]
+  rw [hz, map_div₀, map_add (f := _), map_mul, map_intCast, map_intCast, hs, map_ofNat]

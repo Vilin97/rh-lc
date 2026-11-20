@@ -68,8 +68,8 @@ private theorem trace_eq_sum (E : Type) [Field E] [NumberField E] (p : ℕ) [Fac
     have hadd : LinearMap.mulLeft ℤ_[p] (a + b) = LinearMap.mulLeft ℤ_[p] a + LinearMap.mulLeft ℤ_[p] b := by
       ext z
       simp [add_mul]
-    rw [hadd, map_add, map_add, map_add, ha, hb, ← Finset.sum_add_distrib]
-    simp [map_add]
+    rw [hadd, map_add (f := _), map_add (f := _), map_add (f := _), ha, hb, ← Finset.sum_add_distrib]
+    simp [map_add (f := _)]
   | tmul c y =>
     have h0 : (c ⊗ₜ[ℤ] y : ℤ_[p] ⊗[ℤ] 𝓞 E) = c • ((1 : ℤ_[p]) ⊗ₜ[ℤ] y) := by
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]

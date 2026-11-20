@@ -14,7 +14,7 @@ private theorem lin_mul {E τ : Type} [CommRing E] (i : τ) (f g : MvPowerSeries
   · rw [h1, MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hf, zero_mul]
   · have h2 : p.2 = 0 := by
       have hd := congrArg Finsupp.degree h
-      rw [map_add, Finsupp.degree_single] at hd
+      rw [map_add (f := _), Finsupp.degree_single] at hd
       have : Finsupp.degree p.1 ≠ 0 := fun h0 => h1 ((Finsupp.degree_eq_zero_iff _).1 h0)
       exact (Finsupp.degree_eq_zero_iff _).1 (by omega)
     rw [h2, MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hg, mul_zero]
@@ -34,7 +34,7 @@ private theorem lin_sat {O A τ : Type} [CommRing O] [IsDomain O] [CommRing A] [
     refine Submodule.mul_induction_on hg (fun a ha b hb => ?_) (fun a b ha hb => ?_)
     · rw [map_mul]
       exact lin_mul i _ _ (by rw [hc, (RingHom.mem_ker).1 ha, map_zero]) (by rw [hc, (RingHom.mem_ker).1 hb, map_zero])
-    · rw [map_add, map_add, ha, hb, add_zero]
+    · rw [map_add (f := _), map_add (f := _), ha, hb, add_zero]
   have h2 := key _ (by rwa [sq] at h)
   rw [lin_smul] at h2
   exact (mul_eq_zero.1 h2).resolve_left fun h0 => hc0 (IsFractionRing.injective O (FractionRing O) (by rw [h0, map_zero]))

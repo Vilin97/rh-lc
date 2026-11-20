@@ -29,7 +29,7 @@ theorem lift_mem_KDq (hl : LevOk H SG SQ) (x : Formalism.L2.Herm.unitaryOneFinit
       algebraMap H.E _ (algebraMap (𝓞 H.E) H.E c) := fun w => adAt_inclE H.F w _
   have hsv : ∀ w : HeightOneSpectrum (𝓞 H.E), Valued.v (adAt H.F w s) ≤ 1 := (mem_rInt_iff H.F H.E s).1 hs
   have hle : ∀ w : HeightOneSpectrum (𝓞 H.E), Valued.v (adAt H.F w d) ≤ 1 := fun w => by
-    rw [hd, map_add, map_one, map_mul, hci]
+    rw [hd, map_add (f := _), map_one, map_mul, hci]
     refine Valuation.map_add_le _ (by rw [map_one]) ?_
     rw [map_mul, valued_algebraMap]
     exact mul_le_one' (HeightOneSpectrum.valuation_le_one _ _) (hsv w)
@@ -50,7 +50,7 @@ theorem lift_mem_KDq (hl : LevOk H SG SQ) (x : Formalism.L2.Herm.unitaryOneFinit
       exact DetSpec.val_compAt_ne _ _
     rw [hcomp P, mul_div_cancel_right₀ _ h0]
     show Valued.v (adAt H.F P d - 1) < 1
-    rw [hd, map_add, map_one, add_sub_cancel_left, map_mul, hci, map_mul,
+    rw [hd, map_add (f := _), map_one, add_sub_cancel_left, map_mul, hci, map_mul,
       valued_algebraMap]
     have hlt : P.valuation H.E (algebraMap (𝓞 H.E) H.E c) < 1 :=
       (HeightOneSpectrum.valuation_lt_one_iff_mem P c).2 (hc P hP)

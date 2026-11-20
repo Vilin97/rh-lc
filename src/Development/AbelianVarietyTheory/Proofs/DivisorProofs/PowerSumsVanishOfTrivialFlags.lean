@@ -92,7 +92,7 @@ private theorem mem_span_range_psi {p : ℕ} [Fact p.Prime] (G : _root_.GlobalTh
     rw [hφ]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨c, rfl⟩)
   | add x y hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
 
 open Matrix NumberField in

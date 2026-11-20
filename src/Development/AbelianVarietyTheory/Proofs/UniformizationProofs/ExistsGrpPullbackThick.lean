@@ -173,7 +173,7 @@ theorem mul_pull (hG : GlobalFnsSt) (t : ∀ χ : D.X, LB.Gen (LB.LinComb D.P.L 
       val (t (hD.xe χ)) h y J * val (t (hD.xe χ')) h y J :=
     ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) rfl (val_pull hJ _ _ _))).symm.trans
       ((val_corr hJ (hm (hD.xe χ) (hD.xe χ')) h).trans (val_mul hJ _ _ _))
-  rw [← map_add] at m
+  rw [← map_add (f := _)] at m
   replace m := (congrArg₂ (· * ·) rfl c).symm.trans m
   rw [va, va, va, cPoint_add, mul_comm p', mul_comm p', mul_comm p'] at m
   have vc := val_cub D'.cub (𝟙 T') hJ' (cP D' T' χ) (cP D' T' χ') p'

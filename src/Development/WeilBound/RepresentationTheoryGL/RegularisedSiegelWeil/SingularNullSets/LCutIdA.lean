@@ -28,7 +28,7 @@ theorem repr_map' {F E R R' ι : Type} [Field F] [Field E] [Algebra F E] [CommRi
       φ ((Algebra.TensorProduct.basis R b).repr z k) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   | tmul a e => simp [Algebra.TensorProduct.basis_repr_tmul]
 
 theorem ae_ext (z z' : AE D) (hi : ∀ w, compInf D.host.F D.host.E w z = compInf D.host.F D.host.E w z')

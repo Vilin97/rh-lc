@@ -5,7 +5,7 @@ noncomputable def UpperTheory.Reformulated.B.ComplexLinearPart.linPart :
   fun {a b} T =>
     { toFun := fun v => (1 / 2 : ℂ) • (T v - Complex.I • T (Complex.I • v))
       map_add' := fun v w => by
-        simp only [smul_add, map_add]
+        simp only [smul_add, map_add (f := _)]
         module
       map_smul' := fun c v => by
         have hc : ∀ {n : ℕ} (x : Fin n → ℂ), c • x = c.re • x + c.im • (Complex.I • x) := by
@@ -16,9 +16,9 @@ noncomputable def UpperTheory.Reformulated.B.ComplexLinearPart.linPart :
         have hI : Complex.I • Complex.I • v = -v := by
           rw [smul_smul, Complex.I_mul_I, neg_one_smul]
         have h1 : T (c • v) = c.re • T v + c.im • T (Complex.I • v) := by
-          rw [hc v, T.map_add, T.map_smul, T.map_smul]
+          rw [hc v, T.map_add (f := _), T.map_smul, T.map_smul]
         have h2 : T (Complex.I • c • v) = c.re • T (Complex.I • v) - c.im • T v := by
-          rw [smul_comm Complex.I c v, hc (Complex.I • v), hI, T.map_add, T.map_smul, T.map_smul,
+          rw [smul_comm Complex.I c v, hc (Complex.I • v), hI, T.map_add (f := _), T.map_smul, T.map_smul,
             map_neg, smul_neg, sub_eq_add_neg]
         rw [h1, h2, RingHom.id_apply]
         ext j

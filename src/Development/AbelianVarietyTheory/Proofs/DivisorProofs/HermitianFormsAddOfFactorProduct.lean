@@ -223,7 +223,7 @@ theorem lam_shift [IsCommMonObj A] {L L₁ : LB A.left} (u₁ : HolUnif A L₁ g
   have step : ∀ I, u.fr (j I) (cmap g I z) ^ ε I = ext u.Λ χ (cmap g I l) ^ ε I *
       Complex.exp ((ε I : ℂ) * (Real.pi * B Hm (cmap g I z) (cmap g I l) +
         Real.pi / 2 * B Hm (cmap g I l) (cmap g I l))) * u.fr (j I) (cmap g I (z + l)) ^ ε I := fun I => by
-    rw [hF.2.2 ⟨_, hmem I⟩ (j I) _ (hc I), map_add, ext_of_mem _ _ (hmem I), mul_zpow, mul_zpow, Complex.exp_int_mul]
+    rw [hF.2.2 ⟨_, hmem I⟩ (j I) _ (hc I), map_add (f := _), ext_of_mem _ _ (hmem I), mul_zpow, mul_zpow, Complex.exp_int_mul]
     rfl
   rw [lamUnif_fr, lamUnif_fr, Finset.prod_congr rfl (fun I _ => step I), Finset.prod_mul_distrib,
     Finset.prod_mul_distrib, ← Complex.exp_sum, charProd hM hF l ((hΛ _).2 hl1) ((hΛ _).2 hl2)]

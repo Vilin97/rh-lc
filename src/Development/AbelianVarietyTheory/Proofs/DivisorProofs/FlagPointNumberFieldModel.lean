@@ -62,7 +62,7 @@ theorem exists_finset_factor {X : Scheme.{0}} (h : X ⟶ Sp ℤ) [LocallyOfFinit
     induction hb using Algebra.adjoin_induction with
     | mem b hb => exact hs (Finset.mem_coe.2 (Finset.mem_image_of_mem _ hb))
     | algebraMap r => exact ⟨r, by rw [map_intCast, eq_intCast (algebraMap ℤ Γ(X, U)), map_intCast]⟩
-    | add b b' _ _ hb hb' => rw [map_add]; exact add_mem hb hb'
+    | add b b' _ _ hb hb' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hb hb'
     | mul b b' _ _ hb hb' => rw [map_mul]; exact mul_mem hb hb'
   choose ψ₀ hψ₀ using hR
   let ψ : Γ(X, U) →+* T :=
@@ -147,7 +147,7 @@ theorem exists_numberField : ∀ {E : Type} [Field E] [NumberField E] [IsCMField
       obtain ⟨k, rfl⟩ := hx
       exact hSK _ (Or.inl (Or.inr ⟨k, rfl⟩))
     | zero => rw [map_zero]; exact zero_mem _
-    | add x x' _ _ hx hx' => rw [map_add]; exact add_mem hx hx'
+    | add x x' _ _ hx hx' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hx'
     | smul q x _ hx => rw [map_rat_smul]; exact Kf.smul_mem hx
   let jF : c.F →+* Kf := y.fK.codRestrict Kf hmem
   have hιjF : ι.comp jF = y.fK := RingHom.ext fun _ => rfl

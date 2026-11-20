@@ -6,7 +6,7 @@ open Polynomial
 private theorem exp_cong (w : ℕ) (g : ℤ[X]) : (X ^ w - 1 : ℤ[X]) ∣ expand ℤ (1 + w) g - g := by
   induction g using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, add_sub_add_comm]
+    rw [map_add (f := _), add_sub_add_comm]
     exact dvd_add hp hq
   | monomial n a =>
     rw [expand_monomial, ← C_mul_X_pow_eq_monomial, ← C_mul_X_pow_eq_monomial, ← mul_sub]
@@ -135,7 +135,7 @@ theorem UpperTheory.V.ZK.sEta :
     AddMonoidAlgebra.mapDomainRingHom ℤ (AddMonoidHom.inl (ZMod (l ^ ν)) (ZMod (l ^ ν)))
   have hφι : ∀ t y, φ t (ι y) = y := by
     intro t y
-    refine AddMonoidAlgebra.induction_linear y (by simp) (fun a b ha hb => by rw [map_add, map_add, ha, hb])
+    refine AddMonoidAlgebra.induction_linear y (by simp) (fun a b ha hb => by rw [map_add (f := _), map_add (f := _), ha, hb])
       (fun m r => ?_)
     simp only [ι, AddMonoidAlgebra.mapDomainRingHom_apply, AddMonoidAlgebra.mapDomain_single, hφ]
     simp

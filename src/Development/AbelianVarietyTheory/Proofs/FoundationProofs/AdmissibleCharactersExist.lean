@@ -25,7 +25,7 @@ theorem hf_add_right (x y z : VC D N N') : Hf D T x (y + z) = Hf D T x y + Hf D 
   unfold Hf
   rw [← add_div]
   congr 1
-  simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hf_conj (x y : VC D N N') : Hf D T x y = (starRingEnd ℂ) (Hf D T y x) := by
   set_option synthInstance.maxHeartbeats 100000 in

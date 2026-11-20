@@ -13,7 +13,7 @@ theorem exists_isPhi : ∀ {K : Type} [CommRing K] {V : Type} [AddCommGroup V] [
     intro x x' y
     funext t
     simp only [Lop, Pi.add_apply]
-    split_ifs <;> simp only [map_add, add_mul, smul_add, add_smul, add_zero] <;> abel
+    split_ifs <;> simp only [map_add (f := _), add_mul, smul_add, add_smul, add_zero] <;> abel
   have lopAddY : ∀ (x : V) (y y' : Finset ι → ExteriorAlgebra K V),
       Lop f h x (y + y') = Lop f h x y + Lop f h x y' := by
     intro x y y'

@@ -59,7 +59,7 @@ theorem UpperTheory.Gal.FiniteEtaleModels.trKer_holds :
   have e2 : κ • L.actG h⁻¹ w = w'' := by rw [← map_nsmul, ← hw''e, hinv]
   have key : inAf D ((show D.La from a) - f x) = κ • (n • (w' + w'')) := by
     have e1 : inAf D a = L.actG h⁻¹ (κ • v) := by rw [← hav, hinv]
-    rw [GlobalTheory.HeckeApprox.inAf_sub, e1, hvx, map_nsmul, map_add, map_nsmul, _root_.smul_add, hfx,
+    rw [GlobalTheory.HeckeApprox.inAf_sub, e1, hvx, map_nsmul, map_add (f := _), map_nsmul, _root_.smul_add, hfx,
       smul_comm κ (n * κ), e2, smul_smul κ n, mul_comm κ n, _root_.smul_add]
     abel
   have hmem : n • (w' + w'') ∈ LaHat D := AddSubgroup.nsmul_mem _ (AddSubgroup.add_mem _ hw' hw'') n

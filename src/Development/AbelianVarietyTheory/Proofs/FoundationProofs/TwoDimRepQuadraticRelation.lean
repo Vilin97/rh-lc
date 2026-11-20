@@ -129,13 +129,13 @@ theorem isotypic_of_quadratic_relation : ∀ {E : Type} [Field E] [IsAlgClosed E
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
     | add x₁ x₂ h₁ h₂ =>
-      simp only [map_add, add_mul, mul_add, trace_add, add_smul, smul_add] at h₁ h₂ ⊢
+      simp only [map_add (f := _), add_mul, mul_add, trace_add, add_smul, smul_add] at h₁ h₂ ⊢
       linear_combination (norm := module) h₁ + h₂
     | single g c =>
       induction y using MonoidAlgebra.induction_linear with
       | zero => simp
       | add y₁ y₂ h₁ h₂ =>
-        simp only [map_add, add_mul, mul_add, trace_add, add_smul, smul_add] at h₁ h₂ ⊢
+        simp only [map_add (f := _), add_mul, mul_add, trace_add, add_smul, smul_add] at h₁ h₂ ⊢
         linear_combination (norm := module) h₁ + h₂
       | single h d =>
         simp only [hΦ, hΨ, trace_smul, smul_mul_smul_comm, smul_eq_mul]

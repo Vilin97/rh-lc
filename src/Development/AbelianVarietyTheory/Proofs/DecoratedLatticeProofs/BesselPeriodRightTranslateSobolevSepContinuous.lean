@@ -196,7 +196,7 @@ theorem sepCont_per_rTrans : ∀ (D : D7) (θ : InfFam D) (ψ : AddChar (AF D.ho
       rw [map_smul, hTt]
       exact (contLeft B.V).smul_mem r (mult_mem_contLeft θ M J χ hT'm u)
     | add x y hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (contLeft B.V).add_mem hx hy
   let Λ : SmT M →ₗ[ℂ] ℂ :=
     { toFun := fun x => B.per ψ φ (rTrans t (T x))

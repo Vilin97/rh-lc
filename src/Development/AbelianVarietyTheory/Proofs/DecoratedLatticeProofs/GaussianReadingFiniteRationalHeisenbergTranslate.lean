@@ -127,7 +127,7 @@ theorem xiN_heisO_finOf : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : In
   rw [e0, AddChar.map_zero_eq_one, one_mul, e1, e2, e3]
   set X := embH (tauE D) δ (toHom S T rfl rfl γ)
   have hadd : HV sc (z + X) (z + X) = HV sc z z + HV sc z X + HV sc X z + HV sc X X := by
-    simp only [map_add, LinearMap.add_apply]; ring
+    simp only [map_add (f := _), LinearMap.add_apply]; ring
   have hc : HV sc X z = starRingEnd ℂ (HV sc z X) := GlobalTheory.AdForm.HeisRead.HV_conj sc z X
   have hcj : starRingEnd ℂ (HV sc z X) = HV sc z X - 2 * Complex.I * ((HV sc z X).im : ℂ) := by
     apply Complex.ext <;> simp <;> ring

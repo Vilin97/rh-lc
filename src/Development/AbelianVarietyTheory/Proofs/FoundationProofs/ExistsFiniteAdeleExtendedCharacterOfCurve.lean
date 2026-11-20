@@ -26,7 +26,7 @@ variable (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ)
 theorem cmTraceAdditiveCharacter_add (a b : D.host.E) : psi0 D cc δ (a + b) = psi0 D cc δ a * psi0 D cc δ b := by
   rw [psi0, psi0, psi0, ← ee_add]
   congr 1
-  simp only [map_add, Finset.sum_add_distrib, Complex.add_im]
+  simp only [map_add (f := _), Finset.sum_add_distrib, Complex.add_im]
   ring
 
 theorem cmTraceAdditiveCharacter_zero : psi0 D cc δ 0 = 1 := by simp [psi0, ee]
@@ -121,15 +121,15 @@ theorem exists_psi : ∀ (D : D7), admG1 D → ∀ (cc : Ideal (𝓞 D.host.K)) 
   refine ⟨fun y => psi0 D cc δ (e y), fun x y => ?_, ?_, fun a => ?_, fun y => ?_, m, hm, fun w hw => ?_⟩
   · rw [← cmTraceAdditiveCharacter_add]
     refine key _ _ _ (add_mem (hs x) (hs y)) ?_
-    rw [map_add]
+    rw [map_add (f := _)]
     linear_combination he x + he y
   · exact (key 0 0 0 (zero_mem _) (by simp)).trans (cmTraceAdditiveCharacter_zero D cc δ)
   · exact key _ a 0 (zero_mem _) (by simp)
   · have hw : sgA D (s y) ∈ OhE D := Formalism.UG.P.csDual_sig_mem _ (hs y)
     refine (key _ (e y + D.host.conj (e y)) _ (add_mem (hs y) hw) ?_).trans (cmTraceAdditiveCharacter_add_conj D cc δ _)
     have h := congrArg (sgA D) (he y)
-    rw [map_add, map_mul, map_natCast, GlobalTheory.NormSum.PtsMem.sgA_inc] at h
-    rw [map_add]
+    rw [map_add (f := _), map_mul, map_natCast, GlobalTheory.NormSum.PtsMem.sgA_inc] at h
+    rw [map_add (f := _)]
     linear_combination he y + h
   · exact (key _ 0 w hw (by simp)).trans (cmTraceAdditiveCharacter_zero D cc δ)
 

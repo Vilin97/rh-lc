@@ -134,7 +134,7 @@ theorem dens_gen {n : ℕ} (a b : Fin (n + 1)) (ζ : Alt n) :
     · rw [dens_mul_pull_bas a b hT]
       simp [dens, hT]
   | zero => simp [dens_zero]
-  | add x y _ _ hx hy => rw [map_add, mul_add, dens_add, dens_add, hx, hy, mul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), mul_add, dens_add, dens_add, hx, hy, mul_add]
   | smul c x _ hx => rw [map_smul, mul_smul_comm, dens_smul, dens_smul, hx]; ring
 
 theorem dens_mul_pull_headL {n : ℕ} (η : Alt (n + 1)) (ζ : Alt n) (h : IsType 1 1 η) :
@@ -144,7 +144,7 @@ theorem dens_mul_pull_headL {n : ℕ} (η : Alt (n + 1)) (ζ : Alt n) (h : IsTyp
   induction hη using Submodule.span_induction with
   | mem x hx => obtain ⟨x, rfl⟩ := hx; exact dens_gen _ _ _
   | zero => simp [dens_zero]
-  | add x y _ _ hx hy => rw [map_add, add_mul, dens_add, dens_add, hx, hy, add_mul]
+  | add x y _ _ hx hy => rw [map_add (f := _), add_mul, dens_add, dens_add, hx, hy, add_mul]
   | smul c x _ hx => rw [map_smul, smul_mul_assoc, dens_smul, dens_smul, hx, mul_assoc]
 
 end GlobalTheory.LocFub.TopDens

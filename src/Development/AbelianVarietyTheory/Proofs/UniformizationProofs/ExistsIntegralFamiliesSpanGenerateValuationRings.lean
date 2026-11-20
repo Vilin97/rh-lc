@@ -124,7 +124,7 @@ theorem exists_span_generate : PolBaseChangeSt → GlobalFnsSt → DVR.TwistBase
   let en := (finProdFinEquiv (m := k ^ Module.finrank ℤ D'.X) (n := k ^ D.toPre.P.g)).symm
   have hoff : ∀ i i' l, i' ≠ i → ∀ j, (f (i', l) (hD.xe (e i))).f j = 0 := fun i i' l hi =>
     hf0 (i', l) _ fun mu hmu => hi ((he (e i)).unique ⟨hD.xe.symm mu, hD.xe.injective (by
-      rw [map_add, map_nsmul, AddEquiv.apply_symm_apply]; exact hmu.symm)⟩ ⟨0, by rw [smul_zero, add_zero]⟩)
+      rw [map_add (f := _), map_nsmul, AddEquiv.apply_symm_apply]; exact hmu.symm)⟩ ⟨0, by rw [smul_zero, add_zero]⟩)
   refine ⟨_, fun i => F (en i), fun i => f (en i), fun i => F' (en i), fun i => f' (en i),
     fun i => ⟨hF _, hF' _, hf' _⟩, ?_, ?_⟩
   · have hrange : Set.range (fun i => F' (en i)) = Set.range F' := en.surjective.range_comp F'
@@ -163,7 +163,7 @@ theorem exists_span_generate : PolBaseChangeSt → GlobalFnsSt → DVR.TwistBase
       refine fam_ext fun χ j => ?_
       obtain ⟨i, ⟨m, hm⟩, -⟩ := he (hD.xe.symm χ)
       obtain rfl : χ = hD.xe (e i) + k • hD.xe m := by
-        rw [← map_nsmul, ← map_add, ← hm, AddEquiv.apply_symm_apply]
+        rw [← map_nsmul, ← map_add (f := _), ← hm, AddEquiv.apply_symm_apply]
       refine fam_eq_on_class_of_eq hG R D.toPre _ k s _ (hD.xe (e i)) (fun j => ?_) _ j
       rw [sum_f, Fintype.sum_prod_type, Finset.sum_eq_single i, hc i j]
       · rfl

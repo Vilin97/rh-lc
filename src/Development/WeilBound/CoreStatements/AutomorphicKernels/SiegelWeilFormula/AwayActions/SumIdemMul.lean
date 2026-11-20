@@ -210,7 +210,7 @@ theorem qs_incM {n : ℕ} (ε : ℤ) {g : Matrix (Fin n) (Fin n) E} (hg : IsEH �
     simpa using this
   simp only [incM, Matrix.add_apply, Matrix.transpose_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul,
     Matrix.zero_apply, cA_inclR]
-  rw [show ((ε : ℤ) : AE F E) = inclR (F := F) (AF F) (ε : E) from (map_intCast _ _).symm, ← map_mul, ← map_add, hab,
+  rw [show ((ε : ℤ) : AE F E) = inclR (F := F) (AF F) (ε : E) from (map_intCast _ _).symm, ← map_mul, ← map_add (f := _), hab,
     map_zero]
 
 end PositivityTheory.SiegelWeilFormula.KAway

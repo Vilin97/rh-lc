@@ -34,7 +34,7 @@ theorem evaluation_at_zero : Ev0 := by
       MvPowerSeries.C (PowerSeries.constantCoeff g) := by
     rw [← PowerSeries.subst_C (a := s) (PowerSeries.constantCoeff g), ← PowerSeries.subst_add hsub,
       sub_add_cancel]
-  rw [h4, map_add, h2, zero_add, MvPowerSeries.constantCoeff_C]
+  rw [h4, map_add (f := _), h2, zero_add, MvPowerSeries.constantCoeff_C]
 
 theorem jet_derivative_integrality : JetD := by
   intro p _ ex ph n

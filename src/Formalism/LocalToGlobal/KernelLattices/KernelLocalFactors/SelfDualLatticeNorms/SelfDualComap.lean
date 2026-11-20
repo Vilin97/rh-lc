@@ -76,7 +76,7 @@ theorem th_comap (hI : IsIsom H H' (g : V →ₗ[ℂ] W)) {Λ' : AddSubgroup W} 
     have h := hG2' (g x) hx' (g z)
     simp only [Formalism.L2.Th1.H.opU] at h ⊢
     rw [hI' z x, hI' x x] at h
-    rw [map_add]
+    rw [map_add (f := _)]
     exact h
 
 theorem relIdx_comap (Λ₁ Λ₂ : AddSubgroup W) :

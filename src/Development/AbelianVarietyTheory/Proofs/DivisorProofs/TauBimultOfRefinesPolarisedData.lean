@@ -80,7 +80,7 @@ theorem tauBimult_of_half : ∀ (R : Type) [CommRing R] [IsDomain R] (R' : Type)
   have hw' := hw _ _ _ (hu a) (hu a') (hu b)
   rw [← hx] at hw'
   have hq := hQ (e a) (e a') (e b) y J hJ
-  rw [← map_add] at hq
+  rw [← map_add (f := _)] at hq
   change val (D.tau (a + a') b) (𝟙 _) y J' * cubV D.cub y J' _ _ _ = _
   rw [per _ _ y J J' hJ hJ', per _ _ y J J' hJ hJ', per _ _ y J J' hJ hJ']
   calc _ = (lamVal w (lift (toUnit (TK R') ≫ D.c (a + a')) (toUnit (TK R') ≫ D.c b)).left y J J' *

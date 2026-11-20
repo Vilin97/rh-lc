@@ -40,7 +40,7 @@ theorem u5 : MonomialDeterminantStatement := by
        add_mem' := by
          intro a b ha hb
          show v (algebraMap R C (a + b)) < 1
-         rw [map_add]
+         rw [map_add (f := _)]
          exact lt_of_le_of_lt (v.map_add _ _) (max_lt ha hb)
        zero_mem' := by
          show v (algebraMap R C 0) < 1

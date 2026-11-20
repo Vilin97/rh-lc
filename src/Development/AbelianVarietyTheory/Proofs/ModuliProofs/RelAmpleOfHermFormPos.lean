@@ -192,7 +192,7 @@ theorem exists_complementary (u : HolUnif A L g) (hL : L.IsLB) {Hm : Matrix (Fin
       change θ (F z + F l) = (_ * cexp (Real.pi * hermForm Hm (F z) (F l) +
         Real.pi / 2 * hermForm Hm (F l) (F l))) ^ N * _ at h1
       change θ (F (z + l)) * (θ₁ (z + l) * G (z + l)) = _ * (θ (F z) * (θ₁ z * G z))
-      rw [map_add, h1, hθ₁.2, hG, hform', hform', mul_pow, mul_pow, mul_pow, ← he]
+      rw [map_add (f := _), h1, hθ₁.2, hG, hform', hform', mul_pow, mul_pow, mul_pow, ← he]
       field_simp
   · rw [hform']
     change ρ * (hermForm _ z z).re ≤ _

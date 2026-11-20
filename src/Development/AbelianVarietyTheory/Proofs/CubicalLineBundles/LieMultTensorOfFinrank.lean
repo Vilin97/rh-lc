@@ -84,7 +84,7 @@ theorem hasType_of_isTen : Out.PolBaseChangeSt → ∀ (E : Type) [Field E] [Num
       simp only [map_sub, map_mul, map_ofNat, map_one] at h
       linear_combination h / 2
     obtain ⟨m, rfl, -⟩ := hgen c
-    simp only [RingHom.comp_apply, map_add, map_mul, map_intCast, hw']
+    simp only [RingHom.comp_apply, map_add (f := _), map_mul, map_intCast, hw']
   · refine key _ (Submodule.finrank_eq_zero.2 ((Submodule.eq_bot_iff _).2 fun y hy => ?_))
     have h1 := EigenSplit.mem_eigenSub.1 hy H.rt
     have h2 : rightAction k (OK H) (𝓞 E) D.La H.rt = algebraMap (OK H) k (2 * wK H - 1) • LinearMap.id := by

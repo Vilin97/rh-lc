@@ -17,7 +17,7 @@ theorem pointConeMap_map_intCast (y : (Σ k, ι k) → Ω) (g : MRing ι ℤ) :
     pointConeMap A y (MvPolynomial.map (Int.castRingHom A) g) = ReciprocityTheory.ChartRestriction.G.Geo.mConeMap y g := by
   induction g using MvPolynomial.induction_on with
   | C a => simp [pointConeMap, ReciprocityTheory.ChartRestriction.G.Geo.mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp, map_X]
     simp [pointConeMap, ReciprocityTheory.ChartRestriction.G.Geo.mConeMap]
@@ -51,7 +51,7 @@ theorem exists_pow_chartMonomial_mul_sub_map_mem {y : (Σ k, ι k) → Ω} (hA :
     have h := (pointIdeal A y).add_mem ((pointIdeal A y).mul_mem_left (s ^ m) hg)
       ((pointIdeal A y).mul_mem_left (s ^ n) hk)
     convert h using 1
-    simp only [map_add, map_mul, map_pow, hs, ← hsdef]
+    simp only [map_add (f := _), map_mul, map_pow, hs, ← hsdef]
     ring
   | mul_X p i hp =>
     obtain ⟨n, g, hg⟩ := hp

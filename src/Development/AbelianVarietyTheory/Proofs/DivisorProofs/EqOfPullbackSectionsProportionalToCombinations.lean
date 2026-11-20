@@ -65,7 +65,7 @@ theorem gs_eval_eq {Rg : Type} [CommRing Rg] {fB : B₀ ⟶ Sp Rg} {a : Fin mA �
   induction P using MvPolynomial.induction_on with
   | C a₀ =>
     rw [MvPolynomial.eval₂Hom_C, GlobalTheory.AmpleSpan.gs_const fB _ Ψ₁ x m₁, GlobalTheory.AmpleSpan.gs_const fB _ Ψ₂ x m₂, e]
-  | add P Q hP hQ => rw [map_add, gs_add _ x _ m₁, gs_add _ x _ m₂, hP, hQ]
+  | add P Q hP hQ => rw [map_add (f := _), gs_add _ x _ m₁, gs_add _ x _ m₂, hP, hQ]
   | mul_X P j hP =>
     rw [map_mul, gs_mul _ x _ m₁, gs_mul _ x _ m₂, hP, MvPolynomial.eval₂Hom_X']
     exact congrArg _ (uc.mul_right_cancel ((key Ψ₁ h₁ m₁ j).trans (key Ψ₂ h₂ m₂ j).symm))

@@ -94,13 +94,13 @@ theorem trace_at_split : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [N
     intro w
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [smul_add, map_add, hx, hy, ← map_add]; congr 1; simp only [map_add]; ring
+    | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, ← map_add (f := _)]; congr 1; simp only [map_add (f := _)]; ring
     | tmul b e =>
       rw [TensorProduct.smul_tmul', smul_eq_mul, trace_baseChange_tmul, mul_assoc, liftV_one_mul_comp, map_mul,
         AlgHom.commutes]
       congr 1
       change evFin F v b * algebraMap F (Fv F v) (Algebra.trace F E e) = evFin F v b * τ e + evFin F v b * τ (σ e)
-      rw [← mul_add, ← map_add, add_conj_eq_trace hcm, AlgHom.commutes]
+      rw [← mul_add, ← map_add (f := _), add_conj_eq_trace hcm, AlgHom.commutes]
   rw [hz1, key, hpiW, hpiW]
 
 end GlobalTheory.SplitAdeleTrace

@@ -32,7 +32,7 @@ theorem constantCoeff_algHom {L : Type} [CommRing L] (γ : L⟦X⟧ →ₐ[L] L�
     (a : L⟦X⟧) : constantCoeff (γ a) = constantCoeff a := by
   conv_lhs => rw [PowerSeries.eq_shift_mul_X_add_const a]
   have : γ (C (constantCoeff a)) = C (constantCoeff a) := γ.commutes _
-  rw [map_add, map_mul, this, map_add, map_mul, h0]
+  rw [map_add (f := _), map_mul, this, map_add (f := _), map_mul, h0]
   simp
 
 open PowerSeries in
@@ -297,7 +297,7 @@ theorem exists_val (hinj : Function.Injective inclR) (gA : G → (RA →ₐ[O] R
         ring
       have e2 := congrArg Dc.J e1
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_mul, map_pow, map_sum, map_add, Dc.J_toL, Dc.J_γ] at e2
+        simp only [map_mul, map_pow, map_sum, map_add (f := _), Dc.J_toL, Dc.J_γ] at e2
       rw [map_pow]
       exact e2) w' hw'
   have key' : actVB PD T.ρ g w' - w' = ∑ i, actS T.V B (β (I.io (z' i))) (x i) := key
@@ -453,7 +453,7 @@ theorem mem_of_layers (ιA : Ai →+* B)
     intro o r
     induction r using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [smul_add, map_add, ha, hb]
+    | add a b ha hb => simp only [smul_add, map_add (f := _), ha, hb]
     | tmul a w => rw [smul_tmul', hβ₀, hβ₀, smul_tmul', smul_eq_mul, smul_eq_mul, map_mul]
   have hN : nOf W T = W.N T := nOf_crys W hT
   rw [← hN] at nb hu2 hy

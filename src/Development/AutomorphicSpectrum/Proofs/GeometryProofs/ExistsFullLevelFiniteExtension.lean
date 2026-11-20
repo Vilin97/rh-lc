@@ -50,7 +50,7 @@ theorem exists_finite_subfield {F k : Type} [Field F] [Field k] [Algebra F k] [A
     induction ha using Algebra.adjoin_induction with
     | mem x hx => exact IntermediateField.subset_adjoin F S (Finset.mem_image_of_mem _ hx)
     | algebraMap r => exact (hV r).symm ▸ K.algebraMap_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let f' : Γ(X, U) ⟶ CommRingCat.of K := CommRingCat.ofHom (f.hom.codRestrict K hr)
   refine ⟨Spec.map f' ≫ hU.fromSpec, ?_⟩

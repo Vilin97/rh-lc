@@ -81,7 +81,7 @@ theorem decomp (z : Om l) (N : ℕ) (y : Om l) (hy : y ∈ Fz z) :
     obtain ⟨a, ha, w, hw, h⟩ := hp
     obtain ⟨b, hb, v, hv, h'⟩ := hq
     refine ⟨a + b, add_mem ha hb, w + v, add_mem hw hv, ?_⟩
-    rw [map_add, h, h']
+    rw [map_add (f := _), h, h']
     ring
   | monomial k c =>
     have e : (Polynomial.aeval z : Polynomial ℚ_[l] →ₐ[ℚ_[l]] Om l).toRingHom (Polynomial.monomial k c)
@@ -108,7 +108,7 @@ theorem Vz_stable (n m : ℕ) (z : Om l) (hz : IsPrimitiveRoot z (l ^ (n + m)))
     refine Submodule.subset_span ⟨a * k, fun h => hk (hac'.dvd_of_dvd_mul_left h), ?_⟩
     rw [map_pow, ← ha, pow_mul]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx =>
     change g ((c : Om l) * x) ∈ _
     rw [map_mul, (IntermediateField.mem_fixingSubgroup_iff _ _).1 hg c c.2]
@@ -216,7 +216,7 @@ theorem estimate (C : Core l) (n : ℕ) (hn : 1 ≤ n) (g : GQ l) (hg : g ∈ (F
       (mul_mem (hc _) hb) (sub_mem ((Vz _ _).smul_mem ⟨_, hc c⟩ (Vz_stable n m _ hz g hg w hw)) hw)
     rw [norm_mul, norm_algebraMap'] at this
     convert this using 2
-    rw [map_add, (IntermediateField.mem_fixingSubgroup_iff _ _).1 hg b hb, map_sub, map_one]
+    rw [map_add (f := _), (IntermediateField.mem_fixingSubgroup_iff _ _).1 hg b hb, map_sub, map_one]
     ring
 
 theorem full (C : Core l) (i : ℤ) (x : ℂ_[l]) (hi : i ≠ 0)

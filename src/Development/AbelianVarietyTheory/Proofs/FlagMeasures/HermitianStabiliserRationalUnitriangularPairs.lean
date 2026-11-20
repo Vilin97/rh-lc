@@ -27,7 +27,7 @@ theorem hfR_smul (L : LocE K R) {n : ℕ} (Hm : Matrix (Fin n) (Fin n) R) (s t :
 
 theorem hfR_add (L : LocE K R) {n : ℕ} (Hm : Matrix (Fin n) (Fin n) R) (x y z : Fin n → R) :
     hf L Hm x (y + z) = hf L Hm x y + hf L Hm x z := by
-  simp only [hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hfR_smulr (L : LocE K R) {n : ℕ} (Hm : Matrix (Fin n) (Fin n) R) (t : R) (x y : Fin n → R) :
     hf L Hm x (t • y) = L.cj t * hf L Hm x y := by

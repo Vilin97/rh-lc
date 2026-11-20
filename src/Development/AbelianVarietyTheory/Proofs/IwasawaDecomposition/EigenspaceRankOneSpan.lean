@@ -11,7 +11,7 @@ theorem baseChangeAction_toModuleEnd_self_apply {O R : Type} [CommRing O] [CommR
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul r b => simp [Algebra.TensorProduct.tmul_mul_tmul, mul_comm]
-  | add s t hs ht => simp only [map_add, hs, ht, add_mul]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht, add_mul]
 
 theorem eigenSub_eq_range_tensorAction_of_le_span {O R Λ : Type} [CommRing O] [CommRing R]
     [AddCommGroup Λ] [Module O Λ] [Module.Finite O Λ] [Module.Projective O Λ] (χ : O →+* R)
@@ -55,13 +55,13 @@ theorem eigenSub_eq_range_tensorAction_of_le_span {O R Λ : Type} [CommRing O] [
         simp [ρ, ← TensorProduct.tmul_sum, hsum, TensorProduct.smul_tmul']
       | add y z hy hz =>
         conv_lhs => rw [hy, hz]
-        simp only [map_add, LinearMap.add_apply, Finset.sum_add_distrib]
+        simp only [map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib]
     have hF : ∀ k, IsEquivariant (baseChangeAction R ρ) (baseChangeAction R ρO) (F k) := by
       intro k a y
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul r l => simp [F, ρ, ρO]
-      | add y z hy hz => simp only [map_add, hy, hz]
+      | add y z hy hz => simp only [map_add (f := _), hy, hz]
     have hc : ∀ k, ∃ c : R, c • e = F k x := fun k =>
       Submodule.mem_span_singleton.1 (hspan ((hF k).map_mem hx))
     choose c hc using hc

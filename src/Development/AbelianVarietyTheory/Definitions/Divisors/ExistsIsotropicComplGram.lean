@@ -185,7 +185,7 @@ def kFinSch : Submodule ℂ ((κ → AF F) → ℂ) where
     obtain ⟨W, _, hW⟩ := (kFin_iff om K _).1 h.2
     obtain ⟨W', _, hW'⟩ := (kFin_iff om K _).1 h'.2
     exact (kFin_iff om K _).2 ⟨W ⊔ W', inferInstance, fun k hk => by
-      rw [map_add]; exact Submodule.add_mem_sup (hW k hk) (hW' k hk)⟩⟩
+      rw [map_add (f := _)]; exact Submodule.add_mem_sup (hW k hk) (hW' k hk)⟩⟩
   smul_mem' := fun c Φ h => ⟨Submodule.smul_mem _ c h.1, by
     obtain ⟨W, _, hW⟩ := (kFin_iff om K _).1 h.2
     exact (kFin_iff om K _).2 ⟨W, inferInstance, fun k hk => by rw [map_smul]; exact W.smul_mem c (hW k hk)⟩⟩

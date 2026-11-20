@@ -367,7 +367,7 @@ theorem nuRows_split (δ : Code N) (j : ℕ) (z : RPl N.R) :
     rw [Nat.add_sub_cancel]
     have : N.R.k ≤ N.R.N j := Nat.le_add_right _ _
     omega
-  rw [hN, Multiset.range_add, Multiset.map_add, Multiset.map_map]
+  rw [hN, Multiset.range_add, Multiset.map_add (f := _), Multiset.map_map]
   rfl
 
 theorem apRows_split (j : ℕ) (z : RPl N.R) :
@@ -382,7 +382,7 @@ theorem apRows_split (j : ℕ) (z : RPl N.R) :
     | rfl
     | (simp [Ranks.sigW]; omega)
     | (unfold Ranks.sigW; simp; omega)
-  rw [hs, Multiset.range_add, Multiset.map_add, Multiset.map_map]
+  rw [hs, Multiset.range_add, Multiset.map_add (f := _), Multiset.map_map]
   rfl
 
 theorem stepE_num (δ : Code N) {Nc lam0 C0 ce Ch Sw C1 : ℝ} (H : N.NumFacts δ Nc lam0 C0 ce Ch Sw C1)

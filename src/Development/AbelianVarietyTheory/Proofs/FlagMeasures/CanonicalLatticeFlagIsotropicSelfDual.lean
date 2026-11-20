@@ -167,7 +167,7 @@ theorem mem_perpIn (x : I.GA) (S : Submodule (𝓞 I.E) (Fin I.n → I.E)) (y : 
   | zero => exact ⟨zero_mem _, fun s _ => map_zero (hR I.J s)⟩
   | add y z _ _ hy hz =>
     exact ⟨add_mem hy.1 hz.1, fun s hs => by
-      rw [← hR_apply, map_add, hR_apply, hR_apply, hy.2 s hs, hz.2 s hs, add_zero]⟩
+      rw [← hR_apply, map_add (f := _), hR_apply, hR_apply, hy.2 s hs, hz.2 s hs, add_zero]⟩
   | smul c y _ hy =>
     exact ⟨Submodule.smul_mem _ _ hy.1, fun s hs => by
       rw [← hR_apply, LinearMap.map_smul_of_tower, hR_apply, hy.2 s hs, smul_zero]⟩

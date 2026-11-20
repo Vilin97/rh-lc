@@ -108,10 +108,10 @@ theorem exists_extension {N : Type} [AddCommGroup N] [Module K N] (L : Submodule
   have hf : ∀ v, f v = v + γ (p v) - i (p v) := fun v => rfl
   have hg : ∀ v, g v = v + i (a.symm (p v)) - i (p v) := fun v => rfl
   have hgf : ∀ v, g (f v) = v := fun v => by
-    have : p (f v) = a (p v) := by rw [hf, map_sub, map_add, hpi, hpγ]; abel
+    have : p (f v) = a (p v) := by rw [hf, map_sub, map_add (f := _), hpi, hpγ]; abel
     rw [hg, this, a.symm_apply_apply, ha, hf]; abel
   have hfg' : ∀ v, f (g v) = v := fun v => by
-    have : p (g v) = a.symm (p v) := by rw [hg, map_sub, map_add, hpi, hpi]; abel
+    have : p (g v) = a.symm (p v) := by rw [hg, map_sub, map_add (f := _), hpi, hpi]; abel
     rw [hf, this, ha', hg]; abel
   refine ⟨LinearEquiv.ofLinear f g (LinearMap.ext hfg') (LinearMap.ext hgf), fun x => ?_, fun v => ⟨fun h => ?_, fun h => ?_⟩,
     fun v => ⟨fun h => ?_, fun h => ?_⟩⟩

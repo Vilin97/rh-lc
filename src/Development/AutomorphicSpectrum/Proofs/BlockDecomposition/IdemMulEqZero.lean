@@ -144,7 +144,7 @@ theorem log_on_part (hEx : LogEx) (hMul : LogMul) (hEps : LogEps) (A : PAlg l) (
 
   have hw1 : A.th (E * U * N ^ m + (1 - E)) = 1 := by
     have e1 : A.sharp η ^ (m + v) = 1 := by rw [hm, pow_mul, hz, one_pow]
-    simp only [map_add, map_sub, map_mul, map_pow, map_one, hthE, hthU, hthN]
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_one, hthE, hthU, hthN]
     rw [pow_add] at e1
     linear_combination A.sharp η ^ m * hE + A.sharp c * e1
   obtain ⟨yw, hyw⟩ := (hEx l A n).1 _ hw1

@@ -28,9 +28,9 @@ def dpComap (hι : Function.Injective ι) (h : DPClosed ι δ) : DividedPowers (
     show ι _ ∈ J
     rw [dpowC_spec h hx]; exact δ.dpow_mem hn hx
   dpow_add {n x y} hx hy := hι (by
-    have hxy : ι (x + y) ∈ J := by rw [map_add]; exact J.add_mem hx hy
+    have hxy : ι (x + y) ∈ J := by rw [map_add (f := _)]; exact J.add_mem hx hy
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [dpowC_spec h hxy, map_add, δ.dpow_add hx hy, map_sum]
+      rw [dpowC_spec h hxy, map_add (f := _), δ.dpow_add hx hy, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [map_mul, dpowC_spec h hx, dpowC_spec h hy])
   dpow_mul {n a x} hx := hι (by

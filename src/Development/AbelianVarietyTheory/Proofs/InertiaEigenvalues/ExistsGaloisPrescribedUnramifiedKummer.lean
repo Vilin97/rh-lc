@@ -97,7 +97,7 @@ theorem exists_frac (y : ↥(Kunr l a)) : ∃ w s : Wq l a, s ≠ 0 ∧ (y : Om 
     obtain ⟨w1, s1, hs1, h1⟩ := hx
     obtain ⟨w2, s2, hs2, h2⟩ := hy
     refine ⟨w1 * s2 + w2 * s1, s1 * s2, mul_ne_zero hs1 hs2, ?_⟩
-    rw [map_add, map_mul, map_mul, map_mul, ← h1, ← h2]
+    rw [map_add (f := _), map_mul, map_mul, map_mul, ← h1, ← h2]
     ring
   | mul x y _ _ hx hy =>
     obtain ⟨w1, s1, hs1, h1⟩ := hx
@@ -208,7 +208,7 @@ theorem irreducible_X_pow_add_prime_over_witt (e : ℕ) [NeZero e] : Irreducible
 theorem irreducible_K (e : ℕ) [NeZero e] : Irreducible (Polynomial.X ^ e + Polynomial.C (l : ↥(Kunr l a))) := by
   have hmon : (Polynomial.X ^ e + Polynomial.C (l : Wq l a)).Monic := monic_X_pow_add_C _ (NeZero.ne e)
   have h := (hmon.irreducible_iff_irreducible_map_fraction_map (K := ↥(Kunr l a))).1 (irreducible_X_pow_add_prime_over_witt l a e)
-  simpa [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_C] using h
+  simpa [Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_X, Polynomial.map_C] using h
 
 end GlobalTheory.TameFrob
 

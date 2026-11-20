@@ -74,7 +74,7 @@ theorem cechFG_of_finite (R : Type) [CommRing R] (Z : Scheme.{0}) (s : Z ⟶ Sp 
     simp only [Submodule.coe_smul]
     abel
   refine ⟨r, fun i => h i + (-gv s g ⟨W i, hW i⟩), fun i i' => ?_⟩
-  rw [hfh, e1, rho_add, rho_sum, rho_d0, map_add, map_add]
+  rw [hfh, e1, rho_add, rho_sum, rho_d0, map_add (f := _), map_add (f := _)]
   ring
 
 end GlobalTheory.CechFin

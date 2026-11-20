@@ -331,7 +331,7 @@ theorem derivOp_bracket {v : E} (hv : h.IsSmoothVector π v) (X Y : 𝔤) :
     (h.hasDerivAt_Ad_expG X Y)
   have e := hg.unique (hg'.congr_of_eventuallyEq (Eventually.of_forall fun s => ?_))
   · change D2 (er + eu) et = h.derivOp π (h.bracket X Y) v at e
-    rw [← e, map_add, ContinuousLinearMap.add_apply, db, hsymm, dd, sub_eq_add_neg]
+    rw [← e, map_add (f := _), ContinuousLinearMap.add_apply, db, hsymm, dd, sub_eq_add_neg]
   · simp only [zero_add, Function.comp_apply]
     rw [diag]
     rfl

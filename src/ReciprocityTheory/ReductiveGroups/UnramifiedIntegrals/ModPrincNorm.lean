@@ -57,7 +57,7 @@ theorem norm_KQ {d : ℕ} (hd : 0 < d) (z : KQ d) (p q : ℚ) (h : (z : ℂ) = p
     push_cast
     ring
   rw [Algebra.norm_eq_matrix_det (bKQ hd), Matrix.det_fin_two]
-  simp only [Algebra.leftMulMatrix_eq_repr_mul, e0, e1, map_add, map_smul, Module.Basis.repr_self]
+  simp only [Algebra.leftMulMatrix_eq_repr_mul, e0, e1, map_add (f := _), map_smul, Module.Basis.repr_self]
   simp
   ring
 

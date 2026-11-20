@@ -59,7 +59,7 @@ theorem scalar_lie {𝔸 : Type} [NormedRing 𝔸] [NormedAlgebra ℝ 𝔸] [Com
   have uniq : ∀ (Z : 𝔤) (c : ℂ),
       HasDerivAt (fun t : ℝ => T0 (A (ex (t • Z)) f0)) (T0 (quad (ρ Z) f0 + c • f0)) 0 → z Z = c := fun Z c h => by
     have := (hz Z T0 f0).unique h
-    simp only [map_add, map_smul, add_right_inj, smul_eq_mul] at this
+    simp only [map_add (f := _), map_smul, add_right_inj, smul_eq_mul] at this
     exact mul_right_cancel₀ hT0 this
   have hsm : ∀ (r : ℝ) (Z : 𝔤), z (r • Z) = r • z Z := fun r Z => uniq _ _ (by
     have h1 := hz Z T0 f0
@@ -87,7 +87,7 @@ theorem scalar_lie {𝔸 : Type} [NormedRing 𝔸] [NormedAlgebra ℝ 𝔸] [Com
       simp only [map_mul]
       refine this.congr_deriv ?_
       have e : quad (ρ (-(X + Y) : 𝔤)) = -(quad (ρ X) + quad (ρ Y)) := by
-        rw [Submodule.coe_neg, Submodule.coe_add, map_neg, map_add, ← neg_one_smul ℝ, quad_smul, quad_add]
+        rw [Submodule.coe_neg, Submodule.coe_add, map_neg, map_add (f := _), ← neg_one_smul ℝ, quad_smul, quad_add]
         simp [add_comm]
       rw [← map_smul, e]
       congr 1
@@ -274,7 +274,7 @@ theorem main2 (hLL : LocalLift) (h : IsCMExt F E σ) {ψ : AddChar (AF F) ℂ} (
   let E0 : (InfinitePlace F → Matrix α β ℂ) →ₗ[ℝ] (Fin n ⊕ Fin n → ℝ) :=
     { toFun := fun z => c.vec (d.e (L z))
       map_add' := fun z z' => by
-        rw [← c.vec_add, ← map_add]
+        rw [← c.vec_add, ← map_add (f := _)]
         congr 2
         refine ext_at h τ (At.sub' (hL _) fun a ha => by rw [smul_add, hL _ a ha, hL _ a ha, add_zero]) fun w => ?_
         rw [Matrix.map_add _ (map_add _), hL', hL', hL']

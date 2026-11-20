@@ -68,7 +68,7 @@ theorem pair_int (hun : Formalism.HermitianLatticesTheory.IsUnimodular (VS D).hT
   have e : brS (VS D) (l • y0) (m • y0) = (VS D).hT a2 a1 := by
     show (VS D).hT (m • y0) (l • y0) = _
     rw [← e1, ← e2]
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [c1, c2, hxx]
     simp
 

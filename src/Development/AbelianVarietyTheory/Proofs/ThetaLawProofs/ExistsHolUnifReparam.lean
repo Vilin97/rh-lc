@@ -13,7 +13,7 @@ noncomputable def holUnifReparam {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} 
     (φ : (Fin g → ℂ) ≃ₗ[ℂ] (Fin g → ℂ)) (e : (Fin g → ℂ) → ℂ) (he : Differentiable ℂ e) (hne : ∀ z, e z ≠ 0) :
     HolUnif A L g where
   ex z := u.ex (φ z)
-  ex_add z w := by rw [map_add, u.ex_add]
+  ex_add z w := by rw [map_add (f := _), u.ex_add]
   ex_onto := u.ex_onto.comp φ.surjective
   Λ := u.Λ.comap (φ.toLinearMap.restrictScalars ℤ)
   ker z := u.ker (φ z)

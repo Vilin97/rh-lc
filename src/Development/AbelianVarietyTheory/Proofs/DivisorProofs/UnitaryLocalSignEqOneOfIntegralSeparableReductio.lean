@@ -46,7 +46,7 @@ theorem kapSign_eq_one_of_integral : ∀ (E : Type) [Field E] [NumberField E] [I
   set q₂ := Q₂₀.map f
   have hAB' : A.map f * q₁ + B.map f * q₂ = 1 := by
     have := congrArg (Polynomial.map f) hAB
-    simpa [Polynomial.map_add, Polynomial.map_mul] using this
+    simpa [Polynomial.map_add (f := _), Polynomial.map_mul] using this
   have hCH : aeval γ.1.val (q₁ * q₂) = 0 := by
     rw [← Polynomial.map_mul, ← hP, ← hchar]; exact Matrix.aeval_self_charpoly _
   have hmem : ∀ x, x ∈ V₁ ↔ aeval γ.1.val q₁ *ᵥ x = 0 := by
@@ -70,7 +70,7 @@ theorem kapSign_eq_one_of_integral : ∀ (E : Type) [Field E] [NumberField E] [I
     intro x
     rw [Matrix.mulVec_mulVec, he, ← map_mul, ← mul_assoc, map_mul, hCH, zero_mul, Matrix.zero_mulVec]
   have he1 : e = 1 - aeval γ.1.val (A.map f) * aeval γ.1.val q₁ := by
-    rw [he, ← map_mul, mul_comm q₂, eq_sub_iff_add_eq, ← map_add, add_comm, hAB', map_one]
+    rw [he, ← map_mul, mul_comm q₂, eq_sub_iff_add_eq, ← map_add (f := _), add_comm, hAB', map_one]
   have hfix : ∀ x ∈ V₁, e *ᵥ x = x := by
     intro x hx
     rw [he1, Matrix.sub_mulVec, Matrix.one_mulVec, ← Matrix.mulVec_mulVec, (hmem x).1 hx,

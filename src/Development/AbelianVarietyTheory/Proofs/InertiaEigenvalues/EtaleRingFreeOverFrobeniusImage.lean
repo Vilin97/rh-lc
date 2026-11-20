@@ -21,7 +21,7 @@ def comb (c : Fin N → E) : E := ∑ j, ι (e j) * φE (c j)
 
 theorem comb_add_mul (c d : Fin N → E) (r : E) (hr : φE r = r) :
     comb ι φE e (fun j => c j + r * d j) = comb ι φE e c + r * comb ι φE e d := by
-  simp only [comb, map_add, map_mul, hr, mul_add, Finset.sum_add_distrib, Finset.mul_sum]
+  simp only [comb, map_add (f := _), map_mul, hr, mul_add, Finset.sum_add_distrib, Finset.mul_sum]
   congr 1
   exact Finset.sum_congr rfl fun j _ => by ring
 

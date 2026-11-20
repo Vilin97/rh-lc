@@ -205,7 +205,7 @@ theorem fixedZhat_of (hH : HeisOp) (hSk : SkewSolve) (hS : ShortFin) (hRD : Rows
         star_natCast, hpin y hy, hyvn]
       ring
     have hzz : (VS D).hT F0.z F0.z = -((Tu D u : ℕ) : D.host.E) := F0.z_norm
-    simp only [xf, map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul,
+    simp only [xf, map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul,
       smul_eq_mul, starRingEnd_apply, star_natCast, hιz, hιι, hzz]
     have hh : hz y.1 = hzc := hhz y hy
     rw [show (VS D).hT F0.z (ι2 y.1) = hz y.1 from rfl, hh]
@@ -231,13 +231,13 @@ theorem fixedZhat_of (hH : HeisOp) (hSk : SkewSolve) (hS : ShortFin) (hRD : Rows
     intro y hy
     refine Submodule.mem_inf.2 ⟨mem_orth_Xplus (lf D F0) _ (fun a => ?_) ?_, (Submodule.mem_iInf _).2 fun c => ?_⟩
     · show (VS D).hT (F0.e a) (xf y.1) = 0
-      simp [xf, ι2, map_add, map_smul, hpie, hyve y hy, F0.z_orth]
+      simp [xf, ι2, map_add (f := _), map_smul, hpie, hyve y hy, F0.z_orth]
     · show (VS D).hT F0.z (xf y.1) = 0
-      simp only [xf, map_add, map_smul, smul_eq_mul, F0.z_norm]
+      simp only [xf, map_add (f := _), map_smul, smul_eq_mul, F0.z_norm]
       change ((Tu D u : ℕ) : D.host.E) * hz y.1 + hz y.1 * -((Tu D u : ℕ) : D.host.E) = 0
       ring
     · rw [LinearMap.mem_ker]
-      simp [xf, ι2, map_add, map_smul, hpif, hfz]
+      simp [xf, ι2, map_add (f := _), map_smul, hpif, hfz]
   have hxΛ : ∀ y : Carrier (PD D Λ (lf D F0) u'), xf y.1 ∈ Λ := fun y =>
     Λ.add_mem (hnat _ _ (hι2 y)) (hmemE _ _ (hint _ hz0 _ (hι2 y)) hz0)
 

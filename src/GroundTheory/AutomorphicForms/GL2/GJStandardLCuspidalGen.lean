@@ -101,7 +101,7 @@ theorem schur_form {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] 
     { toSubmodule :=
         { carrier := {u | ∀ x, ∀ w ∈ F, inner ℂ (B w) (R (B (ρ x u))) = c * inner ℂ (B w) (B (ρ x u))}
           add_mem' := fun {a b} ha hb x w hw => by
-            simp only [map_add, inner_add_right]
+            simp only [map_add (f := _), inner_add_right]
             rw [ha x w hw, hb x w hw]; ring
           zero_mem' := fun x w hw => by simp
           smul_mem' := fun c' a ha x w hw => by

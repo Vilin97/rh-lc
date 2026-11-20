@@ -44,7 +44,7 @@ private theorem exists_of_idem (T C : Type) [CommRing T] [IsDomain T] [IsIntegra
   | add x y hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+    exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
   | tmul x y =>
     obtain ⟨r, hr⟩ := IsIntegrallyClosed.algebraMap_eq_of_integral (R := T) y.2
     refine ⟨r • x, ?_⟩

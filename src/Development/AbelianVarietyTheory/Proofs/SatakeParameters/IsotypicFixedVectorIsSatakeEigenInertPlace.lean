@@ -80,7 +80,7 @@ theorem eig_of_isoTyp_fixed : ∀ (L : Type) [Field L] [NumberField L] [IsCMFiel
     intro y z
     rw [hC π.W, hC π.W, hC π.W, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun d _ => ?_
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
   have hzero : heckeFunI L n (Umax L n) Dv h (0 : GAf L n → π.W) = 0 := by
     rw [hC π.W]
     simp
@@ -108,7 +108,7 @@ theorem eig_of_isoTyp_fixed : ∀ (L : Type) [Field L] [NumberField L] [IsCMFiel
         have hyz : ∀ κ ∈ Umax L n, TrivOutside {v} κ → NG.rt L n κ y = y ∧ NG.rt L n κ z = z := by
           intro κ hκ hκt
           have e := hfix κ hκ hκt
-          rw [map_add] at e
+          rw [map_add (f := _)] at e
           have h1 : NG.rt L n κ y - y = z - NG.rt L n κ z := by
             rw [sub_eq_sub_iff_add_eq_add, e, add_comm]
           have hm : NG.rt L n κ y - y ∈ a ⊓ (⨆ i ∈ t, i) :=

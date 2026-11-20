@@ -280,7 +280,7 @@ def resChar (ψ : AddChar k Circle) (hψ : HasConductor ψ 1) (q : Unif k) : Add
   map_add_eq_mul' a b := by
     rw [apply_inv_mul_congr hψ q
       (t := (residue_surjective (R := 𝒪[k]) a).choose + (residue_surjective (R := 𝒪[k]) b).choose)
-      (by rw [map_add, (residue_surjective (R := 𝒪[k]) _).choose_spec, (residue_surjective (R := 𝒪[k]) _).choose_spec,
+      (by rw [map_add (f := _), (residue_surjective (R := 𝒪[k]) _).choose_spec, (residue_surjective (R := 𝒪[k]) _).choose_spec,
         (residue_surjective (R := 𝒪[k]) _).choose_spec])]
     simp [mul_add, AddChar.map_add_eq_mul]
 

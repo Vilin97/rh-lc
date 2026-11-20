@@ -816,7 +816,7 @@ theorem invOm {ϖ : o} (hϖ : Irreducible ϖ) {j : Matrix (Idx r k) (Idx r k) o}
     simp only [smul_add, Matrix.mul_smul, Matrix.smul_mul]
   have E := smul_right_injective _ hϖ.ne_zero e31'
   have E' := congrArg (fun m => m.map (IsLocalRing.residue o)) E
-  simp only [← RingHom.mapMatrix_apply, map_add, map_mul, map_zero] at E'
+  simp only [← RingHom.mapMatrix_apply, map_add (f := _), map_mul, map_zero] at E'
   simp only [RingHom.mapMatrix_apply, map_smul', res_pi hϖ, zero_smul, add_zero] at E'
   have E2 : (b33 j).map (IsLocalRing.residue o) * Y.map (IsLocalRing.residue o) =
       (-X.map (IsLocalRing.residue o)) * (b11 j⁻¹).map (IsLocalRing.residue o) := by

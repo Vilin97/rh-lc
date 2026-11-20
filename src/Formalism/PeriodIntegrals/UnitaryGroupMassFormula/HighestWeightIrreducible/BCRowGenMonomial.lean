@@ -37,7 +37,7 @@ theorem bC_rowGen_monomial {r n : ℕ} (a : Fin r) (m : Fin r × Fin n →₀ �
     rw [MvPolynomial.monomial_single_add, map_mul, map_pow, bC_rowGen_X, ih]
     have hw : Finsupp.weight (lgraded_wa a) (Finsupp.single v e + m) =
         e * lgraded_wa a v + Finsupp.weight (lgraded_wa a) m := by
-      simp [map_add, Finsupp.weight_apply, Finsupp.sum_single_index]
+      simp [map_add (f := _), Finsupp.weight_apply, Finsupp.sum_single_index]
     rw [hw]
     simp only [map_mul, map_pow]
     ring
@@ -58,7 +58,7 @@ theorem bC_coeff_euler {r n : ℕ} (a : Fin r) (f : MvPolynomial (Fin r × Fin n
   have hadd : ∀ p q : MvPolynomial (Fin r × Fin n) ℂ,
       rowDiv ℂ a a 1 (p + q) = rowDiv ℂ a a 1 p + rowDiv ℂ a a 1 q := by
     intro p q
-    simp [rowDiv, map_add]
+    simp [rowDiv, map_add (f := _)]
   induction f using MvPolynomial.induction_on'
   next m' c =>
     rw [bC_euler_monomial, MvPolynomial.coeff_smul, MvPolynomial.coeff_monomial]
@@ -269,7 +269,7 @@ private theorem isWeightedHomogeneous_coeff_rowGen_monomial {r n : ℕ} (a b : F
     rw [MvPolynomial.monomial_single_add, map_mul, map_pow]
     have hw : Finsupp.weight (fun v : Fin r × Fin n => ((v.1 : ℕ) : ℤ)) (Finsupp.single v e + m) =
         (e : ℤ) * ((v.1 : ℕ) : ℤ) + Finsupp.weight (fun v : Fin r × Fin n => ((v.1 : ℕ) : ℤ)) m := by
-      simp [map_add, Finsupp.weight_apply, Finsupp.sum_single_index, nsmul_eq_mul]
+      simp [map_add (f := _), Finsupp.weight_apply, Finsupp.sum_single_index, nsmul_eq_mul]
     rw [hw]
     have hpow : ∀ j : ℕ, ∀ k : ℕ, IsWeightedHomogeneous (fun v : Fin r × Fin n => ((v.1 : ℕ) : ℤ))
         (((rowGen ℂ a b (X v)) ^ j).coeff k) ((j : ℤ) * ((v.1 : ℕ) : ℤ) + (k : ℤ) * (((a : ℕ) : ℤ) - ((b : ℕ) : ℤ))) := by

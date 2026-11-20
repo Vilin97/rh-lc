@@ -123,7 +123,7 @@ theorem coords_of_orthonormal_basis : ∀ (D : D7), admG1 D → ∀ (cc : Ideal 
         funext τ i j
         simp [embV, tor0]
       rw [this, map_zero]
-    | add x y _ _ hx hy => rw [embV_add, map_add, hx, hy]
+    | add x y _ _ hx hy => rw [embV_add, map_add (f := _), hx, hy]
     | smul a x _ hx => rw [embV_smul h, map_smul, hx]
   have h1 : ∀ z : VC D N N', z = ∑ k, coordB D (tor0 D cc δ) b k z • embV D (tor0 D cc δ) (b k) := by
     intro z

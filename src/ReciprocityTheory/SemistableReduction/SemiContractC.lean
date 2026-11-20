@@ -86,7 +86,7 @@ theorem sc_append_li {K : Type} [Field K] [NumberField K] {r k m : ℕ}
   have h1 : ∑ j, g (Fin.natAdd k j) • (N *ᵥ c j) = 0 := by
     have := congrArg N.mulVecLin hg
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa [map_add, map_sum, map_smul, Matrix.mulVecLin_apply, hbN] using this
+      simpa [map_add (f := _), map_sum, map_smul, Matrix.mulVecLin_apply, hbN] using this
   have hc0 := Fintype.linearIndependent_iff.mp hc _ h1
   have hb0 : ∀ i, g (Fin.castAdd m i) = 0 := by
     apply Fintype.linearIndependent_iff.mp hb
@@ -152,7 +152,7 @@ theorem sc_index {K : Type} [Field K] [NumberField K] {r k m : ℕ}
       have h := hspanb hy.2
       rw [LinearMap.mem_ker] at h
       exact h
-    rw [map_add, hy0, zero_add]
+    rw [map_add (f := _), hy0, zero_add]
     exact hspanc hz
 
 end ReciprocityTheory.MultiplicativeHeights

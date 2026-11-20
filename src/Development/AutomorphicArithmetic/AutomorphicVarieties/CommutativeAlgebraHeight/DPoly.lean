@@ -20,7 +20,7 @@ private theorem scale_coeff {A ι : Type} [CommRing A] (P : MvPolynomial ι A) (
     rw [aeval_X_mul_C_X_monomial, Polynomial.coeff_X_pow_mul',
       MvPolynomial.homogeneousComponent_of_mem (MvPolynomial.isHomogeneous_monomial c rfl), Polynomial.coeff_C]
     split_ifs <;> first | rfl | omega
-  | add p q hp hq => rw [map_add, Polynomial.coeff_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), Polynomial.coeff_add, hp, hq, map_add (f := _)]
 
 theorem UpperTheory.V.CA.d_poly :
     ∀ {n : ℕ} {A E : Type} [CommRing A] [Ring E] [Algebra A E] (D : Det n A E) {ι : Type} [Fintype ι] (x : ι → E), (D.poly x).IsHomogeneous n ∧ ∀ (S : Type) [CommRing S] [Algebra A S] (s : ι → S), D.D S (∑ a, s a ⊗ₜ x a) = MvPolynomial.aeval s (D.poly x) := by

@@ -48,7 +48,7 @@ theorem exists_ne_zero_ann {G : Type} [Group G] {S A : Type} [AddCommGroup S] [M
         zero_mem' := by simp
         add_mem' := fun {a b} ha hb => by
           show σ.asModuleEquiv.symm (a + b) ∈ N
-          rw [map_add]; exact N.add_mem ha hb
+          rw [map_add (f := _)]; exact N.add_mem ha hb
         smul_mem' := fun c a ha => by
           show σ.asModuleEquiv.symm (c • a) ∈ N
           rw [asModuleEquiv_symm_map_smul]; exact N.smul_mem _ ha }
@@ -85,13 +85,13 @@ theorem exists_ne_zero_ann {G : Type} [Group G] {S A : Type} [AddCommGroup S] [M
       obtain ⟨v, rfl⟩ := hy
       exact ⟨Pi.single i (σ.asModuleEquiv.symm v), by rw [hΨ, hΦ']⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   obtain ⟨C, hC⟩ := exists_isCompl (LinearMap.ker Ψ)
   obtain ⟨m, hm⟩ := hUr
   have hmem : m ∈ LinearMap.ker Ψ ⊔ C := by rw [hC.sup_eq_top]; trivial
   obtain ⟨a, ha, c, hc, rfl⟩ := Submodule.mem_sup.1 hmem
   have hΨc : Ψ c = ρ.asModuleEquiv.symm U := by
-    rw [← hm, map_add, LinearMap.mem_ker.1 ha, zero_add]
+    rw [← hm, map_add (f := _), LinearMap.mem_ker.1 ha, zero_add]
   have hc0 : c ≠ 0 := by
     intro h
     apply hU0

@@ -160,9 +160,9 @@ theorem form_X_mul (v : σ) (P Q : MvPolynomial σ ℂ) : form (X v * P) Q = for
         split_ifs
         · push_cast; ring
         · rfl
-    | add Q Q' hQ hQ' => rw [map_add, map_add, map_add, hQ, hQ']
+    | add Q Q' hQ hQ' => rw [map_add (f := _), map_add (f := _), map_add (f := _), hQ, hQ']
   | add P P' hP hP' =>
-    rw [mul_add, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hP, hP']
+    rw [mul_add, map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hP, hP']
 
 theorem form_pderiv (v : σ) (P Q : MvPolynomial σ ℂ) : form (pderiv v P) Q = form P (X v * Q) := by
   rw [form_symm, ← form_X_mul, ← form_symm]
@@ -185,7 +185,7 @@ def FAdj (T S : Module.End ℂ (PolF D m n)) : Prop := ∀ P Q, form (T P) Q = f
 
 theorem fadj_add {T S T' S' : Module.End ℂ (PolF D m n)} (h : FAdj T S) (h' : FAdj T' S') :
     FAdj (T + T') (S + S') := by
-  intro P Q; simp only [LinearMap.add_apply, map_add, h P Q, h' P Q]
+  intro P Q; simp only [LinearMap.add_apply, map_add (f := _), h P Q, h' P Q]
 
 theorem fadj_mul {T S T' S' : Module.End ℂ (PolF D m n)} (h : FAdj T S) (h' : FAdj T' S') :
     FAdj (T * T') (S' * S) := by

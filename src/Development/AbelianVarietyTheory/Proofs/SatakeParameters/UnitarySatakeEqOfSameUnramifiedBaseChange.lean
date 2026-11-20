@@ -87,7 +87,7 @@ theorem eq_of_invariant (m : ℕ) (f : (Fin m → ℂ) → ℂ)
       Finset.univ.val.map α' + Finset.univ.val.map (fun i => (α' i)⁻¹)) : f α = f α' := by
   classical
   have h2 := congrArg (Multiset.map (fun x : ℂ => s(x, x⁻¹))) h
-  simp only [Multiset.map_add, Multiset.map_map, Function.comp_def, inv_inv] at h2
+  simp only [Multiset.map_add (f := _), Multiset.map_map, Function.comp_def, inv_inv] at h2
   have e1 : ∀ γ : Fin m → ℂ, (fun i => s((γ i)⁻¹, γ i)) = fun i => s(γ i, (γ i)⁻¹) :=
     fun γ => funext fun i => Sym2.eq_swap
   rw [e1 α, e1 α'] at h2

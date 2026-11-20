@@ -67,7 +67,7 @@ theorem tv_pos (hD : TotPosAll) {N N' : ℕ} (hN : 0 < N) (Z : MatZ D)
   have ht : φ (tv N N' Z) = (((N : ℝ)⁻¹ - N' * (Complex.normSq (φ (leadMinorE Z D.R.rS)) /
       Complex.normSq (φ Z.det)) : ℝ) : ℂ) := by
     rw [tv, gam'_last, inv_last D Z hdet]
-    simp only [map_add, map_mul, map_neg, map_natCast, map_inv₀, hφ, map_div₀, star_div₀]
+    simp only [map_add (f := _), map_mul, map_neg, map_natCast, map_inv₀, hφ, map_div₀, star_div₀]
     rw [div_mul_div_comm, ← Complex.normSq_eq_conj_mul_self, ← Complex.normSq_eq_conj_mul_self]
     push_cast
     ring

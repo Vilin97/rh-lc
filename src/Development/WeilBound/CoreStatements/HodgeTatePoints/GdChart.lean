@@ -18,7 +18,7 @@ theorem map_mem_span (φ : A →+* O) (ψ : K →+* C)
   induction hx using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span (hS x hx)
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     rw [Algebra.smul_def, map_mul, h, ← Algebra.smul_def]
     exact Submodule.smul_mem _ _ hx
@@ -106,7 +106,7 @@ theorem gen_at_point (hAK : Function.Injective (algebraMap A K))
   obtain ⟨x1, hx1, e2⟩ := P.κ_mem y1 hy1
   obtain ⟨r, hr⟩ := hπ
   refine ⟨r • eigProj P.ρΩ (ψ.comp σ) (P.ht x1), Submodule.smul_mem _ _ (proj_ht_mem P _ hx1), ?_⟩
-  rw [h3, e1, tate_single, map_one, Module.End.one_apply, map_add, e2, ← Nat.cast_smul_eq_nsmul O,
+  rw [h3, e1, tate_single, map_one, Module.End.one_apply, map_add (f := _), e2, ← Nat.cast_smul_eq_nsmul O,
     Nat.cast_pow, hr, LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower, smul_smul, smul_smul]
   congr 2
   ring
@@ -130,7 +130,7 @@ theorem gram_at_point (hAK : Function.Injective (algebraMap A K)) (ψ : K →+* 
   rw [tate_single, tate_single, map_one, Module.End.one_apply] at h1
   have h2 := congrArg ψ (hu k)
   rw [h, map_mul, h] at h2
-  simp only [h1, smul_eq_mul, map_mul, map_add, map_natCast, h, h2, RingHom.comp_apply]
+  simp only [h1, smul_eq_mul, map_mul, map_add (f := _), map_natCast, h, h2, RingHom.comp_apply]
   ring
 
 end SlopeTestRemainingChoices
@@ -197,15 +197,15 @@ theorem chart_comp_zero_of
       have h1 : eq' (1 ⊗ₜ ⟨_, qgen_mem D _ l⟩) = ⟨_, proj_ht_mem P _ (htT l)⟩ +
           ((p : O) ^ m) • ⟨y' l, hy' l⟩ := Subtype.ext (ey' l)
       have h2 := hf ⟨_, qgen_mem D _ l⟩
-      rw [h1, map_add, map_smul] at h2
+      rw [h1, map_add (f := _), map_smul] at h2
       have h3 := congrArg ψ hz1
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [hψ, map_add, map_mul, map_pow, map_natCast, ← h2, map_sum] at h3
+        rw [hψ, map_add (f := _), map_mul, map_pow, map_natCast, ← h2, map_sum] at h3
       refine ⟨f ⟨y' l, hy' l⟩ + φ z1 + ∑ k, φ (i w k) * (r * z k l), ?_⟩
       simp only [hz, ew' _ (htT l), mul_add, Finset.sum_add_distrib, map_mul, hψ, hr] at h3 ⊢
       rw [h3]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_mul, map_sum, smul_eq_mul, Finset.mul_sum, add_assoc]
+        simp only [map_add (f := _), map_mul, map_sum, smul_eq_mul, Finset.mul_sum, add_assoc]
       congr 3
       refine Finset.sum_congr rfl fun k _ => ?_
       ring)

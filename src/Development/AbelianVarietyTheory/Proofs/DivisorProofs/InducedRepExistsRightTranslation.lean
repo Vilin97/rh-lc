@@ -40,7 +40,7 @@ theorem lid_law (ν β : kˣ →* ℂˣ) (a b : ℕ) (p : parab k (blocks a b)) 
     simp only [MonoidHom.coe_comp, Function.comp_apply, twist_apply, MonoidHom.coe_coe]
     simp [parChar, detRep, ofChar_apply]
     ring
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
 
 theorem indScalVal_mem (ν β : kˣ →* ℂˣ) (a b : ℕ)
     (F : IndSp (two (stdSum (rfl : a + b = a + b)))

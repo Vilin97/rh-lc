@@ -59,8 +59,8 @@ theorem GlobalTheory.HeatSym.vertical_symbol_zero : ∀ (E : Type) [Field E] [Nu
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun e _ => ?_
-      rw [map_add, mul_add]
-    rw [map_add, this]
+      rw [map_add (f := _), mul_add]
+    rw [map_add (f := _), this]
     ring
   have hmul : ∀ x y : FractionRing Ω,
       (δ₀ (x * y) - ∑ a, ∑ e, Λ a e * δL a q / q * δL e (x * y)) =

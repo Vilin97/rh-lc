@@ -33,7 +33,7 @@ theorem additive_eq (G : FGLaw S d) (g : PS S 1 d)
   have h1 : ∀ b, ∑ e, pderiv S ((0 : Fin 1), e) g * Jac G e b = C (constantCoeff (pderiv S ((0 : Fin 1), b) g)) := by
     intro b
     have := congrArg (fun f => ev (n := 1) ![pt S d 0, 0] (pderiv S ((1 : Fin 2), b) f)) hg
-    simp only [map_add, d_evF, pderiv_second_ev_first_point_eq_zero, d_evY, zero_add, ez_y, ev_sum cz1, ev_mul cz1, hx] at this
+    simp only [map_add (f := _), d_evF, pderiv_second_ev_first_point_eq_zero, d_evY, zero_add, ez_y, ev_sum cz1, ev_mul cz1, hx] at this
     exact this
   have h2 : ∀ a, pderiv S ((0 : Fin 1), a) g =
       ∑ b, C (constantCoeff (pderiv S ((0 : Fin 1), b) g)) * Om G b a := by
@@ -49,7 +49,7 @@ theorem additive_eq (G : FGLaw S d) (g : PS S 1 d)
     simp only [JM, Matrix.of_apply]; ring
   have h0 : constantCoeff g = 0 := by
     have := congrArg constantCoeff hg
-    rw [map_add, cc_ev (czFF G), cc_ev czX, cc_ev czY] at this
+    rw [map_add (f := _), cc_ev (czFF G), cc_ev czX, cc_ev czY] at this
     simpa using this
   rw [← sub_eq_zero]
   have hd : ∀ v, pderiv S v (g - ∑ j, C (constantCoeff (pderiv S ((0 : Fin 1), j) g)) * logOf G j) = 0 := by

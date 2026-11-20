@@ -130,7 +130,7 @@ noncomputable def powAbv (ι : K →+* ℂ_[p]) (c : ℝ) (hc : 0 < c) : Absolut
   eq_zero' x := by
     rw [Real.rpow_eq_zero (norm_nonneg _) hc.ne', norm_eq_zero, map_eq_zero]
   add_le' x y := by
-    rw [map_add]
+    rw [map_add (f := _)]
     calc ‖ι x + ι y‖ ^ c ≤ (max ‖ι x‖ ‖ι y‖) ^ c :=
           Real.rpow_le_rpow (norm_nonneg _) (IsUltrametricDist.norm_add_le_max _ _) hc.le
       _ ≤ ‖ι x‖ ^ c + ‖ι y‖ ^ c := by
@@ -147,7 +147,7 @@ def ball (ι : K →+* ℂ_[p]) : ValuationSubring K where
     exact mul_le_one₀ hx (norm_nonneg _) hy
   one_mem' := by simp
   add_mem' {x y} hx hy := by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   zero_mem' := by simp
   neg_mem' {x} hx := by simpa using hx

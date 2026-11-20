@@ -178,15 +178,15 @@ theorem logOf_add (i : Fin d) :
     rintro ⟨j, c⟩
     fin_cases j
     · simp only [Fin.zero_eta]
-      simp only [g, map_sub, map_add, d_evF, pderiv_logOf, pderiv_first_ev_second_point_eq_zero, d_evX]
+      simp only [g, map_sub, map_add (f := _), d_evF, pderiv_logOf, pderiv_first_ev_second_point_eq_zero, d_evX]
       rw [om_P G i c]; ring
     · simp only [Fin.mk_one]
-      simp only [g, map_sub, map_add, d_evF, pderiv_logOf, pderiv_second_ev_first_point_eq_zero, d_evY]
+      simp only [g, map_sub, map_add (f := _), d_evF, pderiv_logOf, pderiv_second_ev_first_point_eq_zero, d_evY]
       have := om_Q G i c
       simp only [Ar] at this
       rw [this]; ring
   have hc : constantCoeff g = 0 := by
-    simp only [g, map_sub, map_add, cc_ev (czFF G), cc_ev czX, cc_ev czY, logOf, constantCoeff_prim]
+    simp only [g, map_sub, map_add (f := _), cc_ev (czFF G), cc_ev czX, cc_ev czY, logOf, constantCoeff_prim]
     ring
   rw [eq_C_of_pderiv_zero hd, hc, map_zero]
 
@@ -287,7 +287,7 @@ theorem logDerivSt : LogDerivSt := by
     intro c b
     have h := congrArg (fun x => ev (n := 1) ![pt k d 0, 0] (pderiv k ((1 : Fin 2), b) x)) (hadd' c)
     beta_reduce at h
-    simp only [d_evF, map_add, pderiv_second_ev_first_point_eq_zero, d_evY, zero_add, ev_sum cz1, ev_mul cz1, ez_F, ez_dy, ez_y] at h
+    simp only [d_evF, map_add (f := _), pderiv_second_ev_first_point_eq_zero, d_evY, zero_add, ev_sum cz1, ev_mul cz1, ez_F, ez_dy, ez_y] at h
     rw [h]
     congr 1
     have hc := congrFun (congrFun h1 c) b

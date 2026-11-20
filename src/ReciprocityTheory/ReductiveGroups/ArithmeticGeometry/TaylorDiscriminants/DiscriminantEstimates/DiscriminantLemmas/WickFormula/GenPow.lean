@@ -89,7 +89,7 @@ theorem powXL_holds : PowXL := by
   induction n with
   | zero => simp [gdelta_X_inl]
   | succ n ih =>
-    rw [gdelta_pow_succ_apply, ih, map_add, gdelta_X_inl, map_nsmul,
+    rw [gdelta_pow_succ_apply, ih, map_add (f := _), gdelta_X_inl, map_nsmul,
       ← gdelta_pow_succ_apply, gdelta_dL_apply,
       ← gdelta_pow_succ_apply, succ_nsmul _ (n + 1)]
     abel

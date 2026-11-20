@@ -117,9 +117,9 @@ theorem exists_type (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F
       rw [RingHom.map_sub, RingHom.map_sub, h2, sub_self]
   let t : (D.what₂.Tau → ℂˣ) → AE D := fun z => s (fun τ => (z τ : ℂ)) + (1 - s 1)
   have tf : ∀ z, finPart D (t z) = 1 := fun z => by
-    simp only [t, RingHom.map_add, RingHom.map_sub, RingHom.map_one, hs.fin, zero_add, sub_zero]
+    simp only [t, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_one, hs.fin, zero_add, sub_zero]
   have ti : ∀ z τ, θ τ (infPart D (t z)) = z τ := fun z τ => by
-    simp only [t, RingHom.map_add, RingHom.map_sub, RingHom.map_one, hs.comp, Pi.one_apply, sub_self, add_zero]
+    simp only [t, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_one, hs.comp, Pi.one_apply, sub_self, add_zero]
   have tc : Continuous t :=
     (hs.cont.comp (continuous_pi fun τ => Units.continuous_val.comp (continuous_apply τ))).add continuous_const
   let T : (D.what₂.Tau → ℂˣ) →* AE D :=

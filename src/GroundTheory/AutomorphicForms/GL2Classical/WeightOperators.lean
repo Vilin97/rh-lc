@@ -87,7 +87,7 @@ theorem mem_of_sum_mem_of_eigen {W : Submodule ℂ E} (hW : ∀ v ∈ W, Jj v �
         sub_mem (hW _ hsum) (Submodule.smul_mem _ _ hsum)
       have e : Jj (v a + ∑ i ∈ s, v i) - μ a • (v a + ∑ i ∈ s, v i) = ∑ i ∈ s, (μ i - μ a) • v i := by
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [map_add, map_sum, hv a (Finset.mem_insert_self a s), smul_add, Finset.smul_sum]
+          rw [map_add (f := _), map_sum, hv a (Finset.mem_insert_self a s), smul_add, Finset.smul_sum]
         rw [Finset.sum_congr rfl fun i hi => hv i (Finset.mem_insert_of_mem hi)]
         simp only [sub_smul, Finset.sum_sub_distrib]
         abel

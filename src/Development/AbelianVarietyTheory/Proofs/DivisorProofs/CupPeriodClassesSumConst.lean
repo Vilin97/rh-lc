@@ -27,7 +27,7 @@ theorem cup_per_sum_const {I : Type} [Fintype I] {g : ℕ} {Λ : Type} [AddCommG
   refine ⟨f + c, fun T T' T'' φ ψ ↦ ?_⟩
   have e := congrFun (congrFun (congrFun (congrFun (congrFun hf T) T') T'') φ) ψ
   have e2 := hℓ T T' T'' φ ψ
-  rw [map_add, Pi.add_apply, Pi.add_apply, Pi.add_apply, Pi.add_apply, Pi.add_apply, e]
+  rw [map_add (f := _), Pi.add_apply, Pi.add_apply, Pi.add_apply, Pi.add_apply, Pi.add_apply, e]
   rw [Pi.sub_apply, Pi.sub_apply, Pi.sub_apply, Pi.sub_apply, Pi.sub_apply, Submodule.coe_sum]
   simp only [Finset.sum_apply, GlobalTheory.CatCoh.cupZ_apply, Charts.perZ, Charts.mp_Oc] at e2 ⊢
   set_option synthInstance.maxHeartbeats 100000 in

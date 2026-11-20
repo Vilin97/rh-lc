@@ -154,7 +154,7 @@ theorem σ_τ : F.σ F.τ = p * F.τ := by
     exact Finset.dvd_sum fun i _ => sub_dvd_pow_sub_pow x 1 i
   obtain ⟨w, hw⟩ := hd
   have hS : (∑ i ∈ Finset.range p, x ^ i) = p + (x - 1) * w := by rw [← hw]; ring
-  rw [hφ, hS, map_mul, map_add, map_mul, map_natCast, show x - 1 = Sandwich.mu ε from rfl, ← F.p_τ]
+  rw [hφ, hS, map_mul, map_add (f := _), map_mul, map_natCast, show x - 1 = Sandwich.mu ε from rfl, ← F.p_τ]
   linear_combination ((p : F.B) * p * F.a w) * F.τ_sq
 
 theorem θ_τ (hε : IsPrimitiveSystem ε) : F.θ F.τ = 0 := by
@@ -180,7 +180,7 @@ theorem window_iso : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClo
     rw [mem_nonunits_iff, hv.isUnit_iff_valuation_eq_one] at hx hy ⊢
     have hx' := lt_of_le_of_ne (hv.map_le_one x) hx
     have hy' := lt_of_le_of_ne (hv.map_le_one y) hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact ne_of_lt (lt_of_le_of_lt (v.map_add _ _) (max_lt hx' hy'))
   set P : Matrix (Fin d ⊕ Fin k) (Fin d ⊕ Fin k) F.B := blk d k (p : F.B) 1 with hP
   set Pd : Matrix (Fin d ⊕ Fin k) (Fin d ⊕ Fin k) F.B := blk d k 1 (p : F.B) with hPd

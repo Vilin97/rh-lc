@@ -74,7 +74,7 @@ theorem UpperTheory.abelianField_window_triple_snoc :
         rw [map_sub, map_smul, hT'', hs, hd'', sub_self]
       obtain ⟨x, hx⟩ := (hex _).1 hker
       have hTs : T a s = f x + d a (Fin.last n) • s := by rw [hx]; abel
-      rw [hTs, map_add, map_smul, Finsupp.add_apply, Finsupp.smul_apply, hrepr2, ← hbl, b.repr_self]
+      rw [hTs, map_add (f := _), map_smul, Finsupp.add_apply, Finsupp.smul_apply, hrepr2, ← hbl, b.repr_self]
       simp
     | cast i =>
       rw [hbc, ← hT', hrepr1]

@@ -51,7 +51,7 @@ theorem secGram_holds : SecGram := by
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => simp [sigR, hσ]
-    | add z w hz hw => rw [map_add, map_add, hz, hw]
+    | add z w hz hw => rw [map_add (f := _), map_add (f := _), hz, hw]
   have hsF : ∀ c : F, sigR R σ (algebraMap F (R ⊗[F] E) c) = algebraMap F (R ⊗[F] E) c := by
     intro c
     simp [sigR]
@@ -116,7 +116,7 @@ theorem secGram_holds : SecGram := by
     exact Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => by ring
   have hsc : s c = c := hsF _
   have hcc : c + c = 1 := by
-    rw [hc, ← map_add, show (1 / 2 : F) + 1 / 2 = 1 by norm_num, map_one]
+    rw [hc, ← map_add (f := _), show (1 / 2 : F) + 1 / 2 = 1 by norm_num, map_one]
   unfold gramB
   funext i j
   show hR R σ J (x i) (Y j) + hR R σ J (Y i) (x j) = S i j

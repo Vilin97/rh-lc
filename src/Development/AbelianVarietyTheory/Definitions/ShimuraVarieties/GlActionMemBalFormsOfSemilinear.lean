@@ -203,9 +203,9 @@ variable {Y}
 
 def mk : Bil Y (SymSq Y) :=
   LinearMap.mk₂ ℤ (fun y y' => ofTensor Y (y ⊗ₜ y'))
-    (fun _ _ _ => by rw [add_tmul, map_add])
+    (fun _ _ _ => by rw [add_tmul, map_add (f := _)])
     (fun n y y' => by rw [← map_zsmul]; rfl)
-    (fun _ _ _ => by rw [tmul_add, map_add])
+    (fun _ _ _ => by rw [tmul_add, map_add (f := _)])
     (fun n y y' => by rw [← map_zsmul, ← smul_tmul]; rfl)
 
 theorem mk_apply (y y' : Y) : mk y y' = ofTensor Y (y ⊗ₜ y') := rfl
@@ -221,7 +221,7 @@ theorem mk_comm (y y' : Y) : mk y y' = mk y' y := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul y y' => exact h y y'
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem span_mk : Submodule.span ℤ {x : SymSq Y | ∃ y y', x = mk y y'} = ⊤ := by
   rw [← Submodule.ker_mkQ (Submodule.span ℤ _), LinearMap.ker_eq_top]
@@ -370,7 +370,7 @@ noncomputable def equivSymmetricPower : SymSq Y ≃+ Sym[ℤ]^2 Y :=
         refine (congrArg (F.comp G) h2).trans (Eq.trans ?_ h2.symm)
         rw [map_zsmul]
         exact congrArg _ h1
-      | add x y hx hy => rw [map_add, map_add, map_add, hx, hy])
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy])
 
 @[simp] theorem equivSymmetricPower_mk (y y' : Y) :
     equivSymmetricPower Y (mk y y') = SymmetricPower.tprod ℤ ![y, y'] := rfl
@@ -407,7 +407,7 @@ theorem IsBalanced.smul_smul_of_norm {b : Bil Y A} (hb : IsBalanced O b) {w : O}
 
 theorem IsBalanced.add_of_add_star {b : Bil Y A} (hb : IsBalanced O b) {w : O}
     (hw : w + star w = 1) (y y' : Y) : b y (w • y') + b (w • y) y' = b y y' := by
-  rw [hb, ← map_add, ← add_smul, hw, one_smul]
+  rw [hb, ← map_add (f := _), ← add_smul, hw, one_smul]
 
 theorem IsBalanced.smul_mem_ker {b : Bil Y A} (hb : IsBalanced O b) (a : O) {y : Y}
     (hy : y ∈ LinearMap.ker b) : a • y ∈ LinearMap.ker b := by
@@ -462,9 +462,9 @@ theorem balForms_int {Y : Type*} [AddCommGroup Y] : balForms S ℤ Y A = symForm
 
 def traceForm (t : O →ₗ[ℤ] A) : Bil O A :=
   LinearMap.mk₂ ℤ (fun x y => t (x * star y))
-    (fun _ _ _ => by rw [add_mul, map_add])
+    (fun _ _ _ => by rw [add_mul, map_add (f := _)])
     (fun _ _ _ => by rw [smul_mul_assoc, map_smul])
-    (fun _ _ _ => by rw [star_add, mul_add, map_add])
+    (fun _ _ _ => by rw [star_add, mul_add, map_add (f := _)])
     (fun _ _ _ => by rw [star_zsmul, mul_smul_comm, map_smul])
 
 @[simp] theorem traceForm_apply (t : O →ₗ[ℤ] A) (x y : O) : traceForm t x y = t (x * star y) := rfl
@@ -753,9 +753,9 @@ theorem mem_level_top {M : ℤ} {b : Bil Y ℤ} : b ∈ level M ⊤ ↔ ∀ y y'
     · exact ⟨0, trivial, by ext y y'; exact (zero_dvd_iff.1 (h y y')).symm⟩
     · refine ⟨LinearMap.mk₂ ℤ (fun y y' => b y y' / M) (fun y z y' => ?_) (fun n y y' => ?_)
         (fun y y' z => ?_) (fun n y y' => ?_), trivial, ?_⟩
-      · rw [map_add, LinearMap.add_apply, Int.add_ediv_of_dvd_left (h y y')]
+      · rw [map_add (f := _), LinearMap.add_apply, Int.add_ediv_of_dvd_left (h y y')]
       · rw [map_smul, LinearMap.smul_apply, smul_eq_mul, smul_eq_mul, Int.mul_ediv_assoc _ (h y y')]
-      · rw [map_add, Int.add_ediv_of_dvd_left (h y y')]
+      · rw [map_add (f := _), Int.add_ediv_of_dvd_left (h y y')]
       · rw [map_smul, smul_eq_mul, smul_eq_mul, Int.mul_ediv_assoc _ (h y y')]
       · ext y y'
         exact Int.mul_ediv_cancel' (h y y')

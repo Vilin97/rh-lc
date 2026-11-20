@@ -55,9 +55,9 @@ theorem conj_conj' (x : D.host.E) : D.host.conj (D.host.conj x) = x := by
 
 def beO : 𝓞 D.host.E →ₗ[ℤ] 𝓞 D.host.E →ₗ[ℤ] ℝ :=
   LinearMap.mk₂ ℤ (fun a b => ((Algebra.trace ℤ (𝓞 D.host.E) (a * cjO D b) : ℤ) : ℝ))
-    (by intro a a' b; rw [add_mul, map_add, Int.cast_add])
+    (by intro a a' b; rw [add_mul, map_add (f := _), Int.cast_add])
     (by intro c a b; rw [smul_mul_assoc, map_smul, smul_eq_mul, Int.cast_mul, zsmul_eq_mul])
-    (by intro a b b'; rw [map_add, mul_add, map_add, Int.cast_add])
+    (by intro a b b'; rw [map_add (f := _), mul_add, map_add (f := _), Int.cast_add])
     (by intro c a b; rw [map_zsmul, mul_smul_comm, map_smul, smul_eq_mul, Int.cast_mul, zsmul_eq_mul])
 
 theorem beO_apply (a b : 𝓞 D.host.E) :

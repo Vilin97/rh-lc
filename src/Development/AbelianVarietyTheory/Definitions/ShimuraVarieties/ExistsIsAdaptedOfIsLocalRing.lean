@@ -327,17 +327,17 @@ theorem nonempty_baseChange_step_equiv (F : FullFlag R M n) (S : Type*) [CommRin
   · obtain ⟨x, rfl⟩ := hx
     induction x with
     | tmul a l => simp [h₂ l l.2]
-    | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
   · induction l with
     | tmul a l => exact Submodule.tmul_mem_baseChange_of_mem _ (h₃ l)
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · obtain ⟨x, rfl⟩ := hx
     induction x with
     | tmul a l =>
       simp only [LinearMap.baseChange_tmul, Submodule.subtype_apply, ← tmul_sub]
       exact Submodule.tmul_mem_baseChange_of_mem _ (h₄ l l.2)
     | add x y hx hy =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [add_sub_add_comm]
       exact add_mem hx hy
 

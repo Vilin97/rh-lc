@@ -183,7 +183,7 @@ private theorem loc_M (a : ℕ) (hc : IsFinCover ℂ K (xv x)) (hG : (sysZ K x a
     obtain ⟨N₁, h₁⟩ := h₁
     obtain ⟨N₂, h₂⟩ := h₂
     refine ⟨N₁ + N₂, ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     refine Submodule.add_mem _ ?_ ?_
     · rw [add_comm, pow_add, map_mul]
       exact hst N₂ _ h₁

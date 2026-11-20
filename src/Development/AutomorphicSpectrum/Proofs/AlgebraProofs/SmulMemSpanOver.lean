@@ -101,7 +101,7 @@ theorem local_step (R R₁ : Subalgebra o Ω) (hR : R ≤ R₁) (q : E →ₗ[Ω
       have h2 := hup _ _ m hk
       rw [add_comm] at h2
       convert add_mem (hup _ _ k hm) h2 using 1
-      simp only [map_add]
+      simp only [map_add (f := _)]
       module
     | neg x _ hx =>
       obtain ⟨m, hm⟩ := hx

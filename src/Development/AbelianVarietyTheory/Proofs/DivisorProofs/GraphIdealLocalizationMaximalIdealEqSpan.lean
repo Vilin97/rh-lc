@@ -116,7 +116,7 @@ theorem tens_ringHom_ext (E : Place (algebraMap ℂ K)) {T : Type} [CommRing T]
   induction w using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul e b => rw [tensEquiv_tmul, map_mul, map_mul, h₁, h₂]
-  | add u v hu hv => simp only [map_add, hu, hv]
+  | add u v hu hv => simp only [map_add (f := _), hu, hv]
 
 theorem exists_tens_lift (E : Place (algebraMap ℂ K)) {T : Type} [CommRing T] (u : E.ring →+* T)
     (v : κ' →+* T) (h : ∀ a, u (E.const a) = v (algebraMap ℂ κ' a)) :

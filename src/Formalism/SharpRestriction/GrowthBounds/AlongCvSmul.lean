@@ -291,12 +291,12 @@ theorem r1sRestC_of (hFr : PowerSeriesFrobeniusCongruence) (hRo : RootsOfUnityPr
     hGe C V d I κ X hb hBi ζ hζ1 V.l hl0 z ε δ hz hε hδ hrel' hmm (V.l ^ 2) hll
   have hL : coeff (ee (V.l ^ 2) V.l) (A1 * B1) =
       coeff (ee (V.l ^ 2) V.l) B1 + coeff (ee (V.l ^ 2) V.l) ((A1 - 1) * B1) := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     ring
   have hR : coeff (ee (V.l ^ 2) V.l) (A2 * B2) = coeff (ee (V.l ^ 2) V.l) A2 + coeff (ee (V.l ^ 2) V.l) B2 := by
     have e : A2 * B2 = A2 + B2 - 1 + (A2 - 1) * (B2 - 1) := by ring
-    rw [e, map_add, map_sub, map_add, one0 _ _ hl0.ne', kmul kA2 kB2 _ _ (by omega), sub_zero, add_zero]
+    rw [e, map_add (f := _), map_sub, map_add (f := _), one0 _ _ hl0.ne', kmul kA2 kB2 _ _ (by omega), sub_zero, add_zero]
   have hJ := jmul jA1 iB1 (V.l ^ 2) V.l le_rfl
   rw [hE', hR, cA2] at hL
   have fin : PowerSeries.coeff V.l (phi X V.l ζ γ δ fun i => PowerSeries.coeff 1 (z i)) ^ V.l -

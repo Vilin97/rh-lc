@@ -152,11 +152,11 @@ theorem idl_val (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x y : (Fv F v)ˣ)
     (idl h t (x, y) : AE F E) = 1 + liftPair h t ((x : Fv F v) - 1, (y : Fv F v) - 1) := rfl
 
 theorem piW_idl (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x y : (Fv F v)ˣ) : piW t (idl h t (x, y) : AE F E) = x := by
-  rw [idl_val, map_add, map_one, piW_liftPair, add_sub_cancel]
+  rw [idl_val, map_add (f := _), map_one, piW_liftPair, add_sub_cancel]
 
 theorem piW_comp_idl (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x y : (Fv F v)ˣ) :
     piW (t.comp σ) (idl h t (x, y) : AE F E) = y := by
-  rw [idl_val, map_add, map_one, piW_comp_liftPair, add_sub_cancel]
+  rw [idl_val, map_add (f := _), map_one, piW_comp_liftPair, add_sub_cancel]
 
 theorem at_idl (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x y : (Fv F v)ˣ) :
     At (evFin F v) ((idl h t (x, y) : AE F E) - 1) := by
@@ -164,7 +164,7 @@ theorem at_idl (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x y : (Fv F v)ˣ) 
 
 theorem cA_idl (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x y : (Fv F v)ˣ) :
     cA σ (idl h t (x, y) : AE F E) = idl h t (y, x) := by
-  rw [idl_val, idl_val, map_add, map_one, cA_liftPair]; rfl
+  rw [idl_val, idl_val, map_add (f := _), map_one, cA_liftPair]; rfl
 
 theorem chr_idl (h : IsCMExt F E σ) (χ : Chr F E) (t : E →ₐ[F] Fv F v) (x y : (Fv F v)ˣ) :
     (χ (idl h t (x, y)) : ℂ) = (chrW χ t x : ℂ) * (chrW χ (t.comp σ) y : ℂ) := by

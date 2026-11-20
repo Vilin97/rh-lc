@@ -72,7 +72,7 @@ theorem exists_haar_fundamentalDomain_mass_one : ∀ (F E : Type) [Field F] [Num
     (φ.mapMatrix (m := Fin n)).range
     (Matrix.scalar _ (φ (1 / 2))) (Set.pi Set.univ fun _ => Set.pi Set.univ fun _ => K) hcont hm hi h0
     ⟨Matrix.scalar _ (1 / 2), by ext i j; by_cases h : i = j <;> simp [h]⟩
-    (by rw [← map_add, ← map_add, add_halves, map_one, map_one])
+    (by rw [← map_add (f := _), ← map_add (f := _), add_halves, map_one, map_one])
     (fun x => (Matrix.scalar_commute _ (fun _ => Commute.all _ _) x).eq)
     (isCompact_univ_pi fun _ => isCompact_univ_pi fun _ => hK)
     (fun X => by

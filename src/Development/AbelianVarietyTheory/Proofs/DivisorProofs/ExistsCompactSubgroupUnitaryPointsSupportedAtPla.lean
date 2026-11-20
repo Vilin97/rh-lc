@@ -52,7 +52,7 @@ theorem smul_tens_single (v : HeightOneSpectrum (𝓞 F)) {u : AF F} (hu : evFin
     rw [TensorProduct.smul_tmul', smul_eq_mul, hb, TensorProduct.zero_tmul]
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy, add_zero]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy, add_zero]
   | tmul a e =>
     let b : AF F := LinearMap.inr F (Ainf F) (Af F) (singleFin v a)
     have hb : u * b = 0 := by
@@ -92,7 +92,7 @@ theorem smul_mat_emb_sub_one (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) 
       T1 (T2 ((HA.mat _ σ J x).1 r s - (1 : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) r s)) := by
     by_cases h : r = s
     · subst h
-      rw [Matrix.one_apply_eq, Matrix.one_apply_eq, Matrix.one_apply_eq, mul_one, mul_one, map_add, map_sub, map_sub, map_sub]
+      rw [Matrix.one_apply_eq, Matrix.one_apply_eq, Matrix.one_apply_eq, mul_one, mul_one, map_add (f := _), map_sub, map_sub, map_sub]
       abel
     · simp only [Matrix.one_apply_ne h, mul_zero, zero_add, sub_zero, map_zero]
   rw [this]
@@ -104,7 +104,7 @@ theorem map_smul_of_eq_one {R : Type} [CommRing R] [Algebra F R] (ψ : AF F →�
     Algebra.TensorProduct.map ψ (AlgHom.id F E) (a • y) = Algebra.TensorProduct.map ψ (AlgHom.id F E) y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy]
   | tmul b e =>
     rw [TensorProduct.smul_tmul', Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, smul_eq_mul,
       map_mul, ha, one_mul]

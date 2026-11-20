@@ -38,7 +38,7 @@ theorem ctrF_h_mul (f : PolXY K k) :
       hXY K k * pderiv (Sum.inl i) (pderiv (Sum.inr i) f) + f +
         X (Sum.inl i) * pderiv (Sum.inl i) f + X (Sum.inr i) * pderiv (Sum.inr i) f := by
     intro i
-    rw [pderiv_mul, pderiv_inr_h, map_add, pderiv_mul, pderiv_mul, pderiv_inl_h, pderiv_X_self]
+    rw [pderiv_mul, pderiv_inr_h, map_add (f := _), pderiv_mul, pderiv_mul, pderiv_inl_h, pderiv_X_self]
     ring
   rw [ctrF_apply, ctrF_apply, eulX_har, eulY, Finset.sum_congr rfl (fun i _ => key i)]
   simp only [Finset.sum_add_distrib, Finset.mul_sum, Finset.sum_const, Finset.card_univ,
@@ -85,7 +85,7 @@ end Gen
 theorem slTwoCommutator_holds : SlTwo := by
   intro K _ _ k A B f hf
   rw [ctrF_h_mul, eulX_of_mem hf, eulY_of_mem hf]
-  simp only [Algebra.smul_def, Nat.cast_add, Nat.cast_mul, Nat.cast_one, Nat.cast_zero, map_add, map_mul,
+  simp only [Algebra.smul_def, Nat.cast_add, Nat.cast_mul, Nat.cast_one, Nat.cast_zero, map_add (f := _), map_mul,
       map_one, map_zero, map_natCast]
   ring
 

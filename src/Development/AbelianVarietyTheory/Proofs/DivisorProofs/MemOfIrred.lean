@@ -42,7 +42,7 @@ theorem mem_of_irred {K : Type u} {V : Type v} [Field K] [IsAlgClosed K] [AddCom
     induction hm using Submodule.span_induction with
     | mem m hm => exact hr m hm
     | zero => simp
-    | add _ _ _ _ h₁ h₂ => rw [map_add, map_add, h₁, h₂]
+    | add _ _ _ _ h₁ h₂ => rw [map_add (f := _), map_add (f := _), h₁, h₂]
     | smul c _ _ h => rw [map_smul, map_smul, h]
   rw [hfr]
   exact r.2

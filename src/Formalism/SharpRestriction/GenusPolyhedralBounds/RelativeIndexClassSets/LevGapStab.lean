@@ -143,7 +143,7 @@ theorem trV_prV (v : HeightOneSpectrum (𝓞 F)) (z : 𝒜) :
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero]; rfl
   | tmul e a => rw [afsplit_prV_tmul, trV_tmul, adelstabT_tmul]; rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]; rfl
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]; rfl
 
 theorem trV_int (v : HeightOneSpectrum (𝓞 F)) (y : E ⊗[F] v.adicCompletion F) (hy : y ∈ intV E v) :
     trV E v y ∈ v.adicCompletionIntegers F := by
@@ -177,7 +177,7 @@ theorem adele_expand {ι : Type} [Fintype ι] [DecidableEq ι] (β : Module.Basi
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [LinearMap.BilinForm.dualBasis_repr_apply, Algebra.traceForm_apply]
   | add x y hx hy =>
-    simp only [add_mul, map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
+    simp only [add_mul, map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib]
     exact congrArg₂ (· + ·) hx hy
 
 variable (F E) in

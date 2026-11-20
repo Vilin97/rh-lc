@@ -42,7 +42,7 @@ theorem LeafSec_of : LateralTheory.CohomologicalPurity.ChartCut.LeafSec := by
       simp only [ψ, Algebra.TensorProduct.lift_tmul, map_mul, Algebra.TensorProduct.lmul'_apply_tmul]
       congr 1
       all_goals first | rfl | exact hμq _
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   obtain ⟨t, ht⟩ := Ideal.Quotient.mk_surjective (ψ (Algebra.FormallyUnramified.elem A T))
   refine ⟨t, ?_, ?_⟩
   · have h1 : μb (Ideal.Quotient.mk J t) = μ t := Ideal.Quotient.lift_mk _ _ _

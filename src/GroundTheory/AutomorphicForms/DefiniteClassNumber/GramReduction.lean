@@ -35,7 +35,7 @@ def gramCore (G : Matrix J J ℝ) (hs : Gᵀ = G) (hpos : ∀ x : J → ℝ, x �
     · exact (hpos _ hx).le
   add_left x y z := by
     show (toGram G).symm (x + y) ⬝ᵥ _ = (toGram G).symm x ⬝ᵥ _ + (toGram G).symm y ⬝ᵥ _
-    rw [map_add, add_dotProduct]
+    rw [map_add (f := _), add_dotProduct]
   smul_left x y r := by
     show (toGram G).symm (r • x) ⬝ᵥ _ = r * ((toGram G).symm x ⬝ᵥ _)
     rw [map_smul, smul_dotProduct, smul_eq_mul]

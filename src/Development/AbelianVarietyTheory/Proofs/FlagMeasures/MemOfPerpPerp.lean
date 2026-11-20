@@ -135,9 +135,9 @@ theorem perp_lattice {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.
   have hπz : π z = 0 := hπU z (Submodule.mem_sup_right (Submodule.mem_span_singleton_self z))
   have hF : ∀ v, (∀ x ∈ X, h x v = 0) → v + (h z v / T) • z - ι (π v) ∈ X := fun v hv => by
     obtain ⟨w, hw⟩ := hsp (v + (h z v / T) • z) (fun x hx => by simp [hv x hx, hXz x hx])
-      (by rw [map_add, map_smul, hz, smul_eq_mul]; field_simp; ring)
+      (by rw [map_add (f := _), map_smul, hz, smul_eq_mul]; field_simp; ring)
     have := hπX _ hw
-    rw [map_sub, map_add, map_smul, hπz, smul_zero, add_zero, hπι, sub_eq_zero] at this
+    rw [map_sub, map_add (f := _), map_smul, hπz, smul_zero, add_zero, hπι, sub_eq_zero] at this
     rwa [this]
   have hperp : ∀ {w l}, ι w - l ∈ U → ∀ x ∈ X, h x l = 0 := fun {w l} H x hx => by
     have := swap_zero hs ((hU x).2 ⟨fun y hy => hXX y hy x hx, swap_zero hs (hXz x hx)⟩ _ H)
@@ -148,7 +148,7 @@ theorem perp_lattice {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.
     obtain ⟨l', hl', e⟩ := (hL y).1 hy
     have e1 := swap_zero hs (hXι _ (hF l hlX) y)
     have e2 := hlX _ e
-    rw [map_sub, map_add, map_smul, swap_zero hs (hzι y), smul_zero, add_zero, hι, sub_eq_zero] at e1
+    rw [map_sub, map_add (f := _), map_smul, swap_zero hs (hzι y), smul_zero, add_zero, hι, sub_eq_zero] at e1
     rw [map_sub, LinearMap.sub_apply, sub_eq_zero] at e2
     rw [← e1, e2]
     exact hint _ hl' _ hl

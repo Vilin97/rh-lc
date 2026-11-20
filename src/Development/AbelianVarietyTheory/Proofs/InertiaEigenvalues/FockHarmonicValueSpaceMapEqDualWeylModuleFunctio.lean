@@ -19,7 +19,7 @@ def coefLin (lam : D.what₂.Tau → DomWeight n) : Pol ℂ D.what₂.Tau n →�
   toFun F := coefFn (RingHom.id ℂ) lam F
   map_add' F G := by
     funext x
-    simp only [coefFn, map_add, mul_add, Pi.add_apply]
+    simp only [coefFn, map_add (f := _), mul_add, Pi.add_apply]
   map_smul' c F := by
     funext x
     simp only [coefFn, smul_eq_C_mul, map_mul, eval₂Hom_C, Pi.smul_apply, smul_eq_mul, RingHom.id_apply]

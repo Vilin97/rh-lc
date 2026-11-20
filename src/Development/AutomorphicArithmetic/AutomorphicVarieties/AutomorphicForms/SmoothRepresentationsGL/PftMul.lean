@@ -98,7 +98,7 @@ theorem UpperTheory.V.Af.Smo.pftMul :
   simp only [SchwartzMap.add_apply, SchwartzMap.smul_apply, SchwartzMap.smulLeftCLM_apply_apply hit]
   simp only [hwl]
   have hlv : l (v, m) = l1 v + l (0, m) := by
-    rw [hl1, ContinuousLinearMap.comp_apply, ContinuousLinearMap.inl_apply, ← map_add]
+    rw [hl1, ContinuousLinearMap.comp_apply, ContinuousLinearMap.inl_apply, ← map_add (f := _)]
     simp
   rw [hlv, hc]
   have hpi : (Real.pi : ℂ) ≠ 0 := by exact_mod_cast Real.pi_ne_zero

@@ -313,4 +313,4 @@ theorem GlobalTheory.GSep.Spz.latTo_of_specializes : ∀ (I : Type) (X₁ : Glob
     obtain ⟨w, hw⟩ := lab a mu mu₂ h₁ h₂
     obtain ⟨w', rfl⟩ := onto w
     refine (cong₂ a mu₂ _ h₂).2 ⟨𝔫₂.e₈.symm w', 𝔫₂.e₈.injective (inj ?_)⟩
-    rw [hK, map_add, map_add, map_nsmul, map_nsmul, AddEquiv.apply_symm_apply, ← hw, add_sub_cancel]
+    rw [hK, map_add (f := _), map_add (f := _), map_nsmul, map_nsmul, AddEquiv.apply_symm_apply, ← hw, add_sub_cancel]

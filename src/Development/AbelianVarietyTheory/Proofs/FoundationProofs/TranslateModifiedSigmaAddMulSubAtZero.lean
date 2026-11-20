@@ -29,7 +29,7 @@ theorem translate_modifiedSigma_add_mul_sub_at_zero :
       Complex.exp (-(↑Real.pi * Q * (starRingEnd ℂ) Q / (2 * ↑(area Λ)))) ^ 2 := by
     rw [hexp, hexp, ← Complex.exp_add, ← Complex.exp_add]
     congr 1
-    simp only [map_add, map_sub]
+    simp only [map_add (f := _), map_sub]
     ring
   calc _ = (sgStar Λ (P + Q) * sgStar Λ (P - Q)) *
       (Complex.exp (-(↑Real.pi * (P + Q) * (starRingEnd ℂ) (P + Q) / (2 * ↑(area Λ)))) *

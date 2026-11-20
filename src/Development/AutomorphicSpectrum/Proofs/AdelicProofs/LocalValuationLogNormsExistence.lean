@@ -22,7 +22,7 @@ theorem norm_natCast_lt_one_iff (n : ℕ) : ‖(n : ℂ_[p])‖ < 1 ↔ (p : ℕ
 def ballIdeal (κ : K →+* ℂ_[p]) : Ideal (𝓞 K) where
   carrier := {x | ‖κ (algebraMap (𝓞 K) K x)‖ < 1}
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
   zero_mem' := by simp
   smul_mem' := fun c x hx => by
@@ -228,7 +228,7 @@ theorem norm_absNorm_coprime (J : Ideal (𝓞 K)) (hJ : Ideal.absNorm J ≠ 0) {
   apply hx0
   have hj0 : (j : 𝓞 K ⧸ J) = 0 := Ideal.Quotient.eq_zero_iff_mem.2 hj
   have e' := congrArg (Ideal.Quotient.mk J) e
-  rw [map_add, map_mul, map_one] at e'
+  rw [map_add (f := _), map_mul, map_one] at e'
   calc x = (Ideal.Quotient.mk J j + Ideal.Quotient.mk J s * Ideal.Quotient.mk J ((p : ℕ) : 𝓞 K)) * x := by
           rw [e', one_mul]
     _ = 0 := by

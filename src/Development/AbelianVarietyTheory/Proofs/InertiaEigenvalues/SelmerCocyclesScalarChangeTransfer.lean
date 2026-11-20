@@ -109,7 +109,7 @@ theorem trL_mem_bkOn (v : PlE D.host) (x : H1 ((repOn ρ κ Y).comp (DecV N v).s
       change ((z : ↥(DecV N v) → Fin r → Y) g a) = _
       rw [hz, algebraMap_smul φ hY]
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
   · rw [Submodule.mem_bot] at hx ⊢
     rw [hx, map_zero]
@@ -139,7 +139,7 @@ theorem exists_mem_bkOn (v : PlE D.host) (x' : H1 ((repOn ρ κ' Y).comp (DecV N
         intro a
         obtain ⟨w, hw, e⟩ := hx a
         obtain ⟨w', hw', e'⟩ := hy a
-        exact ⟨w + w', Submodule.add_mem _ hw hw', by rw [map_add, e, e', smul_add]⟩
+        exact ⟨w + w', Submodule.add_mem _ hw hw', by rw [map_add (f := _), e, e', smul_add]⟩
       | smul c x _ hx =>
         intro a
         obtain ⟨w, hw, e⟩ := hx (a * c)

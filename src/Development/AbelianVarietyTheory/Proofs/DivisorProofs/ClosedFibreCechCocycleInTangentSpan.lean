@@ -17,7 +17,7 @@ theorem pull_cocycle {Y Z : Scheme.{0}} (ι : Y ⟶ Z) {J : Type} (W : J → Z.O
   intro i i' i''
   have e0 : ι ⁻¹ᵁ W i ⊓ ι ⁻¹ᵁ W i' ⊓ ι ⁻¹ᵁ W i'' ≤ ι ⁻¹ᵁ (W i ⊓ W i' ⊓ W i'') := fun _ hx => hx
   have := congrArg (ι.appLE (W i ⊓ W i' ⊓ W i'') _ e0).hom (hd i i' i'')
-  simp only [map_add, ← CommRingCat.comp_apply, Scheme.Hom.map_appLE] at this
+  simp only [map_add (f := _), ← CommRingCat.comp_apply, Scheme.Hom.map_appLE] at this
   simp only [← CommRingCat.comp_apply]
   erw [Scheme.Hom.appLE_map, Scheme.Hom.appLE_map, Scheme.Hom.appLE_map]
   exact this
@@ -70,7 +70,7 @@ theorem fibre_span : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
   have h1 := hh i i'
   have hy' : ((ι ≫ t.G.hom).appLE U.1 _ hle).hom y * ((ι ≫ t.G.hom).appLE U.1 _ hle).hom (r 0) = 1 := by
     have := congrArg ((ι ≫ t.G.hom).appLE U.1 _ hle).hom hy
-    rw [map_add, map_mul, map_one] at this
+    rw [map_add (f := _), map_mul, map_one] at this
     have h0 : ((ι ≫ t.G.hom).appLE U.1 _ hle).hom i₀ = 0 :=
       (key1 (W i ⊓ W i') (inf_le_left.trans (hWU i)) (ι ⁻¹ᵁ W i ⊓ ι ⁻¹ᵁ W i') (fun _ hx => hx) i₀).symm.trans
         (hz (W i ⊓ W i') (inf_le_left.trans (hWU i)) (ι ⁻¹ᵁ W i ⊓ ι ⁻¹ᵁ W i') (fun _ hx => hx) i₀ hi₀)

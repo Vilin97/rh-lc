@@ -176,11 +176,11 @@ theorem truncatedSeries_add (σ : R →+* S) (D : Derivation A R R) (β : S) (N 
     induction j with
     | zero => simp
     | succ k ih =>
-      simp only [Function.iterate_succ_apply', ih, map_add]
+      simp only [Function.iterate_succ_apply', ih, map_add (f := _)]
   simp only [truncatedSeries_apply]
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
-  rw [key j, map_add]
+  rw [key j, map_add (f := _)]
   ring
 
 theorem truncatedSeries_one (σ : R →+* S) (D : Derivation A R R) (β : S) (N : ℕ) (hN : 1 ≤ N) :
@@ -314,7 +314,7 @@ private theorem mk_truncatedSeries_add (σ : R →+* S) (D : Derivation A R R) (
     Ideal.Quotient.mk J (truncatedSeries σ D β N (f + g)) =
       Ideal.Quotient.mk J (truncatedSeries σ D β N f) +
         Ideal.Quotient.mk J (truncatedSeries σ D β N g) := by
-  rw [truncatedSeries_add, map_add]
+  rw [truncatedSeries_add, map_add (f := _)]
 
 def truncatedSeriesRingHom (σ : R →+* S) (D : Derivation A R R) (β : S) (N : ℕ) (J : Ideal S)
     (hN : 1 ≤ N) (hβ : β ^ N ∈ J) : R →+* S ⧸ J :=

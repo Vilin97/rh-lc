@@ -35,7 +35,7 @@ theorem exists_entries (S : Subring R) (β x : GL (Fin n) R) (H : Set (Fin n →
     exact e1
   choose c hc using h
   refine ⟨Matrix.of fun i j => c j i, Matrix.ext fun i j => ?_⟩
-  rw [hc, Matrix.map_apply, Matrix.add_apply, map_add, Matrix.smul_apply, map_nsmul, Matrix.one_apply,
+  rw [hc, Matrix.map_apply, Matrix.add_apply, map_add (f := _), Matrix.smul_apply, map_nsmul, Matrix.one_apply,
     Matrix.one_apply]
   congr 1
   split_ifs <;> simp
@@ -60,7 +60,7 @@ theorem exists_int (S : Subring R) (β x : GL (Fin n) R) (H : Set (Fin n → R))
     rw [this]; group
   · refine Units.ext (Matrix.ext fun i j => ?_)
     change φ ((1 + N • s) i j) = (1 : Matrix (Fin n) (Fin n) k) i j
-    rw [Matrix.add_apply, map_add, Matrix.smul_apply, map_nsmul, nsmul_eq_mul, hN, zero_mul, add_zero,
+    rw [Matrix.add_apply, map_add (f := _), Matrix.smul_apply, map_nsmul, nsmul_eq_mul, hN, zero_mul, add_zero,
       Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp
 
@@ -83,7 +83,7 @@ theorem swap_mem_hatL (Λ : Submodule (𝓞 E) (Fin n → E)) (z : Fin n → Fin
     change x i ⊗ₜ[F] a = ((1 : E) ⊗ₜ[F] a) * (x i ⊗ₜ[F] 1)
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one]
   | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => simp only [Pi.neg_apply, map_neg]; exact neg_mem hx
 
 theorem smul_mem_hat (Λ : Submodule (𝓞 E) (Fin n → E)) (t : E ⊗[F] FiniteAdeleRing (𝓞 F) F)
@@ -114,7 +114,7 @@ theorem smul_mem_hat (Λ : Submodule (𝓞 E) (Fin n → E)) (t : E ⊗[F] Finit
       rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul]
   | zero => intro y _; rw [map_zero, zero_smul]; exact zero_mem _
   | one => intro y hy; rwa [map_one, one_smul]
-  | add a b _ _ ha hb => intro y hy; rw [map_add, add_smul]; exact add_mem (ha y hy) (hb y hy)
+  | add a b _ _ ha hb => intro y hy; rw [map_add (f := _), add_smul]; exact add_mem (ha y hy) (hb y hy)
   | neg a _ ha => intro y hy; rw [map_neg, neg_smul]; exact neg_mem (ha y hy)
   | mul a b _ _ ha hb => intro y hy; rw [map_mul, mul_smul]; exact ha _ (hb y hy)
 
@@ -126,7 +126,7 @@ theorem swap_symm_mem_hat (Λ : Submodule (𝓞 E) (Fin n → E)) (z : Fin n →
     obtain ⟨x, hx, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨1, fun v => one_mem _, x, hx, rfl⟩
   | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
   | smul c x _ hx =>
     have := smul_mem_hat Λ c.1 c.2 _ hx
     convert this using 1
@@ -155,7 +155,7 @@ theorem swap_mem_UPts (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E)
     (Algebra.TensorProduct.comm F _ E).toAlgHom.toRingHom (RingHom.ext fun x => ?_) (JR _ J) g hg
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a x => rfl
 
 end Swap

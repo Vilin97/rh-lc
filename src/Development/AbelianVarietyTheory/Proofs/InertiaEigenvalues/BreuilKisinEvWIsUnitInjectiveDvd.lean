@@ -23,7 +23,7 @@ theorem flat_ne_zero : bk.flat ≠ 0 := by
   obtain ⟨w, hw⟩ := bk.coeff_zero
   have hE : bk.ev bk.E = (l : Ainf l) * wA l bk.a (w : Wq l bk.a) := by
     conv_lhs => rw [eq_X_mul_shift_add_const bk.E]
-    rw [map_add, map_mul, hX, zero_mul, zero_add, bk.ev_C, Polynomial.constantCoeff_coe, hw, map_mul,
+    rw [map_add (f := _), map_mul, hX, zero_mul, zero_add, bk.ev_C, Polynomial.constantCoeff_coe, hw, map_mul,
       map_natCast]
   have hl' : (l : Ainf l) ∈ RingHom.ker (Per.θ l) := by
     rw [← bk.span_ev, hE, Ideal.span_singleton_mul_right_unit ((w.isUnit).map (wA l bk.a))]
@@ -54,7 +54,7 @@ theorem dvd_of_evRed_eq_zero (x : bk.S) (hx : bk.evRed x = 0) : (l : bk.S) ∣ x
     rw [map_sub, map_mul, map_pow, PowerSeries.map_X, hv, X_pow_order_mul_divXPowOrder, sub_self])
   have h1 : bk.evRed x = bk.flat ^ m * bk.evRed v := by
     have : x = X ^ m * v + (l : bk.S) * y := by linear_combination hy
-    rw [this, map_add, map_mul, map_mul, map_pow, evRed_X, map_natCast, CharP.cast_eq_zero, zero_mul, add_zero]
+    rw [this, map_add (f := _), map_mul, map_mul, map_pow, evRed_X, map_natCast, CharP.cast_eq_zero, zero_mul, add_zero]
   rw [hx] at h1
   exact mul_ne_zero (pow_ne_zero _ bk.flat_ne_zero) (hvu.map bk.evRed).ne_zero h1.symm
 

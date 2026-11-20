@@ -15,7 +15,7 @@ theorem eval_bounded_on_box {σ : Type} (p : MvPolynomial σ ℂ) (M : σ → �
   | add p q hp hq =>
     obtain ⟨B1, h1, hB1⟩ := hp; obtain ⟨B2, h2, hB2⟩ := hq
     exact ⟨B1 + B2, by positivity, fun x hx => by
-      rw [map_add]; exact (norm_add_le _ _).trans (add_le_add (hB1 x hx) (hB2 x hx))⟩
+      rw [map_add (f := _)]; exact (norm_add_le _ _).trans (add_le_add (hB1 x hx) (hB2 x hx))⟩
   | mul_X p n hp =>
     obtain ⟨B, h0, hB⟩ := hp
     refine ⟨B * max (M n) 0, by positivity, fun x hx => ?_⟩
@@ -108,7 +108,7 @@ theorem avg_span : ∀ (ι : Type) [Fintype ι] (a b : ℕ) (hab : a ≤ b), 0 <
       map_add' := fun F G => by
         have e : ∀ k, c m k * evalAt (fun τ => r k τ * y τ) (F + G) =
             c m k * evalAt (fun τ => r k τ * y τ) F + c m k * evalAt (fun τ => r k τ * y τ) G := by
-          intro k; simp only [evalAt, map_add, mul_add]
+          intro k; simp only [evalAt, map_add (f := _), mul_add]
         simp only [e]
         exact integral_add (hint m F) (hint m G)
       map_smul' := fun t F => by

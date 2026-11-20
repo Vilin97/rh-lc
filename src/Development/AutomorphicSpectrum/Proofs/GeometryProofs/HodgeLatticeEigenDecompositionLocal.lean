@@ -109,7 +109,7 @@ theorem exists_frame {g p : ℕ} (ℓ : Fin g → V) (hℓ : LinearIndependent K
           have h7 := hge h6
           exact Submodule.span_subset_span A K _ h7
         | zero => simp
-        | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+        | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
         | smul r a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
       rw [← heW x hx]
       exact h5 x

@@ -7,7 +7,7 @@ theorem tw_g_herm : ∀ (Z R : Type) [CommRing Z] [CommRing R] [Algebra Z R] (σ
   intro Z R _ _ _ σ hσ lam hlam hbij N ψ halt hψ hadj
   have hskew : ∀ x y, ψ x y = -ψ y x := fun x y => by
     have := halt (x + y)
-    simp only [map_add, LinearMap.add_apply, halt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, halt] at this
     linear_combination this
   have hinj : ∀ a b : R, (∀ r, lam (a * r) = lam (b * r)) → a = b := fun a b h =>
     hbij.1 (LinearMap.ext fun r => h r)

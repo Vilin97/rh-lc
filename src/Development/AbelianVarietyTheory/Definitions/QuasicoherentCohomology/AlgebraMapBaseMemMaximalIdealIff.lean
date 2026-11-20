@@ -213,7 +213,7 @@ theorem lift_reduction_bijective (hk : ∀ c : k, ∃ a b : O, c = φ a / φ b) 
       rw [RingHom.comp_apply] at e
       rw [e]
       exact this
-    | add f g hf hg => rw [map_add]; exact add_mem hf hg
+    | add f g hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
     | mul_X f i hf =>
       rw [map_mul]
       refine mul_mem hf ?_
@@ -342,7 +342,7 @@ local instance isPrime_span_two : (Ideal.span {(2 : ℤ)}).IsPrime :=
 
 example : IsUnit (algebraMap (MvPolynomial Unit ℤ) (GaussLocal ℤ (Ideal.span {2}) Unit)
     (X () + C 2)) := by
-  rw [map_add]
+  rw [map_add (f := _)]
   have h2 : algebraMap (MvPolynomial Unit ℤ) (GaussLocal ℤ (Ideal.span {2}) Unit) (C 2) ∈
       maximalIdeal _ :=
     (algebraMap_base_mem_maximalIdeal_iff 2).2 (Ideal.mem_span_singleton_self 2)

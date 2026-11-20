@@ -43,7 +43,7 @@ theorem UpperTheory.lattice_determinant_comparison_at_split_place :
     AddMonoidHom.mk' (fun x => (x : WOF F E nS nT).map (ev F E P)) (fun x y => by
       rw [XFF.coe_add]
       ext i j
-      simp [Matrix.map_apply, map_add])
+      simp [Matrix.map_apply, map_add (f := _)])
   have hφ : ∀ x, φ x = (x : WOF F E nS nT).map (ev F E P) := fun _ => rfl
   have hφe : ∀ x, φ (mulFF e x) = φ x := by
     intro x

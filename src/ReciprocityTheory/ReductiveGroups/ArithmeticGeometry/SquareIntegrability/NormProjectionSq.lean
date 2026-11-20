@@ -17,7 +17,7 @@ private lemma Hf_im_IR_lemma {dim : (E →+* ℂ) → ℕ} {I : Submodule ℤ (V
     | zero => simp [Hf]
     | add y z _ _ h1 h2 =>
       have e : Hf x (y + z) = Hf x y + Hf x z := by
-        simp only [Hf, PiLp.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+        simp only [Hf, PiLp.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
       rw [e, Complex.add_im, h1, h2, add_zero]
     | smul r y _ h =>
       have e : Hf x (r • y) = (r : ℂ) * Hf x y := by

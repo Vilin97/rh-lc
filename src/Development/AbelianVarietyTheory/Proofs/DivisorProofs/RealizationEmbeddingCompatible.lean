@@ -44,7 +44,7 @@ theorem readExt_tmul (b : L) (f : M) : readExt rd eL hL (b ⊗ₜ f) = eL b • 
 theorem readExt_smul (b : L) (x : L ⊗[O] M) : readExt rd eL hL (b • x) = eL b • readExt rd eL hL x := by
   induction x using TensorProduct.induction_on with
   | zero => rw [smul_zero, map_zero, smul_zero]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
   | tmul a f =>
     rw [TensorProduct.smul_tmul', readExt_tmul, readExt_tmul, smul_eq_mul, map_mul, mul_smul]
 
@@ -85,7 +85,7 @@ theorem readExt_injective
         Module.End (FractionRing O) M).restrictScalars O) (d • x) = x := fun x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [smul_add, map_add, hx, hy]
+    | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy]
     | tmul a f =>
       rw [← TensorProduct.tmul_smul, LinearMap.lTensor_tmul]
       congr 1
@@ -126,7 +126,7 @@ theorem descent_of_reading : AtFit fun Fm x hx i p w j ρ hρ ν rd => ∀ e : F
       ((Fm.ex x hx i).nch.k' w) z) = rdK (rdAt p w j hρ ν) hρ ((Fm.ex x hx i).nch.k' w) z := fun z => by
     induction z using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero, map_zero]
-    | add u v hu hv => rw [map_add, map_add, map_add, hu, hv]
+    | add u v hu hv => rw [map_add (f := _), map_add (f := _), map_add (f := _), hu, hv]
     | tmul c f =>
       rw [rdK_tmul, ← he2]
       rfl
@@ -143,7 +143,7 @@ theorem descent_of_reading : AtFit fun Fm x hx i p w j ρ hρ ν rd => ∀ e : F
   have hAadd : ∀ u v, adForm (R2 p) j (u + v) (p.v₀ j (sg0 (Fm.D x i) p.P.A3.A)) =
       adForm (R2 p) j u (p.v₀ j (sg0 (Fm.D x i) p.P.A3.A)) + adForm (R2 p) j v (p.v₀ j (sg0 (Fm.D x i) p.P.A3.A)) := fun u v => by
     change ((R2 p).HW j _).e (((R2 p).FW j).j _ (u + v)) (p.v₀ j _) = _
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     rfl
   have hs : sg0 (Fm.D x i) p.P.A3.A = (Fm.D x i).what₂.embLL := sgAt_mk _ (R2 p).hv0
   have hAsmul : ∀ (c : (Fm.D x i).what₂.LL) u, adForm (R2 p) j (c • u) (p.v₀ j (sg0 (Fm.D x i) p.P.A3.A)) =

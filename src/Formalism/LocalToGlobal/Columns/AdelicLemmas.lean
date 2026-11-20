@@ -833,7 +833,7 @@ theorem redA_add (P : Pl E) {a b : E ⊗[F] Formalism.L2.Herm.Af F} {s : 𝓞 E}
     rw [mul_add]
     exact add_mem ha hb
   apply redA_eq P hs hm
-  rw [mul_add (Ideal.Quotient.mk P.asIdeal s), redA_spec P hs ha, redA_spec P hs hb, ← map_add]
+  rw [mul_add (Ideal.Quotient.mk P.asIdeal s), redA_spec P hs ha, redA_spec P hs hb, ← map_add (f := _)]
   congr 1
   apply Subtype.ext
   simp [mul_add]

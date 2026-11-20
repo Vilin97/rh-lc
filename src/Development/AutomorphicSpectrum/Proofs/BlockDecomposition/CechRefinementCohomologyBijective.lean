@@ -71,7 +71,7 @@ def sqAct (a b : IdF A) : RAct A (sq a b) where
         rw [map_zero, zero_mul])
       map_add' := fun c c' => LinearMap.ext fun x => Subtype.ext (by
         change Ideal.Quotient.mk _ (c + c') * x.1 = Ideal.Quotient.mk _ c * x.1 + Ideal.Quotient.mk _ c' * x.1
-        rw [map_add, add_mul]) }
+        rw [map_add (f := _), add_mul]) }
   nat {T T'} φ c x := by
     obtain ⟨x, hx⟩ := x
     obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x

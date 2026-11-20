@@ -37,7 +37,7 @@ theorem exists_hom (R : RiemLat E g Λ) (R' : RiemLat E g' Λ') (φ : (Fin g →
     have : φ (R.P a) ∈ Set.range R'.P := h ▸ ⟨_, ⟨a, rfl⟩, rfl⟩
     exact this
   choose ga hga using h1
-  refine ⟨AddMonoidHom.mk' ga fun a b => hi (by rw [map_add, hga, hga, hga, map_add, map_add]), fun a' => ?_, hga⟩
+  refine ⟨AddMonoidHom.mk' ga fun a b => hi (by rw [map_add (f := _), hga, hga, hga, map_add (f := _), map_add (f := _)]), fun a' => ?_, hga⟩
   obtain ⟨_, ⟨a, rfl⟩, e⟩ : R'.P a' ∈ φ '' Set.range R.P := h ▸ ⟨a', rfl⟩
   exact ⟨a, hi ((hga a).trans e)⟩
 

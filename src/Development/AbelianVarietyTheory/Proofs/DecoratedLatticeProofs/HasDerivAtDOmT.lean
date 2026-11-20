@@ -86,7 +86,7 @@ theorem dOmT_add {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} {S T 
   have e : (fun t : ℝ => om (1, oneP θ T τ X t) (f + f') w) =
       fun t => om (1, oneP θ T τ X t) f w + om (1, oneP θ T τ X t) f' w := by
     funext t
-    simp only [map_add, Pi.add_apply]
+    simp only [map_add (f := _), Pi.add_apply]
   rw [e] at h2
   exact h2.unique h1
 
@@ -125,7 +125,7 @@ theorem GlobalTheory.Core.Rk.ZcDer.rderC_om : ∀ (D : D7) (ψ : AddChar (AF D.h
   · beta_reduce
     rw [dOmT_smul hθ hω hX c hf, dOmT_smul hθ hω hY c hf, smul_add c, smul_comm Complex.I c]
   · funext h
-    simp only [Formalism.L2.Theta.RderC, Formalism.L2.Theta.Rder, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_smul]
+    simp only [Formalism.L2.Theta.RderC, Formalism.L2.Theta.Rder, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_smul]
     rw [(dX f hf g h w).deriv, (dY f hf g h w).deriv]
 
 end

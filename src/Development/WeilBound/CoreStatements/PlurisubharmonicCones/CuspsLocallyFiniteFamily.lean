@@ -56,7 +56,7 @@ theorem rg_pos (R : RiemLat E g Λ) {N : ℕ} (e : Module.Basis (Fin N) ℤ Λ) 
   have h2 : ∀ l, R.form (e l) w = -(if l = k then 1 else 0) := by
     intro l
     have ha := R.alt (e l + w)
-    simp only [map_add, LinearMap.add_apply, R.alt] at ha
+    simp only [map_add (f := _), LinearMap.add_apply, R.alt] at ha
     have hb : R.form w (e l) = if l = k then 1 else 0 := by
       rw [hw]; simp [Finsupp.single_apply]
     linarith

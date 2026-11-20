@@ -59,7 +59,7 @@ def LatModel.secEquiv {V : Type} [AddCommGroup V] [Module X.functionField V] {M 
     {F F' : X.Modules} (L : LatModel M F) (L' : LatModel M F') (U : X.Opens) (h : genericPoint X ∈ U) :
     Γ(F, U) ≃ₗ[Γ(X, U)] Γ(F', U) where
   toFun := L.transfer L' U h
-  map_add' s t := L'.inj U h (by simp only [map_add, LatModel.val_transfer])
+  map_add' s t := L'.inj U h (by simp only [map_add (f := _), LatModel.val_transfer])
   map_smul' r s := L'.inj U h (by
     simp only [RingHom.id_apply, LatModel.val_transfer, L'.smul U h, L.smul U h])
   invFun := L'.transfer L U h

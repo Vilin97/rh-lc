@@ -52,7 +52,7 @@ private theorem clif_map {A B : Type} [Ring A] [Ring B] [Algebra ℂ A] [Algebra
     {c : Fin n → Fin n → A} (h : Clif c) : Clif fun a b => φ (c a b) := by
   intro a b d e
   have := congrArg φ (h a b d e)
-  simp only [map_add, map_mul] at this
+  simp only [map_add (f := _), map_mul] at this
   rw [this]
   split_ifs <;> simp
 
@@ -168,7 +168,7 @@ theorem UpperTheory.RealTr.diracHW :
   have hdg : (fun a b => L1 a b + L2 a b + spn C a b) = dg (kF E1 E2) c := by
     funext a b
     have : spn C a b = mt V (spn c a b) := by rw [← hφ]; exact congrFun (congrFun hspn a) b
-    simp only [dg, kF, L1, L2, lfJ, map_add, this]
+    simp only [dg, kF, L1, L2, lfJ, map_add (f := _), this]
   have hc4 : Cas (dg (kF E1 E2) c) x = ((N - R : ℝ) : ℂ) • x := by
     have h := Formalism.REAL.kCasSpan (Ten J V) n (fun _ => true) (dg (kF E1 E2) c) κ x
       (Formalism.REAL.glRel_kRel _ _ hUFd.gl) hx' x

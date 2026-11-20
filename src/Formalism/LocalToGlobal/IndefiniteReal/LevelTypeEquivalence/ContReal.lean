@@ -33,7 +33,7 @@ theorem beta_poly (s t : Fin k → ℝ) :
   have hs : ∀ t, Λ (symplOH S T (L s) (L t)).1 = ∑ i, s i * Λ (symplOH S T (L (ev i)) (L t)).1 := by
     intro t
     let g : (Fin k → ℝ) →+ ℂ := AddMonoidHom.mk' (fun s => Λ (symplOH S T (L s) (L t)).1) (fun a b => by
-      simp only [map_add, symplOH_add_left]; exact Λ.map_add _ _)
+      simp only [map_add (f := _), symplOH_add_left]; exact Λ.map_add _ _)
     have hg : Continuous g := by
       have h1 : Continuous fun s => symplOH S T (L s) (L t) := (continuous_symplOH_left (L t)).comp hL
       exact hΛ.comp (continuous_fst.comp h1)
@@ -42,7 +42,7 @@ theorem beta_poly (s t : Fin k → ℝ) :
   rw [hs t]
   refine Finset.sum_congr rfl fun i _ => ?_
   let g : (Fin k → ℝ) →+ ℂ := AddMonoidHom.mk' (fun t => Λ (symplOH S T (L (ev i)) (L t)).1) (fun a b => by
-    simp only [map_add, symplOH_add_right]; exact Λ.map_add _ _)
+    simp only [map_add (f := _), symplOH_add_right]; exact Λ.map_add _ _)
   have hg : Continuous g := by
     have h1 : Continuous fun t => symplOH S T (L (ev i)) (L t) := (continuous_symplOH_right _).comp hL
     exact hΛ.comp (continuous_fst.comp h1)

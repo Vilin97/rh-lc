@@ -37,7 +37,7 @@ theorem exists_quad (L : Formalism.MainNotions.S.Loc.LocE F E) (d : E) : ∃ t n
   rw [hdeg] at hs
   rw [hs] at h0
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_pow, aeval_X, map_sum, map_mul, aeval_C, Finset.sum_range_succ, Finset.sum_range_zero,
+    simp only [map_add (f := _), map_pow, aeval_X, map_sum, map_mul, aeval_C, Finset.sum_range_succ, Finset.sum_range_zero,
     zero_add, pow_zero, pow_one, mul_one] at h0
   refine ⟨-f.charpoly.coeff 1, f.charpoly.coeff 0, ?_⟩
   rw [map_neg]
@@ -100,7 +100,7 @@ theorem exists_shift_inv : ∀ {F : Type} [Field F] [ValuativeRel F] [Topologica
     have ht' : valuation F (t + 2) ≤ valuation F t :=
       le_trans (Valuation.map_add _ _ _) (max_le le_rfl (le_trans hv2 ht1.1.le))
     have hq : (d + 1) * (d + 1) - algebraMap F E (t + 2) * (d + 1) + algebraMap F E (t + (n + 1)) = 0 := by
-      simp only [map_add, map_one, map_ofNat]
+      simp only [map_add (f := _), map_one, map_ofNat]
       linear_combination h
     obtain ⟨w, hw, hdw⟩ := inv_mem_O_of_quad L (d + 1) (t + 2) (t + (n + 1)) hq
       (by rw [hn']; exact ht1.1.le) (by rw [hn']; exact ht')
@@ -117,7 +117,7 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] {E : Type} [
   [Module E V] (H : HermSp M V)
 
 theorem h_add_right' (x y y' : V) : H.h x (y + y') = H.h x y + H.h x y' := by
-  rw [H.h_herm (y + y') x, H.h_add_left, map_add, ← H.h_herm, ← H.h_herm]
+  rw [H.h_herm (y + y') x, H.h_add_left, map_add (f := _), ← H.h_herm, ← H.h_herm]
 
 theorem h_smul_right' (c : E) (x y : V) : H.h x (c • y) = M.L.cj c * H.h x y := by
   rw [H.h_herm (c • y) x, H.h_smul_left, map_mul, ← H.h_herm]
@@ -184,7 +184,7 @@ theorem mkW_mem_of_mem_img : ∀ {F : Type} [Field F] [ValuativeRel F] [Topologi
     | add a b _ _ iha ihb =>
       obtain ⟨w, hw, hwL⟩ := iha
       obtain ⟨w', hw', hwL'⟩ := ihb
-      exact ⟨w + w', by rw [Submodule.coe_add, hw, hw', hprF_add], by rw [map_add]; exact L.add_mem hwL hwL'⟩
+      exact ⟨w + w', by rw [Submodule.coe_add, hw, hw', hprF_add], by rw [map_add (f := _)]; exact L.add_mem hwL hwL'⟩
     | smul c a _ iha =>
       obtain ⟨w, hw, hwL⟩ := iha
       refine ⟨(c : E) • w, ?_, ?_⟩
@@ -274,7 +274,7 @@ theorem coef_integral : ∀ (D : D7) (T : D.host.E) (G : LFlag (VS D) D.R.rS T) 
     have hxp : baseChange₂ D p x ∈ (locH Z p).X (A p).f := by
       rw [hf]; exact GlobalTheory.LocExt.bcP_Xsp_mem Z p G hxX
     have hmem : (D.s.atP p).ιE c • (A p).z + -(baseChange₂ D p x) ∈ img n ((A p).LamStd L) := by
-      rw [← hlat, hz, ← baseChange_smul₂, ← hlx, map_add]
+      rw [← hlat, hz, ← baseChange_smul₂, ← hlx, map_add (f := _)]
       have : baseChange₂ D p l + baseChange₂ D p x + -(baseChange₂ D p x) = baseChange₂ D p l := by abel
       rw [this]
       exact Submodule.subset_span ⟨l, hlΛ, rfl⟩

@@ -176,7 +176,7 @@ theorem cmpD_smul_letter {T : LocLat G Qp LL O} {i : ZMod n} (a : LetA O n) {y :
     apply Subtype.ext
     simp only [Submodule.coe_add, Submodule.coe_smul_of_tower]
     exact hid
-  rw [cmpD, dif_pos hay, he, map_add, W.cmp_smul, W.cmp_π, add_zero, cmpD, dif_pos hyN]
+  rw [cmpD, dif_pos hay, he, map_add (f := _), W.cmp_smul, W.cmp_π, add_zero, cmpD, dif_pos hyN]
 
 end TypesD
 

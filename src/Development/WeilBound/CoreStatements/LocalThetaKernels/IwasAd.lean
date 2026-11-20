@@ -35,7 +35,7 @@ theorem comp_sgE (y : Fv F v ⊗[F] E) : compFin F E v (sgE E v y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => exact congrArg (· ⊗ₜ[F] x) (ev_sg a)
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [NumberField E] in
 theorem at_sgE (y : Fv F v ⊗[F] E) : At (evFin F v) (sgE E v y) := fun u hu => by
@@ -44,7 +44,7 @@ theorem at_sgE (y : Fv F v ⊗[F] E) : At (evFin F v) (sgE E v y) := fun u hu =>
   | tmul a x =>
     change (u • sg v a) ⊗ₜ[F] x = 0
     rw [at_sg a u hu, TensorProduct.zero_tmul]
-  | add x y hx hy => rw [map_add, smul_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
 
 omit [NumberField E] in
 theorem sgE_comp (z : AE F E) : sgE E v (compFin F E v z) = sg v 1 • z := by
@@ -53,7 +53,7 @@ theorem sgE_comp (z : AE F E) : sgE E v (compFin F E v z) = sg v 1 • z := by
   | tmul a x =>
     change sg v (evFin F v a) ⊗ₜ[F] x = (sg v 1 * a) ⊗ₜ[F] x
     rw [mul_comm, mul_sg, mul_one]
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
 
 omit [NumberField E] in
 theorem eq_zero_of_at {z : AE F E} (hz : At (evFin F v) z) (h : compFin F E v z = 0) : z = 0 := by
@@ -75,7 +75,7 @@ theorem piE_cA {h : w.under (𝓞 F) = v} {c : w.adicCompletion E →+* w.adicCo
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 section Vec
 

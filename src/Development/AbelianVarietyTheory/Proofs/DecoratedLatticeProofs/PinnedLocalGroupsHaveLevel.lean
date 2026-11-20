@@ -39,7 +39,7 @@ theorem pr_e : q.pr q.e = 1 := by rw [← sec_one, q.pr_sec]
 theorem toEAf_finEmb (t : EAf D) : toEAf D (finEmb D t) = t := by
   induction t using TensorProduct.induction_on with
   | zero => rw [map_zero, RingHom.map_zero]
-  | add a b ha hb => rw [map_add, RingHom.map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), RingHom.map_add (f := _), ha, hb]
   | tmul x α => rfl
 
 theorem toEAf_mem_iff (a : AE D) : toEAf D a ∈ Formalism.L2.Herm.intAf D.host.F D.host.E ↔ finPart D a ∈ intAE D :=
@@ -79,7 +79,7 @@ theorem exists_chart {PP : Formalism.L2.DIV.Pl D.host.E} (h : IsIdemAt q.e PP) :
       map_one' := pr_finEmb_one q h
       map_mul' := fun x y => by rw [finEmb_mul', map_mul]
       map_zero' := by rw [map_zero, map_zero]
-      map_add' := fun x y => by rw [map_add, map_add] }
+      map_add' := fun x y => by rw [map_add (f := _), map_add (f := _)] }
   have h1 : ∀ a, π (toEAf D a) = q.pr a := fun a => by
     change q.pr (finEmb D _) = _
     rw [← mul_one (toEAf D a), finEmb_mul, map_mul, pr_finEmb_one q h, mul_one]
@@ -100,7 +100,7 @@ theorem exists_chart {PP : Formalism.L2.DIV.Pl D.host.E} (h : IsIdemAt q.e PP) :
       exact (pr_lt q h a).1 ha
     · simp
     · intro x y _ _ hx hy
-      rw [Subring.coe_add, RingHom.map_add]
+      rw [Subring.coe_add, RingHom.map_add (f := _)]
       exact Valuation.map_add_lt _ hx hy
     · intro c x _ hx
       rw [smul_eq_mul, Subring.coe_mul, RingHom.map_mul, Valuation.map_mul]
@@ -132,7 +132,7 @@ theorem pr_other {k' : Type} [Field k'] [ValuativeRel k'] [TopologicalSpace k'] 
   have h2 : q'.pr (cA D q.e) = 0 := by
     have := congrArg q'.pr h1
     rwa [map_mul, pr_e, one_mul, map_zero] at this
-  rw [map_add, h2, add_zero]
+  rw [map_add (f := _), h2, add_zero]
   have i1 : IsIdempotentElem (q'.pr q.e) := by rw [IsIdempotentElem, ← map_mul, he.1.1]
   have i2 : IsIdempotentElem (q.pr q'.e) := by rw [IsIdempotentElem, ← map_mul, he'.1.1]
   refine (IsIdempotentElem.iff_eq_zero_or_one.1 i1).resolve_right fun h3 => ?_
@@ -312,13 +312,13 @@ theorem exists_int {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [I
       rw [Matrix.map_sub _ (toEAf D).map_sub, Matrix.map_one _ (toEAf D).map_zero (toEAf D).map_one]
       rfl
     intro i j
-    rw [e, ← RingHom.map_add]
+    rw [e, ← RingHom.map_add (f := _)]
     exact ((toEAf D).map_mul _ _).symm.trans (congrArg (toEAf D) (hx i j))
   obtain ⟨Y, hY, hY1⟩ := exists_int_ring _ hf hf' (Lev.finE V t * β) (Lev.finE V x) _ (by
     rw [MonoidHom.map_mul, MonoidHom.map_mul, MonoidHom.map_inv, conj_conj]) b0 a1 a2 a3 a4
   refine ⟨Y, ?_, fun i j => congrArg (fun g : GL (Fin V.rank) (EAf D) => g.val i j) hY, fun i j => ?_⟩
   · exact (congrArg (fun g => β * g * β⁻¹) hY).trans (conj_back _ _)
-  · rw [RingHom.map_add]
+  · rw [RingHom.map_add (f := _)]
     exact hY1 i j
 
 variable {u : D.what₂.Word} {d : Dat D u} {τ : ∀ j h, Matrix (Fin (d.bes j 0 h).L.rank) (Fin d.Lz.rank) D.host.E}

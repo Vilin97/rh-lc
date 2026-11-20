@@ -29,11 +29,11 @@ theorem toEAf_tmul (x : AF D.host.F) (e : D.host.E) :
 theorem finEmb_mul (a : AE D) (x : EAf D) : finEmb D (toEAf D a * x) = a * finEmb D x := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, add_mul, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), add_mul, ha, hb]
   | tmul y e =>
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, mul_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), mul_add, ha, hb]
     | tmul f α =>
       rw [toEAf_tmul, Algebra.TensorProduct.tmul_mul_tmul, finEmb_tmul, finEmb_tmul,
         Algebra.TensorProduct.tmul_mul_tmul]
@@ -48,7 +48,7 @@ theorem cF_tmul (e : D.host.E) (α : Af D.host.F) :
 theorem toEAf_cA (a : AE D) : toEAf D (cA D a) = cF D (toEAf D a) := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul y e => rfl
 
 theorem toEAf_incA (e : D.host.E) : toEAf D (incA D e) = eToEAf D e := rfl
@@ -59,13 +59,13 @@ def rankOne (S T : HSp D) (a : D.host.E) (s : Fin S.rank → EAf D) (t : Fin T.r
 theorem rankOne_add_left (S T : HSp D) (a : D.host.E) (s s' : Fin S.rank → EAf D) (t : Fin T.rank → EAf D) :
     rankOne S T a (s + s') t = rankOne S T a s t + rankOne S T a s' t := by
   ext i j
-  simp only [rankOne, Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add, add_mul, mul_add,
+  simp only [rankOne, Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add (f := _), add_mul, mul_add,
     Finset.sum_add_distrib]
 
 theorem rankOne_add_right (S T : HSp D) (a : D.host.E) (s : Fin S.rank → EAf D) (t t' : Fin T.rank → EAf D) :
     rankOne S T a s (t + t') = rankOne S T a s t + rankOne S T a s t' := by
   ext i j
-  simp only [rankOne, Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add, add_mul, mul_add]
+  simp only [rankOne, Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add (f := _), add_mul, mul_add]
 
 def rankOneHom (S T : HSp D) (a : D.host.E) : (Fin S.rank → EAf D) →+ (Fin T.rank → EAf D) →+ WO S T :=
   AddMonoidHom.mk' (fun s => AddMonoidHom.mk' (fun t => rankOne S T a s t) (rankOne_add_right S T a s))
@@ -155,10 +155,10 @@ theorem rankOne_mem_latO (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.r
       exact ⟨β * α, (mul_mem hβ hα : β * α ∈ Formalism.UG.intAd D.host.F), fun _ h => absurd trivial h, a, ha, x, hx, y, hy,
         rankOne_pure S T a x y α β⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     | neg y _ hy => rw [map_neg]; exact neg_mem hy
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 theorem mt_mul (V : HSp D) (g g' : GA D V) : mt V (g * g') = mt V g * mt V g' := by

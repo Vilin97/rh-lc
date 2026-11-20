@@ -36,7 +36,7 @@ theorem bound_of_span (h : V →ₗ⋆[K] V →ₗ[K] K) (T : Set V) (m : Γ)
     induction hy using Submodule.span_induction with
     | mem y hy => exact hT x hx y hy
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact v.map_add_le ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact v.map_add_le ha hb
     | smul r a _ ha =>
       rw [Subring.smul_def, map_smul, smul_eq_mul, map_mul]
       exact (mul_le_mul' r.2.1 ha).trans (by simp)
@@ -44,7 +44,7 @@ theorem bound_of_span (h : V →ₗ⋆[K] V →ₗ[K] K) (T : Set V) (m : Γ)
   induction hx using Submodule.span_induction with
   | mem x hx => exact h1 x hx y hy
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply]; exact v.map_add_le ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply]; exact v.map_add_le ha hb
   | smul r a _ ha =>
     rw [Subring.smul_def, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, map_mul]
     exact (mul_le_mul' r.2.2 ha).trans (by simp)
@@ -75,7 +75,7 @@ theorem exists_max_vector (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (θ
       Submodule.smul_mem _ (⟨c, hc⟩ : biInt v) hy'
     have e : c * h x y + star c * star (h x y) =
         h (x + c • y) (x + c • y) - h x x - h (c • y) (c • y) := by
-      simp only [map_add, LinearMap.add_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+      simp only [map_add (f := _), LinearMap.add_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
         RingHom.id_apply, hyx, starRingEnd_apply]
       ring
     rw [e]

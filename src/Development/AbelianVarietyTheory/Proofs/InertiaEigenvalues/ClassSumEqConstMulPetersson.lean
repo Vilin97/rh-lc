@@ -172,7 +172,7 @@ theorem petFun_add_left (hβ : IsInvForm a β) (x₁ x₂ y : GAf L n → a.W) :
   have j2 := (i2.mul_left (lev (projAF L n a.ρ x₁))).mul_right (lev (projAF L n a.ρ y))
   have j3 := i3.mul_left (lev (projAF L n a.ρ x₁) * lev (projAF L n a.ρ x₂))
   unfold petFun
-  rw [map_add, petersson_level_eq_of_invariant_forms a β hβ (Submodule.add_mem _ (projAF_mem _ _) (projAF_mem _ _)) (projAF_mem _ _) hN (j1.add j2) j3,
+  rw [map_add (f := _), petersson_level_eq_of_invariant_forms a β hβ (Submodule.add_mem _ (projAF_mem _ _) (projAF_mem _ _)) (projAF_mem _ _) hN (j1.add j2) j3,
     petersson_level_eq_of_invariant_forms a β hβ (projAF_mem _ _) (projAF_mem _ _) hN j1 j3, petersson_level_eq_of_invariant_forms a β hβ (projAF_mem _ _) (projAF_mem _ _) hN j2 j3,
     petN_add_left]
 
@@ -187,7 +187,7 @@ theorem petFun_add_right (hβ : IsInvForm a β) (x y₁ y₂ : GAf L n → a.W) 
   have j2 := (i2.mul_left (lev (projAF L n a.ρ x))).mul_right (lev (projAF L n a.ρ y₂))
   have j3 := i3.mul_left (lev (projAF L n a.ρ x) * lev (projAF L n a.ρ y₁))
   unfold petFun
-  rw [map_add, petersson_level_eq_of_invariant_forms a β hβ (projAF_mem _ _) (Submodule.add_mem _ (projAF_mem _ _) (projAF_mem _ _)) hN j1 (j2.add j3),
+  rw [map_add (f := _), petersson_level_eq_of_invariant_forms a β hβ (projAF_mem _ _) (Submodule.add_mem _ (projAF_mem _ _) (projAF_mem _ _)) hN j1 (j2.add j3),
     petersson_level_eq_of_invariant_forms a β hβ (projAF_mem _ _) (projAF_mem _ _) hN j1 j2, petersson_level_eq_of_invariant_forms a β hβ (projAF_mem _ _) (projAF_mem _ _) hN j1 j3,
     petN_add_right]
 

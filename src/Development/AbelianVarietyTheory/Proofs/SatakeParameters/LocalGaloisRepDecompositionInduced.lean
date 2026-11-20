@@ -34,7 +34,7 @@ def letterLift (q : D →+ M) (h1 : ∀ (a : LL) x, q (a • x) = algebraMap LL 
         LinearMap.smul_apply, LinearMap.id_apply, map_smul, LinearMap.liftBaseChange_tmul]
       show z • q (m c x) - τ c • z • q x = 0
       rw [h2, smul_comm, sub_self]
-    | add y z hy hz => rw [map_add]; exact add_mem hy hz)
+    | add y z hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz)
 
 @[simp] theorem letterLift_mk (q : D →+ M) (h1 : ∀ (a : LL) x, q (a • x) = algebraMap LL F a • q x)
     (h2 : ∀ c x, q (m c x) = τ c • q x) (x : D) :
@@ -76,14 +76,14 @@ theorem stMap_onB (T : End ℚ_[l] (Bst P)) (x : V ⊗[ℚ_[l]] Bst P) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem stMap_smul {a : ↥L.1} {a' : ↥L'.1} (h : ∀ x, f (a • x) = a' • f x) (x : V ⊗[ℚ_[l]] Bst P) :
     stMap P f (a • x) = a' • stMap P f x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => rw [smul_tmul', stMap_tmul, h, stMap_tmul, smul_tmul']
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
 
 variable {f ρ ρ'}
 
@@ -92,7 +92,7 @@ theorem stMap_stRep (he : ∀ g x, f (ρ g x) = ρ' g (f x)) (g : ↥(GK K)) (x 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [he]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem stMap_mem_Dpst (he : ∀ g x, f (ρ g x) = ρ' g (f x)) {x : V ⊗[ℚ_[l]] Bst P} (hx : x ∈ Dpst P ρ) :
     stMap P f x ∈ Dpst P ρ' := by
@@ -208,7 +208,7 @@ theorem sum_stMap (hs : ∀ y, ∑ i, e i • f (A i y) = y) (x : V' ⊗[ℚ_[l]
     rw [TensorProduct.sum_tmul]
     exact Finset.sum_congr rfl fun i _ => by rw [stMap_tmul, stMap_tmul, smul_tmul']
   | add x y hx hy =>
-    simp only [map_add, smul_add, Finset.sum_add_distrib, hx, hy]
+    simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, hx, hy]
 
 variable (he : ∀ g x, f (ρ g x) = ρ' g (f x)) (hA : ∀ i g y, A i (ρ' g y) = ρ g (A i y))
   (hs : ∀ y, ∑ i, e i • f (A i y) = y)
@@ -226,7 +226,7 @@ theorem finite_of_decomp [FiniteDimensional ↥(MaximalUnramifiedExtension l) (D
   let T : (Fin n → DpstUr P ρ) →ₗ[↥(MaximalUnramifiedExtension l)] DpstUr P ρ' :=
     { toFun := fun t => toUr P ρ' (∑ i, e i • dMap P he ((toUr P ρ).symm (t i)))
       map_add' := fun s t => by
-        simp only [Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib]
+        simp only [Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
       map_smul' := fun c t => by
         show toUr P ρ' (∑ i, e i • dMap P he (mulD P ρ c ((toUr P ρ).symm (t i)))) =
           toUr P ρ' (mulD P ρ' c (∑ i, e i • dMap P he ((toUr P ρ).symm (t i))))
@@ -271,7 +271,7 @@ theorem roots_le_of_line {W₁ W₂ W : Type} [AddCommGroup W₁] [Module ℂ W�
   have hT₁ : ∀ y, T₁ y = (-a) • y := fun y => by
     have h0 := LinearMap.congr_fun (LinearMap.aeval_self_charpoly T₁) y
     rw [hp] at h0
-    simp only [map_add, aeval_X, aeval_C, LinearMap.add_apply, Module.algebraMap_end_apply,
+    simp only [map_add (f := _), aeval_X, aeval_C, LinearMap.add_apply, Module.algebraMap_end_apply,
       LinearMap.zero_apply] at h0
     rw [neg_smul]
     exact eq_neg_of_add_eq_zero_left h0
@@ -284,7 +284,7 @@ theorem roots_le_of_line {W₁ W₂ W : Type} [AddCommGroup W₁] [Module ℂ W�
     | succ n ih => rw [pow_succ', End.mul_apply, h₂, ih, map_smul, hT, smul_smul, pow_succ]
   have hq : ∀ q : ℂ[X], F₂ (aeval T₂ q y) = q.eval (-a) • F₁ u := fun q => by
     induction q using Polynomial.induction_on' with
-    | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq, eval_add, add_smul]
+    | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq, eval_add, add_smul]
     | monomial n c =>
       rw [aeval_monomial, End.mul_apply, Module.algebraMap_end_apply, map_smul, hpow, eval_monomial,
         smul_smul]
@@ -394,7 +394,7 @@ variable {L₁ L : FinExt l} (hL : L₁.1 ≤ L.1) {a : ℕ}
 
 def lineV (u : Fin a → ↥L.1) : (Fin 1 → ↥L₁.1) →ₗ[ℚ_[l]] (Fin a → ↥L.1) where
   toFun x := IntermediateField.inclusion hL (x 0) • u
-  map_add' x y := by simp only [Pi.add_apply, map_add, add_smul]
+  map_add' x y := by simp only [Pi.add_apply, map_add (f := _), add_smul]
   map_smul' c x := by
     show IntermediateField.inclusion hL (c • x 0) • u = c • IntermediateField.inclusion hL (x 0) • u
     rw [show IntermediateField.inclusion hL (c • x 0) = c • IntermediateField.inclusion hL (x 0) from

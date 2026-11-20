@@ -57,7 +57,7 @@ theorem mem_parahoric {g : GL (A ⊕ D) k} : g ∈ parahoric k A D ↔
 def typeSpace {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (A ⊕ D) k) V) (ξ : kˣ →* ℂˣ) :
     Submodule ℂ V where
   carrier := {f | ∀ g ∈ parahoric k A D, ∀ d : kˣ, (d : k) = g.1.toBlocks₂₂.det → π g f = (ξ d : ℂ) • f}
-  add_mem' hf hf' g hg d hd := by rw [map_add, hf g hg d hd, hf' g hg d hd, smul_add]
+  add_mem' hf hf' g hg d hd := by rw [map_add (f := _), hf g hg d hd, hf' g hg d hd, smul_add]
   zero_mem' g _ d _ := by simp
   smul_mem' c f hf g hg d hd := by rw [map_smul, hf g hg d hd, smul_comm]
 

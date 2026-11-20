@@ -225,7 +225,7 @@ theorem lift_apply (φ : S.EqFun) (d' : S'.D) :
   rfl
 
 theorem lift_add (φ ψ : S.EqFun) : b.lift (φ + ψ) = b.lift φ + b.lift ψ :=
-  Subtype.ext (funext fun d' => by simp only [lift_apply, Submodule.coe_add, Pi.add_apply, map_add])
+  Subtype.ext (funext fun d' => by simp only [lift_apply, Submodule.coe_add, Pi.add_apply, map_add (f := _)])
 
 theorem lift_smul (a : K) (φ : S.EqFun) : b.lift (a • φ) = ι a • b.lift φ :=
   Subtype.ext (funext fun d' => by simp only [lift_apply, Submodule.coe_smul, Pi.smul_apply, b.j_smul])

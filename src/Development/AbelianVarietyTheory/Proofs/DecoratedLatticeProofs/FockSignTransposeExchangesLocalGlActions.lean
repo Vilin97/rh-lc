@@ -72,12 +72,12 @@ lemma swapHom_pderiv (n : Fin b × Fin a) (Q : LPol b a) :
     swapHom ε ε' (pderiv n Q) = C (swSign ε ε' n) * pderiv n.swap (swapHom ε ε' Q) := by
   induction Q using MvPolynomial.induction_on with
   | C c => simp
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add, mul_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _), mul_add]
   | mul_X p m hp =>
     have hs := C_swSign_mul_self (σ := Fin a × Fin b) ε ε' n
     by_cases h : n = m
     · subst h
-      simp only [pderiv_mul, pderiv_X_self, map_add, map_mul, hp, swapHom_X, pderiv_C, mul_one, zero_mul, zero_add]
+      simp only [pderiv_mul, pderiv_X_self, map_add (f := _), map_mul, hp, swapHom_X, pderiv_C, mul_one, zero_mul, zero_add]
       linear_combination (-(swapHom ε ε' p)) * hs
     · have h' : m.swap ≠ n.swap := fun e => h (Prod.swap_injective e).symm
       simp only [pderiv_mul, pderiv_X_of_ne (Ne.symm h), pderiv_X_of_ne h', map_mul, hp, swapHom_X,
@@ -123,13 +123,13 @@ lemma swapHom_half (c : Prop) [Decidable c] (Q : LPol b a) :
 lemma swapHom_termT (i l : Fin b) (j : Fin a) (Q : LPol b a) :
     swapHom ε ε' ((rai ε ε' i j * low ε ε' l j + if i = l then (1 / 2 : ℂ) • 1 else 0) Q) =
       (rai ε' ε j i * low ε' ε j l + if i = l then (1 / 2 : ℂ) • 1 else 0) (swapHom ε ε' Q) := by
-  rw [LinearMap.add_apply, LinearMap.add_apply, map_add, Module.End.mul_apply, Module.End.mul_apply, swapHom_rai,
+  rw [LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), Module.End.mul_apply, Module.End.mul_apply, swapHom_rai,
     swapHom_low, swapHom_half]
 
 lemma swapHom_termS (i : Fin b) (j k : Fin a) (Q : LPol b a) :
     swapHom ε ε' ((rai ε ε' i j * low ε ε' i k + if j = k then (1 / 2 : ℂ) • 1 else 0) Q) =
       (rai ε' ε j i * low ε' ε k i + if j = k then (1 / 2 : ℂ) • 1 else 0) (swapHom ε ε' Q) := by
-  rw [LinearMap.add_apply, LinearMap.add_apply, map_add, Module.End.mul_apply, Module.End.mul_apply, swapHom_rai,
+  rw [LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), Module.End.mul_apply, Module.End.mul_apply, swapHom_rai,
     swapHom_low, swapHom_half]
 
 def swapEquiv : LPol b a ≃+ LPol a b :=

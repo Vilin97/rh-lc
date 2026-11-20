@@ -83,7 +83,7 @@ theorem isSchwartzArch_comp {θ : InfFam D} (hθ : IsInfFam θ) {m r : ℕ}
   have hQ : ∀ Y τ i j, Q Y τ i j = θ τ (Y j i) := fun Y τ i j => hP _ _
   have hadd : ∀ X Y, Q (X + Y) = Q X + Q Y := fun X Y => by
     funext τ i j
-    simp only [hQ, Pi.add_apply, map_add]
+    simp only [hQ, Pi.add_apply, map_add (f := _)]
   let B : (D.what₂.Tau → Fin m → Fin r → ℂ) ≃L[ℝ]
       (Fin (Module.finrank ℝ (D.what₂.Tau → Fin m → Fin r → ℂ)) → ℝ) :=
     (Module.finBasis ℝ (D.what₂.Tau → Fin m → Fin r → ℂ)).equivFun.toContinuousLinearEquiv

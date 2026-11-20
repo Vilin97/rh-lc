@@ -97,7 +97,7 @@ theorem chart_cont {e : AE D} (he : IsSplitIdem D e) {v : HeightOneSpectrum (�
   refine (hev.comp hc).congr fun x => ?_
   have h4 : π (cA D (e * x)) = 0 := (hπ.2.1 _).2 (by rw [RingHom.map_mul, ← mul_assoc, h2, zero_mul])
   have h5 := hπ.2.2.1 (Algebra.trace (AF D.host.F) (AE D) (e * x))
-  rw [tA, RingHom.map_add, h4, add_zero, RingHom.map_mul, chart_one h1 hπ, one_mul] at h5
+  rw [tA, RingHom.map_add (f := _), h4, add_zero, RingHom.map_mul, chart_one h1 hπ, one_mul] at h5
   exact h5.symm
 
 theorem single_add {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)) (a b : Fv F v) :
@@ -106,13 +106,13 @@ theorem single_add {F : Type} [Field F] [NumberField F] (v : HeightOneSpectrum (
   change evalV F w (singleV F v (a + b)) = evalV F w (singleV F v a + singleV F v b)
   by_cases hw : w = v
   · subst hw
-    rw [map_add, GlobalTheory.SplitCoord.evalV_single, GlobalTheory.SplitCoord.evalV_single, GlobalTheory.SplitCoord.evalV_single]
-  · rw [map_add, GlobalTheory.SplitCoord.evalV_single_ne hw, GlobalTheory.SplitCoord.evalV_single_ne hw,
+    rw [map_add (f := _), GlobalTheory.SplitCoord.evalV_single, GlobalTheory.SplitCoord.evalV_single, GlobalTheory.SplitCoord.evalV_single]
+  · rw [map_add (f := _), GlobalTheory.SplitCoord.evalV_single_ne hw, GlobalTheory.SplitCoord.evalV_single_ne hw,
       GlobalTheory.SplitCoord.evalV_single_ne hw, add_zero]
 
 def sec (e : AE D) (v : HeightOneSpectrum (𝓞 D.host.F)) : Fv D.host.F v →+ AE D :=
   AddMonoidHom.mk' (fun a => e * algebraMap (AF D.host.F) _ (pairA D.host.F 0 (singleV D.host.F v a))) fun a b => by
-    rw [← mul_add, ← RingHom.map_add, single_add]
+    rw [← mul_add, ← RingHom.map_add (f := _), single_add]
     congr 2
     exact Prod.ext (add_zero _).symm rfl
 

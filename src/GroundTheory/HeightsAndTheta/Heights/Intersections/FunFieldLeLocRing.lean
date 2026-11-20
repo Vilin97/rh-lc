@@ -203,7 +203,7 @@ theorem RegularityFunctionFieldNumber.proof : RegularityFunctionFieldNumber.Stat
     | C n =>
       rw [eval₂Hom_C, eq_intCast]
       exact intCast_mem D n
-    | add f g hf hg => rw [map_add]; exact add_mem hf hg
+    | add f g hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
     | mul_X f p hf =>
       rw [map_mul]
       refine mul_mem hf ?_

@@ -210,6 +210,6 @@ theorem UpperTheory.Gal.productCup_of_system.rCupTop_of :
         ∑ i, bil τ ρ ((sysZ K x a).mix.D y (uni (Finset.univ.filter (· ≤ i)) J))
           (α (Finset.univ.filter (i ≤ ·))) := map_sum _ _ _
     rw [hR]
-    simp only [hD, map_add, LinearMap.add_apply, Finset.sum_add_distrib, hI, zero_add, hB]
+    simp only [hD, map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib, hI, zero_add, hB]
     rw [Finset.sum_comm]
     simp only [Finset.smul_sum]

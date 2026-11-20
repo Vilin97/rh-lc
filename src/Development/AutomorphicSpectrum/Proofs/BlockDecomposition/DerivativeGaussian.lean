@@ -96,6 +96,6 @@ theorem polyK_temperate (k : ℕ) : (polyK k).HasTemperateGrowth := by
 theorem dGauK : DGau := fun k =>
   ⟨SchwartzMap.smulLeftCLM ℂ (polyK k) gaussK, fun p => by
     rw [SchwartzMap.smulLeftCLM_apply_apply (polyK_temperate k), gaussK_apply, smul_eq_mul]
-    simp [polyK, gauK, crd, crdc, crqc, map_add, map_mul]⟩
+    simp [polyK, gauK, crd, crdc, crqc, map_add (f := _), map_mul]⟩
 
 end GlobalTheory.CompanionTheory.GodementGaussK

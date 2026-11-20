@@ -45,7 +45,7 @@ theorem exists_monic_base_root_near : ∀ (E Ω : Type) [Field E] [NumberField E
   have hga : aeval β g = β ^ n + ∑ i ∈ Finset.range n, algebraMap E Ω (c i) * β ^ i := by
     show aeval β (X ^ n + ∑ i : Fin n, C (c i) * X ^ (i : ℕ)) = _
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_pow, aeval_X, map_sum, map_mul, aeval_C]
+      simp only [map_add (f := _), map_pow, aeval_X, map_sum, map_mul, aeval_C]
     rw [Fin.sum_univ_eq_sum_range (fun i => algebraMap E Ω (c i) * β ^ i) n]
   have hgβ : aeval β g = ∑ i ∈ Finset.range n, (algebraMap E Ω (c i) - f.coeff i) * β ^ i := by
     have : aeval β g = aeval β g - f.eval β := by rw [hβ, sub_zero]

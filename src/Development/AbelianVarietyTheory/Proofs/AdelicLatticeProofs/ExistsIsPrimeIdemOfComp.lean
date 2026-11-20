@@ -132,7 +132,7 @@ theorem cA_cA (h : IsCMExt F E σ) (z : AE F E) : cA σ (cA σ z) = z := by
   | tmul a x =>
     change a ⊗ₜ[F] σ (σ x) = _
     rw [conj_conj h]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem parts_cA (z : AE F E) :
     infPart F E (cA σ z) = sigR (Ainf F) σ (infPart F E z) ∧
@@ -140,7 +140,7 @@ theorem parts_cA (z : AE F E) :
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero, and_self]
   | tmul a x => exact ⟨rfl, rfl⟩
-  | add a b ha hb => simp only [map_add, ha.1, ha.2, hb.1, hb.2, and_self]
+  | add a b ha hb => simp only [map_add (f := _), ha.1, ha.2, hb.1, hb.2, and_self]
 
 theorem finPart_cA_mem {z : AE F E} (hz : finPart F E z ∈ intAE F E) :
     finPart F E (cA σ z) ∈ intAE F E := by
@@ -218,7 +218,7 @@ theorem ev_mul (a b : AE F E) (Q : HeightOneSpectrum (𝓞 E)) : Φ (a * b) Q = 
   rw [map_mul]; rfl
 
 theorem ev_add (a b : AE F E) (Q : HeightOneSpectrum (𝓞 E)) : Φ (a + b) Q = Φ a Q + Φ b Q := by
-  rw [map_add]; rfl
+  rw [map_add (f := _)]; rfl
 
 theorem ev_zero (Q : HeightOneSpectrum (𝓞 E)) : Φ 0 Q = 0 := by rw [map_zero]; rfl
 
@@ -316,7 +316,7 @@ theorem exists_isPrimeIdem_of_comp (hσ : IsCMExt F E σ) (P : HeightOneSpectrum
       · subst hQ
         rw [he'.2.2 Q (Ne.symm hc), mul_zero]
       · rw [he.2.2 Q hQ, zero_mul]
-    · refine hΦ.ext' (by rw [RingHom.map_add, he.1, he'.1, add_zero, h0]) fun Q => ?_
+    · refine hΦ.ext' (by rw [RingHom.map_add (f := _), he.1, he'.1, add_zero, h0]) fun Q => ?_
       rw [ev_add]
       by_cases hQ : Q = P
       · subst hQ

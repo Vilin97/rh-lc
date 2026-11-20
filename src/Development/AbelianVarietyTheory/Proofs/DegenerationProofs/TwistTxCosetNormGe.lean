@@ -23,7 +23,7 @@ theorem twRel_mul {a b : N.QT l} {a' b' : (N.twist β u).QT l} (ha : TwRel β u 
     congrArg₂ (fun s t : N.A => s * t) a2 b2, fun z => ?_⟩
   change a'.1.2.s z * b'.1.2.s z / N.θ (N.c z) a'.1.2.b b'.1.2.b =
     a.1.2.s z * b.1.2.s z / N.θ (N.c z) a.1.2.b b.1.2.b * r ^ β.be (a.1.1.toAdd + b.1.1.toAdd) z
-  rw [a2, b2, a3, b3, map_add, LinearMap.add_apply, zpow_add]
+  rw [a2, b2, a3, b3, map_add (f := _), LinearMap.add_apply, zpow_add]
   apply Additive.ofMul.injective
   simp only [ofMul_mul, ofMul_div]; abel
 
@@ -39,7 +39,7 @@ theorem twRel_qEq (hr : r ^ l = u) {a b : N.QT l} {a' b' : (N.twist β u).QT l} 
     exact congrArg (fun s : N.A => s * N.c z) a2.symm
   · change b'.1.2.s w = a'.1.2.s w * (N.twist β u).τ z w / N.θ (N.c w) a'.1.2.b (N.c z)
     have e : r ^ ((l : ℤ) * β.be z w) = u ^ β.be z w := by rw [zpow_mul, zpow_natCast, hr]
-    rw [b3, a3, a2, N.twist_τ, h1, h2, NumD.Gt.mul_s, NumD.io_s, NumD.io_b, map_add, LinearMap.add_apply, map_nsmul,
+    rw [b3, a3, a2, N.twist_τ, h1, h2, NumD.Gt.mul_s, NumD.io_s, NumD.io_b, map_add (f := _), LinearMap.add_apply, map_nsmul,
       LinearMap.smul_apply, nsmul_eq_mul, zpow_add, e]
     apply Additive.ofMul.injective
     simp only [ofMul_mul, ofMul_div]; abel

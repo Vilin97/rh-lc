@@ -17,7 +17,7 @@ private theorem coeff_scale {σ : Type} [Fintype σ] (t : σ → ℂ) (P : MvPol
     split_ifs with h
     · rw [h]
     · simp
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 open MvPolynomial in
 private theorem eval_scale {σ : Type} (t x : σ → ℂ) (P : MvPolynomial σ ℂ) :
@@ -25,7 +25,7 @@ private theorem eval_scale {σ : Type} (t x : σ → ℂ) (P : MvPolynomial σ �
       MvPolynomial.eval (fun p => t p * x p) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.eval_C, MvPolynomial.eval_X]
 
 theorem UpperTheory.V.Z.Sym.Wt.memMH :

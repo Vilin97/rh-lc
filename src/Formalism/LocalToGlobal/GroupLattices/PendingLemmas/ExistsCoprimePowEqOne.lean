@@ -354,7 +354,7 @@ theorem coeff_one_l (g : G1 p) (hW : IsWq g.W g.wq) : PowerSeries.coeff 1 g.l = 
   unfold G1.l flog
   rw [PowerSeries.coeff_mk, if_neg one_ne_zero, Nat.sub_self, PowerSeries.coeff_zero_eq_constantCoeff_apply]
   unfold omegaW
-  simp only [map_mul, map_sub, map_add, map_neg, map_pow, PowerSeries.constantCoeff_inv, PowerSeries.constantCoeff_X, h0]
+  simp only [map_mul, map_sub, map_add (f := _), map_neg, map_pow, PowerSeries.constantCoeff_inv, PowerSeries.constantCoeff_X, h0]
   simp
   rw [show PowerSeries.constantCoeff (2 : PowerSeries ℂ_[p]) = 2 from map_ofNat _ 2]
   exact mul_inv_cancel₀ two_ne_zero
@@ -430,7 +430,7 @@ theorem dX_mem_ratSub {f : PowerSeries ℂ_[p]} (hf : f ∈ ratSub p) : dX f ∈
   rw [mem_ratSub] at hf ⊢
   intro n
   obtain ⟨z, hz⟩ := hf (n + 1)
-  exact ⟨((n : K0 p) + 1) * z, by unfold dX; rw [PowerSeries.coeff_mk, map_mul, map_add, map_natCast, map_one, hz]⟩
+  exact ⟨((n : K0 p) + 1) * z, by unfold dX; rw [PowerSeries.coeff_mk, map_mul, map_add (f := _), map_natCast, map_one, hz]⟩
 
 theorem wq_mem_ratSub {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (hW : IsWq W wq)
     (h1 : W.a₁ ∈ Wp p) (h2 : W.a₂ ∈ Wp p) (h3 : W.a₃ ∈ Wp p) (h4 : W.a₄ ∈ Wp p) (h6 : W.a₆ ∈ Wp p) :

@@ -51,7 +51,7 @@ theorem exists_iso_of_frames_app_eq :
   choose φ hφ using ex
   let ψ (V : X.Opens) : Γ(F₁, V) →ₗ[Γ(X, V)] Γ(F₂, V) :=
     { toFun := φ V
-      map_add' := fun s t => inj V (by rw [map_add, hφ, hφ, hφ, map_add])
+      map_add' := fun s t => inj V (by rw [map_add (f := _), hφ, hφ, hφ, map_add (f := _)])
       map_smul' := fun a s => inj V (by
         rw [RingHom.id_apply, Scheme.Modules.Hom.app_smul, hφ, hφ, Scheme.Modules.Hom.app_smul]) }
   let e : F₁ ⟶ F₂ := homOfLinear ψ fun {V W} hW s => inj W (by

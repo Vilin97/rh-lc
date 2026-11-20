@@ -92,7 +92,7 @@ theorem gradNPf_unit_one_add (lO d : O) (hl : v (ι lO) = 1) : IsUnit (1 + lO * 
   have hlt : v (1 : L) < v (ι lO * ι d) := by
     rw [v.map_one, hy]
     exact lt_of_lt_of_le gradNPf_zero_lt_one hle
-  rw [_root_.map_add, _root_.map_one, _root_.map_mul, val_add_eq_left_of_val_lt v _ _ hlt, v.map_one]
+  rw [_root_.map_add (f := _), _root_.map_one, _root_.map_mul, val_add_eq_left_of_val_lt v _ _ hlt, v.map_one]
 
 include hι hR in
 theorem gradNPf_unit_nat (l : ℕ) (hp : l.Prime) (hl : v (l : L) = 1) (m : ℕ) (hm : ¬ l ∣ m) :

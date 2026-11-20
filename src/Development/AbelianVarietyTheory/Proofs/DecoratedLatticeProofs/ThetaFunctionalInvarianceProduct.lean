@@ -68,7 +68,7 @@ theorem exists_product_form : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsS
         GlobalTheory.ThetaClosed.isThetaFunO_heisO_all hψ hfB (o.resS T u).2, ?_⟩
       exact o.heisO_boxS ψ T fA fB u
     | zero => rw [map_zero]; exact P.zero_mem
-    | add a b _ _ ha hb => rw [map_add]; exact P.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact P.add_mem ha hb
     | smul c a _ ha => rw [map_smul]; exact P.smul_mem c ha
   have hl0P : ∀ u ∈ half S T (cA D e), ∀ p ∈ P, l0 (heisL S T ψ u p) = l0 p := by
     intro u hu p hp
@@ -79,7 +79,7 @@ theorem exists_product_form : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsS
       rw [o.heisO_boxS ψ T fA fB u, hl0, iterForm_boxS, iterForm_boxS, hA _ (hresA u hu) fA hfA,
         hB _ (hresB u hu) fB hfB]
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, map_add, map_add, ha, hb]
+    | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
     | smul c a _ ha => rw [map_smul, map_smul, map_smul, ha]
 
   let K : Submodule ℂ (WO S T → ℂ) :=

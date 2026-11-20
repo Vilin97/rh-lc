@@ -150,11 +150,11 @@ theorem cover_QI (φ : QI →+* ℂ) (w : ℂ) : ∃ l : QI, IsIntegralElt l ∧
   set b : ℤ := round w.im with hb_def
   refine ⟨(a : QI) + ((s * b : ℤ) : QI) * ζ, ?_, ?_⟩
   · refine ⟨(a : 𝓞 QI) + ((s * b : ℤ) : 𝓞 QI) * ⟨ζ, hint⟩, ?_⟩
-    simp only [map_add, map_mul, map_intCast]
+    simp only [map_add (f := _), map_mul, map_intCast]
     rfl
   · have hs' : (s : ℂ) ^ 2 = 1 := by exact_mod_cast hs
     have h1 : φ ((a : QI) + ((s * b : ℤ) : QI) * ζ) = (a : ℂ) + (b : ℂ) * Complex.I := by
-      rw [map_add, map_mul, map_intCast, map_intCast, he]
+      rw [map_add (f := _), map_mul, map_intCast, map_intCast, he]
       push_cast
       linear_combination (b : ℂ) * Complex.I * hs'
     rw [h1]

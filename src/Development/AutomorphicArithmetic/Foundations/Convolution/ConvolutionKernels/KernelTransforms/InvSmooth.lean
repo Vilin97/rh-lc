@@ -63,7 +63,7 @@ private theorem UpperTheory.ConvolutionTheory.Tf.act_zero {U : Set G} (hU : IsOp
     exact iha _ (ihb f hf)
   | add a b iha ihb =>
     intro f hf g hg
-    rw [map_add, map_add, LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, iha f hf g hg,
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, iha f hf g hg,
       ihb f hf g hg, add_zero]
 
 end

@@ -326,7 +326,7 @@ theorem exists_line_curve (o : Type) [CommRing o] [IsDomain o] (k : Type) [Field
         rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
         exact Subalgebra.algebraMap_mem _ r
       | add p q hp hq =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem hp hq
       | mul_X p i hp =>
         rw [map_mul]

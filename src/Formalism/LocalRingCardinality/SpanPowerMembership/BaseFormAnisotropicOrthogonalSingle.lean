@@ -272,7 +272,7 @@ def hypFv (i : Fin R.rS) : Fin (R.rankY 0) → E :=
   (2 : E)⁻¹ • (Pi.single (ixP R i) 1 - Pi.single (ixN R i) 1)
 
 theorem hyperbolic_basis_basis_zero (i i' : Fin R.rS) : f0 (E := E) R (hypEv R i) (hypEv R i') = 0 := by
-  simp only [hypEv, map_add, LinearMap.add_apply, baseForm_positive_positive_pairing, baseForm_negative_negative_pairing, baseForm_positive_negative_zero, baseForm_negative_positive_zero]
+  simp only [hypEv, map_add (f := _), LinearMap.add_apply, baseForm_positive_positive_pairing, baseForm_negative_negative_pairing, baseForm_positive_negative_zero, baseForm_negative_positive_zero]
   split_ifs <;> simp
 
 theorem hyperbolic_dual_dual_zero (i i' : Fin R.rS) : f0 (E := E) R (hypFv R i) (hypFv R i') = 0 := by
@@ -282,7 +282,7 @@ theorem hyperbolic_dual_dual_zero (i i' : Fin R.rS) : f0 (E := E) R (hypFv R i) 
 
 theorem hyperbolic_basis_dual_pairing (i i' : Fin R.rS) :
     f0 (E := E) R (hypEv R i) (hypFv R i') = if i = i' then 1 else 0 := by
-  simp only [hypEv, hypFv, map_smulₛₗ, map_add, LinearMap.add_apply, map_sub, baseForm_positive_positive_pairing, baseForm_negative_negative_pairing,
+  simp only [hypEv, hypFv, map_smulₛₗ, map_add (f := _), LinearMap.add_apply, map_sub, baseForm_positive_positive_pairing, baseForm_negative_negative_pairing,
     baseForm_positive_negative_zero, baseForm_negative_positive_zero, RingHom.id_apply, smul_eq_mul]
   split_ifs
   · norm_num
@@ -304,7 +304,7 @@ theorem hyperbolic_orthogonal_extension (i : Fin R.rS) (x : Fin (R.N 0) → E) :
   have h1 := baseForm_extension_orthogonal_single R x (ixP R i) (Nat.le_add_right _ _) 1
   have h2 := baseForm_extension_orthogonal_single R x (ixN R i) (by show R.k ≤ R.k + R.rS + 1 + (i : ℕ); omega) 1
   constructor
-  · simp only [hypEv, map_add, h1, h2, add_zero]
+  · simp only [hypEv, map_add (f := _), h1, h2, add_zero]
   · simp only [hypFv, map_smul, map_sub, h1, h2, sub_zero, smul_zero]
 
 theorem hyperbolic_orthogonal_anisotropic (i : Fin R.rS) :
@@ -312,7 +312,7 @@ theorem hyperbolic_orthogonal_anisotropic (i : Fin R.rS) :
   have h1 := baseForm_anisotropic_orthogonal_single R pz (ixP R i) (posIndex_ne_zeroIndex R i) 1
   have h2 := baseForm_anisotropic_orthogonal_single R pz (ixN R i) (ixN_ne_ixZ R i) 1
   constructor
-  · simp only [hypEv, map_add, h1, h2, add_zero]
+  · simp only [hypEv, map_add (f := _), h1, h2, add_zero]
   · simp only [hypFv, map_smul, map_sub, h1, h2, sub_zero, smul_zero]
 
 include hpz in

@@ -14,7 +14,7 @@ theorem exists_smul_eq_zero_of_crossed {G : Type} [Group G] [Finite G] {R : Type
   have := Fintype.ofFinite G
   let J : Submodule R X := (Submodule.pi Set.univ fun _ : G => RingHom.ker ε).map (Fintype.linearCombination R d)
   let ψ : G →* Multiplicative (X ⧸ J) := MonoidHom.mk' (fun g => Multiplicative.ofAdd (J.mkQ (d g))) fun g h => by
-    rw [← ofAdd_add, ← map_add]
+    rw [← ofAdd_add, ← map_add (f := _)]
     congr 1
     rw [Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq, hd]
     refine ⟨Pi.single h (ρ g - 1), fun i _ => ?_, ?_⟩

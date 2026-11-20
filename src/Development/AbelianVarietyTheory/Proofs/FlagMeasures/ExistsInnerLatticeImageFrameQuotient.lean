@@ -36,7 +36,7 @@ theorem h_sub_right (x y y' : V) : H.h x (y - y') = H.h x y - H.h x y' := by
   rw [H.h_herm (y - y') x, h_sub_left, map_sub, ← H.h_herm, ← H.h_herm]
 
 theorem h_add_right (x y y' : V) : H.h x (y + y') = H.h x y + H.h x y' := by
-  rw [H.h_herm (y + y') x, H.h_add_left, map_add, ← H.h_herm, ← H.h_herm]
+  rw [H.h_herm (y + y') x, H.h_add_left, map_add (f := _), ← H.h_herm, ← H.h_herm]
 
 theorem mem_perp_X {r : ℕ} (f : Fin (r + 1) → V) (v : V) :
     v ∈ H.perp (H.X f) ↔ ∀ a : Fin r, H.h v (f a.castSucc) = 0 := by

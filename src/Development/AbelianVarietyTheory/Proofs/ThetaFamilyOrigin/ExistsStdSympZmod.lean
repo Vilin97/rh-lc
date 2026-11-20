@@ -184,12 +184,12 @@ theorem exists_stdSymp_of_alternating_pairing :
   let β : Additive G → Additive G → ZMod M := fun x y =>
     hz.zmodEquivZPowers.symm (Additive.ofMul ⟨w x.toMul y.toMul, wm _ _⟩)
   have βl : ∀ x x' y, β (x + x') y = β x y + β x' y := fun x x' y => by
-    simp only [β, ← map_add]
+    simp only [β, ← map_add (f := _)]
     exact congrArg _ (Subtype.ext (by
       show w (x.toMul * x'.toMul) y.toMul = w x.toMul y.toMul * w x'.toMul y.toMul
       rw [map_mul, MonoidHom.mul_apply]))
   have βr : ∀ x y y', β x (y + y') = β x y + β x y' := fun x y y' => by
-    simp only [β, ← map_add]
+    simp only [β, ← map_add (f := _)]
     exact congrArg _ (Subtype.ext (map_mul (w x.toMul) y.toMul y'.toMul))
   have βw : ∀ x y (n : ℤ), β x y = n ↔ w x.toMul y.toMul = ze ^ n := fun x y n => by
     simp only [β]

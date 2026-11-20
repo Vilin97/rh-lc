@@ -291,7 +291,7 @@ theorem continuous_chi (hc : Continuous ψ) (γ : WO S T) : Continuous (chi ψ S
 theorem chi_rat (hψ : IsCharAF D.host.F ψ) {γ γ' : WO S T} (h : γ ∈ ratL T S) (h' : γ' ∈ ratL T S) :
     chi ψ S T γ γ' = 1 := by
   obtain ⟨a, ha⟩ := (GlobalTheory.OrientedFormLaws.symplOH_laws D S T).2.2.2.2.2.1 γ' h' γ h
-  rw [chi, ha, ← map_add]
+  rw [chi, ha, ← map_add (f := _)]
   exact hψ.2.2.1 _
 
 theorem heisO_rat {γ : WO S T} (h : γ ∈ ratL T S) {g : WO S T → ℂ} (hg : IsThetaFunO ψ S T g) :

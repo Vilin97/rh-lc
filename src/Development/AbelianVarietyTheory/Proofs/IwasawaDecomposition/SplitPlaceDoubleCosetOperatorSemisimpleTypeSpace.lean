@@ -47,7 +47,7 @@ theorem rt_mem_all {a : NG.AlgWt L n} (h : GAf L n) {f : GAf L n → a.W} (hf : 
 def sph (a : NG.AlgWt L n) (v : HeightOneSpectrum (𝓞 L⁺)) : Submodule ℂ (GAf L n → a.W) where
   carrier := {f | f ∈ NG.AFall L n a.ρ ∧ ∀ κ ∈ locK n v, NG.rt L n κ f = f}
   zero_mem' := ⟨zero_mem _, fun _ _ => map_zero _⟩
-  add_mem' := fun hf hg => ⟨add_mem hf.1 hg.1, fun κ hκ => by rw [map_add, hf.2 κ hκ, hg.2 κ hκ]⟩
+  add_mem' := fun hf hg => ⟨add_mem hf.1 hg.1, fun κ hκ => by rw [map_add (f := _), hf.2 κ hκ, hg.2 κ hκ]⟩
   smul_mem' := fun c f hf => ⟨Submodule.smul_mem _ c hf.1, fun κ hκ => by rw [map_smul, hf.2 κ hκ]⟩
 
 def IsReps (v : HeightOneSpectrum (𝓞 L⁺)) (α : GAf L n) (R : Finset (GAf L n)) : Prop :=

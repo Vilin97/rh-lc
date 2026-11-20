@@ -36,7 +36,7 @@ theorem map_covol {G H : Type} [AddGroup G] [TopologicalSpace G] [MeasurableSpac
     have hp : MeasurePreserving E μ (μ.map e) := ⟨E.measurable, rfl⟩
     refine h𝓕.image_of_equiv E.toEquiv (hp.symm E).quasiMeasurePreserving q fun g x => ?_
     show e (e.symm g + x) = g + e x
-    rw [map_add, e.apply_symm_apply]
+    rw [map_add (f := _), e.apply_symm_apply]
 
 variable {D : D7} {m n d : ℕ}
 

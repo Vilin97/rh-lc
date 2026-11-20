@@ -86,11 +86,11 @@ theorem exists_weilEq_smul_of_pure : ∀ (E : Type) [Field E] [NumberField E] [I
   have hadd₁ : ∀ x y z, β (x + y) z = β x z + β y z := fun x y z => by
     have e : (⟨_, mem₁ (x + y)⟩ : uB.Λ) = ⟨_, mem₁ x⟩ + ⟨_, mem₁ y⟩ := Subtype.ext (by simp)
     show EfB _ _ = EfB _ _ + EfB _ _
-    rw [e, map_add, LinearMap.add_apply]
+    rw [e, map_add (f := _), LinearMap.add_apply]
   have hadd₂ : ∀ x y z, β x (y + z) = β x y + β x z := fun x y z => by
     have e : (⟨_, mem₂ (y + z)⟩ : uB.Λ) = ⟨_, mem₂ y⟩ + ⟨_, mem₂ z⟩ := Subtype.ext (by simp)
     show EfB _ _ = EfB _ _ + EfB _ _
-    rw [e, map_add]
+    rw [e, map_add (f := _)]
   have hadjβ : ∀ (s : 𝓞 E) x y, β (s • x) y = β x (H.bar s • y) := fun s x y => by
     have e : (β (s • x) y : ℝ) = β x (H.bar s • y) := by
       rw [hβ, hβ, ← hGP, ← hGP, hcomm f₁ hf₁ F₁ hF₁, hcomm f₂ hf₂ F₂ hF₂, hadj]

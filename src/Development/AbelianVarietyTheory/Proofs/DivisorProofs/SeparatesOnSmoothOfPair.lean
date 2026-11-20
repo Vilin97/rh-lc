@@ -195,13 +195,13 @@ theorem separate_two (hS : SeparatesOnSmooth) (hNN : GlobalTheory.Published.NefN
   have hNnC : IsNef ℂ (N.pull π) := nef_pull hNN p q π hp hq N hNn
   have hN₂C : IsNef ℂ (N₂.pull π) := nef_pull hNN p q π hp hq N₂ hN₂n
   have hcl : a • cls (N.pull π) hNC = cls (N₁.pull π) (LB.isLB_pull h₁ π) + cls (N₂.pull π) (LB.isLB_pull h₂ π) := by
-    rw [cls_pull hN, cls_pull h₁, cls_pull h₂, ← map_nsmul, hdec, map_add]
+    rw [cls_pull hN, cls_pull h₁, cls_pull h₂, ← map_nsmul, hdec, map_add (f := _)]
   have hbig : IsBig ℂ (N.pull π) :=
     isBig_of_smul_cls_eq_add_ampleAt hNN ℂ _ q hq _ _ _ hNC _ _ a (zC 0 s₀) hNnC ha hcl (hA 0) hN₂C
   have hpos := fun j => GlobalTheory.PosThrough.one_le_interNumRed hNN ℂ _ q hq _ _ _ hNC _ _ a (zC j s₀) hNnC ha hcl (hA j) hN₂C
   have hcB : cls (B.pull π) (LB.isLB_pull hB π) =
       m • cls (N.pull π) hNC + cls (N'.pull π) (LB.isLB_pull hN' π) := by
-    rw [cls_pull hB, cls_pull hN, cls_pull hN', hBc, map_add, map_nsmul]
+    rw [cls_pull hB, cls_pull hN, cls_pull hN', hBc, map_add (f := _), map_nsmul]
   have hpt : ∀ (W : Scheme.{0}) (y : Sp ℂ ⟶ W) (O : W.Opens), y s₀ ∈ O → ⊤ ≤ y ⁻¹ᵁ O := by
     intro W y O hs t _
     rw [Subsingleton.elim t s₀]

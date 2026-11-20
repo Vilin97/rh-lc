@@ -106,7 +106,7 @@ theorem flipAt_map (σ : E →ₐ[F] E) (v : Pl F) (d : ℕ) : (flipAt (E := E) 
   have h1 : (cA σ) ((1 : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE F E)) i j) = (1 : Matrix _ _ (AE F E)) i j :=
     congrFun (congrFun (Matrix.map_one (cA σ) (map_zero _) (map_one _)) i) j
   have h2 : (cA σ) (flipM (F := F) (E := E) d i j) = flipM d i j := congrFun (congrFun (flipM_map σ d) i) j
-  simp only [flipAt, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add, map_smul, h1, h2]
+  simp only [flipAt, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _), map_smul, h1, h2]
 
 theorem flipAt_unitary (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : Pl F) :
     (flipAt (E := E) v d)ᵀ * dbl (incM F W.J) * (flipAt v d).map (cA σ) = dbl (incM F W.J) := by

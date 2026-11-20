@@ -137,7 +137,7 @@ theorem holCoord : HolCoord := by
     by_contra hn
     push Not at hn
     have h' : IsDerivAt0 (e t₀) (w t₀ + z) (spMap (dualMap (ψ t₀)) ≫ v) :=
-      ⟨(hder t₀ ht₀).1, fun U h f => by rw [map_add, hn U h f, add_zero]; exact (hder t₀ ht₀).2 U h f⟩
+      ⟨(hder t₀ ht₀).1, fun U h f => by rw [map_add (f := _), hn U h f, add_zero]; exact (hder t₀ ht₀).2 U h f⟩
     have := huniq t₀ ht₀ _ _ _ h' (hder t₀ ht₀)
     exact hz (by simpa using this)
   have h00 : ⊤ ≤ e t₀ 0 ⁻¹ᵁ U := (GlobalTheory.FibreDeriv.top_le_preimage_eps _ _ (hder t₀ ht₀).1 U).1 h₀

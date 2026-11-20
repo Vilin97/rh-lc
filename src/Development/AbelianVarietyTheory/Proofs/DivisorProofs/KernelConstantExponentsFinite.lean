@@ -68,7 +68,7 @@ theorem exists_den_fg {K E ι κ : Type} [Field K] [NumberField K] [AddCommGroup
     induction hy using Submodule.span_induction with
     | mem y hy => exact h (⟨y, hy⟩, a, w)
     | zero => simpa using isIntegral_zero
-    | add y z _ _ hy hz => rw [Pi.single_add, map_add, Pi.add_apply, mul_add]; exact hy.add hz
+    | add y z _ _ hy hz => rw [Pi.single_add, map_add (f := _), Pi.add_apply, mul_add]; exact hy.add hz
     | smul c y _ hy =>
       rw [Pi.single_smul, map_zsmul, Pi.smul_apply, mul_smul_comm]; exact hy.zsmul c
   set_option synthInstance.maxHeartbeats 100000 in

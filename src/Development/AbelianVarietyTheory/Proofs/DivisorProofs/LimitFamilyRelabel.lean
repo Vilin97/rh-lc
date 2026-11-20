@@ -61,7 +61,7 @@ theorem relabel_onObj : Hypotheses2 → HypothesesH → OnObj fun _ O _ _ _ _ =>
       have : (monomial m a : Pol D.what₂.Tau O.Y.N) = a • monomial m 1 := by
         rw [smul_monomial, smul_eq_mul, mul_one]
       rw [this, map_smul, hmon, smul_zero]
-    | add p q hp hq => rw [map_add, hp, hq, add_zero]
+    | add p q hp hq => rw [map_add (f := _), hp, hq, add_zero]
   rw [hΨa] at hF
   exact sub_eq_zero.mp hF
 

@@ -87,7 +87,7 @@ def dualLie {S : Type} [DecidableEq S] {r : ℕ}
   add_mem' := by
     rintro x x' ⟨hx, h⟩ ⟨hx', h'⟩
     refine ⟨add_mem hx hx', fun y hy => ?_⟩
-    rw [Pi.single_add, map_add, LinearMap.add_apply]
+    rw [Pi.single_add, map_add (f := _), LinearMap.add_apply]
     exact add_mem (h y hy) (h' y hy)
   smul_mem' := by
     rintro c x ⟨hx, h⟩

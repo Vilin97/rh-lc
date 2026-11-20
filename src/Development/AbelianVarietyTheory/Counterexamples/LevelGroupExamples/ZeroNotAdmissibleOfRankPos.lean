@@ -48,13 +48,13 @@ theorem dvd_right (x : Dw.La) {y : Dw.La} (hy : y ∈ (l.Mb • ⊤ : Submodule 
     (l.M : ℤ) ∣ Dw.EF x (cSep l • y) := by
   refine Submodule.smul_induction_on hy (fun a ha z _ => ?_) (fun u v hu hv => ?_)
   · rw [← mul_smul, mul_comm]; exact dvd_EF_of_mem _ _ (mul_mem_M ha (cSep_spec l).1)
-  · rw [smul_add, map_add]; exact dvd_add hu hv
+  · rw [smul_add, map_add (f := _)]; exact dvd_add hu hv
 
 theorem dvd_left {x : Dw.La} (y : Dw.La) (hx : x ∈ (Mfr l • ⊤ : Submodule (𝓞 E) Dw.La)) :
     (l.M : ℤ) ∣ Dw.EF x (cSep l • y) := by
   refine Submodule.smul_induction_on hx (fun a ha z _ => ?_) (fun u v hu hv => ?_)
   · rw [Dw.adj, ← mul_smul]; exact dvd_EF_of_mem _ _ (mul_mem_M (bar_mem_Mb ha) (cSep_spec l).1)
-  · rw [map_add, LinearMap.add_apply]; exact dvd_add hu hv
+  · rw [map_add (f := _), LinearMap.add_apply]; exact dvd_add hu hv
 
 theorem pairL_congr {n : ℕ} (x0 x0' x x' : Fin n → Dw.La)
     (h0 : ∀ b, x0 b - x0' b ∈ (Mfr l • ⊤ : Submodule (𝓞 E) Dw.La))
@@ -114,7 +114,7 @@ theorem exists_eq_smul_of_dvd (x : Dw.La) (m : ℕ) (hm : m ≠ 0) (h : ∀ y, (
     ∃ z, x = (m : ℤ) • z := by
   let f : Dw.La →ₗ[ℤ] ℤ :=
     { toFun := fun y => Dw.EF x y / m
-      map_add' := fun a b => by rw [map_add, Int.add_ediv_of_dvd_left (h a)]
+      map_add' := fun a b => by rw [map_add (f := _), Int.add_ediv_of_dvd_left (h a)]
       map_smul' := fun k a => by
         rw [map_zsmul]; simp only [smul_eq_mul, RingHom.id_apply]; exact Int.mul_ediv_assoc _ (h a) }
   obtain ⟨z, hz⟩ := Dw.unimod.2 f

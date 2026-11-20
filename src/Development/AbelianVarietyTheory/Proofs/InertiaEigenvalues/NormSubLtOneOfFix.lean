@@ -180,7 +180,7 @@ theorem approx_step
     apply mul_left_cancel₀ hp0
     have h1 := congrArg (WittVector.map (ρ g).toRingHom) (hd h)
     rw [map_mul, map_pow, map_natCast, map_sub, map_sub, map_zlW, ← wittMap_mul] at h1
-    rw [mul_add, ← hd, ← hd, ← h1, hadd, map_add]
+    rw [mul_add, ← hd, ← hd, ← h1, hadd, map_add (f := _)]
     ring
   have hsmall : ∀ᶠ g in 𝓝ˢ {g : G | ∀ m, 0 < m → g ∈ fixer ρ p m},
       (p : ℤ_[p]) ^ (n + 1) ∣ c g := by
@@ -205,7 +205,7 @@ theorem approx_step
     exact ⟨_, h4⟩
   obtain ⟨β, hβ⟩ := exists_coboundary ρ hopen (fun g => (d g).coeff 0) (fun g h => by
     have := congrArg WittVector.constantCoeff (hdc g h)
-    rw [map_add] at this
+    rw [map_add (f := _)] at this
     simpa [WittVector.map_coeff] using this) he0
   refine ⟨b - (p : WittVector p R) ^ n * WittVector.teichmuller p β, ⟨_, sub_sub_cancel _ _⟩, ?_,
     fun g => ?_⟩
@@ -462,7 +462,7 @@ theorem unramified_mem_Z1f : ∀ (D : Formalism.BasicNotions.D7) (l : ℕ) [Fact
       (D.loc l).actQ g b - b = algebraMap ℚ_[l] _ (v.coord i (c g)) := fun i =>
     exists_rat (D.locA l) (D.locT l) K (fun g => v.coord i (c g))
       ((v.coord i).continuous_of_finiteDimensional.comp hcont)
-      (fun g h => by rw [hadd, map_add]; rfl) (fun g hg => by rw [hI g hg, map_zero])
+      (fun g h => by rw [hadd, map_add (f := _)]; rfl) (fun g hg => by rw [hI g hg, map_zero])
   choose b hb using hex
   refine ⟨∑ i, v i ⊗ₜ[ℚ_[l]] b i, fun g => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in

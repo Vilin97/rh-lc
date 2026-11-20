@@ -46,7 +46,7 @@ theorem pderiv_subst_chain {R σ τ : Type} [CommRing R] [Fintype σ] [Fintype �
     induction p using MvPolynomial.induction_on with
     | C r => simp [D1, D2, subst_C, hs0]
     | add p q hp hq =>
-      simp only [D1, D2, MvPolynomial.coe_add, subst_add ha, map_add] at hp hq ⊢
+      simp only [D1, D2, MvPolynomial.coe_add, subst_add ha, map_add (f := _)] at hp hq ⊢
       rw [hp, hq, ← Finset.sum_add_distrib]
       exact Finset.sum_congr rfl fun i _ => by ring
     | mul_X p s2 hp =>

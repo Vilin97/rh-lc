@@ -49,7 +49,7 @@ theorem iB_mul_one_tmul (P : PlaceMap F K) (y : K ⊗[F] E) (s : E) :
   | zero => simp
   | tmul k e =>
     simp [iB, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR, Algebra.TensorProduct.tmul_mul_tmul]
-  | add y₁ y₂ h₁ h₂ => rw [map_add, add_mul, h₁, h₂, add_mul, map_add]
+  | add y₁ y₂ h₁ h₂ => rw [map_add (f := _), add_mul, h₁, h₂, add_mul, map_add (f := _)]
 
 theorem sigR_incl (σ : E →ₐ[F] E) (e : E) : sigR K σ (inclR K e) = inclR K (σ e) := by
   simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.inclR]

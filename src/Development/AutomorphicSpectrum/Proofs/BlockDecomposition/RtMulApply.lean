@@ -83,7 +83,7 @@ theorem g5b : S2 → G0 → G5b := by
     have e : repW a w u φ = φ := hu
     have e' : repW a w u φ' = φ' := hu'
     change repW a w u (φ + φ') = φ + φ'
-    rw [map_add, e, e']
+    rw [map_add (f := _), e, e']
   · intro w hw
     filter_upwards with u
     change repW a w u 0 = 0

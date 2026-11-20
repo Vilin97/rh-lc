@@ -120,7 +120,7 @@ theorem even_step : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFi
       · intro h; exact absurd (Finset.mem_univ w) h
     rw [hsum] at h2
     have hAD := (i_actslaws F (Fin a × Fin (a + a')) (Φ T₁) _ (Φ T₁)).1 _ (fun t => map_zero _) h2
-    rw [GlobalTheory.KFixIrr.atPl_shift_apply, map_add, map_smul] at hAD
+    rw [GlobalTheory.KFixIrr.atPl_shift_apply, map_add (f := _), map_smul] at hAD
     have hg1 : Φ T₁ ∈ fockDeg G.M B.ψ B.emb (m + 1) := by
       rw [L1]; exact ⟨T₁, GlobalTheory.KFixIrr.degLE_mono (Nat.le_succ m) hT₁.2, rfl⟩
     have hgfix : IsKFix B om (Φ T₁) := (L2 T₁).2 hT₁.1
@@ -156,7 +156,7 @@ theorem even_step : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFi
       (Submodule.span_le.2 ?_)
     rintro _ ⟨w, Z, T₁, hT₁, rfl⟩
     obtain ⟨A', B', hA', hB', rfl⟩ := exists_upq_decomp Z
-    rw [SetLike.mem_coe, Submodule.mem_comap, map_add, map_smul, GlobalTheory.TensIrr.atPl_add, LinearMap.add_apply, map_add,
+    rw [SetLike.mem_coe, Submodule.mem_comap, map_add (f := _), map_smul, GlobalTheory.TensIrr.atPl_add, LinearMap.add_apply, map_add (f := _),
       GlobalTheory.TensIrr.atPl_smul, LinearMap.smul_apply, map_smul]
     exact Submodule.add_mem _ (hder w A' hA' T₁ hT₁) (Submodule.smul_mem _ _ (hder w B' hB' T₁ hT₁))
   exact hle hstep

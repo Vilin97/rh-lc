@@ -137,7 +137,7 @@ theorem constantCoeff_φ₂ (l : ℕ) [Fact l.Prime] (φ₂ : K⟦X⟧⟦X⟧ �
     have h : (X : K⟦X⟧⟦X⟧) = sh X - C X := by rw [sh_X sh hsh]; ring
     rw [h, map_sub, hφsh, hφC, frob_X]
   conv_lhs => rw [eq_shift_mul_X_add_const G]
-  rw [map_add, map_mul, hX, hφC, map_add, map_mul, map_sub, constantCoeff_sh sh hsh, constantCoeff_C,
+  rw [map_add (f := _), map_mul, hX, hφC, map_add (f := _), map_mul, map_sub, constantCoeff_sh sh hsh, constantCoeff_C,
     constantCoeff_C, sub_self, mul_zero, zero_add]
 
 end Sh

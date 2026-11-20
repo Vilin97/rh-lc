@@ -39,7 +39,7 @@ theorem det_eq_one_add (O : Subring F) {c : F} (hc : c ∈ O) {n : ℕ}
       by_cases hij : i = j
       · subst hij; rw [Matrix.one_apply_eq] at e2 ⊢; simpa [M, c'] using e2
       · simpa [M, c', hij] using e2
-    rw [RingHom.mapMatrix_apply, Matrix.map_apply, e', map_add, map_mul, hc0, zero_mul, add_zero]
+    rw [RingHom.mapMatrix_apply, Matrix.map_apply, e', map_add (f := _), map_mul, hc0, zero_mul, add_zero]
     by_cases hij : i = j
     · subst hij; rw [Matrix.one_apply_eq, Matrix.one_apply_eq, map_one]
     · simp [hij]

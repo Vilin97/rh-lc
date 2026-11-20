@@ -36,7 +36,7 @@ theorem expMap_add_smul (H : IsLieData σ j s) (X : L) (t h : ℝ) :
   have hb : ∀ x : 𝔸, x ∈ Metric.eball (0 : 𝔸) (NormedSpace.expSeries ℝ 𝔸).radius := fun x =>
     (NormedSpace.expSeries_radius_eq_top ℝ 𝔸).symm ▸ edist_lt_top _ _
   simp only [expMap]
-  rw [← H.mul _ _ (DerLinear.exp_unitary H _) (DerLinear.exp_unitary H _), add_smul, map_add,
+  rw [← H.mul _ _ (DerLinear.exp_unitary H _) (DerLinear.exp_unitary H _), add_smul, map_add (f := _),
     NormedSpace.exp_add_of_commute_of_mem_ball (𝕂 := ℝ) ?_ (hb _) (hb _)]
   rw [map_smul, map_smul]
   exact ((Commute.refl (j X)).smul_left t).smul_right h
@@ -217,8 +217,8 @@ theorem envRepAll_ι_mem (R : RealPoints θ V) (x : GlobalTheory.AutFinLit.LieC 
     induction y using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero, map_zero]; exact zero_mem _
     | tmul c X => rw [envRepAll_ι_of_tmul]; exact Subalgebra.smul_mem _ (Algebra.subset_adjoin (Set.mem_range_self _)) c
-    | add a b ha hb => rw [map_add, map_add, map_add]; exact add_mem ha hb
-  | add a b ha hb => rw [map_add, map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _)]; exact add_mem ha hb
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
 
 theorem envRepAll_mem (R : RealPoints θ V) (u : GlobalTheory.AutFinLit.Env V) :
     envRepAll R u ∈ Algebra.adjoin ℂ (Set.range (opInf R)) := by
@@ -229,7 +229,7 @@ theorem envRepAll_mem (R : RealPoints θ V) (u : GlobalTheory.AutFinLit.Env V) :
   | algebraMap r => rw [AlgHom.commutes, AlgHom.commutes]; exact Subalgebra.algebraMap_mem _ r
   | ι x => rw [← UniversalEnvelopingAlgebra.ι_apply]; exact envRepAll_ι_mem R x
   | mul a b ha hb => rw [map_mul, map_mul]; exact mul_mem ha hb
-  | add a b ha hb => rw [map_add, map_add]; exact add_mem ha hb
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
 
 end Concrete
 
@@ -254,7 +254,7 @@ theorem envRepAll_comm_lie : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul c X => rw [envRepAll_ι_of_tmul, smul_mul_assoc, mul_smul_comm, hcomm]
-    | add a b ha hb => rw [map_add, map_add, map_add, add_mul, mul_add, ha, hb]
-  | add a b ha hb => rw [map_add, map_add, add_mul, mul_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), add_mul, mul_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), add_mul, mul_add, ha, hb]
 
 end GlobalTheory.EnvCommLie

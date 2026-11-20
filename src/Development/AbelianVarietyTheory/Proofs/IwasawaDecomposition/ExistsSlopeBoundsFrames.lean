@@ -76,7 +76,7 @@ theorem norm_aeval_le_one (R : Polynomial ℤ) {z : C} (hz : ‖z‖ ≤ 1) : �
 theorem norm_coeff_zero_le {z : C} (R : Polynomial ℤ) (hR : Polynomial.aeval z R = 0) (hz : ‖z‖ ≤ 1) :
     ‖((R.coeff 0 : ℤ) : C)‖ ≤ ‖z‖ := by
   have e := congrArg (Polynomial.aeval z) (Polynomial.divX_mul_X_add R)
-  rw [map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C, hR, algebraMap_int_eq, eq_intCast] at e
+  rw [map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C, hR, algebraMap_int_eq, eq_intCast] at e
   have e2 : ((R.coeff 0 : ℤ) : C) = -(Polynomial.aeval z R.divX * z) := by linear_combination e
   rw [e2, norm_neg, norm_mul]
   exact mul_le_of_le_one_left (norm_nonneg _) (norm_aeval_le_one _ hz)

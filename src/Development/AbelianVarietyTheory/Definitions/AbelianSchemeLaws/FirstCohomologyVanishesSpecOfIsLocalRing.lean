@@ -131,7 +131,7 @@ theorem firstCohomologyVanishes_of_every_cover_trivial (M : LB X)
   have hle : ∀ U : X.Opens, U ≤ V d := fun U => hd ▸ le_top
   refine ⟨fun a => rs X (le_inf le_rfl (hle _) : V a ≤ V a ⊓ V d) (φ a d), fun a b => ?_⟩
   have h := congrArg (rs X (le_inf le_rfl (hle _) : V a ⊓ V b ≤ V a ⊓ V b ⊓ V d)) (hφ a b d)
-  simp only [map_add, map_mul, rs_rs, rs_self] at h
+  simp only [map_add (f := _), map_mul, rs_rs, rs_self] at h
   simp only [rs_rs]
   exact eq_sub_of_add_eq h
 

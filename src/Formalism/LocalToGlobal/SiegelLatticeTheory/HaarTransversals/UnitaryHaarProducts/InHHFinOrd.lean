@@ -239,21 +239,21 @@ theorem decomp (v : (VS D).V) : ∃ s ∈ Submodule.span D.host.E (Set.range X.e
       intro x hx
       rcases hx with (⟨b, rfl⟩ | ⟨b, rfl⟩) | hz
       set_option synthInstance.maxHeartbeats 100000 in
-        · simp [map_sub, map_add, map_sum, map_smul, smul_eq_mul, X.ee, X.ef, (X.zu_orth u b).1,
+        · simp [map_sub, map_add (f := _), map_sum, map_smul, smul_eq_mul, X.ee, X.ef, (X.zu_orth u b).1,
           mul_ite, Finset.sum_ite_eq, Finset.sum_ite_eq']
       set_option synthInstance.maxHeartbeats 100000 in
-        · simp [map_sub, map_add, map_sum, map_smul, smul_eq_mul, X.ff, hfe, (X.zu_orth u b).2,
+        · simp [map_sub, map_add (f := _), map_sum, map_smul, smul_eq_mul, X.ff, hfe, (X.zu_orth u b).2,
           mul_ite, Finset.sum_ite_eq, Finset.sum_ite_eq']
       · rw [Set.mem_singleton_iff] at hz
         subst hz
         set_option synthInstance.maxHeartbeats 100000 in
-          simp [map_sub, map_add, map_sum, map_smul, smul_eq_mul, hze, hzf, hzz]
+          simp [map_sub, map_add (f := _), map_sum, map_smul, smul_eq_mul, hze, hzf, hzz]
     simp only [Formalism.MainNotions.S.Lat.orth, Submodule.mem_iInf, LinearMap.mem_ker]
     intro x hx
     induction hx using Submodule.span_induction with
     | mem y hy => exact key y hy
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add, LinearMap.add_apply, hy, hz, add_zero]
+    | add y z _ _ hy hz => rw [map_add (f := _), LinearMap.add_apply, hy, hz, add_zero]
     | smul c y _ hy => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hy, smul_zero]
 
 theorem fmat_one' : X.B.I.fmat 1 = 1 := by
@@ -376,7 +376,7 @@ theorem delta_finOrd (δ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (hδiso : δ ∈ 
   refine ⟨m, hm, LinearEquiv.ext fun v => ?_⟩
   obtain ⟨s, hs, hws⟩ := hdec v
   have e : v = (v - s) + s := by abel
-  rw [LinearEquiv.coe_one, id, e, map_add, hWm _ hws, hUm m s hs]
+  rw [LinearEquiv.coe_one, id, e, map_add (f := _), hWm _ hws, hUm m s hs]
 
 theorem gam_pow_eq_one (γ : X.B.I.GA) (hGF : γ ∈ Formalism.MainNotions.LeviCoordinates.rr_GF X.B.I)
     (δ : (VS D).V ≃ₗ[D.host.E] (VS D).V)
@@ -446,7 +446,7 @@ theorem gamFinKu_of (hK : X.LevelSubgroupCharacter) (hL : LatOfLattice X u) : Ga
     induction hw using Submodule.span_induction with
     | mem x hx => exact hfixS x hx
     | zero => exact map_zero _
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | smul c x _ hx => rw [map_smul, hx]
 
   obtain ⟨Λ, hΛ, hΛlat⟩ := hL h

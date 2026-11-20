@@ -71,7 +71,7 @@ private theorem exists_residue_eq_iff_exists_residue_sub_eq_zero {F : Type} [Fie
   · rintro ⟨y, rfl, hy⟩
     exact ⟨y - t, rfl, by rw [map_sub, hy, ht, sub_self]⟩
   · rintro ⟨y, hy, hy0⟩
-    refine ⟨y + t, ?_, by rw [map_add, hy0, ht, zero_add]⟩
+    refine ⟨y + t, ?_, by rw [map_add (f := _), hy0, ht, zero_add]⟩
     show a = (y : _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v) + (t : _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv F v)
     rw [← hy]
     ring

@@ -130,6 +130,6 @@ theorem algebraic_const : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   · rw [hg, map_one, map_one]
   · rw [hg, map_mul, map_mul, hg, hg]
   · rw [hg, map_zero, map_zero]
-  · rw [hg, map_add, map_add, hg, hg]
+  · rw [hg, map_add (f := _), map_add (f := _), hg, hg]
 
 end GlobalTheory.ArcConst

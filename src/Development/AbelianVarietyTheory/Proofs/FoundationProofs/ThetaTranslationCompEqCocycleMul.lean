@@ -116,7 +116,7 @@ theorem mul_derivative_logOf (F : PowerSeries ℂ_[p]) (hF : constantCoeff F = 1
     | zero => simp [add_mul]
     | succ n => simp [add_mul, coeff_succ_X_mul, coeff_one, pow_succ]
   have e2 := congrArg (substAlgHom (R := ℂ_[p]) hs) e
-  rw [map_mul, map_add, map_one, substAlgHom_X, coe_substAlgHom] at e2
+  rw [map_mul, map_add (f := _), map_one, substAlgHom_X, coe_substAlgHom] at e2
   rw [logOf_eq, derivative_subst hs, ← mul_assoc]
   have e3 : F * subst (F - 1) (d⁄dX ℂ_[p] (PowerSeries.log ℂ_[p])) = 1 := by
     rwa [add_sub_cancel] at e2
@@ -260,7 +260,7 @@ theorem thetaTranslation_comp_eq_cocycle_mul (Λ : AddSubgroup ℂ) (y t : ℂ) 
   simp only [U1, cocy]
   rw [mul_assoc, ← Complex.exp_add, mul_left_comm, ← Complex.exp_add, add_assoc]
   congr 2
-  rw [map_add]
+  rw [map_add (f := _)]
   ring
 
 theorem thetaTranslation_const_mul (Λ : AddSubgroup ℂ) (y c : ℂ) (G : ℂ → ℂ) :

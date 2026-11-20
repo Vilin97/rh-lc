@@ -90,14 +90,14 @@ theorem locX_move {T : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (n : (VS D).V ≃�
     induction hx using Submodule.span_induction with
     | mem z hz => obtain ⟨a, rfl⟩ := hz; exact key a
     | zero => simp
-    | add z w _ _ hz hw => rw [map_add, LinearMap.add_apply, hz, hw, add_zero]
+    | add z w _ _ hz hw => rw [map_add (f := _), LinearMap.add_apply, hz, hw, add_zero]
     | smul c z _ hz => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hz, smul_zero]
   have hdec : ∀ j, n (b j) - b j = (n (π j) - π j) + ∑ c, kk j c • (n (y c) - y c) := by
     intro j
     have e1 : b j = π j + ∑ c, kk j c • y c := by simp [hπ]
     conv_lhs => rw [e1]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, smul_sub, Finset.sum_sub_distrib]
+      simp only [map_add (f := _), map_sum, map_smul, smul_sub, Finset.sum_sub_distrib]
     abel
   have hκ : ∀ c : Fin D.R.rS, ∑ j, v j * (D.s.atP p).ιE (kk j c) = 0 := by
     intro c
@@ -122,7 +122,7 @@ theorem locX_move {T : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (n : (VS D).V ≃�
     rw [map_smul, betaP_bc, map_sub, smul_sub]
   have hsplit : ∑ j, v j • baseChange₂ D p (n (b j) - b j) = ∑ j, v j • baseChange₂ D p (n (π j) - π j) +
       ∑ c, (∑ j, v j * (D.s.atP p).ιE (kk j c)) • baseChange₂ D p (n (y c) - y c) := by
-    simp only [hdec, map_add, baseChangeAt_sum, smul_add, Finset.sum_add_distrib, Finset.smul_sum, smul_smul,
+    simp only [hdec, map_add (f := _), baseChangeAt_sum, smul_add, Finset.sum_add_distrib, Finset.smul_sum, smul_smul,
       Finset.sum_smul]
     congr 1
     exact Finset.sum_comm

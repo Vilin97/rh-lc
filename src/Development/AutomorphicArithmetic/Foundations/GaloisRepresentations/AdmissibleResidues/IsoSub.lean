@@ -35,10 +35,10 @@ private theorem irreducible_subrep_isotypic {H Y V : Type} {I : Type 1} {S : I �
         exact this ⟨(σ i).asModuleEquiv.symm t, rfl⟩
       · rw [map_zero]; exact zero_mem _
       · intro a b ha hb
-        rw [map_add]; exact add_mem ha hb
+        rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     · rw [map_zero]; exact zero_mem _
     · intro a b ha hb
-      rw [map_add]; exact add_mem ha hb
+      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   have hJ : ∀ x, J x ∈ sSup s := fun x => h1 _ (h (π.asModuleEquiv x))
   have hJi : Function.Injective J := hj
   haveI : IsSemisimpleModule R (sSup s : Submodule R ρ.asModule) := by
@@ -68,7 +68,7 @@ private theorem irreducible_subrep_isotypic {H Y V : Type} {I : Type 1} {S : I �
     exact congrArg Subtype.val (e.symm_apply_apply ⟨z, hz⟩)
   · rw [map_zero]; exact zero_mem _
   · intro a b ha hb
-    rw [map_add]; exact add_mem ha hb
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
 
 theorem UpperTheory.GalN.V.isoSub :
     ∀ (H Y V : Type) (I : Type 1) [Group H] [TopologicalSpace H] [IsTopologicalGroup H] [AddCommGroup Y] [Module ℂ Y] [AddCommGroup V] [Module ℂ V] (σ : I → SmIrr H) (π : Representation ℂ H Y) (ρ : Representation ℂ H V) (j : Y →ₗ[ℂ] V), Function.Injective j → (∀ g y, j (π g y) = ρ g (j y)) → (∀ y, j y ∈ ⨆ (i : I) (f : {f : (σ i).V →ₗ[ℂ] V // ∀ g v, f ((σ i).ρ g v) = ρ g (f v)}), LinearMap.range f.1) → ∀ y, y ∈ ⨆ (i : I) (f : {f : (σ i).V →ₗ[ℂ] Y // ∀ g v, f ((σ i).ρ g v) = π g (f v)}), LinearMap.range f.1 := by

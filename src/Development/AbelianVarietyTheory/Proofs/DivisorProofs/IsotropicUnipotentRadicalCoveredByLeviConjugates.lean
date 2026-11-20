@@ -93,7 +93,7 @@ theorem cover_unipRad : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
   have hs : ∀ x, sigR (AF F) σ (sigR (AF F) σ x) = x := fun a => by
     induction a using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (sigma_sigma hcm x)
   have hk : ∀ (c : F) x, sigR (AF F) σ (c • x) = c • sigR (AF F) σ x := fun c x =>
     map_smul (Algebra.TensorProduct.map (AlgHom.id F (AF F)) σ) c x
@@ -102,7 +102,7 @@ theorem cover_unipRad : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
       funext x
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a x => rfl
     rw [e]
     exact IsModuleTopology.continuous_of_linearMap _

@@ -33,7 +33,7 @@ theorem WtBelow.mul {v : AddValuation C (WithTop ℝ)} {ρ : Fin M → ℝ} {D :
   by_cases h2 : q.2 = 0
   · rw [h2, coeff_zero_eq_constantCoeff_apply, hh0, mul_zero, v.map_zero]; exact le_top
   have hd : Finsupp.degree q.1 + Finsupp.degree q.2 = Finsupp.degree α := by
-    rw [← hq', map_add]
+    rw [← hq', map_add (f := _)]
   have d1 : Finsupp.degree q.1 ≠ 0 := fun e => h1 ((Finsupp.degree_eq_zero_iff _).1 e)
   have d2 : Finsupp.degree q.2 ≠ 0 := fun e => h2 ((Finsupp.degree_eq_zero_iff _).1 e)
   rw [v.map_mul]

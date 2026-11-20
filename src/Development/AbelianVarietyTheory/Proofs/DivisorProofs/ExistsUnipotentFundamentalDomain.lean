@@ -28,7 +28,7 @@ theorem cA_inclR (σ : E →ₐ[F] E) (a : E) : cA σ (inclR (F := F) (AF F) a) 
 theorem cA_cA {σ : E →ₐ[F] E} (hσ : ∀ a, σ (σ a) = a) (z : AE F E) : cA σ (cA σ z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => show Algebra.TensorProduct.map _ _ (Algebra.TensorProduct.map _ _ (a ⊗ₜ[F] x)) = a ⊗ₜ[F] x; simp [hσ]
 
 theorem hA_skew {σ : E →ₐ[F] E} (hσ : ∀ a, σ (σ a) = a) {n : ℕ} {J : Matrix (Fin n) (Fin n) E}
@@ -59,7 +59,7 @@ theorem hA_add_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E
 
 theorem hA_add_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v w w' : Fin n → AE F E) :
     hA σ J v (w + w') = hA σ J v w + hA σ J v w' := by
-  simp only [hA, Pi.add_apply, map_add]
+  simp only [hA, Pi.add_apply, map_add (f := _)]
   rw [show (fun i => cA σ (w i) + cA σ (w' i)) = (fun i => cA σ (w i)) + fun i => cA σ (w' i) from rfl,
     Matrix.mulVec_add, dotProduct_add]
 
@@ -274,7 +274,7 @@ theorem cocompact (h : Hyp σ W H') (hxx : form σ W.J H'.x H'.x = 0) (hyy : for
     fun b k => half * (k + cA σ k) - half * hA σ W.J (ι *ᵥ b) (ι *ᵥ b)
   have hcf : ∀ b k, cf b k - cA σ (cf b k) = -hA σ W.J (ι *ᵥ b) (ι *ᵥ b) := by
     intro b k
-    simp only [cf, map_sub, map_mul, map_add, hσhalf, cA_cA h.σσ, hsk]
+    simp only [cf, map_sub, map_mul, map_add (f := _), hσhalf, cA_cA h.σσ, hsk]
     linear_combination (-hA σ W.J (ι *ᵥ b) (ι *ᵥ b)) * hhalf
   let Q : (Fin d₁ → AE F E) × AE F E → unip σ W H' := fun p => elt h p.1 (cf p.1 p.2) (hcf p.1 p.2)
   have hcfc : Continuous fun p : (Fin d₁ → AE F E) × AE F E => cf p.1 p.2 := by
@@ -311,15 +311,15 @@ theorem cocompact (h : Hyp σ W H') (hxx : form σ W.J H'.x H'.x = 0) (hyy : for
     rw [hg, hu₀, nmat_mul h]
   have hc₂ : c₂ - cA σ c₂ = -hA σ W.J (ι *ᵥ b') (ι *ᵥ b') := by
     rw [hb'_def, Matrix.mulVec_add, ← hu₀, hA_add_left, hA_add_right, hA_add_right, hc₂_def]
-    simp only [map_add, map_sub]
+    simp only [map_add (f := _), map_sub]
     linear_combination hc₁ + hc + hsk (ι *ᵥ b) u₀
   set s := half * (c₂ + cA σ c₂) with hs_def
-  have hσs : cA σ s = s := by rw [hs_def, map_mul, hσhalf, map_add, cA_cA h.σσ, add_comm (cA σ c₂)]
+  have hσs : cA σ s = s := by rw [hs_def, map_mul, hσhalf, map_add (f := _), cA_cA h.σσ, add_comm (cA σ c₂)]
   obtain ⟨e', he'⟩ := hcov s
   set k := s - inclR (F := F) (AF F) e' with hk_def
   set e₀ : E := -(2⁻¹ * (e' + σ e')) with he₀_def
   have hσe₀ : σ e₀ = e₀ := by
-    rw [he₀_def, map_neg, map_mul, map_add, h.σσ, map_inv₀, map_ofNat, add_comm (σ e')]
+    rw [he₀_def, map_neg, map_mul, map_add (f := _), h.σσ, map_inv₀, map_ofNat, add_comm (σ e')]
   have h0 : incV F (0 : Fin d₁ → E) = 0 := funext fun _ => map_zero _
   have hc₃ : inclR (F := F) (AF F) e₀ - cA σ (inclR (F := F) (AF F) e₀) =
       -hA σ W.J (ι *ᵥ incV F 0) (ι *ᵥ incV F 0) := by
@@ -328,7 +328,7 @@ theorem cocompact (h : Hyp σ W H') (hxx : form σ W.J H'.x H'.x = 0) (hyy : for
   have key : inclR (F := F) (AF F) e₀ + c₂ = cf b' k := by
     have he₀' : inclR (F := F) (AF F) e₀ =
         -(half * (inclR (F := F) (AF F) e' + inclR (F := F) (AF F) (σ e'))) := by
-      rw [he₀_def, map_neg, map_mul, map_add, hhalf_def]
+      rw [he₀_def, map_neg, map_mul, map_add (f := _), hhalf_def]
     have hσk : cA σ k = s - inclR (F := F) (AF F) (σ e') := by rw [hk_def, map_sub, hσs, cA_inclR]
     simp only [cf]
     linear_combination he₀' + (-half) * hk_def + (-half) * hσk + half * hc₂ -

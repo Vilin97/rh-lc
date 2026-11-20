@@ -55,7 +55,7 @@ theorem toEAf_conj (a : AE D) :
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => rfl
-  | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy]
 
 theorem toEAf_inc (e : D.host.E) : toEAf D (incA D e) = inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F) e := rfl
 

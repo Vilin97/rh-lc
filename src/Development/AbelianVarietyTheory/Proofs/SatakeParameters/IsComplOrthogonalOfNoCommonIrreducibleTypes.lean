@@ -178,7 +178,7 @@ theorem orth_isCompl : ∀ (K V : Type) [Group K] [AddCommGroup V] [Module ℂ V
     intro φ
     have : φ ∈ X.toSubmodule ⊔ Y.toSubmodule := by rw [hXY.sup_eq_top]; trivial
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp this
-    rw [map_add, LinearMap.add_apply, h1 b hb, h2 a ha, add_zero]
+    rw [map_add (f := _), LinearMap.add_apply, h1 b hb, h2 a ha, add_zero]
   · rw [codisjoint_iff, eq_top_iff]
     have htop := hsum ⊤
     change (⊤ : Submodule ℂ V) = _ at htop

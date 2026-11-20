@@ -43,7 +43,7 @@ def eigSub (v : EuclideanSpace ℂ (Fin d)) : StarSubalgebra ℂ (Prod' H d) whe
     rintro a b ⟨ca, ha1, ha2⟩ ⟨cb, hb1, hb2⟩
     refine ⟨ca + cb, ?_, ?_⟩
     · simp only [Prod.snd_add, ContinuousLinearMap.add_apply, ha1, hb1, add_smul]
-    · simp only [Prod.snd_add, star_add, ContinuousLinearMap.add_apply, ha2, hb2, map_add, add_smul]
+    · simp only [Prod.snd_add, star_add, ContinuousLinearMap.add_apply, ha2, hb2, map_add (f := _), add_smul]
   algebraMap_mem' r := by
     refine ⟨r, ?_, ?_⟩
     · simp [Algebra.algebraMap_eq_smul_one]

@@ -21,7 +21,7 @@ theorem sigV_invol (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F))
   induction a using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul x e => rw [sigV_tmul, sigV_tmul, star_star]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem sigV_inclV (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (e : I.E) :
     sigV I v (inclV I v e) = inclV I v (star e) := by

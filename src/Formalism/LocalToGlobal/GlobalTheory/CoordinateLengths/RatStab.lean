@@ -159,7 +159,7 @@ theorem rat_ten (D : D7) {N : ℕ} (lam : D.what₂.Tau → DomWeight N) (s : Fi
       | add x y _ _ hx hy =>
         intro r
         have e : Formalism.L2.Forms.ten (Function.update g τv (x + y)) = Formalism.L2.Forms.ten (Function.update g τv x) + Formalism.L2.Forms.ten (Function.update g τv y) := by
-          rw [bwA_ten_update, bwA_ten_update, bwA_ten_update, map_add, add_mul]
+          rw [bwA_ten_update, bwA_ten_update, bwA_ten_update, map_add (f := _), add_mul]
         rw [e, smul_add]
         exact add_mem (hx r) (hy r)
       | smul o x _ hx =>
@@ -210,7 +210,7 @@ theorem ratGL_holds (D : D7) (u : D.what₂.Word) : RatGL D u := by
     · intro τ hτ
       exact absurd (Finset.mem_univ τ) hτ
   | zero => rw [map_zero, smul_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add, smul_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg, smul_neg]; exact neg_mem hx
 
 end Formalism.L2.GlobalTheoryTheory.LemB

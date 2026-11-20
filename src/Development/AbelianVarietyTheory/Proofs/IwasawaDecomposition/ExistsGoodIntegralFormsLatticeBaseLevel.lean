@@ -23,7 +23,7 @@ theorem mem_of_span {S V H : Type} [Semiring S] [AddCommGroup V] [Module S V] [A
   induction hv using Submodule.span_induction with
   | mem x hx => exact hX x hx
   | zero => rw [map_zero]; exact P.zero_mem
-  | add _ _ _ _ h1 h2 => rw [map_add]; exact P.add_mem h1 h2
+  | add _ _ _ _ h1 h2 => rw [map_add (f := _)]; exact P.add_mem h1 h2
   | smul b x _ h => rw [hfs]; exact P.smul_mem _ h
 
 theorem int_span {L V H : Type} [Field L] [AddCommGroup V] [Module L V] [AddCommGroup H] [Module ℂ H] {σ : L →+* ℂ}

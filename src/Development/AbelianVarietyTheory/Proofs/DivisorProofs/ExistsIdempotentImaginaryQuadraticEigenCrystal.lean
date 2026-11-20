@@ -17,7 +17,7 @@ theorem exists_idem_crys : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.H
 
   have hroot : tR b.ρ ^ 2 - (D.tr : C) * tR b.ρ + (D.nm : C) = 0 := by
     have := congrArg tR b.ρ_root
-    simpa only [map_sub, map_add, map_mul, map_pow, map_intCast, map_zero] using this
+    simpa only [map_sub, map_add (f := _), map_mul, map_pow, map_intCast, map_zero] using this
   have hu2 : (tR b.ρ - ((D.tr : C) - tR b.ρ)) ^ 2 = ((D.tr ^ 2 - 4 * D.nm : ℤ) : C) := by
     push_cast; linear_combination 4 * hroot
   have hunit : IsUnit (tR b.ρ - ((D.tr : C) - tR b.ρ)) := by
@@ -41,7 +41,7 @@ theorem exists_idem_crys : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.H
     linear_combination D.ω * D.tr_eq - D.nm_eq
   have hWrel : W * W - (D.tr : Module.End C H) * W + (D.nm : Module.End C H) = 0 := by
     have := congrArg (fun z => ρ (algebraMap (𝓞 D.F) D.O z)) hωF
-    simpa only [map_sub, map_add, map_mul, map_intCast, map_zero] using this
+    simpa only [map_sub, map_add (f := _), map_mul, map_intCast, map_zero] using this
   have hWx : ∀ x, W (W x) = (D.tr : C) • W x - (D.nm : C) • x := by
     intro x
     have := congrArg (fun f : Module.End C H => f x) hWrel

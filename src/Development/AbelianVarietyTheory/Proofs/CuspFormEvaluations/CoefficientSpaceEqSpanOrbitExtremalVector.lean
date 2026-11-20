@@ -42,11 +42,11 @@ theorem eval_rowGen {K : Type} [Field K] {r n : ℕ} (a b : Fin r) (c : K) (f : 
     (rowGen K a b f).eval (C c) = rowAct K (1 + Matrix.single b a c) f := by
   induction f using MvPolynomial.induction_on with
   | C x => simp [rowGen, rowAct]
-  | add f g hf hg => simp only [map_add, Polynomial.eval_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), Polynomial.eval_add, hf, hg]
   | mul_X f v hf =>
     simp only [map_mul, Polynomial.eval_mul, hf]
     congr 1
-    simp only [rowGen, rowAct, aeval_X, Matrix.add_apply, map_add, add_mul, Finset.sum_add_distrib,
+    simp only [rowGen, rowAct, aeval_X, Matrix.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib,
       Polynomial.eval_add, Polynomial.eval_C]
     congr 1
     · rw [Finset.sum_eq_single v.1]
@@ -132,7 +132,7 @@ theorem orbit_stable {K : Type} [Field K] {r m : ℕ} (v : MvPolynomial (Fin r �
     beta_reduce
     rw [this, Units.val_mul, trGL_coe, Matrix.transpose_mul, Matrix.transpose_transpose]
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem dualWeyl_le_span_orbit (K : Type) [Field K] [CharZero K] {r m : ℕ} (hm : m ≤ r) (ν : Fin m → ℕ)

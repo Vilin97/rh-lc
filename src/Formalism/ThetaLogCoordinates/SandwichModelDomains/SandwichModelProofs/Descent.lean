@@ -49,7 +49,7 @@ theorem dsc_approx (p : ℕ) [Fact p.Prime] (r n : ℕ) (hn : n ≤ r) (ν : Fin
     obtain ⟨d1, hd1, z1, rfl⟩ := hx
     obtain ⟨d2, hd2, z2, rfl⟩ := hy
     refine ⟨d1 + d2, Submodule.add_mem _ hd1 hd2, z1 + z2, ?_⟩
-    rw [map_add, smul_add]; abel
+    rw [map_add (f := _), smul_add]; abel
   | smul a x _ hx =>
     obtain ⟨d, hd, z, rfl⟩ := hx
     obtain ⟨a', ha'⟩ := Ideal.mem_span_singleton.mp (PadicInt.appr_spec k a)

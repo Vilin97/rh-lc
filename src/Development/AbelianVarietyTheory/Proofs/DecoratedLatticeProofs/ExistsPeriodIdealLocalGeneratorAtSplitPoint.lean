@@ -69,7 +69,7 @@ theorem exists_gen : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolog
     rw [Valuation.mem_integer_iff, map_div₀]
     exact div_le_one_of_le₀ (hmax x hx) zero_le'
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, add_div]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), add_div]; exact add_mem hx hy
   | smul r x _ hx =>
     rw [Algebra.smul_def, map_mul, mul_div_assoc]
     exact mul_mem (pr_incA_int q r) hx

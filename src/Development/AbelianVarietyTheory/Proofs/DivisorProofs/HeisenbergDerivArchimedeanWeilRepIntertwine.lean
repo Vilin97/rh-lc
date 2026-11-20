@@ -57,7 +57,7 @@ theorem GlobalTheory.ArchDecay.HeisWeil.exists_hasDerivAt_adm {F E : Type} [Fiel
     obtain ⟨Dx, hDx⟩ := hx
     obtain ⟨Dy, hDy⟩ := hy
     refine ⟨Dx + Dy, fun l hl => ?_⟩
-    simp only [rho_add, map_add]
+    simp only [rho_add, map_add (f := _)]
     exact (hDx l hl).add (hDy l hl)
   | smul c x _ hx =>
     obtain ⟨Dx, hDx⟩ := hx

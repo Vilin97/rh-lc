@@ -42,7 +42,7 @@ theorem perF_k (h : _root_.PositivityTheory.SiegelWeilFormula.Act.C5.Hyp_k L nb 
   rw [kunf.nb_add h.nb, mul_assoc, hΨ _ (kunf.nb_rat h.nb hγ) (_root_.PositivityTheory.SiegelWeilFormula.Act.C5.fix_nb_k h γ)]
   congr 1
   unfold _root_.PositivityTheory.SiegelWeilFormula.Act.C5.th_k
-  rw [e2, Matrix.mul_add, Matrix.trace_add, map_add, neg_add, AddChar.map_add_eq_mul, AddChar.map_neg_eq_inv,
+  rw [e2, Matrix.mul_add, Matrix.trace_add, map_add (f := _), neg_add, AddChar.map_add_eq_mul, AddChar.map_neg_eq_inv,
     kunf.psi_rat d.ok.good.std T ⟨γ, hγ⟩, inv_one, one_mul]
 theorem perFE_k (h : _root_.PositivityTheory.SiegelWeilFormula.Act.C5.Hyp_k L nb uM nb' w₁ cM δ) (Ψ : d.G → ℝ≥0∞) (hΨ : ∀ r ∈ rat2 σ d.Y, (∀ k, inFrame d.b r k (Sum.inl L.i₀) =
       (1 : Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d.n) (AE F E)) k (Sum.inl L.i₀)) → ∀ g, Ψ (r * g) = Ψ g)
@@ -52,7 +52,7 @@ theorem perFE_k (h : _root_.PositivityTheory.SiegelWeilFormula.Act.C5.Hyp_k L nb
   rw [kunf.nb_add h.nb, mul_assoc, hΨ _ (kunf.nb_rat h.nb hγ) (_root_.PositivityTheory.SiegelWeilFormula.Act.C5.fix_nb_k h γ)]
   congr 2
   unfold _root_.PositivityTheory.SiegelWeilFormula.Act.C5.th_k
-  rw [e2, Matrix.mul_add, Matrix.trace_add, map_add, neg_add, AddChar.map_add_eq_mul, AddChar.map_neg_eq_inv,
+  rw [e2, Matrix.mul_add, Matrix.trace_add, map_add (f := _), neg_add, AddChar.map_add_eq_mul, AddChar.map_neg_eq_inv,
     kunf.psi_rat d.ok.good.std T ⟨γ, hγ⟩, inv_one, one_mul]
 theorem shift_eq_k (h : _root_.PositivityTheory.SiegelWeilFormula.Act.C5.Hyp_k L nb uM nb' w₁ cM δ) (r b u : Fin L.n → AE F E) (s a : AF F) :
     _root_.PositivityTheory.SiegelWeilFormula.Act.C5.sM_k R L (r + b) * cM (u, s + a) = (_root_.PositivityTheory.SiegelWeilFormula.Act.C5.sM_k R L r * cM (0, s)) * (_root_.PositivityTheory.SiegelWeilFormula.Act.C5.sM_k R L b * cM (u, a)) := by

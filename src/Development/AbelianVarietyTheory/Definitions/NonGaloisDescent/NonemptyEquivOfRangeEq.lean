@@ -247,7 +247,7 @@ def isotypic (σ : Representation ℂ G V) (τ : Representation ℂ G W) : Subre
   toSubmodule := ⨆ f : τ.IntertwiningMap σ, LinearMap.range f.toLinearMap
   apply_mem_toSubmodule g v hv := by
     refine Submodule.iSup_induction _ (motive := fun v => σ g v ∈ ⨆ f : τ.IntertwiningMap σ, LinearMap.range f.toLinearMap)
-      hv ?_ (by simp) fun x y hx hy => by rw [map_add]; exact add_mem hx hy
+      hv ?_ (by simp) fun x y hx hy => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     rintro f _ ⟨w, rfl⟩
     exact Submodule.mem_iSup_of_mem f ⟨τ g w, f.isIntertwining _ _ g w⟩
 
@@ -294,7 +294,7 @@ theorem map_mem_isotypic {σ : Representation ℂ G V} {σ' : Representation ℂ
   · rintro f _ ⟨w, rfl⟩
     exact apply_mem_isotypic (φ.comp f) w
   · rw [map_zero]; exact (isotypic σ' τ).toSubmodule.zero_mem
-  · rw [map_add]; exact (isotypic σ' τ).toSubmodule.add_mem hx hy
+  · rw [map_add (f := _)]; exact (isotypic σ' τ).toSubmodule.add_mem hx hy
 
 def isotypicMap {σ : Representation ℂ G V} {σ' : Representation ℂ G X} (φ : σ.IntertwiningMap σ')
     (τ : Representation ℂ G W) :
@@ -364,7 +364,7 @@ theorem isCompl_fixed_twKer {π : Representation ℂ G V} (hπ : IsSmooth π) {H
         obtain ⟨A, _, hA⟩ := hx
         obtain ⟨B, _, hB⟩ := hy
         exact ⟨A ⊓ B, inferInstance, fun U _ _ hU => by
-          rw [map_add, hA U (hU.trans inf_le_left), hB U (hU.trans inf_le_right), add_zero]⟩
+          rw [map_add (f := _), hA U (hU.trans inf_le_left), hB U (hU.trans inf_le_right), add_zero]⟩
       | smul c x _ hx =>
         obtain ⟨A, h0, hA⟩ := hx
         exact ⟨A, h0, fun U _ _ hU => by rw [map_smul, hA U hU, smul_zero]⟩

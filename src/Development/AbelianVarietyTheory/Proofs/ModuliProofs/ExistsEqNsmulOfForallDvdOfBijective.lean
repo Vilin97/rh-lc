@@ -8,7 +8,7 @@ theorem exists_eq_nsmul_of_forall_dvd_of_bijective {La : Type} [AddCommGroup La]
   let g : La →ₗ[ℤ] ℤ :=
     { toFun := fun x => EF c x / N
       map_add' := fun x y => by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact Int.add_ediv_of_dvd_left (hc x)
       map_smul' := fun r x => by
         simp only [map_smul, smul_eq_mul, RingHom.id_apply]

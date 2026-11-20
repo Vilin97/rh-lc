@@ -27,7 +27,7 @@ theorem filt_mul {σ : Type} {a b : ℕ} {f g : MvPowerSeries σ O}
   refine Ideal.sum_mem _ fun p hp => ?_
   have hpm : p.1 + p.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.mp hp
   have hd : Finsupp.degree p.1 + Finsupp.degree p.2 = Finsupp.degree m := by
-    rw [← map_add, hpm]
+    rw [← map_add (f := _), hpm]
   have := Ideal.mul_mem_mul (hf p.1) (hg p.2)
   rw [← pow_add] at this
   exact Ideal.pow_le_pow_right (by omega) this
@@ -42,7 +42,7 @@ def FiltIdeal (σ : Type) (N : ℕ) : Ideal (MvPowerSeries σ O) where
   carrier := Filt O σ N
   add_mem' := by
     intro f g hf hg m
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Ideal.add_mem _ (hf m) (hg m)
   zero_mem' := by
     intro m
@@ -116,7 +116,7 @@ theorem decomp {a : ℕ} (f : MvPowerSeries (Fin a) O) :
   classical
   ext m
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum]
+    rw [map_add (f := _), map_sum]
   simp_rw [coeff_X_mul_part]
   by_cases hm : m = 0
   · subst hm

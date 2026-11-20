@@ -17,7 +17,7 @@ theorem UpperTheory.ConvolutionTheory.R2.C.chirpInf :
     | C a =>
       simpa using Function.HasTemperateGrowth.const (E := ι → mixedEmbedding.mixedSpace K) a
     | add p q hp hq =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact hp.fun_add hq
     | mul_X p i hp =>
       have hi : Function.HasTemperateGrowth fun x : ι → mixedEmbedding.mixedSpace K => x i :=

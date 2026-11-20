@@ -25,7 +25,7 @@ theorem cT_aeval (c : O →+* O) {B : Matrix n n O} (hB : cT c B = B) (p : Polyn
     cT c (Polynomial.aeval B p) = Polynomial.aeval B (p.map c) := by
   induction p using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [Polynomial.map_add, map_add, map_add, ← hp, ← hq]
+    rw [Polynomial.map_add (f := _), map_add (f := _), map_add (f := _), ← hp, ← hq]
     ext i j; simp [cT]
   | monomial m a =>
     rw [Polynomial.map_monomial, Polynomial.aeval_monomial, Polynomial.aeval_monomial,
@@ -45,7 +45,7 @@ theorem aeval_intertwine (ι : O →+* L) {B B' : Matrix n n O} {g : Matrix n n 
         Matrix.mul_assoc]
   induction p using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, map_add, Matrix.map_add _ (map_add ι), Matrix.map_add _ (map_add ι), Matrix.add_mul,
+    rw [map_add (f := _), map_add (f := _), Matrix.map_add _ (map_add ι), Matrix.map_add _ (map_add ι), Matrix.add_mul,
       Matrix.mul_add, hp, hq]
   | monomial m a =>
     have e : ∀ M : Matrix n n O, (a • M).map ι = ι a • M.map ι := fun M => by
@@ -84,8 +84,8 @@ private theorem cT_aeval_eq_aeval_cT_map (c : O →+* O) (B : Matrix n n O) (q :
     · subst hij; simp [_root_.Formalism.UG.cT, Polynomial.aeval_C, Matrix.algebraMap_matrix_apply]
     · simp [_root_.Formalism.UG.cT, Polynomial.aeval_C, Matrix.algebraMap_matrix_apply, hij, Ne.symm hij]
   | add p q hp hq =>
-    simp only [map_add, Polynomial.map_add, ← hp, ← hq]
-    simp [_root_.Formalism.UG.cT, Matrix.map_add, Matrix.transpose_add]
+    simp only [map_add (f := _), Polynomial.map_add (f := _), ← hp, ← hq]
+    simp [_root_.Formalism.UG.cT, Matrix.map_add (f := _), Matrix.transpose_add]
   | monomial m a hm =>
     rw [pow_succ, ← mul_assoc, mul_comm _ Polynomial.X, Polynomial.map_mul,
       map_mul (Polynomial.aeval B) Polynomial.X, map_mul (Polynomial.aeval (_root_.Formalism.UG.cT c B)), ← hm,
@@ -222,7 +222,7 @@ theorem _root_.GlobalTheory.UnitaryDoubleCoset.exists_unitary_factors (ι : O �
       ext i j
       simp [Matrix.diagonal_mul, Matrix.mul_diagonal, mul_comm]
     | add p q hp hq =>
-      rw [map_add, map_add, Matrix.map_add _ (map_add ι), Matrix.map_add _ (map_add ι), add_mul,
+      rw [map_add (f := _), map_add (f := _), Matrix.map_add _ (map_add ι), Matrix.map_add _ (map_add ι), add_mul,
         mul_add, hp, hq]
     | monomial m a hm =>
       rw [pow_succ, ← mul_assoc, map_mul (Polynomial.aeval H) _ Polynomial.X,

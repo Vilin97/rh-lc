@@ -32,7 +32,7 @@ theorem main {E V : Type} [Field E] [CharZero E] [AddCommGroup V] [Module E V] {
   have hwy : ∀ i, B w (y i) = 0 := fun i => by rw [hB, hyw, map_zero]
   have hzw' : B z w = 1 := by simp [hw, hzw₁, hzz]
   have hww : B w w = 0 := by
-    simp only [hw, map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+    simp only [hw, map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
       smul_eq_mul, hzz, h1, hsc, hzw₁]
     rw [hc]; simp only [RingHom.id_apply]; ring
   refine ⟨Fin.snoc x z, Fin.snoc y w, ?_, ?_, ?_, ?_⟩

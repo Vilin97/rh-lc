@@ -166,12 +166,12 @@ theorem exists_jacobian_minor_not_mem_charZero {F : Type} [Field F] [CharZero F]
       | zero => simp [D]
       | add x y _ _ hx hy =>
         have : D (x + y) = D x + D y := by
-          simp only [D, map_add, add_mul, Finset.sum_add_distrib]
+          simp only [D, map_add (f := _), add_mul, Finset.sum_add_distrib]
         rw [this, hx, hy, add_zero]
       | smul a x hx' hx =>
         have hx0 : π x = 0 := (hπ x).2 (hG ▸ hx')
         have : D (a • x) = π a * D x := by
-          simp only [D, smul_eq_mul, Derivation.leibniz, map_add, map_mul, hx0, zero_mul,
+          simp only [D, smul_eq_mul, Derivation.leibniz, map_add (f := _), map_mul, hx0, zero_mul,
             add_zero, Finset.mul_sum, mul_assoc]
         rw [this, hx, mul_zero]
     funext k0

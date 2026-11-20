@@ -26,7 +26,7 @@ theorem exists_common (S : Submonoid (𝓞 E)) {N : Submodule (𝓞 E) (Sp E a)}
     rw [LinearMap.smul_apply, ← Finset.mul_prod_erase T f (Finset.mem_coe.mp hy), mul_comm, mul_smul]
     exact N'.smul_mem _ (hf y (Finset.mem_coe.mp hy))
   | zero => rw [map_zero]; exact N'.zero_mem
-  | add y z _ _ hy hz => rw [map_add]; exact N'.add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact N'.add_mem hy hz
   | smul r y _ hy => rw [GlobalTheory.ThetaMove.PeriodComp.apply_smul]; exact N'.smul_mem r hy
 
 theorem smul_mem_perO {AA : Submodule (𝓞 E) E} {N : Submodule (𝓞 E) (Sp E a)} {N' : Submodule (𝓞 E) (Sp E b)}

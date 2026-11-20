@@ -21,7 +21,7 @@ theorem UpperTheory.ConvolutionTheory.Dp.formsClosure :
       Submodule.le_topologicalClosure _ ⟨u, hu, rfl⟩
     have hcV : clsL μ c ∈ (U.map (clsL μ)).topologicalClosure := by
       have h : clsL μ (u + c) ∈ (U.map (clsL μ)).topologicalClosure := hφV
-      rw [map_add] at h
+      rw [map_add (f := _)] at h
       simpa using Submodule.sub_mem _ h huV
     have hle : U.map (clsL μ) ≤ (ℂ ∙ clsL μ c)ᗮ := by
       rintro _ ⟨v, hv, rfl⟩

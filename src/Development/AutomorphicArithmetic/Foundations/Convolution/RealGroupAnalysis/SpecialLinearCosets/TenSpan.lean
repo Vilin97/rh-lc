@@ -211,7 +211,7 @@ private theorem poly_away {p : V4 F → ℂ} (hp : p ∈ polyFn (F := F)) (X : V
     simp only [Pi.mul_apply, hf, hg]
 
 private theorem gauss_away (δ : F) (X : V4 F) : gauss δ (away v X) = gauss δ X := by
-  simp only [gauss, map_add, map_sub, map_mul, map_pow, pInf_away]
+  simp only [gauss, map_add (f := _), map_sub, map_mul, map_pow, pInf_away]
 
 private theorem ten_eq (θ : Kv v) (δ : F) (p : V4 F → ℂ) (hp : p ∈ polyFn (F := F))
     (g : (Fin 4 → Af F) → ℂ) (b : M2 v → ℂ) (X : V4 F) :

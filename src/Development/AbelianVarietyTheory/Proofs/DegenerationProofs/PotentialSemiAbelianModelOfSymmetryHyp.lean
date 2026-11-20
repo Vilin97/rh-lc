@@ -99,7 +99,7 @@ theorem exists_finite_range {K Ω Ω₀ : Type} [Field K] [Field Ω] [Field Ω�
       exact IntermediateField.subset_adjoin _ _
         (Finset.mem_coe.2 (Finset.mem_insert_of_mem (Finset.mem_image_of_mem _ hx)))
     | algebraMap c => rw [j.commutes]; exact hle c.2
-    | add a b _ _ ha hb => rw [map_add]; exact K₁.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact K₁.add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact K₁.mul_mem ha hb
   obtain ⟨a, ha, b, hb, rfl⟩ := fr x
   rw [map_div₀]

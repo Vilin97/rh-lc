@@ -190,7 +190,7 @@ theorem killedBy_iff (hA : Side A pt κ (phiFr (M.fr τ) br e) c a) {i j : Ix p 
   rw [t2, phiFr, phi_symm] at d2
   have key : a (Eab i j - Eab j i) (κ P) = Complex.I • a (((sb br : ℂ) * Complex.I) • (Eab i j + Eab j i)) (κ P) ↔
       a (if br then Eab j i else Eab i j) (κ P) = 0 := by
-    simp only [map_sub, map_smul, map_add, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.add_apply, smul_smul]
+    simp only [map_sub, map_smul, map_add (f := _), LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.add_apply, smul_smul]
     have hI : Complex.I * ((sb br : ℂ) * Complex.I) = -(sb br : ℂ) := by
       linear_combination (sb br : ℂ) * Complex.I_mul_I
     rw [hI]

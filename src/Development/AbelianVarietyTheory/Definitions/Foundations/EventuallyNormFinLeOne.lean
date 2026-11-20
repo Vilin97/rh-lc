@@ -130,7 +130,7 @@ theorem absFin_mul_le (x y : Fv F v ⊗[F] E) : absFin F v (x * y) ≤ absFin F 
   exact mul_le_mul' (le_absFin F v τ x) (le_absFin F v τ y)
 
 theorem absFin_add_le (x y : Fv F v ⊗[F] E) : absFin F v (x + y) ≤ max (absFin F v x) (absFin F v y) := (absFin_le_iff F v).2 fun τ => by
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (absBar_add_le F v _ _).trans (max_le_max (le_absFin F v τ x) (le_absFin F v τ y))
 
 @[simp] theorem absFin_zero : absFin F v (0 : Fv F v ⊗[F] E) = 0 := le_antisymm ((absFin_le_iff F v).2 fun τ => by
@@ -329,7 +329,7 @@ theorem infEmb_eq_or_conj {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ τ' : Em
       simp only [RingHom.comp_apply]
       rw [infEmb_tmul, map_mul, hext]
       try rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 variable {F w} in
 
@@ -367,7 +367,7 @@ theorem eventually_absFin_le_one (z : AF F ⊗[F] E) :
   | zero => exact Filter.Eventually.of_forall fun v => by rw [map_zero, absFin_zero]; exact zero_le
   | add x y hx hy =>
     exact (hx.and hy).mono fun v h => by
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (absFin_add_le F v _ _).trans (max_le h.1 h.2)
   | tmul a x =>
     have hxa : IsAlgebraic ℤ x := by

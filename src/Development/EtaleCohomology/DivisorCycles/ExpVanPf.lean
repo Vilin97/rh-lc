@@ -30,7 +30,7 @@ omit [CharZero C] in
 theorem cc_F (Y : Mat C N) (f : MP C N) : PowerSeries.constantCoeff (F Y f) = ev 1 f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [F, ev]
-  | add p q hp hq => simp only [F, ev, map_add] at *; rw [hp, hq]
+  | add p q hp hq => simp only [F, ev, map_add (f := _)] at *; rw [hp, hq]
   | mul_X p i hp =>
     simp only [F, ev, map_mul, MvPolynomial.aeval_X, MvPolynomial.eval_X] at *
     rw [hp]; congr 1
@@ -40,9 +40,9 @@ theorem deriv_F (Y : Mat C N) (f : MP C N) :
     PowerSeries.derivative (R := C) (F Y f) = F Y (DX Y f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [F]
-  | add p q hp hq => simp only [F, map_add] at * <;> rw [hp, hq]
+  | add p q hp hq => simp only [F, map_add (f := _)] at * <;> rw [hp, hq]
   | mul_X p i hp =>
-    simp only [F, map_mul, Derivation.leibniz, MvPolynomial.aeval_X, smul_eq_mul, map_add] at *
+    simp only [F, map_mul, Derivation.leibniz, MvPolynomial.aeval_X, smul_eq_mul, map_add (f := _)] at *
     rw [hp, ← deriv_E]
 
 theorem coeff_F (hT : TanField) (S : Submonoid (Mat C N)) (Y : Mat C N) (hY : Y ∈ Tan (S : Set (Mat C N))) :

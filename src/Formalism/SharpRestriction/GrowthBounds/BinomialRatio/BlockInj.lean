@@ -60,7 +60,7 @@ theorem rho_tau (f : MvPolynomial (BVar N r D.T.t) (KK O)) : rho D (tau D f) = a
       simp only [AlgHom.comp_apply, IsScalarTower.coe_toAlgHom']
       rw [tau, aeval_X]
       simp only [tauF]
-      rw [map_add, map_mul, rho_qq]
+      rw [map_add (f := _), map_mul, rho_qq]
       rw [rho, aeval_X, aeval_X]
       simp only [rhoF]
       field_simp
@@ -126,7 +126,7 @@ theorem ppi_rename (y : MvPolynomial (Fin N × Fin r) (KK O)) : ppi D (rename (c
   next a =>
     simp [ppi]
   next p q hp hq =>
-    rw [map_add, map_add, hp, hq, C_add]
+    rw [map_add (f := _), map_add (f := _), hp, hq, C_add]
   next p x hp =>
     rw [map_mul, rename_X, map_mul, hp, ppi, aeval_X, C_mul]
     simp [piF, chainEmb]

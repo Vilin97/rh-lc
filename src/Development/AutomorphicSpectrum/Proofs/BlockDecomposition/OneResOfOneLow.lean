@@ -55,7 +55,7 @@ theorem ez (hrow : ∀ q p (u : D.X (p + 1) q), D.dh (p + 1) q u = 0 → ∃ t, 
     · subst h
       obtain ⟨x, hx, u, hu⟩ := hA p y hv hh
       obtain ⟨t, ht⟩ := eb hrow ih p u (by rw [hu, map_sub, hh, D.hh, sub_zero])
-      exact ⟨x + D.dv p q t, by rw [map_add, hx, D.vv, add_zero], by rw [map_add, ht, hu]; abel⟩
+      exact ⟨x + D.dv p q t, by rw [map_add (f := _), hx, D.vv, add_zero], by rw [map_add (f := _), ht, hu]; abel⟩
     · obtain ⟨u, rfl⟩ : ∃ u, D.dv (p + 1) q u = y := hcol _ _ h y hv
       obtain ⟨t, ht⟩ := eb hrow ih p u hh
       exact ⟨D.dv p q t, D.vv _ _ _, ht⟩

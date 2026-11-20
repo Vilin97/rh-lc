@@ -29,7 +29,7 @@ theorem delAt_add {F G : V n → Alt n} {v : V n}
       coefwise (fun f => del f v (coordVec a)) F + coefwise (fun f => del f v (coordVec a)) G := by
     simp only [coefwise, ← Finset.sum_add_distrib, ← add_smul]
     refine Finset.sum_congr rfl fun S _ => ?_
-    simp only [map_add, Finsupp.add_apply]
+    simp only [map_add (f := _), Finsupp.add_apply]
     rw [del_add (hF S) (hG S), ContinuousLinearMap.add_apply]
   simp only [delAt, key, mul_add, Finset.sum_add_distrib]
 
@@ -138,7 +138,7 @@ theorem delAt_pull_fderiv : ∀ {n : ℕ} {φ : ReciprocityTheory.L2DbarEstimate
     simp only [map_mul]
     rw [hy, ha, hb, zero_mul, mul_zero, add_zero]
   | add a b ha hb =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [delAt_add (hD a) (hD b), ha, hb, add_zero]
 
 end GlobalTheory.CxForm.DelVanish

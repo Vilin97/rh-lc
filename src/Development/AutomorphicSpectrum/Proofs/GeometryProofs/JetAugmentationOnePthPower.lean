@@ -19,7 +19,7 @@ theorem exists_const_add_dQ_mul (B : Type) [CommRing B] (m : ℕ) (x : Jet B Uni
   have hP : P = MvPolynomial.C (MvPolynomial.constantCoeff P) + Q * MvPolynomial.X () := by
     rw [hQ]; ring
   conv_lhs => rw [hP]
-  rw [map_add, map_mul, mul_comm]
+  rw [map_add (f := _), map_mul, mul_comm]
   rfl
 
 theorem jetAug_dQ (B : Type) [CommRing B] (m : ℕ) :
@@ -40,7 +40,7 @@ theorem pow_eq_one_add (B : Type) [CommRing B] (p : ℕ) [hp : Fact p.Prime] (h0
     rw [← map_natCast (algebraMap B (Jet B Unit p)) p, h0, map_zero]
   obtain ⟨b, y, rfl⟩ := exists_const_add_dQ_mul B p e
   have hb : b = 1 := by
-    simpa only [map_add, map_mul, jetAug_dQ, zero_mul, add_zero, AlgHom.commutes,
+    simpa only [map_add (f := _), map_mul, jetAug_dQ, zero_mul, add_zero, AlgHom.commutes,
       Algebra.algebraMap_self, RingHom.id_apply] using he
   subst hb
   obtain ⟨c, z, rfl⟩ := exists_const_add_dQ_mul B p y

@@ -67,7 +67,7 @@ theorem UpperTheory.V.Z.Kato.Nb.sTopCocG :
     have h5 := (hadd _ _ _ _ (hz σ hσ) (hgal σ _ _ (hz τ hτ))).1
     refine hE.trans h4 (hE.symm ?_)
     convert h5 using 1
-    rw [hmul, map_add, map_sub]
+    rw [hmul, map_add (f := _), map_sub]
     abel
   · obtain ⟨T, hT⟩ := hu.loc
     obtain ⟨⟨t, ht, hβt⟩, -⟩ := hβ

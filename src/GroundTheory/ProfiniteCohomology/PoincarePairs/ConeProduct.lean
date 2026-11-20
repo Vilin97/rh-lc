@@ -92,7 +92,7 @@ theorem snd_sub_eq_neg_d (hβ : ∀ {r s n : ℕ} (h : r + s = n) (y : LA.X r) (
         μL'.μ (show j + l = j + l from rfl) ((βA.f j).hom b) ((hN.hom (l + 1) l).hom z)) := by
   rw [hβ, homotopy_apply_succ_of_d_eq_zero hN l z hz, hh h a z, map_smul, μL'.leibniz,
     hom_apply_hom_apply_eq_of_comp_eq (βA.comm j (j + 1)) b, ← hab]
-  simp only [map_add, map_sub, LinearMap.sub_apply, smul_add, smul_smul, ← pow_add]
+  simp only [map_add (f := _), map_sub, LinearMap.sub_apply, smul_add, smul_smul, ← pow_add]
   have e : (-1 : k) ^ (j + 1 + j) = -1 := by
     rw [show j + 1 + j = 2 * j + 1 by ring, pow_succ, pow_mul]
     norm_num

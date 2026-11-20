@@ -178,7 +178,7 @@ def cb (χ : E.X) (r : Z ⟶ E.B.left) (z : Z) (j j' : E.ChartIdx) : (Z.presheaf
 
 theorem cb_add (χ χ' : E.X) (r : Z ⟶ E.B.left) (z : Z) (j j' : E.ChartIdx) :
     cb E (χ + χ') r z j j' = cb E χ r z j j' * cb E χ' r z j j' := by
-  simp only [cb, map_add, Finsupp.add_apply, zpow_add, Finset.prod_mul_distrib]
+  simp only [cb, map_add (f := _), Finsupp.add_apply, zpow_add, Finset.prod_mul_distrib]
 
 theorem cb_zero (r : Z ⟶ E.B.left) (z : Z) (j j' : E.ChartIdx) : cb E 0 r z j j' = 1 := by
   simp only [cb, map_zero, Finsupp.zero_apply, zpow_zero, Finset.prod_const_one]

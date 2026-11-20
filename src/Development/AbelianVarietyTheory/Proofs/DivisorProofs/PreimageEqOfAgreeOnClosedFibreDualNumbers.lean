@@ -30,7 +30,7 @@ theorem preimage_eq_of_agree_closedFibre : ∀ (k : Type) [Field k] (X B : Schem
     have hψ : ψ.comp (TrivSqZeroExt.fstHom k k k).toRingHom = φ.hom := by
       refine RingHom.ext fun z => ?_
       conv_rhs => rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq z]
-      rw [map_add, hinr, add_zero]
+      rw [map_add (f := _), hinr, add_zero]
       rfl
     have hx : x ≫ h = Spec.map (CommRingCat.ofHom ψ) ≫ spMap (TrivSqZeroExt.fstHom k k k).toRingHom := by
       rw [← hφ, spMap, ← Spec.map_comp, ← CommRingCat.ofHom_comp, hψ]

@@ -61,7 +61,7 @@ theorem exists_linear_antilinear (L : (I → ℂ) →ₗ[ℝ] (I → ℂ)) :
   have hL : L z = ∑ j, ((z j).re • L (Pi.single j 1) + (z j).im • L (Pi.single j Complex.I)) := by
     conv_lhs => rw [hz]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [map_sum, map_add, map_smul]
+      simp [map_sum, map_add (f := _), map_smul]
   rw [hL]
   ext i
   simp only [Finset.sum_apply, Pi.add_apply, Pi.smul_apply, mulVec, dotProduct, Matrix.of_apply,

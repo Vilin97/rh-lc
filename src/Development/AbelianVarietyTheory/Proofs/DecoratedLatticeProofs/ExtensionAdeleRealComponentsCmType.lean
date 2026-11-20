@@ -26,7 +26,7 @@ theorem eq_zero_of_map_eq_zero {F E A : Type} [Field F] [Field E] [Algebra F E] 
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [Algebra.smul_def, mul_comm]
-    | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   apply (Algebra.TensorProduct.basis A b).repr.injective
   ext k
   rw [map_zero, Finsupp.zero_apply]
@@ -40,7 +40,7 @@ theorem compInf_eq_map {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {D : D7}
 
@@ -64,7 +64,7 @@ theorem infPart_conj (z : AE D) : infPart D (cA D z) = sigR (Ainf D.host.F) D.sp
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem eq_zero_of_parts (z : AE D) (h1 : infPart D z = 0) (h2 : finPart D z = 0) : z = 0 := by
   obtain ⟨e, he, -⟩ := GlobalTheory.AdSplit.exists_adele_equiv D.host.F D.host.E

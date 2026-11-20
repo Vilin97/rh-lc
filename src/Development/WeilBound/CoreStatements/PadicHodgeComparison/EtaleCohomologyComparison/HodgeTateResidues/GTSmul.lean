@@ -110,7 +110,7 @@ theorem pre_of (hF : KFin) (hC : DlogClassExistsUnique) : Nonempty (HTPre l K) :
       · intro z' u
         simp only [smul_tmV, hP_tmV h1 h2 hM, map_mul, mul_assoc]
       · intro x y hx hy
-        simp only [smul_add, map_add, AddMonoidHom.add_apply, mul_add] at hx hy ⊢
+        simp only [smul_add, map_add (f := _), AddMonoidHom.add_apply, mul_add] at hx hy ⊢
         rw [hx, hy]
     · simp only [hP_not h1 h2 hM, mul_zero]
   lin' := fun M a n k v φ => by
@@ -121,7 +121,7 @@ theorem pre_of (hF : KFin) (hC : DlogClassExistsUnique) : Nonempty (HTPre l K) :
         simp only [hP_tmV h1 h2 hM, gT]
         rw [h2.lin' hM _ (h1.comp (xx_spec h1 hM u)), mul_left_comm]
       · intro x y hx hy
-        simp only [map_add, AddMonoidHom.add_apply, mul_add] at hx hy ⊢
+        simp only [map_add (f := _), AddMonoidHom.add_apply, mul_add] at hx hy ⊢
         rw [hx, hy]
     · simp only [hP_not h1 h2 hM, mul_zero]
   fin := fun M hM a n => by
@@ -136,7 +136,7 @@ theorem pre_of (hF : KFin) (hC : DlogClassExistsUnique) : Nonempty (HTPre l K) :
       simp only [act_tmV, hP_tmV h1 h2 hM]
       rw [map_mul, σC_qC, mul_left_comm, gT_act h1 h2 hM]
     · intro x y hx hy
-      simp only [map_add, AddMonoidHom.add_apply, mul_add] at hx hy ⊢
+      simp only [map_add (f := _), AddMonoidHom.add_apply, mul_add] at hx hy ⊢
       rw [hx, hy]
   nat := fun M N u hu hM hN a n v φ => by
     refine V_induction (p := fun v => hP h1 h2 M a n (Model.pullV u hu n v) φ =
@@ -147,7 +147,7 @@ theorem pre_of (hF : KFin) (hC : DlogClassExistsUnique) : Nonempty (HTPre l K) :
       rw [gT_eq h1 h2 hM a (h1.nat u hu (xx_spec h1 hN w)), h2.nat u hu hM hN _ (h1.comp (xx_spec h1 hN w))]
       rfl
     · intro x y hx hy
-      simp only [map_add, AddMonoidHom.add_apply] at hx hy ⊢
+      simp only [map_add (f := _), AddMonoidHom.add_apply] at hx hy ⊢
       rw [hx, hy]
   cup := fun M hM i j x y z hz m m' b b' c φ => by
     have hx := xx_spec h1 hM x

@@ -26,7 +26,7 @@ variable {n : ℕ}
 theorem isSec_comb (E : KMod n) (c : ℂ) {f f' : Mat n → E.V} (h : IsSec E f) (h' : IsSec E f') :
     IsSec E (fun y => c • f y + f' y) := by
   intro g hg k
-  simp only [h g hg k, h' g hg k, map_add, map_smul]
+  simp only [h g hg k, h' g hg k, map_add (f := _), map_smul]
 
 section
 

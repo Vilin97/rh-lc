@@ -111,7 +111,7 @@ theorem exists_basis (n n₁ : ℕ) (L : Submodule (𝓞 E) (Fin n → E)) (x y 
       induction hz using Submodule.span_induction with
       | mem z hz => obtain ⟨u, -, hu⟩ := hsurj _ (map_mem_splitLat τ hz); exact ⟨u, hu⟩
       | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
-      | add a a' _ _ ha ha' => simp only [Pi.add_apply, map_add]; exact add_mem ha ha'
+      | add a a' _ _ ha ha' => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem ha ha'
       | smul a z _ hz => simp only [Pi.smul_apply, smul_eq_mul, map_mul]; exact Submodule.smul_mem _ (τ a) hz
     intro w
     have : w = ∑ i, w i • fun k => τ ((Pi.single i 1 : Fin n → E) k) := by

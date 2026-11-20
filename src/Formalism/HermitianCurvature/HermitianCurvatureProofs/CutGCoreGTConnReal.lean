@@ -398,7 +398,7 @@ theorem gauge_reality_holds : GTCReal := by
       hGc hGs (fun ζ h => by simp only [Kf]; rw [h, mul_zero])
     have hpt : ∀ ζ, Lf ζ - Rf ζ = x * (-(Ja ζ + Jb ζ) + Kf ζ) := by
       intro ζ
-      simp only [Lf, Rf, Ja, Jb, Kf, gg, Complex.star_def, map_mul, map_sub, map_neg, map_add, Complex.conj_ofReal,
+      simp only [Lf, Rf, Ja, Jb, Kf, gg, Complex.star_def, map_mul, map_sub, map_neg, map_add (f := _), Complex.conj_ofReal,
         Complex.conj_conj, map_div₀, map_one, map_ofNat, hxr]
       ring
     have hibp := ibp_dZb (fun w => G w * gg w) (fun w => star (F w)) (hG1.mul (gg_sm.of_le (by exact_mod_cast le_top)))

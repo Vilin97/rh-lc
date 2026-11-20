@@ -25,7 +25,7 @@ theorem exists_ringHom_matrix_lift : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G
     { toFun := fun a => LinearMap.toMatrix' (M a)
       map_one' := by simp only [M1, LinearMap.toMatrix'_id]
       map_mul' := fun a b => by simp only [Mmul, LinearMap.toMatrix'_comp] }
-  refine ⟨RingHom.mk' f (fun a b => by simp only [f, MonoidHom.coe_mk, OneHom.coe_mk, Madd, map_add]), ?_⟩
+  refine ⟨RingHom.mk' f (fun a b => by simp only [f, MonoidHom.coe_mk, OneHom.coe_mk, Madd, map_add (f := _)]), ?_⟩
   intro a z
   show e (LinearMap.toMatrix' (M a) *ᵥ z) = _
   rw [LinearMap.toMatrix'_mulVec, hM]

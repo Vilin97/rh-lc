@@ -142,7 +142,7 @@ theorem vl_map_mem_intSpan (w : Pl.Pl) (lam lam' : ι → DomWeight n) (hn : ∀
       exact zero_mem _
     | add x y _ _ hx hy =>
       intro r hr
-      rw [smul_add, map_add]
+      rw [smul_add, map_add (f := _)]
       exact add_mem (hx r hr) (hy r hr)
     | smul a x _ hx =>
       intro r hr

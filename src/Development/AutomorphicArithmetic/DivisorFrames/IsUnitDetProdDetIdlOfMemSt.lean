@@ -57,9 +57,9 @@ theorem UpperTheory.isUnitDet_prod_detIdl_of_mem_St :
     rw [RingHom.map_det]; rfl
   have h2 : toEAf D ((∏ w ∈ Z, GlobalTheory.RowVacScalar.detIdl (GlobalTheory.RowVacScalar.idemAt w) S g : (AE D)ˣ) : AE D)
       = 1 - toEAf D e + toEAf D e * (βS⁻¹ * Lev.finE S g * βS : GL (Fin S.rank) (Lev.EAf D)).val.det := by
-    rw [hval, det_conj_eq, map_add, map_mul, map_sub, map_one, hdet, add_comm]
+    rw [hval, det_conj_eq, map_add (f := _), map_mul, map_sub, map_one, hdet, add_comm]
   refine ⟨?_, h2, ?_⟩
-  · rw [hval, map_add, map_mul, map_sub, map_one, hinf, zero_mul, zero_add, sub_zero]
+  · rw [hval, map_add (f := _), map_mul, map_sub, map_one, hinf, zero_mul, zero_add, sub_zero]
   · obtain ⟨z, hz⟩ := hg
     have hz' : (βS⁻¹ * Lev.finE S g * βS : GL (Fin S.rank) (Lev.EAf D)) = Formalism.L2.DIV.intGL _ _ _ z := by
       rw [← hz]

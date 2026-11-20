@@ -56,7 +56,7 @@ theorem idealLattice_poisson_summation (I : (FractionalIdeal (𝓞 K)⁰ K)ˣ)
     rw [← Equiv.tsum_eq eL]
     refine tsum_congr fun α => ?_
     change f ((mixedToEuclidean K).symm (mixedToEuclidean K α + mixedToEuclidean K a)) = _
-    rw [← map_add, ContinuousLinearEquiv.symm_apply_apply]
+    rw [← map_add (f := _), ContinuousLinearEquiv.symm_apply_apply]
   have hrhs : ∑' μ : dualLattice L, 𝓕 (F : euclidean.mixedSpace K → ℂ) μ *
       𝐞 ⟪(μ : euclidean.mixedSpace K), mixedToEuclidean K a⟫ =
       ∑' β : idealLattice K (traceDualIdeal K I),

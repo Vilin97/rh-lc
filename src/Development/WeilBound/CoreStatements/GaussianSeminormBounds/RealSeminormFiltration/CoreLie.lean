@@ -51,7 +51,7 @@ theorem lie_tw (p q r s : ℕ) (τ : ℂ) : IsLie (twAct p q r s τ) := by
     rw [Matrix.trace_sub, Matrix.trace_mul_comm, sub_self]
   simp only [LinearMap.sub_apply, Module.End.mul_apply, twAct_apply]
   rw [ht, mul_zero, zero_smul, add_zero, ← h]
-  simp only [map_add, map_smul, smul_add, smul_smul]
+  simp only [map_add (f := _), map_smul, smul_add, smul_smul]
   rw [mul_comm (τ * X.trace)]
   abel
 

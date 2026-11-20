@@ -101,7 +101,7 @@ theorem img_top_of {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host 
   obtain ⟨a, e, hae⟩ := hc.1 x
   obtain ⟨z, hz, m, hm, b, hb, rfl⟩ := h.exists_decomp a
   have h1 : y (z + m + b) ∈ img D y Z' 𝔭 := by
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact add_mem (add_mem (hZ ⟨z, hz, rfl⟩) (hL m hm)) (Submodule.mem_sup_left ⟨b, hb, rfl⟩)
   have h2 : n • e ∈ img D y Z' 𝔭 := by
     apply Submodule.mem_sup_right

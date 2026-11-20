@@ -59,7 +59,7 @@ lemma qc_map_span_mem {A B F : Type} [CommRing A] [CommRing B] [Field F] [Module
   induction hy using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul m x _ hx => rw [map_zsmul]; exact zsmul_mem hx m
 
 lemma qc_span_eq {A B F : Type} [CommRing A] [CommRing B] [Field F] [Module F B] (φ : A →+* B) (S T : Set A)

@@ -220,8 +220,8 @@ theorem bkc : StatBKc := by
   obtain ⟨z, hz⟩ := hlift β (by rw [← hb, ← map_smul, hkill, map_zero])
   obtain ⟨h, hh⟩ := hker (b - q z) (by rw [map_sub, hsq, hz, hb, sub_self])
   refine ⟨z + dl h, ?_, ?_⟩
-  · rw [map_add, hdl, add_zero, hz]; exact hβ
-  · rw [map_add, ← hh]; abel
+  · rw [map_add (f := _), hdl, add_zero, hz]; exact hβ
+  · rw [map_add (f := _), ← hh]; abel
 
 theorem lemmaA : StatLemmaA := by
   intro ℓ Bm _ Am T hsat hcl hT hstep x hx
@@ -241,7 +241,7 @@ theorem lemmaA : StatLemmaA := by
         apply ihk
         rw [smul_smul, ← pow_succ]; exact hy
     have h1 : (ℓ ^ n) • T b ∈ Am := by
-      have : (ℓ ^ n) • T b = T x - T a := by rw [hab, map_add, map_nsmul]; abel
+      have : (ℓ ^ n) • T b = T x - T a := by rw [hab, map_add (f := _), map_nsmul]; abel
       rw [this]; exact Am.sub_mem hx (hT a ha)
     obtain ⟨a', ha', b', hab'⟩ := hstep b ⟨T b, hsatn n _ h1, 0, by simp⟩
     refine ⟨a + (ℓ ^ n) • a', Am.add_mem ha (Am.nsmul_mem ha' _), b', ?_⟩
@@ -262,7 +262,7 @@ theorem inverse_operator_from_injectivity : InverseOperatorFromInjectivity := by
   refine ⟨{ toFun := S, map_add' := ?_, map_smul' := ?_ }, ?_, ?_⟩
   · intro a b
     apply huniq
-    rw [← hS, map_add, smul_add, hS a, hS b]; abel
+    rw [← hS, map_add (f := _), smul_add, hS a, hS b]; abel
   · intro c a
     apply huniq
     rw [← hS, RingHom.id_apply, map_smul, ← smul_sub, ← hS a, smul_comm]

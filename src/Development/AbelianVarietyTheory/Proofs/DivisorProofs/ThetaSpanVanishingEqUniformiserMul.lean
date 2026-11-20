@@ -123,7 +123,7 @@ theorem modPi : ∀ (T D : Type) [CommRing T] [IsDomain T] [IsDiscreteValuationR
       rw [Fin.sum_univ_succAbove _ k] at hrel
       have hrel' := congrArg θ hrel
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_mul, hθc] at hrel'
+        simp only [map_add (f := _), map_sum, map_mul, hθc] at hrel'
       have hν' : c (a ν) * c (a (cc k)) = 1 := by rw [← map_mul, ← map_mul, hν, map_one, map_one]
       set d' : Fin n → D := fun j => d (k.succAbove j) - d k * a ν * a (cc (k.succAbove j)) with hd'
       set u' : Fin n → H.left.functionField := fun j => u (k.succAbove j) with hu'

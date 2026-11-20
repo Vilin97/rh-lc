@@ -181,7 +181,7 @@ theorem exists_generator (hs : Squarefree d) (h4 : d % 4 = 3) (h2 : Module.finra
   obtain ⟨ω, hω, hgen⟩ := exists_integer_generator_of_sq_eq_neg h2 hs h4 hr
   have h1 : τ (ω : K) = (1 + Complex.I * √d) / 2 := by
     have := congrArg τ hω
-    rw [map_mul, map_add, map_one, map_ofNat, hτ] at this
+    rw [map_mul, map_add (f := _), map_one, map_ofNat, hτ] at this
     linear_combination this / 2
   have hd' : (0 : ℝ) < √d := Real.sqrt_pos.2 (by exact_mod_cast (by omega : 0 < d))
   have hc : ∀ m n : ℤ, τ (((m : 𝓞 K) + n * ω : 𝓞 K) : K) = m + n * ((1 + Complex.I * √d) / 2) := fun m n => by
@@ -191,7 +191,7 @@ theorem exists_generator (hs : Squarefree d) (h4 : d % 4 = 3) (h2 : Module.finra
   · obtain ⟨k, rfl⟩ : ∃ k, d = 4 * k + 3 := ⟨d / 4, by omega⟩
     rw [show (1 + (4 * k + 3)) / 4 = k + 1 by omega]
     refine RingOfIntegers.coe_injective ?_
-    simp only [map_add, map_pow, map_natCast]
+    simp only [map_add (f := _), map_pow, map_natCast]
     change (ω : K) ^ 2 + _ = (ω : K)
     push_cast at hr ⊢
     linear_combination (2 * (ω : K) - 1 + rt) / 4 * hω + hr / 4

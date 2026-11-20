@@ -30,7 +30,7 @@ theorem isCompl_strand_lowPart (V : Type) [AddCommGroup V] [Module ℂ V] [Finit
       · subst hk; rw [h2 k y hy.1]; exact hy.2
       · rw [h3 d k hk y hy.1, map_zero]
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add, map_add, hy, hz, add_zero]
+    | add y z _ _ hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, add_zero]
   have fB : ∀ x ∈ strand N (U (-(m : ℤ))) m, ∀ d, ∃ u ∈ U (-(m : ℤ)),
       p d x = (N ^ ((d + m) / 2).toNat) u ∧ (d = -m + 2 * (((d + m) / 2).toNat : ℤ) ∨ u = 0) := by
     intro x hx d
@@ -50,7 +50,7 @@ theorem isCompl_strand_lowPart (V : Type) [AddCommGroup V] [Module ℂ V] [Finit
     | add y z _ _ hy hz =>
       obtain ⟨u1, hu1, e1, o1⟩ := hy
       obtain ⟨u2, hu2, e2, o2⟩ := hz
-      refine ⟨u1 + u2, add_mem hu1 hu2, by rw [map_add, e1, e2, map_add], ?_⟩
+      refine ⟨u1 + u2, add_mem hu1 hu2, by rw [map_add (f := _), e1, e2, map_add (f := _)], ?_⟩
       rcases o1 with o1 | o1
       · exact Or.inl o1
       · rcases o2 with o2 | o2

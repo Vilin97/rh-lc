@@ -40,7 +40,7 @@ theorem down_add_up (t : WO S T) (x : Matrix Y Y' k) : p.down FS FT (t + p.up FS
   unfold Place.up Place.down
   have : (t + (FT.β * x * FS.γ).map p.ι : Matrix (Fin T.rank) (Fin S.rank) (AE D)).map p.π =
       t.map p.π + FT.β * x * FS.γ := Matrix.ext fun i j => by
-    simp only [Matrix.map_apply, Matrix.add_apply, map_add, p.π_ι]
+    simp only [Matrix.map_apply, Matrix.add_apply, map_add (f := _), p.π_ι]
   rw [this, Matrix.mul_add, Matrix.add_mul]
   congr 1
   simp only [← Matrix.mul_assoc, FT.γβ, Matrix.one_mul]

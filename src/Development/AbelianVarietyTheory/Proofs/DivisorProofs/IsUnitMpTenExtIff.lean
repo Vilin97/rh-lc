@@ -19,7 +19,7 @@ theorem rTensor_smul {B B' : Type} [CommRing B] [Algebra R B] [CommRing B'] [Alg
   induction m using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [TensorProduct.smul_tmul']
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 variable {C : Type} [Category.{0} C] (F : C ⥤ CommAlgCat.{0} R)
 
@@ -118,7 +118,7 @@ theorem hasLoc_tenExt (H : Desc.HasLoc F) : Desc.HasLoc (tenExt N F) := by
     induction m using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hs : ∀ (a : F.obj T) (η : F.obj T' ⊗[R] N), a • η = mp F l a • η := fun a η ↦
     (algebraMap_smul (F.obj T') a η).symm
   refine ⟨T', l, (isUnit_mp_tenExt_iff N F l c).2 h1, fun y ↦ ?_, fun x hx ↦ ?_,

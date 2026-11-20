@@ -36,9 +36,9 @@ theorem transgression_holds : TransgressionStatement.{u} := by
   have hadd : ∀ x x' : I, T (x + x') = T x + T x' := fun x x' => by
     have hy : (M.resSub N).coch.d 1
         ((Pair.res M N.subtype continuous_subtype_val).hom.f 1 (yf x + yf x')) = 0 := by
-      rw [map_add]; exact d_add_eq_zero (hyf x) (hyf x')
+      rw [map_add (f := _)]; exact d_add_eq_zero (hyf x) (hyf x')
     refine (key (yf x + yf x') (zf x + zf x') (d_add_eq_zero (hzf x) (hzf x')) hy (x + x')
-      (by rw [map_add, map_add, hdf, hdf]) ?_).trans rfl
+      (by rw [map_add (f := _), map_add (f := _), hdf, hdf]) ?_).trans rfl
     rw [Submodule.coe_add, hxf x, hxf x', cls_add]
     exact cls_congr _ _ (map_add _ _ _).symm
   have hsmul : ∀ (r : R) (x : I), T (r • x) = r • T x := fun r x => by

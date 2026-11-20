@@ -24,7 +24,7 @@ noncomputable def contrML (w₀ : ι) (μ : ι → Module.Dual ℂ V) : Multilin
         rw [← Finset.mul_prod_erase _ _ hi, Function.update_self]
         congr 1
         exact Finset.prod_congr rfl fun k hk => by rw [Function.update_of_ne (Finset.ne_of_mem_erase hk)]
-      simp only [e, Function.update_of_ne (Ne.symm h), map_add, add_mul, add_smul]
+      simp only [e, Function.update_of_ne (Ne.symm h), map_add (f := _), add_mul, add_smul]
   map_update_smul' := by
     intro inst x i c a
     obtain rfl : inst = hd := Subsingleton.elim _ _
@@ -60,7 +60,7 @@ theorem dual_contr (w₀ : ι) (μ : ι → Module.Dual ℂ V) (ν : Module.Dual
     rw [mul_comm]
     congr 1
     exact Finset.prod_congr rfl fun k hk => by rw [Function.update_of_ne (Finset.ne_of_mem_erase hk)]
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _)]
 
 theorem contr_atPl (w₀ : ι) (μ : ι → Module.Dual ℂ V) (L : Module.End ℂ V) (T : ⨂[ℂ] _ : ι, V) :
     contr w₀ μ (GlobalTheory.RealLift.atPl (V := fun _ : ι => V) w₀ L T) = L (contr w₀ μ T) := by
@@ -71,7 +71,7 @@ theorem contr_atPl (w₀ : ι) (μ : ι → Module.Dual ℂ V) (L : Module.End �
     congr 2
     exact Finset.prod_congr rfl fun k hk => by
       simp [Function.update_of_ne (Finset.ne_of_mem_erase hk)]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem atPl_noCommonKernel : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (V : Type) [AddCommGroup V] [Module ℂ V] (J : Type)
     (L : J → Module.End ℂ V) (w₀ : ι), (∀ v : V, (∀ j, L j v = 0) → v = 0) →

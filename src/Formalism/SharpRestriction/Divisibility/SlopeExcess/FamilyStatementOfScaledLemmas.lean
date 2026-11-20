@@ -303,7 +303,7 @@ theorem span_cut {G : Type} [Group G] [Fintype G] (A : HLat K) (ρ : Representat
           rw [smul_smul, inv_mul_cancel₀ hm, one_smul]
         rw [this]; exact Submodule.smul_mem _ _ (Submodule.subset_span hmem)
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem muDual_eq (A : HLat K) (hX : ∀ v, IsUnit (A.X v).det) (hF : A.L.FG)

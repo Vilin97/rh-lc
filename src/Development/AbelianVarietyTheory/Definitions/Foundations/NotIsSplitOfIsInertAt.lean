@@ -325,7 +325,7 @@ theorem finAdEquiv_apply {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]; rfl
   | tmul a x => rfl
-  | add a b ha hb => simp only [map_add, ← ha, ← hb]; rfl
+  | add a b ha hb => simp only [map_add (f := _), ← ha, ← hb]; rfl
 
 variable (F E) in
 

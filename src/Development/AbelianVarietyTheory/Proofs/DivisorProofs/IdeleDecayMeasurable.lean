@@ -30,7 +30,7 @@ theorem continuous_evI : Continuous (evI F) := by
 def intAdeles : AddSubgroup (AF F) where
   carrier := {a | ∀ v, evFin F v a ∈ v.adicCompletionIntegers F}
   zero_mem' := fun v => by rw [map_zero]; exact zero_mem _
-  add_mem' := fun ha hb v => by rw [map_add]; exact add_mem (ha v) (hb v)
+  add_mem' := fun ha hb v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
   neg_mem' := fun ha v => by rw [map_neg]; exact neg_mem (ha v)
 
 theorem isOpen_intAdeles : IsOpen (intAdeles F : Set (AF F)) :=

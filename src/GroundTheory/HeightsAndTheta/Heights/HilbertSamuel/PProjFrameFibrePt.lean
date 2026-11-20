@@ -186,7 +186,7 @@ theorem exists_clear_poly (Q : Polynomial G.Φ) : ∃ b : MRing (GlobalTheory (F
     obtain ⟨b₁, hb₁, F₁, e₁⟩ := hp
     obtain ⟨b₂, hb₂, F₂, e₂⟩ := hq
     refine ⟨b₁ * b₂, by rw [map_mul]; exact mul_ne_zero hb₁ hb₂, Polynomial.C b₂ * F₁ + Polynomial.C b₁ * F₂, ?_⟩
-    rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, Polynomial.map_C, Polynomial.map_C, ← e₁, ← e₂]
+    rw [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, Polynomial.map_C, Polynomial.map_C, ← e₁, ← e₂]
     simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_mul]
     ring
   | monomial n c =>

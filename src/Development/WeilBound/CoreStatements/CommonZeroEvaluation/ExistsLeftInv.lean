@@ -360,7 +360,7 @@ theorem Tend.cong {a : (S →+* K) → K} {b : V} (h : Tend V ψ a (algebraMap V
     rw [hw]
     exact le_of_lt h1
   obtain ⟨y, hy⟩ := hint
-  refine ⟨b + y, by rw [map_add, hy, add_sub_cancel], ?_⟩
+  refine ⟨b + y, by rw [map_add (f := _), hy, add_sub_cancel], ?_⟩
   rw [add_sub_cancel_left]
   have h3 : valV V (algebraMap V K y) < 1 := by
     rw [hy]

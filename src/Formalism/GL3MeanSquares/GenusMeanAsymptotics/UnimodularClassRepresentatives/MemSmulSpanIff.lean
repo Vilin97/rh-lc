@@ -165,7 +165,7 @@ theorem mem_smul_span_iff {κ : Type} [Fintype κ] (a : Basis κ K V) {𝔭 : Id
       rw [← algebraMap_smul K, map_smul, Finsupp.smul_apply, smul_eq_mul]
       simpa using h2
     | add x _ y _ hx hy =>
-      rw [map_add, Finsupp.add_apply]
+      rw [map_add (f := _), Finsupp.add_apply]
       exact (pK K 𝔭 k).add_mem hx hy
   · intro hx
     rw [← a.sum_repr x]

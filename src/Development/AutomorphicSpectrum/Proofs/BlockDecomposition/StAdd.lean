@@ -20,7 +20,7 @@ theorem stAdd : CrystallineSemistableComparison.E.StAdd := by
     obtain ⟨a', rfl, ha'⟩ := hx'
     obtain ⟨h1, h2⟩ := ih (k + 1) _ _ ha ha'
     refine ⟨⟨a + a', by simp, ?_⟩, ⟨a - a', by simp, ?_⟩⟩
-    · simpa [map_add, smul_add] using h1
+    · simpa [map_add (f := _), smul_add] using h1
     · simpa [map_sub, smul_sub] using h2
 
 end GlobalTheory.CompanionTheory.StairAdd

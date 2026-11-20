@@ -125,7 +125,7 @@ def derMap {κ : Type} [Fintype κ] (φ : SInf F κ) :
     ((Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (∑ i, x i * p.2 i) : ℝ) : ℂ) * φ x
   map_add' p q := by
     funext x
-    simp only [Prod.fst_add, Prod.snd_add, map_add, Pi.add_apply, mul_add, Finset.sum_add_distrib, Complex.ofReal_add]
+    simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), Pi.add_apply, mul_add, Finset.sum_add_distrib, Complex.ofReal_add]
     ring
   map_smul' c p := by
     funext x

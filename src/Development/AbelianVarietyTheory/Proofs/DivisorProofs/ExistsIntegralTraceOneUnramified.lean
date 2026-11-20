@@ -16,7 +16,7 @@ theorem exists_integral_add_cc_eq_one : ∀ (E : Type) [Field E] [NumberField E]
     { carrier := {a | ∃ t : 𝓞 E, algebraMap _ (𝓞 E) a = t + σ t}
       add_mem' := by
         rintro a b ⟨s, hs⟩ ⟨t, ht⟩
-        exact ⟨s + t, by rw [map_add, hs, ht, map_add]; ring⟩
+        exact ⟨s + t, by rw [map_add (f := _), hs, ht, map_add (f := _)]; ring⟩
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := by
         rintro c a ⟨t, ht⟩
@@ -35,7 +35,7 @@ theorem exists_integral_add_cc_eq_one : ∀ (E : Type) [Field E] [NumberField E]
         rw [← IsCMField.coe_ringOfIntegersComplexConj]
         rfl
       have hfix := (IsCMField.complexConj_eq_self_iff E ((t : E) + IsCMField.complexConj E t)).1 (by
-        rw [map_add, IsCMField.complexConj_apply_apply, add_comm])
+        rw [map_add (f := _), IsCMField.complexConj_apply_apply, add_comm])
       have hi : IsIntegral ℤ (⟨_, hfix⟩ : maximalRealSubfield E) := by
         have h0 : IsIntegral ℤ ((t + σ t : 𝓞 E) : E) := (t + σ t).isIntegral_coe
         rw [hco] at h0

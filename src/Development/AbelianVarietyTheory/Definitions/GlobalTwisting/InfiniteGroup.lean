@@ -82,7 +82,7 @@ def stdPair (Lc : LocF q F) (a : Fin n) : LocF.PP Lc n :=
    { lat := ⟨1, fun x => by simp⟩
      add := fun x hx y hy => by
        dsimp only at hx hy ⊢
-       rw [dif_pos hx, dif_pos hy, dif_pos ((Lc.std n).add_mem hx hy), ← map_add]; rfl
+       rw [dif_pos hx, dif_pos hy, dif_pos ((Lc.std n).add_mem hx hy), ← map_add (f := _)]; rfl
      smul := fun c x hx => by
        dsimp only at hx ⊢
        rw [dif_pos hx, dif_pos ((Lc.std n).smul_mem c hx), ← map_mul]; rfl
@@ -113,7 +113,7 @@ def actPP (g : GL (Fin n) Lc.K) (p : LocF.PP Lc n) : LocF.PP Lc n :=
        rw [inv_mv]
      add := fun x hx y hy => by
        show p.1.f (mvO g⁻¹ (x + y)) = _
-       rw [map_add]; exact p.2.add _ hx _ hy
+       rw [map_add (f := _)]; exact p.2.add _ hx _ hy
      smul := fun c x hx => by
        show p.1.f (mvO g⁻¹ (c • x)) = _
        rw [map_smul]; exact p.2.smul c _ hx

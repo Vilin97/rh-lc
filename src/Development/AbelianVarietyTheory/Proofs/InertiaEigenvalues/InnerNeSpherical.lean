@@ -39,7 +39,7 @@ theorem scalar_of_eigen {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ
     · intro x hx
       obtain ⟨lx, hlx⟩ := heig x hx
       obtain ⟨m, hm⟩ := heig (x + x0) (P.add_mem hx hx0)
-      rw [map_add, hlx, hl, smul_add] at hm
+      rw [map_add (f := _), hlx, hl, smul_add] at hm
       by_cases hmx : m = lx
       · subst hmx
         have : (l - m) • x0 = 0 := by

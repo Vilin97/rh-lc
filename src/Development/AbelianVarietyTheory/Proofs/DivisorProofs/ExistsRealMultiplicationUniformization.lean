@@ -154,7 +154,7 @@ theorem exists_holUnif_of_compact (A : Over (Sp ℂ)) [GrpObj A] [IsCommMonObj A
       hmulHol _ _ _ _ (HolOn.const hWz _) (HolOn.comp (HolOn.comp hσ hW' hL hLm) hWz
         (differentiableOn_id.sub_const z) fun v hv => hv), ?_⟩
     filter_upwards [(hs.tendsto' z 0 (sub_self z)).eventually hLe] with v hv
-    rw [← hv, ← toMul_add, ← map_add, add_sub_cancel]
+    rw [← hv, ← toMul_add, ← map_add (f := _), add_sub_cancel]
   · obtain ⟨e, he⟩ := (hval _ _).2.1 _ hz
     rw [he]
     show (1 : ℂ) = e (((1 : Γ(A.left, ⊤ ⊓ ⊤)ˣ)) : Γ(A.left, ⊤ ⊓ ⊤)) * 1

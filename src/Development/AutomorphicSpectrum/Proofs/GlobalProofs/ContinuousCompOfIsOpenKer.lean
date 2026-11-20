@@ -348,7 +348,7 @@ theorem tri_add (f₁ : Module.End R M₁) (f₂ : Module.End R M₂) (fP : Modu
         b (geo f₁ m₁ c) ((f₂ ^ c) m₂) := by
       simp [tri, Finset.sum_range_succ]
     rw [e1, ih, e2, geo_add, geo_succ, pow_add, Module.End.mul_apply]
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [b_pow f₁ f₂ fP b hb]
     abel
 

@@ -113,7 +113,7 @@ def gsSumInvReal [Fintype S] : ptTLocal (gsFinFamily S ιs) (gsRealFamily S ιr)
       (Finset.sum_eq_zero fun w _ => map_zero _)).trans (add_zero 0)
   map_add' ξ η := by
     change ∑ v, gsLocalInvRootsQZ S ιs N v (ξ.1 v + η.1 v) + ∑ w, gsRealInvRootsQZ S ιr N w (ξ.2 w + η.2 w) = _
-    simp only [map_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Finset.sum_add_distrib]
     abel
 
 omit [NeZero N] in

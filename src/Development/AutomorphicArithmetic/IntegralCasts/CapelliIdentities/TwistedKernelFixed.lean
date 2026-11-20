@@ -16,7 +16,7 @@ theorem UpperTheory.Reformulated.B.TwistedKernelFixed.aux2 :
         b ∈ {v : V | ∀ (h : ↥H), ((ρ : G → V →ₗ[k] V) (↑h : G) : V → V) v = (↑((χ : ↥H → kˣ) h) : k) • v} →
           ∀ (h : ↥H), ((ρ : G → V →ₗ[k] V) (↑h : G) : V → V) (a + b) = (↑((χ : ↥H → kˣ) h) : k) • (a + b) := by
   intro k G V _ _ _ _ ρ H χ a b ha hb h
-  rw [map_add, ha h, hb h, smul_add]
+  rw [map_add (f := _), ha h, hb h, smul_add]
 
 theorem UpperTheory.Reformulated.B.TwistedKernelFixed.aux3 :
     ∀ {k G V : Type} [inst : Field k] [inst_1 : Group G] [inst_2 : AddCommGroup V] [inst_3 : _root_.Module k V]
@@ -120,7 +120,7 @@ theorem UpperTheory.Reformulated.B.TwistedKernelFixed.eq_zero_of_fixed :
       obtain ⟨K₁, h₁, hx⟩ := hx
       obtain ⟨K₂, h₂, hy⟩ := hy
       refine ⟨K₁ ⊓ K₂, inferInstance, fun L _ _ hL => ?_⟩
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       rw [hx L (hL.trans inf_le_left), hy L (hL.trans inf_le_right), add_zero]
     | smul c x _ hx =>
       obtain ⟨K, h, hx⟩ := hx

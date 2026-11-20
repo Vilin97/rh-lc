@@ -69,7 +69,7 @@ theorem indep_cons [IsLocalRing O] {lam : O} (hl : Ideal.span {lam} = IsLocalRin
   refine Fin.cases ?_ (fun a => ?_)
   · have h1 := congrArg ((C.projectionOnto F h.symm).rTensor _) hx
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_smul, map_sum, hC, LinearMap.rTensor_tmul, map_zero] at h1
+      simp only [map_add (f := _), map_smul, map_sum, hC, LinearMap.rTensor_tmul, map_zero] at h1
     simp only [Submodule.projectionOnto_apply_right, zero_tmul, smul_zero, Finset.sum_const_zero, add_zero] at h1
     rw [← Ideal.mem_span_singleton, hl]
     by_contra hu
@@ -77,7 +77,7 @@ theorem indep_cons [IsLocalRing O] {lam : O} (hl : Ideal.span {lam} = IsLocalRin
     exact hc (hu'.smul_eq_zero.mp h1)
   · have h1 := congrArg (fun y => TensorProduct.lid O _ ((b.coord a).rTensor _ ((F.projectionOnto C h).rTensor _ y))) hx
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_smul, map_sum, hF, LinearMap.rTensor_tmul, map_zero] at h1
+      simp only [map_add (f := _), map_smul, map_sum, hF, LinearMap.rTensor_tmul, map_zero] at h1
     simp only [Submodule.projectionOnto_apply_left, lid_tmul, smul_zero, zero_add, Module.Basis.coord_apply,
       Module.Basis.repr_self, Finsupp.single_apply, ite_smul, one_smul, zero_smul, smul_ite, Finset.sum_ite_eq',
       Finset.mem_univ, if_true] at h1
@@ -149,7 +149,7 @@ def coefAmb {M : Type} [AddCommGroup M] [Module O M] (W : Representation O G M) 
     induction b using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => simp [coefRep_tmul]
-    | add a b ha hb => simp only [map_add, ha, hb])
+    | add a b ha hb => simp only [map_add (f := _), ha, hb])
 
 theorem toAmb_coefH1_eq_coefAmb_toAmb {M : Type} [AddCommGroup M] [Module O M] (W : Representation O G M) {X X' : Type}
     [AddCommGroup X] [Module O X] [AddCommGroup X'] [Module O X'] (f : X →ₗ[O] X') (c : H1 (twCoef W χ X) ⊤) :
@@ -162,7 +162,7 @@ theorem tensAmb_lTensor {X X' : Type} [AddCommGroup X] [Module O X] [AddCommGrou
     tensAmb L χ X' (f.lTensor _ y) = coefAmb χ (latRep L) f (tensAmb L χ X y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul c x =>
     obtain ⟨z, rfl⟩ := Submodule.Quotient.mk_surjective _ c
     rfl

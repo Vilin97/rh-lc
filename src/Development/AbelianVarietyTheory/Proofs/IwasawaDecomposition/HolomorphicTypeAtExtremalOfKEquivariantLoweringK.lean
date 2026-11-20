@@ -152,7 +152,7 @@ theorem holAd_of_kEquiv : ∀ (D : D7) (θ : InfFam D) (V : HSp D) (S : D.what�
         (by rw [hcj, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_sub, Matrix.sub_mul]) (hD _ p2).2
       have hk' := congrArg ℓ hk
       unfold dRepC at hk'
-      rw [map_add, map_smul, smul_eq_mul] at hk'
+      rw [map_add (f := _), map_smul, smul_eq_mul] at hk'
       unfold derC
       rw [hder _ p1, hder _ p2, r1, r2, hk']
       split_ifs

@@ -16,7 +16,7 @@ theorem exists_sub_mem_map_pow_succ {R A : Type} [CommRing R] [CommRing A] (f : 
     obtain ⟨x, hx, hx'⟩ := hy
     obtain ⟨x', hx2, hx2'⟩ := hz
     refine ⟨x + x', add_mem hx hx2, ?_⟩
-    have : y + z - f (x + x') = (y - f x) + (z - f x') := by rw [map_add]; ring
+    have : y + z - f (x + x') = (y - f x) + (z - f x') := by rw [map_add (f := _)]; ring
     rw [this]; exact add_mem hx' hx2'
   | smul c y _ hy =>
     obtain ⟨x, hx, hx'⟩ := hy

@@ -83,7 +83,7 @@ theorem aeval_mem_weight_zero_sections {f : Rul Xo c} (hf : f ∈ Formalism.L2.P
     Polynomial.aeval f P ∈ Formalism.L2.Pj.sec Xo c 0 0 := by
   induction P using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hp hq
   | monomial n a =>
     rw [Polynomial.aeval_monomial, ← Algebra.smul_def]

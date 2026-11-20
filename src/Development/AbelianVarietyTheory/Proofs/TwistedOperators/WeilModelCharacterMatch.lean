@@ -202,7 +202,7 @@ theorem exists_of_mem_KInf {X : HSp D} (B : Fr X) {Ws : GlobalTheory.IndefiniteR
       fun u hu => congrFun (congrFun (hk.1 u hu) i) j
     have h2 := GlobalTheory.ConjInfExp.finPart_eq_one (Eqv.matA D X h i j - (1 : Matrix _ _ (AE D)) i j + 1)
       (by rwa [add_sub_cancel_right])
-    rw [RingHom.map_add, RingHom.map_one, add_eq_right, RingHom.map_sub, sub_eq_zero] at h2
+    rw [RingHom.map_add (f := _), RingHom.map_one, add_eq_right, RingHom.map_sub, sub_eq_zero] at h2
     rw [Matrix.map_apply, h2]
     by_cases e : i = j
     · subst e; simp

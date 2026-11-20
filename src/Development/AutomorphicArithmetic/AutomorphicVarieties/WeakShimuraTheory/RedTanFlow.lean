@@ -77,7 +77,7 @@ theorem tan_lowest : ∀ {O Γ : Type} [CommRing O] [Group Γ] [TopologicalSpace
   refine ⟨a1.comp (cmp m p), fun g => csp (a2 g), fun g h => ?_, fun g h => ?_, fun i j h => cz (a5 h),
     fun g i j h1 h2 => ?_, fun v => ⟨csp (a7 v).1, fun i j h => ?_⟩, fun v s hs i j h => ?_⟩
   · simp only [Fr.cmpT_fst]
-    rw [a3, map_add, (c3 (hr g).1 (hr g⁻¹).1 (hX h)).2, ← (hr g).2, ← (hr g⁻¹).2]
+    rw [a3, map_add (f := _), (c3 (hr g).1 (hr g⁻¹).1 (hX h)).2, ← (hr g).2, ← (hr g⁻¹).2]
   · rw [Fr.cmpT_fst, a4 g h, map_zero]
   · have := cmp_mul (hX g) (hr g).1
     rw [add_zero, ← (hr g).2] at this
@@ -87,7 +87,7 @@ theorem tan_lowest : ∀ {O Γ : Type} [CommRing O] [Group Γ] [TopologicalSpace
     exact cz ((a7 v).2 i j h)
   · have h3 := c3 (hr s).1 (hr s⁻¹).1 (hY v)
     rw [← (hr s).2, ← (hr s⁻¹).2] at h3
-    rw [Fr.cmpT_snd, Fr.cmpT_fst, ← h3.2, ← map_add, ← map_sub, cn v (((hX s).add h3.1).sub (hY v))]
+    rw [Fr.cmpT_snd, Fr.cmpT_fst, ← h3.2, ← map_add (f := _), ← map_sub, cn v (((hX s).add h3.1).sub (hY v))]
     exact cz (a8 v s hs i j h)
 
 theorem tan_flow {O Γ : Type} [CommRing O] [Group Γ] [TopologicalSpace Γ] (Φ : Fr O Γ) {k : Type} [Field k]

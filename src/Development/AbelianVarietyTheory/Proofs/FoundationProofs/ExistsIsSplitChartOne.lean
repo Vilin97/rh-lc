@@ -54,7 +54,7 @@ theorem toCompl_eq (h1 : ∀ a, ψ a = complMap h a) (h2 : ∀ x : E, ψ (τ x) 
     (y : Fv F v ⊗[F] E) : toCompl h y = ψ (splitProj τ y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rw [toCompl_tmul, splitProj_tmul, map_mul, h1, h2]
 
 omit [Algebra F E] in

@@ -53,12 +53,12 @@ theorem _root_.GlobalTheory.Mem.GelfCheck.glRel_rowE (R : Type) [CommRing R] (r 
       map_zero, sub_zero]
     split_ifs <;> simp [_root_.GlobalTheory.Mem.GelfCheck.rowE_C]
   | add p q hp hq =>
-    simp only [LinearMap.sub_apply, Module.End.mul_apply, map_add] at hp hq ⊢
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, map_add (f := _)] at hp hq ⊢
     rw [hp, hq]
   | mul_X p v hp =>
     obtain ⟨e, t⟩ := v
     simp only [LinearMap.sub_apply, Module.End.mul_apply] at hp ⊢
-    simp only [hE, _root_.GlobalTheory.Mem.GelfCheck.rowE_mul, map_add, _root_.GlobalTheory.Mem.GelfCheck.rowE_X,
+    simp only [hE, _root_.GlobalTheory.Mem.GelfCheck.rowE_mul, map_add (f := _), _root_.GlobalTheory.Mem.GelfCheck.rowE_X,
       apply_ite, map_zero] at hp ⊢
     split_ifs at hp ⊢ <;> subst_vars <;>
       simp_all [_root_.GlobalTheory.Mem.GelfCheck.rowE_mul, _root_.GlobalTheory.Mem.GelfCheck.rowE_X] <;>
@@ -73,7 +73,7 @@ private theorem gradedWeyl_gen_coeff_one_and_coeff_zero (R : Type) [CommRing R] 
   | C x =>
     simp [_root_.Formalism.GradedWeylDivisibility.rowGen, Polynomial.coeff_C]
   | add p q hp hq =>
-    simp only [map_add, Polynomial.coeff_add, hp.1, hp.2, hq.1, hq.2, Finset.sum_add_distrib,
+    simp only [map_add (f := _), Polynomial.coeff_add, hp.1, hp.2, hq.1, hq.2, Finset.sum_add_distrib,
       mul_add, and_self]
   | mul_X p v hp =>
     obtain ⟨hp1, hp0⟩ := hp

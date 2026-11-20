@@ -32,7 +32,7 @@ private theorem ex_rel (r : ℕ) (u : UC E s) : ∃ u' : UC E (r + s), (uC E s u
   | add x y _ _ hx hy =>
     obtain ⟨x', hx⟩ := hx
     obtain ⟨y', hy⟩ := hy
-    exact ⟨x' + y', by rw [map_add, map_add]; exact (CapRes.relAlg (eS r s)).add_mem hx hy⟩
+    exact ⟨x' + y', by rw [map_add (f := _), map_add (f := _)]; exact (CapRes.relAlg (eS r s)).add_mem hx hy⟩
   | mul x y _ _ hx hy =>
     obtain ⟨x', hx⟩ := hx
     obtain ⟨y', hy⟩ := hy

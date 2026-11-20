@@ -60,7 +60,7 @@ theorem ext1_comm {C C' : Type} [AddCommGroup C] [Module Qp C] [AddCommGroup C']
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [ext1, hf]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem ext1_comp_ext1 {C : Type} [AddCommGroup C] [Module Qp C]
     (f : V →ₗ[LL] V') (f' : V' →ₗ[LL] V'') (x : V ⊗[Qp] C) :
@@ -68,7 +68,7 @@ theorem ext1_comp_ext1 {C : Type} [AddCommGroup C] [Module Qp C]
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [ext1]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem ext1_id {C : Type} [AddCommGroup C] [Module Qp C] (x : V ⊗[Qp] C) :
     ext1 Qp C (LinearMap.id : V →ₗ[LL] V) x = x := by
@@ -79,7 +79,7 @@ theorem ext1_zero {C : Type} [AddCommGroup C] [Module Qp C] (x : V ⊗[Qp] C) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [ext1]
-  | add a b ha hb => simp only [map_add, ha, hb, add_zero]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb, add_zero]
 
 theorem ext1_add {C : Type} [AddCommGroup C] [Module Qp C] (f f' : V →ₗ[LL] V') (x : V ⊗[Qp] C) :
     ext1 Qp C f x + ext1 Qp C f' x = ext1 Qp C (f + f') x := by

@@ -60,7 +60,7 @@ theorem exists_series_limit_Lat (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : 
     | zero => simp
     | succ n ih =>
       have := add_mem ih (ha n)
-      rw [Finset.sum_range_succ (fun i => ((l : ℕ) : Ainf l) ^ i * a i), map_add]
+      rw [Finset.sum_range_succ (fun i => ((l : ℕ) : Ainf l) ^ i * a i), map_add (f := _)]
       convert this using 1
       ring
   obtain ⟨x, hx⟩ := exists_Ainf_series_limit l a

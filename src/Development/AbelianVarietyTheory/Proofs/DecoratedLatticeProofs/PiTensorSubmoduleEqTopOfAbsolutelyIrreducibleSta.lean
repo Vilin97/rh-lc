@@ -56,7 +56,7 @@ theorem exists_finset_position (i : ι) (t : ⨂[ℂ] j, K j) :
     obtain ⟨s, hs⟩ := hx
     obtain ⟨s', hs'⟩ := hy
     refine ⟨s ∪ s', fun f g h => ?_⟩
-    rw [map_add, map_add, hs f g fun m hm => h m (Finset.mem_union_left _ hm),
+    rw [map_add (f := _), map_add (f := _), hs f g fun m hm => h m (Finset.mem_union_left _ hm),
       hs' f g fun m hm => h m (Finset.mem_union_right _ hm)]
 
 theorem eq_zero_of_subsingleton (i : ι) [Subsingleton (K i)] (t : ⨂[ℂ] j, K j) : t = 0 := by

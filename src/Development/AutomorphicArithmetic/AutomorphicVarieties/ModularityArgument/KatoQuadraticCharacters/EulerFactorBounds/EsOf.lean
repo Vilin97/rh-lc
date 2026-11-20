@@ -32,7 +32,7 @@ private theorem es_of (h1 : SEsLev) (h2 : SEsFrob) (h3 : SEsT)
   obtain ⟨hF, hχ⟩ := h2 Ω l v B σ hq hql hB hσ
   induction hb using Submodule.span_induction with
   | zero => simp
-  | add x y _ _ hx hy => simp only [map_add, hx, hy, smul_add]; abel
+  | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy, smul_add]; abel
   | smul a x _ hx => simp only [map_smul, hx, smul_add, smul_comm a]
   | mem b hb =>
   funext u

@@ -28,7 +28,7 @@ theorem class_limit_norm_le : ∀ (p : ℕ) [Fact p.Prime] (X Y : Type) [AddComm
     have hc : CongMod m (e.symm μ') μ := by
       refine ⟨e.symm (w1 - w2), ?_⟩
       have : μ' = e μ + m • (w1 - w2) := by rw [hw1, hw2, smul_sub]; abel
-      rw [this, map_add, map_nsmul, AddEquiv.symm_apply_apply]
+      rw [this, map_add (f := _), map_nsmul, AddEquiv.symm_apply_apply]
     have hle := hmin _ hc
     have hle' : sc * (β μ μ : ℝ) ≤ sc' * (be μ' μ' : ℝ) := by
       have h2 := hid (e.symm μ') (e.symm μ')

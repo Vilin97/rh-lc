@@ -29,7 +29,7 @@ theorem val_lt_one_of_resS_eq_zero {F E : Type} [Field F] [NumberField F] [Field
   · rw [map_zero, map_zero]
     exact zero_lt_one
   · intro x y _ _ hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact v.map_add_lt hx hy
   · intro c x _ hx
     rw [smul_eq_mul, map_mul, map_mul]

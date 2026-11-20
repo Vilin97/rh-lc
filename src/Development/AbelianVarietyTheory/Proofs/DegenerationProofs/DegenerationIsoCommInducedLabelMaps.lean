@@ -49,9 +49,9 @@ theorem iso_comm_of_labels : ∀ (C : Type) [NormedField C] (N N' : NumD C) (La 
   obtain ⟨z₃, h₃⟩ := key j x
   obtain ⟨z₄, h₄⟩ := key j (gam x)
   refine ⟨J.e (α z₀) - J.e z₁ + z₄ + z₂ - α' z₃ - α' (J.e z₀), ?_⟩
-  rw [h₁, h₂, map_add, map_nsmul] at h₄
+  rw [h₁, h₂, map_add (f := _), map_nsmul] at h₄
   rw [h₀]
-  simp only [map_add, map_nsmul, h₃]
+  simp only [map_add (f := _), map_nsmul, h₃]
   linear_combination (norm := module) h₄
 
 end GlobalTheory.ModelData

@@ -186,7 +186,7 @@ theorem isInvariant_cyclicSubspace (v : H) : π.IsInvariant (π.cyclicSubspace v
     exact Submodule.subset_span ⟨g * h, π.map_mul_apply g h v⟩
   · simp
   · intro x y _ _ hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
   · intro c x _ hx
     rw [map_smul]
@@ -280,7 +280,7 @@ theorem exists_isMinimal_le [IsTopologicalGroup G] [LocallyCompactSpace G] [T2Sp
   have hsum : (A p - lam • p) + (A q - lam • q) = 0 := by
     have hv : A v = lam • v := (hmemE v).1 hvEV.1
     have : v = p + q := by rw [hq]; abel
-    rw [this, map_add, smul_add] at hv
+    rw [this, map_add (f := _), smul_add] at hv
     rw [← sub_eq_zero] at hv
     rw [← hv]
     abel

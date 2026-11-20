@@ -53,7 +53,7 @@ theorem surjective_of_tie (hfl : Module.Flat O RW) {T' T : LocLat G Qp LL O}
     induction c using TensorProduct.induction_on with
     | zero => simp
     | tmul r t => simp [TWmap]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have h2 : ∀ t : ↥T.L.T, ∃ t' : ↥T'.L.T, latMap ι t' = m • t := by
     intro t
     obtain ⟨c, hc⟩ := hkill ((1 : RW) ⊗ₜ[O] t)

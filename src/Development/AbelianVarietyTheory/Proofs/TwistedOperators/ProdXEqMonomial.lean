@@ -110,7 +110,7 @@ theorem cls_mem_of_kc (v : V) (l l' : List (Mat p q)) {Y : Mat p q} (hY : IsKC Y
   exact Submodule.add_mem _ h₁ h₂
 
 theorem pLin_add (x y : Mat p q) : pLin (x + y) = pLin x + pLin y := by
-  simp only [pLin, Matrix.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [pLin, Matrix.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem pLin_smul (c : ℂ) (x : Mat p q) : pLin (c • x) = c • pLin x := by
   simp only [pLin, Finset.smul_sum, Matrix.smul_apply, smul_eq_mul, map_mul, MvPolynomial.smul_eq_C_mul, mul_assoc]
@@ -241,7 +241,7 @@ theorem mixed_mem (v : V) (l : List (Mat p q)) : ∀ a : List (PIx p q),
       simp only [List.map_append, List.map_singleton, List.prod_append, List.prod_singleton,
         smul_mul_assoc, mul_smul_comm, mul_assoc]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hL, hR, map_add, map_sum, map_sum, map_sum]
+      rw [hL, hR, map_add (f := _), map_sum, map_sum, map_sum]
     simp only [map_smul]
     rw [add_sub_right_comm, ← Finset.sum_sub_distrib]
     refine Submodule.add_mem _ (Submodule.sum_mem _ fun ab _ => ?_) ?_

@@ -126,7 +126,7 @@ theorem cramer (w₁ w₂ u : ℂ) :
 
 theorem Bf_comb (w₁ w₂ : ℂ) (s t s' t' : ℝ) :
     Bf ((s : ℂ) * w₁ + (t : ℂ) * w₂) ((s' : ℂ) * w₁ + (t' : ℂ) * w₂) = (s * t' - t * s') * Bf w₁ w₂ := by
-  simp only [Bf, map_add, map_mul, Complex.conj_ofReal, Complex.mul_im, Complex.mul_re,
+  simp only [Bf, map_add (f := _), map_mul, Complex.conj_ofReal, Complex.mul_im, Complex.mul_re,
     Complex.add_re, Complex.add_im, Complex.ofReal_re, Complex.ofReal_im, Complex.conj_re,
     Complex.conj_im]; ring
 
@@ -273,7 +273,7 @@ theorem okc_mul {z w : ℂ} (hz : OKc D z) (hw : OKc D w) : OKc D (z * w) := by
 theorem okc_conj {z : ℂ} (hz : OKc D z) : OKc D (starRingEnd ℂ z) := by
   obtain ⟨x, y, ⟨a, ha⟩, rfl⟩ := hz
   refine ⟨x, -y, ⟨a + y, by omega⟩, ?_⟩
-  rw [map_div₀, map_add, map_mul, conj_be, map_intCast, map_intCast, map_ofNat]; push_cast; ring
+  rw [map_div₀, map_add (f := _), map_mul, conj_be, map_intCast, map_intCast, map_ofNat]; push_cast; ring
 
 theorem coord_eq (x y : ℤ) :
     ((x : ℂ) + (y : ℂ) * be D) / 2 =
@@ -317,7 +317,7 @@ theorem ph_om : ph D (om D) = (1 + be D) / 2 := by
     rw [show (2 : D.host.K) = 1 + 1 by norm_num, IntermediateField.coe_add, IntermediateField.coe_one]
     norm_num
   push_cast
-  rw [h2, map_div₀, map_add, map_one, map_ofNat]
+  rw [h2, map_div₀, map_add (f := _), map_one, map_ofNat]
   exact congrArg (fun t => (1 + t) / 2) (phi_b D)
 
 theorem Bf_lat (δ : ℂ) (c₁ c₂ : 𝓞 D.host.K) :

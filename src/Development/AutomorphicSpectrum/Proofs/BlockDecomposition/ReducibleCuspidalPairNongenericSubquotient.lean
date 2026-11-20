@@ -31,7 +31,7 @@ theorem apply_mem_twKer {σ : Representation ℂ G V} {τ : Representation ℂ G
     refine Submodule.subset_span ⟨n, q u, ?_⟩
     rw [map_sub, map_smul, q.isIntertwining]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem exists_subquotient_subsingleton [TopologicalSpace G] [IsTopologicalGroup G] (π : Representation ℂ G V)
@@ -90,7 +90,7 @@ theorem exists_subquotient_subsingleton [TopologicalSpace G] [IsTopologicalGroup
     have hpe : p v = p (v - c • s) := by
       have h0 : p (c • s) = 0 := (Submodule.Quotient.mk_eq_zero U).2 (U.smul_mem c hsS)
       have h2 : v = (v - c • s) + c • s := by abel
-      conv_lhs => rw [h2, map_add, h0, add_zero]
+      conv_lhs => rw [h2, map_add (f := _), h0, add_zero]
     rw [hpe]
     exact apply_mem_twKer q H χ (apply_mem_twKer p H χ hk)
 

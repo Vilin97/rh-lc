@@ -18,7 +18,7 @@ private def UpperTheory.vanishingCoordinates (ch : ι → VB.Chart M r) (n : ℕ
     { carrier := {s | ∀ (k : ι) (W : X.Opens) (h₁ : W ≤ V) (h₂ : W ≤ (ch k).U) (a : Fin r), n ≤ (a : ℕ) →
         ((ch k).isFrame.basis h₂).repr (resM M h₁ s) a = 0}
       add_mem' := fun hs ht k W h₁ h₂ a ha => by
-        rw [map_add, map_add, Finsupp.add_apply, hs k W h₁ h₂ a ha, ht k W h₁ h₂ a ha, add_zero]
+        rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, hs k W h₁ h₂ a ha, ht k W h₁ h₂ a ha, add_zero]
       zero_mem' := fun k W h₁ h₂ a ha => by rw [map_zero, map_zero, Finsupp.zero_apply]
       smul_mem' := fun c s hs k W h₁ h₂ a ha => by
         rw [resM_smul, map_smul, Finsupp.smul_apply, hs k W h₁ h₂ a ha, smul_zero] }
@@ -108,7 +108,7 @@ private theorem UpperTheory.flag_charts_frames (N : VB.Sub M) (n : ℕ) (c : VB.
       rw [← ht, Fintype.linearCombination_apply]
       conv_rhs => rw [hsplit W (hWV.trans h) t]
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, N.cokernel_π_app_eq_zero_iff.2
+        rw [map_add (f := _), N.cokernel_π_app_eq_zero_iff.2
         (Submodule.sum_mem _ fun (a : {a : Fin r // (a : ℕ) < n}) _ =>
           Submodule.smul_mem _ _ (hmem W (hWV.trans h) a.1 a.2)), zero_add, map_sum]
       simp only [Scheme.Modules.Hom.app_smul, app_resM]

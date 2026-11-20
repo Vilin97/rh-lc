@@ -84,7 +84,7 @@ def provBad (D : D7) (K : Type) [Field K] [NumberField K] (e : 𝓞 K ≃+* D.wh
   supN_smul := fun _ _ σ a F => by
     rw [Submodule.coe_smul, smul_eq_mul, map_mul, norm_mul]
   supN_add := fun _ _ σ F G => by
-    rw [Submodule.coe_add, map_add]; exact norm_add_le _ _
+    rw [Submodule.coe_add, map_add (f := _)]; exact norm_add_le _ _
   l2NormAlt := fun _ _ σ F => ‖σ (F : K)‖
   l2Norm_nonneg_bis := fun _ _ _ _ => norm_nonneg _
   l2Norm_eq_zero_iff := fun _ _ σ F => by
@@ -92,7 +92,7 @@ def provBad (D : D7) (K : Type) [Field K] [NumberField K] (e : 𝓞 K ≃+* D.wh
   l2Norm_smul_alt := fun _ _ σ a F => by
     rw [Submodule.coe_smul, smul_eq_mul, map_mul, norm_mul]
   l2Norm_add_le' := fun _ _ σ F G => by
-    rw [Submodule.coe_add, map_add]; exact norm_add_le _ _
+    rw [Submodule.coe_add, map_add (f := _)]; exact norm_add_le _ _
   l2Norm_le_supNorm_alt := fun _ _ _ _ => le_rfl
   Cu := fun _ => Empty
   Xc := fun _ c => c.elim

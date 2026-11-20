@@ -62,7 +62,7 @@ private lemma A_fin (W : WPres O X R) (x : R) (hx : x ∈ W.A) :
   · rintro _ _ ⟨T, f, rfl, hf⟩ ⟨U, g, rfl, hg⟩
     refine ⟨T ∪ U, f + g, map_add _ _ _, fun m hm => ?_⟩
     rw [Finset.mem_union, not_or] at hm
-    rw [map_add, hf m hm.1, hg m hm.2, add_zero]
+    rw [map_add (f := _), hf m hm.1, hg m hm.2, add_zero]
 
 private lemma A_sum (W : WPres O X R) (g : MvPowerSeries W.σ O) (hx : W.π g ∈ W.A) :
     ∃ T : Finset X, W.π g = ∑ j ∈ T, W.π (wcomp O W.wt j g) := by

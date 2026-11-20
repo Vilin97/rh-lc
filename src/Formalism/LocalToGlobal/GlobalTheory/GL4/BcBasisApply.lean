@@ -79,7 +79,7 @@ theorem bcFun_int (c : (D.mem u).C.cls 0) (τ : D.what₂.Tau) {y : (D.sp.X 0).V
     rw [e, ← ho]
     exact ((o.isIntegral_coe.map (starRingEnd D.host.E).toIntAlgHom).map (CV.rho τ).toIntAlgHom)
   | zero => rw [map_zero]; exact isIntegral_zero
-  | add x y _ _ hx hy => rw [map_add]; exact hx.add hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact hx.add hy
   | smul a x _ hx =>
     rw [← algebraMap_smul D.what₂.LL a x, map_smul, smul_eq_mul]
     exact a.isIntegral_coe.mul hx

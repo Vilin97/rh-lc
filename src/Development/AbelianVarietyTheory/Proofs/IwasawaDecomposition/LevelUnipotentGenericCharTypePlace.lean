@@ -46,7 +46,7 @@ theorem addChar_extend {K : Type} [Ring K] (S : Subring K) (ψ : AddChar S ℂ) 
   obtain ⟨h, hh⟩ := (Module.Baer.of_divisible (Additive ℂˣ)).extension_property f Subtype.val_injective g
   refine ⟨{ toFun := fun x => ((Additive.toMul (h x) : ℂˣ) : ℂ)
             map_zero_eq_one' := by simp
-            map_add_eq_mul' := fun x y => by simp [map_add] }, fun x => ?_⟩
+            map_add_eq_mul' := fun x y => by simp [map_add (f := _)] }, fun x => ?_⟩
   have e := congrArg (fun φ => ((Additive.toMul (φ x) : ℂˣ) : ℂ)) hh
   simpa [f, g, charUnit] using e
 

@@ -24,7 +24,7 @@ def idealBelow (K : Type) [Field K] [NumberField K] [Algebra K Ω] (A : Valuatio
   carrier := {x | A.valuation (algebraMap K Ω (x : K)) < 1}
   add_mem' {a b} ha hb := by
     show A.valuation (algebraMap K Ω ((a + b : 𝓞 K) : K)) < 1
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact Valuation.map_add_lt _ ha hb
   zero_mem' := by show A.valuation (algebraMap K Ω ((0 : 𝓞 K) : K)) < 1; simp
   smul_mem' c b hb := by

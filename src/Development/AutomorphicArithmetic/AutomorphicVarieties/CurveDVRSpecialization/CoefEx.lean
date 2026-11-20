@@ -61,7 +61,7 @@ private theorem ce_large {l : ℕ} [Fact l.Prime] (L : Type) [Field L] [NumberFi
   induction hx using Submodule.span_induction with
   | mem y hy => exact IntermediateField.subset_adjoin _ _ (Set.mem_iUnion.2 ⟨τ, y, hy, rfl⟩)
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul a b _ hb =>
     rw [Rat.smul_def, map_mul, map_ratCast]
     exact mul_mem (SubfieldClass.ratCast_mem _ a) hb

@@ -35,7 +35,7 @@ private theorem scale_coeff {A G : Type} [CommRing A] (P : MvPolynomial G A) (k 
         rw [MvPolynomial.coeff_monomial, if_neg hmd]
       split_ifs <;> simp only [hz, MvPolynomial.coeff_zero]
   | add p q hp hq =>
-    rw [map_add, Polynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
+    rw [map_add (f := _), Polynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
     split_ifs <;> simp
 
 private theorem homog_of_scale {A G : Type} [CommRing A] (P : MvPolynomial G A) (n : ℕ)
@@ -273,7 +273,7 @@ private theorem points (O : Type) [CommRing O] [IsLocalRing O] [IsNoetherianRing
     have hC : res O (MvPowerSeries (Mn G n) O) (MvPowerSeries.C (a0 s)) = abar s := by
       rw [show (MvPowerSeries.C (a0 s) : MvPowerSeries (Mn G n) O) = algebraMap O _ (a0 s) from rfl,
         AlgHom.commutes, IsLocalRing.ResidueField.algebraMap_eq, ha0]
-    simp only [a, map_add, hX, hC, add_zero]
+    simp only [a, map_add (f := _), hX, hC, add_zero]
   have hmapres : MvPolynomial.map (res O (MvPowerSeries (Mn G n) O) : MvPowerSeries (Mn G n) O →+* ResidueField O)
       (pol a) = pol abar := by
     rw [pol_map]
@@ -309,7 +309,7 @@ private theorem points (O : Type) [CommRing O] [IsLocalRing O] [IsNoetherianRing
     co_ev O O R' (Mn G n) (Algebra.ofId O R') (fun s => a' s - algebraMap O R' (a0 s)) hm
   have hFa : ∀ s, F (a s) = a' s := by
     intro s
-    simp only [a, map_add, hFC, hFX, Algebra.ofId_apply]
+    simp only [a, map_add (f := _), hFC, hFX, Algebra.ofId_apply]
     ring
   have hFJ : ∀ x ∈ defI (pol a), F x = 0 := by
     refine (defI_iff (pol a) (F : MvPowerSeries (Mn G n) O →+* R')).2 ?_

@@ -146,7 +146,7 @@ def lat (ρ : 𝓞 E →+* Module.End L V) {r : ℕ} (v : Fin r → V) (I : AddS
     (hst : ∀ a, ∀ x ∈ I, ρ a x ∈ I) : Submodule (𝓞 E) (Fin r → E) where
   carrier := {x | psi ρ v x ∈ I}
   add_mem' {x y} hx hy := by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact I.add_mem hx hy
   zero_mem' := by simp [I.zero_mem]
   smul_mem' c x hx := by
@@ -295,8 +295,8 @@ theorem theta_injective (hcard : Fintype.card (E →+* L) = Module.finrank ℚ E
       intro x' h
       obtain ⟨xy, hxy⟩ := exists_psi hcard ρ hv (hcl ▸ hy)
       obtain ⟨xz, hxz⟩ := exists_psi hcard ρ hv (hcl ▸ hz)
-      have : x' = xy + xz := hinj (by rw [h, map_add, hxy, hxz])
-      rw [map_add, ihy xy hxy, ihz xz hxz, this, map_add]
+      have : x' = xy + xz := hinj (by rw [h, map_add (f := _), hxy, hxz])
+      rw [map_add (f := _), ihy xy hxy, ihz xz hxz, this, map_add (f := _)]
     | neg y hy ih =>
       intro x' h
       obtain ⟨xy, hxy⟩ := exists_psi hcard ρ hv (hcl ▸ hy)

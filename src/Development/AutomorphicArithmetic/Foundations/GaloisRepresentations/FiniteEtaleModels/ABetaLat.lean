@@ -62,7 +62,7 @@ private theorem reindex_lattice_of_ideals {A O L : Type} [CommRing A] [Ring O] [
     apply memW1
     refine ⟨z0 x + z0 y - z0 (x + y), ?_⟩
     have h := hβ (x + y)
-    rw [smul_add, map_add, smul_add, hβ x, hβ y] at h
+    rw [smul_add, map_add (f := _), smul_add, hβ x, hβ y] at h
     rw [smul_sub, smul_add, eq_sub_of_add_eq h.symm]
     simp only [smul_add, smul_sub]
     abel

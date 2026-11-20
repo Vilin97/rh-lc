@@ -46,7 +46,7 @@ theorem isCrys_mul_cyc (ψ : G →* LLˣ) :
         rw [this]
         simp [actVB, charRep, m, hu, cycLL]
       rw [h1, h2, map_mul, PD.t_act, TensorProduct.smul_tmul, smul_mul_assoc]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have h : (Dcris PD (charRep (ψ * cycLL PD LL))).map (m : LL ⊗[Qp] B →ₗ[LL] LL ⊗[Qp] B) =
       Dcris PD (charRep ψ) := by
     ext x
@@ -201,7 +201,7 @@ theorem coordAct_smul (A : G → Matrix (Fin n) (Fin n) Qp) (g : G) (b : B) (x :
 def coordInv (A : G → Matrix (Fin n) (Fin n) Qp) : Submodule K₀ (Fin n → B) where
   carrier := {x | ∀ g, coordAct PD A g x = x}
   zero_mem' g := map_zero _
-  add_mem' hx hy g := by rw [map_add, hx g, hy g]
+  add_mem' hx hy g := by rw [map_add (f := _), hx g, hy g]
   smul_mem' c x hx g := by
     rw [← algebraMap_smul B c x, coordAct_smul, hx g, AlgEquiv.commutes]
 
@@ -233,7 +233,7 @@ theorem finrank_coordInv {LL : Type} [Field LL] [Algebra Qp LL]
       change _ = ∑ j, algebraMap Qp B (A g i j) * PD.actB g (Φ (v ⊗ₜ b) j)
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [hΦ, act_smul, ← Algebra.smul_def, mul_smul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hmap : ((Dcris PD ρ).restrictScalars Qp).map (Φ : V ⊗[Qp] B →ₗ[Qp] (Fin n → B)) =
       (coordInv PD A).restrictScalars Qp := by
     ext x

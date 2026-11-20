@@ -22,7 +22,7 @@ theorem pow_mul_eig {S A : Type} [CommRing S] [Ring A] [Algebra S A] (M Y : A) (
 theorem aeval_mul_eig {S A : Type} [CommRing S] [Ring A] [Algebra S A] (M Y : A) (l : S)
     (h : M * Y = l • Y) (p : Polynomial S) : Polynomial.aeval M p * Y = p.eval l • Y := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, add_mul, hp, hq, Polynomial.eval_add, add_smul]
+  | add p q hp hq => rw [map_add (f := _), add_mul, hp, hq, Polynomial.eval_add, add_smul]
   | monomial k a =>
     rw [Polynomial.aeval_monomial, mul_assoc, pow_mul_eig M Y l h k, Polynomial.eval_monomial, Algebra.algebraMap_eq_smul_one,
       smul_mul_assoc, one_mul, smul_smul]
@@ -30,7 +30,7 @@ theorem aeval_mul_eig {S A : Type} [CommRing S] [Ring A] [Algebra S A] (M Y : A)
 theorem aeval_mulVec_eig {S n : Type} [CommRing S] [Fintype n] [DecidableEq n] (M : Matrix n n S) (v : n → S)
     (l : S) (h : M.mulVec v = l • v) (p : Polynomial S) : (Polynomial.aeval M p).mulVec v = p.eval l • v := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, Matrix.add_mulVec, hp, hq, Polynomial.eval_add, add_smul]
+  | add p q hp hq => rw [map_add (f := _), Matrix.add_mulVec, hp, hq, Polynomial.eval_add, add_smul]
   | monomial k a =>
     have hk : ∀ k : ℕ, (M ^ k).mulVec v = l ^ k • v := by
       intro k
@@ -43,7 +43,7 @@ theorem aeval_mulVec_eig {S n : Type} [CommRing S] [Fintype n] [DecidableEq n] (
 theorem aeval_map_matrix {R K n : Type} [CommRing R] [CommRing K] [Fintype n] [DecidableEq n] (ψ : R →+* K)
     (M : Matrix n n R) (p : Polynomial R) : (Polynomial.aeval M p).map ψ = Polynomial.aeval (M.map ψ) (p.map ψ) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, Matrix.map_add _ (map_add ψ), hp, hq, Polynomial.map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), Matrix.map_add _ (map_add ψ), hp, hq, Polynomial.map_add (f := _), map_add (f := _)]
   | monomial k a =>
     rw [Polynomial.aeval_monomial, Polynomial.map_monomial, Polynomial.aeval_monomial]
     have := (ψ.mapMatrix (m := n)).map_mul (algebraMap R (Matrix n n R) a) (M ^ k)

@@ -32,20 +32,20 @@ theorem eventually_norm_prod (s : Multiset (PadicAlgCl l)) (M : ℚ_[l][X]) :
     exact (tendsto_order.1 hl).2 _ (norm_pos_iff.2 this)
   filter_upwards [hev] with n hn
   conv_lhs => rw [← Multiset.filter_add_not (fun a => aeval a M = 0) s]
-  rw [Multiset.map_add, Multiset.prod_add, norm_mul, norm_prod_map, norm_prod_map]
+  rw [Multiset.map_add (f := _), Multiset.prod_add, norm_mul, norm_prod_map, norm_prod_map]
   congr 1
   · rw [Multiset.map_congr rfl (g := fun _ => ‖(l : ℚ_[l])‖ ^ n), Multiset.map_const',
       Multiset.prod_replicate, ← pow_mul]
     intro a ha
     have h0 : aeval a M = 0 := (Multiset.mem_filter.1 ha).2
-    rw [map_add, aeval_C, h0, zero_add, norm_algebraMap', norm_pow]
+    rw [map_add (f := _), aeval_C, h0, zero_add, norm_algebraMap', norm_pow]
   · apply congrArg
     apply Multiset.map_congr rfl
     intro a ha
     have hlt := hn a (Multiset.mem_toFinset.2 ha)
     have hc : ‖algebraMap ℚ_[l] (PadicAlgCl l) ((l : ℚ_[l]) ^ n)‖ = ‖(l : ℚ_[l])‖ ^ n := by
       rw [norm_algebraMap', norm_pow]
-    rw [map_add, aeval_C, IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm (by rw [hc]; exact hlt.ne'),
+    rw [map_add (f := _), aeval_C, IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm (by rw [hc]; exact hlt.ne'),
       hc, max_eq_left hlt.le]
 
 open Classical in

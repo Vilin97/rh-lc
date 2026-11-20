@@ -95,7 +95,7 @@ theorem exists_selfDual_overlattice {V : Type*} [AddCommGroup V] [Module ℝ V] 
     obtain ⟨n₂, h₂⟩ := hx b₁ hb₁
     obtain ⟨n₃, h₃⟩ := hx a₁ ha₁
     have e : B (a₁ + m • x) (b₁ + k • x) = B a₁ b₁ + k * B a₁ x + m * B x b₁ + m * k * B x x := by
-      simp only [← Int.cast_smul_eq_zsmul ℝ, map_add, map_smul, LinearMap.add_apply,
+      simp only [← Int.cast_smul_eq_zsmul ℝ, map_add (f := _), map_smul, LinearMap.add_apply,
         LinearMap.smul_apply, smul_eq_mul]
       ring
     refine ⟨n₁ - k * n₃ + m * n₂, ?_⟩
@@ -208,12 +208,12 @@ theorem exists_unimodular_overlattice : ∀ (g : ℕ) (Λ : Submodule ℤ (Fin g
   have inj : Function.Injective (Int.cast : ℤ → ℝ) := Int.cast_injective
   let Ef : LinearMap.BilinForm ℤ Λ₁ := LinearMap.mk₂ ℤ F
     (fun a a' b => inj (by
-      rw [Int.cast_add, ← hF, ← hF, ← hF, Submodule.coe_add, map_add, LinearMap.add_apply]))
+      rw [Int.cast_add, ← hF, ← hF, ← hF, Submodule.coe_add, map_add (f := _), LinearMap.add_apply]))
     (fun c a b => inj (by
       rw [smul_eq_mul, Int.cast_mul, ← hF, ← hF, Submodule.coe_smul, ← Int.cast_smul_eq_zsmul ℝ,
         map_smul, LinearMap.smul_apply, smul_eq_mul]))
     (fun a b b' => inj (by
-      rw [Int.cast_add, ← hF, ← hF, ← hF, Submodule.coe_add, map_add]))
+      rw [Int.cast_add, ← hF, ← hF, ← hF, Submodule.coe_add, map_add (f := _)]))
     (fun c a b => inj (by
       rw [smul_eq_mul, Int.cast_mul, ← hF, ← hF, Submodule.coe_smul, ← Int.cast_smul_eq_zsmul ℝ,
         map_smul, smul_eq_mul]))

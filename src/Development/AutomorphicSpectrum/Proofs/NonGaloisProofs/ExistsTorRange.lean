@@ -60,7 +60,7 @@ theorem exists_ext_zmod {N : ℕ} [NeZero N] {A B : Type} [AddCommGroup A] [AddC
   have hΦ' : ∀ a, Φ (j a) = ι (ψ a) := fun a => DFunLike.congr_fun hΦ a
   have hs : ∀ b, ∃ c, ι c = Φ b := fun b => hsurj _ (by rw [← map_nsmul, hB, map_zero])
   choose f hf using hs
-  refine ⟨AddMonoidHom.mk' f fun x y => hinj (by rw [map_add, hf, hf, hf, map_add]), fun a => hinj ?_⟩
+  refine ⟨AddMonoidHom.mk' f fun x y => hinj (by rw [map_add (f := _), hf, hf, hf, map_add (f := _)]), fun a => hinj ?_⟩
   change ι (f (j a)) = _
   rw [hf, hΦ']
 
@@ -91,7 +91,7 @@ theorem descent {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     (fun g h k => Subtype.ext (by
       simp only [AddSubgroup.coe_add, AddSubgroup.coe_sub, AddSubgroup.coe_zero, hsm]
       rw [← hz h k, ← hz (g * h) k, ← hz g (h * k), ← hz g h]
-      simp only [map_add, map_sub, hmul, mul_assoc]
+      simp only [map_add (f := _), map_sub, hmul, mul_assoc]
       abel))
     (fun ψ => by
       obtain ⟨ψ', hψ'⟩ := exists_ext_zmod (N := N) (AddSubgroup.inclusion hMS)
@@ -104,7 +104,7 @@ theorem descent {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
         rw [← hz]
         simp [hact g _ (hFS h)])
       have h2 := congrArg ψ' h1
-      rw [hψ', map_add, map_sub, map_nsmul, nsmul_eq_mul, ZMod.natCast_zmod_val] at h2
+      rw [hψ', map_add (f := _), map_sub, map_nsmul, nsmul_eq_mul, ZMod.natCast_zmod_val] at h2
       exact h2)
   refine ⟨fun g => (f g : Q), hf.comp _, fun g => (f g).2, fun g h => ?_⟩
   have h1 := congrArg (Subtype.val) (hfe g h)
@@ -229,7 +229,7 @@ theorem mk_mul_int {LL O : Type} [Field LL] [Algebra ℚ_[l] LL] [CommRing O] [A
   have h2 : algebraMap ℚ_[l] LL (u : ℚ_[l]) = (a : LL) + (l : LL) ^ n * algebraMap O LL w' := by
     rw [hw', hu]
     push_cast
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
   have h3 : algebraMap ℚ_[l] LL (u : ℚ_[l]) * x = a • x + w' • (l ^ n • x) := by
     rw [h2, nsmul_eq_mul, nsmul_eq_mul, Algebra.smul_def]
     push_cast
@@ -237,7 +237,7 @@ theorem mk_mul_int {LL O : Type} [Field LL] [Algebra ℚ_[l] LL] [CommRing O] [A
   have h4 : T.mkQ (a • x) = a • T.mkQ x := map_nsmul T.mkQ a x
   have h5 : T.mkQ (w' • (l ^ n • x)) = 0 := by
     rw [LinearMap.map_smul, map_nsmul, Submodule.mkQ_apply, hx, smul_zero]
-  rw [h3, ← Submodule.mkQ_apply, map_add, h4, h5, add_zero]
+  rw [h3, ← Submodule.mkQ_apply, map_add (f := _), h4, h5, add_zero]
   rfl
 
 end Int

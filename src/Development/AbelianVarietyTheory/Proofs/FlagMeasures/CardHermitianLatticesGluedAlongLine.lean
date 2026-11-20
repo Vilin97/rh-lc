@@ -138,7 +138,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
       (Submodule.projectionOnto (perp h U) U hc.symm).restrictScalars (𝓞 K)
     have hπ : ∀ (u : U) (w : perp h U), π ((u : V) + (w : V)) = w := by
       intro u w
-      simp only [π, LinearMap.restrictScalars_apply, map_add]
+      simp only [π, LinearMap.restrictScalars_apply, map_add (f := _)]
       rw [Submodule.projectionOnto_apply_right, Submodule.projectionOnto_apply_left, zero_add]
     set B' := L.map π with hB'
     have mB' : ∀ w : perp h U, w ∈ B' ↔ ∃ u : U, (u : V) + (w : V) ∈ L := by
@@ -161,12 +161,12 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
       · intro H v hv
         obtain ⟨u, w, rfl⟩ := hdec v
         have := H w ((mB' w).2 ⟨u, hv⟩)
-        rw [map_add, LinearMap.add_apply, horth, zero_add]
+        rw [map_add (f := _), LinearMap.add_apply, horth, zero_add]
         exact this
       · intro H w hw
         obtain ⟨u, hu⟩ := (mB' w).1 hw
         have := H _ hu
-        rw [map_add, LinearMap.add_apply, horth, zero_add] at this
+        rw [map_add (f := _), LinearMap.add_apply, horth, zero_add] at this
         exact this
     have hgen := hg B' hBB' hB'fg
     obtain ⟨a, ha⟩ := (mB' (g B')).1
@@ -175,7 +175,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
       rw [hAd, dualBasic_mem_dual]
       intro u hu
       have := hL.2 _ ((mA u).1 hu) _ ha
-      rw [map_add, horth, add_zero] at this
+      rw [map_add (f := _), horth, add_zero] at this
       exact this
     refine ⟨(dual (hRes h (perp h U)) B', Submodule.Quotient.mk ⟨a, haA⟩), ⟨⟨?_, ?_⟩, trivial⟩, ?_⟩
     · intro w hw

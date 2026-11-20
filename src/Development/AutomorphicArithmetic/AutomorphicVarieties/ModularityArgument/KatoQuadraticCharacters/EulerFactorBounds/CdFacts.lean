@@ -80,7 +80,7 @@ private theorem cd_inv (N M₀ : ℕ) [NeZero (N * M₀)] (m n : Matrix (Fin 2) 
   rw [hφ] at hm ⊢
   have e0 := congrArg φ (congrFun (congrFun e 0) 0)
   have e1 := congrArg φ (congrFun (congrFun e 1) 0)
-  rw [Matrix.mul_apply, Fin.sum_univ_two, map_add, map_mul, map_mul, hm] at e0 e1
+  rw [Matrix.mul_apply, Fin.sum_univ_two, map_add (f := _), map_mul, map_mul, hm] at e0 e1
   rw [Matrix.one_apply_eq, map_one] at e0
   rw [Matrix.one_apply_ne (by decide), map_zero] at e1
   linear_combination φ (n 0 0) * e1 - φ (n 1 0) * e0

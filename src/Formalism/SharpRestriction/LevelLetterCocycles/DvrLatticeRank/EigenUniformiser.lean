@@ -196,7 +196,7 @@ theorem invariants (D : Data O Δ) (hs : IsUnit (Fintype.card Δ : O)) :
   obtain ⟨P0, hP0⟩ := (part1 (piPrime D)).mp (piPrime_invariant D)
   have hP0c : constantCoeff P0 = 0 := by
     have e := congrArg constantCoeff hP0
-    rw [subst_eq_C_add hps0, map_add, map_mul, hps0, zero_mul, add_zero, constantCoeff_C,
+    rw [subst_eq_C_add hps0, map_add (f := _), map_mul, hps0, zero_mul, add_zero, constantCoeff_C,
       hpp0] at e
     exact e.symm
   have hP0u : IsUnit (coeff 1 P0) := by
@@ -259,7 +259,7 @@ theorem invariants (D : Data O Δ) (hs : IsUnit (Fintype.card Δ : O)) :
       ?_⟩
     have e := subst_eq_C_add hpp0 h
     have e0 := congrArg constantCoeff e
-    rw [hf0, map_add, map_mul, hpp0, zero_mul, add_zero, constantCoeff_C] at e0
+    rw [hf0, map_add (f := _), map_mul, hpp0, zero_mul, add_zero, constantCoeff_C] at e0
     rw [e, ← e0, map_zero, zero_add]
   exact ⟨part1, part2, part3, part4⟩
 

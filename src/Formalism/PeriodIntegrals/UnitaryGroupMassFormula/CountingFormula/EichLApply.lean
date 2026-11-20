@@ -42,7 +42,7 @@ theorem pW_eq (D : Formalism.BasicNotions.D7) (v : (VS D).V) : pW D v = pWL D v 
   simp only [pW, pWL, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.id_apply,
     LinearMap.sum_apply, LinearMap.smulRight_apply, LinearMap.smul_apply, smul_smul, div_eq_inv_mul]
 
-theorem pW_add (D : Formalism.BasicNotions.D7) (u v : (VS D).V) : pW D (u + v) = pW D u + pW D v := by simp only [pW_eq, map_add]
+theorem pW_add (D : Formalism.BasicNotions.D7) (u v : (VS D).V) : pW D (u + v) = pW D u + pW D v := by simp only [pW_eq, map_add (f := _)]
 theorem pW_sub (D : Formalism.BasicNotions.D7) (u v : (VS D).V) : pW D (u - v) = pW D u - pW D v := by simp only [pW_eq, map_sub]
 theorem pW_smul (D : Formalism.BasicNotions.D7) (k : D.host.E) (v : (VS D).V) : pW D (k • v) = k • pW D v := by simp only [pW_eq, map_smul]
 theorem pW_sum (D : Formalism.BasicNotions.D7) {ι : Type} (s : Finset ι) (v : ι → (VS D).V) :
@@ -108,7 +108,7 @@ theorem eich_isom (D : Formalism.BasicNotions.D7) {e y : (VS D).V} {c : D.host.E
     rw [hT_star D y u, hT_star D e u]
     simp [eichL_apply] <;> ring
   rw [eichL_apply D e y c u]
-  simp only [map_add, map_sub, map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply,
+  simp only [map_add (f := _), map_sub, map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply,
     LinearMap.smul_apply, smul_eq_mul, hE, hY, hU, starRingEnd_apply, star_mul']
   linear_combination (star ((VS D).hT e u) * (VS D).hT e v) * hc
 

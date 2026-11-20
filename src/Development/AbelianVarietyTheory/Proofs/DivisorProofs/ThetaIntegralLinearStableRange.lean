@@ -22,7 +22,7 @@ theorem I_linear : GlobalTheory.ThK.WeilConv → ∀ (F E : Type) [Field F] [Num
     intro g
     have hA := summable_of_mem_schA F (hpres (g, h) Φ hΦ)
     have hB := summable_of_mem_schA F (hpres (g, h) Ψ hΨ)
-    simp only [theta, map_add, map_smul, thetaSum, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [theta, map_add (f := _), map_smul, thetaSum, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     rw [(hA.mul_left c).tsum_add hB, tsum_mul_left]
   simp only [Model.I, e]
   rw [integral_add (((hC Φ hΦ).1 h).const_mul c) ((hC Ψ hΨ).1 h), integral_const_mul]

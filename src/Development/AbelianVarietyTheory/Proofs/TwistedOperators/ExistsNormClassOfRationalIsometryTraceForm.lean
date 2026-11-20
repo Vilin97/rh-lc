@@ -22,7 +22,7 @@ theorem lid_smul (c : F ⊗[F] E) (z : F ⊗[F] Fld P) :
     change Algebra.TensorProduct.lid F (Fld P) (Algebra.TensorProduct.map (AlgHom.id F F)
       (IsScalarTower.toAlgHom F E (Fld P)) (a ⊗ₜ e)) = _
     simp [Algebra.smul_def, IsScalarTower.algebraMap_apply F E (Fld P)]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 omit [Field E] in
 theorem inclR_lid {A : Type} [Field A] [Algebra F A] (c : F ⊗[F] A) :
@@ -33,7 +33,7 @@ theorem inclR_lid {A : Type} [Field A] [Algebra F A] (c : F ⊗[F] A) :
     simp only [inclR, Algebra.TensorProduct.lid_tmul]
     change (1 : F) ⊗ₜ[F] (a • e) = a ⊗ₜ e
     rw [TensorProduct.tmul_smul, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 omit [Field E] in
 theorem lid_inclR {A : Type} [Field A] [Algebra F A] (a : A) :

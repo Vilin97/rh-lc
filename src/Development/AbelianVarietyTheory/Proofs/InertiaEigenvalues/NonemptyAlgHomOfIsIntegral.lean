@@ -148,7 +148,7 @@ variable (ρ Y i j b) in
 def xiLin (Q : Finset (Pl D.host.E)) (M : ℕ) (h : GA D (Vc D j)) (a : ↥(half (ρ.ch i) (admissibleConjugatePairPlaces X i Q M)) → ZMod (X.l i ^ M)) :
     PolF D (Wc D j).rank (Vc D j).rank →ₗ[ℂ] (GA D (Wc D j) → ℂ) where
   toFun P := ρ.xi i j b Y Q M h P a
-  map_add' P P' := by funext g; simp only [Base.xiCoef_apply, map_add, Pi.add_apply]
+  map_add' P P' := by funext g; simp only [Base.xiCoef_apply, map_add (f := _), Pi.add_apply]
   map_smul' c P := by funext g; simp only [Base.xiCoef_apply, map_smul, Pi.smul_apply, RingHom.id_apply]
 
 theorem RatUniv.ratBase {rd : Rd ρ Y i j b} (h : RatUniv rd) : RatBase rd := fun s g P hd => by
@@ -193,7 +193,7 @@ theorem mem_range_of_small (rd : Rd ρ Y i j b) (Φ : PolF D (Wc D j).rank (Vc D
     | add _ _ _ _ h1 h2 =>
       obtain ⟨P₁, a1, rfl, f₁, e1⟩ := h1
       obtain ⟨P₂, a2, rfl, f₂, e2⟩ := h2
-      exact ⟨P₁ + P₂, add_mem a1 a2, map_add _ _ _, f₁ + f₂, by rw [map_add, map_add, e1, e2]⟩
+      exact ⟨P₁ + P₂, add_mem a1 a2, map_add _ _ _, f₁ + f₂, by rw [map_add (f := _), map_add (f := _), e1, e2]⟩
     | smul c _ _ h1 =>
       obtain ⟨P₁, a1, rfl, f₁, e1⟩ := h1
       obtain ⟨_, o, rfl⟩ := c

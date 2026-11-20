@@ -164,8 +164,8 @@ theorem ptDer_ptOf {D : R → ℂ} (h : LocDer q p m D W₀ d) (y : Sp ℂ ⟶ Y
     rename_i hW
     obtain ⟨φ, hφ⟩ := exists_ringHom_eq_valAt'' y (m ⁻¹ᵁ (W ⊓ W₀)) (top_le_preimage_preimage_inf y m hW hy)
     unfold ptOf
-    rw [map_add, h.add _ inf_le_right]
-    simp only [hφ, map_add]
+    rw [map_add (f := _), h.add _ inf_le_right]
+    simp only [hφ, map_add (f := _)]
   mul W hW f f' := by
     have hh : ⊤ ≤ y ⁻¹ᵁ m ⁻¹ᵁ (W ⊓ W₀) := top_le_preimage_preimage_inf y m hW hy
     obtain ⟨φ, hφ⟩ := exists_ringHom_eq_valAt'' y (m ⁻¹ᵁ (W ⊓ W₀)) hh
@@ -173,7 +173,7 @@ theorem ptDer_ptOf {D : R → ℂ} (h : LocDer q p m D W₀ d) (y : Sp ℂ ⟶ Y
       rw [← hφ, valAt'_app_eq_valAt'_comp_moduli, valAt'_resG_of_le (y ≫ m) inf_le_left hh]
     unfold ptOf
     rw [e1 f, e1 f', map_mul, h.mul _ inf_le_right]
-    simp only [hφ, map_add, map_mul]
+    simp only [hφ, map_add (f := _), map_mul]
   res W W' hle hW' f := by
     unfold ptOf
     rw [resG_resG, ← val_res h y (inf_le_inf_right W₀ hle) inf_le_right (top_le_preimage_preimage_inf y m hW' hy)

@@ -72,7 +72,7 @@ theorem dkl_comp_herm (k l : Fin n) (y : Fin n → Fin n → ℝ) (hd : Differen
   unfold Dkl dirC cpart
   rw [hc.fderiv]
   simp only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.coe_restrictScalars', hermL_apply]
-  rw [← herm_re_im_vkl k l, map_add, map_smul, smul_eq_mul]
+  rw [← herm_re_im_vkl k l, map_add (f := _), map_smul, smul_eq_mul]
 
 theorem cpart_contDiffOn (i j : Fin n) (hU : IsOpen U) (hF : ContDiffOn ℂ (⊤ : ℕ∞) F U) :
     ContDiffOn ℂ (⊤ : ℕ∞) (cpart i j F) U := by

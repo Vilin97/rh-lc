@@ -103,7 +103,7 @@ theorem adelicLattice_split : ∀ (I : AutInst) (D : Sib I) (s : Bool) (x : Fin 
         afVec I w0, Submodule.subset_span ⟨⟨w0, hw0⟩, rfl⟩, ?_⟩
       rw [← afVec_mulVec_eq_afMat_mulVec]
       funext i
-      simp [afVec, e, Algebra.smul_def, map_add, map_mul]
+      simp [afVec, e, Algebra.smul_def, map_add (f := _), map_mul]
     | zero => exact ⟨0, zero_mem _, 0, zero_mem _, by simp⟩
     | add v1 v2 _ _ h1 h2 =>
       obtain ⟨a1, ha1, w1, hw1, rfl⟩ := h1

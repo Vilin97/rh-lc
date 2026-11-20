@@ -54,7 +54,7 @@ theorem ClosedPtChartUnit.proof : ClosedPtChartUnit.Statement := by
   have hcomp : weightedHomogeneousComponent (NumbersDVR.blockWeight ι) e t =
       weightedHomogeneousComponent (NumbersDVR.blockWeight ι) e p +
         weightedHomogeneousComponent (NumbersDVR.blockWeight ι) e (g₀ * f) := by
-    rw [← hpr, map_add]
+    rw [← hpr, map_add (f := _)]
   have htself : weightedHomogeneousComponent (NumbersDVR.blockWeight ι) e t = t := by
     rw [weightedHomogeneousComponent_of_mem ((mem_weightedHomogeneousSubmodule _ _ _ _).mpr hte'), if_pos rfl]
   rw [htself] at hcomp

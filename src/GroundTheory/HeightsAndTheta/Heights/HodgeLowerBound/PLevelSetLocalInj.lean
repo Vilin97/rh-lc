@@ -31,7 +31,7 @@ theorem hasStrictFDerivAt_eval_poly {J : Type} [Fintype J] (p : MvPolynomial J �
       refine ContinuousLinearMap.ext fun v => ?_
       simp [polyDiff_apply, add_mul, Finset.sum_add_distrib]
     rw [h0]
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p n hp =>
     have hX : HasStrictFDerivAt (fun w : J → ℂ => w n)
@@ -52,7 +52,7 @@ theorem hasStrictFDerivAt_eval_poly {J : Type} [Fintype J] (p : MvPolynomial J �
       have s2 : ∑ j, eval w₀ (pderiv j p) * w₀ n * v j = w₀ n * ∑ j, eval w₀ (pderiv j p) * v j := by
         rw [Finset.mul_sum]
         exact Finset.sum_congr rfl fun j _ => by ring
-      simp only [polyDiff_apply, pderiv_mul, map_add, map_mul, key, eval_X, add_mul,
+      simp only [polyDiff_apply, pderiv_mul, map_add (f := _), map_mul, key, eval_X, add_mul,
         Finset.sum_add_distrib, s1, s2, FunLike.coe_add, FunLike.coe_smul, Pi.add_apply, Pi.smul_apply,
         ContinuousLinearMap.proj_apply, smul_eq_mul]
       ring

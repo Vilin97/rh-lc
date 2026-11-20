@@ -72,7 +72,7 @@ theorem exists_move_denomAt : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ 
       obtain ⟨y, -, hy, rfl⟩ := hx
       exact hJ₂ k' hk' hk2 y hy
     | zero => exact map_zero _
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | smul r x _ hx =>
       change om (k', 1) ((r : ℂ) • x) = (r : ℂ) • x
       rw [map_smul, hx]

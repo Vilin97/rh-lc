@@ -43,7 +43,7 @@ theorem sesquilinearRepresentation : RepStep := by
       obtain ⟨hv', ev⟩ := hv
       refine ⟨add_mem hu' hv', ?_⟩
       have e : (⟨u + v, add_mem hu' hv'⟩ : Λ) = ⟨u, hu'⟩ + ⟨v, hv'⟩ := rfl
-      rw [e, map_add, map_add, eu, ev]
+      rw [e, map_add (f := _), map_add (f := _), eu, ev]
     | smul a u _ hu =>
       obtain ⟨hu', eu⟩ := hu
       refine ⟨Λ.smul_mem a hu', ?_⟩

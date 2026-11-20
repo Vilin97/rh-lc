@@ -16,9 +16,9 @@ private theorem tau_eq {K : Type} [Field K] {Δ τ τ' : K} (hr : τ ^ 2 - 4 ≠
   rw [Matrix.det_fin_two] at h1
   rw [Matrix.trace_fin_two] at h2
   have t1 : (mt (j z)).trace = algebraMap K _ (2 + τ) := by
-    rw [e1, Matrix.trace_fin_two, map_add, map_ofNat, ← h2]; simp; ring
+    rw [e1, Matrix.trace_fin_two, map_add (f := _), map_ofNat, ← h2]; simp; ring
   have t2 : (mt (j z)).det = algebraMap K _ (2 + τ) := by
-    rw [e1, Matrix.det_fin_two, map_add, map_ofNat, ← h2]; simp; linear_combination h1
+    rw [e1, Matrix.det_fin_two, map_add (f := _), map_ofNat, ← h2]; simp; linear_combination h1
   rw [e, Matrix.trace_mul_cycle, e', one_mul, Matrix.det_mul, mul_comm _ (mt y).det, Matrix.det_mul, ← mul_assoc (mt y).det,
     ← Matrix.det_mul, e', Matrix.det_one, one_mul, t1, t2, ← map_pow, ← map_mul] at h
   have h3 := (algebraMap K (Lsq K Δ)).injective h

@@ -62,7 +62,7 @@ theorem hurInt_of_mvIsInt {σ : Type} {g : MvPowerSeries σ C} (hg : MvIsInt v g
 
 theorem hurInt_add {σ : Type} {g h : MvPowerSeries σ C} (hg : HurInt v g) (hh : HurInt v h) :
     HurInt v (g + h) := fun α => by
-  rw [map_add, mul_add]; exact Subring.add_mem _ (hg α) (hh α)
+  rw [map_add (f := _), mul_add]; exact Subring.add_mem _ (hg α) (hh α)
 
 theorem hurInt_zero {σ : Type} : HurInt v (0 : MvPowerSeries σ C) := fun α => by simp
 

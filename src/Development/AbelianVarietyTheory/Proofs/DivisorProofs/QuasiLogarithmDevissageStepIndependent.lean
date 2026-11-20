@@ -119,8 +119,8 @@ theorem GlobalTheory.step_independent : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Ty
     intro α; rw [hE, map_sub, hcomb, cS₁]
   have hkey : comb b e - s = (comb n' e - S') + algebraMap B Q n • E := by
     ext α
-    rw [map_sub, map_add, map_sub, coeff_smul, cE, hcomb, hcomb, hts, cS']
-    simp only [hβ, map_add, map_mul, add_mul, Finset.sum_add_distrib, mul_sub, Finset.mul_sum]
+    rw [map_sub, map_add (f := _), map_sub, coeff_smul, cE, hcomb, hcomb, hts, cS']
+    simp only [hβ, map_add (f := _), map_mul, add_mul, Finset.sum_add_distrib, mul_sub, Finset.mul_sum]
     ring_nf
 
   let L : MvPowerSeries (Fin d) Q →ₗ[Q] MvPowerSeries (Fin d ⊕ Fin d) Q :=
@@ -150,7 +150,7 @@ theorem GlobalTheory.step_independent : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Ty
       exact Submodule.sub_mem _ (Submodule.sum_mem _ fun j _ => mul_mem_coeffIdeal' _ (hej j))
         (mem_coeffIdeal.2 ⟨_, trivial, rfl⟩)
     · have h1 := congrArg (coeff (Finsupp.single i 1)) hkey
-      rw [map_add, coeff_smul] at h1
+      rw [map_add (f := _), coeff_smul] at h1
       have h2 : algebraMap B Q n * coeff (Finsupp.single i 1) E =
           lin (comb b e - s) i - coeff (Finsupp.single i 1) (comb n' e - S') := by
         rw [hl, h1]; ring
@@ -171,10 +171,10 @@ theorem GlobalTheory.step_independent : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Ty
       exact mem_coeffIdeal.2 ⟨y, hy, h⟩
     · have h1 : cob1 (up Q μ) (comb b e - s) =
           cob1 (up Q μ) (comb n' e - S') + algebraMap B Q n • cob1 (up Q μ) E := by
-        rw [← hL, hkey, map_add, map_smul]; rfl
+        rw [← hL, hkey, map_add (f := _), map_smul]; rfl
       have h2 : algebraMap B Q n * coeff α (cob1 (up Q μ) E) =
           coeff α (cob1 (up Q μ) (comb b e - s)) - coeff α (cob1 (up Q μ) (comb n' e - S')) := by
-        rw [h1, map_add, coeff_smul]; ring
+        rw [h1, map_add (f := _), coeff_smul]; ring
       rw [h2]
       refine Submodule.sub_mem _ ?_ ?_
       · obtain ⟨y, hy, h⟩ := hQL.2.2 α; exact mem_coeffIdeal.2 ⟨y, hy, h⟩

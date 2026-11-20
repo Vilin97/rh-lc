@@ -53,7 +53,7 @@ theorem toCompl_eq (v : Pl F) (w : PlacesOver E v) (h : w.1.under (𝓞 F) = v) 
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rw [toCompl_tmul, tensorEquiv_tmul, Pi.mul_apply, complMap_eq v w.1 h]; rfl
-  | add y z hy hz => rw [map_add, map_add, hy, hz]; rfl
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]; rfl
 
 theorem continuous_norm_completionsOver (v : Pl F) :
     Continuous (Algebra.norm (Fv F v) : CompletionsOver E v → Fv F v) := by

@@ -222,7 +222,7 @@ theorem chartRing_forms (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω E
       refine (hU.mul (chartMono_homog M c _)).add ?_
       rw [add_comm]
       exact hU'.mul (chartMono_homog M c _)
-    · rw [eval₂_add, eval₂_mul, eval₂_mul, hUe, hUe', hQ, hQ, ← map_mul, ← map_mul, ← map_add]
+    · rw [eval₂_add, eval₂_mul, eval₂_mul, hUe, hUe', hQ, hQ, ← map_mul, ← map_mul, ← map_add (f := _)]
       congr 1
       ring
   | mul z z' _ _ hz hz' =>
@@ -384,7 +384,7 @@ theorem bind₁_sub_mem {σ R : Type*} [CommRing R] (I : Ideal (MvPolynomial σ 
   induction q using MvPolynomial.induction_on with
   | C r => simp
   | add p q hp hq =>
-    rw [map_add, map_add, add_sub_add_comm]
+    rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
     exact I.add_mem hp hq
   | mul_X p v hp =>
     rw [map_mul, map_mul, bind₁_X_right, bind₁_X_right,

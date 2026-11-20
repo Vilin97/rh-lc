@@ -21,7 +21,7 @@ theorem mvAeval_add_of_mul_eq_zero (t n : I → D) (hn : ∀ i j, n i * n j = 0)
   classical
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq, add_mul, Finset.sum_add_distrib]; ring
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, add_mul, Finset.sum_add_distrib]; ring
   | mul_X p j hp =>
     have h1 : (∑ i, MvPolynomial.aeval t (MvPolynomial.pderiv i p) * n i) * n j = 0 := by
       rw [Finset.sum_mul]
@@ -33,7 +33,7 @@ theorem mvAeval_add_of_mul_eq_zero (t n : I → D) (hn : ∀ i j, n i * n j = 0)
           MvPolynomial.aeval t (MvPolynomial.pderiv i p) * n i * t j +
             if j = i then MvPolynomial.aeval t p * n i else 0 := by
         intro i
-        rw [MvPolynomial.pderiv_mul, map_add, map_mul, map_mul, MvPolynomial.aeval_X,
+        rw [MvPolynomial.pderiv_mul, map_add (f := _), map_mul, map_mul, MvPolynomial.aeval_X,
           MvPolynomial.pderiv_X, Pi.single_apply]
         split_ifs <;> simp <;> ring
       simp only [h3, Finset.sum_add_distrib, Finset.sum_ite_eq, Finset.mem_univ, if_true,
@@ -85,7 +85,7 @@ theorem aeval_pderiv_truncTotal_mul {J : Ideal D} {N : ℕ} (hJ : J ^ (N + 1) = 
     by_contra hlt
     refine MvPolynomial.mem_support_iff.1 hm ?_
     rw [MvPolynomial.coeff_sub, MvPolynomial.coeff_pderiv, MvPowerSeries.coeff_truncTotal _
-      (by rw [map_add, Finsupp.degree_single]; omega), MvPowerSeries.coeff_truncTotal _ (by omega),
+      (by rw [map_add (f := _), Finsupp.degree_single]; omega), MvPowerSeries.coeff_truncTotal _ (by omega),
       MvPowerSeries.coeff_pderiv, sub_self]
   have h1 : ∏ j, t j ^ m j ∈ J ^ N := by
     refine Ideal.pow_le_pow_right hdeg ?_

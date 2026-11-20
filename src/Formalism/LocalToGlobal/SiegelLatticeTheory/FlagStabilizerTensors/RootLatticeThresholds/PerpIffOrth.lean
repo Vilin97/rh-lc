@@ -103,9 +103,9 @@ theorem wd {Λ Λ₀ : Submodule (𝓞 D.host.E) (VS D).V} {γ₀ n n' ν ν' c 
     have e1 : d (ν⁻¹ y) = d y + (ν⁻¹ y - y) := by
       have : ν⁻¹ y = y + (ν⁻¹ y - y) := by abel
       conv_lhs => rw [this]
-      rw [map_add, fix_X F0' hdfix _ ha]
+      rw [map_add (f := _), fix_X F0' hdfix _ ha]
     have e2 : g y - d y = (ν' (d y) - d y) + ν' (ν⁻¹ y - y) := by
-      rw [hgapp, e1, map_add]; abel
+      rw [hgapp, e1, map_add (f := _)]; abel
     rw [e2]
     exact add_mem (nlam_triv hν' _ (hdP y hy)) (nlam_X hν' _ ha)
   have hg1P : ∀ y ∈ perpS (VS D) F0'.X, ((g : (VS D).V →ₗ[D.host.E] (VS D).V) - 1) y ∈ perpS (VS D) F0'.X :=

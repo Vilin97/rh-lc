@@ -62,7 +62,7 @@ theorem repr_const_add_eq_curveForm : ∀ (t : ℝ) (α : Alt 1), IsType 1 1 α 
   intro t α h hr
   funext S
   have hne : (∅ : Finset (Fin (1 + 1))) ≠ Finset.univ := by decide
-  rw [map_add, Finsupp.add_apply, Algebra.algebraMap_eq_smul_one, ← bas_empty, map_smul, Module.Basis.repr_self,
+  rw [map_add (f := _), Finsupp.add_apply, Algebra.algebraMap_eq_smul_one, ← bas_empty, map_smul, Module.Basis.repr_self,
     Finsupp.smul_apply, smul_eq_mul, curveForm]
   split_ifs with h₁ h₂
   · rw [h₁, Finsupp.single_eq_same, h.repr_eq_zero_one hne, _root_.mul_one, add_zero]

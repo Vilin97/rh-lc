@@ -168,7 +168,7 @@ theorem cf_sum {J : Type} [Fintype J] (o : Module.Basis J Z O) (x : O ⊗[Z] R) 
     simp only [cf_tmul, ← TensorProduct.smul_tmul, ← TensorProduct.sum_tmul, Module.Basis.coord_apply,
       o.sum_repr]
   | add a b ha hb =>
-    simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib, ← ha, ← hb]
+    simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib, ← ha, ← hb]
 
 theorem cf_basis {J : Type} [Fintype J] (o : Module.Basis J Z O) (w : J → R) (j : J) :
     cf (o.coord j) (∑ k, o k ⊗ₜ[Z] w k) = w j := by

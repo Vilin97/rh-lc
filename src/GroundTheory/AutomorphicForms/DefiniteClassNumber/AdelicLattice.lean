@@ -250,7 +250,7 @@ def adelicLattice (g : unitaryPoints K E H (FinAdele K)) : AddSubgroup (ι → K
   add_mem' := by
     intro x y hx hy
     show unitaryMat g⁻¹ *ᵥ toFinAdele K E ι (x + y) ∈ stdLattice ι (FinAdele K) b (intAdeles K)
-    rw [map_add, mulVec_add]
+    rw [map_add (f := _), mulVec_add]
     exact stdLattice_add b hx hy
   neg_mem' := by
     intro x hx

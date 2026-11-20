@@ -70,7 +70,7 @@ theorem compFin_cA (σ : E →ₐ[F] E) (v : Pl F) (x : AE F E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 variable {σ : E →ₐ[F] E}
 
@@ -112,7 +112,7 @@ theorem lift_smul_mem (hσ : ∀ x, σ (σ x) = x) {B : Base F E} {n d n₁ d₁
         exact zero_mem _
       | add x y _ _ hx hy =>
         intro p hp
-        rw [mul_add, map_add, add_smul, Matrix.add_vecMulVec, incM_add, smul_add]
+        rw [mul_add, map_add (f := _), add_smul, Matrix.add_vecMulVec, incM_add, smul_add]
         exact add_mem (hx p hp) (hy p hp)
       | smul o x _ hx =>
         intro p hp
@@ -127,7 +127,7 @@ theorem lift_smul_mem (hσ : ∀ x, σ (σ x) = x) {B : Base F E} {n d n₁ d₁
         rw [mem_conjI_iff_span] at hq
         rw [mul_comm]
         exact claim q hq p hp
-      · rw [map_add, add_smul, Matrix.add_vecMulVec, incM_add, smul_add]
+      · rw [map_add (f := _), add_smul, Matrix.add_vecMulVec, incM_add, smul_add]
         exact add_mem hp hq
     have e : (GlobalTheory.LatVac.liftV v c ⊗ₜ[F] σ x) • Matrix.vecMulVec (incV F H.y) (incV F H'.x) =
         GlobalTheory.LatVac.liftV v c • incM F (Matrix.vecMulVec (σ x • H.y) H'.x) := by
@@ -141,7 +141,7 @@ theorem lift_smul_mem (hσ : ∀ x, σ (σ x) = x) {B : Base F E} {n d n₁ d₁
     rw [LinearMap.id_apply, AlgHom.toLinearMap_apply, e]
     exact key x hx
   | zero => rw [map_zero, map_zero, zero_smul]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add, map_add, add_smul]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), add_smul]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg, map_neg, neg_smul]; exact neg_mem hx
 
 theorem vac_fixed : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E)

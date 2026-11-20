@@ -298,7 +298,7 @@ theorem StepH_of (h2 : LemmaTwo) (hSw : SwapRules) (_hL : LawSymm) : StepH := by
   · rw [hc, norm_zero]
     exact zero_le_one
   · have hll := coeff_lg_lg_eq_zero (K := K) hp (hsupp n hc).2.2
-    rw [hHR, map_add, MvPowerSeries.coeff_C_mul, hll, mul_zero, zero_add]
+    rw [hHR, map_add (f := _), MvPowerSeries.coeff_C_mul, hll, mul_zero, zero_add]
     exact hR n
 
 private theorem coeff_lgF_one_lemma {K : Type} [Field K] {p : ℕ} (hp : 2 ≤ p) :

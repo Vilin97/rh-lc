@@ -35,7 +35,7 @@ theorem evalCartan_toCartan {V : Type} [AddCommGroup V] [Module ℂ V] (E1 E2 : 
     · have t : toKP (FreeAlgebra.ι ℂ (true, a, b)) =
           (1 / 2 : ℂ) • (FreeAlgebra.ι ℂ (false, a, b) + FreeAlgebra.ι ℂ (true, a, b)) := by simp [toKP]
       have e : ev2 E1 E2 (FreeAlgebra.ι ℂ (true, a, b)) = E1 a b := by simp [ev2]
-      rw [t, e, map_smul, map_add, eK, eP]
+      rw [t, e, map_smul, map_add (f := _), eK, eP]
       module
   exact DFunLike.congr_fun h a
 

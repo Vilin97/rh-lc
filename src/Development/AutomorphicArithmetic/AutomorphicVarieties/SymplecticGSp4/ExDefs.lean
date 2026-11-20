@@ -110,7 +110,7 @@ theorem unr_map (f : R →ₐ[c.O] R') (ρ : Lift c.O D.rbar R) (h : D.UnrT ρ.h
 
 theorem hEl_map (f : R →ₐ[c.O] R') (ρ : Lift c.O D.rbar R) (i j : Fin 4) :
     D.hEl (ρ.map f).hom i j = f (D.hEl ρ.hom i j) := by
-  simp only [Raw.hEl, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Lift.map_hom, map_add, map_mul, AlgHom.commutes]
+  simp only [Raw.hEl, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, Lift.map_hom, map_add (f := _), map_mul, AlgHom.commutes]
 
 theorem loc_map (f : R →ₐ[c.O] R') (ρ : Lift c.O D.rbar R) (v : ℕ) :
     D.loc (ρ.map f) v = (D.loc ρ v).map f := Lift.ext (MonoidHom.ext fun _ => rfl)

@@ -83,8 +83,8 @@ theorem exists_locDerK_desc : ∀ {R : Type} [CommRing R] [IsDomain R] {Q : DegP
   have hloc : ∀ i, KS.LocDerK p Q.P.A.hom m (fun r => φ (D r)) (V i) (fun W f => (m.app W).hom (e i W f)) := by
     intro i
     refine ⟨fun W hW f f' => ?_, fun W hW f f' => ?_, fun W W' h' hW f => ?_, fun W hW r => ?_⟩
-    · rw [(he i).1.1 W hW, map_add]
-    · rw [(he i).1.2.1 W hW, map_add, map_mul, map_mul]
+    · rw [(he i).1.1 W hW, map_add (f := _)]
+    · rw [(he i).1.2.1 W hW, map_add (f := _), map_mul, map_mul]
     · rw [(he i).1.2.2 W W' h' hW, rsT_eq (pre_mono m h'), res_app m h']
     · rw [(he i).2 W hW, app_const φ _ p m hm]
   obtain ⟨dl, hdl, hu⟩ := InteriorKS.glue_along p Q.P.A.hom m _ V hcov (fun i W f => (m.app W).hom (e i W f)) hloc hc

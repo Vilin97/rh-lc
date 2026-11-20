@@ -41,7 +41,7 @@ theorem exists_coord_tensor_dR : ∀ {G : Type} [Group G] {Qp K₀ K : Type} [Fi
       rw [AlgebraTensorModule.map_tmul, h]
       exact ((PD.Fil a).restrictScalars Qp).smul_mem _ b.2
     | add x y hx hy =>
-      rw [map_add, map_add, Pi.add_apply]
+      rw [map_add (f := _), map_add (f := _), Pi.add_apply]
       exact add_mem hx hy
   · rw [hz z]
     refine Submodule.sum_mem _ fun i _ => ⟨bV i ⊗ₜ ⟨Φ z i, H i⟩, ?_⟩

@@ -100,7 +100,7 @@ theorem wedgeSum_injective {i : F →ₗ[R] H} {s : L →ₗ[R] H} {r : H →ₗ
     induction t using TensorProduct.induction_on with
     | zero => simp
     | add x y hx hy =>
-      simp only [map_add, Submodule.coe_add] at hx hy ⊢
+      simp only [map_add (f := _), Submodule.coe_add] at hx hy ⊢
       rw [hx, hy]
     | tmul x y =>
       rw [hΨ, TensorProduct.map_tmul]

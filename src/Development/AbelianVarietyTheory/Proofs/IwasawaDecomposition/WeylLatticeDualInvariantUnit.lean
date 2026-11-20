@@ -98,7 +98,7 @@ theorem expands_rowSubst (ν : Fin N → ℕ) (g : Matrix (Fin N) (Fin N) ℂ_[p
         beta_reduce
         rw [← Formalism.GradedWeylDivisibility.lclosedeq_hw_map (Int.castRingHom O), Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map]⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul c x _ hx => rw [map_zsmul]; exact zsmul_mem hx c
   have h2 := GlobalTheory.WeylRowAll.rowAct_mem_weyl_square O N (antiOf ν) (antiOf_antitone ν) M _ h1
   have e : (fun y => ev f (g * y)) =

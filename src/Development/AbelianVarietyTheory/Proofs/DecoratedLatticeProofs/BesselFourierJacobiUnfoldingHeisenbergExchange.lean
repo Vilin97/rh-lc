@@ -115,12 +115,12 @@ theorem besselFourierJacobi_unfolding_heisenberg_exchange : ∀ (D : D7) (ψ : A
     rw [← integral_const_mul]
     refine integral_congr_ae (Filter.Eventually.of_forall fun a => ?_)
     beta_reduce
-    rw [s₁.weil₀.om_heis _ _ _ _ hΞ, act_resS, ← kappa_mul, heisO, sympl_resS, symplOH_kappa, ← map_add,
+    rw [s₁.weil₀.om_heis _ _ _ _ hΞ, act_resS, ← kappa_mul, heisO, sympl_resS, symplOH_kappa, ← map_add (f := _),
       Prod.mk_add_mk, add_zero, ← kappa_add]
     ring
   · refine integral_congr_ae (Filter.Eventually.of_forall fun v => ?_)
     beta_reduce
-    rw [s₂.weil₀.om_heis _ _ _ _ hΘ, act_resT, heisO, sympl_resT, ← map_add, Prod.mk_add_mk, add_zero, Matrix.neg_mul]
+    rw [s₂.weil₀.om_heis _ _ _ _ hΘ, act_resT, heisO, sympl_resT, ← map_add (f := _), Prod.mk_add_mk, add_zero, Matrix.neg_mul]
 
 end GlobalTheory.FinPl.HeisExchange
 

@@ -60,7 +60,7 @@ theorem LaplacianHoloComp.full : LaplacianHoloComp.Statement := by
   set w := deriv T t
   have hcancel : fderiv ℝ φ (T t) (deriv (deriv T) t * 1 * 1) +
       fderiv ℝ φ (T t) (deriv (deriv T) t * Complex.I * Complex.I) = 0 := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     have : deriv (deriv T) t * 1 * 1 + deriv (deriv T) t * Complex.I * Complex.I = 0 := by
       rw [mul_assoc _ Complex.I, Complex.I_mul_I]; ring
     rw [this, map_zero]
@@ -72,6 +72,6 @@ theorem LaplacianHoloComp.full : LaplacianHoloComp.Statement := by
   have hn : ‖w‖ ^ 2 = w.re ^ 2 + w.im ^ 2 := by
     rw [Complex.sq_norm, Complex.normSq_apply]; ring
   rw [hw, hwI, hn]
-  simp only [map_add, map_smul, add_apply, smul_apply,
+  simp only [map_add (f := _), map_smul, add_apply, smul_apply,
     smul_eq_mul]
   linear_combination hcancel + (w.re * w.im - w.im * w.re) * hs

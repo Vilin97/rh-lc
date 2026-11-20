@@ -87,7 +87,7 @@ theorem exists_trace_one_at_tame : ∀ (D : D7) (v : Pl D) (ε : AE D) (hεε : 
         exact half_mem_int w h2
       · rw [if_neg hw, zero_mul]
         exact zero_mem _
-    · rw [cA_alg, ← map_add, hεη]
+    · rw [cA_alg, ← map_add (f := _), hεη]
       congr 1
       rw [← two_mul, mul_left_comm, ← map_ofNat (algebraMap D.host.F (AF D.host.F)) 2, ← map_mul,
         mul_inv_cancel₀ two_ne_zero, map_one, mul_one]

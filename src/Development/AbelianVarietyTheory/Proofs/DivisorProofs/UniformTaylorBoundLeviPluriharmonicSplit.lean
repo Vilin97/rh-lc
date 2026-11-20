@@ -50,7 +50,7 @@ theorem re_holomorphicLinearTaylorCoeff_sum_eq (F : V n →L[ℝ] ℝ) (a c : Fi
     2 * (∑ j, ((a j : ℂ) + (c j : ℂ) * I) * lc F j).re =
       F (∑ k, (a k • bas n k + c k • (I • bas n k))) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_add, map_smul, smul_eq_mul, Complex.re_sum, Finset.mul_sum]
+    simp only [map_sum, map_add (f := _), map_smul, smul_eq_mul, Complex.re_sum, Finset.mul_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   simp only [lc, Complex.mul_re, Complex.mul_im, Complex.add_re, Complex.add_im,
     Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.div_ofNat_re,
@@ -71,7 +71,7 @@ theorem re_holomorphicQuadraticTaylorCoeff_sum_eq (B : V n →L[ℝ] V n →L[�
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Complex.re_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun k _ => ?_
-  simp only [map_add, map_sub, map_smul, ContinuousLinearMap.add_apply,
+  simp only [map_add (f := _), map_sub, map_smul, ContinuousLinearMap.add_apply,
     ContinuousLinearMap.sub_apply, ContinuousLinearMap.smul_apply, smul_eq_mul, qc,
     Complex.mul_re, Complex.mul_im, Complex.add_re, Complex.add_im, Complex.ofReal_re,
     Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.div_ofNat_re, Complex.div_ofNat_im,

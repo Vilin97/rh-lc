@@ -77,7 +77,7 @@ theorem sg_fin {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] (c
   induction x using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero, map_zero]
   | tmul a e => rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem isUnit_det_JR {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {n : ℕ}
     (J : Matrix (Fin n) (Fin n) E) (h : J.det ≠ 0) : IsUnit (JR (F := F) (AF F) J).det := by

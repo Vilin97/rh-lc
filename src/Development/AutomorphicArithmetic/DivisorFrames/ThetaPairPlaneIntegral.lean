@@ -48,7 +48,7 @@ theorem UpperTheory.theta_pair_plane_integral :
       incV F H.y + incM F H.ι *ᵥ incV F b + inclR (F := F) (AF F) a • incV F H.x := by
     rw [hG, GlobalTheory.UnipLine.incM_mulVec_incV, GlobalTheory.UnipLine.incM_mulVec_incV, hGy]
     funext i
-    simp only [incV, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul]
+    simp only [incV, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
   have hmul : om (γ * u, 1) Ψ = om (γ, 1) (om (u, 1) Ψ) := by
     rw [← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, one_mul]
   have hph : B.ψ (⅟(2 : AF F) * Algebra.trace (AF F) (AE F E)

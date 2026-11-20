@@ -40,7 +40,7 @@ def w0E (D : D7) : 𝓞 D.host.E := ⟨(1 + D.host.sqrtMinusD) / 2, half_one_add
 
 theorem two_w0E (D : D7) : 2 * w0E D = 1 + rtE D := by
   apply IsFractionRing.injective (𝓞 D.host.E) D.host.E
-  rw [map_mul, map_add, map_one, map_ofNat]
+  rw [map_mul, map_add (f := _), map_one, map_ofNat]
   show 2 * ((1 + D.host.sqrtMinusD) / 2) = 1 + D.host.sqrtMinusD
   field_simp
 
@@ -86,7 +86,7 @@ theorem conj_w0E (D : D7) : barE D (w0E D) = 1 - w0E D := by
   apply IsFractionRing.injective (𝓞 D.host.E) D.host.E
   rw [map_sub, map_one]
   show IsCMField.complexConj D.host.E ((1 + D.host.sqrtMinusD) / 2) = 1 - (1 + D.host.sqrtMinusD) / 2
-  rw [map_div₀, map_add, map_one, cc_sqrtMinusD, map_ofNat]
+  rw [map_div₀, map_add (f := _), map_one, cc_sqrtMinusD, map_ofNat]
   ring
 
 def mE (D : D7) : ℕ := (D.host.d + 1) / 4
@@ -383,9 +383,9 @@ def latW (D : D7) (j : ℕ) : Submodule (𝓞 D.host.E) (D.sp.W j).V :=
 
 def efQ (D : D7) (j : ℕ) : latW D j →ₗ[ℤ] latW D j →ₗ[ℤ] ℚ :=
   LinearMap.mk₂ ℤ (fun x y => Algebra.trace ℚ D.host.E (D.host.xi0 * (D.sp.W j).hT x y))
-    (fun x x' y => by simp [map_add, mul_add])
+    (fun x x' y => by simp [map_add (f := _), mul_add])
     (fun c x y => by simp [map_zsmul]; rw [mul_left_comm, ← zsmul_eq_mul, map_zsmul, zsmul_eq_mul])
-    (fun x y y' => by simp [map_add, mul_add])
+    (fun x y y' => by simp [map_add (f := _), mul_add])
     (fun c x y => by simp [map_zsmul]; rw [mul_left_comm, ← zsmul_eq_mul, map_zsmul, zsmul_eq_mul])
 
 theorem choose_cast {M : Type} [AddCommGroup M] (B : M →ₗ[ℤ] M →ₗ[ℤ] ℚ) (h : ∀ x y, ∃ n : ℤ, B x y = n)
@@ -395,11 +395,11 @@ def intForm {M : Type} [AddCommGroup M] (B : M →ₗ[ℤ] M →ₗ[ℤ] ℚ) (h
     LinearMap.BilinForm ℤ M :=
   LinearMap.mk₂ ℤ (fun x y => (h x y).choose)
     (fun x x' y => Int.cast_injective (α := ℚ) (by
-      rw [Int.cast_add, choose_cast, choose_cast, choose_cast, map_add, LinearMap.add_apply]))
+      rw [Int.cast_add, choose_cast, choose_cast, choose_cast, map_add (f := _), LinearMap.add_apply]))
     (fun c x y => Int.cast_injective (α := ℚ) (by
       rw [smul_eq_mul, Int.cast_mul, choose_cast, choose_cast, LinearMap.map_smul₂, zsmul_eq_mul]))
     (fun x y y' => Int.cast_injective (α := ℚ) (by
-      rw [Int.cast_add, choose_cast, choose_cast, choose_cast, map_add]))
+      rw [Int.cast_add, choose_cast, choose_cast, choose_cast, map_add (f := _)]))
     (fun c x y => Int.cast_injective (α := ℚ) (by
       rw [smul_eq_mul, Int.cast_mul, choose_cast, choose_cast, map_zsmul, zsmul_eq_mul]))
 

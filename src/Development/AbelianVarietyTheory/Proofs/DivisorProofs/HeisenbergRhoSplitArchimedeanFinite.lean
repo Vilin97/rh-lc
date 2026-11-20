@@ -101,7 +101,7 @@ theorem rho_split : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
       rw [← Matrix.smul_mul, hu, Matrix.zero_mul, map_zero]
     rw [← hyp, hw]
     unfold Darboux.rho
-    rw [map_add, map_smul, schr_add_of_orth, schr_pureA]
+    rw [map_add (f := _), map_smul, schr_add_of_orth, schr_pureA]
     · exact dot_eq_zero _ _ _ (congrArg Prod.fst ha)
     · rw [dotProduct_comm]
       exact dot_eq_zero _ _ _ (congrArg Prod.snd ha)

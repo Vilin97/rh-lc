@@ -101,7 +101,7 @@ theorem exists_upper (b : Module.Basis ι F E) (L : Submodule (𝓞 E) (Fin n �
       have h1 := hx j k
       have h2 := hz j k
       unfold IntF at h1 h2 ⊢
-      rw [Pi.add_apply, map_add, Finsupp.add_apply, mul_add, map_add]
+      rw [Pi.add_apply, map_add (f := _), Finsupp.add_apply, mul_add, map_add (f := _)]
       exact ohat_add h1 h2
     | smul a x _ hx =>
       intro j k

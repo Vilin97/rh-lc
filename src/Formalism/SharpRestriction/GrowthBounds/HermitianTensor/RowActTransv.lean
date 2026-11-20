@@ -132,7 +132,7 @@ theorem rowAct_transv (l j : Fin r) (c : K) (i t : Fin r) :
     rowAct K (Matrix.transvection l j c) (X (i, t)) = X (i, t) + if i = l then C c * X (j, t) else 0 := by
   classical
   simp only [rowAct, aeval_X, Matrix.transvection, Matrix.add_apply, Matrix.one_apply]
-  simp only [map_add, add_mul, Finset.sum_add_distrib, apply_ite C, ite_mul, map_one, map_zero, one_mul, zero_mul,
+  simp only [map_add (f := _), add_mul, Finset.sum_add_distrib, apply_ite C, ite_mul, map_one, map_zero, one_mul, zero_mul,
     Finset.sum_ite_eq, Finset.mem_univ, if_true]
   congr 1
   by_cases h : i = l
@@ -165,7 +165,7 @@ theorem lam_addM (L : MvPolynomial (Bool × (Fin r × Fin r)) K →ₗ[K] K) (N 
         X (a, midI r i) + if i = j then C c * X (a, midI r l) else 0 := by
       intro i
       split_ifs <;> simp
-    simp only [e, map_add, map_mul, map_C, map_X, blockEmb, rename_X, rename_C, mul_add, add_mul,
+    simp only [e, map_add (f := _), map_mul, map_C, map_X, blockEmb, rename_X, rename_C, mul_add, add_mul,
       Finset.sum_add_distrib, apply_ite, map_zero, mul_ite, ite_mul, mul_zero, zero_mul,
       Finset.sum_ite_eq', Finset.mem_univ, if_true]
     have hs : ∀ (k : Fin r)

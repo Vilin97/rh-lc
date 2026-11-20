@@ -101,7 +101,7 @@ variable {K} in
 theorem ringHom_ext {S : Type*} [CommRing S] {u v : AK K →+* S} (hA : ∀ a, u (inA K a) = v (inA K a))
     (hO : ∀ c, u (inO K c) = v (inO K c)) : u = v :=
   RingHom.ext fun x => induction_on x (fun a c => by rw [map_mul, map_mul, hA, hO])
-    fun x y hx hy => by rw [map_add, map_add, hx, hy]
+    fun x y hx hy => by rw [map_add (f := _), map_add (f := _), hx, hy]
 
 section Lift
 
@@ -215,7 +215,7 @@ theorem σA_iter (g : GQ l) (n : ℕ) (a : Ainf l) :
 theorem gal_frobq (g : ↥(GK K)) (x : AK K) : gal K g (frobq K x) = frobq K (gal K g x) :=
   induction_on x (fun a c => by
     simp only [map_mul, frobq_inA, frobq_inO, gal_inA, gal_inO, σA_iter])
-    fun x y hx hy => by simp only [map_add, hx, hy]
+    fun x y hx hy => by simp only [map_add (f := _), hx, hy]
 
 variable (K) in
 
@@ -232,7 +232,7 @@ theorem σO_intToOC (g : ↥(GK K)) (c : ↥(OL K)) : Per.σO (g : GQ l) (intToO
 theorem thetaK_gal (g : ↥(GK K)) (x : AK K) : thetaK K (gal K g x) = Per.σO (g : GQ l) (thetaK K x) :=
   induction_on x (fun a c => by
     simp only [map_mul, gal_inA, gal_inO, thetaK_inA, thetaK_inO, GlobalTheory.RingBasics.θ_σA, σO_intToOC])
-    fun x y hx hy => by simp only [map_add, hx, hy]
+    fun x y hx hy => by simp only [map_add (f := _), hx, hy]
 
 variable (K) in
 
@@ -286,7 +286,7 @@ theorem red_frobq (x : AK K) : red K (frobq K x) = red K x ^ l ^ fK K :=
   induction_on x (fun a c => by
     rw [map_mul, frobq_inA, frobq_inO, map_mul, map_mul, red_inA, red_inA, coeff_iter, mul_pow, red_inO,
       ← map_pow (Fq.val l (fK K)), Fq.pow_card])
-    fun x y hx hy => by rw [map_add, map_add, hx, hy, map_add, add_pow_char_pow]
+    fun x y hx hy => by rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), add_pow_char_pow]
 
 theorem σF_val (g : ↥(GK K)) (z : Fq l (fK K)) :
     Per.σF (g : GQ l) (Fq.val l (fK K) z) = Fq.val l (fK K) z :=
@@ -297,7 +297,7 @@ theorem red_gal (g : ↥(GK K)) (x : AK K) : red K (gal K g x) = Per.σF (g : GQ
   induction_on x (fun a c => by
     simp only [map_mul, gal_inA, gal_inO, red_inA, red_inO, σF_val]
     rw [sigA_coeff_pt])
-    fun x y hx hy => by simp only [map_add, hx, hy]
+    fun x y hx hy => by simp only [map_add (f := _), hx, hy]
 
 section Unif
 
@@ -322,14 +322,14 @@ theorem exists_inA (x : AK K) : ∃ a y, x = inA K a + inO K π * y :=
     rw [eq_comm, ← sub_eq_zero, ← map_sub, residue_eq_zero_iff] at hw
     obtain ⟨d, hd⟩ := dvd_of_not_isUnit hπ hw
     refine ⟨a * wA l (fK K) w, inA K a * inO K d, ?_⟩
-    rw [map_mul, inA_wA, sub_eq_iff_eq_add.1 hd, map_add, map_mul]
+    rw [map_mul, inA_wA, sub_eq_iff_eq_add.1 hd, map_add (f := _), map_mul]
     ring)
-    fun x y ⟨a, z, h⟩ ⟨a', z', h'⟩ => ⟨a + a', z + z', by rw [h, h', map_add]; ring⟩
+    fun x y ⟨a, z, h⟩ ⟨a', z', h'⟩ => ⟨a + a', z + z', by rw [h, h', map_add (f := _)]; ring⟩
 
 theorem ker_red : RingHom.ker (red K) = Ideal.span {inO K π} := by
   refine le_antisymm (fun x hx => ?_) ?_
   · obtain ⟨a, y, rfl⟩ := exists_inA hπ x
-    rw [RingHom.mem_ker, map_add, map_mul, red_inO_eq_zero hπ.not_isUnit, zero_mul, add_zero, red_inA,
+    rw [RingHom.mem_ker, map_add (f := _), map_mul, red_inO_eq_zero hπ.not_isUnit, zero_mul, add_zero, red_inA,
       ← WittVector.constantCoeff_apply, ← RingHom.mem_ker, WittVector.ker_constantCoeff,
       Ideal.mem_span_singleton] at hx
     refine Ideal.mem_span_singleton.2 (dvd_add ((dvd_l hπ).trans ?_) (dvd_mul_right _ _))
@@ -351,7 +351,7 @@ theorem dvd_thetaK_sub (x : AK K) : intToOC K π ∣ thetaK K x - (red K x).unti
   obtain ⟨y, hy⟩ := exists_teich_add hπ x
   refine ⟨thetaK K y, ?_⟩
   conv_lhs => enter [1]; rw [hy]
-  rw [map_add, map_mul, thetaK_inA, thetaK_inO, WittVector.fontaineTheta_teichmuller, add_sub_cancel_left]
+  rw [map_add (f := _), map_mul, thetaK_inA, thetaK_inO, WittVector.fontaineTheta_teichmuller, add_sub_cancel_left]
 
 omit hπ in
 
@@ -511,7 +511,7 @@ theorem ker_step {x : AK K} (hx : thetaK K x = 0) :
     rw [hy, eta]; ring
   refine ⟨_, _, ?_, e⟩
   have h2 := congrArg (thetaK K) e
-  rw [hx, map_add, map_mul, map_mul, thetaK_eta hp, zero_mul, zero_add, thetaK_inO] at h2
+  rw [hx, map_add (f := _), map_mul, map_mul, thetaK_eta hp, zero_mul, zero_add, thetaK_inO] at h2
   exact (mul_eq_zero.1 h2.symm).resolve_left ((map_ne_zero_iff _ (intToOC_injective K)).2 hπ.ne_zero)
 
 include hπ hp in

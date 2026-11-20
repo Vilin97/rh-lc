@@ -65,7 +65,7 @@ theorem dUnit_of_mem_torsionIdeal {A : Type} [CommRing A] [Bialgebra O A] [IsCoc
   | add x y _ _ hx hy =>
     obtain ⟨hx0, u, hu⟩ := hx
     obtain ⟨hy0, v, hv⟩ := hy
-    exact ⟨by rw [map_add, hx0, hy0, add_zero], u + v, by simp [hu, hv, smul_add]⟩
+    exact ⟨by rw [map_add (f := _), hx0, hy0, add_zero], u + v, by simp [hu, hv, smul_add]⟩
   | smul c x _ hx =>
     obtain ⟨hx0, u, hu⟩ := hx
     refine ⟨by rw [smul_eq_mul, map_mul, hx0, mul_zero], counitAlgHom O A c • u, ?_⟩
@@ -154,7 +154,7 @@ theorem smul_mem_of_levels [IsAdicComplete (Ideal.span {(p : O)}) O] (G : PDivGr
     have key : Φ (n + 2) (d - c.1) = Φ (n + 2) ((p : O) ^ n • f) := by
       rw [hy', map_smul, hf, smul_smul, ← pow_succ]
     have : c.1 + (p : O) ^ n • f = d - (d - c.1) + (p : O) ^ n • f := by abel
-    rw [this, map_add, map_sub, key, hd]
+    rw [this, map_add (f := _), map_sub, key, hd]
     abel
   choose nxt hnxt using step
   obtain ⟨c0, hc0⟩ := lift 1 _ (hκ 1 (W 1))
@@ -197,7 +197,7 @@ theorem smul_mem_of_levels [IsAdicComplete (Ideal.span {(p : O)}) O] (G : PDivGr
     obtain ⟨t, ht⟩ := close (n + 1)
     have h1 : Φ (n + 1) (seq (n + 1)).1 = κ • W (n + 1) := by
       rw [← compatΦ, (seq (n + 1)).2, hWc]
-    rw [ht, map_add, h1, map_smul, prime_pow_smul_cot_eq_zero, add_zero]
+    rw [ht, map_add (f := _), h1, map_smul, prime_pow_smul_cot_eq_zero, add_zero]
   have good' : ∀ n, Φ n l = κ • W n := by
     intro n
     cases n with

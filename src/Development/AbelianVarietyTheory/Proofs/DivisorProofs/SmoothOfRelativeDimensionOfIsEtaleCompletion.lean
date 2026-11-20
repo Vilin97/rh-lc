@@ -48,7 +48,7 @@ theorem spanFinrank_map_eq_of_flat {A B : Type*} [CommRing A] [CommRing B] [Alge
           simp [g, Algebra.smul_def, mul_comm]
         rw [this]
         exact Ideal.mul_mem_left _ _ (Ideal.mem_map_of_mem _ i.2)
-      | add x y hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     · rw [Ideal.map, Ideal.span_le]
       rintro _ ⟨i, hi, rfl⟩
       refine ⟨(1 : B) ⊗ₜ ⟨i, hi⟩, trivial, ?_⟩

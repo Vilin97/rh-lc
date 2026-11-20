@@ -21,7 +21,7 @@ variable {n d : ℕ}
 theorem differentiable_eval_poly (g : MvPolynomial (Fin n) ℂ) : Differentiable ℂ (fun x => eval x g) := by
   induction g using MvPolynomial.induction_on with
   | C a => simp only [eval_C]; exact differentiable_const a
-  | add p q hp hq => simp only [map_add]; exact hp.add hq
+  | add p q hp hq => simp only [map_add (f := _)]; exact hp.add hq
   | mul_X p i hp => simp only [map_mul, eval_X]; exact hp.mul (differentiable_apply i)
 
 theorem differentiableAt_ratMap (p : Fin d → MvPolynomial (Fin n) ℂ) (q : MvPolynomial (Fin n) ℂ)

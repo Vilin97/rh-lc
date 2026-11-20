@@ -144,7 +144,7 @@ def rrc_C (π : G → (H →L[ℂ] H)) : Submodule ℂ H where
   carrier := {x | Tendsto (fun h => π h x) (𝓝 1) (𝓝 x)}
   add_mem' := fun {a b} ha hb => by
     have := Tendsto.add ha hb
-    simpa only [mem_ofPred_eq, map_add] using this
+    simpa only [mem_ofPred_eq, map_add (f := _)] using this
   zero_mem' := by
     simp only [mem_ofPred_eq, map_zero]
     exact tendsto_const_nhds

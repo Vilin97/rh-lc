@@ -50,7 +50,7 @@ theorem isHalf_place_right (he : IsSplitIdem D e) {u : WO S T} (hu : IsHalf (cA 
 theorem place_fin (he : IsSplitIdem D e) {u : WO S T} (hu : IsHalf (e + cA D e) u) : u.map (infPart D) = 0 := by
   ext i j
   show infPart D (u i j) = 0
-  rw [← hu i j, RingHom.map_mul, RingHom.map_add, GlobalTheory.SplitScalar.infPart_splitIdem he,
+  rw [← hu i j, RingHom.map_mul, RingHom.map_add (f := _), GlobalTheory.SplitScalar.infPart_splitIdem he,
     GlobalTheory.SplitScalar.infPart_splitIdem (GlobalTheory.SplitScalar.isSplitIdem_conj he), add_zero, zero_mul]
 
 theorem theta_heis (hψ : IsStdChar D ψ (-1)) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) {u : WO S T}
@@ -530,7 +530,7 @@ theorem mem_span_vacGen (hW : IsWeilDatumO ψ S T χS χT om) (hr : T.rank ≤ S
         k • z.map (algebraMap (Ov D v) (Fv D.host.F v)) := by
       ext i j
       simp only [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_mul, map_natCast, nsmul_eq_mul]
-    rw [hM, hM, e1, map_add, map_nsmul, heisO_add_of_orth ψ S T (half_orth he (c1 _) (isHalf_nsmul (c1 _) k)),
+    rw [hM, hM, e1, map_add (f := _), map_nsmul, heisO_add_of_orth ψ S T (half_orth he (c1 _) (isHalf_nsmul (c1 _) k)),
       hfix _ ((c3 _).2 ⟨z, rfl⟩)]
   · rw [map_natCast, Nat.cast_smul_eq_nsmul, ← c3, map_nsmul]
     refine (lat_facts hψ S T he).2.2.2.1 _ (isHalf_nsmul (c1 x) k) fun y hy hy' => ?_
@@ -566,7 +566,7 @@ open GlobalTheory.SplitScalar
 variable {χS χT : (AE D)ˣ →* Circle} {om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)}
 
 theorem cA_place (e : AE D) : cA D (e + cA D e) = e + cA D e := by
-  rw [RingHom.map_add, GlobalTheory.DualPairCheck.cA_cA, add_comm]
+  rw [RingHom.map_add (f := _), GlobalTheory.DualPairCheck.cA_cA, add_comm]
 
 theorem kill_locSpan {f φ : WO S T → ℂ} (L : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ))
     (hL : ∀ u, IsHalf (e + cA D e) u → L (heisO ψ S T u f) = heisO ψ S T u (L f)) (h0 : L f = 0)

@@ -155,7 +155,7 @@ theorem eqA (m i : Fin dd) :
   have hsX1 : MvPowerSeries.HasSubst (fun k : Fin dd => (MvPowerSeries.X ((1 : Fin 2), k) : PS C 2 dd)) :=
     hs (fun k => MvPowerSeries.constantCoeff_X _)
   have h := congrArg (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i)) (l_add Y m)
-  rw [map_add, pderiv_subst hF, pderiv_subst (hX 0), pderiv_subst (hX 1)] at h
+  rw [map_add (f := _), pderiv_subst hF, pderiv_subst (hX 0), pderiv_subst (hX 1)] at h
   beta_reduce at h
   have s0 : ∑ w : Fin dd, MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) (MvPowerSeries.X ((0 : Fin 2), w) : PS C 2 dd) *
       MvPowerSeries.subst (fun k : Fin dd => (MvPowerSeries.X ((0 : Fin 2), k) : PS C 2 dd))

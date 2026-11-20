@@ -96,7 +96,7 @@ theorem transv_det {R : Type} [CommRing R] {ca cb : Fin N} (hc : (cb : ℕ) = ca
 theorem transv_map {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (ca cb : Fin N) (t : R) :
     (1 + Matrix.single cb ca t).map f = 1 + Matrix.single cb ca (f t) := by
   ext r c
-  rw [Matrix.map_apply, Matrix.add_apply, Matrix.add_apply, map_add, Matrix.one_apply, Matrix.one_apply, apply_ite f,
+  rw [Matrix.map_apply, Matrix.add_apply, Matrix.add_apply, map_add (f := _), Matrix.one_apply, Matrix.one_apply, apply_ite f,
     map_one, map_zero, Matrix.single_apply, Matrix.single_apply, apply_ite f, map_zero]
 
 theorem step_mul_right (hj : j ≤ N) (i : Fin N) {A U : Matrix (Fin N) (Fin N) ℂ} (hU : IsBlockDiag j U)

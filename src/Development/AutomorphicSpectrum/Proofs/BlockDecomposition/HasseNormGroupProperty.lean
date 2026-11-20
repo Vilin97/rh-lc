@@ -166,7 +166,7 @@ theorem neg_delta (e : Module.Basis (Fin 2) ℚ K) (h0 : e 0 = 1) {δ : ℚ}
     rw [ComplexEmbedding.conjugate_coe_eq]
     have hx : x = e.repr x 0 • (1 : K) + e.repr x 1 • e 1 := by
       conv_lhs => rw [← e.sum_repr x, Fin.sum_univ_two, h0]
-    rw [hx, map_add, map_add]
+    rw [hx, map_add (f := _), map_add (f := _)]
     have hs : ∀ (q : ℚ) (y : K), τ (q • y) = (q : ℂ) * τ y := fun q y => by
       rw [Algebra.smul_def, map_mul]
       congr 1

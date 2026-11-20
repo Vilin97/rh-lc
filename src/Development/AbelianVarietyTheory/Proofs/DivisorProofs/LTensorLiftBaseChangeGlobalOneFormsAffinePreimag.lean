@@ -40,7 +40,7 @@ theorem lTensor_liftSemi_bijective_of_isBaseChange {R R' B B' W W' Ω Ω' : Type
 
   let bil : R' ⊗[R] B →ₗ[R] W →ₗ[R] B' ⊗[R'] (R' ⊗[R] W) :=
     LinearMap.mk₂ R (fun x w ↦ liftSemi f x ⊗ₜ[R'] ((1 : R') ⊗ₜ[R] w))
-      (fun x y w ↦ by rw [map_add, TensorProduct.add_tmul])
+      (fun x y w ↦ by rw [map_add (f := _), TensorProduct.add_tmul])
       (fun c x w ↦ by rw [hR, map_smul, hsm, TensorProduct.smul_tmul'])
       (fun x w w' ↦ by rw [TensorProduct.tmul_add, TensorProduct.tmul_add])
       (fun c x w ↦ by rw [hW, TensorProduct.tmul_smul, hsm])
@@ -70,12 +70,12 @@ theorem lTensor_liftSemi_bijective_of_isBaseChange {R R' B B' W W' Ω Ω' : Type
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy, map_add, map_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
     | tmul r t =>
       induction t using TensorProduct.induction_on with
       | zero => simp
       | add x y hx hy =>
-        rw [TensorProduct.tmul_add, map_add, map_add, map_add, hx, hy, map_add, map_add]
+        rw [TensorProduct.tmul_add, map_add (f := _), map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
       | tmul b w =>
         simp only [Ψ, Θ, bil, LinearMap.comp_apply, LinearEquiv.coe_coe,
           TensorProduct.assoc_symm_tmul, TensorProduct.lift.tmul, LinearMap.mk₂_apply,

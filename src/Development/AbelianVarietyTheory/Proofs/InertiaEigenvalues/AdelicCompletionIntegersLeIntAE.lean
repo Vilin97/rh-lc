@@ -65,7 +65,7 @@ theorem recon (x : AE D) : jI D (infPart D x) + jF D (finPart D x) = x := by
     rw [Prod.mk_add_mk, add_zero, zero_add]
     rfl
   | add p q hp hq =>
-    rw [RingHom.map_add, RingHom.map_add, LinearMap.map_add, LinearMap.map_add]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _), LinearMap.map_add (f := _), LinearMap.map_add (f := _)]
     conv_rhs => rw [← hp, ← hq]
     abel
 
@@ -73,7 +73,7 @@ theorem infPart_jI (a : Ainf D.host.F ⊗[D.host.F] D.host.E) : infPart D (jI D 
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul p q => rfl
-  | add p q hp hq => rw [LinearMap.map_add, RingHom.map_add, hp, hq]
+  | add p q hp hq => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hp, hq]
 
 theorem finPart_jI (a : Ainf D.host.F ⊗[D.host.F] D.host.E) : finPart D (jI D a) = 0 := by
   induction a using TensorProduct.induction_on with
@@ -82,7 +82,7 @@ theorem finPart_jI (a : Ainf D.host.F ⊗[D.host.F] D.host.E) : finPart D (jI D 
     show (sndA D.host.F (iI D.host.F p)) ⊗ₜ[D.host.F] q = 0
     show (0 : Af D.host.F) ⊗ₜ[D.host.F] q = 0
     exact TensorProduct.zero_tmul _ _
-  | add p q hp hq => rw [LinearMap.map_add, RingHom.map_add, hp, hq, add_zero]
+  | add p q hp hq => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hp, hq, add_zero]
 
 theorem infPart_jF (b : Af D.host.F ⊗[D.host.F] D.host.E) : infPart D (jF D b) = 0 := by
   induction b using TensorProduct.induction_on with
@@ -91,13 +91,13 @@ theorem infPart_jF (b : Af D.host.F ⊗[D.host.F] D.host.E) : infPart D (jF D b)
     show (fstA D.host.F (iF D.host.F p)) ⊗ₜ[D.host.F] q = 0
     show (0 : Ainf D.host.F) ⊗ₜ[D.host.F] q = 0
     exact TensorProduct.zero_tmul _ _
-  | add p q hp hq => rw [LinearMap.map_add, RingHom.map_add, hp, hq, add_zero]
+  | add p q hp hq => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hp, hq, add_zero]
 
 theorem finPart_jF (b : Af D.host.F ⊗[D.host.F] D.host.E) : finPart D (jF D b) = b := by
   induction b using TensorProduct.induction_on with
   | zero => simp
   | tmul p q => rfl
-  | add p q hp hq => rw [LinearMap.map_add, RingHom.map_add, hp, hq]
+  | add p q hp hq => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hp, hq]
 
 theorem ext_parts {a b : AE D} (h1 : infPart D a = infPart D b) (h2 : finPart D a = finPart D b) : a = b := by
   rw [← recon a, ← recon b, h1, h2]
@@ -105,9 +105,9 @@ theorem ext_parts {a b : AE D} (h1 : infPart D a = infPart D b) (h2 : finPart D 
 theorem exists_unit_parts (a : (Ainf D.host.F ⊗[D.host.F] D.host.E)ˣ) (b : (Af D.host.F ⊗[D.host.F] D.host.E)ˣ) :
     ∃ Y : (AE D)ˣ, infPart D (Y : AE D) = a ∧ finPart D (Y : AE D) = b := by
   have hI : ∀ a' b', infPart D (jI D a' + jF D b') = a' := fun a' b' => by
-    rw [RingHom.map_add, infPart_jI, infPart_jF, add_zero]
+    rw [RingHom.map_add (f := _), infPart_jI, infPart_jF, add_zero]
   have hF : ∀ a' b', finPart D (jI D a' + jF D b') = b' := fun a' b' => by
-    rw [RingHom.map_add, finPart_jI, finPart_jF, zero_add]
+    rw [RingHom.map_add (f := _), finPart_jI, finPart_jF, zero_add]
   have h1 : (jI D (a : _) + jF D (b : _)) * (jI D ((a⁻¹ : (Ainf D.host.F ⊗[D.host.F] D.host.E)ˣ) : _) +
       jF D ((b⁻¹ : (Af D.host.F ⊗[D.host.F] D.host.E)ˣ) : _)) = 1 := by
     apply ext_parts
@@ -144,12 +144,12 @@ theorem infPart_sigR (x : AE D) : infPart D (sigR (AF D.host.F) D.sp.cm.sig x) =
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul p q => rfl
-  | add p q hp hq => rw [RingHom.map_add, RingHom.map_add, hp, hq, RingHom.map_add, RingHom.map_add]
+  | add p q hp hq => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hp, hq, RingHom.map_add (f := _), RingHom.map_add (f := _)]
 theorem finPart_sigR (x : AE D) : finPart D (sigR (AF D.host.F) D.sp.cm.sig x) = sigR (Af D.host.F) D.sp.cm.sig (finPart D x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul p q => rfl
-  | add p q hp hq => rw [RingHom.map_add, RingHom.map_add, hp, hq, RingHom.map_add, RingHom.map_add]
+  | add p q hp hq => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hp, hq, RingHom.map_add (f := _), RingHom.map_add (f := _)]
 theorem sigR_tmul_one (b : Af D.host.F) : sigR (Af D.host.F) D.sp.cm.sig (b ⊗ₜ[D.host.F] (1 : D.host.E)) = b ⊗ₜ[D.host.F] (1 : D.host.E) := by
   show b ⊗ₜ[D.host.F] D.sp.cm.sig 1 = _
   rw [map_one]

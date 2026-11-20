@@ -238,7 +238,7 @@ theorem repr_scaled (R : Type) [CommRing R] [Algebra F R] {d : ℕ} (b b' : Modu
     simp only [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply, h,
       smul_eq_mul, map_mul]
     ring
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy, mul_add]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy, mul_add]
 
 theorem exists_clear (v : HeightOneSpectrum (𝓞 F)) (s : Finset F) :
     ∃ c : F, c ≠ 0 ∧ ∀ x ∈ s, algebraMap F (Fv F v) (c * x) ∈ v.adicCompletionIntegers F := by

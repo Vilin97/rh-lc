@@ -137,7 +137,7 @@ theorem levZ_add_tors : ∀ (h M d : ℕ) (S : Scheme.{0}) (t : S ⟶ Sp (cycAwa
     rw [← Finset.prod_mul_distrib]
     refine Finset.prod_congr rfl fun k _ => ?_
     haveI := hg k
-    rw [map_add, c.lev_add, MonObj.mul_comp]
+    rw [map_add (f := _), c.lev_add, MonObj.mul_comp]
   · intro a
     simp only [levZ, List.prod_ofFn]
     rw [← Finset.prod_pow]

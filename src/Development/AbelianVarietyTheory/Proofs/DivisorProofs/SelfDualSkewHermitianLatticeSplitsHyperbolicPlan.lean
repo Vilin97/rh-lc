@@ -24,7 +24,7 @@ theorem form_smul_left (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n
 
 theorem form_add_right (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (x y y' : Fin n → E) :
     form σ J x (y + y') = form σ J x y + form σ J x y' := by
-  simp only [form, Pi.add_apply, map_add]
+  simp only [form, Pi.add_apply, map_add (f := _)]
   rw [show (fun i => σ (y i) + σ (y' i)) = (fun i => σ (y i)) + (fun i => σ (y' i)) from rfl,
     Matrix.mulVec_add, dotProduct_add]
 

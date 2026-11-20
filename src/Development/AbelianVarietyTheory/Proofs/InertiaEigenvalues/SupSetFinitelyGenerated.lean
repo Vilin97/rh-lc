@@ -140,7 +140,7 @@ theorem exists_bound (X : Set L)
       exact le_of_eq_of_le (congrArg _ ho.symm) (la.valuation_le_one o)
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [RingOfIntegers.coe_eq_algebraMap (x + y), map_add, mul_add, map_add, mul_add]
+      rw [RingOfIntegers.coe_eq_algebraMap (x + y), map_add (f := _), mul_add, map_add (f := _), mul_add]
       exact Valuation.map_add_le _ hx hy
     | smul n x _ hx =>
       have e : ((d : 𝓞 K) : K) * ℓ ((D : L)⁻¹ * ((n • x : 𝓞 L) : L)) =

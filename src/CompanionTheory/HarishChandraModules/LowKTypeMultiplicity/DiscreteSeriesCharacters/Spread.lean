@@ -128,7 +128,7 @@ theorem capelli_spread : Spread := by
   let c : ℂ → ℂ := fun Y => Formalism.QuantumDeterminants.capP (fun s => (lam s : ℂ)) Y
   let K : Submodule ℂ S :=
     { carrier := {x | ∀ Y : ℂ, qdet E (Y + ((n : ℂ) - 1) / 2) x = c Y • x}
-      add_mem' := fun ha hb Y => by rw [map_add, ha Y, hb Y, smul_add]
+      add_mem' := fun ha hb Y => by rw [map_add (f := _), ha Y, hb Y, smul_add]
       zero_mem' := fun Y => by simp
       smul_mem' := fun s x hx Y => by rw [map_smul, hx Y, smul_comm] }
   have hK : ∀ g ∈ PI.UpqRep.UJset ε, ∀ x ∈ K.map S.subtype, σ g x ∈ K.map S.subtype := by

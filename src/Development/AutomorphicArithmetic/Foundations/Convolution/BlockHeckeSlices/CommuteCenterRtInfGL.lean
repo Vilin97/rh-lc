@@ -73,7 +73,7 @@ theorem commute_uC_finRep (u : UC E n) (k : GL (Fin n) (Af E)) : Commute (uC E n
   have hu : u ∈ Algebra.adjoin ℂ {x : UC E n | ∃ τ i j, x = genC τ i j} := by rw [adjoin_genC]; trivial
   refine Algebra.adjoin_induction (p := fun x _ => Commute (uC E n x) (finRep E n k)) ?_
     (fun r => by rw [AlgHom.commutes]; exact Algebra.commutes r _)
-    (fun _ _ _ _ hx hy => by rw [map_add]; exact hx.add_left hy)
+    (fun _ _ _ _ hx hy => by rw [map_add (f := _)]; exact hx.add_left hy)
     (fun _ _ _ _ hx hy => by rw [map_mul]; exact hx.mul_left hy) hu
   rintro _ ⟨τ, i, j, rfl⟩
   have h : ∀ i j x, Commute (lieS E n i j x) (finRep E n k) := fun i j x => lie_rt_fin _ k
@@ -85,7 +85,7 @@ theorem commute_center_rt_infGL {u : UC E n} (hu : u ∈ Subalgebra.center ℂ (
   rw [center_UC] at hu
   refine Algebra.adjoin_induction (p := fun x _ => Commute (uC E n x) (rt E n (infGL E n y))) ?_
     (fun r => by rw [AlgHom.commutes]; exact Algebra.commutes r _)
-    (fun _ _ _ _ hx hy => by rw [map_add]; exact hx.add_left hy)
+    (fun _ _ _ _ hx hy => by rw [map_add (f := _)]; exact hx.add_left hy)
     (fun _ _ _ _ hx hy => by rw [map_mul]; exact hx.mul_left hy) hu
   rintro _ ⟨τ, u, rfl⟩
   rw [uC_capC]
@@ -102,7 +102,7 @@ def bsp (S : Set (Pl E)) (n : ℕ) {C : ℝ} (hC : 0 ≤ C) : Submodule ℂ (Sm 
   carrier := {φ | Band C φ ∧ Sph S φ}
   zero_mem' := ⟨(bandOps E n C hC).1, fun _ _ _ _ => map_zero _⟩
   add_mem' {φ ψ} hφ hψ := ⟨((bandOps E n C hC).2 φ hφ.1).1 ψ hψ.1, fun w hw k hk => by
-    rw [map_add, hφ.2 w hw k hk, hψ.2 w hw k hk]⟩
+    rw [map_add (f := _), hφ.2 w hw k hk, hψ.2 w hw k hk]⟩
   smul_mem' c φ hφ := ⟨((bandOps E n C hC).2 φ hφ.1).2.1 c, fun w hw k hk => by rw [map_smul, hφ.2 w hw k hk]⟩
 
 def cmp (d : Dat S n) {C : ℝ} (hC : 0 ≤ C) : bsp S n hC →ₗ[ℂ] ((Fin d.len → ℝ) → ℂ) where
@@ -203,8 +203,8 @@ theorem exists_sys (d : Dat S n) {C : ℝ} (hC : 0 ≤ C) :
       rfl
     | add p q hp hq =>
       intro v
-      rw [map_add, add_smul, Submodule.coe_add, hp, hq]
-      simp only [zop, map_add, Subalgebra.coe_add, LinearMap.add_apply]
+      rw [map_add (f := _), add_smul, Submodule.coe_add, hp, hq]
+      simp only [zop, map_add (f := _), Subalgebra.coe_add, LinearMap.add_apply]
     | mul_X p q hp =>
       intro v
       rw [map_mul, mul_smul, hp, MvPolynomial.aeval_X, hz]

@@ -151,7 +151,7 @@ theorem lattice_line (K : Type) [Field K] [NumberField K] (n : ℕ) (F : HermLat
             (fun j => (a : K'') / d'' * algebraMap K' K'' (v j)) +
               (fun j => (b : K'') / d'' * algebraMap K' K'' (v j)) := by
           funext j
-          simp only [Pi.add_apply, map_add, add_div, add_mul]
+          simp only [Pi.add_apply, map_add (f := _), add_div, add_mul]
         rw [this]; exact Submodule.add_mem _ ha hb
       | smul a b _ hb =>
         have : (fun j => ((a • b : 𝓞 K'') : K'') / d'' * algebraMap K' K'' (v j)) =

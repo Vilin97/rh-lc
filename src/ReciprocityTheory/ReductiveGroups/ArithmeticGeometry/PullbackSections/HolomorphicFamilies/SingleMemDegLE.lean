@@ -21,7 +21,7 @@ theorem aeval_tan {ι : Type} [DecidableEq ι] (ℓ : ι) (P : MvPolynomial ι V
   | C a =>
     simp only [MvPolynomial.aeval_C, MvPolynomial.constantCoeff_C, MvPolynomial.coeff_C,
       if_neg (Finsupp.single_ne_zero.2 one_ne_zero).symm, zero_smul, add_zero]
-  | add p q hp hq => rw [map_add, hp, hq, map_add, map_add, MvPolynomial.coeff_add, add_smul]; abel
+  | add p q hp hq => rw [map_add (f := _), hp, hq, map_add (f := _), map_add (f := _), MvPolynomial.coeff_add, add_smul]; abel
   | mul_X p n hp =>
     rw [map_mul, hp, MvPolynomial.aeval_X, map_mul, MvPolynomial.constantCoeff_X, mul_zero, map_zero, zero_add,
       MvPolynomial.coeff_mul_X']

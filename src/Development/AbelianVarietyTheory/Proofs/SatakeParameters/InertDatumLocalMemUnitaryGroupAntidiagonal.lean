@@ -31,7 +31,7 @@ theorem inertLoc_mem_GU (L : Type) [Field L] [NumberField L] [IsCMField L] (n : 
     induction a using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [compAt, conjAL, Formalism.UG.sigR, Algebra.TensorProduct.map_tmul]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   set f : AL L →+* w.adicCompletion L := (Dv.e : _ →+* w.adicCompletion L).comp (compAt L v) with hf
   have hfc : ∀ a, f (conjAL L a) = Dv.σw (f a) := by
     intro a; simp only [hf, RingHom.comp_apply, hcomm]; exact Dv.comm _

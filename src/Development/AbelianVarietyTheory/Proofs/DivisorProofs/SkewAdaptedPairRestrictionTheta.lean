@@ -55,7 +55,7 @@ theorem exists_ratLagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     rw [RingHom.map_dotProduct, RingHom.map_dotProduct]
     simp only [Function.comp_def]
     rw [ha1, ha2, hb1, hb2, ea, eb]
-    simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+    simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
     linear_combination h1 + h2 - h3 + h4
   refine ⟨lagr M M₁ H', hiso, ?_, ?_⟩
   ·
@@ -79,7 +79,7 @@ theorem exists_ratLagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     refine ⟨Matrix.vecMulVec (t • y) (incV F H'.x), ⟨t • y, rfl⟩, t • z, by simp [hz], fun φ => ?_⟩
     have h0 := hcross _ ⟨t • y, rfl⟩ (t • z)
     rw [hD] at h0
-    rw [Darboux.rho, Darboux.rho, schr_comp, ← map_add]
+    rw [Darboux.rho, Darboux.rho, schr_comp, ← map_add (f := _)]
     have hs : (M.co.e (Matrix.vecMulVec (t • y) (incV F H'.x))).1 ⬝ᵥ
           (M.co.e (incM F (1 : Matrix (Fin n) (Fin n) E) * (t • z) * (incM F H'.ι)ᵀ)).2 -
         (M.co.e (incM F (1 : Matrix (Fin n) (Fin n) E) * (t • z) * (incM F H'.ι)ᵀ)).1 ⬝ᵥ

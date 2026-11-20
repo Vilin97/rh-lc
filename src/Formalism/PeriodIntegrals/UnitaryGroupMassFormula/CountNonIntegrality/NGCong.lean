@@ -173,7 +173,7 @@ theorem cong_two {K : Type} [Field K] [ValuativeRel K] (Λ : Submodule (𝓞 D.h
 theorem fin_three {E K : Type} [Field E] [Field K] (σ : E →+* K) (A B C : E) (T T' : ℕ) (c : Prop) [Decidable c]
     (hA : A = if c then -(T : E) else 0) (hB : B = if c then -(T' : E) else 0) (x : K) (hx : σ C = x) :
     σ (A + B - C) + (if c then (T : K) + (T' : K) else 0) = -x := by
-  rw [map_sub, map_add, hx, hA, hB]
+  rw [map_sub, map_add (f := _), hx, hA, hB]
   split_ifs
   · rw [map_neg, map_neg, map_natCast, map_natCast]
     ring
@@ -216,14 +216,14 @@ theorem congruence_subgroup_index : CongG := by
     exact val_one_of_not_mem _ _ hl0 hl s hs'
   have hdec : ∀ a b, (VS D).hT (F0.fvec a) (F'.fl.fvec b) =
       (VS D).hT (F0.fvec a) (F0.fvec b) + (VS D).hT (F0.fvec a) (F'.fl.fvec b - F0.fvec b) := fun a b => by
-    rw [← map_add]; congr 1; abel
+    rw [← map_add (f := _)]; congr 1; abel
   have key : ∀ σ : D.host.E →+* (D.s.atP p).Fp, ∃ s : 𝒪[(D.s.atP p).Fp], σ (Z a b) +
       (if a = Fin.last D.R.rS ∧ b = Fin.last D.R.rS then (((D.mem u).A.T : ℕ) : (D.s.atP p).Fp) else 0) =
         (g.q : (D.s.atP p).Fp) * s := by
     intro σ
     obtain ⟨t, ht⟩ := cong_one Λ hU' (hf a) (hy b) σ _ (hgP σ) (val_one_of_not_mem σ _ hl0 hl) g.q k hg
     refine ⟨t, ?_⟩
-    rw [hZc, hdec, map_add, ht, flag_gram F0 a b]
+    rw [hZc, hdec, map_add (f := _), ht, flag_gram F0 a b]
     split_ifs <;> simp [Tn]
   refine ⟨key (sg1 p g), key (sg2 p g), ?_⟩
   obtain ⟨t, ht⟩ := cong_two Λ hU' (hy a) (hy b) (sg1 p g) (vPrime (sg1 p g) (Loc.resChar p) hl0 hl)

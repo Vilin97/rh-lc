@@ -53,7 +53,7 @@ theorem dbl_inj (hψ : IsStd ψ) (h : IsDbl (σ := σ) (A := A) (Y := Y) (κ := 
   refine (h.theta _ (GlobalTheory.HeisSchA.schr_mem_schA ψ hψ _ Φ hΦ)).unique (by
     convert hasSum_zero with y
     obtain ⟨c, e⟩ := schr_schr (ψ := ψ) (dd.e (incM F (Matrix.fromCols y (-y)))) (dd.e w)
-    rw [Darboux.rho, e, map_smul, ← map_add, ← Darboux.rho, h0, smul_zero])
+    rw [Darboux.rho, e, map_smul, ← map_add (f := _), ← Darboux.rho, h0, smul_zero])
 
 theorem dbl_comm (hψ : IsStd ψ) (h : IsDbl (σ := σ) (A := A) (Y := Y) (κ := κ) ψ dd χ om S l) {p t} (hp : IsPar p t) (g)
     {Φ} (hΦ : Φ ∈ schA F κ) : om p (S g Φ) = S g (om p Φ) := by

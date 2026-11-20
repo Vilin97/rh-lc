@@ -112,7 +112,7 @@ theorem singleAt_mul (w : HeightOneSpectrum (𝓞 E)) (x : w.adicCompletion E) (
   · simp only [map_mul, compAt_singleAt_ne e, zero_mul]
 
 theorem singleAt_add (w : HeightOneSpectrum (𝓞 E)) (x y : w.adicCompletion E) :
-    singleAt F w (x + y) = singleAt F w x + singleAt F w y := by simp only [singleAt, map_add]
+    singleAt F w (x + y) = singleAt F w x + singleAt F w y := by simp only [singleAt, map_add (f := _)]
 
 theorem singleAt_zero (w : HeightOneSpectrum (𝓞 E)) : singleAt F w 0 = 0 := by simp only [singleAt, map_zero]
 
@@ -127,7 +127,7 @@ theorem compAt_mem_latAt {n : ℕ} {L : Submodule (𝓞 E) (Fin n → E)} (w : H
     obtain ⟨a, ha, x, hx, rfl⟩ := hy
     exact (latAt w L).smul_mem ⟨_, GlobalTheory.AdeleBaseChange.locMap_int w _ (ha _)⟩ (Submodule.subset_span ⟨x, hx, rfl⟩)
   | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => simp only [Pi.add_apply, map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hy hz
   | neg y _ hy => simp only [Pi.neg_apply, map_neg]; exact neg_mem hy
 
 theorem finMat_map_compAt (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) {v : HeightOneSpectrum (𝓞 F)}

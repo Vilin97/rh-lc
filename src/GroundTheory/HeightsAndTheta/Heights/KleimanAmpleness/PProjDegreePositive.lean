@@ -90,7 +90,7 @@ theorem isRelevant_of_ringKrullDim (W : Ideal (MRing (fun _ : Unit => ι₀) F))
     | add p r hp hr =>
       obtain ⟨a, ha⟩ := hp
       obtain ⟨b, hb⟩ := hr
-      exact ⟨a + b, by rw [map_add, ha, hb, map_add]⟩
+      exact ⟨a + b, by rw [map_add (f := _), ha, hb, map_add (f := _)]⟩
     | mul_X p v _ =>
       refine ⟨0, ?_⟩
       rw [map_zero, map_mul, Ideal.Quotient.eq_zero_iff_mem.mpr (hX v), mul_zero]

@@ -20,7 +20,7 @@ theorem norm_coeff_sum_le {s : Type} (t : Finset s) (f : s → K⟦X⟧) {C : �
   induction t using Finset.induction_on with
   | empty => simpa using hC
   | insert k t hk ih =>
-    rw [Finset.sum_insert hk, map_add]
+    rw [Finset.sum_insert hk, map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf k n) ih)
 
 theorem bdd_matMul {μ ν ρ : Type} [Fintype ν] {Y : Matrix μ ν K⟦X⟧} {Z : Matrix ν ρ K⟦X⟧}

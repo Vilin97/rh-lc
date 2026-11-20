@@ -188,7 +188,7 @@ theorem ker_fibre_mem_span : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] 
     | add z z' _ _ hz hz' =>
       obtain ⟨y, hy, e⟩ := hz
       obtain ⟨y', hy', e'⟩ := hz'
-      exact ⟨y + y', Submodule.add_mem _ hy hy', by rw [map_add, e, e']⟩
+      exact ⟨y + y', Submodule.add_mem _ hy hy', by rw [map_add (f := _), e, e']⟩
     | smul c z _ hz =>
       obtain ⟨y, hy, e⟩ := hz
       exact ⟨c • y, Submodule.smul_mem _ c hy, by rw [map_smul, e]⟩

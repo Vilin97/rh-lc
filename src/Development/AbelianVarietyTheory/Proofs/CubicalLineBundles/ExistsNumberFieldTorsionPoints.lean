@@ -34,7 +34,7 @@ theorem exists_field_alg (k : IntermediateField ℚ ℂ) [FiniteDimensional ℚ 
       refine ⟨b, hb, Polynomial.mem_rootSet.2 ⟨minpoly.ne_zero (hint b), ?_⟩⟩
       rw [Polynomial.aeval_algHom_apply, minpoly.aeval, map_zero]
     | zero => rw [map_zero]; exact zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | smul c a _ ha => rw [map_smul]; exact IntermediateField.smul_mem _ ha
 
 theorem exists_field_finite (k : IntermediateField ℚ ℂ) [FiniteDimensional ℚ k] (Z : Over (Sp k)) [IsFinite Z.hom] :

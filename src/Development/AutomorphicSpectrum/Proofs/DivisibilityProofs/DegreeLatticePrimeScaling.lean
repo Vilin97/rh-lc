@@ -40,7 +40,7 @@ theorem lineVert_prod_weight [Fintype K] (m : (Σ k, ι k) →₀ ℕ) :
   induction m using Finsupp.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    rw [Finsupp.prod_add_index' (by simp) (by intros; rw [pow_add]), hf, hg, map_add,
+    rw [Finsupp.prod_add_index' (by simp) (by intros; rw [pow_add]), hf, hg, map_add (f := _),
       ← Finset.prod_mul_distrib]
     exact Finset.prod_congr rfl fun k _ => by rw [Pi.add_apply, pow_add]
   | single p e =>
@@ -108,7 +108,7 @@ theorem lineVert_chart_form [Fintype K] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι
       exact a₁.add a₂
     · have hp : ∀ r : ℕ, ∏ k, y ⟨k, c k⟩ ^ r = segreVec y c ^ r := fun r => by
         rw [segreVec, Finset.prod_pow]
-      rw [map_add, map_mul, map_mul, lineVertMono_aeval, lineVertMono_aeval, hp, hp, ← v₁, ← v₂]
+      rw [map_add (f := _), map_mul, map_mul, lineVertMono_aeval, lineVertMono_aeval, hp, hp, ← v₁, ← v₂]
       ring
   | mul x z _ _ hx hz =>
     obtain ⟨r₁, G₁, h₁, v₁⟩ := hx

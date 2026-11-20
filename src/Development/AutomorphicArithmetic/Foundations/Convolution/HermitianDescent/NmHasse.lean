@@ -10,7 +10,7 @@ private theorem root_isUnit {F : Type} [Field F] (p : F[X]) (h : p.coeff 0 ≠ 0
     IsUnit (AdjoinRoot.root p) := by
   have h1 : AdjoinRoot.mk p (X * p.divX + C (p.coeff 0)) = 0 := by
     rw [X_mul_divX_add, AdjoinRoot.mk_self]
-  rw [map_add, map_mul, AdjoinRoot.mk_X, AdjoinRoot.mk_C, add_eq_zero_iff_eq_neg] at h1
+  rw [map_add (f := _), map_mul, AdjoinRoot.mk_X, AdjoinRoot.mk_C, add_eq_zero_iff_eq_neg] at h1
   exact isUnit_of_mul_isUnit_left (h1 ▸ ((Ne.isUnit h).map (AdjoinRoot.of p)).neg)
 
 private theorem root_reduced {F : Type} [Field F] (p : F[X]) (h : p.Separable) :

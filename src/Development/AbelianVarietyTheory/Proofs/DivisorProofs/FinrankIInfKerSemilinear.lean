@@ -97,7 +97,7 @@ theorem finrank_eq {K L F M C W V G G' Γ : Type} [Field K] [Field L] [Field F] 
     induction hf using Submodule.span_induction with
     | mem _ h => obtain ⟨k, rfl⟩ := h; rw [← hΦb, Basis.mk_apply]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, map_add, hx, hy, map_add, TensorProduct.tmul_add]
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), TensorProduct.tmul_add]
     | smul t x _ hx =>
       rw [map_smul, ← algebraMap_smul L, map_smulₛₗ, hx, map_smulₛₗ, hσ, algebraMap_smul, TensorProduct.tmul_smul]
   have hind : LinearIndependent M fun k => Φ (bW k) := by
@@ -132,7 +132,7 @@ theorem finrank_eq {K L F M C W V G G' Γ : Type} [Field K] [Field L] [Field F] 
     induction hv' using Submodule.span_induction with
     | mem _ h => obtain ⟨f, rfl⟩ := h; exact Submodule.subset_span ⟨_, hΦ f⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul t x _ hx => rw [map_smul, ← algebraMap_smul M]; exact Submodule.smul_mem _ _ hx
   let a : Q → W →ₗ[L] W := fun γ => (((chi (θ γ))⁻¹ : Lˣ) : L) • ρ (θ γ) - ((lam ⟨θ γ, (hQ _).1 γ.2⟩ : Lˣ) : L) • LinearMap.id
   let a' : Q → M ⊗[F] V →ₗ[M] M ⊗[F] V := fun γ => R γ - ((lamb γ : Mˣ) : M) • LinearMap.id

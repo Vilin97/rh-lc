@@ -140,7 +140,7 @@ theorem frameONB_of (hLB : LocBasisMM) (hRC : RatCoord) (hFC : FixConj) : FrameO
     refine ⟨x + y, ?_⟩
     show TaylorLogMetric.lamC lam (D.host.φ₀ ((x + y : D.host.K) : D.host.E)) =
       TaylorLogMetric.lamC lam (D.host.φ₀ (x : D.host.E)) + TaylorLogMetric.lamC lam (D.host.φ₀ (y : D.host.E))
-    rw [← htE', ← htE', ← htE', IntermediateField.coe_add, map_add]
+    rw [← htE', ← htE', ← htE', IntermediateField.coe_add, map_add (f := _)]
   have hSr_mul : ∀ a ∈ Sr, ∀ b ∈ Sr, a * b ∈ Sr := by
     rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩
     refine ⟨x * y, ?_⟩

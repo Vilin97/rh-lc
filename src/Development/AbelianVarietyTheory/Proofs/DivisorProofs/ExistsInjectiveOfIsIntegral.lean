@@ -34,7 +34,7 @@ theorem exists_injective_of_isIntegral {A B O C : Type} [CommRing A] [IsDomain A
       map_one' := hv.hom_inj (by simp only [hg, map_one])
       map_mul' := fun x y => hv.hom_inj (by simp only [hg, map_mul])
       map_zero' := hv.hom_inj (by simp only [hg, map_zero])
-      map_add' := fun x y => hv.hom_inj (by simp only [hg, map_add]) }
+      map_add' := fun x y => hv.hom_inj (by simp only [hg, map_add (f := _)]) }
   refine ⟨j', ?_⟩
   have e : (algebraMap O C).comp j' = (ψ : B →+* C) := RingHom.ext hg
   rw [e]

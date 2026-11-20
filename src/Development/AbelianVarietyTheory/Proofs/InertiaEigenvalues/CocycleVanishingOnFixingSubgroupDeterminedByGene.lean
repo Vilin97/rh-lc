@@ -34,7 +34,7 @@ theorem psum_add (hg : g ∈ G) (hone : ∀ y, A 1 y = y)
   induction a with
   | zero => simp [psum_zero, hone]
   | succ a ih =>
-    rw [Nat.add_right_comm, psum_succ, psum_succ, ih, map_add, pow_succ', hmul _ hg _ (pow_mem hg a),
+    rw [Nat.add_right_comm, psum_succ, psum_succ, ih, map_add (f := _), pow_succ', hmul _ hg _ (pow_mem hg a),
       add_assoc]
 
 omit [Group Γ] in
@@ -62,7 +62,7 @@ theorem norm_move_psum_le (hg : g ∈ G)
   | succ n ih =>
     have h : A (g ^ q) (psum A g w (n + 1)) - psum A g w (n + 1)
         = (A (g ^ q) w - w) + A g (A (g ^ q) (psum A g w n) - psum A g w n) := by
-      rw [psum_succ, map_add, map_sub, ← hmul _ (pow_mem hg q) _ hg, ← hmul _ hg _ (pow_mem hg q),
+      rw [psum_succ, map_add (f := _), map_sub, ← hmul _ (pow_mem hg q) _ hg, ← hmul _ hg _ (pow_mem hg q),
         ← pow_succ, ← pow_succ']
       abel
     rw [h]

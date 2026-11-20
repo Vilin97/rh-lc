@@ -87,7 +87,7 @@ def cmQb (ι : Qb →+* ℂ) : Fld where
     rw [map_mul, map_mul, map_mul, map_mul, ha τ, hb τ]
   add_mem' := by
     intro a b ha hb τ
-    rw [map_add, map_add, map_add, map_add, ha τ, hb τ]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ha τ, hb τ]
   inv_mem' := by
     intro a ha τ
     rw [map_inv₀, map_inv₀, map_inv₀, map_inv₀, ha τ]

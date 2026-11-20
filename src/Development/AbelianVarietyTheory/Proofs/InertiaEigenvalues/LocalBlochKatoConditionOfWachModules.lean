@@ -126,7 +126,7 @@ theorem tbe_clauses (L : Lattice (O := O) ρ) (I J : Subgroup G) (hIJ : I = J) (
       obtain ⟨y, ⟨x, hx⟩, b, ⟨u, rfl⟩, rfl⟩ := Submodule.mem_sup.mp hs
       refine ⟨x + u, fun g hg => ?_⟩
       show y g + (actD L g u - u) = actD L g (x + u) - (x + u)
-      rw [hx g hg, map_add]
+      rw [hx g hg, map_add (f := _)]
       abel
   · refine (len_le_torsion PD L _).trans (hlen.trans (le_of_eq ?_))
     push_cast

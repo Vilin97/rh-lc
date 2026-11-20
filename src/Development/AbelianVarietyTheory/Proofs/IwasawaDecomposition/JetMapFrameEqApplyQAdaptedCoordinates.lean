@@ -145,15 +145,15 @@ theorem constantCoeff_subst_linS (c : σ → κ → K) (F : MvPowerSeries σ K) 
     rw [← MvPowerSeries.c_eq_algebraMap, map_sub, MvPowerSeries.constantCoeff_C, sub_self]
   have h1 := MvPowerSeries.constantCoeff_subst_eq_zero hs (constantCoeff_linS c) h0
   rw [← MvPowerSeries.coe_substAlgHom hs] at h1 ⊢
-  conv_lhs => rw [e, map_add, AlgHom.commutes]
-  rw [map_add, h1, add_zero, ← MvPowerSeries.c_eq_algebraMap, MvPowerSeries.constantCoeff_C]
+  conv_lhs => rw [e, map_add (f := _), AlgHom.commutes]
+  rw [map_add (f := _), h1, add_zero, ← MvPowerSeries.c_eq_algebraMap, MvPowerSeries.constantCoeff_C]
 
 theorem fpair_subst_linS (c : σ → κ → K) (Q : MvPolynomial κ K) (F : MvPowerSeries σ K) :
     fpair Q (MvPowerSeries.subst (linS c) F) =
       fpair (MvPolynomial.aeval (fun j : κ => ∑ k : σ, MvPolynomial.C (c k j) * MvPolynomial.X k) Q) F := by
   induction Q using MvPolynomial.induction_on generalizing F with
   | C r => rw [MvPolynomial.aeval_C, fpair_C, MvPolynomial.algebraMap_eq, fpair_C, constantCoeff_subst_linS]
-  | add p q hp hq => rw [fpair_add_left, hp, hq, map_add, fpair_add_left]
+  | add p q hp hq => rw [fpair_add_left, hp, hq, map_add (f := _), fpair_add_left]
   | mul_X p j ih =>
     rw [fpair_mul_X, Formalism.MainNotions.ModuliIntegralCharts.H1.ExpTieAlg.pderiv_subst (hasSubst_linS c), fpair_sum_right]
     simp_rw [pderiv_linS, fpair_mul_C_right, ih, ← fpair_mul_X]
@@ -179,7 +179,7 @@ theorem eval_jetLin {K ι : Type} [Field K] [Fintype ι] [DecidableEq ι] {a b :
       fpair (MvPolynomial.aeval (Sum.elim (fun v => MvPolynomial.C (y v))
         (fun d => MvPolynomial.C (sc d.1) * MvPolynomial.X d)) R) T := by
   induction R using MvPolynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, fpair_add_left]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), fpair_add_left]
   | monomial m c =>
     have hb : MvPolynomial.monomial m c = c • (MvPolynomial.basisMonomials ((ι × Fin b × Fin b) ⊕ DVar ι a b) K) m := by
       rw [MvPolynomial.coe_basisMonomials, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]

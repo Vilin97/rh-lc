@@ -46,7 +46,7 @@ theorem finrank_eig_inf_ker_le : ∀ (Γ V : Type) [Group Γ] [Fintype Γ] [AddC
     have hx1 : x = ρ.asAlgebraHom (1 - e) x := by
       rw [map_sub, map_one, LinearMap.sub_apply, hek, sub_zero]; rfl
     have : x = 0 := by
-      rw [hx1, he, map_sub, map_add, map_mul]
+      rw [hx1, he, map_sub, map_add (f := _), map_mul]
       simp [LinearMap.sub_apply, LinearMap.add_apply, Module.End.mul_apply, hb0, hb1]
     exact Subtype.ext this
   have hdim := LinearMap.finrank_le_finrank_of_injective hinj

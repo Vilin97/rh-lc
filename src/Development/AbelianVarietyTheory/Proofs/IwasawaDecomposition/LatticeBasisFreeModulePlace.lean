@@ -66,7 +66,7 @@ theorem charpoly_restrict_map_eq_prod {O V : Type} [CommRing O] [IsDomain O] [Ad
       exact hBV _ (hf _ (b i).2)
     · simp
     · intro x y _ _ hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact V'.add_mem hx hy
     · intro a x _ hx
       rw [map_smul]

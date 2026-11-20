@@ -287,7 +287,7 @@ theorem isSMulRegular_coker_dualMap_of_exact_fibres :
     refine ⟨t, ht, fun f hf => ⟨k₁.dualMap f, LinearMap.ext fun x => ?_⟩⟩
     have h1 : f ((C.d (i - 1) i).hom (k₀ x)) = 0 := LinearMap.congr_fun hf (k₀ x)
     have h2 := congrArg f (hk x)
-    rw [map_add, h1, zero_add, map_smul] at h2
+    rw [map_add (f := _), h1, zero_add, map_smul] at h2
     exact h2
   have key : ∀ k i, i + k = g →
       IsSMulRegular (Module.Dual A (C.X i) ⧸ LinearMap.range (C.d i (i + 1)).hom.dualMap) ϖ ∧

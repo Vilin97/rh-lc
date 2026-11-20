@@ -92,7 +92,7 @@ def thF (γ : MbMod Z₁.Z →ₗ[M.R] MbMod Z₂.Z) : (Fin (r + 1) → M.R) →
     rw [show mk1 hs Z₂ TT (liftG γ v) + mk1 hs Z₂ TT (liftG γ w) = mk1 hs Z₂ TT (liftG γ v + liftG γ w)
       from rfl]
     apply firstQuotient_of_quotient_eq
-    rw [liftG_spec, Submodule.Quotient.mk_add, Submodule.Quotient.mk_add, liftG_spec, liftG_spec, map_add]
+    rw [liftG_spec, Submodule.Quotient.mk_add, Submodule.Quotient.mk_add, liftG_spec, liftG_spec, map_add (f := _)]
 
 theorem thF_ker (γ : MbMod Z₁.Z →ₗ[M.R] MbMod Z₂.Z) (hb : γ (bCls Z₁.Z) = bCls Z₂.Z)
     (he : γ (eCl Z₁.Z) = eCl Z₂.Z) : LL hs Z₁ TT ≤ (thF hs TT γ).ker := by

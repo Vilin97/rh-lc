@@ -22,7 +22,7 @@ private theorem opOf_proj {Λ Γ Q M : Type} [CommRing Λ] [Group Γ] [Group Q] 
   have key : ∀ a : MonoidAlgebra Λ Q, ρ'.asAlgebraHom (σ a) = ρ.asAlgebraHom a := fun a => by
     induction a using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
     | single g c => simp [σ, ρ']
   haveI := RingHomInvPair.of_ringEquiv σ
   haveI := RingHomInvPair.of_ringEquiv_symm σ
@@ -94,7 +94,7 @@ private theorem opOf_tr {Λ R G P Γ σ : Type} [CommRing Λ] [CommRing R] [Alge
       congr 1
       refine Fintype.sum_equiv (Equiv.mulRight (e (γ p))) _ _ fun g => ?_
       rw [Equiv.coe_mulRight, map_mul, Module.End.mul_apply])
-    rw [hY, map_add] at h4
+    rw [hY, map_add (f := _)] at h4
     exact add_eq_left.1 h4
 private theorem opOf_gen {l q n : ℕ} (hl : l.Prime) (a : Fin q → ℕ) :
     Subgroup.closure (Set.range fun p : Fin q × Fin n => (Pi.mulSingle p (Multiplicative.ofAdd 1) : Del l n a)) = ⊤ := by
@@ -160,7 +160,7 @@ theorem UpperTheory.V.Th.opOfX_alt :
   haveI : ∀ p : Fin q × Fin n, NeZero (l ^ padicValNat l (qj w p.1 - 1)) := fun s => ⟨pow_ne_zero _ hl.out.ne_zero⟩
   obtain ⟨hs, hk⟩ := opOf_tr A.ρ (UIw n w) (UIw1 l n w) hle ρ' hρ' hpr e
     (fun p : Fin q × Fin n => Pi.mulSingle p (Multiplicative.ofAdd 1)) (opOf_gen hl.out fun j => padicValNat l (qj w j - 1))
-    (fun p : Fin q × Fin n => T.act1 (yV A.R p.1 p.2)) (fun p m => (hg p.1 p.2 m).trans (by rw [map_add, map_one]; rfl)) tr htr
+    (fun p : Fin q × Fin n => T.act1 (yV A.R p.1 p.2)) (fun p m => (hg p.1 p.2 m).trans (by rw [map_add (f := _), map_one]; rfl)) tr htr
   have ha : ∀ j, N ≤ padicValNat l (qj w j - 1) := fun j => by
     have h4 : 1 < qj w j := Finite.one_lt_card
     exact (padicValNat_dvd_iff_le (by omega)).1 ((Nat.modEq_iff_dvd' h4.le).1 (hN j).symm)

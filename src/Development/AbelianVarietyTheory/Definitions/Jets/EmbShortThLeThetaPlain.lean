@@ -98,7 +98,7 @@ theorem spanK_fg_of_fg [Module (𝓞 F) C] [IsScalarTower (𝓞 F) F C] {N : Sub
     induction hf using Submodule.span_induction with
     | mem x hx => exact mem_spanK z hx
     | zero => simp
-    | add x y _ _ hx hy => rw [TensorProduct.tmul_add, map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [TensorProduct.tmul_add, map_add (f := _)]; exact add_mem hx hy
     | smul r x _ hx =>
       have e : (1 : K) ⊗ₜ[F] (r • x) = (algebraMap F K (r : F)) • ((1 : K) ⊗ₜ[F] x) := by
         have h1 : r • x = (r : F) • x := (algebraMap_smul F r x).symm

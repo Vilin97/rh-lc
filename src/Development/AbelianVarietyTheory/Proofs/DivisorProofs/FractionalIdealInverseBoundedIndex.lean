@@ -18,7 +18,7 @@ theorem exists_den_of_fg {A K : Type} [CommRing A] [IsDomain A] [Field K] [Algeb
   | add x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by rw [map_add, ha, hb, mul_add]⟩
+    exact ⟨a + b, by rw [map_add (f := _), ha, hb, mul_add]⟩
   | smul c x _ hx =>
     obtain ⟨a, ha⟩ := hx
     exact ⟨c * a, by rw [map_mul, ha, Algebra.smul_def]; ring⟩

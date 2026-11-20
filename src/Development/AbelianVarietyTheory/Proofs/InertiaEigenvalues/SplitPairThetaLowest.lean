@@ -90,7 +90,7 @@ theorem thetaPair_of_hasThetaAt (hBZ : GlobalTheory.Published.BernsteinZelevinsk
       have e : (⟨Φe (a + b), hΦC (a + b)⟩ : ↥X.C) = ⟨Φe a, hΦC a⟩ + ⟨Φe b, hΦC b⟩ := by
         apply Subtype.ext; simp
       show Λ (ι Φ0) F2 ⟨Φe (a + b), hΦC (a + b)⟩ = Λ (ι Φ0) F2 ⟨Φe a, hΦC a⟩ + Λ (ι Φ0) F2 ⟨Φe b, hΦC b⟩
-      rw [e, map_add])
+      rw [e, map_add (f := _)])
   have hℓ2f2 : ℓ2 f2 ≠ 0 := by
     have e : (⟨Φe f2, hΦC f2⟩ : ↥X.C) = y2 := Subtype.ext hf2
     show Λ (ι Φ0) F2 ⟨Φe f2, hΦC f2⟩ ≠ 0

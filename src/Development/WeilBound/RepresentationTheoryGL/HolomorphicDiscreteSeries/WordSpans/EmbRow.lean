@@ -51,7 +51,7 @@ theorem irr : Irr := by
       rfl
     · simp
     · intro a b _ _ ha hb
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Sp.add_mem ha hb
     · intro c a _ ha
       rw [map_smul]

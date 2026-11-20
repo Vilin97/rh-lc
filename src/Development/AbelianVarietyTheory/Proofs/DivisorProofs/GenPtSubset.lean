@@ -151,7 +151,7 @@ theorem symp_eq (e : Num G i j) (Γ : GlobalTheory.IndefiniteRowSideFullHecke.Un
   unfold sympPt symp symplO
   rw [hA, hB1, hB2]
   conv_rhs => arg 2; rw [← GlobalTheory.DualPairCheck.trace_cA]
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
   erw [h2, h1]
   rw [hN, hJW, hJV, Matrix.mul_smul, Matrix.smul_mul, Matrix.smul_mul,
@@ -185,7 +185,7 @@ theorem rho_rho {R W κ : Type} [CommRing R] [Invertible (2 : R)] [AddCommGroup 
     (co : Darboux B κ) (ψ : AddChar R ℂ) (u u₀ : W) (Φ : (κ → R) → ℂ) :
     co.rho ψ u (co.rho ψ u₀ Φ) = ψ (⅟(2 : R) * B u u₀) • co.rho ψ (u + u₀) Φ := by
   funext x
-  simp only [Darboux.rho, schr, co.form, map_add, Prod.fst_add, Prod.snd_add, Pi.smul_apply, smul_eq_mul]
+  simp only [Darboux.rho, schr, co.form, map_add (f := _), Prod.fst_add, Prod.snd_add, Pi.smul_apply, smul_eq_mul]
   rw [← mul_assoc, ← mul_assoc, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul, add_assoc x]
   congr 2
   simp only [add_dotProduct, dotProduct_add]

@@ -13,7 +13,7 @@ lemma eval_aeval_eq {σ τ : Type*} (y : τ → ℂ) (g : σ → MvPolynomial τ
     eval y (aeval g f) = eval (fun i => eval y (g i)) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p i hp => rw [map_mul, map_mul, hp, aeval_X, map_mul, eval_X]
 
 lemma poly_ext {N : ℕ} {p q : MvPolynomial (Fin N × Fin N) ℂ}
@@ -84,7 +84,7 @@ lemma coeff_scale {σ : Type*} [Fintype σ] [DecidableEq σ] (w : σ → ℂ) (f
     split_ifs with h
     · subst h; rfl
     · simp
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, add_mul]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, add_mul]
 
 lemma prod_exp {N : ℕ} (m : Fin N × Fin N →₀ ℕ) (θ : Fin N → ℝ) :
     ∏ v : Fin N × Fin N, Complex.exp ((θ v.2 : ℂ) * Complex.I) ^ m v =
@@ -139,7 +139,7 @@ lemma evM_Fq (x : V) (A : Matrix (Fin N) (Fin N) ℂ) : evM A (Fq hP v0 x) = ⟪
 def Fl : V →ₗ[ℂ] MvPolynomial (Fin N × Fin N) ℂ where
   toFun := Fq hP v0
   map_add' x y := poly_ext fun A => by
-    rw [evM_add, evM_Fq, evM_Fq, evM_Fq, map_add, inner_add_right]
+    rw [evM_add, evM_Fq, evM_Fq, evM_Fq, map_add (f := _), inner_add_right]
   map_smul' c x := poly_ext fun A => by
     rw [RingHom.id_apply, evM_smul, evM_Fq, evM_Fq, map_smul, inner_smul_right]
 

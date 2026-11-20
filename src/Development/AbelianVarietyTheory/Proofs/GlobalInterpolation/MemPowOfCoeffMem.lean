@@ -36,11 +36,11 @@ theorem coeff_mem_of_mem_pow {σ : Type} (n : ℕ) :
           rw [h0, coeff_zero_eq_constantCoeff_apply]
           simpa using (mem_max_iff y).1 hy
         · rw [show 1 - p.2.degree = 0 by omega]; simp
-      have hdeg : d.degree = p.1.degree + p.2.degree := by rw [← hp, map_add]
+      have hdeg : d.degree = p.1.degree + p.2.degree := by rw [← hp, map_add (f := _)]
       have hle : n + 1 - d.degree ≤ (n - p.1.degree) + (1 - p.2.degree) := by omega
       exact Ideal.pow_le_pow_right hle (by rw [pow_add]; exact Ideal.mul_mem_mul h1 h2)
     · intro x y hx hy d
-      rw [map_add]; exact add_mem (hx d) (hy d)
+      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx d) (hy d)
 
 theorem coeff_X_mul_add {σ : Type} [DecidableEq σ] (i : σ) (g : MvPowerSeries σ O) (d : σ →₀ ℕ) :
     coeff (d + Finsupp.single i 1) (X i * g) = coeff d g := by
@@ -86,7 +86,7 @@ theorem mem_pow_of_coeff_mem (a n : ℕ) :
     have hdecomp : f = C (constantCoeff f) + ∑ i, fi i := by
       ext d
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, coeff_C]
+        rw [map_add (f := _), map_sum, coeff_C]
       simp only [hfi]
       by_cases hd : d = 0
       · subst hd

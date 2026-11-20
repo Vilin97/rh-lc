@@ -58,6 +58,6 @@ theorem UpperTheory.V.Lit.Bor.casComm :
   have hZ : star ((1 / 2 : ℝ) • (Y - star Y)) = -((1 / 2 : ℝ) • (Y - star Y)) := by
     rw [star_smul, star_trivial, star_sub, star_star, ← smul_neg, neg_sub]
   have hX : L X = l (hp (toL Y)).1 + l ((1 / 2 : ℝ) • (Y - star Y)) := by
-    rw [← map_add, ← hY]; rfl
+    rw [← map_add (f := _), ← hY]; rfl
   rw [hX]
   exact Commute.add_right (Commute.symm (sub_eq_zero.1 (hherm _))) (Commute.symm (sub_eq_zero.1 (hskew _ hZ)))

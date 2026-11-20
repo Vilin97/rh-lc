@@ -177,13 +177,13 @@ theorem pPart_eq_bot (τ : Ψ) (h : 0 < N - 1) (k₀ : K) (hk : ∀ a : K, a = k
     intro x
     induction x using MvPolynomial.induction_on with
     | C a => simp
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f p hf => simp only [map_mul, hf, aeval_X, map_X, rename_X, hy]
   have hcomp : ∀ x : MRing (PIdx j), aeval (fun _ : K => (1 : ΩFl Ψ N)) (mConeMap (yPart j) x) = aeval (yPart j) x := by
     intro x
     induction x using MvPolynomial.induction_on with
     | C a => simp [mConeMap]
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f p hf => simp only [map_mul, hf]; simp [mConeMap]
   unfold PPart mCoordIdeal
   rw [← RingHom.injective_iff_ker_eq_bot]

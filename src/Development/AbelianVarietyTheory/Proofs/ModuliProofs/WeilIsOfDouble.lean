@@ -133,7 +133,7 @@ theorem exists_act (hom : (∀ (P P' : Out.PolAV (Sp ℂ)) (g : ℕ) (u : HolUni
   · rw [← Category.assoc, ← hex, ← hex, ← hex]
     congr 1; funext k; push_cast; rw [map_mul]; ring
   · rw [MonObj.comp_mul, ← hex, ← hex, ← hex, ← u.ex_add]
-    congr 1; funext k; push_cast; rw [map_add, Pi.add_apply]; ring
+    congr 1; funext k; push_cast; rw [map_add (f := _), Pi.add_apply]; ring
 
 theorem ex_pow {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} {g : ℕ} (u : HolUnif A L g) (n : ℕ) (z : Fin g → ℂ) :
     u.ex z ^ n = u.ex (n • z) := by

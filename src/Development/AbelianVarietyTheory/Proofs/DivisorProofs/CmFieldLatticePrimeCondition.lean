@@ -89,7 +89,7 @@ theorem modelInt_of_latModel : GlobalTheory.Published.PeriodComparison → Globa
     (fun c ψ hψ ↦ by
       obtain ⟨k, t, hk, h⟩ := GlobalTheory.RealMult.PolScale.exists_nat_mul_polForm_eq hDR (FR E) 𝔠 R X₀ c c₀ hc₀ ψ ((2 : R) • ψ₀) hψ hpol
       refine ⟨k, 2 * t, hk, fun x y ↦ ?_⟩
-      rw [h, two_mul t, map_add]
+      rw [h, two_mul t, map_add (f := _)]
       simp [two_smul]) I D N M hM hcomm hprod hskew horth
   let e' : I → Fin n → R := fun i ↦ gen (GlobalTheory.IndefiniteRowSideFullHecke.DifferentConductorValuations.bar (φK i))
   let f' : I → Fin n → R := fun i ↦ gen (GlobalTheory.IndefiniteRowSideFullHecke.DifferentConductorValuations.bar (GlobalTheory.IndefiniteRowSideFullHecke.DifferentConductorValuations.bar (φK i)))

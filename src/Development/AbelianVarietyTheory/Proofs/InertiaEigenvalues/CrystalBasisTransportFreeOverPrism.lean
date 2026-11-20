@@ -29,9 +29,9 @@ theorem exists_read {Z O S W R N ι : Type} [CommRing Z] [CommRing O] [CommRing 
   choose C hC using hD
   refine ⟨AddMonoidHom.mk' (fun x i => Ψ (C x i)) fun x y => funext fun i => ?_, fun s x x' i h => ?_,
     fun c x i h => ?_⟩
-  · have : C (x + y) i = C x i + C y i := hi (by rw [map_add, hC, hC, hC, map_add, Pi.add_apply])
+  · have : C (x + y) i = C x i + C y i := hi (by rw [map_add (f := _), hC, hC, hC, map_add (f := _), Pi.add_apply])
     change Ψ (C (x + y) i) = Ψ (C x i) + Ψ (C y i)
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
   · have : C x' i = ((1 : O) ⊗ₜ[Z] s) * C x i := hi (by
       rw [map_mul, hC, hC, h, Algebra.TensorProduct.map_tmul]; rfl)
     change Ψ (C x' i) = g s * Ψ (C x i)

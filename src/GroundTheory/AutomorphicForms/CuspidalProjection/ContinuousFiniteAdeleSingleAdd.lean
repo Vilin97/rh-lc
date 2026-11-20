@@ -89,7 +89,7 @@ theorem unipAt_add (y y' : UPos n r → v.adicCompletion K) :
   rw [unipAt, unipAt, unipAt, ← unipOne_add]
   congr 1
   funext p
-  simp [map_add]
+  simp [map_add (f := _)]
 
 theorem continuous_unipAt : Continuous (unipAt (K := K) n r v) :=
   (continuous_unipOne (K := K) (n := n) r).comp (continuous_pi fun p => (continuous_adeleSingle v).comp

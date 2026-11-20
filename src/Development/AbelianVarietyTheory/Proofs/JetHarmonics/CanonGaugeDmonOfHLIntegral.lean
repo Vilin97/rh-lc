@@ -258,7 +258,7 @@ theorem quad_int {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0]
   convert h using 1
   rw [hD, dof_sub, GE.dof_add, GE.dof_sum, GE.dof_sum]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [GE.dof_C_mul, mul_sub, Finset.sum_sub_distrib, ← map_mul, ← map_sum, map_add, lin,
+    simp only [GE.dof_C_mul, mul_sub, Finset.sum_sub_distrib, ← map_mul, ← map_sum, map_add (f := _), lin,
     const_pderiv]
   ring
 
@@ -304,14 +304,14 @@ theorem canonGauge_dmonOf_hL_integral :
   have hl : DI (algebraMap R k) (defL (B.FK k) g) := by
     refine di_of_exp B.ph1 ?_ _ ?_ hg.ph1
     · rw [← gt_const_ev_eq _ (triple_points_zero_constant (n := 2) gp_zero₂ (gp_pt 0) (gp_pt 1)), B.cocycleLeft_zero_fst, map_one]
-    · rw [defL, map_sub, map_add, gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
+    · rw [defL, map_sub, map_add (f := _), gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (gp_addOf _ hF _ _ (hp _) (hp _)) (hp _)) _ c0]
       simp
   have hr : DI (algebraMap R k) (defR (B.FK k) g) := by
     refine di_of_exp B.ph2 ?_ _ ?_ hg.ph2
     · rw [← gt_const_ev_eq _ (triple_points_zero_constant (n := 2) gp_zero₂ (gp_pt 0) (gp_pt 1)), B.cocycleRight_zero_fst, map_one]
-    · rw [defR, map_sub, map_add, gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
+    · rw [defR, map_sub, map_add (f := _), gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (hp _) (gp_addOf _ hF _ _ (hp _) (hp _))) _ c0]
       simp

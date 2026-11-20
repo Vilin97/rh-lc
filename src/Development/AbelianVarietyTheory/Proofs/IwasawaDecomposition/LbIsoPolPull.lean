@@ -42,4 +42,4 @@ theorem GlobalTheory.ShFam.lbIso_polPull : ∀ (D : D7) (A : Amb D) (N j : ℕ) 
     set_option synthInstance.maxHeartbeats 100000 in
       rw [Fintype.sum_prod_type, map_sum]
     exact Finset.sum_eq_zero fun τ _ => GlobalTheory.T.root_divisor_sum_trivial D A N j S κ s Φ k τ
-  rw [e1, map_sub, map_sub, map_nsmul, e2, e3, e4, map_nsmul, GlobalTheory.T.flag_root_divisor_relation D A N j S κ s Φ k, map_add, e5, add_zero]
+  rw [e1, map_sub, map_sub, map_nsmul, e2, e3, e4, map_nsmul, GlobalTheory.T.flag_root_divisor_relation D A N j S κ s Φ k, map_add (f := _), e5, add_zero]

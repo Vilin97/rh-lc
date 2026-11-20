@@ -33,7 +33,7 @@ theorem isFrac_add {x : Fin (N + 1) → Ω} {c : ℤ} {I : Finset (Fin (N + 1))}
   refine ⟨mul_mem hs hs', (hf.mul hse').add ?_, hse.mul hse', by push_cast; omega, ?_⟩
   · have hdeg : e + d' = e' + d := by omega
     rw [← hdeg]; exact hse.mul hf'
-  · simp only [map_add, map_mul]
+  · simp only [map_add (f := _), map_mul]
     rw [div_add_div _ _ (hI s hs) (hI s' hs')]
 
 theorem isFrac_mul {x : Fin (N + 1) → Ω} {c : ℤ} {I : Finset (Fin (N + 1))} {z : Ω}
@@ -130,7 +130,7 @@ theorem restrictData_twistSys {x : Fin (N + 1) → Ω} {y : Fin (N + 1) → K'}
     obtain ⟨t', ht'⟩ := exists_isFrac hq'
     have hsum := isFrac_add (fun s hs => eval_ne_zero_of_mem_monos (liftChart hxy I) hs) ht ht'
     rw [twistRes_eq hxy hle I hsum, twistRes_eq hxy hle I ht, twistRes_eq hxy hle I ht']
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     rw [div_add_div _ _ (eval_ne_zero_of_mem_monos I ht.1) (eval_ne_zero_of_mem_monos I ht'.1)]
   smul I q hq f s e hs hf hse := by
     obtain ⟨t, ht⟩ := exists_isFrac hq

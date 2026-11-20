@@ -60,7 +60,7 @@ theorem UpperTheory.V.Pa.BC.sp_fin :
       IsUnit (π (MvPowerSeries.X p) * y + 1) := by
     intro p y
     obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective y
-    rw [← map_mul, ← map_one π, ← map_add]
+    rw [← map_mul, ← map_one π, ← map_add (f := _)]
     apply IsUnit.map
     rw [MvPowerSeries.isUnit_iff_constantCoeff]
     simp

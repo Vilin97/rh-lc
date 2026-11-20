@@ -15,7 +15,7 @@ theorem sesqFormSumExpansion : CommonLiftExpand := by
     intro x
     set_option synthInstance.maxHeartbeats 100000 in
       simp [map_sum, map_smulₛₗ]
-  simp only [map_add, LinearMap.add_apply, hA, hB, h1, h2, mul_zero, Finset.sum_const_zero,
+  simp only [map_add (f := _), LinearMap.add_apply, hA, hB, h1, h2, mul_zero, Finset.sum_const_zero,
     zero_add, add_zero, Finset.mul_sum, mul_assoc]
 
 theorem hermitianDefectBaseChange : PhiBaseChange := by
@@ -88,7 +88,7 @@ theorem eichlerTransformIsometry : EichlerIsometry := by
   have hσu : h σ u = 0 := by rw [hh u σ, huσ, star_zero]
   have e1 : h u y = star (h y u) := hh y u
   have e2 : h σ y = star (h y σ) := hh y σ
-  simp only [map_sub, map_add, map_smul, map_smulₛₗ, LinearMap.sub_apply, LinearMap.add_apply,
+  simp only [map_sub, map_add (f := _), map_smul, map_smulₛₗ, LinearMap.sub_apply, LinearMap.add_apply,
     LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, huu, huσ, hσu, e1, e2, star_mul',
     star_sub, star_add, mul_zero, zero_mul, sub_zero, add_zero]
   linear_combination (-(h x u) * star (h y u)) * hτ
@@ -156,7 +156,7 @@ theorem centralTransvectionIsometry : CentreIsometry := by
       h z (∑ a, ∑ a', k a a' • e a) = ∑ a, ∑ a', star (k a a') * h z (e a) := by
     intro k z; simp [map_sum, map_smulₛₗ, starRingEnd_apply]
   have hy : ∀ a, h (e a) y = star (h y (e a)) := fun a => hh y (e a)
-  simp only [map_add, LinearMap.add_apply, hL, hR, he, hy, mul_zero, Finset.sum_const_zero,
+  simp only [map_add (f := _), LinearMap.add_apply, hL, hR, he, hy, mul_zero, Finset.sum_const_zero,
     add_zero]
   have key : ∑ a, ∑ a', star (c a a' * h y (e a')) * h x (e a) =
       - ∑ a, ∑ a', c a a' * h x (e a') * star (h y (e a)) := by
@@ -1412,11 +1412,11 @@ theorem eichlerTransformProperties : EichlerFacts := by
   · intro x
     have hyu : h (Formalism.HermitianLatticeCounting.LatticeSumBounds.eichler h u σ τ x) u = h x u := by
       rw [hE]
-      simp only [map_sub, map_add, map_smul, LinearMap.sub_apply, LinearMap.add_apply,
+      simp only [map_sub, map_add (f := _), map_smul, LinearMap.sub_apply, LinearMap.add_apply,
         LinearMap.smul_apply, smul_eq_mul, huu, hσu, mul_zero, sub_zero, add_zero]
     have hyσ : h (Formalism.HermitianLatticeCounting.LatticeSumBounds.eichler h u σ τ x) σ = h x σ + h x u * h σ σ := by
       rw [hE]
-      simp only [map_sub, map_add, map_smul, LinearMap.sub_apply, LinearMap.add_apply,
+      simp only [map_sub, map_add (f := _), map_smul, LinearMap.sub_apply, LinearMap.add_apply,
         LinearMap.smul_apply, smul_eq_mul, huσ, mul_zero, sub_zero, add_zero]
     rw [hE (-σ) (star τ) (Formalism.HermitianLatticeCounting.LatticeSumBounds.eichler h u σ τ x), map_neg, hyσ, hyu, hE σ τ x, ← hτ]
     module
@@ -1576,7 +1576,7 @@ theorem splitResidueTrace : ResidueSplit := by
   · intro a ha
     refine ⟨ε.symm ((ε a).1, 0), ?_⟩
     apply ε.injective
-    rw [map_add, hε, RingEquiv.apply_symm_apply]
+    rw [map_add (f := _), hε, RingEquiv.apply_symm_apply]
     ext
     · simp
     · simp [(hsa a).mp ha]

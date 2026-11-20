@@ -78,7 +78,7 @@ def biprodAct (α : O →+* End A) (β : O →+* End B) : O →+* End (A ⊞ B) 
     change (biprod.map (0 : A ⟶ A) (0 : B ⟶ B) : A ⊞ B ⟶ A ⊞ B) = (0 : A ⊞ B ⟶ A ⊞ B)
     exact biprod.hom_ext _ _ (by simp) (by simp)
   map_add' x y := by
-    rw [act, act, map_add, map_add]
+    rw [act, act, map_add (f := _), map_add (f := _)]
     change (biprod.map (act α x + act α y) (act β x + act β y) : A ⊞ B ⟶ A ⊞ B) =
       (biprod.map (act α x) (act β x) + biprod.map (act α y) (act β y) : A ⊞ B ⟶ A ⊞ B)
     exact biprod.hom_ext _ _ (by simp) (by simp)

@@ -100,7 +100,7 @@ theorem exists_residue {S F E : Type*} [CommRing S] [Field F] [Field E] (ev : S 
     have hy := hde y.1 y.2
     rw [key (x + y) (nu x.1 x.2 * de y.1 y.2 + de x.1 x.2 * nu y.1 y.2) (de x.1 x.2 * de y.1 y.2)
       (by rw [map_mul]; exact mul_ne_zero hx hy)
-      (by rw [map_add, map_mul, map_mul, map_mul, ← div_add_div _ _ (hne hx) (hne hy), ← hrep,
+      (by rw [map_add (f := _), map_mul, map_mul, map_mul, ← div_add_div _ _ (hne hx) (hne hy), ← hrep,
         ← hrep]; rfl), map_add, map_mul, map_mul, map_mul, div_add_div _ _ hx hy]
 
 theorem homog_map {O k K : Type} [CommRing O] [CommRing k] [DecidableEq K] {ι : K → Type}
@@ -267,7 +267,7 @@ theorem inertiaDeg_eq_relDeg {O k K : Type} [CommRing O] [Field k] [Fintype K] [
       obtain ⟨t, m, hm, htm⟩ := h𝔫.exists_inv s.2
       refine ⟨b * t, ?_⟩
       have h1 : τ t * τ s = 1 := by
-        rw [← map_mul, ← add_zero (τ _), ← (hker m).mp hm, ← map_add, htm, map_one]
+        rw [← map_mul, ← add_zero (τ _), ← (hker m).mp hm, ← map_add (f := _), htm, map_one]
       have h2 : ρ y * τ s = τ b := by
         rw [hτ, hτ, ← hbs, map_mul]
         congr 1

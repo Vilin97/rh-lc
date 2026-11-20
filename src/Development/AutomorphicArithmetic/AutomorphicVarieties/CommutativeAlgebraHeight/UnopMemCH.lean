@@ -28,7 +28,7 @@ private theorem unopS_map (S T : Type) [CommRing S] [Algebra A S] [CommRing T] [
     Det.unopS A E T (Algebra.TensorProduct.map φ (AlgHom.id A _) x) =
       Algebra.TensorProduct.map φ (AlgHom.id A E) (Det.unopS A E S x) := by
   induction x with
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul s a => simp [Det.unopS]
 
 private theorem op_chiS (D : Det n A E) (S : Type) [CommRing S] [Algebra A S] (y : S ⊗[A] Eᵐᵒᵖ) :
@@ -45,7 +45,7 @@ private theorem unopS_pow (S : Type) [CommRing S] [Algebra A S] (y : S ⊗[A] E�
 private theorem unopS_aeval (S : Type) [CommRing S] [Algebra A S] (y : S ⊗[A] Eᵐᵒᵖ) (p : Polynomial S) :
     Det.unopS A E S (Polynomial.aeval y p) = Polynomial.aeval (Det.unopS A E S y) p := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | monomial k s =>
     rw [aeval_monomial, aeval_monomial, ← Algebra.smul_def, ← Algebra.smul_def, map_smul, unopS_pow]
 
@@ -60,7 +60,7 @@ private theorem lid_unopS (S : Type) [CommRing S] [Algebra A S] (f : S →ₗ[A]
     (TensorProduct.lid A Eᵐᵒᵖ (f.rTensor Eᵐᵒᵖ y)).unop =
       TensorProduct.lid A E (f.rTensor E (Det.unopS A E S y)) := by
   induction y with
-  | add a b ha hb => simp only [map_add, MulOpposite.unop_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), MulOpposite.unop_add, ha, hb]
   | tmul s a => simp [unopS_tmul]
 
 private theorem op_chElt (D : Det n A E) {k : ℕ} (x : Fin k → Eᵐᵒᵖ) (α : Fin k →₀ ℕ) :
@@ -108,8 +108,8 @@ theorem UpperTheory.V.CA.d_op :
       obtain ⟨u, rfl⟩ := unopS_surj S u
       obtain ⟨v, rfl⟩ := unopS_surj S v
       have := h S y v u
-      rw [op_D, op_D, map_add, Det.unopS_mul, Det.unopS_mul, unopS_tmul, MulOpposite.unop_op, ← mul_assoc] at this
+      rw [op_D, op_D, map_add (f := _), Det.unopS_mul, Det.unopS_mul, unopS_tmul, MulOpposite.unop_op, ← mul_assoc] at this
       exact this
     · intro h S _ _ y u v
-      rw [op_D, op_D, map_add, Det.unopS_mul, Det.unopS_mul, unopS_tmul, MulOpposite.unop_op, ← mul_assoc]
+      rw [op_D, op_D, map_add (f := _), Det.unopS_mul, Det.unopS_mul, unopS_tmul, MulOpposite.unop_op, ← mul_assoc]
       exact h S _ _ _

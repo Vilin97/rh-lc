@@ -108,7 +108,7 @@ theorem fac : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F]
       have e2 : Λ j φ = Λ j φ₀ := by
         have e := LinearMap.mem_ker.1 (hΛa j hd)
         rwa [map_sub, sub_eq_zero] at e
-      rw [e1, map_add, LinearMap.mem_ker.1 (hΛa j hSa), add_zero, hΛs j _ hS0, e2, hΛs j _ hφ₀,
+      rw [e1, map_add (f := _), LinearMap.mem_ker.1 (hΛa j hSa), add_zero, hΛs j _ hS0, e2, hΛs j _ hφ₀,
         LinearMap.comp_apply, LinearMap.comp_apply, tensL_apply, tensL_apply, hℓ _ (hso j _ hS0), hℓ _ (hso j _ hφ₀),
         ← (hS φ₀ h0SB).2 (r j) (hrest j _ h0SB), ctf_om, one_mul]
       have e := GlobalTheory.T.triple_unipotent_period_integral_two hKP F E σ B a a' G X om om' hT d₁ W₁ H' i₀ i₁ hH _ (hso j _ hφ₀) μ 𝓕 hμ h𝓕 h1 n hn 1

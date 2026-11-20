@@ -99,7 +99,7 @@ theorem standardWordsWeightOutside_multidegreeProj (b : Fin N → ℕ) (x : MvPo
     · rw [multidegreeProj_eq_zero_of_ne b b' hb _ (standardWord_mem_multihomogeneous F P I hI)]
       exact Submodule.zero_mem _
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem span_standardWords_eq_span_image (b : Fin N → ℕ) (cond : PPath m N LL b → Prop) :

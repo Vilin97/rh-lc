@@ -81,7 +81,7 @@ theorem approx (r : Ideal (D C)) [r.IsPrime] (s : D C) :
     obtain ⟨ε2, h2, c2, e2⟩ := ihy
     refine ⟨ε1 * ε2, fun h => (Ideal.IsPrime.mem_or_mem inferInstance h).elim h1 h2, c1 + c2, ?_⟩
     have : (⟨x + y, Subalgebra.add_mem _ hx hy⟩ : D C) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
     linear_combination ε2 * e1 + ε1 * e2
   | mul x y hx hy ihx ihy =>
     obtain ⟨ε1, h1, c1, e1⟩ := ihx

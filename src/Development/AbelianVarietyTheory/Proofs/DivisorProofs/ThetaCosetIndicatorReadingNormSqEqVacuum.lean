@@ -72,7 +72,7 @@ theorem ip_heisO_eq_zero {ΛS : Lat S} {ΛT : Lat T} (hψ : IsStdChar D ψ (-1))
     congr 1
     have : symplO S T (u - u' + u') l = symplO S T (u - u') l + symplO S T u' l := by
       unfold symplO hO
-      simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+      simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
     rw [sub_add_cancel] at this
     linear_combination -this
   refine (mul_eq_zero.1 (?_ : (ψ (symplO S T (u - u') l) - 1) * _ = 0)).resolve_left (sub_ne_zero.2 hne)

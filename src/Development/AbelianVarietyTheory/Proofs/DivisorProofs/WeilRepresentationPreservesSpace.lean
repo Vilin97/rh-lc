@@ -16,7 +16,7 @@ theorem so_stable : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field
   unfold Model.So at hΦ ⊢
   induction hΦ using Submodule.span_induction with
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   | mem x hx =>
     obtain ⟨f, φ, hSB, hcof, hloc, rfl⟩ := hx

@@ -534,7 +534,7 @@ variable {F G} in
 theorem act_comp_of_X {ρ : ℤ[X] →+* End F} {φ : F ⟶ G} (h : act ρ Polynomial.X ≫ φ = 0)
     (a : ℤ[X]) : act ρ a ≫ φ = zeroChar X a • φ := by
   have e : act ρ a = act ρ a.divX ≫ act ρ Polynomial.X + smulHom F (zeroChar X a) := by
-    conv_lhs => rw [← X_mul_divX_add a, act, map_add, map_mul]
+    conv_lhs => rw [← X_mul_divX_add a, act, map_add (f := _), map_mul]
     exact congrArg _ congr($(RingHom.ext_int (ρ.comp C) (scalarAct F (Int.castRingHom _)))
       (a.coeff 0))
   rw [e, Preadditive.add_comp, Category.assoc, h, Limits.comp_zero, zero_add, smulHom_comp]

@@ -22,7 +22,7 @@ theorem norm_natCast_add_one (w : NumberField.InfinitePlace F) (n : ℕ) :
     ‖((n : w.Completion) + 1)‖ = (n : ℝ) + 1 := by
   have h := (NumberField.InfinitePlace.Completion.isometry_extensionEmbedding w).norm_map_of_map_zero
     (map_zero _) ((n : w.Completion) + 1)
-  rw [← h, map_add, map_natCast, map_one]
+  rw [← h, map_add (f := _), map_natCast, map_one]
   have : ((n : ℂ) + 1) = ((n + 1 : ℕ) : ℂ) := by push_cast; ring
   rw [this, Complex.norm_natCast]
   push_cast; ring
@@ -99,7 +99,7 @@ theorem theta_seqE (D : D7) (θ : InfFam D) (ρ : D.what₂.Tau) (n : ℕ) :
     rw [TensorProduct.add_tmul, ← Algebra.TensorProduct.one_def]
     congr 1
   have e4 := congrArg (θ ρ) e2
-  rw [e3, map_mul, map_add, map_natCast, map_one] at e4
+  rw [e3, map_mul, map_add (f := _), map_natCast, map_one] at e4
   have hn : ((n : ℂ) + 1) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
   push_cast
   field_simp

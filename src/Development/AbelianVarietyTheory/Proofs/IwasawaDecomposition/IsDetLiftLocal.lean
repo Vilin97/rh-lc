@@ -27,9 +27,9 @@ theorem isDetLift_local (D : D7) (P : HeightOneSpectrum (𝓞 D.host.E)) (e : Th
     induction z using TensorProduct.induction_on with
     | zero => rw [(Theta.cA D).map_zero, φ.map_zero, RingHom.map_zero]
     | tmul a b => rfl
-    | add a b ha hb => rw [(Theta.cA D).map_add, φ.map_add, φ.map_add, ha, hb, RingHom.map_add]
+    | add a b ha hb => rw [(Theta.cA D).map_add (f := _), φ.map_add (f := _), φ.map_add (f := _), ha, hb, RingHom.map_add (f := _)]
   have h1 : (finAf D.host.F D.host.E (Neutral.B1.localIdele _ P (Formalism.L2.Host.atFin P k)) : AfE D.host.F D.host.E) = φ (JoinChr.locE D e k) := by
-    rw [GlobalTheory.Core.Cls.JointsStd.finAf_localIdele (e := φ e) (by rw [← φ.map_mul, he.1]) (fun a ha => ?_) k, JoinChr.locE, φ.map_add,
+    rw [GlobalTheory.Core.Cls.JointsStd.finAf_localIdele (e := φ e) (by rw [← φ.map_mul, he.1]) (fun a ha => ?_) k, JoinChr.locE, φ.map_add (f := _),
       φ.map_mul, φ.map_sub, φ.map_one, hinc]
     rw [he.2.2 a ha, ← hinc, ← φ.map_mul]
     exact not_congr (GlobalTheory.HostAdeleIso.mem_intAE_iff_comm D _)

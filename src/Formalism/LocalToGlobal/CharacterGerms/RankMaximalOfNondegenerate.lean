@@ -26,7 +26,7 @@ theorem Agr.trans {τ : Type} {k : ℕ} {f g g' : MvPowerSeries τ C} (h : Agr k
   fun e he => (h e he).trans (h' e he)
 
 theorem Agr.add {τ : Type} {k : ℕ} {f g f' g' : MvPowerSeries τ C} (h : Agr k f g) (h' : Agr k f' g') :
-    Agr k (f + f') (g + g') := fun e he => by rw [map_add, map_add, h e he, h' e he]
+    Agr k (f + f') (g + g') := fun e he => by rw [map_add (f := _), map_add (f := _), h e he, h' e he]
 
 theorem agr_iff_trunc {τ : Type} [Finite τ] (k : ℕ) (f g : MvPowerSeries τ C) :
     Agr k f g ↔ MvPowerSeries.truncTotal k f = MvPowerSeries.truncTotal k g := by
@@ -250,7 +250,7 @@ theorem hom_of_good (Y : FBChart C V O dd) (p : PairData Y d I) {g : Fin 2} {w :
   have hX : ∀ k : Fin 2, MvPowerSeries.constantCoeff (MvPowerSeries.X k : MvPowerSeries (Fin 2) C) = 0 :=
     fun k => MvPowerSeries.constantCoeff_X k
   have hS : MvPowerSeries.constantCoeff (MvPowerSeries.X 0 + MvPowerSeries.X 1 : MvPowerSeries (Fin 2) C) = 0 := by
-    rw [map_add, hX 0, hX 1, add_zero]
+    rw [map_add (f := _), hX 0, hX 1, add_zero]
   have hP0 : ∀ (k : Fin 2) (j : Fin dd), MvPowerSeries.constantCoeff (cvAt (MvPowerSeries.X k) (γ j)) = 0 :=
     fun k j => const_cvAt (hX k) (hγ0 j)
   have hQ0 : ∀ j, MvPowerSeries.constantCoeff (cvAt (MvPowerSeries.X 0 + MvPowerSeries.X 1) (γ j)) = 0 :=
@@ -288,7 +288,7 @@ theorem hom_of_good (Y : FBChart C V O dd) (p : PairData Y d I) {g : Fin 2} {w :
       (MvPowerSeries.subst (fun j' => cvAt (MvPowerSeries.X 0) (γ j')) ((Y.raw p).lg j) +
         MvPowerSeries.subst (fun j' => cvAt (MvPowerSeries.X 1) (γ j')) ((Y.raw p).lg j)) = 0 := by
     intro j
-    rw [map_add, MvPowerSeries.constantCoeff_subst_eq_zero
+    rw [map_add (f := _), MvPowerSeries.constantCoeff_subst_eq_zero
         (MvPowerSeries.hasSubst_of_constantCoeff_zero fun j' => hP0 0 j') (fun j' => hP0 0 j') (Y.chart_log_constantCoeff p j),
       MvPowerSeries.constantCoeff_subst_eq_zero
         (MvPowerSeries.hasSubst_of_constantCoeff_zero fun j' => hP0 1 j') (fun j' => hP0 1 j') (Y.chart_log_constantCoeff p j),

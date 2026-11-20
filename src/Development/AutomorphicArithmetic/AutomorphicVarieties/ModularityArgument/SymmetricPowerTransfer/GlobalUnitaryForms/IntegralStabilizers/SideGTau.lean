@@ -66,7 +66,7 @@ theorem UpperTheory.V.Z.Sym.Glob.sideGTau :
     have hl : lmap f Δ (algebraMap K (Lsq K Δ) τ) = algebraMap K' (Lsq K' (f Δ)) (f τ) := by
       ext <;> simp [lmap]
     rw [e, Matrix.charpoly_map, h]
-    simp only [Polynomial.map_mul, Polynomial.map_sub, Polynomial.map_add, Polynomial.map_pow,
+    simp only [Polynomial.map_mul, Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_pow,
       Polynomial.map_X, Polynomial.map_C, Polynomial.map_one, hl]
   · intro O K _ _ _ Δ δ τ hK h
     unfold HasTau at h

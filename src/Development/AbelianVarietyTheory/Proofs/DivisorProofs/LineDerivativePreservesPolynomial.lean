@@ -34,7 +34,7 @@ theorem derL_mem_polData : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
       obtain ⟨Ψ₂, m₂, d₂⟩ := h₂
       refine ⟨Ψ₁ + Ψ₂, add_mem m₁ m₂, fun y => ?_⟩
       have h := (d₁ y).add (d₂ y)
-      simp only [map_add, Pi.add_apply]
+      simp only [map_add (f := _), Pi.add_apply]
       exact h
     | smul r Φ₁ _ h₁ =>
       obtain ⟨Ψ₁, m₁, d₁⟩ := h₁

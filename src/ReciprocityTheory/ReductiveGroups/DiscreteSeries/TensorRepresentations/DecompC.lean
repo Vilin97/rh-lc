@@ -269,7 +269,7 @@ theorem dc_ee_fin_stable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace �
       refine le_iSup (fun j => S0.map (EE ^ j)) (j + 1) ⟨y, hy, ?_⟩
       rw [pow_succ', Module.End.mul_apply]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact W.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact W.add_mem hx hy
 
 end ReciprocityTheory.ChartRestriction.DS
 

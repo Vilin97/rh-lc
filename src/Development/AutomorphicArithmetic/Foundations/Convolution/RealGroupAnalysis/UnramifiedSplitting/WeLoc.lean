@@ -36,7 +36,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.weLoc :
     rwa [Valuation.map_neg, map_mul, hG.two, one_mul] at this
   refine ⟨fun x => ψ (sg v (-(2 * (e.symm x).1))), ⟨fun x y => ?_, fun x hx => ?_, fun x hx => ?_⟩, fun x => ?_⟩
   · beta_reduce
-    rw [map_add, Prod.fst_add, mul_add, neg_add]
+    rw [map_add (f := _), Prod.fst_add, mul_add, neg_add]
     exact ga _ _
   · obtain ⟨⟨u, t⟩, rfl⟩ := e.surjective x
     have hu : Valued.v u ≤ 1 := (le_max_left _ _).trans ((h2 u t).symm.le.trans hx)

@@ -38,7 +38,7 @@ theorem cT_aeval_mul_eq :
     simp only [aeval_C, Polynomial.map_C, Polynomial.C_comp]
     rw [cT_C, Algebra.commutes]
   | add p q hp hq =>
-    simp only [map_add, Polynomial.map_add, Polynomial.add_comp, cT_add, add_mul, mul_add, hp, hq]
+    simp only [map_add (f := _), Polynomial.map_add (f := _), Polynomial.add_comp, cT_add, add_mul, mul_add, hp, hq]
   | monomial k c ih =>
     have e1 : aeval A (C c * X ^ (k + 1)) = A * aeval A (C c * X ^ k) := by
       have h : aeval A (C c * X ^ (k + 1)) = aeval A (X * (C c * X ^ k)) := by

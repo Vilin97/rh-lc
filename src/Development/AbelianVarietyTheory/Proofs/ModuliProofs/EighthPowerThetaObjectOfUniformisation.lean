@@ -47,10 +47,10 @@ theorem hermForm_eq_sum {g h : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (H₀ : Ma
   refine sub_eq_zero.1 (form_ext s hs
     (fun z w => hermForm Hm z w - ∑ i, ∑ j, (G i j : ℂ) * hermForm H₀ (R i z) (R j w)) ?_ ?_ ?_ ?_ ?_ z w)
   · intro z z' w
-    simp only [hermForm, map_add, add_dotProduct, mul_add, Finset.sum_add_distrib]
+    simp only [hermForm, map_add (f := _), add_dotProduct, mul_add, Finset.sum_add_distrib]
     ring
   · intro z w w'
-    simp only [hermForm, map_add, star_add, Matrix.mulVec_add, dotProduct_add, mul_add, Finset.sum_add_distrib]
+    simp only [hermForm, map_add (f := _), star_add, Matrix.mulVec_add, dotProduct_add, mul_add, Finset.sum_add_distrib]
     ring
   · intro c z w
     simp only [hermForm, map_smul, smul_dotProduct, smul_eq_mul, mul_sub, Finset.mul_sum, mul_left_comm c]
@@ -95,7 +95,7 @@ theorem sharpClass_of_unif : Out.Laws → Out.Laws2 → (∀ (S : Scheme.{0}) (P
   obtain ⟨c, φ, hφ, hcP, ⟨wP, hwP⟩, hlev⟩ := GlobalTheory.T.exists_siegPre_iso_of_polAV laws hc o ℂ em P₀.g k b.ζ (Units.map (em : o →* ℂ) b.ζ) P₀
     (fun x => u₀.ex ((k : ℂ)⁻¹ • per τ (m x))) rfl hk rfl
     (IsPrimitiveRoot.coe_units_iff.1 (b.prim ℂ em))
-    (fun x y => by rw [map_add, map_add, smul_add, u₀.ex_add])
+    (fun x y => by rw [map_add (f := _), map_add (f := _), smul_add, u₀.ex_add])
     (fun x => by
       rw [← ex_nsmul, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, mul_inv_cancel₀ hk, one_smul, u₀.ker]
       exact hmem _)

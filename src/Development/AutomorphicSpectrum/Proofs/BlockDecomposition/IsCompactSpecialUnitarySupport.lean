@@ -25,7 +25,7 @@ theorem fst_mul (a b : AF F) (w : InfinitePlace F) : fstA F (a * b) w = fstA F a
   rw [map_mul]; rfl
 
 theorem fst_add (a b : AF F) (w : InfinitePlace F) : fstA F (a + b) w = fstA F a w + fstA F b w := by
-  rw [map_add]; rfl
+  rw [map_add (f := _)]; rfl
 
 theorem snd_mul (a b : AF F) (v : HeightOneSpectrum (𝓞 F)) :
     evalV F v (sndA F (a * b)) = evalV F v (sndA F a) * evalV F v (sndA F b) := by
@@ -33,7 +33,7 @@ theorem snd_mul (a b : AF F) (v : HeightOneSpectrum (𝓞 F)) :
 
 theorem snd_add (a b : AF F) (v : HeightOneSpectrum (𝓞 F)) :
     evalV F v (sndA F (a + b)) = evalV F v (sndA F a) + evalV F v (sndA F b) := by
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
 
 theorem idem_self {S₁ : Finset (InfinitePlace F)} {S₂ : Finset (HeightOneSpectrum (𝓞 F))} {a : AF F}
     (h : IsPlacesIdem S₁ S₂ a) : a * a = a := by
@@ -134,7 +134,7 @@ theorem SUSupp_add (σ : E →ₐ[F] E) (J : Matrix (Fin M) (Fin M) E) {a b : AF
       rw [← map_mul, hab, map_zero]
     have h3 : algebraMap (AF F) (AF F ⊗[F] E) a • (mt g - 1) + algebraMap (AF F) (AF F ⊗[F] E) b • (mt g - 1) =
         mt g - 1 := by
-      rw [← add_smul, ← map_add]; exact h2
+      rw [← add_smul, ← map_add (f := _)]; exact h2
     have e : trunc (algebraMap (AF F) (AF F ⊗[F] E) a) (mt g) * trunc (algebraMap (AF F) (AF F ⊗[F] E) b) (mt g) =
         1 + (algebraMap (AF F) (AF F ⊗[F] E) a • (mt g - 1) + algebraMap (AF F) (AF F ⊗[F] E) b • (mt g - 1)) := by
       have hz : (algebraMap (AF F) (AF F ⊗[F] E) a • (mt g - 1)) * (algebraMap (AF F) (AF F ⊗[F] E) b • (mt g - 1)) = 0 := by

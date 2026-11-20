@@ -187,7 +187,7 @@ theorem exists_cobOne_relFrob_eq_zero_dUnit_eq (p : ℕ) [Fact p.Prime] (K : Typ
           exact ⟨dUnit K c, cotMap_d V c⟩
         · exact map_zero D₀
         · intro u v _ _ hu hv
-          rw [map_add, hu, hv, add_zero]
+          rw [map_add (f := _), hu, hv, add_zero]
         · intro a u hu hu0
           rw [smul_eq_mul, hD₀mul, hu0, hJaug u hu, zero_smul, smul_zero, add_zero]
       let D : ((frobTwist h G).A 1 ⧸ J) →ₗ[K] Cot K ((frobTwist h G).A 1) ⧸ Rg :=

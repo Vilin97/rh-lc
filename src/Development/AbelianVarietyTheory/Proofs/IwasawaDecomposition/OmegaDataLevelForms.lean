@@ -103,7 +103,7 @@ theorem exists_of_mem_closure {A B k : Type} [CommRing A] [CommRing B] [CommRing
   | add x y _ _ hx hy =>
     obtain ⟨X, h1, h2⟩ := hx
     obtain ⟨Y, h3, h4⟩ := hy
-    exact ⟨X + Y, by rw [Subring.coe_add, map_add, h1, h3], by rw [map_add, h2, h4, add_zero]⟩
+    exact ⟨X + Y, by rw [Subring.coe_add, map_add (f := _), h1, h3], by rw [map_add (f := _), h2, h4, add_zero]⟩
   | neg x _ hx =>
     obtain ⟨X, h1, h2⟩ := hx
     exact ⟨-X, by rw [Subring.coe_neg, map_neg, h1], by rw [map_neg, h2, neg_zero]⟩
@@ -183,7 +183,7 @@ theorem exists_psi (V : HSp D) {l : Level H} {Xo : Moduli Dw l} {c : Coeff l} {n
     apply Subtype.ext
     rw [← swap_unswap U.1, Subring.coe_add, ← swap_unswap Z.1, hU, hZ, RingHom.map_sub]
     exact (sub_add_cancel _ _).symm
-  rw [hw, hUZ, RingHom.map_add, hZ0, zero_add, resS_oToS]
+  rw [hw, hUZ, RingHom.map_add (f := _), hZ0, zero_add, resS_oToS]
   change Ideal.Quotient.factor (hQ P.1 P.2) (δ k : 𝓞 D.host.E ⧸ d.I) = _
   rw [hdet]
   rfl

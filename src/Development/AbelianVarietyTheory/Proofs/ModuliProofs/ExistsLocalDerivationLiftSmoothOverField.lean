@@ -48,8 +48,8 @@ theorem exists_locDerK_of_smooth : ∀ (K : Type) [Field K] (R : Type) [CommRing
   have hc : ∀ a, (m.app W₀).hom (algebraMap R Γ(X, W₀) a) = liftConstHomK q (m ⁻¹ᵁ W₀) (x₀ a) :=
     fun a => app_constFn_of_commK x₀ q p m hm W₀ a
   obtain ⟨d₀, h1, h2, h3⟩ := GlobalTheory.T.exists_derivation_extend' R Γ(X, W₀) Γ(Y, m ⁻¹ᵁ W₀) (m.app W₀).hom
-    (fun r => liftConstHomK q (m ⁻¹ᵁ W₀) (D r)) (fun a b => by rw [hD.1, map_add])
-    (fun a b => by rw [hD.2, hc, hc, map_add, map_mul, map_mul])
+    (fun r => liftConstHomK q (m ⁻¹ᵁ W₀) (D r)) (fun a b => by rw [hD.1, map_add (f := _)])
+    (fun a b => by rw [hD.2, hc, hc, map_add (f := _), map_mul, map_mul])
   obtain ⟨d, hd, -⟩ := (GlobalTheory.T.existsUnique_localDerivationAlongFibreField_of_affine K R Y X q p m D W₀ hW).1 d₀ h1 h2 h3
   exact ⟨d, hd⟩
 

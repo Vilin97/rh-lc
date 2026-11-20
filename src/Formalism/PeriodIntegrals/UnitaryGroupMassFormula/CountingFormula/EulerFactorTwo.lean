@@ -32,7 +32,7 @@ theorem locE_isUnit_or_exists_algEquiv_prod_swap {F E : Type} [Field F] [Valuati
       exact hne ha.symm
     refine IsUnit.of_mul_eq_one (L.cj x * algebraMap F E a⁻¹) ?_
     rw [← mul_assoc, ← ha, ← map_mul, mul_inv_cancel₀ ha0, map_one]
-  obtain ⟨t, ht⟩ := hfix (x + L.cj x) (by rw [map_add, L.cj_cj, add_comm])
+  obtain ⟨t, ht⟩ := hfix (x + L.cj x) (by rw [map_add (f := _), L.cj_cj, add_comm])
   have ht0 : t ≠ 0 := by
     rintro rfl
     rw [map_zero] at ht
@@ -107,7 +107,7 @@ theorem locE_isUnit_or_exists_algEquiv_prod_swap {F E : Type} [Field F] [Valuati
   have hez : e0.symm (g z) = z := e0.symm_apply_apply z
   have hcz : L.cj (g z) = g z.swap := by
     show L.cj (z.1 • p + z.2 • q) = z.2 • p + z.1 • q
-    rw [map_add, map_smul, map_smul, hcp, hcq, add_comm]
+    rw [map_add (f := _), map_smul, map_smul, hcp, hcq, add_comm]
   rw [hcz, hez]
   exact e0.symm_apply_apply z.swap
 

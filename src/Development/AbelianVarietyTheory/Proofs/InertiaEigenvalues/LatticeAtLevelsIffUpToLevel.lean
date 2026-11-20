@@ -459,7 +459,7 @@ theorem approx [IsDomain O] [IsFractionRing O LL]
     have hb : algebraMap O LL b ≠ 0 := IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors b.2
     refine ⟨algebraMap O (LetA O n) o • x + algebraMap O (LetA O n) o' • x', (algebraMap O LL b)⁻¹,
       inv_ne_zero hb, fun j hj => ?_⟩
-    rw [map_add, hO, hO, Pi.add_apply, Pi.add_apply, Pi.smul_apply, Pi.smul_apply, ho, ho', ← h j hj, ← h' j hj,
+    rw [map_add (f := _), hO, hO, Pi.add_apply, Pi.add_apply, Pi.smul_apply, Pi.smul_apply, ho, ho', ← h j hj, ← h' j hj,
       mul_smul, mul_smul, ← smul_add, inv_smul_smul₀ hb]
   | smul e y _ hy =>
     obtain ⟨x, c, hc, h⟩ := hy
@@ -655,7 +655,7 @@ theorem crisLev_step [CharZero LL] (hT : IsCrys PD T.ρ) (hζ : ∃ j : ℕ, IsP
         have e : W.Q ^ (m + m') • (y + z) = ((W.Q ^ m' • (⟨_, hm⟩ : ↥(W.N T)) + W.Q ^ m • ⟨_, hm'⟩ : ↥(W.N T)) : W.DD T) := by
           simp only [Submodule.coe_add, Submodule.coe_smul, smul_smul, ← pow_add, smul_add, add_comm m' m]
         refine ⟨m + m', e ▸ Subtype.property _, ?_⟩
-        rw [show (⟨W.Q ^ (m + m') • (y + z), _⟩ : ↥(W.N T)) = _ from Subtype.ext e, map_add, levB_smul, levB_smul]
+        rw [show (⟨W.Q ^ (m + m') • (y + z), _⟩ : ↥(W.N T)) = _ from Subtype.ext e, map_add (f := _), levB_smul, levB_smul]
         exact add_mem ((serSpan_closed h).2 _) ((serSpan_closed h').2 _)
       | smul a y _ hy =>
         obtain ⟨m, hm, h⟩ := hy

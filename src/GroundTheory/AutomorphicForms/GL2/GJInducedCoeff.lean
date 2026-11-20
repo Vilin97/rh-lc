@@ -38,7 +38,7 @@ theorem exists_extend_dual (hρ : IsSmooth ρ) (hτ : IsSmooth τ)
 
     have hker : ∀ y ∈ coinvariantsKer ρ K, ℓ y = 0 := by
       intro y hy
-      refine Submodule.span_induction ?_ (by simp) (fun a b _ _ ha hb => by rw [map_add, ha, hb, add_zero])
+      refine Submodule.span_induction ?_ (by simp) (fun a b _ _ ha hb => by rw [map_add (f := _), ha, hb, add_zero])
         (fun c a _ ha => by rw [map_smul, ha, smul_zero]) hy
       rintro _ ⟨k, rfl⟩
       simp [hℓ k.1.1 k.1.2 k.2]

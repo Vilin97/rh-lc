@@ -74,7 +74,7 @@ theorem dot_hessC_star {e : ℕ} (f : (Fin e → ℂ) → ℝ) (z : Fin e → �
         c.im * d.re * H (Complex.I • u) v + c.im * d.im * H (Complex.I • u) (Complex.I • v) := by
     intro c d u v
     rw [hsmul c u, hsmul d v]
-    simp only [map_add, map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.coe_smul',
+    simp only [map_add (f := _), map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.coe_smul',
       Pi.smul_apply, smul_eq_mul]
     ring
   set E := fun i : Fin e => (Pi.single i (1 : ℂ) : Fin e → ℂ) with hE

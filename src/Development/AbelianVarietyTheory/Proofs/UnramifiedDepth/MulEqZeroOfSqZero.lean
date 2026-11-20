@@ -192,7 +192,7 @@ def ptTg (h : Coord G g x) {R S : LAlg R₀} (π : LHom R S) (hπ : π.SqZero) :
     rw [map_zero]
     exact congrArg Additive.ofMul (h.zero R)
   map_add' a b := by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact congrArg Additive.ofMul (h.mul_eq π.ker (mul_eq_zero_of_sqZero hπ) _ _).symm
 
 def ptBX [Smooth G.hom] (h : Coord G g x)

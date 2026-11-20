@@ -23,7 +23,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.dropP_pf :
     have h2 : f - P f ∈ Sᗮ := Submodule.sub_starProjection_mem_orthogonal f
     have hdec : P f + (f - P f) = f := by abel
     calc m.Uπ f = m.Uπ (P f + (f - P f)) := by rw [hdec]
-      _ = m.U (P f) := by rw [map_add, m.pp.1 _ (hmem f), m.pp.2 _ h2, add_zero]
+      _ = m.U (P f) := by rw [map_add (f := _), m.pp.1 _ (hmem f), m.pp.2 _ h2, add_zero]
   have C₁ : ∀ f, P (s.T₁ f) = s.T₁ (P f) := hC E n s.pos s.D s.π s.fix ι s.Φ₁ s.T₁ s.t₁ s.o₁
   have C₂ : ∀ f, P (s.T₂ f) = s.T₂ (P f) := hC E n s.pos s.D s.π s.fix ι s.Φ₂ s.T₂ s.t₂ s.o₂
   have C₃ : ∀ f, P ((s.T₁ * m.U * s.T₂) f) = (s.T₁ * m.U * s.T₂) (P f) := hC E n s.pos s.D s.π s.fix ι m.Φ (s.T₁ * m.U * s.T₂) m.t m.o

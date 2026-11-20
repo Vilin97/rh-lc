@@ -36,7 +36,7 @@ def alongLine (l : (ℝ → ℂ) →ₗ[ℂ] ℂ) (ψ : AddChar (AF D.host.F) �
   toFun g := fun x => l fun t => heisO ψ S T (L t) g x
   map_add' g g' := by
     funext x
-    rw [Pi.add_apply, ← map_add]
+    rw [Pi.add_apply, ← map_add (f := _)]
     congr 1
     funext t
     exact congrFun ((heisL ψ S T (L t)).map_add g g') x
@@ -131,7 +131,7 @@ theorem exists_annihLin {ψ : AddChar (AF D.host.F) ℂ} (hψ : Continuous ψ) {
         show ψ (algebraMap D.host.F (AF D.host.F) (1 / 2) * symplO S T x 0) = 1
         rw [GlobalTheory.SplitScalar.symplO_zero_right, mul_zero, AddChar.map_zero_eq_one]
       · intro s t
-        rw [map_add, GlobalTheory.SplitScalar.symplOH_add_right, AddChar.map_add_eq_mul]
+        rw [map_add (f := _), GlobalTheory.SplitScalar.symplOH_add_right, AddChar.map_add_eq_mul]
     exact (hφ 0).mul hgL
   refine ⟨alongLine l ψ S T (lineAt θ τ z) + Complex.I • alongLine l ψ S T (lineAt θ τ (J z)), ?_, ?_⟩
   · intro u hu g

@@ -21,7 +21,7 @@ private theorem UpperTheory.V.Alg.part_filt_split {σ X : Type} [Finite σ] [Add
   obtain ⟨m, hm, hmn⟩ := hμ' n hn
   obtain ⟨r, rfl⟩ := exists_add_of_le hmn
   have hr : Finsupp.weight wt r = 0 := by
-    rw [map_add, hμ m hm] at hn
+    rw [map_add (f := _), hμ m hm] at hn
     simpa using hn
   have hr0 : r ≠ 0 := by
     rintro rfl
@@ -72,8 +72,8 @@ theorem UpperTheory.V.Alg.part_filt :
       obtain ⟨N, hN⟩ := ih
       refine ⟨N + D + 1, fun n hn hd => ?_⟩
       obtain ⟨g, n', hg0, hgw, hgd, rfl⟩ := hD n hn (by omega)
-      rw [map_add] at hd
-      rw [map_add, hgw, zero_add] at hn
+      rw [map_add (f := _)] at hd
+      rw [map_add (f := _), hgw, zero_add] at hn
       have h1 := hN n' hn (by omega)
       have h2 : W.π (monomial g 1) ∈ Q := by
         refine ⟨⟨_, UpperTheory.V.Alg.part_filt_monomial W.wt hgw 1, rfl⟩, ?_⟩
@@ -103,7 +103,7 @@ theorem UpperTheory.V.Alg.part_filt :
         · rw [Algebra.algebraMap_eq_smul_one]
           exact Submodule.smul_mem _ _ hone
         · exact fun hu => hb (IsLocalHom.map_nonunit (f := algebraMap O R) b hu)
-      · rw [map_add]
+      · rw [map_add (f := _)]
         exact add_mem ha hb
   obtain ⟨N, hN⟩ := hmono k
   refine ⟨N + k, ?_⟩
@@ -156,7 +156,7 @@ theorem UpperTheory.V.Alg.part_filt :
     · exact sub_self _
     · rw [sub_zero]
       exact hhj n fun hw => hn ⟨hw, not_lt.1 hd⟩)
-  have hsum : x = W.π low + W.π (h - low) := by rw [← map_add, add_sub_cancel, hhx]
+  have hsum : x = W.π low + W.π (h - low) := by rw [← map_add (f := _), add_sub_cancel, hhx]
   rw [hsum]
   refine add_mem ?_ ?_
   set_option synthInstance.maxHeartbeats 100000 in

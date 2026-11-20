@@ -92,6 +92,6 @@ theorem Eab_coef : ∀ (n : ℕ) (ε : Fin n → Bool) (H : Type) [NormedAddComm
   rw [cpart1_eq, cpart2_eq]
   unfold GlobalTheory.GKLie.cre at h1
   unfold GlobalTheory.GKLie.cim at h2
-  rw [h1, h2, map_add, map_smul, inner_add_right, inner_smul_right]
+  rw [h1, h2, map_add (f := _), map_smul, inner_add_right, inner_smul_right]
 
 end GlobalTheory.MatCoefDeriv

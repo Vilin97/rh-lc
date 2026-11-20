@@ -25,7 +25,7 @@ theorem latW_smul (f : LatHom T.L T'.L) (r : OW l O) (y : TW (OW l O) T) :
   induction y using TensorProduct.induction_on with
   | zero => simp only [smul_zero, map_zero]
   | tmul w x => rfl
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 omit [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [IsUltrametricDist K] [IsUnitBall O K] in
 
@@ -34,7 +34,7 @@ theorem latW_frob (f : LatHom T.L T'.L) (y : TW (OW l O) T) :
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul w x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def latZ (f : LatHom T.L T'.L) :
     letI := zlLat T
@@ -58,7 +58,7 @@ theorem kappa_latZ (f : LatHom T.L T'.L) :
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul w x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ}
 

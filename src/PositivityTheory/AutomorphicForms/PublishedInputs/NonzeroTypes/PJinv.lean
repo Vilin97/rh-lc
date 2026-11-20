@@ -83,7 +83,7 @@ theorem inv_mem (hU : CcUm G) (h : GL (Fin n) 𝒪[k])
   rw [Matrix.det_eq_sign_charpoly_coeff] at hdet
   obtain ⟨u, hu⟩ := isUnit_of_mul_isUnit_right hdet
   have h0 := Matrix.aeval_self_charpoly A
-  rw [← Polynomial.X_mul_divX_add A.charpoly, map_add, map_mul, Polynomial.aeval_X,
+  rw [← Polynomial.X_mul_divX_add A.charpoly, map_add (f := _), map_mul, Polynomial.aeval_X,
     Polynomial.aeval_C] at h0
   have h1 : A * Polynomial.aeval A A.charpoly.divX = -algebraMap 𝒪[k] _ (A.charpoly.coeff 0) :=
     eq_neg_of_add_eq_zero_left h0

@@ -133,7 +133,7 @@ theorem rdE_injective_lattice : ∀ (D : D7) (c : NChoice D) (w : D.what₂.plac
         rw [TensorProduct.mk_apply, rdE_tmul, map_one, one_smul]
         exact Submodule.subset_span ((T.rdV_mem hok).1 hf)
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
       | smul a x _ hx =>
         rw [hsm]
         exact Submodule.smul_mem _ (⟨ε (algebraMap _ _ a), a, rfl⟩ : ringOf ε) hx

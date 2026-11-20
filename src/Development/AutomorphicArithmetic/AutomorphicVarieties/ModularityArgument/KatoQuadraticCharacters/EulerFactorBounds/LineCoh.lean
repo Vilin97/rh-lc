@@ -226,7 +226,7 @@ private theorem rt_up_tp (p M : ℕ) [NeZero p] [NeZero M] (u : Row M) (t : Row 
 private theorem dn_up_tp (p M : ℕ) (u : Row M) (t : Row p) [NeZero M] (i : Fin 2) :
     dn p M (up p M u + tp p M t) i = p * u i := by
   unfold dn up tp
-  rw [Pi.add_apply, map_add, map_natCast, map_natCast]
+  rw [Pi.add_apply, map_add (f := _), map_natCast, map_natCast]
   simp
 
 private theorem ne_up_tp {p M : ℕ} [NeZero M] (hp : IsUnit (p : ZMod M)) {u : Row M} (t : Row p)

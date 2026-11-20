@@ -44,13 +44,13 @@ theorem exists_comap_quot (D : GDet n A G) (H : Subgroup G) [H.Normal]
   have h1 : ∀ y, f (σ y) = y := fun y => by
     induction y using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp [f, σ]
   have h2 : ∀ x, x - σ (f x) ∈ D.toDet.ker := fun x => by
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
     | add a b ha hb =>
-      rw [map_add, map_add, add_sub_add_comm]
+      rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
       exact D.toDet.ker.add_mem ha hb
     | single g r =>
       obtain ⟨h, hh⟩ := QuotientGroup.mk_out_eq_mul H g
@@ -68,7 +68,7 @@ theorem exists_comap_quot (D : GDet n A G) (H : Subgroup G) [H.Normal]
   congr 1
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single g r => simp [f, toT_single]
 
 theorem exists_comap_level [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G]

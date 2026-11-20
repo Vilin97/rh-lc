@@ -27,7 +27,7 @@ theorem exists_valuationSubring_of_padicEmbedding :
       add_mem' := by
         rintro _ _ ⟨x, rfl, hx⟩ ⟨y, rfl, hy⟩
         refine ⟨x + y, by simp, ?_⟩
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (hna _ _).trans (max_le hx hy)
       zero_mem' := ⟨0, by simp, by simp⟩
       neg_mem' := by
@@ -38,7 +38,7 @@ theorem exists_valuationSubring_of_padicEmbedding :
       add_mem' := by
         rintro a b ⟨x, hxa, hx⟩ ⟨y, hyb, hy⟩
         refine ⟨x + y, by simp [hxa, hyb], ?_⟩
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (hna _ _).trans_lt (max_lt hx hy)
       zero_mem' := ⟨0, by simp, by simp⟩
       smul_mem' := by

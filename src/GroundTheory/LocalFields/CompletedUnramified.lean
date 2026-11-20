@@ -164,7 +164,7 @@ theorem exists_sub_algebraMap_mem_pow (x : 𝔅) (n : ℕ) :
     refine ⟨r + ϖ ^ n * s, ?_⟩
     rw [hm, Ideal.span_singleton_pow, Ideal.mem_span_singleton']
     refine ⟨d, ?_⟩
-    rw [map_add, map_mul, map_pow]
+    rw [map_add (f := _), map_mul, map_pow]
     linear_combination (algebraMap R 𝔅 ϖ) ^ n * hd + hc
 
 theorem ringHom_ext_adicCompletion {ϖ : R} (hϖ : Irreducible ϖ) {τ₁ τ₂ : 𝔅 →+* 𝔅}
@@ -178,7 +178,7 @@ theorem ringHom_ext_adicCompletion {ϖ : R} (hϖ : Irreducible ϖ) {τ₁ τ₂ 
   rw [hm, Ideal.span_singleton_pow, Ideal.mem_span_singleton'] at hr
   obtain ⟨c, hc⟩ := hr
   have hx : x = algebraMap R 𝔅 r + c * algebraMap R 𝔅 ϖ ^ n := by rw [hc]; ring
-  rw [hx, map_add, map_add, map_mul, map_mul, map_pow, map_pow, h r, ← h ϖ]
+  rw [hx, map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, h r, ← h ϖ]
   have : τ₁ (algebraMap R 𝔅 ϖ) ^ n ∈ maximalIdeal 𝔅 ^ n := Ideal.pow_mem_pow hmem n
   convert Ideal.mul_mem_left _ (τ₁ c - τ₂ c) this using 1
   ring
@@ -349,7 +349,7 @@ theorem mem_range_algebraMap_iff_fixed (b : B) : b ∈ (algebraMap A B).range �
       have h := hDN (c n).1 (c n).2
       rw [← hc_succ] at h
       rw [ih, h]
-      simp only [s, d, Finset.sum_range_succ, map_add, map_mul, map_pow]
+      simp only [s, d, Finset.sum_range_succ, map_add (f := _), map_mul, map_pow]
       ring
   have hcauchy : ∀ {m n : ℕ}, m ≤ n → s m ≡ s n [SMOD (maximalIdeal A ^ m • ⊤ : Submodule A A)] := by
     intro m n hmn

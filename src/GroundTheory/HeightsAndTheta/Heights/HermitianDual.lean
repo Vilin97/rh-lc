@@ -53,7 +53,7 @@ theorem dualCoord_injective [Module.Finite (𝓞 K) E] [Module.Projective (𝓞 
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero, LinearMap.zero_apply, zero_tmul, Finset.sum_const_zero]
     | add x y hx hy =>
-      simp only [map_add, LinearMap.add_apply, add_tmul, Finset.sum_add_distrib, hx, hy]
+      simp only [map_add (f := _), LinearMap.add_apply, add_tmul, Finset.sum_add_distrib, hx, hy]
     | tmul z ψ =>
       conv_rhs => rw [← hψ ψ]
       rw [tmul_sum]
@@ -66,11 +66,11 @@ theorem dualCoord_conjMap (x : Fibre σ (Module.Dual (𝓞 K) E)) (u : Fibre σ 
     dualCoord (conjugate σ) E (conjMap σ _ x) (conjMap σ E u) = conj σ (dualCoord σ E x u) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero, LinearMap.zero_apply]
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul z φ =>
     induction u using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
     | tmul w e =>
       rw [conjMap_tmul, conjMap_tmul, dualCoord_tmul_tmul, dualCoord_tmul_tmul, map_mul, map_mul]
       rfl
@@ -124,7 +124,7 @@ theorem inner_riesz (σ : K →+* ℂ) (x : Fibre σ (Module.Dual (𝓞 K) E)) (
 theorem riesz_add (σ : K →+* ℂ) (x y : Fibre σ (Module.Dual (𝓞 K) E)) :
     riesz h σ (x + y) = riesz h σ x + riesz h σ y := by
   refine ext_inner_right ℂ fun v ↦ ?_
-  rw [inner_add_left, inner_riesz, inner_riesz, inner_riesz, map_add, LinearMap.add_apply, map_add]
+  rw [inner_add_left, inner_riesz, inner_riesz, inner_riesz, map_add (f := _), LinearMap.add_apply, map_add (f := _)]
 
 theorem riesz_smul (σ : K →+* ℂ) (c : ℂ) (x : Fibre σ (Module.Dual (𝓞 K) E)) :
     riesz h σ (c • x) = starRingEnd ℂ c • riesz h σ x := by

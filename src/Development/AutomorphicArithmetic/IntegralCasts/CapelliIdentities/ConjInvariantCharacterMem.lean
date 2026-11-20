@@ -1705,7 +1705,7 @@ private theorem sigR_continuous {F E : Type} [Field F] [Field E] [Algebra F E]
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [UpperTheory.Reformulated.B.Yzd4.sigR]
-    | add a b ha hb => simp [map_add, ha, hb]
+    | add a b ha hb => simp [map_add (f := _), ha, hb]
   rw [h]
   exact IsModuleTopology.continuous_of_linearMap _
 

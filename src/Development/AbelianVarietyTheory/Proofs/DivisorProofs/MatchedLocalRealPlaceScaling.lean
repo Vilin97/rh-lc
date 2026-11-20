@@ -105,7 +105,7 @@ theorem exists_linear_I (M : Model σ X W) (om : Rep σ X W)
         funext h
         have e : ∀ g, theta om (Φ₁.1 + Φ₂.1) g h = theta om Φ₁.1 g h + theta om Φ₂.1 g h := fun g => by
           unfold theta thetaSum
-          rw [map_add]
+          rw [map_add (f := _)]
           exact (summable_of_mem_schA F (hpres _ _ (hN Φ₁.2))).tsum_add (summable_of_mem_schA F (hpres _ _ (hN Φ₂.2)))
         simp only [Submodule.coe_add, Pi.add_apply, Model.I, e]
         exact integral_add (hconv _ Φ₁.2 h) (hconv _ Φ₂.2 h)

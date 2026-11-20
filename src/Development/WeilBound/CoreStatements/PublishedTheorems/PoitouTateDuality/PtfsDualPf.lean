@@ -81,7 +81,7 @@ theorem dualGen : ∃ eD : TDual (ZMod N) M ≃+ (dualRep D A).V,
         rw [AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply]
       map_add' := fun f f' => LinearMap.ext fun a => by
         show rr ((f + f') (eM.symm a)) = rr (f (eM.symm a)) + rr (f' (eM.symm a))
-        rw [← map_add]
+        rw [← map_add (f := _)]
         rfl }
   refine ⟨eD, fun g f => ?_, fun f m => ?_⟩
   · refine LinearMap.ext fun a => ?_

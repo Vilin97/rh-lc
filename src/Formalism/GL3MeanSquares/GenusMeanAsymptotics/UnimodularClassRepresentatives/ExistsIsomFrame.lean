@@ -100,7 +100,7 @@ theorem exists_next (hS : IsHermSemilocal S) (hs : h.IsSymm) (hM : IsSelfDualMod
   · rw [smul_comm c b, smul_comm d b, ← smul_add, hl, hr, ← mul_assoc, hb1, one_mul] at hcd
     exact hcd
   · intro i hi
-    rw [map_add, hr, hr, hw0o i hi, hr, hxj i hi]
+    rw [map_add (f := _), hr, hr, hw0o i hi, hr, hxj i hi]
     simp
 
 theorem exists_isom_frame (hS : IsHermSemilocal S) (hs : h.IsSymm) (hd : ∀ x, h x x = 0 → x = 0)

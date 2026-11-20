@@ -55,7 +55,7 @@ theorem UpperTheory.integral_quadratic_half_int :
     have h0 := map_isIntegral_int (starRingEnd ℂ) h
     have e : (starRingEnd ℂ) ((a : ℂ) + (b : ℂ) * (Complex.I * (r : ℂ)))
         = (a : ℂ) - (b : ℂ) * (Complex.I * (r : ℂ)) := by
-      simp only [map_add, map_mul, map_ratCast, Complex.conj_I, Complex.conj_ofReal]
+      simp only [map_add (f := _), map_mul, map_ratCast, Complex.conj_I, Complex.conj_ofReal]
       ring
     rwa [e] at h0
   obtain ⟨x, hx⟩ := int_of_isIntegral_cast (2 * a) (by

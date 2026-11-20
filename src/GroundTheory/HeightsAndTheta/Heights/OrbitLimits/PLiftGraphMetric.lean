@@ -20,7 +20,7 @@ theorem pderiv_rename_of_injective {σ τ R : Type*} [CommSemiring R] {f : σ �
   | C a => simp
   | add p q hp hq => simp [hp, hq]
   | mul_X p n hp =>
-    simp only [map_mul, rename_X, Derivation.leibniz, hp, smul_eq_mul, map_add]
+    simp only [map_mul, rename_X, Derivation.leibniz, hp, smul_eq_mul, map_add (f := _)]
     congr 1
     rw [pderiv_X, pderiv_X]
     by_cases hnx : n = x

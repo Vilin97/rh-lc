@@ -471,7 +471,7 @@ theorem th_iff (RC : Subalgebra O C) (hsec : IsSec pq sc) {r : ℕ} (v : Fin r �
       · funext k
         exact congrArg (algebraMap Ω C) (hm k)
     | zero => rw [Prod.fst_zero, Prod.snd_zero, map_zero, map_zero]; exact Submodule.zero_mem _
-    | add a b _ _ ha hb => rw [Prod.fst_add, Prod.snd_add, map_add, map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [Prod.fst_add, Prod.snd_add, map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | neg a _ ha => rw [Prod.fst_neg, Prod.snd_neg, map_neg, map_neg]; exact Submodule.neg_mem _ ha
   · rintro _ ⟨f, u, hf, hu, rfl⟩
     refine Submodule.subset_span ⟨(fun x => ((f.1.1 (toN sc x) : CR O y c') : Ω), fun k => P.j u (v k)),
@@ -494,7 +494,7 @@ theorem j_comp (a : 𝓞 E) (u : Module.Dual (CR O y c') P.L) (w : 𝔐.Li) :
   · rw [← toLi_comm, P.j_apply, P.j_apply]
     rfl
   · simp only [map_smul, hn]
-  · simp only [map_add, hm, hn]
+  · simp only [map_add (f := _), hm, hn]
 
 open PositivityTheory.Xgn.FunctionFamilyIdempotent in
 theorem mul_toN (hsec : IsSec pq sc) {N : ℕ} (a : 𝓞 E) (x : Fin N → F) :

@@ -56,10 +56,10 @@ variable {R R' : Type} [CommRing R] [CommRing R'] {D : Type} [Group D] [Topologi
 private def cocycleTransport : Z1 ρ ≃+ Z1 ρ' where
   toFun z := ⟨fun g => e (z.1 g), continuous_of_discreteTopology.comp z.2.1, fun g h => by
     beta_reduce
-    rw [z.2.2, map_add, he]⟩
+    rw [z.2.2, map_add (f := _), he]⟩
   invFun z := ⟨fun g => e.symm (z.1 g), continuous_of_discreteTopology.comp z.2.1, fun g h => by
     apply e.injective
-    rw [map_add, he]
+    rw [map_add (f := _), he]
     simp only [AddEquiv.apply_symm_apply]
     exact z.2.2 g h⟩
   left_inv z := Subtype.ext (funext fun g => e.symm_apply_apply _)
@@ -133,7 +133,7 @@ theorem local_pair : LocalFiniteness → LocalTateDuality → LocalEulerChar →
         (x.2.1.prodMk (hρ'.comp (continuous_id.prodMk continuous_const)))).neg
     · beta_reduce
       rw [mul_neg, ← hP, x.2.2, hm, map_mul, Module.End.mul_apply]
-      simp only [map_add, map_sub, AddMonoidHom.add_apply]
+      simp only [map_add (f := _), map_sub, AddMonoidHom.add_apply]
       ring
   · obtain ⟨e, he⟩ := exists_dual_equiv P h1 h2
     have hee := dual_equivariant ρ ρ' P χ hP e he

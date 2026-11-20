@@ -104,7 +104,7 @@ theorem isoFree_perp_ker {X : Type} [AddCommGroup X] [Module.Free ℤ X] [Module
   let Λ : S.perp yy.ker →+ X →+ ZMod (S.r * S.N) := AddMonoidHom.mk'
     (fun t => AddMonoidHom.mk' (fun α => eStd S.g _ t (σ α)) fun α β => by
       rw [← eStd_add_right]
-      exact ind t _ _ (by rw [map_add, hσ, hσ, hσ, QuotientAddGroup.mk_add]))
+      exact ind t _ _ (by rw [map_add (f := _), hσ, hσ, hσ, QuotientAddGroup.mk_add]))
     fun t t' => AddMonoidHom.ext fun α => eStd_add_left _ _ _ _ _
   have hΛ : ∀ (t : S.perp yy.ker) b α, yy b = QuotientAddGroup.mk α → Λ t α = eStd S.g _ t b :=
     fun t b α e => ind t _ _ ((hσ α).trans e.symm)
@@ -213,7 +213,7 @@ theorem isoFree_perp_and_weights : Laws → Laws2 → UTorsSt → ∀ (o Ω : Ty
   obtain ⟨z, hz⟩ := QuotientAddGroup.eq.1 ((lab b q' hq').symm.trans e)
   have hz' : (S.r * S.N) • z = -q'.y + α := hz
   have := congrArg l hz'
-  rw [map_nsmul, nsmul_eq_mul, ZMod.natCast_self, zero_mul, map_add, map_neg] at this
+  rw [map_nsmul, nsmul_eq_mul, ZMod.natCast_self, zero_mul, map_add (f := _), map_neg] at this
   exact neg_add_eq_zero.1 this.symm
 
 end GlobalTheory.ZH.TorusPerp

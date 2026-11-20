@@ -27,7 +27,7 @@ variable (F : Type) [Field F] [NumberField F] (κ : Type)
 def ratH : (κ → F) →+ (κ → AF F) :=
   AddMonoidHom.mk' (fun ξ i => algebraMap F (AF F) (ξ i)) fun x y => by
     funext i
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
 
 variable {F κ}
 
@@ -63,7 +63,7 @@ theorem dual {ψ : AddChar (AF F) ℂ} (hψ : IsCharAF F ψ) (hann : RatOfKer ψ
       continuous_finset_sum _ fun i _ => (continuous_apply i).mul continuous_const
     exact hψ.1.comp h
   norm ξ u := hψ.2.1 _
-  addl ξ η u := by rw [map_add, dotProduct_add, AddChar.map_add_eq_mul]
+  addl ξ η u := by rw [map_add (f := _), dotProduct_add, AddChar.map_add_eq_mul]
   addr ξ u v := by rw [add_dotProduct, AddChar.map_add_eq_mul]
   triv ξ η := by rw [ratH_dot, hψ.2.2.1]
   sep u hu := by
@@ -153,7 +153,7 @@ theorem coefSum_of_annih (hA : Annih) : CoefSum := by
       obtain ⟨M, hM⟩ := hu.tendsto_cofinite_zero.bddAbove_range_of_cofinite
       refine ⟨fun ξ => M * v ξ, hv.mul_left M, fun ξ a ha => ?_⟩
       have h1 : ‖Φ₁ (ratH F κ ξ + a + ratH F κ x)‖ ≤ M := by
-        rw [add_right_comm, ← map_add]
+        rw [add_right_comm, ← map_add (f := _)]
         exact (hub (ξ + x) a ha).trans (hM ⟨_, rfl⟩)
       rw [norm_mul, Complex.norm_conj]
       exact mul_le_mul h1 (hvb ξ a ha) (norm_nonneg _) ((norm_nonneg _).trans h1)
@@ -176,7 +176,7 @@ theorem coefSum_of_annih (hA : Annih) : CoefSum := by
     have e1 : thetaSum F Φ₁ = ∑' ξ, Φ₁ (ratH F κ ξ) := rfl
     rw [e1, e2, tsum_mul_tsum_of_summable_norm s₁ s₂, ← e.tsum_eq]
     refine hs'.tsum_prod.trans ?_
-    simp only [← map_add]
+    simp only [← map_add (f := _)]
     rfl
   calc ‖thetaSum F Φ₁‖ₑ * ‖thetaSum F Φ₂‖ₑ = ‖thetaSum F Φ₁ * (starRingEnd ℂ) (thetaSum F Φ₂)‖ₑ := by
         rw [enorm_mul, ← ofReal_norm ((starRingEnd ℂ) _), Complex.norm_conj, ofReal_norm]

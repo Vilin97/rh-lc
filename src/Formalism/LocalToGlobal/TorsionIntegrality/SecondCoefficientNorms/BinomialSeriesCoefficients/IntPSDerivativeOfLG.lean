@@ -307,20 +307,20 @@ theorem cc_pderiv_Q {l : PowerSeries K} (hl0 : PowerSeries.constantCoeff l = 0)
   unfold Q
   have hu : MvPowerSeries.constantCoeff (MvPowerSeries.C α * PowerSeries.subst (MvPowerSeries.X (0 : Fin 2)) l +
       MvPowerSeries.C β * PowerSeries.subst (MvPowerSeries.X (1 : Fin 2)) l : MvPowerSeries (Fin 2) K) = 0 := by
-    rw [map_add, map_mul, map_mul, hv 0, hv 1]
+    rw [map_add (f := _), map_mul, map_mul, hv 0, hv 1]
     simp
   generalize hU : (MvPowerSeries.C α * PowerSeries.subst (MvPowerSeries.X (0 : Fin 2)) l +
       MvPowerSeries.C β * PowerSeries.subst (MvPowerSeries.X (1 : Fin 2)) l : MvPowerSeries (Fin 2) K) = u at hu ⊢
   have hd1 : MvPowerSeries.pderiv (R := K) 1 u =
       MvPowerSeries.C β * PowerSeries.subst (MvPowerSeries.X (1 : Fin 2) : MvPowerSeries (Fin 2) K)
         (PowerSeries.derivative (R := K) l) := by
-    rw [← hU, map_add, Derivation.leibniz, Derivation.leibniz, MvPowerSeries.pderiv_C,
+    rw [← hU, map_add (f := _), Derivation.leibniz, Derivation.leibniz, MvPowerSeries.pderiv_C,
       MvPowerSeries.pderiv_C, hdv, hdv]
     simp
   have hd0 : MvPowerSeries.pderiv (R := K) 0 u =
       MvPowerSeries.C α * PowerSeries.subst (MvPowerSeries.X (0 : Fin 2) : MvPowerSeries (Fin 2) K)
         (PowerSeries.derivative (R := K) l) := by
-    rw [← hU, map_add, Derivation.leibniz, Derivation.leibniz, MvPowerSeries.pderiv_C,
+    rw [← hU, map_add (f := _), Derivation.leibniz, Derivation.leibniz, MvPowerSeries.pderiv_C,
       MvPowerSeries.pderiv_C, hdv, hdv]
     simp
   have hd01 : MvPowerSeries.pderiv (R := K) 0 (MvPowerSeries.pderiv (R := K) 1 u) = 0 := by
@@ -346,7 +346,7 @@ theorem addDefect_eq {l linv : PowerSeries K} (h : IsLogPair l linv) (ph : Power
   have hsum : MvPowerSeries.constantCoeff
       (MvPowerSeries.C a * PowerSeries.subst (MvPowerSeries.X (0 : Fin 2) : MvPowerSeries (Fin 2) K) l +
         MvPowerSeries.C b * PowerSeries.subst (MvPowerSeries.X (1 : Fin 2) : MvPowerSeries (Fin 2) K) l) = 0 := by
-    rw [map_add, hv, hv, add_zero]
+    rw [map_add (f := _), hv, hv, add_zero]
   unfold be0 fadd fmul Q
   rw [subst_subst_linv h (hv 0 a), subst_subst_linv h (hv 1 b), subst_ph_linv h ph hsum,
     subst_ph_linv h ph (hv 0 a), subst_ph_linv h ph (hv 1 b)]

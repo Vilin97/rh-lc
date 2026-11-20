@@ -31,7 +31,7 @@ private theorem span_top {a : ℕ} {κ : DomWeight a} (A : Set (nablaSq ℂ a κ
       induction hx using Submodule.span_induction with
       | mem x h => exact Submodule.subset_span (hst u x h)
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
       | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx⟩
   rcases (isIrreducible_smallRep_unitary a κ).eq_bot_or_eq_top S with h | h
   · exfalso

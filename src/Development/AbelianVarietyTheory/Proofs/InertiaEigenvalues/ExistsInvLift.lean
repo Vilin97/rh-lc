@@ -26,7 +26,7 @@ def InvSet : Subring bk.S where
     simpa [map_neg, neg_sub, sub_eq_add_neg, add_comm] using this
   add_mem' {x y} hx hy g := by
     have h := dvd_add (hx g) (hy g)
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     convert h using 1
     ring
   mul_mem' {x y} hx hy g := by

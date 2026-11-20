@@ -127,7 +127,7 @@ theorem noetherian_local_chart_overlap_finite_complement : LateralTheory.E.LZIde
       clear hp hp' this
       induction p using Polynomial.induction_on' with
       | add p q hp' hq' =>
-        rw [map_add, add_mul, mul_add]
+        rw [map_add (f := _), add_mul, mul_add]
         exact T.add_mem hp' hq'
       | monomial i a =>
         rw [Polynomial.aeval_monomial]

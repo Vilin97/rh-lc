@@ -54,7 +54,7 @@ theorem crdA_eq (A : Type) [CommRing A] [Algebra F A] (φ : E →ₗ[F] F) (z : 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [crdA]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [IsTotallyReal F] [IsCMField E] in
 theorem sum_crdA (A : Type) [CommRing A] [Algebra F A] (z : A ⊗[F] E) :
@@ -66,7 +66,7 @@ theorem sum_crdA (A : Type) [CommRing A] [Algebra F A] (z : A ⊗[F] E) :
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [TensorProduct.tmul_smul, TensorProduct.smul_tmul', TensorProduct.smul_tmul']
     simp [crdA]
-  | add x y hx hy => simp only [map_add, add_smul, Finset.sum_add_distrib, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, hx, hy]
 
 omit [IsTotallyReal F] [IsCMField E] in
 theorem continuous_iff_crdA (A : Type) [CommRing A] [Algebra F A] [TopologicalSpace A] [IsTopologicalRing A]
@@ -91,7 +91,7 @@ theorem continuous_sigR (A : Type) [CommRing A] [Algebra F A] [TopologicalSpace 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem inv_eq_adjoint (A : Type) [CommRing A] [Algebra F A] (g : ConjugateFieldNorm.UA F A V) :
     (g.1⁻¹).val = JR A (V.Gmᵀ)⁻¹ * Formalism.UG.cT (sigR A (ConjugateFieldNorm.cjF F)) g.1.val * JR A V.Gmᵀ := by
@@ -130,7 +130,7 @@ theorem map_sigR {A B : Type} [CommRing A] [Algebra F A] [CommRing B] [Algebra F
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_unit {A B : Type} [CommRing A] [Algebra F A] [CommRing B] [Algebra F B] (p : A →ₐ[F] B)
     (J : Matrix (Fin r) (Fin r) E) (g : Matrix (Fin r) (Fin r) (A ⊗[F] E)) :

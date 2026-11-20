@@ -18,7 +18,7 @@ def sumL {n : ℕ} (ε : Fin n → Bool) (m h : Submodule ℝ (EuclideanSpace �
     EuclideanSpace ℝ ι × EuclideanSpace ℝ η →ₗ[ℝ] gLie ε where
   toFun p := ⟨(L₀ p.1 : EuclideanSpace ℝ _) + (L₁ p.2 : EuclideanSpace ℝ _), by
     rw [← hmh]; exact Submodule.add_mem_sup (L₀ p.1).2 (L₁ p.2).2⟩
-  map_add' p q := by ext1; simp only [Prod.fst_add, Prod.snd_add, map_add, Submodule.coe_add]; abel
+  map_add' p q := by ext1; simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), Submodule.coe_add]; abel
   map_smul' c p := by ext1; simp [smul_add]
 
 def SumLPres : Prop := ∀ (n : ℕ) (ε : Fin n → Bool) (m h : Submodule ℝ (EuclideanSpace ℝ (Fin n × Fin n × Bool)))

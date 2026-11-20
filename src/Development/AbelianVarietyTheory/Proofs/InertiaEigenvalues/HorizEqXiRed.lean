@@ -20,7 +20,7 @@ theorem horiz_eq_xi_red : ∀ (O K : Type) [CommRing O] [NormedField K] [IsUltra
   have hnz : ∀ m : ℕ, ((m : K) + 1) ≠ 0 := by
     intro m h
     have h2 : algebraMap ℚ_[l] K ((m : ℚ_[l]) + 1) = 0 := by
-      rw [map_add, map_natCast, map_one]; exact h
+      rw [map_add (f := _), map_natCast, map_one]; exact h
     rw [map_eq_zero_iff _ (algebraMap ℚ_[l] K).injective] at h2
     exact Nat.cast_add_one_ne_zero m h2
   have hc : w = BK.cst (red w) := by

@@ -191,7 +191,7 @@ def lamPsi (ψ : AddChar (AF F) ℂ) : Submodule (𝓞 F) F where
   add_mem' := by
     intro a b ha hb r
     simp only [Set.mem_setOf_eq] at ha hb ⊢
-    rw [mul_add, map_add, adele_pairing_zero_add, AddChar.map_add_eq_mul, ha r, hb r, one_mul]
+    rw [mul_add, map_add (f := _), adele_pairing_zero_add, AddChar.map_add_eq_mul, ha r, hb r, one_mul]
   zero_mem' := by
     intro r
     rw [mul_zero, map_zero]

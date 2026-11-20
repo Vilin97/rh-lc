@@ -49,7 +49,7 @@ theorem k3Vd (n : ℕ) : QuotientHighestWeightTensorDual n := by
   have hps : ∀ k (u v : Fin n → ℝ), kirrPs k (u - v) = kirrPs k u - kirrPs k v := by
     intro k u v; rw [← k3vdPs_apply, map_sub, k3vdPs_apply, k3vdPs_apply]
   have hpa : ∀ k (u v : Fin n → ℝ), kirrPs k (u + v) = kirrPs k u + kirrPs k v := by
-    intro k u v; rw [← k3vdPs_apply, map_add, k3vdPs_apply, k3vdPs_apply]
+    intro k u v; rw [← k3vdPs_apply, map_add (f := _), k3vdPs_apply, k3vdPs_apply]
   have hN3 := three_add_le_gapBound_dual ε
   have hnpq : 0 ≤ (n : ℝ) * (pOf ε : ℝ) * (qOf ε : ℝ) := by positivity
   have hh := hgap.2.2

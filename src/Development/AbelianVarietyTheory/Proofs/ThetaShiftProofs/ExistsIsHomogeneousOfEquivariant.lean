@@ -21,7 +21,7 @@ theorem coeff_scale {σ L : Type*} [CommRing L] (Q : MvPolynomial σ L) (n : ℕ
       ring
     rw [this, Polynomial.coeff_C_mul_X_pow,
       homogeneousComponent_of_mem (isHomogeneous_monomial r rfl)]
-  | add p q hp hq => simp only [map_add, Polynomial.coeff_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), Polynomial.coeff_add, hp, hq]
 
 theorem minor_isRelPrime' {R σ : Type*} [CommRing R] [IsDomain R] {k : ℕ}
     (e : Fin k × Fin k → σ) (he : Function.Injective e) (l : Fin k) (hl : ∀ i, i ≤ l) :

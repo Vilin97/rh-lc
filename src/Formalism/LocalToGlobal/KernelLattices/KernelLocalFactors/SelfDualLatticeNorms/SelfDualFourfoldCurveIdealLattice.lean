@@ -188,7 +188,7 @@ theorem opU_map (H : Sesq V) (H' : Sesq W) (R : V ≃ₗ[ℂ] W) (hR : IsIsom H 
   have h1 : H' (R z) (R x) = H z x := hR z x
   have h2 : H' (R x) (R x) = H x x := hR x x
   unfold opU
-  rw [← map_add, hF, h1, h2]
+  rw [← map_add (f := _), hF, h1, h2]
 
 theorem isReps_map (R : V ≃ₗ[ℂ] W) {Λ₁ Λ₂ : AddSubgroup V} {S : Finset V} (h : IsReps Λ₁ Λ₂ S) :
     IsReps (imgLat (R : V →ₗ[ℂ] W) Λ₁) (imgLat (R : V →ₗ[ℂ] W) Λ₂) (S.map R.toEquiv.toEmbedding) := by
@@ -226,7 +226,7 @@ theorem semiChar_map (H : Sesq V) (H' : Sesq W) (R : V ≃ₗ[ℂ] W) (hR : IsIs
     have h1 : altE H' (R x) (R y) = altE H x y := by
       unfold altE
       rw [show H' (R x) (R y) = H x y from hR x y]
-    rw [← map_add, hα, hα, hα, h1]
+    rw [← map_add (f := _), hα, hα, hα, h1]
     exact h.2 x hx y hy
 
 theorem fixedBy_map (H : Sesq V) (H' : Sesq W) (R : V ≃ₗ[ℂ] W) (hR : IsIsom H H' (R : V →ₗ[ℂ] W)) (Λ : AddSubgroup V)

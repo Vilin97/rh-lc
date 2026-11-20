@@ -45,7 +45,7 @@ theorem mem_of_atPl (C : ∀ w, Submodule ℂ (V w)) (w : T) (L : Module.End ℂ
     rw [map_smul, atPl_tprod]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, ⟨w, by simpa using hL (f w)⟩, rfl⟩)
   | add x y hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
 
 end GlobalTheory.HoweR.TensQuad

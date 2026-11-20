@@ -77,7 +77,7 @@ theorem exists_lam (c : E →ₐ[F] E) (hc : ∀ x, c (c x) = x) (hne : ∃ z, c
       rw [Matrix.map_add _ (map_add _), Matrix.map_one _ (map_zero _) (map_one _),
         GlobalTheory.UnRep.WeakApprox.map_smul'', afsplit_prV_inclE]
     ext i j
-    rw [e1, afsplitC_apply, Matrix.map_apply, afsplit_decomp, map_add, map_one]
+    rw [e1, afsplitC_apply, Matrix.map_apply, afsplit_decomp, map_add (f := _), map_one]
     simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
     ring
   rw [e]
@@ -95,7 +95,7 @@ theorem weak_approx_at : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a y => simp [sigR, hc]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   haveI : Nontrivial (E ⊗[F] v.adicCompletion F) :=
     (Algebra.TensorProduct.includeRight_injective (R := F) (A := E) (B := v.adicCompletion F)
       (algebraMap F E).injective).nontrivial

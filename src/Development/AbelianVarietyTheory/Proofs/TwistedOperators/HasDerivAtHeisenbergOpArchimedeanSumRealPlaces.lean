@@ -120,7 +120,7 @@ theorem hasDerivAt_realAd_smul : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (
       (hc.comp (continuous_const.mul (continuous_symplO S T continuous_const (hL τ).1))) ?_ ?_
     · rw [map_zero, symplOH, symplO_zero_right, mul_zero, AddChar.map_zero_eq_one]
     · intro s t
-      rw [map_add, symplOH_add_right, AddChar.map_add_eq_mul]
+      rw [map_add (f := _), symplOH_add_right, AddChar.map_add_eq_mul]
   have hpsi : ∀ s, ψ (symplOH S T x (Λ s)) = ∏ τ, ψ (symplOH S T x (lineAt θ τ (compAt θ τ w) (s τ))) := by
     intro s
     rw [hΛ]
@@ -131,7 +131,7 @@ theorem hasDerivAt_realAd_smul : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (
       intro s' g
       induction s' using Finset.induction_on with
       | empty => rw [Finset.sum_empty, Finset.prod_empty, map_zero, AddChar.map_zero_eq_one]
-      | insert a s' ha ih => rw [Finset.sum_insert ha, Finset.prod_insert ha, map_add, AddChar.map_add_eq_mul, ih]
+      | insert a s' ha ih => rw [Finset.sum_insert ha, Finset.prod_insert ha, map_add (f := _), AddChar.map_add_eq_mul, ih]
     exact key Finset.univ _
   have hGd : Differentiable ℝ G := by
     have h1 : Differentiable ℝ fun s : D.what₂.Tau → ℝ => ψ (symplOH S T x (Λ s)) := by

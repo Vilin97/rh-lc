@@ -222,7 +222,7 @@ theorem conjUInv_mem_GfC {D : D7} (V : HSp D) (Yp : GlobalTheory.IndefiniteRowSi
   show f (sigR (AF D.host.F) D.sp.cm.sig (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.mat x i j)) = (1 : Matrix (Fin V.rank) (Fin V.rank) _) i j
   have e : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.mat x i j = (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.mat x - 1) i j + (1 : Matrix (Fin V.rank) (Fin V.rank) _) i j := by
     rw [Matrix.sub_apply, sub_add_cancel]
-  rw [e, map_add, map_add, hz i j, zero_add]
+  rw [e, map_add (f := _), map_add (f := _), hz i j, zero_add]
   by_cases hij : i = j
   · subst hij
     rw [Matrix.one_apply_eq (α := AF D.host.F ⊗[D.host.F] D.host.E), map_one, map_one,

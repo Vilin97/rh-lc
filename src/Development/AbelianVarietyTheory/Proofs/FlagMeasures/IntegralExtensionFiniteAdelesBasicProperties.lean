@@ -18,7 +18,7 @@ theorem levelafC_natCast (m : ℕ) : levelafC (F := F) E (m : 𝓞 F) = (m : E �
   | zero => simp only [levelafC, Nat.cast_zero, map_zero, TensorProduct.tmul_zero]
   | succ k ih =>
     simp only [levelafC] at ih ⊢
-    rw [Nat.cast_succ, Nat.cast_succ, map_add, map_one, TensorProduct.tmul_add, ih,
+    rw [Nat.cast_succ, Nat.cast_succ, map_add (f := _), map_one, TensorProduct.tmul_add, ih,
       Algebra.TensorProduct.one_def]
 
 private theorem sum_afsplitI_one_apply_of_mem (S : Finset (HeightOneSpectrum (𝓞 F))) (w : HeightOneSpectrum (𝓞 F))
@@ -104,7 +104,7 @@ theorem expand_trace {ι : Type} [Fintype ι] [DecidableEq ι] (β : Module.Basi
     conv_lhs => rw [hx, hy]
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl (fun i _ => ?_)
-    rw [mul_add, map_add, TensorProduct.tmul_add]
+    rw [mul_add, map_add (f := _), TensorProduct.tmul_add]
 
 private theorem adelstabT_inclE_of_forall_divisible (a : E ⊗[F] Ad F)
     (h : ∀ m : ℕ, 0 < m → ∃ t ∈ OAd F E, a = (m : E ⊗[F] Ad F) * t) (e : E) :

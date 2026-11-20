@@ -95,7 +95,7 @@ theorem main : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (
   · intro a b
     rw [hκ, hκ]
     have hab := hd (a + b)
-    simp only [map_add, LinearMap.map_add₂, LinearMap.add_apply] at hab
+    simp only [map_add (f := _), LinearMap.map_add₂, LinearMap.add_apply] at hab
     have s1 := c.T.symm (κ0 a) (κ0 b)
     have s2 := c.T.symm a b
     have ha := hd a

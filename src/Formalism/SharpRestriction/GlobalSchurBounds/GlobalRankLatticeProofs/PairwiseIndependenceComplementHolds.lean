@@ -109,7 +109,7 @@ theorem pow_one_add (Y : Matrix (Fin k) (Fin k) ℤ_[g]) (b : ℕ) :
   obtain ⟨Q, hQ⟩ := hd
   refine ⟨aeval Y Q, ?_⟩
   have h := congrArg (aeval Y) hQ
-  simp only [map_sub, map_pow, map_add, map_one, map_mul, map_natCast, aeval_X] at h
+  simp only [map_sub, map_pow, map_add (f := _), map_one, map_mul, map_natCast, aeval_X] at h
   rw [one_pow, sub_eq_iff_eq_add] at h
   rw [h, nsmul_eq_mul, add_comm]
   push_cast

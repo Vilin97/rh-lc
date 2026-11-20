@@ -89,7 +89,7 @@ variable {k r : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 theorem beInt_add_left (σ : Mat k r → (H →L[ℂ] H)) (π : Mat k r → (Vp →L[ℂ] Vp)) (ψ : Mat k r → ℂ)
     (v₁ v₂ v' : H) : beInt σ π ψ (v₁ + v₂) v' = beInt σ π ψ v₁ v' + beInt σ π ψ v₂ v' := by
   funext p
-  simp only [beInt, Pi.add_apply, map_add, inner_add_right, add_mul, add_smul]
+  simp only [beInt, Pi.add_apply, map_add (f := _), inner_add_right, add_mul, add_smul]
 
 theorem beInt_smul_left (σ : Mat k r → (H →L[ℂ] H)) (π : Mat k r → (Vp →L[ℂ] Vp)) (ψ : Mat k r → ℂ)
     (a : ℂ) (v v' : H) : beInt σ π ψ (a • v) v' = a • beInt σ π ψ v v' := by

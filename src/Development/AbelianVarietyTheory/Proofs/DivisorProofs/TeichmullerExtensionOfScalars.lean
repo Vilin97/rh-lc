@@ -21,7 +21,7 @@ theorem exists_powFrob_quot (p k : ℕ) [Fact p.Prime] {R : Type} [CommRing R] (
       map_zero' := by rw [zero_pow (pow_ne_zero _ hp.ne_zero), map_zero]
       map_add' := fun a b => by
         obtain ⟨r, hr⟩ := exists_add_pow_prime_pow_eq hp a b k
-        rw [hr, map_add, map_add, mul_assoc, mul_assoc, map_mul, h0, zero_mul, add_zero] }
+        rw [hr, map_add (f := _), map_add (f := _), mul_assoc, mul_assoc, map_mul, h0, zero_mul, add_zero] }
   refine ⟨Ideal.Quotient.lift _ f fun x hx => ?_, fun _ => rfl⟩
   obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton.1 hx
   change Ideal.Quotient.mk _ _ = 0
@@ -52,10 +52,10 @@ theorem exists_isFrobLin_twist (p k : ℕ) [Fact p.Prime] (R : Type) [CommRing R
   let w : P →ₗ[R] P ⧸ (p : R) • (⊤ : Submodule R P) := (u : R) • Submodule.mkQ _
   have hw : ∀ y, w y = Submodule.Quotient.mk ((u : R) • y) := fun _ => rfl
   let κ₀ : Y ⊗[R] P →+ P ⧸ (p : R) • (⊤ : Submodule R P) := TensorProduct.liftAddHom
-    (AddMonoidHom.mk' (fun b => AddMonoidHom.mk' (fun y => F' b • w y) fun y y' => by rw [map_add, smul_add])
+    (AddMonoidHom.mk' (fun b => AddMonoidHom.mk' (fun y => F' b • w y) fun y y' => by rw [map_add (f := _), smul_add])
       fun b b' => AddMonoidHom.ext fun y => by
         change F' (b + b') • w y = F' b • w y + F' b' • w y
-        rw [map_add, add_smul])
+        rw [map_add (f := _), add_smul])
     fun r b y => by
       obtain ⟨a, rfl⟩ := csurj b
       obtain ⟨x, hx, hx'⟩ := hs r
@@ -74,12 +74,12 @@ theorem exists_isFrobLin_twist (p k : ℕ) [Fact p.Prime] (R : Type) [CommRing R
     obtain ⟨t, rfl⟩ := e'.surjective m
     induction t using TensorProduct.induction_on with
     | zero => rwa [map_zero]
-    | add s t hs ht => rw [map_add]; exact ha _ _ hs ht
+    | add s t hs ht => rw [map_add (f := _)]; exact ha _ _ hs ht
     | tmul b y =>
       obtain ⟨a, rfl⟩ := csurj b
       rw [he']; exact ht a y
   have hsl : ∀ (r : R) m, κ (r • m) = r ^ p ^ k • κ m := fun r => ind _ (by simp)
-    (fun x y hx hy => by rw [smul_add, map_add, map_add, smul_add, hx, hy])
+    (fun x y hx hy => by rw [smul_add, map_add (f := _), map_add (f := _), smul_add, hx, hy])
     fun a y => by rw [← mul_smul, hκ, hκ, mul_pow, mul_smul]
   refine ⟨κ, hκ1, fun f hf => ?_⟩
   let X : ModuleCat R := (ModuleCat.restrictScalars f).obj (ModuleCat.of _ (R ⧸ Ideal.span {(p : R)}))
@@ -91,10 +91,10 @@ theorem exists_isFrobLin_twist (p k : ℕ) [Fact p.Prime] (R : Type) [CommRing R
   let i : X →+ R ⧸ Ideal.span {(p : R)} := AddMonoidHom.id _
   have hi : ∀ a, i (d a) = Ideal.Quotient.mk _ a := fun _ => rfl
   let v : X ⊗[R] M →+ P ⧸ (p : R) • (⊤ : Submodule R P) := TensorProduct.liftAddHom
-    (AddMonoidHom.mk' (fun b => AddMonoidHom.mk' (fun m => i b • κ m) fun y y' => by rw [map_add, smul_add])
+    (AddMonoidHom.mk' (fun b => AddMonoidHom.mk' (fun m => i b • κ m) fun y y' => by rw [map_add (f := _), smul_add])
       fun b b' => AddMonoidHom.ext fun m => by
         change i (b + b') • κ m = i b • κ m + i b' • κ m
-        rw [map_add, add_smul])
+        rw [map_add (f := _), add_smul])
     fun r b m => by
       obtain ⟨a, rfl⟩ := dsurj b
       change i (r • d a) • κ m = i (d a) • κ (r • m)
@@ -110,7 +110,7 @@ theorem exists_isFrobLin_twist (p k : ℕ) [Fact p.Prime] (R : Type) [CommRing R
     have hz : ∃ y, (0 : X ⊗[R] M) = d 1 ⊗ₜ lam y := ⟨0, by rw [map_zero, TensorProduct.tmul_zero]⟩
     have ha : ∀ s t : X ⊗[R] M, (∃ y, s = d 1 ⊗ₜ lam y) → (∃ y, t = d 1 ⊗ₜ lam y) → ∃ y, s + t = d 1 ⊗ₜ lam y := by
       rintro _ _ ⟨y, rfl⟩ ⟨y', rfl⟩
-      exact ⟨y + y', by rw [map_add, TensorProduct.tmul_add]⟩
+      exact ⟨y + y', by rw [map_add (f := _), TensorProduct.tmul_add]⟩
     induction t using TensorProduct.induction_on with
     | zero => exact hz
     | add s t hs ht => exact ha _ _ hs ht

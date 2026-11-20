@@ -30,5 +30,5 @@ theorem UpperTheory.tensor_fractionRing_exists_mul_eq_of_denominator :
     have split : (1 : L) ⊗ₜ[k] ((β1 * β2 : B) : K) =
         ((1 : L) ⊗ₜ[k] (β1 : K)) * ((1 : L) ⊗ₜ[k] (β2 : K)) := by
       rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, Subalgebra.coe_mul]
-    rw [map_add, map_mul, map_mul, i1, i2, ← e1, ← e2, split]
+    rw [map_add (f := _), map_mul, map_mul, i1, i2, ← e1, ← e2, split]
     ring

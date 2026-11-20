@@ -74,7 +74,7 @@ theorem isIntertwiningMap_rTensor {k Γ X Y N : Type*} [CommRing k] [Monoid Γ] 
     induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x n => simp [hf.isIntertwining]
-    | add v w hv hw => simp only [map_add, hv, hw]⟩
+    | add v w hv hw => simp only [map_add (f := _), hv, hw]⟩
 
 namespace AdditiveFunction
 

@@ -38,7 +38,7 @@ theorem stalk_noetherian_and_finite_image :
       | algebraMap n =>
         have : f (algebraMap ℤ Γ(X, U) n) = (n : PadicAlgCl p) := by simp
         rw [this]; exact K.intCast_mem n
-      | add a b _ _ ha hb => rw [map_add]; exact K.add_mem ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _)]; exact K.add_mem ha hb
       | mul a b _ _ ha hb => rw [map_mul]; exact K.mul_mem ha hb
     intro a
     obtain ⟨⟨r, t⟩, rfl⟩ := IsLocalization.mk'_surjective

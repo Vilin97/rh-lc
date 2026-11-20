@@ -60,8 +60,8 @@ private theorem exists_val (hF : R.Facts) (e : EMap G D) (b : BMap G D) (p : PMa
     linear_combination h1
   have add0 : ∀ v v' φ, c0 (v + v') φ = c0 v φ + c0 v' φ := by
     intro v v' φ
-    have := spec0 (R.t ^ N) (v + v') (xs v + xs v') (by rw [map_add, hxs, hxs, map_add, smul_add]) φ
-    rw [map_add, AddMonoidHom.add_apply] at this
+    have := spec0 (R.t ^ N) (v + v') (xs v + xs v') (by rw [map_add (f := _), hxs, hxs, map_add (f := _), smul_add]) φ
+    rw [map_add (f := _), AddMonoidHom.add_apply] at this
     simp only [c0]
     field_simp
     rw [this]; simp only [c0]; field_simp
@@ -99,7 +99,7 @@ private theorem exists_val (hF : R.Facts) (e : EMap G D) (b : BMap G D) (p : PMa
     · intro s v
       rw [smul_smul, hC, hC, map_mul]; ring
     · intro x y hx hy
-      rw [smul_add, map_add, map_add, Pi.add_apply, Pi.add_apply, hx, hy, mul_add]
+      rw [smul_add, map_add (f := _), map_add (f := _), Pi.add_apply, Pi.add_apply, hx, hy, mul_add]
   · intro c v x h φ
     rw [hC1]; exact spec0 c v x h φ
 
@@ -127,7 +127,7 @@ private theorem IsVal.equi {n : ℕ} {C : M.V n →+ (Module.Dual K (HdR M.q n) 
     rw [p.act a hM, hC.spec _ _ _ hx, map_mul, hF.i_σ] at h1
     exact (mul_left_cancel₀ ((map_ne_zero _).mpr (tB_pow_ne hF N)) h1).symm
   · intro x y hx hy
-    rw [map_add, map_add, Pi.add_apply, hx, hy, map_add, Pi.add_apply, map_add]
+    rw [map_add (f := _), map_add (f := _), Pi.add_apply, hx, hy, map_add (f := _), Pi.add_apply, map_add (f := _)]
 
 private theorem IsVal.cup {i j : ℕ} {Ci : M.V i →+ (Module.Dual K (HdR M.q i) → R.B)}
     {Cj : M.V j →+ (Module.Dual K (HdR M.q j) → R.B)} {Cij : M.V (i + j) →+ (Module.Dual K (HdR M.q (i + j)) → R.B)}
@@ -224,7 +224,7 @@ private theorem inj_conn (hF : R.Facts) (hS : EtSide G) (hL : D.Laws G) (e : EMa
     have hw' : w ∈ Submodule.span ℚ_[l] (Set.range g) := by rw [hspan]; trivial
     refine hw (Submodule.span_induction (p := fun w _ => C (j + j') w φ = 0) ?_ (by simp) ?_ ?_ hw')
     · rintro _ ⟨s, rfl⟩; exact hcon s
-    · intro x y _ _ hx hy; rw [map_add, Pi.add_apply, hx, hy, add_zero]
+    · intro x y _ _ hx hy; rw [map_add (f := _), Pi.add_apply, hx, hy, add_zero]
     · intro z x _ hx; rw [(hC _).smul, hx, mul_zero]
   obtain ⟨s₀, hs₀⟩ := hg
   have hall : ∀ s, C (j + j') (g s) φ ≠ 0 := by
@@ -258,7 +258,7 @@ private theorem inj_conn (hF : R.Facts) (hS : EtSide G) (hL : D.Laws G) (e : EMa
       rw [Finset.sum_mul, ← h1]; exact Finset.sum_congr rfl fun _ _ => by ring
     exact (mul_eq_zero.mp h3).resolve_right (hall s)
   · intro x y _ _ hx hy
-    simp only [LinearMap.add_apply, map_add, add_mul, Finset.sum_add_distrib, hx, hy, add_zero]
+    simp only [LinearMap.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, hx, hy, add_zero]
   · intro z x _ hx
     simp only [LinearMap.smul_apply, smul_eq_mul, map_mul, mul_assoc, ← Finset.mul_sum, hx, mul_zero]
 

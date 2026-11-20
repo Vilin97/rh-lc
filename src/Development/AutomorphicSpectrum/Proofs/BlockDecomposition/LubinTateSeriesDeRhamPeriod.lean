@@ -161,7 +161,7 @@ theorem evalMod_teichmuller : ∀ {l : ℕ} [Fact l.Prime] (K : FinExt l) (μ : 
     intro c
     obtain ⟨c', hc'⟩ := hr c
     refine ⟨- oB K μ c', S.neg_mem (ho _), ?_⟩
-    rw [tchHom_apply, hc', map_add, map_mul]; ring
+    rw [tchHom_apply, hc', map_add (f := _), map_mul]; ring
   have hϖ0 : thB l (oB K μ π) ≠ 0 := (env.unit.map (thB l)).ne_zero
   obtain ⟨M, -, s, hs, hM⟩ := GlobalTheory.T.teichmuller_near_power_exists S hw (oB K μ π) hϖ0 x hx
   rw [pow_one] at hM

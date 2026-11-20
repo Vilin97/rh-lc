@@ -39,7 +39,7 @@ theorem four_surj {B C D E B' C' D' E' : Type*} [AddCommGroup B] [AddCommGroup C
   have : γ' (x' - c w) = 0 := by rw [map_sub, ← s3, hy, sub_self]
   obtain ⟨u', hu'⟩ := (h2' _).1 this
   obtain ⟨u, rfl⟩ := hb u'
-  exact ⟨w + β u, by rw [map_add, s2, hu', add_sub_cancel]⟩
+  exact ⟨w + β u, by rw [map_add (f := _), s2, hu', add_sub_cancel]⟩
 
 theorem cpull_comp {R : Type} [CommRing R] {K L M : Cx R} (f : K ⟶ L) (g : L ⟶ M) (I : Cx R) (n : ℤ) (x) :
     cpull (f ≫ g) I n x = cpull f I n (cpull g I n x) := by

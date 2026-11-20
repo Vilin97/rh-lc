@@ -41,14 +41,14 @@ theorem equiv_extZero (y : Af F ⊗[F] E) :
     · change algebraMap E (FiniteAdeleRing (𝓞 E) E) x * finiteAdeleMap F E a = toFinAd F E (a ⊗ₜ[F] x)
       rw [toFinAd_tmul, finiteAdeleMap_eq, mul_comm]
   | add a b ha hb =>
-    rw [map_add, map_add, ha, hb, map_add]
+    rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _)]
     exact Prod.ext (add_zero _) rfl
 
 theorem toE_locIdele (w : HeightOneSpectrum (𝓞 E)) (x : (w.adicCompletion E)ˣ) :
     toE F E (locIdele F w x) = HeckeValGen.localIdele E w x := by
   refine Units.ext ?_
   change adeleTensorAlgEquivLeft F E (locIdele F w x : AF F ⊗[F] E) = _
-  rw [coe_locIdele, map_add, map_sub, map_one, equiv_extZero, equiv_extZero, map_one, RingEquiv.apply_symm_apply]
+  rw [coe_locIdele, map_add (f := _), map_sub, map_one, equiv_extZero, equiv_extZero, map_one, RingEquiv.apply_symm_apply]
   refine Prod.ext ?_ ?_
   · change (1 : InfiniteAdeleRing E) - 0 + 0 = 1
     rw [sub_zero, add_zero]

@@ -51,7 +51,7 @@ variable (E F) in
 def sobolevEquivLp (s : ℝ) : sobolevSubmodule E F s ≃ₗ[ℂ] Lp F 2 (volume : Measure E) where
   toFun := sobolevToLp
   map_add' u v := by
-    rw [sobolevToLp_eq_iff, Submodule.coe_add, map_add, besselPotential_eq_sobolevToLp, besselPotential_eq_sobolevToLp,
+    rw [sobolevToLp_eq_iff, Submodule.coe_add, map_add (f := _), besselPotential_eq_sobolevToLp, besselPotential_eq_sobolevToLp,
       ← Lp.toTemperedDistributionCLM_apply, ← Lp.toTemperedDistributionCLM_apply,
       ← Lp.toTemperedDistributionCLM_apply, map_add]
   map_smul' c u := by

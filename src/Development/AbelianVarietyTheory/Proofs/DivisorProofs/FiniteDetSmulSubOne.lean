@@ -53,7 +53,7 @@ theorem gauss_isometry {R X M : Type} [CommRing R] [AddCommGroup X] [Module R X]
   have hm : ∀ x, x ∈ A.comap (u - LinearMap.id) ↔ u x - x ∈ A := fun x => Iff.rfl
   have key := GlobalTheory.T.gaussSum_nondegenerate_finite_hermitian_module σ w h.sg_sg h.w_add lam hlam β
     (fun x y z => by
-      rw [hβ', hβ', hβ', ← h.add_left, map_add]
+      rw [hβ', hβ', hβ', ← h.add_left, map_add (f := _)]
       congr 1
       abel)
     hsym
@@ -412,10 +412,10 @@ theorem isHeis_gamQ (hψ : IsCharAF D.host.F ψ) (S T : HSp D) {w : 𝓞 D.host.
     IsHeis (sgO D) w (gamQ ψ S T) fun x => opF hψ S T w (finL S T x) := by
   have H := isHeis_opF hψ S T hw
   have e : ∀ x y, gamQ ψ S T x y = gamF ψ S T (finL S T x) (finL S T y) := fun _ _ => rfl
-  exact ⟨H.sg_sg, H.w_add, fun x y z => by rw [e, e, e, map_add, H.add_left],
-    fun x y z => by rw [e, e, e, map_add, H.add_right], fun x => by rw [e, H.alt],
+  exact ⟨H.sg_sg, H.w_add, fun x y z => by rw [e, e, e, map_add (f := _), H.add_left],
+    fun x y z => by rw [e, e, e, map_add (f := _), H.add_right], fun x => by rw [e, H.alt],
     fun r x y => by rw [e, e, map_smul, map_smul, H.adj], fun v => by rw [map_zero, H.zero],
-    fun x y v => by rw [H.comp, e, map_smul, map_add]⟩
+    fun x y v => by rw [H.comp, e, map_smul, map_add (f := _)]⟩
 
 theorem finRat_sandw {g : GA D S} {h : GA D T} {a b} (ha : IsRat S g a) (hb : IsRat T h⁻¹ b)
     (x : Matrix (Fin T.rank) (Fin S.rank) D.host.E) : finRat S T (b * x * a) = actO S T g⁻¹ h⁻¹ (finRat S T x) := by
@@ -452,7 +452,7 @@ theorem finite_data (hψ : IsStdChar D ψ (-1)) (hS : IsSelfDualC S ΛS) (hT : I
       rw [hm, mul_comm, mul_smul]
       exact nsmul_mem (hk' _) m
     | zero => rw [map_zero, smul_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add, smul_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg, smul_neg]; exact neg_mem hx
   have i1 := GlobalTheory.T.relIndex_map_nsmul_comap_eq_abs_norm_pow_mul_det _ _ A fg full (sandw b a - 1) N hN hd fun x hx => by
     rw [LinearMap.sub_apply, smul_sub]

@@ -18,7 +18,7 @@ theorem fc_clm_decomp (n : ℕ) (D : V n →L[ℝ] ℂ) (u : V n) :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [map_add, map_smul, map_smul, Complex.real_smul, Complex.real_smul]
+  rw [map_add (f := _), map_smul, map_smul, Complex.real_smul, Complex.real_smul]
   have h1 : u a = ((u a).re : ℂ) + ((u a).im : ℂ) * Complex.I := (Complex.re_add_im _).symm
   have h2 : (starRingEnd ℂ) (u a) = ((u a).re : ℂ) - ((u a).im : ℂ) * Complex.I := by
     apply Complex.ext <;> simp

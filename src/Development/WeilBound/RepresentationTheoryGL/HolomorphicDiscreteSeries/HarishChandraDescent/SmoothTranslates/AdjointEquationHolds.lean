@@ -145,7 +145,7 @@ theorem adjoint_equation_holds : AdEq := by
     rw [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul]
   obtain ⟨e1, e2⟩ := smc_cpart_unique hc1 hc2
   change ρ g ((actM (smE ε ρ) X x : smD ε ρ) : H) = _
-  rw [hact, hact, hsplit, e1, e2, map_add, map_smul, dS_conj hρ hg h1 hx, dS_conj hρ hg h2 hx]
+  rw [hact, hact, hsplit, e1, e2, map_add (f := _), map_smul, dS_conj hρ hg h1 hx, dS_conj hρ hg h2 hx]
   rfl
 
 end PositivityTheory.RgHe3

@@ -56,7 +56,7 @@ private lemma isHopfApproximable_sum (H : HodgeTateDatum p g v R O σ cp) {r : �
     beta_reduce at hsS ⊢
     rw [Finset.sum_insert ha]
     rw [Pi.add_apply, Pi.smul_apply]
-    simp only [Algebra.smul_def, map_add, map_mul] at hsa hsS ⊢
+    simp only [Algebra.smul_def, map_add (f := _), map_mul] at hsa hsS ⊢
     linear_combination (algebraMap R C (c a)) * hsa + hsS
 
 private lemma isHopfApproximable_comp_mulVec (H : HodgeTateDatum p g v R O σ cp) {r : ℕ} (Bw : Matrix (Ix g) (Fin r) ℤ_[p])
@@ -273,7 +273,7 @@ theorem restrictedHopfOrderApproximation : RestrictedHopfOrderApproximationState
         ((PadicInt.toZMod (x i)).val : R) + (p : R) * algebraMap ℤ_[p] R (y i) := by
       intro i
       conv_lhs => rw [hy i]
-      simp only [map_add, map_mul, map_natCast]
+      simp only [map_add (f := _), map_mul, map_natCast]
     have hR : ∑ i, dj * lam i * ((PadicInt.toZMod (x i)).val : R) -
         dj * ∑ i, lam i * algebraMap ℤ_[p] R (x i) =
         -(dj * (p : R) * ∑ i, lam i * algebraMap ℤ_[p] R (y i)) := by

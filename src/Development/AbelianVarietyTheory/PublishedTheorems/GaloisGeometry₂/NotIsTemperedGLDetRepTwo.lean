@@ -149,7 +149,7 @@ theorem not_isCohFor_absC {s : ℂ} (hs : s ≠ 0) :
   refine not_hasCohomology_of_central (c := s * (2 * Fintype.card (InfinitePlace E))) (by simp [hs]) fun m => ?_
   induction m using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | tmul φ v =>
     rw [tensorLie_tmul, CuspSub.op_triv_twist, AlgRep.dmat_triv, ← dchi_absC_one]
     simp [opTriv, opAdd, TensorProduct.smul_tmul']

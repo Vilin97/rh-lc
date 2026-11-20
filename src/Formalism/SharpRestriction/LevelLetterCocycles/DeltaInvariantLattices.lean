@@ -29,7 +29,7 @@ def BlochKatoCocyclesSubgroup : Submodule LL (H → T.V) where
   add_mem' := by
     rintro a b ⟨ha, x, hx⟩ ⟨hb, y, hy⟩
     refine ⟨(continuousCocycles _).add_mem ha hb, x + y, fun g => ?_⟩
-    simp only [Pi.add_apply, TensorProduct.add_tmul, hx, hy, map_add]
+    simp only [Pi.add_apply, TensorProduct.add_tmul, hx, hy, map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, x, hx⟩

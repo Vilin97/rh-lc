@@ -36,7 +36,7 @@ theorem mem_intAt_iff (q : SplitPt D k) {a : AE D} (ha : a ∈ idAt D (· = q.v)
     · rw [q.sec_pr, RingHom.map_mul]; exact mul_mem_intAE (e_mem_intAt q).2 ((cA_int_iff a).2 h.2)
   · rintro ⟨h1, h2⟩
     refine ⟨ha, ?_⟩
-    rw [eq_sec_add_csec q ha, RingHom.map_add]
+    rw [eq_sec_add_csec q ha, RingHom.map_add (f := _)]
     exact add_mem ((q.int_iff _).1 h1) ((cA_int_iff _).2 ((q.int_iff _).1 h2))
 
 theorem val_xi (q : SplitPt D k) (h : q.UnitAA) : valuation k ((ofSplit q).xi) = 1 := by

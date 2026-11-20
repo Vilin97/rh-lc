@@ -64,7 +64,7 @@ theorem expS_add (f g : MvPowerSeries σ K) (hf : MvPowerSeries.constantCoeff f 
     rfl
   have h0 : ∀ i : Fin 2, MvPowerSeries.constantCoeff (MvPowerSeries.X i : MvPowerSeries (Fin 2) K) = 0 :=
     fun i => MvPowerSeries.constantCoeff_X i
-  rw [← e1, ← subst_expS h hh _ (by rw [map_add, h0, h0, add_zero]), exp_biv,
+  rw [← e1, ← subst_expS h hh _ (by rw [map_add (f := _), h0, h0, add_zero]), exp_biv,
     MvPowerSeries.subst_mul hS, subst_expS h hh _ (h0 0), subst_expS h hh _ (h0 1), e2, e2]
   rfl
 

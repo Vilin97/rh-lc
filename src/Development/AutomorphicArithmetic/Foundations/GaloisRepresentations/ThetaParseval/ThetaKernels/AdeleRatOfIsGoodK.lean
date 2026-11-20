@@ -19,7 +19,7 @@ theorem adele_rat_of_isGood_k {σ : E →ₐ[F] E} {B : Base F E} (hB : _root_.U
   haveI : IsTotallyReal F := hB.cm.1
   obtain ⟨⟨θ, hθ⟩, -⟩ := (_root_.GlobalTheory.StdCharWeilDatum.isStdCharF_of_isGood_k F E σ B hB).2
   let L : Ainf F →+ ℂ := AddMonoidHom.mk' (fun x => ∑ w, θ w (x ⊗ₜ[F] (1 : E))) fun a b => by
-    simp only [map_add, TensorProduct.add_tmul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib]
   have hL : ∀ x, L x = ((Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (InfiniteAdeleRing.ringEquiv_mixedSpace F x) : ℝ) : ℂ) :=
     fun x => GlobalTheory.StdCharWeilDatum.sum_infFam B θ hθ x
   refine GlobalTheory.RatAnnih.adele_rat (GlobalTheory.StdCharWeilDatum.isCharAF hB.std) (psiV_exists_ne_one hB.std) L

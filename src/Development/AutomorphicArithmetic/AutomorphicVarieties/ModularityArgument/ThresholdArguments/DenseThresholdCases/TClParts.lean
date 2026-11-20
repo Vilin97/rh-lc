@@ -13,7 +13,7 @@ section Abstract
 variable {M : Type} [AddCommGroup M] [Module ℂ M]
 private def clE {G : Type} [Group G] (ρ : Representation ℂ G M) (K : Subgroup G) (F : M) : Submodule ℂ M where
   carrier := {y | ∀ k ∈ K, ∀ a : ℂ, ρ k F = a • F → ρ k y = a • y}
-  add_mem' ha hb k hk a h := by rw [map_add, ha k hk a h, hb k hk a h, smul_add]
+  add_mem' ha hb k hk a h := by rw [map_add (f := _), ha k hk a h, hb k hk a h, smul_add]
   zero_mem' k _ a _ := by simp
   smul_mem' c v hv k hk a h := by rw [map_smul, hv k hk a h, smul_comm]
 private theorem clE_stab {G : Type} [Group G] (ρ : Representation ℂ G M) (K : Subgroup G) (F : M) (φ : M →ₗ[ℂ] M)
@@ -150,7 +150,7 @@ private theorem cl_iso {G : Type} [Group G] [TopologicalSpace G] [IsTopologicalG
     rw [← hf, hu]
   · exact ⟨fun g => by simp, fun K _ => ⟨⊤, by simp, zero_mem _⟩⟩
   · intro a b ha hb
-    refine ⟨fun g => by rw [map_add]; exact add_mem (ha.1 g) (hb.1 g), fun K hK => ?_⟩
+    refine ⟨fun g => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha.1 g) (hb.1 g), fun K hK => ?_⟩
     obtain ⟨U, hU, h1⟩ := ha.2 K hK
     obtain ⟨U', hU', h2⟩ := hb.2 K hK
     exact ⟨U ⊓ U', Subgroup.relIndex_inf_ne_zero hU hU', add_mem (fun u hu => h1 u hu.1) (fun u hu => h2 u hu.2)⟩

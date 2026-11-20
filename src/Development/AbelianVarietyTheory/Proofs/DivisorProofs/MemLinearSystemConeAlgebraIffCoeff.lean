@@ -18,7 +18,7 @@ theorem X_pow_mul_C_mem_coneAlg {K V Ω : Type} [Field K] [AddCommGroup V] [Modu
     rw [pow_zero, one_mul]
     exact (coneAlg ev).algebraMap_mem r
   | add x y i _ _ hx hy =>
-    rw [map_add, mul_add]
+    rw [map_add (f := _), mul_add]
     exact add_mem hx hy
   | mem_mul m hm i x _ hx =>
     obtain ⟨v, rfl⟩ := hm

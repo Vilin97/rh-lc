@@ -52,7 +52,7 @@ lemma ldiag_coeff_rowAct_diag {r n : ℕ} (t : Fin r → ℂ) (f : MvPolynomial 
       rfl
     · rw [zero_mul]
   next p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, add_mul]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, add_mul]
 
 lemma ldiag_term (z : ℂ) (w : ℝ) (N : ℕ) :
     z * (w : ℂ) * star (z * (w : ℂ)) * (N : ℂ) = ((Complex.normSq z * w ^ 2 * N : ℝ) : ℂ) := by

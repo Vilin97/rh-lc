@@ -204,7 +204,7 @@ theorem exists_strictHenselian_absolutely_closed_local_ring {f₀ : SInf F (Fin 
       (Submodule.add_mem _ (Submodule.smul_mem _ t (hS ξ₁)) (hS ξ₂)) ?_
     rw [← pure_update_lin f₀ φ₀ (hφ₀.std hG') B.v₁ t _ _]
     exact zeroMatch hM hf₀ hφ₀ (hζ _).1 (Submodule.add_mem _ (Submodule.smul_mem _ t (hζ ξ₁).1) (hζ ξ₂).1)
-      (by rw [hζp, map_add, map_smul, hζp, hζp])
+      (by rw [hζp, map_add (f := _), map_smul, hζp, hζp])
   have h0 : dif G om om' c (Ψ 0) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₀ (Function.update φ₀ B.v₁ (ζ 0))) = 0 := by
     have := key 1 0 0
     simp only [one_smul, add_zero] at this

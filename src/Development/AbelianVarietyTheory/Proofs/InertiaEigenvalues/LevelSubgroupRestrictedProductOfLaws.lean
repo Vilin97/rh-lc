@@ -68,7 +68,7 @@ theorem triv_gen {e : A} (he : e * e = e) (M M' : Matrix n n A) (h : M * M' = 1)
 
 theorem map_mix {B : Type} [CommRing B] (ψ : A →+* B) (e m d : A) :
     ψ (e * m + (1 - e) * d) = ψ e * ψ m + (1 - ψ e) * ψ d := by
-  simp only [map_add, map_mul, map_sub, map_one]
+  simp only [map_add (f := _), map_mul, map_sub, map_one]
 
 theorem map_one_apply {B : Type} [CommRing B] (ψ : A →+* B) (i j : n) :
     ψ ((1 : Matrix n n A) i j) = (1 : Matrix n n B) i j := by
@@ -138,7 +138,7 @@ theorem redFn_piece {β x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} {φ : 
   apply Units.ext
   ext i j
   show resS F PP ((piece hφ y).1 i j) = resS F PP (y.1 i j)
-  rw [piece_apply, map_add, map_mul, map_mul, h, map_sub, h, map_one, sub_self, zero_mul, add_zero, one_mul]
+  rw [piece_apply, map_add (f := _), map_mul, map_mul, h, map_sub, h, map_one, sub_self, zero_mul, add_zero, one_mul]
 
 theorem redFn_piece_eq_one {β x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)} {φ : Formalism.L2.Herm.intAf F E}
     (he : (φ : E ⊗[F] Formalism.L2.Herm.Af F) * φ = φ) (hx : piece he x ∈ St β) (PP : Pl E) (h : resS F PP φ = 0) :

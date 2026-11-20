@@ -37,7 +37,7 @@ theorem twCoef_Wchi {G : Type} [Group G] [TopologicalSpace G] {Qp LL O : Type} [
     twCoef (Γ.Wchi c) Γ.χ₁ X g y = (((Γ.ε g) ^ (-((c : ℤ) - 1)) : Oˣ) : O) • y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, ha, hb, smul_add]
+  | add a b ha hb => rw [map_add (f := _), ha, hb, smul_add]
   | tmul a x =>
     rw [coefRep_tmul, twistRep_apply, smul_tmul']
     congr 1

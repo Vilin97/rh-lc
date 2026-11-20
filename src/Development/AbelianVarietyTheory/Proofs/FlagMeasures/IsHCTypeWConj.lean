@@ -75,7 +75,7 @@ theorem ccInv_smul (s : ℂ) (x : EuclideanSpace ℂ (Fin (Module.finrank ℂ V)
 def tr (T : V →L[ℂ] V) : EuclideanSpace ℂ (Fin (Module.finrank ℂ V)) →L[ℂ] EuclideanSpace ℂ (Fin (Module.finrank ℂ V)) :=
   LinearMap.toContinuousLinearMap
     { toFun := fun x => cc (T (ccInv x))
-      map_add' := fun x y => by simp only [ccInv_add, map_add, cc_add]
+      map_add' := fun x y => by simp only [ccInv_add, map_add (f := _), cc_add]
       map_smul' := fun s x => by simp only [ccInv_smul, map_smul, cc_smul, star_star, RingHom.id_apply] }
 
 end GlobalTheory.ConjTypeW

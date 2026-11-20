@@ -24,7 +24,7 @@ theorem UpperTheory.V.Th.Sp.q2 :
   induction Q using MonoidAlgebra.induction_linear with
   | zero => simp
   | add P Q hP hQ =>
-    simp only [map_add, add_mul, hP.1, hQ.1, hP.2, hQ.2, add_zero, true_and, add_smul]
+    simp only [map_add (f := _), add_mul, hP.1, hQ.1, hP.2, hQ.2, add_zero, true_and, add_smul]
     abel
   | single g a =>
     have h : t (MonoidAlgebra.single g a) = a * t (MonoidAlgebra.single g 1) := by

@@ -58,7 +58,7 @@ theorem exists_half {R W A : Type} [CommRing R] [AddCommGroup W] [Module R W] [A
     rw [nl k, nl M, smul_comm M k, ← e3, nl, hc, smul_comm (c τ), smul_comm (c τ), smul_smul k, smul_smul]
     congr 2
     ring
-  rw [dec y, map_add, AddMonoidHom.add_apply, eb, e2]
+  rw [dec y, map_add (f := _), AddMonoidHom.add_apply, eb, e2]
   exact add_mem (hH _ (nsmul_mem hb 2) _ hu) (hH _ hM _ (nsmul_mem (sub_mem (nsmul_mem ha' k) hd) 2))
 
 theorem heis_congr {ψ : AddChar (AF D.host.F) ℂ} {H : AddSubgroup (WO S T)}
@@ -109,7 +109,7 @@ theorem smul_mem_of_int {Λ : Lt D.host.E S.rank} (hΛ : Λ ∈ Vset D.host.E S.
       exact ⟨AddSubgroup.subset_closure ⟨α, hα, o, rfl⟩, AddSubgroup.subset_closure
         ⟨α, hα, ⟨cc (o : D.host.E), Base.isIntegral_cc o.isIntegral_coe⟩, rfl⟩⟩
     | zero => rw [map_zero, map_zero]; exact ⟨zero_mem _, zero_mem _⟩
-    | add x y _ _ hx hy => rw [map_add, RingHom.map_add]; exact ⟨add_mem hx.1 hy.1, add_mem hx.2 hy.2⟩
+    | add x y _ _ hx hy => rw [map_add (f := _), RingHom.map_add (f := _)]; exact ⟨add_mem hx.1 hy.1, add_mem hx.2 hy.2⟩
     | neg x _ hx => rw [map_neg, RingHom.map_neg]; exact ⟨neg_mem hx.1, neg_mem hx.2⟩
   have h2 := emb_mul a 1
   rw [mul_one] at h2

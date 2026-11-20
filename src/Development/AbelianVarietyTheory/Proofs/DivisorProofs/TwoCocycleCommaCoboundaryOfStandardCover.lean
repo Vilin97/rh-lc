@@ -29,7 +29,7 @@ theorem twoCocycle_comma_coboundary_of_standardCover : ∀ {R : Type} [CommRing 
   have h2 := fun i j k : Fin n ↦ GlobalTheory.T.sections_invertibleLocus_of_basisFunctor F G H hcov hfil T (d i * d j * d k)
     (fun t u ↦ β j k t u - β i k t u + β i j t u) fun t t' u a h ↦ by
       rw [map_mul, map_mul, IsUnit.mul_iff, IsUnit.mul_iff] at h
-      rw [map_add, map_sub]
+      rw [map_add (f := _), map_sub]
       linear_combination hβ j k t t' u a h.1.2 h.2 - hβ i k t t' u a h.1.1 h.2 +
         hβ i j t t' u a h.1.1 h.1.2
   choose x hx' hxs' using h2

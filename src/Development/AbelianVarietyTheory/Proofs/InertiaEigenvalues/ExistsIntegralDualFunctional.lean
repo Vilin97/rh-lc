@@ -99,8 +99,8 @@ theorem intDual_coef : ∀ (l : ℕ) [Fact l.Prime] (LL : Type) [Field LL] [Alge
       add_mem' := by
         intro a a' ha ha' s
         have e : D⁻¹ * ι (a + a') * ι s = D⁻¹ * ι a * ι s + D⁻¹ * ι a' * ι s := by
-          rw [map_add]; ring
-        rw [e, map_add]; exact Zs.add_mem (ha s) (ha' s)
+          rw [map_add (f := _)]; ring
+        rw [e, map_add (f := _)]; exact Zs.add_mem (ha s) (ha' s)
       zero_mem' := by
         intro s; simp only [map_zero, mul_zero, zero_mul]; exact Zs.zero_mem
       smul_mem' := by

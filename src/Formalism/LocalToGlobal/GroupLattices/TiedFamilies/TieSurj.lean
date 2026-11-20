@@ -38,7 +38,7 @@ theorem cmpLin_mem_span (H : CmpCore T Gt I) (hloc : ValIntRec T Gt I) (u : D.wh
     apply Submodule.subset_span
     exact (cmpRec_lat_pf H hloc u w hg y).2 (Submodule.subset_span hy)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ h1 h2 => rw [map_add]; exact Submodule.add_mem _ h1 h2
+  | add y z _ _ h1 h2 => rw [map_add (f := _)]; exact Submodule.add_mem _ h1 h2
   | smul a y _ h1 => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ h1
 
 set_option maxHeartbeats 1000000 in

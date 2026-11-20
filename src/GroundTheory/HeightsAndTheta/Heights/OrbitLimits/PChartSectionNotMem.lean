@@ -123,7 +123,7 @@ theorem ringKrullDim_ker_coneMap (𝔮 : Ideal (MvPolynomial (Σ k, ι k) ℂ)) 
         rfl
       rwa [h3] at h2
     | add f g hf hg =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact AC.add_mem hf hg
     | mul_X f q hf =>
       rw [map_mul, map_mul]
@@ -237,7 +237,7 @@ theorem ChartSectionNotMem.proof : ChartSectionNotMem.Statement := by
       | add f g hf hg =>
         obtain ⟨f', hf'⟩ := hf
         obtain ⟨g', hg'⟩ := hg
-        exact ⟨f' + g', by rw [map_add, hf', hg', map_add]⟩
+        exact ⟨f' + g', by rw [map_add (f := _), hf', hg', map_add (f := _)]⟩
       | mul_X f a hf =>
         obtain ⟨f', hf'⟩ := hf
         obtain ⟨g', hg'⟩ := hXa a

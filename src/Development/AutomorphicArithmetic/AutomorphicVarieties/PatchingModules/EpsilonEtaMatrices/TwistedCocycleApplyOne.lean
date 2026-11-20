@@ -191,7 +191,7 @@ private theorem epsD_one (l : ℕ) [Fact l.Prime] (F : GFrame l) (n : ℕ) (x : 
   have hl : ∀ w : DD (x.Am m) k.g, l • w = 0 := (finAm l F n x m k.g).2.2.2.2.1
   have hy1 : y = 1 + u * l := by rw [hu]; ring
   unfold epsD
-  rw [← hyd, hy1, map_add, map_one, map_add, map_one, map_mul, map_mul, map_natCast, map_natCast,
+  rw [← hyd, hy1, map_add (f := _), map_one, map_add (f := _), map_one, map_mul, map_mul, map_natCast, map_natCast,
     ← nsmul_eq_mul', hl, add_zero]
 
 private theorem epsD_am_eq_one_of_mem_frame_g' (l : ℕ) [Fact l.Prime] (L : Loc) (G0 : Glob l L) (n : ℕ) (x : NP G0.frame n)

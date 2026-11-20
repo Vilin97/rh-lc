@@ -45,7 +45,7 @@ theorem stD_lift {R : Type} [CommRing R] {C J T : Cx R} (τ : Pair C J T) (U : S
     obtain ⟨⟨a, b⟩, hab⟩ := p
     refine TensorProduct.ext' fun u v => ?_
     simp only [LinearMap.comp_apply]
-    rw [stD_lof, map_add, map_zsmul, lift_lof, lift_lof, lift_lof]
+    rw [stD_lof, map_add (f := _), map_zsmul, lift_lof, lift_lof, lift_lof]
     simp only [TensorProduct.map_tmul, TensorProduct.lift.tmul, LinearMap.id_apply]
     have := τ.leibniz U a b w hab u v
     rw [Units.smul_def] at this
@@ -62,7 +62,7 @@ theorem stD_res {R : Type} [CommRing R] (C J : Cx R) {V U : Scheme.{0}} (g : V �
     have n2 := stair_map_res (J.d b (b + 1)) g v
     simp only [Sec.map, Sec.res] at n1 n2
     simp only [LinearMap.comp_apply]
-    rw [Tens.res, Tens.res, DirectSum.lmap_lof, stD_lof, stD_lof, map_add, map_zsmul, DirectSum.lmap_lof, DirectSum.lmap_lof]
+    rw [Tens.res, Tens.res, DirectSum.lmap_lof, stD_lof, stD_lof, map_add (f := _), map_zsmul, DirectSum.lmap_lof, DirectSum.lmap_lof]
     simp only [TensorProduct.map_tmul, LinearMap.id_apply]
     rw [n1, n2]
   exact LinearMap.congr_fun key y

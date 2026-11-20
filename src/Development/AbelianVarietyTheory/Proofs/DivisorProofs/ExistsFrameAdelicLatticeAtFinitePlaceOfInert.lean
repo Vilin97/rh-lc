@@ -242,7 +242,7 @@ theorem exists_basis_at_inert : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
       obtain ⟨y', hy', e⟩ := key2 _ h
       have : y' = y := funext fun i => hinj (congrFun e i)
       rwa [← this]
-  have hκadd : ∀ c d, κ (c + d) = κ c + κ d := fun c d => hinj (by rw [map_add, hκ, hκ, hκ, map_add, mul_add])
+  have hκadd : ∀ c d, κ (c + d) = κ c + κ d := fun c d => hinj (by rw [map_add (f := _), hκ, hκ, hκ, map_add (f := _), mul_add])
   have hκmul : ∀ c d, κ (c * d) = κ c * κ d := fun c d => hinj (by
     rw [hmul, hκ, hκ, hκ, map_mul]
     linear_combination (-(inclR (F := F) (AF F) c * inclR (F := F) (AF F) d)) * h11)

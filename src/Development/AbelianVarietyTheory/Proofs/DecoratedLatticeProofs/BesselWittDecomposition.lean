@@ -46,7 +46,7 @@ def compare {k' : Type} [Field k'] [ValuativeRel k'] [TopologicalSpace k'] [IsNo
   map_one' := by rw [ι_one, ← h, π_e]
   map_mul' x y := by rw [ι_mul, RingHom.map_mul]
   map_zero' := by rw [map_zero, RingHom.map_zero]
-  map_add' x y := by rw [map_add, RingHom.map_add]
+  map_add' x y := by rw [map_add (f := _), RingHom.map_add (f := _)]
 
 variable {Y Y' Z Z' : Type} [Fintype Y] [DecidableEq Y] [Fintype Y'] [DecidableEq Y'] [Fintype Z] [DecidableEq Z]
   [Fintype Z'] [DecidableEq Z'] {S T : HSp D}

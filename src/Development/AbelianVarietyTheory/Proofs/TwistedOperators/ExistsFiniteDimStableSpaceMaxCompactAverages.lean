@@ -136,7 +136,7 @@ theorem exists_stab_insert : ∀ {D : D7} (θ : InfFam D), IsInfFam θ → ∀ (
     induction t using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact continuous_const
     | tmul a b => rw [hB]; exact continuous_avg hθ hP hJ (hFc _ a.2) (hW'c _ b.2)
-    | add u v hu hv => rw [map_add]; exact hu.add hv
+    | add u v hu hv => rw [map_add (f := _)]; exact hu.add hv
   refine ⟨LinearMap.range (TensorProduct.lift B), inferInstance, ?_, ?_, fun f hf => ⟨⟨e, heF⟩ ⊗ₜ ⟨f, hf⟩, hB _ _⟩⟩
   · rintro _ ⟨t, rfl⟩
     exact hcont t
@@ -151,7 +151,7 @@ theorem exists_stab_insert : ∀ {D : D7} (θ : InfFam D), IsInfFam θ → ∀ (
         exact zero_mem _
       | tmul a b => rw [hB]; exact h a b
       | add u v hu hv =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem hu hv
     intro a b
     rcases hτ'' with h | hs

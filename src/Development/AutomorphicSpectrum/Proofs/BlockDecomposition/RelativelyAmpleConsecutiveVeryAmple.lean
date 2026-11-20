@@ -58,7 +58,7 @@ theorem veryAmpleBy_box {p : P ⟶ X} {q : P ⟶ Y} {f : X ⟶ Spec (CommRingCat
       change ap p l₁ _ ∈ _
       induction F using MvPolynomial.induction_on with
       | C c => exact ⟨MvPolynomial.C c, by rw [MvPolynomial.eval₂Hom_C, MvPolynomial.eval₂Hom_C, ap_cst]⟩
-      | add F G hF hG => rw [map_add, map_add]; exact Subring.add_mem _ hF hG
+      | add F G hF hG => rw [map_add (f := _), map_add (f := _)]; exact Subring.add_mem _ hF hG
       | mul_X F i hF =>
         rw [map_mul, map_mul]
         refine Subring.mul_mem _ hF ⟨MvPolynomial.X (e.symm (i, (e a).2)), ?_⟩
@@ -68,7 +68,7 @@ theorem veryAmpleBy_box {p : P ⟶ X} {q : P ⟶ Y} {f : X ⟶ Spec (CommRingCat
       induction F using MvPolynomial.induction_on with
       | C c => exact ⟨MvPolynomial.C c, by
           rw [MvPolynomial.eval₂Hom_C, MvPolynomial.eval₂Hom_C, ap_cst, sq.w]⟩
-      | add F G hF hG => rw [map_add, map_add]; exact Subring.add_mem _ hF hG
+      | add F G hF hG => rw [map_add (f := _), map_add (f := _)]; exact Subring.add_mem _ hF hG
       | mul_X F i hF =>
         rw [map_mul, map_mul]
         refine Subring.mul_mem _ hF ⟨MvPolynomial.X (e.symm ((e a).1, i)), ?_⟩

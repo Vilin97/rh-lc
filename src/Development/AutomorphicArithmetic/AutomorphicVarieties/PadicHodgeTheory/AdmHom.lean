@@ -27,7 +27,7 @@ private theorem exists_inj_dual_tprod (ρ : Representation Q G V) (ρ' : Represe
     intro t x
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add s t hs ht => simp only [map_add, LinearMap.add_apply, hs, ht]
+    | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, hs, ht]
     | tmul f y => simp [e, Module.Dual.transpose_apply]
   apply e.injective
   ext x

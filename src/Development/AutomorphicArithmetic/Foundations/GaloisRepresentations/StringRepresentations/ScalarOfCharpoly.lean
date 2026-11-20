@@ -72,7 +72,7 @@ theorem exists_sum {W Va Vb : Type} [AddCommGroup W] [Module ℂ W] [FiniteDimen
   · rw [← hM]
     obtain ⟨p, q⟩ := g v
     have e : ((p, q) : Va × Vb) = (p, 0) + (0, q) := by simp
-    conv_lhs => rw [e, map_add, h1, h3, add_zero]
+    conv_lhs => rw [e, map_add (f := _), h1, h3, add_zero]
     simp [hb]
 
 theorem aw_of_eigen {x y : WD h} (hp : ∀ g : Weil h, x.charPol g = y.charPol g) (h0 : y.mono0 → x = y)

@@ -83,7 +83,7 @@ theorem map_proj {E : Type} [Field E] [NumberField E] {g : ℕ} (ty : Fin g → 
     | add x y _ _ hx hy =>
       have : (fun j => ty j (a : E) * (x + y) j) = (fun j => ty j (a : E) * x j) + fun j => ty j (a : E) * y j := by
         funext j; simp [mul_add]
-      rw [this, map_add, map_add, hx, hy]
+      rw [this, map_add (f := _), map_add (f := _), hx, hy]
       funext j; simp [mul_add]
     | smul r x _ hx =>
       have : (fun j => ty j (a : E) * (r • x) j) = (r : ℂ) • (fun j => ty j (a : E) * x j) := by

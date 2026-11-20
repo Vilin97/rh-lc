@@ -99,7 +99,7 @@ theorem plF_bij (D : D7) : Function.Bijective fun τ : D.what₂.Tau => plF (F :
     have ea := DFunLike.congr_fun e a
     have eb := DFunLike.congr_fun e b
     simp only [RingHom.comp_apply] at ea eb
-    rw [map_add, map_add, map_mul, map_mul, ea, eb, tauE_sqrtMinusD, tauE_sqrtMinusD]
+    rw [map_add (f := _), map_add (f := _), map_mul, map_mul, ea, eb, tauE_sqrtMinusD, tauE_sqrtMinusD]
   · intro w
     obtain ⟨φ, hφ⟩ := emb_ext (E := D.host.E) w.embedding
     obtain ⟨τ, h | h⟩ := tauE_or φ
@@ -137,7 +137,7 @@ theorem inf_inj {y : Ainf D.host.F ⊗[D.host.F] D.host.E} (h : ∀ τ, th0 D τ
     intro w
     obtain ⟨τ, rfl⟩ := (plF_bij D).2 w
     have e := h τ
-    rw [map_add, theta_tensor_apply, theta_tensor_apply, map_one, mul_one, tauE_sqrtMinusD, compF_real, compF_real] at e
+    rw [map_add (f := _), theta_tensor_apply, theta_tensor_apply, map_one, mul_one, tauE_sqrtMinusD, compF_real, compF_real] at e
     have e1 := congrArg Complex.re e
     have e2 := congrArg Complex.im e
     simp only [Complex.add_re, Complex.add_im, Complex.ofReal_re, Complex.ofReal_im, Complex.mul_re, Complex.mul_im,
@@ -163,7 +163,7 @@ theorem inf_surj (z : D.what₂.Tau → ℂ) : ∃ y : Ainf D.host.F ⊗[D.host.
   obtain ⟨a, ha⟩ := real_surj fun τ => (z τ).re
   obtain ⟨b, hb⟩ := real_surj fun τ => (z τ).im / Real.sqrt D.host.d
   refine ⟨a ⊗ₜ[D.host.F] 1 + b ⊗ₜ[D.host.F] D.host.sqrtMinusD, fun τ => ?_⟩
-  rw [map_add, theta_tensor_apply, theta_tensor_apply, map_one, mul_one, tauE_sqrtMinusD, ha, hb]
+  rw [map_add (f := _), theta_tensor_apply, theta_tensor_apply, map_one, mul_one, tauE_sqrtMinusD, ha, hb]
   have h2 : ((Real.sqrt D.host.d : ℝ) : ℂ) ≠ 0 := Complex.ofReal_ne_zero.2 (sqrt_d_pos D).ne'
   conv_rhs => rw [← Complex.re_add_im (z τ)]
   push_cast
@@ -201,13 +201,13 @@ theorem cmpAt_cA (τ : D.what₂.Tau) (x : AE D) : cmpAt D τ (cA D x) = starRin
   | tmul a e =>
     show th0 D τ (fstA D.host.F a ⊗ₜ[D.host.F] star e) = starRingEnd ℂ (th0 D τ (fstA D.host.F a ⊗ₜ[D.host.F] e))
     rw [theta_tensor_apply, theta_tensor_apply, emb_star, map_mul, compF_real, Complex.conj_ofReal]
-  | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, hx, hy, RingHom.map_add, RingHom.map_add]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy, RingHom.map_add (f := _), RingHom.map_add (f := _)]
 
 theorem finPart_cA (x : AE D) : finPart D (cA D x) = sigR (Af D.host.F) D.sp.cm.sig (finPart D x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, hx, hy, RingHom.map_add, RingHom.map_add]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy, RingHom.map_add (f := _), RingHom.map_add (f := _)]
 
 theorem cmpAt_incA (τ : D.what₂.Tau) (x : D.host.E) : cmpAt D τ (incA D x) = tauE D τ x := (theta_infinite_family D τ).1 x
 

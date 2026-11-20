@@ -267,7 +267,7 @@ theorem IsAutomorphicForm.uAction (u : UEnv K n) :
     exact ha (hb hφ)
   | hadd a b ha hb =>
     intro φ hφ
-    rw [map_add, LinearMap.add_apply, Submodule.coe_add]
+    rw [map_add (f := _), LinearMap.add_apply, Submodule.coe_add]
     exact (ha hφ).add (hb hφ)
 
 theorem mem_cuspForms_uAction (u : UEnv K n) :
@@ -286,7 +286,7 @@ theorem mem_cuspForms_uAction (u : UEnv K n) :
     exact ha (hb hφ)
   | hadd a b ha hb =>
     intro φ hφ
-    rw [map_add, LinearMap.add_apply, Submodule.coe_add]
+    rw [map_add (f := _), LinearMap.add_apply, Submodule.coe_add]
     exact (cuspForms K n).add_mem (ha hφ) (hb hφ)
 
 theorem automorphicForms_le_archSmooth : automorphicForms K n ≤ archSmooth K n :=
@@ -311,7 +311,7 @@ def uActionAF : UEnv K n →ₐ[ℝ] Module.End ℂ (automorphicForms K n) where
     rw [map_zero]; rfl)
   map_add' u v := LinearMap.ext fun φ => Subtype.ext (by
     show ((AutomorphicForm.uAction (u + v) _ : archSmooth K n) : AdelicGLn.AdelicGL K n → ℂ) = _
-    rw [map_add]; rfl)
+    rw [map_add (f := _)]; rfl)
   commutes' r := LinearMap.ext fun φ => Subtype.ext (by
     show ((AutomorphicForm.uAction (algebraMap ℝ (UEnv K n) r) _ : archSmooth K n) :
       AdelicGLn.AdelicGL K n → ℂ) = _
@@ -342,7 +342,7 @@ def uActionCusp : UEnv K n →ₐ[ℝ] Module.End ℂ (cuspForms K n) where
     rw [map_zero]; rfl)
   map_add' u v := LinearMap.ext fun φ => Subtype.ext (by
     show ((AutomorphicForm.uAction (u + v) _ : archSmooth K n) : AdelicGLn.AdelicGL K n → ℂ) = _
-    rw [map_add]; rfl)
+    rw [map_add (f := _)]; rfl)
   commutes' r := LinearMap.ext fun φ => Subtype.ext (by
     show ((AutomorphicForm.uAction (algebraMap ℝ (UEnv K n) r) _ : archSmooth K n) :
       AdelicGLn.AdelicGL K n → ℂ) = _
@@ -373,7 +373,7 @@ variable (K n) in
 
 def lieActionAF : (isExpLieAlgebra K n).lieSubalgebra →ₗ⁅ℝ⁆ Module.End ℂ (automorphicForms K n) where
   toFun X := uActionAF K n (UniversalEnvelopingAlgebra.ι ℝ X)
-  map_add' X Y := by rw [map_add, map_add]
+  map_add' X Y := by rw [map_add (f := _), map_add (f := _)]
   map_smul' r X := by rw [map_smul, map_smul]; rfl
   map_lie' {X Y} := by
     rw [LieHom.map_lie, Ring.lie_def, Ring.lie_def, map_sub, map_mul, map_mul]
@@ -382,7 +382,7 @@ variable (K n) in
 
 def lieActionCusp : (isExpLieAlgebra K n).lieSubalgebra →ₗ⁅ℝ⁆ Module.End ℂ (cuspForms K n) where
   toFun X := uActionCusp K n (UniversalEnvelopingAlgebra.ι ℝ X)
-  map_add' X Y := by rw [map_add, map_add]
+  map_add' X Y := by rw [map_add (f := _), map_add (f := _)]
   map_smul' r X := by rw [map_smul, map_smul]; rfl
   map_lie' {X Y} := by
     rw [LieHom.map_lie, Ring.lie_def, Ring.lie_def, map_sub, map_mul, map_mul]

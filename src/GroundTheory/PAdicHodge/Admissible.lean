@@ -39,7 +39,7 @@ theorem baseChangeRep_smul (g : G) (b : B) (x : B ⊗[F] V) :
   | tmul c v =>
     rw [TensorProduct.smul_tmul', baseChangeRep_tmul, baseChangeRep_tmul, TensorProduct.smul_tmul',
       smul_eq_mul, smul_eq_mul, smul_mul']
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem invariantRing_smul_eq (e : invariantRing G F B) (x : B ⊗[F] V) :
     e • x = (e : B) • x :=
@@ -47,7 +47,7 @@ theorem invariantRing_smul_eq (e : invariantRing G F B) (x : B ⊗[F] V) :
 
 def DB : Submodule (invariantRing G F B) (B ⊗[F] V) where
   carrier := {x | ∀ g : G, baseChangeRep B ρ g x = x}
-  add_mem' {x y} hx hy g := by rw [map_add, hx g, hy g]
+  add_mem' {x y} hx hy g := by rw [map_add (f := _), hx g, hy g]
   zero_mem' g := map_zero _
   smul_mem' e x hx g := by
     rw [invariantRing_smul_eq, baseChangeRep_smul, hx g, (mem_invariantRing.1 e.2) g]
@@ -79,7 +79,7 @@ theorem repr_baseChangeRep {ι : Type*} [Fintype ι] [DecidableEq ι] (v : Basis
     refine Finset.sum_congr rfl fun i _ => ?_
     ring
   | add x y hx hy =>
-    simp only [map_add, Finsupp.add_apply, hx, hy, smul_add, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Finsupp.add_apply, hx, hy, smul_add, mul_add, Finset.sum_add_distrib]
 
 end Defs
 
@@ -339,7 +339,7 @@ noncomputable def basisOfIsAdmissible [FiniteDimensional F V] (hadm : IsAdmissib
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul c d => rw [comparison_tmul]; exact Submodule.smul_mem _ c (hsub d)
-    | add z z' hz hz' => rw [map_add]; exact Submodule.add_mem _ hz hz')
+    | add z z' hz hz' => rw [map_add (f := _)]; exact Submodule.add_mem _ hz hz')
 
 @[simp]
 theorem coe_basisOfIsAdmissible [FiniteDimensional F V] (hadm : IsAdmissible B ρ)

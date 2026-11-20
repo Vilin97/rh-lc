@@ -25,7 +25,7 @@ theorem I_lin (hT : ThetaBasic) (p : IsPair B M χ χ' o r s r' s') (c : Cpt σ 
     (hΨ : Ψ ∈ schA F _) (a : ℂ) : M.I o (Φ + a • Ψ) = M.I o Φ + a • M.I o Ψ := by
   funext h
   have e : ∀ g, theta o (Φ + a • Ψ) g h = theta o Φ g h + a * theta o Ψ g h := fun g => by
-    simp only [theta, map_add, map_smul]
+    simp only [theta, map_add (f := _), map_smul]
     rw [thetaSum_add F (p.weil.isUSplitting.pres _ _ hΦ) (Submodule.smul_mem _ _ (p.weil.isUSplitting.pres _ _ hΨ)),
       thetaSum_smul]
   simp only [Model.I, e, Pi.add_apply, Pi.smul_apply, smul_eq_mul]

@@ -228,7 +228,7 @@ theorem xv_δ_left {n₁ : ℤ} (hn : n + 1 = n₁) (α : Cochain ((chains R).ob
   | zero => rw [ev_δ_zero hn α U s s' hs, bisimplexFunctionBoundaryFirst, smul_zero, sub_zero]
   | succ p =>
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [ev_δ_succ hn α U p s s' hs, bisimplexFunctionBoundaryFirst, map_add, LinearMap.add_apply, sg_smul, map_zsmul, LinearMap.smul_apply, map_sum,
+      rw [ev_δ_succ hn α U p s s' hs, bisimplexFunctionBoundaryFirst, map_add (f := _), LinearMap.add_apply, sg_smul, map_zsmul, LinearMap.smul_apply, map_sum,
       LinearMap.sum_apply, eq_sub_iff_add_eq]
     refine congrArg₂ (· + ·) rfl (congrArg _ (Finset.sum_congr rfl fun i _ => ?_))
     rw [map_zsmul, LinearMap.smul_apply, xv_eq μ α z w p r _ v s' t (by omega) ht h]
@@ -243,7 +243,7 @@ theorem xv_δ_right {m₁ : ℤ} (hm : m + 1 = m₁) (α : Cochain ((chains R).o
   | zero => rw [ev_δ_zero hm z U t t' ht, bisimplexFunctionBoundarySecond, smul_zero, sub_zero]
   | succ r =>
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [ev_δ_succ hm z U r t t' ht, bisimplexFunctionBoundarySecond, map_add, sg_smul, map_zsmul, map_sum, eq_sub_iff_add_eq]
+      rw [ev_δ_succ hm z U r t t' ht, bisimplexFunctionBoundarySecond, map_add (f := _), sg_smul, map_zsmul, map_sum, eq_sub_iff_add_eq]
     refine congrArg₂ (· + ·) rfl (congrArg _ (Finset.sum_congr rfl fun i _ => ?_))
     rw [map_zsmul, xv_eq μ α z w p r x _ s t' hs (by omega) h]
 

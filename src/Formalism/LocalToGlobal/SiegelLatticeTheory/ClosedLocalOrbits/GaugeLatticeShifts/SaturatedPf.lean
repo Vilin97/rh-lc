@@ -1053,7 +1053,7 @@ theorem hT_modX {y y' q q' : S.V} (hy : ∀ a, S.hT (e a) y = 0) (hy' : ∀ a, S
   have h1 : S.hT x y' = 0 := hT_X_left y' hy' x hxX
   have h2 : S.hT x x' = 0 := hT_X_left x' (perpX_of_X hee x' hxX') x hxX
   have h4 : S.hT y x' = 0 := hT_X_right y hy x' hxX'
-  simp [map_add, LinearMap.add_apply, h1, h2, h4]
+  simp [map_add (f := _), LinearMap.add_apply, h1, h2, h4]
 
 theorem cross_l (v w : S.V) (hw : ∀ a, S.hT (e a) w = 0 ∧ S.hT (f a) w = 0) :
     S.hT (v - pj e f v) w = 0 := by
@@ -1072,10 +1072,10 @@ theorem bmap_isom (δ : S.V ≃ₗ[E] S.V) (hδ : δ ∈ Formalism.HermitianLatt
     fun w a => ⟨hT_e_pj hee hef w a, hT_f_pj hff hef w a⟩
   have ev : S.hT v v' = S.hT (v - pj e f v) (v' - pj e f v') + S.hT (pj e f v) (pj e f v') := by
     conv_lhs => rw [← sub_add_cancel v (pj e f v), ← sub_add_cancel v' (pj e f v')]
-    simp only [map_add, LinearMap.add_apply, cross_l v _ (hP v'), cross_r v' _ (hP v)]
+    simp only [map_add (f := _), LinearMap.add_apply, cross_l v _ (hP v'), cross_r v' _ (hP v)]
     abel
   rw [ev, bmap_apply, bmap_apply]
-  simp only [map_add, LinearMap.add_apply, cross_l v _ (hP _), cross_r v' _ (hP _)]
+  simp only [map_add (f := _), LinearMap.add_apply, cross_l v _ (hP _), cross_r v' _ (hP _)]
   have hy := fun a => (hP v a).1
   have hy' := fun a => (hP v' a).1
   have hdy := perpX_map δ hδ hX' _ hy
@@ -1089,13 +1089,13 @@ theorem bmap_inv (δ : S.V ≃ₗ[E] S.V) (hδ : δ ∈ Formalism.HermitianLatti
     bmap e f δ.symm (bmap e f δ v) = v := by
   have hpw : pj e f (pj e f v) = pj e f v := pj_pj hee hff hef v
   have hq : pj e f (bmap e f δ v) = pj e f (δ (pj e f v)) := by
-    rw [bmap_apply, map_add, map_sub, hpw, sub_self, zero_add, pj_pj hee hff hef]
+    rw [bmap_apply, map_add (f := _), map_sub, hpw, sub_self, zero_add, pj_pj hee hff hef]
   have hu := perpX_map δ hδ hX' _ (fun a => hT_e_pj hee hef v a)
   have hx₁ := pj_sub_mem (e := e) (f := f) _ hu
   have key : pj e f (δ.symm (pj e f (δ (pj e f v)))) = pj e f v := by
     have : δ.symm (pj e f (δ (pj e f v))) = pj e f v + δ.symm (pj e f (δ (pj e f v)) - δ (pj e f v)) := by
       rw [map_sub, LinearEquiv.symm_apply_apply]; abel
-    rw [this, map_add, hpw, pj_X hee hef _ (hX' _ hx₁), add_zero]
+    rw [this, map_add (f := _), hpw, pj_X hee hef _ (hX' _ hx₁), add_zero]
   rw [bmap_apply, hq, key, bmap_apply]
   abel
 

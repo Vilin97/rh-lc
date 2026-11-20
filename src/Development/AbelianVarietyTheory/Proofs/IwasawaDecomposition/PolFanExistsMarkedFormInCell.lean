@@ -110,7 +110,7 @@ theorem cone_bal {O : Type} [CommRing O] {bar : O → O} [Module O X] (hγ : ∀
 theorem eq_zero_of_diag {x : LinearMap.BilinForm ℤ X} (hs : ∀ y z, x y z = x z y) (h : ∀ y, x y y = 0) : x = 0 := by
   refine LinearMap.ext₂ fun y z => ?_
   have e := h (y + z)
-  simp only [map_add, LinearMap.add_apply, h y, h z, hs z y] at e
+  simp only [map_add (f := _), LinearMap.add_apply, h y, h z, hs z y] at e
   rw [LinearMap.zero_apply, LinearMap.zero_apply]
   omega
 

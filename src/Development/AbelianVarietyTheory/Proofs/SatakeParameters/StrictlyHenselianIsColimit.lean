@@ -264,7 +264,7 @@ theorem key {B : Subalgebra ℤ A} (E : Type) [CommRing E] [Algebra (RB A B) E] 
       | mem x hx =>
         exact ⟨algebraMap B' (RB A B') ⟨γ x, hF (Finset.mem_image_of_mem γ hx)⟩, toA_algebraMap A B' _⟩
       | algebraMap r => exact ⟨loc h r, by rw [toA_loc, hγ]⟩
-      | add x y _ _ hx hy => rw [map_add]; exact Subring.add_mem _ hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact Subring.add_mem _ hx hy
       | mul x y _ _ hx hy => rw [map_mul]; exact Subring.mul_mem _ hx hy
     intro y; exact this y (hs ▸ Algebra.mem_top)
   let e' : RB A B' ≃+* (toA A B').range := RingEquiv.ofBijective (toA A B').rangeRestrict

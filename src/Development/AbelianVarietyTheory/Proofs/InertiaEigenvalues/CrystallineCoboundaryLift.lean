@@ -33,7 +33,7 @@ theorem filV_antitone : Antitone (FilV PD (LL := LL) (V := V)) := by
   | tmul v b =>
     rw [AlgebraTensorModule.map_tmul]
     exact tmul_mem PD _ (PD.Fil_anti a b.2)
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 theorem filV_exhaustive (z : V ⊗[Qp] BdR) : ∃ a, z ∈ FilV PD (LL := LL) (V := V) a := by
   induction z using TensorProduct.induction_on with
@@ -52,14 +52,14 @@ theorem φVB_act (g : G) (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [φVB, actVB, PD.φ_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem ιV_act (g : G) (x : V ⊗[Qp] B) :
     ιV PD (LL := LL) (V := V) (actVB PD ρ g x) = actVdR PD ρ g (ιV PD (LL := LL) (V := V) x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [ιV, actVB, actVdR, PD.ι_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem sub_φ_mem_Dcris (c : G → V) (x : V ⊗[Qp] B)
     (hx : ∀ g, c g ⊗ₜ[Qp] (1 : B) = actVB PD ρ g x - x) :

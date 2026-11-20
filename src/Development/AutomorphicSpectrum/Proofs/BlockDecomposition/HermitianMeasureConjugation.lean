@@ -35,14 +35,14 @@ def dbl [IsTopologicalAddGroup M] (S : AddSubgroup M) (P : M →+ M) (hPc : Cont
   left_inv p := by
     refine Prod.ext (Subtype.ext ?_) (Subtype.ext ?_)
     · change P (p.1.1 + L p.2.1) = p.1.1
-      rw [map_add, hPs _ p.1.2, h1 _ p.2.2, add_zero]
+      rw [map_add (f := _), hPs _ p.1.2, h1 _ p.2.2, add_zero]
     · change P (L.symm (p.1.1 + L p.2.1)) = p.2.1
       have hl : L.symm (L p.2.1) = p.2.1 := L.left_inv _
-      rw [map_add, map_add, h2 _ p.1.2, zero_add, hl, hPs _ p.2.2]
+      rw [map_add (f := _), map_add (f := _), h2 _ p.1.2, zero_add, hl, hPs _ p.2.2]
   right_inv x := h3 x
   map_add' p q := by
     change (p.1.1 + q.1.1) + L (p.2.1 + q.2.1) = (p.1.1 + L p.2.1) + (q.1.1 + L q.2.1)
-    rw [map_add]; abel
+    rw [map_add (f := _)]; abel
   continuous_toFun :=
     (continuous_subtype_val.comp continuous_fst).add (L.continuous.comp (continuous_subtype_val.comp continuous_snd))
   continuous_invFun := (hPc.subtype_mk _).prodMk ((hPc.comp L.symm.continuous).subtype_mk _)
@@ -64,7 +64,7 @@ theorem char_sq [IsTopologicalAddGroup M] [LocallyCompactSpace M] [SecondCountab
     have hl : Ψ.symm (Ψ p) = p := Ψ.left_inv p
     rw [hl]
     change U p.1.1 + L (U p.2.1) = U (p.1.1 + L p.2.1)
-    rw [map_add, hUL]
+    rw [map_add (f := _), hUL]
   rw [sq, ← GlobalTheory.T.addEquivAddHaarChar_prodCongr, ← GlobalTheory.ModuLR.addEquivAddHaarChar_transport Ψ (GlobalTheory.ModuLR.prodCE T T), e]
 
 end Abstract

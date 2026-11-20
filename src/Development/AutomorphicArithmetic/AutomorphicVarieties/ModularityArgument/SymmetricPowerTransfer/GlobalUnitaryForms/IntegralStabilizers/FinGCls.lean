@@ -67,7 +67,7 @@ private theorem psi_tmul (a : R) (x : Lsq F Δ) : psi Δ R (a ⊗ₜ x) = a • 
 
 private theorem psi_rho (x : Lsq R (algebraMap F R Δ)) : psi Δ R (rho Δ R x) = x := by
   change psi Δ R (_ + _) = _
-  rw [map_add, psi_tmul, psi_tmul]
+  rw [map_add (f := _), psi_tmul, psi_tmul]
   ext <;> simp [qm, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one]
 
 private def sg : Lsq F Δ →ₐ[F] Lsq F Δ :=
@@ -130,7 +130,7 @@ private theorem ev_eq (v : Pl F) (z : AF F ⊗[F] Lsq F Δ) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rw [ev_tmul, Algebra.TensorProduct.map_tmul, evf_tmul]; rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem ae_int (x : F) : ∀ᶠ v : Pl F in Filter.cofinite, cv v x ∈ v.adicCompletionIntegers F :=
   (algebraMap F (Af F) x).2
@@ -248,7 +248,7 @@ private theorem int_of_stab (k : HH Δ)
       rw [evf_tmul]
       exact this.smul (⟨_, ha v⟩ : Ov v)
     | zero => simpa using isIntegral_zero
-    | add x y _ _ hx hy => rw [Pi.add_apply, map_add]; exact hx.add hy
+    | add x y _ _ hx hy => rw [Pi.add_apply, map_add (f := _)]; exact hx.add hy
     | neg x _ hx => rw [Pi.neg_apply, map_neg]; exact hx.neg
   have h2 : (Pi.single j 1 : Fin 3 → Af F ⊗[F] Lsq F Δ) ∈ latHat F (Lsq F Δ) {x : Fin 3 → Lsq F Δ | ∀ i, IsIntegral ℤ (x i)} := by
     refine AddSubgroup.subset_closure ⟨1, fun w => ?_, Pi.single j 1, fun i => ?_, funext fun i => ?_⟩
@@ -286,7 +286,7 @@ private theorem emb_star [IsTotallyReal F] (hneg : ∀ σ : F →+* ℝ, σ Δ <
     ext <;> simp [QuadraticAlgebra.algebraMap_eq]
   rw [e2]
   conv_rhs => rw [e1]
-  simp only [map_add, map_sub, map_mul, h0, Complex.conj_ofReal]
+  simp only [map_add (f := _), map_sub, map_mul, h0, Complex.conj_ofReal]
   apply Complex.ext <;> simp [h2]
 
 end Main

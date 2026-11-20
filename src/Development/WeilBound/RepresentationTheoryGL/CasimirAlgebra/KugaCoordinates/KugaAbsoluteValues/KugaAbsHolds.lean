@@ -140,7 +140,7 @@ theorem kugaAbs_holds : KugaAbs := by
   intro P _ _ M _ _ _ _ β γ _ _ b B a r a' r' D c hb hB hpos ha hr har ha'r' hca hcr hc hD hcas q ω hω X
   have hadj : ∀ X x y, B ((a + r) X x) y = B x ((r - a) X y) := by
     intro X x y
-    simp only [LinearMap.add_apply, LinearMap.sub_apply, map_add, map_sub, ha, hr]
+    simp only [LinearMap.add_apply, LinearMap.sub_apply, map_add (f := _), map_sub, ha, hr]
     ring
   have hzero : kD (a + r) ω = 0 := by
     apply kAlt_eq_zero b hb

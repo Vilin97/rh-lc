@@ -63,7 +63,7 @@ theorem lowPart_map_into : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [N
     have h2 : Submodule.linearProjOfIsCompl N (V ⊔ C) hc n = ⟨n, hn⟩ :=
       Submodule.linearProjOfIsCompl_apply_left hc ⟨n, hn⟩
     show N.subtype (Submodule.linearProjOfIsCompl N (V ⊔ C) hc (y + n)) = n
-    rw [map_add, h1, h2, zero_add]
+    rw [map_add (f := _), h1, h2, zero_add]
     rfl
   have hTV : ∀ x ∈ V, T x ∈ V ⊔ N := fun x hx => hU (Submodule.mem_map_of_mem hx)
   let S : R.Pi →ₗ[ℂ] R.Pi := π ∘ₗ T

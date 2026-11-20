@@ -21,7 +21,7 @@ private theorem prec_of_surj {B C : Type} [CommRing B] [CommRing C] (g : B →+*
   have hu : ∀ n, g (u n) = f n := by
     intro n
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [u, map_add, map_sum, hgd, hb0, Finset.sum_range_sub]
+      simp only [u, map_add (f := _), map_sum, hgd, hb0, Finset.sum_range_sub]
     ring
   have hc : ∀ {m n}, m ≤ n → u m ≡ u n [SMOD (I ^ m • ⊤ : Submodule B B)] := by
     intro m n hmn
@@ -59,7 +59,7 @@ private theorem approx_map {R : Type} [CommRing R] {p : Ideal R} {B : Type} [Com
     have := Ideal.add_mem _ (Ideal.mul_mem_left _ (algebraMap R B t) hx)
       (Ideal.mul_mem_left _ (algebraMap R B s) hy)
     convert this using 1
-    simp only [map_add, map_mul]; ring
+    simp only [map_add (f := _), map_mul]; ring
   | smul b x _ hx =>
     obtain ⟨i, hi, s, hs, hx⟩ := hx
     obtain ⟨a, t, ht, hb⟩ := h.dense n b

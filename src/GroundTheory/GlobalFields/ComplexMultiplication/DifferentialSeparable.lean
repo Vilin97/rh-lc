@@ -28,7 +28,7 @@ theorem span_isogenyPullback_eq_top (φ : Isogeny E E') (hφ : φ.IsSeparable) :
   obtain ⟨z, rfl⟩ := (exact_mapBaseChange_map F M K ω).mp (Subsingleton.elim _ _)
   induction z with
   | zero => simp
-  | add a b ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | tmul a b =>
     rw [mapBaseChange_tmul]
     refine Submodule.smul_mem _ _ ?_
@@ -43,7 +43,7 @@ theorem span_isogenyPullback_eq_top (φ : Isogeny E E') (hφ : φ.IsSeparable) :
       rw [← hf]
       exact D_comap_mem_span φ f
     | zero => simp
-    | add _ _ _ _ h₁ h₂ => rw [map_add]; exact add_mem h₁ h₂
+    | add _ _ _ _ h₁ h₂ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
     | smul c _ _ h =>
       rw [map_smul, algebra_compatible_smul K c]
       exact Submodule.smul_mem _ _ h

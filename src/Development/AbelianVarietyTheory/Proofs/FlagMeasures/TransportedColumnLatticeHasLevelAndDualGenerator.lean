@@ -98,7 +98,7 @@ theorem mlat_mem_dualL {n : ℕ} (J : Matrix (Fin n) (Fin n) D.host.E) (L : Subm
     obtain ⟨q, hq⟩ := hb x hx
     refine ⟨p + q, ?_⟩
     simp only [Formalism.UG.hform, Pi.add_apply, mul_add, Finset.sum_add_distrib] at hp hq ⊢
-    rw [map_add, hp, hq]
+    rw [map_add (f := _), hp, hq]
   | smul c a _ ha =>
     intro x hx
     obtain ⟨p, hp⟩ := ha x hx
@@ -146,7 +146,7 @@ theorem mlat_main (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (wt : (VS D)
     intro a
     simp [w₀, (X.Lb_perp _ hx₀Lb a).1, (X.Lb_perp _ hx₀Lb a).2, (X.zu_orth u a).1, (X.zu_orth u a).2, h, z]
   have hw0z : h z w₀ = 0 := by
-    simp only [w₀, map_add, map_smul, hx₀z, hzz, smul_eq_mul]
+    simp only [w₀, map_add (f := _), map_smul, hx₀z, hzz, smul_eq_mul]
     field_simp; ring
   obtain ⟨d, hd⟩ := hWc w₀ hw0e hw0z
   have hmem : ∀ x, x ∈ Mq wt ↔ φ x ∈ (VS D).L0 := fun x => Iff.rfl
@@ -190,7 +190,7 @@ theorem mlat_main (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (wt : (VS D)
       have hx' : x = m + c • x₀ := by simp [m]
       rw [hx']
       have e : h (m + c • x₀) Y' = h m Y := by
-        simp only [Y', map_add, map_smulₛₗ, map_sub, map_smul, LinearMap.add_apply, LinearMap.smul_apply,
+        simp only [Y', map_add (f := _), map_smulₛₗ, map_sub, map_smul, LinearMap.add_apply, LinearMap.smul_apply,
           hmz', hx₀z', smul_eq_mul, RingHom.id_apply]
         ring
       rw [e]; exact h1
@@ -210,7 +210,7 @@ theorem mlat_main (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (wt : (VS D)
   have hdD : d ∈ dualL (Formalism.L2.Forms.sigD D) (Formalism.L2.Forms.gramN D 0 (Nat.zero_le _)) (Mq wt) := by
     refine (hdual d).2 fun x hx => ?_
     rw [hd]
-    simp only [w₀, map_add, map_smul, hperp0, smul_zero, add_zero]
+    simp only [w₀, map_add (f := _), map_smul, hperp0, smul_zero, add_zero]
     exact selfDual_lattice_hermitian_form_integral ((hmem x).1 hx) hx0L0
   have hTd : (T : D.host.E) • d ∈ Mq wt := by
     refine (hmem _).2 ?_
@@ -219,7 +219,7 @@ theorem mlat_main (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (wt : (VS D)
     refine (VS D).L0.add_mem ?_ hzL0
     rw [Nat.cast_smul_eq_nsmul]; exact nsmul_mem hx0L0 T
   have hw0w0 : h w₀ w₀ = h x₀ x₀ + (T : D.host.E)⁻¹ := by
-    simp only [w₀, map_add, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, map_smul, hx₀z, hx₀z', hzz,
+    simp only [w₀, map_add (f := _), map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, map_smul, hx₀z, hx₀z', hzz,
       hTstar, smul_eq_mul]
     field_simp; ring
 
@@ -280,10 +280,10 @@ theorem mlat_main (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (wt : (VS D)
         (𝓞 D.host.E ⧸ Ideal.span {((T : ℕ) : 𝓞 D.host.E)}) :=
       AddMonoidHom.mk' (fun y => Ideal.Quotient.mk _ (B y.1 y.2)) (by
         intro a b
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         apply hinjO
-        simp only [hB, map_add, AddSubgroup.coe_add, mul_add])
+        simp only [hB, map_add (f := _), AddSubgroup.coe_add, mul_add])
     have hψ : ∀ y, ψ y = Ideal.Quotient.mk _ (B y.1 y.2) := fun y => rfl
     have hsurj : Function.Surjective ψ := by
       intro q
@@ -300,7 +300,7 @@ theorem mlat_main (D : D7) (X : HidaSetting D) (u : D.what₂.Word) (wt : (VS D)
       show algebraMap (𝓞 D.host.E) D.host.E (a * e * ((T : ℕ) : 𝓞 D.host.E)) =
         algebraMap (𝓞 D.host.E) D.host.E (B (a • d) had - a)
       rw [map_sub, hBa, map_mul, map_mul, map_natCast]
-      simp only [hw₀, map_add, map_smul, smul_eq_mul, hx₀z', ← he]
+      simp only [hw₀, map_add (f := _), map_smul, smul_eq_mul, hx₀z', ← he]
       field_simp
       ring
     have hker : ψ.ker = (Mq wt).toAddSubgroup.addSubgroupOf

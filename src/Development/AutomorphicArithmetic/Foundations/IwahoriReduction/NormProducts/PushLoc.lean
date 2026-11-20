@@ -42,7 +42,7 @@ private theorem sh_coc (g : G → V →ₗ[R] V) (hg : ∀ s t v, g (s * t) v = 
     group
   simp only [sh]
   rw [e1]
-  rw [map_sub, map_add, e2] at h
+  rw [map_sub, map_add (f := _), e2] at h
   exact h
 
 private theorem push_coc (g : G → V →ₗ[R] V) (hg : ∀ s t v, g (s * t) v = g s (g t v)) (c : G →* U) (rep : U → G)

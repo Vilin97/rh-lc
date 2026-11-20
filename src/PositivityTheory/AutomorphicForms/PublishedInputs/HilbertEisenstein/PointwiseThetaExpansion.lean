@@ -78,7 +78,7 @@ theorem translate_mem {f : Ad F → ℂ} (hf : f ∈ schwartzBruhat F) (d : Ad F
     convert schwartzBruhatTensor_mem (SchwartzMap.compSubConstCLM ℂ (-(homeomorphMixedSpace F d.1)) φ) hg' using 1
     rw [homeomorphMixedSpace_apply, homeomorphMixedSpace_apply, homeomorphMixedSpace_apply]
     have hB : (B + d).1 = B.1 + d.1 := rfl
-    rw [hB, (InfiniteAdeleRing.ringEquiv_mixedSpace F).map_add]
+    rw [hB, (InfiniteAdeleRing.ringEquiv_mixedSpace F).map_add (f := _)]
     rfl
   | zero => exact zero_mem _
   | add G H _ _ hG hH => exact add_mem hG hH

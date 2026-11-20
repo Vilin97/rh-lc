@@ -220,7 +220,7 @@ theorem sum_ext_prod {σ I J A : Type} [Fintype I] [Fintype J] [CommRing A] [Alg
   · obtain ⟨s, rfl⟩ := hQ
     simpa only [map_prod, MvPolynomial.aeval_X, MvPolynomial.map_X] using h s
   · simp
-  · simp only [map_add, Finset.sum_add_distrib, Rat.cast_add, mul_add] at h₁ h₂ ⊢
+  · simp only [map_add (f := _), Finset.sum_add_distrib, Rat.cast_add, mul_add] at h₁ h₂ ⊢
     rw [h₁, h₂]
   · have e : MvPolynomial.map (algebraMap ℚ ℝ) (a • Q) = (a : ℝ) • MvPolynomial.map (algebraMap ℚ ℝ) Q := by
       simp [MvPolynomial.smul_eq_C_mul]

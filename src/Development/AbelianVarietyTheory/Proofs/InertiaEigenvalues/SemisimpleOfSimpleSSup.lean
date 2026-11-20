@@ -12,7 +12,7 @@ theorem isSS_of_sSup_irreducible_eq_top {k Γ : Type} [Field k] [Group Γ] {V : 
   have hsup : ∀ A B : Submodule k V, Stable ρ A → Stable ρ B → Stable ρ (A ⊔ B) := by
     intro A B hA hB g v hv
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hv
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (hA g a ha) (hB g b hb)
   intro W hW
   obtain ⟨W', ⟨hst, hdis⟩, hmax⟩ :=

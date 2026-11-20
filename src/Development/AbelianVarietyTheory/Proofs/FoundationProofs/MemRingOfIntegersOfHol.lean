@@ -30,7 +30,7 @@ def holSub (X : Tower Ω ε) : Subring X.K where
   one_mem' := ⟨1, differentiableOn_const 1, by rw [map_one, Filter.Germ.coe_one]⟩
   add_mem' := by
     rintro f g ⟨φ, h1, h2⟩ ⟨ψ, h3, h4⟩
-    exact ⟨φ + ψ, h1.add h3, by rw [map_add, h2, h4, Filter.Germ.coe_add]⟩
+    exact ⟨φ + ψ, h1.add h3, by rw [map_add (f := _), h2, h4, Filter.Germ.coe_add]⟩
   zero_mem' := ⟨0, differentiableOn_const 0, by rw [map_zero, Filter.Germ.coe_zero]⟩
   neg_mem' := by
     rintro f ⟨φ, h1, h2⟩

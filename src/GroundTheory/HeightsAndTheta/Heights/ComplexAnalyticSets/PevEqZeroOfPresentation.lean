@@ -163,7 +163,7 @@ theorem pev_eq_zero_of_presentation {σ : Type} [Fintype σ] {w : σ → ℂ} {k
   set Q := H /ₘ F with hQdef
   have hdec : ∀ y t, pev y t H = pev y t R + pev y t F * pev y t Q := by
     intro y t
-    rw [← map_mul, ← map_add, hRdef, hQdef, modByMonic_add_div]
+    rw [← map_mul, ← map_add (f := _), hRdef, hQdef, modByMonic_add_div]
   have hRdeg : R.natDegree < N := by
     by_cases hR0 : R = 0
     · rw [hR0, natDegree_zero]; exact hN

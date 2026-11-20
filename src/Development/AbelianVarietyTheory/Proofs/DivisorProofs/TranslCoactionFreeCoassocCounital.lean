@@ -23,19 +23,19 @@ theorem coassoc (a : A) :
       F (TensorProduct.assoc R A A A ((comul (R := R)).rTensor A w)) := by
     intro w
     induction w with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a b =>
       simp only [LinearMap.lTensor_tmul, LinearMap.rTensor_tmul, LinearMap.comp_apply]
       generalize comul (R := R) a = w
       induction w with
-      | add u v hu hv => simp only [map_add, add_tmul, hu, hv]
+      | add u v hu hv => simp only [map_add (f := _), add_tmul, hu, hv]
       | tmul u v => simp [F]
   have h2 : ∀ w : A ⊗[R] A,
       (comul (R := R) (A := B)).lTensor A ((f : A →ₗ[R] B).lTensor A w) =
       F ((comul (R := R)).lTensor A w) := by
     intro w
     induction w with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a b =>
       simp only [LinearMap.lTensor_tmul, F]
       congr 1
@@ -61,10 +61,10 @@ theorem GlobalTheory.PDivGroup.transl_free :
   obtain ⟨x, rfl⟩ := GlobalTheory.HopfQuot.shear_surjective (R := R) y
   refine ⟨x, ?_⟩
   induction x with
-  | add u v hu hv => simp only [map_add, hu, hv]
+  | add u v hu hv => simp only [map_add (f := _), hu, hv]
   | tmul u v =>
     rw [Algebra.TensorProduct.productMap_apply_tmul, GlobalTheory.HopfQuot.shear_tmul, transl_apply]
     generalize comul (R := R) v = w
     induction w with
-    | add s t hs ht => simp only [map_add, mul_add, smul_add, hs, ht]
+    | add s t hs ht => simp only [map_add (f := _), mul_add, smul_add, hs, ht]
     | tmul s t => simp [TensorProduct.smul_tmul']

@@ -22,7 +22,7 @@ theorem QConj.add {f f' h h' : ℍ → ℂ} (hf : QConj g N f f') (hh : QConj g 
   obtain ⟨a, ha, ha'⟩ := hf
   obtain ⟨b, hb, hb'⟩ := hh
   refine ⟨fun n => a n + b n, ha.add hb, ?_⟩
-  simpa only [map_add] using ha'.add hb'
+  simpa only [map_add (f := _)] using ha'.add hb'
 
 theorem QConj.sub {f f' h h' : ℍ → ℂ} (hf : QConj g N f f') (hh : QConj g N h h') :
     QConj g N (fun τ => f τ - h τ) fun τ => f' τ - h' τ := by

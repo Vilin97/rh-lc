@@ -24,7 +24,7 @@ theorem closure_ratio (N : ℕ) (i : Fin (N + 1)) : Subring.closure (Set.range (
   obtain ⟨p, rfl⟩ := aeval_ratio_surjective ℤ N i s
   induction p using MvPolynomial.induction_on with
   | C a => simpa using intCast_mem _ a
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | mul_X p j hp =>
     rw [map_mul, aeval_X]
     exact mul_mem hp (Subring.subset_closure ⟨j, rfl⟩)
@@ -95,7 +95,7 @@ theorem range_sup_range_eq_top {X Y : Scheme.{0}} (f : X ⟶ Spec (.of ℤ)) (g 
   obtain ⟨t, rfl⟩ := hsurj s
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | tmul u v =>
     have : ψ (u ⊗ₜ v) = a.hom u * b.hom v := by simp [ψ]
     rw [this]
@@ -319,7 +319,7 @@ theorem exists_form (c : ∀ k, Bk n k)
     obtain ⟨f, a, hf⟩ := hs
     obtain ⟨g, b, hg⟩ := ht
     refine ⟨f * mono c b + g * mono c a, a + b, ?_⟩
-    simp only [map_add, map_mul, Phi_mono, hf, hg, Pi.add_apply, pow_add, Finset.prod_mul_distrib]
+    simp only [map_add (f := _), map_mul, Phi_mono, hf, hg, Pi.add_apply, pow_add, Finset.prod_mul_distrib]
     ring
   | neg s _ hs =>
     obtain ⟨f, a, hf⟩ := hs

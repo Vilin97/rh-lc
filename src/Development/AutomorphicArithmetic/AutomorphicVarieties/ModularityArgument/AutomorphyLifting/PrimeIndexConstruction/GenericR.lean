@@ -28,7 +28,7 @@ theorem good_of_isCuspFormR (a : ℕ) (ψ : AddChar (Ad F) ℂ) (φ : TR.Sm F a)
     have hper := per_blk (E := F) (r := r) (m := a - 1) hcont (fun c g => h.1.left _ g) g
     have hper2 : Per (ratN F a r) (fun x => φ.1 (blkU (blkIxHomeo r x) * g)) :=
       ⟨hper.1.comp (blkIxHomeo r).continuous, fun γ hγ x => by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact hper.2 _ ((blkIxHomeo_mem r γ).2 hγ) _⟩
     have key := GlobalTheory.T.quotientAverage_map_lattice_equiv _ _ (ratN F a r) (ratV F _) (isCoLat_ratV F (BlockIx a r))
       (isCoLat_ratV F _) (blkIxHomeo r) (blkIxHomeo_mem r) _ hper

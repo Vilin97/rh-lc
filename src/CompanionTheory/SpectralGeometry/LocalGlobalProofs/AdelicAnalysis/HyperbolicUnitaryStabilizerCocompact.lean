@@ -123,7 +123,7 @@ theorem sigR_invol (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (h
     (a : R ⊗[F] E) : sigR R σ (sigR R σ a) = a := by
   induction a with
   | tmul r e => simp [sigR, hσ]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 theorem sigR_incl (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (e : E) :
     sigR R σ (inclR R e) = inclR R (σ e) := by

@@ -85,7 +85,7 @@ theorem values_basis {A Ω L Li V T I : Type} [CommRing A] [Field Ω] [Field L] 
     rw [← hc, hπ, Pi.single_apply]
     split_ifs <;> simp)
   have hadd : ∀ t t' k, c (t + t') k = c t k + c t' k := fun t t' k => hg (by
-    rw [← hc, map_add, map_add, map_add, ← hc, ← hc]; rfl)
+    rw [← hc, map_add (f := _), map_add (f := _), map_add (f := _), ← hc, ← hc]; rfl)
   have hsm : ∀ (a : A) t k, c (a • t) k = a * c t k := fun a t k => hg (by
     rw [← hc, hi, map_smul, map_mul, ← hc]; rfl)
   have hF : ∀ k, ∃ F : V →ₗ[L] L, ∀ t, F (β t) = v (c t k) := fun k =>

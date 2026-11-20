@@ -78,7 +78,7 @@ theorem conjMap_smul (c : ℂ) (x : Fibre σ E) :
   induction x using TensorProduct.induction_on with
   | zero => simp only [smul_zero, map_zero]
   | tmul z e => rw [smul_tmul', conjMap_tmul, conjMap_tmul, smul_tmul', conj_smul]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 end Fibre
 
@@ -110,7 +110,7 @@ def coreOfInjective {𝕜 V W : Type*} [RCLike 𝕜] [AddCommGroup V] [Module �
   inner x y := inner 𝕜 (f x) (f y)
   conj_inner_symm x y := inner_conj_symm (f x) (f y)
   re_inner_nonneg x := inner_self_nonneg
-  add_left x y z := by simp only [map_add, inner_add_left]
+  add_left x y z := by simp only [map_add (f := _), inner_add_left]
   smul_left x y r := by simp only [map_smul, inner_smul_left]
   definite x h := hf (by rw [map_zero]; exact inner_self_eq_zero.mp h)
 
@@ -141,7 +141,7 @@ theorem integersCoord_conjMap (σ : K →+* ℂ) (x : Fibre σ (𝓞 K)) :
   | tmul z a =>
     rw [conjMap_tmul, integersCoord_tmul, integersCoord_tmul, map_mul]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 variable (K)
 
@@ -179,7 +179,7 @@ theorem standardCoord_conjMap (σ : K →+* ℂ) (ι : Type*) [Fintype ι] [Deci
   | tmul z v =>
     rw [conjMap_tmul, standardCoord_tmul, standardCoord_tmul, map_mul]
     rfl
-  | add x y hx hy => rw [map_add, map_add, PiLp.add_apply, hx, hy, map_add, PiLp.add_apply, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), PiLp.add_apply, hx, hy, map_add (f := _), PiLp.add_apply, map_add (f := _)]
 
 variable (K)
 

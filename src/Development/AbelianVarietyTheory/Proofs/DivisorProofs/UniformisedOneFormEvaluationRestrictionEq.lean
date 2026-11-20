@@ -28,7 +28,7 @@ theorem uniformisedOneFormEvaluation_restriction_eq : ∀ (A : Over (Sp ℂ)) [G
     rw [p1_D, evV.2.2, evU.2.2]
     exact hD b
   | zero => simp
-  | add x y _ _ hx hy => simp only [map_add, hx, hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
   | smul b x _ hx =>
     rw [oneFormsMapOfFunctorMorphism_smul, evV.2.1, evU.2.1, hx]
     congr 1

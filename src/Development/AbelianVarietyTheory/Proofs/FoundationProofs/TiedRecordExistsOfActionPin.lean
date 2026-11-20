@@ -73,7 +73,7 @@ theorem exists_cuspRep_of_injective (f : B.Cusp j w →ₗ[B.KO] (Fin n → K)) 
     ∃ ρ : Representation B.KO P (B.Cusp j w), ∀ g F, ρ g F = a g F := by
   refine ⟨{ toFun := fun g =>
               { toFun := a g
-                map_add' := fun F F' => hf (by rw [map_add, ha, ha, ha, map_add, map_add])
+                map_add' := fun F F' => hf (by rw [map_add (f := _), ha, ha, ha, map_add (f := _), map_add (f := _)])
                 map_smul' := fun c F => hf ?_ }
             map_one' := LinearMap.ext fun F => hf ?_
             map_mul' := fun g g' => LinearMap.ext fun F => hf ?_ }, fun _ _ => rfl⟩

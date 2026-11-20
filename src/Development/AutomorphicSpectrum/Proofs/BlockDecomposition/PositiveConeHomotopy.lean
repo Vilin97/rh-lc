@@ -90,7 +90,7 @@ theorem key_alg {W : Type*} [Ring W] [Algebra ℂ W] (tr : W →ₗ[ℂ] ℂ) (h
   have h4 : tr (Γ * Sv * ∑ i, x i • L1 i) =
       ∑ i, tr (Γ * Sv * (e i * J * L1 i)) + ∑ i, tr (Γ * Sv * (J * (e i * L1 i))) := by
     rw [← Finset.sum_add_distrib]
-    simp only [← map_add]
+    simp only [← map_add (f := _)]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← map_sum]
     congr 1
@@ -108,7 +108,7 @@ theorem key_alg {W : Type*} [Ring W] [Algebra ℂ W] (tr : W →ₗ[ℂ] ℂ) (h
     simp only [Finset.mul_sum, Finset.sum_mul, mul_assoc]
   rw [h5, h4, Finset.sum_add_distrib]
   congr 1
-  simp only [mul_add, map_add, h1, h2, Finset.sum_add_distrib, Finset.sum_neg_distrib, h3, neg_neg]
+  simp only [mul_add, map_add (f := _), h1, h2, Finset.sum_add_distrib, Finset.sum_neg_distrib, h3, neg_neg]
 
 section Analytic
 
@@ -147,7 +147,7 @@ theorem hasDerivAt_A (K : (I → ℝ) × (I → ℝ) → (V →L[ℂ] V)) (S : �
       (Γ * deriv S s * K (path o s v) + Γ * S s * fderiv ℝ K (path o s v) (v - o, 0)) s :=
     (hS.hasDerivAt.const_mul Γ).mul hKP
   have ht := trL.hasFDerivAt.comp_hasDerivAt s hm
-  rw [map_add] at ht
+  rw [map_add (f := _)] at ht
   exact ht
 
 set_option maxHeartbeats 1000000 in
@@ -278,7 +278,7 @@ theorem homot : PositivityTheory.RgBcC.Homot := by
           simp [Pi.single_apply]
         have h2 : fderiv ℝ K y (s • (Pi.single i 1 : I → ℝ), (Pi.single i 1 : I → ℝ)) =
             s • fderiv ℝ K y (Pi.single i 1, 0) + fderiv ℝ K y (0, Pi.single i 1) := by
-          rw [← map_smul, ← map_add]
+          rw [← map_smul, ← map_add (f := _)]
           simp
         rw [h1, ← hydef, h2] at h
         exact h

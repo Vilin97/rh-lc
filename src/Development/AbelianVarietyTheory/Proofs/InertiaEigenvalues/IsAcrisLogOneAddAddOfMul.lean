@@ -78,10 +78,10 @@ theorem isLogJ_add : ∀ (l : ℕ) [Fact l.Prime] (a b : Per.Ainf l) (y y' : Per
         (sa : Per.AinfP l) + (sb : Per.AinfP l) + ((l ^ r * q : ℕ) : Per.AinfP l) * e := by
       simp [hEe]
     rw [hc]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     push_cast at hE ⊢
     linear_combination hsa + hsb - hE
-  · simp only [map_add, map_mul, map_natCast]
+  · simp only [map_add (f := _), map_mul, map_natCast]
     push_cast
     linear_combination hza + hzb
 

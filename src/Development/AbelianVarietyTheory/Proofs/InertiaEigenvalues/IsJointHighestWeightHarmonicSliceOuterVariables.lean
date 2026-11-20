@@ -85,7 +85,7 @@ theorem coefAt_pderiv (hι : Function.Injective ι) (u : σ₀) (Q : MvPolynomia
         simp [Derivation.leibniz, map_mul, slice_X_inner hι, hp, pderiv_X,
           Pi.single_apply, h1, h2, coeff_C_mul, mul_comm (slice ι p) (C (X w))]
     · have h1 : ι u ≠ v := fun h => hv ⟨u, h⟩
-      simp only [Derivation.leibniz, map_add, map_mul, smul_eq_mul, pderiv_X, Pi.single_apply,
+      simp only [Derivation.leibniz, map_add (f := _), map_mul, smul_eq_mul, pderiv_X, Pi.single_apply,
         if_neg h1.symm, mul_zero, zero_add, slice_X_outer hv]
       rw [coeff_X_mul', coeff_mul_X']
       split_ifs
@@ -140,7 +140,7 @@ theorem unslice_slice (hι : Function.Injective ι) (Q : MvPolynomial σ ℂ) :
   | C a =>
     rw [slice_C]
     simp only [unslice, coe_eval₂Hom, eval₂_C, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, rename_C]
-  | add p q hp hq => rw [map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, hp, unslice_slice_X hι]
 

@@ -41,7 +41,7 @@ theorem exists_smul_mem_range_of_unique_point (R B : Type) [CommRing R] [CommRin
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rw [hall ψ, hall φ]
-    | add s t hs ht => rw [map_add, map_add, hs, ht]
+    | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht]
   have hsurj := algebraMap_surjective_of_unramified_of_unique_point K (K ⊗[R] B) φ huniq
   set N : Submodule R B := LinearMap.range (Algebra.linearMap R B) with hN
   have hone : N.mkQ (1 : B) = 0 := (Submodule.Quotient.mk_eq_zero N).mpr ⟨1, by simp⟩
@@ -78,7 +78,7 @@ theorem exists_retraction_away (R B : Type) [CommRing R] [CommRing B] [Algebra R
   have hfg : loc f f * g = 1 := IsLocalization.Away.mul_invSelf f
   have ha_zero : a 0 = 0 := hinj (by simp only [ha, MulZeroClass.mul_zero, map_zero])
   have ha_one : a 1 = f := hinj (by simp only [ha, _root_.mul_one])
-  have ha_add : ∀ b c, a (b + c) = a b + a c := fun b c => hinj (by simp only [ha, map_add]; ring)
+  have ha_add : ∀ b c, a (b + c) = a b + a c := fun b c => hinj (by simp only [ha, map_add (f := _)]; ring)
   have ha_mul : ∀ b c, f * a (b * c) = a b * a c := fun b c => hinj (by simp only [ha, map_mul]; ring)
   have ha_alg : ∀ c, a (algebraMap R B c) = f * c := fun c => hinj (by simp only [ha, map_mul])
   have h_one : loc f (a 1) * g = 1 := by rw [ha_one, hfg]
@@ -90,7 +90,7 @@ theorem exists_retraction_away (R B : Type) [CommRing R] [CommRing B] [Algebra R
   have h_zero : loc f (a 0) * g = 0 := by rw [ha_zero, map_zero, MulZeroClass.zero_mul]
   have h_add : ∀ b c, loc f (a (b + c)) * g = loc f (a b) * g + loc f (a c) * g := by
     intro b c
-    rw [ha_add, map_add, add_mul]
+    rw [ha_add, map_add (f := _), add_mul]
   let r : B →+* Localization.Away f :=
     { toFun := fun b => loc f (a b) * g
       map_one' := h_one

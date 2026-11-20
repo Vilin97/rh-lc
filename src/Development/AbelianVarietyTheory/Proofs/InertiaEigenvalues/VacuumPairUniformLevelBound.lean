@@ -188,7 +188,7 @@ theorem smul_mem_trSp : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfF
         have e1 : r • z = ρ z := by
           simp only [ρ, AddMonoidHom.comp_apply, DistribMulAction.toAddMonoidHom_apply, hzh]
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [e1, hzn, map_add, map_sum, map_nsmul]
+          rw [e1, hzn, map_add (f := _), map_sum, map_nsmul]
         simp only [map_zsmul]
         congr 1
         exact hkrz (e • u)
@@ -196,7 +196,7 @@ theorem smul_mem_trSp : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfF
       let F := AddMonoidHom.mk' (symplO V W t) (GlobalTheory.PlaceModel.symplO_add_right V W t)
       change ψ (F _) = 1
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, AddChar.map_add_eq_mul, map_sum, char_sum]
+        rw [map_add (f := _), AddChar.map_add_eq_mul, map_sum, char_sum]
       simp only [map_zsmul, AddChar.map_zsmul_eq_zpow]
       change (∏ i, ψ (symplO V W t (h i)) ^ n i) * ψ (symplO V W t (e • u)) = 1
       rw [Finset.prod_eq_one fun i _ => by rw [hall i, _root_.one_zpow], one_mul]

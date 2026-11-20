@@ -74,7 +74,7 @@ theorem UpperTheory.V.Cu.entOf4 : EntOf4 := by
       refine ⟨t, ?_⟩
       rw [ht]
       refine low_ne (fun g => f (d.ρ₁ g 1 0)) (fun g => f (d.ρ₁ g 0 0)) (fun g h => ?_) _ g h0 ha hg'
-      simp only [map_mul, Matrix.mul_apply, Fin.sum_univ_two, map_add, h11, one_mul]
+      simp only [map_mul, Matrix.mul_apply, Fin.sum_univ_two, map_add (f := _), h11, one_mul]
     · exact ⟨T.g0, h0⟩
   obtain ⟨t, ht⟩ := key
   have hδ : f (toC d.h d.δ (resQ T.F t) : d.c₁.O) ≠ 0 := hU _ (Units.isUnit _)

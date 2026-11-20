@@ -51,7 +51,7 @@ theorem exists_projBundle_closure : ∀ (o Ω : Type) [CommRing o] [Field Ω] [A
         obtain ⟨i, rfl⟩ := h
         simpa [τ, mul_div_mul_right _ _ hk₀] using hK (i, k₀)
       | algebraMap r => exact Subfield.subset_closure (Or.inl ⟨r, (φ.commutes r).symm⟩)
-      | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
       | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
     refine EE.eq_top_of_pairing_mem hs (hv _ i₀ hi₀) hk₀ h1 fun k => ?_
     rw [pairing_div, mul_div_assoc]

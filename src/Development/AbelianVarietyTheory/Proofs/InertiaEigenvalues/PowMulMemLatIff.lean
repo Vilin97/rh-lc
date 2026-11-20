@@ -54,7 +54,7 @@ def Lat (M n : ℕ) : AddSubgroup P.R.BdR where
     rintro b b' ⟨a, ha⟩ ⟨a', ha'⟩
     refine ⟨a + a', ?_⟩
     have := add_mem ha ha'
-    rw [mul_add, map_add]
+    rw [mul_add, map_add (f := _)]
     convert this using 1
     ring
   neg_mem' := by
@@ -240,7 +240,7 @@ theorem Lifts.act {w : Ainf l} {c : ↥(K0 K)} (h : Lifts AI K w c) {g : GQ l}
 theorem Lifts.add {w w' : Ainf l} {c c' : ↥(K0 K)} (h : Lifts AI K w c) (h' : Lifts AI K w' c') :
     Lifts AI K (w + w') (c + c') := by
   unfold Lifts at h h' ⊢
-  rw [map_add, map_add, h, h']
+  rw [map_add (f := _), map_add (f := _), h, h']
 
 theorem Lifts.sub {w w' : Ainf l} {c c' : ↥(K0 K)} (h : Lifts AI K w c) (h' : Lifts AI K w' c') :
     Lifts AI K (w - w') (c - c') := by
@@ -271,11 +271,11 @@ theorem Solv.add {q q' : Ainf l} (h : Solv AI K s g U q) (h' : Solv AI K s g U q
   obtain ⟨p, r, rfl, h1, h2⟩ := h
   obtain ⟨p', r', rfl, h1', h2'⟩ := h'
   refine ⟨fun k => p k + p' k, fun k => r k + r' k, rfl, fun k h hh => ?_, fun k => ?_⟩
-  · rw [map_add, h1 k h hh, h1' k h hh]
+  · rw [map_add (f := _), h1 k h hh, h1' k h hh]
   · have a := h2 k
     have a' := h2' k
     unfold Step at a a' ⊢
-    rw [map_add]
+    rw [map_add (f := _)]
     linear_combination a + a'
 
 theorem Solv.mul {q w : Ainf l} (h : Solv AI K s g U q) (hg : AI.actW g w = w)

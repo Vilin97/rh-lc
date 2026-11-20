@@ -219,7 +219,7 @@ theorem Xlev_form (K : FinExt l) {i : ℕ} (hi : 1 ≤ i) {ζ : Om l} (hζ : IsP
     obtain ⟨y, h1, h2, rfl⟩ := ha
     obtain ⟨y', h1', h2', rfl⟩ := hb
     refine ⟨y + y', fun a => add_mem (h1 a) (h1' a), by rw [Pi.add_apply, h2, h2', add_zero], ?_⟩
-    simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+    simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
   | neg a _ ha =>
     obtain ⟨y, h1, h2, rfl⟩ := ha
     refine ⟨-y, fun a => neg_mem (h1 a), by rw [Pi.neg_apply, h2, neg_zero], ?_⟩
@@ -260,7 +260,7 @@ theorem step (K : FinExt l) {i : ℕ} (hi : 2 ≤ i) {z : PadicComplex l} (hz : 
   refine ⟨io l (y ⟨0, hp.pos⟩), h3 _, ?_⟩
   rw [h2, ← Finset.add_sum_erase _ _ (Finset.mem_univ ⟨0, hp.pos⟩)]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [pow_zero, one_mul, map_add, add_sub_cancel_left, map_sum, map_mul]
+    simp only [pow_zero, one_mul, map_add (f := _), add_sub_cancel_left, map_sum, map_mul]
   refine sum_mem fun a ha => AddSubgroup.subset_closure ⟨_, _, ?_, h3 a, rfl⟩
   refine (hζ.pow_of_coprime a ?_).map_of_injective (io l).injective
   refine Nat.Coprime.pow_right _ (Nat.Coprime.symm ((Nat.Prime.coprime_iff_not_dvd hp).2 ?_))

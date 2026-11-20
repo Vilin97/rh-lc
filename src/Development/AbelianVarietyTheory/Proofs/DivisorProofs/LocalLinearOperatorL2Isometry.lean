@@ -45,7 +45,7 @@ theorem expand {f h : X → ℂ} (hf : f ∈ SB X) (hh : h ∈ SB X) (c : ℂ) :
   have e : (fun x => (c • h + f) x * conj ((c • h + f) x)) =
       fun x => (c * conj c) * (h x * conj (h x)) + c * (h x * conj (f x)) +
         conj c * (f x * conj (h x)) + f x * conj (f x) := by
-    funext x; simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul]; ring
+    funext x; simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul]; ring
   rw [e, integral_add, integral_add, integral_add, integral_const_mul, integral_const_mul,
     integral_const_mul]
   all_goals first

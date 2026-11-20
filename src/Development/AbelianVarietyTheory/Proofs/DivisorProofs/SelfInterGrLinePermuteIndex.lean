@@ -69,7 +69,7 @@ theorem isometric_pull_flDet (s : ι → ι) (hπ : permute (N := N) s ≫ flStr
 theorem isometric_pull_grLine (s : ι → ι) (hπ : permute (N := N) s ≫ flStr ι N = flStr ι N) (x : ι × Fin N) :
     ((grLine x).pull (permute s) hπ).Isometric (grLine (s x.1, x.2)) := by
   refine icls_eq_iff.1 ?_
-  rw [icls_pull, grLine, grLine, icls_tens, icls_dual, icls_tens, icls_dual, map_add, map_neg, ← icls_pull,
+  rw [icls_pull, grLine, grLine, icls_tens, icls_dual, icls_tens, icls_dual, map_add (f := _), map_neg, ← icls_pull,
     ← icls_pull, icls_eq_iff.2 (isometric_pull_flDet s hπ x.1 _), icls_eq_iff.2 (isometric_pull_flDet s hπ x.1 _)]
 
 theorem isSelfInter_comb_grLine_perm : Hypotheses2 → ∀ (ι : Type) [Fintype ι] (N : ℕ) (σ : Equiv.Perm ι) (n : ι × Fin N → ℤ)

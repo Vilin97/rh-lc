@@ -53,7 +53,7 @@ theorem finAdEquiv_sigR (σ : E →ₐ[F] E) (c : E ≃+* E) (h : ∀ x, σ x = 
     finAdEquiv F E (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR AF σ y) = conjFin c (finAdEquiv F E y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a x =>
     have hc : ∀ x : F, c (algebraMap F E x) = algebraMap F E x := fun x => by rw [← h]; exact σ.commutes x
     change toFinAd F E (a ⊗ₜ[F] σ x) = conjFin c (toFinAd F E (a ⊗ₜ[F] x))
@@ -78,7 +78,7 @@ theorem continuous_finAdEquiv : Continuous (finAdEquiv F E) := by
       map_smul' := fun r y => by
         induction y using TensorProduct.induction_on with
         | zero => simp only [smul_zero, map_zero]
-        | add a b ha hb => simp only [smul_add, map_add, ha, hb]
+        | add a b ha hb => simp only [smul_add, map_add (f := _), ha, hb]
         | tmul a x =>
           change toFinAd F E ((r * a) ⊗ₜ[F] x) = GlobalTheory.AdeleBaseChange.adMap F E r * toFinAd F E (a ⊗ₜ[F] x)
           rw [toFinAd_tmul, toFinAd_tmul, map_mul, mul_assoc] }

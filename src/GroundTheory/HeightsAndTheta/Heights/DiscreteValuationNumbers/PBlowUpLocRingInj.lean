@@ -91,7 +91,7 @@ theorem exists_eq_div_of_mem_blowUpLocRing {P : Ideal (MRing ι R)} [P.IsPrime] 
       IsWeightedHomogeneous.mul hG₁ hG₂, fun h => (hQ.mem_or_mem h).elim hG₁Q hG₂Q, ?_⟩
     rw [div_add_div _ _ (algebraMap_blowUpEval_ne_zero hle hG₁ hG₁Q)
       (algebraMap_blowUpEval_ne_zero hle hG₂ hG₂Q)]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
   | neg x _ hx =>
     obtain ⟨b, F, G, hF, hG, hGQ, rfl⟩ := hx
     refine ⟨b, -F, G, fun d hd => hF (by rwa [coeff_neg, neg_ne_zero] at hd), hG, hGQ, ?_⟩

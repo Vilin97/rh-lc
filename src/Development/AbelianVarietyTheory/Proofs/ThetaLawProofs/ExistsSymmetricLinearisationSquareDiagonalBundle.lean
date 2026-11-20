@@ -468,7 +468,7 @@ theorem main : Out.Laws → ∀ (h k : ℕ) (o : Type) [CommRing o] (ζ : o) (R 
     ⟨(map_one (uv c.diag A.left) ▸ rep_uv 1).form (by rw [map_one, tr_one, Over.id_left, Category.id_comp]; abel),
       by simp⟩
     (fun q q' f f' hf hf' => ⟨(hf.1.mul (hf'.1.pull (tr (i q)).left)).form (by
-        simp only [map_add, map_sub, map_of_apply]
+        simp only [map_add (f := _), map_sub, map_of_apply]
         rw [← Category.assoc, ← Over.comp_left, tr_tr, mul_comm q, map_mul]; abel), by
       have e : pl (GrpObj.inv : A ⟶ A).left (ρ q f') = ρ q (pl (GrpObj.inv : A ⟶ A).left f') := by
         rw [ρe, ρe, pl_pl, pl_pl, ← Over.comp_left, ← Over.comp_left, tr_inv (ii q)]
@@ -476,7 +476,7 @@ theorem main : Out.Laws → ∀ (h k : ℕ) (o : Type) [CommRing o] (ζ : o) (R 
         map_mul, e, _root_.mul_assoc]⟩)
     (fun n => pl φ (v n) * pl A.hom (uv _ _ (b n)⁻¹))
     (fun n => ⟨(((rv n).pull φ).mul ((rep_uv _).pull A.hom)).form (by
-        simp only [map_add, map_sub, map_of_apply, map_zero, htr, Category.comp_id, add_zero]), by
+        simp only [map_add (f := _), map_sub, map_of_apply, map_zero, htr, Category.comp_id, add_zero]), by
       rw [ρe, ρφ, map_mul, ρb, iφ, mul_right_comm, ← map_mul, h₃, map_mul, _root_.mul_assoc]⟩)
     (fun n => by
       rw [ρe, map_mul, ρb, ρφ, _root_.mul_mul_mul_comm, ← map_mul, h₁, pl_pl, hφ.1.w, ← pl_pl, pl_uv (spMap _), ← hb',
@@ -507,7 +507,7 @@ theorem main : Out.Laws → ∀ (h k : ℕ) (o : Type) [CommRing o] (ζ : o) (R 
     exact ⟨t', ht', (congrArg _ e').trans e⟩
   choose U hU eU using fun q => down _ _ (hu q).1
   obtain ⟨J₀, hJ₀, eJ⟩ := down (GrpObj.inv : A ⟶ A).left (pl φ j) ((rj.pull φ).form (by
-    simp only [map_add, map_sub, map_of_apply, hinv, Category.comp_id]))
+    simp only [map_add (f := _), map_sub, map_of_apply, hinv, Category.comp_id]))
   have r₂ : ∀ {x : A.left ⟶ A.left} {t : LB.Gen (LB.LinComb (lbPow (c.diag.pull φ) 2) (K := Fin 2) ![𝟙 A.left, x] ![1, -1])},
       t.IsGen → ∀ y : A.left ⟶ A.left, Rep _ (of y - of (y ≫ x)) (pl y (vals t)) := fun ht y =>
     ((rep_vals ht).pull y).form (by simp [Fin.sum_univ_two, sub_eq_add_neg])

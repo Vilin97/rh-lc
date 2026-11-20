@@ -269,9 +269,9 @@ theorem eq_zero_of_fourier_eq_zero : 鈭� (D : D7) (蠄 : AddChar (AF D.host.F) 鈩
   路 intro y
     exact h蠄.1.1.comp (htr.comp (continuous_const.matrix_mul continuous_id).matrix_trace)
   路 intro y u u'
-    simp only [Matrix.mul_add, Matrix.trace_add, map_add, AddChar.map_add_eq_mul]
+    simp only [Matrix.mul_add, Matrix.trace_add, map_add (f := _), AddChar.map_add_eq_mul]
   路 intro y y' u
-    simp only [Matrix.add_mul, Matrix.trace_add, map_add, AddChar.map_add_eq_mul]
+    simp only [Matrix.add_mul, Matrix.trace_add, map_add (f := _), AddChar.map_add_eq_mul]
   路 intro u
     simp only [Matrix.zero_mul, Matrix.trace_zero, map_zero, AddChar.map_zero_eq_one]
   路 intro y u

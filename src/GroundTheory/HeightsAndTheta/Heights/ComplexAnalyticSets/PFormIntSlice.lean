@@ -35,7 +35,7 @@ theorem mem_zeroSet_slice_iff (W : Ideal (MvPolynomial (Fin n) ℂ)) (ℓ x : Fi
   · rintro ⟨hx, h1⟩ q hq
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hq
     obtain ⟨r, rfl⟩ := Ideal.mem_span_singleton'.mp hz
-    rw [map_add, map_mul, hev, h1, hx y hy]
+    rw [map_add (f := _), map_mul, hev, h1, hx y hy]
     simp
 
 theorem ne_zero_of_mem_slice {W : Ideal (MvPolynomial (Fin n) ℂ)} {ℓ x : Fin n → ℂ}

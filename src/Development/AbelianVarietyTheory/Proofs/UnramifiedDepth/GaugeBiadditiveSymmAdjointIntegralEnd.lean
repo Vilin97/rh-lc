@@ -47,7 +47,7 @@ theorem lin_cc (H : RLaw X V) {τ : Type} {a : κ → MvPowerSeries τ C} (ha : 
 theorem add_cc (H : RLaw X V) {τ : Type} {a b : κ → MvPowerSeries τ C} (ha : ∀ s, constantCoeff (a s) = 0)
     (hb : ∀ s, constantCoeff (b s) = 0) (x : κ) :
     constantCoeff (subst a (X.lg x) + subst b (X.lg x)) = 0 := by
-  rw [map_add, cc_subst ha, cc_subst hb, lg_cc H, add_zero]
+  rw [map_add (f := _), cc_subst ha, cc_subst hb, lg_cc H, add_zero]
 
 theorem constantCoeff_expMulLog (H : RLaw X V) {τ : Type} {a : κ → MvPowerSeries τ C} (ha : ∀ s, constantCoeff (a s) = 0)
     (A : Matrix κ κ C) (i : κ) : constantCoeff (endP X A a i) = 0 := by
@@ -188,7 +188,7 @@ theorem add_left_log (H : RLaw X V) {τ : Type} {P : Fin 3 → κ → MvPowerSer
   have hs := hasSubst_of_constantCoeff_zero hb
   have hadd := formalAdd_constantCoeff H (gp_cc (C := C) (κ := κ) (0 : Fin 3)) (gp_cc 1)
   have h := logInt_subst hb (fun p => hI p.1 p.2) (mem_logInt.2 ⟨by
-    rw [map_sub, map_add, hAt_cc H (gp_cc 0) (gp_cc 2), hAt_cc H (gp_cc 1) (gp_cc 2), hAt_cc H hadd (gp_cc 2)]
+    rw [map_sub, map_add (f := _), hAt_cc H (gp_cc 0) (gp_cc 2), hAt_cc H (gp_cc 1) (gp_cc 2), hAt_cc H hadd (gp_cc 2)]
     simp, H.ph1⟩)
   rw [subst_sub hs, subst_add hs, subst_hAt (gp_cc 0) (gp_cc 2) hb, subst_hAt (gp_cc 1) (gp_cc 2) hb,
     subst_hAt hadd (gp_cc 2) hb] at h
@@ -201,7 +201,7 @@ theorem add_right_log (H : RLaw X V) {τ : Type} {P : Fin 3 → κ → MvPowerSe
   have hs := hasSubst_of_constantCoeff_zero hb
   have hadd := formalAdd_constantCoeff H (gp_cc (C := C) (κ := κ) (1 : Fin 3)) (gp_cc 2)
   have h := logInt_subst hb (fun p => hI p.1 p.2) (mem_logInt.2 ⟨by
-    rw [map_sub, map_add, hAt_cc H (gp_cc 0) (gp_cc 1), hAt_cc H (gp_cc 0) (gp_cc 2), hAt_cc H (gp_cc 0) hadd]
+    rw [map_sub, map_add (f := _), hAt_cc H (gp_cc 0) (gp_cc 1), hAt_cc H (gp_cc 0) (gp_cc 2), hAt_cc H (gp_cc 0) hadd]
     simp, H.ph2⟩)
   rw [subst_sub hs, subst_add hs, subst_hAt (gp_cc 0) (gp_cc 1) hb, subst_hAt (gp_cc 0) (gp_cc 2) hb,
     subst_hAt (gp_cc 0) hadd hb] at h

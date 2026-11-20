@@ -135,7 +135,7 @@ theorem act_first_block : ∀ (P Q R : ℕ) (h : P ≤ R) (k : ℕ) (a a' : Fin 
       ∑ b, X (a, b) * pderiv (a', b) G + (if a = a' then (k : ℂ) + (R : ℂ) / 2 else 0) • G := by
     by_cases e : a = a' <;> simp [opR, LinearMap.sum_apply, e]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [act_eq, he, he, ho, Derivation.leibniz, hk, hG, map_add, map_sum, map_smul]
+    rw [act_eq, he, he, ho, Derivation.leibniz, hk, hG, map_add (f := _), map_sum, map_smul]
   simp only [map_mul, aeval_X, smul_eq_mul, add_mul, mul_smul_comm, smul_mul_assoc]
   rw [mul_comm (detR P Q R h ^ k)]
   split_ifs

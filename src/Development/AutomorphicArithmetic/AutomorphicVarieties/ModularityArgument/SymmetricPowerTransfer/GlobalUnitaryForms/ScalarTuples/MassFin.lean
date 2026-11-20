@@ -329,7 +329,7 @@ private theorem part1 [IsTotallyReal F] (hτ : IsCM τ) (φ : (Etau F τ)ˣ →*
     rw [map_zero, mul_zero]
     exact isIntegral_zero
   · intro x a b ha hb v
-    rw [map_add, mul_add]
+    rw [map_add (f := _), mul_add]
     exact (ha v).add (hb v)
   · intro x r a hr ha v
     rw [map_mul, mul_left_comm]

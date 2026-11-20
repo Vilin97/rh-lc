@@ -23,7 +23,7 @@ lemma fix_span {W : Type} [AddCommGroup W] [Module E W] (g : W ≃ₗ[E] W) (s :
   induction hx using Submodule.span_induction with
   | mem x hx => exact hs x hx
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul a x _ hx => rw [map_smul, hx]
 
 lemma mem_riemannRochSpace_iff_regularAt_everywhere (g : S.GLV) : g ∈ S.H0 ↔ (∀ x y, S.h (g x) (g y) = S.h x y) ∧
@@ -41,7 +41,7 @@ lemma mem_riemannRochSpace_iff_regularAt_everywhere (g : S.GLV) : g ∈ S.H0 ↔
     have hfix : ∀ v ∈ S.ME, g v = v := by
       intro v hv
       obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hv
-      rw [map_add, fix_span g _ (by rintro _ ⟨i, -, rfl⟩; exact (h2 i).1) a ha,
+      rw [map_add (f := _), fix_span g _ (by rintro _ ⟨i, -, rfl⟩; exact (h2 i).1) a ha,
         fix_span g _ (by rintro _ ⟨i, -, rfl⟩; exact (h2 i).2) b hb]
     refine ⟨h1, fun v => ⟨fun hv => ?_, fun hv => by rwa [hfix v hv]⟩, fun v hv => ?_⟩
     · rwa [← g.injective (hfix _ hv)]

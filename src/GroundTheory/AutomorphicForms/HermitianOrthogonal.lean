@@ -150,14 +150,14 @@ end Isometric
 def prod (h : HermitianForm F E V) (h' : HermitianForm F E V') : HermitianForm F E (V × V') where
   toSesq := LinearMap.mk₂'ₛₗ (conjHom F E) (RingHom.id E)
     (fun p q => h.toSesq p.1 q.1 + h'.toSesq p.2 q.2)
-    (fun p p' q => by simp only [Prod.fst_add, Prod.snd_add, map_add, LinearMap.add_apply]; ring)
+    (fun p p' q => by simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), LinearMap.add_apply]; ring)
     (fun c p q => by
       simp only [Prod.smul_fst, Prod.smul_snd, LinearMap.map_smulₛₗ₂, smul_eq_mul]; ring)
-    (fun p q q' => by simp only [Prod.fst_add, Prod.snd_add, map_add]; ring)
+    (fun p q q' => by simp only [Prod.fst_add, Prod.snd_add, map_add (f := _)]; ring)
     (fun c p q => by
       simp only [Prod.smul_fst, Prod.smul_snd, map_smul, smul_eq_mul, RingHom.id_apply]; ring)
   isSymm := ⟨fun p q => by
-    simp only [LinearMap.mk₂'ₛₗ_apply, map_add]
+    simp only [LinearMap.mk₂'ₛₗ_apply, map_add (f := _)]
     rw [h.isSymm.eq, h'.isSymm.eq]⟩
   nonsingular := by
     constructor
@@ -208,7 +208,7 @@ theorem isometric_prod_assoc (h : HermitianForm F E V) (h' : HermitianForm F E V
 def ofUnit (a : Fˣ) : HermitianForm F E E where
   toSesq := LinearMap.mk₂'ₛₗ (conjHom F E) (RingHom.id E)
     (fun x y => conj F E x * algebraMap F E a * y)
-    (fun x x' y => by rw [map_add]; ring)
+    (fun x x' y => by rw [map_add (f := _)]; ring)
     (fun c x y => by simp only [map_mul, smul_eq_mul, conjHom_apply]; ring)
     (fun x y y' => by ring)
     (fun c x y => by simp only [smul_eq_mul, RingHom.id_apply]; ring)
@@ -255,7 +255,7 @@ def restrict (h : HermitianForm F E V) (W W' : Submodule E V) (hW : h.IsOrthoCom
         obtain ⟨w, hw, w', hw', rfl⟩ := Submodule.mem_sup.1 hv
         have h1 := LinearMap.congr_fun hab ⟨w, hw⟩
         simp only [LinearMap.domRestrict₁₂_apply] at h1
-        rw [map_add, map_add, h1, hW.2 _ a.2 _ hw', hW.2 _ b.2 _ hw']
+        rw [map_add (f := _), map_add (f := _), h1, hW.2 _ a.2 _ hw', hW.2 _ b.2 _ hw']
       exact Subtype.ext (h.nonsingular.1 (LinearMap.ext key))
     · intro f
       obtain ⟨x, hx⟩ := h.nonsingular.2 (f.comp (Submodule.projectionOnto W W' hW.1))
@@ -263,7 +263,7 @@ def restrict (h : HermitianForm F E V) (W W' : Submodule E V) (hW : h.IsOrthoCom
       obtain ⟨w, hw, w', hw', rfl⟩ := Submodule.mem_sup.1 hv
       refine ⟨⟨w, hw⟩, LinearMap.ext fun y => ?_⟩
       have h1 := LinearMap.congr_fun hx (y : V)
-      rw [map_add, LinearMap.add_apply, h.toSesq_eq_zero_comm.1 (hW.2 _ y.2 _ hw'), add_zero,
+      rw [map_add (f := _), LinearMap.add_apply, h.toSesq_eq_zero_comm.1 (hW.2 _ y.2 _ hw'), add_zero,
         LinearMap.comp_apply, Submodule.projectionOnto_apply_left] at h1
       exact h1
 
@@ -276,7 +276,7 @@ theorem isometric_prod_restrict (h : HermitianForm F E V) (W W' : Submodule E V)
     (hW : h.IsOrthoCompl W W') :
     Isometric ((h.restrict W W' hW).prod (h.restrict W' W hW.symm)) h := by
   refine ⟨Submodule.prodEquivOfIsCompl W W' hW.1, fun p q => ?_⟩
-  simp only [Submodule.coe_prodEquivOfIsCompl', prod_apply, restrict_apply, map_add,
+  simp only [Submodule.coe_prodEquivOfIsCompl', prod_apply, restrict_apply, map_add (f := _),
     LinearMap.add_apply]
   rw [hW.2 _ p.1.2 _ q.2.2, h.toSesq_eq_zero_comm.1 (hW.2 _ q.1.2 _ p.2.2)]
   ring
@@ -327,7 +327,7 @@ theorem exists_apply_self_ne_zero (h : HermitianForm F E V) [Nontrivial V] :
   have key : h.toSesq (x + t • y) (x + t • y) =
       t * h.toSesq x y + conj F E (t * h.toSesq x y) := by
     rw [map_mul, h.conj_toSesq]
-    simp only [map_add, LinearMap.add_apply, h.toSesq_smul_left, h.toSesq_smul_right, H]
+    simp only [map_add (f := _), LinearMap.add_apply, h.toSesq_smul_left, h.toSesq_smul_right, H]
     ring
   rw [H, ht, add_conj, hc, map_one] at key
   exact one_ne_zero key.symm

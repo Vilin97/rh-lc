@@ -26,7 +26,7 @@ theorem ev_put (h : ∀ y, ev (ι y) = y) (x : A) (y : K) : ev (put ev ι x y) =
   simp [put, h]
 
 theorem put_put (h : ∀ y, ev (ι y) = y) (x : A) (y z : K) : put ev ι (put ev ι x y) z = put ev ι x z := by
-  simp only [put, map_add, map_sub, h, sub_self, zero_add]
+  simp only [put, map_add (f := _), map_sub, h, sub_self, zero_add]
   abel
 
 theorem Pm_Pm (h : ∀ y, ev (ι y) = y) (φ φ₁ : K → ℂ) (a y : K) (Φ : A → ℂ) :

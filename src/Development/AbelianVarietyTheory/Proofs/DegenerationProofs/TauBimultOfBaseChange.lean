@@ -145,7 +145,7 @@ theorem tauBimult_down (hG : GlobalFnsSt) (v : LB.Iso D'.P.L (D.P.L.pull β)) (x
     refine (val_cub D.cub κ hJ (cP D _ (xe a)) (cP D _ (xe a')) (cP D _ (xe b))).trans ?_
     rw [comp_cP, comp_cP, comp_cP]
   refine (congrArg₂ (· * ·) rfl cb).trans ?_
-  rw [← βc, ← βc, ← βc, cub, TauPull.val_tau _ hJ, TauPull.val_tau _ hJ, TauPull.val_tau _ hJ, ← map_add, ← map_add,
+  rw [← βc, ← βc, ← βc, cub, TauPull.val_tau _ hJ, TauPull.val_tau _ hJ, TauPull.val_tau _ hJ, ← map_add (f := _), ← map_add (f := _),
     ← map_add, ← map_add, vψ, vψ, vψ, vψ, vψ, vψ, vψ, vρ, cPoint_add, cPoint_add, cPoint_add, cPoint_add]
   apply Additive.ofMul.injective
   have e' := congrArg Additive.ofMul key

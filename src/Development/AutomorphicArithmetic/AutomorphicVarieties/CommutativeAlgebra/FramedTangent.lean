@@ -90,7 +90,7 @@ private theorem span_of (S : Set R) (hS : S ⊆ maximalIdeal R)
         ext
         · exact map_add (res O R) y z
         · show (f (y + z)).snd - (f' (y + z)).snd = ((f y).snd - (f' y).snd) + ((f z).snd - (f' z).snd)
-          simp only [map_add, TrivSqZeroExt.snd_add]; ring
+          simp only [map_add (f := _), TrivSqZeroExt.snd_add]; ring
       commutes' := fun a => by
         ext
         · exact (res O R).commutes a

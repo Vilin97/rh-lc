@@ -16,7 +16,7 @@ instance (Y : Type) [AddCommGroup Y] [Module ℂ Y] : Module ℂ (Cj Y) := Modul
 def semiInv {X Y : Type} [AddCommGroup X] [Module ℂ X] [AddCommGroup Y] [Module ℂ Y]
     (φ : X →ₛₗ[starRingEnd ℂ] Y) (hφ : Function.Bijective φ) : Y →ₛₗ[starRingEnd ℂ] X where
   toFun := Function.surjInv hφ.2
-  map_add' a b := hφ.1 (by rw [map_add, Function.surjInv_eq hφ.2, Function.surjInv_eq hφ.2,
+  map_add' a b := hφ.1 (by rw [map_add (f := _), Function.surjInv_eq hφ.2, Function.surjInv_eq hφ.2,
     Function.surjInv_eq hφ.2])
   map_smul' c y := hφ.1 (by
     rw [Function.surjInv_eq hφ.2, map_smulₛₗ, Function.surjInv_eq hφ.2]
@@ -47,7 +47,7 @@ def mlin (φ : ∀ a, X a →ₛₗ[starRingEnd ℂ] Y a) : MultilinearMap ℂ X
     show (PiTensorProduct.tprod ℂ (fun a => φ a (Function.update x i (u + v) a)) : ⨂[ℂ] a, Y a) =
       PiTensorProduct.tprod ℂ (fun a => φ a (Function.update x i u a)) +
         PiTensorProduct.tprod ℂ (fun a => φ a (Function.update x i v a))
-    rw [update_comp, update_comp, update_comp, map_add, MultilinearMap.map_update_add]
+    rw [update_comp, update_comp, update_comp, map_add (f := _), MultilinearMap.map_update_add]
   map_update_smul' x i c u := by
     show (PiTensorProduct.tprod ℂ (fun a => φ a (Function.update x i (c • u) a)) : ⨂[ℂ] a, Y a) =
       starRingEnd ℂ c • PiTensorProduct.tprod ℂ (fun a => φ a (Function.update x i u a))
@@ -57,7 +57,7 @@ def tmap (φ : ∀ a, X a →ₛₗ[starRingEnd ℂ] Y a) : (⨂[ℂ] a, X a) �
   toFun t := (PiTensorProduct.lift (mlin φ) t : Cj (⨂[ℂ] a, Y a))
   map_add' s t := by
     show (PiTensorProduct.lift (mlin φ) (s + t) : Cj (⨂[ℂ] a, Y a)) = _
-    rw [map_add]
+    rw [map_add (f := _)]
     rfl
   map_smul' c t := by
     show (PiTensorProduct.lift (mlin φ) (c • t) : Cj (⨂[ℂ] a, Y a)) = _
@@ -76,7 +76,7 @@ theorem tmap_comp (φ : ∀ a, X a →ₛₗ[starRingEnd ℂ] Y a) (ψ : ∀ a, 
   | smul_tprod r x =>
     rw [map_smulₛₗ, map_smulₛₗ, tmap_tprod, tmap_tprod]
     simp [h]
-  | add s t hs ht => rw [map_add, map_add, hs, ht]
+  | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht]
 
 end Tensor
 
@@ -96,7 +96,7 @@ theorem conjEquiv_piTensor {α : Type} [Fintype α] {Γ X Y : α → Type} [∀ 
       congr 2
       funext a
       exact heq a (g a) (x a)
-    | add s t hs ht => rw [map_add, map_add, hs, ht, map_add, map_add]
+    | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht, map_add (f := _), map_add (f := _)]
 
 section Ind
 

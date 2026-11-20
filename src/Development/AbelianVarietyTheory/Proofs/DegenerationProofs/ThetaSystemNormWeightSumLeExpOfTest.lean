@@ -39,7 +39,7 @@ theorem proj_mul_proj (T T' : AddSubgroup S.Gam) (h : T' ≤ T) (hT : T ≤ S.pe
     refine Finset.sum_congr rfl fun t _ => ?_
     rw [smul_mul_smul_comm, ← AddChar.map_add_eq_mul, S.ρ_add _ _ (by
       rw [hT (h u.2) t t.2, smul_zero]), hc]
-    simp only [Equiv.coe_addLeft, map_add, neg_add]
+    simp only [Equiv.coe_addLeft, map_add (f := _), neg_add]
     rfl
   have h4 : ∀ u : T', (χ (-c' u) • S.ρ u) * S.proj T c = S.proj T c := fun u => by
     rw [h1, mul_smul_comm, h3]

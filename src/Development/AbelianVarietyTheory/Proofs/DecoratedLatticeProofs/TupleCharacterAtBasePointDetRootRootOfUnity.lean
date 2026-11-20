@@ -20,7 +20,7 @@ theorem sigR_sigR (D : D7) (w : Formalism.L2.Theta.AE D) :
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul p q => simp [sigR, hσ]
-  | add p q hp hq => rw [map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
 
 theorem exists_idF_eq_mul_sigR (D : D7) (x : (Formalism.L2.Theta.AE D)ˣ) :
     ∃ t : (AF D.host.F)ˣ, ((idF D t : (Formalism.L2.Theta.AE D)ˣ) : Formalism.L2.Theta.AE D) = (x : Formalism.L2.Theta.AE D) * sigR (AF D.host.F) D.sp.cm.sig (x : Formalism.L2.Theta.AE D) := by
@@ -29,7 +29,7 @@ theorem exists_idF_eq_mul_sigR (D : D7) (x : (Formalism.L2.Theta.AE D)ˣ) :
     intro z
     apply (D.sp.cm.fixed _).1
     change D.sp.cm.sig _ = _
-    rw [map_add, hσ, add_comm]
+    rw [map_add (f := _), hσ, add_comm]
   obtain ⟨t, ht⟩ := GlobalTheory.Member.exists_unit_of_sigR_fixed (AF D.host.F) D.sp.cm.sig htr
     (x * Units.map (sigR (AF D.host.F) D.sp.cm.sig).toMonoidHom x) (by
       rw [Units.val_mul, Units.coe_map, RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe, map_mul, sigR_sigR, mul_comm])

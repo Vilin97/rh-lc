@@ -77,4 +77,4 @@ theorem GlobalTheory.EtC.flatExtAcyc.main : ∀ (Q q : ℕ) [NeZero Q] (hq : q �
   refine (GlobalTheory.T.etaleLocal_property_calculus_rules).2.1 V _ _ (hst n V x hloc') ?_
   rintro W k ⟨u, y, hy⟩
   refine ⟨extSh.sec (ZMod.castHom hq (ZMod q)) (K.X (n - 1)) W u, ?_⟩
-  rw [extSh.sec_map, ← sres_comp, ← hx, extSh.sec_res, hy, map_add, map_nsmul, nsmul_self_eq_zero, add_zero]
+  rw [extSh.sec_map, ← sres_comp, ← hx, extSh.sec_res, hy, map_add (f := _), map_nsmul, nsmul_self_eq_zero, add_zero]

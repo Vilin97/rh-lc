@@ -20,6 +20,6 @@ theorem UpperTheory.V.Cj.S.ctCap :
   · obtain ⟨p, -, q, -, e⟩ := UpperTheory.V.Cm.mem_Zalg_iff.1 (UpperTheory.V.Cm.cap_mem_Zalg (a := n) t u)
     have h := hf (GroundTheory.Automorphic.AutomorphicForm.uActionAF E n p φ' +
       Complex.I • GroundTheory.Automorphic.AutomorphicForm.uActionAF E n q φ')
-    rw [map_add, map_smul, hfu, hfu] at h
+    rw [map_add (f := _), map_smul, hfu, hfu] at h
     rw [e]
     exact h

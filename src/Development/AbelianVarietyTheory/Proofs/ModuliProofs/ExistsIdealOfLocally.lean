@@ -46,7 +46,7 @@ theorem exists_ideal_of_locally {R : Type} [CommRing R]
   refine ⟨⟨⟨⟨{r | ∀ (R' : Type) [CommRing R'] (y : R →+* R'), Q R' y → y r = 0}, ?_⟩, ?_⟩, ?_⟩,
     fun R' _ y => ⟨fun hy r hr => hr R' y hy, fun hy => ?_⟩⟩
   · intro a b ha hb R' _ y hy
-    rw [map_add, ha R' y hy, hb R' y hy, add_zero]
+    rw [map_add (f := _), ha R' y hy, hb R' y hy, add_zero]
   · intro R' _ y _
     exact map_zero y
   · intro c a ha R' _ y hy

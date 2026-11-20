@@ -19,6 +19,6 @@ theorem piTensor_zj : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpac
       · simp [Zl.JC.zj, if_neg ha]
     simp only [hf]
     rw [MultilinearMap.map_smul_univ, Finset.prod_filter]
-  | add a b ha hb => rw [map_add, ha, hb, smul_add]
+  | add a b ha hb => rw [map_add (f := _), ha, hb, smul_add]
 
 end GlobalTheory.CompanionTheory.JCScalar

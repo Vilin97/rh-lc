@@ -37,7 +37,7 @@ theorem thetaV_eq_gen (I : Formalism.MainNotions.S.AutInst) (v : InfinitePlace I
       rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]; rfl
     rw [e, map_mul, hθ'.1, ← hb]
     rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 theorem map_thetaV_gen (I : Formalism.MainNotions.S.AutInst) (v : InfinitePlace I.F) (θ' : Ainf I.F ⊗[I.F] I.E →+* ℂ)
@@ -55,7 +55,7 @@ theorem tauF_eq_comm (I : Formalism.MainNotions.S.AutInst) (y : AF I.F ⊗[I.F] 
   | tmul a x =>
     rw [Formalism.L2.SG.AdBridge.tauF_tmul]
     rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 open Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes in
 theorem ofHAFin_eq_one (I : Formalism.MainNotions.S.AutInst) (k : Formalism.L2.SG.AdBridge.HAd I)

@@ -35,14 +35,14 @@ theorem proof : ProjectionUnramifiedGeneric.Statement := by
   let D : (β → L) → MvPolynomial (α ⊕ β) ℂ → L := fun c p => ∑ b, φ (pderiv (Sum.inr b) p) * c b
   have hDadd : ∀ c p p', D c (p + p') = D c p + D c p' := by
     intro c p p'
-    simp only [D, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [D, map_add (f := _), add_mul, Finset.sum_add_distrib]
   have hDmul : ∀ c p p', D c (p * p') = φ p * D c p' + φ p' * D c p := by
     intro c p p'
     simp only [D]
     rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [pderiv_mul]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     ring
   have hDsum : ∀ c (f : Fin r → MvPolynomial (α ⊕ β) ℂ), D c (∑ j, f j) = ∑ j, D c (f j) := by
     intro c f

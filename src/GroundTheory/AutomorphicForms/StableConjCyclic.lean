@@ -213,7 +213,7 @@ theorem aeval_apply_eq_sum_modByMonic (f : Module.End E V) (v : V) (p : E[X]) :
     aeval f p v = ∑ k : Fin (finrank E V), (p %ₘ f.charpoly).coeff k • (f ^ (k : ℕ)) v := by
   have hmon := LinearMap.charpoly_monic f
   conv_lhs => rw [← modByMonic_add_div p f.charpoly]
-  rw [map_add, map_mul, LinearMap.aeval_self_charpoly, zero_mul, add_zero]
+  rw [map_add (f := _), map_mul, LinearMap.aeval_self_charpoly, zero_mul, add_zero]
   by_cases h0 : p %ₘ f.charpoly = 0
   · simp [h0]
   have hdeg : (p %ₘ f.charpoly).natDegree < finrank E V := by

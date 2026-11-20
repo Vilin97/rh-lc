@@ -53,7 +53,7 @@ theorem tauBimult_pow : GlobalFnsSt → ∀ (R : Type) [CommRing R] [IsDomain R]
       val (D.tau (pD.xe a i) (pD.xe b i)) (𝟙 _) y J * val (D.tau (pD.xe a' i) (pD.xe b i)) (𝟙 _) y J := fun i => by
     have := (val_lhs D hJ _ _ _).symm.trans
       ((val_corr hJ (hB (pD.xe a i) (pD.xe a' i) (pD.xe b i)) (𝟙 _)).trans (val_mul hJ _ _ _))
-    rw [show pD.xe (a + a') i = pD.xe a i + pD.xe a' i by rw [map_add]; rfl, cP, cP, cP, Category.assoc,
+    rw [show pD.xe (a + a') i = pD.xe a i + pD.xe a' i by rw [map_add (f := _)]; rfl, cP, cP, cP, Category.assoc,
       Category.assoc, Category.assoc, pD.c_pr, pD.c_pr, pD.c_pr]
     exact this
   have E := (Finset.prod_mul_distrib).symm.trans ((Finset.prod_congr rfl fun i (_ : i ∈ Finset.univ) => e i).trans

@@ -65,7 +65,7 @@ theorem exists_monic_rel (y : (Σ k, ι k) → Ω) {f g : MRing ι} {d : K → �
       rw [e3]
       ring
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, Finset.sum_congr rfl hsum, ← Finset.mul_sum, map_pow, he, mul_pow]
+      rw [map_add (f := _), map_sum, Finset.sum_congr rfl hsum, ← Finset.mul_sum, map_pow, he, mul_pow]
     linear_combination (aeval y g ^ n) * hp
 
 end Rel

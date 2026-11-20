@@ -78,7 +78,7 @@ theorem IsRep.add {s s' : Ω} {d d' : K → ℕ} {G G' : MRing J} (h : IsRep y c
     IsRep y c (s + s') (d + d') (G * xpow c d' + G' * xpow c d) :=
   ⟨mh_add (ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_mul h.1 (isMultiHomog_xpow c d'))
       (by rw [add_comm d d']; exact ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.isMultiHomog_mul h'.1 (isMultiHomog_xpow c d)),
-    by rw [map_add, map_mul, map_mul, aeval_xpow, aeval_xpow, h.2, h'.2, ym_add]; ring⟩
+    by rw [map_add (f := _), map_mul, map_mul, aeval_xpow, aeval_xpow, h.2, h'.2, ym_add]; ring⟩
 
 theorem exists_rep (hc : segCo y c ≠ 0) {s : Ω} (hs : s ∈ chartA y c) : ∃ d G, IsRep y c s d G := by
   induction hs using Algebra.adjoin_induction with

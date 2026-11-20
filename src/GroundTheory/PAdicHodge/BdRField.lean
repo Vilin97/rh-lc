@@ -220,7 +220,7 @@ theorem mul_mem_fil {i j : ℤ} {x y : 𝔹dR} (hx : x ∈ fil K p i) (hy : y �
 
 def filMk {π : 𝔹} (hπ : maximalIdeal 𝔹 = span {π}) (i : ℤ) : 𝔹 →ₗ[𝔹] fil K p i where
   toFun b := ⟨algebraMap 𝔹 𝔹dR π ^ i * algebraMap 𝔹 𝔹dR b, (mem_fil_iff hπ).2 ⟨b, rfl⟩⟩
-  map_add' a b := Subtype.ext (by simp only [map_add, mul_add, Submodule.coe_add])
+  map_add' a b := Subtype.ext (by simp only [map_add (f := _), mul_add, Submodule.coe_add])
   map_smul' c b := Subtype.ext (by
     simp only [smul_eq_mul, map_mul, Submodule.coe_smul, RingHom.id_apply, Algebra.smul_def]
     ring)

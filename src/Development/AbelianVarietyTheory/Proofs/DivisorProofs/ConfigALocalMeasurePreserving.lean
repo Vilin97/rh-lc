@@ -180,7 +180,7 @@ private theorem frame_exists (hσ : ∀ e, σ (σ e) = e) {B : Base F E} {b : �
         (inclR (F := F) (AF F) s • incV F H.x + inclR (F := F) (AF F) t • incV F H.y) := by
       rw [incM_mulVec_incV]
       funext i
-      simp only [incV, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul]
+      simp only [incV, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
     rw [h2]
     simp only [hAd_add_left, hAd_smul_left, hXX, hYY, hXY, hYX, hIX, hIY, mul_zero, mul_one, zero_add, add_zero]
     abel
@@ -348,7 +348,7 @@ private theorem exists_homeo (hσ : ∀ e, σ (σ e) = e) {R : Type} [Zero R] (e
       · rw [smul_add, at_hAd_left (hDat q) _ u hu, smul_comm,
           at_hAd_left (at_mulVec (incM F ι) (at_mulVec P (hDat q))) _ u hu, smul_zero, add_zero]
       · have := hD0 q
-        rw [map_add, map_smul, hAd_herm hσ hJ (incM F ι *ᵥ (P *ᵥ D q)), Algebra.smul_def]
+        rw [map_add (f := _), map_smul, hAd_herm hσ hJ (incM F ι *ᵥ (P *ᵥ D q)), Algebra.smul_def]
         linear_combination this + (hAd σ V.J (incM F ι *ᵥ (P *ᵥ D q)) (incM F ι *ᵥ (P *ᵥ D q))) *
           half_two (F := F) (E := E)
     have c1 : Continuous fun q => P *ᵥ D q := continuous_const.matrix_mulVec hDc

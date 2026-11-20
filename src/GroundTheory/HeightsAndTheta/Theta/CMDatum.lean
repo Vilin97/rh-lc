@@ -86,7 +86,7 @@ theorem ringHom_ext_of_not_mem {R : Type*} [CommRing R] {x : E}
   ext y
   rw [← (basisOneOf hx).sum_repr y, Fin.sum_univ_two, basisOneOf_zero, basisOneOf_one,
     Algebra.smul_def, Algebra.smul_def]
-  simp only [map_add, map_mul, hF, hxe, map_one]
+  simp only [map_add (f := _), map_mul, hF, hxe, map_one]
 
 variable (F E)
 
@@ -100,7 +100,7 @@ theorem eq_or_eq_conjugate_of_comp_eq (φ ψ : E →+* ℂ)
       χ (algebraMap F E (Algebra.norm F a)) = 0 := by
     intro χ
     rw [← mul_conj (F := F) a, ← add_conj (F := F) a]
-    simp only [map_mul, map_add]
+    simp only [map_mul, map_add (f := _)]
     ring
   have hφ := hquad φ
   have hψ := hquad ψ

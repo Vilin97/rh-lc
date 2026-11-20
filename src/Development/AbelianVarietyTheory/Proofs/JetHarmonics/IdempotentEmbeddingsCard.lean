@@ -58,7 +58,7 @@ theorem trace_eq_sum (E : Type) [Field E] [NumberField E] (p : ℕ) [Fact p.Prim
     have : LinearMap.mulLeft ℤ_[p] (x + y) =
         LinearMap.mulLeft ℤ_[p] x + LinearMap.mulLeft ℤ_[p] y := by
       apply LinearMap.ext; intro z; simp [add_mul]
-    simp only [this, map_add, hx, hy, Finset.sum_add_distrib]
+    simp only [this, map_add (f := _), hx, hy, Finset.sum_add_distrib]
   | tmul a y =>
     have h1 : LinearMap.mulLeft ℤ_[p] (a ⊗ₜ[ℤ] y) =
         a • (LinearMap.mulLeft ℤ y).baseChange ℤ_[p] := by

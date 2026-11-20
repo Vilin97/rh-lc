@@ -313,7 +313,7 @@ theorem form_eq_loc (ψ : AddChar K ℂ) (hψc : Continuous ψ) {x₀ : K} (hx�
     rw [← integral_add (hI f hf g hg) (hI f' hf' g hg)]
     congr 1
     funext x
-    rw [map_add, Pi.add_apply, add_mul]
+    rw [map_add (f := _), Pi.add_apply, add_mul]
   · intro c f hf g hg
     simp only [map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc]
     exact integral_const_mul c _
@@ -321,7 +321,7 @@ theorem form_eq_loc (ψ : AddChar K ℂ) (hψc : Continuous ψ) {x₀ : K} (hx�
     rw [← integral_add (hI f hf g hg) (hI f hf g' hg')]
     congr 1
     funext x
-    rw [map_add, Pi.add_apply, map_add, mul_add]
+    rw [map_add (f := _), Pi.add_apply, map_add (f := _), mul_add]
   · intro c f hf g hg
     simp only [map_smul, Pi.smul_apply, smul_eq_mul, map_mul]
     rw [← integral_const_mul]

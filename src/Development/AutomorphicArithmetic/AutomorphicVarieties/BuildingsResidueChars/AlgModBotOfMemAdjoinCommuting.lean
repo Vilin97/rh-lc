@@ -11,7 +11,7 @@ private theorem adjoin_alg {V : Type} [AddCommGroup V] [Module ℂ V] {R : Type}
     { carrier := {r | ∀ x ∈ S, φ r x = 0}
       add_mem' := fun {a b} ha hb x hx => by
         simp only [Set.mem_setOf_eq] at ha hb ⊢
-        rw [map_add, LinearMap.add_apply, ha x hx, hb x hx, add_zero]
+        rw [map_add (f := _), LinearMap.add_apply, ha x hx, hb x hx, add_zero]
       zero_mem' := fun x _ => by simp
       smul_mem' := fun c r hr x hx => by
         simp only [Set.mem_setOf_eq] at hr ⊢

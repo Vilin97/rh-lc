@@ -84,13 +84,13 @@ theorem lift_form : ∃ I : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ, Psd I ∧ (∀ x
   let I : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ := LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ)
     (fun v w => ∫ ξ, Df gl s C ξ v w ∂ν)
     (fun v₁ v₂ w => by
-      simp only [map_add, LinearMap.add_apply]
+      simp only [map_add (f := _), LinearMap.add_apply]
       exact integral_add (hint _ _) (hint _ _))
     (fun c v w => by
       simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply]
       exact integral_const_mul c _)
     (fun v w₁ w₂ => by
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact integral_add (hint _ _) (hint _ _))
     (fun c v w => by
       simp only [LinearMap.map_smulₛₗ, smul_eq_mul]

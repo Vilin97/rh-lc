@@ -65,7 +65,7 @@ theorem evIdx_toR (D : D7) (N : ℕ) (G : MvPolynomial (Vm D.what₂.Tau N) ℚ)
     evIdx D N (toR G) = toR (evIdxQ D N G) := by
   induction G using MvPolynomial.induction_on with
   | C a => simp [toR]
-  | add P Q hP hQ => simp only [toR, map_add] at *; rw [hP, hQ]
+  | add P Q hP hQ => simp only [toR, map_add (f := _)] at *; rw [hP, hQ]
   | mul_X P v hP =>
     simp only [toR, map_mul] at *
     rw [hP]
@@ -117,7 +117,7 @@ theorem sum_numL_of_prod {ι A Comp La : Type} [Fintype Comp] [Fintype La] (w : 
     rw [sub_mul, map_sub, map_sub, e, e, numL_prod_X _ _ _ (by simp), numL_prod_X _ _ _ (by simp)]
   | zero => simp [toR]
   | add P Q _ _ hP hQ =>
-    simp only [toR, map_add, mul_add, Finset.sum_add_distrib, Rat.cast_add, add_div] at *
+    simp only [toR, map_add (f := _), mul_add, Finset.sum_add_distrib, Rat.cast_add, add_div] at *
     rw [hP, hQ]
   | smul q P _ hP =>
     have e : toR (q • P) = (q : ℝ) • toR P := by
@@ -185,7 +185,7 @@ theorem evC_eq_aeval (G : MvPolynomial (Vm D.what₂.Tau N) ℚ) :
     · simp only [AlgHom.comp_apply, evV, evIdxQ, aeval_X, lnOf, Sum.elim_inl, lnLB_rootLn z jc]
     · cases b <;>
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [AlgHom.comp_apply, evV, evIdxQ, aeval_X, lnOf, Sum.elim_inr, map_mul, map_add, map_sum, map_pow, aeval_C,
+        simp only [AlgHom.comp_apply, evV, evIdxQ, aeval_X, lnOf, Sum.elim_inr, map_mul, map_add (f := _), map_sum, map_pow, aeval_C,
         Fintype.sum_sum_type, wholeLn, lnLB_false, lnLB_true, mdlOf_lieW, mdlOf_omW] <;>
       congr 2 <;> exact Finset.sum_congr rfl fun _ _ => congrArg (· ^ k) (aeval_X _ _)
   exact congrArg (fun f => f G) this

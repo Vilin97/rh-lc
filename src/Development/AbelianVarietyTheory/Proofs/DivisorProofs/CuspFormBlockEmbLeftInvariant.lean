@@ -252,7 +252,7 @@ theorem cuspForm_blockEmb_left_invariant : ∀ (F E : Type) [Field F] [NumberFie
       GlobalTheory.BlockForms.blkCols h Yf * (cT (σ : E →+* E) (γ⁻¹).1 - 1) *
         (cT (σ : E →+* E) (GlobalTheory.BlockForms.blkCols h Xf) * J)) ?_ hinj
     rw [hmat, ← map_inv, hrat, hrat, GlobalTheory.CuspBlockLeft.cT_inclR]
-    simp [Matrix.map_add, Matrix.map_sub, Matrix.map_mul, Matrix.map_one]
+    simp [Matrix.map_add (f := _), Matrix.map_sub, Matrix.map_mul, Matrix.map_one]
   rw [map_mul, mul_assoc]
   exact hψ.1.leftM _ hratPt (hlevi _) _
 

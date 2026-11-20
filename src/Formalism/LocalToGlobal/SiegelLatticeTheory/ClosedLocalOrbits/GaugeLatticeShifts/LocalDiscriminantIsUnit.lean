@@ -76,7 +76,7 @@ theorem latP_span (S : Set (VS D).V) :
     induction hx using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul o y _ hy => rw [bt_bc_smulO Z]; exact Submodule.smul_mem _ _ hy
   · exact Submodule.span_mono (Set.image_mono Submodule.subset_span)
 
@@ -86,7 +86,7 @@ theorem latP_sup (A B : Submodule (𝓞 D.host.E) (VS D).V) :
   · rw [lattice₂, Submodule.span_le]
     rintro _ ⟨x, hx, rfl⟩
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ (Submodule.mem_sup_left (Submodule.subset_span ⟨a, ha, rfl⟩))
       (Submodule.mem_sup_right (Submodule.subset_span ⟨b, hb, rfl⟩))
   · exact sup_le (latP_mono Z p le_sup_left) (latP_mono Z p le_sup_right)
@@ -100,7 +100,7 @@ theorem bt_spanEp_spanE (N : Submodule (𝓞 D.host.E) (VS D).V) :
     induction hx using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul c y _ hy => rw [baseChange_smul₂]; exact Submodule.smul_mem _ _ hy
   · exact Submodule.span_mono (Set.image_mono Submodule.subset_span)
 
@@ -1418,7 +1418,7 @@ theorem bt_isFrame (hS : LocSatC D Z) (hD : LocDiffC D Z) (p : PlF D) {T : ℕ}
     set x := W (Fin.last D.R.rS) - F.z
     have hb : brS (VS D) (W (Fin.last D.R.rS)) (W (Fin.last D.R.rS)) = -(T : D.host.E) := by
       rw [e]
-      simp only [brS, map_add, LinearMap.add_apply]
+      simp only [brS, map_add (f := _), LinearMap.add_apply]
       rw [bt_X_orth F hx (bt_z_mem_Xplus F), bt_X_orth F hx (bt_X_le_Xplus F hx),
         bt_X_orth' F hx (bt_z_mem_Xplus F), F.z_norm]
       ring

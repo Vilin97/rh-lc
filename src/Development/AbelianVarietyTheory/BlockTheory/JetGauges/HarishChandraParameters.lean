@@ -63,7 +63,7 @@ def weightSpace (σ : Matrix (Fin n) (Fin n) ℂ → H →L[ℂ] H) (ω : Fin n 
   carrier := {v | ∀ θ : Fin n → ℝ, σ (torus θ) v = wtChar ω θ • v}
   add_mem' := by
     intro a b ha hb θ
-    rw [map_add, ha θ, hb θ, smul_add]
+    rw [map_add (f := _), ha θ, hb θ, smul_add]
   zero_mem' := by intro θ; simp
   smul_mem' := by
     intro c v hv θ

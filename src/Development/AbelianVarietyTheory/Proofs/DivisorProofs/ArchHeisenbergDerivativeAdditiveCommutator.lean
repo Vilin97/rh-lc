@@ -20,7 +20,7 @@ noncomputable def trPair (w : κ → mixedEmbedding.mixedSpace F) :
     (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ℂ where
   toFun y := ((Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (∑ i, y i * w i) : ℝ) : ℂ)
   map_add' a b := by
-    simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add, Complex.ofReal_add]
+    simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _), Complex.ofReal_add]
   map_smul' c a := by
     simp [smul_mul_assoc, ← Finset.smul_sum, Complex.real_smul]
 
@@ -29,7 +29,7 @@ lemma trPair_apply (w y : κ → mixedEmbedding.mixedSpace F) :
 
 lemma trPair_add (w w' y : κ → mixedEmbedding.mixedSpace F) :
     trPair (w + w') y = trPair w y + trPair w' y := by
-  simp only [trPair_apply, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add, Complex.ofReal_add]
+  simp only [trPair_apply, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _), Complex.ofReal_add]
 
 lemma trPair_smul (r : ℝ) (w y : κ → mixedEmbedding.mixedSpace F) :
     trPair (r • w) y = (r : ℂ) * trPair w y := by
@@ -58,7 +58,7 @@ lemma evV_add (a b : κ → AF F) :
     (fun i => evI F ((a + b) i)) = (fun i => evI F (a i)) + (fun i => evI F (b i)) := by
   funext i
   show evI F (a i + b i) = evI F (a i) + evI F (b i)
-  rw [evI_eq, map_add]; rfl
+  rw [evI_eq, map_add (f := _)]; rfl
 
 lemma evV_smul (r : ℝ) (a : κ → AF F) :
     (fun i => evI F ((realAd F r • a) i)) = r • (fun i => evI F (a i)) := by

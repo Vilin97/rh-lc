@@ -98,7 +98,7 @@ theorem exists_wordSum (u : UniversalEnvelopingAlgebra ℝ h.lieSubalgebra) :
     obtain ⟨La, ha⟩ := iha
     obtain ⟨Lb, hb⟩ := ihb
     refine ⟨La ++ Lb, fun v => ?_⟩
-    rw [map_add, map_add, LinearMap.add_apply, Submodule.coe_add, ha, hb, wordSum_append]
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, Submodule.coe_add, ha, hb, wordSum_append]
 
 variable [CompleteSpace E]
 

@@ -36,7 +36,7 @@ theorem exists_ext_dual {D : D7} (i : D.nd.Loc)
   have hb := D.what₂.jMt_basis (D.nd.mu i) (D.nd.j i) b
   let f0 : D.what₂.MtL (D.nd.mu i) (D.nd.j i) →ₛₗ[D.what₂.embLL] ℂ :=
     { toFun := fun z => ioC i (φ (D.nd.prMt i z))
-      map_add' := fun a c => by simp only [map_add]
+      map_add' := fun a c => by simp only [map_add (f := _)]
       map_smul' := fun a z => by
         show ioC i (φ (D.nd.prMt i (a • z))) = D.what₂.embLL a • ioC i (φ (D.nd.prMt i z))
         rw [LinearMap.map_smulₛₗ, map_smul, smul_eq_mul, map_mul, hι, smul_eq_mul] }
@@ -177,7 +177,7 @@ theorem main : ∀ (D : D7) (M : MtFam D) (i : D.nd.Loc), HeckeTied D M → Heck
       obtain ⟨y, rfl⟩ := hx
       exact ⟨_, hpj y⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add a c _ _ ha hc => rw [map_add]; exact add_mem ha hc
+    | add a c _ _ ha hc => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hc
     | smul c a _ ha => rw [hπs]; exact Submodule.smul_mem _ _ ha
   have hrange : LinearMap.range p = ⊤ := by
     rw [eq_top_iff, ← (Pi.basisFun ℂ _).span_eq, Submodule.span_le]
@@ -196,7 +196,7 @@ theorem main : ∀ (D : D7) (M : MtFam D) (i : D.nd.Loc), HeckeTied D M → Heck
     obtain ⟨z, rfl⟩ := LinearMap.range_eq_top.1 hrange f
     have hz : z ∈ G ⊔ typeSum D i none := by rw [hGtop]; exact Submodule.mem_top
     obtain ⟨a, ha, n, hn, rfl⟩ := Submodule.mem_sup.1 hz
-    exact ⟨⟨a, ha⟩, by simp [q, map_add, hnone n hn]⟩
+    exact ⟨⟨a, ha⟩, by simp [q, map_add (f := _), hnone n hn]⟩
   have hdim : finrank ℂ G ≤ Fintype.card (Σ x, Module.Free.ChooseBasisIndex (FractionRing (D.nd.O i)) (E x)) := by
     refine (finrank_iSup_le_sum' _).trans (le_of_eq ?_)
     rw [Fintype.card_sigma]
@@ -218,7 +218,7 @@ theorem main : ∀ (D : D7) (M : MtFam D) (i : D.nd.Loc), HeckeTied D M → Heck
     have hpa : q ⟨a, ha⟩ = q 0 := by
       rw [map_zero]
       show p a = 0
-      rw [map_add, hnone n hn, add_zero] at hz
+      rw [map_add (f := _), hnone n hn, add_zero] at hz
       exact hz
     have := congrArg Subtype.val (hqi hpa)
     simp only [Submodule.coe_zero] at this
@@ -266,7 +266,7 @@ theorem main : ∀ (D : D7) (M : MtFam D) (i : D.nd.Loc), HeckeTied D M → Heck
         rw [LinearMap.mem_ker, LinearMap.comp_apply, LinearMap.proj_apply] at h1
         have h2 : p (g : D.what₂.Mt (D.nd.mu i) (D.nd.j i)) k = 0 := by
           rw [hpg, hπ, show bW.repr u k = 0 from hint.collectedBasis_repr_of_mem_ne v (Ne.symm hk) hu, map_zero]
-        rw [← hac, map_add, Pi.add_apply, h1, zero_add] at h2
+        rw [← hac, map_add (f := _), Pi.add_apply, h1, zero_add] at h2
         simpa using h2
     have hc0 : c = 0 := by
       have := congrArg Subtype.val (hqi (a₁ := ⟨c, hcG⟩) (a₂ := 0) (by

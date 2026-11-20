@@ -20,7 +20,7 @@ variable {l : ℕ} [Fact l.Prime] {K : IntermediateField ℚ_[l] (PadicAlgCl l)}
 
 theorem lin_add {R : Type} [CommRing R] {A B C : Type 1} [AddCommGroup A] [AddCommGroup B] [AddCommGroup C] [Module R A] [Module R B]
     [Module R C] (f : A →ₗ[R] C) (g : B →ₗ[R] C) {x x' : A} {y y' y'' : B} (h : f x = g y) (h' : f x' = g y') (e : y'' = y + y') :
-    f (x + x') = g y'' := by rw [e, map_add, map_add, h, h']
+    f (x + x') = g y'' := by rw [e, map_add (f := _), map_add (f := _), h, h']
 
 theorem lin_smul {R : Type} [CommRing R] {A B C : Type 1} [AddCommGroup A] [AddCommGroup B] [AddCommGroup C] [Module R A] [Module R B]
     [Module R C] (f : A →ₗ[R] C) (g : B →ₗ[R] C) (c : R) {x : A} {y y' : B} (h : f x = g y) (e : y' = c • y) :

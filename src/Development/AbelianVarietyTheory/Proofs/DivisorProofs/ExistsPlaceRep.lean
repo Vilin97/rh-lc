@@ -120,11 +120,11 @@ theorem placeRep_comm (V : HSp D) {τ τ' : D.what₂.Tau} (h : τ ≠ τ') (x :
     Commute (placeRep V τ (UniversalEnvelopingAlgebra.ι ℂ x)) (placeRep V τ' (UniversalEnvelopingAlgebra.ι ℂ y)) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => rw [map_add, map_add]; exact hx.add_left hx'
+  | add x x' hx hx' => rw [map_add (f := _), map_add (f := _)]; exact hx.add_left hx'
   | tmul c X =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => rw [map_add, map_add]; exact hy.add_right hy'
+    | add y y' hy hy' => rw [map_add (f := _), map_add (f := _)]; exact hy.add_right hy'
     | tmul c' Y =>
       rw [placeRep_tmul, placeRep_tmul]
       exact ((matDer_commute h X.1 Y.1).smul_left c).smul_right c'

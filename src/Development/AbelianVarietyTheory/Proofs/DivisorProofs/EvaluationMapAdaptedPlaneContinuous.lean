@@ -42,7 +42,7 @@ theorem rho_rat_rho_rat (M : Model σ X W) {ψ : AddChar (AF F) ℂ} (hψ : IsSt
     rw [← map_ofNat (algebraMap F (AF F)) 2, ← map_mul]
     norm_num
   unfold Darboux.rho
-  rw [incM_add, map_add, GlobalTheory.ThetaQuasiRat.schr_schr, h₁, h₂]
+  rw [incM_add, map_add (f := _), GlobalTheory.ThetaQuasiRat.schr_schr, h₁, h₂]
   have hph : ψ (⅟(2 : AF F) * ((fun i => algebraMap F (AF F) (y₁ i)) ⬝ᵥ (fun i => algebraMap F (AF F) (z₂ i)) -
       (fun i => algebraMap F (AF F) (y₂ i)) ⬝ᵥ (fun i => algebraMap F (AF F) (z₁ i)))) = 1 := by
     have e : ⅟(2 : AF F) * ((fun i => algebraMap F (AF F) (y₁ i)) ⬝ᵥ (fun i => algebraMap F (AF F) (z₂ i)) -

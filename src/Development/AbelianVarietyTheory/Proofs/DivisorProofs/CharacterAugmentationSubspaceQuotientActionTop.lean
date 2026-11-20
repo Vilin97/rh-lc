@@ -76,7 +76,7 @@ theorem actC_mSub_eq_zero {Idx : Type*} (τ : O →+* Module.End k V) (χ : Idx 
         mul_zero]
     · rw [he l hl, zero_mul]
   | zero => simp
-  | add _ _ _ _ h1 h2 => rw [map_add, h1, h2, add_zero]
+  | add _ _ _ _ h1 h2 => rw [map_add (f := _), h1, h2, add_zero]
   | smul a _ _ h => rw [map_smul, h, smul_zero]
 
 end GlobalTheory.HTRho.CRTSplit

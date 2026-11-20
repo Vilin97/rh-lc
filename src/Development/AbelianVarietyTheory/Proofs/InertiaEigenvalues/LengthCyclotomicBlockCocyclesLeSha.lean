@@ -389,7 +389,7 @@ theorem main : ∀ (D : D7) (i : D.nd.Loc) (c : ℕ) (C : Submodule (D.nd.O i) (
     refine ⟨⟨(continuous_of_discreteTopology (f := fun y => p y j)).comp (hZ f.2).1, fun g h => ?_⟩,
       fun v hv g hg => ?_, fun w hw => ?_⟩
     · show p (f.1 (g * h)) j = p (f.1 g) j + twG _ _ g (p (f.1 h) j)
-      rw [(hZ f.2).2, map_add, Pi.add_apply, hact]
+      rw [(hZ f.2).2, map_add (f := _), Pi.add_apply, hact]
     · have h0 : LinearMap.funLeft (D.nd.O i) (KOG (D.nd.O i) 1) Subtype.val f.1 ∈ resIne i C v :=
         ⟨f.1, f.2, rfl⟩
       rw [hine v hv, Submodule.mem_bot] at h0

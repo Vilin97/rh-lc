@@ -47,7 +47,7 @@ theorem exists_finite_subfield {R F C : Type} [CommRing R] [Algebra.FiniteType �
     induction ha using Algebra.adjoin_induction with
     | mem x hx => exact IntermediateField.subset_adjoin _ _ ⟨x, hx, rfl⟩
     | algebraMap r => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 theorem exists_extend {X B : Scheme.{0}} (f : X ⟶ B) (hp : IsProper f) {V : Type} [CommRing V] [IsDomain V]

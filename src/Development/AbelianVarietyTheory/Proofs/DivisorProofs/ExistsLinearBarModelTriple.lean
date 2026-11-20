@@ -74,7 +74,7 @@ theorem exists_isLinBar_at_good {F E : Type} [Field F] [NumberField F] [Field E]
     (fun w => by
       obtain ⟨u, hu, rfl⟩ := locCo_surj' G.M'.co v w
       obtain ⟨Y, z, rfl⟩ := hspan u hu
-      exact ⟨Y, z, by simp only [AddMonoidHom.comp_apply, map_add]⟩)
+      exact ⟨Y, z, by simp only [AddMonoidHom.comp_apply, map_add (f := _)]⟩)
   have hφ₁ : ∀ (u : Matrix (Fin a') (Fin (a + a')) (AE F E)), At (evFin F v) u →
       ∀ φ ∈ GlobalTheory.WeilM.SB _, ∀ φ₁, Acts (evFin F v) (G.M'.co.rho B.ψ u) φ φ₁ →
         φ₁ = GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo G.M'.co v u) φ :=

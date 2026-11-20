@@ -51,7 +51,7 @@ theorem mem_princ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
     rw [← map_natCast (Ideal.Quotient.mk PP.asIdeal)]
     exact Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.absNorm_mem _)
   change resS F PP (y.1 i j) = (1 : Matrix (Fin n) (Fin n) (kP PP)) i j
-  rw [e1, map_add, map_mul, map_natCast, e2, zero_mul, add_zero]
+  rw [e1, map_add (f := _), map_mul, map_natCast, e2, zero_mul, add_zero]
   simp only [Matrix.one_apply]; split_ifs <;> simp
 
 theorem eventually_princ_mat {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}

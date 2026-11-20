@@ -23,7 +23,7 @@ theorem cocycle_one_forms_coboundary_of_restrict : ∀ {R : Type} [CommRing R] {
     have e2 := hθ T' t u
     have e3 := hθ T t (φ ≫ u)
     rw [oneFormsMapOfFunctorMorphism_comp] at e3
-    simp only [map_add, map_sub, e2, e3]
+    simp only [map_add (f := _), map_sub, e2, e3]
     rw [e1]
     abel
   rw [← sub_eq_zero]

@@ -338,7 +338,7 @@ theorem ef_int (hL : SelfD X L) {mk : Dw.La →ₗ[𝓞 E] (Fin r → E)} (hmk :
     rw [LinearMap.map_add₂]
   have addR : ∀ v z z', EF X v (z + z') = EF X v z + EF X v z' := fun v z z' => by
     change EFBil X v (z + z') = EFBil X v z + EFBil X v z'
-    rw [LinearMap.map_add]
+    rw [LinearMap.map_add (f := _)]
   have hs' : 1 - s ∈ l.Mb.map (H.bar : 𝓞 E →+* 𝓞 E) := hs
   obtain ⟨p, hp, hpt⟩ := (Ideal.mem_map_iff_of_surjective (H.bar : 𝓞 E →+* 𝓞 E) H.bar.surjective).mp hs'
   have hpt' : H.bar p = 1 - s := hpt

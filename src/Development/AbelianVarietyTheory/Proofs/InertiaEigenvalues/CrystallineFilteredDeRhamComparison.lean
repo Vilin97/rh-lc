@@ -33,12 +33,12 @@ theorem crys_filtered : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocA
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v w => simp [actVB]; rfl
-    | add u w hu hw => simp only [map_add, hu, hw]
+    | add u w hu hw => simp only [map_add (f := _), hu, hw]
   have hR : ∀ g x, actVdR (P.PD K) ρ' g x = actVdR (P.PD K) ρ g x := fun g x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v w => simp [actVdR]; rfl
-    | add u w hu hw => simp only [map_add, hu, hw]
+    | add u w hu hw => simp only [map_add (f := _), hu, hw]
   have hD : ∀ x, x ∈ DdR (P.PD K) ρ' ↔ x ∈ DdR (P.PD K) ρ := fun x => by
     simp only [DdR, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply, hR]
   have hDc : (Dcris (P.PD K) ρ').restrictScalars ℚ_[l] = Dcris (P.PD K) ρ := by

@@ -99,7 +99,7 @@ def eig (k r : ℕ) (F : Type) [NormedAddCommGroup F] [NormedSpace ℂ F] (χ : 
   zero_mem' := ⟨fun m => inCC_zero A m, fun u => by simp⟩
   add_mem' := by
     rintro v w ⟨hv, hv'⟩ ⟨hw, hw'⟩
-    refine ⟨fun m => ?_, fun u => by rw [map_add, hv', hw', smul_add]⟩
+    refine ⟨fun m => ?_, fun u => by rw [map_add (f := _), hv', hw', smul_add]⟩
     obtain ⟨c, hc⟩ := hv m
     obtain ⟨c', hc'⟩ := hw m
     exact ⟨_, (Formalism.FourierDecayAlt.P.matrix_coefficient_linear k r F A m _ _ c c' 1 hc hc').1⟩

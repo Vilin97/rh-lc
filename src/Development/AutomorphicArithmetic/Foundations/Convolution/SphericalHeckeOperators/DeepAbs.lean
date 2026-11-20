@@ -81,7 +81,7 @@ private theorem clause_span {n l : ℕ} (Y M M' : LaurentRing n) (P : Finset (La
     obtain ⟨h1, ⟨r, hr, e⟩, r', hr', e'⟩ := hx
     obtain ⟨g1, ⟨s, hs, f⟩, s', hs', f'⟩ := hy
     refine ⟨by rw [mul_add]; exact sdom_add h1 g1, ⟨r + s, dom_add hr hs, by rw [mul_add, mul_add, e, f]⟩,
-      r' + s', dom_add hr' hs', by rw [mul_add, map_add, mul_add, e', f']⟩
+      r' + s', dom_add hr' hs', by rw [mul_add, map_add (f := _), mul_add, e', f']⟩
   | smul c x _ hx =>
     obtain ⟨h1, ⟨r, hr, e⟩, r', hr', e'⟩ := hx
     refine ⟨by rw [mul_smul_comm]; exact sdom_smul c h1, ⟨c • r, dom_smul c hr, by rw [mul_smul_comm, mul_smul_comm, e]⟩,

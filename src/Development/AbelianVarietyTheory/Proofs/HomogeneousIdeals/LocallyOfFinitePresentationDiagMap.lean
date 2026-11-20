@@ -229,7 +229,7 @@ theorem isPullback_of_exact (u : Y →+ X) (q : X →+ Z) (hq : Function.Surject
         rw [h2 _ 0 (by rw [hσ, _root_.map_zero]; rfl), ← AddMonoidAlgebra.one_def, map_one]
       map_mul' := fun a b => by
         rw [← map_mul, AddMonoidAlgebra.single_mul_single, _root_.one_mul]
-        exact h2 _ _ (by rw [_root_.map_add, hσ, hσ, hσ]; rfl) }
+        exact h2 _ _ (by rw [_root_.map_add (f := _), hσ, hσ, hσ]; rfl) }
   let c : ULift.{u} ℤ →+* Γ(T.left, ⊤) :=
     (Int.castRingHom _).comp (ULift.ringEquiv : ULift.{u} ℤ ≃+* ℤ).toRingHom
   let φ : AddMonoidAlgebra (ULift.{u} ℤ) Z →+* Γ(T.left, ⊤) :=

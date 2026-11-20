@@ -14,7 +14,7 @@ def imSp (E : Type) [Field E] [NumberField E] [IsCMField E] : Submodule ℚ E wh
   carrier := {a | cc a = -a}
   zero_mem' := by simp [cc]
   add_mem' {a b} ha hb := by
-    simp only [Set.mem_setOf_eq, cc, map_add] at ha hb ⊢; rw [ha, hb, neg_add]
+    simp only [Set.mem_setOf_eq, cc, map_add (f := _)] at ha hb ⊢; rw [ha, hb, neg_add]
   smul_mem' q a ha := by
     simp only [Set.mem_setOf_eq, cc] at ha ⊢
     rw [map_rat_smul, ha, smul_neg]
@@ -23,7 +23,7 @@ theorem mem_imSp {a : E} : a ∈ imSp E ↔ cc a = -a := Iff.rfl
 
 def dm (E : Type) [Field E] [NumberField E] [IsCMField E] : E →ₗ[ℚ] E where
   toFun x := x - cc x
-  map_add' x y := by simp only [cc, map_add]; ring
+  map_add' x y := by simp only [cc, map_add (f := _)]; ring
   map_smul' q x := by simp only [cc, map_rat_smul, RingHom.id_apply, smul_sub]
 
 theorem range_dm : LinearMap.range (dm E) = imSp E := by

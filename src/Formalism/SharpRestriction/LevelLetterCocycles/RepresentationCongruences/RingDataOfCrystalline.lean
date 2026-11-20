@@ -299,7 +299,7 @@ theorem ps_eq (hR : GS.RD W) {s k : ℕ} (hk : k < s) : ∃ h ∈ W.AΔ, ps W s 
   refine ⟨h, hh, ?_⟩
   have e : ps W s = (W.φA ^ s) W.π₀ + lA W := by
     unfold ps qA
-    rw [map_add]
+    rw [map_add (f := _)]
     congr 1
     unfold lA
     exact map_natCast _ _

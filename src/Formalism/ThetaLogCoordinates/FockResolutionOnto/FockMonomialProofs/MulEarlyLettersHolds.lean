@@ -90,7 +90,7 @@ theorem word_low [NeZero r] (LL : Letters N) (j : ℕ) (M : WithTop ℤ) (l : Li
     have heq : glAct p LL j 0 c (glAct p LL j a b G) = glAct p LL j a b (glAct p LL j 0 c G) +
         ((if c = a then glAct p LL j 0 b G else 0) - (if b = 0 then glAct p LL j a c G else 0)) := by
       rw [← hc]; abel
-    rw [heq, map_add, map_sub]
+    rw [heq, map_add (f := _), map_sub]
     refine Submodule.add_mem _ ?_ (Submodule.sub_mem _ ?_ ?_)
     · exact ih a b ha _ (fun l' => by rw [← wd_snoc]; exact hG _)
     · split_ifs
@@ -421,7 +421,7 @@ theorem pow_last (hj : K + 1 ≤ j) (hv : LL.vec (Fin.last K) = true) (c : Fin r
     simp only [zero_add, Nat.cast_one, one_smul]
     abel
   | succ k ih =>
-    rw [hpow (k + 1), ih, map_add, map_smul, h1, h2, ← hpow k, ← hpow (k + 1)]
+    rw [hpow (k + 1), ih, map_add (f := _), map_smul, h1, h2, ← hpow k, ← hpow (k + 1)]
     simp only [Nat.cast_add, Nat.cast_one, add_smul, one_smul]
     abel
 

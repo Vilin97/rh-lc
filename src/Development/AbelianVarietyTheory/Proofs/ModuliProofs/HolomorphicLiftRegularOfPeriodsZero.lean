@@ -135,7 +135,7 @@ private theorem valAt'_sub' {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (U : X.Opens) (h
 
 private theorem valAt'_add_of_top_le {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (U : X.Opens) (hx : ⊤ ≤ x ⁻¹ᵁ U)
     (a b : Γ(X, U)) : valAt' x U (a + b) = valAt' x U a + valAt' x U b := by
-  simp only [valAt', dif_pos hx, valAt, map_add]
+  simp only [valAt', dif_pos hx, valAt, map_add (f := _)]
 
 private theorem valAt'_mul_of_top_le {X : Scheme.{0}} (x : Sp ℂ ⟶ X) (U : X.Opens) (hx : ⊤ ≤ x ⁻¹ᵁ U)
     (a b : Γ(X, U)) : valAt' x U (a * b) = valAt' x U a * valAt' x U b := by

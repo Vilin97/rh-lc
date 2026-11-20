@@ -96,7 +96,7 @@ theorem map_mem_Ufl {xj : (Fin n' → F) →ₗ[F] (Fin n → F)} {x : (Fin (n' 
     have hd := sub_atN_mem hv
     have e : v = (v - Loc.atN v (n' + s) • Loc.eN F (n' + c') (n' + s)) +
         Loc.atN v (n' + s) • Loc.eN F (n' + c') (n' + s) := by abel
-    rw [e, map_add, map_smul]
+    rw [e, map_add (f := _), map_smul]
     refine Submodule.add_mem _ (Ufl_mem_succ_of_mem (ih _ hd)) (Submodule.smul_mem _ _ ?_)
     have e2 : x (Loc.eN F (n' + c') (n' + s)) = Loc.eN F (n + c) (n + s) +
         (x (Loc.eN F (n' + c') (n' + s)) - Loc.eN F (n + c) (n + s)) := by abel
@@ -118,7 +118,7 @@ private theorem atN_apply_eq_atN_of_mem_Ufl_succ {N' C' N C : ℕ} (y : (Fin (N'
   have hy : y v = y (v - Loc.atN v (N' + s) • Loc.eN F (N' + C') (N' + s)) +
       Loc.atN v (N' + s) • (Loc.eN F (N + C) (N + s) +
         (y (Loc.eN F (N' + C') (N' + s)) - Loc.eN F (N + C) (N + s))) := by
-    rw [hsm, ← map_add, sub_add_cancel]
+    rw [hsm, ← map_add (f := _), sub_add_cancel]
   rw [hy, atN_add', atN_smul', atN_add', atN_eq_zero_of_mem_Ufl (hU s _ hd),
     atN_eN_self (by omega), atN_eq_zero_of_mem_Ufl (h3 s)]
   ring

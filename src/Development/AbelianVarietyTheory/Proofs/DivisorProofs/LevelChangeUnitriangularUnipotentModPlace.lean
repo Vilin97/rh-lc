@@ -89,10 +89,10 @@ theorem levUnip_mod_place : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {G
     have h1 := hφk κ hSt p.T.Q.l.M hM (w • a) (f (w • a)) (hκa (w • a) (Submodule.smul_mem_smul hw Submodule.mem_top))
     have h2 : φ (w • a) = φ a := by
       conv_rhs => rw [ha]
-      rw [map_add, hkill c₁ (hMbP hc₁), zero_add]
+      rw [map_add (f := _), hkill c₁ (hMbP hc₁), zero_add]
     have h3 : φ (f a) = φ (f (w • a)) := by
       conv_lhs => rw [ha]
-      rw [map_add, map_add, map_smul, hkill c₁ (hMbP hc₁), zero_add]
+      rw [map_add (f := _), map_add (f := _), map_smul, hkill c₁ (hMbP hc₁), zero_add]
     rw [h3, h1, h2]
   have hrank : (Wc D i).rank = D.R.r := Formalism.IndefR.FWT.rank_Wc i
   have h5 : (R2 p).eG u PPs = upperLeftBlock ((R2 p).datWp i (R2 p).triv).hr (redFn ((R2 p).βW i) PPs.1 (Lev.finE (Wc D i) κ)) :=

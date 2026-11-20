@@ -34,7 +34,7 @@ theorem piInf_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {w : InfinitePlace F}
     have hc := conj_extensionEmbedding_of_isReal (hF.isReal w) ((evInf F w) a)
     erw [hc]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [NumberField E] in
 

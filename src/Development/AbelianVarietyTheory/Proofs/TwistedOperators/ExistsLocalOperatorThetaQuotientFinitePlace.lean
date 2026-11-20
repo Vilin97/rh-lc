@@ -41,8 +41,8 @@ theorem descend {A A' P : Type*} [AddCommGroup A] [Module ℂ A] [AddCommGroup A
     intro ξ η s t
     have := hwd _ (hf (s • ξ + t • η)) _ (add_mem (S.smul_mem s (hf ξ)) (S.smul_mem t (hf η))) _ (hg _) _
       (add_mem (S.smul_mem s (hg ξ)) (S.smul_mem t (hg η))) (hfg _)
-      (hlin _ (hf ξ) _ (hf η) _ _ (hfg ξ) (hfg η) s t) (by rw [hfp, map_add, map_smul, map_smul, hfp, hfp])
-    rw [this, map_add, map_smul, map_smul]
+      (hlin _ (hf ξ) _ (hf η) _ _ (hfg ξ) (hfg η) s t) (by rw [hfp, map_add (f := _), map_smul, map_smul, hfp, hfp])
+    rw [this, map_add (f := _), map_smul, map_smul]
   let T : Module.End ℂ P :=
     { toFun := fun ξ => p (g ξ)
       map_add' := fun ξ η => by simpa using hcomb ξ η 1 1
@@ -71,7 +71,7 @@ theorem acts_comb {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] 
     ring
   have key : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (GlobalTheory.AdelicU.evFin F v) χ R =
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (GlobalTheory.AdelicU.evFin F v) (s • φ₁ + t • ψ₁) R := by
-    rw [← hχ R (hR _ hs), e, map_add, map_smul, map_smul, h₁ R (hR φ hφ), h₂ R (hR ψ hψ), e]
+    rw [← hχ R (hR _ hs), e, map_add (f := _), map_smul, map_smul, h₁ R (hR φ hφ), h₂ R (hR ψ hψ), e]
   have hχe : χ = s • φ₁ + t • ψ₁ := by
     funext y
     have hz : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.AdelicU.evFin F v) (fun i => GlobalTheory.LatVac.liftV v (y i)) := by

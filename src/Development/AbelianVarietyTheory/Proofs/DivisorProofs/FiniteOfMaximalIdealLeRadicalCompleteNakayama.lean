@@ -103,7 +103,7 @@ theorem finite_of_maximalIdeal_le_radical : ∀ (B R : Type) [CommRing B] [IsLoc
       obtain ⟨p, hp, y, hy, rfl⟩ := hx
       refine ⟨p, hp, ?_⟩
       show Ideal.Quotient.mk J p = Ideal.Quotient.mk J (p + y)
-      rw [map_add, Ideal.Quotient.eq_zero_iff_mem.2 (he hy), add_zero]
+      rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 (he hy), add_zero]
     rw [this]
     exact hP.map _
   exact GlobalTheory.FormalIsogeny.finite_of_finite_quotient_map (maximalIdeal B)

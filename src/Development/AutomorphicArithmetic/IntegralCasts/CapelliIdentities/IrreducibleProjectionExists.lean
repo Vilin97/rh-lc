@@ -36,7 +36,7 @@ theorem UpperTheory.irreducible_projection_exists :
       exact hr ⟨_, rfl⟩
     · simp
     · intro a b ha hb
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Y.add_mem ha hb
   let Ys : Subrepresentation ρ := ⟨Y, hinv⟩
   let τ : Representation ℂ H Y := Ys.toRepresentation

@@ -102,7 +102,7 @@ theorem exists_baseChange_injective_of_dense.{w} {D : Set (PrimeSpectrum R)} (hD
   obtain ⟨w, rfl⟩ := (hex z).1 hz
   clear hz
   induction w with
-  | add y z hy hz => rw [map_add, hy, hz, add_zero]
+  | add y z hy hz => rw [map_add (f := _), hy, hz, add_zero]
   | tmul c y =>
     obtain ⟨n, hn⟩ := ha y y.2
     obtain ⟨u, hu⟩ := (hu.pow n).exists_left_inv

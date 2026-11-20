@@ -8,7 +8,7 @@ theorem continuous_mvAeval {K : Type*} [CommRing K] {R : Type*} [CommRing R] [To
     Continuous (fun y : Fin d → R => MvPolynomial.aeval y c) := by
   induction c using MvPolynomial.induction_on with
   | C a => simpa using continuous_const
-  | add f g hf hg => simp only [map_add]; exact hf.add hg
+  | add f g hf hg => simp only [map_add (f := _)]; exact hf.add hg
   | mul_X f n hf => simp only [map_mul, MvPolynomial.aeval_X]; exact hf.mul (continuous_apply n)
 
 theorem continuous_eval₂_mvAeval {K : Type*} [CommRing K] {R : Type*} [CommRing R]

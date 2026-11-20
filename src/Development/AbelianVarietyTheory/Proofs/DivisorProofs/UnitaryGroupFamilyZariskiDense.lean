@@ -136,7 +136,7 @@ theorem mapMatrix_varMat (x : ι × Fin a × Fin a → ℂ) (τ : ι) :
 
 theorem eval_det_one_add (x : ι × Fin a × Fin a → ℂ) (τ : ι) :
     eval x (1 + varMat (a := a) τ).det = (1 + famOf x τ).det := by
-  rw [RingHom.map_det, map_add, map_one, mapMatrix_varMat]
+  rw [RingHom.map_det, map_add (f := _), map_one, mapMatrix_varMat]
 
 theorem eval_cay_entry (x : ι × Fin a × Fin a → ℂ) (τ : ι) (i j : Fin a) :
     eval x (((1 - varMat (a := a) τ) * (1 + varMat τ).adjugate :
@@ -144,7 +144,7 @@ theorem eval_cay_entry (x : ι × Fin a × Fin a → ℂ) (τ : ι) (i j : Fin a
       ((1 - famOf x τ) * (1 + famOf x τ).adjugate) i j := by
   have e : ∀ M : Matrix (Fin a) (Fin a) (MvPolynomial (ι × Fin a × Fin a) ℂ),
       eval x (M i j) = ((eval x).mapMatrix M) i j := fun _ => rfl
-  rw [e, map_mul, map_sub, map_one, RingHom.map_adjugate, map_add, map_one, mapMatrix_varMat]
+  rw [e, map_mul, map_sub, map_one, RingHom.map_adjugate, map_add (f := _), map_one, mapMatrix_varMat]
 
 variable [Fintype ι]
 

@@ -35,7 +35,7 @@ theorem lg_pt {g : GL3Theta.G1 p} (hg : g.Ok) {x : MvPowerSeries (Fin 3) ℂ_[p]
 theorem cc_sum (g : GL3Theta.G1 p) {x y : MvPowerSeries (Fin 3) ℂ_[p]}
     (hx : MvPowerSeries.constantCoeff x = 0) (hy : MvPowerSeries.constantCoeff y = 0) :
     MvPowerSeries.constantCoeff (g.lg x + g.lg y) = 0 := by
-  rw [map_add, cc_lg g hx, cc_lg g hy, add_zero]
+  rw [map_add (f := _), cc_lg g hx, cc_lg g hy, add_zero]
 
 theorem cc_diff (g : GL3Theta.G1 p) {x y : MvPowerSeries (Fin 3) ℂ_[p]}
     (hx : MvPowerSeries.constantCoeff x = 0) (hy : MvPowerSeries.constantCoeff y = 0) :
@@ -74,7 +74,7 @@ theorem formula_at {a : Fin 3 → MvPowerSeries (Fin 3) ℂ_[p]}
   have h1 := congrArg (MvPowerSeries.substAlgHom (R := ℂ_[p]) ha) (sub_eq_zero.mp h)
   rw [AlgHom.map_det, map_mul, map_mul, map_mul, map_mul, map_ofNat, hom_subst ha (by simp),
     hom_subst ha (by simp), hom_subst ha (by simp), hom_subst ha (by simp)] at h1
-  simp only [map_add, map_sub, hX] at h1
+  simp only [map_add (f := _), map_sub, hX] at h1
   rw [← h1]
   congr 1
   ext1 i j

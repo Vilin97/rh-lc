@@ -102,7 +102,7 @@ theorem block_substitution_blockEmb (b : Bool) (v : MvPolynomial (Fin (r + 1 + 1
     rw [qa_blockEmb_C, block_substitution_C]
     simp [subY, qa_blockEmb_C]
   next p q hp hq =>
-    rw [map_add, map_add, hp, hq, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
   next p x hp =>
     rw [map_mul, map_mul, hp, qa_blockEmb_X, block_substitution_X, map_mul, map_mul]
 

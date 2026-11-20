@@ -66,8 +66,8 @@ theorem segreLiftMap_of_isMultiHomog (W : Ideal (MRing ι F)) (b : Unit ⊕ K �
   | zero => exact ⟨by simp, isWeightedHomogeneous_zero _ _ _⟩
   | add p q hp hq ihp ihq =>
     refine ⟨?_, ?_⟩
-    · rw [map_add, map_add, map_add, map_add, ihp.1, ihq.1, add_mul]
-    · rw [map_add]; exact ihp.2.add ihq.2
+    · rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ihp.1, ihq.1, add_mul]
+    · rw [map_add (f := _)]; exact ihp.2.add ihq.2
   | monomial d r hr =>
     have hb : b (Sum.inl ()) =
         ∑ v ∈ d.support, blockWeight (segreIdx ι) v (Sum.inl ()) * d v := by

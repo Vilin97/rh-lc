@@ -39,7 +39,7 @@ theorem slice_le {G V : Type} [AddCommGroup G] [TopologicalSpace G] [IsTopologic
     rw [hν A hA, hν _ (measurable_const_add t hA), ← measure_preimage_add μ (ι t) (π ⁻¹' A ∩ W)]
     congr 1
     ext w
-    simp only [hW, Set.mem_inter_iff, Set.mem_preimage, Set.mem_ofPred_eq, map_add, hπι, add_sub_add_left_eq_sub]
+    simp only [hW, Set.mem_inter_iff, Set.mem_preimage, Set.mem_ofPred_eq, map_add (f := _), hπι, add_sub_add_left_eq_sub]
   obtain ⟨c, hc⟩ : ∃ c : NNReal, ν = c • ν₀ := ⟨_, Measure.isAddLeftInvariant_eq_smul ν ν₀⟩
   have hc0 : c ≠ 0 := by
     rintro rfl

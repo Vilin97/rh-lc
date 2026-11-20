@@ -121,7 +121,7 @@ theorem twistSub_map (f : R →+* R') {ι : Type} {n : ℕ} (LL : Letters ι) (S
     twistSub LL S j (MvPolynomial.map f A) = MvPolynomial.map (lMap f n) (twistSub LL S j A) := by
   induction A using MvPolynomial.induction_on with
   | C a => simp [twistSub, lMap_coefL]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1
@@ -386,7 +386,7 @@ theorem valuation_transport_of_lemma (D : Formalism.BasicNotions.D7) (h : Formal
       exact ⟨h1.1.trans h2.1.symm, h1.2.trans h2.2.symm⟩
     obtain ⟨v1, v2, v3, v4, -, -⟩ := h (KK O) {x // x ∈ t} (⟨fun i : {x // x ∈ t} => LL.vec i⟩ : Letters {x // x ∈ t}) n
       ((fun i : {x // x ∈ t} => (i : ι)) ⁻¹' S)
-    rw [← map_mul, ← map_add, (T _).1, (T _).1, (T _).1, (T _).1, (T _).2, (T _).2, (T _).2, (T _).2, map_mul, map_add]
+    rw [← map_mul, ← map_add (f := _), (T _).1, (T _).1, (T _).1, (T _).1, (T _).2, (T _).2, (T _).2, (T _).2, map_mul, map_add (f := _)]
     exact ⟨v1 _ _, v2 _ _, v3 _ _, v4 _ _⟩
   · unfold valS
     rw [sDegs_det LL S _ y hinj hy]
@@ -427,7 +427,7 @@ theorem coeff_suppProj (R : Type) [CommRing R] {σ : Type} (s : Set (σ →₀ �
         rintro rfl; exact hu hm
       · rw [if_neg hm]
   | add p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
+    rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
     split_ifs <;> simp
 
 theorem suppProj_support_subset (R : Type) [CommRing R] {σ : Type} (s : Set (σ →₀ ℕ)) (A : MvPolynomial σ R) :
@@ -627,7 +627,7 @@ theorem twistSub_polComp {R : Type} [CommRing R] {ι : Type} {n : ℕ} (LL : Let
     by_cases hd : d = fun i => multideg m i
     · rw [hd, polComp_of_mem R n _ _ hm, polComp_of_mem _ n _ _ (hom_twistSub_monomial' LL S j m a)]
     · rw [polComp_of_ne R n _ _ _ hm hd, polComp_of_ne _ n _ _ _ (hom_twistSub_monomial' LL S j m a) hd, map_zero]
-  | add p q hp hq => rw [map_add, map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 theorem sDegs_polComp_subset {R : Type} [CommRing R] {ι : Type} {n : ℕ} (LL : Letters ι) (S : Set ι) (j : Fin n)
     (d : ι → ℕ) (A : MvPolynomial (ι × Fin n) R) : sDegs LL S j (polComp R n d A) ⊆ sDegs LL S j A := by
@@ -752,7 +752,7 @@ theorem twistSub_empty {ι : Type} {n : ℕ} (LL : Letters ι) (j : Fin n) (A : 
     twistSub LL ∅ j A = MvPolynomial.map (coefL R n) A := by
   induction A using MvPolynomial.induction_on with
   | C a => simp [twistSub]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1
@@ -885,10 +885,10 @@ theorem span_mul_mem {R A B C : Type} [CommRing R] [CommRing A] [Algebra R A] [C
     induction hb using Submodule.span_induction with
     | mem y hy => exact h x hx y hy
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add, mul_add]; exact X.add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _), mul_add]; exact X.add_mem hy hz
     | smul c y _ hy => rw [map_smul, mul_smul_comm]; exact X.smul_mem c hy
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, add_mul]; exact X.add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), add_mul]; exact X.add_mem hx hy
   | smul c x _ hx => rw [map_smul, smul_mul_assoc]; exact X.smul_mem c hx
 
 theorem mem_vars_rename_inj {R σ τ : Type} [CommRing R] (f : σ → τ) (hf : Function.Injective f) (p : MvPolynomial σ R)
@@ -1145,7 +1145,7 @@ theorem ord_proj [NeZero r] {K : ℕ} [NeZero K] (R : Type) [CommRing R]
           rw [← h2 i]
           exact h1 _ (segE_mem F j i) hW
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ c hy
   rw [← suppProj_of_mem R _ x hx2]
   exact key x hx
@@ -1347,14 +1347,14 @@ theorem li_sum_inl {R σ τ : Type} [CommRing R] (p : MvPolynomial σ R) :
     sumAlgEquiv R σ τ (rename Sum.inl p) = MvPolynomial.map C p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [sumAlgEquiv_C_inl]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp => simp only [map_mul, hp, rename_X, map_X, sumAlgEquiv_X_inl]
 
 theorem li_sum_inr {R σ τ : Type} [CommRing R] (q : MvPolynomial τ R) :
     sumAlgEquiv R σ τ (rename Sum.inr q) = C q := by
   induction q using MvPolynomial.induction_on with
   | C a => simp [sumAlgEquiv_C_inl]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp => simp only [map_mul, hp, rename_X, sumAlgEquiv_X_inr]
 
 theorem li_key {R σ τ : Type} [CommRing R] (p : MvPolynomial σ R) (q : MvPolynomial τ R) (m : σ →₀ ℕ) :
@@ -2140,7 +2140,7 @@ theorem jone_coeff_XD (i : Fin N × Fin k) (p : MvPolynomial (Fin N × Fin k) Fd
     by_cases h : u = mm
     · subst h; simp
     · simp [h]
-  | add p q hp hq => rw [map_add, mul_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), mul_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 open Classical in
 theorem jone_coeff_Eaa (LL : Letters (Fin N)) (S : Set (Fin N)) (e : Fin m → Fin k) (a : Fin m)
@@ -2393,7 +2393,7 @@ theorem proj_words {R : Type} [CommRing R] {N r K : ℕ} (LL : Letters (Fin N))
     · rw [suppProj_of_disjoint _ _ _ _ hw (proj_biSet_disjoint h)]
       exact Submodule.zero_mem _
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ c hy
 
 variable {n' r : ℕ} [NeZero n'] (F : Frames n' r) (j : ℤ)
@@ -2447,7 +2447,7 @@ theorem proj_claimA [NeZero r] {K : ℕ} [NeZero K] (O : Type) [CommRing O] [IsD
         (fun P1' P2' h => (hcomb b' b'' P1' P2').mpr ⟨h, hq'.2⟩) _ hmem
       rwa [proj_suppProj_map, suppProj_of_mem _ _ _ hw] at this
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul c y _ hy =>
       rw [MvPolynomial.smul_eq_C_mul, map_mul, map_C, ← MvPolynomial.smul_eq_C_mul]
       exact Submodule.smul_mem _ _ hy

@@ -164,7 +164,7 @@ theorem tieOpsX_main : TieOpsX := by
         exact Submodule.subset_span ⟨⟨⟨_, hwΩ⟩, b⟩, rfl⟩
       · rw [← FfL_apply, map_zero]; exact Submodule.zero_mem _
       · intro x y _ _ hx hy
-        rw [← FfL_apply, map_add]; exact Submodule.add_mem _ hx hy
+        rw [← FfL_apply, map_add (f := _)]; exact Submodule.add_mem _ hx hy
       · intro c x _ hx
         rw [← FfL_apply, LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ c hx
     · have hbot : MMw p ((LL.setTies T n).takeD (T.pos i + 1)) T.J (T.thrUpTo i) ρ

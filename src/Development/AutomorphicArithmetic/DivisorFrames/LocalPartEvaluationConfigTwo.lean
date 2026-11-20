@@ -22,7 +22,7 @@ private theorem sigR_sigR' {F E : Type} [Field F] [Field E] [Algebra F E] (R : T
     {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) (z : R ⊗[F] E) : sigR R σ (sigR R σ z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x =>
     show a ⊗ₜ[F] σ (σ x) = _
     rw [hσ]

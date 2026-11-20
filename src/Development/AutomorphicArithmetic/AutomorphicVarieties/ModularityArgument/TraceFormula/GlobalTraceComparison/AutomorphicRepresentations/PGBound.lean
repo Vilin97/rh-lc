@@ -50,7 +50,7 @@ private theorem norm_part_le {V : Type} [NormedAddCommGroup V] [InnerProductSpac
   have e : Up f = U (K.starProjection f) := by
     have h3 : f = K.starProjection f + (f - K.starProjection f) := by abel
     calc Up f = Up (K.starProjection f) + Up (f - K.starProjection f) := by
-          rw [← map_add, ← h3]
+          rw [← map_add (f := _), ← h3]
       _ = U (K.starProjection f) := by
           rw [h2 _ (K.sub_starProjection_mem_orthogonal f), add_zero,
             h1 _ (K.starProjection_apply_mem f)]

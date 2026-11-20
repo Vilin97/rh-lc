@@ -75,7 +75,7 @@ theorem exists_near_idem {e : AE D} {𝔪 : Ideal (𝓞 D.host.E)} (h : GoodMod 
   have h2 : toEAf D (incA D (μ : D.host.E)) = toEAf D (e + (N : AE D) * s) := by
     have := congrArg Subtype.val hs'
     simp only [Subring.coe_mul, AddSubgroupClass.coe_sub, SubringClass.coe_natCast] at this
-    rw [toEAf_incA, RingHom.map_add, RingHom.map_mul, map_natCast, hs]
+    rw [toEAf_incA, RingHom.map_add (f := _), RingHom.map_mul, map_natCast, hs]
     linear_combination -this
   have h3 : finPart D (incA D (μ : D.host.E)) = finPart D (e + (N : AE D) * s) :=
     (Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E).injective h2
@@ -105,7 +105,7 @@ theorem exists_near_idem {e : AE D} {𝔪 : Ideal (𝓞 D.host.E)} (h : GoodMod 
       rw [hid, Ideal.mem_span_singleton']
       refine ⟨⟨_, heO⟩ * ⟨_, hc s hs1⟩ + ⟨_, hs1⟩ * ⟨_, hc e heO⟩ + N * (⟨_, hs1⟩ * ⟨_, hc s hs1⟩), Subtype.ext ?_⟩
       rw [map_mul, Subring.coe_mul _ (oToS _ _ μ), ← toEAf_incA, ← toEAf_incA, h2, h5]
-      simp only [Subring.coe_mul, Subring.coe_add, SubringClass.coe_natCast, RingHom.map_add, RingHom.map_mul, map_natCast]
+      simp only [Subring.coe_mul, Subring.coe_add, SubringClass.coe_natCast, RingHom.map_add (f := _), RingHom.map_mul, map_natCast]
       linear_combination -h6
     obtain ⟨k, hk⟩ := Ideal.mem_span_singleton.1 h7
     exact ⟨k, hk⟩
@@ -262,7 +262,7 @@ theorem inId_of_mem (hc : D.host.ccK = ⊤) (hS : S.gram = 1) {e : AE D} {𝔪 :
     rw [← RingHom.map_mul, ← RingHom.map_mul, mul_right_comm, mul_assoc (es P), h7, mul_assoc, mul_comm (incA D _), ← h6] at h5
     exact h5
   · rw [Matrix.zero_apply, mul_zero, RingHom.map_zero]; exact zero_mem _
-  · intro x y hx hy; rw [Matrix.add_apply, mul_add, RingHom.map_add]; exact add_mem hx hy
+  · intro x y hx hy; rw [Matrix.add_apply, mul_add, RingHom.map_add (f := _)]; exact add_mem hx hy
   · intro x hx; rw [Matrix.neg_apply, mul_neg, RingHom.map_neg]; exact neg_mem hx
 
 set_option maxHeartbeats 1600000 in
@@ -302,7 +302,7 @@ theorem mem_of_inId (hc : D.host.ccK = ⊤) (hS : S.gram = 1) {I : FractionalIde
     | add x y _ _ hx hy =>
       obtain ⟨a, ha, ha', hb⟩ := hx
       obtain ⟨b, hc, hc', hd⟩ := hy
-      exact ⟨a + b, by rw [RingHom.map_add, ha, hc, add_zero], by rw [RingHom.map_add, ha', hc', Subring.coe_add],
+      exact ⟨a + b, by rw [RingHom.map_add (f := _), ha, hc, add_zero], by rw [RingHom.map_add (f := _), ha', hc', Subring.coe_add],
         by rw [Matrix.single_add]; exact add_mem hb hd⟩
     | smul c x _ hx =>
       obtain ⟨a, ha, ha', hb⟩ := hx
@@ -329,8 +329,8 @@ theorem mem_of_char_rat {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (
     rw [← sub_eq_zero]
     apply eq_zero_of_parts
     · have h2 : infPart D (finTens 1 M i j) = 0 := infPart_pair _ _
-      rw [Matrix.add_apply, RingHom.map_sub, RingHom.map_add, hu, h2, infPart_of_mem hu₀, add_zero, sub_zero]
-    · rw [Matrix.add_apply, RingHom.map_sub, RingHom.map_add, hM, sub_eq_zero]
+      rw [Matrix.add_apply, RingHom.map_sub, RingHom.map_add (f := _), hu, h2, infPart_of_mem hu₀, add_zero, sub_zero]
+    · rw [Matrix.add_apply, RingHom.map_sub, RingHom.map_add (f := _), hM, sub_eq_zero]
       rfl
   rw [e]
   refine add_mem (finTens_mem_latO (one_mem_intAf _) ?_) hu₀

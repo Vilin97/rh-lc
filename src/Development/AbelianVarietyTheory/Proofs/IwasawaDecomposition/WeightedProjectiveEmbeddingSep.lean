@@ -59,7 +59,7 @@ theorem exists_ample_model (R : Type) [CommRing R] (X : Scheme.{0}) (f : X ⟶ S
     · rw [Finset.sum_insert hi, ← hc]
       have e := (CechPic.cls_eq_iff (LB.isLB_pull hO1 (ProjSpace.toProj f (t i) (ht i))) (hL i)).2
         (ProjSpace.lbIso_pullback_O1_toProj f (t i) (ht i))
-      rw [← e, CechPic.cls_pull hN' _, CechPic.cls_tens hNp hOq, map_add, CechPic.cls_pull hN.isLB,
+      rw [← e, CechPic.cls_pull hN' _, CechPic.cls_tens hNp hOq, map_add (f := _), CechPic.cls_pull hN.isLB,
         CechPic.cls_pull hO.isLB, ← CechPic.pull_comp, ← CechPic.pull_comp, pullback.lift_fst,
         pullback.lift_snd, CechPic.cls_lbPow hO1, map_nsmul, CechPic.cls_pull hN.isLB,
         CechPic.cls_pull hO1, add_comm, natCast_zsmul]

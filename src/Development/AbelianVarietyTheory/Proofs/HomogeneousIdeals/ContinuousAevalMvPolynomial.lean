@@ -94,7 +94,7 @@ theorem continuous_aeval_mvPolynomial [IsTopologicalRing C] (q : MvPolynomial σ
     Continuous fun z : σ → C => aeval z q := by
   induction q using MvPolynomial.induction_on with
   | C a => simpa using continuous_const
-  | add P Q hP hQ => simp only [map_add]; exact hP.add hQ
+  | add P Q hP hQ => simp only [map_add (f := _)]; exact hP.add hQ
   | mul_X P i hP => simp only [map_mul, aeval_X]; exact hP.mul (continuous_apply i)
 
 variable (σ R C) in

@@ -28,7 +28,7 @@ theorem norm_le_of_mem_span (f : M →ₗ[↥(intO C)] C) {s : Set M} {r : ℝ} 
   | mem x hx => exact h x hx
   | zero => simpa using hr
   | add x y _ _ hx hy =>
-    rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
+    rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   | smul o x _ hx => rw [map_smul]; exact (norm_smul_le _ _).trans hx
 
 theorem bddAbove_norm [Module.Finite ↥(intO C) M] (f : M →ₗ[↥(intO C)] C) :
@@ -81,7 +81,7 @@ theorem supNorm_le_of_tmul {f : WithConv (M ⊗[↥(intO C)] M →ₗ[↥(intO C
   | zero => simpa using hr
   | tmul a b => exact h a b
   | add x y hx hy =>
-    rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
+    rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
 
 theorem supNorm_eq_mul [Module.Finite ↥(intO C) M] (f g : WithConv (M →ₗ[↥(intO C)] C))
     (h : WithConv (M ⊗[↥(intO C)] M →ₗ[↥(intO C)] C))

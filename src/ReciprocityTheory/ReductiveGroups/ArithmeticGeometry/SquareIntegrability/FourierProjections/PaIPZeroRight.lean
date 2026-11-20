@@ -83,7 +83,7 @@ theorem gaussianInner_monomial_high {q c : ℕ} (hq : 1 ≤ q) {m : ι →₀ �
     exact gaussianInner_monomial_orthogonal q (by rintro rfl; exact hm hβ)
   | zero => exact gaussianInner_zero_right q _
   | add x y hx hy ihx ihy =>
-    rw [gaussianInner_conj_symm q (x + y) (paMono m), gaussianInner_add_left hq (hup hx) (hup hy) hmm, map_add,
+    rw [gaussianInner_conj_symm q (x + y) (paMono m), gaussianInner_add_left hq (hup hx) (hup hy) hmm, map_add (f := _),
       ← gaussianInner_conj_symm, ← gaussianInner_conj_symm, ihx, ihy, add_zero]
   | smul r x hx ihx =>
     rw [gaussianInner_conj_symm q (r • x) (paMono m), gaussianInner_smul_left, map_mul, ← gaussianInner_conj_symm, ihx, mul_zero]

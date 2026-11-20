@@ -91,7 +91,7 @@ theorem redM_add (PP : Pl D.host.E) (hM : IsIntM M) (hN : IsIntM N) : redM PP (M
   have h2 : (M + N) i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := add_mem (hM i j) (hN i j)
   rw [Matrix.add_apply]
   unfold redM
-  rw [dif_pos h2, dif_pos (hM i j), dif_pos (hN i j), ← RingHom.map_add]
+  rw [dif_pos h2, dif_pos (hM i j), dif_pos (hN i j), ← RingHom.map_add (f := _)]
   rfl
 
 theorem redM_smul (PP : Pl D.host.E) (hp : p ∈ Formalism.L2.Herm.intAf D.host.F D.host.E) (hM : IsIntM M) :

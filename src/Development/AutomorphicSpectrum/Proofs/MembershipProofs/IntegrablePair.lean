@@ -28,7 +28,7 @@ def pairForm (μ : @Measure (κ → R) (borel _)) (hμ : @IsFiniteMeasureOnCompa
   LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (fun φ φ' => pair μ φ φ')
     (by
       intro f f' g
-      simp only [pair, Submodule.coe_add, Pi.add_apply, map_add, add_mul]
+      simp only [pair, Submodule.coe_add, Pi.add_apply, map_add (f := _), add_mul]
       exact integral_add (integrable_pair μ hμ f g) (integrable_pair μ hμ f' g))
     (by
       intro a f g
@@ -109,12 +109,12 @@ theorem exists_isModel : ∀ {R : Type} [CommRing R] [TopologicalSpace R] [IsTop
   · intro x x' y
     rw [← AddChar.map_add_eq_mul]
     congr 1
-    simp only [d.form, map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+    simp only [d.form, map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
     ring
   · intro x y y'
     rw [← AddChar.map_add_eq_mul]
     congr 1
-    simp only [d.form, map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+    simp only [d.form, map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
     ring
   · intro x
     simp [d.form]

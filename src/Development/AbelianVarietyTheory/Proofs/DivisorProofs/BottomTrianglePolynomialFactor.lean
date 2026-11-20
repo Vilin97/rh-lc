@@ -51,7 +51,7 @@ theorem thetaKO_sub {D : D7} {S T : HSp D} (om : GA D S × GA D T →* Module.En
 
 theorem thetaKO_add {D : D7} {S T : HSp D} (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)) (g : GA D S) (h : GA D T)
     (f f' : WO S T → ℂ) : thetaKO om g h (f + f') = thetaKO om g h f + thetaKO om g h f' := by
-  simp [thetaKO, map_add]
+  simp [thetaKO, map_add (f := _)]
 
 theorem thetaKO_zero {D : D7} {S T : HSp D} (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)) (g : GA D S) (h : GA D T) :
     thetaKO om g h 0 = 0 := by
@@ -176,7 +176,7 @@ theorem factor : GlobalTheory.Published.HoweDualityReal → GlobalTheory.FunPr.H
     { toFun := fun P' => X.I' W.ψ W.θ t P'
       map_add' := fun P Q => by
         show X.I' W.ψ W.θ t (P + Q) = X.I' W.ψ W.θ t P + X.I' W.ψ W.θ t Q
-        rw [← eI', ← eI', ← eI', map_add]; funext h
+        rw [← eI', ← eI', ← eI', map_add (f := _)]; funext h
         simp only [thetaInt, thetaKO_add, Pi.add_apply]
         exact integral_add (iI' t P h) (iI' t Q h)
       map_smul' := fun c P => by

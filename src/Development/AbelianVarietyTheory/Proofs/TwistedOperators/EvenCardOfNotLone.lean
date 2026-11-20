@@ -441,7 +441,7 @@ theorem exists_coords {p : Place F} {a δ b : Fˣ} (hb : b ∉ sqr p)
     (2 * (x₀ * x₁ - δ * (y₀ * y₁))) (by
       rw [hX, hY] at hXY
       have hθ := hq.sq
-      simp only [map_sub, map_add, map_mul, map_pow, map_ofNat]
+      simp only [map_sub, map_add (f := _), map_mul, map_pow, map_ofNat]
       linear_combination (-1 : E) * hXY - ((algebraMap F E x₁) ^ 2 -
         algebraMap F E (δ : F) * (algebraMap F E y₁) ^ 2) * hθ)
   refine ⟨x₀, x₁, y₀, y₁, by linear_combination -e.1, ?_⟩

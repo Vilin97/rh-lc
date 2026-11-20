@@ -216,11 +216,11 @@ theorem pairV_baseChange [Algebra ℤ_[p] C] {X Y A B : Point p v O Λ} {f₁ : 
     A.pairV (f₁.baseChange C x) (f₂.baseChange C y) = B.pairV (g₁.baseChange C x) (g₂.baseChange C y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul c s =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul d t => exact congrArg (· • (c * d)) (h s t)
 
 theorem eq_zero_of_actT {E : Type} [Field E] [NumberField E] [StarRing (𝓞 E)] (P : Point p v O (𝓞 E)) (hg : 0 < P.A.g)
@@ -251,7 +251,7 @@ theorem bijective_of_inverse [Algebra ℤ_[p] C] (h1 : ∀ t, ∑ k, φ k (ψ k 
   have a1 : ∀ l k x, (ψ l).baseChange C ((φ k).baseChange C x) = if k = l then (N : C) • x else 0 := fun l k x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]; split_ifs <;> simp
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]; split_ifs <;> simp
     | tmul c t =>
       have := (h2 (Pi.single k t) 0).1 l
       rw [Finset.sum_eq_single k (fun b _ hb => by simp [hb]) (by simp)] at this
@@ -263,7 +263,7 @@ theorem bijective_of_inverse [Algebra ℤ_[p] C] (h1 : ∀ t, ∑ k, φ k (ψ k 
   have a2 : ∀ l k x, (ψ l).baseChange C ((φ' k).baseChange C x) = 0 := fun l k x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
     | tmul c t =>
       have := (h2 0 (Pi.single k t)).1 l
       rw [Finset.sum_eq_single k (f := fun b => φ' b _) (fun b _ hb => by simp [hb]) (by simp)] at this
@@ -272,7 +272,7 @@ theorem bijective_of_inverse [Algebra ℤ_[p] C] (h1 : ∀ t, ∑ k, φ k (ψ k 
   have a3 : ∀ l k x, (ψ' l).baseChange C ((φ k).baseChange C x) = 0 := fun l k x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
     | tmul c t =>
       have := (h2 (Pi.single k t) 0).2 l
       rw [Finset.sum_eq_single k (fun b _ hb => by simp [hb]) (by simp)] at this
@@ -281,7 +281,7 @@ theorem bijective_of_inverse [Algebra ℤ_[p] C] (h1 : ∀ t, ∑ k, φ k (ψ k 
   have a4 : ∀ l k x, (ψ' l).baseChange C ((φ' k).baseChange C x) = if k = l then (N : C) • x else 0 := fun l k x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]; split_ifs <;> simp
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]; split_ifs <;> simp
     | tmul c t =>
       have := (h2 0 (Pi.single k t)).2 l
       rw [Finset.sum_eq_single k (f := fun b => φ' b _) (fun b _ hb => by simp [hb]) (by simp)] at this
@@ -294,18 +294,18 @@ theorem bijective_of_inverse [Algebra ℤ_[p] C] (h1 : ∀ t, ∑ k, φ k (ψ k 
       ∑ k, (φ' k).baseChange C ((ψ' k).baseChange C x) = (N : C) • x := fun x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, Finset.sum_add_distrib, smul_add, ← hx, ← hy]; abel
+    | add x y hx hy => simp only [map_add (f := _), Finset.sum_add_distrib, smul_add, ← hx, ← hy]; abel
     | tmul c t =>
       simp only [LinearMap.baseChange_tmul, ← TensorProduct.tmul_sum, ← TensorProduct.tmul_add, h1]
       rw [Nat.cast_smul_eq_nsmul, TensorProduct.tmul_smul]
   refine ⟨fun z z' h => Prod.ext (funext fun l => ?_) (funext fun l => ?_), fun x => ?_⟩
   · have := congrArg ((ψ l).baseChange C) h
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, a1, a2, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
+      simp only [map_add (f := _), map_sum, a1, a2, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
     exact smul_right_injective _ hC (add_right_cancel this)
   · have := congrArg ((ψ' l).baseChange C) h
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, a3, a4, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
+      simp only [map_add (f := _), map_sum, a3, a4, Finset.sum_ite_eq', Finset.mem_univ, if_true] at this
     exact smul_right_injective _ hC (add_left_cancel this)
   · refine ⟨(fun k => (ψ k).baseChange C ((N : C)⁻¹ • x), fun k => (ψ' k).baseChange C ((N : C)⁻¹ • x)), ?_⟩
     exact (a5 _).trans (smul_inv_smul₀ hC x)
@@ -326,7 +326,7 @@ theorem det_ne_zero_of_inverse {E : Type} [Field E] [NumberField E] [StarRing (�
   refine (smul_eq_zero_iff_right hN.ne').1 ?_
   rw [← map_nsmul, ← hs]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, LinearMap.sum_apply, hφ, hφ', Finset.sum_const_zero, add_zero]
+    simp only [map_add (f := _), map_sum, LinearMap.sum_apply, hφ, hφ', Finset.sum_const_zero, add_zero]
   refine Finset.sum_eq_zero fun b _ => ?_
   have e : ∑ k, g k b * w k = 0 := by simpa [Matrix.vecMul, dotProduct, mul_comm] using congrFun hwg b
   simp only [← Module.End.mul_apply, ← map_mul]

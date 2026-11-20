@@ -72,7 +72,7 @@ theorem isIntertw_rTensor {H : Type} [Monoid H] {W₁ W₂ Θ : Type} [AddCommGr
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul a t => simp [hφ κ a]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 def powSub {W : Type} [AddCommGroup W] [Module k W] (l : k) (c : ℕ) : Submodule k W :=
   LinearMap.range ((l ^ c) • (LinearMap.id : W →ₗ[k] W))

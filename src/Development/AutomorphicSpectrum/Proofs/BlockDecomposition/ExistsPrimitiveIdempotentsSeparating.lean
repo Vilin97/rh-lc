@@ -86,7 +86,7 @@ theorem exists_prim_cover (K : Type) [Field K] (n : ℕ) (γ : Matrix (Fin n) (F
       { carrier := {f | x ᵥ* aeval γ f = 0}
         add_mem' := fun {a b} ha hb => by
           simp only [Set.mem_setOf_eq] at ha hb ⊢
-          rw [map_add, Matrix.vecMul_add, ha, hb, add_zero]
+          rw [map_add (f := _), Matrix.vecMul_add, ha, hb, add_zero]
         zero_mem' := by simp
         smul_mem' := fun c f hf => by
           simp only [Set.mem_setOf_eq] at hf ⊢

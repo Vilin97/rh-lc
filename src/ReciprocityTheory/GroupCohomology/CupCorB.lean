@@ -62,7 +62,7 @@ theorem hd_hcup (β : V →ₗ[R] W →ₗ[R] Z) (p q : ℕ) (F : (Fin (p + 1) �
       congr 1; funext k; congr 1; ext; simp [val_succAbove]; omega
     rw [s1, hsum, e1]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Fin.val_zero, pow_zero, one_smul, map_add, map_sum, map_zsmul, smul_add, Finset.smul_sum,
+      simp only [Fin.val_zero, pow_zero, one_smul, map_add (f := _), map_sum, map_zsmul, smul_add, Finset.smul_sum,
       smul_smul, Fin.val_succ, LinearMap.smul_apply]
     congr 1
     refine Finset.sum_congr rfl fun b _ => ?_

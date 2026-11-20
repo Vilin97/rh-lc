@@ -133,7 +133,7 @@ theorem mem_of_map_mem {M' : Type*} [AddCommGroup M'] [Module (MRingOver S ι) M
       obtain ⟨y₂, hy₂, e₂⟩ := h₂
       refine ⟨y₁ + y₂, add_mem hy₁ hy₂, ?_⟩
       have : g (x₁ + x₂) - g (y₁ + y₂) = (g x₁ - g y₁) + (g x₂ - g y₂) := by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         abel
       rw [this]
       exact add_mem e₁ e₂

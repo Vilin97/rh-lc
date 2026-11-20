@@ -76,7 +76,7 @@ theorem GlobalTheory.VarySplitFactor.exists_linearMap_pure : ∀ (D : D7) (ψ : 
           (fun p hp => by simp only [xf, Function.update_of_ne hp])
           (by
             simp only [xf, Function.update_self, Submodule.coe_add]
-            rw [hOnAdd, map_add, one_smul])
+            rw [hOnAdd, map_add (f := _), one_smul])
         rw [one_smul] at hz
         exact huniq _ _ _ (hF (u + u')) hz
       map_smul' := by

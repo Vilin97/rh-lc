@@ -40,11 +40,11 @@ theorem X_dvd_of {l : ℕ} [Fact l.Prime] [CharP k l] {R : RingPG k l} {ι : k�
   set s : k⟦X⟧ := PowerSeries.mk fun n => PowerSeries.coeff (n + 1) c
   obtain ⟨t, ht⟩ := h2 s
   have ha : (c : k⸨X⸩) = vv k * (s : k⸨X⸩) + algebraMap k k⸨X⸩ (PowerSeries.constantCoeff c) := by
-    conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const c, map_add, map_mul, ← vv_eq_coe_X]
+    conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const c, map_add (f := _), map_mul, ← vv_eq_coe_X]
     rfl
   have hb' : b = (u : k⟦X⟧) * PowerSeries.X ^ (l - 1) * t + PowerSeries.C (PowerSeries.constantCoeff c) := by
     apply coe_inj
-    rw [← h, ha, map_add ι, map_mul ι, AlgHom.commutes, hu, ht, vv_eq_coe_X, map_add, map_mul, map_mul, map_pow]
+    rw [← h, ha, map_add ι, map_mul ι, AlgHom.commutes, hu, ht, vv_eq_coe_X, map_add (f := _), map_mul, map_mul, map_pow]
     rfl
   have h0 : PowerSeries.constantCoeff c = 0 := by
     rw [hb'] at hb
@@ -129,7 +129,7 @@ theorem span_ind {A D V : Type} [CommRing A] [AddCommGroup D] [Module A D] [AddC
     induction hz using Submodule.span_induction with
     | mem s hs => exact hS s hs
     | zero => intro a; simp
-    | add x y _ _ hx hy => intro a; rw [smul_add, map_add]; exact M.add_mem (hx a) (hy a)
+    | add x y _ _ hx hy => intro a; rw [smul_add, map_add (f := _)]; exact M.add_mem (hx a) (hy a)
     | smul r x _ hx => intro a; rw [smul_smul, mul_assoc]; exact hx _
   simpa using this 1
 
@@ -186,7 +186,7 @@ theorem exists_lift (hι : GlobalTheory.IndefiniteRowSideFullHecke.OnePlusPowerC
   haveI : CharP k⟦X⟧ l := charP_of_injective_algebraMap (algebraMap k k⟦X⟧).injective l
   have hq : PowerSeries.map (algebraMap O k) W.q₀ = PowerSeries.X ^ (l - 1) := by
     have := congrArg (PowerSeries.map (algebraMap O k)) W.q₀_def
-    rw [hp, map_mul, map_sub, map_pow, map_add, map_one, PowerSeries.map_X, add_pow_char, one_pow,
+    rw [hp, map_mul, map_sub, map_pow, map_add (f := _), map_one, PowerSeries.map_X, add_pow_char, one_pow,
       add_sub_cancel_left] at this
     apply mul_left_cancel₀ (PowerSeries.X_ne_zero (R := k))
     rw [this, ← pow_succ']
@@ -252,7 +252,7 @@ theorem condB (hι : GlobalTheory.IndefiniteRowSideFullHecke.OnePlusPowerCharact
     induction hs' using Submodule.span_induction with
     | mem s hs => exact Submodule.subset_span ⟨s, hs, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul a b _ hb => rw [φD_smulA]; exact Submodule.smul_mem _ _ hb
   refine span_ind ((p.j T A q i).comp (trD W T)) (pull ((F.D A).φ i) (N (i - 1))).toAddSubgroup _ _ ?_
     (hsp (h x hx))

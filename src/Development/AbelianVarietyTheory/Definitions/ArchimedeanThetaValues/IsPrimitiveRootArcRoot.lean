@@ -43,7 +43,7 @@ theorem rootChar_eq_iff {ζ : G} {n : ℕ} (hn : 0 < n) (h : IsPrimitiveRoot ζ 
     choose e he using hd
     have hn' : (n : ℤ) ≠ 0 := by exact_mod_cast hn.ne'
     refine ⟨(AddMonoidHom.mk' e fun a b => mul_left_cancel₀ hn' ?_).toIntLinearMap, LinearMap.ext fun χ => ?_⟩
-    · rw [mul_add, ← he, ← he, ← he, map_add, map_add]
+    · rw [mul_add, ← he, ← he, ← he, map_add (f := _), map_add (f := _)]
       ring
     · change f χ = g χ + n • e χ
       rw [nsmul_eq_mul, ← he]

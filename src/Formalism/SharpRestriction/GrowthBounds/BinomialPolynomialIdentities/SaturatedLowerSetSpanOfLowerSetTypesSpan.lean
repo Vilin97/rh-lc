@@ -25,7 +25,7 @@ theorem iInf_span_sup_smul_le {R M X κ : Type*} [CommRing R] [AddCommGroup M] [
     obtain ⟨H, hH, rfl⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1 hY
     obtain ⟨h, rfl⟩ := (Finsupp.mem_span_range_iff_exists_finsupp).1 hH
     refine ⟨z, h, hz, ?_⟩
-    rw [← hsum, map_add, map_smul]
+    rw [← hsum, map_add (f := _), map_smul]
     rfl
   choose z h hz hG' using h1
   obtain ⟨i0⟩ := (inferInstance : Nonempty κ)
@@ -153,7 +153,7 @@ theorem saturatedLowerSetSpan_of_lowerSetTypesSpan (D : Formalism.BasicNotions.D
       | zero => exact ⟨Submodule.zero_mem _, fun i _ => by rw [map_zero]; exact Submodule.zero_mem _⟩
       | add x y _ _ hx hy =>
         exact ⟨Submodule.add_mem _ hx.1 hy.1, fun i hi => by
-          rw [map_add]; exact Submodule.add_mem _ (hx.2 i hi) (hy.2 i hi)⟩
+          rw [map_add (f := _)]; exact Submodule.add_mem _ (hx.2 i hi) (hy.2 i hi)⟩
       | smul a x _ hx =>
         exact ⟨Submodule.smul_mem _ _ hx.1, fun i hi => by
           rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]

@@ -230,7 +230,7 @@ theorem exists_ksCoc {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Hos
     fun a => hΩ a, GlobalTheory.FinAffineCharts.iso_refineLB hP _ _ hle,
     fun a O f => pbT (m ≫ io) (d (κ a) _ (σ O f)) _, fun φ hφ => ⟨fun a => ⟨fun O hO f f' => ?_, fun O hO f f' => ?_,
       fun O O' h hO f => ?_, fun O hO r => ?_⟩, fun a b O hO f => ?_⟩⟩
-  · rw [map_add, (hfld _).1 _ (him a O hO), pbT_add]
+  · rw [map_add (f := _), (hfld _).1 _ (him a O hO), pbT_add]
   · rw [map_mul, (hfld _).2.1 _ (him a O hO), pbT_add, pbT_mul, pbT_mul, happ, happ]
   · have h' := io.image_mono h
     have e : σ O' (resG _ h f) = resG _ h' (σ O f) := by

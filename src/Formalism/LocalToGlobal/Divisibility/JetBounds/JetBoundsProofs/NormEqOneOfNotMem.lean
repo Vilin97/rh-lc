@@ -140,7 +140,7 @@ def normIdeal (σ : K →+* ℂ_[l]) : Ideal (𝓞 K) where
   add_mem' := by
     intro x y hx hy
     simp only [Set.mem_ofPred_eq] at hx hy ⊢
-    rw [cAdd, map_add]
+    rw [cAdd, map_add (f := _)]
     exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt hx hy)
   zero_mem' := by
     simp only [Set.mem_ofPred_eq]

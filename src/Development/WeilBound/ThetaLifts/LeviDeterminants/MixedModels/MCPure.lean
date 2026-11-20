@@ -101,7 +101,7 @@ theorem exists_isTr (w : (κ → AF F) × (κ → AF F)) (f : SInf F κ) : ∃ g
     (Algebra.trace ℝ (mixedEmbedding.mixedSpace F)).continuous_of_finiteDimensional.comp (by unfold dotProduct; fun_prop)
   have hT : Function.HasTemperateGrowth c := GlobalTheory.CompanionTheory.AdelicHeis.temperate_char c (by fun_prop)
     (fun t => by simp [c, Complex.norm_exp]) (by simp [c, beta]) fun s t => by
-      simp only [c, beta, add_dotProduct, map_add, Complex.ofReal_add, mul_add, Complex.exp_add]
+      simp only [c, beta, add_dotProduct, map_add (f := _), Complex.ofReal_add, mul_add, Complex.exp_add]
   refine ⟨Complex.exp (-(2 * Real.pi * Complex.I) * ((beta F κ (infV w.1) (infV w.2) / 2 : ℝ) : ℂ)) •
     SchwartzMap.smulLeftCLM ℂ c (SchwartzMap.compSubConstCLM ℂ (-infV w.1) f), fun x => ?_⟩
   rw [SchwartzMap.smul_apply, SchwartzMap.smulLeftCLM_apply_apply hT, SchwartzMap.compSubConstCLM_apply, sub_neg_eq_add,
@@ -132,7 +132,7 @@ theorem pure_tensor_estimates_holds : PureSt := by
         psiV ψ v (evFin F v a) * φ v fun i => evFin F v ((x + w.1) i) := fun v => by
       have hh : evFin F v (⅟2) = ⅟2 := map_half (evFin F v).toRingHom
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [schr, a, locW, dotProduct, map_add, map_mul, map_sum, hh, Pi.add_apply]
+        simp only [schr, a, locW, dotProduct, map_add (f := _), map_mul, map_sum, hh, Pi.add_apply]
       rfl
     have e2 : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F a) =
         beta F κ (fun i => evI F (x i)) (infV w.2) + beta F κ (infV w.1) (infV w.2) / 2 := by
@@ -143,7 +143,7 @@ theorem pure_tensor_estimates_holds : PureSt := by
           _ = _ := by rw [this, one_mul]
       change Algebra.trace ℝ _ (evIH F a) = _
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [a, map_add, map_mul, h2, ← Algebra.smul_def, map_smul, dotProduct, map_sum, beta, smul_eq_mul]
+        simp only [a, map_add (f := _), map_mul, h2, ← Algebra.smul_def, map_smul, dotProduct, map_sum, beta, smul_eq_mul]
       exact congrArg₂ (· + ·) rfl ((one_div_mul_eq_div _ _).trans rfl)
     have e3 : (fun i => evI F ((x + w.1) i)) = (fun i => evI F (x i)) + infV w.1 := funext fun i => map_add (evIH F) _ _
     change ψ a * _ = _

@@ -26,7 +26,7 @@ theorem aeval_apply_sub_eval_one_mem {R M : Type} [CommRing R] [AddCommGroup M] 
   | add p q hp hq =>
     have e : Polynomial.aeval γ (p + q) w - (p + q).eval 1 • w =
         (Polynomial.aeval γ p w - p.eval 1 • w) + (Polynomial.aeval γ q w - q.eval 1 • w) := by
-      rw [map_add, LinearMap.add_apply, Polynomial.eval_add, add_smul]; abel
+      rw [map_add (f := _), LinearMap.add_apply, Polynomial.eval_add, add_smul]; abel
     rw [e]
     exact U.add_mem hp hq
   | monomial n a =>

@@ -402,7 +402,7 @@ theorem orb : ∀ (D : D7) (c : Comm D) (v : VCom c) χ (Q : QAt v χ), c.Is →
       (GlobalTheory.WeilSrc.Zero.theta_eqv (c.jac Q.s 0 h).d h₂.1)
   have hs := Q.q.split
   have hcc : cA D (cA D Q.q.e) = Q.q.e := cA_cA _
-  have hce : cA D (Q.q.e + cA D Q.q.e) = Q.q.e + cA D Q.q.e := by rw [map_add, hcc, add_comm]
+  have hce : cA D (Q.q.e + cA D Q.q.e) = Q.q.e + cA D Q.q.e := by rw [map_add (f := _), hcc, add_comm]
   have he : (Q.q.e + cA D Q.q.e) * (Q.q.e + cA D Q.q.e) = Q.q.e + cA D Q.q.e := by
     have h3 : cA D Q.q.e * cA D Q.q.e = cA D Q.q.e := by rw [← map_mul, hs.1]
     linear_combination hs.1 + h3 + 2 * hs.2.1

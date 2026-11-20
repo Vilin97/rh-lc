@@ -18,7 +18,7 @@ theorem isCoc_of_isSecDiff : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpO
   obtain ⟨E, _, _, χ, z, hχ, hz⟩ := hR D'' (spOver ψ ≫ spOver φ ≫ x)
   apply hχ.injective
   change χ _ = χ (ψ _ + _)
-  rw [map_add]
+  rw [map_add (f := _)]
   have h1 := hu D D'' (ψ.comp φ) x E χ z (by rw [hz, ← spOver_comp, Category.assoc])
   have h2 := hu D D' φ x E (χ.comp ψ) z (by rw [hz, ← spOver_comp, Category.assoc])
   have h3 := hu D' D'' ψ (spOver φ ≫ x) E χ z hz

@@ -19,7 +19,7 @@ variable {Γ : Type} [Group Γ] [TopologicalSpace Γ]
 def twoCocycleMapOfEquivariantAdd (ρ₁ : Representation R₁ Γ M₁) (ρ₂ : Representation R₂ Γ M₂) (u : M₁ →+ M₂)
     (hu : ∀ g m, u (ρ₁ g m) = ρ₂ g (u m)) : Z2 ρ₁ →+ Z2 ρ₂ where
   toFun f := ⟨u ∘ f.1, (continuous_of_discreteTopology (f := u)).comp f.2.1, fun g h k => by
-    simp only [Function.comp_apply, ← hu, ← map_sub, ← map_add, f.2.2 g h k, map_zero]⟩
+    simp only [Function.comp_apply, ← hu, ← map_sub, ← map_add (f := _), f.2.2 g h k, map_zero]⟩
   map_zero' := Subtype.ext (funext fun _ => map_zero u)
   map_add' f f' := Subtype.ext (funext fun _ => map_add u _ _)
 
@@ -65,7 +65,7 @@ theorem ker_le_range [ContinuousMul Γ] (ρ₁ : Representation R₁ Γ M₁)
       have e0 := congrFun hcf (g, h)
       rw [d1_apply] at e0
       exact e0
-    rw [Pi.sub_apply, d1_apply, map_sub, map_add, map_sub, hp]
+    rw [Pi.sub_apply, d1_apply, map_sub, map_add (f := _), map_sub, hp]
     simp only [Function.comp_apply, Function.surjInv_eq hsurj]
     rw [e, sub_self]
   obtain ⟨k, hk⟩ : ∃ k : Γ × Γ → M₁, ∀ q, u (k q) = (f.1 - d1 ρ₂ (Function.surjInv hsurj ∘ c)) q :=
@@ -78,7 +78,7 @@ theorem ker_le_range [ContinuousMul Γ] (ρ₁ : Representation R₁ Γ M₁)
     exact (continuous_of_discreteTopology (f := Function.invFun u)).comp ((mem_cocycles2 ρ₂ _).1 hf').1
   have hkZ : k ∈ Z2 ρ₁ := by
     refine (mem_cocycles2 ρ₁ k).2 ⟨hkc, fun g h t => hinj ?_⟩
-    rw [map_zero, map_sub, map_add, map_sub, hu, hk, hk, hk, hk]
+    rw [map_zero, map_sub, map_add (f := _), map_sub, hu, hk, hk, hk, hk]
     exact ((mem_cocycles2 ρ₂ _).1 hf').2 g h t
   refine AddMonoidHom.mem_range.2 ⟨Submodule.Quotient.mk ⟨k, hkZ⟩, ?_⟩
   rw [mapH2Add_mk, Submodule.Quotient.eq, Submodule.mem_comap]

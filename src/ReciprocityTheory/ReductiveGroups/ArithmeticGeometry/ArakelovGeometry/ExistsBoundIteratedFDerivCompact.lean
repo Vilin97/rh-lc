@@ -48,7 +48,7 @@ theorem differentiable_mvPolynomial_eval {J : Type} [Fintype J] (p : MvPolynomia
     simp only [MvPolynomial.eval_C]
     exact differentiable_const a
   · intro p q hp hq
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   · intro p i hp
     simp only [map_mul, MvPolynomial.eval_X]

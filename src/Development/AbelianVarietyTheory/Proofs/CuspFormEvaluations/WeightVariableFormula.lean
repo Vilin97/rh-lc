@@ -26,7 +26,7 @@ theorem exists_order [Finite σ] (w : σ → ℕ) :
     simpa [key] using this
   have hadd : ∀ a b, key (a + b) = key a + key b := by
     intro a b
-    simp only [key, map_add]
+    simp only [key, map_add (f := _)]
     rfl
   letI : AddCommMonoid (WSyn w) := inferInstanceAs (AddCommMonoid (σ →₀ ℕ))
   letI lo : LinearOrder (WSyn w) := LinearOrder.lift' key hinj
@@ -259,7 +259,7 @@ theorem prod_pow_weight {A : Type} [CommRing A] (w : σ → ρ) (t : ρ → A) (
   induction m using Finsupp.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    rw [Finsupp.prod_add_index' (by simp) (by simp [pow_add]), hf, hg, map_add, ← Finset.prod_mul_distrib]
+    rw [Finsupp.prod_add_index' (by simp) (by simp [pow_add]), hf, hg, map_add (f := _), ← Finset.prod_mul_distrib]
     simp [pow_add]
   | single v e =>
     rw [Finsupp.prod_single_index (by simp), Finsupp.weight_single, Finset.prod_eq_single (w v)]
@@ -291,7 +291,7 @@ theorem coeff_scale (w : σ → ρ) (t : ρ → K) (m : σ →₀ ℕ) (P : MvPo
       (∏ r, t r ^ (Finsupp.weight (fun v => (Pi.single (w v) 1 : ρ → ℕ)) m r)) * AddMonoidAlgebra.coeff P m := by
   classical
   induction P using MvPolynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq, mul_add]
   | monomial m' c =>
     rw [aeval_scale_monomial w (fun r => (C (t r) : MvPolynomial σ K)), aeval_X_left_apply]
     simp only [← C_pow, ← map_prod, coeff_C_mul, coeff_monomial]
@@ -506,7 +506,7 @@ theorem pev_ne {s t : S} (h : s ≠ t) (z : S × (Fin n × Fin n) → K) (f : Mv
   simp only [pev, blockEmb, aeval_rename, Function.comp_def, h, if_false]
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp => simp only [map_mul, hp, aeval_X, eval_X]
 
 theorem pev_prod (t : S) (z : S × (Fin n × Fin n) → K) (f : S → MvPolynomial (Fin n × Fin n) K) :
@@ -573,7 +573,7 @@ theorem mem_tensor [Infinite K] (V : S → Submodule K (MvPolynomial (Fin n × F
   simp only [Finset.mem_univ, if_true]
   generalize G = F
   induction F using MvPolynomial.induction_on' with
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | monomial m c =>
     have : (monomial m c : MvPolynomial _ K) = c • monomial m 1 := by simp [smul_monomial]
     rw [this, map_smul, tens_monomial]
@@ -593,7 +593,7 @@ theorem rowGen_eval (a b : Fin n) (c : ℚ) (f : MvPolynomial (Fin n × Fin n) �
       (rowGen ℚ (n := n) a b) = rowAct ℚ (1 + Matrix.single b a c) := by
     apply algHom_ext
     rintro ⟨u, s⟩
-    simp only [rowGen, rowAct, AlgHom.comp_apply, aeval_X, AlgHom.coe_restrictScalars', map_add, Matrix.add_apply,
+    simp only [rowGen, rowAct, AlgHom.comp_apply, aeval_X, AlgHom.coe_restrictScalars', map_add (f := _), Matrix.add_apply,
       add_mul, Finset.sum_add_distrib]
     congr 1
     · rw [Finset.sum_eq_single u]
@@ -975,7 +975,7 @@ theorem shift_act (g : Ix → GL (Fin n) K) {ρ ρ' : Row Ix p q} (hm : mat g ρ
   intro ℓ
   by_cases hl : ℓ.1 = ρ
   set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [AlgHom.comp_apply, act, shift, aeval_X, hl, if_true, map_sum, map_mul, map_add, algHom_C, algebraMap_eq,
+    · simp only [AlgHom.comp_apply, act, shift, aeval_X, hl, if_true, map_sum, map_mul, map_add (f := _), algHom_C, algebraMap_eq,
       ← hm, Finset.mul_sum, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun j _ => by ring
   · simp [act, shift, hl]
@@ -995,7 +995,7 @@ theorem pderiv_shift (ρ ρ' : Row Ix p q) (c : K) (v : Lt Ix p q n) (P : MvPoly
     simp only [shift, aeval_X]
     by_cases h1 : r = ρ
     · subst h1
-      simp only [if_true, map_add, pderiv_C_mul, pderiv_X, Pi.single_apply, Prod.mk.injEq, true_and]
+      simp only [if_true, map_add (f := _), pderiv_C_mul, pderiv_X, Pi.single_apply, Prod.mk.injEq, true_and]
       congr 1
       by_cases h2 : r' = ρ'
       · subst h2; simp [smul_eq_C_mul]
@@ -1004,12 +1004,12 @@ theorem pderiv_shift (ρ ρ' : Row Ix p q) (c : K) (v : Lt Ix p q n) (P : MvPoly
   induction P using MvPolynomial.induction_on with
   | C a => simp
   | add P Q hP hQ =>
-    simp only [map_add, hP, hQ]
+    simp only [map_add (f := _), hP, hQ]
     split_ifs
     · rw [smul_add]; ring
     · ring
   | mul_X P ℓ hP =>
-    simp only [map_mul, pderiv_mul, map_add, hP, hX]
+    simp only [map_mul, pderiv_mul, map_add (f := _), hP, hX]
     split_ifs
     · simp only [smul_eq_C_mul]; ring
     · ring
@@ -1034,7 +1034,7 @@ theorem harm_shift (t : Ix) (c : K) {P : MvPolynomial (Lt Ix p q n) K} (hP : ∀
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [lp, xl, yl, map_sum, map_zero] at h1 h2 ⊢
     by_cases h3 : s = t ∧ (Sum.inr j : Fin p ⊕ Fin q) = Sum.inr u'
-    · simp only [pderiv_shift, Prod.mk.injEq, h3, and_self, if_true, map_add, Derivation.map_smul, reduceCtorEq, and_false,
+    · simp only [pderiv_shift, Prod.mk.injEq, h3, and_self, if_true, map_add (f := _), Derivation.map_smul, reduceCtorEq, and_false,
         if_false, add_zero, Finset.sum_add_distrib, ← Finset.smul_sum, h2, smul_zero]
       simpa only [h3] using h1
     · simp only [pderiv_shift, Prod.mk.injEq, h3, reduceCtorEq, and_false, if_false, add_zero, h1]
@@ -1240,7 +1240,7 @@ theorem degree_qf (m : MonomialOrder.{0,0} (Lt Ix p q n))
   rw [e]
   refine degree_sum_monomial m wt hm _ _ (lead h i) one_ne_zero fun b hb _ => ?_
   obtain ⟨t, i, j⟩ := i
-  simp only [map_add, Finsupp.weight_single, one_smul, xl, yl]
+  simp only [map_add (f := _), Finsupp.weight_single, one_smul, xl, yl]
   zify
   simp only [weight_variable_formula, wt_y, lead]
   have : ((b : ℕ) : ℤ) - (i + j + 1) ≠ 0 := by
@@ -1372,7 +1372,7 @@ theorem eval_gshift [Algebra ℚ K] (ρ ρ' : Row Ix p q) (c : K) (P : MvPolynom
     Polynomial.eval₂ (map (algebraMap ℚ K)) (C c) (gshift ρ ρ' P) = shift ρ ρ' c (map (algebraMap ℚ K) P) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [Polynomial.algebraMap_apply]
-  | add P Q hP hQ => simp only [map_add, Polynomial.eval₂_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), Polynomial.eval₂_add, hP, hQ]
   | mul_X P ℓ hP =>
     simp only [map_mul, Polynomial.eval₂_mul, hP, map_X]
     congr 1
@@ -1402,8 +1402,8 @@ def NN (K : Type) [Field K] (t : Ix) (a : Row Ix p q → ℕ) : Submodule K (MvP
     aeval (val h (gen K n)) P = blockEmb K t f}
   add_mem' := by
     rintro _ _ ⟨P, h1, h2, h3⟩ ⟨Q, k1, k2, k3⟩
-    exact ⟨P + Q, h1.add k1, ⟨fun t i j hij c => by rw [map_add, h2.1 t i j hij, k2.1 t i j hij],
-      fun t i j hij c => by rw [map_add, h2.2 t i j hij, k2.2 t i j hij]⟩, by rw [map_add, map_add, h3, k3]⟩
+    exact ⟨P + Q, h1.add k1, ⟨fun t i j hij c => by rw [map_add (f := _), h2.1 t i j hij, k2.1 t i j hij],
+      fun t i j hij c => by rw [map_add (f := _), h2.2 t i j hij, k2.2 t i j hij]⟩, by rw [map_add (f := _), map_add (f := _), h3, k3]⟩
   zero_mem' := ⟨0, isWeightedHomogeneous_zero _ _ _, ⟨fun _ _ _ _ _ => map_zero _, fun _ _ _ _ _ => map_zero _⟩, by simp⟩
   smul_mem' := by
     rintro c _ ⟨P, h1, h2, h3⟩
@@ -1582,8 +1582,8 @@ theorem cof_surj (φ : K →+* ℂ) (a : Row Ix p q → ℕ) (ha : ∀ t, Antito
   | add x y _ _ hx hy =>
     obtain ⟨P, h1, h2, h3⟩ := hx
     obtain ⟨Q, k1, k2, k3⟩ := hy
-    exact ⟨P + Q, h1.add k1, ⟨fun t i j hij c => by rw [map_add, h2.1 t i j hij, k2.1 t i j hij],
-      fun t i j hij c => by rw [map_add, h2.2 t i j hij, k2.2 t i j hij]⟩, by rw [map_add, h3, k3]⟩
+    exact ⟨P + Q, h1.add k1, ⟨fun t i j hij c => by rw [map_add (f := _), h2.1 t i j hij, k2.1 t i j hij],
+      fun t i j hij c => by rw [map_add (f := _), h2.2 t i j hij, k2.2 t i j hij]⟩, by rw [map_add (f := _), h3, k3]⟩
   | smul c x _ hx =>
     obtain ⟨P, h1, h2, h3⟩ := hx
     exact ⟨c • P, (weightedHomogeneousSubmodule K _ _).smul_mem c h1,
@@ -1832,7 +1832,7 @@ theorem rowShift_fw {ρ ρ' : Row Ix Dw.p Dw.q} {σ : E →+* ℂ} {i i' : Fin (
     exists_and_left, exists_eq', and_true]
   split_ifs with h3
   · subst h3
-    simp only [map_add, map_mul, rename_X, rename_C, h2]
+    simp only [map_add (f := _), map_mul, rename_X, rename_C, h2]
     rw [h1]
   · simp
 

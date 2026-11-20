@@ -55,7 +55,7 @@ theorem aeval_conj_units (y : GL (Fin n) ℂ) (A : Matrix (Fin n) (Fin n) ℂ) (
   have hpow : ∀ k : ℕ, ((y⁻¹).val * A * y.val) ^ k = (y⁻¹).val * A ^ k * y.val := fun k => by
     simpa using Units.conj_pow y⁻¹ A k
   induction q using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, hp, hq, Matrix.mul_add, Matrix.add_mul]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, Matrix.mul_add, Matrix.add_mul]
   | monomial k a =>
     simp only [aeval_monomial, hpow, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, Matrix.one_mul,
       Matrix.mul_smul, Matrix.smul_mul]

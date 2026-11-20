@@ -105,7 +105,7 @@ theorem et_props (x y : F) : et (x + y) = et x * et y ∧ ‖et x‖ = 1 ∧ (et
     · rintro ⟨n, hn⟩
       exact ⟨n, by rw [hn]; push_cast; ring⟩
   refine ⟨?_, ?_, hiff, fun hx => hiff.mpr (trace_int hx)⟩
-  · unfold et; rw [map_add, Rat.cast_add, mul_add, Complex.exp_add]
+  · unfold et; rw [map_add (f := _), Rat.cast_add, mul_add, Complex.exp_add]
   · unfold et
     have : 2 * (Real.pi : ℂ) * Complex.I * ((Algebra.trace ℚ F x : ℚ) : ℂ) =
         ((2 * Real.pi * (Algebra.trace ℚ F x : ℚ) : ℝ) : ℂ) * Complex.I := by push_cast; ring

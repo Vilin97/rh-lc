@@ -61,7 +61,7 @@ theorem regularFibre_of_liftedPartialDerivations :
       | C a =>
         rw [MvPolynomial.map_C, hEσC, hDσ, hdσC, MvPolynomial.map_C]
         rfl
-      | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add]
+      | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
       | mul_X p t ih =>
         rw [map_mul, Derivation.leibniz, Derivation.leibniz, MvPolynomial.map_X, hEσX, hdσX, ih]
         simp [smul_eq_mul]

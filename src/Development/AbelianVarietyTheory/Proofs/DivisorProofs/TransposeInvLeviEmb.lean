@@ -79,7 +79,7 @@ theorem no_map_of_lt : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpa
   intro k _ _ _ _ x x' n hn α β _ _ hαβ T hT
   let L : SB (Matrix (Fin n) (Fin (x + x')) k) →ₗ[ℂ] ℂ :=
     { toFun := fun Φ => (T Φ).1.1 1
-      map_add' := fun Φ Ψ => by simp only [map_add]; rfl
+      map_add' := fun Φ Ψ => by simp only [map_add (f := _)]; rfl
       map_smul' := fun c Φ => by simp only [map_smul]; rfl }
   have hmod : ∀ (h : GL (Fin (x + x')) k) (Φ : SB (Matrix (Fin n) (Fin (x + x')) k)),
       ∃ Φ' : SB (Matrix (Fin n) (Fin (x + x')) k), ∀ X, (Φ' : Matrix (Fin n) (Fin (x + x')) k → ℂ) X =

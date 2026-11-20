@@ -89,7 +89,7 @@ theorem nil_lift [IsDomain O] {ι : Type} [Fintype ι] (M : Matrix ι ι F.B) (m
   refine ⟨N, fun w i hu => hN (fun j => F.a (w j)) i ?_⟩
   obtain ⟨c, hc⟩ := iter F M m hm w N i
   rw [sub_eq_iff_eq_add] at hc
-  rw [hc, map_add, map_mul, theta_tau, zero_mul, zero_add, F.θ_a]
+  rw [hc, map_add (f := _), map_mul, theta_tau, zero_mul, zero_add, F.θ_a]
   exact hu
 
 theorem core (C : Type) [Field C] [IsAlgClosed C] [CharZero C] (v : Valuation C NNReal)

@@ -161,7 +161,7 @@ theorem fib_eq_lieEig_rf : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
         exact (Or.𝔐.M.lat _).smul_mem ⟨_, hreg⟩ (lat_act_of_model_rf Or.𝔐 _ _ _ he)
       | zero => simp
       | add u v _ _ hu hv =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem hu hv
       | smul r u _ hu =>
         rw [LinearMap.map_smul_of_tower]

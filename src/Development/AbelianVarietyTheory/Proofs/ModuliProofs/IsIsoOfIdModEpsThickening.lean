@@ -107,7 +107,7 @@ theorem bijective_of_mod_eps {K : Type} [Field K] {B C D : Type} [CommRing B] [C
     have hφe : φ (a DualNumber.eps) * φ (a DualNumber.eps) = 0 := by
       rw [← map_mul, hee, map_zero]
     refine ⟨b + a DualNumber.eps * b1, ?_⟩
-    rw [map_add, map_mul]
+    rw [map_add (f := _), map_mul]
     linear_combination (-1 : C) * hc1 - φ (a DualNumber.eps) * hc2 - c2 * hφe
 
 theorem fst_surjective (K : Type) [Field K] :

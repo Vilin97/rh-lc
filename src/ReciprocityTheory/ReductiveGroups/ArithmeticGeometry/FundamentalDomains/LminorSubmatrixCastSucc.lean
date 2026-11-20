@@ -105,7 +105,7 @@ theorem hermC_zero_left (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (v : F
 theorem hermC_add_right (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (u v v' : Fin r → ℂ) :
     hermC τ G u (v + v') = hermC τ G u v + hermC τ G u v' := by
   unfold hermC
-  simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hermC_smul_right (τ : E →+* ℂ) (G : Matrix (Fin r) (Fin r) E) (c : ℂ) (u v : Fin r → ℂ) :
     hermC τ G u (c • v) = conj c * hermC τ G u v := by

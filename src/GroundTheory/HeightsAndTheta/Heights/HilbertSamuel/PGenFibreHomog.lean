@@ -41,7 +41,7 @@ theorem coeff_mConeMap {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (b : K �
     · subst h; simp
     · rw [if_neg h, if_neg (fun h' => h (Finsupp.equivFunOnFinite.symm.injective h').symm)]
       simp
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, map_add (f := _), map_add (f := _)]
 
 theorem isMultiHomogIdeal_mCoordIdeal {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) :
     NumbersDVR.IsMultiHomogIdeal (R := ℤ) (mCoordIdeal y) := by

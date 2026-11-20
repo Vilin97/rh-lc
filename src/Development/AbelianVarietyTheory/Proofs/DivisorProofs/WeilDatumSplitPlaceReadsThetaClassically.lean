@@ -48,7 +48,7 @@ theorem exists_rat_sub_mem {LS : Set (Fin S.rank → D.host.E)} {LT : Set (Fin T
         add_mem' := by
           rintro a b ⟨γ, h1, h2⟩ ⟨γ', h1', h2'⟩
           refine ⟨γ + γ', by rw [LatVac.finTens_add]; exact add_mem h1 h1', ?_⟩
-          rw [LatVac.finTens_add, map_add, add_sub_add_comm]
+          rw [LatVac.finTens_add, map_add (f := _), add_sub_add_comm]
           exact add_mem h2 h2'
         neg_mem' := by
           rintro a ⟨γ, h1, h2⟩

@@ -178,20 +178,20 @@ by
       show algebraMap D.host.F D.host.E Δ = Δ • (1 : D.host.E) from Algebra.algebraMap_eq_smul_one Δ,
       ← TensorProduct.smul_tmul, Algebra.smul_def, mul_one]
   have k1 : ι a * ι a + ι (DA Δ) * (ι b * ι b) = ι a := by
-    simpa only [map_add, map_mul] using congrArg ι A1
+    simpa only [map_add (f := _), map_mul] using congrArg ι A1
   have k2 : ι a * ι b + ι a * ι b = ι b := by
-    simpa only [map_add, map_mul] using congrArg ι A2
+    simpa only [map_add (f := _), map_mul] using congrArg ι A2
   have k3 : ι a * ι a - ι (DA Δ) * (ι b * ι b) = 0 := by
     simpa only [map_sub, map_mul, map_zero] using congrArg ι A3
   have k4 : ι a + ι a = ι (epv v) := by
-    simpa only [map_add] using congrArg ι A4
+    simpa only [map_add (f := _)] using congrArg ι A4
   have hcι : ∀ x, cA D (ι x) = ι x := by
     intro x
     rw [hιt, hc, map_one]
   have hcd : cA D (ι b * d) = -(ι b * d) := by
     rw [hιt, hd, Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul, hc, hδ, TensorProduct.tmul_neg]
   have hce : cA D (ι a + ι b * d) = ι a - ι b * d := by
-    rw [map_add, hcι, hcd, sub_eq_add_neg]
+    rw [map_add (f := _), hcι, hcd, sub_eq_add_neg]
   have hsum : ι a + ι b * d + cA D (ι a + ι b * d) = algebraMap (AF D.host.F) (AE D) (epv v) := by
     rw [hce, ← hι, ← k4]
     ring
@@ -303,7 +303,7 @@ theorem removal (lam : FirstPropositionFrame D →* Circle)
       have hda : a' = a + epv v * (1 - a) := by rw [ha']; ring
       have hdb : b' = b + epv v * (-b) := by rw [hb']; ring
       rw [hpt] at hXu
-      rw [hpt, hda, hdb, map_add, map_add, map_mul, map_mul, map_sub, map_one, map_neg]
+      rw [hpt, hda, hdb, map_add (f := _), map_add (f := _), map_mul, map_mul, map_sub, map_one, map_neg]
       linear_combination (2 * ι (epv v) - 1 - ι (epv v) * ι (epv v)) * hXu + (u - 1) * hk
     have hlam : lam (mkU δ hδ Δ hΔ h') = lam (mkU δ hδ Δ hΔ h) := by
       have h1 := hsplit e he _ hsupp

@@ -51,7 +51,7 @@ theorem span_pair_isPrime_and_height_eq_two : ∀ (R : Type) [CommRing R] [IsReg
     have hc' : (maximalIdeal R).toCotangent (c 0 • ⟨a, ha⟩ + c 1 • ⟨b, hb⟩) = 0 := by
       rw [Ideal.toCotangent_eq_zero]
       simpa [Fin.sum_univ_two] using hc
-    rw [map_add, hsmul, hsmul] at hc'
+    rw [map_add (f := _), hsmul, hsmul] at hc'
     obtain ⟨h0, h1⟩ := hp _ _ hc'
     intro i
     fin_cases i

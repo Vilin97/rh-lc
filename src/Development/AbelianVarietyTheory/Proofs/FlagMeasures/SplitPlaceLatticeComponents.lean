@@ -28,7 +28,7 @@ theorem split_components :
       funext b
       apply sp.injective
       change sp (y b) = sp (sp.symm (1, 0) * y₁ b + sp.symm (0, 1) * y₂ b)
-      rw [map_add, map_mul, map_mul, sp.apply_symm_apply, sp.apply_symm_apply]
+      rw [map_add (f := _), map_mul, map_mul, sp.apply_symm_apply, sp.apply_symm_apply]
       ext
       · simp [e₁ b]
       · simp [e₂ b]

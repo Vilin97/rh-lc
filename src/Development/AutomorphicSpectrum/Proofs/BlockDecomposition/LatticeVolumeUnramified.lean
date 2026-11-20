@@ -129,7 +129,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem BR_add (σ : E →ₐ[F] E) (J : Matrix (Fin M) (Fin M) E)
     (X X' Y : Fin n → Fin M → Fv F v ⊗[F] E) :
     BR (Fv F v) σ J (X + X') Y = BR (Fv F v) σ J X Y + BR (Fv F v) σ J X' Y := by
-  simp only [BR, hR, hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [BR, hR, hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem mem_S_iff (hG : GoodLoc σ J T bs v ψv S σS ϖ ε) (x : Fv F v ⊗[F] E) :
     x ∈ S ↔ ∀ k, (Algebra.TensorProduct.basis (Fv F v) bs).repr x k ∈ v.adicCompletionIntegers F := by

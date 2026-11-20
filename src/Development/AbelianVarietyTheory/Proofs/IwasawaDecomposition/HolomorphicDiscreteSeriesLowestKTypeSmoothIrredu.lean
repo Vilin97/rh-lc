@@ -65,7 +65,7 @@ theorem derC_coef {q : ℕ} {x₀ : Mt n} (h : OrthFr Hm q x₀)
     abel_nf
     simp
   unfold derC dRepC
-  rw [der_coef hσ hv l hA hu, der_coef hσ hv l hB hu, map_add, map_smul, inner_add_right, inner_smul_right]
+  rw [der_coef hσ hv l hA hu, der_coef hσ hv l hB hu, map_add (f := _), map_smul, inner_add_right, inner_smul_right]
 
 theorem inner_iso (T : H →L[ℂ] H) (hT : ∀ x, ‖T x‖ = ‖x‖) (x y : H) : ⟪T x, T y⟫_ℂ = ⟪x, y⟫_ℂ :=
   (⟨T.toLinearMap, hT⟩ : H →ₗᵢ[ℂ] H).inner_map_map x y

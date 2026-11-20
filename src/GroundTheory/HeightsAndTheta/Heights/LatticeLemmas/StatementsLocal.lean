@@ -84,7 +84,7 @@ def latticeOfLocal
       Submodule (v.adicCompletionIntegers K) (v.adicCompletion K ⊗[K] V)) :
     Submodule (𝓞 K) V where
   carrier := {x | ∀ v, toLocal v x ∈ N v}
-  add_mem' hx hy v := by rw [map_add]; exact (N v).add_mem (hx v) (hy v)
+  add_mem' hx hy v := by rw [map_add (f := _)]; exact (N v).add_mem (hx v) (hy v)
   zero_mem' v := by rw [map_zero]; exact (N v).zero_mem
   smul_mem' a x hx v := by rw [toLocal_smul]; exact (N v).smul_mem _ (hx v)
 

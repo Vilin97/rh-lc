@@ -42,11 +42,11 @@ theorem c_frob (hK : Module.finrank ℚ K = 2) (c : K →+* K) (hc : ∃ x, c x 
     obtain ⟨n2, hn2⟩ := add_c_int hK c hc (a ^ 2)
     have ht : Ideal.Quotient.mk (Ideal.span {(p : 𝓞 K)}) a +
         σ (Ideal.Quotient.mk (Ideal.span {(p : 𝓞 K)}) a) = (n : (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)})) := by
-      rw [hσ, ← map_add, hn, map_intCast]
+      rw [hσ, ← map_add (f := _), hn, map_intCast]
     have ht2 : Ideal.Quotient.mk (Ideal.span {(p : 𝓞 K)}) a ^ 2 +
         σ (Ideal.Quotient.mk (Ideal.span {(p : 𝓞 K)}) a) ^ 2 = (n2 : (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)})) := by
       have := congrArg (Ideal.Quotient.mk (Ideal.span {(p : 𝓞 K)})) hn2
-      rw [map_add, map_intCast, map_pow, map_pow] at this
+      rw [map_add (f := _), map_intCast, map_pow, map_pow] at this
       rw [hσ, ← this, map_pow (Ideal.Quotient.mk _) ((RingOfIntegers.mapRingHom c) a)]
     generalize Ideal.Quotient.mk (Ideal.span {(p : 𝓞 K)}) a = x at ht ht2 ⊢
     have hm : (2 : (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)})) * (x * σ x) = (n : (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)})) ^ 2 - n2 := by
@@ -59,7 +59,7 @@ theorem c_frob (hK : Module.finrank ℚ K = 2) (c : K →+* K) (hc : ∃ x, c x 
     have hzero : x ^ 2 - (n : (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)})) * x + x * σ x = 0 := by
       rw [← ht]; ring
     have hfr := congrArg (frobenius (𝓞 K ⧸ Ideal.span {(p : 𝓞 K)}) p) hzero
-    rw [map_zero, map_add, map_sub, map_mul, map_pow, map_intCast, frobenius_def,
+    rw [map_zero, map_add (f := _), map_sub, map_mul, map_pow, map_intCast, frobenius_def,
       frobenius_def, hmp] at hfr
     have hq : (x ^ p - x) * (x ^ p - σ x) = 0 := by
       rw [← hfr, ← ht]; ring
@@ -95,7 +95,7 @@ theorem c_frob (hK : Module.finrank ℚ K = 2) (c : K →+* K) (hc : ∃ x, c x 
         intro h
         exact hy (add_left_cancel h)
       have h1 := (hdich (x + y)).resolve_left hxy
-      rw [add_pow_char, hx, hyσ, map_add] at h1
+      rw [add_pow_char, hx, hyσ, map_add (f := _)] at h1
       rw [hx]
       exact (add_right_cancel h1).symm
     · exact hx.symm

@@ -132,7 +132,7 @@ theorem levi_kill : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyComplex E
     rw [hcomm x.1 x.2 w.1 w.2, mul_assoc]
   let I : Ideal S :=
     { carrier := {w | ∀ v q, Λ v q w = 0}
-      add_mem' := fun {x y} hx hy v q => by rw [map_add, hx, hy, add_zero]
+      add_mem' := fun {x y} hx hy v q => by rw [map_add (f := _), hx, hy, add_zero]
       zero_mem' := fun v q => map_zero _
       smul_mem' := fun x w hw v q => by
         rw [smul_eq_mul, hΛ]

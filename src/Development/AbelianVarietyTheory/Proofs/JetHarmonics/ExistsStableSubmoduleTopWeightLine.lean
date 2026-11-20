@@ -36,7 +36,7 @@ theorem loweringWord_span_lower (a b : Fin n) (hab : b < a) :
     obtain ⟨N, hN⟩ := hx
     exact Submodule.subset_span ⟨_, hN.step a b hab⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem loweringWord_apply_mem (hE : GlRel E) (hv : IsHW E ν v) {N : ℕ} {x : V}
@@ -108,7 +108,7 @@ theorem exists_stable_submodule_topWeight_line :
       obtain ⟨N, hN⟩ := hx
       exact loweringWord_apply_mem hE hv hN a b
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
   · intro x hx hw
     set H : Module.End ℂ V := ∑ a : Fin n, ((a.val : ℕ) : ℂ) • E a a with hH

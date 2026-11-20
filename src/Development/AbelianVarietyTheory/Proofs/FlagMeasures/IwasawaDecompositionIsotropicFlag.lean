@@ -308,7 +308,7 @@ theorem iwasawa : ∀ (k r : ℕ), ∀ g ∈ GG k r, ∃ n ∈ Nset k r, ∃ a :
       rw [hgw]
       exact (bvec_apply _ _).trans (if_neg fun h => by rw [h] at hi; simp only [eI] at hi; omega)
     | zero => simp
-    | add x y _ _ h1 h2 => rw [map_add, PiLp.add_apply, h1, h2, add_zero]
+    | add x y _ _ h1 h2 => rw [map_add (f := _), PiLp.add_apply, h1, h2, add_zero]
     | smul t x _ h1 => rw [map_smul, PiLp.smul_apply, h1, smul_zero]
   have hgs : ∀ b, w b - gramSchmidt ℂ w b ∈ Submodule.span ℂ (w '' Set.Iio b) := fun b => by
     rw [← span_gramSchmidt_Iio]

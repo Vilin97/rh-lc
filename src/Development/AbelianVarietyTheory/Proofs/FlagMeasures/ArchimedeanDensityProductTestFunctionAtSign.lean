@@ -146,9 +146,9 @@ theorem density_at_sign : ∀ (I : AutInst) (θ : InfinitePlace I.F → (Ainf I.
     cases s <;> simp [sgn, hone]
   have hhalf : ∀ v, a (algebraMap I.F (Ainf I.F) (1 / 2)) v = 1 / 2 := fun v => by
     have h1 : algebraMap I.F (Ainf I.F) (1 / 2) + algebraMap I.F (Ainf I.F) (1 / 2) = 1 := by
-      rw [← map_add, add_halves, map_one]
+      rw [← map_add (f := _), add_halves, map_one]
     have := hone v
-    rw [← h1, map_add, Pi.add_apply] at this
+    rw [← h1, map_add (f := _), Pi.add_apply] at this
     linarith
   have htr : ∀ (X Y : Fin 1 → Fin I.n → Ainf I.F ⊗[I.F] I.E) v,
       a (Algebra.trace (Ainf I.F) (Ainf I.F ⊗[I.F] I.E) (hR (Ainf I.F) I.cm.sig I.J (X 0) (Y 0))) v =

@@ -111,7 +111,7 @@ theorem isMul_add {F : MvPowerSeries (Fin 2) K} {l : PowerSeries K} (h : LawLog 
   refine ⟨constantCoeff_subst_two_variables F h.1 N M hN.1 hM.1, integral_subst_two_variables h.2.1 N M hN.1 hM.1 hN.2.1 hM.2.1, ?_⟩
   rw [cube_log_add h N M hN.1 hM.1, hN.2.2, hM.2.2]
   push_cast
-  rw [map_add]
+  rw [map_add (f := _)]
   ring
 
 theorem isMul_exists {F : MvPowerSeries (Fin 2) K} {l : PowerSeries K} (h : LawLog F l) (n : ℤ) :

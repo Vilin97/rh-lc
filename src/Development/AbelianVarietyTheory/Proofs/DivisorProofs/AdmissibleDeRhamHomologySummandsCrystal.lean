@@ -35,11 +35,11 @@ theorem mem_sup_smul_top_equiv (e : M ≃ₗ[S] N) (J : Ideal S) (K : Submodule 
   constructor
   · intro h
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 h
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup ha ((mem_smul_top_equiv e J b).2 hb)
   · intro h
     obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.1 h
-    have hx : x = e.symm a + e.symm b := by rw [← map_add, hab, LinearEquiv.symm_apply_apply]
+    have hx : x = e.symm a + e.symm b := by rw [← map_add (f := _), hab, LinearEquiv.symm_apply_apply]
     rw [hx]
     refine Submodule.add_mem_sup ?_ ((mem_smul_top_equiv e J _).1 (by simpa using hb))
     simpa using ha

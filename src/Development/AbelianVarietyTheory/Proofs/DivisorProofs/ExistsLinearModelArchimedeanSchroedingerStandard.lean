@@ -53,7 +53,7 @@ theorem invOf_two_mul_pt (S : mixedEmbedding.mixedSpace F) :
   · have hc : c * 2 = 1 := by
       have h := congrArg fstH (invOf_mul_self (2 : AdeleRing (𝓞 F) F))
       rwa [map_mul, map_ofNat, map_one] at h
-    rw [← map_add, ← add_mul, ← mul_two, hc, one_mul, RingEquiv.apply_symm_apply]
+    rw [← map_add (f := _), ← add_mul, ← mul_two, hc, one_mul, RingEquiv.apply_symm_apply]
 
 theorem schrInf_eq (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (β : mixedEmbedding.mixedSpace F →ₗ[ℝ] ℝ)
     (hψ : ∀ a, ψ (((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm a, 0) : AdeleRing (𝓞 F) F) =
@@ -67,14 +67,14 @@ theorem schrInf_eq (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (β : mixedEmbeddin
   have hsum : ∀ a b : mixedEmbedding.mixedSpace F, pt (F := F) a + pt b = pt (a + b) := by
     intro a b
     refine pt_ext ?_ ?_
-    · rw [map_add]
+    · rw [map_add (f := _)]
       exact (map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm _ _).symm
-    · rw [map_add]
+    · rw [map_add (f := _)]
       exact add_zero (0 : FiniteAdeleRing (𝓞 F) F)
   have hbt : β t = β (∑ i, v.1 i * v.2 i) / 2 := by
-    rw [← htt, map_add]; ring
+    rw [← htt, map_add (f := _)]; ring
   show ψ (infE F z ⬝ᵥ infE F v.2 + ⅟(2 : AdeleRing (𝓞 F) F) * (infE F v.1 ⬝ᵥ infE F v.2)) * φ (z + v.1) = _
-  rw [dot_infE_infE, dot_infE_infE, ht, hsum, hψ', map_add, hbt]
+  rw [dot_infE_infE, dot_infE_infE, ht, hsum, hψ', map_add (f := _), hbt]
   push_cast
   ring_nf
 
@@ -87,9 +87,9 @@ variable {F : Type} [Field F] [NumberField F]
 def bil (β : mixedEmbedding.mixedSpace F →ₗ[ℝ] ℝ) (κ : Type) [Fintype κ] :
     (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ℝ :=
   LinearMap.mk₂ ℝ (fun z y => β (∑ i, z i * y i))
-    (fun z z' y => by simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add])
+    (fun z z' y => by simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)])
     (fun c z y => by simp only [Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum, map_smul, smul_eq_mul])
-    (fun z y y' => by simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add])
+    (fun z y y' => by simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)])
     (fun c z y => by simp only [Pi.smul_apply, mul_smul_comm, ← Finset.smul_sum, map_smul, smul_eq_mul])
 
 theorem bil_apply (β : mixedEmbedding.mixedSpace F →ₗ[ℝ] ℝ) {κ : Type} [Fintype κ]
@@ -179,7 +179,7 @@ theorem exists_model : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (A
   show Complex.exp (2 * Real.pi * Complex.I * (β (∑ i, Q x i * Y (GlobalTheory.RealWeil.qPart w) i) +
       β (∑ i, Q (GlobalTheory.RealWeil.pPart w) i * Y (GlobalTheory.RealWeil.qPart w) i) / 2)) *
       φ (Q x + Q (GlobalTheory.RealWeil.pPart w)) = _
-  rw [← h1, ← h2, ← map_add, real_inner_comm (GlobalTheory.RealWeil.pPart w)]
+  rw [← h1, ← h2, ← map_add (f := _), real_inner_comm (GlobalTheory.RealWeil.pPart w)]
   congr 2
   push_cast
   ring

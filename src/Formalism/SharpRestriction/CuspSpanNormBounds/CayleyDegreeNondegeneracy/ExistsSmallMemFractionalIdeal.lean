@@ -112,7 +112,7 @@ theorem inner_eq_coords_orthonormal_pair (hspan : Submodule.span K (Set.range e)
     (ho : ∀ i j, h (e i) (e j) = if i = j then 1 else 0) (u v : V) :
     h u v = star (h (e 0) u) * h (e 0) v + star (h (e 1) u) * h (e 1) v := by
   conv_lhs => rw [eq_sum_coords_orthonormal_pair h e hspan ho u, eq_sum_coords_orthonormal_pair h e hspan ho v]
-  simp only [map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ₂, map_smul, smul_eq_mul, ho, starRingEnd_apply]
+  simp only [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ₂, map_smul, smul_eq_mul, ho, starRingEnd_apply]
   simp
   ring
 
@@ -120,7 +120,7 @@ def orthCompanion (x : V) : V := -(star (h (e 1) x)) • e 0 + star (h (e 0) x) 
 
 theorem orthCompanion_inner_apply (x v : V) :
     h (orthCompanion h e x) v = -(h (e 1) x) * h (e 0) v + h (e 0) x * h (e 1) v := by
-  simp only [orthCompanion, map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ₂, smul_eq_mul, starRingEnd_apply,
+  simp only [orthCompanion, map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ₂, smul_eq_mul, starRingEnd_apply,
     star_neg, star_star]
 
 theorem coords_orthCompanion (ho : ∀ i j, h (e i) (e j) = if i = j then 1 else 0) (x : V) :
@@ -158,7 +158,7 @@ theorem inner_self_ne_zero_of_orthonormal (hcm : ∀ (φ : K →+* ℂ) (a : K),
   have hpar := inner_eq_coords_orthonormal_pair h e hspan ho x x
   rw [h0] at hpar
   have h1 := congrArg φ hpar
-  simp only [map_zero, map_add, map_mul, hcm] at h1
+  simp only [map_zero, map_add (f := _), map_mul, hcm] at h1
   have e0 : ((Complex.normSq (φ (h (e 0) x)) + Complex.normSq (φ (h (e 1) x)) : ℝ) : ℂ) = 0 := by
     push_cast
     rw [Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_conj_mul_self]

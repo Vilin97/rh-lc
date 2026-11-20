@@ -27,11 +27,11 @@ theorem UpperTheory.V.ConeExtensionAcyclic.exists_vert :
     have hb := hs (-ε) (by rw [abs_neg, abs_of_pos hε])
     have hxa := hglob _ ha
     have hxb := hglob _ hb
-    simp only [map_add, map_smul, smul_eq_mul] at hxa hxb
+    simp only [map_add (f := _), map_smul, smul_eq_mul] at hxa hxb
     have hmem1 : e + ε • k ∈ {h | h ∈ poly q ∧ x h ≤ x hm} :=
-      ⟨ha, by simp only [map_add, map_smul, smul_eq_mul]; linarith⟩
+      ⟨ha, by simp only [map_add (f := _), map_smul, smul_eq_mul]; linarith⟩
     have hmem2 : e + (-ε) • k ∈ {h | h ∈ poly q ∧ x h ≤ x hm} :=
-      ⟨hb, by simp only [map_add, map_smul, smul_eq_mul]; linarith⟩
+      ⟨hb, by simp only [map_add (f := _), map_smul, smul_eq_mul]; linarith⟩
     have hseg : e ∈ openSegment ℝ (e + ε • k) (e + (-ε) • k) := by
       refine ⟨1 / 2, 1 / 2, by norm_num, by norm_num, by norm_num, ?_⟩
       module

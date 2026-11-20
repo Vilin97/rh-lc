@@ -70,7 +70,7 @@ private theorem mem_iSup_of_eigenvector (C : Type) [Field C] (OE : Type) [CommRi
       map_zero' := hinj (by simp only [← hx, map_zero, zero_smul, LinearMap.zero_apply])
       map_add' := fun a b => hinj (by
         simp only
-        rw [← hx, map_add, LinearMap.add_apply, hx a, hx b, add_smul]) }
+        rw [← hx, map_add (f := _), LinearMap.add_apply, hx a, hx b, add_smul]) }
   refine Submodule.mem_iSup_of_mem τ ((Submodule.mem_iInf _).mpr fun a => ?_)
   exact Module.End.mem_eigenspace_iff.mpr (hx a)
 
@@ -109,7 +109,7 @@ theorem order_rep_diagonalisable : ∀ (C : Type) [Field C] [IsAlgClosed C] [Cha
           exact Submodule.subset_span ⟨i, rfl⟩
         | zero => simp
         | add x y _ _ hx hy =>
-          rw [map_add, LinearMap.add_apply]
+          rw [map_add (f := _), LinearMap.add_apply]
           exact Submodule.add_mem _ hx hy
         | smul n x _ hx =>
           rw [map_zsmul, LinearMap.smul_apply]

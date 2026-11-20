@@ -426,7 +426,7 @@ private theorem assemble (hs : Seps rbar s) (A : ℕ → Type) [∀ N, CommRing 
       have hd : xe (g, a, b) - Function.surjInv (hsurj K) ((r K).hom g a b) ∈ RingHom.ker (F K) := by
         rw [RingHom.mem_ker, map_sub, Function.surjInv_eq (hsurj K), hxe', sub_self]
       obtain ⟨j, hj, m, hm, hjm⟩ := Submodule.mem_sup.1 (hJ3 K hd)
-      rw [← hjm, map_add, Ideal.Quotient.eq_zero_iff_mem.2 hj, zero_add]
+      rw [← hjm, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hj, zero_add]
       exact Ideal.pow_le_pow_right (Nat.le_succ K) (mem_pow_map (Ideal.Quotient.mkₐ O J) (K + 1) hm)
     have hfin := hloc.comp (fun u => Ideal.Quotient.mk (maximalIdeal (MvPowerSeries (σ × ι × ι) O ⧸ J) ^ K)
           (Ideal.Quotient.mk J (Function.surjInv (hsurj K) u)))

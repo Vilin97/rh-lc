@@ -166,7 +166,7 @@ theorem tau_eq (a b : N.X) :
   rw [Category.id_comp]
   refine Eq.trans ?_ ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·)
     ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) rfl (val_inv _ _))) (val_inv _ _))) (val_inv _ _))).symm
-  rw [NumD.τ, map_div, map_div, p, p, p, map_add]
+  rw [NumD.τ, map_div, map_div, p, p, p, map_add (f := _)]
   apply Additive.ofMul.injective
   simp only [ofMul_mul, ofMul_inv, ofMul_div]
   abel
@@ -185,7 +185,7 @@ theorem exists_val (g : GtPtF D F) : ∃ c, ν.Pt g c := by
   refine ⟨⟨ν.eA.symm g.b, s, fun χ χ' => (toStkU_bijective y).1 ?_⟩, (pt_iff ν y _ _).2 ⟨ν.eA.apply_symm_apply _, hs⟩⟩
   have e := gt_mul (𝟙 (TF (R := R) F)) (good ν y) g (ν.eX χ) (ν.eX χ')
   rw [Category.id_comp] at e
-  rw [map_mul, map_mul, hs, hs, hs, theta_eq ν y, c_eq, c_eq, ν.eA.apply_symm_apply, map_add]
+  rw [map_mul, map_mul, hs, hs, hs, theta_eq ν y, c_eq, c_eq, ν.eA.apply_symm_apply, map_add (f := _)]
   exact e
 
 omit y in
@@ -200,7 +200,7 @@ theorem exists_pt (c : N.Gt) : ∃ g, ν.Pt g c := by
   obtain ⟨g, hb, hv⟩ := exists_gt_pt (D := D) (F := F) (good ν y) (ν.eA c.b) (fun χ => toStkU y (c.s (ν.eX.symm χ)))
     (by rw [map_zero, NumD.Gt.s_zero]; exact map_one _) (fun χ χ' => by
       have e := congrArg (toStkU y) (c.mult (ν.eX.symm χ) (ν.eX.symm χ'))
-      rw [map_mul, map_mul, theta_eq ν y, c_eq, c_eq, ν.eX.apply_symm_apply, ν.eX.apply_symm_apply, ← map_add] at e
+      rw [map_mul, map_mul, theta_eq ν y, c_eq, c_eq, ν.eX.apply_symm_apply, ν.eX.apply_symm_apply, ← map_add (f := _)] at e
       exact e)
   exact ⟨g, (pt_iff ν y _ _).2 ⟨hb.symm, fun χ => ((hv _).trans (by rw [ν.eX.symm_apply_apply])).symm⟩⟩
 
@@ -286,7 +286,7 @@ theorem points_correspond : BrGtSt := by
     obtain ⟨g', hg'⟩ := exists_pt ν (q.1.2 ^ k)
     exact ⟨⟨ν.eX q.1.1.toAdd, g, g', (isNsmul_val ν k hg hg').2 rfl, (isIota_val ν hg').2 q.2⟩, rfl, hg⟩
   · refine ν.eX.surjective.exists.trans (exists_congr fun z => and_congr ?_ ?_)
-    · rw [← h.1, ← h'.1, ← map_nsmul, ← map_add]; exact ν.eX.injective.eq_iff
+    · rw [← h.1, ← h'.1, ← map_nsmul, ← map_add (f := _)]; exact ν.eX.injective.eq_iff
     · obtain ⟨g, hg⟩ := exists_pt ν (N.io z)
       refine ⟨fun ⟨g', hi, ha⟩ => ?_, fun e => ⟨g, (isIota_val ν hg).2 rfl, (isAdd_val ν h.2 hg h'.2).2 e⟩⟩
       obtain ⟨c', hc'⟩ := exists_val ν g'

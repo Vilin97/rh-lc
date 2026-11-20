@@ -41,7 +41,7 @@ theorem UpperTheory.height_ker_section_le_of_cotangent_generators :
       simp
     have h4 : algebraMap S L (algebraMap O S e) * algebraMap S L a ∈ T ⊔ maximalIdeal L • maximalIdeal L := by
       have : algebraMap S L (algebraMap O S e) * algebraMap S L a = algebraMap S L (∑ i, o i • t i) + algebraMap S L (e • a - ∑ i, o i • t i) := by
-        rw [← map_mul, ← Algebra.smul_def, ← map_add]
+        rw [← map_mul, ← Algebra.smul_def, ← map_add (f := _)]
         congr 1
         abel
       rw [this]

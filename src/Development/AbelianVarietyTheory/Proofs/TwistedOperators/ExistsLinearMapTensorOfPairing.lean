@@ -111,7 +111,7 @@ theorem exists_linearMap_tensor :
   choose g hg using ex
   let f : V →ₗ[ℂ] TensorProduct ℂ A B :=
     { toFun := g
-      map_add' := fun P Q => sepR _ _ fun y => by rw [map_add, hg, hg, hg, map_add]
+      map_add' := fun P Q => sepR _ _ fun y => by rw [map_add (f := _), hg, hg, hg, map_add (f := _)]
       map_smul' := fun s P => sepR _ _ fun y => by
         rw [map_smul, hg, hg, map_smul, RingHom.id_apply] }
   have hf : ∀ P y, contrR (m y) (f P) = φ y P := hg

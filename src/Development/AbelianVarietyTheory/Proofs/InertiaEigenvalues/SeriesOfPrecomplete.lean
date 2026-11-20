@@ -117,7 +117,7 @@ theorem contract {τ : A} (hτ : ι τ = t) {S : Subring R}
   abel
 
 def opT (φ : R →+* R) (X Y : Matrix n n R) : Matrix n n R →+ Matrix n n R :=
-  AddMonoidHom.mk' (fun Z => X * φ.mapMatrix Z * Y) fun _ _ => by rw [map_add, mul_add, add_mul]
+  AddMonoidHom.mk' (fun Z => X * φ.mapMatrix Z * Y) fun _ _ => by rw [map_add (f := _), mul_add, add_mul]
 
 theorem opT_apply (φ : R →+* R) (X Y Z : Matrix n n R) :
     opT φ X Y Z = X * φ.mapMatrix Z * Y := rfl
@@ -258,8 +258,8 @@ theorem padic_conj {φ : R →+* R} {io : E →+* R} {S : Subring R} (hφS : ∀
       have h3 : V * io.mapMatrix d' = io.mapMatrix d' + (p : R) • (v * io.mapMatrix d') := by
         rw [hv, add_mul, smul_mul_assoc, one_mul]
       have h4 : z * io.mapMatrix D = z * io.mapMatrix e + (p : R) • (z * io.mapMatrix d) := by
-        rw [hd, map_add, map_natCast_smul, mul_add, mul_smul_comm]
-      simp only [map_add, map_pow_smul, mul_add, add_mul, mul_smul_comm, smul_mul_assoc]
+        rw [hd, map_add (f := _), map_natCast_smul, mul_add, mul_smul_comm]
+      simp only [map_add (f := _), map_pow_smul, mul_add, add_mul, mul_smul_comm, smul_mul_assoc]
       linear_combination (norm := module) hρ + (p : R) ^ (k + 1) • hr + (p : R) ^ (k + 1) • h2 -
         (p : R) ^ (k + 1) • h3 - (p : R) ^ (k + 1) • h4
   choose z d hstep using step
@@ -310,7 +310,7 @@ theorem padic_conj {φ : R →+* R} {io : E →+* R} {S : Subring R} (hφS : ∀
       io.mapMatrix ((q k).2 + (p : E) ^ (k + 1) • b') = (p : R) ^ k • (p : R) •
         (ρ + F * φ.mapMatrix a' - (q k).1 * io.mapMatrix b' - a' * io.mapMatrix (q k).2 -
           (p : R) ^ (k + 1) • (a' * io.mapMatrix b')) := by
-    simp only [map_add, map_pow_smul, mul_add, add_mul, mul_smul_comm, smul_mul_assoc]
+    simp only [map_add (f := _), map_pow_smul, mul_add, add_mul, mul_smul_comm, smul_mul_assoc]
     linear_combination (norm := module) hρ
   rw [this]
   exact ⟨_, rfl⟩
@@ -368,7 +368,7 @@ theorem onto_mod (a b : Matrix n n E) (y : Matrix n n R) (hy : y ∈ matS S) :
       rw [← map_sub]
       exact (hT 0 _ (by rw [zero_add]; exact hu)).mono hτ (by omega))
     refine ⟨y + z, add_mem hy hz, ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     convert h' using 1
     abel
 
@@ -431,7 +431,7 @@ theorem conj_mod (hφt : (p : R) ∣ t ^ p - φ t) (hJ : ∀ x : R, IsUnit (1 + 
   have key : (1 + z) * F₁ = io.mapMatrix e * φ.mapMatrix (1 + z) + (p : R) • (r₁ * F₁) := by
     have := congrArg (· * F₁) hr₁
     simp only [add_mul, neg_mul, opT_apply, mul_assoc, hGF, mul_one, smul_mul_assoc] at this
-    rw [map_add, map_one, mul_add, mul_one, add_mul, one_mul, this]
+    rw [map_add (f := _), map_one, mul_add, mul_one, add_mul, one_mul, this]
     abel
   refine ⟨(1 + z) * F₁ * φ.mapMatrix V, mul_mem (mul_mem hUS hF1S)
     (show φ.mapMatrix V ∈ matS S from fun i j => hφS _ (hVS i j)),
@@ -536,7 +536,7 @@ theorem frob_pi {p : ℕ} (hp : PD.p = p) : φR (inclR πA) = (inclR πA + 1) ^ 
     change R.φ₀ PowerSeries.X = (PowerSeries.X + 1) ^ PD.p - 1
     rw [R.φ₀_X, R.q₀_def, add_comm]
   rw [← io_pi I, ← I.ioE_φ, R.φE_ext, h, hp]
-  simp only [map_sub, map_pow, map_add, map_one]
+  simp only [map_sub, map_pow, map_add (f := _), map_one]
 
 theorem series_EE (R : WSer Γ) {p : ℕ} (hp : PD.p = p) (x : ℕ → R.EE) :
     ∃ y, ∀ k : ℕ, ∃ r, y - ∑ i ∈ Finset.range k, (p : R.EE) ^ i * x i = (p : R.EE) ^ k * r := by

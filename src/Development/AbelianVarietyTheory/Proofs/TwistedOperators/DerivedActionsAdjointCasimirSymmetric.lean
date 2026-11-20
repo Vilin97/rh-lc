@@ -28,7 +28,7 @@ theorem derived_adjoint_and_casimir (p q : ℕ) (T : GrpData p q) (πU : URep T)
     intro Z x y
     obtain ⟨X, hX, Y, hY, rfl⟩ := exists_upq_add Z
     rw [adjZ_add, adjZ_smul, (mem_upq_iff X).1 hX, (mem_upq_iff Y).1 hY]
-    simp only [map_add, map_smul, map_neg, LinearMap.add_apply, LinearMap.smul_apply,
+    simp only [map_add (f := _), map_smul, map_neg, LinearMap.add_apply, LinearMap.smul_apply,
       LinearMap.neg_apply, inner_add_left, inner_add_right, inner_smul_left, inner_smul_right,
       inner_neg_right, hreal X hX, hreal Y hY]
     rfl

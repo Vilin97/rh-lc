@@ -91,7 +91,7 @@ theorem tensor_isLocalRing_of_unique_prime_over : ∀ (P T L : Type) [CommRing P
       intro b
       induction b using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
       | tmul t y =>
         obtain ⟨a, ha⟩ := hres y
         have hy1 : (1 : T) ⊗ₜ[P] (y - algebraMap P L a) ∈ 𝔫 := by

@@ -20,7 +20,7 @@ theorem cA_piInf {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   simp only [piInf, RingHom.comp_apply, e]
   exact (infEmb_sigR h τ _).symm
 

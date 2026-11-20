@@ -104,7 +104,7 @@ private theorem continuous_sigR_stabilizer_orbit_volume (σ : E →ₐ[F] E) : C
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => simp [sigR, LinearMap.baseChange_tmul]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   rw [e]
   exact IsModuleTopology.continuous_of_linearMap _
 
@@ -171,7 +171,7 @@ theorem sigR_invol (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) (x : R ⊗[
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [sigR, hσ]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem gramR_mem (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {M n : ℕ}
     (J : Matrix (Fin M) (Fin M) E) (hJ : ∀ i j, σ (J j i) = J i j)

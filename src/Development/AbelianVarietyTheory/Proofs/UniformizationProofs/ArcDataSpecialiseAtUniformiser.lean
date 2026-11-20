@@ -151,7 +151,7 @@ theorem level_specialises (hL : Laws) (hL₂ : Laws2) (hT : TwistBaseChangeState
   obtain ⟨p₁, hp₁, hp₁'⟩ := exists_partner hL.globalFns W (Units.map ιF.toMonoidHom uS) hF hv hkM q₁
   obtain ⟨gp, gb, gv⟩ := exists_gtPt hL.globalFns s1 s2 (e := W.e.toAddEquiv) s5 q₀.g (Over.mk (specOf σ)) (spMap κ) hσf
     (fun z => unitOn (uS ^ (a.be q₀.y z / k))) (fun y z => by
-      rw [map_add, Int.add_ediv_of_dvd_left (dvd_be a hkM _ _), zpow_add]
+      rw [map_add (f := _), Int.add_ediv_of_dvd_left (dvd_be a hkM _ _), zpow_add]
       exact map_mul (Units.map _) _ _)
   have pull : GtPt.IsPullF F ρ.left gp p₁.g := by
     obtain ⟨c₁, c₂, c₃⟩ := hq₁
@@ -323,7 +323,7 @@ theorem eval_unique {V : Type} [CommRing V] [IsDomain V] [IsDiscreteValuationRin
       intro p
       obtain ⟨t, ht⟩ := ih (PowerSeries.mk fun i => PowerSeries.coeff (i + 1) p)
       refine ⟨t, ?_⟩
-      rw [PowerSeries.eq_shift_mul_X_add_const p, map_add, map_add, map_mul, map_mul, h₁, h₁', h₂, h₂']
+      rw [PowerSeries.eq_shift_mul_X_add_const p, map_add (f := _), map_add (f := _), map_mul, map_mul, h₁, h₁', h₂, h₂']
       linear_combination ϖ * ht
   refine RingHom.ext fun p => sub_eq_zero.1 (IsHausdorff.haus hV.toIsHausdorff _ fun n => ?_)
   rw [SModEq.zero, smul_eq_mul, Ideal.mul_top, hϖ.maximalIdeal_eq, Ideal.span_singleton_pow, Ideal.mem_span_singleton]

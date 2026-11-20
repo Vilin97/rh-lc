@@ -47,7 +47,7 @@ theorem hD_formula_smooth : ∀ (G R : Type) [AddCommGroup G] [NormedAddCommGrou
     rw [← this]
     congr 1
     funext y
-    rw [map_add, add_assoc]
+    rw [map_add (f := _), add_assoc]
   rw [e]
   have h1 : ContDiff ℝ ∞ fun x : R => (om.flip u (π w + x) : ℝ) :=
     (LinearMap.toContinuousLinearMap (om.flip u)).contDiff.comp (contDiff_const.add contDiff_id)

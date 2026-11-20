@@ -39,7 +39,7 @@ theorem _root_.GlobalTheory.GtCount.card_torsion_eq_mul {G B : Type} [AddCommGro
       right_inv := fun x => ?_ }
   · rw [nsmul_sub, g.2, (hs _).2, sub_zero]
   · rw [map_sub, (hs _).1, sub_self]
-  · have hx : p (s x.1 + x.2.1) = x.1 := by rw [map_add, (hs _).1, x.2.2.2, add_zero]
+  · have hx : p (s x.1 + x.2.1) = x.1 := by rw [map_add (f := _), (hs _).1, x.2.2.2, add_zero]
     refine Prod.ext (Subtype.ext hx) (Subtype.ext ?_)
     change s x.1 + x.2.1 - s ⟨p (s x.1 + x.2.1), _⟩ = x.2.1
     rw [hsec ⟨p (s x.1 + x.2.1), _⟩ x.1 hx, add_sub_cancel_left]

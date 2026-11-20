@@ -131,7 +131,7 @@ theorem qk_fixed_of_unram : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRin
     · rw [tor_charVal_pow R D.toPre _ t k h1 hkt J hJ χ]; simp
   obtain ⟨p', hp', z, t, h1, hkt, hpg⟩ := hRep p
   have hg : GlobalTheory.TorusExt.gtExt D.toPre σ.toRingHom hσ p.g = p.g := by
-    rw [hpg, map_add, map_add, hfix p' hp', GlobalTheory.TorusExt.gtExt_iota, hfixt t h1 hkt]
+    rw [hpg, map_add (f := _), map_add (f := _), hfix p' hp', GlobalTheory.TorusExt.gtExt_iota, hfixt t h1 hkt]
   have hq' := (GlobalTheory.TorusExt.qkExt_iff hB σ.toRingHom hσ p q).1 hq
   refine (GlobalTheory.TorusExt.equiv_iff hB p q).2 ⟨0, ?_, ?_⟩
   · rw [hq', smul_zero, add_zero]; rfl

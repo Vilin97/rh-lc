@@ -32,7 +32,7 @@ private theorem exists_valuationSubring_isPlaceOver (K Ω : Type) [Field K] [Num
     rw [map_mul, Valuation.map_mul]
     exact lt_of_le_of_lt (mul_le_of_le_one_left' (hle r)) hx
   have h3 : V.valuation (f (r * x + y)) < 1 := by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Valuation.map_add_lt _ h2 (hlt y hy)
   rw [hry, map_one, Valuation.map_one] at h3
   exact lt_irrefl _ h3

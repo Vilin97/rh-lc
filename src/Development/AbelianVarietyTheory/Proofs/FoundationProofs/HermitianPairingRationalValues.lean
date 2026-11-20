@@ -78,12 +78,12 @@ theorem mulVec_mem_of_homL (D : D7) {N N' : ℕ} {L : Submodule (𝓞 D.host.E) 
 theorem hYY_add_left (D : D7) {N N' : ℕ} (x x' y : Matrix (Fin N') (Fin N) D.host.E) :
     hYY D (x + x') y = hYY D x y + hYY D x' y := by
   unfold hYY
-  simp only [Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add]
+  simp only [Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem hYY_add_right (D : D7) {N N' : ℕ} (x y y' : Matrix (Fin N') (Fin N) D.host.E) :
     hYY D x (y + y') = hYY D x y + hYY D x y' := by
   unfold hYY
-  simp only [Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hYY_gen (D : D7) {N N' : ℕ} {L : Submodule (𝓞 D.host.E) (Fin N → D.host.E)}
     {L' : Submodule (𝓞 D.host.E) (Fin N' → D.host.E)} (hL : SD D L) (hL' : SD D L')

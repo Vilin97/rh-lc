@@ -55,7 +55,7 @@ theorem E_mem (u : Fin (dd Z) → k) : E Z u ∈ Bz Z := ((bas Z).equivFun.symm 
 theorem ee_mem (j : Fin (dd Z)) : ee Z j ∈ Bz Z := (bas Z j).2
 
 theorem E_add (u u' : Fin (dd Z) → k) : E Z (u + u') = E Z u + E Z u' := by
-  simp only [E, map_add, Submodule.coe_add]
+  simp only [E, map_add (f := _), Submodule.coe_add]
 
 theorem E_smul (c : k) (u : Fin (dd Z) → k) : E Z (c • u) = c • E Z u := by
   simp only [E, map_smul, Submodule.coe_smul]
@@ -150,7 +150,7 @@ theorem tau_conj (h : Hyp τ Z) {g : GL (Fin n) k} (hg : g ∈ Gz Z) {y : Matrix
 def adL {g : GL (Fin n) k} (hg : g ∈ Gz Z) : (Fin (dd Z) → k) →ₗ[k] (Fin (dd Z) → k) where
   toFun u := (bas Z).equivFun ⟨g.val * E Z u * g⁻¹.val, PositivityTheory.RgUd.T.Nil.Four.Phi2.conj_mem_Bz hg (E_mem Z u)⟩
   map_add' u u' := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     ext1
     simp [E_add, mul_add, add_mul]

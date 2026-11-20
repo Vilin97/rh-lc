@@ -73,7 +73,7 @@ theorem mem_map_iff {A R S : Type} [CommRing A] [CommRing R] [CommRing S] (ρ : 
         intro w hw y hy
         obtain ⟨u, hu⟩ := hρ.2 s.1
         obtain ⟨v, hv⟩ := hρ.2 t.1
-        have : y = u + v := hρ.1 (by rw [hy, map_add, hu, hv]; rfl)
+        have : y = u + v := hρ.1 (by rw [hy, map_add (f := _), hu, hv]; rfl)
         rw [this, add_mul]
         exact add_mem (hs w hw u hu) (ht w hw v hv)
       | smul a t _ ht =>
@@ -96,7 +96,7 @@ theorem mem_map_iff {A R S : Type} [CommRing A] [CommRing R] [CommRing S] (ρ : 
     | add u v _ _ hu hv =>
       obtain ⟨h1, h2⟩ := hu
       obtain ⟨h3, h4⟩ := hv
-      rw [map_add]
+      rw [map_add (f := _)]
       exact ⟨add_mem h1 h3, add_mem h2 h4⟩
     | neg u _ hu =>
       obtain ⟨h1, h2⟩ := hu
@@ -121,7 +121,7 @@ theorem sgA_hatId {I : Ideal (𝓞 D.host.E)} {x : Formalism.MainNotions.Standar
     rw [map_mul]
     rfl
   | zero => rw [map_zero]; exact zero_mem _
-  | add u v _ _ hu hv => rw [map_add]; exact add_mem hu hv
+  | add u v _ _ hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
   | neg u _ hu => rw [map_neg]; exact neg_mem hu
 
 theorem conj_idem {e : Formalism.L2.Theta.AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (c : Formalism.L2.DIV.Pl D.host.E → ℕ)

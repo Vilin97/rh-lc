@@ -88,7 +88,7 @@ lemma swapW (V : Matrix (Fin r) (Fin r) ℤ) (g : Fin r → Fin r → (Vec r →
 lemma per (A A' : Matrix (Fin r) (Fin r) ℤ) (i j : Fin r) :
     ∑ a : Fin 6, rosatiε a • B r (rosVec A A' a i) (rosVec A A' a j) =
       B r (axv A i) (zv j) + B r (zv i) (axv A j) - B r (xv i) (azv A' j) - B r (azv A' i) (xv j) := by
-  simp [Fin.sum_univ_six, rosVec, rosatiε, map_add, LinearMap.add_apply]
+  simp [Fin.sum_univ_six, rosVec, rosatiε, map_add (f := _), LinearMap.add_apply]
   abel
 
 theorem main {r : ℕ} (W A A' : Matrix (Fin r) (Fin r) ℤ)

@@ -38,7 +38,7 @@ theorem periods_linear : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.
         refine Eq.trans ?_ (congrArg _ (vadd V.1 _ _ z).symm)
         rw [h2 U V f z hz, h2' U V f z hz]; ring
       · change fderiv ℂ (fun z ↦ h U z + h' U z) z = evForm u.ex U.1 z (c.1.2 (op U) + c'.1.2 (op U))
-        rw [fderiv_fun_add (dA h U (h1 U) z hz) (dA h' U (h1' U) z hz), map_add, h3 U z hz, h3' U z hz]
+        rw [fderiv_fun_add (dA h U (h1 U) z hz) (dA h' U (h1' U) z hz), map_add (f := _), h3 U z hz, h3' U z hz]
       · simp only [Pi.add_apply]
         rw [hp U l z hz, hp' U l z hz]; ring
     · refine ⟨c - c', fun U z ↦ h U z - h' U z, map_sub _ _ _,

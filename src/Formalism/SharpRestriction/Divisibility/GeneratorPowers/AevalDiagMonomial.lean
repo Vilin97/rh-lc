@@ -24,7 +24,7 @@ private theorem ccaeval_lemma_3 {σ τ : Type} (g : σ → MvPolynomial τ S) (h
     (p : MvPolynomial σ S) : constantCoeff (aeval g p) = constantCoeff p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp only [aeval_C, algebraMap_eq, constantCoeff_C]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, aeval_X, constantCoeff_X, hg, mul_zero]
 
 private theorem memcc_lemma_19 {σ : Type} {p : MvPolynomial σ S} (hp : constantCoeff p = 0) :
@@ -54,7 +54,7 @@ private theorem base_lemma_17 {σ τ : Type} (g g' : σ → MvPolynomial τ S)
   induction p using MvPolynomial.induction_on with
   | C a => simp only [aeval_C, sub_self, Submodule.zero_mem]
   | add p q hp hq =>
-    rw [map_add, map_add, add_sub_add_comm]
+    rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
     exact Ideal.add_mem _ hp hq
   | mul_X p i hp =>
     rw [map_mul, map_mul, aeval_X, aeval_X]
@@ -103,9 +103,9 @@ private theorem subst_lemma_18 {σ τ : Type} (g g' : σ → MvPolynomial τ S) 
       obtain ⟨hx1, hx2⟩ := hx
       obtain ⟨hy1, hy2⟩ := hy
       constructor
-      · rw [map_add]
+      · rw [map_add (f := _)]
         exact Ideal.add_mem _ hx1 hy1
-      · rw [map_add, map_add, add_sub_add_comm]
+      · rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
         exact Ideal.add_mem _ hx2 hy2
 
 private theorem ev2sub_lemma_25 {τ : Type} (u v u' v' : Fin d → MvPolynomial τ S)
@@ -311,13 +311,13 @@ private theorem comp_lemma_9 {σ τ υ : Type} (g : σ → MvPolynomial τ S) (r
     (p : MvPolynomial σ S) : aeval r (aeval g p) = aeval (fun i => aeval r (g i)) p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp only [aeval_C, algebraMap_eq]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, aeval_X, hp]
 
 private theorem aevalX_lemma_10 {σ : Type} (p : MvPolynomial σ S) : aeval X p = p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp only [aeval_C, algebraMap_eq]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, aeval_X, hp]
 
 private theorem wt_lemma_11 (e : Fin 2 × Fin d →₀ ℕ) :
@@ -347,7 +347,7 @@ private theorem aeval_double_fst_of_additive {h : MvPolynomial (Fin 2 × Fin d) 
     refine congrArg (fun f => aeval f h) ?_
     funext ⟨l, i⟩
     fin_cases l <;> simp [xs, hr, hk]
-  rw [e1, map_add, e2 0 (by decide), e2 1 (by decide)] at H
+  rw [e1, map_add (f := _), e2 0 (by decide), e2 1 (by decide)] at H
   exact H
 
 private theorem aeval_double_snd_of_symm {h : MvPolynomial (Fin 2 × Fin d) S}
@@ -370,7 +370,7 @@ private theorem aeval_double_snd_of_symm {h : MvPolynomial (Fin 2 × Fin d) S}
     fin_cases k <;> simp [xs, hG]
   have e3 : ev2 (h + h) (xs S d (1 : Fin 2)) (xs S d 0) = h + h := by
     unfold ev2 at hs ⊢
-    rw [map_add, hs]
+    rw [map_add (f := _), hs]
   rw [hs] at e1
   rw [e1, ← e2, h0, e3]
 

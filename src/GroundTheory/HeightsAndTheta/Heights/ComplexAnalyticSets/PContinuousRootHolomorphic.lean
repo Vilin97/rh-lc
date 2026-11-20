@@ -12,7 +12,7 @@ theorem hasDerivAt_eval_cons {k : ℕ} (y : Fin k → ℂ) (P : MvPolynomial (Fi
       (eval (Fin.cons s y : Fin (k + 1) → ℂ) (pderiv 0 P)) s := by
   apply P.induction_on (fun a => ?_) (fun p q hp hq => ?_) fun p i hp => ?_
   · simpa using hasDerivAt_const s a
-  · simp only [map_add]
+  · simp only [map_add (f := _)]
     exact hp.add hq
   · cases i using Fin.cases with
     | zero =>

@@ -98,7 +98,7 @@ theorem exists_conj_of_algHom {B : Type} [CommRing B] [IsLocalRing B] {r : ℕ}
     (∑ l, θ (Matrix.single l i0 (1 : B)) * Matrix.single b l 1) * x
   induction x using Matrix.induction_on' with
   | h_zero => simp
-  | h_add p q hp hq => rw [map_add, add_mul, hp, hq, mul_add]
+  | h_add p q hp hq => rw [map_add (f := _), add_mul, hp, hq, mul_add]
   | h_std_basis k l c =>
     have hs : Matrix.single k l c = c • Matrix.single k l (1 : B) := by
       rw [Matrix.smul_single, smul_eq_mul, mul_one]

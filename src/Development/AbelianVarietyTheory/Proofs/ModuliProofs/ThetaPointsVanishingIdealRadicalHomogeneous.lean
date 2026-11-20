@@ -51,7 +51,7 @@ theorem coeff_scale {R R' σ : Type} [CommRing R] [CommRing R'] (β : R →+* R'
       ring
     rw [this, Polynomial.coeff_C_mul_X_pow]
     split_ifs <;> simp
-  | add p q hp hq => simp only [map_add, Polynomial.coeff_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), Polynomial.coeff_add, hp, hq]
 
 theorem component_eq_zero {R σ : Type} [CommRing R] (β : R →+* ℂ) (w : σ → ℂ)
     (F : MvPolynomial σ R) (e : ℕ)

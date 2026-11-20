@@ -150,7 +150,7 @@ def comap {O' : Type} [CommRing O'] [StarRing O'] (f : O' →+* O) (hf : ∀ a, 
       { act := fun a => B.A.act (f a)
         const := fun a => B.A.const (f a)
         hom := fun a => B.A.hom (f a)
-        add_act := fun a b => by rw [map_add, B.A.add_act]
+        add_act := fun a b => by rw [map_add (f := _), B.A.add_act]
         mul_act := fun a b => by rw [map_mul, B.A.mul_act]
         one_act := by rw [map_one, B.A.one_act] }
     ad := fun a => B.ad (f a)
@@ -160,7 +160,7 @@ def comap {O' : Type} [CommRing O'] [StarRing O'] (f : O' →+* O) (hf : ∀ a, 
     adjoint_compat_right := fun a => by simpa only [hf] using B.adjoint_compat_right (f a)
     ad_one := by simpa only [map_one] using B.ad_one
     ad_mul := fun a b => by simpa only [hf, map_mul] using B.ad_mul (f a) (f b)
-    ad_add := fun a b => by simpa only [hf, map_add] using B.ad_add (f a) (f b)
+    ad_add := fun a b => by simpa only [hf, map_add (f := _)] using B.ad_add (f a) (f b)
     ad_sy := fun a => by simpa only [hf] using B.ad_sy (f a) }
 
 end Predicates2

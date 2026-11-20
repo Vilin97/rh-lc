@@ -82,7 +82,7 @@ theorem chernOn_of_numOn : GlobalTheory.Published.ArCalc → ∀ (e : ℕ) (M : 
         simp only [Fintype.sum_option, A, G, L', Option.elim, Pi.zero_apply, zero_smul, Finset.sum_const_zero, add_zero]
         have e1 : (fnB (M.pull ε π f) (hsm f hf) hfc).icls = fnCls hsm F := rfl
         have e2 : (fnB (M.pull ε π ((2 : ℝ) • u)) hu hc).icls = fnCls hsm U := rfl
-        rw [e1, e2, ← map_zsmul, ← map_zsmul, ← map_add]
+        rw [e1, e2, ← map_zsmul, ← map_zsmul, ← map_add (f := _)]
         exact icls_fnB_congr (congrArg (M.pull ε π) hGt) _ _ _ _
       · exact isometric_comb_single G (some (some i))
     have hΦ := ((H.arIso k X p e hX).2 _ G Ψ hΨ).2.2 (Option ι) Ft A hiso

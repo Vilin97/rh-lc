@@ -46,7 +46,7 @@ theorem act_mul (g h : I → GL (Fin 2) ℂ) (x : I × Fin 2 → ℂ) : act (g *
 
 def Wt (n : I → ℕ) : Submodule ℂ (MvPolynomial (I × Fin 2) ℂ) where
   carrier := {P | ∀ (s : I → ℂ) (x : I × Fin 2 → ℂ), eval (fun p => s p.1 * x p) P = (∏ v, s v ^ n v) * eval x P}
-  add_mem' h h' s x := by rw [map_add, map_add, h, h', mul_add]
+  add_mem' h h' s x := by rw [map_add (f := _), map_add (f := _), h, h', mul_add]
   zero_mem' s x := by simp
   smul_mem' c P h s x := by rw [smul_eval, smul_eval, h]; ring
 

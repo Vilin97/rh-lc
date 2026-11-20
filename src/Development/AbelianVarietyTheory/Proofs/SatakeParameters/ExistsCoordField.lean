@@ -54,7 +54,7 @@ theorem exists_hom (hi : Function.Injective (algebraMap R T)) (c : T →+* T)
        rw [this, hα]
      map_mul' := fun x y => by rw [trace_mul_idem hi c ht h1 h2, map_mul]
      map_zero' := by rw [mul_zero, map_zero, map_zero]
-     map_add' := fun x y => by rw [mul_add, map_add, map_add] }, fun _ => rfl⟩
+     map_add' := fun x y => by rw [mul_add, map_add (f := _), map_add (f := _)] }, fun _ => rfl⟩
 
 end General
 
@@ -108,7 +108,7 @@ theorem alg_inj (R : Type) [CommRing R] [Algebra F R] : Function.Injective (alge
 theorem finT_sig (σ : E →ₐ[F] E) (z : AF F ⊗[F] E) : finT F E (sigR (AF F) σ z) = sigR (Af F) σ (finT F E z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [RingHom.map_zero]
-  | add a b ha hb => simp only [RingHom.map_add, ha, hb]
+  | add a b ha hb => simp only [RingHom.map_add (f := _), ha, hb]
   | tmul a e => rfl
 
 theorem finT_alg (a : AF F) : finT F E (algebraMap (AF F) _ a) = algebraMap (Af F) _ (sndA F a) := rfl
@@ -141,7 +141,7 @@ theorem trace_mem (v : HeightOneSpectrum (𝓞 F)) {x : Af F ⊗[F] E} (hx : x �
     have hi : IsIntegral ℤ (Algebra.trace F E y) := Algebra.isIntegral_trace y.isIntegral_coe
     exact HeightOneSpectrum.coe_mem_adicCompletionIntegers v (⟨_, hi⟩ : 𝓞 F)
   | zero => rw [map_zero, map_zero]; exact zero_mem _
-  | add x y _ _ h1 h2 => rw [map_add, map_add]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [map_add (f := _), map_add (f := _)]; exact add_mem h1 h2
   | neg x _ h => rw [map_neg, map_neg]; exact neg_mem h
 
 theorem exists_coord_field (hd : Module.finrank F E = 2) (σ : E →ₐ[F] E) (hσ : ∀ e, σ (σ e) = e)
@@ -157,12 +157,12 @@ theorem exists_coord_field (hd : Module.finrank F E = 2) (σ : E →ₐ[F] E) (h
   have tf := GlobalTheory.FockCompare.SymplVal.trace_tensor hd σ hσ hf (Af F)
   have tt : ∀ z, Algebra.trace (Af F) (Af F ⊗[F] E) (finT F E z) = sndA F (Algebra.trace (AF F) _ z) := fun z => by
     apply alg_inj (F := F) (E := E)
-    rw [tf, ← finT_alg, tA, RingHom.map_add, finT_sig]
+    rw [tf, ← finT_alg, tA, RingHom.map_add (f := _), finT_sig]
   have g1 : finT F E e * finT F E e = finT F E e := by rw [← RingHom.map_mul, h1]
   have g2 : finT F E e * sigR (Af F) σ (finT F E e) = 0 := by
     rw [← finT_sig, ← RingHom.map_mul, h2, RingHom.map_zero]
   have g3 : finT F E e + sigR (Af F) σ (finT F E e) = algebraMap (Af F) _ α := by
-    rw [← finT_sig, ← RingHom.map_add, h3]; rfl
+    rw [← finT_sig, ← RingHom.map_add (f := _), h3]; rfl
   have k := fun b => trace_idem_mul (alg_inj _) _ tf g3 b
   obtain ⟨π, hπ⟩ := exists_hom (alg_inj _) _ tf g1 g2 g3 (evalV F v) hv
   have p3 : ∀ x, finT F E e * algebraMap (Af F) _ (singleV F v (π x)) = finT F E e * x := fun x => by

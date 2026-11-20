@@ -40,7 +40,7 @@ theorem exists_delta (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) (v : Pl F) (w :
   have hδ : ((2 * a + algebraMap (𝓞 F) (𝓞 E) b : 𝓞 E) : E) = 2 * (a : E) + algebraMap F E (b : F) := rfl
   have hD : ((b ^ 2 - 4 * c : 𝓞 F) : F) = (b : F) ^ 2 - 4 * (c : F) := rfl
   refine ⟨2 * a + algebraMap (𝓞 F) (𝓞 E) b, b ^ 2 - 4 * c, ?_, ?_, ?_, ?_⟩
-  · rw [hδ, map_add, map_mul, map_ofNat, AlgHom.commutes, hc]
+  · rw [hδ, map_add (f := _), map_mul, map_ofNat, AlgHom.commutes, hc]
     ring
   · rw [hδ, hD, map_sub, map_mul, map_pow, map_ofNat]
     linear_combination 4 * hq
@@ -107,7 +107,7 @@ theorem exists_traceZero_unit : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
     rw [hx, ← map_mul, hsq, ← IsScalarTower.algebraMap_apply]
     exact (Algebra.TensorProduct.includeRight : E →ₐ[F] AE F E).commutes _
   have hp : inclR (F := F) (AF F) ((1 + δ : 𝓞 E) : E) = 1 + x := by
-    rw [show ((1 + δ : 𝓞 E) : E) = 1 + (δ : E) from rfl, map_add, map_one]
+    rw [show ((1 + δ : 𝓞 E) : E) = 1 + (δ : E) from rfl, map_add (f := _), map_one]
   have hm : inclR (F := F) (AF F) ((1 - δ : 𝓞 E) : E) = 1 - x := by
     rw [show ((1 - δ : 𝓞 E) : E) = 1 - (δ : E) from rfl, map_sub, map_one]
   have he : liftV v (1 : Fv F v) * liftV v c' = liftV v c' :=

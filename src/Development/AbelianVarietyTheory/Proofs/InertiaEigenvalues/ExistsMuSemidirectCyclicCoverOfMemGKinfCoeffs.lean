@@ -57,7 +57,7 @@ theorem galOA_constA_shift {g : GQ l} {m : ℕ}
     rw [this, constA_splitHom, constA_splitHom]
     exact (galOA_tmul g o _).trans (congrArg (fun y : Ainf l => o ⊗ₜ[ℤ_[l]] y) (hm w))
   | add y y' h h' =>
-    rw [map_add, map_add, map_add, h, h', ← map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), h, h', ← map_add (f := _)]
     rfl
 
 theorem galOA_idem {g : GQ l} {m : ℕ}

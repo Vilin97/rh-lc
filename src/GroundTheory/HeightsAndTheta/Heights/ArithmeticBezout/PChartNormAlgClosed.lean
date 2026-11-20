@@ -72,7 +72,7 @@ theorem adjoin_eq_top :
       rw [h]
       exact hS _
     | add a b ha hb =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem ha hb
     | mul_X a v ha =>
       rw [map_mul, map_mul]
@@ -120,7 +120,7 @@ theorem eval_map_firstGroup {F : Type} [Field F] {n e : ℕ} (p : Ideal (MvPolyn
   | C a =>
     rw [aeval_C, bind₁_C_right, MvPolynomial.algebraMap_apply, eval₂_C, MvPolynomial.algebraMap_eq]
   | add a b ha hb =>
-    rw [map_add, map_add, eval₂_add, ha, hb, map_add]
+    rw [map_add (f := _), map_add (f := _), eval₂_add, ha, hb, map_add (f := _)]
   | mul_X a ij ha =>
     rw [map_mul, map_mul, eval₂_mul, ha, map_mul, aeval_X, bind₁_X_right]
     congr 1

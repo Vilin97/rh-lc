@@ -118,7 +118,7 @@ theorem isPullback_of_flat (P C₁ C₂ C₀ E E₁ E₂ E₀ : CommRingCat.{0})
         hw₀, map_sub]
       ring
     | add x y hx hy =>
-      simp only [map_add, Prod.fst_add, Prod.snd_add, hx, hy]
+      simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, hx, hy]
       ring
   have keyone : ∀ e : E, pr (f.lTensor E (e ⊗ₜ 1)) = (e ⊗ₜ 1, e ⊗ₜ 1) := fun e ↦ by
     rw [LinearMap.lTensor_tmul, hf, map_one, map_one, TensorProduct.prodRight_tmul]

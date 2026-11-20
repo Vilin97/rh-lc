@@ -58,13 +58,13 @@ theorem eB_mul_iB (P : PlaceMap F K) (y : K ⊗[F] E) :
     rw [iB_tmul, Algebra.TensorProduct.algebraMap_apply, Algebra.TensorProduct.tmul_mul_tmul, one_mul]
     change (P.inj 1 * P.inj a) ⊗ₜ[F] b = _
     rw [← map_mul, one_mul]
-  | add x y hx hy => rw [map_add, mul_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), mul_add, hx, hy]
 
 theorem pB_iB (P : PlaceMap F K) (y : K ⊗[F] E) : pB P (iB P y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rw [iB_tmul, pB_tmul, P.proj_inj]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem iB_pB (P : PlaceMap F K) (y : AF F ⊗[F] E) :
     iB P (pB P y) = algebraMap (AF F) (AF F ⊗[F] E) (P.inj 1) * y := by
@@ -74,7 +74,7 @@ theorem iB_pB (P : PlaceMap F K) (y : AF F ⊗[F] E) :
     rw [pB_tmul, iB_tmul, P.inj_proj, Algebra.TensorProduct.algebraMap_apply,
       Algebra.TensorProduct.tmul_mul_tmul, one_mul]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, mul_add]
 
 theorem det_eq_one_of_lift (P : PlaceMap F K) {M : ℕ} {G : Matrix (Fin M) (Fin M) (AF F ⊗[F] E)}
     {X : Matrix (Fin M) (Fin M) (K ⊗[F] E)} (hG : ∀ i j, (G - 1) i j = iB P ((X - 1) i j)) (hX : X.det = 1) :
@@ -88,7 +88,7 @@ theorem det_eq_one_of_lift (P : PlaceMap F K) {M : ℕ} {G : Matrix (Fin M) (Fin
     ext i j
     rw [RingHom.mapMatrix_apply, Matrix.map_apply, hGij]
     change pB P _ = _
-    rw [map_add, pB_iB]
+    rw [map_add (f := _), pB_iB]
     by_cases h : i = j
     · subst h
       simp

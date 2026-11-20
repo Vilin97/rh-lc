@@ -79,7 +79,7 @@ theorem heisS_add {H : Matrix ι ι ℂ} (hH : H.IsHermitian) (y₁ y₂ : ι �
     have e1 := heisS_spec hH y₁ t₁
     have e2 := heisS_spec hH y₂ t₂
     have e3 := hForm_conj hH y₁ y₂
-    simp only [map_add, map_sub, hForm_add_left, hForm_add_right]
+    simp only [map_add (f := _), map_sub, hForm_add_left, hForm_add_right]
     linear_combination e1 + e2 - e3
   rw [eq_heisS hs]
   congr 1

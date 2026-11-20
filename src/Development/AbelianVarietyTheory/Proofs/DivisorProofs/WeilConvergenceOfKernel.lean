@@ -124,7 +124,7 @@ theorem weilConv (hKP : KP) : WeilConv := by
     (IsUWeilPair.isUSplitting hP.weil).pres x Φ hΦ
   have thAdd : ∀ Φ ∈ schA F (Fin n × Fin d), ∀ Ψ ∈ schA F (Fin n × Fin d), ∀ g h,
       theta om (Φ + Ψ) g h = theta om Φ g h + theta om Ψ g h := fun Φ hΦ Ψ hΨ g h => by
-    simp only [theta, map_add]
+    simp only [theta, map_add (f := _)]
     exact thetaSum_add F (pres _ Φ hΦ) (pres _ Ψ hΨ)
   have thSmul : ∀ (a : ℂ) Φ g h, theta om (a • Φ) g h = a * theta om Φ g h := fun a Φ g h => by
     simp only [theta, map_smul]

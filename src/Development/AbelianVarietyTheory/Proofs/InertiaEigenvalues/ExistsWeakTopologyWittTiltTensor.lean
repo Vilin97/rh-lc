@@ -122,7 +122,7 @@ theorem continuous_peval [IsTopologicalRing R] {k : ℕ} (φ : MvPolynomial (Fin
   induction φ using MvPolynomial.induction_on with
   | C a => simpa using continuous_const
   | add φ ψ h1 h2 =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact h1.add h2
   | mul_X φ i h =>
     simp only [map_mul, MvPolynomial.aeval_X]
@@ -216,12 +216,12 @@ theorem coords_map (b : Module.Basis ι R T) (σ : W →ₐ[R] W) (ρ : T →ₗ
       ∑ j, algebraMap R W (b.repr (ρ (b j)) i) * σ (coords W O b x j) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy, mul_add, Finset.sum_add_distrib]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy, mul_add, Finset.sum_add_distrib]
   | tmul r t =>
     induction r using TensorProduct.induction_on with
     | zero => simp
     | add x y hx hy =>
-      simp only [add_tmul, map_add, Pi.add_apply, hx, hy, mul_add, Finset.sum_add_distrib]
+      simp only [add_tmul, map_add (f := _), Pi.add_apply, hx, hy, mul_add, Finset.sum_add_distrib]
     | tmul a w =>
       simp only [TensorProduct.map_tmul, AlgHom.toLinearMap_apply, Algebra.TensorProduct.map_tmul,
         AlgHom.id_apply, coords_tmul, map_smul σ]

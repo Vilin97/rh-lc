@@ -55,7 +55,7 @@ theorem exists_real_different_generator : ∀ (E : Type) [Field E] [NumberField 
           _ = ‖j' δ'‖ := one_mul _
       | zero => simp
       | add x y _ _ hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
       | smul c x _ hx =>
         rw [smul_eq_mul, map_mul, norm_mul]

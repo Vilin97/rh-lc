@@ -126,7 +126,7 @@ theorem pullback_span {M' ι : Type} [AddCommGroup M'] [Module LL M'] {P : ι �
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨x, k, hk, rfl⟩)
     | zero => simp
     | add a b _ _ ha hb =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact Submodule.add_mem _ ha hb
     | smul c a _ ha =>
       rw [map_smul, map_smul]

@@ -124,9 +124,9 @@ theorem HomLocRingNoetherian.proof (hmem : HomLocRingMem.Statement.{u}) :
         (by simp only [map_mul]; rw [← hb₂]; ring) _ _ hτ hτW
       refine ⟨a₁ + a₂, I.add_mem ha₁I ha₂I, ?_⟩
       have hsum : img P (h₁ * (s * t₂) + h₂ * (s * t₁)) = img P ((t₁ * t₂) * h) := by
-        simp only [map_mul, map_add]; rw [← hb₁, ← hb₂, ← hy]; ring
+        simp only [map_mul, map_add (f := _)]; rw [← hb₁, ← hb₂, ← hy]; ring
       have hc := img_component_congr hP hsum ((e₁ + e₂) + d)
-      rw [component_form_mul (ht₁.mul ht₂), map_add, map_add] at hc
+      rw [component_form_mul (ht₁.mul ht₂), map_add (f := _), map_add (f := _)] at hc
       have h1 := img_ne_zero hPW ht₁W
       have h2 := img_ne_zero hPW ht₂W
       have h3 := img_ne_zero hPW htW

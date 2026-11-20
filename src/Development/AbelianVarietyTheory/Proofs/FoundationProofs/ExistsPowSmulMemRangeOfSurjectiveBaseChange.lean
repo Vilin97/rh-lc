@@ -91,7 +91,7 @@ theorem HasBasisAway.map {a : R} (φ : X →ₗ[R] M) (P : Submodule R M)
     obtain ⟨n, hn⟩ := h3 x trivial
     obtain ⟨q, hq, y, hy, e⟩ := mem_sup.1 hn
     refine ⟨n, ?_⟩
-    rw [smul_add, ← map_smul, ← e, map_add, ← add_assoc]
+    rw [smul_add, ← map_smul, ← e, map_add (f := _), ← add_assoc]
     refine add_mem_sup (add_mem (smul_mem _ _ hp) hq) ?_
     rw [← map_span]
     exact mem_map_of_mem hy
@@ -578,7 +578,7 @@ theorem exists_pow_smul_mem_range_of_surjective_baseChange.{w}
       have : (LinearMap.range φ.toLinearMap).mkQ (φ x) = 0 :=
         (Submodule.Quotient.mk_eq_zero _).2 ⟨x, rfl⟩
       rw [Algebra.TensorProduct.map_tmul, LinearMap.lTensor_tmul, this, tmul_zero]
-    | add z w hz hw => rw [map_add, map_add, hz, hw, add_zero]
+    | add z w hz hw => rw [map_add (f := _), map_add (f := _), hz, hw, add_zero]
   obtain ⟨n, hn⟩ := ha.exists_pow_smul_eq_zero K hK ((LinearMap.range φ.toLinearMap).mkQ y)
   rw [← map_smul, mkQ_apply, Submodule.Quotient.mk_eq_zero] at hn
   exact ⟨n, hn⟩

@@ -154,7 +154,7 @@ theorem haar_fundDomain_transfer : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ)
       filter_upwards [h𝓕.ae_covers] with x ⟨g, hg⟩
       refine ⟨⟨co.e g, into g g.2⟩, g +ᵥ x, hg, ?_⟩
       show co.e ((g : Formalism.IndefR.Datum.WO S T) + x) = co.e g + co.e x
-      rw [map_add]
+      rw [map_add (f := _)]
     · intro p q hpq
       let g : ratL T S := ⟨co.e.symm p, onto' p p.2⟩
       let h : ratL T S := ⟨co.e.symm q, onto' q q.2⟩
@@ -170,7 +170,7 @@ theorem haar_fundDomain_transfer : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ)
         rw [← Set.image_vadd, ← Set.image_vadd, Set.image_image, Set.image_image]
         refine Set.image_congr fun w _ => ?_
         show (r : (κ → AF D.host.F) × (κ → AF D.host.F)) + co.e w = co.e ((k : Formalism.IndefR.Datum.WO S T) + w)
-        rw [map_add, hk, LinearEquiv.apply_symm_apply]
+        rw [map_add (f := _), hk, LinearEquiv.apply_symm_apply]
       show MeasureTheory.AEDisjoint (ν.map me) (p +ᵥ me '' 𝓕) (q +ᵥ me '' 𝓕)
       rw [himg p g rfl, himg q h rfl, MeasureTheory.AEDisjoint, ← Set.image_inter me.injective, me.map_apply,
         me.preimage_image]

@@ -104,7 +104,7 @@ theorem exists_divided_linear : ∀ (V : Type) [CommRing V] [IsDomain V] [IsLoca
   obtain ⟨h, hh⟩ := Module.projective_lifting_property f g hf
   refine ⟨fun y => (h y).toMul, fun y z => by
       change (h (y + z)).toMul = (h y).toMul * (h z).toMul
-      rw [map_add]; rfl,
+      rw [map_add (f := _)]; rfl,
     fun o y => by
       change (h (o • y)).toMul = (h y).toMul ≫ a.act o
       rw [map_smul]; rfl, fun y => ?_⟩

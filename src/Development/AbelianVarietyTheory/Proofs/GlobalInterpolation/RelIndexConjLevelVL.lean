@@ -69,7 +69,7 @@ theorem swap_mem_int (y : v.adicCompletion F ⊗[F] E) : y ∈ GlobalTheory.Adel
   constructor
   · refine GlobalTheory.AdelicU.intLoc_induction (p := fun y => swap v y ∈
       tensInt (F := F) (v.adicCompletion F) (intOE E) (v.adicCompletionIntegers F).toSubring) (fun a ha x => ?_)
-      (by simp) (fun y z hy hz => by rw [map_add]; exact add_mem hy hz)
+      (by simp) (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz)
       (fun y hy => by rw [map_neg]; exact neg_mem hy)
     have : swap v (a ⊗ₜ[F] (x : E)) = ((x : E) ⊗ₜ[F] (1 : v.adicCompletion F)) * ((1 : E) ⊗ₜ[F] a) := by
       rw [swap_tmul, Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
@@ -139,7 +139,7 @@ theorem mem_UPts_swap (g : GL (Fin n) (v.adicCompletion F ⊗[F] E)) :
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have h1 : cT (sigR σ (v.adicCompletion F)) (g.1.map (swap (E := E) v).toRingHom) =
       (cT (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ) g.1).map (swap (E := E) v).toRingHom := by
     ext i j

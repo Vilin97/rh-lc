@@ -38,7 +38,7 @@ theorem form_conj (hσ : ∀ x, σ (σ x) = x) (hJ : cT σ J = J) (v w : Fin n �
   ring
 
 theorem form_add_right (v w w' : Fin n → E) : form σ J v (w + w') = form σ J v w + form σ J v w' := by
-  simp only [form, Pi.add_apply, map_add]
+  simp only [form, Pi.add_apply, map_add (f := _)]
   rw [show (fun i => σ (w i) + σ (w' i)) = (fun i => σ (w i)) + (fun i => σ (w' i)) from rfl, add_dotProduct]
 
 theorem conj_mulVec (B : Matrix (Fin n) (Fin n) E) (w : Fin n → E) :

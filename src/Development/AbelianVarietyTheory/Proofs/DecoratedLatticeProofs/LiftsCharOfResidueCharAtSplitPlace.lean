@@ -42,7 +42,7 @@ theorem swapProj_one_tmul (φ : SplitProj D v) (a : Fv D.host.F v) : swapProj φ
 theorem swapProj_prV (φ : SplitProj D v) (z : EAf D) : swapProj φ (Formalism.UG.prV v z) = GlobalTheory.IndefiniteRowSideFullHecke.RestrictedTensorSplitting.rdE φ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul b y => rfl
 
 theorem swapProj_prV_oToS (φ : SplitProj D v) (x : 𝓞 D.host.E) :
@@ -54,7 +54,7 @@ theorem swapProj_prV_oToS (φ : SplitProj D v) (x : 𝓞 D.host.E) :
 
 theorem isIdemOf_idem (φ : SplitProj D v) : IsIdemOf φ (GlobalTheory.EmbChart.idem (GlobalTheory.SplitProjChart.emb φ)) := by
   refine ⟨GlobalTheory.EmbChart.isSplitIdem_idem _, ?_, GlobalTheory.SplitProjChart.rdA_idem φ⟩
-  rw [GlobalTheory.EmbChart.cA_idem, GlobalTheory.EmbChart.idem, ← LinearMap.map_add, add_sub_cancel]
+  rw [GlobalTheory.EmbChart.cA_idem, GlobalTheory.EmbChart.idem, ← LinearMap.map_add (f := _), add_sub_cancel]
   rfl
 
 theorem eq_splitPrime {φ : SplitProj D v} {PP : Pl D.host.E} (hφ : IsProjAt φ PP) :
@@ -107,7 +107,7 @@ theorem exists_unit_lift {A K : Type} [CommRing A] [CommRing K] (π : A →+* K)
   · change e * (e * U + (1 - e) - 1) = e * U + (1 - e) - 1
     linear_combination (U - 1) * hee
   · change π (e * U + (1 - e)) = u
-    rw [map_add, map_mul, h2, h3, hU, one_mul, add_zero]
+    rw [map_add (f := _), map_mul, h2, h3, hU, one_mul, add_zero]
 
 theorem liftsChar_of_resAt : ∀ (D : D7) (χ : (AE D)ˣ →* Circle) (PP : Pl D.host.E) (a : (kP PP)ˣ →* ℂˣ), GlobalTheory.StepLaw.ResAt χ PP a → ∀ (v : HeightOneSpectrum (𝓞 D.host.F)) (φ : SplitProj D v), IsProjAt φ PP → ∀ μ : (Fv D.host.F v)ˣ →* ℂˣ, (∀ (x : (AE D)ˣ) (y : (Fv D.host.F v)ˣ), (∃ e, IsIdemOf φ e ∧ (1 - e) * (x : AE D) = 1 - e ∧ rdA φ (x : AE D) = y) → μ y = Circle.toUnits (χ x)) → LiftsChar φ PP μ a := by
   intro D χ PP a hres v φ hφ μ hμ u k ⟨x0, hx0k, hx0⟩

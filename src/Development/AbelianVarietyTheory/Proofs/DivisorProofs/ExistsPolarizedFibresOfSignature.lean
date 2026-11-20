@@ -120,7 +120,7 @@ theorem exists_obj (l : Level H) (hA : l.A = 1) (T : PAT H (Sp ℂ)) {p q : ℕ}
   obtain ⟨Ef, hEf, -, -, -, -, hW⟩ := AHWeil.tangent_and_weil_of_isAH hT T.pol _ u Hm χ hAH
   obtain ⟨I, -⟩ := UnifObj.exists_tateIso D D ty Pe (fun a x => x ≫ T.t.act.act a)
     (fun n x y c => Out.WeilIs T.t.G T.t.PP.L n x y (unitOn c)) (fun z => u.ex (F z)) (fun _ => LinearMap.id)
-    hP.1 hP.2.1 (fun z z' => by rw [map_add, u.ex_add]) (u.ex_onto.comp F.surjective)
+    hP.1 hP.2.1 (fun z z' => by rw [map_add (f := _), u.ex_add]) (u.ex_onto.comp F.surjective)
     (fun z => (u.ker _).trans (hF z)) hact
     (fun k a b c hk hc => by
       have := hW k ⟨F (Pe a), (hF _).2 ⟨a, rfl⟩⟩ ⟨F (Pe b), (hF _).2 ⟨b, rfl⟩⟩ c hk (by

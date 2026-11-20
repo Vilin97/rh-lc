@@ -21,7 +21,7 @@ theorem exists_root_field {D : Type} [CommRing D] [IsDomain D] (p : ℕ)
       intro h0
       exact nonZeroDivisors.ne_zero hb (hinjF (by simpa using h0))
     have h1 : algebraMap D F (a ^ 2 + (p : D) * b ^ 2) = 0 := by
-      simp only [map_add, map_mul, map_pow, map_natCast]
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast]
       have e : algebraMap D F a ^ 2 + (p : F) * algebraMap D F b ^ 2 =
           ((algebraMap D F a / algebraMap D F b) ^ 2 + (p : F)) * algebraMap D F b ^ 2 := by
         rw [div_pow, add_mul, div_mul_cancel₀ _ (pow_ne_zero 2 hb0)]
@@ -37,7 +37,7 @@ theorem exists_root_field {D : Type} [CommRing D] [IsDomain D] (p : ℕ)
   haveI : Fact (Irreducible g) := ⟨hirr⟩
   refine ⟨AdjoinRoot g, inferInstance, (AdjoinRoot.of g).comp (algebraMap D F), AdjoinRoot.root g, ?_, ?_⟩
   · have h0 : AdjoinRoot.mk g (Polynomial.X ^ 2 + Polynomial.C (p : F)) = 0 := AdjoinRoot.mk_self
-    rw [map_add, map_pow, AdjoinRoot.mk_X, AdjoinRoot.mk_C, map_natCast] at h0
+    rw [map_add (f := _), map_pow, AdjoinRoot.mk_X, AdjoinRoot.mk_C, map_natCast] at h0
     linear_combination h0
   · intro u v huv
     have h1 : AdjoinRoot.mk g (Polynomial.C (algebraMap D F u) +
@@ -93,7 +93,7 @@ theorem twist_isPrime (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (
     · rw [Ideal.span_le, Set.singleton_subset_iff]
       show quad p ∈ RingHom.ker φ
       rw [RingHom.mem_ker]
-      simp only [quad, map_add, map_mul, map_pow, hx, hy, hCp]
+      simp only [quad, map_add (f := _), map_mul, map_pow, hx, hy, hCp]
       have hs' : (Polynomial.C s) ^ 2 = -(p : Polynomial E) := by
         rw [← map_pow, hs]; simp
       linear_combination (Polynomial.X ^ 2 : Polynomial E) * hs'
@@ -112,7 +112,7 @@ theorem twist_isPrime (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (
   have hxx : mk' xN * mk' xN = σ (-(p : Polynomial (MRing ι ⧸ W)) * Polynomial.X ^ 2) := by
     have hq : mk' (quad p) = 0 :=
       Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _))
-    simp only [quad, map_add, map_mul, map_pow] at hq
+    simp only [quad, map_add (f := _), map_mul, map_pow] at hq
     have hc : mk' (C (p : ℤ)) = (p : MRing (Tb ι) ⧸ twist p W) := by simp [mk']
     rw [hc] at hq
     simp only [map_mul, map_neg, map_natCast, map_pow, hσX]
@@ -127,7 +127,7 @@ theorem twist_isPrime (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (
     | add f g hf hg =>
       obtain ⟨a, b, h1⟩ := hf
       obtain ⟨a', b', h2⟩ := hg
-      exact ⟨a + a', b + b', by rw [map_add, h1, h2, map_add, map_add]; ring⟩
+      exact ⟨a + a', b + b', by rw [map_add (f := _), h1, h2, map_add (f := _), map_add (f := _)]; ring⟩
     | mul_X f q hf =>
       obtain ⟨a, b, h1⟩ := hf
       rw [map_mul, h1]
@@ -179,7 +179,7 @@ theorem twist_isPrime (K : Type) [Fintype K] (ι : K → Type) [∀ k, Fintype (
     change φ' (mk' f) = 0 at hq
     change mk' f = 0
     rw [h1] at hq ⊢
-    rw [map_add, map_mul, hσ, hσ, hφx] at hq
+    rw [map_add (f := _), map_mul, hσ, hσ, hφx] at hq
     have hcoef : ∀ n, (a.coeff (n + 1) = 0 ∧ b.coeff n = 0) := by
       intro n
       have := congrArg (fun t => _root_.AddMonoidAlgebra.coeff (M := ℕ) t (n + 1)) hq

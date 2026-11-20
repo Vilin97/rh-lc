@@ -43,7 +43,7 @@ theorem monomial_smul_mem (hM : IsMultigrading ι M piece) (d : (Σ k, ι k) →
     have h2 := hpow k _ _ (ih hy)
     convert h2 using 2
     funext k'
-    simp only [map_add, Finsupp.weight_single, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
+    simp only [map_add (f := _), Finsupp.weight_single, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
       Nat.cast_add, Nat.cast_mul, blockWeight, unitDeg, Pi.single_apply]
     split_ifs <;> push_cast <;> ring
 
@@ -101,7 +101,7 @@ theorem comp_mem_sup [DirectSum.Decomposition piece] {N₁ N₂ : Submodule (MRi
     ∀ y ∈ N₁ ⊔ N₂, ∀ m, comp (piece := piece) m y ∈ N₁ ⊔ N₂ := by
   intro y hy m
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hy
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem_sup (h₁ a ha m) (h₂ b hb m)
 
 open Classical in
@@ -130,7 +130,7 @@ theorem step [∀ k, Fintype (ι k)] (hM : IsMultigrading ι M piece) [DirectSum
       exact Submodule.coe_mem _
     · have h := DirectSum.decompose_of_mem_same piece hy2
       rw [← comp_apply] at h
-      rw [← map_add, h]
+      rw [← map_add (f := _), h]
   by_cases hb : ∀ k, 0 ≤ (m - c) k
   · set b : K → ℕ := fun k => ((m - c) k).toNat with hbdef
     have hbm : m = c + fun k => (b k : ℤ) := by

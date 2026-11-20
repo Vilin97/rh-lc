@@ -71,7 +71,7 @@ theorem kronFun_div {p : ℕ} (hp : p.Prime) :
       prodSer p + xp p ((aC * dC ^ p - aC ^ p * dC) ^ 2) := by
     rw [← gmQ_xp hp0]
     ext m
-    simp only [xp, PowerSeries.coeff_mk, map_add]
+    simp only [xp, PowerSeries.coeff_mk, map_add (f := _)]
     split_ifs <;> simp
   rw [← key, hsum, hk]
   rw [PowerSeries.coeff_C_mul, PowerSeries.coeff_C_mul, PowerSeries.coeff_mk]

@@ -45,7 +45,7 @@ theorem bezout_eventually : ∀ (E : Type) [Field E] [NumberField E] (P : E[X]),
       exact zero_mem _
   filter_upwards [key u₀, key v₀] with w hu hv
   refine ⟨u₀.map (algebraMap E (w.adicCompletion E)), v₀.map (algebraMap E (w.adicCompletion E)), hu, hv, ?_⟩
-  rw [Polynomial.derivative_map, ← Polynomial.map_mul, ← Polynomial.map_mul, ← Polynomial.map_add, h,
+  rw [Polynomial.derivative_map, ← Polynomial.map_mul, ← Polynomial.map_mul, ← Polynomial.map_add (f := _), h,
     Polynomial.map_one]
 
 end GlobalTheory.BCT.SepBezout

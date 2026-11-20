@@ -88,7 +88,7 @@ theorem torusS_loc (t : Fin (n + 1) → Rˣ) (ht : AlgebraicIndependent K fun k 
       ((MvPolynomial.aeval u p : torusS K t S) : R) = MvPolynomial.aeval (fun k => (t k : R)) p := fun p => by
     induction p using MvPolynomial.induction_on with
     | C c => simp
-    | add p q hp hq => simp only [map_add, Subalgebra.coe_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), Subalgebra.coe_add, hp, hq]
     | mul_X p k hp => simp only [map_mul, Subalgebra.coe_mul, hp, MvPolynomial.aeval_X]; rfl
   have hinj := algebraicIndependent_iff_injective_aeval.mp ht
   refine ⟨fun p q h => hinj (by rw [← hval, ← hval, h]), fun a => ?_⟩
@@ -125,7 +125,7 @@ theorem torusS_loc (t : Fin (n + 1) → Rˣ) (ht : AlgebraicIndependent K fun k 
       obtain ⟨f1, g1, hg1, h1⟩ := hx
       obtain ⟨f2, g2, hg2, h2⟩ := hy
       refine ⟨f1 * g2 + f2 * g1, g1 * g2, by rw [map_mul]; exact hg1.mul hg2, ?_⟩
-      simp only [map_add, map_mul]
+      simp only [map_add (f := _), map_mul]
       linear_combination (MvPolynomial.aeval (fun k => (t k : R)) g2) * h1 +
         (MvPolynomial.aeval (fun k => (t k : R)) g1) * h2
     | mul x y _ _ hx hy =>

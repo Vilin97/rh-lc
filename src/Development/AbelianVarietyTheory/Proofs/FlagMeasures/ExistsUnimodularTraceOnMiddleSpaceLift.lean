@@ -49,7 +49,7 @@ theorem nondeg_Wn [FiniteDimensional K V] (x : V) (hx : x ∈ N.Wn) (h : ∀ y �
   obtain ⟨w, hw, u, hu, rfl⟩ := hx'
   obtain ⟨t, rfl⟩ := Submodule.mem_span_singleton.1 hu
   have hz := h _ (NFGeom.z_mem_Wn N)
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, orthogonal_perp_z N hw,
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, orthogonal_perp_z N hw,
     zz] at hz
   have ht : t = 0 := by
     have := N.F.hT
@@ -158,7 +158,7 @@ theorem unimod (L : Submodule (𝓞 K) V) (hL : IsUnimodMod H L (uPerp N.F N.F')
       refine ⟨Wn_le_uPerp N y.2, fun x hx => ?_⟩
       have h1 := h ⟨pr N x, hprW x hx⟩ (hprL x hx)
       rw [hW_B] at h1
-      rw [← pr_add N x, map_add, Wn_perp_II N y.2 (NFGeom.proj_mem N x), add_zero]
+      rw [← pr_add N x, map_add (f := _), Wn_perp_II N y.2 (NFGeom.proj_mem N x), add_zero]
       exact h1
     · intro hy x hx
       rw [hW_B]

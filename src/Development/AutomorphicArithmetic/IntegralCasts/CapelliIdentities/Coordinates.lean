@@ -16,7 +16,7 @@ theorem UpperTheory.Reformulated.B.AdjoinSimpleRationalCoordinates.coords :
   intro E _ _ _ A z hz
   have h1 := congrArg (algebraMap (𝓞 E) E) A.tr_eq
   have h2 := congrArg (algebraMap (𝓞 E) E) A.nm_eq
-  simp only [map_add, map_mul, map_intCast] at h1 h2
+  simp only [map_add (f := _), map_mul, map_intCast] at h1 h2
   have hq : (A.ω : E) * (A.ω : E) = (A.tr : E) * (A.ω : E) - (A.nm : E) := by
     rw [← h1, ← h2]; simp only [NumberField.RingOfIntegers.coe_eq_algebraMap]; ring
   rw [← IntermediateField.mem_toSubalgebra, IntermediateField.adjoin_simple_toSubalgebra_of_isAlgebraic (Algebra.IsAlgebraic.isAlgebraic _)] at hz

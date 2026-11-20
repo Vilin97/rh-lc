@@ -271,7 +271,7 @@ private def wS (σ : Submodule ℂ (UA L n → ℂ)) :
   add_mem' {x y} hx hy i ℓ := by
     have : toForm ι e ((x + y) i) ℓ = toForm ι e (x i) ℓ + toForm ι e (y i) ℓ := by
       funext g
-      simp only [toForm, Pi.add_apply, map_add]
+      simp only [toForm, Pi.add_apply, map_add (f := _)]
     rw [this]
     exact σ.add_mem (hx i ℓ) (hy i ℓ)
   zero_mem' i ℓ := by

@@ -167,7 +167,7 @@ theorem cntP_succ (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
       rw [← ha, Ideal.Quotient.factor_mk, inQ_mk 𝔭 hk] at hi₀
       obtain ⟨b, hb⟩ := exists_tr_one hK hF h𝔭 hi₀ (k + 1)
       refine SecondPropositionFree.mem_range_linPart _ y i₀ (b := Ideal.Quotient.mk _ b) ?_ hw
-      rw [← ha, sg_mk, sg_mk, ← map_mul, ← map_mul, ← map_add, ← map_one (Ideal.Quotient.mk _),
+      rw [← ha, sg_mk, sg_mk, ← map_mul, ← map_mul, ← map_add (f := _), ← map_one (Ideal.Quotient.mk _),
         Ideal.Quotient.eq]
       exact hb)
   rw [Ideal.Quotient.factor_mk] at h

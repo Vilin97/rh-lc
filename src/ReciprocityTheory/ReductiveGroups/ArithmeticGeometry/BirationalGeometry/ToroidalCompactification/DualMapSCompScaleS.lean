@@ -166,7 +166,7 @@ theorem glue_tan' {n : ℕ} (s : Fin n → S) (hs : Ideal.span (Set.range s) = �
          linear_combination (-(g0 x.snd * g0 y.snd)) * he2
        map_zero' := by simp
        map_add' := fun x y => by
-         simp only [TrivSqZeroExt.fst_add, TrivSqZeroExt.snd_add, map_add]
+         simp only [TrivSqZeroExt.fst_add, TrivSqZeroExt.snd_add, map_add (f := _)]
          ring }, fun _ => rfl⟩
   have hdec : ∀ {R : Type} [CommRing R] (x : DualNumber R),
       x = TrivSqZeroExt.inl x.fst + TrivSqZeroExt.inl x.snd * TrivSqZeroExt.inr 1 := by
@@ -183,13 +183,13 @@ theorem glue_tan' {n : ℕ} (s : Fin n → S) (hs : Ideal.span (Set.range s) = �
     refine RingHom.ext fun x => ?_
     rw [RingHom.comp_apply, hgm]
     conv_lhs => rw [hdec x]
-    rw [map_add, map_mul]
+    rw [map_add (f := _), map_mul]
     simp [dualMapS_fst', dualMapS_snd', hg0]
   have hβ : β = gm.comp (dualMapS (qR (s k) (s l))).toRingHom := by
     refine RingHom.ext fun x => ?_
     rw [RingHom.comp_apply, hgm]
     conv_lhs => rw [hdec x]
-    rw [map_add, map_mul]
+    rw [map_add (f := _), map_mul]
     simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, dualMapS_fst', dualMapS_snd', hR', heps]
   have hk := congrArg (fun f => f.left) (hQ k l)
   simp only [Over.comp_left, spMap, Over.homMk_left] at hk

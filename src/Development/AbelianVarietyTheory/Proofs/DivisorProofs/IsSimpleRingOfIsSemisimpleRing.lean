@@ -35,7 +35,7 @@ theorem Datum.exists_of_mem_algO {g : Module.End ℚ D.VQ} (hg : g ∈ D.algO) :
     obtain ⟨q, x, rfl⟩ := hg
     obtain ⟨q', x', rfl⟩ := hh
     refine ⟨1 / (q.den * q'.den), (q.num * q'.den : ℤ) • x + (q'.num * q.den : ℤ) • x', ?_⟩
-    rw [map_add, map_zsmul, map_zsmul, smul_add, ← Int.cast_smul_eq_zsmul ℚ, ← Int.cast_smul_eq_zsmul ℚ,
+    rw [map_add (f := _), map_zsmul, map_zsmul, smul_add, ← Int.cast_smul_eq_zsmul ℚ, ← Int.cast_smul_eq_zsmul ℚ,
       smul_smul, smul_smul]
     congr 2
     · push_cast; conv_lhs => rw [← Rat.num_div_den q]
@@ -111,7 +111,7 @@ theorem Datum.toReal_tmul (D : Datum p) (q : ℚ) (x : D.La) : D.toReal (q ⊗�
 theorem Datum.toReal_smul (D : Datum p) (q : ℚ) (t : D.VQ) : D.toReal (q • t) = (q : ℝ) • D.toReal t := by
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [smul_add, map_add, ha, hb, map_add, smul_add]
+  | add a b ha hb => rw [smul_add, map_add (f := _), ha, hb, map_add (f := _), smul_add]
   | tmul q' x =>
     rw [TensorProduct.smul_tmul', D.toReal_tmul, D.toReal_tmul, TensorProduct.smul_tmul', smul_eq_mul, smul_eq_mul,
       Rat.cast_mul]
@@ -129,18 +129,18 @@ theorem Datum.actReal_tmul (D : Datum p) (x : D.O) (r : ℝ) (y : D.La) : D.actR
 theorem Datum.toReal_actQ (D : Datum p) (x : D.O) (t : D.VQ) : D.toReal (D.actQ x t) = D.actReal x (D.toReal t) := by
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
   | tmul q y => rw [D.actQ_tmul, D.toReal_tmul, D.toReal_tmul, D.actReal_tmul]
 
 theorem Datum.ER_actReal (D : Datum p) (x : D.O) (a c : ℝ ⊗[ℤ] D.La) :
     D.EF.baseChange ℝ (D.actReal x a) c = D.EF.baseChange ℝ a (D.actReal (D.star x).unop c) := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add a a' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+  | add a a' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
   | tmul r y =>
     induction c using TensorProduct.induction_on with
     | zero => simp
-    | add c c' h h' => simp only [map_add, h, h']
+    | add c c' h h' => simp only [map_add (f := _), h, h']
     | tmul r' z => rw [D.actReal_tmul, D.actReal_tmul, LinearMap.BilinForm.baseChange_tmul,
         LinearMap.BilinForm.baseChange_tmul, D.adj]
 

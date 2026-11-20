@@ -396,7 +396,7 @@ theorem surjective_succ
   have e := compactDualityMap_δ φ D t hS hT h₁ h₀ q y
   change compactDualityMap φ D h₁ t M ((δ hS r (r + 1) rfl).hom q) y = _ at e
   have hψy : ψ ((compactδRes φ hT s).hom y) = ν y := congrArg (fun f => f y) hψ
-  rw [map_add, map_zsmul, AddMonoidHom.add_apply, AddMonoidHom.smul_apply, e, hq,
+  rw [map_add (f := _), map_zsmul, AddMonoidHom.add_apply, AddMonoidHom.smul_apply, e, hq,
     neg_neg_one_pow_zsmul_zsmul]
   change _ + ψ ((compactδRes φ hT s).hom y) = l y
   rw [hψy, hν, AddMonoidHom.sub_apply, add_sub_cancel]

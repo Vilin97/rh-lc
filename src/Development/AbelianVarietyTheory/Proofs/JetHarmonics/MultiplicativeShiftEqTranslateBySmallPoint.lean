@@ -26,7 +26,7 @@ lemma bdd_add {f g : ℂ_[q]⟦X⟧} (hf : Bdd f) (hg : Bdd g) : Bdd (f + g) := 
   obtain ⟨A, hA⟩ := hf
   obtain ⟨B, hB⟩ := hg
   refine ⟨A + B, fun n => ?_⟩
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (norm_add_le _ _).trans (add_le_add (hA n) (hB n))
 
 lemma bdd_mul {f g : ℂ_[q]⟦X⟧} (hf : Bdd f) (hg : Bdd g) : Bdd (f * g) := by
@@ -47,7 +47,7 @@ lemma shift_aeval {ζ : ℂ_[q]} (h : ‖ζ - 1‖ < 1) {u w : ℂ_[q]⟦X⟧} (
     simp only [MvPolynomial.aeval_C]
     exact ⟨bdd_C c, Shift.shiftS_C ζ c⟩
   | add p r hp hr =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact ⟨bdd_add hp.1 hr.1, by rw [Shift.shiftS_add h hp.1 hr.1, hp.2, hr.2]⟩
   | mul_X p i hp =>
     have hi : Bdd (![u, w] i) := by
@@ -72,7 +72,7 @@ lemma hat_eval (ι : ℂ ≃+* ℂ_[q]) {ℓ : ℂ_[q]⟦X⟧} (hℓ : constantC
     rw [h2]
     simp
   | add p r hp hr =>
-    simp only [map_add, MvPolynomial.eval₂_add]
+    simp only [map_add (f := _), MvPolynomial.eval₂_add]
     exact ⟨hp.1.add hr.1, by rw [(h1 _ _ hp.1 hr.1).1, hp.2, hr.2]⟩
   | mul_X p i hp =>
     have hi : AnalyticAt ℂ (fun z => ![F z, G z] i) 0 := by
@@ -93,7 +93,7 @@ lemma one_add_X_mul_derivative_logS : (1 + X) * derivative ℂ_[q] (logS : ℂ_[
     field_simp
     ring
   ext n
-  rw [add_mul, one_mul, map_add]
+  rw [add_mul, one_mul, map_add (f := _)]
   cases n with
   | zero => rw [coeff_zero_X_mul, hc]; simp
   | succ n => rw [coeff_succ_X_mul, hc, hc, coeff_one, if_neg (Nat.succ_ne_zero n)]; ring
@@ -165,7 +165,7 @@ def IntLt (n : ℕ) (f : ℂ_[q]⟦X⟧) : Prop := ∀ m < n, ‖coeff m f‖ �
 
 lemma intLt_add {n : ℕ} {f g : ℂ_[q]⟦X⟧} (hf : IntLt n f) (hg : IntLt n g) : IntLt n (f + g) := by
   intro m hm
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf m hm) (hg m hm))
 
 lemma intLt_mul {n : ℕ} {f g : ℂ_[q]⟦X⟧} (hf : IntLt n f) (hg : IntLt n g) : IntLt n (f * g) := by

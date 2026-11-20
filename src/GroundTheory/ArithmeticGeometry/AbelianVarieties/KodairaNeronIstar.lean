@@ -259,7 +259,7 @@ theorem kodairaNeron_bound_of_double_root_y {j : ℕ} (hj : 2 ≤ j) (hS : Stage
       apply mem_quadRoots one_ne_zero
       have := (dvd_iff_residue_eq_zero hπ).1 (stageY_quad W hπ (by omega)
         ⟨d1, ⟨A₂, h2, hA₂⟩, ⟨A₃, h3⟩, h4, ⟨A₆, h6⟩⟩ h3 h6 e)
-      simp only [map_sub, map_add, map_mul, map_pow] at this
+      simp only [map_sub, map_add (f := _), map_mul, map_pow] at this
       linear_combination this
     · exact ⟨none, Finset.mem_insert_self _ _, x, y, h, rfl, dx, dy, Or.inl ⟨hx2, rfl⟩⟩
   · rintro P Q t hP hQ ⟨x, y, h, rfl, dx, dy, hPt⟩ ⟨x', y', h', rfl, dx', dy', hQt⟩
@@ -343,7 +343,7 @@ theorem kodairaNeron_bound_of_triple_root_x {j : ℕ} (hj : 2 ≤ j) (hS : Stage
         h, rfl, dx, dy, Or.inr ⟨hx2, X, rfl, rfl⟩⟩
       apply mem_quadRoots hA₂r
       have := (dvd_iff_residue_eq_zero hπ).1 (stageX_quad W hπ hj hS h2 h4 h6 e)
-      simp only [map_add, map_mul, map_pow] at this
+      simp only [map_add (f := _), map_mul, map_pow] at this
       linear_combination this
     · exact ⟨none, Finset.mem_insert_self _ _, x, y, h, rfl, dx, dy, Or.inl ⟨hx2, rfl⟩⟩
   · rintro P Q t hP hQ ⟨x, y, h, rfl, dx, dy, hPt⟩ ⟨x', y', h', rfl, dx', dy', hQt⟩

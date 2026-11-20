@@ -74,7 +74,7 @@ lemma ev_expand {O : LAlg R₀} {g : ℕ} (gb : Module.Basis (Fin g) R₀ B.gg)
     rw [map_smul, Algebra.smul_def, Algebra.smul_def]
     ring
   | add a b ha hb =>
-    simp only [BX.ev, map_add] at *
+    simp only [BX.ev, map_add (f := _)] at *
     rw [ha, hb, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun _ _ => by rw [Finsupp.add_apply]; ring
 
@@ -341,7 +341,7 @@ theorem exists_tateMatrices_link :
             Matrix.mul_smul, hinv₀]
           rfl
         | add a b ha hb =>
-          rw [map_add, map_add, map_add, Matrix.transpose_add, Matrix.add_mul, Matrix.mul_add, ha, hb]
+          rw [map_add (f := _), map_add (f := _), map_add (f := _), Matrix.transpose_add, Matrix.add_mul, Matrix.mul_add, ha, hb]
       projectors := by simp
       Ht := Ht
       Bt := Bt
@@ -357,7 +357,7 @@ theorem exists_tateMatrices_link :
           rw [e, Matrix.mul_smul, hHt₀]
           rfl
         | add a b ha hb =>
-          rw [map_add, map_add, map_add, Matrix.transpose_add, Matrix.add_mul,
+          rw [map_add (f := _), map_add (f := _), map_add (f := _), Matrix.transpose_add, Matrix.add_mul,
             Matrix.map_add _ (map_add _), Matrix.mul_add, ha, hb], by simp⟩
       form_eq_alt := by
         ext i j
@@ -398,7 +398,7 @@ theorem exists_tateMatrices_link :
         | add a b ha hb =>
           rw [A.act_add, AddSubgroup.coe_add, ha, hb, ← Finset.sum_add_distrib]
           refine Finset.sum_congr rfl fun k _ => ?_
-          rw [map_add, Matrix.add_apply, map_add, val_add_smul _ _ _ (hτ0 k)]
+          rw [map_add (f := _), Matrix.add_apply, map_add (f := _), val_add_smul _ _ _ (hτ0 k)]
       ρL_spec := hρLs }
   refine ⟨A, H, L, rfl, rfl, rfl, fun a => ?_, fun a j n => ?_⟩
   · change ρL _ = _

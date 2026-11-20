@@ -264,7 +264,7 @@ theorem detAlg_of (hE : Formalism.MainNotions.RamifiedCoefficientChains.DcrisExa
     rw [← hsumκ, ← Finset.prod_pow_eq_pow_sum]
     refine Finset.prod_congr rfl fun k _ => ?_
     by_cases hk : (k : ℕ) < m'
-    · simp only [dd, κ, dif_pos hk, map_pow, map_add, PowerSeries.constantCoeff_X,
+    · simp only [dd, κ, dif_pos hk, map_pow, map_add (f := _), PowerSeries.constantCoeff_X,
         PowerSeries.constantCoeff_C, zero_add]
     · simp [dd, κ, dif_neg hk]
   have hzz : ∏ k, zz k = ((PD.p : ℕ) : O) ^ (σ * m') := by
@@ -272,7 +272,7 @@ theorem detAlg_of (hE : Formalism.MainNotions.RamifiedCoefficientChains.DcrisExa
     refine Finset.prod_congr rfl fun k _ => ?_
     by_cases hk : (k : ℕ) < m' <;> simp [zz, hk]
   have hPd : PowerSeries.constantCoeff P.det = PowerSeries.constantCoeff u0 * ((PD.p : ℕ) : O) ^ w0 := by
-    rw [hdetP, map_mul, map_pow, map_add, PowerSeries.constantCoeff_X, zero_add, map_natCast]
+    rw [hdetP, map_mul, map_pow, map_add (f := _), PowerSeries.constantCoeff_X, zero_add, map_natCast]
   have hM0 : (Matrix.of fun l k => red (cols k) l) = QQc.map PowerSeries.constantCoeff := by
     ext l k
     simp only [Matrix.of_apply, hredc (cols k) (QQc' k) (hQQc k)]

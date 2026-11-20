@@ -65,7 +65,7 @@ theorem trace_mul_star_pos : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel
   have hEF : ∀ y z : D.La, D.EF y z = - D.EF z y := by
     intro y z
     have h := D.alt (y + z)
-    simp only [map_add, LinearMap.add_apply, D.alt y, D.alt z, zero_add, add_zero] at h
+    simp only [map_add (f := _), LinearMap.add_apply, D.alt y, D.alt z, zero_add, add_zero] at h
     omega
   have hanti : ∀ u v, D.EF.baseChange ℝ u v = - D.EF.baseChange ℝ v u := by
     intro u v
@@ -79,11 +79,11 @@ theorem trace_mul_star_pos : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel
         simp only [zsmul_eq_mul, Int.cast_neg]
         ring
       | add v w hv hw =>
-        simp only [map_add, LinearMap.add_apply]
+        simp only [map_add (f := _), LinearMap.add_apply]
         rw [hv, hw]
         ring
     | add u w hu hw =>
-      simp only [map_add, LinearMap.add_apply]
+      simp only [map_add (f := _), LinearMap.add_apply]
       rw [hu, hw]
       ring
   have hadjB : ∀ b u v, D.EF.baseChange ℝ (A b u) v = D.EF.baseChange ℝ u (A (D.star b).unop v) := by
@@ -95,8 +95,8 @@ theorem trace_mul_star_pos : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel
       | zero => simp
       | tmul s z =>
         rw [hA, hA, LinearMap.BilinForm.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul, D.adj]
-      | add v w hv hw => simp only [map_add, LinearMap.add_apply, hv, hw]
-    | add u w hu hw => simp only [map_add, LinearMap.add_apply, hu, hw]
+      | add v w hv hw => simp only [map_add (f := _), LinearMap.add_apply, hv, hw]
+    | add u w hu hw => simp only [map_add (f := _), LinearMap.add_apply, hu, hw]
   have hsym : ∀ u v, D.EF.baseChange ℝ (J u) v = D.EF.baseChange ℝ (J v) u := by
     intro u v
     rw [← hJinv (J v) u, hJJ, map_neg, LinearMap.neg_apply, hanti v (J u), neg_neg]

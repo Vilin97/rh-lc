@@ -78,7 +78,7 @@ theorem eq_of_teich (τ : Formalism.CyclotomicNorms.Fbar g →* ℂ) (hτ : Func
     rw [Polynomial.map_mul, roots_mul]
     rw [← Polynomial.map_mul]
     exact Polynomial.map_ne_zero h0
-  rw [hm, rootsBar_pow, Multiset.map_add, Multiset.prod_add, Multiset.map_nsmul, Multiset.prod_nsmul,
+  rw [hm, rootsBar_pow, Multiset.map_add (f := _), Multiset.prod_add, Multiset.map_nsmul, Multiset.prod_nsmul,
     Multiset.map_singleton, Multiset.prod_singleton] at h
   have h2 := mul_right_cancel₀ (pow_ne_zero t (X_sub_C_ne_zero _)) h
   have h3 := congrArg Polynomial.roots h2

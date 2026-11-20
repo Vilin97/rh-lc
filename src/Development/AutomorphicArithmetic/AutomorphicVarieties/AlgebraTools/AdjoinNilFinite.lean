@@ -23,7 +23,7 @@ theorem UpperTheory.V.AlgebraTools.adjoin_nil_finite :
         refine ⟨a + b, ?_⟩
         have e : x + y - algebraMap A G (a + b) =
             (x - algebraMap A G a) + (y - algebraMap A G b) := by
-          rw [map_add]; ring
+          rw [map_add (f := _)]; ring
         rw [e]
         exact (Commute.all _ _).isNilpotent_add ha hb
       algebraMap_mem' := fun r => ⟨r, by simp⟩ }

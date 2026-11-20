@@ -252,7 +252,7 @@ theorem rdU_cover_eq : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, Formalism.
       obtain ⟨u, hu, e⟩ := hδm T.Q.l.M C.d.pd (by have := T.Q.l.three_le; omega) _ _ _
         (hm₁ a (Submodule.smul_mono_left (Ideal.map_mono hlev.1.2.1) ha)) b₂
       refine ⟨(φ₁ _).symm ⟨u, hu⟩, (φ₁ (T.dict j σ h).1).injective (Subtype.ext ?_)⟩
-      rw [hgam, hγδ, e, map_add, map_nsmul, LinearEquiv.apply_symm_apply]
+      rw [hgam, hγδ, e, map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply]
       rfl)
     (fun a i => by
       rw [hP₁, hP₂, hgam, Equiv.apply_symm_apply, hrel]

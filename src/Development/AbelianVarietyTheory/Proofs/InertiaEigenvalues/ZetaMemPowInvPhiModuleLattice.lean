@@ -78,7 +78,7 @@ theorem zetaBound : GlobalTheory.IndefiniteRowSideFullHecke.AdmissibleSignatures
     rw [← Nat.cast_pow, Nat.cast_smul_eq_nsmul]
     exact nsmul_mem hv' _
   have key : (l : K) ^ c₁ • D.zeta y = c • (D.phi X0 + D.phi Q) := by
-    rw [← map_add, ← hsplit, map_smul, hζ, smul_comm]
+    rw [← map_add (f := _), ← hsplit, map_smul, hζ, smul_comm]
   rw [key]
   exact D.MM.smul_mem ⟨c, hc⟩ (add_mem hφX0 hφQ)
 

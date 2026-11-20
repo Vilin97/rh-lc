@@ -176,7 +176,7 @@ theorem chart_form (y : (Σ k, ι k) → Ω) (e : Module.Basis (Fin N) Ω E)
       refine (IsWeightedHomogeneous.mul hU (chartMonoZ_homog c _)).add ?_
       rw [add_comm]
       exact IsWeightedHomogeneous.mul hU' (chartMonoZ_homog c _)
-    · rw [map_add, map_mul, map_mul, hUe, hUe', hQ, hQ, ← map_mul, ← map_mul, ← map_add]
+    · rw [map_add (f := _), map_mul, map_mul, hUe, hUe', hQ, hQ, ← map_mul, ← map_mul, ← map_add (f := _)]
       congr 1
       ring
   | mul z z' _ _ hz hz' =>

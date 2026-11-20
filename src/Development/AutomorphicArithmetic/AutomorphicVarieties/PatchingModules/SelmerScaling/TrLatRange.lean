@@ -129,7 +129,7 @@ theorem UpperTheory.V.Pa.trLat :
       obtain ⟨k, rfl⟩ := hz
       exact (trLat_mul M E).2 (Submodule.subset_span ⟨(k, i, j), rfl⟩)
     | zero => simp
-    | add x y _ _ hx hy => rw [Matrix.add_apply, map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [Matrix.add_apply, map_add (f := _)]; exact add_mem hx hy
     | smul b x _ hx =>
       rw [Matrix.smul_apply, Algebra.smul_def, map_mul]
       exact (trLat_mul M E).1 _ (hM b) _ hx

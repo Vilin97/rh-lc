@@ -24,7 +24,7 @@ theorem hf_add_right (x y z : ι → A) : hform s J x (y + z) = hform s J x y + 
   simp only [hform, Pi.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem hf_add_left (x y z : ι → A) : hform s J (x + y) z = hform s J x z + hform s J y z := by
-  simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hf_smul_right (a : A) (x y : ι → A) : hform s J x (a • y) = a * hform s J x y := by
   simp only [hform, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
@@ -239,7 +239,7 @@ theorem fibre_ne_zero : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     simp only [JR, Matrix.map_apply, HermTop.sigR_inclR, hJ.1]
   obtain ⟨hf, hf2, hfs⟩ : ∃ hf : R ⊗[F] E, hf + hf = 1 ∧ sigR R σ hf = hf := by
     refine ⟨inclR R (algebraMap F E (1 / 2)), ?_, ?_⟩
-    · rw [← map_add, ← map_add]
+    · rw [← map_add (f := _), ← map_add (f := _)]
       norm_num
     · rw [HermTop.sigR_inclR, σ.commutes]
   have hxx : hform (sigR R σ) (JR R J) (X 0) (X 0) = 0 := congrFun (congrFun hX0 0) 0

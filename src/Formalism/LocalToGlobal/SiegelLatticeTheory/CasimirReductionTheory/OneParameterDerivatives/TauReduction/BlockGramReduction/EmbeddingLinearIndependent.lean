@@ -31,7 +31,7 @@ theorem complex_embedding_cases (I : AutInst) (σ : I.E →+* ℂ) :
     intro a
     have ht := hF (a + star a) (by rw [star_add, star_star, add_comm])
     have hm := hF (a * star a) (by rw [star_mul, star_star])
-    rw [map_add, map_add] at ht
+    rw [map_add (f := _), map_add (f := _)] at ht
     rw [map_mul, map_mul] at hm
     have hprod : (σ a - I.φ v a) * (σ a - I.φ v (star a)) = 0 := by
       linear_combination (σ a) * ht - hm
@@ -55,10 +55,10 @@ theorem complex_embedding_cases (I : AutInst) (σ : I.E →+* ℂ) :
   have hb' := (key b).resolve_right hb
   rcases key (a + b) with h | h
   · apply ha
-    rw [map_add, map_add] at h
+    rw [map_add (f := _), map_add (f := _)] at h
     linear_combination h - hb'
   · apply hb
-    rw [map_add, map_add, map_add] at h
+    rw [map_add (f := _), map_add (f := _), map_add (f := _)] at h
     linear_combination h - ha'
 
 theorem embedding_linear_independent (I : AutInst) :

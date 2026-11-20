@@ -29,7 +29,7 @@ theorem toFrac_injective [Module.Flat R L] : Function.Injective (toFrac R L Q) :
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [toFrac]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   rw [e]; exact h
 
 theorem finite_integralClosure [Module.Flat R L] [Algebra.FormallyEtale R L] [Algebra.EssFiniteType R L]

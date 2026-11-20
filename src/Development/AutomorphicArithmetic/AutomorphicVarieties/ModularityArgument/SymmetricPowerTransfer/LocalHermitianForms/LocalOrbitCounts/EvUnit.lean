@@ -91,7 +91,7 @@ theorem UpperTheory.V.Z.Sym.Loc.kappa : UpperTheory.V.Z.Sym.Loc.Kappa := by
       exact this h4
     have hXu : IsUnit (r * (r + 2)) := isUnit_of_mul_isUnit_right (hw ▸ hwu.pow 2)
     have eX : 2 + τ + QuadraticAlgebra.trace (algebraMap K (Lsq K Δ) (algebraMap O K r)) = algebraMap O K (r * (r + 2)) := by
-      rw [QuadraticAlgebra.trace_algebraMap, ← hr', map_mul, map_add, map_ofNat]; ring
+      rw [QuadraticAlgebra.trace_algebraMap, ← hr', map_mul, map_add (f := _), map_ofNat]; ring
     have hX0 : algebraMap O K (r * (r + 2)) ≠ 0 := (hXu.map _).ne_zero
     have hn : QuadraticAlgebra.norm (algebraMap K (Lsq K Δ) (algebraMap O K r)) = 2 + τ := by rw [QuadraticAlgebra.norm_algebraMap, hr']
     refine red _ hn (eX ▸ hX0) _ ?_
@@ -143,7 +143,7 @@ theorem UpperTheory.V.Z.Sym.Loc.kappa : UpperTheory.V.Z.Sym.Loc.Kappa := by
         HL.2.1 _ _ hDe (ev_unit hXu), HL.2.1 _ _ L.even (ev_unit hXu), HL.2.1 _ _ hDe (ev_neg hce)]
       simp
     by_cases hu : IsUnit (2 + τ₀ + 2 * x)
-    · exact main l₀ _ hi hl' hu (by rw [map_add, ep, map_mul, map_ofNat, hx, QuadraticAlgebra.trace_def]; ring)
+    · exact main l₀ _ hi hl' hu (by rw [map_add (f := _), ep, map_mul, map_ofNat, hx, QuadraticAlgebra.trace_def]; ring)
     · have hu' : IsUnit (2 + τ₀ - 2 * x) := by
         by_contra h'
         have : (2 + τ₀ + 2 * x) + (2 + τ₀ - 2 * x) ∈ IsLocalRing.maximalIdeal O := add_mem hu h'

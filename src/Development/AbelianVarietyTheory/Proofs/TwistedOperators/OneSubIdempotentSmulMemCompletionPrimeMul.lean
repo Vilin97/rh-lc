@@ -158,13 +158,13 @@ theorem one_sub_smul_mem : ∀ (D : D7) (P : Formalism.L2.DIV.Pl D.host.E) (e : 
     · simp only [map_mul, hsi, mul_zero]
     · intro Q
       have hΦe : Φ ((1 - e) * s) = Φ ((zb * incA D (x : D.host.E) + zc * incA D (x' : D.host.E)) * s) := by
-        simp only [map_mul, map_sub, map_one, map_add, hΦ.inc, hzb, hzc, hbc]
+        simp only [map_mul, map_sub, map_one, map_add (f := _), hΦ.inc, hzb, hzc, hbc]
       rw [hΦe]
   have key' : 1 - finPart D e =
       finPart D zb * ((1 : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F) ⊗ₜ[D.host.F] (x : D.host.E)) +
         finPart D zc * ((1 : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F) ⊗ₜ[D.host.F] (x' : D.host.E)) := by
     have h := congrArg (finPart D) key
-    simpa only [map_mul, map_sub, map_one, map_add, hsf, mul_one, hinc] using h
+    simpa only [map_mul, map_sub, map_one, map_add (f := _), hsf, mul_one, hinc] using h
   rw [key', add_smul]
   exact AddSubgroup.add_mem _ (mul_smul_mem_hat D P.asIdeal L hzbi hx hy)
     (mul_smul_mem_hat D P.asIdeal L hzci hx' hy)

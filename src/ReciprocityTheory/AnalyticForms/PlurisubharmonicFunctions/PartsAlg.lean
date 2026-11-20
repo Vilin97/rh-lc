@@ -58,7 +58,7 @@ variable {e : ℕ}
 
 theorem leviC_add_snd (H : (Fin e → ℂ) →L[ℝ] (Fin e → ℂ) →L[ℝ] ℝ) (a b b' : Fin e → ℂ) :
     leviC H a (b + b') = leviC H a b + leviC H a b' := by
-  simp only [leviC, smul_add, map_add]
+  simp only [leviC, smul_add, map_add (f := _)]
   push_cast
   ring
 
@@ -76,7 +76,7 @@ theorem leviC_smul_snd (H : (Fin e → ℂ) →L[ℝ] (Fin e → ℂ) →L[ℝ] 
     linear_combination ((c.im : ℂ) * b k) * Complex.I_sq
   unfold leviC
   rw [h2, h1]
-  simp only [map_add, map_sub, map_smul, smul_eq_mul]
+  simp only [map_add (f := _), map_sub, map_smul, smul_eq_mul]
   apply Complex.ext <;> simp <;> ring
 
 theorem sum_leviC_mul (H : (Fin e → ℂ) →L[ℝ] (Fin e → ℂ) →L[ℝ] ℝ) (a x : Fin e → ℂ) :

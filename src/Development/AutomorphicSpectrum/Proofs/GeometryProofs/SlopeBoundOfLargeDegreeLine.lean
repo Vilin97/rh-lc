@@ -76,11 +76,11 @@ theorem exists_isometric_ext {K L' : Type} [Field K] [NumberField K] [Field L'] 
     intro x y
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero, tmul_zero, inner_zero_left]
-    | add x x' hx hx' => simp only [map_add, tmul_add, inner_add_left, hx, hx']
+    | add x x' hx hx' => simp only [map_add (f := _), tmul_add, inner_add_left, hx, hx']
     | tmul a e =>
       induction y using TensorProduct.induction_on with
       | zero => simp only [map_zero, tmul_zero, inner_zero_right]
-      | add y y' hy hy' => simp only [map_add, tmul_add, inner_add_right, hy, hy']
+      | add y y' hy hy' => simp only [map_add (f := _), tmul_add, inner_add_right, hy, hy']
       | tmul b e' =>
         rw [h1, h1, h2, h2, map_smul, map_smul, map_smul, map_smul, inner_smul_left, inner_smul_left,
           inner_smul_right, inner_smul_right, hB]

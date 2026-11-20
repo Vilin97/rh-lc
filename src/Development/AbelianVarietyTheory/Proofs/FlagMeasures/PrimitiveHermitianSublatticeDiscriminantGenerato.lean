@@ -164,9 +164,9 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   have hp1 : ∀ a : U, p a = a := Submodule.projectionOnto_apply_left hc
   have hq1 : ∀ a : W, q a = a := Submodule.projectionOnto_apply_left hc.symm
   obtain ⟨iU, dU⟩ := dual_latIn h hs hp U hsU hpU p (Submodule.projectionOnto_surjective hc)
-    (fun x a => by conv_rhs => rw [← hpq x, map_add, LinearMap.add_apply, horth', add_zero]) L hL
+    (fun x a => by conv_rhs => rw [← hpq x, map_add (f := _), LinearMap.add_apply, horth', add_zero]) L hL
   obtain ⟨iW, dW⟩ := dual_latIn h hs hp W hsW hpW q (Submodule.projectionOnto_surjective hc.symm)
-    (fun x a => by conv_rhs => rw [← hpq x, map_add, LinearMap.add_apply, horth, zero_add]) L hL
+    (fun x a => by conv_rhs => rw [← hpq x, map_add (f := _), LinearMap.add_apply, horth, zero_add]) L hL
   have hLd : L ≤ dual h L := by rw [ht]; exact le_sup_left
   have nL := (GlobalTheory.T.hermitianLatticeDiscriminantOrder_ne_zero_unimodular K V h hK hs (nondeg h hp) L hL).1
   have nU := (GlobalTheory.T.hermitianLatticeDiscriminantOrder_ne_zero_unimodular K U _ hK hsU (nondeg _ hpU) _ iU).1

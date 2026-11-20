@@ -79,7 +79,7 @@ theorem integral_form_extend_of_saturated : ∀ (C : Type) [Field C] (v : Valuat
     exact this
   have hsplit : x = ((xL - s y : L) : X) + ((s y : L) : X) := by simp [xL]
   have hGy : F ((s y : L) : X) = 0 := LinearMap.congr_fun hG y
-  rw [hsplit, map_add, hGy, add_zero, hFS _ hmem]
+  rw [hsplit, map_add (f := _), hGy, add_zero, hFS _ hmem]
   exact hf _ (Submodule.coe_mem _) hmem
 
 end GlobalTheory

@@ -44,7 +44,7 @@ theorem span_corr_baseChange : GlobalTheory.Published.AbelianDeRham → ∀ {F :
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul r c => rw [liftSemi_tmul, map_smul, map_smul, h c]
-    | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
   obtain ⟨hfin, hproj, -⟩ := H1.prim X.ab X.dim
   obtain ⟨n, e, f, hef⟩ := exists_finite_dualBasis (R := R) (M := primDR X.A)
   have key : ∀ (q : primDR X.A →ₗ[R] primDR X.A) (y' : HdR X'.A),
@@ -81,7 +81,7 @@ theorem span_corr_baseChange : GlobalTheory.Published.AbelianDeRham → ∀ {F :
     have hP1 : ∀ c, c - P c ∈ PrimitiveSubmodule X.A := fun c ↦ by
       obtain ⟨u, v, huv, -⟩ := Submodule.existsUnique_add_of_isCompl hN c
       have hv : P v = v := Submodule.projection_apply_of_mem_left hN.symm v.2
-      rw [← huv, map_add, hP0 _ u.2, hv, zero_add, add_sub_cancel_right]
+      rw [← huv, map_add (f := _), hP0 _ u.2, hv, zero_add, add_sub_cancel_right]
       exact u.2
     have hy0 := (Submodule.mem_dualAnnihilator _).1 hy'
     refine Submodule.span_mono ?_ (key P y' fun c ↦ ?_)
@@ -100,7 +100,7 @@ theorem span_corr_baseChange : GlobalTheory.Published.AbelianDeRham → ∀ {F :
       obtain ⟨c, hc, rfl⟩ := hw
       rw [hxx' c, (Submodule.mem_dualAnnihilator _).1 hx c hc, map_zero]
     | zero => exact map_zero _
-    | add a b _ _ ha hb => rw [map_add, ha, hb, add_zero]
+    | add a b _ _ ha hb => rw [map_add (f := _), ha, hb, add_zero]
     | smul r a _ ha => rw [map_smul, ha, smul_zero]
 
 end GlobalTheory.DeRham

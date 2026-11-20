@@ -83,7 +83,7 @@ theorem cubWeil_eq_transport : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
       Algebra.TensorProduct.lift (AlgHom.id K K) ((Algebra.ofId R K).comp s) (fun _ _ => .all _ _) w := fun w => by
     induction w using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     | tmul c a =>
       rw [CartierDual.baseChange_tmul_tmul, Algebra.TensorProduct.lift_tmul, _root_.one_mul, Algebra.smul_def, mul_comm]
       rfl

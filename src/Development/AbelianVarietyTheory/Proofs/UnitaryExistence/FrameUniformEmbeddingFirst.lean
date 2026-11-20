@@ -78,7 +78,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {n : ℕ
 theorem genus_hermA_shift (N : ℕ) (x y w w' : Fin n → AdLat.RA F E) :
     AdLat.hermA c G (x + N • w) (y + N • w') =
       AdLat.hermA c G x y + N • (AdLat.hermA c G w (y + N • w') + AdLat.hermA c G x w') := by
-  simp only [AdLat.hermA, Pi.add_apply, Pi.smul_apply, map_add, map_nsmul, smul_add, Finset.smul_sum,
+  simp only [AdLat.hermA, Pi.add_apply, Pi.smul_apply, map_add (f := _), map_nsmul, smul_add, Finset.smul_sum,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   simp only [nsmul_eq_mul]

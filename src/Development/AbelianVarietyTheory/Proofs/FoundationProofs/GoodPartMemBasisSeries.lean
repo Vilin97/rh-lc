@@ -189,7 +189,7 @@ theorem toFrac_injective : Function.Injective (toFrac O F O') := by
     intro x
     induction x with
     | tmul a x => rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   intro x y hxy
   exact h (by rw [← e, ← e, hxy])
 
@@ -301,7 +301,7 @@ theorem eExt_toFrac (y : O' ⊗[X.O i] Y.Fm i j b) :
       toFrac _ _ O' ((Formalism.MainNotions.IntegralHeckeForms.eO Y i j b).baseChange O' y) := by
   induction y with
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_eExt (L : Submodule O' (O' ⊗[X.O i] Y.Fm i j b)) :
     (L.map (toFrac _ _ O')).map (ToricLatticeDenominators.eExt Y i j b O') =
@@ -333,20 +333,20 @@ theorem up_eq (y : X.Ok i k ⊗[X.O i] Y.Fm i j b) : up Y i j b O' k y =
     LinearMap.rTensor (Y.Fm i j b) (IsScalarTower.toAlgHom (X.O i) (X.Ok i k) O').toLinearMap y := by
   induction y with
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem incl_eq (y : X.Ok i k ⊗[X.O i] Y.Fm i j b) :
     ToricLatticeDenominators.incl Y i j b O' k y = toFrac _ _ O' (up Y i j b O' k y) := by
   induction y with
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem up_e (y : X.Ok i k ⊗[X.O i] Y.Fm i j b) :
     up Y i j b O' k ((Formalism.MainNotions.IntegralHeckeForms.eO Y i j b).baseChange (X.Ok i k) y) =
       (Formalism.MainNotions.IntegralHeckeForms.eO Y i j b).baseChange O' (up Y i j b O' k y) := by
   induction y with
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def ext (L : Submodule (X.Ok i k) (X.Ok i k ⊗[X.O i] Y.Fm i j b)) : Submodule O' (O' ⊗[X.O i] Y.Fm i j b) :=
   Submodule.span O' (up Y i j b O' k '' L)
@@ -409,7 +409,7 @@ theorem ext_self (k : ℕ) (L : Submodule (X.Ok i k) (X.Ok i k ⊗[X.O i] Y.Fm i
     intro y
     induction y with
     | tmul a x => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [ext, Set.image_congr fun y _ => this y, Set.image_id', Submodule.span_eq]
 
 theorem partBAt_iff (k : ℕ) (Q : Finset (PlE D.host)) (ψ : GE N →* (X.Ok i k)ˣ) (ε : ℝ)

@@ -89,7 +89,7 @@ theorem algHom_mem {K : IntermediateField ℚ ℂ} (φ : MvPolynomial σ ℂ →
   obtain ⟨P', rfl⟩ := hP
   induction P' using MvPolynomial.induction_on with
   | C a => rw [MvPolynomial.map_C, MvPolynomial.algHom_C]; exact C_mem a.2
-  | add p q hp hq => rw [map_add, map_add]; exact (coefRing K σ).add_mem hp hq
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _)]; exact (coefRing K σ).add_mem hp hq
   | mul_X p v hp => rw [map_mul, map_mul, MvPolynomial.map_X]; exact (coefRing K σ).mul_mem hp (hX v)
 
 end GlobalTheory.RealRatAct

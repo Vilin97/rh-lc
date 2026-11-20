@@ -22,7 +22,7 @@ theorem riemLat_assemble_of_quot : ∀ (E : Type) [Field E] [NumberField E] [IsC
     show q (R.P (s (x' + y'))) = q (R.P (s x')) + q (R.P (s y'))
     have hD : s x' + s y' ∈ D := D.add_mem (hsD x') (hsD y')
     have h := hwd _ (hsD (x' + y')) _ hD (by rw [hs, hadd _ (hsD x') _ (hsD y'), hs, hs])
-    rw [h, map_add, map_add])
+    rw [h, map_add (f := _), map_add (f := _)])
   have hP' : ∀ x ∈ D, P' (π x) = q (R.P x) := fun x hx => hwd _ (hsD (π x)) _ hx (hs (π x))
   refine ⟨⟨R₁.1, R₁.2, R₁.3, R₁.form, R₁.5, R₁.6, R₁.7, P', Hm', hHm, hpos, ?_, B', ?_⟩, rfl, rfl, hP'⟩
   · intro x' y'

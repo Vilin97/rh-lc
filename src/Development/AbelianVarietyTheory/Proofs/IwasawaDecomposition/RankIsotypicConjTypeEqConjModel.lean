@@ -99,7 +99,7 @@ theorem conjMap_isot (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host
     · rintro ⟨hΦ, hR⟩ T ⟨f, rfl⟩
       let Ψ : π.S →ₗ[ℂ] MMap M' :=
         { toFun := fun x => conjMap M M' c h (Φ (cjS π x))
-          map_add' := fun x y => by rw [cjS_add, map_add, conjMap_add]
+          map_add' := fun x y => by rw [cjS_add, map_add (f := _), conjMap_add]
           map_smul' := fun a x => by simp only [RingHom.id_apply]; rw [cjS_smul, map_smul, conjMap_smul, star_star] }
       have hΨ : principalLevelFrame.IsEqvA (principalLevelFrame.actM P M') π Ψ := by
         intro k x

@@ -46,7 +46,7 @@ theorem aeval_tan (ℓ : ι) (q : MvPolynomial ι K) :
     have hs : (0 : ι →₀ ℕ) ≠ Finsupp.single ℓ 1 := (Finsupp.single_ne_zero.2 one_ne_zero).symm
     ext <;> simp [MvPolynomial.coeff_C, hs, TrivSqZeroExt.algebraMap_eq_inl]
   next p q hp hq =>
-    simp only [map_add, hp, hq, MvPolynomial.coeff_add, TrivSqZeroExt.inl_add, TrivSqZeroExt.inr_add]
+    simp only [map_add (f := _), hp, hq, MvPolynomial.coeff_add, TrivSqZeroExt.inl_add, TrivSqZeroExt.inr_add]
     abel
   next p i hp =>
     rw [map_mul, hp, MvPolynomial.aeval_X]

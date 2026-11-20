@@ -199,7 +199,7 @@ theorem exists_addMonoidHom_eqOn_ball {g : V → A} {r : ℝ} (hr : 0 < r)
       apply ih
       have : (2⁻¹ : ℝ) ^ k • x = (2⁻¹ : ℝ) ^ (k + 1) • x + (2⁻¹ : ℝ) ^ (k + 1) • x := by
         rw [← add_smul, pow_succ]; congr 1; ring
-      rw [this, map_add, hg _ (hball _) _ (hball _), h]
+      rw [this, map_add (f := _), hg _ (hball _) _ (hball _), h]
   have ht : Tendsto (fun j : ℕ => (2⁻¹ : ℝ) ^ j • x) atTop (𝓝 0) := by
     simpa using (tendsto_pow_atTop_nhds_zero_of_lt_one (r := (2⁻¹ : ℝ)) (by norm_num)
       (by norm_num)).smul_const x

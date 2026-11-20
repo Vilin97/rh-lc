@@ -40,7 +40,7 @@ theorem qEq_of_twRel {s : Oˣ} {j : ℕ} (hs : s ^ j = u) {p p' : N.QT j} {P P' 
     have d := (show Mult β u (fun w => s ^ β.be p.1.1.toAdd w) p.1.2 P.1.2 from a.2).mul c
     refine NumD.Gt.ext (b.2.1.trans ((congrArg NumD.Gt.b h2).trans d.1.symm)) (funext fun (w : N.X) => ?_)
     refine (b.2.2 w).trans (Eq.trans ?_ (d.2 w).symm)
-    rw [h2, h1, map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul, zpow_add, zpow_mul,
+    rw [h2, h1, map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul, zpow_add, zpow_mul,
       zpow_natCast, hs]
 end
 

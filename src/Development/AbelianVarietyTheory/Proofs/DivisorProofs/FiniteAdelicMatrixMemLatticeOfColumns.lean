@@ -29,7 +29,7 @@ theorem lift_eq (z : Af D.host.F ⊗[D.host.F] D.host.E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem lift_finPart (z : AE D) (h : infPart D z = 0) : lift D (finPart D z) = z := by
   have key : ∀ z : AE D, z =
@@ -45,7 +45,7 @@ theorem lift_finPart (z : AE D) (h : infPart D z = 0) : lift D (finPart D z) = z
       congr 1
       exact Prod.ext (add_zero a.1).symm (zero_add a.2).symm
     | add x y hx hy =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [add_add_add_comm, ← hx, ← hy]
   have := key z
   rw [h, map_zero, zero_add] at this
@@ -56,7 +56,7 @@ def col (V W : HSp D) (b : Fin V.rank) : (Fin W.rank → Af D.host.F ⊗[D.host.
   map_zero' := by ext i j; simp
   map_add' y z := by
     ext i j
-    simp only [Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add]
+    simp only [Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add (f := _)]
     split_ifs <;> simp
 
 theorem col_mem (V W : HSp D) (hV : V.gram = 1) (k : GA D W) (b : Fin V.rank)
@@ -94,7 +94,7 @@ theorem col_mem (V W : HSp D) (hV : V.gram = 1) (k : GA D W) (b : Fin V.rank)
       rfl
     · simp
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 theorem mem_latO_of_cols : ∀ (D : D7) (V W : HSp D), V.gram = 1 → ∀ (k : GA D W) (x : WO V W), x.map (infPart D) = 0 → (∀ b, (fun a => finPart D (x a b)) ∈ latGHat W k) → x ∈ (latO V W (Formalism.L2.Pj.stdLat D.host.E V.rank : Set (Fin V.rank → D.host.E)) (Bridge.hLat W (fin W k) : Set (Fin W.rank → D.host.E)) fun _ => True) := by

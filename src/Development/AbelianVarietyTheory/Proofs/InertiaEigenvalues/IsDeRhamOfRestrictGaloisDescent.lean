@@ -151,7 +151,7 @@ theorem isDR_of_restrict : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K K' L
       induction x using TensorProduct.induction_on with
       | zero => simp only [map_zero]
       | tmul v b => simp [mulOm_tmul, actVdR_tmul, P.actQdR_Om]
-      | add y z hy hz => simp only [map_add, hy, hz])
+      | add y z hy hz => simp only [map_add (f := _), hy, hz])
     (DdR (P.PD K) ρ) (DdR (P.PD K') (ρ.comp (Subgroup.inclusion hle)))
     (fun x => mem_DdR P K ρ x)
     (fun x => by

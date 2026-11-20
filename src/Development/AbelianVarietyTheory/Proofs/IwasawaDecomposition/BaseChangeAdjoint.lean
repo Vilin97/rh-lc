@@ -9,7 +9,7 @@ namespace GlobalTheory.RedForm
 theorem bilin_skew_of_alt {M : Type} [AddCommGroup M] (B : LinearMap.BilinForm ℤ M) (halt : ∀ x, B x x = 0)
     (x y : M) : B x y = - B y x := by
   have h := halt (x + y)
-  simp only [map_add, LinearMap.add_apply, halt, zero_add, add_zero] at h
+  simp only [map_add (f := _), LinearMap.add_apply, halt, zero_add, add_zero] at h
   exact eq_neg_of_add_eq_zero_left (by rw [add_comm]; exact h)
 
 theorem baseChange_adjoint {K M : Type} [CommRing K] [AddCommGroup M] (B : LinearMap.BilinForm ℤ M)
@@ -21,8 +21,8 @@ theorem baseChange_adjoint {K M : Type} [CommRing K] [AddCommGroup M] (B : Linea
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul k' m' => simp [LinearMap.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul, h]
-    | add y1 y2 h1 h2 => simp only [map_add, h1, h2]
-  | add x1 x2 h1 h2 => simp only [map_add, LinearMap.add_apply, h1, h2]
+    | add y1 y2 h1 h2 => simp only [map_add (f := _), h1, h2]
+  | add x1 x2 h1 h2 => simp only [map_add (f := _), LinearMap.add_apply, h1, h2]
 
 theorem baseChange_nondeg {K M : Type} [CommRing K] [AddCommGroup M] [Module.Free ℤ M] [Module.Finite ℤ M]
     (B : LinearMap.BilinForm ℤ M) (hskew : ∀ x y, B x y = - B y x) (hB : Function.Bijective B)

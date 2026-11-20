@@ -60,7 +60,7 @@ theorem exists_root {d : ℕ} (hd : Valued.v ((d : w.adicCompletion E)) < 1) (t 
       simp only [f, derivative_sub, derivative_X_pow, derivative_C, sub_zero, eval_mul, eval_C, eval_pow,
         eval_X, one_pow, mul_one]
       push_cast; ring
-    rw [this, map_add, map_one, Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mul_mem_right _ _ hdO), zero_add]
+    rw [this, map_add (f := _), map_one, Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mul_mem_right _ _ hdO), zero_add]
     exact isUnit_one
   obtain ⟨a, ha, -⟩ := HenselianRing.is_henselian (I := IsLocalRing.maximalIdeal O) f hmon 1 hf1 hf2
   refine ⟨(a : w.adicCompletion E), ?_⟩

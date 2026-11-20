@@ -124,7 +124,7 @@ theorem repr_baseChange {R E B ι : Type} [CommRing R] [Field E] [Algebra R E] [
       Matrix.map_apply, map_sum, map_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     ring
-  | add a b ha hb => simp [map_add, ha, hb, Matrix.mulVec_add]
+  | add a b ha hb => simp [map_add (f := _), ha, hb, Matrix.mulVec_add]
 
 end GlobalTheory.CayleyHamiltonSmallCoefficients
 
@@ -257,7 +257,7 @@ theorem cayleyHamilton_galV : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlg
         rw [← LinearMap.toMatrix_comp β β β, ← LinearMap.toMatrix_comp β β β, hc]
       have hR : LinearMap.toMatrix β β Rφ = A σ * A σ - LinearMap.toMatrix β β (hT _ hadmT) * A σ
           + ((q : ℤ_[l]) ^ (w + 1)) • LinearMap.toMatrix β β (hT _ hadmD) := by
-        simp only [Rφ, map_add, map_sub, map_smul, LinearMap.toMatrix_comp β β β]
+        simp only [Rφ, map_add (f := _), map_sub, map_smul, LinearMap.toMatrix_comp β β β]
         rfl
       have hmap : (LinearMap.toMatrix β β Rφ).map (algebraMap ℤ_[l] E) =
           (A σ).map (algebraMap ℤ_[l] E) * (A σ).map (algebraMap ℤ_[l] E)
@@ -286,11 +286,11 @@ theorem cayleyHamilton_galV : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlg
     refine Eq.trans ?_ hY
     rw [Matrix.add_mulVec, Matrix.sub_mulVec, Matrix.smul_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
       ← Matrix.mulVec_mulVec]
-    rw [map_add, map_sub, map_smul, map_smul, Finsupp.coe_add,
+    rw [map_add (f := _), map_sub, map_smul, map_smul, Finsupp.coe_add,
       Finsupp.coe_sub, Finsupp.coe_smul, Finsupp.coe_smul, repr_baseChange, repr_baseChange]
   show X.galV l E s (X.galV l E s (jm z)) - t s • X.galV l E s (jm z) + d s • jm z = 0
   calc _ = jm ((gs s).baseChange E ((gs s).baseChange E z) - t s • (gs s).baseChange E z + d s • z) := by
-        rw [map_add, map_sub, map_smul, map_smul, hjG, hjG]
+        rw [map_add (f := _), map_sub, map_smul, map_smul, hjG, hjG]
     _ = 0 := by rw [hW, map_zero]
 
 end GlobalTheory

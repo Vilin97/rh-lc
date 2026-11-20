@@ -54,7 +54,7 @@ theorem numLin_mul_eq_zero (H : Host E) (Dw : Datum H) (Q : MvPolynomial ((E →
     · exact numLin_of_chernRoots_eq_zero H Dw _ (chernRoots_X_of_lt H Dw τ k hk) a
     · exact numLin_relPoly H Dw τ k hk a
   | zero => intro a; simp
-  | add x y _ _ hx hy => intro a; rw [add_mul, map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => intro a; rw [add_mul, map_add (f := _), hx, hy, add_zero]
   | smul r x _ hx => intro a; rw [smul_eq_mul, mul_assoc, mul_comm r, mul_assoc]; exact hx _
 
 end GlobalTheory.GrassTop.RelVanish

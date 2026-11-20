@@ -42,9 +42,9 @@ theorem pair_act' (ρ : Rep A V) (M : SlopeTestRemainingChoices S A) (X X' : Ix 
 
 def frmS (ρ : Rep A V) (M : SlopeTestRemainingChoices S A) : F7.Sesq (Ix S → V) :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun X X' => frm ρ M X X')
-    (fun X Y Z => by simp [frm, pair, act_add, map_add, Finset.sum_add_distrib])
+    (fun X Y Z => by simp [frm, pair, act_add, map_add (f := _), Finset.sum_add_distrib])
     (fun c X Z => by simp [frm, pair, act_smul, Finset.mul_sum])
-    (fun X Y Z => by simp [frm, pair, map_add, Finset.sum_add_distrib])
+    (fun X Y Z => by simp [frm, pair, map_add (f := _), Finset.sum_add_distrib])
     (fun c X Z => by simp [frm, pair, Finset.mul_sum])
 
 theorem frmS_apply (ρ : Rep A V) (M : SlopeTestRemainingChoices S A) (X X' : Ix S → V) : frmS ρ M X X' = frm ρ M X X' := rfl

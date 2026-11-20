@@ -457,7 +457,7 @@ theorem exists_lift {X : Type} [AddCommGroup X] [Module.Finite ℤ X] (β : X �
     rintro _ ⟨z, rfl⟩
     induction z with
     | tmul a b => obtain ⟨c, hc⟩ := h a b; exact ⟨Additive.ofMul c, hc.symm⟩
-    | add z w hz hw => rw [map_add]; exact add_mem hz hw
+    | add z w hz hw => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hz hw
   obtain ⟨s, hs⟩ := Module.projective_lifting_property v.rangeRestrict (Submodule.inclusion hle)
     v.surjective_rangeRestrict
   let m : X → X → M := fun a b => ⟨β a b, a ⊗ₜ b, rfl⟩
@@ -465,7 +465,7 @@ theorem exists_lift {X : Type} [AddCommGroup X] [Module.Finite ℤ X] (β : X �
   · exact (congrArg Subtype.val (LinearMap.congr_fun hs (m a b))).symm
   · exact congrArg (fun z => (s z).toMul) (Subtype.ext e : m a b = m a' b')
   · have : m (a + a') b = m a b + m a' b := Subtype.ext (by simp [m])
-    simp only [this, map_add, toMul_add]
+    simp only [this, map_add (f := _), toMul_add]
 
 end Exist
 

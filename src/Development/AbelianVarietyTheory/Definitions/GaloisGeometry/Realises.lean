@@ -35,7 +35,7 @@ def relPhi (i : ℕ) {n : ℕ} (h : (X.Pj i).m + 1 = n) (a : D.what₂.Tau → �
     intro x y hx hy f
     have h1 := hx f
     have h2 := hy f
-    simp only [GL3Theta.evFr, Prod.fst_add, Prod.snd_add, map_add, Pi.add_apply] at h1 h2 ⊢
+    simp only [GL3Theta.evFr, Prod.fst_add, Prod.snd_add, map_add (f := _), Pi.add_apply] at h1 h2 ⊢
     rw [h1, h2, mul_add]
   zero_mem' := by
     intro f

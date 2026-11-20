@@ -24,7 +24,7 @@ theorem flip_conj (x : ReciprocityTheory.Aut.AL L) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.DefiniteClassFinite
 

@@ -19,7 +19,7 @@ variable {O : Type} [CommRing O] {bar : O → O} {X X₁ : Type} [AddCommGroup X
 
 theorem isMin2_pullR_iff {r : X →ₗ[O] X₁} (hr : Function.Surjective r) (B : X₁ →ₗ[ℤ] X₁ →ₗ[ℤ] ℝ) (y : X) :
     IsMin2 (pullR r B) y ↔ IsMin2 B (r y) := by
-  have e : ∀ x : X, r (y + (x + x)) = r y + (r x + r x) := fun x => by rw [map_add, map_add]
+  have e : ∀ x : X, r (y + (x + x)) = r y + (r x + r x) := fun x => by rw [map_add (f := _), map_add (f := _)]
   constructor
   · intro h x
     obtain ⟨x, rfl⟩ := hr x
@@ -60,7 +60,7 @@ theorem isSpanned_contact : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [Ch
   have hcov : Covers2 fun i => r (a i) := fun y => by
     obtain ⟨y, rfl⟩ := hr y
     obtain ⟨i, x, rfl⟩ := ha y
-    exact ⟨i, r x, by rw [map_add, map_add]⟩
+    exact ⟨i, r x, by rw [map_add (f := _), map_add (f := _)]⟩
   obtain ⟨m, γ, hγ, hnn, hK, hsub⟩ :=
     GlobalTheory.T.contact_set_spans_of_pos_def O bar X₁ ι (fun i => r (a i)) (red X₁) hcov ⟨B₁', hB₁', hdef⟩
   refine ⟨m, fun i => pull r (γ i), fun i => pull_mem r (hγ i), fun i y => hnn i (r y), fun i => ?_, fun B hB => ?_⟩

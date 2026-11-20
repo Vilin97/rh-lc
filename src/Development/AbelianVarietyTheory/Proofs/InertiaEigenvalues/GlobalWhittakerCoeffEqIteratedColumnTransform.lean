@@ -92,7 +92,7 @@ theorem colT_eq_stepCoeff {a k : ℕ} (hk : k < a) {F : GA E a → ℂ} (hc : Co
   have hP' : Per (ratV E (Fin k)) (fun x => (fun y : UnipotentBlockColumnIndex a k k → Ad E =>
       GlobalTheory.StdCharConductor.psi E (-dot (eLast a k) y) * F (blkU y * g)) (colHom hk x)) := by
     refine ⟨hP.1.comp (colHom hk).continuous_toFun, fun γ hγ x => ?_⟩
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hP.2 _ ((colHom_mem_iff hk γ).2 hγ) _
   unfold colT coefF
   rw [← avg_equiv (Fin k → Ad E) (UnipotentBlockColumnIndex a k k → Ad E) (ratV E (Fin k)) (ratV E (UnipotentBlockColumnIndex a k k)) (isCoLat_ratV E _)

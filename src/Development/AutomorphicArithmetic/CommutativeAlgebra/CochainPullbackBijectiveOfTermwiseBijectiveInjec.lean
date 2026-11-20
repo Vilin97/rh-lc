@@ -75,9 +75,9 @@ private theorem coneAt_of_graded (hA : IsFilt dA gA FA rA) (hB : IsFilt dB gB FB
         rw [map_sub, map_sub, map_sub, hd n₁ n₂ h12 v, hxy, hB.dd, sub_zero]
       obtain ⟨v', w', hv', hw'⟩ := ih' _ _ hx'F hy'F hx'c hx'r
       refine ⟨v + v', w + w', ?_, ?_⟩
-      · rw [map_add, ← hv']
+      · rw [map_add (f := _), ← hv']
         abel
-      · rw [map_add, map_add]
+      · rw [map_add (f := _), map_add (f := _)]
         rw [sub_sub, sub_eq_iff_eq_add] at hw'
         rw [hw']
         abel
@@ -141,7 +141,7 @@ private theorem coneAt_of_conn {K L I : Cx R} (g : K ⟶ L) (M : ℤ)
   simp only [Cocycle.mk_coe] at hw
   refine ⟨v' + u, -w, ?_, ?_⟩
   · rw [δ_add, hv', Cocycle.δ_eq_zero, add_zero]
-  · rw [map_add, δ_neg, hw]
+  · rw [map_add (f := _), δ_neg, hw]
     abel
 
 private theorem conn_of_coneAt {K L I : Cx R} (g : K ⟶ L) (M : ℤ)

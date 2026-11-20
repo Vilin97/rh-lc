@@ -313,7 +313,7 @@ theorem field_flag_indep : ∀ (F : Type) [Field F] (Ω : Type) [Field Ω] [Alge
       (by rw [μ.parts_sum]; omega)
   | zero => simp [genNum]
   | add x z _ _ hx hz =>
-    rw [map_add, genNum_add, genNum_add, hx, hz]
+    rw [map_add (f := _), genNum_add, genNum_add, hx, hz]
   | smul n x _ hx =>
     rw [map_zsmul, ← Int.cast_smul_eq_zsmul ℝ, genNum_smul, genNum_smul, hx]
 

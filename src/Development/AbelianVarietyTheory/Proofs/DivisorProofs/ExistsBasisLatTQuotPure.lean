@@ -120,7 +120,7 @@ theorem proj_frame (r : κ → R) :
       rw [hf, hχ, ← algebraMap_smul C]
       exact e.symm
     | zero => simp
-    | add x y _ _ hx hy => rw [add_smul, map_add, TensorProduct.tmul_add, map_add, hx, hy, map_add, add_smul]
+    | add x y _ _ hx hy => rw [add_smul, map_add (f := _), TensorProduct.tmul_add, map_add (f := _), hx, hy, map_add (f := _), add_smul]
     | smul a x _ hx =>
       rw [smul_assoc, map_smul, TensorProduct.tmul_smul, LinearMap.map_smul_of_tower, hx, map_smul, smul_assoc]
   set_option synthInstance.maxHeartbeats 100000 in
@@ -135,7 +135,7 @@ theorem linearIndependent_part : LinearIndependent C (part hs k ρ f) := by
   have hg : ∀ j, IsEquivariant (baseChangeAction C ρ) ρ' (g j) := fun j a x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul c t =>
       obtain ⟨r, rfl⟩ := f.surjective t
       have : baseChangeAction C ρ a (c ⊗ₜ f r) = c ⊗ₜ f (ι a • r) := by rw [hf]; rfl
@@ -155,7 +155,7 @@ theorem span_part : Submodule.span O (Set.range (part hs k ρ f)) = eigQuotLat (
   · rintro _ ⟨_, ⟨x, rfl⟩, rfl⟩
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
     | tmul c t =>
       obtain ⟨r, rfl⟩ := f.surjective t
       rw [LinearMap.liftBaseChange_tmul, map_smul]
@@ -183,7 +183,7 @@ theorem map_quot_eq (φ : T' →ₗ[A] T) (hφ : ∀ a x, φ (ρ' a x) = ρ a (�
   have he : IsEquivariant (baseChangeAction C ρ') (baseChangeAction C ρ) (φ.baseChange C) := fun a x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul c t => exact congrArg (c ⊗ₜ ·) (hφ a t)
   rw [← span_part hι hs k χ hχ ρ' f' hf', Set.range_unique, Submodule.map_span, Set.image_singleton,
     ← proj_frame hι hs k χ hχ ρ f hf, hm]

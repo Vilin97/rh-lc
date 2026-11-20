@@ -256,7 +256,7 @@ theorem frameC_holds : FrameC := by
     induction hy using Submodule.span_induction with
     | mem x hx => exact hS x hx
     | zero => simp
-    | add x y _ _ hx hy => rw [LinearMap.map_add, LinearMap.add_apply, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [LinearMap.map_add (f := _), LinearMap.add_apply, hx, hy, add_zero]
     | smul c x _ hx => rw [hBl, hx, mul_zero]
   have hset : ∀ a : Fin D.R.rS, {b : Fin D.R.rS | b < a} = {b | b.val < a.castSucc.val} := fun a => rfl
   have hsetU : {b : Fin D.R.rS | b.val < (Fin.last D.R.rS).val} = Set.univ := by
@@ -436,7 +436,7 @@ theorem frameC_holds : FrameC := by
   have hzT := Formalism.L2.SG.Pf.zTr C u τ
   refine ⟨?_, hzT.1, hzT.1, ?_, ⟨(embS D τ N.c)⁻¹, ?_⟩, fun a => ⟨hA1 a, hA2 a⟩, fun b hb => hA3 b hb, hZ1, hZ2⟩
   · rw [hfun]
-    refine ⟨fun x y => by beta_reduce; rw [map_add, GramPf.phiV_add],
+    refine ⟨fun x y => by beta_reduce; rw [map_add (f := _), GramPf.phiV_add],
       fun c x => by beta_reduce; rw [map_smul, GramPf.phiV_smul],
       fun x y => by beta_reduce; rw [GramPf.phiV_herm, hm2I], ?_⟩
     rw [show (Set.range fun y => phiV C τ (m2 y)) = Set.range (phiV C τ) from
@@ -469,7 +469,7 @@ theorem frameC_holds : FrameC := by
     rw [hE, Matrix.mulVec_smul, Matrix.mulVec_mulVec, hGl, Matrix.one_mulVec, hΦ]
     refine Submodule.smul_mem _ _ ?_
     exact span_map_mem (embS D τ) (fun y => phiV C τ (m2 y))
-      (fun x y => by beta_reduce; rw [map_add, GramPf.phiV_add])
+      (fun x y => by beta_reduce; rw [map_add (f := _), GramPf.phiV_add])
       (fun c x => by beta_reduce; rw [map_smul, GramPf.phiV_smul]) (fN '' {b | b.val < N.j}) _
       (by rintro _ ⟨b, hb, rfl⟩; beta_reduce; rw [hm2f']; exact hXst b hb) _ (hfN5 a ha)
   · have hE : Formalism.QuantumDeterminants.bvec (Formalism.QuantumDeterminants.eI D.R.k D.R.rS a) = ((((2 * D.host.v) ^ (D.R.rS - a.val) : ℝ) : ℂ))⁻¹ •
@@ -478,7 +478,7 @@ theorem frameC_holds : FrameC := by
     rw [hE, Matrix.mulVec_smul, hgΦ]
     refine Submodule.smul_mem _ _ ?_
     exact span_map_mem (embS D τ) (fun y => phiV C τ (mA (t.lin.symm y)))
-      (fun x y => by beta_reduce; rw [map_add, map_add, GramPf.phiV_add])
+      (fun x y => by beta_reduce; rw [map_add (f := _), map_add (f := _), GramPf.phiV_add])
       (fun c x => by beta_reduce; rw [map_smul, map_smul, GramPf.phiV_smul]) (fM '' {b | b.val < N.j}) _
       (by rintro _ ⟨b, hb, rfl⟩; beta_reduce; rw [hmAf']; exact hXst b hb) _ (hfM5 a ha)
   · refine hcancel _ _ (hρa a) ?_

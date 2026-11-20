@@ -212,7 +212,7 @@ theorem sigR_sigR {F E : Type} [Field F] [NumberField F] [Field E] [NumberField 
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigR, hs]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end Place
 

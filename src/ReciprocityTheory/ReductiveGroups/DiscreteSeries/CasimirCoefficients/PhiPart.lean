@@ -254,7 +254,7 @@ theorem phiM_part (μ : Fin n → ℤ) {z B : Matrix (Fin n) (Fin n) ℂ} (hz : 
     abel
   have d1 : ∑ a, (μ a : ℂ) * X1 a a = ∑ a, (μ a : ℂ) * B a a := by simp [hX1]
   have d2 : ∑ a, (μ a : ℂ) * X2 a a = ∑ a, (μ a : ℂ) * B a a := by simp [hX2]
-  rw [hsplit, map_add, map_add, fderiv_phiM_lower μ hz hL, fderiv_phiM_upper μ hz hU, d1, d2]
+  rw [hsplit, map_add (f := _), map_add (f := _), fderiv_phiM_lower μ hz hL, fderiv_phiM_upper μ hz hU, d1, d2]
   ring
 
 end ReciprocityTheory.ChartRestriction.DS.S7

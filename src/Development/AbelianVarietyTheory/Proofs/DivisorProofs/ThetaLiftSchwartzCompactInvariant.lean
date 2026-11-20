@@ -49,7 +49,7 @@ theorem tmap_eInf_smul (x : AE F E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul b y => simp [TensorProduct.smul_tmul', fstA_eInf]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _)]
 
 theorem map_fst_eq_one {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {k : UA σ J} (h1 : compArch σ J k = 1) :
     (mat k).map (Algebra.TensorProduct.map (fstA F) (AlgHom.id F E)) = 1 := by

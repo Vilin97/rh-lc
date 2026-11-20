@@ -19,7 +19,7 @@ theorem analyticAt_eval_poly {D : ℕ} {σ : Type*} (p : MvPolynomial σ ℂ)
   · simpa using analyticAt_const
   · rename_i p q hp hq
     have h := hp.add hq
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact h
   · rename_i p i hp
     have h := hp.mul (hγ i)

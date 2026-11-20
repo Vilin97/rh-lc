@@ -25,7 +25,7 @@ theorem schr_schr {R : Type} [CommRing R] [Invertible (2 : R)] (ψ : AddChar R �
 theorem rho_rho {R : Type} [CommRing R] [Invertible (2 : R)] {V : Type} [AddCommGroup V] [Module R V]
     {Bf : V → V → R} {κ : Type} [Fintype κ] (dc : Darboux Bf κ) (ψ : AddChar R ℂ) (w w' : V) (h : Bf w w' = 0)
     (φ : (κ → R) → ℂ) : dc.rho ψ w (dc.rho ψ w' φ) = dc.rho ψ (w + w') φ := by
-  simp only [Darboux.rho, map_add]
+  simp only [Darboux.rho, map_add (f := _)]
   refine schr_schr ψ _ _ ?_ φ
   have := dc.form w w'
   rw [h] at this

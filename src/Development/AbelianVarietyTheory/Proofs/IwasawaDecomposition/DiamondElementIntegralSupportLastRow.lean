@@ -351,8 +351,8 @@ theorem fT_kill (hLb : IsBase S π) (hv : (T : 𝓞 F) ∈ v.asIdeal) (hP : P.un
     show ι (algebraMap (𝓞 E) E i) * s.1 j = ι (algebraMap (𝓞 E) E π) * (ι _ * s.1 j)
     rw [← mul_assoc, ← map_mul, mul_inv_cancel_left₀ hπ0]
   have e : s = kap F v (y * cO E π) • s + kap F v i • s := by
-    rw [← add_smul, ← map_add, hyi, map_one, one_smul]
-  rw [e, map_add, hA, hB, add_zero]
+    rw [← add_smul, ← map_add (f := _), hyi, map_one, one_smul]
+  rw [e, map_add (f := _), hA, hB, add_zero]
 
 theorem ee_self (r : Fin n) : ee n F E v r r = 1 := by
   simp [ee]
@@ -369,7 +369,7 @@ theorem mem_of_smul_eq_zero {A M : Type} [CommRing A] [AddCommGroup M] [Module A
   obtain ⟨y, i, hi, hyi⟩ := P.isMaximal.exists_inv hdn
   apply hm
   have e : κ (y * d + i) • m = m := by rw [hyi, map_one, one_smul]
-  rw [← e, map_add, add_smul, map_mul, mul_smul, hd, smul_zero, hP i hi, zero_add]
+  rw [← e, map_add (f := _), add_smul, map_mul, mul_smul, hd, smul_zero, hP i hi, zero_add]
 
 set_option maxHeartbeats 2000000 in
 

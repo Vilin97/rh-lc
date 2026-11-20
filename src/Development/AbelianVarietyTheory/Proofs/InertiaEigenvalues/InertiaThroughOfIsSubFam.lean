@@ -76,7 +76,7 @@ theorem subIner_rTensor_inj {Qp LL B V U : Type} [Field Qp] [Field LL] [Algebra 
     | tmul v b =>
       conv_rhs => rw [← h1 v, TensorProduct.sum_tmul]
       simp
-    | add z w hz hw => simp only [map_add, Finset.sum_add_distrib, hz, hw]
+    | add z w hz hw => simp only [map_add (f := _), Finset.sum_add_distrib, hz, hw]
   rw [← h2 x]
   simp [hx]
 
@@ -104,7 +104,7 @@ theorem subIner_mem_Dpcris (ρ : Representation LL G V) (x : V ⊗[Qp] B) :
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVB, PotCrysData.resH, PC.actB_eq]
-    | add z w hz hw => simp only [map_add, hz, hw]
+    | add z w hz hw => simp only [map_add (f := _), hz, hw]
   simp [PotCrysData.Dpcris, Dcris, Submodule.mem_iInf, sub_eq_zero, h1]
 
 theorem subIner_actVB_mul (ρ : Representation LL G V) (g h : G) (z : V ⊗[Qp] B) :
@@ -112,7 +112,7 @@ theorem subIner_actVB_mul (ρ : Representation LL G V) (g h : G) (z : V ⊗[Qp] 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB]
-  | add z w hz hw => simp only [map_add, hz, hw]
+  | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 theorem subIner_Dpcris_stable (ρ : Representation LL G V) (g : G) (x : V ⊗[Qp] B)
     (hx : x ∈ PC.Dpcris ρ) : actVB PC.PD ρ g x ∈ PC.Dpcris ρ := by
@@ -131,7 +131,7 @@ theorem subIner_rTensor_actVB (ρ : Representation LL G V) (σ : Representation 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB, hf]
-  | add z w hz hw => simp only [map_add, hz, hw]
+  | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 theorem subIner_mem_Eig (ρ : Representation LL G V) (I : Subgroup G) (a : I →* LLˣ) (x : V ⊗[Qp] B) :
     x ∈ PC.Eig ρ I a ↔ x ∈ PC.Dpcris ρ ∧ ∀ g : I, actVB PC.PD ρ g x = ((a g : LLˣ) : LL) • x := by

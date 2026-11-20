@@ -89,7 +89,7 @@ theorem phi_lam (hv : ∀ k ∈ K, σ k v = v) (g : G) (f : (G ⧸ K) →₀ ℂ
     phi K σ v (lam K g f) = σ g (phi K σ v f) := by
   induction f using Finsupp.induction_linear with
   | zero => simp only [map_zero]
-  | add f₁ f₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+  | add f₁ f₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
   | single y c =>
     obtain ⟨x, rfl⟩ := QuotientGroup.mk_surjective y
     rw [lam_single, phi_single hv, phi_single hv, map_mul, ContinuousLinearMap.mul_apply,
@@ -117,7 +117,7 @@ theorem phi_phi (hv : ∀ k ∈ K, σ k v = v) (h : Hk K) (f : (G ⧸ K) →₀ 
       phi K σ v ((h : Module.End ℂ ((G ⧸ K) →₀ ℂ)) f) := by
   induction f using Finsupp.induction_linear with
   | zero => simp only [map_zero]
-  | add f₁ f₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+  | add f₁ f₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
   | single y c =>
     obtain ⟨x, rfl⟩ := QuotientGroup.mk_surjective y
     have hd : lam K x (dlt K) = Finsupp.single (x : G ⧸ K) 1 := by
@@ -195,7 +195,7 @@ theorem stTransfer : StTransfer := by
     let L : Hk K →+ H :=
       { toFun := fun h => phi K σ u ((h : Module.End ℂ ((G ⧸ K) →₀ ℂ)) (dlt K)),
         map_zero' := by simp,
-        map_add' := fun x y => by simp [map_add] }
+        map_add' := fun x y => by simp [map_add (f := _)] }
     have hw : ∀ π : Equiv.Perm (Fin M), A (word E (List.ofFn fun i => σ (g (π i)))) =
         L (List.ofFn fun i => b (g (π i))).reverse.prod := by
       intro π

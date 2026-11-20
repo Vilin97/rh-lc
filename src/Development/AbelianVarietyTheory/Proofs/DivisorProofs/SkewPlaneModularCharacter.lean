@@ -213,7 +213,7 @@ theorem isLevi_of_lines {n n₁ : ℕ} {W : Spc F E n} {W₁ : Spc F E n₁} {H 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [c, cA, hσ]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   have e : ∀ v : Fin n → E, incM F W.J *ᵥ (c ∘ incV F v) = incV F (W.J *ᵥ (σ ∘ v)) := fun v => incM_mulVec W.J (σ ∘ v)
   have ev : ∀ v : Fin n → E, v ᵥ* H.ι = 0 → incV F v ᵥ* incM F H.ι = 0 := fun v hv => funext fun i =>
     (RingHom.map_vecMul f H.ι v i).symm.trans (by rw [hv]; exact map_zero f)
@@ -224,7 +224,7 @@ theorem isLevi_of_lines {n n₁ : ℕ} {W : Spc F E n} {W₁ : Spc F E n₁} {H 
     (by
       rw [e, e, ← incM_one, ← hD, ← incM_mul]
       ext i j
-      simp only [incM, incV, vecMulVec_apply, map_apply, Matrix.sub_apply, Matrix.add_apply, map_sub, map_add, map_mul]) hg gx gy
+      simp only [incM, incV, vecMulVec_apply, map_apply, Matrix.sub_apply, Matrix.add_apply, map_sub, map_add (f := _), map_mul]) hg gx gy
   set h := incM F L * mat g * incM F H.ι
   have hgr : (incM F H.ι)ᵀ * incM F W.J * (incM F H.ι).map c = incM F W₁.J := by
     rw [← hgram, incM_mul, incM_mul]; rfl

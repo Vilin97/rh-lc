@@ -47,7 +47,7 @@ theorem subsingleton_coh_canon_tens : GlobalTheory.Published.NefNumerics → Glo
   have hM : (tens K.bundle N).IsLB := isLB_tens K.isLB hnef.isLB
   have hK' := LB.isLB_pull K.isLB π
   obtain ⟨i⟩ := nonempty_twist_iso_of_cls_eq (structureModule X') (LB.isLB_pull hM π) (isLB_tens hK' hL)
-    (by rw [cls_pull hM π, cls_tens K.isLB hnef.isLB, cls_tens hK' hL, cls_pull K.isLB π, cls_pull hnef.isLB π, map_add])
+    (by rw [cls_pull hM π, cls_tens K.isLB hnef.isLB, cls_tens hK' hL, cls_pull K.isLB π, cls_pull hnef.isLB π, map_add (f := _)])
   exact subsingleton_coh_of_pull (f := p) (f' := p') H hM q
     ((cohOn.mapIso Γ(X', ⊤) ⊤ q i).toEquiv.subsingleton_congr.2 hKV)
 

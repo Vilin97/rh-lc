@@ -11,7 +11,7 @@ variable {O : Type*} [CommRing O] {D : Type*} [Group D] {M : Type*} [AddCommGrou
 
 def coD0 (ρ : Representation O D M) : M →ₗ[O] (D → M) where
   toFun v g := ρ g v - v
-  map_add' v w := by ext g; simp only [map_add, Pi.add_apply]; abel
+  map_add' v w := by ext g; simp only [map_add (f := _), Pi.add_apply]; abel
   map_smul' c v := by ext g; simp only [map_smul, Pi.smul_apply, RingHom.id_apply, smul_sub]
 
 def coB1 (ρ : Representation O D M) : Submodule O (D → M) := LinearMap.range (coD0 ρ)

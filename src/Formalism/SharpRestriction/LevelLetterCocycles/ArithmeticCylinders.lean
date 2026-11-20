@@ -31,7 +31,7 @@ def eigSp {O K V X : Type} [CommRing O] [Field K] [Algebra O K] [AddCommGroup V]
     [Module O V] [IsScalarTower O K V] (T : Subalgebra O (X → O)) (act : T →ₐ[O] (V →ₗ[K] V)) (π : X) : Submodule K V where
   carrier := {v | ∀ t : T, act t v = algebraMap O K ((t : X → O) π) • v}
   add_mem' := fun {a b} ha hb t => by
-    rw [map_add, ha t, hb t, smul_add]
+    rw [map_add (f := _), ha t, hb t, smul_add]
   zero_mem' := fun t => by
     rw [map_zero, smul_zero]
   smul_mem' := fun c v hv t => by

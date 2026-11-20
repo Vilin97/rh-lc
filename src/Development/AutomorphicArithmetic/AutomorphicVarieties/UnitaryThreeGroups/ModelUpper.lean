@@ -42,7 +42,7 @@ private theorem graded_ext {ξ ξ' : A →ₐ[O] K} (h : ∀ j, ∀ f ∈ 𝒜 j
   induction f using DirectSum.Decomposition.inductionOn 𝒜 with
   | zero => simp
   | homogeneous m => exact h _ _ m.2
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 private theorem act_act (s t : Kˣ) (ξ : A →ₐ[O] K) :
     act 𝒜 (tz s) (act 𝒜 (tz t) ξ) = act 𝒜 (tz (s * t)) ξ :=

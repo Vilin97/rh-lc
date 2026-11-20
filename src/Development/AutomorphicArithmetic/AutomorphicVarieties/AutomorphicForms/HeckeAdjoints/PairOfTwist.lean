@@ -46,7 +46,7 @@ theorem UpperTheory.V.Af.Gk.pairOfTwist :
     have e : (Matrix.of (toL (-(Matrix.of X)ᵀ))).trace = -(Matrix.of X).trace := by
       change (-(Matrix.of X)ᵀ).trace = _
       rw [Matrix.trace_neg, Matrix.trace_transpose]
-    simp only [T, CuspSub.op_toTwist, opAdd, opMul, Units.val_one, one_smul, map_add, map_smul, LinearMap.add_apply,
+    simp only [T, CuspSub.op_toTwist, opAdd, opMul, Units.val_one, one_smul, map_add (f := _), map_smul, LinearMap.add_apply,
       LinearMap.smul_apply, smul_eq_mul, e, map_neg] at h
     change B (T _) (T ψ) + B (T φ) (T _) = 0
     linear_combination h

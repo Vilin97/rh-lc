@@ -304,7 +304,7 @@ theorem exists_forms_vanish {V : Type} [AddCommGroup V] [Module ℂ V]
     obtain ⟨r₁, h₁⟩ := ha
     obtain ⟨r₂, h₂⟩ := hb
     refine ⟨max r₁ r₂, fun r hr l hl => ?_⟩
-    rw [map_add, map_add, h₁ r (le_of_max_le_left hr) l hl, h₂ r (le_of_max_le_right hr) l hl,
+    rw [map_add (f := _), map_add (f := _), h₁ r (le_of_max_le_left hr) l hl, h₂ r (le_of_max_le_right hr) l hl,
       add_zero]
   | smul c a _ ha =>
     obtain ⟨r₁, h₁⟩ := ha

@@ -14,7 +14,7 @@ private def ZM {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} (X : 
   carrier := {a | ∀ u, AdicCompletion.eval (idl l) (X.Kl l) n (a u) = 0}
   add_mem' {a b} ha hb u := by
     show AdicCompletion.eval (idl l) (X.Kl l) n (a u + b u) = 0
-    rw [map_add, ha u, hb u, add_zero]
+    rw [map_add (f := _), ha u, hb u, add_zero]
   zero_mem' u := by
     show AdicCompletion.eval (idl l) (X.Kl l) n 0 = 0
     exact map_zero _

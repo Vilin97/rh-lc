@@ -50,7 +50,7 @@ theorem hensel_step : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicati
   have key : ∀ i j, Formalism.UG.hform σ J (z' i) (z' j) - Formalism.UG.hform σ J (z i) (z j) =
       ϖ ^ k * (Formalism.UG.hform σ J (z i) (w j) + Formalism.UG.hform σ J (w i) (z j) + ϖ ^ k * Formalism.UG.hform σ J (w i) (w j)) := by
     intro i j
-    simp only [Formalism.UG.hform, hz'e, map_add, map_mul, map_pow, hσϖ, mul_add, Finset.mul_sum, ← Finset.sum_sub_distrib,
+    simp only [Formalism.UG.hform, hz'e, map_add (f := _), map_mul, map_pow, hσϖ, mul_add, Finset.mul_sum, ← Finset.sum_sub_distrib,
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun r _ => Finset.sum_congr rfl fun s _ => by ring
   have hgram1 : ∀ i j, GlobalTheory.Hk3.IntWitt.DvdPow ϖ 1 (Formalism.UG.hform σ J (z i) (w j) + Formalism.UG.hform σ J (w i) (z j)) := by

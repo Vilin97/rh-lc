@@ -21,7 +21,7 @@ theorem good_add {φ ψ : Sm E a} (hφ : Good φ) (hψ : Good ψ) : Good (φ + �
     have h1' : finRep E a k φ = φ := h1
     have h2' : finRep E a k ψ = ψ := h2
     show finRep E a k (φ + ψ) = φ + ψ
-    rw [map_add, h1', h2']
+    rw [map_add (f := _), h1', h2']
 
 theorem good_smul {φ : Sm E a} (hφ : Good φ) (s : ℂ) : Good (s • φ) := by
   refine ⟨fun γ g => ?_, ?_⟩

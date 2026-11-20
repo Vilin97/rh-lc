@@ -103,12 +103,12 @@ theorem form_mul (Q : Matrix α α E) (g : UG c (stdJ ν E)) (w w' : Matrix α (
 omit [DecidableEq α] in
 theorem form_add_left (Q : Matrix α α E) (w₁ w₂ w' : Matrix α (ν ⊕ ν) E) :
     form c Q (w₁ + w₂) w' = form c Q w₁ w' + form c Q w₂ w' := by
-  simp only [form, hTens, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add, mul_add]
+  simp only [form, hTens, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _), mul_add]
 
 omit [DecidableEq α] in
 theorem form_add_right (Q : Matrix α α E) (w w₁ w₂ : Matrix α (ν ⊕ ν) E) :
     form c Q w (w₁ + w₂) = form c Q w w₁ + form c Q w w₂ := by
-  simp only [form, hTens, Matrix.add_apply, Finset.sum_add_distrib, map_add, mul_add]
+  simp only [form, hTens, Matrix.add_apply, Finset.sum_add_distrib, map_add (f := _), mul_add]
 
 theorem form_swap (hc : ∀ z, c (c z) = z) {Q : Matrix α α E} (hQ : IsHerm c Q) (w w' : Matrix α (ν ⊕ ν) E) :
     form c Q w' w = -form c Q w w' := by

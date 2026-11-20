@@ -82,7 +82,7 @@ theorem approxE (S : Finset (HeightOneSpectrum (𝓞 F))) (c : 𝓞 F) (hc : c �
         obtain ⟨j, rfl⟩ := hy
         exact Submodule.subset_span ⟨j, rfl⟩
       | zero => rw [map_zero]; exact zero_mem _
-      | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+      | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
       | smul t y _ hy =>
         rw [Algebra.smul_def, map_mul, (A p).compat, ← Algebra.smul_def]
         exact Submodule.smul_mem _ _ hy

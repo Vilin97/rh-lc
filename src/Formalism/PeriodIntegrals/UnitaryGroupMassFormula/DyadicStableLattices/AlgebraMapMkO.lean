@@ -29,7 +29,7 @@ theorem mkO_mul (a b c e : ℤ) :
 
 theorem mkO_add (a b c e : ℤ) : mkO m a b + mkO m c e = mkO m (a + c) (b + e) := by
   apply FaithfulSMul.algebraMap_injective (𝓞 (Kq m)) (Kq m)
-  rw [map_add, algebraMap_mkO, algebraMap_mkO, algebraMap_mkO]
+  rw [map_add (f := _), algebraMap_mkO, algebraMap_mkO, algebraMap_mkO]
   ext <;> simp
 
 theorem mkO_sub (a b c e : ℤ) : mkO m a b - mkO m c e = mkO m (a - c) (b - e) := by

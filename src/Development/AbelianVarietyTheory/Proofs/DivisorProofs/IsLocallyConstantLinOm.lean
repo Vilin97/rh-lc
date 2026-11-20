@@ -176,7 +176,7 @@ theorem exists_implementer [CharZero k] {n : ℕ} (hψ : Continuous ψ) (hψ1 : 
     (fun Y z => (hσ _ _).trans (by simp [dotProduct, r]; rfl))
     (fun w => ⟨of fun _ => (σ.symm w).1, of fun _ => (σ.symm w).2, by
       show σ ((σ.symm w).1, 0) + σ (0, (σ.symm w).2) = w
-      rw [← map_add]; simp⟩)
+      rw [← map_add (f := _)]; simp⟩)
   let h : (Fin n → k) ≃ₜ Matrix (Fin 1) (Fin n) k := (Homeomorph.funUnique (Fin 1) (Fin n → k)).symm
   have hsb : ∀ {X Y : Type} [TopologicalSpace X] [TopologicalSpace Y] (e : X ≃ₜ Y), ∀ f ∈ SB Y, f ∘ e ∈ SB X :=
     fun e f hf => ⟨hf.1.comp_continuous e.continuous, hf.2.comp_homeomorph e⟩
@@ -194,7 +194,7 @@ theorem exists_implementer [CharZero k] {n : ℕ} (hψ : Continuous ψ) (hψ1 : 
   show (T (schrS hψ (σ w) φ)).1 = schr ψ w (T φ).1
   have e1 := schr_schr ψ (σ (0, w.2)) (σ (w.1, 0)) φ
   have e2 := schr_schr ψ (0, w.2) (w.1, 0) (T φ).1
-  rw [hσ, ← map_add] at e1
+  rw [hσ, ← map_add (f := _)] at e1
   simp only [Prod.mk_add_mk, zero_add, add_zero, Prod.mk.eta] at e1 e2
   have hne : ∀ t, ψ t ≠ 0 := fun t => (ψ.val_isUnit t).ne_zero
   refine smul_right_injective _ (hne _) (Eq.trans ?_ e2)
@@ -216,9 +216,9 @@ variable {k : Type} [Field k] [Invertible (2 : k)] {E : Type} [Field E] [Algebra
 
 def trB (c : E →ₐ[k] E) : LinearMap.BilinForm k (Fin 2 → E) :=
   LinearMap.mk₂ k (fun u v => Algebra.trace k E (u 0 * c (v 1) - u 1 * c (v 0)))
-    (fun u u' v => by rw [← map_add]; congr 1; simp only [Pi.add_apply]; ring)
+    (fun u u' v => by rw [← map_add (f := _)]; congr 1; simp only [Pi.add_apply]; ring)
     (fun a u v => by rw [← map_smul]; congr 1; simp [smul_sub])
-    (fun u v v' => by rw [← map_add]; congr 1; simp only [Pi.add_apply, map_add]; ring)
+    (fun u v v' => by rw [← map_add (f := _)]; congr 1; simp only [Pi.add_apply, map_add (f := _)]; ring)
     (fun a u v => by rw [← map_smul]; congr 1; simp [smul_sub])
 
 omit [Invertible (2 : k)] in

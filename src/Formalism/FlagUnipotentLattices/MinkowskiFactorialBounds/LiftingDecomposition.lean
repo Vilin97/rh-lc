@@ -110,10 +110,10 @@ theorem lifting_unitary : Formalism.HermitianLatticeCounting.S6.LiftUnitary := b
     intro x y
     obtain ⟨a, b, hb, rfl⟩ := hsplit x
     obtain ⟨c, d, hd, rfl⟩ := hsplit y
-    have e1 : g ((a : V) + b) = (h a : V) + b := by rw [map_add, hgW, hgP b hb]
-    have e2 : g ((c : V) + d) = (h c : V) + d := by rw [map_add, hgW, hgP d hd]
+    have e1 : g ((a : V) + b) = (h a : V) + b := by rw [map_add (f := _), hgW, hgP b hb]
+    have e2 : g ((c : V) + d) = (h c : V) + d := by rw [map_add (f := _), hgW, hgP d hd]
     rw [e1, e2]
-    simp only [map_add, LinearMap.add_apply, hh, hb _ (h c).2, hb _ c.2,
+    simp only [map_add (f := _), LinearMap.add_apply, hh, hb _ (h c).2, hb _ c.2,
       B_swap0 H (hd _ (h a).2), B_swap0 H (hd _ a.2)]
   have hinj : Function.Injective g := by
     rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
@@ -125,7 +125,7 @@ theorem lifting_unitary : Formalism.HermitianLatticeCounting.S6.LiftUnitary := b
   rintro g' ⟨⟨-, hP'⟩, -, hW'⟩
   ext y
   obtain ⟨a, b, hb, rfl⟩ := hsplit y
-  rw [map_add, map_add, hgW, hW', hgP b hb, hP' b hb]
+  rw [map_add (f := _), map_add (f := _), hgW, hW', hgP b hb, hP' b hb]
 
 theorem lifting_fixes_base_vector : Formalism.HermitianLatticeCounting.S6.LiftUnitaryFixesBase := by
   intro K V _ _ _ _ H r F F' Wt g hL hg

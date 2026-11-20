@@ -5360,7 +5360,7 @@ private theorem UpperTheory.Reformulated.B.Qi13.key {l : ℕ} [Fact l.Prime] {K 
       rw [← map_natCast (algebraMap (ZMod l) k), ZMod.natCast_self, map_zero]
     have hc : c = n + l * d := by rw [← hd]; ring
     rw [← hn, hc]
-    simp only [map_add, map_mul, map_natCast, hl, zero_mul, add_zero]
+    simp only [map_add (f := _), map_mul, map_natCast, hl, zero_mul, add_zero]
   rw [Fintype.linearIndependent_iff] at h ⊢
   intro g hg
   by_contra hne

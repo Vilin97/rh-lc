@@ -98,7 +98,7 @@ theorem line_step {ρ σ : ℕ} {B : BesLev D ρ} {B' : BesLev D σ} (ψ : AddCh
   rw [heisO_neg_cancel] at hmove
   rw [hmove, GlobalTheory.SplitScalar.heisO_heisO, contr_smul_left]
   have he : -(B.o.resS S).symm (0, l.κ S w) + (B.o.resS S).symm (0, y) = (B.o.resS S).symm (0, y - l.κ S w) := by
-    rw [← map_neg, ← map_add, Prod.neg_mk, neg_zero, Prod.mk_add_mk, zero_add, neg_add_eq_sub]
+    rw [← map_neg, ← map_add (f := _), Prod.neg_mk, neg_zero, Prod.mk_add_mk, zero_add, neg_add_eq_sub]
   rw [he, hc, smul_smul]
 
 open Classical in
@@ -175,9 +175,9 @@ theorem contrOp : ∀ D : D7, ContrOp D := by
           (fun u'' => heisO ψ S B'.A (B'.o.resT S u').1 (GlobalTheory.Unf.contr l S vL f₁ f₂ u'') v₀) u₀ := by
     intro u hu u' hu'
     have hsL : u = (B.o.resS S).symm ((B.o.resS S u).1, 0) + (B.o.resS S).symm (0, (B.o.resS S u).2) := by
-      rw [← map_add, Prod.mk_add_mk, add_zero, zero_add, Prod.mk.eta, AddEquiv.symm_apply_apply]
+      rw [← map_add (f := _), Prod.mk_add_mk, add_zero, zero_add, Prod.mk.eta, AddEquiv.symm_apply_apply]
     have hsR : u' = (B'.o.resT S).symm ((B'.o.resT S u').1, 0) + (B'.o.resT S).symm (0, (B'.o.resT S u').2) := by
-      rw [← map_add, Prod.mk_add_mk, add_zero, zero_add, Prod.mk.eta, AddEquiv.symm_apply_apply]
+      rw [← map_add (f := _), Prod.mk_add_mk, add_zero, zero_add, Prod.mk.eta, AddEquiv.symm_apply_apply]
     have hoL : symplO B.V₀ S ((B.o.resS S).symm ((B.o.resS S u).1, 0)) ((B.o.resS S).symm (0, (B.o.resS S u).2)) = 0 := by
       rw [B.o.symplO_resS, AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply, GlobalTheory.SplitScalar.symplO_zero_right,
         GlobalTheory.SplitScalar.symplO_zero_left, add_zero]

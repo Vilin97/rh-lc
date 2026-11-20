@@ -114,7 +114,7 @@ theorem entrySum_zero {n : ℕ} (l : Fin n → ℂ) (x : ℂ[X]) :
     · simp [Matrix.one_apply_ne h]
   have h0 := congrArg (compRingHom x) (GlobalTheory.CompanionTheory.AdjSum.adj_sum n l)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_sub, map_prod, map_add, map_one, coe_compRingHom_apply, X_comp, C_comp] at h0
+    simp only [map_sum, map_sub, map_prod, map_add (f := _), map_one, coe_compRingHom_apply, X_comp, C_comp] at h0
   rw [← h0, hM, ← RingHom.map_adjugate]
   simp [entrySum]
 

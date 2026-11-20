@@ -59,26 +59,26 @@ theorem isLeftCoaction_iff_isCoaction_comm [IsCocomm R C] (ρ : M →ₗ[R] C �
       (((TensorProduct.comm R C M).toLinearMap ∘ₗ ρ).rTensor C (TensorProduct.comm R C M t)) := by
     intro t
     induction t with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul c m =>
       simp only [LinearMap.lTensor_tmul, comm_tmul, LinearMap.rTensor_tmul, LinearMap.comp_apply,
         LinearEquiv.coe_coe]
       generalize ρ m = s
       induction s with
-      | add a b ha hb => simp only [map_add, tmul_add, add_tmul, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), tmul_add, add_tmul, ha, hb]
       | tmul c' m' => simp [e]
   have h2 : ∀ t : C ⊗[R] M,
       e (TensorProduct.assoc R C C M ((comul : C →ₗ[R] C ⊗[R] C).rTensor M t)) =
       (comul : C →ₗ[R] C ⊗[R] C).lTensor M (TensorProduct.comm R C M t) := by
     intro t
     induction t with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul c m => simp [e]
   have h3 : ∀ t : C ⊗[R] M, TensorProduct.comm R R M ((Coalgebra.counit : C →ₗ[R] R).rTensor M t) =
       (Coalgebra.counit : C →ₗ[R] R).lTensor M (TensorProduct.comm R C M t) := by
     intro t
     induction t with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul c m => simp
   constructor
   · intro h

@@ -47,7 +47,7 @@ private theorem chineseRemainder_finiteCover {F K : Type} [Field F] [Field K] [A
       refine ⟨c + c', ?_⟩
       have e : (⟨algebraMap F K (a + b), hmem _ (add_mem ha hb)⟩ : rB ℂ K x {0}) =
           ⟨_, hmem a ha⟩ + ⟨_, hmem b hb⟩ := Subtype.ext (map_add _ _ _)
-      exact (congrArg mk e).trans (by rw [map_add, hc1, hc2, map_add])
+      exact (congrArg mk e).trans (by rw [map_add (f := _), hc1, hc2, map_add (f := _)])
     · rintro a b ha hb ⟨c, hc1⟩ ⟨c', hc2⟩
       refine ⟨c * c', ?_⟩
       have e : (⟨algebraMap F K (a * b), hmem _ (mul_mem ha hb)⟩ : rB ℂ K x {0}) =
@@ -67,7 +67,7 @@ private theorem chineseRemainder_finiteCover {F K : Type} [Field F] [Field K] [A
         exact Submodule.zero_mem _
       | add a b _ _ ha hb =>
         have : g (a + b) = g a + g b := by
-          simp only [g, ← map_add]
+          simp only [g, ← map_add (f := _)]
           rfl
         rw [this]
         exact Submodule.add_mem _ ha hb

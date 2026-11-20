@@ -17,7 +17,7 @@ variable {g : ℕ} {q : ℕ} [Fact q.Prime]
 
 theorem hf_add_right (Hm : Matrix (Fin g) (Fin g) ℂ) (x y y' : Fin g → ℂ) :
     hf Hm x (y + y') = hf Hm x y + hf Hm x y' := by
-  simp only [hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hf_neg_right (Hm : Matrix (Fin g) (Fin g) ℂ) (x y : Fin g → ℂ) : hf Hm x (-y) = -hf Hm x y := by
   have h := hf_smul_right Hm (-1) x y
@@ -124,7 +124,7 @@ theorem goodLift_eq : ∀ (q : ℕ) [Fact q.Prime] (lam : Qbar →+* ℂ_[q]) (g
       obtain ⟨v1, hv1, rfl, h1⟩ := ih1
       obtain ⟨v2, hv2, rfl, h2⟩ := ih2
       refine ⟨v1 + v2, add_mem hv1 hv2, (smul_add _ _ _).symm, fun x hx => ?_⟩
-      rw [bar, map_add]
+      rw [bar, map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (h1 x hx) (h2 x hx))
     | neg y1 _ ih =>
       obtain ⟨v1, hv1, rfl, h1⟩ := ih

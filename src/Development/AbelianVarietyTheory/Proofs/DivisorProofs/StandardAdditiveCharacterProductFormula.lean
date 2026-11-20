@@ -94,7 +94,7 @@ lemma psi_ofInt (ψ : AddChar (AF F) ℂ) (hc : Continuous ψ)
       simp only [g, tr, Finset.sum_empty, h0, map_zero]; exact AddChar.map_zero_eq_one ψ
     | insert a T ha ih =>
       have hmul : ∀ p p', g (p + p') = g p * g p' := by
-        intro p p'; simp only [g, ofInt_add, map_add]; exact AddChar.map_add_eq_mul _ _ _
+        intro p p'; simp only [g, ofInt_add, map_add (f := _)]; exact AddChar.map_add_eq_mul _ _ _
       have e : tr (insert a T) = Pi.single a (q a) + tr T := by simp only [tr, Finset.sum_insert ha]
       rw [e, hmul, ih, mul_one]; exact psi_ofInt_single ψ a (q a) (hq a)
   have := gc.continuousAt.tendsto.comp htr
@@ -130,7 +130,7 @@ lemma finite_decomp (ψ : AddChar (AF F) ℂ) (hunr : ∀ᶠ v in cofinite, PsiU
   · apply RestrictedProduct.ext; intro w
     show evalV F w x = evalV F w (_ + _)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum]
+      rw [map_add (f := _), map_sum]
     have hsame : ∀ (t : Fv F w), evalV F w (singleFin w t) = t := fun t =>
       RestrictedProduct.single_eq_same (fun v => HeightOneSpectrum.adicCompletionIntegers F v) w t
     have hne : ∀ v (t : Fv F v), v ≠ w → evalV F w (singleFin v t) = 0 := fun v t h =>
@@ -198,7 +198,7 @@ theorem psi_eq_inf_mul_finprod : ∀ (F : Type) [Field F] [NumberField F] (ψ : 
     rw [hu1, zero_mul, mul_zero]; rfl
   have hfin : ψ (j a.2) = ∏ v ∈ S, psiLoc ψ v (evFin F v a) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hx, map_add, map_sum, AddChar.map_add_eq_mul, addChar_sum]
+      rw [hx, map_add (f := _), map_sum, AddChar.map_add_eq_mul, addChar_sum]
     rw [show ψ (j (ofInt q)) = 1 from psi_ofInt ψ hstd.1 q hq, one_mul]
     refine Finset.prod_congr rfl fun v _ => ?_
     rfl

@@ -84,7 +84,7 @@ theorem ker_eq {k L : Type} [Field k] [CommRing L] (hL : IsField L) [Algebra k L
         ← IsScalarTower.algebraMap_apply k (GenParField k e n) L]
       exact IntermediateField.algebraMap_mem _ c
     | add a b ha hb =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem ha hb
     | mul_X a p ha =>
       rw [map_mul, map_mul]
@@ -102,7 +102,7 @@ theorem ker_eq {k L : Type} [Field k] [CommRing L] (hL : IsField L) [Algebra k L
       rw [aeval_C]
       exact hF c
     | add a b ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem ha hb
     | mul_X a j ha =>
       rw [map_mul, aeval_X]

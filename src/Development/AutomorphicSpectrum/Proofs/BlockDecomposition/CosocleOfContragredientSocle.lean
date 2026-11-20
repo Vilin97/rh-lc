@@ -81,7 +81,7 @@ theorem eq_of_isCoatom_of_mem_range {S S' : Subrepresentation π} (hS : IsCoatom
   have h2 := pullContra_apply_eq_zero S' l' hb
   have h3 : (pullContra S l).1 b = 0 := (congrArg (fun y : smoothPart π.dual => y.1 b) hl').symm.trans h2
   show (pullContra S l).1 (a + b) = 0
-  rw [map_add, h1, h3, add_zero]
+  rw [map_add (f := _), h1, h3, add_zero]
 
 end General
 

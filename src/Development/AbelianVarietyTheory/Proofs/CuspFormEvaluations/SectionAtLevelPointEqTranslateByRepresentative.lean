@@ -131,7 +131,7 @@ theorem im_even (mk : Dw.La →+ (Fin g → ℂ)) (hmk : ∀ a, mk a ∈ Φ.lat)
     simp
   · rintro a b ⟨k, hk⟩ ⟨k', hk'⟩
     refine ⟨k + k', ?_⟩
-    rw [map_add, hermForm_add_left', Complex.add_im, hk, hk']
+    rw [map_add (f := _), hermForm_add_left', Complex.add_im, hk, hk']
     push_cast
     ring
 
@@ -184,7 +184,7 @@ theorem GlobalTheory.AnVal.rd_vt_levPt : ∀ (E : Type) [Field E] [NumberField E
   obtain ⟨w, hw⟩ := eq_two_smul_of_mem hx2
   obtain ⟨k, hk2⟩ := l.odd
   have hMa : ((l.M : ℂ) ^ 2) • a = mk w + mk w := by
-    rw [ha, smul_smul, mul_inv_cancel₀ (pow_ne_zero 2 hM), one_smul, hw, map_add]
+    rw [ha, smul_smul, mul_inv_cancel₀ (pow_ne_zero 2 hM), one_smul, hw, map_add (f := _)]
   have hb2 : (l.M : ℂ) • (x' - a) = (2 : ℂ) • (δ - mk w - k • ((l.M : ℂ) • (x' - a))) := by
     have h3 : (l.M : ℂ) • ((l.M : ℂ) • (x' - a)) = (2 : ℂ) • δ - (mk w + mk w) := by
       rw [smul_smul, ← sq, smul_sub, h2, hMa]

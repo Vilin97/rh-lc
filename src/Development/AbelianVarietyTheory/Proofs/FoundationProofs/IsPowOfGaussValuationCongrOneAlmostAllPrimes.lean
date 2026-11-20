@@ -116,7 +116,7 @@ variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ}
 def levK (X : Tower Ω ε) (M : ℕ) : IntermediateField Ω X.K where
   carrier := {f | Lev X M f}
   mul_mem' ha hb γ hγ := by rw [map_mul, ha γ hγ, hb γ hγ]
-  add_mem' ha hb γ hγ := by rw [map_add, ha γ hγ, hb γ hγ]
+  add_mem' ha hb γ hγ := by rw [map_add (f := _), ha γ hγ, hb γ hγ]
   algebraMap_mem' c γ _ := AlgEquiv.commutes _ c
   inv_mem' x hx γ hγ := by rw [map_inv₀, hx γ hγ]
 

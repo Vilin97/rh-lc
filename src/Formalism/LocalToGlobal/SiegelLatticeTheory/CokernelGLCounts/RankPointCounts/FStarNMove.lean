@@ -27,7 +27,7 @@ theorem spanL {ι : Type*} (x : ι → S.V) (y : S.V) (h : ∀ i, S.hT (x i) y =
     obtain ⟨i, rfl⟩ := hv
     exact h i
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+  | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
   | smul c a _ ha => rw [hT_smulL, ha, mul_zero]
 
 theorem spanR {ι : Type*} (x : ι → S.V) (y : S.V) (h : ∀ i, S.hT y (x i) = 0) :
@@ -153,7 +153,7 @@ theorem exists_move {T T' : E} (F : FlagG S r T) (P Q : FlagG S r T')
       map_add' := by
         intro c c'
         funext a
-        simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add]
+        simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add (f := _)]
       map_smul' := by
         intro m c
         funext a
@@ -186,7 +186,7 @@ theorem exists_move {T T' : E} (F : FlagG S r T) (P Q : FlagG S r T')
       have e2 : ∑ b, k b • Q.fvec b = ∑ b, k b • P.fvec b + ∑ b, k b • (Q.fvec b - P.fvec b) := by
         rw [← Finset.sum_add_distrib]
         exact Finset.sum_congr rfl fun b _ => by rw [smul_sub]; abel
-      rw [e2, map_add, LinearMap.add_apply, hT_X_X F hx0 x.2, add_zero, hsw,
+      rw [e2, map_add (f := _), LinearMap.add_apply, hT_X_X F hx0 x.2, add_zero, hsw,
         spanL S F.e _ hk _ x.2, star_zero]
     refine Submodule.eq_of_le_of_finrank_le hle ?_
     have h1 : finrank E (LinearMap.range A) = r := by
@@ -280,7 +280,7 @@ theorem exists_move {T T' : E} (F : FlagG S r T) (P Q : FlagG S r T')
     have e6 : S.hT (∑ i, g i • tg i) (∑ i, g' i • tg i) = S.hT (∑ i, g i • b₂ i) (∑ i, g' i • b₂ i) := by
       rw [hermitian_double_sum_expand, hermitian_double_sum_expand]
       simp only [hgram]
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [e1, e2, e3, e4, e5, e6]
   have hinj : Function.Injective n₀ := by
     rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
@@ -294,7 +294,7 @@ theorem exists_move {T T' : E} (F : FlagG S r T) (P Q : FlagG S r T')
   obtain ⟨g, w, hw, rfl⟩ := hdec v
   have key : n (∑ i, g i • b₂ i + w) - (∑ i, g i • b₂ i + w) =
       ∑ b, g (Sum.inr b) • (Q.fvec b - P.fvec b) - (xm ⟨w, hw⟩ : S.V) := by
-    rw [hn, map_add, hn₀sum, hn₀w w hw, hsplit]
+    rw [hn, map_add (f := _), hn₀sum, hn₀w w hw, hsplit]
     simp only [tg, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, smul_sub, Finset.sum_sub_distrib]
     abel
   rw [key]
@@ -305,7 +305,7 @@ theorem exists_move {T T' : E} (F : FlagG S r T) (P Q : FlagG S r T')
   have h2 : S.hT (F.e a) (∑ a', g (Sum.inl a') • F.fvec a') = 0 :=
     spanR S F.fvec (F.e a) (fun c => by rw [hsw, hT_f_e, star_zero]) _
       (Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩))
-  rw [map_add, hw0, add_zero, hsplit, map_add, h2, zero_add] at h1
+  rw [map_add (f := _), hw0, add_zero, hsplit, map_add (f := _), h2, zero_add] at h1
   exact h1
 
 end NMoveP

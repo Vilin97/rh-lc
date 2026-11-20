@@ -38,7 +38,7 @@ theorem parabolic_volume : VolPP σ v := by
       simp only [Set.mem_preimage, Set.mem_pi, Set.mem_univ, true_implies, Set.mem_ofPred_eq, PPTyp,
         if_pos hl, unit_forall]
       rw [D.mem_sc_mul, D.mem_sc_mul, D.mem_pt_mul, D.shear_first_coordinate, D.shear_second_coordinate]
-      simp only [map_add, (D.p_sig _).1, (D.p_sig _).2, id]
+      simp only [map_add (f := _), (D.p_sig _).1, (D.p_sig _).2, id]
       constructor
       · rintro ⟨⟨_, h2⟩, h3, _⟩
         exact ⟨h3, h2⟩
@@ -73,7 +73,7 @@ theorem parabolic_volume : VolPP σ v := by
       simp only [Set.mem_preimage, Set.mem_pi, Set.mem_univ, true_implies, Set.mem_ofPred_eq, PPTyp,
         if_neg hl, unit_forall, Pi.add_apply]
       rw [D.mem_sc_mul, D.mem_sc_mul, D.mem_pt_mul]
-      simp only [map_add, D.shear_first_coordinate, D.shear_second_coordinate, hp0, hp1, map_natCast, (D.p_sig _).1, (D.p_sig _).2, id]
+      simp only [map_add (f := _), D.shear_first_coordinate, D.shear_second_coordinate, hp0, hp1, map_natCast, (D.p_sig _).1, (D.p_sig _).2, id]
       constructor
       · rintro ⟨⟨_, h2⟩, h3, _⟩
         refine ⟨?_, h2⟩

@@ -103,7 +103,7 @@ private theorem red_add_divisor {σ : Type} {f g : MvPowerSeries σ (_root_.Glob
   intro α
   obtain ⟨v, hv, hv'⟩ := hf α
   obtain ⟨w, hw, hw'⟩ := hg α
-  exact ⟨v + w, by rw [map_add, map_add, hv, hw], by rw [map_add, map_add, hv', hw']⟩
+  exact ⟨v + w, by rw [map_add (f := _), map_add (f := _), hv, hw], by rw [map_add (f := _), map_add (f := _), hv', hw']⟩
 
 open MvPowerSeries in
 variable {p : ℕ} [Fact p.Prime] {k : Type} [Field k] in

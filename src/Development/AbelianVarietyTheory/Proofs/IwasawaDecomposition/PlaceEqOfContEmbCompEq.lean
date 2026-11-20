@@ -50,7 +50,7 @@ theorem _root_.GlobalTheory.HeckeGal.place_eq_of_contEmb_comp_eq :
   rw [← hb'] at hnb
   have hsum : j (algebraMap E (v.adicCompletion E) (algebraMap (𝓞 E) E a)) +
       j (algebraMap E (v.adicCompletion E) (algebraMap (𝓞 E) E b)) = 1 := by
-    rw [← map_add, ← map_add, ← map_add, hab, map_one, map_one, map_one]
+    rw [← map_add (f := _), ← map_add (f := _), ← map_add (f := _), hab, map_one, map_one, map_one]
   have hle := IsUltrametricDist.norm_add_le_max
     (j (algebraMap E (v.adicCompletion E) (algebraMap (𝓞 E) E a)))
     (j (algebraMap E (v.adicCompletion E) (algebraMap (𝓞 E) E b)))

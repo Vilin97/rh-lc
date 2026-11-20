@@ -81,7 +81,7 @@ theorem modulus_conj_flow : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a y => simp [LinearMap.baseChange_tmul, sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hcT : ∀ {p q : ℕ}, Continuous fun M : Matrix (Fin p) (Fin q) (AF F ⊗[F] E) => cT (sigR (AF F) σ) M :=
     fun {p q} => (continuous_id.matrix_map hsc).matrix_transpose
   have hSk : IsClosed (skewA σ (r + 1) : Set (Matrix (Fin (r + 1)) (Fin (r + 1)) (AF F ⊗[F] E))) :=
@@ -110,7 +110,7 @@ theorem modulus_conj_flow : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
       Matrix.mul_assoc]
   set hf2 : AF F ⊗[F] E := inclR (F := F) (AF F) (2⁻¹ : E) with hhf2
   have hh : hf2 + hf2 = 1 := by
-    rw [hhf2, ← map_add, ← map_one (inclR (F := F) (AF F))]; congr 1; norm_num
+    rw [hhf2, ← map_add (f := _), ← map_one (inclR (F := F) (AF F))]; congr 1; norm_num
   have hsh : sigR (AF F) σ hf2 = hf2 := by
     rw [hhf2]; simp [sigR, inclR, map_ofNat]
   have hcond : ∀ (x : Matrix (Fin (r + 1)) (Fin m) (AF F ⊗[F] E)) (s : skewA σ (r + 1)),

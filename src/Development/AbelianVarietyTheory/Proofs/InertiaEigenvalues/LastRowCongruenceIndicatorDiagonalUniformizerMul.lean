@@ -73,7 +73,7 @@ theorem indN_lastRow_tl : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCom
     simp only [lastRow, tl_eq_diagT, Units.val_mul, GlobalTheory.SmGL.val_diagT, Matrix.diagonal_mul, map_mul]
     congr 1
     change GlobalTheory.RSJ.pFin E (1 - sFin E 1 + sFin E (c : Af E)) = _
-    rw [map_add, map_sub, map_one]
+    rw [map_add (f := _), map_sub, map_one]
     change 1 - 1 + (c : Af E) = _
     ring
   have hcomp : ∀ v i, pLoc E v (GlobalTheory.RSJ.pFin E (lastRow (u * k) i)) = (compV E (m + 1) v k).val (Fin.last m) i := by

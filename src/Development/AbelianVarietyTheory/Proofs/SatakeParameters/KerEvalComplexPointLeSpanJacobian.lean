@@ -27,7 +27,7 @@ theorem ker_le_span_sup {A : Type} [CommRing A] [Algebra ℂ A] (e : A →+* ℂ
     rw [pow_two] at hx
     refine Submodule.mul_induction_on hx (fun x hx y hy => ?_) (fun x y hx hy => ?_)
     · rw [hmul, RingHom.mem_ker.1 hx, RingHom.mem_ker.1 hy, zero_mul, zero_mul, add_zero]
-    · rw [map_add, hx, hy, add_zero]
+    · rw [map_add (f := _), hx, hy, add_zero]
   have hsmul : ∀ b (c : ℂ) (x : A), δ b (c • x) = c * δ b x := by
     intro b c x
     rw [Algebra.smul_def, hmul, hc, he, mul_zero, add_zero]

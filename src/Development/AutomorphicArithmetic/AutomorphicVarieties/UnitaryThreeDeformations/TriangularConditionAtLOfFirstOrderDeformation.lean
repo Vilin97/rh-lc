@@ -128,11 +128,11 @@ private theorem condT_deform {O D : Type} [CommRing O] [IsLocalRing O] [Group D]
   · obtain ⟨c, hc, e⟩ := key g hg a b
     rw [e, htri g hg a b hab, zero_add]
     apply h0
-    rw [map_sub, map_add, map_mul, map_mul, map_mul, ho, hc]
+    rw [map_sub, map_add (f := _), map_mul, map_mul, map_mul, ho, hc]
     exact h1 g hg a b hab
   · obtain ⟨c, hc, e⟩ := key s hη a a
     rw [e, hine s hs hη a, h0, add_zero]
-    rw [map_sub, map_add, map_mul, map_mul, map_mul, hc, h2 s hs a]
+    rw [map_sub, map_add (f := _), map_mul, map_mul, map_mul, hc, h2 s hs a]
     ring
 
 end SlopeTestRemainingChoices

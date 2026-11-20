@@ -19,7 +19,7 @@ theorem eval_pullback (A : Matrix (Fin d) (Fin n) ℂ) (x : Fin n → ℂ) (g : 
     eval x (ComplexSets.pullback A g) = eval (A.mulVec x) g := by
   induction g using MvPolynomial.induction_on with
   | C a => simp [ComplexSets.pullback]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp]
     congr 1

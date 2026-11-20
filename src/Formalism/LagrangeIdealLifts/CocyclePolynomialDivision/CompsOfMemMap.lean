@@ -21,7 +21,7 @@ theorem comps_add {x y : A} (hx : Comps φA ε aa ℓ x) (hy : Comps φA ε aa �
   obtain ⟨e, he, rfl⟩ := hx
   obtain ⟨e', he', rfl⟩ := hy
   refine ⟨e + e', fun i => aa.add_mem (he i) (he' i), ?_⟩
-  simp [map_add, mul_add, sum_add_distrib]
+  simp [map_add (f := _), mul_add, sum_add_distrib]
 
 theorem comps_mul_phi (s : A) {x : A} (hx : Comps φA ε aa ℓ x) :
     Comps φA ε aa ℓ (φA s * x) := by

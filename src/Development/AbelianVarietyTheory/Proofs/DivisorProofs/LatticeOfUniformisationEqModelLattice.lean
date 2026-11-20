@@ -26,7 +26,7 @@ theorem exists_tau {o B X : Type} [CommRing o] [CommRing B] [AddCommGroup X] (b 
   refine ⟨{ toFun := fun χ => Units.map b.toMonoidHom ζ ^ (c (Multiplicative.toAdd χ)).val
             map_one' := by simp
             map_mul' := fun χ χ' => by
-              simp only [toAdd_mul, map_add, ZMod.val_add]
+              simp only [toAdd_mul, map_add (f := _), ZMod.val_add]
               rw [← pow_add, ← pow_eq_pow_mod _ hu] }, fun χ => rfl, ?_⟩
   refine MonoidHom.ext fun χ => ?_
   rw [MonoidHom.pow_apply, MonoidHom.one_apply]

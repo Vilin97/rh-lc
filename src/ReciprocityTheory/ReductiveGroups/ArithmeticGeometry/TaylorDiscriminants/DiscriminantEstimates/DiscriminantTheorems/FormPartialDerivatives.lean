@@ -28,7 +28,7 @@ theorem det_polynomial_harmonic : ReciprocityTheory.ChartRestriction.G.TB.DetPol
        one_mem' := fun i => by simp
        add_mem' := by
          intro g h hg hh i
-         rw [map_add, hg i, hh i, add_zero]
+         rw [map_add (f := _), hg i, hh i, add_zero]
        zero_mem' := fun i => by simp
        algebraMap_mem' := fun r i => by simp [MvPolynomial.algebraMap_eq] }, fun g => Iff.rfl⟩
 
@@ -50,8 +50,8 @@ theorem det_polynomial_harmonic : ReciprocityTheory.ChartRestriction.G.TB.DetPol
        one_mem' := ⟨fun j => by simp, fun _ => 0, fun k => by simp⟩
        add_mem' := by
          rintro g h ⟨hg0, G, hG⟩ ⟨hh0, H, hH⟩
-         refine ⟨fun j => by rw [map_add, hg0 j, hh0 j, add_zero], fun b' => G b' + H b', fun k => ?_⟩
-         rw [map_add, hG k, hH k, ← Finset.sum_add_distrib]
+         refine ⟨fun j => by rw [map_add (f := _), hg0 j, hh0 j, add_zero], fun b' => G b' + H b', fun k => ?_⟩
+         rw [map_add (f := _), hG k, hH k, ← Finset.sum_add_distrib]
          refine Finset.sum_congr rfl fun b' _ => ?_
          ring
        zero_mem' := ⟨fun j => by simp, fun _ => 0, fun k => by simp⟩
@@ -78,7 +78,7 @@ theorem det_polynomial_harmonic : ReciprocityTheory.ChartRestriction.G.TB.DetPol
          rintro g h ⟨hgA, G, hGA, hG⟩ ⟨hhA, H, hHA, hH⟩
          refine ⟨Ay.add_mem hgA hhA, fun d => G d + H d, fun d => Ay.add_mem (hGA d) (hHA d),
            fun k => ?_⟩
-         rw [map_add, hG k, hH k, ← Finset.sum_add_distrib]
+         rw [map_add (f := _), hG k, hH k, ← Finset.sum_add_distrib]
          refine Finset.sum_congr rfl fun d _ => ?_
          ring
        zero_mem' := ⟨Ay.zero_mem, fun _ => 0, fun _ => Ay.zero_mem, fun k => by simp⟩

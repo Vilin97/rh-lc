@@ -126,7 +126,7 @@ theorem norm_one_add (L : LocE F E) (ϖ : 𝒪[F]) (hϖ : Irreducible ϖ) {y : E
   rw [IsUnit.unit_spec]
   have e : ((1 + ϖ * (t + ϖ * n) : 𝒪[F]) : F) = 1 + (ϖ : F) * ((t : F) + (ϖ : F) * (n : F)) := rfl
   rw [e]
-  simp only [map_add, map_mul, map_one, AlgEquiv.commutes]
+  simp only [map_add (f := _), map_mul, map_one, AlgEquiv.commutes]
   rw [← ht, ← hn]
   ring
 
@@ -172,7 +172,7 @@ theorem congK_basic (L : LocE F E) (ϖ : 𝒪[F]) (hϖ : Irreducible ϖ) {m i : 
   let A' : Matrix (Fin m) (Fin m) L.O := 1 + p • C'
   have hAA : A = L.O.subtype.mapMatrix A' := by
     rw [hAC]
-    simp only [A', map_add, map_one]
+    simp only [A', map_add (f := _), map_one]
     congr 1
     ext a b
     simp [C', p, pow_succ]

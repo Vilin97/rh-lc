@@ -27,9 +27,9 @@ noncomputable def quadComplexEquiv : QuadraticAlgebra R a 0 ≃+* ℂ where
   map_mul' z w := by
     have hsq : Real.sqrt (-φ a) * Real.sqrt (-φ a) = -φ a := Real.mul_self_sqrt (neg_pos.2 ha).le
     apply Complex.ext
-    · simp only [QuadraticAlgebra.re_mul, map_add, map_mul, Complex.mul_re]
+    · simp only [QuadraticAlgebra.re_mul, map_add (f := _), map_mul, Complex.mul_re]
       linear_combination (φ z.im * φ w.im) * hsq
-    · simp only [QuadraticAlgebra.im_mul, map_add, map_mul, zero_mul, add_zero,
+    · simp only [QuadraticAlgebra.im_mul, map_add (f := _), map_mul, zero_mul, add_zero,
         Complex.mul_im]
       ring
   map_add' z w := by

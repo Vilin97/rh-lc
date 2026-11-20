@@ -63,7 +63,7 @@ theorem rowShift_colMap (g : T → Fin n → Fin n → k) (σ : T) (i i' : Fin (
     by_cases h : (⟨τ, j⟩ : Σ s, Fin (r s)) = ⟨σ, i⟩
     · cases h
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [rowShift_X_self, colMap_X, map_sum, map_mul, map_add, algHom_C, algebraMap_eq,
+        simp only [rowShift_X_self, colMap_X, map_sum, map_mul, map_add (f := _), algHom_C, algebraMap_eq,
         Finset.mul_sum, ← Finset.sum_add_distrib]
       exact Finset.sum_congr rfl fun _ _ => by ring
     set_option synthInstance.maxHeartbeats 100000 in

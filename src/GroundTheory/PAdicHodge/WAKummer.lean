@@ -105,16 +105,16 @@ theorem exists_iotaB_eq_uBdR_add [FiniteDimensional ℚ_[p] K] {ε : 𝒪♭}
       linear_combination hu σ
     have h1 : σ • iotaB hε hζ u = iotaB hε hζ u + algebraMap 𝔹 𝔹dR
         (algebraMap ℚ_[p] 𝔹 (kummerC hε hζ σ : ℚ_[p]) * fontaineT ε hε) := by
-      rw [← iotaB_galB, hgy, map_add, map_mul, hιA, hιt, map_mul]
+      rw [← iotaB_galB, hgy, map_add (f := _), map_mul, hιA, hιt, map_mul]
     have h2 : σ • algebraMap 𝔹 𝔹dR (uBdR p) = algebraMap 𝔹 𝔹dR (uBdR p) + algebraMap 𝔹 𝔹dR
         (algebraMap ℚ_[p] 𝔹 (kummerC hε hζ σ : ℚ_[p]) * fontaineT ε hε) := by
-      rw [gal_smul_algebraMap_bDeRham, gal_smul_uBdR_eq hε hζ σ, map_add]
+      rw [gal_smul_algebraMap_bDeRham, gal_smul_uBdR_eq hε hζ σ, map_add (f := _)]
     rw [smul_sub, h1, h2]
     ring
   obtain ⟨k, hk⟩ := bDeRham_fixed K _ hfixw
   rw [algebraMap_intermediateField_bDeRham] at hk
   refine ⟨k, ?_⟩
-  rw [map_add]
+  rw [map_add (f := _)]
   linear_combination -hk
 
 set_option maxHeartbeats 4000000 in
@@ -189,7 +189,7 @@ theorem exists_iotaB_sub_sum_eq {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply, coe_padicAlgCl_eq]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sub, map_add, h1, thetaAlgHom_algClToBdR, map_sum,
+      rw [map_sub, map_add (f := _), h1, thetaAlgHom_algClToBdR, map_sum,
       Finset.sum_congr rfl fun i _ => h2 i, h3, zero_add, sub_self]
 
 set_option maxHeartbeats 8000000 in

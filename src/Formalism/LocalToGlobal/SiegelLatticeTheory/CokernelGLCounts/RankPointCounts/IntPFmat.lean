@@ -49,7 +49,7 @@ theorem frame_nm (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (G 
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl (fun c _ => ?_)
     rw [← smul_add, add_sub_cancel]
-  rw [e1, map_add]
+  rw [e1, map_add (f := _)]
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]

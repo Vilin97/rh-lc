@@ -63,7 +63,7 @@ theorem InCodiff.mul_different_pow {x : E} (hx : InCodiff x) (h : ℕ) :
       rw [RingOfIntegers.coe_eq_algebraMap, map_mul, pow_succ, mul_mul_mul_comm]
       exact this
     · have := hu.add hv
-      rw [RingOfIntegers.coe_eq_algebraMap, map_add, add_mul]
+      rw [RingOfIntegers.coe_eq_algebraMap, map_add (f := _), add_mul]
       exact this
 
 theorem exists_discr_pow_mul_isIntegral [IsGalois ℚ E] :

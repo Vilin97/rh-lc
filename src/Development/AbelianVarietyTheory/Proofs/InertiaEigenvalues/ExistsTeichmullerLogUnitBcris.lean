@@ -139,7 +139,7 @@ theorem exists_log_unit : ∀ (l : ℕ) [Fact l.Prime] (C : Core l) (x : OCb l),
       map_inv_units _ u (by rw [hu, map_pow, map_natCast])
     have hul : (↑u⁻¹ : Per.Bcris l) * ((l ^ N : ℕ) : Per.Bcris l) = 1 := by
       rw [Nat.cast_pow, ← hu, Units.inv_mul]
-    rw [map_mul, hσu, hσY, hy', map_add, map_mul, map_mul, map_natCast]
+    rw [map_mul, hσu, hσY, hy', map_add (f := _), map_mul, map_mul, map_natCast]
     rw [GlobalTheory.RingIface.zB_eq_aB_zA l c, GlobalTheory.RingIface.aB_eq_alg l (Per.zA l c)]
     simp only [Core.tB]
     linear_combination (algebraMap (Per.Acris l) (Per.Bcris l) (algebraMap (Per.Ainf l) (Per.Acris l) (Per.zA l c)) *

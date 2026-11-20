@@ -38,7 +38,7 @@ theorem vac_comb : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ
   have hce : cA D Q₀.q.e * Q₀.q.e = 0 := by rw [mul_comm, hec]
   have hcc : cA D Q₀.q.e * cA D Q₀.q.e = cA D Q₀.q.e := by rw [← map_mul, hee]
   have hreal : cA D (Q₀.q.e + cA D Q₀.q.e) = Q₀.q.e + cA D Q₀.q.e := by
-    rw [map_add, Formalism.L2.Theta.cA_cA, add_comm]
+    rw [map_add (f := _), Formalism.L2.Theta.cA_cA, add_comm]
   have hidem : (Q₀.q.e + cA D Q₀.q.e) * (Q₀.q.e + cA D Q₀.q.e) = Q₀.q.e + cA D Q₀.q.e := by
     rw [add_mul, mul_add, mul_add, hee, hec, hce, hcc, add_zero, zero_add]
   have horth : (Q₀.q.e + cA D Q₀.q.e) * (1 - (Q₀.q.e + cA D Q₀.q.e)) = 0 := by

@@ -89,7 +89,7 @@ theorem sigR_sigR (hσ : ∀ x, σ (σ x) = x) (x : R ⊗[F] E) : sigR R σ (sig
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigR, Algebra.TensorProduct.map_tmul, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem conjT_conjT (hσ : ∀ x, σ (σ x) = x) (A : Matrix (Fin n) (Fin n) (R ⊗[F] E)) :
     conjT R σ (conjT R σ A) = A := by

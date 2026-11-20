@@ -424,7 +424,7 @@ theorem LocalUniversalDenominator.fin_case
     have hDq : (q.map (eval (A.mulVec z))).eval (∑ i, c i * z i) *
         (mp.map (eval (A.mulVec z))).derivative.eval (∑ i, c i * z i) = eval (A.mulVec z) D := by
       have h1 := congrArg (fun t => (t.map (eval (A.mulVec z))).eval (∑ i, c i * z i)) hpq
-      simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C, Polynomial.eval_add,
+      simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C, Polynomial.eval_add,
         Polynomial.eval_mul, Polynomial.eval_C] at h1
       rw [← Polynomial.derivative_map, hroot.eq_zero, zero_mul, zero_add] at h1
       rw [mul_comm]

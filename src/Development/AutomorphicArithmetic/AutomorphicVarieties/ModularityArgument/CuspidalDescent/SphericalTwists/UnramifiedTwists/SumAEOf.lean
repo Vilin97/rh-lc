@@ -45,7 +45,7 @@ private theorem prod_algSat_sum (n q : ℕ) {I : Type} (s : Finset I) (B : I →
   simp only [algSat_eq']
   induction s using Finset.induction_on with
   | empty => simp
-  | insert i s hi ih => rw [Finset.sum_insert hi, Finset.prod_insert hi, Multiset.map_add, Multiset.map_add, Multiset.prod_add, ih]
+  | insert i s hi ih => rw [Finset.sum_insert hi, Finset.prod_insert hi, Multiset.map_add (f := _), Multiset.map_add (f := _), Multiset.prod_add, ih]
 
 private theorem algSat_shift {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (𝓞 E)) (a n : ℕ) (s t : ℝ)
     (h : ((a : ℝ) - 1) / 2 + -s = ((n : ℝ) - 1) / 2 + t) (B : Multiset ℂˣ) :

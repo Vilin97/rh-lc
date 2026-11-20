@@ -78,9 +78,9 @@ theorem symK_rename (ε : Fin m → Bool) (i j : Fin n) (p : MvPolynomial (Final
   · intro a
     simp [MvPolynomial.derivation_C]
   · intro p q hp hq
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   · intro p v hp
-    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add, hp, symK_rename_X]
+    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add (f := _), hp, symK_rename_X]
 
 theorem Dsrc_eq_zero (ε : Fin m → Bool) (i j : Fin n) (p : MvPolynomial (FinalTheorems m n) ℂ)
     (h : symK ε i j (rename (phi ε) p) = 0) : Dsrc (m := m) i j p = 0 := by
@@ -134,10 +134,10 @@ theorem fix_of_exp (δ : Derivation ℂ (MvPolynomial (FinalTheorems m n) ℂ) (
     · intro a
       simp [Φ, MvPolynomial.derivation_C, Polynomial.algebraMap_apply, MvPolynomial.algebraMap_eq]
     · intro p q hp hq
-      simp only [map_add, Polynomial.derivative_add, hp, hq, mul_add]
+      simp only [map_add (f := _), Polynomial.derivative_add, hp, hq, mul_add]
     · intro p v hp
       rw [map_mul, Polynomial.derivative_mul, hp, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
-      simp only [mul_add, map_add, map_mul, hΦδ, hX, hC, Polynomial.derivative_add, Polynomial.derivative_C,
+      simp only [mul_add, map_add (f := _), map_mul, hΦδ, hX, hC, Polynomial.derivative_add, Polynomial.derivative_C,
         Polynomial.derivative_mul, Polynomial.derivative_X, zero_add, one_mul, mul_zero, add_zero, Polynomial.C_mul]
       ring
   have hev1 : ∀ q, Polynomial.eval 1 (Φ q) = φ q := by
@@ -146,7 +146,7 @@ theorem fix_of_exp (δ : Derivation ℂ (MvPolynomial (FinalTheorems m n) ℂ) (
     · intro a
       simp [Φ, Polynomial.algebraMap_apply, MvPolynomial.algebraMap_eq]
     · intro p q hp hq
-      simp only [map_add, Polynomial.eval_add, hp, hq]
+      simp only [map_add (f := _), Polynomial.eval_add, hp, hq]
     · intro p v hp
       rw [map_mul, map_mul, Polynomial.eval_mul, hp, hX, hφ]
       simp
@@ -156,7 +156,7 @@ theorem fix_of_exp (δ : Derivation ℂ (MvPolynomial (FinalTheorems m n) ℂ) (
     · intro a
       simp [Φ, Polynomial.algebraMap_apply, MvPolynomial.algebraMap_eq]
     · intro p q hp hq
-      simp only [map_add, Polynomial.eval_add, hp, hq]
+      simp only [map_add (f := _), Polynomial.eval_add, hp, hq]
     · intro p v hp
       rw [map_mul, Polynomial.eval_mul, hp, hX]
       simp
@@ -256,7 +256,7 @@ theorem Dsrc_monomial (l : Fin n) (d : FinalTheorems m n →₀ ℕ) (r : ℂ) :
       wgt_single l k v]
     have hX : (X v : MvPolynomial (FinalTheorems m n) ℂ) ^ (k - 1) * X v = X v ^ k := by
       rw [← pow_succ, Nat.sub_add_cancel (Nat.pos_of_ne_zero hk)]
-    simp only [smul_eq_mul, nsmul_eq_mul, Int.cast_add, Int.cast_mul, Int.cast_natCast, map_add, map_mul,
+    simp only [smul_eq_mul, nsmul_eq_mul, Int.cast_add, Int.cast_mul, Int.cast_natCast, map_add (f := _), map_mul,
       map_natCast]
     calc _ = (k : MvPolynomial (FinalTheorems m n) ℂ) * C ((wgt l (Finsupp.single v 1) : ℤ) : ℂ) * (X v ^ (k - 1) * X v) *
             monomial f r + C ((wgt l f : ℤ) : ℂ) * (X v ^ k * monomial f r) := by ring

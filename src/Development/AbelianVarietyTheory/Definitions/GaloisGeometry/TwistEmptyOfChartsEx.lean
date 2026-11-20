@@ -34,7 +34,7 @@ theorem exists_char {G : Type} [CommGroup G] (H : Subgroup G) (g : G) (hg : g �
   let ψ : G →* Circle :=
     { toFun := fun x => AddCircle.toCircle (φ (Additive.ofMul (QuotientGroup.mk x : G ⧸ H)))
       map_one' := by simp
-      map_mul' := fun x y => by rw [QuotientGroup.mk_mul, ofMul_mul, map_add, AddCircle.toCircle_add] }
+      map_mul' := fun x y => by rw [QuotientGroup.mk_mul, ofMul_mul, map_add (f := _), AddCircle.toCircle_add] }
   refine ⟨Circle.toUnits.comp ψ, fun h hh => ?_, fun h => hc (hj _ ?_)⟩
   · have : (QuotientGroup.mk h : G ⧸ H) = 1 := (QuotientGroup.eq_one_iff _).2 hh
     have h2 : ψ h = 1 := by

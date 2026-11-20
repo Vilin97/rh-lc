@@ -69,7 +69,7 @@ theorem main : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedF
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => simp [IsBaseChange.equiv_tmul, mul_smul_comm, map_mul]
-    | add s t hs ht => simp only [map_add, hs, ht, mul_add]
+    | add s t hs ht => simp only [map_add (f := _), hs, ht, mul_add]
   have hT : Matrix.toLin' B = j.conj (Algebra.lmul E A.L (algebraMap A.K A.L τ)) := by
     apply LinearMap.ext
     intro v

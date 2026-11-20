@@ -30,7 +30,7 @@ theorem descends : ∀ (K : Type) [Field K] [IsAlgClosed K] (A A' B N : Over (Sp
   have hP' : (LB.LinComb P₀ φ ![1, -1]).IsLB := LB.isLB_linComb hP₀ _ _
   have ev' : ∀ (Y : Over (Sp K)) (a : Y ⟶ A') (b : Y ⟶ B), evc hP' a b = evc hP₀ a b - evc hP₀ a 1 := by
     intro Y a b
-    rw [evc, cls_linComb hP₀, Fin.sum_univ_two, map_add, map_zsmul, map_zsmul, ← pull_comp, ← pull_comp]
+    rw [evc, cls_linComb hP₀, Fin.sum_univ_two, map_add (f := _), map_zsmul, map_zsmul, ← pull_comp, ← pull_comp]
     simp only [φ, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one, ← Over.comp_left, comp_lift,
       lift_fst, lift_snd, MonObj.comp_one, one_smul, neg_smul, evc, sub_eq_add_neg]
   have one : ∀ (Y : Over (Sp K)) (b : Y ⟶ B), evc hP₀ (1 : Y ⟶ A') b = 0 := fun Y b ↦ by

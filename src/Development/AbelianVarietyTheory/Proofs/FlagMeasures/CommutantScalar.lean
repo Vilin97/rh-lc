@@ -287,7 +287,7 @@ theorem tensor_rep [∀ i, CompleteSpace (H i)] [CompleteSpace Hs] [∀ i, Topol
         (continuous_pi fun i => (hc i (x i)).comp (continuous_apply i))
     | zero => simpa only [map_zero] using continuous_const
     | add w w' _ _ hw hw' =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact hw.add hw'
     | smul c w _ hw =>
       simp only [map_smul]

@@ -210,7 +210,7 @@ theorem pullback_span_of_exact (W : LocWach PD LL O v n) {T Y : LocLat G Qp LL O
     obtain ⟨q1, hq1, β1, h11, h21⟩ := ha
     obtain ⟨q2, hq2, β2, h12, h22⟩ := hb
     refine ⟨q1 + q2, Submodule.add_mem _ hq1 hq2, β1 + β2, ?_, fun h => by rw [h21 h, h22 h, add_zero]⟩
-    rw [smul_add, h11, h12, map_add, add_smul]
+    rw [smul_add, h11, h12, map_add (f := _), add_smul]
     abel
   | smul c a _ ha =>
     obtain ⟨q, hq, β, h1, h2⟩ := ha

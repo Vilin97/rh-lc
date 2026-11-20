@@ -34,7 +34,7 @@ theorem mConeMap_rename {κ : K → K'} {v : (Σ k, ι k) → Σ k, ι' k} (hv :
     mConeMap y (rename v g) = rename κ (mConeMap (y ∘ v) g) := by
   induction g using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp =>
     simp only [map_mul, hp, rename_X]
     congr 1
@@ -53,7 +53,7 @@ theorem mCoordIdeal_map {Ω₁ : Type} [Field Ω₁] (φ : Ω →+* Ω₁) (x : 
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simp [mConeMap]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p n hp =>
       simp only [map_mul, hp]
       congr 1
@@ -222,7 +222,7 @@ theorem addOne_mem {y : (Σ k, ι' k) → Ω} {z : (Σ k, ι' k) → ℂ} (h : z
       intro g
       induction g using MvPolynomial.induction_on with
       | C a => simp [mConeMap, ρ, τ]
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
       | mul_X p n hp =>
         simp only [map_mul, hp]
         congr 1
@@ -234,7 +234,7 @@ theorem addOne_mem {y : (Σ k, ι' k) → Ω} {z : (Σ k, ι' k) → ℂ} (h : z
       intro g
       induction g using MvPolynomial.induction_on with
       | C a => simp [ρ]
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
       | mul_X p n hp =>
         simp only [map_mul, hp]
         congr 1
@@ -331,7 +331,7 @@ theorem one_mem_mcPts [CharZero Ω] :
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simp [mConeMap]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p n hp =>
       simp only [map_mul, hp]
       simp [mConeMap]

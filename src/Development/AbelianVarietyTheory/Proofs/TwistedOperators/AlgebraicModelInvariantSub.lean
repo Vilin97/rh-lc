@@ -175,7 +175,7 @@ theorem algD_kFinite : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fi
     obtain ⟨U₂, h2, l2, m2, s2⟩ := hy
     refine ⟨U₁ ⊔ U₂, inferInstance, sup_le l1 l2, Submodule.add_mem_sup m1 m2, fun k hk z hz => ?_⟩
     obtain ⟨y₁, hy₁, y₂, hy₂, rfl⟩ := Submodule.mem_sup.1 hz
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (s1 k hk y₁ hy₁) (s2 k hk y₂ hy₂)
   | smul c x _ hx =>
     obtain ⟨U, h, l, m, s⟩ := hx

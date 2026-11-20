@@ -54,7 +54,7 @@ theorem exists_residue_eval : ∀ (F : Type) [Field F] (Y : Scheme.{0}) (p : Y �
   let e : B.Sec →+ Γ(Y, U) ⧸ P :=
     { toFun := fun s => Ideal.Quotient.mk P (resG Y hUi (s.f i))
       map_zero' := by simp
-      map_add' := fun s t => by simp only [GlobalTheory.LB.add_f, map_add] }
+      map_add' := fun s t => by simp only [GlobalTheory.LB.add_f, map_add (f := _)] }
   refine ⟨Γ(Y, U) ⧸ P, inferInstance, inferInstance, hfin, e, ?_, ?_, ?_⟩
   · intro a s
     change Ideal.Quotient.mk P (resG Y hUi ((algX p ⊤ a • s).f i)) = _ * Ideal.Quotient.mk P _

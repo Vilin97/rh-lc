@@ -50,7 +50,7 @@ theorem log_iSup_w_eq_mul_log_iSup_norm : ∀ {F : Type} [Field F] [NumberField 
     | mem x hx => exact hg x hx
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
+      rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
     | smul r x _ hx =>
       rw [Algebra.smul_def, map_mul, norm_mul]
       calc ‖ι (algebraMap (𝓞 K) K r)‖ * ‖ι x‖ ≤ 1 * ‖ι g‖ :=

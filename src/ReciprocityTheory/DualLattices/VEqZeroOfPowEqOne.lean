@@ -107,7 +107,7 @@ def additive (v : AddValuation C (WithTop ℝ)) (d : ℕ) : LogFGL v d where
   F a := X (Sum.inl a) + X (Sum.inr a)
   F_int a α := by
     unfold IsIntV
-    rw [map_add]
+    rw [map_add (f := _)]
     refine le_trans (le_min ?_ ?_) (v.map_add _ _) <;> (rw [coeff_X]; split_ifs <;> simp)
   F_const a := by simp
   lg_F a := by

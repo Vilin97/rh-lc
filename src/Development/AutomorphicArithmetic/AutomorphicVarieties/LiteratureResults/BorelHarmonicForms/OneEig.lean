@@ -14,7 +14,7 @@ theorem UpperTheory.V.Lit.Bor.oneEig :
     refine not_hasCohomology_of_central hne (fun m => ?_) hC
     induction m using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | tmul φ v =>
       have e : π.op (.lie (oneL E a)) φ = c • φ := Subtype.ext (hc' φ.1 φ.2)
       have hr' : Ξ.dmat (oneL E a) = (r : ℂ) • (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ) := hr

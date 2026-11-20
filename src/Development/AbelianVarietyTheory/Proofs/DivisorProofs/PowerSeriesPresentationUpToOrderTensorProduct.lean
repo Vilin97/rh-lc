@@ -14,7 +14,7 @@ variable {k : Type} [CommRing k]
 def ordIdeal (ρ : Type) (N : ℕ) : Ideal (MvPowerSeries ρ k) where
   carrier := {f | (N : ℕ∞) ≤ f.order}
   add_mem' {f g} hf hg := MvPowerSeries.le_order fun d hd => by
-    rw [map_add, MvPowerSeries.coeff_of_lt_order (hd.trans_le hf),
+    rw [map_add (f := _), MvPowerSeries.coeff_of_lt_order (hd.trans_le hf),
       MvPowerSeries.coeff_of_lt_order (hd.trans_le hg), add_zero]
   zero_mem' := by simp
   smul_mem' c f hf := by

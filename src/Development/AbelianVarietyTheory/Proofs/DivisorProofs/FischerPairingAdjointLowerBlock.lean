@@ -19,8 +19,8 @@ theorem pair_symm' {σ : Type} [Fintype σ] (f g : MvPolynomial σ ℂ) : pair f
       by_cases h : α = β
       · subst h; simp; ring
       · simp [h, Ne.symm h]
-    | add g g' h h' => simp only [map_add, LinearMap.add_apply, h, h']
-  | add f f' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+    | add g g' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
+  | add f f' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
 
 theorem pair_X_pderiv {σ : Type} [Fintype σ] (f g : MvPolynomial σ ℂ) (u v : σ) :
     pair (X u * pderiv v f) g = pair f (X v * pderiv u g) := by
@@ -77,12 +77,12 @@ theorem rowD_aeval (b b' : Fin Q) (G : Mdl P Q) :
       aeval (fun ab : Fin P × Fin Q => mS P Q S ab.1 ab.2) (∑ a, X (a, b') * pderiv (a, b) G) := by
   induction G using MvPolynomial.induction_on with
   | C c => simp
-  | add G G' h h' => simp only [map_add, h, h', mul_add, Finset.sum_add_distrib]
+  | add G G' h h' => simp only [map_add (f := _), h, h', mul_add, Finset.sum_add_distrib]
   | mul_X G v h =>
     obtain ⟨a, i⟩ := v
     rw [map_mul, Derivation.leibniz, h, aeval_X, rowD_mS]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Derivation.leibniz, smul_eq_mul, mul_add, Finset.sum_add_distrib, map_add, map_sum,
+      simp only [Derivation.leibniz, smul_eq_mul, mul_add, Finset.sum_add_distrib, map_add (f := _), map_sum,
       map_mul, aeval_X, pderiv_X, Pi.single_apply, Prod.mk.injEq, Finset.mul_sum]
     refine congrArg₂ (· + ·) ?_ ?_
     · by_cases hi : i = b

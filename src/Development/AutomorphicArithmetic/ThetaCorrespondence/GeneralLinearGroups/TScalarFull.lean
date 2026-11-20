@@ -77,7 +77,7 @@ private theorem piTensor_scalar {α : Type} [Fintype α] {Γ X : α → Type} [�
     simp only [hc]
     rw [MultilinearMap.map_smul_univ, smul_comm]
   | add x y hx hy =>
-    rw [map_add, hx, hy, smul_add]
+    rw [map_add (f := _), hx, hy, smul_add]
 
 theorem UpperTheory.Lit.Cas.scalarFull :
     ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] (h N : ℕ) (y : Fin h → IrrGL k) (hc : ∑ i, (y i).1 = N) (t : kˣ) (c : Fin h → ℂ), (∀ i, ScalarBy (y i) t (c i)) → ∀ v, prodIrr y hc (Matrix.GeneralLinearGroup.scalar (Fin N) t) v = (∏ i, c i) • v := by

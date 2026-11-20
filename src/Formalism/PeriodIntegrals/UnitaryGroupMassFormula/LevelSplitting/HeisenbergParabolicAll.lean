@@ -18,7 +18,7 @@ theorem heisenberg_parabolic (F E : Type) [Field F] [NumberField F] [Field E] [A
   have H : (datR (Af F) σ J P T).Hyp := datR_hyp (R := Af F) hσσ hJ hP
   have hh : Half (datR (Af F) σ J P T) (algebraMap F (Af F ⊗[F] E) (1 / 2)) := by
     refine ⟨?_, ?_⟩
-    · rw [← map_add, add_halves, map_one]
+    · rw [← map_add (f := _), add_halves, map_one]
     · show (Algebra.TensorProduct.map (AlgHom.id F (Af F)) σ) (algebraMap F (Af F ⊗[F] E) (1 / 2)) =
         algebraMap F (Af F ⊗[F] E) (1 / 2)
       exact AlgHom.commutes _ _

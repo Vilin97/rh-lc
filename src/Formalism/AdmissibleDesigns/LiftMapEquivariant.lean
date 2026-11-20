@@ -251,7 +251,7 @@ theorem im_iff (hι : Function.Bijective ι)
     have hcoc : ∀ γ δ, c0 (γ * δ) = c0 γ + ρ₁ γ (c0 δ) := by
       intro γ δ
       apply mkK_inj (O := O)
-      rw [map_add, ← locRep_mkK, hc0, hc0, hc0, hσmul]
+      rw [map_add (f := _), ← locRep_mkK, hc0, hc0, hc0, hσmul]
       have h2 := hd₁.1.1.2 (σ γ) (σ δ)
       show untr e (d₁ (σ γ * σ δ)) = untr e (d₁ (σ γ)) + locRep ρ₁ γ (untr e (d₁ (σ δ)))
       rw [h2]

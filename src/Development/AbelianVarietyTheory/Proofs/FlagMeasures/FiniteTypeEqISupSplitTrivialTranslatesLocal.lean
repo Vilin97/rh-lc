@@ -38,7 +38,7 @@ theorem finTyp_eq_iSup_rt_local : ∀ (L : Type) [Field L] [NumberField L] [IsCM
       rw [this]
       exact Submodule.mem_iSup_of_mem (⟨y', hy'⟩ : {y : GAf L n // TrivOutside {s.v}ᶜ y}) ⟨b, rfl⟩
     · simp
-    · intro f₁ f₂ h₁ h₂; rw [map_add]; exact Submodule.add_mem _ h₁ h₂
+    · intro f₁ f₂ h₁ h₂; rw [map_add (f := _)]; exact Submodule.add_mem _ h₁ h₂
   rcases π.irr Wd hle hstab with h0 | h0
   · exfalso
     obtain ⟨a, ha⟩ := exists_ne (0 : V)

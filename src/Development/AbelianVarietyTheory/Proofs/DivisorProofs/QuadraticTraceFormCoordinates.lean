@@ -15,11 +15,11 @@ def hermBil {R S : Type} [CommRing R] [CommRing S] [Algebra R S] (c : S →ₐ[R
     (J : Matrix (Fin n) (Fin n) S) : LinearMap.BilinForm R (Fin n → S) :=
   LinearMap.mk₂ R (fun b a => Algebra.trace R S (∑ i, ∑ k, b i * J i k * c (a k)))
     (fun b b' a => by
-      simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add])
+      simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)])
     (fun r b a => by
       simp only [Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum, map_smul, smul_eq_mul])
     (fun b a a' => by
-      simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib])
+      simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib])
     (fun r b a => by
       simp only [Pi.smul_apply, map_smul, mul_smul_comm, ← Finset.smul_sum, smul_eq_mul])
 
@@ -75,7 +75,7 @@ theorem cA_cA (σ : E →ₐ[F] E) (hσ : ∀ a, σ (σ a) = a) (x : AE F E) : c
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [cA, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 end GlobalTheory.HermCoords
 

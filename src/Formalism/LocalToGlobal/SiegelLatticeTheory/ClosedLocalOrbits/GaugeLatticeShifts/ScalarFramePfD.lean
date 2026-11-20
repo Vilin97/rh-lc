@@ -64,7 +64,7 @@ theorem baseChange_mem_span {ι : Type} (v : ι → (VS D).V) {x : (VS D).V}
   induction hx using Submodule.span_induction with
   | mem x hx => obtain ⟨i, rfl⟩ := hx; exact Submodule.subset_span ⟨i, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul e x _ hx => rw [baseChange_smul₂]; exact Submodule.smul_mem _ _ hx
 
 theorem mem_orthogonal_frame_iff (u v : Fin (D.R.rS + 1) → Vp D p) (w : Vp D p) :
@@ -97,7 +97,7 @@ theorem scalar_frame_w_zero_exists (Λ : Submodule (𝓞 D.host.E) (VS D).V) (f 
     conv_lhs => rw [vp_eq_sum p w]
     rw [hU, hHh, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun j _ => ?_
-    rw [← smul_add, ← map_add, add_sub_cancel]
+    rw [← smul_add, ← map_add (f := _), add_sub_cancel]
   have hHperp : ∀ i, (locH Z p).h Hh (baseChange₂ D p (Sum.elim f g1 i)) = 0 := by
     intro i
     rw [hHh, h_sum_left]

@@ -74,7 +74,7 @@ theorem map_pow_succ_apply (τ : O' ≃ₐ[O] O') (j : ℕ) (t : O' ⊗[O] R) :
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul u r => simp [Algebra.TensorProduct.map_tmul, pow_succ']
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_pow_fixed (τ : O' ≃ₐ[O] O') (s : O' ⊗[O] R)
     (hs : Algebra.TensorProduct.map τ.toAlgHom (AlgHom.id O R) s = s) (j : ℕ) :
@@ -85,7 +85,7 @@ theorem map_pow_fixed (τ : O' ≃ₐ[O] O') (s : O' ⊗[O] R)
     induction s using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul x r => simp
-    | add x y hx hy => rw [map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), hx, hy]
   | succ j ih => rw [GlobalTheory.CompanionTheory.NormLoc.map_pow_succ_apply, ih, hs]
 
 theorem trace_tensor_mem (ℓ : ℕ) (τ : O' ≃ₐ[O] O') (hτ : τ ^ ℓ = 1)
@@ -105,7 +105,7 @@ theorem trace_tensor_mem (ℓ : ℕ) (τ : O' ≃ₐ[O] O') (hτ : τ ^ ℓ = 1)
   | add x y hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by simp only [map_add, Finset.sum_add_distrib, ha, hb]⟩
+    exact ⟨a + b, by simp only [map_add (f := _), Finset.sum_add_distrib, ha, hb]⟩
 
 theorem fixed_mem_range (ℓ : ℕ) (τ : O' ≃ₐ[O] O') (hτ : τ ^ ℓ = 1)
     (hfix : ∀ z : O', τ z = z → z ∈ Set.range (algebraMap O O')) (a : O')

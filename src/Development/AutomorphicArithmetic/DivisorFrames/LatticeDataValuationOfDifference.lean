@@ -17,15 +17,15 @@ private theorem skewK {K : Type} [CommRing K] (u v : K ⊗[ℤ] Dw.La) :
     Dw.EF.baseChange K u v = -Dw.EF.baseChange K v u := by
   have skew : ∀ x y : Dw.La, Dw.EF x y = -Dw.EF y x := fun x y => by
     have := Dw.alt (x + y)
-    simp only [map_add, LinearMap.add_apply, Dw.alt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, Dw.alt] at this
     linarith
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add u u' h h' => simp only [map_add, LinearMap.add_apply, h, h']; ring
+  | add u u' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']; ring
   | tmul k x =>
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add u u' h h' => simp only [map_add, LinearMap.add_apply, h, h']; ring
+    | add u u' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']; ring
     | tmul k' x' =>
       rw [LinearMap.BilinForm.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul, skew x x', neg_smul, mul_comm]
 
@@ -34,11 +34,11 @@ private theorem adjK {K : Type} [CommRing K] (o : 𝓞 E) (u v : K ⊗[ℤ] Dw.L
       Dw.EF.baseChange K u (((LinearMap.lsmul (𝓞 E) Dw.La (H.bar o)).restrictScalars ℤ).baseChange K v) := by
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add u u' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+  | add u u' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
   | tmul k x =>
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add u u' h h' => simp only [map_add, h, h']
+    | add u u' h h' => simp only [map_add (f := _), h, h']
     | tmul k' x' =>
       simp only [LinearMap.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul, LinearMap.restrictScalars_apply,
         LinearMap.lsmul_apply]
@@ -60,7 +60,7 @@ private theorem expand : ∃ (n : ℕ) (e y : Fin n → Dw.La), ∀ (K : Type) [
   induction w using TensorProduct.induction_on with
   | zero => simp
   | add u u' h h' =>
-    simp only [map_add, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
     rw [← h, ← h']
   | tmul k x =>
     conv_lhs => rw [← a.sum_repr x, TensorProduct.tmul_sum]
@@ -84,7 +84,7 @@ private theorem mem_span_iff {K : Type} [NormedField K] [IsUltrametricDist K] (w
       simp only [pr, LinearMap.BilinForm.baseChange_tmul, _root_.mul_one, zsmul_eq_mul]
       exact intCast_mem _ _
     | zero => simp only [pr, map_zero, LinearMap.zero_apply]; exact zero_mem _
-    | add x y _ _ hx hy => simp only [pr, map_add, LinearMap.add_apply]; exact add_mem hx hy
+    | add x y _ _ hx hy => simp only [pr, map_add (f := _), LinearMap.add_apply]; exact add_mem hx hy
     | smul c x _ hx =>
       have : pr Dw (c • x) b = (c : K) * pr Dw x b := by
         change pr Dw ((c : K) • x) b = _
@@ -136,7 +136,7 @@ private theorem perp_of_mem {K : Type} [Field K] (σ s : 𝓞 E →+* K) (hs : �
     obtain ⟨o, u', rfl⟩ := hu
     rw [map_sub, LinearMap.sub_apply, adjK, hx, hs, bar_bar', map_smul, map_smul, LinearMap.smul_apply, sub_self]
   | zero => simp
-  | add u v _ _ hu hv => rw [map_add, LinearMap.add_apply, hu, hv, add_zero]
+  | add u v _ _ hu hv => rw [map_add (f := _), LinearMap.add_apply, hu, hv, add_zero]
   | smul c u _ hu => rw [map_smul, LinearMap.smul_apply, hu, smul_zero]
 
 end SlopeTestRemainingChoices

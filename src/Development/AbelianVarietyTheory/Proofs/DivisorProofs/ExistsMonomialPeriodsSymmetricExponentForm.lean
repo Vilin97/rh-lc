@@ -36,9 +36,9 @@ theorem exists_isMonomial_symm : ∀ (W : Type) [CommRing W] [IsDomain W] [IsLoc
     · exact zero_le_one.trans (QForm.Q_pos hϖ D hQ' ha)
   let be : LinearMap.BilinForm ℤ D.toPre.X :=
     LinearMap.mk₂ ℤ (fun a b => QForm.bHom hϖ D hQ' a b)
-      (fun a a' b => by simp only [map_add, AddMonoidHom.add_apply])
+      (fun a a' b => by simp only [map_add (f := _), AddMonoidHom.add_apply])
       (fun c a b => by simp only [map_zsmul, AddMonoidHom.smul_apply, smul_eq_mul])
-      (fun a b b' => by simp only [map_add])
+      (fun a b b' => by simp only [map_add (f := _)])
       (fun c a b => by simp only [map_zsmul, smul_eq_mul])
   have hbe : ∀ a b, be a b = QForm.bOf D.toPre Q a b := fun _ _ => rfl
   refine ⟨be, fun y z => ?_, fun y => ?_⟩

@@ -22,7 +22,7 @@ def sub (E₀ E B : Type) [Field E₀] [Field E] [Algebra E₀ E] [CommRing B] [
     exact ⟨x * y, by rw [map_mul, hx, hy, map_mul]⟩
   add_mem' := by
     rintro a b ⟨x, hx⟩ ⟨y, hy⟩
-    exact ⟨x + y, by rw [map_add, hx, hy, map_add]⟩
+    exact ⟨x + y, by rw [map_add (f := _), hx, hy, map_add (f := _)]⟩
   algebraMap_mem' c := ⟨c, by rw [IsScalarTower.algebraMap_apply E₀ E B, π.commutes]; rfl⟩
 
 omit [CharZero O] [Module.Finite ℤ_[l] O] [IsAdicComplete (maximalIdeal O) O] in
@@ -72,7 +72,7 @@ theorem reduce (hP : LocalPublishedTheorems)
       map_one' := hinj (by rw [hp]; simp)
       map_mul' := fun a b => hinj (by rw [hp, map_mul, hp, hp]; simp)
       map_zero' := hinj (by rw [hp]; simp)
-      map_add' := fun a b => hinj (by rw [hp, map_add, hp, hp]; simp)
+      map_add' := fun a b => hinj (by rw [hp, map_add (f := _), hp, hp]; simp)
       commutes' := fun c => hinj (by
         rw [hp]
         show π (algebraMap E₀ B c) = algebraMap E₀ E (algebraMap E₀ E₀ c)

@@ -136,7 +136,7 @@ abbrev core (W : Submodule ℂ (Kinf E N → ℂ)) (v : InfinitePlace E) : Inner
     exact integral_nonneg fun u => by positivity
   add_left a b w := by
     show ∫ u, conj (toFun W v (a + b) u) * toFun W v w u ∂nuN N = _
-    simp only [map_add, Pi.add_apply, add_mul]
+    simp only [map_add (f := _), Pi.add_apply, add_mul]
     exact integral_add (integrable_toFun W v a w) (integrable_toFun W v b w)
   smul_left a w c := by
     show ∫ u, conj (toFun W v (c • a) u) * toFun W v w u ∂nuN N = _
@@ -350,7 +350,7 @@ theorem Rd_clm (L : V →L[ℂ] V') (X : Mat N) {f : Mat N → V} {y : Mat N} (h
 
 theorem Eu_clm (L : V →L[ℂ] V') (s : Bool) (a b : Fin N) {f : Mat N → V} {y : Mat N}
     (hf : DifferentiableAt ℝ f y) : Eu s a b (fun z => L (f z)) y = L (Eu s a b f y) := by
-  simp only [Eu, Pi.smul_apply, Pi.add_apply, Rd_clm L _ hf, map_add, map_smul]
+  simp only [Eu, Pi.smul_apply, Pi.add_apply, Rd_clm L _ hf, map_add (f := _), map_smul]
 
 theorem Epow_clm (L : V →L[ℂ] V') (s : Bool) {f : Mat N → V} (hf : ContDiffOn ℝ ∞ f (GLs N)) (m : ℕ) :
     ∀ a b : Fin N, Set.EqOn (Epow s m a b (fun z => L (f z))) (fun z => L (Epow s m a b f z)) (GLs N) := by

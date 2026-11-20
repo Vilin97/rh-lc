@@ -30,7 +30,7 @@ theorem key_pow_dvd {A : Type} [CommRing A] (p : ℕ) (hp : p.Prime) (w : A) (hw
   have hpow : ∀ a, φ (M 0 a) ^ (p ^ e) = φ (N' 0 a) := by
     intro a
     obtain ⟨T, hT⟩ := hMN 0 a
-    rw [← map_pow, hT, map_add, map_mul, hp0, zero_mul, add_zero]
+    rw [← map_pow, hT, map_add (f := _), map_mul, hp0, zero_mul, add_zero]
   have hδ : ∀ b', ∑ a, φ (N' 0 a) * φ (N a b') = if (0 : Fin (k + 1)) = b' then 1 else 0 := by
     intro b'
     have h := congrArg φ (hinv 0 b')
@@ -157,7 +157,7 @@ theorem key_minor_dvd {A : Type} [CommRing A] (p : ℕ) (hp : p.Prime) (w : A) (
   have hpow : ∀ a, φ (M 0 a) ^ (p ^ e) = φ (N' 0 a) := by
     intro a
     obtain ⟨T, hT⟩ := hMN 0 a
-    rw [← map_pow, hT, map_add, map_mul, hp0, zero_mul, add_zero]
+    rw [← map_pow, hT, map_add (f := _), map_mul, hp0, zero_mul, add_zero]
   rw [map_sub, map_mul, map_mul, map_pow, map_pow, hrow u' N' hu' c, hrow u M hu 0, hrow u' N' hu' 0,
     hrow u M hu c, mul_pow, mul_pow, hpow 0, hpow c]
   ring

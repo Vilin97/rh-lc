@@ -51,7 +51,7 @@ theorem apolar_X_mul (i : σ) (P : MvPolynomial σ ℂ) (F : MvPowerSeries σ �
       MvPowerSeries.coeff_pderiv, add_comm _ m, prod_factorial_add_single]
     push_cast
     ring
-  | add P Q hP hQ => simp only [mul_add, map_add, LinearMap.add_apply, hP, hQ]
+  | add P Q hP hQ => simp only [mul_add, map_add (f := _), LinearMap.add_apply, hP, hQ]
 
 theorem apolar_mul_X (i : σ) (P : MvPolynomial σ ℂ) (F : MvPowerSeries σ ℂ) :
     apolar P (MvPowerSeries.X i * F) = apolar (MvPolynomial.pderiv i P) F := by
@@ -69,7 +69,7 @@ theorem apolar_mul_X (i : σ) (P : MvPolynomial σ ℂ) (F : MvPowerSeries σ �
     · have : m i = 0 := by
         rw [Finsupp.single_le_iff] at h; omega
       simp [this]
-  | add P Q hP hQ => simp only [map_add, LinearMap.add_apply, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), LinearMap.add_apply, hP, hQ]
 
 variable {W : Type*} [NormedAddCommGroup W] [NormedSpace ℂ W]
 
@@ -106,7 +106,7 @@ theorem apolar_eq_zero_of_mem_span {ι : Type*} (v : ι → σ → ℂ) (F : MvP
       simp only [Finset.sum_mul, map_sum, smul_mul_assoc, map_smul, LinearMap.sum_apply,
       LinearMap.smul_apply, apolar_X_mul]
   | zero => simp
-  | add P P' _ _ h h' => intro Q; rw [add_mul, map_add, LinearMap.add_apply, h, h', add_zero]
+  | add P P' _ _ h h' => intro Q; rw [add_mul, map_add (f := _), LinearMap.add_apply, h, h', add_zero]
   | smul a P _ h => intro Q; rw [smul_eq_mul, mul_comm a, mul_assoc, h]
 
 end Pairing

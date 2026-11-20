@@ -55,7 +55,7 @@ theorem inWL_smul (j : ℕ) (c : ↥D.LL0) (z : ↥D.LL0 ⊗[S.Ks] FmK S j) :
     rw [TensorProduct.smul_tmul']
     show ((c • a : ↥D.LL0) : D.what₂.LL) • (_ : S.WL j) = (c : D.what₂.LL) • (((a : ↥D.LL0) : D.what₂.LL) • (_ : S.WL j))
     rw [smul_eq_mul, IntermediateField.coe_mul, mul_smul]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem inWL_opK (j : ℕ) (f : Module.End D.what₂.LL (S.WL j)) (hf : ∀ x ∈ (S.A j).WK, f x ∈ (S.A j).WK)
     (z : ↥D.LL0 ⊗[S.Ks] FmK S j) :
@@ -65,7 +65,7 @@ theorem inWL_opK (j : ℕ) (f : Module.End D.what₂.LL (S.WL j)) (hf : ∀ x �
   | tmul a x =>
     rw [LinearMap.baseChange_tmul, inWL_tmul, inWL_tmul, LinearMap.map_smul]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem goodProjector_eq_sum (j : ℕ) (hst : RhoStab S j) (hχ : ChiInLL0 S j) (eC : G0g D.nd → ↥D.LL0)
     (s : Finset (G0g D.nd)) (hs : ∀ g, g ∉ s → eC g = 0) :
@@ -183,7 +183,7 @@ theorem hL_separable_good : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 I
     { toFun := fun z => (Rl.FW i0).j σ0 ((Y.fi i0).e (inWL S ((i0 : ℕ) + 1) z.1))
       map_add' := fun z w => by
         show (Rl.FW i0).j σ0 ((Y.fi i0).e (inWL S ((i0 : ℕ) + 1) (z.1 + w.1))) = _
-        rw [map_add, map_add, map_add]
+        rw [map_add (f := _), map_add (f := _), map_add (f := _)]
       map_smul' := fun c z => by
         show (Rl.FW i0).j σ0 ((Y.fi i0).e (inWL S ((i0 : ℕ) + 1) (c • z.1))) = _
         rw [inWL_smul, LinearEquiv.map_smul, LinearMap.map_smulₛₗ]

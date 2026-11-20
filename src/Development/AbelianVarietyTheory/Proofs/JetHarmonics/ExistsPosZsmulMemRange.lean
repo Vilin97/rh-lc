@@ -14,7 +14,7 @@ theorem quad_add_zsmul (hs : ∀ x y, Bf x y = Bf y x) (hQ : ∀ x, 2 * Q x = Bf
   have h2 := hQ y
   have h3 := hQ w
   have h4 := hs w y
-  simp only [map_add, map_zsmul, AddMonoidHom.add_apply, AddMonoidHom.smul_apply, smul_eq_mul] at h1
+  simp only [map_add (f := _), map_zsmul, AddMonoidHom.add_apply, AddMonoidHom.smul_apply, smul_eq_mul] at h1
   have h5 : 2 * Q (y + t • w) = 2 * (Q y + t * Bf y w + t ^ 2 * Q w) := by
     linear_combination h1 - h2 + t * h4 - t ^ 2 * h3
   exact mul_left_cancel₀ two_ne_zero h5
@@ -176,7 +176,7 @@ theorem exists_coset_minimiser :
     nlinarith
   · intro q z
     have hz := hmin (χ + z)
-    rw [map_add, ← add_assoc] at hz
+    rw [map_add (f := _), ← add_assoc] at hz
     have e1 := quad_add_zsmul hs hQ (x + φ χ) (φ z) 1
     have e2 := quad_add_zsmul hs hQ (x + φ χ) (φ z) q
     rw [one_smul] at e1

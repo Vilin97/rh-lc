@@ -56,7 +56,7 @@ def vertex (h : HasVertex P) : Ideal (lauSub P) where
   carrier := {p | ∃ c ∈ maximalIdeal C, algebraMap C K c = p.1.coeff 0}
   add_mem' := by
     rintro p q ⟨c, h1, h2⟩ ⟨d, h3, h4⟩
-    exact ⟨c + d, add_mem h1 h3, by rw [map_add, h2, h4]; rfl⟩
+    exact ⟨c + d, add_mem h1 h3, by rw [map_add (f := _), h2, h4]; rfl⟩
   zero_mem' := ⟨0, zero_mem _, map_zero _⟩
   smul_mem' := by
     rintro q p ⟨c, h1, h2⟩

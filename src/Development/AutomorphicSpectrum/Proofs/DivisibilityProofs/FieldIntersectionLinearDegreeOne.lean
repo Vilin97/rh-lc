@@ -70,7 +70,7 @@ theorem lin_sup (U : Submodule F (σ → F)) (p : σ) :
   · rintro _ ⟨c, hc, rfl⟩
     obtain ⟨u, hu, v, hv, rfl⟩ := Submodule.mem_sup.1 hc
     obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.1 hv
-    rw [map_add, map_smul, linForm_single, smul_eq_C_mul]
+    rw [map_add (f := _), map_smul, linForm_single, smul_eq_C_mul]
     exact add_mem (Ideal.mem_sup_left (linForm_mem hu))
       (Ideal.mul_mem_left _ _ (Ideal.mem_sup_right (Ideal.mem_span_singleton_self _)))
   · exact SetLike.coe_subset_coe.2 le_sup_left

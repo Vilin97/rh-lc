@@ -88,7 +88,7 @@ theorem GlobalTheory.InertLocSymp.psi_symp_eq :
   have h2 : (2 : L) ≠ 0 := by
     intro h
     have h1 : (2 : AF F) • ι 1 = 0 := by
-      rw [two_smul, ← map_add, one_add_one_eq_two, h, map_zero]
+      rw [two_smul, ← map_add (f := _), one_add_one_eq_two, h, map_zero]
     have : ι 1 = 0 := by
       rw [← one_smul (AF F) (ι 1), ← invOf_mul_self (2 : AF F), mul_smul, h1, smul_zero]
     exact one_ne_zero (hinj (this.trans (map_zero ι).symm))
@@ -96,7 +96,7 @@ theorem GlobalTheory.InertLocSymp.psi_symp_eq :
   set z := GlobalTheory.Hk3.locH σL δ JS JT x y
   have hhalf : ⅟(2 : AF F) • ι z = ι (z / 2) := by
     have : ι z = (2 : AF F) • ι (z / 2) := by
-      rw [two_smul, ← map_add, add_halves]
+      rw [two_smul, ← map_add (f := _), add_halves]
     rw [this, smul_smul, invOf_mul_self, one_smul]
   have hsymp : ⅟(2 : AF F) * symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J)
       (GlobalTheory.InertLocFrame.xm ι PV PW x) (GlobalTheory.InertLocFrame.xm ι PV PW y) =

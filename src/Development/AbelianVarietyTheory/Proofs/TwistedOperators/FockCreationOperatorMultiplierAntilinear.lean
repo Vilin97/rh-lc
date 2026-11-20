@@ -88,7 +88,7 @@ theorem fmR_smul {S T : HSp D} (A : GlobalTheory.ChainFr.Fr S) (B : GlobalTheory
 
 theorem omF_add {S T : HSp D} (A : GlobalTheory.ChainFr.Fr S) (B : GlobalTheory.ChainFr.Fr T) (z w e : VCx D.what₂.Tau S.rank T.rank) :
     omF A B (z + w) e = omF A B z e + omF A B w e := by
-  rw [omF_eq, omF_eq, omF_eq, fmR_add, map_add, LinearMap.add_apply]
+  rw [omF_eq, omF_eq, omF_eq, fmR_add, map_add (f := _), LinearMap.add_apply]
 
 theorem omF_smul {S T : HSp D} (A : GlobalTheory.ChainFr.Fr S) (B : GlobalTheory.ChainFr.Fr T) (c : ℝ) (z e : VCx D.what₂.Tau S.rank T.rank) :
     omF A B (c • z) e = c * omF A B z e := by

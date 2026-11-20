@@ -57,7 +57,7 @@ theorem sigR_swap (t : I.E ⊗[I.F] Af I.F) :
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigR, Formalism.UG.sigR, swapE]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem swapE_inclE_eq (a : I.E) :
     swapE I (Formalism.UG.inclE (F := I.F) (Af I.F) a) = inclR (Af I.F) a := by

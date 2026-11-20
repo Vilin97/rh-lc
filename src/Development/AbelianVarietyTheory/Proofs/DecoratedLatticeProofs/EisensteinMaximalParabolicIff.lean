@@ -76,7 +76,7 @@ theorem keeps_inv {A : Type} [CommRing A] {n j : ℕ} (M : GL (Fin n) A) {C : Ma
     exact isUnit_of_mul_isUnit_right h2
   obtain ⟨u, hu⟩ := hu
   have h0 := Matrix.aeval_self_charpoly M.val
-  rw [← Polynomial.X_mul_divX_add M.val.charpoly, map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C,
+  rw [← Polynomial.X_mul_divX_add M.val.charpoly, map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C,
     ← hu] at h0
   have h1 : (M⁻¹).val = -((u⁻¹).val • Polynomial.aeval M.val M.val.charpoly.divX) := by
     have h2 := congrArg (fun Z => (u⁻¹).val • ((M⁻¹).val * Z)) h0

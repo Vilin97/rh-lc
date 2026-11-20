@@ -143,7 +143,7 @@ private theorem part1 (i : ι) (n : ℕ) (q : ℤ) : ∃ P : H →L[ℂ] H, (∀
 private theorem part4 (i : ι) (v : H) (hv : ∀ n q g, PiH C ρ i n q (ρ g v) = 0) : v = 0 := by
   let Wd : Submodule ℂ H :=
     { carrier := {y | ∀ (n : ℕ) (q : ℤ) (g : G1 K 2), KT.P (sg C ρ i) n q (ρ g y) = 0}
-      add_mem' := fun {x y} hx hy n q g => by rw [map_add, KT.P_add, hx, hy, add_zero]
+      add_mem' := fun {x y} hx hy n q g => by rw [map_add (f := _), KT.P_add, hx, hy, add_zero]
       zero_mem' := fun n q g => by rw [map_zero]; simpa using KT.P_smul (sg C ρ i) n q 0 0
       smul_mem' := fun c x hx n q g => by rw [map_smul, KT.P_smul, hx, smul_zero] }
   have hcl : IsClosed (Wd : Set H) := by

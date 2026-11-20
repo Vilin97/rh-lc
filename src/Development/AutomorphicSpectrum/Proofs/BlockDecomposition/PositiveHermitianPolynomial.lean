@@ -50,7 +50,7 @@ theorem norm_value_pos {r : ℕ} (Q : SelfRecip E r) (ρ : Fld Q →+* ℂ) (hn 
     | tmul a e =>
       rw [involBase, Algebra.TensorProduct.map_tmul, hf, hf, map_mul, hg]
       exact congrArg _ (hinv e)
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   obtain ⟨z, hz⟩ := hz w
   have h1 := congrArg f hz
   rw [map_mul, hfi, hf, map_one, one_mul, Complex.mul_conj] at h1
@@ -68,7 +68,7 @@ theorem aeval_units_conj {n : ℕ} (u : (Matrix (Fin n) (Fin n) ℂ)ˣ) (A : Mat
     aeval ((u : Matrix (Fin n) (Fin n) ℂ) * A * ((u⁻¹ : _ˣ) : Matrix (Fin n) (Fin n) ℂ)) p =
       (u : Matrix (Fin n) (Fin n) ℂ) * aeval A p * ((u⁻¹ : _ˣ) : Matrix (Fin n) (Fin n) ℂ) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, hp, hq, mul_add, add_mul]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, mul_add, add_mul]
   | monomial k a =>
     rw [aeval_monomial, aeval_monomial, Units.conj_pow]
     simp only [Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul, mul_smul_comm]
@@ -135,7 +135,7 @@ theorem map_aeval {n : ℕ} (τ : E →+* ℂ) (A : Matrix (Fin n) (Fin n) E) (p
     (aeval A p).map τ = aeval (A.map τ) (p.map τ) := by
   induction p using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, Polynomial.map_add, map_add, ← hp, ← hq]
+    rw [map_add (f := _), Polynomial.map_add (f := _), map_add (f := _), ← hp, ← hq]
     ext i j
     simp
   | monomial k a =>

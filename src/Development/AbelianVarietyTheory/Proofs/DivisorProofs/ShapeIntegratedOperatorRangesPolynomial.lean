@@ -54,7 +54,7 @@ theorem conj_ev (P : Poly n) :
   · exact Finset.sup_mono (support_map_subset _ _)
   · induction P using MvPolynomial.induction_on with
     | C a => simp [ev]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p v hp =>
       simp only [map_mul, hp]
       rcases v with x | x <;> simp [ev]

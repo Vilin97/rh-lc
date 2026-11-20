@@ -37,7 +37,7 @@ theorem isUnitary_tAct (R S k : ℕ) (W : Type) [AddCommGroup W] [Module ℂ W] 
     · simp [h0]
     · exact (hp _ h0).le
   set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [formT_apply, tAct_apply, map_add, LinearMap.add_apply, Finset.sum_add_distrib, ha a b hab, map_sum,
+    · simp only [formT_apply, tAct_apply, map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib, ha a b hab, map_sum,
       LinearMap.sum_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, star_adP_Eab, RingHom.id_apply]
     congr 1
     rw [Finset.sum_comm, Finset.sum_comm (s := (Finset.univ : Finset (Fin k → NC R S)))]

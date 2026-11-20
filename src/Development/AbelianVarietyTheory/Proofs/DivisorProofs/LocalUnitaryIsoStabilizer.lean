@@ -68,7 +68,7 @@ theorem sigR_sigR (hσ : ∀ x, σ (σ x) = x) (R : Type) [CommRing R] [Algebra 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [sigR, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem sigR_inclR (R : Type) [CommRing R] [Algebra F R] (e : E) : sigR R σ (inclR (F := F) R e) = inclR (F := F) R (σ e) := by
   show Algebra.TensorProduct.map (AlgHom.id F R) σ ((1 : R) ⊗ₜ[F] e) = (1 : R) ⊗ₜ[F] σ e
@@ -122,7 +122,7 @@ theorem at_up (H : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) : At (evFin F v) (u
 
 theorem compFin_up (H : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) : (up v H).map (compFin F E v) = H := by
   have e : (up v H).map (compFin F E v) = (compFin F E v).mapMatrix (up v H) := rfl
-  rw [e, up, map_add, map_one, RingHom.mapMatrix_apply, map_lift_compFin, add_sub_cancel]
+  rw [e, up, map_add (f := _), map_one, RingHom.mapMatrix_apply, map_lift_compFin, add_sub_cancel]
 
 theorem up_compFin {A : Matrix (Fin n) (Fin n) (AE F E)} (hA : At (evFin F v) (A - 1)) :
     up v (A.map (compFin F E v)) = A :=
@@ -175,7 +175,7 @@ theorem unitary_up (J : Matrix (Fin n) (Fin n) E) (v : Pl F) (H : Matrix (Fin n)
   have hU : up v H = 1 + X := by rw [hX, add_sub_cancel]
   have hcA : (1 + X).map (cA σ) = 1 + X.map (cA σ) := by
     have e : (1 + X).map (cA σ) = (cA σ : AE F E →+* AE F E).mapMatrix (1 + X) := rfl
-    rw [e, map_add, map_one]; rfl
+    rw [e, map_add (f := _), map_one]; rfl
   have hD : At (evFin F v) ((up v H)ᵀ * incM F J * (up v H).map (cA σ) - incM F J) := by
     have e : (up v H)ᵀ * incM F J * (up v H).map (cA σ) - incM F J =
         Xᵀ * incM F J * (1 + X.map (cA σ)) + incM F J * X.map (cA σ) := by
@@ -208,7 +208,7 @@ theorem infT_liftV_smul (v : Pl F) (x : AE F E) : infT F E (GlobalTheory.LatVac.
     rw [TensorProduct.smul_tmul', smul_eq_mul, infT_tmul]
     have : (GlobalTheory.LatVac.liftV v 1 * a).1 = 0 := zero_mul _
     rw [this, TensorProduct.zero_tmul]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, add_zero]
 
 theorem compFin_liftV_smul {v u : Pl F} (h : u ≠ v) (x : AE F E) :
     compFin F E u (GlobalTheory.LatVac.liftV v 1 • x) = 0 := by
@@ -222,7 +222,7 @@ theorem vecLoc_finT (u : Pl F) (z : Fin n → AE F E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
 
 theorem mem_latHat_iff_comp {W : Spc F E n} (hL : W.L.FG) (z : Fin n → AE F E) :
     z ∈ latHat W ↔ (∀ i, infT F E (z i) = 0) ∧ ∀ u, (fun i => compFin F E u (z i)) ∈ latLoc F W.L u := by
@@ -246,11 +246,11 @@ theorem comp_mulVec {v : Pl F} {A : Matrix (Fin n) (Fin n) (AE F E)} (hA : At (e
   have hidem : GlobalTheory.LatVac.liftV v 1 • y = y := GlobalTheory.InertLagUniq.liftV_one_smul v y hat
   obtain ⟨h1, h2⟩ := comp_of_idem hidem
   refine ⟨fun i => ?_, fun u hu => ?_, ?_⟩
-  · rw [hAz, Pi.add_apply, map_add, h1 i, add_zero]
+  · rw [hAz, Pi.add_apply, map_add (f := _), h1 i, add_zero]
   · funext i
     have := congrFun (h2 u hu) i
     simp only [Pi.zero_apply] at this
-    rw [hAz, Pi.add_apply, map_add, this, add_zero]
+    rw [hAz, Pi.add_apply, map_add (f := _), this, add_zero]
   · funext i
     exact RingHom.map_mulVec (compFin F E v) A z i
 

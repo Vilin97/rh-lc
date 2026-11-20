@@ -114,7 +114,7 @@ theorem UpperTheory.V.Z.IntegralApplyAeEq.nEx :
     have f3 := (cadd _ _ (cadd _ _ (cadd _ _ (csh (T - 1) (M.J' (one W w))) (resCob M.F k).1).1 f1).1 f2).1
     refine ⟨(∫ x, cut V (Ioi T) ((shF V).av wR u) x) + ∫ x, v x, ?_⟩
     convert f3 using 1
-    rw [← e1, ← e2, map_add, map_add, ← hh, ← hR]
+    rw [← e1, ← e2, map_add (f := _), map_add (f := _), ← hh, ← hR]
     linear_combination (norm := module) dec
   choose n hn using ex
   let b := Module.finBasis ℂ W

@@ -37,13 +37,13 @@ theorem infPart_liftFin (x : Af D.host.F ⊗[D.host.F] D.host.E) : infPart D (Gl
   induction x using TensorProduct.induction_on with
   | zero => rw [LinearMap.map_zero, RingHom.map_zero]
   | tmul a m => exact GlobalTheory.LatVac.infPart_pair a m
-  | add x y hx hy => rw [LinearMap.map_add, RingHom.map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hx, hy, add_zero]
 
 theorem finPart_liftFin (x : Af D.host.F ⊗[D.host.F] D.host.E) : finPart D (GlobalTheory.LatticeStable.liftFin D x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => rw [LinearMap.map_zero, RingHom.map_zero]
   | tmul a m => rfl
-  | add x y hx hy => rw [LinearMap.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hx, hy]
 
 theorem toEAf_eq_comm (z : AE D) :
     toEAf D z = Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E (finPart D z) := rfl

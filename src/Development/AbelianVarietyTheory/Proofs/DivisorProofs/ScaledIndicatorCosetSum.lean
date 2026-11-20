@@ -136,7 +136,7 @@ theorem indicator_scaledInt_eq_sum : ∀ (F : Type) [Field F] [NumberField F] (�
     have e : y - ι (rep (fun i => Ideal.Quotient.mk I (x i))) = (y - ι ξ) - ι (fun i => a * m * (t i : F)) := by
       funext i
       simp only [ι, Pi.sub_apply]
-      rw [hF i, map_add]
+      rw [hF i, map_add (f := _)]
       abel
     rw [e]
     exact sub_mem hξ' hw

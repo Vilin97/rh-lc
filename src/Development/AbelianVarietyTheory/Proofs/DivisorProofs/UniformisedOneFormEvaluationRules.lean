@@ -100,7 +100,7 @@ theorem evForm_rules : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.le
     intro a
     rw [hE a b, hD]
   | zero => intro a; simp
-  | add x y _ _ hx hy => intro a; rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => intro a; rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
   | smul s x _ hx =>
     intro a
     rw [smul_smul, hx, hx, smul_smul, holUnif_val_mul]

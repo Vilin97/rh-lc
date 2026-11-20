@@ -39,9 +39,9 @@ theorem pushout_functional {K : Type} [Field K] {A B C : CommRingCat.{0}} (f : C
     exact this
   refine ⟨fun α β hα hβ => ?_, fun G hG w => ?_⟩
   · let α' : A →ₗ[K] K :=
-      { toFun := α, map_add' := α.map_add, map_smul' := fun c a => by rw [Algebra.smul_def]; exact hα c a }
+      { toFun := α, map_add' := α.map_add (f := _), map_smul' := fun c a => by rw [Algebra.smul_def]; exact hα c a }
     let β' : B →ₗ[K] K :=
-      { toFun := β, map_add' := β.map_add, map_smul' := fun c b => by rw [Algebra.smul_def]; exact hβ c b }
+      { toFun := β, map_add' := β.map_add (f := _), map_smul' := fun c b => by rw [Algebra.smul_def]; exact hβ c b }
     refine ⟨((LinearMap.mul' K K).comp (TensorProduct.map α' β')).toAddMonoidHom.comp φ.hom.toAddMonoidHom,
       fun a b => ?_⟩
     show LinearMap.mul' K K (TensorProduct.map α' β' (φ.hom (i.hom a * j.hom b))) = α a * β b
@@ -73,7 +73,7 @@ theorem pushout_functional {K : Type} [Field K] {A B C : CommRingCat.{0}} (f : C
     | tmul a b =>
       rw [Algebra.TensorProduct.productMap_apply_tmul]
       exact hG a b
-    | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 theorem pbT_of_le {Z Y : Scheme.{0}} (f : Z ⟶ Y) {O₀ : Y.Opens} (s : Γ(Y, O₀)) {O : Z.Opens}
     (h : O ≤ f ⁻¹ᵁ O₀) : pbT f s O = (f.appLE O₀ O h).hom s := by
@@ -368,7 +368,7 @@ theorem pair_symm {K : Type} [Field K] {Y Z : Scheme.{0}} {q : Y ⟶ Sp K} {p₁
       (F i i' j j' (rsT (u i i' j') _) - F i i' j j' (rsT (u i i' j) _)) +
         (F i i' j j' (rsT (u' i' j j') _) - F i i' j j' (rsT (u' i j j') _)) := by
     intro i i' j j'
-    rw [map_add, map_sub, map_sub]
+    rw [map_add (f := _), map_sub, map_sub]
   rw [← sub_eq_zero, ← Finset.sum_sub_distrib]
   have e1 : ∀ a, α (θ a) * β (φ a) - α (φ a) * β (θ a) = ∑ i, ∑ i', ∑ j, ∑ j',
       (α (Pi.single i (Pi.single i' (θ a i i'))) * β (Pi.single j (Pi.single j' (φ a j j'))) -

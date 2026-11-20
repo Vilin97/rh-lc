@@ -350,7 +350,7 @@ theorem subsingleton_tateZero_gr (j : ℕ) : Subsingleton (TateZero Gal(L/K) (D.
       D.π ^ (D.k + j) • ∑ σ, (c σ - c 1) • σ D.θ := by
     show D.val x - 1 - ∑ σ : Gal(L/K), (σ (D.val y) - 1) = _
     rw [← hc, hyv]
-    simp only [Algebra.smul_def, map_add, map_one, map_mul, map_pow, map_sub,
+    simp only [Algebra.smul_def, map_add (f := _), map_one, map_mul, map_pow, map_sub,
       algEquiv_algebraMap_integer, add_sub_cancel_left, Finset.mul_sum, ← sum_sub_distrib]
     refine sum_congr rfl fun σ _ => ?_
     ring
@@ -404,7 +404,7 @@ theorem subsingleton_tateNegOne_gr (j : ℕ) : Subsingleton (TateNegOne Gal(L/K)
     have he0' : ∑ τ, algebraMap 𝒪[K] L (c τ) = algebraMap 𝒪[K] L D.π * algebraMap 𝒪[K] L e0 := by
       set_option synthInstance.maxHeartbeats 100000 in
         rw [← map_sum, he0, map_mul]
-    simp only [Algebra.smul_def, map_add, map_one, map_mul, map_pow,
+    simp only [Algebra.smul_def, map_add (f := _), map_one, map_mul, map_pow,
       algEquiv_algebraMap_integer, add_sub_cancel_left, Finset.mul_sum, sum_sub_distrib]
     have h3 : ∑ τ : Gal(L/K), algebraMap 𝒪[K] L (c τ) * (algebraMap 𝒪[K] L D.π ^ (D.k + j) * D.θ) =
         (∑ τ, algebraMap 𝒪[K] L (c τ)) * (algebraMap 𝒪[K] L D.π ^ (D.k + j) * D.θ) := by

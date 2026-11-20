@@ -126,8 +126,8 @@ theorem HasVal.add {s t : Φ} {v w : L} (hv : HasVal y z s v) (hw : HasVal y z t
     ?_, ?_, ?_⟩
   · rw [add_comm]; exact isMultiHomog_mul hg' hh
   · rw [map_mul]; exact mul_ne_zero h0 h0'
-  · rw [map_add, map_mul, map_mul, map_mul, e, e']; ring
-  · rw [map_add, map_mul, map_mul, map_mul, ev, ev']; ring
+  · rw [map_add (f := _), map_mul, map_mul, map_mul, e, e']; ring
+  · rw [map_add (f := _), map_mul, map_mul, map_mul, ev, ev']; ring
 
 theorem hasVal_intCast (n : ℤ) : HasVal y z (n : Φ) (n : L) :=
   ⟨0, C n, 1, isMultiHomog_C_zero n, isMultiHomog_one, by simp, by simp, by simp⟩

@@ -61,8 +61,8 @@ theorem exists_trace {z : Formalism.L2.Theta.AE D} (hz : z ∈ intL D) :
   | add x y _ _ hx hy =>
     obtain ⟨a, ha, h1⟩ := hx
     obtain ⟨b, hb, h2⟩ := hy
-    exact ⟨a + b, fun v => by rw [map_add]; exact add_mem (ha v) (hb v), by
-      rw [RingHom.map_add, map_add (fj D), ← h1, ← h2, add_add_add_comm]⟩
+    exact ⟨a + b, fun v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v), by
+      rw [RingHom.map_add (f := _), map_add (fj D), ← h1, ← h2, add_add_add_comm]⟩
   | neg x _ hx =>
     obtain ⟨a, ha, h1⟩ := hx
     exact ⟨-a, fun v => by rw [map_neg]; exact neg_mem (ha v), by
@@ -110,7 +110,7 @@ theorem exists_hom {v} {e : Formalism.L2.Theta.AE D} (he : SplitAt D v e) :
   · refine scalar_eq he ?_
     rw [← hf, map_zero, mul_zero, ← sub_self (0 : Fv D.host.F v), singleV_sub, sub_self, map_zero, zero_mul]
   · refine scalar_eq he ?_
-    rw [← hf, map_add, singleV_add, map_add, mul_add, add_mul, hf, hf]
+    rw [← hf, map_add (f := _), singleV_add, map_add (f := _), mul_add, add_mul, hf, hf]
 
 theorem hom_algebraMap {v} {e : Formalism.L2.Theta.AE D} (he : SplitAt D v e) {φ : D.host.E →+* Fv D.host.F v}
     (hφ : ∀ x, e * incA D x = fj D (singleV D.host.F v (φ x)) * e) (t : D.host.F) :
@@ -136,7 +136,7 @@ theorem exists_isIdemAt : ∀ (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) (
     { carrier := {x | Valued.v (φ x) < 1}
       add_mem' := fun {a b} ha hb => by
         show Valued.v (φ ((a : D.host.E) + b)) < 1
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Valuation.map_add_lt _ ha hb
       zero_mem' := by
         show Valued.v (φ 0) < 1

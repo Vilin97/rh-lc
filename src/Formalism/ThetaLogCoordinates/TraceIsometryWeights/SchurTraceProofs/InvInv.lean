@@ -325,7 +325,7 @@ theorem E_Pstep_apply [CharZero K] (h : GlRel E) {S : Finset ι} {z j : ι} (hz 
     simp [Om, cc_zero]
   | succ n ih =>
     rw [Pstep_eq, Finset.sum_range_succ, ← Pstep_eq]
-    simp only [LinearMap.add_apply, map_add, ih, LinearMap.smul_apply, map_smul,
+    simp only [LinearMap.add_apply, map_add (f := _), ih, LinearMap.smul_apply, map_smul,
       E_Om_apply h hz hj hS hzz n]
     rw [eq_neg_of_add_eq_zero_left (cc_rec (K := K) S.card n)]
     module

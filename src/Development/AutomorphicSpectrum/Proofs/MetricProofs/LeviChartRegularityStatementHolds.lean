@@ -45,7 +45,7 @@ def tanIdeal {σ : Type} [Fintype σ] (w v : σ → ℂ) : Ideal (MvPolynomial �
   add_mem' := by
     rintro a b ⟨ha0, ha1⟩ ⟨hb0, hb1⟩
     refine ⟨by simp [ha0, hb0], ?_⟩
-    simp only [map_add, add_mul, Finset.sum_add_distrib, ha1, hb1, add_zero]
+    simp only [map_add (f := _), add_mul, Finset.sum_add_distrib, ha1, hb1, add_zero]
   zero_mem' := by simp
   smul_mem' := by
     rintro g h ⟨h0, h1⟩

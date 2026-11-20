@@ -65,7 +65,7 @@ theorem hom_one_apply {R R' : Type} [CommRing R] [CommRing R'] (φ : R →+* R')
 
 theorem hom_entry {R R' : Type} [CommRing R] [CommRing R'] (φ : R →+* R') (t m o : R) :
     φ (t * m + (o - t * o)) = φ t * φ m + (φ o - φ t * φ o) := by
-  rw [map_add, map_sub, map_mul, map_mul]
+  rw [map_add (f := _), map_sub, map_mul, map_mul]
 
 theorem hom_entry_zero {R R' : Type} [CommRing R] [CommRing R'] (φ : R →+* R') {t : R} (ht : φ t = 0) (m o : R) :
     φ (t * m + (o - t * o)) = φ o := by

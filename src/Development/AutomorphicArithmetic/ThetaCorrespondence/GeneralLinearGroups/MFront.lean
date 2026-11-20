@@ -25,7 +25,7 @@ private theorem UpperTheory.Lit.Mix.front_support_decomposition (hG : GlobalTheo
   have hAB : ∀ x ∈ A₀, x ∉ A₁ := fun x hx hx' => hU x hx x hx' 0 (by simp) (by simp)
   have hn₁ : (A₁.map Sigma.fst).sum = n := by
     have h := hA.sum_fst
-    rw [Multiset.map_add, Multiset.sum_add, hm₀, Fintype.card_fin] at h
+    rw [Multiset.map_add (f := _), Multiset.sum_add, hm₀, Fintype.card_fin] at h
     omega
   have hS₁ : HasSupport π (Finset.univ.val.map u) :=
     ⟨s, u, rfl, hA.isIrreducible, fun a => ⟨(hc a).1, (u a).2.rep.irr, (hc a).2⟩, e₃, .of_injective φ hφ⟩

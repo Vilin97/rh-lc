@@ -212,7 +212,7 @@ theorem inf_trivial_of_trivAt_degOne : ∀ (F E : Type) [Field F] [NumberField F
     have hzb : z = fun w => Units.map w.1.embedding.toMonoidHom (xb b) := funext fun i => Units.ext (by
       rw [hz i, Units.coe_map, hτapp]
       simp only [hxbdef, Units.val_mk0, RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe]
-      rw [← map_add, ← coe_algebraMap]
+      rw [← map_add (f := _), ← coe_algebraMap]
       rfl)
     rw [hzb]
     show χ (infIdele E (infUnit E _)) = _

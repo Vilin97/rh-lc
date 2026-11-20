@@ -64,7 +64,7 @@ theorem sigR_mem_intLoc (σ : E →ₐ[F] E) {v : HeightOneSpectrum (𝓞 F)} {y
     Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ y ∈ intLoc F E v :=
   intLoc_induction (p := fun y => Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ y ∈ intLoc F E v)
     (fun _ ha x => tmul_mem_intLoc ha (RingOfIntegers.mapRingHom (σ : E →+* E) x))
-    (by simp) (fun y z hy hz => by rw [map_add]; exact add_mem hy hz)
+    (by simp) (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz)
     (fun y hy => by rw [map_neg]; exact neg_mem hy) hy
 
 variable (F) in

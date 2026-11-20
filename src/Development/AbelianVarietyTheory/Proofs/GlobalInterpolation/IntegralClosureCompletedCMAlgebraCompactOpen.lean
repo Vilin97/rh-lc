@@ -15,7 +15,7 @@ theorem eq_sum_trace {F E : Type} [Field F] [Field E] [Algebra F E] [FiniteDimen
   induction z using TensorProduct.induction_on with
   | zero => simp
   | add x y hx hy =>
-    simp only [add_mul, map_add, add_smul, Finset.sum_add_distrib]
+    simp only [add_mul, map_add (f := _), add_smul, Finset.sum_add_distrib]
     rw [← hx, ← hy]
   | tmul a e =>
     have h3 : ∀ e : E, Algebra.trace R (R ⊗[F] E) (a ⊗ₜ[F] e) =

@@ -25,7 +25,7 @@ theorem SchurSignCoefficient.coeff_aeval_diagonal {N : ℕ} (c : Fin N → ℚ)
     split_ifs with hue
     · subst hue; ring
     · simp
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem SchurSignCoefficient.aeval_smul_powerSumHom (N : ℕ) (s : ℚ)
     (S : MvPolynomial (Fin N) ℚ) :

@@ -90,7 +90,7 @@ theorem _root_.GlobalTheory.TestLat.SumLat.isLattice_sumLat [Finite C] (lam : ι
       rw [map_zero]
       exact zero_mem _
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
     | smul a x _ hx =>
       rw [map_smul]

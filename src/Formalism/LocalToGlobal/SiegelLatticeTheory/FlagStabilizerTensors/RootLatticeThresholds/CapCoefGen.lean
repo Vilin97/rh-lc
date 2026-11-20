@@ -140,7 +140,7 @@ theorem eabH_cf (hσ : IsURepOn (UJset ε) σ) (hQP : Q * P = 1) (hPQ : P * Q = 
         Complex.I • actM (smE ε σ) (S7.cpart2 ε (P * Matrix.single c d 1 * Q)) := by
     conv_lhs => rw [SmDerA.cpart_decomp ε (P * Matrix.single c d 1 * Q)]
     rw [SmDerA.actM_add, SmDerA.actM_smul]
-  rw [hY, LinearMap.add_apply, LinearMap.smul_apply, Submodule.coe_add, Submodule.coe_smul, map_add, map_smul,
+  rw [hY, LinearMap.add_apply, LinearMap.smul_apply, Submodule.coe_add, Submodule.coe_smul, map_add (f := _), map_smul,
     inner_add_right, inner_smul_right, add_smul, smul_smul]
 
 end Coef
@@ -170,7 +170,7 @@ theorem top_cf (hσ : IsURepOn (UJset ε) σ) (hQP : Q * P = 1) (hPQ : P * Q = 1
   unfold Formalism.QuantumDeterminants.Top Formalism.REAL.Tm
   rw [eabH_cf hσ hQP hPQ a T x f hf c d hg, hf g hg]
   by_cases hcd : c = d
-  · rw [if_pos hcd, if_pos hcd, LinearMap.add_apply, Submodule.coe_add, map_add, inner_add_right, add_smul,
+  · rw [if_pos hcd, if_pos hcd, LinearMap.add_apply, Submodule.coe_add, map_add (f := _), inner_add_right, add_smul,
       Algebra.algebraMap_eq_smul_one, LinearMap.smul_apply, Module.End.one_apply, Submodule.coe_smul, map_smul,
       inner_smul_right, smul_smul]
     rfl

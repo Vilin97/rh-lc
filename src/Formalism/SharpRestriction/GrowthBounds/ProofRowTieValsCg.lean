@@ -70,7 +70,7 @@ theorem Cg.trans {f g k : MvPowerSeries τ C} (h : Cg V A f g) (h' : Cg V A g k)
     rwa [sub_add_sub_cancel] at this⟩
 
 theorem Cg.add {f g f' g' : MvPowerSeries τ C} (h : Cg V A f g) (h' : Cg V A f' g') : Cg V A (f + f') (g + g') :=
-  ⟨by rw [map_add, h.1, h'.1, add_zero], by rw [map_add, h.2.1, h'.2.1, add_zero], by
+  ⟨by rw [map_add (f := _), h.1, h'.1, add_zero], by rw [map_add (f := _), h.2.1, h'.2.1, add_zero], by
     have := UImg.mul hA h.2.2 h'.2.2
     rw [← VP.exp_add (by rw [map_sub, h.1, h.2.1, sub_zero]) (by rw [map_sub, h'.1, h'.2.1, sub_zero])] at this
     rwa [show f - g + (f' - g') = f + f' - (g + g') by ring] at this⟩
@@ -145,7 +145,7 @@ theorem gauge_congr_additive_left {a b c : Fin dd → MvPowerSeries τ C} (ha : 
   have c2 := VP.cc_hAt Y hQ.1 hR.1
   have c3 := VP.cc_hAt Y (VP.cc_addAt Y hP.1 hQ.1) hR.1
   have h := cg_of (V := V) hA (F := VP.hAt Y P R + VP.hAt Y Q R) (G := VP.hAt Y (VP.addAt Y P Q) R)
-    (by rw [map_add, c1, c2, add_zero]) c3 (by
+    (by rw [map_add (f := _), c1, c2, add_zero]) c3 (by
       rw [← VP.first_partial_law_at_points Y hP.1 hQ.1 hR.1]
       exact IntS.subst (VP.constantCoeff_triple_substitution hP.1 hQ.1 hR.1) (VP.integral_triple_substitution hP.2 hQ.2 hR.2) Y.intPh1)
   rw [VP.subst_add' hA, VP.hAt_subst Y hA hP.1 hR.1, VP.hAt_subst Y hA hQ.1 hR.1,
@@ -164,7 +164,7 @@ theorem gauge_congr_additive_right {a b c : Fin dd → MvPowerSeries τ C} (ha :
   have c2 := VP.cc_hAt Y hP.1 hR.1
   have c3 := VP.cc_hAt Y hP.1 (VP.cc_addAt Y hQ.1 hR.1)
   have h := cg_of (V := V) hA (F := VP.hAt Y P Q + VP.hAt Y P R) (G := VP.hAt Y P (VP.addAt Y Q R))
-    (by rw [map_add, c1, c2, add_zero]) c3 (by
+    (by rw [map_add (f := _), c1, c2, add_zero]) c3 (by
       rw [← VP.second_partial_law_at_points Y hP.1 hQ.1 hR.1]
       exact IntS.subst (VP.constantCoeff_triple_substitution hP.1 hQ.1 hR.1) (VP.integral_triple_substitution hP.2 hQ.2 hR.2) Y.intPh2)
   rw [VP.subst_add' hA, VP.hAt_subst Y hA hP.1 hQ.1, VP.hAt_subst Y hA hP.1 hR.1,

@@ -15,7 +15,7 @@ theorem mul_conj_polar (z w : ℂ) : z * conj w = (1 / 4 : ℂ) * ((((‖z + w�
   have e : ∀ y : ℂ, (((‖y‖ ^ 2 : ℝ)) : ℂ) = y * conj y := fun y => by
     rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
   rw [e, e, e, e]
-  simp only [map_add, map_sub, map_mul, Complex.conj_I]
+  simp only [map_add (f := _), map_sub, map_mul, Complex.conj_I]
   linear_combination (1 / 2 : ℂ) * (z * conj w - w * conj z) * Complex.I_sq
 
 theorem integral_sq_norm {X : Type} [MeasurableSpace X] {μ : Measure X} {h : X → ℂ} (hh : MemLp h 2 μ) :
@@ -87,12 +87,12 @@ theorem mul_eq_zero_of_supp (S : Finset (Pl F)) {m n k : ℕ} (A : Matrix (Fin m
     have hl : ∀ w : Pl F, fstA F (GlobalTheory.LatVac.liftV w 1) = 0 := fun w => rfl
     have : fstA F (1 - e) = 0 := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [he, map_sub, map_one, map_add, map_sum, h0, Finset.sum_eq_zero fun w _ => hl w, add_zero, sub_self]
+        rw [he, map_sub, map_one, map_add (f := _), map_sum, h0, Finset.sum_eq_zero fun w _ => hl w, add_zero, sub_self]
     rw [this, map_zero]
   have h2 : ∀ w ∈ S, evFin F w (1 - e) = 0 := by
     intro w hw
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [he, map_sub, map_one, map_add, map_sum]
+      rw [he, map_sub, map_one, map_add (f := _), map_sum]
     have h0 : evFin F w (infOne (F := F)) = 0 := by
       change evalV F w (sndA F infOne) = 0
       have : sndA F (infOne (F := F)) = 0 := rfl

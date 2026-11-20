@@ -276,7 +276,7 @@ theorem exists_lieModel_pull {X' : Scheme.{0}} (t : SAB H X) (t' : SAB H X') (g 
         obtain ⟨e', rfl⟩ := M₁.onto v hv
         obtain ⟨e, rfl⟩ := hsurj e'
         exact ⟨e, rfl⟩
-      add := fun e e' => by rw [map_add, M₁.add]
+      add := fun e e' => by rw [map_add (f := _), M₁.add]
       smul := fun c e => by rw [hj₂]; exact M₁.smul c (j e) }
   have hcanc : ∀ v w : epsAt ξ' ⟶ t'.G, v.left ≫ m.φ = w.left ≫ m.φ → v = w := by
     intro v w h

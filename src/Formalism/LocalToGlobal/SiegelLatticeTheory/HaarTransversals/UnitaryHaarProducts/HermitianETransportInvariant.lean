@@ -97,7 +97,7 @@ theorem toV_crd (v : (VS D).V) : toV X (X.crd v) = v := by
   simp [toV, HidaSetting.crd, crdOf, Module.Basis.sum_repr]
 
 theorem toV_add (x y : Fin X.B.I.n → X.B.I.E) : toV X (x + y) = toV X x + toV X y := by
-  simp only [toV, Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+  simp only [toV, Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
 
 theorem toV_sub (x y : Fin X.B.I.n → X.B.I.E) : toV X (x - y) = toV X x - toV X y := by
   simp only [toV, Pi.sub_apply, map_sub, sub_smul, Finset.sum_sub_distrib]
@@ -172,7 +172,7 @@ theorem prA_Lf (y : VA X.B.I) (hy : y ∈ X.B.I.Lf) : prA X y ∈ X.B.I.Lf := by
     rw [prA_incl]
     exact incl_mem_Lf X _ (prE_L X _ x.2)
   | zero => simp
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | smul c y _ hy =>
     rw [Subring.smul_def, map_smul]
     exact X.B.I.Lf.smul_mem c hy
@@ -256,7 +256,7 @@ theorem kset_split_fwd (n : X.B.I.Gf) (hn : n ∈ X.NfinU u) (h : Hfin X u)
   have hs := hn.2.2 q hqe
   have hpr : prA X (X.B.I.fmat n *ᵥ q) = q := by
     have e : X.B.I.fmat n *ᵥ q = q + (X.B.I.fmat n - 1) *ᵥ q := by rw [sub_mulVec, one_mulVec]; abel
-    rw [e, map_add, prA_span_e X _ hs, add_zero, prA_fix X q hqe hqf]
+    rw [e, map_add (f := _), prA_span_e X _ hs, add_zero, prA_fix X q hqe hqf]
   have hq : q ∈ X.B.I.Lf := hpr ▸ prA_Lf X _ hnq
   have hsplit : X.B.I.fmat (h : X.B.I.Gf) *ᵥ y = (y - p) + q := by
     rw [hqdef, ← hfin_fix_sub X u h y, ← mulVec_add]
@@ -446,7 +446,7 @@ theorem span_repr (y : VA X.B.I)
     simp [hA_f_e]
   | zero => simp only [← hAlin_apply, map_zero, zero_smul, Finset.sum_const_zero]
   | add y z _ _ hy hz =>
-    simp only [← hAlin_apply, map_add, add_smul, Finset.sum_add_distrib]
+    simp only [← hAlin_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
     simp only [hAlin_apply]
     rw [← hy, ← hz]
   | smul c y _ hy =>
@@ -772,7 +772,7 @@ theorem hA_f_Lf (a : Fin D.R.rS) (y : VA X.B.I) (hy : y ∈ X.B.I.Lf) :
     have hx : toV X (x : Fin X.B.I.n → X.B.I.E) ∈ (VS D).L0 := (X.L_eq x).1 x.2
     exact hermitian_f_lattice_mem_ideal X a _ hx
   | zero => simp only [← hAlin_apply, map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [← hAlin_apply, map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [← hAlin_apply, map_add (f := _)]; exact add_mem hy hz
   | smul c y _ hy =>
     rw [Subring.smul_def, ← hAlin_apply, map_smul, hAlin_apply, smul_eq_mul, ← smul_eq_mul, ← Subring.smul_def]
     exact Submodule.smul_mem _ c hy
@@ -817,7 +817,7 @@ theorem coord_dd {n : X.B.I.Gf} (hnK : n ∈ X.B.I.Kset) (a : Fin D.R.rS) :
         hone (fun t ht s hs => ?_) (fun x y hx hy => ?_)
       · rw [map_mul, map_mul, mul_comm (Formalism.UG.inclE (F := X.B.I.F) (Af X.B.I.F) (X.ιE.symm t)), mul_assoc]
         exact Iad_mul X _ _ s hs _ (hstep t ht)
-      · rw [map_add, map_add, add_mul]; exact add_mem hx hy
+      · rw [map_add (f := _), map_add (f := _), add_mul]; exact add_mem hx hy
     rw [map_one, map_one, one_mul, ← FractionalIdeal.coe_mul] at hind
     have e : (aaD D b)⁻¹ * aaD D a = (ddS D)⁻¹ := by
       unfold aaD
@@ -856,7 +856,7 @@ theorem psi_B (hP : PsiDd X) {n : X.B.I.Gf} (hnK : n ∈ X.B.I.Kset) :
   refine psi_sum _ _ fun a _ => ?_
   have e : X.B.I.fmat n *ᵥ incl X.B.I (nxt X.eR (X.zR u) a) = incl X.B.I (nxt X.eR (X.zR u) a) +
       (X.B.I.fmat n - 1) *ᵥ incl X.B.I (nxt X.eR (X.zR u) a) := by rw [sub_mulVec, one_mulVec]; abel
-  rw [e, ← hAlin_apply, map_add, hAlin_apply, hAlin_apply, hA_f_nxt, zero_add]
+  rw [e, ← hAlin_apply, map_add (f := _), hAlin_apply, hAlin_apply, hA_f_nxt, zero_add]
   exact psi_Iad X hP _ (coord_dd hnK a)
 
 theorem xw_diff {C : ℕ} (hC : GoodC X u C) (a : Fin D.R.rS) :
@@ -1088,7 +1088,7 @@ theorem hE_smul_left (x y : Fin X.B.I.n → X.B.I.E) (c : X.B.I.E) : hE X (c •
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 theorem hE_add_left (x x' y : Fin X.B.I.n → X.B.I.E) : hE X (x + x') y = hE X x y + hE X x' y := by
-  simp only [hE, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hE, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 def hEl (x : Fin X.B.I.n → X.B.I.E) : (Fin X.B.I.n → X.B.I.E) →ₗ[X.B.I.E] X.B.I.E where
   toFun := hE X x
@@ -1199,7 +1199,7 @@ theorem hE_perp_sub (p y : Fin X.B.I.n → X.B.I.E) (he : ∀ a, hE X (X.eR a) p
     rw [sub_PW]
     show hEl X p _ = 0
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, smul_eq_mul, hEl_apply, hpe, hpf, hpz, mul_zero,
+      simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, hEl_apply, hpe, hpf, hpz, mul_zero,
       Finset.sum_const_zero, add_zero]
   exact ⟨by rw [hE_symm X p, h2, star_zero], h2⟩
 

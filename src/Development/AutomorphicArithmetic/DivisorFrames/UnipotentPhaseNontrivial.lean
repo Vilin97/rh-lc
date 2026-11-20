@@ -91,7 +91,7 @@ theorem UpperTheory.unipotent_phase_nontrivial :
   obtain ⟨s₀, hs₀⟩ := GlobalTheory.T.standard_adelic_char_exists_ne_one F B.ψ hB.std
   set z : Fin n₁ → AE F E := algebraMap (AF F) (AE F E) (⅟2 * s₀) • incV F z₀ with hz
   have h2 : algebraMap (AF F) (AE F E) (⅟2) + algebraMap (AF F) (AE F E) (⅟2) = 1 := by
-    rw [← map_add, invOf_two_add_invOf_two, map_one]
+    rw [← map_add (f := _), invOf_two_add_invOf_two, map_one]
   obtain ⟨g, hg, hgy, -⟩ := UpperTheory.exists_unipotent_heisenberg F E σ B n n₁ X X₁ H j₀ j₁ r s r₁ s₁ hB hX hX₁ hH z
     (-(algebraMap (AF F) (AE F E) (⅟2) * hA σ X₁.J z z)) (by
       rw [map_neg, map_mul, AlgHom.commutes, hA_herm hσ hX₁.herm]

@@ -251,7 +251,7 @@ theorem eq_of_ind (u : D.what₂.Word) (g1 g2 : (VS D).V ≃ₗ[D.host.E] (VS D)
   apply LinearEquiv.ext
   intro v
   have hsplit : v = (v - ∑ a, (VS D).hT (X.eX a) v • X.fY a) + ∑ a, (VS D).hT (X.eX a) v • X.fY a := by abel
-  rw [hsplit, map_add, map_add, hperp _ (hv' v)]
+  rw [hsplit, map_add (f := _), map_add (f := _), hperp _ (hv' v)]
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
     simp [map_sum, hf1, hf2]

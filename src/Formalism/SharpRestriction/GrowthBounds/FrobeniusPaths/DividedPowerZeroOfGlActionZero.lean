@@ -433,7 +433,7 @@ theorem map_divided_power {R R' : Type*} [CommRing R] [CommRing R'] (φ : R →+
   | monomial m c =>
     rw [divPow_monomial_eq_smul, MvPolynomial.map_monomial, divPow_monomial_eq_smul, MvPolynomial.smul_eq_C_mul, map_mul,
       MvPolynomial.map_C, map_divided_power_monomial, MvPolynomial.smul_eq_C_mul]
-  | add p q hp hq => rw [map_add, map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 theorem divided_power_zero_of_gl_action_zero {ι : Type*} [Fintype ι] {n : ℕ} (LL : Letters ι) (S : Set ι) (a b : Fin n) (hab : a ≠ b)
     (G : MvPolynomial (ι × Fin n) ℤ) (hG : glAct ℤ LL S a b G = 0) (R : Type*) [CommRing R] (k : ℕ) (hk : 1 ≤ k) :
@@ -852,7 +852,7 @@ theorem coeff_gl_action_diag (S : Set (Fin N)) (a : Fin n) (m : Fin N × Fin n �
     split_ifs with h
     · rw [h]
     · rw [mul_zero]
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem weight_eq_of_eigen (S : Set (Fin N)) (a : Fin n) (G : MvPolynomial (Fin N × Fin n) ℤ) (lam : ℤ)
     (h : glAct ℤ LL S a a G = lam • G) (m : Fin N × Fin n →₀ ℕ) (hm : m ∈ G.support) : wtS LL S m a = lam := by

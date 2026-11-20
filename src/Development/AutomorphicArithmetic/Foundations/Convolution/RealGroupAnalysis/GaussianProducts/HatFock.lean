@@ -29,7 +29,7 @@ private theorem gauss_split (δ : F) (v : V4 F) : gauss δ v = gR δ v * gE (v 1
     refine Finset.sum_congr rfl fun w _ => ?_
     have e : v 0 ^ 2 + v 1 ^ 2 + 2 * (v 2 ^ 2 - rt δ * v 3 ^ 2) =
         (v 0 ^ 2 + 2 * (v 2 ^ 2 - rt δ * v 3 ^ 2)) + v 1 ^ 2 := by ring
-    rw [e, map_add, map_pow]
+    rw [e, map_add (f := _), map_pow]
     rfl
   rw [gauss, gR, gE, ← Complex.exp_add, h]
   push_cast

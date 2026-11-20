@@ -153,7 +153,7 @@ lemma card_fiber_mul (W : Type*) [AddCommGroup W] [Fintype W] [DecidableEq W]
       rw [map_sub, hf, hf0, sub_self]
     · intro f hf
       simp only [Finset.coe_filter, Set.mem_setOf_eq, Finset.mem_univ, true_and] at hf ⊢
-      rw [map_add, hf, hf0, zero_add]
+      rw [map_add (f := _), hf, hf0, zero_add]
     · intro f _; simp
     · intro f _; simp
   have htot := Finset.card_eq_sum_card_fiberwise (f := L) (s := (univ : Finset (Fin r → k)))

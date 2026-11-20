@@ -21,7 +21,7 @@ private theorem bddBelow_support_primePowerComponent_coeff (p : ℕ) [Fact p.Pri
   | mem x hx => exact Finset.single_le_sum (f := fun t => ‖j (t q)‖) (fun _ _ => norm_nonneg _) hx
   | zero => simpa using h0
   | add x y _ _ hx hy =>
-    rw [Pi.add_apply, map_add]
+    rw [Pi.add_apply, map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   | smul a x _ hx =>
     have e : (a • x) q = (a : K) * x q := rfl

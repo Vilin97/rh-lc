@@ -49,7 +49,7 @@ theorem map_mul (f : V →ₗ[LL] V') (c : K) (x : V ⊗[Qp] BdR) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [mulVdR]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem map_act (ρ : Representation LL G V) (ρ' : Representation LL G V') (f : V →ₗ[LL] V')
     (he : ∀ g v, f (ρ g v) = ρ' g (f v)) (g : G) (x : V ⊗[Qp] BdR) :
@@ -58,7 +58,7 @@ theorem map_act (ρ : Representation LL G V) (ρ' : Representation LL G V') (f :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVdR, he]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem act_mul (ρ : Representation LL G V) (g : G) (c : K) (x : V ⊗[Qp] BdR) :
     actVdR PD ρ g (mulVdR (LL := LL) (V := V) c x) =
@@ -66,7 +66,7 @@ theorem act_mul (ρ : Representation LL G V) (g : G) (c : K) (x : V ⊗[Qp] BdR)
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVdR, mulVdR]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem mul_mem_filV (a : ℤ) (c : K) (x : V ⊗[Qp] BdR) (hx : x ∈ FilV PD (LL := LL) (V := V) a) :
     mulVdR (LL := LL) (V := V) c x ∈ FilV PD (LL := LL) (V := V) a := by
@@ -76,7 +76,7 @@ theorem mul_mem_filV (a : ℤ) (c : K) (x : V ⊗[Qp] BdR) (hx : x ∈ FilV PD (
   | tmul v b =>
     refine ⟨v ⊗ₜ ⟨c • b.1, (PD.Fil a).smul_mem c b.2⟩, ?_⟩
     simp [mulVdR, Algebra.smul_def]
-  | add y z hy hz => rw [map_add, map_add]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 noncomputable def ev (x : V ⊗[Qp] BdR) : LL ⊗[Qp] K →ₗ[Qp] V ⊗[Qp] BdR :=
   TensorProduct.lift (LinearMap.mk₂ Qp (fun (c : LL) (k : K) => c • mulVdR (LL := LL) (V := V) k x)
@@ -87,7 +87,7 @@ noncomputable def ev (x : V ⊗[Qp] BdR) : LL ⊗[Qp] K →ₗ[Qp] V ⊗[Qp] BdR
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul v b => simp [mulVdR, add_mul, tmul_add]
-      | add y z hy hz => simp only [map_add, hy, hz]; abel)
+      | add y z hy hz => simp only [map_add (f := _), hy, hz]; abel)
     (fun q c k => by
       rw [smul_comm q c]
       congr 1
@@ -98,7 +98,7 @@ noncomputable def ev (x : V ⊗[Qp] BdR) : LL ⊗[Qp] K →ₗ[Qp] V ⊗[Qp] BdR
           rw [← Algebra.smul_def, ← Algebra.smul_def, smul_assoc]
         simp only [mulVdR, AlgebraTensorModule.map_tmul, LinearMap.id_apply, LinearMap.mulLeft_apply, this,
           tmul_smul]
-      | add y z hy hz => simp only [map_add, hy, hz, smul_add]))
+      | add y z hy hz => simp only [map_add (f := _), hy, hz, smul_add]))
 
 theorem ev_tmul (x : V ⊗[Qp] BdR) (c : LL) (k : K) :
     ev (LL := LL) (K := K) x (c ⊗ₜ k) = c • mulVdR (LL := LL) (V := V) k x := rfl
@@ -108,7 +108,7 @@ theorem mul_mul (y k : K) (x : V ⊗[Qp] BdR) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [mulVdR, mul_assoc]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem map_fildR_eq [CharZero Qp] (ρ : Representation LL G V) (ρ' : Representation LL G V')
     (f : V →ₗ[LL] V') (he : ∀ g v, f (ρ g v) = ρ' g (f v)) (τ : K →ₐ[Qp] LL) (a : ℤ)
@@ -157,14 +157,14 @@ theorem tensor_exact (ι : V₀ →ₗ[LL] V) (π : V →ₗ[LL] V') (hι : Func
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   have e2 : ∀ x, AlgebraTensorModule.map π (LinearMap.id : BdR →ₗ[Qp] BdR) x =
       (π.restrictScalars Qp).rTensor BdR x := by
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   have hex : Function.Exact (ι.restrictScalars Qp) (π.restrictScalars Qp) :=
     (LinearMap.exact_iff.2 hk.symm : Function.Exact ι π)
   constructor

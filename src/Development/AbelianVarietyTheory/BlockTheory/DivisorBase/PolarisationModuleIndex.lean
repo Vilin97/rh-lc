@@ -26,7 +26,7 @@ theorem TrInt.zero : TrInt (0 : E) := ⟨0, by simp⟩
 theorem TrInt.add {x y : E} (hx : TrInt x) (hy : TrInt y) : TrInt (x + y) := by
   obtain ⟨m, hm⟩ := hx
   obtain ⟨n, hn⟩ := hy
-  exact ⟨m + n, by rw [map_add, hm, hn]; push_cast; rfl⟩
+  exact ⟨m + n, by rw [map_add (f := _), hm, hn]; push_cast; rfl⟩
 
 variable [IsCMField E]
 
@@ -52,7 +52,7 @@ def polMod (L : Submodule (OF E) E) : Submodule (OF E) E where
       have h1 := ha.1
       have h2 := hb.1
       simp only [bar] at h1 h2 ⊢
-      rw [map_add, h1, h2]; ring,
+      rw [map_add (f := _), h1, h2]; ring,
     fun x hx y hy => by rw [add_mul, add_mul]; exact (ha.2 x hx y hy).add (hb.2 x hx y hy)⟩
   smul_mem' := fun a ξ hξ => ⟨by
       have h1 := hξ.1

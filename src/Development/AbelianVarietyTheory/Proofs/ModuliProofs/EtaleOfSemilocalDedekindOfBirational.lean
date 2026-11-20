@@ -119,9 +119,9 @@ theorem etale_adjoin_root_of_unity (O S : Type*) [CommRing O] [IsDomain O] [IsIn
     rw [hgh, AdjoinRoot.mk_eq_zero]; exact dvd_mul_right _ _
   have hd : AdjoinRoot.mk (minpoly O z) (derivative (X ^ N - C (1 : O))) =
       AdjoinRoot.mk (minpoly O z) (derivative (minpoly O z)) * AdjoinRoot.mk (minpoly O z) h := by
-    rw [hgh, derivative_mul, map_add, map_mul, map_mul, AdjoinRoot.mk_self, zero_mul, add_zero]
+    rw [hgh, derivative_mul, map_add (f := _), map_mul, map_mul, AdjoinRoot.mk_self, zero_mul, add_zero]
   have h1 := congrArg (AdjoinRoot.mk (minpoly O z)) hpoly
-  rw [map_mul, hd, map_add, map_mul, hg0, mul_zero, zero_add] at h1
+  rw [map_mul, hd, map_add (f := _), map_mul, hg0, mul_zero, zero_add] at h1
   have hu' : IsUnit (AdjoinRoot.mk (minpoly O z) (C (N : O))) := by
     rw [AdjoinRoot.mk_C]; exact hu.map _
   rw [← h1] at hu'
@@ -243,7 +243,7 @@ theorem etale_coeff_adjoin_zeta (E : Type) [Field E] [NumberField E] [IsCMField 
     refine ⟨d₁ * d₂, mul_ne_zero hd₁ hd₂,
       algebraMap (c.V W) (c₁.V W) d₂ * a₁ + algebraMap (c.V W) (c₁.V W) d₁ * a₂,
       A'.add_mem (A'.mul_mem (A'.algebraMap_mem _) ha₁) (A'.mul_mem (A'.algebraMap_mem _) ha₂), ?_⟩
-    rw [map_add, map_mul, map_mul, hbι, hbι, e₁, e₂, map_mul]
+    rw [map_add (f := _), map_mul, map_mul, hbι, hbι, e₁, e₂, map_mul]
     ring
   have hmul : ∀ y₁ y₂, P y₁ → P y₂ → P (y₁ * y₂) := by
     rintro y₁ y₂ ⟨d₁, hd₁, a₁, ha₁, e₁⟩ ⟨d₂, hd₂, a₂, ha₂, e₂⟩

@@ -136,7 +136,7 @@ theorem exists_powUnif_triv {G' G : Over (Sp ℂ)} [GrpObj G'] [GrpObj G] {j : �
     blockLat_discrete e u.Λ, blockLat_full e u.Λ u.full, hc, fun _ _ => 1, fun _ => differentiableOn_const _,
     fun _ _ _ => one_ne_zero, fun a b z hz => ?_⟩, fun z => Iff.rfl, hex⟩
   · have := p.hom i
-    rw [MonObj.mul_comp, hex, hex, hex, map_add, u.ex_add]
+    rw [MonObj.mul_comp, hex, hex, hex, map_add (f := _), u.ex_add]
   · choose z hz using fun i => u.ex_onto (a ≫ p.pr i)
     refine ⟨∑ i, blockIn e i (z i), pow_hom_ext p fun i => ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in

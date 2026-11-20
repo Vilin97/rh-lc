@@ -81,7 +81,7 @@ theorem exists_mul_frob_E : ∃ c ∈ S O K e, c * frob K l (E K l e) = l := by
   simp only [map_mul, map_sub, map_one, rescale_X, expand_X, expand_C, map_neg] at h
   have h2 : (C (l : K)⁻¹ : K⟦X⟧) * l = 1 := by
     rw [← map_natCast (C : K →+* K⟦X⟧), ← map_mul, inv_mul_cancel₀ hl0, map_one]
-  rw [E, map_add, map_pow, frob_X, map_natCast, ← pow_mul, mul_comm l e]
+  rw [E, map_add (f := _), map_pow, frob_X, map_natCast, ← pow_mul, mul_comm l e]
   linear_combination (l : K⟦X⟧) * h - c * X ^ (e * l) * h2
 
 omit [IsUltrametricDist K] in

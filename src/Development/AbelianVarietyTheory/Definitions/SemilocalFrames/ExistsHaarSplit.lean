@@ -46,13 +46,13 @@ theorem delta_sq : (θ - cj θ) ^ 2 = algebraMap K B (t ^ 2 - 4 * n) := by
 
 theorem cj_cj (x : B) : cj (cj x) = x := by
   obtain ⟨a, b, rfl⟩ := h.gen x
-  simp only [map_add, map_mul, AlgEquiv.commutes]
+  simp only [map_add (f := _), map_mul, AlgEquiv.commutes]
   rw [h.cj_gen, map_sub, AlgEquiv.commutes, h.cj_gen]; ring
 
 theorem sub_cj (a b : K) : (algebraMap K B a + algebraMap K B b * θ - cj (algebraMap K B a + algebraMap K B b * θ))
     * (θ - cj θ) = algebraMap K B (b * (t ^ 2 - 4 * n)) := by
   rw [map_mul (algebraMap K B) b, ← h.delta_sq]
-  simp only [map_add, map_mul, AlgEquiv.commutes]; ring
+  simp only [map_add (f := _), map_mul, AlgEquiv.commutes]; ring
 
 theorem cj_fix (x : B) : cj x = x ↔ ∃ a : K, algebraMap K B a = x := by
   constructor
@@ -109,11 +109,11 @@ theorem trace_eq [CharZero K] (hr : Module.finrank K B = 2) (x : B) :
     rw [Algebra.trace_algebraMap, hr]; simp
   have h2 : Algebra.trace K B θ = t := by
     have e := congrArg (Algebra.trace K B) h.tr
-    rw [map_add, Algebra.trace_eq_of_algEquiv cj, h1] at e
+    rw [map_add (f := _), Algebra.trace_eq_of_algEquiv cj, h1] at e
     linear_combination e / 2
   obtain ⟨a, b, rfl⟩ := h.gen x
-  rw [map_add, h1, ← Algebra.smul_def, map_smul, h2, Algebra.smul_def, Algebra.smul_def]
-  simp only [map_add, map_mul, AlgEquiv.commutes, map_ofNat, Algebra.algebraMap_self, RingHom.id_apply, ← h.tr]
+  rw [map_add (f := _), h1, ← Algebra.smul_def, map_smul, h2, Algebra.smul_def, Algebra.smul_def]
+  simp only [map_add (f := _), map_mul, AlgEquiv.commutes, map_ofNat, Algebra.algebraMap_self, RingHom.id_apply, ← h.tr]
   ring
 
 theorem trace_dual [CharZero K] (hr : Module.finrank K B = 2) (x : B) :
@@ -127,12 +127,12 @@ theorem trace_dual [CharZero K] (hr : Module.finrank K B = 2) (x : B) :
     have f1 : Algebra.trace K B ((algebraMap K B a + algebraMap K B b * θ) * (θ - cj θ)) = b * (t ^ 2 - 4 * n) := by
       apply h.inj
       rw [e1, map_mul (algebraMap K B) b, ← h.delta_sq]
-      simp only [map_add, map_mul, map_sub, AlgEquiv.commutes, h.cj_cj]; ring
+      simp only [map_add (f := _), map_mul, map_sub, AlgEquiv.commutes, h.cj_cj]; ring
     have f2 : Algebra.trace K B ((algebraMap K B a + algebraMap K B b * θ) * (cj θ * (θ - cj θ)))
         = (-a) * (t ^ 2 - 4 * n) := by
       apply h.inj
       rw [e2, map_mul (algebraMap K B) (-a), ← h.delta_sq]
-      simp only [map_add, map_mul, map_sub, map_neg, AlgEquiv.commutes, h.cj_cj]; ring
+      simp only [map_add (f := _), map_mul, map_sub, map_neg, AlgEquiv.commutes, h.cj_cj]; ring
     have g1 := hx _ h.int_delta
     have g2 := hx _ ((int_cj cj h.int_gen).mul h.int_delta)
     rw [f1] at g1; rw [f2] at g2
@@ -297,7 +297,7 @@ theorem exists_de (l : ℕ) [Fact l.Prime] [Algebra ℚ_[l] K] (hc : Continuous 
       zero_mem' := fun y _ => by simp
       add_mem' := fun {a b} ha hb y hy => by
         have : x₀ * ((a + b : 𝒪[K]) : K) * y = x₀ * a * y + x₀ * b * y := by push_cast; ring
-        rw [this, map_add]
+        rw [this, map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (ha y hy) (hb y hy))
       smul_mem' := fun c a ha y hy => by
         have : x₀ * ((c • a : 𝒪[K]) : K) * y = x₀ * a * (c * y) := by
@@ -589,16 +589,16 @@ theorem exists_isUnitGen [StarRing E] (hc : Formalism.BasicNotions.CMData F E) (
     | mem x hx =>
       obtain ⟨y, rfl⟩ := hx
       obtain ⟨a, b, rfl⟩ := GlobalTheory.cm_exists_coords hc θ hθ y
-      exact ⟨A.ιF a, A.ιF b, by rw [map_add, map_mul, A.compat, A.compat]⟩
+      exact ⟨A.ιF a, A.ιF b, by rw [map_add (f := _), map_mul, A.compat, A.compat]⟩
     | zero => exact ⟨0, 0, by simp⟩
     | add x y _ _ hx hy =>
       obtain ⟨a, b, rfl⟩ := hx
       obtain ⟨c, d, rfl⟩ := hy
-      exact ⟨a + c, b + d, by simp only [map_add]; ring⟩
+      exact ⟨a + c, b + d, by simp only [map_add (f := _)]; ring⟩
     | smul c x _ hx =>
       obtain ⟨a, b, rfl⟩ := hx
       exact ⟨c * a, c * b, by simp only [map_mul, Algebra.smul_def]; ring⟩
-  · rw [hcj, ← map_add, ht, A.compat]
+  · rw [hcj, ← map_add (f := _), ht, A.compat]
   · rw [hcj, ← map_mul, hn, A.compat]
   · rw [ed]; exact (map_ne_zero _).2 hd0
   · rw [ed, ← map_inv₀]; exact hv _ (by rw [map_inv₀, hd1, inv_one])

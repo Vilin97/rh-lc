@@ -108,12 +108,12 @@ theorem isMov_conj {V : HSp D} {g : GA D V} (h : IsMov (fmt V g) (stdL D.host.E 
     induction x using TensorProduct.induction_on with
     | zero => rw [c.map_zero, c.map_zero]
     | tmul a x => exact congrArg (fun t => a ⊗ₜ[D.host.F] t) (star_star x)
-    | add x y hx hy => rw [c.map_add, c.map_add, hx, hy]
+    | add x y hx hy => rw [c.map_add (f := _), c.map_add (f := _), hx, hy]
   have c3 (x : Formalism.L2.Theta.AE D) : finPart D (cA D x) = c (finPart D x) := by
     induction x using TensorProduct.induction_on with
     | zero => rw [RingHom.map_zero, RingHom.map_zero, c.map_zero]
     | tmul a x => rfl
-    | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, c.map_add, hx, hy]
+    | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), c.map_add (f := _), hx, hy]
   have c4 : fmtC V g = (fmt V g).map c := by ext i j; exact c3 _
   have c5 {u} (hu : u ∈ hatV (stdL D.host.E V.rank)) : c ∘ u ∈ hatV (stdL D.host.E V.rank) := by
     refine hatV_map (c.toAddMonoidHom.compLeft _) _ (fun a ha x hx => ?_) hu

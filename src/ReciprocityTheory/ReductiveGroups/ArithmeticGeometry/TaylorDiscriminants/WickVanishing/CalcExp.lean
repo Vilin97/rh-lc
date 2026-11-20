@@ -132,7 +132,7 @@ theorem constantCoeff_psubst {a : MvPowerSeries σ k} (ha : constantCoeff a = 0)
   have h1 : f = PowerSeries.C (PowerSeries.constantCoeff f) +
       (f - PowerSeries.C (PowerSeries.constantCoeff f)) := by ring
   conv_lhs => rw [h1]
-  rw [PowerSeries.subst_add hs, PowerSeries.subst_C, map_add,
+  rw [PowerSeries.subst_add hs, PowerSeries.subst_C, map_add (f := _),
     PowerSeries.constantCoeff_subst_eq_zero ha _ (by simp), add_zero]
   simp
 
@@ -183,7 +183,7 @@ private theorem one_add_X_mul_derivative_log_eq_one :
       push_cast; rw [div_mul_cancel₀ _ hn]; ring]
     simp
   ext n
-  rw [add_mul, one_mul, map_add]
+  rw [add_mul, one_mul, map_add (f := _)]
   rcases n with _ | n
   · simp [hD, PowerSeries.coeff_one]
   · rw [PowerSeries.coeff_succ_X_mul, hD, hD, PowerSeries.coeff_one, if_neg (Nat.succ_ne_zero n)]
@@ -264,7 +264,7 @@ private theorem eq_zero_of_one_add_X_mul_derivative_eq_self' (H : PowerSeries k)
         rcases n with _ | m
         · simp
         · rw [PowerSeries.coeff_succ_X_mul, PowerSeries.coeff_derivative, ih, zero_mul]
-      rw [add_mul, one_mul, map_add, hX, add_zero, PowerSeries.coeff_derivative, ih] at h1
+      rw [add_mul, one_mul, map_add (f := _), hX, add_zero, PowerSeries.coeff_derivative, ih] at h1
       have h2 : ((n + 1 : ℕ) : k) * PowerSeries.coeff (n + 1) H = 0 := by
         rw [mul_comm]; push_cast; exact h1
       exact natCast_mul_eq_zero (Nat.succ_ne_zero n) h2
@@ -285,7 +285,7 @@ theorem exp_log_one_add : PowerSeries.subst (PowerSeries.log k) (PowerSeries.exp
     exact h1
   have hH := eq_zero_of_one_add_X_mul_derivative_eq_self' (PowerSeries.subst (PowerSeries.log k) (PowerSeries.exp k) -
     (1 + PowerSeries.X)) (by simp [hE0]) (by
-      rw [map_sub, map_add, hD, PowerSeries.derivative_X, Derivation.map_one_eq_zero, zero_add]
+      rw [map_sub, map_add (f := _), hD, PowerSeries.derivative_X, Derivation.map_one_eq_zero, zero_add]
       linear_combination (PowerSeries.subst (PowerSeries.log k) (PowerSeries.exp k)) * one_add_X_mul_derivative_log_eq_one (k := k))
   exact sub_eq_zero.mp hH
 

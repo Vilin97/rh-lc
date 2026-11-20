@@ -18,7 +18,7 @@ namespace GlobalTheory.IsoMean
 private lemma symplO_eq_symplOH_add_symplOH {D : D7} (V W : HSp D) (x y : WO V W) :
     symplO V W x y = symplOH V W x y + symplOH V W x y := by
   unfold symplOH
-  rw [← add_mul, ← map_add, add_halves, map_one, one_mul]
+  rw [← add_mul, ← map_add (f := _), add_halves, map_one, one_mul]
 
 private lemma symplOH_swap' {D : D7} (V W : HSp D) (x y : WO V W) :
     symplOH V W y x = -symplOH V W x y := by

@@ -50,7 +50,7 @@ theorem exists_eq_sum (φ : ℤ_[p] →+* L) (hφ : ∀ z, v (φ z) ≤ 1) (h1 :
       obtain ⟨l, y, hy, rfl⟩ := ih
       obtain ⟨l', y', hy', rfl⟩ := h y hy
       refine ⟨fun i => l i + p ^ k * l' i, y', hy', ?_⟩
-      simp only [map_add, map_mul, map_pow, map_natCast, mul_add, Finset.sum_add_distrib, Finset.mul_sum]
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast, mul_add, Finset.sum_add_distrib, Finset.mul_sum]
       rw [add_assoc, pow_succ, mul_assoc]
       congr 2
       exact Finset.sum_congr rfl fun i _ => by ring

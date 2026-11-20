@@ -365,7 +365,7 @@ theorem exists_cc_gen (K : FiniteSubfield) (v : {v : InfinitePlace K.1 // v.IsRe
     (by rw [← Polynomial.C_1, Polynomial.degree_X_pow_add_C (by norm_num : 0 < 2)]; norm_num)
   have hy2 : κA y ^ 2 = -1 := by
     have h := congrArg κA (show y ^ 2 + 1 = 0 by simpa using hy)
-    rw [map_add, map_pow, map_one, map_zero] at h
+    rw [map_add (f := _), map_pow, map_one, map_zero] at h
     linear_combination h
   have hsurj : Function.Surjective κA := by
     intro z
@@ -378,7 +378,7 @@ theorem exists_cc_gen (K : FiniteSubfield) (v : {v : InfinitePlace K.1 // v.IsRe
       · exact ⟨-y, by rw [map_neg]; linear_combination -h⟩
     obtain ⟨t, ht⟩ := hI
     refine ⟨algebraMap v.1.Completion _ (ρ.symm z.re) + algebraMap v.1.Completion _ (ρ.symm z.im) * t, ?_⟩
-    rw [map_add, map_mul, hκr, hκr, ht, RingEquiv.apply_symm_apply, RingEquiv.apply_symm_apply]
+    rw [map_add (f := _), map_mul, hκr, hκr, ht, RingEquiv.apply_symm_apply, RingEquiv.apply_symm_apply]
     exact Complex.re_add_im z
   let e : AlgebraicClosure v.1.Completion ≃+* ℂ :=
     RingEquiv.ofBijective κA.toRingHom ⟨κA.toRingHom.injective, hsurj⟩

@@ -61,7 +61,7 @@ theorem exists_unit_coeff_of_not_dvd_line (D : Formalism.BasicNotions.D7) (N : N
   let I : Ideal (Polynomial K) := Ideal.span {Polynomial.X ^ n}
   let π : Polynomial K →ₐ[X.O0 i] (Polynomial K ⧸ I) := Ideal.Quotient.mkₐ (X.O0 i) I
   have hu : ∀ q, (π (Polynomial.C (b q) * Polynomial.X + 1)) ^ (X.l i ^ M) = 1 := fun q => by
-    rw [← map_pow, add_pow_char_pow, one_pow, map_add, map_one, add_eq_right]
+    rw [← map_pow, add_pow_char_pow, one_pow, map_add (f := _), map_one, add_eq_right]
     refine Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mem_span_singleton.2 ?_)
     rw [mul_pow]
     exact Dvd.dvd.mul_left (pow_dvd_pow _ hn) _
@@ -71,7 +71,7 @@ theorem exists_unit_coeff_of_not_dvd_line (D : Formalism.BasicNotions.D7) (N : N
     refine MvPolynomial.algHom_ext fun q => ?_
     have := hth q
     simp only [AlgHom.comp_apply, toLam, MvPolynomial.aeval_X, map_sub, map_one]
-    rw [sub_eq_iff_eq_add, ← map_one π, ← map_add, ← this]
+    rw [sub_eq_iff_eq_add, ← map_one π, ← map_add (f := _), ← this]
   have h1 := DFunLike.congr_fun hc F
   have h2 := DFunLike.congr_fun hc G
   simp only [AlgHom.comp_apply] at h1 h2

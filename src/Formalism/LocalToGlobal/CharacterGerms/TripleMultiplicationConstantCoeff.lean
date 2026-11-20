@@ -172,7 +172,7 @@ theorem QQ_eq (Y : FBChart C V O dd) : QQ Y = ex (ev (n := 3) ![m3 Y.B.G V.l, p3
     · exact z0p3 2 j
   have hE0 : constantCoeff (ev (n := 3) ![p3 0, p3 1] Y.h + ev (n := 3) ![p3 0, p3 2] Y.h -
       ev (n := 3) ![p3 0, SS Y.B.G] Y.h) = 0 := by
-    rw [map_sub, map_add, eval_height_constantCoeff Y (z0p3 0) (z0p3 1), eval_height_constantCoeff Y (z0p3 0) (z0p3 2), eval_height_constantCoeff Y (z0p3 0) (triple_sum_constantCoeff _)]
+    rw [map_sub, map_add (f := _), eval_height_constantCoeff Y (z0p3 0) (z0p3 1), eval_height_constantCoeff Y (z0p3 0) (z0p3 2), eval_height_constantCoeff Y (z0p3 0) (triple_sum_constantCoeff _)]
     simp
   unfold QQ
   rw [hph2, ev_ex ha _ hE0, ev_sub ha, ev_add ha, ev_ev (constant_zero_two_points _ (z0p3 0) (z0p3 1)) ha,
@@ -216,12 +216,12 @@ theorem ident (Y : FBChart C V O dd) :
   have zc2 : constantCoeff c2 = 0 := eval_height_constantCoeff Y (z0p3 0) (z0p3 2)
   have zs : ∀ (c : C) (f : PS C 3 dd), constantCoeff f = 0 → constantCoeff (c • f) = 0 := fun c f hf => by
     rw [show c • f = MvPowerSeries.C c * f from (MvPowerSeries.smul_eq_C_mul f c), map_mul, hf, mul_zero]
-  have zE : constantCoeff (c1 + c2 - c0) = 0 := by rw [map_sub, map_add, zc1, zc2, zc0]; simp
+  have zE : constantCoeff (c1 + c2 - c0) = 0 := by rw [map_sub, map_add (f := _), zc1, zc2, zc0]; simp
   rw [UU_eq _ _ (triple_sum_constantCoeff _), UU_eq _ _ (z0p3 1), UU_eq _ _ (z0p3 2), QQ_eq, hph2, ← hc0, ← hc1, ← hc2, ← ha,
     ← hb1, ← hb2, ← ex_nsmul _ zE V.l,
-    ← ex_add _ _ (by rw [map_sub, za, zs _ _ zc0, sub_zero]) (by rw [map_sub, map_add, zb1, zb2, za]; simp),
+    ← ex_add _ _ (by rw [map_sub, za, zs _ _ zc0, sub_zero]) (by rw [map_sub, map_add (f := _), zb1, zb2, za]; simp),
     ← ex_add _ _ (by rw [map_sub, zb1, zs _ _ zc1, sub_zero]) (by rw [map_sub, zb2, zs _ _ zc2, sub_zero]),
-    ← ex_add _ _ (by rw [map_add, map_sub, map_sub, zb1, zb2, zs _ _ zc1, zs _ _ zc2]; simp)
+    ← ex_add _ _ (by rw [map_add (f := _), map_sub, map_sub, zb1, zb2, zs _ _ zc1, zs _ _ zc2]; simp)
       (by rw [map_nsmul, zE, nsmul_zero])]
   congr 1
   rw [Nat.cast_smul_eq_nsmul C, Nat.cast_smul_eq_nsmul C, Nat.cast_smul_eq_nsmul C]

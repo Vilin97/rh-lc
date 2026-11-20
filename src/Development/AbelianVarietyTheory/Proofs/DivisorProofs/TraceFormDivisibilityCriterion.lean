@@ -103,7 +103,7 @@ theorem conj_mem_mul (H : Host E) {P : Ideal (𝓞 E)} {y : E} (hy : y ∈ (P : 
     refine FractionalIdeal.mul_mem_mul (coe_mem_coeIdeal ?_) (conj_mem_Jd H hj)
     rw [Ideal.mem_comap]
     simpa [GlobalTheory.IsoCols.bar_bar] using ha
-  · rw [map_add]; exact fadd ha hb
+  · rw [map_add (f := _)]; exact fadd ha hb
 
 theorem exists_avoid2 (S : Finset (Ideal (𝓞 E))) (hS : ∀ Q ∈ S, Q.IsMaximal) {A B : Ideal (𝓞 E)}
     (hA : A.IsPrime) (hB : B.IsPrime) (hAS : A ∉ S) (hBS : B ∉ S) :
@@ -156,7 +156,7 @@ theorem exists_skew_avoid (H : Host E) (S : Finset (Ideal (𝓞 E))) (hS : ∀ P
       simpa [hP'def, Ideal.mem_comap] using hfP'
     obtain ⟨z, hzJ, hzs, hzP⟩ := exists_skew_notMem H hP
     refine ⟨x + (e : E) * z, fadd hxJ (mul_mem_of_mem _ e hzJ), ?_, fun Q hQ hmem => ?_⟩
-    · rw [map_add, map_mul, conj_coe H, he, hxs, hzs]; ring
+    · rw [map_add (f := _), map_mul, conj_coe H, he, hxs, hzs]; ring
     · rcases Finset.mem_insert.1 hQ with rfl | hQ
       · have h1 : (e : E) * z ∈ (Q : FractionalIdeal (𝓞 E)⁰ E) * Jd E := by
           have := fsub hmem hxP; rwa [add_sub_cancel_left] at this
@@ -199,7 +199,7 @@ theorem exists_skew_perfect : ∀ {E : Type} [Field E] [NumberField E] [IsCMFiel
         obtain ⟨m2, h2⟩ := htr b
         obtain ⟨m3, h3⟩ := htr (a + b)
         have e : (m3 : ℚ) = m1 + m2 := by
-          rw [← h1, ← h2, ← h3]; push_cast; rw [mul_add, map_add]
+          rw [← h1, ← h2, ← h3]; push_cast; rw [mul_add, map_add (f := _)]
         show ⌊Algebra.trace ℚ E (x * ((a + b : 𝓞 E) : E))⌋ = ⌊Algebra.trace ℚ E (x * (a : E))⌋ + ⌊Algebra.trace ℚ E (x * (b : E))⌋
         rw [h1, h2, h3, Int.floor_intCast, Int.floor_intCast, Int.floor_intCast]
         exact_mod_cast e }

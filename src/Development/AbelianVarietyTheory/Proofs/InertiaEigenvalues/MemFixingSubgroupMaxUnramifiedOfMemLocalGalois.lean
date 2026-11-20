@@ -100,7 +100,7 @@ theorem lTensor_TWmap {T T' : LocLat G Qp LL O} (f : LatHom T.L T'.L) (φ : R �
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a t => simp [TWmap]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem lTensor_TWact {T T' : LocLat G Qp LL O} (f : LatHom T.L T'.L) (φ : R →ₐ[O] R) (g : G)
     (x : TW R T) :
@@ -110,7 +110,7 @@ theorem lTensor_TWact {T T' : LocLat G Qp LL O} (f : LatHom T.L T'.L) (φ : R �
   | tmul a t =>
     have : resT f (T.actT g t) = T'.actT g (resT f t) := Subtype.ext (f.equiv g t)
     simp [TWact, this]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end Generic
 

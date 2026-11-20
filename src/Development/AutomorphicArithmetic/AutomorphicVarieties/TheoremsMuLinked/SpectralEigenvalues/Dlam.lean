@@ -9,7 +9,7 @@ theorem UpperTheory.V.Th.Sp.dlam :
   · intro a b
     show th (MvPowerSeries.pderiv (R := O) k (a * b)) =
       th a • th (MvPowerSeries.pderiv (R := O) k b) + th b • th (MvPowerSeries.pderiv (R := O) k a)
-    rw [Derivation.leibniz, map_add, smul_eq_mul, smul_eq_mul, map_mul, map_mul, smul_eq_mul,
+    rw [Derivation.leibniz, map_add (f := _), smul_eq_mul, smul_eq_mul, map_mul, map_mul, smul_eq_mul,
       smul_eq_mul]
   · intro k'
     show th (MvPowerSeries.pderiv (R := O) k (MvPowerSeries.X k')) = if k = k' then 1 else 0

@@ -161,10 +161,10 @@ theorem unit_aux {R T : Type} [CommRing R] [CommRing T] (c : R →+* R) (hc : �
   have h3 : c e * c e = c e := by rw [← map_mul, h1]
   have hb : c a * c ai = 1 := by rw [← map_mul, ha, map_one]
   refine ⟨e * a + c e * c ai + (1 - e - c e), ?_, ?_, ?_, ?_⟩
-  · simp only [map_add, map_mul, map_sub, map_one, hc]
+  · simp only [map_add (f := _), map_mul, map_sub, map_one, hc]
     rw [sub_right_comm 1 (c e) e]
     exact glued_idempotent_units_mul_eq_one h1 h2 h3 ha hb
-  · rw [← map_mul c, map_add, map_add, map_sub, map_sub, map_one, map_mul]
+  · rw [← map_mul c, map_add (f := _), map_add (f := _), map_sub, map_sub, map_one, map_mul]
     exact add_mem (add_mem (mul_mem i1 i2) (hB _ i3)) (sub_mem (sub_mem (one_mem _) i1) (hB _ i1))
   · linear_combination (a - 1) * h1 + (a + c ai - 2) * h2 + (c ai - 1) * h3
   · linear_combination (a - 1) * h1 + (c ai - 1) * h2
@@ -208,7 +208,7 @@ theorem exists_central_lift (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (L : 
     exact smul_one_supp u2 i j
   have h0 := GlobalTheory.PlaceDatum.infPart_idemSum he
   have hf : ζ ∈ GfC V := GlobalTheory.IdemSupport.mem_GfC_of_suppF V (f := e + cA D e)
-    (by rw [RingHom.map_add, h0, GlobalTheory.PlaceDatum.infPart_cA h0, add_zero]) hs
+    (by rw [RingHom.map_add (f := _), h0, GlobalTheory.PlaceDatum.infPart_cA h0, add_zero]) hs
   have huv : (⟨finSw D u, hu⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) * ⟨finSw D (cA D u), finSw_cA_int u hu⟩ = 1 :=
     Subtype.ext (((finSw D).map_mul _ _).symm.trans ((congrArg (finSw D) u1).trans (finSw D).map_one))
   have hx : (Lev.finE V ζ).1 = finSw D u • (1 : Matrix (Fin V.rank) (Fin V.rank) (Lev.EAf D)) := by

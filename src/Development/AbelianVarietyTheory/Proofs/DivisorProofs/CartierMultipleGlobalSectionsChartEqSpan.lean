@@ -182,7 +182,7 @@ theorem W_closed (σ : Setup) (x : Sp σ.R) :
   have hc : ∀ r, σ.θ x (σ.c₀ r) = GlobalTheory.Desc.cst (σ.C x).G.hom (σ.ρ x r) := fun r =>
     RingHom.congr_fun (theta_comp σ x) r
   refine ⟨fun a ha b hb z hz => ?_, fun r a ha z hz => ?_, fun s hs a ha z hz => ?_⟩
-  · rw [map_add]; exact (ha z hz).add (hb z hz)
+  · rw [map_add (f := _)]; exact (ha z hz).add (hb z hz)
   · rw [map_mul, hc]; exact (regAt_cst _ _ _).mul (ha z hz)
   · obtain ⟨u, hu⟩ := isUnit_of_not_mem σ x hs
     rw [map_mul, map_inv₀, hc, ← hu, ← map_units_inv]

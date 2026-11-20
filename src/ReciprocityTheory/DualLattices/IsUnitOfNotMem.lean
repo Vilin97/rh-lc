@@ -11,7 +11,7 @@ variable {C : Type} [Field C] {v : Valuation C NNReal} {R : Type} [CommRing R] [
 def mI (hv : v.Integers R) : Ideal R where
   carrier := {r | v (algebraMap R C r) < 1}
   add_mem' {a b} ha hb := by
-    simp only [Set.mem_ofPred_eq, map_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
     exact v.map_add_lt ha hb
   zero_mem' := by simp
   smul_mem' c x hx := by

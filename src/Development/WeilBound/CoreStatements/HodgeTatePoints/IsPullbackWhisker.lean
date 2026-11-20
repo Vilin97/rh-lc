@@ -948,7 +948,7 @@ theorem coeff_cocycle (R : CommRingCat.{0}) (φ : torusRing ZU X ⟶ R) (y : Spe
   obtain ⟨c', h4⟩ := mem_span_of φ y δ ρ h0
   have h5 : twist u ((expand y).hom ρ - 1) = ((expand (prodPoint φ y ≫ a)).hom ρ - 1) +
       (const X R).hom ((value φ y).hom ρ - 1) := by
-    rw [map_sub, map_one, h1, expand, h3, h4, evA_map, ha, map_sub, map_add, map_mul, map_one]
+    rw [map_sub, map_one, h1, expand, h3, h4, evA_map, ha, map_sub, map_add (f := _), map_mul, map_one]
     have := congrArg (const X R).hom (evA_sq δ hδ R y)
     rw [map_mul, map_zero] at this
     linear_combination c * (const X R).hom c' * this
@@ -978,7 +978,7 @@ theorem cobound :
         (isPullback_prod X Y).hom_ext (by rw [prodPoint_fst, Spec.map_preimage]) (by rw [prodPoint_snd])⟩
     obtain ⟨c, h3⟩ := hf0 R (prodPoint φ y ≫ a)
     obtain ⟨c', h4⟩ := mem_span_of φ y δ ρ h0
-    rw [map_mul, ← evA_comp, ← evA_comp, prodPoint_snd, map_add, map_add, map_one, map_one, key R φ y, ← value_eq,
+    rw [map_mul, ← evA_comp, ← evA_comp, prodPoint_snd, map_add (f := _), map_add (f := _), map_one, map_one, key R φ y, ← value_eq,
       h3, h4, ha]
     linear_combination (-c * c') * evA_sq δ hδ R y
   exact ⟨⟨1 + f, 1 - f, by linear_combination -hff, by linear_combination -hff⟩, fin⟩

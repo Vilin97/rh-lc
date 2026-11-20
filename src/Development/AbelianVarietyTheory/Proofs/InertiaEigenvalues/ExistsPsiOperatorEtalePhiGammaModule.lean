@@ -23,7 +23,7 @@ theorem psi_of_etale_basis {R E M Γ : Type*} [CommRing R] [CommRing E] [Algebra
   let ψ : M →ₗ[R] M :=
     { toFun := fun z => ∑ j, ψE (b'.repr z j) • b j
       map_add' := fun z w => by
-        simp only [map_add, Finsupp.add_apply, add_smul, Finset.sum_add_distrib]
+        simp only [map_add (f := _), Finsupp.add_apply, add_smul, Finset.sum_add_distrib]
       map_smul' := fun c z => by
         simp only [RingHom.id_apply, Finset.smul_sum]
         refine Finset.sum_congr rfl fun j _ => ?_

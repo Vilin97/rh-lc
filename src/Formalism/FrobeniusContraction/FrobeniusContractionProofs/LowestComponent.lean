@@ -151,7 +151,7 @@ theorem ψ_coeff0 (hℓ : 1 ≤ ℓ) {z : LaurentSeries k} (hz : Ord 0 z) :
     · subst h; simp
   have hz' : z = z.coeff 0 • (1 : LaurentSeries k) + z.coeff 1 • vv k + r := by
     rw [hrdef]; abel
-  rw [hz', map_add, map_add, ψ_smul, ψ_smul, P.ψ_one, HahnSeries.coeff_add, HahnSeries.coeff_add,
+  rw [hz', map_add (f := _), map_add (f := _), ψ_smul, ψ_smul, P.ψ_one, HahnSeries.coeff_add, HahnSeries.coeff_add,
     HahnSeries.coeff_smul, HahnSeries.coeff_smul, psi_order_one_of_order_two P hℓ hr 0 (by norm_num)]
   have e1 : (z.coeff 0 • (1 : LaurentSeries k) + z.coeff 1 • vv k + r).coeff 0 = z.coeff 0 := by
     rw [← hz']
@@ -403,7 +403,7 @@ theorem Gam_ψ {x : Fin n → LaurentSeries k} (hx : ∀ j, P.ψ (x j) = 0) (m :
 
 theorem Gam_add (x y : Fin n → LaurentSeries k) : Gam P g (x + y) = Gam P g x + Gam P g y := by
   funext m
-  simp [Gam, map_add, add_mul, Finset.sum_add_distrib]
+  simp [Gam, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem Gam_sub (x y : Fin n → LaurentSeries k) : Gam P g (x - y) = Gam P g x - Gam P g y := by
   funext m
@@ -426,7 +426,7 @@ theorem XS_zero (b : ℤ) : XS P b (0 : Fin n → LaurentSeries k) :=
 
 theorem XS_add {b : ℤ} {x y : Fin n → LaurentSeries k} (hx : XS P b x) (hy : XS P b y) :
     XS P b (x + y) := fun j =>
-  ⟨ord_add (hx j).1 (hy j).1, by rw [Pi.add_apply, map_add, (hx j).2, (hy j).2, add_zero]⟩
+  ⟨ord_add (hx j).1 (hy j).1, by rw [Pi.add_apply, map_add (f := _), (hx j).2, (hy j).2, add_zero]⟩
 
 theorem XS_mono {b c : ℤ} {x : Fin n → LaurentSeries k} (hx : XS P b x) (h : c ≤ b) : XS P c x :=
   fun j => ⟨ord_mono (hx j).1 h, (hx j).2⟩

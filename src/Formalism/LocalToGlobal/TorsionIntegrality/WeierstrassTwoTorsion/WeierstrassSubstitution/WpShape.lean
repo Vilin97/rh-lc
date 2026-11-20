@@ -60,7 +60,7 @@ theorem C_neg_three : (HahnSeries.C (((-2 - 1 : ℤ)) : K) : LaurentSeries K) = 
 
 theorem add_eq_mul (r : K⟦X⟧) :
     (uPow (-2) : LaurentSeries K) + toL r = uPow (-2) * toL (1 + X ^ 2 * r) := by
-  rw [map_add, map_one, map_mul, map_pow, mul_add, mul_one, uPow_neg_two]
+  rw [map_add (f := _), map_one, map_mul, map_pow, mul_add, mul_one, uPow_neg_two]
   congr 1
   have h := z_mul_zi (K := K)
   linear_combination (-(toL X * uPow (-1) + 1) * toL r) * h
@@ -138,7 +138,7 @@ theorem cleared_of_clearedM {g2 g3 : K} {r : K⟦X⟧} (h : ClearedM g2 g3 (1 + 
     Cleared g2 g3 r := by
   unfold ClearedM at h
   unfold Cleared
-  rw [map_add, Derivation.map_one_eq_zero, derivative_X_sq_mul] at h
+  rw [map_add (f := _), Derivation.map_one_eq_zero, derivative_X_sq_mul] at h
   have e : X * (0 + (2 * X * r + X ^ 2 * derivative K r)) - 2 * (1 + X ^ 2 * r)
       = -2 + X ^ 3 * derivative K r := by ring
   rw [e] at h
@@ -181,7 +181,7 @@ theorem cleared_unique [CharZero K] {g2 g3 : K} {r s : K⟦X⟧} (hr : Cleared g
     have t3 := coeff_shift_zero (m := 4) (-4 * (r ^ 2 + r * s + s ^ 2)) hn (by norm_num)
     have t4 := coeff_shift_zero (m := 3) (derivative K r + derivative K s) hn' (by norm_num)
     have e := key n
-    simp only [map_add] at e
+    simp only [map_add (f := _)] at e
     rw [t1, t2, t3, t4, coeff_ofNat_mul, coeff_ofNat_mul, coeff_X_mul_derivative] at e
     have e2 : ((4 : K) * n + 12) * coeff n (r - s) = 0 := by linear_combination e
     have h4 : ((4 : K) * n + 12) ≠ 0 := by
@@ -200,7 +200,7 @@ theorem cleared_low [CharZero K] {g2 g3 : K} {r : K⟦X⟧} (h : Cleared g2 g3 r
   have E := cleared_main h
   have lhs : ∀ n : ℕ, coeff n (4 * (X * derivative K r) + 12 * r) = (4 * (n : K) + 12) * coeff n r := by
     intro n
-    rw [map_add, coeff_ofNat_mul, coeff_ofNat_mul, coeff_X_mul_derivative]
+    rw [map_add (f := _), coeff_ofNat_mul, coeff_ofNat_mul, coeff_X_mul_derivative]
     ring
   have r0 : coeff 0 r = 0 := by
     have e := congrArg (coeff 0) E
@@ -224,12 +224,12 @@ theorem cleared_low [CharZero K] {g2 g3 : K} {r : K⟦X⟧} (h : Cleared g2 g3 r
     linear_combination E
   have lt : ∀ n : ℕ, coeff n (4 * (X * derivative K t) + 20 * t) = (4 * (n : K) + 20) * coeff n t := by
     intro n
-    rw [map_add, coeff_ofNat_mul, coeff_ofNat_mul, coeff_X_mul_derivative]
+    rw [map_add (f := _), coeff_ofNat_mul, coeff_ofNat_mul, coeff_X_mul_derivative]
     ring
   have f0 := congrArg (coeff 0) E2
-  rw [lt, map_add, coeff_C, if_pos rfl, coeff_X_pow_mul', if_neg (by norm_num : ¬ (2 ≤ 0))] at f0
+  rw [lt, map_add (f := _), coeff_C, if_pos rfl, coeff_X_pow_mul', if_neg (by norm_num : ¬ (2 ≤ 0))] at f0
   have f2 := congrArg (coeff 2) E2
-  rw [lt, map_add, coeff_C, if_neg (by norm_num : (2 : ℕ) ≠ 0), coeff_X_pow_mul', if_pos (le_refl 2),
+  rw [lt, map_add (f := _), coeff_C, if_neg (by norm_num : (2 : ℕ) ≠ 0), coeff_X_pow_mul', if_pos (le_refl 2),
     Nat.sub_self, map_add, coeff_C, if_pos rfl, coeff_X_pow_mul', if_neg (by norm_num : ¬ (2 ≤ 0))] at f2
   push_cast at f0 f2
   refine ⟨r0, r1, ?_, ?_⟩
@@ -242,7 +242,7 @@ theorem cleared_neg {g2 g3 : K} {r : K⟦X⟧} (h : Cleared g2 g3 r) :
     Cleared g2 g3 (rescale (-1 : K) r) := by
   unfold Cleared at h ⊢
   have e := congrArg (rescale (-1 : K)) h
-  simp only [map_add, map_sub, map_mul, map_pow, map_neg, map_ofNat, map_one, rescale_X,
+  simp only [map_add (f := _), map_sub, map_mul, map_pow, map_neg, map_ofNat, map_one, rescale_X,
     rescale_C'] at e
   rw [derivative_rescale_neg_one]
   linear_combination e
@@ -258,13 +258,13 @@ theorem cleared_odd [CharZero K] {g2 g3 : K} {r : K⟦X⟧} (h : Cleared g2 g3 r
 theorem second_cleared {c : K} {r : K⟦X⟧}
     (h : dL (dL (uPow (-2) + toL r)) = 6 * (uPow (-2) + toL r) ^ 2 - HahnSeries.C c) :
     X ^ 2 * derivative K (derivative K r) = 12 * r + X ^ 2 * (6 * (r * r)) - X ^ 2 * C c := by
-  rw [map_add, dL_uPow, dL_toL] at h
-  rw [map_add, dL_mul, dL_C, dL_uPow, dL_toL] at h
+  rw [map_add (f := _), dL_uPow, dL_toL] at h
+  rw [map_add (f := _), dL_mul, dL_C, dL_uPow, dL_toL] at h
   rw [C_neg_two, C_neg_three, uPow_neg_four, mul_zero, add_zero, uPow_neg_two] at h
   have e := alg_second (toL X) (uPow (-1)) (toL r) (toL (derivative K (derivative K r)))
     (HahnSeries.C c) z_mul_zi h
   apply toL_injective
-  simp only [map_sub, map_add, map_mul, map_pow, map_ofNat, HahnSeries.ofPowerSeries_C]
+  simp only [map_sub, map_add (f := _), map_mul, map_pow, map_ofNat, HahnSeries.ofPowerSeries_C]
   linear_combination e
 
 theorem sum_even (a : ℕ → K) (h0 : a 0 = 0) (hodd : ∀ n, Odd n → a n = 0) (q : ℕ) :
@@ -308,7 +308,7 @@ theorem recursion_of [CharZero K] {c : K} {r : K⟦X⟧}
   have h3 : 2 * q + 2 - 2 = 2 * q := by omega
   have h4 : 2 * q ≠ 0 := by omega
   have e := congrArg (coeff (2 * q + 2)) h
-  simp only [map_sub, map_add, coeff_X_pow_mul', if_pos h2, h3, coeff_ofNat_mul, coeff_derivative,
+  simp only [map_sub, map_add (f := _), coeff_X_pow_mul', if_pos h2, h3, coeff_ofNat_mul, coeff_derivative,
     coeff_C, if_neg h4, sub_zero] at e
   rw [show 2 * q + 1 + 1 = 2 * q + 2 by omega] at e
   have hs := sum_even (fun n => coeff n r) h0 hodd q
@@ -340,12 +340,12 @@ theorem wpL_eq (hE : ExpSpec.{u}) [CharZero K] (W : WeierstrassCurve K) :
     X_dvd_iff.mpr (by rw [map_sub, CurveSer.xS_cc, map_one, sub_self])
   have hT' : xS W = 1 + X * T := by linear_combination hT
   have hx0 : constantCoeff ((xS W).subst (expSer W)) = 1 := by
-    rw [hT', ← coe_substAlgHom hs, map_add, map_one, map_mul, coe_substAlgHom, subst_X hs,
+    rw [hT', ← coe_substAlgHom hs, map_add (f := _), map_one, map_mul, coe_substAlgHom, subst_X hs,
       map_add, map_one, map_mul, e0, zero_mul, add_zero]
   refine ⟨E⁻¹ ^ 2 * (xS W).subst (expSer W) + C (W.b₂ / 12) * X ^ 2, ?_, ?_⟩
-  · rw [map_add, map_mul, map_pow, hEi0, hx0, map_mul, map_pow, constantCoeff_X]
+  · rw [map_add (f := _), map_mul, map_pow, hEi0, hx0, map_mul, map_pow, constantCoeff_X]
     simp
-  · rw [wpL, xZ, hinv, map_add, map_mul, map_mul, map_pow, map_pow, toL_C, uPow_neg_two]
+  · rw [wpL, xZ, hinv, map_add (f := _), map_mul, map_mul, map_pow, map_pow, toL_C, uPow_neg_two]
     linear_combination
       (-HahnSeries.C (W.b₂ / 12) * (toL X * uPow (-1) + 1)) * z_mul_zi (K := K)
 
@@ -362,7 +362,7 @@ theorem wpL_shape (hE : ExpSpec.{u}) (hO : WpODE.{u}) [CharZero K] (W : Weierstr
     ring
   rw [hMe] at hC
   unfold ClearedM at hC
-  rw [map_add, Derivation.map_one_eq_zero, derivative_X_mul] at hC
+  rw [map_add (f := _), Derivation.map_one_eq_zero, derivative_X_mul] at hC
   have key : X * (8 * M1 - X * (-4 * derivative K M1 - 11 * M1 ^ 2 - 2 * X * M1 * derivative K M1
       + X ^ 2 * derivative K M1 ^ 2 - 4 * X * M1 ^ 3 + C (g₂ W) * X ^ 2 * (1 + X * M1)
       + C (g₃ W) * X ^ 4)) = 0 := by

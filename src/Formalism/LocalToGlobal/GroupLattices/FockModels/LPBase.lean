@@ -127,7 +127,7 @@ theorem dual_mem (A : Submodule R V) (A' : Submodule R' V') (h : BC ν A A') (G 
   | add y z _ _ hy hz =>
     obtain ⟨a, ha⟩ := hy
     obtain ⟨b, hb⟩ := hz
-    exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+    exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
   | smul c y _ hy =>
     obtain ⟨a, ha⟩ := hy
     exact ⟨c * a, by rw [LinearMap.map_smul_of_tower, map_mul, ha, Algebra.smul_def]⟩

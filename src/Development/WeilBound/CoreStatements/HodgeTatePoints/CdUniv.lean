@@ -105,7 +105,7 @@ theorem aeval_inr {κ : Type} [Fintype κ] [DecidableEq κ] (c : κ → S) (P : 
       rw [MvPolynomial.coeff_C, if_neg (Finsupp.single_ne_zero.2 one_ne_zero).symm]
     simp [this, TrivSqZeroExt.algebraMap_eq_inl]
   | add p q hp hq =>
-    rw [map_add, hp, hq]
+    rw [map_add (f := _), hp, hq]
     ext <;> simp [add_mul, Finset.sum_add_distrib]
   | mul_X p n hp =>
     have : ∀ s : κ, (p * MvPolynomial.X n).coeff (Finsupp.single s 1) =

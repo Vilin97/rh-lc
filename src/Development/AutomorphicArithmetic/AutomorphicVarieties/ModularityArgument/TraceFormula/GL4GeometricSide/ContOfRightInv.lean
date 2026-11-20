@@ -19,7 +19,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 private def Fx (π : CuspSub E n) (K : Subgroup (GL (Fin n) (Af E))) : Submodule ℂ π.V where
   carrier := {ψ | ∀ k ∈ K, finRep E n k ψ.1 = ψ.1}
-  add_mem' {a b} ha hb k hk := by rw [Submodule.coe_add, map_add, ha k hk, hb k hk]
+  add_mem' {a b} ha hb k hk := by rw [Submodule.coe_add, map_add (f := _), ha k hk, hb k hk]
   zero_mem' k _ := map_zero _
   smul_mem' c a ha k hk := by rw [Submodule.coe_smul, map_smul, ha k hk]
 

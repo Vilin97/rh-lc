@@ -289,7 +289,7 @@ theorem thPDatum_eq_levelSum : ∀ (D : D7) (S T : HSp D) (C : Ctx S T) (hn : T.
       exact Submodule.mem_sup.1 (h0 ▸ Submodule.mem_top)
     have hgE : (g : D.host.E) = 1 - (m : D.host.E) := by
       have h := congrArg (algebraMap (𝓞 D.host.E) D.host.E) hgm
-      rw [map_add, map_one] at h
+      rw [map_add (f := _), map_one] at h
       exact eq_sub_of_add_eq h
     refine ⟨(g : D.host.E) • y₁, ?_, ?_⟩
     · rw [GlobalTheory.SW.TensLat.mem_tens_stdL] at hy₁ ⊢

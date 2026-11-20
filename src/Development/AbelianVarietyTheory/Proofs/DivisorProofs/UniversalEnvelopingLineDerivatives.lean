@@ -21,7 +21,7 @@ theorem adjoin_word : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     obtain ⟨γ₁, γ₂, e1, e2, e3⟩ := exists_lines h hJ τ X
     generalize (1 / 2 : ℂ) • (X - adj (J.map τ.1) X) = X₁ at e1 e3
     generalize (-Complex.I / 2 : ℂ) • (X + adj (J.map τ.1) X) = X₂ at e2 e3
-    have hX : D X = D X₁ + Complex.I • D X₂ := by rw [← map_smul, ← map_add, ← e3]
+    have hX : D X = D X₁ + Complex.I • D X₂ := by rw [← map_smul, ← map_add (f := _), ← e3]
     refine ⟨Finsupp.single [γ₁] 1 + Finsupp.single [γ₂] Complex.I, fun l hl γ hγ => ?_, fun f => ?_⟩
     · rcases Finset.mem_union.1 (Finsupp.support_add hl) with hl | hl <;>
         obtain rfl := Finset.mem_singleton.1 (Finsupp.support_single_subset hl) <;>

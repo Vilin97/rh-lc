@@ -104,7 +104,7 @@ theorem N_eq_L (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ S) 
     rw [pz_apply, map_smul, map_smul, hz]
   have h4 : S (D.pW v) = T (D.pW v) := hw _ (isW_pW H v)
   rw [key]
-  simp only [map_add, h1, h2, h3, h4]
+  simp only [map_add (f := _), h1, h2, h3, h4]
 
 theorem h_f_pX (H : D.Hyp) (a : Fin r) (u : n → A) : D.h (D.f a) (D.pX u) = D.h (D.f a) u := by
   have key : ∀ a', D.h (D.f a) (D.e a') = if a' = a then 1 else 0 := by
@@ -150,7 +150,7 @@ theorem pW_comm (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ S)
     intro x
     rw [pU_apply, pX_apply, pXv_apply, pz_apply]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, hS'.1, hf, hS'.2]
+      simp only [map_add (f := _), map_sum, map_smul, hS'.1, hf, hS'.2]
   have hwW : ∀ u, IsW D u → D.pW (S u) = S u := by
     intro u hu
     have hu' : (∀ a, D.h (D.e a) u = 0) ∧ (∀ a, D.h (D.f a) u = 0) ∧ D.h D.z u = 0 := hu
@@ -160,7 +160,7 @@ theorem pW_comm (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ S)
     simp [h0]
   have hv : v = D.pU v + D.pW v := by rw [pW_apply]; abel
   conv_lhs => rw [hv]
-  rw [map_add, map_add, hfix, pW_pU H, zero_add, hwW _ (isW_pW H v)]
+  rw [map_add (f := _), map_add (f := _), hfix, pW_pU H, zero_add, hwW _ (isW_pW H v)]
 
 end Dat
 

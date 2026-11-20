@@ -700,7 +700,7 @@ theorem eval_jetLin (cD : ι → ℂ) (y' : ι × Fin b × Fin b → ℂ) (G : V
     rw [MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq, MvPolynomial.C_mul_monomial, atZero_monomial]
     unfold jetC
     ring
-  · simp only [map_add, hp, hq]
+  · simp only [map_add (f := _), hp, hq]
 
 theorem jetMap_eval (cD : ι → ℂ) (G : VCx ι a b → ℂ) (Q : Pol ℂ ι a) (y' : ι × Fin b × Fin b → ℂ) :
     eval y' (jetMap (jetC cD G) (fun _ => 0) Q) =
@@ -849,7 +849,7 @@ theorem homAt_le_locP_perO (S : Finset (HeightOneSpectrum (𝓞 E))) (AA0 : Subm
     induction hy using Submodule.span_induction with
     | mem y hy => rw [LinearMap.smul_apply]; exact huT y (Finset.mem_coe.1 hy)
     | zero => rw [map_zero]; exact N'.zero_mem
-    | add y y' _ _ h1 h2 => rw [map_add]; exact N'.add_mem h1 h2
+    | add y y' _ _ h1 h2 => rw [map_add (f := _)]; exact N'.add_mem h1 h2
     | smul r y _ h1 =>
       have e : (u • x) (r • y) = r • (u • x) y := by
         rw [← algebraMap_smul E r y, map_smul, algebraMap_smul]
@@ -968,7 +968,7 @@ theorem liftIndep_of (h : A.HeisHyp a b Sall) : A.LiftIndep a b Sall := by
   obtain ⟨hSc, hr1, hr2, -⟩ := hlev c hc
   obtain ⟨hSg, -, -, -⟩ := hlev _ hgpos
   have e0 : embH (X.embC A.σ₀) A.δ s₀ = embH (X.embC A.σ₀) A.δ s + embH (X.embC A.σ₀) A.δ (s₀ - s) := by
-    rw [← map_add]; congr 1; abel
+    rw [← map_add (f := _)]; congr 1; abel
   unfold Amb.thInd
   rw [← hs₀def, e0]
   congr 1
@@ -1204,7 +1204,7 @@ theorem indTieD_of {X : Fields} (A : Amb X) (a b : ℕ) (Sall : Finset (HeightOn
     intro t ht m hm hmB
     obtain ⟨t0, ht0, rfl⟩ := ht
     obtain ⟨m0, hm0, rfl⟩ := hm
-    rw [← map_add, ti_onV _ hδ, ti_onV _ hδ]
+    rw [← map_add (f := _), ti_onV _ hδ, ti_onV _ hδ]
     have hm0B : m0 ∈ halfBO Sall (perO A.AA N N') D := (ti_mem_laV _ hδ _ _).1 hmB
     have hm0c : m0 ∈ mulLat c (homAt Sall N N') := ti_mul_mono hcD _ ((lf_halfB_iff A Sall hAA N N' hN.1.fg hD hD hm0).1 hm0B)
     unfold cosInd
@@ -2117,7 +2117,7 @@ theorem qe_same (ξ : Chr F E L) (hξ : ∀ v : HeightOneSpectrum (𝓞 F), wild
       obtain ⟨b', i, hi, hbi⟩ := P.isMaximal.exists_inv hbP
       have hp : (a - 1) * toRInt F E b' - 1 ∈ P.asIdeal.map (toRInt F E) := by
         have e3 := congrArg (toRInt F E) hbi
-        simp only [map_add, map_mul, map_one] at e3
+        simp only [map_add (f := _), map_mul, map_one] at e3
         have e : (a - 1) * toRInt F E b' - 1 = (a - 1 - toRInt F E b) * toRInt F E b' - toRInt F E i := by
           linear_combination e3
         rw [e]

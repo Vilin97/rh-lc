@@ -57,7 +57,7 @@ theorem exists_homog_congr (i : ∀ k, ι k) (p : MRing ι F) :
     refine ⟨Np ⊔ Nq, fun N' hN => ?_⟩
     obtain ⟨a, ha, ha'⟩ := hp N' (le_sup_left.trans hN)
     obtain ⟨b, hb, hb'⟩ := hq N' (le_sup_right.trans hN)
-    exact ⟨a + b, IsWeightedHomogeneous.add ha hb, by rw [map_add, map_add, ha', hb']⟩
+    exact ⟨a + b, IsWeightedHomogeneous.add ha hb, by rw [map_add (f := _), map_add (f := _), ha', hb']⟩
   | mul_X p s hp =>
     obtain ⟨Np, hp⟩ := hp
     refine ⟨Np + blockWeight ι s, fun N' hN => ?_⟩
@@ -106,7 +106,7 @@ theorem dehom_monomial_mul (m : (Σ k, ι k) →₀ ℕ) :
   induction m using Finsupp.induction_linear with
   | zero => simp
   | add m m' hm hm' =>
-    rw [← mul_one (1 : F), ← monomial_mul, map_mul, map_mul, map_add, ← hm, ← hm']
+    rw [← mul_one (1 : F), ← monomial_mul, map_mul, map_mul, map_add (f := _), ← hm, ← hm']
     simp only [Pi.add_apply, pow_add, Finset.prod_mul_distrib]
     ring
   | single p n =>

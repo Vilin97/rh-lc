@@ -53,7 +53,7 @@ theorem GlobalTheory.Fam.chi_compat_pk : ∀ (D : D7) (L : SizeData₂ D) (hT : 
   have hint : ∀ z : D.host.E, valuation k (q.pr (incA D z)) = 1 →
       finPart D (Formalism.L2.JoinChr.locE D q.e z) ∈ intAE D := by
     intro z hz
-    rw [GlobalTheory.ChainOnto.locE_eq, ← q.sec_pr, (finPart D).map_add, (finPart D).map_sub, (finPart D).map_one]
+    rw [GlobalTheory.ChainOnto.locE_eq, ← q.sec_pr, (finPart D).map_add (f := _), (finPart D).map_sub, (finPart D).map_one]
     refine add_mem ((q.int_iff _).1 ?_) (sub_mem (GlobalTheory.AdIdem.idempotent_mem_intAE D 1 (mul_one 1))
       (GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← (finPart D).map_mul, hee])))
     exact (Valuation.mem_integer_iff _ _).2 hz.le
@@ -62,7 +62,7 @@ theorem GlobalTheory.Fam.chi_compat_pk : ∀ (D : D7) (L : SizeData₂ D) (hT : 
     GlobalTheory.EtaConjExist.unram_of_chrEq hL.eta (Formalism.L2.Host.CharFrame.isEta _).unr
   have hη : (pk W).eta y = 1 := hUnr y (by
       show infPart D (Formalism.L2.JoinChr.locE D q.e (a : D.host.E)) = 1
-      rw [GlobalTheory.ChainOnto.locE_eq, (infPart D).map_add, (infPart D).map_mul, (infPart D).map_sub, (infPart D).map_one, hinf,
+      rw [GlobalTheory.ChainOnto.locE_eq, (infPart D).map_add (f := _), (infPart D).map_mul, (infPart D).map_sub, (infPart D).map_one, hinf,
         zero_mul, zero_add, sub_zero])
     (hint _ h1) (hint _ (by rw [hinv, map_inv₀, h1, inv_one]))
   have hS : (Formalism.IndefR.Lift.chrStep (pk W).mu0 (pk W).eta j).1 y = (pk W).mu0 j y := by

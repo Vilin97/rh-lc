@@ -34,7 +34,7 @@ theorem minorZ_of (hF : MinorFormula) : MinorZ := by
   apply pow_dvd_prod N (m + i) i _ hiN
   intro l hl
   refine ⟨m + l, by omega, ?_⟩
-  simp only [Bool.false_eq_true, ↓reduceIte, Nat.cast_add, map_sub, map_add]
+  simp only [Bool.false_eq_true, ↓reduceIte, Nat.cast_add, map_sub, map_add (f := _)]
   ring
 
 theorem minorZ'_of (hF : MinorFormula) : MinorZ' := by

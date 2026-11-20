@@ -55,7 +55,7 @@ theorem isLocUnit_locU {D : D7} {PP : Pl D.host.E} (h : Formalism.L2.NTheta.IsId
   · rw [hxv, map_loc, hinf, zero_mul, add_zero]
   · rw [hxi]
     have e1 : finPart D (1 + idemAt PP * (b' - 1)) = finPart D (1 - idemAt PP) + finPart D (idemAt PP * b') := by
-      rw [← RingHom.map_add]
+      rw [← RingHom.map_add (f := _)]
       congr 1
       ring
     rw [e1]

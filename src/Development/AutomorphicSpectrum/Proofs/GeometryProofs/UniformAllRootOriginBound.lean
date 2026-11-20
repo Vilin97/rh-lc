@@ -74,7 +74,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.uniform_all_root_origin_bound 
       map_one' := hinj (by rw [hf, map_one]; exact map_one ev₁)
       map_mul' := fun a b => hinj (by rw [hf, map_mul, hf, hf]; exact map_mul ev₁ ⟨_, h3A a⟩ ⟨_, h3A b⟩)
       map_zero' := hinj (by rw [hf, map_zero]; exact map_zero ev₁)
-      map_add' := fun a b => hinj (by rw [hf, map_add, hf, hf]; exact map_add ev₁ ⟨_, h3A a⟩ ⟨_, h3A b⟩) }
+      map_add' := fun a b => hinj (by rw [hf, map_add (f := _), hf, hf]; exact map_add ev₁ ⟨_, h3A a⟩ ⟨_, h3A b⟩) }
   have hev₀ : ∀ x : A₃, j (ev₀ x) = ev₁ ⟨x, h3A x⟩ := hf
   have h23 : A₂ ≤ A₃ := fun x hx => (hA₃ x).2 ⟨hle hx, hLj _ (FinRd.Pt.hasVal_mem hzL (hev ⟨x, hx⟩))⟩
   obtain ⟨y₀, φT, hφT, hy₀⟩ := GlobalTheory.T.integralFramedPoint_baseChange_stable E H Dw l Xo c T T₀ io y iT r₀ hr₀ (fun a _ => hv₀ a)

@@ -81,12 +81,12 @@ theorem exists_homog {K : Type} [Fintype K] {J : K → Type} {Ω : Type} [Field 
     obtain ⟨N₂, D₂, H₂, h₂, c₂, r₂⟩ := hg
     refine ⟨N₁ * N₂, D₁ + D₂,
       MvPolynomial.C N₂ * H₁ * M D₂ + MvPolynomial.C N₁ * H₂ * M D₁, mul_ne_zero h₁ h₂, ?_, ?_⟩
-    · rw [map_add, map_mul, map_mul, map_mul, map_mul, c₁, c₂, hMc, hMc, hCc, hCc, ← hW, map_add,
+    · rw [map_add (f := _), map_mul, map_mul, map_mul, map_mul, c₁, c₂, hMc, hMc, hCc, hCc, ← hW, map_add (f := _),
         map_add]
       push_cast
       rw [MvPolynomial.C_mul]
       ring
-    · rw [map_add, map_mul, map_mul, map_mul, map_mul, r₁, r₂, hMρ, hMρ, hCρ, hCρ, map_add]
+    · rw [map_add (f := _), map_mul, map_mul, map_mul, map_mul, r₁, r₂, hMρ, hMρ, hCρ, hCρ, map_add (f := _)]
       push_cast
       ring
   | mul_X f p hf =>

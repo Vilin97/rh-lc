@@ -109,7 +109,7 @@ theorem exists_heisLine_deriv {E : Type} [Field E] [NumberField E] [Algebra F E]
     have hxy : evI F (x ⬝ᵥ y₁) = ∑ i, z i * evI F (y₁ i) := by
       simp only [dotProduct, evI_sum, evI_mul, hz]
     have htr : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F A) = t * (P + t * Q) := by
-      rw [hA, evI_mul, evI_add, evI_mul, evI_realAd, ← Algebra.smul_def, ← Algebra.smul_def, map_smul, map_add,
+      rw [hA, evI_mul, evI_add, evI_mul, evI_realAd, ← Algebra.smul_def, ← Algebra.smul_def, map_smul, map_add (f := _),
         map_smul, hxy, hP, trForm_apply, hQ, smul_eq_mul, smul_eq_mul]
     have harg : (fun i => evI F ((x + realAd F t • x₁) i)) = z + t • v := by
       funext i

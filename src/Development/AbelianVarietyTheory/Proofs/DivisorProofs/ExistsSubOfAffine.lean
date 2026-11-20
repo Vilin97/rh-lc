@@ -27,7 +27,7 @@ theorem exists_sub_of_affine {T : Scheme.{0}} (H : T.Modules)
   let sec : ∀ U : T.Opens, Submodule Γ(T, U) Γ(H, U) := fun U =>
     { carrier := {s | ∀ (V : T.Opens) (hV : IsAffineOpen V) (h : V ≤ U), resM H h s ∈ P V hV}
       add_mem' := fun ha hb V hV h => by
-        rw [map_add]; exact add_mem (ha V hV h) (hb V hV h)
+        rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha V hV h) (hb V hV h)
       zero_mem' := fun V hV h => by rw [map_zero]; exact zero_mem _
       smul_mem' := fun r s hs V hV h => by
         rw [resM_smul]; exact Submodule.smul_mem _ _ (hs V hV h) }
@@ -77,7 +77,7 @@ theorem exists_pow_smul_mem {R R' : Type} [CommRing R] [CommRing R'] [Algebra R 
       obtain ⟨n, y, hy, e⟩ := ha
       obtain ⟨k, z, hz, e'⟩ := hb
       refine ⟨n + k, f ^ k • y + f ^ n • z, add_mem (N.smul_mem _ hy) (N.smul_mem _ hz), ?_⟩
-      rw [map_add, map_smulₛₗ, map_smulₛₗ, ← e, ← e', smul_add, map_pow, map_pow, smul_smul,
+      rw [map_add (f := _), map_smulₛₗ, map_smulₛₗ, ← e, ← e', smul_add, map_pow, map_pow, smul_smul,
         smul_smul, ← pow_add, ← pow_add, add_comm k n]
     | smul c a _ ha =>
       obtain ⟨n, y, hy, e⟩ := ha

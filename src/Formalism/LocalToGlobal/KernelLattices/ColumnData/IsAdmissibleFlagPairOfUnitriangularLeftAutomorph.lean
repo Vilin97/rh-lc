@@ -307,7 +307,7 @@ theorem area_eq (L : PeriodPair) : TaylorLogMetric.area L.lattice.toAddSubgroup 
       obtain ⟨k, l, rfl⟩ := PeriodPair.mem_lattice.1 h₂
       have key : (conj ((m : ℂ) * L.ω₁ + (n : ℂ) * L.ω₂) * ((k : ℂ) * L.ω₁ + (l : ℂ) * L.ω₂)).im
           = ((m * l - n * k : ℤ) : ℝ) * (conj L.ω₁ * L.ω₂).im := by
-        simp only [map_add, map_mul, map_intCast, Complex.mul_im, Complex.add_im, Complex.add_re, Complex.mul_re,
+        simp only [map_add (f := _), map_mul, map_intCast, Complex.mul_im, Complex.add_im, Complex.add_re, Complex.mul_re,
           Complex.conj_re, Complex.conj_im, Complex.intCast_re, Complex.intCast_im]
         push_cast; ring
       rw [key, abs_mul] at ha ⊢

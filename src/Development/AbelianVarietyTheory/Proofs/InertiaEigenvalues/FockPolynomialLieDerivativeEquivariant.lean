@@ -48,7 +48,7 @@ theorem lie_equivariant : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T :
     rw [hψ u hu w', hg, hlin]
   have hcomm : ∀ Q, Lop (fockSubst (pS D i) g Q) = fockSubst (pS D i) g (Lop Q) := by
     intro Q
-    simp only [hLop, map_add, map_smul]
+    simp only [hLop, map_add (f := _), map_smul]
     rw [GlobalTheory.T.fockPolynomialSubstitution_commute_targetGlAction]
   have hsm : ∀ x, Lop (c • x) = c • Lop x := by
     intro x

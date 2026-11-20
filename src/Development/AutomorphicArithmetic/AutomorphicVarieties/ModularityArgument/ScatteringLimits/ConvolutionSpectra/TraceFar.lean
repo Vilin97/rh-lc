@@ -108,8 +108,8 @@ theorem UpperTheory.V.Z.IntegralApplyAeEq.traceFar :
       simpa [l] using this
     have a3 : E (E (X (Λ h))) = E (X (Λ h)) := DFunLike.congr_fun h3 _
     show (Λ ∘L M.F.U (-t)) (Ψ (X (Λ h))) = (Λ ∘L M.F.U (-t)) (Ψ (Λ (X (Λ h))) + Ψ (E (E (X (Λ h)))))
-    conv_lhs => rw [k5 M T (X (Λ h)), k4 M r0, ContinuousLinearMap.add_apply, a2, add_zero, map_add, map_add, map_add, map_add, a1, add_zero]
-    rw [a3, map_add]
+    conv_lhs => rw [k5 M T (X (Λ h)), k4 M r0, ContinuousLinearMap.add_apply, a2, add_zero, map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), a1, add_zero]
+    rw [a3, map_add (f := _)]
   constructor
   · have := key 0 le_rfl
     have e : M.F.U (-0) = 1 := by ext h; simpa using M.F.zero h

@@ -56,7 +56,7 @@ theorem eig_span : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} 
   have pZero : ∀ x, postOn (R.MY 0) 0 x = 0 := by
     intro x; ext v; simp [postOn]
   have hAdd : ∀ c c', h P (c + c') w = h P c w + h P c' w := fun c c' =>
-    inj (by rw [hh P hP, map_add, hh P hP, hh P hP, hkAdd, pAdd])
+    inj (by rw [hh P hP, map_add (f := _), hh P hP, hh P hP, hkAdd, pAdd])
   have hSmul : ∀ (z : ℂ) c, h P (z • c) w = z • h P c w := fun z c =>
     inj (by rw [hh P hP, map_smul, hh P hP, hkSmul, pSmul])
   have hZero : h P 0 w = 0 := inj (by rw [hh P hP, hkZero, pZero, map_zero])

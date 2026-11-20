@@ -45,7 +45,7 @@ theorem mem_sum_form (T : LocLat G Qp LL O) (S : Submodule (LetA O n) (W.DD T))
       ∃ z : Fin m → W.DD T, (∀ j, z j ∈ S) ∧ w + w' = ∑ j, u j • W.φD T (z j) := by
     rintro w w' ⟨z, hz, rfl⟩ ⟨z', hz', rfl⟩
     refine ⟨z + z', fun j => S.add_mem (hz j) (hz' j), ?_⟩
-    simp only [Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
   have key : ∀ w ∈ φspan W T S, ∀ a : LetA O n,
       ∃ z : Fin m → W.DD T, (∀ j, z j ∈ S) ∧ a • w = ∑ j, u j • W.φD T (z j) := by
     intro w hw

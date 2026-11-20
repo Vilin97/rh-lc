@@ -112,7 +112,7 @@ theorem exists_local {X Y : Scheme.{0}} (p : X ⟶ Sp ℂ) [LocallyOfFiniteType 
       map_one' := inj _ _ fun w e => by rw [hF', map_one, map_one]
       map_mul' := fun a b => inj _ _ fun w e => by rw [hF', map_mul, map_mul, hF', hF']
       map_zero' := inj _ _ fun w e => by rw [hF', map_zero, map_zero]
-      map_add' := fun a b => inj _ _ fun w e => by rw [hF', map_add, map_add, hF', hF'] }
+      map_add' := fun a b => inj _ _ fun w e => by rw [hF', map_add (f := _), map_add (f := _), hF', hF'] }
   refine ⟨W.toSpecΓ ≫ Spec.map (CommRingCat.ofHom φ) ≫ hD.fromSpec, ?_⟩
   intro w x' hx'
   have e := top_le_of_lift W (ex w) x' hx'

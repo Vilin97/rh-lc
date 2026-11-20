@@ -17,7 +17,7 @@ private theorem UpperTheory.isAlgebraic_of_finite_algHoms (K L : Type) [Field K]
     induction m with
     | zero => simp
     | succ m ih =>
-      rw [pow_succ', AlgEquiv.mul_apply, ih, map_add, hσ, map_natCast]
+      rw [pow_succ', AlgEquiv.mul_apply, ih, map_add (f := _), hσ, map_natCast]
       push_cast
       ring
   let f : ℕ → (L →ₐ[K] ℂ) := fun m => (σ ^ m : ℂ ≃ₐ[K] ℂ).toAlgHom.comp q

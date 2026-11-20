@@ -109,10 +109,10 @@ theorem chart_form_eq_zero : GlobalTheory.ThK.KP → ∀ (k : Type) [Field k] [V
     intro C
     let Dq : fullRk k n d →ₗ[ℂ] fullRk k ρ d →ₗ⋆[ℂ] ℂ :=
       LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun Ψ θ => Bf Ψ (e C θ))
-        (fun Ψ Ψ' θ => by simp [map_add])
+        (fun Ψ Ψ' θ => by simp [map_add (f := _)])
         (fun c Ψ θ => by simp)
         (fun Ψ θ θ' => by
-          rw [← map_add]
+          rw [← map_add (f := _)]
           refine key Ψ _ _ fun Y hY => ?_
           simp only [Submodule.coe_add, Pi.add_apply]
           rw [hev C _ Y hY, hev C _ Y hY, hev C _ Y hY]

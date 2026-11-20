@@ -24,7 +24,7 @@ def partLₗ (e : ((κ → A) → ℂ) →ₗ[ℂ] (κ₁ → A) → ℂ) : ((κ
   toFun := partL e
   map_add' Φ Ψ := funext fun y => by
     show e ((fun x => Φ _) + fun x => Ψ _) _ = _
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   map_smul' c Φ := funext fun y => by
     show e (c • fun x => Φ _) _ = _
     rw [map_smul]; rfl
@@ -33,7 +33,7 @@ def partRₗ (e : ((κ' → A) → ℂ) →ₗ[ℂ] (κ₁' → A) → ℂ) : ((
   toFun := partR e
   map_add' Φ Ψ := funext fun y => by
     show e ((fun x => Φ _) + fun x => Ψ _) _ = _
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   map_smul' c Φ := funext fun y => by
     show e (c • fun x => Φ _) _ = _
     rw [map_smul]; rfl
@@ -52,7 +52,7 @@ def conjLin {X Y : Type} (e : (X → ℂ) →ₗ[ℂ] (Y → ℂ)) : (X → ℂ)
     have h : (fun x => starRingEnd ℂ (φ x + ψ x)) = (fun x => starRingEnd ℂ (φ x)) + fun x => starRingEnd ℂ (ψ x) :=
       funext fun x => map_add _ _ _
     simp only [Pi.add_apply]
-    rw [h, map_add, Pi.add_apply, map_add]
+    rw [h, map_add (f := _), Pi.add_apply, map_add (f := _)]
   map_smul' c φ := funext fun y => by
     have h : (fun x => starRingEnd ℂ (c * φ x)) = starRingEnd ℂ c • fun x => starRingEnd ℂ (φ x) :=
       funext fun x => by simp

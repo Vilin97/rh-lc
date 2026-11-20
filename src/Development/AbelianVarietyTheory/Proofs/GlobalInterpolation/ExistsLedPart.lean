@@ -95,7 +95,7 @@ theorem exists_served {L : SizeData₂ D} (X : Inst D L) (Y : LatInst D) (K : Co
   refine exists_sub (D.plEq w) (fun x => c.cmp u w hg (D.nuIn u x) ∈ NP X Y K u w hg) ?_ ?_ ?_
   · simp
   · intro x y hx hy
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   · intro a x ha hx
     obtain ⟨o, ho⟩ := (c.embW_val u w hg a).1 ha
@@ -109,7 +109,7 @@ theorem exists_atT (u : D.what₂.Word) (w : D.what₂.places.Pl) :
   refine exists_sub (D.plEq w) (fun x => D.nuIn u x ∈ LT.Nlam D u w) ?_ ?_ ?_
   · simp
   · intro x y hx hy
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   · intro a x ha hx
     show D.nuIn u (a • x) ∈ _

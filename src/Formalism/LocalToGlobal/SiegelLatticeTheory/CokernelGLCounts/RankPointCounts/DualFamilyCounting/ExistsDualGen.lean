@@ -67,7 +67,7 @@ theorem exists_dual_gen (e : Fin r → S.V) (z : S.V) (N : ℕ) (hN : 0 < N) (hi
     have hl : c (Fin.last r) = 0 := by
       have h1 := congrArg (S.hT z) hc
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, map_zero] at h1
+        rw [map_add (f := _), map_sum, map_zero] at h1
       simp only [map_smul, smul_eq_mul, hze, mul_zero, Finset.sum_const_zero, zero_add] at h1
       exact (mul_eq_zero.1 h1).resolve_right hzz0
     rw [hl, zero_smul, add_zero] at hc

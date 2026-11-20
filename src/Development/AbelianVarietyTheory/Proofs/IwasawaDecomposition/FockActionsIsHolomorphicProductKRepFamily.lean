@@ -75,7 +75,7 @@ theorem CoeffDiff.aeval {σ : Type} {F : E → σ → MvPolynomial σ ℂ} (hF :
     exact fun _ => differentiableAt_const _
   | add p q hp hq =>
     intro d
-    simp only [map_add, MvPolynomial.coeff_add]
+    simp only [map_add (f := _), MvPolynomial.coeff_add]
     exact (hp d).add (hq d)
   | mul_X p v hp =>
     simp only [map_mul, MvPolynomial.aeval_X]

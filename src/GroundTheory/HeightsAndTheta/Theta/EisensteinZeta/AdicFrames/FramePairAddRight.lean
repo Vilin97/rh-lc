@@ -28,13 +28,13 @@ theorem conjBase_conjBase (z : (R ⊗[K] E)) : conjBase K E R (conjBase K E R z)
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [conjBase_tmul, conj_conj]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem conjBase_smul (c : K) (z : (R ⊗[K] E)) : conjBase K E R (c • z) = c • conjBase K E R z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [conjBase_tmul, TensorProduct.smul_tmul']
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem cT_cT {m n : Type*} (M : Matrix m n (R ⊗[K] E)) : cT K E R (cT K E R M) = M := by
   ext i j

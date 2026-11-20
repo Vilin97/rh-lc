@@ -68,7 +68,7 @@ theorem dim_add_card_le {κ : K → K'} {v : (Σ k, ι k) → (Σ k', ι' k')} (
     have ht' : Cardinal.toENat (Algebra.trdeg ℤ (MRing ι ⧸ imageZ v W')) + Fintype.card (FibreBlock κ) ≤
         Cardinal.toENat (Algebra.trdeg ℤ (MRing ι' ⧸ W')) := by
       have := OrderHomClass.mono Cardinal.toENat ht
-      rw [map_add, Cardinal.toENat_nat] at this
+      rw [map_add (f := _), Cardinal.toENat_nat] at this
       exact this
     rw [hD, hC]
     have h2 : Cardinal.toENat (Algebra.trdeg ℤ (MRing ι ⧸ imageZ v W')) + 1 + Fintype.card (FibreBlock κ) ≤

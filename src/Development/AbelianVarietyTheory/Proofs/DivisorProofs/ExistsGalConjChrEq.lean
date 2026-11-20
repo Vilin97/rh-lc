@@ -19,7 +19,7 @@ theorem exists_galConj_chrEq : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl
   obtain ⟨ι, h1, h2, h3⟩ := GlobalTheory.HostAdeleIso.exists_finiteAdele_equiv D
   obtain ⟨e, he, hinf, -⟩ := GlobalTheory.PlaceIdem.exists_isPlIdem D ι h1 h2 h3 P
   have hx : infPart D ((Formalism.L2.JoinChr.locU he.1 k : (AE D)ˣ) : AE D) = 1 := by
-    rw [Formalism.L2.JoinChr.locU_val, Formalism.L2.JoinChr.locE, RingHom.map_add, RingHom.map_mul, hinf, zero_mul, add_zero,
+    rw [Formalism.L2.JoinChr.locU_val, Formalism.L2.JoinChr.locE, RingHom.map_add (f := _), RingHom.map_mul, hinf, zero_mul, add_zero,
       RingHom.map_one]
   obtain ⟨y, hy0, hy⟩ := hμ.2.2.2.1 _ hx
   have a1 := hH.2 P e he k _ (Formalism.L2.JoinChr.locU_val he.1 k)

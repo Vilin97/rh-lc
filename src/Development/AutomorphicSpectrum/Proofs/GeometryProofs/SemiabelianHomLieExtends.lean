@@ -270,7 +270,7 @@ theorem hom_maps_lie : ∀ (O K : Type) [CommRing O] [IsDedekindDomain O] [Field
   refine ⟨{ toFun := f, map_add' := ?_, map_smul' := ?_ }, fun e v hv => ?_⟩
   · intro a b
     apply hinj
-    simp only [hf, map_add]
+    simp only [hf, map_add (f := _)]
   · intro r a
     apply hinj
     simp only [hf, map_smulₛₗ, RingHom.id_apply]

@@ -23,7 +23,7 @@ variable {V W : HSp D} (ω : GA D V × GA D W →* Module.End ℂ (WO V W → �
 theorem kernel_zero : thetaKO ω g h 0 = 0 := by simp [thetaKO]
 
 theorem kernel_add (f f' : WO V W → ℂ) : thetaKO ω g h (f + f') = thetaKO ω g h f + thetaKO ω g h f' := by
-  simp [thetaKO, map_add]
+  simp [thetaKO, map_add (f := _)]
 
 theorem kernel_sub (f f' : WO V W → ℂ) : thetaKO ω g h (f - f') = thetaKO ω g h f - thetaKO ω g h f' := by
   simp [thetaKO, map_sub]
@@ -43,7 +43,7 @@ theorem multT_apply_smooth_cusp {W : HSp D} {S : D.what₂.Tau → SPar} (θ : I
     simp only [map_smul, LinearEquiv.coe_coe, PiTensorProduct.lift.tprod]
     exact ⟨GlobalTheory.MultMem.isAutFunSm_smul c (hT'.aut w), GlobalTheory.MultMem.isCuspFun_smul c (hT'.cusp w)⟩
   | add x y hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact ⟨GlobalTheory.MultMem.isAutFunSm_add hx.1 hy.1,
       GlobalTheory.MultMem.isCuspFun_add hx.1.toIsAutFun hy.1.toIsAutFun hx.2 hy.2⟩
 

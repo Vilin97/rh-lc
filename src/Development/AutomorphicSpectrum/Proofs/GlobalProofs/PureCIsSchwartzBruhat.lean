@@ -31,7 +31,7 @@ theorem repr_map {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra
   | zero => simp
   | tmul r e =>
     simp [Algebra.TensorProduct.basis_repr_tmul, Algebra.smul_def]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 end Coord
 

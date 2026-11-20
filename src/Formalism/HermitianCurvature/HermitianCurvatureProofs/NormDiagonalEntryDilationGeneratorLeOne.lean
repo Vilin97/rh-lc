@@ -2634,7 +2634,7 @@ theorem phase_function_add_left (H : Hyp D Ξ α) {A₁ A₂ B : Mat k r → (Wq
   rw [← integral_add (ph_integrable H h₁ hB hq) (ph_integrable H h₂ hB hq)]
   congr 1
   funext g
-  rw [rho_eq, rho_eq, rho_eq, Pi.add_apply, map_add, hsInner_add_left]
+  rw [rho_eq, rho_eq, rho_eq, Pi.add_apply, map_add (f := _), hsInner_add_left]
 
 theorem phase_function_add_right (H : Hyp D Ξ α) {A B₁ B₂ : Mat k r → (Wq →L[ℂ] Wp)} {cA c₁ c₂ : ℝ} (hA : admitted α cA A)
     (h₁ : admitted α c₁ B₁) (h₂ : admitted α c₂ B₂) {q : SS k r} (hq : D.inSS q) :

@@ -115,7 +115,7 @@ theorem chartRingI.equiv (x : Fin (N + 1) → Ω) (I : Kleiman.Chart x) :
       intro g
       induction g using MvPolynomial.induction_on with
       | C a => rw [aeval_C]; exact Subalgebra.algebraMap_mem _ a
-      | add p q hp hq => rw [map_add]; exact add_mem hp hq
+      | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
       | mul_X p i hp =>
         rw [map_mul, aeval_X]
         exact mul_mem hp (Algebra.subset_adjoin ⟨i₀, hi₀, i, rfl⟩)

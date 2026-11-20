@@ -714,7 +714,7 @@ theorem hs_inner_adjoint_identity (T : (Wq →L[ℂ] Wp) →L[ℂ] (Wq →L[ℂ]
 theorem hs_adjoint_add (S T : (Wq →L[ℂ] Wp) →L[ℂ] (Wq →L[ℂ] Wp)) : hsAdjoint (S + T) = hsAdjoint S + hsAdjoint T := by
   have : CompleteSpace Wp := FiniteDimensional.complete ℂ Wp
   unfold hsAdjoint
-  simp only [ContinuousLinearMap.add_comp, ContinuousLinearMap.comp_add, map_add]
+  simp only [ContinuousLinearMap.add_comp, ContinuousLinearMap.comp_add, map_add (f := _)]
 
 theorem hs_adjoint_real_smul (c : ℝ) (T : (Wq →L[ℂ] Wp) →L[ℂ] (Wq →L[ℂ] Wp)) : hsAdjoint (c • T) = c • hsAdjoint T := by
   have : CompleteSpace Wp := FiniteDimensional.complete ℂ Wp

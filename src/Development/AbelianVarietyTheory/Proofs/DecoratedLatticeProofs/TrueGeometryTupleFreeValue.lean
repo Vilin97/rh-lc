@@ -305,7 +305,7 @@ theorem prV_comm (v : GlobalTheory.FinPl.Pl D) (z : Af ↥D.host.F ⊗[↥D.host
       Algebra.TensorProduct.map_tmul, AlgHom.id_apply, Algebra.TensorProduct.comm_tmul]
     rfl
   | add a b ha hb =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact congrArg₂ (· + ·) ha hb
 
 set_option synthInstance.maxHeartbeats 200000 in

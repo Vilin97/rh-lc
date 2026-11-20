@@ -49,7 +49,7 @@ private theorem fixes_of_imag {Y Ω : Type} [Field Y] [NumberField Y] [IsCMField
   obtain ⟨a, haa⟩ : ∃ a : Y, a = (y + IsCMField.complexConj Y y) / 2 := ⟨_, rfl⟩
   obtain ⟨b, hbb⟩ : ∃ b : Y, b = (y - IsCMField.complexConj Y y) / (2 * e) := ⟨_, rfl⟩
   have ha : IsCMField.complexConj Y a = a := by
-    rw [haa, map_div₀, map_add, IsCMField.complexConj_apply_apply, map_ofNat, add_comm]
+    rw [haa, map_div₀, map_add (f := _), IsCMField.complexConj_apply_apply, map_ofNat, add_comm]
   have hb : IsCMField.complexConj Y b = b := by
     rw [hbb, map_div₀, map_sub, IsCMField.complexConj_apply_apply, map_mul, map_ofNat, hce]
     field_simp
@@ -62,7 +62,7 @@ private theorem fixes_of_imag {Y Ω : Type} [Field Y] [NumberField Y] [IsCMField
     g.commutes ⟨a, (IsCMField.complexConj_eq_self_iff Y a).1 ha⟩
   have hfb : g (algebraMap Y Ω b) = algebraMap Y Ω b :=
     g.commutes ⟨b, (IsCMField.complexConj_eq_self_iff Y b).1 hb⟩
-  rw [hy, map_add, map_mul, map_add, map_mul, hfa, hfb, hg]
+  rw [hy, map_add (f := _), map_mul, map_add (f := _), map_mul, hfa, hfb, hg]
 
 theorem UpperTheory.Gal.UnramifiedFromSplittingCriterion.inertSplit :
     DecGen → InertSplit := by

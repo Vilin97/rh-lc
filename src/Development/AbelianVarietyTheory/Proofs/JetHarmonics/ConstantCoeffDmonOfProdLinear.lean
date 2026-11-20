@@ -38,7 +38,7 @@ theorem word_add (D : ι → Derivation k A A) (w : List ι) (x y : A) :
     w.foldl (fun g l => D l g) (x + y) = w.foldl (fun g l => D l g) x + w.foldl (fun g l => D l g) y := by
   induction w generalizing x y with
   | nil => rfl
-  | cons l w ih => simp only [List.foldl_cons, map_add, ih]
+  | cons l w ih => simp only [List.foldl_cons, map_add (f := _), ih]
 
 theorem word_smul (D : ι → Derivation k A A) (w : List ι) (r : k) (x : A) :
     w.foldl (fun g l => D l g) (r • x) = r • w.foldl (fun g l => D l g) x := by

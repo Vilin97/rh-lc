@@ -47,7 +47,7 @@ theorem cst_C' (x : O) : Br.cst (C x) = algebraMap O (LetA O n) x := by
   simp [PhiBridge.cst, h]
 
 theorem EL_add (F G : PowerSeries O) : EL Br a (F + G) = EL Br a F + EL Br a G := by
-  simp only [EL, cst_add' Br, mul_add, map_add]
+  simp only [EL, cst_add' Br, mul_add, map_add (f := _)]
 
 theorem EL_sum {I : Type} (s : Finset I) (F : I → PowerSeries O) :
     EL Br a (∑ i ∈ s, F i) = ∑ i ∈ s, EL Br a (F i) := by

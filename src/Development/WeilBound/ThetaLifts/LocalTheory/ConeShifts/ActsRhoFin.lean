@@ -49,7 +49,7 @@ theorem pure_real {S : ((κ → AF F) → ℂ) → (κ → AF F) → ℂ} {f f�
   have := congrFun (hz (idem F v) (evI_idem v)) i
   have h2 := congrArg (evFin F v) this
   rw [Pi.smul_apply, smul_eq_mul, map_mul, evFin_idem_self, one_mul, Pi.zero_apply, map_zero] at h2
-  rw [Pi.add_apply, map_add, h2, add_zero]
+  rw [Pi.add_apply, map_add (f := _), h2, add_zero]
 
 theorem proj_adm (x : κ → AF F) : (LinearMap.proj x : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ) ∈ (adeleClass F).adm κ := fun g _ =>
   ⟨g (fun i => (x i).2) • ((BoundedContinuousFunction.evalCLM ℂ fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F (x i).1).comp
@@ -109,7 +109,7 @@ theorem acts_rho_inf {W : Type} [AddCommGroup W] [Module (AF F) W] {B : W → W 
       show evIH F _ = _
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [dotProduct, map_sum, map_mul]; rfl
-    rw [evI_add, evI_mul, h2, map_add, ← Algebra.smul_def, map_smul, hd, hd]
+    rw [evI_add, evI_mul, h2, map_add (f := _), ← Algebra.smul_def, map_smul, hd, hd]
     simp only [PositivityTheory.Mix.beta, smul_eq_mul]
     push_cast
     rw [one_div, inv_mul_eq_div]

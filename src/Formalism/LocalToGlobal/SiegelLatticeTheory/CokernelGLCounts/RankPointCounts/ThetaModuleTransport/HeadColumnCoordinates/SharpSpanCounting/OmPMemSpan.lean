@@ -104,7 +104,7 @@ theorem mkW_decomp (f f' : Fin (r + 1) → V) (T T' : F) (hF : Formalism.MainNot
       (H.h u (f (Fin.last r)) + algebraMap F E T * H.h u (omP H f f')) •
         H.mkW f ⟨omP H f f', omP_mem H f f' hD⟩ := by
   have hmem := decomp H f f' T T' hF hF' hD hD0 u hu u.2 _ _ rfl rfl
-  rw [← sub_eq_zero, ← map_smul, ← map_smul, ← map_add, ← map_sub, Formalism.MainNotions.S.Loc.HermSp.mkW,
+  rw [← sub_eq_zero, ← map_smul, ← map_smul, ← map_add (f := _), ← map_sub, Formalism.MainNotions.S.Loc.HermSp.mkW,
     Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero, Submodule.mem_comap]
   exact hmem
 

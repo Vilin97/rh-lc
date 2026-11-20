@@ -29,7 +29,7 @@ theorem baseChange_middle_equiv_of_exact : ∀ (R R' : Type) [CommRing R] [CommR
       have h1 : (r ⊗ₜ[R] m : R' ⊗[R] M) = r • (1 ⊗ₜ m) := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
       rw [h1]; simp only [map_smul, hf1, LinearMap.baseChange_tmul, heH, hc]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hfi : ∀ u, f (LinearMap.baseChange R' i u) = i' (eW u) := by
     intro u
     induction u using TensorProduct.induction_on with
@@ -38,7 +38,7 @@ theorem baseChange_middle_equiv_of_exact : ∀ (R R' : Type) [CommRing R] [CommR
       have h1 : (r ⊗ₜ[R] w : R' ⊗[R] W) = r • (1 ⊗ₜ w) := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
       rw [h1]; simp only [map_smul, hf1, LinearMap.baseChange_tmul, heW, hb]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hex : Function.Exact (LinearMap.baseChange R' i) (LinearMap.baseChange R' p) := by
     rw [LinearMap.baseChange_eq_ltensor, LinearMap.baseChange_eq_ltensor]
     first | exact lTensor_exact R' hip hp | exact LinearMap.lTensor_exact R' hip hp
@@ -62,7 +62,7 @@ theorem baseChange_middle_equiv_of_exact : ∀ (R R' : Type) [CommRing R] [CommR
       rw [map_sub, hfp, hs, LinearEquiv.apply_symm_apply, sub_self]
     obtain ⟨w', hw'⟩ := (hip' _).1 h0
     refine ⟨s + LinearMap.baseChange R' i (eW.symm w'), ?_⟩
-    rw [map_add, hfi, LinearEquiv.apply_symm_apply, hw', add_sub_cancel]
+    rw [map_add (f := _), hfi, LinearEquiv.apply_symm_apply, hw', add_sub_cancel]
   have hbij : Function.Bijective f := ⟨hinj, hsur⟩
   exact ⟨LinearEquiv.ofBijective f hbij, fun x => hf1 x⟩
 

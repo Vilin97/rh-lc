@@ -155,7 +155,7 @@ theorem exists_finset_sum_cofanProj_app [Small.{u} κ] [∀ k, (F k).IsQuasicohe
       add_mem' := by
         rintro a b ⟨A, hA⟩ ⟨B, hB⟩
         exact ⟨A ∪ B, fun T h => by
-          rw [map_add, hA T (Finset.subset_union_left.trans h),
+          rw [map_add (f := _), hA T (Finset.subset_union_left.trans h),
             hB T (Finset.subset_union_right.trans h)]⟩
       zero_mem' := ⟨∅, fun _ _ => map_zero _⟩
       smul_mem' := by

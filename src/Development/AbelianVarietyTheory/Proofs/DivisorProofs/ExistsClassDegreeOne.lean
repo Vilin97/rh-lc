@@ -55,7 +55,7 @@ theorem exists_dual_pLow_one : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] (N 
     rw [hm]; exact add_tsub_cancel_of_le hle
   have hdeg : m.degree = dimFl ι N - 1 := by
     have := congrArg Finsupp.degree hadd
-    rw [map_add, Finsupp.degree_single, hδ, PPowSum.degree_permExp] at this
+    rw [map_add (f := _), Finsupp.degree_single, hδ, PPowSum.degree_permExp] at this
     omega
   refine ⟨C ((-1 : ℝ) ^ dimFl ι N) * monomial m 1, ?_, ?_⟩
   · have := (isHomogeneous_C (ι × Fin N) ((-1 : ℝ) ^ dimFl ι N)).mul

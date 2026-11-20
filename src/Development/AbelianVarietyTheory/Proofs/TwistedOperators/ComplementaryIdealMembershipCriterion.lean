@@ -56,7 +56,7 @@ theorem infPart_of_mem {𝔠 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E} {x :
     show (0 : Ainf D.host.F) ⊗ₜ[D.host.F] a = 0
     exact TensorProduct.zero_tmul _ _
   | zero => exact map_zero _
-  | add x z _ _ hx hz => rw [RingHom.map_add, hx, hz, add_zero]
+  | add x z _ _ hx hz => rw [RingHom.map_add (f := _), hx, hz, add_zero]
   | neg x _ hx => rw [RingHom.map_neg, hx, neg_zero]
 
 def finId (𝔠 : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E) : AddSubgroup (EAf D) :=

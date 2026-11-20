@@ -155,7 +155,7 @@ theorem cone_ex_of_acyclic {A B : Cx R} (f : Hm A B) (hA : ∀ k, A.Ex (k + 1)) 
     refine (cone_ex_one f).2 fun a b ha hb ↦ ?_
     obtain ⟨y, rfl⟩ := Cx.ex_succ_iff.1 (hA 0) a ha
     obtain ⟨y', h2, h3⟩ := h1 (b - f.f 0 y) (by rw [map_sub, ← hb, f.f_d, sub_self])
-    exact ⟨y + y', by rw [map_add, h2, add_zero], by rw [map_add, h3, add_sub_cancel]⟩
+    exact ⟨y + y', by rw [map_add (f := _), h2, add_zero], by rw [map_add (f := _), h3, add_sub_cancel]⟩
   | k + 2 =>
     refine (cone_ex_succ f k).2 fun a b ha hb ↦ ?_
     obtain ⟨y, rfl⟩ := Cx.ex_succ_iff.1 (hA (k + 1)) a ha

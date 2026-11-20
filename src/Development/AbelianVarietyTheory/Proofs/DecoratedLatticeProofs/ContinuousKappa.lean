@@ -96,7 +96,7 @@ def contrBil (hψ : IsStdChar D ψ (-1)) {ρ σ : ℕ} {B : BesLev D ρ} {B' : B
   LinearMap.mk₂ ℂ (fun Ψ₁ Ψ₂ => GlobalTheory.Unf.contr l S vL (T₁ Ψ₁) (T₂ Ψ₂))
     (fun a a' b => by
       funext u v
-      simp only [GlobalTheory.Unf.contr, map_add, Pi.add_apply, mul_add]
+      simp only [GlobalTheory.Unf.contr, map_add (f := _), Pi.add_apply, mul_add]
       exact integral_add (integrable_contr hψ l S vL (h₁ a) (h₂ b) u v)
         (integrable_contr hψ l S vL (h₁ a') (h₂ b) u v))
     (fun c a b => by
@@ -105,7 +105,7 @@ def contrBil (hψ : IsStdChar D ψ (-1)) {ρ σ : ℕ} {B : BesLev D ρ} {B' : B
       rw [← integral_const_mul]; congr 1; funext w; ring)
     (fun a b b' => by
       funext u v
-      simp only [GlobalTheory.Unf.contr, map_add, Pi.add_apply, add_mul]
+      simp only [GlobalTheory.Unf.contr, map_add (f := _), Pi.add_apply, add_mul]
       exact integral_add (integrable_contr hψ l S vL (h₁ a) (h₂ b) u v)
         (integrable_contr hψ l S vL (h₁ a) (h₂ b') u v))
     (fun c a b => by

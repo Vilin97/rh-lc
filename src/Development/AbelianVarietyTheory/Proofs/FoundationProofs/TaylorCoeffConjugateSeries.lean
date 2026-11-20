@@ -120,7 +120,7 @@ theorem coeff_taylor_of_hasSum (n : ℕ) :
       rw [Finsupp.single_le_iff]; omega
     obtain ⟨m', rfl⟩ := exists_add_of_le hle
     have h1 := ih (analyticAt_fderiv_apply hf (Pi.single i 1)) (hasSum_fderiv_series hf h i) m' (by
-      rw [map_add, Finsupp.degree_single] at hm; omega)
+      rw [map_add (f := _), Finsupp.degree_single] at hm; omega)
     rw [taylor_fderiv hf, MvPowerSeries.coeff_pderiv] at h1
     have h4 : ((m' i : ℂ) + 1) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero (m' i)
     rw [add_comm]

@@ -200,7 +200,7 @@ theorem dim_le_trdeg [Fintype K] [∀ k, Fintype (ι k)] (hP : P.IsPrime)
   haveI : N.IsPrime := hN.isPrime
   have key := DimensionInequality.full.{0, 0} ℤ (MRing ι ℤ ⧸ P) hinj N
   have key' := OrderHomClass.mono Cardinal.toENat key
-  rw [map_add, map_add, Cardinal.toENat_ofENat, Cardinal.toENat_ofENat] at key'
+  rw [map_add (f := _), map_add (f := _), Cardinal.toENat_ofENat, Cardinal.toENat_ofENat] at key'
   have hu : (N.under ℤ).height ≤ 1 := by
     have h := Ideal.height_le_ringKrullDim_of_ne_top (I := N.under ℤ) (Ideal.IsPrime.ne_top inferInstance)
     rw [IsPrincipalIdealRing.ringKrullDim_eq_one ℤ Int.not_isField] at h

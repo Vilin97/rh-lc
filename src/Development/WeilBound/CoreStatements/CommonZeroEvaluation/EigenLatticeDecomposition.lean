@@ -93,7 +93,7 @@ theorem eigen_lattice_decomposition : ∀ (E : Type) [Field E] [NumberField E] (
   induction he using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨h1 x hx, h3 x⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul r x _ hx => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ _ hx
 
 end ModelDimension

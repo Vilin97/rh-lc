@@ -40,7 +40,7 @@ def toG {G : Type} [Group G] (ρ : G →* E) : GDet n A G where
     congr 1
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp [grpMap, TensorProduct.smul_tmul']
   homog B _ _ b x := by
     change D.D B (grpMap A ρ B (b • x)) = b ^ n * D.D B (grpMap A ρ B x)
@@ -67,7 +67,7 @@ def mat (n : ℕ) (A : Type) [CommRing A] : Det n A (Matrix (Fin n) (Fin n) A) w
     congr 1
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul b M =>
       rw [Algebra.TensorProduct.map_tmul, matMap_tmul, matMap_tmul]
       ext i j

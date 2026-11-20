@@ -28,19 +28,19 @@ def dec {n d d₁ : ℕ} (h : d = d₁ + 2) (H' : Plane E d d₁) :
 def zPart {n d d₁ : ℕ} (h : d = d₁ + 2) (H' : Plane E d d₁) :
     Matrix (Fin n) (Fin d) (AE F E) →ₗ[AF F] Matrix (Fin n) (Fin d₁) (AE F E) where
   toFun w i j := dec h H' w i ((colEq h).symm (Sum.inl j))
-  map_add' w w' := by ext i j; simp only [map_add]; rfl
+  map_add' w w' := by ext i j; simp only [map_add (f := _)]; rfl
   map_smul' c w := by ext i j; simp only [map_smul]; rfl
 
 def aPart {n d d₁ : ℕ} (h : d = d₁ + 2) (H' : Plane E d d₁) :
     Matrix (Fin n) (Fin d) (AE F E) →ₗ[AF F] (Fin n → AE F E) where
   toFun w i := dec h H' w i ((colEq h).symm (Sum.inr 0))
-  map_add' w w' := by ext i; simp only [map_add]; rfl
+  map_add' w w' := by ext i; simp only [map_add (f := _)]; rfl
   map_smul' c w := by ext i; simp only [map_smul]; rfl
 
 def bPart {n d d₁ : ℕ} (h : d = d₁ + 2) (H' : Plane E d d₁) :
     Matrix (Fin n) (Fin d) (AE F E) →ₗ[AF F] (Fin n → AE F E) where
   toFun w i := dec h H' w i ((colEq h).symm (Sum.inr 1))
-  map_add' w w' := by ext i; simp only [map_add]; rfl
+  map_add' w w' := by ext i; simp only [map_add (f := _)]; rfl
   map_smul' c w := by ext i; simp only [map_smul]; rfl
 
 variable (F E) in
@@ -61,7 +61,7 @@ def mCo (σ : E →ₐ[F] E) (h2 : Module.finrank F E = 2) {n : ℕ} (X : Spc F 
     have e : (fun k => cA σ (a k + a' k)) = (fun k => cA σ (a k)) + fun k => cA σ (a' k) := by
       ext k; simp
     simp only [Pi.add_apply]
-    rw [e, Matrix.mulVec_add, Pi.add_apply, mul_add, map_add]
+    rw [e, Matrix.mulVec_add, Pi.add_apply, mul_add, map_add (f := _)]
   map_smul' c a := by
     ext p
     have e : (fun k => cA σ (c • a k)) = c • fun k => cA σ (a k) := by
@@ -83,7 +83,7 @@ def coL : Matrix (Fin n) (Fin d) (AE F E) →ₗ[AF F] (Fin n × Fin d → AF F)
   toFun w := (glue h (M₁.co.e (zPart h H' w)).1 (tCo h2 (bPart h H' w)),
     glue h (M₁.co.e (zPart h H' w)).2 (mCo σ h2 X (aPart h H' w)))
   map_add' w w' := by
-    ext k <;> simp only [glue, map_add, Prod.fst_add, Prod.snd_add, Prod.fst_add, Pi.add_apply] <;>
+    ext k <;> simp only [glue, map_add (f := _), Prod.fst_add, Prod.snd_add, Prod.fst_add, Pi.add_apply] <;>
       cases idx h k <;> simp
   map_smul' c w := by
     ext k <;> simp only [glue, map_smul, Prod.smul_fst, Prod.smul_snd, Pi.smul_apply, RingHom.id_apply] <;>

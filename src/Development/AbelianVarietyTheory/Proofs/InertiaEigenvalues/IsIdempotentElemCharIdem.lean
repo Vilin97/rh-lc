@@ -87,7 +87,7 @@ theorem charIdem_of_mem {σ : Representation ℂ G V} {τ : Representation ℂ G
   refine Submodule.iSup_induction _ (motive := fun v => charIdem σ τ v = v) hv ?_ (map_zero _) fun x y hx hy => ?_
   · rintro f _ ⟨w, rfl⟩
     exact (map_charIdem f τ w).symm.trans (by rw [charIdem_self hτ]; rfl)
-  · rw [map_add, hx, hy]
+  · rw [map_add (f := _), hx, hy]
 
 end FiniteGroup
 

@@ -72,13 +72,13 @@ theorem span_le_iSup {ι : Type} [Fintype ι] {G Γ X A : ι → Type} [∀ i, G
       | smul_tprod r u =>
         rw [map_smul, hΦ, hT]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨fun i => ⟨f i (a i) (u i), hf i _ _⟩, rfl⟩)
-      | add x y h1 h2 => rw [map_add]; exact add_mem h1 h2
+      | add x y h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
     · induction t using PiTensorProduct.induction_on with
       | smul_tprod r u =>
         rw [map_smul, map_smul, map_smul, piTensor_tprod, hΦ, hΦ]
         funext m
         simp only [Pi.smul_apply, he]
-      | add x y h1 h2 => rw [map_add, map_add, map_add, h1, h2]; rfl
+      | add x y h1 h2 => rw [map_add (f := _), map_add (f := _), map_add (f := _), h1, h2]; rfl
     · change Φ _ = _
       rw [hΦ, prodMap_apply]
       simp only [hx]

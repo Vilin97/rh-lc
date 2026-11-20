@@ -47,8 +47,8 @@ theorem im_eq_on_span {g : ℕ} (Hm Hm' : Matrix (Fin g) (Fin g) ℂ)
   | mem_mem x y hx hy => exact h x hx y hy
   | zero_left y _ => simp [hermForm]
   | zero_right x _ => simp [hermForm]
-  | add_left x y z _ _ _ h1 h2 => simp only [map_add, hermForm_add_left, Complex.add_im, h1, h2]
-  | add_right x y z _ _ _ h1 h2 => simp only [map_add, hermForm_add_right, Complex.add_im, h1, h2]
+  | add_left x y z _ _ _ h1 h2 => simp only [map_add (f := _), hermForm_add_left, Complex.add_im, h1, h2]
+  | add_right x y z _ _ _ h1 h2 => simp only [map_add (f := _), hermForm_add_right, Complex.add_im, h1, h2]
   | smul_left r x y _ _ h1 => simp only [map_smul, hermForm_rsmul_left, Complex.im_ofReal_mul, h1]
   | smul_right r x y _ _ h1 => simp only [map_smul, hermForm_rsmul_right, Complex.im_ofReal_mul, h1]
 

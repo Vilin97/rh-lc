@@ -24,4 +24,4 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.repScalar :
       exact h1
     · simp
     · intro x y hx hy
-      rw [map_add, hx, hy, smul_add]
+      rw [map_add (f := _), hx, hy, smul_add]

@@ -78,7 +78,7 @@ theorem exists_homog {K : Type} [Fintype K] {J : K → Type} (c : ∀ k, J k)
     have hp : ∀ n, aeval v ((∏ k, X ⟨k, c k⟩ : MvPolynomial (Σ k, J k) ℤ) ^ n) = (∏ k, e k) ^ n := by
       intro n
       simp [map_prod, hc S v s e h1 h2]
-    rw [map_add, map_mul, map_mul, hF S v s e h1 h2, hG S v s e h1 h2, hp, hp, map_add]
+    rw [map_add (f := _), map_mul, map_mul, hF S v s e h1 h2, hG S v s e h1 h2, hp, hp, map_add (f := _)]
     simp only [pow_add, Finset.prod_mul_distrib, Finset.prod_pow]
     ring
   | mul_X f p hf =>

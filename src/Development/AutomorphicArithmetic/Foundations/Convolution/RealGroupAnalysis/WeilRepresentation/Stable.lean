@@ -26,6 +26,6 @@ theorem UpperTheory.ConvolutionTheory.R2.stable :
     obtain ⟨O⟩ := UpperTheory.ConvolutionTheory.R2.Fo.opsEx F
     obtain ⟨Y, s, hY, rfl, -⟩ := lieSplit X
     change lie E 2 (Y + zE s) Ψ ∈ span W M π
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact add_mem (Submodule.subset_span ⟨f, hf, _, dLFock F E D O Y φ hφ, lieL F E D O W M π f hf φ hφ Y hY Ψ e⟩)
       (Submodule.subset_span ⟨_, π.stable (.lie _) f hf, φ, hφ, lieZ F E D W M π f hf φ hφ s Ψ e⟩)

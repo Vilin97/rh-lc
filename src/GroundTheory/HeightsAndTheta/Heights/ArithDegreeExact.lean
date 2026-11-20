@@ -47,7 +47,7 @@ theorem mem_span_fibreVec {ι : Type*} [Fintype ι] {s : ι → E} (hs : LinearI
       rw [fibreVec, ← map_smul, smul_tmul', complex_smul_def, mul_one, AlgEquiv.apply_symm_apply]
     rw [this]
     exact W.smul_mem _ (key e)
-  | add x y hx hy => rw [map_add]; exact W.add_mem hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact W.add_mem hx hy
 
 end Span
 
@@ -59,7 +59,7 @@ theorem lTensor_complex_smul (σ : K →+* ℂ) {M N : Type*} [AddCommGroup M] [
   induction x using TensorProduct.induction_on with
   | zero => simp only [smul_zero, map_zero]
   | tmul z m => rw [smul_tmul', LinearMap.lTensor_tmul, LinearMap.lTensor_tmul, smul_tmul']
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 section GramBlock
 
@@ -135,7 +135,7 @@ theorem linearIndependent_sumElim {s' : m → E'.carrier} {s'' : n → E''.carri
   have h2 : ∑ j, g (Sum.inr j) • s'' j = 0 := by
     have := congrArg X.proj hg
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa [map_add, map_sum, map_smul, proj_incl, hu] using this
+      simpa [map_add (f := _), map_sum, map_smul, proj_incl, hu] using this
   have hr := hs'' _ h2
   have h1 : ∑ i, g (Sum.inl i) • s' i = 0 := by
     apply X.incl_injective
@@ -171,7 +171,7 @@ theorem card_quotient_sumElim {s' : m → E'.carrier} {s'' : n → E''.carrier}
         have h2 : ∑ j, g (Sum.inr j) • s'' j = 0 := by
           have := congrArg X.proj hg
           set_option synthInstance.maxHeartbeats 100000 in
-            simpa [map_add, map_sum, map_smul, proj_incl, hu] using this
+            simpa [map_add (f := _), map_sum, map_smul, proj_incl, hu] using this
         have hr := (Fintype.linearIndependent_iff.mp hs'') _ h2
         simp only [hr, zero_smul, Finset.sum_const_zero, add_zero] at hg
         have : X.incl (∑ i, g (Sum.inl i) • s' i) = X.incl x := by

@@ -35,7 +35,7 @@ theorem int_of_mem_bInv (D : Formalism.BasicNotions.D7) (cc : Ideal (𝓞 D.host
   | add x y _ _ hx hy =>
     obtain ⟨u, hu⟩ := hx
     obtain ⟨v, hv⟩ := hy
-    exact ⟨u + v, by rw [map_add, hu, hv]; ring⟩
+    exact ⟨u + v, by rw [map_add (f := _), hu, hv]; ring⟩
   | smul o x _ hx =>
     obtain ⟨u, hu⟩ := hx
     refine ⟨o * u, ?_⟩

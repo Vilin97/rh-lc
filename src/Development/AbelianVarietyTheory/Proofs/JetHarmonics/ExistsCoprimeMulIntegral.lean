@@ -41,7 +41,7 @@ theorem exists_coprime_mul_integral (D : D7) (p : ℕ) [Fact p.Prime] (lam : Qba
   obtain ⟨t, n, ht, hn⟩ := exists_trace_norm D c
   have ht1 : ‖(t : ℂ_[p])‖ ≤ 1 := by
     have := congrArg (homP D lam) ht
-    rw [map_add, map_ratCast] at this
+    rw [map_add (f := _), map_ratCast] at this
     rw [← this]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le h1 h2)
   have hn1 : ‖(n : ℂ_[p])‖ ≤ 1 := by

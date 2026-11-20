@@ -40,7 +40,7 @@ def supp (F : Shv R) (U : Scheme.{0}) : Submodule (ULift.{1} R) (Sec F U) where
     · exact Or.inl h
     rcases hg.2 with h' | h'
     · exact Or.inl h'
-    · right; change (F.obj.map g.op).hom (a + b) = 0; rw [map_add]; exact (congrArg₂ (· + ·) h h').trans (add_zero 0)
+    · right; change (F.obj.map g.op).hom (a + b) = 0; rw [map_add (f := _)]; exact (congrArg₂ (· + ·) h h').trans (add_zero 0)
   smul_mem' c a ha := by
     refine GrothendieckTopology.superset_covering _ (fun V g hg => ?_) ha
     rcases hg with h | h

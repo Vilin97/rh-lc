@@ -68,7 +68,7 @@ theorem UpperTheory.V.Th.Sp.msp :
         rfl
       rw [MvPolynomial.eval₂_C, hc, sub_self, mul_zero]
     · intro p q hp hq
-      rw [map_add, MvPolynomial.eval₂_add, map_add]
+      rw [map_add (f := _), MvPolynomial.eval₂_add, map_add (f := _)]
       linear_combination hp + hq
     · intro p v hp
       rw [map_mul, MvPolynomial.eval₂_mul, MvPolynomial.eval₂_X, map_mul]

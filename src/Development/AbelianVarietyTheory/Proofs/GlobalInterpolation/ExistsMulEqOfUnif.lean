@@ -121,7 +121,7 @@ theorem tauLat_colLat (τ : I) (B : GL (Fin n) E) :
       simp only [Pi.zero_apply, map_zero]
       exact zero_mem _
     | add y z _ _ hy hz =>
-      simp only [Pi.add_apply, map_add]
+      simp only [Pi.add_apply, map_add (f := _)]
       exact add_mem hy hz
     | smul r y _ hy =>
       have e : (fun a => emb τ ((r • y) a)) = RingOfIntegers.mapRingHom (emb τ) r • fun a => emb τ (y a) := by
@@ -274,7 +274,7 @@ theorem exists_basis_ker {d : Deco E n ST SG} (hd : d.Ok) (P : ST) (hs : d.at P.
       refine (mul_eq_zero.1 ?_).resolve_right hi
       rw [hx2, mul_zero, hgs, ← Finset.add_sum_erase _ _ (Finset.mem_univ i)] at e'
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [← e', map_add, map_sum, add_mul, Finset.sum_mul]
+        rw [← e', map_add (f := _), map_sum, add_mul, Finset.sum_mul]
       congr 1
       exact Finset.sum_congr rfl fun j _ => by rw [map_mul, mul_assoc, ← hc']
     obtain ⟨s', hs', b, hb⟩ := exists_mul_eq_of_unif hT hT2 h1

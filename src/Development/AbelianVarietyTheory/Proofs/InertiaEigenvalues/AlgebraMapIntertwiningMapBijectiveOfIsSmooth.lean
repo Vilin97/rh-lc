@@ -55,7 +55,7 @@ theorem rank_le_aleph0_of_isIrreducible {π : Representation ℂ G V} (hs : IsSm
     show π.asAlgebraHom f v ∈ _
     induction f using MonoidAlgebra.induction_on with
     | of g => exact Submodule.subset_span ⟨g, by simp⟩
-    | add a b ha hb => rw [map_add, LinearMap.add_apply]; exact add_mem (ha trivial) (hb trivial)
+    | add a b ha hb => rw [map_add (f := _), LinearMap.add_apply]; exact add_mem (ha trivial) (hb trivial)
     | smul c a ha => rw [map_smul, LinearMap.smul_apply]; exact Submodule.smul_mem _ _ (ha trivial)
   rw [← rank_top, ← ht]
   exact (rank_span_le _).trans (le_aleph0_iff_set_countable.2 (countable_orbit hs v))

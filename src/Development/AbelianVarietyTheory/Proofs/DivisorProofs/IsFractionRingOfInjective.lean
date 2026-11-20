@@ -123,7 +123,7 @@ theorem exists_isEtTower_tensor : ∀ {K κ L : Type} [Field K] [Field κ] [Fiel
       rw [e]
       exact Subring.mul_mem _ (Subring.subset_closure (Or.inl ⟨x, rfl⟩))
         (Subring.subset_closure (Or.inr ⟨y, rfl⟩))
-    | add x y hx hy => rw [map_add]; exact Subring.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Subring.add_mem _ hx hy
   have hmem : ∀ z : ℂ, algebraMap ℂ L z ∈ A.toSubring := fun z => by
     rw [← hcL]; exact A.algebraMap_mem _
   have hevτ : ∀ i, ev (τ i) = 0 := fun i => by

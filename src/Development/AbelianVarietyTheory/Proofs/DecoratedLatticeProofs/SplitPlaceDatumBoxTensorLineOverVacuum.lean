@@ -86,7 +86,7 @@ def boxMap (o : OrthDec X T L) (S : HSp D) (T₂ : (WO S T → ℂ) →ₗ[ℂ] 
           fun w => T₂ (fun x => Φ' ((o.resT S).symm (x, w))) (o.resT S z).1 := by
       funext w
       exact congrFun (T₂.map_add (fun x => Φ ((o.resT S).symm (x, w))) fun x => Φ' ((o.resT S).symm (x, w))) _
-    rw [this, map_add]; rfl
+    rw [this, map_add (f := _)]; rfl
   map_smul' c Φ := by
     funext z
     have : (fun w => T₂ (fun x => (c • Φ) ((o.resT S).symm (x, w))) (o.resT S z).1) =
@@ -158,11 +158,11 @@ variable {o : OrthDec X T L} {ΛX : AddSubgroup (WO S X)} {ΛT : AddSubgroup (WO
 
 theorem symm_add_left (o : OrthDec X T L) (x u : WO S T) (w : WO S L) (K : ℕ) :
     (o.resT S).symm (x + K • u, w) = (o.resT S).symm (x, w) + K • (o.resT S).symm (u, 0) := by
-  rw [← map_nsmul, ← map_add, Prod.smul_mk, Prod.mk_add_mk, nsmul_zero, add_zero]
+  rw [← map_nsmul, ← map_add (f := _), Prod.smul_mk, Prod.mk_add_mk, nsmul_zero, add_zero]
 
 theorem symm_add_right (o : OrthDec X T L) (x : WO S T) (w u : WO S L) (K : ℕ) :
     (o.resT S).symm (x, w + K • u) = (o.resT S).symm (x, w) + K • (o.resT S).symm (0, u) := by
-  rw [← map_nsmul, ← map_add, Prod.smul_mk, Prod.mk_add_mk, nsmul_zero, add_zero]
+  rw [← map_nsmul, ← map_add (f := _), Prod.smul_mk, Prod.mk_add_mk, nsmul_zero, add_zero]
 
 theorem sb_slice_left (h : Near o ΛX ΛT ΛL N) {Φ : WO S X → ℂ} (hΦ : IsSBHalf e ΛX Φ) (w : WO S L) :
     IsSBHalf e ΛT fun x => Φ ((o.resT S).symm (x, w)) := by
@@ -209,7 +209,7 @@ theorem sb_boxT (h : Near o ΛX ΛT ΛL N) {φ : WO S T → ℂ} {φ' : WO S L �
   · rw [← (o.resT S).symm_apply_apply t]
     exact half_symm o (a1 _ (left_ne_zero_of_mul ht)) (b1 _ (right_ne_zero_of_mul ht))
   · simp only [OrthDec.boxT]
-    rw [map_add, map_nsmul, Prod.fst_add, Prod.snd_add, Prod.smul_fst, Prod.smul_snd]
+    rw [map_add (f := _), map_nsmul, Prod.fst_add, Prod.snd_add, Prod.smul_fst, Prod.smul_snd]
     congr 1
     · rw [show N * a * b = N * b * a by ring, mul_nsmul, mul_nsmul]
       exact a2 _ (nsmul_mem (h.fst u hu) b)
@@ -220,7 +220,7 @@ theorem sb_boxT (h : Near o ΛX ΛT ΛL N) {φ : WO S T → ℂ} {φ' : WO S L �
   · have p1 := h.inl _ (nsmul_mem (a3 _ (left_ne_zero_of_mul ht)) b)
     have p2 := h.inr _ (nsmul_mem (b3 _ (right_ne_zero_of_mul ht)) a)
     have := add_mem p1 p2
-    rw [← nsmul_add, ← map_add, Prod.mk_add_mk, add_zero, zero_add, ← mul_nsmul, ← mul_nsmul, mul_comm b a,
+    rw [← nsmul_add, ← map_add (f := _), Prod.mk_add_mk, add_zero, zero_add, ← mul_nsmul, ← mul_nsmul, mul_comm b a,
       ← Prod.smul_mk, map_nsmul, Prod.mk.eta, AddEquiv.symm_apply_apply, ← mul_nsmul'] at this
     rwa [mul_assoc]
 
@@ -240,12 +240,12 @@ theorem isPlaceModel_boxMap {ψ : AddChar (AF D.host.F) ℂ} (h : Near o ΛX ΛT
           fun x' => (fun x' => Φ ((o.resT S).symm (x', w + (o.resT S x).2))) (x' + (o.resT S x).1) := by
         funext x'
         show _ = Φ ((o.resT S).symm ((x', w) + o.resT S x))
-        rw [map_add, AddEquiv.symm_apply_apply]
+        rw [map_add (f := _), AddEquiv.symm_apply_apply]
       rw [e2, h₂.trans _ (sb_slice_left h hΦ _) _ (half_fst o hx)]
       rfl
     rw [e1, map_smul, h₃.trans _ (sb_slice_right h hΦ T₂ _) _ (half_snd o hx)]
     simp only [heisO, Pi.smul_apply, smul_eq_mul]
-    rw [boxMap_apply, o.symplOH_resT, AddChar.map_add_eq_mul, map_add, Prod.fst_add, Prod.snd_add, mul_assoc]
+    rw [boxMap_apply, o.symplOH_resT, AddChar.map_add_eq_mul, map_add (f := _), Prod.fst_add, Prod.snd_add, mul_assoc]
   · funext z
     rw [boxMap_apply]
     have e1 : (fun w => T₂ (fun x' => ψ (symplO S X ((o.resT S).symm (x', w)) y) * Φ ((o.resT S).symm (x', w)))
@@ -265,7 +265,7 @@ theorem isPlaceModel_boxMap {ψ : AddChar (AF D.host.F) ℂ} (h : Near o ΛX ΛT
       ring
     rw [e1, map_smul, h₃.modul _ (sb_slice_right h hΦ T₂ _) _ (half_snd o hy)]
     simp only [heisO, Pi.smul_apply, smul_eq_mul]
-    rw [boxMap_apply, o.symplOH_resT, AddChar.map_add_eq_mul, map_add, Prod.fst_add, Prod.snd_add, mul_assoc]
+    rw [boxMap_apply, o.symplOH_resT, AddChar.map_add_eq_mul, map_add (f := _), Prod.fst_add, Prod.snd_add, mul_assoc]
 
 end Slices
 

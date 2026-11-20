@@ -47,7 +47,7 @@ theorem bar_rt : H.bar H.rt = -H.rt := by
 
 theorem cmHost_bar_halfIntegerGenerator : H.bar H.w0 = 1 - H.w0 := by
   have h := congrArg H.bar H.two_weight_eq_one_add_root
-  rw [map_mul, map_add, map_one, bar_rt, map_ofNat] at h
+  rw [map_mul, map_add (f := _), map_one, bar_rt, map_ofNat] at h
   apply mul_left_cancel₀ (two_ne_zero (α := 𝓞 E))
   linear_combination h + H.two_weight_eq_one_add_root
 
@@ -60,7 +60,7 @@ theorem bar_mul_wE (s : ℤ × ℤ) :
     have h4 : (4 : 𝓞 E) ≠ 0 := by norm_num
     apply mul_left_cancel₀ h4
     linear_combination (-(2 * H.w0 + H.rt - 1)) * H.two_weight_eq_one_add_root - H.rt_sq + hm'
-  rw [e, wE, map_add, map_mul, map_intCast, map_intCast, cmHost_bar_halfIntegerGenerator]
+  rw [e, wE, map_add (f := _), map_mul, map_intCast, map_intCast, cmHost_bar_halfIntegerGenerator]
   push_cast
   linear_combination (s.2 : 𝓞 E) ^ 2 * hw
 
@@ -70,7 +70,7 @@ theorem form_smul_smul (D : Datum H) (c : 𝓞 E) (N : ℤ) (h : H.bar c * c = N
 
 theorem form_skew (D : Datum H) (x y : D.La) : D.EF x y = -D.EF y x := by
   have h := D.alt (x + y)
-  simp only [map_add, LinearMap.add_apply, D.alt] at h
+  simp only [map_add (f := _), LinearMap.add_apply, D.alt] at h
   linarith
 
 variable {g : ℕ} {ty : Fin g → (E →+* ℂ)}
@@ -177,7 +177,7 @@ theorem exists_isometry_of_conj_split : ∀ (E : Type) [Field E] [NumberField E]
         exact ⟨this, by rw [form_skew, this, neg_zero]⟩
       have e : (F.Di i').EF (Φ (wE H s • a + H.bar (wE H s) • b)) (Φ (wE H s • a' + H.bar (wE H s) • b')) =
           N * (F.Di i').EF (Φ (a + b)) (Φ (a' + b')) := by
-        simp only [map_add, LinearMap.add_apply]
+        simp only [map_add (f := _), LinearMap.add_apply]
         rw [(o _ (Submodule.smul_mem _ _ ha) _ (Submodule.smul_mem _ _ hb')).1,
           (o _ (Submodule.smul_mem _ _ ha') _ (Submodule.smul_mem _ _ hb)).2, (o _ ha _ hb').1, (o _ ha' _ hb).2]
         simp only [map_smul Φ]

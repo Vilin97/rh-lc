@@ -67,7 +67,7 @@ theorem phi_tmul (n : ℕ) (c : ℤ_[l]) (g : G) : phi n (c ⊗ₜ[ℤ] g) = psi
 
 theorem phi_eq_zero (n : ℕ) (x : ℤ_[l] ⊗[ℤ] G) (hx : x ∈ (idl l) ^ n • (⊤ : Submodule ℤ_[l] (ℤ_[l] ⊗[ℤ] G))) :
     phi n x = 0 := by
-  refine Submodule.smul_induction_on hx (fun a ha m hm => ?_) (fun x y hx hy => by rw [map_add, hx, hy, add_zero])
+  refine Submodule.smul_induction_on hx (fun a ha m hm => ?_) (fun x y hx hy => by rw [map_add (f := _), hx, hy, add_zero])
   clear hm
   rw [idl_pow_eq_ker, RingHom.mem_ker] at ha
   induction m using TensorProduct.induction_on with
@@ -75,7 +75,7 @@ theorem phi_eq_zero (n : ℕ) (x : ℤ_[l] ⊗[ℤ] G) (hx : x ∈ (idl l) ^ n �
   | tmul c g =>
     rw [TensorProduct.smul_tmul', phi_tmul, smul_eq_mul]
     simp [psi, ha]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, add_zero]
 
 theorem mk_eq_iff (n : ℕ) (g g' : G) :
     (Submodule.Quotient.mk ((1 : ℤ_[l]) ⊗ₜ[ℤ] g) : Q l n G) = Submodule.Quotient.mk ((1 : ℤ_[l]) ⊗ₜ[ℤ] g') ↔

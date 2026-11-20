@@ -20,7 +20,7 @@ theorem prV_toEAf_eq_swap (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) (a : 
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul x e => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 set_option maxHeartbeats 1000000 in
 

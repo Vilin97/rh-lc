@@ -43,7 +43,7 @@ theorem extend_hom {V : Type} [AddCommGroup V] [Module ℂ V] (S : Submodule ℂ
   · intro x y; apply LinearMap.ext; intro w
     rw [Module.End.mul_apply, hA x, hA y, hA (x * y), map_mul, Module.End.mul_apply]
     have e : P ((T y (P w) : V) + (w - (P w : V))) = T y (P w) := by
-      rw [map_add, map_sub, hP, hP, sub_self, add_zero]
+      rw [map_add (f := _), map_sub, hP, hP, sub_self, add_zero]
     rw [e]; abel
   · intro g s
     show A g s = _

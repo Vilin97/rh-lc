@@ -116,7 +116,7 @@ theorem isMonHom_mul (p q : B ⟶ A) [IsMonHom p] [IsMonHom q] : IsMonHom (p * q
 
 omit [IsCommMonObj A] [IsCommMonObj B] in
 theorem lam_add {T : Over S} (c d : Pic B.left) (x y : T ⟶ B) : lam (c + d) x y = lam c x y + lam d x y := by
-  simp only [lam, map_add]
+  simp only [lam, map_add (f := _)]
   abel
 
 end Geometry
@@ -174,7 +174,7 @@ theorem sectionsDim_additionGraph_principalPolarisation : Out.Laws → Out.Laws2
         pull (GrpObj.inv : Q.A ⟶ Q.A).left (pull r.left c) = pull r.left c := fun r _ => by
       rw [← pull_comp, ← Over.comp_left, GrpObj.inv_hom, Over.comp_left, pull_comp, e₁]
     refine (cls_eq_iff hM (pull_isLB hM _)).1 ?_
-    rw [cls_pull hM, cM, map_nsmul, map_add, map_add, e₂, e₂, e₂]
+    rw [cls_pull hM, cM, map_nsmul, map_add (f := _), map_add (f := _), e₂, e₂, e₂]
 
   let C : Matrix (Fin 2) (Fin 2) ℕ := !![2 * N, N; N, 2 * N]
   let s : Q.A ⟶ Q.A := (Φ Q.A).symm ![p ^ (2 * N) * q ^ N, p ^ N * q ^ (2 * N)]
@@ -251,7 +251,7 @@ theorem sectionsDim_additionGraph_principalPolarisation : Out.Laws → Out.Laws2
   rw [cls_pull hMe', cls_lbPow hM, cls_lbPow hM', cM, cls_linComb hL, Fin.sum_univ_three]
   have e₁ : ∀ r : P.A ⊗ P.A ⟶ P.A, pull φ.hom.left (pull r.left c) = pull (φ.hom ≫ r).left c := fun r => by
     rw [Over.comp_left, pull_comp]
-  simp only [← hc, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val, map_nsmul, map_add, map_zsmul, e₁,
+  simp only [← hc, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val, map_nsmul, map_add (f := _), map_zsmul, e₁,
     MonObj.comp_mul, ← hpd, ← hqd]
   module
 

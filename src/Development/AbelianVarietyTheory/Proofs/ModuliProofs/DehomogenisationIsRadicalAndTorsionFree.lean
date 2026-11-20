@@ -41,7 +41,7 @@ theorem exists_ker_eq_dehomogenisation {o σ : Type} [CommRing o] (I : Ideal (Mv
     intro F
     induction F using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => rw [MvPolynomial.eval₂_add, hp, hq, map_add]
+    | add p q hp hq => rw [MvPolynomial.eval₂_add, hp, hq, map_add (f := _)]
     | mul_X p j hp => rw [MvPolynomial.eval₂_mul, hp, MvPolynomial.eval₂_X, map_mul]
   have hxu : g (MvPolynomial.X i) * u = 1 := IsLocalization.Away.mul_invSelf x
   refine ⟨ψ, fun c => by exact MvPolynomial.eval₂Hom_C _ _ c, le_antisymm ?_ ?_⟩

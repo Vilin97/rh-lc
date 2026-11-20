@@ -80,7 +80,7 @@ theorem UpperTheory.V.Alg.obs_correct :
     obtain ⟨⟨y1, y2⟩, -⟩ := Y.2
     refine ⟨?_, fun a b e => ?_⟩
     · have : (T Y.1).transpose = T Y.1.transpose := by rw [← T0, ← T0, Matrix.transpose_map]
-      rw [this, Tl, Tr, Jres, ← map_add, y1, map_zero]
+      rw [this, Tl, Tr, Jres, ← map_add (f := _), y1, map_zero]
     · have : T 0 a b = 0 := by rw [map_zero]; rfl
       rw [← T0, Matrix.map_apply, y2 a b e, ← this, ← T0]
       rfl
@@ -105,7 +105,7 @@ theorem UpperTheory.V.Alg.obs_correct :
       simp only [mul_assoc]
     rw [hf]
     simp only
-    rw [sub_mul, mul_sub, mul_sub, TT, Tl, Tr, rtres, rtres, e, e', map_sub, map_add]
+    rw [sub_mul, mul_sub, mul_sub, TT, Tl, Tr, rtres, rtres, e, e', map_sub, map_add (f := _)]
     abel
   have fone : f 1 = 1 := by
     obtain ⟨u, -, hu, -⟩ := g3 _ (fH 1)

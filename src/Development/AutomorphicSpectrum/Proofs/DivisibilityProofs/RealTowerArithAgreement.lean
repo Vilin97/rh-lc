@@ -328,7 +328,7 @@ theorem tendsto_arFun (hC : M.Converges II) (F : RPA Ψ N) :
     simp only [e, map_smul, arFun_monomial, PP_monomial, smul_eq_mul]
     rw [hLim.limUnder_eq]
     exact hLim.const_mul a
-  | add p q hp hq => simpa only [map_add] using hp.add hq
+  | add p q hp hq => simpa only [map_add (f := _)] using hp.add hq
 
 end Limits
 

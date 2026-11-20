@@ -71,7 +71,7 @@ theorem infEmb_sigR (σ : E →ₐ[F] E) (τ : E →+* ℂ) (θ : Ainf F ⊗[F] 
     show θ (a ⊗ₜ[F] σ x) = starRingEnd ℂ _
     rw [hθ', hθ', map_mul, GlobalTheory.InfAdeleCM.conj_ext, hσ]
     rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy, star_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy, star_add]
 
 theorem exists_infAdele_equiv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (I : Type) [Fintype I] (τ : I → (E →+* ℂ)) (θ : I → (Ainf F ⊗[F] E →+* ℂ)), IsCMExt F E σ → IsCMFam τ → (∀ i, IsInfEmb (τ i) (θ i)) → ∃ e : (Ainf F ⊗[F] E) ≃+* (I → ℂ), (∀ x i, e x i = θ i x) ∧ Continuous e ∧ Continuous e.symm ∧ ∀ x i, e (sigR (Ainf F) σ x) i = star (e x i) := by
   intro F E _ _ _ _ _ σ I _ τ θ h hτ hθ

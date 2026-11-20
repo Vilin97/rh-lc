@@ -11,7 +11,7 @@ private theorem map_eq_lTensor (S : Type) [CommRing S] [Algebra A S] (z : S ⊗[
     Algebra.TensorProduct.map (AlgHom.id S S) f z = f.toLinearMap.lTensor S z := by
   induction z with
   | tmul s x => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 private theorem map_surj (hf : Function.Surjective f) (S : Type) [CommRing S] [Algebra A S] :
     Function.Surjective (Algebra.TensorProduct.map (AlgHom.id S S) f) := by
@@ -35,7 +35,7 @@ private theorem eq_of_map_eq (hf : Function.Surjective f) (hk : ∀ x, f x = 0 �
       intro y
       have := (D.mem_ker.1 (hk k.1 k.2)) S y (s ⊗ₜ 1) 1
       simpa using this
-    | add a b ha hb => intro y; rw [LinearMap.map_add, ← add_assoc, hb, ha]
+    | add a b ha hb => intro y; rw [LinearMap.map_add (f := _), ← add_assoc, hb, ha]
   rw [← key w y, hw, add_sub_cancel]
 
 private theorem map_map_swap (B B' : Type) [CommRing B] [Algebra A B] [CommRing B'] [Algebra A B'] (g : B →ₐ[A] B')
@@ -44,7 +44,7 @@ private theorem map_map_swap (B B' : Type) [CommRing B] [Algebra A B] [CommRing 
       Algebra.TensorProduct.map g (AlgHom.id A E') (Algebra.TensorProduct.map (AlgHom.id B B) f x) := by
   induction x with
   | tmul s x => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end
 

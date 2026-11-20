@@ -248,7 +248,7 @@ theorem inB_mem (h : IsSec σ t sec) {B : Base F E} (hb : IsSplitBasis t X.L b) 
       exact ⟨fun i => evFin F v a ⊗ₜ[F] x i, AddSubgroup.subset_closure ⟨_, ha v, x, hx, rfl⟩, funext fun i => by
         rw [Pi.smul_apply, (h.smul _ _).1, incV, (h.inc _).1]; rfl⟩
     | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
-    | add a b _ _ ha hb => simp only [Pi.add_apply, map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem ha hb
     | neg a _ ha => simp only [Pi.neg_apply, map_neg]; exact neg_mem ha
   have fr : ∀ y ∈ latLoc F X.L v, ∃ z ∈ latHat X, (fun i => piW t (z i)) = splitVec t y := fun y hy => by
     induction hy using AddSubgroup.closure_induction with
@@ -264,7 +264,7 @@ theorem inB_mem (h : IsSec σ t sec) {B : Base F E} (hb : IsSplitBasis t X.L b) 
       obtain ⟨p, p1, p2⟩ := ha
       obtain ⟨q, q1, q2⟩ := hb
       exact ⟨p + q, add_mem p1 q1, funext fun i => by
-        rw [Pi.add_apply, map_add, congrFun p2 i, congrFun q2 i]; exact (map_add _ _ _).symm⟩
+        rw [Pi.add_apply, map_add (f := _), congrFun p2 i, congrFun q2 i]; exact (map_add _ _ _).symm⟩
     | neg a _ ha =>
       obtain ⟨p, p1, p2⟩ := ha
       exact ⟨-p, neg_mem p1, funext fun i => by rw [Pi.neg_apply, map_neg, congrFun p2 i]; exact (map_neg _ _).symm⟩

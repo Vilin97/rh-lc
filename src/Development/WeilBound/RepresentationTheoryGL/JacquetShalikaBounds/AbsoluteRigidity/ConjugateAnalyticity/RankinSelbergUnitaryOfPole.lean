@@ -221,7 +221,7 @@ theorem rankin_selberg_unitary_of_pole : NormEx → SatTw → RSPole → RSU := 
         unfold LS
         rw [conj_eul]
         congr 1
-        simp only [map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+        simp only [map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
         push_cast
         ring
       rw [hL, LS_shift α β _ _ τ τ' (hval τ) (hval τ') σ]

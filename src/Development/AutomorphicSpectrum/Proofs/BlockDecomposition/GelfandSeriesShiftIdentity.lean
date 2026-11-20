@@ -23,6 +23,6 @@ theorem gser_mul_prod : ∀ (n : ℕ) (c : Fin n → ℂ),
   have e : gser c = PowerSeries.mk (fun k => ∑ a, ∑ b,
       (Formalism.REAL.Amat (fun a => c a + ((n : ℂ) - 1) / 2) ^ k) a b) := rfl
   rw [e]
-  simpa only [map_add, map_one] using h
+  simpa only [map_add (f := _), map_one] using h
 
 end GlobalTheory.CompanionTheory.WaveMult

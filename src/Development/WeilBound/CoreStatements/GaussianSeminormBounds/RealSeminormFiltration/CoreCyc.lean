@@ -315,7 +315,7 @@ theorem cyc_irred {A : Type} [NormedAddCommGroup A] [InnerProductSpace ℂ A] [F
     have h2 : ρ a b y ∈ Nᗮ := by
       have e : ρ a b y = - ρ a b z := by
         have := hf.2 a b hab
-        rw [← hyz, map_add] at this
+        rw [← hyz, map_add (f := _)] at this
         exact eq_neg_of_add_eq_zero_left this
       rw [e]
       exact Nᗮ.neg_mem (hKo a b (sb_of_pos hab) z hz')

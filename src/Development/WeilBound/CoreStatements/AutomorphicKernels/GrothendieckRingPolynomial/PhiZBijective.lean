@@ -37,7 +37,7 @@ theorem ell_phiOf (hA : GlobalTheory.Published.IrreducibleAdmissibleGL) (hj : LS
     · exact absurd ((toMultiset_eq_single_iff u Δ).mpr h2) h1
     · simp
   | add p q hp hq =>
-    rw [map_add, map_add, map_add, hp, hq, MvPolynomial.coeff_add, add_mul]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq, MvPolynomial.coeff_add, add_mul]
 
 end PositivityTheory.Groth.GrothendieckPhiBijection
 

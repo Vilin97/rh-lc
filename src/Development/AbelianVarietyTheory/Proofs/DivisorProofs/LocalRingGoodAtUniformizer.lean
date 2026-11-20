@@ -27,7 +27,7 @@ theorem sig_sig (h : IsCMExt F E σ) (a : A) : sigR (Fv F v) σ (sigR (Fv F v) �
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => rw [sig_tmul, sig_tmul, GlobalTheory.SelfDualLatticeCompare.conj_conj h]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem iota_eq (c : Fv F v) : algebraMap (Fv F v) A c = c ⊗ₜ[F] (1 : E) := by
   simp [Algebra.TensorProduct.algebraMap_apply]
@@ -76,7 +76,7 @@ theorem sig_mem (h : IsCMExt F E σ) {s : A} (hs : s ∈ intA (E := E) v) : sigR
     exact tmul_mem v ha ⟨_, hy⟩
   | zero => simp
   | one => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
@@ -106,7 +106,7 @@ theorem trace_mem (h : IsCMExt F E σ) {s : A} (hs : s ∈ intA (E := E) v) :
   | mem y hy =>
     obtain ⟨a, ha, x, rfl⟩ := hgen y hy
     have hfix : σ ((x : E) + σ x) = (x : E) + σ x := by
-      rw [map_add, GlobalTheory.SelfDualLatticeCompare.conj_conj h, add_comm]
+      rw [map_add (f := _), GlobalTheory.SelfDualLatticeCompare.conj_conj h, add_comm]
     have hxi : IsIntegral ℤ (σ (x : E)) := x.2.map (σ : E →+* E).toIntAlgHom
     obtain ⟨f, hf⟩ := exists_int_of_fixed h (x + ⟨_, hxi⟩) hfix
     refine ⟨a * algebraMap F (Fv F v) f, mul_mem ha (coe_mem v f), ?_⟩
@@ -118,7 +118,7 @@ theorem trace_mem (h : IsCMExt F E σ) {s : A} (hs : s ∈ intA (E := E) v) :
     obtain ⟨c, hc, e⟩ := hx
     obtain ⟨d, hd, e'⟩ := hy
     refine ⟨c + d, add_mem hc hd, ?_⟩
-    rw [map_add, map_add, ← e, ← e']; ring
+    rw [map_add (f := _), map_add (f := _), ← e, ← e']; ring
   | neg x _ hx =>
     obtain ⟨c, hc, e⟩ := hx
     refine ⟨-c, neg_mem hc, ?_⟩
@@ -150,7 +150,7 @@ theorem exists_w (h : IsCMExt F E σ) (hv : GlobalTheory.IndefiniteRowSideFullHe
   have hσσ := GlobalTheory.SelfDualLatticeCompare.conj_conj h
   obtain ⟨r, hr⟩ := exists_int_of_fixed h (t + t') (by
     show σ ((t : E) + σ t) = (t : E) + σ t
-    rw [map_add, hσσ, add_comm])
+    rw [map_add (f := _), hσσ, add_comm])
   obtain ⟨n, hn⟩ := exists_int_of_fixed h (t * t') (by
     show σ ((t : E) * σ t) = (t : E) * σ t
     rw [map_mul, hσσ, mul_comm])
@@ -195,17 +195,17 @@ theorem exists_w (h : IsCMExt F E σ) (hv : GlobalTheory.IndefiniteRowSideFullHe
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, ← hs, tmul_algebraMap, one_mul]
   have hB : ι b * ι b' = 1 := by rw [← map_mul, hbb, map_one]
   have hS : ι sF⁻¹ * ι sF = 1 := by rw [← map_mul, inv_mul_cancel₀ hs0, map_one]
-  have hC : ι 2 * ι c + ι b * ι rF = 1 := by rw [← map_mul, ← map_mul, ← map_add, hcb, map_one]
+  have hC : ι 2 * ι c + ι b * ι rF = 1 := by rw [← map_mul, ← map_mul, ← map_add (f := _), hcb, map_one]
   have h2ι : ι 2 = 2 := map_ofNat ι 2
   refine ⟨ι c + ι b * (1 : Fv F v) ⊗ₜ[F] (t : E),
     add_mem (iota_mem v hc) (mul_mem (iota_mem v hb) (tmul_mem v (one_mem _) t)), ?_,
     ι (b' * sF⁻¹) * (1 : Fv F v) ⊗ₜ[F] (d : E),
     mul_mem (iota_mem v (mul_mem hb' (inv_mem v hsv))) (tmul_mem v (one_mem _) d), ?_⟩
-  · rw [map_add, map_mul, sig_iota, sig_iota, sig_tmul]
+  · rw [map_add (f := _), map_mul, sig_iota, sig_iota, sig_tmul]
     simp only [← hι]
     rw [h2ι] at hC
     linear_combination ι b * e1 + hC
-  · rw [map_add, map_mul, sig_iota, sig_iota, sig_tmul, map_mul]
+  · rw [map_add (f := _), map_mul, sig_iota, sig_iota, sig_tmul, map_mul]
     simp only [← hι]
     linear_combination (ι b * ι b' * ι sF⁻¹ * (1 : Fv F v) ⊗ₜ[F] (d : E)) * e2 +
       (ι b * ι b' * ι sF⁻¹) * e3 + (ι sF⁻¹ * ι sF) * hB + hS

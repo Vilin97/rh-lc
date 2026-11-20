@@ -119,7 +119,7 @@ private lemma mono_segre_lemma_5 [DecidableEq K] [∀ k, DecidableEq (ι k)] :
       omega
     obtain ⟨μ', hμ'd, hμ'⟩ := ih m' hblk
     refine ⟨μ' + Finsupp.single v 1, ?_, fun z => ?_⟩
-    · rw [map_add, hμ'd]
+    · rw [map_add (f := _), hμ'd]
       simp [Finsupp.degree_eq_sum, Finsupp.single_apply]
     · rw [← hm'm, Finsupp.prod_add_index' (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _),
         Finsupp.prod_add_index' (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _), hμ' z]
@@ -226,7 +226,7 @@ theorem segre_rel [DecidableEq K] [∀ k, DecidableEq (ι k)] {Q : Ideal (MRingO
     have h := congrArg
       (GradedAlgebra.proj (weightedHomogeneousSubmodule ℂ (blkW ι)) (fun _ => n + 1)) hqt
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, GradedAlgebra.proj_apply (weightedHomogeneousSubmodule ℂ (blkW ι)) (fun _ => n + 1)
+      rw [map_add (f := _), map_sum, GradedAlgebra.proj_apply (weightedHomogeneousSubmodule ℂ (blkW ι)) (fun _ => n + 1)
         (segMono ι i ^ (n + 1)),
       DirectSum.decompose_of_mem_same _ hsN] at h
     rw [← h]
@@ -246,7 +246,7 @@ theorem segre_rel [DecidableEq K] [∀ k, DecidableEq (ι k)] {Q : Ideal (MRingO
   refine ⟨n + 1, Nat.succ_pos n, G, fun j => by simpa using hGdeg j, fun z hz => ?_⟩
   have hk := congrArg (MvPolynomial.eval z) key
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, map_pow, eval_segMono, hz.2 _ hqQ, zero_add] at hk
+    rw [map_add (f := _), map_sum, map_pow, eval_segMono, hz.2 _ hqQ, zero_add] at hk
   rw [← hk]
   refine Finset.sum_congr rfl (fun j _ => ?_)
   rw [map_mul, eval_psiPoly, hGev j z, mul_comm]
@@ -298,7 +298,7 @@ private lemma finite_zeros_lemma_9 {V : Type} [Fintype V] [DecidableEq V] (r : V
         set β := α - Finsupp.single v (r v) with hβ
         have hαβ : β + Finsupp.single v (r v) = α := tsub_add_cancel_of_le hsle
         have hdeg : Finsupp.degree β + r v = N := by
-          rw [← hα, ← hαβ, map_add, deg_single_lemma_8]
+          rw [← hα, ← hαβ, map_add (f := _), deg_single_lemma_8]
         have hXr : Ideal.Quotient.mkₐ ℂ I (X v ^ r v) = Ideal.Quotient.mkₐ ℂ I (H v) := by
           rw [Ideal.Quotient.mkₐ_eq_mk, Ideal.Quotient.eq]
           exact Ideal.subset_span ⟨v, rfl⟩
@@ -314,7 +314,7 @@ private lemma finite_zeros_lemma_9 {V : Type} [Fintype V] [DecidableEq V] (r : V
         have h1 := le_totalDegree hγ
         rw [deg_sum_lemma_7] at h1
         have h2 := hH v
-        rw [map_add]
+        rw [map_add (f := _)]
         omega
   have htop : M = ⊤ := by
     refine eq_top_iff.2 (fun x _ => ?_)

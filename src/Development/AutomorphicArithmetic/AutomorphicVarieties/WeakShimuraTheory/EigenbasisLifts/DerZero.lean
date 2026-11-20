@@ -16,7 +16,7 @@ theorem UpperTheory.V.Ws.Eb.derZero :
       first
         | rfl
         | simp [TrivSqZeroExt.algebraMap_eq_inl']
-    | add x y _ _ hx hy => rw [map_add, TrivSqZeroExt.snd_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), TrivSqZeroExt.snd_add, hx, hy, add_zero]
     | mul x y _ _ hx hy => simp [map_mul, TrivSqZeroExt.snd_mul, hx, hy]
   have hcont := ((coPt c R).2 x').2
   by_contra h

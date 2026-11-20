@@ -92,7 +92,7 @@ theorem exists_card_ker_pow_le (c : Coef l) (k : ℕ) :
   refine ⟨red c n (w • s i), ?_⟩
   have e1 : (PadicInt.toZModPow k (a i)).val • red c n (s i) = red c n ((((PadicInt.toZModPow k (a i)).val : ℕ) : ℤ_[l]) • s i) := by
     rw [Nat.cast_smul_eq_nsmul, map_nsmul]
-  rw [e1, ← map_neg, ← map_add, ← neg_smul, ← add_smul, neg_add_eq_sub, hw, mul_smul]
+  rw [e1, ← map_neg, ← map_add (f := _), ← neg_smul, ← add_smul, neg_add_eq_sub, hw, mul_smul]
   simp only [AddMonoidHom.coe_mulLeft]
   rw [← map_natCast (red c n), ← map_pow, ← map_mul]
   congr 1

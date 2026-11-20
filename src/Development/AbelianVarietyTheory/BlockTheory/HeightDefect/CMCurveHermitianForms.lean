@@ -126,7 +126,7 @@ theorem herm_conj (D : Datum H) (x y : D.La) : (herm D y x : 𝓞 E) = H.bar (he
   have hb : H.bar H.w0 = 1 - H.w0 := cmHost_bar_halfIntegerGenerator H
   have sk : ∀ a b, D.EF a b = - D.EF b a := fun a b => by
     have := D.alt (a + b)
-    simp only [map_add, LinearMap.add_apply, D.alt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, D.alt] at this
     linarith
   have h1 : D.EF (H.w0 • y) x = D.EF (H.w0 • x) y - D.EF x y := by
     rw [D.adj, hb, sk y, sub_smul, one_smul, map_sub, LinearMap.sub_apply]; ring

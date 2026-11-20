@@ -95,7 +95,7 @@ theorem exists_action (h6 : ExtSt) {X : Scheme.{0}} [IsIntegral X] {F : X.Module
     rw [hφ, hφ, (φ c).app_smul, hφ, smul_smul, map_mul, mul_comm]
   · refine h6 X F F r r _ (s a₀) _ _ hη (hs a₀) hF fun i => ?_
     change (φ (c + d)).app _ (s a₀ i) = (φ c).app _ (s a₀ i) + (φ d).app _ (s a₀ i)
-    rw [hφ, hφ, hφ, map_add, add_smul]
+    rw [hφ, hφ, hφ, map_add (f := _), add_smul]
 
 set_option maxHeartbeats 2000000 in
 

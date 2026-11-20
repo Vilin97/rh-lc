@@ -37,7 +37,7 @@ private def nx {l : ℕ} [Fact l.Prime] {D : Type} [CommRing D] (ξ : D →+* Qb
   carrier := {a | ‖ξ a‖ < 1}
   add_mem' {a b} ha hb := by
     show ‖ξ (a + b)‖ < 1
-    rw [map_add]
+    rw [map_add (f := _)]
     exact lt_of_le_of_lt (PadicAlgCl.isNonarchimedean l _ _) (max_lt ha hb)
   zero_mem' := by
     show ‖ξ 0‖ < 1

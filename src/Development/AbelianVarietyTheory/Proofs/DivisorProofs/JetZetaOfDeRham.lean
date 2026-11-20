@@ -109,7 +109,7 @@ theorem exists_comb_anti {g : ℕ} (Λ : Submodule ℤ (Fin g → ℂ)) (h : Sub
     | add c d hc hd =>
       obtain ⟨c', e1, e2⟩ := hc
       obtain ⟨d', e3, e4⟩ := hd
-      exact ⟨c' + d', by simp only [map_add, e1, e3, star_add], by simp only [map_add, e2, e4, star_add]⟩
+      exact ⟨c' + d', by simp only [map_add (f := _), e1, e3, star_add], by simp only [map_add (f := _), e2, e4, star_add]⟩
     | single x r => exact ⟨Finsupp.single x (star r), by simp, by simp⟩
   obtain ⟨c', e1, e2⟩ := k c
   exact ⟨c', by rw [e1, h2, star_zero], by rw [e2, h1, star_star]⟩
@@ -175,8 +175,8 @@ theorem hasJet_period (hC : JetCalc) (K : Coord ε G) (hb : Y.mor.IsBC)
     simpa only [e, map_zero, LinearMap.zero_apply] using hasJet_const (J := J) 0
   | add c d hc hd =>
     have e : period K (c + d) ω = fun z ↦ period K c ω z + period K d ω z :=
-      funext fun z ↦ by simp only [period, map_add, LinearMap.add_apply]
-    simpa only [e, map_add, LinearMap.add_apply] using hc.add hC hd
+      funext fun z ↦ by simp only [period, map_add (f := _), LinearMap.add_apply]
+    simpa only [e, map_add (f := _), LinearMap.add_apply] using hc.add hC hd
   | single x r =>
     have e : period K (Finsupp.single x r) ω = fun z ↦ r * K.P z x ((K.mor z).pull ω) :=
       funext fun z ↦ by simp only [period, Finsupp.linearCombination_single, LinearMap.smul_apply, smul_eq_mul]
@@ -225,7 +225,7 @@ theorem jetZeta : GlobalTheory.Published.AbelianDeRham → JetCalc → JetZeta :
       rw [hd, if_neg hk, LinearMap.zero_apply, map_zero, mul_zero]
     · exact fun h ↦ (h (Finset.mem_univ i)).elim
   have hz := (Submodule.mem_dualAnnihilator _).1 (Y.fil _ hF _ hJ) (m'.pull ω) (m'.isMor.pullback1_mem_hodgeFiltration hω)
-  rw [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, fb, fd, smul_eq_mul, map_neg] at hz
+  rw [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, fb, fd, smul_eq_mul, map_neg] at hz
   refine (isUnit_jet hC J ja.1 h0).mul_right_cancel ?_
   rw [Algebra.smul_def]
   linear_combination hz

@@ -68,7 +68,7 @@ theorem resq_mul (a b : (chartRingOver S y c)) : resq y c p (a * b) = resq y c p
   simp [resq, map_mul]
 
 theorem resq_add (a b : (chartRingOver S y c)) : resq y c p (a + b) = resq y c p a + resq y c p b := by
-  simp [resq, map_add]
+  simp [resq, map_add (f := _)]
 
 theorem resq_div_eq {a b a' b' : (chartRingOver S y c)} (hb : b ∉ p) (hb' : b' ∉ p) (h : (a : Ω) / b = (a' : Ω) / b') :
     resq y c p a / resq y c p b = resq y c p a' / resq y c p b' := by

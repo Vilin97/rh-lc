@@ -29,7 +29,7 @@ theorem loc_abs {A B : Type*} [CommRing A] [IsLocalRing A] [CommRing B] (f : A �
     (x ∈ f.range ∧ ∃ z ∈ f.range, x * z = 1) ∨ (y ∈ f.range ∧ ∃ z ∈ f.range, y * z = 1) := by
   obtain ⟨a, rfl⟩ := hx
   obtain ⟨b, rfl⟩ := hy
-  rw [← map_add] at h
+  rw [← map_add (f := _)] at h
   rcases IsLocalRing.isUnit_or_isUnit_of_isUnit_add (isUnit_of_isU f hf h.2) with ha | hb
   · exact Or.inl (isU_of_isUnit f ha)
   · exact Or.inr (isU_of_isUnit f hb)

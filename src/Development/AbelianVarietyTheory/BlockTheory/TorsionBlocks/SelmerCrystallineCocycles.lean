@@ -57,7 +57,7 @@ def cobOn (ρ : Γ →* GL (Fin m) O') (J : Subgroup Γ) : Submodule O' (Γ → 
   add_mem' := by
     rintro a b ⟨x, hx⟩ ⟨y, hy⟩
     refine ⟨x + y, fun g hg => ?_⟩
-    simp only [Pi.add_apply, hx g hg, hy g hg, map_add]
+    simp only [Pi.add_apply, hx g hg, hy g hg, map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨x, hx⟩
@@ -70,7 +70,7 @@ def cocDiv [TopologicalSpace Γ] (ρ : Γ →* GL (Fin m) O') : Submodule O' (Γ
   add_mem' := by
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
     refine ⟨ha.add hb, fun g h => ?_⟩
-    simp only [Pi.add_apply, ha', hb', map_add]
+    simp only [Pi.add_apply, ha', hb', map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, ha'⟩

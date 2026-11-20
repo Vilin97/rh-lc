@@ -139,7 +139,7 @@ theorem exists_norm_le [IsNoetherianRing A] (m : Ideal A) (φ : B →+* K) (hφ 
     { carrier := {b | ‖φ b‖ ≤ |r|}
       add_mem' := by
         intro a b ha hb
-        simp only [Set.mem_setOf_eq, map_add] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at *
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
       zero_mem' := by simp
       smul_mem' := by
@@ -185,7 +185,7 @@ theorem norm_eq_one (𝔷 : Ideal B) (hz : 𝔷.IsMaximal) (φ : B →+* K) (hφ
   by_contra hne
   have hlt : ‖φ s‖ < 1 := lt_of_le_of_ne (hφ s) hne
   have h1 : ‖φ (y * s + i)‖ = 1 := by rw [h]; simp
-  rw [map_add, map_mul] at h1
+  rw [map_add (f := _), map_mul] at h1
   have h2 := IsUltrametricDist.norm_add_le_max (φ y * φ s) (φ i)
   have h3 : ‖φ y * φ s‖ < 1 := by
     rw [norm_mul]; exact (mul_le_of_le_one_left (norm_nonneg _) (hφ y)).trans_lt hlt
@@ -252,10 +252,10 @@ theorem exists_rep [Module.Free ℤ X] [Module.Finite ℤ X] (hN : 1 ≤ N) :
   refine ⟨fun x => b.equivFun.symm (fun i => b.equivFun x i % N), fun x => ?_, ?_, ?_⟩
   · refine ⟨b.equivFun.symm (fun i => -(b.equivFun x i / N)), b.equivFun.injective ?_⟩
     ext i
-    simp only [LinearEquiv.apply_symm_apply, map_add, map_nsmul, Pi.add_apply, nsmul_eq_mul, Pi.mul_apply, Pi.natCast_apply]
+    simp only [LinearEquiv.apply_symm_apply, map_add (f := _), map_nsmul, Pi.add_apply, nsmul_eq_mul, Pi.mul_apply, Pi.natCast_apply]
     rw [Int.emod_def]; ring
   · rintro x y ⟨w, rfl⟩
-    simp only [map_add, map_nsmul, Pi.add_apply, nsmul_eq_mul, Pi.mul_apply, Pi.natCast_apply, Int.add_mul_emod_self_left]
+    simp only [map_add (f := _), map_nsmul, Pi.add_apply, nsmul_eq_mul, Pi.mul_apply, Pi.natCast_apply, Int.add_mul_emod_self_left]
   · refine ((Set.finite_Icc (fun _ => (0 : ℤ)) (fun _ => (N : ℤ))).image b.equivFun.symm).subset ?_
     rintro _ ⟨x, rfl⟩
     have : (0 : ℤ) < N := by exact_mod_cast hN

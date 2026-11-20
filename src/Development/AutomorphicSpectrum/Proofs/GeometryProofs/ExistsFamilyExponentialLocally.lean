@@ -118,7 +118,7 @@ theorem exists_family_inverse (b₀ : Fin n → ℂ) (L : (Fin n → ℂ) × (Fi
   have hsplit : ∀ u v, L' (u, v) = L' (u, 0) + v := by
     intro u v
     have : ((u, v) : (Fin n → ℂ) × (Fin g → ℂ)) = (u, 0) + (0, v) := by simp
-    rw [this, map_add, hinr]
+    rw [this, map_add (f := _), hinr]
   let D : ((Fin n → ℂ) × (Fin g → ℂ)) →L[ℂ] ((Fin n → ℂ) × (Fin g → ℂ)) :=
     (ContinuousLinearMap.fst ℂ _ _).prod L'
   let Di : ((Fin n → ℂ) × (Fin g → ℂ)) →L[ℂ] ((Fin n → ℂ) × (Fin g → ℂ)) :=

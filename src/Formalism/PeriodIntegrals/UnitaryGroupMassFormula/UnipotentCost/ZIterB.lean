@@ -55,7 +55,7 @@ def lamL (a b : Fin s) (ε : Bool) (T : En s) : (Fin s → Fin s → ℂ) →L[�
     { toFun := fun W => if ε then (T (fun c => W c b) a).re else (T (fun c => W c b) a).im
       map_add' := fun W W' => by
         have : (fun c => (W + W') c b) = (fun c => W c b) + (fun c => W' c b) := rfl
-        rw [this, map_add]
+        rw [this, map_add (f := _)]
         cases ε <;> simp
       map_smul' := fun r W => by
         have : (fun c => (r • W) c b) = r • (fun c => W c b) := rfl

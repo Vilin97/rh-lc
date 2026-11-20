@@ -84,7 +84,7 @@ theorem PolyHom.exists_shift {n : ℕ} {D : ℤ[X] → ℚ} (h : PolyHom n D) (F
     (C (F.coeff i : ℚ) + if i = 0 then X else 0 : ℚ[X])) Φ, fun t => ?_⟩
   have e : F + t = ∑ i : Fin (F.natDegree + 1),
       Polynomial.monomial (i : ℕ) (F.coeff i + if i = 0 then (t : ℤ) else 0) := by
-    simp only [map_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Finset.sum_add_distrib]
     congr 1
     · conv_lhs => rw [F.as_sum_range]
       exact (Fin.sum_univ_eq_sum_range (fun i => monomial i (F.coeff i)) _).symm
@@ -132,7 +132,7 @@ theorem aeval_eq_of_act {Q : Type} [AddCommGroup Q] (s : Module.End ℤ Q) (act 
     | zero => simp [h1]
     | succ n ih => rw [pow_succ', hX, ← ih]; simp
   induction F using Polynomial.induction_on' with
-  | add p q hp' hq' => rw [map_add, LinearMap.add_apply, hp', hq', hadd]
+  | add p q hp' hq' => rw [map_add (f := _), LinearMap.add_apply, hp', hq', hadd]
   | monomial n a =>
     have : (monomial n a : ℤ[X]) = a • X ^ n := by
       rw [← C_mul_X_pow_eq_monomial, smul_eq_C_mul]

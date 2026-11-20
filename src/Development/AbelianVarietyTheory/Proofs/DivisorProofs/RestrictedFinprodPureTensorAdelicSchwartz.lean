@@ -31,7 +31,7 @@ theorem rest_evI_finprod : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) 
   refine ⟨fun x z hz => ?_, ?_⟩
   ·
     have hc : ∀ v i, evFin F v ((x + z) i) = evFin F v (x i) := fun v i => by
-      rw [Pi.add_apply, map_add, evFin_eq_zero z hz v i, add_zero]
+      rw [Pi.add_apply, map_add (f := _), evFin_eq_zero z hz v i, add_zero]
     simp only [hc]
   ·
     have hg : (fun y : κ → FiniteAdeleRing (𝓞 F) F => ∏ᶠ v, φ v fun i => Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (y i)) ∈

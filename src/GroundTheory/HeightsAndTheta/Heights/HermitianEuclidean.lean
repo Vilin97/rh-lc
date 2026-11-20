@@ -34,7 +34,7 @@ theorem realToFibre_smul (r : ℝ) (x : ℝ ⊗[ℤ] E) :
   | tmul s e =>
     rw [smul_tmul', realToFibre_tmul, realToFibre_tmul, smul_tmul', complex_smul_def, smul_eq_mul,
       Complex.ofReal_mul, map_mul]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem realToFibre_lTensor {F : Type*} [AddCommGroup F] [Module (𝓞 K) F] (φ : E →ₗ[𝓞 K] F)
     (x : ℝ ⊗[ℤ] E) :
@@ -43,7 +43,7 @@ theorem realToFibre_lTensor {F : Type*} [AddCommGroup F] [Module (𝓞 K) F] (φ
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul r e => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 end RealToFibre
 
@@ -113,7 +113,7 @@ theorem realToFibre_eq_zero (x : ℝ ⊗[ℤ] E) (hx : ∀ σ : K →+* ℂ, rea
         LinearMap.toSpanSingleton_apply]
       rw [← tmul_sum, hdecomp]
     | add y z hy hz =>
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       rw [hy, hz]
   have hφ : ∀ i, LinearMap.lTensor ℝ ((φ i).restrictScalars ℤ) x = 0 := by
     intro i
@@ -146,7 +146,7 @@ def traceCore : InnerProductSpace.Core ℝ (RealSpace h) where
     rw [RCLike.re_to_real]
     exact Finset.sum_nonneg fun σ _ ↦ (h.form σ).re_inner_nonneg _
   add_left x y z := by
-    simp only [map_add, (h.form _).add_left, Complex.add_re, Finset.sum_add_distrib]
+    simp only [map_add (f := _), (h.form _).add_left, Complex.add_re, Finset.sum_add_distrib]
   smul_left x y r := by
     simp only [map_smul, realToFibre_smul, (h.form _).smul_left, conj_trivial,
       Complex.conj_ofReal, Complex.re_ofReal_mul, Finset.mul_sum]

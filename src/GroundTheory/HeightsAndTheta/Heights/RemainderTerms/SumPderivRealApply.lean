@@ -63,7 +63,7 @@ theorem deriv_restPoly (D : Derivation ℝ (IndefiniteRowSideFullHecke.RestTerms
   rw [IndefiniteRowSideFullHecke.RestTerms.restPoly, Derivation.leibniz, hfib, smul_zero, zero_add,
     Derivation.leibniz_pow, hmu, IndefiniteRowSideFullHecke.RestTerms.degPoly]
   simp only [smul_eq_mul, nsmul_eq_mul, Nat.add_sub_cancel]
-  simp only [map_mul, map_natCast, map_add, map_one]
+  simp only [map_mul, map_natCast, map_add (f := _), map_one]
   push_cast
   ring
 

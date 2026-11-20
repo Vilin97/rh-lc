@@ -33,15 +33,15 @@ theorem hTens_add_left' (JA : Matrix α α S) (JB : Matrix β β S) (x x' y : Ma
 
 theorem hTens_add_right' (JA : Matrix α α S) (JB : Matrix β β S) (x y y' : Matrix α β S) :
     hTens c JA JB x (y + y') = hTens c JA JB x y + hTens c JA JB x y' := by
-  simp only [hTens, Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hTens, Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem symp_add_left' (ξ : S) (JA : Matrix α α S) (JB : Matrix β β S) (x x' y : Matrix α β S) :
     symp c ξ JA JB (x + x') y = symp c ξ JA JB x y + symp c ξ JA JB x' y := by
-  simp only [symp, hTens_add_left', mul_add, map_add]
+  simp only [symp, hTens_add_left', mul_add, map_add (f := _)]
 
 theorem symp_add_right' (ξ : S) (JA : Matrix α α S) (JB : Matrix β β S) (x y y' : Matrix α β S) :
     symp c ξ JA JB x (y + y') = symp c ξ JA JB x y + symp c ξ JA JB x y' := by
-  simp only [symp, hTens_add_right', mul_add, map_add]
+  simp only [symp, hTens_add_right', mul_add, map_add (f := _)]
 
 theorem symp_zero_left' (ξ : S) (JA : Matrix α α S) (JB : Matrix β β S) (y : Matrix α β S) :
     symp c ξ JA JB 0 y = 0 := by

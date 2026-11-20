@@ -149,7 +149,7 @@ theorem xJ_nat {m : ℕ} {M₁ M₂ : Type} [AddCommGroup M₁] [Module ℂ M₁
   have h' : ∀ a b v, φ (E₁ a b v) = E₂ a b (φ v) := fun a b v => LinearMap.congr_fun (h a b) v
   refine LinearMap.ext fun f => funext fun I => ?_
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [xJ_apply, map_add, map_sum, h', LinearMap.compLeft_apply]
+    simp [xJ_apply, map_add (f := _), map_sum, h', LinearMap.compLeft_apply]
 
 theorem glrel_inj {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
     (G : Fin n → Fin n → Module.End ℂ V) (H : Fin n → Fin n → Module.End ℂ W) (φ : V →ₗ[ℂ] W)

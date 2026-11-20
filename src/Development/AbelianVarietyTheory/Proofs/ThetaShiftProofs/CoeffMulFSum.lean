@@ -86,7 +86,7 @@ theorem FSum_shift (α : A.X) (th : (Fin A.gB → ℂ) → ℂ) (v : A.V) :
     simp
   · intro μ _
     have hu : (A.psi α : ℂ) ≠ 0 := (A.psi α).ne_zero
-    have hc : v.2 + A.ct (α + μ) - A.ct α = v.2 + A.ct μ := by rw [map_add]; abel
+    have hc : v.2 + A.ct (α + μ) - A.ct α = v.2 + A.ct μ := by rw [map_add (f := _)]; abel
     simp only [AnArc.term, pow_one, one_smul, zero_add, map_zero, AnArc.e_zero, A.psi_add,
       A.T_symm α μ, hc]
     rw [eq_inv_mul_iff_mul_eq₀ hu]

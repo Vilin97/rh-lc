@@ -167,7 +167,7 @@ theorem eq_zero_of_additive_of_pderiv (k : Type) [CommRing k] [Algebra ℚ k] (d
       intro j l
       rw [pderiv_pt, if_neg fun h => Fin.succ_ne_zero _ h.1]
     have h := congrArg (pderiv k ((0 : Fin (q + 2)), i)) hadd
-    rw [map_add, pderiv_ev_cons hS hw _ hv, pderiv_ev_cons (gp_pt _) hw _ hv,
+    rw [map_add (f := _), pderiv_ev_cons hS hw _ hv, pderiv_ev_cons (gp_pt _) hw _ hv,
       pderiv_ev_cons (gp_pt _) hw _ hv] at h
     simp only [pderiv_pt, true_and, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq',
       Finset.mem_univ, if_true, one_ne_zero, false_and, if_false, Finset.sum_const_zero,

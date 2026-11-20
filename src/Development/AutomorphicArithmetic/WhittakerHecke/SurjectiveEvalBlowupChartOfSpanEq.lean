@@ -82,7 +82,7 @@ theorem UpperTheory.surjective_eval_blowupChart_of_span_eq :
         rw [hbe]
         ring
       · rintro x y ⟨wx, hwx, hx⟩ ⟨wy, hwy, hy⟩
-        exact ⟨wx + wy, add_mem hwx hwy, by rw [map_add, hx, hy, add_mul]⟩
+        exact ⟨wx + wy, add_mem hwx hwy, by rw [map_add (f := _), hx, hy, add_mul]⟩
   intro z
   obtain ⟨n, r, hr, hz⟩ := exists_mul_pow_eq I c z
   obtain ⟨w, hw, hwe⟩ := hpow n r hr

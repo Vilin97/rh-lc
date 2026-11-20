@@ -83,7 +83,7 @@ theorem rd_mem_span (rd : Rd ρ Y i j b) (S : Set (Y.Fm i ((j : ℕ) + 1) b)) {y
   induction hy using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x z _ _ hx hz => rw [map_add]; exact add_mem hx hz
+  | add x z _ _ hx hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hz
   | smul c x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 theorem mem_span_of_faithful {rd : Rd ρ Y i j b} (hf : Faithful rd) (S : Set (Y.Fm i ((j : ℕ) + 1) b))

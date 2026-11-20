@@ -57,7 +57,7 @@ theorem kummer_vanishing : B6h1 := by
     have h2 := u.2
     change _ = _ at h2
     have h3 := congrArg (fun y => ((Additive.toMul (e _ hqBBB y) : rootsOfUnity q _) : (B ⊗[A] (B ⊗[A] B))ˣ)) h2
-    simp only [AddMonoidHom.add_apply, map_add, toMul_add, Subgroup.coe_mul, LinearMap.toAddMonoidHom_coe] at h3
+    simp only [AddMonoidHom.add_apply, map_add (f := _), toMul_add, Subgroup.coe_mul, LinearMap.toAddMonoidHom_coe] at h3
     rw [he _ _ _ hqBB hqBBB, he _ _ _ hqBB hqBBB, he _ _ _ hqBB hqBBB] at h3
     have h4 := congrArg Units.val h3
     simp only [Units.val_mul, Units.coe_map, RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe, AlgHom.coe_toRingHom] at h4

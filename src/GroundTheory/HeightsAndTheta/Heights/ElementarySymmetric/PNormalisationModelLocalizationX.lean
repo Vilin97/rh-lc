@@ -93,7 +93,7 @@ theorem clear (h : MvPolynomial (Fin n ⊕ Fin M.m) ℂ) :
         rename Sum.inl (denProd M ^ N₂ * g₁ + denProd M ^ N₁ * g₂) =
         rename Sum.inl (denProd M) ^ N₂ * (rename Sum.inl (denProd M) ^ N₁ * p - rename Sum.inl g₁) +
           rename Sum.inl (denProd M) ^ N₁ * (rename Sum.inl (denProd M) ^ N₂ * r - rename Sum.inl g₂) := by
-      simp only [map_add, map_mul, map_pow]
+      simp only [map_add (f := _), map_mul, map_pow]
       ring
     rw [e]
     exact add_mem (Ideal.mul_mem_left _ _ h₁) (Ideal.mul_mem_left _ _ h₂)
@@ -287,7 +287,7 @@ theorem toFracModel_mem (hJ : J.IsPrime) (hq : q ∈ zeroSet J) (h : MvPolynomia
     rw [← rename_C (R := ℂ) (Sum.inl : Fin n → Fin n ⊕ Fin M.m) c, toFracModel_rename]
     exact toFrac_mem _
   | add p r hp hr =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hp hr
   | mul_X p s hp =>
     rw [map_mul]

@@ -45,7 +45,7 @@ theorem comp_d_apply {A A' : Rep k G} (φ : A ⟶ A') (i : ℕ) (y : (Fin i → 
     φ.hom ((inhomogeneousCochains.d A i).hom y v) =
       (inhomogeneousCochains.d A' i).hom (fun u => φ.hom (y u)) v := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [inhomogeneousCochains.d_hom_apply, map_add, map_sum, map_smul, Rep.hom_comm_apply]
+    simp only [inhomogeneousCochains.d_hom_apply, map_add (f := _), map_sum, map_smul, Rep.hom_comm_apply]
 
 include hX in
 

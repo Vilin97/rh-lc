@@ -524,7 +524,7 @@ theorem FinFr.abs_val_le_one {K : Type} [Field K] [NumberField K] [Algebra c.F K
     exact F.nrm_le_one w.2
   | zero => simp
   | add a b _ _ ha hb =>
-    rw [map_add, key]
+    rw [map_add (f := _), key]
     exact (le_min ((key _).1 ha) ((key _).1 hb)).trans (nval_add _ _ _)
   | smul a s _ hs =>
     rw [show a • s = (a : K) • s from (algebraMap_smul K a s).symm, val_smul, map_mul]

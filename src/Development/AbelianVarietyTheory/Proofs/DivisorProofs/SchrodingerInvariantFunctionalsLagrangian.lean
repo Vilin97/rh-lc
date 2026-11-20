@@ -53,7 +53,7 @@ theorem charInv : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) 
     let T : SchwartzMap (κ → mixedEmbedding.mixedSpace F) ℂ →ₗ[ℂ] ℂ :=
       { toFun := fun f => l (pureA F f g)
         map_add' := fun f f' => by
-          rw [← map_add]
+          rw [← map_add (f := _)]
           congr 1
           ring
         map_smul' := fun s f => by
@@ -74,7 +74,7 @@ theorem charInv : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) 
   let a : ((κ → Af F) → ℂ) →ₗ[ℂ] ℂ :=
     { toFun := fun g => l (pureA F f₀ g)
       map_add' := fun g g' => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         ring
       map_smul' := fun s g => by
@@ -110,7 +110,7 @@ theorem charInv : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) 
     rw [hα f, hαc, pureA_zero]
     ring
   | zero => simp
-  | add φ φ' _ _ h h' => rw [map_add, h, h', Pi.add_apply, mul_add]
+  | add φ φ' _ _ h h' => rw [map_add (f := _), h, h', Pi.add_apply, mul_add]
   | smul s φ _ h => rw [map_smul, h, Pi.smul_apply, smul_eq_mul, smul_eq_mul]; ring
 
 theorem eval_mem_adm {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (x : κ → AF F) :
@@ -152,7 +152,7 @@ theorem main : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F : Type) [Field F] [Nu
     have e2 := e φ hφ
     have e3 := e φ' hφ'
     simp only [LinearMap.proj_apply] at e1 e2 e3
-    rw [← e1, map_add, map_smul, map_smul, e2, e3]
+    rw [← e1, map_add (f := _), map_smul, map_smul, e2, e3]
     rfl
   have key : ∀ l : ((κ → AF F) → ℂ) →ₗ[ℂ] ℂ, (∀ (t : AF F), ∀ w ∈ L, ∀ φ ∈ schA F κ,
       l (schr ψ (t • ((fun i => algebraMap F (AF F) (w.1 i)), (fun i => algebraMap F (AF F) (w.2 i)))) φ) = l φ) →
@@ -163,7 +163,7 @@ theorem main : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F : Type) [Field F] [Nu
         map_add' := fun φ φ' => by
           have := hlin 1 1 φ.1 φ.2 φ'.1 φ'.2
           simp only [one_smul] at this
-          simp only [Submodule.coe_add, this, map_add]
+          simp only [Submodule.coe_add, this, map_add (f := _)]
         map_smul' := fun s φ => by
           have := hlin s 0 φ.1 φ.2 0 (Submodule.zero_mem _)
           simp only [zero_smul, add_zero] at this

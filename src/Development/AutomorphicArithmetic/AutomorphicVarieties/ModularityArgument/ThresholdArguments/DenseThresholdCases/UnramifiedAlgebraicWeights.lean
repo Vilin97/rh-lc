@@ -54,8 +54,8 @@ private theorem lowS_fin {k : ℕ} {φ : TR.Sm ℚ 2} (h : φ ∈ LowS k) (u : G
     LinearMap.congr_fun (TR.lie_rt_fin _ u) φ
   refine mem_LowS.2 ⟨fun v => ?_, fun v => ?_, fun v => ?_⟩
   · rw [e, e, ← map_sub, h1, map_smul]
-  · rw [e, e, e, e, ← map_sub, h2, map_smul, map_add]
-  · rw [e, e, ← map_add, h3, map_zero]
+  · rw [e, e, e, e, ← map_sub, h2, map_smul, map_add (f := _)]
+  · rw [e, e, ← map_add (f := _), h3, map_zero]
 theorem not_dvd_level_of_satake_hecke_poly_cofinite : _root_.UpperTheory.V.Af.Hypotheses' → Published.CuspSemisimpleReal → ∀ (k : ℕ), 2 ≤ k → ∀ (g : Newform k) (j : ℤ) (π : TR.CuspSub ℚ 2),
     (∀ᶠ w : Pl in Filter.cofinite, ∃ Bs, π.HasSat w Bs ∧
       ((algSat 2 (normV w) Bs).map fun b => Polynomial.X - Polynomial.C ((normV w : ℂ) ^ j * b)).prod = g.heckePoly (normV w)) →

@@ -137,7 +137,7 @@ theorem exists_gt (hD : IsSumDeg D.toPre D₁.toPre D₂.toPre p₁ p₂ q₁ q�
   obtain ⟨τ₁, hτ₁, hκ₁⟩ := hi₁ j₁ (fun y => congrArg Prod.fst (hj₁ y)) (fun y => congrArg Prod.snd (hj₁ y))
   obtain ⟨τ₂, hτ₂, hκ₂⟩ := hi₂ j₂ (fun y => congrArg Prod.fst (hj₂ y)) (fun y => congrArg Prod.snd (hj₂ y))
   have hj : ∀ χ, j₁ (q₁ χ) + j₂ (q₂ χ) = χ := fun χ => hD.xsum.1 (by
-    rw [map_add, hj₁, hj₂, Prod.mk_add_mk, add_zero, zero_add]; rfl)
+    rw [map_add (f := _), hj₁, hj₂, Prod.mk_add_mk, add_zero, zero_add]; rfl)
   exact ⟨⟨q, q_hom, q_flat, q_surj, q_aff, i, i_hom, hker, t, ht,
     GlobalTheory.ProdUnif.tMul_of_box R _ _ _ p₁ p₂ q₁ q₂ hD w hc _ _ _ _ g₁.pG g₂.pG _ _ hp₁ hp₂ t g₁.t g₂.t H g₁.t_mul g₂.t_mul,
     fun χ => GlobalTheory.ProdUnifUnit.unit_box R _ _ _ p₁ p₂ q₁ q₂ w _ (thick R I e) _ _ _ _ _ _ g₁.pG g₂.pG χ (t χ) _ _ inferInstance

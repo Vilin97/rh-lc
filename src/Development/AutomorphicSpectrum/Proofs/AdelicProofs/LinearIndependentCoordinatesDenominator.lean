@@ -75,7 +75,7 @@ theorem exists_coordinates (K : Type*) [Field K] [Algebra R K] [IsFractionRing R
         dsimp only [Pi.add_apply]
         rw [key (x + y) _ _ (mul_ne_zero (hDx x) (hDx y)) hrel j,
           div_add_div _ _ (hne (hDx x)) (hne (hDx y))]
-        simp only [map_add, map_mul]
+        simp only [map_add (f := _), map_mul]
         ring
       map_smul' := fun r x => by
         funext j

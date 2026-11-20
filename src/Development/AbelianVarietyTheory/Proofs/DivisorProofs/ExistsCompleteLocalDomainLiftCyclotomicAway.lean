@@ -50,7 +50,7 @@ theorem hom_ext {n : ℕ} (hn : n ≠ 0) {R : Type} [CommRing R] (f g : cycAway 
   | one => exact (map_one f).trans (map_one g).symm
   | add x y hx hy ihx ihy =>
     change f (⟨x, hx⟩ + ⟨y, hy⟩) = g (⟨x, hx⟩ + ⟨y, hy⟩)
-    rw [map_add, map_add, ihx, ihy]
+    rw [map_add (f := _), map_add (f := _), ihx, ihy]
   | neg x hx ih =>
     change f (-⟨x, hx⟩) = g (-⟨x, hx⟩)
     rw [map_neg, map_neg, ih]
@@ -137,7 +137,7 @@ theorem exists_complete_domain_lift : ∀ (n : ℕ), 3 ≤ n → ∀ (K : Type) 
       | zero => show f 0 ∈ _; rw [map_zero]; exact zero_mem _
       | one => show f 1 ∈ _; rw [map_one]; exact one_mem _
       | add x y hx hy ihx ihy =>
-        show f (⟨x, hx⟩ + ⟨y, hy⟩) ∈ _; rw [map_add]; exact add_mem ihx ihy
+        show f (⟨x, hx⟩ + ⟨y, hy⟩) ∈ _; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ihx ihy
       | neg x hx ih => show f (-⟨x, hx⟩) ∈ _; rw [map_neg]; exact neg_mem ih
       | mul x y hx hy ihx ihy =>
         show f (⟨x, hx⟩ * ⟨y, hy⟩) ∈ _; rw [map_mul]; exact mul_mem ihx ihy

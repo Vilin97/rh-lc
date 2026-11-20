@@ -320,13 +320,13 @@ theorem applyAt0_eq_jet (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l])
     congr 1
     rw [DworkPowerSeriesWeights.mfact, Nat.cast_finsuppProd]
     ring
-  · rw [map_add, OrbMul.jetPairPoly_add_left, ← hp, ← hq,
+  · rw [map_add (f := _), OrbMul.jetPairPoly_add_left, ← hp, ← hq,
       applyAt0_eq_sum N0 N1 l Th (p + q) (p.support ∪ q.support) MvPolynomial.support_add,
       applyAt0_eq_sum N0 N1 l Th p (p.support ∪ q.support) Finset.subset_union_left,
       applyAt0_eq_sum N0 N1 l Th q (p.support ∪ q.support) Finset.subset_union_right,
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun μ _ => ?_
-    rw [MvPolynomial.coeff_add, Int.cast_add, add_mul, add_mul, map_add]
+    rw [MvPolynomial.coeff_add, Int.cast_add, add_mul, add_mul, map_add (f := _)]
 
 end Apply
 
@@ -496,13 +496,13 @@ theorem apply_at_zero_eq_jet_pair (Th : MvPowerSeries (ZMod 1 × Fin N0 × Fin N
     congr 1
     rw [DworkPowerSeriesWeights.mfact, Finsupp.prod_embDomain, Nat.cast_finsuppProd]
     ring
-  · rw [map_add, OrbMul.jetPairPoly_add_left, ← hp, ← hq,
+  · rw [map_add (f := _), OrbMul.jetPairPoly_add_left, ← hp, ← hq,
       applyAt0_eq_sum N0 N1 l Th (p + q) (p.support ∪ q.support) MvPolynomial.support_add,
       applyAt0_eq_sum N0 N1 l Th p (p.support ∪ q.support) Finset.subset_union_left,
       applyAt0_eq_sum N0 N1 l Th q (p.support ∪ q.support) Finset.subset_union_right,
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun μ _ => ?_
-    rw [MvPolynomial.coeff_add, Int.cast_add, add_mul, add_mul, map_add]
+    rw [MvPolynomial.coeff_add, Int.cast_add, add_mul, add_mul, map_add (f := _)]
 
 def frIdx1 : Fin N0 × Fin N0 → ZMod 1 × ℕ × Fin N0 := fun v => (default, (v.1 : ℕ), v.2)
 

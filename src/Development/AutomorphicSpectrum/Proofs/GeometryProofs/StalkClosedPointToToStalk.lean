@@ -31,7 +31,7 @@ theorem inv_mem_of_span_eq_top {κ : Type} (x : κ → o) (hx : Ideal.span (Set.
       rw [map_zero, zero_div]
       exact S.zero_mem
     | add y z _ _ hy hz =>
-      rw [map_add, add_div]
+      rw [map_add (f := _), add_div]
       exact S.add_mem hy hz
     | smul r y _ hy =>
       rw [smul_eq_mul, map_mul, mul_div_assoc]
@@ -82,7 +82,7 @@ theorem exists_pow_mul_eq (t : o) (a : K)
     { carrier := {s | ∃ b : o, a * algebraMap o K s = algebraMap o K b}
       add_mem' := by
         rintro u v ⟨b, hb⟩ ⟨b', hb'⟩
-        exact ⟨b + b', by rw [map_add, map_add, mul_add, hb, hb']⟩
+        exact ⟨b + b', by rw [map_add (f := _), map_add (f := _), mul_add, hb, hb']⟩
       zero_mem' := ⟨0, by rw [map_zero, mul_zero]⟩
       smul_mem' := by
         rintro r u ⟨b, hb⟩

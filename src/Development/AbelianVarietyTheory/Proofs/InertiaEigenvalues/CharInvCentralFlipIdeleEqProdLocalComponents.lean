@@ -108,7 +108,7 @@ theorem infPart_of_isIdemAt {e : AE D} {PP : HeightOneSpectrum (𝓞 D.host.E)}
   have hs := congrArg (infPart D) hsum
   have hm := congrArg (infPart D) hec
   have hi := congrArg (infPart D) hee
-  rw [map_add, h0] at hs
+  rw [map_add (f := _), h0] at hs
   rw [map_mul, map_zero] at hm
   rw [map_mul] at hi
   have hc : infPart D (cA D e) = - infPart D e :=
@@ -138,7 +138,7 @@ theorem char_inv_eq_prod_locK_of_flip : ∀ (D : D7) (V : HSp D) (χW : (AE D)ˣ
     exact Finset.sum_eq_zero (fun PP hPP => infPart_of_isIdemAt (hes PP hPP))
   have hinf : infPart D (x : AE D) = 1 := by
     have := congrArg (infPart D) hx
-    rw [map_mul, map_add, map_mul, map_sub, hinfT, map_one, zero_mul, zero_add, sub_zero, mul_one] at this
+    rw [map_mul, map_add (f := _), map_mul, map_sub, hinfT, map_one, zero_mul, zero_add, sub_zero, mul_one] at this
     exact this
   have hcomp : ∀ P, ι (finPart D (x : AE D)) P *
       ((if P ∈ T then 1 else 0) * (((M₀ ^ V.rank : ℕ) : HeightOneSpectrum.adicCompletion D.host.E P))
@@ -147,7 +147,7 @@ theorem char_inv_eq_prod_locK_of_flip : ∀ (D : D7) (V : HSp D) (χW : (AE D)ˣ
     have h0 : ι (finPart D ((x : AE D) * ((∑ PP ∈ T, es PP) * ((M₀ ^ V.rank : ℕ) : AE D)
         + (1 - ∑ PP ∈ T, es PP)))) P = ι (finPart D 1) P := by
       rw [Nat.cast_pow, hx]
-    simp only [map_mul, map_add, map_sub, map_one, map_natCast] at h0
+    simp only [map_mul, map_add (f := _), map_sub, map_one, map_natCast] at h0
     rw [fa_mul, fa_add, fa_mul, fa_sub, fa_one, fa_natCast, heT] at h0
     exact h0
   let k : HeightOneSpectrum (𝓞 D.host.E) → D.host.Eˣ := fun P => if P ∈ T then (u⁻¹) ^ V.rank else 1

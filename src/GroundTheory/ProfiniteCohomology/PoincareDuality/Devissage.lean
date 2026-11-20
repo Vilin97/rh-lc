@@ -303,7 +303,7 @@ theorem tensorHom_toDualDual_evalPairing (M : Rep.{u} k Γ) :
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul f m => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem cupPairing_toDualDual (M : Rep.{u} k Γ) [IsDiscreteRep M] [IsDiscreteRep (dualRep D M)]
     [IsDiscreteRep (dualRep D (dualRep D M))] (x : cohomology M 2)

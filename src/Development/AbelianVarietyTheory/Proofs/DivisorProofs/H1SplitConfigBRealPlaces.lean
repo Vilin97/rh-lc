@@ -118,7 +118,7 @@ theorem indLineFin_beta_inert : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field 
       { carrier := {x | P x}
         add_mem' := by
           intro x y hx hy h hh
-          simp only [map_add, Pi.add_apply, hx h hh, hy h hh, smul_add]
+          simp only [map_add (f := _), Pi.add_apply, hx h hh, hy h hh, smul_add]
         zero_mem' := by
           intro h hh; simp
         smul_mem' := by

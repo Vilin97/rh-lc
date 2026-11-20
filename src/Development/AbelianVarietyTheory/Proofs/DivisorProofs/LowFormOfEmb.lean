@@ -38,7 +38,7 @@ theorem exists_descent {H W : Type} [AddCommGroup H] [Module ℂ H] [AddCommGrou
   subst e
   choose f hf hu using h
   refine ⟨⟨⟨f, fun x x' => (hu _ _ ?_).symm⟩, fun a x => (hu _ _ ?_).symm⟩, hf⟩
-  · simp only [map_add, hf, smul_add]
+  · simp only [map_add (f := _), hf, smul_add]
   · simp only [map_smulₛₗ, hf, RingHom.id_apply, smul_comm c]
 
 theorem mem_orth_ker [FiniteDimensional K X] {H W : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [NormedAddCommGroup W]

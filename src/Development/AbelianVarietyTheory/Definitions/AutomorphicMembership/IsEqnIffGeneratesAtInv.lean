@@ -706,7 +706,7 @@ namespace Presents
 def rat (h : Presents D L r) : L.Sec →ₗ[Γ(X, ⊤)] X.functionField where
   toFun s := fnOf _ (exists_chart h.isLB (genericPoint X)).choose_spec (s.f _) /
     r (exists_chart h.isLB (genericPoint X)).choose
-  map_add' s t := by rw [LB.add_f, map_add, add_div]
+  map_add' s t := by rw [LB.add_f, map_add (f := _), add_div]
   map_smul' a s := by
     rw [LB.smul_f, map_mul, fnOf_resG, mul_div_assoc]
     rfl

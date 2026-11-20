@@ -94,7 +94,7 @@ theorem mem_mulG (I : Ideal (𝓞 F)) {γ : Af F} (hγ : γ ∈ intAf F)
     refine FiniteAdeleRing.ext F fun v => ?_
     change evalV F v γ = evalV F v (algebraMap F (Af F) (t₁ : F) * β₁ + ∑ w ∈ Z, algebraMap F (Af F) (τ w : F) * β w)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, map_mul]
+      rw [map_add (f := _), map_sum, map_mul]
     simp only [map_mul, ev_apply, eβ₁, eβ]
     by_cases hv : t₁ ∈ v.asIdeal
     · have hvZ : v ∈ Z := (hZ v).2 hv
@@ -122,7 +122,7 @@ theorem mem_hatA_of_div : ∀ (D : D7) (S T : HSp D) (A : AddSubgroup (Matrix (F
     { carrier := {t | algebraMap D.host.F D.host.E (t : D.host.F) • y ∈ A}
       add_mem' := fun {a b} ha hb => by
         change algebraMap D.host.F D.host.E ((a : D.host.F) + (b : D.host.F)) • y ∈ A
-        rw [map_add, add_smul]
+        rw [map_add (f := _), add_smul]
         exact add_mem ha hb
       zero_mem' := by
         change algebraMap D.host.F D.host.E (0 : D.host.F) • y ∈ A

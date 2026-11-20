@@ -31,7 +31,7 @@ theorem exists_isLocalizedModule_pi {R K C T : Type} [CommRing R] [CommRing K] [
   let ϕ : O →ₗ[R] (T ⧸ H → C) :=
     { toFun := fun f s => φ f.1 f.2 s.out
       map_add' := fun f g => funext fun s => hext' _ _ fun ψ => by
-        rw [Pi.add_apply, map_add, hφ, hφ, hφ]; rfl
+        rw [Pi.add_apply, map_add (f := _), hφ, hφ, hφ]; rfl
       map_smul' := fun a f => funext fun s => hext' _ _ fun ψ => by
         rw [Pi.smul_apply, map_smul, hφ, hφ]; rfl }
   have hϕ : ∀ (f : O) (s : T ⧸ H) (ψ : C →ₐ[R] K), ψ (ϕ f s) = f.1 (s.out * t ψ) := fun f s ψ => hφ _ _ _ _

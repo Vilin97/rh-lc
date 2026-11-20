@@ -17,7 +17,7 @@ private def pairSub {d d' : ℕ} (T : (Fin d → ℂ) ≃ₗ[ℂ] (Fin d' → �
     intro p q hp hq v
     have hp' : ∀ v, T (p.1 *ᵥ v) = p.2 *ᵥ T v := hp
     have hq' : ∀ v, T (q.1 *ᵥ v) = q.2 *ᵥ T v := hq
-    rw [Prod.fst_add, Prod.snd_add, Matrix.add_mulVec, Matrix.add_mulVec, map_add, hp', hq']
+    rw [Prod.fst_add, Prod.snd_add, Matrix.add_mulVec, Matrix.add_mulVec, map_add (f := _), hp', hq']
   algebraMap_mem' := by
     intro c v
     simp only [Algebra.algebraMap_eq_smul_one, Prod.smul_fst, Prod.smul_snd, Prod.fst_one, Prod.snd_one,

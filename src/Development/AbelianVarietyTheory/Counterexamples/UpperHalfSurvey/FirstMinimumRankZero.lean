@@ -67,7 +67,7 @@ theorem flowMat_eq_transv (ξ : Fin r → E) (τ : X.Ψ) (s : E) :
   ext a b
   have h1 : τ.1 (if a = b then 1 else 0) = if a = b then 1 else 0 := by split_ifs <;> simp
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Data.flowMat, transvMat, Matrix.of_apply, Matrix.map_apply, map_add, map_mul, map_sum,
+    simp only [Data.flowMat, transvMat, Matrix.of_apply, Matrix.map_apply, map_add (f := _), map_mul, map_sum,
     h1, hk, emb_cc]
   ring
 

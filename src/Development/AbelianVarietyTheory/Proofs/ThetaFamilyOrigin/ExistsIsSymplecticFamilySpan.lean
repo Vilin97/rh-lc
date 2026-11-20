@@ -195,10 +195,10 @@ theorem exists_stdSymp_of_pairing {p J g : ℕ} (hp : p.Prime) {G R : Type*} [Co
   let β : Additive T → Additive T → ZMod (p ^ (j + 1)) := fun x y =>
     hz.zmodEquivZPowers.symm (Additive.ofMul ⟨w x.toMul y.toMul, wm _ _⟩)
   have βl : ∀ x x' y, β (x + x') y = β x y + β x' y := fun x x' y => by
-    simp only [β, ← map_add]
+    simp only [β, ← map_add (f := _)]
     exact congrArg _ (Subtype.ext (wl _ _ _))
   have βr : ∀ x y y', β x (y + y') = β x y + β x y' := fun x y y' => by
-    simp only [β, ← map_add]
+    simp only [β, ← map_add (f := _)]
     exact congrArg _ (Subtype.ext (wr _ _ _))
   have βw : ∀ x y (n : ℤ), β x y = n ↔ w x.toMul y.toMul = ze ^ n := fun x y n => by
     simp only [β]

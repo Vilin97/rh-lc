@@ -140,7 +140,7 @@ theorem exists_of_integral_pairing (z : InfinitePlace E → ℂ)
   let t : E := ∑ i, ((2 * n i : ℤ) : ℚ) • db i
   let L1 : E →ₗ[ℚ] ℝ :=
     { toFun := fun e => ((Algebra.trace ℚ E (e * t) : ℚ) : ℝ) / 2
-      map_add' := fun x y => by rw [add_mul, map_add, Rat.cast_add, add_div]
+      map_add' := fun x y => by rw [add_mul, map_add (f := _), Rat.cast_add, add_div]
       map_smul' := fun q x => by
         rw [smul_mul_assoc, LinearMap.map_smul, smul_eq_mul, Rat.cast_mul, RingHom.id_apply,
           Rat.smul_def]
@@ -149,7 +149,7 @@ theorem exists_of_integral_pairing (z : InfinitePlace E → ℂ)
     { toFun := fun e => ∑ τ : InfinitePlace E, (τ.embedding e * z τ).re
       map_add' := fun x y => by
         rw [← Finset.sum_add_distrib]
-        exact Finset.sum_congr rfl fun τ _ => by rw [map_add, add_mul, Complex.add_re]
+        exact Finset.sum_congr rfl fun τ _ => by rw [map_add (f := _), add_mul, Complex.add_re]
       map_smul' := fun q x => by
         simp only [RingHom.id_apply, Rat.smul_def, Finset.mul_sum]
         refine Finset.sum_congr rfl fun τ _ => ?_
@@ -243,7 +243,7 @@ theorem exists_extend_of_submodule (A : Submodule (𝓞 E) V) (s : A →ₗ[𝓞
       intro hxyA
       have hxA : x ∈ A := Submodule.span_le.mpr hbA hx
       have hyA : y ∈ A := Submodule.span_le.mpr hbA hy
-      rw [map_add, ihx hxA, ihy hyA, show (⟨x + y, hxyA⟩ : A) = ⟨x, hxA⟩ + ⟨y, hyA⟩ from rfl,
+      rw [map_add (f := _), ihx hxA, ihy hyA, show (⟨x + y, hxyA⟩ : A) = ⟨x, hxA⟩ + ⟨y, hyA⟩ from rfl,
         map_add]
       push_cast; rfl
     | smul c x hx ihx =>
@@ -333,7 +333,7 @@ theorem exists_dualBasis (A : Submodule (𝓞 E) V) (hA : A.FG) :
     | add y z _ _ hy hz =>
       conv_lhs => rw [hy, hz]
       rw [← Finset.sum_add_distrib]
-      exact Finset.sum_congr rfl fun i _ => by rw [map_add, add_smul]
+      exact Finset.sum_congr rfl fun i _ => by rw [map_add (f := _), add_smul]
     | smul c y _ hy =>
       conv_lhs => rw [hy]
       rw [Finset.smul_sum]
@@ -380,7 +380,7 @@ theorem fibSub_eq_span (W : Submodule E S.V) :
         ((CAt.ofComplex τ.embedding).symm z) hmem
       rw [← tmul_eq_smul_pt] at h2
       exact h2
-    | add y y' hy hy' => rw [map_add]; exact Submodule.add_mem _ hy hy'
+    | add y y' hy hy' => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hy'
   · rw [Submodule.span_le]
     rintro _ ⟨w, hw, rfl⟩
     exact ⟨(1 : CAt τ.embedding) ⊗ₜ[E] (⟨w, hw⟩ : W), by
@@ -414,7 +414,7 @@ theorem ext_pt {M : Type} [AddCommGroup M] [Module ℂ M] {X Y : S.FibSp τ →�
   induction mem_span_pt S τ y using Submodule.span_induction with
   | mem x hx => obtain ⟨v, rfl⟩ := hx; exact h v
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | smul c x _ hx => rw [map_smul, map_smul, hx]
 
 theorem fibMap_pt' (T : MetSpace E) (φ : S.V →ₗ[E] T.V) (v : S.V) :
@@ -428,7 +428,7 @@ theorem fibMap_mem_fibSub (T : MetSpace E) (φ : S.V →ₗ[E] T.V) (W : Submodu
     obtain ⟨v, rfl⟩ := hx
     rw [fibMap_pt']; exact Submodule.subset_span ⟨φ v, hφ v, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 def fibFun (σ : S.V →ₗ[E] E) : S.FibSp τ →ₗ[ℂ] ℂ :=
@@ -454,7 +454,7 @@ theorem dualBasis_at (A : Submodule (𝓞 E) S.V) {n : ℕ} (a : Fin n → S.V) 
   | add y z _ _ hy hz =>
     conv_lhs => rw [hy, hz]
     rw [← Finset.sum_add_distrib]
-    exact Finset.sum_congr rfl fun i _ => by rw [map_add, add_smul]
+    exact Finset.sum_congr rfl fun i _ => by rw [map_add (f := _), add_smul]
   | smul c y _ hy =>
     conv_lhs => rw [hy]
     rw [Finset.smul_sum]
@@ -518,7 +518,7 @@ theorem map_smulIdeal_mem (aa : FractionalIdeal (𝓞 E)⁰ E) (A : Submodule (�
     rw [LinearMap.map_smul]
     exact Submodule.subset_span ⟨c, hc, U a, hU a ha, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ _ hy
 
 theorem form_mem_of_smulIdeal (aa : FractionalIdeal (𝓞 E)⁰ E) (B : Submodule (𝓞 E) V)
@@ -531,7 +531,7 @@ theorem form_mem_of_smulIdeal (aa : FractionalIdeal (𝓞 E)⁰ E) (B : Submodul
     rw [LinearMap.map_smul, smul_eq_mul, ← ho, mul_comm, ← Algebra.smul_def]
     exact Submodule.smul_mem _ o hc
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ _ hy
 
 theorem mem_espan_of_smulIdeal (aa : FractionalIdeal (𝓞 E)⁰ E) (A : Submodule (𝓞 E) V) {x : V}
@@ -550,7 +550,7 @@ theorem map_espan_mem (A : Submodule (𝓞 E) V) (B : Submodule (𝓞 E) V') (U 
   induction hx using Submodule.span_induction with
   | mem y hy => exact hU y hy
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul e y _ hy => rw [LinearMap.map_smul]; exact Submodule.smul_mem _ _ hy
 
 end IdealMaps
@@ -568,7 +568,7 @@ theorem fibMap_fibSub (S T : MetSpace E) (τ : InfinitePlace E) (φ : S.V →ₗ
     obtain ⟨v, hv, rfl⟩ := hx
     rw [fibMap_pt']; exact Submodule.subset_span ⟨φ v, hφ v hv, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x z _ _ hx hz => rw [map_add]; exact Submodule.add_mem _ hx hz
+  | add x z _ _ hx hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hz
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem eqOn_fibSub (S : MetSpace E) (τ : InfinitePlace E) {M : Type} [AddCommGroup M] [Module ℂ M]
@@ -579,7 +579,7 @@ theorem eqOn_fibSub (S : MetSpace E) (τ : InfinitePlace E) {M : Type} [AddCommG
   induction hx using Submodule.span_induction with
   | mem y hy => obtain ⟨a, ha, rfl⟩ := hy; exact h a ha
   | zero => simp
-  | add y z _ _ hy hz => rw [map_add, map_add, hy, hz]
+  | add y z _ _ hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
   | smul c y _ hy => rw [map_smul, map_smul, hy]
 
 theorem pt_mem_fibSub (S : MetSpace E) (τ : InfinitePlace E) (W : Submodule E S.V) {w : S.V}
@@ -678,7 +678,7 @@ theorem dualHom (F E : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field 
         have hsplit : y = (S'.fibSub (espan B') τ).starProjection y +
             (y - (S'.fibSub (espan B') τ).starProjection y) := by abel
         rw [LinearMap.comp_apply, ContinuousLinearMap.coe_coe]
-        conv_lhs => rw [hsplit, map_add, hwB τ _ hperp, add_zero]
+        conv_lhs => rw [hsplit, map_add (f := _), hwB τ _ hperp, add_zero]
         generalize (S'.fibSub (espan B') τ).starProjection y = x at hPB ⊢
         have hx := dualBasis_at S' τ B' b ρ hidB hPB
         conv_lhs => rw [hx]

@@ -32,11 +32,11 @@ lemma coeff_inl_mul_inr (u v : AddMonoidAlgebra A X) (x y : X) :
   classical
   induction u using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => rw [map_add, add_mul]; simp only [AddMonoidAlgebra.coeff_add, Finsupp.add_apply, ha, hb, add_mul]
+  | add a b ha hb => rw [map_add (f := _), add_mul]; simp only [AddMonoidAlgebra.coeff_add, Finsupp.add_apply, ha, hb, add_mul]
   | single a r =>
     induction v using AddMonoidAlgebra.induction_linear with
     | zero => simp
-    | add c d hc hd => rw [map_add, mul_add]; simp only [AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hc, hd, mul_add]
+    | add c d hc hd => rw [map_add (f := _), mul_add]; simp only [AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hc, hd, mul_add]
     | single b s =>
       simp only [AddMonoidAlgebra.mapDomainRingHom_apply, AddMonoidAlgebra.mapDomain_single,
         AddMonoidAlgebra.single_mul_single, AddMonoidAlgebra.coeff_single, Finsupp.single_apply]
@@ -49,7 +49,7 @@ lemma coeff_diag (u : AddMonoidAlgebra A X) (x y : X) [Decidable (x = y)] :
   induction u using AddMonoidAlgebra.induction_linear with
   | zero => simp
   | add a b ha hb =>
-    rw [map_add]; simp only [AddMonoidAlgebra.coeff_add, Finsupp.add_apply, ha, hb]
+    rw [map_add (f := _)]; simp only [AddMonoidAlgebra.coeff_add, Finsupp.add_apply, ha, hb]
     split_ifs <;> simp
   | single a r =>
     simp only [AddMonoidAlgebra.mapDomainRingHom_apply, AddMonoidAlgebra.mapDomain_single,

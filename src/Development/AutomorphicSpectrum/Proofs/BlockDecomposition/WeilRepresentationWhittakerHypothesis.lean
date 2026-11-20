@@ -218,10 +218,10 @@ theorem gauss_step {χ : AddChar F Circle} (hχ : Continuous χ) (hχ1 : χ ≠ 
     simp only [FTs]
     refine integral_congr_ae (Filter.Eventually.of_forall fun u => ?_)
     have e : conj F E (v + t) * u = conj F E t * u + conj F E v * u := by
-      rw [map_add]
+      rw [map_add (f := _)]
       ring
     show (χ _ : ℂ) * Φ u * (χ _ : ℂ) = Φ u * (χ _ : ℂ)
-    rw [e, map_add, chi_add]
+    rw [e, map_add (f := _), chi_add]
     ring
   have h1 : ∫ v, (χ ((a * Algebra.norm F z + d * Algebra.norm F v -
         Algebra.trace F E (conj F E z * v)) / c) : ℂ) * FTs χ (conj F E) (muE E χ) Φ v ∂muE E χ =
@@ -241,7 +241,7 @@ theorem gauss_step {χ : AddChar F Circle} (hχ : Continuous χ) (hχ1 : χ ≠ 
       have e2 : conj F E z * t = algebraMap F E d⁻¹ * algebraMap F E (Algebra.norm F z) := by
         rw [algebraMap_norm_eq_mul_conj (K := F), ht]
         ring
-      rw [mul_add, map_add, e2, trace_algebraMap_mul, Algebra.trace_algebraMap,
+      rw [mul_add, map_add (f := _), e2, trace_algebraMap_mul, Algebra.trace_algebraMap,
         (Fact.out : Module.finrank F E = 2)]
       simp
     have e : (a * Algebra.norm F z + d * Algebra.norm F (v + t) -

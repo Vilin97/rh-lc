@@ -16,13 +16,13 @@ theorem lid_rTensor_subtype_mem_smul_top (I : Ideal A) (t : I ⊗[A] M) :
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul i m => simpa using Submodule.smul_mem_smul i.2 Submodule.mem_top
-  | add s t hs ht => rw [map_add, map_add]; exact add_mem hs ht
+  | add s t hs ht => rw [map_add (f := _), map_add (f := _)]; exact add_mem hs ht
 
 theorem exists_lid_rTensor_subtype_eq (I : Ideal A) {x : M} (hx : x ∈ I • (⊤ : Submodule A M)) :
     ∃ t : I ⊗[A] M, TensorProduct.lid A M (I.subtype.rTensor M t) = x := by
   refine Submodule.smul_induction_on hx (fun a ha m _ => ⟨⟨a, ha⟩ ⊗ₜ m, by simp⟩) ?_
   rintro x x' ⟨s, rfl⟩ ⟨s', rfl⟩
-  exact ⟨s + s', by rw [map_add, map_add]⟩
+  exact ⟨s + s', by rw [map_add (f := _), map_add (f := _)]⟩
 
 theorem mem_colon_smul_top_of_flat [Module.Flat A M] (J : Ideal A) (a : A) {v : M}
     (hv : a • v ∈ J • (⊤ : Submodule A M)) :

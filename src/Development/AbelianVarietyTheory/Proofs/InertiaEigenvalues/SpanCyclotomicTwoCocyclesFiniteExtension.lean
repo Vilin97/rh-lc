@@ -40,7 +40,7 @@ theorem span_cocycles_ext {G F E : Type} [Group G] [TopologicalSpace G] [Field F
       intro i
       refine H (fun p => b.coord i (z p)) ((hb i).comp hc) (fun g h k => ?_)
       have := congrArg (b.coord i) (hz g h k)
-      rw [← Algebra.smul_def, map_sub, map_add, map_sub, map_smul, map_zero, smul_eq_mul] at this
+      rw [← Algebra.smul_def, map_sub, map_add (f := _), map_sub, map_smul, map_zero, smul_eq_mul] at this
       exact this
     choose x f hf hxf using key
     refine ⟨∑ i, x i • b i, fun g => ∑ i, f i g • b i, ?_, fun g h => ?_⟩

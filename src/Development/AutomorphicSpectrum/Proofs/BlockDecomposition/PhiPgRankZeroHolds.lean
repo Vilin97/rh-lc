@@ -601,7 +601,7 @@ theorem final_match (m : Mir k (0 + t)) (x : τ.V ⊗[ℂ] σ.V) :
     ((rhoR τ σ).comp (iotaG t)) m (TensorProduct.congr (eMk τ) (LinearEquiv.refl ℂ σ.V) x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a b =>
     exact match_tmul τ σ m a b
 

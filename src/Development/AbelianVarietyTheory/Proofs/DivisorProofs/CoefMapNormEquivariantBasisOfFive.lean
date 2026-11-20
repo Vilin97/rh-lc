@@ -945,7 +945,7 @@ theorem io_eq_phase_smul_at_ofFive : ∀ {D : D7} {G : Type} [Group G] [Fintype 
       rw [MvPolynomial.smul_eq_C_mul, map_mul, toG_C, MvPolynomial.smul_eq_C_mul]
     obtain ⟨B₀, hB₀⟩ := GlobalTheory.AdTh.PhaseMap.exists_ext c₁ n4
       { toFun := fun v => toG O.c' σ' lt (O.io (CoefExt.up O.jL (lamV D i) v))
-        map_add' := fun v w => by rw [up_add, map_add, map_add]
+        map_add' := fun v w => by rw [up_add, map_add (f := _), map_add (f := _)]
         map_smul' := fun a v => by rw [up_smul, map_smul, hsm, ← RingHom.congr_fun hσ a]; rfl }
     replace hB₀ : ∀ v, B₀ (c₁ v) = toG O.c' σ' lt (O.io (CoefExt.up O.jL (lamV D i) v)) := hB₀
     have hpG : toG O.c' σ' lt (O.io O.hw) = deltaConj i σ := by
@@ -1377,7 +1377,7 @@ theorem omega_level_conjVec_ofFive : ∀ {D : D7} {G : Type} [Group G] [Fintype 
     (fun PP hPP => blockTri_blkOf_le _ _ (parLev_g hκ.2.1 (hPP.resolve_right (Finset.notMem_empty _))))
     (fun PP hPP => (congrFun hκ.2.2 ⟨PP, hPP⟩).trans (congrFun hκ'.2.2 ⟨PP, hPP⟩).symm)
   have hinf : infPart D ((detAt e hee (Vc D i) k : (AE D)ˣ) : AE D) = 1 := by
-    rw [Vac.detAt_val, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, GlobalTheory.PlaceVec.idemSum_infPart he, zero_mul, zero_add,
+    rw [Vac.detAt_val, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, GlobalTheory.PlaceVec.idemSum_infPart he, zero_mul, zero_add,
       sub_zero, RingHom.map_one]
   have n1 : η' (detAt e hee (Vc D i) k) = 1 := hη' _ hinf (Vac.finPart_detAt sV e hee) (by
     rw [← MonoidHom.map_inv]
@@ -2633,7 +2633,7 @@ theorem geometric_value_ofFive (hR : GlobalTheory.Core5 R F) (tie : FWTie T R κ
   have hA' : A'.Marked (n • mk) :=
     marked_of_congr A' (hmk'' mk hB) fun a ha => by
       obtain ⟨b, hb⟩ := hzl a ha
-      exact ⟨mk b, hmk b, by rw [LinearMap.comp_apply, hb, map_add, map_zsmul, map_nsmul]; rfl⟩
+      exact ⟨mk b, hmk b, by rw [LinearMap.comp_apply, hb, map_add (f := _), map_zsmul, map_nsmul]; rfl⟩
   have halg : ∀ s : O.c'.F, algebraMap (O.dδ ()).c₂.F ℂ ((O.dδ ()).eF s) = algebraMap O.c'.F ℂ s := fun s => rfl
   obtain ⟨y₂, A₂, hov₂, hA₂', hrd₂⟩ := MarkLift.exists_lift_marked _ _ _ _ _ O.c' _ (O.dδ ()) halg hlev tie.laws.pins.2.1.2 hA₂
     (fun h => absurd h hpq) _ g _ Dc.bas Dc.idx Dc.e _ _ y' A' Dc.sympl hdom hsd _ _ him₁ hA' him₂ hov'

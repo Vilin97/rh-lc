@@ -112,7 +112,7 @@ noncomputable instance (D : WeilDivisor X) (V : X.Opens) :
   add_smul r s f := Subtype.ext (funext fun y => by
     change sectionValue V y (r + s) * f.1 y = sectionValue V y r * f.1 y +
       sectionValue V y s * f.1 y
-    rw [map_add, add_mul])
+    rw [map_add (f := _), add_mul])
   zero_smul f := Subtype.ext (funext fun y => by
     change sectionValue V y 0 * f.1 y = 0
     rw [map_zero, zero_mul])

@@ -172,7 +172,7 @@ private theorem sep_dual_pk (v : HeightOneSpectrum (𝓞 F)) {κ : Type} [Fintyp
     have h2 := LinearMap.pi_apply_eq_sum_univ Bm z.2
     simp only [smul_eq_mul] at h1 h2
     rw [← h1, ← h2]
-    conv_lhs => rw [hz, map_add]
+    conv_lhs => rw [hz, map_add (f := _)]
     rfl
   have hu : ∀ z, ψ₀ ((fun k => c * Bm (e k)) ⬝ᵥ z.2 - z.1 ⬝ᵥ (fun k => -(c * A (e k)))) = ψ' (l z) := by
     intro z
@@ -304,7 +304,7 @@ theorem UpperTheory.exists_separating_of_not_mem_lattice_coset :
   have hbd : ∀ l ∈ S.map (GlobalTheory.LatVac.locCo M.co v), ∀ i, c₀ * l.1 i ∈ v.adicCompletionIntegers F ∧
       c₀ * l.2 i ∈ v.adicCompletionIntegers F := by
     rintro _ ⟨_, ⟨a, ha, b, hb, rfl⟩, rfl⟩ i
-    rw [map_add]
+    rw [map_add (f := _)]
     simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, mul_add]
     exact ⟨add_mem (hb₁ _ (hc₁ a ha i).1) (hb₂ _ (hb2 b hb i).1), add_mem (hb₁ _ (hc₁ a ha i).2) (hb₂ _ (hb2 b hb i).2)⟩
   have hst : ∀ t ∈ v.adicCompletionIntegers F, ∀ l ∈ S.map (GlobalTheory.LatVac.locCo M.co v),

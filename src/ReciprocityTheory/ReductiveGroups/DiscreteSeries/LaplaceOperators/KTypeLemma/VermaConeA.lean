@@ -73,7 +73,7 @@ theorem vc_eq_zero_of_list (T : Fin n → Fin n → Module.End ℂ U) (P : (Fin 
         rw [hD, hx a, sub_smul]
       have h2 : D w = 0 := by rw [hD, hν a, sub_self]
       have h3 : D x = (l'.map D).sum := by
-        rw [hxl, List.sum_cons, map_add, h2, zero_add, map_list_sum]
+        rw [hxl, List.sum_cons, map_add (f := _), h2, zero_add, map_list_sum]
       have hgood : ∀ u ∈ l'.map D, u ∈ vcGood T P := by
         intro u hu
         obtain ⟨u0, hu0, rfl⟩ := List.mem_map.mp hu

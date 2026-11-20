@@ -31,11 +31,11 @@ theorem mem_primDR_of_isPer : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : 
   have hq : ((fun l : v.Λ ↦ p ⟨(M₁ + M₂) l, add_mem (hM1 l) (hM2 l)⟩) -
       ((fun l : v.Λ ↦ p ⟨M₁ l, hM1 l⟩) + fun l : v.Λ ↦ p ⟨M₂ l, hM2 l⟩)) = 0 := by
     funext l
-    rw [Pi.sub_apply, Pi.add_apply, Pi.zero_apply, sub_eq_zero, ← map_add]
+    rw [Pi.sub_apply, Pi.add_apply, Pi.zero_apply, sub_eq_zero, ← map_add (f := _)]
     rfl
   rw [hq] at hdiff
   have h0 := GlobalTheory.T.cechDeRham_class_eq_zero_of_periods_zero (A ⊗ A) n L' v hAA _ hdiff
-  rw [← map_add, ← map_sub] at h0
+  rw [← map_add (f := _), ← map_sub] at h0
   exact sub_eq_zero.1 ((GlobalTheory.T.bijective_cmp1_of_isAbelianScheme_over_complex (A ⊗ A) hAA).1 (h0.trans (map_zero _).symm))
 
 end GlobalTheory.CechPer

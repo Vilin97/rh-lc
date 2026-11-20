@@ -44,7 +44,7 @@ theorem evp_conj (c : (k : K) → J k) (P : MvPolynomial ((k : K) → J k) ℤ) 
   unfold evp
   induction P using MvPolynomial.induction_on with
   | C n => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     rw [map_mul, map_mul, map_mul, hp]
     simp only [MvPolynomial.aeval_X, segreRatio, map_prod, map_div₀]

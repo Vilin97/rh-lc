@@ -82,7 +82,7 @@ theorem exists_localOp : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [
   · intro x hx y hy c
     have hz : c • x + y ∈ SB (Fin a × Fin (a + a') → Fv F v) := add_mem (Submodule.smul_mem _ c hx) hy
     apply eq_of_tens_eq v R hR0 hinv
-    rw [← (hS _ hz).2 R (hR _ hz), tens_add_smul, map_add, map_smul, (hS x hx).2 R (hR x hx),
+    rw [← (hS _ hz).2 R (hR _ hz), tens_add_smul, map_add (f := _), map_smul, (hS x hx).2 R (hR x hx),
       (hS y hy).2 R (hR y hy), ← tens_add_smul]
   · intro γ hγ φ hφ
     have hact : actAB (cA σ) ((1 : UA σ G.V.J), h) γ = γ * (mat h)ᵀ := by
@@ -324,7 +324,7 @@ theorem shape : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] 
       (fun Y : Matrix (Fin a) (Fin (a + a')) (Fv F v) => ι (S (c • x + y)) (Y * htᵀ)) = c • (fun Y : Matrix (Fin a) (Fin (a + a')) (Fv F v) => ι (S x) (Y * htᵀ)) + fun Y : Matrix (Fin a) (Fin (a + a')) (Fv F v) => ι (S y) (Y * htᵀ) := by
     intro x hx y hy c
     funext Y
-    simp only [hlin x hx y hy c, map_add, map_smul, Pi.add_apply, Pi.smul_apply]
+    simp only [hlin x hx y hy c, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply]
   have hT2 : ∀ C, ∀ x ∈ SB (Fin a × Fin (a + a') → Fv F v),
       schr (GlobalTheory.LatVac.psiAt B.ψ v) (wT C) x ∈ SB (Fin a × Fin (a + a') → Fv F v) ∧
       ι (schr (GlobalTheory.LatVac.psiAt B.ψ v) (wT C) x) = (fun Y => ι x (Y + C)) ∧

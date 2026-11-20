@@ -24,7 +24,7 @@ theorem one_tmul_mem_nonZeroDivisors_of_flat (O A B : Type*) [CommRing O] [CommR
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a c => simp [Algebra.TensorProduct.tmul_mul_tmul]
-    | add x y hx hy => rw [map_add, hx, hy, add_mul]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, add_mul]
   rw [mem_nonZeroDivisors_iff_right]
   intro x hx
   exact hinj (by rw [key, map_zero, hx])
@@ -39,7 +39,7 @@ theorem tmul_one_mem_nonZeroDivisors_of_flat (O A B : Type*) [CommRing O] [CommR
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul c d => simp [Algebra.TensorProduct.tmul_mul_tmul]
-    | add x y hx hy => rw [map_add, hx, hy, add_mul]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, add_mul]
   rw [mem_nonZeroDivisors_iff_right]
   intro x hx
   exact hinj (by rw [key, map_zero, hx])

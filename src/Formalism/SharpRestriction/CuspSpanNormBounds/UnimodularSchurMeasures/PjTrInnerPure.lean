@@ -106,7 +106,7 @@ theorem pj_tr_cont (x : X.Hs) : Continuous fun g => X.σs g x := by
       exact pj_tr_cont_pure X hX z
     | zero => simpa using continuous_const
     | add y z _ _ h1 h2 =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact h1.add h2
     | smul c y _ h1 =>
       simp only [map_smul]

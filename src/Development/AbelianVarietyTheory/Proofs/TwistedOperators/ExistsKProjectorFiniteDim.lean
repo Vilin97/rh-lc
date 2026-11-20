@@ -159,7 +159,7 @@ theorem finiteDimensional_iSup_range {s : Kt → (H →L[ℂ] H)} (hs : ∀ k v,
           exact Submodule.mem_iSup_of_mem i ⟨ρ' k x, hT' i k x⟩
         · rw [map_zero]; exact Submodule.zero_mem _
         · intro a b ha hb
-          rw [map_add]
+          rw [map_add (f := _)]
           exact Submodule.add_mem _ ha hb
       let Q : H →ₗ[ℂ] H := LinearMap.id - (W'.starProjection : H →ₗ[ℂ] H)
       have hQ : ∀ y, Q y = y - W'.starProjection y := fun y => rfl
@@ -309,7 +309,7 @@ theorem exists_fix {π : UJ ε →* (U →L[ℂ] U)} (hπ : IsUnitaryRep π) (S 
   let A : U →ₗ[ℂ] U :=
     { toFun := fun v => ∫ k, e k • π k v ∂(muK ε)
       map_add' := fun x y => by
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
         exact integral_add (integrable_avg hπ hec x) (integrable_avg hπ hec y)
       map_smul' := fun c x => by
         simp only [map_smul, smul_comm (e _) c, RingHom.id_apply]

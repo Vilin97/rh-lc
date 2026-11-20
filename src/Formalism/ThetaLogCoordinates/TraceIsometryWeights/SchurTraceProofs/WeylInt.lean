@@ -32,7 +32,7 @@ theorem wl_iso_le_iSup (G : GlW K V n) (W : Submodule K V) (la : Fin n → ℤ) 
 theorem wl_iso_wt (G : GlW K V n) (W : Submodule K V) (la : Fin n → ℤ) {x : V} (hx : x ∈ IsoW G W la)
     {ν : Fin n → ℤ} (hν : ¬ Dle ν la) : G.comp ν x = 0 := by
   refine Submodule.iSup_induction _ (motive := fun x => G.comp ν x = 0) (wl_iso_le_iSup G W la hx)
-    (fun v y hy => ?_) (by simp) (fun y z hy hz => by rw [map_add, hy, hz, add_zero])
+    (fun v y hy => ?_) (by simp) (fun y z hy hz => by rw [map_add (f := _), hy, hz, add_zero])
   by_contra h
   exact hν (G.wt_le_of_mem v.2.1 hy h)
 

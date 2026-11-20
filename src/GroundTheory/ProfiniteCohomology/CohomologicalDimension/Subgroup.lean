@@ -211,7 +211,7 @@ omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDiscon
 theorem summandFun_add (a b : A) (x : G) :
     summandFun H V (a + b) x = summandFun H V a x + summandFun H V b x := by
   simp only [summandFun]
-  split_ifs <;> simp [map_add]
+  split_ifs <;> simp [map_add (f := _)]
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [TotallyDisconnectedSpace G] in
 theorem summandFun_smul (r : k) (a : A) (x : G) :

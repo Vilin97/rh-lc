@@ -31,7 +31,7 @@ theorem exists_linear_lift {J G V : Type} [Fintype J] [DecidableEq J] [Group G] 
     rw [Pi.basisFun_apply] at this
     exact congrArg Subtype.val this
   let F' : (J → ℤ) →+ Additive G := AddMonoidHom.mk' (fun a => E ((k : ℂ)⁻¹ • (l a : V))) (fun a b => by
-    rw [map_add, Submodule.coe_add, smul_add, map_add])
+    rw [map_add (f := _), Submodule.coe_add, smul_add, map_add (f := _)])
   refine ⟨l, fun a => ?_⟩
   have hmem : a ∈ F.eqLocus F' := by
     have ha : a = ∑ j, a j • (Pi.single j 1 : J → ℤ) := by

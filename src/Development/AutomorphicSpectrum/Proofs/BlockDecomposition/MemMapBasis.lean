@@ -27,7 +27,7 @@ theorem twist {Λ D : Type} [CommRing Λ] [CommRing D] (i : Λ →+* D) (hf : i.
   have hgi' : ∀ a, g (i a) = i a := fun a => RingHom.congr_fun hgi a
   let γ : D →ₗ[Λ] D :=
     { toFun := fun x => i χ * g x
-      map_add' := fun x y => by rw [map_add, mul_add]
+      map_add' := fun x y => by rw [map_add (f := _), mul_add]
       map_smul' := fun a x => by
         simp only [RingHom.id_apply, hs, map_mul, hgi']
         ring }
@@ -60,7 +60,7 @@ theorem mem_map_basis {D E ι : Type} [CommRing D] [CommRing E] [Algebra D E]
         rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
         exact Ideal.mul_mem_right _ _ hy
       | add x _ y _ hx hy =>
-        rw [map_add, Finsupp.add_apply]
+        rw [map_add (f := _), Finsupp.add_apply]
         exact add_mem hx hy
     simpa using key _ h'
   · intro h

@@ -94,7 +94,7 @@ theorem UpperTheory.V.Pr.autEnd3_of_autPt :
       map_one' := hinj (by rw [hf, map_one, map_one])
       map_mul' := fun x y => hinj (by rw [hf, map_mul, map_mul, hf, hf])
       map_zero' := hinj (by rw [hf, map_zero, map_zero])
-      map_add' := fun x y => hinj (by rw [hf, map_add, map_add, hf, hf]) }
+      map_add' := fun x y => hinj (by rw [hf, map_add (f := _), map_add (f := _), hf, hf]) }
   letI : Algebra K L := φ.toAlgebra
   haveI : IsScalarTower K L Ω := IsScalarTower.of_algebraMap_eq fun x => (hf x).symm
   haveI := k.ab

@@ -162,10 +162,10 @@ theorem intertwiner_matrix : ∀ {k : Type} [Field k] [ValuativeRel k] [Topologi
   have hμa : ∀ z f, μ z f = GlobalTheory.WeilM.schr ψ0 (wM z) f := fun _ _ => rfl
   have hτ : ∀ x x' f, τ x (τ x' f) = τ (x + x') f := by
     intro x x' f
-    rw [hτa, hτa, hτa, GlobalTheory.WeilM.schr_schr, hTT, mul_zero, AddChar.map_zero_eq_one, one_smul, map_add]
+    rw [hτa, hτa, hτa, GlobalTheory.WeilM.schr_schr, hTT, mul_zero, AddChar.map_zero_eq_one, one_smul, map_add (f := _)]
   have hμ : ∀ z z' f, μ z (μ z' f) = μ (z + z') f := by
     intro z z' f
-    rw [hμa, hμa, hμa, GlobalTheory.WeilM.schr_schr, hMM, mul_zero, AddChar.map_zero_eq_one, one_smul, map_add]
+    rw [hμa, hμa, hμa, GlobalTheory.WeilM.schr_schr, hMM, mul_zero, AddChar.map_zero_eq_one, one_smul, map_add (f := _)]
   have hτμ : ∀ x z f, τ x (μ z f) = χ x z • μ z (τ x f) := by
     intro x z f
     rw [hτa, hμa, hμa, hτa, GlobalTheory.VacLoc.schr_comm, hTM]

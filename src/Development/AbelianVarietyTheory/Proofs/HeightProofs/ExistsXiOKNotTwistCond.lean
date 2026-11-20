@@ -30,7 +30,7 @@ theorem bar_eq (x : AfE D) : FieldTwistConditions.bar D x = barF D x := by
   induction x using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a e => rw [barF_tmul, ← D.conjF_eq]; rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem normOne_iff (x : (AfE D)ˣ) : FieldTwistConditions.NormOne D x ↔ NormOne x := by
   unfold FieldTwistConditions.NormOne NormOne

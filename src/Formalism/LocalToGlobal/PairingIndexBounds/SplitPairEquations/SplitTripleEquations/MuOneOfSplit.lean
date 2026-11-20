@@ -202,7 +202,7 @@ theorem mu_one_of_split {H : Sesq V} {α : V → ℂ} {Λ₁ Λ₂ Λ₃ A A' : 
       simp only [hχ]
       rw [← Complex.exp_add]
       congr 1
-      simp only [altE, map_add, Complex.add_im]
+      simp only [altE, map_add (f := _), Complex.add_im]
       push_cast; ring
     · intro k hk
       obtain ⟨m, hm⟩ := altE_int hT.sd₂ hs₁2 hk

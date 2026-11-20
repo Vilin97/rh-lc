@@ -47,7 +47,7 @@ def vanishAt {k : Type} [Field k] {X : Scheme.{0}} [Algebra k Γ(X, ⊤)] {M : L
     (t : Fin m → M.Sec) (x : X) : Submodule k (Fin m → k) where
   carrier := {c | x ∉ nonzeroLocus (comb t c)}
   add_mem' := fun {a b} ha hb hx => by
-    rw [map_add] at hx
+    rw [map_add (f := _)] at hx
     exact (nonzeroLocus_add_le _ _ hx).elim ha hb
   zero_mem' := fun hx => by
     rw [map_zero] at hx

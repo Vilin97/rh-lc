@@ -260,7 +260,7 @@ theorem _root_.GlobalTheory.exists_noetherian_subring_homogeneous_matrix_flat_ch
       rw [aeval_eq_bind₁, MvPolynomial.map_bind₁]
       simp only [φ] at hg₀ hwa₀ hwb₀ hφX ⊢
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_mul, hg₀, hwa₀, hwb₀, hφX]
+        simp only [map_add (f := _), map_sum, map_mul, hg₀, hwa₀, hwb₀, hφX]
       rw [← aeval_eq_bind₁]
       exact hwit i j
     haveI : Algebra.FormallySmooth R₀ (MvPolynomial ι R₀ ⧸ Ideal.span (Set.range (g₀ i))) :=
@@ -281,7 +281,7 @@ theorem _root_.GlobalTheory.exists_noetherian_subring_homogeneous_matrix_flat_ch
       simp only [Matrix.smul_apply, Matrix.add_apply, Matrix.mul_apply, Matrix.one_apply,
         smul_eq_mul] at h1 ⊢
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_mul, map_sum, map_sub, map_one, hg₀, hφX, hΦ₀, hC₀, hC'₀,
+        simp only [map_add (f := _), map_mul, map_sum, map_sub, map_one, hg₀, hφX, hΦ₀, hC₀, hC'₀,
         apply_ite φ, map_zero, map_one]
       simpa [Φ₀, C₀, C'₀] using h1
     · refine Matrix.ext fun l j => ?_
@@ -290,7 +290,7 @@ theorem _root_.GlobalTheory.exists_noetherian_subring_homogeneous_matrix_flat_ch
       simp only [Matrix.add_apply, Matrix.mul_apply, Matrix.sum_apply, Matrix.smul_apply,
         smul_eq_mul] at h1 ⊢
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_mul, map_sum, hΦ₀, hΨ₀, hE₀, hg₀]
+        simp only [map_add (f := _), map_mul, map_sum, hΦ₀, hΨ₀, hE₀, hg₀]
       exact h1
 
 end GlobalTheory

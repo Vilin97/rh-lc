@@ -182,7 +182,7 @@ theorem om0_nonneg {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {g : �
   have hd : IndefiniteRowSideFullHecke.SiegelReframe.dflat τ P hor = 0 := hw0
   have hdI : IndefiniteRowSideFullHecke.SiegelReframe.dflat τ P (Complex.I • hor) = 0 := (hker P hP).1 hor hd
   have key : om0 τ P ![u, Complex.I • u] = om0 τ P ![vert, Complex.I • vert] := by
-    rw [hom, hom, hu, smul_add, map_add, map_add, hd, hdI, zero_add, zero_add]
+    rw [hom, hom, hu, smul_add, map_add (f := _), map_add (f := _), hd, hdI, zero_add, zero_add]
   have hIv : Complex.I • vert = (0, Complex.I • (u.2 - w0)) := by simp [hvert]
   have hv0 : ∀ t : Fin g → ℂ, t ≠ 0 → 0 < om0 τ P ![((0 : E), t), (0, Complex.I • t)] := fun t ht => hpos P hP t ht
   refine ⟨?_, fun h1 h2 => ?_⟩

@@ -72,7 +72,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Fo.eopLift :
         simp only [Ops.dL, LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul]
     rw [h2, h3, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun σ _ => ?_
-    simp only [Fin.sum_univ_two, smul_add, map_add, add_smul]
+    simp only [Fin.sum_univ_two, smul_add, map_add (f := _), add_smul]
     simp
     abel
   have hEop : Eop τ i j = (1 / 2 : ℂ) • (lie E 2 (toL (Matrix.single i j (atEmb τ 1))) -

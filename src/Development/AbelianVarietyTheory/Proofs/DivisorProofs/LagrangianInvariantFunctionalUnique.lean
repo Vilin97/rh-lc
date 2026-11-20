@@ -117,7 +117,7 @@ theorem uniq_of (hfac : ∀ {Y : Type} [NormedAddCommGroup Y] [NormedSpace ℝ Y
       rw [hE, hMm, hg, hh, SchwartzMap.smulLeftCLM_apply_apply hT, SchwartzMap.compSubConstCLM_apply,
         sub_neg_eq_add, ← Submodule.coe_add, hFa, hE, hMm, smul_eq_mul, ← mul_assoc, ← ech_add]
       congr 2
-      simp only [hq, map_add, LinearMap.add_apply, Submodule.coe_add]
+      simp only [hq, map_add (f := _), LinearMap.add_apply, Submodule.coe_add]
       rw [hsym p a]; ring
     · refine hf _ _ fun p hp => ?_
       lift p to P using hp

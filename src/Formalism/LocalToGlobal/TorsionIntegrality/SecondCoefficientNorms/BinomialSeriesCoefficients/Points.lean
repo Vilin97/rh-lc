@@ -60,7 +60,7 @@ theorem subst_linv_l (h : IsLogPair l linv) {x : MvPowerSeries σ K}
 theorem constantCoeff_add_l (h : IsLogPair l linv) {x y : MvPowerSeries σ K}
     (hx : MvPowerSeries.constantCoeff x = 0) (hy : MvPowerSeries.constantCoeff y = 0) :
     MvPowerSeries.constantCoeff (PowerSeries.subst x l + PowerSeries.subst y l) = 0 := by
-  rw [map_add, constantCoeff_subst_l h hx, constantCoeff_subst_l h hy, add_zero]
+  rw [map_add (f := _), constantCoeff_subst_l h hx, constantCoeff_subst_l h hy, add_zero]
 
 theorem constantCoeff_C_mul_l (h : IsLogPair l linv) (a : K) {x : MvPowerSeries σ K}
     (hx : MvPowerSeries.constantCoeff x = 0) :
@@ -151,7 +151,7 @@ theorem fmul_fadd (h : IsLogPair l linv) (a : K) {x y : MvPowerSeries σ K}
 theorem fmul_add (h : IsLogPair l linv) (a b : K) {x : MvPowerSeries σ K}
     (hx : MvPowerSeries.constantCoeff x = 0) :
     fmul l linv (a + b) x = fadd l linv (fmul l linv a x) (fmul l linv b x) := by
-  rw [fadd, l_fmul h a hx, l_fmul h b hx, fmul, map_add, add_mul]
+  rw [fadd, l_fmul h a hx, l_fmul h b hx, fmul, map_add (f := _), add_mul]
 
 theorem fadd_fmul_neg (h : IsLogPair l linv) (a : K) {x : MvPowerSeries σ K}
     (hx : MvPowerSeries.constantCoeff x = 0) :

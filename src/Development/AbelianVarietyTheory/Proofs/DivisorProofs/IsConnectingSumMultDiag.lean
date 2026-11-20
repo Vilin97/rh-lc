@@ -28,7 +28,7 @@ abbrev valZero : A ⊗[R] A →ₐ[R] R :=
 theorem map_multDiag (f : A →ₐc[R] B) (i : ℕ) (c : A ⊗[R] A) :
     f (multDiag R A i c) = multDiag R B i (pullbackTwo f c) := by
   induction c with
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
   | tmul a b => simp [map_mulBy]
 
 omit [IsCocomm R A] [IsCocomm R B] in
@@ -36,13 +36,13 @@ omit [IsCocomm R A] [IsCocomm R B] in
 theorem valZero_pullTwo (f : A →ₐc[R] B) (c : A ⊗[R] A) :
     valZero R B (pullbackTwo f c) = valZero R A c := by
   induction c with
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
   | tmul a b => simp
 
 theorem counit_multDiag (i : ℕ) (c : A ⊗[R] A) :
     counit (R := R) (multDiag R A i c) = valZero R A c := by
   induction c with
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
   | tmul a b => simp
 
 theorem pullTwo_mulBy_eq (c : A ⊗[R] A) (hc : c ∈ symCocycles R A) (k : ℕ) :
@@ -54,7 +54,7 @@ theorem pullTwo_mulBy_eq (c : A ⊗[R] A) (hc : c ∈ symCocycles R A) (k : ℕ)
     rw [Finset.sum_range_zero, map_zero, zero_smul, add_zero, add_zero]
     generalize c = t
     induction t with
-    | add s t hs ht => simp only [map_add, hs, ht]
+    | add s t hs ht => simp only [map_add (f := _), hs, ht]
     | tmul a b =>
       simp [h0, Algebra.algebraMap_eq_smul_one, Algebra.TensorProduct.one_def, smul_tmul',
         smul_smul, mul_comm]
@@ -65,10 +65,10 @@ theorem pullTwo_mulBy_eq (c : A ⊗[R] A) (hc : c ∈ symCocycles R A) (k : ℕ)
     have e2 : ∀ t : A ⊗[R] A, LinearMap.mul' R A (TensorProduct.map (mulBy R A k : A →ₗ[R] A)
         (BialgHom.id R A : A →ₗ[R] A) t) = multDiag R A k t := fun t => by
       induction t with
-      | add s t hs ht => simp only [map_add, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), hs, ht]
       | tmul a b => simp
     rw [e, e2, pullTwo_id, ih] at h
-    rw [h, Finset.sum_range_succ, map_add, succ_nsmul]
+    rw [h, Finset.sum_range_succ, map_add (f := _), succ_nsmul]
     abel
 
 end PDiv
@@ -91,7 +91,7 @@ theorem isConnecting_sum_multDiag (p : ℕ) [Fact p.Prime] (R : Type) [CommRing 
   have hK : funsMap ((p : ℤ_[p]) • 𝟙 G) K = K :=
     Subtype.ext (funext fun n => AlgHomClass.commutes (Hom.app _ n) _)
   refine ⟨z + G.cob K, B, (Submodule.Quotient.eq _).2 ⟨K, by simp⟩, ?_, ?_, rfl⟩
-  · rw [map_add, cocyclesMap_cob, hK]
+  · rw [map_add (f := _), cocyclesMap_cob, hK]
     refine Subtype.ext (funext fun n => ?_)
     change cobOne R _ (B.1 n) = pullbackTwo (((p : ℤ_[p]) • 𝟙 G : G ⟶ G).app n) (z.1 n) +
       cobOne R _ (algebraMap R _ (valZero R _ (z.1 n)))

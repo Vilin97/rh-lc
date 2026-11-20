@@ -154,7 +154,7 @@ theorem Phi_tensInt (v : HeightOneSpectrum (𝓞 (fixF E))) (b : 𝓞 E) {z : E 
     rw [e1, Phi_tmul]
     exact mul_mem (tau_int v a b) c.2
   | add x y hx hy =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact add_mem hx hy
 
 end Formalism.L2.KerInert.WAP
@@ -197,7 +197,7 @@ theorem locInt_add {e₁ e₂ : E} (h₁ : LocInt v e₁) (h₂ : LocInt v e₂)
   obtain ⟨a₁, s₁, hs₁, h₁⟩ := h₁
   obtain ⟨a₂, s₂, hs₂, h₂⟩ := h₂
   refine ⟨phi E s₂ * a₁ + phi E s₁ * a₂, s₁ * s₂, mul_notMem hs₁ hs₂, ?_⟩
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   rw [← h₁, ← h₂]
   ring
 

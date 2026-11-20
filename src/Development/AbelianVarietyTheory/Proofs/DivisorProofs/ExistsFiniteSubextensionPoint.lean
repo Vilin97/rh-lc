@@ -65,7 +65,7 @@ theorem exists_finite_subext_point : ∀ (X S : Scheme.{0}) (s : X ⟶ S), Local
       simp only [CommRingCat.hom_comp, RingHom.comp_apply, CommRingCat.hom_ofHom] at e
       rw [RingHom.algebraMap_toAlgebra, e]
       exact L.algebraMap_mem _
-    | add b c _ _ hb hc => rw [map_add]; exact L.add_mem hb hc
+    | add b c _ _ hb hc => rw [map_add (f := _)]; exact L.add_mem hb hc
     | mul b c _ _ hb hc => rw [map_mul]; exact L.mul_mem hb hc
   let φL : Γ(X, V) →+* L := φ.hom.codRestrict L hmem
   refine ⟨L, Spec.map (CommRingCat.ofHom φL : Γ(X, V) ⟶ CommRingCat.of L) ≫ hV'.fromSpec, hfin, ?_, ?_⟩

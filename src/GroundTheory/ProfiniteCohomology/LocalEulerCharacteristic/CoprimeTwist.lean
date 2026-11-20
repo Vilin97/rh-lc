@@ -47,7 +47,7 @@ theorem evalMor_bijective (T M : Rep.{u} k G) (hT : Module.finrank k T = 1) :
     | tmul t f =>
       simp only [φ, TensorProduct.lift.tmul, LinearMap.comp_apply, LinearMap.lsmul_apply]
       rw [← TensorProduct.smul_tmul, ht]
-    | add x y hx hy => rw [map_add, TensorProduct.tmul_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), TensorProduct.tmul_add, hx, hy]
   constructor
   · rw [injective_iff_map_eq_zero]
     intro x hx

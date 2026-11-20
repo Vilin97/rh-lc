@@ -125,7 +125,7 @@ theorem annEval_eq_zero_iff (x : T.Ann ρ0 σ0) :
     · obtain ⟨Y, hY, z, hz, V, hV, hUY⟩ := T.exists_bddB_eq_ξ_mul_add hξ (hU j) (N j) (hJ0 j hj)
       have hz1 : ‖z‖ ≤ 1 := hz ▸ hJ0 j hj
       refine ⟨Y, hY, ⟨_, T.coe_teich_mul_mem_Econ hz1 hV⟩, fun _ => ⟨?_, fun r => ?_⟩⟩
-      · simp only [hbdef, ξAnn, ← map_mul, ← map_add]
+      · simp only [hbdef, ξAnn, ← map_mul, ← map_add (f := _)]
         congr 1
         exact Subtype.ext hUY
       · rw [annNorm_coeAnn]

@@ -142,14 +142,14 @@ theorem form_mul (φ : T.V →ₗ[LL] LL) (b : BdR) (y : T.V ⊗[Qp] BdR) :
     form T ι φ (mulVR T b y) = b * form T ι φ y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, mul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
   | tmul x c => simp [mulVR, form_tmul, mul_left_comm]
 
 theorem form_smul (φ : T.V →ₗ[LL] LL) (c : LL) (y : T.V ⊗[Qp] BdR) :
     form T ι φ (c • y) = ι c * form T ι φ y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy, mul_add]
   | tmul x b => rw [smul_tmul', form_tmul, form_tmul, map_smul, smul_eq_mul, map_mul, mul_assoc]
 
 theorem form_ker (φ : T.V →ₗ[LL] LL) {y : T.V ⊗[Qp] BdR} (hy : y ∈ compKer T ι) : form T ι φ y = 0 := by
@@ -158,17 +158,17 @@ theorem form_ker (φ : T.V →ₗ[LL] LL) {y : T.V ⊗[Qp] BdR} (hy : y ∈ comp
     obtain ⟨c, y, rfl⟩ := hz
     rw [map_sub, form_smul, form_mul, sub_self]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul c x _ hx => rw [form_smul, hx, mul_zero]
 
 theorem form_fil (hι : ∀ c, ι c ∈ PD.Fil 0) (φ : T.V →ₗ[LL] LL) (n : ℤ) {y : T.V ⊗[Qp] BdR}
     (hy : y ∈ compKer T ι ⊔ FilV PD (LL := LL) (V := T.V) n) : form T ι φ y ∈ PD.Fil n := by
   obtain ⟨y', hy', _, ⟨z, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hy
   clear hy
-  rw [map_add, form_ker T ι φ hy', zero_add]
+  rw [map_add (f := _), form_ker T ι φ hy', zero_add]
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add]; exact add_mem ha hb
+  | add a b ha hb => simp only [map_add (f := _)]; exact add_mem ha hb
   | tmul x b =>
     have := PD.Fil_mul _ _ _ _ (hι (φ x)) b.2
     rw [zero_add] at this

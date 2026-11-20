@@ -47,7 +47,7 @@ theorem mem_span_isAdW_of_kills {n : ℕ} {A : Type} [AddCommGroup A] [Module �
       have h1 : e (k, k) * wtPart x w = wtPart x w * e (k, k) + (w k : ℂ) • wtPart x w := by
         rw [← isAdW_wtPart x w k]; abel
       have h2 := congrArg (fun u => φ u t) h1
-      simp only [map_mul, map_add, map_smul, Module.End.mul_apply, LinearMap.add_apply,
+      simp only [map_mul, map_add (f := _), map_smul, Module.End.mul_apply, LinearMap.add_apply,
         LinearMap.smul_apply, hd k, add_smul] at h2 ⊢
       rw [h2])
     (by

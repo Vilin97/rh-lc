@@ -14,7 +14,7 @@ private theorem lift_tw {O Γ A : Type} [CommRing O] [Group Γ] [Ring A] [Algebr
     MonoidAlgebra.lift O A Γ f (MonoidAlgebra.lift O (MonoidAlgebra O Γ) Γ (twHom η) y) = MonoidAlgebra.lift O A Γ f' y := by
   induction y using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | single g a =>
     simp only [MonoidAlgebra.lift_single, h, map_smul, smul_smul]
     simp [twHom, MonoidAlgebra.lift_single, smul_smul]

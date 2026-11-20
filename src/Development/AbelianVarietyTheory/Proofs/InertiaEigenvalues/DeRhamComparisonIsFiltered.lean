@@ -72,7 +72,7 @@ theorem graded_indep
           (fun i hi => (F _).sub_mem (hFG _ _ _ (he i hi)) (he i hi)) (by
             convert (FM _).sub_mem (hMG g _ _ hz) hz using 1
             set_option synthInstance.maxHeartbeats 100000 in
-              simp only [map_add, map_sum, hρ, hd, sub_smul, Finset.sum_sub_distrib]
+              simp only [map_add (f := _), map_sum, hρ, hd, sub_smul, Finset.sum_sub_distrib]
             abel)
       have hκ : ∀ i, ∃ κ ∈ F 0, (∀ g, σ g κ = κ) ∧ (k i₀ ≠ k i → κ = 0) ∧
           (i ∈ s → β * b i - κ ∈ F (k i₀ - k i + 1)) := fun i => by
@@ -142,7 +142,7 @@ theorem step
     refine Submodule.add_mem _ (Submodule.subset_span ⟨k i + 1, b i, _, fun g => ?_, hmem, ?_, rfl⟩)
       (ih _ (hn ▸ Finset.card_erase_lt_of_mem hi) _ rfl _ (fun j hj => ?_) ?_)
     set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [map_add, map_sum, hρ, hd, (hκ _).2.1]
+      · simp only [map_add (f := _), map_sum, hρ, hd, (hκ _).2.1]
     · rw [show c + 1 - (k i + 1) = c - k i by ring]
       exact hb i hi
     · refine (F _).sub_mem (hb j (Finset.mem_of_mem_erase hj)) ?_
@@ -354,7 +354,7 @@ theorem deRham_filtered : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : Lo
     induction z using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact S.zero_mem
     | tmul v x => exact hS v x x.2
-    | add x y hx hy => rw [map_add]; exact S.add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact S.add_mem hx hy
   have hFa : Antitone fun a => ((P.PD K).Fil a).toAddSubgroup :=
     antitone_int_of_succ_le fun a => (P.PD K).Fil_anti a
   have hMa : Antitone fun a => (FilV (P.PD K) (LL := ↥LL.1) (V := V) a).toAddSubgroup :=
@@ -369,7 +369,7 @@ theorem deRham_filtered : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : Lo
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul v x => simp [actVdR]
-      | add x y hx hy => simp only [map_add, hx, hy])
+      | add x y hx hy => simp only [map_add (f := _), hx, hy])
     (P.PD K).Fil_mul
     (fun a c x z hx hz => hind c
       ((FilV (P.PD K) (LL := ↥LL.1) (V := V) (a + c)).toAddSubgroup.comap (φ x).toAddMonoidHom)

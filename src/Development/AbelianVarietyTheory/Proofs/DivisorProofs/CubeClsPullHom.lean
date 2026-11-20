@@ -34,7 +34,7 @@ theorem cubeCls_add {G : Over S} [GrpObj G] [IsCommMonObj G] {T : Over S} {n : ‚
     (a b : Pic G.left) :
     GlobalTheory.ZH.EndoExtend.cubeCls G x (a + b) = GlobalTheory.ZH.EndoExtend.cubeCls G x a + GlobalTheory.ZH.EndoExtend.cubeCls G x b := by
   unfold GlobalTheory.ZH.EndoExtend.cubeCls
-  simp only [map_add, smul_add, Finset.sum_add_distrib]
+  simp only [map_add (f := _), smul_add, Finset.sum_add_distrib]
 
 theorem cubeCls_one_left {G : Over S} [GrpObj G] [IsCommMonObj G] {T : Over S} (y : T ‚ü∂ G) (c : Pic G.left) :
     GlobalTheory.ZH.EndoExtend.cubeCls G ![1, y] c = 0 := by

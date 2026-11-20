@@ -44,7 +44,7 @@ theorem UpperTheory.V.Ws.X1.contLift :
   let σ : R → A := fun r => l (Ideal.Quotient.mk _ r) + u r
   have hpσ : ∀ r, p (σ r) = r := by
     intro r
-    simp only [σ, map_add, hl, hu2]
+    simp only [σ, map_add (f := _), hl, hu2]
     ring
   have hL : ∀ M, N0 ≤ M → ∀ r r' : R, r - r' ∈ maximalIdeal R ^ M → σ r - σ r' ∈ maximalIdeal A ^ M := by
     intro M hM r r' h

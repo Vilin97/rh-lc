@@ -96,7 +96,7 @@ theorem exists_translate {k F K : Type} [CommRing k] [CommRing F] [CommRing K] (
     refine RingHom.ext fun t => ?_
     have : t = algebraMap k _ t.fst + algebraMap k _ t.snd * DualNumber.eps := by
       ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
-    conv_rhs => rw [this, map_add, map_mul, h₁, h₁, h₂]
+    conv_rhs => rw [this, map_add (f := _), map_mul, h₁, h₁, h₂]
     ext <;> simp [Chart.dualMapR, TrivSqZeroExt.algebraMap_eq_inl]
   have c₁ : (Chart.dualMapR e).comp (algebraMap F (DualNumber F)) = (algebraMap K (DualNumber K)).comp e := by
     ext r <;> simp [Chart.dualMapR, TrivSqZeroExt.algebraMap_eq_inl]

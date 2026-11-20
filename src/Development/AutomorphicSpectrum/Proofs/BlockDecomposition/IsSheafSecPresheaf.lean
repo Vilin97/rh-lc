@@ -36,7 +36,7 @@ def secGroup (W : X.Opens) : AddSubgroup (∀ α, κ α → Γ(X, W ⊓ U α)) w
     ∑ k', rs (le_inf (inf_le_left.trans inf_le_right) inf_le_right : W ⊓ U α ⊓ U β ≤ U α ⊓ U β) (g α β k k') *
       rs (inf_le_inf_right _ inf_le_left : W ⊓ U α ⊓ U β ≤ W ⊓ U β) (s β k')}
   add_mem' := fun {s t} hs ht α β k => by
-    simp only [Pi.add_apply, map_add, hs α β k, ht α β k, mul_add, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), hs α β k, ht α β k, mul_add, Finset.sum_add_distrib]
   zero_mem' := fun α β k => by simp only [Pi.zero_apply, map_zero, mul_zero, Finset.sum_const_zero]
   neg_mem' := fun {s} hs α β k => by
     simp only [Pi.neg_apply, map_neg, hs α β k, mul_neg, Finset.sum_neg_distrib]
@@ -68,7 +68,7 @@ instance secModule (W : X.Opens) : Module Γ(X, W) (secGroup g W) where
   smul_add a s t := Subtype.ext <| funext fun α => funext fun k => mul_add _ _ _
   add_smul a b s := Subtype.ext <| funext fun α => funext fun k => by
     change rs _ (a + b) * s.1 α k = rs _ a * s.1 α k + rs _ b * s.1 α k
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
   zero_smul s := Subtype.ext <| funext fun α => funext fun k => by
     change rs _ 0 * s.1 α k = 0
     rw [map_zero, zero_mul]

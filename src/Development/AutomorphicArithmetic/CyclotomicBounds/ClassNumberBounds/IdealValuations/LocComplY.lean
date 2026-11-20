@@ -27,7 +27,7 @@ private def indPrime (j : E →+* PadicAlgCl l) : Ideal (𝓞 E) where
   carrier := {x | ‖j (x : E)‖ < 1}
   zero_mem' := by simp
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_ofPred_eq, map_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
     exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
   smul_mem' := fun c x hx => by
     simp only [Set.mem_ofPred_eq, smul_eq_mul, map_mul, norm_mul] at *

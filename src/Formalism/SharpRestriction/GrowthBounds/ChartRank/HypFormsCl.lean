@@ -41,7 +41,7 @@ theorem eval_blockRowSubstitution (g : ι → Matrix (Fin n) (Fin n) ℂ) (z : �
     eval z (blockRowSubstitutionAlgHom g P) = eval (fun x => ∑ c, g x.1 x.2.1 c * z (x.1, c, x.2.2)) P := by
   induction P using MvPolynomial.induction_on
   next a => simp [blockRowSubstitutionAlgHom]
-  next p q hp hq => simp only [map_add, hp, hq]
+  next p q hp hq => simp only [map_add (f := _), hp, hq]
   next p x hp => simp only [map_mul, hp, blockRowSubstitution_X, eval_X, map_sum, eval_C]
 
 theorem blockRowSubstitution_rename (g : ι → Matrix (Fin n) (Fin n) ℂ) (τ : ι) (q : MvPolynomial (Fin n × Fin n) ℂ) :

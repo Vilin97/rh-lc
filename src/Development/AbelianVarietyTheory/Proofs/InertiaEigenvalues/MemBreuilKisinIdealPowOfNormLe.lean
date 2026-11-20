@@ -41,13 +41,13 @@ theorem exists_of_mem_ball_small {l : ℕ} (hl : 1 < l) {A : Type} [CommRing A] 
     obtain ⟨c, z₁, z₂, h⟩ := hx
     obtain ⟨c', z₁', z₂', h'⟩ := hy
     refine ⟨c + c', (l : A) ^ c' * z₁ + (l : A) ^ c * z₁', z₂ + z₂', ?_⟩
-    simp only [map_add, map_mul, map_pow, pow_add] at h h' ⊢
+    simp only [map_add (f := _), map_mul, map_pow, pow_add] at h h' ⊢
     linear_combination (algebraMap A (PreDisc l u ρ) (l : A)) ^ c' * h +
       (algebraMap A (PreDisc l u ρ) (l : A)) ^ c * h'
   | smul a x _ hx =>
     obtain ⟨c, z₁, z₂, h⟩ := hx
     refine ⟨c, a * z₁, a * z₂, ?_⟩
-    simp only [map_add, map_mul, map_pow, pow_add, Algebra.smul_def] at h ⊢
+    simp only [map_add (f := _), map_mul, map_pow, pow_add, Algebra.smul_def] at h ⊢
     linear_combination (algebraMap A (PreDisc l u ρ) a) * h
 
 theorem exists_of_norm_toDisc_lt {l : ℕ} (hl : 1 < l) {A : Type} [CommRing A] (u : A)
@@ -75,7 +75,7 @@ theorem BK.X_pow_natDegree_mem_J {l : ℕ} [Fact l.Prime] {K : FinExt l} (bk : B
     (X : bk.S) ^ bk.Ep.natDegree ∈ bk.J := by
   have h := congrArg (Polynomial.coeToPowerSeries.ringHom (R := Wq l bk.a)) bk.monic.as_sum
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_pow, map_sum, map_mul, Polynomial.coeToPowerSeries.ringHom_apply, Polynomial.coe_X,
+    simp only [map_add (f := _), map_pow, map_sum, map_mul, Polynomial.coeToPowerSeries.ringHom_apply, Polynomial.coe_X,
     Polynomial.coe_C] at h
   have e : (X : bk.S) ^ bk.Ep.natDegree =
       bk.E - ∑ i ∈ Finset.range bk.Ep.natDegree, C (bk.Ep.coeff i) * (X : bk.S) ^ i := by

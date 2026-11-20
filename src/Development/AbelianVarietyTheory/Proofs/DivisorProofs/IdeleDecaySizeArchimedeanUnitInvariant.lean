@@ -21,7 +21,7 @@ theorem coord_inf (F E : Type) [Field F] [NumberField F] [Field E] [NumberField 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [Algebra.TensorProduct.basis_repr_tmul]
-  | add x y hx hy => simp only [map_add, Pi.add_apply, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, Finsupp.add_apply, hx, hy]
 
 end GlobalTheory.IdeleSizeUnit
 

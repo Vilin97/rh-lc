@@ -46,7 +46,7 @@ def act (h : ModRep ε ρ) {g : Mx n} (hg : g ∈ UJset ε) : Fam ε ρ →L[ℂ
         exp_mul_eq (isUnit_of_UJ hg)]
       rfl,
     fun l₁ l₂ a Y Z => by
-      simp only [List.map_append, List.map_cons, adInv_lin, v.2.2.1, map_add, map_smul],
+      simp only [List.map_append, List.map_cons, adInv_lin, v.2.2.1, map_add (f := _), map_smul],
     fun l₁ l₂ Y Z T hT => by
       simp only [List.map_append, List.map_cons, ← map_sub, v.2.2.2 _ _ _ _ _ (adInv_br hg hT)]⟩
   map_add' _ _ := Subtype.ext <| funext fun _ => map_add (ρ g) _ _

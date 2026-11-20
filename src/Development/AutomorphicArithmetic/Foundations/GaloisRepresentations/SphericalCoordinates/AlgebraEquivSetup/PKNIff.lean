@@ -65,7 +65,7 @@ theorem UpperTheory.Gal.W2.Seed.pKNIff :
     · intro h w hw i k
       obtain ⟨u, hu, e⟩ := h _ (hsingle k)
       have e2 := congrFun (congrArg ν e) i
-      rw [hactM, ν.apply_symm_apply, hcol, map_add, map_nsmul, ν.apply_symm_apply] at e2
+      rw [hactM, ν.apply_symm_apply, hcol, map_add (f := _), map_nsmul, ν.apply_symm_apply] at e2
       have hui := (hlat u).1 hu i
       obtain ⟨x, hx⟩ := T.Φ_surj (ν u i)
       have hxi := (T.Φ_int x).1 (hx ▸ hui) w hw
@@ -116,5 +116,5 @@ theorem UpperTheory.Gal.W2.Seed.pKNIff :
         rw [map_mul, h3, e, map_mul, map_inv₀]
         exact (inv_mul_le_one₀ (zero_lt_iff.2 ((Valuation.ne_zero_iff _).2 h2))).2 h1
       · apply ν.injective
-        rw [hactM, hC, map_add, map_nsmul, ν.apply_symm_apply, Matrix.add_mulVec, Matrix.one_mulVec,
+        rw [hactM, hC, map_add (f := _), map_nsmul, ν.apply_symm_apply, Matrix.add_mulVec, Matrix.one_mulVec,
           Matrix.smul_mulVec, Nat.cast_smul_eq_nsmul]

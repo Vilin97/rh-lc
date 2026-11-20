@@ -221,7 +221,7 @@ theorem extFun_comb : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolo
     obtain ⟨c₁, hc₁, h₁⟩ := hf
     obtain ⟨c₂, hc₂, h₂⟩ := hg
     exact ⟨c₁ + c₂, combAt_add hc₁ hc₂, fun f₀ Tm h => by
-      rw [LinearMap.map_add, h₁ f₀ Tm h, h₂ f₀ Tm h, comb_add_left]⟩
+      rw [LinearMap.map_add (f := _), h₁ f₀ Tm h, h₂ f₀ Tm h, comb_add_left]⟩
   | smul a f _ hf =>
     obtain ⟨c, hc, h₁⟩ := hf
     exact ⟨a • c, combAt_smul a hc, fun f₀ Tm h => by rw [LinearMap.map_smul, h₁ f₀ Tm h, comb_smul_left]⟩

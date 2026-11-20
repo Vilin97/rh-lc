@@ -42,7 +42,7 @@ theorem dD_dir {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) :
   | mem Φ h =>
     obtain ⟨f, g, hg, rfl⟩ := h
     refine ⟨fun v w => funext fun x => ?_, fun r v => funext fun x => ?_⟩
-    · simp only [Pi.add_apply, dD_pureA_apply, map_add, add_mul]
+    · simp only [Pi.add_apply, dD_pureA_apply, map_add (f := _), add_mul]
     · simp only [Pi.smul_apply, dD_pureA_apply, map_smul, smul_eq_mul, Complex.real_smul]
       ring
   | zero =>

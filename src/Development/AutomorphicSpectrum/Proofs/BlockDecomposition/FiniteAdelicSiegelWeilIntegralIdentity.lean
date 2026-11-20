@@ -53,7 +53,7 @@ theorem integrable_starLoc_fin : ∀ (F E : Type) [Field F] [NumberField F] [Fie
     (fun c => ‖starLoc (Af F) σ J (psiFin F ψ) μ Q (hermIn (Af F) σ n c)‖) (fun _ => norm_nonneg _)
     (fun c l hl => by
       show ‖_‖ = ‖_‖
-      rw [map_add, hUp _ _ hl]) C ((M : ℝ) / 2) hb (GlobalTheory.T.summable_denominator_power_of_lt F E σ hCM n _ hs)
+      rw [map_add (f := _), hUp _ _ hl]) C ((M : ℝ) / 2) hb (GlobalTheory.T.summable_denominator_power_of_lt F E σ hCM n _ hs)
   exact GlobalTheory.T.summable_over_lattice_quotient_locally_constant _ _ ν U hUo hUc (hermIn (Af F) σ n) (GlobalTheory.T.hermitian_finite_adeles_dense_rational F E σ hCM n U hUo) _ (fun g u hu => hUp g u hu) hsum
 
 end GlobalTheory.CompanionTheory.SiegelND.Integ.Hua

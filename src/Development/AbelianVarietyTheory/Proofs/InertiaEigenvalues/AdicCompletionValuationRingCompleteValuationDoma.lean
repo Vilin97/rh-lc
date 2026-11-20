@@ -106,7 +106,7 @@ theorem exists_eq_mul_unit (hx0 : x ≠ 0) (hxu : ¬ IsUnit x) (y : AdicCompleti
     apply isUnit_of_evalₐ
     have hx1 : Ideal.Quotient.mk (Ideal.span {x} ^ 1) x = 0 := by
       rw [Ideal.Quotient.eq_zero_iff_mem, pow_one]; exact Ideal.mem_span_singleton_self x
-    rw [map_add, map_one, map_mul, map_mul, evalₐ_algebraMap, evalₐ_algebraMap, hx1,
+    rw [map_add (f := _), map_one, map_mul, map_mul, evalₐ_algebraMap, evalₐ_algebraMap, hx1,
       mul_zero, zero_mul, add_zero]
     exact isUnit_one
   refine ⟨a, n, ⟨b, hb⟩, hunit.unit, ?_⟩

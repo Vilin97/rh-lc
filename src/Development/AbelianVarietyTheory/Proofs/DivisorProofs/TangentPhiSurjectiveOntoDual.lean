@@ -29,7 +29,7 @@ theorem kappa_eq_epsIso (O : Type) [CommRing O]
       (TM O O).hom.appLE ⊤ ⊤ le_top (cst O (toTsze O O b).snd) * ε := by
     apply hinj
     change toTsze O O b = toTsze O O _
-    rw [map_add, map_mul, toTsze_base, toTsze_base, hε, Iso.inv_hom_id_apply,
+    rw [map_add (f := _), map_mul, toTsze_base, toTsze_base, hε, Iso.inv_hom_id_apply,
       Iso.inv_hom_id_apply]
     ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
   have e0 := d_base (sec_hom (zeroSec O O)) (isChart O O).le (le_preimage_top (TM O O).hom ⊤)
@@ -43,7 +43,7 @@ theorem kappa_eq_epsIso (O : Type) [CommRing O]
   have hd : d (sec_hom (zeroSec O O)) (isChart O O).le b =
       cst O (toTsze O O b).snd • d (sec_hom (zeroSec O O)) (isChart O O).le ε := by
     conv_lhs => rw [hb]
-    rw [map_add, e0, zero_add, e2, e1, smul_zero, add_zero, e3, GlobalTheory.LB.resG_self]
+    rw [map_add (f := _), e0, zero_add, e2, e1, smul_zero, add_zero, e3, GlobalTheory.LB.resG_self]
   have h1 : (epsIso O).hom.app ⊤ (d (sec_hom (zeroSec O O)) (isChart O O).le ε) =
       (1 : Γ(Sp O, ⊤)) := epsIso_d O
   rw [hd]

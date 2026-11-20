@@ -93,7 +93,7 @@ def flt_lift {B : Type*} [CommRing B] {σ : Type*} (Fl : flt_Fil B) (wt : (σ �
     have hx' : x.1 + x.2 = m := by simpa using hx
     have := Fl.mul_mem (ha x.1) (hb x.2)
     have e1 : t - wt x.1 + (u - wt x.2) = t + u - wt m := by
-      rw [← hx', map_add]; ring
+      rw [← hx', map_add (f := _)]; ring
     rwa [e1] at this
   one_mem := by
     classical
@@ -148,7 +148,7 @@ theorem flt_hom_monomial {B₀ B' : Type*} [CommRing B₀] [CommRing B'] {σ : T
       rw [MvPolynomial.X_pow_eq_monomial, MvPolynomial.monomial_mul, one_mul]
     have e2 : wt (Finsupp.single a k) = (k : ℤ) * wt (Finsupp.single a 1) := by
       rw [← nsmul_eq_mul, ← _root_.map_nsmul, Finsupp.smul_single, smul_eq_mul, mul_one]
-    rw [e1, _root_.map_mul, _root_.map_pow, _root_.map_add, e2]
+    rw [e1, _root_.map_mul, _root_.map_pow, _root_.map_add (f := _), e2]
     exact Fl'.mul_mem (flt_pow_mem Fl' (hX a) k) ih
 
 theorem flt_hom_mem {B₀ B' : Type*} [CommRing B₀] [CommRing B'] {σ : Type*} (Fl : flt_Fil B₀) (Fl' : flt_Fil B')
@@ -299,7 +299,7 @@ theorem flt_valS_add {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} [NeZero n] 
     (F G : MvPolynomial (ι × Fin n) R) : min (valS LL S F) (valS LL S G) ≤ valS LL S (F + G) := by
   have h1 := flt_withTop_le (a := min (valS LL S F) (valS LL S G)) (b := valS LL S (F + G)) (N := 0)
     fun t ht => by
-      rw [sub_zero, flt_le_valS, _root_.map_add]
+      rw [sub_zero, flt_le_valS, _root_.map_add (f := _)]
       exact AddSubgroup.add_mem _ ((flt_le_valS LL S F t).1 (ht.trans (min_le_left _ _)))
         ((flt_le_valS LL S G t).1 (ht.trans (min_le_right _ _)))
   simpa using h1
@@ -308,7 +308,7 @@ theorem flt_lam1S_add {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} [NeZero n]
     (F G : MvPolynomial (ι × Fin n) R) : lam1S LL S (F + G) ≤ max (lam1S LL S F) (lam1S LL S G) := by
   have h1 := flt_withBot_le (a := lam1S LL S (F + G)) (b := max (lam1S LL S F) (lam1S LL S G)) (N := 0)
     fun M hM => by
-      rw [add_zero, flt_lam1S_le, _root_.map_add]
+      rw [add_zero, flt_lam1S_le, _root_.map_add (f := _)]
       exact AddSubgroup.add_mem _ ((flt_lam1S_le LL S F M).1 ((le_max_left _ _).trans hM))
         ((flt_lam1S_le LL S G M).1 ((le_max_right _ _).trans hM))
   simpa using h1
@@ -674,7 +674,7 @@ theorem flt_Th_twist {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} (LL : Lette
   refine MvPolynomial.ringHom_ext (fun r => ?_) (fun v => ?_)
   · simp only [RingHom.comp_apply, flt_tay, flt_Th, twistSub, eval₂Hom_C, RingHom.coe_comp,
       Function.comp_apply, MvPolynomial.map_C]
-  · simp only [RingHom.comp_apply, flt_tay, eval₂Hom_X', _root_.map_add, MvPolynomial.map_C, MvPolynomial.map_X]
+  · simp only [RingHom.comp_apply, flt_tay, eval₂Hom_X', _root_.map_add (f := _), MvPolynomial.map_C, MvPolynomial.map_X]
     by_cases hS : v.1 ∈ S
     · cases hv : LL.vec v.1
       · have hT : twistSub LL S j (X v : MvPolynomial (ι × Fin n) R) =

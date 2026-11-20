@@ -30,7 +30,7 @@ theorem eq_of_span {H ι X : Type} [AddCommGroup H] [Module ℂ H] {M : ι → T
   | mem y hy => exact h y hy
   | zero => simp
   | add y y' _ _ h h' =>
-    simp only [map_add, MultilinearMap.add_apply, Pi.add_apply]
+    simp only [map_add (f := _), MultilinearMap.add_apply, Pi.add_apply]
     linear_combination h + h'
   | smul a y _ h =>
     simp only [map_smul, MultilinearMap.smul_apply, Pi.smul_apply, smul_eq_mul]

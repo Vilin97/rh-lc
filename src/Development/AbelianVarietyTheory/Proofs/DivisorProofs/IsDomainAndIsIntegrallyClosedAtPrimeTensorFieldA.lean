@@ -72,7 +72,7 @@ theorem isDomain_and_isIntegrallyClosed_atPrime_tensor_field
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a k => simp [φ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hinj : Function.Injective φ := by
     rw [hφ]
     exact Module.Flat.lTensor_preserves_injective_linearMap _ Subtype.val_injective

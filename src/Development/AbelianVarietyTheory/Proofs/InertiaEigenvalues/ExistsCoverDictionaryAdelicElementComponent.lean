@@ -43,10 +43,10 @@ theorem frBor_of_isometry {E : Type} [Field E] [NumberField E] [IsCMField E] {H 
     · obtain ⟨a, d, rfl⟩ := F.t_surj k b
       obtain ⟨x, hx⟩ := hM (s • a) (Submodule.smul_mem_smul hs Submodule.mem_top)
       refine ⟨x + m • (gam (s • d) - s • d), ?_⟩
-      rw [smul_add, ← map_smul, map_add, hx, smul_comm s l.M' d, map_nsmul, hm, smul_add, ← mul_smul, smul_sub]
+      rw [smul_add, ← map_smul, map_add (f := _), hx, smul_comm s l.M' d, map_nsmul, hm, smul_add, ← mul_smul, smul_sub]
       abel
     · rintro a b ⟨x, hx⟩ ⟨z, hz⟩
-      exact ⟨x + z, by rw [map_add, hx, hz, smul_add]; abel⟩
+      exact ⟨x + z, by rw [map_add (f := _), hx, hz, smul_add]; abel⟩
   obtain ⟨-, -, hex⟩ := GlobalTheory.FamRigid.ex_eq_of_level_group GlobalTheory.latMinkowski E H Dw l Xo _ g _ F k P P' gam 1 hP hP' hEF hM'
     (fun a => ⟨gam a - a, by rw [hA, one_smul, add_sub_cancel]⟩) (fun a => by rw [Matrix.one_mulVec, h])
   simp only [Matrix.one_mulVec] at hex

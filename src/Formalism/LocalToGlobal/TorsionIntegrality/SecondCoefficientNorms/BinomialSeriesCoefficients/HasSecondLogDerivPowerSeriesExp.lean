@@ -62,7 +62,7 @@ theorem hasSecondLogDeriv_mul {f h g₁ g₂ : PowerSeries K} (h1 : HasSecondLog
   have e2 : derivative K (derivative K f * h + f * derivative K h) =
       derivative K (derivative K f) * h + 2 * (derivative K f * derivative K h) +
         f * derivative K (derivative K h) := by
-    rw [map_add, Derivation.leibniz, Derivation.leibniz]
+    rw [map_add (f := _), Derivation.leibniz, Derivation.leibniz]
     simp only [smul_eq_mul]
     ring
   rw [e1, e2]
@@ -171,7 +171,7 @@ theorem derivative2_dblInt (e : PowerSeries K) :
 theorem derivative2_lam (e : PowerSeries K) (s2 : K) :
     derivative K (derivative K (lam e s2)) = e + C s2 := by
   unfold lam
-  rw [map_add, map_add, derivative2_dblInt]
+  rw [map_add (f := _), map_add (f := _), derivative2_dblInt]
   congr 1
   ext n
   simp only [PowerSeries.coeff_derivative, PowerSeries.coeff_C_mul, PowerSeries.coeff_X_pow, PowerSeries.coeff_C]
@@ -276,7 +276,7 @@ theorem isogenyIff_of (hE : MvExpLaws) : IsogenyIff := by
   have hd : derivative K (derivative K Φ) = g + C (2 * (∑ P, c P - (al ^ 2 - ((Fintype.card ι : K) + 1)) * s2)) := by
     rw [hΦdef, map_sub, map_sub, Derivation.map_smul, Derivation.map_smul, Derivation.map_smul, Derivation.map_smul,
       derivative_rescale, Derivation.map_smul, derivative_rescale, derivative2_lam, map_add, rescale_C_eq, hg]
-    simp only [PowerSeries.smul_eq_C_mul, map_mul, map_sub, map_add, map_pow, map_natCast, map_one, map_ofNat]
+    simp only [PowerSeries.smul_eq_C_mul, map_mul, map_sub, map_add (f := _), map_pow, map_natCast, map_one, map_ofNat]
     linear_combination (-2 : PowerSeries K) * hend'
   constructor
   · intro h

@@ -167,7 +167,7 @@ theorem eq_zero_of_stable (K : Submodule ℂ (MvPolynomial L ℂ)) (hK : ∀ l, 
     have h1 : ∀ l, pderiv l P = 0 := fun l => ih _ (hK l P hP) fun α hα => by
       rw [coeff_pderiv] at hα
       have := h _ (left_ne_zero_of_mul hα)
-      simp only [map_add, Finsupp.degree_single] at this
+      simp only [map_add (f := _), Finsupp.degree_single] at this
       omega
     have h2 : P = C (AddMonoidAlgebra.coeff P 0) := by
       refine MvPolynomial.ext _ _ fun α => ?_
@@ -200,9 +200,9 @@ theorem exists_fock [DecidableEq L] (Z d : L → Module.End ℂ S) (hZ : ∀ l l
   have hp : ∀ l P, φ (pderiv l P) = d l (φ P) := fun l P => by
     induction P using MvPolynomial.induction_on with
     | C a => rw [pderiv_C, map_zero, hCa, map_smul, h0, smul_zero]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p j hp =>
-      rw [mul_comm p, hX, pderiv_mul, map_add, hX, hp, ← Module.End.mul_apply (d l), hd, add_comm]
+      rw [mul_comm p, hX, pderiv_mul, map_add (f := _), hX, hp, ← Module.End.mul_apply (d l), hd, add_comm]
       by_cases h : l = j
       · subst h; simp
       · simp [h, pderiv_X_of_ne (Ne.symm h)]
@@ -307,7 +307,7 @@ variable {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] {L : Type} [Finty
 
 theorem D_add (c c' : L → ℂ) (f : 𝓢(V, ℂ)) : H.D (c + c') f = H.D c f + H.D c' f := by
   ext x
-  simp only [SchwartzMap.add_apply, H.hD, map_add, ContinuousLinearMap.add_apply]
+  simp only [SchwartzMap.add_apply, H.hD, map_add (f := _), ContinuousLinearMap.add_apply]
   push_cast
   ring
 
@@ -595,7 +595,7 @@ theorem exists_fockMap : ∃ φ : MvPolynomial L ℂ →ₗ[ℂ] 𝓢(V, ℂ), F
   have e2 : H.Dl c = ∑ l, (((c l).re : ℂ) • a l + ((c l).im : ℂ) • b l) := by
     conv_lhs => rw [e]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_add, map_smul, coe_smul, a, b]
+      simp only [map_sum, map_add (f := _), map_smul, coe_smul, a, b]
   change H.Dl c (φ P) = _
   rw [e2]
   set_option synthInstance.maxHeartbeats 100000 in
@@ -711,7 +711,7 @@ theorem piInf_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {w : InfinitePlace F}
     piInf τ (cA σ z) = star (piInf τ z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb, star_add]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb, star_add]
   | tmul a e =>
     show piInf τ (a ⊗ₜ[F] σ e) = _
     rw [piInf_tmul, piInf_tmul, h.2.2.2, star_mul']
@@ -734,7 +734,7 @@ theorem eq_zero_of_piInf {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ : ∀ w :
     exact (one_mul _).symm.trans h3
   have hre : ∀ w i, (C.repr x i).1 w = 0 := fun w => by
     have e := hinf w
-    rw [hdec, map_add, piInf_tmul, piInf_tmul, hB0, hB1, map_one, mul_one] at e
+    rw [hdec, map_add (f := _), piInf_tmul, piInf_tmul, hB0, hB1, map_one, mul_one] at e
     have hi := congrArg Complex.im e
     have him := im_ne_zero h hβ (τ w).1
     set p := InfinitePlace.Completion.extensionEmbedding w ((C.repr x 0).1 w) with hp
@@ -799,7 +799,7 @@ theorem exists_section {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ : ∀ w : I
         piInf (τ w) (ofInf c • ((1 : AF F) ⊗ₜ[F] y)) = ((e w (c w) : ℝ) : ℂ) * (τ w).1 y := fun c y => by
       rw [← he, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
       rfl
-    rw [map_add, hc, hc]
+    rw [map_add (f := _), hc, hc]
     simp only [(e w).apply_symm_apply, map_one, mul_one]
     apply Complex.ext
     · simp only [Complex.add_re, Complex.ofReal_re, Complex.re_ofReal_mul, r]; ring
@@ -860,7 +860,7 @@ theorem trace_AE {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (z : AE F E) :
   rw [Algebra.trace_eq_matrix_trace b, Matrix.trace_fin_two]
   simp only [Algebra.leftMulMatrix_eq_repr_mul, e0, e1]
   rw [map_add (cA σ), map_mul (cA σ), AlgHom.commutes, AlgHom.commutes, q.anti]
-  simp only [map_add, map_smul, Module.Basis.repr_self, Finsupp.add_apply, Finsupp.smul_apply, Finsupp.single_eq_same,
+  simp only [map_add (f := _), map_smul, Module.Basis.repr_self, Finsupp.add_apply, Finsupp.smul_apply, Finsupp.single_eq_same,
     Finsupp.single_eq_of_ne (zero_ne_one' (Fin 2)), Finsupp.single_eq_of_ne (zero_ne_one' (Fin 2)).symm, smul_eq_mul, mul_one, mul_zero,
     add_zero, zero_add]
   ring
@@ -875,7 +875,7 @@ theorem trace_trace {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ : ∀ w : Infi
       ∑ w, 2 * (piInf (τ w) z).re := by
   rw [trace_mixed h.1]
   refine Finset.sum_congr rfl fun w _ => ?_
-  rw [← piInf_algebraMap (τ w), trace_AE h, map_add, piInf_cA h]
+  rw [← piInf_algebraMap (τ w), trace_AE h, map_add (f := _), piInf_cA h]
   simp [two_mul]
 
 theorem evI_add (a b : AF F) : evI F (a + b) = evI F a + evI F b := map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F) _ _
@@ -987,9 +987,9 @@ variable (F κ) in
 def trB : (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ((κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ) :=
   (LinearMap.toContinuousLinearMap (𝕜 := ℝ) (E := κ → mixedEmbedding.mixedSpace F) (F' := ℝ)).toLinearMap.comp
     (LinearMap.mk₂ ℝ (fun y x => Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (∑ i, x i * y i))
-      (fun y y' x => by simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add])
+      (fun y y' x => by simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)])
       (fun t y x => by simp only [Pi.smul_apply, mul_smul_comm, ← Finset.smul_sum, map_smul])
-      (fun y x x' => by simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add])
+      (fun y x x' => by simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)])
       (fun t y x => by simp only [Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum, map_smul]))
 
 theorem trB_apply (y x : κ → mixedEmbedding.mixedSpace F) :
@@ -1041,7 +1041,7 @@ theorem exists_heis (hD : DerEx) {ψ : AddChar (AF F) ℂ} {τ : ∀ w : Infinit
     { toFun := fun z i => evI F ((d.e (U z)).1 i)
       map_add' := fun z z' => by
         funext i
-        rw [hadd, map_add]
+        rw [hadd, map_add (f := _)]
         exact evI_add _ _
       map_smul' := fun t z => by
         funext i
@@ -1053,7 +1053,7 @@ theorem exists_heis (hD : DerEx) {ψ : AddChar (AF F) ℂ} {τ : ∀ w : Infinit
     { toFun := fun z i => evI F ((d.e (U z)).2 i)
       map_add' := fun z z' => by
         funext i
-        rw [hadd, map_add]
+        rw [hadd, map_add (f := _)]
         exact evI_add _ _
       map_smul' := fun t z => by
         funext i
@@ -1127,7 +1127,7 @@ theorem iota_sumPl (c : InfinitePlace F → Matrix (Ix P Q) (Ix R S) ℂ) (T : T
       rfl
     · rw [Function.update_of_ne h, Function.update_of_ne h]
       rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Main
 

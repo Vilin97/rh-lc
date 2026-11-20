@@ -44,13 +44,13 @@ def SimSys.comp (s t : SimSys D N K) : SimSys D N K where
   lin n hn hc c x := by
     obtain ⟨z, hz⟩ := t.lin n hn hc c x
     obtain ⟨z', hz'⟩ := s.lin n hn hc c (t.g n x)
-    exact ⟨z' + s.g n z, by simp only [AddMonoidHom.comp_apply]; rw [hz, map_add, hz', map_nsmul, smul_add, add_assoc]⟩
+    exact ⟨z' + s.g n z, by simp only [AddMonoidHom.comp_apply]; rw [hz, map_add (f := _), hz', map_nsmul, smul_add, add_assoc]⟩
   u_cop n hn hc := Nat.Coprime.mul_left (s.u_cop n hn hc) (t.u_cop n hn hc)
   u_tower n m hn hm hc := Nat.ModEq.mul (s.u_tower n m hn hm hc) (t.u_tower n m hn hm hc)
   surj n hn hc x := by
     obtain ⟨y, z, hy⟩ := s.surj n hn hc x
     obtain ⟨y', z', hy'⟩ := t.surj n hn hc y
-    exact ⟨y', z + s.g n z', by simp only [AddMonoidHom.comp_apply]; rw [hy', map_add, hy, map_nsmul, smul_add, add_assoc]⟩
+    exact ⟨y', z + s.g n z', by simp only [AddMonoidHom.comp_apply]; rw [hy', map_add (f := _), hy, map_nsmul, smul_add, add_assoc]⟩
   inj n hn hc x z h := by
     obtain ⟨w, hw⟩ := s.inj n hn hc (t.g n x) z h
     exact t.inj n hn hc x w hw
@@ -68,13 +68,13 @@ def SimSys.comp (s t : SimSys D N K) : SimSys D N K where
     obtain ⟨z', hz'⟩ := s.tower n m hn hm hc (t.g n x)
     exact ⟨z' + s.g (n * m) z, by
       simp only [AddMonoidHom.comp_apply]
-      rw [hz, map_add, hz', map_nsmul, smul_add, add_assoc]⟩
+      rw [hz, map_add (f := _), hz', map_nsmul, smul_add, add_assoc]⟩
   one x := by
     obtain ⟨z, hz⟩ := t.one x
     obtain ⟨z', hz'⟩ := s.one x
     exact ⟨z' + s.g K z, by
       simp only [AddMonoidHom.comp_apply]
-      rw [hz, map_add, hz', map_nsmul, smul_add, add_assoc]⟩
+      rw [hz, map_add (f := _), hz', map_nsmul, smul_add, add_assoc]⟩
 
 section Tate
 
@@ -103,7 +103,7 @@ def TateIsoO.resim (I : TateIsoO D k Q act e) (t : SimSys D N K) : TateIsoO D k 
   ev n y := if 0 < n ∧ n.Coprime p then I.ev n (t.g n y) else I.ev n y
   add n x y := by
     split_ifs
-    · rw [map_add, I.add]
+    · rw [map_add (f := _), I.add]
     · exact I.add _ _ _
   lin n c x := by
     split_ifs with h
@@ -159,7 +159,7 @@ def Obj.resim {b : Base D R} {S : Scheme.{0}} {s : S ⟶ Sp R} (o : Obj b K s) (
     (t : SimSys D N K) : Obj b K s :=
   { o with
     eta := fun y => o.eta (t.g K y)
-    eta_add := fun x y => by rw [map_add]; exact o.eta_add _ _
+    eta_add := fun x y => by rw [map_add (f := _)]; exact o.eta_add _ _
     eta_lin := fun c x => by
       obtain ⟨z, hz⟩ := t.lin K hK hKp c x
       rw [hz, o.eta_add_nsmul]; exact o.eta_lin _ _

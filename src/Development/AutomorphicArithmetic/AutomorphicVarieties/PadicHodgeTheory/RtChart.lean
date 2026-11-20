@@ -69,6 +69,6 @@ theorem UpperTheory.V.Loc.rtChart :
   refine ⟨w, φ, hφ, count_weights_eq_local_dims w (chartCount hP D U E x hx 12 w φ u hφ hg fun i j => ?_), hg⟩
   have h1 := hz i
   simp only [e, map_sub, AlgHom.commutes, sub_eq_iff_eq_add] at h1
-  rw [h1, map_add, MvPowerSeries.algebraMap_apply, MvPowerSeries.coeff_C, if_neg (by simp), add_zero,
+  rw [h1, map_add (f := _), MvPowerSeries.algebraMap_apply, MvPowerSeries.coeff_C, if_neg (by simp), add_zero,
     MvPowerSeries.coeff_X]
   simp [Finsupp.single_left_inj, eq_comm]

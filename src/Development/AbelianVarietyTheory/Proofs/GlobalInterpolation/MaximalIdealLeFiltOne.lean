@@ -10,7 +10,7 @@ def filt (N : ℕ) : Ideal (MvPowerSeries (Fin a) O) where
   carrier := {f | ∀ m : Fin a →₀ ℕ, coeff m f ∈ IsLocalRing.maximalIdeal O ^ (N - m.degree)}
   add_mem' := by
     intro f g hf hg m
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact Ideal.add_mem _ (hf m) (hg m)
   zero_mem' := by
     intro m
@@ -23,7 +23,7 @@ def filt (N : ℕ) : Ideal (MvPowerSeries (Fin a) O) where
     refine Ideal.mul_mem_left _ _ ?_
     refine Ideal.pow_le_pow_right ?_ (hf p.2)
     have : p.2.degree ≤ m.degree := by
-      rw [← hp, map_add]; omega
+      rw [← hp, map_add (f := _)]; omega
     omega
 
 theorem mul_mem_filt {k l : ℕ} {f g : MvPowerSeries (Fin a) O}
@@ -37,7 +37,7 @@ theorem mul_mem_filt {k l : ℕ} {f g : MvPowerSeries (Fin a) O}
   have hm := Ideal.mul_mem_mul h1 h2
   rw [← pow_add] at hm
   refine Ideal.pow_le_pow_right ?_ hm
-  have : m.degree = p.1.degree + p.2.degree := by rw [← hp, map_add]
+  have : m.degree = p.1.degree + p.2.degree := by rw [← hp, map_add (f := _)]
   omega
 
 theorem maximalIdeal_le_filt_one :

@@ -53,7 +53,7 @@ def dualZ (X : Submodule (𝓞 H.E) (V H n)) : Submodule (𝓞 H.E) (V H n) wher
   add_mem' := fun {y y'} hy hy' x hx => by
     obtain ⟨z, h⟩ := hy x hx
     obtain ⟨z', h'⟩ := hy' x hx
-    exact ⟨z + z', by rw [add_dotProduct, map_add, h, h']; push_cast; rfl⟩
+    exact ⟨z + z', by rw [add_dotProduct, map_add (f := _), h, h']; push_cast; rfl⟩
   zero_mem' := fun x _ => ⟨0, by simp⟩
   smul_mem' := fun a y hy x hx => by rw [smul_dot]; exact hy _ (X.smul_mem a hx)
 
@@ -99,7 +99,7 @@ def sqForm (x : V H n) : Herm H n :=
 
 def symForm (x x' : V H n) : Herm H n :=
   ⟨Matrix.of fun i k => x i * H.conj (x' k) + x' i * H.conj (x k), fun i k => by
-    simp only [Matrix.of_apply, map_add, map_mul, conj_conj]; ring⟩
+    simp only [Matrix.of_apply, map_add (f := _), map_mul, conj_conj]; ring⟩
 
 def atPl (χ : Herm H n) (τ : Pl R) : Matrix (Fin n) (Fin n) ℂ :=
   (χ : Matrix (Fin n) (Fin n) H.E).map (tau H τ)
@@ -185,7 +185,7 @@ def trBil (b : Pl R → Matrix (Fin n) (Fin n) ℂ) : XR R n →ₗ[ℝ] XR R n 
   LinearMap.mk₂ ℝ
     (fun u v => ∑ τ, ∑ i, ∑ k, 2 * (starRingEnd ℂ (u τ i) * b τ i k * v τ k).re)
     (fun u u' v => by
-      simp only [Pi.add_apply, map_add, add_mul, Complex.add_re, mul_add, Finset.sum_add_distrib])
+      simp only [Pi.add_apply, map_add (f := _), add_mul, Complex.add_re, mul_add, Finset.sum_add_distrib])
     (fun t u v => by
       simp only [Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ =>

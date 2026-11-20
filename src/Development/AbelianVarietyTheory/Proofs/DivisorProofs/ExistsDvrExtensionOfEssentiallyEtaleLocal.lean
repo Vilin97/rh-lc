@@ -22,7 +22,7 @@ theorem tensorLift_injective_of_flat {R S A K L : Type} [CommRing R] [CommRing S
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a s => rw [hg, LinearMap.rTensor_tmul, AlgHom.toLinearMap_apply, hH]
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   have hloc : IsLocalizedModule (nonZeroDivisors R) (TensorProduct.mk R K S 1) :=
     (isLocalizedModule_iff_isBaseChange (nonZeroDivisors R) K _).mpr (TensorProduct.isBaseChange R S K)
   haveI : Nontrivial R := (algebraMap R K).domain_nontrivial

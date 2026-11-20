@@ -39,7 +39,7 @@ theorem aeval_conj (P : GL (Fin n) K) (D : Matrix (Fin n) (Fin n) K) (Q : K[X]) 
     aeval ((P : Matrix (Fin n) (Fin n) K) * D * ((P⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K)) Q =
       (P : Matrix (Fin n) (Fin n) K) * aeval D Q * ((P⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) := by
   induction Q using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, hp, hq, Matrix.mul_add, Matrix.add_mul]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, Matrix.mul_add, Matrix.add_mul]
   | monomial k a =>
     rw [aeval_monomial, aeval_monomial, conj_pow]
     have hc : algebraMap K (Matrix (Fin n) (Fin n) K) a * (P : Matrix (Fin n) (Fin n) K) =

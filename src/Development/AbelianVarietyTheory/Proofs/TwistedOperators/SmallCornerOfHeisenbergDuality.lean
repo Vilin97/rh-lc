@@ -16,7 +16,7 @@ def hermJ (σ : L →+* L) (x y : Fin N → L) : L := ∑ i, σ (x i) * y i.rev
 
 theorem hermJ_add_left (σ : L →+* L) (x x' y : Fin N → L) :
     hermJ σ (x + x') y = hermJ σ x y + hermJ σ x' y := by
-  simp only [hermJ, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hermJ, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hermJ_add_right (σ : L →+* L) (x y y' : Fin N → L) :
     hermJ σ x (y + y') = hermJ σ x y + hermJ σ x y' := by
@@ -105,7 +105,7 @@ theorem smallCorner_of_heis_dual : Heis → Dual → SmallCorner := by
     rw [← dotProduct_eq_neg_hermJ r b b hrb, hb]
     simp only [dotProduct, mul_neg, Finset.sum_neg_distrib]
   have hc : r ⬝ᵥ b₁ + τ * s + σ (r ⬝ᵥ b₁ + τ * s) = -∑ j, r j * σ (r j.rev) := by
-    rw [hnorm, hrb₁, map_add, map_mul, map_neg, map_hermJ hσσ, hσs, ← hsplit]
+    rw [hnorm, hrb₁, map_add (f := _), map_mul, map_neg, map_hermJ hσσ, hσs, ← hsplit]
     simp only [hermJ_add_left, hermJ_add_right]
     linear_combination s * hτ + hs
   obtain ⟨hHrad, -, hHex⟩ := hH L ϖ σ q N hU

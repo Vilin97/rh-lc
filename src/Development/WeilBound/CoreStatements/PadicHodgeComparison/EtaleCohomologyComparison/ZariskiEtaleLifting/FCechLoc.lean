@@ -42,7 +42,7 @@ theorem cl_mem_of_pow {X : Type w} [AddCommGroup X] [Module R X] (act : A →+* 
     { carrier := {a | act a z ∈ V}
       add_mem' := fun {a b} ha hb => by
         change act (a + b) z ∈ V
-        rw [map_add, LinearMap.add_apply]; exact V.add_mem ha hb
+        rw [map_add (f := _), LinearMap.add_apply]; exact V.add_mem ha hb
       zero_mem' := by
         change act 0 z ∈ V
         rw [map_zero, LinearMap.zero_apply]; exact V.zero_mem

@@ -114,7 +114,7 @@ theorem mem_range_piTensorHomMap [∀ τ, FiniteDimensional ℂ (V τ)]
     obtain ⟨a₁, ha₁⟩ := h₁
     obtain ⟨a₂, ha₂⟩ := h₂
     refine ⟨a₁ + a₂, ?_⟩
-    rw [map_add, ha₁, ha₂]
+    rw [map_add (f := _), ha₁, ha₂]
     ext x
     simp
 
@@ -258,7 +258,7 @@ theorem piTensorHomMap_map_update (y : PiTensorProduct ℂ (fun σ => V σ →�
     rw [e1, e2]
     exact (PiTensorProduct.mapMultilinear ℂ V W).map_update_sub t τ _ _
   | add a b ha hb =>
-    simp only [map_add, ha, hb, LinearMap.add_comp, LinearMap.comp_add]
+    simp only [map_add (f := _), ha, hb, LinearMap.add_comp, LinearMap.comp_add]
     abel
 
 end GlobalTheory.PiTensorCommute
@@ -348,7 +348,7 @@ theorem mem_span_map_of_commute :
       rw [map_smul, map_smul, PiTensorProduct.map_tprod, PiTensorProduct.piTensorHomMap_tprod_eq_map]
       exact Submodule.smul_mem _ _ (Submodule.subset_span
         ⟨fun σ => π σ (t σ), fun τ p hp => (memH τ _).1 (hπmem τ _) p hp, rfl⟩)
-    | add a b ha hb => rw [map_add, map_add]; exact Submodule.add_mem _ ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ ha hb
   rw [hy]
   exact key y
 

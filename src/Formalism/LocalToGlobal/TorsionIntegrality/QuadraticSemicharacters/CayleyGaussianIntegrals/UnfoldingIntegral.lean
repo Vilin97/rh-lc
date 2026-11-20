@@ -86,7 +86,7 @@ theorem unfoldingIntegral : UnfoldIntegral := by
     rw [hT]
     have h1 : ((e p : Λ) : V) = (p.1 : V) + Ae (p.2 : V) := rfl
     rw [h1, ud_phi_wd hU (hS.1 _ p.1.2) (show Ae (p.2 : V) ∈ latA Λ δ Ae from ⟨p.2, p.2.2, rfl⟩)]
-    simp only [f, map_add, LinearEquiv.symm_apply_apply]
+    simp only [f, map_add (f := _), LinearEquiv.symm_apply_apply]
     congr 2
     abel
   have hint : ∀ x : Λ, Integrable (fun z => termT H α δ (x : V) z) (μ.restrict D') := by

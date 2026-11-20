@@ -102,7 +102,7 @@ theorem algebraMap_basis_repr {ι : Type} [Fintype ι] [DecidableEq ι] (b : Mod
       ∑ τ : E →ₐ[F] FvBar F v, finEmb F v τ y * τ (b i) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz, add_mul, Finset.sum_add_distrib]
+  | add y z hy hz => simp only [map_add (f := _), Finsupp.add_apply, hy, hz, add_mul, Finset.sum_add_distrib]
   | tmul a e =>
     rw [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul, map_mul,
       ← IsScalarTower.algebraMap_apply, Module.Basis.traceDual_repr_apply, Algebra.traceForm_apply,

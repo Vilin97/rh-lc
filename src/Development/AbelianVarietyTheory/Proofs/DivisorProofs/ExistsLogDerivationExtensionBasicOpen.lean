@@ -33,7 +33,7 @@ theorem exists_extension {A B : Type} [CommRing A] [CommRing B] [Algebra A B] (f
   let e : B →+ B :=
     { toFun := fun x => (L x).snd
       map_zero' := by rw [map_zero, TrivSqZeroExt.snd_zero]
-      map_add' := fun x y => by rw [map_add, TrivSqZeroExt.snd_add] }
+      map_add' := fun x y => by rw [map_add (f := _), TrivSqZeroExt.snd_add] }
   refine ⟨Derivation.mk' e.toIntLinearMap fun x y => ?_, fun r => ?_⟩
   · change (L (x * y)).snd = x • (L y).snd + y • (L x).snd
     rw [map_mul, TrivSqZeroExt.snd_mul, hfst, hfst]
@@ -51,7 +51,7 @@ theorem map_mem_map {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) (D :
     rw [h]
     exact Ideal.mem_map_of_mem φ (hJ g hg)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x hx hE =>
     rw [smul_eq_mul, E.leibniz, smul_eq_mul, smul_eq_mul]
     exact add_mem (Ideal.mul_mem_left _ a hE) (Ideal.mul_mem_right _ _ hx)

@@ -117,7 +117,7 @@ theorem levelPrime_mod (D : D7) (u : D.what₂.Word) :
     push_cast at this ⊢
     linear_combination -this
   have hci : IsIntegral ℤ (D.conjF y) := hyi.map (D.conjF.toRingHom.toIntAlgHom)
-  rw [← D.conjF_eq, hπ, map_add, map_mul, map_one, map_natCast] at hn
+  rw [← D.conjF_eq, hπ, map_add (f := _), map_mul, map_one, map_natCast] at hn
   set z : D.host.E := y + D.conjF y + M * (y * D.conjF y) with hz
   have hzi : IsIntegral ℤ z :=
     (hyi.add hci).add ((isIntegral_natCast (R := ℤ) (B := D.host.E) M).mul (hyi.mul hci))

@@ -44,7 +44,7 @@ theorem derivation_apply_eq_sum [IsNoetherianRing Q] {M : Type*} [AddCommGroup M
       have h1 : ∀ i, ∑ j, φ (pderiv (R := T) j (X i * k i)) • D (φ (X j)) =
           φ (X i) • ∑ j, φ (pderiv (R := T) j (k i)) • D (φ (X j)) + φ (k i) • D (φ (X i)) := by
         intro i
-        simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul, add_smul,
+        simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, add_smul,
           Finset.sum_add_distrib, Finset.smul_sum, mul_smul]
         congr 1
         rw [Finset.sum_eq_single i]
@@ -57,7 +57,7 @@ theorem derivation_apply_eq_sum [IsNoetherianRing Q] {M : Type*} [AddCommGroup M
         generalize constantCoeff g = c at hg
         subst hg
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [map_add, hC, zero_add, pderiv_C, map_sum, Finset.sum_smul]
+          simp only [map_add (f := _), hC, zero_add, pderiv_C, map_sum, Finset.sum_smul]
         rw [Finset.sum_comm, ← Finset.sum_sub_distrib]
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [h1, map_mul, Derivation.leibniz, smul_sub]

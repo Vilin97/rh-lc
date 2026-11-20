@@ -91,7 +91,7 @@ theorem range_idempotent_equiv_sum_eigDim : ∀ (p : ℕ) [Fact p.Prime] (C : Ty
       exact Module.End.mem_eigenspace_iff.1 this
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x x' h h' => rw [map_add, map_add, map_add, LinearMap.add_apply, h, h', add_smul]
+    | add x x' h h' => rw [map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply, h, h', add_smul]
     | tmul c a =>
       have h1 : (c ⊗ₜ[ℤ] a : ℤ_[p] ⊗[ℤ] OE) = (c ⊗ₜ[ℤ] 1) * (1 ⊗ₜ[ℤ] a) := by simp
       have h2 : ρ (c ⊗ₜ[ℤ] 1) = algebraMap ℤ_[p] O c • (1 : Matrix (Fin g) (Fin g) O) := hz c

@@ -59,7 +59,7 @@ private theorem exists_smul_mem_of_extOrder {R K : Type} [CommRing R] [IsDomain 
       funext t
       have h1 := congrFun e1 t
       have h2 := congrFun e2 t
-      simp only [Pi.smul_apply, smul_eq_mul, Pi.add_apply, map_mul, map_add] at h1 h2 ⊢
+      simp only [Pi.smul_apply, smul_eq_mul, Pi.add_apply, map_mul, map_add (f := _)] at h1 h2 ⊢
       linear_combination (algebraMap R K s2) * h1 + (algebraMap R K s1) * h2
     | mul x y _ _ hx hy =>
       obtain ⟨s1, hs1, a1, ha1, e1⟩ := hx

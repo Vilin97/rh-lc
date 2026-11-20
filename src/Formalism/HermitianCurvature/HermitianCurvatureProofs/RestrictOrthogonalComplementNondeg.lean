@@ -66,7 +66,7 @@ lemma exists_unit_norm_vector (hσ : Inv σ) {h : V →ₛₗ[σ] V →ₗ[K] K}
     have h2 := hcon (u + (l / h u v) • v)
     have h3 : h (u + (l / h u v) • v) (u + (l / h u v) • v) =
         h u u + (l / h u v) * h u v + σ (l / h u v) * h v u + σ (l / h u v) * ((l / h u v) * h v v) := by
-      simp only [map_add, LinearMap.add_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
+      simp only [map_add (f := _), LinearMap.add_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
         RingHom.id_apply]
       ring
     rw [h3, hcon u, hcon v, ← hh u v, ← map_mul, div_mul_cancel₀ _ huv] at h2
@@ -419,8 +419,8 @@ lemma exists_isotropic_completion (hσ : Inv σ) (h : V →ₛₗ[σ] V →ₗ[K
   have ht : σ (h m0 m0) = h m0 m0 := hh m0 m0
   refine ⟨m0 + (-(l * h m0 m0) / N i0) • u, ?_, ?_, ?_⟩
   · intro i
-    rw [map_add, map_smul, hGN, smul_zero, add_zero, hm0]
-  · simp only [map_add, LinearMap.add_apply, map_smul, map_smulₛₗ, LinearMap.smul_apply, huu, hum,
+    rw [map_add (f := _), map_smul, hGN, smul_zero, add_zero, hm0]
+  · simp only [map_add (f := _), LinearMap.add_apply, map_smul, map_smulₛₗ, LinearMap.smul_apply, huu, hum,
       hmu, smul_eq_mul, map_div₀, map_neg, map_mul, ht]
     have hl' : σ l = 1 - l := by rw [← hl]; ring
     rw [hl']
@@ -431,7 +431,7 @@ lemma exists_isotropic_completion (hσ : Inv σ) (h : V →ₛₗ[σ] V →ₗ[K
     have h1 : h u (∑ i, c i • x i) = 0 := by
       rw [form_sum_right_alt]
       exact Finset.sum_eq_zero (fun j _ => by rw [hux, mul_zero])
-    rw [hc, map_add, map_smul, huu, smul_zero, add_zero, hum] at h1
+    rw [hc, map_add (f := _), map_smul, huu, smul_zero, add_zero, hum] at h1
     exact hs h1
 
 lemma witt_extension_induction (hσ : Inv σ) [FiniteDimensional K V] (h : V →ₛₗ[σ] V →ₗ[K] K) (hh : Herm h)
@@ -633,7 +633,7 @@ theorem exists_sigma (hq : Fintype.card K = q ^ 2) :
       nlinarith
     obtain ⟨t, ht⟩ := h3
     refine ⟨t / (t + σ t), ?_⟩
-    rw [map_div₀, map_add, hinv, add_comm (σ t) t, ← add_div, div_self ht]
+    rw [map_div₀, map_add (f := _), hinv, add_comm (σ t) t, ← add_div, div_self ht]
 
 theorem c_count_succ [DecidableEq K] (n : ℕ) (c : K) :
     (univ.filter (fun w : Fin (n + 1) → K => ∑ i, w i ^ q * w i = c)).card =

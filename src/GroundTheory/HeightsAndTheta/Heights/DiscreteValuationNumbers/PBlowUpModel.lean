@@ -50,7 +50,7 @@ theorem coeff_aeval_C_mul_X_pow {B : Type*} [CommRing B] [Algebra R B] (a : σ �
     by_cases hd : Finsupp.weight ω d = n
     · rw [if_pos hd.symm, if_pos hd]
     · rw [if_neg (Ne.symm hd), if_neg hd, map_zero]
-  | add p q hp hq => simp only [map_add, Polynomial.coeff_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), Polynomial.coeff_add, hp, hq]
 
 theorem aeval_weightedHomogeneousComponent_of_forms {K : Type*} [DecidableEq K] {ι : K → Type*}
     (ω : σ → K → ℕ) (e : σ → MRing ι R) (he : ∀ v, IsMultiHomog (e v) (ω v)) (m : K → ℕ)
@@ -73,7 +73,7 @@ theorem aeval_weightedHomogeneousComponent_of_forms {K : Type*} [DecidableEq K] 
     · rw [(isWeightedHomogeneous_monomial ω d c
         (m := Finsupp.weight ω d) rfl).weightedHomogeneousComponent_ne m
         (Ne.symm hdm), hmon.weightedHomogeneousComponent_ne m (Ne.symm hdm), map_zero]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 end Graded
 
@@ -231,7 +231,7 @@ theorem BlowUpModel.proof (h₁ : ReesAlgebraDim.Statement.{u}) : BlowUpModel.St
           rw [aeval_C, Polynomial.algebraMap_apply]
           exact (reesAlgebra I).algebraMap_mem _
         | add p q hp hq =>
-          rw [map_add]
+          rw [map_add (f := _)]
           exact add_mem hp hq
         | mul_X p v hp =>
           rw [map_mul]
@@ -262,7 +262,7 @@ theorem BlowUpModel.proof (h₁ : ReesAlgebraDim.Statement.{u}) : BlowUpModel.St
             rw [map_zero]
             exact zero_mem _
           | add a b _ _ ha hb =>
-            rw [map_add]
+            rw [map_add (f := _)]
             exact add_mem ha hb
           | smul c a _ ha =>
             rw [LinearMap.map_smul, Polynomial.smul_eq_C_mul]

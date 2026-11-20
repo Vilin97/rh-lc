@@ -88,7 +88,7 @@ theorem exists_alg_form : ∀ {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {θ : In
   have hcc : cA D (cA D e) = e := GlobalTheory.DualPairCheck.cA_cA e
   have hq1 : (1 - (e + (cA D e))) * (1 - (e + (cA D e))) = 1 - (e + (cA D e)) := by linear_combination he1 + hc1 + 2 * hec
   have hcq : cA D (1 - (e + (cA D e))) = 1 - (e + (cA D e)) := by
-    rw [map_sub, map_one, map_add, hcc, add_comm (cA D e) e]
+    rw [map_sub, map_one, map_add (f := _), hcc, add_comm (cA D e) e]
   have hcq0 : (cA D e) * (1 - (e + (cA D e))) = 0 := by linear_combination -hc1 - hce
   have hqc0 : cA D (1 - (e + (cA D e))) * (cA D e) = 0 := by rw [hcq, mul_comm]; exact hcq0
   have hdec : ∀ x : WO S T, (cA D e) • x + (e • x + (1 - (e + (cA D e))) • x) = x := fun x => by

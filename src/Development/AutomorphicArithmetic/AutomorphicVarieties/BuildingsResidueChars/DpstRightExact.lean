@@ -33,7 +33,7 @@ private noncomputable def dmapUr {l : ℕ} [Fact l.Prime] (P : LocPrime l) {K : 
     {ρ : Representation LL ↥(GK K) V} {ρ' : Representation LL ↥(GK K) V'} {f : V →ₗ[LL] V'}
     (hf : ∀ g v, f (ρ g v) = ρ' g (f v)) : DpstUr P ρ →ₗ[↥(MaximalUnramifiedExtension l)] DpstUr P ρ' where
   toFun := fun x => toUr P ρ' (dmap P hf ((toUr P ρ).symm x))
-  map_add' := fun x y => by simp only [map_add]
+  map_add' := fun x y => by simp only [map_add (f := _)]
   map_smul' := fun c x => dmap_mulD P hf c ((toUr P ρ).symm x)
 
 theorem UpperTheory.dpst_right_exact :

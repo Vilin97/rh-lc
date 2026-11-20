@@ -44,7 +44,7 @@ private theorem coeff_pd_eq_coeff_add_single_mul (i : XZ (Bool × H) N0 N1) (Q :
           · omega
         simp [hsi]
       · rw [if_neg h2]
-  · simp only [map_add, MvPolynomial.coeff_add, hp, hq, add_mul]
+  · simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq, add_mul]
 
 theorem coeff_lapT (t : H) (Q : PolyXZ H N0 N1) (ν : XZ (Bool × H) N0 N1 →₀ ℕ) :
     AddMonoidAlgebra.coeff (lapT N0 N1 t Q) ν =

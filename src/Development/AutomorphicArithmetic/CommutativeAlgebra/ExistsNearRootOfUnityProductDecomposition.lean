@@ -21,7 +21,7 @@ private lemma mm_map {A E D : Type} [CommRing A] [IsLocalRing A] [CommRing E] [A
       rw [AlgHom.map_smul_of_tower]
       exact Submodule.smul_mem_smul hr (h y hy))
     (fun a b ha hb => by
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem ha hb)
 
 private lemma adjoin_map {A E D : Type} [CommRing A] [CommRing E] [Algebra A E] [CommRing D] [Algebra A D]

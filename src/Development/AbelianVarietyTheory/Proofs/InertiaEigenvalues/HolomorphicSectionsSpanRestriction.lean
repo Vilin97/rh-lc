@@ -54,7 +54,7 @@ theorem mem_span_of_image_mem_span {K : Type} [Field K] {M : Type} [AddCommGroup
       obtain ⟨i, rfl⟩ := hx
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul c x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
   refine Submodule.span_le.mpr ?_ hφ
   rintro _ ⟨i, rfl⟩

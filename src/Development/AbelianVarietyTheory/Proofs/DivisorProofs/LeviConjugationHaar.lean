@@ -82,7 +82,7 @@ theorem GlobalTheory.UnipConj.lintegral_conj_levi : ∀ (F E : Type) [Field F] [
     · rw [(hχ _).1, (hχ _).1, (hχ _).1]; exact e1
     · simp only [AddSubgroup.coe_add, (hχ _).2, (hχ _).1]
       show GlobalTheory.UnipConj.coT σ G.V.J H ((n₁ * n₂ : unip σ G.V H) : UA σ G.V.J) = _
-      simp only [GlobalTheory.UnipConj.coT, Subgroup.coe_mul, e2, map_add]
+      simp only [GlobalTheory.UnipConj.coT, Subgroup.coe_mul, e2, map_add (f := _)]
       show _ = _ + _ + (wf _ _ - cA σ (wf _ _))
       abel
 

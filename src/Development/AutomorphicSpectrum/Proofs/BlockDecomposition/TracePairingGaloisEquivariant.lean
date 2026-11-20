@@ -18,6 +18,6 @@ theorem T_gal {W A C₀ : Type} [CommRing W] [CommRing A] [CommRing C₀] [Algeb
     rw [hg]
     simp only [T, TensorProduct.liftAddHom_tmul, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_mul, hσ, hσk]
   · intro x y hx hy
-    simp only [map_add, hx, hy]
+    simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.CompanionTheory.FrobPairing

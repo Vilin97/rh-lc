@@ -55,7 +55,7 @@ theorem exists_basicOpen_le_of_app_eq_one_of_isClosedImmersion :
   obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.mp h1
   refine ⟨b, ?_, hb⟩
   have ha0 : (i'.app Y').hom a = 0 := ha
-  calc (i'.app Y').hom b = (i'.app Y').hom (a + b) := by rw [map_add, ha0, zero_add]
+  calc (i'.app Y').hom b = (i'.app Y').hom (a + b) := by rw [map_add (f := _), ha0, zero_add]
     _ = 1 := by rw [hab, map_one]
 
 end GlobalTheory

@@ -167,7 +167,7 @@ theorem latIn_isLattice {M : Submodule (𝓞 K) V} (hM : IsLatMod M S I) :
         obtain ⟨n, hn, i, hi, e⟩ := Submodule.mem_sup.1 hy'
         refine ⟨n, hn, ?_⟩
         change p n = y
-        rw [← hC y y.2, ← e, map_add, hI i hi, add_zero]
+        rw [← hC y y.2, ← e, map_add (f := _), hI i hi, add_zero]
       · rintro ⟨n, hn, rfl⟩
         have hn' : n ∈ M := hN ▸ Submodule.mem_sup_left hn
         exact ⟨⟨p n, hpC n (h2 hn')⟩, hp n hn', rfl⟩
@@ -179,7 +179,7 @@ theorem latIn_isLattice {M : Submodule (𝓞 K) V} (hM : IsLatMod M S I) :
       induction hx using Submodule.span_induction with
       | mem x hx => exact ⟨⟨p x, hpC x (h2 hx)⟩, Submodule.subset_span (hp x hx), rfl⟩
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y _ _ a b => rw [map_add]; exact add_mem a b
+      | add x y _ _ a b => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b
       | smul r x _ a => rw [map_smul]; exact Submodule.smul_mem _ _ a
     intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli

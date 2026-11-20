@@ -290,7 +290,7 @@ theorem UpperTheory.Reformulated.B.DualIntegralLattice.main :
       map_one' := hinj (by rw [ht]; simp)
       map_zero' := hinj (by rw [ht]; simp)
       map_mul' := fun a b => hinj (by rw [ht, map_mul, ht, ht]; simp)
-      map_add' := fun a b => hinj (by rw [ht, map_add, ht, ht]; simp) }
+      map_add' := fun a b => hinj (by rw [ht, map_add (f := _), ht, ht]; simp) }
   have hdet := key3 τ hpu W hkey
   let Wo := W.map τ
   have hinv : Wo * Wo⁻¹ = 1 := Matrix.mul_nonsing_inv _ hdet

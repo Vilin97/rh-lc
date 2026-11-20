@@ -29,7 +29,7 @@ theorem echA_zero : ech 0 = 1 := by simp [ech]
 theorem schA_add {Y : Type} [AddCommGroup Y] [Module ℝ Y] (β : LinearMap.BilinForm ℝ Y) (a b a' b' : Y)
     (h : β a b' = β a' b) (f : Y → ℂ) : sch β (a + a') (b + b') f = sch β a b (sch β a' b' f) := by
   funext x
-  simp only [sch, map_add, LinearMap.add_apply]
+  simp only [sch, map_add (f := _), LinearMap.add_apply]
   rw [show x + (a + a') = x + a + a' by abel, ← mul_assoc, ← echA_add]
   congr 2
   rw [h]; ring
@@ -77,7 +77,7 @@ theorem GlobalTheory.ArchSchA.lagSetA_submodule : ∀ {F E : Type} [Field F] [Nu
     rfl
   · rintro l ⟨y, c, z, hy, hc, hz, hz1, rfl⟩ l' ⟨y', c', z', hy', hc', hz', hz1', rfl⟩
     refine ⟨y + y', c + c', z + z', lagL_at_add hy hy', lagL_at_add hc hc', lagL_at_add hz hz', ?_, ?_⟩
-    · rw [map_add, Prod.fst_add, lagL_arch_add, hz1, hz1', add_zero]
+    · rw [map_add (f := _), Prod.fst_add, lagL_arch_add, hz1, hz1', add_zero]
     · have : Matrix.vecMulVec (y + y') (incV F H'.x) + Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ (c + c')) +
             incM F H.ι * (z + z') * (incM F H'.ι)ᵀ =
           (Matrix.vecMulVec y (incV F H'.x) + Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ c) +
@@ -86,7 +86,7 @@ theorem GlobalTheory.ArchSchA.lagSetA_submodule : ∀ {F E : Type} [Field F] [Nu
             incM F H.ι * z' * (incM F H'.ι)ᵀ) := by
         rw [Matrix.add_vecMulVec, Matrix.mulVec_add, Matrix.vecMulVec_add, Matrix.mul_add, Matrix.add_mul]; abel
       rw [this]
-      ext : 1 <;> simp only [Prod.fst_add, Prod.snd_add, LinearEquiv.map_add, lagL_arch_add] <;> abel
+      ext : 1 <;> simp only [Prod.fst_add, Prod.snd_add, LinearEquiv.map_add (f := _), lagL_arch_add] <;> abel
   · rintro t l ⟨y, c, z, hy, hc, hz, hz1, rfl⟩
     refine ⟨realAd F t • y, realAd F t • c, realAd F t • z, lagL_at_smul _ hy, lagL_at_smul _ hc, lagL_at_smul _ hz,
       ?_, ?_⟩
@@ -145,7 +145,7 @@ theorem GlobalTheory.ArchSchA.infRelA_proportional : GlobalTheory.FunPr.Hypothes
   have eadd : ∀ x y : Matrix (Fin n) (Fin d) (AE F E),
       arch F (M.co.e (x + y)).1 = arch F (M.co.e x).1 + arch F (M.co.e y).1 ∧
       arch F (M.co.e (x + y)).2 = arch F (M.co.e x).2 + arch F (M.co.e y).2 := fun x y =>
-    ⟨by rw [map_add, Prod.fst_add, archA_add], by rw [map_add, Prod.snd_add, archA_add]⟩
+    ⟨by rw [map_add (f := _), Prod.fst_add, archA_add], by rw [map_add (f := _), Prod.snd_add, archA_add]⟩
   have inv : ∀ S : SInf F (Fin n × Fin d) →L[ℂ] SInf F (Fin n₁ × Fin d₁),
       GlobalTheory.ThK.EvFactor.InfRelG B M M₁ H.ι H'.ι (isoA H H') S →
       ∀ l ∈ Λ, ∀ f g : SInf F (Fin n × Fin d), ⇑g = sch (trP F _) l.1 l.2 ⇑f → ℓ S g = ℓ S f := by

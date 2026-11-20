@@ -37,7 +37,7 @@ theorem exists_dvd_pow_mul_ringHom_sub_natPowComb {S A : Type} [CommRing S] [Com
   obtain ⟨a, x, hx⟩ := hs
   obtain ⟨b, y, hy⟩ := ht
   refine ⟨a + b, p ^ b * (m : A) ^ i * x + p ^ a * (m : A) ^ j * y, ?_⟩
-  simp only [map_add, map_mul, map_pow, map_natCast]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast]
   linear_combination (p ^ b * (m : A) ^ i) * hx + (p ^ a * (m : A) ^ j) * hy
 
 theorem ringHom_lift_sub_mem_mul {S R A : Type} [CommRing S] [CommRing R] [CommRing A] (ψ : S →+* A) (φ : R →+* A) (I : Ideal A)
@@ -53,7 +53,7 @@ theorem ringHom_lift_sub_mem_natPowComb {S R A : Type} [CommRing S] [CommRing R]
     ψ ((m : S) ^ j * s + (m : S) ^ i * t) - (m : A) ^ (i + j) * φ (x + y) ∈ I := by
   have h := I.add_mem (I.mul_mem_left ((m : A) ^ j) hs) (I.mul_mem_left ((m : A) ^ i) ht)
   convert h using 1
-  simp only [map_add, map_mul, map_pow, map_natCast]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast]
   ring
 
 noncomputable def oK (K : FinExt l) (C : Core l) : ↥(OL K) →+* Per.BdRp l :=
@@ -101,7 +101,7 @@ theorem good_poly (P : Polynomial (Wq l bk.a)) :
     Good bk C n (bk.str.symm (Ideal.Quotient.mk _ (P : bk.S))) := by
   induction P using Polynomial.induction_on with
   | C a => rw [Polynomial.coe_C]; exact good_C a
-  | add p q hp hq => rw [Polynomial.coe_add, map_add, map_add]; exact hp.add hq
+  | add p q hp hq => rw [Polynomial.coe_add, map_add (f := _), map_add (f := _)]; exact hp.add hq
   | monomial k a h =>
     rw [pow_succ, ← mul_assoc, Polynomial.coe_mul, Polynomial.coe_X, map_mul, map_mul]
     exact h.mul good_X

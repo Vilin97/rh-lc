@@ -79,7 +79,7 @@ theorem span_rows_integral {g : ℕ} (v : Valuation C NNReal) (hv : v.Integers R
       · simpa [Matrix.mulVec, dotProduct] using h2 k
     | zero => simp
     | add a b _ _ ha hb =>
-      simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+      simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
       exact (v.map_add _ _).trans (max_le ha hb)
     | smul r a _ ha =>
       simp only [Pi.smul_apply, smul_eq_mul, map_mul, mul_assoc, ← Finset.mul_sum]

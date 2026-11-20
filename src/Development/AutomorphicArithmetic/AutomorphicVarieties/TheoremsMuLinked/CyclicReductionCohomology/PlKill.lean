@@ -110,7 +110,7 @@ private theorem pow_one_padic {l : ℕ} [Fact l.Prime] {R : Type} [CommRing R] (
   rw [PadicInt.ker_toZMod, PadicInt.maximalIdeal_eq_span_p, Ideal.mem_span_singleton] at this
   obtain ⟨c, hc⟩ := dvd_sub_pow_of_dvd_sub this m
   rw [one_pow] at hc
-  rw [eq_add_of_sub_eq hc, map_add, map_mul, map_pow, map_natCast, pow_succ, hl]
+  rw [eq_add_of_sub_eq hc, map_add (f := _), map_mul, map_pow, map_natCast, pow_succ, hl]
   simp
 
 private theorem rho_pow (l : ℕ) [Fact l.Prime] (L : Loc) (G0 : Glob l L) (T : TWGrp G0) (O : Type) [CommRing O]

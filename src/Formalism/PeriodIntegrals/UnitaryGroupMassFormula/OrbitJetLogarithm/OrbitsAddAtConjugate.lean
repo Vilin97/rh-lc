@@ -142,7 +142,7 @@ theorem orbitsAddAtConjugate (D : D7) (E : Ent D) : OrbitsAddAtConjugate E := by
         + subst (psiA p ep0) (V * L) := by
     conv_lhs => rw [hUV]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [add_mul, Finset.sum_mul, ← MvPowerSeries.coe_substAlgHom (R := ℂ_[p]) hs, map_add, map_sum]
+      rw [add_mul, Finset.sum_mul, ← MvPowerSeries.coe_substAlgHom (R := ℂ_[p]) hs, map_add (f := _), map_sum]
     congr 1
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [hmon k, map_smul]

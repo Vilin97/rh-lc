@@ -76,7 +76,7 @@ theorem orth_ker_inf_range {n d e : ℕ} (J : (Fin n → K) →ₛₗ[σ] M)
         rw [← hsp, Submodule.span_le]
         rintro _ ⟨k, rfl⟩
         have hd : J (Pi.single k 1) = J (Zm *ᵥ (Pr *ᵥ Pi.single k 1)) + J (Pi.single k 1 - Zm *ᵥ (Pr *ᵥ Pi.single k 1)) := by
-          rw [← map_add, add_sub_cancel]
+          rw [← map_add (f := _), add_sub_cancel]
         show J (Pi.single k 1) ∈ S ⊔ N
         rw [hd]
         exact Submodule.add_mem_sup (Submodule.subset_span ⟨_, ⟨_, rfl⟩, rfl⟩) (Submodule.subset_span ⟨_, hker _, rfl⟩)

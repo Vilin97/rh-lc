@@ -287,7 +287,7 @@ theorem UpperTheory.V.Sd.holB :
     rw [← smul_sub, ← map_sub, this, map_smul, smul_comm]
   · have := hφ.low v
     simp only [TR.Eop, map_smul, lie_fin] at this ⊢
-    rw [← smul_sub, ← map_sub, this, map_smul, smul_comm, ← smul_add, ← map_add]
+    rw [← smul_sub, ← map_sub, this, map_smul, smul_comm, ← smul_add, ← map_add (f := _)]
   · have h := hE x y hy (yf * u)
     have hy' : 0 < ∏ v, y.val v := Finset.prod_pos fun v _ => hy v
     convert h using 2

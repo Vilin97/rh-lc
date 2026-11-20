@@ -78,7 +78,7 @@ theorem range_le_bn (T : Tower p Ω) (n : ℕ) (ι : On p n →ₐ[O0 p] Ω) (h 
       rw [this, AlgHom.commutes]
       exact Subalgebra.algebraMap_mem _ c
     | add f g hf hg =>
-      rw [map_add, map_add, map_add]; exact Subalgebra.add_mem _ hf hg
+      rw [map_add (f := _), map_add (f := _), map_add (f := _)]; exact Subalgebra.add_mem _ hf hg
     | monomial k c _ =>
       simp only [map_mul, map_pow]
       refine Subalgebra.mul_mem _ ?_ (Subalgebra.pow_mem _ hX _)
@@ -87,7 +87,7 @@ theorem range_le_bn (T : Tower p Ω) (n : ℕ) (ι : On p n →ₐ[O0 p] Ω) (h 
       exact Subalgebra.algebraMap_mem _ c
   induction P using Polynomial.induction_on with
   | C a => exact hC a
-  | add f g hf hg => rw [map_add, map_add]; exact Subalgebra.add_mem _ hf hg
+  | add f g hf hg => rw [map_add (f := _), map_add (f := _)]; exact Subalgebra.add_mem _ hf hg
   | monomial k a _ =>
     simp only [map_mul, map_pow]
     exact Subalgebra.mul_mem _ (hC a) (Subalgebra.pow_mem _ hY _)

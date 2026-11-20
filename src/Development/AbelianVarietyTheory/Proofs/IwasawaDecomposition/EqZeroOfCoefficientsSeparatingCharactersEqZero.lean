@@ -170,7 +170,7 @@ theorem _root_.GlobalTheory.SeparatingCharacters.eq_zero_of_coefficients_eq_zero
     | zero => exact map_zero L
     | add x y _ _ hx hy =>
       simp only [Set.mem_setOf_eq] at hx hy ⊢
-      rw [map_add, hx, hy, add_zero]
+      rw [map_add (f := _), hx, hy, add_zero]
     | smul c x _ hx =>
       simp only [Set.mem_setOf_eq] at hx ⊢
       rw [map_smul, hx, smul_zero]

@@ -56,12 +56,12 @@ theorem tensor_iso_twist {V : Type*} [AddCommGroup V] [Module ℂ V] [FiniteDime
         TensorProduct.rid_tmul, WDRep.twist_ρ, LinearMap.smul_apply, map_smul, coe_chr]
       rw [apply_eq_det_smul (c.ρ σ) y, smul_smul]
       simp [Function.eval, mul_comm]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x y =>
       simp [N_eq_zero c, Function.eval]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem iso_of_twist {V V' : Type*} [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
     [AddCommGroup V'] [Module ℂ V'] [FiniteDimensional ℂ V']

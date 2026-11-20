@@ -25,7 +25,7 @@ theorem twistAlg_inv_twistAlg {K Γ : Type} [Field K] [Group Γ] (H : Subgroup �
     simp only [MonoidAlgebra.of_apply, twistAlg_single]
     congr 1
     simp
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
   | smul r x hx => simp [map_smul, hx]
 
 theorem twistAlg_injective {K Γ : Type} [Field K] [Group Γ] (H : Subgroup Γ) (χ : Γ →* Kˣ) :

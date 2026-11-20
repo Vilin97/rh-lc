@@ -222,7 +222,7 @@ theorem rest_pure {κ : Type} [Fintype κ] (f : SInf F κ) (φ : ∀ v : Pl F, (
     rw [evFin, AlgHom.comp_apply]
     convert map_zero (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v)
     exact h2
-  simp only [Pi.add_apply, map_add, hz0, add_zero]
+  simp only [Pi.add_apply, map_add (f := _), hz0, add_zero]
 
 theorem pair_pol {B : Base F E} {M : Model σ X W} {χX χW : Chr F E} {om : Rep σ X W} {r s r' s' : ℕ}
     (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew σ B r' s') (hM : M.IsGood B.ψ)

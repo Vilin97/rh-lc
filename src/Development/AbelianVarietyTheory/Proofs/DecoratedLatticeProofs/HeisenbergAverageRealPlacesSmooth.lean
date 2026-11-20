@@ -68,7 +68,7 @@ theorem sm_heisO_average : ∀ (D : D7) (θ : InfFam D) (σ : (D.what₂.Tau →
   funext y
   refine congrArg _ ?_
   funext x
-  rw [heisO_iota h hψ, (piW θ T A).map_add, h.pi_iota, (iotaW σ T A).map_add, ← add_assoc, mul_assoc]
+  rw [heisO_iota h hψ, (piW θ T A).map_add (f := _), h.pi_iota, (iotaW σ T A).map_add (f := _), ← add_assoc, mul_assoc]
   rfl
 
 end GlobalTheory.HeisAverage

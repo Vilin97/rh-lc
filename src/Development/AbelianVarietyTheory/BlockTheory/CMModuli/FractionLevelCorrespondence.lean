@@ -95,7 +95,7 @@ lemma IsSubst.unique (J : Ideal O') [IsHausdorff J O'] {π : O'} (hπ : π ∈ J
       have : ev F - ev' F = π * (ev (PowerSeries.mk fun p => PowerSeries.coeff (p + 1) F) -
           ev' (PowerSeries.mk fun p => PowerSeries.coeff (p + 1) F)) := by
         conv_lhs => rw [hF]
-        simp only [map_add, map_mul, h.1, h.2, h'.1, h'.2]
+        simp only [map_add (f := _), map_mul, h.1, h.2, h'.1, h'.2]
         ring
       rw [this, pow_succ']
       exact Ideal.mul_mem_mul hπ (ih _)

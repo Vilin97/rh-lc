@@ -44,7 +44,7 @@ theorem mem_germ_range_of_mem_rB : ∀ (d : ℕ) (Z : Scheme.{0}) [IsIntegral Z]
     | add x y _ _ hx hy =>
       obtain ⟨g, hg⟩ := hx
       obtain ⟨g', hg'⟩ := hy
-      exact ⟨g + g', by rw [map_add, hg, hg']; rfl⟩
+      exact ⟨g + g', by rw [map_add (f := _), hg, hg']; rfl⟩
     | mul x y _ _ hx hy =>
       obtain ⟨g, hg⟩ := hx
       obtain ⟨g', hg'⟩ := hy

@@ -48,7 +48,7 @@ theorem mOm_injective_and_omB (k K A : Type) [Field k] [Field K] [Algebra k K] [
       { carrier := {y | ∃ z : Om k A q, ((semiHom_algebraMap k A K).mOm q z : DR k K) = y}
         add_mem' := by
           rintro _ _ ⟨a, rfl⟩ ⟨b, rfl⟩
-          exact ⟨a + b, by rw [map_add]; rfl⟩
+          exact ⟨a + b, by rw [map_add (f := _)]; rfl⟩
         zero_mem' := ⟨0, by rw [map_zero]; rfl⟩
         smul_mem' := by
           rintro c _ ⟨a, rfl⟩
@@ -77,7 +77,7 @@ theorem mOm_injective_and_omB (k K A : Type) [Field k] [Field K] [Algebra k K] [
       rw [mOm_ιMulti_D_algebraMap]
       exact ιMulti_D_mem_omB_regForms B q fun j => ⟨algebraMap A K (w j), (hB _).2 ⟨w j, rfl⟩⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add _ _ _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+    | add _ _ _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
     | smul a z _ h => rw [hsm]; exact smul_mem_omB_regForms B q ((hB _).2 ⟨a, rfl⟩) h
 
 end GlobalTheory.PD

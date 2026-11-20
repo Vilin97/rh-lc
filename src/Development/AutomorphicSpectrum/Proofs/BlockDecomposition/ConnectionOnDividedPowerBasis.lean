@@ -107,7 +107,7 @@ lemma nilpotent_of_pow_mem (J : Ideal B) (hJ : IsNilpotent J) (A : Module.End B 
         rw [map_smul]
         exact Submodule.smul_mem_smul hr (ih n)
       · intro x y hx hy
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hx hy
   refine ⟨L, ?_⟩
   ext z
@@ -212,7 +212,7 @@ theorem ker_and_surjective : ∀ {B M : Type} [CommRing B] [AddCommGroup M] [Mod
       rw [map_smul]
       exact Submodule.smul_mem_smul hr trivial
     · intro x y hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
   have hVp : ∀ z, ((D * shift e - 1) ^ p) z ∈ J • (⊤ : Submodule B M) := by
     intro z

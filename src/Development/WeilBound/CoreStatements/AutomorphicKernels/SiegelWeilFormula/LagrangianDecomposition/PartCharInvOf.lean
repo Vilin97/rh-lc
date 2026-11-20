@@ -66,7 +66,7 @@ theorem partCharInv_of (hfin : FinPart) : PartCharInv := by
     let a : ((κ' ⊕ κ'' → Af F) → ℂ) →ₗ[ℂ] ℂ :=
       { toFun := fun h => l (pureA F f₁ h)
         map_add' := fun h h' => by
-          rw [← map_add]
+          rw [← map_add (f := _)]
           congr 1
           ring
         map_smul' := fun s h => by
@@ -96,7 +96,7 @@ theorem partCharInv_of (hfin : FinPart) : PartCharInv := by
       obtain ⟨f, g, hg, rfl⟩ := hmem
       exact gen f g hg
     | zero => simp
-    | add _ _ _ _ h h' => rw [map_add, map_add, map_add, h, h']
+    | add _ _ _ _ h h' => rw [map_add (f := _), map_add (f := _), map_add (f := _), h, h']
     | smul c _ _ h => rw [map_smul, map_smul, map_smul, h]
   have h0 : P Ψ = 0 := by
     funext x

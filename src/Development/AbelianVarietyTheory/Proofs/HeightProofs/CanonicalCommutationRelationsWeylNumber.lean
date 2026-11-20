@@ -53,7 +53,7 @@ theorem weyl_number : ∀ (M R : Type) [AddCommGroup M] [Module ℂ M] [AddCommG
     (fun u hu => by simpa using hpos u hu)
   simp only [LinearMap.compl₂_apply] at he
   let A : R →+ Module.End ℂ M := AddMonoidHom.mk' (fun u => Dop u + Complex.I • Dop (j u))
-    (fun u v => by simp only [map_add, hadd, smul_add]; abel)
+    (fun u v => by simp only [map_add (f := _), hadd, smul_add]; abel)
   have hA : ∀ u, A u = Dop u + Complex.I • Dop (j u) := fun _ => rfl
   have hAs : ∀ (c : ℝ) u, A (c • u) = (c : ℂ) • A u := fun c u => by
     simp only [hA, map_smul, hsmul]; module

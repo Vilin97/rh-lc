@@ -72,11 +72,11 @@ theorem tUnit : TUnit := by
   have hmem : Φ' + k • Φ ∈ d.sch := d.sch.add_mem hΦ' (d.sch.smul_mem k hΦ)
   have e1 : ∀ y, C * S0 (d.om x Φ') y + k * (C * S0 (d.om x Φ) y) = C * S0 (d.om x (Φ' + k • Φ)) y := by
     intro y
-    simp only [map_add, map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     ring
   have e2 : ∀ y, C * S0 Φ' y + k * (C * S0 Φ y) = C * S0 (Φ' + k • Φ) y := by
     intro y
-    simp only [map_add, map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     ring
   simp_rw [e1, e2, enorm_mul, mul_pow]
   have hC : ‖C‖ₑ ^ 2 ≠ ⊤ := by simp

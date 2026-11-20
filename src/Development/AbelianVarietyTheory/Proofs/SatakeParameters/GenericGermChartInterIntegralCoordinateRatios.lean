@@ -61,7 +61,7 @@ theorem germ_mem_adjoin (p : Z ⟶ Sp ℂ) [inst : Algebra ℂ Z.functionField] 
   obtain ⟨q, rfl⟩ := GlobalTheory.ProjSpace.aeval_ratio_surjective ℂ d a t
   induction q using MvPolynomial.induction_on with
   | C c => rw [aeval_C, germ_const p hinst φ hφ a ha c]; exact Subalgebra.algebraMap_mem _ c
-  | add q r hq hr => rw [map_add, map_add, map_add]; exact add_mem hq hr
+  | add q r hq hr => rw [map_add (f := _), map_add (f := _), map_add (f := _)]; exact add_mem hq hr
   | mul_X q j hq =>
     rw [map_mul, map_mul, map_mul, aeval_X, ← ratioSec_eq_ratio, ← rat_eq φ a j ha]
     exact mul_mem hq (Algebra.subset_adjoin ⟨j, rfl⟩)

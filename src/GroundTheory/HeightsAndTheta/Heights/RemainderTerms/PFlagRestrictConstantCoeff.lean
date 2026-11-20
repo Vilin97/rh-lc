@@ -13,7 +13,7 @@ theorem FlagRestrictConstantCoeff.proof : FlagRestrictConstantCoeff.Statement :=
   intro f N τ R
   induction R using MvPolynomial.induction_on with
   | C a => simp [restrictToBlock]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     rw [map_mul, map_mul, map_mul, hp, constantCoeff_X, mul_zero]
     have hX : constantCoeff (restrictToBlock f N τ (X i)) = 0 := by

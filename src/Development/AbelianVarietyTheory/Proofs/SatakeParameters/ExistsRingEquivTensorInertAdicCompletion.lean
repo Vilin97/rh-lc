@@ -102,7 +102,7 @@ theorem exists_ringEquiv_completion : ∀ (E : Type) [Field E] [NumberField E] [
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rw [locConj_tmul, hψ, hψ, map_mul, hσφ, hσ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hint : ∀ s : 𝓞 E, Valued.v (algebraMap E (P.adicCompletion E) (s : E)) ≤ 1 := fun s =>
     (Idele.valued_algebraMap P (s : E)).trans_le (P.valuation_le_one s)
   refine ⟨RingEquiv.ofBijective ψ ⟨hinj, surjective_of_continuous v P φ hc ψ hψ⟩, hE, hconj,
@@ -113,7 +113,7 @@ theorem exists_ringEquiv_completion : ∀ (E : Type) [Field E] [NumberField E] [
       obtain ⟨a, rfl⟩ := hx
       exact (congrArg Valued.v (hE a)).trans_le (hint a)
     | algebraMap a => exact ((congrArg Valued.v (hA a)).trans (hv a)).trans_le a.2
-    | add x y _ _ hx hy => rw [map_add]; exact Valuation.map_add_le _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Valuation.map_add_le _ hx hy
     | mul x y _ _ hx hy => rw [map_mul, map_mul]; exact mul_le_one' hx hy
   · replace hz : Valued.v (ψ z) ≤ 1 := hz
     have fix : ∀ w : LocAlg v, locConj v w = w → Valued.v (ψ w) ≤ 1 → w ∈ locOrder v := by

@@ -13,7 +13,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} {S : Type}
 private def eqForms (ρ : Representation ℂ (infU E n) S) : Submodule ℂ (S →ₗ[ℂ] (UA E n → ℂ)) where
   carrier := {f | (∀ v, f v ∈ autU E n) ∧ ∀ (x : infU E n) v, f (ρ x v) = RU E n x (f v)}
   add_mem' ha hb := ⟨fun v => add_mem (ha.1 v) (hb.1 v), fun x v => by
-    rw [LinearMap.add_apply, LinearMap.add_apply, ha.2, hb.2, map_add]⟩
+    rw [LinearMap.add_apply, LinearMap.add_apply, ha.2, hb.2, map_add (f := _)]⟩
   zero_mem' := ⟨fun _ => zero_mem _, fun _ _ => rfl⟩
   smul_mem' c _ ha := ⟨fun v => Submodule.smul_mem _ c (ha.1 v), fun x v => by
     rw [LinearMap.smul_apply, LinearMap.smul_apply, ha.2, map_smul]⟩
@@ -52,7 +52,7 @@ theorem UpperTheory.admissible_equivariantForms_representation :
         obtain ⟨x, rfl⟩ := hT
         rw [u.2.2, hu, map_zero]
       | zero => simp
-      | add a b _ _ ha hb => rw [LinearMap.add_apply, map_add, ha, hb, add_zero]
+      | add a b _ _ ha hb => rw [LinearMap.add_apply, map_add (f := _), ha, hb, add_zero]
       | smul c a _ ha => rw [LinearMap.smul_apply, map_smul, ha, smul_zero]
     obtain ⟨l, hl⟩ := Module.Projective.exists_dual_eq_one ℂ hv
     refine Subtype.ext (LinearMap.ext fun w => ?_)

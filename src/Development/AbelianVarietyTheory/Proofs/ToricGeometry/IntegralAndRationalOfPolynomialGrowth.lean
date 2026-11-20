@@ -19,7 +19,7 @@ theorem exists_norm_eval_le {d : ℕ} (c : MvPolynomial (Fin d) ℂ) :
     have h1 : (1 : ℝ) ≤ 1 + ‖x‖ := by linarith [norm_nonneg x]
     have h2 : (1 + ‖x‖) ^ M ≤ (1 + ‖x‖) ^ (M + M') := pow_le_pow_right₀ h1 (by omega)
     have h3 : (1 + ‖x‖) ^ M' ≤ (1 + ‖x‖) ^ (M + M') := pow_le_pow_right₀ h1 (by omega)
-    rw [map_add]
+    rw [map_add (f := _)]
     refine (norm_add_le _ _).trans ?_
     have := mul_le_mul_of_nonneg_left h2 hK
     have := mul_le_mul_of_nonneg_left h3 hK'
@@ -89,7 +89,7 @@ theorem exists_map_eq_of_eval {d N : ℕ} (U : Set (Fin d → ℂ)) (S : (Fin d 
 theorem contDiff_eval_map {d : ℕ} (p : Polynomial (MvPolynomial (Fin d) ℂ)) :
     ContDiff ℂ 1 (fun z : (Fin d → ℂ) × ℂ => (p.map (MvPolynomial.eval z.1)).eval z.2) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => simpa [Polynomial.map_add] using hp.add hq
+  | add p q hp hq => simpa [Polynomial.map_add (f := _)] using hp.add hq
   | monomial n a =>
     simp only [Polynomial.map_monomial, Polynomial.eval_monomial]
     refine ContDiff.mul ?_ (contDiff_snd.pow n)
@@ -125,7 +125,7 @@ theorem separable_map {d : ℕ} (p : Polynomial (MvPolynomial (Fin d) ℂ))
     (p.map (MvPolynomial.eval x)).Separable := by
   obtain ⟨a, b, h⟩ := Ideal.mem_span_pair.1 hq
   have h' := congrArg (Polynomial.map (MvPolynomial.eval x)) h
-  simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C] at h'
+  simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C] at h'
   refine ⟨Polynomial.C (MvPolynomial.eval x q)⁻¹ * a.map (MvPolynomial.eval x),
     Polynomial.C (MvPolynomial.eval x q)⁻¹ * b.map (MvPolynomial.eval x), ?_⟩
   rw [Polynomial.derivative_map, mul_assoc, mul_assoc, ← mul_add, h', ← Polynomial.C_mul,
@@ -252,7 +252,7 @@ theorem integral_and_rational_of_polynomial_growth :
     rotate_right
     · rintro s ⟨hs, hs'⟩
       refine ⟨Polynomial.X ^ n + s, Polynomial.monic_X_pow_add hs, fun z hz => ?_⟩
-      rw [Polynomial.map_add, hs' z.1 hz.1, Polynomial.map_pow, Polynomial.map_X, add_sub_cancel]
+      rw [Polynomial.map_add (f := _), hs' z.1 hz.1, Polynomial.map_pow, Polynomial.map_X, add_sub_cancel]
       exact Lagrange.eval_nodal_at_node (v := fun y => φ (z.1, y)) ((hT _ _).2 hz.2)
     · intro x hx
       have h1 : (Lagrange.nodal (T x) (fun y => φ (x, y))).degree = n := by

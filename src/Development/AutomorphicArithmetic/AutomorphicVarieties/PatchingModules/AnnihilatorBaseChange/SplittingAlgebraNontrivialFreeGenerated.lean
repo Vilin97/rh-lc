@@ -28,7 +28,7 @@ private theorem spCo_desc {R L : Type} [CommRing R] [CommRing L] [Algebra R L] {
     rw [SetLike.mem_coe, RingHom.mem_ker]
     have h1 : ∀ i, F (MvPowerSeries.C (ut j i) + MvPowerSeries.X (j, i)) = a j i := by
       intro i
-      rw [map_add, hC, hX]
+      rw [map_add (f := _), hC, hX]
       exact add_sub_cancel _ _
     have h2 : (F : MvPowerSeries (Fin q × Fin n) R →+* L).comp MvPowerSeries.C = algebraMap R L :=
       RingHom.ext hC
@@ -139,7 +139,7 @@ private theorem splitting_algebra_nontrivial_free_generated (R : Type) [CommRing
     intro j i
     rw [AlgHom.comp_apply, hΨ, hχr]
     show χ' (Sp.mk P ut _) = _
-    rw [hχ', map_add, hF0C, hF0X, add_zero]
+    rw [hχ', map_add (f := _), hF0C, hF0X, add_zero]
   have hcomap : Ideal.comap Ψ.toRingHom (maximalIdeal (Sp P ut)) = n0 := by
     refine Ideal.ext fun y => ?_
     rw [Ideal.mem_comap, ← hkerχ', hmem0, RingHom.mem_ker]
@@ -155,7 +155,7 @@ private theorem splitting_algebra_nontrivial_free_generated (R : Type) [CommRing
   have hΦu : ∀ j i, Φ (Sp.u P ut j i) = algebraMap (MSplitAlg P n) (Localization.AtPrime n0) (MSplitAlg.root P n j i) := by
     intro j i
     show Φ (Sp.mk P ut _) = _
-    rw [hΦ, map_add, hFC', hFX']
+    rw [hΦ, map_add (f := _), hFC', hFX']
     exact add_sub_cancel _ _
   have hΦg : Φ.comp g = AlgHom.id R (Localization.AtPrime n0) := by
     have h1 : (Φ.comp g).comp (IsScalarTower.toAlgHom R (MSplitAlg P n) (Localization.AtPrime n0)) = IsScalarTower.toAlgHom R (MSplitAlg P n) (Localization.AtPrime n0) := by
@@ -204,7 +204,7 @@ private theorem splitting_algebra_nontrivial_free_generated (R : Type) [CommRing
     rw [Ψ.commutes]
     exact Subalgebra.algebraMap_mem _ r
   | add p1 p2 h1 h2 =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact add_mem h1 h2
   | mul_X p s hp =>
     rw [map_mul, map_mul]

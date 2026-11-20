@@ -39,7 +39,7 @@ theorem Ge_mul {w : σ → ℕ} {a b : ℕ} {F G : MvPolynomial σ K} (hF : F �
   rw [coeff_mul]
   refine Finset.sum_eq_zero fun p hp => ?_
   replace hp := Finset.HasAntidiagonal.mem_antidiagonal.mp hp
-  have h : Finsupp.weight w p.1 + Finsupp.weight w p.2 = Finsupp.weight w m := by rw [← map_add, hp]
+  have h : Finsupp.weight w p.1 + Finsupp.weight w p.2 = Finsupp.weight w m := by rw [← map_add (f := _), hp]
   by_cases h1 : Finsupp.weight w p.1 < a
   · rw [hF _ h1, zero_mul]
   · rw [hG _ (by omega), mul_zero]

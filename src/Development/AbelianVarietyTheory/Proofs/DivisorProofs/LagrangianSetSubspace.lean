@@ -55,7 +55,7 @@ theorem lagSetB_isSubspace : ∀ {F E : Type} [Field F] [NumberField F] [Field E
     rfl
   · rintro l ⟨a, c, z, ha, hc, hz, hz1, rfl⟩ l' ⟨a', c', z', ha', hc', hz', hz1', rfl⟩
     refine ⟨a + a', c + c', z + z', sub_at_add ha ha', sub_at_add hc hc', sub_at_add hz hz', ?_, ?_⟩
-    · rw [map_add, Prod.fst_add, sub_arch_add, hz1, hz1', add_zero]
+    · rw [map_add (f := _), Prod.fst_add, sub_arch_add, hz1, hz1', add_zero]
     · have : Matrix.vecMulVec (incV F H.x) (a + a') + Matrix.vecMulVec (incM F H.ι *ᵥ (c + c')) (incV F H'.x) +
           incM F H.ι * (z + z') * (incM F H'.ι)ᵀ =
           (Matrix.vecMulVec (incV F H.x) a + Matrix.vecMulVec (incM F H.ι *ᵥ c) (incV F H'.x) +
@@ -64,7 +64,7 @@ theorem lagSetB_isSubspace : ∀ {F E : Type} [Field F] [NumberField F] [Field E
             incM F H.ι * z' * (incM F H'.ι)ᵀ) := by
         rw [Matrix.vecMulVec_add, Matrix.mulVec_add, Matrix.add_vecMulVec, Matrix.mul_add, Matrix.add_mul]; abel
       rw [this]
-      ext : 1 <;> simp only [Prod.fst_add, Prod.snd_add, LinearEquiv.map_add, sub_arch_add] <;> abel
+      ext : 1 <;> simp only [Prod.fst_add, Prod.snd_add, LinearEquiv.map_add (f := _), sub_arch_add] <;> abel
   · rintro t l ⟨a, c, z, ha, hc, hz, hz1, rfl⟩
     refine ⟨realAd F t • a, realAd F t • c, realAd F t • z, sub_at_smul _ ha, sub_at_smul _ hc, sub_at_smul _ hz, ?_, ?_⟩
     · rw [map_smul, Prod.smul_fst, sub_arch_smul, hz1, smul_zero]

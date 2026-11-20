@@ -78,7 +78,7 @@ theorem add_mem_E0Set_and_reducePoint_add {P Q : (curveK K W).Point} (hP : P ∈
             · exact absurd h hy
           have hD : ρ (y₁ + y₂ + W.a₁ * x₁ + W.a₃) ≠ 0 := by
             intro h0; apply hy
-            rw [map_add, map_add, map_add, map_mul] at h0
+            rw [map_add (f := _), map_add (f := _), map_add (f := _), map_mul] at h0
             simp only [WeierstrassCurve.Affine.negY, WeierstrassCurve.map_a₁,
               WeierstrassCurve.map_a₃, ← hx]
             linear_combination h0

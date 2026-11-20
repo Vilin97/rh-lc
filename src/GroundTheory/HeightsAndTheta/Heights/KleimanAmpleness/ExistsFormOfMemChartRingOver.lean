@@ -110,7 +110,7 @@ theorem RowSub.exists_form_of_mem_chartRingOver (y : (Σ k, ι k) → Ω) (c : �
       · exact h1 d hd k
       · exact h2 d hd k
     · rw [hPadd, div_add_div _ _ (hP m) (hP m')]
-      simp only [map_add, map_mul, map_prod, map_pow, aeval_X]
+      simp only [map_add (f := _), map_mul, map_prod, map_pow, aeval_X]
       ring
   | mul x x' _ _ ih ih' =>
     obtain ⟨m, h, hh, rfl⟩ := ih

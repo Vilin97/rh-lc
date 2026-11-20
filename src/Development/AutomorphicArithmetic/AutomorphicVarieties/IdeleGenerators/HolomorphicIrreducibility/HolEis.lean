@@ -171,7 +171,7 @@ private theorem proj (hR : RayFin) (hC : CharPick) {φ : TR.Sm F 2} {ψ : GA F 2
     let M : (GA F 2 → ℂ) →ₗ[ℂ] (GA F 2 → ℂ) :=
       { toFun := fun θ g => L fun t => ((ν.1 t⁻¹ : ℂˣ) : ℂ) * θ (aff t 0 * g)
         map_add' := fun a b => funext fun g => by
-          rw [Pi.add_apply, ← map_add]; congr 1; funext t; simp [mul_add]
+          rw [Pi.add_apply, ← map_add (f := _)]; congr 1; funext t; simp [mul_add]
         map_smul' := fun c a => funext fun g => by
           rw [Pi.smul_apply, ← map_smul]; congr 1; funext t; simp [mul_left_comm] }
     refine ⟨M ∘ₗ Λ, fun h => ?_⟩
@@ -220,7 +220,7 @@ private theorem loc {φ : TR.Sm F 2} {Ψ : GA F 2 → ℂ} (h0 : Ψ ≠ 0) (hr :
     rw [Function.surjInv_eq hs, Function.surjInv_eq hs] at e
     rw [e]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [(uopSum F w _ _ c Φ hΦ).2 _ hS, ← hM1, ← map_smul, ← he, (uopSum F w _ _ c φ hf).2 _ hS, map_add, map_sum, hM1]
+    rw [(uopSum F w _ _ c Φ hΦ).2 _ hS, ← hM1, ← map_smul, ← he, (uopSum F w _ _ c φ hf).2 _ hS, map_add (f := _), map_sum, hM1]
   simp only [hM, apply_ite M, map_zero]
 
 omit [IsTotallyReal F] in

@@ -829,7 +829,7 @@ theorem all_tendsto (F : I.L2 μf fund) : Tendsto (fun g : I.Ginf => R (g, 1) F)
     have t₂ : Tendsto (fun g : I.Ginf => R (g, 1) (hf₂.toLp f₂)) (𝓝 1) (𝓝 (hf₂.toLp f₂)) := hP₂
     show Tendsto (fun g : I.Ginf => R (g, 1) (hf₁.toLp f₁ + hf₂.toLp f₂)) (𝓝 1)
       (𝓝 (hf₁.toLp f₁ + hf₂.toLp f₂))
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact t₁.add t₂
   · apply isClosed_of_closure_subset
     intro H hH

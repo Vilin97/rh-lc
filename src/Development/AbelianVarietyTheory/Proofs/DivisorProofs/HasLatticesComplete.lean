@@ -76,8 +76,8 @@ theorem Reads.latSeq {H : Type*} [AddCommGroup H] [Module K H] [Module R H] [IsS
     obtain ⟨s, hs⟩ := h₄ (resSec w B t)
     obtain ⟨x, hx, y, hy, e⟩ := Submodule.mem_sup.1 (h'.2.ge ((h₃ s).2 ⟨t, hs⟩))
     refine ⟨E.symm x, by simpa using hx, ?_⟩
-    have e' : s = E.symm x + E.symm y := by rw [← map_add, e, E.symm_apply_apply]
-    rw [← hs, e', map_add, (h₁ (E.symm y)).2 (by simpa using hy), add_zero]
+    have e' : s = E.symm x + E.symm y := by rw [← map_add (f := _), e, E.symm_apply_apply]
+    rw [← hs, e', map_add (f := _), (h₁ (E.symm y)).2 (by simpa using hy), add_zero]
 
 variable {α : O →+* End A} {β : O →+* End B} {α' : O →+* End A'} {β' : O →+* End B'} {r : ℕ}
 
@@ -110,7 +110,7 @@ def intForms (G : Over (Sp R)) [GrpObj G] (A : Over (Sp K)) [GrpObj A] (φ : A.l
     h c ∈ (1 : Submodule R K)}
   zero_mem' := ⟨zero_mem _, fun _ _ h _ _ _ => by rw [map_zero]; exact zero_mem _⟩
   add_mem' {x y} hx hy := ⟨add_mem hx.1 hy.1, fun v v' h a b c => by
-    rw [map_add]; exact add_mem (hx.2 v v' h a b c) (hy.2 v v' h a b c)⟩
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx.2 v v' h a b c) (hy.2 v v' h a b c)⟩
   smul_mem' r x hx := by
     rw [← algebraMap_smul K r x]
     refine ⟨Submodule.smul_mem _ _ hx.1, fun v v' h a b c => ?_⟩
@@ -168,7 +168,7 @@ def latOmega (κ : Γ.baseChange K ⟶ 𝒜) : Submodule R 𝒜.RigExt where
   zero_mem' := ⟨0, 0, (map_zero _).symm, by rw [map_zero, map_zero]⟩
   add_mem' := by
     rintro _ _ ⟨w, w₀, rfl, h⟩ ⟨w', w₀', rfl, h'⟩
-    exact ⟨w + w', w₀ + w₀', (map_add _ _ _).symm, by rw [map_add, map_add, h, h']⟩
+    exact ⟨w + w', w₀ + w₀', (map_add _ _ _).symm, by rw [map_add (f := _), map_add (f := _), h, h']⟩
   smul_mem' := by
     rintro r _ ⟨w, w₀, rfl, h⟩
     exact ⟨algebraMap R K r • w, r • w₀, by rw [map_smul, algebraMap_smul], by rw [map_smul, map_smulₛₗ, h]⟩
@@ -178,7 +178,7 @@ def latExt {Δ : PDivGroup p R} (π : 𝒜 ⟶ Δ.baseChange K) : Submodule R �
   zero_mem' := ⟨0, by rw [map_zero, map_zero]⟩
   add_mem' := by
     rintro _ _ ⟨y, rfl⟩ ⟨y', rfl⟩
-    exact ⟨y + y', by rw [map_add, map_add]⟩
+    exact ⟨y + y', by rw [map_add (f := _), map_add (f := _)]⟩
   smul_mem' := by
     rintro r _ ⟨y, rfl⟩
     exact ⟨r • y, by rw [map_smulₛₗ, map_smul, algebraMap_smul]⟩

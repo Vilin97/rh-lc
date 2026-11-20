@@ -186,7 +186,7 @@ theorem UpperTheory.ConvolutionTheory.Tf.rconvSlice :
       rw [integral_const_mul]
     | add u v hu hv =>
       intro g
-      rw [map_add, LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, hu g, hv g, (h4 u v).2,
+      rw [map_add (f := _), LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, hu g, hv g, (h4 u v).2,
         ← integral_add (hi _ g) (hi _ g)]
       refine integral_congr_ae (Filter.Eventually.of_forall fun a => ?_)
       simp only [CompactlySupportedContinuousMap.add_apply]

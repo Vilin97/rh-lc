@@ -117,7 +117,7 @@ theorem inv_dc {Ωγ : S.V} {F₁ F₂ : LFlag S r T'} (h : DCRel Λ F F₁ F₂
     refine ⟨n v, ⟨?_, fun a => ?_⟩, ?_⟩
     · rw [hsp, Submodule.mem_map_equiv, LinearEquiv.symm_apply_apply]; exact hv.1
     · have e : n v = v + (n v - v) := by abel
-      rw [e, map_add, NMoveP.hT_f_X F.fl a hd, add_zero, hv.2]
+      rw [e, map_add (f := _), NMoveP.hT_f_X F.fl a hd, add_zero, hv.2]
     · have e : n v - Ωγ = (n v - v) + (v - Ωγ) := by abel
       rw [e]; exact Submodule.add_mem _ hd hvγ
   · rintro ⟨v, hv, hvγ⟩
@@ -154,7 +154,7 @@ theorem qu_dc {F₁ F₂ : LFlag S r T'} (h : DCRel Λ F F₁ F₂) : QU F F₁ 
       rw [hsp, Submodule.mem_map_equiv, LinearEquiv.symm_apply_apply]; exact hd
     have : n d = 0 := hq _ hnd fun a => by
       have e : n d = d + (n d - d) := by abel
-      rw [e, map_add, NMoveP.hT_f_X F.fl a hdd, add_zero, h0]
+      rw [e, map_add (f := _), NMoveP.hT_f_X F.fl a hdd, add_zero, h0]
     simpa using this
 
 theorem inv_eqv {P : LFlag S r T' → Prop} {x y : Carrier P} (h : Relation.EqvGen (Rel Λ F P) x y)
@@ -246,7 +246,7 @@ theorem pair_core (hΛ : Submodule.IsLattice E Λ) (F : LFlag S r T) (F' F'' : L
     exact this
   have hzz : S.hT F.fl.z ν = 0 := by
     have h1 : S.hT F.fl.z Ω'' = 1 := by rw [← fvec_last, hΩ.2]; simp
-    rw [hν, map_add, map_smul, h1, F.fl.z_norm, smul_eq_mul]
+    rw [hν, map_add (f := _), map_smul, h1, F.fl.z_norm, smul_eq_mul]
     field_simp
     ring
   have hνXp : ν ∈ orth S (Xplus F) := by

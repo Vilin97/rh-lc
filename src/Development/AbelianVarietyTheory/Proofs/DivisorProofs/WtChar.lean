@@ -25,7 +25,7 @@ def wtChar (D : Deep X₁ ε₁) (T : AddSubgroup D.X.S.Gam) (a : D.X.S.Gam) : T
   map_zero' := by simp [eStd]
   map_add' := by
     intro s t
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     simp only [eStd, AddSubgroup.coe_add, Pi.add_apply, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun _ _ => by ring

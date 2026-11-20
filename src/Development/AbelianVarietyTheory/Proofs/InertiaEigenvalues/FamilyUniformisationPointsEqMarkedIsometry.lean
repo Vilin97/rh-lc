@@ -119,7 +119,7 @@ theorem isometry_of_point_eq_perm : ∀ {E : Type} [Field E] [NumberField E] [Is
   obtain ⟨gam, -, hEF, hM, -, -⟩ := (key (by
     refine ⟨F.over_σ k P hP, isPeriod_permP π hπ hP, ⟨?_, ?_, ?_, ?_, ?_⟩, ?_, ?_, ?_, ?_, ?_⟩
     · intro z w
-      rw [map_add]
+      rw [map_add (f := _)]
       exact F.ex_add k P hP _ _
     · exact (F.ex_onto k P hP).comp (permCLE π).surjective
     · exact isHolTo_comp_cle (permCLE π) (y := fun z => (F.ex k P z).left) (GlobalTheory.ClassUniq.isHolTo_ex F k P hP)

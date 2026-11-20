@@ -66,7 +66,7 @@ theorem projT_mem_TMod {m : Amb x η} (hm : m ∈ TMod x η S n0 d0 g0) (c : ℤ
     · exact Submodule.subset_span ⟨j, rfl⟩
     · rw [map_zero]; exact zero_mem _
   | zero => rw [map_zero, map_zero, map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [map_add, map_add, map_add]; exact add_mem (ha c) (hb c)
+  | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _)]; exact add_mem (ha c) (hb c)
   | smul p m _ hm =>
     have hsum : toA x η (p • m) = ∑ d ∈ Finset.range (p.totalDegree + 1),
         phi x η S (homogeneousComponent d p) * toA x η m := by
@@ -85,7 +85,7 @@ def pieceM (c : ℤ) : Submodule (Sy S r) (TMod x η S n0 d0 g0) where
   carrier := {m | toA x η (m : Amb x η) ∈ tgr c}
   add_mem' {a b} ha hb := by
     change toA x η ((a : Amb x η) + b) ∈ tgr c
-    rw [map_add]; exact add_mem ha hb
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   zero_mem' := by
     change toA x η ((0 : TMod x η S n0 d0 g0) : Amb x η) ∈ tgr c
     rw [Submodule.coe_zero, map_zero]; exact zero_mem _
@@ -115,7 +115,7 @@ theorem isInternal_pieceM : DirectSum.IsInternal (pieceM x η S n0 d0 g0) := by
         DFinsupp.mapRange_single (hf := fun c => map_zero (pc c))
       rw [this, DirectSum.coeAddMonoidHom_of]
       rfl
-    | add a b ha hb => simp only [map_add, ha, hb, Submodule.coe_add]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, Submodule.coe_add]
   constructor
   · intro v w hvw
     have h1 : Φ v = Φ w := (gradeBy.isInternal (R := Ω) (AddMonoidHom.fst ℤ ℤ)).1 (by

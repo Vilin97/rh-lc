@@ -190,9 +190,9 @@ theorem val_infinite (D : D7) (c : (AE D)ˣ →* Circle) (χ : HChar D.host.E) (
       rw [RingHom.map_sub, RingHom.map_sub, h2, sub_self]
   let t : (D.what₂.Tau → ℂˣ) → AE D := fun z => s (fun τ => (z τ : ℂ)) + (1 - s 1)
   have tf : ∀ z, finPart D (t z) = 1 := fun z => by
-    simp only [t, RingHom.map_add, RingHom.map_sub, RingHom.map_one, hs.fin, zero_add, sub_zero]
+    simp only [t, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_one, hs.fin, zero_add, sub_zero]
   have ti : ∀ z τ, θ τ (infPart D (t z)) = z τ := fun z τ => by
-    simp only [t, RingHom.map_add, RingHom.map_sub, RingHom.map_one, hs.comp, Pi.one_apply, sub_self, add_zero]
+    simp only [t, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_one, hs.comp, Pi.one_apply, sub_self, add_zero]
   have tc : Continuous t :=
     (hs.cont.comp (continuous_pi fun τ => Units.continuous_val.comp (continuous_apply τ))).add continuous_const
   let T : (D.what₂.Tau → ℂˣ) →* AE D :=
@@ -315,7 +315,7 @@ theorem isEta_res (D : D7) (c : (AE D)ˣ →* Circle) (χ : HChar D.host.E) (hc 
     let τ₀ : D.what₂.Tau := ((GlobalTheory.CMTypePlaces.places_bijective D).2 (Classical.arbitrary _)).choose
     let w : Ainf D.host.F := 1 + ρ (Pi.single τ₀ (-2))
     have hw : ∀ τ, θ τ (w ⊗ₜ[D.host.F] (1 : D.host.E)) = if τ = τ₀ then -1 else 1 := fun τ => by
-      rw [TensorProduct.add_tmul, map_add, r1, ← Algebra.TensorProduct.one_def, map_one, Pi.single_apply]
+      rw [TensorProduct.add_tmul, map_add (f := _), r1, ← Algebra.TensorProduct.one_def, map_one, Pi.single_apply]
       split_ifs <;> norm_num
     have hww : w * w = 1 := by
       refine sub_eq_zero.1 (r0 _ fun τ => ?_)

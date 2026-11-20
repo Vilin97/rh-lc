@@ -125,16 +125,16 @@ private theorem exists_orthonormal_mem_span_of_diagonal_square_prod {K V : Type}
     set w' : V := ((a 1 : K) * ((p₂ : K) - (q₂ : K) * θ)) • v 0 -
       ((a 0 : K) * ((p₁ : K) - (q₁ : K) * θ)) • v 1 with hw'
     have hww : h w w = 1 := by
-      simp only [hw, map_add, map_smul, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply,
+      simp only [hw, map_add (f := _), map_smul, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply,
         smul_eq_mul, hv00, hv11, hv01, hv10, map_mul, map_ratCast, hθ]
       linear_combination hqK - ((a 0 : K) * (q₁ : K) ^ 2 + (a 1 : K) * (q₂ : K) ^ 2) * hθ2
     have hww' : h w w' = 0 := by
-      simp only [hw, hw', map_add, map_sub, map_smul, map_smulₛₗ, LinearMap.add_apply,
+      simp only [hw, hw', map_add (f := _), map_sub, map_smul, map_smulₛₗ, LinearMap.add_apply,
         LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul, hv00, hv11, hv01, hv10, map_mul,
         map_ratCast, hθ]
       ring
     have hw'w : h w' w = 0 := by
-      simp only [hw, hw', map_add, map_sub, map_smul, map_smulₛₗ, LinearMap.add_apply,
+      simp only [hw, hw', map_add (f := _), map_sub, map_smul, map_smulₛₗ, LinearMap.add_apply,
         LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul, hv00, hv11, hv01, hv10, map_mul,
         map_ratCast, hθ]
       ring

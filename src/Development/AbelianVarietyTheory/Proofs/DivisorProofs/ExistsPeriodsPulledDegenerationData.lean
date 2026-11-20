@@ -54,7 +54,7 @@ theorem tau_pull : ∀ (R V : Type) [CommRing R] [IsDomain R] [CommRing V] [IsDo
     refine Eq.trans ?_ (g.trans p)
     simp only [Category.assoc]
     rfl
-  rw [l, TauPull.val_tauW _ _ hJ, TauPull.val_tau _ hJ₁, ← map_add, psiW_val hD hJ hJ₁, psiW_val hD hJ hJ₁,
+  rw [l, TauPull.val_tauW _ _ hJ, TauPull.val_tau _ hJ₁, ← map_add (f := _), psiW_val hD hJ hJ₁, psiW_val hD hJ hJ₁,
     psiW_val hD hJ hJ₁, rigW_val hD hJ hJ₁]
   apply Additive.ofMul.injective
   simp only [ofMul_mul, ofMul_inv]

@@ -87,13 +87,13 @@ theorem pderiv_linSub (g : Matrix (Fin n) (Fin n) R) (a b : Fin n)
   next c =>
     simp [linSub]
   next p q hp hq =>
-    simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hp, hq, mul_add, Finset.sum_add_distrib]
   next p v hp =>
     have hs : ∀ i, linSub g (Pi.single (M := fun _ : Fin n × Fin n => MvPolynomial (Fin n × Fin n) R) (i, b) 1 v) =
         if v = (i, b) then 1 else 0 := fun i => by
       rw [Pi.single_apply]; split_ifs <;> simp
     rw [map_mul, Derivation.leibniz, hp, pderiv_linSub_X]
-    simp only [Derivation.leibniz, pderiv_X, map_add, map_mul, smul_eq_mul, mul_add,
+    simp only [Derivation.leibniz, pderiv_X, map_add (f := _), map_mul, smul_eq_mul, mul_add,
       Finset.sum_add_distrib, Finset.mul_sum]
     congr 1
     · simp only [hs, mul_ite, mul_one, mul_zero]

@@ -20,8 +20,8 @@ theorem exists_idele_at {θ : InfF D} (hθ : IsInfFam θ) (τ : D.what₂.Tau) (
   obtain ⟨σ, hσ⟩ := GlobalTheory.FockCompare.exists_chart hθ
   have key : ∀ w : ℂ, ∃ x : AE D, finPart D x = 1 ∧ ∀ τ', θ τ' (infPart D x) = if τ' = τ then w else 1 := fun w =>
     ⟨1 + σ fun τ' => (if τ' = τ then w else 1) - 1,
-      by rw [RingHom.map_add, hσ.fin, RingHom.map_one, add_zero], fun τ' => by
-      rw [RingHom.map_add, RingHom.map_add, hσ.comp, RingHom.map_one, RingHom.map_one]; ring⟩
+      by rw [RingHom.map_add (f := _), hσ.fin, RingHom.map_one, add_zero], fun τ' => by
+      rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hσ.comp, RingHom.map_one, RingHom.map_one]; ring⟩
   obtain ⟨x, hx1, hx2⟩ := key w
   obtain ⟨y, hy1, hy2⟩ := key w⁻¹
   have hxy : x * y = 1 := by

@@ -184,7 +184,7 @@ theorem denseIn_of_residue {K : Type} [Field K] (T : CDVR) (io : K →+* T.Fr) (
       obtain ⟨k', h', e'⟩ := h1 h
       refine ⟨k + p ^ m * k', h', ?_⟩
       rw [e, map_mul, e']
-      simp only [map_add, map_mul, map_pow, hp]
+      simp only [map_add (f := _), map_mul, map_pow, hp]
       ring
   intro x d hd
   obtain ⟨v, s, hs, rfl⟩ := IsFractionRing.div_surjective (A := T.V) x
@@ -233,7 +233,7 @@ theorem denseIn_of_initial {K : Type} [Field K] [NumberField K] (w : HeightOneSp
     obtain ⟨h, e⟩ := h1
     refine ⟨o, h, ?_⟩
     have e' : v = algebraMap O V o + algebraMap O V π * h := by rw [← e]; ring
-    exact (congrArg (algebraMap V (FractionRing V)) e').trans (by rw [map_add, hio])
+    exact (congrArg (algebraMap V (FractionRing V)) e').trans (by rw [map_add (f := _), hio])
   obtain ⟨g, χ, -, h1, h2, h3⟩ := hini T io 1 ho
   have h2' : ∀ a, χ (algebraMap T₀.V T₀.Fr a) = algebraMap T.V T.Fr (g a) := fun a => RingHom.congr_fun h2 a
   intro x d hd

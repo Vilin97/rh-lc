@@ -115,7 +115,7 @@ theorem psi_weight_zero_product (pD : IsPowDeg D' D j) {O : Type} [CommRing O] [
     rw [e3] at U
     have hxe1 : ∀ i, pD.xe (y + w0 • y) i = pD.xe y i + w0 • pD.xe y i := by
       intro i
-      rw [map_add, hx]
+      rw [map_add (f := _), hx]
       rfl
     have hxe2 : ∀ i, pD.xe (w0 • y) i = w0 • pD.xe y i := by
       intro i

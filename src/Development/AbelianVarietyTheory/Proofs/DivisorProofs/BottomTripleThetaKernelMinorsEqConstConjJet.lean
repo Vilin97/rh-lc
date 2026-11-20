@@ -59,7 +59,7 @@ theorem isFockVacAt_conj {D : D7} {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdC
   have h2 := congrFun h0 x
   simp only [Pi.add_apply, Pi.smul_apply, Pi.neg_apply, smul_eq_mul, Pi.zero_apply] at h2 ⊢
   have e := congrArg (starRingEnd ℂ) h2
-  simp only [map_add, map_mul, map_neg, Complex.conj_I, map_zero] at e
+  simp only [map_add (f := _), map_mul, map_neg, Complex.conj_I, map_zero] at e
   linear_combination e
 
 theorem map_conj_minorPol {D : D7} {a d : ℕ} {n : D.what₂.Tau → ℕ} (U : Tup D a d n) :

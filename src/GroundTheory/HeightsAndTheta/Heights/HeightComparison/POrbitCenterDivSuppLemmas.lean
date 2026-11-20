@@ -27,7 +27,7 @@ theorem exists_isWeightedHomogeneous_eq_of_chart {R : Type*} [CommRing R]
     · refine IsWeightedHomogeneous.add (h₁.mul (isWeightedHomogeneous_chartMonomial c D₂)) ?_
       rw [add_comm D₁]
       exact h₂.mul (isWeightedHomogeneous_chartMonomial c D₁)
-    · rw [map_add, map_mul, map_mul, hmon, hmon, mul_one, mul_one, e₁, e₂, map_add]
+    · rw [map_add (f := _), map_mul, map_mul, hmon, hmon, mul_one, mul_one, e₁, e₂, map_add (f := _)]
   | mul_X p i hp =>
     obtain ⟨D, G, h, e⟩ := hp
     exact ⟨D + coordDeg n i, G * X i, h.mul (isWeightedHomogeneous_X ℤ _ i),
@@ -87,7 +87,7 @@ theorem finitePlace_aeval_le_one {K : Type*} [Field K] [NumberField K] (v : Fini
     rw [aeval_C, algebraMap_int_eq, eq_intCast]
     exact IsNonarchimedean.apply_intCast_le_one (fun a b ↦ FinitePlace.add_le v a b)
   | add p q hp hq =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (FinitePlace.add_le v _ _).trans (max_le hp hq)
   | mul_X p i hp =>
     rw [map_mul, map_mul, aeval_X]

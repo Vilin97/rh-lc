@@ -40,7 +40,7 @@ theorem coneMap_component (z : (Σ k, ι k) → Φ) (b : K → ℕ) (f : MRing �
     · subst h
       rw [h1.weightedHomogeneousComponent_same, h2.weightedHomogeneousComponent_same]
     · rw [h1.weightedHomogeneousComponent_ne _ h, h2.weightedHomogeneousComponent_ne _ h, map_zero]
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
 
 theorem isMultiHomogIdeal_pointIdeal (z : (Σ k, ι k) → Φ) : IsMultiHomogIdeal (pointIdeal O z) := by
   intro f hf b
@@ -97,7 +97,7 @@ theorem rename_eq_bind₁ {σ τ R : Type*} [CommRing R] (f : σ → τ) (q : Mv
     rename f q = bind₁ (fun p => X (f p)) q := by
   induction q using MvPolynomial.induction_on with
   | C r => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp => simp only [map_mul, hp, rename_X, bind₁_X_right]
 
 theorem bind₁_sub_mem_of {σ τ R : Type*} [CommRing R] (I : Ideal (MvPolynomial τ R))
@@ -106,7 +106,7 @@ theorem bind₁_sub_mem_of {σ τ R : Type*} [CommRing R] (I : Ideal (MvPolynomi
   induction q using MvPolynomial.induction_on with
   | C r => simp
   | add p q hp hq =>
-    rw [map_add, map_add, add_sub_add_comm]
+    rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
     exact I.add_mem hp hq
   | mul_X p v hp =>
     rw [map_mul, map_mul, bind₁_X_right, bind₁_X_right,

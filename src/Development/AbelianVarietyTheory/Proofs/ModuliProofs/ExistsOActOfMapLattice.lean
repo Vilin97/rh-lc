@@ -44,6 +44,6 @@ theorem exists_oAct_of_map_lattice :
     refine (eq_of (a + b) (act a * act b) (isMonHom_mul_of_isCommMonObj _ _) ?_).symm
     intro z
 
-    rw [map_add, LinearMap.add_apply, u.2, (hact a).2, (hact b).2, MonObj.comp_mul]
+    rw [map_add (f := _), LinearMap.add_apply, u.2, (hact a).2, (hact b).2, MonObj.comp_mul]
 
 end GlobalTheory

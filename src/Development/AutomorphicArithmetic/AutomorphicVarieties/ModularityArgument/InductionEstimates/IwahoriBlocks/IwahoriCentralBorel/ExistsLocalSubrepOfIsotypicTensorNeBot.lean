@@ -104,12 +104,12 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.exists_l
       rw [hf]
       exact Submodule.subset_span ⟨_, m₁ a, _, m₂ b, rfl⟩
     | add x y hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
   · intro p v
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a b =>
       have hL : rhoW (w i) σ₁ σ₂ p (a ⊗ₜ b) =
           ((dl (w i) p : ℂˣ) : ℂ) • (σ₁.ρ (lev₂ (w i) p).1 a ⊗ₜ σ₂.ρ (lev₂ (w i) p).2 b) := by

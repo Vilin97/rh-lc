@@ -109,8 +109,8 @@ theorem freeAt_of_basis_lattice (K : Type) [Field K] (C : ACurve K) (V : Type) [
         ring
       · simp [hss]
     | add a a' ha ha' =>
-      rw [map_add, LinearMap.add_apply, map_add, ha, ha']
-      split_ifs <;> simp [map_add]
+      rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), ha, ha']
+      split_ifs <;> simp [map_add (f := _)]
   · intro l s y hy
     obtain ⟨c, hc, rfl⟩ := (hL' y).1 hy
     simp only [LinearMap.sum_apply, LinearMap.smul_apply, key', smul_eq_mul]

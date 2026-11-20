@@ -114,7 +114,7 @@ theorem dualMonoid_exposedFace {σ : PointedCone ℝ (ℝ ⊗[ℤ] N)}
       AddSubmonoid.nsmul_mem _ (AddSubmonoid.subset_closure (Set.mem_singleton _)) _,
       by rw [smul_neg, add_neg_cancel_right]⟩
     have := hp _ hk x hx
-    rw [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
+    rw [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
     exact this
   · refine sup_le (dualMonoid_anti fun x hx => (mem_exposedFace.1 hx).1) ?_
     rw [AddSubmonoid.closure_le, Set.singleton_subset_iff]

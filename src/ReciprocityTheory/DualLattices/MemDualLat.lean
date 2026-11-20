@@ -130,7 +130,7 @@ private theorem mem_dualLat_span_lemma_2 {C R : Type} [Field C] [CommRing R] [Al
       add_mem' := by
         rintro f g ⟨r, hr⟩ ⟨s, hs⟩
         refine ⟨r + s, ?_⟩
-        rw [map_add, hr, hs, ← Finset.sum_add_distrib]
+        rw [map_add (f := _), hr, hs, ← Finset.sum_add_distrib]
         refine Finset.sum_congr rfl fun a _ => ?_
         simp only [Pi.add_apply]
         ring
@@ -247,7 +247,7 @@ private theorem tensor_pair_lemma_6 {C R : Type} [Field C] [CommRing R] [Algebra
       add_mem' := by
         rintro F G ⟨r, hr⟩ ⟨s, hs⟩
         refine ⟨r + s, ?_⟩
-        rw [map_add, hr, hs, ← Finset.sum_add_distrib]
+        rw [map_add (f := _), hr, hs, ← Finset.sum_add_distrib]
         refine Finset.sum_congr rfl fun a _ => ?_
         rw [← Finset.sum_add_distrib]
         refine Finset.sum_congr rfl fun b _ => ?_

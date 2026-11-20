@@ -56,4 +56,4 @@ theorem _root_.UpperTheory.KN.isLocallyConstant_torsion_push_of_continuous :
     simp only [Submodule.coe_add, Submodule.coe_smul]
     rw [← hyeq]
     abel
-  rw [hsplit, map_add, map_smul, hkill, add_zero]
+  rw [hsplit, map_add (f := _), map_smul, hkill, add_zero]

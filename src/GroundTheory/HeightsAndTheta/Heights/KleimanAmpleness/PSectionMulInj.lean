@@ -30,7 +30,7 @@ theorem exists_of_mem_idealMod (J : Ideal (Poly S N)) (I : Chart x) {z : Ω} (hz
     refine ⟨G * m' + m * G', m * m', e + e', J.add_mem (J.mul_mem_right _ hG) (J.mul_mem_left _ hG'),
       mul_mem hm hm', (hGe.mul hme').add (hme.mul hGe'), hme.mul hme', ?_⟩
     rw [div_add_div _ _ (eval_ne_zero_of_mem_monos I hm) (eval_ne_zero_of_mem_monos I hm')]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
   | smul r a _ ha =>
     obtain ⟨F, m₀, e₀, hm₀, hF, hm₀e, hr⟩ := r.2
     obtain ⟨G, m, e, hG, hm, hGe, hme, rfl⟩ := ha

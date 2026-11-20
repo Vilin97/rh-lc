@@ -27,7 +27,7 @@ theorem lift_poly (hc : IsColimit c) {σ : Type} (p : MvPolynomial σ c.pt) :
     obtain ⟨j₂, q₂, h₂⟩ := hq
     refine ⟨IsFiltered.max j₁ j₂, MvPolynomial.map (D.map (IsFiltered.leftToMax j₁ j₂)).hom q₁ +
       MvPolynomial.map (D.map (IsFiltered.rightToMax j₁ j₂)).hom q₂, ?_⟩
-    rw [map_add, map_ι_map, map_ι_map, h₁, h₂]
+    rw [map_add (f := _), map_ι_map, map_ι_map, h₁, h₂]
   | mul_X p i hp =>
     obtain ⟨j, q, h⟩ := hp
     exact ⟨j, q * MvPolynomial.X i, by simp [h]⟩

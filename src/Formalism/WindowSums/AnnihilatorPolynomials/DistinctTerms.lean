@@ -21,7 +21,7 @@ theorem mem_span_iff_of_distinct_exponents : DistinctTerms := by
     obtain ⟨a, b, hab⟩ := Ideal.mem_span_pair.mp hmem
     have hcoef := congrArg (PowerSeries.coeff (e i₀)) hab
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, mul_comm a, PowerSeries.coeff_X_pow_mul', if_neg (by omega), zero_add,
+      rw [map_add (f := _), mul_comm a, PowerSeries.coeff_X_pow_mul', if_neg (by omega), zero_add,
       PowerSeries.coeff_mul_C, map_sum] at hcoef
     have hterm : ∀ i ∈ I, PowerSeries.coeff (e i₀) (w i * X ^ e i * C (ϖ ^ m i)) =
         (if e i ≤ e i₀ then PowerSeries.coeff (e i₀ - e i) (w i) else 0) * ϖ ^ m i := by

@@ -104,7 +104,7 @@ theorem exists_inhabitant (hσ : IsCMExt F E σ) {δ : E} (h0 : δ ≠ 0) (hδ :
     · intro k γ hγ g
       have e := fun i j => GlobalTheory.UAut.Model.isSm_entry (J := δ • (big F δ).J.map σ) hσ τ i j k γ hγ g
       simp only [arch_entry] at e
-      simp only [Matrix.det_fin_three, map_add, map_sub, map_mul]
+      simp only [Matrix.det_fin_three, map_add (f := _), map_sub, map_mul]
       fun_prop
     · refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℂ
         {fun g' : GAd σ (δ • (big F δ).J.map σ) => piInf τ (g'.1.1.det)}) (Submodule.span_le.2 ?_)

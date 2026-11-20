@@ -207,7 +207,7 @@ theorem chartOpen_cover {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (hP : IsMult
       exact hall p
     · simp
     · intro a b _ _ ha hb
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem ha hb
     · intro a b _ hb
       rw [smul_eq_mul, map_mul]

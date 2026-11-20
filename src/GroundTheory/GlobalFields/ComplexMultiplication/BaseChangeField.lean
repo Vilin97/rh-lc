@@ -155,7 +155,7 @@ theorem _root_.GroundTheory.Arith.Abelian.Isogeny.exists_finiteDimensional_mapOf
       galFF E (g.restrictScalars F) a = a ∧ galFF E (g.restrictScalars F) b = b := by
     intro g
     have e := hyfix g
-    rw [hab, map_add, map_mul, galFF_genY] at e
+    rw [hab, map_add (f := _), map_mul, galFF_genY] at e
     exact eq_of_add_mul_genY_eq (galFF_mem_adjoin_genX E _ ha) (galFF_mem_adjoin_genX E _ hb)
       ha hb e
   have h1 := isAlgebraic_coeffs (E := E) (r := r) (fun g => by rw [hr]; exact hxfix g)
@@ -203,7 +203,7 @@ theorem _root_.GroundTheory.Arith.Abelian.Isogeny.exists_finiteDimensional_mapOf
     rw [Isogeny.congr_alt, ← hr]
     exact hrat r n₁ d₁ hn₁ hd₁
   have hy₁ : ffMap σ₁ C₁ y₁ = ψ₁.y := by
-    rw [Isogeny.congr_y, hab, map_add, map_mul, ← hr₂, ← hr₃, map_add, map_mul,
+    rw [Isogeny.congr_y, hab, map_add (f := _), map_mul, ← hr₂, ← hr₃, map_add (f := _), map_mul,
       hrat r₂ n₂ d₂ hn₂ hd₂, hrat r₃ n₃ d₃ hn₃ hd₃, ffMap_genY, ffCongr_genY]
   refine ⟨F₁, inferInstance, Isogeny.ofMap σ₁ ψ₁ x₁ y₁ hx₁ hy₁, h, h', ?_⟩
   rw [Isogeny.mapOf, Isogeny.map_ofMap]

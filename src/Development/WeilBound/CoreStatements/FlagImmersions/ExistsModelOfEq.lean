@@ -106,7 +106,7 @@ theorem exists_functional [IsCommMonObj G] [Smooth G.hom] {Li : Type} [AddCommGr
   choose σ hσ using hs
   obtain ⟨F, hF⟩ := hlift (AddMonoidHom.mk' (fun t => (Scheme.stalkClosedPointTo z).hom (σ t)) fun t t' => by
       have : σ (t + t') = σ t + σ t' := hgi (by simp [hσ])
-      rw [this, map_add]) fun a t => by
+      rw [this, map_add (f := _)]) fun a t => by
     have : σ (a • t) = a * σ t := hgi (by rw [hσ, map_mul, hσ, hsi, map_smul, smul_eq_mul])
     show (Scheme.stalkClosedPointTo z).hom (σ (a • t)) = _ * (Scheme.stalkClosedPointTo z).hom (σ t)
     rw [this, map_mul]

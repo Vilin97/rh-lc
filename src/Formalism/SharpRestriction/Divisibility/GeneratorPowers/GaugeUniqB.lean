@@ -82,7 +82,7 @@ theorem coeff_aeval_scale (s : ι → R) (p : MvPolynomial ι R) (e : ι →₀ 
       ring
     · simp
   | add p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem jetMap_mk {ι' : Type} (m : ℕ) (φ : ι → MvPolynomial ι' R) (hφ : ∀ i, φ i ∈ orig R ι')
     (p : MvPolynomial ι R) :

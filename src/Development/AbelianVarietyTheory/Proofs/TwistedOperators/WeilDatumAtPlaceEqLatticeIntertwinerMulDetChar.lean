@@ -262,7 +262,7 @@ theorem compAt_finPart_det (V : HSp D) {v : HeightOneSpectrum (𝓞 D.host.F)} {
 
 theorem compAt_cut {w : HeightOneSpectrum (𝓞 D.host.E)} {e : AE D} (hf : finPart D e = singleAt D.host.F w 1) (d : AE D) :
     compAt D.host.F w (finPart D (e * d + (1 - e))) = compAt D.host.F w (finPart D d) := by
-  simp only [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hf, compAt_singleAt, one_mul, sub_self,
+  simp only [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hf, compAt_singleAt, one_mul, sub_self,
     add_zero]
 
 theorem isDetAt_eq_locIdele {T : HSp D} {v : HeightOneSpectrum (𝓞 D.host.F)} {w : HeightOneSpectrum (𝓞 D.host.E)}

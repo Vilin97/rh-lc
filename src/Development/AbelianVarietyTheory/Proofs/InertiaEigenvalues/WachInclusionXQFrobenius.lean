@@ -27,7 +27,7 @@ theorem q_eq (W : LocWach PD LL O v n) : W.q = ∑ i ∈ Finset.range PD.p, (1 +
   simpa [LocWach.q, letπ, Finset.sum_apply] using h2
 
 theorem φA_one_add (W : LocWach PD LL O v n) : W.φA (1 + letπ) = (1 + letπ) ^ PD.p := by
-  rw [map_add, map_one, W.φA_π, q_eq]
+  rw [map_add (f := _), map_one, W.φA_π, q_eq]
   linear_combination geom_sum_mul (1 + (letπ : LetA O n)) PD.p
 
 theorem φA_pow_one_add (W : LocWach PD LL O v n) (k : ℕ) :
@@ -37,7 +37,7 @@ theorem φA_pow_one_add (W : LocWach PD LL O v n) (k : ℕ) :
   | succ k ih => rw [pow_succ', AlgHom.mul_apply, ih, map_pow, φA_one_add, ← pow_mul, pow_succ']
 
 theorem X_eq (W : LocWach PD LL O v n) : W.X = (1 + letπ) ^ (PD.p ^ (W.s - 1)) - 1 := by
-  rw [← φA_pow_one_add W, map_add, map_one, add_sub_cancel_left, LocWach.X]
+  rw [← φA_pow_one_add W, map_add (f := _), map_one, add_sub_cancel_left, LocWach.X]
 
 theorem Q_eq (W : LocWach PD LL O v n) :
     W.Q = ∑ i ∈ Finset.range PD.p, ((1 + letπ) ^ (PD.p ^ (W.s - 1))) ^ i := by
@@ -95,13 +95,13 @@ theorem ioE_φ (hO : Function.Injective (algebraMap O LL)) {W : LocWach PD LL O 
 
 theorem io_X_gen {W : LocWach PD LL O v n} (E : EtTie W RA RW inclR φR gR πA) :
     E.io W.X = (1 + πA) ^ (PD.p ^ (W.s - 1)) - 1 := by
-  rw [X_eq, map_sub, map_pow, map_add, map_one, E.io_π]
+  rw [X_eq, map_sub, map_pow, map_add (f := _), map_one, E.io_π]
 
 theorem io_Q_gen {W : LocWach PD LL O v n} (E : EtTie W RA RW inclR φR gR πA) :
     E.io W.Q = ∑ i ∈ Finset.range PD.p, ((1 + πA) ^ (PD.p ^ (W.s - 1))) ^ i := by
   set_option synthInstance.maxHeartbeats 100000 in
     rw [Q_eq, map_sum]
-  simp only [map_pow, map_add, map_one, E.io_π]
+  simp only [map_pow, map_add (f := _), map_one, E.io_π]
 
 end Generic
 

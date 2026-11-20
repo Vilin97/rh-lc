@@ -42,7 +42,7 @@ def jj (hψ : IsReb T L ψ) : O0 p →+* O0 p where
   map_one' := hψ.inj (by rw [jf_spec, map_one, map_one])
   map_mul' a b := hψ.inj (by rw [jf_spec, map_mul, map_mul, jf_spec, jf_spec])
   map_zero' := hψ.inj (by rw [jf_spec, map_zero, map_zero])
-  map_add' a b := hψ.inj (by rw [jf_spec, map_add, map_add, jf_spec, jf_spec])
+  map_add' a b := hψ.inj (by rw [jf_spec, map_add (f := _), map_add (f := _), jf_spec, jf_spec])
 
 theorem comp_jj (hψ : IsReb T L ψ) : ψ.comp (jj hψ) = algebraMap (O0 p) Ω :=
   RingHom.ext (jf_spec hψ)

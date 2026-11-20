@@ -152,12 +152,12 @@ noncomputable def rho (M : InfinitePlace K → ((ι → ℂ) ≃ₗ[ℂ] (ι' �
       ext p
       have : (fun j : ι => p.1.embedding ((x + y) j)) =
           (fun j => p.1.embedding (x j)) + (fun j => p.1.embedding (y j)) := by funext j; simp
-      simp only [this, map_add]; rfl }
+      simp only [this, map_add (f := _)]; rfl }
 
 noncomputable def form (M : InfinitePlace K → ((ι → ℂ) ≃ₗ[ℂ] (ι' → ℂ)))
     (u : PiLp 2 (fun _ : InfinitePlace K × ι' => ℂ)) (w : InfinitePlace K) : (ι → ℂ) →ₗ[ℂ] ℂ where
   toFun z := (fun i => starRingEnd ℂ (u (w, i))) ⬝ᵥ M w z
-  map_add' x y := by rw [map_add, dotProduct_add]
+  map_add' x y := by rw [map_add (f := _), dotProduct_add]
   map_smul' c x := by rw [map_smul, dotProduct_smul]; rfl
 
 omit [IsTotallyComplex K] [Fintype ι] in

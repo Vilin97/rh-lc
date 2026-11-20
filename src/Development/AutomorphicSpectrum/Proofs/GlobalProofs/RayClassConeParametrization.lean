@@ -48,7 +48,7 @@ theorem exists_complement {𝔣 𝔞 : Ideal (𝓞 F)} (h𝔣 : 𝔣 ≠ ⊥) (h
   have hu : IsUnit (Ideal.Quotient.mk 𝔣 α) := by
     refine IsUnit.of_mul_eq_one (Ideal.Quotient.mk 𝔣 a) ?_
     have : Ideal.Quotient.mk 𝔣 b = 0 := Ideal.Quotient.eq_zero_iff_mem.2 hb
-    rw [mul_comm, ← map_mul, ← map_one (Ideal.Quotient.mk 𝔣), ← hab, map_add, this, add_zero]
+    rw [mul_comm, ← map_mul, ← map_one (Ideal.Quotient.mk 𝔣), ← hab, map_add (f := _), this, add_zero]
   obtain ⟨u, hu⟩ := hu
   set e := Nat.card (𝓞 F ⧸ 𝔣)ˣ with he
   have he0 : 0 < e := Nat.card_pos

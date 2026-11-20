@@ -64,7 +64,7 @@ theorem mOrbitMap_mapDomain (ρ : Representation ℂ M V) (v : V) (h : M) (c : M
     mOrbitMap ρ v (Finsupp.mapDomain (h * ·) c) = ρ h (mOrbitMap ρ v c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp [mOrbitMap]
-  | add c d hc hd => rw [Finsupp.mapDomain_add, map_add, hc, hd, map_add, map_add]
+  | add c d hc hd => rw [Finsupp.mapDomain_add, map_add (f := _), hc, hd, map_add (f := _), map_add (f := _)]
   | single g a => simp [Finsupp.mapDomain_single, mOrbitMap_single, map_mul]
 
 theorem linearForm_mOrbitMap (ρ : Representation ℂ M V) (v : V) (l : Dual ℂ V) (h : M)
@@ -241,7 +241,7 @@ variable (e : End ℂ V) (N : Submodule ℂ V)
 def mGenKernel : Submodule ℂ (mGenSubrep ρ N).toSubmodule where
   carrier := {u | ∀ g, e (ρ g u) = 0}
   add_mem' {a b} ha hb g := by
-    simp only [mem_setOf_eq, Submodule.coe_add, map_add, ha g, hb g, add_zero]
+    simp only [mem_setOf_eq, Submodule.coe_add, map_add (f := _), ha g, hb g, add_zero]
   zero_mem' g := by simp
   smul_mem' c a ha g := by
     simp only [mem_setOf_eq, Submodule.coe_smul, map_smul, ha g, smul_zero]

@@ -55,7 +55,7 @@ theorem exists_factor {A B C : Type*} [Ring A] [Ring B] [Ring C] (f : A →+* C)
     simp only [map_zero, ← hj]
   · intro x y
     apply hg
-    simp only [map_add, ← hj]
+    simp only [map_add (f := _), ← hj]
 
 end Bridge.CrisIncl.CrisRestrictionLemmas
 

@@ -42,7 +42,7 @@ theorem smMap_extZ {R R' : Rep k r} (f : R.smSub →ₗ[ℂ] R'.smSub)
     have h1 := extZ_coe f ⟨v, hv⟩
     have h2 := extZ_coe f ⟨w, hw⟩
     have h3 := extZ_coe f (⟨v, hv⟩ + ⟨w, hw⟩)
-    rw [show extZ f v = _ from h1, show extZ f w = _ from h2, show extZ f (v + w) = _ from h3, map_add]
+    rw [show extZ f v = _ from h1, show extZ f w = _ from h2, show extZ f (v + w) = _ from h3, map_add (f := _)]
     rfl
   smul a v hv := by
     have h1 := extZ_coe f ⟨v, hv⟩

@@ -19,7 +19,7 @@ theorem UpperTheory.V.Z.Sym.Al.isoTypic :
     intro g v hv
     obtain ⟨x, hx, y, hy, rfl⟩ := f2 g
     refine Submodule.iSup_induction _ (motive := fun v => repOn hπ (x * y) v ∈ N) hv ?_ (by simp) fun a b ha hb => by
-      rw [map_add]; exact N.add_mem ha hb
+      rw [map_add (f := _)]; exact N.add_mem ha hb
     rintro ⟨p, hp⟩ _ ⟨t, rfl⟩
     refine Submodule.mem_iSup_of_mem ⟨repOn hπ y ∘ₗ p, fun h t => ?_⟩ ⟨τ.ρ (cLoc w x) t, ?_⟩
     · rw [LinearMap.comp_apply, hp, MonoidHom.comp_apply, ← Module.End.mul_apply, ← map_mul, ← f1 _ (s1 h) y hy, map_mul]; rfl

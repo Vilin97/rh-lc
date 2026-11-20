@@ -79,7 +79,7 @@ theorem twist_congr : ∀ (l n M : ℕ) [Fact l.Prime], l ^ n ∣ M → ∀ (γ 
   simp only [en] at e00 e01 e10 e11
   rw [hd] at e01 e10
   fin_cases i <;>
-    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, mZl, Matrix.map_apply, map_add, map_mul, map_intCast]
+    simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two, mZl, Matrix.map_apply, map_add (f := _), map_mul, map_intCast]
   · rw [← e00, e01]; ring
   · rw [← e10, ← e11]; ring
 

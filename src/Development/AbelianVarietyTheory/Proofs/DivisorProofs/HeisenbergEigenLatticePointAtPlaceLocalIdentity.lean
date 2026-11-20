@@ -64,7 +64,7 @@ theorem heis_at_local_identity : ∀ {F : Type} [Field F] [NumberField F] (v : I
     funext i
     rw [← hevx]
     simp [GlobalTheory.LatVac.locCo]
-  rw [map_add, map_mul, hhalf, hdot, hdot, hevx, hsum] at key
+  rw [map_add (f := _), map_mul, hhalf, hdot, hdot, hevx, hsum] at key
   have hr0 : r x ≠ 0 := hrx ▸ hx₀
   rw [GlobalTheory.LatVac.psiAt_apply]
   have := key

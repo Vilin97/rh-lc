@@ -24,12 +24,12 @@ theorem hHom_add_right (V W : HSp D) (x y y' : WA V W) : hHom V W x (y + y') = h
 theorem symplH_add_left (V W : HSp D) (x x' y : WA V W) :
     symplH V W (x + x') y = symplH V W x y + symplH V W x' y := by
   unfold symplH sympl
-  rw [hHom_add_right, mul_add, map_add, mul_add]
+  rw [hHom_add_right, mul_add, map_add (f := _), mul_add]
 
 theorem symplH_add_right (V W : HSp D) (x y y' : WA V W) :
     symplH V W x (y + y') = symplH V W x y + symplH V W x y' := by
   unfold symplH sympl
-  rw [hHom_add_left, mul_add, map_add, mul_add]
+  rw [hHom_add_left, mul_add, map_add (f := _), mul_add]
 
 theorem heis_heis (ψ : AddChar (AF D.host.F) ℂ) (V W : HSp D) (w w' : WA V W) (f : WA V W → ℂ) :
     Heisenberg₂ ψ V W w (Heisenberg₂ ψ V W w' f) = ψ (symplH V W w w') • Heisenberg₂ ψ V W (w + w') f := by

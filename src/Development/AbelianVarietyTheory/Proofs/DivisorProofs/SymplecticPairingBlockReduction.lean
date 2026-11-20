@@ -19,7 +19,7 @@ theorem symp_fromBlocks_hyperbolic :
         Algebra.trace R S (ξ * ∑ j, ∑ l, z (Sum.inr (Sum.inr i)) j * K j l * c (z' (Sum.inr (Sum.inl i)) l))) := by
   intro R S _ _ _ c ξ α β _ _ _ _ r₀ J₀ K z z'
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [symp, hTens, ← map_add, ← map_sum, ← mul_add, ← Finset.mul_sum]
+    simp only [symp, hTens, ← map_add (f := _), ← map_sum, ← mul_add, ← Finset.mul_sum]
   congr 2
   simp only [Fintype.sum_sum_type, Matrix.fromBlocks_apply₁₁, Matrix.fromBlocks_apply₁₂,
     Matrix.fromBlocks_apply₂₁, Matrix.fromBlocks_apply₂₂, Matrix.zero_apply, Matrix.of_apply,

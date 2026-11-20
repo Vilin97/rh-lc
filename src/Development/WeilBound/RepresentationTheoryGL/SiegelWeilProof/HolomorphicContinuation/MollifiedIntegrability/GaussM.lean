@@ -167,7 +167,7 @@ theorem key (hI : IntegP) (hW : Wick) (hR : Rot) (ε : Fin m → Bool) {c : ℝ}
         rintro P Q ⟨R1, h1⟩ ⟨R2, h2⟩
         refine ⟨R1 + R2, fun y => ?_⟩
         rw [sec_add hI hc (herm_isHermitian y), h1, h2]
-        simp [evUV, map_add]; ring
+        simp [evUV, map_add (f := _)]; ring
       zero_mem' := ⟨0, fun y => by simp [sec_zero, evUV]⟩
       smul_mem' := by
         rintro r P ⟨R1, h1⟩

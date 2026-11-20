@@ -264,7 +264,7 @@ lemma step1 (N : Submodule O V) (hN : N.FG) (W U : Submodule (FractionRing O) V)
         rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
         exact hc
       show U.mkQ a = U.mkQ (n : V)
-      rw [← hac, map_add, hc0, add_zero]
+      rw [← hac, map_add (f := _), hc0, add_zero]
     have hli : LinearIndependent O (fun i => ((b i : LinearMap.range g) : V ⧸ U)) :=
       b.linearIndependent.map' (LinearMap.range g).subtype (Submodule.ker_subtype _)
     have hliK := (LinearIndependent.iff_fractionRing O (FractionRing O)).mp hli
@@ -443,7 +443,7 @@ theorem core {X : Type*} (E : Set (Module.End (FractionRing O) V))
           have hnWU : (n : V) ∈ W x ⊔ U₁ := hNWU n.2
           obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.mp hnWU
           have key : f (n : V) - l • (n : V) = f b - l • b := by
-            rw [← hab, map_add, hfl a ha, smul_add]
+            rw [← hab, map_add (f := _), hfl a ha, smul_add]
             abel
           show f (n : V) - l • (n : V) ∈ U₁
           rw [key]
@@ -544,7 +544,7 @@ lemma cc_mem_VS (hsum : (⨆ x, Vx T act x) = ⊤) {Z : Set X} {c : T} (hc : c �
     exact Submodule.mem_top
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hv
   have hpres := VS_pres (act c) (fun y => vx_pres (act c) (fun f => cc_comm c f) y) Z
-  rw [map_add, LinearMap.mem_ker.mp (cc_kill hc hb), add_zero]
+  rw [map_add (f := _), LinearMap.mem_ker.mp (cc_kill hc hb), add_zero]
   exact hpres ha
 
 lemma vcc_attain (Z : Set X) (x : X) :

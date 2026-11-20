@@ -49,7 +49,7 @@ private theorem maximalIdeal_map_sup_span_ne_univ_of_inv_not_mem_adjoin {R K : T
     refine ⟨f.coeff 0, ?_⟩
     rw [← hs, ← hfs, RingHom.comp_apply]
     conv_rhs => rw [← Polynomial.X_mul_divX_add f]
-    rw [map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C, map_add, map_mul,
+    rw [map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C, map_add (f := _), map_mul,
       Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mem_span_singleton_self ys), zero_mul, zero_add]
   have htop : (IsLocalRing.maximalIdeal R).map (π.comp (algebraMap R S)) = ⊤ := by
     have := congrArg (Ideal.map π) hJ

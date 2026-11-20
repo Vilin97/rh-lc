@@ -29,7 +29,7 @@ theorem eigen_eq_one_of_reps {V K : Type} [AddCommGroup V] [Field K] [CharZero K
   have hLM : L ≤ M := fun u hu t => hf t u hu
   have hTM : ∀ u, T u ∈ M ↔ u ∈ M := fun u => by
     have e : ∀ t, f (T t + b + T u) = χ * f (t + u) := fun t => by
-      rw [← hT, map_add]; congr 1; abel
+      rw [← hT, map_add (f := _)]; congr 1; abel
     constructor
     · intro h t
       apply mul_left_cancel₀ hχ

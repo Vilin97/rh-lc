@@ -93,7 +93,7 @@ theorem cap_comm_quot {N : ℕ} {I : Submodule ℂ (Sm E N)} (hI : ∀ X, ∀ φ
       add_mem' := fun {x y} hx hy φ hφ => by
         obtain ⟨h1, e1⟩ := hx φ hφ
         obtain ⟨h2, e2⟩ := hy φ hφ
-        exact ⟨add_mem h1 h2, by simp only [LinearMap.add_apply, map_add, e1, e2]⟩
+        exact ⟨add_mem h1 h2, by simp only [LinearMap.add_apply, map_add (f := _), e1, e2]⟩
       algebraMap_mem' := fun c φ hφ => ⟨by simpa only [Module.algebraMap_end_apply] using I.smul_mem c hφ,
         by simp only [Module.algebraMap_end_apply, map_smul]⟩ }
   have hL : ∀ X, lie E N X ∈ S := fun X φ hφ => ⟨hI X φ hφ, hf (.lie X) φ hφ⟩
@@ -230,7 +230,7 @@ theorem prod_map_finset_sum {ι : Type} (s : Finset ι) (A : ι → Multiset ℂ
     ((∑ j ∈ s, A j).map g).prod = ∏ j ∈ s, ((A j).map g).prod := by
   classical
   refine Finset.induction_on s (by simp) fun j s hj ih => ?_
-  rw [Finset.sum_insert hj, Finset.prod_insert hj, Multiset.map_add, Multiset.prod_add, ih]
+  rw [Finset.sum_insert hj, Finset.prod_insert hj, Multiset.map_add (f := _), Multiset.prod_add, ih]
 
 theorem cap_commute_act {a : ℕ} (τ : E →+* ℂ) (u : ℂ) (o : Op E a) : Commute (cap (a := a) τ u) (act o) := by
   cases o with

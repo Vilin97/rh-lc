@@ -72,7 +72,7 @@ theorem exists_dual_family (t : SAB H (Sp A)) {G' : Over (Sp A')} [GrpObj G'] (�
       pb_pb hid hψ hψ (Category.comp_id _) (Category.comp_id _)]
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     refine (congrArg₂ (· + ·) hx hy).trans ?_
     rw [← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun i _ => (add_smul _ _ _).symm

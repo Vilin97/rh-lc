@@ -39,7 +39,7 @@ theorem exists_tensor_addEquiv {R A B C P Q N N' : Type*} [CommRing R] [CommRing
   refine ⟨E, hE, fun r z => ?_⟩
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   | tmul x y =>
     rw [TensorProduct.smul_tmul', hE, hE, TensorProduct.smul_tmul', ← algebraMap_smul A r x,
       j.map_smul (algebraMap R A r) x, IsScalarTower.algebraMap_apply R A C, algebraMap_smul C]
@@ -75,11 +75,11 @@ variable (M H V) in
 def secMulHom : SecOn M V ⊗[Γ(X, V)] SecOn H V →ₗ[Γ(X, V)] SecOn (tw M H 1) V :=
   TensorProduct.lift <| LinearMap.mk₂ Γ(X, V) mul
     (fun s s' t => tw_ext fun p k => by
-      simp only [twCoord_mul, twCoord_add, coord_add, map_add, add_mul])
+      simp only [twCoord_mul, twCoord_add, coord_add, map_add (f := _), add_mul])
     (fun a s t => tw_ext fun p k => by
       simp only [twCoord_mul, twCoord_smul, coord_smul, map_mul, rs_rs, _root_.mul_assoc])
     (fun s t t' => tw_ext fun p k => by
-      simp only [twCoord_mul, twCoord_add, coord_add, map_add, mul_add])
+      simp only [twCoord_mul, twCoord_add, coord_add, map_add (f := _), mul_add])
     (fun a s t => tw_ext fun p k => by
       simp only [twCoord_mul, twCoord_smul, coord_smul, map_mul, rs_rs]
       exact mul_left_comm _ _ _)

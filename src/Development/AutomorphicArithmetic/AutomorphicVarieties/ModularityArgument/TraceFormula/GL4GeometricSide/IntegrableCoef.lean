@@ -62,7 +62,7 @@ theorem avgEx : AvgEx := by
     refine ext_inner_left ℂ fun w => ?_
     rw [inner_add_right, hp, hp, hp, ← integral_add (hI x w) (hI y w)]
     refine integral_congr_ae (Filter.Eventually.of_forall fun κ => ?_)
-    simp only [map_add, inner_add_right, mul_add]
+    simp only [map_add (f := _), inner_add_right, mul_add]
   · intro c x
     refine ext_inner_left ℂ fun w => ?_
     rw [RingHom.id_apply, inner_smul_right, hp, hp, ← integral_const_mul]

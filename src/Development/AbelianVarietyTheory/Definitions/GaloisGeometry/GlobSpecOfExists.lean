@@ -397,7 +397,7 @@ def cmpFamL {X : Fields} {n : ℕ} {lam : X.Tau → DomWeight n} {P : Places p O
     funext a L
     simp only [cmpFam, PSys.cmp, Pi.add_apply]
     split_ifs
-    · rw [← map_add, ← map_add]; rfl
+    · rw [← map_add (f := _), ← map_add (f := _)]; rfl
     · simp
   map_smul' r φ := by
     funext a L

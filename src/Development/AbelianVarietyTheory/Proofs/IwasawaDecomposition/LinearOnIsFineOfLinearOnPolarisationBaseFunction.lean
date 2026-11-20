@@ -167,9 +167,9 @@ theorem isFine_of_additive [Module.Finite ℤ X] {γ : Fin m → LinearMap.Bilin
   have hn : ∀ x : X, (M + 1) • x = ((M : ℤ) + 1) • x := fun x => by
     rw [← natCast_zsmul]; push_cast; rfl
   have e1 : s a₀ + (M + 1) • s d = s α := by
-    rw [hd, map_add, map_smul, hn]
+    rw [hd, map_add (f := _), map_smul, hn]
   have e2 : s a₀ + (M + 1) • s e = s (a₀ + ((M : ℤ) + 1) • e) := by
-    rw [map_add, map_smul, hn]
+    rw [map_add (f := _), map_smul, hn]
   rw [e1, e2]
   have h3 := classMin_le M (h i) s (a₀ + ((M : ℤ) + 1) • e)
   rw [redV_add_smul, heq i (Finset.mem_univ i)] at h3

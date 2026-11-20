@@ -217,7 +217,7 @@ theorem hR_swap (x y : Fin V.rank → R ⊗[F] E) :
   have hs : ∀ z, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR R hc.sig (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR R hc.sig z) = z := fun z => by
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a e =>
       change a ⊗ₜ[F] star (star e) = _
       rw [star_star]
@@ -305,7 +305,7 @@ theorem absA_neg (u : SV (wittIndex V)) {g : GA D V} (hg : g ∈ parab D.sp.cm V
     fun z => by
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a e =>
       change a ⊗ₜ[D.host.F] star (star e) = _
       rw [star_star]

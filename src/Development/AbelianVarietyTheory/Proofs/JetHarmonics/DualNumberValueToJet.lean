@@ -55,7 +55,7 @@ theorem dualNumber_value_toJet : ∀ (R O : Type) [CommRing R] [CommRing O] (f :
       TrivSqZeroExt.inr (algebraMap O S (e q.2)) := hψ
   rw [toJet_one_eq, constantCoeff_dof]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_mul, hC, hX, Fintype.sum_prod_type, Fin.sum_univ_one]
+    simp only [map_add (f := _), map_sum, map_mul, hC, hX, Fintype.sum_prod_type, Fin.sum_univ_one]
   congr 1
   ext
   · simp [TrivSqZeroExt.fst_sum]

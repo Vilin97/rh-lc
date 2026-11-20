@@ -17,14 +17,14 @@ section Trace
 variable (σ : E →ₐ[F] E) (hσ : ∀ e, σ (σ e) = e) (hfix : ∀ y : E, σ y = y → y ∈ (algebraMap F E).range)
 
 def trF (y : E) : F :=
-  Classical.choose (hfix (y + σ y) (by rw [map_add, hσ, add_comm]))
+  Classical.choose (hfix (y + σ y) (by rw [map_add (f := _), hσ, add_comm]))
 
 theorem trF_spec (y : E) : algebraMap F E (trF σ hσ hfix y) = y + σ y :=
-  Classical.choose_spec (hfix (y + σ y) (by rw [map_add, hσ, add_comm]))
+  Classical.choose_spec (hfix (y + σ y) (by rw [map_add (f := _), hσ, add_comm]))
 
 theorem trF_add (y z : E) : trF σ hσ hfix (y + z) = trF σ hσ hfix y + trF σ hσ hfix z := by
   apply (algebraMap F E).injective
-  rw [map_add, trF_spec, trF_spec, trF_spec, map_add]
+  rw [map_add (f := _), trF_spec, trF_spec, trF_spec, map_add (f := _)]
   abel
 
 theorem trF_smul (c : F) (y : E) : trF σ hσ hfix (c • y) = c * trF σ hσ hfix y := by

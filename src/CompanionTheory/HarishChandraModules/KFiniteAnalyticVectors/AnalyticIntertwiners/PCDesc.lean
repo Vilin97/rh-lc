@@ -326,7 +326,7 @@ theorem harish_chandra_descent : Descend := by
     · refine ⟨1, ContinuousLinearMap.ext fun v => ?_⟩
       have h1 : v + πU.π z v ∈ S := by
         show πU.π z (v + πU.π z v) - (v + πU.π z v) = 0
-        rw [map_add, ← ContinuousLinearMap.mul_apply, ← map_mul, hzz, map_one]
+        rw [map_add (f := _), ← ContinuousLinearMap.mul_apply, ← map_mul, hzz, map_one]
         simp [add_comm]
       rw [h, Submodule.mem_bot] at h1
       simp [eq_neg_of_add_eq_zero_right h1]
@@ -391,7 +391,7 @@ theorem harish_chandra_descent : Descend := by
       obtain ⟨k, hk, rfl⟩ := hK' g hg
       rw [hσ]
       refine Submodule.smul_mem _ _ ?_
-      refine Submodule.span_induction (fun y hy => ?_) (by simp) (fun a b _ _ ha hb => by rw [map_add]; exact add_mem ha hb)
+      refine Submodule.span_induction (fun y hy => ?_) (by simp) (fun a b _ _ ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb)
         (fun c a _ ha => by rw [map_smul]; exact Submodule.smul_mem _ _ ha) hv
       obtain ⟨⟨k', hk'⟩, rfl⟩ := hy
       refine Submodule.subset_span ⟨⟨k * k', ?_⟩, by simp⟩

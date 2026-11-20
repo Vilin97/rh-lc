@@ -31,7 +31,7 @@ theorem u3upPf_FilC_anti (T : LocLat G Qp LL O) (τ : K →ₐ[Qp] LL) {a a' : �
     induction z using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact Submodule.zero_mem _
     | tmul u w => exact ⟨u ⊗ₜ ⟨(w : BdR), PD.Fil_anti k w.2⟩, rfl⟩
-    | add z z' hz hz' => rw [map_add]; exact Submodule.add_mem _ hz hz'
+    | add z z' hz hz' => rw [map_add (f := _)]; exact Submodule.add_mem _ hz hz'
   have hA : Antitone fun k => FildR PD T.ρ τ k := antitone_int_of_succ_le hs
   unfold Formalism.MainNotions.DeltaInvariantLattices.FilC
   exact sup_le_sup_right (hA h) _

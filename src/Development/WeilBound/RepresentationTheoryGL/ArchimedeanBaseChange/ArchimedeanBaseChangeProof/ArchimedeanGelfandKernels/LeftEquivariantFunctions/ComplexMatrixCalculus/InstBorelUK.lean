@@ -41,7 +41,7 @@ def creL (n : ℕ) : (Md n → ℂ) →ₗ[ℂ] Matrix (Finset (Md n)) (Finset (
 def annL (n : ℕ) : (Md n → ℂ) →ₗ[ℂ] Matrix (Finset (Md n)) (Finset (Md n)) ℂ where
   toFun w := matL n (CliffordAlgebra.contractLeft (Q := (0 : QuadraticForm ℂ (Md n → ℂ))) (dualOf w))
   map_add' w w' := by
-    rw [← map_add, ← map_add]; congr 2; ext v; simp [dualOf, add_dotProduct]
+    rw [← map_add (f := _), ← map_add (f := _)]; congr 2; ext v; simp [dualOf, add_dotProduct]
   map_smul' c w := by
     rw [RingHom.id_apply, ← map_smul, ← map_smul]; congr 2; ext v; simp [dualOf, smul_dotProduct]
 

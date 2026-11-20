@@ -138,14 +138,14 @@ theorem exists_lift {P X Y : Over (Sp K)} (p : P ⟶ X) (q : P ⟶ Y)
         | add a b _ _ ha hb =>
           obtain ⟨r, hr⟩ := ha
           obtain ⟨r', hr'⟩ := hb
-          exact ⟨r + r', fun y hy => by simp only [map_add, hr, hr']⟩
+          exact ⟨r + r', fun y hy => by simp only [map_add (f := _), hr, hr']⟩
         | neg a _ ha =>
           obtain ⟨r, hr⟩ := ha
           exact ⟨-r, fun y hy => by simp only [map_neg, hr]⟩
         | mul a b _ _ ha hb =>
           obtain ⟨r, hr⟩ := ha
           obtain ⟨r', hr'⟩ := hb
-          exact ⟨a * r' + b * r, fun y hy => by simp only [map_mul, map_add, hδ, hr, hr']⟩
+          exact ⟨a * r' + b * r, fun y hy => by simp only [map_mul, map_add (f := _), hδ, hr, hr']⟩
       obtain ⟨a, ha, b, hb, hu, e⟩ := hg ((P.left.presheaf.map (homOfLE hW).op).hom s)
       obtain ⟨a', ha'⟩ := key a ha
       obtain ⟨b', hb'⟩ := key b hb

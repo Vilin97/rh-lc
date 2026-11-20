@@ -45,14 +45,14 @@ theorem alg {R M P : Type} [CommRing R] [AddCommGroup M] [Module R M] [AddCommGr
     obtain ⟨k, hk, n, hn, rfl⟩ := Submodule.mem_sup.1
       (hN.codisjoint.eq_top ▸ Submodule.mem_top : t ∈ LinearMap.range j ⊔ N)
     obtain ⟨s, rfl⟩ := hk
-    exact ⟨n, hn, by rw [map_add, hφj, zero_add]⟩
+    exact ⟨n, hn, by rw [map_add (f := _), hφj, zero_add]⟩
   let Θ : M →ₗ[R] P × Module.Dual R P := LinearMap.prod p φ
   have hΘ : Function.Surjective Θ := by
     rintro ⟨s, l⟩
     obtain ⟨n, hn, rfl⟩ := hsurjN l
     refine ⟨j s + n, ?_⟩
     show (p (j s + n), φ (j s + n)) = (s, φ n)
-    rw [map_add, map_add, hpj, hpN n hn, hφj, add_zero, zero_add]
+    rw [map_add (f := _), map_add (f := _), hpj, hpN n hn, hφj, add_zero, zero_add]
   let bQ := bP.prod bP.dualBasis
   let e : (P × Module.Dual R P) ≃ₗ[R] M :=
     bQ.equiv bM (finSumFinEquiv.trans (finCongr (two_mul g).symm))

@@ -26,7 +26,7 @@ theorem ent_coe {X Y : Obj k r} (f : M X →ₗ[ℂ] M Y) (e : Y.1.ι) (c : X.1.
 
 theorem ent_lin {X Y : Obj k r} (f : M X →ₗ[ℂ] M Y) (e : Y.1.ι) (c : X.1.ι) : Lin (GG k r) X.2.R.σ (ent f e c) :=
   ⟨fun v w hv hw => by
-    rw [ent_coe f e c ⟨v, hv⟩, ent_coe f e c ⟨w, hw⟩, ← Submodule.coe_add, ← Pi.add_apply, ← map_add, ← Pi.single_add]
+    rw [ent_coe f e c ⟨v, hv⟩, ent_coe f e c ⟨w, hw⟩, ← Submodule.coe_add, ← Pi.add_apply, ← map_add (f := _), ← Pi.single_add]
     exact ent_coe f e c (⟨v, hv⟩ + ⟨w, hw⟩), fun a v hv => by
     rw [ent_coe f e c ⟨v, hv⟩, ← Submodule.coe_smul, ← Pi.smul_apply, ← map_smul, ← Pi.single_smul]
     exact ent_coe f e c (a • ⟨v, hv⟩)⟩
@@ -100,7 +100,7 @@ theorem hasDerivAt_lin {X : Obj k r} (hX : X.1.OK) {H' : Type} [NormedAddCommGro
     rfl
   show Tl _ = _
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [this, map_add, map_sum]
+    rw [this, map_add (f := _), map_sum]
   simp only [ex_zero, hX.one, Matrix.one_apply, ite_smul, one_smul, zero_smul, Finset.sum_add_distrib,
     Finset.sum_ite_eq, Finset.mem_univ, if_true, X.2.repOn.map_one, map_smul]
   congr 1

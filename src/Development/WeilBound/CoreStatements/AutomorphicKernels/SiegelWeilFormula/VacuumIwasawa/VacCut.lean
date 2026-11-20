@@ -25,7 +25,7 @@ theorem vac_le_fock {d : SD σ} (R : RD d) : R.vac ≤ R.fock := by
 def Tl (d : SD σ) : d.Fn →ₗ[ℂ] (Mx F E d.m d.n → ℂ) where
   toFun := d.T
   map_add' Φ Ψ := funext fun X => by
-    simp only [SD.T, Pi.add_apply, ← map_add]
+    simp only [SD.T, Pi.add_apply, ← map_add (f := _)]
     congr 1
     funext z
     exact mul_add _ _ _

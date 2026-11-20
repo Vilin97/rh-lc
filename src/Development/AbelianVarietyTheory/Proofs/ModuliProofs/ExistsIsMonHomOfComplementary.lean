@@ -96,7 +96,7 @@ theorem isMonHom_of_lift {A' : Over (Sp ℂ)} [GrpObj A'] {L' : LB A'.left} {g' 
     obtain ⟨w, hw⟩ := u.ex_onto (y ≫ snd A A)
     have hy : y = lift (u.ex z) (u.ex w) := by
       ext1 <;> simp [hz, hw]
-    rw [hy, ← Category.assoc, ← Hom.mul_def, ← u.ex_add, ← hf, map_add, u'.ex_add, Hom.mul_def, ← Category.assoc,
+    rw [hy, ← Category.assoc, ← Hom.mul_def, ← u.ex_add, ← hf, map_add (f := _), u'.ex_add, Hom.mul_def, ← Category.assoc,
       lift_map, ← hf, ← hf]
 
 theorem exists_isMonHom_of_complementary (hamp : Out.AmpleSt) (P P' : Out.PolAV (Sp ℂ)) {g g' : ℕ}

@@ -29,7 +29,7 @@ theorem dofD_apply (F : Fin d → PS k 2 d) (v : Fin d → k) (f : PS k 1 d) :
 
 theorem dof_add (F : Fin d → PS k 2 d) (v : Fin d → k) (f g : PS k 1 d) :
     Dof F v (f + g) = Dof F v f + Dof F v g := by
-  simp only [← dofD_apply, map_add]
+  simp only [← dofD_apply, map_add (f := _)]
 
 theorem dof_zero (F : Fin d → PS k 2 d) (v : Fin d → k) : Dof F v 0 = 0 := by
   simp only [← dofD_apply, map_zero]

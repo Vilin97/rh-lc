@@ -306,7 +306,7 @@ theorem jet_mul_of_vanish {B K : Type} [CommRing B] [CommRing K] (D : B →+ B)
       rwa [Function.iterate_succ_apply] at this)
     have h2 := ih (D u) a (fun k hk => h k (Nat.lt_succ_of_lt hk))
     have h3 : D^[i] (a * D u) = D^[i] (D u * a) := by rw [mul_comm]
-    rw [Function.iterate_succ_apply, hD, iterate_map_add, map_add, h1, h3, h2, h i (Nat.lt_succ_self i), mul_zero, add_zero,
+    rw [Function.iterate_succ_apply, hD, iterate_map_add, map_add (f := _), h1, h3, h2, h i (Nat.lt_succ_self i), mul_zero, add_zero,
       Function.iterate_succ_apply]
 
 theorem jet_vanish_of_mul {B K : Type} [CommRing B] [CommRing K] [IsDomain K] (D : B →+ B)

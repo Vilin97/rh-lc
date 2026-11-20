@@ -100,7 +100,7 @@ theorem mem_diffIm_of_single_mem [Fintype (E →+* K)] [DecidableEq (E →+* K)]
       rw [e]
       exact Submodule.smul_mem _ a (Submodule.subset_span ⟨x, hx0, rfl⟩)
     · intro x y hx hy
-      rw [map_add, add_mul]
+      rw [map_add (f := _), add_mul]
       exact add_mem hx hy
   simpa using h2
 
@@ -246,7 +246,7 @@ theorem eigenLat_le [Fintype (E →+* K)] (hc : Fintype.card (E →+* K) = Modul
       rw [← map_mul, Submodule.coe_smul, Pi.smul_apply, Algebra.smul_def]
     | zero => simp
     | add a b _ _ ha hb =>
-      simp only [map_add, Pi.add_apply, add_smul, Finset.sum_add_distrib, ← ha, ← hb]
+      simp only [map_add (f := _), Pi.add_apply, add_smul, Finset.sum_add_distrib, ← ha, ← hb]
     | smul c a _ ha =>
       simp only [map_smul, Pi.smul_apply, smul_assoc, ← Finset.smul_sum, ← ha]
   have hsum := hrec _ hw'

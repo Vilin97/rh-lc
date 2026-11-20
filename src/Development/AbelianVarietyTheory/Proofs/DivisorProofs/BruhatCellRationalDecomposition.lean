@@ -161,7 +161,7 @@ theorem GlobalTheory.EisCT.exists_unipRad_stabL_big : ∀ (F E : Type) [Field F]
   let ν0 : GRat σ J := ⟨Matrix.nonsingInvUnit (1 + N) hdet, hU⟩
   have hνm : (matHom _ σ J (ratEmb σ J ν0)).1 = adMat F (1 + N) := rfl
   have hm : adMat F (1 + N) - 1 = adMat F N := by
-    rw [show adMat F (1 + N) = (inclR (F := F) (AF F)).mapMatrix (1 + N) from rfl, map_add, map_one,
+    rw [show adMat F (1 + N) = (inclR (F := F) (AF F)).mapMatrix (1 + N) from rfl, map_add (f := _), map_one,
       add_sub_cancel_left]; rfl
   have hνU : ratEmb σ J ν0 ∈ unipRad σ J (col0 X) := by
     refine Subgroup.subset_closure ?_

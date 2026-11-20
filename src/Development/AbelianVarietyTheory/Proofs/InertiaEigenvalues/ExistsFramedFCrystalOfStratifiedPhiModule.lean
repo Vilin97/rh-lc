@@ -42,7 +42,7 @@ def fracMap {A N : Type} [CommRing A] [AddCommGroup N] [Module A N] {φ : A →+
     N →ₛₗ[(algebraMap A (Localization.Away t)).comp φ] LocalizedModule (Submonoid.powers t) N where
   toFun x := LocalizedModule.mk (Ψ x) ⟨t ^ a, (Submonoid.mem_powers_iff _ _).2 ⟨a, rfl⟩⟩
   map_add' x y := by
-    rw [map_add, LocalizedModule.mk_add_mk, ← smul_add, LocalizedModule.mk_cancel_common_left]
+    rw [map_add (f := _), LocalizedModule.mk_add_mk, ← smul_add, LocalizedModule.mk_cancel_common_left]
   map_smul' c x := by
     rw [Ψ.map_smulₛₗ, RingHom.comp_apply, algebraMap_smul, LocalizedModule.smul'_mk]
 

@@ -17,7 +17,7 @@ theorem actC_resCoef {G E B : Type} [Group G] [Field E] [Algebra ℚ_[l] E] [Com
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [actC, resCoef]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 def smulRep {G E B : Type} [Group G] [Field E] [CommRing B] [Algebra E B] (N : Type) [AddCommGroup N]
     [Module B N] [Module E N] [IsScalarTower E B N] (χ : G →* Bˣ) : Representation E G N where

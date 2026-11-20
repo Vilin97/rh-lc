@@ -350,11 +350,11 @@ theorem finrank_DdR_le_of_isField (hF : IsField BdR) [FiniteDimensional Qp LL]
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul c v => simp [σ, TensorProduct.smul_tmul']
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   let U : Submodule K (BdR ⊗[Qp] V) :=
     { carrier := {x | ∀ g, σ g x = x}
       zero_mem' := fun g => map_zero _
-      add_mem' := fun hx hy g => by rw [map_add, hx g, hy g]
+      add_mem' := fun hx hy g => by rw [map_add (f := _), hx g, hy g]
       smul_mem' := fun c x hx g => by
         rw [← algebraMap_smul BdR c x, hσ, hx g, AlgEquiv.commutes] }
   haveI : Module.Finite K U := GlobalTheory.Cmp.SmallJumps.finite_of_invariant (F := BdR)
@@ -374,7 +374,7 @@ theorem finrank_DdR_le_of_isField (hF : IsField BdR) [FiniteDimensional Qp LL]
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul c v => simp [σ, actVdR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   let f : DdR PD ρ →ₗ[Qp] U :=
     { toFun := fun x => ⟨TensorProduct.comm Qp V BdR x, fun g => by
         have := x.2

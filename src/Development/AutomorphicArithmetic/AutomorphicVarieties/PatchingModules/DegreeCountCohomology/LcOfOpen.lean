@@ -44,7 +44,7 @@ private theorem lc_padic {l : ℕ} [Fact l.Prime] {R : Type} [CommRing R] (f : �
   filter_upwards [hev] with y hy
   obtain ⟨z, hz⟩ := (PadicInt.norm_lt_one_iff_dvd _).1 hy
   have hyz : y = x + (l : ℤ_[l]) * z := by rw [← hz]; ring
-  rw [hyz, map_add, map_mul, map_natCast, hl, zero_mul, add_zero]
+  rw [hyz, map_add (f := _), map_mul, map_natCast, hl, zero_mul, add_zero]
 
 private theorem maximalIdeal_powerSeries_eq_span_X (K : Type) [Field K] :
     IsLocalRing.maximalIdeal (PowerSeries K) = Ideal.span {(PowerSeries.X : PowerSeries K)} := by

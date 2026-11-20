@@ -33,7 +33,7 @@ theorem bodyC_of_span (Y : Pend X) (j : ℕ) (cK : Y.Kc) {I : Type} [Fintype I] 
     simp only [map_zero, Pi.zero_apply, ker_zero, smul_zero, Finset.sum_const_zero]
   | add x y _ _ hx hy =>
     intro c' L' hL
-    simp only [map_add, Pi.add_apply, ker_add, smul_add, Finset.sum_add_distrib, hx c' L' hL, hy c' L' hL]
+    simp only [map_add (f := _), Pi.add_apply, ker_add, smul_add, Finset.sum_add_distrib, hx c' L' hL, hy c' L' hL]
   | smul a x _ hx =>
     intro c' L' hL
     simp only [map_smul, Pi.smul_apply, ker_smul]

@@ -33,7 +33,7 @@ theorem evT_piTensor_locRepU {c : ℕ} {n : Fin c → ℕ} (w : HeightOneSpectru
   | smul_tprod r ψ =>
     rw [map_smul, map_smul, map_smul, piTensor_tprod, evT_tprod, evT_tprod]
     rfl
-  | add v₁ v₂ h₁ h₂ => rw [map_add, map_add, map_add, h₁, h₂]
+  | add v₁ v₂ h₁ h₂ => rw [map_add (f := _), map_add (f := _), map_add (f := _), h₁, h₂]
 
 end Core
 

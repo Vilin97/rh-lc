@@ -68,7 +68,7 @@ theorem model_conj_norm : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   have hφu : ∀ a, φ (u * a) = u * φ a := by
     intro a; apply ψ.injective; rw [hψu, hφψ, hφψ, h3u]
   have hφadd : ∀ a b, φ (a + b) = φ a + φ b := by
-    intro a b; apply ψ.injective; rw [map_add, hφψ, hφψ, hφψ]; simp [ψ₃, Matrix.mulVec_add]
+    intro a b; apply ψ.injective; rw [map_add (f := _), hφψ, hφψ, hφψ]; simp [ψ₃, Matrix.mulVec_add]
 
   have hφmul : ∀ a b, φ (a * b) = a * φ b := by
     intro a

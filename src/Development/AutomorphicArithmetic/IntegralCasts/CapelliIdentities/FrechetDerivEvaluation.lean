@@ -9,7 +9,7 @@ private theorem UpperTheory.Reformulated.B.FrechetDerivEvaluation.aux {σ : Type
   | C a => simpa using hasFDerivAt_const a z
   | add p q hp hq =>
     have h := hp.add hq
-    simp only [map_add, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
     exact h
   | mul_X p n hp =>
     have h := hp.mul (hasFDerivAt_apply (𝕜 := ℂ) n z)

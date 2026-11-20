@@ -249,13 +249,13 @@ theorem tensFrom_tensTo (x : v.adicCompletion F ⊗[F] E) : tensFrom j k hjk v (
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rw [tensTo_tmul, tensFrom_tmul, RingEquiv.symm_apply_apply, RingEquiv.symm_apply_apply]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem tensTo_tensFrom (y : (mapPl j v).adicCompletion F' ⊗[F'] E') : tensTo j k hjk v (tensFrom j k hjk v y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rw [tensFrom_tmul, tensTo_tmul, RingEquiv.apply_symm_apply, RingEquiv.apply_symm_apply]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 end Tens
 

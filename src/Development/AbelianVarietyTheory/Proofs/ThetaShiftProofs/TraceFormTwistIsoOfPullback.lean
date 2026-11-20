@@ -136,7 +136,7 @@ theorem rig_val : val D.rigK r z J = om hD.w z J J' (r' ≫ (1 : TK R' ⟶ D'.P.
 theorem tau_val (a b : D'.X) : val (D.tau (hD.xe a) (hD.xe b)) r z J =
     (om hD.w z J J' (r' ≫ D'.xK (a + b)))⁻¹ * om hD.w z J J' (r' ≫ D'.xK a) * om hD.w z J J' (r' ≫ D'.xK b) *
       (om hD.w z J J' (r' ≫ (1 : TK R' ⟶ D'.P.A).left))⁻¹ * val (D'.tau a b) r' z J' := by
-  rw [TauPull.val_tau r hJ, TauPull.val_tau r' hJ', ← map_add, psi_val hD r r' hr hJ hJ', psi_val hD r r' hr hJ hJ',
+  rw [TauPull.val_tau r hJ, TauPull.val_tau r' hJ', ← map_add (f := _), psi_val hD r r' hr hJ hJ', psi_val hD r r' hr hJ hJ',
     psi_val hD r r' hr hJ hJ', rig_val hD r r' hr hJ hJ']
   apply Additive.ofMul.injective
   simp only [ofMul_mul, ofMul_inv]

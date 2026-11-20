@@ -37,7 +37,7 @@ theorem core (s : R →+* R) (T : R) (D : K) (hT : T * T = algebraMap K R D) (hD
       rw [← h, ← map_mul, inv_mul_cancel₀ h2, map_one]
     have hs : s (algebraMap K R 2⁻¹ * (1 + algebraMap K R t⁻¹ * T)) =
         algebraMap K R 2⁻¹ * (1 - algebraMap K R t⁻¹ * T) := by
-      rw [map_mul, map_add, map_mul, hsK, hsK, hsT, map_one]
+      rw [map_mul, map_add (f := _), map_mul, hsK, hsK, hsT, map_one]
       ring
     refine ⟨algebraMap K R 2⁻¹ * (1 + algebraMap K R t⁻¹ * T), ?_, ?_, ?_⟩
     · generalize algebraMap K R t⁻¹ * T = w at hw
@@ -118,7 +118,7 @@ theorem exists_theta {σ : E →ₐ[F] E} (h : IsCMExt F E σ) :
     intro s t hst
     simp only [Algebra.smul_def, mul_one] at hst
     have h1 := congrArg σ hst
-    simp only [map_add, map_mul, AlgHom.commutes, hσθ, map_zero] at h1
+    simp only [map_add (f := _), map_mul, AlgHom.commutes, hσθ, map_zero] at h1
     have hs : (2 : E) * algebraMap F E s = 0 := by
       linear_combination hst + h1
     have ht : (2 : E) * (algebraMap F E t * θ) = 0 := by
@@ -141,7 +141,7 @@ theorem exists_theta {σ : E →ₐ[F] E} (h : IsCMExt F E σ) :
   have hsum' : algebraMap F E a + algebraMap F E b * θ = θ * θ := by
     simpa only [Algebra.smul_def, mul_one] using hsum
   have hconj := congrArg σ hsum'
-  simp only [map_add, map_mul, AlgHom.commutes, hσθ] at hconj
+  simp only [map_add (f := _), map_mul, AlgHom.commutes, hσθ] at hconj
   have hb : (2 : E) * (algebraMap F E b * θ) = 0 := by
     linear_combination hsum' - hconj
   have hb0 : algebraMap F E b = 0 :=

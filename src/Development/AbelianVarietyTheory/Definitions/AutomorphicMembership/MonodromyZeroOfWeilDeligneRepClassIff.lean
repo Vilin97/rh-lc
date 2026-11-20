@@ -193,11 +193,11 @@ theorem Iso.tensor {a : WDRep h V} {a' : WDRep h V'} {b : WDRep h V''} {b' : WDR
   · induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [h1, h1']
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [h2, h2']
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def dual (a : WDRep h V) : WDRep h (Dual ℂ V) where
   ρ := a.ρ.dual

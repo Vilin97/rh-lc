@@ -67,7 +67,7 @@ theorem lg_agree (G : LogFGL v d) {τ : Type*} {x y : Fin d → MvPowerSeries τ
   have split : ∀ z : Fin d → MvPowerSeries τ C, HasSubst z →
       subst z (G.lg a) = z a + subst z (G.lg a - X a) := by
     intro z hz; rw [subst_sub hz, subst_X hz]; ring
-  rw [split x hsx, split y hsy, map_add, map_add, h a e he,
+  rw [split x hsx, split y hsy, map_add (f := _), map_add (f := _), h a e he,
     pt_subst_agree hsx hsy hx hy (G.lg a - X a) k h (pt_hK_of_low (lg_low G a) x y) e
       (by omega)]
 
@@ -178,7 +178,7 @@ theorem delete_step [IsAlgClosed C] [CharZero C] (G : LogFGL v d) {p : ℕ} (hp 
       if l ∣ m then 0 else PowerSeries.coeff m (G.lgCurve ga a) := by
     intro a m
     have h1 := congrArg (PowerSeries.coeff m) (hsum a)
-    rw [map_add, hlgε] at h1
+    rw [map_add (f := _), hlgε] at h1
     split_ifs at h1 ⊢ with hd
     · linear_combination -h1
     · linear_combination -h1

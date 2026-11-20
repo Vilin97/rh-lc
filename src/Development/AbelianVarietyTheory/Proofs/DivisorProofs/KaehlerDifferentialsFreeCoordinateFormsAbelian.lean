@@ -54,7 +54,7 @@ theorem kaehler_frame : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.l
       rw [hD, Derivation.liftKaehlerDifferential_comp_D]
       exact (hval a y z hz).symm.trans (hev' _)
     | zero => simp only [map_zero, ContinuousLinearMap.zero_apply]
-    | add x y _ _ hx hy => simp only [map_add, ContinuousLinearMap.add_apply, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), ContinuousLinearMap.add_apply, hx, hy]
     | smul r x _ hx =>
       rw [hsm', ContinuousLinearMap.smul_apply, hx, map_smul, smul_eq_mul, smul_eq_mul, map_mul, hev' r]
 

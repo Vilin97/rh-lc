@@ -62,10 +62,10 @@ private theorem sInf_mul (x : TR.Rinf F) (a : A F) : TR.sInf F x * a = TR.sInf F
   · rw [map_mul, pFin_sInf, pFin_sInf, zero_mul]
 
 private theorem pInf_aI (w : InfinitePlace F) (t : ℝ) : TR.pInf F (aI w t : (A F)ˣ) = eR w t := by
-  rw [aI_val, map_add, pInf_sInf, map_one]; abel
+  rw [aI_val, map_add (f := _), pInf_sInf, map_one]; abel
 
 private theorem pFin_aI (w : InfinitePlace F) (t : ℝ) : pFin F (aI w t : (A F)ˣ) = 1 := by
-  rw [aI_val, map_add, pFin_sInf, map_one, add_zero]
+  rw [aI_val, map_add (f := _), pFin_sInf, map_one, add_zero]
 
 private theorem ab_aI (w : InfinitePlace F) (t : ℝ) : ab (aI w t) = Real.exp t := by
   have h1 : ((aI w t : (A F)ˣ) : A F).1 = TR.infEq F (eR w t) := by

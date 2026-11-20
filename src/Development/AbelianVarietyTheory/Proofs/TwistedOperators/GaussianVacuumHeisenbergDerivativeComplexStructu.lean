@@ -54,7 +54,7 @@ theorem actsD_zero_of_neg {F E : Type} [Field F] [NumberField F] [Field E] [Numb
   let ell : (Fin n × Fin d → mixedEmbedding.mixedSpace F) → (Fin n × Fin d → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ℝ :=
     fun b =>
     { toFun := fun y => Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (y ⬝ᵥ b)
-      map_add' := fun x y => by simp only [add_dotProduct, map_add]
+      map_add' := fun x y => by simp only [add_dotProduct, map_add (f := _)]
       map_smul' := fun c x => by simp only [smul_dotProduct, map_smul, smul_eq_mul, RingHom.id_apply] }
   set a₁ : Fin n × Fin d → mixedEmbedding.mixedSpace F := fun i => evI F ((M.co.e u).1 i)
   set a₂ : Fin n × Fin d → mixedEmbedding.mixedSpace F := fun i => evI F ((M.co.e u').1 i)

@@ -463,7 +463,7 @@ theorem final_eq {V : Submodule ℂ (G3 → ℂ)} (hV : WhA V) {W : G3 → ℂ} 
       simp only [dia, map_mul]
     rw [hQ, hm, hdu, hdd]
     simp only [mul_assoc]
-  rw [key, hV.psi W hW, hV.cen W hW, ← map_add, psi_rat, one_mul]
+  rw [key, hV.psi W hW, hV.cen W hW, ← map_add (f := _), psi_rat, one_mul]
 
 theorem hGen_of' (h1 : MajU) (h1' : MajV) (h2 : ContW) : HGen := by
   intro V hV W hW ξ hξ0 hξ1 g

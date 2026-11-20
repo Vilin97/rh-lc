@@ -96,7 +96,7 @@ theorem DegLt.mono {k k' : ℕ} {f : MvPolynomial σ ℂ} (h : DegLt k f) (hk : 
 
 omit [DecidableEq σ] in
 theorem DegLt.pderiv {k : ℕ} {f : MvPolynomial σ ℂ} (h : DegLt (k + 1) f) (l : σ) : DegLt k (pderiv l f) :=
-  fun α hα => by rw [coeff_pderiv, h _ (by rw [map_add, Finsupp.degree_single]; omega), zero_mul]
+  fun α hα => by rw [coeff_pderiv, h _ (by rw [map_add (f := _), Finsupp.degree_single]; omega), zero_mul]
 
 theorem DegLt.X_mul {k : ℕ} {f : MvPolynomial σ ℂ} (h : DegLt k f) (l : σ) : DegLt (k + 1) (X l * f) :=
   fun α hα => by
@@ -106,7 +106,7 @@ theorem DegLt.X_mul {k : ℕ} {f : MvPolynomial σ ℂ} (h : DegLt k f) (l : σ)
       have e : α - Finsupp.single l 1 + Finsupp.single l 1 = α :=
         tsub_add_cancel_of_le (Finsupp.single_le_iff.2 (Nat.pos_of_ne_zero (Finsupp.mem_support_iff.1 hl)))
       have := congrArg Finsupp.degree e
-      rw [map_add, Finsupp.degree_single] at this
+      rw [map_add (f := _), Finsupp.degree_single] at this
       omega
     · rfl
 
@@ -176,7 +176,7 @@ theorem inner_X_X (a b : σ) (f g : MvPolynomial σ ℂ) :
 theorem norm_X_mul_le [Fintype σ] {k : ℕ} {f : MvPolynomial σ ℂ} (h : DegLt k f) (l : σ) :
     ‖F.ι (X l * f)‖ ≤ √(k + 1) * ‖F.ι f‖ := by
   have h1 : ‖F.ι (X l * f)‖ ^ 2 = ‖F.ι (pderiv l f)‖ ^ 2 + ‖F.ι f‖ ^ 2 := by
-    simp only [← inner_self_eq_norm_sq (𝕜 := ℂ), inner_X_X, if_true, map_add]
+    simp only [← inner_self_eq_norm_sq (𝕜 := ℂ), inner_X_X, if_true, map_add (f := _)]
   have h2 : ‖F.ι (pderiv l f)‖ ^ 2 ≤ k * ‖F.ι f‖ ^ 2 :=
     (Finset.single_le_sum (f := fun l => ‖F.ι (pderiv l f)‖ ^ 2) (fun _ _ => sq_nonneg _)
       (Finset.mem_univ l)).trans (sum_sq_pderiv_le F h)
@@ -329,7 +329,7 @@ theorem summable_pow (h : (1 - Aᴴ * A).PosDef) :
     rw [← Real.sqrt_sq hm.le, ← Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq hm.le]
     congr 1; push_cast; field_simp
   have b3 : ‖F.ι (gaussPoly A x ^ (n + 1))‖ ≤ (n + 1) * (s * ‖F.ι (gaussPoly A x ^ n)‖) := by
-    rw [pow_succ', gaussPoly_mul, map_add]
+    rw [pow_succ', gaussPoly_mul, map_add (f := _)]
     refine (norm_add_le_of_le b1 b2).trans ?_
     rw [← hT, s1, s2]
     calc _ = (n + 1) * (g (1 / (n + 1)) * ‖F.ι (gaussPoly A x ^ n)‖) := by simp only [g]; ring
@@ -350,7 +350,7 @@ theorem coeff_pow_eq_zero {σ : Type} {q : MvPolynomial σ ℂ} (hq : AddMonoidA
     rw [pow_succ, coeff_mul]
     refine Finset.sum_eq_zero fun p hp => ?_
     have e := congrArg Finsupp.degree (Finset.HasAntidiagonal.mem_antidiagonal.1 hp)
-    rw [map_add] at e
+    rw [map_add (f := _)] at e
     by_cases h0 : p.2 = 0
     · rw [h0, hq, mul_zero]
     · have : p.2.degree ≠ 0 := fun h => h0 ((Finsupp.degree_eq_zero_iff _).1 h)
@@ -361,7 +361,7 @@ theorem hasCoeff_unique {σ : Type} [DecidableEq σ] (F : Fock σ) {v w : F.H} {
   refine F.dense.eq_of_inner_right (𝕜 := ℂ) ?_
   rintro _ ⟨f, rfl⟩
   induction f using MvPolynomial.induction_on' with
-  | add f g hf hg => simp only [map_add, inner_add_left, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), inner_add_left, hf, hg]
   | monomial α a =>
     have e : (monomial α a : MvPolynomial σ ℂ) = a • monomial α 1 := by simp [smul_monomial]
     rw [e, map_smul, inner_smul_left, inner_smul_left, hv α, hw α]

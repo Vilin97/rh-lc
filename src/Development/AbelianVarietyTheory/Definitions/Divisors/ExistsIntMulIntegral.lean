@@ -66,7 +66,7 @@ theorem Datum.EF_smulF_right (c : 𝓞 D.F) (x y : D.La) : D.EF x (D.smulF c y) 
 
 theorem Datum.EF_swap (x y : D.La) : D.EF y x = - D.EF x y := by
   have h := D.alt (x + y)
-  simp only [map_add, LinearMap.add_apply, D.alt, zero_add, add_zero] at h
+  simp only [map_add (f := _), LinearMap.add_apply, D.alt, zero_add, add_zero] at h
   linarith
 
 theorem Datum.skew_swap (x y : D.La) : D.skew y x = - IsCMField.complexConj D.F (D.skew x y) := by
@@ -88,7 +88,7 @@ theorem Datum.skew_swap (x y : D.La) : D.skew y x = - IsCMField.complexConj D.F 
 
 theorem Datum.conj_ω : IsCMField.complexConj D.F (D.ω : D.F) = D.tr - D.ω := by
   have h := congrArg (fun z : 𝓞 D.F => (z : D.F)) D.tr_eq
-  simp only [map_add, map_intCast] at h
+  simp only [map_add (f := _), map_intCast] at h
   rw [← D.bar_eq]
   push_cast at h ⊢
   linear_combination h
@@ -143,7 +143,7 @@ theorem Datum.quadQ_monic : D.quadQ.Monic := by
   unfold Datum.quadQ; monicity!
 
 theorem Datum.aeval_quadQ : aeval (D.ω : D.F) D.quadQ = 0 := by
-  simp only [Datum.quadQ, map_add, map_sub, map_mul, map_pow, aeval_X, aeval_C, map_intCast, D.ω_sq]
+  simp only [Datum.quadQ, map_add (f := _), map_sub, map_mul, map_pow, aeval_X, aeval_C, map_intCast, D.ω_sq]
   ring
 
 theorem Datum.ω_ne_rat (q : ℚ) : (D.ω : D.F) ≠ algebraMap ℚ D.F q := by
@@ -192,7 +192,7 @@ def Datum.kqEquiv : D.Kq →+* IntermediateField.adjoin ℚ {(D.ω : D.F)} where
 def Datum.uOf (r : ℚ_[p]) (hr : r ^ 2 - D.tr * r + D.nm = 0) : D.Kq →+* ℚ_[p] :=
   ((IntermediateField.adjoin.powerBasis D.isIntegral_ω).lift r (by
       rw [IntermediateField.adjoin.powerBasis_gen, IntermediateField.minpoly_gen, D.minpoly_ω]
-      simp only [Datum.quadQ, map_add, map_sub, map_mul, map_pow, aeval_X, aeval_C, map_intCast]
+      simp only [Datum.quadQ, map_add (f := _), map_sub, map_mul, map_pow, aeval_X, aeval_C, map_intCast]
       linear_combination hr)).toRingHom.comp D.kqEquiv
 
 theorem Datum.uOf_ω (r : ℚ_[p]) (hr : r ^ 2 - D.tr * r + D.nm = 0) :

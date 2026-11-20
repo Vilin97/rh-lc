@@ -177,11 +177,11 @@ theorem not_funKilled_both {F E : Type} [Field F] [NumberField F] [Field E] [Num
     show inclE (F := F) (v.adicCompletion F) (p : E) * inclE (F := F) (v.adicCompletion F) (a : E) +
       inclE (F := F) (v.adicCompletion F) (q : E) * inclE (F := F) (v.adicCompletion F) (b : E) = 1
     have := congrArg (fun r : 𝓞 E => inclE (F := F) (v.adicCompletion F) (algebraMap (𝓞 E) E r)) hab
-    simp only [map_add, map_mul, map_one] at this
+    simp only [map_add (f := _), map_mul, map_one] at this
     rw [← this, mul_comm _ (inclE (F := F) (v.adicCompletion F) (a : E)), mul_comm _ (inclE (F := F) (v.adicCompletion F) (b : E))])
   have : t = c p • c a • t + c q • c b • t := by rw [smul_smul, smul_smul, ← add_smul, e, one_smul]
   have h3 := congrArg (S.fT v hv) this
-  rw [map_add, h1, h2, add_zero] at h3
+  rw [map_add (f := _), h1, h2, add_zero] at h3
   exact h3
 
 set_option maxHeartbeats 1600000 in

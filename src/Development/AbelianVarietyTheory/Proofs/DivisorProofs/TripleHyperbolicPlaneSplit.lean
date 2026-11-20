@@ -117,7 +117,7 @@ theorem exists_extend_ne_zero {F : Type} [Field F] [NumberField F] (v : Pl F) {�
       intro y hy y' hy'
       obtain ⟨a, ha, rfl⟩ := AddSubgroup.mem_map.1 hy
       obtain ⟨b, hb, rfl⟩ := AddSubgroup.mem_map.1 hy'
-      rw [← map_add, hc' _ (Λ.add_mem ha hb), hc' a ha, hc' b hb, Prod.snd_add, dotProduct_add, AddChar.map_add_eq_mul])
+      rw [← map_add (f := _), hc' _ (Λ.add_mem ha hb), hc' a ha, hc' b hb, Prod.snd_add, dotProduct_add, AddChar.map_add_eq_mul])
     (by
       intro y _ hy'
       have hy'' : q y ∈ Λ := hy'

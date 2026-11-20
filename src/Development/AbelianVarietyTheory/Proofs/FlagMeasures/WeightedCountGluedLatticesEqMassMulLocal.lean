@@ -43,7 +43,7 @@ theorem mem_isometriesFixingBothFrames_iff_unitriangular : ∀ (D : D7) {T T' : 
         rw [hrest, add_comm]
       have h1 := hh a
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [hsplit, map_add, map_sum] at h1
+        rw [hsplit, map_add (f := _), map_sum] at h1
       have h2 : ∑ b ∈ Finset.univ.filter (fun b => b < a), g (A b a • f b) =
           ∑ b ∈ Finset.univ.filter (fun b => b < a), A b a • f b := by
         refine Finset.sum_congr rfl fun b hb => ?_

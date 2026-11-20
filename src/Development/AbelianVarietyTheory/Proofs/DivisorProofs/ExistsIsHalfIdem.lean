@@ -43,7 +43,7 @@ def latQ (S T : HSp D) (LS : Set (Fin S.rank → D.host.E)) (LT : Set (Fin T.ran
   carrier := {x | finRat S T x ∈ latO S T LS LT fun _ => True}
   add_mem' {x y} hx hy := by
     show finRat S T (x + y) ∈ latO S T LS LT fun _ => True
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
   zero_mem' := by
     show finRat S T 0 ∈ latO S T LS LT fun _ => True

@@ -338,7 +338,7 @@ def step (z : Sp S ⟶ Z) {x : Sp S ⟶ Y.X} (_hx : z ≫ π = x) (σ : E →+* 
     tanPull φ e v ∈ initSpan S' (F.vecAt k z' hz' hx' σ) i}
   zero_mem' := fun S' _ φ x' e k z' _ hz' hx' => by rw [map_zero]; exact Submodule.zero_mem _
   add_mem' := fun hu hv S' _ φ x' e k z' ez hz' hx' => by
-    rw [map_add]; exact Submodule.add_mem _ (hu S' φ x' e k z' ez hz' hx') (hv S' φ x' e k z' ez hz' hx')
+    rw [map_add (f := _)]; exact Submodule.add_mem _ (hu S' φ x' e k z' ez hz' hx') (hv S' φ x' e k z' ez hz' hx')
   smul_mem' := fun a v hv S' _ φ x' e k z' ez hz' hx' => by
     rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ (hv S' φ x' e k z' ez hz' hx')
 

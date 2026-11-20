@@ -113,7 +113,7 @@ theorem exists_trace_eq {A B σ : Type} [CommRing A] [IsLocalRing A] [IsNoetheri
       intro z
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | tmul s w => simp [hπ]
     rw [e, AlgHom.map_det, RingHom.map_det]
     congr 1
@@ -130,7 +130,7 @@ theorem exists_trace_eq {A B σ : Type} [CommRing A] [IsLocalRing A] [IsNoetheri
     rw [hε, residue_eq_zero_iff] at hx
     change _ ∈ m.radical
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hu, map_add, map_sum]
+      rw [hu, map_add (f := _), map_sum]
     refine add_mem (Ideal.le_radical ?_) (Ideal.sum_mem _ fun j _ => ?_)
     · have : algebraMap S B (C (constantCoeff s)) = algebraMap A B (constantCoeff s) :=
         (IsScalarTower.algebraMap_apply A S B _).symm
@@ -157,7 +157,7 @@ theorem exists_trace_eq {A B σ : Type} [CommRing A] [IsLocalRing A] [IsNoetheri
       intro z
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | tmul s w =>
         rw [hπ, hη, map_mul, ← hκ, ← hε]; rfl
     have h1 := e P.det
@@ -269,7 +269,7 @@ theorem C_dvd_trace_of_jacobian : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDi
       rw [PlaceInt.mem_maximalIdeal_mvPowerSeries_iff, ← residue_eq_zero_iff] at hc
       rw [Ideal.mem_comap, Ideal.mem_comap, hu]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [RingHom.coe_coe, map_add, map_sum, map_mul, hιC, hιX]
+        simp only [RingHom.coe_coe, map_add (f := _), map_sum, map_mul, hιC, hιX]
       refine add_mem ?_ (Ideal.sum_mem _ fun j _ =>
         Ideal.mul_mem_right _ _ (Ideal.subset_span ⟨j, rfl⟩))
       simp [red, hc]

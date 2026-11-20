@@ -33,7 +33,7 @@ theorem exists_int_mul (L : PeriodPair) {w₁ w₂ : ℂ} (h₁ : w₁ ∈ L.lat
   obtain ⟨a, b, rfl⟩ := PeriodPair.mem_lattice.mp h₁
   obtain ⟨c, d, rfl⟩ := PeriodPair.mem_lattice.mp h₂
   refine ⟨a * d - b * c, ?_⟩
-  simp only [map_add, map_mul, map_intCast, Complex.mul_im, Complex.mul_re, Complex.add_im,
+  simp only [map_add (f := _), map_mul, map_intCast, Complex.mul_im, Complex.mul_re, Complex.add_im,
     Complex.add_re, Complex.intCast_re, Complex.intCast_im, Complex.conj_re, Complex.conj_im]
   push_cast
   ring

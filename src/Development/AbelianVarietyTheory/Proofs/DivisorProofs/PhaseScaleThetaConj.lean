@@ -82,7 +82,7 @@ theorem smallComb_of_small {ρ : Setup D.ntw} {i : D.ntw.Tw} {b : Bool}
     | add _ _ _ _ h1 h2 =>
       obtain ⟨P₁, a1, rfl, f₁⟩ := h1
       obtain ⟨P₂, a2, rfl, f₂⟩ := h2
-      exact ⟨P₁ + P₂, add_mem a1 a2, map_add _ _ _, by rw [map_add]; exact f₁.add f₂⟩
+      exact ⟨P₁ + P₂, add_mem a1 a2, map_add _ _ _, by rw [map_add (f := _)]; exact f₁.add f₂⟩
     | smul c _ _ h1 =>
       obtain ⟨P₁, a1, rfl, f₁⟩ := h1
       refine ⟨(c : ℂ) • P₁, Submodule.smul_mem _ _ a1, ?_, ?_⟩

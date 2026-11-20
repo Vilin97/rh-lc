@@ -32,7 +32,7 @@ theorem pderiv_algHom_of_linear {R : Type*} [CommRing R]
     rw [map_mul, Derivation.leibniz, hP, h1, smul_eq_mul, smul_eq_mul, ← h2, Finset.mul_sum,
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun j _ => ?_
-    rw [Derivation.leibniz, map_add, smul_add, smul_eq_mul, smul_eq_mul, map_mul G (X k),
+    rw [Derivation.leibniz, map_add (f := _), smul_add, smul_eq_mul, smul_eq_mul, map_mul G (X k),
       mul_smul_comm]
 
 omit [Fintype τ] in
@@ -57,7 +57,7 @@ theorem fockInner_algHom_of_linear (F : MvPolynomial σ ℂ →ₐ[ℂ] MvPolyno
     rw [algHom_C, algebraMap_eq, C_apply, C_apply, fockInner_monomial_left,
       fockInner_monomial_left, this]
     simp [constantCoeff_eq]
-  | add P P' hP hP' => rw [map_add, fockInner_add_left, fockInner_add_left, hP, hP']
+  | add P P' hP hP' => rw [map_add (f := _), fockInner_add_left, fockInner_add_left, hP, hP']
   | mul_X P k hP =>
     set_option synthInstance.maxHeartbeats 100000 in
       rw [mul_comm P, fockInner_X_mul_left, pderiv_algHom_of_linear G _ hG, map_mul, hF,

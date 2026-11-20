@@ -175,7 +175,7 @@ theorem exists_matrix_split {E : Type} [Field E] [NumberField E] {n p q : ℕ} (
     rw [eq_top_iff, ← hsp, Submodule.span_le]
     rintro _ ⟨v, rfl⟩
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 (hs ▸ Submodule.mem_top : v ∈ Lp ⊔ Lm)
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨a, ha, rfl⟩) (Submodule.subset_span ⟨b, hb, rfl⟩)
   have h1 : Module.finrank E Wp ≤ p := hle Lp p hp
   have h2 : Module.finrank E Wm ≤ q := hle Lm q hq
@@ -330,7 +330,7 @@ theorem marking_of_conjugate : ∀ (D : D7) (H : ReciprocityTheory.ChartRestrict
     (hp.trans (C.F.sig k).1) (hq.trans (C.F.sig k).2) (wE H s : D.host.E) (H.bar (wE H s) : D.host.E)
   have hS : ∀ a ∈ GlobalTheory.PureType.lat hP H.rt0, ∀ b ∈ GlobalTheory.PureType.lat hP (-H.rt0),
       S *ᵥ φ k (a + b) = φ k (wE H s • a + H.bar (wE H s) • b) := fun a ha b hb => by
-    rw [map_add, Matrix.mulVec_add, hSp a ha, hSm b hb, map_add, map_smul, map_smul]
+    rw [map_add (f := _), Matrix.mulVec_add, hSp a ha, hSm b hb, map_add (f := _), map_smul, map_smul]
     rfl
   have hdec : ∀ v : (C.F.Di k).La, ∃ a ∈ GlobalTheory.PureType.lat hP H.rt0, ∃ b ∈ GlobalTheory.PureType.lat hP (-H.rt0), a + b = v :=
     fun v => Submodule.mem_sup.1 (by rw [show _ ⊔ _ = ⊤ from hsplit]; trivial)
@@ -363,7 +363,7 @@ theorem marking_of_conjugate : ∀ (D : D7) (H : ReciprocityTheory.ChartRestrict
       obtain ⟨a, ha, a', ha', e⟩ := hdec (C.F.t k (b • x))
       obtain ⟨z, hz⟩ := hΦ _ hv a ha a' ha' e.symm
       refine ⟨φ (π k) z, by rw [← SetLike.mem_coe, ← hL']; exact ⟨z, rfl⟩, ?_⟩
-      rw [hz, ← e, hS a ha a' ha', map_add, map_nsmul, hδ2])
+      rw [hz, ← e, hS a ha a' ha', map_add (f := _), map_nsmul, hδ2])
   refine ⟨δ, (r1 δ).2 ⟨δ', hδ⟩, u, h1, h2, ?_⟩
   rw [hdet] at h3
   rw [RingOfIntegers.coe_eq_algebraMap, map_mul, map_pow, map_pow]

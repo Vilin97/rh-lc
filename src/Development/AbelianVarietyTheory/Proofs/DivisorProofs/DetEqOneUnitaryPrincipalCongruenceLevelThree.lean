@@ -47,7 +47,7 @@ theorem isIntegral_of_left_eigen {r : ℕ} {Ω : Type} [Field Ω] [Algebra E Ω]
     { toFun := fun x => u ⬝ᵥ (fun a => φ (x a))
       map_add' := by
         intro x y
-        simp only [Pi.add_apply, map_add]
+        simp only [Pi.add_apply, map_add (f := _)]
         rw [← dotProduct_add]; rfl
       map_smul' := by
         intro c x

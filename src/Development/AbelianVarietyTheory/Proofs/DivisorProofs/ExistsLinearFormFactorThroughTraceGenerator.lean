@@ -49,7 +49,7 @@ theorem exists_linear_theta_factor : ∀ {E : Type} [Field E] [NumberField E] [I
   · intro x y
     apply uniq
     intro u
-    rw [← hT (x + y) u, add_mul, map_add, ← hT x u, ← hT y u]
+    rw [← hT (x + y) u, add_mul, map_add (f := _), ← hT x u, ← hT y u]
     simp [ψ, smul_add]
   · intro c x
     show T (c • x) = c * T x

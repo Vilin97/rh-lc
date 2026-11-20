@@ -46,7 +46,7 @@ theorem exists_center_ofCusp {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a)
     ∃ p ∈ (isExpLieAlgebra E a).centerU, ∃ q ∈ (isExpLieAlgebra E a).centerU, ∀ ψ : cuspForms E a,
       z (ofCusp E a ψ) = ofCusp E a (uActionCusp E a p ψ + Complex.I • uActionCusp E a q ψ) := by
   obtain ⟨p, hp, q, hq, rfl⟩ := mem_Zalg_iff.1 hz
-  exact ⟨p, hp, q, hq, fun ψ => by rw [map_add, map_smul, ofCusp_uAction, ofCusp_uAction]; rfl⟩
+  exact ⟨p, hp, q, hq, fun ψ => by rw [map_add (f := _), map_smul, ofCusp_uAction, ofCusp_uAction]; rfl⟩
 
 theorem isStable_range : GlobalTheory.CuspRep.IsStable (LinearMap.range (ofCusp E a)) := by
   rintro o _ ⟨ψ, rfl⟩

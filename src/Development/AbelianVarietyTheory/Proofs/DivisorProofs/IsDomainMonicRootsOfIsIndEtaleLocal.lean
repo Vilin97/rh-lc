@@ -72,7 +72,7 @@ theorem isDomain_aic_of_indEt : ∀ (T O : Type) [CommRing T] [CommRing O] [IsLo
   have hp' : p'.map (v : W →+* O) = p := by
     conv_rhs => rw [hpm.as_sum]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [p', Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
+      simp only [p', Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
       Polynomial.map_mul, Polynomial.map_C]
     rw [← Fin.sum_univ_eq_sum_range (fun i => C (p.coeff i) * X ^ i)]
     simp [hc]

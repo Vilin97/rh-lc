@@ -65,7 +65,7 @@ def comapAct {O₀ : Type} [CommRing O₀] (a : OAct O G) (φ : O₀ →+* O) : 
   hom c := a.hom _
   one := by rw [map_one, a.one]
   mul c d := by rw [map_mul, a.mul]
-  add c d := by rw [map_add, a.add]
+  add c d := by rw [map_add (f := _), a.add]
 
 @[simp] theorem comapAct_act {O₀ : Type} [CommRing O₀] (a : OAct O G) (φ : O₀ →+* O) (c : O₀) :
     (comapAct a φ).act c = a.act (φ c) := rfl
@@ -240,7 +240,7 @@ theorem comp_homOfNat (x : T ⟶ G) : x ≫ homOfNat φ = (φ T (mk a x)).hom :=
 
 theorem isLinearHom_homOfNat : IsLinearHom a b (homOfNat φ) where
   isMonHom := isMonHom_of_mul_comp _ fun T x y ↦ by
-    simp only [comp_homOfNat φ hφ, mk_mul, map_add, hom_add]
+    simp only [comp_homOfNat φ hφ, mk_mul, map_add (f := _), hom_add]
   comm r := by
     rw [comp_homOfNat φ hφ, ← Category.id_comp (a.act r), mk_comp_act, map_smul]
     rfl
@@ -297,7 +297,7 @@ instance isMonHom_tmul (m : M) : IsMonHom (h.tmul m) := (h.isLinearHom_tmul m).i
 @[simp] theorem tmul_zero : h.tmul 0 = 1 := by simp [tmul]
 
 theorem tmul_add (m n : M) : h.tmul (m + n) = h.tmul m * h.tmul n := by
-  simp only [tmul, add_tmul, map_add, Pts.hom_add]
+  simp only [tmul, add_tmul, map_add (f := _), Pts.hom_add]
 
 theorem tmul_smul (c : O) (m : M) : h.tmul (c • m) = h.tmul m ≫ b.act c := by
   simp only [tmul, ← smul_tmul', map_smul, Pts.hom_smul]
@@ -364,7 +364,7 @@ theorem liftPts_natural {K : Over S} [GrpObj K] [IsCommMonObj K] {c : OAct O K}
   rw [← h.natural]
   induction z with
   | tmul m x => ext; simp [liftPts_equiv_tmul]
-  | add z w hz hw => simp only [map_add, hz, hw]
+  | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 def lift {K : Over S} [GrpObj K] [IsCommMonObj K] {c : OAct O K} (f : M →ₗ[O] Pts c G)
     (hf : ∀ m, IsLinearHom a c (f m).hom) : H ⟶ K :=
@@ -410,7 +410,7 @@ theorem hom_equiv_comp_map (φ : M →ₗ[O] M') {f : G ⟶ G'} (hf : IsLinearHo
       (h'.equiv T (TensorProduct.map φ (Pts.post hf T) z)).hom := by
   induction z with
   | tmul m x => simp
-  | add z w hz hw => simp only [map_add, Pts.hom_add, MonObj.mul_comp, hz, hw]
+  | add z w hz hw => simp only [map_add (f := _), Pts.hom_add, MonObj.mul_comp, hz, hw]
 
 @[simp] theorem map_id : h.map h LinearMap.id (IsLinearHom.id a) = 𝟙 H :=
   h.hom_ext fun m ↦ by simp
@@ -588,7 +588,7 @@ def congrLeft (h : IsTensor H b G a M) (e : M' ≃ₗ[O] M) : IsTensor H b G a M
     congr 1
     induction z with
     | tmul m x => simp
-    | add z w hz hw => simp only [map_add, hz, hw]
+    | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 @[simp] theorem congrLeft_tmul (h : IsTensor H b G a M) (e : M' ≃ₗ[O] M) (m : M') :
     (h.congrLeft e).tmul m = h.tmul (e m) := rfl
@@ -603,7 +603,7 @@ def congrRight (h : IsTensor H b G a M) (e : G' ≅ G) (he : IsLinearHom a' a e.
     | tmul m x =>
       simp only [LinearMap.lTensor_tmul, LinearEquiv.lTensor_tmul]
       congr 1
-    | add z w hz hw => simp only [map_add, hz, hw]
+    | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 @[simp] theorem congrRight_tmul (h : IsTensor H b G a M) (e : G' ≅ G)
     (he : IsLinearHom a' a e.hom) (m : M) : (h.congrRight e he).tmul m = e.hom ≫ h.tmul m := by
@@ -624,7 +624,7 @@ def self (a : OAct O G) : IsTensor G a G a O where
   natural u z := by
     induction z with
     | tmul m x => simp
-    | add z w hz hw => simp only [map_add, hz, hw]
+    | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 @[simp] theorem self_tmul (a : OAct O G) (c : O) : (self a).tmul c = a.act c := by
   simp [tmul, self, -hom_equiv_tmul]
@@ -641,7 +641,7 @@ def algAct : OAct O' H where
   hom c := inferInstance
   one := h.hom_ext fun m ↦ by simp
   mul c d := h.hom_ext fun m ↦ by simp [smul_smul, mul_comm]
-  add c d := by rw [map_add, mapLeft_add]
+  add c d := by rw [map_add (f := _), mapLeft_add]
 
 variable {O'}
 
@@ -677,7 +677,7 @@ def algEquiv (T : Over S) : M ⊗[O] Pts a T ≃ₗ[O'] Pts (h.algAct O') T wher
     | tmul m x => simp [smul_tmul']
     | add z w hz hw =>
       simp only [Pts.hom_mk, RingHom.id_apply, Pts.hom_smul] at hz hw ⊢
-      simp only [smul_add, map_add, Pts.hom_add, hz, hw, MonObj.mul_comp]
+      simp only [smul_add, map_add (f := _), Pts.hom_add, hz, hw, MonObj.mul_comp]
   left_inv z := by simp
   right_inv y := by simp
 
@@ -708,10 +708,10 @@ def trans {K : Over S} [GrpObj K] [IsCommMonObj K] {c : OAct O' K} {N : Type} [A
       Pts.pre c u (k.equiv T ((h.algEquiv O' T).lTensor N
         (AlgebraTensorModule.assoc O O' O' N M _ z)))
     induction z with
-    | add z w hz hw => simp only [map_add, hz, hw]
+    | add z w hz hw => simp only [map_add (f := _), hz, hw]
     | tmul w x =>
       induction w with
-      | add v w hv hw => simp only [add_tmul, map_add, hv, hw]
+      | add v w hv hw => simp only [add_tmul, map_add (f := _), hv, hw]
       | tmul n m => ext; simp
 
 @[simp] theorem trans_tmul {K : Over S} [GrpObj K] [IsCommMonObj K] {c : OAct O' K} {N : Type}
@@ -819,7 +819,7 @@ def prod (h : IsTensor H b G a M) (h' : IsTensor H' b' G a M') :
       obtain ⟨m, m'⟩ := m
       apply Pts.ext
       apply CartesianMonoidalCategory.hom_ext <;> simp
-    | add z w hz hw => simp only [map_add, hz, hw]
+    | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 @[simp] theorem prod_tmul (h : IsTensor H b G a M) (h' : IsTensor H' b' G a M') (m : M) (m' : M') :
     (h.prod h').tmul (m, m') = CartesianMonoidalCategory.lift (h.tmul m) (h'.tmul m') := rfl
@@ -831,7 +831,7 @@ def pow {n : ℕ} (p : IsPowGrp G' G n) (a : OAct O G) :
   natural u z := by
     induction z with
     | tmul m x => exact Pts.ext (pow_hom_ext p fun i ↦ by simp)
-    | add z w hz hw => simp only [map_add, hz, hw]
+    | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 @[reassoc (attr := simp)]
 theorem pow_tmul_pr {n : ℕ} (p : IsPowGrp G' G n) (a : OAct O G) (v : Fin n → O) (i : Fin n) :
@@ -934,7 +934,7 @@ def baseChange (h : IsTensor H b G a M) (hφ : IsLinearPullback a₁ a f φ)
     induction z with
     | tmul m x =>
       simp only [LinearMap.lTensor_tmul, LinearEquiv.lTensor_tmul, Pts.pullbackEquiv_pre]
-    | add z w hz hw => simp only [map_add, hz, hw]
+    | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 theorem baseChange_tmul (h : IsTensor H b G a M) (hφ : IsLinearPullback a₁ a f φ)
     (hψ : IsLinearPullback b₁ b f ψ) (m : M) :

@@ -121,7 +121,7 @@ private theorem surjective_quo {F E : Type} [Field F] [NumberField F] [Field E] 
       cA (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.conj F E : E →ₐ[F] E) z := fun z => by
     induction z using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     | tmul a b => rfl
   obtain ⟨x, hx⟩ := GlobalTheory.AdLat.hilbert90_adeleRing_tensor_quadratic F E (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.conj F E) h.2.2.1
     (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.conj_ne_one F E) (u.1 : AE F E) (by rw [hs]; exact GlobalTheory.NormOneIdele.mem_normOneIdeles.1 u.2)

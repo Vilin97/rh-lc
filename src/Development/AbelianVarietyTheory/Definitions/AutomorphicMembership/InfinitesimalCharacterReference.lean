@@ -122,9 +122,9 @@ theorem inf_eq_paramV {D : D7} {cf : CharFrame D} (C : CharSide D cf) (j : Fin D
   rw [hμ.2, Multiset.map_singleton] at h2
   rw [isoInf_string _ _ _ _ h1, isoInf_string _ _ _ _ h2]
   constructor
-  · simp only [hcSigma, NG.paramV, Multiset.map_add, Multiset.map_map, Function.comp_def]
+  · simp only [hcSigma, NG.paramV, Multiset.map_add (f := _), Multiset.map_map, Function.comp_def]
     congr 1
-  · simp only [hcSigma, NG.paramV, Multiset.map_add, Multiset.map_map, Function.comp_def]
+  · simp only [hcSigma, NG.paramV, Multiset.map_add (f := _), Multiset.map_map, Function.comp_def]
     congr 1
     · congr 1 <;> exact Multiset.map_congr rfl fun _ _ => by ring
     · have hr : Multiset.range D.R.t = (Multiset.range D.R.t).map fun c => D.R.t - 1 - c := by

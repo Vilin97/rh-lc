@@ -41,7 +41,7 @@ theorem exists_isCoord [IsScalarTower L L' M'] (u : Basis ι L L') (J : M →ₗ
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [smul_assoc, smul_comm]
     | add a b ha hb =>
-      simp only [map_add, smul_add, Finset.sum_add_distrib, ha, hb]
+      simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, ha, hb]
   · rw [hπ, u.repr_self, Finsupp.single_apply]
     by_cases hk : k = l
     · simp [hk]
@@ -157,7 +157,7 @@ theorem IsCoord.tensor {Q : Type} [Field Q] [Algebra Q L] [Algebra Q L'] [Module
     | tmul m c =>
       simp only [AlgebraTensorModule.map_tmul, LinearMap.id_apply, TensorProduct.smul_tmul']
       rw [← TensorProduct.sum_tmul, h.1]
-    | add a b ha hb => simp only [map_add, smul_add, Finset.sum_add_distrib, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, ha, hb]
   · intro k l x
     induction x using TensorProduct.induction_on with
     | zero => simp
@@ -165,7 +165,7 @@ theorem IsCoord.tensor {Q : Type} [Field Q] [Algebra Q L] [Algebra Q L'] [Module
       simp only [AlgebraTensorModule.map_tmul, LinearMap.id_apply, TensorProduct.smul_tmul', h.2]
       split_ifs <;> simp
     | add a b ha hb =>
-      simp only [map_add, smul_add, ha, hb]
+      simp only [map_add (f := _), smul_add, ha, hb]
       split_ifs <;> simp
 
 theorem map_comm {Q : Type} [Field Q] [Algebra Q L] [Algebra Q L'] [Module Q M] [Module Q M']
@@ -178,7 +178,7 @@ theorem map_comm {Q : Type} [Field Q] [Algebra Q L] [Algebra Q L'] [Module Q M] 
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul m c => simp [hf]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end General
 

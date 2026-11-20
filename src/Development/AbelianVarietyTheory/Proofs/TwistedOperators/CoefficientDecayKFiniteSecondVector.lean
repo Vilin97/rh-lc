@@ -166,7 +166,7 @@ def decSet (v : M.H τ) (N : ℕ) : Submodule ℂ (M.H τ) where
   add_mem' := by
     rintro a b ⟨C, hC⟩ ⟨C', hC'⟩
     refine ⟨C + C', fun g hg => ?_⟩
-    rw [map_add, inner_add_right]
+    rw [map_add (f := _), inner_add_right]
     calc ‖⟪v, M.rep τ g a⟫_ℂ + ⟪v, M.rep τ g b⟫_ℂ‖ * (1 + hsn g) ^ N
         ≤ (‖⟪v, M.rep τ g a⟫_ℂ‖ + ‖⟪v, M.rep τ g b⟫_ℂ‖) * (1 + hsn g) ^ N :=
           mul_le_mul_of_nonneg_right (norm_add_le _ _) (pow_nonneg (by linarith [hsn_nonneg g]) _)
@@ -236,7 +236,7 @@ theorem decayAt_of_kFin : GlobalTheory.Published.HarishChandraModules → ∀ (D
         rfl
       · simp
       · intro x x' _ _ h h'
-        rw [map_add]
+        rw [map_add (f := _)]
         exact S0.add_mem h h'
       · intro c x _ h
         rw [map_smul]

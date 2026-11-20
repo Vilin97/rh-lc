@@ -21,7 +21,7 @@ theorem repr_map {R S : Type} [CommRing R] [Algebra F R] [CommRing S] [Algebra F
   | zero => simp
   | tmul r m =>
     simp [Algebra.TensorProduct.basis_repr_tmul]
-  | add a c ha hc => simp only [map_add, Finsupp.add_apply, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), Finsupp.add_apply, ha, hc]
 
 theorem cv_ratTup (R : Type) [CommRing R] [Algebra F R] {d M : ℕ}
     (b : Module.Basis (Fin d) F E) (x : Fin M × Fin d → F) :

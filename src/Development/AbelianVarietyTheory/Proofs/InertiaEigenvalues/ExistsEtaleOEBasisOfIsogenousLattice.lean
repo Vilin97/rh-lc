@@ -26,7 +26,7 @@ theorem algebraMap_mem_OE {K : FinExt l} (bk : BK K) (x : ℤ_[l]) : algebraMap 
   refine ⟨0, (PadicInt.appr x n : bk.S), algebraMap ℤ_[l] (WCb l) y, ?_⟩
   have : x = (PadicInt.appr x n : ℤ_[l]) + (l : ℤ_[l]) ^ n * y := by rw [mul_comm, hy]; ring
   have h2 := congrArg (algebraMap ℤ_[l] (WCb l)) this
-  rw [map_add, map_mul, map_pow, map_natCast, map_natCast] at h2
+  rw [map_add (f := _), map_mul, map_pow, map_natCast, map_natCast] at h2
   rw [pow_zero, one_mul, h2, map_natCast]
 
 theorem evW_mem_OE {K : FinExt l} (bk : BK K) (s : bk.S) : bk.evW s ∈ bk.OE := fun _ => ⟨0, s, 0, by simp⟩

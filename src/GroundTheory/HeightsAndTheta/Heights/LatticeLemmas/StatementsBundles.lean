@@ -268,8 +268,8 @@ theorem baseChangeCoord_conjMap (τ : L →+* ℂ) (x : Fibre τ (𝓞 L ⊗[�
       change ofComplex _ _ = ofComplex _ _
       simp only [map_mul]
       rfl
-    | add s t hs ht => simp only [tmul_add, map_add, hs, ht]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+    | add s t hs ht => simp only [tmul_add, map_add (f := _), hs, ht]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 def HermitianMetric.baseChange (L : Type*) [Field L] [NumberField L] [Algebra K L]
     (h : HermitianMetric K E) : HermitianMetric L (𝓞 L ⊗[𝓞 K] E) where

@@ -49,7 +49,7 @@ theorem hA_left_inv (k : I.Gf) (x y : VA I) : hA I x (I.fmat k *ᵥ y) = hA I (I
   exact h.symm
 
 theorem hA_add_left (x x' y : VA I) : hA I (x + x') y = hA I x y + hA I x' y := by
-  simp only [hA, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hA, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hA_sub_left (x x' y : VA I) : hA I (x - x') y = hA I x y - hA I x' y := by
   simp only [hA, Formalism.UG.hform, Pi.sub_apply, map_sub, sub_mul, Finset.sum_sub_distrib]

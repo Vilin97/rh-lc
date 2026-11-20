@@ -43,7 +43,7 @@ theorem exists_sep {O : Type} [CommRing O] {ι : Type} [Fintype ι] (em : ι →
       obtain ⟨t, ht⟩ := hfin.infinite_compl.nonempty
       refine ⟨x + (t : O) * z, fun q hq h => ht (Set.mem_biUnion (Finset.mem_coe.2 hq) ?_)⟩
       simp only [Set.mem_ofPred_eq]
-      simp only [map_add, map_mul, map_natCast] at h
+      simp only [map_add (f := _), map_mul, map_natCast] at h
       linear_combination h
   obtain ⟨x0, hx0⟩ := key (Finset.univ.filter fun q : ι × ι => q.1 ≠ q.2)
     (fun q hq => (Finset.mem_filter.1 hq).2)
@@ -69,7 +69,7 @@ theorem commute_aeval {A B : Matrix (Fin n) (Fin n) K} (h : Commute A B) (f : K[
     rw [aeval_C]
     exact (Algebra.commutes a A).symm
   | add p q hp hq =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hp.add_right hq
   | monomial k a ih =>
     rw [pow_succ, ← mul_assoc, map_mul, aeval_X]
@@ -94,7 +94,7 @@ theorem aeval_shift (N B : Matrix (Fin n) (Fin n) K) (hNB : Commute N B) (lam : 
     aeval (N + B) f *ᵥ w = aeval (algebraMap K (Matrix (Fin n) (Fin n) K) lam + B) f *ᵥ w := by
   induction f using Polynomial.induction_on with
   | C a => simp
-  | add p q hp hq => rw [map_add, map_add, Matrix.add_mulVec, Matrix.add_mulVec, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), Matrix.add_mulVec, Matrix.add_mulVec, hp, hq]
   | monomial k a _ =>
     rw [map_mul, map_mul, aeval_C, aeval_C, map_pow, map_pow, aeval_X, aeval_X, alg_mulVec, alg_mulVec,
       pow_shift N B hNB lam w hw (k + 1)]
@@ -201,16 +201,16 @@ theorem split_holds : SplitSt := by
     rw [← map_mul, ← map_mul, mul_comm]
   have h1 := congrArg (fun A => A *ᵥ u) (hann (x0 + (t : O) * x))
   simp only [Matrix.zero_mulVec] at h1
-  rw [← Matrix.mulVec_mulVec, map_add, map_mul, map_natCast, aeval_shift _ _ hcx (em c x0) _ hw0] at h1
+  rw [← Matrix.mulVec_mulVec, map_add (f := _), map_mul, map_natCast, aeval_shift _ _ hcx (em c x0) _ hw0] at h1
   have e2 : algebraMap K (Matrix (Fin n) (Fin n) K) (em c x0) + (t : Matrix (Fin n) (Fin n) K) * M x =
       aeval (M x) (Polynomial.C (em c x0) + Polynomial.C (t : K) * X) := by
-    rw [map_add, map_mul, aeval_C, aeval_C, aeval_X, map_natCast]
+    rw [map_add (f := _), map_mul, aeval_C, aeval_C, aeval_X, map_natCast]
   rw [e2, ← aeval_comp, prod_comp] at h1
   refine Eq.trans ?_ h1
   congr 2
   refine Finset.prod_congr rfl fun c' _ => ?_
   rw [sub_comp, X_comp, C_comp]
-  simp only [map_add, map_mul, map_natCast, map_sub]
+  simp only [map_add (f := _), map_mul, map_natCast, map_sub]
   ring
 
 end RowTiePSplit

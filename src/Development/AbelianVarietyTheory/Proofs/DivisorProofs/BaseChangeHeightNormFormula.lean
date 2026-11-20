@@ -20,7 +20,7 @@ theorem form_sum_right {K : Type} [Field K] {V : Type} [AddCommGroup V] [Module 
 theorem form_add_left {K : Type} [Field K] {V : Type} [AddCommGroup V] [Module K V]
     (h : HermFam K V) (σ : K →+* ℂ) (a b y : V) :
     h.form σ (a + b) y = h.form σ a y + h.form σ b y := by
-  rw [← h.conj_symm σ y, h.add_right, map_add, h.conj_symm, h.conj_symm]
+  rw [← h.conj_symm σ y, h.add_right, map_add (f := _), h.conj_symm, h.conj_symm]
 
 theorem form_smul_left {K : Type} [Field K] {V : Type} [AddCommGroup V] [Module K V]
     (h : HermFam K V) (σ : K →+* ℂ) (c : K) (a y : V) :

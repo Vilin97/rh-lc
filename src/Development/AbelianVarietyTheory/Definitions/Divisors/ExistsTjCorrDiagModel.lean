@@ -31,7 +31,7 @@ theorem exists_prime_uIdeal_le (D : Datum p) : ∃ (r : ℤ) (w : Ideal (𝓞 D.
   have hnm := D.nm_eq
   have hbb : D.bar (D.bar D.ω) = D.ω := by
     have := congrArg D.bar htr
-    rw [map_add, map_intCast] at this
+    rw [map_add (f := _), map_intCast] at this
     linear_combination this - htr
   have e1 : D.bar D.ω - r = (p : 𝓞 D.F) * (a * (D.bar D.ω - r) + c * k) := by
     linear_combination (-(D.bar D.ω - r)) * hac + c * hk' + c * hnm - c * r * htr

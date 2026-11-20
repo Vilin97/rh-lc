@@ -45,7 +45,7 @@ theorem tens_ext
   | tmul s t =>
     rw [Algebra.TensorProduct.lift_tmul, IsScalarTower.coe_toAlgHom', IsScalarTower.coe_toAlgHom',
       map_mul, map_mul, h1, h2]
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 open TensorProduct in
 

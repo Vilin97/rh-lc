@@ -158,7 +158,7 @@ theorem gen_mod (g : R) (hg : g ≠ 0) {n : ℕ} (L : Submodule R (Fin n → K))
     obtain ⟨α, β, hαβ⟩ := hu.1
     refine ⟨fun i => α * r i, β • x, L.smul_mem β hxL, ?_⟩
     have h1 : algebraMap R K α * algebraMap R K u + algebraMap R K g * algebraMap R K β = 1 := by
-      rw [← map_mul, ← map_mul, ← map_add, mul_comm g β, hαβ, map_one]
+      rw [← map_mul, ← map_mul, ← map_add (f := _), mul_comm g β, hαβ, map_one]
     calc x = (algebraMap R K α * algebraMap R K u + algebraMap R K g * algebraMap R K β) • x := by
           rw [h1, one_smul]
       _ = α • (algebraMap R K u • x) + g • (β • x) := by

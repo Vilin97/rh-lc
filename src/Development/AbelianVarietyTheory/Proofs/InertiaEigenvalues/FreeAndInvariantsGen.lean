@@ -25,7 +25,7 @@ theorem dvd_coeff_of_aeval {O : Type} [CommRing O] (a : O) (ξ w : O⟦X⟧) (s 
     have h0 : a ∣ E.coeff 0 := by
       have h1 := congrArg constantCoeff h
       rw [← hE] at h1
-      simp only [map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C, hξ, map_pow,
+      simp only [map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C, hξ, map_pow,
         constantCoeff_X, zero_pow hs.ne', zero_pow (Nat.mul_pos e.succ_pos hs).ne', mul_zero,
         zero_mul, zero_add, constantCoeff_C, PowerSeries.algebraMap_apply, Algebra.algebraMap_self,
         RingHom.id_apply] at h1
@@ -33,7 +33,7 @@ theorem dvd_coeff_of_aeval {O : Type} [CommRing O] (a : O) (ξ w : O⟦X⟧) (s 
     obtain ⟨d, hd⟩ := h0
     obtain ⟨w', hw'⟩ := hw.exists_right_inv
     have h2 : X ^ s * (w * Polynomial.aeval ξ E.divX - X ^ (e * s) * b) = C a * (c - C d) := by
-      rw [← hE, map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C, hd] at h
+      rw [← hE, map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C, hd] at h
       have hC : algebraMap O O⟦X⟧ (a * d) = C a * C d := by rw [← map_mul]; rfl
       rw [hC] at h
       nth_rewrite 1 [hξ] at h
@@ -175,7 +175,7 @@ theorem eisenstein_gen (R : Fr l O) (j : O⟦X⟧ →ₐ[O] O⟦X⟧) (ht : FrTi
   · refine ⟨R.u, R.u.isUnit, ?_⟩
     rw [← hφ, R.φ_X, map_mul, map_mul, map_pow, hjE, algHom_eq_subst j hj R.u]
   · refine ⟨R.κ, R.κ.isUnit, ?_⟩
-    rw [← hγ, R.γ_X, map_mul, map_add, map_one, map_mul, hjE, algHom_eq_subst j hj R.κ]
+    rw [← hγ, R.γ_X, map_mul, map_add (f := _), map_one, map_mul, hjE, algHom_eq_subst j hj R.κ]
     ring
 
 omit hp [CharZero O] [Algebra ℤ_[l] O] in

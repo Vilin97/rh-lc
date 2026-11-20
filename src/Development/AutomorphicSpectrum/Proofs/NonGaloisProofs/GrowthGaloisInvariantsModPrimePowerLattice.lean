@@ -206,7 +206,7 @@ def coW : Submodule O A.V where
   zero_mem' := fun g => by simp
   add_mem' := by
     intro a b ha hb g
-    have : A.ρ g (a + b) - (a + b) = (A.ρ g a - a) + (A.ρ g b - b) := by rw [map_add]; abel
+    have : A.ρ g (a + b) - (a + b) = (A.ρ g a - a) + (A.ρ g b - b) := by rw [map_add (f := _)]; abel
     rw [this]
     exact LA.T.add_mem (ha g) (hb g)
   smul_mem' := by
@@ -271,7 +271,7 @@ def fixQ (I : Submodule O ↥LA.T) (hI : StableSub LA I) : Submodule O (↥LA.T 
   zero_mem' := fun g => map_zero _
   add_mem' := by
     intro a b ha hb g
-    rw [map_add, ha g, hb g]
+    rw [map_add (f := _), ha g, hb g]
   smul_mem' := by
     intro c a ha g
     rw [map_smul, ha g]

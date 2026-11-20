@@ -59,12 +59,12 @@ theorem mem_gamma_iff {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
       (fun a ha => by
         obtain ⟨b, hb⟩ := h1 a ha
         refine ⟨b, (M.φ k).injective (Subtype.ext ?_)⟩
-        rw [hg, hb, map_add, map_nsmul]
+        rw [hg, hb, map_add (f := _), map_nsmul]
         rfl)
     obtain ⟨b, hb⟩ := key ((M.φ k).symm ⟨v, hv⟩)
     refine ⟨M.φ k b, (M.φ k b).2, ?_⟩
     have h3 := hg ((M.φ k).symm ⟨v, hv⟩)
-    rw [hb, map_add, map_nsmul, LinearEquiv.apply_symm_apply] at h3
+    rw [hb, map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply] at h3
     exact h3.symm
   · intro h
     refine ⟨fun a _ => ?_, fun a => ?_⟩

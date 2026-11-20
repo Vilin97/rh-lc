@@ -190,7 +190,7 @@ theorem exists_projv {w : Above v} (hs : IsSplitAt w.1) (x : Av v) : ∃ X : Af 
       exact Pi.single_eq_of_ne (fun e => h (Subtype.ext e)) z
   funext u
   show pLoc E u.1 (sLoc E w.1 (x w) + sLoc E (conjAbove w).1 (x (conjAbove w))) = x u
-  rw [map_add, hl, hl]
+  rw [map_add (f := _), hl, hl]
   rcases above_cases hs u with rfl | rfl
   · rw [sg_same, sg_ne (conjAbove_ne hs).symm, add_zero]
   · rw [sg_ne (conjAbove_ne hs), sg_same, zero_add]

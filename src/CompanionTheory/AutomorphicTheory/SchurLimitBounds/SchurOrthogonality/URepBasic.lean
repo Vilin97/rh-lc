@@ -189,7 +189,7 @@ theorem isInvariant_iff_commute_starProjection (V : Submodule ℂ H) [V.HasOrtho
     have hq : v - V.starProjection v ∈ Vᗮ := V.sub_starProjection_mem_orthogonal v
     have hp : V.starProjection v ∈ V := V.starProjection_apply_mem v
     have e1 : V.starProjection (π g v) = π g (V.starProjection v) := by
-      conv_lhs => rw [hdec, map_add, map_add,
+      conv_lhs => rw [hdec, map_add (f := _), map_add (f := _),
         Submodule.starProjection_eq_self_iff.mpr (hV g _ hp),
         (V.starProjection_apply_eq_zero_iff).mpr (hV.orthogonal g _ hq), add_zero]
     exact e1.symm

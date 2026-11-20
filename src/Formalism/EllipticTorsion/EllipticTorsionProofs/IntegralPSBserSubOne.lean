@@ -59,12 +59,12 @@ def geometricSignedSeries (K : Type*) [Field K] [CharZero K] : PowerSeries K :=
 
 theorem geomAlt_mul : geometricSignedSeries K * (1 + X) = 1 := by
   ext n
-  rw [mul_add, mul_one, map_add, mul_comm]
+  rw [mul_add, mul_one, map_add (f := _), mul_comm]
   rcases n with _ | m
   · simp [geometricSignedSeries]
   · rw [coeff_succ_X_mul]
     simp only [geometricSignedSeries, coeff_mk, coeff_one]
-    rw [← map_add]
+    rw [← map_add (f := _)]
     have : ((-1 : ℚ) ^ (m + 1) + (-1) ^ m) = 0 := by ring
     simp [this]
 
@@ -120,7 +120,7 @@ theorem bser_deriv (b : ℤ_[p]) :
   ext n
   have hr := congrArg (phi p K) (choose_rec p b n)
   simp only [map_mul, map_sub, map_natCast] at hr
-  rw [add_mul, one_mul, map_add, coeff_derivative, coeff_smul]
+  rw [add_mul, one_mul, map_add (f := _), coeff_derivative, coeff_smul]
   rcases n with _ | m
   · simp only [bser, coeff_mk, coeff_zero_X_mul, smul_eq_mul] at hr ⊢
     push_cast at hr ⊢

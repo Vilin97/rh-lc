@@ -69,7 +69,7 @@ theorem rho_representation_holds : PositivityTheory.RgDs.K.RhoRep := by
     ring
   · intro k a a'
     funext x'
-    simp only [rhoA, Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib]
+    simp only [rhoA, Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
   · intro k c a
     funext x'
     simp only [rhoA, Pi.smul_apply, map_smul, Finset.smul_sum]

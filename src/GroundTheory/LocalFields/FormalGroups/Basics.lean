@@ -365,7 +365,7 @@ theorem coeff_one_subst_pair (F : FormalGroup R) {f g : PowerSeries R}
       PowerSeries.coeff 1 f + PowerSeries.coeff 1 g := by
   change coeff (Finsupp.single () 1) (subst ![f, g] F.toPowerSeries) =
     coeff (Finsupp.single () 1) f + coeff (Finsupp.single () 1) g
-  rw [subst_eq_add_add_subst_higher F (hasSubst_pair hf hg), map_add, map_add,
+  rw [subst_eq_add_add_subst_higher F (hasSubst_pair hf hg), map_add (f := _), map_add (f := _),
     coeff_of_lt_order (lt_of_lt_of_le (by simp) (two_le_order_subst_higher F hf hg)), add_zero]
 
 theorem coeff_one_subst {f g : PowerSeries R} (hf : PowerSeries.constantCoeff f = 0)
@@ -385,7 +385,7 @@ theorem coeff_one_subst {f g : PowerSeries R} (hf : PowerSeries.constantCoeff f 
       (PowerSeries.subst g (f - PowerSeries.C c * PowerSeries.X)) :=
     h2.trans (PowerSeries.le_order_subst_left' hg)
   conv_lhs => rw [hdec]
-  rw [PowerSeries.subst_add hgs, PowerSeries.subst_mul hgs, PowerSeries.subst_X hgs, map_add,
+  rw [PowerSeries.subst_add hgs, PowerSeries.subst_mul hgs, PowerSeries.subst_X hgs, map_add (f := _),
     PowerSeries.coeff_of_lt_order 1 (lt_of_lt_of_le (by norm_num) h2'), add_zero]
   change PowerSeries.coeff 1 (PowerSeries.subst g (PowerSeries.C c) * g) = _
   rw [PowerSeries.subst_C]

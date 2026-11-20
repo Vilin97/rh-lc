@@ -29,7 +29,7 @@ theorem exists_schwartz_slice {κ : Type} [Fintype κ] {Φ : (κ → AF F) → �
       funext i
       show InfiniteAdeleRing.ringEquiv_mixedSpace F ((x i).1 + (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (t i)) =
         t i - -a i
-      rw [map_add, RingEquiv.apply_symm_apply, sub_neg_eq_add, add_comm]
+      rw [map_add (f := _), RingEquiv.apply_symm_apply, sub_neg_eq_add, add_comm]
     have h2 : (fun i => ((x + GlobalTheory.ThetaTransform.embR t) i).2) = fun i => (x i).2 := by
       funext i
       show (x i).2 + 0 = (x i).2

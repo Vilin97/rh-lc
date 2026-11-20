@@ -65,7 +65,7 @@ theorem exists_mem_span_of_mem_localSpan {I : Type} {V : I → Y.Opens}
     have e₁ := piMap_mem_span_image _ (inf_le_left : W₁ ⊓ W₂ ≤ W₁) _ m₁
     have e₂ := piMap_mem_span_image _ (inf_le_right : W₁ ⊓ W₂ ≤ W₂) _ m₂
     rw [piMap_resG_piMap_resG] at e₁ e₂
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem e₁ e₂
   | smul a x _ hx =>
     obtain ⟨W₁, h₁, hy₁, m₁⟩ := hx

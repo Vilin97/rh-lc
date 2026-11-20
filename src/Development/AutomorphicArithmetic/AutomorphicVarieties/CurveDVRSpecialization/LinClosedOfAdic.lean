@@ -16,7 +16,7 @@ theorem UpperTheory.V.Pr.linClosedOfAdic :
           ext s t
           simp [e]
         simp only [Set.mem_setOf_eq] at hx hy ⊢
-        rw [h, map_add, hx, hy, add_zero]
+        rw [h, map_add (f := _), hx, hy, add_zero]
       zero_mem' := by
         have h : e 0 = 0 := by
           ext s t

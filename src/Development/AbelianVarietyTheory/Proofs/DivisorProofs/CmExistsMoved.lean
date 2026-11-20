@@ -44,7 +44,7 @@ theorem quad_exists : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     rw [LinearIndependent.pair_iff]
     intro s t hst
     have h2 : σ (s • (1 : E) + t • δ₀) = s • (1 : E) - t • δ₀ := by
-      simp only [Algebra.smul_def, map_add, map_mul, AlgHom.commutes, map_one, hanti]
+      simp only [Algebra.smul_def, map_add (f := _), map_mul, AlgHom.commutes, map_one, hanti]
       ring
     rw [hst, map_zero] at h2
     have ht : (2 * t) • δ₀ = 0 := by

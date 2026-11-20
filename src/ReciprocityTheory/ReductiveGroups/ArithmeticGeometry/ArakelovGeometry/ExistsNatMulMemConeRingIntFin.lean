@@ -43,7 +43,7 @@ theorem exists_nat_mul_coneMap_mem_int (y : ι → Ω) (p : MvPolynomial ι ℚ)
     have h : ((n1 * n2 : ℕ) : Polynomial Ω) * coneMap ℚ y (f + g) =
         (n2 : Polynomial Ω) * ((n1 : Polynomial Ω) * coneMap ℚ y f) +
         (n1 : Polynomial Ω) * ((n2 : Polynomial Ω) * coneMap ℚ y g) := by
-      rw [map_add]; push_cast; ring
+      rw [map_add (f := _)]; push_cast; ring
     rw [h]
     exact add_mem (mul_mem (natCast_mem _ _) h1) (mul_mem (natCast_mem _ _) h2)
   · rintro f i ⟨n, hn, h⟩

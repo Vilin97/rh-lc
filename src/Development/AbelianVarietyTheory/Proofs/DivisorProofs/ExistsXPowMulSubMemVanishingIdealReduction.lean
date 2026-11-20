@@ -116,7 +116,7 @@ theorem GlobalTheory.FormalAlg.exists_X_pow_mul_sub_mem_vanIdeal : ∀ (R : Type
     obtain ⟨P, hP⟩ := hdvd
     have hx : φ (MvPolynomial.X i) = 1 := by rw [hφ, eval₂Hom_X']; exact (hR i).self_eq_one
     have hG : G₁ = g + (MvPolynomial.X i - 1) * P := by rw [← hP]; ring
-    rw [hG, map_sub, map_mul, map_pow, hx, one_pow, _root_.one_mul, map_add, map_mul, map_sub, hx, map_one, sub_self,
+    rw [hG, map_sub, map_mul, map_pow, hx, one_pow, _root_.one_mul, map_add (f := _), map_mul, map_sub, hx, map_one, sub_self,
       zero_mul, add_zero, hgF, sub_self]
   obtain ⟨c, hc'⟩ := exists_X_pow_mul_mem_vanIdeal f hc ha r hR i hQ hφQ
   refine ⟨c + e, MvPolynomial.X i ^ c * G₁, ?_, fun m => ?_, ?_⟩

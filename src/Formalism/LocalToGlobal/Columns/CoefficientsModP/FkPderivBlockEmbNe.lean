@@ -45,7 +45,7 @@ theorem fk_fock_right (τ : ι) (P Q : MvPolynomial (ι × Fin n × Fin n) K) (h
   classical
   induction g using MvPolynomial.induction_on with
   | C a => rw [fk_blockEmb_C, ← smul_eq_C_mul, map_smul, smul_eq_mul, constantCoeff_C]
-  | add p q hp hq => rw [map_add, add_mul, map_add, hp, hq, map_add, add_mul]
+  | add p q hp hq => rw [map_add (f := _), add_mul, map_add (f := _), hp, hq, map_add (f := _), add_mul]
   | mul_X p v _ =>
     rw [map_mul (Formalism.GradedWeylDivisibility.blockEmb K τ), fk_blockEmb_X, mul_comm _ (X (τ, v)), mul_assoc, ← fockL_pderiv_X, hP, map_zero,
       LinearMap.zero_apply, map_mul constantCoeff, constantCoeff_X, mul_zero, zero_mul]
@@ -59,7 +59,7 @@ theorem fk_fock_mul (τ : ι) (P P' : MvPolynomial (ι × Fin n × Fin n) K) (hP
     rw [fk_blockEmb_C, ← smul_eq_C_mul, LinearMap.map_smulₛₗ, LinearMap.smul_apply, fk_fock_right τ P P' hP,
       fockL_C_left, smul_eq_mul, starRingEnd_apply, mul_assoc]
   | add p q hp hq =>
-    rw [map_add, add_mul, map_add, LinearMap.add_apply, hp, hq, map_add, LinearMap.add_apply, add_mul]
+    rw [map_add (f := _), add_mul, map_add (f := _), LinearMap.add_apply, hp, hq, map_add (f := _), LinearMap.add_apply, add_mul]
   | mul_X p v hp =>
     rw [map_mul (Formalism.GradedWeylDivisibility.blockEmb K τ), fk_blockEmb_X, mul_comm _ (X (τ, v)), mul_assoc, fockL_X_pderiv, Derivation.leibniz, hP',
       smul_zero, zero_add, fk_pderiv_blockEmb, smul_eq_mul, mul_comm P', hp, mul_comm p, fockL_X_pderiv]
@@ -123,7 +123,7 @@ theorem fk_blockAct_mem {ι : Type} [Fintype ι] {n : ℕ} (U : ι → Matrix (F
     rw [map_C, algHom_C]
     exact fk_C_mem K0 a.2
   | add p q hp hq =>
-    rw [map_add (map K0.subtype), map_add]
+    rw [map_add (map K0.subtype), map_add (f := _)]
     exact add_mem hp hq
   | mul_X p v hp =>
     rw [map_mul (map K0.subtype), map_X, map_mul, blockAct_X]

@@ -23,7 +23,7 @@ theorem exists_intLift (E : Type) [Field E] [NumberField E] (V : Type) [CommRing
   · rw [hs]; simp
   · rw [map_mul, hs, hs, hs]; simp
   · rw [hs]; simp
-  · rw [map_add, hs, hs, hs]; simp
+  · rw [map_add (f := _), hs, hs, hs]; simp
 
 theorem ord_vw_pow_mul_unit (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (K : Type) [Field K]
     [Algebra O K] [IsFractionRing O K] {ϖ : O} (hϖ : Irreducible ϖ) (u : Oˣ) (n : ℕ) :

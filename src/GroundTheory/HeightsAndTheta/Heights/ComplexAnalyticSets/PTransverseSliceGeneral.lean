@@ -62,7 +62,7 @@ theorem exists_mul_mem_of_le_sup_sq (q : Fin n → ℂ) (I : Ideal (MvPolynomial
     rw [Submodule.map_le_iff_le_comap]
     intro x hx
     obtain ⟨i, hi, y, hy, rfl⟩ := Submodule.mem_sup.1 (h hx)
-    rw [Submodule.mem_comap, map_add, Submodule.mkQ_apply,
+    rw [Submodule.mem_comap, map_add (f := _), Submodule.mkQ_apply,
       (Submodule.Quotient.mk_eq_zero I).2 hi, zero_add, ← Submodule.map_smul'']
     rw [sq, ← Ideal.smul_eq_mul] at hy
     exact Submodule.mem_map_of_mem hy
@@ -91,7 +91,7 @@ theorem gradSpace_sliceIdeal (W : Ideal (MvPolynomial (Fin n) ℂ)) (L : Matrix 
   refine le_antisymm ?_ (sup_le ?_ ?_)
   · rintro _ ⟨x, hx, rfl⟩
     obtain ⟨w, hw, y, hy, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add]
+    rw [map_add (f := _)]
     refine Submodule.add_mem_sup ⟨w, hw, rfl⟩ ?_
     obtain ⟨c, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.1 hy
     set_option synthInstance.maxHeartbeats 100000 in
@@ -192,7 +192,7 @@ theorem isOpen_dense_sup_span_rows (V : Submodule ℂ (Fin n → ℂ)) (hV : n �
       map_add' := fun L L' => by
         ext k i
         show Ψ (L i + L' i) k = Ψ (L i) k + Ψ (L' i) k
-        rw [map_add]
+        rw [map_add (f := _)]
         rfl
       map_smul' := fun c L => by
         ext k i

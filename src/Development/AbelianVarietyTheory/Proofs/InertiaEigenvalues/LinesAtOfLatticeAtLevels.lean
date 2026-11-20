@@ -34,7 +34,7 @@ theorem aeval_eq_zero_of_diagWith [Module.Free O Q] (hinj : Function.Injective (
     intro p s
     induction p using Polynomial.induction_on with
     | C a => simp [Algebra.algebraMap_eq_smul_one, LinearMap.baseChange_smul]
-    | add p q hp hq => simp only [map_add, LinearMap.baseChange_add, LinearMap.add_apply, hp, hq, add_smul]
+    | add p q hp hq => simp only [map_add (f := _), LinearMap.baseChange_add, LinearMap.add_apply, hp, hq, add_smul]
     | monomial k a ih =>
       rw [pow_succ, ← mul_assoc, map_mul _ _ Polynomial.X, map_mul _ _ Polynomial.X, Polynomial.aeval_X,
         Polynomial.aeval_X, LinearMap.baseChange_mul, Module.End.mul_apply, he, map_smul, ih, smul_smul, mul_comm]
@@ -81,7 +81,7 @@ theorem aeval_intertwine {Q' : Type} [AddCommGroup Q'] [Module O Q'] (π : Q →
     π (Polynomial.aeval f p x) = Polynomial.aeval f' p (π x) := by
   induction p using Polynomial.induction_on generalizing x with
   | C a => simp
-  | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial k a ih =>
     rw [pow_succ, ← mul_assoc, map_mul _ _ Polynomial.X, map_mul _ _ Polynomial.X, Polynomial.aeval_X,
       Polynomial.aeval_X, Module.End.mul_apply, Module.End.mul_apply, ih, h]
@@ -257,7 +257,7 @@ theorem senOp_of_lines {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l
   have : FiniteDimensional ℚ_[l] ↥LL.1 := LL.2
   have : IsFractionRing ↥(OL LL) ↥LL.1 := integralClosure.isFractionRing_of_finite_extension ℚ_[l] ↥LL.1
   have hχ : algebraMap ↥(OL LL) ↥LL.1 ((H.W K 1 LL hA.2.2).χΓ g : ↥(OL LL)) = 1 + ((P.PD K).p : ↥LL.1) := by
-    rw [hg, map_add, map_one, map_natCast]
+    rw [hg, map_add (f := _), map_one, map_natCast]
   have hl' : ¬ IsUnit (((P.PD K).p : ℕ) : ↥(OL LL)) := hp.symm ▸ hl
   obtain ⟨b₀⟩ := GlobalTheory.WachFree.wach_free P H K 1 LL hA.2.2 T hcr.1
   obtain ⟨b, hb⟩ := GlobalTheory.WachTie.exists_invariant_basis _ T hcard ⟨b₀.reindex (finCongr (finrank_lattice T.L))⟩

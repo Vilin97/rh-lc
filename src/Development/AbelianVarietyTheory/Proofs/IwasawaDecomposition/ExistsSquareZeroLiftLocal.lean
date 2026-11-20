@@ -67,7 +67,7 @@ def lift (hJ : RingHom.ker q ^ 2 = ⊥) : R →+* TrivSqZeroExt S (RingHom.ker q
   map_one' := incl_injective q hJ (by rw [incl_liftFun q hJ, map_one, map_one])
   map_mul' x y := incl_injective q hJ (by rw [map_mul, incl_liftFun q hJ, incl_liftFun q hJ, incl_liftFun q hJ, map_mul])
   map_zero' := incl_injective q hJ (by rw [incl_liftFun q hJ, map_zero, map_zero])
-  map_add' x y := incl_injective q hJ (by rw [map_add, incl_liftFun q hJ, incl_liftFun q hJ, incl_liftFun q hJ, map_add])
+  map_add' x y := incl_injective q hJ (by rw [map_add (f := _), incl_liftFun q hJ, incl_liftFun q hJ, incl_liftFun q hJ, map_add (f := _)])
 
 theorem incl_comp_lift : (incl (S := S) (RingHom.ker q) hJ : TrivSqZeroExt S (RingHom.ker q) →+* A).comp (lift q φ ψ h hJ) = φ :=
   RingHom.ext fun f => incl_liftFun q hJ φ ψ h f

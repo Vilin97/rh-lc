@@ -123,7 +123,7 @@ lemma rightCoaction_counit [IsMonHom i] [Mono v] (b : B) :
   refine Eq.trans ?_ h1
   generalize ρ b = z
   induction z with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x y => simp [φ, Algebra.smul_def, _root_.mul_comm]
 
 lemma rightCoaction_assoc [IsMonHom i] [Mono v] (b : B) :
@@ -150,23 +150,23 @@ lemma rightCoaction_assoc [IsMonHom i] [Mono v] (b : B) :
   have e₁ (z : B ⊗[R] Λ) :
       TensorProduct.assoc R B Λ Λ (ρ.toLinearMap.rTensor Λ z) = φ₁ z := by
     induction z with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul x y =>
       simp only [LinearMap.rTensor_tmul, AlgHom.toLinearMap_apply, φ₁,
         Algebra.TensorProduct.lift_tmul, AlgHom.comp_apply]
       generalize ρ x = w
       induction w with
-      | add x y hx hy => simp only [map_add, add_tmul, add_mul, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), add_tmul, add_mul, hx, hy]
       | tmul x y => simp [φ₀, l, r₁, r₂]
   have e₂ (z : B ⊗[R] Λ) : (Coalgebra.comul (R := R) (A := Λ)).lTensor B z = φ₂ z := by
     induction z with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul x y =>
       simp only [LinearMap.lTensor_tmul, φ₂, Algebra.TensorProduct.lift_tmul, AlgHom.comp_apply,
         Bialgebra.comulAlgHom_apply]
       generalize Coalgebra.comul (R := R) y = w
       induction w with
-      | add x y hx hy => simp only [map_add, tmul_add, mul_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), tmul_add, mul_add, hx, hy]
       | tmul x y => simp [l, r₁, r₂]
   rw [e₁, e₂, h]
 

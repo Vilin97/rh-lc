@@ -41,7 +41,7 @@ theorem exists_factor {M ι : Type} [AddCommGroup M] (k : ι → Type) [∀ i, A
       map_add_eq_mul' := fun a b => by
         rw [← AddChar.map_add_eq_mul]
         refine key _ _ fun j hj => ?_
-        rw [hL _ j hj, map_add, hL _ j hj, hL _ j hj, Pi.single_add, Pi.add_apply] }
+        rw [hL _ j hj, map_add (f := _), hL _ j hj, hL _ j hj, Pi.single_add, Pi.add_apply] }
   refine ⟨ψP, fun m => ?_⟩
   have hs : χ m = χ (∑ i ∈ Q, L (Pi.single i (R i m))) := by
     refine key _ _ fun j hj => ?_
@@ -65,7 +65,7 @@ namespace GlobalTheory.IdemCharLift
 def supG (D : D7) (e : AE D) (ϖ : 𝓞 D.host.E) : AddSubgroup (AE D) where
   carrier := {Z | e * Z = Z ∧ toEAf D (incA D (ϖ : D.host.E) * Z) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E}
   zero_mem' := ⟨mul_zero e, by rw [mul_zero, RingHom.map_zero]; exact zero_mem _⟩
-  add_mem' := fun {a b} ha hb => ⟨by rw [mul_add, ha.1, hb.1], by rw [mul_add, RingHom.map_add]; exact add_mem ha.2 hb.2⟩
+  add_mem' := fun {a b} ha hb => ⟨by rw [mul_add, ha.1, hb.1], by rw [mul_add, RingHom.map_add (f := _)]; exact add_mem ha.2 hb.2⟩
   neg_mem' := fun {a} ha => ⟨by rw [mul_neg, ha.1], by rw [mul_neg, RingHom.map_neg]; exact neg_mem ha.2⟩
 
 def resG (D : D7) (e : AE D) (ϖ : 𝓞 D.host.E) (PP : Pl D.host.E) : supG D e ϖ →+ kP PP where

@@ -14,7 +14,7 @@ private theorem algebraTensorModule_map_map_id_left_comm_of_comm {F L V B B' : T
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [h]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 set_option maxHeartbeats 800000 in
 theorem UpperTheory.Gal.crystallineComparison.annPer_of :
@@ -36,7 +36,7 @@ theorem UpperTheory.Gal.crystallineComparison.annPer_of :
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul v b => simp [m]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [h1]
     exact Module.Flat.lTensor_preserves_injective_linearMap c hc
   have hmaps : ∀ x ∈ Dinv σ ρ, m x ∈ Dinv σ' ρ := by

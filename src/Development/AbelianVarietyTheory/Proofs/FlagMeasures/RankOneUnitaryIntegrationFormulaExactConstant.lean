@@ -101,7 +101,7 @@ def blk (k r : ℕ) : Mb k × ℂ →+* Mat k r where
       pad_mul_q, q_mul_pad, smul_zero, add_zero, zero_add, smul_smul, mul_comm]
   map_zero' := by simp
   map_add' p q := by
-    simp only [Prod.fst_add, Prod.snd_add, map_add, add_smul]; abel
+    simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), add_smul]; abel
 
 theorem pad_cont : Continuous (pad k r) := LinearMap.continuous_of_finiteDimensional _
 

@@ -27,7 +27,7 @@ theorem crd_tensMap {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Alge
     funext i
     have h1 := congrFun hx i
     have h2 := congrFun hy i
-    simp only [map_add, Pi.add_apply] at h1 h2 ⊢
+    simp only [map_add (f := _), Pi.add_apply] at h1 h2 ⊢
     rw [h1, h2]
 
 variable [FiniteDimensional F E] (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace R] [IsTopologicalRing R]

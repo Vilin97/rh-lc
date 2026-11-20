@@ -58,7 +58,7 @@ private lemma exists_linearMap_ev_eq_of_tateIso (I I' : _root_.ReciprocityTheory
   let g : D.La →ₗ[𝓞 E] D.La ⧸ N :=
     { toFun := fun a => N.mkQ (s a)
       map_add' := fun a b => by
-        rw [← map_add, Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq, ← hrel,
+        rw [← map_add (f := _), Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq, ← hrel,
           I.add, hs, hs, hs, I'.add]
       map_smul' := fun c a => by
         rw [RingHom.id_apply, ← map_smul, Submodule.mkQ_apply, Submodule.mkQ_apply,

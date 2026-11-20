@@ -153,7 +153,7 @@ theorem exists_alpha (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : 
     obtain ⟨t₂, ht₂⟩ := (conjO_eq_iff_mem_range hF (conjO K τ * τ)).1 (by
       rw [map_mul, conjO_conjO, mul_comm])
     refine ⟨α₀ * (1 + ι a * τ), ν₀ * (1 + a + a * a * t₂), ?_, ?_, ?_⟩
-    · rw [map_mul, map_add, map_mul, map_one, conjO_map hF, map_mul ι, map_add ι, map_add ι, map_mul ι,
+    · rw [map_mul, map_add (f := _), map_mul, map_one, conjO_map hF, map_mul ι, map_add ι, map_add ι, map_mul ι,
         map_mul ι, map_one, ← hν₀, ht₂]
       rw [map_one] at hτ
       linear_combination (conjO K α₀ * α₀ * ι a) * hτ

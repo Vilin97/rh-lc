@@ -93,7 +93,7 @@ theorem differentiableOn_eval_comp {σ E : Type} [NormedAddCommGroup E] [NormedS
     DifferentiableOn ℂ (fun z => MvPolynomial.eval (fun c => u c z) F) S := by
   induction F using MvPolynomial.induction_on with
   | C a => simpa using differentiableOn_const a
-  | add p q hp hq => simp only [map_add]; exact hp.add hq
+  | add p q hp hq => simp only [map_add (f := _)]; exact hp.add hq
   | mul_X p c hp => simp only [map_mul, MvPolynomial.eval_X]; exact hp.mul (hu c)
 
 private theorem exists_ringHom_valAt'_eq {Y : Over (Sp ℂ)} (x : 𝟙_ (Over (Sp ℂ)) ⟶ Y) {U : Y.left.Opens}

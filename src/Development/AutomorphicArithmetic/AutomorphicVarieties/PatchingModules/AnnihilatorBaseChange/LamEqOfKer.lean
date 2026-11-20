@@ -62,7 +62,7 @@ theorem UpperTheory.V.Pa.Core.dSees :
     intro z
     induction z using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp [MonoidAlgebra.mapDomainRingHom_apply, MonoidAlgebra.mapDomain_single]
   have key : ∀ z : MonoidAlgebra R G, D'.lam i (MonoidAlgebra.mapRingHom G f z) =
       D'.lam i (MonoidAlgebra.mapDomain (fun q : G ⧸ V.toSubgroup => q.out)

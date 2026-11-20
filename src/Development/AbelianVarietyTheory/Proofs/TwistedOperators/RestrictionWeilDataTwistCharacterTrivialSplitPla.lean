@@ -98,7 +98,7 @@ theorem charTwist_eq_one_at_split : ∀ (D : D7) (V V' W : HSp D) (r : ℕ) (C :
         refine ⟨fun t x => ?_, ?_⟩
         · rw [heisO_add']; exact (hf1 t x).add (hg1 t x)
         · refine (hf2.add hg2).congr (Filter.Eventually.of_forall fun t => ?_)
-          simp only [Pi.add_apply, heisO_add', res_add (hf1 t) (hg1 t), map_add]
+          simp only [Pi.add_apply, heisO_add', res_add (hf1 t) (hg1 t), map_add (f := _)]
       zero_mem' := by
         refine ⟨fun t x => ?_, ?_⟩
         · rw [heisO_zero']; exact integrableOn_zero
@@ -118,7 +118,7 @@ theorem charTwist_eq_one_at_split : ∀ (D : D7) (V V' W : HSp D) (r : ℕ) (C :
         unfold avgForm
         rw [← integral_add hf2 hg2]
         refine integral_congr_ae (Filter.Eventually.of_forall fun t => ?_)
-        simp only [heisO_add', res_add (hf1 t) (hg1 t), map_add]
+        simp only [heisO_add', res_add (hf1 t) (hg1 t), map_add (f := _)]
       map_smul' := by
         rintro a ⟨f, hf1, hf2⟩
         show avgForm ψ V V' W C B μ 𝓨 K e ℓ' (a • f) = a • avgForm ψ V V' W C B μ 𝓨 K e ℓ' f

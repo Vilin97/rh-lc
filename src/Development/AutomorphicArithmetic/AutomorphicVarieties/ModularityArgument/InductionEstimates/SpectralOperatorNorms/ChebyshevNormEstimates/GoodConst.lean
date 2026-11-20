@@ -55,7 +55,7 @@ private theorem symb_hom {R : Type} [Semiring R] (f : R →+* (H →L[ℂ] H)) (
     rw [map_zero]
     simpa only [zero_smul] using this)
   have ha : ∀ r r', s (r + r') = fun z => s r z + s r' z := fun r r' =>
-    actUniq J _ _ _ (hs _) (by rw [map_add]; exact ((actLaws J).2.2.2.1 _ _ _ _ (hs r) (hs r')).1)
+    actUniq J _ _ _ (hs _) (by rw [map_add (f := _)]; exact ((actLaws J).2.2.2.1 _ _ _ _ (hs r) (hs r')).1)
   have hm : ∀ r r', s (r * r') = fun z => s r z * s r' z := fun r r' =>
     actUniq J _ _ _ (hs _) (by rw [map_mul]; exact ((actLaws J).2.2.2.1 _ _ _ _ (hs r) (hs r')).2)
   exact ⟨fun z =>
@@ -75,9 +75,9 @@ private theorem good_poly {σ τ : Type} (f : MvPolynomial σ (MvPolynomial τ �
   | C p =>
     induction p using MvPolynomial.induction_on with
     | C c => exact hc c
-    | add p q hp hq => simpa only [map_add] using good_add hp hq
+    | add p q hp hq => simpa only [map_add (f := _)] using good_add hp hq
     | mul_X p t hp => simpa only [map_mul] using good_mul hp (ht t)
-  | add p q hp hq => simpa only [map_add] using good_add hp hq
+  | add p q hp hq => simpa only [map_add (f := _)] using good_add hp hq
   | mul_X p t hp => simpa only [map_mul] using good_mul hp (hs t)
 
 end SlopeTestRemainingChoices

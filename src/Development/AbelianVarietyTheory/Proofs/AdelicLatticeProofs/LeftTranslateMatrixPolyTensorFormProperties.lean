@@ -25,7 +25,7 @@ theorem exists_monomial_eq_prod_X {σ : Type} (n : ℕ) : ∀ d : σ →₀ ℕ,
       exact Nat.one_le_iff_ne_zero.mpr hi
     obtain ⟨d', rfl⟩ := exists_add_of_le hle
     have hd' : d'.degree = n := by
-      rw [map_add, Finsupp.degree_single] at hd
+      rw [map_add (f := _), Finsupp.degree_single] at hd
       omega
     obtain ⟨a, ha⟩ := ih d' hd'
     refine ⟨Fin.cons i a, ?_⟩
@@ -39,7 +39,7 @@ theorem evC_ltr (g y : Matrix ι ι ℂ) (f : MvPolynomial (ι × ι) ℂ) : evC
   induction f using MvPolynomial.induction_on with
   | C a => simp [evC, ltr]
   | add p q hp hq =>
-    simp only [evC, map_add] at *
+    simp only [evC, map_add (f := _)] at *
     rw [hp, hq]
   | mul_X p i hp =>
     simp only [evC, map_mul] at *

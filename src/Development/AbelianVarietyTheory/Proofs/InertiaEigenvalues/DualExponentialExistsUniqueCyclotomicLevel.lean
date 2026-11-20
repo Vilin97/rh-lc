@@ -190,7 +190,7 @@ theorem Small.add {n k : ℕ} {x y : P.R.BdR} (hx : Small AI n k x) (hy : Small 
   obtain ⟨b, hb⟩ := hy
   refine ⟨a + b, ?_⟩
   convert add_mem ha hb using 1
-  rw [map_add, map_add]; ring
+  rw [map_add (f := _), map_add (f := _)]; ring
 
 theorem Small.sub {n k : ℕ} {x y : P.R.BdR} (hx : Small AI n k x) (hy : Small AI n k y) :
     Small AI n k (x - y) := by
@@ -257,7 +257,7 @@ theorem small_cob (u : GQ l → ℚ_[l]) (hu : Tendsto u (𝓝 1) (𝓝 1)) (hu1
   have h5 : Small AI n (m + k) (P.actQdR g (P.ιB (AI.ιA a)) - P.ιB (AI.ιA a)) := by
     refine ⟨x, ?_⟩
     have h6 := congrArg (fun w => P.ιB (AI.ιA w)) h4
-    simp only [map_sub, map_add, map_mul, map_pow, map_natCast] at h6
+    simp only [map_sub, map_add (f := _), map_mul, map_pow, map_natCast] at h6
     rw [act_ι, ← AI.ιA_act]
     have h7 := (h2 (AI.ξ ^ n * y)).2 (dvd_mul_right _ _)
     simp only [map_mul, map_pow] at h7
@@ -404,7 +404,7 @@ theorem graded {e : ℕ} {z : GQ l → ℚ_[l]}
     congr 1
     refine (t_unit.pow i).mul_left_cancel ?_
     rw [mul_add, ← tw_act, ← hy' _ hg, ← hy' _ hh, ← hy' _ (mul_mem hg hh), hz.2.2 g hg h hh]
-    simp only [cB, map_mul, map_add, map_sub, mul_zpow, Units.val_mul, AlgEquiv.commutes,
+    simp only [cB, map_mul, map_add (f := _), map_sub, mul_zpow, Units.val_mul, AlgEquiv.commutes,
       AlgEquiv.mul_apply]
     ring
   refine ⟨y, fun σ hσ => ⟨hy σ hσ, hy' σ hσ⟩, cont_of_one
@@ -447,7 +447,7 @@ theorem descend {e : ℕ} {z : GQ l → ℚ_[l]}
       exact hβ σ hσ)
     rw [Nat.cast_succ]
     convert h2 using 1
-    rw [map_add, mul_add, tw_act, mul_sub, ← (hy σ hσ).2]
+    rw [map_add (f := _), mul_add, tw_act, mul_sub, ← (hy σ hσ).2]
     ring
 
 include T J hs in
@@ -469,7 +469,7 @@ theorem exists_exp {e : ℕ} {z : GQ l → ℚ_[l]}
       th_q J _ (om_mem α), J.θ_Om, J.θ_act σ x hx, hβ σ hσ]
     ring)
   convert h2 using 1
-  rw [map_add, mul_add, tw_act, mul_sub, mul_sub, ← (hy σ hσ).2, sub_self]
+  rw [map_add (f := _), mul_add, tw_act, mul_sub, mul_sub, ← (hy σ hσ).2, sub_self]
   simp only [cB, zpow_zero, Units.val_one, map_one]
   ring
 

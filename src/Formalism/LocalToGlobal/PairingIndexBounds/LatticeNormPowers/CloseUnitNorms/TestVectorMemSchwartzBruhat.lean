@@ -101,7 +101,7 @@ theorem conj_conj (x : D.host.E) : D.host.conj (D.host.conj x) = x := by
 
 theorem conj_coords (a b : ℚ) :
     D.host.conj ((a : D.host.E) + (b : D.host.E) * bet D) = (a : D.host.E) - (b : D.host.E) * bet D := by
-  rw [map_add, map_mul, map_ratCast, map_ratCast, bet, Formalism.BasicNotions.Examples₂.conj_bE]; ring
+  rw [map_add (f := _), map_mul, map_ratCast, map_ratCast, bet, Formalism.BasicNotions.Examples₂.conj_bE]; ring
 
 theorem bet_mem : bet D ∈ D.host.K := IntermediateField.subset_adjoin _ _ (Set.mem_singleton _)
 
@@ -214,7 +214,7 @@ theorem lemT (z : 𝓞 D.host.K) {k m : ℕ} (hkm : k ≤ m)
   have hpos : (0 : ℝ) ≤ (p : ℝ) ^ (-(m : ℤ)) := by positivity
   have htd : ((p ^ k : ℕ) : ℤ) ∣ t := by
     have : ‖(t : ℂ_[p])‖ ≤ (p : ℝ) ^ (-(k : ℤ)) := by
-      rw [← Lp_int D lam, ← ht, map_add]
+      rw [← Lp_int D lam, ← ht, map_add (f := _)]
       exact (norm_max _ _).trans (max_le (h1.trans hpm) (h2.trans hpm))
     have := dvd_of_normC this
     exact_mod_cast this
@@ -566,7 +566,7 @@ theorem claimC (hPsi : InducedCMType D) {L : Submodule (𝓞 D.host.E) (Fin N �
   have hp0 : (p : ℂ) ^ n ≠ 0 := pow_ne_zero _ (by exact_mod_cast (Fact.out : p.Prime).ne_zero)
   set q : ℂ := D.host.φ₀ (oE D ε) / (p : ℂ) ^ n with hq
   have hφ := congrArg D.host.φ₀ hw
-  rw [map_mul, map_add, map_mul, map_mul, map_intCast, map_pow, map_natCast] at hφ
+  rw [map_mul, map_add (f := _), map_mul, map_mul, map_intCast, map_pow, map_natCast] at hφ
   have hkey : D.host.φ₀ (D.host.conj (oE D μ)) * q = (c0 : ℂ) * q + D.host.φ₀ (oE D w) := by
     rw [hq]
     field_simp

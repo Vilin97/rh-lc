@@ -91,7 +91,7 @@ theorem onMt_add (i : D.nd.Loc) {a b : MonoidAlgebra ℂ (G0g D.nd)}
     D.ntypes.onMt (D.nd.mu i) (D.nd.j i) (a + b) =
       D.ntypes.onMt (D.nd.mu i) (D.nd.j i) a + D.ntypes.onMt (D.nd.mu i) (D.nd.j i) b := by
   unfold NTypes.onMt
-  rw [dif_pos ha, dif_pos hb, dif_pos (add_mem ha hb), ← map_add]
+  rw [dif_pos ha, dif_pos hb, dif_pos (add_mem ha hb), ← map_add (f := _)]
   rfl
 
 theorem onMt_smul (i : D.nd.Loc) (c : ℂ) {a : MonoidAlgebra ℂ (G0g D.nd)}
@@ -121,7 +121,7 @@ theorem Phi_mem {i : D.nd.Loc} (s : Sec D i) (w : TensorProduct (D.nd.O i) (KK D
     rw [Formalism.MainNotions.TruncatedSeriesCountingIdentities.Br.EigSpan_holds D.nd i]; exact Submodule.mem_top
   refine Submodule.iSup_induction _ (motive := fun w => s.Φ w ∈ ptPart D i) hw
     (fun x v hv => ?_) (by rw [map_zero]; exact Submodule.zero_mem _)
-    (fun v v' h h' => by rw [map_add]; exact Submodule.add_mem _ h h')
+    (fun v v' h h' => by rw [map_add (f := _)]; exact Submodule.add_mem _ h h')
   exact Submodule.mem_iSup_of_mem (some x)
     (Submodule.mem_iSup_of_mem (Option.some_ne_none x) (s.eig x v hv))
 
@@ -156,7 +156,7 @@ theorem class_step (P : PairedCharacterCondition.Pend D) (hC : OnMtPreservesType
       Submodule.sub_mem _ (Phi_mem s _) (onMt_ptPart hC i _ (Phi_mem s _))
     exact sub_eq_zero.1 ((Submodule.disjoint_def.1 hind) _ m1 m2)
   | zero => simp only [map_zero]
-  | add v v' _ _ h h' => simp only [map_add, h, h']
+  | add v v' _ _ h h' => simp only [map_add (f := _), h, h']
   | smul a v _ h => rw [LinearMap.map_smul, s.semi, h, s.semi, LinearMap.map_smul]
 
 end Forms
@@ -196,7 +196,7 @@ theorem all_central (P : PairedCharacterCondition.Pend D) (hC : OnMtPreservesTyp
           ↥(Subalgebra.center (D.nd.O i) (MonoidAlgebra (D.nd.O i) (G0g D.nd)))) =
           ⟨conjSum x, conjSum_mem_center _⟩ + ⟨conjSum y, conjSum_mem_center _⟩ :=
         Subtype.ext (conjSum_add x y)
-      rw [e, map_add, LinearMap.baseChange_add, LinearMap.add_apply, map_add, hx, hy, conjSum_add,
+      rw [e, map_add (f := _), LinearMap.baseChange_add, LinearMap.add_apply, map_add (f := _), hx, hy, conjSum_add,
         mapCoef_add, onMt_add i (mapCoef_central _ _ (conjSum_mem_center _))
           (mapCoef_central _ _ (conjSum_mem_center _)), LinearMap.add_apply]
     | smul r x hx =>

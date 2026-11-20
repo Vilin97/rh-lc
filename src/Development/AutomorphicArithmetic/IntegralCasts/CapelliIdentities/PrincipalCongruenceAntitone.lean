@@ -78,9 +78,9 @@ theorem UpperTheory.Reformulated.B.Gr32.holLin :
     · change φ.1 _ + z * ψ.1 _ = _ * (φ.1 _ + z * ψ.1 _)
       rw [a3, b3]
       ring
-    · simp only [map_add, map_smul]
+    · simp only [map_add (f := _), map_smul]
       linear_combination (norm := module) a4 v + z • b4 v
-    · simp only [map_add, map_smul]
+    · simp only [map_add (f := _), map_smul]
       linear_combination (norm := module) a5 v + z • b5 v
   · intro φ ψ z c₀ a d₀ b h1 h2 x y hy yf
     have h := (h1 x y hy yf).add ((h2 x y hy yf).mul_left z)

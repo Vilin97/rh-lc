@@ -33,7 +33,7 @@ theorem sum_mult_re_eq_trace (x : F) :
 theorem traceInf_add (x y : Ainf F) : traceInf F (x + y) = traceInf F x + traceInf F y := by
   rw [traceInf, traceInf, traceInf, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun w _ => ?_
-  rw [show (x + y) w = x w + y w from rfl, map_add, Complex.add_re, mul_add]
+  rw [show (x + y) w = x w + y w from rfl, map_add (f := _), Complex.add_re, mul_add]
 
 theorem continuous_traceInf : Continuous (traceInf F) := by
   refine continuous_finset_sum _ fun w _ => continuous_const.mul (Complex.continuous_re.comp ?_)

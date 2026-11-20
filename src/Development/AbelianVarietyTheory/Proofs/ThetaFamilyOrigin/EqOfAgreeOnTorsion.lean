@@ -215,7 +215,7 @@ theorem sum_pull_act (hm : MulPullSt) (hc : CubeSt) {r c : ℕ} (a : O) (b : Fin
     rfl
   simp only [h₂]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [← Finset.smul_sum, ← smul_add, ← map_sum, ← map_add, h, ← nsmul_one, map_nsmul, h₁]
+    rw [← Finset.smul_sum, ← smul_add, ← map_sum, ← map_add (f := _), h, ← nsmul_one, map_nsmul, h₁]
   module
 
 end Classes
@@ -320,7 +320,7 @@ theorem endDeterminedOnTorsion : Out.Laws →
     · have h₁ := sum_pull_act P ρ laws.mulPull laws.cube _ b hb
       have h₂ := congrArg (pull φ.hom.left) (sum_pull_act P' ρ' laws.mulPull laws.cube _ b hb)
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, map_nsmul _ (4 * c), hl] at h₂
+        rw [map_add (f := _), map_sum, map_nsmul _ (4 * c), hl] at h₂
       simp only [Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, Over.comp_left, pull_comp,
         map_nsmul (pull φ.hom.left) 4 (cls P'.L P'.isLB), hl]
       rw [add_add_add_comm, h₁, h₂]

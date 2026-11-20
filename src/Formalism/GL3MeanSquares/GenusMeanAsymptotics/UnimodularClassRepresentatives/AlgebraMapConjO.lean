@@ -115,7 +115,7 @@ theorem mixed_mem (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {h : V �
     have hw : z11 + conjO K θ * θ * z22 + θ * z + conjO K θ * z21 ∈ discrIdeal h L := by
       refine mem_discrIdeal b (update_mem hx (L.add_mem hy (L.smul_mem θ hy'))) ?_
       rw [hd]
-      simp only [map_add, map_mul, h11, h22, h21, hz, algebraMap_conjO, star_add, star_mul']
+      simp only [map_add (f := _), map_mul, h11, h22, h21, hz, algebraMap_conjO, star_add, star_mul']
       ring
     have he : θ * z + conjO K θ * z21 =
         (z11 + conjO K θ * θ * z22 + θ * z + conjO K θ * z21) - z11 - conjO K θ * θ * z22 := by

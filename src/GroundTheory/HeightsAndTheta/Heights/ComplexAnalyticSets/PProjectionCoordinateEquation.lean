@@ -34,7 +34,7 @@ theorem finSuccEquiv_pderiv_zero {k : ℕ} (P : MvPolynomial (Fin (k + 1)) ℂ) 
       Polynomial.derivative_C]
   | add p q hp hq => simp [hp, hq]
   | mul_X p i hp =>
-    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, hp, map_mul,
+    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, hp, map_mul,
       Polynomial.derivative_mul]
     cases i using Fin.cases with
     | zero =>

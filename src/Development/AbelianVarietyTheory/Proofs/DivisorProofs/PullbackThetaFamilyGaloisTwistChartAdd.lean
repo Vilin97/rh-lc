@@ -15,7 +15,7 @@ theorem famTw_add_f : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre R) (N
   subst e
   show ((GlobalTheory.FieldBaseChange.famPull D (Kb R) (TwF σ) GlobalTheory.allSixLaws.1.globalFns N (s + s') :
     Fam D (TwF σ) N).s α).f j = _
-  rw [map_add]
+  rw [map_add (f := _)]
   rfl
 
 end GlobalTheory.Mum.Conj

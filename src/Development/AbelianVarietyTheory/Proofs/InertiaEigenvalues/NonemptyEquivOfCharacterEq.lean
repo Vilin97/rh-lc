@@ -70,7 +70,7 @@ theorem nonempty_equiv_range {ρ : Representation ℂ G V} {σ : Representation 
     refine ⟨⟨u, hu⟩, Subtype.ext ?_⟩
     have hk' : f.toLinearMap k = 0 := hk
     change f.toLinearMap u = f.toLinearMap v
-    rw [← hku, map_add, hk', zero_add]
+    rw [← hku, map_add (f := _), hk', zero_add]
   let ψ : IntertwiningMap q.toRepresentation f.range.toRepresentation :=
     φ.intertwiningMap_of_isIntertwiningMap _ _ (by
       intro g v

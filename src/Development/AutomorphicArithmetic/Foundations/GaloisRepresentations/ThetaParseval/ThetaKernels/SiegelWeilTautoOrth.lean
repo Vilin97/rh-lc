@@ -84,7 +84,7 @@ theorem gram_mem_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) (X : 
     (2⁻¹ : E) • (Xᵀ * d.A.J * X.map σ) + T₀, ?_⟩
   rw [_root_.PositivityTheory.SiegelWeilFormula.Tauto.gram_incM_k, hT₀]
   ext i j
-  simp only [incM, Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_add, map_mul]
+  simp only [incM, Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_add (f := _), map_mul]
   rw [Algebra.smul_def, ← half_eq]
 theorem exists_twist_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) (ε : ℤˣ) (S₀ : Matrix (Fin d.n) (Fin d.n) E) (hS : incM F S₀ ∈ nCond σ d.n ε)
     (h0 : S₀ ≠ 0) : ∃ β₀ ∈ nCond σ d.n ε, d.B.ψ (-(d.tt (incM F S₀ * β₀))) ≠ 1 := by
@@ -188,7 +188,7 @@ theorem orth_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) {nb : nA 
     obtain ⟨β₀, hβ₀, hne⟩ := _root_.PositivityTheory.SiegelWeilFormula.Tauto.exists_twist_k d ε S₀ ((mem_nA_iff hσ hb _).1 hS) hS0
     let h : nA σ d.Y d.b → ℂ := fun β => d.B.ψ (-(d.tt (incM F S₀ * β.1)))
     have hadd : ∀ β β' : nA σ d.Y d.b, h (β + β') = h β * h β' := fun β β' => by
-      simp only [h, AddSubgroup.coe_add, Matrix.mul_add, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, Matrix.trace_add, map_add, neg_add,
+      simp only [h, AddSubgroup.coe_add, Matrix.mul_add, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, Matrix.trace_add, map_add (f := _), neg_add,
         AddChar.map_add_eq_mul]
     have hper : ∀ g ∈ nF σ d.Y d.b, ∀ y, h (g + y) = h y := fun g hg y => by
       obtain ⟨T₀, hT₀⟩ := (mem_nF_iff g).1 hg

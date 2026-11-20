@@ -31,7 +31,7 @@ theorem UpperTheory.Reformulated.B.NormOnValuationRing.mem_max_iff :
     { carrier := {t | ‖φ t‖ < 1}
       add_mem' := fun {a b} ha hb => by
         change ‖φ (a + b)‖ < 1
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
       zero_mem' := by simp
       smul_mem' := fun c a ha => by

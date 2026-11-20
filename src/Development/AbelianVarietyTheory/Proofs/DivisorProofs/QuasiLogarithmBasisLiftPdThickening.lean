@@ -15,7 +15,7 @@ variable {B Q : Type} [CommRing B] [CommRing Q] [Algebra B Q] {σ ι : Type} [Fi
 
 theorem comb_add (b c : ι → B) (e : ι → MvPowerSeries σ Q) :
     comb (b + c) e = comb b e + comb c e := by
-  simp [comb, map_add, add_smul, Finset.sum_add_distrib]
+  simp [comb, map_add (f := _), add_smul, Finset.sum_add_distrib]
 
 theorem comb_sub (b c : ι → B) (e : ι → MvPowerSeries σ Q) :
     comb (b - c) e = comb b e - comb c e := by
@@ -75,7 +75,7 @@ theorem GlobalTheory.basis_lift : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [C
       · intro α
         obtain ⟨x, -, hx⟩ := hs α
         obtain ⟨y, -, hy⟩ := hs' α
-        exact ⟨x + y, trivial, by rw [map_add, hx, hy, map_add]⟩
+        exact ⟨x + y, trivial, by rw [map_add (f := _), hx, hy, map_add (f := _)]⟩
       · rw [comb_add]; convert hq' using 1; abel
 
   have divP : ∀ h : MvPowerSeries (Fin d) Q, QL μ (Ideal.span {(p : B)}) h →
@@ -177,7 +177,7 @@ theorem GlobalTheory.basis_lift : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [C
       · intro α
         obtain ⟨a, -, ha⟩ := hS α
         obtain ⟨c, -, hc⟩ := hsF (Fs K) α
-        exact ⟨a + p ^ K * c, trivial, by simp [coeff_smul, ha, hc, map_add, map_mul, map_pow, map_natCast]⟩
+        exact ⟨a + p ^ K * c, trivial, by simp [coeff_smul, ha, hc, map_add (f := _), map_mul, map_pow, map_natCast]⟩
       · have h1 : x (K + 1) = x K + fun i => (p : B) ^ K * bF (Fs K) i := by
           funext i; simp [hx, Finset.sum_range_succ]
         have h2 : (Fs (K + 1)).1 = gF (Fs K) := by rw [hFs]
@@ -206,7 +206,7 @@ theorem GlobalTheory.basis_lift : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [C
       rw [hfe]
       have e1 : comb (x v) e + S + (p : Q) ^ v • (Fs v).1 - comb L e =
           (comb (x v) e - comb L e) + S + (p : Q) ^ v • (Fs v).1 := by abel
-      rw [e1, ← comb_sub, map_add, map_add, coeff_comb, coeff_smul]
+      rw [e1, ← comb_sub, map_add (f := _), map_add (f := _), coeff_comb, coeff_smul]
       refine add_mem (add_mem (Subring.sum_mem _ fun i _ => ?_) ?_) (hv _ (Fs v).2)
       · rw [show (x v - L) i = c i * (p : B) ^ v from (hc i).symm,
           show algebraMap B Q (c i * (p : B) ^ v) * coeff α (e i) =

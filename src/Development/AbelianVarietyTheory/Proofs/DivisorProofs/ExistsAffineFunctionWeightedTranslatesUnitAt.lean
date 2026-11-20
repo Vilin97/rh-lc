@@ -29,7 +29,7 @@ def liftStalk (σ : X.functionField →+* X.functionField) (h : ∀ f, RegAt x f
   map_zero' := IsFractionRing.injective (X.presheaf.stalk x) X.functionField (by
     rw [(h _ ⟨_, rfl⟩).choose_spec, map_zero, map_zero])
   map_add' s t := IsFractionRing.injective (X.presheaf.stalk x) X.functionField (by
-    rw [(h _ ⟨_, rfl⟩).choose_spec, map_add, map_add, map_add, (h _ ⟨s, rfl⟩).choose_spec,
+    rw [(h _ ⟨_, rfl⟩).choose_spec, map_add (f := _), map_add (f := _), map_add (f := _), (h _ ⟨s, rfl⟩).choose_spec,
       (h _ ⟨t, rfl⟩).choose_spec])
 
 theorem algebraMap_liftStalk (σ : X.functionField →+* X.functionField) (h : ∀ f, RegAt x f → RegAt x (σ f))

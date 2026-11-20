@@ -48,7 +48,7 @@ theorem pushout_residue_linearIndependent :
 
   let g : A →ₗ[T] ResidueField D :=
     { toFun := fun a => φ (f (Submodule.Quotient.mk (p := maximalIdeal T • (⊤ : Submodule T A)) a))
-      map_add' := fun a b => by simp only [Submodule.Quotient.mk_add, map_add]
+      map_add' := fun a b => by simp only [Submodule.Quotient.mk_add, map_add (f := _)]
       map_smul' := fun t a => by
         simp only [RingHom.id_apply]
         have hq : Submodule.Quotient.mk (p := maximalIdeal T • (⊤ : Submodule T A)) (t • a) =
@@ -73,7 +73,7 @@ theorem pushout_residue_linearIndependent :
       rw [map_smul, Algebra.smul_def]
       have : algebraMap D (ResidueField D) r = 0 := (residue_eq_zero_iff r).2 hr
       rw [this, zero_mul]
-    · intro a b ha hb; rw [map_add, ha, hb, add_zero]
+    · intro a b ha hb; rw [map_add (f := _), ha, hb, add_zero]
   have := hkill _ hd
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, Finset.sum_eq_single j (fun i _ hi => by rw [map_smul, hψ, hg, if_neg hi, smul_zero])

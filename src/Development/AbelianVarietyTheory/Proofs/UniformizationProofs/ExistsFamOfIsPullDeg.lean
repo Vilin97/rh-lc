@@ -331,7 +331,7 @@ theorem fe_pull (hG : GlobalFnsSt) (hD : IsPullDeg φ D D') {k : ℕ} (F : Fam D
       cubN (fun a b c => θ (β a) (β b) (β c)) k (cP D' T' α) (cP D' T' mu) x :=
     Finset.prod_congr rfl fun i _ => by simp only [map_mul, map_pow]
   have key₀ := fe_on hG hD.psiW F f hs (hD.xe mu) (hD.xe α) κ (β x) (z := y) hJ
-  rw [← map_nsmul, ← map_add, ← βc, ← map_mul, feUnit, ← βc, ← βc, ← map_add] at key₀
+  rw [← map_nsmul, ← map_add (f := _), ← βc, ← map_mul, feUnit, ← βc, ← βc, ← map_add (f := _)] at key₀
   have key : sval (f (hD.xe (α + k • mu))) (x.left ≫ Φ) y J = sval (f (hD.xe α)) ((x * cP D' T' mu).left ≫ Φ) y J *
       (cubN θ k (β (cP D' T' α)) (β (cP D' T' mu)) (β x) * (θ (β (cP D' T' α)) (β x) (β (cP D' T' mu)))⁻¹ *
         (val (hD.psiW.psi (hD.xe (mu + α))) (σ.left ≫ hD.g) y J * (val (hD.psiW.psi (hD.xe mu)) (σ.left ≫ hD.g) y J)⁻¹ *

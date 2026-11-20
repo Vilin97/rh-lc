@@ -375,7 +375,7 @@ theorem exists_finset_boundedBasis_of_gram (X : DataX E r) {B : ℝ} (hB : 0 ≤
       fun m => by
         obtain ⟨c, m', rfl⟩ := hx m
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [map_add, map_add, add_sub_add_comm, map_sum, map_sum, ← Finset.sum_sub_distrib,
+          rw [map_add (f := _), map_add (f := _), add_sub_add_comm, map_sum, map_sum, ← Finset.sum_sub_distrib,
           map_smul, map_smul, ← smul_sub]
         refine add_mem (Submodule.sum_mem _ fun j _ => ?_) ⟨(pairing X w.1 w.2.1.1 m' -
           pairing X v hv.1 m') ᵥ* N.adjugate, ?_⟩

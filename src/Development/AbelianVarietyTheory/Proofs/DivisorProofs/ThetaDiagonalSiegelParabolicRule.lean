@@ -72,7 +72,7 @@ theorem isCovolOne_map {m n m' n' : ℕ} {μ : Measure (Mx D m n)} {𝓕 : Set (
         rw [this, Measure.map_id]
       exact this.absolutelyContinuous
     · change e (e.symm γ + x) = γ + e x
-      rw [map_add, e.apply_symm_apply]
+      rw [map_add (f := _), e.apply_symm_apply]
   · rw [hemb.map_apply, Set.preimage_image_eq _ e.injective]
     exact h.2.2
 

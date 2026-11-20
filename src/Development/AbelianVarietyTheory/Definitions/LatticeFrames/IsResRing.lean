@@ -68,7 +68,7 @@ def hermInf (S : HermR (AF F) σ n) : HermR (Ainf F) σ n :=
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]⟩
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]⟩
 
 def hermV (v : HeightOneSpectrum (𝓞 F)) (S : HermR (AF F) σ n) : HermR (Fv F v) σ n :=
   ⟨Matrix.of fun a c => GlobalTheory.GaugeEx.prV v (S.1 a c), fun a c => by
@@ -77,7 +77,7 @@ def hermV (v : HeightOneSpectrum (𝓞 F)) (S : HermR (AF F) σ n) : HermR (Fv F
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [sigR, GlobalTheory.GaugeEx.prV]
-    | add x y hx hy => simp only [map_add, hx, hy]⟩
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]⟩
 
 def latH (b : Module.Basis (Fin d) F E) (v : HeightOneSpectrum (𝓞 F)) : Set (HermR (Fv F v) σ n) :=
   {S | ∀ a c, S.1 a c ∈ GlobalTheory.GaugeEx.intV b v}

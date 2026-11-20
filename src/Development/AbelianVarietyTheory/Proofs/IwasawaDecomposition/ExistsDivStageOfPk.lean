@@ -20,11 +20,11 @@ def bkMk {B : Base} {C : Cols B} (W : RowsRest B C) {m : ℕ} (c : Fin m → W.E
     (u : B.Word) : (C.fm u).ramSub →ₗ[B.LL] Module.Dual B.LL (Fin m → B.LL) :=
   LinearMap.mk₂ B.LL (b u)
     (fun φ ψ x => B.embLL.injective (by
-      rw [map_add, hb, hb, hb, map_add, (W.Bu_linL u _).map_add]))
+      rw [map_add (f := _), hb, hb, hb, map_add (f := _), (W.Bu_linL u _).map_add (f := _)]))
     (fun a φ x => B.embLL.injective (by
       rw [smul_eq_mul, map_mul, hb, hb, map_smulₛₗ, (W.Bu_linL u _).map_smul, smul_eq_mul]))
     (fun φ x y => B.embLL.injective (by
-      rw [map_add, hb, hb, hb, map_add, (W.Bu_linR u _).map_add]))
+      rw [map_add (f := _), hb, hb, hb, map_add (f := _), (W.Bu_linR u _).map_add (f := _)]))
     (fun a φ x => B.embLL.injective (by
       rw [smul_eq_mul, map_mul, hb, hb, map_smulₛₗ, (W.Bu_linR u _).map_smul, smul_eq_mul]))
 

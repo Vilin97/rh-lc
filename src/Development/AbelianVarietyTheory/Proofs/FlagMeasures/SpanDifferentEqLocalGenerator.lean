@@ -131,7 +131,7 @@ theorem span_different_eq : ∀ (D : D7) (Z : LocDat D) (p : PlF D), Submodule.s
         rw [e]
         exact N.smul_mem _ (Submodule.subset_span ⟨x, hx, rfl⟩)
       · intro a b ha hb
-        rw [map_add, mul_add, map_add]
+        rw [map_add (f := _), mul_add, map_add (f := _)]
         exact N.add_mem ha hb
     have h1 := key 1 (by rw [hIJ]; exact (FractionalIdeal.mem_one_iff _).2 ⟨1, map_one _⟩)
     have e1 : Z.δ p * (D.s.atP p).ιF 1 = Z.δ p := by rw [map_one, mul_one]

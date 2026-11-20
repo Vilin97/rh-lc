@@ -16,7 +16,7 @@ theorem UpperTheory.V.K.shaZmCard :
   have hf : Finite (Additive (ClassGroup (𝓞 L)) →+ QZ l) :=
     Nat.finite_of_card_ne_zero (by rw [hc]; exact pow_ne_zero _ hl.out.ne_zero)
   let f : ClDual L l (ZMod (l ^ 1)) (ZMod (l ^ 1)) → (Additive (ClassGroup (𝓞 L)) →+ QZ l) := fun θ =>
-    AddMonoidHom.mk' (fun c => ι (θ.1 c.toMul)) fun a b => by rw [toMul_add, θ.2.1, map_add]
+    AddMonoidHom.mk' (fun c => ι (θ.1 c.toMul)) fun a b => by rw [toMul_add, θ.2.1, map_add (f := _)]
   have hfi : Function.Injective f := fun a b h =>
     Subtype.ext (funext fun c => hι (DFunLike.congr_fun h (Additive.ofMul c)))
   have hfin : Finite (ClDual L l (ZMod (l ^ 1)) (ZMod (l ^ 1))) := Finite.of_injective f hfi

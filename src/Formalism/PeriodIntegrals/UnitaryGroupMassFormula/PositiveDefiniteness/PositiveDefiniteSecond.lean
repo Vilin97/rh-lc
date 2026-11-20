@@ -77,7 +77,7 @@ theorem posDef_of_points {E : Type} [Field E] (φ : E →+* ℂ) {k : ℕ} (N : 
       obtain ⟨t, ht⟩ := hreal
       refine re_nonneg_of_rat N (φ t) ht (fun α β => ?_)
       have h1 := hpt (fun i => (α i : E) + (β i : E) * t)
-      simpa [map_add, map_mul, map_ratCast] using h1
+      simpa [map_add (f := _), map_mul, map_ratCast] using h1
   have hpsd : N.PosSemidef := by
     rw [Matrix.posSemidef_iff_dotProduct_mulVec]
     refine ⟨hN, fun v => ?_⟩

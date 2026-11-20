@@ -250,7 +250,7 @@ def reduction : 𝒪[FieldOfNorms K Ω L] →+* 𝓀[L] where
     show (0 : FieldOfNorms K Ω L).1 E₀ = 0
     rw [← equivFam_val, equivFam_zero, NormTower.Fam.zero_val]
   map_add' x y := by
-    rw [← map_add, ← sub_eq_zero, ← map_sub, residue_eq_zero_iff, mem_maximalIdeal_L_iff]
+    rw [← map_add (f := _), ← sub_eq_zero, ← map_sub, residue_eq_zero_iff, mem_maximalIdeal_L_iff]
     exact add_val_cong x y
 
 theorem reduction_eq_zero_iff (x : 𝒪[FieldOfNorms K Ω L]) :

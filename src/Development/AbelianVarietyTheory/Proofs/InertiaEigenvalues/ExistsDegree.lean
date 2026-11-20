@@ -54,7 +54,7 @@ theorem exists_degree : ∀ (l : ℕ) [Fact l.Prime],
       RingHom.mem_ker, map_sub, sub_eq_zero, hz σ₀]
     exact key σ k _ fun x hx => by rw [hσ x hx, ha σ₀ k x hx]
   · refine PadicInt.ext_of_toZModPow.mp fun k => ?_
-    rw [map_add, hz σ, hz τ, ← Nat.cast_add]
+    rw [map_add (f := _), hz σ, hz τ, ← Nat.cast_add]
     refine key _ k _ fun x hx => ?_
     rw [AlgEquiv.mul_apply, ha τ k x hx, map_pow, ha σ k x hx, ← pow_mul, ← pow_add]
   · refine PadicInt.ext_of_toZModPow.mp fun k => ?_

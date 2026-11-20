@@ -29,7 +29,7 @@ theorem symm_equiv (g : G) (w : W) : φ.symm (ρW g w) = ρM g (φ.symm w) := by
 def psiZ : ReciprocityTheory.Gal.Z1 ρW →ₗ[O] coZ1s ρM where
   toFun f := ⟨fun g => φ.symm (f.1 g), fun g h => by
     show φ.symm (f.1 (g * h)) = φ.symm (f.1 g) + ρM g (φ.symm (f.1 h))
-    rw [f.2.2 g h, map_add, symm_equiv ρM ρW φ hφ]⟩
+    rw [f.2.2 g h, map_add (f := _), symm_equiv ρM ρW φ hφ]⟩
   map_add' _ _ := by ext; simp
   map_smul' _ _ := by ext; simp
 
@@ -71,7 +71,7 @@ theorem lc_mem_range {x : H1z ρM} (hx : x ∈ lcH1 ρM) : ∃ y, psi ρM ρW φ
   have hcont : Continuous (fun g => φ ((c : G → M) g)) := (hc'.comp (⇑φ)).continuous
   have hcoc : ∀ g h, φ ((c : G → M) (g * h)) = φ ((c : G → M) g) + ρW g (φ ((c : G → M) h)) := by
     intro g h
-    rw [c.2 g h, map_add, hφ]
+    rw [c.2 g h, map_add (f := _), hφ]
   refine ⟨Submodule.Quotient.mk ⟨fun g => φ ((c : G → M) g), hcont, hcoc⟩, ?_⟩
   rw [psi_mk]
   show Submodule.Quotient.mk _ = Submodule.Quotient.mk c

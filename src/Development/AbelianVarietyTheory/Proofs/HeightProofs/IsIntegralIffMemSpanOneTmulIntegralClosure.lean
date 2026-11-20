@@ -110,7 +110,7 @@ theorem exists_eq_algebraMap_add_pow_mul {R R' : Type} [CommRing R] [IsLocalRing
     obtain ⟨r, s, hs⟩ := ih
     obtain ⟨r₁, s₁, hs₁⟩ := h1 s
     refine ⟨r + ϖ ^ n * r₁, s₁, ?_⟩
-    rw [hs, hs₁, map_add, map_mul, map_pow]
+    rw [hs, hs₁, map_add (f := _), map_mul, map_pow]
     ring
 
 open NumberField in
@@ -173,7 +173,7 @@ private theorem isIntegral_of_isIntegral_one_tmul' {y : L}
       have := modByMonic_add_div g f'
       rw [← hr] at this
       have h2 := congrArg (aeval t) this
-      rw [map_add, map_mul, hft, zero_mul, add_zero, hgt] at h2
+      rw [map_add (f := _), map_mul, hft, zero_mul, add_zero, hgt] at h2
       exact h2
     have hdeg : r.degree < f.natDegree := by
       have := degree_modByMonic_lt g hfm

@@ -103,7 +103,7 @@ theorem mem_span_xi_pow_of_forall_mem_sup (hξ : RingHom.ker θ = span {ξ}) {x 
       obtain ⟨b', rfl⟩ := mem_span_singleton.1 hb
       have hξ0 : θ ξ = 0 := by
         rw [← RingHom.mem_ker, hξ]; exact mem_span_singleton_self ξ
-      rw [← hab, map_add, map_mul, map_mul, map_pow, map_pow, map_natCast, hξ0,
+      rw [← hab, map_add (f := _), map_mul, map_mul, map_pow, map_pow, map_natCast, hξ0,
         zero_pow (Nat.succ_ne_zero k), zero_mul, add_zero]
       exact mem_span_singleton.2 ⟨_, rfl⟩
     have hx2 : x ∈ span {ξ} := by rw [← hξ]; exact hθ

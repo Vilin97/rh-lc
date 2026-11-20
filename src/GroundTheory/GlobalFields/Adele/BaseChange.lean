@@ -126,7 +126,7 @@ variable (K L) in
 
 def traceRetraction : L ⊗[K] 𝔸[K] →ₗ[𝔸[K]] 𝔸[K] where
   toFun t := TensorProduct.lid K 𝔸[K] (LinearMap.rTensor 𝔸[K] (normalizedTrace K L) t)
-  map_add' s t := by simp only [map_add]
+  map_add' s t := by simp only [map_add (f := _)]
   map_smul' c t := by
     change _ = c * _
     induction t using TensorProduct.induction_on with
@@ -136,7 +136,7 @@ def traceRetraction : L ⊗[K] 𝔸[K] →ₗ[𝔸[K]] 𝔸[K] where
         ((1 ⊗ₜ c) * (l ⊗ₜ a))) = _
       rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, LinearMap.rTensor_tmul,
         LinearMap.rTensor_tmul, TensorProduct.lid_tmul, TensorProduct.lid_tmul, mul_smul_comm]
-    | add s t hs ht => simp only [smul_add, map_add, hs, ht, mul_add]
+    | add s t hs ht => simp only [smul_add, map_add (f := _), hs, ht, mul_add]
 
 theorem traceRetraction_one_tmul (a : 𝔸[K]) : traceRetraction K L (1 ⊗ₜ a) = a := by
   change TensorProduct.lid K 𝔸[K] (LinearMap.rTensor 𝔸[K] (normalizedTrace K L) (1 ⊗ₜ a)) = a

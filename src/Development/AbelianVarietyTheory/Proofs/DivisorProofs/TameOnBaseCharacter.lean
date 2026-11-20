@@ -39,14 +39,14 @@ theorem exists_root {R A : Type} [CommRing R] [CommRing A] (c : R →+* R) (hc :
   have hw2 : ((w⁻¹ : Rˣ) : R) = e * c (x : R) + c e * (x : R) + (1 - e - c e) := rfl
   have hcw : c w = w := by
     rw [hw1]
-    simp only [map_add, map_mul, map_sub, map_one, hc]
+    simp only [map_add (f := _), map_mul, map_sub, map_one, hc]
     ring
   have hm : ∀ a ∈ S, e * c a + c e * a + (1 - e - c e) ∈ S := fun a ha =>
     add_mem (add_mem (mul_mem heS (hS _ ha)) (mul_mem (hS _ heS) ha)) (sub_mem (sub_mem (one_mem _) heS) (hS _ heS))
   refine ⟨x * w, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · rw [Units.val_mul, map_mul, hcw, ← mul_assoc, ← hx]
   · rw [Units.val_mul, hw1]
-    simp only [map_add, map_mul, map_sub, map_one, h1, hpe, hpf]
+    simp only [map_add (f := _), map_mul, map_sub, map_one, h1, hpe, hpf]
     ring
   · rw [Units.val_mul, hw1]
     exact mul_mem h2 (hm _ h3)
@@ -118,7 +118,7 @@ theorem cA_cA (z : AE D) : cA D (cA D z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => rfl
   | tmul a x => exact congrArg (a ⊗ₜ[D.host.F] ·) (star_star x)
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, ha, hb]
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
 
 set_option maxHeartbeats 1000000 in
 

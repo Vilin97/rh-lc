@@ -69,10 +69,10 @@ theorem coeff_rename_mul (hf : Function.Injective f) (hg : Function.Injective g)
     AddMonoidAlgebra.coeff (rename f P * rename g Q) (α.mapDomain f + β.mapDomain g) = AddMonoidAlgebra.coeff P α * AddMonoidAlgebra.coeff Q β := by
   classical
   induction P using MvPolynomial.induction_on' with
-  | add P P' h h' => simp only [map_add, add_mul, MvPolynomial.coeff_add, h, h']
+  | add P P' h h' => simp only [map_add (f := _), add_mul, MvPolynomial.coeff_add, h, h']
   | monomial α' x =>
     induction Q using MvPolynomial.induction_on' with
-    | add Q Q' h h' => simp only [map_add, mul_add, MvPolynomial.coeff_add, h, h']
+    | add Q Q' h h' => simp only [map_add (f := _), mul_add, MvPolynomial.coeff_add, h, h']
     | monomial β' y =>
       rw [rename_monomial, rename_monomial, monomial_mul, coeff_monomial, coeff_monomial,
         coeff_monomial]
@@ -102,10 +102,10 @@ theorem fock_rename_mul (hf : Function.Injective f) (hg : Function.Injective g)
     (hfg : ∀ x y, f x ≠ g y) (P P' : MvPolynomial σ₁ ℂ) (Q Q' : MvPolynomial σ₂ ℂ) :
     fock (rename f P * rename g Q) (rename f P' * rename g Q') = fock P P' * fock Q Q' := by
   induction P using MvPolynomial.induction_on' with
-  | add P₁ P₂ h h' => simp only [map_add, add_mul, fock_add_left, h, h']
+  | add P₁ P₂ h h' => simp only [map_add (f := _), add_mul, fock_add_left, h, h']
   | monomial α x =>
     induction Q using MvPolynomial.induction_on' with
-    | add Q₁ Q₂ h h' => simp only [map_add, mul_add, fock_add_left, h, h']
+    | add Q₁ Q₂ h h' => simp only [map_add (f := _), mul_add, fock_add_left, h, h']
     | monomial β y =>
       rw [rename_monomial, rename_monomial, monomial_mul, fock_monomial_left, fock_monomial_left,
         fock_monomial_left, coeff_rename_mul hf hg hfg, mfact_mapDomain_add hf hg hfg, star_mul']

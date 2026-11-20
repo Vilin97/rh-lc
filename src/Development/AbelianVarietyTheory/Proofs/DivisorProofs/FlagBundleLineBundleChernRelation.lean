@@ -342,7 +342,7 @@ theorem exists_prod_chart {k : Type} [CommRing k] {B Y : Scheme.{0}} {q : B ⟶ 
       rw [eval₂Hom_C, ev_appLE π w hW (s_mem hv), s_map hv]
       rfl
     | add P Q hP hQ =>
-      simp only [map_add, ev_add]
+      simp only [map_add (f := _), ev_add]
       exact hP.add hQ
     | mul_X P a hP =>
       have hd : DifferentiableOn ℂ (fun v : V (d + 1) => v (Fin.last d)) (basePt ⁻¹' c.e.target) := by fun_prop

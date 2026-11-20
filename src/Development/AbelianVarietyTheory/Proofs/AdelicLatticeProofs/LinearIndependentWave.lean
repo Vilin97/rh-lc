@@ -385,7 +385,7 @@ theorem exists_intertwiner {V : Type} [AddCommGroup V] [Module ℂ V] (h : IsBic
     | add Φ₁ Φ₂ _ _ h₁ h₂ =>
       have e : (fun t => (Φ₁ + Φ₂) (t + x)) = (fun t => Φ₁ (t + x)) + (fun t => Φ₂ (t + x)) := rfl
       rw [e]
-      simp only [map_add, h₁, h₂]
+      simp only [map_add (f := _), h₁, h₂]
     | smul a Φ₁ _ h₁ =>
       have e : (fun t => (a • Φ₁) (t + x)) = a • (fun t => Φ₁ (t + x)) := rfl
       rw [e]
@@ -411,7 +411,7 @@ theorem exists_intertwiner {V : Type} [AddCommGroup V] [Module ℂ V] (h : IsBic
         funext t
         simp [mul_add]
       rw [e]
-      simp only [map_add, h₁, h₂]
+      simp only [map_add (f := _), h₁, h₂]
     | smul a Φ₁ _ h₁ =>
       have e : (fun t => χ t y * (a • Φ₁) t) = a • (fun t => χ t y * Φ₁ t) := by
         funext t

@@ -19,7 +19,7 @@ theorem tensor_decomp_eq_zero {K M N : Type*} [Field K] [AddCommGroup M] [Module
   have h' := congrArg (TensorProduct.equivFinsuppOfBasisLeft b) h
   have h0 := DFunLike.congr_fun h' 0
   have h1 := DFunLike.congr_fun h' 1
-  simp [map_add, TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply] at h0 h1
+  simp [map_add (f := _), TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply] at h0 h1
   exact ⟨h0, h1⟩
 
 theorem mem_ALint_of_supported_at_split : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (s : ReciprocityTheory.Aut.SplitPlace L) (e : 𝓞 L), Valued.v (s.i (e : L)) = 1 → Valued.v (s.i (IsCMField.complexConj L (e : L))) < 1 → ∀ z : ReciprocityTheory.Aut.AL L, (∀ w, w ≠ s.v → ReciprocityTheory.Aut.compAt L w z = 0) → Valued.v (s.proj z) ≤ 1 → Valued.v (s.proj (ReciprocityTheory.Aut.conjAL L z)) ≤ 1 → z ∈ ReciprocityTheory.Aut.ALint L := by
@@ -32,7 +32,7 @@ theorem mem_ALint_of_supported_at_split : ∀ (L : Type) [Field L] [NumberField 
     rw [LinearIndependent.pair_iff]
     intro a t h
     have h' := congrArg (IsCMField.complexConj L) h
-    simp only [Algebra.smul_def, map_add, map_mul, AlgEquiv.commutes, map_one, map_zero] at h h'
+    simp only [Algebra.smul_def, map_add (f := _), map_mul, AlgEquiv.commutes, map_one, map_zero] at h h'
     have hd : algebraMap (maximalRealSubfield L) L t * ((e : L) - IsCMField.complexConj L (e : L)) = 0 := by
       linear_combination h - h'
     have ht : t = 0 := by

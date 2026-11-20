@@ -39,8 +39,8 @@ def transport (f : M →+ E) (g : M →+ F) (L1 : Submodule ℤ E) (L2 : Submodu
     have hy := ((h1 _).1 y.2).choose_spec
     have hz := ((h1 _).1 z.2).choose_spec
     show g _ = g _ + g _
-    rw [← map_add]
-    exact eq_of_norm_eq f g hn (by rw [hs, map_add, hy, hz]; rfl)
+    rw [← map_add (f := _)]
+    exact eq_of_norm_eq f g hn (by rw [hs, map_add (f := _), hy, hz]; rfl)
 
 theorem transport_apply (f : M →+ E) (g : M →+ F) (L1 : Submodule ℤ E) (L2 : Submodule ℤ F)
     (h1 : ∀ y, y ∈ L1 ↔ ∃ m, f m = y) (h2 : ∀ y, y ∈ L2 ↔ ∃ m, g m = y)
@@ -356,7 +356,7 @@ theorem proj_eq_tv (hc : ∀ k, U.mkQ (c k) = b'' k) (v : InfinitePlace K) (x : 
       ∑ k, v.embedding (r k) • Formalism.HermitianLatticesTheory.fcoord b X v (c k) := by
     rw [← fcoord_finset_sum_smul, ← Formalism.HermitianLatticesTheory.fcoord_add, sub_add_cancel]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [← hL, hsplit, map_add, h0, zero_add, map_sum, tv, Fintype.linearCombination_apply]
+    rw [← hL, hsplit, map_add (f := _), h0, zero_add, map_sum, tv, Fintype.linearCombination_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [map_smul, hL]
 

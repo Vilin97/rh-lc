@@ -150,7 +150,7 @@ theorem exists_cocycle_cup_not_cob : Formalism.GaloisCohomology.LocalTateDuality
     obtain ⟨t0, rfl⟩ := Submodule.Quotient.mk_surjective _ y
     show pairKO D.bT D.T ((x + x' : X) : VT ⧸ D.T) t0 =
       pairKO D.bT D.T (x : VT ⧸ D.T) t0 + pairKO D.bT D.T (x' : VT ⧸ D.T) t0
-    rw [Submodule.coe_add, map_add, LinearMap.add_apply])
+    rw [Submodule.coe_add, map_add (f := _), LinearMap.add_apply])
   have he : ∀ g x y, β (a g x) (a' g y) = (χ g : ℤ_[p]) • β x y := fun g x y => by
     obtain ⟨t0, rfl⟩ := Submodule.Quotient.mk_surjective _ y
     show pairKO D.bT D.T (D.ρA g x) (D.ρTl' g t0) = ι (χ g : ℤ_[p]) • pairKO D.bT D.T (x : VT ⧸ D.T) t0

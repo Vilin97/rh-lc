@@ -252,7 +252,7 @@ private theorem core {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] 
       rw [← hcK, hmul, hR, hR, hcK g, hcK h]
       ring
     simp only [z]
-    rw [hγ, e, map_add, map_mul, map_mul, hdiag, hdiag, map_mul, Units.val_mul, map_mul]
+    rw [hγ, e, map_add (f := _), map_mul, map_mul, hdiag, hdiag, map_mul, Units.val_mul, map_mul]
     have := hU g
     have := hU h
     field_simp

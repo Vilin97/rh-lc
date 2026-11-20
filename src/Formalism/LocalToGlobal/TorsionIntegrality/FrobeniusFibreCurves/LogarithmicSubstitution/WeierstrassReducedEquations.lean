@@ -140,7 +140,7 @@ theorem invertedEven : WEven := by
         C 2 + C (4 * A) * w + C (6 * kap) * w ^ 2 := by
       simp only [map_mul, map_ofNat]
     have hc := congrArg (PowerSeries.coeff (2 * m + 1)) h2
-    rw [e, map_add, map_add, PowerSeries.coeff_C_mul, PowerSeries.coeff_C_mul, hk, hsq,
+    rw [e, map_add (f := _), map_add (f := _), PowerSeries.coeff_C_mul, PowerSeries.coeff_C_mul, hk, hsq,
       PowerSeries.coeff_C, if_neg (by omega)] at hc
     simp only [dz, PowerSeries.coeff_derivative] at hc
     have a1 : ((2 * m + 1 + 1 : ℕ) : K) + 1 ≠ 0 := Nat.cast_add_one_ne_zero _

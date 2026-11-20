@@ -16,8 +16,8 @@ theorem weight_mapDomain (r n : ℕ) (u : Fin r × Fin n →₀ ℕ) :
   | zero => simp
   | add a b ha hb =>
     refine ⟨fun i => ?_, ?_⟩
-    · rw [Finsupp.mapDomain_add, map_add, map_add, Pi.add_apply, Pi.add_apply, ha.1, hb.1]
-    · rw [Finsupp.mapDomain_add, map_add, Pi.add_apply, ha.2, hb.2]
+    · rw [Finsupp.mapDomain_add, map_add (f := _), map_add (f := _), Pi.add_apply, Pi.add_apply, ha.1, hb.1]
+    · rw [Finsupp.mapDomain_add, map_add (f := _), Pi.add_apply, ha.2, hb.2]
   | single v k =>
     refine ⟨fun i => ?_, ?_⟩
     · simp [Finsupp.mapDomain_single, Finsupp.weight_single, colW, Pi.single_apply]

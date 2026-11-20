@@ -77,7 +77,7 @@ def coordLL (a : n) : TrV e (n → FractionRing O) →ₗ[LL] LL where
   toFun v := e ((v : n → FractionRing O) a)
   map_add' u v := by
     show e ((u : n → FractionRing O) a + (v : n → FractionRing O) a) = _
-    rw [map_add]
+    rw [map_add (f := _)]
   map_smul' c v := by
     show e (e.symm c * (v : n → FractionRing O) a) = c * e ((v : n → FractionRing O) a)
     rw [map_mul, RingEquiv.apply_symm_apply]
@@ -87,7 +87,7 @@ def fromLL : (n → LL) →ₗ[LL] TrV e (n → FractionRing O) where
   map_add' u v := by
     funext a
     show e.symm (u a + v a) = e.symm (u a) + e.symm (v a)
-    rw [map_add]
+    rw [map_add (f := _)]
   map_smul' c u := by
     funext a
     show e.symm (c * u a) = e.symm c * e.symm (u a)

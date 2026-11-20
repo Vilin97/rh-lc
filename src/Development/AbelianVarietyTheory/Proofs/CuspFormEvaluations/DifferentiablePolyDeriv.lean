@@ -47,7 +47,7 @@ theorem polyDeriv_algHom (hF : ContDiff ℂ (⊤ : ℕ∞) F) (Φ : MvPolynomial
     have h : (C a : MvPolynomial σ ℂ) = a • monomial 0 1 := by simp [smul_eq_C_mul]
     rw [algHom_C, algebraMap_eq, h]
     simp [polyDeriv_smul, polyDeriv_monomial_one, pdTerm_eq_itD, -smul_monomial, -monomial_zero']
-  | add P Q hP hQ => simp only [map_add, polyDeriv_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), polyDeriv_add, hP, hQ]
   | mul_X P l hP =>
     rw [map_mul, hΦ, mul_add, mul_left_comm, C_mul', polyDeriv_add, polyDeriv_smul,
       polyDeriv_mul_X hF, polyDeriv_mul_X hF, polyDeriv_mul_X hF, funext hP]

@@ -24,7 +24,7 @@ theorem adj_move (φ : A →+* R) (C : Matrix (Fin m) (Fin m) R) (B Y : Matrix (
     ext b a
     have := congrArg φ (congrFun (hZ b) a)
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.add_apply, Pi.smul_apply, map_add, map_nsmul] at this
+      simp only [Matrix.mulVec, dotProduct, map_sum, map_mul, Pi.add_apply, Pi.smul_apply, map_add (f := _), map_nsmul] at this
     simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, Matrix.of_apply, Matrix.mul_apply,
       Matrix.transpose_apply, ← this, mul_comm]
   unfold adj
@@ -48,7 +48,7 @@ theorem red_eq (S : Subring R) (ρ : S →+* k) (M : ℕ) (hM : (M : k) = 0) (X 
   set_option synthInstance.maxHeartbeats 100000 in
     rw [e, map_sum]
   refine Finset.sum_congr rfl fun a _ => ?_
-  rw [map_mul, map_add, map_nsmul, nsmul_eq_mul, hM, zero_mul, add_zero]
+  rw [map_mul, map_add (f := _), map_nsmul, nsmul_eq_mul, hM, zero_mul, add_zero]
 
 def lft (c : R) (P Q : Matrix (Fin m) (Fin m) R) : Matrix (Fin m) (Fin m) R := c • (P * Q)
 
@@ -97,7 +97,7 @@ theorem adj_int_ring (S : Subring R) (φ : A →+* R) (C : Matrix (Fin m) (Fin m
       · simp
     | zero => simp
     | add x y _ _ hx hy =>
-      simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+      simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, mul_add]
       exact add_mem hx hy
     | neg x _ hx =>
       simp only [Pi.neg_apply, map_neg, neg_mul, Finset.sum_neg_distrib, mul_neg]

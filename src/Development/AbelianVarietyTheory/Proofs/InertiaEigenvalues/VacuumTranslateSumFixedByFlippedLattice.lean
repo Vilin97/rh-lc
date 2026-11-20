@@ -67,7 +67,7 @@ theorem flipElt_eq (e : AE D) (m : ℕ) :
 
 theorem cA_intPart (e : AE D) (m : ℕ) :
     cA D (e * (m : AE D) + (1 - e - cA D e)) = cA D e * (m : AE D) + (1 - cA D e - e) := by
-  simp only [map_add, map_mul, map_sub, map_one, cA_cA, map_natCast]
+  simp only [map_add (f := _), map_mul, map_sub, map_one, cA_cA, map_natCast]
 
 set_option maxHeartbeats 1000000 in
 

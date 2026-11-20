@@ -16,7 +16,7 @@ theorem exists_adjoint_herm : ∀ {L V : Type} [NontriviallyNormedField L] [AddC
   have hss := hs.1
   have hadd1 : ∀ x x' y, h (x + x') y = h x y + h x' y := by
     intro x x' y
-    rw [hsymm y (x + x'), hadd2, map_add, ← hsymm, ← hsymm]
+    rw [hsymm y (x + x'), hadd2, map_add (f := _), ← hsymm, ← hsymm]
   have hsmul1 : ∀ (a : L) x y, h (a • x) y = s a * h x y := by
     intro a x y
     rw [hsymm y (a • x), hsmul2, map_mul, ← hsymm]
@@ -76,7 +76,7 @@ theorem exists_adjoint_herm : ∀ {L V : Type} [NontriviallyNormedField L] [AddC
   refine ⟨{ toFun := z, map_add' := ?_, map_smul' := ?_ }, ?_⟩
   · intro y y'
     apply ψ_inj'
-    rw [hz, map_add, map_add, hz, hz]
+    rw [hz, map_add (f := _), map_add (f := _), hz, hz]
     rfl
   · intro a y
     apply ψ_inj'

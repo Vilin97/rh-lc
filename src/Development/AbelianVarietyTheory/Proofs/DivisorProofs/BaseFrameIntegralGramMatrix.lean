@@ -35,7 +35,7 @@ theorem form_mem_span {R : Type} [CommRing R] (S : Subring R) (σ : R →+* R) (
       rw [this]; exact S.mul_mem c.2 ha
   | zero => simp
   | add a b _ _ ha hb =>
-    simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
     exact S.add_mem ha hb
   | smul c a _ ha =>
     have : ∑ i, ∑ j, σ ((c • a) i) * J i j * y j = σ (c : R) * ∑ i, ∑ j, σ (a i) * J i j * y j := by

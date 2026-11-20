@@ -20,7 +20,7 @@ theorem UpperTheory.Gal.KunnethLefschetz.piBC_holds :
       simp [g, e]
       rfl
     | add x y hx hy =>
-      rw [map_add, ← hx, ← hy]
+      rw [map_add (f := _), ← hx, ← hy]
       funext s
       simp
   rw [key]

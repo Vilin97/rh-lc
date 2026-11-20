@@ -130,7 +130,7 @@ theorem ker_plane_le {A' B' : ι k₀ → Φ} (a b c d : Φ) (hA : ∀ m, A' m =
   have e : σ.comp (planeMap y k₀ A B) = planeMap y k₀ A' B' := by
     refine MvPolynomial.ringHom_ext (fun r => by simp) fun q => ?_
     rcases q with ⟨_ | k, m⟩
-    · simp only [σ, planeMap, ext2, RingHom.comp_apply, map_mul, map_add, eval₂Hom_C, eval₂Hom_X',
+    · simp only [σ, planeMap, ext2, RingHom.comp_apply, map_mul, map_add (f := _), eval₂Hom_C, eval₂Hom_X',
         Matrix.cons_val_zero, Matrix.cons_val_one, hA, hB]
       ring
     · simp only [σ, planeMap, ext2, RingHom.comp_apply, eval₂Hom_C, eval₂Hom_X']
@@ -184,7 +184,7 @@ theorem arith_of_birational [CharZero Φ] [Nonempty K] (hb : Birational y) (h0 :
   rw [ht] at htr
   have hA := IntDomainDim.full (MRing ι ⧸ mCoordIdeal y) (algebraMap_injective _ hhor)
   rw [hA, htr]
-  simp only [map_add, map_natCast]
+  simp only [map_add (f := _), map_natCast]
   norm_cast
   omega
 
@@ -266,7 +266,7 @@ theorem birational_pen (hb : Birational y) (h0 : ∀ k, ∃ i, y ⟨k, i⟩ ≠ 
   have hP : ∀ p : Polynomial Φ, algebraMap _ (RatFunc Φ) p ∈ regO w w := fun p => by
     induction p using Polynomial.induction_on with
     | C a => simpa using hC a
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | monomial n a h => rw [pow_succ, ← mul_assoc, map_mul]; exact mul_mem h (by simpa using hX)
   refine birational_of_regO fun s => ?_
   induction s using RatFunc.induction_on with

@@ -117,11 +117,11 @@ theorem exists_half_canMult : ∀ (g : ℕ) (Λ : Submodule ℤ (Fin g → ℂ))
     have hm : (fun i => bs.repr (l + l') (Sum.inl i)) =
         (fun i => bs.repr l (Sum.inl i)) + (fun i => bs.repr l' (Sum.inl i)) := by
       funext i
-      simp [map_add]
+      simp [map_add (f := _)]
     have hn : (fun i => bs.repr (l + l') (Sum.inr i)) =
         (fun i => bs.repr l (Sum.inr i)) + (fun i => bs.repr l' (Sum.inr i)) := by
       funext i
-      simp [map_add]
+      simp [map_add (f := _)]
     rw [hm, hn, GlobalTheory.HolTheta.canMult_add, hexp, Finset.sum_sub_distrib]
     rfl
   have hbasis : ∀ j : Fin g ⊕ Fin g, χ (bs j) =

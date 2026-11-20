@@ -22,11 +22,11 @@ theorem connTors : StatConnTors.{u} := by
           · have : (j ∘ fun g => s (v:V) g) = fun g => ρV g v - v := funext fun g => hs v v.2 g
             rw [this]
             exact (hc.comp (continuous_id.prodMk continuous_const)).sub continuous_const
-          · rw [map_add, ej, hs v v.2, hs v v.2, hs v v.2, map_mul, Module.End.mul_apply, map_sub]
+          · rw [map_add (f := _), ej, hs v v.2, hs v v.2, hs v v.2, map_mul, Module.End.mul_apply, map_sub]
             abel⟩
       map_add' := fun v w => Subtype.ext (funext fun g => hjinj (by
           show j (s ((v + w : W) : V) g) = j (s v g + s w g)
-          rw [map_add, hs _ (v+w).2, hs v v.2, hs w w.2, Submodule.coe_add, map_add]; abel))
+          rw [map_add (f := _), hs _ (v+w).2, hs v v.2, hs w w.2, Submodule.coe_add, map_add (f := _)]; abel))
       map_smul' := fun r v => Subtype.ext (funext fun g => hjinj (by
           show j (s ((r • v : W) : V) g) = j (r • s v g)
           rw [map_smul, hs _ (r • v).2, hs v v.2, Submodule.coe_smul, map_smul, smul_sub])) }

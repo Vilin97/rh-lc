@@ -211,7 +211,7 @@ theorem period_add : ∀ (n : ℕ) (V : Type) [CommRing V] [IsDomain V] [IsLocal
     ((e.trans e₀) a) ((e.trans e₀) a') ((e.trans e₀) b)
   have hT := val_τ₀_add L.T T'' (z := z) (J := J) hJ ((n : ℤ) • a) ((n : ℤ) • a') ((n : ℤ) • b)
   rw [← smul_add] at hT
-  rw [← map_add] at hD
+  rw [← map_add (f := _)] at hD
   have r₁ := hP κK hκ (a + a') b z J J' hJ hJ'
   have r₂ := hP κK hκ a b z J J' hJ hJ'
   have r₃ := hP κK hκ a' b z J J' hJ hJ'

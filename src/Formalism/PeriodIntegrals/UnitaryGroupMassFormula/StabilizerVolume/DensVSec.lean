@@ -90,7 +90,7 @@ theorem secGram_holds : SecGram := by
   obtain ⟨q, hq⟩ := exists_leftInv_of_linIndep Z hZ
   refine ⟨q, fun S hS => ?_⟩
   have hh : algebraMap F (R ⊗[F] E) (1 / 2) + algebraMap F (R ⊗[F] E) (1 / 2) = 1 := by
-    rw [← map_add, show (1 / 2 : F) + 1 / 2 = 1 by norm_num, map_one]
+    rw [← map_add (f := _), show (1 / 2 : F) + 1 / 2 = 1 by norm_num, map_one]
   have hsh : sigR R σ (algebraMap F (R ⊗[F] E) (1 / 2)) = algebraMap F (R ⊗[F] E) (1 / 2) :=
     (Algebra.TensorProduct.map (AlgHom.id F R) σ).commutes _
   have h1 : ∀ i j, hR R σ J (x i)

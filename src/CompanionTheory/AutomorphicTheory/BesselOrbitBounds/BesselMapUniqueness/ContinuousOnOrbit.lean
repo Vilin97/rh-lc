@@ -17,7 +17,7 @@ theorem LieWd.lieW {W : List (Mat n)} (h : LieWd Hm W) : LieW (UH Hm) W := fun X
 theorem CWLin.comp_sigma (hAd : DsAd) (hU : URep Hm σ) {B : H → V} (hB : CWLin Hm σ B) {y : Mat n}
     (hy : y ∈ UH Hm) : CWLin Hm σ (fun v => B (σ y v)) := by
   refine ⟨fun x hx x' hx' => ?_, fun a x hx => ?_, ?_⟩
-  · rw [map_add, hB.add _ (hx.apply hU.rep hy) _ (hx'.apply hU.rep hy)]
+  · rw [map_add (f := _), hB.add _ (hx.apply hU.rep hy) _ (hx'.apply hU.rep hy)]
   · rw [map_smul, hB.smul _ _ (hx.apply hU.rep hy)]
   · obtain ⟨C, Ws, hWs, hb⟩ := hB.bd
     refine ⟨C, Ws.map fun W => W.map fun X => y⁻¹ * X * y, fun W hW => ?_, fun v hv => ?_⟩

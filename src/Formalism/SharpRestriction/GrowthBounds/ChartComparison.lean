@@ -18,7 +18,7 @@ theorem locW_map {LL : Type} [Field LL] [NumberField LL] (Pl : Rows.Places LL) (
   induction hx using Submodule.span_induction with
   | mem y hy => exact Submodule.subset_span (h y hy)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ h1 h2 => rw [map_add]; exact Submodule.add_mem _ h1 h2
+  | add y z _ _ h1 h2 => rw [map_add (f := _)]; exact Submodule.add_mem _ h1 h2
   | smul a y _ h1 =>
     rw [Subring.smul_def, map_smul, ← Subring.smul_def]
     exact Submodule.smul_mem _ _ h1

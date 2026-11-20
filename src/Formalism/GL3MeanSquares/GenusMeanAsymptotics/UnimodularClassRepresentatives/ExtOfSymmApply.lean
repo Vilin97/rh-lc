@@ -68,7 +68,7 @@ theorem linearMap_ext (S : VecSplit h h') {f g : V →ₗ[K] V} (h0 : f S.x₀ =
     (h1 : ∀ a, f (S.ι a) = g (S.ι a)) : f = g := by
   ext v
   obtain ⟨c, a, rfl⟩ := S.cover v
-  rw [map_add, map_add, map_smul, map_smul, h0, h1]
+  rw [map_add (f := _), map_add (f := _), map_smul, map_smul, h0, h1]
 
 theorem autL_iff {W : Type} [AddCommGroup W] [Module K W] [Module (𝓞 K) W]
     [IsScalarTower (𝓞 K) K W] {k : W →ₗ⋆[K] W →ₗ[K] K} {M : Submodule (𝓞 K) W} {g : W ≃ₗ[K] W} :

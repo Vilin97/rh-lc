@@ -98,7 +98,7 @@ theorem cupProduct_leibniz {M N P : TRep R G} (b : Pairing M N P) (p q : ℕ) (f
       (-1 : R) ^ p • cupFun b p (q + 1) f (dn N.rho q f') g := by
   have e : p + 1 + q = p + q + 1 := by omega
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [dn_apply, cupFun, map_add, map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply,
+    simp only [dn_apply, cupFun, map_add (f := _), map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply,
     LinearMap.smul_apply, smul_add, Finset.smul_sum, smul_smul]
   rw [Fin.sum_univ_castSucc (n := p)]
   rw [show ∀ F : Fin (p + q + 1) → P.V, ∑ j, F j = ∑ j : Fin p, F (Fin.castAdd (q + 1) j) +

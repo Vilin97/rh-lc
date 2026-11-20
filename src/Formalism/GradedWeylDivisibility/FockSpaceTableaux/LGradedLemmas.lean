@@ -31,7 +31,7 @@ theorem lgraded_rowGen_monomial {r n : ℕ} (a : Fin r) (m : Fin r × Fin n →�
   next v k m _ _ ih =>
     have hw : Finsupp.weight (lgraded_wa a) (Finsupp.single v k) = k * lgraded_wa a v := by
       simp [Finsupp.weight_apply, Finsupp.sum_single_index]
-    rw [add_comm, monomial_add_single, map_mul, ih, map_pow, lgraded_rowGen_X, map_add, map_mul,
+    rw [add_comm, monomial_add_single, map_mul, ih, map_pow, lgraded_rowGen_X, map_add (f := _), map_mul,
       map_pow, hw, mul_pow, ← pow_mul, pow_add, mul_comm (lgraded_wa a v) k]
     ring
 
@@ -51,7 +51,7 @@ theorem lgraded_coeff_euler {r n : ℕ} (a : Fin r) (f : MvPolynomial (Fin r × 
     · simp
   next p q hp hq =>
     have hpq : rowDiv ℚ a a 1 (p + q) = rowDiv ℚ a a 1 p + rowDiv ℚ a a 1 q := by
-      simp only [rowDiv, map_add, Polynomial.coeff_add]
+      simp only [rowDiv, map_add (f := _), Polynomial.coeff_add]
     rw [hpq, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem lgraded_weight_rowW {r n : ℕ} (m : Fin r × Fin n →₀ ℕ) (a : Fin r) :

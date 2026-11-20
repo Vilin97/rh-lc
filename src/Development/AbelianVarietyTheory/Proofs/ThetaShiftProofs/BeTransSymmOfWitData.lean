@@ -148,7 +148,7 @@ theorem be_trans_symm_of_witData (a : ArcIn D l β k b)
   have k₃ := key (y + z)
   have s₁ := a.be_symm z y
   have s₂ := a.be_symm (e₁.trans e₂.symm z) (e₁.trans e₂.symm y)
-  simp only [map_add, LinearMap.add_apply] at k₃
+  simp only [map_add (f := _), LinearMap.add_apply] at k₃
   omega
 
 theorem be_isometry_of_witData

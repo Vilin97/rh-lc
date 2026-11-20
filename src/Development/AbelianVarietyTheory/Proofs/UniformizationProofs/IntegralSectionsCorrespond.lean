@@ -147,7 +147,7 @@ theorem push_fe (hG : GlobalFnsSt) (k : ℕ) (s' : Fam D' F k)
     exact prod_sum₂ (K := Fin 4) (K' := Fin 4) _ rfl (prod_neg _ _ rfl)
   rw [Category.assoc (inv _) _ (prF hD F), trF_pr hD F hT h₁ h₂, IsIso.inv_hom_id_assoc] at e₂
   rw [IsIso.inv_hom_id] at e₁ e₃
-  rw [← map_nsmul, ← map_add, e₁, e₄, Category.id_comp, e₂, e₃, e₅]
+  rw [← map_nsmul, ← map_add (f := _), e₁, e₄, Category.id_comp, e₂, e₃, e₅]
   exact (BoxFamily.unit_shuffle _ _ _ _).symm
 
 theorem exists_pull (hG : GlobalFnsSt) (k : ℕ) (s : Fam D F k) : ∃ s' : Fam D' F k, FamRel hD F s'.s s.s :=

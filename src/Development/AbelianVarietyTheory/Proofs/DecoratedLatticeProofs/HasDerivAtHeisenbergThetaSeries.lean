@@ -37,14 +37,14 @@ theorem hasDerivAt_term {G : Type} [AddCommGroup G] (a : ℝ →+ G) (p : G →+
   have h3 := h2.mul h1
   simp only [hκ]
   refine h3.congr_deriv ?_
-  simp only [AddMonoidHom.add_apply, map_add, hκ, Pi.add_apply, Pi.mul_apply]
+  simp only [AddMonoidHom.add_apply, map_add (f := _), hκ, Pi.add_apply, Pi.mul_apply]
   ring
 
 variable {D : D7}
 
 theorem two_halves (S T : HSp D) (x y : WO S T) : symplO S T x y = symplOH S T x y + symplOH S T x y := by
   unfold symplOH
-  rw [← add_mul, ← map_add, add_halves, map_one, one_mul]
+  rw [← add_mul, ← map_add (f := _), add_halves, map_one, one_mul]
 
 theorem phase_identity {S S₀ T : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (x y a b ξ : Mx D T.rank ρ) :
     symplOH S T (d.extX T x + d.extY T y) (d.extX T a + d.extY T b) +
@@ -52,7 +52,7 @@ theorem phase_identity {S S₀ T : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) (x y
       -(symplOH S T (d.extX T x) (d.extY T y)) + symplO S T (d.extX T (x + ξ)) (d.extY T y) +
         (symplOH S T (d.extX T a) (d.extY T b) + symplOH S T (d.extX T (x + ξ)) (d.extY T b) +
           symplOH S T (d.extX T (x + ξ)) (d.extY T b)) := by
-  simp only [two_halves, map_add, GlobalTheory.WeilVacMove.symplOH_add_left, GlobalTheory.WeilVacMove.symplOH_add_right,
+  simp only [two_halves, map_add (f := _), GlobalTheory.WeilVacMove.symplOH_add_left, GlobalTheory.WeilVacMove.symplOH_add_right,
     HypDec.symplOH_extX_extX, HypDec.symplOH_extY_extY,
     GlobalTheory.WeilVacMove.symplOH_skew S T (d.extX T a) (d.extY T y)]
   ring
@@ -70,7 +70,7 @@ theorem eq_ext (A B : HSp D) (w : WO (dblSp A) B) :
 def mulLine {m n k : ℕ} (M : ℝ →+ Mx D m n) (j : Mx D n k) : ℝ →+ Mx D m k where
   toFun t := HMul.hMul (M t) j
   map_zero' := by rw [map_zero, Matrix.zero_mul]
-  map_add' s t := by rw [map_add, Matrix.add_mul]
+  map_add' s t := by rw [map_add (f := _), Matrix.add_mul]
 
 theorem continuous_mulLine {m n k : ℕ} {M : ℝ →+ Mx D m n} (hM : Continuous M) (j : Mx D n k) :
     Continuous (mulLine M j) := hM.matrix_mul continuous_const

@@ -44,7 +44,7 @@ theorem ker_cocompact {F A V V' M M' : Type} [Field F] [CommRing A] [Algebra F A
       rw [map_smul, map_smul, ← smul_sub]
       exact Submodule.smul_mem _ _ hx
     | add x y hx hy =>
-      rw [map_add, map_add, add_sub_add_comm]
+      rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
       exact add_mem hx hy
   refine ⟨(fun a : Fin _ → A => ∑ j, a j • w j) '' Set.univ.pi fun _ => K,
     (isCompact_univ_pi fun _ => hK).image (by fun_prop), ?_, fun x hx => ?_⟩
@@ -140,7 +140,7 @@ theorem ex_neg {x : Matrix n n R} (h : x * x * x = 0) : ex A x * ex A (-x) = 1 :
 theorem map_ex (x : Matrix n n R) : (ex A x).map c = ex A (x.map c) := by
   have := (c.mapMatrix (m := n))
   change c.mapMatrix (ex A x) = ex A (c.mapMatrix x)
-  simp only [ex, map_add, map_one, map_smul, map_mul]
+  simp only [ex, map_add (f := _), map_one, map_smul, map_mul]
 
 theorem ex_unit {x : Matrix n n R} (h : x * x * x = 0) (hs : xᵀ * J + J * x.map c = 0) : (ex A x)ᵀ * J * (ex A x).map c = J := by
   have h1 : xᵀ * J = J * (-x.map c) := by rw [Matrix.mul_neg]; exact eq_neg_of_add_eq_zero_left hs
@@ -160,7 +160,7 @@ theorem log_skew {x : Matrix n n R} (h : x * x * x = 0) (hu : (1 + x)ᵀ * J * (
     (x - (⅟2 : A) • (x * x))ᵀ * J + J * (x - (⅟2 : A) • (x * x)).map c = 0 := by
   have e0 : (1 + x).map c = 1 + x.map c := by
     change c.mapMatrix _ = 1 + c.mapMatrix x
-    rw [map_add, map_one]
+    rw [map_add (f := _), map_one]
   have e1 : (x - (⅟2 : A) • (x * x)).map c = x.map c - (⅟2 : A) • (x.map c * x.map c) := by
     change c.mapMatrix _ = c.mapMatrix x - _ • (c.mapMatrix x * c.mapMatrix x)
     rw [map_sub, map_smul, map_mul]

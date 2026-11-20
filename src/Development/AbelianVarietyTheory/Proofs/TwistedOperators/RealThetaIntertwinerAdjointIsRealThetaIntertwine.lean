@@ -451,7 +451,7 @@ theorem ell_act (τ : D.what₂.Tau) {g : Matrix (Fin V.rank) (Fin V.rank) ℂ} 
     by_cases h : ρ = τ
     · subst h; simp [rep_inner hg]
     · simp [Function.update_of_ne h]
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 theorem incl_act (τ : D.what₂.Tau) {g : Matrix (Fin V.rank) (Fin V.rank) ℂ} (hg : g ∈ Formalism.QuantumDeterminants.UH (gramAt D V τ))
     (x : SmT M) : inclT M (intersection_update_fsHerm_neg_one M τ (actS M τ hg) x) = actT M τ g (inclT M x) := by
@@ -459,7 +459,7 @@ theorem incl_act (τ : D.what₂.Tau) {g : Matrix (Fin V.rank) (Fin V.rank) ℂ}
   | smul_tprod c v =>
     simp only [map_smul]
     rw [position_tprod, incl_tprod, incl_tprod, GlobalTheory.Chain.RealLine.Semi.actT_tprod, coe_update, actS_coe]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem der_mapFactor (τ : D.what₂.Tau) {Y : Matrix (Fin V.rank) (Fin V.rank) ℂ} (hY : Y ∈ lieAt V τ) (x : SmT M) :
     DerT M τ Y x (intersection_update_fsHerm_neg_one M τ (derS M τ hY) x) := by
@@ -473,7 +473,7 @@ theorem der_mapFactor (τ : D.what₂.Tau) {Y : Matrix (Fin V.rank) (Fin V.rank)
     refine HasDerivAt.mul_const ?_ _
     exact ((innerSL ℂ (w τ)).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt (0 : ℝ) (smooth_facts M τ hY (v τ).2).2
   | add x y hx hy =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hx.add hy
 
 omit [DecidableEq D.what₂.Tau] in
@@ -629,7 +629,7 @@ theorem clause_eqK (hω : ∀ g h, ω' (h, g) = ω (g, h)) (hI : GlobalTheory.Gr
       (inclT M (Tp φ (PiTensorProduct.tprod ℂ w)))
     rw [e] at h2
     rw [h2, hA, hA, hI1]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem clause_invK (hω : ∀ g h, ω' (h, g) = ω (g, h)) (hI : GlobalTheory.Grid.IsIntw θ M' M ω' pt It) (hA : AdjRel It Tp)
     (τ : D.what₂.Tau) (h : Matrix (Fin W.rank) (Fin W.rank) ℂ) (hh : h ∈ Formalism.QuantumDeterminants.UH (gramAt D W τ)) (φ φ' : P)
@@ -648,7 +648,7 @@ theorem clause_invK (hω : ∀ g h, ω' (h, g) = ω (g, h)) (hI : GlobalTheory.G
     refine sm_ext M fun u => ?_
     rw [hA, hA, hI.eqK τ h hh φ φ' hp' (PiTensorProduct.tprod ℂ u), coe_update, actS_coe]
     exact congrArg _ (ell_act M' τ hh _ _)
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem clause_eqg (hω : ∀ g h, ω' (h, g) = ω (g, h)) (hI : GlobalTheory.Grid.IsIntw θ M' M ω' pt It) (hA : AdjRel It Tp)
     (τ : D.what₂.Tau) (Y : Matrix (Fin V.rank) (Fin V.rank) ℂ) (hY : Y ∈ lieAt V τ) (φ φ' : P)
@@ -672,7 +672,7 @@ theorem clause_eqg (hω : ∀ g h, ω' (h, g) = ω (g, h)) (hI : GlobalTheory.Gr
     rw [derS_coe] at e
     rw [← e, hA, hA, eq_neg_of_add_eq_zero_left hinv]
     simp only [map_neg]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem clause_invg (hω : ∀ g h, ω' (h, g) = ω (g, h)) (hI : GlobalTheory.Grid.IsIntw θ M' M ω' pt It) (hA : AdjRel It Tp)
     (τ : D.what₂.Tau) (Y : Matrix (Fin W.rank) (Fin W.rank) ℂ) (hY : Y ∈ lieAt W τ) (φ φ' : P) (v v' : SmT M')
@@ -690,12 +690,12 @@ theorem clause_invg (hω : ∀ g h, ω' (h, g) = ω (g, h)) (hI : GlobalTheory.G
       have hs := skew M' τ hY (fun ρ => (w ρ : M'.H ρ)) (w τ).2 (hI.eqg τ Y hY φ φ' hd' (PiTensorProduct.tprod ℂ u))
       have e := coe_update M' τ w (derS M' τ hY (w τ))
       rw [derS_coe] at e
-      rw [map_add, map_add, map_zero, map_zero, position_tprod, hA, hA, hs, e]
+      rw [map_add (f := _), map_add (f := _), map_zero, map_zero, position_tprod, hA, hA, hs, e]
       simp
     simp only [map_smul]
     rw [← smul_add, key, smul_zero]
   | add a b ha hb =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [add_add_add_comm, ha, hb, add_zero]
 
 end Main

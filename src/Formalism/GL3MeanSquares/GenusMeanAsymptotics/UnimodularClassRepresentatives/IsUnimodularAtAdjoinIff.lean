@@ -32,7 +32,7 @@ namespace VecSplit
 variable (S : VecSplit h h')
 
 theorem h_x₀_comb (c : K) (a : V') : h S.x₀ (c • S.x₀ + S.ι a) = c * h S.x₀ S.x₀ := by
-  rw [map_add, map_smul, S.orth a, smul_eq_mul, add_zero]
+  rw [map_add (f := _), map_smul, S.orth a, smul_eq_mul, add_zero]
 
 theorem comb_eq_iff {c c' : K} {a a' : V'} :
     c • S.x₀ + S.ι a = c' • S.x₀ + S.ι a' ↔ c = c' ∧ a = a' := by

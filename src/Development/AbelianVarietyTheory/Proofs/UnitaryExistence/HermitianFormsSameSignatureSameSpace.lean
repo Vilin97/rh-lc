@@ -195,7 +195,7 @@ theorem model_in_same_space : (∀ (E : Type) [Field E] [NumberField E] [IsCMFie
     have e1 : FD.cc ((a : E) + (b : E) * (H.rt : E)) = (a : E) - (b : E) * (H.rt : E) := by
       have c := cc_rt H
       rw [FD.cc] at c ⊢
-      rw [map_add, map_mul, c, IsCMField.complexConj_apply_eq_self,
+      rw [map_add (f := _), map_mul, c, IsCMField.complexConj_apply_eq_self,
         IsCMField.complexConj_apply_eq_self]
       ring
     have e2 : Gm'.det / Gm.det = (a : E) ^ 2 + (H.d : E) * (b : E) ^ 2 := by

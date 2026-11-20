@@ -96,7 +96,7 @@ theorem capelliC_map {A B : Type*} [Ring A] [Algebra ℂ A] [Ring B] [Algebra �
   have e : (⇑φ ∘ fun j : Fin n => capEntry E (x - ((j : ℕ) : ℂ)) (id (σ j)) (id j)) =
       fun j : Fin n => capEntry (fun a b => φ (E a b)) (x - ((j : ℕ) : ℂ)) (id (σ j)) (id j) := by
     funext j
-    simp only [Function.comp, capEntry, map_add]
+    simp only [Function.comp, capEntry, map_add (f := _)]
     split_ifs <;> simp
   rw [e]
 

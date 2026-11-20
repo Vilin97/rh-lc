@@ -99,7 +99,7 @@ theorem mat_embArch_sub_one (y : GArch σ J w) :
   rw [placeToAdeles_apply]
   by_cases h : r = s
   · subst h
-    simp only [Matrix.one_apply_eq, mul_one, map_sub, map_add]
+    simp only [Matrix.one_apply_eq, mul_one, map_sub, map_add (f := _)]
     ring
   · simp [Matrix.one_apply_ne h]
 

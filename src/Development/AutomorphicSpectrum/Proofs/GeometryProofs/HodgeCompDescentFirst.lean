@@ -173,7 +173,7 @@ theorem lie_of_cover : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
       · rw [map_zero]
         exact Submodule.zero_mem _
       · intro x x' hx hx'
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hx hx'
     refine le_antisymm (fun e he => ?_) (hle s)
     exact mem_of_mem_iSup _ 𝔐.Vgen hindep N (fun s' x hx => (hle s' hx).2) s (htop he.1) he.2

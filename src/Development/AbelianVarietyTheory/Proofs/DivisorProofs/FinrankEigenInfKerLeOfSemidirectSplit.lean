@@ -29,7 +29,7 @@ theorem commute_single {π : Γ →* G} {ι : G →* Γ} (h : IsSplit π ι) (x 
     show _ * _ = _ * _
     simp [MonoidAlgebra.of_apply, MonoidAlgebra.single_mul_single, h.2 m r hr]
   · intro x y hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hx.add_left hy
   · intro a x hx
     rw [map_smul]
@@ -45,7 +45,7 @@ theorem asAlgebraHom_map {V : Type} [AddCommGroup V] [Module ℂ V] (ι : G →*
   · intro m
     simp [MonoidAlgebra.of_apply, Representation.asAlgebraHom_single]
   · intro x y hx hy
-    rw [map_add, map_add, map_add, hx, hy]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   · intro a x hx
     rw [map_smul, map_smul, map_smul, hx]
 
@@ -162,7 +162,7 @@ theorem GlobalTheory.BadCount.finrank_eig_inf_ker_le_of_isSplit : ∀ (G Γ V : 
       · unfold GlobalTheory.BadCount.Lift.eR
         refine Commute.sum_right _ _ _ (fun r _ => ?_)
         exact GlobalTheory.BadCount.Lift.commute_single h _ r r.2 _)
-    (by rw [← map_one ιA, ← map_sub, hsum, map_sub, map_add, map_mul])
+    (by rw [← map_one ιA, ← map_sub, hsum, map_sub, map_add (f := _), map_mul])
     (fun k γ hne => by
       rw [hco] at hne
       show π γ ∈ H k

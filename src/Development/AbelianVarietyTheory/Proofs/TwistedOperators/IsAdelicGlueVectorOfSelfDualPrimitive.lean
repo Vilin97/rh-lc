@@ -26,7 +26,7 @@ theorem mem_glueLat_iff {L₀ : Lat X} {x₀ : X.V} (y : Y.V) : y ∈ glueLat Y 
       y = ι (x + (a : D.host.E) • x₀) + ((a : D.host.E) * (Tu D u)⁻¹) • z := by
   rw [mem_glueLat]
   refine exists_congr fun x => and_congr_right fun _ => exists_congr fun a => ?_
-  rw [map_add, map_smul, smul_add, smul_smul]
+  rw [map_add (f := _), map_smul, smul_add, smul_smul]
   constructor <;> rintro rfl <;> abel
 
 theorem coords_of_mem (h : IsLine Y X ι z u) {L₀ : Lat X} {x₀ x : X.V} {a : D.host.E}

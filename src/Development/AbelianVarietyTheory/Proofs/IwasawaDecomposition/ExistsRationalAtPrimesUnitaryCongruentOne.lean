@@ -62,7 +62,7 @@ theorem exists_near_entry (x : AfE F E) (P : HeightOneSpectrum (𝓞 E)) {γ : W
     ∃ y : E, Valued.v (adAt F P x - algebraMap E _ y) < γ := by
   obtain ⟨y, N, r, hr, hN, e⟩ := exists_approx_small x {P} hγ
   refine ⟨y, ?_⟩
-  rw [e, map_add, adAt_inclE, add_sub_cancel_left]
+  rw [e, map_add (f := _), adAt_inclE, add_sub_cancel_left]
   exact valued_nat_mul_lt hr (hN P (by simp))
 
 theorem locM_sub_one_apply (w : HeightOneSpectrum (𝓞 E)) (x : GL (Fin n) (AfE F E)) (i j : Fin n) :

@@ -98,7 +98,7 @@ theorem hermForm_pull_eq_of_lbIso_pow_factor :
       have h4 : χ' ⟨F l, hΛ l⟩ ≠ 0 := norm_ne_zero_iff.1 (by rw [hu'.2.1]; exact one_ne_zero)
       have h5 := u.fr_ne _ _ hi'
       rw [hrφ (i, j) z ⟨hi, hj⟩, hrφ (i, j) (z + l) ⟨hi', hj'⟩]
-      simp only [hper, hermForm_sub_smul, hH₂, hermForm_pull, map_add]
+      simp only [hper, hermForm_sub_smul, hH₂, hermForm_pull, map_add (f := _)]
       rw [h1, h2]
       simp only [hermForm]
       generalize (z ⬝ᵥ Hm.mulVec (star (l : Fin g → ℂ))) = a
@@ -247,7 +247,7 @@ def fmul (D : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) : (Fin (g + g) → �
   toFun v := Fin.append (fun i => v (Fin.castAdd g i)) (D fun i => v (Fin.natAdd g i))
   map_add' v w := by
     have : (fun i => (v + w) (Fin.natAdd g i)) = (fun i => v (Fin.natAdd g i)) + fun i => w (Fin.natAdd g i) := rfl
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
     funext i
     refine Fin.addCases (fun i => ?_) (fun i => ?_) i
     · simp only [Fin.append_left, Pi.add_apply]

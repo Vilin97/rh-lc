@@ -17,11 +17,11 @@ theorem UpperTheory.exists_signed_basis_lieSubalgebra_exp_compact :
   let B : LinearMap.BilinForm ℝ (isExpLieAlgebra K n).lieSubalgebra :=
     LinearMap.mk₂ ℝ (fun X Y => trForm K n X Y)
       (fun X₁ X₂ Y => by
-        simp only [hmk, mat_coe_add, Matrix.add_mul, Matrix.trace_add, map_add])
+        simp only [hmk, mat_coe_add, Matrix.add_mul, Matrix.trace_add, map_add (f := _)])
       (fun r X Y => by
         simp only [hmk, mat_coe_smul, Matrix.smul_mul, Matrix.trace_smul, map_smul])
       (fun X Y₁ Y₂ => by
-        simp only [hmk, mat_coe_add, Matrix.mul_add, Matrix.trace_add, map_add])
+        simp only [hmk, mat_coe_add, Matrix.mul_add, Matrix.trace_add, map_add (f := _)])
       (fun r X Y => by
         simp only [hmk, mat_coe_smul, Matrix.mul_smul, Matrix.trace_smul, map_smul])
   have hB : ∀ X Y, B X Y = trForm K n X Y := fun _ _ => rfl

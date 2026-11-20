@@ -29,7 +29,7 @@ theorem act_eigen (σ : Representation ℂ K X) (ψ : K →* ℂˣ) (y : X)
     σ.asAlgebraHom c y = aug ψ c • y := by
   induction c using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, LinearMap.add_apply, ha, hb, add_smul]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, ha, hb, add_smul]
   | single g r => rw [aug_single, Representation.asAlgebraHom_single, LinearMap.smul_apply, hy, smul_smul]
 
 theorem act_comm (σ : Representation ℂ K X) (τ : Representation ℂ K Y) (f : X →ₗ[ℂ] Y)
@@ -37,7 +37,7 @@ theorem act_comm (σ : Representation ℂ K X) (τ : Representation ℂ K Y) (f 
     f (σ.asAlgebraHom c x) = τ.asAlgebraHom c (f x) := by
   induction c using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]
   | single g r => simp only [Representation.asAlgebraHom_single, LinearMap.smul_apply, map_smul, hf]
 
 theorem exists_kill [TopologicalSpace K] [IsTopologicalGroup K] [CompactSpace K]
@@ -133,7 +133,7 @@ theorem exists_kill_tensor (ψ : K →* ℂˣ)
     obtain ⟨d, hd, hd'⟩ := hw (c * b)
     refine ⟨d * c, by rw [map_mul]; exact mul_ne_zero hd hc, ?_⟩
     rw [map_mul, Module.End.mul_apply] at hd'
-    rw [map_mul, Module.End.mul_apply, map_add, map_add, hc', zero_add, hd']
+    rw [map_mul, Module.End.mul_apply, map_add (f := _), map_add (f := _), hc', zero_add, hd']
 
 end Tensor
 

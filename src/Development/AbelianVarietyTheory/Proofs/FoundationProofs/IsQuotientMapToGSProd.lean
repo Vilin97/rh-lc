@@ -29,10 +29,10 @@ theorem crd_of_mem {n : ℕ} (i : Ix c) {x : Qbar l} (hx : x ∈ c.O) :
 
 theorem crd_add {n : ℕ} (i : Ix c) {x y : Qbar l} (hx : x ∈ c.O) (hy : y ∈ c.O) :
     crd c n i (x + y) = crd c n i x + crd c n i y := by
-  rw [crd_of_mem i hx, crd_of_mem i hy, crd_of_mem i (c.O.add_mem hx hy), ← map_add]
+  rw [crd_of_mem i hx, crd_of_mem i hy, crd_of_mem i (c.O.add_mem hx hy), ← map_add (f := _)]
   congr 1
   have : (⟨x + y, c.O.add_mem hx hy⟩ : c.O) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-  rw [this, map_add]; rfl
+  rw [this, map_add (f := _)]; rfl
 
 theorem crd_sub {n : ℕ} (i : Ix c) {x y : Qbar l} (hx : x ∈ c.O) (hy : y ∈ c.O) :
     crd c n i (x - y) = crd c n i x - crd c n i y := by

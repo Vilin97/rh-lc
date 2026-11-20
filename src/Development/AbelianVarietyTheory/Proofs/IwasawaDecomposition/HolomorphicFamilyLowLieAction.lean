@@ -44,7 +44,7 @@ theorem exists_multi (U : ∀ i, L i →ₗ[ℂ] R) (hU : ∀ i j, i ≠ j → �
       map_update_smul' := ?_ }, fun v => ?_⟩
   · intro inst v i x y
     obtain rfl : inst = (fun a b => Classical.propDecidable (a = b)) := Subsingleton.elim _ _
-    simp only [prod_update U hU, map_add, mul_add]
+    simp only [prod_update U hU, map_add (f := _), mul_add]
   · intro inst v i c x
     obtain rfl : inst = (fun a b => Classical.propDecidable (a = b)) := Subsingleton.elim _ _
     simp only [prod_update U hU, map_smul, mul_smul_comm]
@@ -148,7 +148,7 @@ theorem core [Fintype ι] {B : P →ₗ⋆[ℂ] P →ₗ[ℂ] ℂ} {ϖ : (ι →
       rw [map_smul, hm]
       exact (Finset.noncommProd_commute _ _ _ _ (fun j _ => hAU j (v j))).smul_right r
     | add x y hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact hx.add_right hy
   · intro g hg v y hv
     have key : ∀ s : Finset ι, (s.noncommProd (fun j => U j (v j)) (pw U hUU v s)) y =

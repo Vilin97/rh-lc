@@ -149,7 +149,7 @@ theorem lattice_weight_components_mem [CharZero (KK O)] (E : GLOps n (KK O) V) (
     have hlF : lam ∉ F := fun h => hl (Finset.mem_insert_of_mem h)
     have h2 := hTM M hM _ hmem
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, Finset.sum_insert ha] at h2
+      rw [map_add (f := _), map_sum, Finset.sum_insert ha] at h2
     rw [hT lam y0 hy0, hg1, hT a (f a) (hf a (Finset.mem_insert_self a F)), hg0] at h2
     have h3 : ∀ nu ∈ F, T (f nu) = ((g' nu : ℤ) : KK O) • f nu :=
       fun nu hnu => hT nu (f nu) (hf nu (Finset.mem_insert_of_mem hnu))

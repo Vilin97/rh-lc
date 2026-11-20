@@ -140,7 +140,7 @@ theorem lift_add {Γ K : Subgroup G} (ξ : Representation ℂ Γ W)
     (v v' : DoubleCoset.Quotient (Γ : Set G) (K : Set G) → W) :
     lift Γ K ξ (v + v') = lift Γ K ξ v + lift Γ K ξ v' := by
   funext g
-  simp only [lift, Pi.add_apply, map_add]
+  simp only [lift, Pi.add_apply, map_add (f := _)]
   rw [← finsum_add_distrib (Set.toFinite _) (Set.toFinite _)]
   congr 1; funext q
   rw [finsum_mem_add_distrib (cosetSet_finite hloc _ g), smul_add]

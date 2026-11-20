@@ -77,7 +77,7 @@ theorem index_smul_mem_HfD [CharZero LL] (L : Lattice (O := O) ρ) (hρ : ∀ g,
       intro h hh
       change _ = actVB PD ρ h _ - _
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [hx h hh, finsum_eq_sum_of_fintype, add_tmul, sum_tmul, map_add, map_sum, h1, sub_tmul]
+        rw [hx h hh, finsum_eq_sum_of_fintype, add_tmul, sum_tmul, map_add (f := _), map_sum, h1, sub_tmul]
       have : ∀ q : G ⧸ H, (corHfRepO ρ O q.out (Z (q.out⁻¹ * h * q.out))) ⊗ₜ[Qp] (1 : B) =
           actVB PD ρ h (actVB PD ρ q.out X) - actVB PD ρ q.out X := by
         intro q

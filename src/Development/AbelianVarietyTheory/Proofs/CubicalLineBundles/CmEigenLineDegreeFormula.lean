@@ -96,12 +96,12 @@ theorem degSt : CMCurve → ThetaUnifAV → Out.Laws → HomExtDvr → DegSt := 
 
   have h2 : 2 * τ H.w0 = 1 + ρ := by
     have e := congrArg τ H.two_weight_eq_one_add_root
-    rw [map_mul, map_add, map_one, map_ofNat, hτ] at e
+    rw [map_mul, map_add (f := _), map_one, map_ofNat, hτ] at e
     exact e
   have two : (2 : 𝓞 k) ≠ 0 := two_ne_zero
   have h3 : (2 : 𝓞 k) * RingOfIntegers.mapRingHom j (τ H.w0) = 2 * RingOfIntegers.mapRingHom i ω := by
     have e := congrArg (RingOfIntegers.mapRingHom j) h2
-    rw [map_mul, map_add, map_one, map_ofNat, hρω] at e
+    rw [map_mul, map_add (f := _), map_one, map_ofNat, hρω] at e
     rw [e]
     ring
   have h4 := mul_left_cancel₀ two h3

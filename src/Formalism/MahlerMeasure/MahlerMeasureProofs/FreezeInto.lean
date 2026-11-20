@@ -148,7 +148,7 @@ theorem glAct_full_aeval {τ : Type} (σ : τ → MvPolynomial (Fin K × Fin r) 
   | C a =>
     rw [aeval_C, MvPolynomial.algebraMap_eq, glAct_full_C]
   | add f g hf hg =>
-    rw [_root_.map_add, _root_.map_add, hf, hg, add_zero]
+    rw [_root_.map_add (f := _), _root_.map_add (f := _), hf, hg, add_zero]
   | mul_X f x hf =>
     rw [_root_.map_mul, aeval_X, glAct_full_mul, hf, hσ x, mul_zero, mul_zero, add_zero]
 end
@@ -234,7 +234,7 @@ theorem intPol_aeval {υ : Type} (σ : υ → MvPolynomial τ ℚ_[p]) (hσ : �
     rw [MvPolynomial.map_C, aeval_C, MvPolynomial.algebraMap_eq, intPol_iff]
     exact ⟨C a, MvPolynomial.map_C _ _⟩
   | add f g hf hg =>
-    rw [_root_.map_add, _root_.map_add]
+    rw [_root_.map_add (f := _), _root_.map_add (f := _)]
     exact Submodule.add_mem _ hf hg
   | mul_X f x hf =>
     rw [_root_.map_mul, MvPolynomial.map_X, _root_.map_mul, aeval_X]

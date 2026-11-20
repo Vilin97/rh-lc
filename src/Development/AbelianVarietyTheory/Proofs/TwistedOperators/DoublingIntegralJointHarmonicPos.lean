@@ -221,7 +221,7 @@ theorem exists_coeff_ne_zero (hn : 1 ≤ p + q) (T : GrpData p q) (π₁ π₂ :
     have hUK : KStable (prodAct M₁ M₂) (U.map E.subtype) := by
       rintro Z hZ _ ⟨w, hw, rfl⟩
       obtain ⟨X, Y, hX, hXK, hY, hYK, rfl⟩ := exists_decomp hZ
-      rw [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, Submodule.subtype_apply,
+      rw [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, Submodule.subtype_apply,
         ← ha X hXK, ← ha Y hYK]
       exact Submodule.add_mem _ ⟨_, key X hX hXK w hw, rfl⟩
         (Submodule.smul_mem _ _ ⟨_, key Y hY hYK w hw, rfl⟩)

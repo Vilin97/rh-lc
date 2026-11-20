@@ -59,7 +59,7 @@ theorem exists_conductor_elem {R : Type} [CommRing R] (p : Ideal R) [hp : p.IsPr
       obtain ⟨y1, hy1, e1⟩ := hx
       obtain ⟨y2, hy2, e2⟩ := hy
       exact ⟨y1 + y2, J.add_mem hy1 hy2, by
-        rw [map_add, e1, e2, ← mul_add]; rfl⟩
+        rw [map_add (f := _), e1, e2, ← mul_add]; rfl⟩
     | smul q x _ hx =>
       obtain ⟨y1, hy1, e1⟩ := hx
       obtain ⟨q', rfl⟩ := Ideal.Quotient.mk_surjective q

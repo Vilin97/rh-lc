@@ -12,7 +12,7 @@ variable {K : Type*} [Field K] [NumberField K]
 
 def embLinear (σ : K →+* ℂ) : K →ₗ[𝓞 K] ComplexAt σ where
   toFun x := ofComplex σ (σ x)
-  map_add' x y := by simp only [map_add]
+  map_add' x y := by simp only [map_add (f := _)]
   map_smul' a x := by
     rw [RingHom.id_apply, smul_def, Algebra.smul_def, map_mul, map_mul]
 
@@ -54,7 +54,7 @@ theorem eq_fieldCoord_tmul_one (σ : K →+* ℂ) (t : Fibre σ K) :
         rw [div_eq_mul_inv]
         ring
   | add s t hs ht =>
-    rw [map_add, map_add, add_tmul, ← hs, ← ht]
+    rw [map_add (f := _), map_add (f := _), add_tmul, ← hs, ← ht]
 
 theorem fieldCoord_injective (σ : K →+* ℂ) : Function.Injective (fieldCoord σ) := by
   intro s t h
@@ -67,7 +67,7 @@ theorem fieldCoord_conjMap (σ : K →+* ℂ) (t : Fibre σ K) :
   | tmul z x =>
     rw [conjMap_tmul, fieldCoord_tmul, fieldCoord_tmul, map_mul]
     rfl
-  | add s t hs ht => rw [map_add, map_add, hs, ht, map_add, map_add]
+  | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht, map_add (f := _), map_add (f := _)]
 
 def fieldStdCoord (σ : K →+* ℂ) (n : ℕ) : Fibre σ (Fin n → K) →ₗ[ℂ] EuclideanSpace ℂ (Fin n) :=
   (WithLp.linearEquiv 2 ℂ (Fin n → ℂ)).symm.toLinearMap ∘ₗ
@@ -94,7 +94,7 @@ theorem fieldStdCoord_conjMap (σ : K →+* ℂ) (n : ℕ) (x : Fibre σ (Fin n 
     rw [conjMap_tmul, fieldStdCoord_apply, fieldStdCoord_apply, piRight_apply, piRight_apply,
       piRightHom_tmul, piRightHom_tmul, fieldCoord_tmul, fieldCoord_tmul, map_mul]
     rfl
-  | add x y hx hy => rw [map_add, map_add, PiLp.add_apply, hx, hy, map_add, PiLp.add_apply, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), PiLp.add_apply, hx, hy, map_add (f := _), PiLp.add_apply, map_add (f := _)]
 
 variable (K) in
 
@@ -131,7 +131,7 @@ theorem localLattice_span (S : Set V) :
     induction hx using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul a y _ hy => rw [toLocal_smul]; exact Submodule.smul_mem _ _ hy
   · exact Submodule.span_mono (Set.image_mono Submodule.subset_span)
 
@@ -152,7 +152,7 @@ theorem localLattice_isLocalLattice (L : FullLattice K V) :
       induction hx using Submodule.span_induction with
       | mem y hy => exact h1 y hy
       | zero => rw [map_zero]; exact W.zero_mem
-      | add y z _ _ hy hz => rw [map_add]; exact W.add_mem hy hz
+      | add y z _ _ hy hz => rw [map_add (f := _)]; exact W.add_mem hy hz
       | smul c y _ hy =>
         rw [map_smul, ← algebraMap_smul (v.adicCompletion K) c]
         exact W.smul_mem _ hy

@@ -17,14 +17,14 @@ theorem transpC_eval_aeval {σ κ : Type} (x : κ → ℂ) (g : σ → MvPolynom
     eval x (aeval g Q) = eval (fun i => eval x (g i)) Q := by
   induction Q using MvPolynomial.induction_on with
   | C c => simp
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p v hp => rw [map_mul, map_mul, hp, map_mul, aeval_X, eval_X]
 
 theorem transpC_map_eval {σ Kc : Type} [CommRing Kc] (ι : ℂ →+* Kc) (x : σ → ℂ) (R : MvPolynomial σ ℂ) :
     eval (fun i => ι (x i)) (map ι R) = ι (eval x R) := by
   induction R using MvPolynomial.induction_on with
   | C c => simp
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
   | mul_X p v hp => rw [map_mul, map_mul, hp, map_mul, map_X, eval_X, eval_X, map_mul]
 
 theorem transpC_hom_aeval {σ ι' κ : Type} (φ : MvPolynomial ι' (MvPolynomial κ ℂ) →+* ℂ) (hφ : ∀ c, φ (C (C c)) = c)
@@ -32,7 +32,7 @@ theorem transpC_hom_aeval {σ ι' κ : Type} (φ : MvPolynomial ι' (MvPolynomia
     φ (aeval g Q) = eval (fun i => φ (g i)) Q := by
   induction Q using MvPolynomial.induction_on with
   | C c => simp [MvPolynomial.algebraMap_apply, hφ]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p v hp => rw [map_mul, map_mul, hp, map_mul, aeval_X, eval_X]
 
 theorem evFr_scalar_of_wtPol (D : D7) {N : ℕ} (ν : D.what₂.Tau → Fin N → ℕ) (Q : MvPolynomial (GL3Theta.FrV D N) ℂ)

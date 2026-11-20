@@ -133,7 +133,7 @@ theorem S6.QuotientDegreeSplit.proof : S6.QuotientDegreeSplit.Statement := by
         intro j
         have h1 := congrFun h0 j
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [map_add, map_sum, map_smul, hπ', LinearMap.restrictScalars_apply, hb0, hc1,
+          simp only [map_add (f := _), map_sum, map_smul, hπ', LinearMap.restrictScalars_apply, hb0, hc1,
           smul_zero, Finset.sum_const_zero, zero_add, Finset.sum_apply, Pi.smul_apply,
           Pi.single_apply, smul_ite, Finset.sum_ite_eq, Finset.mem_univ, if_true,
           Pi.zero_apply] at h1

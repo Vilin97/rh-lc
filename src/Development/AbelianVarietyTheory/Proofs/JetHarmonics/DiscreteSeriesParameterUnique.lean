@@ -68,7 +68,7 @@ lemma dsigC_equiv (V : H ≃L[ℂ] H') (hV : ∀ g, Formalism.REAL.inUJ ε g →
   have hH := Formalism.REAL.Jm_conjTranspose ε
   have hJ' := Formalism.REAL.f1alg_JJ_left ε
   unfold dsigC
-  rw [map_add, map_smul, dsig_equiv V hV, dsig_equiv V hV]
+  rw [map_add (f := _), map_smul, dsig_equiv V hV, dsig_equiv V hV]
   · rw [Formalism.REAL.f1alg_inG_iff]
     have hs : star (1 / (2 * Complex.I) : ℂ) = -(1 / (2 * Complex.I)) := by
       simp [Complex.conj_I]

@@ -157,7 +157,7 @@ theorem sigR_sigR {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [Com
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [sigR, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem map_cT_inclR {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [CommRing R] [Algebra F R]
     (σ : E →ₐ[F] E) {a b : Type} (P : Matrix a b E) :

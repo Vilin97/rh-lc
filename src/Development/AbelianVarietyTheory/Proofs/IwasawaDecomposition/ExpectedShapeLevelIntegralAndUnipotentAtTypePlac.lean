@@ -28,7 +28,7 @@ theorem proj_eq_of_compAt (s : SplitPlace L) {x y : AL L}
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rfl
-    | add a b ha hb => rw [map_add, map_add, ha, hb, map_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _)]
   rw [key, key, h]
 
 theorem loc_eq_of_comp (s : SplitPlace L) {x y : GAf L n}

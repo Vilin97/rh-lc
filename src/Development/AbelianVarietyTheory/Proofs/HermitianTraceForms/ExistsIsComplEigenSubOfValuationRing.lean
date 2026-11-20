@@ -84,7 +84,7 @@ theorem isEquivariant_equiv (hf : ∀ a x, f (ρ a x) = ρ' a (f x)) (hb : IsBas
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul r x => simp [hf]
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
 
 theorem charpoly_of_isBaseChange [Module.Free R N] [Module.Finite R N] [Module.Free R' M]
     [Module.Finite R' M] (hf : ∀ a x, f (ρ a x) = ρ' a (f x)) (hb : IsBaseChange R' f) (a : O) :
@@ -154,7 +154,7 @@ theorem extendTensor_equivariant {O : Type*} [CommRing O] (ρ : O →+* Module.E
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r x => simp
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
 
 theorem extendTensor_injective [Module.Flat A N] [FaithfulSMul S T] :
     Function.Injective (extendTensor A S T N) :=
@@ -232,7 +232,7 @@ private theorem charpoly_eq_prod_local [IsLocalRing S] [Module.Free S M] [Module
     | tmul x => rw [← mk_equivariant, hB.lift_eq, hB.lift_eq, hf]
     | smul s x hx =>
       rw [map_smul, map_smul, map_smul, hx, ← algebraMap_smul S s, ← algebraMap_smul S s, map_smul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [charpoly_of_isBaseChange hf' hb',
     charpoly_eq_prod_of_isDomain _ (isSplitting_fractionRing_of_injective h hinj)]
   simp [Polynomial.map_prod, finrank_eigenSub_of_flat (mk_equivariant B ρ) hB,
@@ -338,7 +338,7 @@ theorem eigenSub_eq_span_of_factor (B : Type*) [CommRing B] [Algebra A B] [Modul
     | tmul x => rw [← mk_equivariant, hN.lift_eq, hN.lift_eq, hf]
     | smul s x hx =>
       rw [map_smul, map_smul, map_smul, hx, ← algebraMap_smul S s, ← algebraMap_smul S s, map_smul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have h1 := eigenSub_eq_span_of_isBaseChange (isBaseChange_eigenMapAlgebra hB hf' hb' i)
   rw [← RingHom.comp_assoc, ← IsScalarTower.algebraMap_eq,
     eigenSub_eq_span_of_flat (mk_equivariant B ρ) hN, ← Submodule.map_coe, Submodule.map_span,

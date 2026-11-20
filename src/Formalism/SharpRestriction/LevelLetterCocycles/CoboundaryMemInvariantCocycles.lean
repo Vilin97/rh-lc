@@ -105,7 +105,7 @@ theorem sum_clK_eq_pow_smul_clK_of_level_decomposition [NeZero n] (M s σ : ℕ)
       · rw [← hY1]
         have hyz' : W.γ T (yz : W.DD T × W.DD T).1 - (yz : W.DD T × W.DD T).1 =
             W.φD T (yz : W.DD T × W.DD T).2 - (yz : W.DD T × W.DD T).2 := by rw [hγ]; exact hyz
-        simp only [map_add, map_sub, map_smul, gamma_frobenius_comm]
+        simp only [map_add (f := _), map_sub, map_smul, gamma_frobenius_comm]
         have e : ((PD.p : ℕ) : O) ^ s • W.γ T (yz : W.DD T × W.DD T).1 =
             ((PD.p : ℕ) : O) ^ s • (yz : W.DD T × W.DD T).1 +
               ((PD.p : ℕ) : O) ^ s • (W.φD T (yz : W.DD T × W.DD T).2 - (yz : W.DD T × W.DD T).2) := by

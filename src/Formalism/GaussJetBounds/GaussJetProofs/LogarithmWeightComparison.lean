@@ -97,7 +97,7 @@ private theorem coeff_pow_eq_zero_of_degree_lt' {h : MvPowerSeries τ K} (h0 : c
     replace hab : ab.1 + ab.2 = n := Finset.HasAntidiagonal.mem_antidiagonal.1 hab
     by_cases ha : ab.1 = 0
     · rw [ha, MvPowerSeries.coeff_zero_eq_constantCoeff_apply, h0, zero_mul]
-    · have hdeg : ab.1.degree + ab.2.degree = n.degree := by rw [← hab, map_add]
+    · have hdeg : ab.1.degree + ab.2.degree = n.degree := by rw [← hab, map_add (f := _)]
       have hpos : 0 < ab.1.degree := by
         rcases Nat.eq_zero_or_pos ab.1.degree with h' | h'
         · exact absurd ((Finsupp.degree_eq_zero_iff _).1 h') ha

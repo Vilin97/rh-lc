@@ -272,7 +272,7 @@ private lemma exists_prinCong_not_mem_stdAt {c : ℕ} (hc : 0 < c) :
   have hinv : IntAt P (1 + (qOf P : E) ^ c)⁻¹ := by
     unfold IntAt
     refine ⟨1, 1 + ((qOf P : ℕ) : 𝓞 E) ^ c, hs, ?_⟩
-    simp only [map_add, map_one, map_pow, map_natCast]
+    simp only [map_add (f := _), map_one, map_pow, map_natCast]
     exact mul_inv_cancel₀ ht0
   obtain ⟨g, hg⟩ : ∃ g : GLint E N P, g.1 = sumE hN 1 (Units.mk0 (1 + (qOf P : E) ^ c) ht0) :=
     ⟨⟨sumE hN 1 (Units.mk0 (1 + (qOf P : E) ^ c) ht0), fun x => by

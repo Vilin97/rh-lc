@@ -37,10 +37,10 @@ theorem nilRad_eq_zero_of_commute {F : Type} [Field F] {V : Type} [AddCommGroup 
     simpa using this
   ext x
   have hx : x = aeval g p₁ (aeval g a x) + aeval g p₂ (aeval g b x) := by
-    rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, ← LinearMap.add_apply, ← map_add,
+    rw [← Module.End.mul_apply, ← Module.End.mul_apply, ← map_mul, ← map_mul, ← LinearMap.add_apply, ← map_add (f := _),
       mul_comm p₁, mul_comm p₂, hab]
     simp
-  rw [hx, map_add, hu.2 _ (h2 _), intertwine_aeval_apply u g g hug, h1 _ (hu.1 _)]
+  rw [hx, map_add (f := _), hu.2 _ (h2 _), intertwine_aeval_apply u g g hug, h1 _ (hu.1 _)]
   simp
 
 theorem exists_conj_eq_add_of_isCoprime : ∀ (F : Type) [Field F] [Finite F] (V : Type) [AddCommGroup V] [Module F V]

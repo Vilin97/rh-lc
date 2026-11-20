@@ -98,7 +98,7 @@ theorem analyticAt_eval_map (p : MvPolynomial J ℤ) (z : J → ℂ) :
     simp only [MvPolynomial.map_C, MvPolynomial.eval_C]
     exact analyticAt_const
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p v hp =>
     simp only [map_mul, MvPolynomial.map_X, MvPolynomial.eval_X]

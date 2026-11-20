@@ -51,7 +51,7 @@ theorem IsVal.add {x y : V} {i : G.comp} {L : G.P.Tup} {Q Q' : XR G.P LL}
     (h : IsVal S emb embLL G A pos embV yc x i L Q) (h' : IsVal S emb embLL G A pos embV yc y i L Q') :
     IsVal S emb embLL G A pos embV yc (x + y) i L (Q + Q') := by
   refine ⟨Submodule.add_mem _ h.1 h'.1, fun g hg c γ hγ κ hp z z' hz => ?_⟩
-  rw [map_add, map_add, map_add, Pi.add_apply, Pi.add_apply, Pi.add_apply, h.2 g hg c γ hγ κ hp z z' hz,
+  rw [map_add (f := _), map_add (f := _), map_add (f := _), Pi.add_apply, Pi.add_apply, Pi.add_apply, h.2 g hg c γ hγ κ hp z z' hz,
     h'.2 g hg c γ hγ κ hp z z' hz, mul_add]
 
 theorem IsVal.smul {x : V} {i : G.comp} {L : G.P.Tup} {Q : XR G.P LL} (a : LL)
@@ -70,7 +70,7 @@ def cmpL (hex : ValEx S emb embLL G A pos embV yc) (hu : ValUniq S emb embLL G A
     unfold cmpC
     by_cases hL : G.P.IsLatTup L
     · simp only [hL, if_true]
-      rw [← map_add]
+      rw [← map_add (f := _)]
       congr 1
       exact hu (x + y) i L _ _ hL (valC_spec hex _ i L hL) ((valC_spec hex x i L hL).add (valC_spec hex y i L hL))
     · simp [hL]

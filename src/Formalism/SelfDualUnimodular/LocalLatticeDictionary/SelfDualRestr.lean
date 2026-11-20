@@ -54,7 +54,7 @@ theorem ext_apply (h : V →ₗ⋆[K] V →ₗ[K] K) (X : V) (hX : h X X ≠ 0)
 theorem coef_ext (h : V →ₗ⋆[K] V →ₗ[K] K) (X : V) (hX : h X X ≠ 0)
     (g : LinearMap.ker (h X) ≃ₗ[K] LinearMap.ker (h X)) (x : V) :
     coef h X (ext h X hX g x) = coef h X x := by
-  rw [ext_apply, map_add, map_smul, coef_self h X hX, coef_ker h X (g (proj h X hX x)), smul_eq_mul,
+  rw [ext_apply, map_add (f := _), map_smul, coef_self h X hX, coef_ker h X (g (proj h X hX x)), smul_eq_mul,
     mul_one, add_zero]
 
 theorem proj_ext (h : V →ₗ⋆[K] V →ₗ[K] K) (X : V) (hX : h X X ≠ 0)
@@ -91,7 +91,7 @@ theorem h_decomp (h : V →ₗ⋆[K] V →ₗ[K] K) (X : V) (hX : h X X ≠ 0) (
     (x y : V) :
     h x y = star (coef h X x) * coef h X y * h X X + h (proj h X hX x) (proj h X hX y) := by
   conv_lhs => rw [decomp h X hX x, decomp h X hX y]
-  simp only [LinearMap.map_add₂, map_add, LinearMap.map_smulₛₗ₂, map_smul, smul_eq_mul, starRingEnd_apply,
+  simp only [LinearMap.map_add₂, map_add (f := _), LinearMap.map_smulₛₗ₂, map_smul, smul_eq_mul, starRingEnd_apply,
     LinearMap.add_apply, LinearMap.smul_apply]
   rw [LinearMap.mem_ker.mp (proj h X hX y).2, h_ker_X h X hs (proj h X hX x)]
   ring
@@ -136,7 +136,7 @@ theorem selfDual_restr {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : ∀ u v, star (h
     have hpm : ((proj h X hXu.1 m : LinearMap.ker (h X)) : V) ∈ M := ((mem_iff_split hM hXM hXu m).1 hm).2
     have e : h m x = h (proj h X hXu.1 m) x := by
       conv_lhs => rw [decomp h X hXu.1 m]
-      rw [map_add, LinearMap.add_apply, map_smulₛₗ, LinearMap.smul_apply, LinearMap.mem_ker.1 x.2,
+      rw [map_add (f := _), LinearMap.add_apply, map_smulₛₗ, LinearMap.smul_apply, LinearMap.mem_ker.1 x.2,
         smul_zero, zero_add]
     rw [e]
     exact hx (proj h X hXu.1 m) hpm
@@ -148,7 +148,7 @@ theorem nondeg_restr {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : ∀ u v, star (h u
     (hnd : ∀ x, (∀ y, h x y = 0) → x = 0) {X : V} (hX : h X X ≠ 0) (w : LinearMap.ker (h X))
     (hw : ∀ y, restr h (LinearMap.ker (h X)) w y = 0) : w = 0 := by
   refine Subtype.ext (hnd _ (fun z => ?_))
-  rw [decomp h X hX z, map_add, map_smul, smul_eq_mul, h_ker_X h X hs w, mul_zero, zero_add]
+  rw [decomp h X hX z, map_add (f := _), map_smul, smul_eq_mul, h_ker_X h X hs w, mul_zero, zero_add]
   exact hw (proj h X hX z)
 
 theorem symm_restr {h : V →ₗ⋆[K] V →ₗ[K] K} (hsy : h.IsSymm) (W : Submodule K V) :

@@ -117,7 +117,7 @@ theorem locRing_local {p : Ideal (𝓞 K)} (hp : p.IsPrime) :
     exact (hcompl_mem_prime_ideal_property hp hS).1 this
   have e : algebraMap (𝓞 K) K r1 / algebraMap (𝓞 K) K s1 + algebraMap (𝓞 K) K r2 / algebraMap (𝓞 K) K s2 + 1 =
       algebraMap (𝓞 K) K (r1 * s2 + r2 * s1 + s1 * s2) / algebraMap (𝓞 K) K (s1 * s2) := by
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     field_simp
   have hf := congrArg id (show star (algebraMap (𝓞 K) K r1 / algebraMap (𝓞 K) K s1 +
       algebraMap (𝓞 K) K r2 / algebraMap (𝓞 K) K s2 + 1) = _ by rw [star_add, star_add, star_one, hfa, hfb])

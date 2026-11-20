@@ -30,7 +30,7 @@ theorem prO_of_mem_U {hc' : IsCompl U (orthK h U)} {x : V} (hx : x ∈ U) : prO 
 theorem split (hs : h.IsSymm) (hc' : IsCompl U (orthK h U)) (x y : V) :
     h x y = h (prO hc' x) (prO hc' y) + h (prO hc'.symm x) (prO hc'.symm y) := by
   conv_lhs => rw [← prO_add hc' x, ← prO_add hc' y]
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   rw [h_UW (prO_mem hc' x) (prO_symm_mem hc' y), h_WU hs (prO_symm_mem hc' x) (prO_mem hc' y)]
   ring
 
@@ -45,7 +45,7 @@ theorem mem_T_of (hG : Good hc M T 𝔭 Λ) (hd : dualF h 𝔭 Λ = Λ) {b : V} 
   have hbΛ : b ∈ Λ := by
     rw [← hd]
     intro y hy
-    rw [← prO_add hc y, map_add, LinearMap.add_apply, h_UW (prO_mem hc y) hb, zero_add]
+    rw [← prO_add hc y, map_add (f := _), LinearMap.add_apply, h_UW (prO_mem hc y) hb, zero_add]
     exact H _ (hG.iW y hy)
   rw [← hG.cW]
   exact Submodule.mem_inf.2 ⟨hbΛ, hb⟩
@@ -101,7 +101,7 @@ def glue (hc' : IsCompl U (orthK h U)) (T : Submodule (𝓞 K) V) (𝔭 : Ideal 
     rintro x x' ⟨b, hb, y, hy, c, hcy, hU, hP⟩ ⟨b', hb', y', hy', c', hcy', hU', hP'⟩
     refine ⟨b + b', by simp [hb, hb'], y + y', Λ₀.add_mem hy hy', c + c', by simp [hcy, hcy'],
       by simp [hU, hU'], ?_⟩
-    rw [Submodule.Quotient.mk_add, Submodule.Quotient.mk_add, map_add, hP, hP']
+    rw [Submodule.Quotient.mk_add, Submodule.Quotient.mk_add, map_add (f := _), hP, hP']
   smul_mem' := by
     rintro r x ⟨b, hb, y, hy, c, hcy, hU, hP⟩
     refine ⟨r • b, by simp [hb], r • y, Λ₀.smul_mem r hy, r • c, by simp [hcy], by simp [hU], ?_⟩

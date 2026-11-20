@@ -62,7 +62,7 @@ theorem flat_tensor_invariants (R R' O : Type) [CommRing R] [CommRing R'] [Algeb
         show x ⊗ₜ[R] galDiff R R' y σ = _
         rw [galDiff_apply, galTensor_tmul, TensorProduct.tmul_sub]
       | add u v hu hv =>
-        rw [map_add, map_add, Pi.add_apply, hu, hv, map_add]
+        rw [map_add (f := _), map_add (f := _), Pi.add_apply, hu, hv, map_add (f := _)]
         abel
     have h0 : LinearMap.lTensor O (galDiff R R') t = 0 := by
       apply (TensorProduct.piRight R R O (fun _ : GlobalTheory.Mum.Gal (algebraMap R R') => R')).injective

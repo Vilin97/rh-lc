@@ -22,7 +22,7 @@ theorem cFin_tmul (a : Af D.host.F) (e : D.host.E) :
 theorem finPart_cA (z : AE D) : finPart D (cA D z) = cFin D (finPart D z) := by
   induction z using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero, RingHom.map_zero]
-  | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy]
   | tmul a e => rfl
 
 theorem cFin_mem_intAE (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.host.E) {z : Af D.host.F ⊗[D.host.F] D.host.E}
@@ -32,7 +32,7 @@ theorem cFin_mem_intAE (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.
     obtain ⟨a, ha, x, rfl⟩ := hw
     exact AddSubgroup.subset_closure ⟨a, ha, H.bar x, by rw [cFin_tmul, H.bar_eq]⟩
   | zero => rw [RingHom.map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [RingHom.map_neg]; exact neg_mem hx
 
 theorem swapAE_mem {z : Af D.host.F ⊗[D.host.F] D.host.E} (hz : z ∈ intAE D) : swapAE D z ∈ LatticeBasisLifts.OAf D := by
@@ -47,7 +47,7 @@ theorem swapAE_mem {z : Af D.host.F ⊗[D.host.F] D.host.E} (hz : z ∈ intAE D)
     rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul] at this
     exact this
   | zero => rw [RingHom.map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [RingHom.map_neg]; exact neg_mem hx
 
 theorem swapAE_idealHat {I : Ideal (𝓞 D.host.E)} {z : Af D.host.F ⊗[D.host.F] D.host.E}
@@ -64,7 +64,7 @@ theorem swapAE_idealHat {I : Ideal (𝓞 D.host.E)} {z : Af D.host.F ⊗[D.host.
   | add x y _ _ hx hy =>
     obtain ⟨s, hs, e⟩ := hx
     obtain ⟨t, ht, e'⟩ := hy
-    exact ⟨s + t, add_mem hs ht, by rw [RingHom.map_add, ← e, ← e']; rfl⟩
+    exact ⟨s + t, add_mem hs ht, by rw [RingHom.map_add (f := _), ← e, ← e']; rfl⟩
   | neg x _ hx =>
     obtain ⟨s, hs, e⟩ := hx
     exact ⟨-s, neg_mem hs, by rw [RingHom.map_neg, ← e]; rfl⟩
@@ -88,7 +88,7 @@ theorem cFin_idealHat (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host D.h
     rw [RingHom.map_mul, cFin_tmul, ← H.bar_eq]
     exact congrArg (fun t : 𝓞 D.host.E => ((1 : Af D.host.F) ⊗ₜ[D.host.F] (t : D.host.E)) * cFin D y) (bar_bar H c)
   | zero => rw [RingHom.map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [RingHom.map_neg]; exact neg_mem hx
 
 theorem exists_unit_subring {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (S : Subring B) (x : Aˣ)

@@ -139,7 +139,7 @@ def gHeckeSub {gb : GBase G R} {M : ℕ} {s : S ⟶ Sp R} (o : GObj gb M s) (g :
   one_mem' := ⟨0, by rw [map_zero, smul_zero, GObj.eta_zero]⟩
   mul_mem' := by
     rintro _ _ ⟨x, rfl⟩ ⟨y, rfl⟩
-    exact ⟨x + y, by rw [map_add, smul_add, o.eta_add]⟩
+    exact ⟨x + y, by rw [map_add (f := _), smul_add, o.eta_add]⟩
   inv_mem' := by
     rintro _ ⟨x, rfl⟩
     exact ⟨-x, by rw [map_neg, smul_neg, GObj.eta_neg]⟩

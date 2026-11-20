@@ -163,7 +163,7 @@ theorem phase_add (κ : F) (ξ u r : E) :
   have h2 : Algebra.trace F E ((algebraMap F E κ * conj F E u - ξ) * r) =
       κ * Algebra.trace F E (conj F E u * r) - Algebra.trace F E (ξ * r) := by
     rw [sub_mul, map_sub, mul_assoc, ← Algebra.smul_def, map_smul, smul_eq_mul]
-  rw [norm_add, h2, mul_add ξ, map_add, ht]
+  rw [norm_add, h2, mul_add ξ, map_add (f := _), ht]
   ring
 
 end Quadratic
@@ -186,7 +186,7 @@ theorem gaussI_eq_setIntegral : ∀ (F : Type) [Field F] [ValuativeRel F] [Topol
   · refine hχ.comp (hT.comp (Continuous.mul ?_ continuous_snd))
     exact (continuous_const.mul (continuous_conj.comp continuous_fst)).sub continuous_const
   · intro u r s
-    rw [mul_add, map_add, AddChar.map_add_eq_mul]
+    rw [mul_add, map_add (f := _), AddChar.map_add_eq_mul]
   · intro r hr u
     beta_reduce
     rw [phase_add, AddChar.map_add_eq_mul, AddChar.map_add_eq_mul, hχM r hr, hΦM r hr, mul_one,

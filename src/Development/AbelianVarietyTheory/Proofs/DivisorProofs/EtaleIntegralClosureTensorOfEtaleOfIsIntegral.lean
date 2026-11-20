@@ -26,7 +26,7 @@ theorem exists_one_tmul_eq_of_isIntegral_smooth_fractionField
     | add u v hu hv =>
       obtain ⟨a, ha⟩ := hu
       obtain ⟨b, hb⟩ := hv
-      exact ⟨a + b, by rw [map_add, Subalgebra.coe_add, ha, hb, TensorProduct.add_tmul]⟩
+      exact ⟨a + b, by rw [map_add (f := _), Subalgebra.coe_add, ha, hb, TensorProduct.add_tmul]⟩
   obtain ⟨b, hb⟩ := key y
   refine ⟨b, e.injective ?_⟩
   rw [← hy', hb]

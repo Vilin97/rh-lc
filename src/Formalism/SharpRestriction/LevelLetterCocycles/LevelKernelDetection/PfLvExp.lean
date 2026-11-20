@@ -85,7 +85,7 @@ theorem Pf_LvExp_ιV_inj (T : LocLat G Qp LL O) : Function.Injective (ιV PD (LL
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x b => simp [ιV]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hi : Function.Injective (PD.ι.toLinearMap.restrictScalars Qp) := PD.ι_inj
   intro a b hab
   rw [h, h] at hab
@@ -109,7 +109,7 @@ theorem Pf_LvExp_Φ_smul (s : ℕ) (D : Type) [AddCommGroup D] [Module LL D] (f 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul g d => simp [Pf_LvExp_Φ, TensorProduct.smul_tmul', TensorProduct.piScalarRightHom_tmul, mul_smul]
-  | add z z' hz hz' => rw [smul_add, map_add, map_add, Pi.add_apply, Pi.add_apply, hz, hz', smul_add]
+  | add z z' hz hz' => rw [smul_add, map_add (f := _), map_add (f := _), Pi.add_apply, Pi.add_apply, hz, hz', smul_add]
 
 theorem Pf_LvExp_coeff_expN (Lb : LevB W) (s : ℕ) (T : LocLat G Qp LL O) (c : ZMod n) (y : ↥(W.N T))
     (k : ℤ) : ((HahnModule.of (KsW W s)).symm (expN Lb s T c y)).coeff k = coefN Lb s T c y k :=

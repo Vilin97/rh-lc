@@ -18,7 +18,7 @@ theorem sgA_sgA (D : D7) (y : AE D) : sgA D (sgA D y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sgA, Formalism.UG.sigR, conj_conj]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem sum_eq_trace {R : Type} [CommRing R] (s : R →+* R) {a b : ℕ} (x y : Matrix (Fin a) (Fin b) R) :
     ∑ i, ∑ j, x i j * s (y i j) = Matrix.trace (x * (y.map s).transpose) := by
@@ -54,7 +54,7 @@ theorem GlobalTheory.FinWeil.gamA_alg : ∀ (D : D7), admG1 D → ∀ (cc : Idea
         simp only [ht, map_sum, map_mul, sgA_sgA]
       simp only [mul_comm]
     have h2 : t = inc D (1 / 2) * t + sgA D (inc D (1 / 2) * t) := by
-      rw [map_mul, sgA_inc, h1, ← add_mul, ← map_add, map_div₀, map_one, map_ofNat, add_halves, map_one, one_mul]
+      rw [map_mul, sgA_inc, h1, ← add_mul, ← map_add (f := _), map_div₀, map_one, map_ofNat, add_halves, map_one, one_mul]
     rw [h2]
     exact hsg _
   · unfold gamA
@@ -67,4 +67,4 @@ theorem GlobalTheory.FinWeil.gamA_alg : ∀ (D : D7), admG1 D → ∀ (cc : Idea
     simp only [Matrix.add_apply, add_mul, Finset.sum_add_distrib]
   · unfold gamA
     rw [← hadd]
-    simp only [Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]

@@ -173,7 +173,7 @@ theorem tensor_equiv {A A' B B' K : Type} [CommRing A] [CommRing A'] [CommRing B
       rw [RingHom.comp_apply]
       erw [tensorHom_tmul, tensorHom_tmul]
       simp
-    | add x y hx hy => simp only [RingHom.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [RingHom.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
   · refine RingHom.ext fun x => ?_
     induction x using TensorProduct.induction_on with
     | zero => simp
@@ -181,7 +181,7 @@ theorem tensor_equiv {A A' B B' K : Type} [CommRing A] [CommRing A'] [CommRing B
       rw [RingHom.comp_apply]
       erw [tensorHom_tmul, tensorHom_tmul]
       simp
-    | add x y hx hy => simp only [RingHom.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [RingHom.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
 
 theorem regular_transfer {T T' : Type} [CommRing T] [CommRing T'] (F : T ≃+* T')
     (hN : IsNoetherianRing T)

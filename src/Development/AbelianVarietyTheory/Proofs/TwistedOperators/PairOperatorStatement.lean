@@ -574,7 +574,7 @@ private theorem cntIp_add_right (φ φ₁ φ₂ : Form k n ℂ) (h : (Function.s
     cntIp φ (φ₁ + φ₂) = cntIp φ φ₁ + cntIp φ φ₂ := by
   rw [cntIp_eq_sum_of_support_subset _ _ h.toFinset (Or.inr (by simp)), cntIp_eq_sum_of_support_subset _ _ h.toFinset (Or.inr (by simp)),
     cntIp_eq_sum_of_support_subset _ _ h.toFinset (Or.inr (by simp)), ← Finset.sum_add_distrib]
-  exact Finset.sum_congr rfl fun P _ => by rw [Pi.add_apply, map_add, mul_add]
+  exact Finset.sum_congr rfl fun P _ => by rw [Pi.add_apply, map_add (f := _), mul_add]
 
 theorem isAdj_sum {ι : Type} (s : Finset ι) (a b : ι → ℂ) (A B : ι → Module.End ℂ (Form k n ℂ))
     (hab : ∀ i, (starRingEnd ℂ) (b i) = a i) (h : ∀ i, IsAdj (A i) (B i)) :

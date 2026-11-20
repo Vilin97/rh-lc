@@ -196,8 +196,8 @@ theorem res_algClosed [IsAlgClosed C] (hM : Maximal (fun M => Disc M π) M) :
     obtain ⟨a, rfl⟩ := map_surjective _ residue_surjective a
     obtain ⟨b, rfl⟩ := map_surjective _ residue_surjective b
     have h2 := norm_aeval_lt M (a * f + b * g - 1)
-      (by rw [Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, hf, hab]; simp) hα1
-    rw [map_sub, map_add, map_mul, map_mul, hα, mul_zero, zero_add, map_one] at h2
+      (by rw [Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, hf, hab]; simp) hα1
+    rw [map_sub, map_add (f := _), map_mul, map_mul, hα, mul_zero, zero_add, map_one] at h2
     have h3 : ‖aeval α b * aeval α g‖ = 1 := by
       have := IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm
         (x := aeval α b * aeval α g - 1) (y := 1) (by rw [norm_one]; exact h2.ne)

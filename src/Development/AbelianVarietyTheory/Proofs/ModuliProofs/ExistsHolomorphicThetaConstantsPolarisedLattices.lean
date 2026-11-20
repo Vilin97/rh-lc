@@ -23,7 +23,7 @@ theorem exists_holomorphic_thetaConstants_of_family : Out.Laws → Out.Laws2 →
   obtain ⟨hfree, hfin, -, halt⟩ :=
     unimodular_symplectic_coordinates_and_lattice_rank.2 La EF g (Q b₀) (Hm b₀) hp₀
   have hadd : ∀ x y, ac w (x + y) = ac w x + ac w y := fun x y => hp₀.1 (by
-    rw [map_add, ← hF₀, ← hF₀, ← hF₀, map_add, map_add])
+    rw [map_add (f := _), ← hF₀, ← hF₀, ← hF₀, map_add (f := _), map_add (f := _)])
   let W : La →ₗ[ℤ] La := (AddMonoidHom.mk' (ac w) hadd).toIntLinearMap
   have hW : ∀ x, W x = ac w x := fun _ => rfl
   have hW' : ∀ x, (LinearMap.id - W : La →ₗ[ℤ] La) x = ac w' x := fun x => by

@@ -46,7 +46,7 @@ theorem perVec_add (Wt : UnfAt U k x) (v w : Fin r → D.host.E) : perVec Wt (v 
   funext j
   simp only [perVec, Pi.add_apply]
   unfold perFr
-  split_ifs <;> simp [he, Matrix.mulVec_add, hermC, map_add, mul_add, Finset.sum_add_distrib]
+  split_ifs <;> simp [he, Matrix.mulVec_add, hermC, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem perVec_smul (Wt : UnfAt U k x) (q : ℚ) (v : Fin r → D.host.E) : perVec Wt (q • v) = q • perVec Wt v := by
   have he : ∀ τ : D.host.E →+* ℂ, Data.emb τ (q • v) = (q : ℂ) • Data.emb τ v := fun τ => by

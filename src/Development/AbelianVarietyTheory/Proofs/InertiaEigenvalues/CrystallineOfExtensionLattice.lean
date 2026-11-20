@@ -35,7 +35,7 @@ theorem isCrys_comp_extRep {l : ℕ} [Fact l.Prime] {LL : Type} [Field LL] [Alge
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVB, Pl.PD_actB, hρ']; rfl
-    | add u w hu hw => rw [map_add, map_add, hu, hw]
+    | add u w hu hw => rw [map_add (f := _), map_add (f := _), hu, hw]
   have h1 := (GlobalTheory.CrysExt.isCrystalline_iff_mem_H1f (Pl.PD K) (ρ := ρ') hT h0.1 ⟨_, hc⟩ h0.2).mpr
     ((GlobalTheory.IndefiniteRowSideFullHecke.CrystallineExtensions.mk_mem_H1fSub (Pl.PD K) ρ' ⟨_, hc⟩).mpr (by
       obtain ⟨-, x, hx⟩ := hz

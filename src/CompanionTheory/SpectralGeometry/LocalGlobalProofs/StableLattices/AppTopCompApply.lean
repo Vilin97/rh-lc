@@ -89,7 +89,7 @@ lemma exists_invariant [Module.Flat A B] (u w : B ⊗[A] B) (huw : u * w = 1)
   have hl : ∀ z : B ⊗[A] B, d.lTensor B z = pr e₁ e₂ z - pr e₂ e₃ u * pr e₁ e₃ z := by
     intro z
     induction z with
-    | add a b ha hb => simp only [map_add, ha, hb, mul_add]; ring
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, mul_add]; ring
     | tmul a b =>
       simp only [LinearMap.lTensor_tmul, hd, TensorProduct.tmul_sub, h23]
       congr 1

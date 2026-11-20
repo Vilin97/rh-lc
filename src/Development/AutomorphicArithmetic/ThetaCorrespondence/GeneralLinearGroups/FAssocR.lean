@@ -52,7 +52,7 @@ private theorem inj_dichotomy {G V W V₁ V₂ : Type} [Group G] [AddCommGroup V
     choose g hg using fun w => hex _ (h0 w)
     let L : W →ₗ[ℂ] V₁ :=
       { toFun := g
-        map_add' := fun a b => hι (by rw [map_add, hg, hg, hg, map_add])
+        map_add' := fun a b => hι (by rw [map_add (f := _), hg, hg, hg, map_add (f := _)])
         map_smul' := fun c a => hι (by rw [map_smul, hg, hg, map_smul]; rfl) }
     refine ⟨⟨L, fun x => LinearMap.ext fun w => hι ?_⟩, fun a b hab => hf ?_⟩
     · show ι (g (σ x w)) = ι (ρ₁ x (g w))

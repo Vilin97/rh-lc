@@ -36,7 +36,7 @@ theorem UpperTheory.cfc_apply_of_eigenvector :
     | star_id =>
       rw [star_trivial, cfcHom_id hA, hv]; rfl
     | add f g hf hg =>
-      rw [map_add, ContinuousLinearMap.add_apply, hf, hg]
+      rw [map_add (f := _), ContinuousLinearMap.add_apply, hf, hg]
       simp [add_smul]
     | mul f g hf hg =>
       rw [map_mul, ContinuousLinearMap.mul_apply, hg, map_smul, hf, smul_smul]

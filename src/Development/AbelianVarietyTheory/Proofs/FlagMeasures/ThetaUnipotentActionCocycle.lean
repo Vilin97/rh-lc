@@ -236,7 +236,7 @@ theorem simple_mul {n n' : GA D B} (hn : n ∈ d.N) (hn' : n' ∈ d.N) (i j : Fi
 theorem chr_mul {n n' : GA D B} (hn : n ∈ d.N) (hn' : n' ∈ d.N) (ψ : AddChar (AF D.host.F) ℂ) :
     d.chr ψ (n * n') = d.chr ψ n * d.chr ψ n' := by
   unfold FJDat.chr
-  rw [← AddChar.map_add_eq_mul, ← map_add, ← Finset.sum_add_distrib]
+  rw [← AddChar.map_add_eq_mul, ← map_add (f := _), ← Finset.sum_add_distrib]
   congr 2
   exact Finset.sum_congr rfl fun i _ => by rw [simple_mul d hn hn' _ _ rfl, mul_add]
 

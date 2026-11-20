@@ -30,7 +30,7 @@ theorem ext_tensor : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGr
   have hM : ∀ x, M (L x) = algebraMap R R' d • x := by
     intro x
     induction x with
-    | add x y hx hy => rw [map_add, map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, smul_add]
     | tmul r a =>
       have e : ∑ t, a.1 t • m t = d • a := by
         apply Subtype.ext

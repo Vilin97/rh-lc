@@ -2014,7 +2014,7 @@ theorem sc_star_prod {Y : ℂ} (hY : star Y = Y) (s : Finset ℕ) (g : ℕ → �
     star (∏ i ∈ s, (Y + (g i : ℂ))) = ∏ i ∈ s, (Y + (g i : ℂ)) := by
   rw [show star (∏ i ∈ s, (Y + (g i : ℂ))) = starRingEnd ℂ (∏ i ∈ s, (Y + (g i : ℂ))) from rfl, map_prod]
   refine Finset.prod_congr rfl fun i _ => ?_
-  rw [map_add, Complex.conj_ofReal]
+  rw [map_add (f := _), Complex.conj_ofReal]
   congr 1
 
 theorem sc_star_xA (h : SHyp P L0 QQ κ) {Y : ℂ} (hY : star Y = Y) : star (xA κ Y) = xA κ Y := by

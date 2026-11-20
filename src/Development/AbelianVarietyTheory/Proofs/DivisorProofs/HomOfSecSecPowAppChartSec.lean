@@ -165,7 +165,7 @@ theorem exists_iso_of_frames {F G : X.Modules} {κ : Type} {U : κ → X.Opens} 
     rwa [← IsFrame.equiv_resM, resM_resM, resM_resM] at this
   let θ : F ⟶ G := GlobalTheory.LB.homOfLinear (fun V =>
     { toFun := t V
-      map_add' := fun a b => ext fun k => by simp only [map_add, ht]
+      map_add' := fun a b => ext fun k => by simp only [map_add (f := _), ht]
       map_smul' := fun a b => ext fun k => by simp only [resM_smul, ht, map_smul, RingHom.id_apply] })
     fun {V W} hW s => ext fun k => by
       change resM G _ (t W (resM F hW s)) = resM G _ (resM G hW (t V s))

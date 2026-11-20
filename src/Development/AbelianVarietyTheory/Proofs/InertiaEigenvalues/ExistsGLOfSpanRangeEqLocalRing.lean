@@ -82,7 +82,7 @@ theorem exists_GL_of_span_range_eq : ∀ (O M : Type) [CommRing O] [IsLocalRing 
   have hdet : IsUnit H.det := by
     have hne : r H.det ≠ 0 := by
       rw [RingHom.map_det]
-      simp only [H, map_add, map_mul, map_sub, map_one, hT]
+      simp only [H, map_add (f := _), map_mul, map_sub, map_one, hT]
       exact hTb
     by_contra hnu
     exact hne ((IsLocalRing.residue_eq_zero_iff _).mpr ((IsLocalRing.mem_maximalIdeal _).mpr hnu))

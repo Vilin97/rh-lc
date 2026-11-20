@@ -49,7 +49,7 @@ theorem exists_strictHenselian_absolutely_closed_local_ring (ρ : G → H →L[�
   let L : H →ₗ[ℂ] H :=
     { toFun := fun u => ∫ x, w x • ρ x u ∂μ
       map_add' := fun u v => by
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
         exact integral_add (integrable_w μ ρ hρ hw hc u) (integrable_w μ ρ hρ hw hc v)
       map_smul' := fun c u => by
         simp only [map_smul, RingHom.id_apply]

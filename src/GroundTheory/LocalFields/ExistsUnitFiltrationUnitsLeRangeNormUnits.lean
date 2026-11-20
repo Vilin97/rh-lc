@@ -265,7 +265,7 @@ theorem exists_norm_one_add_smul_eq (z : 𝒪[L]) {ϖ : 𝒪[K]} (hϖ : Irreduci
   let f : 𝒪[K][X] := C (1 - a) + C M.trace * X + Q * X ^ 2
   have hnorm : ∀ r : 𝒪[K], Algebra.norm 𝒪[K] (1 + r • z) = 1 + M.trace * r + Q.eval r * r ^ 2 := by
     intro r
-    rw [Algebra.norm_eq_matrix_det b, map_add, map_one, map_smul, Matrix.det_one_add_smul]
+    rw [Algebra.norm_eq_matrix_det b, map_add (f := _), map_one, map_smul, Matrix.det_one_add_smul]
   have htr : M.trace = ϖ ^ k * ε := by
     rw [← hz, Algebra.trace_eq_matrix_trace b]
   have hd : f.derivative.eval 0 = ϖ ^ k * ε := by

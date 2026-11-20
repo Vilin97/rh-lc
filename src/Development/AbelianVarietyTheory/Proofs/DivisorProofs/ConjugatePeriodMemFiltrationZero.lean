@@ -45,7 +45,7 @@ theorem conj_mem_Fil_zero : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : 
       · rw [← inK_oK]
         simpa only [f, RingHom.comp_apply, RingEquiv.toRingHom_eq_coe, RingHom.coe_coe, conj_inK] using
           eD_om_mem T (s (oK K c))
-    | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
   obtain ⟨D, z, hD⟩ := exists_pow_mul b
   obtain ⟨u, hu, hlu⟩ := l_inv_mem l
   have e : f b = u ^ D * f (toB K z) := by

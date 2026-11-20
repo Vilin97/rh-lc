@@ -33,7 +33,7 @@ theorem CoefHom.mul {G G' : MvPolynomial (Fin N × Fin N) (MvPolynomial (Fin N �
   rw [coeff_mul]
   refine IsWeightedHomogeneous.sum _ _ _ fun p hp => ?_
   have hp' : p.1 + p.2 = m := by simpa using hp
-  rw [← hp', map_add, add_add_add_comm]
+  rw [← hp', map_add (f := _), add_add_add_comm]
   exact (h p.1).mul (h' p.2)
 
 theorem coefHom_monomial (d : Fin N × Fin N →₀ ℕ) (g : MvPolynomial (Fin N × Fin N) O) (e : M)
@@ -61,7 +61,7 @@ theorem coefHom_genHom_monomial (wf : Fin N × Fin N → M) (h : ∀ a b s, wx (
     rw [map_zero, add_zero]
     exact isWeightedHomogeneous_C _ _
   | add f g hf hg =>
-    rw [← mul_one c, ← monomial_mul, map_mul, map_add]
+    rw [← mul_one c, ← monomial_mul, map_mul, map_add (f := _)]
     exact (hf c).mul wx u (hg 1)
   | single v n =>
     induction n generalizing c with
@@ -71,7 +71,7 @@ theorem coefHom_genHom_monomial (wf : Fin N × Fin N → M) (h : ∀ a b s, wx (
       rw [map_zero, add_zero]
       exact isWeightedHomogeneous_C _ _
     | succ n ih =>
-      rw [Finsupp.single_add, ← mul_one c, ← monomial_mul, map_mul, map_add]
+      rw [Finsupp.single_add, ← mul_one c, ← monomial_mul, map_mul, map_add (f := _)]
       refine (ih c).mul wx u ?_
       rw [Finsupp.weight_single, one_smul]
       exact hX v

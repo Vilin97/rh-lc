@@ -82,7 +82,7 @@ theorem ringHom_ext_zO {R : Type*} [CommRing R] (f g : 𝓞 (Cond.Cyc N) →+* R
   · rw [Set.mem_singleton_iff.1 hy]
     exact h
   · simp only [algebraMap_int_eq, eq_intCast, map_intCast]
-  · rw [map_add, map_add, h1, h2]
+  · rw [map_add (f := _), map_add (f := _), h1, h2]
   · rw [map_mul, map_mul, h1, h2]
 
 variable (l : ℕ) [Fact l.Prime] (Q : Ideal (𝓞 (Cond.Cyc N))) [Q.IsPrime] [Q.LiesOver (span {(l : ℤ)})]

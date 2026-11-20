@@ -77,7 +77,7 @@ private theorem stepF_of (hGen : GenEx) (hComp : QComp) (hIso : QIso) (hCls : Cl
     have e1 : (algebraMap (𝓞 D.F) D.O) (a₁ * ε) • y = (algebraMap (𝓞 D.F) D.O) ((t : 𝓞 D.F) * a₂) • y +
         (M₁ : ℕ) • ((algebraMap (𝓞 D.F) D.O) z • y) := by
       have h' : a₁ * ε = (t : 𝓞 D.F) * a₂ + ((M₁ : ℕ) : 𝓞 D.F) * z := by linear_combination hz
-      rw [h', map_add, add_smul, map_mul (algebraMap (𝓞 D.F) D.O) ((M₁ : ℕ) : 𝓞 D.F) z, mul_smul,
+      rw [h', map_add (f := _), add_smul, map_mul (algebraMap (𝓞 D.F) D.O) ((M₁ : ℕ) : 𝓞 D.F) z, mul_smul,
         map_natCast, Nat.cast_smul_eq_nsmul]
     have h1 := (T.M M₁).univ.eta_add ((algebraMap (𝓞 D.F) D.O) ((t : 𝓞 D.F) * a₂) • y)
       ((M₁ : ℕ) • ((algebraMap (𝓞 D.F) D.O) z • y))

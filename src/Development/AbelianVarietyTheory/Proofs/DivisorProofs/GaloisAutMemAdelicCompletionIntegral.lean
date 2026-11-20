@@ -27,7 +27,7 @@ theorem exists_sub_notMem {A B : Type} [CommRing A] [CommRing B] [IsDomain B] [A
     | add x y hx hy =>
       have := P.add_mem hx hy
       convert this using 1
-      simp only [map_add]; ring
+      simp only [map_add (f := _)]; ring
   have h2 : φ (Algebra.FormallyUnramified.elem A B) = 0 := by
     have h := congrArg φ (Algebra.FormallyUnramified.one_tmul_mul_elem (R := A) s)
     simp only [map_mul, φ, Algebra.TensorProduct.productMap_apply_tmul, AlgHom.id_apply, map_one,
@@ -48,7 +48,7 @@ theorem herm_add_left (G : Matrix (Fin r) (Fin r) E) (x x' y : Fin r → E) :
 
 theorem herm_add_right (G : Matrix (Fin r) (Fin r) E) (x y y' : Fin r → E) :
     herm G x (y + y') = herm G x y + herm G x y' := by
-  simp only [herm, cc, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [herm, cc, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem herm_smul_left (G : Matrix (Fin r) (Fin r) E) (t : E) (x y : Fin r → E) :
     herm G (t • x) y = t * herm G x y := by
@@ -168,7 +168,7 @@ theorem hermA_add_left (c : E ≃ₐ[F] E) (G : Matrix (Fin n) (Fin n) E) (x x' 
 
 theorem hermA_add_right (c : E ≃ₐ[F] E) (G : Matrix (Fin n) (Fin n) E) (x y y' : Fin n → RA F E) :
     hermA c G x (y + y') = hermA c G x y + hermA c G x y' := by
-  simp only [hermA, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hermA, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hermA_tmul (c : E ≃ₐ[F] E) (G : Matrix (Fin n) (Fin n) E) (s t : FiniteAdeleRing (𝓞 F) F)
     (x y : Fin n → E) : hermA c G (fun i => s ⊗ₜ x i) (fun i => t ⊗ₜ y i)
@@ -198,7 +198,7 @@ theorem galoisAut_mem_adelicCompletionIntegral (c : E ≃ₐ[F] E) {a : RA F E} 
     rw [Model.sg_tmul]
     exact AddSubgroup.subset_closure ⟨a, ha, c s, IsIntegral.map (c : E →+* E).toIntAlgHom hs, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem smul_mem_hat (Λ : Submodule (𝓞 E) (Fin n → E)) {a : RA F E} {z : Fin n → RA F E}

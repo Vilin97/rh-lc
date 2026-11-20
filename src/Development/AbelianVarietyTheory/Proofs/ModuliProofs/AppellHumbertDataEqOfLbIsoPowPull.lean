@@ -97,7 +97,7 @@ theorem semicharacter_pull_eq_of_lbIso_pow :
   have hexl : ∀ (l : u.Λ) z, u.ex (z + l) = u.ex z := fun l z => by
     rw [u.ex_add, (u.ker _).2 l.2, _root_.mul_one]
   have hexl' : ∀ (l : u.Λ) z, u'.ex (F (z + l)) = u'.ex (F z) := fun l z => by
-    rw [map_add, u'.ex_add, (u'.ker _).2 (hΛ₀ _ l.2), _root_.mul_one]
+    rw [map_add (f := _), u'.ex_add, (u'.ker _).2 (hΛ₀ _ l.2), _root_.mul_one]
   have hχne : ∀ l, χ l ≠ 0 := fun l h0 => by simpa [h0] using hu.2.2.1 l
   have hχne' : ∀ l, χ' l ≠ 0 := fun l h0 => by simpa [h0] using hu'.2.2.1 l
   let c : u.Λ → ℂ := fun l => χ l ^ n * (χ' ⟨F l, hΛ₀ l l.2⟩ ^ m)⁻¹
@@ -115,9 +115,9 @@ theorem semicharacter_pull_eq_of_lbIso_pow :
     have ha' := hu'.2.2.2 ⟨F l, hΛ₀ l l.2⟩ j (F z) hp.2
     dsimp only at ha'
     have hb : u.fr i (z + l) ≠ 0 := u.fr_ne i _ hzl.1
-    have hb' : u'.fr j (F z + F l) ≠ 0 := u'.fr_ne j _ (by rw [← map_add]; exact hzl.2)
+    have hb' : u'.fr j (F z + F l) ≠ 0 := u'.fr_ne j _ (by rw [← map_add (f := _)]; exact hzl.2)
     simp only [φ, c]
-    rw [hexl l z, map_add]
+    rw [hexl l z, map_add (f := _)]
     refine mul_pow_mul_inv_pow_eq_of_factor m n ha ha' ?_ (hχne l) (hχne' _) (Complex.exp_ne_zero _) hb hb'
     rw [← Complex.exp_nat_mul, ← Complex.exp_nat_mul]
     congr 1

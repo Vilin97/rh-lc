@@ -208,7 +208,7 @@ theorem quad_fock : (∀ (l κ : Type) [Fintype l] [DecidableEq l] [Fintype κ] 
     dsimp only
     rw [H2 P Q R S (Y w) (hY w)]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [← atPlLin_apply, map_smul, map_sum, map_sub, map_add, atPlLin_mul]
+      simp only [← atPlLin_apply, map_smul, map_sum, map_sub, map_add (f := _), atPlLin_mul]
     congr 1
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [lineSign_eq_sgn]

@@ -45,7 +45,7 @@ private theorem rel_core {p : ℕ} [Fact p.Prime] {D : Datum p} (F : D.La →+ A
       _root_.mul_one, hpowI (n * k) hNpos]
   obtain ⟨v0, hv0, hv0eq⟩ : ∃ v0 ∈ LaHat D, F x = inAf D y' + n • v0 := by
     obtain ⟨w, hw, hFw⟩ := hrel (n * k) hNpos hNp y'
-    rw [hy', map_add, map_nsmul, map_nsmul] at hFw
+    rw [hy', map_add (f := _), map_nsmul, map_nsmul] at hFw
     refine ⟨w - F z, (LaHat D).sub_mem hw (hFmem z), ?_⟩
     apply nsmul_cancel' (c := k) (Nat.pos_iff_ne_zero.mp hk0)
     have e : k • F x = k • inAf D y' + (n * k) • w - (n * k) • F z := by

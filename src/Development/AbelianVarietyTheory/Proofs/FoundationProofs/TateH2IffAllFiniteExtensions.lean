@@ -226,7 +226,7 @@ theorem nonempty_iff_of_ringEquiv (hinj : Function.Injective (algebraMap O LL))
   haveI := RingHomInvPair.of_ringEquiv_symm σ
   let f : LL →ₛₗ[(σ : O →+* O')] M' :=
     { toFun := fun x => m (φ x)
-      map_add' := fun a b => by rw [map_add, map_add]
+      map_add' := fun a b => by rw [map_add (f := _), map_add (f := _)]
       map_smul' := fun a x => by
         rw [Algebra.smul_def, map_mul, ← hσ, hsmul]
         rfl }

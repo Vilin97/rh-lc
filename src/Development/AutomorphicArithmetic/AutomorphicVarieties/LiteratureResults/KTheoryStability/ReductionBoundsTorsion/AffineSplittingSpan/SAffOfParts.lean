@@ -75,7 +75,7 @@ private theorem aeval_mapOp_dc_comm {A : Type} (φ : A → A) (k : ℕ) (f : Pol
       have : mapOp φ (k + 2) (dc a) = dc (mapOp φ (k + 1) a) := rfl
       rw [this, ih]
   induction f using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq, hadd]
+  | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq, hadd]
   | monomial N a =>
     simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply, hpow, hsmul]
 
@@ -98,7 +98,7 @@ private theorem invS_aeval_mapOp_of_invS_of_mul_hom {A : Type} [Group A] (φ : A
   induction f using Polynomial.induction_on' with
   | add p q hp hq =>
     intro g hg y
-    simp only [map_add, LinearMap.add_apply, Pi.add_apply, hp g hg y, hq g hg y]
+    simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply, hp g hg y, hq g hg y]
   | monomial N a =>
     intro g hg y
     simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply,
@@ -125,7 +125,7 @@ private theorem aPoly_mulV_of_unit_place_monomials_ne_one (hSpan : Span) (hEig :
     unfold mulV
     simp [smul_add]
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_add, map_sum]
+    · rw [map_add (f := _), map_sum]
     simp only [map_smul, hf, smul_zero, Finset.sum_const_zero, zero_add]
     exact aeval_mapOp_dc_comm _ q f e
 

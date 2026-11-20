@@ -254,7 +254,7 @@ theorem mem_range_PhiU (p : M.Cok Y × E) :
     obtain ⟨c, x⟩ := p
     obtain ⟨u, rfl⟩ := Submodule.Quotient.mk_surjective _ c
     dsimp only at h
-    rw [linQ_mk, ← map_add, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at h
+    rw [linQ_mk, ← map_add (f := _), Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at h
     simp only [Model.Rsub, LinearMap.mem_range] at h
     obtain ⟨s, hs⟩ := h
     have hs' : (s : E) = x + lamE Y al u := hs
@@ -366,7 +366,7 @@ theorem indU_piU (g : MbMod Z₁.Z →ₗ[M.R] MbMod Z₂.Z) (he : g (eCl Z₁.Z
   obtain ⟨v, rfl⟩ := Submodule.Quotient.mk_surjective _ m
   rw [piU_mk]
   show piU hY₂ (g (Submodule.Quotient.mk (extL r fun i => v i.castSucc))) = _
-  rw [mk_eq_mk_extL_add_last_smul_eCl Z₁ v, map_add, map_smul, he, map_add, map_smul, piU_e, smul_zero, add_zero]
+  rw [mk_eq_mk_extL_add_last_smul_eCl Z₁ v, map_add (f := _), map_smul, he, map_add (f := _), map_smul, piU_e, smul_zero, add_zero]
 
 theorem symm_e (γ : MbMod Z₁.Z ≃ₗ[M.R] MbMod Z₂.Z) (he : γ (eCl Z₁.Z) = eCl Z₂.Z) :
     γ.symm.toLinearMap (eCl Z₂.Z) = eCl Z₁.Z := by

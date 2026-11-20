@@ -127,7 +127,7 @@ theorem diagonal_image_block_free : HypFree := by
     rw [MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq]
     exact hC a
   next p q hp hq =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hadd _ _ hp hq
   next p w hp =>
     rw [map_mul, MvPolynomial.aeval_X]

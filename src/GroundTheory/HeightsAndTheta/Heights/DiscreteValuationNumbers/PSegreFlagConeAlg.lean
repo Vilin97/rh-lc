@@ -192,7 +192,7 @@ theorem SegreFlagConeAlg.proof : SegreFlagConeAlg.Statement := by
           exact AC.mul_mem ha hb
         add_mem' := fun {a b} ha hb => by
           show ψ (a + b) ∈ AC
-          rw [map_add]
+          rw [map_add (f := _)]
           exact AC.add_mem ha hb
         algebraMap_mem' := fun r => by
           show ψ (algebraMap O Ω r) ∈ AC

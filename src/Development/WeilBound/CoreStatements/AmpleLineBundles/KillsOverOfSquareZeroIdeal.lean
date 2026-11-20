@@ -190,7 +190,7 @@ theorem prim_eq {B M : Type} [CommRing B] [AddCommGroup M] (d : AddMonoidAlgebra
     rw [Bialgebra.comulAlgHom_apply]
     induction x using AddMonoidAlgebra.induction_linear with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, hx, hy, AddMonoidAlgebra.coeff_add, Finsupp.add_apply]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, AddMonoidAlgebra.coeff_add, Finsupp.add_apply]
     | single a r =>
       rw [AddMonoidAlgebra.comul_single]
       simp only [CommSemiring.comul_apply, TensorProduct.map_tmul, AddMonoidAlgebra.lsingle_apply, hψ,
@@ -208,7 +208,7 @@ theorem prim_eq {B M : Type} [CommRing B] [AddCommGroup M] (d : AddMonoidAlgebra
       d.coeff m * (1 : AddMonoidAlgebra B M).coeff m + (1 : AddMonoidAlgebra B M).coeff m * d.coeff m := by
     intro m
     have := congrArg (ψ m) h
-    rw [map_add, map_add, hΔ, Algebra.TensorProduct.includeLeft_apply,
+    rw [map_add (f := _), map_add (f := _), hΔ, Algebra.TensorProduct.includeLeft_apply,
       Algebra.TensorProduct.includeRight_apply, hψ, hψ, Algebra.algebraMap_eq_smul_one, map_smul,
       Algebra.TensorProduct.one_def, hψ, smul_eq_mul] at this
     exact this
@@ -282,7 +282,7 @@ theorem kills_over_of_square_zero_ideal : ∀ (S : Scheme.{0}) (G : Over S) [Grp
         rw [toAdd_one, map_zero]
         rfl
       map_mul' := fun x y => by
-        rw [toAdd_mul, map_add]
+        rw [toAdd_mul, map_add (f := _)]
         rfl }
   let φ : R →+* A := AddMonoidAlgebra.liftNCRingHom g F (fun _ _ => Commute.all _ _)
   have he : φ.comp (algebraMap B R) = g := by

@@ -194,7 +194,7 @@ theorem GlobalTheory.LatVacSign.heisO_finRat_sign : ∀ {D : D7} (ψ : AddChar (
   have h1 := heisO_smul_fix hψ hS hT W nW hv f hf
   have h2 := heisO_smul_fix hψ hS hT W' nW' hv f hf
   have hsum : incA D (W : D.host.E) • u + incA D (W' : D.host.E) • u = u := by
-    rw [← add_smul, ← map_add, hW, hW', add_sub_cancel, map_one, one_smul]
+    rw [← add_smul, ← map_add (f := _), hW, hW', add_sub_cancel, map_one, one_smul]
   have key := GlobalTheory.LatVac.heisO_heisO ψ (incA D (W : D.host.E) • u) (incA D (W' : D.host.E) • u) f
   rw [h2, h1, hsum] at key
 

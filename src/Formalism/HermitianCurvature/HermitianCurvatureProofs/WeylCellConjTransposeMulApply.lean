@@ -480,7 +480,7 @@ theorem opL_equiv (a : Fin r) (j : Fin 6) {f f' : (Fin r → ℂ) → E} (L : E 
   · show pbOp a f' c = L (pbOp a f c)
     unfold pbOp wirtBar
     split_ifs
-    · simp only [hfd, map_smul, map_add]
+    · simp only [hfd, map_smul, map_add (f := _)]
     · simp
   · show star (c a) • f' c = L (star (c a) • f c)
     rw [h0, map_smul]

@@ -169,7 +169,7 @@ theorem perp_lattice (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h.
     obtain ⟨l, hl, h1⟩ := exists_rep h hs hn hL hU (LinearMap.range ι ⊔ X) (h (ι w)) (by
       intro y hy hy'
       obtain ⟨_, ⟨a, rfl⟩, x, hx, rfl⟩ := Submodule.mem_sup.1 hy'
-      rw [map_add, sw (hXW x hx w), add_zero, hι, ← hsW.eq]
+      rw [map_add (f := _), sw (hXW x hx w), add_zero, hι, ← hsW.eq]
       exact GlobalTheory.UnimodQuot.star_mem_one ((dualBasic_mem_dual _ _ _).1 hw a ((hmem a).2 ⟨x, hx, hy⟩)))
     obtain ⟨w', x, hx, e⟩ := dec l fun x hx => sw (by
       rw [h1 x (Submodule.mem_sup_right hx), sw (hXW x hx w)])
@@ -253,7 +253,7 @@ theorem main : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D),
     · rintro ⟨x, hx, h1⟩
       refine ⟨Submodule.mem_sup.2 ⟨v + x, ⟨h1, (Formalism.MainNotions.mem_orth_iff _ _).2 fun y hy => ?_⟩, -x, F0.X.neg_mem hx,
         by abel⟩, (Formalism.MainNotions.mem_orth_iff _ _).2 hv⟩
-      rw [map_add, hv y hy, hXX y hy x hx, add_zero]
+      rw [map_add (f := _), hv y hy, hXX y hy x hx, add_zero]
   obtain ⟨a1, a2, a3⟩ := perp_lattice (hS D).hT (hS D).herm (hS D).nondeg hL hU (D.sp.X 0).hT (D.sp.X 0).herm
     (D.sp.X 0).nondeg (D.sp.iXY 0) hiso F0.X F0.z (Tu D u) hT hXX hXz hXW hzW F0.z_norm hlift.1 hdec
     (fun c x hx h => hconv.2 c ((hsub _ fun y hy => by simp [hXz y hy]).2 ⟨x, hx, h⟩))

@@ -105,7 +105,7 @@ theorem delAt_add {v : V n} {F G : V n → Alt n} (hF : ∀ S, DifferentiableAt 
   rw [← mul_add]
   congr 1
   refine (bas n).ext_elem fun S => ?_
-  simp only [map_add, Finsupp.add_apply, FormMul.repr_coefwise]
+  simp only [map_add (f := _), Finsupp.add_apply, FormMul.repr_coefwise]
   rw [del_add (hF S) (hG S), ContinuousLinearMap.add_apply]
 
 theorem delAt_const (α : Alt n) (v : V n) : delAt (fun _ => α) v = 0 := by
@@ -125,7 +125,7 @@ def closedAt (v : V n) : Subalgebra ℂ (V n → Ev n) where
   add_mem' := by
     rintro F G ⟨hF, hF0⟩ ⟨hG, hG0⟩
     refine ⟨fun S => ?_, ?_⟩
-    · simp only [Pi.add_apply, Subalgebra.coe_add, map_add, Finsupp.add_apply]
+    · simp only [Pi.add_apply, Subalgebra.coe_add, map_add (f := _), Finsupp.add_apply]
       exact (hF S).add (hG S)
     · simp only [Pi.add_apply, Subalgebra.coe_add]
       rw [delAt_add hF hG, hF0, hG0, add_zero]

@@ -159,14 +159,14 @@ theorem oActSelf_holds : OActSelfSt := by
     · rw [hlam'def]
       simp only
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, map_add, PowerSeries.coeff_smul,
+        rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, map_add (f := _), PowerSeries.coeff_smul,
         PowerSeries.coeff_zero_eq_constantCoeff_apply, (hlam q).1, map_sum]
       simp only [PowerSeries.coeff_zero_eq_constantCoeff_apply, hΔ0, Finset.sum_const_zero, smul_eq_mul, mul_zero,
         add_zero]
     · rw [hlam'def]
       simp only
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, PowerSeries.coeff_smul, smul_eq_mul, map_sum]
+        rw [map_add (f := _), PowerSeries.coeff_smul, smul_eq_mul, map_sum]
       exact ((p.em_int _ α).mul_int ((hlam q).2 n)).add (VF.Ge.sum fun col _ => hΔi q col n)
   refine ⟨γ', lam', hγ'cv, hlam'cv, fun z => ?_, fun q => ?_⟩
   ·

@@ -328,7 +328,7 @@ theorem FGAbove.exists_ringHom (h : R₀.FG) {S : Type} [CommRing S] (φ : ∀ R
     rfl
   · obtain ⟨T, hx, hy⟩ := two x y
     show φ _ _ = φ _ _ + φ _ _
-    rw [key T x hx, key T y hy, key T _ (add_mem hx hy), ← map_add]
+    rw [key T x hx, key T y hy, key T _ (add_mem hx hy), ← map_add (f := _)]
     rfl
 
 theorem spMap_comp_ring {A A' A'' : Type} [CommRing A] [CommRing A'] [CommRing A''] (f : A →+* A')

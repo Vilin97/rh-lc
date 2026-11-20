@@ -214,7 +214,7 @@ private lemma span_range_inf_ker_eq_span_range_castSucc {R : Type} [CommRing R] 
     obtain ⟨c, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun R).1 hx
     have hk' : f (∑ i, c i • v i) = 0 := hk
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [Fin.sum_univ_castSucc, map_add, map_sum] at hk'
+      rw [Fin.sum_univ_castSucc, map_add (f := _), map_sum] at hk'
     simp only [LinearMap.map_smul_of_tower, h0, h1, smul_zero, Finset.sum_const_zero,
       zero_add] at hk'
     have hc : c (Fin.last r) = 0 := by
@@ -374,7 +374,7 @@ private lemma log_relIndex_map_lemma_4 (h : _root_.ReciprocityTheory.GeometryOfN
           | zero => simp
           | add a b _ _ ha hb =>
             convert add_mem ha hb using 1
-            rw [map_add, add_smul]
+            rw [map_add (f := _), add_smul]
             abel
           | smul c a _ ha =>
             convert Submodule.smul_mem _ c ha using 1

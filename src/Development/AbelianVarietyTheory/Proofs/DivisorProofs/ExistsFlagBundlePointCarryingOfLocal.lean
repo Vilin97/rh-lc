@@ -29,7 +29,7 @@ private theorem exists_pow_smul_mem_of_mem_span_away' {R : Type} [CommRing R] (r
       funext t
       have e₁t := congrFun e₁ t
       have e₂t := congrFun e₂ t
-      simp only [Pi.smul_apply, smul_eq_mul, Pi.add_apply, map_add, map_mul, map_pow] at e₁t e₂t ⊢
+      simp only [Pi.smul_apply, smul_eq_mul, Pi.add_apply, map_add (f := _), map_mul, map_pow] at e₁t e₂t ⊢
       rw [← e₁t, ← e₂t]
       ring
     | smul a y _ h =>

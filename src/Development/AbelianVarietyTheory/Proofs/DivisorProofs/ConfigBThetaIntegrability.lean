@@ -62,24 +62,24 @@ theorem isFrobInf_sub_smul : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] 
     obtain ⟨g', hg', e'⟩ := onto (φ (R.p f))
     have hgs : g + c • g' ∈ G₁.M.Pol B.ψ B.emb := Submodule.add_mem _ hg (Submodule.smul_mem _ c hg')
     have he2 : φ' (R.p f) = R₁.p (g + c • g') := by
-      rw [map_add, map_smul, e', ← he]; simp
+      rw [map_add (f := _), map_smul, e', ← he]; simp
     have h1 := hφ'.lie γ hγ γ₁ hγ₁ t ht f hf f₁ hf₁ (g + c • g') hgs (D (g + c • g'))
       ((hDi _ hgs _).2 rfl) he2 c₀ hd
     have h2 := hφ.lie γ hγ γ₁ hγ₁ t ht f hf f₁ hf₁ g' hg' (D g') ((hDi _ hg' _).2 rfl) e'.symm c₀ hd
     have h3 : g₁ = D g := (hDi g hg g₁).1 hg₁
-    simp only [LinearMap.sub_apply, LinearMap.smul_apply, h1, h2, h3, map_add, map_smul]
+    simp only [LinearMap.sub_apply, LinearMap.smul_apply, h1, h2, h3, map_add (f := _), map_smul]
     module
   · intro k hk t k₁ ht hk₁ f hf f₁ hf₁ g hg g₁ hg₁ he
     obtain ⟨D, hDm, hDi⟩ := act.2.2.2 k₁ hk₁
     obtain ⟨g', hg', e'⟩ := onto (φ (R.p f))
     have hgs : g + c • g' ∈ G₁.M.Pol B.ψ B.emb := Submodule.add_mem _ hg (Submodule.smul_mem _ c hg')
     have he2 : φ' (R.p f) = R₁.p (g + c • g') := by
-      rw [map_add, map_smul, e', ← he]; simp
+      rw [map_add (f := _), map_smul, e', ← he]; simp
     have h1 := hφ'.cpt k hk t k₁ ht hk₁ f hf f₁ hf₁ (g + c • g') hgs (D (g + c • g'))
       ((hDi _ hgs _).2 rfl) he2
     have h2 := hφ.cpt k hk t k₁ ht hk₁ f hf f₁ hf₁ g' hg' (D g') ((hDi _ hg' _).2 rfl) e'.symm
     have h3 : g₁ = D g := (hDi g hg g₁).1 hg₁
-    simp only [LinearMap.sub_apply, LinearMap.smul_apply, h1, h2, h3, map_add, map_smul]
+    simp only [LinearMap.sub_apply, LinearMap.smul_apply, h1, h2, h3, map_add (f := _), map_smul]
     module
 
 end GlobalTheory.FrobInfLin

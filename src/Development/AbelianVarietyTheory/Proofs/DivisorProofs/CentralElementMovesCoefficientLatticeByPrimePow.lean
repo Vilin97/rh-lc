@@ -52,7 +52,7 @@ theorem centLat : CentLat := by
   obtain ⟨β, Λ, hβ⟩ := GlobalTheory.AdIsomObj.frames_exist D (Vc D i) 1
   have ha : ∀ PP : Pl D.host.E, (N : 𝓞 D.host.E) ∉ PP.asIdeal →
       GlobalTheory.StdFrames.cpt PP (toEAf D (e + cA D e)) = 0 := fun PP hPP => by
-    rw [RingHom.map_add, RingHom.map_add, (cpt_sum he PP).2 fun h => hPP (hQ PP h), zero_add, GlobalTheory.StdFrames.toEAf_cA]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _), (cpt_sum he PP).2 fun h => hPP (hQ PP h), zero_add, GlobalTheory.StdFrames.toEAf_cA]
     exact GlobalTheory.StdFrames.cpt_sg_eq_zero ((cpt_sum he _).2 fun h => hPP ((GlobalTheory.StdFrames.natCast_mem_cP PP N).1 (hQ _ h)))
   obtain ⟨m₁, h₁⟩ := inCoefLat_pow' R i hβ hsupp ha
   obtain ⟨m₂, h₂⟩ := inCoefLat_pow' R i hβ (GlobalTheory.SplitLinear.suppAt_inv hsupp) ha

@@ -47,7 +47,7 @@ theorem exists_lift {O : Type} [CommRing O] (N : NumD O) (b : N.A) : ∃ γ : N.
     (LinearMap.range_eq_top.2 fun x => ⟨Additive.ofMul ⟨x, 1⟩, rfl⟩)
   have h : ∀ χ, (s χ).toMul.x = χ := fun χ => LinearMap.congr_fun hs χ
   refine ⟨⟨b, fun χ => (s χ).toMul.u, fun χ χ' => ?_⟩, rfl⟩
-  rw [map_add]
+  rw [map_add (f := _)]
   change (s χ).toMul.u * (s χ').toMul.u / N.θ (N.c (s χ).toMul.x) (N.c (s χ').toMul.x) b * _ = _
   rw [h, h, div_mul_cancel]
 

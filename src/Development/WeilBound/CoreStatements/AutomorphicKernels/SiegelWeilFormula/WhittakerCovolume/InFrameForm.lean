@@ -77,7 +77,7 @@ theorem sigR_eq_cA (z : AE F E) : Formalism.MainNotions.GlobalTheoryTheory.Genus
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, cA, Algebra.TensorProduct.map_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem inFrame_form (d : SD σ) (y : d.G) : ∃ C' : Matrix (Fin d.n) (Fin d.n) (AE F E),
     (∃ ε : ℤˣ, C' = ((ε : ℤ) : AE F E) • 1) ∧

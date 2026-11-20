@@ -326,7 +326,7 @@ theorem map_span (LL : ChainLetters N) (s : Set (Tx r LL)) (G : MvPolynomial (Fi
     obtain ⟨y, hy, rfl⟩ := hx
     exact Submodule.subset_span ⟨y, hy, (psiR_map LL y).symm⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hx

@@ -65,7 +65,7 @@ theorem latLoc_span (B : NLocBase D M) (j : ℕ) (w : D.what₂.places.Pl) :
     induction hx using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul c y _ hy => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
   let b := Module.Free.chooseBasis D.what₂.LL (D.what₂.MtL (D.what₂.muTw w) j)
   rw [eq_top_iff, ← (B.iV_basis j w b).2, Submodule.span_le]
@@ -96,7 +96,7 @@ theorem proj_facts {K V : Type} [Field K] [AddCommGroup V] [Module K V] {P Q : S
     (t : Module.End K V) (hP : ∀ x ∈ P, t x = x) (hQ : ∀ x ∈ Q, t x = 0) (y : V) : t y ∈ P ∧ y - t y ∈ Q := by
   have hy : y ∈ P ⊔ Q := hc.sup_eq_top ▸ Submodule.mem_top
   obtain ⟨p, hp, q, hq, rfl⟩ := Submodule.mem_sup.1 hy
-  rw [map_add, hP p hp, hQ q hq, add_zero, add_sub_cancel_left]
+  rw [map_add (f := _), hP p hp, hQ q hq, add_zero, add_sub_cancel_left]
   exact ⟨hp, hq⟩
 
 theorem part_le_off {O K V : Type} [CommRing O] [Field K] [Algebra O K] [AddCommGroup V] [Module K V]
@@ -135,7 +135,7 @@ theorem main : ∀ (D : D7) (M : MtFam D) (T : NormalizedLocalCompatibility D M)
     obtain ⟨hxP, hxL⟩ := Submodule.mem_inf.1 hx
     obtain ⟨l, hlL, q, hq, rfl⟩ := Submodule.mem_sup.1 hxL
     have e : tp I (l + q) = l + q := hpart I _ hxP
-    rw [map_add, hoff I q hq, add_zero] at e
+    rw [map_add (f := _), hoff I q hq, add_zero] at e
     rw [← e]
     exact alg_stable T.B hl _ (htp I) l hlL
   constructor

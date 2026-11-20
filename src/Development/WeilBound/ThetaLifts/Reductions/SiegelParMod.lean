@@ -60,7 +60,7 @@ theorem sigR_sigR (hσ : ∀ x, σ (σ x) = x) (x : AF F ⊗[F] E) : sigR (AF F)
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigR, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem continuous_sigR : Continuous (sigR (AF F) σ) := by
   have : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
@@ -424,7 +424,7 @@ theorem char_torus (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWittFrame �
   have hs : ∀ (i : Fin r) (c : ℝ), f (Pi.single i c) = g (Pi.single i c) := fun i c => by
     have e1 := congrArg f (ek_succ i c)
     have e2 := congrArg g (ek_succ i c)
-    rw [map_add] at e1 e2
+    rw [map_add (f := _)] at e1 e2
     rw [hk _ (by omega) c, hk _ (by omega) c] at e1
     linarith
   have hfg : f s = g s := by

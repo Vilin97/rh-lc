@@ -61,7 +61,7 @@ def lForm (ℓ : mixedEmbedding.mixedSpace F →ₗ[ℝ] ℝ) (c : κ → mixedE
     (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap
     { toFun := fun y => ℓ (y ⬝ᵥ c)
-      map_add' := fun y y' => by rw [add_dotProduct, map_add]
+      map_add' := fun y y' => by rw [add_dotProduct, map_add (f := _)]
       map_smul' := fun r y => by rw [smul_dotProduct, map_smul]; rfl }
 
 theorem lForm_apply (ℓ : mixedEmbedding.mixedSpace F →ₗ[ℝ] ℝ) (c y : κ → mixedEmbedding.mixedSpace F) :
@@ -90,7 +90,7 @@ def lLin (ℓ : mixedEmbedding.mixedSpace F →ₗ[ℝ] ℝ) :
   LinearMap.mk₂ ℝ (fun v f => lOp ℓ v f)
     (fun v v' f => by
       ext x
-      simp only [SchwartzMap.add_apply, lOp_apply, lForm_apply, Prod.fst_add, Prod.snd_add, map_add,
+      simp only [SchwartzMap.add_apply, lOp_apply, lForm_apply, Prod.fst_add, Prod.snd_add, map_add (f := _),
         dotProduct_add]
       push_cast; ring)
     (fun c v f => by
@@ -99,7 +99,7 @@ def lLin (ℓ : mixedEmbedding.mixedSpace F →ₗ[ℝ] ℝ) :
         dotProduct_smul, smul_eq_mul, Complex.real_smul]
       push_cast; ring)
     (fun v f f' => by
-      simp only [lOp, map_add, smul_add]
+      simp only [lOp, map_add (f := _), smul_add]
       abel)
     (fun c v f => by
       simp only [lOp, ContinuousLinearMap.map_smul_of_tower, smul_add]
@@ -126,7 +126,7 @@ theorem schr_pureA_arch (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (ℓ : mixedEm
     funext i
     change InfiniteAdeleRing.ringEquiv_mixedSpace F ((a i).1 + (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm ((t • h1) i)) =
       InfiniteAdeleRing.ringEquiv_mixedSpace F (a i).1 + (t • h1) i
-    rw [map_add, RingEquiv.apply_symm_apply]
+    rw [map_add (f := _), RingEquiv.apply_symm_apply]
   set A := a ⬝ᵥ GlobalTheory.WeilL2Words.arch F (t • h2) +
     ⅟(2 : AdeleRing (𝓞 F) F) * (GlobalTheory.WeilL2Words.arch F (t • h1) ⬝ᵥ GlobalTheory.WeilL2Words.arch F (t • h2)) with hA
   have hev : ∀ w : κ → mixedEmbedding.mixedSpace F,
@@ -142,12 +142,12 @@ theorem schr_pureA_arch (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (ℓ : mixedEm
     rfl
   have hA2 : A.2 = 0 := by
     change s A = 0
-    rw [hA, map_add, map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct, hsnd, hsnd, dotProduct_zero,
+    rw [hA, map_add (f := _), map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct, hsnd, hsnd, dotProduct_zero,
       dotProduct_zero, mul_zero, add_zero]
   have hpa : ⇑(GlobalTheory.ThetaSobolevBase.evHom F) ∘ a = GlobalTheory.WeilL2Words.archPart F a := rfl
   have hA1 : GlobalTheory.ThetaSobolevBase.evHom F A = GlobalTheory.WeilL2Words.archPart F a ⬝ᵥ (t • h2) +
       algebraMap ℝ (mixedEmbedding.mixedSpace F) (1 / 2) * ((t • h1) ⬝ᵥ (t • h2)) := by
-    rw [hA, map_add, map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct, GlobalTheory.ThetaSobolevBase.evHom_invOf_two,
+    rw [hA, map_add (f := _), map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct, GlobalTheory.ThetaSobolevBase.evHom_invOf_two,
       hev, hev, hpa]
   have hAe : A = GlobalTheory.WeilL2Words.arch1 F (GlobalTheory.ThetaSobolevBase.evHom F A) := by
     refine Prod.ext ?_ ?_
@@ -158,7 +158,7 @@ theorem schr_pureA_arch (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (ℓ : mixedEm
       algebraMap ℝ (mixedEmbedding.mixedSpace F) (1 / 2) * ((t • h1) ⬝ᵥ (t • h2))) =
       t * lForm ℓ h2 (GlobalTheory.WeilL2Words.archPart F a) + t ^ 2 * (1 / 2 * ℓ (h1 ⬝ᵥ h2)) := by
     rw [← Algebra.smul_def, lForm_apply]
-    simp only [dotProduct_smul, smul_dotProduct, map_add, map_smul, smul_eq_mul]
+    simp only [dotProduct_smul, smul_dotProduct, map_add (f := _), map_smul, smul_eq_mul]
     ring
   rw [hAe, hℓ, hA1, hfin, harch, hl]
   ring

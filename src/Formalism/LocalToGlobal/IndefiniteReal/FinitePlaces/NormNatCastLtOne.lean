@@ -227,7 +227,7 @@ theorem weakApprox (S : Finset (HeightOneSpectrum (𝓞 F))) (t : ∀ w : Infini
     have huv : b v - algebraMap F (v.adicCompletion F) u ∈ v.adicCompletionIntegers F := hu v
     have e : algebraMap F (v.adicCompletion F) (f + g) - s v =
         -((M : v.adicCompletion F) ^ k * (b v - algebraMap F (v.adicCompletion F) u)) := by
-      rw [hbv, hg, map_add, map_mul, map_pow, map_natCast]
+      rw [hbv, hg, map_add (f := _), map_mul, map_pow, map_natCast]
       field_simp
       ring
     rw [e, norm_neg, norm_mul, norm_pow]
@@ -267,7 +267,7 @@ theorem weakApprox (S : Finset (HeightOneSpectrum (𝓞 F))) (t : ∀ w : Infini
       nlinarith [hηi w]
     calc ‖algebraMap F w.Completion (f + g * (m : F)⁻¹) - t w‖
         = ‖(algebraMap F w.Completion f - t w) + algebraMap F w.Completion g * algebraMap F w.Completion ((m : F)⁻¹)‖ := by
-          rw [map_add, map_mul]; ring_nf
+          rw [map_add (f := _), map_mul]; ring_nf
       _ ≤ ‖algebraMap F w.Completion f - t w‖ + ‖algebraMap F w.Completion g‖ * (m : ℝ)⁻¹ := by
           refine (norm_add_le _ _).trans ?_
           rw [norm_mul, hmw]
@@ -302,7 +302,7 @@ theorem weakApprox (S : Finset (HeightOneSpectrum (𝓞 F))) (t : ∀ w : Infini
     calc ‖algebraMap F (v.adicCompletion F) (f + g * (m : F)⁻¹) - s v‖
         = ‖(algebraMap F (v.adicCompletion F) (f + g) - s v) +
             algebraMap F (v.adicCompletion F) g * (algebraMap F (v.adicCompletion F) ((m : F)⁻¹) - 1)‖ := by
-          rw [map_add, map_add, map_mul]; ring_nf
+          rw [map_add (f := _), map_add (f := _), map_mul]; ring_nf
       _ ≤ ‖algebraMap F (v.adicCompletion F) (f + g) - s v‖ +
             ‖algebraMap F (v.adicCompletion F) g‖ * ‖(M : v.adicCompletion F)‖ ^ j := by
           refine (norm_add_le _ _).trans (add_le_add le_rfl ?_)

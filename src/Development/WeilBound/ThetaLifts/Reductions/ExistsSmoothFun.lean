@@ -163,7 +163,7 @@ theorem exists_smooth_fun (S : ℝ → Sch l →ₗ[ℂ] Sch l) (hn : ∀ t f, �
   let m : Sch l →ₗ[ℂ] ℂ :=
     { toFun := fun f => ∫ s in (0 : ℝ)..δ, lam (S s f)
       map_add' := fun f g => by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact intervalIntegral.integral_add ((Sc f lam).intervalIntegrable _ _) ((Sc g lam).intervalIntegrable _ _)
       map_smul' := fun a f => by
         simp only [map_smul, RingHom.id_apply]

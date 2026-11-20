@@ -33,7 +33,7 @@ def InvK (a : H.comp) (L : H.P.Tup) : Submodule H.Kf H.P.Xsp where
     ∀ γ : (H.lev a).Γ, (H.lev a).smul γ L = L → ((H.lev a).χ γ : H.O) • (H.lev a).actX γ X = X}
   zero_mem' := ⟨Submodule.zero_mem _, fun γ _ => by rw [map_zero, smul_zero]⟩
   add_mem' := fun {x y} hx hy => ⟨Submodule.add_mem _ hx.1 hy.1, fun γ hγ => by
-    rw [map_add, smul_add, hx.2 γ hγ, hy.2 γ hγ]⟩
+    rw [map_add (f := _), smul_add, hx.2 γ hγ, hy.2 γ hγ]⟩
   smul_mem' := fun c x hx => ⟨Submodule.smul_mem _ c hx.1, fun γ hγ => by
     rw [map_smul, ← algebraMap_smul H.Kf, smul_smul, mul_comm, ← smul_smul, algebraMap_smul, hx.2 γ hγ]⟩
 
@@ -51,7 +51,7 @@ def Eqv : Submodule H.Kf H.Fn where
       show F a _ + F' a _ = _
       rw [(hF a).2.2 γ L, (hF' a).2.2 γ L]
       show _ = ((H.lev a).χ γ : H.O) • (H.lev a).actX γ (F a L + F' a L)
-      rw [map_add, smul_add]⟩
+      rw [map_add (f := _), smul_add]⟩
   smul_mem' := fun c F hF a => ⟨fun L hL => Submodule.smul_mem _ c ((hF a).1 L hL),
     fun L hL => by
       show c • F a L = 0

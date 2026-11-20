@@ -54,7 +54,7 @@ theorem tw_symm' (σ : 𝓞 E ≃+* 𝓞 E) (a : Fin n → 𝓞 E) : tw σ.symm 
 
 def conj (σ : 𝓞 E ≃+* 𝓞 E) (r : (Fin n → 𝓞 E) →ₗ[𝓞 E] (Fin m → 𝓞 E)) : (Fin n → 𝓞 E) →ₗ[𝓞 E] (Fin m → 𝓞 E) where
   toFun a := tw σ.symm (r (tw σ a))
-  map_add' a b := by simp only [tw_add, map_add]
+  map_add' a b := by simp only [tw_add, map_add (f := _)]
   map_smul' c a := by
     simp only [tw_smul, map_smul, RingHom.id_apply]
     rw [σ.symm_apply_apply]
@@ -371,7 +371,7 @@ theorem finrank_le_of_isDomT {X : Type} [AddCommGroup X] [Module (𝓞 E) X] {be
   have hadd : ∀ y y', g (y + y') = g y + g y' := fun y y' => by
     obtain ⟨a, rfl⟩ := hs y
     obtain ⟨b, rfl⟩ := hs y'
-    rw [← map_add, hg, hg, hg, tw_add, map_add]
+    rw [← map_add (f := _), hg, hg, hg, tw_add, map_add (f := _)]
   let j : X₁ ≃+ X := AddEquiv.ofBijective (AddMonoidHom.mk' g hadd) ⟨fun y y' e => by
       obtain ⟨a, rfl⟩ := hs y
       obtain ⟨b, rfl⟩ := hs y'

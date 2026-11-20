@@ -48,7 +48,7 @@ def InfEq {Z : Type} (ad : Z → P → P) (θ : Z → Module.End ℂ M) {q : ℕ
 def infCo {Z : Type} (ad : Z → P → P) (θ : Z → Module.End ℂ M) (q : ℕ) : Submodule ℂ (P [⋀^Fin q]→ₗ[R] M) where
   carrier := {f | InfEq ad θ f}
   add_mem' {f g} hf hg z X := by
-    simp only [AlternatingMap.add_apply, map_add, Finset.sum_add_distrib, hf z X, hg z X]
+    simp only [AlternatingMap.add_apply, map_add (f := _), Finset.sum_add_distrib, hf z X, hg z X]
   zero_mem' z X := by simp
   smul_mem' c f hf z X := by
     simp only [AlternatingMap.smul_apply, map_smul, hf z X, Finset.smul_sum]
@@ -166,7 +166,7 @@ def hodgeCo (ε : T → Fin n → Bool) (E : T → Fin n → Fin n → Module.En
   carrier := {f | f ∈ coC ε (famT E ξ) q ∧ ∀ τ X,
     ∑ i, f (Function.update X i (prP τ (X i))) - onIdx M (zXi ε ξ τ) (f X) = (p τ : ℂ) • f X}
   add_mem' {f g} hf hg := ⟨add_mem hf.1 hg.1, fun τ X => by
-    simp only [AlternatingMap.add_apply, map_add, Finset.sum_add_distrib, smul_add, ← hf.2 τ X, ← hg.2 τ X]
+    simp only [AlternatingMap.add_apply, map_add (f := _), Finset.sum_add_distrib, smul_add, ← hf.2 τ X, ← hg.2 τ X]
     abel⟩
   zero_mem' := ⟨zero_mem _, fun τ X => by simp⟩
   smul_mem' c f hf := ⟨Submodule.smul_mem _ c hf.1, fun τ X => by

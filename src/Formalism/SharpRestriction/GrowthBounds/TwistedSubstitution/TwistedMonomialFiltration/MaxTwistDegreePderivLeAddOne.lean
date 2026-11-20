@@ -61,7 +61,7 @@ theorem divDer_single_one (v : ι × Fin n) (F : MvPolynomial (ι × Fin n) R) :
         rw [hv, Nat.cast_zero, mul_zero]
       · rfl
   | add p q hp hq =>
-    rw [map_add, ← hp, ← hq]
+    rw [map_add (f := _), ← hp, ← hq]
     ext μ
     rw [MvPolynomial.coeff_add, coeff_divDer, coeff_divDer, coeff_divDer, MvPolynomial.coeff_add, add_mul]
 

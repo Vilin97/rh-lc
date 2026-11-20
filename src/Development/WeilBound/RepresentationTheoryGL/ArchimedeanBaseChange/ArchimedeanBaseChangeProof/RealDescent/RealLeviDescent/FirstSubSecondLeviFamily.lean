@@ -199,7 +199,7 @@ theorem multiplicity_assembly_holds : MultiplicityAssembly := by
     | grade0 r => simp [Module.algebraMap_end_apply]
     | grade1 p => simp [evCap, sc, hS5 p.1 p.2]
     | mul x y hx hy => rw [map_mul, map_mul, Module.End.mul_apply, hy, map_smul, hx, smul_smul, mul_comm]
-    | add x y hx hy => rw [map_add, map_add, LinearMap.add_apply, hx, hy, add_smul]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, hx, hy, add_smul]
   have hkill : ∀ l : Lt n, l.1 = false → inUU lev l → xL E1 E2 l v = 0 := by
     intro l hl _
     have hlt : l.2.1.1 < l.2.1.2 := l.2.2

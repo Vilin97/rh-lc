@@ -29,7 +29,7 @@ theorem exists_frac_of_mem_idealMod {J : Ideal (Poly S N)} {I : Chart x} {z : Ω
     refine ⟨h * t' + t * h', t * t', d + d', J.add_mem (J.mul_mem_right _ hh) (J.mul_mem_left _ hh'),
       mul_mem ht ht', (hhd.mul htd').add (htd.mul hhd'), htd.mul htd', ?_⟩
     rw [div_add_div _ _ (eval_ne_zero_of_mem_monos I ht) (eval_ne_zero_of_mem_monos I ht')]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
   · rintro a _ _ ⟨h, t, d, hh, ht, hhd, htd, rfl⟩
     obtain ⟨f, s, e, hs, hf, hse, ha⟩ := a.2
     refine ⟨f * h, s * t, e + d, J.mul_mem_left _ hh, mul_mem hs ht, hf.mul hhd, hse.mul htd, ?_⟩
@@ -48,9 +48,9 @@ theorem idealMod_sup_span_le {J₁ : Ideal (Poly S N)}
   obtain ⟨j, hj, cg, hcg, hjc⟩ := Submodule.mem_sup.mp hf
   obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp hcg
   have hf' : f = homogeneousComponent d j + homogeneousComponent d (c * g) := by
-    rw [← map_add, hjc, homogeneousComponent_of_mem ((mem_homogeneousSubmodule _ _).mpr hfd),
+    rw [← map_add (f := _), hjc, homogeneousComponent_of_mem ((mem_homogeneousSubmodule _ _).mpr hfd),
       if_pos rfl]
-  rw [SetLike.mem_coe, hf', map_add, add_div]
+  rw [SetLike.mem_coe, hf', map_add (f := _), add_div]
   refine Submodule.add_mem_sup (Submodule.subset_span ⟨_, s, d, hJ j hj d, hs,
     homogeneousComponent_isHomogeneous d j, hsd, rfl⟩) ?_
   set_option synthInstance.maxHeartbeats 100000 in

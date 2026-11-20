@@ -277,7 +277,7 @@ theorem exists_unit_conj {H : Geo.Tor.Host D.host.E} (l : Geo.Tor.Level H) {e : 
   refine ⟨x, hx, fun h => h0 (RingOfIntegers.coe_injective (h.trans (map_zero _).symm)), ?_⟩
   have := GlobalTheory.MovedIdem.finPart_conj_mem (idem_div_mem he (H.bar x) fun PP hPP hm => by
     have := add_mem hm (hP PP hPP hy')
-    rw [← map_add, hxy, map_one] at this
+    rw [← map_add (f := _), hxy, map_one] at this
     exact PP.isPrime.one_notMem this)
   rwa [hstar, star_inv₀, star_star] at this
 

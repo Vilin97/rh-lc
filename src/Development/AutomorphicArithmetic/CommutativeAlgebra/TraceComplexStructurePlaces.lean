@@ -172,7 +172,7 @@ private theorem jt_lhs {p : ℕ} [Fact p.Prime] (D : Datum p) (τ₁ : D.F →+*
     refine Finset.sum_congr rfl fun σ _ => ?_
     ring
   rw [e0, e1, e2, ← hS]
-  simp only [map_mul, map_add, map_sub, Complex.conj_I, Complex.conj_natCast, Complex.conj_conj]
+  simp only [map_mul, map_add (f := _), map_sub, Complex.conj_I, Complex.conj_natCast, Complex.conj_conj]
   ring
 
 private theorem jt_actOn {C V : Type} [Ring C] [Algebra ℚ C] [AddCommGroup V] [Module ℚ V]

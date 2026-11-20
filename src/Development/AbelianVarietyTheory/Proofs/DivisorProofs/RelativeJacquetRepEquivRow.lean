@@ -26,7 +26,7 @@ theorem piTensor_colRep_apply (χ₁ χ₂ : kˣ →* ℂˣ) (u v : ℕ) (x : �
     (y : ⨂[ℂ] _ : Bool, ℂ ⊗[ℂ] ℂ) :
     piTensor (colRep χ₁ χ₂ u v) x y = (cellScal χ₁ χ₂ u v x : ℂ) • y := by
   induction y using PiTensorProduct.induction_on with
-  | add a b ha hb => rw [map_add, ha, hb, smul_add]
+  | add a b ha hb => rw [map_add (f := _), ha, hb, smul_add]
   | smul_tprod c f =>
     rw [map_smul, smul_comm, piTensor_tprod, cellScal, Units.coe_prod, ← MultilinearMap.map_smul_univ]
     congr 2

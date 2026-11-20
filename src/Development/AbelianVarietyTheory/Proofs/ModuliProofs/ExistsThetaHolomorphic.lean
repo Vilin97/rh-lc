@@ -179,7 +179,7 @@ theorem exists_canMult {La : Type*} [AddCommGroup La] (bs : Module.Basis (Fin g 
       simp only [LinearMap.neg_apply, neg_eq_iff_eq_neg] at h
       rw [h]
       simp [dotProduct]
-    rw [e, ← canMult_add, map_add]
+    rw [e, ← canMult_add, map_add (f := _)]
     rfl
   · rintro (i | i)
     · rw [← ht, canMult]

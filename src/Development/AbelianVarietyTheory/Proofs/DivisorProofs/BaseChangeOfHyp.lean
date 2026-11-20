@@ -48,7 +48,7 @@ theorem core (s₀ s : X ⟶ Sp R) (hs : s = s₀) (s₀' s' : X' ⟶ Sp R') (hs
     refine LinearMap.ext fun z ↦ ?_
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [map_add (f := _)] at hx hy ⊢; rw [hx, hy]
     | tmul x c =>
       simp only [LinearMap.coe_comp, Function.comp_apply, liftSemi_tmul, map_smul,
         LinearEquiv.coe_coe, LinearEquiv.baseChange_tmul, key]
@@ -82,7 +82,7 @@ theorem core (s₀ s : X ⟶ Sp R) (hs : s = s₀) (s₀' s' : X' ⟶ Sp R') (hs
       clear hc'z hz
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
       | tmul x ω =>
         rw [show x ⊗ₜ[R] ω = x • (1 ⊗ₜ[R] ω) by rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one],
           map_smul]
@@ -146,7 +146,7 @@ theorem abelianDeRham_baseChange_of_smoothLift (H₁ : GlobalTheory.Published.Cr
       refine LinearMap.ext fun z ↦ ?_
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add] at hx hy ⊢; rw [hx, hy]
+      | add x y hx hy => simp only [map_add (f := _)] at hx hy ⊢; rw [hx, hy]
       | tmul x c => rfl
     have hb : Function.Bijective
         ((LinearEquiv.ofTop _ hP') ∘ liftSemi (GlobalTheory.Published.AbelianDeRham.bcMor h).pull) := by

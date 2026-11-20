@@ -163,7 +163,7 @@ theorem block_raise (hS : StepChar) (hT : TensDecomp) (P Q : GMod n) (d : Fin 3 
     have e1 : ∀ p, θ (ι p) (incl (tensE M a b u p)) =
         θ (ι p) (P.E (ι a) (ι b) (incl (u p))) + if p = a then θ (ι a) (incl (u b)) else 0 := by
       intro p
-      rw [tensE_apply, map_add, map_add, hinclE]
+      rw [tensE_apply, map_add (f := _), map_add (f := _), hinclE]
       by_cases hp : p = a
       · subst hp; simp
       · simp [hp]
@@ -351,7 +351,7 @@ theorem sub_raise (hS : StepChar) (hT : TensDecomp) (Y Y' : GMod n) (d : Fin 3 �
     change _ = θq p (sqMk Y S1 S2 hS1 hS2 ⟨(Y.E b a).dualMap x, hS1 b a _ x.2⟩) + _
     rw [show θq p (sqMk Y S1 S2 hS1 hS2 ⟨(Y.E b a).dualMap x, hS1 b a _ x.2⟩) = mkQ' (R p ⟨(Y.E b a).dualMap x, hS1 b a _ x.2⟩) from rfl]
     by_cases hp : p = b
-    · rw [if_pos hp, ← map_add]
+    · rw [if_pos hp, ← map_add (f := _)]
       refine congrArg _ (Subtype.ext ?_)
       have := hθ a b p x
       rw [if_pos hp] at this
@@ -659,7 +659,7 @@ theorem transport : Transport := by
     · rw [if_pos hp]
       change φ (coordB X B (χ s) p (Eb (step X (χ s)) B b a u)) =
         φ (Eb X B b a (coordB X B (χ s) p u)) + φ (coordB X B (χ s) a u)
-      rw [e, if_pos hp, map_add]
+      rw [e, if_pos hp, map_add (f := _)]
     · rw [if_neg hp, add_zero]
       change φ (coordB X B (χ s) p (Eb (step X (χ s)) B b a u)) = φ (Eb X B b a (coordB X B (χ s) p u))
       rw [e, if_neg hp, add_zero]

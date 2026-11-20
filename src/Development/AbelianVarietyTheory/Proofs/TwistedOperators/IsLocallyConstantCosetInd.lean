@@ -154,7 +154,7 @@ theorem exists_factor (G : Type) [Group G] [TopologicalSpace G] [IsTopologicalGr
   · have h1 : IsOpen ((K v ⊓ K w : Subgroup G) : Set G) := (ho v).inter (ho w)
     have h2 := hinter (K v) (K w) (hK v) (ho w)
     rw [hb _ h1 h2 v fun k hk => hw v k hk.1, hb _ h1 h2 w fun k hk => hw w k hk.2,
-      hb _ h1 h2 (v + w) fun k hk => by rw [map_add, hw v k hk.1, hw w k hk.2], map_add, smul_add]
+      hb _ h1 h2 (v + w) fun k hk => by rw [map_add (f := _), hw v k hk.1, hw w k hk.2], map_add (f := _), smul_add]
   · show b (c • v) = c • b v
     rw [hb _ (ho v) (hK v) (c • v) fun k hk => by rw [map_smul, hw v k hk], map_smul, smul_comm]
   · show _ = b _

@@ -29,7 +29,7 @@ theorem GlobalTheory.wedge_D_eq_pow_mul_wedge_D_of_eq_unit_mul_pow : ∀ (k K : 
     rw [← pow_succ']; congr 1; omega
   have hX : (r:K) • f (D k K T) + T • f (D k K (r:K)) = ((a:K) * (e:K) * (s:K)^(e-1)) • f (D k K (s:K)) + ((s:K) * (s:K)^(e-1)) • f (D k K (a:K)) := by
     have h1 := congrArg (fun z => f (D k K z)) hT
-    simp only [Derivation.leibniz, Derivation.leibniz_pow, map_add, map_smul, map_nsmul] at h1
+    simp only [Derivation.leibniz, Derivation.leibniz_pow, map_add (f := _), map_smul, map_nsmul] at h1
     rw [← hse, mul_smul, mul_smul, Nat.cast_smul_eq_nsmul K]; exact h1
   have heB : (e : B) ∉ Q := by
     intro h

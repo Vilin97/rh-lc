@@ -38,7 +38,7 @@ theorem cmp_trans {Ξ : AlgRep E a} {q : ℕ} (x : GL (Fin a) (Af E)) (α : Co �
   change cmp i ((finRep E a x).rTensor (Fin Ξ.d → ℂ) (α X)) = _
   induction α X using TensorProduct.induction_on with
   | zero => simp
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
   | tmul φ v => simp
 
 theorem dCo_comb {Ξ : AlgRep E a} {q : ℕ} (s : ℂ) (α β : Co Ξ q) :
@@ -46,7 +46,7 @@ theorem dCo_comb {Ξ : AlgRep E a} {q : ℕ} (s : ℂ) (α β : Co Ξ q) :
   refine AlternatingMap.ext fun X => ?_
   have ap : ∀ Y, (s • α + β) Y = s • α Y + β Y := fun _ => rfl
   change _ = s • dCo (smLie Ξ) α X + dCo (smLie Ξ) β X
-  simp only [dCo_apply, ap, map_add, map_smul, smul_add, Finset.sum_add_distrib, Finset.smul_sum]
+  simp only [dCo_apply, ap, map_add (f := _), map_smul, smul_add, Finset.sum_add_distrib, Finset.smul_sum]
   exact congrArg (· + _) (Finset.sum_congr rfl fun i _ => smul_comm _ _ _)
 
 def Rel (σ : ℂ ≃+* ℂ) {Ξ Ξ' : AlgRep E a} (h : Ξ.d = Ξ'.d) {q : ℕ} (α : Co Ξ q) (β : Co Ξ' q) : Prop :=
@@ -180,7 +180,7 @@ theorem embed_of (hH : PartH) (h1 : RelFacts) (h2 : PartA) (h3 : RelOnto) (h4 : 
       exact ⟨0, ⟨fun k X => by simp, fun X i _ => rfl, fun X => Submodule.zero_mem _⟩,
         AlternatingMap.ext fun X => by simp [dCo_apply]⟩
   obtain ⟨J, J1, J2, J3⟩ := h8 _ τ.V τ'.V (Co Ξ' q) τ.ρ τ'.ρ (transRep Ξ' q) σ T T1 T2 M M1 (fun v β => Rel σ h (Φ v) β)
-    (fun s v v' w w' a b => by simpa only [map_add, map_smul] using R1 s _ _ _ _ a b)
+    (fun s v v' w w' a b => by simpa only [map_add (f := _), map_smul] using R1 s _ _ _ _ a b)
     (fun g v w b => by rw [F3]; exact R2 g _ _ b)
     (fun v => h3 h2 E a ha σ Ξ Ξ' h hσ q M M2 M5 _ (hF v).1 (hF v).2.1 (h11 E a π Ξ q _ (hF v).2.2.2))
     fun v w hw b => ⟨fun e0 => M4 w hw ((R3 _ _ b).1 (by rw [e0, map_zero]; exact hz Ξ)),
@@ -195,7 +195,7 @@ theorem embed_of (hH : PartH) (h1 : RelFacts) (h2 : PartA) (h3 : RelOnto) (h4 : 
     simp [hn X]
   obtain ⟨X, i, hX⟩ := hX
   refine ⟨{ toFun := fun v => cmp i (J v X)
-            map_add' := fun x y => by rw [map_add, AlternatingMap.add_apply, map_add]
+            map_add' := fun x y => by rw [map_add (f := _), AlternatingMap.add_apply, map_add (f := _)]
             map_smul' := fun c x => by rw [map_smul, AlternatingMap.smul_apply, map_smul]; rfl },
     fun e0 => hX (LinearMap.congr_fun e0 v), fun g v => ?_, fun v => (M3 _ (J2 v) X i).1,
     fun v t => ⟨by simpa using (hm t).1, (M3 _ (J2 v) X i).2 t⟩⟩

@@ -89,7 +89,7 @@ theorem cocycle_is_coboundary (R : Type) [CommRing R] (D : Type) [CommRing D] [A
     have hb := isUnit_of_mul_isUnit_right (isUnit_of_mul_isUnit_left hu)
     have hk := isUnit_of_mul_isUnit_right hu
     have e4 := hcoc k a b E ψ hk ha hb
-    simp only [map_add, map_sub, map_mul, map_pow]
+    simp only [map_add (f := _), map_sub, map_mul, map_pow]
     rw [← hc a b E ψ ha hb, ← hc k b E ψ hk hb, ← hc k a E ψ hk ha]
     linear_combination (ψ (s a) * ψ (s b) * ψ (s k)) ^ N * e4
   choose M₀ hM₀ using h2

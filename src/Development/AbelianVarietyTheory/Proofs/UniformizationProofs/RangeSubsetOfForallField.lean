@@ -233,7 +233,7 @@ theorem exists_fromLocus : ∃ g : Over.mk (U.ι ≫ toSpec (node K)) ⟶ splitT
         (awayEval (node K) 1 ρ P hP.equation h1.isUnit)) := by
       rw [← cancel_mono (awayChart (node K) 1), Category.assoc, hj, e,
         ptHom_eq_awayChart _ 1 _ _ _ h1.isUnit]
-    rw [← evalAt_comp, e2, evalAt_specMap, CommRingCat.hom_ofHom, map_add, map_one, add_mul,
+    rw [← evalAt_comp, e2, evalAt_specMap, CommRingCat.hom_ofHom, map_add (f := _), map_one, add_mul,
       awayEval_awayCoord_mul, _root_.one_mul]
   have hs : IsUnit s := by
     refine isUnit_of_forall_evalAt s fun k _ x h0 => ?_

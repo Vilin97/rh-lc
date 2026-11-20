@@ -91,7 +91,7 @@ theorem col_powSubst_int {N k : ℕ} (LL : LiftLetters (Fin N)) (z : ℤ) (F : M
   unfold powSubst
   induction F using MvPolynomial.induction_on with
   | C a => rw [aeval_C]; exact Subalgebra.algebraMap_mem _ a
-  | add p q hp hq => rw [map_add]; exact Subalgebra.add_mem _ hp hq
+  | add p q hp hq => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hp hq
   | mul_X p v hp => rw [map_mul, aeval_X]; exact Subalgebra.mul_mem _ hp (Subalgebra.pow_mem _ (X_mem_goodSub v rfl) _)
 
 theorem colFac (S : UniformizedDVR X.p O) (hS : S.SqP) (hn : 1 ≤ X.n') (h2 : 2 ≤ numSeg X.TT)

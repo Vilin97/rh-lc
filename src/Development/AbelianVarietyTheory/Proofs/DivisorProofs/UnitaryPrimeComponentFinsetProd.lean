@@ -52,7 +52,7 @@ theorem eps_empty : eps E (fun p => p ∈ (∅ : Finset ℕ)) = 0 :=
 theorem eps_insert (q : ℕ) (s : Finset ℕ) (h : q ∉ s) :
     eps E (fun p => p ∈ insert q s) = eps E (fun p => p = q) + eps E (fun p => p ∈ s) :=
   ext_prV fun v => by
-    rw [map_add, prV_eps, prV_eps, prV_eps]
+    rw [map_add (f := _), prV_eps, prV_eps, prV_eps]
     by_cases h1 : pr v = q
     · simp [h1, h]
     · by_cases h2 : pr v ∈ s <;> simp [h1, h2]

@@ -59,7 +59,7 @@ theorem existsUnique_place (hc : CMData F E) {g : ℕ} {p : 𝓞 E} (hn : (p : E
     by_contra hy'
     have h1 := key y hy hy'
     have h2 := key (y + p) (w.asIdeal.add_mem hy h.1) (fun h3 => hy' (by simpa using w'.asIdeal.sub_mem h3 h'.1))
-    rw [map_add] at h2
+    rw [map_add (f := _)] at h2
     exact hs w' h'.1 (cj E p) (cj_coe p) (by simpa using w'.asIdeal.sub_mem h2 h1)
   have hex : ∃ w : Pl E, p ∈ w.asIdeal ∧ w.asIdeal.comap (algebraMap (𝓞 F) (𝓞 E)) = v.asIdeal := by
     haveI := v.isPrime

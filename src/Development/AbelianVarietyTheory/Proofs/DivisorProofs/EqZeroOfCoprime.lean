@@ -33,7 +33,7 @@ theorem symm_of_casimir {R S L W ι : Type*} [CommRing R] [CommRing S] [Algebra 
     (m * n * n) • (β f (κ f') - β f' (κ f)) = 0 := by
   let Φ : W → Module.Dual S L := fun f ↦
     { toFun v := ∑ i, β f (e i • v) • t i
-      map_add' := fun v w ↦ by simp only [smul_add, map_add, add_smul, Finset.sum_add_distrib]
+      map_add' := fun v w ↦ by simp only [smul_add, map_add (f := _), add_smul, Finset.sum_add_distrib]
       map_smul' := fun s v ↦ by
         have := cas (β f ∘ₗ (LinearMap.toSpanSingleton S L v).restrictScalars R) s
         simpa [smul_smul, mul_comm] using this }
@@ -59,7 +59,7 @@ theorem symm_of_casimir {R S L W ι : Type*} [CommRing R] [CommRing S] [Algebra 
   have k' : ∀ w : Module.Dual S L ⊗[S] L,
       (m * n) • (contractLeft S L w * (Φ f (κ f') - Φ f' (κ f))) = 0 := fun w ↦ by
     induction w with
-    | add x y hx hy => rw [map_add, add_mul, smul_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), add_mul, smul_add, hx, hy, add_zero]
     | tmul ℓ u =>
       have c := congrArg ℓ (k u)
       have c₁ := congrArg (Φ f) (dual_smul_comm ℓ u (κ f'))
@@ -94,7 +94,7 @@ theorem exists_form (F : Type) [Field F] [NumberField F] (l : ℕ) [Fact l.Prime
   choose t ht using fun i ↦ hu ⟨(integralBasis F).traceDual i, (mem _).2 fun a ↦ ⟨_, (dual i a).symm⟩⟩
   refine ⟨n, (AddMonoidHom.mk' τ fun a b ↦ Int.cast_injective (α := ℚ) ?_).toIntLinearMap, t, hn,
     fun i x ↦ Int.cast_injective (α := ℚ) ?_, fun y hy ↦ ?_⟩
-  · rw [Int.cast_add, hτ, hτ, hτ, ← map_add, ← mul_add]
+  · rw [Int.cast_add, hτ, hτ, hτ, ← map_add (f := _), ← mul_add]
     simp
   · have e := congrArg Subtype.val (ht i)
     simp only [Submodule.coe_smul, Algebra.smul_def, map_natCast] at e
@@ -129,7 +129,7 @@ theorem exists_casimir (F : Type) [Field F] [NumberField F] (l : ℕ) [Fact l.Pr
   refine ⟨n, fun i ↦ 1 ⊗ₜ b i, fun i ↦ 1 ⊗ₜ t i, (AlgebraTensorModule.rid ℤ R R).toLinearMap ∘ₗ τ.baseChange R, hn,
     fun f s ↦ ?_, ?_⟩
   · induction s with
-    | add x y hx hy => simp only [add_mul, map_add, add_smul, Finset.sum_add_distrib, hx, hy]
+    | add x y hx hy => simp only [add_mul, map_add (f := _), add_smul, Finset.sum_add_distrib, hx, hy]
     | tmul r a =>
       have e₁ : ∀ i, (r ⊗ₜ[ℤ] a * (1 : R) ⊗ₜ[ℤ] b i) = r • ∑ j, b.repr (a * b i) j • (1 : R) ⊗ₜ[ℤ] b j := fun i ↦ by
         simp only [← tmul_smul, ← tmul_sum, b.sum_repr]

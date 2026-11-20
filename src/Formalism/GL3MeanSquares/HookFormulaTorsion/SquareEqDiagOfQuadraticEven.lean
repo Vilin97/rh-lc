@@ -13,7 +13,7 @@ theorem t_swap : ModelCocycleTwoSwapped := by
 theorem t_heis : HeisenbergCocycle := by
   intro V _ H hadd hherm F x y z
   have hadd2 : ∀ x y y', H x (y + y') = H x y + H x y' := by
-    intro x y y'; rw [hherm (y+y') x, hadd, map_add, ← hherm, ← hherm]
+    intro x y y'; rw [hherm (y+y') x, hadd, map_add (f := _), ← hherm, ← hherm]
   have hc : H y x = H x y - 2 * Complex.I * ((H x y).im : ℂ) := by
     rw [hherm x y]; apply Complex.ext <;> simp <;> ring
   unfold Heisenberg₂
@@ -79,7 +79,7 @@ variable {V : Type} [AddCommGroup V] {H : V → V → ℂ}
 
 theorem add2 (hadd : ∀ x x' y, H (x + x') y = H x y + H x' y)
     (hherm : ∀ x y, H y x = (starRingEnd ℂ) (H x y)) : ∀ x y y', H x (y + y') = H x y + H x y' := by
-  intro x y y'; rw [hherm (y+y') x, hadd, map_add, ← hherm, ← hherm]
+  intro x y y'; rw [hherm (y+y') x, hadd, map_add (f := _), ← hherm, ← hherm]
 
 theorem sub2 (hadd : ∀ x x' y, H (x + x') y = H x y + H x' y)
     (hherm : ∀ x y, H y x = (starRingEnd ℂ) (H x y)) : ∀ x y y', H x (y - y') = H x y - H x y' := by

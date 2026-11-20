@@ -338,7 +338,7 @@ theorem exists_span : PolBaseChangeSt → GlobalFnsSt → DVR.TwistBaseChangeSta
       refine Finset.sum_eq_zero fun l _ => ?_
       have h0 := zero_sec D.toPre.P.isLB D'.P.isLB (DegPre.prB D' (FractionRing R')).left (f (i', l) (hD.xe (e i)))
         (hf0 (i', l) _ fun mu hmu => hi ((he (e i)).unique ⟨hD.xe.symm mu, hD.xe.injective (by
-          rw [map_add, map_nsmul, AddEquiv.apply_symm_apply]; exact hmu.symm)⟩ ⟨0, by rw [smul_zero, add_zero]⟩))
+          rw [map_add (f := _), map_nsmul, AddEquiv.apply_symm_apply]; exact hmu.symm)⟩ ⟨0, by rw [smul_zero, add_zero]⟩))
         (f' (i', l) (e i)) (fun y J J' hJ hJ' => val_of_rel (famφB_comm hD (e i)) (hf' (i', l) (e i)) _ y hJ hJ')
         ((F' (i', l)).s (e i)) (hF' (i', l) (e i)) j
       rw [smul_f, h0, mul_zero]

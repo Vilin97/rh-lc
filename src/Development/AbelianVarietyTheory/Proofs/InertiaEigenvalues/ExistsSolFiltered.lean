@@ -25,8 +25,8 @@ private lemma constantCoeff_coeff_one_one_add_X_pow {R : Type*} [CommRing R] (N 
     have h1 : coeff 1 (X * (1 + X : R⟦X⟧) ^ N) = constantCoeff ((1 + X : R⟦X⟧) ^ N) := by
       rw [show (1 : ℕ) = 0 + 1 from rfl, coeff_succ_X_mul, coeff_zero_eq_constantCoeff_apply]
     refine ⟨?_, ?_⟩
-    · rw [e, map_add, ih.1, map_mul, constantCoeff_X, zero_mul, add_zero]
-    · rw [e, map_add, ih.2, h1, ih.1]
+    · rw [e, map_add (f := _), ih.1, map_mul, constantCoeff_X, zero_mul, add_zero]
+    · rw [e, map_add (f := _), ih.2, h1, ih.1]
       push_cast
       ring
 
@@ -66,7 +66,7 @@ private lemma coeff_one_mul_one_add_X_sq_mul_pow {R : Type*} [CommRing R] (f w :
   have e : f * (1 + X ^ 2 * w) ^ n = f + X ^ 2 * (f * q) := by
     rw [one_pow] at hq
     linear_combination f * hq
-  rw [e, map_add, X_pow_dvd_iff.1 (dvd_mul_right _ _) 1 (by norm_num), add_zero]
+  rw [e, map_add (f := _), X_pow_dvd_iff.1 (dvd_mul_right _ _) 1 (by norm_num), add_zero]
 
 open PowerSeries in
 private lemma sum_mul_triSol_eq {R : Type*} [CommRing R] (M : ℕ → ℕ → R)
@@ -164,7 +164,7 @@ theorem _root_.GlobalTheory.ExpImage.solve_mod_pow : ∀ (l : ℕ) [Fact l.Prime
     have hvb : PowerSeries.map PadicInt.toZMod v = 1 + X ^ 2 * (X ^ t * (1 + X)) := by
       apply X_mul_cancel
       have h := congrArg (PowerSeries.map (PadicInt.toZMod (p := l))) hv
-      simp only [map_mul, map_sub, map_pow, map_add, map_one, PowerSeries.map_X] at h
+      simp only [map_mul, map_sub, map_pow, map_add (f := _), map_one, PowerSeries.map_X] at h
       rw [h, pow_add, pow_one, add_pow_char_pow (1 : PowerSeries (ZMod l)) X l s, one_pow, ht]
       ring
     have hU1 : PadicInt.toZMod U = 1 := by
@@ -173,7 +173,7 @@ theorem _root_.GlobalTheory.ExpImage.solve_mod_pow : ∀ (l : ℕ) [Fact l.Prime
       rwa [map_sub, map_one, sub_eq_zero] at this
     have hcomp : PadicInt.toZMod (coeff (n + 1) (T (X ^ n))) = (m : ZMod l) := by
       rw [← coeff_map, hTX, add_comm n 1]
-      simp only [map_mul, map_sub, map_pow, map_add, map_one, PowerSeries.map_X,
+      simp only [map_mul, map_sub, map_pow, map_add (f := _), map_one, PowerSeries.map_X,
         PowerSeries.map_C, hU1, one_mul]
       rw [coeff_mul_X_pow, hvb, map_sub, coeff_one_mul_one_add_X_sq_mul_pow,
         show ((1 : PowerSeries (ZMod l)) + X ^ 2 * (X ^ t * (1 + X))) ^ k =

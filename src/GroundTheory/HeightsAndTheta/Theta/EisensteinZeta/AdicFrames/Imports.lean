@@ -45,7 +45,7 @@ theorem measurePreserving_shear (μ : Measure G) [μ.IsAddLeftInvariant] [SFinit
           have h1 : ∫⁻ X, g (X + ζ (d + t X)) ∂μ = ∫⁻ X, g (X + ζ (t X)) ∂μ := by
             rw [← lintegral_add_right_eq_self (μ := μ) (fun X ↦ g (X + ζ (t X))) (ζ d)]
             refine lintegral_congr fun X ↦ ?_
-            simp only [htζ, map_add]
+            simp only [htζ, map_add (f := _)]
             congr 1
             abel
           rw [lintegral_const_mul (ρ d) (f := fun X ↦ g (X + ζ (d + t X)))

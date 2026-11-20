@@ -168,7 +168,7 @@ theorem polD_eq (D : D7) (F : IntermediateField ℚ ℂ) {N N' : ℕ} (s : D.wha
   next a =>
     simp [polG, evF]
   next p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   next p n hp =>
     simp only [map_mul] at hp ⊢
     rw [hp]

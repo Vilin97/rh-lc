@@ -160,7 +160,7 @@ theorem exists_completion_frobenius : ∀ (E : Type) [Field E] [NumberField E] (
       have := congrArg (fun t : Q.adicCompletionIntegers E => σ t) ha
       simp only [pow_one] at this
       push_cast at this ⊢
-      rw [map_add, map_mul, map_natCast] at this
+      rw [map_add (f := _), map_mul, map_natCast] at this
       rw [← this]
       exact (σ2 (a : E)).symm
     have e2 : algebraMap (𝓞 E) (Q.adicCompletionIntegers E) (φ • a - a ^ p) ∈
@@ -175,7 +175,7 @@ theorem exists_completion_frobenius : ∀ (E : Type) [Field E] [NumberField E] (
           (p : Q.adicCompletionIntegers E) = 0 :=
         Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mem_span_singleton_self _)
       rw [RingHom.map_sub (algebraMap _ _), map_pow (algebraMap _ _), e1, ha, pow_one] at e2
-      simp only [map_sub, map_add, map_mul, map_pow, hp0, zero_mul, add_zero] at e2 ⊢
+      simp only [map_sub, map_add (f := _), map_mul, map_pow, hp0, zero_mul, add_zero] at e2 ⊢
       exact e2
     obtain ⟨y, hy⟩ := Ideal.mem_span_singleton.1 e3
     refine ⟨y, ?_⟩

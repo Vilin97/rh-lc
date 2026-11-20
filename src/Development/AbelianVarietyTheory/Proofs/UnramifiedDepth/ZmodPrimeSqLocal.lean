@@ -254,7 +254,7 @@ def wModel : WData (tower p) (mkL (ZMod p)) where
   ann_p := ann_p p
   compat a := by
     change red p (fst a + p * snd a) = red p (fst a)
-    rw [map_add, map_mul, map_natCast, ZMod.natCast_self, zero_mul, add_zero]
+    rw [map_add (f := _), map_mul, map_natCast, ZMod.natCast_self, zero_mul, add_zero]
   b := 1
   ξ_img := by
     change fst (DualNumber.eps : DualNumber (ZMod (p ^ 2))) + (p : ZMod (p ^ 2)) * snd (DualNumber.eps : DualNumber (ZMod (p ^ 2))) = (p : ZMod (p ^ 2)) * 1

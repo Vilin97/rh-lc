@@ -119,7 +119,7 @@ theorem UpperTheory.exists_polynomial_of_isFinF_thetaLift_pureTensor :
     rw [← hD3 _ _ _ fun t => hat t _, ← h2]
   rw [← hΘ] at hv ⊢
   have hg₀ : ∀ t z, Dr (dir t z) g + Complex.I • Dr (dir t (cplxO ((frSgn ε A).cart t) (B.cart t) z)) g = 0 := fun t z =>
-    hi _ (by rw [map_add, map_smul, ← hd, ← hd]; exact hv.2 t z)
+    hi _ (by rw [map_add (f := _), map_smul, ← hd, ← hd]; exact hv.2 t z)
   have hGa : M.IsGauss Bs.ψ Bs.emb g := ⟨fun _ => 1, fun u u' hu hu' hrel f f' hf hf' => by
     rw [hD2 u hu _ _ hf, hD2 u' hu' _ _ hf', hsum u hu, hsum u' hu', Finset.smul_sum]
     refine Finset.sum_congr rfl fun t _ => ?_

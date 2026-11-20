@@ -154,7 +154,7 @@ theorem mult_lt_of_connected : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoe
         simpa using sub_mem h' ha
       exact (IsLocalRing.maximalIdeal.isMaximal _).ne_top
         (Ideal.eq_top_of_isUnit_mem _ h1 isUnit_one)
-    exact ⟨1 + a, IsLocalRing.notMem_maximalIdeal.1 h1a, by rw [map_add, map_one, e]; ring⟩
+    exact ⟨1 + a, IsLocalRing.notMem_maximalIdeal.1 h1a, by rw [map_add (f := _), map_one, e]; ring⟩
   have hu := unitAt_pull (p := p) s hbir hvc hsv hunit0
   have := mult_le_ord_of_regularAt (hreg v hvσ hvc hsv) hu.ne_zero hvc
   rw [hu.ord_eq_zero] at this

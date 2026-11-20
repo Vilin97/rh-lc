@@ -34,7 +34,7 @@ theorem degree_eq_two {σ : Type} (e : σ →₀ ℕ) (he : e.degree = 2) :
   have hsplit : e = (e - Finsupp.single s 1) + Finsupp.single s 1 := (tsub_add_cancel_of_le hle).symm
   have he' : (e - Finsupp.single s 1).degree = 1 := by
     have h2 := congrArg Finsupp.degree hsplit
-    rw [map_add, Finsupp.degree_single] at h2
+    rw [map_add (f := _), Finsupp.degree_single] at h2
     omega
   obtain ⟨t, ht⟩ := Formalism.FG.SolveVAux.degree_eq_one (e - Finsupp.single s 1) he'
   refine ⟨s, t, ?_⟩
@@ -118,7 +118,7 @@ theorem quad_form (q : MvPowerSeries (Fin 1 × Fin N) S) (hq0 : constantCoeff q 
     rw [if_neg, mul_zero]
     rintro rfl
     apply hdeg
-    rw [map_add, Finsupp.degree_single, Finsupp.degree_single]
+    rw [map_add (f := _), Finsupp.degree_single, Finsupp.degree_single]
 
 end KAVal
 

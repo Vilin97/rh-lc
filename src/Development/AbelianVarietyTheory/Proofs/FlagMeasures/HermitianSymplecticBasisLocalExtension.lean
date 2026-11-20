@@ -87,7 +87,7 @@ theorem hf_sub_l {N : ℕ} (Hm : Matrix (Fin N) (Fin N) R) (a b y : Fin N → R)
   simp [hf, sub_mul, Finset.sum_sub_distrib]
 
 theorem exists_bound1 (x : R) : ∃ e ∈ 𝒪[K], e ≠ 0 ∧ Sm L e⁻¹ x := by
-  obtain ⟨t, ht⟩ := (L.cj_fix (x + L.cj x)).1 (by rw [map_add, L.cj_cj, add_comm])
+  obtain ⟨t, ht⟩ := (L.cj_fix (x + L.cj x)).1 (by rw [map_add (f := _), L.cj_cj, add_comm])
   obtain ⟨n, hn⟩ := (L.cj_fix (x * L.cj x)).1 (by rw [map_mul, L.cj_cj, mul_comm])
   have key : ∀ k : K, ∃ c ∈ 𝒪[K], c ≠ 0 ∧ c * k ∈ 𝒪[K] := by
     intro k
@@ -224,7 +224,7 @@ theorem bc_piQ (A : Places F E sig) (p : HeightOneSpectrum (𝓞 F)) {N r : ℕ}
     fun x y => ((GlobalTheory.HL.RatExt.rational_extend A N p).2.2.2.2.1 Hm x y).symm
   funext j
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [piQ, piL, Places.bc, map_sub, map_sum, map_add, map_mul, h5]
+    simp only [piQ, piL, Places.bc, map_sub, map_sum, map_add (f := _), map_mul, h5]
 
 end Global
 
@@ -355,13 +355,13 @@ theorem strong_approx_params : ∀ {F E : Type} [Field F] [NumberField F] [Field
     haveI := (A.loc p).char0
     have hcH : (A.L p).cj (hf (A.L p) (Hm.map (A.loc p).ιE) (up p) (up p)) =
         hf (A.L p) (Hm.map (A.loc p).ιE) (up p) (up p) := by
-      rw [← hs p, map_add, (A.L p).cj_cj, add_comm]
+      rw [← hs p, map_add (f := _), (A.L p).cj_cj, add_comm]
     have hct : (A.L p).cj ((A.loc p).ιE t) = (A.loc p).ιE t := by
       rw [A.L_cj, (A.loc p).cj_ιE, ht, hq_swap A Hm hH]
     have h2 : algebraMap (A.loc p).Fp (A.loc p).Ep 2⁻¹ * 2 = 1 := by
       rw [← map_ofNat (algebraMap (A.loc p).Fp (A.loc p).Ep) 2, ← map_mul, inv_mul_cancel₀ two_ne_zero,
         map_one]
-    simp only [y, map_add, map_mul, map_sub, AlgEquiv.commutes, hcH, hct]
+    simp only [y, map_add (f := _), map_mul, map_sub, AlgEquiv.commutes, hcH, hct]
     linear_combination ((A.loc p).ιE t - hf (A.L p) (Hm.map (A.loc p).ιE) (up p) (up p)) * h2 + hs p
   obtain ⟨s, hs1, hs2⟩ := (GlobalTheory.T.strong_approximation_additive_quadratic_extension A d hd).2.2 t y hyO hytr
   refine ⟨u, s, horthu, hs1, fun p => ⟨fun j => ?_, ?_⟩⟩

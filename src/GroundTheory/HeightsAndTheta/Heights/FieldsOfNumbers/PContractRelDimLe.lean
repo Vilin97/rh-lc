@@ -79,7 +79,7 @@ theorem exists_rename_eq_killBlocks_compl (x : MRing ι' F) :
   | add p q hp hq =>
     obtain ⟨a, ha⟩ := hp
     obtain ⟨b, hb⟩ := hq
-    exact ⟨a + b, by rw [map_add, ha, hb, map_add]⟩
+    exact ⟨a + b, by rw [map_add (f := _), ha, hb, map_add (f := _)]⟩
   | mul_X p v hp =>
     obtain ⟨a, ha⟩ := hp
     obtain ⟨k', i⟩ := v

@@ -178,7 +178,7 @@ theorem exists_mul_pow_eq_aeval {ι₀ : Type} (x : ι₀ → Ω) (j : Unit → 
     obtain ⟨D₁, g₁, h₁⟩ := hu
     obtain ⟨D₂, g₂, h₂⟩ := hv
     refine ⟨D₁ + D₂, g₁ * X (j ()) ^ D₂ + g₂ * X (j ()) ^ D₁, ?_⟩
-    simp only [map_add, map_mul, map_pow, aeval_X, ← h₁, ← h₂]
+    simp only [map_add (f := _), map_mul, map_pow, aeval_X, ← h₁, ← h₂]
     ring
   | mul u v _ _ hu hv =>
     obtain ⟨D₁, g₁, h₁⟩ := hu

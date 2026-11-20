@@ -94,7 +94,7 @@ def cornerMap (ϖ : w.adicCompletion E) (a b i j : ℕ) (hi : i ≤ a) :
     have : (⟨_, corner_mem hi (X + Y) p⟩ : w.adicCompletionIntegers E) =
         ⟨_, corner_mem hi X p⟩ + ⟨_, corner_mem hi Y p⟩ :=
       Subtype.ext (by simp [mul_add])
-    simp only [this, map_add, Pi.add_apply]
+    simp only [this, map_add (f := _), Pi.add_apply]
 
 theorem cornerMap_apply (ϖ : w.adicCompletion E) (a b i j : ℕ) (hi : i ≤ a) (W : latD ϖ a b i j)
     (p : Fin i × Fin (b - j)) :

@@ -12,7 +12,7 @@ variable {E k : Type} [Field E] [NumberField E] [Field k] [ValuativeRel k] [Topo
 def vI (h : IsCompl P q ι ϖ) (γ : ValueGroupWithZero k) : Ideal (𝓞 E) where
   carrier := {x | valuation k (ι (x : E)) ≤ γ}
   add_mem' {a b} ha hb := by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact le_trans (Valuation.map_add _ _ _) (max_le ha hb)
   zero_mem' := by simp
   smul_mem' c x hx := by

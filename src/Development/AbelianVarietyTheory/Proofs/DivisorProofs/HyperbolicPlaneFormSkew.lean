@@ -190,7 +190,7 @@ theorem finite_of_gelf (h : IsCMExt F E σ) (hJ : IsHermND σ J) (τ : ∀ w : I
   have hmem := GlobalTheory.T.centre_generated_by_gelfand GlobalTheory.T.relativeCentre' _ _ n X hG hc U (A.sum_mem fun l hl => A.smul_mem (hu l hl) _) fun w a b => by
     obtain ⟨γ₁, γ₂, h1, h2, e⟩ := exists_lines h hJ (τ w) (Matrix.single a b 1)
     change D w _ * U = U * D w _
-    rw [e, map_add, map_smul (D w) Complex.I, add_mul, mul_add, smul_mul_assoc, mul_smul_comm, hline w _ _ h1,
+    rw [e, map_add (f := _), map_smul (D w) Complex.I, add_mul, mul_add, smul_mul_assoc, mul_smul_comm, hline w _ _ h1,
       hline w _ _ h2]
   have key : ∀ a ∈ Algebra.adjoin ℂ (Set.range fun p : InfinitePlace F × ℕ => gelfA (X p.1) p.2), ∀ x ∈ W, a x ∈ W := by
     intro a ha

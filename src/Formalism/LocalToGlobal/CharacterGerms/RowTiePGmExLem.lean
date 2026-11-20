@@ -289,7 +289,7 @@ theorem resid {R : Type} [CommRing R] {d : ℕ} [NeZero d] (ψ : ZMod d → R �
   let P : Ideal R :=
     { carrier := {x | V.MM (ψ 0 x)}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_ofPred_eq, map_add] at *; exact mm_add ha hb
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at *; exact mm_add ha hb
       zero_mem' := by simp only [Set.mem_ofPred_eq, map_zero]; exact mm_zero
       smul_mem' := fun c x hx => by
         simp only [Set.mem_ofPred_eq, smul_eq_mul, map_mul] at *; exact mm_int_mul (hint 0 c) hx }
@@ -386,7 +386,7 @@ theorem resid {R : Type} [CommRing R] {d : ℕ} [NeZero d] (ψ : ZMod d → R �
   obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective z
   refine ⟨x, ?_⟩
   have h1 : Ideal.Quotient.mk P (x ^ ((V.l ^ d - 1) / 2) + 1) = 0 := by
-    rw [map_add, map_pow, hz, map_one, neg_add_cancel]
+    rw [map_add (f := _), map_pow, hz, map_one, neg_add_cancel]
   have h2 := (hmem _).1 (Ideal.Quotient.eq_zero_iff_mem.1 h1)
   rwa [map_add, map_pow, map_one] at h2
 

@@ -155,7 +155,7 @@ theorem absCombo {C : Type*} [CommRing C] [Algebra ℂ C] (κ : C →ₐ[ℂ] R)
     κ φ1 * ((-N - cu • b) + b) + κ φ2 * (-N - cv • b) = κ ψ1 * ((-N - cv • b) + b) + κ ψ2 * (-N - cu • b) := by
   have e1 := congrArg (fun f => κ f * N) h1
   have e2 := congrArg (fun f => κ f * b) h2
-  simp only [map_add, map_sub, map_smul, add_mul, sub_mul, smul_mul_assoc] at e1 e2
+  simp only [map_add (f := _), map_sub, map_smul, add_mul, sub_mul, smul_mul_assoc] at e1 e2
   simp only [mul_add, mul_sub, mul_neg, mul_smul_comm]
   linear_combination (norm := module) -e1 + e2
 
@@ -797,8 +797,8 @@ theorem ev_eq_sum (Y : ℂ) (p : B[X]) : ev Y p = ∑ i ∈ p.support, Y ^ i •
 
 theorem ev_comp (Y c : ℂ) (p : B[X]) : ev Y (p.comp (X + C (algebraMap ℂ B c))) = ev (Y + c) p := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [add_comp, map_add, map_add, hp, hq]
-  | monomial n a => rw [monomial_comp, map_mul, map_pow, map_add, ev_C, ev_X, ev_C, ev_monomial, map_add]
+  | add p q hp hq => rw [add_comp, map_add (f := _), map_add (f := _), hp, hq]
+  | monomial n a => rw [monomial_comp, map_mul, map_pow, map_add (f := _), ev_C, ev_X, ev_C, ev_monomial, map_add (f := _)]
 
 def IsPoly (F : ℂ → B) : Prop := ∃ p : B[X], ∀ Y, F Y = ev Y p
 
@@ -810,7 +810,7 @@ theorem IsPoly.const (a : B) : IsPoly (fun _ => a) := ⟨C a, fun Y => (ev_C Y a
 
 theorem IsPoly.add {F G : ℂ → B} (hF : IsPoly F) (hG : IsPoly G) : IsPoly (fun Y => F Y + G Y) := by
   obtain ⟨p, hp⟩ := hF; obtain ⟨q, hq⟩ := hG
-  exact ⟨p + q, fun Y => by show F Y + G Y = _; rw [map_add, hp, hq]⟩
+  exact ⟨p + q, fun Y => by show F Y + G Y = _; rw [map_add (f := _), hp, hq]⟩
 
 theorem IsPoly.sub {F G : ℂ → B} (hF : IsPoly F) (hG : IsPoly G) : IsPoly (fun Y => F Y - G Y) := by
   obtain ⟨p, hp⟩ := hF; obtain ⟨q, hq⟩ := hG
@@ -1370,7 +1370,7 @@ theorem raising_lowering_commutator_alt (hSc : SSScalar) (hSh : SSShift) (hR : R
     absC _ _ _ _ _ _ _ _ hGGi hGdef czzb.eq cGiz.eq cGizb.eq nz nGi nszb nsGi (hCurv P), ti_mul, ti_mul,
     absFin _ _ _ _ cK, ← mul_smul_comm, ← mul_smul_comm, ← mul_sub]
   refine congrArg (fun t => ggiA P * ggiA P * t) ?_
-  rw [← map_smul, ← map_smul, ← map_sub, ← map_one (kap P), ← map_smul, ← map_add, ← map_add]
+  rw [← map_smul, ← map_smul, ← map_sub, ← map_one (kap P), ← map_smul, ← map_add (f := _), ← map_add (f := _)]
   refine congrArg (kap P) (funext fun π => ?_)
   have := pf P hP π u (h0 π) (h1 π) (h2 π)
   simp only [Pi.add_apply, Pi.smul_apply, Pi.sub_apply, Pi.one_apply, smul_eq_mul]

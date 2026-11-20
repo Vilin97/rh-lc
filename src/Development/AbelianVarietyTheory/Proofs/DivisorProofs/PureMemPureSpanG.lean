@@ -57,7 +57,7 @@ theorem pureSpanG_deriv (P : Submodule ℂ (SInf F (Fin n × Fin d))) (T : ℝ �
     refine ⟨y₁ + z₁, add_mem hy₁ hz₁, fun x => ?_⟩
     have h2 := (hyd x).add (hzd x)
     have e : ((fun t => T t y x) + fun t => T t z x) = fun t => T t (y + z) x := by
-      funext t; simp [map_add]
+      funext t; simp [map_add (f := _)]
     rw [e] at h2
     simpa using h2
   | smul c y _ hy =>
@@ -82,7 +82,7 @@ theorem pureSpanG_acts (P : Submodule ℂ (SInf F (Fin n × Fin d))) (T : Module
     rw [acts_pure' φ (hGd φ h1).1 (good_std hstd (hGd φ h1)) hact]
     exact Submodule.subset_span ⟨f₁, hf₁, φ, h1, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ c hy
 
 end Gen
@@ -365,7 +365,7 @@ theorem sup_wstable
   refine ⟨?_, ?_, ?_⟩
   · intro v h hh Φ hΦ
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hΦ
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (hNm.stab.fin v h hh a ha) (hfin v h hh b hb)
   · intro γ hγ Φ hΦ Φ₁ _ hder
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hΦ
@@ -381,14 +381,14 @@ theorem sup_wstable
       have h2 := (ha₁ x).add (hb₁d x)
       have e2 : ((fun t => om (1, γ (Multiplicative.ofAdd t)) a x) + fun t => om (1, γ (Multiplicative.ofAdd t)) b x) =
           fun t => om (1, γ (Multiplicative.ofAdd t)) (a + b) x := by
-        funext t; simp [map_add]
+        funext t; simp [map_add (f := _)]
       rw [e2] at h2
       exact (hder x).unique h2
     rw [e]
     exact Submodule.add_mem_sup ha₁N hb₁
   · intro k hk Φ hΦ
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hΦ
-    rw [map_add]
+    rw [map_add (f := _)]
     refine Submodule.add_mem_sup (hNm.stab.cpt k hk a ha) (pureSpanG_acts M Gd P (om (1, k)) hstd hGd (fun f hf => ?_) b hb)
     obtain ⟨f₁, -, hact, -⟩ := hP4 k hk f (hPl hf)
     exact ⟨f₁, hP.2.2.2.2 k hk f hf f₁ hact, hact⟩

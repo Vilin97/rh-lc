@@ -72,7 +72,7 @@ theorem aaRep_holds : AARep := by
       exact map_add (hasse X la G.w β) _ _
     refine ⟨xa + xb, ⟨fun β hβ => by rw [hs]; exact add_mem (ha1 β hβ) (hb1 β hβ), fun β hβ => ?_⟩, map_add _ _ _⟩
     convert Q.A0.add_mem (ha2 β hβ) (hb2 β hβ) using 1
-    rw [← map_add]
+    rw [← map_add (f := _)]
     exact congrArg _ (Subtype.ext (hs β))
   | smul o y _ ih =>
     classical

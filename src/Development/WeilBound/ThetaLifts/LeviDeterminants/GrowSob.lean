@@ -17,7 +17,7 @@ variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 def lineA (a : V F κ) : ℝ →+ (κ → AF F) where
   toFun t := splitE F κ (t • a, 0)
   map_zero' := by rw [zero_smul]; exact map_zero (splitE F κ)
-  map_add' s t := by rw [← map_add, Prod.mk_add_mk, add_zero, add_smul]
+  map_add' s t := by rw [← map_add (f := _), Prod.mk_add_mk, add_zero, add_smul]
 
 theorem schr_lineA (ψ : AddChar (AF F) ℂ) (a : V F κ) (t : ℝ) (Θ : (κ → AF F) → ℂ) (x : κ → AF F) :
     schr ψ (emb (t • ((a, 0) : V F κ × V F κ))) Θ x = Θ (x + lineA a t) := by
@@ -81,7 +81,7 @@ theorem slice {D : ℕ} (b : Module.Basis (Fin D) ℝ (V F κ)) : ∃ μ, IsHaar
         rw [← map_sum]
       congr 1
       exact Prod.ext (by rw [Prod.fst_sum]) (by rw [Prod.snd_sum]; simp)
-    rw [this, ← map_add, Prod.mk_add_mk, add_zero]
+    rw [this, ← map_add (f := _), Prod.mk_add_mk, add_zero]
   simp only [e1]
   rw [lintegral_add_left_eq_self (fun t => G (J (t, y))) t₀, ENNReal.coe_toNNReal (ENNReal.inv_ne_top.2 h0), hint,
     lintegral_prod (fun p => G (J p)) (hG.comp c1).measurable.aemeasurable]
@@ -101,7 +101,7 @@ theorem slice {D : ℕ} (b : Module.Basis (Fin D) ℝ (V F κ)) : ∃ μ, IsHaar
             rw [show m • u = a + -y from e]
             abel
           have : J (z, a) = J (z, y) + (m : AF F) • J (0, u) := by
-            rw [Nat.cast_smul_eq_nsmul, ← map_nsmul, ← map_add, ha']
+            rw [Nat.cast_smul_eq_nsmul, ← map_nsmul, ← map_add (f := _), ha']
             simp
           change G (J (z, y)) = G (J (z, a))
           rw [this, hinv]

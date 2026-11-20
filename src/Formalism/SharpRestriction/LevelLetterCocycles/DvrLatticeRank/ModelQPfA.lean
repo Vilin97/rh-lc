@@ -28,13 +28,13 @@ theorem smulE_mul (π' : LetA O n) (c : ZMod n) (e f : W.EE) (x : LA W T π' c) 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul y l => simp [smulE, mul_assoc]
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem smulE_one (π' : LetA O n) (c : ZMod n) (x : LA W T π' c) : smulE W T π' c 1 x = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul y l => simp [smulE]
-  | add x y hx hy => rw [map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), hx, hy]
 
 theorem smulE_comm (π' : LetA O n) (c : ZMod n) (e f : W.EE) (x : LA W T π' c) :
     smulE W T π' c e (smulE W T π' c f x) = smulE W T π' c f (smulE W T π' c e x) := by
@@ -90,11 +90,11 @@ theorem finite_of (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (π' Eπ :
     intro τ
     induction τ using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | tmul a l =>
       obtain ⟨co, s, hs⟩ := hdiv a
       rw [toLA_tmul, hs]
-      rw [map_add, TensorProduct.add_tmul]
+      rw [map_add (f := _), TensorProduct.add_tmul]
       refine add_mem ?_ ?_
       · refine Submodule.mem_sup_left ?_
         have hl : (l : LcQ W T π' c) ∈ Submodule.span O (Set.range gL) := by rw [hgL]; trivial
@@ -155,7 +155,7 @@ theorem finite_of (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (π' Eπ :
         (Finset.mem_coe.2 (Finset.mem_image.2 ⟨p, Finset.mem_univ _, rfl⟩)))
 
   have hxe : x = smulE W T π' c Ei y + smulE W T π' c Ei z := by
-    rw [← map_add, hyz, hEinv']
+    rw [← map_add (f := _), hyz, hEinv']
   have hsc : Ei * algebraMap (LetA O n) W.EE (π' * Eπ ^ (2 * h')) =
       algebraMap (LetA O n) W.EE (π' ^ 1) * algebraMap (LetA O n) W.EE (Eπ ^ h') := by
     have hvv : (((u ^ h')⁻¹ : W.EEˣ) : W.EE) * ((u ^ h' : W.EEˣ) : W.EE) = 1 := Units.inv_mul _
@@ -173,7 +173,7 @@ theorem finite_of (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (π' Eπ :
     Subtype.ext (by rw [Submodule.coe_add]; exact hxe)
   have hz0 : mkQ ⟨_, hzL⟩ = 0 := (Submodule.Quotient.mk_eq_zero _).2 hzN
   show mkQ ⟨x, hx0⟩ ∈ _
-  rw [hsplit, map_add, hz0, add_zero]
+  rw [hsplit, map_add (f := _), hz0, add_zero]
   exact hyL2
 
 theorem tf_of (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (π' Eπ : LetA O n) (h' : ℕ) (c : ZMod n)
@@ -230,7 +230,7 @@ theorem range_iff {ι : Type} [Fintype ι] [DecidableEq ι] (π' : LetA O n) (c 
       obtain ⟨g, hg, e⟩ := hx i
       obtain ⟨g', hg', e'⟩ := hy i
       refine ⟨g + g', add_mem hg hg', ?_⟩
-      rw [map_add, map_add, Finsupp.add_apply, e, e', mul_add, map_add]
+      rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, e, e', mul_add, map_add (f := _)]
     | tmul a l =>
       intro i
       refine ⟨algebraMap O (LetA O n) (bL.repr l i) * a, mul_mem (Subalgebra.algebraMap_mem _ _) a.2, ?_⟩
@@ -251,7 +251,7 @@ theorem coord_smulE {ι : Type} [Fintype ι] [DecidableEq ι] (π' : LetA O n) (
       e * TensorProduct.equivFinsuppOfBasisRight bL z i := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, Finsupp.add_apply, hx, hy, map_add, Finsupp.add_apply, mul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, hx, hy, map_add (f := _), Finsupp.add_apply, mul_add]
   | tmul m l =>
     rw [smulE_tmul, TensorProduct.equivFinsuppOfBasisRight_apply_tmul, TensorProduct.equivFinsuppOfBasisRight_apply_tmul,
       Finsupp.mapRange_apply, Finsupp.mapRange_apply, mul_smul_comm]

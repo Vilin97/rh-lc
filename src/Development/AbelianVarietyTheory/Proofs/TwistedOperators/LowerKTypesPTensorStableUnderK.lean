@@ -141,7 +141,7 @@ def vmGen (a₀ : W →ₗ[ℂ] W) (Y : Matrix (Fin n) (Fin n) ℂ) :
     (∑ d, Y d q.1 • G (d, q.2)) + (∑ c, star (Y c q.2) • G (q.1, c)) + a₀ (G q)
   map_add' F G := by
     ext q
-    simp only [PiLp.add_apply, smul_add, Finset.sum_add_distrib, map_add]
+    simp only [PiLp.add_apply, smul_add, Finset.sum_add_distrib, map_add (f := _)]
     abel
   map_smul' c G := by
     ext q
@@ -299,7 +299,7 @@ theorem vminus_stable_under_K : ∀ (V W : Type) [NormedAddCommGroup V] [InnerPr
   choose f hf using hex
   let a₀ : W →ₗ[ℂ] W :=
     { toFun := f
-      map_add' := fun v v' => j.injective (by simp only [map_add, hf])
+      map_add' := fun v v' => j.injective (by simp only [map_add (f := _), hf])
       map_smul' := fun c v => j.injective (by simp only [map_smul, hf, RingHom.id_apply]) }
   have ha : ∀ v, j (a₀ v) = actM E ((-Y).map star) (j v) := hf
   have hJJ := Jm_mul_self ε

@@ -24,7 +24,7 @@ theorem theta_leibniz_add_const :
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun ij hij => ?_
     have := (Finset.mem_addAntidiagonal.1 hij).2.2
-    rw [← this, theta_coeff, theta_coeff, mul_add, map_add]; ring
+    rw [← this, theta_coeff, theta_coeff, mul_add, map_add (f := _)]; ring
   · ext r; simp [theta_coeff, mul_add]
   · intro c; ext r
     rw [theta_coeff]

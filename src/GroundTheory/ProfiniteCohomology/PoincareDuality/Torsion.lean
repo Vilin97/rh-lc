@@ -59,7 +59,7 @@ noncomputable def zmodOfQZ (f : A →+ QZ) (hf : ∀ a, n • f a = 0) : A →+ 
   map_zero' := zmodToQZ_injective (by
     rw [Classical.choose_spec (exists_zmodToQZ_eq (hf 0)), map_zero, map_zero])
   map_add' a b := zmodToQZ_injective (by
-    rw [Classical.choose_spec (exists_zmodToQZ_eq (hf (a + b))), map_add, map_add,
+    rw [Classical.choose_spec (exists_zmodToQZ_eq (hf (a + b))), map_add (f := _), map_add (f := _),
       Classical.choose_spec (exists_zmodToQZ_eq (hf a)),
       Classical.choose_spec (exists_zmodToQZ_eq (hf b))])
 

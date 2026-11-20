@@ -130,13 +130,13 @@ theorem unram_idl {χ : (AE D)ˣ →* Circle} (hχ : UnramEverywhere D χ) (x : 
     rw [map_one]
     exact AddSubgroup.subset_closure ⟨1, fun v => by simp, 1, rfl⟩
   have key : ∀ y : k, valuation k y ≤ 1 → finPart D (q.sec y + (1 - q.e)) ∈ intAE D := fun y hy => by
-    rw [RingHom.map_add, RingHom.map_sub, ← sec_one]
+    rw [RingHom.map_add (f := _), RingHom.map_sub, ← sec_one]
     exact add_mem ((q.int_iff y).1 hy) (sub_mem one ((q.int_iff 1).1 (one_mem _)))
   refine hχ _ ?_ (key _ hx.le) (key _ (by simp [hx]))
   have h1 : infPart D (q.sec x) = 0 := (GlobalTheory.FrameGlob.sec_mem_idAt q x).1
   have h2 : infPart D q.e = 0 := (GlobalTheory.FrameGlob.e_mem_idAt q).1
   change infPart D (q.sec x + (1 - q.e)) = 1
-  rw [RingHom.map_add, RingHom.map_sub, h1, h2, RingHom.map_one, zero_add, sub_zero]
+  rw [RingHom.map_add (f := _), RingHom.map_sub, h1, h2, RingHom.map_one, zero_add, sub_zero]
 
 theorem res_idl {PP : Formalism.L2.DIV.Pl D.host.E} (h : IsIdemAt q.e PP) {χ : (AE D)ˣ →* Circle} {H : Formalism.L2.Host.HChar D.host.E}
     {c : (Formalism.L2.DIV.kP PP)ˣ →* ℂˣ} (hχ : Formalism.IndefR.Links.ChrEq χ H) (hr : Formalism.IndefR.Links.IsRes H PP c) (x : kˣ)
@@ -227,7 +227,7 @@ theorem exists_unif {PP : Formalism.L2.DIV.Pl D.host.E} (h : IsIdemAt q.e PP) {�
     { toFun := fun u => ψ (t⁻¹ * prO q (l u))
       map_zero_eq_one' := by rw [wd _ 0 (by rw [hl, map_zero])]; simp
       map_add_eq_mul' := fun a b => by
-        rw [wd _ (l a + l b) (by rw [map_add, hl, hl, hl]), map_add, mul_add, AddChar.map_add_eq_mul, Circle.coe_mul] }
+        rw [wd _ (l a + l b) (by rw [map_add (f := _), hl, hl, hl]), map_add (f := _), mul_add, AddChar.map_add_eq_mul, Circle.coe_mul] }
   have hα : ∀ z, α (Ideal.Quotient.mk _ z) = ψ (t⁻¹ * prO q z) := fun z => congrArg (fun c : Circle => (c : ℂ)) (wd _ z (hl _))
   haveI := PP.isMaximal
   letI := Ideal.Quotient.field PP.asIdeal

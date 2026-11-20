@@ -69,7 +69,7 @@ theorem factor_mem_cocycles_pow_quot (ρ : Representation O G M) (a : O) {m n : 
   refine ⟨(continuous_factor a h).comp hz.1, fun g g' => ?_⟩
   show Submodule.factor _ (z (g * g')) = Submodule.factor _ (z g) +
     quotRep ρ a m g (Submodule.factor (powSub_anti (M := M) a h) (z g'))
-  rw [hz.2 g g', map_add]
+  rw [hz.2 g g', map_add (f := _)]
   congr 1
   obtain ⟨y, hy⟩ := Submodule.Quotient.mk_surjective _ (z g')
   rw [← hy]

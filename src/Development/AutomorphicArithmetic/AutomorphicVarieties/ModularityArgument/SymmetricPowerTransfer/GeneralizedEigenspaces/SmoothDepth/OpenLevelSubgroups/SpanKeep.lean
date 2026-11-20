@@ -87,7 +87,7 @@ theorem UpperTheory.V.Z.Sym.Al.spanKeep :
       rw [map_zero, smul_zero]
     · intro a b _ _ ha hb
       unfold EigAt at ha hb ⊢
-      rw [map_add, ha, hb, smul_add]
+      rw [map_add (f := _), ha, hb, smul_add]
     · intro t a _ ha
       unfold EigAt at ha ⊢
       rw [map_smul, ha, smul_comm]

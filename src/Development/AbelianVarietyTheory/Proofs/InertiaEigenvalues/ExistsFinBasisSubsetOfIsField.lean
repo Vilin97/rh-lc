@@ -61,7 +61,7 @@ theorem spans_dual_base {V : Type} [AddCommGroup V] [Module Qp V] [FiniteDimensi
     | zero => simp only [smul_zero, map_zero, mul_zero]
     | tmul v a => simp only [hsm, mulR, AlgebraTensorModule.map_tmul, LinearMap.id_apply,
         LinearMap.mulLeft_apply, hκ, mul_smul_comm]
-    | add y₁ y₂ h₁ h₂ => simp only [smul_add, map_add, h₁, h₂, mul_add]
+    | add y₁ y₂ h₁ h₂ => simp only [smul_add, map_add (f := _), h₁, h₂, mul_add]
   have hdec : ∀ y : V ⊗[Qp] F, y = ∑ k, κ k y • (bV k ⊗ₜ[Qp] (1 : F)) := by
     intro y
     induction y using TensorProduct.induction_on with
@@ -74,7 +74,7 @@ theorem spans_dual_base {V : Type} [AddCommGroup V] [Module Qp V] [FiniteDimensi
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [TensorProduct.smul_tmul, Basis.coord_apply]
     | add y₁ y₂ h₁ h₂ =>
-      simp only [map_add, add_smul, Finset.sum_add_distrib]
+      simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
       exact congrArg₂ (· + ·) h₁ h₂
   have hspanD : Submodule.span F (DdR PD ρ : Set (V ⊗[Qp] F)) = ⊤ := by
     refine eq_top_iff.2 fun y _ => ?_
@@ -101,7 +101,7 @@ theorem spans_dual_base {V : Type} [AddCommGroup V] [Module Qp V] [FiniteDimensi
     induction y using TensorProduct.induction_on with
     | zero => simp only [smul_zero, map_zero]
     | tmul v a => simp [hsm, mulR, actVdR]
-    | add y₁ y₂ h₁ h₂ => simp only [smul_add, map_add, h₁, h₂]
+    | add y₁ y₂ h₁ h₂ => simp only [smul_add, map_add (f := _), h₁, h₂]
   have hcoord : ∀ g i (y : V ⊗[Qp] F), E.coord i (actVdR PD ρ g y) = PD.actdR g (E.coord i y) := by
     intro g i y
     have h1 : actVdR PD ρ g y = ∑ j, PD.actdR g (E.repr y j) • E j := by
@@ -139,14 +139,14 @@ theorem spans_dual_base {V : Type} [AddCommGroup V] [Module Qp V] [FiniteDimensi
     | zero => simp only [map_zero, mul_zero]
     | tmul v' a => simp only [mulR, AlgebraTensorModule.map_tmul, LinearMap.id_apply,
         LinearMap.mulLeft_apply, hπ, mul_smul_comm]
-    | add z₁ z₂ h₁ h₂ => simp only [map_add, h₁, h₂, mul_add]
+    | add z₁ z₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂, mul_add]
   have hπact : ∀ g x z, π (ρ g x) (actVdR PD ρ' g z) = PD.actdR g (π x z) := by
     intro g x z
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul v' a =>
       simp [actVdR, hπ, hβ, Algebra.smul_def, IsScalarTower.algebraMap_apply Qp K F]
-    | add z₁ z₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+    | add z₁ z₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
   have hzdec : ∀ z : V' ⊗[Qp] F, z = ∑ j, w j ⊗ₜ π (bV j) z := by
     intro z
     induction z using TensorProduct.induction_on with
@@ -158,7 +158,7 @@ theorem spans_dual_base {V : Type} [AddCommGroup V] [Module Qp V] [FiniteDimensi
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [TensorProduct.smul_tmul]
     | add z₁ z₂ h₁ h₂ =>
-      simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib]
       exact congrArg₂ (· + ·) h₁ h₂
   have hπext : ∀ z z' : V' ⊗[Qp] F, (∀ x, π x z = π x z') → z = z' := by
     intro z z' hz
@@ -226,7 +226,7 @@ theorem spans_resRep_iff (ρ : Representation LL G V) : Spans PD (resRep Qp ρ) 
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul v c => simp [mulR]
-    | add x z hx hz => rw [map_add, map_add, hx, hz]
+    | add x z hx hz => rw [map_add (f := _), map_add (f := _), hx, hz]
   have hd : ∀ y : V ⊗[Qp] F, y ∈ DdR PD (resRep Qp ρ) ↔ y ∈ DdR PD ρ := by
     intro y
     have ha : ∀ g, actVdR PD (resRep Qp ρ) g y = actVdR PD ρ g y := by
@@ -234,7 +234,7 @@ theorem spans_resRep_iff (ρ : Representation LL G V) : Spans PD (resRep Qp ρ) 
       induction y using TensorProduct.induction_on with
       | zero => simp only [map_zero]
       | tmul v c => simp [actVdR, resRep]
-      | add x z hx hz => rw [map_add, map_add, hx, hz]
+      | add x z hx hz => rw [map_add (f := _), map_add (f := _), hx, hz]
     simp only [DdR, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply, ha]
   unfold Spans
   simp only [hd, hm]
@@ -251,10 +251,10 @@ theorem spans_dual [FiniteDimensional Qp LL] [CharZero Qp] [FiniteDimensional LL
   have hV'f : FiniteDimensional Qp V' := Module.Finite.trans LL V'
   let tr : LL →ₗ[Qp] Qp := Algebra.trace Qp LL
   let β₀ : V →ₗ[Qp] V' →ₗ[Qp] Qp := LinearMap.mk₂ Qp (fun x y => tr (β x y))
-    (fun x₁ x₂ y => by simp only [map_add, LinearMap.add_apply])
+    (fun x₁ x₂ y => by simp only [map_add (f := _), LinearMap.add_apply])
     (fun c x y => by
       simp only [LinearMap.map_smul_of_tower, LinearMap.smul_apply, map_smul])
-    (fun x y₁ y₂ => by simp only [map_add])
+    (fun x y₁ y₂ => by simp only [map_add (f := _)])
     (fun c x y => by simp only [LinearMap.map_smul_of_tower, map_smul])
   have hβ₀ : ∀ g x y, β₀ (resRep Qp ρ g x) (resRep Qp ρ' g y) = β₀ x y := by
     intro g x y

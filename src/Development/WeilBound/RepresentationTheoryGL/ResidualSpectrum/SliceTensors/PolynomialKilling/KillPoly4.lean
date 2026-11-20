@@ -35,7 +35,7 @@ theorem killPoly4 : KillPoly := by
       rw [e]
       exact hmem _
     | zero => rw [map_zero]; exact V.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact V.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact V.add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact V.smul_mem c hx
   have hcV : ∀ x ∈ V, ∀ g, Continuous fun t => x (a t * g) := by
     intro x hx

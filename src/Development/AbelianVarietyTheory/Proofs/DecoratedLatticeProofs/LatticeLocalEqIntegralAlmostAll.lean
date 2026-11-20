@@ -83,7 +83,7 @@ theorem repr_map (f : A →ₐ[F] B) (a : A ⊗[F] E) (k : ι) :
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [Algebra.TensorProduct.basis_repr_tmul]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 end Tensor
 
@@ -203,7 +203,7 @@ theorem plc_finPart (v : Pl D) (a : AE D) : plc v (finPart D a) = pairA D.host.F
     show pairA D.host.F 0 (singleV D.host.F v 1 * a.2) ⊗ₜ[D.host.F] x = _
     congr 1
     exact Prod.ext (zero_mul _).symm rfl
-  | add x y hx hy => rw [RingHom.map_add, AddMonoidHom.map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [RingHom.map_add (f := _), AddMonoidHom.map_add (f := _), hx, hy, smul_add]
 
 theorem eventually_latV_iff : ∀ (D : D7) (S : HSp D) (L : Lat S), Submodule.IsLattice D.host.E L → ∀ᶠ v : Pl D in cofinite, ∀ y : Fin S.rank → AE D, y ∈ latV S L (· = v) ↔ ∀ i, y i ∈ intAt D (· = v) := by
   intro D S L hL

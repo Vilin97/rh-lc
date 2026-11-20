@@ -33,7 +33,7 @@ def resChar {R : Type} [CommRing R] [IsLocalRing R] (f : R → ℂ) (hadd : ∀ 
     exact hm 0 (Ideal.zero_mem _)
   map_add_eq_mul' x y := by
     rw [← hadd]
-    exact res_key f hadd hm _ _ (by rw [map_add, res_surjInv, res_surjInv, res_surjInv])
+    exact res_key f hadd hm _ _ (by rw [map_add (f := _), res_surjInv, res_surjInv, res_surjInv])
 
 theorem resChar_residue {R : Type} [CommRing R] [IsLocalRing R] (f : R → ℂ) (hadd : ∀ a b, f (a + b) = f a * f b)
     (hm : ∀ a ∈ IsLocalRing.maximalIdeal R, f a = 1) (a : R) :
@@ -111,7 +111,7 @@ theorem fst_dual (e : E ⊗[F] v.adicCompletion F) (he : sp e = (1, 0)) (P : Pro
     (hx : x - (if P then e else 0) = (c : E ⊗[F] v.adicCompletion F) * s) :
     (sp x).1 = (if P then 1 else 0) + (c : v.adicCompletion F) * (sp s).1 := by
   rw [sub_eq_iff_eq_add] at hx
-  rw [hx, map_add, map_mul, map_natCast, Prod.fst_add, Prod.fst_mul, Prod.fst_natCast]
+  rw [hx, map_add (f := _), map_mul, map_natCast, Prod.fst_add, Prod.fst_mul, Prod.fst_natCast]
   split_ifs
   · rw [he]; ring
   · rw [map_zero]; simp
@@ -149,7 +149,7 @@ theorem local_frame_first_factor : ∀ (F E : Type) [Field F] [NumberField F] [F
   have hFadd : ∀ x y, Fk (x + y) = Fk x * Fk y := by
     intro x y
     simp only [Fk]
-    rw [← hpsi_add, ← map_add, ← mul_add, ← map_add, Prod.mk_add_mk, add_zero]
+    rw [← hpsi_add, ← map_add (f := _), ← mul_add, ← map_add (f := _), Prod.mk_add_mk, add_zero]
   have hFg : ∀ w ∈ v.adicCompletionIntegers F, Fk ((g : v.adicCompletion F) * w) = 1 := by
     intro w hw
     simp only [Fk]

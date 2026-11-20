@@ -18,7 +18,7 @@ theorem _root_.GlobalTheory.TorsIsometry.exists_eq_nsmul_of_dvd {M : Type} [AddC
   let φ : M →ₗ[ℤ] ℤ :=
     { toFun := fun b => B d b / n
       map_add' := fun x y => by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact Int.add_ediv_of_dvd_left (hd x)
       map_smul' := fun c x => by
         simp only [map_zsmul, smul_eq_mul, RingHom.id_apply]

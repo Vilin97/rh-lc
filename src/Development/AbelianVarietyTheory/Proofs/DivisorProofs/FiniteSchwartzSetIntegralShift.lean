@@ -100,7 +100,7 @@ theorem finPart : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
   let T : (Fin n → E) →+ (Fin n × Fin d → AF F) × (Fin n × Fin d → AF F) :=
     { toFun := fun ξ => ef • M.co.e (Matrix.vecMulVec (incV F ξ) (incV F y))
       map_zero' := by simp [hincV0]
-      map_add' := fun ξ ξ' => by simp only [hincVadd, Matrix.add_vecMulVec, map_add, smul_add] }
+      map_add' := fun ξ ξ' => by simp only [hincVadd, Matrix.add_vecMulVec, map_add (f := _), smul_add] }
 
   have hdec : ∀ ξ : Fin n → E, M.co.rho B.ψ (Matrix.vecMulVec (incV F ξ) (incV F y)) Ψ =
       M.co.rho B.ψ (realAd F 1 • Matrix.vecMulVec (incV F ξ) (incV F y)) (schr B.ψ (T ξ) Ψ) := by
@@ -183,7 +183,7 @@ theorem finPart : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       refine ⟨a + a', b + b', fun i => ?_, fun i => ?_, ?_⟩
       · simpa [mul_add] using (ha i).add (ha' i)
       · simpa [mul_add] using (hb i).add (hb' i)
-      · rw [map_add, he, he']
+      · rw [map_add (f := _), he, he']
         ext i <;> simp [emb, mul_add]
     | smul k ξ _ h =>
       obtain ⟨a, b, ha, hb, he⟩ := h
@@ -222,7 +222,7 @@ theorem finPart : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       push_cast
       ring
     show schr B.ψ (T (ρ + K • η)) Ψ = schr B.ψ (T ρ) Ψ
-    rw [map_add, map_zsmul, he, he', hK1]
+    rw [map_add (f := _), map_zsmul, he, he', hK1]
     funext x
     rw [schr_add, hfix _ _ (hemb_int m₀ _ (hKint a ha)) (hemb_int m₀ _ (hKint b hb))]
 

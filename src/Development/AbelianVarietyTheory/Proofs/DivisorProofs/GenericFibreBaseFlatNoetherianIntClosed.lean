@@ -70,7 +70,7 @@ theorem flat_noetherian_nzd_intClosed : ∀ (A : Type) [CommRing A] [IsDomain A]
       | add u v hu hv =>
         obtain ⟨a, ha⟩ := hu
         obtain ⟨b, hb⟩ := hv
-        exact ⟨a + b, by rw [map_add, Subalgebra.coe_add, ha, hb, TensorProduct.add_tmul]⟩
+        exact ⟨a + b, by rw [map_add (f := _), Subalgebra.coe_add, ha, hb, TensorProduct.add_tmul]⟩
     obtain ⟨b, hb⟩ := key y
     refine ⟨b, ?_⟩
     apply e.injective

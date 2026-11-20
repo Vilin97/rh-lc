@@ -49,7 +49,7 @@ theorem frob_matrix_isUnit : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [
   have hσm : ∀ b, F.θ b ∈ IsLocalRing.maximalIdeal O → F.θ (F.σ b) ∈ IsLocalRing.maximalIdeal O := by
     intro b hb
     obtain ⟨z, hz⟩ := hσ b
-    rw [hz, map_add, map_pow, map_mul, map_natCast]
+    rw [hz, map_add (f := _), map_pow, map_mul, map_natCast]
     exact Ideal.add_mem _ (Ideal.pow_mem_of_mem _ hb _ (Fact.out : p.Prime).pos)
       (Ideal.mul_mem_right _ _ hpm)
   have key : ∀ w : Fin d ⊕ Fin k → F.B, (∀ l, ¬IsUnit (F.θ (U.mulVec (fun j => F.σ (w j)) l))) →
@@ -100,7 +100,7 @@ theorem frob_matrix_isUnit : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [
   have hres : ∀ b, IsLocalRing.residue O (F.θ (F.σ b)) = IsLocalRing.residue O (F.θ b) ^ p := by
     intro b
     obtain ⟨z, hz⟩ := hσ b
-    rw [hz, map_add, map_pow, map_mul, map_natCast, map_add, map_pow, map_mul,
+    rw [hz, map_add (f := _), map_pow, map_mul, map_natCast, map_add (f := _), map_pow, map_mul,
       (IsLocalRing.residue_eq_zero_iff _).2 hpm, zero_mul, add_zero]
   have hk := key w (by
     intro l

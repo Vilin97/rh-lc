@@ -83,7 +83,7 @@ theorem spanP_of (h : DensLow R) : Formalism.IndefR.Eqv.Act.SpanP R := by
       rw [map_smul, PiTensorProduct.map_tprod, map_smul, PiTensorProduct.lift.tprod]
       simp only [Submodule.subtype_apply]
       rw [hvan0 v, smul_zero]
-    | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
   have hspan : ∀ v : ∀ τ, M.sm τ, (∀ τ, v τ ∈ Kf τ) →
       PiTensorProduct.tprod ℂ v ∈ Submodule.span ℂ {x | ∃ φ w, Tm φ w = x} := by
     intro v hv

@@ -148,9 +148,9 @@ theorem avg_add (hψ : Continuous ψ) (hπ : IsSmooth π) (ξ : Fin (m + 1) → 
     (hA : IsLat A) (v w : V) : avg ψ h π ξ A (v + w) = avg ψ h π ξ A v + avg ψ h π ξ A w := by
   obtain ⟨p, hp, hpw⟩ := exists_avgData₂ h π ψ hψ hπ ξ hA v w
   have hpvw : AvgData ψ h π ξ A (v + w) p :=
-    avgData_of_fix h π ψ hp (fun a ha => by rw [map_add, hp.2.2.1 a ha, hpw.2.2.1 a ha])
+    avgData_of_fix h π ψ hp (fun a ha => by rw [map_add (f := _), hp.2.2.1 a ha, hpw.2.2.1 a ha])
   rw [avg_eq h π ψ hpvw, avg_eq h π ψ hp, avg_eq h π ψ hpw, ← smul_add, ← Finset.sum_add_distrib]
-  simp only [map_add, smul_add]
+  simp only [map_add (f := _), smul_add]
 
 theorem avg_smul (hψ : Continuous ψ) (hπ : IsSmooth π) (ξ : Fin (m + 1) → k) {A : AddSubgroup (Fin (m + 1) → k)}
     (hA : IsLat A) (c : ℂ) (v : V) : avg ψ h π ξ A (c • v) = c • avg ψ h π ξ A v := by

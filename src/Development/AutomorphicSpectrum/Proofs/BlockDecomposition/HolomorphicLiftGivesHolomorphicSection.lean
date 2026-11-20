@@ -194,7 +194,7 @@ theorem differentiableOn_eval₂ {E ι : Type*} [NormedAddCommGroup E] [NormedSp
     DifferentiableOn ℂ (fun v => eval₂Hom (Int.castRingHom ℂ) (g v) P) T := by
   induction P using MvPolynomial.induction_on with
   | C a => simpa only [eval₂Hom_C] using differentiableOn_const _
-  | add p q hp hq => simpa only [map_add] using hp.fun_add hq
+  | add p q hp hq => simpa only [map_add (f := _)] using hp.fun_add hq
   | mul_X p q hp => simpa only [map_mul, eval₂Hom_X'] using hp.fun_mul (hg q)
 
 theorem holo_near (m : ℕ) (n : Fin (m + 1) → ℕ) (X : Scheme.{0}) (i : X ⟶ MP ℤ m n) [IsClosedImmersion i] (D : ℕ)

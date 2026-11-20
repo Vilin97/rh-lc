@@ -37,7 +37,7 @@ theorem twist {N W : Type} [AddCommGroup N] [Fintype N] [AddCommGroup W] (e : W 
       refine Finset.sum_congr rfl fun z _ => ?_
       rw [← he, Equiv.coe_addLeft]
       congr 1
-      simp only [map_add, AddMonoidHom.add_apply]
+      simp only [map_add (f := _), AddMonoidHom.add_apply]
       abel
     exact (mul_eq_right₀ ha').1 this.symm
   refine ⟨a, ?_⟩

@@ -132,7 +132,7 @@ theorem idealSys_map_eq_extend (x : Fin (N + 1) → Ω) (qq : Ideal (Poly S N))
       exact Submodule.subset_span ⟨_, s', e, hq p hp e, hs', homogeneousComponent_isHomogeneous e p, hse', rfl⟩
     · rw [map_zero, map_zero, zero_div]; exact Submodule.zero_mem _
     · intro a b _ _ ha hb
-      rw [map_add, map_add, add_div]; exact Submodule.add_mem _ ha hb
+      rw [map_add (f := _), map_add (f := _), add_div]; exact Submodule.add_mem _ ha hb
     · intro c g _ hg
       rw [map_smul, map_smul, smul_div_assoc]
       exact Submodule.smul_of_tower_mem _ c hg

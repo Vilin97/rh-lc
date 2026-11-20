@@ -209,7 +209,7 @@ theorem dc_symm_nodal (hpos : ∀ f ∈ S, f ≠ 0 → 0 < (Q f f).re)
     induction hy using Submodule.iSup_induction' with
     | mem μ x hx => exact key μ x hx
     | zero => simp
-    | add x y _ _ hx hy => simp [map_add, hx, hy]
+    | add x y _ _ hx hy => simp [map_add (f := _), hx, hy]
   exact gen ⟨w, hw⟩ (by rw [htop]; trivial)
 
 end

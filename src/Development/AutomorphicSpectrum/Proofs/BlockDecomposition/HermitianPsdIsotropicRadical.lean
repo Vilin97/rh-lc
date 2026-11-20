@@ -11,7 +11,7 @@ theorem re_pairing_eq_zero_of_psd {V : Type} [AddCommGroup V] [Module ℂ V]
     have h := hpos (v + (t : ℂ) • u)
     have e : B (v + (t : ℂ) • u) (v + (t : ℂ) • u)
         = B v v + (t : ℂ) * B v u + (t : ℂ) * B u v + (t : ℂ) * (t : ℂ) * B u u := by
-      simp only [map_add, LinearMap.add_apply, map_smul, map_smulₛₗ, LinearMap.smul_apply,
+      simp only [map_add (f := _), LinearMap.add_apply, map_smul, map_smulₛₗ, LinearMap.smul_apply,
         smul_eq_mul, Complex.conj_ofReal]
       ring
     rw [e, hv, hB v u] at h

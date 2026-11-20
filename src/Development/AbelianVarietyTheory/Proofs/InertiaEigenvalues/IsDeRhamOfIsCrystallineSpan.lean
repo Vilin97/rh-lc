@@ -34,7 +34,7 @@ theorem act_mul_ι (g : G) (c : K) (d : V ⊗[Qp] B) :
       mulVdR (K := K) (BdR := BdR) (V := V) (LL := LL) c (ιV PD (LL := LL) (V := V) (actVB PD ρ g d)) := by
   induction d using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul v b => simp [actVdR, mulVdR, ιV, actVB, PD.ι_comm]
 
 theorem mul_ι_mem (c : K) {d : V ⊗[Qp] B} (hd : d ∈ Dcris PD ρ) :
@@ -49,7 +49,7 @@ theorem coord_mul_ι {I : Type} [DecidableEq I] (b : Basis I Qp V) (j : I) (c : 
       algebraMap K BdR c * PD.ι (equivFinsuppOfBasisLeft b d j) := by
   induction d using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, Finsupp.add_apply, ha, hb, mul_add]
+  | add a b ha hb => simp only [map_add (f := _), Finsupp.add_apply, ha, hb, mul_add]
   | tmul v y =>
     have h : ∀ q : Qp, PD.ι (q • y) = q • PD.ι y := fun q =>
       (PD.ι.toLinearMap.restrictScalars Qp).map_smul q y

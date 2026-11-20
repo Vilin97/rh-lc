@@ -15,7 +15,7 @@ theorem pot_triv_lin : ∀ (R : Type) [CommRing R] (w : ℕ) (Γ : Subgroup SL(2
     obtain ⟨p, hp⟩ := hF' γ hγ
     obtain ⟨q, hq⟩ := hG' γ hγ
     refine ⟨p + q, fun z hz => ?_⟩
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     rw [← hp z hz, ← hq z hz]; abel
   · refine ⟨fun z => MvPolynomial.isHomogeneous_zero _ _ _, fun γ _ => ⟨0, fun z _ => ?_⟩⟩
     simp
@@ -29,7 +29,7 @@ theorem pot_triv_lin : ∀ (R : Type) [CommRing R] (w : ℕ) (Γ : Subgroup SL(2
       rw [← hp z hz, smul_sub]
   · rintro F G ⟨ψ, p, hψ, hp⟩ ⟨ψ', p', hψ', hp'⟩
     refine ⟨ψ + ψ', p + p', fun γ hγ z hz => ?_, fun z hz => ?_⟩
-    · simp only [Pi.add_apply, map_add, hψ γ hγ z hz, hψ' γ hγ z hz]
+    · simp only [Pi.add_apply, map_add (f := _), hψ γ hγ z hz, hψ' γ hγ z hz]
     · simp only [Pi.add_apply, hp z hz, hp' z hz]; abel
   · rintro c F ⟨ψ, p, hψ, hp⟩
     refine ⟨c • ψ, c • p, fun γ hγ z hz => ?_, fun z hz => ?_⟩
@@ -44,6 +44,6 @@ theorem pot_triv_lin : ∀ (R : Type) [CommRing R] (w : ℕ) (Γ : Subgroup SL(2
     refine ⟨fun z => MvPolynomial.map f (ψ z), MvPolynomial.map f p, fun γ hγ z hz => ?_, fun z hz => ?_⟩
     · simp only
       rw [← (polySlash_laws R).2.2.2.2.1 S f, hψ γ hγ z hz]
-    · simp only [hp z hz, map_add]
+    · simp only [hp z hz, map_add (f := _)]
 
 end GlobalTheory.KZ

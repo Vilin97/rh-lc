@@ -271,7 +271,7 @@ theorem T_ne_g (B : Pre) (X : PreX B) (u : B.Word) (i : Fin 2) : B.T u ≠ B.hos
     have h1 := congrArg (fun z : 𝓞 B.host.E => (z : B.host.E)) (sub_eq_iff_eq_add'.1 hy)
     simpa using h1
   have hn := X.piT_norm u
-  rw [hyE, h, map_add, map_one, map_mul, map_natCast] at hn
+  rw [hyE, h, map_add (f := _), map_one, map_mul, map_natCast] at hn
   have hyb : (yb : B.host.E) = B.host.conj (y : B.host.E) := rfl
   have h2 : ((B.host.g i : ℕ) : 𝓞 B.host.E) ∣ ((1 : ℤ) : 𝓞 B.host.E) := by
     refine ⟨1 - y - yb - (B.host.g i : 𝓞 B.host.E) * y * yb, RingOfIntegers.ext ?_⟩

@@ -188,7 +188,7 @@ theorem idNF_spec (F : Formalism.MainNotions.S.FlagG S r (n : E)) (hT : ((n : �
       · intro ht
         obtain ⟨y, hy, x, hx, hxy⟩ := Submodule.mem_sup.1 ht
         have h1 : S.hT (f a) (t • F.e a) = t := by rw [map_smul, hfe, if_pos rfl, smul_eq_mul, mul_one]
-        rw [← hxy, map_add, hXa0 a x hx, add_zero] at h1
+        rw [← hxy, map_add (f := _), hXa0 a x hx, add_zero] at h1
         rw [← h1]; exact hval a y hy
       · intro ht
         apply Submodule.mem_sup_left
@@ -273,7 +273,7 @@ theorem idNF_spec (F : Formalism.MainNotions.S.FlagG S r (n : E)) (hT : ((n : �
       refine Submodule.sum_mem _ fun c _ => ?_
       have hc : S.hT (f c) x = -S.hT (f c) y := by
         have := hfc c
-        rw [map_add] at this
+        rw [map_add (f := _)] at this
         exact eq_neg_of_add_eq_zero_right this
       rw [hΛ]
       refine Submodule.mem_sup_left (Submodule.mem_sup_left (Submodule.subset_span ⟨c, _, ?_, rfl⟩))

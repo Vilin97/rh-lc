@@ -30,7 +30,7 @@ theorem exists_pos_invariant_form {G : Type} [Group G] {H : Subgroup G} [Topolog
     { carrier := {f | Integrable (descend H f) μ}
       zero_mem' := by simp
       add_mem' := fun {f g} hf hg => by
-        simp only [Set.mem_ofPred_eq, map_add] at *
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
         exact hf.add hg
       smul_mem' := fun c f hf => by
         simp only [Set.mem_ofPred_eq, map_smul] at *

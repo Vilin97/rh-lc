@@ -101,7 +101,7 @@ theorem liftV_one_smul_eq (v : Pl F) (a : AE F E) :
   | tmul x e =>
     rw [TensorProduct.smul_tmul', smul_eq_mul, liftV_one_mul]
     rfl
-  | add a b ha hb => rw [smul_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [smul_add, ha, hb, map_add (f := _), map_add (f := _)]
 
 end GlobalTheory.VacShift
 
@@ -135,7 +135,7 @@ theorem lift_smul_mem (hσ : ∀ x, σ (σ x) = x) {B : Base F E} {n d n₁ d₁
     · rw [TensorProduct.tmul_add, add_smul]
       exact add_mem hp hq
   | zero => rw [map_zero, zero_smul]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add, add_smul]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), add_smul]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg, neg_smul]; exact neg_mem hx
 
 theorem hTens_vecMulVec_gen {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (c : A →ₐ[R] A)

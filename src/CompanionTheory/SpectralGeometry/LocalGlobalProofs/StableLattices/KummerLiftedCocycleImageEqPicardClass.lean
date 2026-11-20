@@ -123,7 +123,7 @@ theorem pderiv_comm' {σ : Type} (i j : σ) (f : MvPolynomial σ ℂ) :
   | C a => simp
   | add p q hp hq => simp [hp, hq]
   | mul_X p k hp =>
-    simp only [Derivation.leibniz, map_add, smul_eq_mul, hp, pderiv_X, Pi.single_apply]
+    simp only [Derivation.leibniz, map_add (f := _), smul_eq_mul, hp, pderiv_X, Pi.single_apply]
     split_ifs <;> simp <;> ring
 
 theorem dd_comm (a b c d : Fin n) : Commute (dd ε a b) (dd ε c d) := by

@@ -65,13 +65,13 @@ theorem finrank_eq_sum [FiniteDimensional F K]
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a c => rw [hΨ]; exact W.smul_mem _ (hW c x hx)
-    | add y z hy hz => rw [map_add]; exact W.add_mem hy hz
+    | add y z hy hz => rw [map_add (f := _)]; exact W.add_mem hy hz
   have hΨE : ∀ σ, ∀ x ∈ E σ, ∀ z, Ψ z x = evalEmb F K L z σ • x := by
     intro σ x hx z
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a c => rw [hΨ, evalEmb_tmul, (hE σ x).1 hx, mul_smul]
-    | add y z hy hz => simp [map_add, hy, hz, add_smul]
+    | add y z hy hz => simp [map_add (f := _), hy, hz, add_smul]
   have hsum : ∑ τ, e τ = 1 := by
     apply (evalEmb_bijective hcard).1
     set_option synthInstance.maxHeartbeats 100000 in
@@ -172,7 +172,7 @@ theorem act_mul (g : G) (c : K) (x : V ⊗[Qp] BdR) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVdR, mulVdR_tmul]
-  | add y z hy hz => simp [map_add, hy, hz]
+  | add y z hy hz => simp [map_add (f := _), hy, hz]
 
 theorem mul_mem_DdR (c : K) (x : V ⊗[Qp] BdR) (hx : x ∈ DdR PD ρ) :
     mulVdR (K := K) (LL := LL) c x ∈ DdR PD ρ := by
@@ -189,7 +189,7 @@ theorem mul_mem_FilV (a : ℤ) (c : K) (x : V ⊗[Qp] BdR) (hx : x ∈ FilV PD (
   | tmul v b =>
     refine ⟨v ⊗ₜ ⟨c • b.1, (PD.Fil a).smul_mem c b.2⟩, ?_⟩
     simp [mulVdR_tmul, Algebra.smul_def]
-  | add y z hy hz => rw [map_add, map_add]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 theorem finrank_DdR [FiniteDimensional Qp K] (hcard : Fintype.card (K →ₐ[Qp] LL) = finrank Qp K)
     [FiniteDimensional LL ↥(DdR PD ρ)] (a : ℤ) :

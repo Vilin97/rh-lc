@@ -19,7 +19,7 @@ private theorem prodLeft_act (r : V →ₗ[Q] V) (r' : V' →ₗ[Q] V') (a : B �
         AlgebraTensorModule.map r' a (TensorProduct.prodLeft Q Q V V' B x).2) := by
   induction x with
   | tmul v b => obtain ⟨v, v'⟩ := v; simp
-  | add x y hx hy => simp only [map_add, hx, hy, Prod.fst_add, Prod.snd_add, Prod.mk_add_mk]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, Prod.fst_add, Prod.snd_add, Prod.mk_add_mk]
 
 private theorem fixT_map (r : G → V →ₗ[Q] V) (r' : G → V' →ₗ[Q] V') (a : G → B →ₗ[Q] B) :
     (fixT (fun g => (r g).prodMap (r' g)) a).map (TensorProduct.prodLeft Q Q V V' B).toLinearMap =

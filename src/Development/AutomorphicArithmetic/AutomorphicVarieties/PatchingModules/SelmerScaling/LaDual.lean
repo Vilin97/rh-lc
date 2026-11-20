@@ -17,7 +17,7 @@ private theorem UpperTheory.V.Pa.dual_functionals_finite_separating_surjective {
     induction hy using Submodule.span_induction with
     | mem x hx => exact h0 x hx
     | zero => exact map_zero μ
-    | add x z _ _ hx hz => rw [map_add, hx, hz, add_zero]
+    | add x z _ _ hx hz => rw [map_add (f := _), hx, hz, add_zero]
     | smul b x _ hx => rw [(hL μ).1 hμ b x, hx, mul_zero]
   have hfin : Module.Finite F L := by
     obtain ⟨n, s, hsp⟩ := Module.Finite.exists_fin (R := R) (M := N)
@@ -67,7 +67,7 @@ private theorem UpperTheory.V.Pa.dual_functionals_finite_separating_surjective {
     { carrier := {a | ∃ y : N, ∀ μ : L, (μ : N →+ F) y = a μ}
       add_mem' := by
         rintro a b ⟨y, hy⟩ ⟨z, hz⟩
-        exact ⟨y + z, fun μ => by rw [map_add, hy, hz]; rfl⟩
+        exact ⟨y + z, fun μ => by rw [map_add (f := _), hy, hz]; rfl⟩
       zero_mem' := ⟨0, fun μ => by simp⟩
       smul_mem' := by
         rintro c a ⟨y, hy⟩

@@ -135,10 +135,10 @@ theorem main : ∀ (N : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (π : Re
       obtain ⟨s₂, h₂⟩ := hz
       rcases le_total (valuation k (s₁ : k)) (valuation k (s₂ : k)) with h | h
       · refine ⟨s₂, fun s hs => ?_⟩
-        simp only [map_add]
+        simp only [map_add (f := _)]
         rw [integral_add (hint x s) (hint z s), h₁ s (h.trans hs), h₂ s hs, add_zero]
       · refine ⟨s₁, fun s hs => ?_⟩
-        simp only [map_add]
+        simp only [map_add (f := _)]
         rw [integral_add (hint x s) (hint z s), h₁ s hs, h₂ s (h.trans hs), add_zero]
     | smul c x _ hx =>
       obtain ⟨s₀, h₀⟩ := hx

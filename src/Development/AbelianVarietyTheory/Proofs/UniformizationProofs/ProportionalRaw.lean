@@ -59,7 +59,7 @@ theorem exists_comb {M : LB Y} (a : Γ(Y, ⊤)) (s s' : LB.Sec M) : ∃ s'' : LB
   have e : ∀ {V : Y.Opens} (h : M.U i ⊓ M.U j ≤ V), (Y.presheaf.map (homOfLE h).op).hom
       ((Y.presheaf.map (homOfLE (le_top : V ≤ ⊤)).op).hom a) = (Y.presheaf.map (homOfLE le_top).op).hom a := fun h => by
     rw [← CommRingCat.comp_apply, ← Functor.map_comp]; rfl
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   rw [e, e, s.compat i j, s'.compat i j]
   ring
 

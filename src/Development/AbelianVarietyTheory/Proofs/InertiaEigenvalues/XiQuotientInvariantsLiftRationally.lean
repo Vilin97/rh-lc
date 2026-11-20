@@ -33,7 +33,7 @@ theorem sum_co (x : T ⊗[R] M) : ∑ k, b k ⊗ₜ[R] co b k x = x := by
   | tmul t m =>
     simp only [co_tmul, ← smul_tmul]
     rw [← sum_tmul, b.sum_repr]
-  | add x y hx hy => simp only [map_add, tmul_add, Finset.sum_add_distrib, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), tmul_add, Finset.sum_add_distrib, hx, hy]
 
 theorem mem_range_iff (S : Submodule R M) (x : T ⊗[R] M) :
     x ∈ LinearMap.range (LinearMap.lTensor T S.subtype) ↔ ∀ k, co b k x ∈ S := by
@@ -44,7 +44,7 @@ theorem mem_range_iff (S : Submodule R M) (x : T ⊗[R] M) :
     | tmul t m =>
       rw [LinearMap.lTensor_tmul, co_tmul]
       exact S.smul_mem _ m.2
-    | add x y hx hy => rw [map_add, map_add]; exact S.add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact S.add_mem hx hy
   · intro h
     rw [← sum_co b x]
     exact Submodule.sum_mem _ fun k _ => ⟨b k ⊗ₜ[R] ⟨_, h k⟩, rfl⟩
@@ -64,7 +64,7 @@ def Phi (i : T →+ V) (hi : ∀ (c : R) t, i (c • t) = algebraMap R F c • i
     (hβ : ∀ (c : R) m, β (c • m) = algebraMap R F c • β m) : T ⊗[R] M →+ V ⊗[F] B :=
   TensorProduct.liftAddHom
     (AddMonoidHom.mk' (fun t => AddMonoidHom.mk' (fun m => i t ⊗ₜ[F] β m)
-      (fun m m' => by rw [map_add, tmul_add]))
+      (fun m m' => by rw [map_add (f := _), tmul_add]))
       (fun t t' => by ext m; simp [add_tmul]))
     (fun c t m => by simp [hi, hβ, smul_tmul])
 
@@ -117,13 +117,13 @@ theorem core {ι : Type} [Fintype ι] (bT : Basis ι R T) (bV : Basis ι F V)
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul t m => simp only [hΦ, map_tmul, Phi_tmul, hiρ, hβρ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hsm : ∀ (c : R) x, Φ (c • x) = algebraMap R F c • Φ x := by
     intro c x
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul t m => rw [smul_tmul', hΦ, Phi_tmul, Phi_tmul, hi, smul_tmul']
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   have hq : ∀ (N : Submodule R M) (q : G → (M ⧸ N) →ₗ[R] (M ⧸ N)),
       (∀ g m, q g (Submodule.Quotient.mk m) = Submodule.Quotient.mk (ρM g m)) → ∀ g x,
       TensorProduct.map (ρT g) (q g) (LinearMap.lTensor T N.mkQ x) =
@@ -132,7 +132,7 @@ theorem core {ι : Type} [Fintype ι] (bT : Basis ι R T) (bV : Basis ι F V)
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul t m => simp [h]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   obtain ⟨z', rfl⟩ := LinearMap.lTensor_surjective T Ne.mkQ_surjective z
   obtain ⟨w, hwG, hwa, hwe⟩ := ht (Φ z') (by
       rw [mem_range_iff bV]; intro k; rw [hco]; exact ha _) (by
@@ -159,7 +159,7 @@ theorem core {ι : Type} [Fintype ι] (bT : Basis ι R T) (bV : Basis ι F V)
       induction u using TensorProduct.induction_on with
       | zero => simp
       | tmul t m => exact ⟨ρV g t ⊗ₜ[F] ⟨_, hSb g _ m.2⟩, rfl⟩
-      | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
     rw [map_sub, map_smul, hwG] at h1
     have := Submodule.sub_mem _ hx h1
     convert this using 1

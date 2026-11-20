@@ -14,7 +14,7 @@ theorem one_le_det_one_add {𝕜 : Type*} {n : Type*} [RCLike 𝕜] [Fintype n] 
       simp only [← EuclideanSpace.inner_eq_star_dotProduct, inner_self_eq_norm_sq_to_K,
         hA.eigenvectorBasis.orthonormal.1 i, algebraMap.coe_one, one_pow, RCLike.one_re]
     have h := hA.eigenvalues_eq i
-    rw [Matrix.add_mulVec, Matrix.one_mulVec, dotProduct_add, map_add, hv1] at h
+    rw [Matrix.add_mulVec, Matrix.one_mulVec, dotProduct_add, map_add (f := _), hv1] at h
     have h0 := hD.re_dotProduct_nonneg ⇑(hA.eigenvectorBasis i)
     linarith
   have hprod : (1 : ℝ) ≤ ∏ i, hA.eigenvalues i := by

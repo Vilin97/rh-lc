@@ -70,13 +70,13 @@ private theorem index_val {K : Type} [Field K] [CharZero K] [ValuativeRel K] [To
         simp
       map_mul' := by
         intro z w
-        simp only [QuadraticAlgebra.re_mul, QuadraticAlgebra.im_mul, map_add, map_mul,
+        simp only [QuadraticAlgebra.re_mul, QuadraticAlgebra.im_mul, map_add (f := _), map_mul,
           map_zero, zero_mul, add_zero]
         linear_combination (-(algebraMap K L z.im * algebraMap K L w.im)) * hβ
       map_zero' := by simp
       map_add' := by
         intro z w
-        simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.im_add, map_add]
+        simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.im_add, map_add (f := _)]
         ring
       commutes' := by intro r; simp }
   have hφ : Function.Injective φ := by

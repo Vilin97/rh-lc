@@ -58,7 +58,7 @@ theorem exists_lift (x : S.RA) (M0 h0 : ℕ) (hinj : Function.Injective S.inclR)
   choose z hz using fun y : ↥N => LinearMap.mem_range.1 (h1 y y.2)
   refine ⟨AddMonoidHom.mk' z (fun y y' => hi ?_), fun a y => hi ?_, fun g u hu y y' hy => hi ?_,
     fun t => ?_⟩
-  · rw [map_add, hz, hz, hz, Submodule.coe_add, map_add, smul_add]
+  · rw [map_add (f := _), hz, hz, hz, Submodule.coe_add, map_add (f := _), smul_add]
   · rw [AddMonoidHom.mk'_apply, TWincl_smul, hz, hz, Submodule.coe_smul,
       jD_smulA, smul_comm]
   · rw [AddMonoidHom.mk'_apply, TWincl_smul, TWincl_smul,
@@ -80,7 +80,7 @@ theorem exists_lift (x : S.RA) (M0 h0 : ℕ) (hinj : Function.Injective S.inclR)
         intro r
         obtain ⟨w, hw, e⟩ := ih r
         obtain ⟨w', hw', e'⟩ := ih' r
-        exact ⟨w + w', add_mem hw hw', by rw [map_add, e, e', smul_add, smul_add]⟩
+        exact ⟨w + w', add_mem hw hw', by rw [map_add (f := _), e, e', smul_add, smul_add]⟩
       | smul c v _ ih =>
         intro r
         obtain ⟨w, hw, e⟩ := ih (r * algebraMap S.O S.RA c)
@@ -124,7 +124,7 @@ theorem γD_pow_sub (l : ℕ) [Fact l.Prime] (g : S.W.Gam)
 
 theorem one_add_X : 1 + S.W.X = (1 + letπ) ^ (S.PD.p ^ (S.W.s - 1)) := by
   have h1 : S.W.φA (1 + letπ) = (1 + letπ) ^ S.PD.p := by
-    rw [map_add, map_one, S.W.φA_π]
+    rw [map_add (f := _), map_one, S.W.φA_π]
     funext i
     simp [letπ, LocWach.q, S.W.q₀_def]
   have h2 : ∀ k, (S.W.φA ^ k) (1 + letπ) = (1 + letπ) ^ (S.PD.p ^ k) := by
@@ -132,7 +132,7 @@ theorem one_add_X : 1 + S.W.X = (1 + letπ) ^ (S.PD.p ^ (S.W.s - 1)) := by
     induction k with
     | zero => simp
     | succ k ih => rw [pow_succ, AlgHom.mul_apply, h1, map_pow, ih, ← pow_mul, pow_succ]
-  rw [← h2, map_add, map_one]
+  rw [← h2, map_add (f := _), map_one]
   rfl
 
 theorem γA_letE (g : S.W.Gam) (i : ZMod S.n) : S.W.γA g (letE i) = letE i := by
@@ -248,7 +248,7 @@ theorem assemble (act : GQ l →* (PadicComplex l ≃+* PadicComplex l)) (χ : G
         refine Submodule.smul_induction_on this (fun r hr n _ => ?_) (fun x y hx hy => ?_)
         · rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
           exact J.mul_mem_right _ hr
-        · rw [map_add, Finsupp.add_apply]
+        · rw [map_add (f := _), Finsupp.add_apply]
           exact J.add_mem hx hy
       · rw [← core, map_sub, hy', ← hcol]
         rfl)
@@ -365,7 +365,7 @@ theorem exists_decompletion : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.l
     have h1 := congrArg E.io (one_add_X S)
     have h2 : S.PD.p = l := (D.loc l).PD_p K
     have h3 : S.W.s = s := (HW l).W_s K s LL h
-    rw [map_add, map_one, map_pow, map_add, map_one, E.io_π, h2, h3] at h1
+    rw [map_add (f := _), map_one, map_pow, map_add (f := _), map_one, E.io_π, h2, h3] at h1
     exact add_left_cancel (h1.trans (one_add_pow_sub LL _ _))
   have hθw : θ w = AI.ζ (1 + n) - 1 := by
     rw [map_sub, map_one, map_pow, hθ.2, show s + n = (1 + n) + (s - 1) by omega, zeta_pow]

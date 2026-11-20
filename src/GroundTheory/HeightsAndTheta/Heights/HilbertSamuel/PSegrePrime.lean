@@ -53,7 +53,7 @@ theorem segreMap_weightedHomogeneousComponent [Nonempty K] (b : Unit → ℕ)
     by_cases h : b = Finsupp.weight (blockWeight (fun _ : Unit => ∀ k, ι k)) d
     · rw [if_pos h, if_pos (key.mp h)]
     · rw [if_neg h, if_neg (mt key.mpr h), map_zero]
-  | add p p' hp hp' => simp only [map_add, hp, hp']
+  | add p p' hp hp' => simp only [map_add (f := _), hp, hp']
 
 theorem SegrePrime.proof : SegrePrime.Statement := by
   intro F _ K _ _ _ ι _ q hq

@@ -15,7 +15,7 @@ theorem tensor_centralizer_flat : ∀ (K : Type) [Field K] [Algebra ℚ K] (C : 
     induction w' using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   let ad : C →ₗ[ℚ] C := LinearMap.mulRight ℚ y - LinearMap.mulLeft ℚ y
   have hex : Function.Exact Z.val.toLinearMap ad := by
     intro x
@@ -39,7 +39,7 @@ theorem tensor_centralizer_flat : ∀ (K : Type) [Field K] [Algebra ℚ K] (C : 
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [ad, TensorProduct.tmul_sub]
-    | add a b ha hb => rw [map_add, ha, hb, add_mul, mul_add]; abel
+    | add a b ha hb => rw [map_add (f := _), ha, hb, add_mul, mul_add]; abel
   refine ⟨?_, ?_⟩
   · intro a b hab
     rw [hmap, hmap] at hab

@@ -142,7 +142,7 @@ theorem thetaInt_ne_zero : GlobalTheory.FunPr.Hypotheses₂ → GlobalTheory.Ind
   have tadd : ∀ Φ ∈ S, ∀ Ψ ∈ S, thetaInt ωA ν 𝓕 (Φ + Ψ) = thetaInt ωA ν 𝓕 Φ + thetaInt ωA ν 𝓕 Ψ := by
     intro Φ hΦ Ψ hΨ; funext h
     have e : (fun g => thetaKO ωA g h (Φ + Ψ)) = fun g => thetaKO ωA g h Φ + thetaKO ωA g h Ψ := by
-      funext g; simp [thetaKO, map_add]
+      funext g; simp [thetaKO, map_add (f := _)]
     simp only [thetaInt, Pi.add_apply]
     rw [e]
     exact integral_add (hint Φ hΦ h) (hint Ψ hΨ h)

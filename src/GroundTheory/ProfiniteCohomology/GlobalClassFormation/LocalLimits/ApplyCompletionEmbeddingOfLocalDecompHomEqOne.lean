@@ -76,7 +76,7 @@ theorem map_monicOfCoeffs {R S : Type*} [CommRing R] [CommRing S] (φ : R →+* 
     (c : Fin n → R) :
     (GroundTheory.LocalField.monicOfCoeffs c).map φ = GroundTheory.LocalField.monicOfCoeffs (fun i ↦ φ (c i)) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [GroundTheory.LocalField.monicOfCoeffs, Polynomial.map_add, Polynomial.map_pow, map_X,
+    simp only [GroundTheory.LocalField.monicOfCoeffs, Polynomial.map_add (f := _), Polynomial.map_pow, map_X,
     Polynomial.map_sum, Polynomial.map_mul, map_C]
 
 theorem exists_adjoin_eq_of_dense {k L : Type*} [Field k] [NontriviallyNormedField L] [CompleteSpace L]

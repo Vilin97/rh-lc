@@ -49,7 +49,7 @@ theorem thetaZeroOne_eq_neg_conj_thetaOneZero :
       noncomm_ring
     rwa [hone y hy, Matrix.one_mul, Matrix.mul_one] at h3
   have h4 := congrArg conj (congrFun (congrFun h2 k) l)
-  simp only [Matrix.add_apply, transpose_apply, conjTranspose_apply, Matrix.zero_apply, map_add,
+  simp only [Matrix.add_apply, transpose_apply, conjTranspose_apply, Matrix.zero_apply, map_add (f := _),
     map_zero, star_def, conj_conj] at h4
   exact eq_neg_of_add_eq_zero_left h4
 

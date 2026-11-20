@@ -21,7 +21,7 @@ lemma conj_eq_neg_of_sq (d : ℕ) (β : ℂ) (hβ : β ^ 2 = -(d : ℂ)) : (star
 lemma conic_of_norm_one (d : ℕ) (β : ℂ) (hβ : β ^ 2 = -(d : ℂ)) (x y : ℚ)
     (h : ((x : ℂ) + y * β) * (starRingEnd ℂ) ((x : ℂ) + y * β) = 1) :
     x ^ 2 + d * y ^ 2 = 1 := by
-  rw [map_add, map_mul, map_ratCast, map_ratCast, conj_eq_neg_of_sq d β hβ] at h
+  rw [map_add (f := _), map_mul, map_ratCast, map_ratCast, conj_eq_neg_of_sq d β hβ] at h
   have hC : ((x ^ 2 + d * y ^ 2 : ℚ) : ℂ) = ((1 : ℚ) : ℂ) := by
     push_cast
     linear_combination h + (y : ℂ) ^ 2 * hβ

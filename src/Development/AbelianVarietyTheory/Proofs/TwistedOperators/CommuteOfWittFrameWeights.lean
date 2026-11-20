@@ -197,7 +197,7 @@ theorem GlobalTheory.Cusp.WeightCommute.commute_of_weights : ∀ (D : D7) (V : H
     show GlobalTheory.Cusp.ratAct D.sp.cm V (g * γ) v = GlobalTheory.Cusp.ratAct D.sp.cm V (γ * g) v
     rw [ratAct_mul', ratAct_mul']
     obtain ⟨x, hx, y, hy, z, hzX, hzY, rfl⟩ := decomp v
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [h5 _ (h1 x hx), h6 _ (h2 y hy), h7 _ (zX z hzX) (zY z hzY), h5 x hx, h6 y hy, h7 z hzX hzY,
       map_smul, map_smul]
   exact Subtype.ext (Units.ext hmat)

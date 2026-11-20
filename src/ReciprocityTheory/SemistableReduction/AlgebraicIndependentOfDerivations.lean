@@ -12,11 +12,11 @@ theorem derivation_aeval_eq {K R ι : Type*} [CommRing K] [CommRing R] [Algebra 
   classical
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp [map_add, hp, hq, add_mul, Finset.sum_add_distrib]
+  | add p q hp hq => simp [map_add (f := _), hp, hq, add_mul, Finset.sum_add_distrib]
   | mul_X p j hp =>
     simp only [map_mul, aeval_X, Derivation.leibniz, hp, smul_eq_mul, pderiv_X, Pi.single_apply,
       add_mul, Finset.sum_add_distrib, Finset.mul_sum]
-    simp only [map_add, map_mul, aeval_X, apply_ite (aeval z), map_zero, map_one, add_mul, mul_ite,
+    simp only [map_add (f := _), map_mul, aeval_X, apply_ite (aeval z), map_zero, map_one, add_mul, mul_ite,
       mul_one, mul_zero, ite_mul, zero_mul, Finset.sum_add_distrib, Finset.sum_ite_eq,
       Finset.mem_univ, if_true]
     ring

@@ -98,7 +98,7 @@ variable {l : ℕ} [Fact l.Prime] {P : LocPrime l} {AI : LocAinf l P}
 
 theorem aeval_mem {x : P.R.BdR} (hx : x ∈ FilB P 0) (f : ℚ_[l][X]) : aeval x f ∈ FilB P 0 := by
   induction f using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | monomial n a =>
     rw [aeval_monomial]
     exact qB_mul_mem a (by simpa using FilB_pow hx n)
@@ -160,7 +160,7 @@ theorem eps_sub_exp (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
   obtain ⟨Q, hQ⟩ := exp_log_dvd ℚ_[l] M
   have h1 := congrArg (aeval (io AI (mu AI.ε))) hQ
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sub, map_add, map_one, aeval_X, map_sum, map_mul, aeval_C, map_pow] at h1
+    simp only [map_sub, map_add (f := _), map_one, aeval_X, map_sum, map_mul, aeval_C, map_pow] at h1
   have h2 := FilB_zero_mul (aeval_mem hm0 Q) (FilB_pow hm M)
   rw [mul_one, mul_comm, ← h1] at h2
   generalize aeval (io AI (mu AI.ε)) (logT ℚ_[l] M) = L at hL hd h2

@@ -22,7 +22,7 @@ def perpOf (H : Matrix (Fin n) (Fin n) K) (Z : Submodule K (Fin n → K)) : Subm
   carrier := {x | ∀ z ∈ Z, hform H z x = 0}
   add_mem' := by
     intro x y hx hy z hz
-    rw [map_add, hx z hz, hy z hz, add_zero]
+    rw [map_add (f := _), hx z hz, hy z hz, add_zero]
   zero_mem' := by
     intro z _
     rw [map_zero]

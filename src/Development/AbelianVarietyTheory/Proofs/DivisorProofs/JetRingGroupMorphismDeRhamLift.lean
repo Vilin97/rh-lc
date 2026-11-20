@@ -24,7 +24,7 @@ theorem crys_ext (hm : m.IsBC) {d₁ d₂ : Crys J.κ (spMap J.π) X.A} (h : ∀
   refine LinearMap.ext fun c ↦ ?_
   obtain ⟨z, rfl⟩ := hm.2 c
   induction z with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x c => rw [liftSemi_tmul, map_smul, map_smul, h c]
 
 theorem bcMap_apply (hm : m.IsBC) (h : HdR X.A) (c : primDR X.A) :
@@ -52,7 +52,7 @@ attribute [local instance] fintypeIdx
 
 def co (hm : m.IsBC) (ν : Idx I n) (d : Crys J.κ (spMap J.π) X.A) : HdR X.A where
   toFun c := J.b.repr (d (m.pull c)) ν
-  map_add' a b := by simp only [map_add, Finsupp.add_apply]
+  map_add' a b := by simp only [map_add (f := _), Finsupp.add_apply]
   map_smul' r c := by
     rw [LinearMap.map_smulₛₗ, map_smul, smul_eq_mul, ← Algebra.smul_def, map_smul, Finsupp.smul_apply,
       RingHom.id_apply]
@@ -62,7 +62,7 @@ theorem co_apply (hm : m.IsBC) (ν : Idx I n) (d : Crys J.κ (spMap J.π) X.A) (
 
 theorem co_add (hm : m.IsBC) (ν : Idx I n) (d₁ d₂ : Crys J.κ (spMap J.π) X.A) :
     co hm ν (d₁ + d₂) = co hm ν d₁ + co hm ν d₂ :=
-  LinearMap.ext fun c ↦ by simp only [co_apply, LinearMap.add_apply, map_add, Finsupp.add_apply]
+  LinearMap.ext fun c ↦ by simp only [co_apply, LinearMap.add_apply, map_add (f := _), Finsupp.add_apply]
 
 theorem co_zero (hm : m.IsBC) (ν : Idx I n) : co hm ν (0 : Crys J.κ (spMap J.π) X.A) = 0 :=
   LinearMap.ext fun c ↦ by simp only [co_apply, LinearMap.zero_apply, map_zero, Finsupp.zero_apply]
@@ -88,7 +88,7 @@ theorem bcE_bijective (hm : m.IsBC) : Function.Bijective (bcE hm) := by
   have hG : ∀ z, G (bcE hm z) = z := fun z ↦ by
     induction z with
     | add x y hx hy =>
-      simp only [G, map_add, co_add, tmul_add, Finset.sum_add_distrib] at hx hy ⊢
+      simp only [G, map_add (f := _), co_add, tmul_add, Finset.sum_add_distrib] at hx hy ⊢
       rw [hx, hy]
     | tmul β h =>
       simp only [G, bcE, liftSemi_tmul, co_smul_bc, ← TensorProduct.smul_tmul, ← TensorProduct.sum_tmul]
@@ -112,7 +112,7 @@ theorem isCompl_span_tmul {p q : Submodule R M} (h : IsCompl p q) :
       obtain ⟨y, hy, rfl⟩ := hx
       rw [LinearMap.baseChange_tmul, Submodule.projection_apply_of_mem_right h.symm hy, tmul_zero]
     | zero => exact map_zero _
-    | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | smul a x _ hx => rw [map_smul, hx, smul_zero]
   have hq : ∀ z ∈ Submodule.span A ((fun x ↦ (1 : A) ⊗ₜ[R] x) '' (q : Set M)), P z = z := fun z hz ↦ by
     induction hz using Submodule.span_induction with
@@ -120,7 +120,7 @@ theorem isCompl_span_tmul {p q : Submodule R M} (h : IsCompl p q) :
       obtain ⟨y, hy, rfl⟩ := hx
       rw [LinearMap.baseChange_tmul, Submodule.projection_apply_of_mem_left h.symm hy]
     | zero => exact map_zero _
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | smul a x _ hx => rw [map_smul, hx]
   refine ⟨Submodule.disjoint_def.2 fun z h₁ h₂ ↦ (hq z h₂).symm.trans (hp z h₁), codisjoint_iff.2 ?_⟩
   refine (Submodule.eq_top_iff'.2 fun z ↦ ?_)
@@ -188,7 +188,7 @@ theorem corr_iff (hm : m.IsBC) (d : Crys J.κ (spMap J.π) X.A) (y : HdR X.A) :
   · intro H c'
     obtain ⟨z, rfl⟩ := hm.2 c'
     induction z with
-    | add x z hx hz => simp only [map_add, hx, hz]
+    | add x z hx hz => simp only [map_add (f := _), hx, hz]
     | tmul β c =>
       rw [liftSemi_tmul, LinearMap.map_smulₛₗ, red_pull, map_smul, map_smul, smul_eq_mul, smul_eq_mul, map_mul, H c]
 
@@ -200,7 +200,7 @@ theorem exists_red_mem (hm : m.IsBC) {d : Crys J.κ (spMap J.π) X.A}
     obtain ⟨x, hx, hj⟩ := hd
     refine ⟨x, hx, fun c ↦ ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hj c, map_add, map_sum]
+      rw [hj c, map_add (f := _), map_sum]
     simp [jet_filtration_proj_section_eq_zero, JetRing.π_algebraMap]
   | zero => exact ⟨0, zero_mem _, fun c ↦ by simp⟩
   | add d₁ d₂ _ _ h₁ h₂ =>
@@ -249,7 +249,7 @@ theorem jetFil_summand_reduces : GlobalTheory.Published.GrothendieckDeformation 
   · refine ⟨jetEquiv hm hN' (1 ⊗ₜ y), Submodule.subset_span ⟨y, hy, (isJetElt_iff hm hN' y _).2 rfl⟩,
       (corr_iff hm _ _).2 fun c ↦ ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [jetEquiv_tmul_apply, map_add, map_sum]
+      rw [jetEquiv_tmul_apply, map_add (f := _), map_sum]
     simp [jet_filtration_proj_section_eq_zero, JetRing.π_algebraMap]
   · rintro ⟨d, hd, hc⟩
     obtain ⟨y', hy', e⟩ := exists_red_mem hm hd

@@ -33,7 +33,7 @@ theorem bd_mem_supported_of_eraseIdx {V : Type} {A B : Set (List V)}
     exact Finsupp.single_mem_supported ℤ _ (h l hl i (Finset.mem_range.1 hi))
   | zero => simp
   | add a b _ _ ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ ha hb
   | smul r a _ ha =>
     rw [LinearMap.map_smul]
@@ -185,7 +185,7 @@ theorem retract_step : ∀ (V : Type) (F : Set (List V)) (S : Set V), SubClosed 
         abel
       conv_lhs => rw [hc2]
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, add_assoc, ← Finset.sum_add_distrib]
+        rw [map_add (f := _), map_sum, add_assoc, ← Finset.sum_add_distrib]
       congr 1
       exact Finset.sum_congr rfl fun τ _ => GlobalTheory.T.seqChain_boundary_prefix_chain V τ (ys τ)
     set g := bd V Cg + ∑ τ ∈ P, ((ys τ).sum fun w a =>

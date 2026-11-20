@@ -107,7 +107,7 @@ theorem twist_smul_eq_zero (Γ A : Type) [Group Γ] [CommRing A] [IsLocalRing A]
   · intro z
     induction z using MonoidAlgebra.induction_on with
     | of g => rw [e, e', hU, Matrix.smul_mul, Matrix.trace_smul, smul_eq_mul]
-    | add x y hx hy => simp only [map_add, Matrix.add_mul, Matrix.trace_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Matrix.add_mul, Matrix.trace_add, hx, hy]
     | smul a x hx => simp only [map_smul, Matrix.smul_mul, Matrix.trace_smul, hx]
   · rw [e]
     exact (Matrix.isUnit_iff_isUnit_det _).mp ((Group.isUnit g₀).map T)

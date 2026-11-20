@@ -25,7 +25,7 @@ theorem norm_modEq_one (a : ℕ) (y : 𝓞 E) :
   let b := Module.Free.chooseBasis ℤ (𝓞 E)
   rw [Algebra.norm_eq_matrix_det b, ← eq_intCast (Int.castRingHom (ZMod a)), RingHom.map_det]
   have : (Int.castRingHom (ZMod a)).mapMatrix (Algebra.leftMulMatrix b (1 + (a : 𝓞 E) * y)) = 1 := by
-    rw [map_add, map_one, map_mul, map_natCast, map_add, map_one, map_mul, map_natCast,
+    rw [map_add (f := _), map_one, map_mul, map_natCast, map_add (f := _), map_one, map_mul, map_natCast,
       ← map_natCast (algebraMap (ZMod a) (Matrix (Module.Free.ChooseBasisIndex ℤ (𝓞 E))
         (Module.Free.ChooseBasisIndex ℤ (𝓞 E)) (ZMod a))), ZMod.natCast_self, map_zero, zero_mul, add_zero]
   rw [this, Matrix.det_one]
@@ -145,7 +145,7 @@ theorem valuation_eq_one_of_approx : ∀ (E : Type) [Field E] [NumberField E] (w
   have hkky : kk = 1 + (a : 𝓞 E) * y := by
     apply FaithfulSMul.algebraMap_injective (𝓞 E) E
     have ha0 : (a : E) ≠ 0 := Nat.cast_ne_zero.2 hapos.ne'
-    rw [map_add, map_one, map_mul, map_natCast, hy, hkk]
+    rw [map_add (f := _), map_one, map_mul, map_natCast, hy, hkk]
     field_simp
     ring
   have hcong := norm_modEq_one a y

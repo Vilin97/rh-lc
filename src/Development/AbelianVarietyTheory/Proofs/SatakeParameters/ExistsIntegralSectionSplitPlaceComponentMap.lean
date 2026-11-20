@@ -62,7 +62,7 @@ theorem exists_integralSection_splitPlace_componentMap_cast {E : Type} [Field E]
       exact (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).2 (sp.split_le_one z)
     | zero => simp
     | add y z _ _ hy hz =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem hy hz
     | neg y _ hy =>
       rw [map_neg, map_neg]

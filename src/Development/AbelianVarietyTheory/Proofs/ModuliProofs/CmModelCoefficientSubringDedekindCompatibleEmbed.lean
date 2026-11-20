@@ -41,7 +41,7 @@ theorem aeval_derivative_mul_mem_adjoin (A K : Type*) {L : Type*} [CommRing A] [
   obtain ⟨g, hg⟩ := minpoly.isIntegrallyClosed_dvd hAx hf
   have : aeval x (derivative f) * z = aeval x g * (aeval x (derivative (minpoly A x)) * z) := by
     rw [hg, derivative_mul]
-    simp only [map_add, map_mul, minpoly.aeval]
+    simp only [map_add (f := _), map_mul, minpoly.aeval]
     ring
   rw [this]
   exact Subalgebra.mul_mem _ (aeval_mem_adjoin_singleton _ _) h1

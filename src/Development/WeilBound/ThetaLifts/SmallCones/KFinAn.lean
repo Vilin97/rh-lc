@@ -61,7 +61,7 @@ theorem dopL_apply (w : V × V) (f : 𝓢(V, ℂ)) : dopL lam w f = dop w.1 (lam
 def evD (f : 𝓢(V, ℂ)) (x : V) : V × V →ₗ[ℝ] ℂ where
   toFun w := dopL lam w f x
   map_add' a b := by
-    simp only [dopL_apply, Prod.fst_add, Prod.snd_add, map_add, dop_add, SchwartzMap.add_apply]
+    simp only [dopL_apply, Prod.fst_add, Prod.snd_add, map_add (f := _), dop_add, SchwartzMap.add_apply]
   map_smul' c a := by
     simp only [dopL_apply, dop_apply, Prod.smul_fst, Prod.smul_snd, map_smul, ContinuousLinearMap.smul_apply, smul_eq_mul,
       RingHom.id_apply, Complex.real_smul]
@@ -111,7 +111,7 @@ theorem vacs_fin [FiniteDimensional ℝ V] (hl : Function.Injective lam) (S : Se
     induction hγ using Submodule.span_induction with
     | mem γ h => exact DFunLike.congr_fun ((mem_vacs lam).1 hf γ h) x
     | zero => simp
-    | add a b _ _ ha hb => rw [Prod.fst_add, Prod.snd_add, map_add, map_add, ha, hb, mul_add]
+    | add a b _ _ ha hb => rw [Prod.fst_add, Prod.snd_add, map_add (f := _), map_add (f := _), ha, hb, mul_add]
     | smul c a _ ha => rw [Prod.smul_fst, Prod.smul_snd, map_smul, map_smul, ha, mul_smul_comm]
   have key : ∀ f ∈ vacs lam S, f 0 = 0 → f = 0 := fun f hf h0 => by
     let π : Γ →ₗ[ℝ] V × V := ((LinearMap.fst ℝ V V).prodMap (LinearMap.fst ℝ V V)) ∘ₗ Γ.subtype

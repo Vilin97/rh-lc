@@ -41,7 +41,7 @@ theorem I_add (M : Model σ Y W) (om : Rep σ Y W) (hpres : ∀ x, ∀ Φ ∈ sc
   rw [← integral_add (hconv Φ hΦ h) (hconv Ψ hΨ h)]
   refine integral_congr_ae (Eventually.of_forall fun g => ?_)
   show thetaSum F (om (g, h) (Φ + Ψ)) = thetaSum F (om (g, h) Φ) + thetaSum F (om (g, h) Ψ)
-  rw [map_add, thetaSum_add F (hpres _ _ hΦ) (hpres _ _ hΨ)]
+  rw [map_add (f := _), thetaSum_add F (hpres _ _ hΦ) (hpres _ _ hΨ)]
 
 theorem snd_eq_zero_of_at {κ : Type} (z : κ → AF F) (hz : At (evI F) z) (i : κ) : (z i).2 = 0 := by
   let u : AF F := (show InfiniteAdeleRing F × FiniteAdeleRing (𝓞 F) F from (0, 1))
@@ -69,7 +69,7 @@ theorem exists_deriv (hP : GlobalTheory.FunPr.Hypotheses₂) (M : Model σ Y W) 
     obtain ⟨Φ₁, m₁, p₁, q₁⟩ := ihΦ
     obtain ⟨Ψ₁, m₂, p₂, q₂⟩ := ihΨ
     refine ⟨Φ₁ + Ψ₁, Submodule.add_mem _ m₁ m₂, fun x => ?_, fun h => ?_⟩
-    · simpa only [map_add, Pi.add_apply] using (p₁ x).fun_add (p₂ x)
+    · simpa only [map_add (f := _), Pi.add_apply] using (p₁ x).fun_add (p₂ x)
     · simpa only [I_add M om hpres hconv hΦ hΨ, I_add M om hpres hconv m₁ m₂] using (q₁ h).fun_add (q₂ h)
   | smul c Φ hΦ ih =>
     obtain ⟨Φ₁, m₁, p₁, q₁⟩ := ih

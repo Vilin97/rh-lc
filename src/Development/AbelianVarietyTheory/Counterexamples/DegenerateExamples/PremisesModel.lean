@@ -9,7 +9,7 @@ open Finset Matrix in
 private theorem isUnit_add_mul_of_mem_maximalIdeal {O : Type*} [CommRing O] [IsLocalRing O] {ϖ : O}
     (hϖ : ϖ ∈ IsLocalRing.maximalIdeal O) {u : O} (hu : IsUnit u) (c : O) :
     IsUnit (u + ϖ * c) := by
-  rw [← IsLocalRing.residue_ne_zero_iff_isUnit, map_add,
+  rw [← IsLocalRing.residue_ne_zero_iff_isUnit, map_add (f := _),
     (IsLocalRing.residue_eq_zero_iff _).mpr (Ideal.mul_mem_right c _ hϖ), add_zero,
     IsLocalRing.residue_ne_zero_iff_isUnit]
   exact hu

@@ -264,16 +264,16 @@ theorem respectsAdd_dualPt : RespectsAdd E' E φ.dualPt := by
     have e₂ := happ P₂ h₂ τ₂ hτ₂
     rw [e₂, e₁] at e
     have : Point.map ι (P₁ + P₂) = constMap E' Ω (φ.pointMap c) := by
-      rw [map_add, e]; abel
+      rw [map_add (f := _), e]; abel
     have hg := isGenPt_map E' ι h₃
     rw [this] at hg
     exact not_isGenPt_constMap E' (φ.pointMap c) hg
   have hτ₃ : (genEval E (R₁ + R₂) hR₃).comp φ.comap = ι.comp (genEval E' (P₁ + P₂) h₃) := by
     rw [← genEval_app, ← genEval_map]
     apply genEval_congr
-    rw [φ.app_add hR₁ hR₂ hR₃, happ P₁ h₁ τ₁ hτ₁, happ P₂ h₂ τ₂ hτ₂, map_add]
+    rw [φ.app_add hR₁ hR₂ hR₃, happ P₁ h₁ τ₁ hτ₁, happ P₂ h₂ τ₂ hτ₂, map_add (f := _)]
   apply Point.map_injective (W' := E) ι
-  rw [map_add, φ.map_dualPt_of_lift _ h₁ τ₁ hτ₁, φ.map_dualPt_of_lift _ h₂ τ₂ hτ₂,
+  rw [map_add (f := _), φ.map_dualPt_of_lift _ h₁ τ₁ hτ₁, φ.map_dualPt_of_lift _ h₂ τ₂ hτ₂,
     φ.map_dualPt_of_lift _ h₃ _ hτ₃, map_genEval_genericPoint, zsmul_add]
 
 noncomputable def dual : Isogeny E' E :=

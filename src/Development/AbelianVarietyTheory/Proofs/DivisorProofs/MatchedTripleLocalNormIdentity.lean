@@ -42,7 +42,7 @@ theorem lie_deriv_polData : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [
     obtain ⟨Φ₁, m1, d1⟩ := h1
     obtain ⟨Ψ₁, m2, d2⟩ := h2
     refine ⟨Φ₁ + Ψ₁, Submodule.add_mem _ m1 m2, fun x => ?_⟩
-    simp only [map_add, Pi.add_apply]
+    simp only [map_add (f := _), Pi.add_apply]
     exact (d1 x).add (d2 x)
   | smul c Φ _ h1 =>
     obtain ⟨Φ₁, m1, d1⟩ := h1

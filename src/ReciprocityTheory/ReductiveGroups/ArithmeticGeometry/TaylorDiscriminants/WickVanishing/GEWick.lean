@@ -39,7 +39,7 @@ theorem iter_Cmul (D : PS k 1 d → PS k 1 d) (hD : ∀ (r : k) f, D (C r * f) =
 private theorem Dof_add' (v : Fin d → k) (f g : PS k 1 d) :
     Dof F v (f + g) = Dof F v f + Dof F v g := by
   first
-  | simp only [Dof, map_add, mul_add, Finset.sum_add_distrib]
+  | simp only [Dof, map_add (f := _), mul_add, Finset.sum_add_distrib]
   | simp [Dof, mul_add, Finset.sum_add_distrib]
 
 theorem foldr_add (L : List ι) (m : ι →₀ ℕ) (f g : PS k 1 d) :
@@ -96,7 +96,7 @@ theorem dpolyOf_add_P (P Q : MvPolynomial ι k) (f : PS k 1 d) :
     dpolyOf_eq_sum_of_subset F u Q (P.support ∪ Q.support) (fun x hx => Finset.mem_union_right _ hx) f,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun m _ => ?_
-  rw [MvPolynomial.coeff_add, map_add, add_mul]
+  rw [MvPolynomial.coeff_add, map_add (f := _), add_mul]
 
 theorem dpolyOf_smul_P (a : k) (P : MvPolynomial ι k) (f : PS k 1 d) :
     DpolyOf F u (a • P) f = C a * DpolyOf F u P f := by
@@ -178,7 +178,7 @@ theorem degLt_pderiv {n : ℕ} {P : MvPolynomial ι k} (h : DegLt (n + 1) P) (l 
       have hdeg : s.degree = m.degree + 1 := by
         first
         | rw [← hs', Finsupp.degree_add, Finsupp.degree_single]
-        | rw [← hs', map_add, Finsupp.degree_single]
+        | rw [← hs', map_add (f := _), Finsupp.degree_single]
         | (rw [← hs']; simp [Finsupp.degree_add])
         | (rw [← hs']; simp)
       exact hc (h s (by omega))
@@ -285,7 +285,7 @@ theorem exp_cut (t : k) (q : PS k 1 d) (hq0 : constantCoeff q = 0) (N : ℕ) :
   unfold FB.expS
   rw [hexp]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [key, map_add, map_sum, map_mul, map_pow, map_smul, hX]
+    simp only [key, map_add (f := _), map_sum, map_mul, map_pow, map_smul, hX]
   simp only [smul_pow, smul_smul, MvPowerSeries.smul_eq_C_mul, map_mul, map_pow]
   congr 1
   all_goals first
@@ -301,7 +301,7 @@ theorem wickExp_of (hH : HalfSt) : WickExpSt := by
       half_pow hH F u c q hc hq0 hq1 hq2 (P.totalDegree + 1) P (G * Y), iterate_eq_zero,
       dpolyOf_zero_P, map_zero, mul_zero]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hY, mul_add, dpolyOf_add_f, map_add, hrem, add_zero, Finset.mul_sum, dpolyOf_sum_f, map_sum]
+    rw [hY, mul_add, dpolyOf_add_f, map_add (f := _), hrem, add_zero, Finset.mul_sum, dpolyOf_sum_f, map_sum]
   unfold expSecond
   set_option synthInstance.maxHeartbeats 100000 in
     rw [dpolyOf_sum_P, map_sum]

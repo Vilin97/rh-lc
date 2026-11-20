@@ -230,7 +230,7 @@ theorem sum_crd (t : AEf I) : t = ∑ j, b j ⊗ₜ[I.F] crd I b j t := by
     rw [TensorProduct.sum_tmul]
     simp only [TensorProduct.smul_tmul']
   | add s t hs ht =>
-    simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib]
     rw [← hs, ← ht]
 
 theorem exists_denom : ∃ D : ℕ, 1 ≤ D ∧ ∀ o : 𝓞 I.E, ∀ j : ι,
@@ -272,9 +272,9 @@ theorem exists_denom : ∃ D : ℕ, 1 ≤ D ∧ ∀ o : 𝓞 I.E, ∀ j : ι,
     obtain ⟨r, hr⟩ := hx j
     obtain ⟨r', hr'⟩ := hy' j
     refine ⟨r + r', ?_⟩
-    rw [map_add, ← hr, ← hr']
+    rw [map_add (f := _), ← hr, ← hr']
     push_cast
-    rw [map_add, Finsupp.add_apply, mul_add]
+    rw [map_add (f := _), Finsupp.add_apply, mul_add]
   | smul a x _ hx =>
     intro j
     obtain ⟨r, hr⟩ := hx j
@@ -335,7 +335,7 @@ theorem crd_mem {ι : Type} [Fintype ι] (b : Module.Basis ι I.F I.E) {D : ℕ}
     rw [e, hr]
     exact mul_mem (algebraMap_mem_intAd I r) ha
   | zero => rw [map_zero, mul_zero]; exact zero_mem _
-  | add x y _ _ h h' => rw [map_add, mul_add]; exact add_mem h h'
+  | add x y _ _ h h' => rw [map_add (f := _), mul_add]; exact add_mem h h'
   | neg x _ h => rw [map_neg, mul_neg]; exact neg_mem h
 
 theorem eq_zero_of_forall_bsub (t : AEf I) (h : ∀ N : ℕ, 1 ≤ N → t ∈ bsub I N) : t = 0 := by

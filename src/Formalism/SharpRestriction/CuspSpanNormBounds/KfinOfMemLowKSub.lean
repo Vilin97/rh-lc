@@ -42,7 +42,7 @@ theorem finset_sup_kstable {n : ℕ} (ε : Fin n → Bool) (τ : Matrix (Fin n) 
       infer_instance
     · intro g hg v hv
       obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.1 hv
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem_sup (hA.2 g hg x hx) (hS.2 g hg y hy)
 
 theorem kfin_of_mem_lowKSub {n : ℕ} {ε : Fin n → Bool} {lam : Fin n → ℝ}

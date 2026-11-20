@@ -247,7 +247,7 @@ theorem th_linear {D : D7} {Y : ShimX D.what₂.Tau} (T : Real0 Y) (c : Y.Comp) 
     (w : Fin (dimY Y) → ℂ) : IsLinearMap ℝ fun u => leviAt ((T.M c).A σ) ((T.F c).th u σ) j y w := by
   have hc := fun v => twice_differentiable_of_potential ((T.K 2 c).firstChern_isPotential v σ) hy
   refine ⟨fun u v => ?_, fun t v => ?_⟩
-  · rw [← T.c1_L 2 c _ σ j y hy, map_add, (T.K 2 c).isOneCochain_add _ _ σ j y hy, lv_add (hc _) (hc _),
+  · rw [← T.c1_L 2 c _ σ j y hy, map_add (f := _), (T.K 2 c).isOneCochain_add _ _ σ j y hy, lv_add (hc _) (hc _),
       T.c1_L 2 c _ σ j y hy, T.c1_L 2 c _ σ j y hy]
   · rw [← T.c1_L 2 c _ σ j y hy, map_smul, (T.K 2 c).firstChern_smul_leviEq _ _ σ j y hy, lv_rsmul (hc _),
       T.c1_L 2 c _ σ j y hy, smul_eq_mul]

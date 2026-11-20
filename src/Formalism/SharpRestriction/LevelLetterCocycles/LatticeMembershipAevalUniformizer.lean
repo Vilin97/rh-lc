@@ -198,7 +198,7 @@ theorem lattice_membership_aeval_uniformizer (hS : PsStable W) (hP : ∃ u ∈ W
     obtain ⟨g₁, h₁, e₁⟩ := hp g hg
     obtain ⟨g₂, h₂, e₂⟩ := hq g hg
     refine ⟨g₁ + g₂, Formalism.MainNotions.UnusedSlot80.UnivC.inNL_add W T A a e b h₁ h₂, fun k => ?_⟩
-    simp only [map_add, LinearMap.add_apply, e₁, e₂, Pi.add_apply, mul_add]
+    simp only [map_add (f := _), LinearMap.add_apply, e₁, e₂, Pi.add_apply, mul_add]
   | monomial k c ih =>
     intro g hg
     obtain ⟨u, hu, hγ⟩ := hP

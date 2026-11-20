@@ -32,7 +32,7 @@ theorem root_fix {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosed Ω] (l : �
   have h2 : ((cyclotomicCharacter Ω l (σ : Ω ≃+* Ω) : ℤ_[l]ˣ) : ℤ_[l]) = 1 + (l : ℤ_[l]) ^ n * u := h
   have h3 : PadicInt.toZModPow n ((l : ℤ_[l]) ^ n) = 0 := by
     rw [← RingHom.mem_ker, PadicInt.ker_toZModPow]; exact Ideal.mem_span_singleton_self _
-  rw [h2, map_add, map_mul, h3, zero_mul, add_zero, map_one] at h1
+  rw [h2, map_add (f := _), map_mul, h3, zero_mul, add_zero, map_one] at h1
   have h4 : t ^ (1 : ZMod (l ^ n)).val = t := by
     rw [ZMod.val_one_eq_one_mod, ← pow_eq_pow_mod 1 ht, pow_one]
   rw [h4] at h1

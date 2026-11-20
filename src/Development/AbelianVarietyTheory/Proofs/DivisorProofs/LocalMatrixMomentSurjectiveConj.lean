@@ -33,7 +33,7 @@ theorem evFin_trace [FiniteDimensional F E] (v : Pl F) (z : AE F E) :
       Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (compFin F E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   | tmul a x =>
     have e : compFin F E v (a ⊗ₜ[F] x) = evFin F v a ⊗ₜ[F] x := rfl
     rw [e, trace_tmul', trace_tmul', map_mul, AlgHom.commutes]
@@ -48,7 +48,7 @@ theorem piW_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : Pl F} (t : E →�
   have e : compFin F E v (cA σ y) = sigR (Fv F v) σ (compFin F E v y) := by
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a x => rfl
   change splitProj (t.comp σ) (compFin F E v (cA σ y)) = splitProj t (compFin F E v y)
   rw [e]

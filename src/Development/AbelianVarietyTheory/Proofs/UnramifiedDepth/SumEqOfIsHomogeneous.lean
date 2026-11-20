@@ -47,7 +47,7 @@ theorem form_mul_X (φ : (σ →₀ ℕ) → C) (P : MvPolynomial σ C) (i : σ)
     form φ (P * MvPolynomial.X i) = form (fun A => φ (A + Finsupp.single i 1)) P := by
   induction P using MvPolynomial.induction_on' with
   | monomial u a => rw [MvPolynomial.X, MvPolynomial.monomial_mul, form_monomial, form_monomial, mul_one]
-  | add p q hp hq => rw [add_mul, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [add_mul, map_add (f := _), map_add (f := _), hp, hq]
 
 theorem form_add (φ ψ : (σ →₀ ℕ) → C) (P : MvPolynomial σ C) :
     form (fun A => φ A + ψ A) P = form φ P + form ψ P := by
@@ -62,7 +62,7 @@ theorem form_rename {τ : Type} (e : σ → τ) (φ : (τ →₀ ℕ) → C) (P 
     form φ (MvPolynomial.rename e P) = form (fun A => φ (A.mapDomain e)) P := by
   induction P using MvPolynomial.induction_on' with
   | monomial u a => rw [MvPolynomial.rename_monomial, form_monomial, form_monomial]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 def fact (C : Type) [Field C] (A : σ →₀ ℕ) : C := A.prod fun _ e => (e.factorial : C)
 
@@ -88,7 +88,7 @@ theorem pair_mul_X (P : MvPolynomial σ C) (f : MvPowerSeries σ C) (i : σ) :
 
 theorem pair_add_right (P : MvPolynomial σ C) (f g : MvPowerSeries σ C) :
     pair P (f + g) = pair P f + pair P g := by
-  simp only [pair, map_add, mul_add, form_add]
+  simp only [pair, map_add (f := _), mul_add, form_add]
 
 theorem pair_smul_right (P : MvPolynomial σ C) (c : C) (f : MvPowerSeries σ C) :
     pair P (c • f) = c * pair P f := by
@@ -113,7 +113,7 @@ theorem coeff_slice (b : κ' →₀ ℕ) (g : MvPowerSeries (κ ⊕ κ') C) (A :
 theorem slice_add (b : κ' →₀ ℕ) (f g : MvPowerSeries (κ ⊕ κ') C) :
     slice b (f + g) = slice b f + slice b g := by
   ext A
-  simp only [coeff_slice, map_add]
+  simp only [coeff_slice, map_add (f := _)]
 
 theorem slice_smul (b : κ' →₀ ℕ) (c : C) (g : MvPowerSeries (κ ⊕ κ') C) :
     slice b (c • g) = c • slice b g := by
@@ -221,7 +221,7 @@ theorem mixed_mul_rename_inl (F : MvPolynomial κ C) (p : MvPolynomial κ C) :
       mul_comm H, MvPolynomial.C_mul', mixed, map_smul, smul_eq_mul, mixed]
   | add p q hp hq =>
     intro H g
-    rw [map_add, MvPolynomial.coe_add, add_mul, mixed_add_right, ← hp, ← hq, mul_add, mixed, map_add,
+    rw [map_add (f := _), MvPolynomial.coe_add, add_mul, mixed_add_right, ← hp, ← hq, mul_add, mixed, map_add (f := _),
       mixed, mixed]
   | mul_X p i hp =>
     intro H g
@@ -250,13 +250,13 @@ theorem pair_eq_mixed (ζ : κ' → MvPolynomial κ C) (F : MvPolynomial κ C)
       MvPolynomial.aeval_C, Algebra.algebraMap_eq_smul_one, mixed, map_smul, ← mixed, mixed_one]
   | add p q hp hq =>
     intro g
-    rw [map_add, mul_add, pair, map_add, ← pair, ← pair, hp, hq, map_add, mixed, mixed, mixed, map_add]
+    rw [map_add (f := _), mul_add, pair, map_add (f := _), ← pair, ← pair, hp, hq, map_add (f := _), mixed, mixed, mixed, map_add (f := _)]
   | mul_X p j hp =>
     intro g
     rw [map_mul, MvPolynomial.rename_X, ← mul_assoc, pair_mul_X, Derivation.leibniz, hd, smul_eq_mul,
       smul_eq_mul, mul_comm g, mul_assoc E, ← mul_add, hp, mixed_add_right, map_mul, MvPolynomial.aeval_X,
       mul_add, ← mixed_mul_X_inr, ← mixed_mul_rename_inl, add_comm]
-    simp only [mixed, map_add]
+    simp only [mixed, map_add (f := _)]
 
 end Two
 
@@ -367,7 +367,7 @@ theorem act_mul (g : MvPowerSeries (κ ⊕ κ') C) (R : MvPolynomial κ C)
   | add p q hp hq => simp [add_mul, hp, hq]
   | monomial a c =>
     induction P using MvPolynomial.induction_on' with
-    | add p q hp hq => simp only [mul_add, map_add, hp, hq]
+    | add p q hp hq => simp only [mul_add, map_add (f := _), hp, hq]
     | monomial m d =>
       have h1 : (Finsupp.sumFinsuppEquivProdFinsupp (a.mapDomain Sum.inl + m)).1 =
           a + (Finsupp.sumFinsuppEquivProdFinsupp m).1 := by
@@ -781,7 +781,7 @@ theorem constantCoeff_hP (l i n : ℕ) (h1 : MvPowerSeries (PVar n) C) (h : HM2 
     have := h 0 (by simpa using hc)
     simp [degR] at this
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hP, map_add, h0, MvPowerSeries.smul_eq_C_mul, map_mul, map_sum]
+    rw [hP, map_add (f := _), h0, MvPowerSeries.smul_eq_C_mul, map_mul, map_sum]
   set_option synthInstance.maxHeartbeats 100000 in
     simp [map_sum]
 

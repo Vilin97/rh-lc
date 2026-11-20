@@ -99,7 +99,7 @@ theorem exists_boxSubgroup_fixing (hπ : ∀ v, IsSmooth (π v))
       fun g hg => ?_⟩
     · filter_upwards [hAe, hBe] with v h1 h2
       rw [h1, h2, inf_idem]
-    · rw [map_add, hAfix g fun v => (hg v).1, hBfix g fun v => (hg v).2]
+    · rw [map_add (f := _), hAfix g fun v => (hg v).1, hBfix g fun v => (hg v).2]
   | smul c a _ ha =>
     obtain ⟨A, hAc, hAo, hAK, hAe, hAfix⟩ := ha
     exact ⟨A, hAc, hAo, hAK, hAe, fun g hg => by rw [map_smul, hAfix g hg]⟩

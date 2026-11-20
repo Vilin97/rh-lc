@@ -131,7 +131,7 @@ private theorem exists_proj {K H V : Type} [Field K] [Group H] [AddCommGroup V] 
     have e2 : q a = 0 := Submodule.linearProjOfIsCompl_apply_right hc ⟨a, ha⟩
     have e3 : q (τ g b) = ⟨τ g b, hb'⟩ := Submodule.linearProjOfIsCompl_apply_left hc ⟨_, hb'⟩
     have e4 : q (τ g a) = 0 := Submodule.linearProjOfIsCompl_apply_right hc ⟨_, ha'⟩
-    simp only [LinearMap.comp_apply, map_add, e1, e2, e3, e4]
+    simp only [LinearMap.comp_apply, map_add (f := _), e1, e2, e3, e4]
     simp
   · rw [hker]
     intro h

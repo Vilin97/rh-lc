@@ -30,7 +30,7 @@ theorem res_mem {D : D7} (S : Subfield ℂ) (c : (AE D)ˣ →* Circle) (χ : For
   have h4 := hψ a (Units.mk0 _ ha0) u rfl ha.symm
   have h5 := hc.2 P e he (Units.mk0 _ ha0) (Formalism.L2.JoinChr.locU he.1 (Units.mk0 _ ha0)) rfl
   have h6 := hS (Formalism.L2.JoinChr.locU he.1 (Units.mk0 _ ha0)) (by
-    rw [Formalism.L2.JoinChr.locU_val, Formalism.L2.JoinChr.locE, RingHom.map_add, RingHom.map_one, RingHom.map_mul, hinf,
+    rw [Formalism.L2.JoinChr.locU_val, Formalism.L2.JoinChr.locE, RingHom.map_add (f := _), RingHom.map_one, RingHom.map_mul, hinf,
       zero_mul, add_zero])
   rw [h5, ← h4, MonoidHom.inv_apply, Units.val_inv_eq_inv_val] at h6
   exact inv_mem_iff.1 h6

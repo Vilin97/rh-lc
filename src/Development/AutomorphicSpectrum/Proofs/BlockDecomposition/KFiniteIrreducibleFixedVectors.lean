@@ -84,7 +84,7 @@ theorem exists_typeSpace : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCo
       exact (hcomm u k F).trans (congrArg (π k) hu.2)
     | zero => exact ⟨H.zero_mem, fun _ _ => map_zero _⟩
     | add x y _ _ hx hy =>
-      exact ⟨H.add_mem hx.1 hy.1, fun u hu => by rw [map_add, hx.2 u hu, hy.2 u hu]⟩
+      exact ⟨H.add_mem hx.1 hy.1, fun u hu => by rw [map_add (f := _), hx.2 u hu, hy.2 u hu]⟩
     | smul c x _ hx =>
       exact ⟨H.smul_mem c hx.1, fun u hu => by rw [map_smul, hx.2 u hu]⟩
   let ρ : Representation ℂ (Kinf E a) Y := restrictRep π Y hYs
@@ -102,7 +102,7 @@ theorem exists_typeSpace : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCo
       { carrier := {v | v ∈ H ∧ ∀ u ∈ U, R (latticeGL E a) μ (finGL E a u) v = v}
         zero_mem' := ⟨H.zero_mem, fun _ _ => map_zero _⟩
         add_mem' := fun {x y} hx hy =>
-          ⟨H.add_mem hx.1 hy.1, fun u hu => by rw [map_add, hx.2 u hu, hy.2 u hu]⟩
+          ⟨H.add_mem hx.1 hy.1, fun u hu => by rw [map_add (f := _), hx.2 u hu, hy.2 u hu]⟩
         smul_mem' := fun c x hx => ⟨H.smul_mem c hx.1, fun u hu => by rw [map_smul, hx.2 u hu]⟩ }
     have hle : X ≤ P := iSup₂_le fun T hT => by
       rintro _ ⟨w, rfl⟩

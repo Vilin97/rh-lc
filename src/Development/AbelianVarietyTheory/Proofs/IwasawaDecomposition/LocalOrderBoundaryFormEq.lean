@@ -29,7 +29,7 @@ theorem pow_eq_of_associated {W : Type} [CommRing W] [IsDomain W] {ϖ : W} (hϖ 
 
 theorem two_mul_apply {X : Type} [AddCommGroup X] (be : LinearMap.BilinForm ℤ X) (hs : ∀ y z, be y z = be z y)
     (y z : X) : 2 * be y z = be (y + z) (y + z) - be y y - be z z := by
-  simp only [map_add, LinearMap.add_apply, hs z y]
+  simp only [map_add (f := _), LinearMap.add_apply, hs z y]
   ring
 
 theorem smul_left {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] {O : Type} [Ring O] [StarRing O]

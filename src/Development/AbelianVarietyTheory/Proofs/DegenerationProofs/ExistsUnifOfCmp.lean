@@ -161,7 +161,7 @@ theorem fe_of_pull (hG : GlobalFnsSt) (F : Type) [Field F] [Algebra (FractionRin
   rw [c] at e₂
   have e₁' := (congrArg (fun q => sval (s (hD.xe (α + k • mu))) q y J) hΛ).symm.trans e₁
   have e₃' := (congrArg (fun q => val u q y J) hΛ).symm.trans e₃
-  rw [← map_nsmul, ← map_add]
+  rw [← map_nsmul, ← map_add (f := _)]
   refine e₁'.trans (Eq.trans ?_ (congrArg₂ (· * ·) e₂ (congrArg Units.val e₃')).symm)
   rw [e₄, e₅]
   exact (BoxFamily.unit_shuffle _ _ _ _).symm

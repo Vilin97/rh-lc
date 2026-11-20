@@ -88,7 +88,7 @@ theorem familyUnif_lattice_genus : ∀ (E : Type) [Field E] [NumberField E] [IsC
     obtain ⟨k, hk⟩ := h5 n hn (s n • a) (s n • a')
     have hc' : H.bar (s n) * s n = (κ n : 𝓞 E) + (n : 𝓞 E) * c := by linear_combination hc
     have e1 : D.EF (s n • a) (s n • a') = κ n * D.EF a a' + n * D.EF a (c • a') := by
-      rw [D.adj, smul_smul, hc', add_smul, mul_smul, Nat.cast_smul_eq_nsmul, Int.cast_smul_eq_zsmul, map_add,
+      rw [D.adj, smul_smul, hc', add_smul, mul_smul, Nat.cast_smul_eq_nsmul, Int.cast_smul_eq_zsmul, map_add (f := _),
         map_nsmul, map_zsmul, smul_eq_mul, nsmul_eq_mul]
     simp only [LinearMap.smul_apply, ← map_smul]
     rw [e1] at hk
@@ -98,6 +98,6 @@ theorem familyUnif_lattice_genus : ∀ (E : Type) [Field E] [NumberField E] [IsC
     obtain ⟨e', he'⟩ := level_smul_mem_half l hs3 ha
     refine ⟨e + f l.M e', ?_⟩
     have h : s l.M • a = a + l.M • e' := by rw [← he', sub_smul, one_smul, add_sub_cancel]
-    rw [LinearMap.smul_apply, ← map_smul, h, map_add, map_nsmul, he, smul_add, add_assoc]
+    rw [LinearMap.smul_apply, ← map_smul, h, map_add (f := _), map_nsmul, he, smul_add, add_assoc]
 
 end GlobalTheory

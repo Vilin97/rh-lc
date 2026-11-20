@@ -214,7 +214,7 @@ theorem mem_span_restrictedProd : ∀ (F : Type) [Field F] [NumberField F] (κ :
   obtain ⟨B, hB, hBV⟩ := exists_box_pi hV
   let U : AddSubgroup (κ → Af F) :=
     { carrier := {y | ∀ i v, evalV F v (y i) ∈ B v}
-      add_mem' := fun ha hb i v => by simpa only [Pi.add_apply, map_add] using add_mem (ha i v) (hb i v)
+      add_mem' := fun ha hb i v => by simpa only [Pi.add_apply, map_add (f := _)] using add_mem (ha i v) (hb i v)
       zero_mem' := fun i v => by simpa only [Pi.zero_apply, map_zero] using zero_mem (B v)
       neg_mem' := fun ha i v => by simpa only [Pi.neg_apply, map_neg] using neg_mem (ha i v) }
   have hmemU : ∀ y, y ∈ U ↔ ∀ i v, evalV F v (y i) ∈ B v := fun y => Iff.rfl

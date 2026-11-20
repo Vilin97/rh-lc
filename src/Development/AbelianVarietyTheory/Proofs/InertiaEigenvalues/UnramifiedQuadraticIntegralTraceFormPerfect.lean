@@ -185,7 +185,7 @@ theorem exists_far : ∃ w : E, ‖w‖ = 1 ∧ ∀ c : F, 1 ≤ ‖w - algebraM
   · intro c
     have : z / algebraMap F E x - algebraMap F E c
         = (y - algebraMap F E (c0 + x * c)) / algebraMap F E x := by
-      rw [hzdef]; field_simp; rw [map_add, map_mul]; ring
+      rw [hzdef]; field_simp; rw [map_add (f := _), map_mul]; ring
     rw [this, norm_div, norm_algebraMap', le_div_iff₀ hxpos, one_mul, ← hx]
     exact hall _
 
@@ -236,7 +236,7 @@ theorem exists_half (F : Type) {E : Type} [NontriviallyNormedField F] [Nontrivia
   by_cases h2 : ‖(2 : F)‖ = 1
   · refine ⟨algebraMap F E (1 / 2), ?_, ?_⟩
     · rw [norm_algebraMap', norm_div, h2, norm_one]; norm_num
-    · rw [hU.star_fix, ← map_add]; norm_num
+    · rw [hU.star_fix, ← map_add (f := _)]; norm_num
   · have h2' : ‖(2 : F)‖ < 1 := by
       refine lt_of_le_of_ne ?_ h2
       have := IsUltrametricDist.norm_add_le_max (1 : F) 1

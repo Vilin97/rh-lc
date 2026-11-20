@@ -171,7 +171,7 @@ theorem exists_open_locus : ∀ (h h' M d : ℕ) (O : Type) [Ring O] (bar : O �
   obtain ⟨hr₁, hr₂, hsy⟩ := image_bundle_rig z.A G z.P inc z.rig₁ z.rig₂ z.symm
   let lev : (Fin h ⊕ Fin h → ℤ) → (𝟙_ (Over S') ⟶ G) := fun a => z.lev (jl a) ≫ pr
   have lev_add : ∀ a b, lev (a + b) = lev a * lev b := fun a b => by
-    simp only [lev, map_add, z.lev_add, MonObj.mul_comp]
+    simp only [lev, map_add (f := _), z.lev_add, MonObj.mul_comp]
   have lev_tors : ∀ a, lev a ^ M = 1 := fun a => by
     simp only [lev, ← MonObj.pow_comp, z.lev_tors, MonObj.one_comp]
 
@@ -183,14 +183,14 @@ theorem exists_open_locus : ∀ (h h' M d : ℕ) (O : Type) [Ring O] (bar : O �
   have hy₃ : ∀ a, y₃ a = ∏ k, z.lev (jl (κ k a)) ≫ act (o k) := fun a => List.prod_ofFn
   obtain ⟨U₁, hU₁, hT₁⟩ := GlobalTheory.T.natCast_unit_locus_open S' d
   obtain ⟨U₂, hU₂, hT₂⟩ := GlobalTheory.T.additive_torsion_families_equal_locus_open h M S' t z.A z.ab hM1 x₂ y₂
-    (fun a b => by simp only [x₂, map_add, z.lev_add, MonObj.mul_comp])
-    (fun a b => by simp only [y₂, map_add, z.lev_add])
+    (fun a b => by simp only [x₂, map_add (f := _), z.lev_add, MonObj.mul_comp])
+    (fun a b => by simp only [y₂, map_add (f := _), z.lev_add])
     (fun a => by simp only [x₂, ← MonObj.pow_comp, z.lev_tors, MonObj.one_comp])
     (fun a => by simp only [y₂, z.lev_tors])
   obtain ⟨U₃, hU₃, hT₃⟩ := GlobalTheory.T.additive_torsion_families_equal_locus_open h' M S' t z.A z.ab hM1 z.lev y₃ z.lev_add
     (fun a b => by
       haveI := fun k => hRA.1 (o k)
-      simp only [hy₃, map_add, z.lev_add, MonObj.mul_comp, Finset.prod_mul_distrib])
+      simp only [hy₃, map_add (f := _), z.lev_add, MonObj.mul_comp, Finset.prod_mul_distrib])
     z.lev_tors
     (fun a => by
       haveI := fun k => hRA.1 (o k)

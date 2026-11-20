@@ -84,7 +84,7 @@ theorem relationsLift_of_lTensor_injective (K : Ideal A)
   let g : F × K →ₗ[A] A := f.coprod (-K.subtype)
   let z : M ⊗[A] (F × K) := (inl A F K).lTensor M x + (inr A F K).lTensor M y
   have hgz : g.lTensor M z = 0 := by
-    simp only [z, g, map_add, ← lTensor_comp_apply, coprod_inl, coprod_inr, lTensor_neg,
+    simp only [z, g, map_add (f := _), ← lTensor_comp_apply, coprod_inl, coprod_inr, lTensor_neg,
       LinearMap.neg_apply, hy, add_neg_cancel]
   have hL : K ≤ range g := fun a ha => ⟨(0, ⟨-a, neg_mem ha⟩), by simp [g]⟩
   have hz : g.rangeRestrict.lTensor M z = 0 := by
@@ -100,7 +100,7 @@ theorem relationsLift_of_lTensor_injective (K : Ideal A)
     rw [add_neg_eq_zero.mp this]
     exact k.2
   · rw [lTensor_comp_apply, hw]
-    simp only [z, map_add, ← lTensor_comp_apply, fst_comp_inl, fst_comp_inr, lTensor_id,
+    simp only [z, map_add (f := _), ← lTensor_comp_apply, fst_comp_inl, fst_comp_inr, lTensor_id,
       lTensor_zero, LinearMap.zero_apply, add_zero, id_apply]
 
 theorem flat_of_lTensor_injective [IsNoetherianRing A] (B : Type*) [CommRing B] [Algebra A B]
@@ -137,7 +137,7 @@ theorem lTensor_map_injective {O : Type*} [CommRing O] [Algebra O A] [Module O M
       | add a b ha hb iha ihb =>
         obtain ⟨a', ha'⟩ := iha m
         obtain ⟨b', hb'⟩ := ihb m
-        exact ⟨a' + b', by rw [map_add, ha', hb', ← tmul_add]; rfl⟩
+        exact ⟨a' + b', by rw [map_add (f := _), ha', hb', ← tmul_add]; rfl⟩
       | smul c a ha iha =>
         obtain ⟨a', ha'⟩ := iha (c • m)
         exact ⟨a', by rw [ha', smul_tmul]; rfl⟩
@@ -145,7 +145,7 @@ theorem lTensor_map_injective {O : Type*} [CommRing O] [Algebra O A] [Module O M
       TensorProduct.rid O M (J.subtype.lTensor M y) := by
     intro y
     induction y with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul m a => simp [t, j]
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro x hx

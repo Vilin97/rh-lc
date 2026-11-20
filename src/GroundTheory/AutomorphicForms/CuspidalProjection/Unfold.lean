@@ -33,7 +33,7 @@ theorem map_zero : u 0 = 1 := by
   exact (mul_eq_left.1 h.symm)
 
 theorem map_neg_mul (b : B) (z : G) : u (-b) * (u b * z) = z := by
-  rw [← mul_assoc, ← hu.map_add, neg_add_cancel, hu.map_zero, one_mul]
+  rw [← mul_assoc, ← hu.map_add (f := _), neg_add_cancel, hu.map_zero, one_mul]
 
 theorem isCompact_setOf_mul_mem {C : Set G} (hC : IsCompact C) (z : G) :
     IsCompact {b | u b * z ∈ C} :=
@@ -59,7 +59,7 @@ theorem avgWeight_mul_left [ν.IsAddLeftInvariant] (hu : IsProperHom u) (β : G 
     (z : G) : avgWeight ν u β (u b' * z) = avgWeight ν u β z := by
   unfold avgWeight
   have h : ∀ b, u (-b) * (u b' * z) = u (-(b - b')) * z := fun b => by
-    rw [← mul_assoc, ← hu.map_add, neg_sub, sub_eq_add_neg, add_comm b' (-b)]
+    rw [← mul_assoc, ← hu.map_add (f := _), neg_sub, sub_eq_add_neg, add_comm b' (-b)]
   simp_rw [h]
   exact lintegral_sub_right_eq_self (fun b => ENNReal.ofReal (β (u (-b) * z))) b'
 

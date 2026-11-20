@@ -81,9 +81,9 @@ theorem exists_balanced_formAt : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
       (fun a a' => by ext b; simp [GlobalTheory.PreValForm.bOf_add_left' hϖ D' hB hQ'])
   let be : LinearMap.BilinForm ℤ P.D.toPre.X :=
     LinearMap.mk₂ ℤ (fun y z => B (hD.xe.symm y) (hD.xe.symm z))
-      (fun y y' z => by simp only [map_add, AddMonoidHom.add_apply])
+      (fun y y' z => by simp only [map_add (f := _), AddMonoidHom.add_apply])
       (fun c y z => by simp only [map_zsmul, AddMonoidHom.smul_apply, smul_eq_mul])
-      (fun y z z' => by simp only [map_add])
+      (fun y z z' => by simp only [map_add (f := _)])
       (fun c y z => by simp only [map_zsmul, smul_eq_mul])
   have hbe : ∀ y z, be y z = QForm.bOf D' Q (hD.xe.symm y) (hD.xe.symm z) := fun _ _ => rfl
   have hsm : ∀ (a : 𝓞 E) (y : P.D.toPre.X), hD.xe.symm (a • y) = a • hD.xe.symm y := fun a y =>

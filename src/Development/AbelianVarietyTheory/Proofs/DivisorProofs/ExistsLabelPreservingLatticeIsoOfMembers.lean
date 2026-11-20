@@ -51,7 +51,7 @@ theorem LatTo.symm
   · obtain ⟨mu, hmu⟩ := y₀.1 a
     obtain ⟨w, hw⟩ := (y₁.2.2.1 a (K mu) mu' (hl a mu hmu)).1 h
     refine (y₀.2.2.1 a mu (K.symm mu') hmu).2 ⟨K.symm w, ?_⟩
-    rw [hw, map_add, K.symm_apply_apply, map_nsmul]
+    rw [hw, map_add (f := _), K.symm_apply_apply, map_nsmul]
 
 end GlobalTheory.GSep.GMem
 

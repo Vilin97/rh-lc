@@ -139,7 +139,7 @@ theorem exists_eps (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.InstExistsPf
           ((c : ℕ) : Lev.EAf D) * (GlobalTheory.LevSplit.finSw D z + GlobalTheory.LevSplit.finSw D (cA D z))
         have hcc : ((c : ℕ) : Lev.EAf D) = GlobalTheory.LevSplit.finSw D (incA D (c : D.host.E)) := by
           rw [GlobalTheory.LevSplit.finSw_incA, map_natCast]
-        rw [hcc, mul_add, ← RingHom.map_mul, ← RingHom.map_mul, hz, hz', RingHom.map_add]
+        rw [hcc, mul_add, ← RingHom.map_mul, ← RingHom.map_mul, hz, hz', RingHom.map_add (f := _)]
     · rw [hfin]
       exact supp_fact (GlobalTheory.LevSplit.finSw D) (mt (D.sp.Y 0) n) (e + cA D e) hs v
   exact key X.B.I h

@@ -16,7 +16,7 @@ theorem ker_map {σ τ : Type} (k : Type) [Field k] [Algebra ℚ k] (g : σ → 
       (map (algebraMap ℚ k) f) = map (algebraMap ℚ k) (aeval g f) := fun f => by
     induction f using MvPolynomial.induction_on with
     | C a => simp [algebraMap_eq]
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f i hf => simp only [map_mul, hf, map_X, aeval_X]
   refine le_antisymm (fun f hf => ?_) (Ideal.map_le_iff_le_comap.2 fun f hf => ?_)
   · let b := Module.Basis.ofVectorSpace ℚ k
@@ -95,7 +95,7 @@ theorem pointIdeal_plPt [CharZero k] (u : ∀ s, Matrix (Fin (r s)) (Fin (r s)) 
       C (aeval (fun q : Ent r => u q.1 q.2.1.1 q.2.1.2) f) := fun f => by
     induction f using MvPolynomial.induction_on with
     | C a => simp [Θ, φ]
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f i hf => simp only [map_mul, hf]; simp [Θ, φ]
   have key : (pointConeMap k (plPt u) : MvPolynomial _ k →+* MvPolynomial _ Ω) = Θ.comp
       (aeval (fun s => map (algebraMap ℚ k) (genCone r s)) : MvPolynomial _ k →ₐ[k] MvPolynomial _ k).toRingHom := by

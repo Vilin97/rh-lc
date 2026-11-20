@@ -148,7 +148,7 @@ theorem onePsi_of (hX : X.Ok) (σ₀ : X.K →+* ℂ) {s0 : X.E} (hne : s0 ≠ 0
     apply hinj
     ext x
     obtain ⟨a, b, rfl⟩ := exists_pair hX hne hc x
-    rw [map_add, map_add, map_mul, map_mul, hagree a, hagree b, h1, h2, hrr]
+    rw [map_add (f := _), map_add (f := _), map_mul, map_mul, hagree a, hagree b, h1, h2, hrr]
 
   have : Algebra.IsAlgebraic X.F X.E := inferInstance
   obtain ⟨w', hw'⟩ := InfinitePlace.comap_surjective (k := X.F) (K := X.E) w

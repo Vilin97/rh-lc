@@ -78,7 +78,7 @@ theorem exists_realExt {E : Type} [Field E] [NumberField E] [IsCMField E] {g : �
         obtain ⟨y, rfl⟩ := hw
         rw [hL, hL, R'.im, R.im, hf]
       | zero => simp
-      | add w w' _ _ h h' => rw [map_add, imH_add_right, imH_add_right, h, h']
+      | add w w' _ _ h h' => rw [map_add (f := _), imH_add_right, imH_add_right, h, h']
       | smul r w _ h => rw [map_smul, imH_smul_right, imH_smul_right, h]
     intro z w
     induction hall z using Submodule.span_induction with
@@ -86,7 +86,7 @@ theorem exists_realExt {E : Type} [Field E] [NumberField E] [IsCMField E] {g : �
       obtain ⟨x, rfl⟩ := hz
       exact h1 x w
     | zero => simp
-    | add z z' _ _ h h' => rw [map_add, imH_add_left, imH_add_left, h, h']
+    | add z z' _ _ h h' => rw [map_add (f := _), imH_add_left, imH_add_left, h, h']
     | smul r z _ h => rw [map_smul, imH_smul_left, imH_smul_left, h]
   · intro a z
     induction hall z using Submodule.span_induction with
@@ -94,7 +94,7 @@ theorem exists_realExt {E : Type} [Field E] [NumberField E] [IsCMField E] {g : �
       obtain ⟨x, rfl⟩ := hz
       rw [← R.act, hL, hL, R'.act]
     | zero => simp
-    | add z z' _ _ h h' => simp only [map_add, h, h']
+    | add z z' _ _ h h' => simp only [map_add (f := _), h, h']
     | smul r z _ h =>
       rw [LinearMap.map_smul_of_tower, map_smul, h, map_smul, LinearMap.map_smul_of_tower]
 

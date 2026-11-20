@@ -55,7 +55,7 @@ theorem eval_linePoly {σ : Type} (c : σ → ℝ) (e : σ → ℤ) (Q : MvPolyn
   unfold linePoly
   induction Q using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, Polynomial.eval_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), Polynomial.eval_add, hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, Polynomial.eval_mul, hp, aeval_X, MvPolynomial.eval_X, Polynomial.eval_sub,
       Polynomial.eval_C, Polynomial.eval_X]

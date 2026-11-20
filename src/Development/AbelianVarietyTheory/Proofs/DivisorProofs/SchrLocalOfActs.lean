@@ -31,7 +31,7 @@ theorem GlobalTheory.AdelicActs.schr_local_of_acts : ∀ {F : Type} [Field F] [N
   have hrx : r (x₀ + z) = r x₀ := hr.1 x₀ z hz
   have hev : (fun i => evFin F v ((x₀ + z) i)) = y := by
     funext i
-    simp only [z, Pi.add_apply, map_add, GlobalTheory.EmbChart.evFin_atPlace, add_sub_cancel]
+    simp only [z, Pi.add_apply, map_add (f := _), GlobalTheory.EmbChart.evFin_atPlace, add_sub_cancel]
   have e2 := congrFun e (x₀ + z)
   simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens] at e2
   rw [hev, hrx] at e2

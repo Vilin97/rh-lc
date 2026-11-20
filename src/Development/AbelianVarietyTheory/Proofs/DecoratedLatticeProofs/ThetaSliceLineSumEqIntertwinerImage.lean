@@ -139,7 +139,7 @@ theorem heisO_resS_symm_right (ψ : AddChar (AF D.host.F) ℂ) {S A L T : HSp D}
   simp only [heisO]
   rw [o.symplOH_resS, AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply]
   have h0 : symplOH A T w 0 = 0 := by simp [symplOH, symplO, hO]
-  rw [h0, zero_add, ← map_add]
+  rw [h0, zero_add, ← map_add (f := _)]
   simp
 
 theorem symplO_resS_symm_right {S A L T : HSp D} (o : OrthDec S A L) (t : WO S T) (a : WO L T) :
@@ -163,7 +163,7 @@ def restrRight {m n m' n' m'' n'' : ℕ} (r : Mx D m n ≃+ Mx D m' n' × Mx D m
     have : (fun t => h (r t).1 * (Φ + Φ') (r t).2) =
         (fun t => h (r t).1 * Φ (r t).2) + fun t => h (r t).1 * Φ' (r t).2 := by
       funext t; simp [mul_add]
-    rw [this, map_add]; rfl
+    rw [this, map_add (f := _)]; rfl
   map_smul' c Φ := by
     funext w
     have : (fun t => h (r t).1 * (c • Φ) (r t).2) = c • fun t => h (r t).1 * Φ (r t).2 := by
@@ -224,7 +224,7 @@ theorem main : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSp
     have hfun : (fun t => h (r t).1 * (fun t => Φ (t + x)) (r t).2) =
         fun t => (fun t => h (r t).1 * Φ (r t).2) (t + r.symm (0, x)) := by
       funext t
-      simp only [map_add, AddEquiv.apply_symm_apply, Prod.fst_add, Prod.snd_add, add_zero]
+      simp only [map_add (f := _), AddEquiv.apply_symm_apply, Prod.fst_add, Prod.snd_add, add_zero]
     rw [hfun, hT.trans _ (hsb Φ hΦ) _ (half_resS_symm_right o hx), hr, heisO_resS_symm_right]
     rfl
   · intro Φ hΦ y' hy'

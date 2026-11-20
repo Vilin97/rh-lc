@@ -45,11 +45,11 @@ theorem main : ∀ (K : Type) [Field K] [CharZero K] (ι : K →+* ℂ) (Λ₀ �
   have real0 : ∀ (w : ℂ) (k : K), w - ι k ∈ Λ₀.lattice → ∃ m, ι m = w := by
     intro w k h
     obtain ⟨l, hl⟩ := hT.rat₀ _ h
-    exact ⟨k + l, by rw [map_add, hl]; ring⟩
+    exact ⟨k + l, by rw [map_add (f := _), hl]; ring⟩
   have real1 : ∀ (w : ℂ) (k : K), w - ι k ∈ Λ₁.lattice → ∃ m, ι m = w := by
     intro w k h
     obtain ⟨l, hl⟩ := hT.rat₁ _ h
-    exact ⟨k + l, by rw [map_add, hl]; ring⟩
+    exact ⟨k + l, by rw [map_add (f := _), hl]; ring⟩
   refine ⟨fun x => ?_, fun x y x' y' hxy hxy' => ?_, fun x y hxy => ?_⟩
   ·
     obtain ⟨l, hl⟩ := hT.rat₀ ((N : ℂ) * (c₀ * tors N τ₀ x))

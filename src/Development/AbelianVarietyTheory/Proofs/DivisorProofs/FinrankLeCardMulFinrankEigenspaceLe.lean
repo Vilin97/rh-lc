@@ -33,7 +33,7 @@ theorem finrank_le_card_mul_finrank_eigenspace_le :
         map_add' := fun f f' => by
           funext h
           apply Subtype.ext
-          simp only [Submodule.coe_add, add_mul, map_add, smul_add, Finset.sum_add_distrib,
+          simp only [Submodule.coe_add, add_mul, map_add (f := _), smul_add, Finset.sum_add_distrib,
             Pi.add_apply]
         map_smul' := fun c f => by
           funext h

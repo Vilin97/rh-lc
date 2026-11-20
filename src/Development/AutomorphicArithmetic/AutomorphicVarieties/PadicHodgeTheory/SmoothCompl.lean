@@ -51,7 +51,7 @@ private theorem sc_inj {O E R : Type} [CommRing O] [IsDomain O] [Field E] [Algeb
     obtain ⟨b, hb, i, hi, hbi⟩ := Submodule.mem_sup.1 h1
     obtain ⟨e', h, he', hh, h2⟩ := UpperTheory.exists_homogeneous_lift_mod_ker_pow_succ_sup O R I x n t ht0 hspan N b hb
     have hφb : φ b = e • φ a := by
-      rw [← map_smul, ← hbi, map_add, show φ i = 0 from hI hi, add_zero]
+      rw [← map_smul, ← hbi, map_add (f := _), show φ i = 0 from hI hi, add_zero]
     have h3 : MvPolynomial.aeval (fun j => φ (t j)) h ∈ maximalIdeal (MvPowerSeries (Fin n) E) ^ (N + 1) := by
       have h4 := hmap _ _ h2
       rw [map_sub, map_smul, hφb, MvPolynomial.comp_aeval_apply] at h4

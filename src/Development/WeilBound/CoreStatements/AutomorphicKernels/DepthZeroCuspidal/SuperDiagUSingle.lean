@@ -435,7 +435,7 @@ theorem diag_no_step {M : ℕ} (π : IrrRep (GL (Fin (M + 1)) k)) (hπ : IsCuspi
         intro a b _
         have e1 : Z a b = ((⟨Y a b, hY a b⟩ + lift (c a b) - lift (c a b + r a b) : 𝒪[k]) : k) := by
           simp [Z, Yc]
-        rw [e1, ← GlobalTheory.StepData.residue_eq_zero_iff_lt, map_sub, map_add, hlift, hlift]
+        rw [e1, ← GlobalTheory.StepData.residue_eq_zero_iff_lt, map_sub, map_add (f := _), hlift, hlift]
         simp only [r]
         ring
       rw [← rho_mul, U_mul, show Y + Yc c = Yc (c + r) + Z by simp [Z], ← U_mul, rho_mul,

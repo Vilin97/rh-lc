@@ -110,7 +110,7 @@ def reesIdeal (I : Ideal R) (J : ℕ → Ideal (MvPolynomial σ R))
   zero_mem' := by intro d e; simp
   add_mem' := by
     intro F G hF hG d e
-    rw [map_add, piece_add]
+    rw [map_add (f := _), piece_add]
     exact add_mem (hF d e) (hG d e)
   smul_mem' := by
     intro c F hF
@@ -128,7 +128,7 @@ def reesIdeal (I : Ideal R) (J : ℕ → Ideal (MvPolynomial σ R))
         (coeff_piece_mem p.2 _) (hF d p.2)
     | add p q hp hq =>
       intro F hF d e
-      rw [add_mul, map_add, piece_add]
+      rw [add_mul, map_add (f := _), piece_add]
       exact add_mem (hp hF d e) (hq hF d e)
     | mul_X p i hp =>
       intro F hF

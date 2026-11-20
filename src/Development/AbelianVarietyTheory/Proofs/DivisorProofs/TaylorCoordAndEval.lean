@@ -56,7 +56,7 @@ theorem taylor_coord_and_eval : ∀ {I : Type} [Fintype I] [DecidableEq I] {D : 
   induction P using MvPolynomial.induction_on with
   | C a => simpa using hconst a
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [hadd _ _ (han p) (han q), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, MvPolynomial.eval_X, MvPolynomial.aeval_X]

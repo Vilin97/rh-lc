@@ -379,7 +379,7 @@ omit [StarRing A] [Algebra ℂ A] in
 theorem io_mul' (x y : A) : (io x : SlopeTestRemainingChoices S A) * io y = io (x * y) := by simp only [io, map_mul]
 
 omit [StarRing A] [Algebra ℂ A] in
-theorem io_add' (x y : A) : (io x : SlopeTestRemainingChoices S A) + io y = io (x + y) := by simp only [io, map_add]
+theorem io_add' (x y : A) : (io x : SlopeTestRemainingChoices S A) + io y = io (x + y) := by simp only [io, map_add (f := _)]
 
 omit [StarRing A] [Algebra ℂ A] in
 theorem io_pow' (x : A) (n : ℕ) : (io x : SlopeTestRemainingChoices S A) ^ n = io (x ^ n) := by simp only [io, map_pow]

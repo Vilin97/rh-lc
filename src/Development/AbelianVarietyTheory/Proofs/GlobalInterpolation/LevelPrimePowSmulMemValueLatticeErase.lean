@@ -117,7 +117,7 @@ theorem weight_rowZ {r n : ℕ} (d : Fin r × Fin n →₀ ℕ) (a : Fin r) :
   classical
   induction d using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, Pi.add_apply, Nat.cast_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), Pi.add_apply, Nat.cast_add, hf, hg]
   | single v c =>
     simp [Finsupp.weight_apply, rowZ, rowW, Pi.single_apply, Finsupp.sum_single_index]
 
@@ -126,7 +126,7 @@ theorem weight_rowW {r n : ℕ} (d : Fin r × Fin n →₀ ℕ) (a : Fin r) :
   classical
   induction d using Finsupp.induction_linear with
   | zero => simp [rowDeg]
-  | add f g hf hg => simp only [map_add, Pi.add_apply, hf, hg, rowDeg, Finsupp.add_apply, Finset.sum_add_distrib]
+  | add f g hf hg => simp only [map_add (f := _), Pi.add_apply, hf, hg, rowDeg, Finsupp.add_apply, Finset.sum_add_distrib]
   | single v c =>
     obtain ⟨b, s⟩ := v
     by_cases h : a = b
@@ -247,7 +247,7 @@ theorem diag_step {R : Type} [CommRing R] (φ : R →+* ℂ) {n : ℕ} (hn : 0 <
     obtain ⟨y', hy', ey⟩ := hy
     obtain ⟨z', hz', ez⟩ := hz
     refine ⟨y' + z', add_mem hy' hz', ?_⟩
-    rw [map_add, map_add, ← ey, ← ez, ← roundL_coe]
+    rw [map_add (f := _), map_add (f := _), ← ey, ← ez, ← roundL_coe]
     simp
   | smul a y _ hy =>
     obtain ⟨y', hy', ey⟩ := hy
@@ -382,7 +382,7 @@ theorem exists_frame_adapted (hn : 0 < n) (p : LocF.PP Lc n) : ∃ (h : GL (Fin 
     simp [N, Matrix.mulVec, dotProduct]
   rw [e, f_expand p hh]
   show ∑ a, Lc.res (x a + N₀.mulVec x a) * c a = _
-  simp only [map_add, add_mul, Finset.sum_add_distrib]
+  simp only [map_add (f := _), add_mul, Finset.sum_add_distrib]
   have h0' : c ⟨0, hn⟩ ≠ 0 := h0
   have e2 : ∑ a, Lc.res (N₀.mulVec x a) * c a = ∑ d ∈ Finset.univ.erase ⟨0, hn⟩, -(Lc.res (x d) * c d) := by
     rw [Finset.sum_eq_single ⟨0, hn⟩]
@@ -503,7 +503,7 @@ theorem ten_update_mem (D : D7) (w : D.what₂.places.Pl) {n : ℕ} (lam : D.wha
     exact zero_mem _
   | add y z _ _ hy hz =>
     intro r hr
-    rw [map_add, ← tenM_apply, MultilinearMap.map_update_add, smul_add, tenM_apply, tenM_apply]
+    rw [map_add (f := _), ← tenM_apply, MultilinearMap.map_update_add, smul_add, tenM_apply, tenM_apply]
     exact add_mem (hy r hr) (hz r hr)
   | smul a y _ hy =>
     intro r hr
@@ -521,7 +521,7 @@ theorem map_int_mem (R : Type) [CommRing R] {n : ℕ} (lam : DomWeight n)
     simp only
     rw [← lclosedeq_applyWord_map, lclosedeq_hw_map]
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | smul a y _ hy =>
     rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hy
@@ -608,7 +608,7 @@ theorem pow_smul_mem_valB_erase : ∀ (D : D7) (u : D.what₂.Word) (X : Ch D u)
     | add a b _ _ ha hb =>
       obtain ⟨a', ha', ea⟩ := ha
       obtain ⟨b', hb', eb⟩ := hb
-      exact ⟨a' + b', add_mem ha' hb', by rw [map_add, map_add, smul_add, ea, eb]⟩
+      exact ⟨a' + b', add_mem ha' hb', by rw [map_add (f := _), map_add (f := _), smul_add, ea, eb]⟩
     | neg a _ ha =>
       obtain ⟨a', ha', ea⟩ := ha
       exact ⟨-a', neg_mem ha', by rw [map_neg, map_neg, smul_neg, ea]⟩

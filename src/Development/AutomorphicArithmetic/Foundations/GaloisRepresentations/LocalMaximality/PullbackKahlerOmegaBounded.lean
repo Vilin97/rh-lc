@@ -30,7 +30,7 @@ private theorem mapDR_om {B : Subalgebra ℂ K} {B' : Subalgebra ℂ L}
     rw [mapDR_smul', mapDR_iMulti]
     exact Submodule.subset_span ⟨_, h b hb, _, fun j => h _ (hv j), rfl⟩
   | zero => simp
-  | add u v _ _ hu hv => rw [map_add]; exact add_mem hu hv
+  | add u v _ _ hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
   | smul c u _ hu =>
     have e := ((mapDR ℂ K L).toLinearMap.restrictScalars ℂ).map_smul c u
     have e' : mapDR ℂ K L (c • u) = c • mapDR ℂ K L u := e
@@ -101,11 +101,11 @@ private theorem gY_act (s : K ⊗[ℂ] K) (m : DR ℂ K ⊗[ℂ] DR ℂ K) :
     gY j2 (actZ K s m) = gS j2 s • gY j2 m := by
   induction s using TensorProduct.induction_on with
   | zero => simp
-  | add s t hs ht => simp only [map_add, LinearMap.add_apply, add_smul, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, add_smul, hs, ht]
   | tmul p q =>
     induction m using TensorProduct.induction_on with
     | zero => simp
-    | add u v hu hv => simp only [map_add, smul_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), smul_add, hu, hv]
     | tmul w' w =>
       have e : actZ K (p ⊗ₜ q) (w' ⊗ₜ w) = (p • w') ⊗ₜ[ℂ] (q • w) := by
         simp [actZ, Module.endTensorEndAlgHom_apply]
@@ -162,7 +162,7 @@ theorem UpperTheory.Gal.productCup_of_system.gMap_of :
     induction t using TensorProduct.induction_on with
     | zero => simp
     | add u v hu hv =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem hu hv
     | tmul p q =>
       have e : gS j2 (Algebra.TensorProduct.map (rB ℂ K (xv x) I).val (rB ℂ K (xv x) J).val (p ⊗ₜ q)) =

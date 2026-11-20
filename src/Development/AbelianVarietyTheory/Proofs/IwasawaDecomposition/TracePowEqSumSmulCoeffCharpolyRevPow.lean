@@ -133,7 +133,7 @@ theorem trace_pow_eq_sum_smul_coeff_charpolyRev_pow :
           smul_smul]
     _ = (L ^ (m + 1)).trace := by
         rw [Algebra.smul_def]
-        simp only [map_mul, map_pow, map_neg, map_one, map_add, map_natCast]
+        simp only [map_mul, map_pow, map_neg, map_one, map_add (f := _), map_natCast]
         linear_combination (-1 : S) ^ m * key + (L ^ (m + 1)).trace * hsq
 
 end GlobalTheory

@@ -28,11 +28,11 @@ theorem deriv_part (s : ℂ) (m : ℕ) (b : Bool) {ρ : ℕ} (I J : Fin ρ ↪ F
   | C r =>
     simp [phi, del]
   | add f g hf hg =>
-    simp only [map_add, Derivation.leibniz, mul_add, Finset.sum_add_distrib, hf, hg]
+    simp only [map_add (f := _), Derivation.leibniz, mul_add, Finset.sum_add_distrib, hf, hg]
   | mul_X f pq hf =>
     have e : phi b I J (f * X pq) = phi b I J f * yv b (J pq.1) (I pq.2) := by rw [map_mul, phi_X]
     have hdx : del p q (X pq : Pm (Polynomial ℂ) ρ) = X (pq.1, p) * X (q, pq.2) := by simp [del, mkDerivation_X]
-    rw [e, Derivation.leibniz (del p q), smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, ← hf, hdx, map_mul,
+    rw [e, Derivation.leibniz (del p q), smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, ← hf, hdx, map_mul,
       phi_X, phi_X, phi_X]
     have hsplit : ∀ a d : Fin n, yv b a (I p) * yv b (J q) d * pderiv (b, a, d) (phi b I J f * yv b (J pq.1) (I pq.2)) =
         yv b (J pq.1) (I pq.2) * (yv b a (I p) * yv b (J q) d * pderiv (b, a, d) (phi b I J f)) +

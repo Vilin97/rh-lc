@@ -17,7 +17,7 @@ theorem aeval_eq_coeff_zero_add (A : ValuationSubring Ω) (g : ℤ[X]) {y : Ω} 
   have h1 : aeval y r = ((aeval (⟨y, hy⟩ : A) r : A) : Ω) :=
     aeval_algebraMap_apply Ω (⟨y, hy⟩ : A) r
   conv_lhs => rw [hg]
-  rw [map_add, map_mul, aeval_C, aeval_X, h1]
+  rw [map_add (f := _), map_mul, aeval_C, aeval_X, h1]
   simp
 
 theorem exists_nat_of_isPlaceOver (E : Type) [Field E] [NumberField E] [Algebra E Ω]

@@ -83,7 +83,7 @@ theorem image_deriv_add {H : Type} [NormedAddCommGroup H] [NormedSpace ℂ H] (�
       · simp
     have hΦ : ∀ t : ℝ, Φ (u₃ t - u₃ 0 - (t : ℂ) • (A₁ + A₂)) = Φ (u₃ t - u₁ t - (t : ℂ) • v t) +
         Φ ((t : ℂ) • (v t - v 0)) + Φ (u₁ t - u₁ 0 - (t : ℂ) • A₁) := fun t => by
-      rw [hid t, map_add, map_add]
+      rw [hid t, map_add (f := _), map_add (f := _)]
     exact ((o2.add o3).add o1).congr_left fun t => (hΦ t).symm
   have h3 : HasDerivAt (fun t => Φ (u₃ t)) (Φ A₃) 0 :=
     (Φ.restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt (0 : ℝ) d₃

@@ -27,7 +27,7 @@ theorem tensNU_map (φ : R' →ₐ[F] R) (j : R →ₗ[F] R') (hj : ∀ a b, j (
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [Algebra.TensorProduct.one_def, h]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, mul_add]
 
 theorem mat_extH_mapH (φ : R' →ₐ[F] R) (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j b) (h : ∀ a, j (φ a) = j 1 * a)
     (g : HA R' σ J) : ∃ c : R' ⊗[F] E, (HA.mat R' σ J (extH σ J j hj (mapH σ J φ g))).1 =

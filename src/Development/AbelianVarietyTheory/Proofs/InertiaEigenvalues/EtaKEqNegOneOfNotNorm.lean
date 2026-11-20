@@ -121,7 +121,7 @@ theorem etaK_eq_neg_one : ∀ (F E : Type) [NontriviallyNormedField F] [Nontrivi
     | algebraMap x =>
       rw [← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply F A.K A.L]
       exact IntermediateField.algebraMap_mem _ _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | inv x _ hx => rw [map_inv₀]; exact inv_mem hx
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   have htop' : A.K⟮algebraMap E A.L ζ⟯ = ⊤ := by

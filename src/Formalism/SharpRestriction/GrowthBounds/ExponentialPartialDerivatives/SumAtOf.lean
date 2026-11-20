@@ -106,14 +106,14 @@ theorem cEq_of {V : VF C} (X : RawChart C d I κ) (H : ∀ g, X.CartHyp V g) (hS
     rw [dVar_hLf X H g a a' _ hw, hpair, hder, hJ', hsg, hσ]
     have e1 : upG g ((S g).ze (t g) k + MvPowerSeries.subst (t g) Λ + sig0) =
         upG g ((S g).ze (t g) k) + MvPowerSeries.subst (tW t) (upG g Λ) + upG g sig0 := by
-      rw [upG_eq, map_add, map_add, ← upG_eq, ← upG_eq, ← upG_eq, subst_tW_upG ht0]
+      rw [upG_eq, map_add (f := _), map_add (f := _), ← upG_eq, ← upG_eq, ← upG_eq, subst_tW_upG ht0]
     have e2 : MvPowerSeries.subst (tW t) ((X.k : C) • (MvPowerSeries.subst Φ' J - upG g Λ)) =
         (X.k : C) • (MvPowerSeries.subst (tW t) (MvPowerSeries.subst Φ' J) -
           MvPowerSeries.subst (tW t) (upG g Λ)) := by
       rw [← MvPowerSeries.coe_substAlgHom hT, map_smul, map_sub]
     rw [e1, e2]
     show L _ - L _ = L _
-    simp only [map_smul, map_sub, map_add, hsig]
+    simp only [map_smul, map_sub, map_add (f := _), hsig]
     module
 
 theorem sumCvK {V : VF C} (X : RawChart C d I κ) (hA : AddM V X)
@@ -273,7 +273,7 @@ theorem sumAt_of {V : VF C} (X : RawChart C d I κ) (hA : AddM V X)
         rw [h2 c q]
         ring
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [e, ← MvPowerSeries.coe_substAlgHom (hasSubst_unit (ht0 c)), map_add, map_sub, map_sum]
+        rw [e, ← MvPowerSeries.coe_substAlgHom (hasSubst_unit (ht0 c)), map_add (f := _), map_sub, map_sum]
       congr 1
       refine Finset.sum_congr rfl fun c' _ => ?_
       split_ifs
@@ -303,7 +303,7 @@ theorem sumAt_of {V : VF C} (X : RawChart C d I κ) (hA : AddM V X)
           ∑ c, MvPowerSeries.subst (fun _ : Unit => t c) (alongCv (γ c) (X.sg v)) +
           ∑ c, MvPowerSeries.subst (fun _ : Unit => t c) (lam c q) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [← hpush, ← MvPowerSeries.coe_substAlgHom htS, map_add, map_sub, map_sum, map_sum]
+        rw [← hpush, ← MvPowerSeries.coe_substAlgHom htS, map_add (f := _), map_sub, map_sum, map_sum]
       simp only [MvPowerSeries.coe_substAlgHom, key2]
     rw [hexp, hsum, hsplit, hAll]
     ring

@@ -16,7 +16,7 @@ theorem tailDecomp {O : Type} [CommRing O] {n : ℕ} (k : ℕ) (a : LetA O n) :
   funext i
   ext m
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Pi.add_apply, Finset.sum_apply, Pi.mul_apply, Pi.pow_apply, letπ, map_add, map_sum,
+    simp only [Pi.add_apply, Finset.sum_apply, Pi.mul_apply, Pi.pow_apply, letπ, map_add (f := _), map_sum,
     PowerSeries.coeff_C_mul_X_pow, PowerSeries.coeff_X_pow_mul', PowerSeries.coeff_mk,
     Finset.sum_ite_eq, Finset.mem_range]
   by_cases hk : m < k
@@ -53,7 +53,7 @@ theorem continuous_of_tail {O : Type} [CommRing O] [TopologicalSpace O] {n : ℕ
     intro b
     conv_lhs => rw [tailDecomp k b]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum]
+      rw [map_add (f := _), map_sum]
   have : Φ a - Φ a₀ = S a + Φ (letπ ^ k * (tl a - tl a₀)) := by
     rw [hΦ a, hΦ a₀, mul_sub, map_sub]
     simp only [S, Finset.sum_sub_distrib]

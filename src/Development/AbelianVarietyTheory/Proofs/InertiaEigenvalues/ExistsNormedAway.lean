@@ -68,7 +68,7 @@ theorem _root_.GlobalTheory.AwayNorm.exists_normed_away : ∀ (p : ℕ) (R : Typ
     rw [hD] at hx hy ⊢
     obtain ⟨a, rfl⟩ := hx
     obtain ⟨b, rfl⟩ := hy
-    exact ⟨a + b, by rw [map_add, mul_add]⟩
+    exact ⟨a + b, by rw [map_add (f := _), mul_add]⟩
   have hneg : ∀ x r, D x r → D (-x) r := by
     intro x r hx
     rw [hD] at hx ⊢
@@ -231,7 +231,7 @@ theorem _root_.GlobalTheory.AwayNorm.exists_normed_away : ∀ (p : ℕ) (R : Typ
       induction n with
       | zero => simp
       | succ n ih =>
-        rw [Finset.sum_range_succ, map_add, mul_add, ← add_assoc, ← ih, map_mul, map_pow,
+        rw [Finset.sum_range_succ, map_add (f := _), mul_add, ← add_assoc, ← ih, map_mul, map_pow,
           map_natCast]
         linear_combination hz n
     refine ⟨v 0 + (p : L) * algebraMap R L s, Metric.tendsto_atTop.2 fun ε hε => ?_⟩

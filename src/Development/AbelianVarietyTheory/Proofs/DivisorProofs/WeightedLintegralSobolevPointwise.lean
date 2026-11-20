@@ -76,7 +76,7 @@ theorem weighted_lintegral_sobolev_pointwise : ∀ {E : Type} [NormedAddCommGrou
           have ht0 : (0:ℝ) ≤ t := le_of_lt ht
           have hmono : ‖x‖ ≤ ‖x + t • v‖ := by
             have h1 : φ x ≤ φ (x + t • v) := by
-              rw [map_add, map_smul, smul_eq_mul]
+              rw [map_add (f := _), map_smul, smul_eq_mul]
               have : 0 ≤ φ v := hvS.2
               nlinarith
             have h2 : φ (x + t • v) ≤ ‖x + t • v‖ := by

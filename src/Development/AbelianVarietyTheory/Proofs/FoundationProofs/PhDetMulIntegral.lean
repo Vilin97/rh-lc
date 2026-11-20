@@ -26,7 +26,7 @@ theorem term_eq (H : Sesq V) (a : V ≃ₗ[ℂ] V) (ha : ∀ z w, H (a z) (a w) 
   have h1 : H z (a.symm x) = H (a z) x := by rw [← ha, LinearEquiv.apply_symm_apply]
   rw [term, kerTerm, hy, mul_assoc, mul_assoc, ← Complex.exp_add, ← Complex.exp_add]
   congr 2
-  simp only [map_add, map_sub, map_neg, LinearMap.add_apply, LinearMap.sub_apply, h1]
+  simp only [map_add (f := _), map_sub, map_neg, LinearMap.add_apply, LinearMap.sub_apply, h1]
   ring
 
 theorem value_eq (H : Sesq V) (hH : IsPosHerm H) (a : V ≃ₗ[ℂ] V) (ha : ∀ z w, H (a z) (a w) = H z w) (x y : V)
@@ -79,7 +79,7 @@ theorem term_shift (H : Sesq V) (hH : IsPosHerm H) (a : V ≃ₗ[ℂ] V) (ha : �
   push_cast
   rw [← hm']
   simp only [Complex.im_eq_sub_conj, ← hH.1]
-  simp only [map_add, map_sub, LinearMap.add_apply, LinearMap.sub_apply, ha]
+  simp only [map_add (f := _), map_sub, LinearMap.add_apply, LinearMap.sub_apply, ha]
   have := Complex.I_ne_zero
   field_simp
   ring

@@ -529,7 +529,7 @@ theorem weight_letter {n : ℕ} (i : ℕ) (e : ℕ × Fin n →₀ ℕ) :
   refine Finsupp.induction_linear e ?_ ?_ ?_
   · simp
   · intro f g hf hg
-    simp only [map_add, hf, hg, Finsupp.coe_add, Pi.add_apply, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hf, hg, Finsupp.coe_add, Pi.add_apply, Finset.sum_add_distrib]
   · rintro ⟨x1, x2⟩ k
     rw [Finsupp.weight_apply, Finsupp.sum_single_index]
     · by_cases hi : x1 = i

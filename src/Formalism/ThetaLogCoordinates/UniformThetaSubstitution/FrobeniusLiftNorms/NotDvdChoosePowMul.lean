@@ -91,7 +91,7 @@ theorem order_sub_lin {F : MvPowerSeries (Fin 2) K} (hF0 : MvPowerSeries.constan
   refine MvPowerSeries.nat_le_order fun d hd => ?_
   have hdeg : d.degree = d 0 + d 1 := by
     rw [Finsupp.degree_eq_sum, Fin.sum_univ_two]
-  rw [map_sub, map_add, MvPowerSeries.coeff_X, MvPowerSeries.coeff_X]
+  rw [map_sub, map_add (f := _), MvPowerSeries.coeff_X, MvPowerSeries.coeff_X]
   rcases Nat.lt_or_ge d.degree 1 with h0 | h1
   · have hd0 : d = 0 := by
       ext x; fin_cases x
@@ -149,7 +149,7 @@ theorem order_pow_sub_lin {F : MvPowerSeries (Fin 2) K} (hF0 : MvPowerSeries.con
 
 theorem degree_pair (i j : ℕ) :
     (Finsupp.single (0 : Fin 2) i + Finsupp.single (1 : Fin 2) j).degree = i + j := by
-  rw [map_add, Finsupp.degree_single, Finsupp.degree_single]
+  rw [map_add (f := _), Finsupp.degree_single, Finsupp.degree_single]
 
 theorem coeff_lin_pow (n i : ℕ) (hi : i ≤ n) :
     MvPowerSeries.coeff (Finsupp.single (0 : Fin 2) i + Finsupp.single (1 : Fin 2) (n - i))
@@ -452,7 +452,7 @@ theorem good_succ {p : ℕ} (hp : p.Prime) (hnp : ‖(p : K)‖ = (p : ℝ)⁻¹
         g0F K p := by
     rw [← hμdef]
     unfold rem
-    rw [map_add]
+    rw [map_add (f := _)]
     ring
   have htop1 : PowerSeries.coeff (p ^ (2 * j + 1)) (g0F K p) = ((p : K) ^ (j + 1))⁻¹ := by
     have e : p ^ (2 * j + 1) = p * (p ^ 2) ^ j := by ring

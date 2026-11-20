@@ -163,7 +163,7 @@ theorem uniqueFactorizationMonoid_addMonoidAlgebra_of_sub (f : P →+ X)
         obtain ⟨⟨a, n⟩, ha⟩ := hs
         obtain ⟨⟨c, m⟩, hc⟩ := ht
         refine ⟨⟨a * m + c * n, n * m⟩, ?_⟩
-        simp only [Submonoid.coe_mul, map_add, map_mul] at ha hc ⊢
+        simp only [Submonoid.coe_mul, map_add (f := _), map_mul] at ha hc ⊢
         rw [← ha, ← hc]
         ring
       | single x a =>

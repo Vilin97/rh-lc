@@ -29,7 +29,7 @@ theorem exists_dual_integral_of_saturated_free_part :
       have hz : ∀ i, W'.mkQ (w i) = 0 := fun i => by
         simpa using hwW i
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_smul, hz, smul_zero, Finset.sum_const_zero, zero_add,
+        simp only [map_add (f := _), map_sum, map_smul, hz, smul_zero, Finset.sum_const_zero, zero_add,
         map_zero] at h
       exact Fintype.linearIndependent_iff.mp ht _ h
     have h2 : ∀ i, f (Sum.inl i) = 0 := by

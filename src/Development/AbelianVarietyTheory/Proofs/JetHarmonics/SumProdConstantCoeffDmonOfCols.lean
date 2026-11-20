@@ -25,7 +25,7 @@ theorem coeff_mul_congr {k σ : Type} [CommRing k] (N : ℕ) (f g E : MvPowerSer
   rw [coeff_mul, coeff_mul]
   refine Finset.sum_congr rfl fun p hp => ?_
   have hp' : p.1 + p.2 = mo := Finset.HasAntidiagonal.mem_antidiagonal.1 hp
-  have hd : p.1.degree + p.2.degree = mo.degree := by rw [← hp', map_add]
+  have hd : p.1.degree + p.2.degree = mo.degree := by rw [← hp', map_add (f := _)]
   rw [h p.1 (by omega)]
 
 theorem exists_col {ι : Type} [Fintype ι] {n : ℕ} (m a : ι × Fin n →₀ ℕ)

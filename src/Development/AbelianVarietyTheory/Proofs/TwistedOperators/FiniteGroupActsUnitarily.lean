@@ -50,7 +50,7 @@ theorem csumAt_eq_of_rat (f f' : S.Cl → S.V) (hf : S.IsRat f) : csumAt S σ f 
   rw [pairAt_eq_of_rat S σ (f c) (f' c) (fun i => hf c i)]
 
 theorem csumAt_add_left (f g f' : S.Cl → S.V) : csumAt S σ (f + g) f' = csumAt S σ f f' + csumAt S σ g f' := by
-  simp only [csumAt, pairAt, Pi.add_apply, map_add, Finsupp.add_apply, add_mul, mul_add, Finset.sum_add_distrib]
+  simp only [csumAt, pairAt, Pi.add_apply, map_add (f := _), Finsupp.add_apply, add_mul, mul_add, Finset.sum_add_distrib]
 
 theorem csumAt_smul_left (a : K) (f f' : S.Cl → S.V) :
     csumAt S σ (a • f) f' = starRingEnd ℂ (σ a) * csumAt S σ f f' := by
@@ -58,7 +58,7 @@ theorem csumAt_smul_left (a : K) (f f' : S.Cl → S.V) :
 
 private theorem csumAt_add_right (f g g' : S.Cl → S.V) :
     csumAt S σ f (g + g') = csumAt S σ f g + csumAt S σ f g' := by
-  simp only [csumAt, pairAt, Pi.add_apply, map_add, Finsupp.add_apply, mul_add, Finset.sum_add_distrib]
+  simp only [csumAt, pairAt, Pi.add_apply, map_add (f := _), Finsupp.add_apply, mul_add, Finset.sum_add_distrib]
 
 private theorem csumAt_smul_right' (b : K) (f f' : S.Cl → S.V) :
     csumAt S σ f (b • f') = σ b * csumAt S σ f f' := by

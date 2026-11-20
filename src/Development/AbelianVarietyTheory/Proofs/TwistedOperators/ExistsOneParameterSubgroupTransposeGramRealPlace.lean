@@ -46,11 +46,11 @@ theorem emb_eq_or_conj (e₁ e₂ : D.host.E →+* ℂ)
   · left
     intro y
     obtain ⟨p, q, rfl⟩ := hdec y
-    rw [map_add, map_add, map_mul, map_mul, hc, h, h]
+    rw [map_add (f := _), map_add (f := _), map_mul, map_mul, hc, h, h]
   · right
     intro y
     obtain ⟨p, q, rfl⟩ := hdec y
-    rw [← hconj, star_add, star_mul, Eqv.star_algebraMapF, Eqv.star_algebraMapF, hb, map_add, map_add, map_mul, map_mul,
+    rw [← hconj, star_add, star_mul, Eqv.star_algebraMapF, Eqv.star_algebraMapF, hb, map_add (f := _), map_add (f := _), map_mul, map_mul,
       map_neg, hc, h, h]
     ring
 
@@ -62,7 +62,7 @@ theorem exists_piInf (τ : D.what₂.Tau) (p : GlobalTheory.AdelicU.EmbOver D.ho
     intro c hc hx y
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, ha, hb]
+    | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
     | tmul a x =>
       have l1 : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piInf p (a ⊗ₜ[D.host.F] x) = Eqv.gW D (Eqv.plW D τ) (fstA D.host.F a) * p.1 x :=
         GlobalTheory.AdelicU.infEmb_tmul p _ x
@@ -165,7 +165,7 @@ theorem GlobalTheory.LineAtPlace.exists_oneP : ∀ (D : D7) (θ : InfFam D) (X :
     have k2 := GlobalTheory.ConjInfExp.finPart_eq_one
       (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.mat (γ (Multiplicative.ofAdd t)) (e i) (e j) - (1 : Matrix _ _ (AE D)) (e i) (e j) + 1)
       (by rwa [add_sub_cancel_right])
-    rw [RingHom.map_add, RingHom.map_one, add_eq_right, RingHom.map_sub, sub_eq_zero] at k2
+    rw [RingHom.map_add (f := _), RingHom.map_one, add_eq_right, RingHom.map_sub, sub_eq_zero] at k2
     rw [Matrix.map_apply, hm, submatrix_apply, k2]
     by_cases k : i = j
     · subst k; simp

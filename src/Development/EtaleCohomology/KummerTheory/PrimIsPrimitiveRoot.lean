@@ -60,7 +60,7 @@ theorem local_pow {q : ℕ} [NeZero q] {U : Scheme.{0}} (ζ ξ : Prim q Γ(U, �
       exact hie
     have hq : ((q : ℕ) : U.residueField x) ≠ 0 := (Prim.map e ξ).2.1.ne_zero
     change e _ ≠ 0
-    rw [map_add, map_mul, map_mul, hy, mul_zero, add_zero, map_pow, map_natCast]
+    rw [map_add (f := _), map_mul, map_mul, hy, mul_zero, add_zero, map_pow, map_natCast]
     exact mul_ne_zero hq (pow_ne_zero _ (hξ.ne_zero (NeZero.ne q)))
   · have hs : ξ.1 + (ζ.1 ^ ((ZMod.unitOfCoprime i hcop : (ZMod q)ˣ) : ZMod q).val - ξ.1) =
         ζ.1 ^ ((ZMod.unitOfCoprime i hcop : (ZMod q)ˣ) : ZMod q).val := by ring

@@ -46,7 +46,7 @@ theorem gradFun_val (hK : FiniteDimensional ℚ_[p] K) {π : Kˣ} (hπ : vK p K 
 def gradHom (hK : FiniteDimensional ℚ_[p] K) {π : Kˣ} (hπ : vK p K π = 1) {i : ℕ} (hi : 0 < i) :
     UKi p K i →* Multiplicative (resK p K) :=
   MonoidHom.mk' (fun x => Multiplicative.ofAdd (redK p K (gradFun p hK hπ i x))) fun x y => by
-    rw [← ofAdd_add, ← map_add, Multiplicative.ofAdd.apply_eq_iff_eq, redK_eq_iff]
+    rw [← ofAdd_add, ← map_add (f := _), Multiplicative.ofAdd.apply_eq_iff_eq, redK_eq_iff]
     have hP : ((π : K) : PadicAlgCl p) ^ i ≠ 0 := pow_ne_zero _ (coe_units_ne_zero π)
     have h1 : ((gradFun p hK hπ i (x * y) : K) : PadicAlgCl p) -
         (((gradFun p hK hπ i x + gradFun p hK hπ i y : OK p K) : K) : PadicAlgCl p) =

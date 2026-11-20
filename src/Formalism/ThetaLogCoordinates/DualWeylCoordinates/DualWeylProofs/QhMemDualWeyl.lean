@@ -82,13 +82,13 @@ lemma qh_phi_coeff (Q : MvPolynomial (Fin n × Fin n) R) (d0 : Fin n × Fin n �
       split_ifs
       · rw [coeff_monomial, if_neg h]
       · simp
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
 
 lemma qh_weight (d : Fin n × Fin n →₀ ℕ) :
     Finsupp.weight (Formalism.GradedWeylDivisibility.colW n n) d = ⇑(Finsupp.mapDomain Prod.snd d) := by
   induction d using Finsupp.induction_linear with
   | zero => simp
-  | add d1 d2 h1 h2 => rw [map_add, h1, h2, Finsupp.mapDomain_add, Finsupp.coe_add]
+  | add d1 d2 h1 h2 => rw [map_add (f := _), h1, h2, Finsupp.mapDomain_add, Finsupp.coe_add]
   | single v e =>
     rw [Finsupp.weight_single, Finsupp.mapDomain_single]
     funext a

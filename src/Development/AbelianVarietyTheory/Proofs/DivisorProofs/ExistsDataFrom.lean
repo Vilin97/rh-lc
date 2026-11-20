@@ -238,7 +238,7 @@ theorem kU_symm (hε : ∀ k a b, ε k a b = ε k b a) (a b : Fin T.r → ℤ) :
   simp only [kU, hε _ a b]
 
 theorem kU_add (a a' b : Fin T.r → ℤ) : kU T s hs ε n (a + a') b = kU T s hs ε n a b * kU T s hs ε n a' b := by
-  simp only [kU, ← Finset.prod_mul_distrib, ← zpow_add, map_add, LinearMap.add_apply, mul_add]
+  simp only [kU, ← Finset.prod_mul_distrib, ← zpow_add, map_add (f := _), LinearMap.add_apply, mul_add]
 
 def tauF (a b : Fin T.r → ℤ) :
     LB.Gen (LB.LinComb (Mp T iw).L (lamPts (cK T iw ((n : ℤ) • a)) (cK T iw ((n : ℤ) • b))) negε) :=

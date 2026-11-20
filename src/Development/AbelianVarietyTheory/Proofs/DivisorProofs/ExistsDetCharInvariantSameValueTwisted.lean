@@ -136,6 +136,6 @@ theorem exists_mem_inv_eq_of_twisted : ∀ {ι : Type} [Fintype ι] (a d : ℕ) 
     rw [← Formalism.L2.DIV.fockL_apply, hWW] at this
     simp at this
   · have hP : P = y.1 + z.1 := congrArg Subtype.val hyz
-    rw [hP, map_add, hK y hy, zero_add]
+    rw [hP, map_add (f := _), hK y hy, zero_add]
 
 end GlobalTheory.MinorFrame

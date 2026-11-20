@@ -47,7 +47,7 @@ theorem exists_linear_mod_sq {A : Type} [CommRing A] [Algebra ℂ A] {ι : Type}
       have h : x + y - algebraMap ℂ A (e (x + y)) - ∑ l, (c + d) l • (r l - algebraMap ℂ A (e (r l))) =
           (x - algebraMap ℂ A (e x) - ∑ l, c l • (r l - algebraMap ℂ A (e (r l)))) +
           (y - algebraMap ℂ A (e y) - ∑ l, d l • (r l - algebraMap ℂ A (e (r l)))) := by
-        simp only [map_add, Pi.add_apply, add_smul, Finset.sum_add_distrib]
+        simp only [map_add (f := _), Pi.add_apply, add_smul, Finset.sum_add_distrib]
         ring
       rw [h]
       exact add_mem hc hd

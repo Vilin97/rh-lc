@@ -41,7 +41,7 @@ theorem thmPExp_degree_le_of_mem_antidiagonal [DecidableEq σ] {m : σ →₀ �
     (hpq : pq ∈ antidiagonal m) : pq.1.degree ≤ m.degree ∧ pq.2.degree ≤ m.degree := by
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hpq
   have := congrArg Finsupp.degree hpq
-  rw [map_add] at this
+  rw [map_add (f := _)] at this
   omega
 
 end ThmPExpLemmas

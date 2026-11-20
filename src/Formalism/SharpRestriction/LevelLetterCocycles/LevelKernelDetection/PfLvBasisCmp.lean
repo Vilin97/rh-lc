@@ -24,7 +24,7 @@ theorem lvBasis_cmp_congr {a b : W.DD T} (ha : a ∈ W.N T) (hb : b ∈ W.N T) (
 
 theorem lvBasis_cmp_add {a b : W.DD T} (ha : a ∈ W.N T) (hb : b ∈ W.N T) (hab : a + b ∈ W.N T) :
     W.cmp T ⟨a + b, hab⟩ = W.cmp T ⟨a, ha⟩ + W.cmp T ⟨b, hb⟩ := by
-  rw [← map_add]
+  rw [← map_add (f := _)]
   rfl
 
 theorem lvBasis_letE_idem (i : ZMod n) (x : W.DD T) :
@@ -39,7 +39,7 @@ theorem lvBasis_cmp_of_eq {w z y : W.DD T} (hw : w ∈ W.N T) (hz : z ∈ W.N T)
     (o : O) (h : y = o • w + (letπ : LetA O n) • z) :
     W.cmp T ⟨y, hy⟩ = algebraMap O LL o • W.cmp T ⟨w, hw⟩ := by
   have e : (⟨y, hy⟩ : ↥(W.N T)) = o • ⟨w, hw⟩ + (letπ : LetA O n) • ⟨z, hz⟩ := Subtype.ext h
-  rw [e, map_add, W.cmp_smul, W.cmp_π, add_zero]
+  rw [e, map_add (f := _), W.cmp_smul, W.cmp_π, add_zero]
 
 theorem lvBasis_cmp_smul_const {w : W.DD T} (hw : w ∈ W.N T) (a : LetA O n) (o : O)
     (ha : ∀ j, PowerSeries.constantCoeff (a j) = o) (h : a • w ∈ W.N T) :

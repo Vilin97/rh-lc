@@ -57,7 +57,7 @@ private theorem charpoly_inv {M M' : Matrix (Fin 2) (Fin 2) ℂ} (h : M * M' = 1
     field_simp
     linear_combination this
   rw [Matrix.charpoly_fin_two, t', d']
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   ring
 
 private theorem frobEig_unique {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω] [IsAlgClosure F Ω] {l n : ℕ} [Fact l.Prime]

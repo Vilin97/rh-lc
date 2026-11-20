@@ -15,7 +15,7 @@ private lemma rank_one_form (f : T →ₗ[K] T) (h1 : finrank K (LinearMap.range
   have inj := smul_left_injective K hv'
   let φ : T →ₗ[K] K :=
     { toFun := a
-      map_add' := fun x y => inj (by simp only [add_smul, hav, map_add])
+      map_add' := fun x y => inj (by simp only [add_smul, hav, map_add (f := _)])
       map_smul' := fun c x => inj (by
         simp only [smul_eq_mul, mul_smul, hav, map_smul, RingHom.id_apply]) }
   refine ⟨φ, v, hv', ?_, ?_⟩
@@ -40,7 +40,7 @@ private lemma span_orbit (τ : Representation K G T)
       obtain ⟨h, rfl⟩ := hx
       exact Submodule.subset_span ⟨g * h, by show τ (g * h) v = τ g (τ h v); rw [map_mul]; rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   rcases hirr _ hinvar with h | h
   · exfalso

@@ -76,7 +76,7 @@ theorem herm_add_right {D : D7} (G : Matrix (Fin r) (Fin r) D.host.E) (x y y' : 
   refine Finset.sum_congr rfl fun a _ => ?_
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun b _ => ?_
-  simp only [Pi.add_apply, cc, map_add]
+  simp only [Pi.add_apply, cc, map_add (f := _)]
   ring
 
 theorem AA_mul_inv (hP : FactPrincipalDatum) (D : D7) : D.host.AA * D.host.AA⁻¹ = 1 :=

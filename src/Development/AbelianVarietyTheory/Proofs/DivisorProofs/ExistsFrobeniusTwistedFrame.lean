@@ -25,19 +25,19 @@ theorem eq_psiR {ψ : RL p O Λ →+* RL p O Λ} (hψ : IsPsi ψ) (r : RL p O Λ
   induction r using TensorProduct.induction_on with
   | zero => simp
   | tmul a l => rw [hψ, psiR_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem phiR_psiR (r : RL p O Λ) : phiR (psiR r) = r := by
   induction r using TensorProduct.induction_on with
   | zero => simp
   | tmul a l => rw [psiR_tmul, phiR_tmul, PsiPhi.frobenius_phiInv']
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem psiR_phiR (r : RL p O Λ) : psiR (phiR r) = r := by
   induction r using TensorProduct.induction_on with
   | zero => simp
   | tmul a l => rw [phiR_tmul, psiR_tmul, PsiPhi.phiInv_frobenius']
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem phiR_smul (a : Ainf p O) (r : RL p O Λ) :
     phiR (a • r) = WittVector.frobenius a • phiR r := by
@@ -45,7 +45,7 @@ theorem phiR_smul (a : Ainf p O) (r : RL p O Λ) :
   | zero => simp
   | tmul x l => rw [TensorProduct.smul_tmul', phiR_tmul, phiR_tmul, TensorProduct.smul_tmul',
       smul_eq_mul, smul_eq_mul, map_mul]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem phiR_one_tmul_mul (l : Λ) (r : RL p O Λ) :
     phiR (((1 : Ainf p O) ⊗ₜ[ℤ_[p]] l) * r) = ((1 : Ainf p O) ⊗ₜ[ℤ_[p]] l) * phiR r := by
@@ -59,7 +59,7 @@ def twist (e : (Fin N → RL p O Λ) ≃ₗ[Ainf p O] (Fin h → Ainf p O)) :
   invFun v := fun i => psiR (e.symm (fun j => WittVector.frobenius (v j)) i)
   map_add' x y := by
     funext j
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     rw [show (fun i => phiR (x i) + phiR (y i)) = (fun i => phiR (x i)) + fun i => phiR (y i) from rfl,
       map_add, Pi.add_apply, map_add]
   map_smul' a x := by

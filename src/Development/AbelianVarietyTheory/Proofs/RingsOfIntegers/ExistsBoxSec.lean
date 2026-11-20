@@ -158,7 +158,7 @@ theorem phiRel_box : GlobalFnsSt → ∀ (R : Type) [CommRing R] [IsDomain R] (j
     (fun i => line_pr pD i p'.g.b (p i).g.b (hb i)) w hw
   refine ⟨w', hw', fun s s₁ S S₁ hs hS hS₁ α' u' hu' hc' => ?_⟩
   choose u hu hc using fun i => (gen_phi hG (p i) (w i) (hw i) (pD.xe α' i)).1
-  have hx : ∀ i, pD.xe (α' + p'.y) i = pD.xe α' i + (p i).y := fun i => by rw [map_add, hy]; rfl
+  have hx : ∀ i, pD.xe (α' + p'.y) i = pD.xe α' i + (p i).y := fun i => by rw [map_add (f := _), hy]; rfl
   have ht : ∀ i, (DegPre.trPt D' F p'.g.b).left ≫ prB pD F i = prB pD F i ≫ (DegPre.trPt D F (p i).g.b).left := fun i => by
     have := congrArg (fun q => q.left) (trPt_pr pD i p'.g.b)
     rw [hb i] at this

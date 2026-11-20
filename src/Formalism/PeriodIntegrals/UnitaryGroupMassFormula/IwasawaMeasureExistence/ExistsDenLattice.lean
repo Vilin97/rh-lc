@@ -225,7 +225,7 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] {B : Type} [CommRing B] 
 variable {ι : Type} [Fintype ι] [DecidableEq ι] (b : Module.Basis ι F E)
 
 theorem emb_add (c c' : ι → B) : emb b (c + c') = emb b c + emb b c' := by
-  apply coord_injective b; rw [map_add, coord_emb, coord_emb, coord_emb]
+  apply coord_injective b; rw [map_add (f := _), coord_emb, coord_emb, coord_emb]
 
 theorem emb_zero : emb b (0 : ι → B) = 0 := by
   apply coord_injective b; rw [map_zero, coord_emb]

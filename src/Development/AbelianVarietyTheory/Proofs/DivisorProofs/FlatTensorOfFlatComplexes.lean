@@ -149,7 +149,7 @@ theorem exists_fg_tens {S A B : Type*} [CommRing S] [AddCommGroup A] [Module S A
     obtain ⟨A2, B2, y2, hA2, hB2, rfl⟩ := hy
     refine ⟨A1 ⊔ A2, B1 ⊔ B2, TensorProduct.map (Submodule.inclusion le_sup_left) (Submodule.inclusion le_sup_left) x1 +
       TensorProduct.map (Submodule.inclusion le_sup_right) (Submodule.inclusion le_sup_right) y2, hA1.sup hA2, hB1.sup hB2, ?_⟩
-    rw [map_add, ← LinearMap.comp_apply, ← LinearMap.comp_apply (TensorProduct.map _ _), ← TensorProduct.map_comp,
+    rw [map_add (f := _), ← LinearMap.comp_apply, ← LinearMap.comp_apply (TensorProduct.map _ _), ← TensorProduct.map_comp,
       ← TensorProduct.map_comp]
     rfl
 
@@ -159,7 +159,7 @@ theorem comm_lTensor {S M N N' : Type*} [CommRing S] [AddCommGroup M] [Module S 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem key_alg {S A B I J : Type*} [CommRing S] [AddCommGroup A] [Module S A] [AddCommGroup B] [Module S B]
     [AddCommGroup I] [Module S I] [AddCommGroup J] [Module S J] (f : A →ₗ[S] I) (g : B →ₗ[S] J) (y : A ⊗[S] B)
@@ -260,7 +260,7 @@ theorem tensor_locally_zero_of_exact {A B M N : Scheme.{0}ᵒᵖ ⥤ ModuleCat.{
     · rintro _ ⟨u, rfl⟩
       induction u using TensorProduct.induction_on with
       | zero => simp
-      | add a b ha hb => rw [map_add]; exact add_mem ha hb
+      | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
       | tmul a b =>
         have hb : (g.app (op V)).hom b.1 = 0 := by
           have := b.2
@@ -272,7 +272,7 @@ theorem tensor_locally_zero_of_exact {A B M N : Scheme.{0}ᵒᵖ ⥤ ModuleCat.{
     · rintro _ ⟨u, rfl⟩
       induction u using TensorProduct.induction_on with
       | zero => simp
-      | add a b ha hb => rw [map_add]; exact add_mem ha hb
+      | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
       | tmul a b =>
         have ha : (f.app (op V)).hom a.1 = 0 := by
           have := a.2
@@ -307,7 +307,7 @@ theorem tens_locIm {ι : Type} {A B M N : ι → Scheme.{0}ᵒᵖ ⥤ ModuleCat.
   | of i y =>
     induction y using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | tmul a b =>
       refine loc_mono (fun V k h => ?_) (loc_and (hfs i U a) (hgs i U b))
       obtain ⟨⟨a', ha'⟩, ⟨b', hb'⟩⟩ := h

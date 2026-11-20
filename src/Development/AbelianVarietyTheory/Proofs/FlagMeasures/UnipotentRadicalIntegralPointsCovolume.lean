@@ -317,7 +317,7 @@ theorem radicalCovolume : RadicalCovolume := by
         map_zero' := by funext v i; simp
         map_add' := fun Y Y' => by
           funext v i
-          simp [Matrix.map_add, Matrix.mul_add, Matrix.add_mul] }
+          simp [Matrix.map_add (f := _), Matrix.mul_add, Matrix.add_mul] }
     have c0 : ∀ Y v i, crd Y v i = ((I.P v)⁻¹ * Y.map (I.φ v) * I.P v * (B v i.1)ᴴ).trace :=
       fun _ _ _ => rfl
     have c1 : ∀ (x : 𝓞 I.E) Y v i, crd (x • Y) v i = I.φ v (x : I.E) * crd Y v i := by
@@ -367,7 +367,7 @@ theorem radicalCovolume : RadicalCovolume := by
       have hcX : crd (w • Y - I.J⁻¹ * (w • Y)ᴴ * I.J) = fun v i => (y v i : ℂ) := by
         funext v i
         have h1 := congrArg (I.φ v) hw
-        rw [map_add, hφ, map_one] at h1
+        rw [map_add (f := _), hφ, map_one] at h1
         rw [map_sub, Pi.sub_apply, Pi.sub_apply, c2, c1, hYy, map_mul, Complex.conj_ofReal]
         linear_combination (y v i : ℂ) * h1
       generalize w • Y - I.J⁻¹ * (w • Y)ᴴ * I.J = X at hX' hU' hcX
@@ -385,7 +385,7 @@ theorem radicalCovolume : RadicalCovolume := by
       refine ⟨g, (hΓ' g).2 ⟨hg, fun v => lowers_anti (hW v).1.1 (Nat.zero_le c) (hg2 v)⟩, hg2, ?_⟩
       convert hyD using 1
       funext v i
-      rw [hg1, ← c0, map_add, c3 Z hZ, add_zero, hcX]
+      rw [hg1, ← c0, map_add (f := _), c3 Z hZ, add_zero, hcX]
       simp
     · rw [hcov, hf2, hdeg, show Formalism.HermitianLatticesTheory.fDeg I.E = I.f from hf1] at hD3
       exact hD3

@@ -14,7 +14,7 @@ private lemma lift_commute_of {X : Type} (u : X → Module.End ℂ Y) (z : Modul
   | grade0 r => rw [AlgHom.commutes]; exact Algebra.commutes r z
   | grade1 x => simpa using h x
   | mul p q hp hq => rw [map_mul]; exact hp.mul_left hq
-  | add p q hp hq => rw [map_add]; exact hp.add_left hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add_left hq
 
 private lemma lift_commute {X X' : Type} (u : X → Module.End ℂ Y) (v : X' → Module.End ℂ Y)
     (h : ∀ x y, Commute (u x) (v y)) (p : FreeAlgebra ℂ X) (q : FreeAlgebra ℂ X') :
@@ -28,7 +28,7 @@ private lemma lift_intertwine {X : Type} (u v : X → Module.End ℂ Y) (A : Mod
   | grade0 r => simpa using (Algebra.commutes r A).symm
   | grade1 x => simpa using h x
   | mul p q hp hq => rw [map_mul, map_mul, ← mul_assoc, hp, mul_assoc, hq, mul_assoc]
-  | add p q hp hq => rw [map_add, map_add, mul_add, add_mul, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), mul_add, add_mul, hp, hq]
 
 private lemma lift_lift {X : Type} (u : X → Module.End ℂ Y) (p : FreeAlgebra ℂ (FreeAlgebra ℂ X)) :
     FreeAlgebra.lift ℂ (fun q => FreeAlgebra.lift ℂ u q) p =
@@ -54,7 +54,7 @@ private lemma mem_adjoin_iff {X : Type} (u : X → Module.End ℂ Y) (x : Module
     | grade1 t =>
       simpa using (Algebra.subset_adjoin (Set.mem_range_self t) : u t ∈ Algebra.adjoin ℂ (Set.range u))
     | mul p q hp hq => rw [map_mul]; exact Subalgebra.mul_mem _ hp hq
-    | add p q hp hq => rw [map_add]; exact Subalgebra.add_mem _ hp hq
+    | add p q hp hq => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hp hq
 
 private lemma conj_mul (A x y : Module.End ℂ Y) (hAA : A * A = 1) :
     A * x * A * (A * y * A) = A * (x * y) * A := by

@@ -94,7 +94,7 @@ def fib (φ : Hom A B) : Cx R where
     have h := B.up.dd n x.2
     show φ.f (n + 1) (A.d n x.1) + -B.d n (φ.f n x.1 + (show B.X n from B.up.d n x.2)) = 0
     have h' : -B.d n (show B.X n from B.up.d n x.2) = 0 := h
-    rw [map_add, neg_add, h', φ.comm]; simp
+    rw [map_add (f := _), neg_add, h', φ.comm]; simp
 
 def fibFst (φ : Hom A B) : Hom (fib φ) A := ⟨fun _ => LinearMap.fst R _ _, fun _ _ => rfl⟩
 

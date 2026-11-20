@@ -70,7 +70,7 @@ theorem mem_range_ev {U : X.Opens} (hU : IsAffineOpen U) (hg : genPt ξ ∈ U) (
     { carrier := {t | ev ξ U hg t * a ∈ (ev ξ U hg).range}
       add_mem' := fun {t t'} ht ht' => by
         show ev ξ U hg (t + t') * a ∈ (ev ξ U hg).range
-        rw [map_add, add_mul]; exact add_mem ht ht'
+        rw [map_add (f := _), add_mul]; exact add_mem ht ht'
       zero_mem' := by
         show ev ξ U hg 0 * a ∈ (ev ξ U hg).range
         rw [map_zero, zero_mul]; exact zero_mem _

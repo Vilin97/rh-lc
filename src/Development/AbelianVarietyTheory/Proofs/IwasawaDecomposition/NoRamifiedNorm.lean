@@ -20,7 +20,7 @@ theorem trace_rat {R : Ranks} (H : Host R) (x : H.E) (hx : x ∈ H.K) :
   rw [eq_ratCast] at h1 h2
   push_cast
   rw [h1, h2]
-  simp only [map_add, map_one]
+  simp only [map_add (f := _), map_one]
   ring
 
 theorem no_ramified_norm {T d : ℕ} (hT : T.Prime) (hd : d.Prime) (h2 : T ≠ 2) (hTd : T ≠ d)

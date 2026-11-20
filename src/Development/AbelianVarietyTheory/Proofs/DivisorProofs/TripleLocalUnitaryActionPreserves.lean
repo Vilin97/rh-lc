@@ -45,7 +45,7 @@ theorem at_lift (v : Pl F) (y : κ → Fv F v) : At (evFin F v) (lift v y) := by
 
 theorem prj_add_lift (v : Pl F) (x : κ → AF F) (y : κ → Fv F v) : prj v (x + lift v y) = prj v x + y := by
   funext i
-  simp [prj, lift, map_add, GlobalTheory.EmbChart.evFin_atPlace]
+  simp [prj, lift, map_add (f := _), GlobalTheory.EmbChart.evFin_atPlace]
 
 def box (v : Pl F) (y₀ : κ → Fv F v) : Set (κ → Fv F v) := {y | ∀ k, y k - y₀ k ∈ v.adicCompletionIntegers F}
 

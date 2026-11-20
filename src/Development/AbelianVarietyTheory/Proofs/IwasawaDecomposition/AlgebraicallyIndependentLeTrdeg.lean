@@ -30,7 +30,7 @@ theorem card_algebraicIndependent_compositum_le_trdeg
           exact RingHom.congr_fun hr c
         rw [h1]
         exact Subalgebra.algebraMap_mem _ _
-    | add x y _ _ hx hy => rw [map_add]; exact Subalgebra.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact Subalgebra.mul_mem _ hx hy
   let f : Algebra.adjoin k (Set.range ((↑) : s → K)) →+* Algebra.adjoin K T :=
     (σ.comp (Algebra.adjoin k (Set.range ((↑) : s → K))).val.toRingHom).codRestrict

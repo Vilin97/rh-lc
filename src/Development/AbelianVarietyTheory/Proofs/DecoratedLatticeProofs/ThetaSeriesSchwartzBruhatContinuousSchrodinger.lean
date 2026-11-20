@@ -23,7 +23,7 @@ namespace GlobalTheory.Core.Rk.ThetaOf
 variable {D : D7} {S S₀ : HSp D} {ρ : ℕ}
 
 theorem symplO_eq_add (S T : HSp D) (x y : WO S T) : symplO S T x y = symplOH S T x y + symplOH S T x y := by
-  rw [symplOH, ← add_mul, ← map_add, add_halves, map_one, one_mul]
+  rw [symplOH, ← add_mul, ← map_add (f := _), add_halves, map_one, one_mul]
 
 theorem exists_symplO_eq (d : HypDec S S₀ ρ) (T : HSp D) {ξ : Matrix (Fin T.rank) (Fin ρ) D.host.E} (hξ : ξ ≠ 0)
     (t : AF D.host.F) : ∃ a, symplO S T (d.extX T (rat ξ)) (d.extY T a) = t := by
@@ -79,7 +79,7 @@ theorem integral_pair (hψ : IsStdChar D ψ (-1)) (d : HypDec S S₀ ρ) (T : HS
   obtain ⟨t, ht⟩ := hψ.1.2.2.2
   obtain ⟨u, hu⟩ := exists_symplO_eq d T hξ t
   refine integral_char_eq_zero h _ (fun a b => ?_) (fun γ hγ => ?_) (u := u) (by rw [hu]; exact ht)
-  · rw [map_add, symplO_add_right, AddChar.map_add_eq_mul]
+  · rw [map_add (f := _), symplO_add_right, AddChar.map_add_eq_mul]
   · exact (GlobalTheory.RatAnnih.ratL_annihilator D ψ hψ S T _).2 (ratMx_mul (rat_mem _) (rat_mem _)) _
       (ratMx_mul hγ (rat_mem _))
 

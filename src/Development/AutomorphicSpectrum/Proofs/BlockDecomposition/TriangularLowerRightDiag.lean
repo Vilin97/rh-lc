@@ -205,7 +205,7 @@ theorem exists_cov (hg : A.Good) (hb : Base A ε ν r δ α ω) {i : ι} (hi : �
   have h1 : r (xs p i) * r (xs' p i) = 1 := hb.inj (by rw [map_mul, n1, n2, hxx, map_one])
   have h2 : r (xs p i) * r (ys' p i δ) + r (ys p i δ) = 0 :=
     hb.inj (by
-      rw [map_add, map_mul, n1, n3, n4, map_zero]
+      rw [map_add (f := _), map_mul, n1, n3, n4, map_zero]
       simp only [ys']
       linear_combination (-(ys p i δ)) * hxx)
   let a : Rˣ := ⟨pm p (.inr i) (.inr i), qm p (.inr i) (.inr i), d2, by rw [mul_comm]; exact d2⟩

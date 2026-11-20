@@ -154,7 +154,7 @@ theorem UpperTheory.weilDeligne_unipotent_monodromy :
   have hsplit : π n w - w = (π (n * L⁻¹) (π L w) - π L w) + (π L w - w) := by
     rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel_right]
     abel
-  rw [hsplit, map_add]
+  rw [hsplit, map_add (f := _)]
   refine add_mem ?_ ?_
   · rw [Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero _).mpr]
     · exact zero_mem _

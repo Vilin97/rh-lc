@@ -80,7 +80,7 @@ theorem rtSum_finset_sum {ρ : Representation ℂ (GQ L n) W} {S : Submodule ℂ
       have hyfix : ∀ κ ∈ K, NG.rt L n κ y = y := by
         intro κ hκ
         have e := hfix κ hκ
-        rw [map_add] at e
+        rw [map_add (f := _)] at e
         have hd : NG.rt L n κ y - y ∈ a ⊓ ⨆ i ∈ t, i := by
           refine ⟨Submodule.sub_mem _ (haF.1.1.stable κ y hy) hy, ?_⟩
           have h4 : NG.rt L n κ y - y = z - NG.rt L n κ z := by
@@ -93,11 +93,11 @@ theorem rtSum_finset_sum {ρ : Representation ℂ (GQ L n) W} {S : Submodule ℂ
       have hzfix : ∀ κ ∈ K, NG.rt L n κ z = z := by
         intro κ hκ
         have e := hfix κ hκ
-        rw [map_add, hyfix κ hκ] at e
+        rw [map_add (f := _), hyfix κ hκ] at e
         exact add_left_cancel e
       have e1 := rtSum_iso hS.1 haF.2 K R c hc y hy hyfix
       have e2 := ih htF z hz hzfix
-      simp only [map_add, Finset.sum_add_distrib, e1, e2, smul_add]
+      simp only [map_add (f := _), Finset.sum_add_distrib, e1, e2, smul_add]
     · have hle : a ≤ ⨆ i ∈ t, i := inf_eq_left.1 htop
       exact ih htF f ((sup_le hle le_rfl) hf) hfix
 

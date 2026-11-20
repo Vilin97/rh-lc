@@ -43,7 +43,7 @@ theorem gr_decomp {K B : Type} [CommRing K] [CommRing B] [Algebra K B] {I : Idea
           · intro b _ hb
             simp [Pi.single_eq_of_ne hb]
           · simp
-        simp only [Pi.add_apply, map_add, Finset.sum_add_distrib, h1, ← hn]
+        simp only [Pi.add_apply, map_add (f := _), Finset.sum_add_distrib, h1, ← hn]
         ring
     intro b
     refine key m le_rfl b ?_

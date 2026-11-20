@@ -83,7 +83,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host 
     hl₀ hl
   have hdν : CongMod D.m (d ν) (d ν') := by
     obtain ⟨w, hw⟩ := hνν'
-    exact ⟨d w, by rw [hw, map_add, map_nsmul]⟩
+    exact ⟨d w, by rw [hw, map_add (f := _), map_nsmul]⟩
   have e := eq_of_classSum_approx D.m (fun μ => t ct yy₁ μ κ) _ _ hdν _ _
     (hsum ct yy₁ hl₁.uIsLab (y ≫ s) h' hys yy' hl'.uIsLab hco' a (d ν) κ ((hyy a).trans (hd _ _ ha)))
     (hsum ct yy₁ hl₁.uIsLab y h hy yy hl.uIsLab hco a' (d ν') κ (hd _ _ ha'))

@@ -18,7 +18,7 @@ theorem unit_eq_mul_qth_power_near_zeroLocus : ∀ (k B : Type) [Field k] [IsAlg
   have hab : a * algebraMap B A₂ y₁ - 1 ∈ Ideal.span {algebraMap B A₂ f} := by
     obtain ⟨t, ht⟩ := Ideal.mem_span_singleton.mp he
     have h1 := congrArg (algebraMap B A₂) hxy₁
-    simp only [map_add, map_mul, map_one] at h1
+    simp only [map_add (f := _), map_mul, map_one] at h1
     rw [Ideal.mem_span_singleton, ha]
     refine ⟨-(algebraMap B A₂ x₁) * e + t, ?_⟩
     simp only [map_mul]

@@ -62,7 +62,7 @@ theorem map_span {ι : Type} (g : ι → V) (h : V ≃ₗ[E] V) (Λ : Submodule 
   induction hx using Submodule.span_induction with
   | mem x hx => obtain ⟨i, rfl⟩ := hx; exact H i
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Λ.add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Λ.add_mem hx hy
   | smul c x _ hx =>
     have : h (c • x) = c • h x := h.map_smul (c : E) x
     rw [this]; exact Λ.smul_mem c hx
@@ -72,7 +72,7 @@ theorem map_spanE {ι : Type} (g : ι → V) (h : V ≃ₗ[E] V) (Λ : Submodule
   induction hx using Submodule.span_induction with
   | mem x hx => obtain ⟨i, rfl⟩ := hx; exact H i
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Λ.add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Λ.add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Λ.smul_mem c hx
 
 theorem map_mem_of_mem_sup_three_submodules (A A' B Λ : Submodule O V) (h : V ≃ₗ[E] V) (H1 : ∀ x ∈ A, h x ∈ Λ)
@@ -80,7 +80,7 @@ theorem map_mem_of_mem_sup_three_submodules (A A' B Λ : Submodule O V) (h : V �
   intro x hx
   obtain ⟨y, hy, w, hw, rfl⟩ := Submodule.mem_sup.1 hx
   obtain ⟨a, ha, a', ha', rfl⟩ := Submodule.mem_sup.1 hy
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
   exact Λ.add_mem (Λ.add_mem (H1 a ha) (H2 a' ha')) (H3 w hw)
 
 theorem inter (A A' B : Submodule O V) (P P' W : Submodule E V) (hA : ∀ x ∈ A, x ∈ P)

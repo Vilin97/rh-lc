@@ -231,7 +231,7 @@ theorem fubini_Fr {K Ψ : ℂ → ℂ} (hK : Integrable K volC) (hKc : Continuou
         refine integral_congr_ae (Eventually.of_forall fun u => ?_)
         show _ = K y * ee _ * Ψ u
         have e : 2 * (conj (z + u) * y).re = 2 * (conj z * y).re + 2 * (conj y * u).re := by
-          simp only [map_add, Complex.mul_re, Complex.add_re, Complex.add_im, Complex.conj_re, Complex.conj_im]
+          simp only [map_add (f := _), Complex.mul_re, Complex.add_re, Complex.add_im, Complex.conj_re, Complex.conj_im]
           ring
         rw [e, ee_add]
         ring

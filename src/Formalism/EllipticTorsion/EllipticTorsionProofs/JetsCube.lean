@@ -88,7 +88,7 @@ theorem Dj_sub (j : Fin 3) (a b : MvPowerSeries (Fin 3) K) : Dj F j (a - b) = Dj
   rw [Dj, Dj, Dj, map_sub, mul_sub]
 
 theorem Dj_add (j : Fin 3) (a b : MvPowerSeries (Fin 3) K) : Dj F j (a + b) = Dj F j a + Dj F j b := by
-  rw [Dj, Dj, Dj, map_add, mul_add]
+  rw [Dj, Dj, Dj, map_add (f := _), mul_add]
 
 theorem Dj_C (j : Fin 3) (c : K) : Dj F j (MvPowerSeries.C c) = 0 := by
   rw [Dj, MvPowerSeries.pderiv_C, mul_zero]

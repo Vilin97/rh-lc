@@ -20,7 +20,7 @@ theorem halfProj_apply (T : V →ₗ[ℂ] V) (s : ℂ) (x : V) :
 theorem map_halfProj {T : V →ₗ[ℂ] V} (hT2 : ∀ x, T (T x) = x) {s : ℂ} (hs2 : s * s = 1) (x : V) :
     T (halfProj T s x) = s • halfProj T s x := by
   have e : (s * s) • T x = T x := by rw [hs2, one_smul]
-  simp only [halfProj_apply, map_smul, map_add, hT2]
+  simp only [halfProj_apply, map_smul, map_add (f := _), hT2]
   linear_combination (norm := module) (-1 / 2 : ℂ) • e
 
 theorem halfProj_map {T : V →ₗ[ℂ] V} (hT2 : ∀ x, T (T x) = x) {s : ℂ} (hs2 : s * s = 1) (x : V) :
@@ -90,7 +90,7 @@ theorem exists_commuting_of_gram {α : Type*} (T : V →ₗ[ℂ] V)
   · simp only [LinearMap.add_apply, inner_add_left, inner_add_right, cross, cross', hv1, hw1]
     rw [inner_halfProj hT hT2 (by simp) (by simp), inner_halfProj hT hT2 (by simp) (by simp)]
     ring
-  · simp only [LinearMap.add_apply, map_add, hv2, hv3, hw2, hw3]
+  · simp only [LinearMap.add_apply, map_add (f := _), hv2, hv3, hw2, hw3]
   · simp only [LinearMap.add_apply, hv4, hw4, halfProj_apply]
     module
 

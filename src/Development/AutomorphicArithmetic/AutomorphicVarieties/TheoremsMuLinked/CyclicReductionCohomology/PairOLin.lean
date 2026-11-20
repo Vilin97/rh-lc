@@ -17,7 +17,7 @@ private theorem pairO_lin (l : ℕ) [Fact l.Prime] (R : Type) [CommRing R] (φ :
   have h3 : φ a * x = n • x := by
     have := hk (φ b * x)
     rw [nsmul_eq_mul, Nat.cast_pow] at this
-    rw [h2, map_add, map_mul, map_pow, map_natCast, map_natCast, add_mul, mul_assoc, this, add_zero, nsmul_eq_mul]
+    rw [h2, map_add (f := _), map_mul, map_pow, map_natCast, map_natCast, add_mul, mul_assoc, this, add_zero, nsmul_eq_mul]
   rw [h3, map_nsmul, nsmul_eq_mul, hn, ZMod.natCast_zmod_val]
 
 private theorem pairO_dvd (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] (t : O) (ht : Irreducible t)

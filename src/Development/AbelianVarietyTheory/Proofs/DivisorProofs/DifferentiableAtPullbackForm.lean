@@ -23,7 +23,7 @@ theorem repr_mul_eq_sum {n : ℕ} (x y : Alt n) (S : Finset (Fin (n + n))) :
 theorem ι_eq_sum {m : ℕ} (u : Fin m ⊕ Fin m → ℂ) :
     ExteriorAlgebra.ι ℂ u = ∑ a, u (.inl a) • dz a + ∑ a, u (.inr a) • dzb a := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [dz, dzb, ← map_smul, ← map_sum, ← map_add]
+    simp only [dz, dzb, ← map_smul, ← map_sum, ← map_add (f := _)]
   refine congrArg _ (funext ?_)
   rintro (b | b) <;> simp [Pi.single_apply, Finset.sum_apply]
 
@@ -36,7 +36,7 @@ theorem differentiableAt_repr_pull {n m : ℕ} {E : Type*} [NormedAddCommGroup E
   | ι u =>
     rw [ι_eq_sum]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, (pull_dz _ _).1, (pull_dz _ _).2, Finsupp.add_apply,
+      simp only [map_add (f := _), map_sum, map_smul, (pull_dz _ _).1, (pull_dz _ _).2, Finsupp.add_apply,
       Finsupp.finsetSum_apply, Finsupp.smul_apply, smul_eq_mul]
     refine DifferentiableAt.add ?_ ?_
     · exact DifferentiableAt.fun_sum fun a _ => (DifferentiableAt.fun_sum fun b _ => (hL b a).mul_const _).const_mul _
@@ -47,7 +47,7 @@ theorem differentiableAt_repr_pull {n m : ℕ} {E : Type*} [NormedAddCommGroup E
     simp only [map_mul, repr_mul_eq_sum (pull _ a)]
     exact DifferentiableAt.fun_sum fun A _ => DifferentiableAt.fun_sum fun B _ => ((ha A).mul (hb B)).mul_const _
   | add a b ha hb =>
-    simp only [map_add, Finsupp.add_apply]
+    simp only [map_add (f := _), Finsupp.add_apply]
     exact (ha S).add (hb S)
 
 theorem differentiableAt_repr_pull_fderiv : ∀ {n m : ℕ} {φ : V n → V m} {U : Set (V n)}, IsOpen U →

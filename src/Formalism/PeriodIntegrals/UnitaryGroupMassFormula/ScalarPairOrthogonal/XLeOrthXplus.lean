@@ -23,7 +23,7 @@ theorem mem_orth {U : Submodule E S.V} {v : S.V} : v ∈ orth S U ↔ ∀ x ∈ 
   simp only [orth, Submodule.mem_iInf, LinearMap.mem_ker]
 
 theorem hT_add_left (x y v : S.V) : S.hT (x + y) v = S.hT x v + S.hT y v := by
-  rw [map_add, LinearMap.add_apply]
+  rw [map_add (f := _), LinearMap.add_apply]
 
 theorem hT_sub_left (x y v : S.V) : S.hT (x - y) v = S.hT x v - S.hT y v := by
   rw [map_sub, LinearMap.sub_apply]

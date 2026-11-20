@@ -16,7 +16,7 @@ private lemma map_smul_c {B B' : Type} [CommRing B] [Algebra A B] [CommRing B'] 
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [smul_tmul']
-  | add a b ha hb => simp only [smul_add, map_add, ha, hb]
+  | add a b ha hb => simp only [smul_add, map_add (f := _), ha, hb]
 
 private lemma map_map_c {B B' B'' : Type} [CommRing B] [Algebra A B] [CommRing B'] [Algebra A B']
     [CommRing B''] [Algebra A B''] (φ : B →ₐ[A] B') (ψ : B' →ₐ[A] B'') (χ : B →ₐ[A] B'') (h : ∀ b, ψ (φ b) = χ b)
@@ -26,7 +26,7 @@ private lemma map_map_c {B B' B'' : Type} [CommRing B] [Algebra A B] [CommRing B
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [h]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 private lemma add_of_homog (f : ∀ (B : Type) [CommRing B] [Algebra A B], B ⊗[A] E → B)
     (nat : ∀ (B B' : Type) [CommRing B] [Algebra A B] [CommRing B'] [Algebra A B'] (φ : B →ₐ[A] B') (x : B ⊗[A] E),
@@ -45,7 +45,7 @@ private lemma add_of_homog (f : ∀ (B : Type) [CommRing B] [Algebra A B], B ⊗
     have h := nat _ _ ((TrivSqZeroExt.map g).restrictScalars A) z
     have hc : ∀ b, ((TrivSqZeroExt.map g).restrictScalars A) (i2 b) = i1 b := fun b =>
       (TrivSqZeroExt.map g).commutes b
-    simp only [z, map_add, map_smul_c, map_map_c i2 _ i1 hc] at h
+    simp only [z, map_add (f := _), map_smul_c, map_map_c i2 _ i1 hc] at h
     have h2 := congrArg TrivSqZeroExt.snd h
     simp only [AlgHom.restrictScalars_apply, TrivSqZeroExt.map_inr, TrivSqZeroExt.snd_map] at h2
     exact h2.symm

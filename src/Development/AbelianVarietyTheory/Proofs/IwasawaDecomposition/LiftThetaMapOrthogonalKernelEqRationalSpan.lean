@@ -123,7 +123,7 @@ theorem orth_ker_eq_span [NumberField K] [StarRing K] {V W : Type} [NormedAddCom
     obtain ⟨a, ha, b, hb, rfl⟩ := htop y
     have hb0 : θ b = 0 := hRk hb
     have ha0 : θ a = 0 := by
-      rw [LinearMap.mem_ker, map_add, hb0, add_zero] at hy; exact hy
+      rw [LinearMap.mem_ker, map_add (f := _), hb0, add_zero] at hy; exact hy
     rw [hinj a ha ha0, zero_add]; exact hb
   rw [hker]
   refine le_antisymm (fun y hy => ?_) hUR

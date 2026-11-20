@@ -144,9 +144,9 @@ theorem g_weight {n : ℕ} (d : Fin r × Fin n →₀ ℕ) :
   refine Finsupp.induction_linear d ?_ ?_ ?_
   · simp
   · intro f g hf hg
-    rw [map_add, hf, hg, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), hf, hg, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [map_add, Pi.add_apply, Nat.cast_add, mul_add]
+    rw [map_add (f := _), Pi.add_apply, Nat.cast_add, mul_add]
   · intro v k
     simp only [Finsupp.weight_apply, Finsupp.sum_single_index, zero_smul, implies_true]
     rw [Finset.sum_eq_single v.1]
@@ -204,7 +204,7 @@ private theorem finsupp_weight_rowW_eq_rowDeg {k n : ℕ} (d : Fin k × Fin n �
   refine Finsupp.induction_linear d ?_ ?_ ?_
   · simp [rowDeg]
   · intro f g hf hg
-    rw [map_add, Pi.add_apply, hf, hg]
+    rw [map_add (f := _), Pi.add_apply, hf, hg]
     simp only [rowDeg, Finsupp.add_apply, Finset.sum_add_distrib]
   · intro v c
     simp only [Finsupp.weight_apply, Finsupp.sum_single_index, zero_smul, implies_true]

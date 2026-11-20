@@ -91,7 +91,7 @@ theorem length_quotSMulTop_quot {y : C} (hmax : (P ⊔ Ideal.span {y}).IsMaximal
       obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
       obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.1 hb
       refine ⟨Ideal.Quotient.mk P c, ?_⟩
-      rw [Algebra.smul_def, Ideal.Quotient.algebraMap_eq, map_add,
+      rw [Algebra.smul_def, Ideal.Quotient.algebraMap_eq, map_add (f := _),
         Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add, map_mul, mul_comm]
   rw [← (g.quotKerEquivOfSurjective hg).length_eq, hker]
   exact Module.length_eq_one_iff.2 (isSimpleModule_iff_isCoatom.mpr (Ideal.isMaximal_def.1 hmax))

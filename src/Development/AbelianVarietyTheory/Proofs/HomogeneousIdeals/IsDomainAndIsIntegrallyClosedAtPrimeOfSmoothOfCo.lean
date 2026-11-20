@@ -110,7 +110,7 @@ theorem isIntegrallyClosedIn_tensor_of_smooth {A B L : Type*} [CommRing A] [Comm
     | add x y hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
     | tmul b y =>
       obtain ⟨a, ha⟩ := hcl y.2
       refine ⟨a • b, ?_⟩

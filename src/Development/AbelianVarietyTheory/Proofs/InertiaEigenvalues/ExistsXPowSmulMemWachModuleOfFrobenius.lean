@@ -47,7 +47,7 @@ theorem mem_N_of_jD (E : EtTie W RA RW inclR φR gR πA) (T : LocLat G Qp LL O)
       refine ⟨β + γ, ?_⟩
       rw [← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun j _ => ?_
-      rw [Pi.add_apply, map_add, add_smul]
+      rw [Pi.add_apply, map_add (f := _), add_smul]
     | smul c z _ hz =>
       obtain ⟨β, rfl⟩ := hz
       refine ⟨c • β, ?_⟩

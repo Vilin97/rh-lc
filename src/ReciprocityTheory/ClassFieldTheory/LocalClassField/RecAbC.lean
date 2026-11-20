@@ -30,7 +30,7 @@ theorem exists_normUnits (hL : FiniteDimensional ℚ_[p] L) (h : K ≤ L) :
   refine ⟨MonoidHom.mk' ν fun a b => ?_, hν⟩
   apply Additive.ofMul.injective
   apply ofK_injective (p := p) (K := K)
-  rw [hν, ofMul_mul, ofMul_mul, map_add, map_add, map_add, hν, hν]
+  rw [hν, ofMul_mul, ofMul_mul, map_add (f := _), map_add (f := _), map_add (f := _), hν, hν]
 
 theorem mem_normGrp_iff_exists (a : Kˣ) :
     a ∈ normGrp p K L ↔ ∃ b : Lˣ, ofK p K (Additive.ofMul a) = normHom p K L (ofK p L (Additive.ofMul b)) := by

@@ -22,7 +22,7 @@ theorem gSall_le_iSup (μ : Fin n → ℤ) :
       rw [map_zero]
       exact Submodule.zero_mem _
     | add y z _ _ hy hz =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hy hz
   show sInf {U : Submodule K V | {v | G.IsHW μ v} ⊆ (U : Set V) ∧ G.Stable U} ≤ _
   refine sInf_le ⟨fun v hv => ?_, hstab⟩

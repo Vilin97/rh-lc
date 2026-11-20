@@ -53,7 +53,7 @@ theorem quad (hσ : ∀ x, σ (σ x) = x) (hS : IsHermND σ JS) (hT : IsHermND �
         (symplOHF σ JS JT ξ₀ y u + symplOHF σ JS JT ξ₀ (intAF F w • (y + u)) (y + u)) =
       symplOHF σ JS JT ξ₀ (intAF F w • y) y + symplOF σ JS JT ξ₀ (intAF F w • y) u := by
   have h1 : intAF F w • y + cAF σ (intAF F w) • y = y := by
-    rw [← add_smul, cAF_intAF, ← map_add, hw, map_one, one_smul]
+    rw [← add_smul, cAF_intAF, ← map_add (f := _), hw, map_one, one_smul]
   have h2 := congrArg (fun z => symplOHF σ JS JT ξ₀ z u) h1
   simp only [GlobalTheory.HeisLineF.symplOHF_add_left] at h2
   have h3 := symplOHF_smul σ JS JT hσ ξ₀ (intAF F w) u y

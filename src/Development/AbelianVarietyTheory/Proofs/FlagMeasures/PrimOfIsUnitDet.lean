@@ -19,7 +19,7 @@ theorem ip_add_left (x x' y : Fin n → A) : ip c (x + x') y = ip c x y + ip c x
   simp only [ip, Pi.add_apply, add_mul, Finset.sum_add_distrib]
 
 theorem ip_add_right (x y y' : Fin n → A) : ip c x (y + y') = ip c x y + ip c x y' := by
-  simp only [ip, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [ip, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem ip_sub_left (x x' y : Fin n → A) : ip c (x - x') y = ip c x y - ip c x' y := by
   simp only [ip, Pi.sub_apply, sub_mul, Finset.sum_sub_distrib]
@@ -186,7 +186,7 @@ theorem card_fixed_sq (hc : ∀ u, c (c u) = u) {ω : A} (hω : IsUnit (ω - c �
       right_inv := fun p => by
         obtain ⟨⟨f, hf0⟩, ⟨g, hg0⟩⟩ := p
         have key : v • (f + ω • g - σ (f + ω • g)) = g := by
-          rw [map_add, hs, hf0, hg0, add_sub_add_left_eq_sub, ← sub_smul, smul_smul, mul_comm,
+          rw [map_add (f := _), hs, hf0, hg0, add_sub_add_left_eq_sub, ← sub_smul, smul_smul, mul_comm,
             hv1, one_smul]
         refine Prod.ext (Subtype.ext ?_) (Subtype.ext ?_)
         · show f + ω • g - ω • v • (f + ω • g - σ (f + ω • g)) = f

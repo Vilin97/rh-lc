@@ -91,7 +91,7 @@ theorem tensRho_compat (A : KAct ε X) (k : S7.KG ε) (a b : Fin n) (u : Fin n �
   have e1 : tensRho A k (tensE X a b u) j =
       ∑ i, S7.toMK k j i • A.ρ k (X.E a b (u i)) + S7.toMK k j a • A.ρ k (u b) := by
     rw [tensRho_apply]
-    simp only [tensE_apply, map_add, smul_add, Finset.sum_add_distrib]
+    simp only [tensE_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
     congr 1
     simp [apply_ite (A.ρ k)]
   have e2 : (∑ c, ∑ d, (S7.toMK k c a * (S7.toMK k)ᴴ b d) • tensE X c d (tensRho A k u)) j =

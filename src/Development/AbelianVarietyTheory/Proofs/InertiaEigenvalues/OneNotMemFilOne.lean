@@ -51,7 +51,7 @@ theorem ddR_of_trivial {V : Type} [AddCommGroup V] [Module Qp V] [Module LL V]
       refine Finset.sum_congr rfl fun i _ => ?_
       simp [c, TensorProduct.smul_tmul]
     | add a b ha hb =>
-      simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib, ← ha, ← hb]
+      simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib, ← ha, ← hb]
   have hc : ∀ i g y, c i (actVdR PD ρ g y) = PD.actdR g (c i y) := by
     intro i g y
     induction y using TensorProduct.induction_on with
@@ -62,7 +62,7 @@ theorem ddR_of_trivial {V : Type} [AddCommGroup V] [Module Qp V] [Module LL V]
       simp only [c, actVdR, LinearMap.comp_apply, AlgebraTensorModule.map_tmul,
         LinearMap.rTensor_tmul, LinearEquiv.coe_coe, TensorProduct.lid_tmul, h2, hρ]
       simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hk : ∀ i, ∃ k : K, algebraMap K BdR k = c i x := fun i =>
     PD.invdR (c i x) fun g => by rw [← hc, hx]
   refine ⟨?_, fun a ha => ?_, fun a ha hF => ?_⟩
@@ -84,7 +84,7 @@ theorem ddR_of_trivial {V : Type} [AddCommGroup V] [Module Qp V] [Module LL V]
       | tmul v b =>
         have : (e.coord i v) • (b : BdR) ∈ (PD.Fil a).restrictScalars Qp := Submodule.smul_mem _ _ b.2
         simpa [c] using this
-      | add y z hy hz => rw [map_add, map_add]; exact Submodule.add_mem _ hy hz
+      | add y z hy hz => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ hy hz
     rw [hsum x]
     refine Finset.sum_eq_zero fun i _ => ?_
     obtain ⟨k, hk⟩ := hk i

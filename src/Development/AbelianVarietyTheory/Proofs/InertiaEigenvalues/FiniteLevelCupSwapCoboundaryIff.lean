@@ -122,9 +122,9 @@ theorem swap_cong (L : Lattice (O := O) ρ) (L' : Lattice (O := O) ρ') (P : V �
       (algebraMap O LL ϖ)⁻¹ ^ r * P (ρ g (Formalism.MainNotions.LocalSituation.liftQ L _ (s h))) (ρ' g (d h)) := by
     rw [hχ]; ring
   rw [E1, E3, hdmul, E5]
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul,
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul,
     LinearMap.flip_apply] at he3 ⊢
-  rw [map_sub, map_add, map_mul, map_mul, ← he0, ← he1, ← he2, ← he3]
+  rw [map_sub, map_add (f := _), map_mul, map_mul, ← he0, ← he1, ← he2, ← he3]
   ring
 
 end Cong

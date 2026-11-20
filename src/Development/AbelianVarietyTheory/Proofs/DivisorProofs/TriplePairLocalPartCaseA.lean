@@ -74,7 +74,7 @@ theorem schr_schr_eq {R : Type} [CommRing R] [Invertible (2 : R)] (ψ : AddChar 
 theorem uStar_add (σ : E →ₐ[F] E) (H : Plane E n n₁) (H' : Plane E d d₁) (v : Pl F) (s t : Fv F v ⊗[F] E) :
     uStar σ H H' (GlobalTheory.VanishLoc.liftT v (s + t)) =
       uStar σ H H' (GlobalTheory.VanishLoc.liftT v s) + uStar σ H H' (GlobalTheory.VanishLoc.liftT v t) := by
-  simp only [uStar, map_add, add_smul]
+  simp only [uStar, map_add (f := _), add_smul]
 
 theorem uStar_smul (σ : E →ₐ[F] E) (H : Plane E n n₁) (H' : Plane E d d₁) (v : Pl F) (a : Fv F v)
     (t : Fv F v ⊗[F] E) :
@@ -85,7 +85,7 @@ def locUStar {σ : E →ₐ[F] E} {X : Spc F E n} {W : Spc F E d} (M : Model σ 
     (H' : Plane E d d₁) (v : Pl F) :
     (Fv F v ⊗[F] E) →ₗ[Fv F v] (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v) where
   toFun t := GlobalTheory.LatVac.locCo M.co v (uStar σ H H' (GlobalTheory.VanishLoc.liftT v t))
-  map_add' s t := by rw [uStar_add, map_add]
+  map_add' s t := by rw [uStar_add, map_add (f := _)]
   map_smul' a t := by rw [uStar_smul, GlobalTheory.VanishLocCont.locCo_smul, RingHom.id_apply]
 
 end GlobalTheory.LamSupp
@@ -177,7 +177,7 @@ theorem GlobalTheory.LamSupp.lam_supp : GlobalTheory.FunPr.Hypotheses₂ → ∀
     filter_upwards [h1, h2] with y hy1 hy2
     simp only [Function.comp_apply, Prod.fst_zero, Prod.snd_zero, dotProduct_zero, zero_dotProduct,
       sub_self, mul_zero, AddChar.map_zero_eq_one] at hy2
-    have e1 : L y = L x + L (y - x) := by rw [← map_add]; congr 1; abel
+    have e1 : L y = L x + L (y - x) := by rw [← map_add (f := _)]; congr 1; abel
     have h3 := schr_schr_eq (GlobalTheory.LatVac.psiAt B.ψ v) (L x) (L (y - x)) ψ
     rw [hy1, hy2, one_smul] at h3
     show ev v (schr _ (L y) ψ) = ev v (schr _ (L x) ψ)

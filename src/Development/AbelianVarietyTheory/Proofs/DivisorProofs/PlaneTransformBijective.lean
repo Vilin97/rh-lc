@@ -56,7 +56,7 @@ theorem cA_bijective (σ : E →ₐ[F] E) : Function.Bijective (cA σ) := by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [cA, e]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   rw [this]
   exact AlgEquiv.bijective _
 

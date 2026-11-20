@@ -129,7 +129,7 @@ private theorem trace_cut {Z : Type} [NormedAddCommGroup Z] [InnerProductSpace �
     _ = ∑ j ∈ s, LinearMap.trace ℂ Z (T * ((a j - a' j) * (a j - a' j) * c))
           + LinearMap.trace ℂ Z (T * (Q * c)) := by
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [hM, add_mul, mul_add, map_add, Finset.sum_mul, Finset.mul_sum, map_sum]
+          rw [hM, add_mul, mul_add, map_add (f := _), Finset.sum_mul, Finset.mul_sum, map_sum]
     _ = LinearMap.trace ℂ Z (T * Q) := by
         rw [Finset.sum_eq_zero hzero, zero_add, hQc]
 

@@ -21,7 +21,7 @@ theorem exists_eq_tmul_one_of_mon_phi_fil : ∀ (l : ℕ) [Fact l.Prime] (P : Lo
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [ιV, hι, P.PD_ι]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [key] at hF
   obtain ⟨v, rfl⟩ := (GlobalTheory.FundSeq.tensor_fundamental_sequence l P AI T K ℚ_[l] V).2 w hw hF
   exact ⟨v, by rw [crisIncl_tmul, Polynomial.C_1]⟩

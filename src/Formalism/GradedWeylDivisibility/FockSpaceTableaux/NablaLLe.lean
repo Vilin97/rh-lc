@@ -36,7 +36,7 @@ theorem nabla_weight_le : NablaLLe := by
         · rename_i a
           simp [colAddGen]
         · rename_i p q hp hq
-          simp only [map_add, hp, hq]
+          simp only [map_add (f := _), hp, hq]
         · rename_i p v hp
           simp only [map_mul, hp]
           congr 1

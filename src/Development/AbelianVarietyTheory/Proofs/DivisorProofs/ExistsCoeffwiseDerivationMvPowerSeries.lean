@@ -15,7 +15,7 @@ theorem mvPowerSeries_derivation_coeffwise (σ R : Type) [CommRing R] (D : Deriv
         intro F G
         funext α
         show D (MvPowerSeries.coeff α (F + G)) = D (MvPowerSeries.coeff α F) + D (MvPowerSeries.coeff α G)
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
       map_smul' := by
         intro n F
         funext α
@@ -25,7 +25,7 @@ theorem mvPowerSeries_derivation_coeffwise (σ R : Type) [CommRing R] (D : Deriv
   refine ⟨Derivation.mk' L ?_, ?_⟩
   · intro F G
     ext α
-    rw [smul_eq_mul, smul_eq_mul, map_add]
+    rw [smul_eq_mul, smul_eq_mul, map_add (f := _)]
     erw [hL]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [MvPowerSeries.coeff_mul, map_sum,

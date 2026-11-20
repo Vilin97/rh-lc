@@ -24,7 +24,7 @@ theorem ps_hom_ext {R B : Type} [CommRing R] [CommRing B] {f g : R⟦X⟧ →+* 
   ext1 a
   rw [← sub_eq_zero]
   refine hsep _ fun n => ?_
-  rw [a.eq_X_pow_mul_shift_add_trunc n, map_add, map_add, hp, map_mul, map_mul, map_pow, map_pow, ← hX]
+  rw [a.eq_X_pow_mul_shift_add_trunc n, map_add (f := _), map_add (f := _), hp, map_mul, map_mul, map_pow, map_pow, ← hX]
   exact ⟨_, by rw [add_sub_add_right_eq_sub, ← mul_sub]⟩
 
 theorem eq_zero_of_pow_dvd {R : Type} [CommRing R] {a : R⟦X⟧} (ha : constantCoeff a = 0) (b : R⟦X⟧)
@@ -110,7 +110,7 @@ theorem map_gam {R' : Type} [CommRing R'] [Algebra ℤ_[l] R'] (h : R →+* R')
 
 private theorem coeff_ode (f : ℤ_[l]⟦X⟧) (n : ℕ) :
     coeff n ((1 + X) * d⁄dX ℤ_[l] f) = coeff (n + 1) f * (n + 1) + coeff n f * n := by
-  rw [add_mul, one_mul, map_add, coeff_derivative]
+  rw [add_mul, one_mul, map_add (f := _), coeff_derivative]
   cases n with
   | zero => simp
   | succ n => rw [coeff_succ_X_mul, coeff_derivative]; simp
@@ -150,7 +150,7 @@ theorem gam_binomialSeries (c c' : ℤ_[l]) :
       congrFun (coe_substAlgHom hs) f
     refine ode_unique (c * c') ?_ (ode_binomial _) ?_
     · have h1 := congrArg (gam ℤ_[l] c) (ode_binomial c')
-      rw [map_mul, map_mul, map_add, map_one, gam_X, gam_C] at h1
+      rw [map_mul, map_mul, map_add (f := _), map_one, gam_X, gam_C] at h1
       have h2 := ode_binomial c
       have h3 : d⁄dX ℤ_[l] (gam ℤ_[l] c (binomialSeries ℤ_[l] c')) =
           gam ℤ_[l] c (d⁄dX ℤ_[l] (binomialSeries ℤ_[l] c')) * d⁄dX ℤ_[l] (binomialSeries ℤ_[l] c) := by

@@ -21,7 +21,7 @@ variable (k d) in
 
 def Q (n : ℕ) : AddSubgroup (Pt k n d) where
   carrier := {p | ∀ i, constantCoeff (p i) = 0}
-  add_mem' := fun ha hb i => by rw [Pi.add_apply, map_add, ha i, hb i, add_zero]
+  add_mem' := fun ha hb i => by rw [Pi.add_apply, map_add (f := _), ha i, hb i, add_zero]
   zero_mem' := fun _ => map_zero _
   neg_mem' := fun ha i => by rw [Pi.neg_apply, map_neg, ha i, neg_zero]
 
@@ -144,7 +144,7 @@ theorem jS_zR {κ : Type} (m : ℕ) (a : κ → MvPowerSeries τ R) (ha) (s : κ
 
 private theorem pj_add {κ : Type} [Finite κ] (m : ℕ) (g h : MvPowerSeries κ R) :
     pj m (g + h) = pj m g + pj m h := by
-  simp only [pj, map_add]
+  simp only [pj, map_add (f := _)]
 
 private theorem pj_mul' {κ : Type} [Finite κ] (m : ℕ) (g h : MvPowerSeries κ R) :
     pj m (g * h) = pj m g * pj m h := by
@@ -167,7 +167,7 @@ private theorem pj_aeval (m : ℕ) (a : σ → MvPowerSeries τ R) (q : MvPolyno
     · subst h
       simp
     · rw [if_neg h, if_neg (Ne.symm h)]
-  | add p q hp hq => rw [map_add, map_add, pj_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), pj_add, hp, hq]
   | mul_X p s hp => rw [map_mul, map_mul, pj_mul', hp, MvPolynomial.aeval_X, MvPolynomial.aeval_X]
 
 theorem jS_pj (m : ℕ) (a : σ → MvPowerSeries τ R) (ha) (f : MvPowerSeries σ R) : jS m a ha (pj m f) = pj m (subst a f) := by

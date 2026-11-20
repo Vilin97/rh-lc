@@ -183,7 +183,7 @@ theorem weak_op {α : Type} [MeasurableSpace α] (μ : Measure α) (G : α → �
   let L : 𝓢(V, ℂ) →ₗ[ℂ] 𝓢(V₁, ℂ) :=
     { toFun := g
       map_add' := fun a b => eq_of_weak fun T => by
-        rw [map_add, (hg _ T).2, (hg _ T).2, (hg _ T).2, ← integral_add (hg _ T).1 (hg _ T).1]
+        rw [map_add (f := _), (hg _ T).2, (hg _ T).2, (hg _ T).2, ← integral_add (hg _ T).1 (hg _ T).1]
         simp
       map_smul' := fun c a => eq_of_weak fun T => by
         rw [map_smul, (hg _ T).2, (hg _ T).2, ← integral_smul]

@@ -123,7 +123,7 @@ private theorem KN_conj {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (
     refine ⟨L.actG u y, integ_of_mem hu y hy, ?_⟩
     have e2 : L.actG u (L.actG u⁻¹ x) = x := by
       rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
-    rw [map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply, e, map_add, e2, map_nsmul]
+    rw [map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply, e, map_add (f := _), e2, map_nsmul]
   refine ⟨key _ hv.1, ?_⟩
   have : (u * v * u⁻¹)⁻¹ = u * v⁻¹ * u⁻¹ := by group
   rw [this]

@@ -31,7 +31,7 @@ theorem shiftEq_add {R : Type} [CommRing R] [IsDomain R] {Q : DegPre R} {k : ℕ
   have gadd : gs (𝟙 _) z ⊤ (scal (DegPre.BF Q (FractionRing R)).hom (c₁ + c₂)) =
       gs (𝟙 _) z ⊤ (scal (DegPre.BF Q (FractionRing R)).hom c₁) +
         gs (𝟙 _) z ⊤ (scal (DegPre.BF Q (FractionRing R)).hom c₂) := by
-    rw [← gs_add _ z ⊤ hz]; simp only [Out.scal, map_add]
+    rw [← gs_add _ z ⊤ hz]; simp only [Out.scal, map_add (f := _)]
   rw [g0, zero_mul, add_zero] at b
   rw [a, e, gadd]
   linear_combination (-(gs (𝟙 _) z ⊤ (scal (DegPre.BF Q (FractionRing R)).hom c₂))) * b

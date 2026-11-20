@@ -42,7 +42,7 @@ theorem baseChange : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o Ω] (S
       map_one' := inj₂ (by rw [hgf, map_one, map_one, map_one])
       map_mul' := fun a b => inj₂ (by rw [map_mul, hgf, hgf, hgf, map_mul, map_mul])
       map_zero' := inj₂ (by rw [hgf, map_zero, map_zero, map_zero])
-      map_add' := fun a b => inj₂ (by rw [map_add, hgf, hgf, hgf, map_add, map_add]) }
+      map_add' := fun a b => inj₂ (by rw [map_add (f := _), hgf, hgf, hgf, map_add (f := _), map_add (f := _)]) }
   have hgv : ∀ v, algebraMap V₂ (FractionRing V₂) (g v) = σ (algebraMap u.V _ v) := hgf
   have hK : σ.comp (algebraMap u.V _) = (algebraMap V₂ _).comp g := RingHom.ext fun v => (hgv v).symm
   have hg : Function.Injective g := fun a b h =>

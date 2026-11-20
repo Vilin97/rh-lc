@@ -30,7 +30,7 @@ theorem intAt_add {a b : E} (ha : IntAt P a) (hb : IntAt P b) : IntAt P (a + b) 
   obtain ⟨r, s, hs, h⟩ := ha
   obtain ⟨r', s', hs', h'⟩ := hb
   refine ⟨r * s' + s * r', s * s', PI.TwNormLat.W.mul_notMem' P hs hs', ?_⟩
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   rw [← h, ← h']
   ring
 

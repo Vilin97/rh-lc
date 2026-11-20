@@ -41,7 +41,7 @@ theorem lbIso_blowPol {X Z : Scheme.{0}} (π : Z ⟶ X) (ΩX : LB X) (ΩZ : LB Z
   rw [cls_tens hZ (isLB_dual E'.isLB_lb), cls_tens hMpT (isLB_dual EX.isLB_lb),
     cls_dual E'.isLB_lb, cls_dual EX.isLB_lb, cls_lbPow hΩZ, cls_lbPow hMp, cls_pull hM,
     cls_tens hXk (isLB_dual DX.isLB_lb), cls_dual DX.isLB_lb, cls_lbPow hΩX, eΩ, eE, eDn, eDp]
-  simp only [map_add, map_neg, map_nsmul, smul_add, smul_neg, mul_smul]
+  simp only [map_add (f := _), map_neg, map_nsmul, smul_add, smul_neg, mul_smul]
   abel
 
 end GlobalTheory.PolClass

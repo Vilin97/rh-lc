@@ -100,7 +100,7 @@ theorem isGKMap_avgF (hθ : IsInfFam θ) (hne : τ' ≠ τ) (hκ : Continuous κ
   let T' : kFin ε σ →ₗ[ℂ] (GA D V → ℂ) :=
     { toFun := fun v => avgF θ V μ τ κ e (T v)
       map_add' := fun a b => by
-        rw [map_add]
+        rw [map_add (f := _)]
         exact avgF_add μ hθ hκ hU he (hT.aut a).cont (hT.aut b).cont
       map_smul' := fun c a => by
         rw [map_smul]

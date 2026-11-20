@@ -71,7 +71,7 @@ private theorem higman_trace_integrality {R K La : Type} [CommRing R] [Field K] 
       obtain ⟨t, rfl⟩ := hx
       exact Submodule.subset_span ⟨g t, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul c x _ hx =>
       change g.baseChange K ((c : K) • x) ∈ L
       rw [map_smul]; exact hsm c c.2 _ hx
@@ -86,7 +86,7 @@ private theorem higman_trace_integrality {R K La : Type} [CommRing R] [Field K] 
     obtain ⟨M, hMa, hMb⟩ := h2 o
     induction u using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
     | tmul c t =>
       rw [hP, hP, Finset.smul_sum]
       set_option synthInstance.maxHeartbeats 100000 in
@@ -100,7 +100,7 @@ private theorem higman_trace_integrality {R K La : Type} [CommRing R] [Field K] 
       intro u
       induction u using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, smul_add, Finset.sum_add_distrib, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, hx, hy]
       | tmul c t =>
         simp only [hAt, LinearMap.baseChange_tmul]
         rw [← TensorProduct.tmul_sum, hf, Nat.cast_smul_eq_nsmul, ← natCast_zsmul, TensorProduct.tmul_smul, natCast_zsmul]

@@ -19,7 +19,7 @@ variable {R}
 
 theorem hasSubst_om (p : ℕ) (hp : 0 < p) : PowerSeries.HasSubst (((1 + PowerSeries.X : PowerSeries R) ^ p) - 1) := by
   apply PowerSeries.HasSubst.of_constantCoeff_zero
-  simp only [map_sub, map_pow, map_add, map_one]
+  simp only [map_sub, map_pow, map_add (f := _), map_one]
   erw [PowerSeries.constantCoeff_X]
   simp
 
@@ -39,12 +39,12 @@ theorem phi_X (p : ℕ) (hp : 0 < p) : phi (R := R) p hp PowerSeries.X = ((1 + P
   unfold phi; rw [PowerSeries.substAlgHom_X]
 
 theorem phi_one_add_X (p : ℕ) (hp : 0 < p) : phi (R := R) p hp (1 + PowerSeries.X) = (1 + PowerSeries.X) ^ p := by
-  rw [map_add, map_one, phi_X]; ring
+  rw [map_add (f := _), map_one, phi_X]; ring
 
 theorem phi_eval₂ (p : ℕ) (hp : 0 < p) (P : R[X]) :
     phi (R := R) p hp (P.eval₂ PowerSeries.C (1 + PowerSeries.X)) = (Polynomial.expand R p P).eval₂ PowerSeries.C (1 + PowerSeries.X) := by
   induction P using Polynomial.induction_on' with
-  | add f g hf hg => simp [Polynomial.eval₂_add, map_add, hf, hg]
+  | add f g hf hg => simp [Polynomial.eval₂_add, map_add (f := _), hf, hg]
   | monomial n a =>
     simp only [Polynomial.eval₂_monomial, Polynomial.expand_monomial, map_mul, map_pow, phi_one_add_X, ← pow_mul]
     congr 1
@@ -91,7 +91,7 @@ abbrev smap (σ : R ≃+* R) : PowerSeries R →+* PowerSeries R := PowerSeries.
 
 theorem hasSubst_pow (b : ℕ) : PowerSeries.HasSubst (((1 + PowerSeries.X : PowerSeries R) ^ b) - 1) := by
   apply PowerSeries.HasSubst.of_constantCoeff_zero
-  simp only [map_sub, map_pow, map_add, map_one]
+  simp only [map_sub, map_pow, map_add (f := _), map_one]
   erw [PowerSeries.constantCoeff_X]
   simp
 
@@ -139,7 +139,7 @@ theorem padicHom_ext (p : ℕ) [Fact p.Prime] [IsHausdorff (Ideal.span {(p : R)}
   rw [SModEq.zero, smul_eq_mul, Ideal.mul_top, Ideal.span_singleton_pow, Ideal.mem_span_singleton']
   refine ⟨f e - g e, ?_⟩
   rw [hx]
-  simp only [map_add, map_mul, map_pow, map_natCast]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast]
   ring
 
 def trLev (p m : ℕ) [Fact p.Prime] (hm : 1 ≤ m) : lev R p (m + 1) →+ lev R p m :=
@@ -204,7 +204,7 @@ theorem sbp_apply (b : ℤ_[p]) (h : PowerSeries R) : sbp p b h = act p R b h :=
 
 theorem sbp_one_add_X (b : ℤ_[p]) :
     sbp p b (1 + PowerSeries.X : PowerSeries R) = PowerSeries.binomialSeries R b := by
-  rw [map_add, map_one, sbp, PowerSeries.substAlgHom_X, br]; ring
+  rw [map_add (f := _), map_one, sbp, PowerSeries.substAlgHom_X, br]; ring
 
 theorem sbp_nat (b : ℕ) : sbp (R := R) p (b : ℤ_[p]) = sb b := by
   unfold sbp sb
@@ -247,7 +247,7 @@ theorem ev_binomialSeries (m : ℕ) (b : ℤ_[p]) (n : ℕ) (hn : b - n ∈ Idea
   obtain ⟨s, hs⟩ := (cyc_dvd_level (R := R) p m).trans h1
   have h2 : PowerSeries.binomialSeries R (e * ((p ^ m : ℕ) : ℤ_[p])) = 1 + cyc R p m * s := by
     rw [← hs, br]; ring
-  rw [hb, PowerSeries.binomialSeries_add, PowerSeries.binomialSeries_nat, h2, map_mul, map_add, map_mul, ev_cyc_self,
+  rw [hb, PowerSeries.binomialSeries_add, PowerSeries.binomialSeries_nat, h2, map_mul, map_add (f := _), map_mul, ev_cyc_self,
     map_pow, levZeta]
   simp
 
@@ -287,7 +287,7 @@ theorem ev_sbp_cyc (m : ℕ) (b : ℤ_[p]ˣ) : ev R p m (sbp p (b : ℤ_[p]) (cy
       ev R p m ((Polynomial.expand R n P).eval₂ PowerSeries.C (1 + PowerSeries.X)) := by
     intro P
     induction P using Polynomial.induction_on' with
-    | add f g hf hg => simp only [Polynomial.eval₂_add, map_add, hf, hg]
+    | add f g hf hg => simp only [Polynomial.eval₂_add, map_add (f := _), hf, hg]
     | monomial k a =>
       have hC : sbp p (b : ℤ_[p]) (PowerSeries.C a : PowerSeries R) = PowerSeries.C a := (sbp p (b : ℤ_[p])).commutes a
       rw [Polynomial.expand_monomial, Polynomial.eval₂_monomial, Polynomial.eval₂_monomial, map_mul, map_pow,

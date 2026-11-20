@@ -58,7 +58,7 @@ private theorem le_of_mem_map {O S K Γ : Type} [CommRing O] [CommRing S] [CommR
     exact h2 a ha
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (Valuation.map_add _ _ _).trans (max_le hx hy)
   | smul a x _ hx =>
     rw [smul_eq_mul, map_mul, map_mul]

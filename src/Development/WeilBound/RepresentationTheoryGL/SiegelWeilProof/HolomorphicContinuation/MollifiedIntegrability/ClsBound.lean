@@ -235,7 +235,7 @@ theorem dirC_cls {s : ℂ} (hs : s = 1 ∨ s = -1) (z : ℂ) (p q : ℕ) (R : Mv
     dirC_pow (diffAt_of (contDiff_detU hs) y) p _ _ (dirC_detU hs y k l),
     dirC_pow (diffAt_of (contDiff_detV hs) y) q _ (-(Complex.I * s * vM s y k l)) (by rw [dirC_detV hs]; ring),
     dirC_evUV hs]
-  simp only [cls, dR, evUV_eq, map_add, map_mul, map_sub, eval_C, eval_X, ent]
+  simp only [cls, dR, evUV_eq, map_add (f := _), map_mul, map_sub, eval_C, eval_X, ent]
   simp only [Bool.false_eq_true, if_false, if_true]
   ring
 

@@ -56,7 +56,7 @@ lemma cev_add {m n : ℕ} (σ τ : Cochain P U m) (i : Fin (n + 1) → ι) (c : 
     rw [AddMonoidHom.add_apply, cev_single, cev_single, cev_single, ← smul_add]
     congr 1
     by_cases h : inter U i ≤ inter U j
-    · rw [cval_of_le P U _ i j h, cval_of_le P U _ i j h, cval_of_le P U _ i j h, Pi.add_apply, map_add]
+    · rw [cval_of_le P U _ i j h, cval_of_le P U _ i j h, cval_of_le P U _ i j h, Pi.add_apply, map_add (f := _)]
     · simp only [cval, h, dif_neg, not_false_eq_true, add_zero]
   exact congrArg (fun L => L c) this
 

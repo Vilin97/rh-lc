@@ -73,13 +73,13 @@ theorem factorIrr (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [Is
         exact ⟨⟨A ((GlobalTheory.SmGL.leviTwo k (Fin r) (Fin t)).symm l).1 x, hS _ _ x.2⟩ ⊗ₜ
           B ((GlobalTheory.SmGL.leviTwo k (Fin r) (Fin t)).symm l).2 w, by simp [ρ']⟩
       | add a b ha hb =>
-        rw [map_add, map_add]; exact add_mem ha hb
+        rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
     have hLR : ∀ y ∈ R, L y ∈ S := by
       rintro _ ⟨z, rfl⟩
       induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul x w => rw [LinearMap.rTensor_tmul, hL]; exact S.smul_mem _ x.2
-      | add a b ha hb => rw [map_add, map_add]; exact add_mem ha hb
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
     rcases key R hR with h | h
     · left
       refine (Submodule.eq_bot_iff S).2 fun s hs => ?_
@@ -110,13 +110,13 @@ theorem factorIrr (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [Is
         exact ⟨A ((GlobalTheory.SmGL.leviTwo k (Fin r) (Fin t)).symm l).1 x ⊗ₜ
           ⟨B ((GlobalTheory.SmGL.leviTwo k (Fin r) (Fin t)).symm l).2 w, hS _ _ w.2⟩, by simp [ρ']⟩
       | add a b ha hb =>
-        rw [map_add, map_add]; exact add_mem ha hb
+        rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
     have hLR : ∀ y ∈ R, L y ∈ S := by
       rintro _ ⟨z, rfl⟩
       induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul x w => rw [LinearMap.lTensor_tmul, hL]; exact S.smul_mem _ w.2
-      | add a b ha hb => rw [map_add, map_add]; exact add_mem ha hb
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
     rcases key R hR with h | h
     · left
       refine (Submodule.eq_bot_iff S).2 fun s hs => ?_

@@ -12,7 +12,7 @@ def affineComb {A R : Type} [CommRing A] [CommRing R] (a b c : A →+* R)
   toFun s := a s + b s - c s
   map_one' := by simp
   map_zero' := by simp
-  map_add' s t := by simp only [map_add]; ring
+  map_add' s t := by simp only [map_add (f := _)]; ring
   map_mul' s t := by
     simp only [map_mul]
     linear_combination - h s t - h t s

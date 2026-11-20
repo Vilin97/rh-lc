@@ -59,7 +59,7 @@ theorem linearIndependent_comb {ι κ : Type} [Fintype ι] [Fintype κ]
     Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (hxX i)
   have hcomp : comp a N τ (∑ i, w (Sum.inl i) • x i + φ) = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, hφe]
+      rw [map_add (f := _), map_sum, hφe]
     simpa [map_smul] using hw
   have hzφ : ∑ i, w (Sum.inl i) • x i + φ ∈ Fil.restrictScalars (Int0 v) :=
     hE4 ⟨add_mem hzX (hE10 hφ), hcomp⟩

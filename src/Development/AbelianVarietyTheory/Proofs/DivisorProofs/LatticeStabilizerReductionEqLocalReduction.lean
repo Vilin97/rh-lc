@@ -44,7 +44,7 @@ def ballIdeal (PP : Pl D.host.E) : Ideal (Formalism.L2.Herm.intAf D.host.F D.hos
   add_mem' := by
     intro s t hs ht
     show Valued.v (cpt PP (((s + t : Formalism.L2.Herm.intAf D.host.F D.host.E)) : Lev.EAf D)) < 1
-    rw [Subring.coe_add, map_add]
+    rw [Subring.coe_add, map_add (f := _)]
     exact Valuation.map_add_lt _ hs ht
   zero_mem' := by
     show Valued.v (cpt PP (((0 : Formalism.L2.Herm.intAf D.host.F D.host.E)) : Lev.EAf D)) < 1

@@ -338,11 +338,11 @@ theorem eq_or_eq_conj (s s₀ : SplitPlace L) (h : s.v = s₀.v) : s₀ = s ∨ 
     have e : x = (x + IsCMField.complexConj L x) / 2 + (x - IsCMField.complexConj L x) / (2 * δ) * δ := by
       field_simp; ring
     have h1 := hfix ((x + IsCMField.complexConj L x) / 2) (by
-      rw [map_div₀, map_add, IsCMField.complexConj_apply_apply, map_ofNat, add_comm]) j j'
+      rw [map_div₀, map_add (f := _), IsCMField.complexConj_apply_apply, map_ofNat, add_comm]) j j'
     have h2 := hfix ((x - IsCMField.complexConj L x) / (2 * δ)) (by
       rw [map_div₀, map_sub, IsCMField.complexConj_apply_apply, map_mul, map_ofNat, hδ]
       field_simp; ring) j j'
-    rw [e, map_add, map_add, map_mul, map_mul, h1, h2, hj]
+    rw [e, map_add (f := _), map_add (f := _), map_mul, map_mul, h1, h2, hj]
   have hsq : i₀ δ * i₀ δ = i δ * i δ := by
     rw [← map_mul, ← map_mul]
     exact hfix _ (by rw [map_mul, hδ]; ring) _ _

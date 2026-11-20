@@ -113,7 +113,7 @@ theorem HostLog.constantCoeff_subst {K σ τ : Type} [Field K] [Finite σ] {a : 
   have hs := MvPowerSeries.hasSubst_of_constantCoeff_zero ha
   have e : f = (f - MvPowerSeries.C (MvPowerSeries.constantCoeff f)) + MvPowerSeries.C (MvPowerSeries.constantCoeff f) := by ring
   conv_lhs => rw [e]
-  rw [MvPowerSeries.subst_add hs, map_add, MvPowerSeries.constantCoeff_subst_eq_zero hs ha (by simp), zero_add,
+  rw [MvPowerSeries.subst_add hs, map_add (f := _), MvPowerSeries.constantCoeff_subst_eq_zero hs ha (by simp), zero_add,
     MvPowerSeries.subst_C]
   simp
 

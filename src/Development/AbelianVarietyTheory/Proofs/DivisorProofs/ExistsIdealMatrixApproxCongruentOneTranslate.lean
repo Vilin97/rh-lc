@@ -60,7 +60,7 @@ theorem exists_mem_approx (D : D7) (𝔪 : Ideal (𝓞 D.host.E)) (m : ℕ) (hm 
     obtain ⟨b', hb', u', hu', h'⟩ := hy'
     refine ⟨b + b', add_mem hb hb', u + u', add_mem hu hu', ?_⟩
     push_cast
-    rw [map_add]
+    rw [map_add (f := _)]
     linear_combination h + h'
   | neg y _ hy =>
     obtain ⟨b, hb, u, hu, h⟩ := hy

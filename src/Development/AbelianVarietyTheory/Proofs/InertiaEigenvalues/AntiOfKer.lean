@@ -327,7 +327,7 @@ theorem step : Cheb → PoitouTateTotallyComplex → CohDimTwo → TameLocal →
       · rw [hξ q hq, hπj]
     have e3 : π (∏ q, (1 + ξ q) ^ (Multiplicative.toAdd (d (P' q) g)).val) =
         ∏ q, (1 + a₀ q * t) ^ (Multiplicative.toAdd (d (P q) g)).val := by
-      simp only [map_prod, map_pow, map_add, map_one]
+      simp only [map_prod, map_pow, map_add (f := _), map_one]
       rw [Fintype.prod_sum_type, Fintype.prod_sum_type, Fin.prod_univ_castSucc]
       have e4 : π (ξ (.inr (Fin.last n))) = 0 := by rw [← h1, ← hξ0]
       rw [e4, add_zero, one_pow, mul_one]

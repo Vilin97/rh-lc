@@ -20,7 +20,7 @@ theorem hp_add_right {C : Submodule ℂ A} {ip : A → A → ℂ} (hp : Petersso
   have h3 := hp.herm z x
   have h4 := hp.add y z x
   simp only [Submodule.coe_add] at h1 h4
-  rw [← h1, ← h2, ← h3, h4, map_add]
+  rw [← h1, ← h2, ← h3, h4, map_add (f := _)]
 
 theorem hp_zero_right {C : Submodule ℂ A} {ip : A → A → ℂ} (hp : PeterssonHilbertSpace.IsHermPos C ip) (x : C) : ip x (0 : A) = 0 := by
   have h := hp_add_right hp x 0 0

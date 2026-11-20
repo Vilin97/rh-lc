@@ -139,7 +139,7 @@ theorem push_mem (B₀ : LocBridge l E Ω Gw O₀) (B : LocBridge l E Ω Gw O) (
     rw [Br.toLLK_alg, RingEquiv.apply_symm_apply]
   change φ (algebraMap (Br.Ow B₀) (Br.LLw B₀) (n j)) =
     φ (Br.toLLK B₀ (u j) - (z (θ g) j + ((Br.locM B₀ M₀ (θ g)).mulVec m j - m j))) at h1
-  rw [h2, hφ, fracMap_alg, Br.toLLK_alg, map_sub, map_add, map_sub, hφ, congrFun (hp g m) j] at h1
+  rw [h2, hφ, fracMap_alg, Br.toLLK_alg, map_sub, map_add (f := _), map_sub, hφ, congrFun (hp g m) j] at h1
   exact h1
 
 set_option synthInstance.maxHeartbeats 400000 in

@@ -251,7 +251,7 @@ theorem contr_add_left (γ γ' : Fin n → Vsp dim) (w : Fin n → E) :
 
 theorem contr_add_right (γ : Fin n → Vsp dim) (w w' : Fin n → E) :
     contr γ (w + w') = contr γ w + contr γ w' := by
-  simp only [contr, cc, Pi.add_apply, map_add, actE_add_left, Finset.sum_add_distrib]
+  simp only [contr, cc, Pi.add_apply, map_add (f := _), actE_add_left, Finset.sum_add_distrib]
 
 @[simp] theorem contr_zero_left (w : Fin n → E) : contr (0 : Fin n → Vsp dim) w = 0 := by
   simp [contr, actE_zero_right]

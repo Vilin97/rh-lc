@@ -78,7 +78,7 @@ theorem cone_mem_schA : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numb
       (GlobalTheory.T.config_a_haar_eigen_triple hKP F E σ B b a' G G₁ H H' hC μ hμ e hE X om om' om₁ om₁' hT hT₁ _ (hpres _ _ h₂) y)]
     refine integral_congr_ae (Eventually.of_forall fun l => ?_)
     beta_reduce
-    rw [map_add, rho_add', map_add, Pi.add_apply]
+    rw [map_add (f := _), rho_add', map_add (f := _), Pi.add_apply]
     ring
   have hsmul : ∀ (c : ℂ) (Φ : (Fin (b + 2) × Fin (b + 2 + a') → AF F) → ℂ),
       cone B G.M om e K μK μ (shiftA H H') X.ν ((b + 2 - a') / 2) (c • Φ) =

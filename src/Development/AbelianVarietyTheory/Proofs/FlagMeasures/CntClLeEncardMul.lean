@@ -68,7 +68,7 @@ theorem le_finrank_orth {E : Type} [Field E] [NumberField E] [StarRing E] {S : H
     have hv' : ∀ i, S.hT (Sum.elim F.fvec F'.fvec i) v = 0 := fun i => congrFun (LinearMap.mem_ker.1 hv) i
     refine (Formalism.MainNotions.mem_orth_iff _ _).2 fun x hx => ?_
     obtain ⟨p, hp, q, hq, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add, LinearMap.add_apply,
+    rw [map_add (f := _), LinearMap.add_apply,
       Formalism.MainNotions.hT_zero_of_mem_Xplus F (fun a => by simpa [FlagG.fvec] using hv' (.inl a.castSucc))
         (by simpa [FlagG.fvec] using hv' (.inl (Fin.last r))) p hp,
       Formalism.MainNotions.hT_zero_of_mem_Xplus F' (fun a => by simpa [FlagG.fvec] using hv' (.inr a.castSucc))

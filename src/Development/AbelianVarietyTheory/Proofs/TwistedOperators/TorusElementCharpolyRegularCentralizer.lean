@@ -26,11 +26,11 @@ theorem lT_smul (f : Fld P →ₗ[E] E) (a : k ⊗[F] E) (z : k ⊗[F] Fld P) :
     LinearMap.lTensor k (f.restrictScalars F) (a • z) = a * LinearMap.lTensor k (f.restrictScalars F) z := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [add_smul, map_add, ha, hb, add_mul]
+  | add a b ha hb => rw [add_smul, map_add (f := _), ha, hb, add_mul]
   | tmul k1 e1 =>
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add z w hz hw => rw [smul_add, map_add, hz, hw, map_add, mul_add]
+    | add z w hz hw => rw [smul_add, map_add (f := _), hz, hw, map_add (f := _), mul_add]
     | tmul k2 l =>
       rw [tmul_smul_tmul, LinearMap.lTensor_tmul, LinearMap.lTensor_tmul, Algebra.TensorProduct.tmul_mul_tmul,
         LinearMap.restrictScalars_apply, LinearMap.restrictScalars_apply, f.map_smul, smul_eq_mul]
@@ -53,7 +53,7 @@ def tEquiv : (k ⊗[F] Fld P) ≃ₗ[k ⊗[F] E] (ι → k ⊗[F] E) where
     induction z using TensorProduct.induction_on with
     | zero => simp
     | add z w hz hw =>
-      simp only [map_add, add_smul, Finset.sum_add_distrib] at hz hw ⊢
+      simp only [map_add (f := _), add_smul, Finset.sum_add_distrib] at hz hw ⊢
       rw [hz, hw]
     | tmul c y =>
       simp only [crd_tmul, tmul_smul_tmul, mul_one]

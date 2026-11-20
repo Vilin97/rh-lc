@@ -18,7 +18,7 @@ theorem apply_eq_re (l : ℂ →ₗ[ℝ] ℝ) (z : ℂ) :
   have hz : z = z.re • (1 : ℂ) + z.im • Complex.I := by
     apply Complex.ext <;> simp
   conv_lhs => rw [hz]
-  rw [map_add, map_smul, map_smul]
+  rw [map_add (f := _), map_smul, map_smul]
   simp
   ring
 

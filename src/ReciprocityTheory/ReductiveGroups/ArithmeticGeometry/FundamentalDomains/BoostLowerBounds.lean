@@ -30,7 +30,7 @@ private theorem hermC_Gm_smul_left (c : ℂ) (u v : Fin r → ℂ) :
 
 private theorem hermC_Gm_add_right (u v v' : Fin r → ℂ) :
     hermC τ.1 X.Gm u (v + v') = hermC τ.1 X.Gm u v + hermC τ.1 X.Gm u v' := by
-  simp only [hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 private theorem hermC_Gm_sub_right (u v v' : Fin r → ℂ) :
     hermC τ.1 X.Gm u (v - v') = hermC τ.1 X.Gm u v - hermC τ.1 X.Gm u v' := by

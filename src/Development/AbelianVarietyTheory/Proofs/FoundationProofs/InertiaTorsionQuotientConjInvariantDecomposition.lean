@@ -308,7 +308,7 @@ theorem conj_invariant : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Field Ω] [Al
   have htadd : ∀ s ∈ Ine (F := ℚ) B, ∀ s' ∈ Ine (F := ℚ) B, t (s * s') = t s + t s' := by
     intro s hs s' _
     simp only [t]
-    rw [GlobalTheory.WeilDeligne.kummer_mul, GlobalTheory.WeilDeligne.cycZ_of_mem_Ine hB hl hs, Units.val_one, one_mul, map_add]
+    rw [GlobalTheory.WeilDeligne.kummer_mul, GlobalTheory.WeilDeligne.cycZ_of_mem_Ine hB hl hs, Units.val_one, one_mul, map_add (f := _)]
   let F : G ℚ Ω → M × ZMod (l ^ n) := fun x => (u x, t x)
   have hFlc : IsLocallyConstant (fun s : Ine (F := ℚ) B => F s) :=
     IsLocallyConstant.prodMk hlc (htlc.comp_continuous continuous_subtype_val)

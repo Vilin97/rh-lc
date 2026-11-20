@@ -27,7 +27,7 @@ theorem exists_int_of_rat (f : MRingOver ℚ ι) :
     obtain ⟨m1, F1, hm1, h1⟩ := hp
     obtain ⟨m2, F2, hm2, h2⟩ := hq
     refine ⟨m1 * m2, C (m2 : ℤ) * F1 + C (m1 : ℤ) * F2, Nat.mul_pos hm1 hm2, ?_⟩
-    rw [map_add, map_mul, map_mul, map_C, map_C, h1, h2]
+    rw [map_add (f := _), map_mul, map_mul, map_C, map_C, h1, h2]
     simp only [eq_intCast, Int.cast_natCast, Nat.cast_mul, C_mul]
     ring
 

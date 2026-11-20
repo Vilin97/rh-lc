@@ -71,7 +71,7 @@ def good (H : Submodule ℂ (L2 (latticeGL E a) μ)) : Submodule ℂ (Sm E a) wh
           have e1 : finRep E a k φ = φ := hk.1
           have e2 : finRep E a k ψ = ψ := hk.2
           change finRep E a k (φ + ψ) = φ + ψ
-          rw [map_add, e1, e2]),
+          rw [map_add (f := _), e1, e2]),
       ⟨C + C', fun g => (norm_add_le _ _).trans (add_le_add (h3 g) (h3' g))⟩, F + F', add_mem hF hF',
       Filter.EventuallyEq.trans (ae_quotMeasure_iff.1 (Lp.coeFn_add F F')) (e.add e')⟩
   smul_mem' := fun c φ ⟨h1, h2, ⟨C, h3⟩, F, hF, e⟩ =>
@@ -136,7 +136,7 @@ def kfv : Submodule ℂ (smv μ H) where
     refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℂ (Set.range fun k => cptRep E a k φ.1) ⊔
       Submodule.span ℂ (Set.range fun k => cptRep E a k ψ.1)) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
-    simp only [Submodule.coe_add, map_add]
+    simp only [Submodule.coe_add, map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨k, rfl⟩) (Submodule.subset_span ⟨k, rfl⟩)
   smul_mem' := fun c φ h => by
     haveI : FiniteDimensional ℂ (Submodule.span ℂ (Set.range fun k => cptRep E a k φ.1)) := h

@@ -24,7 +24,7 @@ private theorem rowGen_map_intCast {R S : Type} [CommRing R] [CommRing S] (φ : 
     Polynomial.map (MvPolynomial.map φ) (rowGen R a b f) = rowGen S a b (map φ f) := by
   induction f using MvPolynomial.induction_on with
   | C c => simp [rowGen]
-  | add p q hp hq => rw [map_add, map_add, Polynomial.map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), Polynomial.map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p v hp =>
     rw [map_mul, Polynomial.map_mul, hp, map_mul, map_mul, map_X]
     congr 1
@@ -64,7 +64,7 @@ theorem eval_idFrame_int {r n : ℕ} (F : MvPolynomial (Fin r × Fin n) ℤ) :
     eval (idFrame ℚ r n) (map (Int.castRingHom ℚ) F) = ((eval (idFrame ℤ r n) F : ℤ) : ℚ) := by
   induction F using MvPolynomial.induction_on with
   | C c => simp
-  | add p q hp hq => simp only [map_add, hp, hq, Int.cast_add]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, Int.cast_add]
   | mul_X p v hp =>
     simp only [map_mul, map_X, eval_X, hp, Int.cast_mul]
     congr 1
@@ -96,7 +96,7 @@ private theorem fockQ_zero_right {σ : Type} (f : MvPolynomial σ ℚ) : fockQ f
 
 private theorem fockQ_add_right {σ : Type} (f g g' : MvPolynomial σ ℚ) :
     fockQ f (g + g') = fockQ f g + fockQ f g' := by
-  rw [← fockB_apply, map_add, fockB_apply, fockB_apply]
+  rw [← fockB_apply, map_add (f := _), fockB_apply, fockB_apply]
 
 private theorem fockQ_smul_right' {σ : Type} (f g : MvPolynomial σ ℚ) (c : ℚ) :
     fockQ f (c • g) = c * fockQ f g := by
@@ -135,7 +135,7 @@ theorem nablaEqDualWeylOf : NablaEqDualWeylOf := by
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
       refine ⟨a + b, ?_⟩
-      rw [map_add, fockQ_add_right, ha, hb]
+      rw [map_add (f := _), fockQ_add_right, ha, hb]
       push_cast
       ring
     | smul c x _ hx =>

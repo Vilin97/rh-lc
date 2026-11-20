@@ -34,7 +34,7 @@ theorem aeval_eq_zero_of_mem (x : Cone n (AlgebraicClosure ℚ)) {f : MvPolynomi
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [Geo.mConeMap]
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f p hf => simp only [map_mul, hf, aeval_X, eval_X, Geo.mConeMap, eval_C, mul_one]
   rw [h, hmem, map_zero]
 
@@ -101,7 +101,7 @@ theorem exists_int_mul {κ : Type*} (F : MvPolynomial κ ℚ) :
     obtain ⟨N₁, P₁, h₁, e₁⟩ := hf
     obtain ⟨N₂, P₂, h₂, e₂⟩ := hg
     refine ⟨N₁ * N₂, C N₂ * P₁ + C N₁ * P₂, mul_ne_zero h₁ h₂, ?_⟩
-    rw [map_add, map_mul, map_mul, MvPolynomial.map_C, MvPolynomial.map_C, e₁, e₂, Int.cast_mul,
+    rw [map_add (f := _), map_mul, map_mul, MvPolynomial.map_C, MvPolynomial.map_C, e₁, e₂, Int.cast_mul,
       C_mul]
     simp only [eq_intCast]
     ring

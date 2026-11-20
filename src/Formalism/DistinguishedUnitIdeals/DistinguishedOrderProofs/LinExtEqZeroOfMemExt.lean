@@ -266,7 +266,7 @@ theorem linExt_mem_of_mem_ext (g : (Fin r → O) →ₗ[O] O) (V : Submodule O (
     exact Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self _)
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
   | smul c x _ hx =>
     rw [map_smul, smul_eq_mul]
@@ -607,7 +607,7 @@ theorem descent_estimate_up_down : MUD := by
       rw [hk1] at h
       obtain ⟨N, c', z, hc', heq⟩ := h
       have hj := congrArg (linExt (LinearMap.proj j ∘ₗ f)) heq
-      rw [linExt_levelRel, map_add, map_smul, map_smul,
+      rw [linExt_levelRel, map_add (f := _), map_smul, map_smul,
         linExt_eq_zero_of_mem_ext _ (V s₁) (fun v hv => by simp [hfC v hv]) c' hc', hyW,
         map_smul, hLam, hLL] at hj
       have hj' : p s₁ ^ (H s₁ - b s₁) * (Q1 * (C (ϖ ^ (N + kk s₁)) * vecExt f W j)) =
@@ -641,7 +641,7 @@ theorem descent_estimate_up_down : MUD := by
         ϖ ^ (kk s₀ + min n c) ∣ ϖ ^ c * φ (dd s₀) := by
       intro φ n hφF hφC
       have hj := congrArg (linExt φ) heq₀
-      rw [linExt_levelRel, map_add, map_smul, map_smul,
+      rw [linExt_levelRel, map_add (f := _), map_smul, map_smul,
         linExt_eq_zero_of_mem_ext _ (V s₀) hφF c₀ hc₀, hyW, map_smul, hWu, map_add, map_smul]
         at hj
       obtain ⟨g, hg⟩ := Ideal.mem_span_singleton'.mp (linExt_mem_of_mem_ext φ (V s₁) _ hφC u huC)
@@ -738,7 +738,7 @@ theorem descent_estimate_up_down : MUD := by
           Submodule.smul_mem _ _ hc', ?_⟩
         funext i
         have hi := congrFun heq i
-        simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, cst, map_add, map_mul]
+        simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, cst, map_add (f := _), map_mul]
           at hi ⊢
         rw [hLamE, hLL0]
         rw [pow_add] at hi ⊢

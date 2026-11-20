@@ -50,7 +50,7 @@ theorem exists_approx (hO : ∀ o : O, algebraMap O A o ∈ S)
   | add x y _ _ hx hy =>
     obtain ⟨l, z, hz, rfl⟩ := hx
     obtain ⟨l', z', hz', rfl⟩ := hy
-    exact ⟨l + l', z + z', add_mem hz hz', by rw [map_add, smul_add]; abel⟩
+    exact ⟨l + l', z + z', add_mem hz hz', by rw [map_add (f := _), smul_add]; abel⟩
   | smul s x _ hx =>
     obtain ⟨l, z, hz, rfl⟩ := hx
     obtain ⟨o, w, hw, e⟩ := hS s s.2
@@ -104,7 +104,7 @@ theorem congr_of_end (g : ℕ) (x y : GL n A)
     refine ⟨((y⁻¹ : GL n A) : Matrix n n A) *ᵥ (ι (θ l) + z - z'),
       (inv_mem hy _).1 (sub_mem (add_mem (Submodule.subset_span ⟨_, rfl⟩) hz) hz'), ?_⟩
     have e2 : (x : Matrix n n A) *ᵥ ι l - (y : Matrix n n A) *ᵥ ι l = (g : A) • (ι (θ l) + z - z') := by
-      rw [e, e', hθ, LinearMap.add_apply, LinearMap.smul_apply, map_add, map_nsmul,
+      rw [e, e', hθ, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_nsmul,
         ← Nat.cast_smul_eq_nsmul A, smul_sub, smul_add]
       abel
     rw [← Matrix.mulVec_smul, ← e2, Matrix.mulVec_sub, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec,

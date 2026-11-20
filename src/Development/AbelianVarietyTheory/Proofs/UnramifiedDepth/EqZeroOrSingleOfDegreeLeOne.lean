@@ -17,7 +17,7 @@ theorem eq_zero_or_single_of_degree_le_one {σ : Type} (μ : σ →₀ ℕ) (h :
     have hs' : 1 ≤ μ s := Nat.one_le_iff_ne_zero.2 hs
     have hle : Finsupp.single s 1 ≤ μ := Finsupp.single_le_iff.2 hs'
     obtain ⟨ν, rfl⟩ := exists_add_of_le hle
-    rw [map_add, Finsupp.degree_single] at h
+    rw [map_add (f := _), Finsupp.degree_single] at h
     have : ν = 0 := (Finsupp.degree_eq_zero_iff ν).1 (by omega)
     exact ⟨s, by rw [this, add_zero]⟩
 

@@ -538,7 +538,7 @@ private theorem isThetaFunO_add_twisted_operators {f g : WO S T → ℂ} (hf : I
   case level =>
     refine ⟨U ⊓ V, ?_, fun u hu h0 => ?_⟩
     · rw [AddSubgroup.coe_inf]; exact hU.inter hV
-    · rw [← GlobalTheory.SplitScalar.heisL_apply, map_add, GlobalTheory.SplitScalar.heisL_apply, GlobalTheory.SplitScalar.heisL_apply,
+    · rw [← GlobalTheory.SplitScalar.heisL_apply, map_add (f := _), GlobalTheory.SplitScalar.heisL_apply, GlobalTheory.SplitScalar.heisL_apply,
         hUf u hu.1 h0, hVg u hu.2 h0]
   case cont => exact hf.cont.add hg.cont
   case smooth => intro k L hL hL0 w; exact (hf.smooth k L hL hL0 w).add (hg.smooth k L hL hL0 w)

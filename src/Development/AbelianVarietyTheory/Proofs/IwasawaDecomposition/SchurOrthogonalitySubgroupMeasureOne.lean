@@ -76,7 +76,7 @@ theorem schur_orthogonality {G : Type} [Group G] [MeasurableSpace G] [Measurable
     simp only [hB]
     rw [← integral_add (hint y y1) (hint y y2)]
     congr 1; funext g
-    simp only [hF, map_add, inner_add_right, mul_add]
+    simp only [hF, map_add (f := _), inner_add_right, mul_add]
   have hBsmul : ∀ y (c : ℂ) y', B y (c • y') = c * B y y' := by
     intro y c y'
     simp only [hB]

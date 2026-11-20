@@ -272,9 +272,9 @@ theorem existsUnique_coeff : ∀ (K : Type) [Field K] (A₀ : Over (Sp K)) [GrpO
     intro W V hW hW₀ hV hVW
     refine existsUnique_coeff_affine (G := A₀) hv hd x₀ p m H y hW hV hVW (fun f => rsT (d W f) V) ?_ ?_ ?_
     · intro f f'
-      simp only [hD.add W hW₀, rsT_eq_resG_of_le' (O₀ := (y ≫ m) ⁻¹ᵁ W) _ hVW, map_add]
+      simp only [hD.add W hW₀, rsT_eq_resG_of_le' (O₀ := (y ≫ m) ⁻¹ᵁ W) _ hVW, map_add (f := _)]
     · intro f f'
-      simp only [hD.mul W hW₀, rsT_eq_resG_of_le' (O₀ := (y ≫ m) ⁻¹ᵁ W) _ hVW, map_add, map_mul]
+      simp only [hD.mul W hW₀, rsT_eq_resG_of_le' (O₀ := (y ≫ m) ⁻¹ᵁ W) _ hVW, map_add (f := _), map_mul]
       simp only [← rsT_eq_resG_of_le' (O₀ := (y ≫ m) ⁻¹ᵁ W) _ hVW, rsT_comp_app_eq_pbT_app y m hVW]
     · intro r
       simp only [hD.base W hW₀, GlobalTheory.KS.InvField.constFn_zero, rsT_eq_resG_of_le' (O₀ := (y ≫ m) ⁻¹ᵁ W) _ hVW,

@@ -39,7 +39,7 @@ theorem exists_isContr {Tm : H₁ →ₗ[ℂ] H₂ →ₗ[ℂ] FF} (hI : IsIsoBi
   · intro c a y
     exact ext_inner_left ℂ fun x => by simp only [inner_smul_right, hf, RingHom.id_apply]
   · intro a y z
-    exact ext_inner_left ℂ fun x => by simp only [inner_add_right, hf, map_add, inner_add_left]
+    exact ext_inner_left ℂ fun x => by simp only [inner_add_right, hf, map_add (f := _), inner_add_left]
   · intro c a y
     exact ext_inner_left ℂ fun x => by simp only [inner_smul_right, hf, map_smul, inner_smul_left]
 

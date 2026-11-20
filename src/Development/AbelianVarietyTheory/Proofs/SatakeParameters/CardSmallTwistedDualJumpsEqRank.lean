@@ -21,7 +21,7 @@ theorem twistedDualJumps_eq_hodgeTateJump_images : jT2 P j s =
       (Finset.univ : Finset (Fin R.m)).val.map (fun i => twistedJump P j s (-⌊P.b i⌋)) := by
   obtain ⟨q, hq⟩ := R.t_odd
   cases s <;>
-    simp only [jT2, jW, cloud, lows, twistedJump, Multiset.map_add, Multiset.map_map,
+    simp only [jT2, jW, cloud, lows, twistedJump, Multiset.map_add (f := _), Multiset.map_map,
       Function.comp_def, ↓reduceIte, Bool.false_eq_true] <;>
     congr 1 <;>
     refine Multiset.map_congr rfl fun i _ => ?_ <;>

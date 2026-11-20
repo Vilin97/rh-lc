@@ -21,7 +21,7 @@ theorem analyticAt_eval₂Hom {E R J : Type*} [NormedAddCommGroup E] [NormedSpac
     AnalyticAt ℂ (fun z => MvPolynomial.eval₂Hom (φ z) (u z) q) w := by
   induction q using MvPolynomial.induction_on with
   | C a => simpa only [MvPolynomial.eval₂Hom_C] using hφ a
-  | add P Q hP hQ => simp only [map_add]; exact hP.add hQ
+  | add P Q hP hQ => simp only [map_add (f := _)]; exact hP.add hQ
   | mul_X P i hP =>
     simp only [map_mul, MvPolynomial.eval₂Hom_X']
     exact hP.mul (hu i)
@@ -34,7 +34,7 @@ theorem hasDerivAt_eval₂Hom_line {R J : Type*} [CommRing R] [Fintype J]
   induction q using MvPolynomial.induction_on with
   | C a => simpa using hasDerivAt_const (0 : ℂ) (φ a)
   | add P Q hP hQ =>
-    simp only [map_add, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_mul, Finset.sum_add_distrib]
     exact hP.add hQ
   | mul_X P i hP =>
     have hX : HasDerivAt (fun t : ℂ => y i + t * v i) (v i) 0 := by

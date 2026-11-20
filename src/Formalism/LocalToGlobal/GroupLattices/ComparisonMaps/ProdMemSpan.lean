@@ -67,7 +67,7 @@ theorem rowAct_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {k n 
     rowAct S (U.map φ) (map φ f) = map φ (rowAct R U f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp]
     set_option synthInstance.maxHeartbeats 100000 in

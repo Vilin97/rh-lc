@@ -48,7 +48,7 @@ theorem restr_skew {D : O} {N : Module.End K (K ⊗[O] H)} {M : Module.End O H} 
     (hM : IsScaledRestr D N M) (h : ∀ x y, B.baseChange K (N x) y + B.baseChange K x (N y) = 0) (x y : H) :
     B (M x) y + B x (M y) = 0 := by
   apply IsFractionRing.injective O K
-  rw [map_add, algebraMap_bilin, algebraMap_bilin, hM, hM, map_zero]
+  rw [map_add (f := _), algebraMap_bilin, algebraMap_bilin, hM, hM, map_zero]
   simp only [map_smul, LinearMap.smul_apply]
   rw [← smul_add, h, smul_zero]
 
@@ -95,13 +95,13 @@ theorem baseChange_skew_iso (B : LinearMap.BilinForm O H) {M M' : Module.End O H
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add x₁ x₂ h₁ h₂ =>
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     exact ⟨by linear_combination h₁.1 + h₂.1, by linear_combination h₁.2 + h₂.2⟩
   | tmul c₀ a =>
     induction y using TensorProduct.induction_on with
     | zero => simp
     | add y₁ y₂ h₁ h₂ =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact ⟨by linear_combination h₁.1 + h₂.1, by linear_combination h₁.2 + h₂.2⟩
     | tmul c' b =>
       simp only [LinearMap.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul]
@@ -145,7 +145,7 @@ theorem nilPart_claims : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   · rw [add_mul, one_mul, mul_sub, mul_one, hnn]; abel
   · rw [sub_mul, one_mul, mul_add, mul_one, hnn]; abel
   · exact (Commute.one_left _).add_left (nilPart_commute R _ (hMρ a) l t)
-  · simp only [LinearMap.add_apply, Module.End.one_apply, map_add]
+  · simp only [LinearMap.add_apply, Module.End.one_apply, map_add (f := _)]
     linear_combination nilPart_skew R B hMskew hMiso l t x y + nilPart_iso R B hMskew hMiso l t x y
 
 end GlobalTheory.DivLin

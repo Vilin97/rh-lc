@@ -50,7 +50,7 @@ theorem UpperTheory.Gal.ClosedPhiFromClosedTrace.zeroAp_holds :
       have hmap2 : (u ^ (l ^ t) • N + P • H).map (phiA l)
           = u ^ (l ^ (t + 1)) • N.map (phiA l) + P • H.map (phiA l) := by
         ext i j
-        simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add,
+        simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _),
           map_mul, map_pow, hφu, hφP]
         rw [← pow_mul, pow_succ' l t]
       calc (l : Per.Acris l) ^ (c * (t + 1)) • D

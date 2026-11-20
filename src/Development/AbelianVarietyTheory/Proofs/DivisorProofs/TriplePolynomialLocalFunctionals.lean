@@ -120,7 +120,7 @@ theorem I_add (hKP : GlobalTheory.ThK.KP) {B : Base F E} {a a' : ℕ} {G : Geo �
       fun g => GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.theta om' Φ₁ g h + GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.theta om' Φ₂ g h := by
     funext g
     unfold GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.theta
-    rw [map_add, GlobalTheory.WeilM.thetaSum_add F (hpres _ _ hs1) (hpres _ _ hs2)]
+    rw [map_add (f := _), GlobalTheory.WeilM.thetaSum_add F (hpres _ _ hs1) (hpres _ _ hs2)]
   unfold Model.I
   rw [e, integral_add (conv_so hKP hT _ h1 h) (conv_so hKP hT _ h2 h)]
   rfl

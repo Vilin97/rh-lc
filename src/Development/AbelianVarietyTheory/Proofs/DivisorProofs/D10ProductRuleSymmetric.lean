@@ -98,7 +98,7 @@ theorem dbarAdjF_dbarAdjF : ∀ {g : ℕ} (G : Matrix (Fin g) (Fin g) ℂ) (ψ :
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hd a, dbarAdjF_eq G ψ f z, Finset.smul_sum, ← Finset.sum_add_distrib, map_sum]
     refine Finset.sum_congr rfl fun a' _ => ?_
-    rw [← map_smul, ← map_add, hdA]
+    rw [← map_smul, ← map_add (f := _), hdA]
   have hneg : dbarAdjF G ψ (dbarAdjF G ψ f) z = -dbarAdjF G ψ (dbarAdjF G ψ f) z := by
     conv_rhs => rw [hX, Finset.sum_comm, ← Finset.sum_neg_distrib]
     rw [hX]

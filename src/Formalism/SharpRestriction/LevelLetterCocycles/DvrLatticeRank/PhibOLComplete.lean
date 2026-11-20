@@ -87,7 +87,7 @@ theorem phib_shift (φ : PowerSeries O →ₐ[O] PowerSeries O) (c : ℕ → O) 
     rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_mk]
   rw [h1, h2] at h
   conv_lhs => rw [h]
-  rw [map_add, map_mul, phib_C]
+  rw [map_add (f := _), map_mul, phib_C]
   ring
 
 theorem phib_poly (r : Polynomial O) (p : ℕ) (h : r.degree < (p : WithBot ℕ)) :
@@ -259,7 +259,7 @@ theorem phii_shift (φ : PowerSeries O →ₐ[O] PowerSeries O) (f : PowerSeries
     φ f = PowerSeries.C (PowerSeries.constantCoeff f) +
       φ PowerSeries.X * φ (PowerSeries.mk fun j => PowerSeries.coeff (j + 1) f) := by
   conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const f]
-  rw [map_add, map_mul, phib_C]
+  rw [map_add (f := _), map_mul, phib_C]
   ring
 
 theorem phii_step (p : ℕ) (hp : p.Prime) [IsHausdorff (Ideal.span {((p : ℕ) : O)}) O]
@@ -395,7 +395,7 @@ theorem phii_EE (W : LocWach PD LL O v n) [IsAdicComplete (Ideal.span {((PD.p : 
           W.φE (c k * algebraMap (LetA O n) W.EE (letπ ^ M)) = 0 := by
         simp_rw [map_mul, ← mul_assoc]
         rw [← Finset.sum_mul, h, zero_mul]
-      simp_rw [hd, map_add, map_mul, map_pow, map_natCast, mul_add] at h2
+      simp_rw [hd, map_add (f := _), map_mul, map_pow, map_natCast, mul_add] at h2
       rw [Finset.sum_add_distrib] at h2
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum, mul_neg, Finset.mul_sum]

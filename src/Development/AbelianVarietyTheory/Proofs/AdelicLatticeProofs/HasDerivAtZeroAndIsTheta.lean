@@ -54,7 +54,7 @@ theorem sm_deriv (ι : R →+ G) (φ : G →+ ℂ) (hφ : ContDiff ℝ ∞ fun x
     rw [← this]
     congr 1
     funext y
-    rw [map_add, add_assoc]
+    rw [map_add (f := _), add_assoc]
   show ContDiff ℝ ∞ fun x : R => φ (w + ι x) * f (w + ι x) + fderiv ℝ (fun y : R => f (w + ι x + ι y)) 0 u
   rw [e]
   refine ContDiff.add (ContDiff.mul (contDiff_const.add hφ) (hf w)) ?_
@@ -78,12 +78,12 @@ variable {D : D7}
 theorem symplOH_add_left (S T : HSp D) (x x' y : WO S T) :
     symplOH S T (x + x') y = symplOH S T x y + symplOH S T x' y := by
   unfold symplOH symplO hO
-  simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem symplOH_add_right (S T : HSp D) (x y y' : WO S T) :
     symplOH S T x (y + y') = symplOH S T x y + symplOH S T x y' := by
   unfold symplOH symplO hO
-  simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add]
+  simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem symplOH_zero_left (S T : HSp D) (y : WO S T) : symplOH S T 0 y = 0 := by
   have := symplOH_add_left S T 0 0 y
@@ -182,7 +182,7 @@ theorem exists_log {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) 
         ∑ ρ, θ ρ (fstA D.host.F a ⊗ₜ[D.host.F] (1 : D.host.E))
       map_zero' := by simp only [map_zero, TensorProduct.zero_tmul, Finset.sum_const_zero, mul_zero]
       map_add' := fun a b => by
-        simp only [map_add, TensorProduct.add_tmul, Finset.sum_add_distrib, mul_add] }
+        simp only [map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib, mul_add] }
   refine ⟨lam, ?_, fun a ha => ?_⟩
   · exact continuous_const.mul (continuous_finset_sum _ fun ρ _ => (hθ ρ).2.comp continuous_fst)
   · have hc := hψ.2.2 θ hθ (fstA D.host.F a)
@@ -298,7 +298,7 @@ theorem continuous_of_level (h : Chart θ σ) (hψ : Continuous ψ) (f : WO S T 
 def phase (lam : AF D.host.F →+ ℂ) (S T : HSp D) (v : WO S T) : WO S T →+ ℂ where
   toFun w := lam (symplOH S T w v)
   map_zero' := by rw [symplOH_zero_left, map_zero]
-  map_add' x y := by rw [symplOH_add_left, map_add]
+  map_add' x y := by rw [symplOH_add_left, map_add (f := _)]
 
 theorem contDiff_phase (h : Chart θ σ) {lam : AF D.host.F →+ ℂ} (hl : Continuous lam) (v : WO S T) :
     ContDiff ℝ ∞ fun x => phase lam S T v (iotaW σ T S x) :=
@@ -341,7 +341,7 @@ theorem psi_sympl_line {lam : AF D.host.F →+ ℂ} (hl : Continuous lam)
   let φ : ℝ →+ ℂ :=
     { toFun := fun t => lam (symplOH S T w (L t))
       map_zero' := by rw [map_zero L, symplOH_zero_right, map_zero]
-      map_add' := fun x y => by rw [map_add L, symplOH_add_right, map_add] }
+      map_add' := fun x y => by rw [map_add L, symplOH_add_right, map_add (f := _)] }
   exact additive_real φ (hl.comp (continuous_symplOH S T continuous_const hL)) t
 
 theorem hasDerivAt_zero_and_isTheta (hψ : IsStdChar D ψ (-1)) {L : ℝ →+ WO S T} (hL : Continuous L)
@@ -399,7 +399,7 @@ theorem heisO_line_add (hψ : IsStdChar D ψ (-1)) {L : ℝ →+ WO S T} (hL : C
     have := additive_real ((phase lam S T (L 1)).comp L)
       (hl.comp (continuous_symplOH S T hL continuous_const)) s
     exact this.trans (mul_eq_zero_of_right _ h1)
-  rw [heisO_heisO, psi_sympl_line hl hlam hL hL0, h2, mul_zero, Complex.exp_zero, one_smul, map_add]
+  rw [heisO_heisO, psi_sympl_line hl hlam hL hL0, h2, mul_zero, Complex.exp_zero, one_smul, map_add (f := _)]
 
 theorem hasDerivAt_line (hψ : IsStdChar D ψ (-1)) {L : ℝ →+ WO S T} (hL : Continuous L)
     (hL0 : ∀ t, (L t).map (finPart D) = 0) {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (w : WO S T) (s : ℝ) :

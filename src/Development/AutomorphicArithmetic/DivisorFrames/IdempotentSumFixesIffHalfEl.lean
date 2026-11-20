@@ -33,7 +33,7 @@ private theorem cpt_split {v : HeightOneSpectrum (𝓞 D.host.F)} (τ : D.host.E
     cpt (D := D) (splitPrime τ) (toEAf D z) = complMap (splitPrime_under τ) (piW τ z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [RingHom.map_add, hx, hy]
+  | add x y hx hy => simp only [RingHom.map_add (f := _), hx, hy]
   | tmul a x =>
     have e1 : (a ⊗ₜ[D.host.F] x : AE D) = algebraMap _ (AE D) a * incA D x := by
       change _ = (a ⊗ₜ[D.host.F] (1 : D.host.E)) * ((1 : AF D.host.F) ⊗ₜ[D.host.F] x)
@@ -48,7 +48,7 @@ private theorem piW_comp {v : HeightOneSpectrum (𝓞 D.host.F)} (τ : D.host.E 
     piW (τ.comp D.sp.cm.sig) z = piW τ (cA D z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [RingHom.map_add, hx, hy]
+  | add x y hx hy => simp only [RingHom.map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 private theorem first_half {e₀ : AE D} {S : Finset (HeightOneSpectrum (𝓞 D.host.E))} (he : IsIdemSum e₀ S)
@@ -121,7 +121,7 @@ theorem UpperTheory.idempotentSum_fixes_iff_halfEl :
   have hc : ∀ y : AE D, cA D (cA D y) = y := fun y => by
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [RingHom.map_add, hx, hy]
+    | add x y hx hy => simp only [RingHom.map_add (f := _), hx, hy]
     | tmul a x => exact congrArg (fun s => a ⊗ₜ[D.host.F] s) (star_star x)
   have hi : Function.Injective (cA D) := Function.LeftInverse.injective hc
   have h := first_half he P t hP ht (cA D z)

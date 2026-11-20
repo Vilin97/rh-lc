@@ -126,7 +126,7 @@ theorem sA_invol (r : RA X) : sA X (sA X r) = r := by
     have e : X.B.I.cm.sig (X.B.I.cm.sig a) = a := star_star a
     rw [e]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 @[reducible] def starRA : StarRing (RA X) where
   star := sA X

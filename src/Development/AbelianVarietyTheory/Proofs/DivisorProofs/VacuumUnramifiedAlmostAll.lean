@@ -47,7 +47,7 @@ theorem exists_isPlaceOver : ∀ (l : ℕ) [Fact l.Prime] (lam : algebraicClosur
   let P : Ideal (𝓞 k) :=
     { carrier := {a | ‖f a‖ < 1}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at *
         exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
       zero_mem' := by simp
       smul_mem' := fun c a ha => by

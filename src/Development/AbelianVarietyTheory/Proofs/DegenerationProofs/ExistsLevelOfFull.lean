@@ -60,7 +60,7 @@ theorem card_torsion (hn : 0 < n) (add : ∀ a b, ev (a + b) = ev a * ev b) (ker
         simp only [Pi.add_apply, Pi.smul_apply, nsmul_eq_mul, Int.toNat_of_nonneg (h₀ i)]
         exact (Int.emod_add_mul_ediv _ _).symm
       rw [← ha]
-      conv_rhs => rw [e, map_add, add, map_nsmul, (ker _).2 ⟨_, rfl⟩, _root_.mul_one]
+      conv_rhs => rw [e, map_add (f := _), add, map_nsmul, (ker _).2 ⟨_, rfl⟩, _root_.mul_one]
   rw [← Nat.card_eq_of_bijective f hb]
   simp
 

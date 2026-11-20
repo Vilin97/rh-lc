@@ -62,7 +62,7 @@ theorem le_iSup_range (ρ : Representation ℂ (GQ L n) W) (S : Submodule ℂ (G
       rw [e]
       exact Submodule.mem_iSup_of_mem (⟨_, htr T.1 y T.2 hy⟩ : {T // Good T}) ⟨_, rfl⟩
     · simp
-    · intro f₁ f₂ h₁ h₂; rw [map_add]; exact Submodule.add_mem _ h₁ h₂
+    · intro f₁ f₂ h₁ h₂; rw [map_add (f := _)]; exact Submodule.add_mem _ h₁ h₂
   have hT0 : Good T0 := ⟨hT0eq, hT0S⟩
   rcases hS.2.2 Wd ⟨hWdS.trans hS.1.le, hstab⟩ hWdS with h0 | h0
   · exfalso

@@ -28,7 +28,7 @@ theorem hform_smul_right (c : R →+* R) (Jm : Matrix (Fin M) (Fin M) R) (x y : 
 
 theorem hform_add_left (c : R →+* R) (Jm : Matrix (Fin M) (Fin M) R) (x y z : Fin M → R) :
     Formalism.UG.hform c Jm (x + y) z = Formalism.UG.hform c Jm x z + Formalism.UG.hform c Jm y z := by
-  simp only [Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hform_smul_left (c : R →+* R) (Jm : Matrix (Fin M) (Fin M) R) (x y : Fin M → R) (k : R) :
     Formalism.UG.hform c Jm (k • x) y = c k * Formalism.UG.hform c Jm x y := by
@@ -117,7 +117,7 @@ theorem pB_iB (P : PlaceMap F K) (y : K ⊗[F] E) : pB P (iB P y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul k e => simp [pB, iB, P.proj_inj]
-  | add y z hy hz => rw [map_add, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
 
 def cd (ψ : E →ₗ[F] F) : AF F ⊗[F] E →ₗ[AF F] AF F :=
   (TensorProduct.AlgebraTensorModule.rid F (AF F) (AF F)).toLinearMap ∘ₗ ψ.baseChange (AF F)
@@ -151,7 +151,7 @@ theorem pB_eq_sum (P : PlaceMap F K) (B : Module.Basis (Fin 2) F E) (x : AF F �
     rw [h2]
     simp [pB]
   | add x y hx hy =>
-    simp only [map_add, add_smul, Finset.sum_add_distrib, hx, hy]
+    simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, hx, hy]
 
 theorem continuous_phi_pB (P : PlaceMap F K) (B : Module.Basis (Fin 2) F E) (ψ : E →ₗ[F] F) (w : K ⊗[F] E) :
     Continuous fun x : AF F ⊗[F] E => phi K ψ (w * pB P x) := by
@@ -182,7 +182,7 @@ theorem pB_lift (P : PlaceMap F K) {L : HA K σ J →* HA (AF F) σ J} (hL : IsL
     · subst h
       simp
     · rw [Matrix.one_apply_ne h, Matrix.one_apply_ne h, map_zero]
-  rw [h1, map_add, pB_iB, h2, Matrix.sub_apply, sub_add_cancel]
+  rw [h1, map_add (f := _), pB_iB, h2, Matrix.sub_apply, sub_add_cancel]
 
 theorem lift_fixes (P : PlaceMap F K) {L : HA K σ J →* HA (AF F) σ J} (hL : IsLift P σ J L) (x : HA K σ J)
     (t : Fin M → E)
@@ -231,7 +231,7 @@ theorem not_isCompact_planeSupp : ∀ {F E : Type} [Field F] [NumberField F] [Fi
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul k e => simp [sigR, GlobalTheory.CompanionTheory.SaGen.Dichotomy.sigma_sigma hCM]
-    | add s t hs ht => rw [map_add, map_add, hs, ht]
+    | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht]
   have hJm : ∀ i j, sigR K σ (JR K J j i) = JR K J i j := fun i j => map_mem_HermR K σ J hJ.1 i j
   obtain ⟨u, hu⟩ : ∃ u : Fin M → K ⊗[F] E, u = x • incV K a + y • incV K b := ⟨_, rfl⟩
   rw [← hu] at huu huz
@@ -271,7 +271,7 @@ theorem not_isCompact_planeSupp : ∀ {F E : Type} [Field F] [NumberField F] [Fi
       rw [← sum_form]
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [Φ, pB_lift P hL, map_sum, w]
-    rw [h1, hg, qr_mulVec, huz', mul_one, hform_add_right, hform_smul_right, hzu, mul_one, map_add, hphi, ← hC₀]
+    rw [h1, hg, qr_mulVec, huz', mul_one, hform_add_right, hform_smul_right, hzu, mul_one, map_add (f := _), hphi, ← hC₀]
     ring
   have hmem : L g ∈ PlaneSupp σ J ε a b := by
     obtain ⟨h1, h2⟩ := hdet g hgd

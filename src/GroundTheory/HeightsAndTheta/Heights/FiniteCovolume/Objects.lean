@@ -24,11 +24,11 @@ theorem embedding_conj [NumberField F] [NumberField E] [IsTotallyReal F] [IsTota
   · obtain ⟨c, rfl⟩ := hx
     rw [conj_algebraMap, hF]
   · have hs : σ x + σ (conj F E x) = σ (algebraMap F E (Algebra.trace F E x)) := by
-      rw [← map_add, add_conj]
+      rw [← map_add (f := _), add_conj]
     have hp : σ x * σ (conj F E x) = σ (algebraMap F E (Algebra.norm F x)) := by
       rw [← map_mul, mul_conj]
     have e1 : starRingEnd ℂ (σ x) + starRingEnd ℂ (σ (conj F E x)) = σ x + σ (conj F E x) := by
-      rw [← map_add, hs, hF]
+      rw [← map_add (f := _), hs, hF]
     have e2 : starRingEnd ℂ (σ x) * starRingEnd ℂ (σ (conj F E x)) =
         σ x * σ (conj F E x) := by
       rw [← map_mul, hp, hF]
@@ -137,7 +137,7 @@ structure IsLattice (La : AddSubgroup W) : Prop where
 def dualLattice (h : HermitianForm F E W) (La : AddSubgroup W) : AddSubgroup W where
   carrier := {y | ∀ x ∈ La, h.toSesq y x ∈ integralClosure ℤ E}
   add_mem' {a b} ha hb x hx := by
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact add_mem (ha x hx) (hb x hx)
   zero_mem' x _ := by
     rw [map_zero, LinearMap.zero_apply]

@@ -59,6 +59,6 @@ theorem exists_oAct_of_map_lattice :
     rw [← hlift, ← Category.assoc, ← hlift, ← hlift, mul_comm, map_mul, Module.End.mul_apply]
   · intro a b
     refine hext _ _ fun z => ?_
-    rw [← hlift, comp_mul, ← hlift, ← hlift, map_add, LinearMap.add_apply, u.ex_add]
+    rw [← hlift, comp_mul, ← hlift, ← hlift, map_add (f := _), LinearMap.add_apply, u.ex_add]
 
 end GlobalTheory.TorusAction

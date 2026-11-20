@@ -18,7 +18,7 @@ def modelOfEquiv {S : Scheme.{0}} {R : Type} [CommRing R] {G : Over S} [GrpObj G
   onto v hv := by
     obtain ⟨w, h⟩ := M.onto v hv
     exact ⟨e.symm w, by simpa using h⟩
-  add v w := by rw [map_add, M.add]
+  add v w := by rw [map_add (f := _), M.add]
   smul c v := by rw [map_smul, M.smul]
 
 theorem exists_model (S : Scheme.{0}) (G : Over S) [GrpObj G] [IsCommMonObj G] [Smooth G.hom] (R R' : Type)

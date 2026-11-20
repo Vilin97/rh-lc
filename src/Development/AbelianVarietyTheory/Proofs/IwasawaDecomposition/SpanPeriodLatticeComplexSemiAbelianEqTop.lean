@@ -39,7 +39,7 @@ theorem span_ker_eq_top : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] (y : Sp �
         show lam (e a * e b) = 0
         have hx : lam (e a) = 0 := hx
         have hx' : lam (e b) = 0 := hx'
-        rw [← hadd, hlam, map_add, ← hlam, ← hlam, hx, hx', add_zero]
+        rw [← hadd, hlam, map_add (f := _), ← hlam, ← hlam, hx, hx', add_zero]
       inv_mem' := by
         intro x hx
         obtain ⟨a, rfl⟩ := hsurj x

@@ -96,7 +96,7 @@ theorem exists_sub_mem_pdIdeal (y : AcrisZero p R) :
     refine ⟨a + b, ?_⟩
     convert add_mem ha hb using 1
     change (⟨x, hx'⟩ + ⟨y, hy'⟩ : AcrisZero p R) - _ = _
-    rw [map_add]; ring
+    rw [map_add (f := _)]; ring
   | mul x y hx' hy' hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
@@ -113,7 +113,7 @@ theorem theta_eq_zero_of_mem_pdIdeal {y : AcrisZero p R} (hy : y ∈ pdIdeal p R
     obtain ⟨n, x, hx, hn, rfl⟩ := hy
     exact AinfInv.theta_gamma hn (by rw [AinfInv.theta_algebraMap, hx, map_zero])
   | zero => exact map_zero _
-  | add x y _ _ hx hy => rw [AddMemClass.coe_add, map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [AddMemClass.coe_add, map_add (f := _), hx, hy, add_zero]
   | smul a x _ hx => rw [smul_eq_mul, MulMemClass.coe_mul, map_mul, hx, mul_zero]
 
 theorem gamma_mem_of_mem_pdIdeal {y : AcrisZero p R} (hy : y ∈ pdIdeal p R) (n : ℕ) :
@@ -172,7 +172,7 @@ def theta : AcrisZero p R →+* R where
   map_zero' := algebraMap_away_injective (p := p) (by
     rw [(exists_theta_eq _).choose_spec]; simp)
   map_add' x y := algebraMap_away_injective (p := p) (by
-    rw [map_add, (exists_theta_eq _).choose_spec, (exists_theta_eq _).choose_spec,
+    rw [map_add (f := _), (exists_theta_eq _).choose_spec, (exists_theta_eq _).choose_spec,
       (exists_theta_eq _).choose_spec]; simp)
 
 theorem algebraMap_theta (y : AcrisZero p R) :
@@ -266,7 +266,7 @@ theorem factorial_dvd_pow (hθ : Function.Surjective (Ainf.theta p R)) {x : Acri
     simpa [hc] using hx
   have h2 := map_dvd (algebraMap (AcrisZero p R) (Acris p R))
     (AcrisZero.factorial_dvd_pow_of_mem_pdIdeal ((AcrisZero.theta_eq_zero_iff _).1 h1) n)
-  rw [map_natCast, map_pow, map_add, map_mul, map_pow, map_natCast] at h2
+  rw [map_natCast, map_pow, map_add (f := _), map_mul, map_pow, map_natCast] at h2
   rw [← dvd_sub_left h2]
   refine ((factorial_dvd_p_pow n).trans ?_).trans (sub_dvd_pow_sub_pow _ _ n)
   exact ⟨z - algebraMap _ _ (algebraMap (Ainf p R) (AcrisZero p R) c), by ring⟩

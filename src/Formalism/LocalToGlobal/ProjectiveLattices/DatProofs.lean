@@ -123,17 +123,17 @@ theorem efR_formula (ε : ℤ) (hI : DatInt D j) (x y : ℝ ⊗[ℤ] latW D j) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add x1 x2 h1 h2 =>
-    rw [map_add, LinearMap.add_apply, h1, h2, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), LinearMap.add_apply, h1, h2, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl (fun τ _ => ?_)
-    simp only [map_add, Pi.add_apply, star_add, add_dotProduct, mul_add, Complex.add_re]
+    simp only [map_add (f := _), Pi.add_apply, star_add, add_dotProduct, mul_add, Complex.add_re]
     try ring
   | tmul a v =>
     induction y using TensorProduct.induction_on with
     | zero => simp
     | add y1 y2 h1 h2 =>
-      rw [map_add, h1, h2, ← Finset.sum_add_distrib]
+      rw [map_add (f := _), h1, h2, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl (fun τ _ => ?_)
-      simp only [map_add, Pi.add_apply, mulVec_add, dotProduct_add, mul_add, Complex.add_re]
+      simp only [map_add (f := _), Pi.add_apply, mulVec_add, dotProduct_add, mul_add, Complex.add_re]
       try ring
     | tmul a' w =>
       rw [LinearMap.BilinForm.baseChange_tmul, thW_tmul, thW_tmul]
@@ -222,7 +222,7 @@ theorem thW_AW (D : D7) (j : ℕ) (a : 𝓞 D.host.E) (A : ℝ ⊗[ℤ] latW D j
     try rfl
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add z1 z2 h1' h2' => rw [map_add, map_add, h1', h2', map_add (thW D j), map_add (AW D j a)]
+  | add z1 z2 h1' h2' => rw [map_add (f := _), map_add (f := _), h1', h2', map_add (thW D j), map_add (AW D j a)]
   | tmul x m =>
     have e : x ⊗ₜ[ℤ] m = x • ((1 : ℝ) ⊗ₜ[ℤ] m) := by
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]

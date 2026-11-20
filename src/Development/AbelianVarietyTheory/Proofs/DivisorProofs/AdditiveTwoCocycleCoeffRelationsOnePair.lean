@@ -191,7 +191,7 @@ theorem relations : ∀ (R : Type) [CommRing R] (d : ℕ) (c : MvPowerSeries (Fi
         (if 0 = l then 1 else 0) = 0 := by
     intro i j l hi
     have h := congrArg (coeff (ex3 i j l)) hid
-    rw [map_sub, map_add, map_sub, map_zero,
+    rw [map_sub, map_add (f := _), map_sub, map_zero,
       coeff_powerSeriesEvalTwoGroups_piSingle c m (by simp) (by simp) _ j l
         (fun p q hpq => by rw [coeff_yz, if_neg (by omega)]),
       coeff_powerSeriesEvalTwoGroups_piSingle c m (by simp) (by simp) _ (i + j) l

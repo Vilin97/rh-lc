@@ -176,7 +176,7 @@ theorem isChartFun_of_restrictsToVal {R₀ : Type} [CommRing R₀] {k : ℕ} (r�
     clear e₁ e₂ hh
     induction h using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r a =>
       have h1 : g (1 ⊗ₜ res M (hle.trans inf_le_left) a) = algebraMap R (Localization.Away f) (ψ a) :=
         RingHom.congr_fun hτ a
@@ -225,12 +225,12 @@ theorem rTensor_val_eq {R₀ R₁ : Type} [CommRing R₀] [CommRing R₁] [Algeb
   have l₁ : ∀ x, LinearMap.lTensor R₁ (resL M hle) x = ρ₁ x := fun x ↦ by
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r a => rfl
   have l₀ : ∀ x, LinearMap.rTensor Γ(M, W') (coefL R₀ R₁) x = θ x := fun x ↦ by
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r a => rfl
   rw [l₀, l₁, ← e₁, ← e₀, hr _ Z hrZ δZ]
 
@@ -260,7 +260,7 @@ theorem exists_isChartFun : ∀ (F : Type) [Field F] [NumberField F] (𝔠 : Fra
           (LinearMap.rTensor Γ(M, W') q (LinearMap.lTensor R₁ (resL M (hle.trans inf_le_left)) x)) := fun x ↦ by
       induction x using TensorProduct.induction_on with
       | zero => simp only [map_zero]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul r a => rfl
     refine (hc _).trans ?_
     rw [← e, (rTensor_exact Γ(M, W') hex hq).apply_apply_eq_zero, map_zero]

@@ -98,7 +98,7 @@ theorem coordK_map_mul : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => simp [sigR, sigma_sigma σ hσ]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   let s : (Fv F v ⊗[F] E) ≃+* (Fv F v ⊗[F] E) :=
     { toFun := sigR (Fv F v) σ, invFun := sigR (Fv F v) σ, left_inv := hss, right_inv := hss,
       map_mul' := map_mul _, map_add' := map_add _ }

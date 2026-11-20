@@ -28,7 +28,7 @@ theorem sum_fibre (fa : G →+ G) (wp : G → K) (al : K)
     · intro T hT; simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hT ⊢
       rw [map_sub, hT, sub_self]
     · intro P hP; simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hP ⊢
-      rw [map_add, hP, add_zero]
+      rw [map_add (f := _), hP, add_zero]
     · intro T _; simp
     · intro P _; simp
     · intro T _; simp

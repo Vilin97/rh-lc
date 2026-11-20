@@ -273,7 +273,7 @@ def reach (ψ : AddChar (AF D.host.F) ℂ) (e : AE D) (Λ : AddSubgroup (WO S T)
     · rcases Finset.mem_union.1 (Finsupp.support_add hu) with h | h
       · exact hc u h
       · exact hd u h
-    · rw [map_add, hc' f₀ Tm hT, hd' f₀ Tm hT, comb_eq_lc, comb_eq_lc, comb_eq_lc, map_add]
+    · rw [map_add (f := _), hc' f₀ Tm hT, hd' f₀ Tm hT, comb_eq_lc, comb_eq_lc, comb_eq_lc, map_add (f := _)]
   zero_mem' := ⟨zero_mem _, 0, by simp, fun f₀ Tm _ => by rw [map_zero, comb_eq_lc, map_zero]⟩
   smul_mem' a b hb := by
     obtain ⟨hb1, d, hd, hd'⟩ := hb

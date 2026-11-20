@@ -13,8 +13,8 @@ private def levSub {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a 
   carrier := {φ | IsLevelFn U Ξ φ}
   zero_mem' := ⟨fun _ _ => rfl, fun u _ => map_zero _, fun m _ => by simp⟩
   add_mem' := fun {φ ψ} h h' => ⟨fun γ g => congrArg₂ (· + ·) (h.1 γ g) (h'.1 γ g),
-    fun u hu => by rw [map_add, h.2.1 u hu, h'.2.1 u hu],
-    fun m hm => by rw [map_add, h.2.2 m hm, h'.2.2 m hm, smul_add]⟩
+    fun u hu => by rw [map_add (f := _), h.2.1 u hu, h'.2.1 u hu],
+    fun m hm => by rw [map_add (f := _), h.2.2 m hm, h'.2.2 m hm, smul_add]⟩
   smul_mem' := fun c φ h => ⟨fun γ g => congrArg (c • ·) (h.1 γ g),
     fun u hu => by rw [map_smul, h.2.1 u hu],
     fun m hm => by rw [map_smul, h.2.2 m hm, smul_comm]⟩

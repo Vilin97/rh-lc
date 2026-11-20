@@ -65,7 +65,7 @@ theorem blockAct_smul_of_mem (lam : ι → DomWeight n) (a : K) (M : ι → Matr
       smul_eq_C_mul]
     rfl
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, smul_add]
   | smul c x _ hx => rw [map_smul, map_smul, hx, smul_comm]
 
 variable [StarRing K]

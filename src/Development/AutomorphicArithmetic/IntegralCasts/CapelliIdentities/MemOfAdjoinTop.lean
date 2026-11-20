@@ -14,7 +14,7 @@ theorem UpperTheory.Reformulated.B.Qj1.mem_of_adjoin_top.{u_2} :
     rw [eq_ratCast, map_ratCast]
     exact SubfieldClass.ratCast_mem F q
   | add y z _ _ hy hz =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hy hz
   | mul y z _ _ hy hz =>
     rw [map_mul]

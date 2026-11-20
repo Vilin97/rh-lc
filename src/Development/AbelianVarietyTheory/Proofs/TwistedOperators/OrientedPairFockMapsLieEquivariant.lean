@@ -82,7 +82,7 @@ theorem oriented_maps : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfF
       · rw [← e1]; exact hW'.om_pres _ f hth
       · have h0 := hvac τ z
         unfold annih at h0 ⊢
-        rw [e, e, ← map_smul, ← map_add, h0, map_zero]
+        rw [e, e, ← map_smul, ← map_add (f := _), h0, map_zero]
     · have ht := GlobalTheory.OrientedHeis.om_fin_pureTensorO ψ (sgn ε M) X χS χT (ω.toSgn ε) hW' θ hθ 1 (one_mem _) h hh
         (frSgn ε A).cart B.cart A.onb B.onb f P hf.1
       rw [e1] at ht

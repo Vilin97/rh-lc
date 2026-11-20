@@ -80,7 +80,7 @@ theorem shell_measure' : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplic
       intro i l
       show (1 + Matrix.single a a.rev (-b) : Matrix (Fin n) (Fin n) L) i l =
         σ ((1 + Matrix.single a a.rev b : Matrix (Fin n) (Fin n) L) l.rev i.rev)
-      rw [Matrix.add_apply, Matrix.add_apply, map_add, Matrix.one_apply, Matrix.one_apply, Matrix.single_apply,
+      rw [Matrix.add_apply, Matrix.add_apply, map_add (f := _), Matrix.one_apply, Matrix.one_apply, Matrix.single_apply,
         Matrix.single_apply, apply_ite σ, apply_ite σ, map_one, map_zero, hb]
       congr 1
       · exact if_congr (by rw [Fin.rev_inj, eq_comm]) rfl rfl

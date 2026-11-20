@@ -108,7 +108,7 @@ theorem local_noInv (AI : LocAinf l P) (T : LocTied l P AI) {m : ℕ} (r r' : �
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => exact ⟨v ⊗ₜ[ℚ_[l]] ⟨b.1, (P.PD Bw.Kw).Fil_anti 0 b.2⟩, rfl⟩
-    | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   · unfold multV at hm
     omega
 

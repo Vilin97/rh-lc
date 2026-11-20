@@ -32,7 +32,7 @@ theorem latHaar : LatHaar := by
   have hef : ∀ g : Γ, Function.Semiconj φ (e g +ᵥ ·) (g +ᵥ ·) := by
     intro g x
     show φ ((e g : V) + x) = (g : V) + φ x
-    rw [map_add]
+    rw [map_add (f := _)]
     simp [e]
   have hs' : IsAddFundamentalDomain Γ (φ ⁻¹' s) μ := hs.preimage_of_equiv hqmp he hef
   have heq : μ (φ ⁻¹' s) = μ s := hs'.measure_eq hs

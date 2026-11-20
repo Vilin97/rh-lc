@@ -46,7 +46,7 @@ theorem hilbert90_baseChange : ∀ (F E K : Type) [Field F] [CharZero F] [Field 
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul k c => rw [htm, ← hm, pow_orderOf_eq_one]; rfl
-    | add a b ha hb => rw [map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), ha, hb]
   simp only [hpow] at hx
   let a : ℕ → K ⊗[F] E := fun i => ∏ j ∈ Finset.range i, (T ^ j) x
   have ha : ∀ i, x * T (a i) = a (i + 1) := by

@@ -35,7 +35,7 @@ theorem coeff_coeffForm (φ : K →ₗ[F] F) (m : σ →₀ ℕ) (P : MvPolynomi
   classical
   induction P using MvPolynomial.induction_on' with
   | monomial d r => rw [coeffForm_monomial, coeff_monomial, coeff_monomial]; split_ifs <;> simp
-  | add P Q hP hQ => simp only [map_add, MvPolynomial.coeff_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), MvPolynomial.coeff_add, hP, hQ]
 
 theorem coeffForm_comm (φ : K →ₗ[F] F) (L : MvPolynomial σ F →ₗ[F] MvPolynomial σ F)
     (L' : MvPolynomial σ K →ₗ[K] MvPolynomial σ K)
@@ -46,7 +46,7 @@ theorem coeffForm_comm (φ : K →ₗ[F] F) (L : MvPolynomial σ F →ₗ[F] MvP
     have e : (monomial d r : MvPolynomial σ K) =
         r • MvPolynomial.map (algebraMap F K) (monomial d 1) := by simp [smul_monomial]
     rw [e, map_smul, ← h, coeffForm_smul_map, coeffForm_smul_map, map_smul]
-  | add P Q hP hQ => simp only [map_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
 
 theorem mem_span_map_of_coeffForm_mem (V : Set (MvPolynomial σ F)) {P : MvPolynomial σ K}
     (h : ∀ φ : K →ₗ[F] F, coeffForm φ P ∈ V) :
@@ -74,7 +74,7 @@ theorem coeffForm_mem_span (φ : K →ₗ[F] F) (V : Set (MvPolynomial σ F)) {P
     rw [coeffForm_smul_map]
     exact Submodule.smul_mem _ _ (Submodule.subset_span hQ)
   | zero => simp
-  | add P Q _ _ hP hQ => intro r; rw [smul_add, map_add]; exact add_mem (hP r) (hQ r)
+  | add P Q _ _ hP hQ => intro r; rw [smul_add, map_add (f := _)]; exact add_mem (hP r) (hQ r)
   | smul s P _ hP => intro r; rw [smul_smul]; exact hP _
 
 theorem mem_span_of_map_mem_span [Nontrivial K] (V : Set (MvPolynomial σ F))
@@ -231,7 +231,7 @@ theorem rowHighest_eq_span_colWord [CommRing K] [Algebra ℚ K] :
     rw [map_colWord]
     exact Submodule.subset_span ⟨w, rfl⟩
   | zero => simp
-  | add P Q _ _ hP hQ => rw [map_add]; exact add_mem hP hQ
+  | add P Q _ _ hP hQ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hP hQ
   | smul r P _ hP =>
     rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hP

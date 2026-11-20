@@ -30,8 +30,8 @@ theorem exists_idele (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (y : (Fv F v)
   have hv : (((Units.map (oneAdd (liftPair h t))).comp MulEquiv.prodUnits.symm.toMonoidHom (y, 1) : (AF F ⊗[F] E)ˣ) :
       AF F ⊗[F] E) = 1 + liftPair h t ((y : Fv F v) - 1, ((1 : (Fv F v)ˣ) : Fv F v) - 1) := rfl
   refine ⟨(Units.map (oneAdd (liftPair h t))).comp MulEquiv.prodUnits.symm.toMonoidHom (y, 1), ?_, ?_, ?_⟩
-  · rw [hv, map_add, map_one, piW_liftPair, add_sub_cancel]
-  · rw [hv, map_add, map_one, piW_comp_liftPair, add_sub_cancel]; rfl
+  · rw [hv, map_add (f := _), map_one, piW_liftPair, add_sub_cancel]
+  · rw [hv, map_add (f := _), map_one, piW_comp_liftPair, add_sub_cancel]; rfl
   · rw [hv, add_sub_cancel_left]; exact at_liftPair h t _
 
 theorem absE_eq (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (s : (AF F ⊗[F] E)ˣ) (y : (Fv F v)ˣ)

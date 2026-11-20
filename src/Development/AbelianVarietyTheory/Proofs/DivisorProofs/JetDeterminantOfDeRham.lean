@@ -60,7 +60,7 @@ theorem exists_det_formula (H : GlobalTheory.Published.AbelianDeRham) {F : Type}
     obtain ⟨z, rfl⟩ := hb.2 z
     induction z with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul s z =>
       rw [liftSemi_tmul, map_smul, map_smul, LinearMap.sum_apply]
       congr 1
@@ -100,7 +100,7 @@ theorem exists_comb (h : Submodule.span ℝ (Λ : Set (Fin g → ℂ)) = ⊤) (w
     | add x y _ _ hx hy =>
       obtain ⟨c, h1, h2⟩ := hx
       obtain ⟨d, h3, h4⟩ := hy
-      exact ⟨c + d, by rw [map_add, h1, h3], by rw [map_add, h2, h4, star_add]⟩
+      exact ⟨c + d, by rw [map_add (f := _), h1, h3], by rw [map_add (f := _), h2, h4, star_add]⟩
     | smul r x _ hx =>
       obtain ⟨c, h1, h2⟩ := hx
       refine ⟨(r : ℂ) • c, by rw [map_smul, h1]; rfl, ?_⟩
@@ -127,7 +127,7 @@ theorem exists_lie_comb {A : Over (Sp ℂ)} [GrpObj A] {L : LB A.left} {g : ℕ}
   | add c d hc hd =>
     obtain ⟨v, h1, h2⟩ := hc
     obtain ⟨w, h3, h4⟩ := hd
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact ⟨v * w, h1.add h3, UnifDifferential.isDiff_mul u ((Chart.isTan_iff _).2 h1.1) ((Chart.isTan_iff _).2 h3.1) h2 h4⟩
   | single x r =>
     obtain ⟨v, h1, h2⟩ := h x
@@ -143,14 +143,14 @@ theorem pair_comb {g : ℕ} (Λ : Submodule ℤ (Fin g → ℂ)) {M : Type 1} [A
   induction c using Finsupp.induction_linear with
   | zero => simp
   | add c c' hc hc' =>
-    simp only [map_add, LinearMap.add_apply, hc, hc', Pi.add_apply, ← mul_add, ← Finset.sum_add_distrib]
+    simp only [map_add (f := _), LinearMap.add_apply, hc, hc', Pi.add_apply, ← mul_add, ← Finset.sum_add_distrib]
     congr 1
     exact Finset.sum_congr rfl fun a _ ↦ by ring
   | single x r =>
     induction d using Finsupp.induction_linear with
     | zero => simp
     | add d d' hd hd' =>
-      simp only [map_add, hd, hd', Pi.add_apply, ← mul_add, ← Finset.sum_add_distrib]
+      simp only [map_add (f := _), hd, hd', Pi.add_apply, ← mul_add, ← Finset.sum_add_distrib]
       congr 1
       exact Finset.sum_congr rfl fun a _ ↦ by ring
     | single x' r' =>
@@ -205,7 +205,7 @@ theorem low_eq_zero [IsCMField E] (hφ : IsCMType φ) {c : Ideal (OF E)} (hc : c
     | add f g hf hg =>
       obtain ⟨f', e1, e2⟩ := hf
       obtain ⟨g', e3, e4⟩ := hg
-      exact ⟨f' + g', by simp only [map_add, e1, e3], by simp only [map_add, Pi.add_apply, e2, e4, mul_add]⟩
+      exact ⟨f' + g', by simp only [map_add (f := _), e1, e3], by simp only [map_add (f := _), Pi.add_apply, e2, e4, mul_add]⟩
     | single x r =>
       refine ⟨Finsupp.single ⟨M x, hM _ x.2⟩ r, ?_, ?_⟩
       · rw [Finsupp.linearCombination_single, Finsupp.linearCombination_single, map_smul, hend α M hex x ⟨M x, hM _ x.2⟩ rfl]

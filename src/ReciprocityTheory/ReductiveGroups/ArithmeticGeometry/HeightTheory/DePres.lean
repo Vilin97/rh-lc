@@ -31,7 +31,7 @@ private theorem eq_of_aeval_block_zero_eq {D N : ℕ} (P Q : KTp K D N)
     induction R using MvPolynomial.induction_on
     · simp
     · rename_i p q hp hq
-      simp only [map_add, hp, hq]
+      simp only [map_add (f := _), hp, hq]
     · rename_i p v hp
       simp only [map_mul, MvPolynomial.aeval_X]
       rw [hp]
@@ -165,7 +165,7 @@ private theorem sH_comp_eq_of_X_eq (hd : d.AxH 𝒜) (h : d.S1)
     · rename_i a
       rw [← MvPolynomial.algebraMap_eq, AlgEquiv.commutes, AlgHom.commutes, hK]
     · rename_i p q hp hq
-      simp only [map_add, hp, hq]
+      simp only [map_add (f := _), hp, hq]
     · rename_i p v hp
       simp only [map_mul, hp, hXc v]
   have hL : ∀ q : KTp K d.D d.N,
@@ -222,7 +222,7 @@ theorem de_pres (hd : d.AxH 𝒜) (h : d.S1) : ∃ a b : KTp K d.D d.N, d.IsPres
       rw [show d.sH c (MvPolynomial.C a) = algebraMap K (OmS (Ω c) d.D d.N) a from
         MvPolynomial.aeval_C _ _, hKC, MvPolynomial.aeval_C, MvPolynomial.algebraMap_apply]
     · rename_i p q hp hq
-      simp only [map_add, hp, hq]
+      simp only [map_add (f := _), hp, hq]
     · rename_i p v hp
       rw [map_mul (d.sH c), hp]
       simp only [map_mul, MvPolynomial.aeval_X]

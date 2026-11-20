@@ -37,7 +37,7 @@ theorem exists_form : ∀ (R : Type) [CommRing R] (I : Ideal R), ∀ (Y : ∀ e 
         rintro a b ⟨N₁, G, hG, h1⟩ ⟨N₂, G', hG', h2⟩
         refine ⟨N₁ + N₂, X j ^ N₂ * G + X j ^ N₁ * G',
           J.add_mem (J.mul_mem_left _ hG) (J.mul_mem_left _ hG'), ?_⟩
-        simp only [map_add, map_mul, map_pow, hX, h1, h2]
+        simp only [map_add (f := _), map_mul, map_pow, hX, h1, h2]
         ring
       zero_mem' := ⟨0, 0, J.zero_mem, by simp⟩
       smul_mem' := by

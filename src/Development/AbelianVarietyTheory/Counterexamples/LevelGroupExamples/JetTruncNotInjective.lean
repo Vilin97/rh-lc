@@ -96,7 +96,7 @@ theorem jetSubstPS_add_C {κ : Type} [Fintype κ] [DecidableEq κ] (φ : ι → 
   congr 1
   funext i
   ext e
-  simp only [coeff_sub, coeff_psTrunc, constantCoeff_eq, coeff_C, map_add, MvPowerSeries.coeff_C]
+  simp only [coeff_sub, coeff_psTrunc, constantCoeff_eq, coeff_C, map_add (f := _), MvPowerSeries.coeff_C]
   by_cases h : e = 0
   · subst h; simp
   · simp [h, Ne.symm h]

@@ -155,7 +155,7 @@ theorem grLat_diag {n : ℕ} (b : Basis (Fin n) C V) (c : Fin n → C) (i : Fin 
       · subst hj; simp
       · simp [hj]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ a hx
   · rw [Submodule.span_singleton_le_iff_mem]

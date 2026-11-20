@@ -103,7 +103,7 @@ theorem UpperTheory.symplectic_generation :
       LinearMap.toMatrix' (LinearMap.snd K _ _ ∘ₗ g ∘ₗ LinearMap.inl K _ _),
       LinearMap.toMatrix' (LinearMap.snd K _ _ ∘ₗ g ∘ₗ LinearMap.inr K _ _), fun w => ?_⟩
     simp only [LinearMap.toMatrix'_mulVec]
-    have : g w = g (w.1, 0) + g (0, w.2) := by rw [← map_add]; simp
+    have : g w = g (w.1, 0) + g (0, w.2) := by rw [← map_add (f := _)]; simp
     rw [this]
     rfl
   simp only [hw] at hg

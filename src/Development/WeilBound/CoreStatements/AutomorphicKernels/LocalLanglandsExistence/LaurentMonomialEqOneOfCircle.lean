@@ -75,7 +75,7 @@ theorem prod_map_finsetSum {ι : Type*} (s : Finset ι) (M : ι → Multiset ℂ
   classical
   induction s using Finset.induction_on with
   | empty => simp
-  | insert j s hj ih => rw [Finset.sum_insert hj, Finset.prod_insert hj, Multiset.map_add, Multiset.prod_add, ih]
+  | insert j s hj ih => rw [Finset.sum_insert hj, Finset.prod_insert hj, Multiset.map_add (f := _), Multiset.prod_add, ih]
 
 theorem filter_finsetSum {ι : Type*} (s : Finset ι) (M : ι → Multiset ℂ) (p : ℂ → Prop) [DecidablePred p] :
     (∑ i ∈ s, M i).filter p = ∑ i ∈ s, (M i).filter p := by
@@ -89,7 +89,7 @@ theorem map_finsetSum {ι : Type*} (s : Finset ι) (M : ι → Multiset ℂ) (f 
   classical
   induction s using Finset.induction_on with
   | empty => simp
-  | insert j s hj ih => rw [Finset.sum_insert hj, Finset.sum_insert hj, Multiset.map_add, ih]
+  | insert j s hj ih => rw [Finset.sum_insert hj, Finset.sum_insert hj, Multiset.map_add (f := _), ih]
 
 variable {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E Ω] [IsAlgClosure E Ω]
   {A : ValuationSubring Ω} {w : HeightOneSpectrum (𝓞 E)} {h : IsPlaceOver A w}
@@ -109,7 +109,7 @@ theorem prod_charPol_eq {r : ℕ} (p q : Fin r → ℕ) (x y : Fin r → WD h) (
       ((∑ i, (p i • (x i).eig σ + q i • (y i).eig σ)).map fun α => X - C α).prod := by
   rw [prod_map_finsetSum]
   refine Finset.prod_congr rfl fun i _ => ?_
-  rw [Multiset.map_add, Multiset.prod_add, Multiset.map_nsmul, Multiset.map_nsmul, Multiset.prod_nsmul,
+  rw [Multiset.map_add (f := _), Multiset.prod_add, Multiset.map_nsmul, Multiset.map_nsmul, Multiset.prod_nsmul,
     Multiset.prod_nsmul, ← WD.charPol_eq_prod, ← WD.charPol_eq_prod]
 
 end Twist

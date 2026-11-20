@@ -34,7 +34,7 @@ theorem conj_lat : ∀ (D : D7) (j : Fin D.R.m) (B : Base (Vc D j) (Wc D j)), B.
     { toFun := fun F h => Φ ((τ κ / κ) • GlobalTheory.CoefModel.mapVV (τ : ℂ →+* ℂ) (lamV D j) (π (F h)))
       map_add' := fun F G => by
         funext h
-        simp only [Pi.add_apply, map_add, smul_add]
+        simp only [Pi.add_apply, map_add (f := _), smul_add]
       map_smul' := fun a F => by
         funext h
         simp only [Pi.smul_apply, map_smul, map_smulₛₗ, RingHom.id_apply]

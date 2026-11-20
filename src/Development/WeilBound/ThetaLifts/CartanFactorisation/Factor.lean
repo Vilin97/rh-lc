@@ -25,7 +25,7 @@ theorem exists_Ilin {ψ : AddChar (AF F) ℂ} {M : Model σ X W} {om : Rep σ X 
     { toFun := fun Φ => M.I om Φ
       map_add' := fun Φ Ψ => funext fun h => by
         have e : ∀ g, theta om (Φ.1 + Ψ.1) g h = theta om Φ g h + theta om Ψ g h := fun g => by
-          simp only [theta, map_add]
+          simp only [theta, map_add (f := _)]
           exact thetaSum_add F (hw.isUSplitting.pres _ _ (h1 Φ.2)) (hw.isUSplitting.pres _ _ (h1 Ψ.2))
         simp only [Model.I, Submodule.coe_add, e, Pi.add_apply]
         exact integral_add (h2 _ Φ.2 h) (h2 _ Ψ.2 h)

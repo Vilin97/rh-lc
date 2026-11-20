@@ -73,7 +73,7 @@ theorem exists_unitsToIdeles_eq_of_idelesSumInv_eq_zero (y : cohomology (limitRe
     rw [hy'def, map_sub, hy, idelesSumInv_unitsToIdeles, sub_zero]
   suffices h : ∃ x, (unitsToIdeles K 2).hom x = y' by
     obtain ⟨x, hx⟩ := h
-    exact ⟨x + globalCupClass (iChar K) a₀, by rw [map_add, hx, hy'def, sub_add_cancel]⟩
+    exact ⟨x + globalCupClass (iChar K) a₀, by rw [map_add (f := _), hx, hy'def, sub_add_cancel]⟩
   obtain ⟨m, hm0, hm⟩ := exists_nsmul_eq_zero_limitRep y'
   let S : Finset (HeightOneSpectrum (𝓞 K.1)) :=
     (idelesLimitCohomologyEquiv ι (by norm_num : 1 ≤ 2) y').support.preimage Sum.inr Sum.inr_injective.injOn

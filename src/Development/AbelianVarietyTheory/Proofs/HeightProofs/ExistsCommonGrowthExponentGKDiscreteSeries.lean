@@ -34,7 +34,7 @@ theorem norm_sum_list_le {p : ℕ} (ℓ : Fin p → (H →ₗ[ℂ] ℂ)) (x : Fi
         (L.map fun u => ‖u.1‖ * ‖∑ j, ℓ j (σ y (Dw σ u.2 (x j)))‖).sum
   | [] => by simp
   | u :: L => by
-    simp only [List.map_cons, List.sum_cons, map_add, map_smul, smul_eq_mul, Finset.sum_add_distrib,
+    simp only [List.map_cons, List.sum_cons, map_add (f := _), map_smul, smul_eq_mul, Finset.sum_add_distrib,
       ← Finset.mul_sum]
     refine (norm_add_le _ _).trans (add_le_add (le_of_eq (norm_mul _ _)) (norm_sum_list_le ℓ x y L))
 

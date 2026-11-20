@@ -187,7 +187,7 @@ theorem exists_linear_of_integral {K σ : Type} [Field K] [Infinite K]
         algebraMap K (MvPolynomial σ K ⧸ I) (a i) * Ideal.Quotient.mk I u =
         Ideal.Quotient.mk I (l i) := fun i => by
       have : algebraMap K (MvPolynomial σ K ⧸ I) (a i) = Ideal.Quotient.mk I (C (a i)) := rfl
-      rw [this, ← map_mul, ← map_add]
+      rw [this, ← map_mul, ← map_add (f := _)]
       simp only [v, sub_add_cancel]
     have hu : IsIntegral R (Ideal.Quotient.mk I u) := by
       refine isIntegral_of_homogeneous_relation (X j * F) hGd a ha
@@ -232,7 +232,7 @@ theorem main : ∀ (K : Type) [Field K] [Infinite K] (N : ℕ)
     obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective s
     induction f using MvPolynomial.induction_on with
     | C a => exact Subalgebra.algebraMap_mem _ a
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p i hp => rw [map_mul]; exact mul_mem hp (Algebra.subset_adjoin ⟨i, rfl⟩)
   obtain ⟨m, y, hy, hind, hint⟩ := exists_linear_of_integral I hI hne _ (Fin (N + 1)) X rfl
     (fun i => isHomogeneous_X K i)

@@ -39,7 +39,7 @@ theorem chern_invForm {D : D7} (Y : DV.ShimX D.what₂.Tau) (hP : Propor Y) :
       (-(((Y.j : ℝ) - 1) / Y.j) - -(((Y.N : ℝ) - Y.j - 1) / ((Y.N : ℝ) - Y.j))) *
         (Y.vol * degFl D.what₂.Tau Y.N (pLow Y.j τ 1 * curveCl D.what₂.Tau Y.N Y.j)) := by
     intro τ
-    rw [add_mul, map_add, mul_assoc, mul_assoc, ← smul_eq_C_mul, ← smul_eq_C_mul, LinearMap.map_smul,
+    rw [add_mul, map_add (f := _), mul_assoc, mul_assoc, ← smul_eq_C_mul, ← smul_eq_C_mul, LinearMap.map_smul,
       LinearMap.map_smul, hH, hP, smul_eq_mul, smul_eq_mul]
     ring
   set_option synthInstance.maxHeartbeats 100000 in

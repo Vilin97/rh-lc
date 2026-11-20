@@ -112,7 +112,7 @@ theorem isoDbl : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
   have h3 := (dd.form _ _).symm.trans (spG_ix (σ := σ) X.J (dbl (incM F W.J)) horth
     (m' * (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) (AE F E))ᵀ) z)
   have h4 := (dd.form _ _).symm.trans (spG_dd (σ := σ) X.J (incM F W.J) ι m m')
-  simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   linear_combination h1 + h2 - h3 + h4
 theorem zsSum : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (n n₁ d : ℕ) (H : Plane E n n₁)
     (b : Module.Basis (Fin 2) F E) (u : Fin d → AE F E),
@@ -240,7 +240,7 @@ theorem exists_lagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     set bb := incM F H.ι * ((t • incM F p.2) * (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) (AE F E))ᵀ) with hbb
     have hsum : t • dd.e (Matrix.vecMulVec (incV F H.x) (fun j => inclR (F := F) (AF F) (p.1 j)) +
         incM F H.ι * (incM F p.2 * (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) (AE F E))ᵀ)) = dd.e a + dd.e bb := by
-      rw [← map_smul, ← map_add, ha, hbb, smul_add, Matrix.vecMulVec_smul, Matrix.smul_mul, Matrix.mul_smul]
+      rw [← map_smul, ← map_add (f := _), ha, hbb, smul_add, Matrix.vecMulVec_smul, Matrix.smul_mul, Matrix.mul_smul]
     have horth : (dd.e a).1 ⬝ᵥ (dd.e bb).2 = (dd.e bb).1 ⬝ᵥ (dd.e a).2 := by
       have h := hiso H.x hH.xx (fun u => (hH.orth u).1) dd hdd (t • fun j => inclR (F := F) (AF F) (p.1 j)) 0 0
         (t • incM F p.2)

@@ -56,7 +56,7 @@ lemma aug_single (j : Fin 1 → ι) (z : ℤ) : aug (Finsupp.single j z) = z :=
 lemma aug_bd (c : Chain ι 1) : aug (bd 0 c) = 0 := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [map_add, map_add, hf, hg, add_zero]
+  | add f g hf hg => rw [map_add (f := _), map_add (f := _), hf, hg, add_zero]
   | single i z =>
     rw [bd_single, Fin.sum_univ_two]
     simp [aug_single]
@@ -123,7 +123,7 @@ lemma bd_cone_add_cone_bd (n : ℕ) (s : ι) (c : Chain ι (n + 1)) :
   induction c using Finsupp.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [add_add_add_comm, hf, hg]
   | single i z =>
     set_option synthInstance.maxHeartbeats 100000 in
@@ -290,7 +290,7 @@ noncomputable def rho : (n : ℕ) → (Fin (n + 1) → ι) → Chain ι n
 lemma lin_rho_zero (c : Chain ι 0) : lin (rho (ι := ι) 0) c = c := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [map_add, hf, hg]
+  | add f g hf hg => rw [map_add (f := _), hf, hg]
   | single i z => rw [lin_single, rho, Finsupp.smul_single_one]
 
 theorem rho_mem : ∀ (n : ℕ) (i : Fin (n + 1) → ι),
@@ -375,7 +375,7 @@ theorem hmt_mem : ∀ (n : ℕ) (i : Fin (n + 1) → ι),
 lemma lin_hmt_zero (c : Chain ι 0) : lin (hmt (ι := ι) 0) c = 0 := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [map_add, hf, hg, add_zero]
+  | add f g hf hg => rw [map_add (f := _), hf, hg, add_zero]
   | single i z => rw [lin_single, hmt, smul_zero]
 
 theorem boundary_homotopy : ∀ (n : ℕ) (i : Fin (n + 2) → ι),

@@ -107,7 +107,7 @@ theorem adapted_comap {R K : Type} [CommRing R] [IsDomain R] [IsDiscreteValuatio
     intro c hc y hy
     induction hy using Submodule.span_induction with
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul r x _ hx =>
       rw [← algebraMap_smul K r x, map_smul, algebraMap_smul]; exact Submodule.smul_mem _ _ hx
     | mem x hx =>
@@ -174,7 +174,7 @@ theorem exists_lattice (hX : CovTop.HypothesesXH) (hB : Published.BarsottiTateDi
   have a₅ := T.rigidified_extension_lagrangian_sign p R K hR hK Γ' 𝒜 κ w B (-ε) κ₂ hBL w₃
   have f₁ : ∀ x, ∀ y ∈ PrimitiveSubmodule A, frobDR p K hK A (x + y) = frobDR p K hK A x := fun x y hy => by
     have k : frobDR p K hK A y = 0 := (hX.conj p K hK A g hA hg _ (frobMor p K hK A (cast_left p K hK A))).1 y hy
-    rw [map_add, k, add_zero]
+    rw [map_add (f := _), k, add_zero]
   obtain ⟨L, ho, fg, l₁, l₂⟩ := adapted_comap E β₁.1 β₂ β₃ β₄ hF' hΩ f₁ v₁ v₂ a₁ a₂ a₃ a₄ a₅
   refine ⟨L, fg, l₁, l₂, fun f f' u u' _ _ _ _ e₁ e₂ e₃ c hc => ?_⟩
   · obtain ⟨g₁, k₁⟩ := T.pdivisible_inclusion_compatible_towers p R K G A φ hG hφ Γ' s 𝒜 t κ hκ f u e₁

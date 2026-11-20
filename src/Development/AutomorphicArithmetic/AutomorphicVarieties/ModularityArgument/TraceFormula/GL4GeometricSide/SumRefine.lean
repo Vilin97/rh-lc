@@ -122,7 +122,7 @@ theorem rlLow : HeckeMem → LowType → RlLow := by
     simp only [T, LinearMap.sub_apply, eop_fin, map_sub]
   have hTu : ∀ a b, D.i (kF (D.E1 w) (D.E2 w) a b u) = T a b v := fun a b => Subtype.ext (by
     rw [hTval, ← hu]
-    simp only [kF, LinearMap.add_apply, map_add, Submodule.coe_add, D.hE1, D.hE2]
+    simp only [kF, LinearMap.add_apply, map_add (f := _), Submodule.coe_add, D.hE1, D.hE2]
     abel)
   have hmem : u ∈ hwSp (D.E1 w) (D.E2 w) ν := by
     refine ⟨fun a => D.inj ?_, fun a b hab he => D.inj ?_⟩

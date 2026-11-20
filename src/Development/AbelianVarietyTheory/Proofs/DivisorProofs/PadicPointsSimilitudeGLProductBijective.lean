@@ -17,7 +17,7 @@ theorem starT_starT (x : ℚ_[p] ⊗[ℚ] G.C) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a c => rw [starT_tmul, starT_tmul, G.star_star]
-  | add x y hx hy => simp only [map_add, MulOpposite.unop_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), MulOpposite.unop_add, hx, hy]
 
 theorem starT_algebraMap (a : ℚ_[p]) :
     (starT G.star ℚ_[p] (algebraMap ℚ_[p] (ℚ_[p] ⊗[ℚ] G.C) a)).unop = algebraMap ℚ_[p] (ℚ_[p] ⊗[ℚ] G.C) a := by
@@ -30,7 +30,7 @@ theorem starT_mul (x y : ℚ_[p] ⊗[ℚ] G.C) :
 
 def starL : ℚ_[p] ⊗[ℚ] G.C →ₗ[ℚ_[p]] ℚ_[p] ⊗[ℚ] G.C where
   toFun x := (starT G.star ℚ_[p] x).unop
-  map_add' x y := by rw [map_add, MulOpposite.unop_add]
+  map_add' x y := by rw [map_add (f := _), MulOpposite.unop_add]
   map_smul' a x := by
     rw [Algebra.smul_def, starT_mul, starT_algebraMap, RingHom.id_apply, Algebra.smul_def]
     exact (Algebra.commutes _ _).symm

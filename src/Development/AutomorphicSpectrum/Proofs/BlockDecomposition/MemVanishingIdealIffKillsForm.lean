@@ -27,7 +27,7 @@ theorem KilledIn.add {n : ℕ} {f g : MvPolynomial (Fin (N + 1)) R} (hf : Killed
   unfold KillsForm at hf2 hg2
   unfold KilledIn KillsForm
   refine ⟨hf1.add hg1, fun k => ?_⟩
-  rw [GlobalTheory.ProjSpace.formOn_add hf1 hg1, map_add, hf2 k, hg2 k, add_zero]
+  rw [GlobalTheory.ProjSpace.formOn_add hf1 hg1, map_add (f := _), hf2 k, hg2 k, add_zero]
 
 theorem KilledIn.mul {d m : ℕ} {a f : MvPolynomial (Fin (N + 1)) R} (ha : a.IsHomogeneous d)
     (hf : KilledIn φ m f) : KilledIn φ (d + m) (a * f) := by
@@ -84,7 +84,7 @@ theorem killedIn_component_of_mem {h : MvPolynomial (Fin (N + 1)) R} (hh : h ∈
     exact killedIn_zero φ n
   | add x y _ _ ihx ihy =>
     intro n
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (ihx n).add (ihy n)
   | smul a x _ ih =>
     intro n

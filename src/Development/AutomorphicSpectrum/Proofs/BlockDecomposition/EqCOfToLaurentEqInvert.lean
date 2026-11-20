@@ -52,7 +52,7 @@ theorem exists_split (h : K[T;T⁻¹]) :
     obtain ⟨p₁, p₂, rfl⟩ := hp
     obtain ⟨q₁, q₂, rfl⟩ := hq
     refine ⟨p₁ + q₁, p₂ + q₂, ?_⟩
-    simp only [map_add]
+    simp only [map_add (f := _)]
     ring
   | C_mul_T n a =>
     rcases lt_or_ge n 0 with hn | hn

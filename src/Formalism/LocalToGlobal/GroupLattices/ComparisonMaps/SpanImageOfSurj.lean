@@ -27,7 +27,7 @@ theorem span_image_of_surj {V : Type} [AddCommGroup V] [Module LL V] (cmp : V �
       | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
       | zero => simp
       | add x y _ _ hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hx hy
       | smul a x _ hx =>
         obtain ⟨o, ho⟩ := hA a a.2

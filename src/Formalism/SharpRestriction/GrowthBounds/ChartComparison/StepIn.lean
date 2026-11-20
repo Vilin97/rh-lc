@@ -65,9 +65,9 @@ def embN (β : S.Ch) : (M.lat i).V →ₛₗ[D.what₂.embLL] ({c // S.chOf c = 
     have h : S.raw β (x + y) = S.raw β x + S.raw β y := by
       funext cl z
       unfold raw
-      rw [map_add]
+      rw [map_add (f := _)]
       rfl
-    rw [h, map_add, smul_add]
+    rw [h, map_add (f := _), smul_add]
   map_smul' a x := by
     have h : S.raw β (a • x) = D.what₂.embLL a • S.raw β x := by
       funext cl z

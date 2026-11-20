@@ -24,7 +24,7 @@ theorem hf_add_left (T : Tor D) {N N' : ℕ} (x y z : VC D N N') : Hf D T (x + y
   simp only [Hf, Pi.add_apply, add_mul, Finset.sum_add_distrib, add_div]
 
 theorem hf_add_right (T : Tor D) {N N' : ℕ} (x y z : VC D N N') : Hf D T x (y + z) = Hf D T x y + Hf D T x z := by
-  simp only [Hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib, add_div]
+  simp only [Hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib, add_div]
 
 theorem U_U (T : Tor D) {N N' : ℕ} (x a : VC D N N') (c : ℂ) (G : VC D N N' → ℂ) (z : VC D N N') :
     U D T x (fun w => c * U D T a G w) z =
@@ -89,7 +89,7 @@ theorem iop_transport (T : Tor D) {N N' : ℕ} (φ : VC D N N' ≃+ VC D N N')
   have hi : (A'.addSubgroupOf B').index = (A.addSubgroupOf B).index := (Nat.card_congr ε.toEquiv).symm
   have ht : ∀ x, al D T (φ x) * U D T (φ x) (fun w => G (φ.symm w)) (φ z) = al D T x * U D T x G z := by
     intro x
-    simp only [al, U, hφ, ← map_add, AddEquiv.symm_apply_apply]
+    simp only [al, U, hφ, ← map_add (f := _), AddEquiv.symm_apply_apply]
   unfold Iop
   rw [hi]
   congr 1
@@ -608,7 +608,7 @@ theorem split_char {y : D.host.E} (hy : y ≠ 0) (u : (AE D)ˣ) (hu : (u : AE D)
   rw [← he] at h3
   have hee : e * e = e := by rw [he]; linear_combination h1 + h1' + 2 * h2
   have hee' : (1 - e) * (1 - e) = 1 - e := by linear_combination hee
-  have hse : sgA D e = e := by rw [he, map_add, VacMove.sgA_sgA, add_comm]
+  have hse : sgA D e = e := by rw [he, map_add (f := _), VacMove.sgA_sgA, add_comm]
   have heO : e ∈ OhE D := he ▸ add_mem hε (VacMove.sgA_mem D hε)
   have hy' : D.host.conj y ≠ 0 := by simpa using hy
   set d := y / D.host.conj y with hdd
@@ -625,7 +625,7 @@ theorem split_char {y : D.host.E} (hy : y ≠ 0) (u : (AE D)ˣ) (hu : (u : AE D)
     simp only [part, hu]; ring
   · ext
     change (1 - e) + e * inc D y = ((1 - e) + e * inc D d) * sgA D ((1 - e) + e * inc D y)
-    rw [map_add, map_mul, map_sub, map_one, hse, PtsMem.sgA_inc]
+    rw [map_add (f := _), map_mul, map_sub, map_one, hse, PtsMem.sgA_inc]
     linear_combination (-(1 - inc D d - inc D (D.host.conj y) + inc D d * inc D (D.host.conj y))) * hee - e * hdy
   · have hk : χ.f (part hee' hdA) = 1 := by
       have hz : ∀ q : ℕ, q.Prime → ¬ InertQ D q → ZeroAt D q (1 - e) := fun q hq => (h3 q hq).2
@@ -638,7 +638,7 @@ theorem split_char {y : D.host.E} (hy : y ≠ 0) (u : (AE D)ˣ) (hu : (u : AE D)
       ext
       change (1 - (1 - e)) + (1 - e) * inc D y =
         ((1 - (1 - e)) + (1 - e) * inc D d) * sgA D ((1 - (1 - e)) + (1 - e) * inc D y)
-      simp only [map_add, map_mul, map_sub, map_one, hse, PtsMem.sgA_inc]
+      simp only [map_add (f := _), map_mul, map_sub, map_one, hse, PtsMem.sgA_inc]
       linear_combination (-(1 - inc D d - inc D (D.host.conj y) + inc D d * inc D (D.host.conj y))) * hee' -
         (1 - e) * hdy
     have hw2 : χ.f (part hee' hyA) ^ 2 = 1 := by

@@ -19,7 +19,7 @@ variable {D : D7}
 
 theorem symplOH_add_right {S T : HSp D} (x y y' : WO S T) :
     symplOH S T x (y + y') = symplOH S T x y + symplOH S T x y' := by
-  simp only [symplOH, symplO, hO, Matrix.add_apply, RingHom.map_add, mul_add, add_mul, Finset.sum_add_distrib,
+  simp only [symplOH, symplO, hO, Matrix.add_apply, RingHom.map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib,
     LinearMap.map_add]
 
 theorem symplOH_isoPart_midPart (V V' W : HSp D) {r : ℕ} (C : Matrix (Fin V.rank) (Fin r) D.host.E)

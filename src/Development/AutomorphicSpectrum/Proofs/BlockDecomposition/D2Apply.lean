@@ -45,7 +45,7 @@ theorem tw_nat (E : R' ⊗[R] N ≃ₗ[R'] Q) (E₂ : R' ⊗[R] N₂ ≃ₗ[R'] 
     tw M E₂ (g.lTensor M t) = h.lTensor M (tw M E t) := by
   induction t with
   | tmul x n => simp [tw_tmul, H]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end Gen
 
@@ -82,7 +82,7 @@ theorem bc_ext {R R' N Q : Type} [CommRing R] [CommRing R'] [Algebra R R'] [AddC
   | tmul r n =>
     have e : r ⊗ₜ[R] n = r • ((1 : R') ⊗ₜ[R] n) := by simp [TensorProduct.smul_tmul']
     rw [e, map_smul, map_smul, H]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem d2_apply {R : Type} [CommRing R] {C : Type} [Category.{0} C] (F : C ⥤ CommAlgCat.{0} R) (z : C2 F)
     {T T' T'' T''' : C} (φ : T ⟶ T') (ψ : T' ⟶ T'') (χ : T'' ⟶ T''') :
@@ -150,11 +150,11 @@ theorem perf_ext (m : BC F F') (h : Perf F) : Perf F' := by
   have t₁ : ∀ x, d1 F' (E₁ (1 ⊗ₜ x)) = E₂ (1 ⊗ₜ d1 F x) := fun x ↦ by
     rw [e₁, e₂]
     funext T T' T'' φ ψ
-    simp only [d1_apply, map_sub, map_add, m.naturality]
+    simp only [d1_apply, map_sub, map_add (f := _), m.naturality]
   have t₂ : ∀ x, d2 F' (E₂ (1 ⊗ₜ x)) = E₃ (1 ⊗ₜ d2 F x) := fun x ↦ by
     rw [e₂, e₃]
     funext T T' T'' T''' φ ψ χ
-    simp only [d2_apply, map_sub, map_add, m.naturality]
+    simp only [d2_apply, map_sub, map_add (f := _), m.naturality]
   refine ⟨.of R' (R' ⊗[R] P₀), .of R' (R' ⊗[R] P₁), .of R' (R' ⊗[R] P₂), .of R' (R' ⊗[R] P₃),
     a₀.baseChange R', a₁.baseChange R', a₂.baseChange R',
     E₀.toLinearMap ∘ₗ ψ₀.baseChange R', E₁.toLinearMap ∘ₗ ψ₁.baseChange R', E₂.toLinearMap ∘ₗ ψ₂.baseChange R',

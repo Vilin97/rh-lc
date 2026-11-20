@@ -103,7 +103,7 @@ theorem cT_corner (M : Matrix (Fin n) (Fin n) (Ad E)) :
   change conjAd E ((1 : Matrix (Fin n) (Fin n) (Ad E)) j i - idem w * (1 : Matrix (Fin n) (Fin n) (Ad E)) j i +
       idem w * M j i) = (1 : Matrix (Fin n) (Fin n) (Ad E)) i j - idem w * (1 : Matrix (Fin n) (Fin n) (Ad E)) i j +
       idem w * conjAd E (M j i)
-  rw [map_add, map_sub, map_mul, map_mul, conjAd_idem, Matrix.one_apply, Matrix.one_apply]
+  rw [map_add (f := _), map_sub, map_mul, map_mul, conjAd_idem, Matrix.one_apply, Matrix.one_apply]
   by_cases h : j = i
   · subst h; simp
   · simp [h, Ne.symm h]

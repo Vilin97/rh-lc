@@ -13,7 +13,7 @@ variable {D : D7}
 
 theorem hHom_add_left (V W : HSp D) (x x' y : WA V W) : hHom V W (x + x') y = hHom V W x y + hHom V W x' y := by
   unfold hHom
-  split_ifs <;> simp only [Matrix.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  split_ifs <;> simp only [Matrix.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hHom_add_right (V W : HSp D) (x y y' : WA V W) : hHom V W x (y + y') = hHom V W x y + hHom V W x y' := by
   unfold hHom
@@ -21,11 +21,11 @@ theorem hHom_add_right (V W : HSp D) (x y y' : WA V W) : hHom V W x (y + y') = h
 
 theorem symplH_add_left (V W : HSp D) (x x' y : WA V W) :
     symplH V W (x + x') y = symplH V W x y + symplH V W x' y := by
-  simp only [symplH, sympl, hHom_add_right, mul_add, map_add]
+  simp only [symplH, sympl, hHom_add_right, mul_add, map_add (f := _)]
 
 theorem symplH_add_right (V W : HSp D) (x y y' : WA V W) :
     symplH V W x (y + y') = symplH V W x y + symplH V W x y' := by
-  simp only [symplH, sympl, hHom_add_left, mul_add, map_add]
+  simp only [symplH, sympl, hHom_add_left, mul_add, map_add (f := _)]
 
 theorem heis_heis (ψ : AddChar (AF D.host.F) ℂ) (V W : HSp D) (u u' : WA V W) (f : WA V W → ℂ) (w : WA V W) :
     Heisenberg₂ ψ V W u (Heisenberg₂ ψ V W u' f) w = ψ (symplH V W u u') * Heisenberg₂ ψ V W (u + u') f w := by

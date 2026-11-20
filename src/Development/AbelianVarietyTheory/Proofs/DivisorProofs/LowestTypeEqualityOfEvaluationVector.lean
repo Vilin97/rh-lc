@@ -116,7 +116,7 @@ theorem GlobalTheory.EvalLowType.lowType_of_eval : ∀ (D : D7) (G : Type) [Grou
   let Lin : LowT (R.MW i (sg0 D A)) →ₗ[ℂ] (GA D (Wc D i) → ℂ) :=
     { toFun := fun t g => Datum.thetaKO ω h g (Datum.pureTensorO R.ψ R.θ (Vc D i) (Wc D i) (fun _ => 1)
         (cart (R.MW i (sg0 D A))) (R.BV i) (onb (R.MW i (sg0 D A))) φ' (R.ioP i t ((O i).c0' y)))
-      map_add' := fun a b => by funext g; simp [Datum.thetaKO, map_add]
+      map_add' := fun a b => by funext g; simp [Datum.thetaKO, map_add (f := _)]
       map_smul' := fun a b => by funext g; simp [Datum.thetaKO, map_smul] }
   let act := Formalism.IndefR.Links.actL (Wc D i) (R.βW i) (R.datWp i R.triv) (R.eG ((u : G)⁻¹))
   let Rt : MultilinearMap ℂ (fun ρ => lowT (R.MW i (sg0 D A)) ρ) (GA D (Wc D i) → ℂ) :=

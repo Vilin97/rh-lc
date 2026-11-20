@@ -87,7 +87,7 @@ theorem dl_one (j : Fin d) : dl (1 : PS k 1 d) j = 0 := by
 
 theorem dl_mul {u u' : PS k 1 d} (h : constantCoeff u = 1) (h' : constantCoeff u' = 1) (j : Fin d) :
     dl (u * u') j = dl u j + dl u' j := by
-  rw [dl_eq, dl_eq, dl_eq, Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, h, h']
+  rw [dl_eq, dl_eq, dl_eq, Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, h, h']
   ring
 
 theorem dl_pull {φ : Pt k 1 d} (hφ : ∀ i, constantCoeff (φ i) = 0) (u : PS k 1 d) (j : Fin d) :
@@ -206,7 +206,7 @@ theorem HasDlog.add {B : FB V d Λ} {I : Ideal O} {e : L → Fin d → O} {y y' 
   obtain ⟨u, z, h1, h2, h3⟩ := h
   obtain ⟨u', z', h1', h2', h3'⟩ := h'
   refine ⟨u * u', z + z', by rw [map_mul]; exact isCh_mul (WickVanishing.Nab.lawK F B) h1 h1', fun l => ?_, fun l => ?_⟩
-  · rw [Pi.add_apply, map_add, h2, h2', map_mul, ← Finset.sum_add_distrib]
+  · rw [Pi.add_apply, map_add (f := _), h2, h2', map_mul, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun j _ => by rw [dl_mul h1.1 h1'.1, mul_add]
   · have := I.add_mem (h3 l) (h3' l)
     simp only [Pi.add_apply]

@@ -71,7 +71,7 @@ private theorem ex_mu {O A : Type} [CommRing O] [IsLocalRing O] [CommRing A] [Al
   have k2 : ∀ a : O, s (residue O a) • η = a • η := fun a => k _ _ (hs _)
   refine ⟨AddMonoidHom.mk' (fun c => s c • η) fun c d => ?_, k2, fun a c => ?_⟩
   · rw [← add_smul]
-    exact k _ _ (by rw [map_add, hs, hs, hs])
+    exact k _ _ (by rw [map_add (f := _), hs, hs, hs])
   · obtain ⟨b, hb⟩ := IsCO.res_surj (O := O) a
     have e : res O A a = residue O b := by
       have := (res_eq_zero_iff O A _).2 hb

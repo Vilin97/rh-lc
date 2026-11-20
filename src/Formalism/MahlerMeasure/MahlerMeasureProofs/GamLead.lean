@@ -560,7 +560,7 @@ theorem core (hr : 1 ≤ r) (o n z t : ℕ) (ht : t ≤ o) (hon : o < n)
       ∑ l ∈ range (A + 1), (tieE w e ^ l) (xx l + (if l = 0 then 0 else yy (l - 1))) =
         ∑ l ∈ range (A + 1), (tieE w e ^ l) (xx l) + ∑ l ∈ range A, (tieE w e ^ (l + 1)) (yy l) := by
     intro xx yy
-    simp only [map_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Finset.sum_add_distrib]
     congr 1
     rw [Finset.sum_range_succ']
     simp
@@ -580,7 +580,7 @@ theorem core (hr : 1 ≤ r) (o n z t : ℕ) (ht : t ≤ o) (hon : o < n)
       simp only [h0, if_false]
       have hb := (hyy (l - 1) hl1).2
       rw [show A - 1 - (l - 1) = A - l by omega, show Bn - 1 - (l - 1) = Bn - l by omega] at hb
-      exact ⟨biHom_add (hxx l hl).2.1 hb, by rw [map_add, (hxx l hl).1, (hyy (l - 1) hl1).1, add_zero]⟩
+      exact ⟨biHom_add (hxx l hl).2.1 hb, by rw [map_add (f := _), (hxx l hl).1, (hyy (l - 1) hl1).1, add_zero]⟩
   have hu := hucond x yl hxc hylc
   have hu' := hucond x' yl' hxc' hylc'
 
@@ -1090,7 +1090,7 @@ theorem coeff_kill (g : MvPolynomial σ K) (M : σ →₀ ℕ) :
     · subst hM; split_ifs <;> simp
     · split_ifs <;> simp [coeff_monomial, hM]
   | add p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
+    rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
     split_ifs <;> ring
 
 theorem kill_X (v : σ) : kill P (X v : MvPolynomial σ K) = if P v then 0 else X v := by

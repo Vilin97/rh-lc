@@ -26,7 +26,7 @@ theorem rho_add (d : Darboux Bf κ) (ψ : AddChar R ℂ) {u v : V}
     (h : (d.e u).1 ⬝ᵥ (d.e v).2 = (d.e v).1 ⬝ᵥ (d.e u).2) (φ : (κ → R) → ℂ) :
     d.rho ψ (u + v) φ = d.rho ψ u (d.rho ψ v φ) := by
   funext x
-  simp only [Darboux.rho, schr, map_add, Prod.fst_add, Prod.snd_add]
+  simp only [Darboux.rho, schr, map_add (f := _), Prod.fst_add, Prod.snd_add]
   rw [← mul_assoc, ← AddChar.map_add_eq_mul, add_assoc x]
   congr 2
   have h2 : ⅟(2 : R) * 2 = 1 := invOf_mul_self 2
@@ -191,7 +191,7 @@ theorem inv_lagCols {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
   have f3 := dd.form a b
   rw [P1] at f1; rw [P2] at f2; rw [P3] at f3
   have hab : (dd.e (a + b)).1 ⬝ᵥ (dd.e c).2 = (dd.e c).1 ⬝ᵥ (dd.e (a + b)).2 := by
-    simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+    simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
     linear_combination f1 + f2
   have hab' : (dd.e a).1 ⬝ᵥ (dd.e b).2 = (dd.e b).1 ⬝ᵥ (dd.e a).2 := by linear_combination -f3
   have hsch : ∀ w, ∀ Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d), dd.rho B.ψ w Φ ∈ schA F (Fin n × Fin d ⊕ Fin n × Fin d) :=

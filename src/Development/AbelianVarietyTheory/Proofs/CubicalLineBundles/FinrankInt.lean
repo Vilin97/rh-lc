@@ -50,7 +50,7 @@ theorem exists_form (𝔄 : Submodule (𝓞 E) E) (ξ : E) (hξ0 : ξ ≠ 0)
   let EF : LinearMap.BilinForm ℤ 𝔄 := LinearMap.mk₂ ℤ f
     (fun x x' y => by
       apply Int.cast_injective (α := ℚ)
-      rw [Int.cast_add, ← hf, ← hf, ← hf, Submodule.coe_add, mul_add, add_mul, map_add])
+      rw [Int.cast_add, ← hf, ← hf, ← hf, Submodule.coe_add, mul_add, add_mul, map_add (f := _)])
     (fun c x y => by
       apply Int.cast_injective (α := ℚ)
       rw [smul_eq_mul, Int.cast_mul c, ← hf, ← hf, ← zsmul_eq_mul _ c, ← map_zsmul]
@@ -59,7 +59,7 @@ theorem exists_form (𝔄 : Submodule (𝓞 E) E) (ξ : E) (hξ0 : ξ ≠ 0)
       ring)
     (fun x y y' => by
       apply Int.cast_injective (α := ℚ)
-      rw [Int.cast_add, ← hf, ← hf, ← hf, Submodule.coe_add, map_add, mul_add, map_add])
+      rw [Int.cast_add, ← hf, ← hf, ← hf, Submodule.coe_add, map_add (f := _), mul_add, map_add (f := _)])
     (fun c x y => by
       apply Int.cast_injective (α := ℚ)
       rw [smul_eq_mul, Int.cast_mul c, ← hf, ← hf, ← zsmul_eq_mul _ c, ← map_zsmul]

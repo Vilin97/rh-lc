@@ -79,7 +79,7 @@ theorem small_add {r s : ℝ} {f g : Hn F → ℂ} (hf : Small ι r f) (hg : Sma
   obtain ⟨a, ha, ha'⟩ := hf
   obtain ⟨b, hb, hb'⟩ := hg
   refine ⟨a + b, hasQ_add ha hb, fun ξ => ?_⟩
-  rw [Pi.add_apply, map_add]
+  rw [Pi.add_apply, map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max (ha' ξ) (hb' ξ))
 
 theorem small_mul {r s : ℝ} {f g : Hn F → ℂ} (hf : Small ι r f) (hg : Small ι s g) : Small ι (r * s) (f * g) := by

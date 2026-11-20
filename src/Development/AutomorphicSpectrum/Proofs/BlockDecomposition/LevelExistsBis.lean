@@ -336,7 +336,7 @@ theorem step {π : Submodule ℂ (UA E n → ℂ)} (hπ : IsAutRepU π) {w : Pl 
     { carrier := {v | ∀ q ∈ Q, RU E n q (v : UA E n → ℂ) = v}
       add_mem' := by
         intro a b ha hb q hq
-        simp only [Submodule.coe_add, map_add, ha q hq, hb q hq]
+        simp only [Submodule.coe_add, map_add (f := _), ha q hq, hb q hq]
       zero_mem' := by
         intro q hq
         simp

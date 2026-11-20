@@ -28,7 +28,7 @@ theorem dn_extF_ok (ht : A.Tied T) (P : ST) (hM : MoveHyp ST ∅ P) (c : S.Cl)
   refine (ht.ok c.1 (S.rep c)).dn P hM ?_ ?_ ?_ ?_
   · intro x hx y hy
     rw [← hN] at hx hy
-    rw [extF_of_mem g hx, extF_of_mem g hy, extF_of_mem g ((localization₂ _ _).add_mem hx hy), redL_add hx hy, map_add]
+    rw [extF_of_mem g hx, extF_of_mem g hy, extF_of_mem g ((localization₂ _ _).add_mem hx hy), redL_add hx hy, map_add (f := _)]
   · intro r x hx
     rw [← hN] at hx
     rw [extF_of_mem g hx, extF_of_mem g ((localization₂ _ _).smul_mem r hx), redL_osmul r hx, map_smul]

@@ -38,7 +38,7 @@ theorem prInf_sigR (σ : E →ₐ[F] E) (z : AF F ⊗[F] E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add a c ha hc => simp only [map_add, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), ha, hc]
 
 omit [NumberField E] in
 theorem prV_sigR (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (z : AF F ⊗[F] E) :
@@ -46,7 +46,7 @@ theorem prV_sigR (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (z : AF F
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add a c ha hc => simp only [map_add, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), ha, hc]
 
 omit [NumberField E] in
 theorem prInf_inclR (e : E) : prInf (inclR (F := F) (AF F) e) = inclR (F := F) (Ainf F) e := by

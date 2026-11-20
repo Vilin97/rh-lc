@@ -162,7 +162,7 @@ theorem le_of_reduction_le {ϖ : O} (hm : ∀ x ∈ maximalIdeal O, ϖ ∣ x)
     funext i
     simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, ← hc i]
     ring
-  rw [hv, map_add, map_smul]
+  rw [hv, map_add (f := _), map_smul]
   exact L'.add_mem hv' (h2 ((mem_scaleBy _ _ _).2 ⟨_, ⟨c, rfl⟩, rfl⟩))
 
 theorem isUnit_det_map (k : GL (Fin n) O) :

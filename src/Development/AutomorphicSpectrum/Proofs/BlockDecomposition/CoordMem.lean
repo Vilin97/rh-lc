@@ -77,7 +77,7 @@ theorem diag {φ₂ : T₂ ⟶ T₂} {φ₁ : T₁ ⟶ T₁} {c : ι → Λ}
   rw [e.symm_apply_apply]
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, Finsupp.add_apply, smul_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), Finsupp.add_apply, smul_add, hf, hg]
   | single b m =>
     rw [hd, e.symm_apply_apply]
     by_cases h : b = a
@@ -155,7 +155,7 @@ theorem fl_sum {d : ℕ} {a₀ : ι} {t : T₁ ⟶ T₂} (ht : ∀ m, e (Finsupp
   simp only [fl_coe] at h1
   refine (show ((Φ.prMap t (co Φ e he a₀ x)) r).1 + ((∑ k, fl Φ e he (fun a => K a = some k) x) r).1 = (x r).1 from ?_)
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [h1, show ((Φ.prMap t (co Φ e he a₀ x)) r).1 = (F.map t).hom (e.symm (x r).1 a₀) from rfl, ← ht, ← map_sum, ← map_add]
+    rw [h1, show ((Φ.prMap t (co Φ e he a₀ x)) r).1 = (F.map t).hom (e.symm (x r).1 a₀) from rfl, ← ht, ← map_sum, ← map_add (f := _)]
   apply e.symm.injective
   rw [e.symm_apply_apply]
   ext a

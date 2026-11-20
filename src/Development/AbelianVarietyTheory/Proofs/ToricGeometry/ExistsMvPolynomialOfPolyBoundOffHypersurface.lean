@@ -217,7 +217,7 @@ theorem _root_.GlobalTheory.exists_mvPolynomial_of_poly_bound_off_hypersurface :
           MvPolynomial.eval x (Polynomial.aeval (MvPolynomial.X 0) φ) = φ.eval (x 0) := by
         intro φ
         induction φ using Polynomial.induction_on' with
-        | add p₁ p₂ h₁ h₂ => simp only [map_add, Polynomial.eval_add, h₁, h₂]
+        | add p₁ p₂ h₁ h₂ => simp only [map_add (f := _), Polynomial.eval_add, h₁, h₂]
         | monomial n a => simp [Polynomial.aeval_monomial, Polynomial.eval_monomial]
       set_option synthInstance.maxHeartbeats 100000 in
         rw [hPmdef, map_sum]

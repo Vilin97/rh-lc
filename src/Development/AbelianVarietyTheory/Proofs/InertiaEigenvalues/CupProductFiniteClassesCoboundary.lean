@@ -66,7 +66,7 @@ theorem actVB_mul (ρ : Representation LL G V) (g h : G) (x : V ⊗[Qp] B) :
     actVB PD ρ (g * h) x = actVB PD ρ g (actVB PD ρ h x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b => simp [actVB_tmul, map_mul, Module.End.mul_apply]
 
 theorem pairT_actVB (ρ : Representation LL G V) (ρ' : Representation LL G V')
@@ -77,11 +77,11 @@ theorem pairT_actVB (ρ : Representation LL G V) (ρ' : Representation LL G V')
       actVB PD (charRep (cycLL PD LL)) g (pairT B P x y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul v r =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul v' r' =>
       rw [actVB_tmul, actVB_tmul, pairT_tmul, pairT_tmul, actVB_tmul, hP, charRep_apply, map_mul]
 
@@ -93,11 +93,11 @@ theorem pairT_actVdR (ρ : Representation LL G V) (ρ' : Representation LL G V')
       actVdR PD (charRep (cycLL PD LL)) g (pairT BdR P x y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul v r =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul v' r' =>
       rw [actVdR_tmul, actVdR_tmul, pairT_tmul, pairT_tmul, actVdR_tmul, hP, charRep_apply, map_mul]
 
@@ -106,11 +106,11 @@ theorem pairT_φVB (P : V →ₗ[LL] V' →ₗ[LL] LL) (x : V ⊗[Qp] B) (y : V'
       pairT B P (φVB PD (LL := LL) (V := V) x) (φVB PD (LL := LL) (V := V') y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul v r =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul v' r' =>
       simp [φVB, pairT_tmul]
 
@@ -119,11 +119,11 @@ theorem pairT_ιV (P : V →ₗ[LL] V' →ₗ[LL] LL) (x : V ⊗[Qp] B) (y : V' 
       pairT BdR P (ιV PD (LL := LL) (V := V) x) (ιV PD (LL := LL) (V := V') y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul v r =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul v' r' =>
       simp [ιV, pairT_tmul]
 
@@ -133,7 +133,7 @@ theorem pairT_filV (P : V →ₗ[LL] V' →ₗ[LL] LL) (a : ℤ) (z : V ⊗[Qp] 
   obtain ⟨y, rfl⟩ := hz
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add y y' hy hy' => simp only [map_add, LinearMap.add_apply]; exact add_mem hy hy'
+  | add y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply]; exact add_mem hy hy'
   | tmul v f =>
     rw [AlgebraTensorModule.map_tmul, pairT_tmul, mul_one]
     exact ⟨P v v' ⊗ₜ[Qp] f, rfl⟩
@@ -143,7 +143,7 @@ theorem actVdR_filV (ρ : Representation LL G V) (a : ℤ) (g : G) (z : V ⊗[Qp
   obtain ⟨y, rfl⟩ := hz
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add y y' hy hy' => simp only [map_add]; exact add_mem hy hy'
+  | add y y' hy hy' => simp only [map_add (f := _)]; exact add_mem hy hy'
   | tmul v f =>
     rw [AlgebraTensorModule.map_tmul, actVdR_tmul]
     exact ⟨ρ g v ⊗ₜ[Qp] (⟨PD.actdR g f, PD.Fil_G g a f f.2⟩ : (PD.Fil a).restrictScalars Qp), rfl⟩
@@ -252,7 +252,7 @@ theorem cob_of_cont (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
     have s1 : ιV (P.PD K) (LL := LL) (V := LL) (F h) =
         pairT P.R.BdR m (ιV (P.PD K) (LL := LL) (V := A.V) x - d2) (b h ⊗ₜ[ℚ_[l]] (1 : P.R.BdR)) -
           (actVdR (P.PD K) (charRep (cycLL (P.PD K) LL)) h w2 - w2) := by
-      simp only [F, map_sub, pairT_ιV, e1, GlobalTheory.CobCrisLift.ιV_act, hι1, map_add, LinearMap.sub_apply, e2]
+      simp only [F, map_sub, pairT_ιV, e1, GlobalTheory.CobCrisLift.ιV_act, hι1, map_add (f := _), LinearMap.sub_apply, e2]
       abel
     rw [s1]
     exact sub_mem (pairT_filV (P.PD K) m 0 _ hd2' (b h))
@@ -304,7 +304,7 @@ theorem cob_of_cont (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
   have main : actVB (P.PD K) (charRep (cycLL (P.PD K) LL)) g (F h) - F (g * h) + F g =
       pairT P.R.B m (actVB (P.PD K) A.ρ g x) (actVB (P.PD K) A'.ρ g (b h ⊗ₜ[ℚ_[l]] (1 : P.R.B))) -
         pairT P.R.B m x (A'.ρ g (b h) ⊗ₜ[ℚ_[l]] (1 : P.R.B)) := by
-    simp only [F, map_sub, actVB_mul, hcoc, map_add,
+    simp only [F, map_sub, actVB_mul, hcoc, map_add (f := _),
       ← pairT_actVB (P.PD K) A.ρ A'.ρ m hD.1 g]
     abel
   calc (ReciprocityTheory.Def.d1 (charRep (cycLL (P.PD K) LL)) f (g, h)) ⊗ₜ[ℚ_[l]] (1 : P.R.B)

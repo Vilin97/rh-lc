@@ -331,7 +331,7 @@ theorem idealLattice2_poisson_summation (I : Fin 2 → (FractionalIdeal (𝓞 K)
     rw [← Equiv.tsum_eq eL]
     refine tsum_congr fun α => ?_
     change f ((toEuclid2 K).symm (toEuclid2 K α + toEuclid2 K a)) = _
-    rw [← map_add, ContinuousLinearEquiv.symm_apply_apply]
+    rw [← map_add (f := _), ContinuousLinearEquiv.symm_apply_apply]
   have hrhs : ∑' μ : dualLattice L,
       𝓕 (F : WithLp 2 (euclidean.mixedSpace K × euclidean.mixedSpace K) → ℂ) μ *
         𝐞 ⟪(μ : WithLp 2 (euclidean.mixedSpace K × euclidean.mixedSpace K)), toEuclid2 K a⟫ =
@@ -382,7 +382,7 @@ theorem summable_norm_iff_and_tsum_eq_coset2 (I : Fin 2 → (FractionalIdeal (�
   have hemb : ∀ α, emb2 K (h α) = (α : Fin 2 → mixedSpace K) + emb2 K c := by
     intro α
     funext i
-    simp only [emb2, hh, Pi.add_apply, map_add, hy α i, add_comm]
+    simp only [emb2, hh, Pi.add_apply, map_add (f := _), hy α i, add_comm]
   set G : (Fin 2 → K) → ℂ := (coset2 K I c).indicator (fun ξ => g (emb2 K ξ))
   have hsupp : ∀ ξ ∉ Set.range h, G ξ = 0 := by
     intro ξ hξ

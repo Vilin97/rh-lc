@@ -34,7 +34,7 @@ theorem exists_uniform_denom : ∀ {F E : Type} [Field F] [NumberField F] [Field
         intro β γ
         have : (fun i => ((β + γ) i : E)) = (fun i => (β i : E)) + (fun i => (γ i : E)) := by
           funext i; simp
-        simp only [this, Matrix.add_vecMulVec, incM_add, map_add] }
+        simp only [this, Matrix.add_vecMulVec, incM_add, map_add (f := _)] }
   have hf : ∀ β, f β = M.co.e (incM F (Matrix.vecMulVec (fun i => (β i : E)) x)) := fun _ => rfl
   obtain ⟨g, hg⟩ := (Module.Finite.fg_top : (⊤ : Submodule ℤ (Fin n → 𝓞 E)).FG)
   choose Y Z hYZ using fun β : Fin n → 𝓞 E => hM.rat (Matrix.vecMulVec (fun i => (β i : E)) x)
@@ -60,7 +60,7 @@ theorem exists_uniform_denom : ∀ {F E : Type} [Field F] [NumberField F] [Field
       add_mem' := by
         rintro β γ ⟨y, z, h1⟩ ⟨y', z', h2⟩
         refine ⟨y + y', z + z', ?_⟩
-        rw [map_add, h1, h2]
+        rw [map_add (f := _), h1, h2]
         ext k <;> simp [add_div]
       neg_mem' := by
         rintro β ⟨y, z, h1⟩

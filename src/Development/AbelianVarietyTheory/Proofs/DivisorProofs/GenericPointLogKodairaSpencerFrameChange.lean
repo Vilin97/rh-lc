@@ -87,7 +87,7 @@ theorem der_through {k K R RW : Type} [CommRing k] [Field K] [Algebra k K] [Comm
   have hδmul : ∀ x y, D (ρW (x * y)) - ρW (DlW (x * y)) =
       ρW x * (D (ρW y) - ρW (DlW y)) + ρW y * (D (ρW x) - ρW (DlW x)) := by
     intro x y
-    rw [map_mul, Derivation.leibniz, Derivation.leibniz, map_add, smul_eq_mul, smul_eq_mul, smul_eq_mul, smul_eq_mul,
+    rw [map_mul, Derivation.leibniz, Derivation.leibniz, map_add (f := _), smul_eq_mul, smul_eq_mul, smul_eq_mul, smul_eq_mul,
       map_mul, map_mul]
     ring
   have hδres : ∀ r, D (ρW (res r)) - ρW (DlW (res r)) = 0 := fun r => by rw [hD, hc, sub_self]

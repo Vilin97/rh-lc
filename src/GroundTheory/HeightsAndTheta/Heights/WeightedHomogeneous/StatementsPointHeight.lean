@@ -23,7 +23,7 @@ def multiplierIdeal {L : Type*} [Field L] [NumberField L] {ι : Type*} (y : ι �
     intro a a' ha ha' i
     obtain ⟨c, hc⟩ := ha i
     obtain ⟨c', hc'⟩ := ha' i
-    exact ⟨c + c', by rw [map_add, hc, hc', add_mul]⟩
+    exact ⟨c + c', by rw [map_add (f := _), hc, hc', add_mul]⟩
   zero_mem' := fun _ ↦ ⟨0, by rw [map_zero, zero_mul]⟩
   smul_mem' := by
     intro c a ha i

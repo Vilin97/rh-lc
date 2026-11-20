@@ -296,7 +296,7 @@ variable {g} in
 theorem _root_.GlobalTheory.BadShare.torusCard_mul {f h : (ZMod g)[X]} (hf : f ≠ 0) (hh : h ≠ 0) :
     _root_.GlobalTheory.BadShare.torusCard g (f * h) = _root_.GlobalTheory.BadShare.torusCard g f * _root_.GlobalTheory.BadShare.torusCard g h := by
   unfold _root_.GlobalTheory.BadShare.torusCard _root_.GlobalTheory.BadShare.degType
-  rw [UniqueFactorizationMonoid.normalizedFactors_mul hf hh, Multiset.map_add, Multiset.map_add, Multiset.prod_add]
+  rw [UniqueFactorizationMonoid.normalizedFactors_mul hf hh, Multiset.map_add (f := _), Multiset.map_add (f := _), Multiset.prod_add]
 
 open Polynomial Classical in
 variable (g : ℕ) [Fact g.Prime] in

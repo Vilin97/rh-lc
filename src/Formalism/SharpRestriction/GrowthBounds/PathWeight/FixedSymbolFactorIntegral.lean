@@ -83,7 +83,7 @@ theorem SyS_comp {H0 : PP} (hH0 : IsWeightedHomogeneous (normalVariableWeight n'
   | add x y _ _ hx hy =>
     obtain ⟨W1, a1, b1⟩ := hx
     obtain ⟨W2, a2, b2⟩ := hy
-    exact ⟨W1 + W2, add_mem a1 a2, by rw [add_mul, map_add, mul_add, b1, b2, add_mul]⟩
+    exact ⟨W1 + W2, add_mem a1 a2, by rw [add_mul, map_add (f := _), mul_add, b1, b2, add_mul]⟩
 
 theorem inWj_compN {w : O} (o : ℕ) {P : PP} {j : ℕ} (hP : InWj w P j) :
     InWj w (weightedHomogeneousComponent (normalVariableWeight n' k r) o P) j := fun m => by
@@ -156,7 +156,7 @@ theorem core (D : Formalism.BasicNotions.D7) (c' o : ℕ) (T Z Y' : PP) (hZ : Z 
     have e1 : T = weightedHomogeneousComponent (normalVariableWeight n' (r + K) r) o (Z * X.fixedSymbolFactor c') +
         C (algebraMap O (KK O) ((p : O) ^ c')) * weightedHomogeneousComponent (normalVariableWeight n' (r + K) r) o Y' := by
       conv_lhs => rw [← hTo, hT]
-      rw [map_add, C_mul', C_mul', map_smul]
+      rw [map_add (f := _), C_mul', C_mul', map_smul]
     have e2 : C (algebraMap O (KK O) (X.S.w ^ o)) * T - W * X.fixedSymbolFactor c' =
         C (algebraMap O (KK O) (X.S.w ^ (o + c') * X.S.w ^ c')) *
           weightedHomogeneousComponent (normalVariableWeight n' (r + K) r) o Y' := by

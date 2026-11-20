@@ -112,7 +112,7 @@ theorem cupCob_of_mk_eq_zero {Γ k M M' : Type} [Group Γ] [TopologicalSpace Γ]
   obtain ⟨m, hm⟩ := (mem_coboundaries1 ρ x.1).1 hx
   refine ⟨fun g => P m (y.1 g), ((IsLocallyConstant.iff_continuous _).2 y.2.1).comp (P m), fun g h => ?_⟩
   have e : x.1 g = ρ g m - m := hm g
-  simp only [e, y.2.2 g h, map_sub, map_add, LinearMap.sub_apply, hP]
+  simp only [e, y.2.2 g h, map_sub, map_add (f := _), LinearMap.sub_apply, hP]
   ring
 
 theorem residue_globalCyclotomicCharacter (i : X.Tw) (g : GE N) :

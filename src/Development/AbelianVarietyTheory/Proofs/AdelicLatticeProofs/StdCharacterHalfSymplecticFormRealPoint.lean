@@ -51,7 +51,7 @@ theorem comp_hO {θ : InfFam D} (hθ : IsInfFam θ) (S T : HSp D) (τ : D.what�
 theorem valTau_symplO {θ : InfFam D} (hθ : IsInfFam θ) (S T : HSp D) (τ : D.what₂.Tau) (x y : WO S T) :
     valTau θ τ (symplO S T x y) = omAt S T τ (piW θ T S x τ) (piW θ T S y τ) := by
   unfold valTau symplO omAt
-  rw [SymplVal.trace_AE, RingHom.map_add, RingHom.map_add, comp_cA hθ, RingHom.map_mul, RingHom.map_mul,
+  rw [SymplVal.trace_AE, RingHom.map_add (f := _), RingHom.map_add (f := _), comp_cA hθ, RingHom.map_mul, RingHom.map_mul,
     comp_incA hθ, comp_hO hθ, Complex.add_re, Complex.conj_re, two_mul]
 
 theorem finPart_cA_eq_zero {z : AE D} (hz : finPart D z = 0) : finPart D (cA D z) = 0 := by
@@ -59,7 +59,7 @@ theorem finPart_cA_eq_zero {z : AE D} (hz : finPart D z = 0) : finPart D (cA D z
     intro w
     induction w using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a e => rfl
   rw [h, hz, map_zero]
 
@@ -82,7 +82,7 @@ theorem sndA_symplO (S T : HSp D) {x y : WO S T} (h : x.map (finPart D) = 0 ∨ 
     rw [RingHom.map_mul, finPart_hO S T h, mul_zero]
   have h1 : finPart D (algebraMap (AF D.host.F) (AE D) (symplO S T x y)) = 0 := by
     unfold symplO
-    rw [SymplVal.trace_AE, RingHom.map_add, h0, finPart_cA_eq_zero h0, add_zero]
+    rw [SymplVal.trace_AE, RingHom.map_add (f := _), h0, finPart_cA_eq_zero h0, add_zero]
   have hinj := Algebra.TensorProduct.includeLeft_injective (R := D.host.F) (S := D.host.F) (A := Af D.host.F)
     (B := D.host.E) (algebraMap D.host.F D.host.E).injective
   apply hinj

@@ -77,7 +77,7 @@ theorem repr_K (x : D.host.K) : ∃ r s : ℚ, (x : D.host.E) =
   · exact ⟨0, 1, by simp⟩
   · intro r; exact ⟨r, 0, by simp⟩
   · rintro _ _ ⟨r, s, rfl⟩ ⟨r', s', rfl⟩
-    exact ⟨r + r', s + s', by simp only [map_add]; ring⟩
+    exact ⟨r + r', s + s', by simp only [map_add (f := _)]; ring⟩
   · rintro _ ⟨r, s, rfl⟩
     by_cases h0 : r = 0 ∧ s = 0
     · exact ⟨0, 0, by rw [h0.1, h0.2]; simp⟩
@@ -100,12 +100,12 @@ theorem repr_K (x : D.host.K) : ∃ r s : ℚ, (x : D.host.E) =
         ring
       have h1 := congrArg (algebraMap ℚ D.host.E) q1
       have h2 := congrArg (algebraMap ℚ D.host.E) q2
-      simp only [map_add, map_mul, map_neg, map_natCast, map_one, map_zero] at h1 h2
+      simp only [map_add (f := _), map_mul, map_neg, map_natCast, map_one, map_zero] at h1 h2
       linear_combination (algebraMap ℚ D.host.E s * algebraMap ℚ D.host.E (-s / (r ^ 2 + (D.host.d : ℚ) * s ^ 2))) * hsq + h1 +
         D.host.sqd * h2
   · rintro _ _ ⟨r, s, rfl⟩ ⟨r', s', rfl⟩
     refine ⟨r * r' - (D.host.d : ℚ) * (s * s'), r * s' + s * r', ?_⟩
-    simp only [map_add, map_sub, map_mul, map_natCast]
+    simp only [map_add (f := _), map_sub, map_mul, map_natCast]
     linear_combination (algebraMap ℚ D.host.E s * algebraMap ℚ D.host.E s') * hsq
 
 theorem norm_int (t t' : 𝓞 D.host.K) (h : ((t' : D.host.K) : D.host.E) = D.host.conj ((t : D.host.K) : D.host.E)) :
@@ -115,13 +115,13 @@ theorem norm_int (t t' : 𝓞 D.host.K) (h : ((t' : D.host.K) : D.host.E) = D.ho
   obtain ⟨r, s, hrs⟩ := repr_K (t : D.host.K)
   have hc : ((t' : D.host.K) : D.host.E) =
       algebraMap ℚ D.host.E r - algebraMap ℚ D.host.E s * D.host.sqd := by
-    rw [h, hrs, map_add, map_mul, AlgEquiv.commutes, AlgEquiv.commutes, conj_b]
+    rw [h, hrs, map_add (f := _), map_mul, AlgEquiv.commutes, AlgEquiv.commutes, conj_b]
     ring
   have hprod : (((t * t' : 𝓞 D.host.K) : D.host.K) : D.host.E) = algebraMap ℚ D.host.E (r ^ 2 + (D.host.d : ℚ) * s ^ 2) := by
     have e : (((t * t' : 𝓞 D.host.K) : D.host.K) : D.host.E) = ((t : D.host.K) : D.host.E) * ((t' : D.host.K) : D.host.E) := by
       push_cast; rfl
     rw [e, hrs, hc]
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
     linear_combination (-(algebraMap ℚ D.host.E s * algebraMap ℚ D.host.E s)) * hsq
   have hi : IsIntegral ℤ (algebraMap ℚ D.host.E (r ^ 2 + (D.host.d : ℚ) * s ^ 2)) := by
     rw [← hprod]

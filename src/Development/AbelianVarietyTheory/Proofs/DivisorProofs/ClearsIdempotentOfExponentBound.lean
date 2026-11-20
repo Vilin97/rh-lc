@@ -71,7 +71,7 @@ theorem exists_coprime_mul_pow_mem {𝔣 : Ideal (OF E)} (h𝔣 : 𝔣 ≠ ⊥) 
   obtain ⟨a, rfl⟩ := Ideal.mem_span_singleton'.1 hy
   have hu : (Ideal.Quotient.mk J a) * (l : OF E ⧸ J) = 1 := by
     have : Ideal.Quotient.mk J (j + a * l) = 1 := by rw [hjy, map_one]
-    rw [map_add, Ideal.Quotient.eq_zero_iff_mem.2 hj, zero_add, map_mul, map_natCast] at this
+    rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hj, zero_add, map_mul, map_natCast] at this
     exact this
   have hlx : (l : OF E ⧸ J) * x = 0 := by
     rw [← nsmul_eq_mul, ← hx]; exact addOrderOf_nsmul_eq_zero x
@@ -123,7 +123,7 @@ theorem coordAt_map {𝔣 : Ideal (OF E)} {c : OF E} (hc : c ∈ 𝔣) {O : Type
     simp only [TensorProduct.map_tmul, LinearMap.mulLeft_apply]
     change σ (algebraMap (OF E) E c * x) * algebraMap O K (w * y) = _ * (σ x * algebraMap O K y)
     rw [map_mul, map_mul]; ring
-  | add s t hs ht => rw [map_add, map_add, hs, ht, map_add, mul_add]
+  | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht, map_add (f := _), mul_add]
 
 end GlobalTheory.Proof.clears_idempotent_of_exponent_bound
 

@@ -38,7 +38,7 @@ theorem ringKrullDim_quotient_le_one {P : Ideal T} (ψ : T →ₐ[K] K) {t : T} 
       simp only [smul_smul, inv_mul_cancel₀ (pow_ne_zero e h0), one_smul] at h4
       rw [h4]
       simp [π]
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   refine (ringKrullDim_le_of_surjective π.toRingHom hsurj).trans_eq ?_
   rw [Polynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_field]
   simp

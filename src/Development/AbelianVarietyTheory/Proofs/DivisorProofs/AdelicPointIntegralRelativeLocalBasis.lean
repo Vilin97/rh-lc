@@ -129,7 +129,7 @@ theorem norm_ev_le_one {l : ℕ} [Fact l.Prime] {inc : E →+* PadicAlgCl l}
   | zero => simp
   | one => simp
   | add x y _ _ hx hy =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   | neg x _ hx => rwa [map_neg, map_neg, norm_neg]
   | mul x y _ _ hx hy =>

@@ -92,7 +92,7 @@ theorem transvection (hf : Surjective f) {i j : n} (hij : i ≠ j) (c : R) :
     LiftsToDetOne f (Matrix.transvection i j c) := by
   obtain ⟨c, rfl⟩ := hf c
   refine ⟨Matrix.transvection i j c, det_transvection_of_ne _ _ hij _, ?_⟩
-  simp [Matrix.transvection, Matrix.map_add, Matrix.map_single]
+  simp [Matrix.transvection, Matrix.map_add (f := _), Matrix.map_single]
 
 end LiftsToDetOne
 
@@ -301,7 +301,7 @@ theorem exists_isSymm_isUnit_add_mul [Finite (MaximalSpectrum R)] {A B C D : Mat
   · have := p.isMaximal
     have hX : (Matrix.of fun i j => s fun p => Y p i j).map (Ideal.Quotient.mk p.asIdeal) = Y p :=
       Matrix.ext fun i j => by simp [hs]
-    rw [RingHom.map_det, map_add, map_mul, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply,
+    rw [RingHom.map_det, map_add (f := _), map_mul, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply,
       RingHom.mapMatrix_apply, hX]
     exact ((isUnit_iff_isUnit_det _).1 (hu p)).ne_zero
 

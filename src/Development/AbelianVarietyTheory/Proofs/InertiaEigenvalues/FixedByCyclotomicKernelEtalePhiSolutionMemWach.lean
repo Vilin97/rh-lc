@@ -100,7 +100,7 @@ theorem exists_inv : ∃ t, inclR πA * I.ioE t = 1 := by
   exact ⟨t, by rw [← ioE_letπ I, ← map_mul, ht, map_one]⟩
 
 theorem exists_succ : ∃ e, I.ioE e = inclR πA + 1 :=
-  ⟨algebraMap (LetA O n) R.EE letπ + 1, by rw [map_add, map_one, ioE_letπ]⟩
+  ⟨algebraMap (LetA O n) R.EE letπ + 1, by rw [map_add (f := _), map_one, ioE_letπ]⟩
 
 theorem dense (R : WSer Γ) {p : ℕ} (hp : PD.p = p) (e : R.EE) : ∃ (a : LetA O n) (m : ℕ) (r : R.EE),
     e * algebraMap _ R.EE ((letπ : LetA O n) ^ m) - algebraMap _ R.EE a = (p : R.EE) * r := by
@@ -173,7 +173,7 @@ theorem eroot_pow (j : ℕ) : AI.εroot j ^ l ^ j = AI.ε := by
 
 theorem piR_succ : piR AI LL s + 1 = fW LL (WittVector.teichmuller l (AI.εroot s)) := by
   have h : piR AI LL s = fW LL (piW AI s) := rfl
-  rw [h, ← map_one (fW LL), ← map_add, piW, sub_add_cancel]
+  rw [h, ← map_one (fW LL), ← map_add (f := _), piW, sub_add_cancel]
 
 theorem phi_iter_eroot (j : ℕ) : (φRW LL)^[j] (fW LL (WittVector.teichmuller l (AI.εroot j))) =
     (piR AI LL s + 1) ^ l ^ s := by
@@ -209,7 +209,7 @@ theorem near_of_crd (y : RW LL) (N m : ℕ) (w : Fin (Module.finrank ℤ_[l] ↥
   rw [LinearMap.map_sub, sub_coeff_zero, h1, crd_mul, crd_sum, WittVector.mul_coeff_zero, h4,
     coeff_zero_piW, coeff_inclW]
   have h5 := h i
-  rw [map_add, map_pow] at h5
+  rw [map_add (f := _), map_pow] at h5
   exact sub_eq_of_eq_add' h5
 
 theorem approx_subring (hG : Good K s LL) (T : Subring (RW LL))

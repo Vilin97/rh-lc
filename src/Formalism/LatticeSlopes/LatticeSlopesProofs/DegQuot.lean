@@ -149,7 +149,7 @@ theorem degree_quotient : DegQuot := by
       have h2 : ∀ j, P (g (Sum.inr j) • ℓ j) = g (Sum.inr j) • (eQ j : E) := fun j => by
         rw [map_zsmul, hℓP]
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, map_sum, map_zero, Finset.sum_congr rfl (fun i _ => h1 i),
+        rw [map_add (f := _), map_sum, map_sum, map_zero, Finset.sum_congr rfl (fun i _ => h1 i),
         Finset.sum_const_zero, zero_add, Finset.sum_congr rfl (fun j _ => h2 j)] at h
       exact h
     have hQz : ∀ j, g (Sum.inr j) = 0 := by

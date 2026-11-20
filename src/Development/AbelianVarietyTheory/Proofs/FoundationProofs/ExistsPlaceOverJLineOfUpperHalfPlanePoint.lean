@@ -155,7 +155,7 @@ theorem _root_.GlobalTheory.KZ.ValAt.ord_add (X : _root_.GlobalTheory.KZ.Tower �
     (φ := _root_.GlobalTheory.KZ.ValAt.rep X x + _root_.GlobalTheory.KZ.ValAt.rep X y) ?_ hτ]
   · exact meromorphicOrderAt_add (meromorphicAt_rep_of_mem_upperHalfPlaneSet X x hτ)
       (meromorphicAt_rep_of_mem_upperHalfPlaneSet X y hτ)
-  · rw [map_add, Filter.Germ.coe_add, ← an_eq_germ_rep,
+  · rw [map_add (f := _), Filter.Germ.coe_add, ← an_eq_germ_rep,
       ← an_eq_germ_rep]
 
 open Matrix in

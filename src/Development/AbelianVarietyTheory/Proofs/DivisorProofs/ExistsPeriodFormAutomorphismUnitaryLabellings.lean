@@ -31,7 +31,7 @@ theorem cm_symm {N : ℕ} {x y : Y} (h : CongMod N x y) : CongMod N y x := by
 theorem cm_map {Y' : Type} [AddCommGroup Y'] (f : Y →+ Y') {N : ℕ} {x y : Y} (h : CongMod N x y) :
     CongMod N (f x) (f y) := by
   obtain ⟨w, rfl⟩ := h
-  exact ⟨f w, by rw [map_add, map_nsmul]⟩
+  exact ⟨f w, by rw [map_add (f := _), map_nsmul]⟩
 
 theorem cm_of_mk {N : ℕ} {x y : Y}
     (h : (QuotientAddGroup.mk x : Y ⧸ (nsmulAddMonoidHom N : Y →+ Y).range) = QuotientAddGroup.mk y) :

@@ -9,7 +9,7 @@ private theorem coord_lTensor {K V B B' ι : Type} [Field K] [AddCommGroup V] [M
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v y => simp [equivFinsuppOfBasisLeft_apply_tmul_apply]
-  | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), Finsupp.add_apply, hy, hz]
 
 private theorem line_abs {K V B B' : Type} [Field K] [AddCommGroup V] [Module K V] [AddCommGroup B]
     [Module K B] [AddCommGroup B'] [Module K B'] (φ : B →ₗ[K] B) (j : B →ₗ[K] B') (F : Submodule K B')

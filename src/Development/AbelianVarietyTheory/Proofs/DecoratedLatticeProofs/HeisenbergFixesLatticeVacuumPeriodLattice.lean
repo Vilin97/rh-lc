@@ -57,7 +57,7 @@ theorem mem_latRat (S T : HSp D) (hS : S.gram = 1) (hc : D.host.ccK = ⊤)
     refine sum_mem fun i _ => AddSubgroup.subset_closure ⟨r, ?_, s' i, (hs i).2, x (s i), hx _ (hs i).1, rfl⟩
     rw [AA_eq hc]; exact hr
   · rw [map_zero]; exact zero_mem _
-  · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
+  · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · intro c x _ hx
     have : c • x = ((c : D.host.E)) • x := (algebraMap_smul D.host.E c x).symm
     rw [this, map_smul]
@@ -183,7 +183,7 @@ theorem tauE_X (S T : HSp D) (hS1 : S.gram = 1) (hT1 : T.gram = 1)
     rw [Matrix.smul_apply, smul_eq_mul, star_mul']
     ring
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hX, map_mul, map_div₀, map_add, map_one, hxi, map_ofNat, map_sum]
+    rw [hX, map_mul, map_div₀, map_add (f := _), map_one, hxi, map_ofNat, map_sum]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_sum, map_mul, tauE_star']
   have hn : ∀ c a, starRingEnd ℂ (tauE D τ (γ c a)) * tauE D τ (γ c a) =
@@ -244,7 +244,7 @@ theorem latSign : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) 
   obtain ⟨w, hw0, hxw⟩ := exists_trace_one_xi0_mul_star_eq_of_ccK_eq_top (D := D) hP.cc
   have hw : incA D (w : D.host.E) + cA D (incA D (w : D.host.E)) = 1 := by
     have : cA D (incA D (w : D.host.E)) = incA D (star (w : D.host.E)) := rfl
-    rw [this, ← RingHom.map_add, hw0, RingHom.map_one]
+    rw [this, ← RingHom.map_add (f := _), hw0, RingHom.map_one]
   have hΛ : ∀ u ∈ (latO S T (N : Set (Fin S.rank → D.host.E)) (N' : Set (Fin T.rank → D.host.E)) fun _ => True),
       ∀ u' ∈ (latO S T (N : Set (Fin S.rank → D.host.E)) (N' : Set (Fin T.rank → D.host.E)) fun _ => True),
         ψ (symplO S T u (incA D (w : D.host.E) • u')) = 1 :=

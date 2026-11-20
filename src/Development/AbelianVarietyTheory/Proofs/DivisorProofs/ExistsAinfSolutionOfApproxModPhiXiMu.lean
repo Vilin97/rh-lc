@@ -23,7 +23,7 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
       fun j => WittVector.frobenius (v0 j) +
         (WittVector.frobenius (xi ε) * Sandwich.mu ε) * WittVector.frobenius (z j) := by
     funext j
-    rw [map_add, map_mul, GlobalTheory.WinLift.frob_mu]
+    rw [map_add (f := _), map_mul, GlobalTheory.WinLift.frob_mu]
   rw [hw, mulVec_add_mul]
   linear_combination (-1 : Ainf p O) * hc i + WittVector.frobenius (xi ε) * Sandwich.mu ε * hz i
 

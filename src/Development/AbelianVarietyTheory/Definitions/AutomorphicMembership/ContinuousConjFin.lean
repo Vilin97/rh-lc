@@ -174,7 +174,7 @@ theorem qdet_shift {A : Type} [Ring A] [Algebra ℂ A] (X : Fin a → Fin a → 
   refine Finset.sum_congr rfl fun σ _ => ?_
   congr 3
   split_ifs
-  · simp only [map_sub, map_add]; abel
+  · simp only [map_sub, map_add (f := _)]; abel
   · simp
 
 theorem Zalg_stable {V : Submodule ℂ (Sm E a)} (hV : ∀ X, ∀ φ ∈ V, lie E a X φ ∈ V) {z : Module.End ℂ (Sm E a)}
@@ -216,11 +216,11 @@ theorem chiInf_expU_atEmb (χ : HChar E) (τ : E →+* ℂ) (z : ℂ) :
       Complex.exp (expo χ τ * z + expo χ (ComplexEmbedding.conjugate τ) * starRingEnd ℂ z) := by
   have e : atEmb τ (-Complex.I) = -atEmb τ Complex.I := by
     rw [atEmb_eq]; simp
-  rw [chiInf_expU, atEmb_eq, map_add, map_smul, map_smul]
+  rw [chiInf_expU, atEmb_eq, map_add (f := _), map_smul, map_smul]
   simp only [expo, atEmb_conj, map_one, Complex.conj_I, e, map_neg, Complex.real_smul]
   congr 1
   conv_rhs => rw [← Complex.re_add_im z]
-  simp only [map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+  simp only [map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
   linear_combination (z.im * dchi χ (atEmb τ Complex.I)) * Complex.I_mul_I
 
 theorem expo_eq_of_exp (χ : HChar E) (τ : E →+* ℂ) (p q : ℂ)

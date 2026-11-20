@@ -42,7 +42,7 @@ theorem exists_normal_factor (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R
     induction hy using Submodule.span_induction with
     | mem y hy => exact IntermediateField.subset_adjoin _ _ ⟨y, hy, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     | smul r y _ hy => rw [Algebra.smul_def, map_mul, hψ]; exact mul_mem (L.algebraMap_mem _) hy
   obtain ⟨f₁, f₂, f₃, f₄, -⟩ := integralClosure_finite_local_of_isAdicComplete R h₄ L
   have : IsScalarTower R L F := IsScalarTower.of_algebraMap_eq fun _ => rfl

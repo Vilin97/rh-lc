@@ -22,7 +22,7 @@ theorem proj_ht_mem (P : HTPoint C O c κ N V Ω) (τ : E →+* C) {y : V} (hy :
 omit [IsAlgClosed C] [CharZero C] in
 private theorem htPoint_e_antisymm (P : HTPoint C O c κ N V Ω) (x y : V) : P.e x y = - P.e y x := by
   have h := P.alt (x + y)
-  simp only [map_add, LinearMap.add_apply, P.alt, zero_add, add_zero] at h
+  simp only [map_add (f := _), LinearMap.add_apply, P.alt, zero_add, add_zero] at h
   linear_combination h
 
 omit [IsAlgClosed C] [CharZero C] in
@@ -76,7 +76,7 @@ private theorem htPoint_exists_linearMap_ext_of_T (P : HTPoint C O c κ N V Ω) 
     have hxT : x ∈ P.T := hT ▸ hx
     have hzT : z ∈ P.T := hT ▸ hz
     have : (⟨x + z, hy⟩ : P.T) = ⟨x, hxT⟩ + ⟨z, hzT⟩ := rfl
-    rw [map_add, this, map_add, map_add, ihx hxT, ihz hzT]
+    rw [map_add (f := _), this, map_add (f := _), map_add (f := _), ihx hxT, ihz hzT]
   | smul a x hx ihx =>
     intro hy
     have hxT : x ∈ P.T := hT ▸ hx
@@ -167,7 +167,7 @@ private theorem htPoint_rho_mem_T (P : HTPoint C O c κ N V Ω) (a : 𝓞 E) {z 
       rw [map_zero, LinearMap.zero_apply]
       exact S.zero_mem
     | add x z _ _ hx hz =>
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact S.add_mem hx hz
     | smul n x _ hx =>
       simp only [map_zsmul, LinearMap.smul_apply]
@@ -182,7 +182,7 @@ private theorem htPoint_rho_mem_T (P : HTPoint C O c κ N V Ω) (a : 𝓞 E) {z 
     rw [map_zero]
     exact S.zero_mem
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact S.add_mem hx hy
   | smul o x _ hx =>
     rw [LinearMap.map_smul_of_tower]

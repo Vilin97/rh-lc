@@ -51,7 +51,7 @@ theorem existsUnique_linearMap_lift_of_germ {V W A : Type*} [NormedAddCommGroup 
   have hL := eventuallyEq_fderiv_of_eventually_add_mod_discrete hker hd h0 <| by
     filter_upwards [hadd.eventually hk, (continuous_fst.tendsto (0 : V × V)).eventually hk,
       (continuous_snd.tendsto (0 : V × V)).eventually hk] with p h1 h2 h3
-    rw [AddMonoidHom.mem_ker, sub_sub, map_sub, map_add, h1, h2, h3, map_add, sub_self]
+    rw [AddMonoidHom.mem_ker, sub_sub, map_sub, map_add (f := _), h1, h2, h3, map_add (f := _), sub_self]
   have hL' : ex'.comp (fderiv ℂ k 0 : V →+ W) = ex := addMonoidHom_eq_of_eventuallyEq_addGroup <| by
     filter_upwards [hL, hk] with z h1 h2
     change ex' (fderiv ℂ k 0 z) = ex z

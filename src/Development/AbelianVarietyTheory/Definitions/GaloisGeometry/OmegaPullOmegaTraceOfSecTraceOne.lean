@@ -128,7 +128,7 @@ theorem formOm_induction (hf : f ≫ s = s') {U : X.Opens} (hU : IsAffineOpen U)
   obtain ⟨z, rfl⟩ := hb.equiv.surjective y
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero]; exact h0
-  | add a b ha' hb' => rw [map_add]; exact ha _ _ ha' hb'
+  | add a b ha' hb' => rw [map_add (f := _)]; exact ha _ _ ha' hb'
   | tmul b' x => rw [hb.equiv_tmul]; exact hm b' x
 
 theorem formTraceU_res (hf : f ≫ s = s') {U V : X.Opens} (hU : IsAffineOpen U)
@@ -139,7 +139,7 @@ theorem formTraceU_res (hf : f ≫ s = s') {U V : X.Opens} (hU : IsAffineOpen U)
       formTraceU hf hV j (formRes s' (f.preimage_mono h) j y)) hf hU ?_ (fun y z hy hz ↦ ?_)
     (fun b' x ↦ ?_) y
   · simp only [map_zero]
-  · simp only [map_add, hy, hz]
+  · simp only [map_add (f := _), hy, hz]
   · rw [formTraceU_smul_formPull, formRes_smul, formRes_smul, formRes_formPull,
       formTraceU_smul_formPull, secTrace_res hU hV h]
 

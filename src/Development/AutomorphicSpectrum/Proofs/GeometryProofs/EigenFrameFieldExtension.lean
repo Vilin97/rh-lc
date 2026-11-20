@@ -46,7 +46,7 @@ theorem equiv_baseChange {j : V →ₗ[F] T} (hj : IsBaseChange F' j) {ρ : O �
     congr 1
     simp [algebraMap_smul]
   | add y z hy hz =>
-    simp only [map_add, hy, hz, smul_add]
+    simp only [map_add (f := _), hy, hz, smul_add]
     abel
 
 theorem exists_sum_of_mem_eigSp {j : V →ₗ[F] T} (hj : IsBaseChange F' j) {ρ : O →+* Module.End F V}
@@ -93,7 +93,7 @@ theorem frame_base {j : V →ₗ[F] T} (hj : IsBaseChange F' j) {ρ : O →+* Mo
         exact Submodule.subset_span ⟨i, rfl⟩
       | zero => simp
       | add w z _ _ hw hz =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hw hz
       | smul c w _ hw =>
         rw [map_smul, ← algebraMap_smul F' c]

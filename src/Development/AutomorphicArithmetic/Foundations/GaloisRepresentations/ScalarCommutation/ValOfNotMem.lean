@@ -45,13 +45,13 @@ private theorem tensor_comm {R Q C : Type} [CommRing R] [Algebra ℚ R] [CommRin
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [σ, hEV, hs1]
-    | add a b ha hb => simp [map_add, ha, hb]
+    | add a b ha hb => simp [map_add (f := _), ha, hb]
   have h2 : ∀ z, σ (EV z) = (r ⊗ₜ[ℚ] (1 : C)) * z := by
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [σ, hEV, hs2]
-    | add a b ha hb => simp only [map_add, ha, hb, mul_add]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, mul_add]
   have h3 : EV (r ⊗ₜ[ℚ] (1 : C)) = 1 := by simp [hEV, hr, Algebra.TensorProduct.one_def]
   have key : ∀ z, Commute z (EV M) → (r ⊗ₜ[ℚ] (1 : C)) * (σ z * M - M * σ z) = 0 := by
     intro z hz

@@ -59,7 +59,7 @@ theorem cong_add {A : Type} [CommRing A] (φ : A →+* A) {a b : A} (ha : ∃ w,
   obtain ⟨w, hw⟩ := ha
   obtain ⟨w', hw'⟩ := hb
   obtain ⟨r, hr⟩ := exists_add_pow_prime_eq hl.out a b
-  exact ⟨w + w' - a * b * r, by rw [map_add, hw, hw', hr]; ring⟩
+  exact ⟨w + w' - a * b * r, by rw [map_add (f := _), hw, hw', hr]; ring⟩
 
 theorem cong_mul {A : Type} [CommRing A] (φ : A →+* A) {a b : A} (ha : ∃ w, φ a = a ^ l + (l : A) * w)
     (hb : ∃ w, φ b = b ^ l + (l : A) * w) : ∃ w, φ (a * b) = (a * b) ^ l + (l : A) * w := by
@@ -75,7 +75,7 @@ theorem frobC_ainfToAcris (b : Ainf l) :
 theorem cong_ainf (b : Ainf l) :
     ∃ w, frobC l (ainfToAcris l b) = ainfToAcris l b ^ l + (l : Per.Acris l) * w := by
   obtain ⟨c, hc⟩ := frobenius_eq_pow_add b
-  exact ⟨ainfToAcris l c, by rw [frobC_ainfToAcris, hc, map_add, map_pow, map_mul, map_natCast]⟩
+  exact ⟨ainfToAcris l c, by rw [frobC_ainfToAcris, hc, map_add (f := _), map_pow, map_mul, map_natCast]⟩
 
 theorem frob_mem_of_theta {x : Ainf l} (hx : Per.θ l x = 0) :
     ∃ u, ainfToAcris l (WittVector.frobenius x) = (l : Per.Acris l) * u := by
@@ -84,7 +84,7 @@ theorem frob_mem_of_theta {x : Ainf l} (hx : Per.θ l x = 0) :
   have hf : (l.factorial : Per.Acris l) = (l : Per.Acris l) * ((l - 1).factorial : Per.Acris l) := by
     rw [← Nat.cast_mul, Nat.mul_factorial_pred hl.out.ne_zero]
   refine ⟨((l - 1).factorial : Per.Acris l) * d + ainfToAcris l c, ?_⟩
-  rw [hc, map_add, map_pow, ← hd, map_mul, map_natCast, hf]
+  rw [hc, map_add (f := _), map_pow, ← hd, map_mul, map_natCast, hf]
   ring
 
 theorem padicValNat_factorial_bound {n : ℕ} (hn : n ≠ 0) :
@@ -142,7 +142,7 @@ theorem cong_acris0 : ∀ (s : Per.AinfP l) (hs : s ∈ Per.Acris0 l),
       add_mem' := fun {x y} hx hy => by
         change ∃ w, frobC l (algebraMap (Per.Acris0 l) (Per.Acris l) (x + y)) =
           (algebraMap (Per.Acris0 l) (Per.Acris l) (x + y)) ^ l + (l : Per.Acris l) * w
-        rw [map_add]
+        rw [map_add (f := _)]
         exact cong_add (frobC l).toRingHom hx hy
       algebraMap_mem' := fun r => by
         change ∃ w, frobC l (algebraMap (Per.Acris0 l) (Per.Acris l) (algebraMap (Per.Ainf l) (Per.Acris0 l) r)) =
@@ -170,7 +170,7 @@ theorem frobC_cong (y : Per.Acris l) : ∃ w, frobC l y = y ^ l + (l : Per.Acris
   obtain ⟨c, hc⟩ := sub_dvd_pow_sub_pow (algebraMap (Per.Acris0 l) (Per.Acris l) s + (l : Per.Acris l) ^ 1 * z)
     (algebraMap (Per.Acris0 l) (Per.Acris l) s) l
   refine ⟨w + frobC l z - z * c, ?_⟩
-  rw [map_add, map_mul, map_pow, map_natCast, hw]
+  rw [map_add (f := _), map_mul, map_pow, map_natCast, hw]
   linear_combination -hc
 
 end GlobalTheory.AcrisPrism

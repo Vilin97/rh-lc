@@ -46,7 +46,7 @@ theorem exists_approx {k A : Type} [CommRing k] [IsDedekindDomain k] [CommRing A
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul c a => simp
-      | add x y hx hy => rw [map_add, hx, hy, mul_add]
+      | add x y hx hy => rw [map_add (f := _), hx, hy, mul_add]
     rw [mem_nonZeroDivisors_iff_left]
     intro x hx
     exact h (by rw [e, hx, map_zero])

@@ -149,7 +149,7 @@ theorem surj_fin (hM : MV) (H : Hyp) (q : ℕ) (i n : ℤ) {X P : Scheme.{0}} (�
         exact mem_ι _ p
       · have e : pull _ (sch.map φ) _ _ x' - z = pull _ (sch.map φ) _ _ (x' - x) + (pull _ (sch.map φ) _ _ x - z) := by
           rw [map_sub]; abel
-        rw [e, map_add, map_add, map_sub (pull _ (sch.map V.ι) _ _), hx j', sub_self, map_zero, add_zero,
+        rw [e, map_add (f := _), map_add (f := _), map_sub (pull _ (sch.map V.ι) _ _), hx j', sub_self, map_zero, add_zero,
           ← pull_comp, ← pull_comp, ← CategoryTheory.Functor.map_comp, ← CategoryTheory.Functor.map_comp]
         refine vanish_of_range C.ι _ ?_ n _ (by rw [map_sub, h2, sub_self])
         rintro _ ⟨p, rfl⟩

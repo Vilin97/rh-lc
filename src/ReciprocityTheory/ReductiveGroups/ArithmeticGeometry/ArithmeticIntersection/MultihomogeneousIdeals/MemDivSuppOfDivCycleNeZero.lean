@@ -252,7 +252,7 @@ theorem cycEval_zero (J : Ideal (MRingOver F ι) → ℤ) : cycEval J 0 = 0 := b
 
 theorem cycEval_add (J : Ideal (MRingOver F ι) → ℤ) (D E : Ideal (MRingOver F ι) →₀ ℤ) :
     cycEval J (D + E) = cycEval J D + cycEval J E := by
-  simp only [cycEval_eq_liftAddHom, map_add]
+  simp only [cycEval_eq_liftAddHom, map_add (f := _)]
 
 theorem cycEval_sub (J : Ideal (MRingOver F ι) → ℤ) (D E : Ideal (MRingOver F ι) →₀ ℤ) :
     cycEval J (D - E) = cycEval J D - cycEval J E := by

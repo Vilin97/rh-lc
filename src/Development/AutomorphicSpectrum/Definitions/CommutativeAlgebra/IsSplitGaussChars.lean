@@ -70,7 +70,7 @@ def dualLat (L : C.I → AddSubgroup V) (B : V →ₗ[K] V' →ₗ[K] K) : C.I �
     { carrier := {y | ∀ x ∈ L i, C.v i (B x y) ≤ 1}
       zero_mem' := fun x _ => by simp
       add_mem' := fun {a b} ha hb x hx => by
-        rw [map_add]; exact (C.v i).map_add_le (ha x hx) (hb x hx)
+        rw [map_add (f := _)]; exact (C.v i).map_add_le (ha x hx) (hb x hx)
       neg_mem' := fun {a} ha x hx => by
         rw [map_neg, Valuation.map_neg]; exact ha x hx }
 
@@ -352,7 +352,7 @@ def latOf (i : C.I) {n : ℕ} (b : Module.Basis (Fin n) K V) : AddSubgroup V whe
   carrier := {x | ∀ q, C.v i (b.repr x q) ≤ 1}
   zero_mem' := fun q => by simp
   add_mem' := fun ha hb q => by
-    rw [map_add, Finsupp.add_apply]; exact (C.v i).map_add_le (ha q) (hb q)
+    rw [map_add (f := _), Finsupp.add_apply]; exact (C.v i).map_add_le (ha q) (hb q)
   neg_mem' := fun ha q => by simpa using ha q
 
 theorem isLatOf_latOf (i : C.I) {n : ℕ} (b : Module.Basis (Fin n) K V) :

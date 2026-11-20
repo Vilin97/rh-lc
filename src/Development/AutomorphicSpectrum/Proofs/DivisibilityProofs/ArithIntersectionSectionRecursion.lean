@@ -86,7 +86,7 @@ theorem eval_one_coneMap (y : (Σ k, ι k) → Ω) (f : MRing ι) :
     eval (fun _ => (1 : Ω)) (mConeMap y f) = aeval y f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp]
     congr 1
@@ -141,7 +141,7 @@ theorem exists_form_of_mem_chart {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc
     obtain ⟨N2, r2, hr2, e2⟩ := h2
     refine ⟨N1 + N2, r1 * mon c N2 + r2 * mon c N1, hom_add (hom_mul hr1 (hom_mon c N2))
       (hom_of_eq (hom_mul hr2 (hom_mon c N1)) fun k => by simp [add_comm]), ?_⟩
-    rw [map_add, map_mul, map_mul, aeval_mon, aeval_mon, e1, e2, prod_pow_add]
+    rw [map_add (f := _), map_mul, map_mul, aeval_mon, aeval_mon, e1, e2, prod_pow_add]
     ring
   | mul a b _ _ h1 h2 =>
     obtain ⟨N1, r1, hr1, e1⟩ := h1

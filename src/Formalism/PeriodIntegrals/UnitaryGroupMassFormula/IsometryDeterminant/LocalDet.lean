@@ -97,7 +97,7 @@ theorem chi_transvection_int (P : HeightOneSpectrum R) {i j : ι} (hij : i ≠ j
     simp only [Matrix.transvection, Matrix.add_apply, Matrix.one_apply, Matrix.single_apply]
     split_ifs <;> simp
   rw [chi, map_std_eq (hint z) (g' := Matrix.transvection i j (algebraMap R K (-z))) (hint (-z))
-    (by rw [Matrix.transvection_mul_transvection_same i j hij, ← map_add, add_neg_cancel, map_zero,
+    (by rw [Matrix.transvection_mul_transvection_same i j hij, ← map_add (f := _), add_neg_cancel, map_zero,
       Matrix.transvection_zero]), lidx_self]
 
 theorem chi_transvection (P : HeightOneSpectrum R) {i j : ι} (hij : i ≠ j) (c : K) :

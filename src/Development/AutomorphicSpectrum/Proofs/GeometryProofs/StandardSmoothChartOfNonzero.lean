@@ -49,7 +49,7 @@ theorem exists_homog {σ Ω : Type} [Field Ω] [CharZero Ω] (r : σ → Ω) (c�
       · have := ((isHomogeneous_C σ m₁).mul ((isHomogeneous_X ℤ c₀).pow n₁)).mul hG₂
         convert this using 1
         ring
-    · simp only [map_add, map_mul, map_pow, aeval_X, h1, one_pow, mul_one, eq_intCast, map_intCast, e₁, e₂]
+    · simp only [map_add (f := _), map_mul, map_pow, aeval_X, h1, one_pow, mul_one, eq_intCast, map_intCast, e₁, e₂]
       push_cast
       ring
   | mul x y hx hy ihx ihy =>

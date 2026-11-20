@@ -161,7 +161,7 @@ private lemma dIn_univ_of_QL_of_isLift {B O Q : Type} [CommRing B] [CommRing O]
         coeff_zero_eq_constantCoeff_apply, hμ.const j, map_zero])
       hν1 f i
     rw [eq_sub_iff_add_eq] at key
-    rw [← key, map_add, (_root_.GlobalTheory.coeff_subst_restrict_sum _).1 α, coeff_pderiv, coeff_C]
+    rw [← key, map_add (f := _), (_root_.GlobalTheory.coeff_subst_restrict_sum _).1 α, coeff_pderiv, coeff_C]
     obtain ⟨b, -, hb⟩ := hcob (Finsupp.mapDomain Sum.inl α + Finsupp.single (Sum.inr i) 1)
     obtain ⟨c, -, hc⟩ := hlin i
     refine ⟨b * ((Finsupp.mapDomain Sum.inl α (Sum.inr i) : ℕ) + 1) +
@@ -299,9 +299,9 @@ theorem _root_.GlobalTheory.QLog.hasPeriod_frob : ∀ (p : ℕ) [Fact p.Prime] (
   refine ⟨q', by unfold _root_.GlobalTheory.QLog.frob; exact hfrob,
     F.σ b - (e + e'), ?_⟩
   have hs' := congrArg F.s hb
-  simp only [map_mul, map_pow, map_natCast, hs, map_add] at hs'
-  simp only [pow_zero, one_mul, map_add] at hee
-  simp only [map_add, map_mul, map_sub, map_pow, map_natCast]
+  simp only [map_mul, map_pow, map_natCast, hs, map_add (f := _)] at hs'
+  simp only [pow_zero, one_mul, map_add (f := _)] at hee
+  simp only [map_add (f := _), map_mul, map_sub, map_pow, map_natCast]
   linear_combination hs' - (p : F.Q) ^ n * hee
 
 end GlobalTheory.QLog

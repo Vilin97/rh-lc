@@ -110,8 +110,8 @@ theorem adelAut_holSub (h : AdelAut V dict mu) (la : ∀ k, Wt (X k).Ψ r) {P : 
   | zero => exact ⟨fun γ _ g => by simp, by rw [map_zero]; exact continuous_const⟩
   | add P Q _ _ h1 h2 =>
     refine ⟨fun γ hγ g => ?_, ?_⟩
-    · rw [map_add]; simp only [Pi.add_apply]; rw [h1.1 γ hγ g, h2.1 γ hγ g]
-    · rw [map_add]; exact h1.2.add h2.2
+    · rw [map_add (f := _)]; simp only [Pi.add_apply]; rw [h1.1 γ hγ g, h2.1 γ hγ g]
+    · rw [map_add (f := _)]; exact h1.2.add h2.2
   | smul a P _ h1 =>
     refine ⟨fun γ hγ g => ?_, ?_⟩
     · rw [map_smul]; simp only [Pi.smul_apply]; rw [h1.1 γ hγ g]

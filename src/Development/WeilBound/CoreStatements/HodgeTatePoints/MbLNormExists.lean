@@ -111,7 +111,7 @@ theorem map_chRing {o : Type} [CommRing o] {Ω : Type} [Field Ω] [Algebra o Ω]
   | algebraMap r =>
     rw [← IsScalarTower.algebraMap_apply]
     exact Subalgebra.algebraMap_mem _ r
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
 
 theorem exists_of_mem_chRing {o : Type} [CommRing o] {Ω : Type} [Field Ω] [Algebra o Ω] {κ : Type} (x : κ → Ω)

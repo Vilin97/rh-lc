@@ -169,15 +169,15 @@ theorem key (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityT
       have e1 := hQ _ _ (hb i)
       have e2 := hQ _ _ (hb j)
       have e3 := hQ (Θ.bas (Pi.single (.inl i.1) 1) + Θ.bas (Pi.single (.inl j.1) 1)) (b i + b j)
-        (by rw [map_add, hb i, hb j, add_smul])
-      rw [map_add, map_add] at e3
+        (by rw [map_add (f := _), hb i, hb j, add_smul])
+      rw [map_add (f := _), map_add (f := _)] at e3
       simp only [p] at e0
       rw [e1, e2, e3, ← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib] at e0
       change (hermForm Hm (p i.1) (p j.1)).re = _
       refine mul_left_cancel₀ (two_ne_zero) (e0.trans ?_)
       rw [Finset.mul_sum]
       refine Finset.sum_congr rfl fun τ _ => ?_
-      rw [map_add, Complex.normSq_add]
+      rw [map_add (f := _), Complex.normSq_add]
       ring)
   rw [← hD]
   convert hJ using 2 <;> first | rfl | congr!

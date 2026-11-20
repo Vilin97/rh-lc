@@ -52,7 +52,7 @@ theorem contDiff_evalC (s : MRing ι) :
     ContDiff ℝ ∞ (fun z : (Σ k, ι k) → ℂ => eval z (map (Int.castRingHom ℂ) s)) := by
   induction s using MvPolynomial.induction_on with
   | C a => simpa only [map_C, eval_C] using contDiff_const
-  | add p q hp hq => simpa only [map_add, eval_add] using hp.add hq
+  | add p q hp hq => simpa only [map_add (f := _), eval_add] using hp.add hq
   | mul_X p i hp =>
     simpa only [map_mul, map_X, eval_mul, eval_X] using hp.mul (contDiff_apply ℝ (fun _ => ℂ) i)
 

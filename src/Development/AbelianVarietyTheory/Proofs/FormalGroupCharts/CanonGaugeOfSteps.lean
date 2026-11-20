@@ -36,7 +36,7 @@ theorem cob_three {n : ℕ} (U V W : Fin 2 → Pt k n d) (hU : ∀ j, GP (U j)) 
   add f g := by
     rw [gt_ev_add U hU, gt_ev_add V hV, gt_ev_add W hW]; ring
   const f hf := by
-    rw [map_sub, map_add, gt_const_ev U hU f hf, gt_const_ev V hV f hf, gt_const_ev W hW f hf]; simp
+    rw [map_sub, map_add (f := _), gt_const_ev U hU f hf, gt_const_ev V hV f hf, gt_const_ev W hW f hf]; simp
 
 theorem cob_two {n : ℕ} (U V : Fin 2 → Pt k n d) (hU : ∀ j, GP (U j)) (hV : ∀ j, GP (V j)) :
     Cob (fun h : PS k 2 d => ev U h - ev V h) where

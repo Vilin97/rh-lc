@@ -42,12 +42,12 @@ theorem keep (htf : ∀ i (x : V i), m • x = 0 → x = 0)
     refine (mem_sub Λ φ ρ m).2 fun u => ?_
     by_cases hu : u = v
     · subst hu
-      exact ⟨y + m • ρ u g⁻¹ z, add_mem hy (hg u z hz).2, by rw [map_add, smul_add, smul_act_smul, h1]⟩
+      exact ⟨y + m • ρ u g⁻¹ z, add_mem hy (hg u z hz).2, by rw [map_add (f := _), smul_add, smul_act_smul, h1]⟩
     · obtain ⟨w, hw, h3⟩ := h2 u hu
       exact ⟨m • ρ u g⁻¹ w, (hg u w hw).2, by rw [smul_act_smul, h3]⟩
   obtain ⟨y', hy', h4⟩ := (mem_sub Λ φ ρ m).1 (e ha) v
   have h5 := congrArg (ρ v x⁻¹) (h4.trans h1)
-  rw [map_nsmul, inv_act, map_add, map_nsmul, map_nsmul, ← act_mul] at h5
+  rw [map_nsmul, inv_act, map_add (f := _), map_nsmul, map_nsmul, ← act_mul] at h5
   have h6 : ρ v (x⁻¹ * g) y = y' - m • ρ v x⁻¹ z := by
     refine sub_eq_zero.1 (htf v _ ?_)
     rw [smul_sub, smul_sub, h5, smul_smul, sq]

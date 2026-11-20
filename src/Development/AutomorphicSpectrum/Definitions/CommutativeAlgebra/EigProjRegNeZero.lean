@@ -41,7 +41,7 @@ theorem grLat_diag {n : ℕ} (b : Basis (Fin n) C V) (c : Fin n → C) (i : Fin 
       · subst hj; simp
       · simp [Finsupp.single_apply, hj]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ a hx
   · rw [Submodule.span_singleton_le_iff_mem]
@@ -284,10 +284,10 @@ theorem grLat_shear (b : Basis (Fin 2) C V) (a : C) :
   · rintro _ ⟨x, ⟨hx, hF⟩, rfl⟩
     obtain ⟨o, o', rfl⟩ := Submodule.mem_span_pair.1 hx
     have h1 := b.flag_le_ker_coord (k := (0 : Fin 2).succ) (l := 1) (by decide) hF
-    rw [LinearMap.mem_ker, map_add, LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower] at h1
+    rw [LinearMap.mem_ker, map_add (f := _), LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower] at h1
     have h2 : o' • (1 : C) = 0 := by simpa using h1
     change b.coord 0 _ ∈ _
-    rw [map_add, LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower]
+    rw [map_add (f := _), LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower]
     have h3 : o' • a = 0 := by rw [← one_mul a, ← smul_mul_assoc, h2, zero_mul]
     refine Submodule.mem_span_singleton.2 ⟨o, ?_⟩
     simp [h3]
@@ -337,7 +337,7 @@ theorem isFreeOn_stable {ρ : 𝓞 E →+* Module.End K V} {X : Submodule A V} {
     refine zsmul_mem ?_ _
     exact Submodule.subset_span ⟨(q.1, k), rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ c hx
 
 theorem eigSub_ne_eigQuot [CharZero K] {v : Valuation K NNReal} (hv : v.Integers A)

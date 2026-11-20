@@ -132,7 +132,7 @@ theorem vanishing {N r t : ℕ} (h : r + t = N) {ϖ : kˣ} (hϖ : valuation k (�
     obtain ⟨M1, h1⟩ := hx
     obtain ⟨M2, h2⟩ := hy
     refine ⟨max M1 M2, fun ν hν => ?_⟩
-    rw [map_add, map_add, h1 ν fun i j hi hj => le_trans (by simp) (hν i j hi hj),
+    rw [map_add (f := _), map_add (f := _), h1 ν fun i j hi hj => le_trans (by simp) (hν i j hi hj),
       h2 ν fun i j hi hj => le_trans (by simp) (hν i j hi hj), add_zero]
   | smul c x _ hx =>
     obtain ⟨M, hM⟩ := hx

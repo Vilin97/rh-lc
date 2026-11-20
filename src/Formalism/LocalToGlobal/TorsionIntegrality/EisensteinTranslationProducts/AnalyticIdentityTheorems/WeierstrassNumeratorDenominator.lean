@@ -101,7 +101,7 @@ theorem second_order (g2 g3 : K) :
   have h12 : (12 : PowerSeries K) = C (12 : K) := (map_ofNat C 12).symm
   have h6 : (6 : PowerSeries K) = C (6 : K) := (map_ofNat C 6).symm
   rw [h12, h6]
-  simp only [map_add, map_sub, coeff_C_mul, coeff_X_pow_mul', coeff_X_pow]
+  simp only [map_add (f := _), map_sub, coeff_C_mul, coeff_X_pow_mul', coeff_X_pow]
   by_cases hn : 2 ≤ n
   · obtain ⟨j, rfl⟩ : ∃ j, n = j + 2 := ⟨n - 2, by omega⟩
     simp only [if_pos hn, Nat.add_sub_cancel, coeff_derivative]
@@ -155,7 +155,7 @@ theorem deriv_defect (g2 g3 : K) (P : PowerSeries K) :
   have h4 : (4 : PowerSeries K) = C (4 : K) := (map_ofNat C 4).symm
   have h2 : (2 : PowerSeries K) = C (2 : K) := (map_ofNat C 2).symm
   unfold defect
-  simp only [map_add, map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul,
+  simp only [map_add (f := _), map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul,
     derivative_X, derivative_C, h4, h2, Derivation.map_one_eq_zero]
   rw [← h4, ← h2]
   ring
@@ -181,7 +181,7 @@ theorem pOf_split (g2 g3 : K) :
     pOf g2 g3 = C (g2 / 20) * X ^ 2 + C (g3 / 28) * X ^ 4
       + X ^ 6 * PowerSeries.mk fun n => coeff (n + 6) (pOf g2 g3) := by
   ext n
-  simp only [map_add, coeff_C_mul, coeff_X_pow_mul', coeff_X_pow, coeff_mk]
+  simp only [map_add (f := _), coeff_C_mul, coeff_X_pow_mul', coeff_X_pow, coeff_mk]
   rcases n with _ | _ | _ | _ | _ | _ | n
   · simp [coeff_pOf, cW_one]
   · simp [coeff_pOf]
@@ -206,7 +206,7 @@ theorem defect_split (g2 g3 : K) : ∃ S : PowerSeries K, defect g2 g3 (pOf g2 g
   have hd : derivative K (pOf g2 g3)
       = X * (2 * c2 + 4 * c3 * X ^ 2 + 6 * X ^ 4 * T + X ^ 5 * derivative K T) := by
     rw [hP, hc2, hc3]
-    simp only [map_add, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul,
+    simp only [map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul,
       derivative_X, derivative_C]
     ring
   refine ⟨-4 * (6 * T + X * derivative K T) - 12 * T
@@ -246,7 +246,7 @@ theorem weierstrass_numerator_denominator : WpNumDen := by
   intro K _ _ g2 g3
   constructor
   · ext n
-    rw [map_add, coeff_X_pow_mul', coeff_one]
+    rw [map_add (f := _), coeff_X_pow_mul', coeff_one]
     rcases n with _ | _ | n
     · simp [wpNum]
     · simp [wpNum]

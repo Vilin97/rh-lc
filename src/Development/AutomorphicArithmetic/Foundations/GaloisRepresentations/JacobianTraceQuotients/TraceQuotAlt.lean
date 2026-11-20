@@ -79,4 +79,4 @@ theorem UpperTheory.Gal.Join.traceQuot :
     rw [step]
     simpa using hm
   conv_lhs => rw [hsplit]
-  rw [map_add, hzero, add_zero]
+  rw [map_add (f := _), hzero, add_zero]

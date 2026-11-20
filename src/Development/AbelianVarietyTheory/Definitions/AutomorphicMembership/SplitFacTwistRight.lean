@@ -48,7 +48,7 @@ theorem om_rational {ψ : AddChar (AF D.host.F) ℂ} {V W : HSp D} {χ χ' : IdC
 theorem root_of_at {e d : AE D} (hd : d * cA D d = 1)
     (hs : (e + cA D e) * (d - 1) = d - 1) :
     e * d + (1 - e) = d * cA D (e * d + (1 - e)) := by
-  rw [map_add, map_mul, map_sub, map_one]
+  rw [map_add (f := _), map_mul, map_sub, map_one]
   have h1 : d * (cA D e * cA D d + (1 - cA D e)) = cA D e * (d * cA D d) + d - d * cA D e := by ring
   rw [h1, hd]
   linear_combination hs

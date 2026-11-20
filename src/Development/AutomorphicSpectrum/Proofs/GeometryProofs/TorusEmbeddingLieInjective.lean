@@ -34,7 +34,7 @@ theorem exists_div {R X : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationRi
   choose f hf using hd
   refine ⟨AddMonoidHom.mk' f fun a b => ?_, ?_⟩
   · apply mul_left_cancel₀ hπ.ne_zero
-    rw [mul_add, ← hf, ← hf, ← hf, map_add]
+    rw [mul_add, ← hf, ← hf, ← hf, map_add (f := _)]
   · ext χ
     simp [hf]
 

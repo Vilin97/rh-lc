@@ -195,7 +195,7 @@ theorem sigX_cEl {i t : ℕ} (τ : MRep k (i + 1)) (σ : GRep k (t + 1)) (c : Fi
   rw [pgProj_cEl]
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul a b =>
     refine (extTensor_tmul _ _ _ a b).trans ?_
     have h1 : (σ.tw (-((i + 1 + 1 : ℕ) : ℝ) / 2)).ρ 1 b = b := by rw [map_one]; rfl
@@ -311,7 +311,7 @@ theorem mem_twKer_of_qO {i t : ℕ} (ψ : AddChar k Circle) (τ : MRep k (i + 1)
     induction x using TensorProduct.induction_on with
     | zero => simp
     | add x y hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
     | tmul w b =>
       rw [LinearMap.rTensor_tmul]

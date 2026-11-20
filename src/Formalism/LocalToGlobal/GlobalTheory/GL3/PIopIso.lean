@@ -196,7 +196,7 @@ theorem sqrt_d_pos (D : D7) : 0 < Real.sqrt D.host.d :=
 
 theorem Hf_add_right (T : Tor D) (x y y' : VC D N N') :
     Hf D T x (y + y') = Hf D T x y + Hf D T x y' := by
-  rw [Hf_herm T (y + y') x, Hf_add_left, map_add, ← Hf_herm, ← Hf_herm]
+  rw [Hf_herm T (y + y') x, Hf_add_left, map_add (f := _), ← Hf_herm, ← Hf_herm]
 
 theorem Hf_self_im (T : Tor D) (x : VC D N N') : (Hf D T x x).im = 0 := by
   have h := congrArg Complex.im (Hf_herm T x x)

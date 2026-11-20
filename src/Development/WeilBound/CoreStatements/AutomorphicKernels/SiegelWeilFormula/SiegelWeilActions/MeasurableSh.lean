@@ -86,7 +86,7 @@ theorem unf_lint {Γ : AddSubgroup V} {Δ : AddSubgroup A} [Countable Γ] [Count
     · intro h
       exact ⟨⟨Λ.symm h, (hΛ _).2 (by simp [h.2])⟩, Subtype.ext (by simp)⟩
     · intro g x
-      simp [AddSubgroup.vadd_def, vadd_eq_add, map_add]
+      simp [AddSubgroup.vadd_def, vadd_eq_add, map_add (f := _)]
   have hM : Measurable fun p : V × (V × A) =>
       ∑' c : Γ × Δ, ψ (sh Λ Q Z ((c.1 : V), (c.2 : A)) p) :=
     Measurable.tsum fun c => hψ.comp (hsh _)

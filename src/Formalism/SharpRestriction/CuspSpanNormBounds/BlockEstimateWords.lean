@@ -1161,7 +1161,7 @@ theorem poisson_preparation (hM : Mod D X a cb c0 Ks E₀ Eg E₁ E₂ E₃ C C4
     exact AddSubgroup.mem_map.2 ⟨t - t0, (hT t ht).2, rfl⟩
   have hadd : ∀ t, tau a (j0 + 1) 1 t0 + embA a (j0 + 1) 1 (t - t0) = tau a (j0 + 1) 1 t := fun t => by
     have h1 : embA a (j0 + 1) 1 t0 + embA a (j0 + 1) 1 (t - t0) = embA a (j0 + 1) 1 t := by
-      rw [← map_add, add_sub_cancel]
+      rw [← map_add (f := _), add_sub_cancel]
     exact h1
   have hne : ∀ z ∈ Ts.image (fun t => embA a (j0 + 1) 1 (t - t0)), ∀ v, (tau a (j0 + 1) 1 t0 + z) v ≠ 0 := fun z hz v => by
     obtain ⟨t, ht, rfl⟩ := Finset.mem_image.1 hz
@@ -2529,7 +2529,7 @@ theorem dual_of_full {D : D7} (a : ℕ → ℕ → D.what₂.Tau → ℂ) {δ : 
     { toFun := fun t => (∑ v, (σ v * (a b s v * plEmb D v t)).im) / Real.pi
       map_zero' := by simp
       map_add' := fun x y => by
-        simp only [map_add, mul_add, Complex.add_im, Finset.sum_add_distrib, add_div] }
+        simp only [map_add (f := _), mul_add, Complex.add_im, Finset.sum_add_distrib, add_div] }
   let φ : D.host.E →ₗ[ℚ] ℝ := φ0.toRatLinearMap
   have hφ : ∀ t, φ t = (∑ v, (σ v * (a b s v * plEmb D v t)).im) / Real.pi := fun t => rfl
   have hrat : ∀ t : D.host.E, ∃ q : ℚ, φ t = q := by
@@ -2543,7 +2543,7 @@ theorem dual_of_full {D : D7} (a : ℕ → ℕ → D.what₂.Tau → ℂ) {δ : 
     | add x y _ _ hx hy =>
       obtain ⟨p, hp⟩ := hx
       obtain ⟨q, hq⟩ := hy
-      exact ⟨p + q, by rw [map_add, hp, hq]; push_cast; ring⟩
+      exact ⟨p + q, by rw [map_add (f := _), hp, hq]; push_cast; ring⟩
     | smul r x _ hx =>
       obtain ⟨p, hp⟩ := hx
       exact ⟨r * p, by rw [map_smul, hp, Rat.smul_def]; push_cast; ring⟩
@@ -2649,7 +2649,7 @@ theorem fund_scl (c : ι → ℂ) (hc : ∀ v, c v ≠ 0) (Λ : AddSubgroup (ι 
       right_inv := fun g => Subtype.ext (scl_inv_left c hc g.1) }
   have key := hF.image_of_equiv f hq e (fun g x => by
     show scl c (scl (fun v => (c v)⁻¹) g.1 + x) = g.1 + scl c x
-    rw [map_add, scl_inv_right c hc])
+    rw [map_add (f := _), scl_inv_right c hc])
   exact key
 
 theorem vol_scl (c : ι → ℂ) (F : Set (ι → ℂ)) :
@@ -2690,7 +2690,7 @@ theorem exists_denom (D : D7) (M : Submodule ℤ D.host.E) (hfg : M.FG) :
   | add x y _ _ hx hy =>
     obtain ⟨p, hp⟩ := hx
     obtain ⟨q, hq⟩ := hy
-    exact ⟨p + q, by rw [map_add, hp, hq, mul_add]⟩
+    exact ⟨p + q, by rw [map_add (f := _), hp, hq, mul_add]⟩
   | smul n x _ hx =>
     obtain ⟨p, hp⟩ := hx
     exact ⟨n • p, by rw [map_zsmul, hp, mul_smul_comm]⟩

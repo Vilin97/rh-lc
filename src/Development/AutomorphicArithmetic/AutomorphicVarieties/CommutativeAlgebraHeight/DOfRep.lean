@@ -11,7 +11,7 @@ private theorem chiS_ofRep {n : ℕ} {A E ι : Type} [CommRing A] [Ring E] [Alge
       (Det.repS r S y).map Polynomial.C := by
     induction y with
     | tmul s z => ext1 a b; simp [Det.repS_tmul, Polynomial.algebraMap_apply]
-    | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, Matrix.map_add _ (map_add _)]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), Matrix.map_add _ (map_add _)]
   change (Det.repS r (Polynomial S) _).det = _
   rw [map_sub, h1, Det.repS_tmul, Matrix.charpoly, Matrix.charmatrix]
   congr 2
@@ -41,7 +41,7 @@ private theorem coeff_repS {σ A E ι : Type} [CommRing A] [Ring E] [Algebra A E
     rw [mul_comm s, MvPolynomial.coeff_C_mul]
     simp [mul_comm]
   | add a b ha hb =>
-    rw [map_add, map_add, map_add, ha, hb, map_add, Matrix.map_add _ (MvPolynomial.coeff_add α)]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), Matrix.map_add _ (MvPolynomial.coeff_add α)]
 
 theorem UpperTheory.V.CA.d_ofRep :
     ∀ {n : ℕ} {A E ι : Type} [CommRing A] [Ring E] [Algebra A E] [Fintype ι] [DecidableEq ι] (h : Fintype.card ι = n) (r : E →ₐ[A] Matrix ι ι A) (x : E), (Det.ofRep h r).chi x = (r x).charpoly ∧ (Det.ofRep h r).val x = (r x).det ∧ (1 ≤ n → (Det.ofRep h r).tr x = (r x).trace) ∧ (x ∈ (Det.ofRep h r).CH → r x = 0) := by

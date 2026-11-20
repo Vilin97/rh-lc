@@ -103,7 +103,7 @@ theorem iotaW_actTw (hinj : Function.Injective (algebraMap O LL)) {G : Type} [Gr
     have e1 := map_add (tableLineDegreeTwo.actTw (stdLatG hinj (twistM N θ)) ↥(Xq LL lam a) θ g) u v
     have e2 := map_add (actD (stdLatG hinj N) g) (iotaW LL lam a k u) (iotaW LL lam a k v)
     refine (congrArg _ e1).trans ((map_add _ _ _).trans ?_)
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (congrArg₂ (· + ·) hu hv).trans e2.symm
   | tmul t y =>
     obtain ⟨y, hy⟩ := y

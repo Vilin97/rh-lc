@@ -34,7 +34,7 @@ theorem padicInt_ringHom_ext {p : ℕ} [Fact p.Prime] (hp : ‖(p : C)‖ < 1) (
     have hx : x = y * (p : ℤ_[p]) ^ k + (x.appr k : ℤ_[p]) := by rw [hy]; ring
     have : a x - b x = (a y - b y) * (p : C) ^ k := by
       conv_lhs => rw [hx]
-      simp only [map_add, map_mul, map_pow, map_natCast]
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast]
       ring
     rw [this, norm_mul, norm_pow]
     refine mul_le_of_le_one_left (by positivity) ?_
@@ -105,7 +105,7 @@ theorem exists_subring_finite {R V : Type} [CommRing R] [CommRing V] {p : ℕ} [
   induction ha using Submodule.span_induction with
   | mem x hx => exact Algebra.subset_adjoin ⟨x, hx, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx =>
     rw [Algebra.smul_def, map_mul]
     refine mul_mem ?_ hx

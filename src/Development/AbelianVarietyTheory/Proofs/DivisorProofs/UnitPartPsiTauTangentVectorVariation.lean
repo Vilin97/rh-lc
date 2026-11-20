@@ -72,7 +72,7 @@ noncomputable def ev (z : Sp A) : A →+* (Sp A).presheaf.stalk z where
   map_one' := by rw [map_one, gs_eq _ z ⊤ trivial, map_one, map_one]
   map_mul' a b := by rw [map_mul, gs_mul _ z ⊤ trivial]
   map_zero' := by rw [map_zero, gs_eq _ z ⊤ trivial, map_zero, map_zero]
-  map_add' a b := by rw [map_add, gs_add _ z ⊤ trivial]
+  map_add' a b := by rw [map_add (f := _), gs_add _ z ⊤ trivial]
 
 theorem ev_apply (z : Sp A) (a : A) : ev z a = gs (𝟙 _) z ⊤ ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom a) := rfl
 
@@ -253,7 +253,7 @@ theorem units_eval : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_mul, map_mul, map_sum]
     simp only [map_mul, map_natCast, map_ofNat]
-  rw [hcst, map_add, map_nsmul, nsmul_eq_mul] at hii
+  rw [hcst, map_add (f := _), map_nsmul, nsmul_eq_mul] at hii
 
   have hee' : (ee : DualNumber k) = 1 + TrivSqZeroExt.inr ((e : k) * ℓ e mu - s) := by
     rw [hee, hs]

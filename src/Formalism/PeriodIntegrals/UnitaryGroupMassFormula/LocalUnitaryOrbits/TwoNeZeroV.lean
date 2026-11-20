@@ -61,7 +61,7 @@ theorem add_sig_sc (hcm : IsCMExt F E σ) (z : Fv F v ⊗[F] E) : ∃ t : Fv F v
   induction z using TensorProduct.induction_on with
   | zero => exact ⟨0, by simp [sc_eq]⟩
   | tmul r e =>
-    obtain ⟨f, hf⟩ := fixed_mem_F σ hcm (e + σ e) (by rw [map_add, sigma_invol σ hcm, add_comm])
+    obtain ⟨f, hf⟩ := fixed_mem_F σ hcm (e + σ e) (by rw [map_add (f := _), sigma_invol σ hcm, add_comm])
     refine ⟨f • r, ?_⟩
     have hs : sigR (Fv F v) σ (r ⊗ₜ[F] e) = r ⊗ₜ[F] σ e := by
       simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, Algebra.TensorProduct.map_tmul]
@@ -71,7 +71,7 @@ theorem add_sig_sc (hcm : IsCMExt F E σ) (z : Fv F v ⊗[F] E) : ∃ t : Fv F v
     obtain ⟨t1, h1⟩ := hx
     obtain ⟨t2, h2⟩ := hy
     refine ⟨t1 + t2, ?_⟩
-    rw [map_add, sc_eq, map_add, ← sc_eq, ← sc_eq, ← h1, ← h2]
+    rw [map_add (f := _), sc_eq, map_add (f := _), ← sc_eq, ← sc_eq, ← h1, ← h2]
     abel
 
 theorem two_ne_zero_v : (2 : Fv F v) ≠ 0 := by
@@ -161,7 +161,7 @@ theorem fixLoc_holds : FixLoc σ v := by
   obtain ⟨a, ha, rfl⟩ := fix_int σ v hcm hx hfx
   obtain ⟨b, hb, rfl⟩ := fix_int σ v hcm hy hfy
   have hab : a + b ∈ v.adicCompletionIntegers F := add_mem ha hb
-  rw [sc_eq, sc_eq, ← map_add, ← sc_eq] at hu
+  rw [sc_eq, sc_eq, ← map_add (f := _), ← sc_eq] at hu
   have hU : IsUnit ((⟨a, ha⟩ : v.adicCompletionIntegers F) + ⟨b, hb⟩) := fixLoc_holds_lemma v hab hu
   rcases IsLocalRing.isUnit_or_isUnit_of_isUnit_add hU with h | h
   · exact Or.inl (isU_sc v ha h)

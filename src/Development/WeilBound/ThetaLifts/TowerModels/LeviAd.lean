@@ -24,7 +24,7 @@ theorem compInf_sgI_self (w : InfinitePlace F) (y : w.Completion ⊗[F] E) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => exact congrArg (· ⊗ₜ[F] x) (Pi.single_eq_same (M := fun u : InfinitePlace F => u.Completion) w a)
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [NumberField E] in
 theorem compInf_sgI_ne {w u : InfinitePlace F} (h : u ≠ w) (y : w.Completion ⊗[F] E) :
@@ -35,7 +35,7 @@ theorem compInf_sgI_ne {w u : InfinitePlace F} (h : u ≠ w) (y : w.Completion �
   | tmul a x =>
     exact (congrArg (· ⊗ₜ[F] x) (Pi.single_eq_of_ne (M := fun u : InfinitePlace F => u.Completion) h a)).trans
       (TensorProduct.zero_tmul _ _)
-  | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
 
 omit [NumberField E] in
 theorem compFin_sgI (w : InfinitePlace F) (v : Pl F) (y : w.Completion ⊗[F] E) :
@@ -44,14 +44,14 @@ theorem compFin_sgI (w : InfinitePlace F) (v : Pl F) (y : w.Completion ⊗[F] E)
   | zero => simp
   | tmul a x =>
     exact (congrArg (· ⊗ₜ[F] x) (map_zero (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v))).trans (TensorProduct.zero_tmul _ _)
-  | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
 
 theorem exists_inf (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E w) (z : InfinitePlace F → ℂ) :
     ∃ a : AE F E, (∀ w, piInf (τ w) a = z w) ∧ ∀ v, compFin F E v a = 1 := by
   choose b hb using fun w => (infEmb_bijective h (τ w)).2 (z w - 1)
   refine ⟨1 + ∑ w, TensorProduct.map (sgI w) LinearMap.id (b w), fun w => ?_, fun v => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_add, map_one, piInf, RingHom.comp_apply, map_sum, Finset.sum_eq_single w (fun u _ hu => compInf_sgI_ne hu.symm _)
+    · rw [map_add (f := _), map_one, piInf, RingHom.comp_apply, map_sum, Finset.sum_eq_single w (fun u _ hu => compInf_sgI_ne hu.symm _)
       (fun h => absurd (Finset.mem_univ w) h), compInf_sgI_self, hb, add_sub_cancel]
   set_option synthInstance.maxHeartbeats 100000 in
     · simp [map_sum, compFin_sgI]
@@ -83,7 +83,7 @@ theorem compFin_cA (v : Pl F) (z : AE F E) : compFin F E v (cA σ z) = sigR _ σ
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem piInf_cA (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) (z : AE F E) :
     piInf τ (cA σ z) = star (piInf τ z) := by
@@ -91,7 +91,7 @@ theorem piInf_cA (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) (
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem sig_sig (h : IsCMExt F E σ) (x : E) : σ (σ x) = x := by
   obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
@@ -101,7 +101,7 @@ theorem cA_cA (h : IsCMExt F E σ) (z : AE F E) : cA σ (cA σ z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (sig_sig h x)
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [NumberField E] in
 theorem iso_map_piInf (hc : ∀ {w : InfinitePlace F} (τ : EmbOver E w) (z : AE F E), piInf τ (cA σ z) = star (piInf τ z))

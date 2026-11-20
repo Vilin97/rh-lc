@@ -76,7 +76,7 @@ lemma psd_add {P : Finset α} {k k' : α → α → ℂ} (hk : PSDOn P k) (hk' :
     PSDOn P (fun x y => k x y + k' x y) := by
   unfold TA.PSDOn at hk hk' ⊢
   refine ⟨fun x hx y hy => ?_, fun a => ?_⟩
-  · simp only [hk.1 x hx y hy, hk'.1 x hx y hy, map_add]
+  · simp only [hk.1 x hx y hy, hk'.1 x hx y hy, map_add (f := _)]
   · have e : ∑ x ∈ P, ∑ y ∈ P, conj (a x) * (k x y + k' x y) * a y =
         (∑ x ∈ P, ∑ y ∈ P, conj (a x) * k x y * a y) +
           ∑ x ∈ P, ∑ y ∈ P, conj (a x) * k' x y * a y := by

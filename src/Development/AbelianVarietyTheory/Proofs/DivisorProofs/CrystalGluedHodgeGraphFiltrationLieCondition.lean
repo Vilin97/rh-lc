@@ -99,7 +99,7 @@ theorem crdL_smul (π : TrivSqZeroExt k (Fin d → k) →ₗ[k] k) (u : CrysC k 
 
 theorem crdL_add (π : TrivSqZeroExt k (Fin d → k) →ₗ[k] k) (u : CrysC k d A₀) (q q' : primDR A₀) :
     π (u ((GlobalTheory.FODef.constMorV k (Fin d → k) A₀).pull (q + q'))) = π (u ((GlobalTheory.FODef.constMorV k (Fin d → k) A₀).pull q)) + π (u ((GlobalTheory.FODef.constMorV k (Fin d → k) A₀).pull q')) := by
-  simp only [map_add]
+  simp only [map_add (f := _)]
 
 def crdL (π : TrivSqZeroExt k (Fin d → k) →ₗ[k] k) (u : CrysC k d A₀) : primDR A₀ →ₗ[k] k where
   toFun q := π (u ((GlobalTheory.FODef.constMorV k (Fin d → k) A₀).pull q))
@@ -111,7 +111,7 @@ theorem crdL_apply (π : TrivSqZeroExt k (Fin d → k) →ₗ[k] k) (u : CrysC k
 
 theorem crdL_add_u (π : TrivSqZeroExt k (Fin d → k) →ₗ[k] k) (u v : CrysC k d A₀) (q : primDR A₀) :
     crdL A₀ π (u + v) q = crdL A₀ π u q + crdL A₀ π v q := by
-  simp only [crdL_apply, LinearMap.add_apply, map_add]
+  simp only [crdL_apply, LinearMap.add_apply, map_add (f := _)]
 
 theorem crdL_zero_u (π : TrivSqZeroExt k (Fin d → k) →ₗ[k] k) (q : primDR A₀) :
     crdL A₀ π 0 q = 0 := by
@@ -244,12 +244,12 @@ theorem lieZ_le_fil (hs : t = spMap β) : lieZ o₀ β ≤ Fil o₀.A := by
   have hq0 : D.ω * D.ω - (D.tr : 𝓞 D.F) * D.ω + (D.nm : 𝓞 D.F) = 0 := by
     rw [← D.tr_eq, ← D.nm_eq]; ring
   have hq := congrArg (fun x => crysAct o₀ (algebraMap (𝓞 D.F) D.O x) h) hq0
-  simp only [map_add, map_sub, map_mul, map_intCast, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
+  simp only [map_add (f := _), map_sub, map_mul, map_intCast, map_zero, LinearMap.add_apply, LinearMap.sub_apply,
     Module.End.mul_apply, Module.End.intCast_apply, LinearMap.zero_apply] at hq
   rw [← Int.cast_smul_eq_zsmul k, ← Int.cast_smul_eq_zsmul k] at hq
   have hroot : β b.ρ * ((D.tr : k) - β b.ρ) = (D.nm : k) := by
     have := congrArg β b.ρ_root
-    simp only [map_add, map_sub, map_mul, map_pow, map_intCast, map_zero] at this
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_intCast, map_zero] at this
     linear_combination -this
   have hy0 : crysAct o₀ (algebraMap (𝓞 D.F) D.O D.ω) ((A - ((D.tr : k) - β b.ρ) • 1) h) -
       β b.ρ • ((A - ((D.tr : k) - β b.ρ) • 1) h) ∈ Fil o₀.A := by

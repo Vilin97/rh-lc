@@ -35,7 +35,7 @@ theorem norm_eq_one_of_sub_one_mem {a : 𝓞 E} (ha : IsUnit a) (h3 : a - 1 ∈ 
     rw [zsmul_eq_mul, Int.cast_ofNat, mul_comm, hm]; ring
   let b := RingOfIntegers.basis E
   have hdet : (Int.castRingHom (ZMod 3)) (Algebra.norm ℤ a) = 1 := by
-    rw [Algebra.norm_eq_matrix_det b, RingHom.map_det, ea, map_add, map_one, map_zsmul]
+    rw [Algebra.norm_eq_matrix_det b, RingHom.map_det, ea, map_add (f := _), map_one, map_zsmul]
     have : (Int.castRingHom (ZMod 3)).mapMatrix (1 + (3 : ℤ) • Algebra.leftMulMatrix b m) = 1 := by
       ext i j
       simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul,

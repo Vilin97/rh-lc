@@ -77,7 +77,7 @@ theorem crdB_mul {J : Type} (b : Module.Basis J ℤ_[l] O) (j : J) (c : Per.BdRp
   | zero => simp
   | tmul o β =>
     rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, crdB_tmul, crdB_tmul, smul_mul_assoc]
-  | add x y hx hy => rw [add_mul, map_add, map_add, hx, hy, add_mul]
+  | add x y hx hy => rw [add_mul, map_add (f := _), map_add (f := _), hx, hy, add_mul]
 
 theorem crdB_sum {J : Type} [Fintype J] [DecidableEq J] (b : Module.Basis J ℤ_[l] O) (j : J)
     (β : J → Per.BdRp l) : crdB b j (∑ k, b k ⊗ₜ β k) = β j := by
@@ -96,7 +96,7 @@ theorem toAc_eis (t : Wq l a →ₐ[ℤ_[l]] O) : toAc t K (eis l a e) = fun _ =
     funext fun τ => Subtype.ext ((congrArg (PowerSeries.map _) (PowerSeries.map_X _)).trans
       (PowerSeries.map_X _))
   have hE : EIn l e (A O K) = uIn _ ^ e + (l : A O K) := Subtype.ext (by simp [E])
-  rw [eis, map_add, map_pow, hX, map_natCast, hE]
+  rw [eis, map_add (f := _), map_pow, hX, map_natCast, hE]
   rfl
 
 theorem exists_of_toOD_iTot_mem (t : Wq l a →ₐ[ℤ_[l]] O) (ϖ : PiSys l e) (n : ℕ) (f : ZMod a → A O K)
@@ -151,7 +151,7 @@ theorem eq_Ehat_pow_mul_of_iD_mem : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [Ne
 
   have h1 : ϖ.iD t K (fun τ => ofAl O K l e (g τ)) ∈
       Ideal.span {ϖ.iD t K (fun _ => Ehat O K l e) ^ n} := by
-    rw [hsplit, map_add, map_mul, map_pow] at hx
+    rw [hsplit, map_add (f := _), map_mul, map_pow] at hx
     exact (Ideal.add_mem_iff_left _ (Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _))).1 hx
   have h2 : (fun τ => ofA O K l e (r τ)) =
       (fun _ => ofA O K l e ((l : A O K) ^ m)) * fun τ => ofAl O K l e (g τ) := by

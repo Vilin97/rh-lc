@@ -262,7 +262,7 @@ theorem blk_mem_intSpan {n : ℕ} (w : D.what₂.places.Pl) (lam : D.what₂.Tau
     funext τ
     rw [map_roundAct, MvPolynomial.map_map, RingHom.ext_int ((embO D w).comp (Int.castRingHom _)) (Int.castRingHom ℂ)]
   | zero => rw [map_zero]; exact AddSubgroup.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact AddSubgroup.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact AddSubgroup.add_mem _ hx hy
   | neg x _ hx => rw [map_neg]; exact AddSubgroup.neg_mem _ hx
 
 theorem exists_lift {K L : Type} [Field K] [Field L] (A : Subring L) (j : K →+* L) {n : ℕ} (k : GL (Fin n) K)
@@ -356,7 +356,7 @@ theorem valB_laws : ∀ (D : D7) (u : D.what₂.Word) (X : Ch D u) (i : ℕ) (M 
     refine ⟨h, hh, z + Co.mov w (fun v => (h v)⁻¹ * h' v) z',
       AddSubgroup.add_mem _ hz (mov_mem Co w hw _ (fun v x => ?_) z' hz'), ?_⟩
     · rw [← hh v, ← hh' v x, Matrix.mulVec_mulVec, ← Units.val_mul, mul_inv_cancel_left]
-    · rw [map_add, map_add, ← mov_mul, hy, hy']
+    · rw [map_add (f := _), map_add (f := _), ← mov_mul, hy, hy']
       simp only [mul_inv_cancel_left]
   · rintro r hr y ⟨h, hh, z, hz, hy⟩
     exact ⟨h, hh, _, smul_mem_intSpan w _ r hr z hz, by rw [map_smul, map_smul, hy]⟩

@@ -40,7 +40,7 @@ theorem extTensor_detRep_apply {n n' : Type} [Fintype n] [DecidableEq n] [Fintyp
     rw [extTensor_tmul]
     simp only [detRep, ofChar_apply, detChar_apply, Units.val_mul]
     rw [← smul_eq_mul, ← smul_eq_mul (a := ((ψ _ : ℂˣ) : ℂ)), TensorProduct.smul_tmul_smul]
-  | add u w hu hw => rw [map_add, hu, hw, smul_add]
+  | add u w hu hw => rw [map_add (f := _), hu, hw, smul_add]
 
 theorem row_scalar (χ : kˣ →* ℂˣ) (n b0 b1 b2 : ℕ) (hn : b0 + b1 + b2 = n) (h0 : b0 ≤ 1) (h2 : b2 ≤ 1)
     (e0 e1 e2 : ℤ) (he0 : e0 = ((b1 + b2 : ℕ) : ℤ)) (he2 : e2 = -((b0 + b1 : ℕ) : ℤ)) (t₁ t₂ : kˣ) :

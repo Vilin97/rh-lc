@@ -31,7 +31,7 @@ theorem aut_bar (σ : 𝓞 E ≃+* 𝓞 E) (a : 𝓞 E) : σ (H.bar a) = H.bar (
       hom := fun a => t.act.hom _
       one := by rw [map_one, t.act.one]
       mul := fun a b => by rw [map_mul, t.act.mul]
-      add := fun a b => by rw [map_add, t.act.add] }
+      add := fun a b => by rw [map_add (f := _), t.act.add] }
   PP := t.PP
   cub := t.cub
   sym := t.sym

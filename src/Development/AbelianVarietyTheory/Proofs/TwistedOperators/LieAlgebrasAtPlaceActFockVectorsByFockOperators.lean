@@ -80,7 +80,7 @@ theorem pure_rename {ι κ X : Type} {A : ι → (X → ℂ) → (X → ℂ)} {A
     rw [MvPolynomial.rename_C, ← mul_one (MvPolynomial.C a : MvPolynomial ι ℂ),
       ← mul_one (MvPolynomial.C a : MvPolynomial κ ℂ), MvPolynomial.C_mul', MvPolynomial.C_mul', map_smul, map_smul,
       GlobalTheory.FockIndep.pure_one, GlobalTheory.FockIndep.pure_one]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [mul_comm, map_mul (MvPolynomial.rename e), MvPolynomial.rename_X, hX, hX', hp, h]
 
@@ -131,7 +131,7 @@ theorem derAll_of_one (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {τ : D.wh
         (∑ i, c i • ptAt ψ θ S T τ sS sT frS⁻¹ frT⁻¹ g (L (z i) (L (z' i) P))) +
           lam • ptAt ψ θ S T τ sS sT frS⁻¹ frT⁻¹ g P := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [ptAt, map_add, map_sum, map_smul]
+        simp only [ptAt, map_add (f := _), map_sum, map_smul]
     rw [e]
     exact h
   have e : P' = (∑ i, c i • L (z i) (L (z' i) P)) + lam • P := by
@@ -151,12 +151,12 @@ theorem lieAt_of_vacAt : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : Inf
   refine ⟨fun X hX P => ?_, fun Y hY P => ?_⟩
   · refine derAll_of_one hψ hθ hS hT (hg.1 X hX) h0.1 (h0.2 τ) n0 (fun z => ?_) hf hv
     have h := hl.1 X hX (MvPolynomial.rename (fun s => (τ, s)) P) z
-    rw [← ins_one, GlobalTheory.Chain.RealIt.GlueProof.fockS_ins, ← map_smul, ← map_add, ins_one, ins_one,
+    rw [← ins_one, GlobalTheory.Chain.RealIt.GlueProof.fockS_ins, ← map_smul, ← map_add (f := _), ins_one, ins_one,
       ptF_rename hψ hθ A B τ h0.1, ptF_rename hψ hθ A B τ h0.1, neg_smul, ← sub_eq_add_neg] at h
     exact h
   · refine derAll_of_one hψ hθ hS hT (hg.2 Y hY) h0.1 (h0.2 τ) n0 (fun z => ?_) hf hv
     have h := hl.2 Y hY (MvPolynomial.rename (fun s => (τ, s)) P) z
-    rw [← ins_one, GlobalTheory.Chain.RealIt.GlueProof.fockT_ins, ← map_smul, ← map_add, ins_one, ins_one,
+    rw [← ins_one, GlobalTheory.Chain.RealIt.GlueProof.fockT_ins, ← map_smul, ← map_add (f := _), ins_one, ins_one,
       ptF_rename hψ hθ A B τ h0.1, ptF_rename hψ hθ A B τ h0.1] at h
     exact h
 

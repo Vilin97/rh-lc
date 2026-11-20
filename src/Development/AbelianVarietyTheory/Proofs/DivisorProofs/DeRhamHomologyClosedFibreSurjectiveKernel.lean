@@ -30,7 +30,7 @@ theorem fibre_baseChange : ∀ (C₀ : Type) [CommRing C₀] [IsLocalRing C₀] 
   · intro h'
     let l : primDR A₀ →ₗ[C₀] IsLocalRing.ResidueField C₀ :=
       { toFun c := h' ((Published.AbelianDeRham.bcMor hh).pull c)
-        map_add' c d := by rw [map_add, map_add]
+        map_add' c d := by rw [map_add (f := _), map_add (f := _)]
         map_smul' r c := by
           rw [map_smulₛₗ, map_smul, smul_eq_mul, RingHom.id_apply, Algebra.smul_def] }
     obtain ⟨hh', hhl⟩ := Module.projective_lifting_property (Algebra.linearMap C₀ (IsLocalRing.ResidueField C₀)) l

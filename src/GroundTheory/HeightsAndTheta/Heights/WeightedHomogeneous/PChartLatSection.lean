@@ -95,7 +95,7 @@ theorem exists_form_of_mem_chartRingZ (y : Coord n → Ω) (c : (k : ι) → Fin
       (h₁.mul (isWeightedHomogeneous_chartMonomial c δ₂)).add ?_, ?_⟩
     · rw [add_comm δ₁]
       exact h₂.mul (isWeightedHomogeneous_chartMonomial c δ₁)
-    · rw [map_add, map_mul, map_mul, v₁, v₂, aeval_chartMonomial, aeval_chartMonomial, hpow]
+    · rw [map_add (f := _), map_mul, map_mul, v₁, v₂, aeval_chartMonomial, aeval_chartMonomial, hpow]
       ring
   | mul x z _ _ hx hz =>
     obtain ⟨δ₁, e₁, h₁, v₁⟩ := hx

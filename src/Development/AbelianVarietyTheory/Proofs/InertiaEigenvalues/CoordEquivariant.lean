@@ -154,7 +154,7 @@ theorem transfer {G : Subgroup (GQ l)} {X : Type} [AddCommGroup X] [Module ℤ_[
     fun σ hσ τ hτ => by
       rw [hc σ hσ, hc τ hτ, hc _ (G.mul_mem hσ hτ)]
       have := hfm ⟨σ, hσ⟩ ⟨τ, hτ⟩
-      rw [← hA ⟨σ, hσ⟩, ← map_add, ← this]
+      rw [← hA ⟨σ, hσ⟩, ← map_add (f := _), ← this]
       rfl⟩
     ⟨Ψ x, hb x, fun σ hσ => by
       have := hx ⟨σ, hσ⟩
@@ -212,7 +212,7 @@ theorem coord_equivariant {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)
   induction x using TensorProduct.induction_on with
   | zero => funext a; simp [twAct, Matrix.mulVec, dotProduct]
   | add x y hx hy =>
-    rw [map_add, map_add, hx, hy, map_add]
+    rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
     funext a
     simp [twAct, Matrix.mulVec, dotProduct, mul_add, Finset.sum_add_distrib]
   | tmul t q =>

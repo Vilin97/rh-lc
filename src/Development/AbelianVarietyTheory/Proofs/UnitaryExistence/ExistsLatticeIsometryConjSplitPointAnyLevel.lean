@@ -39,7 +39,7 @@ theorem exists_isometry_of_conj_split_anyLevel : ∀ (E : Type) [Field E] [Numbe
         exact ⟨this, by rw [form_skew, this, neg_zero]⟩
       have e : (F.Di i').EF (Φ (wE H s • a + H.bar (wE H s) • b)) (Φ (wE H s • a' + H.bar (wE H s) • b')) =
           N * (F.Di i').EF (Φ (a + b)) (Φ (a' + b')) := by
-        simp only [map_add, LinearMap.add_apply]
+        simp only [map_add (f := _), LinearMap.add_apply]
         rw [(o _ (Submodule.smul_mem _ _ ha) _ (Submodule.smul_mem _ _ hb')).1,
           (o _ (Submodule.smul_mem _ _ ha') _ (Submodule.smul_mem _ _ hb)).2, (o _ ha _ hb').1, (o _ ha' _ hb).2]
         simp only [map_smul Φ]

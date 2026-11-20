@@ -37,14 +37,14 @@ theorem exists_basis (k : ℕ) (ρ : Fin (k + 1) → ℤ) (hρ : ρ ≠ 0) :
   have hli : ∀ (c : ℤ), ∀ x ∈ LinearMap.ker φ, c • y + x = 0 → c = 0 := by
     intro c x hx hc
     have h1 := congrArg φ hc
-    rw [map_add, map_smul, LinearMap.mem_ker.mp hx, hy, map_zero, add_zero, smul_eq_mul] at h1
+    rw [map_add (f := _), map_smul, LinearMap.mem_ker.mp hx, hy, map_zero, add_zero, smul_eq_mul] at h1
     exact (mul_eq_zero.mp h1).resolve_right hg
   have hsp : ∀ z, ∃ c : ℤ, z + c • y ∈ LinearMap.ker φ := by
     intro z
     obtain ⟨c, hc⟩ := (Submodule.IsPrincipal.mem_iff_eq_smul_generator
       (LinearMap.range φ)).mp (LinearMap.mem_range_self φ z)
     refine ⟨-c, ?_⟩
-    rw [LinearMap.mem_ker, map_add, map_smul, hy, hc, ← hgdef, smul_eq_mul, smul_eq_mul]
+    rw [LinearMap.mem_ker, map_add (f := _), map_smul, hy, hc, ← hgdef, smul_eq_mul, smul_eq_mul]
     ring
   obtain ⟨n, bk⟩ := Submodule.basisOfPid (Pi.basisFun ℤ (Fin (k + 1))) (LinearMap.ker φ)
   let b := Module.Basis.mkFinSnoc bk y hli hsp

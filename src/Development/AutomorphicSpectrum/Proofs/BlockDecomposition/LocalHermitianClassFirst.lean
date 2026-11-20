@@ -96,7 +96,7 @@ theorem vecT_smul (a : k) (t : k ⊗[maximalRealSubfield E] Fld Q) :
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul b y => rw [TensorProduct.smul_tmul', vecT_tmul, vecT_tmul, smul_eq_mul, map_mul, mul_smul]
-  | add s t hs ht => rw [smul_add, map_add, map_add, hs, ht, smul_add]
+  | add s t hs ht => rw [smul_add, map_add (f := _), map_add (f := _), hs, ht, smul_add]
 
 variable (j : K ≃+* k ⊗[maximalRealSubfield E] E) (hj : ∀ a e, j.symm (a ⊗ₜ e) = cm a * φ e)
   (A₀ : Matrix (Fin n) (Fin n) E) (hψ : ∀ y, ψ (alpha Q * y) = A₀ *ᵥ ψ y)
@@ -106,11 +106,11 @@ theorem vecT_inclBase (u : k ⊗[maximalRealSubfield E] E) (t : k ⊗[maximalRea
     vecT Q φ cm hc ψ (inclBase Q k u * t) = j.symm u • vecT Q φ cm hc ψ t := by
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, add_mul, map_add, ha, hb, map_add, add_smul]
+  | add a b ha hb => rw [map_add (f := _), add_mul, map_add (f := _), ha, hb, map_add (f := _), add_smul]
   | tmul a e =>
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add s t hs ht => rw [mul_add, map_add, hs, ht, map_add, smul_add]
+    | add s t hs ht => rw [mul_add, map_add (f := _), hs, ht, map_add (f := _), smul_add]
     | tmul b y =>
       have e1 : inclBase Q k (a ⊗ₜ e) = a ⊗ₜ algebraMap E (Fld Q) e := rfl
       rw [e1, Algebra.TensorProduct.tmul_mul_tmul, vecT_tmul, vecT_tmul, hj, ← Algebra.smul_def, map_smul]
@@ -123,7 +123,7 @@ theorem vecT_alpha (t : k ⊗[maximalRealSubfield E] Fld Q) :
     vecT Q φ cm hc ψ (((1 : k) ⊗ₜ alpha Q) * t) = (A₀.map φ) *ᵥ vecT Q φ cm hc ψ t := by
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add s t hs ht => rw [mul_add, map_add, hs, ht, map_add, Matrix.mulVec_add]
+  | add s t hs ht => rw [mul_add, map_add (f := _), hs, ht, map_add (f := _), Matrix.mulVec_add]
   | tmul b y =>
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, vecT_tmul, vecT_tmul, hψ, Matrix.mulVec_smul]
     congr 1
@@ -144,7 +144,7 @@ theorem vecT_eval (m : K[X]) : ∀ t : k ⊗[maximalRealSubfield E] Fld Q,
       Matrix.one_mulVec, RingEquiv.symm_apply_apply]
   | add p q hp hq =>
     intro t
-    rw [map_add, add_mul, map_add, hp, hq, map_add, Matrix.add_mulVec]
+    rw [map_add (f := _), add_mul, map_add (f := _), hp, hq, map_add (f := _), Matrix.add_mulVec]
   | monomial d a ih =>
     intro t
     have e1 : (C a * X ^ (d + 1) : K[X]) = (C a * X ^ d) * X := by rw [pow_succ, mul_assoc]
@@ -239,9 +239,9 @@ theorem exists_psi {n : ℕ} (A : Matrix (Fin n) (Fin n) E) (hs : A.charpoly.Sep
   let ψ : Fld Q →ₗ[E] (Fin n → E) :=
     { toFun := fun y => aeval A (rep y) *ᵥ e₀
       map_add' := fun y y' => by
-        rw [← Matrix.add_mulVec, ← map_add]
+        rw [← Matrix.add_mulVec, ← map_add (f := _)]
         refine hmk _ _ ?_
-        rw [map_add, hrep, hrep, hrep]
+        rw [map_add (f := _), hrep, hrep, hrep]
         rfl
       map_smul' := fun c y => by
         rw [RingHom.id_apply, ← Matrix.smul_mulVec, ← map_smul]

@@ -197,7 +197,7 @@ theorem isRegularLocalRing_locAt_chart (P : Ideal (MvPolynomial (Σ k, ι k) ℂ
       intro k
       have h := congrArg (lam k) hg
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_smul, map_zero, smul_eq_mul, v, Sum.elim_inl, Sum.elim_inr,
+        simp only [map_add (f := _), map_sum, map_smul, map_zero, smul_eq_mul, v, Sum.elim_inl, Sum.elim_inr,
         hlamG, hlamX, mul_zero, Finset.sum_const_zero, zero_add, mul_ite, mul_one,
         Finset.sum_ite_eq', Finset.mem_univ, if_true] at h
       exact h

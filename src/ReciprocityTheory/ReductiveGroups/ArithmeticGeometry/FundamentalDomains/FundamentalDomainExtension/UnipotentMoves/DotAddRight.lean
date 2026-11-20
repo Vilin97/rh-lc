@@ -14,7 +14,7 @@ lemma dot_add_left {n : ℕ} (u u' w : Fin n → ℂ) : dot (u + u') w = dot u w
   simp only [dot, Pi.add_apply, add_mul, Finset.sum_add_distrib]
 
 lemma dot_add_right {n : ℕ} (u w w' : Fin n → ℂ) : dot u (w + w') = dot u w + dot u w' := by
-  simp only [dot, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [dot, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 lemma conj_dot {n : ℕ} (u w : Fin n → ℂ) : conj (dot u w) = dot w u := by
   set_option synthInstance.maxHeartbeats 100000 in

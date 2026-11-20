@@ -21,7 +21,7 @@ theorem DL_apply (f : LaurentSeries R) : DL W f = toL (fw W) * dL f := rfl
 theorem isDer_DL : IsDer (DL W) := by
   unfold IsDer
   refine ⟨fun a b => ?_, fun a b => ?_⟩
-  · simp only [DL, map_add, mul_add]
+  · simp only [DL, map_add (f := _), mul_add]
   · simp only [DL, dL_mul]
     ring
 

@@ -160,7 +160,7 @@ private theorem trace_rz (hF : IsHostFrame Ω c e ψ S A F) (ι : Qbar l ≃+* �
   refine (h3 (F.Ψ (toGS Ω _ σ⁻¹))).trans ?_
   rw [h1, map_mul, map_inv, map_pow, Units.val_mul, Units.val_inv_eq_inv_val, Units.val_pow_eq_pow_val, h2,
     UpperTheory.V.Af.eis3]
-  simp only [map_add, map_mul, map_inv₀, map_pow, map_natCast, map_one, RingEquiv.symm_apply_apply, _root_.mul_inv_rev, inv_inv]
+  simp only [map_add (f := _), map_mul, map_inv₀, map_pow, map_natCast, map_one, RingEquiv.symm_apply_apply, _root_.mul_inv_rev, inv_inv]
   rw [mul_comm (_ ⁻¹) ((q : PadicAlgCl l) ^ e)]
   rfl
 variable {K : Type} [Field K] [NumberField K] [IsCMField K] [Algebra K Ω] [IsScalarTower ℚ K Ω]

@@ -85,7 +85,7 @@ theorem mem_max (l : ℕ) [hp : Fact l.Prime] (hl : ((l : ℕ) : O) ∈ IsLocalR
     | exact ringChar.of_eq ((hp.out.eq_one_or_self_of_dvd _ (ringChar.dvd hk)).resolve_left
         CharP.ringChar_ne_one)
   have h := congrArg (IsLocalRing.residue O) hroot
-  simp only [map_pow, map_add, map_one] at h
+  simp only [map_pow, map_add (f := _), map_one] at h
   rw [add_pow_char, one_pow] at h
   have h2 : (IsLocalRing.residue O x₀) ^ l = 0 := by linear_combination h
   exact (IsLocalRing.residue_eq_zero_iff _).1 (pow_eq_zero_iff hp.out.ne_zero |>.1 h2)
@@ -165,7 +165,7 @@ def Fs (l : ℕ) (x₀ : O) (a : O⟦X⟧) : O⟦X⟧ :=
 theorem Fs_mul (l : ℕ) {x₀ : O} (hroot : (1 + x₀) ^ l = 1) (a : O⟦X⟧) :
     (1 + a) ^ l - 1 = Fs l x₀ a * (a - C x₀) := by
   have hy : (1 + C x₀ : O⟦X⟧) ^ l = 1 := by
-    simpa [map_pow, map_add, map_one] using congrArg (C : O →+* O⟦X⟧) hroot
+    simpa [map_pow, map_add (f := _), map_one] using congrArg (C : O →+* O⟦X⟧) hroot
   have h := geom_sum₂_mul (1 + a) (1 + C x₀) l
   rw [hy] at h
   unfold Fs
@@ -186,7 +186,7 @@ private theorem coeff_one_one_add_X_pow_eq (n : ℕ) : coeff 1 ((1 + X : O⟦X�
     have e : coeff 1 ((1 + X : O⟦X⟧) ^ n * X) = 1 := by
       rw [show (1 : ℕ) = 0 + 1 from rfl, PowerSeries.coeff_succ_mul_X]
       simp
-    rw [pow_succ, mul_add, mul_one, map_add, ih, e]
+    rw [pow_succ, mul_add, mul_one, map_add (f := _), ih, e]
     push_cast
     ring
 
@@ -235,16 +235,16 @@ theorem theta_at_root (l : ℕ) [hp : Fact l.Prime] (hl : ((l : ℕ) : O) ∈ Is
     apply hinj
     have eg : g₁ = C χ + X * h₂ := by rw [← hh₂]; ring
     rw [← hb, hg₁, eg]
-    simp only [map_add, map_mul, hXI, hd]
+    simp only [map_add (f := _), map_mul, hXI, hd]
   have hbroot : (1 + b) ^ l = 1 := by
     have e1 : γ (φ₀ X) = (1 + γ X) ^ l - 1 := by
-      simp only [hφ₀, map_sub, map_pow, map_add, map_one]
+      simp only [hφ₀, map_sub, map_pow, map_add (f := _), map_one]
     have e2 : Ideal.Quotient.mk I (γ (φ₀ X)) = 0 := by
       rw [← hc, hL2, h0, map_zero, map_zero]
     rw [e1] at e2
     have e3 : Ideal.Quotient.mk I ((1 + γ X) ^ l - 1) =
         Ideal.Quotient.mk I (C ((1 + b) ^ l - 1)) := by
-      simp only [map_sub, map_pow, map_add, map_one, hb]
+      simp only [map_sub, map_pow, map_add (f := _), map_one, hb]
     have h3 : (1 + b) ^ l - 1 = 0 := hinj _ _ (by rw [← e3, e2, map_zero, map_zero])
     linear_combination h3
   have hbx : b = x₀ := by
@@ -256,7 +256,7 @@ theorem theta_at_root (l : ℕ) [hp : Fact l.Prime] (hl : ((l : ℕ) : O) ∈ Is
   have hL4 : ∀ f, Ideal.Quotient.mk I (γ f) = Ideal.Quotient.mk I f := by
     intro f
     obtain ⟨c, q, hq⟩ := decomp hxm f
-    simp only [hq, map_add, map_mul, map_sub, algHom_C_eq_C γ, hγX, hXI, sub_self, zero_mul,
+    simp only [hq, map_add (f := _), map_mul, map_sub, algHom_C_eq_C γ, hγX, hXI, sub_self, zero_mul,
       zero_add]
   have hXQ : X * Q ≠ 0 := by
     rw [hQ]

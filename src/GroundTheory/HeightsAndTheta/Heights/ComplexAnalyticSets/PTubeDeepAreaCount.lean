@@ -23,7 +23,7 @@ theorem differentiable_eval {k : ℕ} (P : MvPolynomial (Fin k) ℂ) :
   induction P using MvPolynomial.induction_on with
   | C a => simp
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p i hp =>
     simp only [map_mul, eval_X]

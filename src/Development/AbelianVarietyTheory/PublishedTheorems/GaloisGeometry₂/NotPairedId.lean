@@ -55,7 +55,7 @@ theorem twist {π : CuspSub E a} (h : Paired π π invTOp) (χ : HChar E) : Pair
     have e3 : opMul χ (invTOp (.lie X)) = 1 := rfl
     have e4 : opMul χ (.lie X) = 1 := rfl
     rw [e2, e3, e4]
-    simp only [Units.val_one, one_smul, map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
+    simp only [Units.val_one, one_smul, map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
     linear_combination e
 
 theorem not_paired_id {s : ℂ} (hs : s ≠ 0) :

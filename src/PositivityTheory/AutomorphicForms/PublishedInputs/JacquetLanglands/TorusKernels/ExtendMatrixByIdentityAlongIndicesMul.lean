@@ -138,7 +138,7 @@ theorem pt_eq (f : P → ℂ) (m : ℕ) {r θ : ℝ} (hr0 : 0 < r) (hr1 : r < 1)
     have := congrArg conj h
     simpa using this
   have hcw : conj w = -Complex.I * (1 + conj s) / (1 - conj s) := by
-    rw [hw, map_div₀, map_mul, map_add, map_sub, map_one, Complex.conj_I]
+    rw [hw, map_div₀, map_mul, map_add (f := _), map_sub, map_one, Complex.conj_I]
   have hI : Complex.I ≠ 0 := Complex.I_ne_zero
   have hD : Complex.I - conj w = 2 * Complex.I / (1 - conj s) := by
     rw [hcw]; field_simp; ring

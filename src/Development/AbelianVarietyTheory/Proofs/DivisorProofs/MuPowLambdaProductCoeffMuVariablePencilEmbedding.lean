@@ -92,9 +92,9 @@ private lemma pderiv_mu_lambdaPoly_lemma_5 (f : _root_.GlobalTheory.PsCo.Pc1.A.P
     pderiv none (_root_.GlobalTheory.PsCo.Pc1.A.inM n L f) = 0 := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [_root_.GlobalTheory.PsCo.Pc1.A.inM]
-  | add p q hp hq => simp [map_add, hp, hq]
+  | add p q hp hq => simp [map_add (f := _), hp, hq]
   | mul_X p v hp =>
-    simp only [map_mul, Derivation.leibniz, hp, smul_eq_mul, map_add]
+    simp only [map_mul, Derivation.leibniz, hp, smul_eq_mul, map_add (f := _)]
     simp [_root_.GlobalTheory.PsCo.Pc1.A.inM, pderiv_X]
 
 open MvPolynomial in
@@ -111,9 +111,9 @@ private lemma pencilModeDerivation_lambdaPoly_lemma_7 (x : _root_.GlobalTheory.P
       _root_.GlobalTheory.PsCo.Pc1.A.inM n L (_root_.GlobalTheory.PsCo.Pc1.A.dL L ε x f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [_root_.GlobalTheory.PsCo.Pc1.A.inM]
-  | add p q hp hq => simp [map_add, hp, hq]
+  | add p q hp hq => simp [map_add (f := _), hp, hq]
   | mul_X p v hp =>
-    simp only [map_mul, Derivation.leibniz, hp, smul_eq_mul, map_add]
+    simp only [map_mul, Derivation.leibniz, hp, smul_eq_mul, map_add (f := _)]
     simp [_root_.GlobalTheory.PsCo.Pc1.A.dMu, _root_.GlobalTheory.PsCo.Pc1.A.inM, mkDerivation_X]
 
 open MvPolynomial in
@@ -124,9 +124,9 @@ private lemma lambdaModeDerivation_entryPoly_lemma_8 (x : _root_.GlobalTheory.Ps
       _root_.GlobalTheory.PsCo.Pc1.A.inL n L (_root_.GlobalTheory.PsCo.Pc1.dM ε x P) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [_root_.GlobalTheory.PsCo.Pc1.A.inL]
-  | add p q hp hq => simp [map_add, hp, hq]
+  | add p q hp hq => simp [map_add (f := _), hp, hq]
   | mul_X p v hp =>
-    simp only [map_mul, Derivation.leibniz, hp, smul_eq_mul, map_add]
+    simp only [map_mul, Derivation.leibniz, hp, smul_eq_mul, map_add (f := _)]
     simp [_root_.GlobalTheory.PsCo.Pc1.A.dL, _root_.GlobalTheory.PsCo.Pc1.A.inL, mkDerivation_X]
 
 open MvPolynomial in
@@ -328,7 +328,7 @@ private lemma coeff_pderiv_mu_lemma_13 (F : _root_.GlobalTheory.PsCo.Pc1.A.PolyM
       (k + 1 : _root_.GlobalTheory.PsCo.Pc1.Poly n) *
         _root_.GlobalTheory.PsCo.Pc1.A.exL n L (_root_.GlobalTheory.PsCo.Pc1.A.coefM n L (k + 1) F) := by
   rw [_root_.GlobalTheory.PsCo.Cw2a.t_coefM_pderiv]
-  simp only [Algebra.smul_def, map_add, map_natCast, map_one, nsmul_eq_mul, Nat.cast_add, Nat.cast_one]
+  simp only [Algebra.smul_def, map_add (f := _), map_natCast, map_one, nsmul_eq_mul, Nat.cast_add, Nat.cast_one]
   rw [show ((k : _root_.GlobalTheory.PsCo.Pc1.A.PolyL n L) + 1) =
       _root_.GlobalTheory.PsCo.Pc1.A.inL n L ((k : _root_.GlobalTheory.PsCo.Pc1.Poly n) + 1) by simp, extractCoeff_inl_mul]
 
@@ -433,7 +433,7 @@ private lemma koszulRecursion_solvable_of_product_lemma (M : ℕ) (m : Fin L →
     ⟨fun k => ?_, fun k hk => ?_, fun x k hk => ?_⟩, ?_⟩
   · have hk := coeff_eq_zero_of_mem_lambdaSquares_lemma_12 hmem k
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sub, map_add, map_sum, coeff_pderiv_mu_lemma_13, coeff_embedding_mul_lemma_14, coeff_modeDerivation_lemma_15, mul_assoc,
+      simp only [map_sub, map_add (f := _), map_sum, coeff_pderiv_mu_lemma_13, coeff_embedding_mul_lemma_14, coeff_modeDerivation_lemma_15, mul_assoc,
       pencilModeDerivation_embedding_lemma_16, coeff_mu_mul_lemma_17, shift_const_mul_lemma_4] at hk
     simp only [← mul_assoc] at hk ⊢
     linear_combination hk
@@ -510,7 +510,7 @@ theorem _root_.GlobalTheory.PsCo.Pc1.A.stAlg : _root_.GlobalTheory.PsCo.Pc1.StAl
       ⟨fun k => ?_, fun k hk => ?_, fun x k hk => ?_⟩, ?_⟩
     · have h₁ := r₁ k
       have h₂ := r₂ k
-      simp only [map_add, shift_add_lemma_3, mul_add, Finset.sum_add_distrib] at h₁ h₂ ⊢
+      simp only [map_add (f := _), shift_add_lemma_3, mul_add, Finset.sum_add_distrib] at h₁ h₂ ⊢
       linear_combination h₁ + h₂
     · simp [s₁ k hk, s₂ k hk]
     · simp [t₁ x k hk, t₂ x k hk]

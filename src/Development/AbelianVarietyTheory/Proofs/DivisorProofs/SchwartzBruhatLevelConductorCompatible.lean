@@ -51,7 +51,7 @@ theorem pureA_fixed : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [Fint
               push_cast; simp only [norm_mul]; ring
           _ ≤ 1 := by rw [h2, one_mul]; exact hnat v _
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, dotProduct, dotProduct, Finset.mul_sum, map_sum, map_sum]
+        rw [map_add (f := _), dotProduct, dotProduct, Finset.mul_sum, map_sum, map_sum]
       refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ?_ ?_)
       · refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _) fun i _ => ?_
         rw [map_mul, norm_mul]

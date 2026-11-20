@@ -25,7 +25,7 @@ theorem coeff_aeval_scale (c : σ → K) (f : MvPolynomial σ K) (m : σ →₀ 
     split_ifs with h
     · subst h; ring
     · simp
-  | add f g hf hg => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, mul_add]
+  | add f g hf hg => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, mul_add]
 
 end Scale
 

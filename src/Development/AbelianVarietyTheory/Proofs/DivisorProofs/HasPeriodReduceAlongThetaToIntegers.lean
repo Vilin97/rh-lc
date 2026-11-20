@@ -20,7 +20,7 @@ theorem _root_.GlobalTheory.QLog.hasPeriod_reduce : ∀ (p : ℕ) [Fact p.Prime]
       hq).2.2 O E F.θ Θ hΘ
     simpa [hw] using hmap
   · have h2 := congrArg Θ hb
-    rw [map_mul, map_pow, map_natCast, hΘ, map_add, map_mul, map_pow, map_natCast] at h2
+    rw [map_mul, map_pow, map_natCast, hΘ, map_add (f := _), map_mul, map_pow, map_natCast] at h2
     exact h2
 
 end GlobalTheory.QLog

@@ -12,7 +12,7 @@ variable {K : Type} [CommRing K] {V : Type} [AddCommGroup V] [Module K V] {ι : 
 theorem dtot_add {E : Type} [AddCommGroup E] (d : E →+ E) (c c' : Finset ι → E) :
     Dtot d (c + c') = Dtot d c + Dtot d c' := by
   funext t
-  simp only [Dtot, delta, Pi.add_apply, smul_add, Finset.sum_add_distrib, map_add]
+  simp only [Dtot, delta, Pi.add_apply, smul_add, Finset.sum_add_distrib, map_add (f := _)]
   abel
 
 def dtotHom {E : Type} [AddCommGroup E] (d : E →+ E) : (Finset ι → E) →+ (Finset ι → E) :=
@@ -223,7 +223,7 @@ private theorem Dtot_Lop_eq_zero_of_Dtot_eq_zero_of_empty_eq_zero (p : ℕ) (d :
       abel
     have hLs2 : Lop f h v y s = (-1 : ℤ) ^ s.card • (ExteriorAlgebra.ι K (f m v) * y s) +
         (if h2 : s'.Nonempty then h m (s'.min' h2) v • y s' else 0) := hLs
-    rw [hsum, hLs2, hX, map_add, map_zsmul, dω, hys s]
+    rw [hsum, hLs2, hX, map_add (f := _), map_zsmul, dω, hys s]
     by_cases h2 : s'.Nonempty
     · set n := s'.min' h2 with hn_eq
       have hns : n ∈ s' := s'.min'_mem h2

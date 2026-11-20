@@ -77,7 +77,7 @@ theorem typeSpan_proj_mem {M ι : Type} [AddCommGroup M] [Module ℂ M] (b : M �
     have e3 : b (x - π₁ x) (T w - π (T w)) = 0 := by
       rw [← hherm _ (G.sub_mem hTw (hYG (hπY _))) _ (hYG hxp), e2, star_zero]
     have hsplit : T w = π (T w) + (T w - π (T w)) := by abel
-    rw [hsplit, map_add, e1, e3, add_zero]
+    rw [hsplit, map_add (f := _), e1, e3, add_zero]
   have hd : e x - π₁ x ∈ typeSpan ρ Y₀ G := Submodule.sub_mem _ (he x) hpS
   have hdd : b (e x - π₁ x) (e x - π₁ x) = 0 := by
     have h1 := he' x _ hd

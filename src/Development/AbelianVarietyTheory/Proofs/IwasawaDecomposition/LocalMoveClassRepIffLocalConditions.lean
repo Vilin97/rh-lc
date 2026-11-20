@@ -117,7 +117,7 @@ theorem exists_near {g : GL (Fin n) (AfE F E)} {N : Submodule (𝓞 E) (Sp E n)}
         rw [this, Matrix.mulVec_add, Pi.add_apply]
       rw [e0, Matrix.mulVec_add, Pi.add_apply]
       ring
-    rw [e, map_add]
+    rw [e, map_add (f := _)]
     exact Valuation.map_add_lt _ (h i) (h' i)
   | smul a y _ ih =>
     obtain ⟨x, hx, h⟩ := ih
@@ -143,7 +143,7 @@ theorem exists_near {g : GL (Fin n) (AfE F E)} {N : Submodule (𝓞 E) (Sp E n)}
         (a : AfE F E) * ((((g⁻¹ : GL (Fin n) (AfE F E)) : Matrix (Fin n) (Fin n) (AfE F E)) *ᵥ y) i - Col2.pullV g x i) +
         ((a : AfE F E) - Formalism.UG.inclE (F := F) (FiniteAdeleRing (𝓞 F) F) (algebraMap (𝓞 E) E r)) * Col2.pullV g x i := by
       ring
-    rw [e, map_add]
+    rw [e, map_add (f := _)]
     refine Valuation.map_add_lt _ ?_ ?_
     · rw [map_mul, map_mul]
       exact (mul_le_of_le_one_left' ((mem_rInt_iff F E _).1 a.2 P)).trans_lt (h i)

@@ -28,7 +28,7 @@ instance : Module Λ (Rep ρ) where
   smul_add a v w := by change ρ a *ᵥ _ = ρ a *ᵥ _ + ρ a *ᵥ _; apply mulVec_add
   add_smul a b v := by
     change ρ (a + b) *ᵥ _ = ρ a *ᵥ _ + ρ b *ᵥ _
-    rw [map_add]; apply add_mulVec
+    rw [map_add (f := _)]; apply add_mulVec
   zero_smul v := by
     change ρ 0 *ᵥ _ = _
     rw [map_zero]; apply zero_mulVec

@@ -129,7 +129,7 @@ theorem isSquare_iff (H : Host E) {l : ℕ} (hl : l.Prime) {w : Ideal (𝓞 E)} 
     · rintro ⟨a, ha, haw, hbw⟩
       obtain ⟨x, y, rfl⟩ := exists_coords H ha
       have hb : H.bar (x + y * H.w0) = x + y * (1 - H.w0) := by
-        rw [map_add, map_mul, map_intCast, map_intCast, cmHost_bar_halfIntegerGenerator]
+        rw [map_add (f := _), map_mul, map_intCast, map_intCast, cmHost_bar_halfIntegerGenerator]
       rw [hb] at hbw
       have hy : ¬ (l : ℤ) ∣ y := by
         intro hy

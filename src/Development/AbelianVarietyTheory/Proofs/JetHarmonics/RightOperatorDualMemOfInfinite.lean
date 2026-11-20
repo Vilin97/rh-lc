@@ -17,7 +17,7 @@ variable {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module �
 theorem IsPol.map {f : ℂ → V} (hf : IsPol f) (φ : V →ₗ[ℂ] W) : IsPol fun y => φ (f y) := by
   induction hf with
   | const a => exact IsPol.const _
-  | add _ _ h1 h2 => simpa only [map_add] using h1.add h2
+  | add _ _ h1 h2 => simpa only [map_add (f := _)] using h1.add h2
   | xsmul _ h => simpa only [map_smul] using h.xsmul
 
 end module
@@ -83,7 +83,7 @@ private lemma isPol_linearMap_comp (g : V →ₗ[ℂ] W) {f : ℂ → V} (hf : _
     _root_.GlobalTheory.RhvPoly.IsPol fun y => g (f y) := by
   induction hf with
   | const a => exact .const _
-  | add _ _ ihf ihg => simpa only [map_add] using ihf.add ihg
+  | add _ _ ihf ihg => simpa only [map_add (f := _)] using ihf.add ihg
   | xsmul _ ih => simpa only [map_smul] using ih.xsmul
 
 open MeasureTheory in

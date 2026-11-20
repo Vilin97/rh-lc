@@ -377,7 +377,7 @@ theorem adele_tens_eq_zero {F E A B : Type} [Field F] [Field E] [Algebra F E] [C
     induction z with
     | tmul x y => simp [← TensorProduct.add_tmul]
     | add x y hx hy =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [add_add_add_comm, ← hx, ← hy]
   rw [hz z, a, b, map_zero, map_zero, add_zero]
 

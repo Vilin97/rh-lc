@@ -206,7 +206,7 @@ theorem eq_zero_of_orth {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hnd 
     obtain ⟨s, rfl⟩ := hx
     rw [← hs.eq, hz s, map_zero]
   | zero => simp
-  | add x w _ _ hx hw => rw [map_add, hx, hw, add_zero]
+  | add x w _ _ hx hw => rw [map_add (f := _), hx, hw, add_zero]
   | smul c x _ hx => rw [map_smul, hx, smul_zero]
 
 end Vec

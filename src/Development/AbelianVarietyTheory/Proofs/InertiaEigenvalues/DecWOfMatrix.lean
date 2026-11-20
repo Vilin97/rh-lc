@@ -25,7 +25,7 @@ private theorem tensorProduct_map_algHom_smul {O A M N : Type} [CommRing O] [Com
     rw [TensorProduct.smul_tmul', TensorProduct.map_tmul, TensorProduct.map_tmul,
       TensorProduct.smul_tmul', AlgHom.toLinearMap_apply, AlgHom.toLinearMap_apply, smul_eq_mul,
       smul_eq_mul, map_mul]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 private theorem coeffs_eq_of_sum_smul_eq_of_span_eq {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] {n : ℕ}
     (B : Module.Basis (Fin n) R M) (c : Fin n → M) (hc : Submodule.span R (Set.range c) = ⊤)

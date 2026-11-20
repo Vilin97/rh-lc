@@ -104,7 +104,7 @@ def dd (hP : P * P = P) (m : ℕ) : GL (Fin n) ℚ_[g] :=
     by rw [idem_mul h, inv_mul_cancel₀ h0, one_smul, add_sub_cancel]⟩
 
 theorem dd_val (hP : P * P = P) (m : ℕ) : (dd hP m).val = ι (P + g ^ m • (1 - P)) := by
-  rw [map_add, map_nsmul, map_sub, map_one, ← Nat.cast_smul_eq_nsmul ℚ_[g], Nat.cast_pow]
+  rw [map_add (f := _), map_nsmul, map_sub, map_one, ← Nat.cast_smul_eq_nsmul ℚ_[g], Nat.cast_pow]
   rfl
 
 theorem dd_zero (hP : P * P = P) : dd hP 0 = 1 :=
@@ -127,7 +127,7 @@ theorem conj_up (hP : P * P = P) {k : GL (Fin n) ℤ_[g]} (hk : red g n k ∈ U 
     simp only [mul_add, add_mul, mul_sub, sub_mul, mul_assoc, hp, hp', mul_one, one_mul, sub_self, add_zero]
   obtain ⟨k', h1, h2⟩ := exists_unit (P * k.val * P + (1 - P) * k.val * (1 - P) +
     (g : Matrix (Fin n) (Fin n) ℤ_[g]) * (P * k.val * (1 - P)) + (1 - P) * (M * P)) (un _ hx2) (by
-      simp only [map_add, map_mul, map_sub, map_one, red_nat, hx, un_val, zero_mul]
+      simp only [map_add (f := _), map_mul, map_sub, map_one, red_nat, hx, un_val, zero_mul]
       simp only [mul_add, add_mul, mul_sub, sub_mul, mul_assoc, hp, hp', mul_one, one_mul, sub_self, add_zero]
       abel)
   refine ⟨k', h2 ▸ un_mem _ ?_ ?_, Units.ext ?_⟩
@@ -153,11 +153,11 @@ theorem conj_down (hP : P * P = P) {u : Gn g n} (hu : u ∈ U (1 - φ P) (φ P))
   obtain ⟨y, rfl⟩ := red_surjective g n u
   have hP' : ∀ r, P * (P * r) = P * r := fun r => by rw [← mul_assoc, hP]
   obtain ⟨k, h1, h2⟩ := exists_unit (1 + (1 - P) * ((y.val - 1) * P)) (red g n y) (by
-    simp only [map_add, map_mul, map_sub, map_one]
+    simp only [map_add (f := _), map_mul, map_sub, map_one]
     change 1 + _ * (((red g n y).val - 1) * _) = _
     rw [hu.2, hu.1, add_sub_cancel])
   obtain ⟨k', h3, h4⟩ := exists_unit (1 + (g : Matrix (Fin n) (Fin n) ℤ_[g]) ^ (m + 1) * ((1 - P) * ((y.val - 1) * P)))
-    1 (by simp only [map_add, map_mul, map_pow, red_nat, map_one, pow_succ, mul_zero, zero_mul, add_zero, Units.val_one])
+    1 (by simp only [map_add (f := _), map_mul, map_pow, red_nat, map_one, pow_succ, mul_zero, zero_mul, add_zero, Units.val_one])
   refine ⟨k, k', h2, h4, Units.ext ?_⟩
   change (dd hP _).val * ι k.val = ι k'.val * (dd hP _).val
   rw [dd_val, ← map_mul, ← map_mul, h1, h3]

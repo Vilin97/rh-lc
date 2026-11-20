@@ -80,7 +80,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.formEx_pf :
         simp only [prW]
         rw [← integral_add (hI a b) (hI a' b)]
         refine integral_congr_ae (Filter.Eventually.of_forall fun x => ?_)
-        simp only [Submodule.coe_add, Pi.add_apply, map_add]
+        simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _)]
         ring)
       (fun c a b => by
         simp only [prW, smul_eq_mul]

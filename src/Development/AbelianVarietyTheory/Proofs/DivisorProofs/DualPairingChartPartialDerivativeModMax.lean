@@ -108,7 +108,7 @@ theorem pairing_ev₂_sub_mem : ∀ (p : ℕ) (O : Type) [CommRing O] (G : PDivG
         rw [map_sum]
       refine Finset.sum_eq_zero fun i _ => ?_
       rw [map_smul, coeff_atZero_pderiv_inr, hT, smul_zero]
-      rw [map_add, Finsupp.degree_mapDomain, Finsupp.degree_single]
+      rw [map_add (f := _), Finsupp.degree_mapDomain, Finsupp.degree_single]
       omega
     rw [ha, hb, pow_one, pow_one, ← nsmul_eq_mul, ← nsmul_eq_mul, map_nsmul, map_nsmul,
       nsmul_eq_mul, nsmul_eq_mul]

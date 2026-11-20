@@ -52,7 +52,7 @@ theorem map_mem_half {R A : Type} [CommRing R] [AddCommGroup A] [Module R A] (I 
   refine Submodule.smul_induction_on ha (fun m hm b _ => ?_) (fun x y hx hy => ?_)
   · rw [map_smul]
     exact Submodule.smul_mem_smul hm trivial
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact add_mem hx hy
 
 set_option maxHeartbeats 1000000 in
@@ -103,7 +103,7 @@ theorem marked_isometry : ∀ (D : D7) (V : HSp D) (H : ReciprocityTheory.ChartR
         funext i
         exact TensorProduct.tmul_sub _ _ _)
     refine ⟨φ'.symm ⟨w, (hmem' w).2 (hw ▸ hz)⟩, φ'.injective (Subtype.ext ?_)⟩
-    rw [hgam, sub_eq_iff_eq_add'.1 e', map_add, map_nsmul, LinearEquiv.apply_symm_apply]
+    rw [hgam, sub_eq_iff_eq_add'.1 e', map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply]
     rfl
 
 end GlobalTheory.ShortMoveIso

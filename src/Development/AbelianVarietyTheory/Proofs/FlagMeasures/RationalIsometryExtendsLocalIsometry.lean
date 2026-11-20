@@ -28,7 +28,7 @@ theorem isUnitary_of_span (H : HermSp M V) (g : V ≃ₗ[E] V) {S : Set V} (hS :
     induction hx using Submodule.span_induction with
     | mem x hx => exact h x hx y hy
     | zero => rw [map_zero, H.h_zero_left, H.h_zero_left]
-    | add x x' _ _ ih ih' => rw [map_add, H.h_add_left, H.h_add_left, ih, ih']
+    | add x x' _ _ ih ih' => rw [map_add (f := _), H.h_add_left, H.h_add_left, ih, ih']
     | smul a x _ ih => rw [map_smul, H.h_smul_left, H.h_smul_left, ih]
   have h2 : ∀ y x, H.h (g y) (g x) = H.h y x := by
     intro y x
@@ -36,7 +36,7 @@ theorem isUnitary_of_span (H : HermSp M V) (g : V ≃ₗ[E] V) {S : Set V} (hS :
     induction hy using Submodule.span_induction with
     | mem y hy => rw [H.h_herm, h1 x y hy, ← H.h_herm]
     | zero => rw [map_zero, H.h_zero_left, H.h_zero_left]
-    | add y y' _ _ ih ih' => rw [map_add, H.h_add_left, H.h_add_left, ih, ih']
+    | add y y' _ _ ih ih' => rw [map_add (f := _), H.h_add_left, H.h_add_left, ih, ih']
     | smul a y _ ih => rw [map_smul, H.h_smul_left, H.h_smul_left, ih]
   exact fun x y => h2 x y
 
@@ -49,7 +49,7 @@ theorem baseChange_mem_span (p : PlF D) {s : Set (VS D).V} {x : (VS D).V} (hx : 
   induction hx using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ ihx ihy => rw [map_add]; exact Submodule.add_mem _ ihx ihy
+  | add x y _ _ ihx ihy => rw [map_add (f := _)]; exact Submodule.add_mem _ ihx ihy
   | smul a x _ ih => rw [baseChange_smul₂]; exact Submodule.smul_mem _ _ ih
 
 theorem ext_bcP (p : PlF D) {f g : Vp D p →ₗ[(D.s.atP p).Ep] Vp D p} (h : ∀ x, f (baseChange₂ D p x) = g (baseChange₂ D p x)) :
@@ -199,7 +199,7 @@ theorem perp_le (Z : LocDat D) (p : PlF D) {T : D.host.E} (F : LFlag (VS D) D.R.
           set_option synthInstance.maxHeartbeats 100000 in
             simp [hw, map_sub, map_sum, map_smul, hes, Finset.sum_ite_eq]
         | zero => simp
-        | add y y' _ _ ih ih' => simp [map_add, ih, ih']
+        | add y y' _ _ ih ih' => simp [map_add (f := _), ih, ih']
         | smul a y _ ih => simp [map_smulₛₗ, ih]
       have e : baseChange₂ D p x - ∑ a, (locH Z p).h (baseChange₂ D p x) (baseChange₂ D p (F.fl.e a)) • baseChange₂ D p (es a) = baseChange₂ D p w := by
         show baseChange₂ D p x - ∑ a, LocFacts₂ Z.M p (baseChange₂ D p x) (baseChange₂ D p (F.fl.e a)) • baseChange₂ D p (es a) = _
@@ -256,7 +256,7 @@ theorem locEquiv_NU (Z : LocDat D) (p : PlF D) (γ : (VS D).V ≃ₗ[D.host.E] (
     | zero => simp
     | add x y _ _ ihx ihy =>
       have e : locEquiv p γ (x + y) - (x + y) = (locEquiv p γ x - x) + (locEquiv p γ y - y) := by
-        rw [map_add]; abel
+        rw [map_add (f := _)]; abel
       rw [e]; exact Submodule.add_mem _ ihx ihy
     | smul c x _ ih =>
       rw [map_smul, ← smul_sub]; exact Submodule.smul_mem _ _ ih

@@ -62,7 +62,7 @@ theorem exists_ne_zero_of_principal {g : ℕ} (Λ : Submodule ℤ (Fin g → ℂ
       · simp [h, Matrix.mulVec, dotProduct]
     have e := hf ⟨_, hm⟩ (φ z)
     rw [h1 i ⟨_, hm⟩ z rfl] at e
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [e, ← Complex.exp_nat_mul, mul_right_comm, ← Complex.exp_add, mul_comm]
     congr 2
     ring
@@ -79,7 +79,7 @@ theorem exists_ne_zero_of_principal {g : ℕ} (Λ : Submodule ℤ (Fin g → ℂ
       simp
     have e := hf ⟨_, hm⟩ (φ z)
     rw [h2 j ⟨_, hm⟩ z rfl] at e
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [e, mul_pow, mul_pow, ← Complex.exp_nat_mul, ← Complex.exp_nat_mul]
     have : cexp (n * (Q (z + τ.mulVec (Pi.single j 1)) - Q z)) *
         cexp (-(n * Q (z + τ.mulVec (Pi.single j 1)))) = cexp (-(n * Q z)) := by

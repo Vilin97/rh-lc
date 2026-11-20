@@ -157,19 +157,19 @@ theorem fock_data (h : IsCMExt F E σ) (hfr : Framed τ JA JB a b A C) {Φ : Ten
     simp only [Matrix.transpose_mul, Matrix.mul_assoc]
     rw [← Matrix.mul_assoc (C w)ᵀ, ← Matrix.transpose_mul, h2, Matrix.transpose_one, Matrix.one_mul]
   set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [hU, ← map_add, ← map_sum, ← map_smul]
+    · simp only [hU, ← map_add (f := _), ← map_sum, ← map_smul]
     congr 1
     rw [Fintype.sum_prod_type, sumPl, LinearMap.sum_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun w _ => ?_
     rw [atL_eq, ← fock_eq (hu w)]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_smul, map_sum, map_add, atL_mul, LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.add_apply,
+      simp only [map_smul, map_sum, map_add (f := _), atL_mul, LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.add_apply,
       Module.End.mul_apply]
 
 theorem sumPl_add (Φ : Tens F P Q R S →ₗ[ℂ] SInf F κ) (L : InfinitePlace F → Module.End ℂ (Formalism.BasicNotions.TH.Pol P Q R S))
     (s : InfinitePlace F → ℂ) (T : Tens F P Q R S) :
     Φ (sumPl (fun w => L w + s w • 1) T) = Φ (sumPl L T) + (∑ w, s w) • Φ T := by
-  simp only [sumPl, atL_eq, map_add, map_smul, atL_one, Finset.sum_add_distrib, ← Finset.sum_smul, LinearMap.add_apply,
+  simp only [sumPl, atL_eq, map_add (f := _), map_smul, atL_one, Finset.sum_add_distrib, ← Finset.sum_smul, LinearMap.add_apply,
     LinearMap.smul_apply, Module.End.one_apply]
 
 theorem exists_dbl {γ γ' : Multiplicative ℝ →* UG (cA σ) JB} (h : γ ∈ RLines σ JB) (h' : γ' ∈ RLines σ JB) :
@@ -256,7 +256,7 @@ theorem sB_dbl (hdd : IsDblCoord (cA σ) (-1) JA JB d dd) (u u' v v' : Matrix α
     sB σ JA (dbl JB) (Matrix.fromCols u u') (Matrix.fromCols v v') = sB σ JA JB u v - sB σ JA JB u' v' := by
   rw [sB, sB, sB, dd.form, d.form, d.form, hdd, hdd, sumElim_dotProduct_sumElim, sumElim_dotProduct_sumElim,
     ← Fock.evIh_apply, ← Fock.evIh_apply, ← Fock.evIh_apply]
-  simp only [dotProduct_neg, map_sub, map_add, map_neg]
+  simp only [dotProduct_neg, map_sub, map_add (f := _), map_neg]
   ring
 
 omit [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β] in
@@ -429,19 +429,19 @@ theorem lieSecond' (hM : GlobalTheory.Published.RealMetaplecticRepresentation) :
       (∑ w, (m w : ℂ) * (Y w).trace)).cexp).mul_const (l (pureA F B G)))
     have t1 : ∀ j, T0 (Dd (Matrix.fromCols (v j) (-v j)) (Dd (Matrix.fromCols (hf • u j) (hf • u j)) B)) =
         2 * π * I * (2 * sB σ JA JB (v j) (hf • u j) : ℝ) * T0 B := fun j => by
-      rw [iDd.comm (at_cols (hv j) (ng (hv j))) (at_cols (hh j) (hh j)), map_add, kill _ (hh j), map_smul, sB_dbl hdd,
+      rw [iDd.comm (at_cols (hv j) (ng (hv j))) (at_cols (hh j) (hh j)), map_add (f := _), kill _ (hh j), map_smul, sB_dbl hdd,
         sB_neg d, zero_add, smul_eq_mul]
       congr 3
       ring
     have t2 : ∀ j, T0 (Dd (Matrix.fromCols (hf • u j) (-(hf • u j))) (Dd (Matrix.fromCols (v j) (v j)) B)) =
         -(2 * π * I * (2 * sB σ JA JB (v j) (hf • u j) : ℝ) * T0 B) := fun j => by
-      rw [iDd.comm (at_cols (hh j) (ng (hh j))) (at_cols (hv j) (hv j)), map_add, kill _ (hv j), map_smul, sB_dbl hdd,
+      rw [iDd.comm (at_cols (hh j) (ng (hh j))) (at_cols (hv j) (hv j)), map_add (f := _), kill _ (hv j), map_smul, sB_dbl hdd,
         sB_neg d, zero_add, smul_eq_mul, sB_anti d]
       push_cast
       ring
     rw [hT0] at hne
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hT0, map_add, map_smul, map_sum, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, kill _ (hh _),
+      simp only [hT0, map_add (f := _), map_smul, map_sum, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, kill _ (hh _),
       kill _ (hv _), t1, t2, zero_add, add_zero, Finset.sum_neg_distrib, add_neg_cancel, smul_zero, smul_eq_mul,
       trace_blocks, tr, id, ofReal_zero, zero_mul, Complex.exp_zero, one_mul, ofReal_one, mul_zero] at h3
     have h4 := mul_right_cancel₀ hne h3

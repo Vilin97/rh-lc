@@ -26,7 +26,7 @@ theorem act_mem (i : X.Tw) (j : ℕ) (b : Bool) (W : Submodule (FractionRing (X.
     act Y i j b z x ∈ W := by
   induction z using MonoidAlgebra.induction_on with
   | of g => simpa [act] using hW g x hx
-  | add f g hf hg => rw [map_add]; exact W.add_mem hf hg
+  | add f g hf hg => rw [map_add (f := _)]; exact W.add_mem hf hg
   | smul r f hf => rw [map_smul]; exact W.smul_mem r hf
 
 theorem eG_on_irred (i : X.Tw) (j : ℕ) (b : Bool) (W : Submodule (FractionRing (X.O i)) (Y.Fm i j b))
@@ -64,7 +64,7 @@ theorem act_comm (i : X.Tw) (j : ℕ) (b : Bool) (T : Module.End (FractionRing (
     act Y i j b z (T x) = T (act Y i j b z x) := by
   induction z using MonoidAlgebra.induction_on with
   | of g => simpa [act] using hT g x
-  | add f g hf hg => simp only [map_add, LinearMap.add_apply, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), LinearMap.add_apply, hf, hg]
   | smul r f hf => simp only [map_smul, LinearMap.smul_apply, hf]
 
 theorem eG_actG (i : X.Tw) (j : ℕ) (b : Bool) (g : G0g N) (x : Y.Fm i j b) :

@@ -26,7 +26,7 @@ private theorem eq_self_of_fix_D_of_linear_kaehler {A : Type} [CommRing A] [Alge
     obtain ⟨a, rfl⟩ := hx
     exact hD a
   | zero => exact map_zero g
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul a x _ hx => rw [hs, hx]
 
 private theorem exists_kaehler_map_D_of_algHom {A B : Type} [CommRing A] [CommRing B] [Algebra ℂ A] [Algebra ℂ B]

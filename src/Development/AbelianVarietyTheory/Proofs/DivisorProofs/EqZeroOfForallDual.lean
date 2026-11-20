@@ -18,7 +18,7 @@ theorem eq_zero_of_forall_dual {O C M : Type} [CommRing O] [CommRing C] [Algebra
     refine LinearMap.ext fun w => ?_
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul c m =>
       rw [Module.Basis.coord_apply, Module.Basis.baseChange_repr_tmul,
         LinearMap.liftBaseChange_tmul, LinearMap.comp_apply, Algebra.linearMap_apply,
@@ -35,7 +35,7 @@ theorem mem_W_iff : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClos
     intro y w
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul c t =>
       have e : (c ⊗ₜ[ℤ_[p]] t : P.V) = c • ((1 : C) ⊗ₜ[ℤ_[p]] t) := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]

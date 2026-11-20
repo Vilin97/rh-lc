@@ -147,7 +147,7 @@ theorem pass4 [NeZero n] [IsDomain O] [IsPrincipalIdealRing O] [IsFractionRing O
   have hellF0 : ellF 0 = 0 := by simp [hellFdef]
   have hellFa : ∀ f g, ellF (f + g) = ellF f + ellF g := by
     intro f g
-    simp only [hellFdef, map_add, Finsupp.add_apply, add_smul, Finset.sum_add_distrib]
+    simp only [hellFdef, map_add (f := _), Finsupp.add_apply, add_smul, Finset.sum_add_distrib]
   have hellFs : ∀ (o : O) f, ellF (o • f) = algebraMap O LL o • ellF f := by
     intro o f
     simp only [hellFdef, map_smul, Finsupp.smul_apply, smul_eq_mul, map_mul, mul_smul, Finset.smul_sum]
@@ -158,10 +158,10 @@ theorem pass4 [NeZero n] [IsDomain O] [IsPrincipalIdealRing O] [IsFractionRing O
         have h0 : d 0 = 0 := dH.map_zero
         simp [h0, hellF0]
       map_add' := fun f g => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         rw [hda, hellFa]
-        simp only [Pi.add_apply, map_add, smul_add]
+        simp only [Pi.add_apply, map_add (f := _), smul_add]
         abel }
   have hψ4 : ∀ (o : O) (x : ↥F3), ψ4 (o • x) = algebraMap O LL o • ψ4 x := by
     intro o x

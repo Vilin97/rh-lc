@@ -48,8 +48,8 @@ theorem supp_wt_term (w : σ → ℕ) (l l' : σ) (P : MvPolynomial σ ℂ) (γ 
         intro y
         simp [Finsupp.weight_apply]
       have key := congrArg (Finsupp.weight w) (tsub_add_cancel_of_le hle)
-      rw [map_add, hsw] at key
-      rw [map_add, hsw]
+      rw [map_add (f := _), hsw] at key
+      rw [map_add (f := _), hsw]
       omega
   · exact absurd rfl h
 
@@ -59,7 +59,7 @@ private theorem weight_le_of_mem_support_mul_of_right (w : σ → ℕ) (k : ℕ)
   classical
   intro γ hγ
   obtain ⟨a, _, b, hb, rfl⟩ := Finset.mem_add.mp (support_mul F G hγ)
-  rw [map_add]
+  rw [map_add (f := _)]
   exact le_add_left (hG b hb)
 
 private theorem weight_le_of_mem_support_sum {ι : Type} (w : σ → ℕ) (k : ℕ) (s : Finset ι)
@@ -90,7 +90,7 @@ private theorem exists_mem_support_mul_weight_eq_of_weight_zero (w : σ → ℕ)
   obtain ⟨γ, hγ⟩ := PI.FJMP.exists_mem_support (mul_ne_zero hD0 hg0)
   have hwγ : Finsupp.weight w γ = b := by
     obtain ⟨x, hx, y, hy, hxy⟩ := Finset.mem_add.mp (support_mul D g0 hγ)
-    rw [← hxy, map_add, hD x hx, zero_add]
+    rw [← hxy, map_add (f := _), hD x hx, zero_add]
     have h2 := mem_support_iff.mp hy
     rw [hc0] at h2
     by_contra hne
@@ -228,7 +228,7 @@ theorem supp_gen_pos {N : ℕ} (pos : κ → Bool) (ρ : Fin N → κ) (hρ : �
       apply h1
       rw [h0, zero_mul]
     have h2 := hmin _ hmem
-    rw [map_add, hsw, hwpos _ hpos0] at h2
+    rw [map_add (f := _), hsw, hwpos _ hpos0] at h2
     omega
   have hle : Finsupp.single (v (ρ i0)) 1 ≤ e0 := by
     rw [Finsupp.single_le_iff, hi0]
@@ -242,7 +242,7 @@ theorem supp_gen_pos {N : ℕ} (pos : κ → Bool) (ρ : Fin N → κ) (hρ : �
     exact mul_ne_zero (mem_support_iff.mp he0) (Nat.cast_add_one_ne_zero _)
   have hwγ0 : Finsupp.weight w (e0 - Finsupp.single (v (ρ i0)) 1) = Finsupp.weight w e0 := by
     have h1 := congrArg (Finsupp.weight w) hadd
-    rw [map_add, hsw, hwpos _ hpos0, add_zero] at h1
+    rw [map_add (f := _), hsw, hwpos _ hpos0, add_zero] at h1
     exact h1
   obtain ⟨γ, hγ, hγw⟩ := exists_mem_support_mul_weight_eq_of_weight_zero w _ M.det (g i0) hD0 hD hg _ hγ0 hwγ0
   rw [hdet] at hγ

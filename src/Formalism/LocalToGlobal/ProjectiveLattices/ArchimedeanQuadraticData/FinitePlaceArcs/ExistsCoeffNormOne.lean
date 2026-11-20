@@ -142,7 +142,7 @@ private theorem coeff_bind_scale_lemma_3 {σ K : Type} [NormedField K] (s : σ �
       rw [Finsupp.prod, mul_comm]
     · rw [mul_zero]
   next p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 private theorem norm_subA_le_lemma_4 {K : Type} [NormedField K]
     (A : ∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) K) (Cb : ℝ) (hC0 : 0 ≤ Cb)

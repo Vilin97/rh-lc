@@ -315,7 +315,7 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
   ·
     refine span_eq_of_basis hv (eigSub (liftA hv a) τ (Fin (p + q) → RS (liftA hv a))) h
       LinearMap.id (fun z i => ((comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C))
-      (fun z z' => by funext i; simp only [map_add, Pi.add_apply]; rfl)
+      (fun z z' => by funext i; simp only [map_add (f := _), Pi.add_apply]; rfl)
       (fun c z => by funext i; simp only [map_smul, Pi.smul_apply, smul_eq_mul]; rfl)
       (fun z z' hz => by rw [show z = z' from hz])
       (fun k => (h k : Fin (p + q) → RS (liftA hv a))) (fun k => rfl) _ (fun y => ?_)
@@ -327,7 +327,7 @@ theorem exForm : ∀ (C : Type) [Field C] (w : Valuation C ℝ≥0) (ℓ : C), 0
       (fun z => quotMap (w := w) (filSpace Fil τ)
         (fun i => ((comp (liftA hv a) (p + q) τ z i : Int0 (toAddVal w ℓ h0 h1)) : C)))
       (fun z z' => by
-        rw [← map_add]; congr 1; funext i; simp only [map_add, Pi.add_apply]; rfl)
+        rw [← map_add (f := _)]; congr 1; funext i; simp only [map_add (f := _), Pi.add_apply]; rfl)
       (fun c z => by
         show (filSpace Fil τ).mkQ _ = (c : C) • (filSpace Fil τ).mkQ _
         rw [← map_smul]; congr 1; funext i; simp only [map_smul, Pi.smul_apply, smul_eq_mul]; rfl)

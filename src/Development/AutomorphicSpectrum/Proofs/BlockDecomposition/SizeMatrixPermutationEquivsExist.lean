@@ -34,7 +34,7 @@ theorem tensorReindex_piTensor {α β : Type} (e : β ≃ α) {Γ X : α → Typ
   | smul_tprod r z =>
     simp only [map_smul, piTensor_tprod, tensorReindex_tprod, h]
   | add x y hx hy =>
-    simp only [map_add, hx, hy]
+    simp only [map_add (f := _), hx, hy]
 
 variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 

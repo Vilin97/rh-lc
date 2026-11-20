@@ -156,7 +156,7 @@ theorem classSum_smul_left (c : ℂ) (f f' : GAf L n → a.W) :
 
 theorem classSum_add_right (f f₁ f₂ : GAf L n → a.W) :
     classSum a β J T f (f₁ + f₂) = classSum a β J T f f₁ + classSum a β J T f f₂ := by
-  simp only [classSum, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [classSum, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem classSum_smul_right (c : ℂ) (f f' : GAf L n → a.W) :
     classSum a β J T f (c • f') = c * classSum a β J T f f' := by

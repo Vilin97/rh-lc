@@ -43,7 +43,7 @@ variable {G : Type} [Group G]
 def levRep (ρ : Representation O G M) (c : O) : Representation O G (Lev M c) where
   toFun g :=
     { toFun := fun x => Lev.mk (ρ g x.val) (by rw [← map_smul, Lev.smul_val, map_zero])
-      map_add' := fun x y => Lev.ext (by rw [Lev.val_mk, Lev.val_add, Lev.val_add, map_add]; rfl)
+      map_add' := fun x y => Lev.ext (by rw [Lev.val_mk, Lev.val_add, Lev.val_add, map_add (f := _)]; rfl)
       map_smul' := fun a x => Lev.ext (by rw [Lev.val_mk, Lev.val_smul, Lev.val_smul, map_smul]; rfl) }
   map_one' := by ext x; show ρ 1 x.val = x.val; rw [map_one]; rfl
   map_mul' g h := by ext x; show ρ (g * h) x.val = ρ g (ρ h x.val); rw [map_mul]; rfl

@@ -43,13 +43,13 @@ theorem UpperTheory.V.Cj.H.harmSub :
   have comb : ∀ (s : ℂ) (α β : Geo.Co Ξ q), IsH r m α → IsH r m β → IsH r m (s • α + β) := by
     intro s α β hα hβ
     have ap : ∀ X i, cmp i ((s • α + β) X) = s • cmp i (α X) + cmp i (β X) := fun X i => by
-      rw [show (s • α + β) X = s • α X + β X from rfl, map_add, map_smul]
+      rw [show (s • α + β) X = s • α X + β X from rfl, map_add (f := _), map_smul]
     refine ⟨(L1 _).1 (L.add_mem (L.smul_mem s ((L1 _).2 hα.lev)) ((L1 _).2 hβ.lev)),
       by rw [dCo_comb, hα.closed, hβ.closed, smul_zero, add_zero], fun X i => ⟨?_, fun t u => ?_⟩, fun X i => ?_⟩
     · rw [ap]
       exact Cm.mem_range_ofAut.1 (Submodule.add_mem _ (Submodule.smul_mem _ s (Cm.mem_range_ofAut.2 (hα.aut X i).1))
         (Cm.mem_range_ofAut.2 (hβ.aut X i).1))
-    · rw [ap, map_add, map_smul, (hα.aut X i).2 t u, (hβ.aut X i).2 t u, smul_add, smul_comm]
+    · rw [ap, map_add (f := _), map_smul, (hα.aut X i).2 t u, (hβ.aut X i).2 t u, smul_add, smul_comm]
     · rw [ap]
       exact Submodule.add_mem _ (Submodule.smul_mem _ s (hα.sq X i)) (hβ.sq X i)
   have zero : IsH r m (0 : Geo.Co Ξ q) := by

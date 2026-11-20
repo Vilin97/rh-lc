@@ -30,7 +30,7 @@ private theorem finite_bad_places (k B : Type) [Field k] [CommRing B] [IsDedekin
   | algebraMap r =>
     rw [← IsScalarTower.algebraMap_apply k B (FractionRing B)]
     exact v.algebraMap_mem r
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 private theorem dvd_ord_of_mem_sel (k B : Type) [Field k] [CommRing B] [IsDedekindDomain B] [Algebra k B]

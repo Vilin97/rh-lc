@@ -104,7 +104,7 @@ theorem extend_frame : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     simp [Fin.castSucc_ne_last]
   let h2 : Fv F v ⊗[F] E := algebraMap F (Fv F v ⊗[F] E) (1 / 2)
   have hh : h2 + h2 = 1 := by
-    rw [← map_add, show (1 / 2 : F) + 1 / 2 = 1 by norm_num, map_one]
+    rw [← map_add (f := _), show (1 / 2 : F) + 1 / 2 = 1 by norm_num, map_one]
   have hsh : s h2 = h2 := (Algebra.TensorProduct.map (AlgHom.id F (Fv F v)) σ).commutes _
   let c : Fin r → Fin r → Fv F v ⊗[F] E := fun a b => h2 * hR (Fv F v) σ J (f' a) (f' b)
   let f : Fin r → Fin n → Fv F v ⊗[F] E := fun b => f' b - ∑ a, c a b • y a.castSucc

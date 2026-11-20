@@ -25,7 +25,7 @@ theorem span_top_of_image {L : Type*} [Field L] (e : L →+* ℂ) {M V : Type*} 
     induction hx using Submodule.span_induction with
     | mem y hy => obtain ⟨k, rfl⟩ := hy; exact hFb k
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add, map_add, hy, hz, map_add, map_add]
+    | add y z _ _ hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, map_add (f := _), map_add (f := _)]
     | smul c y _ hy => rw [LinearMap.map_smulₛₗ, map_smul, hy, map_smul, smul_eq_mul, smul_eq_mul, map_mul]
   have hF0 : F = 0 := by
     refine LinearMap.ext fun v => ?_
@@ -96,7 +96,7 @@ theorem span_image_top {L : Type*} [Field L] {K : Type*} [Field K] (e : L →+* 
     induction hx using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul c x _ hx => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
   exact key _ (hS ▸ Submodule.mem_top)
 
@@ -125,7 +125,7 @@ theorem span_mtSub (hC : PartCompl B) (i : LocT B) :
     obtain ⟨u, hu, rfl⟩ := hz
     exact Submodule.subset_span (Submodule.subset_span ⟨u, hu, rfl⟩)
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
 
 set_option synthInstance.maxHeartbeats 400000 in

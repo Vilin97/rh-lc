@@ -198,7 +198,7 @@ theorem sylvester (A : Matrix (Fin a) (Fin a) K) (B : Matrix (Fin b) (Fin b) K)
         Matrix.smul_mul, Matrix.mul_smul, hpow]
   obtain ⟨u, v, huv⟩ := h
   have h1 : Polynomial.aeval B (A.charpoly * u + v * B.charpoly) = 1 := by rw [mul_comm _ u, huv, map_one]
-  rw [map_add, map_mul, map_mul, Matrix.aeval_self_charpoly B, mul_zero, add_zero] at h1
+  rw [map_add (f := _), map_mul, map_mul, Matrix.aeval_self_charpoly B, mul_zero, add_zero] at h1
   have h2 : X * Polynomial.aeval B A.charpoly = 0 := by
     rw [← hp, Matrix.aeval_self_charpoly, Matrix.zero_mul]
   rw [← Matrix.mul_one X, ← h1, ← Matrix.mul_assoc, h2, Matrix.zero_mul]
@@ -297,7 +297,7 @@ theorem finsum_conj_eq_zero : ∀ (K : Type) [Field K] [TopologicalSpace K] [IsT
         exact (hfin.mem_toFinset.1 hq) (if_neg hn)
       have e1 : (Quotient.out q)⁻¹ * uGL e X = uGL e (-coord e (Quotient.out q) + X) := by
         rw [uGL_add, uGL_neg, ← eq_uGL_coord e hq']
-      rw [hM, ← map_neg, ← map_add, Φ.symm_apply_apply]
+      rw [hM, ← map_neg, ← map_add (f := _), Φ.symm_apply_apply]
       conv_rhs => rw [← QuotientGroup.out_eq' q, QuotientGroup.eq, e1]
       exact ⟨fun h => ⟨uGL_mem e _, uGL_mem_blockPar e _, h⟩, fun h => h.2.2⟩
     rw [Finset.sum_congr rfl fun q hq => if_congr (h1 q hq) rfl rfl, Finset.sum_ite_eq', ← h0]

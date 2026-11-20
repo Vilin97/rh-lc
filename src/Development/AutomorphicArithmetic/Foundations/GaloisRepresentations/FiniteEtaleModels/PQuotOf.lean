@@ -23,7 +23,7 @@ private theorem conj_congOne {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup
     exact add_mem hw2 hw3
   · have key : L.actG u (L.actG u⁻¹ z) = z := by
       rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
-    rw [map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply, e2, map_add, map_nsmul, key]
+    rw [map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply, e2, map_add (f := _), map_nsmul, key]
 
 private theorem inAf_mem' {p : ℕ} [Fact p.Prime] (D : Datum p) (x : D.La) : inAf D x ∈ LaHat D :=
   AddSubgroup.subset_closure ⟨1, x, fun v => by rw [map_one]; exact one_mem _, rfl⟩

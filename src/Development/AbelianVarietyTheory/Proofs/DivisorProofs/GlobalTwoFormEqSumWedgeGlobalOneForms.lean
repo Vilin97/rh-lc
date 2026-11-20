@@ -86,7 +86,7 @@ theorem eq_expand {n : ℕ} (w : Fin n → Ω[B⁄R]) (δ : Fin n → Module.Dua
     · rw [coordPair_wedge, wedge_swap (w j) (w i), smul_neg, sub_smul]; abel
     · simp
   | zero => simp
-  | add y z _ _ hy hz => rw [map_add, ← hy, ← hz]
+  | add y z _ _ hy hz => rw [map_add (f := _), ← hy, ← hz]
   | smul c y _ hy => rw [map_smul, ← hy]
 
 end Alg
@@ -103,7 +103,7 @@ theorem coordPair_nat {n : ℕ} (Φ : Frame F n) (i j : Fin n) ⦃T T' : C⦄ (�
     rw [ιMulti_two, pOm_wedge, coordPair_wedge, coordPair_wedge, Φ.nat, Φ.nat, Φ.nat, Φ.nat]
     simp only [map_sub, map_mul]
   | zero => simp
-  | add y z _ _ hy hz => simp only [map_add, hy, hz]
+  | add y z _ _ hy hz => simp only [map_add (f := _), hy, hz]
   | smul c y _ hy => rw [pOm_smul, map_smul, map_smul, hy, smul_eq_mul, smul_eq_mul, map_mul]
 
 end GlobalTheory.AbCoh.TwoFormSum

@@ -106,7 +106,7 @@ theorem exists_match : ∀ (C : Type) [NormedField C] (N N' : NumD C) (La : Type
   · rintro k p q p' q' ⟨hk, x, a, b, c⟩ ⟨-, y, a', b', c'⟩
     refine ⟨hk, x + y, (E _).trans ((E _).symm (H.1 k hk x y)) (qEq_mul a a'),
       (E' _).trans ((E' _).symm (H'.1 k hk x y)) (qEq_mul b b'), fun w => ?_⟩
-    rw [map_add, LinearMap.add_apply, zpow_add, zpow_add, c, c']
+    rw [map_add (f := _), LinearMap.add_apply, zpow_add, zpow_add, c, c']
   · rintro k p q p' q' ⟨hk, x, a, b, c⟩ h
     refine ⟨?_, fun h' => ⟨hk, x, (E _).trans a h, (E' _).trans b h', c⟩⟩
     rintro ⟨-, y, a', b', -⟩

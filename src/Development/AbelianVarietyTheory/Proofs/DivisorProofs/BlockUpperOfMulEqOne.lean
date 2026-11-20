@@ -44,7 +44,7 @@ theorem blockUpper_of_mul_eq_one {R : Type} [CommRing R] {N a : ℕ} {A B : Matr
   have hq : Polynomial.aeval A p.divX ∈ blockUpperSub R N a :=
     Algebra.adjoin_le (Set.singleton_subset_iff.2 hA') (Polynomial.aeval_mem_adjoin_singleton R _)
   have hCH : Polynomial.aeval A p = 0 := Matrix.aeval_self_charpoly A
-  rw [← Polynomial.X_mul_divX_add p, map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C] at hCH
+  rw [← Polynomial.X_mul_divX_add p, map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C] at hCH
   have h2 : p.coeff 0 • B = -Polynomial.aeval A p.divX := by
     have := congrArg (fun M => B * M) hCH
     simp only [mul_add, ← mul_assoc, hBA, one_mul, mul_zero, Algebra.algebraMap_eq_smul_one, Matrix.mul_smul,

@@ -93,7 +93,7 @@ def dualHomA {M N : AM B Λ} (φ : M ⟶ N) : dualA τ N ⟶ dualA τ M where
 
 theorem isAdd_dualA {M : AM B Λ} (h : IsAdd M) : IsAdd (dualA τ M) := fun a b => by
   change VB.dualMap (M.ρ (τ (a + b)) : M.V ⟶ M.V) = VB.dualMap (M.ρ (τ a) : M.V ⟶ M.V) + VB.dualMap (M.ρ (τ b) : M.V ⟶ M.V)
-  rw [map_add, h, VB.dualMap_add]
+  rw [map_add (f := _), h, VB.dualMap_add]
 
 def dualP (P : EPres B Λ) : EPres B Λ where
   r := P.r

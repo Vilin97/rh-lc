@@ -50,7 +50,7 @@ theorem split_step_o (D : D7) (hT : SumRepresentations.tie0 D) (h3 : SumRepresen
       (D.naut.frobEig (D.naut.locW i σ w)).map (· * e⁻¹) +
       ((List.range D.R.t).map fun k => ({(m * e⁻¹) * ((normV w : ℕ) : ℂ) ^
         (((((D.R.t : ℝ) - 1) / 2 - (k : ℝ) : ℝ)) : ℂ)} : Multiset ℂ)).sum := by
-    rw [hV, D.naut.frobEig_char _ _ _ hXu hbu hbd hb, D.naut.frobEig_sum _ _ hWu hSu, Multiset.map_add]
+    rw [hV, D.naut.frobEig_char _ _ _ hXu hbu hbd hb, D.naut.frobEig_sum _ _ hWu hSu, Multiset.map_add (f := _)]
     dsimp only [muPart]
     rw [hmu.2, hm]
     congr 1

@@ -85,7 +85,7 @@ theorem gen_relDet {P : HeightOneSpectrum (𝓞 E)} {L L' : Submodule (𝓞 E) (
         rw [← Finset.prod_erase_mul _ s (Finset.mem_univ ⟨y, hy⟩), mul_smul]
         exact L'.smul_mem _ (hs' ⟨y, hy⟩)
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add, smul_add]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _), smul_add]; exact add_mem ha hb
       | smul c a _ ha =>
         rw [← algebraMap_smul E c a, map_smul, algebraMap_smul, smul_comm]
         exact L'.smul_mem _ ha

@@ -57,7 +57,7 @@ def imgL {i j : ℕ} (w : D.what₂.places.Pl) (f : Fn X i →ₗ[ℂ] Fn X j)
   carrier := {y | ∃ x ∈ A, X.fm.emb j y = f (X.fm.emb i x)}
   add_mem' := by
     rintro a b ⟨x, hx, h1⟩ ⟨y, hy, h2⟩
-    exact ⟨x + y, A.add_mem hx hy, by rw [map_add, map_add, map_add, h1, h2]⟩
+    exact ⟨x + y, A.add_mem hx hy, by rw [map_add (f := _), map_add (f := _), map_add (f := _), h1, h2]⟩
   zero_mem' := ⟨0, A.zero_mem, by simp⟩
   smul_mem' := by
     rintro r a ⟨x, hx, h1⟩
@@ -553,7 +553,7 @@ theorem S_iff (w : D.what₂.places.Pl) (x : Vl X 0) : eL x ∈ Y.fm.S 0 w ↔ x
       induction hy using Submodule.span_induction with
       | mem z hz => exact Submodule.subset_span ((h.lat_iff _).mpr (by rw [eL.apply_symm_apply]; exact hz))
       | zero => rw [map_zero]; exact Submodule.zero_mem _
-      | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
       | smul r a _ ha =>
         rw [Subring.smul_def, map_smul]
         exact Submodule.smul_mem _ r ha
@@ -562,7 +562,7 @@ theorem S_iff (w : D.what₂.places.Pl) (x : Vl X 0) : eL x ∈ Y.fm.S 0 w ↔ x
     induction hx using Submodule.span_induction with
     | mem z hz => exact Submodule.subset_span ((h.lat_iff z).mp hz)
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul r a _ ha =>
       rw [Subring.smul_def, map_smul]
       exact Submodule.smul_mem _ r ha

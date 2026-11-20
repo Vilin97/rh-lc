@@ -46,7 +46,7 @@ theorem rho_tens (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) {W' : Type} [AddComm
     rw [smul_eq_mul, mul_add, h, mul_left_comm, h, mul_zero, add_zero]
   have hloc : (fun i => evI F ((x + (dc.e w).1) i)) = locV x + locV (dc.e w).1 := by
     funext i
-    simp only [Pi.add_apply, locV, evI_eq_evIHom, map_add]
+    simp only [Pi.add_apply, locV, evI_eq_evIHom, map_add (f := _)]
   simp only [Darboux.rho, schr, tens]
   rw [hψ.2.2 _ ht, trace_evI_heis, hr x _ ha, hloc, schrF]
   exact (mul_assoc _ _ _).symm
@@ -88,7 +88,7 @@ def amap (M : Model σ X W) (m : Matrix (Fin d) (Fin d) (AE F E)) :
       ((Fin n × Fin d → mixedEmbedding.mixedSpace F) × (Fin n × Fin d → mixedEmbedding.mixedSpace F)) where
   toFun v := Coord.coordI M (wv M v * m)
   map_add' v v' := by
-    simp only [wv, Prod.fst_add, Prod.snd_add, Coord.lift_add, ← Prod.mk_add_mk, map_add, Matrix.add_mul,
+    simp only [wv, Prod.fst_add, Prod.snd_add, Coord.lift_add, ← Prod.mk_add_mk, map_add (f := _), Matrix.add_mul,
       Coord.coordI_add]
   map_smul' c v := by
     simp only [wv, Prod.smul_fst, Prod.smul_snd, Coord.lift_smul, ← Prod.smul_mk, map_smul, Matrix.smul_mul,

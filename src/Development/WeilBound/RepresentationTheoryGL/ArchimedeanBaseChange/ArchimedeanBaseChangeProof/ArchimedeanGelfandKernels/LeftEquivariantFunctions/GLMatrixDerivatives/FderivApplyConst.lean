@@ -66,7 +66,7 @@ theorem dc_add_smul (hG : GelComm) {E : KMod n} {Fr : Mat n → (E.V →L[ℂ] E
   rw [← Finset.sum_add_distrib, Finset.smul_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [GlobalTheory.CompanionTheory.RCalc.Rd_smul c (hb p) hs hx, Pi.smul_apply, GlobalTheory.CompanionTheory.RCalc.Rd_add (hb p) h₁ h₂ hx, Pi.add_apply]
-  simp only [Pi.smul_apply, Pi.add_apply, map_add, map_smul, smul_add]
+  simp only [Pi.smul_apply, Pi.add_apply, map_add (f := _), map_smul, smul_add]
   abel
 
 theorem om_DC (hG : GelComm) {lam : Fin n → ℤ} {E : KMod n} {Fr : Mat n → (E.V →L[ℂ] E.V)}

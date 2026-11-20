@@ -372,7 +372,7 @@ theorem sameChrOf (hS : SpSig D) (hW : WittLow D) :
     have e1 : B.up x = localIdele D.host.E Q (atFin Q k) := by
       apply Units.ext
       show B.Φ (x : AE D) = _
-      rw [hx, locE, RingEquiv.map_add, RingEquiv.map_mul, RingEquiv.map_sub, RingEquiv.map_one, B.inc, (B.idem Q e).1 he]
+      rw [hx, locE, RingEquiv.map_add (f := _), RingEquiv.map_mul, RingEquiv.map_sub, RingEquiv.map_one, B.inc, (B.idem Q e).1 he]
       refine Prod.ext ?_ ?_
       · show (1 : InfiniteAdeleRing D.host.E) + 0 * _ = 1
         rw [zero_mul, add_zero]

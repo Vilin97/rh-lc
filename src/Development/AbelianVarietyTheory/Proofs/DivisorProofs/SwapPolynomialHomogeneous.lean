@@ -47,7 +47,7 @@ abbrev dif (x y : κ) : Derivation ℝ (MvPolynomial κ ℝ) (MvPolynomial κ �
 theorem dif_mid (x y : κ) (hxy : x ≠ y) (M : MvPolynomial κ ℝ) : dif x y (mid x y M) = 0 := by
   induction M using MvPolynomial.induction_on with
   | C a => rw [mid_C, ← algebraMap_eq, Derivation.map_algebraMap]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, add_zero]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, add_zero]
   | mul_X p z hp =>
     rw [map_mul, Derivation.leibniz, hp, smul_zero, add_zero]
     have : dif x y (mid x y (X z)) = 0 := by
@@ -129,8 +129,8 @@ def good (x y : κ) (φ ψ : MvPolynomial κ ℝ →ₗ[ℝ] ℝ) (N : ℕ) : Su
   add_mem' := by
     rintro a b ⟨J, hJ, h1, h2⟩ ⟨K, hK, k1, k2⟩
     refine ⟨J + K, hJ.add hK, ?_, ?_⟩
-    · rw [← h1, ← k1, map_add, map_add]; abel
-    · rw [map_add, map_add, h2, k2]
+    · rw [← h1, ← k1, map_add (f := _), map_add (f := _)]; abel
+    · rw [map_add (f := _), map_add (f := _), h2, k2]
   zero_mem' := ⟨0, isHomogeneous_zero _ _ _, by simp, by simp⟩
   smul_mem' := by
     rintro c a ⟨J, hJ, h1, h2⟩

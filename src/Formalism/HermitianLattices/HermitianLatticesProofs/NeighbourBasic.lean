@@ -98,7 +98,7 @@ theorem neighbourBasic_ded (P : Ideal R) (hP : P.IsMaximal) (c c' : K)
       add_mem' := by
         rintro x y ⟨p, hp, q, hq, hx⟩ ⟨p', hp', q', hq', hy⟩
         refine ⟨p + p', P.add_mem hp hp', q + q', P.add_mem hq hq', ?_⟩
-        simp only [map_add, hx, hy]; ring
+        simp only [map_add (f := _), hx, hy]; ring
       zero_mem' := ⟨0, P.zero_mem, 0, P.zero_mem, by simp⟩
       smul_mem' := by
         rintro r x ⟨p, hp, q, hq, hx⟩
@@ -190,7 +190,7 @@ theorem neighbourBasic_unimod [IsDedekindDomain R] [IsFractionRing R K]
     intro l hl
     obtain ⟨a, ha⟩ := hgen l hl
     have e1 : l = a • l₀ + (l - a • l₀) := by abel
-    rw [e1, map_add, LinearMap.add_apply, neighbourBasic_h_smul_left]
+    rw [e1, map_add (f := _), LinearMap.add_apply, neighbourBasic_h_smul_left]
     exact radd _ _ (rmul _ _ (rstar _ (ralg a)) h0) (hN _ ha)
   have hNM : ∀ y ∈ dual h M, ∀ n ∈ L ⊓ M, h n y ∈ Set.range (algebraMap R K) :=
     fun y hy n hn => (memD M y).mp hy n (Submodule.mem_inf.mp hn).2

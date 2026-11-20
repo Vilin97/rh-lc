@@ -116,7 +116,7 @@ theorem GlobalTheory.Discrepancy.vanishing_logRes_floor : ∀ (k : Type) [Field 
   obtain ⟨c, rfl⟩ := Nat.exists_eq_add_of_le hab
   have e1 : toPic Γ' = (r * (a + c)) • (toPic (pullCart s G) - m • toPic K - m • toPic F) +
       m • toPic Fd := by
-    rw [hΓ', hR, hΓ]; simp only [map_add, map_nsmul, map_sub]
+    rw [hΓ', hR, hΓ]; simp only [map_add (f := _), map_nsmul, map_sub]
   have e2 : m • toPic Fd = m • (a • CechPic.pull s (cls M hM) - cls A hA.isLB) := by
     rw [hAc, add_sub_cancel_left]
   rw [e1, add_assoc, e2, toPic_pullCart]

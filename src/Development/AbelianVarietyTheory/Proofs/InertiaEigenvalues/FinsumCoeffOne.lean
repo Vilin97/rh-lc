@@ -134,7 +134,7 @@ theorem Q_pow_cancel (R : WSer Γ) (m : ℕ) (a : LetA LL n) (h : toL O LL n (R.
     conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const b]
     have : R.φ₀ (PowerSeries.C (PowerSeries.constantCoeff b)) = PowerSeries.C (PowerSeries.constantCoeff b) :=
       R.φ₀.commutes _
-    rw [map_add, map_mul, this, R.φ₀_X]
+    rw [map_add (f := _), map_mul, this, R.φ₀_X]
     simp
   have hq : PowerSeries.constantCoeff R.q₀ = (PD.p : O) := by
     have := congrArg (PowerSeries.coeff 1) R.q₀_def
@@ -574,18 +574,18 @@ theorem ιV_smul_sub (ι : LL →ₐ[Qp] BdR) (a : LL ⊗[Qp] B) (m : T.V ⊗[Qp
       intro u u' z
       change mulR (LL := LL) T.V BdR (u + u') z = mulR (LL := LL) T.V BdR u z + mulR (LL := LL) T.V BdR u' z
       simp
-    rw [add_smul, map_add, map_add, this, add_sub_add_comm]
+    rw [add_smul, map_add (f := _), map_add (f := _), this, add_sub_add_comm]
     exact add_mem ha hb
   | tmul c b =>
     refine Submodule.subset_span ⟨c, mulVR T (PD.ι b) (ιV PD (LL := LL) (V := T.V) m), ?_⟩
     congr 1
     · induction m using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+      | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
       | tmul x y => simp [smulS_def, actS_tmul, ιV, mulVR, smul_tmul']
     · induction m using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul x y => simp [ιV, mulVR, mul_assoc]
 
 theorem dR_basis (hT : IsCrys PD T.ρ) (F : Frame Dc Mo T) (ι : LL →ₐ[Qp] BdR) (x : ↥(Mo.N T)) :

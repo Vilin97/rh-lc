@@ -1509,7 +1509,7 @@ theorem T_mod (D : D7) (u : D.what₂.Word) :
     rw [← hT, e2, e1]; ring
   have e4 : (((D.mem u).A.T : ℤ) - 1 : 𝓞 D.host.E) = ((N : ℤ) : 𝓞 D.host.E) * (α + α' + (N : 𝓞 D.host.E) * α * α') := by
     apply RingOfIntegers.ext
-    simp only [map_sub, map_one, map_mul, map_add, map_natCast, map_intCast]
+    simp only [map_sub, map_one, map_mul, map_add (f := _), map_natCast, map_intCast]
     push_cast
     exact e3
   have h5 : ((N : ℤ) : 𝓞 D.host.E) ∣ ((((D.mem u).A.T : ℤ) - 1 : ℤ) : 𝓞 D.host.E) := by

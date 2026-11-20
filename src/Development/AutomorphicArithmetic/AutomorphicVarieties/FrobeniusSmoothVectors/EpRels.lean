@@ -35,7 +35,7 @@ theorem UpperTheory.V.Fr.ep_rels :
       rw [map_mul]
       exact Ideal.mul_mem_mul (hτm m hm) (hτJ j hj)
     · intro a b ha hb
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Ideal.add_mem _ ha hb
   obtain ⟨a, g, z, hz, hle, hmin⟩ :=
     ep_basis O h2 (MvPowerSeries ι O) τ hττ J (maximalIdeal (MvPowerSeries ι O) * J) hτJ hτN le_rfl

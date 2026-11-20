@@ -50,7 +50,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.finMax :
         rw [Ideal.mem_comap, Ideal.mem_jacobson_bot]
         intro y
         obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective y
-        rw [← map_mul, ← map_one (Ideal.Quotient.mk I), ← map_add]
+        rw [← map_mul, ← map_one (Ideal.Quotient.mk I), ← map_add (f := _)]
         exact (Ideal.mem_jacobson_bot.1 hx y).map _
       intro x hx
       have hx' : Ideal.Quotient.mk I x ∈ ((⊥ : Ideal (T ⧸ I)).jacobson) ^ n := by

@@ -410,7 +410,7 @@ theorem length_coh_zero_eq_sum [CompactSpace X] (h : suppDim F ≤ 0) :
   letI (x : X) := baseModuleStalk F (algebraMap R Γ(X, ⊤)) x
   let l : sectionsOn F ⊤ →ₗ[R] ∀ x : support F, (F.presheaf.stalk x.1 :) :=
     { toFun := fun s x => F.presheaf.germ ⊤ x.1 (Opens.mem_top _) (sectionsOn.toΓ F ⊤ s)
-      map_add' := fun s t => funext fun x => by rw [map_add, map_add]; rfl
+      map_add' := fun s t => funext fun x => by rw [map_add (f := _), map_add (f := _)]; rfl
       map_smul' := fun r s => funext fun x => by
         rw [sectionsOn.toΓ_smul, restrictGlobal_top, germ_smul]; rfl }
   have hl : Function.Bijective l := (germ_support_bijective hf fun x hx =>

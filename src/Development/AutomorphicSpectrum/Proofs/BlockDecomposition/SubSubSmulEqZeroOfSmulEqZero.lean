@@ -44,7 +44,7 @@ theorem smul_eq_zero_of_fixed {Λ N : Type} [CommRing Λ] [AddCommGroup N] [Modu
           linear_combination (norm := module) -(w * ξ) • hx'
         rw [this, hx]
       have h2 := hE _ h1
-      simp only [map_add, map_smul] at h2
+      simp only [map_add (f := _), map_smul] at h2
       have hM : (w * ξ) • (γ x' - x') = 0 := by
         subst hμ
         linear_combination (norm := module) h2 - hx'
@@ -73,7 +73,7 @@ theorem exists_mem_smul_top {Λ N : Type} [CommRing Λ] [AddCommGroup N] [Module
     obtain ⟨x₁, hx₁, e₁⟩ := ihx
     obtain ⟨y₁, hy₁, e₂⟩ := ihy
     refine ⟨x₁ + y₁, Submodule.add_mem _ hx₁ hy₁, ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     linear_combination (norm := module) e₁ + e₂
 
 theorem exists_sub_eq_smul {Λ N : Type} [CommRing Λ] [AddCommGroup N] [Module Λ N]

@@ -44,7 +44,7 @@ theorem exists_point_of_fixed {F F' : Type} [Field F] [Field F'] [Algebra F F'] 
       map_one' := inj (by rw [hg, map_one, map_one])
       map_mul' := fun a b => inj (by rw [hg, map_mul, map_mul, hg, hg])
       map_zero' := inj (by rw [hg, map_zero, map_zero])
-      map_add' := fun a b => inj (by rw [hg, map_add, map_add, hg, hg]) }
+      map_add' := fun a b => inj (by rw [hg, map_add (f := _), map_add (f := _), hg, hg]) }
   refine ⟨Spec.map (CommRingCat.ofHom g') ≫ X.fromSpecResidueField y, ?_⟩
   rw [← Category.assoc, ← Spec.map_comp]
   congr 2

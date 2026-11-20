@@ -72,7 +72,7 @@ theorem UpperTheory.V.Z.Sym.Dict.Br.rhoInt :
       rw [← rhoDiv L P v w h, ← rho_coe P v w h]
       have : (⟨2 * x.re, 0⟩ : Lsq (Kv v) (cv v P.Δ)) = x + star x := by
         apply QuadraticAlgebra.ext <;> simp [two_mul]
-      rw [this, map_add]
+      rw [this, map_add (f := _)]
       exact add_mem (hx w h) hs
     have hn : x.re * x.re - cv v P.Δ * (x.im * x.im) ∈ v.adicCompletionIntegers (Lp L) := by
       rw [← rhoDiv L P v w h, ← rho_coe P v w h]

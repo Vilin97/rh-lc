@@ -12,7 +12,7 @@ theorem derivation_mem_of_mem_sq {T : Type} [CommRing T] (P : Ideal T) (D : Deri
   refine Submodule.mul_induction_on hx (fun a ha b hb => ?_) (fun a b ha hb => ?_)
   · rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     exact P.add_mem (P.mul_mem_right _ ha) (P.mul_mem_right _ hb)
-  · rw [map_add]; exact P.add_mem ha hb
+  · rw [map_add (f := _)]; exact P.add_mem ha hb
 
 theorem mem_of_derivation_det_not_mem {T : Type} [CommRing T] (P : Ideal T) [P.IsPrime] {h : ℕ}
     (D : Fin h → Derivation ℤ T T) (f : Fin h → T) (hf : ∀ i, f i ∈ P)

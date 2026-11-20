@@ -54,7 +54,7 @@ theorem holo_eval {σ : Type} {A : FinHolAtlas e X} {V : Set X} {s : X → σ �
   | add p q hp hq =>
     intro j y hy
     show AnalyticAt ℂ (fun x => eval (s ((A.chart j).symm x)) (p + q)) y
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (hp j y hy).add (hq j y hy)
   | mul_X p i hp =>
     intro j y hy

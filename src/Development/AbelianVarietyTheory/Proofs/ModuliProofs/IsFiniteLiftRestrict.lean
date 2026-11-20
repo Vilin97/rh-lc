@@ -131,7 +131,7 @@ theorem eq_of_RZ {T : Scheme.{0}} {l : Level H} {S A : ℕ} (hA : l.A = A) {β :
         (g.comp (algebraMap ℚ (KA l)))) q
     | add x y hx hy ihx ihy =>
       change f (⟨x, hx⟩ + ⟨y, hy⟩) = g (⟨x, hx⟩ + ⟨y, hy⟩)
-      rw [map_add, map_add, ihx, ihy]
+      rw [map_add (f := _), map_add (f := _), ihx, ihy]
     | inv x hx ih =>
       change f (⟨x, hx⟩⁻¹) = g (⟨x, hx⟩⁻¹)
       exact hinv _ ih

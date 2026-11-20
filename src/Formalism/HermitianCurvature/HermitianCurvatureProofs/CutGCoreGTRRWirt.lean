@@ -45,7 +45,7 @@ theorem rotation_wirtinger_holds : GTRRWirt := by
       refine Prod.ext (by simp) ?_
       simp only [Prod.smul_snd, Prod.snd_add, Complex.real_smul, mul_one]
       apply Complex.ext <;> simp
-    rw [hv, map_add, map_smul, map_smul, Complex.real_smul, Complex.real_smul]
+    rw [hv, map_add (f := _), map_smul, map_smul, Complex.real_smul, Complex.real_smul]
     push_cast
     ring
   rw [key]

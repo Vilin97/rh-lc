@@ -221,7 +221,7 @@ private theorem exists_subring_powerSeries_mem_iff_psIsInt : ∃ T : Subring (Po
               have hg' : PsIsInt v g := hg
               show PsIsInt v (f + g)
               intro n
-              rw [← hS, map_add]
+              rw [← hS, map_add (f := _)]
               exact S.add_mem ((hS _).2 (hf' n)) ((hS _).2 (hg' n))
             zero_mem' := by
               show PsIsInt v 0

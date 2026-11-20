@@ -76,7 +76,7 @@ theorem Rel.add {T₁ T₂ : Module.End ℂ V} {T₁' T₂' : Module.End ℂ (N'
   obtain ⟨y₁, hy₁, e₁⟩ := h₁ x
   refine ⟨y₁ + y₂, ?_, ?_⟩
   · rw [Submodule.coe_add, hy₁, hy₂]; rfl
-  · rw [LinearMap.add_apply, e₁, e₂, map_add]
+  · rw [LinearMap.add_apply, e₁, e₂, map_add (f := _)]
 
 theorem Rel.sub {T₁ T₂ : Module.End ℂ V} {T₁' T₂' : Module.End ℂ (N' ⧸ below N N')} (h₁ : Rel N N' T₁ T₁')
     (h₂ : Rel N N' T₂ T₂') : Rel N N' (T₁ - T₂) (T₁' - T₂') := by

@@ -26,7 +26,7 @@ private theorem coeff_subst_congr_lemma {R : Type*} [CommRing R] {σ : Type*}
         rw [MvPowerSeries.coeff_zero_eq_constantCoeff_apply, ha]
       rw [h2, h0, mul_zero]
     · have hd : x.2.degree ≠ 0 := fun h => h2 ((Finsupp.degree_eq_zero_iff _).1 h)
-      have hsum : x.1.degree + x.2.degree = e.degree := by rw [← map_add, hx]
+      have hsum : x.1.degree + x.2.degree = e.degree := by rw [← map_add (f := _), hx]
       have h1 : x.1.degree < n := by omega
       rw [ih x.1 h1, zero_mul]
 
@@ -53,7 +53,7 @@ theorem pderiv_subst_coe (p : Polynomial R) {a : MvPowerSeries σ R}
   intro P
   induction P using Polynomial.induction_on'
   next P Q hP hQ =>
-    rw [Polynomial.coe_add, map_add, map_add, hP, hQ, map_add, map_add, add_mul]
+    rw [Polynomial.coe_add, map_add (f := _), map_add (f := _), hP, hQ, map_add (f := _), map_add (f := _), add_mul]
   next n c =>
     have hX : PowerSeries.substAlgHom hs (PowerSeries.X : PowerSeries R) = a := by
       rw [PowerSeries.coe_substAlgHom, PowerSeries.subst_X hs]
@@ -65,7 +65,7 @@ theorem pderiv_subst_coe (p : Polynomial R) {a : MvPowerSeries σ R}
 theorem degree_le_of_mem_antidiagonal [DecidableEq σ] {d : σ →₀ ℕ} {x : (σ →₀ ℕ) × (σ →₀ ℕ)}
     (hx : x ∈ Finset.HasAntidiagonal.antidiagonal d) : x.1.degree ≤ d.degree := by
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx
-  rw [← hx, map_add]
+  rw [← hx, map_add (f := _)]
   exact Nat.le_add_right _ _
 
 theorem pderiv_subst (g : PowerSeries R) {a : MvPowerSeries σ R}
@@ -79,7 +79,7 @@ theorem pderiv_subst (g : PowerSeries R) {a : MvPowerSeries σ R}
     intro k hk
     rw [Polynomial.coeff_coe, PowerSeries.coeff_trunc, if_pos (by omega)]
   have hdeg : (e + Finsupp.single i 1).degree = e.degree + 1 := by
-    rw [map_add, Finsupp.degree_single]
+    rw [map_add (f := _), Finsupp.degree_single]
   have h1 : MvPowerSeries.coeff e (MvPowerSeries.pderiv (R := R) i (g.subst a)) =
       MvPowerSeries.coeff e (MvPowerSeries.pderiv (R := R) i
         (((PowerSeries.trunc (e.degree + 2) g : Polynomial R) : PowerSeries R).subst a)) := by

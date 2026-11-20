@@ -199,7 +199,7 @@ theorem UpperTheory.surjective_eval_coordBlowupSubst_pushout_of_flat :
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul b p => simp [Algebra.TensorProduct.tmul_mul_tmul, mul_comm]
-    | add a b ha hb => rw [map_add, ha, hb, add_mul]
+    | add a b ha hb => rw [map_add (f := _), ha, hb, add_mul]
   have hinj := Module.Flat.lTensor_preserves_injective_linearMap (M := B)
     (LinearMap.mulLeft (MvPolynomial (Fin D) A) (MvPolynomial.X (ULift.up j) : P'))
     (fun a b hab => (MvPolynomial.isRegular_X).left hab)

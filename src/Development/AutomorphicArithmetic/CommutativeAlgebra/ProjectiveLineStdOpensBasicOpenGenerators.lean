@@ -26,7 +26,7 @@ private theorem closure_chart (i j : Fin 2) (hij : i ≠ j) :
         eq_intCast MvPolynomial.C c, map_intCast]
       exact intCast_mem _ c
     | add p q hp hq =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hp hq
     | mul_X p n hp =>
       rw [map_mul]

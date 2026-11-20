@@ -316,7 +316,7 @@ theorem fderiv_apply_mul {z : E} (hφ : ∀ a, DifferentiableAt ℂ (fun z => φ
 theorem fderiv_apply_add {z : E} (hφ : ∀ a, DifferentiableAt ℂ (fun z => φ z a) z) (v : E)
     (a b : A) : fderiv ℂ (fun z => φ z (a + b)) z v =
       fderiv ℂ (fun z => φ z a) z v + fderiv ℂ (fun z => φ z b) z v := by
-  simp only [map_add]
+  simp only [map_add (f := _)]
   rw [fderiv_fun_add (hφ a) (hφ b)]
   simp
 
@@ -344,7 +344,7 @@ theorem fderiv_apply_eval₂ {R : Type*} [CommRing R] (g : R →+* A) {z : E}
     rw [pow_succ, ← mul_assoc, Polynomial.eval₂_mul, Polynomial.eval₂_X, fderiv_apply_mul hφ, ih,
       Polynomial.derivative_mul (g := Polynomial.X), Polynomial.derivative_X, Polynomial.eval₂_add,
       Polynomial.eval₂_mul _ _ (p := Polynomial.derivative _), Polynomial.eval₂_X, mul_one]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     ring
 
 theorem exists_isOpen_fderiv_eq_zero {R : Type*} [CommRing R] (g : R →+* A) {a : A}

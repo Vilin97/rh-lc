@@ -142,7 +142,7 @@ theorem injective_and_range_eq_invariants {l : ℕ} [Fact l.Prime] {O : Type} [C
         rw [← hr]
         ring
       have e4 : j (PowerSeries.mk c) - a = j X ^ N * (j r - (sq N).1) := by
-        conv_lhs => rw [e3, map_add, map_mul, map_pow, hjsum, hexp N]
+        conv_lhs => rw [e3, map_add (f := _), map_mul, map_pow, hjsum, hexp N]
         ring
       rw [e4]
       exact (pow_dvd_pow_of_dvd hXj N).trans (dvd_mul_right _ _)

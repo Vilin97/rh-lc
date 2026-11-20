@@ -52,7 +52,7 @@ private theorem map_split {α β : Type} [Fintype α] [Fintype β] {n : ℕ} (e 
     Finset.univ.val.map (fun i => f (e (.inl i))) + Finset.univ.val.map (fun j => f (e (.inr j))) =
       Finset.univ.val.map f := by
   rw [← Multiset.map_univ_val_equiv e, Multiset.map_map, ← Finset.univ_disjSum_univ]
-  simp [Finset.disjSum, Multiset.disjSum, Multiset.map_add, Multiset.map_map, Function.comp_def]
+  simp [Finset.disjSum, Multiset.disjSum, Multiset.map_add (f := _), Multiset.map_map, Function.comp_def]
 
 private theorem finish (hT : TargetAlg) (hM : MonoRes) {E : Type} [Field E] [NumberField E] [IsCMField E] (w : Pl E)
     (n a : ℕ) (s : Finset (Fin (n / 2))) (h : LocData.admitted n a s) (e : Fin a ⊕ Fin (n - a) ≃ Fin n)

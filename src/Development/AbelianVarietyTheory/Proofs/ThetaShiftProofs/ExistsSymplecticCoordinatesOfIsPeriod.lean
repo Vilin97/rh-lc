@@ -222,10 +222,10 @@ theorem alternating_eq (i : Fin Fu.n) {P : (Fu.Di i).La →+ (Fin g → ℂ)} (h
     hf.continuous hf0 (fun a v => by
       obtain ⟨j, hj⟩ := hch v
       have hp : Fu.ex i P (h (v + p a)) = Fu.ex i P (h v) := by
-        rw [map_add, hgam, Fu.ex_add i P hP, (Fu.ex_ker i P hP _).2 ⟨gam a, rfl⟩, _root_.mul_one]
+        rw [map_add (f := _), hgam, Fu.ex_add i P hP, (Fu.ex_ker i P hP _).2 ⟨gam a, rfl⟩, _root_.mul_one]
       have hj' : ⊤ ≤ (Fu.ex i P (h (v + p a))).left ⁻¹ᵁ Xo.univ.t.PP.L.U j := by rw [hp]; exact hj
       have h1 := hlaw a j v hj
-      rw [hfr j v hj, hfr j _ hj', hlaw₀ (gam a) j _ hj, ← hgam, ← map_add] at h1
+      rw [hfr j v hj, hfr j _ hj', hlaw₀ (gam a) j _ hj, ← hgam, ← map_add (f := _)] at h1
       apply mul_right_cancel₀ (h0₀ j _ hj')
       rw [LinearMap.comp_apply]
       linear_combination h1) a b
@@ -240,7 +240,7 @@ theorem intertwines (i : Fin Fu.n) {P : (Fu.Di i).La →+ (Fin g → ℂ)} (hP :
     HolHom.isHolTo_of_holAt isOpen_univ fun v _ =>
       (HolHom.holAt_of_isHolTo (HolHom.isHolTo_ex Fu i hP) (Set.mem_univ (h (φ v)))).precomp (k := h.comp φ) (hh v)
   have hu := HolHom.existsUnique_linear_ex Fu i hP (e := fun v => Fu.ex i P (h (φ v)))
-    (fun z w => by rw [map_add, map_add, Fu.ex_add i P hP]) hol
+    (fun z w => by rw [map_add (f := _), map_add (f := _), Fu.ex_add i P hP]) hol
   have := hu.unique (y₁ := h.comp φ) (y₂ := LinearMap.pi fun k => ty k (x : E) • (LinearMap.proj k).comp h)
     (fun _ => rfl) (fun z => by rw [hφ, ← Fu.ex_lin i P hP]; rfl)
   exact congrFun (LinearMap.congr_fun this v) k
@@ -285,7 +285,7 @@ theorem fibre_hom_eq_exponential (Fu : FamilyUnif Xo σ ty) (i : Fin Fu.n) {P : 
     exact_mod_cast (mul_left_cancel₀ (neg_ne_zero.2 Complex.two_pi_I_ne_zero) this).symm
   obtain ⟨_, _, h3⟩ := FibreExp.free_finite_finrank_of_isPeriod hP
   let gam₀ : La' →ₗ[ℤ] (Fu.Di i).La :=
-    (AddMonoidHom.mk' gam fun a b => hP.2.1 (by simp only [hgam, map_add])).toIntLinearMap
+    (AddMonoidHom.mk' gam fun a b => hP.2.1 (by simp only [hgam, map_add (f := _)])).toIntLinearMap
   have hb : Function.Bijective gam₀ :=
     bijective_of_isometry_of_bijective_form (hrk.trans h3.symm) EF' (Fu.Di i).EF hEF gam₀ hEq
   have hbh : Function.Bijective h :=

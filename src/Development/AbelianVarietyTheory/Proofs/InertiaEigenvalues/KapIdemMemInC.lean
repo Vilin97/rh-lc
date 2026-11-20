@@ -38,7 +38,7 @@ theorem evEmb_eq_sum {LL : FinExt l} {f : ℕ} (o : Module.Basis (Fin f) ℤ_[l]
     ev x = ∑ k, kap o x k * algebraMap (Om l) (PadicComplex l) (τ (o k : ↥LL.1)) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero, kap_zero, zero_mul, Finset.sum_const_zero]
-  | add x y hx hy => simp only [map_add, kap_add, hx, hy, add_mul, Finset.sum_add_distrib]
+  | add x y hx hy => simp only [map_add (f := _), kap_add, hx, hy, add_mul, Finset.sum_add_distrib]
   | tmul c a =>
     rw [hev]
     simp only [kap_tmul, mul_assoc, ← Finset.mul_sum]

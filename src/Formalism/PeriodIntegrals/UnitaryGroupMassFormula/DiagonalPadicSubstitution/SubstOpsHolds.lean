@@ -30,11 +30,11 @@ theorem substOps_holds : SubstOps := by
     have hlb : MvPowerSeries.constantCoeff (PowerSeries.subst b l) = 0 :=
       PowerSeries.constantCoeff_subst_eq_zero hb l hl
     have hab : MvPowerSeries.constantCoeff (add l ex a b) = 0 :=
-      PowerSeries.constantCoeff_subst_eq_zero (by rw [map_add, hla, hlb, add_zero]) ex hex
+      PowerSeries.constantCoeff_subst_eq_zero (by rw [map_add (f := _), hla, hlb, add_zero]) ex hex
     have hadd : MvPowerSeries.subst s (add l ex a b) =
         add l ex (MvPowerSeries.subst s a) (MvPowerSeries.subst s b) := by
       unfold add
-      rw [psubst_comm hs _ (by rw [map_add, hla, hlb, add_zero]) ex, MvPowerSeries.subst_add hs,
+      rw [psubst_comm hs _ (by rw [map_add (f := _), hla, hlb, add_zero]) ex, MvPowerSeries.subst_add hs,
         psubst_comm hs a ha l, psubst_comm hs b hb l]
     refine ⟨cc a ha, hadd, fun c => ?_, psubst_comm hs a ha ph, ?_⟩
     · unfold mulBy

@@ -84,7 +84,7 @@ theorem trace_eq (p q : ℚ) : Algebra.trace ℚ E4 (-(ii / 2) * (p + q * ii)) =
     simp only [eq_ratCast]
     push_cast
     linear_combination (-(q : E4) / 2) * ii_mul_ii
-  rw [e, map_add, ← Algebra.smul_def, map_smul, trace_ii, Algebra.trace_algebraMap, finrank_eq]
+  rw [e, map_add (f := _), ← Algebra.smul_def, map_smul, trace_ii, Algebra.trace_algebraMap, finrank_eq]
   simp
   ring
 

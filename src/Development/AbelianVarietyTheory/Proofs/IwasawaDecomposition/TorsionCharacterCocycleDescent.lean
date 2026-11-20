@@ -23,7 +23,7 @@ theorem tensor_eq_zero_of_sections {R B : Type} [CommRing R] [CommRing B] [Algeb
     induction s using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have h2 : ∀ f : B →ₗ[R] R, TensorProduct.rid R B (f.lTensor B s) = 0 := by
     intro f
     refine inj _ fun σ => ?_
@@ -32,7 +32,7 @@ theorem tensor_eq_zero_of_sections {R B : Type} [CommRing R] [CommRing B] [Algeb
       induction s using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [mul_comm]
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
     rw [this, h1, map_zero]
   refine (Algebra.TensorProduct.basis B e).ext_elem fun i => ?_
   have : (Algebra.TensorProduct.basis B e).repr s i = TensorProduct.rid R B ((e.coord i).lTensor B s) := by
@@ -40,7 +40,7 @@ theorem tensor_eq_zero_of_sections {R B : Type} [CommRing R] [CommRing B] [Algeb
     induction s using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [Algebra.smul_def, mul_comm]
-    | add a b ha hb => simp only [map_add, Finsupp.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Finsupp.add_apply, ha, hb]
   rw [this, h2]
   simp
 

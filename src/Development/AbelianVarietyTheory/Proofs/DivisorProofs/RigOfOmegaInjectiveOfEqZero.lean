@@ -148,7 +148,7 @@ theorem transl_res (n : ℕ) (a : G.A (n + 2)) :
   rw [transl_apply, transl_apply, ← pullTwo_comul]
   generalize comul (R := R) a = t
   induction t with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x y => simp
 
 theorem transl_mulP (n : ℕ) (a : G.A n) : G.transl n (G.mulP n a) = G.mulP n a ⊗ₜ 1 := by
@@ -157,7 +157,7 @@ theorem transl_mulP (n : ℕ) (a : G.A n) : G.transl n (G.mulP n a) = G.mulP n a
     ← Coalgebra.lTensor_counit_comul]
   generalize comul (R := R) a = t
   induction t with
-  | add x y hx hy => simp only [map_add, add_tmul, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), add_tmul, hx, hy]
   | tmul x y => simp [resOne_mulP, Algebra.algebraMap_eq_smul_one, smul_tmul]
 
 theorem pullbackTwo_mulP_injective (n : ℕ) : Function.Injective (pullbackTwo (G.mulP n)) :=

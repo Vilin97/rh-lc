@@ -150,7 +150,7 @@ theorem star_cover : ∀ (X : Type) [AddCommGroup X] (m : ℕ) (γ : Fin m → L
     apply hv0
     refine LinearMap.ext₂ fun x y => ?_
     have := hvyy (x + y)
-    simp only [map_add, LinearMap.add_apply, hvyy x, hvyy y, hvs y x] at this
+    simp only [map_add (f := _), LinearMap.add_apply, hvyy x, hvyy y, hvs y x] at this
     simp only [LinearMap.zero_apply]; omega
   obtain ⟨a, haF, hamin⟩ := Finset.exists_min_image _ (fun a => dotR a EB / dotR a Ev) hne
   obtain ⟨haA, hapos⟩ := Finset.mem_filter.mp haF

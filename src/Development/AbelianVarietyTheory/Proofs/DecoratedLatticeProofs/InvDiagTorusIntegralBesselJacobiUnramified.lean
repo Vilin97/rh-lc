@@ -96,7 +96,7 @@ theorem vac_fix_Y : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S S₀ T : HS
       heisO ψ S T (d.extY T y₁) (heisO ψ S T (d.extY T y₂) f) := by
     intro y₁ y₂
     funext w
-    simp only [heisO, map_add]
+    simp only [heisO, map_add (f := _)]
     rw [GlobalTheory.OrientedHeis.symplOH_add_left, HypDec.symplOH_extY_extY, add_zero, GlobalTheory.OrientedHeis.symplOH_add_right,
       AddChar.map_add_eq_mul, add_assoc]
     ring
@@ -111,7 +111,7 @@ theorem vac_fix_Y : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S S₀ T : HS
       have hy' : (2 : Fv D.host.F v) * yv = 1 := congrArg Subtype.val hyv
       refine ⟨algebraMap (AF D.host.F) (AE D) (GlobalTheory.SplitIdem.placeHom D.host.F v yv), ?_, ?_⟩
       · exact AddSubgroup.subset_closure ⟨_, GlobalTheory.SplitIdem.singleV_mem_intAf D.host.F v yv, 1, rfl⟩
-      · rw [two_mul, ← map_add, ← map_add, ← two_mul, hy']
+      · rw [two_mul, ← map_add (f := _), ← map_add (f := _), ← two_mul, hy']
     have h1 : 2 • (a • d.extY T y) = d.extY T y := by
       rw [two_nsmul, ← add_smul, ← two_mul, ha2, GlobalTheory.VecInvInert.idem_smul_eq hε hy]
     have h3 := hf.2.1 (a • d.extY T y) (GlobalTheory.LatticeStable.smul_mem_latO D S T _ _ _ a ha _ hy)
@@ -127,7 +127,7 @@ theorem vac_fix_Y : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S S₀ T : HS
     have f2 : heisO ψ S T (d.extY T (cA D e • y)) f = f := by
       rw [← hsm]
       exact hf.2.2 _ he' _ (GlobalTheory.LatticeStable.smul_mem_latO D S T _ _ _ _ (hint _ he'.1) _ hy) (fun i j => by rw [Matrix.smul_apply, smul_eq_mul, ← mul_assoc, he'.1])
-    rw [hu, ← map_add, hadd, f2, f1]
+    rw [hu, ← map_add (f := _), hadd, f2, f1]
 
 end GlobalTheory.FinPl.InvStep
 

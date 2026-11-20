@@ -23,7 +23,7 @@ open Formalism.IndefR.Fin.LevelGroupLemmas.Lat (liftE lift lift_add lift_zero to
 
 theorem liftE_add {D : D7} (a b : EAf D) : liftE (a + b) = liftE a + liftE b := by
   unfold liftE
-  rw [map_add, lift_add]
+  rw [map_add (f := _), lift_add]
 
 theorem liftE_zero {D : D7} : liftE (0 : EAf D) = 0 := by
   unfold liftE
@@ -40,7 +40,7 @@ def psiE {D : D7} (ψ : AddChar (AF D.host.F) ℂ) : AddChar (EAf D) ℂ where
   map_zero_eq_one' := by
     rw [liftE_zero, mul_zero, map_zero, neg_zero, AddChar.map_zero_eq_one]
   map_add_eq_mul' a b := by
-    rw [liftE_add, mul_add, map_add, neg_add, AddChar.map_add_eq_mul]
+    rw [liftE_add, mul_add, map_add (f := _), neg_add, AddChar.map_add_eq_mul]
 
 theorem psi_sympl {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (βS : GL (Fin S.rank) (EAf D))
     (βT : GL (Fin T.rank) (EAf D)) (t y : WO S T) (hy : ∀ i j, infPart D (y i j) = 0) :
@@ -76,7 +76,7 @@ theorem fac {D : D7} (Φ : AddChar (EAf D) ℂ) (Q : Finset (Pl D.host.E)) (a : 
       map_zero_eq_one' := h1 PP hPP _ (L PP 0).2 (hL PP 0)
       map_add_eq_mul' := fun x y => by
         rw [← AddChar.map_add_eq_mul, ← mul_add]
-        exact hcong PP hPP (L PP (x + y)) (L PP x + L PP y) (by rw [map_add, hL, hL, hL]) }
+        exact hcong PP hPP (L PP (x + y)) (L PP x + L PP y) (by rw [map_add (f := _), hL, hL, hL]) }
     else 1
   have hψ : ∀ PP ∈ Q, ∀ w (hw : w ∈ Formalism.L2.Herm.intAf D.host.F D.host.E),
       ψP PP (resS D.host.F PP ⟨w, hw⟩) = Φ (a PP * w) := by

@@ -37,7 +37,7 @@ theorem exists_hom_of_model (P : X → Prop) (s : X → Y) (S : Submodule ℂ Y)
           hlift _ _ (hadd _ _ (hlP Φ) (hlP Ψ)).1 (by rw [(hadd _ _ (hlP Φ) (hlP Ψ)).2, hls, hls]; rfl)
         apply Subtype.ext
         simp only [Submodule.coe_add]
-        rw [e, map_add]
+        rw [e, map_add (f := _)]
         exact (hadd _ _ (hpres _ _ (hlP Φ)) (hpres _ _ (hlP Ψ))).2
       map_smul' := fun c Φ => by
         have e : lift (c • Φ) = c • lift Φ :=

@@ -28,7 +28,7 @@ private noncomputable def p3 (ε : B) (h0 : π ε = 0) (hε : ∀ b, b * ε = π
     have h' : π c'.1.1 = c'.1.2.fst := c'.2
     simp only [Subalgebra.coe_mul, Prod.fst_mul, Prod.snd_mul, DualNumber.snd_mul, add_mul, mul_add, mul_smul_comm,
       smul_mul_assoc, mul_comm ε c'.1.1, hε, h, h', h0, smul_smul, add_smul, mul_zero, zero_smul, add_zero]
-    rw [map_add, map_smul, h0, smul_zero, add_zero, h, mul_comm c'.1.2.snd, mul_comm c.1.2.snd]
+    rw [map_add (f := _), map_smul, h0, smul_zero, add_zero, h, mul_comm c'.1.2.snd, mul_comm c.1.2.snd]
     abel
   commutes' a := by simp [algebraMap_eq_inl]
 
@@ -121,7 +121,7 @@ theorem UpperTheory.V.Loc.ordEq :
       (π : B →+* E).comp (f₁ : fib π →+* B) := RingHom.ext fun c => Eq.symm c.2
   have k3 : (π : B →+* E).comp (f₃ : fib π →+* B) = (π : B →+* E).comp (f₁ : fib π →+* B) := RingHom.ext fun c => by
     change π (c.1.1 + c.1.2.snd • ε) = π c.1.1
-    rw [map_add, map_smul, h0, smul_zero, add_zero]
+    rw [map_add (f := _), map_smul, h0, smul_zero, add_zero]
   obtain ⟨R, hR1, hR3⟩ := glue_hom (f₁ : fib π →+* B) (f₃ : fib π →+* B) (q : B →+* B ⧸ I) (q : B →+* B ⧸ I) i13 g13
     (conjBy n₁ u₁) r ((map_conjBy _ _ _).trans e'.symm)
   have hR := dcr_pair f₁ f₃ i13 (hR1 ▸ hr₁) (hR3 ▸ hr)

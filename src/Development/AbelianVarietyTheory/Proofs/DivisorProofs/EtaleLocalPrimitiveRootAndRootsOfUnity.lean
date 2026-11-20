@@ -49,7 +49,7 @@ lemma loc_of_prod_eq_zero {U : Scheme.{0}} (y : Γ(U, ⊤)) (z : ℕ → Γ(U, �
     by_contra hnb
     have hun : IsUnit (γ (z a0 - z b)) := (hu a0 ha0 b hbS (Ne.symm hba)).map γ
     have e : γ (z a0 - z b) = γ (y - z b) + -(γ (y - z a0)) := by
-      rw [← map_neg, ← map_add]; congr 1; ring
+      rw [← map_neg, ← map_add (f := _)]; congr 1; ring
     rw [e] at hun
     exact (IsLocalRing.nonunits_add ((mem_nonunits_iff).2 hnb)
       ((mem_nonunits_iff).2 (fun h => hna (by simpa using h.neg)))) hun
@@ -127,7 +127,7 @@ lemma cyc_etale {A : Type} [CommRing A] (q : ℕ) [NeZero q] (hq : IsUnit (q : A
     rw [map_mul, AdjoinRoot.mk_self, zero_mul, map_sub, map_pow, AdjoinRoot.mk_X, map_one, sub_eq_zero] at this
     exact this
   have hd := congrArg (fun p => AdjoinRoot.mk (cyclotomic q A) (derivative p)) hG
-  simp only [derivative_mul, derivative_sub, derivative_X_pow, derivative_one, sub_zero, map_add, map_mul,
+  simp only [derivative_mul, derivative_sub, derivative_X_pow, derivative_one, sub_zero, map_add (f := _), map_mul,
     AdjoinRoot.mk_self, zero_mul, add_zero] at hd
   have hu : IsUnit (AdjoinRoot.mk (cyclotomic q A) (C (q : A)) * AdjoinRoot.mk (cyclotomic q A) (X ^ (q - 1))) := by
     rw [map_pow, AdjoinRoot.mk_X, AdjoinRoot.mk_C]

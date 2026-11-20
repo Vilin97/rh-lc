@@ -87,7 +87,7 @@ theorem Cg.of_int {p : ℕ} (hp : p.Prime) {F G W : PowerSeries ℤ} (h : F = G 
   obtain ⟨r, hr, hpr⟩ := p_mem_span hp
   refine ⟨CoeffIn.map_int _ G, PowerSeries.C r * W.map (Int.castRingHom ℂ),
     (CoeffIn.ksC hr).mul (CoeffIn.map_int _ W), ?_⟩
-  rw [h, map_add, map_mul, PowerSeries.map_C]
+  rw [h, map_add (f := _), map_mul, PowerSeries.map_C]
   have hc : (Int.castRingHom ℂ) (p : ℤ) = (1 - zetaC p) * r := by
     rw [eq_intCast, Int.cast_natCast, hpr]
   rw [hc, map_mul]

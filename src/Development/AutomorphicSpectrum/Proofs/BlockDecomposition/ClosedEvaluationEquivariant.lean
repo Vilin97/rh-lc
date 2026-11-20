@@ -168,7 +168,7 @@ theorem qC_sigX (c : Fin (i + 1) → k) (z : τ.V ⊗[ℂ] σ.V) :
     qC τ σ (sigX τ σ ⟨uG (i + 1) (t + 1) (Fin.append c (0 : Fin (t + 1) → k)), uG_mem_H _ _ c⟩ z) = qC τ σ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
   | tmul a b =>
     set g := (pgProj k (i + 1) (t + 1) ⟨uG (i + 1) (t + 1) (Fin.append c (0 : Fin (t + 1) → k)), uG_mem_H _ _ c⟩) with hgdef
     have hg2 : g.2 = 1 := pgProj_snd _ _ c

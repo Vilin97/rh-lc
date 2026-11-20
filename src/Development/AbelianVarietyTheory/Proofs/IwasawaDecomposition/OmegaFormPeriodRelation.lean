@@ -59,13 +59,13 @@ theorem cf_cf (x : AfE D) : cf D (cf D x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero]
   | tmul a x => exact congrArg (fun t => a ⊗ₜ[D.host.F] t) (star_star x)
-  | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy]
 
 theorem finPart_cA (x : AE D) : finPart D (cA D x) = cf D (finPart D x) := by
   induction x using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero, RingHom.map_zero]
   | tmul a x => rfl
-  | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy]
 
 theorem conj_mem_hatV {k : ℕ} {L L' : Lt D.host.E k} (h : ∀ v ∈ L, (fun j => cc (v j)) ∈ L') {u : Fin k → AfE D}
     (hu : u ∈ hatV L) : cf D ∘ u ∈ hatV L' := by

@@ -128,7 +128,7 @@ theorem z_mem_perp (F : FlagG S r T) : F.z ∈ perpS S F.X := by
     obtain ⟨i, rfl⟩ := hy
     exact F.z_orth i
   | zero => simp
-  | add y y' _ _ h1 h2 => rw [map_add, LinearMap.add_apply, h1, h2, add_zero]
+  | add y y' _ _ h1 h2 => rw [map_add (f := _), LinearMap.add_apply, h1, h2, add_zero]
   | smul c y _ h => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, h, smul_zero]
 
 theorem X_le_Xa_r (F : FlagG S r T) : F.X ≤ F.Xa r := by

@@ -309,8 +309,8 @@ theorem lsd_fst (z : AE D) (k : Fin (Module.finrank D.host.F D.host.E)) :
     simp [Finsupp.smul_apply, Algebra.smul_def]
   | add x y hx hy =>
     have h1 : cE D.host.F D.host.E (x + y) k = cE D.host.F D.host.E x k + cE D.host.F D.host.E y k := by
-      rw [map_add]; rfl
-    rw [h1, map_add, hx, hy, ← Finsupp.add_apply, ← LinearEquiv.map_add, ← RingHom.map_add]
+      rw [map_add (f := _)]; rfl
+    rw [h1, map_add (f := _), hx, hy, ← Finsupp.add_apply, ← LinearEquiv.map_add (f := _), ← RingHom.map_add (f := _)]
 
 set_option maxHeartbeats 800000 in
 open Formalism.IndefR.PHeisFC in
@@ -324,8 +324,8 @@ theorem lsd_snd (z : AE D) (k : Fin (Module.finrank D.host.F D.host.E)) :
     simp [Finsupp.smul_apply, Algebra.smul_def]
   | add x y hx hy =>
     have h1 : cE D.host.F D.host.E (x + y) k = cE D.host.F D.host.E x k + cE D.host.F D.host.E y k := by
-      rw [map_add]; rfl
-    rw [h1, map_add, hx, hy, ← Finsupp.add_apply, ← LinearEquiv.map_add, ← RingHom.map_add]
+      rw [map_add (f := _)]; rfl
+    rw [h1, map_add (f := _), hx, hy, ← Finsupp.add_apply, ← LinearEquiv.map_add (f := _), ← RingHom.map_add (f := _)]
 
 theorem lsd_alg_int (y : 𝓞 D.host.F) : algebraMap D.host.F (Af D.host.F) (y : D.host.F) ∈ intAf D.host.F := by
   intro v
@@ -348,8 +348,8 @@ theorem lsd_int_coord : ∃ r : 𝓞 D.host.F, r ≠ 0 ∧ ∀ w ∈ intAE D, �
     exact intAf_mul ha (lsd_alg_int y)
   | zero => simp only [map_zero, Finsupp.zero_apply, mul_zero]; exact fun v => zero_mem _
   | add x y _ _ hx hy =>
-    rw [map_add, Finsupp.add_apply, mul_add]
-    exact fun v => by rw [map_add]; exact add_mem (hx v) (hy v)
+    rw [map_add (f := _), Finsupp.add_apply, mul_add]
+    exact fun v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx v) (hy v)
   | neg x _ hx =>
     rw [map_neg, Finsupp.neg_apply, mul_neg]
     exact fun v => by rw [map_neg]; exact neg_mem (hx v)
@@ -432,7 +432,7 @@ theorem lsd_fi : ∀ x ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT :
     intro i j
     rw [Matrix.of_apply, Fock.DRho.infPart_tmul, VacEx.fstA_pairA, TensorProduct.zero_tmul]
   | zero => intro i j; simp
-  | add x y _ _ hx hy => intro i j; rw [Matrix.add_apply, map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => intro i j; rw [Matrix.add_apply, map_add (f := _), hx, hy, add_zero]
   | neg x _ hx => intro i j; rw [Matrix.neg_apply, map_neg, hx, neg_zero]
 
 set_option maxHeartbeats 1600000 in

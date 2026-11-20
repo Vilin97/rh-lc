@@ -29,7 +29,7 @@ theorem int_of_mem_colLat_one {x : Fin n → K} (hx : x ∈ colLat (1 : GL (Fin 
   | add x y _ _ hx hy =>
     obtain ⟨u, hu⟩ := hx
     obtain ⟨v, hv⟩ := hy
-    exact ⟨u + v, by rw [map_add, hu, hv]; rfl⟩
+    exact ⟨u + v, by rw [map_add (f := _), hu, hv]; rfl⟩
   | smul r x _ hx =>
     obtain ⟨u, hu⟩ := hx
     exact ⟨r * u, by rw [map_mul, hu, Pi.smul_apply, Algebra.smul_def]⟩
@@ -113,7 +113,7 @@ theorem map_rowAct {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (g : 
     map φ (Formalism.GradedWeylDivisibility.rowAct R g f) = Formalism.GradedWeylDivisibility.rowAct S (g.map φ) (map φ f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [Formalism.GradedWeylDivisibility.rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, map_mul, hp]
     simp [Formalism.GradedWeylDivisibility.rowAct]
@@ -156,7 +156,7 @@ theorem polyAction_mem_locP_nabStd (K : Type) [Field K] [NumberField K] (ι : Ty
       simp only [map_smul]
       exact (Finset.prod_smul _ _ _).symm
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul r x _ hx =>
       rw [LinearMap.map_smul_of_tower]
       exact Submodule.smul_mem _ _ hx

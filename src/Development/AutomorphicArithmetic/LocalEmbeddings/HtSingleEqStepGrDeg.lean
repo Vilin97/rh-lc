@@ -195,7 +195,7 @@ theorem GlobalTheory.LieRead.ht_single_eq_stepGrDeg {D : D7} (O : Setup D) (x : 
     let u : AbsoluteValue K ℝ := (NormedField.toAbsoluteValue ℂ_[resP v]).comp j.injective
     have hu : IsNonarchimedean u := fun a b => by
       show ‖j (a + b)‖ ≤ max ‖j a‖ ‖j b‖
-      rw [map_add]; exact IsUltrametricDist.norm_add_le_max _ _
+      rw [map_add (f := _)]; exact IsUltrametricDist.norm_add_le_max _ _
     have h1 := congrArg Real.log (hsup u hu)
     rw [Real.log_pow] at h1
     have h2 : Real.log ‖ioOf (resP v) ε (θ (ι c))‖ = n * Real.log (sSup ((fun b => ‖((ioOf (resP v) ε).comp θ) (ι b)‖) ''

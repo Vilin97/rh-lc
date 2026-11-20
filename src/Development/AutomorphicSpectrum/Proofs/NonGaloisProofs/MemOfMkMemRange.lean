@@ -198,7 +198,7 @@ theorem exists_pairing (Z : Submodule k E) (Z' : Submodule k E') (M C : Submodul
         rw [Submodule.coe_smul, smul_sub, mul_smul] }
   refine ⟨LinearMap.mk₂ k (fun a b => f ⟨cup a b, hM a a.2 b b.2⟩) ?_ ?_ ?_ ?_, ?_⟩
   · intro a a' b
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     ext
     simp
@@ -208,7 +208,7 @@ theorem exists_pairing (Z : Submodule k E) (Z' : Submodule k E') (M C : Submodul
     ext
     simp
   · intro a b b'
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     ext
     simp
@@ -242,7 +242,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
 def cocSub : Submodule LL (G × G → LL) where
   carrier := {z | Continuous z ∧ ReciprocityTheory.Def.d2 (charRep (cycLL PD LL)) z = 0}
   zero_mem' := ⟨continuous_const, map_zero _⟩
-  add_mem' := fun ha hb => ⟨ha.1.add hb.1, by rw [map_add, ha.2, hb.2, add_zero]⟩
+  add_mem' := fun ha hb => ⟨ha.1.add hb.1, by rw [map_add (f := _), ha.2, hb.2, add_zero]⟩
   smul_mem' := fun c _ ha => ⟨ha.1.const_smul c, by rw [map_smul, ha.2, smul_zero]⟩
 
 def cobSub : Submodule LL (G × G → LL) where

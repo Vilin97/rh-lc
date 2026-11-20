@@ -48,7 +48,7 @@ theorem isUnit_or_isUnit_of_add_one {a b : Hens R} (hab : a + b = 1) : IsUnit a 
   obtain ⟨k, hik, hjk⟩ := directed_of (· ≤ ·) i j
   have h1 : EtNbhd.trans hik x + EtNbhd.trans hjk y = 1 := by
     apply of_injective k
-    rw [map_add, of_trans, of_trans, map_one, hab]
+    rw [map_add (f := _), of_trans, of_trans, map_one, hab]
   rcases IsLocalRing.isUnit_or_isUnit_of_add_one h1 with h | h
   · left
     rw [← of_trans hik]

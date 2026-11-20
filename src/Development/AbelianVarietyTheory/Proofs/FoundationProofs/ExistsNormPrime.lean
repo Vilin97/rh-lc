@@ -171,7 +171,7 @@ theorem hb_odd (dK : ℕ) (L : PeriodPair) (hmod : dK % 4 = 3) (hCM : Formalism.
 
   have hbI : ι b ∈ Formalism.G.unitBall ℂ_[p] := by
     have hs : ι b + ι bb = ((2 * m + n : ℤ) : ℂ_[p]) := by
-      rw [← map_add, hb, hbb]
+      rw [← map_add (f := _), hb, hbb]
       have e : ((m : ℂ) + (n : ℂ) * Formalism.L2.Th1.CM.omegaK dK) +
           ((m : ℂ) + (n : ℂ) * (1 - Formalism.L2.Th1.CM.omegaK dK)) = ((2 * m + n : ℤ) : ℂ) := by
         push_cast; ring
@@ -183,7 +183,7 @@ theorem hb_odd (dK : ℕ) (L : PeriodPair) (hmod : dK % 4 = 3) (hCM : Formalism.
 
   have hi := congrArg ι hiso
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_mul, map_pow, map_add, map_sum, map_sub] at hi
+    simp only [map_mul, map_pow, map_add (f := _), map_sum, map_sub] at hi
   have key : (ι b ^ 2 - 1) * (W.b₂ / 12) =
       (ι (L.weierstrassP Q) - W.b₂ / 12) +
         ∑ P ∈ S, ((ι (L.weierstrassP (Q + P)) - W.b₂ / 12) - (ι (L.weierstrassP P) - W.b₂ / 12)) -
@@ -264,7 +264,7 @@ theorem unit_endo : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (cc : Ideal (𝓞 D.ho
   set β' := ι ((m : ℂ) + ((1 : ℤ) : ℂ) * (1 - Formalism.L2.Th1.CM.omegaK D.host.d)) with hβ'
   have h2 : ‖(2 : ℂ_[p])‖ = 1 := Formalism.L2.Th1.Top.OrthogonalGaussModelNormLemmas.norm_two p hp2
   have hsum : β + β' = ((2 * m + 1 : ℤ) : ℂ_[p]) := by
-    rw [hβ, hβ', ← map_add]
+    rw [hβ, hβ', ← map_add (f := _)]
     have e : ((m : ℂ) + ((1 : ℤ) : ℂ) * Formalism.L2.Th1.CM.omegaK D.host.d) +
         ((m : ℂ) + ((1 : ℤ) : ℂ) * (1 - Formalism.L2.Th1.CM.omegaK D.host.d)) = ((2 * m + 1 : ℤ) : ℂ) := by
       push_cast; ring
@@ -294,7 +294,7 @@ theorem unit_endo : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (cc : Ideal (𝓞 D.ho
     have hm' := Formalism.L2.Th1.G.WeierstrassCurveSeries.endInt_int (Formalism.L2.KerInert.IwahoriBlocks.RB p) _ _ hlp hFG (-m)
     have h := Formalism.L2.Th1.C.Pts.endInt_add hlp hFG hEβ hm'
     have e : β + ((-m : ℤ) : ℂ_[p]) = ι (Formalism.L2.Th1.CM.omegaK D.host.d) := by
-      rw [hβ, map_add, map_mul, map_intCast, map_intCast]; push_cast; ring
+      rw [hβ, map_add (f := _), map_mul, map_intCast, map_intCast]; push_cast; ring
     rwa [e] at h
   exact Formalism.L2.KerInert.IwahoriBlocks.integralMv_of_endInt g hOk _
     (Formalism.L2.KerInert.IwahoriBlocks.endInt_OK D p g hOk ι hι hEω a)

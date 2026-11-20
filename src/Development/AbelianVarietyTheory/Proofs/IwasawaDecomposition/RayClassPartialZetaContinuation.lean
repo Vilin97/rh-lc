@@ -71,7 +71,7 @@ theorem im_ne_zero [IsTotallyComplex K] (φ : K →+* ℂ) (b : Module.Basis (Fi
     have hz : (-q.num) • b 0 + ((q.den : ℤ)) • b 1 = 0 := by
       apply RingOfIntegers.ext
       simp only [RingOfIntegers.coe_eq_algebraMap] at hK ⊢
-      simp only [zsmul_eq_mul, map_add, map_mul, map_intCast, map_neg, map_zero, map_natCast]
+      simp only [zsmul_eq_mul, map_add (f := _), map_mul, map_intCast, map_neg, map_zero, map_natCast]
       push_cast at hK ⊢
       linear_combination hK
     have := Fintype.linearIndependent_iff.1 b.linearIndependent ![-q.num, (q.den : ℤ)]
@@ -130,7 +130,7 @@ theorem abs_im_eq (φ : K →+* ℂ) (b : Module.Basis (Fin 2) ℤ (𝓞 K)) (J 
   simp only [hψ]
   rw [← hdet, Nat.cast_natAbs, Int.cast_abs, ← abs_mul, he 0, he 1]
   congr 1
-  simp only [map_add, map_mul, map_intCast, Complex.mul_im, Complex.add_im, Complex.add_re,
+  simp only [map_add (f := _), map_mul, map_intCast, Complex.mul_im, Complex.add_im, Complex.add_re,
     Complex.mul_re, Complex.intCast_re, Complex.intCast_im, Complex.conj_re, Complex.conj_im]
   push_cast
   ring
@@ -363,7 +363,7 @@ theorem partial_zeta_continuation : ∀ (K : Type) [Field K] [NumberField K] [Is
       φ (x₀ : K) + p.1 * φ ((e 0 : 𝓞 K) : K) + p.2 * φ ((e 1 : 𝓞 K) : K) := by
     intro p
     rw [hfL p]
-    simp [ψ, map_add, map_mul, map_intCast]
+    simp [ψ, map_add (f := _), map_mul, map_intCast]
   have hnz : ∀ m n : ℤ, φ (x₀ : K) + m * φ ((e 0 : 𝓞 K) : K) + n * φ ((e 1 : 𝓞 K) : K) ≠ 0 := by
     intro m n h0
     have hx := (fL (m, n)).2.2

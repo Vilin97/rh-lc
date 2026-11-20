@@ -42,11 +42,11 @@ theorem adj_baseChange {O : Type} [CommRing O] {K : Type} [Field K] [Algebra O K
     (x y : K ⊗[O] H) : B.baseChange K (f.baseChange K x) y = B.baseChange K x (g.baseChange K y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul s h =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul t h' => simp only [LinearMap.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul, hfg]
 
 end GlobalTheory.EigenPair

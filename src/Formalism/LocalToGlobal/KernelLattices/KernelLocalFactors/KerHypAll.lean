@@ -116,7 +116,7 @@ theorem psiAt_repYA {G : ChGlob X R.m} {m2 : ℕ} (hL : L.Ok Ch sel mu cst G m2)
   have hz' := (xqMem_stdAt (P := P.1) _).1 hz
   have e : (frsF sel mu p P).symm (γ.symm (repY ((fun v => γ v) '' Y))) =
       (frsF sel mu p P).symm (repY Y) + (frsF sel mu p P).symm (γ.symm (repY ((fun v => γ v) '' Y)) - repY Y) := by
-    rw [← map_add, add_sub_cancel]
+    rw [← map_add (f := _), add_sub_cancel]
   rw [e]
   refine hL.psiInv al P x₀ _ _ fun i => ?_
   have h := hz' i
@@ -648,14 +648,14 @@ theorem joinCol_move {n' c' n c : ℕ} (hc' : c' = 1) {ri : Sp E (n' + c') ≃�
     exact if_pos rfl
   have hriv : ri v = Loc.inX E n' 1 (gi (LinearMap.funLeft E E (Fin.castAdd 1) v)) + (v (Fin.last n')) • Loc.eN E (n' + 1) n' := by
     conv_lhs => rw [hdec]
-    rw [map_add, map_smul, hxi, hri.2.1]
+    rw [map_add (f := _), map_smul, hxi, hri.2.1]
   have h1 : LinearMap.funLeft E E (Fin.castAdd 1) (ri v) = gi (LinearMap.funLeft E E (Fin.castAdd 1) v) := by
-    rw [hriv, map_add, map_smul, hπ, hπe, smul_zero, add_zero]
+    rw [hriv, map_add (f := _), map_smul, hπ, hπe, smul_zero, add_zero]
   have h2 : (ri v) (Fin.last n') = v (Fin.last n') := by
     rw [hriv, Pi.add_apply, Pi.smul_apply, ha, hae, smul_eq_mul, mul_one, zero_add]
   simp only [joinCol, LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smulRight_apply, LinearEquiv.coe_coe, haN]
   rw [hxc, h1, h2]
-  simp only [map_add, map_smul]
+  simp only [map_add (f := _), map_smul]
 
 end R1
 

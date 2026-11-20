@@ -58,18 +58,18 @@ theorem orth_mem_span_qFr : ∀ (D : D7) (X : HidaSetting D) (u : D.what₂.Word
     have h := (hef b).1
     rw [hy] at h
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa [map_add, map_sum, hqe, X.ee, X.ef, (X.zu_orth u b).1] using h
+      simpa [map_add (f := _), map_sum, hqe, X.ee, X.ef, (X.zu_orth u b).1] using h
   have c1 : ∀ b, X.ιE (c (Sum.inr (Sum.inl b))) = 0 := by
     intro b
     have h := (hef b).2
     rw [hy] at h
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa [map_add, map_sum, hqf, X.ff, hT_fe, (X.zu_orth u b).2] using h
+      simpa [map_add (f := _), map_sum, hqf, X.ff, hT_fe, (X.zu_orth u b).2] using h
   have c3 : X.ιE (c (Sum.inr (Sum.inr (Sum.inr ())))) = 0 := by
     have h := hz
     rw [hy] at h
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [map_add, map_sum, hqz, hT_ze, hT_zf] at h
+      simp [map_add (f := _), map_sum, hqz, hT_ze, hT_zf] at h
     rw [h.resolve_right (hT_zz_ne X u), map_zero]
   refine ⟨fun j => X.ιE (c (Sum.inl j)), ?_⟩
   rw [hy, Fintype.linearCombination_apply]

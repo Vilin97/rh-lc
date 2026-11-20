@@ -69,7 +69,7 @@ theorem valAt'_mul (x : Sp ℂ ⟶ X) (U : X.Opens) (f g : Γ(X, U)) :
 theorem valAt'_add (x : Sp ℂ ⟶ X) (U : X.Opens) (f g : Γ(X, U)) :
     valAt' x U (f + g) = valAt' x U f + valAt' x U g := by
   by_cases h : ⊤ ≤ x ⁻¹ᵁ U
-  · simp only [valAt'_eq_valAtHom x h, map_add]
+  · simp only [valAt'_eq_valAtHom x h, map_add (f := _)]
   · simp only [valAt'_of_not_le x h, add_zero]
 
 theorem valAt'_zero (x : Sp ℂ ⟶ X) (U : X.Opens) : valAt' x U 0 = 0 := by

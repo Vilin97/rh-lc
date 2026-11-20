@@ -34,7 +34,7 @@ theorem perp_iff {n : ℕ} [NeZero n] {Λ : Type} [CommRing Λ]
       P (x.1 g) (ρ' g (y.1 h)) + P (ρ g (x.1 h)) (y.1 g) + χ g * P (x.1 h) (y.1 h) :=
     fun x g h => by
     rw [x.2.2, y.2.2, ← hP]
-    simp only [map_add, AddMonoidHom.add_apply]
+    simp only [map_add (f := _), AddMonoidHom.add_apply]
     ring
   have cb : ∀ x : Z1 ρ, Continuous fun g => P (x.1 g) (y.1 g) := fun x =>
     (continuous_of_discreteTopology (f := fun p : M × M' => P p.1 p.2)).comp

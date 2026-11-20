@@ -73,7 +73,7 @@ theorem side {A T : HSp D} (E₀ : AE D) (hc : cA D E₀ = E₀) (hsq : E₀ * E
       have e1 := congrFun (congrFun hu.2 a) b
       have e2 := congrFun (congrFun hu'.2 a) b
       simp only [Matrix.map_apply, Matrix.zero_apply, Matrix.add_apply] at e1 e2 ⊢
-      rw [(infPart D).map_add, e1, e2, add_zero]⟩) l hl
+      rw [(infPart D).map_add (f := _), e1, e2, add_zero]⟩) l hl
   have half : ∀ u ∈ (aconv l).support, IsHalf (1 - E₀) u := fun u hu a b => by
     rw [sub_mul, one_mul, (key u hu).1 a b, sub_zero]
   refine ⟨fun u hu => (key u hu).2, half, fun x hx y hy => ?_⟩

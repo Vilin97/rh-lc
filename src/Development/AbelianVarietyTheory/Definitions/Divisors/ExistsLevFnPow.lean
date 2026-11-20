@@ -80,7 +80,7 @@ theorem exists_ev (F E : Type) [Field F] [NumberField F] [Field E] [NumberField 
   · induction z using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
     | tmul x a => rw [hφ]; exact mul_mem (hK x) (h2 a)
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · induction hz using Subring.closure_induction with
     | mem x hx =>
       rcases hx with ⟨⟨_, b, rfl⟩, rfl⟩ | ⟨y, rfl⟩
@@ -92,7 +92,7 @@ theorem exists_ev (F E : Type) [Field F] [NumberField F] [Field E] [NumberField 
         exact h3 _ y.2
     | zero => simp
     | one => simp
-    | add x y _ _ hx hy => rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
     | neg x _ hx => rwa [map_neg, norm_neg]
     | mul x y _ _ hx hy => rw [map_mul, norm_mul]; exact mul_le_one₀ hx (norm_nonneg _) hy
 

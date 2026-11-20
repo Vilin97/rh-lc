@@ -123,13 +123,13 @@ variable {P} in
 
 theorem Alg.ringHom_ext {S : Type} [Ring S] {f g : Alg P →+* S} (hC : ∀ b, f (algebraMap B _ b) = g (algebraMap B _ b))
     (hr : f (root P) = g (root P)) : f = g :=
-  RingHom.ext (Alg.induction hC hr (fun y z hy hz => by rw [map_add, map_add, hy, hz])
+  RingHom.ext (Alg.induction hC hr (fun y z hy hz => by rw [map_add (f := _), map_add (f := _), hy, hz])
     fun y z hy hz => by rw [map_mul, map_mul, hy, hz])
 
 def gamma : (Alg P)ˣ :=
   Units.mkOfMulEqOne (root P) (-(algebraMap B _ (s (P.1.coeff 0)) * aeval (root P) P.1.divX)) (by
     have h := aeval_root P
-    rw [← X_mul_divX_add P.1, map_add, map_mul, aeval_X, aeval_C] at h
+    rw [← X_mul_divX_add P.1, map_add (f := _), map_mul, aeval_X, aeval_C] at h
     have h1 := congrArg (algebraMap B (Alg P)) P.2.conj_mul_coeff_zero
     rw [map_mul, map_one] at h1
     linear_combination (-algebraMap B (Alg P) (s (P.1.coeff 0))) * h + h1)
@@ -208,7 +208,7 @@ theorem _root_.GlobalTheory.UTr.conj_conj (hs : ∀ b, s (s b) = b)
   obtain ⟨q, rfl⟩ := _root_.GlobalTheory.UTr.exists_aeval_root P z
   induction q using Polynomial.induction_on with
   | C a => simp [σ, hs]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | monomial k a ih =>
     rw [pow_succ, ← mul_assoc, map_mul, map_mul, map_mul, ih, aeval_X,
       _root_.GlobalTheory.UTr.conj_root, hinv]
@@ -406,7 +406,7 @@ theorem _root_.GlobalTheory.UTr.cT_evalMat (g : _root_.Formalism.UG.UJ s J)
       hcT_alg]
     exact Algebra.commutes _ _
   | add p q hp hq =>
-    rw [map_add, map_add, map_add, map_add, hcT_add, add_mul, hp, hq, mul_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hcT_add, add_mul, hp, hq, mul_add]
   | monomial k a ih =>
     rw [pow_succ, ← mul_assoc, map_mul (aeval _) (C a * X ^ k) X, aeval_X]
     generalize aeval (_root_.GlobalTheory.UTr.root P) (C a * X ^ k) = w at ih ⊢
@@ -523,7 +523,7 @@ theorem evalMat_algMap {Q : Csr s'} (φ : B →+* B') (h : Q.1 ∣ P.1.map φ) {
     ext i j
     simp [Matrix.algebraMap_matrix_apply, apply_ite φ]
   | hr => rw [algMap_root, evalMat_root, evalMat_root]
-  | hadd y z hy hz => rw [map_add, map_add, map_add, hy, hz, Matrix.map_add _ (map_add φ)]
+  | hadd y z hy hz => rw [map_add (f := _), map_add (f := _), map_add (f := _), hy, hz, Matrix.map_add _ (map_add φ)]
   | hmul y z hy hz => rw [map_mul, map_mul, map_mul, hy, hz, Matrix.map_mul]
 
 theorem IsCyc.map {g : Matrix n n B} (h : IsCyc P g) (φ : B →+* B') {Q : Csr s'} (hQ : Q.1 = P.1.map φ) :
@@ -533,7 +533,7 @@ theorem IsCyc.map {g : Matrix n n B} (h : IsCyc P g) (φ : B →+* B') {Q : Csr 
   have hg' : aeval (g.map φ) Q.1 = 0 := by rw [hQ, aeval_map_map, hg, Matrix.map_zero _ (map_zero φ)]
   let l : Alg Q →ₗ[B'] (n → B') :=
     { toFun := fun z => evalMat Q _ hg' z *ᵥ (φ ∘ i 1)
-      map_add' := fun y z => by rw [map_add, Matrix.add_mulVec]
+      map_add' := fun y z => by rw [map_add (f := _), Matrix.add_mulVec]
       map_smul' := fun c z => by rw [map_smul, Matrix.smul_mulVec]; rfl }
   have hl : ∀ z, l (algMap φ hQ.dvd z) = φ ∘ i z := fun z => by
     change evalMat Q _ hg' _ *ᵥ _ = _

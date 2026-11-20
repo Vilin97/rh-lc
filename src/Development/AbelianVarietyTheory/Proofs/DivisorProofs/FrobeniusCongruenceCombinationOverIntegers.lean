@@ -124,14 +124,14 @@ theorem GlobalTheory.SmallSecond.frob_congr_to_O : ∀ (p : ℕ) [Fact p.Prime] 
       rw [coeff_map, key, map_neg, map_sum]
     exact m.neg_mem (m.sum_mem fun l _ => by rw [map_mul]; exact m.mul_mem_right _ (hWm l))
   · have h1 := hgen (p • β)
-    rw [coeff_frob_smul p hp0, coeff_map, F.s_alg, ← map_add, ← map_sub] at h1
+    rw [coeff_frob_smul p hp0, coeff_map, F.s_alg, ← map_add (f := _), ← map_sub] at h1
     rw [hcobT, F.frame.inj h1]
     obtain ⟨y, hy⟩ := F.σ_pow (coeff β F₁)
     obtain ⟨r', hr'⟩ := Ideal.mem_span_singleton.1 (hr (p • β))
     have e1 : F.θ (F.σ (coeff β F₁) + r (p • β) - ∑ l, W l * g l (p • β)) - F.θ (coeff β F₁) ^ p =
         F.θ (F.σ (coeff β F₁) - coeff β F₁ ^ p) + F.θ (r (p • β)) -
           F.θ (∑ l, W l * g l (p • β)) := by
-      simp only [map_sub, map_add, map_pow]; ring
+      simp only [map_sub, map_add (f := _), map_pow]; ring
     rw [e1, hy, hr']
     exact m.sub_mem (m.add_mem (hθp y) (hθp r')) (hSm _)
   · have h1 := hgen α

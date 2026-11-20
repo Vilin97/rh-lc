@@ -200,7 +200,7 @@ theorem _root_.GlobalTheory.exists_sim_of_aut_mod : ∀ (E : Type) [Field E] [Nu
     obtain ⟨z, hz⟩ := exists_smul_eq_level_smul_of_mem_map_bar_Mb D l hbe (hh b)
     have : (H.bar e * e') • h (g b) = (H.bar e * e') • b + e' • (((l.M : ℕ) : NumberField.RingOfIntegers E) • z) := by
       rw [← hz, smul_smul, mul_comm e' (H.bar e), ← smul_add, add_sub_cancel]
-    rw [this, map_add, add_sub_cancel_left]
+    rw [this, map_add (f := _), add_sub_cancel_left]
     rw [smul_comm]
     exact level_dvd_EF_level_smul D l _ _
   have hF : ∀ a b, (l.M : ℤ) ∣ D.EF (f1 a) (f1 b) - D.EF a b := by
@@ -228,7 +228,7 @@ theorem _root_.GlobalTheory.exists_sim_of_aut_mod : ∀ (E : Type) [Field E] [Nu
           - (-D.EF (e' • g a) (e • u b) - -D.EF (e' • a) (e • b)) := by
       have hab : D.EF a b = D.EF (e • a + e' • a) (e • b + e' • b) := by rw [← ha, ← hb]
       rw [hab]
-      simp only [hf1, LinearMap.add_apply, LinearMap.smul_apply, map_add, LinearMap.add_apply]
+      simp only [hf1, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), LinearMap.add_apply]
       ring
     rw [hexp]
     exact dvd_sub (dvd_add (dvd_sub (dvd_sub (dvd_add hgg huu) hee1) hee2) hca) hcb
@@ -239,7 +239,7 @@ theorem _root_.GlobalTheory.exists_sim_of_aut_mod : ∀ (E : Type) [Field E] [Nu
     intro a b
     obtain ⟨k, hk⟩ := hF a b
     refine ⟨s * t * (D.EF a (f1 b) + D.EF (f1 a) b - 2 * D.EF a b) + t ^ 2 * A * k, ?_⟩
-    simp only [hf0, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply, map_add,
+    simp only [hf0, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply, map_add (f := _),
       map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
     push_cast
     linear_combination (t ^ 2 * (A : ℤ) ^ 2) * hk + D.EF a b * (t * A + s * l.M + 1) * hst

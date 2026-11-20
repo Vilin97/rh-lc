@@ -58,7 +58,7 @@ theorem idem_orbitMap {π : Representation ℂ G V} {ρ : Representation ℂ G W
   | add a b ha hb =>
     obtain ⟨c, h1, h2⟩ := ha
     obtain ⟨d, h3, h4⟩ := hb
-    exact ⟨c + d, by rw [map_add, map_add, h1, h3, add_smul], by rw [map_add, map_add, h2, h4, add_smul]⟩
+    exact ⟨c + d, by rw [map_add (f := _), map_add (f := _), h1, h3, add_smul], by rw [map_add (f := _), map_add (f := _), h2, h4, add_smul]⟩
   | smul r a ha =>
     obtain ⟨c, h1, h2⟩ := ha
     exact ⟨r * c, by rw [map_smul, map_smul, h1, mul_smul], by rw [map_smul, map_smul, h2, mul_smul]⟩

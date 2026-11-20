@@ -159,7 +159,7 @@ theorem _root_.GlobalTheory.LawDer.Kernel.constantCoeff_iterate_invDer_mem : ∀
         coeff (Finsupp.mapDomain Sum.inl β + Finsupp.single (Sum.inr i) 1)
           (_root_.GlobalTheory.Katz.cob1 μ' l) := by
       rw [map_sub, hcoeffD]
-      simp only [hsplit, map_add, hleft, hright, hzero, Nat.cast_zero, zero_add, add_zero,
+      simp only [hsplit, map_add (f := _), hleft, hright, hzero, Nat.cast_zero, zero_add, add_zero,
         mul_one, mul_add, Finset.sum_add_distrib]
       by_cases hβ : β = 0 <;> simp [hβ, Pi.single_apply, coeff_C]
     rw [hsum]

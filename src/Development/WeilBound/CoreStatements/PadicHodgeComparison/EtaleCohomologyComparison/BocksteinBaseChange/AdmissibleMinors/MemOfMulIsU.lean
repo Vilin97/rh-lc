@@ -99,7 +99,7 @@ theorem coords {M : Model l K} {n : ℕ} (A : Set (Module.Dual ℚ_[l] (M.V n)))
     · exact fun f hf => h f hf
     · simpa using h0
     · intro f f' _ _ h1 h2
-      simp only [LinearMap.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+      simp only [LinearMap.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
       exact hadd _ _ h1 h2
     · intro c f _ h1
       have e : ∑ k, z k * R.q ((c • f) (b k)) = R.q c * ∑ k, z k * R.q (f (b k)) := by

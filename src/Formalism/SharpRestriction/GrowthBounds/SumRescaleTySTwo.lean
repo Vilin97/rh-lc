@@ -115,7 +115,7 @@ theorem good_curve_closed : GoodCurveClosed := by
       intro n
       have e := congrArg (PowerSeries.coeff n) (hγ2 q)
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sub, map_sum, apply_ite (PowerSeries.coeff n), PowerSeries.coeff_smul, map_zero,
+        simp only [map_add (f := _), map_sub, map_sum, apply_ite (PowerSeries.coeff n), PowerSeries.coeff_smul, map_zero,
         smul_eq_mul] at e
       linear_combination e
     have hT1 : ∀ b : ℕ → C, PowerSeries.coeff V.l (tyS V.l b) = b 1 := fun b => by

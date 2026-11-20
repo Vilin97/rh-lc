@@ -92,7 +92,7 @@ theorem sigR_id (z : Fv F v ⊗[F] E) : sigR (Fv F v) (AlgHom.id F E) z = z := b
   | (induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [sigR, Algebra.TensorProduct.map_tmul]
-      | add x y hx hy => rw [map_add, hx, hy])
+      | add x y hx hy => rw [map_add (f := _), hx, hy])
 
 theorem JR_one : JR (F := F) (Fv F v) (1 : Matrix (Fin 1) (Fin 1) E) = 1 := by
   simp [JR]
@@ -110,7 +110,7 @@ theorem localTracePairing_eq_realBilinearForm (ι : Type) [Fintype ι] (x y : ι
 
 theorem localTracePairing_add_left (ι : Type) [Fintype ι] (x x' y : ι → Fv F v ⊗[F] E) :
     trP v ι (x + x') y = trP v ι x y + trP v ι x' y := by
-  simp [trP, add_mul, map_add, Finset.sum_add_distrib]
+  simp [trP, add_mul, map_add (f := _), Finset.sum_add_distrib]
 
 theorem localTracePairing_smul_left (ι : Type) [Fintype ι] (c : Fv F v) (x y : ι → Fv F v ⊗[F] E) :
     trP v ι (c • x) y = c * trP v ι x y := by

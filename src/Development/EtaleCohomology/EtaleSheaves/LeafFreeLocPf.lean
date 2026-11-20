@@ -43,7 +43,7 @@ lemma alg {S X Y Z : Type*} [CommRing S] (g : X → Z) (f : Y → Z) (D : Submod
     intro x
     induction x using Finsupp.induction_linear with
     | zero => simp
-    | add p q hp hq => rw [Finsupp.mapDomain_add, map_add, hp, hq, map_add]
+    | add p q hp hq => rw [Finsupp.mapDomain_add, map_add (f := _), hp, hq, map_add (f := _)]
     | single a r =>
       rw [Finsupp.mapDomain_single]
       simp only [θ, Finsupp.linearCombination_single, hv]
@@ -52,7 +52,7 @@ lemma alg {S X Y Z : Type*} [CommRing S] (g : X → Z) (f : Y → Z) (D : Submod
     intro y
     induction y using Finsupp.induction_linear with
     | zero => simp
-    | add p q hp hq => rw [Finsupp.mapDomain_add, map_add, hp, hq, add_zero]
+    | add p q hp hq => rw [Finsupp.mapDomain_add, map_add (f := _), hp, hq, add_zero]
     | single u r =>
       rw [Finsupp.mapDomain_single]
       simp only [θ, Finsupp.linearCombination_single, v]

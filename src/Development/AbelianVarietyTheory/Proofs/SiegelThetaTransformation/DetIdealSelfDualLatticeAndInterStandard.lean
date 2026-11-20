@@ -217,7 +217,7 @@ theorem conj_mem_detSpan {M M' : Submodule (𝓞 E) (Fin n → E)}
     rw [AlgEquiv.map_det]
     exact det_mem _ fun i => h _ (hv i)
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul b x _ hx =>
     have : IsCMField.complexConj E (b • x) = IsCMField.ringOfIntegersComplexConj E b • IsCMField.complexConj E x := by
       change IsCMField.complexConj E ((b : E) * x) = (IsCMField.ringOfIntegersComplexConj E b : E) * _

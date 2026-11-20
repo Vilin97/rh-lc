@@ -178,7 +178,7 @@ theorem gen [QuasiCompact f] [QuasiSeparated f] (x : Γ(pullback f (spMap i₀),
         rintro _ _ ⟨n, c, y, rfl⟩ ⟨m, d, z, rfl⟩
         obtain ⟨y', hy'⟩ := hc_factor f i₀ c (Fin.append c d) (Lc_le_append_left i₀ c d) y
         obtain ⟨z', hz'⟩ := hc_factor f i₀ d (Fin.append c d) (Lc_le_append_right i₀ c d) z
-        exact ⟨_, Fin.append c d, y' + z', by rw [map_add, hy', hz']⟩
+        exact ⟨_, Fin.append c d, y' + z', by rw [map_add (f := _), hy', hz']⟩
       mul_mem' := by
         rintro _ _ ⟨n, c, y, rfl⟩ ⟨m, d, z, rfl⟩
         obtain ⟨y', hy'⟩ := hc_factor f i₀ c (Fin.append c d) (Lc_le_append_left i₀ c d) y

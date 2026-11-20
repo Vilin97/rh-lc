@@ -49,7 +49,7 @@ theorem exists_isAdd_of_mem_primDR (R : Type) [CommRing R] (A : Over (Sp R)) [Gr
     IsMor.of_over _ (by rw [← Category.assoc, Over.w])
   have h' : CatCoh.H1.mk _ ((M μ[A]).coef.pullbackOneCocycle f) =
       CatCoh.H1.mk _ ((M (fst A A)).coef.pullbackOneCocycle f + (M (snd A A)).coef.pullbackOneCocycle f) := by
-    rw [map_add]; exact h
+    rw [map_add (f := _)]; exact h
   obtain ⟨k, hk⟩ := H1.mk_eq_mk.1 h'
   obtain ⟨c, hc⟩ := exists_crystallineCocycleOnPoints_pullback_cohomologous _ (M μ[A]) f
   obtain ⟨c₁, hc₁⟩ := exists_crystallineCocycleOnPoints_pullback_cohomologous _ (M (fst A A)) f
@@ -63,7 +63,7 @@ theorem exists_isAdd_of_mem_primDR (R : Type) [CommRing R] (A : Over (Sp R)) [Gr
           fv ((M (snd A A)).coef.pullbackOneCocycle f) D D' φ (lift x y)) :=
     congrFun (congrFun (congrFun hk _) _) (trivMap φ (lift x y))
   rw [hc, hc₁, hc₂, lift_fst, lift_snd, ← Hom.mul_def, comp_lift] at e
-  simp only [map_add, map_sub]
+  simp only [map_add (f := _), map_sub]
   linear_combination e
 
 end GlobalTheory.PtExt

@@ -104,7 +104,7 @@ theorem trForm_baseChange_eq_sum (H : Host E) (v w : ℝ ⊗[ℤ] 𝓞 E) :
   | tmul r x =>
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add w w' h h' => rw [map_add, Complex.ofReal_add, h, h']; simp [mul_add, Finset.sum_add_distrib]
+    | add w w' h h' => rw [map_add (f := _), Complex.ofReal_add, h, h']; simp [mul_add, Finset.sum_add_distrib]
     | tmul s y =>
       rw [LinearMap.BilinForm.baseChange_tmul, zsmul_eq_mul]
       push_cast

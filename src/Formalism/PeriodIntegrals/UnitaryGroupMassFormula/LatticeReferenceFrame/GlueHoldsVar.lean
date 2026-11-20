@@ -100,7 +100,7 @@ theorem glue_holds_var : Glue := by
         exact zmod_zero I g
   · refine ⟨?_, fun a => ⟨?_, ?_⟩⟩
     · show ZMod' I g (hA I (incl I z) (incl I z) + 1)
-      rw [hA_incl, ← map_one (Formalism.UG.inclE (F := I.F) (Af I.F)), ← map_add]
+      rw [hA_incl, ← map_one (Formalism.UG.inclE (F := I.F) (Af I.F)), ← map_add (f := _)]
       exact zmod_of_GE I g hzz
     · show ZMod' I g (hA I (incl I (Q • M • e a)) (incl I z))
       rw [hA_incl]

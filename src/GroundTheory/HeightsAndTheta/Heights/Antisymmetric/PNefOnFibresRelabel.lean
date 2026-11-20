@@ -103,7 +103,7 @@ def locQuotSemilinear :
     induction y using LocalizedModule.induction_on with | h m' s' => ?_
     rw [LocalizedModule.mk_add_mk, locQuotMap_mk, locQuotMap_mk, locQuotMap_mk,
       LocalizedModule.mk_add_mk]
-    simp only [Submonoid.smul_def, map_add, quotEquivMap_smul]
+    simp only [Submonoid.smul_def, map_add (f := _), quotEquivMap_smul]
     congr 1
     ext
     simp
@@ -350,7 +350,7 @@ theorem mCoordIdeal_relabel {Ω : Type} [Field Ω] (y : (Σ k', ι' k') → Ω) 
     intro f
     induction f using MvPolynomial.induction_on with
     | C n => simp [mConeMap]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p q hp =>
       rw [map_mul, map_mul, map_mul, hp]
       obtain ⟨k, i⟩ := q

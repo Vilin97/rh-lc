@@ -31,7 +31,7 @@ theorem omO_piW_lineAt {θ : InfFam D} {σ : (D.what₂.Tau → ℂ) →+ AE D} 
       -symplAt V W τ z (compAt θ τ ξ) := by
   have skew : ∀ x y, GlobalTheory.OrientedHeis.omO V W x y = -GlobalTheory.OrientedHeis.omO V W y x := fun x y => by
     have e := GlobalTheory.OrientedHeis.omO_self (S := V) (T := W) h (x + y)
-    simp only [map_add, LinearMap.add_apply, GlobalTheory.OrientedHeis.omO_self h] at e
+    simp only [map_add (f := _), LinearMap.add_apply, GlobalTheory.OrientedHeis.omO_self h] at e
     linarith
   have hL := GlobalTheory.OrientedHeis.isLineAt_lineAt h.inf (m := W.rank) (n := V.rank) τ z
   have hc : ∀ b, GlobalTheory.FockCompare.piW θ W V (lineAt θ τ z 1) b = compAt θ b (lineAt θ τ z 1) := fun b => rfl

@@ -116,7 +116,7 @@ theorem hi1 (Y : FBChart C V O dd) (i : Fin dd) :
     have := Y.gauge.ph1; rwa [toK_self, FK_self] at this
   have hg : constantCoeff (ev (n := 3) ![pt C dd 0, pt C dd 2] Y.h + ev (n := 3) ![pt C dd 1, pt C dd 2] Y.h -
       ev (n := 3) ![addOf Y.B.G.F (pt C dd 0) (pt C dd 1), pt C dd 2] Y.h) = 0 := by
-    rw [map_sub, map_add, const_ev (killE.constant_zero_point_third _ (z0_pt 0)) (h_const Y),
+    rw [map_sub, map_add (f := _), const_ev (killE.constant_zero_point_third _ (z0_pt 0)) (h_const Y),
       const_ev (killE.constant_zero_point_third _ (z0_pt 1)) (h_const Y), const_ev (killE.constant_zero_point_third _ (const_addOf Y 0 1)) (h_const Y)]
     simp
   have hd1 : ∀ k' : Fin 3, k' ≠ 1 → ∀ j, pderiv C ((1 : Fin 3), i) (pt C (n := 3) dd k' j) = 0 :=
@@ -172,7 +172,7 @@ theorem hi1 (Y : FBChart C V O dd) (i : Fin dd) :
     funext k j; fin_cases k
     · exact eval_outer_points_first j
     · exact eval_outer_points_middle j
-  rw [hph, pderiv_expS hg, ← hph, ev_mul constant_zero_outer_points, Y.B.cocycleLeft_zero_snd, one_mul, map_sub, map_add, ev_sub constant_zero_outer_points,
+  rw [hph, pderiv_expS hg, ← hph, ev_mul constant_zero_outer_points, Y.B.cocycleLeft_zero_snd, one_mul, map_sub, map_add (f := _), ev_sub constant_zero_outer_points,
     ev_add constant_zero_outer_points, hA, ev_zero constant_zero_outer_points, zero_add, hB, hE1B, hC, ev_sum constant_zero_outer_points]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_

@@ -82,7 +82,7 @@ theorem second_derivative_shift_integral {B : FB R d O} {h : PS k 2 d} (hc : B.I
   set H := ev (n := 3) ![pt k d 0, pt k d 1] h + ev (n := 3) ![pt k d 0, pt k d 2] h -
     ev (n := 3) ![pt k d 0, A] h with hH
   have hcH : constantCoeff H = 0 := by
-    rw [hH, map_sub, map_add, cc_ev' cz01, cc_ev' c02, cc_ev' c0A, hh]
+    rw [hH, map_sub, map_add (f := _), cc_ev' cz01, cc_ev' c02, cc_ev' c0A, hh]
     simp
   have hI : pderiv k ((2 : Fin 3), b) H ∈ Ig R k (Fin 3 × Fin d) :=
     ig_dlog B.ph2 (constantCoeff_second_factor B) H hcH hc.ph2 _
@@ -98,7 +98,7 @@ theorem second_derivative_shift_integral {B : FB R d O} {h : PS k 2 d} (hc : B.I
       ev (n := 3) ![pt k d 0, pt k d 2] (pderiv k ((1 : Fin 2), b) h) -
         ∑ c, ev (n := 3) ![pt k d 0, A] (pderiv k ((1 : Fin 2), c) h) *
           ev (n := 3) ![pt k d 1, pt k d 2] (pderiv k ((1 : Fin 2), b) (B.FK k c)) := by
-    rw [hH, map_sub, map_add, pderiv_ev_zero cz01 h _ ?_, d2 c02, d2 c0A]
+    rw [hH, map_sub, map_add (f := _), pderiv_ev_zero cz01 h _ ?_, d2 c02, d2 c0A]
     · simp only [dA]
       simp [pderiv_pt]
     · intro j i

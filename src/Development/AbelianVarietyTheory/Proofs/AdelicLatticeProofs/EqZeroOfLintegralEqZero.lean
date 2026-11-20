@@ -179,7 +179,7 @@ theorem lineAt_move (hθ : IsInfFam θ) (g : GA D S) (h : GA D T) (τ : D.what�
   let L : ℝ →+ WO S T :=
     { toFun := fun t => actO S T g h (lineAt θ τ z t)
       map_zero' := by unfold actO; rw [AddMonoidHom.map_zero, Matrix.mul_zero, Matrix.zero_mul]
-      map_add' := fun s t => by unfold actO; rw [AddMonoidHom.map_add, Matrix.mul_add, Matrix.add_mul] }
+      map_add' := fun s t => by unfold actO; rw [AddMonoidHom.map_add (f := _), Matrix.mul_add, Matrix.add_mul] }
   have hL' : IsLineAt θ τ (compAt θ τ (mt T h) * z * compAt θ τ (mt S g⁻¹)) L := by
     refine ⟨(continuous_const.matrix_mul hL.1).matrix_mul continuous_const, fun t => ?_, fun t τ' => ?_⟩
     · show (actO S T g h (lineAt θ τ z t)).map (finPart D) = 0

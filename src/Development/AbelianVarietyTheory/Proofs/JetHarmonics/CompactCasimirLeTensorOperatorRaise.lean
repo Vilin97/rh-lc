@@ -61,7 +61,7 @@ theorem core (V : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [Finite
   have hint : ∀ a b, ε a = ε b → ∀ x, F a b (sumMap φ x) = sumMap φ (K a b x) := by
     intro a b hab x
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hK, sumMap_apply, tensAct_apply, map_sum, map_add, map_smul, hφ a b hab,
+      simp only [hK, sumMap_apply, tensAct_apply, map_sum, map_add (f := _), map_smul, hφ a b hab,
       Finset.sum_add_distrib]
     congr 1
     rw [Finset.sum_comm]

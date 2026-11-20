@@ -14,7 +14,7 @@ theorem length_eq_add_eigen {R M : Type} [CommRing R] [AddCommGroup M] [Module R
   have hc : (2 : R) * c = 1 := h2.mul_val_inv
   have eP : ∀ x : M, f (x + s • f x) = s • (x + s • f x) := by
     intro x
-    rw [map_add, map_smul, hf, smul_add, smul_smul, hs, one_smul, add_comm]
+    rw [map_add (f := _), map_smul, hf, smul_add, smul_smul, hs, one_smul, add_comm]
   have eQ : ∀ x : M, f (x - s • f x) = (-s) • (x - s • f x) := by
     intro x
     rw [map_sub, map_smul, hf, smul_sub, smul_smul, neg_mul, hs, neg_smul, neg_smul, one_smul]

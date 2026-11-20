@@ -49,7 +49,7 @@ theorem level_schur (hρ : IsSmooth ρ) [ρ.IsIrreducible] [FiniteDimensional �
   obtain ⟨w₀, hw₀⟩ := hc.exists_hasEigenvector
   let ψ : Module.End (HeckeAlgebraLevel μ K hKc hKo) (fixedVectors ρ K) :=
     { toFun := fun w => φ w - c • w
-      map_add' := fun a b => by rw [map_add, smul_add]; abel
+      map_add' := fun a b => by rw [map_add (f := _), smul_add]; abel
       map_smul' := fun h w => by rw [RingHom.id_apply, φ.map_smul, smul_sub, level_smul_comm] }
   have hw₀ker : w₀ ∈ LinearMap.ker ψ := by
     rw [LinearMap.mem_ker]

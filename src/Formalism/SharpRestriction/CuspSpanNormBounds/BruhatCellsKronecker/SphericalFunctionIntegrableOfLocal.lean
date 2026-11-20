@@ -1023,7 +1023,7 @@ theorem opExists_of_regRep (hR : X.RegRep) (hφ : Integrable X.φ (X.I.muA X.μf
         rw [← integral_const_mul]
         exact integral_congr_ae (Filter.Eventually.of_forall fun g => by ring))
       (fun x y y' => by
-        simp only [map_add, inner_add_right, mul_add]
+        simp only [map_add (f := _), inner_add_right, mul_add]
         exact integral_add (hint x y) (hint x y'))
       (fun c x y => by
         simp only [map_smul, inner_smul_right, smul_eq_mul, RingHom.id_apply]

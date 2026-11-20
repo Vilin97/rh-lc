@@ -85,7 +85,7 @@ theorem skew_block (s : A →+* A) (J K K' : Matrix ι ι A) (a c : A) (ha : s a
     ext i j
     have h1 : s ((1 : Matrix ι ι A) i j) = (1 : Matrix ι ι A) i j :=
       congrFun (congrFun (Matrix.map_one s (map_zero _) (map_one _)) i) j
-    simp only [Matrix.map_apply, Matrix.smul_apply, Matrix.sub_apply, smul_eq_mul, map_mul, map_sub, map_add, map_one,
+    simp only [Matrix.map_apply, Matrix.smul_apply, Matrix.sub_apply, smul_eq_mul, map_mul, map_sub, map_add (f := _), map_one,
       ha, hc, h1]
     ring
   rw [e3]

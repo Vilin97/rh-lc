@@ -14,7 +14,7 @@ theorem pderiv_comm_two_variables (i j : Fin 2) (P : MvPolynomial (Fin 2) ℝ) :
   | C a => simp
   | add p q hp hq => simp [hp, hq]
   | mul_X p n hp =>
-    simp only [pderiv_mul, map_add, hp, pderiv_X, Pi.single_apply]
+    simp only [pderiv_mul, map_add (f := _), hp, pderiv_X, Pi.single_apply]
     split_ifs <;> (try simp) <;> ring
 
 theorem hasDerivAt_eval_fst (P : MvPolynomial (Fin 2) ℝ) (s t : ℝ) :
@@ -24,14 +24,14 @@ theorem hasDerivAt_eval_fst (P : MvPolynomial (Fin 2) ℝ) (s t : ℝ) :
     simp only [eval_C, pderiv_C, map_zero]
     exact hasDerivAt_const s a
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p n hp =>
     have hX : HasDerivAt (fun u : ℝ => (![u, t] : Fin 2 → ℝ) n) (eval ![s, t] (pderiv 0 (X n))) s := by
       fin_cases n
       · simpa using hasDerivAt_id' s
       · simpa using hasDerivAt_const s t
-    simp only [map_mul, eval_X, pderiv_mul, map_add]
+    simp only [map_mul, eval_X, pderiv_mul, map_add (f := _)]
     exact hp.mul hX
 
 theorem hasDerivAt_eval_snd (P : MvPolynomial (Fin 2) ℝ) (s t : ℝ) :
@@ -41,14 +41,14 @@ theorem hasDerivAt_eval_snd (P : MvPolynomial (Fin 2) ℝ) (s t : ℝ) :
     simp only [eval_C, pderiv_C, map_zero]
     exact hasDerivAt_const t a
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p n hp =>
     have hX : HasDerivAt (fun u : ℝ => (![s, u] : Fin 2 → ℝ) n) (eval ![s, t] (pderiv 1 (X n))) t := by
       fin_cases n
       · simpa using hasDerivAt_const t s
       · simpa using hasDerivAt_id' t
-    simp only [map_mul, eval_X, pderiv_mul, map_add]
+    simp only [map_mul, eval_X, pderiv_mul, map_add (f := _)]
     exact hp.mul hX
 
 theorem continuous_eval_fst (P : MvPolynomial (Fin 2) ℝ) (t : ℝ) :

@@ -127,7 +127,7 @@ private theorem lat_of_isBundle {F : Type} [Field F] [Algebra ℂ F] {d : ℕ} {
       exact hmono y.2
     | zero => simpa using (rA ℂ x I).zero_mem
     | add a b _ _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (rA ℂ x I).add_mem ha hb
     | smul c a _ ha =>
       have : φ k (c • a) = (c : F) * φ k a := by

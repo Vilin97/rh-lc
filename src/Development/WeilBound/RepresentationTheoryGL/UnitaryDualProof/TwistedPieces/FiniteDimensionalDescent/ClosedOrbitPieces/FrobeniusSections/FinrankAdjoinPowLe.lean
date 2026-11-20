@@ -120,7 +120,7 @@ theorem sectionEx {k R : Type*} [Field k] [CommRing R] [Algebra k R] [FiniteDime
   let Lbar : Fin n → R ⧸ N := fun i => π.symm (fun I => α I i)
   let σ : ∀ I : MaximalSpectrum R, R ⧸ I.asIdeal → R ⧸ N := fun I z => π.symm (Pi.single I z)
   have hσadd : ∀ I z w, σ I (z + w) = σ I z + σ I w := fun I z w => by
-    simp only [σ, Pi.single_add, map_add]
+    simp only [σ, Pi.single_add, map_add (f := _)]
   have hσmul : ∀ I z w, σ I (z * w) = σ I z * σ I w := fun I z w => by
     simp only [σ, Pi.single_mul, map_mul]
   have hσpow : ∀ I z, σ I (z ^ (p ^ c)) = σ I z ^ (p ^ c) := fun I z => by

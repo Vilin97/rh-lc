@@ -150,7 +150,7 @@ theorem four_expand : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam
   have heX : ∀ x, IsHalf e (eXm S T e x) := fun x i j => by
     simp only [eXm, Matrix.map_apply, ← mul_assoc, hee]
   have heX_add : ∀ x y, eXm S T e (x + y) = eXm S T e x + eXm S T e y := fun x y => by
-    ext i j; simp only [eXm, map_add, Matrix.map_apply, Matrix.add_apply, RingHom.map_add, mul_add]
+    ext i j; simp only [eXm, map_add (f := _), Matrix.map_apply, Matrix.add_apply, RingHom.map_add (f := _), mul_add]
   have heX_sub : ∀ x y, eXm S T e (x - y) = eXm S T e x - eXm S T e y := fun x y => by
     ext i j; simp only [eXm, map_sub, Matrix.map_apply, Matrix.sub_apply, RingHom.map_sub, mul_sub]
   have heF : ∀ M : Matrix (Fin T.rank) (Fin S.rank) D.host.E, e • GlobalTheory.LatVac.finTens 1 M = eXm S T e (Matrix.toLin' M) := fun M => by

@@ -251,7 +251,7 @@ theorem tau_periods : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (Q 
       exact (congrArg (· ^ W i j) (Q.val_tau_zero 0 z J hJ)).trans (one_zpow _)
   have hQab : ∏ i, ∏ j, val (Q.tau (xe (a + b) i) (xe (a + b) j)) (𝟙 _) z J ^ W i j =
       ∏ i, ∏ j, val (Q.tau (xe a i + xe b i) (xe a j + xe b j)) (𝟙 _) z J ^ W i j := by
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   rw [hQ0, hQab]
   have key := periods_alg (cQ Q) (cQ_add Q)
     (fun x y => val (Q.tau x y) (𝟙 _) z J) (cubV Q.cub z J) hsym hadd W (xe a) (xe b)

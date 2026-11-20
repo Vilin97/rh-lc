@@ -11,7 +11,7 @@ lemma lintegral_indicator_translate {X : Type} [AddCommGroup X] [MeasurableSpace
   congr 1
   funext x
   show Set.indicator {x | P x - z ∈ S} h (x + z) = Set.indicator {x | P x ∈ S} h x
-  have hx : (P (x + z) - z ∈ S) ↔ (P x ∈ S) := by rw [map_add, hz, add_sub_cancel_right]
+  have hx : (P (x + z) - z ∈ S) ↔ (P x ∈ S) := by rw [map_add (f := _), hz, add_sub_cancel_right]
   by_cases hxs : P x ∈ S
   · rw [Set.indicator_of_mem (show x + z ∈ {x | P x - z ∈ S} from hx.mpr hxs),
       Set.indicator_of_mem (show x ∈ {x | P x ∈ S} from hxs), hinv x z hz]

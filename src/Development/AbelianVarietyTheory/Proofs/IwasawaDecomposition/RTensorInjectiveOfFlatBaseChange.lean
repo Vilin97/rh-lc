@@ -22,10 +22,10 @@ theorem rTensor_injective_of_flat_baseChange {A C B N' N : Type*} [CommRing A] [
   have key : ∀ z, (ι.restrictScalars A).rTensor B (e' z) = e (ι.rTensor (C ⊗[A] B) z) := by
     intro z
     induction z with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul n t =>
       induction t with
-      | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
+      | add a b ha hb => simp only [tmul_add, map_add (f := _), ha, hb]
       | tmul c b => simp [e, e']
   intro x y h
   obtain ⟨x, rfl⟩ := e'.surjective x
@@ -47,10 +47,10 @@ theorem rTensor_injective_of_flat {A B L N' N : Type*} [CommRing A] [CommRing B]
   have key : ∀ z, ι.lTensor L (e' z) = e ((ι.baseChange B).lTensor L z) := by
     intro z
     induction z with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul n t =>
       induction t with
-      | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
+      | add a b ha hb => simp only [tmul_add, map_add (f := _), ha, hb]
       | tmul c b => simp [e, e']
   intro x y h
   obtain ⟨x, rfl⟩ := e'.surjective x
@@ -91,7 +91,7 @@ theorem relationsLift_succ {R : Type*} {A : Type u} {M : Type*} [CommRing R] [Co
     refine Submodule.smul_induction_on hv (fun r hr n _ => ?_) ?_
     · exact ⟨n ⊗ₜ ⟨r, hr⟩, by simp⟩
     · rintro _ _ ⟨a, rfl⟩ ⟨b, rfl⟩
-      exact ⟨a + b, by simp only [map_add]⟩
+      exact ⟨a + b, by simp only [map_add (f := _)]⟩
   obtain ⟨z, hz⟩ := hsurj _ hx
   have hy : f'.lTensor M x₁ = incl.lTensor M z := by
     apply hT
@@ -188,7 +188,7 @@ theorem lTensor_injective_of_fibre {A B A' L C N' N : Type} [CommRing A] [CommRi
       (ι.restrictScalars A).lTensor L (e' z) := by
     intro z
     induction z with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul l n => rfl
   intro x y h
   apply e'.injective

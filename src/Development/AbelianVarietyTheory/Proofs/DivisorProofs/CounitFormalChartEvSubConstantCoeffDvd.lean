@@ -43,9 +43,9 @@ theorem counit_ev_sub_constantCoeff (p : ℕ) (O : Type) [CommRing O] (G : PDivG
   obtain ⟨a, ha⟩ := hN _ hT
   rw [pow_one] at ha
   have hsplit : c.ev n F = c.ev n (F - (P : MvPowerSeries (Fin d) O)) + c.ev n P := by
-    rw [← map_add, sub_add_cancel]
+    rw [← map_add (f := _), sub_add_cancel]
   refine ⟨Coalgebra.counit (R := O) a, ?_⟩
-  rw [hsplit, map_add, ha, hPc, add_sub_cancel_right]
+  rw [hsplit, map_add (f := _), ha, hPc, add_sub_cancel_right]
   rw [show ((p : G.A n)) * a = (p : O) • a by rw [Algebra.smul_def, map_natCast], map_smul, smul_eq_mul]
 
 end GlobalTheory.FrNil

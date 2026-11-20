@@ -15,7 +15,7 @@ variable (ι : Type) (d : ℕ)
 
 def hermSub : Submodule ℝ (ι → Fin d → Fin d → ℂ) where
   carrier := {b | IsHerm b}
-  add_mem' {a b} ha hb τ i k := by simp only [Pi.add_apply, map_add, ha τ i k, hb τ i k]
+  add_mem' {a b} ha hb τ i k := by simp only [Pi.add_apply, map_add (f := _), ha τ i k, hb τ i k]
   zero_mem' τ i k := by simp
   smul_mem' c b hb τ i k := by
     simp only [Pi.smul_apply, Complex.real_smul, map_mul, Complex.conj_ofReal, hb τ i k]
@@ -43,10 +43,10 @@ variable {ι d}
 def hermSingle (i0 k0 : Fin d) : (ι → ℂ) →ₗ[ℝ] hermSub ι d where
   toFun z := ⟨fun τ i k => (if i = i0 ∧ k = k0 then z τ else 0) +
       (if k = i0 ∧ i = k0 then conj (z τ) else 0), fun τ i k => by
-    simp only [map_add, apply_ite conj, map_zero, Complex.conj_conj, add_comm]⟩
+    simp only [map_add (f := _), apply_ite conj, map_zero, Complex.conj_conj, add_comm]⟩
   map_add' z w := by
     apply Subtype.ext; funext τ i k
-    simp only [Pi.add_apply, map_add, Submodule.coe_add]
+    simp only [Pi.add_apply, map_add (f := _), Submodule.coe_add]
     split_ifs <;> ring
   map_smul' c z := by
     apply Subtype.ext; funext τ i k
@@ -205,7 +205,7 @@ theorem span_latZ {g : ℕ} (hg : 0 < g) :
           AddHom.coe_mk, Complex.real_smul, map_mul, emb_cE, map_add, apply_ite τ.1, map_zero,
           emb_cc]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Sp.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Sp.add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact Sp.smul_mem c hx
   refine eq_top_iff.2 fun b _ => ?_
   rw [sum_hermSingle b]

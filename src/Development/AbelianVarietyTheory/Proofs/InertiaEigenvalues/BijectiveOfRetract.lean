@@ -77,7 +77,7 @@ theorem map_H2_sum {ι : Type*} (s : Finset ι) (u : ι → M →ₗ[R] M') (hu 
     have he : ∀ g m, (∑ j ∈ s, u j) (rho g m) = rho' g ((∑ j ∈ s, u j) m) := by
       intro g m; simp only [LinearMap.sum_apply, map_sum, hue]
     rw [map_H2_congr rho rho' (Finset.sum_insert ha) hs hse
-        ((hu a).add hc) (fun g m => by simp only [LinearMap.add_apply, hue, he, map_add]),
+        ((hu a).add hc) (fun g m => by simp only [LinearMap.add_apply, hue, he, map_add (f := _)]),
       map_H2_add rho rho' _ _ (hu a) (hue a) hc he, ih hc he, Finset.sum_insert ha]
 
 end Functor
@@ -108,7 +108,7 @@ def phi (M : Type) [AddCommGroup M] [Module O M] [TopologicalSpace M] [IsTopolog
         LinearMap.toSpanSingleton O M (m + m') =
           LinearMap.toSpanSingleton O M m + LinearMap.toSpanSingleton O M m')
       (cont_span M _) (span_twist ε M _) ((cont_span M m).add (cont_span M m'))
-      (fun g a => by simp only [LinearMap.add_apply, span_twist, map_add]),
+      (fun g a => by simp only [LinearMap.add_apply, span_twist, map_add (f := _)]),
       map_H2_add _ _ _ _ (cont_span M m) (span_twist ε M m) (cont_span M m') (span_twist ε M m')]
     rfl
   map_smul' c m := by
@@ -210,7 +210,7 @@ theorem bijective_of_retract (M : Type) [AddCommGroup M] [Module O M] [Topologic
           (hs' i) (twist_equiv ε _)]
       rfl
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, map_sum, Finset.sum_congr rfl (fun j _ => k1 j),
+      rw [map_add (f := _), map_sum, map_sum, Finset.sum_congr rfl (fun j _ => k1 j),
       Finset.sum_congr rfl (fun i _ => k2 i), ← LinearMap.sum_apply, ← LinearMap.sum_apply,
       ← map_H2_sum (twist ε M) (twist ε M) _ _ _ _ (cont_sum _ _ fun j => (hs j).comp (hp j))
         (twist_equiv ε _),

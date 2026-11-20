@@ -15,7 +15,7 @@ private theorem specRoot_semi {R K U : Type} [Field R] [Field K] [Algebra R K] [
       intro c
       rw [pow_succ', Module.End.mul_apply, ih, h, Matrix.mulVec_mulVec, pow_succ']
   induction q using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, LinearMap.add_apply, hp, hq, Matrix.add_mulVec, hadd]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, hp, hq, Matrix.add_mulVec, hadd]
   | monomial n a =>
     rw [aeval_monomial, aeval_monomial, ← Algebra.smul_def, ← Algebra.smul_def, LinearMap.smul_apply, hp,
       Matrix.smul_mulVec, hsm]
@@ -73,7 +73,7 @@ theorem UpperTheory.crystalline_period_matrix_relation :
   let ψ : Bcr l →+* Bcr l := (((PP l).φB ^ f : Bcr l →ₐ[ℚ_[l]] Bcr l) : Bcr l →+* Bcr l)
   have hψ : (ψ : Bcr l → Bcr l) = ((PP l).φB)^[f] := AlgHom.coe_pow _ _
   have key := specRoot_semi Φ (fun a b => by
-      simp only [Φ, Pi.add_apply, map_add, ← Finset.sum_add_distrib, ← TensorProduct.tmul_add]
+      simp only [Φ, Pi.add_apply, map_add (f := _), ← Finset.sum_add_distrib, ← TensorProduct.tmul_add]
       refine Finset.sum_congr rfl fun i _ => ?_
       congr 1
       simp only [Matrix.mulVec, dotProduct, mul_add, Finset.sum_add_distrib])

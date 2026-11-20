@@ -22,7 +22,7 @@ theorem exists_pt_of_gen {C R A : Type} [Field C] [CommRing R] [IsDomain R] [Alg
       map_one' := inj (by rw [hf, map_one, map_one]),
       map_mul' := fun a b => inj (by rw [hf, map_mul, map_mul, hf, hf]),
       map_zero' := inj (by rw [hf, map_zero, map_zero]),
-      map_add' := fun a b => inj (by rw [hf, map_add, map_add, hf, hf]),
+      map_add' := fun a b => inj (by rw [hf, map_add (f := _), map_add (f := _), hf, hf]),
       commutes' := fun r => inj (by rw [hf, AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply]) }
   exact ⟨ψ, fun a => hf a⟩
 

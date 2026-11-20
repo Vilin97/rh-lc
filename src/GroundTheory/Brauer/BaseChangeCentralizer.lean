@@ -93,7 +93,7 @@ def rightInclHom : L →ₐ[E] (Module.End E (RightMul (inclBase E hf)))ᵐᵒ�
     apply MulOpposite.unop_injective
     refine LinearMap.ext fun x => ?_
     change RightMul.of _ (x.val * incl (a + b)) = RightMul.of _ (x.val * incl a + x.val * incl b)
-    rw [map_add, mul_add]
+    rw [map_add (f := _), mul_add]
   commutes' e := by
     apply MulOpposite.unop_injective
     refine LinearMap.ext fun x => ?_

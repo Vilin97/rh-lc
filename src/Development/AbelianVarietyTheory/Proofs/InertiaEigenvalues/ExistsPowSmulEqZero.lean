@@ -126,7 +126,7 @@ theorem inv_ext {G T S X Y : Type} [Group G] [AddCommGroup T] [Module O T] [Modu
     induction m using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => simp [coefRep_tmul]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   rw [Submodule.eq_bot_iff] at hS hY ⊢
   intro m hm
   have h1 : p.lTensor T m = 0 := hY _ fun g => by rw [← nat, hm g]
@@ -190,7 +190,7 @@ theorem lc_act (hB : AdicBasis L lam) (hc : ∀ v, Continuous fun g => twistRep 
     IsLocallyConstant fun g => twCoef (latRep L) χ X g m := by
   induction m using TensorProduct.induction_on with
   | zero => simp only [map_zero]; exact IsLocallyConstant.const _
-  | add a b ha hb => simp only [map_add]; exact ha.add hb
+  | add a b ha hb => simp only [map_add (f := _)]; exact ha.add hb
   | tmul t x =>
     obtain ⟨a, ha⟩ := hX x
     exact lc_tmul hB x a ha (fun g => act L χ g t) (by simpa only [act_coe] using hc t)

@@ -219,16 +219,16 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.indCs :
       rw [← e]
       exact (hv w' 1 ((norm_split h2 hne.symm e.symm).trans (by rw [e, pow_one]))).trans (pow_one _)
     refine ⟨_, _, hun k1, hun k2, ?_⟩
-    rw [e1, e2, ← Multiset.map_add]
+    rw [e1, e2, ← Multiset.map_add (f := _)]
     exact satTw k3 (pow_val hi₀ _).1
   · obtain ⟨_, B', k1, rfl, k3⟩ := hw.2 hq2
     refine ⟨_, B'.map (· * χ₀⁻¹.val (w.under (𝓞 K))), ?_, ?_, satTw k3 (pow_val hi₀ _).1⟩
     · have k4 := hun k1
       rw [hv w 2 hq2] at k4
       simpa only [Multiset.map_map, Function.comp_def, mul_pow] using k4
-    · simp only [Multiset.map_add, Multiset.map_map, Function.comp_def, neg_mul]
+    · simp only [Multiset.map_add (f := _), Multiset.map_map, Function.comp_def, neg_mul]
   · have k := (hI τ τ' _ _ hne hc (k1.twist χ) (k2.twist χ)).twist χ₀⁻¹
-    rw [pow_expo hχ, pow_expo hχ, pow_expo hi₀, ← Multiset.map_add, Multiset.map_map] at k
+    rw [pow_expo hχ, pow_expo hχ, pow_expo hi₀, ← Multiset.map_add (f := _), Multiset.map_map] at k
     simpa using k
 
 end Main

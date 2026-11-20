@@ -24,7 +24,7 @@ theorem aeval_eq_eval_mConeMap (y : (Σ k, ι k) → Ω) (f : MRing ι) :
     aeval y f = eval (fun _ ↦ (1 : Ω)) (mConeMap y f) := by
   induction f using MvPolynomial.induction_on with
   | C c => simp [mConeMap]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p n hp =>
     rw [map_mul, map_mul, map_mul, hp]
     simp [mConeMap]

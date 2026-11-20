@@ -166,7 +166,7 @@ theorem theta_kernels_agree_up_to_scalar : GlobalTheory.Published.HoweDualityRea
   obtain ⟨Φ₁, hΦ₁, h4⟩ := hO.algB' Φ₁D hΦ₁D
   have hy := hc (p Φ) (p' Φ₁) ⟨Φ, hΦ, Φ₁, hΦ₁, ΦD, hΦD, Φ₁D, hΦ₁D, hD, h4, m1, rfl⟩
   have h5 := dB.2 _ _ _ _ (-c) h4 hD₀
-  have hz : p' (Φ₁ + (-c) • Φ₀) = 0 := by rw [map_add, map_smul, hy, hp, neg_smul, add_neg_cancel]
+  have hz : p' (Φ₁ + (-c) • Φ₀) = 0 := by rw [map_add (f := _), map_smul, hy, hp, neg_smul, add_neg_cancel]
   have m2 := (_root_.GlobalTheory.SquareAgree.theta_kernel_match_on_opposite_parabolic hRe hP D ψ θ W W₁ X A A₁ B α β ν 𝓕 ν₁ 𝓕₁ ωA ωB e Bs Γ Xc om om' cA cB hθ hT hO hTD R Rf hR Pi rf rl p p' hM _ (add_mem hΦ₁ (Submodule.smul_mem _ _ hΦ₀)) _
     (add_mem hΦ₁D (Submodule.smul_mem _ _ hΦ₀D)) h5).1 hz
   have m3 := lin.2 _ _ _ _ (-1) m1 m2

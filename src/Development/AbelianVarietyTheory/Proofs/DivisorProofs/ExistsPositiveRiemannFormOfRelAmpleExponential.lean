@@ -53,12 +53,12 @@ theorem exists_riemannForm_of_relAmple : ∀ (X : Scheme.{0}) (G : Over X) [GrpO
   choose N hN using fun a b => GlobalTheory.TorusRM.ahFactor_im_int g _ _ u Hm χ hLA hF (P a) (hmem a) (P b) (hmem b)
   let EF : LinearMap.BilinForm ℤ La := LinearMap.mk₂ ℤ N
     (fun a a' b => Int.cast_injective (α := ℝ) (by
-      push_cast; rw [← hN, ← hN, ← hN, map_add, add_dotProduct, Complex.add_im]))
+      push_cast; rw [← hN, ← hN, ← hN, map_add (f := _), add_dotProduct, Complex.add_im]))
     (fun c a b => Int.cast_injective (α := ℝ) (by
       rw [smul_eq_mul, Int.cast_mul, ← hN, ← hN, map_zsmul]
       exact im_dot_mulVec_star_zsmul_left Hm c _ _))
     (fun a b b' => Int.cast_injective (α := ℝ) (by
-      push_cast; rw [← hN, ← hN, ← hN, map_add, star_add, Matrix.mulVec_add, dotProduct_add, Complex.add_im]))
+      push_cast; rw [← hN, ← hN, ← hN, map_add (f := _), star_add, Matrix.mulVec_add, dotProduct_add, Complex.add_im]))
     (fun c a b => Int.cast_injective (α := ℝ) (by
       rw [smul_eq_mul, Int.cast_mul, ← hN, ← hN, map_zsmul]
       exact im_dot_mulVec_star_zsmul_right Hm c _ _))

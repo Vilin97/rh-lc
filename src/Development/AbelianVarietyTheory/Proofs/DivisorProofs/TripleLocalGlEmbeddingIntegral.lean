@@ -105,7 +105,7 @@ theorem eq_of_tens_eq_of_ne (v : Pl F) {κ : Type} {ψ₁ ψ₂ : (κ → Fv F v
     intro u hu; funext i; exact GlobalTheory.LatVac.at_liftV v _ u hu
   have hev : (fun i => evFin F v ((x₀ + z) i)) = y := by
     funext i
-    simp only [Pi.add_apply, z, map_add, GlobalTheory.LatVac.evFin_liftV]
+    simp only [Pi.add_apply, z, map_add (f := _), GlobalTheory.LatVac.evFin_liftV]
     abel
   have e := congrFun h (x₀ + z)
   simp only [tens, hev, hr x₀ z hz] at e
@@ -186,7 +186,7 @@ theorem diag_integral : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
     intro φ hφ φ' hφ' c
     have hm : c • φ + φ' ∈ SB ((Fin a' × Fin (a + a')) → Fv F v) := (SB _).add_mem ((SB _).smul_mem c hφ) hφ'
     refine hι.bij.injOn (hSsb _ hm) ((SB _).add_mem ((SB _).smul_mem c (hSsb φ hφ)) (hSsb φ' hφ')) ?_
-    rw [hint g _ hm, map_add, map_smul, map_add, map_smul, hint g φ hφ, hint g φ' hφ']
+    rw [hint g _ hm, map_add (f := _), map_smul, map_add (f := _), map_smul, hint g φ hφ, hint g φ' hφ']
     funext Y
     simp only [GlobalTheory.SplitFlip.omB, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     ring

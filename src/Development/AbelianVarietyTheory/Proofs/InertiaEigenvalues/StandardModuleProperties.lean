@@ -24,7 +24,7 @@ theorem isL_add [CharZero k] (H : GlobalTheory.Published.LanglandsMultisegments)
     {V : Type} [AddCommGroup V] [Module ℂ V] (π : Representation ℂ (GL (Fin (x.1 + t.1)) k) V)
     (hπ : π.IsIrreducible) (φ : π.Equiv (prod₂ x.rep t.rep)) : IsL (𝔪 + 𝔫) π := by
   have e : y.1 = x.1 + t.1 := by
-    rw [← deg_eq_of_isL hy, ← deg_eq_of_isL hx, ← deg_eq_of_isL ht, Multiset.map_add, Multiset.sum_add]
+    rw [← deg_eq_of_isL hy, ← deg_eq_of_isL hx, ← deg_eq_of_isL ht, Multiset.map_add (f := _), Multiset.sum_add]
   obtain ⟨n, c⟩ := y
   dsimp only at e
   subst e

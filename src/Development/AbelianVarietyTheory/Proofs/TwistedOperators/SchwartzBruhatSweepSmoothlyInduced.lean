@@ -111,7 +111,7 @@ theorem sb_induced : ∀ (G X Y W : Type) [Group G] [TopologicalSpace G] [IsTopo
           rw [hA, hA, map_mul, hu, mul_one, hm, hu'])⟩
       map_add' := fun Φ Ψ => Subtype.ext (Subtype.ext (funext fun g => by
         show ev.symm (A (Φ + Ψ) g) = ev.symm (A Φ g) + ev.symm (A Ψ g)
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         exact Subtype.ext (funext fun y => mul_add _ _ _)))
       map_smul' := fun a Φ => Subtype.ext (Subtype.ext (funext fun g => by

@@ -26,7 +26,7 @@ theorem padicInt_hom_ext_pt {l : ℕ} [Fact l.Prime] {R : Type} [CommRing R] [Ch
   have h : f x - g x = (f y - g y) * (l : WittVector l R) ^ n := by
     have hf := congrArg f hx
     have hg := congrArg g hx
-    simp only [map_add, map_mul, map_pow, map_natCast] at hf hg
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast] at hf hg
     rw [hf, hg]
     ring
   rw [SModEq.zero, h, smul_eq_mul, Ideal.mul_top, Ideal.span_singleton_pow]

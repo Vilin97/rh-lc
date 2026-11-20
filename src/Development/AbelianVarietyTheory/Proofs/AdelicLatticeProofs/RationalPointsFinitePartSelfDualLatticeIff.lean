@@ -26,7 +26,7 @@ theorem symplO_nsmul (S T : HSp D) (N : ℕ) (x y : WO S T) :
 
 theorem symplO_eq_add (S T : HSp D) (x y : WO S T) : symplO S T x y = symplOH S T x y + symplOH S T x y := by
   unfold symplOH
-  rw [← add_mul, ← RingHom.map_add, add_halves, RingHom.map_one, one_mul]
+  rw [← add_mul, ← RingHom.map_add (f := _), add_halves, RingHom.map_one, one_mul]
 
 theorem psi_real {θ : InfFam D} {ψ : AddChar (AF D.host.F) ℂ} (hθ : IsInfFam θ) (hψ : IsStdChar D ψ (-1))
     (S T : HSp D) (x y : WO S T) (h : x.map (finPart D) = 0 ∨ y.map (finPart D) = 0) :

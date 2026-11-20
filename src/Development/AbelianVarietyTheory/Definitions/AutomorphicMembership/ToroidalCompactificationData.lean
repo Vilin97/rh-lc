@@ -242,7 +242,7 @@ theorem kae_unique (h' : IsBdOf x L B') (hz : z ∈ DomI D.what₂.Tau j (N - j)
   refine LinearMap.ext₂ fun ξ ζ => ?_
   have e1 := e (ξ + ζ)
   have e2 := e (ξ + Complex.I • ζ)
-  simp only [map_add, map_smul, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, e, smul_eq_mul, Complex.conj_I,
+  simp only [map_add (f := _), map_smul, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, e, smul_eq_mul, Complex.conj_I,
     RingHom.id_apply] at e1 e2
   show b ξ ζ = 0
   linear_combination (1 / 2) * e1 + (Complex.I / 2) * e2 + ((b ξ ζ - b ζ ξ) / 2) * Complex.I_mul_I

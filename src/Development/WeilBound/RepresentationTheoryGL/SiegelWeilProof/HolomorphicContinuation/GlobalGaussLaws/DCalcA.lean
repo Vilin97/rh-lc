@@ -56,7 +56,7 @@ theorem eval_hasDeriv (P : PX m n) (u : Fin m → Fin n → ℂ) (X : Fin n → 
     simp only [evX_eq, eval_C, pderiv_C, map_zero, zero_mul, Finset.sum_const_zero]
     exact hasDerivAt_const _ _
   | add p q hp hq =>
-    simp only [evX_eq, map_add, add_mul, Finset.sum_add_distrib] at *
+    simp only [evX_eq, map_add (f := _), add_mul, Finset.sum_add_distrib] at *
     exact hp.add hq
   | mul_X p k hp =>
     have h := hp.mul (crd_hasDeriv u X k s)

@@ -22,7 +22,7 @@ theorem absEv_mul_locFin_le : ∀ (F E : Type) [Field F] [NumberField F] [Field 
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [sigR]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   have hN := congrArg (fun y => absBar F v (finEmb F v (embBar F E v) y))
     (GlobalTheory.Doubling.algebraMap_norm_eq hσ (R := Fv F v) δ.1)
   simp only [map_mul, absBar_mul, e2, AlgHom.commutes, absBar_algebraMap] at hN

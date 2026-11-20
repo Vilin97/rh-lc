@@ -143,13 +143,13 @@ theorem zmem : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S 
   rw [Matrix.sub_apply, Matrix.add_apply, Matrix.add_apply, Matrix.map_apply, Matrix.map_apply, Matrix.smul_apply,
     Matrix.smul_apply, smul_eq_mul, smul_eq_mul]
   refine GlobalTheory.SplitScalar.adele_ext ?_ ?_
-  · simp only [RingHom.map_sub, RingHom.map_add, RingHom.map_mul, i1, hinf, hinfc,
+  · simp only [RingHom.map_sub, RingHom.map_add (f := _), RingHom.map_mul, i1, hinf, hinfc,
       mul_zero, zero_mul, sub_zero, add_zero]
   · have hs : ∀ r : D.host.E, LinearMap.toMatrix' (r • x') i j = r * LinearMap.toMatrix' x' i j := fun r => by
       rw [map_smul]; rfl
     have ho' := congrArg (finPart D) ho
-    simp only [RingHom.map_sub, RingHom.map_add, RingHom.map_mul, RingHom.map_one] at ho'
-    simp only [RingHom.map_sub, RingHom.map_add, RingHom.map_mul, f1, hs]
+    simp only [RingHom.map_sub, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_one] at ho'
+    simp only [RingHom.map_sub, RingHom.map_add (f := _), RingHom.map_mul, f1, hs]
     linear_combination (finPart D (incA D (LinearMap.toMatrix' x' i j))) * ho'
 
 end GlobalTheory.HalfAComp

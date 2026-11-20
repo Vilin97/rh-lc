@@ -141,7 +141,7 @@ lemma key (ρ : G →* Matrix n n R) (L0 : R × ℕ × G) (h0 : 1 ≤ L0.2.1) (r
   have hnew : ∀ L k, φ (term ρ (newL L0 L (k + 1))) = φ (term ρ L0) ^ (k + 1) * φ (term ρ L) := by
     intro L k
     rw [term_newL, map_mul, map_pow]
-  simp only [map_sub, map_one, map_add, map_list_sum, List.map_cons, List.sum_cons, elim,
+  simp only [map_sub, map_one, map_add (f := _), map_list_sum, List.map_cons, List.sum_cons, elim,
     List.map_append, List.sum_append, sum_flat, List.map_map]
   rw [← alg_identity (φ (term ρ L0)) N hx]
   congr 3

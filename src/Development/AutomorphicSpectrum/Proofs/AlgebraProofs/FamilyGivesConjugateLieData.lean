@@ -438,7 +438,7 @@ theorem locSplit {p : ℕ} [Fact p.Prime] [CharP K p] (F : Family C p d O) (i : 
   have c₄ := congrArg Φ e₄
   have c₅ := congrArg Φ e₅
   have c₆ := congrArg Φ e₆
-  simp only [map_add, map_sub, map_mul, map_one, map_zero, hT] at c₁ c₂ c₃ c₄ c₅ c₆
+  simp only [map_add (f := _), map_sub, map_mul, map_one, map_zero, hT] at c₁ c₂ c₃ c₄ c₅ c₆
   refine locSplit_of_mats C (F.BK i) p i (Φ r₁) (Φ r₂) (Φ s₁) (Φ s₂) ?_ ?_ ?_
     (intM_map C i _) (intM_map C i _) (intM_map C i _) (intM_map C i _)
     (fun u => LinearMap.congr_fun (GlobalTheory.T.alpha_beta_adjoint_exact K p d O (F.BK i)).2 u) ?_ ?_ ?_ ?_ ?_ ?_

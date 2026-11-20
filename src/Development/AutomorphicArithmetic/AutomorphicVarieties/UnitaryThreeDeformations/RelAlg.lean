@@ -30,7 +30,7 @@ theorem exists_eq_sum_X {O σ : Type} [CommRing O] [Fintype σ] (p : MvPowerSeri
   · ext n
     simp only [← hg]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, coeff_C]
+      rw [map_add (f := _), map_sum, coeff_C]
     simp only [hq]
     by_cases h : n ≠ 0
     · simp [dif_pos h, if_neg h]
@@ -63,18 +63,18 @@ theorem mem_pow_of_coeff {O σ : Type} [CommRing O] [Fintype σ] (a : Ideal O) (
       rcases h2 i n with h | h
       · rw [h]; exact zero_mem _
       · have := hf (Finsupp.single i 1 + n)
-        rw [map_add, Finsupp.degree_single, show N + 1 - (1 + Finsupp.degree n) = N - Finsupp.degree n by omega] at this
+        rw [map_add (f := _), Finsupp.degree_single, show N + 1 - (1 + Finsupp.degree n) = N - Finsupp.degree n by omega] at this
         rwa [h]
 
 def Tr {O : Type} (σ : Type) [CommRing O] (a : Ideal O) (N : ℕ) : Ideal (MvPowerSeries σ O) where
   carrier := {f | ∀ n, coeff n f ∈ a ^ (N - Finsupp.degree n)}
-  add_mem' ha hb n := by rw [map_add]; exact add_mem (ha n) (hb n)
+  add_mem' ha hb n := by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha n) (hb n)
   zero_mem' n := by simp
   smul_mem' g f hf n := by
     classical
     rw [smul_eq_mul, coeff_mul]
     refine Ideal.sum_mem _ fun p hp => Ideal.mul_mem_left _ _ (Ideal.pow_le_pow_right ?_ (hf p.2))
-    rw [← Finset.HasAntidiagonal.mem_antidiagonal.1 hp, map_add]
+    rw [← Finset.HasAntidiagonal.mem_antidiagonal.1 hp, map_add (f := _)]
     omega
 
 theorem isHomog_Tr {O σ : Type} [CommRing O] (a : Ideal O) (N : ℕ) (wt : σ → ℤ) : IsHomog O wt (Tr σ a N) := by

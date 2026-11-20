@@ -401,7 +401,7 @@ theorem HidaSetting.exists_of_charpoly [IsArtinianRing A] (S : HidaSetting σ τ
   have hρ : ρ α = G := S.pb.lift_gen G hmin
   let φ₀ : B →ₗ[A] (Fin r → A) :=
     { toFun := fun y => ρ y *ᵥ v
-      map_add' := fun y z => by rw [map_add, Matrix.add_mulVec]
+      map_add' := fun y z => by rw [map_add (f := _), Matrix.add_mulVec]
       map_smul' := fun a y => by rw [map_smul, Matrix.smul_mulVec]; rfl }
   have hdet : IsUnit (LinearMap.toMatrix b (Pi.basisFun A (Fin r)) φ₀).det := by
     convert hv using 2
@@ -429,8 +429,8 @@ theorem HidaSetting.exists_of_charpoly [IsArtinianRing A] (S : HidaSetting σ τ
     | mem l hl => obtain ⟨i, rfl⟩ := hl; rw [S.pow, hadjn]
     | zero => simp [hform]
     | add l m _ _ h1 h2 =>
-      rw [add_mul, map_add, map_add, add_mul, map_add]
-      simp only [hform, Pi.add_apply, map_add, add_mul, mul_add, Finset.sum_add_distrib] at h1 h2 ⊢
+      rw [add_mul, map_add (f := _), map_add (f := _), add_mul, map_add (f := _)]
+      simp only [hform, Pi.add_apply, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib] at h1 h2 ⊢
       rw [h1, h2]
     | smul a l _ h1 =>
       have e : τ (a • l) * y' = σ a • (τ l * y') := by
@@ -554,11 +554,11 @@ theorem map_smul_tensor (f : AdjoinRoot P →ₗ[E] E) (a : E ⊗[F] k) (y : Adj
   rw [Algebra.smul_def]
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add a a' h h' => rw [map_add, add_mul, map_add, h, h', add_mul]
+  | add a a' h h' => rw [map_add (f := _), add_mul, map_add (f := _), h, h', add_mul]
   | tmul e t =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' h h' => rw [mul_add, map_add, h, h', map_add, mul_add]
+    | add y y' h h' => rw [mul_add, map_add (f := _), h, h', map_add (f := _), mul_add]
     | tmul l s =>
       have : AdjoinRoot.of P e * l = e • l := (Algebra.smul_def e l).symm
       simp [algebraMap_tmul, this]
@@ -621,7 +621,7 @@ theorem sigR_invol {L : Type} [CommRing L] [Algebra F L] (s : L →ₐ[F] L) (hs
     (y : L ⊗[F] k) : sigR s k (sigR s k y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add y y' h h' => rw [map_add, map_add, h, h']
+  | add y y' h h' => rw [map_add (f := _), map_add (f := _), h, h']
   | tmul l t => simp [sigR, hs]
 
 theorem exists_setting [CharZero E] (hP : IsPPol c r P) (hc : ∀ e, c (c e) = e) :
@@ -637,7 +637,7 @@ theorem exists_setting [CharZero E] (hP : IsPPol c r P) (hc : ∀ e, c (c e) = e
   · intro a
     induction a using TensorProduct.induction_on with
     | zero => simp
-    | add y y' h h' => simp only [map_add, h, h']
+    | add y y' h h' => simp only [map_add (f := _), h, h']
     | tmul e t => simp [starLk, sigR, algebraMap_tmul, starL_of]
   · have : AdjoinRoot.root P * (((alpha hP)⁻¹ : (AdjoinRoot P)ˣ) : AdjoinRoot P) = 1 :=
       (alpha hP).mul_inv
@@ -685,7 +685,7 @@ theorem sig_fixed (hF : ∀ e, c e = e → ∃ a, algebraMap F E a = e) (z : E �
   clear hz
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add y y' h h' => rw [map_add, map_add, tmul_add, h, h']
+  | add y y' h h' => rw [map_add (f := _), map_add (f := _), tmul_add, h, h']
   | tmul a t => simp [Algebra.algebraMap_eq_smul_one, TensorProduct.smul_tmul]
 
 theorem exists_unit_plus (hP : IsPPol c r P) {x : AdjoinRoot P ⊗[F] k} (hu : IsUnit x)
@@ -739,7 +739,7 @@ theorem exists_basis_plus [CharZero E] (hP : IsPPol c r P) (hc : ∀ e, c (c e) 
       have h1 := congrArg (starL hP) hg
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [map_sum, hsm, hfix, map_zero] at h1
-      choose a ha using fun i => hF (g i + c (g i)) (by rw [map_add, hc, add_comm])
+      choose a ha using fun i => hF (g i + c (g i)) (by rw [map_add (f := _), hc, add_comm])
       have h2 : ∑ i, a i • b i = 0 := by
         apply Subtype.val_injective
         have : ∑ i, a i • (b i : AdjoinRoot P) = 0 := by
@@ -764,7 +764,7 @@ theorem exists_basis_plus [CharZero E] (hP : IsPPol c r P) (hc : ∀ e, c (c e) 
       exact Submodule.sum_mem _ fun i _ =>
         Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
     rintro l -
-    have h1 := key (l + starL hP l) (by rw [map_add, starL_starL hP hc, add_comm])
+    have h1 := key (l + starL hP l) (by rw [map_add (f := _), starL_starL hP hc, add_comm])
     have h2 := key (δ • (l - starL hP l)) (by
       rw [hsm, hcδ, map_sub, starL_starL hP hc, neg_smul, ← smul_neg, neg_sub])
     have : l = (2 : E)⁻¹ • ((l + starL hP l) + δ⁻¹ • δ • (l - starL hP l)) := by

@@ -62,7 +62,7 @@ theorem pointConeMap_liftPairForm {y : (Σ k, ι k) → Ω} {pt : (Σ o, bundleI
     simp only [liftPairForm, rename_C, pointConeMap, aeval_C, MvPolynomial.algebraMap_apply, map_C]
     rw [IsScalarTower.algebraMap_apply O Ω Φ]
   | add p q hp hq =>
-    simp only [liftPairForm, map_add] at hp hq ⊢
+    simp only [liftPairForm, map_add (f := _)] at hp hq ⊢
     rw [hp, hq]
   | mul_X p v hp =>
     simp only [liftPairForm, pointConeMap] at hp ⊢

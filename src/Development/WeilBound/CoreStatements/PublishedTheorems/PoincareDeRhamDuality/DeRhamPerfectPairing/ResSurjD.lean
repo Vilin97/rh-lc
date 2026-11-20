@@ -95,7 +95,7 @@ theorem resSurj_coreD.{u} :
     have h1 : γ n ∈ m • (⊤ : Submodule R M) := (oneT_iff m _).1 hz
     obtain ⟨f, hf, w, hw, e⟩ := Submodule.mem_sup.1 (hγ m hm n h1)
     refine (oneT_iff m n).2 ?_
-    have e2 : n = π w := by rw [← hπ n, ← e, map_add, hπF f hf, zero_add]
+    have e2 : n = π w := by rw [← hπ n, ← e, map_add (f := _), hπF f hf, zero_add]
     rw [e2]
     have : π w ∈ Submodule.map π (m • ⊤) := Submodule.mem_map_of_mem hw
     rw [Submodule.map_smul''] at this

@@ -24,7 +24,7 @@ private theorem sum_map_tensor [FiniteDimensional F E] [IsGalois F E] {A : Type}
       (trace_eq_sum_automorphisms l).symm
     rw [← TensorProduct.sum_tmul, h, Algebra.algebraMap_eq_smul_one, TensorProduct.smul_tmul]
   | add a b ha hb =>
-    simp only [map_add, Finset.sum_add_distrib, ha, hb, TensorProduct.tmul_add]
+    simp only [map_add (f := _), Finset.sum_add_distrib, ha, hb, TensorProduct.tmul_add]
 
 private theorem map_mul_tensor {A : Type} [CommRing A] [Algebra F A] (τ τ' : E ≃ₐ[F] E) (t : E ⊗[F] A) :
     Algebra.TensorProduct.map ((τ * τ' : E ≃ₐ[F] E) : E →ₐ[F] E) (AlgHom.id F A) t =
@@ -33,7 +33,7 @@ private theorem map_mul_tensor {A : Type} [CommRing A] [Algebra F A] (τ τ' : E
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul l a => simp [Algebra.TensorProduct.map_tmul]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 private theorem fixed_tensor [FiniteDimensional F E] [IsGalois F E] {A : Type} [CommRing A] [Algebra F A]
     (σ : E ≃ₐ[F] E) (hσ : ∀ τ : E ≃ₐ[F] E, τ ∈ Subgroup.zpowers σ) (T : E ⊗[F] A)

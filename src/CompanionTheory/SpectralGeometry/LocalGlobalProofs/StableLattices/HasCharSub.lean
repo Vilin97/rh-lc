@@ -41,7 +41,7 @@ def trMod (Y : GMod n) : GMod n where
   gl := fun a b c d => by
     refine LinearMap.ext fun φ => LinearMap.ext fun x => ?_
     have h := comm_apply Y d c b a x
-    simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.dualMap_apply, h, map_add, map_sub]
+    simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.dualMap_apply, h, map_add (f := _), map_sub]
     by_cases h1 : b = c <;> by_cases h2 : d = a
     · subst h1; subst h2; simp; ring
     · subst h1; simp [h2, Ne.symm h2]
@@ -69,8 +69,8 @@ def leviSub (P : GMod n) (d : Fin 3 → ℕ) (h : ∑ i, d i = n) (χ : Fin n �
     ∀ i Y, Qd P d h i Y x = plab χ L i Y • x}
   add_mem' := by
     rintro x y ⟨hx, hx'⟩ ⟨hy, hy'⟩
-    exact ⟨fun a b hab => by rw [map_add, hx a b hab, hy a b hab, add_zero],
-      fun i Y => by rw [map_add, hx', hy', smul_add]⟩
+    exact ⟨fun a b hab => by rw [map_add (f := _), hx a b hab, hy a b hab, add_zero],
+      fun i Y => by rw [map_add (f := _), hx', hy', smul_add]⟩
   zero_mem' := ⟨fun _ _ _ => map_zero _, fun _ _ => by simp⟩
   smul_mem' := by
     rintro c x ⟨hx, hx'⟩

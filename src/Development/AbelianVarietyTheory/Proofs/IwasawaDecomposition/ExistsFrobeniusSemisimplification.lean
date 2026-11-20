@@ -41,7 +41,7 @@ theorem semisimplePart_mul_eq {f s N : End ℂ V} {c : ℂ} (hc : Commute f s) (
       hs.isFinitelySemisimple hn
     simp [h1, h3, smul_smul]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 end Lin
 

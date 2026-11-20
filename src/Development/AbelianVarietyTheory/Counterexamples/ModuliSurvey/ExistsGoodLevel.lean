@@ -116,7 +116,7 @@ theorem exists_good_level (H : Host E) : ∃ l : Level H, l.A = 1 ∧ ∀ p : �
   have o2 : Odd N₂ := ⟨2 * N₁ ^ 2 + 8 * e + 3, by omega⟩
   let α : 𝓞 E := (2 + r) * (2 * N₁ + r)
   have hα : H.bar α = (2 - r) * (2 * N₁ - r) := by
-    simp only [α, map_mul, map_add, map_natCast, map_ofNat, hbar]; ring
+    simp only [α, map_mul, map_add (f := _), map_natCast, map_ofNat, hbar]; ring
   have n1 : (2 + r) * (2 - r) = (N₁ : 𝓞 E) := by rw [hN₁]; push_cast; linear_combination -hr2
   have n2 : (2 * N₁ + r) * (2 * N₁ - r) = (N₂ : 𝓞 E) := by rw [hN₂]; push_cast; linear_combination -hr2
   have cZ : ∀ a b : ℕ, a.Coprime b → IsCoprime (a : 𝓞 E) (b : 𝓞 E) := fun a b h => Nat.Coprime.cast h

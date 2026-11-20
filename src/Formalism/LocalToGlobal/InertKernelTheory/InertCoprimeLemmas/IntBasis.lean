@@ -72,7 +72,7 @@ theorem embT_K (D : D7) (τ : D.what₂.Tau) (x : D.host.E) (hx : x ∈ D.host.K
     induction hx' using IntermediateField.adjoin_induction with
     | mem y hy => rw [Set.mem_singleton_iff.mp hy]; exact hb
     | algebraMap r => rw [eq_ratCast (algebraMap ℚ D.host.E) r]; exact map_ratCast σ r
-    | add y z _ _ h1 h2 => rw [map_add, h1, h2]
+    | add y z _ _ h1 h2 => rw [map_add (f := _), h1, h2]
     | inv y _ h1 => rw [map_inv₀, h1]
     | mul y z _ _ h1 h2 => rw [map_mul, h1, h2]
   show D.host.φ₀ (σ x) = _

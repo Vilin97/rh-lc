@@ -221,7 +221,7 @@ theorem dualCoord_injective (τ : InfinitePlace E) : Function.Injective (S.dualC
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero, LinearMap.zero_apply, zero_tmul, Finset.sum_const_zero]
     | add x y hx hy =>
-      simp only [map_add, LinearMap.add_apply, add_tmul, Finset.sum_add_distrib, hx, hy]
+      simp only [map_add (f := _), LinearMap.add_apply, add_tmul, Finset.sum_add_distrib, hx, hy]
     | tmul z ψ =>
       conv_rhs => rw [← hψ ψ]
       rw [tmul_sum]
@@ -247,7 +247,7 @@ theorem inner_riesz (τ : InfinitePlace E) (x : Fib τ.embedding (Module.Dual E 
 theorem riesz_add (τ : InfinitePlace E) (x y : Fib τ.embedding (Module.Dual E S.V)) :
     S.riesz τ (x + y) = S.riesz τ x + S.riesz τ y := by
   refine ext_inner_right ℂ fun v ↦ ?_
-  rw [inner_add_left, inner_riesz, inner_riesz, inner_riesz, map_add, LinearMap.add_apply, map_add]
+  rw [inner_add_left, inner_riesz, inner_riesz, inner_riesz, map_add (f := _), LinearMap.add_apply, map_add (f := _)]
 
 theorem riesz_smul (τ : InfinitePlace E) (c : ℂ) (x : Fib τ.embedding (Module.Dual E S.V)) :
     S.riesz τ (c • x) = starRingEnd ℂ c • S.riesz τ x := by
@@ -363,7 +363,7 @@ def dualLatIn (W : Submodule E S.V) (A : Submodule (𝓞 E) S.V) :
   add_mem' {φ ψ} hφ hψ a ha := by
     obtain ⟨x, hx⟩ := hφ a ha
     obtain ⟨y, hy⟩ := hψ a ha
-    exact ⟨x + y, by rw [LinearMap.add_apply, map_add, hx, hy]⟩
+    exact ⟨x + y, by rw [LinearMap.add_apply, map_add (f := _), hx, hy]⟩
   zero_mem' a _ := ⟨0, by rw [map_zero, LinearMap.zero_apply]⟩
   smul_mem' c φ hφ a ha := by
     obtain ⟨x, hx⟩ := hφ a ha
@@ -561,7 +561,7 @@ theorem stdCoord_flip (τ : InfinitePlace E) (u : Fib τ.embedding (Fin 2 → E)
     simp only [flipMap, LinearMap.pi_apply, LinearMap.smul_apply, LinearMap.proj_apply, smul_eq_mul,
       map_mul]
     ring
-  | add u v hu hv => rw [map_add, map_add, PiLp.add_apply, hu, hv, map_add, PiLp.add_apply, mul_add]
+  | add u v hu hv => rw [map_add (f := _), map_add (f := _), PiLp.add_apply, hu, hv, map_add (f := _), PiLp.add_apply, mul_add]
 
 theorem signs_conj_mul (τ : InfinitePlace E) (i : Fin 2) :
     starRingEnd ℂ (τ.embedding (algebraMap F E (signs F i))) *

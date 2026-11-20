@@ -10,7 +10,7 @@ theorem continuous_aeval_comp {Γ k : Type} [TopologicalSpace Γ] [CommRing k] [
     Continuous fun u : Γ → Γ => MvPolynomial.aeval (f ∘ u) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simpa using continuous_const
-  | add p q hp hq => simp only [map_add]; exact hp.add hq
+  | add p q hp hq => simp only [map_add (f := _)]; exact hp.add hq
   | mul_X p j hp =>
     simp only [map_mul, MvPolynomial.aeval_X, Function.comp_apply]
     exact hp.mul (hf.comp (continuous_apply j))

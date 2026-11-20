@@ -51,9 +51,9 @@ private theorem extend_point_degree_zero_graded {O A B K : Type} [CommRing O] [C
   let ψ : ∀ w, 𝓑 w →ₗ[O] K := fun w =>
     { toFun := fun f => X (g w f) * ((c⁻¹ : Kˣ) : K) ^ w.1.toNat
       map_add' := fun a b => by
-        rw [← add_mul, ← map_add]
+        rw [← add_mul, ← map_add (f := _)]
         congr 1
-        exact hk' _ _ (by rw [map_add, hg, hg, hg, Submodule.coe_add]; ring)
+        exact hk' _ _ (by rw [map_add (f := _), hg, hg, hg, Submodule.coe_add]; ring)
       map_smul' := fun r b => by
         rw [RingHom.id_apply, ← smul_mul_assoc, ← map_smul]
         congr 1
@@ -244,7 +244,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.m4 :
       simp only [LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hb n f f.2, hb' n f f.2,
         LinearMap.zero_apply]
       linear_combination ((n : PadicAlgCl l) * x f) * h
-    | add f g hf hg => rw [map_add, hf, hg]; simp
+    | add f g hf hg => rw [map_add (f := _), hf, hg]; simp
   by_cases h0 : b = 0
   · exact ⟨1, 0, Or.inl one_ne_zero, key _ _ (by simp [h0])⟩
   · exact ⟨b', -b, Or.inr (neg_ne_zero.2 h0), key _ _ (by ring)⟩

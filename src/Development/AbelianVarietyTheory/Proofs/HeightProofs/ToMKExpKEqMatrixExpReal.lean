@@ -230,7 +230,7 @@ theorem abs_linear_le (ψ : Mx n →ₗ[ℝ] ℝ) {X : Mx n} (h : hs X ≤ 1) :
     |ψ X| ≤ ∑ a : Fin n, ∑ b : Fin n, (|ψ (Matrix.single a b (1 : ℂ))| + |ψ (Matrix.single a b Complex.I)|) := by
   conv_lhs => rw [eq_sum_re_im X]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_add, map_smul, smul_eq_mul]
+    simp only [map_sum, map_add (f := _), map_smul, smul_eq_mul]
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun a _ => ?_)
   refine (Finset.abs_sum_le_sum_abs _ _).trans (Finset.sum_le_sum fun b _ => ?_)
   have h1 := norm_entry_le_of_hs h a b

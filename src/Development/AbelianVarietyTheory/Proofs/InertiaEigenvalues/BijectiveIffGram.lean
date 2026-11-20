@@ -71,11 +71,11 @@ theorem exists_intPair [IsFractionRing O LL] {T T' : LocLat G Qp LL O}
   have hO := IsFractionRing.injective O LL
   choose f hf using fun (x : ↥T.L.T) (y : ↥T'.L.T) => (h.2.2.2.2 y).1 y.2 x x.2
   let β : ↥T.L.T →ₗ[O] ↥T'.L.T →ₗ[O] O := LinearMap.mk₂ O f
-    (fun x x' y => hO (by rw [map_add, ← hf, ← hf, ← hf]; simp))
+    (fun x x' y => hO (by rw [map_add (f := _), ← hf, ← hf, ← hf]; simp))
     (fun c x y => hO (by
       rw [smul_eq_mul, map_mul, ← hf, ← hf, Submodule.coe_smul, ← algebraMap_smul LL c]
       simp [Algebra.smul_def]))
-    (fun x y y' => hO (by rw [map_add, ← hf, ← hf, ← hf]; simp))
+    (fun x y y' => hO (by rw [map_add (f := _), ← hf, ← hf, ← hf]; simp))
     (fun c x y => hO (by
       rw [smul_eq_mul, map_mul, ← hf, ← hf, Submodule.coe_smul, ← algebraMap_smul LL c]
       simp [Algebra.smul_def]))
@@ -274,7 +274,7 @@ theorem dualFor [IsFractionRing O LL]
         rw [← ha, ← ha', ← hA₁, ← h1, map_sub, LinearMap.sub_apply]
       have h4 := congrArg (algebraMap _ W.EE) hd
       rw [RingHom.map_sub, map_mul] at h4
-      rw [← hA₂, ← hy', map_sub, h2, map_add]
+      rw [← hA₂, ← hy', map_sub, h2, map_add (f := _)]
       linear_combination h4 + h3
     · apply le_antisymm
       · apply invSub_le
@@ -289,7 +289,7 @@ theorem dualFor [IsFractionRing O LL]
           | add x y _ _ hx hy =>
             obtain ⟨a, ha⟩ := hx
             obtain ⟨a', ha'⟩ := hy
-            exact ⟨a + a', by rw [map_add, LinearMap.add_apply, ha, ha', map_add]⟩
+            exact ⟨a + a', by rw [map_add (f := _), LinearMap.add_apply, ha, ha', map_add (f := _)]⟩
           | smul a x _ hx =>
             obtain ⟨a', ha'⟩ := hx
             exact ⟨a * a', by rw [hA₁, ha', map_mul]⟩

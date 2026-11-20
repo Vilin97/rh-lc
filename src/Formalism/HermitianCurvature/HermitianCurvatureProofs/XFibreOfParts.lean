@@ -131,7 +131,7 @@ private theorem contDiff_of_isPolyDeg' {k r κ : ℕ} {P : B.Mat k r → ℂ} (h
     simp only [MvPolynomial.eval_C]
     exact contDiff_const
   next p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   next p i hp =>
     simp only [map_mul, MvPolynomial.eval_X]

@@ -253,7 +253,7 @@ theorem eq_zero_of_separated {W ι : Type} [AddCommGroup W] [Module ℂ W] (U : 
       rw [Submodule.mem_comap, hf q w hw]
       exact Submodule.smul_mem _ _ (le_iSup₂_of_le (f := fun q (_ : q ∈ s) => U q) q hq le_rfl hw)
     have e1 : (m - l p) • x = f z - l p • z := by
-      rw [sub_smul, ← hfx, ← e, map_add, hf p y hy, smul_add]; abel
+      rw [sub_smul, ← hfx, ← e, map_add (f := _), hf p y hy, smul_add]; abel
     rw [← Submodule.smul_mem_iff _ (sub_ne_zero.2 hne.symm), e1]
     exact Submodule.sub_mem _ (hst hz) (Submodule.smul_mem _ _ hz)
 

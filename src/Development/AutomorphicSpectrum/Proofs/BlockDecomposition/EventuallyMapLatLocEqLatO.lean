@@ -24,7 +24,7 @@ theorem map_comp_apply_evalV (v : HeightOneSpectrum (𝓞 F)) (z : AF F ⊗[F] E
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp; rfl
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem eventually_matV_mem_intLoc {n : ℕ} (h : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)) :
     ∀ᶠ v : HeightOneSpectrum (𝓞 F) in cofinite, ∀ a c, PositivityTheory.SiegelWeilFormula.Gen.matV v h a c ∈ intLoc F E v :=

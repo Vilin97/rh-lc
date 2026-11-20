@@ -17,7 +17,7 @@ theorem cA_cA {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) (a : AE F E) : c
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [cA, Algebra.TensorProduct.map_tmul, hσ]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem conj_conj {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) (e : E) : σ (σ e) = e := by
   obtain ⟨τ⟩ : Nonempty (E →+* ℂ) := inferInstance
@@ -38,7 +38,7 @@ theorem fA_smul_left (a : AE F E) (v w : Fin n → AE F E) : fA σ J (a • v) w
   simp [fA, smul_dotProduct]
 
 theorem fA_add_right (v w w' : Fin n → AE F E) : fA σ J v (w + w') = fA σ J v w + fA σ J v w' := by
-  simp only [fA, dotProduct, Matrix.mulVec, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [fA, dotProduct, Matrix.mulVec, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem fA_sub_right (v w w' : Fin n → AE F E) : fA σ J v (w - w') = fA σ J v w - fA σ J v w' := by
   simp only [fA, dotProduct, Matrix.mulVec, Pi.sub_apply, map_sub, mul_sub, Finset.sum_sub_distrib]

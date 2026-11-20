@@ -103,7 +103,7 @@ theorem gram_map_secondProj_transpose (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E
     exact hcorS _ _ _
   all_goals
     ext a b
-    simp only [Matrix.map_apply, Matrix.transpose_apply, Matrix.of_apply, hcor, map_mul, map_add, map_neg,
+    simp only [Matrix.map_apply, Matrix.transpose_apply, Matrix.of_apply, hcor, map_mul, map_add (f := _), map_neg,
       map_sub, RingHom.coe_coe, splitSecondProj_algebraMap, ph2_cj_eq_ph1, h1, ha1]
     first | ring1 | (rw [hcorS]; done) | (rw [hcorS]; ring1)
 

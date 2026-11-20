@@ -35,7 +35,7 @@ theorem finite_not_integral {K O A : Type} [Field K] [CommRing O] [CommRing A] (
   induction ha using Algebra.adjoin_induction with
   | mem y hy => exact hc y hy
   | algebraMap r => exact hO i r
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | mul y z _ _ hy hz => rw [map_mul]; exact mul_mem hy hz
 
 theorem ae_centre {X : Scheme.{0}} {K O : Type} [Field K] [CommRing O] (s : X ⟶ Spec (CommRingCat.of O))

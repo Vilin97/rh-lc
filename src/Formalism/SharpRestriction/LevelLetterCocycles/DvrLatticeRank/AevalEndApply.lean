@@ -159,7 +159,7 @@ theorem ev_aeval_twA (c : ZMod n) (ζ : LL) (Eπ : LetA O n) (h' : ℕ)
   have hzero : ev W c ζ Eπ h' 0 i = 0 := by
     unfold ev; split_ifs <;> simp
   have hadd : ∀ x y : LetA O n, ev W c ζ Eπ h' (x + y) i = ev W c ζ Eπ h' x i + ev W c ζ Eπ h' y i := by
-    intro x y; unfold ev; split_ifs <;> simp [map_add, add_mul]
+    intro x y; unfold ev; split_ifs <;> simp [map_add (f := _), add_mul]
   have hsmul : ∀ (r : O) (x : LetA O n),
       ev W c ζ Eπ h' (r • x) i = algebraMap O LL r * ev W c ζ Eπ h' x i := by
     intro r x

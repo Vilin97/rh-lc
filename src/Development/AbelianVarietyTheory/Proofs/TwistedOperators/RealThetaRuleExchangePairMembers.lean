@@ -27,7 +27,7 @@ theorem comm_comm' {V1 V2 : Type*} [AddCommGroup V1] [Module ℂ V1] [AddCommGro
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem comm_map' {V1 V2 W1 W2 : Type*} [AddCommGroup V1] [Module ℂ V1] [AddCommGroup V2] [Module ℂ V2]
     [AddCommGroup W1] [Module ℂ W1] [AddCommGroup W2] [Module ℂ W2]
@@ -37,7 +37,7 @@ theorem comm_map' {V1 V2 W1 W2 : Type*} [AddCommGroup V1] [Module ℂ V1] [AddCo
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 def tr {V1 V2 : Type*} [AddCommGroup V1] [Module ℂ V1] [AddCommGroup V2] [Module ℂ V2]
     (f : FP r s p q →ₗ[ℂ] V2 ⊗[ℂ] V1) : FP p q r s →ₗ[ℂ] V1 ⊗[ℂ] V2 :=

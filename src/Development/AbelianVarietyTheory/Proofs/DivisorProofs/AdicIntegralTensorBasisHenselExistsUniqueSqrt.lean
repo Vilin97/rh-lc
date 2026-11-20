@@ -17,7 +17,7 @@ variable (v : HeightOneSpectrum ℤ) {L : Type} [Field L] [NumberField L] {κ : 
 
 theorem isIntB_add {x y : v.adicCompletion ℚ ⊗[ℚ] L} (hx : IsIntB v bL x) (hy : IsIntB v bL y) :
     IsIntB v bL (x + y) := fun i => by
-  rw [map_add, Finsupp.add_apply]; exact add_mem (hx i) (hy i)
+  rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hx i) (hy i)
 
 theorem isIntB_neg {x : v.adicCompletion ℚ ⊗[ℚ] L} (hx : IsIntB v bL x) : IsIntB v bL (-x) := fun i => by
   rw [map_neg, Finsupp.neg_apply]; exact neg_mem (hx i)

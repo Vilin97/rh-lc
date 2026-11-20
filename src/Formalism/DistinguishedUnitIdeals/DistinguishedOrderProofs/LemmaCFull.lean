@@ -129,14 +129,14 @@ theorem levelCond_dvd_sub (ϖ : O) (hϖ : Irreducible ϖ) {d : ℕ} {p : PowerSe
     obtain ⟨N, c, z, _, hz⟩ := h
     apply isSat_pow_of_unitDist ϖ hϖ d p hp _ N
     have h1 := congrArg (linExt g) hz
-    rw [map_smul, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul] at h1
+    rw [map_smul, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul] at h1
     rw [h1]
     exact dvd_add (dvd_mul_right _ _) (dvd_mul_of_dvd_left hd _)
   | down =>
     obtain ⟨N, c, z, _, hz⟩ := h
     apply isSat_pow_of_unitDist ϖ hϖ d p hp _ N
     have h1 := congrArg (linExt g) hz
-    rw [map_smul, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul] at h1
+    rw [map_smul, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul] at h1
     rw [h1]
     exact dvd_add (dvd_mul_of_dvd_left hd _)
       (dvd_mul_of_dvd_left (hd.trans (pow_dvd_pow p (Nat.le_add_right H b))) _)
@@ -157,7 +157,7 @@ theorem levelCond_dvd (ϖ : O) (hϖ : Irreducible ϖ) {d : ℕ} {p : PowerSeries
     obtain ⟨N, c, z, hc, hz⟩ := h
     apply isSat_pow_of_unitDist ϖ hϖ d p hp _ N
     have h1 := congrArg (linExt g) hz
-    rw [map_smul, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul,
+    rw [map_smul, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul,
       linExt_eq_zero_of_mem_ext g V (hg rfl) c hc, mul_zero, zero_add] at h1
     rw [h1]
     exact dvd_mul_right _ _
@@ -165,7 +165,7 @@ theorem levelCond_dvd (ϖ : O) (hϖ : Irreducible ϖ) {d : ℕ} {p : PowerSeries
     obtain ⟨N, c, z, _, hz⟩ := h
     apply isSat_pow_of_unitDist ϖ hϖ d p hp _ N
     have h1 := congrArg (linExt g) hz
-    rw [map_smul, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul] at h1
+    rw [map_smul, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul] at h1
     rw [h1]
     exact dvd_add (dvd_mul_right _ _) (dvd_mul_of_dvd_left (pow_dvd_pow p (Nat.le_add_right H b)) _)
 

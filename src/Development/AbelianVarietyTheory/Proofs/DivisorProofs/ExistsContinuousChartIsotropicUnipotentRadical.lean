@@ -218,7 +218,7 @@ theorem sigR_half : sigR (AF F) σ (inclR (F := F) (AF F) (2⁻¹ : E)) = inclR 
   simp [sigR, inclR, h]
 
 theorem half_add_half : inclR (F := F) (AF F) (2⁻¹ : E) + inclR (F := F) (AF F) (2⁻¹ : E) = 1 := by
-  rw [← map_add, show (2⁻¹ : E) + 2⁻¹ = 1 by norm_num, map_one]
+  rw [← map_add (f := _), show (2⁻¹ : E) + 2⁻¹ = 1 by norm_num, map_one]
 
 theorem skew_crd (hF : Fr σ J C D Z J₀) (b : Matrix (Fin j) (Fin m) (AF F ⊗[F] E)) (s : skewA σ j) :
     ((s : Matrix (Fin j) (Fin j) (AF F ⊗[F] E)) - inclR (F := F) (AF F) (2⁻¹ : E) • (b * plus σ J₀ b)) +

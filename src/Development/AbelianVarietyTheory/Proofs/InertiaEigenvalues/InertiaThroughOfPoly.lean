@@ -38,7 +38,7 @@ theorem mem_iSup_eigen {L M ι : Type} [Field L] [AddCommGroup M] [Module L M] (
     obtain ⟨u, v, huv⟩ := hcop
     set Q := ∏ b ∈ t, (X - C (c b)) with hQ
     have hdec : d = Polynomial.aeval f (u * (X - C (c a))) d + Polynomial.aeval f (v * Q) d := by
-      rw [← LinearMap.add_apply, ← map_add, huv, map_one, Module.End.one_apply]
+      rw [← LinearMap.add_apply, ← map_add (f := _), huv, map_one, Module.End.one_apply]
     rw [Finset.iSup_insert, hdec, add_comm]
     refine Submodule.add_mem_sup ?_ ?_
     · refine ⟨aeval_mem_of_stable f D hD _ d hd, ?_⟩
@@ -74,20 +74,20 @@ theorem actVB_mul' (g h : G) (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem actVB_one' (x : V ⊗[Qp] B) : actVB PC.PD ρ 1 x = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem actVB_resH (h : PC.H) (x : V ⊗[Qp] B) :
     actVB PC.PD' (PC.resH ρ) h x = actVB PC.PD ρ (h : G) x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB, PotCrysData.resH, PC.actB_eq]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mem_Dpcris_iff (x : V ⊗[Qp] B) :
     x ∈ PC.Dpcris ρ ↔ ∀ g ∈ PC.H, actVB PC.PD ρ g x = x := by

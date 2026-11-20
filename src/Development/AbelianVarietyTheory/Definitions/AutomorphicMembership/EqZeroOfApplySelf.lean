@@ -61,7 +61,7 @@ theorem eq_zero_of_apply_self {β : LinearMap.BilinForm ℤ (𝓞 E)} (hβ : β 
   have h1 : ∀ z, β y₀ z = 0 := fun z => by
     by_contra hz
     have k := hp ((-(β z z + 1) * β y₀ z) • y₀ + z)
-    simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, h, hβ.1 z y₀] at k
+    simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, h, hβ.1 z y₀] at k
     have : 1 ≤ β y₀ z * β y₀ z := mul_self_pos.2 hz
     have := hp z
     nlinarith

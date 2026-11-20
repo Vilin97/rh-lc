@@ -74,11 +74,11 @@ theorem cubical_add [Module.Free ℤ X] (f : X → X → X → A)
   have hH : ∀ a b b', d a b b' = H a (b + b') - H a b - H a b' := fun a b b' => by
     refine ext_of_basis bs (fun a => d a b b') (fun a => H a (b + b') - H a b - H a b')
       (fun a a' => hd_add a a' b b') (fun a a' => ?_) (fun i => ?_) a
-    · simp only [map_add, Pi.add_apply]; abel
+    · simp only [map_add (f := _), Pi.add_apply]; abel
     · simp only [hHb]; exact hh i b b'
   let t' : X → X → A := fun a b => T a b - H a b
   have hL1 : ∀ a a' b, f a a' b = t' (a + a') b - t' a b - t' a' b := fun a a' b => by
-    simp only [t', map_add, Pi.add_apply]; rw [ht1]; abel
+    simp only [t', map_add (f := _), Pi.add_apply]; rw [ht1]; abel
   have hL2 : ∀ a b b', f a b b' = t' a (b + b') - t' a b - t' a b' := fun a b b' => by
     have := hH a b b'
     simp only [d] at this
@@ -107,7 +107,7 @@ theorem cubical_add [Module.Free ℤ X] (f : X → X → X → A)
   have hi : ∀ i b, s (bs i) b = U (bs i) b - U b (bs i) := by
     intro i b
     refine ext_of_basis bs (fun b => s (bs i) b) (fun b => U (bs i) b - U b (bs i))
-      (fun b b' => hs_r _ b b') (fun b b' => by simp only [map_add, LinearMap.add_apply]; abel)
+      (fun b b' => hs_r _ b b') (fun b b' => by simp only [map_add (f := _), LinearMap.add_apply]; abel)
       (fun j => ?_) b
     show s (bs i) (bs j) = U (bs i) (bs j) - U (bs j) (bs i)
     rw [hU, hU]
@@ -119,7 +119,7 @@ theorem cubical_add [Module.Free ℤ X] (f : X → X → X → A)
       simp only [v, if_pos h, if_neg h', s]; abel
   have hsu : ∀ a b, s a b = U a b - U b a := fun a b =>
     ext_of_basis bs (fun a => s a b) (fun a => U a b - U b a) (fun a a' => hs_l a a' b)
-      (fun a a' => by simp only [map_add, LinearMap.add_apply]; abel) (fun i => hi i b) a
+      (fun a a' => by simp only [map_add (f := _), LinearMap.add_apply]; abel) (fun i => hi i b) a
   let t'' : X → X → A := fun a b => t' a b - U a b
   have hsym : ∀ a b, t'' a b = t'' b a := fun a b => by
     have := hsu a b
@@ -127,9 +127,9 @@ theorem cubical_add [Module.Free ℤ X] (f : X → X → X → A)
     simp only [t'']
     linear_combination (norm := module) this
   have hM1 : ∀ a a' b, f a a' b = t'' (a + a') b - t'' a b - t'' a' b := fun a a' b => by
-    simp only [t'', map_add, LinearMap.add_apply]; rw [hL1]; abel
+    simp only [t'', map_add (f := _), LinearMap.add_apply]; rw [hL1]; abel
   have hM2 : ∀ a b b', f a b b' = t'' a (b + b') - t'' a b - t'' a b' := fun a b b' => by
-    simp only [t'', map_add]; rw [hL2]; abel
+    simp only [t'', map_add (f := _)]; rw [hL2]; abel
   have hcoc : ∀ a b c, t'' (a + b) c + t'' a b = t'' a (b + c) + t'' b c := fun a b c => by
     have u1 := hM1 a b c
     have u2 := hM2 a b c

@@ -31,7 +31,7 @@ theorem sigma_sigma {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) (x : E) : σ (σ
 theorem cA_cA {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) (a : AE F E) : cA σ (cA σ a) = a := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul a x =>
     show a ⊗ₜ[F] σ (σ x) = a ⊗ₜ[F] x
     rw [hσ]
@@ -83,7 +83,7 @@ theorem tr_nondeg (t : AE F E) (h : ∀ e : E, Algebra.trace (AF F) (AE F E) (t 
       conv_lhs => rw [hx, hy]
       rw [← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
-      rw [add_mul, map_add, add_smul]
+      rw [add_mul, map_add (f := _), add_smul]
     | tmul a x =>
       have e1 : ∀ i, (a ⊗ₜ[F] x : AE F E) * inclR (F := F) (AF F) (b i) = a • inclR (F := F) (AF F) (x * b i) := by
         intro i
@@ -139,7 +139,7 @@ theorem decomp {n d d₁ : ℕ} (x y : Fin d → E) (ι : Matrix (Fin d) (Fin d�
       Finset.sum_ite_eq, Finset.mem_univ, if_true]
   rw [h1]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_mul, map_sum, mul_add, Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum]
+    simp only [map_add (f := _), map_mul, map_sum, mul_add, Finset.sum_add_distrib, Finset.sum_mul, Finset.mul_sum]
   congr 1
   · congr 1
     · refine Finset.sum_congr rfl fun j _ => ?_; ring
@@ -326,7 +326,7 @@ theorem isotropic_orbit_orthogonal_at_place : ∀ (F E : Type) [Field F] [Number
     refine ⟨Matrix.vecMulVec (m *ᵥ incV F s) (incV F H'.x), ⟨_, rfl⟩, at_vecMulVec (at_mulVec hm _) _,
       m * (incM F U)ᵀ, at_mul hm _, ?_⟩
     have h1 : incM F (1 : Matrix (Fin n) (Fin n) E) = 1 := Matrix.map_one _ (map_zero _) (map_one _)
-    rw [h1, Matrix.one_mul, ← map_add]
+    rw [h1, Matrix.one_mul, ← map_add (f := _)]
     congr 1
     conv_lhs => rw [hdec]
     rw [hb0, Matrix.zero_vecMulVec, add_zero]

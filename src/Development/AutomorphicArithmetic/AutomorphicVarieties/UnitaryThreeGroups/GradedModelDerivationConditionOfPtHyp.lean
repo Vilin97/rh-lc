@@ -41,11 +41,11 @@ private theorem twist_der (t : Kˣ) (ξ : A →ₐ[O] K) (D E : A →ₗ[O] K) (
       simp only [smul_eq_mul]
       ring
     · intro g g' h h'
-      simp only [mul_add, map_add, smul_add, add_smul, smul_eq_mul] at h h' ⊢
+      simp only [mul_add, map_add (f := _), smul_add, add_smul, smul_eq_mul] at h h' ⊢
       rw [h, h']
       ring
   · intro f f' h h'
-    simp only [add_mul, map_add, smul_add, add_smul, smul_eq_mul] at h h' ⊢
+    simp only [add_mul, map_add (f := _), smul_add, add_smul, smul_eq_mul] at h h' ⊢
     rw [h, h']
     ring
 
@@ -224,5 +224,5 @@ theorem UpperTheory.V.U3.gradedModel_derivationCondition_of_ptHyp :
       ring
     exact (mul_eq_zero.1 h').resolve_left (htne j)
   · intro y y' h h'
-    simp only [map_add]
+    simp only [map_add (f := _)]
     linear_combination h + h'

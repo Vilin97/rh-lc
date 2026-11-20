@@ -57,8 +57,8 @@ theorem rho_pureA_schrF : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
     have key : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evHom F ⅟(2 : AF F) * z) +
         Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evHom F ⅟(2 : AF F) * z) =
         Algebra.trace ℝ (mixedEmbedding.mixedSpace F) z := by
-      rw [← map_add, ← add_mul, ← map_add, invOf_two_add_invOf_two, map_one, one_mul]
-    rw [← evHom_apply, map_add, map_mul, hpq, hxq, map_add]
+      rw [← map_add (f := _), ← add_mul, ← map_add (f := _), invOf_two_add_invOf_two, map_one, one_mul]
+    rw [← evHom_apply, map_add (f := _), map_mul, hpq, hxq, map_add (f := _)]
     linarith
   simp only [schr, pureA, GlobalTheory.ArchUniq.schrF, GlobalTheory.ArchUniq.trP, GlobalTheory.ArchUniq.locV] at harch ⊢
   rw [hψ.2.2 _ hAt, hfin, htr, harch, ← mul_assoc]

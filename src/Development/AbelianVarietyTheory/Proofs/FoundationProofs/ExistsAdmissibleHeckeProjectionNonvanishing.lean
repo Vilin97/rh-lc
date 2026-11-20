@@ -76,7 +76,7 @@ theorem exists_admissible_hecke_projection_nonvanishing_alt : ∀ {Ω : Type} [F
 
   have hadd0 : ∀ b b', pr0 (b + b') = pr0 b + pr0 b' := by
     intro b b'
-    simp only [hκ, TensorProduct.tmul_add, map_add, smul_add, Finset.sum_add_distrib]
+    simp only [hκ, TensorProduct.tmul_add, map_add (f := _), smul_add, Finset.sum_add_distrib]
   have hsmul0 : ∀ (z : ℤ_[l]) b, pr0 (z • b) = algebraMap ℚ_[l] (Qbar l) (z : ℚ_[l]) • pr0 b := by
     intro z b
     rw [hκ, hκ, Finset.smul_sum]

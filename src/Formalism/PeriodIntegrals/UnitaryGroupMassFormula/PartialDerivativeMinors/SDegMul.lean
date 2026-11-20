@@ -16,9 +16,9 @@ theorem sdegMul_zero : ∀ k : ℕ, SDegD d k (0 : A)
   | k + 1 => fun j => by simpa using sdegMul_zero k
 
 theorem sdegMul_add : ∀ (k : ℕ) (a b : A), SDegD d k a → SDegD d k b → SDegD d k (a + b)
-  | 0, a, b, ha, hb => fun j => by simp [map_add, ha j, hb j]
+  | 0, a, b, ha, hb => fun j => by simp [map_add (f := _), ha j, hb j]
   | k + 1, a, b, ha, hb => fun j => by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact sdegMul_add k _ _ (ha j) (hb j)
 
 theorem symbol_degree_mul : ∀ (n k l : ℕ) (f g : A), k + l = n → SDegD d k f → SDegD d l g → SDegD d n (f * g)

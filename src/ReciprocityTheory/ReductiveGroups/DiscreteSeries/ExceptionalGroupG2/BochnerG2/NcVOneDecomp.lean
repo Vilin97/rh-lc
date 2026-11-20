@@ -191,7 +191,7 @@ private lemma mul_norm_sq_sum_le_re_inner_of_orthogonal_eigen {W : Type*} [Norme
       rw [@norm_add_sq ℂ, h0]; simp
     have hre : RCLike.re (inner ℂ (T (y i + ∑ j ∈ s, y j)) (y i + ∑ j ∈ s, y j)) =
         θ i * ‖y i‖ ^ 2 + RCLike.re (inner ℂ (T (∑ j ∈ s, y j)) (∑ j ∈ s, y j)) := by
-      rw [map_add, inner_add_left, inner_add_right, inner_add_right, h1, h2, add_zero, zero_add,
+      rw [map_add (f := _), inner_add_left, inner_add_right, inner_add_right, h1, h2, add_zero, zero_add,
         map_add, h3]
     rw [hn, hre]
     by_cases hyi : y i = 0

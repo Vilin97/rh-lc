@@ -90,7 +90,7 @@ variable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteS
 def fixedSubspace (σ : UnitaryRep (normOneGL K n) H) (U : Subgroup (AdelicGLn.FiniteAdelicGL K n)) :
     Submodule ℂ H where
   carrier := {v | ∀ u ∈ U, σ (finProj K n u) v = v}
-  add_mem' hv hw u hu := by rw [map_add, hv u hu, hw u hu]
+  add_mem' hv hw u hu := by rw [map_add (f := _), hv u hu, hw u hu]
   zero_mem' u _ := map_zero _
   smul_mem' c v hv u hu := by rw [map_smul, hv u hu]
 

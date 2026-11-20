@@ -61,7 +61,7 @@ private theorem sm_comm (a : A) (k : F) (y : V ⊗[Q] P) :
     Thick.sm V P (a ⊗ₜ[Q] k) y = TensorProduct.comm Q P V (k • (TensorProduct.comm Q P V).symm (a • y)) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul v b => simp [Thick.sm_tmul, smul_tmul']
 
 private theorem coord_iff (x : ι → V ⊗[Q] P) (y : V ⊗[Q] P) :
@@ -106,7 +106,7 @@ private theorem crys_pair (K : FinExt l) {V V' W : Type} [AddCommGroup V] [Modul
     intro t x
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add s t hs ht => simp only [map_add, LinearMap.add_apply, hs, ht]
+    | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, hs, ht]
     | tmul f y => simp [e, Module.Dual.transpose_apply]
   apply e.injective
   ext x
@@ -193,24 +193,24 @@ private theorem st_ci {K : FinExt l} (ρ : Representation A ↥(GK K) V) (g : �
     stRep (PP l) (resCoef ℚ_[l] ρ) g (ci y) = ci (actC (GK K).subtype ρ g y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b => simp [actC, resCoef]
 
 private theorem ci_smul (a : A) (y : V ⊗[ℚ_[l]] Bcr l) : ci (a • y) = a • ci y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul v b => simp [smul_tmul']
 
 private theorem ci_sm (L : FinExt l) (c : A ⊗[ℚ_[l]] ↥(K0 L)) (y : V ⊗[ℚ_[l]] Bcr l) :
     ci (smulC V L c y) = Thick.sm V (Bst (PP l)) c (ci y) := by
   induction c using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul a k =>
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b =>
     refine (congrArg _ (Thick.sm_tmul a k v b)).trans ?_
     rw [crisIncl_tmul, crisIncl_tmul, Thick.sm_tmul, Polynomial.smul_C]
@@ -220,7 +220,7 @@ private theorem st_smul {K : FinExt l} (ρ : Representation ℚ_[l] ↥(GK K) V)
     (cm).symm (stRep (PP l) ρ g (cm (s • u))) = actSt (PP l) (g : GQ l) s • (cm).symm (stRep (PP l) ρ g (cm u)) := by
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul v b => simp [smul_tmul']
 
 private def jU (A : Type) [CommRing A] [Algebra ℚ_[l] A] (L : FinExt l) :
@@ -235,11 +235,11 @@ private theorem sm_jU (L : FinExt l) (c : A ⊗[ℚ_[l]] ↥(K0 L)) (y : V ⊗[�
     Thick.sm V (Bst (PP l)) (jU A L c) y = Thick.sm V (Bst (PP l)) c y := by
   induction c using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul a k =>
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b =>
     refine (Thick.sm_tmul _ _ _ _).trans (Eq.trans ?_ (Thick.sm_tmul a k v b).symm)
     rw [Algebra.smul_def, Algebra.smul_def]
@@ -263,7 +263,7 @@ private theorem exists_basis (L : FinExt l) (ρ : Representation A ↥(GK L) V) 
     intro y
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [tmul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [tmul_add, map_add (f := _), hx, hy]
     | tmul v b => simp [e, Polynomial.smul_eq_C_mul]
   refine ⟨_, (Algebra.TensorProduct.basis (Bst (PP l)) b).map e, fun i => ⟨TensorProduct.comm ℚ_[l] (Bcr l) V (b i), ?_, ?_⟩⟩
   · have : b i = (d₀ i : Bcr l ⊗[ℚ_[l]] V) := by simp [b, comparison_tmul]
@@ -322,13 +322,13 @@ private theorem exists_frame {K L : FinExt l} (h : K.1 ≤ L.1) (ρ : Representa
       obtain ⟨y, hy, e⟩ := hw i
       exact e ▸ (mem_Dpst _ _).2 ⟨L, fix y hy⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul c a _ ha =>
       have : ∀ a, cm (c • a) = mulV (PP l) ℚ_[l] V c (cm a) := by
         intro a
         induction a using TensorProduct.induction_on with
         | zero => simp
-        | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+        | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
         | tmul v b => rw [smul_tmul', comm_tmul, comm_tmul, mulV_tmul, Algebra.smul_def]
       rw [this]
       exact mulV_mem_Dpst _ _ c _ ha
@@ -346,7 +346,7 @@ private theorem exists_frame {K L : FinExt l} (h : K.1 ≤ L.1) (ρ : Representa
     | add a b _ _ ha hb =>
       obtain ⟨x, hx, ex⟩ := ha
       obtain ⟨y, hy, ey⟩ := hb
-      exact ⟨x + y, Submodule.add_mem _ hx hy, by rw [map_add, map_add, ex, ey]⟩
+      exact ⟨x + y, Submodule.add_mem _ hx hy, by rw [map_add (f := _), map_add (f := _), ex, ey]⟩
     | smul c a _ ha =>
       obtain ⟨x, hx, ex⟩ := ha
       refine ⟨_, Thick.smulC_mem L _ ((1 : A) ⊗ₜ c) hx, ?_⟩

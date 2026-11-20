@@ -68,7 +68,7 @@ omit [TopologicalSpace M] [TopologicalSpace N] in
 theorem gen_quasi (φ : M ≃+ N) (S : AddSubgroup M) (S' : AddSubgroup N) (hS : ∀ x, φ x ∈ S' ↔ x ∈ S)
     (κ : M → M → ℂ) (κ' : N → N → ℂ) (hκ : ∀ x y, κ' (φ x) (φ y) = κ x y) (f : N → ℂ) :
     (∀ γ ∈ S', ∀ w, f (γ + w) = κ' γ w * f w) ↔ ∀ γ ∈ S, ∀ w, (f ∘ φ) (γ + w) = κ γ w * (f ∘ φ) w := by
-  simp only [φ.surjective.forall, hS, hκ, Function.comp_apply, map_add]
+  simp only [φ.surjective.forall, hS, hκ, Function.comp_apply, map_add (f := _)]
 
 theorem gen_continuous [IsTopologicalAddGroup M] {A : Type} [AddCommGroup A] [TopologicalSpace A]
     [IsTopologicalAddGroup A] (ψ : AddChar A ℂ) (hψ : Continuous ψ) (s : M → M → A)

@@ -230,7 +230,7 @@ theorem flag_form_zero {T : E} (F : FlagG S r T) : ∀ x ∈ F.Xplus, ∀ v ∈ 
   obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hx2
   have h1 : S.hT x1 v = 0 :=
     form_span_left (s := Set.range F.e) (by rintro _ ⟨i, rfl⟩; exact hX v hv i) x1 hx1
-  rw [map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, h1, hzX v hv]
+  rw [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, h1, hzX v hv]
   simp
 
 theorem flag_X_le {T : E} (F : FlagG S r T) : F.X ≤ orth S F.Xplus := by
@@ -597,7 +597,7 @@ theorem betaL_of (D : D7) (u u' : D.what₂.Word) (hI : IotaLift D u u') (hP : P
       simp
     have e2 : (VS D).hT x.1.fl.z (v - c • x.1.fl.z) = 0 := by
       rw [map_sub, map_smul, hc, smul_eq_mul, div_mul_cancel₀ _ hzz, sub_self]
-    rw [map_add, LinearMap.add_apply, e1, LinearMap.map_smulₛₗ, LinearMap.smul_apply, e2]
+    rw [map_add (f := _), LinearMap.add_apply, e1, LinearMap.map_smulₛₗ, LinearMap.smul_apply, e2]
     simp
   have hδv : δ v - v ∈ X' := by
     have h0 := hfix _ hv0
@@ -678,7 +678,7 @@ theorem posW_holds (D : D7) : PosW D := by
       obtain ⟨a1, ha1, a2, ha2, hsum⟩ := Submodule.mem_sup.1 hvs
       obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 ha1
       have h1 : (VS D).hT F'.z v = c * (VS D).hT F'.z F'.z := by
-        rw [← hsum, map_add, map_smul, flag_form_zero F' F'.z hzXp a2 ha2, smul_eq_mul, add_zero]
+        rw [← hsum, map_add (f := _), map_smul, flag_form_zero F' F'.z hzXp a2 ha2, smul_eq_mul, add_zero]
       rw [hzv, F'.z_norm] at h1
       have hc : c = 0 := by
         rcases mul_eq_zero.1 h1.symm with h | h

@@ -222,7 +222,7 @@ theorem isWeilHom_baseChange (hA : IsAbelianScheme A) (h : IsGrpPullback A₀ A 
         ((CartierDual.baseChange R R₀ (G.A n) x).ofConv.lTensor _ (α U.val)) := fun x => by
       induction x with
       | add x y hx hy =>
-        rw [map_add, map_add, hx, hy, ← map_add, ← LinearMap.add_apply, ← LinearMap.lTensor_add]
+        rw [map_add (f := _), map_add (f := _), hx, hy, ← map_add (f := _), ← LinearMap.add_apply, ← LinearMap.lTensor_add]
         rfl
       | tmul c χ =>
         have ec : c ⊗ₜ[R] χ = c • ((1 : R₀) ⊗ₜ[R] χ) := by rw [smul_tmul', smul_eq_mul, _root_.mul_one]

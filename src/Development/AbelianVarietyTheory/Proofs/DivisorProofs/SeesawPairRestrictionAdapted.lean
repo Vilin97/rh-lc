@@ -127,7 +127,7 @@ theorem exists_coord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   have hb2 : ∀ (c : AF F) z, b (c • z) = c • b z := fun c z => by funext j; simp [b, Matrix.mul_smul]
   have hD1 : ∀ z z', D (z + z') = D z + D z' := fun z z' => by
     funext j
-    simp only [D, Matrix.mul_add, Matrix.add_apply, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib, neg_add]
+    simp only [D, Matrix.mul_add, Matrix.add_apply, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib, neg_add]
   have hD2 : ∀ (c : AF F) z, D (c • z) = c • D z := fun c z => by
     funext j; simp [D, Matrix.mul_smul, Finset.smul_sum]
   have hπ1 : ∀ z z', π (z + z') = π z + π z' := fun z z' => by ext i j; simp [π, Matrix.mul_add]
@@ -136,9 +136,9 @@ theorem exists_coord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       ((Fin n × Fin d) ⊕ (Fin n × Fin d) → AF F) × ((Fin n × Fin d) ⊕ (Fin n × Fin d) → AF F) :=
     { toFun := fun z => (glue ε (p z) (dd₁.e (π z)).1, glue ε (q z) (dd₁.e (π z)).2)
       map_add' := fun z z' => by
-        rw [Prod.mk_add_mk, glue_add, glue_add, hπ1, map_add]
+        rw [Prod.mk_add_mk, glue_add, glue_add, hπ1, map_add (f := _)]
         congr 2 <;> funext k <;>
-          simp only [p, q, hb1, hD1, mul_add, Pi.add_apply, map_add, Finsupp.add_apply, neg_add]
+          simp only [p, q, hb1, hD1, mul_add, Pi.add_apply, map_add (f := _), Finsupp.add_apply, neg_add]
       map_smul' := fun c z => by
         rw [Prod.smul_mk, glue_smul, glue_smul, hπ2, map_smul]
         congr 2 <;> funext k <;> simp [p, q, hb2, hD2] }
@@ -147,7 +147,7 @@ theorem exists_coord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
     have h1 := dd₁.form (π z) (π z')
     show Tr _ = glue ε _ _ ⬝ᵥ glue ε _ _ - glue ε _ _ ⬝ᵥ glue ε _ _
     change Tr _ = _ at h1
-    rw [glue_dot, glue_dot, hpq, hpq, hHt, mul_add, map_add, h1, neg_one_mul, map_neg, map_sub, hTr]
+    rw [glue_dot, glue_dot, hpq, hpq, hHt, mul_add, map_add (f := _), h1, neg_one_mul, map_neg, map_sub, hTr]
     ring
   let co₀ := GlobalTheory.DblSchr.dblD (cA σ) (swapD (cA σ) M.co)
   have hbij : Function.Bijective Φ := by

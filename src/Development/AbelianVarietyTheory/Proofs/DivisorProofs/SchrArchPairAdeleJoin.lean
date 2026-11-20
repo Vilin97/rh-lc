@@ -31,7 +31,7 @@ theorem adeleJoin_add_arch (x v : κ → mixedEmbedding.mixedSpace F) (y : κ �
   refine Prod.ext ?_ ?_
   · show (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (x i) + (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (v i) =
       (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (x i + v i)
-    rw [map_add]
+    rw [map_add (f := _)]
   · exact add_zero (y i)
 
 theorem adeleJoin_dot_arch (x u : κ → mixedEmbedding.mixedSpace F) (y : κ → FiniteAdeleRing (𝓞 F) F) :
@@ -67,11 +67,11 @@ theorem ell_half (ℓ : mixedEmbedding.mixedSpace F →ₗ[ℝ] ℝ) (z : mixedE
     ℓ (InfiniteAdeleRing.ringEquiv_mixedSpace F (⅟(2 : AdeleRing (𝓞 F) F)).1 * z) = ℓ z / 2 := by
   set c := InfiniteAdeleRing.ringEquiv_mixedSpace F (⅟(2 : AdeleRing (𝓞 F) F)).1
   have hc : c + c = 1 := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     have : (⅟(2 : AdeleRing (𝓞 F) F)).1 + (⅟(2 : AdeleRing (𝓞 F) F)).1 = (⅟(2 : AdeleRing (𝓞 F) F) + ⅟2).1 := rfl
     rw [this, invOf_two_add_invOf_two]
     exact map_one _
-  have h2 : ℓ (c * z) + ℓ (c * z) = ℓ z := by rw [← map_add, ← add_mul, hc, one_mul]
+  have h2 : ℓ (c * z) + ℓ (c * z) = ℓ z := by rw [← map_add (f := _), ← add_mul, hc, one_mul]
   linarith
 
 theorem schr_archPair_adeleJoin (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (ℓ : mixedEmbedding.mixedSpace F →ₗ[ℝ] ℝ)
@@ -82,7 +82,7 @@ theorem schr_archPair_adeleJoin (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) (ℓ :
       Complex.exp (2 * Real.pi * Complex.I * ((ℓ (∑ i, x i * h.2 i) : ℂ) + (ℓ (∑ i, h.1 i * h.2 i) : ℂ) / 2)) *
         Φ (GlobalTheory.WeilCont.adeleJoin F (x + h.1) y) := by
   simp only [GlobalTheory.WeilM.schr, archPair]
-  rw [adeleJoin_add_arch, adeleJoin_dot_arch, arch_dot_arch, mul_arch1', ← adeleOfMixedSpaceComponent_add, hℓ, map_add, ell_half]
+  rw [adeleJoin_add_arch, adeleJoin_dot_arch, arch_dot_arch, mul_arch1', ← adeleOfMixedSpaceComponent_add, hℓ, map_add (f := _), ell_half]
   congr 2
   push_cast
   ring

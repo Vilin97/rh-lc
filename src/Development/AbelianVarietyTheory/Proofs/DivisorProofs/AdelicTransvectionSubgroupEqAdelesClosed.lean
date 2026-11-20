@@ -27,7 +27,7 @@ theorem cT_one_add (c : A →+* A) {N J : Matrix (Fin n) (Fin n) A} (hN : N * N 
     Formalism.UG.cT c (1 + a • N) * J * (1 + a • N) = J + (c a + a) • (J * N) := by
   have e : Formalism.UG.cT c (1 + a • N) = 1 + c a • Formalism.UG.cT c N := by
     ext i j
-    simp only [Formalism.UG.cT, transpose_apply, map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add,
+    simp only [Formalism.UG.cT, transpose_apply, map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _),
       map_mul, Matrix.one_apply, eq_comm (a := i)]
     split_ifs <;> simp
   rw [e, Matrix.add_mul, Matrix.one_mul, Matrix.smul_mul, hJ, ← Matrix.mul_smul]
@@ -71,7 +71,7 @@ theorem anti_eq [CharZero F] {δ : E} (hδ : σ δ = -δ) (hsp : ∀ x : E, ∃ 
     (a : R ⊗[F] E) (ha : sigR R σ a + a = 0) : ∃ s : R, a = s ⊗ₜ[F] δ := by
   obtain ⟨a₀, a₁, rfl⟩ := GlobalTheory.FockCompare.RealChart.tensor_span δ hsp a
   refine ⟨a₁, ?_⟩
-  rw [map_add, sigR_tmul, sigR_tmul, hδ, map_one, TensorProduct.tmul_neg] at ha
+  rw [map_add (f := _), sigR_tmul, sigR_tmul, hδ, map_one, TensorProduct.tmul_neg] at ha
   have h2 : (2 : F) • (a₀ ⊗ₜ[F] (1 : E)) = 0 := by
     rw [two_smul, ← ha]; abel
   rw [(smul_eq_zero_iff_right two_ne_zero).1 h2, zero_add]
@@ -306,7 +306,7 @@ theorem inZe_archM {θ : InfFam D} (hθ : IsInfFam θ) {V : HSp D} {ξ : Fin V.r
     InZe (gramAt D V τ) (fun i => tauE D τ (ξ i)) (archM V (θ τ) z) := by
   obtain ⟨a, h1, e⟩ := exists_skew h hz
   have h2 := congrArg (fun a => θ τ (infPart D a)) h1
-  simp only [RingHom.map_add, RingHom.map_zero] at h2
+  simp only [RingHom.map_add (f := _), RingHom.map_zero] at h2
   rw [comp_cA hθ] at h2
   refine ⟨(θ τ (infPart D a)).im, ?_⟩
   rw [archM_eq hθ ξ z a e τ]
@@ -329,8 +329,8 @@ theorem exists_lift {θ : InfFam D} (hθ : IsInfFam θ) {V : HSp D} {ξ : Fin V.
     refine hσ.ext _ ?_ fun τ => ?_
     · have e : finPart D (cA D a) = sigR (GlobalTheoryTheory.GenusMassVolumes.Af D.host.F) D.sp.cm.sig (finPart D a) :=
         LiftUnitary.snd_sigR D.sp.cm.sig a
-      rw [RingHom.map_add, e, hf, RingHom.map_zero, add_zero]
-    · rw [RingHom.map_add, RingHom.map_add, comp_cA hθ, hi]
+      rw [RingHom.map_add (f := _), e, hf, RingHom.map_zero, add_zero]
+    · rw [RingHom.map_add (f := _), RingHom.map_add (f := _), comp_cA hθ, hi]
       simp
   obtain ⟨z, hz⟩ : ∃ z : GA D V, (matHom V z).1 = 1 + a • (nilM V ξ).map (incA D) :=
     ⟨tv (AF D.host.F) D.sp.cm.sig (nilM_sq h) (nilM_adj V ξ) a hsk, rfl⟩

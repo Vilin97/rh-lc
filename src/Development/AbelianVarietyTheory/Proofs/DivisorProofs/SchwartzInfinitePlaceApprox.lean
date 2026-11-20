@@ -110,7 +110,7 @@ theorem exists_arch_factor_of_comm (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (T
       map_add' := fun g g' => by
         apply Subtype.ext; funext z
         simp only [Submodule.coe_add, Pi.add_apply]
-        rw [show pureA F f (g.1 + g'.1) = pureL f g.1 + pureL f g'.1 from (pureL f).map_add _ _, map_add]; rfl
+        rw [show pureA F f (g.1 + g'.1) = pureL f g.1 + pureL f g'.1 from (pureL f).map_add _ _, map_add (f := _)]; rfl
       map_smul' := fun c g => by
         apply Subtype.ext; funext z
         simp only [Submodule.coe_smul, Pi.smul_apply, RingHom.id_apply]

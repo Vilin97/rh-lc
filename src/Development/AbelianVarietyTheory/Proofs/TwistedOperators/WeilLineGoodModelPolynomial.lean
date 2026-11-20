@@ -232,7 +232,7 @@ def amap (M : Model σ X W) (p : UA σ X.J × UA σ W.J) :
       ((Fin n × Fin d → mixedEmbedding.mixedSpace F) × (Fin n × Fin d → mixedEmbedding.mixedSpace F)) where
   toFun v := Coord.coordI M (actAB (cA σ) p (GlobalTheory.ArchFam.wv M v))
   map_add' v v' := by
-    simp only [GlobalTheory.ArchFam.wv, Prod.fst_add, Prod.snd_add, Coord.lift_add, ← Prod.mk_add_mk, map_add, actAB_add,
+    simp only [GlobalTheory.ArchFam.wv, Prod.fst_add, Prod.snd_add, Coord.lift_add, ← Prod.mk_add_mk, map_add (f := _), actAB_add,
       Coord.coordI_add]
   map_smul' c v := by
     simp only [GlobalTheory.ArchFam.wv, Prod.smul_fst, Prod.smul_snd, Coord.lift_smul, ← Prod.smul_mk, map_smul, actAB_smul,
@@ -307,7 +307,7 @@ theorem exists_orbit_pair (hP : GlobalTheory.FunPr.Hypotheses₂) (M : Model σ 
     intro t a g h
     have e1 : (⇑(a • g + h) : (Fin n × Fin d → mixedEmbedding.mixedSpace F) → ℂ) = a • ⇑g + ⇑h := rfl
     have h1 : tens (evI F) ⇑(Tf t (a • g + h)) r₀ = tens (evI F) (a • ⇑(Tf t g) + ⇑(Tf t h)) r₀ := by
-      rw [← hK, e1, htl, map_add, map_smul, hK, hK, htl]
+      rw [← hK, e1, htl, map_add (f := _), map_smul, hK, hK, htl]
     have h2 := hinj _ _ h1
     exact SchwartzMap.ext fun x => congrFun h2 x
   have hz : ∀ t, Tf t 0 = 0 := fun t => by

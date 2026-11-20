@@ -61,7 +61,7 @@ theorem inCone_of_sq_monomial (R : Type) [CommRing R] [IsDomain R] [IsLocalRing 
     rw [Int.toNat_of_nonneg (hp i y), mul_assoc]
   have full : ∀ y z, be y z = ∑ i, ((v i * k : ℕ) : ℤ) * γ i y z := fun y z => by
     have h := diag (y + z)
-    simp only [map_add, LinearMap.add_apply, mul_add, Finset.sum_add_distrib, hbe z y, fun i => hs i z y] at h
+    simp only [map_add (f := _), LinearMap.add_apply, mul_add, Finset.sum_add_distrib, hbe z y, fun i => hs i z y] at h
     rw [← diag y, ← diag z] at h
     omega
   refine ⟨fun i => ((v i * k : ℕ) : ℝ), fun i => Nat.cast_nonneg _, LinearMap.ext₂ fun y z => ?_⟩

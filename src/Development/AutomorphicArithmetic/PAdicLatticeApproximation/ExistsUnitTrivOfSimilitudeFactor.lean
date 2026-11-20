@@ -45,7 +45,7 @@ private theorem starT_invol {p : ℕ} [Fact p.Prime] (G : HTGroup p) (R : Type) 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add a b ha hb =>
-    simp only [map_add, MulOpposite.unop_add, ha, hb]
+    simp only [map_add (f := _), MulOpposite.unop_add, ha, hb]
   | tmul r c => rw [starT_tmul, starT_tmul, G.star_star]
 
 private theorem starT_alg {p : ℕ} [Fact p.Prime] (G : HTGroup p) (R : Type) [CommRing R] [Algebra ℚ R]

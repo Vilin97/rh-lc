@@ -29,7 +29,7 @@ theorem generatesAt_add_vanishesAt {D : CartierDiv X} {x : X} {f u : X.functionF
   rw [he.vanishesAt_iff] at hu
   obtain ⟨a, ha, hae⟩ := hf
   obtain ⟨b, hb, hbe⟩ := hu
-  refine ⟨a + b, ?_, by rw [map_add, hae, hbe, add_mul]⟩
+  refine ⟨a + b, ?_, by rw [map_add (f := _), hae, hbe, add_mul]⟩
   by_contra hn
   have h1 : a + b ∈ IsLocalRing.maximalIdeal _ := (IsLocalRing.mem_maximalIdeal _).2 hn
   have h2 : a ∈ IsLocalRing.maximalIdeal _ := by

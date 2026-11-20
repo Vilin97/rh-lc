@@ -216,7 +216,7 @@ theorem exists_lvlModel (hF : GlobalTheory.Published.HarishChandraFinite) (hD : 
   refine GlobalTheory.HilbertModel.exists_hmod _ _ _ inferInstance (fun x hx y hy z hz a => ?_) fun x hx h0 => ?_
   · obtain ⟨k1, k2⟩ := h1 _ hx _ hy _ hz a
     unfold ipCC
-    rw [map_add, map_smul, k1, k2]
+    rw [map_add (f := _), map_smul, k1, k2]
     exact ⟨by ring, by simp⟩
   · have := h2 _ hx fun h => h0 (toMM_injective R t j (h.trans (map_zero _).symm))
     rw [Complex.re_ofReal_mul]
@@ -430,7 +430,7 @@ theorem isMultiplicityInner_mul_inner {V : HSp D} {Sp : D.what₂.Tau → SPar} 
   intro v v'
   have hf : (fun g => star (e x v g) * e y v' g) = fun g => star (e x v g) * e (x + y) v' g - star (e x v g) * e x v' g := by
     funext g
-    simp only [map_add, add_apply, Pi.add_apply]
+    simp only [map_add (f := _), add_apply, Pi.add_apply]
     ring
   rw [hf]
   refine ⟨(h₂ v v').1.sub (h₁ v v').1, ?_⟩

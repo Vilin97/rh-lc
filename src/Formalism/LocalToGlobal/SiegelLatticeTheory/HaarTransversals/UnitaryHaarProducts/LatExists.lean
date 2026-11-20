@@ -464,13 +464,13 @@ theorem hypRep_holds : HypRep := by
     rw [this]; exact P.sub_mem hb ha'
   let x : 𝓞 E := a + y * s0
   have hxPb : σ x ∈ P := by
-    have : σ x = σ a + y * σ s0 := by simp only [x, map_add, map_mul, hyσ]
+    have : σ x = σ a + y * σ s0 := by simp only [x, map_add (f := _), map_mul, hyσ]
     rw [this]; exact P.add_mem ha' (P.mul_mem_right _ hyP)
   have hx1 : x - 1 ∈ P := by
     have : x - 1 = y * s0 - b := by simp only [x]; rw [← hab]; ring
     rw [this]; exact P.sub_mem (P.mul_mem_right _ hyP) hb
   have hxt : x + σ x = 1 := by
-    have : x + σ x = (a + σ a) + y * (s0 + σ s0) := by simp only [x, map_add, map_mul, hyσ]; ring
+    have : x + σ x = (a + σ a) + y * (s0 + σ s0) := by simp only [x, map_add (f := _), map_mul, hyσ]; ring
     rw [this, hs0']; simp only [y]; ring
   have hxtE : (x : E) + star (x : E) = 1 := by
     have := congrArg (fun o : 𝓞 E => (o : E)) hxt
@@ -516,19 +516,19 @@ theorem hypRep_holds : HypRep := by
     simp only [β, s, map_mul, map_neg, map_natCast]
     rw [show (algebraMap (𝓞 E) E) (σ o) = star (o : E) from rfl, div_mul_eq_mul_div, eq_div_iff hsα]
     linear_combination ((T : ℕ) : E) * h2
-  · simp only [map_add, LinearMap.add_apply, hsmulL, map_smul, smul_eq_mul, hee, hff, hef, hfe]
+  · simp only [map_add (f := _), LinearMap.add_apply, hsmulL, map_smul, smul_eq_mul, hee, hff, hef, hfe]
     simp only [β, s, star_div₀, star_mul', star_neg, star_natCast, star_star]
     field_simp
     linear_combination (-(T : E) * star α * α) * hxtE
   · intro γ hγ
     have hA : γ * α ∈ c := by
       have h1 := hfc _ hγ
-      simp only [map_add, map_smul, smul_eq_mul, hfe, hff] at h1
+      simp only [map_add (f := _), map_smul, smul_eq_mul, hfe, hff] at h1
       simpa [mul_comm] using h1
     have hB : ∃ o : 𝓞 E, (o : E) = γ * s := by
       obtain ⟨o, ho⟩ := PI.SRW.pair_int S hU hγ (hce α hαc)
       refine ⟨o, (show (o : E) = S.hT (α • e) (γ • (α • e + β • f)) from ho).trans ?_⟩
-      simp only [hsmulL, map_add, map_smul, smul_eq_mul, hee, hef, β]
+      simp only [hsmulL, map_add (f := _), map_smul, smul_eq_mul, hee, hef, β]
       field_simp
       ring
     have hC : ∀ p ∈ P, ∃ o : 𝓞 E, (o : E) = (p : E) * γ := by
@@ -783,18 +783,18 @@ theorem isoW_holds : IsoW D := by
   refine ⟨D.sp.zm + D.sp.iXY 0 y, ?_, ?_, fun i => ⟨?_, ?_⟩⟩
   · intro h0
     have h4 : (VS D).hT D.sp.zm (D.sp.zm + D.sp.iXY 0 y) = 0 := by rw [h0, map_zero]
-    rw [map_add, D.sp.zm_norm, h3, add_zero, neg_eq_zero] at h4
+    rw [map_add (f := _), D.sp.zm_norm, h3, add_zero, neg_eq_zero] at h4
     exact hT0 h4
   · have h5 := hiso y y
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [D.sp.zm_norm, h2, h3, h5, hy]
     ring
   · have h6 : (VS D).hT (D.sp.hypE i) D.sp.zm = 0 := by rw [← hconj, (D.sp.hyp_orthz i).1, star_zero]
     have h7 : (VS D).hT (D.sp.hypE i) (D.sp.iXY 0 y) = 0 := by rw [← hconj, (D.sp.hyp_orthX i y).1, star_zero]
-    rw [map_add, h6, h7, add_zero]
+    rw [map_add (f := _), h6, h7, add_zero]
   · have h6 : (VS D).hT (D.sp.hypF i) D.sp.zm = 0 := by rw [← hconj, (D.sp.hyp_orthz i).2, star_zero]
     have h7 : (VS D).hT (D.sp.hypF i) (D.sp.iXY 0 y) = 0 := by rw [← hconj, (D.sp.hyp_orthX i y).2, star_zero]
-    rw [map_add, h6, h7, add_zero]
+    rw [map_add (f := _), h6, h7, add_zero]
 
 theorem ddG_of (hSD : LatEx.SplitDiff) : DdG D := by
   intro P hP

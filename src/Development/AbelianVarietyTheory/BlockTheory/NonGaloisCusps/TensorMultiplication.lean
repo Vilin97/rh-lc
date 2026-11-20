@@ -27,7 +27,7 @@ theorem actVB_mulVB (ρ : Representation LL G V) (g : G) (c : K₀) (x : V ⊗[Q
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB, mulVB]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 omit [IsScalarTower Qp K₀ B] in
 
@@ -37,14 +37,14 @@ theorem comm_smul [SMulCommClass Qp K₀ B] (c : K₀) (x : B ⊗[Qp] V) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul b v => simp [mulVB, TensorProduct.smul_tmul', Algebra.smul_def]
-  | add a b ha hb => simp only [smul_add, map_add, ha, hb]
+  | add a b ha hb => simp only [smul_add, map_add (f := _), ha, hb]
 
 def DcrisK (ρ : Representation LL G V) : Submodule K₀ (B ⊗[Qp] V) where
   carrier := {x | TensorProduct.comm Qp B V x ∈ Dcris PD ρ}
   zero_mem' := by simp
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_setOf_eq, map_add] at ha hb ⊢
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at ha hb ⊢
     exact (Dcris PD ρ).add_mem ha hb
   smul_mem' := by
     intro c x hx

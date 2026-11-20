@@ -17,7 +17,7 @@ namespace GlobalTheory.MixedForm
 def tensForm {k κ κ' : Type} (l₁ : ((κ → k) → ℂ) →ₗ[ℂ] ℂ) (l₂ : ((κ' → k) → ℂ) →ₗ[ℂ] ℂ) : ((κ ⊕ κ' → k) → ℂ) →ₗ[ℂ] ℂ where
   toFun f := l₁ fun x₁ => l₂ fun x₂ => f (Sum.elim x₁ x₂)
   map_add' f g := by
-    rw [← map_add]; congr 1; funext x₁; rw [Pi.add_apply, ← map_add]; rfl
+    rw [← map_add (f := _)]; congr 1; funext x₁; rw [Pi.add_apply, ← map_add (f := _)]; rfl
   map_smul' c f := by
     rw [RingHom.id_apply, ← map_smul]; congr 1; funext x₁; rw [Pi.smul_apply, ← map_smul]; rfl
 
@@ -39,7 +39,7 @@ def proj (v : Pl F) (φ₀ : (κ → Fv F v) → ℂ) (l : ((κ → Fv F v) → 
   toFun Φ y := φ₀ (fun i => evFin F v (y i)) * l fun x => Φ (repl v y x)
   map_add' Φ Ψ := by
     funext y
-    rw [Pi.add_apply, ← mul_add, ← map_add]; rfl
+    rw [Pi.add_apply, ← mul_add, ← map_add (f := _)]; rfl
   map_smul' c Φ := by
     funext y
     rw [RingHom.id_apply, Pi.smul_apply, smul_eq_mul, mul_left_comm, ← smul_eq_mul c, ← map_smul]; rfl

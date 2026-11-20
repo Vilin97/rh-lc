@@ -26,7 +26,7 @@ private theorem padicInt_hom_ext {R : Type} [CommRing R] [IsHausdorff (Ideal.spa
   refine ⟨f y - g y, ?_⟩
   have hf := congrArg f hz
   have hg := congrArg g hz
-  rw [map_add, map_mul, map_pow, map_natCast, map_natCast] at hf hg
+  rw [map_add (f := _), map_mul, map_pow, map_natCast, map_natCast] at hf hg
   rw [hf, hg]
   ring
 

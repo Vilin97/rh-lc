@@ -58,7 +58,7 @@ def formsAt (t : T) (P : LevelP R.Pg D.R.r ℂ) : Submodule ℂ (R.HX t).H where
   carrier := {x | ∀ v, HasType D.sp.X' R.βX (datXP R t P) (scal R t x v)}
   add_mem' := by
     intro x y hx hy v κ hκ h
-    simp only [map_add, LinearMap.add_apply, Pi.add_apply, hx v κ hκ h, hy v κ hκ h, mul_add]
+    simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply, hx v κ hκ h, hy v κ hκ h, mul_add]
   zero_mem' := by
     intro v κ _ h
     simp

@@ -66,7 +66,7 @@ theorem sb_of_sbHalf (p : SplitPt D k) {n n' : Type} [Fintype n] [DecidableEq n]
       have hx'z : x' = x + ((k0 : ℕ) : k) • z := by
         rw [hz, smul_smul, mul_inv_cancel₀ hc, one_smul, add_sub_cancel]
       show Φ (HalfInd.wr α β x') = Φ (HalfInd.wr α β x)
-      rw [hx'z, map_add, hwr]
+      rw [hx'z, map_add (f := _), hwr]
       exact hinv _ hx'.1 hx'.2 _
   · refine HasCompactSupport.intro (hUc.image (f := fun z => ((k0 : ℕ) : k)⁻¹ • z) (by fun_prop)) fun x hx => ?_
     by_contra h
@@ -147,7 +147,7 @@ theorem main : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [TopologicalSp
         have hfun : (fun t => (fun t => Φ (t + x)) (r t).1 * a' (r t).2) =
             fun t => (fun t => Φ (r t).1 * a' (r t).2) (t + r.symm (x, 0)) := by
           funext t
-          simp only [map_add, AddEquiv.apply_symm_apply, Prod.fst_add, Prod.snd_add, add_zero]
+          simp only [map_add (f := _), AddEquiv.apply_symm_apply, Prod.fst_add, Prod.snd_add, add_zero]
         rw [hfun, hT.trans _ (hsb Φ hΦ) _ (ExtZero.half_resS_symm o hx), hr, ExtZero.heisO_resS_symm]
         rfl
       · intro Φ hΦ y' hy'

@@ -57,7 +57,7 @@ theorem exists_limit_functional {ι : Type} [Fintype ι] [DecidableEq ι] {N : �
     simp only [h1, map_smul, smul_eq_mul, h2]
     exact (hL m).const_mul a
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
 
 theorem exists_limFam_of_cauchy : ∀ (D : D7) (Y : ShimX D.what₂.Tau), (∀ B : ℝ, 2 ≤ B → ∀ u : Wt Y, CptGaps Y 0 u → supAbs Y u ≤ 1 → ∃ C R₀ : ℝ, ∀ R R' : ℝ, R₀ ≤ R → R ≤ R' → |Y.arDeg (setB Y B) R (linRoot u ^ (dimFl D.what₂.Tau Y.N + 1)) - Y.arDeg (setB Y B) R' (linRoot u ^ (dimFl D.what₂.Tau Y.N + 1))| ≤ C * Real.log R ^ (dimY Y + 1) / Real.sqrt R) → ∃ Φ : ℝ → Fn Y, LimFam Φ := by

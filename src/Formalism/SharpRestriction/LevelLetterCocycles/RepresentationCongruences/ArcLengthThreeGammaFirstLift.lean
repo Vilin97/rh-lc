@@ -128,7 +128,7 @@ theorem arc_length_three_gamma_first_lift [NeZero n] [Fintype (K →ₐ[Qp] LL)]
   have e3 : W.γ T₁ (W.φD T₁ X₁) =
       W.φD T₁ X₁ + ((w : LetA O n) * W.π₀ * qA W ^ (PD.p - 1)) ^ (r + 1) • W.φD T₁ x₁ := by
     have h1 : W.γ T₁ (W.φD T₁ X₁) = W.φD T₁ (W.γ T₁ X₁) := (W.φγ_comm T₁ W.gam X₁).symm
-    rw [h1, ← hwφ, ← map_pow, ← DYB.φD_smulA, ← map_add, ← hγX, add_sub_cancel]
+    rw [h1, ← hwφ, ← map_pow, ← DYB.φD_smulA, ← map_add (f := _), ← hγX, add_sub_cancel]
   have e4 : W.γ T₁ ((W.π₀ * qA W ^ (size c + S)) • Z) =
       ((W.π₀ * qA W ^ (size c + S)) * ((1 + (u : LetA O n) * qA W) *
         (1 + (u : LetA O n) * W.π₀) ^ (size c + S))) • W.γ T₁ Z := by

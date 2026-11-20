@@ -47,9 +47,9 @@ variable {O : Type*} [CommRing O] [StarRing O] {X : Type*} [AddCommGroup X] [Mod
 
 def pairForm (f g : X →ₗ[O] O) : Bil X O :=
   LinearMap.mk₂ ℤ (fun y x => f y * star (g x) + f x * star (g y))
-    (fun _ _ _ => by simp only [map_add, star_add]; ring)
+    (fun _ _ _ => by simp only [map_add (f := _), star_add]; ring)
     (fun n _ _ => by simp only [map_zsmul, zsmul_eq_mul, star_mul, star_intCast]; ring)
-    (fun _ _ _ => by simp only [map_add, star_add]; ring)
+    (fun _ _ _ => by simp only [map_add (f := _), star_add]; ring)
     (fun n _ _ => by simp only [map_zsmul, zsmul_eq_mul, star_mul, star_intCast]; ring)
 
 @[simp] theorem pairForm_apply (f g : X →ₗ[O] O) (y x : X) :
@@ -74,9 +74,9 @@ theorem exists_universal_pi {w : O} (hw : w + star w = 1) [Module.Finite O X]
     simp [c, e]
   let Φ : Bil X (Fin n × Fin n → O) :=
     LinearMap.mk₂ ℤ (fun y x ij => pairForm (c ij.1) (c ij.2) y x)
-      (fun _ _ _ => by ext; simp only [map_add, LinearMap.add_apply, Pi.add_apply])
+      (fun _ _ _ => by ext; simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply])
       (fun _ _ _ => by ext; simp only [map_zsmul, LinearMap.smul_apply, Pi.smul_apply])
-      (fun _ _ _ => by ext; simp only [map_add, Pi.add_apply])
+      (fun _ _ _ => by ext; simp only [map_add (f := _), Pi.add_apply])
       (fun _ _ _ => by ext; simp only [map_zsmul, Pi.smul_apply])
   refine ⟨n, Φ, ⟨fun y x => funext fun ij => (pairForm_mem_balForms _ _).1 y x,
     fun a y x => funext fun ij => (pairForm_mem_balForms _ _).2 a y x⟩, e, ?_⟩
@@ -97,7 +97,7 @@ theorem exists_universal_pi {w : O} (hw : w + star w = 1) [Module.Finite O X]
   have h (ij : Fin n × Fin n) : τ ((w * Φ y x ij) • e ij.1) (e ij.2) =
       τ ((w * (c ij.1 y * star (c ij.2 x))) • e ij.1) (e ij.2) +
         τ ((w * (c ij.1 x * star (c ij.2 y))) • e ij.1) (e ij.2) := by
-    rw [← LinearMap.add_apply, ← map_add, ← add_smul, ← mul_add]
+    rw [← LinearMap.add_apply, ← map_add (f := _), ← add_smul, ← mul_add]
     rfl
   simp only [h, Finset.sum_add_distrib, key]
   rw [hτ.1 (w • x) y, add_comm, hτ.2.add_of_add_star hw]
@@ -165,9 +165,9 @@ variable (O) in
 
 def balTensorMk : Bil X ((X ⊗[ℤ] X) ⧸ balTensorRel O X) :=
   LinearMap.mk₂ ℤ (fun y x => QuotientAddGroup.mk' (balTensorRel O X) (y ⊗ₜ x))
-    (fun _ _ _ => by rw [add_tmul, map_add])
+    (fun _ _ _ => by rw [add_tmul, map_add (f := _)])
     (fun n y y' => by rw [← map_zsmul]; rfl)
-    (fun _ _ _ => by rw [tmul_add, map_add])
+    (fun _ _ _ => by rw [tmul_add, map_add (f := _)])
     (fun n y y' => by rw [← map_zsmul, ← smul_tmul]; rfl)
 
 variable (O X) in
@@ -197,7 +197,7 @@ theorem balTensor_hom_ext {B : Type*} [AddCommGroup B]
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul y x => exact h y x
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem balTensorLift_bijective {w : O} (hw : w + star w = 1) [Module.Finite O X]
     [Module.Projective O X] [Module.IsTorsionFree ℤ O] :

@@ -63,8 +63,8 @@ theorem char_int {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {c
     | add y y' _ _ h h' =>
       obtain ⟨z, h1, h2, h3⟩ := h
       obtain ⟨z', h1', h2', h3'⟩ := h'
-      exact ⟨z + z', by rw [RingHom.map_add, h1, h1', add_zero], by rw [RingHom.map_add, h2, h2'],
-        by rw [mul_add, map_add, ψ.map_add_eq_mul, h3, h3', one_mul]⟩
+      exact ⟨z + z', by rw [RingHom.map_add (f := _), h1, h1', add_zero], by rw [RingHom.map_add (f := _), h2, h2'],
+        by rw [mul_add, map_add (f := _), ψ.map_add_eq_mul, h3, h3', one_mul]⟩
     | neg y _ h =>
       obtain ⟨z, h1, h2, h3⟩ := h
       exact ⟨-z, by rw [RingHom.map_neg, h1, neg_zero], by rw [RingHom.map_neg, h2],

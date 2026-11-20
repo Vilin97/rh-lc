@@ -58,7 +58,7 @@ theorem closure_span_eq {K : Type} [Field K] [NumberField K] {σ : K →+* ℂ} 
     induction hx using Submodule.span_induction with
     | mem x hx => exact AddSubgroup.subset_closure ⟨1, f x, ⟨x, hx, rfl⟩, by simp⟩
     | zero => rw [map_zero]; exact C.zero_mem
-    | add _ _ _ _ h1 h2 => rw [map_add]; exact C.add_mem h1 h2
+    | add _ _ _ _ h1 h2 => rw [map_add (f := _)]; exact C.add_mem h1 h2
     | smul b x _ h => rw [hfs]; exact stab b _ h
   apply le_antisymm
   · refine AddSubgroup.closure_mono ?_

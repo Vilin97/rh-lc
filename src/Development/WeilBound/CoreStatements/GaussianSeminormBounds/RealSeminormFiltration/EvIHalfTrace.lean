@@ -118,7 +118,7 @@ theorem hl_line_deriv (a : V) (L : V →L[ℝ] ℝ) (f : 𝓢(V, ℂ)) :
     (lam.hasTemperateGrowth.mul L.hasTemperateGrowth).add
       ((Function.HasTemperateGrowth.const _).mul (lam.hasTemperateGrowth.mul lam.hasTemperateGrowth))
   have hdiff : ∀ (x : V) (t : ℝ), q (x + t • a) - q x = t * L x + t ^ 2 * (L a / 2) := fun x t => by
-    simp only [hq, map_add, map_smul, hla, smul_eq_mul]
+    simp only [hq, map_add (f := _), map_smul, hla, smul_eq_mul]
     ring
   have t1 := chirp_tg 1 hqt
   have t2 := chirp_tg (-1) hqt
@@ -276,7 +276,7 @@ theorem phase_line (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (a b x : κ → AF
     congr 1
     · exact Finset.sum_congr rfl fun i _ => by ring
     · exact Finset.sum_congr rfl fun i _ => by ring
-  rw [ev, map_add, map_smul, map_smul, linForm_apply]
+  rw [ev, map_add (f := _), map_smul, map_smul, linForm_apply]
   simp [smul_eq_mul]
 
 theorem evI_half_trace (S : mixedEmbedding.mixedSpace F) :
@@ -288,7 +288,7 @@ theorem evI_half_trace (S : mixedEmbedding.mixedSpace F) :
   have h2 : S = evI F ⅟(2 : AF F) * S + evI F ⅟(2 : AF F) * S := by
     rw [← add_mul, h1, one_mul]
   have h3 := congrArg (Algebra.trace ℝ (mixedEmbedding.mixedSpace F)) h2
-  rw [map_add] at h3
+  rw [map_add (f := _)] at h3
   linarith
 
 theorem snd_eq_zero {z : κ → AF F} (hz : At (evI F) z) (i : κ) : (z i).2 = 0 := by

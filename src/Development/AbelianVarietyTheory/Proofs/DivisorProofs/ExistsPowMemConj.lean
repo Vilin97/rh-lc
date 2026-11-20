@@ -51,7 +51,7 @@ theorem sh_mul (x y : G.C) : sh G (x * y) = sh G y * sh G x := by
 
 theorem sh_one : sh G (1 : G.C) = 1 := by simp [sh]
 
-theorem sh_add (x y : G.C) : sh G (x + y) = sh G x + sh G y := by simp [sh, map_add]
+theorem sh_add (x y : G.C) : sh G (x + y) = sh G x + sh G y := by simp [sh, map_add (f := _)]
 
 theorem sh_zero : sh G (0 : G.C) = 0 := by simp [sh]
 
@@ -123,7 +123,7 @@ def iM (P : Pair G) : FM P →ₐ[ℚ] FM P where
   map_mul' a b := jM_injective P (by
     rw [mul_comm (iMf P a), jM_iMf, map_mul, map_mul, jM_iMf, jM_iMf, iC_mul])
   map_zero' := jM_injective P (by rw [jM_iMf, map_zero, iC_zero])
-  map_add' a b := jM_injective P (by rw [jM_iMf, map_add, map_add, jM_iMf, jM_iMf, iC_add])
+  map_add' a b := jM_injective P (by rw [jM_iMf, map_add (f := _), map_add (f := _), jM_iMf, jM_iMf, iC_add])
   commutes' q := jM_injective P (by rw [jM_iMf, jM_algQ, iC_algQ])
 
 theorem jM_iM (P : Pair G) (a : FM P) : jM P (iM P a) = iC P (jM P a) := jM_iMf P a

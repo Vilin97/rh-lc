@@ -32,18 +32,18 @@ theorem mvPowerSeries_eq_zero_of_pderiv_mem_span (S : Set (MvPowerSeries σ R))
           rw [Finsupp.single_le_iff]; omega
         obtain ⟨m', rfl⟩ := exists_add_of_le hle
         have h1 := ih _ (hd F hF i) m' (by
-          rw [map_add, Finsupp.degree_single] at hm; omega)
+          rw [map_add (f := _), Finsupp.degree_single] at hm; omega)
         rw [MvPowerSeries.coeff_pderiv, add_comm m', mul_comm, ← Nat.cast_succ, ← nsmul_eq_mul,
           smul_eq_zero_iff_right (Nat.succ_ne_zero _)] at h1
         exact h1
       | zero => intro m _; simp
-      | add F G _ _ hF hG => intro m hm; rw [map_add, hF m hm, hG m hm, add_zero]
+      | add F G _ _ hF hG => intro m hm; rw [map_add (f := _), hF m hm, hG m hm, add_zero]
       | smul G F _ hF =>
         intro m hm
         rw [smul_eq_mul, MvPowerSeries.coeff_mul]
         refine Finset.sum_eq_zero fun p hp => ?_
         rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-        rw [hF p.2 (by rw [← hp, map_add] at hm; omega), mul_zero]
+        rw [hF p.2 (by rw [← hp, map_add (f := _)] at hm; omega), mul_zero]
   intro F hF
   ext m
   rw [key _ F (Ideal.subset_span hF) m (Nat.lt_succ_self _), map_zero]
@@ -137,7 +137,7 @@ theorem taylorDir_congr (h : f =ᶠ[𝓝 0] g) : taylorDir u f = taylorDir u g :
 theorem taylorDir_add (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
     taylorDir u (f + g) = taylorDir u f + taylorDir u g := by
   ext m
-  rw [map_add, coeff_taylorDir_eq_lineDerivList u (hf.add hg) (Multiset.coe_toList _),
+  rw [map_add (f := _), coeff_taylorDir_eq_lineDerivList u (hf.add hg) (Multiset.coe_toList _),
     coeff_taylorDir_eq_lineDerivList u hf (Multiset.coe_toList _),
     coeff_taylorDir_eq_lineDerivList u hg (Multiset.coe_toList _), ← mul_add,
     ← lineDerivList_add hf hg]

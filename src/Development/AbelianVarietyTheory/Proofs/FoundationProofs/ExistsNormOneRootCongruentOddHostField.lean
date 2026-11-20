@@ -75,14 +75,14 @@ theorem finite_root_odd (F E : Type) [Field F] [NumberField F] [Field E] [Number
       rwa [map_ofNat] at this
     apply htwo.mul_left_cancel
     have := congrArg (sg (FiniteAdeleRing (𝓞 F) F) c) h2w
-    rw [map_mul _ 2, map_ofNat, map_mul _ e' (1 + u), map_add, map_one, hse] at this
+    rw [map_mul _ 2, map_ofNat, map_mul _ e' (1 + u), map_add (f := _), map_one, hse] at this
     linear_combination h2w - u * this - e' * hu
   have he1 := sub_mem (one_mem (intHat F E)) heO
   refine ⟨e' * w + (1 - e') * x₁, e' * y' + (1 - e') * y₁, add_mem (mul_mem heO hwO) (mul_mem he1 hx₁'),
     add_mem (mul_mem heO hy₀O) (mul_mem he1 hy₁'), ?_, ?_, e' * e' * (h' * z) + f' * (x₁ - 1),
     add_mem (mul_mem (mul_mem heO heO) (mul_mem hhO hz)) (mul_mem hfO (sub_mem hx₁' (one_mem _))), ?_⟩
   · linear_combination e' * hy₀' + (1 - e') * hxy₁ + (w * y' - w * y₁ - x₁ * y' + x₁ * y₁) * hee'
-  · rw [map_add, map_mul _ (1 - e'), map_sub, map_one, hse]
+  · rw [map_add (f := _), map_mul _ (1 - e'), map_sub, map_one, hse]
     linear_combination hr₀ + (1 - e') * hr₁
   · rw [nsmul_eq_mul, hw]
     linear_combination (x₁ - 1) * hef'

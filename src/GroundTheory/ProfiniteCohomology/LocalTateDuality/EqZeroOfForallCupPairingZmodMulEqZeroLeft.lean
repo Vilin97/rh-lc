@@ -54,7 +54,7 @@ theorem finite_cohomology_one_res_galRootsOfUnity (hn : (n : K) ≠ 0) (U : Open
         rw [pow_zero, zero_smul] at h
         rw [h, map_zero, map_zero, ofAdd_zero]
       map_mul' := fun a b => by
-        rw [unitsInvariantOpen_mul, map_add, map_add, ofAdd_add] }
+        rw [unitsInvariantOpen_mul, map_add (f := _), map_add (f := _), ofAdd_add] }
   have hle : (powMonoidHom n : (fixedField (U : Subgroup Gal(Ksep/K)))ˣ →* _).range ≤ κ.ker := by
     rintro _ ⟨b, rfl⟩
     rw [MonoidHom.mem_ker]
@@ -86,7 +86,7 @@ theorem eq_zero_of_forall_cupPairing_zmodMul_eq_zero_left (hn : (n : K) ≠ 0)
     exact (isOpen_discrete _).preimage ((openChar n U z).continuous_toFun.comp continuous_ofMul)
   have hcomm : ∀ σ τ : Gal(Ksep/fixedField (U : Subgroup Gal(Ksep/K))),
       σ * τ * σ⁻¹ * τ⁻¹ ∈ charKer (charAdd (openChar n U z)) := fun σ τ => by
-    rw [mem_charKer, ofMul_mul, ofMul_mul, ofMul_mul, ofMul_inv, ofMul_inv, map_add, map_add, map_add,
+    rw [mem_charKer, ofMul_mul, ofMul_mul, ofMul_mul, ofMul_inv, ofMul_inv, map_add (f := _), map_add (f := _), map_add (f := _),
       map_neg, map_neg]
     abel
   have htop := eq_top_of_forall_exists_norm _ hopen hcomm hnorm

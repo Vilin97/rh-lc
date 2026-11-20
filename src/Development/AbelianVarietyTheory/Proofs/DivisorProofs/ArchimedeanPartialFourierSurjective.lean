@@ -61,7 +61,7 @@ theorem fourier_hop (μ : Measure (κ ⊕ κ → mixedEmbedding.mixedSpace F)) [
         GlobalTheory.ArchSch.ech (-(B a b) / 2 - B a ξ) * GlobalTheory.ArchSch.ech (B (x + a) (ξ + b)) := by
       rw [← ech_add', ← ech_add']
       congr 1
-      simp only [map_add, LinearMap.add_apply]
+      simp only [map_add (f := _), LinearMap.add_apply]
       ring
     change GlobalTheory.ArchSch.ech (B x b + B a b / 2) * f (x + a) * GlobalTheory.ArchSch.ech (B x ξ) =
       GlobalTheory.ArchSch.ech (-(B a b) / 2 - B a ξ) * (f (x + a) * GlobalTheory.ArchSch.ech (B (x + a) (ξ + b)))
@@ -86,7 +86,7 @@ theorem trace_dot_pairing_eq_quadratic (u a : κ ⊕ κ → mixedEmbedding.mixed
 
 theorem q_add_left (u v w : κ ⊕ κ → mixedEmbedding.mixedSpace F) : q (u + v) w = q u w + q v w := by
   simp only [q]
-  rw [show (fun j => (u + v) (Sum.inr j)) = (fun j => u (Sum.inr j)) + (fun j => v (Sum.inr j)) from rfl, map_add,
+  rw [show (fun j => (u + v) (Sum.inr j)) = (fun j => u (Sum.inr j)) + (fun j => v (Sum.inr j)) from rfl, map_add (f := _),
     LinearMap.add_apply]
 
 theorem q_comm (u v : κ ⊕ κ → mixedEmbedding.mixedSpace F) : q u v = q v u := traceDot_comm _ _
@@ -178,7 +178,7 @@ theorem shearOp_surjective : Function.Surjective (shearOp (F := F) (κ := κ)) :
 theorem shearOp_hop (a b : κ ⊕ κ → mixedEmbedding.mixedSpace F) (f g : SchwartzMap (κ ⊕ κ → mixedEmbedding.mixedSpace F) ℂ)
     (hg : ⇑g = hop a b f) : ⇑(shearOp g) = hop (shear.symm a) (shearT b) (shearOp f) := by
   funext u
-  rw [shearOp_apply, hg, hop, hop, shearOp_apply, ContinuousLinearEquiv.map_add,
+  rw [shearOp_apply, hg, hop, hop, shearOp_apply, ContinuousLinearEquiv.map_add (f := _),
     ContinuousLinearEquiv.apply_symm_apply, ← traceDot_shear, ← traceDot_shear, ContinuousLinearEquiv.apply_symm_apply]
 
 end GlobalTheory.DiagHeisFourier

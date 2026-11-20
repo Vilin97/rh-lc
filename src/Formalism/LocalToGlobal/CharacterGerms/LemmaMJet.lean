@@ -16,7 +16,7 @@ variable {C : Type} [Field C] {σ τ : Type}
 
 theorem jet_add_right (P : MvPolynomial σ C) (G H : MvPowerSeries σ C) :
     jetAt0 P (G + H) = jetAt0 P G + jetAt0 P H := by
-  simp only [jetAt0, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [jetAt0, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem jet_smul_right (P : MvPolynomial σ C) (a : C) (G : MvPowerSeries σ C) :
     jetAt0 P (a • G) = a * jetAt0 P G := by
@@ -111,7 +111,7 @@ theorem jet_subst_linS [Fintype σ] [Fintype τ] (M : τ → σ → C) (Q : MvPo
         simp) 0 (by simp)
     rw [subst_linS_C] at h0
     simpa using h0
-  | add p q hp hq => rw [map_add, tpjet_jetAt0_add, tpjet_jetAt0_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), tpjet_jetAt0_add, tpjet_jetAt0_add, hp, hq]
   | mul_X p c hp =>
     rw [jet_mul_X, dVar_subst_linS, jet_sum_right, map_mul]
     have h : linT M (MvPolynomial.X c) = ∑ w, MvPolynomial.C (M c w) * MvPolynomial.X w := by

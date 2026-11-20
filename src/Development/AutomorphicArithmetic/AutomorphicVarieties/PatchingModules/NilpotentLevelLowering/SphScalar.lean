@@ -39,7 +39,7 @@ private theorem sphScalar_ev {G M M' : Type} [Group G] [AddCommGroup M] [Module 
     rw [AlgHom.commutes, AlgHom.commutes, Module.algebraMap_end_apply, Module.algebraMap_end_apply, map_smul]
   | add T T' h1 h2 h h' =>
     change ev' (⟨T, h1⟩ + ⟨T', h2⟩) _ = g (ev (⟨T, h1⟩ + ⟨T', h2⟩) _)
-    rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, map_add, h, h']
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), h, h']
   | mul T T' h1 h2 h h' =>
     change ev' (⟨T, h1⟩ * ⟨T', h2⟩) _ = g (ev (⟨T, h1⟩ * ⟨T', h2⟩) _)
     rw [map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply, h', h]

@@ -28,7 +28,7 @@ theorem chartVal_zero {n : ℕ} (I : Cech.Idx (support x) n) :
 theorem chartVal_add {n : ℕ} (y y' : Cech.Cochain (locSys S N M.coneSubE) n) (I : Cech.Idx (support x) n) :
     chartVal M c (y + y') I = chartVal M c y I + chartVal M c y' I := by
   unfold chartVal
-  rw [Pi.add_apply, map_add, map_add]
+  rw [Pi.add_apply, map_add (f := _), map_add (f := _)]
 
 theorem chartVal_smul {n : ℕ} (a : S) (y : Cech.Cochain (locSys S N M.coneSubE) n)
     (I : Cech.Idx (support x) n) : chartVal M c (a • y) I = a • chartVal M c y I := by

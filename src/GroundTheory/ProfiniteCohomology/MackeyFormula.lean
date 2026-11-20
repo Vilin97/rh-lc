@@ -84,7 +84,7 @@ noncomputable def mackeyLift :
     funext y
     simp only [mackeyLiftFun]
     change _ = N.ρ _ ((F _).1 _) + N.ρ _ ((F' _).1 _)
-    rw [← map_add]
+    rw [← map_add (f := _)]
     rfl
   map_smul' r F := by
     apply Subtype.ext
@@ -166,7 +166,7 @@ noncomputable def mackeyIncl (d : MackeyDoubleCoset U ι) :
     mackeySummand U ι N d.out ⟶ Rep.res ι (Rep.coind U.subtype N) :=
   Rep.ofHom ⟨{
       toFun := fun F => mackeyLift U ι N (Pi.single d F)
-      map_add' := fun F F' => by rw [Pi.single_add, map_add]
+      map_add' := fun F F' => by rw [Pi.single_add, map_add (f := _)]
       map_smul' := fun r F => by rw [Pi.single_smul, map_smul]; rfl },
     fun h₀ => LinearMap.ext fun F => mackeyLift_single_ρ U ι N d F h₀⟩
 

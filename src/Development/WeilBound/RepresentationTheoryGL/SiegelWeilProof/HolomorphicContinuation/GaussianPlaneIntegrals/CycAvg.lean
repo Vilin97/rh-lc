@@ -88,7 +88,7 @@ theorem CC.subR {K : Type*} [TopologicalSpace K] {g : K → Matrix (Fin m) (Fin 
     CC fun k => subR (g k) P := by
   induction P using MvPolynomial.induction_on
   next c => simpa [subR_C] using CC.const (K := K) (MvPolynomial.C c : PX m n)
-  next p q hp hq => simpa [map_add] using hp.add hq
+  next p q hp hq => simpa [map_add (f := _)] using hp.add hq
   next p v hp =>
     simp only [map_mul]
     refine hp.mul ?_
@@ -144,7 +144,7 @@ theorem evX_inv_act {w : Matrix (Fin m) (Fin m) ℂ} (hw : w ∈ Formalism.REAL.
   let S : Subalgebra ℂ (PX m n) :=
     { carrier := {R | ∀ x, evX R (act w x) = evX R x}
       mul_mem' := fun {a b} ha hb x => by simp only [evX_eq, map_mul] at *; rw [ha, hb]
-      add_mem' := fun {a b} ha hb x => by simp only [evX_eq, map_add] at *; rw [ha, hb]
+      add_mem' := fun {a b} ha hb x => by simp only [evX_eq, map_add (f := _)] at *; rw [ha, hb]
       algebraMap_mem' := fun c x => by simp [evX_eq, algebraMap_eq] }
   have hle : Algebra.adjoin ℂ (Set.range fun ij : Fin n × Fin n => (Qp ε ij.1 ij.2 : PX m n)) ≤ S := by
     rw [Algebra.adjoin_le_iff]

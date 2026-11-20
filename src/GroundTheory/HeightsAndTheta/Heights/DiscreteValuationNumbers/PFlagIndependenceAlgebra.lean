@@ -91,7 +91,7 @@ theorem classNum_rename_vars {σ τ : Type*} [DecidableEq σ] [DecidableEq τ] (
     classNum cls (rename φ H) Q W = classNum (cls ∘ φ) H Q W := by
   induction H using MvPolynomial.induction_on' with
   | monomial μ c => rw [rename_monomial, classNum_monomial_eq, classNum_monomial_eq, classList_mapDomain]
-  | add p q hp hq => rw [map_add, classNum_add_poly, classNum_add_poly, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), classNum_add_poly, classNum_add_poly, hp, hq]
 
 end ClassNum
 
@@ -169,7 +169,7 @@ theorem isPairExpansion_add {n m : ℕ} {A B : MvPolynomial (Fin n) ℤ}
     {As Bs : Fin n → MvPolynomial (Fin n ⊕ Fin n) ℤ} (hA : IsPairExpansion m A As)
     (hB : IsPairExpansion m B Bs) : IsPairExpansion m (A + B) (As + Bs) := by
   refine ⟨?_, fun i => (hA.homogeneous i).add (hB.homogeneous i)⟩
-  simp only [map_add, Pi.add_apply, mul_add, Finset.sum_add_distrib, ← hA.expansion,
+  simp only [map_add (f := _), Pi.add_apply, mul_add, Finset.sum_add_distrib, ← hA.expansion,
     ← hB.expansion]
   ring
 
@@ -199,7 +199,7 @@ theorem exists_expansion {n : ℕ} (A : MvPolynomial (Fin n) ℤ) :
     obtain ⟨Ps, hP⟩ := hp
     obtain ⟨Qs, hQ⟩ := hq
     refine ⟨Ps + Qs, ?_⟩
-    simp only [map_add, Pi.add_apply, mul_add, Finset.sum_add_distrib, ← hP, ← hQ]
+    simp only [map_add (f := _), Pi.add_apply, mul_add, Finset.sum_add_distrib, ← hP, ← hQ]
     ring
   | mul_X p j hp =>
     obtain ⟨Ps, hP⟩ := hp

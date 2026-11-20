@@ -47,7 +47,7 @@ theorem exists_place (j : K →+* ℂ_[q]) :
     { carrier := {x | ‖j (x : K)‖ < 1}
       add_mem' := fun {x y} hx hy => by
         show ‖j ((x : K) + (y : K))‖ < 1
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt hx hy)
       zero_mem' := by
         show ‖j (0 : K)‖ < 1

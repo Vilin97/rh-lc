@@ -164,7 +164,7 @@ theorem fibreIdeal_flag (P : Ideal (MRing ι)) [hP : P.IsPrime] (B : Matrix (Fin
       rw [aeval_C, show (C a : MRingOver (FnField P) (fibreIdx (FlagBundleBlocks ι N1 n) Sum.inl)) =
         algebraMap (FnField P) _ a from rfl, AlgHom.commutes, AlgHom.commutes]
       exact IsScalarTower.algebraMap_apply _ _ _ a
-    | add p q hp hq => rw [map_add, hp, hq, map_add, map_add, map_add]
+    | add p q hp hq => rw [map_add (f := _), hp, hq, map_add (f := _), map_add (f := _), map_add (f := _)]
     | mul_X p q hp =>
       rw [map_mul, hp, map_mul, map_mul, map_mul]
       congr 1

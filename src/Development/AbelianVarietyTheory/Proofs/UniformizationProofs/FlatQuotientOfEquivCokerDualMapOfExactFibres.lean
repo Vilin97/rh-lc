@@ -36,7 +36,7 @@ theorem dual_baseChange_eq_zero_iff (M : Type) [AddCommGroup M]
   · intro h
     refine Submodule.smul_induction_on h (fun r hr x _ => ?_) (fun x y hx hy => ?_)
     · rw [map_smul, ← algebraMap_smul B r, RingHom.mem_ker.mp hr, zero_smul]
-    · rw [map_add, hx, hy, add_zero]
+    · rw [map_add (f := _), hx, hy, add_zero]
 
 theorem dual_baseChange_dualMap {M N : Type} [AddCommGroup M] [Module A M] [AddCommGroup N]
     [Module A N] (a : M →ₗ[A] N) (f : Module.Dual A N) :

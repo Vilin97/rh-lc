@@ -185,7 +185,7 @@ lemma bounded_map (φ : (m → ℂ) →ₗ[ℂ] (m → ℂ))
     · subst h
       simp [Complex.real_smul]
     · simp [Pi.single_apply, h]
-  rw [e, map_add, map_smul, map_smul, smul_add, nsmul_intCast_smul_comm, nsmul_intCast_smul_comm]
+  rw [e, map_add (f := _), map_smul, map_smul, smul_add, nsmul_intCast_smul_comm, nsmul_intCast_smul_comm]
   exact add_mem (zsmul_mem (k1 i) _) (zsmul_mem (k2 i) _)
 
 lemma comm_of_bounded (σ : (m → ℂ) ≃ₗ[ℂ] (m → ℂ)) {N N' : ℕ} (hN : N ≠ 0) (hN' : N' ≠ 0)

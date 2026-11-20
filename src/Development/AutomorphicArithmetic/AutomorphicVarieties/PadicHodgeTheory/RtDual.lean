@@ -122,7 +122,7 @@ private theorem map_mem_finiteCocycles_adRep_of_continuous {l : ℕ} [Fact l.Pri
     adFun_map (ι : A →+* B) (r g) X
   refine ⟨⟨hc.matrix_map hι, fun g h => ?_⟩, LinearMap.rTensor (Bcr l) f x, fun g => ?_⟩
   · show f (c (g * h)) = f (c g) + adRep _ g (f (c h))
-    rw [hcc g h, map_add, hf]
+    rw [hcc g h, map_add (f := _), hf]
   · have key : ∀ y : Matrix (Fin m) (Fin m) A ⊗[ℚ_[l]] Bcr l,
         LinearMap.rTensor (Bcr l) f (actC (MonoidHom.id _) (adRep r) g y) =
         actC (MonoidHom.id _) (adRep ((GG.map (ι : A →+* B)).comp r)) g (LinearMap.rTensor (Bcr l) f y) := by
@@ -130,7 +130,7 @@ private theorem map_mem_finiteCocycles_adRep_of_continuous {l : ℕ} [Fact l.Pri
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [actC, hf]
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
     rw [← key, ← map_sub, ← hx g, LinearMap.rTensor_tmul]
     rfl
 

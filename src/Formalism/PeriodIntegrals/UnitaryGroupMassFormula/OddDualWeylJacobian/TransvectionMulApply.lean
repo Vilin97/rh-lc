@@ -105,7 +105,7 @@ theorem key (a b : Fin k) (hab : a ≠ b) (f' : MvPolynomial (Fin k × Fin k) R)
   · intro r
     simp [PI.OddDualWeyl.dualSub, PI.OddDualWeyl.rowGen]
   · intro p q hp hq
-    rw [map_add, map_add, hp, hq, map_add, Polynomial.map_add, Polynomial.add_comp]
+    rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), Polynomial.map_add (f := _), Polynomial.add_comp]
   · intro p v hp
     have hv : PI.OddDualWeyl.rowGen R a b (PI.OddDualWeyl.dualSub R k (X v)) =
         (Polynomial.map (PI.OddDualWeyl.dualSub R k : MvPolynomial (Fin k × Fin k) R →+* _)
@@ -126,7 +126,7 @@ theorem key (a b : Fin k) (hab : a ≠ b) (f' : MvPolynomial (Fin k × Fin k) R)
           PI.OddDualWeyl.dualM R k i j := e1
       rw [e4, rowGen_dualM a b hab, e3]
       split_ifs with h
-      · rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C, Polynomial.map_C, Polynomial.map_X,
+      · rw [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C, Polynomial.map_C, Polynomial.map_X,
           Polynomial.add_comp, Polynomial.mul_comp, Polynomial.C_comp, Polynomial.C_comp,
           Polynomial.X_comp, e1, e2]
         ring

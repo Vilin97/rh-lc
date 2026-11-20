@@ -47,7 +47,7 @@ theorem one_sub_halfSqrt_eq_conj (D : Formalism.BasicNotions.D7) :
   have hw : algebraMap (𝓞 D.host.E) D.host.E (w0 D) = (1 + D.host.sqrtMinusD) / 2 := rfl
   change algebraMap (𝓞 D.host.E) D.host.E (1 - w0 D) =
     D.host.conj (algebraMap (𝓞 D.host.E) D.host.E (w0 D))
-  rw [map_sub, map_one, hw, map_div₀, map_add, map_one, conj_sqrtMinusD, map_ofNat]
+  rw [map_sub, map_one, hw, map_div₀, map_add (f := _), map_one, conj_sqrtMinusD, map_ofNat]
   ring
 
 structure LocB (D : Formalism.BasicNotions.D7) {r j p : ℕ} (L : ModuliIntegralCharts.Loc D r j p) where

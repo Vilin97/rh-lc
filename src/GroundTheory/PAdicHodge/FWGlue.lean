@@ -105,7 +105,7 @@ def glueHom : Ω →ₐ[F] Ω where
       glueFun_eq Ω N hdir hcov f hf k (x + y) (add_mem (hik hi) (hjk hj))]
     have : (⟨((x + y : Ω) : E), add_mem (hik hi) (hjk hj)⟩ : N k) =
         ⟨(x : E), hik hi⟩ + ⟨(y : E), hjk hj⟩ := rfl
-    rw [this, map_add]; rfl
+    rw [this, map_add (f := _)]; rfl
   commutes' c := by
     obtain ⟨i, hi⟩ := hcov _ (algebraMap_mem Ω c)
     apply Subtype.ext

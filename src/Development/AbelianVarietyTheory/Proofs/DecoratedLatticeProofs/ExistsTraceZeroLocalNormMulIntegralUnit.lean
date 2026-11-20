@@ -29,7 +29,7 @@ theorem exists_norm_eq {R : Type} [CommRing R] (c : R →+* R) (a : R) (ha : c a
   have hN : x ^ (2 * n + 1) * c x ^ (2 * n + 1) = a ^ 2 * (k ^ 2 * (x * c x)) := by
     rw [← mul_pow, pow_succ, mul_comm 2 n, pow_mul, ← hk]; ring
   refine ⟨x ^ (2 * n + 1) + a, c x ^ (2 * n + 1) - x ^ (2 * n + 1) + a * (k ^ 2 * (x * c x) - 1), ?_, ?_⟩
-  · rw [map_add, map_pow, ha]; linear_combination hN
+  · rw [map_add (f := _), map_pow, ha]; linear_combination hN
   · rw [← Ideal.isCoprime_span_singleton_iff, Ideal.isCoprime_iff_sup_eq]
     by_contra hne
     obtain ⟨P, hPm, hle⟩ := Ideal.exists_le_maximal _ hne
@@ -43,7 +43,7 @@ theorem exists_norm_eq {R : Type} [CommRing R] (c : R →+* R) (a : R) (ha : c a
     rcases hP P hp haP with h | h
     · have : c x ∈ P := hp.mem_of_pow_mem (2 * n + 1)
         (by simpa using P.add_mem hd (P.pow_mem_of_mem (h hx) (2 * n + 1) (by omega)))
-      rw [← map_one c, ← hxy, map_add]
+      rw [← map_one c, ← hxy, map_add (f := _)]
       exact P.add_mem this (h (h2 y hy))
     · have : x ∈ P := hp.mem_of_pow_mem (2 * n + 1)
         (by simpa using P.sub_mem (P.pow_mem_of_mem (h (h1 x hx)) (2 * n + 1) (by omega)) hd)
@@ -126,7 +126,7 @@ theorem glue_mem (q : ℕ) (x y : E) (v : HeightOneSpectrum (𝓞 F))
     (h2 : (q : 𝓞 F) ∉ v.asIdeal → (1 : Fv F v) ⊗ₜ[F] y ∈ intLoc F E v) :
     compFin F E v (idemAt F q ⊗ₜ[F] x + (1 - idemAt F q) ⊗ₜ[F] y) ∈ intLoc F E v := by
   have e : ∀ (a : AF F) (z : E), compFin F E v (a ⊗ₜ[F] z) = evFin F v a ⊗ₜ[F] z := fun _ _ => rfl
-  rw [map_add, e, e, map_sub, map_one, evFin_idemAt]
+  rw [map_add (f := _), e, e, map_sub, map_one, evFin_idemAt]
   split_ifs with h
   · simpa using h1 h
   · simpa using h2 h
@@ -162,7 +162,7 @@ theorem exists_idele (σ : E →ₐ[F] E) (q : ℕ) (hq : 1 < q) (a α η : 𝓞
   refine ⟨glue q (α : E) 1 hαE one_ne_zero, glue q (η : E)⁻¹ a (inv_ne_zero hηE) haE, ?_, fun v => ?_, fun v => ?_⟩
   · have e : ∀ (b : AF F) (z : E), Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AF F) σ (b ⊗ₜ[F] z) = b ⊗ₜ[F] σ z := fun _ _ => rfl
     simp only [glue]
-    rw [map_add, e, e, glue_mul, glue_mul, map_one, mul_one, mul_one, mul_assoc, hα,
+    rw [map_add (f := _), e, e, glue_mul, glue_mul, map_one, mul_one, mul_one, mul_assoc, hα,
       show (η : E)⁻¹ * (a * η) = a by field_simp, glue_self]
   · refine glue_mem q _ _ v (fun h => inv_mem_intLoc v (q ^ k - 1) (fun h' => ?_) η d ?_)
       fun _ => tmul_mem_intLoc (one_mem _) a

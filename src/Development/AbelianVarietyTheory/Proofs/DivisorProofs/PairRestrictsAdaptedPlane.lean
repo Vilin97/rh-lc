@@ -81,7 +81,7 @@ theorem avg_conv : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field 
     have hform := dd.form (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ)) (Matrix.vecMulVec (incV F H'.x) Y)
     rw [hiso] at hform
     have hss := schrSchr B.ψ (dd.e (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ))) (dd.e (Matrix.vecMulVec (incV F H'.x) Y)) φ
-    rw [← hform, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add] at hss
+    rw [← hform, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add (f := _)] at hss
     have hb' : dd.rho B.ψ (Matrix.vecMulVec (incV F H'.x) Y) φ ∈ schA F κ := hmem _ φ hφ
     show l₁ (ed (schr B.ψ (dd.e (incM F H'.ι * (Z * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ) + Matrix.vecMulVec (incV F H'.x) Y)) φ)) = l₁ (ed φ)
     rw [← hss]

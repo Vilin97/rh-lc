@@ -27,7 +27,7 @@ theorem pLoc_prjG (T : Finset (Pl E)) (w : Pl E) (x : GL (Fin n) (FiniteAdeleRin
       if w ∈ T then GeneralLinearGroup.map (pLoc E w) x else 1 := by
   refine Units.ext (Matrix.ext fun i j => ?_)
   change pLoc E w (idem E T * x i j + (1 - idem E T) * (1 : Matrix (Fin n) (Fin n) (FiniteAdeleRing (𝓞 E) E)) i j) = _
-  rw [map_add, map_mul, map_mul, map_sub, map_one, pLoc_idem]
+  rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, pLoc_idem]
   split_ifs with hw
   · rw [one_mul, sub_self, zero_mul, add_zero]; rfl
   · rw [zero_mul, sub_zero, zero_add, one_mul, Units.val_one, Matrix.one_apply, Matrix.one_apply, apply_ite (pLoc E w),

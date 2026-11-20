@@ -179,7 +179,7 @@ theorem op_adm {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] {ψ
     obtain ⟨T₁, h₁⟩ := hx
     obtain ⟨T₂, h₂⟩ := hy
     refine ⟨T₁ + T₂, fun f => ?_⟩
-    rw [show pureA F f (x + y) = pureA F f x + pureA F f y from funext fun _ => mul_add _ _ _, map_add, h₁, h₂]
+    rw [show pureA F f (x + y) = pureA F f x + pureA F f y from funext fun _ => mul_add _ _ _, map_add (f := _), h₁, h₂]
     rfl
   | smul r x _ hx =>
     obtain ⟨T₁, h₁⟩ := hx

@@ -45,12 +45,12 @@ theorem vecQ_crd (v : Fin r → E) : vecQ X bas (crd X bas v) = v :=
 noncomputable def EFBil : (Fin r → E) →ₗ[ℚ] (Fin r → E) →ₗ[ℚ] ℚ :=
   LinearMap.mk₂ ℚ (EF X)
     (fun u u' v => by
-      simp only [EF_def, ← map_add, herm, Pi.add_apply, add_mul, Finset.sum_add_distrib, mul_add])
+      simp only [EF_def, ← map_add (f := _), herm, Pi.add_apply, add_mul, Finset.sum_add_distrib, mul_add])
     (fun q u v => by
       simp only [EF_def, ← map_smul, herm, Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum,
         mul_smul_comm])
     (fun u v v' => by
-      simp only [EF_def, herm, cc, Pi.add_apply, map_add, Finset.sum_add_distrib, mul_add])
+      simp only [EF_def, herm, cc, Pi.add_apply, map_add (f := _), Finset.sum_add_distrib, mul_add])
     (fun q u v => by
       simp only [EF_def, herm, cc, Pi.smul_apply, map_rat_smul, ← Finset.smul_sum,
         mul_smul_comm])

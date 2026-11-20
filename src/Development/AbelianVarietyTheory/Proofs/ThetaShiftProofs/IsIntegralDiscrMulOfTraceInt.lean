@@ -71,7 +71,7 @@ theorem _root_.GlobalTheory.ArcQ.pairE_properties : ∀ (E : Type) [Field E] [Nu
       ring
     rw [e, hC, integralBasis_apply, hC, mul_smul]
   · intro x y
-    simp only [hP, smul_add, map_add, Int.cast_add, mul_add, Finset.sum_add_distrib]
+    simp only [hP, smul_add, map_add (f := _), Int.cast_add, mul_add, Finset.sum_add_distrib]
   · intro x
     have := hC x 1
     simpa using this

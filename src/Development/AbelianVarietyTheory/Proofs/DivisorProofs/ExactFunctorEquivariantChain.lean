@@ -45,7 +45,7 @@ theorem isAdd_frobA (h : (p : Γ((fibI p B).subscheme, ⊤)) = 0) {M : AM B Λ} 
   haveI := Examples₂.additive_frobFun p h
   change (frobFun p h).map (M.ρ (a + b) : M.V ⟶ M.V) =
     (frobFun p h).map (M.ρ a : M.V ⟶ M.V) + (frobFun p h).map (M.ρ b : M.V ⟶ M.V)
-  rw [hM, Functor.map_add]
+  rw [hM, Functor.map_add (f := _)]
 
 theorem isFrob_of_iso (h : (p : Γ((fibI p B).subscheme, ⊤)) = 0) {F G F' : B.X.Modules} (e : F ≅ G)
     (e' : F' ≅ (frobFun p h).obj G) : IsFrob p F F' :=

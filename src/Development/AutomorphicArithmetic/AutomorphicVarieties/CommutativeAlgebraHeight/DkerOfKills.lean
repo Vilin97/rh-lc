@@ -34,7 +34,7 @@ private theorem dker_unit (T : Type) [CommRing T] [Algebra A T] (t : T) (ht : Is
 private theorem dker_cancel (S : Type) [CommRing S] [Algebra A S] (w : S ⊗[A] E) :
     Det.cancel A E S S[X] (1 + X ⊗ₜ w) = 1 + ((X : S[X]) ⊗ₜ[A] (1 : E)) *
       Algebra.TensorProduct.map (IsScalarTower.toAlgHom A S S[X]) (AlgHom.id A E) w := by
-  rw [map_add, map_one]
+  rw [map_add (f := _), map_one]
   congr 1
 
 private theorem dker_top (S : Type) [CommRing S] [Algebra A S] (w : S ⊗[A] E) :
@@ -53,7 +53,7 @@ private theorem dker_of_kills {x : E} (hx : D.Kills x) : x ∈ D.ker := by
   congr 1
   apply dker_poly_eq
   intro T _ _ f hf
-  simp only [map_add, map_mul, map_one, Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
+  simp only [map_add (f := _), map_mul, map_one, Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
   generalize Algebra.TensorProduct.map f (AlgHom.id A E) (Algebra.TensorProduct.map (IsScalarTower.toAlgHom A S S[X]) (AlgHom.id A E) y) = y'
   generalize Algebra.TensorProduct.map f (AlgHom.id A E) (Algebra.TensorProduct.map (IsScalarTower.toAlgHom A S S[X]) (AlgHom.id A E) u) = u'
   generalize Algebra.TensorProduct.map f (AlgHom.id A E) (Algebra.TensorProduct.map (IsScalarTower.toAlgHom A S S[X]) (AlgHom.id A E) v) = v'
@@ -73,7 +73,7 @@ private theorem dker_kills_of {x : E}
       D.D S[X] 1 := by
     apply dker_poly_eq
     intro T _ _ f hf
-    simp only [map_add, map_mul, map_one, Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
+    simp only [map_add (f := _), map_mul, map_one, Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
     generalize Algebra.TensorProduct.map f (AlgHom.id A E) (Algebra.TensorProduct.map (IsScalarTower.toAlgHom A S S[X]) (AlgHom.id A E) h) = h'
     obtain ⟨c, hc⟩ := dker_unit T (f X) hf h'
     have e : 1 + (c : T ⊗[A] E) * (1 ⊗ₜ x) = (c : T ⊗[A] E) * ((↑c⁻¹ : T ⊗[A] E) + 1 ⊗ₜ x) := by
@@ -85,11 +85,11 @@ private theorem dker_kills_of {x : E}
     clear key
     induction h with
     | tmul b z => simp [ev]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hX : ev X = 1 := by simp [ev]
   have k2 := congrArg ev key
   rw [← D.nat, map_one, map_one] at k2
-  simp only [map_add, map_mul, map_one, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, hev, hX] at k2
+  simp only [map_add (f := _), map_mul, map_one, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, hev, hX] at k2
   rw [← Algebra.TensorProduct.one_def, one_mul, add_mul, one_mul, add_comm (_ ⊗ₜ x), ← add_assoc, hx] at k2
   exact k2
 

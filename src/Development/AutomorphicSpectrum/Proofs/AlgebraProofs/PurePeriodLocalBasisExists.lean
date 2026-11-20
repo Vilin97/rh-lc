@@ -95,7 +95,7 @@ theorem norm_diff_lt (D : Datum H) (ℓ : Nat.Primes) (j : E →+* ℂ_[ℓ]) {r
   have e : j (sesq D (u + ((ℓ : ℕ) : 𝓞 E) • v) (u' + ((ℓ : ℕ) : 𝓞 E) • v')) - j (sesq D u u') =
       ((ℓ : ℕ) : ℂ_[ℓ]) * (j (sesq D v u') + j (sesq D u v') + ((ℓ : ℕ) : ℂ_[ℓ]) * j (sesq D v v')) := by
     rw [hl, hr', hr', hsl, hsl, hsr, hsr, hcast, map_natCast (IsCMField.complexConj E)]
-    simp only [map_add, map_mul, map_natCast]
+    simp only [map_add (f := _), map_mul, map_natCast]
     ring
   have hc := norm_prime_lt ℓ
   have hc0 : 0 ≤ ‖(((ℓ : ℕ) : ℂ_[ℓ]))‖ := norm_nonneg _

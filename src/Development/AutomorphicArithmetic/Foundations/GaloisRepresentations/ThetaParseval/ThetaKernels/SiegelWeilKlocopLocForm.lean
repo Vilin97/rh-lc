@@ -26,7 +26,7 @@ theorem _root_.PositivityTheory.SiegelWeilFormula.SD_k.T_lin (d : _root_.Positiv
       funext x
       simp only [schr, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
       ring
-  simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.T, Darboux.rho, h, map_add, map_smul, Pi.add_apply, Pi.smul_apply]
+  simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.T, Darboux.rho, h, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply]
 theorem _root_.PositivityTheory.SiegelWeilFormula.RD_k.tens_cancel {Ψ : d.MF} (hΨ : d.IsAwayW w Ψ) (h0 : Ψ ≠ 0) {g g' : d.LF}
     (h : R.tens w g Ψ = R.tens w g' Ψ) : g = g' := by
   obtain ⟨X₀, hX₀⟩ : ∃ X₀, Ψ X₀ ≠ 0 := by
@@ -72,7 +72,7 @@ theorem _root_.PositivityTheory.SiegelWeilFormula.RD_k.locOp_lin (hT : _root_.Po
   have e := (hL y (a • f + g) (isSw_lin a hf hg)).2 Ψ hΨ.1 _ hΦ hTΦ
   have ef := (hL y f hf).2 Ψ hΨ.1 Φf hΦf hTf
   have eg := (hL y g hg).2 Ψ hΨ.1 Φg hΦg hTg
-  rw [map_add, map_smul, d.T_lin, ef, eg] at e
+  rw [map_add (f := _), map_smul, d.T_lin, ef, eg] at e
   apply R.tens_cancel hΨ.1 hΨ.2.1
   rw [← e]
   funext X

@@ -103,7 +103,7 @@ theorem cmpb_det_nonneg {f : V n → ℝ} {x : V n} (hf : ContDiffAt ℝ 2 f x)
     refine Matrix.IsHermitian.ext fun j k => ?_
     show (starRingEnd ℂ) (cHess n g x k j) = cHess n g x j k
     rw [hH k j, hH j k]
-    simp only [map_div₀, map_add, map_sub, map_mul, Complex.conj_I, hc2, map_ofNat]
+    simp only [map_div₀, map_add (f := _), map_sub, map_mul, Complex.conj_I, hc2, map_ofNat]
     linear_combination (1 / 4 : ℂ) * hsym (bas n k) (bas n j) +
       (1 / 4 : ℂ) * hsym (Complex.I • bas n k) (Complex.I • bas n j) -
       (Complex.I / 4) * hsym (bas n k) (Complex.I • bas n j) +

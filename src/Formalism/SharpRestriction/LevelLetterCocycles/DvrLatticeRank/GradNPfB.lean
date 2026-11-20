@@ -83,7 +83,7 @@ theorem gradNPf_expand (π' a : LetA O n) (hπ0 : ∀ i, PowerSeries.constantCoe
     rfl
   have e3 : PowerSeries.constantCoeff (F i) = c₀ := by
     have := congrArg PowerSeries.constantCoeff e1
-    rw [hc i, map_add, map_mul, hπ0 i, zero_mul, zero_add, PowerSeries.constantCoeff_C] at this
+    rw [hc i, map_add (f := _), map_mul, hπ0 i, zero_mul, zero_add, PowerSeries.constantCoeff_C] at this
     exact this.symm
   rw [e3] at e1
   have hC : algebraMap O (PowerSeries O) c₀ = PowerSeries.C c₀ := by

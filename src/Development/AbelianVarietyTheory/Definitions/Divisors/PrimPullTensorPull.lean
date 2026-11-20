@@ -140,7 +140,7 @@ theorem primPull_tensorPull {ρ : RingAct B O} {ρ' : RingAct B' O} {u : B' ⟶ 
   | zero => simp
   | tmul c x => rw [tensorPull_tmul, tensorPull_tmul, LinearMap.comp_smul, LinearMap.smul_comp,
       primPull_opPull hu]
-  | add z z' hz hz' => rw [map_add, map_add, LinearMap.comp_add, LinearMap.add_comp, hz, hz']
+  | add z z' hz hz' => rw [map_add (f := _), map_add (f := _), LinearMap.comp_add, LinearMap.add_comp, hz, hz']
 
 def pullPart {ρ : RingAct B O} {ρ' : RingAct B' O} {K : Type} [CommRing K] [Algebra K O] (χ : K →+* C)
     (ε : C ⊗[ℤ] O) (u : B' ⟶ B) (hu : GlobalTheory.IwLevel.IsLin ρ' ρ u) : epsPart ρ χ ε →ₗ[C] epsPart ρ' χ ε :=

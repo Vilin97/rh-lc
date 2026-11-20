@@ -23,10 +23,10 @@ theorem hs_term_rec (k j : ℕ) (hj : j ≤ k) :
   rcases lt_or_ge j m with h | h
   · obtain ⟨n, hn⟩ : ∃ n, m - j = n + 1 := ⟨m - j - 1, by omega⟩
     rw [hn, Nat.add_sub_cancel]
-    simp only [Nat.cast_add, map_mul, map_add, map_pow, map_neg, map_one]
+    simp only [Nat.cast_add, map_mul, map_add (f := _), map_pow, map_neg, map_one]
     ring
   · rw [Nat.choose_eq_zero_of_lt (show m < j + 1 by omega)]
-    simp only [Nat.cast_add, map_mul, map_add, map_pow, map_neg, map_one, Nat.cast_zero, map_zero]
+    simp only [Nat.cast_add, map_mul, map_add (f := _), map_pow, map_neg, map_one, Nat.cast_zero, map_zero]
     ring
 
 theorem hs_add_two (k : ℕ) : hs (k + 2) = X 0 * hs (k + 1) - X 1 * hs k := by

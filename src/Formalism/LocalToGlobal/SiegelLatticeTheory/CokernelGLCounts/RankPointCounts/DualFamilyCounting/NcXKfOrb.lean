@@ -116,7 +116,7 @@ theorem ev_crd_oev {d : ℕ} (b : Module.Basis (Fin d) F E) :
     exact hgen o l
   | zero => simp [PI.VolStabW.PositiveNearLattice.crd]
   | add a c _ _ ha hc =>
-    simp only [PI.VolStabW.PositiveNearLattice.crd, map_add, Finsupp.add_apply] at *
+    simp only [PI.VolStabW.PositiveNearLattice.crd, map_add (f := _), Finsupp.add_apply] at *
     exact Subring.add_mem _ ha hc
   | smul c a _ ha =>
     have e : PI.VolStabW.PositiveNearLattice.crd b (Fv F v) (c • a) l =

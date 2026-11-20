@@ -64,5 +64,5 @@ theorem UpperTheory.V.Z.J.D.unitEv :
     rw [AlgHom.commutes]
     exact (isIntegral_algHom_iff c.O.val Subtype.val_injective).2 hbi
   have := hi1.add hi2
-  rw [← map_add, sub_add_cancel] at this
+  rw [← map_add (f := _), sub_add_cancel] at this
   exact (UpperTheory.V.Hi.Up.intIff _).1 this

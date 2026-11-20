@@ -71,7 +71,7 @@ theorem finite_plancherel_schrodinger_intertwiner :
     obtain ⟨y, hHd, hy, hne⟩ := hwit (rep (c - d)) (by rw [hrep]; exact sub_ne_zero.mpr hcd)
     refine ⟨y, hHd, hy, fun heq => hne ?_⟩
     have h1 := hχ y hy (rep (c - d) + rep d)
-    have hr : red (rep (c - d) + rep d) = c := by rw [map_add, hrep, hrep, sub_add_cancel]
+    have hr : red (rep (c - d) + rep d) = c := by rw [map_add (f := _), hrep, hrep, sub_add_cancel]
     rw [hr, AddSubgroup.coe_add, hB, AddChar.map_add_eq_mul, ← hχd y d, heq] at h1
     have h0 : χ y d ≠ 0 := fun h => by simpa [h] using hχnorm y hy d
     exact mul_right_cancel₀ h0 (h1.trans (one_mul _).symm)
@@ -88,7 +88,7 @@ theorem finite_plancherel_schrodinger_intertwiner :
         have he : red ⟨t + Fintype.card G • u, ht'⟩ = red ⟨t, ht⟩ := by
           have : (⟨t + Fintype.card G • u, ht'⟩ : Λc) = ⟨t, ht⟩ + Fintype.card G • ⟨u, hu⟩ :=
             Subtype.ext (by simp)
-          rw [this, map_add, map_nsmul, card_nsmul_eq_zero, add_zero]
+          rw [this, map_add (f := _), map_nsmul, card_nsmul_eq_zero, add_zero]
         rw [hind, hind, dif_pos ht, dif_pos ht', he]
       · have ht' : t + Fintype.card G • u ∉ Λc := fun h => ht (by simpa using Λc.sub_mem h hnu)
         rw [hind, hind, dif_neg ht, dif_neg ht']
@@ -114,7 +114,7 @@ theorem finite_plancherel_schrodinger_intertwiner :
     · have ht' : t + (rep c : X) ∈ Λc := Λc.add_mem ht (rep c).2
       have he : red ⟨t + rep c, ht'⟩ = red ⟨t, ht⟩ + c := by
         have : (⟨t + rep c, ht'⟩ : Λc) = ⟨t, ht⟩ + rep c := Subtype.ext (by simp)
-        rw [this, map_add, hrep]
+        rw [this, map_add (f := _), hrep]
       rw [dif_pos ht, dif_pos ht', he]
       simp
     · have ht' : t + (rep c : X) ∉ Λc := fun h => ht (by simpa using Λc.sub_mem h (rep c).2)

@@ -20,7 +20,7 @@ theorem cA_cA {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) (z : AE F E) : c
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => exact congrArg (a ⊗ₜ[F] ·) (hσ e)
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 variable (F E) in
 
@@ -34,7 +34,7 @@ def skewAt (σ : E →ₐ[F] E) (ev : AF F → R) : AddSubgroup (AE F E) where
   carrier := {c | At ev c ∧ cA σ c = -c}
   zero_mem' := ⟨fun u _ => smul_zero u, by simp⟩
   add_mem' := fun {a b} ha hb =>
-    ⟨fun u hu => by rw [smul_add, ha.1 u hu, hb.1 u hu, add_zero], by rw [map_add, ha.2, hb.2, neg_add]⟩
+    ⟨fun u hu => by rw [smul_add, ha.1 u hu, hb.1 u hu, add_zero], by rw [map_add (f := _), ha.2, hb.2, neg_add]⟩
   neg_mem' := fun {a} ha => ⟨fun u hu => by rw [smul_neg, ha.1 u hu, neg_zero], by rw [map_neg, ha.2]⟩
 
 def vecAtSmul {m : ℕ} {ev : AF F → R} (s : AE F E) : vecAt F E m ev →+ vecAt F E m ev where

@@ -174,5 +174,5 @@ theorem UpperTheory.V.Lit.KN.oneChar :
   have h6 := congrArg (fun u : (PadicAlgCl l)ˣ => (u⁻¹).val) (h4 (galEmb ℚ K Ω σ))
   rw [Ne, h2, h3]
   refine oneChar_unram hI hA Ω K l c' N e ψ' he hG' ι σ t ?_ hne
-  rw [ht, map_add, map_add, map_add, map_add, map_one, map_one]
+  rw [ht, map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), map_one, map_one]
   exact congrArg₂ (· + ·) (congrArg (· + 1) h5) h6

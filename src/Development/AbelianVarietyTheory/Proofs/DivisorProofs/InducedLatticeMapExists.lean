@@ -20,14 +20,14 @@ theorem mem_of_coprime {R A : Type} [CommRing R] [AddCommGroup A] [Module R A] {
   have h1 : (1 : R) ∈ I ⊔ J := by rw [h]; trivial
   obtain ⟨x, hx, y, hy, hxy⟩ := Submodule.mem_sup.1 h1
   have : a = x • a + y • a := by rw [← add_smul, hxy, one_smul]
-  rw [this, map_add, map_smul]
+  rw [this, map_add (f := _), map_smul]
   exact add_mem (Submodule.smul_mem_smul hx trivial) (hf _ (Submodule.smul_mem_smul hy trivial))
 
 theorem map_mem_smul_top {R A : Type} [CommRing R] [AddCommGroup A] [Module R A] {J : Ideal R}
     (f : A →ₗ[R] A) {a : A} (ha : a ∈ J • (⊤ : Submodule R A)) : f a ∈ J • (⊤ : Submodule R A) := by
   refine Submodule.smul_induction_on ha (fun r hr x _ => ?_) (fun x y hx hy => ?_)
   · rw [map_smul]; exact Submodule.smul_mem_smul hr trivial
-  · rw [map_add]; exact add_mem hx hy
+  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 theorem mem_of_range {R A B : Type} [CommRing R] [AddCommGroup A] [Module R A] [AddCommGroup B] [Module R B]
     {I J : Ideal R} {N : ℕ} (h : I * J = Ideal.span {(N : R)}) (ι : A →ₗ[R] B) (hι : Function.Injective ι)

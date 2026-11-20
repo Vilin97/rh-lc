@@ -155,12 +155,12 @@ theorem Rel.zero : ∀ (n : ℕ) (X : DblData R), Rel n X 0 0
 
 theorem Rel.add : ∀ (n : ℕ) (X : DblData R) {x₁ x₂ : X.A n} {y₁ y₂ : X.C n},
     Rel n X x₁ y₁ → Rel n X x₂ y₂ → Rel n X (x₁ + x₂) (y₁ + y₂)
-  | 0, X, _, _, _, _, h₁, h₂ => rel_zero.mpr (by rw [map_add, map_add, rel_zero.mp h₁, rel_zero.mp h₂])
+  | 0, X, _, _, _, _, h₁, h₂ => rel_zero.mpr (by rw [map_add (f := _), map_add (f := _), rel_zero.mp h₁, rel_zero.mp h₂])
   | n + 1, X, _, _, _, _, h₁, h₂ => by
       obtain ⟨z₁, e₁, r₁⟩ := rel_succ.mp h₁
       obtain ⟨z₂, e₂, r₂⟩ := rel_succ.mp h₂
-      refine rel_succ.mpr ⟨z₁ + z₂, by rw [map_add, map_add, e₁, e₂], ?_⟩
-      rw [map_add]
+      refine rel_succ.mpr ⟨z₁ + z₂, by rw [map_add (f := _), map_add (f := _), e₁, e₂], ?_⟩
+      rw [map_add (f := _)]
       exact Rel.add n X.shift r₁ r₂
 
 theorem Rel.smul : ∀ (n : ℕ) (X : DblData R) (r : R) {x : X.A n} {y : X.C n},

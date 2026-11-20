@@ -93,7 +93,7 @@ theorem neg_eq (i l : ℕ) : ixNeg a c i = ixNeg a c l ↔ i = l := by unfold ix
 include hn hneg in
 theorem raw_ee {i l : ℕ} (hi : i < c / 2) (hl : l < c / 2) :
     Examples₂.diagForm n neg (rawE (E := E) n a c i) (rawE n a c l) = 0 := by
-  simp only [rawE, map_add, LinearMap.add_apply]
+  simp only [rawE, map_add (f := _), LinearMap.add_apply]
   rw [diag_one n neg _ _ (pos_lt n a c hn hi), diag_one n neg _ _ (pos_lt n a c hn hi),
     diag_one n neg _ _ (neg_lt n a c hn hi), diag_one n neg _ _ (neg_lt n a c hn hi),
     sgn_pos n a c neg hn hneg hi, sgn_neg n a c neg hn hneg, if_neg (pos_ne_neg a c i l hi),
@@ -115,7 +115,7 @@ theorem raw_ff (lam : E) {i l : ℕ} (hi : i < c / 2) (hl : l < c / 2) :
 include hn hneg in
 theorem raw_ef (lam : E) (hlam : lam + star lam = 1) {i l : ℕ} (hi : i < c / 2) (hl : l < c / 2) :
     Examples₂.diagForm n neg (rawE (E := E) n a c i) (rawEv n a c lam l) = if i = l then 1 else 0 := by
-  simp only [rawE, rawEv, map_smul, map_sub, map_add, LinearMap.add_apply, smul_eq_mul]
+  simp only [rawE, rawEv, map_smul, map_sub, map_add (f := _), LinearMap.add_apply, smul_eq_mul]
   rw [diag_one n neg _ _ (pos_lt n a c hn hi), diag_one n neg _ _ (pos_lt n a c hn hi),
     diag_one n neg _ _ (neg_lt n a c hn hi), diag_one n neg _ _ (neg_lt n a c hn hi),
     sgn_pos n a c neg hn hneg hi, sgn_neg n a c neg hn hneg, if_neg (pos_ne_neg a c i l hi),
@@ -142,7 +142,7 @@ theorem raw_zE (hc : c % 2 = 1) (pz lam : E) {i : ℕ} (hi : i < c / 2) :
   have k2 : Examples₂.diagForm n neg (rawZ n a c pz) (sv n (ixNeg a c i) 1) = 0 := by
     rw [rawZ, diag_sv, dif_neg (fun h => h2 h.1)]
   constructor
-  · simp only [rawE, map_add, k1, k2, add_zero]
+  · simp only [rawE, map_add (f := _), k1, k2, add_zero]
   · simp only [rawEv, map_smul, map_sub, k1, k2, sub_zero, smul_zero]
 
 theorem sv_low (p : ℕ) (hp : a ≤ p) (x : E) (i : Fin n) (hi : (i : ℕ) < a) : sv n p x i = 0 := by
@@ -173,13 +173,13 @@ def hypFL (lam : E) (i : Fin R.rS) : Fin (R.rankY 0) → E :=
   lam • Pi.single (Examples₂.ixP R i) 1 + (-star lam) • Pi.single (Examples₂.ixN R i) 1
 
 theorem hypFL_ff (lam : E) (i i' : Fin R.rS) : Examples₂.f0 (E := E) R (hypFL R lam i) (hypFL R lam i') = 0 := by
-  simp only [hypFL, map_add, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, Examples₂.baseForm_positive_positive_pairing, Examples₂.baseForm_negative_negative_pairing, Examples₂.baseForm_positive_negative_zero,
+  simp only [hypFL, map_add (f := _), map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, Examples₂.baseForm_positive_positive_pairing, Examples₂.baseForm_negative_negative_pairing, Examples₂.baseForm_positive_negative_zero,
     Examples₂.baseForm_negative_positive_zero, smul_eq_mul, starRingEnd_apply, star_neg, star_star, RingHom.id_apply]
   split_ifs <;> ring
 
 theorem hypFL_ef (lam : E) (hlam : lam + star lam = 1) (i i' : Fin R.rS) :
     Examples₂.f0 (E := E) R (Examples₂.hypEv R i) (hypFL R lam i') = if i = i' then 1 else 0 := by
-  simp only [Examples₂.hypEv, hypFL, map_add, map_smul, LinearMap.add_apply, Examples₂.baseForm_positive_positive_pairing, Examples₂.baseForm_negative_negative_pairing, Examples₂.baseForm_positive_negative_zero, Examples₂.baseForm_negative_positive_zero,
+  simp only [Examples₂.hypEv, hypFL, map_add (f := _), map_smul, LinearMap.add_apply, Examples₂.baseForm_positive_positive_pairing, Examples₂.baseForm_negative_negative_pairing, Examples₂.baseForm_positive_negative_zero, Examples₂.baseForm_negative_positive_zero,
     smul_eq_mul]
   split_ifs
   · linear_combination hlam
@@ -191,16 +191,16 @@ theorem hypFL_orthX (lam : E) (i : Fin R.rS) (x : Fin (R.N 0) → E) :
   have h1 := Examples₂.baseForm_extension_orthogonal_single R x (Examples₂.ixP R i) (Nat.le_add_right _ _) 1
   have h2 := Examples₂.baseForm_extension_orthogonal_single R x (Examples₂.ixN R i) (by show R.k ≤ R.k + R.rS + 1 + (i : ℕ); omega) 1
   constructor
-  · simp only [Examples₂.hypEv, map_add, h1, h2, add_zero]
-  · simp only [hypFL, map_add, map_smul, h1, h2, smul_zero, add_zero]
+  · simp only [Examples₂.hypEv, map_add (f := _), h1, h2, add_zero]
+  · simp only [hypFL, map_add (f := _), map_smul, h1, h2, smul_zero, add_zero]
 
 theorem hypFL_orthz (pz lam : E) (i : Fin R.rS) :
     Examples₂.f0 R (Pi.single (Examples₂.ixZ R) pz) (Examples₂.hypEv R i) = 0 ∧ Examples₂.f0 R (Pi.single (Examples₂.ixZ R) pz) (hypFL R lam i) = 0 := by
   have h1 := Examples₂.baseForm_anisotropic_orthogonal_single R pz (Examples₂.ixP R i) (Examples₂.posIndex_ne_zeroIndex R i) 1
   have h2 := Examples₂.baseForm_anisotropic_orthogonal_single R pz (Examples₂.ixN R i) (Examples₂.ixN_ne_ixZ R i) 1
   constructor
-  · simp only [Examples₂.hypEv, map_add, h1, h2, add_zero]
-  · simp only [hypFL, map_add, map_smul, h1, h2, smul_zero, add_zero]
+  · simp only [Examples₂.hypEv, map_add (f := _), h1, h2, add_zero]
+  · simp only [hypFL, map_add (f := _), map_smul, h1, h2, smul_zero, add_zero]
 
 def spL (hstar : ∀ x : E, IsIntegral ℤ x → IsIntegral ℤ (star x)) (cm : CMData F E) (T : ℕ) (hT : T.Prime) (pz : E)
     (hpz : star pz * pz = (T : E))

@@ -37,7 +37,7 @@ theorem coinvariant_vanish_above_top_degree :
       have hx : (monomial m (1 : ℝ)).IsHomogeneous m.degree := isHomogeneous_monomial _ rfl
       rw [homogeneousComponent_of_mem hx, if_neg (by omega)]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | smul a x _ hx => rw [map_smul, hx, smul_zero]
   rw [map_sub, h2, sub_zero, homogeneousComponent_of_mem hP, if_pos rfl] at h1
   exact h1

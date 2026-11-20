@@ -235,7 +235,7 @@ theorem mem_gammaInt_iff (hι : ∀ a, ‖ι a‖ ≤ 1) {x : Gamma p ι} :
       rw [Algebra.TensorProduct.one_def]
       exact repr_mem_wittOverInt_of_tmul p ι hϖ hι (one_mem _) 1 j
     | add x y _ _ hx hy =>
-      intro j; rw [map_add, Finsupp.add_apply]; exact add_mem (hx j) (hy j)
+      intro j; rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hx j) (hy j)
     | neg x _ hx =>
       intro j; rw [map_neg, Finsupp.neg_apply]; exact neg_mem (hx j)
     | mul x y _ _ hx hy =>
@@ -559,7 +559,7 @@ theorem gammaRed_gammaPhi (hσ : ∀ x, residue (normInteger K) (σ x) = residue
   | tmul w o =>
     rw [gammaPhi_tmul p ι a σ hσ, gammaRed_tmul, gammaRed_tmul, wittOverFrob_coeff, hσ, map_pow, mul_pow]
   | add x y hx hy =>
-    rw [map_add, map_add, hx, hy, map_add]
+    rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
     exact (add_pow_expChar_pow _ _ p a).symm
 
 theorem gammaPhi_mem_gammaInt (hσ : ∀ x, residue (normInteger K) (σ x) = residue (normInteger K) x ^ p ^ a) {x : Gamma p ι} (hx : x ∈ gammaInt p ι) :
@@ -571,7 +571,7 @@ theorem gammaPhi_mem_gammaInt (hσ : ∀ x, residue (normInteger K) (σ x) = res
     exact tmul_mem_gammaInt p ι (wittOverFrob_mem_wittOverInt p ι a hw) _
   | zero => simp
   | one => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 

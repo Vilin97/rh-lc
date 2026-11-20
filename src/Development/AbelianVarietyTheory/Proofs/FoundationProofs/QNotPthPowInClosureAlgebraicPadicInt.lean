@@ -96,7 +96,7 @@ theorem q_not_pow : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebra
   let c : Fin n → O0 p := fun i => g * f i + (p : O0 p) * D g * f i - (p : O0 p) * g * D (f i)
 
   have hc : ∑ i, c i • a i = 0 := by
-    simp only [c, Algebra.smul_def, ← hφ, map_add, map_sub, map_mul, map_natCast]
+    simp only [c, Algebra.smul_def, ← hφ, map_add (f := _), map_sub, map_mul, map_natCast]
     have e1 : ∑ i, (φ g * φ (f i) + (p : Ω) * φ (D g) * φ (f i) - (p : Ω) * φ g * φ (D (f i))) * a i
         = (φ g + (p : Ω) * φ (D g)) * ∑ i, φ (f i) * a i - (p : Ω) * φ g * ∑ i, a i * φ (D (f i)) := by
       rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_sub_distrib]

@@ -121,8 +121,8 @@ theorem existsUnique_coeff {ε : ι → LinearMap.BilinForm ℤ X} (hε : IsSymB
   · rw [hF]
     have := bimul_ext e q (fun x y => ∏ p : Fin (Module.finrank ℤ X) × Fin (Module.finrank ℤ X),
         q (e p.1) (e p.2) ^ halfForm e p.1 p.2 x y) hadd hadd'
-      (fun a a' b => by simp only [map_add, LinearMap.add_apply, zpow_add, Finset.prod_mul_distrib])
-      (fun a b b' => by simp only [map_add, zpow_add, Finset.prod_mul_distrib])
+      (fun a a' b => by simp only [map_add (f := _), LinearMap.add_apply, zpow_add, Finset.prod_mul_distrib])
+      (fun a b b' => by simp only [map_add (f := _), zpow_add, Finset.prod_mul_distrib])
       (fun i j => by
         simp only [halfForm_basis]
         rw [Finset.prod_eq_single (min i j, max i j)]
@@ -138,8 +138,8 @@ theorem existsUnique_coeff {ε : ι → LinearMap.BilinForm ℤ X} (hε : IsSymB
       rw [div_eq_one]
       have := bimul_ext e q (fun x y => ∏ p : Fin (Module.finrank ℤ X) × Fin (Module.finrank ℤ X),
           q (e p.1) (e p.2) ^ halfForm e p.1 p.2 x y) hadd hadd'
-        (fun a a' b => by simp only [map_add, LinearMap.add_apply, zpow_add, Finset.prod_mul_distrib])
-        (fun a b b' => by simp only [map_add, zpow_add, Finset.prod_mul_distrib])
+        (fun a a' b => by simp only [map_add (f := _), LinearMap.add_apply, zpow_add, Finset.prod_mul_distrib])
+        (fun a b b' => by simp only [map_add (f := _), zpow_add, Finset.prod_mul_distrib])
         (fun i j => by
           simp only [halfForm_basis]
           rw [Finset.prod_eq_single (min i j, max i j)]

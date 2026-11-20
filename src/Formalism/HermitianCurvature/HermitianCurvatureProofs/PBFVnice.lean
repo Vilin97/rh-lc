@@ -27,7 +27,7 @@ variable {k r : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace �
 def phaseL (s : ℂ) (D : Mat k r →L[ℝ] ℂ) : Mat k r →L[ℝ] ℂ :=
   LinearMap.toContinuousLinearMap
     { toFun := fun g => s * D g - starRingEnd ℂ (s * D g)
-      map_add' := by intro g g'; simp only [map_add, mul_add]; ring
+      map_add' := by intro g g'; simp only [map_add (f := _), mul_add]; ring
       map_smul' := by
         intro c g
         simp only [map_smul, Complex.real_smul, map_mul, Complex.conj_ofReal, RingHom.id_apply]

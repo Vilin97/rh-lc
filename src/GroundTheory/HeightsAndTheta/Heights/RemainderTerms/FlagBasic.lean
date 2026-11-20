@@ -211,7 +211,7 @@ theorem derivation_restPolynomial (D : Derivation ℚ (RootRing f (r + a)) (Root
     ring
   rw [restPolynomial, Derivation.leibniz, hfib, smul_zero, zero_add, Derivation.leibniz_pow, hmu]
   simp only [smul_eq_mul, nsmul_eq_mul, Nat.add_sub_cancel]
-  simp only [map_mul, map_natCast, map_add, map_one]
+  simp only [map_mul, map_natCast, map_add (f := _), map_one]
   push_cast
   ring
 

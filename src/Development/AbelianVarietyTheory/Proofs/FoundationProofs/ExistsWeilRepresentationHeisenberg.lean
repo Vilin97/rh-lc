@@ -65,7 +65,7 @@ theorem _root_.GlobalTheory.FinWeil.isHeis_comp_rep {σ : R →+* R} {w : R} {γ
   · show W (ρ g 0) v = v
     rw [map_zero, h.zero]
   · show W (ρ g x) (W (ρ g y) v) = γ (w • x) y • W (ρ g (x + y)) v
-    rw [h.comp, map_add, ← hρ g (w • x) y, LinearMap.map_smul]
+    rw [h.comp, map_add (f := _), ← hρ g (w • x) y, LinearMap.map_smul]
 
 open Classical in
 open scoped BigOperators in

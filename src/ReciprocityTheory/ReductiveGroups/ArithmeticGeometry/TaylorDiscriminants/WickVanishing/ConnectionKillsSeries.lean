@@ -16,7 +16,7 @@ variable {k : Type} [CommRing k] {τ : Type} [Fintype τ]
 def vf (c : τ → MvPowerSeries τ k) (G : MvPowerSeries τ k) : MvPowerSeries τ k := ∑ t, c t * pderiv k t G
 
 theorem vf_add (c : τ → MvPowerSeries τ k) (f G : MvPowerSeries τ k) : vf c (f + G) = vf c f + vf c G := by
-  simp only [vf, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [vf, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem vf_sub (c : τ → MvPowerSeries τ k) (f G : MvPowerSeries τ k) : vf c (f - G) = vf c f - vf c G := by
   simp only [vf, map_sub, mul_sub, Finset.sum_sub_distrib]

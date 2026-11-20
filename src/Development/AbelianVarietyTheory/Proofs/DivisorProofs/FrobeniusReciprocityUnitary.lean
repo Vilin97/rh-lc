@@ -268,7 +268,7 @@ theorem frobenius_X0 : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpa
     { toFun := c0
       map_add' := fun x y => hL (x + y) (U0 x ∩ U0 y) (c0 x + c0 y) ⟨Filter.inter_mem (hc0 x).1 (hc0 y).1,
         fun Ψ₁ hs => by
-          rw [map_add, (hc0 x).2 Ψ₁ (fun Y hY => hs Y (fun h => hY h.1)),
+          rw [map_add (f := _), (hc0 x).2 Ψ₁ (fun Y hY => hs Y (fun h => hY h.1)),
             (hc0 y).2 Ψ₁ (fun Y hY => hs Y (fun h => hY h.2)), mul_add]⟩
       map_smul' := fun r x => hL (r • x) (U0 x) (starRingEnd ℂ r * c0 x) ⟨(hc0 x).1,
         fun Ψ₁ hs => by rw [map_smulₛₗ, (hc0 x).2 Ψ₁ hs, smul_eq_mul]; ring⟩ }

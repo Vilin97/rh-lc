@@ -15,7 +15,7 @@ theorem norm_one_tmul_eq {F E K : Type} [Field F] [Field E] [Field K] [Algebra F
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [Algebra.TensorProduct.tmul_mul_tmul]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem isUnit_of_norm_eq {F E K : Type} [Field F] [Field E] [Field K] [Algebra F E] [Algebra F K]
     [Module.Finite F E] {x : F} (hx : x ≠ 0) {y : K ⊗[F] E}

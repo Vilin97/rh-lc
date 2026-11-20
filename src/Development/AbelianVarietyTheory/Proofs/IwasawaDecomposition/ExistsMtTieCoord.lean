@@ -225,7 +225,7 @@ theorem oLatTie_of_span (μ : D.what₂.Tup) (j : ℕ) {n : ℕ} (e : (Fin n →
       obtain ⟨c, hc⟩ := h1
       obtain ⟨d, hd⟩ := h2
       refine ⟨c + d, ?_⟩
-      rw [map_add, hc, hd, ← Finset.sum_add_distrib]
+      rw [map_add (f := _), hc, hd, ← Finset.sum_add_distrib]
       simp [add_smul]
     | smul a _ _ h1 =>
       obtain ⟨c, hc⟩ := h1

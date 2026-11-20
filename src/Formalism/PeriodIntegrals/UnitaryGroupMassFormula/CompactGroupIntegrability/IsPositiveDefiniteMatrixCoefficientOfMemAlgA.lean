@@ -90,7 +90,7 @@ def Ugood : Submodule ℂ S where
   carrier := {u | ∀ w : H, IsPD (fun h : UG N => ⟪w, σ h (u : H)⟫_ℂ)}
   add_mem' := by
     intro u v hu hv w
-    simpa [map_add, inner_add_right] using (hu w).add (hv w)
+    simpa [map_add (f := _), inner_add_right] using (hu w).add (hv w)
   zero_mem' := by
     intro w
     simpa using IsPD.const (N := N) 0

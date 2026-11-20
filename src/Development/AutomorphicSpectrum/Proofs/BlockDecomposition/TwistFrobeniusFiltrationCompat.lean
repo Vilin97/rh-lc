@@ -138,7 +138,7 @@ theorem exists_phi_xi (A : PAlg l) :
   refine ⟨((l - 1).factorial : A.Acr0) * A.dxi0 l + algebraMap A.W A.Acr0 y, ?_⟩
   rw [acrisZero_map_algebraMap]
   change algebraMap A.W A.Acr0 (A.phiW A.xi) = _
-  rw [hy, map_add, map_pow, ← factorial_mul_divided_power_xi, map_mul, map_natCast, mul_add, ← mul_assoc, ← Nat.cast_mul,
+  rw [hy, map_add (f := _), map_pow, ← factorial_mul_divided_power_xi, map_mul, map_natCast, mul_add, ← mul_assoc, ← Nat.cast_mul,
     Nat.mul_factorial_pred (Fact.out : l.Prime).ne_zero]
 
 theorem factorization_factorial_le (k : ℕ) (hk : 1 ≤ k) : (k.factorial).factorization l ≤ k - 1 := by

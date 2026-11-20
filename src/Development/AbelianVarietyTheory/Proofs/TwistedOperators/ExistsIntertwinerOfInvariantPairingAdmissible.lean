@@ -175,7 +175,7 @@ theorem exists_intertwiner : ∀ (G : Type) [Group G] [TopologicalSpace G] [IsTo
   · intro a b
     apply huniq
     intro x
-    rw [map_add (B x), ← hφ₀, ← hφ₀, ← hφ₀, map_add]
+    rw [map_add (B x), ← hφ₀, ← hφ₀, ← hφ₀, map_add (f := _)]
   · intro c a
     apply huniq
     intro x

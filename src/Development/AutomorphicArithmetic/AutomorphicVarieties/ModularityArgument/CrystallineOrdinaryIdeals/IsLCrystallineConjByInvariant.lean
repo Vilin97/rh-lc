@@ -17,7 +17,7 @@ private theorem isCr_transfer {l : ℕ} [Fact l.Prime] {G A A' V V' : Type} [Gro
     intro g x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul v b => simp [F, actC, resCoef, hf]
   have hD : (Dcr φ (resCoef ℚ_[l] ρ)).map F.toLinearMap = Dcr φ (resCoef ℚ_[l] ρ') := by
     ext x

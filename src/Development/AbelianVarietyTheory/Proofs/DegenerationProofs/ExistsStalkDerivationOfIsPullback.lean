@@ -40,13 +40,13 @@ def gmDual (D : VF X) (f : P ⟶ X.left) (z : P) (V : X.left.Opens) (hz : z ∈ 
     refine Eq.trans ?_ (DualNumber.snd_mul _ _).symm
     show gm f z V hz (D.D V (a * b)) = gm f z V hz a * gm f z V hz (D.D V b) +
       gm f z V hz (D.D V a) * gm f z V hz b
-    rw [D.leibniz, map_add, map_mul, map_mul]; ring)
+    rw [D.leibniz, map_add (f := _), map_mul, map_mul]; ring)
   map_zero' := TrivSqZeroExt.ext (map_zero _) (by
     show gm f z V hz (D.D V 0) = 0
     rw [map_zero, map_zero])
   map_add' a b := TrivSqZeroExt.ext (map_add _ a b) (by
     show gm f z V hz (D.D V (a + b)) = gm f z V hz (D.D V a) + gm f z V hz (D.D V b)
-    rw [map_add, map_add])
+    rw [map_add (f := _), map_add (f := _)])
 
 theorem gmDual_res (D : VF X) (f : P ⟶ X.left) (z : P) (V V' : X.left.Opens) (h : V' ≤ V)
     (hz : z ∈ f ⁻¹ᵁ V') (u : Γ(X.left, V)) :

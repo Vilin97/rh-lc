@@ -279,7 +279,7 @@ theorem ker_eq_extId {I : AutInst} {p : ℕ} (hp : p ≠ 0) {w : HeightOneSpectr
     rw [← map_natCast (psi I.F I.E)] at e
     have hpr : r (psi I.F I.E (p : 𝓞 I.E)) = 0 := by rw [map_natCast, map_natCast, ZMod.natCast_self]
     have hb : r (psi I.F I.E b) = 0 := by
-      rw [e, map_add, _root_.map_mul, hpr, zero_mul, add_zero] at h
+      rw [e, map_add (f := _), _root_.map_mul, hpr, zero_mul, add_zero] at h
       exact h
     rw [e]
     exact add_mem (Ideal.subset_span ⟨b, (hr b).1 hb, rfl⟩)
@@ -302,7 +302,7 @@ theorem exists_matrix {R k L : Type} [CommRing R] [CommRing k] [AddCommGroup L] 
     rw [hk] at hy ⊢
     refine Submodule.smul_induction_on hy (fun a ha z _ => ?_) (fun z z' hz hz' => ?_)
     · rw [map_smul]; exact Submodule.smul_mem_smul ha Submodule.mem_top
-    · rw [map_add]; exact add_mem hz hz'
+    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hz hz'
   choose b hb using fun j : Fin N => hc (Pi.single j 1)
   choose s hs using hr
   refine ⟨Matrix.of fun i j => c (T (b j)) i, fun y => ?_⟩
@@ -451,7 +451,7 @@ theorem exists_frame (I : AutInst) (hI : ∀ y, y ∈ I.Lf ↔ ∀ i, y i ∈ In
   let c : I.Lf →ₛₗ[r] (Fin I.n → ZMod p) :=
     { toFun := fun y i => r ⟨y.1 i, (hI y.1).1 y.2 i⟩
       map_add' := fun x y => funext fun i => by
-        rw [Pi.add_apply, ← map_add]; rfl
+        rw [Pi.add_apply, ← map_add (f := _)]; rfl
       map_smul' := fun a x => funext fun i => by
         have e : (⟨(a • x).1 i, (hI _).1 (a • x).2 i⟩ : IntAf I.F I.E) =
           a * ⟨x.1 i, (hI x.1).1 x.2 i⟩ := rfl
@@ -482,7 +482,7 @@ theorem exists_frame (I : AutInst) (hI : ∀ y, y ∈ I.Lf ↔ ∀ i, y i ∈ In
     exact sum_mem fun k _ => Submodule.smul_mem_smul (congrFun h k) Submodule.mem_top
   · refine Submodule.smul_induction_on h (fun a ha x _ => ?_) (fun x y hx hy => ?_)
     · rw [map_smulₛₗ, RingHom.mem_ker.1 ha, zero_smul]
-    · rw [map_add, hx, hy, add_zero]
+    · rw [map_add (f := _), hx, hy, add_zero]
 
 theorem rank_eq_of_std {I : AutInst} (hI : ∀ y, y ∈ I.Lf ↔ ∀ i, y i ∈ IntAf I.F I.E) {N p : ℕ}
     {w : HeightOneSpectrum (𝓞 I.E)} (fr : PlFrame I N p w) : N = I.n :=

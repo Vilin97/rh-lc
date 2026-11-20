@@ -40,7 +40,7 @@ theorem thetaS_comp (s t : K) (hst : s + t = 0) :
       simp only [AlgHom.comp_apply, AlgHom.id_apply, thetaS_X_inl_zero]
     · have hC : (C s + C t : MvPolynomial (V D N) K) = 0 := by
         rw [← C_add, hst, C_0]
-      simp only [AlgHom.comp_apply, AlgHom.id_apply, thetaS_X_inl_of_ne_zero _ ha, map_add, map_mul,
+      simp only [AlgHom.comp_apply, AlgHom.id_apply, thetaS_X_inl_of_ne_zero _ ha, map_add (f := _), map_mul,
         thetaS_X_inr, thetaS_X_inl_zero, algHom_C, algebraMap_eq]
       linear_combination
         (X (Sum.inr a) * X (Sum.inl (0, j)) : MvPolynomial (V D N) K) * hC

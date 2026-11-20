@@ -158,7 +158,7 @@ theorem oneCocycle_coboundary_comma_localBasis (F : C ⥤ CommAlgCat.{0} R) (G :
     intro i j k S u hi hj hk
     refine eq_zero_of_local₃ F G H hdir (hp i S u hi) (hp j S u hj) (hp k S u hk) _
       fun t S' ψ ai aj ak ⟨w⟩ ↦ ?_
-    rw [map_add, map_sub, hc j k S (hp j S u hj) (hp k S u hk) t S' ψ w aj ak,
+    rw [map_add (f := _), map_sub, hc j k S (hp j S u hj) (hp k S u hk) t S' ψ w aj ak,
       hc i k S (hp i S u hi) (hp k S u hk) t S' ψ w ai ak,
       hc i j S (hp i S u hi) (hp j S u hj) t S' ψ w ai aj]
     simp only [map_sub]
@@ -183,7 +183,7 @@ theorem oneCocycle_coboundary_comma_localBasis (F : C ⥤ CommAlgCat.{0} R) (G :
     intro t u S ψ i j hi hj
     have key : X i t u S - X j t u S + c i j S = 0 :=
       eq_zero_of_local₃ F G H hdir ⟨ψ⟩ (hp i S _ hi) (hp j S _ hj) _ fun t' S' χ a0 ai aj ⟨w⟩ ↦ by
-        rw [map_add, map_sub, hX i t u S ⟨ψ⟩ (hp i S _ hi) t' S' χ w a0 ai,
+        rw [map_add (f := _), map_sub, hX i t u S ⟨ψ⟩ (hp i S _ hi) t' S' χ w a0 ai,
           hX j t u S ⟨ψ⟩ (hp j S _ hj) t' S' χ w a0 aj,
           hc i j S (hp i S _ hi) (hp j S _ hj) t' S' χ w ai aj]
         simp only [map_sub]
@@ -221,7 +221,7 @@ theorem oneCocycle_coboundary_comma_localBasis (F : C ⥤ CommAlgCat.{0} R) (G :
       rw [map_sub, map_sub, hX i t' (u ≫ G.map a) S ⟨χ⟩ (hp i S _ hi') t'' S' ψ w ⟨a'⟩ ai,
         hX i t u S ⟨G.map a ≫ χ⟩ (hp i S _ hi') t'' S' ψ w ⟨a ≫ a'⟩ ai, ← mp_comp,
         (Subsingleton.elim _ _ : χ ≫ ψ = G.map a' ≫ w), mp_comp, hyc t t' t'' u a a']
-      simp only [map_sub, map_add]
+      simp only [map_sub, map_add (f := _)]
       ring
   linear_combination key
 

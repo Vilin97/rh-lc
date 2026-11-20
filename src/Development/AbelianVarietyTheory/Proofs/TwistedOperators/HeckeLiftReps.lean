@@ -191,9 +191,9 @@ theorem core_reps (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E
   rw [hv (jm m) _ _ f1 f2 hjm']
   obtain ⟨b', hb'⟩ := hwmΛ m
   have hjw : ⊤ ≤ (F.ex i₂ Pm' (h (w + wm m))).left ⁻¹ᵁ Xo.univ.t.PP.L.U j := by
-    rw [map_add, eadd', hb', (eker' _).2 ⟨b', rfl⟩, _root_.mul_one]; exact hj
+    rw [map_add (f := _), eadd', hb', (eker' _).2 ⟨b', rfl⟩, _root_.mul_one]; exact hj
   have hf := hfr (w + wm m) j (jm m) hjw hjm'
-  rw [map_add] at hf
+  rw [map_add (f := _)] at hf
   rw [hf]; ring
 
 set_option maxHeartbeats 1000000 in

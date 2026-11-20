@@ -34,7 +34,7 @@ theorem rfull_eventually_sat (D : Pre E n) :
 
 theorem rfull_bcParam_map_inv (n : ℕ) (α : Fin (n / 2) → ℂˣ) :
     (GlobalTheory.LGrp.bcParam n α).map (·⁻¹) = GlobalTheory.LGrp.bcParam n α := by
-  simp only [GlobalTheory.LGrp.bcParam, Multiset.map_add, Multiset.map_map, Function.comp_def, inv_inv,
+  simp only [GlobalTheory.LGrp.bcParam, Multiset.map_add (f := _), Multiset.map_map, Function.comp_def, inv_inv,
     Multiset.map_replicate, inv_one]
   rw [add_comm (Multiset.map _ _) (Multiset.map _ _)]
 

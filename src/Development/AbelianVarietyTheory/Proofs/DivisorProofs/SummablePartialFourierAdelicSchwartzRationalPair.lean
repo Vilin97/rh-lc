@@ -78,8 +78,8 @@ def shear : ((κ → mixedSpace F) × EuclidPi F κ) ≃L[ℝ] (κ ⊕ κ → mi
       map_add' := fun p q => by
         funext i
         rcases i with i | i
-        · simp only [Prod.fst_add, Prod.snd_add, map_add, Sum.elim_inl, Pi.add_apply]; abel
-        · simp only [Prod.snd_add, map_add, Sum.elim_inr, Pi.add_apply]
+        · simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), Sum.elim_inl, Pi.add_apply]; abel
+        · simp only [Prod.snd_add, map_add (f := _), Sum.elim_inr, Pi.add_apply]
       map_smul' := fun a p => by
         funext i
         rcases i with i | i

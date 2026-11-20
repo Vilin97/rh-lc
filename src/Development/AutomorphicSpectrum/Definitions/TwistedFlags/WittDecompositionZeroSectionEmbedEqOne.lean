@@ -618,7 +618,7 @@ theorem z_norm (he : Even j) : (D.sp.Y j).hT (vecY j (F.z j)) (vecY j (F.z j)) =
 theorem embedding_line_sum_orthogonal (he : Even j) {v : (D.sp.Y j).V} (h1 : ∀ x, (D.sp.Y j).hT (D.sp.iXY j x) v = 0)
     (h2 : (D.sp.Y j).hT (vecY j (F.z j)) v = 0) (w : (V0 D j).V) : (D.sp.Y j).hT (F.embeddingLineSum j w) v = 0 := by
   change (D.sp.Y j).hT (D.sp.iXY j w.1 + lineMap true (D.sp.Y j) (vecY j (F.z j)) w.2) v = 0
-  rw [map_add, LinearMap.add_apply, h1, lineMap_apply, LinearMap.map_smulₛₗ₂, h2, smul_zero, add_zero]
+  rw [map_add (f := _), LinearMap.add_apply, h1, lineMap_apply, LinearMap.map_smulₛₗ₂, h2, smul_zero, add_zero]
 
 theorem embedding_line_sum_isometry (he : Even j) : HSpace.IsIsomEmb (V0 D j) (D.sp.Y j) (F.embeddingLineSum j) := fun a b => by
   have h1 : ∀ x c, (D.sp.Y j).hT (D.sp.iXY j x) (lineMap true (D.sp.Y j) (vecY j (F.z j)) c) = 0 := fun x c => by
@@ -626,7 +626,7 @@ theorem embedding_line_sum_isometry (he : Even j) : HSpace.IsIsomEmb (V0 D j) (D
   have h2 := lineMap_isom (neg := true) (F.z_norm hj he)
   change (D.sp.Y j).hT (D.sp.iXY j a.1 + lineMap true (D.sp.Y j) (vecY j (F.z j)) a.2)
     (D.sp.iXY j b.1 + lineMap true (D.sp.Y j) (vecY j (F.z j)) b.2) = (D.sp.X j).hT a.1 b.1 + (lineNeg D).hT a.2 b.2
-  rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, h1, hT_symm_zero _ (h1 _ _), D.sp.iXY_isom j hj, h2,
+  rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, h1, hT_symm_zero _ (h1 _ _), D.sp.iXY_isom j hj, h2,
     add_zero, zero_add]
 
 variable {r : ℕ} (hr : r = rho D j)

@@ -24,7 +24,7 @@ def permCLE (σ : Equiv.Perm (Fin g)) : (Fin g → ℂ) ≃L[ℂ] (Fin g → ℂ
 
 def pre (u : HolUnif A L g) (T : (Fin g → ℂ) ≃L[ℂ] (Fin g → ℂ)) : HolUnif A L g where
   ex z := u.ex (T z)
-  ex_add z w := by rw [map_add, u.ex_add]
+  ex_add z w := by rw [map_add (f := _), u.ex_add]
   ex_onto y := by
     obtain ⟨x, rfl⟩ := u.ex_onto y
     exact ⟨T.symm x, by simp⟩
@@ -82,7 +82,7 @@ theorem pre_isAH (u : HolUnif A L g) (T : (Fin g → ℂ) ≃L[ℂ] (Fin g → �
     exact hpos _ (fun h0 ↦ hz (T.injective (by rw [h0, map_zero])))
   · have := hfr ⟨T l, l.2⟩ i (T z) hz
     change u.fr i (T z) = _ * _ * u.fr i (T (z + l))
-    rw [this, hT, hT, map_add]
+    rw [this, hT, hT, map_add (f := _)]
 
 theorem perm_dot_diagonal (σ : Equiv.Perm (Fin g)) (d : Fin g → ℂ) (z l : Fin g → ℂ) :
     permCLE σ z ⬝ᵥ (Matrix.diagonal d).mulVec (star (permCLE σ l)) =

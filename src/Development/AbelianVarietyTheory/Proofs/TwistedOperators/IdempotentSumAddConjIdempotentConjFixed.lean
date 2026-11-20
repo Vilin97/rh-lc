@@ -21,6 +21,6 @@ theorem idemSum_add_conj_idem : ∀ {D : D7} (Z : Finset (Pl D.host.E)) (e : AE 
   · have h4 : cA D e * e = 0 := by rw [mul_comm]; exact h2
     calc (e + cA D e) * (e + cA D e) = e * e + e * cA D e + cA D e * e + cA D e * cA D e := by ring
       _ = e + cA D e := by rw [h1, h2, h4, h3]; ring
-  · rw [map_add, cA_cA, add_comm]
+  · rw [map_add (f := _), cA_cA, add_comm]
 
 end GlobalTheory.IdemConjSum

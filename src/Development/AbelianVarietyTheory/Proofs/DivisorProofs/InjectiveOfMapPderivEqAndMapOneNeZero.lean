@@ -38,7 +38,7 @@ theorem injective_of_pderiv {V : Type} [AddCommGroup V] [Module ℂ V] {ι : Typ
         · intro m hm
           rw [mem_support_iff, coeff_pderiv] at hm
           have h2 := hs _ (mem_support_iff.2 (left_ne_zero_of_mul hm))
-          rw [map_add, Finsupp.degree_single] at h2
+          rw [map_add (f := _), Finsupp.degree_single] at h2
           omega
         · rw [hd, hp, map_zero]
       apply hC p hp

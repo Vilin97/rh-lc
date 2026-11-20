@@ -296,15 +296,15 @@ theorem generic_of_semilocal {σ : B →+* B} {δ : B} (hδ : IsUnit δ) (hσδ 
     (by convert ((h2.mul h2).mul (hδ.pow 2)).mul hq using 1; ring))))).exists
   obtain ⟨r, hr⟩ := h3.exists_left_inv
   have hr' := congrArg σ hr
-  simp only [zero_mul, one_mul, zero_add, map_mul, map_add, map_neg, map_natCast, hσδ, neg_neg, map_one]
+  simp only [zero_mul, one_mul, zero_add, map_mul, map_add (f := _), map_neg, map_natCast, hσδ, neg_neg, map_one]
     at hr hr' h1 h3
   refine ⟨r * (t + δ), ?_, ?_, ?_⟩
-  · rw [map_mul, map_add, map_natCast, hσδ]
+  · rw [map_mul, map_add (f := _), map_natCast, hσδ]
     linear_combination σ r * (t + δ) * hr + hr'
-  · rw [map_mul, map_add, map_natCast, hσδ, ← h1.mul_left_iff]
+  · rw [map_mul, map_add (f := _), map_natCast, hσδ, ← h1.mul_left_iff]
     convert h4 using 1
     linear_combination (-(t - δ) * b) * hr'
-  · rw [map_mul, map_add, map_natCast, hσδ, ← h1.mul_left_iff, ← h3.mul_left_iff]
+  · rw [map_mul, map_add (f := _), map_natCast, hσδ, ← h1.mul_left_iff, ← h3.mul_left_iff]
     convert h5 using 1
     linear_combination (-(t - δ) ^ 2 * b) * hr' - (t + δ) ^ 2 * σ b * hr
 
@@ -569,7 +569,7 @@ theorem sigR_sigR {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) (R : Type) [
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigR, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem exists_split_tensor (σ : E →ₐ[F] E) {δ : E} (hδ : δ ≠ 0) (hσδ : σ δ = -δ) {κ : Type} [Fintype κ]
     (x : κ → E ⊗[F] Af F) : ∃ (B : Type) (_ : CommRing B) (σ' : B →+* B) (π : E ⊗[F] Af F →+* B)
@@ -593,7 +593,7 @@ theorem exists_split_tensor (σ : E →ₐ[F] E) {δ : E} (hδ : δ ≠ 0) (hσ�
   · induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · simp [hpe, Algebra.TensorProduct.one_def]
   · have hy' : y ∈ RingHom.ker (Algebra.TensorProduct.map (AlgHom.id F E) p) := hy
     rw [Algebra.TensorProduct.lTensor_ker _ hp] at hy'

@@ -51,7 +51,7 @@ theorem commute_cap_lieS (τ : E →+* ℂ) (u : ℂ) (i j : Fin a) (x : Cinf E)
   set_option synthInstance.maxHeartbeats 100000 in
     rw [hx, map_sum]
   refine Commute.sum_right _ _ _ fun w _ => ?_
-  rw [atEmb_eq, map_add, map_smul, map_smul, lieS_atEmb_one, lieS_atEmb_I]
+  rw [atEmb_eq, map_add (f := _), map_smul, map_smul, lieS_atEmb_one, lieS_atEmb_I]
   exact (((commute_cap_Eop τ _ u i j).add_right (commute_cap_Eop τ _ u i j)).smul_right _).add_right
     ((((commute_cap_Eop τ _ u i j).sub_right (commute_cap_Eop τ _ u i j)).smul_right _).smul_right _)
 

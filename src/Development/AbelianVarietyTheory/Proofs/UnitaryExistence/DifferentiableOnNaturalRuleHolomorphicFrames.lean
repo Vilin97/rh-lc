@@ -38,7 +38,7 @@ def holSub (B : Set V) (k : V → (A →ₐ[K] CAt σ)) : Subalgebra K A where
     simp only [Set.mem_setOf_eq, map_mul, toC_mul] at *
     exact hx.mul hy
   add_mem' := fun {x y} hx hy => by
-    simp only [Set.mem_setOf_eq, map_add, toC_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _), toC_add] at *
     exact hx.add hy
   algebraMap_mem' := fun r => by
     simp only [Set.mem_setOf_eq, AlgHom.commutes]

@@ -28,7 +28,7 @@ private theorem grSpan_mem {Λ : Type} [CommRing Λ] {σ : Type} (d : σ → ℕ
       fun n => rfl
     have hsplit : g = MvPowerSeries.X t ^ d t * h + g' := by
       ext n
-      rw [map_add, MvPowerSeries.X_pow_eq, MvPowerSeries.coeff_monomial_mul, hg', hh]
+      rw [map_add (f := _), MvPowerSeries.X_pow_eq, MvPowerSeries.coeff_monomial_mul, hg', hh]
       by_cases hn : d t ≤ n t
       · have hle : Finsupp.single t (d t) ≤ n := Finsupp.single_le_iff.2 hn
         rw [if_pos hle, if_neg (by omega), one_mul, tsub_add_cancel_of_le hle, add_zero]
@@ -121,7 +121,7 @@ theorem UpperTheory.V.AlgebraTools.mvPowerSeries_span_monomials :
   obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.1 hmem
   have hab' := hab.symm
   rw [sub_eq_iff_eq_add] at hab'
-  rw [hab', map_add, map_add, Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add]
+  rw [hab', map_add (f := _), map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add]
   refine Submodule.add_mem _ (Submodule.mem_sup_right ?_) (Submodule.mem_sup_left ?_)
   · have h1 : Ideal.Quotient.mk (Ideal.span (Set.range w)) b ∈
         ((m.map (algebraMap Λ (MvPowerSeries σ Λ))) • ⊤ :

@@ -52,7 +52,7 @@ theorem half {K : Type} [Field K] [NumberField K] (c : K →+* K) (hc : ∀ x, c
   have hj : ∀ j : ℕ, Rp K p (T ^ j * ((N : K) * N)) := fun j => by
     have := (hL _).1 (hTj j) _ hNL
     rwa [Ind.hf_smul_left, hvv] at this
-  have hcT : c T = c ε / p + ε := by rw [hT, map_add, map_div₀, map_natCast, hc]
+  have hcT : c T = c ε / p + ε := by rw [hT, map_add (f := _), map_div₀, map_natCast, hc]
   have hjj : ∀ j : ℕ, Rp K p ((T * c T) ^ j * ((N : K) ^ 4)) := fun j => by
     have h1 := hj j
     have h2 := NO.rp_c c (hj j)
@@ -112,7 +112,7 @@ theorem near_one {K : Type} [Field K] [NumberField K] (c : K →+* K) (hc : ∀ 
   rw [← hρ'] at hn
   obtain ⟨z, hz⟩ : ∃ z, z = ε * ρ' + c ε := ⟨_, rfl⟩
   have hzR : Rp K p z := by rw [hz]; exact NO.rp_add (NO.rp_mul hε hρR) (NO.rp_c c hε)
-  have hcz : c z = c ε * c ρ' + ε := by rw [hz, map_add, map_mul, hc]
+  have hcz : c z = c ε * c ρ' + ε := by rw [hz, map_add (f := _), map_mul, hc]
   have hnz : ¬ Rp K p (z * c z / p) := by
     intro h
     apply hn

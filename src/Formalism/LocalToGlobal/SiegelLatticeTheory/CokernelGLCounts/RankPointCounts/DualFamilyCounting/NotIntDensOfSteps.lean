@@ -217,7 +217,7 @@ theorem h_int_span (H : Loc.HermSp M V) {ι : Type} (g : ι → V) (hG : ∀ a b
     | mem y hy => obtain ⟨a, rfl⟩ := hy; exact hG a b
     | zero => have := h_smul_right H 0 (g b) 0; rw [zero_smul, map_zero, zero_mul] at this; rw [this]; exact M.L.O.zero_mem
     | add y y' _ _ ih ih' =>
-      rw [H.h_herm (y + y') (g b), H.h_add_left, map_add, ← H.h_herm y (g b), ← H.h_herm y' (g b)]
+      rw [H.h_herm (y + y') (g b), H.h_add_left, map_add (f := _), ← H.h_herm y (g b), ← H.h_herm y' (g b)]
       exact M.L.O.add_mem ih ih'
     | smul c y _ ih =>
       rw [Subring.smul_def, h_smul_right]

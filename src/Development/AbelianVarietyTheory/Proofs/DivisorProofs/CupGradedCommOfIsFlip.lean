@@ -39,7 +39,7 @@ theorem phi_res (w : ℤ) {N : ℕ} {V : Scheme.{0}} (g : V ⟶ U) (x : Sx E N U
     Sec.res g (phi μ a b w x c) = phi μ a b w (x.res g) c := by
   induction c using Finsupp.induction_linear with
   | zero => rw [map_zero, map_zero]; exact map_zero _
-  | add f f' hf hf' => rw [map_add, map_add, ← hf, ← hf']; exact map_add _ _ _
+  | add f f' hf hf' => rw [map_add (f := _), map_add (f := _), ← hf, ← hf']; exact map_add _ _ _
   | single z t =>
     rw [phi_single, phi_single, along_res, along_res, ← pv_res]
     simp only [Sec.res, map_zsmul]
@@ -48,7 +48,7 @@ theorem phi_along (w : ℤ) {N M : ℕ} (θ : SimplexCategory.mk N ⟶ SimplexCa
     phi μ a b w (x.along θ) c = phi μ a b w x (Pr.push θ c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp only [map_zero]
-  | add f f' hf hf' => rw [map_add, map_add, map_add, hf, hf']
+  | add f f' hf hf' => rw [map_add (f := _), map_add (f := _), map_add (f := _), hf, hf']
   | single z t =>
     rw [Pr.push, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single, phi_single, phi_single, along_along, along_along]
 
@@ -131,13 +131,13 @@ theorem phi_d (α : Cocycle ((chains R).obj E) I n) (β : Cocycle ((chains R).ob
     Sec.map (K.d w w') (phi μ α.1 β.1 w x c) = sg (n + m) • phi μ α.1 β.1 w' x (Pr.d N c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f f' hf hf' => rw [map_add, map_add, map_add, smul_add, ← hf, ← hf']; exact map_add _ _ _
+  | add f f' hf hf' => rw [map_add (f := _), map_add (f := _), map_add (f := _), smul_add, ← hf, ← hf']; exact map_add _ _ _
   | single z t =>
     obtain ⟨p, r, a', b'⟩ := z
     have e1 : Sec.map (K.d w w') (phi μ α.1 β.1 w x (Finsupp.single ⟨p, r, a', b'⟩ t)) =
         t • sg (m * p) • Sec.map (K.d w w') (pv μ α.1 β.1 w p r (x.along a') (x.along b')) := by
       rw [phi_single]; simp only [Sec.map, map_zsmul]
-    rw [e1, d_pv_cyc μ α β w w' hw, Pr.d, Finsupp.linearCombination_single, map_zsmul, map_add, map_zsmul, phi_d₁, phi_d₂]
+    rw [e1, d_pv_cyc μ α β w w' hw, Pr.d, Finsupp.linearCombination_single, map_zsmul, map_add (f := _), map_zsmul, phi_d₁, phi_d₂]
     dsimp only
     have hm2 := sg_sq m
     simp only [sg_add, sg_neg, sg_one, sg_nat]

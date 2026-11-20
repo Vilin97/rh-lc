@@ -40,8 +40,8 @@ def invT {m : ℕ} (K₁ : Subgroup G) (K₂ : Subgroup H) (τ₀ : K₁ →* GL
     Submodule ℂ (Fin m → W) where
   carrier := {F | (∀ (k : K₁) i, ∑ j, τ₀ k i j • ρ (k, 1) (F j) = F i) ∧ ∀ k ∈ K₂, ∀ i, ρ (1, k) (F i) = F i}
   add_mem' {F F'} h h' := ⟨fun k i => by
-    simp only [Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib, h.1 k i, h'.1 k i], fun k hk i => by
-    simp only [Pi.add_apply, map_add, h.2 k hk i, h'.2 k hk i]⟩
+    simp only [Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib, h.1 k i, h'.1 k i], fun k hk i => by
+    simp only [Pi.add_apply, map_add (f := _), h.2 k hk i, h'.2 k hk i]⟩
   zero_mem' := ⟨fun k i => by simp, fun k _ i => by simp⟩
   smul_mem' a F h := ⟨fun k i => by
     simp only [Pi.smul_apply, map_smul]

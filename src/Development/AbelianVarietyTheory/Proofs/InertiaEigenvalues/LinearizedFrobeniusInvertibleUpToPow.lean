@@ -49,14 +49,14 @@ theorem semiBC_cancel {C P : Type} [CommRing C] [AddCommGroup P] [Module C P] {�
   intro Q _ _ m
   obtain ⟨W, hW, hU⟩ := hw Q
     { toFun := fun x => m (u x)
-      map_add' := fun x y => by rw [map_add, map_add]
+      map_add' := fun x y => by rw [map_add (f := _), map_add (f := _)]
       map_smul' := fun a x => by rw [u.map_smulₛₗ, m.map_smulₛₗ, hρ] }
   refine ⟨W, fun y => ?_, fun W' hW' => hU W' fun x => by rw [← hκ]; exact hW' (u x)⟩
   refine induction_bc h (fun y => W (κ y) = m y) (fun x => ?_) (fun y z hy hz => ?_) (fun b y hy => ?_) y
   · show W (κ (u x)) = m (u x)
     rw [hκ]; exact hW x
   · show W (κ (y + z)) = m (y + z)
-    rw [map_add, map_add, map_add, hy, hz]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hy, hz]
   · show W (κ (b • y)) = m (b • y)
     rw [κ.map_smulₛₗ, W.map_smul, m.map_smulₛₗ, hy]
 
@@ -95,7 +95,7 @@ theorem semiBC_frob {Q : Type} [CommRing Q] {d : ℕ} {α β : B →+* Q} (σ : 
       { toFun := fun z => (W' (fun i => σ (z i)) : Tw σ Q')
         map_add' := fun z z' => by
           show W' (fun i => σ ((z + z') i)) = W' (fun i => σ (z i)) + W' (fun i => σ (z' i))
-          rw [← map_add]; congr 1; funext i; simp
+          rw [← map_add (f := _)]; congr 1; funext i; simp
         map_smul' := fun c z => by
           show W' (fun i => σ ((c • z) i)) = σ c • W' (fun i => σ (z i))
           rw [← map_smul]; congr 1; funext i; simp }

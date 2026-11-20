@@ -45,7 +45,7 @@ theorem exists_max_det {n : ℕ} (E : Submodule (𝓞 L) (Fin n → 𝓞 L)) (hD
         exact hcon v hv
       | zero => simpa using hapos
       | add x y _ _ hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt hx hy)
       | smul r x _ hx =>
         rw [smul_eq_mul, map_mul, norm_mul]

@@ -85,7 +85,7 @@ theorem src_abs (hI : Interp) (hCP : CoefProd) (F : B → MvPolynomial (Fin n ×
     { carrier := {G | Φ G ∈ M}
       add_mem' := fun {a b} ha hb => by
         show Φ (a + b) ∈ M
-        rw [map_add]; exact M.add_mem ha hb
+        rw [map_add (f := _)]; exact M.add_mem ha hb
       zero_mem' := by show Φ 0 ∈ M; rw [map_zero]; exact M.zero_mem
       smul_mem' := fun o G hG => by
         show Φ (o • G) ∈ M

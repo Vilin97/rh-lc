@@ -222,7 +222,7 @@ theorem birational_of_closure {Ω : Type} [Field Ω] {n : ℕ} (yf : Fin n → �
     obtain ⟨d', g', h', hg', hh', h0', he'⟩ := hy
     refine ⟨d + d', g * h' + h * g', h * h', homog_add (isMultiHomog_mul' hg hh') (isMultiHomog_mul' hh hg'),
       isMultiHomog_mul' hh hh', by rw [map_mul]; exact mul_ne_zero h0 h0', ?_⟩
-    simp only [map_add, map_mul, he, he']
+    simp only [map_add (f := _), map_mul, he, he']
     ring
   | neg x _ hx =>
     obtain ⟨d, g, h, hg, hh, h0, he⟩ := hx

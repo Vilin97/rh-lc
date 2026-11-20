@@ -122,7 +122,7 @@ theorem rk_multV_nonneg (T : LocLat G Qp LL O) (τ : K →ₐ[Qp] LL) [FiniteDim
     | zero => simp
     | tmul v f => exact LinearMap.mem_range.mpr ⟨v ⊗ₜ ⟨(f : BdR), PD.Fil_anti a f.2⟩, by simp⟩
     | add y z hy hz =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hy hz
   have h0 : FildR PD T.ρ τ a ≤ DdRE PD T.ρ τ := by
     unfold Formalism.WeaklyAdmissibleFiltrations.FildR

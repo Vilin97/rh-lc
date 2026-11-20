@@ -65,7 +65,7 @@ theorem restrict_idealPow_lift : ∀ {A : Type} [CommRing A] [IsNoetherianRing A
         exact Submodule.smul_mem_smul (hJ a ha) Submodule.mem_top
       · intro y z hy hz
         show _ ∈ _
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hy hz
     obtain ⟨y, hy⟩ := (Set.ext_iff.1 (range_idealPowι_app
       (Ideal.map (toFunctions (A := A) V) I) (G.restrict (φ ⁻¹ᵁ V).ι) hU m) _).2 (h2 _ h1)

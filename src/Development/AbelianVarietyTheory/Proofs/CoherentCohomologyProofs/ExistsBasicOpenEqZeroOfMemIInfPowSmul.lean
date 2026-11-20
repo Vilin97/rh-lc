@@ -161,7 +161,7 @@ theorem associatedPrimes_tensor_residueField (p : Ideal A) [hp : p.IsPrime] :
       obtain ⟨r, hr, x', hx'⟩ := hx
       obtain ⟨s, hs, y', hy'⟩ := hy
       refine ⟨r * s, p.primeCompl.mul_mem hr hs, s • x' + r • y', ?_⟩
-      rw [map_add, LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower, hx', hy', smul_add,
+      rw [map_add (f := _), LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower, hx', hy', smul_add,
         smul_smul, smul_smul, mul_comm s r]
   have hreg : ∀ r ∉ p, ∀ x : M ⊗[A] p.ResidueField, r • x = 0 → x = 0 := fun r hr x hx ↦ by
     have h1 : Function.Injective (r • LinearMap.id : p.ResidueField →ₗ[A] p.ResidueField) := by

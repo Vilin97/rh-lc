@@ -33,7 +33,7 @@ theorem gd_zero (v : HeightOneSpectrum (𝓞 F)) : Gd v (0 : AF F) :=
   ⟨fun u _ => smul_zero u, by rw [map_zero]; exact zero_mem _⟩
 
 theorem gd_add {v : HeightOneSpectrum (𝓞 F)} {x y : AF F} (hx : Gd v x) (hy : Gd v y) : Gd v (x + y) :=
-  ⟨fun u hu => by rw [smul_add, hx.1 u hu, hy.1 u hu, add_zero], by rw [map_add]; exact add_mem hx.2 hy.2⟩
+  ⟨fun u hu => by rw [smul_add, hx.1 u hu, hy.1 u hu, add_zero], by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx.2 hy.2⟩
 
 theorem gd_neg {v : HeightOneSpectrum (𝓞 F)} {x : AF F} (hx : Gd v x) : Gd v (-x) :=
   ⟨fun u hu => by rw [smul_neg, hx.1 u hu, neg_zero], by rw [map_neg]; exact neg_mem hx.2⟩
@@ -50,11 +50,11 @@ def bil (σ : E →ₐ[F] E) {n d : ℕ} (ξ : E) (JX : Matrix (Fin n) (Fin n) E
   LinearMap.mk₂ (AF F) (symp (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) (inclR (F := F) (AF F) ξ)
       (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F JX) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F JY))
     (fun x x' y => by
-      simp only [symp, hTens, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add])
+      simp only [symp, hTens, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add (f := _)])
     (fun a x y => by
       simp only [symp, hTens, Matrix.smul_apply, smul_mul_assoc, ← Finset.smul_sum, mul_smul_comm, map_smul])
     (fun x y y' => by
-      simp only [symp, hTens, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add])
+      simp only [symp, hTens, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add (f := _)])
     (fun a x y => by
       simp only [symp, hTens, Matrix.smul_apply, smul_mul_assoc, ← Finset.smul_sum, mul_smul_comm, map_smul])
 
@@ -111,7 +111,7 @@ theorem coords_symp_integral : ∀ {F E : Type} [Field F] [NumberField F] [Field
       exact ⟨gd_zero v, gd_zero v⟩
     | add x y _ _ hx hy =>
       intro k
-      simp only [map_add, Prod.fst_add, Prod.snd_add, Pi.add_apply]
+      simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, Pi.add_apply]
       exact ⟨gd_add (hx k).1 (hy k).1, gd_add (hx k).2 (hy k).2⟩
     | neg x _ hx =>
       intro k
@@ -134,10 +134,10 @@ theorem coords_symp_integral : ∀ {F E : Type} [Field F] [NumberField F] [Field
       induction hy using AddSubgroup.closure_induction with
       | mem y hy => exact hgen x hx y hy
       | zero => rw [map_zero]; exact gd_zero v
-      | add y y' _ _ h h' => rw [map_add]; exact gd_add h h'
+      | add y y' _ _ h h' => rw [map_add (f := _)]; exact gd_add h h'
       | neg y _ h => rw [map_neg]; exact gd_neg h
     | zero => intro y _; rw [map_zero, LinearMap.zero_apply]; exact gd_zero v
-    | add x x' _ _ h h' => intro y hy; rw [map_add, LinearMap.add_apply]; exact gd_add (h y hy) (h' y hy)
+    | add x x' _ _ h h' => intro y hy; rw [map_add (f := _), LinearMap.add_apply]; exact gd_add (h y hy) (h' y hy)
     | neg x _ h => intro y hy; rw [map_neg, LinearMap.neg_apply]; exact gd_neg (h y hy)
   have hp := hpair γ hγ γ hγ
   exact ⟨fun k => ⟨(hcoord γ hγ k).1.1, (hcoord γ hγ k).1.2, (hcoord γ hγ k).2.1, (hcoord γ hγ k).2.2⟩, hp.1, hp.2⟩

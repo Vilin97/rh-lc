@@ -53,7 +53,7 @@ theorem riesz [FiniteDimensional E V] (h : V →ₗ⋆[E] V →ₗ[E] E) (hs : h
     | add x y hx hy ihx ihy =>
       intro huL
       have e2 : (⟨x + y, huL⟩ : Λ) = ⟨x, hspL hx⟩ + ⟨y, hspL hy⟩ := rfl
-      rw [e2, map_add, map_add, ihx (hspL hx), ihy (hspL hy)]
+      rw [e2, map_add (f := _), map_add (f := _), ihx (hspL hx), ihy (hspL hy)]
     | smul r x hx ih =>
       intro huL
       have e2 : (⟨r • x, huL⟩ : Λ) = r • ⟨x, hspL hx⟩ := rfl

@@ -160,11 +160,11 @@ theorem nondeg_of_PD (h : V →ₗ⋆[K] V →ₗ[K] K) (hp : PD h) : h.Nondegen
 
 def ext (h : V →ₗ⋆[K] V →ₗ[K] K) (β : K) : (V × K) →ₗ⋆[K] (V × K) →ₗ[K] K :=
   LinearMap.mk₂'ₛₗ (starRingEnd K) (RingHom.id K) (fun x y => h x.1 y.1 + β * (star x.2 * y.2))
-    (fun x x' y => by simp only [Prod.fst_add, Prod.snd_add, map_add, LinearMap.add_apply, star_add]; ring)
+    (fun x x' y => by simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), LinearMap.add_apply, star_add]; ring)
     (fun c x y => by
       simp only [Prod.smul_fst, Prod.smul_snd, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, star_mul',
         starRingEnd_apply]; ring)
-    (fun x y y' => by simp only [Prod.fst_add, Prod.snd_add, map_add]; ring)
+    (fun x y y' => by simp only [Prod.fst_add, Prod.snd_add, map_add (f := _)]; ring)
     (fun c x y => by
       simp only [Prod.smul_fst, Prod.smul_snd, map_smul, smul_eq_mul, RingHom.id_apply]; ring)
 
@@ -185,7 +185,7 @@ theorem ext_PD (hK : IsCMUnram K) {h : V →ₗ⋆[K] V →ₗ[K] K} (hp : PD h)
   intro τ x hx
   have e : (τ (β * (star x.2 * x.2))).re = (τ β).re * Complex.normSq (τ x.2) := by
     rw [map_mul, map_mul, hK.2.1, ← Complex.normSq_eq_conj_mul_self, Complex.re_mul_ofReal]
-  rw [ext_apply, map_add, Complex.add_re, e]
+  rw [ext_apply, map_add (f := _), Complex.add_re, e]
   have n1 := Complex.normSq_nonneg (τ x.2)
   have b := hβ τ
   by_cases h1 : x.1 = 0
@@ -234,7 +234,7 @@ theorem exists_intLat [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower
   · intro x hx y hy
     induction hx using Submodule.span_induction with
     | zero => simp
-    | add x x' _ _ h1 h2 => rw [map_add, LinearMap.add_apply]; exact Submodule.add_mem _ h1 h2
+    | add x x' _ _ h1 h2 => rw [map_add (f := _), LinearMap.add_apply]; exact Submodule.add_mem _ h1 h2
     | smul a x _ h1 =>
       obtain ⟨t, ht⟩ := LocWitt.star_int a
       rw [← algebraMap_smul K a x, map_smulₛₗ, LinearMap.smul_apply, starRingEnd_apply, ← ht,
@@ -244,7 +244,7 @@ theorem exists_intLat [FiniteDimensional K V] [Module (𝓞 K) V] [IsScalarTower
       obtain ⟨i, rfl⟩ := hx
       induction hy using Submodule.span_induction with
       | zero => simp
-      | add y y' _ _ h1 h2 => rw [map_add]; exact Submodule.add_mem _ h1 h2
+      | add y y' _ _ h1 h2 => rw [map_add (f := _)]; exact Submodule.add_mem _ h1 h2
       | smul a y _ h1 =>
         rw [← algebraMap_smul K a y, map_smul, algebraMap_smul]
         exact Submodule.smul_mem _ _ h1

@@ -15,7 +15,7 @@ theorem map_unip {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (x : Blo
   apply Units.ext
   ext i j
   change f ((1 + nilM x : Matrix (Fin a) (Fin a) R) i j) = (1 + nilM fun p => f (x p) : Matrix (Fin a) (Fin a) S) i j
-  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add]
+  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add (f := _)]
   split_ifs <;> simp
 
 theorem continuous_nilM {R : Type} [CommRing R] [TopologicalSpace R] :

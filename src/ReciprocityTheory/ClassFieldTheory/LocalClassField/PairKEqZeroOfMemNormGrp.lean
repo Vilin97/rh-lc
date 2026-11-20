@@ -25,11 +25,11 @@ theorem IsRecip.of_le {L' : IntermediateField ℚ_[p] (PadicAlgCl p)} (h : L ≤
 
 theorem IsRecip.mul {a b : Kˣ} {g g' : GK p K} (h : IsRecip p K L a g) (h' : IsRecip p K L b g') :
     IsRecip p K L (a * b) (g * g') := fun χ hχ => by
-  rw [pairK_mul, ← h χ hχ, ← h' χ hχ, ofMul_mul, map_add]
+  rw [pairK_mul, ← h χ hχ, ← h' χ hχ, ofMul_mul, map_add (f := _)]
 
 theorem IsRecip.congr {a : Kˣ} {g g' : GK p K} (h : IsRecip p K L a g) (hg : g⁻¹ * g' ∈ subG p K L) :
     IsRecip p K L a g' := fun χ hχ => by
-  rw [← h χ hχ, show g' = g * (g⁻¹ * g') by group, ofMul_mul, map_add, hχ _ hg, add_zero]
+  rw [← h χ hχ, show g' = g * (g⁻¹ * g') by group, ofMul_mul, map_add (f := _), hχ _ hg, add_zero]
 
 theorem exists_quot_data (hL : IsAbLK p K L) : ∃ (A : Type) (_ : AddCommGroup A) (_ : Finite A) (π : Additive (GK p K) →+ A),
     Surjective π ∧ (IsLocallyConstant fun g : GK p K => π (Additive.ofMul g)) ∧ Nat.card A = degLK p K L ∧
@@ -69,7 +69,7 @@ theorem IsRecip.unique (hL : IsAbLK p K L) {a : Kˣ} {g g' : GK p K} (h : IsReci
   by_contra hn
   obtain ⟨χ, hχ, hne⟩ := exists_char_ne_zero hL _ hn
   apply hne
-  rw [ofMul_mul, map_add, ofMul_inv, map_neg, h χ hχ, h' χ hχ, neg_add_cancel]
+  rw [ofMul_mul, map_add (f := _), ofMul_inv, map_neg, h χ hχ, h' χ hχ, neg_add_cancel]
 
 theorem exists_isRecip (hL : IsAbLK p K L) (a : Kˣ) : ∃ g : GK p K, IsRecip p K L a g :=
   exists_eval hL

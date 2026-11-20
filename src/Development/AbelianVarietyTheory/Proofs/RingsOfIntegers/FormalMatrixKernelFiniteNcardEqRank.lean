@@ -65,7 +65,7 @@ theorem algHom_ext_of_mem_maximalIdeal {V σ A : Type} [CommRing V] [IsLocalRing
     intro P
     induction P using MvPolynomial.induction_on with
     | C c => rw [MvPolynomial.coe_C, hCa, AlgHom.commutes, AlgHom.commutes]
-    | add p q hp hq => rw [MvPolynomial.coe_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [MvPolynomial.coe_add, map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p j hp => rw [MvPolynomial.coe_mul, MvPolynomial.coe_X, map_mul, map_mul, hp, h, h']
   ext g
   obtain ⟨P, -, hP⟩ := hP g

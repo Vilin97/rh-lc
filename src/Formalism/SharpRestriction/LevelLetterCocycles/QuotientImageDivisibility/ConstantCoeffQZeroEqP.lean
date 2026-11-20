@@ -34,7 +34,7 @@ theorem cc_lev_pi (c : ZMod n) (ζ : LL) (hζ : ∃ j : ℕ, IsPrimitiveRoot ζ 
     PowerSeries.constantCoeff (W.lev c ζ letπ) = ζ - 1 := by
   obtain ⟨E, hE0, -, hE⟩ := W.lev_π c ζ hζ
   have := congrArg PowerSeries.constantCoeff hE
-  rw [map_add, map_one, map_mul, PowerSeries.constantCoeff_C, hE0, mul_one] at this
+  rw [map_add (f := _), map_one, map_mul, PowerSeries.constantCoeff_C, hE0, mul_one] at this
   linear_combination this
 
 theorem constantCoeff_q_zero_eq_p : PowerSeries.constantCoeff W.q₀ = (PD.p : O) := by
@@ -53,7 +53,7 @@ theorem cc_lev_q_one (c : ZMod n) : PowerSeries.constantCoeff (W.lev c 1 W.q) = 
     simp only [LocWach.q, Pi.add_apply, Pi.mul_apply, letπ, Pi.natCast_apply]
     conv_lhs => rw [PowerSeries.eq_shift_mul_X_add_const W.q₀]
     rw [constantCoeff_q_zero_eq_p, map_natCast]
-  rw [hq, map_add, map_mul, map_natCast, map_add, map_mul,
+  rw [hq, map_add (f := _), map_mul, map_natCast, map_add (f := _), map_mul,
     cc_lev_pi W c 1 ⟨0, by rw [pow_zero]; exact IsPrimitiveRoot.one⟩, sub_self, mul_zero, zero_add,
     map_natCast]
 
@@ -81,7 +81,7 @@ theorem lev_q_eq (c : ZMod n) {ζ : LL} (hζ : IsPrimitiveRoot ζ PD.p) (hp : (P
   have hζ' : ∃ j : ℕ, IsPrimitiveRoot ζ (PD.p ^ j) := ⟨1, by rwa [pow_one]⟩
   obtain ⟨E, hE0, hE', hE⟩ := W.lev_π c ζ hζ'
   have h := congrArg (W.lev c ζ) (q_mul W)
-  rw [map_mul, map_sub, map_pow, map_add, map_one, hE, mul_pow, ← map_pow,
+  rw [map_mul, map_sub, map_pow, map_add (f := _), map_one, hE, mul_pow, ← map_pow,
     hζ.pow_eq_one, map_one, one_mul] at h
   have hπ := cc_lev_pi W c ζ hζ'
   have hζ1 : ζ - 1 ≠ 0 := sub_ne_zero.2 (hζ.ne_one PD.hp.one_lt)

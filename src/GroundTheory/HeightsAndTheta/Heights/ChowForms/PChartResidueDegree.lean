@@ -319,7 +319,7 @@ theorem ChartResidueDegree.proof (h₁ : ChowFormBirational.Statement) (h₂ : C
       obtain ⟨o₁, e₁⟩ := ih₁
       obtain ⟨o₂, e₂⟩ := ih₂
       refine ⟨o₁ + o₂, ?_⟩
-      simpa only [map_add] using congrArg₂ (· + ·) e₁ e₂
+      simpa only [map_add (f := _)] using congrArg₂ (· + ·) e₁ e₂
     | mul_X P v ih =>
       obtain ⟨o₁, e₁⟩ := ih
       cases v with

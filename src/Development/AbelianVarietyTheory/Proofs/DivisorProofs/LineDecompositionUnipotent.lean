@@ -37,7 +37,7 @@ theorem sigma_sigma (h : IsCMExt F E σ) (a : E) : σ (σ a) = a := by
 theorem cA_cA (h : IsCMExt F E σ) (z : AE F E) : cA σ (cA σ z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e => simp [cA, sigma_sigma h]
 
 theorem inclR_sigma (a : E) : inclR (F := F) (AF F) (σ a) = cA σ (inclR (F := F) (AF F) a) := by
@@ -321,7 +321,7 @@ theorem sumPl_act {ι : Type} [Fintype ι] [DecidableEq ι] {V : Type} [AddCommG
   rw [← sumPl_add₃]
   congr 1
   funext w
-  rw [h w, map_add, map_add, Matrix.trace_add, Matrix.trace_add, mul_add, mul_add, add_smul, add_smul]
+  rw [h w, map_add (f := _), map_add (f := _), Matrix.trace_add, Matrix.trace_add, mul_add, mul_add, add_smul, add_smul]
   abel
 
 theorem line_decomposition : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E)

@@ -63,7 +63,7 @@ private theorem app_abs {M : Type} [AddCommGroup M] [Module ℂ M] (S : Set (Upp
       intro a b ha hb V hV
       have e : B ^ (a + b).degree * zm ev (a + b) * V = B ^ a.degree * zm ev a * (B ^ b.degree * zm ev b * V) := by
         have hc : Commute (B ^ b.degree) (zm ev a) := (hB _).pow_left _
-        rw [map_add, pow_add, zm_add, mul_assoc (B ^ a.degree), ← mul_assoc (B ^ b.degree), hc.eq]
+        rw [map_add (f := _), pow_add, zm_add, mul_assoc (B ^ a.degree), ← mul_assoc (B ^ b.degree), hc.eq]
         simp only [mul_assoc]
       have e2 : (monomial (a + b) 1 : MvPolynomial (Ix K n) ℂ) = monomial a 1 * monomial b 1 := by rw [monomial_mul, one_mul]
       rw [e, ha _ (fx b V hV), hb V hV, e2, map_mul, Module.End.mul_apply]
@@ -198,7 +198,7 @@ private theorem pc_comm (hn : 0 < n) (𝔞 : Amp μ) (ev : PR K n →+* (LL μ �
     intro p
     induction p using MvPolynomial.induction_on with
     | C a => rw [hev.const, he0.const]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p i hp =>
       simp only [map_mul, hp]
       rcases i with _ | x
@@ -213,7 +213,7 @@ private theorem pc_comm (hn : 0 < n) (𝔞 : Amp μ) (ev : PR K n →+* (LL μ �
     rw [hev.hecke w hy, ← he0.hecke w hy]
     exact h0 _
   | algebraMap r => rw [algebraMap_eq, hC]; exact h0 _
-  | add x y _ _ hx hy => rw [map_add]; exact hx.add_right hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact hx.add_right hy
   | mul x y _ _ hx hy => rw [map_mul]; exact hx.mul_right hy
 
 theorem killCore (hn : 0 < n) (𝔞 : Amp μ) (η : ℝ) (hη : 0 < η) :

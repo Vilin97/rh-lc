@@ -417,7 +417,7 @@ theorem compAt_cast {F₁ : Subfield L} (h : F₁ = maximalRealSubfield L) (s : 
   subst h
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
   | tmul x a =>
     have e : s.proj (x ⊗ₜ[maximalRealSubfield L] a) = s.i x * a s.v := by
       simp only [SplitPlace.proj, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Algebra.TensorProduct.lift_tmul]
@@ -441,7 +441,7 @@ theorem triv_cast {F₁ : Subfield L} (h : F₁ = maximalRealSubfield L) (s : Sp
       ((tensCastR rfl).symm y) = c (compAt L u y) := fun y => by
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul x a => rfl
   have e' : (x.1.1.map (tensCastR rfl).symm).map (Algebra.TensorProduct.map
       (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV (maximalRealSubfield L) u) (AlgHom.id _ L)) = (x.1.1.map (compAt L u)).map c :=

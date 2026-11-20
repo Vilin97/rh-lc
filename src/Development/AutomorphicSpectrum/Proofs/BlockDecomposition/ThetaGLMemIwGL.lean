@@ -46,7 +46,7 @@ theorem theta_expand (c : F →+* F) (p : GL (Fin n) F) (T : Matrix (Fin n) (Fin
       _ = 1 - T * (1 - T * P') := by rw [← h2]; exact h2
       _ = 1 - T + T * T * P' := by noncomm_ring
   have hent : P' l.rev i.rev = (1 - T + T * T * P') l.rev i.rev := congrFun (congrFun h3 _) _
-  rw [GlobalTheory.ThetaPull.thetaGL_apply, ← hP', hent, Matrix.add_apply, Matrix.sub_apply, map_add, map_sub,
+  rw [GlobalTheory.ThetaPull.thetaGL_apply, ← hP', hent, Matrix.add_apply, Matrix.sub_apply, map_add (f := _), map_sub,
     mul_add, mul_sub]
   congr 2
   · by_cases h : i = l

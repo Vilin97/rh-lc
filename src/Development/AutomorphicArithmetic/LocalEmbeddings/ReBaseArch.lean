@@ -26,7 +26,7 @@ def prU (c : A →ₐ[R] A) (J : Matrix ι ι A) (e : R) (he : e * e = e) : UG c
     show (e • g.1.1 + (1 - e) • 1)ᵀ * J * (e • g.1.1 + (1 - e) • (1 : Matrix ι ι A)).map c = J
     have hm : (e • g.1.1 + (1 - e) • (1 : Matrix ι ι A)).map c = e • g.1.1.map c + (1 - e) • 1 := by
       ext i j
-      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add, map_smul, Matrix.one_apply]
+      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _), map_smul, Matrix.one_apply]
       split_ifs <;> simp
     rw [hm]
     simp only [Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_one, Matrix.add_mul, Matrix.mul_add,
@@ -51,7 +51,7 @@ theorem smul_det_prM (e : R) (he : e * e = e) (M : Matrix ι ι A) {u : R} (hu :
   have h1 : (Ideal.Quotient.mk I).mapMatrix (prM e he ι M) = 1 := by
     ext i j
     simp only [prM_apply, RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply]
-    simp only [map_add, Algebra.smul_def, map_mul, map_sub, h0, map_one, Matrix.one_apply]
+    simp only [map_add (f := _), Algebra.smul_def, map_mul, map_sub, h0, map_one, Matrix.one_apply]
     split_ifs <;> simp
   have h2 : (prM e he ι M).det - 1 ∈ I := by
     rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, RingHom.map_det, h1, Matrix.det_one, map_one, sub_self]

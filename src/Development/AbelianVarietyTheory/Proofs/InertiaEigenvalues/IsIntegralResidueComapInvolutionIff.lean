@@ -30,7 +30,7 @@ noncomputable def conjO (K : UQ) : K.O →+* K.O where
     rw [← Classical.choose_spec (K.c_int 0)]; simp
   map_add' a b := by
     apply IsFractionRing.injective K.O K.E
-    rw [← Classical.choose_spec (K.c_int (a + b)), map_add, map_add, map_add,
+    rw [← Classical.choose_spec (K.c_int (a + b)), map_add (f := _), map_add (f := _), map_add (f := _),
       ← Classical.choose_spec (K.c_int a), ← Classical.choose_spec (K.c_int b)]
 
 theorem conjO_spec (K : UQ) (o : K.O) :

@@ -372,12 +372,12 @@ def latticeEF (ξ0 : E) (G : Matrix (Fin r) (Fin r) E) (Λ : Submodule (𝓞 E) 
     rw [traceFormBilin_apply, hk, Rat.num_intCast]
   LinearMap.mk₂ ℤ (fun x y => (EFf ξ0 G x y).num)
     (fun x x' y => Int.cast_injective (α := ℚ) (by
-      rw [Int.cast_add, key, key, key, Submodule.coe_add, map_add, LinearMap.add_apply]))
+      rw [Int.cast_add, key, key, key, Submodule.coe_add, map_add (f := _), LinearMap.add_apply]))
     (fun n x y => Int.cast_injective (α := ℚ) (by
       rw [smul_eq_mul, Int.cast_mul, key, key, Submodule.coe_smul_of_tower, map_zsmul,
         LinearMap.smul_apply, zsmul_eq_mul]))
     (fun x y y' => Int.cast_injective (α := ℚ) (by
-      rw [Int.cast_add, key, key, key, Submodule.coe_add, map_add]))
+      rw [Int.cast_add, key, key, key, Submodule.coe_add, map_add (f := _)]))
     (fun n x y => Int.cast_injective (α := ℚ) (by
       rw [smul_eq_mul, Int.cast_mul, key, key, Submodule.coe_smul_of_tower, map_zsmul,
         zsmul_eq_mul]))
@@ -618,7 +618,7 @@ theorem hypForm_bijective : Function.Bijective (hypForm E) := by
       (F ∘ₗ LinearMap.inr ℤ _ _ ∘ₗ ConjDual.val.symm.toLinearMap)
     refine ⟨(x, ConjDual.val.symm (-(F ∘ₗ LinearMap.inl ℤ _ _))), LinearMap.ext fun v => ?_⟩
     have h1 := LinearMap.congr_fun hx (ConjDual.val v.2)
-    have h2 : F v = F (v.1, 0) + F (0, v.2) := by rw [← map_add]; simp
+    have h2 : F v = F (v.1, 0) + F (0, v.2) := by rw [← map_add (f := _)]; simp
     simp only [Module.Dual.eval_apply] at h1
     simp [h1, h2, add_comm]
 
@@ -679,7 +679,7 @@ example : ¬ IsConjAdj ((Algebra.traceForm ℚ E).compl₁₂ (LinearMap.proj (0
     have h1 := h ξ0 ![a] ![1]
     simp only [LinearMap.compl₁₂_apply, LinearMap.proj_apply, Algebra.traceForm_apply,
       Pi.smul_apply, Matrix.cons_val_zero, smul_eq_mul, hξ, mul_one, map_neg] at h1
-    rw [mul_add, map_add]
+    rw [mul_add, map_add (f := _)]
     rw [mul_comm ξ0 a] at h1
     linarith
   exact h0 (by linear_combination this / 2)

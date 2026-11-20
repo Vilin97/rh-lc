@@ -27,7 +27,7 @@ theorem toEAf_surj {D : D7} (a : EAf D) : ∃ α : AE D, toEAf D α = a := by
   | add x y hx hy =>
     obtain ⟨p, hp⟩ := hx
     obtain ⟨q, hq⟩ := hy
-    exact ⟨p + q, by rw [RingHom.map_add, hp, hq]⟩
+    exact ⟨p + q, by rw [RingHom.map_add (f := _), hp, hq]⟩
   | tmul x y => exact ⟨pairA D.host.F 0 y ⊗ₜ[D.host.F] x, rfl⟩
 
 theorem inv_of_chart {D : D7} {ePP α : AE D} {v : HeightOneSpectrum (𝓞 D.host.F)} {π : AE D →+* Fv D.host.F v}

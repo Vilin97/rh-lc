@@ -58,7 +58,7 @@ theorem IsVB_dual {L : Lat ξ E} {r : ℕ} (h : L.IsVB r ⊤) : L.dual.IsVB r �
       · exact one_mem _
       · exact zero_mem _
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul c x _ hx =>
       have : B.dualBasis i (c • x) = (c : Ω) * B.dualBasis i x := by
         rw [show c • x = (c : Ω) • x from rfl, map_smul, smul_eq_mul]

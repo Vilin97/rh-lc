@@ -98,12 +98,12 @@ theorem tensor_le_span {A R T : Type} [CommRing A] [CommRing R] [Algebra A R] [A
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a t => simp [TensorProduct.smul_tmul']
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   · intro i x
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a t => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · intro x hx
     exact (b.baseChange R).ext_elem fun i => by simpa using hx i
 
@@ -120,7 +120,7 @@ theorem ideal_le_span {A W O : Type} [CommRing A] [CommRing W] [Algebra A W] [Co
     induction b using TensorProduct.induction_on with
     | zero => simp
     | tmul a w => simp [e]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   let U : Submodule W (W ⊗[A] O) := (I.comap e.toRingEquiv.toRingHom).restrictScalars W
   have hUm : ∀ x, x ∈ U ↔ e x ∈ I := fun x => Iff.rfl
   have h := tensor_le_span φ hs hI U fun x hx => by
@@ -132,7 +132,7 @@ theorem ideal_le_span {A W O : Type} [CommRing A] [CommRing W] [Algebra A W] [Co
   induction hy using Submodule.span_induction with
   | mem z hz => exact Ideal.subset_span ⟨hz.1, by rw [← hc, hz.2]⟩
   | zero => simp
-  | add z w _ _ hz hw => rw [map_add]; exact Ideal.add_mem _ hz hw
+  | add z w _ _ hz hw => rw [map_add (f := _)]; exact Ideal.add_mem _ hz hw
   | smul a z _ hz => rw [Algebra.smul_def, map_mul]; exact Ideal.mul_mem_left _ _ hz
 
 theorem flat_of_letters {E M ι : Type} [CommRing E] [AddCommGroup M] [Module E M] [Fintype ι]

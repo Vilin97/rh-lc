@@ -65,7 +65,7 @@ theorem finPart_detAt {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {g : GA D V
   have hfe : finPart D e ∈ intAE D := by
     apply GlobalTheory.AdIdem.idempotent_mem_intAE
     rw [← map_mul, he]
-  rw [detAt_val, map_add, map_mul, map_sub, map_one]
+  rw [detAt_val, map_add (f := _), map_mul, map_sub, map_one]
   exact add_mem (GlobalTheory.IdemPrime.mul_mem_int hfe hd) (sub_mem GlobalTheory.VacInert.one_int hfe)
 
 theorem infPart_place {v : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D.host.F} (h : IsPlaceIdem D v ε) :

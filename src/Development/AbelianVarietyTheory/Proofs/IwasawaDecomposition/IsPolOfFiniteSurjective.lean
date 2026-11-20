@@ -59,7 +59,7 @@ theorem isPol_of_finite_surjective : ∀ (E : Type) [Field E] [NumberField E] [I
       CechPic.cls_lbPow (CechPic.isLB_dual hL), CechPic.cls_dual hL, CechPic.cls_dual hB]
   have e : CechPic.pull π (CechPic.cls _ hLB) = CechPic.cls _ hA'.isLB :=
     (congrArg _ (cl hL BD.isLB_lb hLB)).trans (Eq.trans
-      (by rw [map_add, map_nsmul, map_neg, map_neg, e₁, e₂]) (cl hL' BD'.isLB_lb hA'.isLB).symm)
+      (by rw [map_add (f := _), map_nsmul, map_neg, map_neg, e₁, e₂]) (cl hL' BD'.isLB_lb hA'.isLB).symm)
   have hiso : LBIso ((polOf Z m BD).pull π) (polOf Z' m BD') := by
     rw [← CechPic.cls_pull hLB π (pull_isLB hLB π)] at e
     exact (CechPic.cls_eq_iff (pull_isLB hLB π) hA'.isLB).1 e

@@ -65,10 +65,10 @@ theorem exists_sec (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E
   let s : (InfinitePlace F → ℂ) → AE F E := fun z => ρ (fun w => (z w).re) • 1 + ρ (fun w => (z w).im) • a
   have hs1 : ∀ x w, piInf (τ w) (s x) = x w := fun x w => by
     change piInf (τ w) (ρ (fun w => (x w).re) • 1 + ρ (fun w => (x w).im) • a) = x w
-    rw [map_add, St.piInf_smul, St.piInf_smul, eρ, eρ, ha, map_one, mul_one, Complex.re_add_im]
+    rw [map_add (f := _), St.piInf_smul, St.piInf_smul, eρ, eρ, ha, map_one, mul_one, Complex.re_add_im]
   have hs2 : ∀ x v, compFin F E v (s x) = 0 := fun x v => by
     change compFin F E v (ρ (fun w => (x w).re) • 1 + ρ (fun w => (x w).im) • a) = 0
-    rw [map_add, St.compFin_smul v rfl, St.compFin_smul v rfl, add_zero]
+    rw [map_add (f := _), St.compFin_smul v rfl, St.compFin_smul v rfl, add_zero]
   have hc : Continuous s := by
     have h1 : Continuous fun z : InfinitePlace F → ℂ => ρ fun w => (z w).re :=
       hρ.comp (continuous_pi fun w => Complex.continuous_re.comp (continuous_apply w))
@@ -86,8 +86,8 @@ theorem exists_sec (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E
     · rw [piInf_finOne, map_zero]
     · rw [compFin_finOne, hs2, map_zero]
   · refine ext' _ _ (fun w => ?_) fun v => ?_
-    · rw [map_add, hs1, hs1, hs1, Pi.add_apply]
-    · rw [map_add, hs2, hs2, hs2, add_zero]
+    · rw [map_add (f := _), hs1, hs1, hs1, Pi.add_apply]
+    · rw [map_add (f := _), hs2, hs2, hs2, add_zero]
   · refine ext' _ _ (fun w => ?_) fun v => ?_
     · rw [map_mul, hs1, hs1, hs1, Pi.mul_apply]
     · rw [map_mul, hs2, hs2, hs2, zero_mul]

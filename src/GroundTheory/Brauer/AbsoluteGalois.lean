@@ -45,7 +45,7 @@ def toGalUnitsH2 : mulCocycles₂ (L ≃ₐ[K] L) Lˣ →* Multiplicative (H2 (g
   map_mul' c c' := by
     rw [← ofAdd_add]
     congr 1
-    rw [← map_add]
+    rw [← map_add (f := _)]
     rfl
 
 theorem toGalUnitsH2_eq_one_iff (c : mulCocycles₂ (L ≃ₐ[K] L) Lˣ) :

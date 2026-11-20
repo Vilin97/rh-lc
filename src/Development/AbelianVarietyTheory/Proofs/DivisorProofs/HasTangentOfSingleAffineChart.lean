@@ -64,7 +64,7 @@ theorem rhs_mul (ξ : Sp (PowerSeries E) ⟶ G.left)
       ev_map (PowerSeries E) E G.left (PowerSeries.constantCoeff (R := E)) ξ U₂ hU₂ hc' f]
   rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [dUnit_mul, map_add, LinearMap.map_smul, LinearMap.map_smul, smul_eq_mul, smul_eq_mul, map_add,
+  rw [dUnit_mul, map_add (f := _), LinearMap.map_smul, LinearMap.map_smul, smul_eq_mul, smul_eq_mul, map_add (f := _),
     map_mul, map_mul, hε, hε]
   ring
 

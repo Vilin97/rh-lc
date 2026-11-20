@@ -66,7 +66,7 @@ theorem det_hm_self_ne_zero {p : k[X]} (hp : p.Separable) {X : Matrix (Fin r) (F
     (hX : aeval X p = 0) : (hm p X X).det ≠ 0 := by
   obtain ⟨u, v, huv⟩ := hp
   have h := congrArg (aeval X) huv
-  rw [map_add, map_mul, map_mul, hX, mul_zero, zero_add, map_one] at h
+  rw [map_add (f := _), map_mul, map_mul, hX, mul_zero, zero_add, map_one] at h
   rw [hm_self]
   exact (Matrix.isUnit_det_of_left_inverse h).ne_zero
 

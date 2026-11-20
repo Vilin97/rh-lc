@@ -44,7 +44,7 @@ theorem dvd_right (D : Datum H) {N : ℕ} {I : Ideal (𝓞 E)}
     rw [← hI, _root_.mul_comm c a]
     exact Ideal.mul_mem_mul ha hc
   · intro x y hx hy
-    rw [smul_add, map_add]
+    rw [smul_add, map_add (f := _)]
     exact dvd_add hx hy
 
 theorem dvd_left (D : Datum H) {N : ℕ} {I : Ideal (𝓞 E)}
@@ -58,7 +58,7 @@ theorem dvd_left (D : Datum H) {N : ℕ} {I : Ideal (𝓞 E)}
     rw [← hI]
     exact Ideal.mul_mem_mul (bar_mem ha) hc
   · intro x y hx hy
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact dvd_add hx hy
 
 theorem exists_adjoint (D : Datum H) (f : D.La →ₗ[𝓞 E] D.La) :
@@ -68,7 +68,7 @@ theorem exists_adjoint (D : Datum H) (f : D.La →ₗ[𝓞 E] D.La) :
   refine ⟨{ toFun := fun u => e.symm ((D.EF u).comp (f.restrictScalars ℤ)),
             map_add' := fun x y => D.unimod.1 ?_,
             map_smul' := fun a x => D.unimod.1 ?_ }, fun u v => ?_⟩
-  · simp only [hE, map_add, LinearMap.add_comp]
+  · simp only [hE, map_add (f := _), LinearMap.add_comp]
   · rw [hE]
     ext v
     simp only [LinearMap.comp_apply, LinearMap.restrictScalars_apply, RingHom.id_apply]
@@ -81,7 +81,7 @@ theorem modN_of_dvd (D : Datum H) {n : ℕ} (hn : 0 < n) {w : D.La} (h : ∀ v, 
   obtain ⟨b, hb⟩ := D.unimod.2
     ({ toFun := fun v => D.EF w v / n
        map_add' := fun x y => by
-         simp only [map_add]
+         simp only [map_add (f := _)]
          exact Int.add_ediv_of_dvd_left (h x)
        map_smul' := fun m x => by
          simp only [map_zsmul, smul_eq_mul, RingHom.id_apply]

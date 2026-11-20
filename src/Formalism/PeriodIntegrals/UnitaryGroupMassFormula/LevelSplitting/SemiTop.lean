@@ -21,7 +21,7 @@ theorem piMat_eq (g : HA R σ J) :
       LinearMap.toMatrix' (datR R σ J P T).pW *
         ((HA.mat R σ J g : GL (Fin M) (R ⊗[F] E)) : Matrix (Fin M) (Fin M) (R ⊗[F] E)) *
           LinearMap.toMatrix' (datR R σ J P T).pW := by
-  rw [piMat, PI.LevelKSplit.W.SemiG.Dat.Pi, map_add, LinearMap.toMatrix'_comp,
+  rw [piMat, PI.LevelKSplit.W.SemiG.Dat.Pi, map_add (f := _), LinearMap.toMatrix'_comp,
     LinearMap.toMatrix'_comp, lin, ← Matrix.toLin'_apply', LinearMap.toMatrix'_toLin', Matrix.mul_assoc]
 
 theorem mat_inv (g : HA R σ J) : HA.mat R σ J g⁻¹ = (HA.mat R σ J g)⁻¹ := rfl

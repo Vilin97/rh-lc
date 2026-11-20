@@ -73,7 +73,7 @@ theorem sigR_smul (σ : E →ₐ[F] E) (c : Fv F v) (x : Fv F v ⊗[F] E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigR, TensorProduct.smul_tmul']
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 private theorem sigR_smulO_lemma (σ : E →ₐ[F] E) (c : v.adicCompletionIntegers F)
     (x : Fv F v ⊗[F] E) : sigR (Fv F v) σ (c • x) = c • sigR (Fv F v) σ x := by
@@ -82,7 +82,7 @@ private theorem sigR_smulO_lemma (σ : E →ₐ[F] E) (c : v.adicCompletionInteg
     | (induction x using TensorProduct.induction_on with
         | zero => simp
         | tmul a b => simp [sigR, TensorProduct.smul_tmul']
-        | add y z hy hz => simp only [smul_add, map_add, hy, hz])
+        | add y z hy hz => simp only [smul_add, map_add (f := _), hy, hz])
 
 theorem oev_sigR (σ : E →ₐ[F] E) {x : Fv F v ⊗[F] E} (hx : x ∈ OEv (E := E) v) :
     sigR (Fv F v) σ x ∈ OEv (E := E) v := by
@@ -99,7 +99,7 @@ theorem oev_sigR (σ : E →ₐ[F] E) {x : Fv F v ⊗[F] E} (hx : x ∈ OEv (E :
           by simp [sigR, inclR]⟩
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   | smul c x _ hx =>
     rw [sigR_smulO_lemma]

@@ -424,15 +424,15 @@ theorem splitLaw_add (hW : IsWeilDatumO ψ S T χS χT om) {a b : AE D} (ha : a 
   have ea : (a + cA D a) * (a + cA D a) = a + cA D a := by linear_combination ha + ha' + 2 * hac
   have eb : (b + cA D b) * (b + cA D b) = b + cA D b := by linear_combination hb + hb' + 2 * hbc
   have eab : (a + cA D a) * (b + cA D b) = 0 := by linear_combination hab + hab' + habc + hcab
-  obtain ⟨g₁, hg₁⟩ := cut_exists S g _ ea (by rw [RingHom.map_add, cc, add_comm])
-  obtain ⟨g₂, hg₂⟩ := cut_exists S g _ eb (by rw [RingHom.map_add, cc, add_comm])
+  obtain ⟨g₁, hg₁⟩ := cut_exists S g _ ea (by rw [RingHom.map_add (f := _), cc, add_comm])
+  obtain ⟨g₂, hg₂⟩ := cut_exists S g _ eb (by rw [RingHom.map_add (f := _), cc, add_comm])
   have hgg : g = g₁ * g₂ := by
     refine Subtype.ext (Units.ext ?_)
     show mt S g = mt S g₁ * mt S g₂
     rw [hg₁, hg₂, cut_mul _ _ eab]
     ext i j
     have := hg i j
-    rw [RingHom.map_add, Matrix.sub_apply] at this
+    rw [RingHom.map_add (f := _), Matrix.sub_apply] at this
     simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
     linear_combination -this
   obtain ⟨x₁, hx₁⟩ := exists_detAt ha S g₁
@@ -446,7 +446,7 @@ theorem splitLaw_add (hW : IsWeilDatumO ψ S T χS χT om) {a b : AE D} (ha : a 
     · rw [hg₂]
       exact idem_det hb (by rw [mul_add, hb, hbc, add_zero]) _
   refine ⟨r₁ * r₂, mul_pos hr₁ hr₂, fun ℓ hℓ f hf => ?_⟩
-  rw [RingHom.map_add] at hℓ
+  rw [RingHom.map_add (f := _)] at hℓ
   have e1 : om (g, 1) f = om (g₁, 1) (om (g₂, 1) f) := by
     rw [← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, mul_one, ← hgg]
   rw [e1, l₁ ℓ (fun u hu => hℓ u (isHalf_add_left hab' hu)) _ (hW.om_pres _ _ hf),
@@ -475,7 +475,7 @@ theorem splitLaw_sum (hW : IsWeilDatumO ψ S T χS χT om) {e : AE D} (he : Glob
     generalize (∑ j ∈ P, es j) = b at *
     have hb' : cA D b * cA D b = cA D b := by rw [← RingHom.map_mul, hb]
     have hab' : cA D (es i) * cA D b = 0 := by rw [← RingHom.map_mul, hab, RingHom.map_zero]
-    rw [RingHom.map_add] at hec
+    rw [RingHom.map_add (f := _)] at hec
     have hbc : b * cA D b = 0 := by
       have : b * cA D b = (b * (es i + b)) * (cA D b * (cA D (es i) + cA D b)) := by
         rw [mul_add, mul_add, mul_comm b (es i), hab, hb, mul_comm (cA D b) (cA D (es i)), hab', hb', zero_add, zero_add]

@@ -122,7 +122,7 @@ theorem crd_up (W : Formalism.BasicNotions.HSpace E) :
     | zero => intro i; simpa using isIntegral_zero
     | add y z _ _ hy hz =>
       intro i
-      rw [map_add, Finsupp.add_apply, smul_add]
+      rw [map_add (f := _), Finsupp.add_apply, smul_add]
       exact (hy i).add (hz i)
     | smul r y _ hy =>
       intro i
@@ -273,7 +273,7 @@ theorem latHat_low (W : Formalism.BasicNotions.HSpace E) : ∃ c : 𝓞 F, c ≠
     | add w1 w2 _ _ h1 h2 =>
       intro x hx
       have hx' : x = (swp F E).symm w1 + (swp F E).symm w2 :=
-        (swp F E).injective (by rw [hx, map_add, AlgEquiv.apply_symm_apply, AlgEquiv.apply_symm_apply])
+        (swp F E).injective (by rw [hx, map_add (f := _), AlgEquiv.apply_symm_apply, AlgEquiv.apply_symm_apply])
       rw [hx', Pi.single_add, smul_add]
       exact add_mem (h1 _ (AlgEquiv.apply_symm_apply _ _)) (h2 _ (AlgEquiv.apply_symm_apply _ _))
     | neg w _ h1 =>
@@ -377,7 +377,7 @@ def crdF {ι : Type} (b : Module.Basis ι F E) (i : ι) : Af F ⊗[F] E →ₗ[A
     | tmul a' e =>
       rw [TensorProduct.smul_tmul']
       simp [smul_eq_mul]
-    | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 theorem crdF_tmul {ι : Type} (b : Module.Basis ι F E) (i : ι) (a : Af F) (e : E) :
     crdF b i (a ⊗ₜ[F] e) = b.repr e i • a := by
@@ -390,7 +390,7 @@ theorem sum_crdF {ι : Type} [Fintype ι] (b : Module.Basis ι F E) (x : Af F �
   | tmul a e =>
     simp only [crdF_tmul, TensorProduct.smul_tmul]
     rw [← TensorProduct.tmul_sum, Module.Basis.sum_repr]
-  | add x y hx hy => simp only [map_add, TensorProduct.add_tmul, Finset.sum_add_distrib, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib, hx, hy]
 
 theorem isOpen_SI : IsOpen (SI F E : Set (Af F ⊗[F] E)) := by
   have := isModTopF (F := F) (E := E)
@@ -428,7 +428,7 @@ def finPr : AF F ⊗[F] E →ₛₗ[(sndA F : AF F →+* Af F)] Af F ⊗[F] E wh
     | tmul a' e =>
       rw [TensorProduct.smul_tmul']
       simp [Algebra.TensorProduct.map_tmul, TensorProduct.smul_tmul']
-    | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 theorem continuous_finPr : Continuous (finPr (F := F) (E := E)) := by
   have := Unfold.isModTop (F := F) (E := E)
@@ -546,7 +546,7 @@ theorem infEmb_sig (σ : E →ₐ[F] E) (hσ : ∀ a, σ a = star a)
     rw [h1 (σ e), h1 e]
     simp only [map_mul]
     rw [hθ.1, hθ.1, hσ, hτs, infEmb_real hfix τ hτs θ hθ a]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem infMat_unitary (σ : E →ₐ[F] E) (hσ : ∀ a, σ a = star a)
     (hfix : ∀ x : F, star (algebraMap F E x) = algebraMap F E x)
@@ -563,7 +563,7 @@ theorem infMat_unitary (σ : E →ₐ[F] E) (hσ : ∀ a, σ a = star a)
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a e => simp [sigR, Algebra.TensorProduct.map_tmul]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     show θ (Algebra.TensorProduct.map (fstA F) (AlgHom.id F E) (sigR (AF F) σ x)) = _
     rw [e, infEmb_sig σ hσ hfix τ hτs θ hθ]
     rfl

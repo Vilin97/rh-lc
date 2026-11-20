@@ -325,7 +325,7 @@ theorem exists_sec_isFn_of_differentiable :
     (hϑ.comp (LinearMap.toContinuousLinearMap F).differentiable) (fun l i z hz => by
       have hl : F l ∈ u.Λ := by rw [← u.ker, hF, u₀.ker]; exact l.2
       change ϑ (F (z + l)) * u.fr i (F (z + l)) = ϑ (F z) * u.fr i (F z)
-      rw [map_add]
+      rw [map_add (f := _)]
       exact hper ⟨F l, hl⟩ i (F z) (by rw [hF]; exact hz))
   refine ⟨s, fun i z hz => ?_⟩
   obtain ⟨w, hw⟩ := u₀.ex_onto (u.ex z)

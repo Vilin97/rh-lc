@@ -82,7 +82,7 @@ theorem UpperTheory.Gal.W2.Seed.pDenom :
       exact AddSubgroup.nsmul_mem _ (hcm y) _
     | zero => simp [AddSubgroup.zero_mem]
     | add y z _ _ hy hz =>
-      rw [map_add, map_add, smul_add]
+      rw [map_add (f := _), map_add (f := _), smul_add]
       exact AddSubgroup.add_mem _ hy hz
     | smul n y _ hy =>
       rw [map_zsmul, map_zsmul, smul_comm]
@@ -98,7 +98,7 @@ theorem UpperTheory.Gal.W2.Seed.pDenom :
     exact GlobalTheory.W2.smul_mem_laHat ha (hgen x)
   | zero => simp [AddSubgroup.zero_mem]
   | add y z _ _ hy hz =>
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     exact AddSubgroup.add_mem _ hy hz
   | neg y _ hy =>
     rw [map_neg, smul_neg]

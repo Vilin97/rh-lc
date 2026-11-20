@@ -106,7 +106,7 @@ theorem UpperTheory.trace_action_eq_sum_places :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add x y hx hy =>
-    simp only [map_add, Matrix.trace_add, Complex.add_re, Finset.sum_add_distrib, hx, hy, mul_add]
+    simp only [map_add (f := _), Matrix.trace_add, Complex.add_re, Finset.sum_add_distrib, hx, hy, mul_add]
   | tmul r c =>
     have h1 : actOn L.rep ℝ (r ⊗ₜ[ℚ] c) = r • (L.rep c).baseChange ℝ := by
       rw [Algebra.smul_def]

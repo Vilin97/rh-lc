@@ -21,7 +21,7 @@ theorem ip_add_left (u u' w : X.Ψ → Fin r → ℂ) : ip X (u + u') w = ip X u
   simp only [ip, Pi.add_apply, add_mul, Finset.sum_add_distrib, Complex.add_re, mul_add]
 
 theorem ip_add_right (u w w' : X.Ψ → Fin r → ℂ) : ip X u (w + w') = ip X u w + ip X u w' := by
-  simp only [ip, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib, Complex.add_re]
+  simp only [ip, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib, Complex.add_re]
 
 theorem ip_smul_left (k : ℝ) (u w : X.Ψ → Fin r → ℂ) : ip X (k • u) w = k * ip X u w := by
   unfold ip

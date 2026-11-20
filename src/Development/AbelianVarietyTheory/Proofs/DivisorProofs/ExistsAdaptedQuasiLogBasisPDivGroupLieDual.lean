@@ -41,7 +41,7 @@ theorem in_top_add {σ : Type} {f g : MvPowerSeries σ E} (hf : In (⊤ : Ideal 
     (hg : In (⊤ : Ideal O) g) : In (⊤ : Ideal O) (f + g) := fun α => by
   obtain ⟨a, -, ha⟩ := hf α
   obtain ⟨b, -, hb⟩ := hg α
-  exact ⟨a + b, trivial, by rw [map_add, ha, hb, map_add]⟩
+  exact ⟨a + b, trivial, by rw [map_add (f := _), ha, hb, map_add (f := _)]⟩
 
 theorem in_top_sub {σ : Type} {f g : MvPowerSeries σ E} (hf : In (⊤ : Ideal O) f)
     (hg : In (⊤ : Ideal O) g) : In (⊤ : Ideal O) (f - g) := fun α => by
@@ -74,13 +74,13 @@ theorem ql_add_smul (h : ∀ i, constantCoeff (μ i) = 0) {f g : MvPowerSeries (
   · have h1 := hf.1
     have h2 := hg.1
     rw [← coeff_zero_eq_constantCoeff_apply] at h1 h2 ⊢
-    rw [map_add, map_smul, h1, h2, smul_zero, add_zero]
+    rw [map_add (f := _), map_smul, h1, h2, smul_zero, add_zero]
   · obtain ⟨a1, -, h1⟩ := hf.2.1 i
     obtain ⟨a2, -, h2⟩ := hg.2.1 i
     refine ⟨a1 + a * a2, trivial, ?_⟩
     simp only [lin] at h1 h2 ⊢
-    rw [map_add, map_smul, h1, h2, smul_eq_mul, map_add, map_mul]
-  · rw [← cobL_apply μ h, map_add, map_smul, cobL_apply, cobL_apply]
+    rw [map_add (f := _), map_smul, h1, h2, smul_eq_mul, map_add (f := _), map_mul]
+  · rw [← cobL_apply μ h, map_add (f := _), map_smul, cobL_apply, cobL_apply]
     exact in_top_add hf.2.2 (in_top_smul a hg.2.2)
 
 theorem ql_comb (h : ∀ i, constantCoeff (μ i) = 0) {ι : Type} [Fintype ι]

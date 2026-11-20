@@ -37,7 +37,7 @@ theorem vecSpan_insert_eq_of_add_mem {W : Finset (SV k)} {u u' : SV k} (h : vec 
 theorem rt_flip {W : Finset (SV k)} {u u' : SV k} (hu : u ∉ W) (hu' : u' ∉ W) (h : vec u + vec u' ∈ aP W) :
     rt (insert u' W) u' = - rt (insert u W) u := by
   have hy : pr W (vec u + vec u') = vec u + vec u' := Submodule.starProjection_eq_self_iff.2 h
-  rw [map_add] at hy
+  rw [map_add (f := _)] at hy
   simp only [rt, wt, erase_insert hu, erase_insert hu']
   rw [neg_sub, sub_eq_sub_iff_add_eq_add, hy, add_comm]
 

@@ -81,7 +81,7 @@ theorem homL_std {N N' : ℕ} {A : Matrix (Fin N') (Fin N) D.host.E}
     rw [this]; exact inc_int b
   · intro i j; simp only [Matrix.zero_apply, map_zero]; exact zero_mem _
   · intro A B _ _ hA hB i j
-    rw [Matrix.add_apply, map_add]; exact add_mem (hA i j) (hB i j)
+    rw [Matrix.add_apply, map_add (f := _)]; exact add_mem (hA i j) (hB i j)
   · intro r A _ hA i j
     rw [Matrix.smul_apply, Algebra.smul_def, map_mul]; exact mul_mem (inc_int r) (hA i j)
 

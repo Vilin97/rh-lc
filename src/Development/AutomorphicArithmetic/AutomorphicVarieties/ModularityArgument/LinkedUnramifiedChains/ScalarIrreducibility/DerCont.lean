@@ -80,7 +80,7 @@ private theorem derCont_abs [IsLocalRing O] [Finite (ResidueField O)] [IsLocalRi
     intro x hx
     rw [pow_two] at hx
     refine Submodule.mul_induction_on hx (fun f hf g hg => ?_)
-      (fun a b ha hb => by rw [map_add, ha, hb, add_zero])
+      (fun a b ha hb => by rw [map_add (f := _), ha, hb, add_zero])
     have hf' : y f = 0 := RingHom.mem_ker.1 hf
     have hg' : y g = 0 := RingHom.mem_ker.1 hg
     rw [hD, hf', hg']
@@ -126,10 +126,10 @@ private theorem derCont_abs [IsLocalRing O] [Finite (ResidueField O)] [IsLocalRi
   have e1 : b * algebraMap O R p ^ n = p ^ n • b := by
     rw [Algebra.smul_def, map_pow, mul_comm]
   constructor
-  · rw [map_add, hDq c hc, add_zero, e1, map_smul, Algebra.smul_def, norm_mul, map_pow, norm_pow, ← hyp]
+  · rw [map_add (f := _), hDq c hc, add_zero, e1, map_smul, Algebra.smul_def, norm_mul, map_pow, norm_pow, ← hyp]
     have := mul_le_mul_of_nonneg_left (hbd b) hρ0
     nlinarith
-  · rw [map_add, hyq c hc, add_zero, map_mul, norm_mul, map_pow, norm_pow]
+  · rw [map_add (f := _), hyq c hc, add_zero, map_mul, norm_mul, map_pow, norm_pow]
     have := mul_le_mul (hle b) (le_refl (‖y (algebraMap O R p)‖ ^ n)) hρ0 zero_le_one
     nlinarith
 

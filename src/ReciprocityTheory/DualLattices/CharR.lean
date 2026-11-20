@@ -42,7 +42,7 @@ theorem lim (B : BX R₀) (hB1 : PairingPropertiesStatement B) {p : ℕ} (Tw : A
     sub_eq_zero.mp (Tw.sep _ (fun n => by rw [map_sub, hab n, sub_self]))
   let ht : ι → B.gg →ₗ[R₀] (Tw.O : Type u) := fun i =>
     { toFun := hta i
-      map_add' := fun v w => hsep _ _ (fun n => by simp only [map_add, hta_spec])
+      map_add' := fun v w => hsep _ _ (fun n => by simp only [map_add (f := _), hta_spec])
       map_smul' := fun c v => hsep _ _ (fun n => by simp only [map_smul, hta_spec, RingHom.id_apply]) }
   have hlift : ∀ i n, ∃ (th : B.G (Tw.R' n)) (w : B.gg ⊗[R₀] (Tw.R' n : Type u)),
       B.map (Tw.π n) th = B.map (Tw.q n) (τ i n) ∧

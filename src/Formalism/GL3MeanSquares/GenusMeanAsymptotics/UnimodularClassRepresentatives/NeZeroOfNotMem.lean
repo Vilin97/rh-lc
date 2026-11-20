@@ -89,7 +89,7 @@ theorem isLocUnif (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
     obtain ⟨z, hz⟩ := exists_add_conj_eq hK hF (1 : 𝓞 F)
     refine ⟨jK z, jK_mem_SP _, ?_⟩
     have := congrArg jK hz
-    rw [map_add, map_one, map_one] at this
+    rw [map_add (f := _), map_one, map_one] at this
     exact this
   skew := by
     obtain ⟨P, hP, -⟩ := exists_maximal_over hK hF h𝔭
@@ -141,7 +141,7 @@ theorem isLocUnif (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
       intro hmem
       have h1 : ι (n₀ - t * t) ∈ extP K 𝔭 ^ 1 := by
         have : ι (n₀ - t * t) = ι π₀ * (z * ι t + ι t * conjO K z + ι π₀ * z * conjO K z) := by
-          rw [map_sub, hn₀, map_add, map_mul (conjO K), conjO_map hF, conjO_map hF, map_mul]
+          rw [map_sub, hn₀, map_add (f := _), map_mul (conjO K), conjO_map hF, conjO_map hF, map_mul]
           ring
         rw [this]
         exact Ideal.mul_mem_right _ _ (ι_mem_pow (by rw [pow_one]; exact hu.mem))
@@ -152,7 +152,7 @@ theorem isLocUnif (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsF
       exact (hp.mem_or_mem h2).elim ht ht
     have hn0 : jK (ι n₀) ≠ 0 := jι_ne_zero (ne_zero_of_notMem hn)
     have e1 : jK (ι t) * (1 + jK (ι π₀) * s) = jK (ι t + ι π₀ * z) := by
-      rw [map_add, map_mul, e]
+      rw [map_add (f := _), map_mul, e]
       ring
     have e2 : jK (ι n₀) = jK (ι t + ι π₀ * z) * jK (conjO K (ι t + ι π₀ * z)) := by
       rw [hn₀, map_mul]

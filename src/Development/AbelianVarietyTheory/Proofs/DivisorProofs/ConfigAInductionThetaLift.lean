@@ -74,10 +74,10 @@ theorem lowPart_frobInf_line : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F
   · left
     intro x hx
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 (hdec hx)
-    rw [map_add, h0 y hy, hoff φ hφ z hz, add_zero]
+    rw [map_add (f := _), h0 y hy, hoff φ hφ z hz, add_zero]
   · right
     refine ⟨c, fun x hx => ?_⟩
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 (hdec hx)
-    rw [map_add, map_add, hc y hy, hoff φ hφ z hz, hoff φ' hφ' z hz, smul_add, smul_zero]
+    rw [map_add (f := _), map_add (f := _), hc y hy, hoff φ hφ z hz, hoff φ' hφ' z hz, smul_add, smul_zero]
 
 end GlobalTheory.IndLine

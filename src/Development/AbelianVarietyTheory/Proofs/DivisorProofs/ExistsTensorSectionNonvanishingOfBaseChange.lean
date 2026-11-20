@@ -43,7 +43,7 @@ theorem exists_sec_of_pull {F E : Type} [Field F] [Field E] [Algebra F E] {Y X :
     { toFun := fun f ab => dfun N V c hVc f ab.1 ab.2
       map_add' := fun f g => by
         funext ab
-        simp only [dfun, Pi.add_apply, map_add, mul_add]
+        simp only [dfun, Pi.add_apply, map_add (f := _), mul_add]
         abel
       map_smul' := fun r f => by
         funext ab
@@ -102,7 +102,7 @@ theorem exists_sec_of_pull {F E : Type} [Field F] [Field E] [Algebra F E] {Y X :
     | tmul m a =>
       simp only [LinearMap.rTensor_tmul, e₁, e₂, TensorProduct.equivFinsuppOfBasisRight_apply_tmul,
         Finsupp.mapRange_apply, map_smul]
-    | add u v hu hv => simp only [map_add, Finsupp.add_apply, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), Finsupp.add_apply, hu, hv]
   have hβ : ∀ β, dfun N V c hVc (e₁ t β) = 0 := fun β =>
     (hδ _).1 (by rw [← nat, ht, map_zero, Finsupp.zero_apply])
   choose θ hθ using fun β => exists_glue N V c hVc hN hcov (e₁ t β) (hβ β)
@@ -152,7 +152,7 @@ theorem exists_sec_tens_of_baseChange : ∀ (k E : Type) [Field k] [Field E] [Al
   have hT := isLB_tens (LB.isLB_pull hL π) (LB.isLB_pull hM π)
   have iso : LBIso ((tens L M).pull π) (tens (L.pull π) (M.pull π)) := by
     refine (cls_eq_iff hNp hT).1 ?_
-    rw [cls_pull hN π hNp, cls_tens hL hM hN, map_add, cls_tens (LB.isLB_pull hL π) (LB.isLB_pull hM π) hT,
+    rw [cls_pull hN π hNp, cls_tens hL hM hN, map_add (f := _), cls_tens (LB.isLB_pull hL π) (LB.isLB_pull hM π) hT,
       cls_pull hL π, cls_pull hM π]
   obtain ⟨s₂, hs₂⟩ := exists_sec_nonzeroLocus_eq_of_lbIso hNp hT iso s
   exact exists_sec_of_pull H hN s₂ x (hs₂ ▸ hs)

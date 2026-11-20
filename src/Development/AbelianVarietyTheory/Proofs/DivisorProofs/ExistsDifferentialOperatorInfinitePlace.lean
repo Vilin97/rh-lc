@@ -51,7 +51,7 @@ theorem exists_fockDer_small : ∀ (F E : Type) [Field F] [NumberField F] [Field
   let D : Mat _ _ →ₗ[ℂ] Module.End ℂ (SInf F (Fin a' × Fin (a + a'))) :=
     { toFun := fun Y => Φ ∘ₗ atPl w (fockAct2 _ _ _ _ Y + ((B.mα w : ℂ) / 2 * Y.trace) • 1) ∘ₗ Ψ
       map_add' := fun Y Y' => by
-        rw [← LinearMap.comp_add, ← LinearMap.add_comp, ← atPl_add, map_add, Matrix.trace_add, mul_add, add_smul]
+        rw [← LinearMap.comp_add, ← LinearMap.add_comp, ← atPl_add, map_add (f := _), Matrix.trace_add, mul_add, add_smul]
         congr 3
         abel
       map_smul' := fun r Y => by
@@ -153,7 +153,7 @@ theorem hasDerivAt_thetaIntegral_small : ∀ (F E : Type) [Field F] [NumberField
       obtain ⟨x₁, hx₁, ex⟩ := ihx
       obtain ⟨y₁, hy₁, ey⟩ := ihy
       refine ⟨x₁ + y₁, add_mem hx₁ hy₁, fun z => ?_⟩
-      simp only [map_add, Pi.add_apply]
+      simp only [map_add (f := _), Pi.add_apply]
       exact (ex z).add (ey z)
     | smul r x hx ihx =>
       obtain ⟨x₁, hx₁, ex⟩ := ihx
@@ -169,7 +169,7 @@ theorem hasDerivAt_thetaIntegral_small : ∀ (F E : Type) [Field F] [NumberField
       map_add' := fun Ψ₁ Ψ₂ => by
         funext y
         have e := ((hderv i _ Ψ₁.2 y).add (hderv i _ Ψ₂.2 y)).deriv
-        simp only [Submodule.coe_add, map_add, Pi.add_apply]
+        simp only [Submodule.coe_add, map_add (f := _), Pi.add_apply]
         exact e
       map_smul' := fun r Ψ => by
         funext y
@@ -236,7 +236,7 @@ theorem hasDerivAt_thetaIntegral_small : ∀ (F E : Type) [Field F] [NumberField
     | add x y hx hy ihx ihy =>
       intro f hf φ hSB hvac
       have e : (⟨x + y, add_mem hx hy⟩ : U) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-      rw [e, map_add, LinearMap.add_apply, ihx f hf φ hSB hvac, ihy f hf φ hSB hvac, map_add, LinearMap.add_apply,
+      rw [e, map_add (f := _), LinearMap.add_apply, ihx f hf φ hSB hvac, ihy f hf φ hSB hvac, map_add (f := _), LinearMap.add_apply,
         GlobalTheory.ThKSmoothDer.pure_add]
     | smul r x hx ihx =>
       intro f hf φ hSB hvac
@@ -266,7 +266,7 @@ theorem hasDerivAt_thetaIntegral_small : ∀ (F E : Type) [Field F] [NumberField
       simpa using hasDerivAt_const (0 : ℝ) (0 : ℂ)
     | add x y hx hy ihx ihy =>
       intro z
-      simp only [map_add, Pi.add_apply]
+      simp only [map_add (f := _), Pi.add_apply]
       exact (ihx z).add (ihy z)
     | smul r x hx ihx =>
       intro z

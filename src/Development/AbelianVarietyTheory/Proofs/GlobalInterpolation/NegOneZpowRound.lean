@@ -65,7 +65,7 @@ theorem op_add {V : Type} [AddCommGroup V] [Module ℂ V] (H : Sesq V) (hH : IsH
         Complex.exp (-(Real.pi : ℂ) * H z x - (Real.pi : ℂ) * H x x / 2) := by
     rw [← Complex.exp_add, ← Complex.exp_add, Complex.exp_eq_exp_iff_exists_int]
     refine ⟨m, ?_⟩
-    simp only [map_add, LinearMap.add_apply, h2]
+    simp only [map_add (f := _), LinearMap.add_apply, h2]
     push_cast
     ring
   linear_combination (α x * α l * F (z + x + l)) * h3

@@ -146,7 +146,7 @@ theorem emb_unique {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω] {l
   have h4 := IsUltrametricDist.norm_add_le_max
     (j' (algebraMap K' (w.adicCompletion K') (algebraMap (𝓞 K') K' a)))
     (j' (algebraMap K' (w.adicCompletion K') (algebraMap (𝓞 K') K' b)))
-  rw [← map_add, ← map_add, ← map_add, hab, map_one, map_one, map_one, norm_one] at h4
+  rw [← map_add (f := _), ← map_add (f := _), ← map_add (f := _), hab, map_one, map_one, map_one, norm_one] at h4
   exact absurd (h4.trans_lt (max_lt h1 h2')) (lt_irrefl _)
 
 end TwistIne

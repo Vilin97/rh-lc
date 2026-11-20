@@ -92,7 +92,7 @@ theorem exists_form {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k,
       isMultiHomog_add (ArakelovGeometry.isMultiHomog_mul h₁ (ArakelovGeometry.isMultiHomog_xpow c δ₂)) ?_, ?_⟩
     · rw [add_comm δ₁]
       exact ArakelovGeometry.isMultiHomog_mul h₂ (ArakelovGeometry.isMultiHomog_xpow c δ₁)
-    · rw [map_add, map_mul, map_mul, v₁, v₂, aeval_xpow, aeval_xpow, hpow]
+    · rw [map_add (f := _), map_mul, map_mul, v₁, v₂, aeval_xpow, aeval_xpow, hpow]
       ring
   | mul x z _ _ hx hz =>
     obtain ⟨δ₁, e₁, h₁, v₁⟩ := hx
@@ -108,7 +108,7 @@ theorem mem_chartRingZ {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (c : ∀
     intro f
     induction f using MvPolynomial.induction_on with
     | C r => simp [mConeMap]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p q hp =>
       simp only [map_mul]
       rw [hp]

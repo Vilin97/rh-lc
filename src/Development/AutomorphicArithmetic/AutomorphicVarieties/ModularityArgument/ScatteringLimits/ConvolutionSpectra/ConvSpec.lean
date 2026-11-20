@@ -22,7 +22,7 @@ theorem UpperTheory.V.Z.IntegralApplyAeEq.convSpec :
   have hk1 : Integrable κ := hk.1.integrable_of_hasCompactSupport hk.2
   let A : L V →ₗ[ℂ] L W :=
     { toFun := fun u => ∫ t, (κ t).compLpL 2 volume (sh V t u)
-      map_add' := fun x y => by simp only [map_add]; exact integral_add (hi x) (hi y)
+      map_add' := fun x y => by simp only [map_add (f := _)]; exact integral_add (hi x) (hi y)
       map_smul' := fun a x => by simp only [map_smul, RingHom.id_apply]; exact integral_smul a _ }
   have hb : ∀ u, ‖A u‖ ≤ (∫ t, ‖κ t‖) * ‖u‖ := fun u => by
     rw [← integral_mul_const]

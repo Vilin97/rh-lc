@@ -76,7 +76,7 @@ theorem simple_zero (i : ZMod n) (ζ : LL) (hζ : QRoot W i ζ) :
       E ^ (PD.p ^ W.s) - 1 := by
     rw [GlobalTheory.WachHeightTest.Q_eq]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_pow, map_add, map_one, hlev]
+      simp only [map_sum, map_pow, map_add (f := _), map_one, hlev]
     rw [geom_sum_mul, ← pow_mul, ← pow_succ, ← hs, mul_pow, ← map_pow, hp.pow_eq_one, map_one,
       one_mul]
   have h2 : PowerSeries.X ^ 2 ∣ E ^ (PD.p ^ W.s) - 1 := by
@@ -111,7 +111,7 @@ theorem mem_smul_iff {ι : Type} [Fintype ι] (nb : Module.Basis ι (LetA O n) �
       · rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
         refine ⟨(W.N T).add_mem ha hb, fun j => ?_⟩
         have e : (⟨a + b, (W.N T).add_mem ha hb⟩ : ↥(W.N T)) = ⟨a, ha⟩ + ⟨b, hb⟩ := rfl
-        rw [e, map_add, Finsupp.add_apply]
+        rw [e, map_add (f := _), Finsupp.add_apply]
         exact I.add_mem (ha' j) (hb' j)
     exact key.2
   · intro h

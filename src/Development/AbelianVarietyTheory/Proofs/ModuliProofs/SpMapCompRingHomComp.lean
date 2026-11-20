@@ -33,7 +33,7 @@ theorem coeff_eval₂_scale {R R' σ : Type} [CommRing R] [CommRing R'] (β : R 
       MvPolynomial.homogeneousComponent_of_mem ((MvPolynomial.mem_homogeneousSubmodule _ _).2
         (MvPolynomial.isHomogeneous_monomial a rfl))]
     split_ifs <;> simp
-  · simp only [map_add, Polynomial.coeff_add, hp, hq]
+  · simp only [map_add (f := _), Polynomial.coeff_add, hp, hq]
 
 theorem eval₂_homogeneousComponent_eq_zero {R R' σ : Type} [CommRing R] [CommRing R'] (β : R →+* R') (w : σ → R')
     (F : MvPolynomial σ R) (e : ℕ)

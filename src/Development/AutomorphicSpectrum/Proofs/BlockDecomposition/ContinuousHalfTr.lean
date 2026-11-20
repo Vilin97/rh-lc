@@ -71,7 +71,7 @@ theorem ann_gen (P : A → Prop) (hP : ∀ x : A, (∀ t : F, P (algebraMap F A 
 end Gen
 
 theorem halfTr_add' (a b : AE D) : halfTr (a + b) = halfTr a + halfTr b := by
-  simp only [halfTr, trA, map_add, mul_add]
+  simp only [halfTr, trA, map_add (f := _), mul_add]
 
 theorem halfTr_zero' : halfTr (0 : AE D) = 0 := by
   simp [halfTr]
@@ -81,8 +81,8 @@ theorem halfTr_neg' (a : AE D) : halfTr (-a) = -halfTr a := by
 
 theorem halfTr_add_cA (w : AE D) : halfTr (w + cA D w) = Algebra.trace (AF D.host.F) (AE D) w := by
   have h2 : algebraMap D.host.F (AF D.host.F) (1 / 2) + algebraMap D.host.F (AF D.host.F) (1 / 2) = 1 := by
-    rw [← map_add, add_halves, map_one]
-  simp only [halfTr, trA, map_add, Formalism.IndefR.Datum.Brg.trace_cA, mul_add]
+    rw [← map_add (f := _), add_halves, map_one]
+  simp only [halfTr, trA, map_add (f := _), Formalism.IndefR.Datum.Brg.trace_cA, mul_add]
   rw [← add_mul, h2, one_mul]
 
 theorem halfTr_incA' (e : D.host.E) :

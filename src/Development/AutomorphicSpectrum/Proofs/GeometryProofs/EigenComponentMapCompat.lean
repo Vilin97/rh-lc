@@ -37,7 +37,7 @@ theorem eigSp_sum_eq_zero (ρ : O →+* Module.End k V) (s : Finset (O →+* k))
           set_option synthInstance.maxHeartbeats 100000 in
             rw [map_sum]
           exact Finset.sum_congr rfl fun u hu => (mem_eigSp_iff' ρ u _).1 (hf' u hu) a
-        rw [map_add, hf₀ a, h2, smul_add, Finset.smul_sum] at h1
+        rw [map_add (f := _), hf₀ a, h2, smul_add, Finset.smul_sum] at h1
         simp only [sub_smul, Finset.sum_sub_distrib]
         rw [← h1]
         abel
@@ -85,10 +85,10 @@ theorem eigComp_map {k k' V V' O : Type} [Field k] [Field k'] [AddCommGroup V] [
           κ.injective (RingHom.congr_fun e a))
         exact Submodule.mem_iSup_of_mem (κ.comp s) (Submodule.mem_iSup_of_mem hne (hmap s y hy))
       · intro a b ha hb
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ ha hb
     · intro a b ha hb
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ ha hb
   have h : ∃ p ∈ eigSp ρ σ, x - p ∈ ⨆ σ' ∈ {σ' : O →+* k | σ' ≠ σ}, eigSp ρ σ' := by
     by_contra hcon

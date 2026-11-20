@@ -145,11 +145,11 @@ theorem bwA_rowAct_elem_eq (a b : Fin r) (c : R) (f : MvPolynomial (Fin r × Fin
       | simp [Formalism.GradedWeylDivisibility.rowAct, Formalism.GradedWeylDivisibility.rowGen, Polynomial.algebraMap_apply]
       | simp [Formalism.GradedWeylDivisibility.rowAct, Formalism.GradedWeylDivisibility.rowGen]
   · intro p q hp hq
-    simp only [map_add, Polynomial.eval_add, hp, hq]
+    simp only [map_add (f := _), Polynomial.eval_add, hp, hq]
   · intro p v hp
     simp only [map_mul, Polynomial.eval_mul, hp]
     congr 1
-    simp only [Formalism.GradedWeylDivisibility.rowAct, Formalism.GradedWeylDivisibility.rowGen, MvPolynomial.aeval_X, Matrix.add_apply, map_add, add_mul,
+    simp only [Formalism.GradedWeylDivisibility.rowAct, Formalism.GradedWeylDivisibility.rowGen, MvPolynomial.aeval_X, Matrix.add_apply, map_add (f := _), add_mul,
       Finset.sum_add_distrib, sum_C_one_mul_X_eq_X, sum_C_single_mul_X_eq_ite, Polynomial.eval_add, Polynomial.eval_C]
     split_ifs <;> simp <;> exact mul_comm _ _
 
@@ -238,11 +238,11 @@ theorem bwA_rowGen_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {
       | simp [Formalism.GradedWeylDivisibility.rowGen, Polynomial.algebraMap_apply]
       | simp [Formalism.GradedWeylDivisibility.rowGen]
   · intro p q hp hq
-    simp only [map_add, Polynomial.map_add, hp, hq]
+    simp only [map_add (f := _), Polynomial.map_add (f := _), hp, hq]
   · intro p v hp
     simp only [map_mul, Polynomial.map_mul, hp]
     congr 1
-    simp only [Formalism.GradedWeylDivisibility.rowGen, MvPolynomial.aeval_X, MvPolynomial.map_X, Polynomial.map_add, Polynomial.map_C]
+    simp only [Formalism.GradedWeylDivisibility.rowGen, MvPolynomial.aeval_X, MvPolynomial.map_X, Polynomial.map_add (f := _), Polynomial.map_C]
     split_ifs <;> simp
 
 theorem bwA_rowDiv_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {r n : ℕ} (a b : Fin r) (k : ℕ)
@@ -682,7 +682,7 @@ theorem bwA_ten_intSpan (D : D7) (w : D.what₂.places.Pl) {N : ℕ} (lam : D.wh
         intro Q1 Q2 h1 h2
         simp only [Set.mem_setOf_eq] at h1 h2 ⊢
         intro r' hr'
-        rw [map_add, add_mul, smul_add]
+        rw [map_add (f := _), add_mul, smul_add]
         exact add_mem (h1 r' hr') (h2 r' hr')
       zero_mem' := by
         simp only [Set.mem_setOf_eq]

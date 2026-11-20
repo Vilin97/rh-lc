@@ -42,14 +42,14 @@ theorem exists_monic_map_eq_X_pow {R B K : Type*} [CommRing R] [CommRing B] [Fie
   have ht : IsUnit (aeval x (u.map κ)) := by
     have h1 : u.map κ = C (κ (u.coeff 0)) + X * r := by
       rw [← hr, coeff_map]; ring
-    rw [h1, map_add, aeval_C, map_mul, aeval_X]
+    rw [h1, map_add (f := _), aeval_C, map_mul, aeval_X]
     exact hx _ hu0 _
   have hxa : x ^ a ∈ J := by
     obtain ⟨v, hv⟩ := ht
     have h2 : x ^ a * aeval x (u.map κ) = -aeval x e := by
       have := hχ
       rw [← aeval_def] at this
-      rw [show χ = X ^ a * u.map κ + e by rw [he]; ring, map_add, map_mul, map_pow, aeval_X] at this
+      rw [show χ = X ^ a * u.map κ + e by rw [he]; ring, map_add (f := _), map_mul, map_pow, aeval_X] at this
       linear_combination this
     have h3 : x ^ a = -aeval x e * ↑v⁻¹ := by
       rw [← h2, ← hv, mul_assoc, Units.mul_inv, mul_one]
@@ -72,7 +72,7 @@ theorem exists_monic_map_eq_X_pow {R B K : Type*} [CommRing R] [CommRing B] [Fie
   have hqmap : q.map ε = X ^ q.natDegree := by
     conv_lhs => rw [hqm.as_sum]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum, add_eq_left]
+      rw [Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum, add_eq_left]
     refine Finset.sum_eq_zero fun k hk => ?_
     have hk' : q.natDegree - k ≠ 0 := by have := Finset.mem_range.1 hk; omega
     have : q.coeff k ∈ RingHom.ker ε := Ideal.pow_le_self hk' (hqc k)
@@ -122,7 +122,7 @@ theorem toGerm_monic_expr {d : ℕ} (A : (σ → ℂ) →L[ℂ] (Fin d → ℂ))
     toGerm w (x ^ n + ∑ j, compA A w (c j) * x ^ (j : ℕ)) =
       toGerm w x ^ n + ∑ j, pull A w (toGerm (A w) (c j)) * toGerm w x ^ (j : ℕ) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [map_add, map_sum, map_mul, map_pow, pull_toGerm]
+    simp [map_add (f := _), map_sum, map_mul, map_pow, pull_toGerm]
 
 theorem coe_monic_expr {d : ℕ} (A : (σ → ℂ) →L[ℂ] (Fin d → ℂ)) (w : σ → ℂ) (x : anFun w) (n : ℕ)
     (c : Fin n → anFun (A w)) :
@@ -154,7 +154,7 @@ theorem proof : CentredIntegralEquation.Statement := by
     intro x n c
     rw [toGerm_monic_expr]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_mul, map_pow, aeval_X, aeval_C, halg]
+      simp only [map_add (f := _), map_sum, map_mul, map_pow, aeval_X, aeval_C, halg]
   set zc : σ → anFun w := fun i => mkA (fun z => z i)
     ((ContinuousLinearMap.proj (R := ℂ) (φ := fun _ : σ => ℂ) i).analyticAt w)
   set cz : σ → holGerms w ⧸ I := fun i => Ideal.Quotient.mk I (toGerm w (zc i))
@@ -216,10 +216,10 @@ theorem proof : CentredIntegralEquation.Statement := by
     have e : algebraMap (holGerms (A w)) (holGerms w ⧸ I) (constGerm (A w) c) + xB * Ideal.Quotient.mk I t =
         Ideal.Quotient.mk I (pull A w (constGerm (A w) c) +
           (toGerm w gA - pull A w (constGerm (A w) (g w))) * t) := by
-      simp only [xB, gcl, halg, map_add, map_mul, map_sub]
+      simp only [xB, gcl, halg, map_add (f := _), map_mul, map_sub]
     rw [e]
     refine (isUnit_of_germEval_ne_zero _ ?_).map _
-    simp only [map_add, map_mul, map_sub, germEval_pull, germEval_constGerm, germEval_toGerm]
+    simp only [map_add (f := _), map_mul, map_sub, germEval_pull, germEval_constGerm, germEval_toGerm]
     simpa [gA, mkA] using hc
   obtain ⟨Q, hQm, hQ0, hQmap⟩ :=
     exists_monic_map_eq_X_pow (germEval (A w)) (constGerm (A w)) (germEval_constGerm _) xB hx
@@ -244,7 +244,7 @@ theorem proof : CentredIntegralEquation.Statement := by
     rw [Fin.sum_univ_eq_sum_range (fun i => pull A w (F.coeff i) * toGerm w gA ^ i) n, ← hF0]
     conv_rhs => rw [hFm.as_sum]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_mul, map_pow, aeval_X, aeval_C, halg, gcl]
+      simp only [map_add (f := _), map_sum, map_mul, map_pow, aeval_X, aeval_C, halg, gcl]
     rfl
   · simp only [hrepv]
     rw [Fin.sum_univ_eq_sum_range (fun i => germEval (A w) (F.coeff i) * T ^ i) n]

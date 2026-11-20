@@ -132,7 +132,7 @@ theorem trace_coprime (d p : ℕ) (hp : p.Prime) (hp2 : p ≠ 2) (hpd : ¬ p ∣
     simp
   have hc : conj π = (m : ℂ) + (n : ℂ) * ((1 - Complex.I * ((Real.sqrt d : ℝ) : ℂ)) / 2) := by
     rw [hπ]
-    simp only [map_add, map_mul, map_div₀, map_one, Complex.conj_ofReal, Complex.conj_I, map_intCast, map_ofNat]
+    simp only [map_add (f := _), map_mul, map_div₀, map_one, Complex.conj_ofReal, Complex.conj_I, map_intCast, map_ofNat]
     ring
   refine ⟨2 * m + n, ?_, ?_⟩
   · rw [hc, hπ]
@@ -175,7 +175,7 @@ theorem ring_facts {X : Fields} (σ₀ : X.K →+* ℂ) (π : ℂ) (pE : 𝓞 X.
   · apply hinj
     rw [map_mul, f1, f2, hpp, map_natCast]
   · apply hinj
-    rw [map_add, f1, f2, hT, map_intCast]
+    rw [map_add (f := _), f1, f2, hT, map_intCast]
 
 end Arith
 
@@ -449,13 +449,13 @@ theorem p_torsion_represents_quotient : HalfP := by
     have h𝓞 : α * pE + (α + β * pE) * cO X.E pE = 1 := by linear_combination hαβ + β * hprod
     have hcopE : algebraMap (𝓞 X.E) X.E α * (algebraMap (𝓞 X.E) X.E pE) + (algebraMap (𝓞 X.E) X.E α + algebraMap (𝓞 X.E) X.E β * (algebraMap (𝓞 X.E) X.E pE)) * (algebraMap (𝓞 X.E) X.E (cO X.E pE)) = 1 := by
       have := congrArg (algebraMap (𝓞 X.E) X.E) h𝓞
-      simp only [map_add, map_mul, map_one] at this
+      simp only [map_add (f := _), map_mul, map_one] at this
       exact this
     have hm₃ : ((k : X.E) * (algebraMap (𝓞 X.E) X.E (cO X.E pE))) • m + (algebraMap (𝓞 X.E) X.E α * (algebraMap (𝓞 X.E) X.E pE / algebraMap (𝓞 X.E) X.E (cO X.E pE)) +
         (algebraMap (𝓞 X.E) X.E α + algebraMap (𝓞 X.E) X.E β * (algebraMap (𝓞 X.E) X.E pE))) • m₁ ∈ perO A.AA N N' := by
       refine add_mem (KH.smul_mem_of _ hm ((k : 𝓞 X.E) * cO X.E pE) (by simp only [map_mul, map_intCast])) ?_
       rw [add_smul, ← smul_smul]
-      exact add_mem (KH.smul_mem_of _ hm₀ α rfl) (KH.smul_mem_of _ hm₁ (α + β * pE) (by simp only [map_add, map_mul]))
+      exact add_mem (KH.smul_mem_of _ hm₀ α rfl) (KH.smul_mem_of _ hm₁ (α + β * pE) (by simp only [map_add (f := _), map_mul]))
     refine ⟨embH (X.embC A.σ₀) A.δ w, hxS, ?_⟩
     rw [KH.mem_cLat']
     refine ⟨embH (X.embC A.σ₀) A.δ (((k : X.E) * (algebraMap (𝓞 X.E) X.E (cO X.E pE))) • m + (algebraMap (𝓞 X.E) X.E α * (algebraMap (𝓞 X.E) X.E pE / algebraMap (𝓞 X.E) X.E (cO X.E pE)) +

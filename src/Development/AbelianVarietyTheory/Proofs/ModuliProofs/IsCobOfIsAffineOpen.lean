@@ -57,7 +57,7 @@ theorem isCob_of_isAffineOpen : ∀ (X : Scheme.{0}) (J : Type) (U : J → X.Ope
       rsT_eq_resG (c a d) (le_inf (inf_le_left.trans inf_le_left) inf_le_right)] at h0
     have e := congrArg (resG X (inf_le_left.trans (le_inf (le_inf ha hb) hd) :
       W ⊓ (LB.triv X).U PUnit.unit ≤ U a ⊓ U b ⊓ U d)) h0
-    rw [map_add, resG_resG_divisors, resG_resG_divisors, resG_resG_divisors] at e
+    rw [map_add (f := _), resG_resG_divisors, resG_resG_divisors, resG_resG_divisors] at e
     change resG X _ (resG X _ (c a b)) + resG X _ (resG X _ (c b d)) = resG X _ (resG X _ (c a d))
     rw [resG_resG_divisors, resG_resG_divisors, resG_resG_divisors]
     exact e

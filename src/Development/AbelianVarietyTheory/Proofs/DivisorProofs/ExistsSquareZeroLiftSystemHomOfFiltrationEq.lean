@@ -28,7 +28,7 @@ theorem sysHom_of_K_eq : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : I
       (GlobalTheory.T.mem_liftSystemFiltration_sup_iff_hodgeFiltration R R₀ I hI π hπ hk X₀ s₀ S hρ hF c').2 (by rw [hc', hodgeFiltration_eq_range]; exact ⟨f, rfl⟩)
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hmem
     have hρz : rho hI hk s₀ z = 0 := (hρ.2 z).2 hz
-    have hfo : FormOf hI hk y w := ⟨f, by rw [← hc', map_add, hρz, add_zero], hf⟩
+    have hfo : FormOf hI hk y w := ⟨f, by rw [← hc', map_add (f := _), hρz, add_zero], hf⟩
     have hm := GlobalTheory.T.crystallineClass_secondSystem_eq_neg_defect R R₀ I hI π hπ hk X₀ s₀ hG.const S S' Φ θ hθ y hy w hfo (v w) (hv w)
     have hy' : y ∈ S'.K hI := hK ▸ hy
     have h0 : S'.r hI y = 0 := hy'

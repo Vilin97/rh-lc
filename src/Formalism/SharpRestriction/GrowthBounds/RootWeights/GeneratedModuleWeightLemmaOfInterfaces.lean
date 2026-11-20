@@ -45,7 +45,7 @@ theorem generated_submodule_stable (G : MvPolynomial (ι × Fin n) R) (g : MvPol
     exact Submodule.subset_span ⟨g * u, Submonoid.mul_mem _ (Submonoid.subset_closure hg) hu, rfl⟩
   | zero => simp
   | add y z _ _ hy hz =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hy hz
   | smul c y _ hy =>
     rw [map_smul]
@@ -81,7 +81,7 @@ theorem generic_translate_weights_mem (hT : TransvectionExpansion) (hTo : TorusA
       exact hw w hwW
     | zero => simp
     | add y z _ _ hy hz =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hy hz
     | smul c y _ hy =>
       rw [MvPolynomial.smul_eq_C_mul, map_mul, matrixSubst_C, RingHom.id_apply, ← MvPolynomial.smul_eq_C_mul]

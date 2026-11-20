@@ -282,7 +282,7 @@ theorem IrreducibleGermPrimitiveForm.proof (hF : FiniteFibreGermIntegral.Stateme
   have hPt : (Polynomial.X ^ N + ∑ j, C (a j) * Polynomial.X ^ (j : ℕ)).map (germOf (A x)) = p := by
     conv_rhs => rw [hpm.as_sum]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
+      simp only [Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
       Polynomial.map_mul, Polynomial.map_C, a, germOf_germRep]
     rw [← hN, Fin.sum_univ_eq_sum_range (fun i => C (p.coeff i) * Polynomial.X ^ i) N]
   set Pt : (analyticAtRing (A x))[X] := Polynomial.X ^ N + ∑ j, C (a j) * Polynomial.X ^ (j : ℕ) with hPtdef
@@ -326,7 +326,7 @@ theorem IrreducibleGermPrimitiveForm.proof (hF : FiniteFibreGermIntegral.Stateme
       set_option synthInstance.maxHeartbeats 100000 in
         simp [hPtdef, Polynomial.map_sum, ev]
     have h2 := congrArg (Polynomial.map ev) huv
-    rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, Polynomial.map_C, ← derivative_map,
+    rw [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, Polynomial.map_C, ← derivative_map,
       hmap] at h2
     have hy' : ev res ≠ 0 := hy
     refine ⟨C (ev res)⁻¹ * u.map ev, C (ev res)⁻¹ * v.map ev, ?_⟩

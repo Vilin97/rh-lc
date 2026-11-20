@@ -72,7 +72,7 @@ theorem map_identity (φ : A →+* ℂ) (hφ : ∀ x, φ (ρ x) = star (φ x)) (
     intro X; ext i j
     simp [Formalism.UG.cT, conjTranspose_apply, hφ]
   have := congrArg φ.mapMatrix h
-  simpa only [map_add, map_mul, RingHom.mapMatrix_apply, hcT, Matrix.map_mul] using this
+  simpa only [map_add (f := _), map_mul, RingHom.mapMatrix_apply, hcT, Matrix.map_mul] using this
 
 end Block
 

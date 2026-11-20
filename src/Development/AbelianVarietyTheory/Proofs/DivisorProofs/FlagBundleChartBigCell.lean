@@ -137,7 +137,7 @@ theorem holo_cellInv (g : Γ(Y, W)) :
     simp only [MvPolynomial.eval₂Hom_C]
     exact ev_appLE_cellInv π w y₀ hv a
   | add P Q hP hQ =>
-    simp only [map_add, ev_add]
+    simp only [map_add (f := _), ev_add]
     exact hP.add hQ
   | mul_X P s hP =>
     have hd : DifferentiableOn ℂ (fun v : V D => v (ε.symm (.inr s))) {v | base ε v ∈ c.e.target} := by

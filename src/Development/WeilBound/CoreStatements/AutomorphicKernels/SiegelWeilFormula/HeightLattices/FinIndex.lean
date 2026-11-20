@@ -38,7 +38,7 @@ theorem vol_sig (hcm : HeckeCharacterZeroLocus.SiegelWeilU.IsCMExt F E σ) (v : 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [Lsg, hsg, HeckeCharacterZeroLocus.SiegelWeilU.sigR]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hc : Continuous sg := by
     have := IsModuleTopology.continuous_of_linearMap Lsg
     exact (funext hL : ⇑Lsg = ⇑sg) ▸ this

@@ -39,7 +39,7 @@ private theorem act_transp (J : L V →ₗᵢ[ℂ] H) (J' : L W →ₗᵢ[ℂ] H
       rw [a, b]; rfl)]
     simp only [ContinuousLinearMap.comp_apply]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hT', h1, hT, map_add, Finsupp.sum, Finsupp.sum, map_sum, (convSpec _ hk' x).2.2, (convSpec _ hk _).2.2,
+      rw [hT', h1, hT, map_add (f := _), Finsupp.sum, Finsupp.sum, map_sum, (convSpec _ hk' x).2.2, (convSpec _ hk _).2.2,
       ← ContinuousLinearMap.integral_comp_comm _ (convSpec _ hk _).2.1]
     simp only [lift_sh]
   · beta_reduce
@@ -53,7 +53,7 @@ private theorem act_transp (J : L V →ₗᵢ[ℂ] H) (J' : L W →ₗᵢ[ℂ] H
       (ContinuousLinearMap.compL ℂ W V W S) ∘L ((ContinuousLinearMap.compL ℂ W V V).flip S')
     have hΦ : ∀ c, Φ c = S ∘L c ∘L S' := fun c => rfl
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [← hΦ, symb, Finsupp.sum, map_add, map_sum, map_smul]
+      simp only [← hΦ, symb, Finsupp.sum, map_add (f := _), map_sum, map_smul]
     rw [← Φ.integral_comp_comm hi]
     simp only [map_smul]
 

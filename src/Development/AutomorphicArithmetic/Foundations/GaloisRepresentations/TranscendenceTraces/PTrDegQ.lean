@@ -30,5 +30,5 @@ theorem UpperTheory.Gal.TranscendenceTraces.trDegQ_of :
     simp only [TensorProduct.tmul_smul, LinearMap.smul_apply, LinearMap.id_apply]
     exact (Int.cast_smul_eq_zsmul ℚ_[l] d _).symm
   | add u v hu hv =>
-    simp only [map_add] at hu hv ⊢
+    simp only [map_add (f := _)] at hu hv ⊢
     rw [hu, hv]

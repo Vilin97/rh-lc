@@ -244,7 +244,7 @@ theorem UpperTheory.V.CA.u_tan :
         show Multiplicative.ofAdd _ = Multiplicative.ofAdd _ * Multiplicative.ofAdd _
         rw [← ofAdd_add]
         congr 1
-        rw [hab, map_add, map_add, map_mul, hmk a, hmk b, ← map_mul, hee, add_zero] }
+        rw [hab, map_add (f := _), map_add (f := _), map_mul, hmk a, hmk b, ← map_mul, hee, add_zero] }
   have hψker : IsOpen (ψ.ker : Set (lev G J)) := by
     have hle : HD.toSubgroup.comap (lev G J).subtype ≤ ψ.ker := by
       intro h hh

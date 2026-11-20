@@ -135,7 +135,7 @@ theorem appLE_center (f : Γ(X, W)) : e.appLE _ _ le_rfl (center e W π f) = 0 :
 
 def d (h : V ≤ e ⁻¹ᵁ W) : Γ(X, W) →+ Γ(conormal e, V) :=
   AddMonoidHom.mk' (fun f => cls (le_nhd he h) (center e W π f) (appLE_center he f)) fun f g => by
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact cls_add _ _ _ _ _ _
 
 theorem d_apply (h : V ≤ e ⁻¹ᵁ W) (f : Γ(X, W)) :
@@ -185,7 +185,7 @@ def univ : Der π e (conormal e) where
     replace h₁ := h₁.trans (congrArg (· • _) (appLE_resG e _ _ f))
     replace h₂ := h₂.trans (congrArg (· • _) ((appLE_base he _ _ h _).trans (resG_appLE e _ _ g)))
     rw [d_apply, d_apply, d_apply, ← h₁, ← h₂, ← cls_add _ _ _ _ _ (by
-      rw [map_add, map_mul, map_mul, appLE_center he, appLE_center he]; simp)]
+      rw [map_add (f := _), map_mul, map_mul, appLE_center he, appLE_center he]; simp)]
     congr 1
     simp only [center_apply, map_mul]
     ring
@@ -221,7 +221,7 @@ def lift (D : Der π e F) : conormal e ⟶ F :=
   adj e (homOfLinear (F := ideal e) (G := (Scheme.Modules.pushforward e).obj F)
     (fun W =>
       { toFun s := D.app (le_refl (e ⁻¹ᵁ W)) ((idealSub e).incl.app W s)
-        map_add' s t := by rw [map_add]; exact map_add _ _ _
+        map_add' s t := by rw [map_add (f := _)]; exact map_add _ _ _
         map_smul' a s := by
           refine (D.app_mul _ a ((idealSub e).incl.app W s)).trans ?_
           rw [show e.appLE W _ le_rfl ((idealSub e).incl.app W s) = 0 from
@@ -239,7 +239,7 @@ def comp (D : Der π e F) (φ : F ⟶ F') : Der π e F' where
   res_app h h' f := (app_resM φ h' _).symm.trans (congrArg (φ.app _) (D.res_app h h' f))
   app_res h k f := congrArg (φ.app _) (D.app_res h k f)
   app_mul {W V} h f g := (congrArg (QCoh.appLinear φ V) (D.app_mul h f g)).trans (by
-    rw [map_add, map_smul, map_smul]; rfl)
+    rw [map_add (f := _), map_smul, map_smul]; rfl)
   app_base h k a := (congrArg (φ.app _) (D.app_base h k a)).trans (map_zero _)
 
 end Der
@@ -462,7 +462,7 @@ theorem ofAugCot_bijective : Function.Bijective (c.ofAugCot he) := by
       exact key _
     · rw [map_smul, map_smul, hy]
       rfl
-    · rw [map_add, map_add, hy, hz]
+    · rw [map_add (f := _), map_add (f := _), hy, hz]
       rfl
 
 def augCotEquiv : letI := c.algebra; AugCot (c.aug he) ≃ₗ[Γ(S, U)] Γ(conormal e, U) :=
@@ -530,9 +530,9 @@ theorem prod_hom_ext {Y P : Scheme.{0}} {π₂ : Y ⟶ S} {e₂ : S ⟶ Y} (he�
       exact congr(($h₂).app U _)
   | zero => simp only [map_zero]
   | one => simp only [d_one, map_zero]
-  | add a b _ _ ha hb => simp only [map_add, ha, hb]
+  | add a b _ _ ha hb => simp only [map_add (f := _), ha, hb]
   | neg a _ ha => simp only [map_neg, ha]
-  | mul a b _ _ ha hb => simp only [d_mul, map_add, Scheme.Modules.Hom.app_smul, ha, hb]
+  | mul a b _ _ ha hb => simp only [d_mul, map_add (f := _), Scheme.Modules.Hom.app_smul, ha, hb]
 
 theorem IsChart.exists_isBaseChange [QuasiCompact e] (c : IsChart π e U W) {R A : Type}
     [CommRing R] [CommRing A] [Algebra R A] (ε : A →ₐ[R] R) [Algebra R Γ(S, U)]

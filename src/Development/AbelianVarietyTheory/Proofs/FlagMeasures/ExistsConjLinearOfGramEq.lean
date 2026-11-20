@@ -46,11 +46,11 @@ theorem exists_conjLinear_of_gram_eq :
     intro c d
     induction c using Finsupp.induction_linear with
     | zero => simp [hz1]
-    | add c c' h h' => rw [map_add, map_add, hadd, inner_add_left, h, h']
+    | add c c' h h' => rw [map_add (f := _), map_add (f := _), hadd, inner_add_left, h, h']
     | single i x =>
       induction d using Finsupp.induction_linear with
       | zero => simp [hz2]
-      | add d d' h h' => rw [map_add, map_add, hadd2, inner_add_right, h, h']
+      | add d d' h h' => rw [map_add (f := _), map_add (f := _), hadd2, inner_add_right, h, h']
       | single j y =>
         rw [hA, hB, conjLinearCombination_single, conjLinearCombination_single,
           Finsupp.linearCombination_single, Finsupp.linearCombination_single, hsmul, hsmul2,

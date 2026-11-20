@@ -30,7 +30,7 @@ def thetaLinAt (hP : IsPair B M χY χW om r s r' s') {φ : (Fin n × Fin d → 
   toFun f := theta om (pureA F f φ) g h
   map_add' f f' := by
     have hs := hP.weil.isUSplitting.pres
-    simp only [theta, pureA_add, map_add]
+    simp only [theta, pureA_add, map_add (f := _)]
     exact thetaSum_add F (hs _ _ (pureA_mem f hφ)) (hs _ _ (pureA_mem f' hφ))
   map_smul' c f := by
     simp only [theta, pureA_smul, map_smul, RingHom.id_apply]

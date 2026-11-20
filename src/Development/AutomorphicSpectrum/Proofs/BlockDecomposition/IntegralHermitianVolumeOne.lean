@@ -107,7 +107,7 @@ theorem sigEquiv_apply (bs : Module.Basis (Fin d) F E) (σ : E →ₐ[F] E) (v :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [sigEquiv, sigR]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem trace_sigR (bs : Module.Basis (Fin d) F E) (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F))
     (x : Fv F v ⊗[F] E) :
@@ -237,7 +237,7 @@ def testMat (σ : E →ₐ[F] E) (a b : Fin n) (s : Fv F v ⊗[F] E) : Matrix (F
 theorem testMat_mem (hG : GoodLoc σ J T bs v ψv S σS ϖ ε) (a b : Fin n) {s : Fv F v ⊗[F] E} (hs : s ∈ S) :
     testMat σ a b s ∈ HermR (Fv F v) σ n := by
   intro i j
-  simp only [testMat, map_add, apply_ite (sigR (Fv F v) σ), map_zero, GoodAt.sig_sig hG hs]
+  simp only [testMat, map_add (f := _), apply_ite (sigR (Fv F v) σ), map_zero, GoodAt.sig_sig hG hs]
   rw [add_comm]
   simp only [and_comm]
 
@@ -265,11 +265,11 @@ theorem pair_testMat (bs : Module.Basis (Fin d) F E) (hG : GoodLoc σ J T bs v �
   unfold pairHerm
   show algebraMap F (Fv F v) (1 / 2) * Algebra.trace (Fv F v) (Fv F v ⊗[F] E)
     (∑ i, ∑ j, testMat σ a b s i j * (y : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) j i) = _
-  rw [sum_testMat, hy, ← map_mul, map_add, trace_sigR bs, ← two_mul, ← mul_assoc, hh, one_mul]
+  rw [sum_testMat, hy, ← map_mul, map_add (f := _), trace_sigR bs, ← two_mul, ← mul_assoc, hh, one_mul]
 
 theorem pair_add (x x' y : HermR (Fv F v) σ n) :
     pairHerm (Fv F v) σ n (x + x') y = pairHerm (Fv F v) σ n x y + pairHerm (Fv F v) σ n x' y := by
-  simp only [pairHerm, AddSubgroup.coe_add, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add, mul_add]
+  simp only [pairHerm, AddSubgroup.coe_add, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _), mul_add]
 
 theorem continuous_pair (y : HermR (Fv F v) σ n) (bs : Module.Basis (Fin d) F E) :
     Continuous fun x : HermR (Fv F v) σ n => pairHerm (Fv F v) σ n x y := by

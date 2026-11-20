@@ -44,7 +44,7 @@ theorem exists_isotypic_projector (R : Type) [Ring R] (M : Type) [AddCommGroup M
   let P : M →ₗ[R] M := Mξ.subtype ∘ₗ Submodule.linearProjOfIsCompl Mξ C hC
   have hP : ∀ y ∈ Mξ, ∀ z ∈ C, P (y + z) = y := by
     intro y hy z hz
-    simp only [P, LinearMap.comp_apply, map_add]
+    simp only [P, LinearMap.comp_apply, map_add (f := _)]
     have h1 : Submodule.linearProjOfIsCompl Mξ C hC y = ⟨y, hy⟩ :=
       Submodule.linearProjOfIsCompl_apply_left hC ⟨y, hy⟩
     have h2 : Submodule.linearProjOfIsCompl Mξ C hC z = 0 :=
@@ -59,7 +59,7 @@ theorem exists_isotypic_projector (R : Type) [Ring R] (M : Type) [AddCommGroup M
   refine ⟨P, hPy x₀ hx, fun v => hPy _ (hPmem v), ?_, ?_⟩
   · intro g v
     obtain ⟨y, hy, z, hz, rfl⟩ := hdec v
-    rw [hP y hy z hz, map_add, hP (g y) (hinv g hy) (g z) (hCinv g hz)]
+    rw [hP y hy z hz, map_add (f := _), hP (g y) (hinv g hy) (g z) (hCinv g hz)]
   · intro W hW a ha v
     have hX : ∀ u : (R ∙ x₀), a • u = 0 := by
       intro u

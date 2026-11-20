@@ -118,7 +118,7 @@ private theorem isKap {l : ℕ} [Fact l.Prime] {F : GFrame l} {n : ℕ} {x : NP 
   · intro j g _ h _
     have e := (hsel j).2.2.1 g h
     simp only [one_smul]
-    rw [hr, hr, e, map_add, map_mul, map_mul]
+    rw [hr, hr, e, map_add (f := _), map_mul, map_mul]
   · intro j g
     rw [ha, mp_od hinj]
     exact (hsel j).1 g
@@ -191,7 +191,7 @@ theorem UpperTheory.V.Pa.Det.detAsm :
     refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
     · simp only [s, neg_mul_neg, ← map_mul, hee, map_one]
     · intro j g _ h _
-      simp only [la, hzc g h, ep_add, heps, ep_C, (hact (z h) (hzW h) g).2.1 j, map_add, mp_smul,
+      simp only [la, hzc g h, ep_add, heps, ep_C, (hact (z h) (hzW h) g).2.1 j, map_add (f := _), mp_smul,
         map_mul, hr, hχ]
     · intro j g
       rw [hDa, mp_od hinj]
@@ -212,7 +212,7 @@ theorem UpperTheory.V.Pa.Det.detAsm :
       have h0 := hell g hg
       simp only [ell, (hact (z g) (hzW g) g).2.2.2, hmapid] at h0
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [ph, la, hr, ← map_mul, mp_trace, ← map_sum, ← map_add, h0, map_zero]
+        simp only [ph, la, hr, ← map_mul, mp_trace, ← map_sum, ← map_add (f := _), h0, map_zero]
   obtain ⟨Y₀, Y, hY₀ev, hY₀s, hY, hph⟩ := UpperTheory.V.Pa.Det.detAlg D _ la s ph hK hTw
   obtain ⟨m, b, hb⟩ := clr (K := x.K)
     (Sum.elim (fun p : Fin n × Fin n => Y₀ p.1 p.2) (fun q : Fin k.g × Fin n × Fin n => Y q.1 q.2.1 q.2.2))

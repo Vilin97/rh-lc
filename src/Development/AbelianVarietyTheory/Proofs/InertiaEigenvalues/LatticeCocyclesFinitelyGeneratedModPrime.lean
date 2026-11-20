@@ -242,7 +242,7 @@ theorem cocycles_fg_mod_l : Formalism.GaloisCohomology.LocalTateDualityK → ∀
     refine ⟨(isLocallyConstant_mk hS _ hcZ.1 (hcT c)).continuous.comp hΦ.2, fun g h => ?_⟩
     change mk LA.T ϖ (ev c (Φ.symm (g * h))) = mk LA.T ϖ (ev c (Φ.symm g)) +
       act ϖ (ρT (Φ.symm g)) (hρT _) (mk LA.T ϖ (ev c (Φ.symm h)))
-    rw [act_mk, ← map_add]
+    rw [act_mk, ← map_add (f := _)]
     congr 1
     apply Subtype.ext
     simp [ev, ρT, map_mul, hcZ.2]

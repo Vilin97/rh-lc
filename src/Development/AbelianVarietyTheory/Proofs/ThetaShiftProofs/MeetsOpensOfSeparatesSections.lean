@@ -39,7 +39,7 @@ theorem valF_mul (h : ⊤ ≤ x ⁻¹ᵁ U) (a b : Γ(X, U)) : valF x U (a * b) 
   simp only [valF_eq h, map_mul]
 
 theorem valF_add (h : ⊤ ≤ x ⁻¹ᵁ U) (a b : Γ(X, U)) : valF x U (a + b) = valF x U a + valF x U b := by
-  simp only [valF_eq h, map_add]
+  simp only [valF_eq h, map_add (f := _)]
 
 theorem valF_sub (h : ⊤ ≤ x ⁻¹ᵁ U) (a b : Γ(X, U)) : valF x U (a - b) = valF x U a - valF x U b := by
   simp only [valF_eq h, map_sub]
@@ -229,7 +229,7 @@ theorem MeetsOpens.exists_hom_of_embedsBy [IsReduced X] [X'.IsSeparated] (hx : M
   | C b =>
     rw [MvPolynomial.eval₂Hom_C, MvPolynomial.eval₂Hom_C]
     exact (valF_appLE f ⊤ le_top hj b).trans ((congrArg (valF · ⊤ b) (hf j)).trans (valF_appLE f' ⊤ le_top hj' b).symm)
-  | add p q hp hq => rw [map_add, map_add, valF_add hj, valF_add hj', hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), valF_add hj, valF_add hj', hp, hq]
   | mul_X p l hp =>
     rw [map_mul, map_mul, valF_mul hj, valF_mul hj', hp, MvPolynomial.eval₂Hom_X', MvPolynomial.eval₂Hom_X']
     congr 1

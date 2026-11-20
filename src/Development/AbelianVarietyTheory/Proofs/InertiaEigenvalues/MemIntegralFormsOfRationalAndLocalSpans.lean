@@ -18,7 +18,7 @@ variable {D : D7} {T : CoreJ D} {j : ℕ} {σ : T.Q.c.F →+* ℂ}
 
 theorem rd_add (C : Cover T j σ) (a : (D.host.E →+* ℂ) × ℕ → ℕ) (f g : Rul C.d.Xo₂ C.d.c₂) :
     C.rd a (f + g) = C.rd a f + C.rd a g := by
-  simp only [Cover.rd, map_add, smul_add]
+  simp only [Cover.rd, map_add (f := _), smul_add]
 
 theorem rd_smul (C : Cover T j σ) (a : (D.host.E →+* ℂ) × ℕ → ℕ) (x : C.d.c₂.F) (f : Rul C.d.Xo₂ C.d.c₂) :
     C.rd a (x • f) = C.σ₂ x • C.rd a f := by
@@ -38,7 +38,7 @@ theorem vAdd_nonneg {k : Type} [Field k] [NumberField k] (la : HeightOneSpectrum
 
 theorem cuspSec_add (C : Cover T j σ) (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n : ℕ) {f g : Rul C.d.Xo₂ C.d.c₂}
     (hf : f ∈ C.cuspSec a n) (hg : g ∈ C.cuspSec a n) : f + g ∈ C.cuspSec a n :=
-  ⟨add_mem hf.1 hg.1, by rw [map_add]; exact add_mem hf.2 hg.2⟩
+  ⟨add_mem hf.1 hg.1, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf.2 hg.2⟩
 
 theorem cuspSec_smul (C : Cover T j σ) (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n : ℕ) (x : C.d.c₂.F)
     {f : Rul C.d.Xo₂ C.d.c₂} (hf : f ∈ C.cuspSec a n) : x • f ∈ C.cuspSec a n :=

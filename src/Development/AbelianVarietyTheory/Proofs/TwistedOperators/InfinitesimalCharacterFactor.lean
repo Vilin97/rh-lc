@@ -235,7 +235,7 @@ theorem genInfChar_of_isFactor : GlobalTheory.Published.LanglandsClassification 
       change T (A X u) = dRep π X (T u)
       rw [hA X hX, hTL X hX _ u.2])
     obtain ⟨X₁, h₁, X₂, h₂, rfl⟩ := exists_lieSet_add ε Y
-    simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, h1 _ h₁, h1 _ h₂]
+    simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, h1 _ h₁, h1 _ h₂]
   have hTφ : ∀ u, T' (φ u) = 0 := fun u => by
     rw [hφv, map_sub, map_smul, map_etr T' (fun a b u => hTA _ u), hχ' χ hχ, sub_self]
   obtain ⟨N, hN⟩ := exists_ker_sup_range φ (fun Y => IsGKSub ε I.ρ (Y.map (kFinVec ε I.ρ).subtype))

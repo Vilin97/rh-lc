@@ -47,7 +47,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.xvanExt :
   intro φ
   have h1 : ∀ g h, φ (z (g * h)) = φ (z g) + Raw.bar γ g * φ (z h) := by
     intro g h
-    rw [hcoc g h, map_add, hι, ← Algebra.smul_def, map_smul, smul_eq_mul]
+    rw [hcoc g h, map_add (f := _), hι, ← Algebra.smul_def, map_smul, smul_eq_mul]
   have h2 : D.UnrT (fun g => φ (z g)) 0 := by
     intro A hA g hg hb
     simp only [hunr A hA g hg hb, map_zero]

@@ -150,12 +150,12 @@ theorem frobpin_local (I : Ideal (LetA O n)) (hI : IsAdicComplete I ↥(W.N T))
     refine Submodule.smul_induction_on hy (fun a ha z hz => ?_) (fun x y hx hy => ?_)
     · rw [frobpin_φD_smul, smul_comm c (W.φA a), pow_succ, Submodule.mul_smul]
       exact Submodule.smul_mem_smul (frobpin_φA_pow W I hφI k a ha) (hcI z hz)
-    · rw [map_add, smul_add]
+    · rw [map_add (f := _), smul_add]
       exact Submodule.add_mem _ hx hy
   let f : ↥(W.N T) →+ ↥(W.N T) :=
     { toFun := fun y => ⟨c • W.φD T y, hcN y y.2⟩
       map_zero' := by ext; simp
-      map_add' := fun x y => by ext; simp [map_add, smul_add] }
+      map_add' := fun x y => by ext; simp [map_add (f := _), smul_add] }
   have hf : ∀ k : ℕ, ∀ y ∈ (I ^ k • ⊤ : Submodule (LetA O n) ↥(W.N T)),
       f y ∈ (I ^ (k + 1) • ⊤ : Submodule (LetA O n) ↥(W.N T)) := by
     intro k y hy
@@ -237,7 +237,7 @@ theorem frobenius_uniformiser_wach {G : Type} [Group G] [TopologicalSpace G] {Qp
     · rw [map_zero, smul_zero]
       exact Submodule.zero_mem _
     · intro x y hx hy
-      rw [map_add, smul_add]
+      rw [map_add (f := _), smul_add]
       exact Submodule.add_mem _ hx hy
   have hN : ∀ y ∈ W.N T, Formalism.MainNotions.DeltaInvariantLattices.Eat E π' ^ h' • W.φD T y ∈ W.N T := by
     intro y hy

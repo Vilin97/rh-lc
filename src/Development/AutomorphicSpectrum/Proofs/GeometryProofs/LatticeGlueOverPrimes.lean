@@ -118,7 +118,7 @@ theorem exists_nat_mul_mem [CharZero Ω] (hξ : IsCptGen ξ) (W : X.Opens) (hW :
     { carrier := {s | ∃ t, φ s * a = φ t}
       add_mem' := by
         rintro x y ⟨t, ht⟩ ⟨u, hu⟩
-        exact ⟨t + u, by rw [map_add, map_add, add_mul, ht, hu]⟩
+        exact ⟨t + u, by rw [map_add (f := _), map_add (f := _), add_mul, ht, hu]⟩
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := by
         rintro c x ⟨t, ht⟩

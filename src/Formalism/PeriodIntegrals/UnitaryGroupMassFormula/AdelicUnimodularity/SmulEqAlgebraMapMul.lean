@@ -97,7 +97,7 @@ variable {b}
 
 theorem intC_add {x y : E ⊗[F] Af} (hx : IntC b x) (hy : IntC b y) : IntC b (x + y) := by
   intro k
-  rw [map_add]
+  rw [map_add (f := _)]
   exact ohat_add (hx k) (hy k)
 
 theorem intC_nsmul {x : E ⊗[F] Af} (hx : IntC b x) (m : ℕ) : IntC b (m • x) := by

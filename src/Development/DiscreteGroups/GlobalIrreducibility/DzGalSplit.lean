@@ -21,11 +21,11 @@ theorem gsplit_tensor_sum {V V' V'' : Type} [AddCommGroup V] [Module ℂ V] [Fin
   · induction v using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul x y => obtain ⟨y1, y2⟩ := y; simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · induction v using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul x y => obtain ⟨y1, y2⟩ := y; simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem gsplit_lpChar_lpSum (x y z : WD h) :
     x.lpChar (y.lpSum z) = (x.lpChar y).lpSum (x.lpChar z) := by

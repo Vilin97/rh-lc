@@ -87,7 +87,7 @@ theorem CycleSplit.Filt.proof (hS : CycleSplit.Filt.Step.Statement.{u, w}) :
     · intro hf
       obtain ⟨a, ha, y, hy, rfl⟩ := Submodule.mem_sup.mp hf
       obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp hy
-      rw [map_add, hmkQ]
+      rw [map_add (f := _), hmkQ]
       exact Submodule.add_mem_sup ha (Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self _))
   have hJkp : ∀ (l : Fin Fl.n) (f : Poly S N), f ∈ Fl.prime l ↔ f * g l ∈ Jk l.castSucc := by
     intro l f

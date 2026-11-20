@@ -161,7 +161,7 @@ theorem tate_exp_one (ψ : AddChar k Circle) (hψ : Continuous ψ) (hψ1 : ψ �
         rw [hwd (lift 0) 0 (by rw [hlift, map_zero])]
         simp
       map_add_eq_mul' := fun z w => by
-        rw [hwd (lift (z + w)) (lift z + lift w) (by rw [map_add, hlift, hlift, hlift])]
+        rw [hwd (lift (z + w)) (lift z + lift w) (by rw [map_add (f := _), hlift, hlift, hlift])]
         push_cast
         rw [mul_add, AddChar.map_add_eq_mul] }
   have hψb : ∀ a : 𝒪[k], ψb (IsLocalRing.residue 𝒪[k] a) = ψ ((c : k) * a) := fun a =>

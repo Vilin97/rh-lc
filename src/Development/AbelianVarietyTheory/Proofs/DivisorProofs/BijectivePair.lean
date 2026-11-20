@@ -33,7 +33,7 @@ theorem bijective_pair : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     intro x hx
     have e : (x 0 : E) * θ + (x 1 : E) = 0 := hx
     have e2 := congrArg ψ e
-    rw [map_add, map_mul, map_zero] at e2
+    rw [map_add (f := _), map_mul, map_zero] at e2
     have him := congrArg Complex.im e2
     simp only [Complex.add_im, Complex.mul_im, hreal, mul_zero, zero_mul, add_zero, Complex.zero_im] at him
     have h0re : (ψ (x 0 : E)).re = 0 := (mul_eq_zero.1 him).resolve_right hθ

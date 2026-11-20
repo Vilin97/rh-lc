@@ -191,7 +191,7 @@ theorem exists_col (θ : 𝓞 E) (hθ : (θ : E) + star (θ : E) = 1) (hlat : Su
       · have : m w = w := ext_Xflag (m : S.V →ₗ[E] S.V) LinearMap.id b
           (fun a ha => e2 a fun h => by rw [h] at ha; exact lt_irrefl _ ha) w hw
         change m (n _) = _
-        rw [h1, map_add, map_smul, e1, this]; module
+        rw [h1, map_add (f := _), map_smul, e1, this]; module
       · change m (n _) = _
         rw [h2 j hj, e2 j hj]
   have := key 1 (by rw [mul_inv_cancel₀ (h0 b)]; exact FractionalIdeal.one_mem_one _)
@@ -215,7 +215,7 @@ theorem exists_cols (w : Fin (r + 1) → S.V) (hw : ∀ b : Fin (r + 1), w b ∈
         rcases lt_trichotomy b.val k with hb | hb | hb
         · have : m (w b) = w b := ext_Xflag (m : S.V →ₗ[E] S.V) LinearMap.id b
             (fun a ha => e2 a fun h => by rw [h] at ha; exact lt_asymm ha hb) _ (hw b)
-          rw [if_pos hb, if_pos (by omega), map_add, this, e2 b fun h => by rw [h] at hb; exact lt_irrefl _ hb]
+          rw [if_pos hb, if_pos (by omega), map_add (f := _), this, e2 b fun h => by rw [h] at hb; exact lt_irrefl _ hb]
         · have : b = ⟨k, hk⟩ := Fin.ext hb
           rw [if_neg (by omega), if_pos (by omega), add_zero, this, e1]
         · rw [if_neg (by omega), if_neg (by omega), add_zero,
@@ -459,7 +459,7 @@ theorem exists_exact_frame : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) 
   obtain ⟨θ, hθ, -⟩ := GlobalTheory.TraceOne.exists_trace_one D 2 Nat.prime_two
   have hθ' : (θ : D.host.E) + star (θ : D.host.E) = 1 := by
     have := congrArg (algebraMap (𝓞 D.host.E) D.host.E) hθ
-    rw [map_add, map_one] at this
+    rw [map_add (f := _), map_one] at this
     rw [GlobalTheory.NormSum.AdLattice.star_eq_conj]
     exact this
   choose st hst using fun o : 𝓞 D.host.E => star_int (E := D.host.E) ⟨o, rfl⟩

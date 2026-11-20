@@ -29,7 +29,7 @@ theorem crisSpan_rat : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAi
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => rfl
-    | add x z hx hz => rw [map_add, map_add, hx, hz]
+    | add x z hx hz => rw [map_add (f := _), map_add (f := _), hx, hz]
   have hmem : ∀ x : V ⊗[ℚ_[l]] P.R.B, x ∈ Dcris (P.PD K) ρ' ↔ x ∈ Dcris (P.PD K) ρ := by
     intro x
     simp only [Dcris, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply,
@@ -57,6 +57,6 @@ theorem crisSpan_rat : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAi
   induction d i using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => rfl
-  | add x z hx hz => rw [map_add, map_add, hx, hz]
+  | add x z hx hz => rw [map_add (f := _), map_add (f := _), hx, hz]
 
 end GlobalTheory.Per.RatSpan

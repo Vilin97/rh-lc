@@ -30,7 +30,7 @@ theorem exists_semilinear_descent_to_baseChange :
       ∀ x, Φ x = ∑ k, rd (π (B.repr x k)) • ((1 : KT) ⊗ₜ[Ks] (⟨bs k, hb k⟩ : WK)) :=
     ⟨{ toFun := fun x => ∑ k, rd (π (B.repr x k)) • ((1 : KT) ⊗ₜ[Ks] (⟨bs k, hb k⟩ : WK))
        map_zero' := by simp
-       map_add' := by intro x y; simp [map_add, add_smul, Finset.sum_add_distrib] },
+       map_add' := by intro x y; simp [map_add (f := _), add_smul, Finset.sum_add_distrib] },
      fun _ => rfl⟩
   have key : ∀ (l : LL) (w : WK), Φ (l • (w : WL)) = rd (π l) • ((1 : KT) ⊗ₜ[Ks] w) := by
     intro l w

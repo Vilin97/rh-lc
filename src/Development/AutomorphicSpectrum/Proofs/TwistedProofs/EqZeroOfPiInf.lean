@@ -80,7 +80,7 @@ theorem eq_zero_of_piInf : ∀ {F E : Type} [Field F] [NumberField F] [Field E] 
     exact (one_mul _).symm.trans h3
   have hre : ∀ w i, (C.repr x i).1 w = 0 := fun w => by
     have e := hinf w
-    rw [hdec, map_add, piInf_tmul, piInf_tmul, hB0, hB1, map_one, mul_one] at e
+    rw [hdec, map_add (f := _), piInf_tmul, piInf_tmul, hB0, hB1, map_one, mul_one] at e
     have hi := congrArg Complex.im e
     have him := im_ne_zero h hβ (emb w).1
     set p := InfinitePlace.Completion.extensionEmbedding w ((C.repr x 0).1 w) with hp

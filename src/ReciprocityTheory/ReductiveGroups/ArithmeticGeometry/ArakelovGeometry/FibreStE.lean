@@ -136,11 +136,11 @@ theorem exists_gen (x : ι → Ω) (e : Fin (D + 1) → ι) (h : IsProjFrame x e
       hUV := by
         have e1 : (UV 0).map r * Pa.map r + (UV 1).map r * derivative (Pa.map r) - C (r b') =
             (UV 0 * Pa + UV 1 * derivative Pa - C b').map r := by
-          rw [Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul,
+          rw [Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul,
             Polynomial.derivative_map, Polynomial.map_C]
         have e2 : (UV 0 * Pa + UV 1 * derivative Pa - C b').map
             (algebraMap (chartRing y) (fnField y)) = 0 := by
-          rw [Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul,
+          rw [Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul,
             ← Polynomial.derivative_map, Polynomial.map_C, hUV 0, hUV 1, ← hPK]
           simp only [Matrix.cons_val_zero, Matrix.cons_val_one]
           linear_combination (C (algebraMap (chartRing y) (fnField y) b')) * huv

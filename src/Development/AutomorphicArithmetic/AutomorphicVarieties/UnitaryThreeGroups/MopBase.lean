@@ -85,7 +85,7 @@ theorem approx {O X R σ : Type} [CommRing O] [AddCommGroup X] [CommRing R] [Alg
     induction d using Finsupp.induction_linear with
     | zero => simpa using h1
     | add f g hf hg =>
-      rw [Finsupp.prod_add_index' (by simp) (fun _ _ _ => pow_add _ _ _), map_add]
+      rw [Finsupp.prod_add_index' (by simp) (fun _ _ _ => pow_add _ _ _), map_add (f := _)]
       exact hmul _ _ _ hf _ hg
     | single i k =>
       rw [Finsupp.prod_single_index (by simp), Finsupp.weight_single]

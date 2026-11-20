@@ -152,7 +152,7 @@ theorem char_eq_bar_smul : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     intro k pk pk' x x' hk hx hx' hxx
     obtain ⟨w, hw⟩ := hlab k pk pk' x x' hk hx hx' hxx
     refine ⟨j.symm w, j.injective ?_⟩
-    rw [map_add, map_nsmul, AddEquiv.apply_symm_apply, hs, hw]
+    rw [map_add (f := _), map_nsmul, AddEquiv.apply_symm_apply, hs, hw]
   have hT := GlobalTheory.LabelTransfer.main o Ω S ρ p y₀ u eA s hlab'
   haveI : Mono (jK u.V) := GlobalTheory.PolDeg.Wit.mono_jK
   haveI : Mono (genMap u.U) := by unfold genMap; infer_instance
@@ -187,8 +187,8 @@ theorem char_eq_bar_smul : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   have hadj : ∀ y : X₀, be y (j (m χ) - H.bar a • j χ) = 0 := by
     intro y
     have h := hpol (j.symm y) χ
-    rw [hq, hq, hq, hq, hq, hq, map_add, map_add, hs, AddEquiv.apply_symm_apply] at h
-    simp only [map_add, LinearMap.add_apply, AddEquiv.apply_symm_apply] at h
+    rw [hq, hq, hq, hq, hq, hq, map_add (f := _), map_add (f := _), hs, AddEquiv.apply_symm_apply] at h
+    simp only [map_add (f := _), LinearMap.add_apply, AddEquiv.apply_symm_apply] at h
     rw [hbe.1 (j χ) (a • y), hbe.1 (j (m χ)) y, hbe.2.1 a y (j χ)] at h
     push_cast at h
     have h' : sc * (be y (j (m χ)) : ℝ) = sc * (be y (H.bar a • j χ) : ℝ) := by linarith
@@ -325,7 +325,7 @@ theorem latAt_centre : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
     rw [← hχ]
     refine QuotientAddGroup.eq.2 ⟨j.symm v, j.injective ?_⟩
     simp only [nsmulAddMonoidHom_apply] at hv ⊢
-    rw [map_nsmul, j.apply_symm_apply, hv, map_add, map_neg, j.apply_symm_apply]
+    rw [map_nsmul, j.apply_symm_apply, hv, map_add (f := _), map_neg, j.apply_symm_apply]
   have hker' : lb.yy.ker = X.S.HH X.M z := by
     rw [← hker]
     ext b

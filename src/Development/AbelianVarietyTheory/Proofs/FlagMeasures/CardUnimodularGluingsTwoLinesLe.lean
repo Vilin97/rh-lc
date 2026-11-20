@@ -60,7 +60,7 @@ private lemma exists_generator_of_integral_dual {β : E} {N : Submodule (𝓞 E)
     have ha' : a = f c₀ := by
       rw [hf, hc₀, hd, ← mul_assoc, inv_mul_cancel₀ hd0, one_mul]
     have : a - c • f y = f i := by
-      rw [ha', ← hiz, map_add, map_smul, add_sub_cancel_right]
+      rw [ha', ← hiz, map_add (f := _), map_smul, add_sub_cancel_right]
     rw [this]; exact hi
 
 open NumberField in

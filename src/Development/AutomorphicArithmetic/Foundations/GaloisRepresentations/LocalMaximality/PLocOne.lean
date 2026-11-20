@@ -26,7 +26,7 @@ private theorem locOne_nak {L : Type} [Field L] [Algebra ℂ L] (B O : Subalgebr
       | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
       | algebraMap r => simp
       | add y z _ _ hy hz =>
-        rw [Subalgebra.coe_add, map_add]
+        rw [Subalgebra.coe_add, map_add (f := _)]
         exact Submodule.add_mem _ hy hz
       | mul y z _ _ hy hz =>
         rw [Subalgebra.coe_mul, Derivation.leibniz]
@@ -67,7 +67,7 @@ private theorem locOne_nak {L : Type} [Field L] [Algebra ℂ L] (B O : Subalgebr
         push_cast at h5
         linear_combination h5
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [h1, map_add, Derivation.map_algebraMap, zero_add, map_sum]
+        rw [h1, map_add (f := _), Derivation.map_algebraMap, zero_add, map_sum]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [Derivation.leibniz]
       rfl

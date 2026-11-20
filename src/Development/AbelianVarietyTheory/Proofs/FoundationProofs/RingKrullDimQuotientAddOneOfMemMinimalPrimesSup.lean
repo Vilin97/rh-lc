@@ -286,7 +286,7 @@ theorem ringKrullDim_quotient_le_zero_of_forall_X_mem {I : Ideal (MvPolynomial �
   | add p q hp hq =>
     obtain ⟨a, ha⟩ := hp
     obtain ⟨b, hb⟩ := hq
-    exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+    exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
   | mul_X p i _ =>
     exact ⟨0, by rw [map_zero, eq_comm, Ideal.Quotient.eq_zero_iff_mem]; exact I.mul_mem_left _ (h i)⟩
 

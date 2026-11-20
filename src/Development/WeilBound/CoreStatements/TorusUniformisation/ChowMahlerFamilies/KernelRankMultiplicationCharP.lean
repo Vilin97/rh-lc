@@ -29,7 +29,7 @@ theorem finrank_eq_mul_ker {k V : Type} [Field k] (p : ℕ) [CharP k p] [AddComm
     | zero => intro v; simp [h]
     | succ n ih =>
       intro v
-      rw [pow_succ' X (n + 1), Module.End.mul_apply, h, ih, Module.End.mul_apply, map_add, map_smul,
+      rw [pow_succ' X (n + 1), Module.End.mul_apply, h, ih, Module.End.mul_apply, map_add (f := _), map_smul,
         ← Module.End.mul_apply X (X ^ n), ← pow_succ', Nat.cast_succ (n + 1), add_smul, one_smul, add_assoc]
   have h2 : ∀ j, j < p → LinearMap.ker X ≤ LinearMap.range (X ^ j) := by
     intro j
@@ -125,7 +125,7 @@ theorem loc (p : ℕ) [CharP k p] (χ : C →ₐ[k] k) (s : ℕ) : ∀ (V : Type
         rw [← map_smul, hV c hc, map_zero]) T' (fun j c => δ j.succ c - δ j.succ (x 0) * w * δ 0 c)
       (fun j c v => by
         obtain ⟨v, rfl⟩ := N.mkQ_surjective v
-        rw [← map_smul N.mkQ, hT', hT', ← map_smul N.mkQ, ← map_smul N.mkQ, ← map_add]
+        rw [← map_smul N.mkQ, hT', hT', ← map_smul N.mkQ, ← map_smul N.mkQ, ← map_add (f := _)]
         congr 1
         simp only [LinearMap.smul_apply, LinearMap.sub_apply, hT, smul_add, smul_sub, ← mul_smul, sub_smul]
         rw [mul_comm c]
@@ -174,7 +174,7 @@ theorem glob [IsAlgClosed k] [Module.Finite k C] (p : ℕ) [Fact p.Prime] [CharP
         add_smul ((n + 1 : ℕ) : k), one_smul, ← mul_smul c (c ^ n * _), ← mul_smul (δ i c), ← mul_assoc, ← pow_succ',
         mul_comm (δ i c), add_assoc, mul_smul c]
   have hTN : ∀ i, ∀ v ∈ N, T i v ∈ N := fun i v hv => by
-    refine Submodule.smul_induction_on hv (fun a ha v _ => ?_) (fun a b ha hb => by rw [map_add]; exact N.add_mem ha hb)
+    refine Submodule.smul_induction_on hv (fun a ha v _ => ?_) (fun a b ha hb => by rw [map_add (f := _)]; exact N.add_mem ha hb)
     induction ha using Submodule.span_induction generalizing v with
     | mem a ha =>
       obtain ⟨c, hc, rfl⟩ := ha
@@ -183,7 +183,7 @@ theorem glob [IsAlgClosed k] [Module.Finite k C] (p : ℕ) [Fact p.Prime] [CharP
       rw [this]
       exact Submodule.smul_mem_smul (Ideal.subset_span ⟨c, hc, rfl⟩) trivial
     | zero => simp
-    | add a b _ _ ha hb => rw [add_smul, map_add]; exact N.add_mem (ha v trivial) (hb v trivial)
+    | add a b _ _ ha hb => rw [add_smul, map_add (f := _)]; exact N.add_mem (ha v trivial) (hb v trivial)
     | smul a b _ hb => rw [smul_eq_mul, mul_comm, mul_smul]; exact hb _ trivial
   have : FiniteDimensional k (V ⧸ N) := Module.Finite.of_surjective (N.mkQ.restrictScalars k) N.mkQ_surjective
   have : FiniteDimensional k N := Module.Finite.of_injective (N.subtype.restrictScalars k) Subtype.val_injective
@@ -198,7 +198,7 @@ theorem glob [IsAlgClosed k] [Module.Finite k C] (p : ℕ) [Fact p.Prime] [CharP
       exact (Submodule.Quotient.mk_eq_zero _).2 (Submodule.smul_mem_smul (Ideal.subset_span ⟨c, hc, rfl⟩) trivial))
     T' δ (fun j c v => by
       obtain ⟨v, rfl⟩ := N.mkQ_surjective v
-      rw [← map_smul N.mkQ, hT', hT', ← map_smul N.mkQ, ← map_smul N.mkQ, ← map_add, hT]) x x1 x2
+      rw [← map_smul N.mkQ, hT', hT', ← map_smul N.mkQ, ← map_smul N.mkQ, ← map_add (f := _), hT]) x x1 x2
   have b2 := ih (finrank k N) (by omega) N rfl
     (fun i => ⟨⟨fun v => ⟨T i v, hTN i v v.2⟩, fun a b => Subtype.ext (map_add _ _ _)⟩,
       fun a b => Subtype.ext (map_smul (T i) a b.1)⟩) (fun i c v => Subtype.ext (hT i c v.1))
@@ -222,10 +222,10 @@ theorem inv_mul (D : H →ₗ[k] k) (hD : ∀ a b, D (a * b) = counit (R := k) a
   have he : ∀ a, e (comul a) = a := fun a => by simp [e]
   have key : ∀ s t, β (s * t) = e s * β t + β s * e t := fun s t => by
     induction s with
-    | add x y hx hy => simp only [add_mul, map_add, hx, hy]; ring
+    | add x y hx hy => simp only [add_mul, map_add (f := _), hx, hy]; ring
     | tmul a a' =>
       induction t with
-      | add x y hx hy => simp only [mul_add, map_add, hx, hy]; ring
+      | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]; ring
       | tmul b b' => simp [β, e, hD, Algebra.smul_def]; ring
   have := key (comul a) (comul b)
   rw [he, he, ← Bialgebra.comul_mul] at this
@@ -254,7 +254,7 @@ theorem exists_transl (χ : H →ₐ[k] k) : ∃ σ : H →ₐ[k] H, (∀ y, χ 
       simp only [LinearMap.comp_apply]
       generalize comul (R := k) x = t
       induction t with
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a b => simp [u, e]; rw [← Algebra.smul_def, map_smul, smul_eq_mul, mul_comm]
     rw [h3]
     exact congrArg D (DFunLike.congr_fun h1 y)
@@ -286,7 +286,7 @@ theorem dvd_quot [IsAlgClosed k] [Module.Finite k H] (p : ℕ) [Fact p.Prime] [C
     rw [s2, map_sub, map_smul, h1, smul_zero, sub_zero]
     exact this.trans (Pi.single_apply _ _ _)
   · obtain ⟨v, rfl⟩ := I.mkQ_surjective v
-    rw [← map_smul I.mkQ, hT, hT, ← map_smul I.mkQ, ← map_smul I.mkQ, ← map_add, smul_eq_mul, inv_mul _ (hD i)]
+    rw [← map_smul I.mkQ, hT, hT, ← map_smul I.mkQ, ← map_smul I.mkQ, ← map_add (f := _), smul_eq_mul, inv_mul _ (hD i)]
     rfl
 
 open GlobalTheory GlobalTheory.PDiv in
@@ -315,11 +315,11 @@ theorem hopf_dvd [IsAlgClosed k] [Module.Finite k H] [IsCocomm k H] (p : ℕ) [F
       | algebraMap c => simp [inv, Algebra.algebraMap_eq_smul_one, Algebra.TensorProduct.one_def, h1]
       | ι x => simp [hF, l, Fintype.linearCombination_apply, inv, hf, h0, h1]
       | mul a b ha hb => rw [map_mul, inv_mul _ (hD i), ha, hb]; simp
-      | add a b ha hb => rw [map_add, map_add, ha, hb, add_zero]
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, add_zero]
     induction ha using Submodule.span_induction with
     | mem a ha => obtain ⟨x, -, rfl⟩ := ha; exact (k2 x).symm ▸ zero_mem _
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | smul a b hb' hb =>
       rw [smul_eq_mul, inv_mul _ (hD i)]
       exact add_mem (Ideal.mul_mem_left _ _ hb) (Ideal.mul_mem_left _ _ hb')
@@ -344,7 +344,7 @@ theorem hopf_dvd [IsAlgClosed k] [Module.Finite k H] [IsCocomm k H] (p : ℕ) [F
       simp only [LinearMap.comp_apply]
       generalize comul (R := k) φ = t
       induction t with
-      | add x y hx hy => simp only [map_add, LinearMap.add_apply, ← hx, ← hy]; rfl
+      | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, ← hx, ← hy]; rfl
       | tmul a b => simp [mul_comm]
     refine dvd_quot p (fun i => CartierDual.evalAt k H (f i)) (fun i φ ψ => ?_) ?_ _ fun i φ hφ => ?_
     · simp [CartierDual.mul_apply, hf, add_comm]
@@ -379,22 +379,22 @@ noncomputable def co (i : Fin r) : B ⊗[k] Sq k r →ₗ[k] B :=
 
 theorem co_mul (i : Fin r) (s t : B ⊗[k] Sq k r) : co i (s * t) = c0 k r B s * co i t + co i s * c0 k r B t := by
   induction s with
-  | add x y hx hy => simp only [add_mul, map_add, hx, hy]; ring
+  | add x y hx hy => simp only [add_mul, map_add (f := _), hx, hy]; ring
   | tmul a a' =>
     induction t with
-    | add x y hx hy => simp only [mul_add, map_add, hx, hy]; ring
+    | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]; ring
     | tmul b b' => simp [snd_mul, Algebra.smul_def]; ring
 
 theorem co_map {B' : Type} [CommRing B'] [Algebra k B'] (θ : B →ₐ[k] B') (i : Fin r) (s : B ⊗[k] Sq k r) :
     co i (Algebra.TensorProduct.map θ (AlgHom.id k _) s) = θ (co i s) := by
   induction s with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a a' => simp
 
 theorem map_lineCoeffConst {B' : Type} [CommRing B'] [Algebra k B'] (θ : B →ₐ[k] B') (s : B ⊗[k] Sq k r) :
     c0 k r B' (Algebra.TensorProduct.map θ (AlgHom.id k _) s) = θ (c0 k r B s) := by
   induction s with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a a' => simp
 
 noncomputable def dir (l : Fin r → k) : Sq k r →ₐ[k] DualNumber k := TrivSqZeroExt.map (dotProductBilin k k l)
@@ -403,7 +403,7 @@ theorem map_dir (l : Fin r → k) (s : B ⊗[k] Sq k r) :
     Algebra.TensorProduct.map (AlgHom.id k B) (dir l) s =
       c0 k r B s ⊗ₜ[k] 1 + (∑ i, l i • co i s) ⊗ₜ[k] (DualNumber.eps : DualNumber k) := by
   induction s with
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add, Finset.sum_add_distrib, add_tmul]; abel
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add, Finset.sum_add_distrib, add_tmul]; abel
   | tmul a x =>
     have : dir l x = x.fst • 1 + (∑ i, l i * x.snd i) • (DualNumber.eps : DualNumber k) := by
       ext <;> simp [dir, dotProduct]
@@ -755,7 +755,7 @@ theorem aeval_one {I : Type} [Fintype I] [DecidableEq I] (c : I → R) (hc : ∀
     aeval c P = algebraMap k R (AddMonoidAlgebra.coeff P 0) + ∑ i, AddMonoidAlgebra.coeff P (Finsupp.single i 1) • c i := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [coeff_C, (Finsupp.single_ne_zero.2 one_ne_zero).symm]
-  | add P Q hP hQ => simp only [map_add, hP, hQ, MvPolynomial.coeff_add, add_smul, Finset.sum_add_distrib]; abel
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ, MvPolynomial.coeff_add, add_smul, Finset.sum_add_distrib]; abel
   | mul_X P n hP =>
     rw [map_mul, hP, aeval_X, add_mul, Finset.sum_mul]
     simp only [smul_mul_assoc, hc, smul_zero, Finset.sum_const_zero, add_zero, coeff_mul_X']
@@ -776,7 +776,7 @@ theorem aeval_two {d : ℕ} (a b : Fin d → R) (ha : ∀ i j, a i * a j = 0) (h
     have : ∀ i j : Fin d, ¬ (0 : Fin 2 × Fin d →₀ ℕ) = Finsupp.single (0, i) 1 + Finsupp.single (1, j) 1 := fun i j h => by
       simpa using DFunLike.congr_fun h (0, i)
     simp [coeff_C, (Finsupp.single_ne_zero.2 one_ne_zero).symm, this]
-  | add P Q hP hQ => simp only [map_add, hP, hQ, MvPolynomial.coeff_add, add_smul, Finset.sum_add_distrib]; abel
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ, MvPolynomial.coeff_add, add_smul, Finset.sum_add_distrib]; abel
   | mul_X P n hP =>
     rw [map_mul, hP, aeval_X]
     obtain ⟨l, n⟩ := n

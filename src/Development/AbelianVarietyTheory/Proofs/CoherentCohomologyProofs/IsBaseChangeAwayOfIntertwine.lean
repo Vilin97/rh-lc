@@ -36,7 +36,7 @@ theorem exists_away_map_of_intertwine (ψ : N₀ →ₗ[R₀] N) (x₀ : A₀) (
     exact awayFrac_eq_iff.2 ⟨l, by rw [← h, ← h, hl]⟩
   refine ⟨⟨⟨fun z => awayFrac N x (d z) (ψ (n z)), fun z w => ?_⟩, fun r z => ?_⟩, key⟩
   · obtain ⟨k, m, m', rfl, rfl⟩ := exists_awayFrac_common z w
-    rw [← map_add, key, key, key, map_add, map_add]
+    rw [← map_add (f := _), key, key, key, map_add (f := _), map_add (f := _)]
   · obtain ⟨k, m, rfl⟩ := exists_awayFrac z
     simp only [RingHom.id_apply]
     rw [← LinearMap.map_smul_of_tower, key, key, map_smul, LinearMap.map_smul_of_tower]
@@ -52,16 +52,16 @@ theorem isBaseChange_away_of_intertwine (ψ : N₀ →ₗ[R₀] N) (hψ : IsBase
   have hFP (k l : ℕ) (t : R ⊗[R₀] N₀) : F (k + l) (P l t) = F k t := by
     induction t with
     | tmul r y => exact congrArg (r ⊗ₜ[R₀] ·) (awayFrac_add_pow_smul x₀ k l y)
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hP (l : ℕ) (t : R ⊗[R₀] N₀) : hψ.equiv (P l t) = x ^ l • hψ.equiv t := by
     induction t with
     | tmul r y => simp [P, IsBaseChange.equiv_tmul, h, smul_comm r]
-    | add a b ha hb => simp only [map_add, ha, hb, smul_add]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, smul_add]
   have hF (k : ℕ) (t : R ⊗[R₀] N₀) :
       θ.liftBaseChange R (F k t) = awayFrac N x k (hψ.equiv t) := by
     induction t with
     | tmul r y => simp [F, IsBaseChange.equiv_tmul, hθ, LinearMap.map_smul_of_tower]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hsurj (z : R ⊗[R₀] LocalizedModule.Away x₀ N₀) : ∃ k t, F k t = z := by
     induction z with
     | tmul r z =>
@@ -70,7 +70,7 @@ theorem isBaseChange_away_of_intertwine (ψ : N₀ →ₗ[R₀] N) (hψ : IsBase
     | add a b ha hb =>
       obtain ⟨k, t, rfl⟩ := ha
       obtain ⟨j, u, rfl⟩ := hb
-      exact ⟨k + j, P j t + P k u, by rw [map_add, hFP, add_comm k j, hFP]⟩
+      exact ⟨k + j, P j t + P k u, by rw [map_add (f := _), hFP, add_comm k j, hFP]⟩
   suffices hb : Function.Bijective (θ.liftBaseChange R) from
     IsBaseChange.of_equiv (LinearEquiv.ofBijective _ hb) fun z => by simp
   constructor

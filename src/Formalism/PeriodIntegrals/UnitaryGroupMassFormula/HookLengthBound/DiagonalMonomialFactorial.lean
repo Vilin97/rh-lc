@@ -43,7 +43,7 @@ theorem coeff_diagHom {N : ℕ} (f : MvPolynomial (Fin N × Fin N) ℚ) (m : Fin
     · rw [coeff_zero, coeff_monomial, if_neg]
       rintro rfl
       exact h hm
-  · rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
+  · rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
 
 def diagMono {N : ℕ} (s : ℕ) (h : s ≤ N) : Fin N × Fin N →₀ ℕ :=
   ∑ p : Fin s, Finsupp.single (Fin.castLE h p, Fin.castLE h p) 1

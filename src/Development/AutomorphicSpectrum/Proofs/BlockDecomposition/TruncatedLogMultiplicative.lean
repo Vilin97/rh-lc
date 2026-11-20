@@ -23,7 +23,7 @@ theorem derivative_logPoly (c : ℕ → B) (hc : ∀ k : ℕ, c k * ((k : B) + 1
   rw [derivative_C_mul, derivative_X_pow, neg_pow (X : B[X]) k]
   simp only [Nat.add_sub_cancel, map_mul, map_pow, map_neg, map_one, Nat.cast_add, Nat.cast_one]
   calc _ = (-1) ^ k * (C (c k) * ((k : B[X]) + 1)) * X ^ k := by
-        simp only [map_add, map_natCast, map_one]; ring
+        simp only [map_add (f := _), map_natCast, map_one]; ring
     _ = _ := by rw [h1, mul_one]
 
 theorem one_add_mul_geom {R : Type} [CommRing R] (u : R) (s : ℕ) :

@@ -39,7 +39,7 @@ private theorem galOf_mul' {A B : Type*} [CommRing A] [Algebra F A] [CommRing B]
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a c => simp
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
   simp [galOf, h]
 
 private theorem galOf_one' {A B : Type*} [CommRing A] [Algebra F A] [CommRing B] [Algebra E B] (e : E ⊗[F] A ≃ₐ[E] B)
@@ -49,7 +49,7 @@ private theorem galOf_one' {A B : Type*} [CommRing A] [Algebra F A] [CommRing B]
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a c => simp
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
   simp [galOf, h]
 
 private theorem gal_module [IsGalois F E] (σ : E ≃ₐ[F] E) (hσ : σ = 1 ∨ ∀ τ, τ ∈ Subgroup.zpowers σ) (n : ℕ)

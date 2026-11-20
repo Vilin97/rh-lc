@@ -34,7 +34,7 @@ def Dp (u : WeightFamilies.Wt D j) (t : ι → ℝ) : Submodule (𝓞 B.KO) (B.C
   carrier := {F | ∀ ζ, ((t ζ : ℝ) : EReal) ≤ X.vAt la (y ζ) (X.inc u F)}
   zero_mem' := fun ζ => by rw [map_zero, X.vAt_zero]; exact le_top
   add_mem' := fun {a b} ha hb ζ => by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact le_trans (le_min (ha ζ) (hb ζ)) (X.vAt_add la (y ζ) _ _)
   smul_mem' := fun a F hF ζ => by
     by_cases ha : a = 0

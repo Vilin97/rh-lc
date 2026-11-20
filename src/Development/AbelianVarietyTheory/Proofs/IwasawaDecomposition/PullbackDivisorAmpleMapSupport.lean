@@ -104,7 +104,7 @@ theorem finite_preimage_of_blowup : ∀ (E : Type) [Field E] [NumberField E] [Is
     have h4 := GlobalTheory.T.blowup_divisor_trivial_on_fibers BY n (genι Y) q _ hiso hB.1 hI (qF.fiber t) (T.residueField t) (qF.fiberι t)
       (qF.fiberToSpecResidueField t) (T.fromSpecResidueField t ≫ u)
       (by rw [← hqu, ← Category.assoc, hc, Category.assoc])
-    rw [hcls, map_nsmul, map_add, map_nsmul, map_neg, h3, smul_zero, zero_add, smul_neg, ← map_nsmul, h4, neg_zero]
+    rw [hcls, map_nsmul, map_add (f := _), map_nsmul, map_neg, h3, smul_zero, zero_add, smul_neg, ← map_nsmul, h4, neg_zero]
   by_cases hx : ∃ t : T, u t = x
   · obtain ⟨t, rfl⟩ := hx
     refine (hfin t).subset fun p hp => ?_

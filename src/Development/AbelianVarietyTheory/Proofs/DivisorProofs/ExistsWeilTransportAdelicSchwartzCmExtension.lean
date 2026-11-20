@@ -132,7 +132,7 @@ theorem cA_eq (σ : E →ₐ[F] E) (z : AF F ⊗[F] E) : cA σ z = cAF σ z := b
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {σ : E →ₐ[F] E} {nS nT : ℕ} {JS : Matrix (Fin nS) (Fin nS) E} {JT : Matrix (Fin nT) (Fin nT) E} {ξ₀ : E}
   {JA : Matrix (Fin nT) (Fin nT) E} {JB : Matrix (Fin nS) (Fin nS) E} {ξ : AF F ⊗[F] E}

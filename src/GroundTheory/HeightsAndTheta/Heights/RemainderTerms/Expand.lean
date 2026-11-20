@@ -53,7 +53,7 @@ theorem hasDD_of_dividedDifference_eq {f N : ℕ} {H P : RootRing f N}
 
 theorem antisymmetrize_add (f N : ℕ) (H H' : RootRing f N) :
     antisymmetrize f N (H + H') = antisymmetrize f N H + antisymmetrize f N H' := by
-  simp [antisymmetrize, map_add, smul_add, Finset.sum_add_distrib]
+  simp [antisymmetrize, map_add (f := _), smul_add, Finset.sum_add_distrib]
 
 theorem antisymmetrize_smul (f N : ℕ) (b : ℚ) (H : RootRing f N) :
     antisymmetrize f N (b • H) = b • antisymmetrize f N H := by

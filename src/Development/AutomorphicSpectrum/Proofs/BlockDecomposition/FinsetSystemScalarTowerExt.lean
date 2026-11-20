@@ -21,7 +21,7 @@ theorem equiv_lTensor {p : P →ₗ[B] P'} {q : Q →ₗ[B] Q'} (hp : IsBaseChan
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [IsBaseChange.equiv_tmul, h]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem exact_core [Module.Flat B A] {p : P →ₗ[B] P'} {q : Q →ₗ[B] Q'} {s : R →ₗ[B] R'}
     (hp : IsBaseChange A p) (hq : IsBaseChange A q) (hs : IsBaseChange A s)

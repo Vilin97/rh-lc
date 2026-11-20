@@ -95,7 +95,7 @@ theorem dualIdeal_eq_bot {F : HermLattice ℚ 1} {T : Type} [Fintype T] [Subsing
     intro f
     induction f using MvPolynomial.induction_on with
     | C n => simp [mConeMap, φ]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p q hp =>
       have hq : q.2 = t₀ := Subsingleton.elim _ _
       simp only [map_mul, hp]

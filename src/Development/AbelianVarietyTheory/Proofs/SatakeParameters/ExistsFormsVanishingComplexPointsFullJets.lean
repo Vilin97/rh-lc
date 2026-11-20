@@ -214,7 +214,7 @@ theorem exists_lin_sep {X : Scheme.{0}} (p : X ⟶ Sp ℂ) {N : ℕ} (ι : X ⟶
       exact ((basicOpen_app_frac ι _ (hL l) hg le_rfl).le h).2 (hLx l)
     | algebraMap c => rw [he, sub_self]; exact I.zero_mem
     | add a b _ _ ha hb =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       convert I.add_mem ha hb using 1
       ring
     | mul a b _ _ ha hb =>

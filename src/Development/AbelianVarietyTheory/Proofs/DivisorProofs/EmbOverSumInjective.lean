@@ -49,7 +49,7 @@ theorem span_range_eq_top {F B : Type} [Field F] [Ring B] [Algebra F B] [Algebra
       rw [Algebra.ofId_apply, Algebra.smul_def]; rfl
     rw [this]
     exact Submodule.smul_mem _ c (Submodule.subset_span ⟨b, rfl⟩)
-  | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
 
 end GlobalTheory.UPel.HT.RealRepBij
 

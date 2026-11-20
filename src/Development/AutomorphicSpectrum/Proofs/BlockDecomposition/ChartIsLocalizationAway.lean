@@ -267,7 +267,7 @@ theorem pres_transport {A R B ι : Type} [CommRing A] [CommRing R] [CommRing B] 
     (p : MvPolynomial ι A) : β (MvPolynomial.aeval v p) = MvPolynomial.eval₂Hom g w p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [hg]
-  | add p p' hp hp' => simp only [map_add, hp, hp']
+  | add p p' hp hp' => simp only [map_add (f := _), hp, hp']
   | mul_X p j hp => simp only [map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.eval₂Hom_X', hw]
 
 theorem chart_exists (K : Type) [Field K] (W Z Y : Scheme.{0}) (q : Z ⟶ Spec (CommRingCat.of K)) (i : W ⟶ Z)

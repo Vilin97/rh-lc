@@ -34,7 +34,7 @@ theorem exists_corr_of_defect : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀]
     change -η U _ = Φ.φ U b - ψ U b at h
     linear_combination h
   refine ⟨ψ, fun U b ↦ ?_, fun U V a b ↦ ?_⟩
-  · rw [hψv, map_add, Φ.red, (S'.ker U _).2 ((hη U).2.1 _), add_zero]
+  · rw [hψv, map_add (f := _), Φ.red, (S'.ker U _).2 ((hη U).2.1 _), add_zero]
   ·
     let α : S.F.obj U →ₐ[R] S'.F.obj V := (mp S'.F a).comp (Φ.φ U : S.F.obj U →ₐ[R] S'.F.obj U)
     let χ : Ω[Sec s₀ U.unop.1⁄R₀] →+ S'.F.obj V := θ U V a + (mp S'.F a).toAddMonoidHom.comp (η U) -
@@ -69,7 +69,7 @@ theorem exists_corr_of_defect : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀]
     rw [hn] at h0
     have h1 := (hθ U V a).der b
     simp only [α, AlgHom.coe_comp, Function.comp_apply] at h1
-    rw [hψv, hψv, map_add]
+    rw [hψv, hψv, map_add (f := _)]
     simp only [AlgEquiv.coe_toAlgHom] at h0 h1 ⊢
     linear_combination h0 - h1
 

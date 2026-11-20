@@ -11,7 +11,7 @@ theorem ldtwist_map_rowAct {K L : Type*} [CommRing K] [CommRing L] (φ : K →+*
   · rename_i a
     simp [rowAct]
   · rename_i p q hp hq
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   · rename_i p v hp
     simp only [map_mul, hp]
     congr 1

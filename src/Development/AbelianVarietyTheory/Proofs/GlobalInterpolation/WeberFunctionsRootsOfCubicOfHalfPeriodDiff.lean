@@ -65,7 +65,7 @@ lemma cubic_eq (j F0 F1 F2 : ℂ)
   obtain ⟨s1, s2, s3⟩ := h
   have e : ((X - C F0) * (X - C (-F1)) * (X - C (-F2)) : ℂ[X]) =
       X ^ 3 - C (F0 - F1 - F2) * X ^ 2 + C (-(F0 * F1) - F0 * F2 + F1 * F2) * X - C (F0 * F1 * F2) := by
-    simp only [map_sub, map_neg, map_mul, map_add]
+    simp only [map_sub, map_neg, map_mul, map_add (f := _)]
     ring
   rw [e, s1, s2, s3]
   simp only [map_sub, map_ofNat]

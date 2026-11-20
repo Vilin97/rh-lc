@@ -406,7 +406,7 @@ theorem lb_fockB_zero_right (f : MvPolynomial σ K) : fockB f 0 = 0 := by
   rw [← fockBL_apply, map_zero]
 
 theorem lb_fockB_add_right (f g g' : MvPolynomial σ K) : fockB f (g + g') = fockB f g + fockB f g' := by
-  simp only [← fockBL_apply, map_add]
+  simp only [← fockBL_apply, map_add (f := _)]
 
 theorem lb_fockB_smul_right (f g : MvPolynomial σ K) (c : K) : fockB f (c • g) = c * fockB f g := by
   simp only [← fockBL_apply, map_smul, smul_eq_mul]
@@ -564,7 +564,7 @@ theorem lb_map_coefLast {N n : ℕ} (hN : N = n + 1) (b : ι → Fin n → ℕ) 
   | monomial m a =>
     rw [map_monomial, lb_coefLast_monomial, lb_coefLast_monomial, bc_map_smul]
     split_ifs <;> simp
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
 
 theorem lb_map_projVV [CharZero K] [CharZero K'] {n : ℕ} (lam : ι → DomWeight n) (p : Pol K ι n) :
     map j ((projVV lam p : VV K lam) : Pol K ι n) = ((projVV lam (map j p) : VV K' lam) : Pol K' ι n) := by
@@ -1121,7 +1121,7 @@ theorem lx_low_mul {τ : ι} {D : ℤ} {P Q : Pol K ι N} (hP : LxLow hN τ D P)
   classical
   intro M hM
   obtain ⟨x, hx, y, hy, rfl⟩ := Finset.mem_add.1 (support_mul P Q hM)
-  rw [map_add, hQ (mem_support_iff.1 hy), add_zero]
+  rw [map_add (f := _), hQ (mem_support_iff.1 hy), add_zero]
   exact hP x hx
 
 theorem lx_coeff_low {τ : ι} {D : ℤ} {P : Pol K ι N} (hP : LxLow hN τ D P) (M : ι × Fin N × Fin N →₀ ℕ)
@@ -1136,7 +1136,7 @@ theorem rename_weightedHomogeneous_zero {α : Type} (f : α → ι × Fin N × F
     (fun a => ?_) (fun p q hp hq => ?_) (fun p v hp => ?_)
   · rw [rename_C]
     exact isWeightedHomogeneous_C _ _
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact hp.add hq
   · rw [map_mul, rename_X]
     have hx := isWeightedHomogeneous_X K (lxW hN τ) (f v)
@@ -1219,7 +1219,7 @@ theorem weight_monomial_shift_eq_omega (b : ι → Fin n → ℕ) (τ : ι) (m' 
     ((Finsupp.weight (lxW hN τ) (Finsupp.mapDomain (upVar hN) m' + zExp hN b) : ℕ) : ℤ) =
       Formalism.BranchingDeterminantCap.omg (fun s => (b τ s : ℤ)) := by
   classical
-  rw [map_add, lx_weight_mapDomain]
+  rw [map_add (f := _), lx_weight_mapDomain]
   have h0 : Finsupp.weight (lxW hN τ ∘ upVar hN) m' = 0 := by
     have : (lxW hN τ ∘ upVar hN) = 0 := by
       funext v
@@ -2004,7 +2004,7 @@ theorem unit_mem (s : DomWeight n) (y : Pol K Unit n) (hy : y ∈ VV K (fun _ : 
     rw [this, AlgEquiv.symm_apply_apply]
     exact hF ()
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem tenD_smul {k : ℕ} (a : ι → K) (g : ι → MvPolynomial (Fin k × Fin k) K) :
@@ -2331,7 +2331,7 @@ theorem hwA_key {K : Type} [Field K] [CharZero K] {σ ι' : Type} (S : Finset ι
   obtain ⟨m0, rfl⟩ : ∃ m0, m = m0 + Finsupp.single (t s0) 1 :=
     ⟨m - Finsupp.single (t s0) 1, (tsub_add_cancel_of_le (Finsupp.single_le_iff.2 (Nat.one_le_iff_ne_zero.2 hne))).symm⟩
   have hw0 : Finsupp.weight w m0 + w (t s0) = d := by
-    rw [← hmd, map_add, lx_w_single, one_smul]
+    rw [← hmd, map_add (f := _), lx_w_single, one_smul]
   have hc := congrArg (AddMonoidAlgebra.coeff · (Finsupp.single (u s0) 1 + m0)) hD
   rw [coeff_sum, coeff_zero, Finset.sum_eq_single s0] at hc
   · rw [coeff_X_mul, coeff_pderiv] at hc
@@ -2348,12 +2348,12 @@ theorem hwA_key {K : Type} [Field K] [CharZero K] {σ ι' : Type} (S : Finset ι
       have e1 : Finsupp.weight w (Finsupp.single (u s0) 1 + m0 - Finsupp.single (u s) 1) + w (u s) =
           w (u s0) + Finsupp.weight w m0 := by
         have := congrArg (Finsupp.weight w) (tsub_add_cancel_of_le hle)
-        rw [map_add, map_add, lx_w_single, lx_w_single, one_smul, one_smul] at this
+        rw [map_add (f := _), map_add (f := _), lx_w_single, lx_w_single, one_smul, one_smul] at this
         exact this
       have hnot : (Finsupp.single (u s0) 1 + m0 - Finsupp.single (u s) 1 + Finsupp.single (t s) 1) ∉ f.support := by
         intro hin
         have := hd _ hin
-        rw [map_add, lx_w_single, one_smul] at this
+        rw [map_add (f := _), lx_w_single, one_smul] at this
         have := hs s hsS hss
         omega
       rw [notMem_support_iff.1 hnot, zero_mul]
@@ -2623,7 +2623,7 @@ theorem hwB_rE_sum (r n : ℕ) (a a' : Fin r) (f : MvPolynomial (Fin r × Fin n)
     rE K r n a a' f = ∑ s : Fin n, X (a, s) * pderiv (a', s) f := by
   induction f using MvPolynomial.induction_on with
   | C c => simp
-  | add p q hp hq => simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p i hp =>
     simp only [Derivation.leibniz, smul_eq_mul, hp, hwB_rE_X, pderiv_X, mul_add, Finset.sum_add_distrib]
     congr 1
@@ -2680,9 +2680,9 @@ theorem hwB_rename {σ σ' : Type} (g : σ → σ') (D : Derivation K (MvPolynom
     (f : MvPolynomial σ K) : D' (rename g f) = rename g (D f) := by
   induction f using MvPolynomial.induction_on with
   | C c => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
-    simp only [map_mul, rename_X, Derivation.leibniz, smul_eq_mul, hp, h, map_add]
+    simp only [map_mul, rename_X, Derivation.leibniz, smul_eq_mul, hp, h, map_add (f := _)]
 
 end Gen
 
@@ -2943,7 +2943,7 @@ theorem hwD_mfact_add_single (m : σ →₀ ℕ) (i : σ) : mfact (m + Finsupp.s
   ring
 
 theorem hwD_fockB_add_left (f f' g : MvPolynomial σ K) : fockB (f + f') g = fockB f g + fockB f' g := by
-  rw [← fockBL_apply, map_add, LinearMap.add_apply, fockBL_apply, fockBL_apply]
+  rw [← fockBL_apply, map_add (f := _), LinearMap.add_apply, fockBL_apply, fockBL_apply]
 
 theorem hwD_fockB_sum_left {ι' : Type} (s : Finset ι') (F : ι' → MvPolynomial σ K) (g : MvPolynomial σ K) :
     fockB (∑ i ∈ s, F i) g = ∑ i ∈ s, fockB (F i) g := by
@@ -3422,7 +3422,7 @@ theorem inB_comm_sub {n : ℕ} {A A' : Module.End ℤ (BP ℤ n)} {B B' : Module
 theorem inB_comm_add {n : ℕ} {A A' : Module.End ℤ (BP ℤ n)} {B B' : Module.End ℚ (BP ℚ n)}
     (h : inB_Comm A B) (h' : inB_Comm A' B') : inB_Comm (A + A') (B + B') := by
   intro p
-  rw [LinearMap.add_apply, LinearMap.add_apply, map_add, h p, h' p]
+  rw [LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), h p, h' p]
 
 theorem inB_comm_mul {n : ℕ} {A A' : Module.End ℤ (BP ℤ n)} {B B' : Module.End ℚ (BP ℚ n)}
     (h : inB_Comm A B) (h' : inB_Comm A' B') : inB_Comm (A * A') (B * B') := by
@@ -3463,9 +3463,9 @@ theorem inB_bmE (n : ℕ) (s t : Fin n) (p : BP ℤ n) :
     have h2 : bmE ℚ n s t (C ((Int.castRingHom ℚ) a)) = 0 := by
       rw [← MvPolynomial.algebraMap_eq]; exact Derivation.map_algebraMap _ _
     rw [map_C, h1, h2, map_zero]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
-    rw [Derivation.leibniz, map_mul, map_X, Derivation.leibniz, map_add, smul_eq_mul, smul_eq_mul, smul_eq_mul, smul_eq_mul,
+    rw [Derivation.leibniz, map_mul, map_X, Derivation.leibniz, map_add (f := _), smul_eq_mul, smul_eq_mul, smul_eq_mul, smul_eq_mul,
       map_mul, map_mul, hp, map_X]
     congr 2
     unfold bmE
@@ -3683,7 +3683,7 @@ theorem inC_cyc {n : ℕ} {σ : Type} (sg : Fin n → ℕ) (hsg : Antitone sg)
     obtain ⟨w, rfl⟩ := hx
     exact (W w).2
   | zero => exact map_zero d
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul c x _ hx => rw [map_smul, hx, smul_zero]
 
 section Ident
@@ -4200,11 +4200,11 @@ theorem nmJ_iso (c : Fin n → ℕ) (p : MvPolynomial (Fin n × Fin n) ℂ) (hp 
   have H : BsForm s.natW D := by
     refine ⟨?_, ?_, ?_, ?_, ?_⟩
     · intro p p' q
-      simp only [D, map_add, fischerInner_add_left]; ring
+      simp only [D, map_add (f := _), fischerInner_add_left]; ring
     · intro c p q
       simp only [D, map_smul, bs_fock_smul_left]; ring
     · intro p q q'
-      simp only [D, map_add, fischerInner_add_right]; ring
+      simp only [D, map_add (f := _), fischerInner_add_right]; ring
     · intro c p q
       simp only [D, map_smul, bs_fock_smul_right]; ring
     · intro g p _ q _
@@ -5207,7 +5207,7 @@ theorem negOp_mem {p : MvPolynomial (D.what₂.Tau × Fin (D.R.N D.R.m) × Fin (
       (by rw [lamTr, delSq_wSh]; exact hf τ)
     rwa [lamTr, delSq_wSh] at this
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 theorem negOp_negOp (p : MvPolynomial (D.what₂.Tau × Fin (D.R.N D.R.m) × Fin (D.R.N D.R.m)) ℂ) :
@@ -5252,7 +5252,7 @@ theorem brTen_negOp (hI : (D.fm u).SgInterlace) {p : MvPolynomial (D.what₂.Tau
     rw [eps_ten_smul]
     rfl
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy, map_add, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), smul_add]
   | smul a x _ hx => rw [map_smul, map_smul, hx, map_smul, smul_comm]
 
 theorem brTen_eps_zero (hI : (D.fm u).SgInterlace) {p : MvPolynomial (D.what₂.Tau × Fin (D.R.N D.R.m) × Fin (D.R.N D.R.m)) ℂ}
@@ -5269,11 +5269,11 @@ theorem brTen_ne_eps (hI : (D.fm u).SgInterlace) :
   refine ⟨(1 / 2 : ℂ) • (p + sgnSg D u • negOp D u p),
     Submodule.smul_mem _ _ (add_mem hp (Submodule.smul_mem _ _ (negOp_mem hp))), ?_, ?_⟩
   · have e1 : negOp D u ((1 / 2 : ℂ) • (p + sgnSg D u • negOp D u p)) = (1 / 2 : ℂ) • (negOp D u p + sgnSg D u • p) := by
-      rw [map_smul, map_add, map_smul, negOp_negOp]
+      rw [map_smul, map_add (f := _), map_smul, negOp_negOp]
     have e2 : sgnSg D u • ((1 / 2 : ℂ) • (p + sgnSg D u • negOp D u p)) = (1 / 2 : ℂ) • (negOp D u p + sgnSg D u • p) := by
       rw [smul_comm, smul_add, smul_smul, hs, one_smul, add_comm]
     rw [e1, e2]
-  · rw [map_smul, map_add, map_smul, brTen_negOp hI hp, smul_smul, hs, one_smul, ← two_smul ℂ, smul_smul]
+  · rw [map_smul, map_add (f := _), map_smul, brTen_negOp hI hp, smul_smul, hs, one_smul, ← two_smul ℂ, smul_smul]
     norm_num
     exact hne
 

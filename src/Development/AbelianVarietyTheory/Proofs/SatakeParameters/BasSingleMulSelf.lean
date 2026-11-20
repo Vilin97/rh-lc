@@ -116,7 +116,7 @@ theorem pull_mem_holGe {n m : ℕ} (L : V n →L[ℂ] V m) {p : ℕ} {β : Alt m
     exact holGe_anti hS (pull_bas_mem L S)
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
   | smul c x _ hx =>
     rw [map_smul]

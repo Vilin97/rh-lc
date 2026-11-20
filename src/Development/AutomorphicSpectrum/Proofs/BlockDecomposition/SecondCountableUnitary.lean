@@ -173,7 +173,7 @@ theorem continuous_map_dual (w : abelian₂ n) : ∀ φ : Module.Dual ℂ (abeli
     exact h1.comp h2
   | add a b ha hb =>
     intro φ
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (ha φ).add (hb φ)
   | mul a b ha hb =>
     intro φ

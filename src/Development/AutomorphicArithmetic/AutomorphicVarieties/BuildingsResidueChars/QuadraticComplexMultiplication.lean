@@ -53,5 +53,5 @@ theorem UpperTheory.quadratic_complex_multiplication :
   refine ⟨f.coeff 0, f.coeff 1, ?_⟩
   rw [hx, IntermediateField.adjoin.powerBasis_gen]
   conv_lhs => rw [eq_X_add_C_of_natDegree_le_one (p := f) (by omega)]
-  simp only [map_add, map_mul, aeval_C, aeval_X]
+  simp only [map_add (f := _), map_mul, aeval_C, aeval_X]
   exact add_comm _ _

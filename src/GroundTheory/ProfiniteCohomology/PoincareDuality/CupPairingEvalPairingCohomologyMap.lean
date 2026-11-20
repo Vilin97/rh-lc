@@ -38,7 +38,7 @@ theorem dualMap_add (D : Rep.{u} k G) {A B : Rep.{u} k G} (f₁ f₂ : A ⟶ B) 
   apply LinearMap.ext
   intro a
   show g ((f₁ + f₂).hom a) = g (f₁.hom a) + g (f₂.hom a)
-  rw [Rep.add_hom, Representation.IntertwiningMap.coe_add, Pi.add_apply, map_add]
+  rw [Rep.add_hom, Representation.IntertwiningMap.coe_add, Pi.add_apply, map_add (f := _)]
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] in
 theorem dualMap_zero (D : Rep.{u} k G) {A B : Rep.{u} k G} :

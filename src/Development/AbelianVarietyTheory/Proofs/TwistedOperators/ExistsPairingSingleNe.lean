@@ -118,10 +118,10 @@ theorem isHeis_of (hσ : ∀ x, σ (σ x) = x) (hv : ∀ x, Valued.v (σ x) = Va
     show (2⁻¹ : L) + σ 2⁻¹ = 1
     rw [map_inv₀, map_ofNat]; field_simp; norm_num)
   add_left x y z := by
-    simp only [pairing, ← AddChar.map_add_eq_mul, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add]
+    simp only [pairing, ← AddChar.map_add_eq_mul, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add (f := _)]
     congr 1; ring
   add_right x y z := by
-    simp only [pairing, ← AddChar.map_add_eq_mul, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add]
+    simp only [pairing, ← AddChar.map_add_eq_mul, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add (f := _)]
     congr 1; ring
   alt x := by
     have : σ (∑ i, ∑ j, x i j * σ (x i.rev j.rev)) = ∑ i, ∑ j, x i j * σ (x i.rev j.rev) := by
@@ -186,7 +186,7 @@ theorem selfDual_intMat (hU : IsUnramInv ϖ σ q) (h2 : Valued.v (2 : L) = 1) (h
   refine fun x => ⟨fun hx y hy => ?_, fun h i j => ?_⟩
   · have : δ * ∑ i, ∑ j, x i j * σ (y i.rev j.rev) ∈ intL L :=
       mul_mem (mem_intL.2 hδ.le) (sum_mem fun i _ => sum_mem fun j _ => mul_mem (hx i j) (hs _ (hy _ _)))
-    exact hψ0 _ (add_mem this (hs _ this)) (by rw [map_add, hU.1, add_comm])
+    exact hψ0 _ (add_mem this (hs _ this)) (by rw [map_add (f := _), hU.1, add_comm])
   · by_contra hx
     obtain ⟨u, hu, hne⟩ := exists_pairing_single_ne hU h2 hδ hψ x hx
     refine hne (h _ fun i' j' => ?_)

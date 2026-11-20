@@ -87,7 +87,7 @@ theorem secTrace_add (x : κ → Ω) (e : Fin (D + 1) → κ) (_h : IsRatProjFra
   rw [dif_pos hst, dif_pos hs', dif_pos ht']
   have key : (⟨(s + t) / x (e 0) ^ n, hst⟩ : IntermediateField.extendScalars (fnField_comp_le x e)) =
       ⟨s / x (e 0) ^ n, hs'⟩ + ⟨t / x (e 0) ^ n, ht'⟩ := Subtype.ext (add_div s t _)
-  rw [key, map_add]
+  rw [key, map_add (f := _)]
   push_cast
   ring
 

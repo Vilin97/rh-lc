@@ -22,7 +22,7 @@ theorem adeleRingHom_ext {R : Type*} [Semiring R] {f g : 𝔸[L] →+* R}
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul l a => rw [adeleTensorEquiv_tmul, map_mul, map_mul, hL, hK]
-  | add s t hs ht => rw [map_add, map_add, map_add, hs, ht]
+  | add s t hs ht => rw [map_add (f := _), map_add (f := _), map_add (f := _), hs, ht]
 
 theorem adeleTensorEquiv_symm_algebraMap (l : L) :
     (adeleTensorEquiv K L).symm (algebraMap L 𝔸[L] l) = l ⊗ₜ 1 := by

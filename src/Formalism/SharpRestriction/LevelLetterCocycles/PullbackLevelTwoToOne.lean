@@ -56,7 +56,7 @@ theorem lemGAla_dl_trunc (W : LocWach PD LL O v n) (T : LocLat G Qp LL O)
     fun a b ha hb => ⟨by rw [smul_sub, ha.1, hb.1], fun δ hδ => by rw [map_sub, ha.2 δ hδ, hb.2 δ hδ]⟩
   have hadd : ∀ a b : W.DD T, Formalism.MainNotions.CrystallineLiftingInputs.DL W T (c + (j : ZMod n)) a →
       Formalism.MainNotions.CrystallineLiftingInputs.DL W T (c + (j : ZMod n)) b → Formalism.MainNotions.CrystallineLiftingInputs.DL W T (c + (j : ZMod n)) (a + b) :=
-    fun a b ha hb => ⟨by rw [smul_add, ha.1, hb.1], fun δ hδ => by rw [map_add, ha.2 δ hδ, hb.2 δ hδ]⟩
+    fun a b ha hb => ⟨by rw [smul_add, ha.1, hb.1], fun δ hδ => by rw [map_add (f := _), ha.2 δ hδ, hb.2 δ hδ]⟩
   have hsmem : ∀ y, s y ∈ W.AΔ := by
     intro y
     obtain ⟨⟨⟨a, ha⟩, -⟩, hps⟩ := hrem y

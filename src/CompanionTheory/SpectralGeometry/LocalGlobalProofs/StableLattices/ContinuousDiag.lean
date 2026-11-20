@@ -69,7 +69,7 @@ theorem q_line (hσ : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.
   unfold Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.qR Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.hR
   generalize algebraMap F R (1 / 2) = u
   rw [e, GlobalTheory.HermLineZeros.hform_expand, hst, mul_assoc (algebraMap R (R ⊗[F] E) t)]
-  simp only [← Algebra.smul_def, map_add, map_smul, smul_eq_mul]
+  simp only [← Algebra.smul_def, map_add (f := _), map_smul, smul_eq_mul]
   ring
 
 end Line
@@ -132,7 +132,7 @@ theorem null_sets : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
   · refine null_nonunit F ν id (fun w => (hc w).measurable) (diag F) (continuous_diag F).measurable ?_
     intro x w
     refine (Set.finite_singleton (-RealCoord.coord F x w)).subset fun t ht => ?_
-    simp only [Set.mem_setOf_eq, id, map_add, Pi.add_apply, coord_diag] at ht
+    simp only [Set.mem_setOf_eq, id, map_add (f := _), Pi.add_apply, coord_diag] at ht
     simp only [Set.mem_singleton_iff]
     linarith
   · obtain ⟨y0, a, ha, hy0⟩ := GlobalTheory.HermLineZeros.exists_anisotropic hσ hM hJ
@@ -160,7 +160,7 @@ theorem null_sets : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
       rw [e2] at ht
       simp only [e] at ht
       rw [hc' (diag F t)] at ht
-      simp only [map_add, map_mul, map_pow, Pi.add_apply, Pi.mul_apply, Pi.pow_apply,
+      simp only [map_add (f := _), map_mul, map_pow, Pi.add_apply, Pi.mul_apply, Pi.pow_apply,
         coord_diag, RealCoord.coord_algebraMap] at ht
       simpa [Polynomial.IsRoot] using ht
 

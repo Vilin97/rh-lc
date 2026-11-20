@@ -38,7 +38,7 @@ theorem cw_mul (d : A →+ A) (hd : ∀ x y, d (x * y) = x * d y + y * d x) (f g
   ext n
   rw [mul_comm g (cw d f)]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [coeff_cw, MvPowerSeries.coeff_mul, map_add, map_sum, hd, ← Finset.sum_add_distrib]
+    simp only [coeff_cw, MvPowerSeries.coeff_mul, map_add (f := _), map_sum, hd, ← Finset.sum_add_distrib]
   exact Finset.sum_congr rfl fun q _ => by ring
 
 def dv (τ : A →+* MvPowerSeries σ A) (p : σ) : A →+ A := co τ (Finsupp.single p 1)
@@ -49,7 +49,7 @@ theorem dv_eq (τ : A →+* MvPowerSeries σ A) (p : σ) (x : A) : dv τ p x = c
 
 theorem dv_mul {τ : A →+* MvPowerSeries σ A} (h : IsTay τ) (p : σ) (x y : A) :
     dv τ p (x * y) = x * dv τ p y + y * dv τ p x := by
-  simp only [dv_eq, map_mul, Derivation.leibniz, map_add, smul_eq_mul, h x, h y]
+  simp only [dv_eq, map_mul, Derivation.leibniz, map_add (f := _), smul_eq_mul, h x, h y]
 
 def IterAt (τ : A →+* MvPowerSeries σ A) (p : σ) (x : A) : Prop := pderiv A p (τ x) = cw (dv τ p) (τ x)
 
@@ -64,7 +64,7 @@ theorem iterAt_iff (τ : A →+* MvPowerSeries σ A) (p : σ) (x : A) :
 theorem IterAt.add {τ : A →+* MvPowerSeries σ A} {p : σ} {x y : A} (hx : IterAt τ p x) (hy : IterAt τ p y) :
     IterAt τ p (x + y) := by
   unfold IterAt at hx hy ⊢
-  simp only [map_add, hx, hy]
+  simp only [map_add (f := _), hx, hy]
 
 theorem IterAt.mul {τ : A →+* MvPowerSeries σ A} (h : IsTay τ) {p : σ} {x y : A} (hx : IterAt τ p x)
     (hy : IterAt τ p y) : IterAt τ p (x * y) := by
@@ -217,7 +217,7 @@ theorem pol_isCst (r : R) : IsCst (pol σ R) (algebraMap R (MvPolynomial σ R) r
   exact pol_C σ R r
 
 theorem pol_dv_X [DecidableEq σ] (p q : σ) : dv (pol σ R) p (MvPolynomial.X q) = if p = q then 1 else 0 := by
-  rw [dv, co_apply, pol_X, map_add, MvPowerSeries.coeff_C, MvPowerSeries.coeff_X,
+  rw [dv, co_apply, pol_X, map_add (f := _), MvPowerSeries.coeff_C, MvPowerSeries.coeff_X,
     if_neg (Finsupp.single_ne_zero.mpr one_ne_zero), zero_add]
   by_cases hpq : p = q
   · subst hpq; simp
@@ -230,7 +230,7 @@ theorem pol_iterAt (p : σ) (x : MvPolynomial σ R) : IterAt (pol σ R) p x := b
   have key : ∀ (n : σ) (γ : σ →₀ ℕ), co (pol σ R) γ (MvPolynomial.X n) =
       (if γ = 0 then MvPolynomial.X n else 0) + (if γ = Finsupp.single n 1 then 1 else 0) := by
     intro n γ
-    rw [co_apply, pol_X, map_add, MvPowerSeries.coeff_C, MvPowerSeries.coeff_X]
+    rw [co_apply, pol_X, map_add (f := _), MvPowerSeries.coeff_C, MvPowerSeries.coeff_X]
   have hX : ∀ n, IterAt (pol σ R) p (MvPolynomial.X n) := by
     intro n
     rw [iterAt_iff]
@@ -301,7 +301,7 @@ theorem tens_isTay (τ : K →+* MvPowerSeries σ K) (h : IsTay τ) (hR : ∀ r 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul k v => rw [tens_co_tmul, co_zero h]
-  | add x y hx hy => rw [map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), hx, hy]
 
 theorem tens_isCst_right (τ : K →+* MvPowerSeries σ K) (hR : ∀ r : R, IsCst τ (algebraMap R K r)) (v : V) :
     IsCst (tens R V τ hR).toRingHom ((1 : K) ⊗ₜ[R] v) := by
@@ -571,11 +571,11 @@ theorem pdOp_algebraMap (p : Idx D j N) (f : Pol X la N) :
 
 theorem tayOp_Tv (q : Idx D j N) : tayOp X la N (Tv X la N q) = MvPowerSeries.C (Tv X la N q) + MvPowerSeries.X q := by
   show tayOp X la N (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.X q)) = _
-  rw [tayOp, Tay.loc_algebraMap, tayPol, Tay.pol_X, map_add, MvPowerSeries.map_C, MvPowerSeries.map_X] <;> rfl
+  rw [tayOp, Tay.loc_algebraMap, tayPol, Tay.pol_X, map_add (f := _), MvPowerSeries.map_C, MvPowerSeries.map_X] <;> rfl
 
 theorem hasseOp_Tv (β : Idx D j N →₀ ℕ) (q : Idx D j N) : hasseOp X la N β (Tv X la N q) =
     if β = 0 then Tv X la N q else if β = Finsupp.single q 1 then 1 else 0 := by
-  rw [hasseOp, Tay.hs_apply, Tay.co_apply, tayOp_Tv, map_add, MvPowerSeries.coeff_C, MvPowerSeries.coeff_X]
+  rw [hasseOp, Tay.hs_apply, Tay.co_apply, tayOp_Tv, map_add (f := _), MvPowerSeries.coeff_C, MvPowerSeries.coeff_X]
   by_cases h0 : β = 0
   · subst h0
     have h1 : (0 : Idx D j N →₀ ℕ) ≠ Finsupp.single q 1 := fun h => Finsupp.single_ne_zero.mpr one_ne_zero h.symm
@@ -706,7 +706,7 @@ theorem hasseRp_mem_span_Kp {T : Set (Rp X la N)} (hT : ∀ t ∈ T, Tay.IsCst (
     · exact Submodule.subset_span ht
     · exact zero_mem _
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem (hx β) (hy β)
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx β) (hy β)
   | smul k x _ hx =>
     rw [hasseRp_smul]
     exact Submodule.sum_mem _ fun q _ => Submodule.smul_mem _ _ (hx q.2)
@@ -721,7 +721,7 @@ theorem hasseRp_mem_span_Op {T : Set (Rp X la N)} (hT : ∀ t ∈ T, Tay.IsCst (
     · exact Submodule.subset_span ht
     · exact zero_mem _
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem (hx β) (hy β)
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx β) (hy β)
   | smul k x _ hx =>
     rw [hasseRp_smul_Op]
     exact Submodule.sum_mem _ fun q _ => Submodule.smul_mem _ _ (hx q.2)

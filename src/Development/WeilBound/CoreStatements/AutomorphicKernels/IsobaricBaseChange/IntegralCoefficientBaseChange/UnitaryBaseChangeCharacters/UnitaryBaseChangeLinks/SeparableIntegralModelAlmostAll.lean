@@ -64,7 +64,7 @@ theorem goodPlaces (E : Type) [Field E] [NumberField E] (P : E[X]) (hP : P.Separ
   refine ⟨Q, ⟨A, B, ?_⟩, hQ⟩
   apply Polynomial.map_injective (intL (w.adicCompletion E)).subtype Subtype.val_injective
   have h2 := congrArg (Polynomial.map (algebraMap E (w.adicCompletion E))) hab
-  simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_one] at h2 ⊢
+  simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_one] at h2 ⊢
   rw [← Polynomial.derivative_map] at h2 ⊢
   rw [hQ, hA, hB]
   exact h2

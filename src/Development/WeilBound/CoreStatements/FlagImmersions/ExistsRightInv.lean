@@ -256,7 +256,7 @@ theorem perMat_of : PerCoord → MatStep → PerMat := by
     show k _ = _
     rw [(hall t' ht'.1).2.1 a, (hall t ht.1).2.1 a]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_add, map_smul, hk, hk']
+      simp only [map_sum, map_add (f := _), map_smul, hk, hk']
     refine Finset.sum_congr rfl fun τ _ => ?_
     rw [sum_frame, sum_frame, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, ← hUe, ← hUe']
 

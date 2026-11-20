@@ -36,7 +36,7 @@ theorem cpt_toEAf (Q : Pl D.host.E) (z : Formalism.L2.Theta.AE D) :
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a x => exact (toAd_spec D x a.2).trans ((mul_comm _ _).trans (GlobalTheory.LFun.toFinAd_tmul a.2 x).symm)
-    | add a b ha hb => simp only [RingHom.map_add, RingEquiv.map_add, ha, hb]
+    | add a b ha hb => simp only [RingHom.map_add (f := _), RingEquiv.map_add (f := _), ha, hb]
   exact congrArg (fun s : FiniteAdeleRing (𝓞 D.host.E) D.host.E => s Q) h
 
 theorem cpt_locIdele (Q w : Pl D.host.E) (y : (w.adicCompletion D.host.E)ˣ) :
@@ -80,7 +80,7 @@ theorem exists_one_add {e : Formalism.L2.Theta.AE D} {P : Finset (Pl D.host.E)} 
   refine ⟨∏ w ∈ P, GlobalTheory.LFun.locIdele D.host.F w (u w), ?_, cpt_ext fun Q => ?_, ?_, ?_⟩
   · rw [Units.coe_prod, hom_prod]
     exact Finset.prod_eq_one fun w _ => GlobalTheory.LFun.infTens_locIdele w (u w)
-  · rw [Units.coe_prod, hom_prod, hom_prod, Finset.prod_congr rfl fun w _ => cpt_locIdele Q w (u w), RingHom.map_add,
+  · rw [Units.coe_prod, hom_prod, hom_prod, Finset.prod_congr rfl fun w _ => cpt_locIdele Q w (u w), RingHom.map_add (f := _),
       RingHom.map_one]
     by_cases hQ : Q ∈ P
     · rw [Finset.prod_eq_single Q (fun w _ hne => GlobalTheory.LFun.finSingle_ne hne.symm _) (fun h' => absurd hQ h'),
@@ -153,7 +153,7 @@ theorem det_sub_mem {R : Type} [CommRing R] (A : Subring R) (J : Ideal A) {k : �
   have e3 : (Ideal.Quotient.mk J).mapMatrix M' = (Ideal.Quotient.mk J).mapMatrix N' := by
     ext i j
     change Ideal.Quotient.mk J (N' i j + s i j) = Ideal.Quotient.mk J (N' i j)
-    rw [map_add, Ideal.Quotient.eq_zero_iff_mem.2 (hs i j), add_zero]
+    rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 (hs i j), add_zero]
   refine ⟨M'.det - N'.det, Ideal.Quotient.eq.1 (by rw [RingHom.map_det, RingHom.map_det, e3]), ?_⟩
   rw [e1, e2, ← RingHom.map_det, ← RingHom.map_det]
   rfl
@@ -172,7 +172,7 @@ theorem cA_cA (z : Formalism.L2.Theta.AE D) : cA D (cA D z) = z := by
   | tmul a x =>
     change a ⊗ₜ[D.host.F] star (star x) = _
     rw [star_star]
-  | add a b ha hb => simp only [RingHom.map_add, ha, hb]
+  | add a b ha hb => simp only [RingHom.map_add (f := _), ha, hb]
 
 theorem inId_of {I : Ideal (𝓞 D.host.E)} {z : Lev.EAf D} (h : GlobalTheory.FrameIdeal.InId (F := D.host.F) I z) : InId I z := by
   obtain ⟨s, hs, rfl⟩ := h

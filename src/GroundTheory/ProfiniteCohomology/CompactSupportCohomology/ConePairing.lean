@@ -59,7 +59,7 @@ noncomputable def coconeLeftμ {r s n : ℕ} (h : r + s = n) :
     (fun c p z => Prod.ext (LinearMap.map_smul₂ _ _ _ _) (LinearMap.map_smul₂ _ _ _ _))
     (fun p z z' => Prod.ext (map_add _ _ _) (by
       change μL.shiftLeft r s n h p.2 ((ρ.f s).hom (z + z')) = _
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       rfl))
     (fun c p z => Prod.ext (map_smul _ _ _) (by
       change μL.shiftLeft r s n h p.2 ((ρ.f s).hom (c • z)) = _
@@ -186,7 +186,7 @@ noncomputable def coconeRightμ {r s n : ℕ} (h : r + s = n) :
         K'.X n × shiftNegOneX L' n))
     (fun x x' p => Prod.ext (LinearMap.map_add₂ _ _ _ _) (by
       change (-1 : k) ^ r • μR.shiftRight r s n h ((ρ.f r).hom (x + x')) p.2 = _
-      rw [map_add, LinearMap.map_add₂, smul_add]
+      rw [map_add (f := _), LinearMap.map_add₂, smul_add]
       rfl))
     (fun c x p => Prod.ext (LinearMap.map_smul₂ _ _ _ _) (by
       change (-1 : k) ^ r • μR.shiftRight r s n h ((ρ.f r).hom (c • x)) p.2 = _
@@ -194,7 +194,7 @@ noncomputable def coconeRightμ {r s n : ℕ} (h : r + s = n) :
       rfl))
     (fun x p q => Prod.ext (map_add _ _ _) (by
       change (-1 : k) ^ r • μR.shiftRight r s n h ((ρ.f r).hom x) (p.2 + q.2) = _
-      rw [map_add, smul_add]
+      rw [map_add (f := _), smul_add]
       rfl))
     (fun c x p => Prod.ext (map_smul _ _ _) (by
       change (-1 : k) ^ r • μR.shiftRight r s n h ((ρ.f r).hom x) (c • p.2) = _

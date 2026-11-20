@@ -85,7 +85,7 @@ theorem topRing (D : D7) : IsTopologicalRing (AE D) :=
 
 def offS (S : Finset (Pl D)) : AddSubgroup (AE D) where
   carrier := {z | ∀ v ∉ S, cv D v z ∈ intLoc D.host.F D.host.E v}
-  add_mem' := fun hx hy v hv => by rw [RingHom.map_add]; exact add_mem (hx v hv) (hy v hv)
+  add_mem' := fun hx hy v hv => by rw [RingHom.map_add (f := _)]; exact add_mem (hx v hv) (hy v hv)
   zero_mem' := fun v _ => by rw [RingHom.map_zero]; exact zero_mem _
   neg_mem' := fun hx v hv => by rw [RingHom.map_neg]; exact neg_mem (hx v hv)
 

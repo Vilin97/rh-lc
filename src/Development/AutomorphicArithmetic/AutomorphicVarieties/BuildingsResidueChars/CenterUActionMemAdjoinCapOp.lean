@@ -23,7 +23,7 @@ theorem UpperTheory.centerU_action_mem_adjoin_capOp :
       exact sum_mem fun τ _ => sum_mem fun i _ => sum_mem fun j _ =>
         Subalgebra.smul_mem _ (Algebra.subset_adjoin (by exact ⟨τ, i, j, rfl⟩)) _
     | hmul x y hx hy => rw [map_mul]; exact mul_mem hx hy
-    | hadd x y hx hy => rw [map_add]; exact add_mem hx hy
+    | hadd x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   refine UpperTheory.V.Fb.multiCentre (gen D (lam K n)) hrel hcomm (h1 z) fun τ i j => ?_
   have h2 := gen_mem D (lam K n) τ i j
     (Subalgebra.toSubmodule (Subalgebra.centralizer ℂ {uAction z})) fun x => by

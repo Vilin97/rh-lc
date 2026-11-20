@@ -59,7 +59,7 @@ theorem nadel_canonical_add : GlobalTheory.Published.NadelVanishingPair → ∀ 
       have e1 := hC.interNumRed_of_cls_eq_add hH hKB hK hB (cls_tens hK hB hKB)
       have e2 := hC.interNumRed_of_cls_eq_add hH (isLB_toLB (m' • canonical q D + D₀))
         (isLB_lbPow hK m') (isLB_toLB D₀) (by
-          rw [← toPic_apply, ← toPic_apply, map_add, map_nsmul, hcan, cls_lbPow hK])
+          rw [← toPic_apply, ← toPic_apply, map_add (f := _), map_nsmul, hcan, cls_lbPow hK])
       rw [e1, e2, hC.interNumRed_lbPow hH hK m']
       have : (m' : ℚ) ≠ 0 := by exact_mod_cast hm.ne'
       push_cast

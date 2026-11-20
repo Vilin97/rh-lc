@@ -29,7 +29,7 @@ def pullOver {Y X : Over S} (f : Y ⟶ X) : Cris.H1 κ (X.hom ≫ t) →ₗ[R] C
 def prim (A : Over S) [GrpObj A] : Submodule R (Cris.H1 κ (A.hom ≫ t)) where
   carrier := {c | ∀ (Y : Over S) (f g : Y ⟶ A),
     pullOver κ t (f * g) c = pullOver κ t f c + pullOver κ t g c}
-  add_mem' {a b} ha hb Y f g := by rw [map_add, ha, hb, map_add, map_add]; abel
+  add_mem' {a b} ha hb Y f g := by rw [map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]; abel
   zero_mem' Y f g := by simp
   smul_mem' r c hc Y f g := by rw [map_smul, hc, map_smul, map_smul, smul_add]
 
@@ -50,7 +50,7 @@ theorem mem_prim_iff (A : Over S) [GrpObj A] (c : Cris.H1 κ (A.hom ≫ t)) :
     intro Y f g
     have e : f * g = lift f g ≫ μ[A] := by
       rw [MonObj.mul_eq_mul, MonObj.comp_mul, lift_fst, lift_snd]
-    rw [e, ← pullOver_pullOver, hc, map_add, pullOver_pullOver, pullOver_pullOver, lift_fst,
+    rw [e, ← pullOver_pullOver, hc, map_add (f := _), pullOver_pullOver, pullOver_pullOver, lift_fst,
       lift_snd]
 
 def AllPrim (A : Over S) [GrpObj A] : Prop := prim κ t A = ⊤
@@ -127,7 +127,7 @@ theorem pullback_mem_primitive (m : GrpMor κ t A κ' t' A' σ b φ) {c : Cris.H
   let f₀ : Over.mk (Y.hom ≫ b) ⟶ A := Over.homMk (f.left ≫ φ) (pt f)
   let g₀ : Over.mk (Y.hom ≫ b) ⟶ A := Over.homMk (g.left ≫ φ) (pt g)
   have hfg : (f₀ * g₀).left = (f * g).left ≫ φ := m.mul Y f g f₀ g₀ rfl rfl
-  rw [key f₀ f rfl, key g₀ g rfl, key (f₀ * g₀) (f * g) hfg, hc' _ f₀ g₀, map_add]
+  rw [key f₀ f rfl, key g₀ g rfl, key (f₀ * g₀) (f * g) hfg, hc' _ f₀ g₀, map_add (f := _)]
 
 def pull (m : GrpMor κ t A κ' t' A' σ b φ) : prim κ t A →ₛₗ[σ] prim κ' t' A' :=
   (m.isMor.pull1.domRestrict _).codRestrict _ fun c ↦ m.pullback_mem_primitive c.2
@@ -200,7 +200,7 @@ theorem push_mul (f g : A ⟶ B) [IsMonHom f] [IsMonHom g] [IsMonHom (f * g)] :
   have hc : ∀ (Y : Over S) (f g : Y ⟶ B),
       pullOver κ t (f * g) c.1 = pullOver κ t f c.1 + pullOver κ t g c.1 := c.2
   show h (primPull κ t (f * g) c) = h (primPull κ t f c) + h (primPull κ t g c)
-  rw [← map_add]
+  rw [← map_add (f := _)]
   exact congrArg h (Subtype.ext (hc A f g))
 
 theorem push_congr {f g : A ⟶ B} [IsMonHom f] [IsMonHom g] (e : f = g) : push κ t f = push κ t g := by
@@ -284,7 +284,7 @@ theorem GrpMor.IsBC.unique (hm : m.IsBC) {h : Crys κ t A} {h₁ h₂ : Crys κ'
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x c => rw [liftSemi_tmul, map_smul, map_smul, e₁ c, e₂ c]
-  | add z w hz hw => rw [map_add, map_add, map_add, hz, hw]
+  | add z w hz hw => rw [map_add (f := _), map_add (f := _), map_add (f := _), hz, hw]
 
 theorem GrpMor.IsBC.exists (hm : m.IsBC) (h : Crys κ t A) : ∃ h', m.Corr h h' := by
   let g : prim κ t A →ₛₗ[algebraMap R R'] R' :=

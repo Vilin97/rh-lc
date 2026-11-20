@@ -52,6 +52,6 @@ theorem iotaO_toB (C : GlobalTheory.MemLoc.Core l) (x : OA l O) : iotaO O C (toB
   | tmul o w =>
     exact congrArg (fun y : Per.BdR l => o ⊗ₜ[ℤ_[l]] y)
       ((congrArg C.ι (GlobalTheory.RingIface.aB_eq_alg l w).symm).trans (core_ι_aB C w))
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.BKGal.HatVal

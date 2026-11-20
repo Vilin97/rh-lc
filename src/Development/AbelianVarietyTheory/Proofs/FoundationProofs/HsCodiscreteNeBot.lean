@@ -26,7 +26,7 @@ def Z1 (N l w : ℕ) [Fact l.Prime] : Submodule ℤ_[l] (Gam N l → MvPolynomia
   add_mem' := by
     rintro c c' ⟨h1, h2⟩ ⟨h1', h2'⟩
     refine ⟨fun γ => (h1 γ).add (h1' γ), fun γ δ => ?_⟩
-    simp only [Pi.add_apply, h2, h2', map_add]; abel
+    simp only [Pi.add_apply, h2, h2', map_add (f := _)]; abel
   zero_mem' := ⟨fun γ => MvPolynomial.isHomogeneous_zero _ _ _, fun γ δ => by simp⟩
   smul_mem' := by
     rintro r c ⟨h1, h2⟩

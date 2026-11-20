@@ -256,7 +256,7 @@ theorem exists_dual_lt (hl : 1 ≤ l) (D : ZMod d → ℝ) (hD : 0 ≤ D) {v : �
       · simp [Prod.snd_sum]
     conv_lhs => rw [hq]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, smul_eq_mul]
+      simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul]
   obtain ⟨a, c, key'⟩ : ∃ (a : ZMod d → ℝ) (c : ℝ),
       ∀ q : (ZMod d → ℝ) × ℝ, f q = ∑ t, q.1 t * a t + q.2 * c := ⟨_, _, key⟩
   have hrec : ∀ q : (ZMod d → ℝ) × ℝ, (∀ s, 0 ≤ q.1 s) → q.2 ≤ 0 → q ∈ Kset l d :=

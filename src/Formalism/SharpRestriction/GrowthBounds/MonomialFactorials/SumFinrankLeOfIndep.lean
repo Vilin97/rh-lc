@@ -59,7 +59,7 @@ theorem span_SSZ_fin (aTop : Fin X.s → ℕ) (aPlus : ℕ) (b : SegBlock X.s X.
     induction hx using Submodule.span_induction with
     | mem x hx => exact map_SSZ (ι := iotaX X) (iotaX_int X) Dd x hx
     | zero => rw [map_zero]; exact W.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact W.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact W.add_mem hx hy
     | smul a x _ hx => rw [map_smul_Q]; exact W.smul_mem _ hx
   refine Module.rank_lt_aleph0_iff.1 (lt_of_le_of_lt (rank_le (n := Module.finrank (KK X.O) W) fun s hs => ?_)
     (Cardinal.natCast_lt_aleph0))

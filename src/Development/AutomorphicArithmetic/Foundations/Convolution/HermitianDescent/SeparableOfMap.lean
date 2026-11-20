@@ -90,7 +90,7 @@ private theorem phi_sg (b : Module.Basis (Fin n) k A) (t : A ⊗[k] R) :
     rw [Algebra.TensorProduct.congr_apply, Algebra.TensorProduct.map_tmul, phi_tmul, phi_tmul]
     ext i j
     simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, Matrix.map_add _ (map_add σ)]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), Matrix.map_add _ (map_add σ)]
 
 private theorem phi_pow (b : Module.Basis (Fin n) k A) (j : ℕ) (t : A ⊗[k] R) :
     phi b (((Algebra.TensorProduct.congr AlgEquiv.refl σ : A ⊗[k] R ≃ₐ[A] A ⊗[k] R) ^ j) t) =

@@ -62,7 +62,7 @@ def core (μ : Measure G) [IsFiniteMeasure μ] [μ.IsOpenPosMeasure] (ρ : Repre
     rw [avgF_self, RCLike.re_to_complex, Complex.ofReal_re]
     exact integral_nonneg fun _ => sq_nonneg _
   add_left u v w := by
-    simp only [avgF, map_add, inner_add_left]
+    simp only [avgF, map_add (f := _), inner_add_left]
     exact integral_add (integrable_avg μ ρ hρ u w) (integrable_avg μ ρ hρ v w)
   smul_left v w r := by
     simp only [avgF, map_smul, inner_smul_left]

@@ -276,7 +276,7 @@ private theorem h1f_equiv_of_intertwiner {F Ω : Type} [Field F] [NumberField F]
     (hf : ∀ g x, f (ρ g x) = ρ' g (f x)) (hf' : ∀ g x, f' (ρ' g x) = ρ g (f' x)) (H : Af.BlochKatoSelmerVanishes l ρ') :
     Af.BlochKatoSelmerVanishes l ρ := by
   intro c hZ hb
-  have h := H (fun g => f (c g)) ⟨hc.comp hZ.1, fun g h => by simp only [hZ.2 g h, map_add, hf]⟩ ⟨fun w hw => ?_, fun τ => ?_⟩
+  have h := H (fun g => f (c g)) ⟨hc.comp hZ.1, fun g h => by simp only [hZ.2 g h, map_add (f := _), hf]⟩ ⟨fun w hw => ?_, fun τ => ?_⟩
   · obtain ⟨m, hm⟩ := (mem_coboundaries1 _ _).1 h
     refine (mem_coboundaries1 _ _).2 ⟨f' m, fun g => ?_⟩
     rw [← hff (c g), hm g, map_sub, hf']
@@ -285,7 +285,7 @@ private theorem h1f_equiv_of_intertwiner {F Ω : Type} [Field F] [NumberField F]
   · obtain ⟨j, hj, ⟨h1, h2⟩, x, hx⟩ := hb.above τ
     refine ⟨j, hj, ⟨hc.comp h1, fun g h => ?_⟩, LinearMap.rTensor (Loc.Bcr l) (f.restrictScalars ℚ_[l]) x, fun g => ?_⟩
     · refine (congrArg f (h2 g h)).trans ?_
-      rw [map_add]
+      rw [map_add (f := _)]
       exact congrArg _ (hf _ _)
     · have key : ∀ y : V ⊗[ℚ_[l]] Loc.Bcr l, LinearMap.rTensor (Loc.Bcr l) (f.restrictScalars ℚ_[l])
           (Loc.actC ((MonoidHom.snd _ _).comp (Af.decJ F j).subtype)
@@ -297,7 +297,7 @@ private theorem h1f_equiv_of_intertwiner {F Ω : Type} [Field F] [NumberField F]
         induction y using TensorProduct.induction_on with
         | zero => simp
         | tmul a b => simp [Loc.actC, hf]
-        | add a b ha hb => simp only [map_add, ha, hb]
+        | add a b ha hb => simp only [map_add (f := _), ha, hb]
       rw [← key, ← map_sub, ← hx g, LinearMap.rTensor_tmul]
       rfl
 

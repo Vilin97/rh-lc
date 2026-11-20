@@ -28,7 +28,7 @@ theorem invAt_of_mem_Fi {F : S.Cl → E.Y → ℂ} (hF : F ∈ E.Fi) : E.InvAt F
   | zero => exact fun c => ⟨zero_mem _, fun γ _ => map_zero _⟩
   | add x y _ _ hx hy =>
     exact fun c => ⟨add_mem (hx c).1 (hy c).1, fun γ hγ => by
-      rw [Pi.add_apply, map_add, (hx c).2 γ hγ, (hy c).2 γ hγ]⟩
+      rw [Pi.add_apply, map_add (f := _), (hx c).2 γ hγ, (hy c).2 γ hγ]⟩
   | smul a x _ hx =>
     exact fun c => ⟨Submodule.smul_mem _ _ (hx c).1, fun γ hγ => by
       rw [Pi.smul_apply, map_smul, (hx c).2 γ hγ]⟩

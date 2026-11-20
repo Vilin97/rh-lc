@@ -71,7 +71,7 @@ theorem eigen_pointwise {κ : Type} [Fintype κ] (v : Pl F) (ψ : AddChar (AF F)
   simp only [schr, tens, Pi.smul_apply, smul_eq_mul] at e
   rw [hR1, hR2, dot_congr_at v hp2 hevΔ] at e
   have hev : (fun i => evFin F v ((Δ + p.1) i)) = fun i => evFin F v ((z + p.1) i) := by
-    funext i; simp only [Pi.add_apply, map_add, hevΔ]
+    funext i; simp only [Pi.add_apply, map_add (f := _), hevΔ]
   have hev' : (fun i => evFin F v (Δ i)) = fun i => evFin F v (z i) := funext hevΔ
   rw [hev, hev'] at e
   exact mul_right_cancel₀ hR0 (by linear_combination e)

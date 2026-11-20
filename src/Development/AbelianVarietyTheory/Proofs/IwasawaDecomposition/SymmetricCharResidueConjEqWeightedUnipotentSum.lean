@@ -146,7 +146,7 @@ theorem resBar : ∀ (D : D7) (X : HidaSetting D) (h : X.B.I = Formalism.L2.SG.I
   rw [GlobalTheory.T.symEdge_conjWeighted_sum_eq_flag_and_unipotent_pairs _ _ _ hr]
   apply modW_of hφ
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [argS, map_add, map_sum]
+    simp only [argS, map_add (f := _), map_sum]
   congr 1
   · refine Finset.sum_congr rfl fun a _ => ?_
     rw [← Formalism.L2.SG.Pf.unitaryCongruence.hA_symm]

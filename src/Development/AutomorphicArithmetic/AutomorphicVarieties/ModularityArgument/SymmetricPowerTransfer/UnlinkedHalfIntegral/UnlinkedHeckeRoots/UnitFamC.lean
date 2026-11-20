@@ -114,7 +114,7 @@ private lemma Good.comb {k : ℤ} {f g : (ZMod N)ˣ → ℍ → ℂ} (hf : Good 
   pre := hf.pre.comb hg.pre c
   int a n := by
     show ‖ι.symm (coef (f a + c • g a) n)‖ ≤ 1
-    rw [hf.coef_comb hg, map_add, map_mul]
+    rw [hf.coef_comb hg, map_add (f := _), map_mul]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf.int a n) ?_)
     rw [norm_mul]
     exact mul_le_one₀ hc (norm_nonneg _) (hg.int a n)
@@ -123,7 +123,7 @@ private lemma Good.comb {k : ℤ} {f g : (ZMod N)ˣ → ℍ → ℂ} (hf : Good 
     obtain ⟨g', pg, cg⟩ := hg.cg σ
     refine ⟨fun a => f' a + σ c • g' a, pf.comb pg (σ c), fun a n => ?_⟩
     show coef (f' a + σ c • g' a) n = σ (coef (f a + c • g a) n)
-    rw [pf.coef_comb pg, hf.coef_comb hg, map_add, map_mul, cf, cg]
+    rw [pf.coef_comb pg, hf.coef_comb hg, map_add (f := _), map_mul, cf, cg]
 
 private lemma good_one (k : ℕ) (hk : Even k) (h2 : k ≠ 2) :
     ∃ E : (ZMod N)ˣ → ℍ → ℂ, Good ι (k : ℤ) E ∧ ∀ a, coef (E a) 0 = 1 := by

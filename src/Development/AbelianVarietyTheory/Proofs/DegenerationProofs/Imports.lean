@@ -95,7 +95,7 @@ theorem main (R : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] (�
       (fun g _ b' h => ⟨1, g, by simpa using h⟩) ?_ ?_ b'
     · rintro x y ⟨n, b, hb⟩ ⟨m, c, hc⟩
       refine ⟨n + m, algebraMap R B π ^ m * b + algebraMap R B π ^ n * c, ?_⟩
-      rw [map_add, map_mul, map_mul, map_pow, map_pow, AlgHom.commutes, ← hb, ← hc]
+      rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, AlgHom.commutes, ← hb, ← hc]
       ring
     · rintro x y ⟨n, b, hb⟩ ⟨m, c, hc⟩
       refine ⟨n + m, b * c, ?_⟩

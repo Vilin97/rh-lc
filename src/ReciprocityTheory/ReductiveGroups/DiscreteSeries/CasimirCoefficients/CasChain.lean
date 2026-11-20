@@ -28,7 +28,7 @@ theorem eabV_of_local (ε : Fin n → Bool) {F : Matrix (Fin n) (Fin n) ℂ → 
   simp only [EabV, EcV, RdV, Lhol]
   rw [h1.deriv, h2.deriv]
   conv_rhs => rw [← ccb_cpart_sum ε (Matrix.single a b 1)]
-  rw [add_mul, smul_mul_assoc, map_add, map_smul, smul_neg, neg_add]
+  rw [add_mul, smul_mul_assoc, map_add (f := _), map_smul, smul_neg, neg_add]
 
 theorem contDiffOn_of_local [CompleteSpace E] {F : Matrix (Fin n) (Fin n) ℂ → E} {V W : Set (Matrix (Fin n) (Fin n) ℂ)} {m : Matrix (Fin n) (Fin n) ℂ}
     (hV : IsOpen V) (hF : DifferentiableOn ℂ F V) (hW : IsOpen W)

@@ -115,7 +115,7 @@ theorem four_of_classSums : ∀ (O : Type) [CommRing O] (bar : O → O) (q s : �
         ev' (f (fun u => c' (i, u)) (c i)) - io (∑ ν ∈ U, Φ.u y ν (c i) * mono W (Φ.t y) (Φ.δ y) ν) ∈
           maximalIdeal V' ^ j' := by
       intro c' hc' i U hU hU'
-      rw [← Finset.sum_sdiff hU, map_add]
+      rw [← Finset.sum_sdiff hU, map_add (f := _)]
       have e2 : ∀ x y z : V', x - (y + z) = (x - z) - y := fun _ _ _ => by ring
       rw [e2]
       refine sub_mem (hSc _ _) (hmap j' (Ideal.mem_map_of_mem io (Ideal.sum_mem _ fun ν hν => ?_)))

@@ -23,7 +23,7 @@ theorem TWincl_smul {R R' : Type} [CommRing R] [CommRing R'] [Algebra O R] [Alge
     TWincl f T (r • z) = f r • TWincl f T z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero, smul_zero]
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul b x => simp [TWincl, TensorProduct.smul_tmul']
 
 theorem TWincl_inj {R R' : Type} [CommRing R] [CommRing R'] [Algebra O R] [Algebra O R']
@@ -139,7 +139,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O
   choose Cx hC using hK1'
   let C : ↥T.L.T →ₗ[O] (ι → OA l O) :=
     { toFun := Cx
-      map_add' := fun x y => hV (by rw [map_add, hC, hC, hC, map_add, smul_add])
+      map_add' := fun x y => hV (by rw [map_add (f := _), hC, hC, hC, map_add (f := _), smul_add])
       map_smul' := fun o x => hV (by rw [map_smul, hC, hC, map_smul, RingHom.id_apply, smul_comm]) }
   let CA : TW (OA l O) T →ₗ[OA l O] (ι → OA l O) := LinearMap.liftBaseChange (OA l O) C
   have hP1 : ∀ z' : TW (OA l O) T,
@@ -147,7 +147,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O
     intro z'
     induction z' using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add, smul_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _), smul_add]
     | tmul b x =>
       have e1 : TWincl (inclO l O) T (b ⊗ₜ[O] x) = inclO l O b • ((1 : OW l O) ⊗ₜ[O] x) := by
         simp [TWincl, TensorProduct.smul_tmul']
@@ -166,7 +166,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O
       funext i
       simp
     | add x y hx hy =>
-      rw [map_add, map_add, hx, hy, ← smul_add]
+      rw [map_add (f := _), map_add (f := _), hx, hy, ← smul_add]
       congr 1
     | tmul b x =>
       simp only [ψ, CA, TWincl, LinearMap.smul_apply, TensorProduct.map_tmul, AlgHom.toLinearMap_apply,

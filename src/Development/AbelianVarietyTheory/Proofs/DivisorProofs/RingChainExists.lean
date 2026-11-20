@@ -44,12 +44,12 @@ omit [Module A M] in
 theorem exists_add_lift (Ψ : N →ₛₗ[σ] N') (hΨ : Function.Bijective Ψ) (f : M →+ N') :
     ∃ ψ : M →+ N, ∀ x, Ψ (ψ x) = f x := by
   choose g hg using fun x => hΨ.2 (f x)
-  exact ⟨AddMonoidHom.mk' g fun x y => hΨ.1 (by rw [map_add, hg, hg, hg, map_add]), hg⟩
+  exact ⟨AddMonoidHom.mk' g fun x y => hΨ.1 (by rw [map_add (f := _), hg, hg, hg, map_add (f := _)]), hg⟩
 
 theorem exists_lin_lift (Ψ : N →ₛₗ[σ] N') (hΨ : Function.Bijective Ψ) (f : M →ₛₗ[σ] N') :
     ∃ ψ : M →ₗ[A] N, ∀ x, Ψ (ψ x) = f x := by
   choose g hg using fun x => hΨ.2 (f x)
-  exact ⟨⟨⟨g, fun x y => hΨ.1 (by rw [map_add, hg, hg, hg, map_add])⟩,
+  exact ⟨⟨⟨g, fun x y => hΨ.1 (by rw [map_add (f := _), hg, hg, hg, map_add (f := _)])⟩,
     fun a x => hΨ.1 (by rw [map_smulₛₗ, hg, hg, map_smulₛₗ]; rfl)⟩, hg⟩
 
 def res (f : M →ₛₗ[σ] M') (H : Submodule R M') : H.comap f →ₛₗ[σ] H where
@@ -96,7 +96,7 @@ variable [Algebra A R]
 
 def unitMap (e : R ⊗[A] M ≃ₗ[R] M') : M →ₛₗ[algebraMap A R] M' where
   toFun y := e (1 ⊗ₜ y)
-  map_add' x y := by rw [TensorProduct.tmul_add, map_add]
+  map_add' x y := by rw [TensorProduct.tmul_add, map_add (f := _)]
   map_smul' a y := by
     rw [← map_smul, TensorProduct.smul_tmul', ← TensorProduct.smul_tmul, Algebra.smul_def, smul_eq_mul]
 
@@ -118,12 +118,12 @@ theorem modIso_of_dvd {q : A} (ec : AdicCompletion (Ideal.span {q}) A ≃+* R)
   refine ⟨fun r => ?_, fun x ⟨r, hr⟩ => ?_⟩
   · obtain ⟨x, y, hy⟩ := LatDescent.adic_surj A q (ec.symm r)
     have h1 := congrArg ec hy
-    rw [ec.apply_symm_apply, map_add, map_mul, he, he] at h1
+    rw [ec.apply_symm_apply, map_add (f := _), map_mul, he, he] at h1
     exact ⟨x, algebraMap A R t * ec y, by rw [h1, ← mul_assoc, ← map_mul, ← ht]; ring⟩
   · obtain ⟨x', y, hy⟩ := LatDescent.adic_surj A q (ec.symm r)
     obtain ⟨b, hb⟩ := LatDescent.adic_inj A q (x - a * x') (algebraMap A _ a * y) (ec.injective (by
       have h1 := congrArg ec hy
-      rw [ec.apply_symm_apply, map_add, map_mul, he, he] at h1
+      rw [ec.apply_symm_apply, map_add (f := _), map_mul, he, he] at h1
       rw [map_mul, map_mul, he, he, he, map_sub, map_mul, hr, h1]; ring))
     exact ⟨x' + t * b, by rw [mul_add, ← mul_assoc, ← ht, ← hb]; ring⟩
 
@@ -265,7 +265,7 @@ theorem exists_j_rho_lat {Om : Type} [AddCommGroup Om] [Module A Om] [Module.Fin
     obtain ⟨y, hy⟩ := (GlobalTheory.T.base_change_nakayama_approximation A S.R π _ hπ mπ Lie G.Lie eL).1 z
     obtain ⟨t, -, ht⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1 hy
     refine ⟨y, hΦ.1 ?_⟩
-    rw [hj, ← hz, ← sub_add_cancel z (eL (1 ⊗ₜ y)), ← ht, map_add, map_smul, kill, zero_add]
+    rw [hj, ← hz, ← sub_add_cancel z (eL (1 ⊗ₜ y)), ← ht, map_add (f := _), map_smul, kill, zero_add]
     rfl⟩) fun z => (hΦ.2 z).imp fun x hx => by rw [hx, sub_self]; exact zero_mem _
   obtain ⟨ρ, hρ⟩ := exists_lin_lift Ψ hΨ (ρ'.comp (unitMap eO))
   refine ⟨j, ρ, fun z => ?_, fun y x => ?_, fun w x => ?_⟩
@@ -275,7 +275,7 @@ theorem exists_j_rho_lat {Om : Type} [AddCommGroup Om] [Module A Om] [Module.Fin
     obtain ⟨t, -, ht⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1 hw
     obtain ⟨t, rfl⟩ := hs t
     refine ⟨w, hΨ.1 ?_⟩
-    rw [hρ, ← hz', ← r1, ← sub_add_cancel (pr x) (eO (1 ⊗ₜ w)), ← ht, map_add, map_smul, r1,
+    rw [hρ, ← hz', ← r1, ← sub_add_cancel (pr x) (eO (1 ⊗ₜ w)), ← ht, map_add (f := _), map_smul, r1,
       ← Submodule.Quotient.mk_smul, kill, Submodule.Quotient.mk_zero, zero_add]
     rfl
   · rw [← hΦ.1.eq_iff, hj, kΦ, LinearMap.comp_apply, j1, eq_comm]

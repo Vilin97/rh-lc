@@ -356,7 +356,7 @@ theorem idealLatticePi_poisson_summation (I : ι → (FractionalIdeal (𝓞 K)�
     rw [← Equiv.tsum_eq eL]
     refine tsum_congr fun α ↦ ?_
     have heL : (eL α : EuclidPi K ι) = toEuclidPi K α := rfl
-    rw [heL, hFx, ← map_add, ContinuousLinearEquiv.symm_apply_apply]
+    rw [heL, hFx, ← map_add (f := _), ContinuousLinearEquiv.symm_apply_apply]
   have hrhs : ∑' μ : dualLattice L,
       𝓕 (F : EuclidPi K ι → ℂ) μ * 𝐞 ⟪(μ : EuclidPi K ι), toEuclidPi K a⟫ =
       ∑' β : idealLatticePi (fun i ↦ traceDualIdeal K (I i)),
@@ -407,7 +407,7 @@ theorem summable_norm_iff_and_tsum_eq_cosetPi (I : ι → (FractionalIdeal (𝓞
   have hemb : ∀ α, embPi K (h α) = (α : ι → mixedSpace K) + embPi K c := by
     intro α
     funext i
-    simp only [embPi, hh, Pi.add_apply, map_add, hy α i, add_comm]
+    simp only [embPi, hh, Pi.add_apply, map_add (f := _), hy α i, add_comm]
   set G : (ι → K) → ℂ := (cosetPi K I c).indicator (fun ξ ↦ g (embPi K ξ))
   have hsupp : ∀ ξ ∉ Set.range h, G ξ = 0 := by
     intro ξ hξ

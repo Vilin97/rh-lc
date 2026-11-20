@@ -29,7 +29,7 @@ theorem exists_proj_sesq_posDef_finiteDim : ∀ {M : Type} [AddCommGroup M] [Mod
   let A : F →ₗ[ℂ] (Fin n → ℂ) := LinearMap.pi (fun i => (b (v i : M)).comp F.subtype)
   let B : M →ₗ[ℂ] (Fin n → ℂ) :=
     { toFun := fun x i => star (b x (v i : M))
-      map_add' := by intro x y; funext i; simp [map_add]
+      map_add' := by intro x y; funext i; simp [map_add (f := _)]
       map_smul' := by intro c x; funext i; simp [mul_comm] }
   have key : ∀ (y : F) (x : M), (∀ i, b (v i : M) (y : M) = star (b x (v i : M))) →
       ∀ f ∈ F, b (y : M) f = b x f := by

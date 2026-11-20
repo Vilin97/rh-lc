@@ -97,7 +97,7 @@ theorem lie_lift {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] [Smoo
     | zero => simp
     | tmul m => exact Submodule.subset_span ⟨m, rfl⟩
     | smul s n h => rw [map_smul]; exact Submodule.smul_mem _ _ (h trivial)
-    | add m n h h' => rw [map_add]; exact Submodule.add_mem _ (h trivial) (h' trivial)
+    | add m n h h' => rw [map_add (f := _)]; exact Submodule.add_mem _ (h trivial) (h' trivial)
   · haveI : Module.Projective R V := (LieProj.lie_finite_projective_baseChange S G R x V M).2.1
     haveI : FaithfulSMul R R' := (faithfulSMul_iff_algebraMap_injective R R').2 hg
     intro a c hac

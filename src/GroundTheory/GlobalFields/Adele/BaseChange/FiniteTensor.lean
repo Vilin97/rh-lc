@@ -128,7 +128,7 @@ theorem sum_finiteCoord_finiteTensorMap (t : L ⊗[K] FiniteAdeleRing (𝓞 K) K
     simp_rw [finiteTensorMap_tmul, finiteCoord_algebraMap_mul, ← Algebra.smul_def,
       TensorProduct.tmul_smul, TensorProduct.smul_tmul', ← TensorProduct.sum_tmul, b.sum_repr]
   | add s t hs ht =>
-    simp_rw [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib, hs, ht]
+    simp_rw [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib, hs, ht]
 
 variable (K L) in
 

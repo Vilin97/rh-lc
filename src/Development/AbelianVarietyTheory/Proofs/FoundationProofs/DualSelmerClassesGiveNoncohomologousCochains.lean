@@ -34,10 +34,10 @@ theorem phi_bijective : ∀ (l : ℕ) [Fact l.Prime] (c : Coef l) (n : ℕ), Fun
     have e : x = Pi.single 0 (x 0) + Pi.single 1 (x 1) := by
       funext i; fin_cases i <;> simp
     have e2 : φ x = φ' (Pi.single 0 (x 0)) + φ' (Pi.single 1 (x 1)) := by
-      rw [← map_add, ← e]; rfl
+      rw [← map_add (f := _), ← e]; rfl
     have h0' : φ' (Pi.single 0 (x 0)) = tbA c n (x 0 * b0) := h0 (x 0)
     have h1' : φ' (Pi.single 1 (x 1)) = tbA c n (x 1 * b1) := h1 (x 1)
-    rw [Phi_apply, e2, h0', h1', ← map_add]
+    rw [Phi_apply, e2, h0', h1', ← map_add (f := _)]
     congr 1
     simp
 
@@ -89,7 +89,7 @@ theorem sel_perp : GlobalTheory.Mem.LiteralAutomorphy.LitCoh → ∀ (l : ℕ) [
   have hY : ∀ x s, Phi c n (Y x s) = (rep x).1 (toGS Ω (S : Set Pl) s) := fun x s => hΦΨ _
   have hYc : ∀ x s t, Y x (s * t) = Y x s + matQ c n (dual1 W) hint' s *ᵥ Y x t := by
     intro x s t
-    simp only [Y, map_mul, (rep x).2.2, map_add, hΨeq]
+    simp only [Y, map_mul, (rep x).2.2, map_add (f := _), hΨeq]
   refine ⟨fun x s => lftV c n (Y x s), fun x => ?_, fun x x' hne hcob => ?_⟩
   · have hsel0 := (mem_Sel _ _ _ _ _).1 x.2
     refine ⟨⟨?_, fun s i => lftV_mem c n _ i, fun s _ t _ => ?_⟩, fun a ha => ?_, fun q hq hlq => ?_, ?_⟩
@@ -105,7 +105,7 @@ theorem sel_perp : GlobalTheory.Mem.LiteralAutomorphy.LitCoh → ∀ (l : ℕ) [
       have e1 : (⟨(lftV c n (Y x s) + mat (dual1 W) s *ᵥ lftV c n (Y x t)) i, hb i⟩ : c.O) =
           ⟨lftV c n (Y x s) i, lftV_mem c n _ i⟩ +
             ⟨(mat (dual1 W) s *ᵥ lftV c n (Y x t)) i, CupCob.mulVec_mem c _ _ (hint' s) (lftV_mem c n _) i⟩ := rfl
-      rw [e1, map_add, red_lftV, red_mulVec c n _ (hint' s) _ (lftV_mem c n _), red_lftV, hYc]
+      rw [e1, map_add (f := _), red_lftV, red_mulVec c n _ (hint' s) _ (lftV_mem c n _), red_lftV, hYc]
       simp only [red_lftV, Pi.add_apply]
       rfl
     · intro i

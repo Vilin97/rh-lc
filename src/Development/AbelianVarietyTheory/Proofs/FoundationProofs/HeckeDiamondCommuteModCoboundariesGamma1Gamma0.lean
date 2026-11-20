@@ -72,7 +72,7 @@ theorem comm_of_decomp {Γ : Subgroup SL(2, ℤ)} {w : ℕ} (A B : Module.End �
   have hcj : ∀ z ∈ B1 Γ w, cj z ∈ B1 Γ w := (cj_mem_Z1_cj_mem_B1_per_smul Γ w).2.1
   have e : A (B (x + cj y + b)) - B (A (x + cj y + b)) =
       (A (B x) - B (A x)) + cj (A (B y) - B (A y)) + (A (B b) - B (A b)) := by
-    simp only [cj_sub, hAc, hBc, map_add]
+    simp only [cj_sub, hAc, hBc, map_add (f := _)]
     abel
   rw [e]
   exact add_mem (add_mem hx (hcj _ hy)) (sub_mem (hA _ (hB _ hb)) (hB _ (hA _ hb)))

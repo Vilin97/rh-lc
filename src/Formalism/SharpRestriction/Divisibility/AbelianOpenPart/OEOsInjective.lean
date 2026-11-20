@@ -22,7 +22,7 @@ def oEOs : 𝓞 D.host.E →+* D.what₂.O where
   map_one' := hinj (by rw [oEOsFun_spec, map_one, map_one])
   map_mul' x y := hinj (by rw [map_mul, oEOsFun_spec, oEOsFun_spec, oEOsFun_spec, map_mul])
   map_zero' := hinj (by rw [oEOsFun_spec, map_zero, map_zero])
-  map_add' x y := hinj (by rw [map_add, oEOsFun_spec, oEOsFun_spec, oEOsFun_spec, map_add])
+  map_add' x y := hinj (by rw [map_add (f := _), oEOsFun_spec, oEOsFun_spec, oEOsFun_spec, map_add (f := _)])
 
 theorem oEOs_injective : Function.Injective (oEOs D hinj) := by
   intro x y hxy

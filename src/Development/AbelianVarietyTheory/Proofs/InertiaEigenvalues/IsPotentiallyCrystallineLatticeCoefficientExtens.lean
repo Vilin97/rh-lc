@@ -28,7 +28,7 @@ theorem isCrys_transport {ρ : Representation LL G V} {ρ' : Representation LL G
     (AlgebraTensorModule.congr e (LinearEquiv.refl Qp B)) (actVB PD ρ) (actVB PD ρ') (fun g x => by
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul v c => simp [actVB, he])
   unfold IsCrys at h ⊢
   rw [← e.finrank_eq, ← h]

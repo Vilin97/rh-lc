@@ -17,7 +17,7 @@ theorem sp_coef_map {M N : Type*} [AddCommGroup M] [Module ℂ M] [AddCommGroup 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul m y => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem sp_expand {M N : Type*} [AddCommGroup M] [Module ℂ M] [AddCommGroup N] [Module ℂ N]
     [Module.Finite ℂ N] (x : M ⊗[ℂ] N) :

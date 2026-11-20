@@ -14,7 +14,7 @@ variable {G K V : Type} [Group G] [Field K] [AddCommGroup V] [Module ℂ V]
 
 def typePart (ρ : Representation ℂ G V) (σ : K →+* ℂ) (P : Subgroup G) (ψ : P →* Kˣ) : Submodule ℂ V where
   carrier := {x | ∀ g : P, ρ (g : G) x = σ ((ψ g : Kˣ) : K) • x}
-  add_mem' hx hy g := by rw [map_add, hx g, hy g, smul_add]
+  add_mem' hx hy g := by rw [map_add (f := _), hx g, hy g, smul_add]
   zero_mem' g := by rw [map_zero, smul_zero]
   smul_mem' c x hx g := by rw [map_smul, hx g, smul_comm]
 

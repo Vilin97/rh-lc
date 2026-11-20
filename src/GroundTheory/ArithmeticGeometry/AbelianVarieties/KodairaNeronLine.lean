@@ -130,7 +130,7 @@ theorem exists_integral_line [DecidableEq K] {x₁ y₁ x₂ y₂ x₃ y₃ : �
         _ = L := by rw [h1, mul_one]
     · exfalso
       have key : ι (1 : 𝒪) = ι ((x₁ + x₂ + x₃) * t ^ 2 - W.a₁ * t + W.a₂ * t ^ 2) := by
-        simp only [map_add, map_sub, map_mul, map_pow, map_one]
+        simp only [map_add (f := _), map_sub, map_mul, map_pow, map_one]
         rw [v1]
         simp only [WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂]
         linear_combination (-(L * ι t + 1) - ι W.a₁ * ι t) * hLt
@@ -145,13 +145,13 @@ theorem exists_integral_line [DecidableEq K] {x₁ y₁ x₂ y₂ x₃ y₃ : �
       exact (maximalIdeal.isMaximal 𝒪).ne_top ((Ideal.eq_top_iff_one _).2 hm)
   obtain ⟨ℓ, rfl⟩ := hL
   refine ⟨ℓ, y₁ - ℓ * x₁, by ring, hinj ?_, hinj ?_, hinj ?_, hinj ?_, hinj ?_⟩
-  · simp only [map_add, map_sub, map_mul]; rw [e1, e2]; ring
-  · simp only [map_add, map_sub, map_mul]; rw [e1, e3]; ring
-  · simp only [map_add, map_sub, map_mul, map_pow]; rw [v1]; simp
+  · simp only [map_add (f := _), map_sub, map_mul]; rw [e1, e2]; ring
+  · simp only [map_add (f := _), map_sub, map_mul]; rw [e1, e3]; ring
+  · simp only [map_add (f := _), map_sub, map_mul, map_pow]; rw [v1]; simp
   · have hN : N = ι y₁ - ι ℓ * ι x₁ := by rw [e1]; ring
-    simp only [map_add, map_sub, map_mul, map_pow, map_ofNat]; rw [v2, hN]; simp
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_ofNat]; rw [v2, hN]; simp
   · have hN : N = ι y₁ - ι ℓ * ι x₁ := by rw [e1]; ring
-    simp only [map_add, map_sub, map_mul, map_pow]; rw [v3, hN]; simp
+    simp only [map_add (f := _), map_sub, map_mul, map_pow]; rw [v3, hN]; simp
 
 section Origin
 
@@ -171,7 +171,7 @@ theorem dvd_partials_of_singular {x y : 𝒪} (h : W.toAffine.Equation x y)
   push Not at hs
   obtain ⟨hA, hB⟩ := hs (equation_residue W h)
   rw [dvd_iff_residue_eq_zero hπ, dvd_iff_residue_eq_zero hπ]
-  simp only [map_sub, map_add, map_mul, map_pow, map_ofNat, WeierstrassCurve.map_a₁,
+  simp only [map_sub, map_add (f := _), map_mul, map_pow, map_ofNat, WeierstrassCurve.map_a₁,
     WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄] at hA hB ⊢
   exact ⟨hA, hB⟩
 
@@ -185,7 +185,7 @@ theorem dvd_of_singular_origin (h3 : π ∣ W.a₃) (h4 : π ∣ W.a₄) (h6 : �
   rw [dvd_iff_residue_eq_zero hπ]
   have he := equation_residue W h
   rw [WeierstrassCurve.Affine.equation_iff] at he
-  simp only [map_sub, map_add, map_mul, map_pow, map_ofNat, WeierstrassCurve.map_a₁,
+  simp only [map_sub, map_add (f := _), map_mul, map_pow, map_ofNat, WeierstrassCurve.map_a₁,
     WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄,
     WeierstrassCurve.map_a₆] at hA hB he
   set X := residue 𝒪 x

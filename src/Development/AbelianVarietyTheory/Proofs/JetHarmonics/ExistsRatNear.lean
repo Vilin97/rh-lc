@@ -22,7 +22,7 @@ theorem exists_rat_near (h : ∀ m : ℕ, ∃ ε : 𝓞 D.host.K, IsIdem D lam m
   obtain ⟨t, -, ht, -⟩ := exists_trace_norm D ((ε : D.host.K) * c)
   refine ⟨t, ?_⟩
   have h1 := congrArg (homP D lam) ht
-  rw [map_add, homP_conjK, map_mul, map_mul, map_ratCast] at h1
+  rw [map_add (f := _), homP_conjK, map_mul, map_mul, map_ratCast] at h1
   have h2 : homP D lam c - (t : ℂ_[p]) =
       -((homP D lam (ε : D.host.K) - 1) * homP D lam c + homPbar D lam (ε : D.host.K) * homPbar D lam c) := by
     rw [← h1]; ring

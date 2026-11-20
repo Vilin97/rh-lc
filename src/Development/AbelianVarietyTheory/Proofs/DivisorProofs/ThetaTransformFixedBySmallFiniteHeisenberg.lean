@@ -155,12 +155,12 @@ theorem schr_fin_fix (F : Type) [Field F] [NumberField F] [Invertible (2 : AF F)
         = pairA F 0 (z ⬝ᵥ b + (c • a) ⬝ᵥ b) := by
       have e1 : GlobalTheory.HeisSchA.p1 (F := F) (x ⬝ᵥ (fun i => pairA F 0 (b i)) + ⅟(2 : AF F) *
           ((fun i => pairA F 0 (a i)) ⬝ᵥ (fun i => pairA F 0 (b i)))) = 0 := by
-        rw [map_add, map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct]
+        rw [map_add (f := _), map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct]
         have e0 : (fun i => GlobalTheory.HeisSchA.p1 (F := F) (pairA F 0 (b i))) = 0 := funext fun i => rfl
         simp only [Function.comp_def, e0, dotProduct_zero, mul_zero, add_zero]
       have e2 : GlobalTheory.HeisSchA.p2 (F := F) (x ⬝ᵥ (fun i => pairA F 0 (b i)) + ⅟(2 : AF F) *
           ((fun i => pairA F 0 (a i)) ⬝ᵥ (fun i => pairA F 0 (b i)))) = z ⬝ᵥ b + (c • a) ⬝ᵥ b := by
-        rw [map_add, map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct, smul_dotProduct, smul_eq_mul]
+        rw [map_add (f := _), map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct, smul_dotProduct, smul_eq_mul]
         rfl
       exact Prod.ext e1 e2
     show ψ (x ⬝ᵥ (fun i => pairA F 0 (b i)) + ⅟(2 : AF F) * ((fun i => pairA F 0 (a i)) ⬝ᵥ
@@ -210,9 +210,9 @@ theorem thetaTr_level : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar
   obtain ⟨K, hK⟩ := schr_fin_fix D.host.F ψ hψ.1.1 Φ hΦ
   have hcont : Continuous co.e := IsModuleTopology.continuous_of_linearMap co.e.toLinearMap
   let f1 : Formalism.IndefR.Datum.WO S T →+ (κ → Af D.host.F) :=
-    AddMonoidHom.mk' (fun u i => ((co.e u).1 i).2) (fun u v => by funext i; rw [map_add]; rfl)
+    AddMonoidHom.mk' (fun u i => ((co.e u).1 i).2) (fun u v => by funext i; rw [map_add (f := _)]; rfl)
   let f2 : Formalism.IndefR.Datum.WO S T →+ (κ → Af D.host.F) :=
-    AddMonoidHom.mk' (fun u i => ((co.e u).2 i).2) (fun u v => by funext i; rw [map_add]; rfl)
+    AddMonoidHom.mk' (fun u i => ((co.e u).2 i).2) (fun u v => by funext i; rw [map_add (f := _)]; rfl)
   have hf1 : Continuous f1 :=
     continuous_pi fun i => continuous_snd.comp ((continuous_apply i).comp (continuous_fst.comp hcont))
   have hf2 : Continuous f2 :=
@@ -224,7 +224,7 @@ theorem thetaTr_level : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar
     exact hK _ hu.1 _ hu.2
   show ψ (Formalism.IndefR.Datum.symplOH S T w u) * GlobalTheory.WeilM.thetaSum D.host.F (GlobalTheory.WeilM.schr ψ (co.e (w + u)) Φ) =
     GlobalTheory.WeilM.thetaSum D.host.F (GlobalTheory.WeilM.schr ψ (co.e w) Φ)
-  rw [map_add]
+  rw [map_add (f := _)]
   have h1 : GlobalTheory.WeilM.schr ψ (co.e w + co.e u) Φ = fun x =>
       ψ (-(⅟(2 : AF D.host.F) * ((co.e w).1 ⬝ᵥ (co.e u).2 - (co.e u).1 ⬝ᵥ (co.e w).2))) *
         GlobalTheory.WeilM.schr ψ (co.e w) (GlobalTheory.WeilM.schr ψ (co.e u) Φ) x :=

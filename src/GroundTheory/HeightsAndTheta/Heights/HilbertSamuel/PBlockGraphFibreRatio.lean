@@ -20,7 +20,7 @@ theorem eval_mConeMap {Ω : Type} [Field Ω] (v : (Σ k, ι k) → Ω) (s : K �
     eval s (mConeMap v f) = aeval (fun p => s p.1 * v p) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add f g hf hg => rw [map_add, map_add, map_add, hf, hg]
+  | add f g hf hg => rw [map_add (f := _), map_add (f := _), map_add (f := _), hf, hg]
   | mul_X f p hf =>
     rw [map_mul, map_mul, map_mul, hf]
     simp [mConeMap, mul_comm]
@@ -68,7 +68,7 @@ theorem graphMap_rename_inlV (P : Ideal (MRing ι)) (g : (Σ k, ι₂ k) → MRi
     graphMap P g (rename (inlV (ι₂ := ι₂)) f) = C (Ideal.Quotient.mk P f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [graphMap]
-  | add f f' hf hf' => rw [map_add, map_add, hf, hf', map_add, map_add]
+  | add f f' hf hf' => rw [map_add (f := _), map_add (f := _), hf, hf', map_add (f := _), map_add (f := _)]
   | mul_X f p hf =>
     rw [map_mul, map_mul, hf, rename_X, map_mul, map_mul]
     congr 1

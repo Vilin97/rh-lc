@@ -74,7 +74,7 @@ theorem exists_frac [W.IsPrime] (hPW : P ≤ W) {a : FractionRing (MRing ι R �
       (add_comm b' b ▸ isMultiHomog_mul hf' hg), isMultiHomog_mul hg hg',
       fun h => (Ideal.IsPrime.mem_or_mem ‹_› h).elim hgW hgW', ?_⟩
     rw [div_add_div _ _ (hne hgW) (hne hgW')]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     ring
   | neg x _ hx =>
     obtain ⟨b, f, g, hf, hg, hgW, rfl⟩ := hx
@@ -229,7 +229,7 @@ theorem psi_eq_zero (hPh : IsMultiHomogIdeal P) {f : MRing ι R} (hf : f ∈ P) 
     psi (P := P) T hT f = 0 := by
   conv_lhs => rw [← sum_weightedHomogeneousComponent (w := blockWeight ι) f]
   refine finsum_induction (fun q => psi (P := P) T hT q = 0) (map_zero _)
-    (fun x y hx hy => by rw [map_add, hx, hy, add_zero]) fun b => ?_
+    (fun x y hx hy => by rw [map_add (f := _), hx, hy, add_zero]) fun b => ?_
   rw [psi_homog T hPW hT (weightedHomogeneousComponent_isWeightedHomogeneous b f)]
   have h0 : fr P (weightedHomogeneousComponent (blockWeight ι) b f) = 0 :=
     fr_eq_zero_iff.mpr (hPh f hf b)
@@ -291,7 +291,7 @@ theorem isLocalization_lau (hPh : IsMultiHomogIdeal P) :
       obtain ⟨⟨r, h⟩, hr⟩ := hp
       obtain ⟨⟨r', h'⟩, hr'⟩ := hq
       refine ⟨⟨r * h' + r' * h, h * h'⟩, ?_⟩
-      simp only [Submonoid.coe_mul, map_mul, map_add] at hr hr' ⊢
+      simp only [Submonoid.coe_mul, map_mul, map_add (f := _)] at hr hr' ⊢
       rw [← hr, ← hr']
       ring
     | single d a =>
@@ -308,7 +308,7 @@ theorem isLocalization_lau (hPh : IsMultiHomogIdeal P) :
         AddMonoidAlgebra.single_mul_single]
       congr 1
       · ext k
-        simp only [Pi.add_apply, map_add, dp, dm]
+        simp only [Pi.add_apply, map_add (f := _), dp, dm]
         simp only [AddMonoidHom.compLeft_apply, Function.comp_apply, Nat.coe_castAddMonoidHom]
         omega
       · apply Subtype.ext
@@ -392,7 +392,7 @@ variable (T : ∀ k, ι k) (hPW : P ≤ W) (hT : ∀ k, (X ⟨k, T k⟩ : MRing 
 theorem ev_mem_locC (p : Lau P W) : ev T hPW hT p ∈ locC hPW := by
   induction p using AddMonoidAlgebra.induction_linear with
   | zero => rw [map_zero]; exact zero_mem _
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | single d a =>
     rw [ev_single, chi_apply]
     refine mul_mem (homLocRing_le_locC hPW a.2) (prod_mem fun k _ => zpow_mem_locC hPW ?_ ?_ _)
@@ -463,7 +463,7 @@ theorem map_maximalIdeal_incAC [IsLocalRing (homLocRing P W)] (hWh : IsMultiHomo
     refine finsum_induction (fun q => ((algQC hPW).comp
         (Ideal.Quotient.mk P)) q ∈ (IsLocalRing.maximalIdeal (homLocRing P W)).map (incAC hPW))
       (by rw [RingHom.map_zero]; exact zero_mem _)
-      (fun x y hx hy => by rw [RingHom.map_add]; exact add_mem hx hy)
+      (fun x y hx hy => by rw [RingHom.map_add (f := _)]; exact add_mem hx hy)
       fun b => ?_
     set wb := weightedHomogeneousComponent (blockWeight ι) b w
     have hwb : IsMultiHomog wb b := weightedHomogeneousComponent_isWeightedHomogeneous b w

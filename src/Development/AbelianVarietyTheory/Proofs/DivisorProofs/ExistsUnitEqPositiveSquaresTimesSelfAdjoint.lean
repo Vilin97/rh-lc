@@ -145,8 +145,8 @@ theorem aeval_map_eq {n : ℕ} (T : Matrix (Fin n) (Fin n) ℚ) (P Q : Matrix (F
     simp only [aeval_C, eq_ratCast, this, Matrix.mul_smul, Matrix.smul_mul, mul_one, h1]
     ext i j; by_cases h : i = j <;> simp [h, one_apply, Matrix.algebraMap_matrix_apply]
   | add p q hp hq =>
-    simp only [map_add]
-    rw [hm, map_add, ← hm, ← hm, hp, hq, ← diagonal_add, mul_add, add_mul]
+    simp only [map_add (f := _)]
+    rw [hm, map_add (f := _), ← hm, ← hm, hp, hq, ← diagonal_add, mul_add, add_mul]
   | monomial m a h =>
     rw [pow_succ, ← mul_assoc, map_mul, hm, map_mul, ← hm, ← hm, h, aeval_X, hT]
     have : ∀ D E : Matrix (Fin n) (Fin n) ℝ, P * D * Q * (P * E * Q) = P * (D * E) * Q := by
@@ -226,6 +226,6 @@ theorem main (n : ℕ) (Tm : Matrix (Fin n) (Fin n) ℚ) (B : Matrix (Fin n) (Fi
     rw [e3, Algebra.smul_def, ← map_mul, inv_mul_cancel₀ hN0'.ne', map_one]
   have := congrArg ι hmain
   set_option synthInstance.maxHeartbeats 100000 in
-    simpa only [map_one, map_add, map_smul, map_sum, map_mul, map_pow, hx, hιm, aeval_X] using this
+    simpa only [map_one, map_add (f := _), map_smul, map_sum, map_mul, map_pow, hx, hιm, aeval_X] using this
 
 end GlobalTheory.Desc.SqLin

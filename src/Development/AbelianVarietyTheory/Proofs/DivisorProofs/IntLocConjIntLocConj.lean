@@ -94,7 +94,7 @@ theorem intLocConj_intLocConj (v : HeightOneSpectrum (𝓞 (maximalRealSubfield 
   induction (z : Fv (maximalRealSubfield E) v ⊗[maximalRealSubfield E] E) using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 end CM
 

@@ -106,7 +106,7 @@ theorem idem_orth {k' : Type} [Field k'] [ValuativeRel k'] [TopologicalSpace k']
   have he' : cA D q'.e * cA D q'.e = cA D q'.e := by rw [← map_mul, he]
   have h1 : q'.e + cA D q'.e ∈ GlobalTheory.FinPl.idAt D (· = q'.v) :=
     ((GlobalTheory.T.placeIdempotent_acts_on_supportedAndOff D q'.v ε' hε').1 _).2 (by rw [← hs']; linear_combination he + he' + 2 * hec)
-  rw [map_add, cA_cA, add_comm, hs]
+  rw [map_add (f := _), cA_cA, add_comm, hs]
   refine (GlobalTheory.T.placeIdempotent_acts_on_supportedAndOff D q.v ε hε).2 _ ⟨h1.1, ?_⟩
   have h2 := h1.2
   simp only [SetLike.mem_coe, Submodule.mem_iInf] at h2 ⊢

@@ -49,7 +49,7 @@ theorem div_isIntegral (x : κ → Ω) (e : Fin (D + 1) → κ) (h : IsRatProjFr
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [coneMap, ψ]
-    | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p k hp => rw [map_mul, map_mul, map_mul, hp]; simp [coneMap, ψ]
   have hmem : ∀ r : coneRing ℚ y, ψ r ∈ fnField y := by
     intro r

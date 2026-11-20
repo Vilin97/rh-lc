@@ -167,7 +167,7 @@ lemma trunc_normal (x : TruncK K' n) : ∃ k ≤ n, ∃ u : TruncK K' n, IsUnit 
       refine isUnit_iff_exists_inv'.mpr ⟨Ideal.Quotient.mk _ v, ?_⟩
       have : Ideal.Quotient.mk (Ideal.span {(X : K'[X]) ^ n}) (u * X ^ n + v * q) = 1 := by
         rw [huv, map_one]
-      rw [map_add, map_mul, map_mul, map_pow, tt_pow_n, mul_zero, zero_add] at this
+      rw [map_add (f := _), map_mul, map_mul, map_pow, tt_pow_n, mul_zero, zero_add] at this
       exact this
     · rw [hpq, map_mul, map_pow, mul_comm]
 
@@ -266,7 +266,7 @@ lemma finrank_span_le {a m : ℕ} (x : Fin a → TruncK K' n) (hx : (TT) ^ m •
     obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective r
     induction p using Polynomial.induction_on' with
     | add p q hp hq =>
-      rw [map_add, add_smul]
+      rw [map_add (f := _), add_smul]
       exact Submodule.add_mem _ (hp (Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self x)))
         (hq (Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self x)))
     | monomial j c =>

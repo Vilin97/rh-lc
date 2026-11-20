@@ -80,7 +80,7 @@ theorem loc_gen (Λ : Submodule (𝓞 D.host.E) (VS D).V) (hL : Submodule.IsLatt
       rw [betaL_bc]
       exact Submodule.subset_span ⟨_, by rw [hPv]; exact hu v hv, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y y' _ _ hy hy' => rw [map_add]; exact Submodule.add_mem _ hy hy'
+    | add y y' _ _ hy hy' => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hy'
     | smul o y _ hy =>
       rw [Subring.smul_def, map_smul, ← Subring.smul_def]
       exact Submodule.smul_mem _ _ hy
@@ -120,7 +120,7 @@ theorem bcP_N (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T : D.host.E} (F : LFla
         (lattice₂ D Z.M p Λ) ⊔
       (lattice₂ D Z.M p Λ ⊓ XO Z p ((locH Z p).X (fun a => sF Z p a • baseChange₂ D p (frame F a)))) := by
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hv
-  rw [map_add]
+  rw [map_add (f := _)]
   refine Submodule.add_mem_sup ?_ ⟨Submodule.subset_span ⟨z, hz.1, rfl⟩, ?_⟩
   · obtain ⟨w, hw, rfl⟩ := (Formalism.L2.SG.Pf.mem_gSmul (gS D) Λ y).1 hy
     exact g_loc Z p Λ gg hgg hw
@@ -148,7 +148,7 @@ theorem loc_beta (Λ : Submodule (𝓞 D.host.E) (VS D).V) {T T' : D.host.E} (F 
     exact key w hw
   | zero => simp
   | add a b _ _ ha hb =>
-    rw [map_add, add_sub_add_comm]
+    rw [map_add (f := _), add_sub_add_comm]
     exact add_mem ha hb
   | smul c a _ ha =>
     have e : betaP p β (c • a) - c • a = c • (betaP p β a - a) := by

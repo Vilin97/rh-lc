@@ -49,7 +49,7 @@ theorem span_bcP_Xa_eq_Fj : ∀ (D : D7) (T : D.host.E) (G : LFlag (VS D) D.R.rS
       rw [map_zero]
       exact Submodule.zero_mem _
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       rw [baseChange_smul₂]

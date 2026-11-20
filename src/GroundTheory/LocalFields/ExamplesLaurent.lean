@@ -174,7 +174,7 @@ theorem valuation_powerSeriesHom_of_constantCoeff_ne_zero {F : PowerSeries 𝓀[
           gcongr
           exact (Valuation.mem_integer_iff _ _).mp (powerSeriesHom K p G).2
       _ < 1 := by simpa using valuation_uniformizer_lt_one K
-  rw [hFG, map_add, map_mul, powerSeriesHom_X, powerSeriesHom_C, Subring.coe_add,
+  rw [hFG, map_add (f := _), map_mul, powerSeriesHom_X, powerSeriesHom_C, Subring.coe_add,
     Subring.coe_mul, Valuation.map_add_eq_of_lt_right _ (h1 ▸ h2), h1]
 
 noncomputable def laurentHom : 𝓀[K]⸨X⸩ →+* K :=

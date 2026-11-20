@@ -183,7 +183,7 @@ theorem GlobalTheory.HoweD.exists_osc : ∀ (ι l : Type) [Fintype ι] [Decidabl
     (fun v => (hcont v).comp ((LinearMap.continuous_of_finiteDimensional φ.toLinearMap).comp
       GlobalTheory.HoweD.Osc.continuous_coordOf))
     (fun z z' v => by
-      rw [rho_rho, ← map_add, ← GlobalTheory.HoweD.Osc.coordOf_add, hφ, ← GlobalTheory.HoweD.Osc.two_mul_sum_coordOf]
+      rw [rho_rho, ← map_add (f := _), ← GlobalTheory.HoweD.Osc.coordOf_add, hφ, ← GlobalTheory.HoweD.Osc.two_mul_sum_coordOf]
       congr 2
       simp [Complex.mul_im]
       ring)

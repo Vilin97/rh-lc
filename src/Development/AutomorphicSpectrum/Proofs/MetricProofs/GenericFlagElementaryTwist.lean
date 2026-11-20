@@ -31,7 +31,7 @@ theorem gen_data : ∀ (Ω Φ : Type) [Field Ω] [Field Φ] [Algebra Ω Φ] (Ψ 
     intro r
     induction r using MvPolynomial.induction_on with
     | C a => rw [iS_C, map_C, aeval_C]; rfl
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p n hp => simp only [map_mul, hp, map_X, aeval_X, iS_X]
   have hiS : Function.Injective iS := fun a b e => by
     refine MvPolynomial.map_injective A.subtype Subtype.val_injective

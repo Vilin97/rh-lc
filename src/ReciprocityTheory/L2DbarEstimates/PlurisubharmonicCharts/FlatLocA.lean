@@ -32,9 +32,9 @@ theorem flA_decomp (D : V n →L[ℝ] ℂ) (w : V n) :
   have hcb : w b • bas n b = (w b).re • bas n b + (w b).im • (I • bas n b) := by
     conv_lhs => rw [← Complex.re_add_im (w b)]
     rw [add_smul, mul_smul, Complex.coe_smul, Complex.coe_smul]
-  rw [hcb, map_add, map_smul, map_smul]
+  rw [hcb, map_add (f := _), map_smul, map_smul]
   conv_rhs => rw [← Complex.re_add_im (w b)]
-  simp only [Complex.real_smul, map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+  simp only [Complex.real_smul, map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
   ring_nf; simp only [I_sq]; ring_nf
 
 theorem flA_fderiv_comp {U : V n → ℂ} {G : V n → V n} {y : V n}

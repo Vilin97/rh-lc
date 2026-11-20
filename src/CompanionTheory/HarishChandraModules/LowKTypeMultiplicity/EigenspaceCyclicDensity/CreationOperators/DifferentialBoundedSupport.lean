@@ -257,7 +257,7 @@ theorem lift_bd {ε : Fin n → Bool} (φ : V →ₗ[ℂ] W) (E : Fin n → Fin 
     (x : Cn n V) : lift n φ (bd ε E x) = bd ε F (lift n φ x) := by
   funext A
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [lift_apply, bd_apply, bd_apply, map_add, map_sum, map_sum]
+    rw [lift_apply, bd_apply, bd_apply, map_add (f := _), map_sum, map_sum]
   congr 1
   · refine Finset.sum_congr rfl fun i _ => ?_
     split_ifs with hi

@@ -78,7 +78,7 @@ theorem re_complexLinearCoeffs_dot {D : ℕ} (L : (Fin D → ℂ) →L[ℝ] ℝ)
     apply Complex.ext <;> simp [Finset.sum_apply, Pi.single_apply, Finset.sum_add_distrib]
   conv_rhs => rw [hz]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_add, map_smul, dotProduct, Complex.re_sum, smul_eq_mul]
+    simp only [map_sum, map_add (f := _), map_smul, dotProduct, Complex.re_sum, smul_eq_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
   simp only [complexLinearCoeffs, Complex.mul_re, Complex.sub_re, Complex.sub_im, Complex.mul_im,
     Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im]
@@ -125,7 +125,7 @@ theorem re_dot_complexQuadMatrix {D : ℕ} (H : (Fin D → ℂ) →L[ℝ] (Fin D
   rw [← Finset.sum_sub_distrib, Finset.sum_div]
   refine Finset.sum_congr rfl fun k _ => ?_
   subst hc hd
-  simp only [map_add, map_smul, _root_.add_apply, _root_.smul_apply, smul_eq_mul]
+  simp only [map_add (f := _), map_smul, _root_.add_apply, _root_.smul_apply, smul_eq_mul]
   simp only [complexQuadMatrix, Complex.mul_re, Complex.mul_im, Complex.div_ofNat_re,
     Complex.div_ofNat_im, Complex.sub_re, Complex.sub_im, Complex.ofReal_re, Complex.ofReal_im,
     Complex.I_re, Complex.I_im]

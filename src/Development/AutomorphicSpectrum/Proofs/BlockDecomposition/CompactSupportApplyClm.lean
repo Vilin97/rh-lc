@@ -193,7 +193,7 @@ def Tm (T : V →L[ℂ] V) : Module.End ℂ (Hs μ V) where
   map_add' f h := Hs.ext_on fun y hy => by
     simp only [Hs.add_fn, Pi.add_apply]
     rw [toH_fn hy, toH_fn hy, toH_fn hy]
-    simp only [Hs.add_fn, Pi.add_apply, map_add]
+    simp only [Hs.add_fn, Pi.add_apply, map_add (f := _)]
   map_smul' c f := Hs.ext_on fun y hy => by
     simp only [Hs.smul_fn, Pi.smul_apply, RingHom.id_apply]
     rw [toH_fn hy, toH_fn hy]

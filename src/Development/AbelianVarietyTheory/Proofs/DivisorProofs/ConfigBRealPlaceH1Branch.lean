@@ -91,7 +91,7 @@ theorem config_b_real_place_branch : GlobalTheory.ThK.KP → ∀ (F E : Type) [F
   have hpr_off : ∀ o ∈ off, pr o = 0 := fun o ho =>
     (Submodule.linearProjOfIsCompl_apply_eq_zero_iff hcompl).2 (Submodule.mem_sup_left ho)
   have hπ : ∀ y ∈ tw, ∀ o ∈ off, ι ((pr (y + o) : tw) : R.Pi) = ι y := fun y hy o ho => by
-    rw [map_add, hpr_off o ho, add_zero, hpr_tw y hy]
+    rw [map_add (f := _), hpr_off o ho, add_zero, hpr_tw y hy]
   have hker : LinearMap.ker (ι ∘ₗ tw.subtype) = ⊥ := by
     rw [LinearMap.ker_eq_bot']
     intro y hy
@@ -132,6 +132,6 @@ theorem config_b_real_place_branch : GlobalTheory.ThK.KP → ∀ (F E : Type) [F
     · intro x hx
       obtain ⟨y, hy, o, ho, rfl⟩ := Submodule.mem_sup.1 (hdec hx)
       simp only [LinearMap.comp_apply, Submodule.subtype_apply]
-      rw [hπ y hy o ho, hsι y hy, map_add, hoff o ho, add_zero]
+      rw [hπ y hy o ho, hsι y hy, map_add (f := _), hoff o ho, add_zero]
 
 end GlobalTheory.IndLine

@@ -49,7 +49,7 @@ theorem exists_domBy_chart : ∀ (K : Type) [Fintype K] (J : K → Type) [∀ k,
       rw [eq_intCast, map_intCast]
       exact intCast_mem W r
     | add a b _ _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem ha hb
     | mul a b _ _ ha hb =>
       rw [map_mul]

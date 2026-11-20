@@ -163,7 +163,7 @@ theorem pderiv_comm {σ R : Type} [CommRing R] (i j : σ) (P : MvPolynomial σ R
       congr 1
       simp [Finsupp.single_apply, hij, Ne.symm hij]
       ring
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem colSum_conj {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H} {l : Level H}
     (c : Coeff l) (hPsi : PsiCoverSt H) (a : (E →+* ℂ) × ℕ → ℕ) (n : ℕ) (P : MvPolynomial (LtN Dw n) c.F)
@@ -228,7 +228,7 @@ theorem secondOrder_zero {E : Type} [Field E] [NumberField E] [IsCMField E] {H :
   refine Finset.sum_eq_zero fun ℓ _ => ?_
   rw [Finset.sum_comm]
   refine Finset.sum_eq_zero fun ℓ' _ => ?_
-  rw [← Finset.mul_sum, map_add, add_mul]
+  rw [← Finset.mul_sum, map_add (f := _), add_mul]
   have h1 : MvPolynomial.C (β (ltIdx Dw ℓ) (ltIdx Dw ℓ')) *
       ∑ b : Fin n, MvPolynomial.pderiv (ℓ, b) (MvPolynomial.pderiv (ℓ', b) Q) = 0 := by
     by_cases hb : β (ltIdx Dw ℓ) (ltIdx Dw ℓ') = 0

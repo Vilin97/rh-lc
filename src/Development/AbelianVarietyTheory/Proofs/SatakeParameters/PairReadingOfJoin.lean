@@ -35,7 +35,7 @@ theorem exists_ne_of_mem_iSup {M : Type} [AddCommGroup M] [Module ℂ M] {ι : S
   by_contra H
   push_neg at H
   exact h (Submodule.iSup_induction p (motive := fun z => ℓ z = 0) hx (fun i y hy => H i y hy) (map_zero ℓ)
-    (fun a b ha hb => by rw [map_add, ha, hb, add_zero]))
+    (fun a b ha hb => by rw [map_add (f := _), ha, hb, add_zero]))
 
 theorem exists_ne_of_mem_iSup_sub {M : Type} [AddCommGroup M] [Module ℂ M] {ι : Sort*} (A : Submodule ℂ M)
     (p : ι → Submodule ℂ M) (hpA : ∀ i, p i ≤ A) (ℓ : A →+ ℂ) (x : A) (hx : (x : M) ∈ ⨆ i, p i)
@@ -46,7 +46,7 @@ theorem exists_ne_of_mem_iSup_sub {M : Type} [AddCommGroup M] [Module ℂ M] {ι
     (fun i y hy => ⟨hpA i hy, H i ⟨y, hpA i hy⟩ hy⟩) ⟨A.zero_mem, by exact map_zero ℓ⟩
     (fun a b ⟨ha, ea⟩ ⟨hb, eb⟩ => ⟨A.add_mem ha hb, by
         have e : (⟨a + b, A.add_mem ha hb⟩ : A) = ⟨a, ha⟩ + ⟨b, hb⟩ := rfl
-        rw [e, map_add, ea, eb, add_zero]⟩)
+        rw [e, map_add (f := _), ea, eb, add_zero]⟩)
   exact h hk
 
 def precompₛ {V C : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup C] [Module ℂ C] (T : V →ₗ[ℂ] C) :
@@ -123,7 +123,7 @@ theorem GlobalTheory.NPin.pairRead_of_join : GlobalTheory.Published.BernsteinZel
       have e : (⟨Φe (a + b), hΦC (a + b)⟩ : ↥X.C) = ⟨Φe a, hΦC a⟩ + ⟨Φe b, hΦC b⟩ := by
         apply Subtype.ext; simp
       show Θ.Λ (ι Φ0) F2 ⟨Φe (a + b), hΦC (a + b)⟩ = Θ.Λ (ι Φ0) F2 ⟨Φe a, hΦC a⟩ + Θ.Λ (ι Φ0) F2 ⟨Φe b, hΦC b⟩
-      rw [e, map_add])
+      rw [e, map_add (f := _)])
   have hℓ2f2 : ℓ2 f2 ≠ 0 := by
     have e : (⟨Φe f2, hΦC f2⟩ : ↥X.C) = y2 := Subtype.ext hf2
     show Θ.Λ (ι Φ0) F2 ⟨Φe f2, hΦC f2⟩ ≠ 0

@@ -30,7 +30,7 @@ def convSub (μ : @Measure Y (borel Y)) (L₁ : V →ₗ[ℂ] ℂ) (T : Y → V 
     letI : MeasurableSpace Y := borel Y
     intro v w hv hw
     show Integrable (fun y => L₁ (T y (v + w))) μ
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact Integrable.add hv hw
   smul_mem' := by
     letI : MeasurableSpace Y := borel Y
@@ -44,7 +44,7 @@ def avg0 (μ : @Measure Y (borel Y)) (L₁ : V →ₗ[ℂ] ℂ) (T : Y → V →
   map_add' v w := by
     letI : MeasurableSpace Y := borel Y
     show ∫ y, L₁ (T y ((v : V) + w)) ∂μ = ∫ y, L₁ (T y v) ∂μ + ∫ y, L₁ (T y w) ∂μ
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact integral_add v.2 w.2
   map_smul' c v := by
     letI : MeasurableSpace Y := borel Y

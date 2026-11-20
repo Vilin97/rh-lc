@@ -23,7 +23,7 @@ theorem map_algebraMap_padic : ∀ (p : ℕ) [Fact p.Prime] (A B : Type) [CommRi
   obtain ⟨y, hy⟩ := Ideal.mem_span_singleton'.1 (PadicInt.appr_spec n a)
   have : a = y * (p : ℤ_[p]) ^ n + (a.appr n : ℤ_[p]) := by rw [hy]; ring
   rw [this]
-  simp only [map_add, map_mul, map_pow, map_natCast, add_sub_add_right_eq_sub, ← sub_mul]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast, add_sub_add_right_eq_sub, ← sub_mul]
   exact Ideal.mul_mem_left _ _ (Ideal.pow_mem_pow hp n)
 
 theorem autCongr_continuous_cyc_inertia : ∀ (E Ω Ω₁ : Type) [Field E] [NumberField E] [Field Ω] [Field Ω₁] [Algebra E Ω] [Algebra E Ω₁] [IsAlgClosure E Ω] [IsAlgClosure E Ω₁] (σ : Ω ≃ₐ[E] Ω₁), Continuous (fun g : G E Ω => (AlgEquiv.autCongr σ g : G E Ω₁)) ∧ (∀ (p : ℕ) [Fact p.Prime] (g : G E Ω), cycZ E Ω₁ p (AlgEquiv.autCongr σ g) = cycZ E Ω p g) ∧ ∀ (A : ValuationSubring Ω) (A₁ : ValuationSubring Ω₁), (∀ y, σ y ∈ A₁ ↔ y ∈ A) → ∀ g : G E Ω, g ∈ Ine (F := E) A → (AlgEquiv.autCongr σ g : G E Ω₁) ∈ Ine (F := E) A₁ := by
@@ -149,7 +149,7 @@ theorem exists_semilinear_baseChange : ∀ (O B M : Type) [CommRing O] [IsDomain
         induction z using TensorProduct.induction_on with
         | zero => simp
         | tmul k m => rw [smul_tmul', hι, hι, smul_tmul', smul_eq_mul, smul_eq_mul, map_mul]
-        | add x y hx hy => rw [smul_add, map_add, map_add, smul_add, hx, hy] }
+        | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), smul_add, hx, hy] }
   have hι' : ∀ m, ι (1 ⊗ₜ m) = 1 ⊗ₜ (1 ⊗ₜ m) := fun m => (hι 1 m).trans (by rw [map_one])
   refine ⟨ι, fun S hS => ?_, fun S hS => ?_⟩
   · have h1 : ∀ z, ι z ∈ Submodule.span (FractionRing B) (ι '' S) := fun z => by
@@ -157,7 +157,7 @@ theorem exists_semilinear_baseChange : ∀ (O B M : Type) [CommRing O] [IsDomain
       induction hz using Submodule.span_induction with
       | mem z hz => exact Submodule.subset_span ⟨z, hz, rfl⟩
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
       | smul c x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
     rw [eq_top_iff]
     rintro z -
@@ -183,14 +183,14 @@ theorem exists_semilinear_baseChange : ∀ (O B M : Type) [CommRing O] [IsDomain
         induction hz using Submodule.span_induction with
         | mem z hz => exact Submodule.subset_span ⟨z, hz, rfl⟩
         | zero => simp
-        | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+        | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
         | smul c x _ hx =>
           rw [← algebraMap_smul (FractionRing O), map_smulₛₗ, hκ, algebraMap_smul]
           exact Submodule.smul_mem _ _ hx
       rintro _ ⟨y, rfl⟩
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
       | tmul b m =>
         have : TensorProduct.mk B (FractionRing B) (B ⊗[O] M) 1 (b ⊗ₜ[O] m) = b • ι (1 ⊗ₜ m) := by
           rw [hι', ← tmul_smul, smul_tmul', smul_eq_mul, mul_one]
@@ -240,7 +240,7 @@ theorem heckeEig_baseChange_ne_bot : ∀ (O B X M : Type) [CommRing O] [IsDomain
       intro hg'
       rw [← hs] at hf hg
       have : (⟨f + g, hg'⟩ : T₁) = ⟨f, hf⟩ + ⟨g, hg⟩ := rfl
-      rw [this, map_add, LinearMap.add_apply, ihf, ihg, Pi.add_apply, add_smul]
+      rw [this, map_add (f := _), LinearMap.add_apply, ihf, ihg, Pi.add_apply, add_smul]
     | smul b f hf ih =>
       intro hg'
       rw [← hs] at hf
@@ -270,7 +270,7 @@ theorem exists_act_baseChange : ∀ (O B X M : Type) [CommRing O] [IsDomain O] [
     have : ⇑F = ⇑(TensorProduct.piScalarRight O O B X) ∘ ⇑(T.val.toLinearMap.lTensor B) := funext fun z => by
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [Function.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
+      | add x y hx hy => simp only [Function.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
       | tmul b f =>
         rw [hF]
         funext x
@@ -284,7 +284,7 @@ theorem exists_act_baseChange : ∀ (O B X M : Type) [CommRing O] [IsDomain O] [
       show F z ∈ _
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
       | tmul b f => rw [hF]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨f, f.2, rfl⟩)
     · rw [Submodule.span_le]
       rintro _ ⟨f, hf, rfl⟩
@@ -305,7 +305,7 @@ theorem exists_act_baseChange : ∀ (O B X M : Type) [CommRing O] [IsDomain O] [
         G z (1 ⊗ₜ e j) := fun z j => by
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, Pi.add_apply, LinearMap.add_apply, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, LinearMap.add_apply, hx, hy]
       | tmul b f => simp [hG, Φ, smul_tmul']
     intro z z' h
     apply h1

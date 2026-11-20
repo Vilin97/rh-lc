@@ -203,7 +203,7 @@ theorem Implements.c_map [Nontrivial M] {g : X ≃+ X} {T : M →ₗ[ℂ] M} (h 
     S.c (g x) (g y) = S.c x y := by
   obtain ⟨v, hv⟩ := exists_ne (0 : M)
   have e : T (S.rho x (S.rho y v)) = T (S.c x y • S.rho (x + y) v) := by rw [S.rho_rho]
-  rw [h.1, h.1, S.rho_rho, map_smul, h.1, map_add] at e
+  rw [h.1, h.1, S.rho_rho, map_smul, h.1, map_add (f := _)] at e
   have hne : S.rho (g x + g y) (T v) ≠ 0 := by
     intro h0
     apply hv

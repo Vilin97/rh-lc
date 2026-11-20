@@ -65,7 +65,7 @@ variable {ι : Type} [Fintype ι]
 
 def linHom (ι : Type) [Fintype ι] : (ι → ℤ) →+ MvPolynomial ι ℝ :=
   AddMonoidHom.mk' (fun n => lin fun i => (n i : ℝ)) fun n m => by
-    simp only [lin, Pi.add_apply, Int.cast_add, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [lin, Pi.add_apply, Int.cast_add, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 def combHom (c : ι → G) : (ι → ℤ) →+ G :=
   AddMonoidHom.mk' (fun n => ∑ i, n i • c i) fun n m => by

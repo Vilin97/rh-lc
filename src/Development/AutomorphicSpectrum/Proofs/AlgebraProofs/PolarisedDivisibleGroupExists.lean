@@ -39,7 +39,7 @@ theorem exists_smul_eq {La M : Type} [AddCommGroup La] [AddCommGroup M] [Module 
     obtain ⟨d, hd, m, hm⟩ := hx
     obtain ⟨d', hd', m', hm'⟩ := hy
     refine ⟨d * d', mul_ne_zero hd hd', d' • m + d • m', ?_⟩
-    rw [map_add, map_smul, map_smul, hm, hm', smul_add, smul_smul, smul_smul, mul_comm d' d]
+    rw [map_add (f := _), map_smul, map_smul, hm, hm', smul_add, smul_smul, smul_smul, mul_comm d' d]
 
 theorem tmul_one_injective {W : Type} [AddCommGroup W] [Module O W] [Module.Free O W] {w : W}
     (h : (1 : C) ⊗ₜ[O] w = 0) : w = 0 := by
@@ -169,7 +169,7 @@ theorem exists_point {c : E ≃+* E} {κ : O} {N : ℕ} {La : Type} [AddCommGrou
     | tmul s y =>
       have hs : ∀ z : La, s ⊗ₜ[ℤ] z = s • ((1 : C) ⊗ₜ[ℤ] z) := fun z => by simp [TensorProduct.smul_tmul']
       rw [hs, map_smul, map_smul, map_smul, map_smul, hρ, ht1, ht1, omAct_tmul, hlin]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · intro x hx
     rw [hT] at hx
     induction hx using Submodule.span_induction with
@@ -177,7 +177,7 @@ theorem exists_point {c : E ≃+* E} {κ : O} {N : ℕ} {La : Type} [AddCommGrou
       obtain ⟨a, rfl⟩ := h
       exact ⟨D (gen a), (ht1 a).symm⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul r x _ hx =>
       rw [← algebraMap_smul C r x, map_smul, algebraMap_smul]
       exact Submodule.smul_mem _ _ hx
@@ -213,7 +213,7 @@ theorem baseChange_alt {R A W : Type} [CommRing R] [CommRing A] [Algebra R A] [A
     LinearMap.BilinForm.baseChange A B z z = 0 := by
   have hs : ∀ x y, B x y = - B y x := fun x y => by
     have := h (x + y)
-    simp only [map_add, LinearMap.add_apply, h, zero_add, add_zero] at this
+    simp only [map_add (f := _), LinearMap.add_apply, h, zero_add, add_zero] at this
     exact eq_neg_of_add_eq_zero_right this
   have skew : ∀ z z' : A ⊗[R] W, LinearMap.BilinForm.baseChange A B z z' +
       LinearMap.BilinForm.baseChange A B z' z = 0 := by
@@ -221,13 +221,13 @@ theorem baseChange_alt {R A W : Type} [CommRing R] [CommRing A] [Algebra R A] [A
     induction z using TensorProduct.induction_on with
     | zero => simp
     | add x y hx hy =>
-      simp only [map_add, LinearMap.add_apply]
+      simp only [map_add (f := _), LinearMap.add_apply]
       linear_combination hx + hy
     | tmul a m =>
       induction z' using TensorProduct.induction_on with
       | zero => simp
       | add x y hx hy =>
-        simp only [map_add, LinearMap.add_apply]
+        simp only [map_add (f := _), LinearMap.add_apply]
         linear_combination hx + hy
       | tmul a' m' =>
         rw [LinearMap.BilinForm.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul, hs m m', neg_smul,
@@ -235,7 +235,7 @@ theorem baseChange_alt {R A W : Type} [CommRing R] [CommRing A] [Algebra R A] [A
   induction z using TensorProduct.induction_on with
   | zero => simp
   | add x y hx hy =>
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     linear_combination hx + hy + skew x y
   | tmul a m => rw [LinearMap.BilinForm.baseChange_tmul, h, zero_smul]
 
@@ -245,7 +245,7 @@ theorem baseChange_perfect {R W : Type} [CommRing R] [AddCommGroup W] [Module.Fr
   classical
   have hs : ∀ x y, B x y = - B y x := fun x y => by
     have := h (x + y)
-    simp only [map_add, LinearMap.add_apply, h, zero_add, add_zero] at this
+    simp only [map_add (f := _), LinearMap.add_apply, h, zero_add, add_zero] at this
     exact eq_neg_of_add_eq_zero_right this
   let b := Module.finBasis ℤ W
   let bR := Algebra.TensorProduct.basis R b

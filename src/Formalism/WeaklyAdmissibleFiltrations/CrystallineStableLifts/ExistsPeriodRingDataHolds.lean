@@ -22,7 +22,7 @@ lemma lpScale_coeff (c : ℚˣ) (f : LaurentPolynomial ℚ) (m : ℤ) :
     (lpScale c f).coeff m = ((c ^ m : ℚˣ) : ℚ) * f.coeff m := by
   induction f using LaurentPolynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, AddMonoidAlgebra.coeff_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply,
+    rw [map_add (f := _), AddMonoidAlgebra.coeff_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply,
       Finsupp.add_apply, hp, hq, mul_add]
   | C_mul_T n a =>
     have h1 : lpScale c (T n) = ((c ^ n : ℚˣ) : ℚ) • T n := by

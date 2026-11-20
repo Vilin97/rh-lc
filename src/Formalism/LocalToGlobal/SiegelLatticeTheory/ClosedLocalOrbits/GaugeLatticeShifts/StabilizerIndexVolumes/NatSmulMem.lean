@@ -112,7 +112,7 @@ theorem lat_fun_bdd (Λ : Submodule (𝓞 E) V) (h : Submodule.IsLattice E Λ) {
   induction hv using Submodule.span_induction with
   | mem x hx => exact hmS (i, ⟨x, hx⟩)
   | zero => simpa using intE_zero
-  | add x y _ _ hx hy => rw [map_add, mul_add]; exact intE_add hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), mul_add]; exact intE_add hx hy
   | smul o x _ hx =>
     rw [← coe_smul_eq, LinearMap.map_smul, smul_eq_mul, mul_left_comm]
     exact intE_mul ⟨o, rfl⟩ hx

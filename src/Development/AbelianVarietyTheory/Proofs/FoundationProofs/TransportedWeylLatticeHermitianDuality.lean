@@ -92,7 +92,7 @@ theorem pair_denom (h : V →ₗ⋆[K] V →ₗ[K] K) (w : HeightOneSpectrum (�
     exact Submodule.smul_mem _ _ (hsy ⟨y, hy⟩)
   | zero => simp
   | add y z _ _ hy hz =>
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact add_mem hy hz
   | smul r y _ hy =>
     rw [pair_smul_left]
@@ -181,7 +181,7 @@ theorem mem_colLat_dual (G : Matrix (Fin n) (Fin n) K) (B B' : GL (Fin n) K)
       exact H j
     | zero => simp
     | add y z _ _ hy hz =>
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact add_mem hy hz
     | smul r y _ hy =>
       rw [pair_smul_left]

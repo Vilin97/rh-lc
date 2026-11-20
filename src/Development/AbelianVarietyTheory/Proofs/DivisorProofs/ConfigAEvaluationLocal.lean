@@ -86,7 +86,7 @@ theorem crdV_compFin (v : Pl F) (x : AE F E) (i : Fin (Module.finrank F E)) :
     crdV E v (compFin F E v x) i = evFin F v (GlobalTheory.XTermMaj.crd F E x i) := by
   induction x using TensorProduct.induction_on with
   | zero => simp [GlobalTheory.XTermMaj.crd]
-  | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy, GlobalTheory.XTermMaj.crd]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy, GlobalTheory.XTermMaj.crd]
   | tmul r x =>
     have h : compFin F E v (r ⊗ₜ[F] x) = evFin F v r ⊗ₜ[F] x := rfl
     rw [h]

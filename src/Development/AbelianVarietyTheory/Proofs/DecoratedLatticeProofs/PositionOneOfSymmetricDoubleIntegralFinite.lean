@@ -60,7 +60,7 @@ theorem GlobalTheory.PosOne.exUp_represents : ∀ (k : Type) [Field k] [Valuativ
     { toFun := fun φ => LinearMap.mk₂ ℂ
         (fun v Φ₀ => ∫ β, (Φ₀ : (n → k) → ℂ) β * B φ (σ (colE c (p + 1) β) v) ∂(Measure.pi fun _ => ν))
         (fun v₁ v₂ Φ₀ => by
-          simp only [map_add, mul_add]
+          simp only [map_add (f := _), mul_add]
           exact integral_add (integ φ v₁ Φ₀) (integ φ v₂ Φ₀))
         (fun a v Φ₀ => by
           simp only [map_smul, smul_eq_mul, mul_left_comm _ a]
@@ -73,7 +73,7 @@ theorem GlobalTheory.PosOne.exUp_represents : ∀ (k : Type) [Field k] [Valuativ
           exact integral_const_mul a _)
       map_add' := fun φ φ' => by
         ext v Φ₀
-        simp only [LinearMap.mk₂_apply, LinearMap.add_apply, map_add, mul_add]
+        simp only [LinearMap.mk₂_apply, LinearMap.add_apply, map_add (f := _), mul_add]
         exact integral_add (integ φ v Φ₀) (integ φ' v Φ₀)
       map_smul' := fun a φ => by
         ext v Φ₀

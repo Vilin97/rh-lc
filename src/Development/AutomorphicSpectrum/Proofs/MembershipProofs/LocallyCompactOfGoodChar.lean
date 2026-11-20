@@ -125,12 +125,12 @@ def sys {ψ : AddChar R ℂ} {O : Subring R} {u : Rˣ} (h : GoodChar ψ O u) (d 
     c_add_left := fun x x' y => by
       rw [← AddChar.map_add_eq_mul]
       congr 1
-      simp only [d.form, map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+      simp only [d.form, map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
       ring
     c_add_right := fun x y y' => by
       rw [← AddChar.map_add_eq_mul]
       congr 1
-      simp only [d.form, map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+      simp only [d.form, map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
       ring
     c_self := fun x => by simp [d.form]
     c_norm := fun x y => h.norm_one _

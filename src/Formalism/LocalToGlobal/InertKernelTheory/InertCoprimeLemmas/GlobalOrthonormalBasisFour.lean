@@ -12,7 +12,7 @@ variable {D : D7}
 theorem hYY_add_left {N N' : ℕ} (x x' y : Matrix (Fin N') (Fin N) D.host.E) :
     hYY D (x + x') y = hYY D x y + hYY D x' y := by
   unfold hYY
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
   simp only [Matrix.add_apply, add_mul, Finset.sum_add_distrib]
 
@@ -760,7 +760,7 @@ theorem coord_of_OK (D : D7) (w : 𝓞 D.host.K) (a b' : ℚ)
   have hb := bE_isIntegral D
   have hcw : D.host.conj (((w : D.host.K)) : D.host.E) =
       (a : D.host.E) - (b' : D.host.E) * D.host.sqd := by
-    rw [hw, map_add, map_mul, map_ratCast, map_ratCast, G0.conj_b]; ring
+    rw [hw, map_add (f := _), map_mul, map_ratCast, map_ratCast, G0.conj_b]; ring
   constructor
   · apply int_of_isIntegral D
     have e : ((2 * a : ℚ) : D.host.E) = (((w : D.host.K)) : D.host.E) + D.host.conj (((w : D.host.K)) : D.host.E) := by
@@ -786,7 +786,7 @@ theorem okK_of_int (D : D7) (m1 m2 : ℤ) : ∃ w : 𝓞 D.host.K,
   have e : ((((m1 : 𝓞 D.host.K) + (m2 : 𝓞 D.host.K) * bO : 𝓞 D.host.K) : D.host.K) : D.host.E) =
       algebraMap D.host.K D.host.E (algebraMap (𝓞 D.host.K) D.host.K ((m1 : 𝓞 D.host.K) + (m2 : 𝓞 D.host.K) * bO)) := rfl
   rw [e]
-  simp only [map_add, map_mul, map_intCast]
+  simp only [map_add (f := _), map_mul, map_intCast]
   rfl
 
 theorem okK_mul_mem (D : D7) (κ : 𝓞 D.host.K) {z : D.host.E} (hz : z ∈ AAs D) :
@@ -823,7 +823,7 @@ theorem tr_pos (D : D7) (x : D.host.E) (hx : x ≠ 0) :
     exact Finset.sum_pos (fun τ _ => Complex.normSq_pos.2 ((map_ne_zero _).2 hx)) Finset.univ_nonempty
   obtain ⟨p, q, e⟩ := CS.K_repr D _ (G0.hK D x x).2
   have hs := IO.sqrt_d_pos D
-  rw [e, map_add, map_mul, map_ratCast, map_ratCast, CS.embedding_sqrt_neg_d] at hφ
+  rw [e, map_add (f := _), map_mul, map_ratCast, map_ratCast, CS.embedding_sqrt_neg_d] at hφ
   have him := congrArg Complex.im hφ
   have hre := congrArg Complex.re hφ
   simp only [Complex.add_im, Complex.mul_im, Complex.ratCast_im, Complex.ratCast_re, Complex.I_re, Complex.I_im,
@@ -850,13 +850,13 @@ theorem tE_add_l (y y' z : D.host.E) :
     ((Algebra.trace D.host.K D.host.E ((y + y') * D.host.conj z) : D.host.K) : D.host.E) =
       (Algebra.trace D.host.K D.host.E (y * D.host.conj z) : D.host.E) +
         (Algebra.trace D.host.K D.host.E (y' * D.host.conj z) : D.host.E) := by
-  rw [add_mul, map_add, IntermediateField.coe_add]
+  rw [add_mul, map_add (f := _), IntermediateField.coe_add]
 
 theorem tE_add_r (y z z' : D.host.E) :
     ((Algebra.trace D.host.K D.host.E (y * D.host.conj (z + z')) : D.host.K) : D.host.E) =
       (Algebra.trace D.host.K D.host.E (y * D.host.conj z) : D.host.E) +
         (Algebra.trace D.host.K D.host.E (y * D.host.conj z') : D.host.E) := by
-  rw [map_add, mul_add, map_add, IntermediateField.coe_add]
+  rw [map_add (f := _), mul_add, map_add (f := _), IntermediateField.coe_add]
 
 theorem tE_mul_l (κ : D.host.K) (y z : D.host.E) :
     ((Algebra.trace D.host.K D.host.E ((κ : D.host.E) * y * D.host.conj z) : D.host.K) : D.host.E) =
@@ -897,7 +897,7 @@ theorem InC_add {x y : D.host.E} (hx : InC D p e x) (hy : InC D p e y) : InC D p
       push_cast; ring
     rw [e1]
     exact add_mem (nat_mul_mem D t' htx) (nat_mul_mem D t hty)
-  · rw [add_mul, map_add, hxo i, hyo i, add_zero]
+  · rw [add_mul, map_add (f := _), hxo i, hyo i, add_zero]
 
 theorem InC_bE {v : D.host.E} (hv : InC D p e v) : InC D p e (D.host.sqd * v) := by
   obtain ⟨⟨t, ht, htv⟩, hvo⟩ := hv
@@ -1067,7 +1067,7 @@ theorem div_mem (D : D7) (p : ℕ) [hp : Fact p.Prime] {k : ℕ} (e : Fin k → 
   obtain ⟨q2, hq2, p2⟩ := hPZ _ (InC_add D p e hxC (InC_bE D p e hvC))
   have hcT : D.host.conj ((Algebra.trace D.host.K D.host.E (x * D.host.conj (oprj D e u w)) : D.host.K) : D.host.E) =
       (α : D.host.E) - (β : D.host.E) * D.host.sqd := by
-    rw [hαβ, map_add, map_mul, map_ratCast, map_ratCast, G0.conj_b]; ring
+    rw [hαβ, map_add (f := _), map_mul, map_ratCast, map_ratCast, G0.conj_b]; ring
   have hcb : D.host.conj (D.host.sqd) = -D.host.sqd := G0.conj_b D
   have hsq : (D.host.sqd) ^ 2 = -(D.host.d : D.host.E) := CS.s_sq D
 

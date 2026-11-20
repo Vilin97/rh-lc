@@ -19,7 +19,7 @@ theorem Scale {p : ℕ} [Fact p.Prime] (hZS : ZpSimeq)
     | succ n ih =>
       have H2 := simeq_add ih H
       refine simeq_congr ?_ H2
-      simp only [Nat.cast_succ, map_add, map_one, add_mul, one_mul, add_zero, sub_zero]
+      simp only [Nat.cast_succ, map_add (f := _), map_one, add_mul, one_mul, add_zero, sub_zero]
   have hGs : CC fun c : ℂ_[p] => MvPowerSeries.C c * (MvPowerSeries.C (zc u) * F) := cc_mul cc_C (cc_const _)
   obtain ⟨w, hw⟩ := hu.exists_left_inv
   have H3 := hZS p τ _ hGs hN w
@@ -138,7 +138,7 @@ theorem Lnat (hgrp : IntegralMv (add l ex (Xv 0) (Xv 1) : MvPowerSeries (Fin 2) 
     refine simeq_trans H ?_
     have H2 := simeq_add ih (simeq_refl (be l ex ph (Xv 0) (Xv 1) : MvPowerSeries (Fin 2) ℂ_[p]))
     refine simeq_congr ?_ H2
-    rw [map_add, map_one, add_mul, one_mul]
+    rw [map_add (f := _), map_one, add_mul, one_mul]
 
 theorem Lzp (hZS : ZpSimeq) (hgrp : IntegralMv (add l ex (Xv 0) (Xv 1) : MvPowerSeries (Fin 2) ℂ_[p]))
     (hbi : Simeq (be l ex ph (add l ex (Xv 0) (Xv 1)) (Xv 2) : MvPowerSeries (Fin 3) ℂ_[p])

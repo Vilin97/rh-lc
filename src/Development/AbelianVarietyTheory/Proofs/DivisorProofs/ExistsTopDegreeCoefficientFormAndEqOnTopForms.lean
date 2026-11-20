@@ -42,7 +42,7 @@ theorem isTop_exists_and_eq (k : Type) [Field k] [CharZero k] (F K : Type) [Fiel
     rw [e]
     exact key _
   | zero => simp
-  | add a c _ _ ha hc => rw [map_add, add_smul, ← ha, ← hc]
+  | add a c _ _ ha hc => rw [map_add (f := _), add_smul, ← ha, ← hc]
   | smul r a _ ha => rw [map_smul, smul_eq_mul, mul_smul, ← ha]
 
 end GlobalTheory.PD

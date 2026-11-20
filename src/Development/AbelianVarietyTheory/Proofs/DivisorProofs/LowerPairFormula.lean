@@ -78,7 +78,7 @@ theorem lower_pair_formula : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
           rw [map_smul, hBK, hb0, map_zero, smul_zero]
         · exact horth (φ i) σ' hσ _ he_mem v hv
       · intro x y hx hy
-        rw [map_add, hx, hy, add_zero]
+        rw [map_add (f := _), hx, hy, add_zero]
     have := hall (GlobalTheory.IndefiniteRowSideFullHecke.DifferentConductorValuations.inK K H u)
     rw [hBK] at this
     exact hu (hinj (by rw [this, map_zero]))
@@ -100,6 +100,6 @@ theorem lower_pair_formula : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
         exact this.symm
       rw [hN.2 σ hσ w hw, horth σ (GlobalTheory.IndefiniteRowSideFullHecke.DifferentConductorValuations.bar (φ i)) hne w hw _ hf_mem, zero_div, zero_smul]
   · intro x y hx hy
-    rw [map_add, hx, hy, map_add, LinearMap.add_apply, add_div, add_smul]
+    rw [map_add (f := _), hx, hy, map_add (f := _), LinearMap.add_apply, add_div, add_smul]
 
 end GlobalTheory.Div.LowerPairFormula

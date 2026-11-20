@@ -55,7 +55,7 @@ lemma skewOf_add (q1 q2 : (G.UT j → ℂ) × (Fin j → ℝ)) : skewOf (q1 + q2
     simp only [Prod.snd_add, Pi.add_apply, Complex.ofReal_add]; ring
   · simp only [Matrix.add_apply]
     rw [skewOf_gt _ h, skewOf_gt _ h, skewOf_gt _ h, skewOf_lt _ h, skewOf_lt _ h, skewOf_lt _ h]
-    simp only [Prod.fst_add, Pi.add_apply, map_add]; ring
+    simp only [Prod.fst_add, Pi.add_apply, map_add (f := _)]; ring
 
 def kap (c1 c2 : Matrix (Fin (2 * ρ + k + 1)) (Fin j) ℂ) : (G.UT j → ℂ) × (Fin j → ℝ) :=
   skc ((1 / 2 : ℂ) • (c2ᴴ * Hpk k ρ * c1 - c1ᴴ * Hpk k ρ * c2))
@@ -237,7 +237,7 @@ lemma cstr_iff {z : Fin (2 * r + k + 1) → ℂ} (hz : C2.StdZ k r z) (c : Fin (
       rw [eq_div_iff hl']
       have := congrArg conj ha
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [Pi.zero_apply, map_add, map_sum, map_mul, Complex.conj_conj, map_zero] at this
+        simp only [Pi.zero_apply, map_add (f := _), map_sum, map_mul, Complex.conj_conj, map_zero] at this
       linear_combination this
     · simp [extC]
   · intro h

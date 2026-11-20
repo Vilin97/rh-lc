@@ -13,7 +13,7 @@ variable {σ : Type} {k l n : ℕ}
 
 def harmSub (z : Fin k × Fin n → σ) (y : Fin l × Fin n → σ) : Submodule ℂ (MvPolynomial σ ℂ) where
   carrier := {P | ∀ i j, ∑ t, pderiv (z (i, t)) (pderiv (y (j, t)) P) = 0}
-  add_mem' := fun ha hb i j => by simp only [map_add, Finset.sum_add_distrib, ha i j, hb i j, add_zero]
+  add_mem' := fun ha hb i j => by simp only [map_add (f := _), Finset.sum_add_distrib, ha i j, hb i j, add_zero]
   zero_mem' := fun i j => by simp
   smul_mem' := fun c _ ha i j => by
     simp only [Derivation.map_smul, ← Finset.smul_sum, ha i j, smul_zero]
@@ -22,7 +22,7 @@ theorem pderiv_pderiv_polar [DecidableEq σ] (u v a b : σ) (P : MvPolynomial σ
     pderiv u (pderiv v (X a * pderiv b P)) = X a * pderiv b (pderiv u (pderiv v P)) +
       (if u = a then pderiv b (pderiv v P) else 0) +
       (if v = a then pderiv u (pderiv b P) else 0) := by
-  rw [pderiv_X_mul', map_add, pderiv_X_mul', pderiv_swap v b, pderiv_swap u b]
+  rw [pderiv_X_mul', map_add (f := _), pderiv_X_mul', pderiv_swap v b, pderiv_swap u b]
   split_ifs <;> simp [pderiv_swap u b]
 
 theorem lap_colOp [DecidableEq σ] (z : Fin k × Fin n → σ) (y : Fin l × Fin n → σ) {I J : Type}

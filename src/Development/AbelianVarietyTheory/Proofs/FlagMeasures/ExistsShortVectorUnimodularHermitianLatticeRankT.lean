@@ -197,7 +197,7 @@ noncomputable def fam [IsTotallyComplex E] (hs : ∀ (φ : E →+* ℂ) (a : E),
     (hp : ∀ (φ : E →+* ℂ) (y : Fin m → E), y ≠ 0 → 0 < (φ (star y ⬝ᵥ (J *ᵥ y))).re) :
     ReciprocityTheory.GeometryOfNumbersTheory.HermFam E (Fin m → E) where
   form σ x y := σ (star x ⬝ᵥ (J *ᵥ y))
-  add_right σ x y z := by rw [mulVec_add, dotProduct_add, map_add]
+  add_right σ x y z := by rw [mulVec_add, dotProduct_add, map_add (f := _)]
   smul_right σ a x y := by rw [mulVec_smul, dotProduct_smul, smul_eq_mul, map_mul]
   conj_symm σ x y := by rw [← hs, star_form hJ]
   posDef σ n v hv := by

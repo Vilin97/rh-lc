@@ -18,7 +18,7 @@ def jacM (w : Matrix (Fin n) (Fin m) ℂ) (B : Matrix (Fin n) (Fin m) ℂ)
     (EuclideanSpace ℝ α × EuclideanSpace ℝ β) →ₗ[ℝ] (Fin n → Fin m → ℂ) where
   toFun z := (Lv z.1 * w + (1 / 2 : ℂ) • (B * Hv z.2) : Matrix (Fin n) (Fin m) ℂ)
   map_add' z z' := by
-    simp only [Prod.fst_add, Prod.snd_add, map_add, Matrix.add_mul, Matrix.mul_add, smul_add]
+    simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), Matrix.add_mul, Matrix.mul_add, smul_add]
     abel
   map_smul' r z := by
     simp only [Prod.smul_fst, Prod.smul_snd, map_smul, Matrix.smul_mul, Matrix.mul_smul, RingHom.id_apply]

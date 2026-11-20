@@ -134,7 +134,7 @@ theorem pure_arch : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Number
       change evFin F v (u * z i) = 0 at h3
       rw [map_mul, h2, one_mul] at h3
       exact h3
-    simp only [hr, Pi.add_apply, map_add, hz0, add_zero]
+    simp only [hr, Pi.add_apply, map_add (f := _), hz0, add_zero]
   exact hc r hRest
 
 end GlobalTheory.ArchPure

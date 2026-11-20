@@ -131,7 +131,7 @@ theorem maj_parallelogram (x : Frame X.Ψ N) (τ : X.Ψ) (u v : Fin N → ℂ) :
     simp only [← Complex.add_re, ← Finset.sum_add_distrib]
     congr 1
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
-    simp only [hs, hermC_add_left, hermC_smul_left, map_add, map_mul, map_neg, map_one]
+    simp only [hs, hermC_add_left, hermC_smul_left, map_add (f := _), map_mul, map_neg, map_one]
     ring
   have hh : hermC τ.1 X.Gm (u + v) (u + v) + hermC τ.1 X.Gm (u - v) (u - v) =
       hermC τ.1 X.Gm u u + hermC τ.1 X.Gm u u + (hermC τ.1 X.Gm v v + hermC τ.1 X.Gm v v) := by

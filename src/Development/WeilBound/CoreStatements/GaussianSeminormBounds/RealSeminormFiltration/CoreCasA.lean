@@ -105,7 +105,7 @@ theorem cas_one {K I : Type} [Fintype K] [Fintype I] [DecidableEq I] (σ : K →
       simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.sum_apply, LinearMap.smul_apply] at this
       rw [← this]; abel
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hm1, hRa, map_sum, map_add, map_smul, h1', hι, Finset.sum_add_distrib]
+      simp only [hm1, hRa, map_sum, map_add (f := _), map_smul, h1', hι, Finset.sum_add_distrib]
     rw [Finset.sum_comm]
   let N := (LinearMap.ker m1)ᗮ
   have hRN : ∀ k, ∀ x ∈ N, R k x ∈ N := by
@@ -181,7 +181,7 @@ theorem cas_one {K I : Type} [Fintype K] [Fintype I] [DecidableEq I] (σ : K →
       rw [hSa]
       simp
     rw [e4]
-    simp only [hRa, smul_add, map_add, Finset.sum_add_distrib]
+    simp only [hRa, smul_add, map_add (f := _), Finset.sum_add_distrib]
     rw [e1, e2, e3, two_smul]
     push_cast
     rw [add_smul]

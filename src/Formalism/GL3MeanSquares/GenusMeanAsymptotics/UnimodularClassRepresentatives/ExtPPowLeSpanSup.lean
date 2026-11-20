@@ -245,7 +245,7 @@ def trF (hF : IsFixF K F) : 𝓞 K →ₗ[𝓞 F] 𝓞 F where
   toFun z := trf hF z
   map_add' x y := by
     apply ι_inj (K := K)
-    rw [map_add, trf_spec, trf_spec, trf_spec, map_add]
+    rw [map_add (f := _), trf_spec, trf_spec, trf_spec, map_add (f := _)]
     ring
   map_smul' a x := by
     apply ι_inj (K := K)

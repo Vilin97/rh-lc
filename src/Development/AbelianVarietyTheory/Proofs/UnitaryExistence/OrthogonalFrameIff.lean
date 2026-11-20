@@ -468,7 +468,7 @@ theorem level_elem_iff {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
       fun x y hx hy => ?_
     · rw [map_smul]
       exact h.base fr L0 AA (by rw [← hι]; exact LinearMap.mem_range_self ι x) b hb
-    · rw [map_add, toFin_add]
+    · rw [map_add (f := _), toFin_add]
       exact add_mem hx hy
   · rintro ⟨h3, h⟩
     refine fixesHalf_of_base fr L0 AA hA fun u hu b hb => ?_
@@ -555,7 +555,7 @@ theorem isArchAt_unique [IsTotallyReal F] {τ : E →+* ℂ} {th th' : Inf𝔸 F
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a x => rw [GlobalTheory.InfAdeleCM.hom_tmul τ th h.1 h.2, GlobalTheory.InfAdeleCM.hom_tmul τ th' h'.1 h'.2]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 variable {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H} {l : Level H} {Xo : Moduli Dw l} {c : Coeff l}
   {σ : c.F →+* ℂ}
@@ -684,12 +684,12 @@ theorem isMarkStab_iff {g : ℕ} {ty : Fin g → (E →+* ℂ)} {σ' : KA l →+
         (fun b hb x _ => ?_) fun x y hx hy => ?_
       · obtain ⟨a', v, rfl⟩ := Fm.t_surj i x
         obtain ⟨m, hm⟩ : l.M ∣ l.M' := Nat.dvd_lcm_left _ _
-        rw [smul_add, ← map_smul, map_add, Submodule.coe_add]
+        rw [smul_add, ← map_smul, map_add (f := _), Submodule.coe_add]
         refine add_mem (h _ (Submodule.smul_mem_smul hb Submodule.mem_top)) ?_
         rw [hm, smul_comm, mul_smul, map_nsmul, Submodule.coe_smul_of_tower]
         exact ⟨_, X.Λ.sub_mem ((hγ.2 _).1 (φ (m • b • v)).2) (φ (m • b • v)).2,
           by rw [smul_sub, ← Matrix.mulVec_smul]⟩
-      · rw [map_add, Submodule.coe_add]
+      · rw [map_add (f := _), Submodule.coe_add]
         exact add_mem hx hy
     obtain ⟨y, hy, e⟩ := key
     exact ⟨φ.symm ⟨y, hy⟩, by rw [φ.apply_symm_apply, ← e]; abel⟩

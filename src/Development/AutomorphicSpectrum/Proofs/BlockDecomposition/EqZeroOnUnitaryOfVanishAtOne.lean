@@ -47,7 +47,7 @@ theorem real_linear_skew (L : Mat n →ₗ[ℝ] ℂ) (X : Mat n) (hX : Xᴴ = -X
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
-    rw [hs a b (X a b), map_add, map_smul, map_smul]
+    rw [hs a b (X a b), map_add (f := _), map_smul, map_smul]
     simp [Complex.real_smul]
   rw [h1]
   refine Eq.trans ?_ (sum_swap (fun a b => X a b)

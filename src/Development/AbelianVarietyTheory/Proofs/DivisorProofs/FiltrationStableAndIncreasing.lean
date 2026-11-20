@@ -122,7 +122,7 @@ theorem filt_basic : ∀ (R S : ℕ) (M : GKMod R S) (N : Submodule ℂ M.V), KS
       exact (le_iSup (fun j : Fin (k + 1) => LinearMap.range (phiN M.act N j)) j)
         (kstable_range M.lie N hN j Z hZ w hw)
     · simp
-    · intro a b ha hb; rw [map_add]; exact add_mem ha hb
+    · intro a b ha hb; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   · apply le_antisymm
     · refine iSup_le fun j => ?_
       refine Fin.lastCases ?_ (fun i => ?_) j

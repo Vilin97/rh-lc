@@ -35,7 +35,7 @@ theorem conj_mul_psi (c : Circle) : starRingEnd ℂ (c : ℂ) * (c : ℂ) = 1 :=
 theorem fp_add (ξ : Fin (m + 1) → k) (p : AddSubgroup (Fin (m + 1) → k) × Finset (Fin (m + 1) → k)) (x y : V) :
     fp ψ h π ξ p (x + y) = fp ψ h π ξ p x + fp ψ h π ξ p y := by
   unfold fp; rw [← smul_add, ← Finset.sum_add_distrib]; congr 1
-  exact Finset.sum_congr rfl fun t _ => by rw [map_add, smul_add]
+  exact Finset.sum_congr rfl fun t _ => by rw [map_add (f := _), smul_add]
 
 theorem fp_smul (ξ : Fin (m + 1) → k) (p : AddSubgroup (Fin (m + 1) → k) × Finset (Fin (m + 1) → k)) (c : ℂ) (x : V) :
     fp ψ h π ξ p (c • x) = c • fp ψ h π ξ p x := by

@@ -40,7 +40,7 @@ theorem exists_common {ι A : Type} [Finite ι] [CommRing A] {R : ι → Type} [
 theorem aeval_intertwine {K : Type} [Field K] {n : ℕ} (B C H : Matrix (Fin n) (Fin n) K) (h : B * H = H * C)
     (p : K[X]) : aeval B p * H = H * aeval C p := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, add_mul, mul_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), add_mul, mul_add, hp, hq]
   | monomial d a =>
     have hpow : B ^ d * H = H * C ^ d := by
       induction d with
@@ -148,7 +148,7 @@ theorem psi_inclBase (y : k ⊗[maximalRealSubfield E] E) :
     psi j Q hj1 (inclBase Q k y) = AdjoinRoot.of _ (j.symm y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a e =>
     have h0 : inclBase Q k (a ⊗ₜ e) = a ⊗ₜ[maximalRealSubfield E] algebraMap E (Fld Q) e := by
       simp [inclBase]
@@ -191,7 +191,7 @@ theorem involBase_phi (cK : K →+* K)
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [inclBase, involBase, invol_algebraMap]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have e1 : ib.comp ι = ι.comp cK := RingHom.ext fun y => hιc y
   have e2 : ib ((1 : k) ⊗ₜ alpha Q) = (1 : k) ⊗ₜ (alpha Q)⁻¹ := by
     change (1 : k) ⊗ₜ invol Q (alpha Q) = _
@@ -305,7 +305,7 @@ theorem assembly (j : K ≃+* k ⊗[maximalRealSubfield E] E) (hj1 : ∀ e : E, 
   set R : K[X] := a.map (algebraMap E K) with hRdef
   have hBA : aeval A R * A = 1 := by
     have := congrArg (fun p : E[X] => aeval A (p.map (algebraMap E K))) hab
-    simp only [Polynomial.map_add, Polynomial.map_mul, map_add, map_mul, hCH, Polynomial.map_X, aeval_X,
+    simp only [Polynomial.map_add (f := _), Polynomial.map_mul, map_add (f := _), map_mul, hCH, Polynomial.map_X, aeval_X,
       Polynomial.map_one, map_one, mul_zero, add_zero, zero_mul] at this
     exact this
   have hAB : A * aeval A R = 1 := by
@@ -315,7 +315,7 @@ theorem assembly (j : K ≃+* k ⊗[maximalRealSubfield E] E) (hj1 : ∀ e : E, 
     rw [hRdef, phi_map j (Qs Q) hj1]
     congr 1
     have := congrArg (AdjoinRoot.mk (Qs Q).1) hab
-    rw [map_add, map_mul, map_mul, map_one, AdjoinRoot.mk_X, AdjoinRoot.mk_eq_zero.2 (hQsP Q), mul_zero, add_zero] at this
+    rw [map_add (f := _), map_mul, map_mul, map_one, AdjoinRoot.mk_X, AdjoinRoot.mk_eq_zero.2 (hQsP Q), mul_zero, add_zero] at this
     exact eq_inv_of_mul_eq_one_left this
   set H' : Matrix (Fin n) (Fin n) K := H₀.map (algebraMap E K) with hH'
   have hcTmap : (cT (IsCMField.complexConj E).toRingEquiv.toRingHom γ₀.val).map (algebraMap E K) = cT cK A := by
@@ -413,7 +413,7 @@ theorem locJ_cj (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w)
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => simp [GlobalTheory.LFun.toCompl_tmul, hF, hσ]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   conv_lhs => rw [← toCompl_locJ hU w hw v hv x, hcomp, locJ_toCompl]
 
 def locPhi (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) (v : HeightOneSpectrum (𝓞 (maximalRealSubfield E)))

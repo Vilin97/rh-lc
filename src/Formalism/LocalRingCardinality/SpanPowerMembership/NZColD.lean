@@ -78,7 +78,7 @@ def atT (u : D.what₂.Word) (w : D.what₂.places.Pl) : Submodule (𝓞 D.what�
   add_mem' := by
     intro a b ha hb
     show D.nuIn u (a + b) ∈ LT.Nlam D u w
-    rw [map_add]; exact Submodule.add_mem _ ha hb
+    rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   zero_mem' := by
     show D.nuIn u 0 ∈ LT.Nlam D u w
     rw [map_zero]; exact Submodule.zero_mem _
@@ -96,7 +96,7 @@ def srv (u : D.what₂.Word) (w : D.what₂.places.Pl) (hg : GIdx D.host (D.mem 
   add_mem' := by
     intro a b ha hb
     show c.cmpN u w hg (a + b) ∈ N.NPf u w hg
-    rw [map_add]; exact Submodule.add_mem _ ha hb
+    rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   zero_mem' := by
     show c.cmpN u w hg 0 ∈ N.NPf u w hg
     rw [map_zero]; exact Submodule.zero_mem _

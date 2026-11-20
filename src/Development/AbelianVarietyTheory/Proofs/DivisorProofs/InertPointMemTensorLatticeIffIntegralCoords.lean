@@ -74,7 +74,7 @@ theorem smul_mem_latAtV {t : w.adicCompletion E} (ht : t ∈ Formalism.UG.Ov E w
     | add x y _ _ hx hy => rw [smul_add]; exact add_mem hx hy
     | neg x _ hx => rw [smul_neg]; exact neg_mem hx
   · intro γ hγ; rw [map_zero, map_zero, zero_smul]; exact zero_mem _
-  · intro y z hy hz γ hγ; rw [map_add, map_add, add_smul]; exact add_mem (hy γ hγ) (hz γ hγ)
+  · intro y z hy hz γ hγ; rw [map_add (f := _), map_add (f := _), add_smul]; exact add_mem (hy γ hγ) (hz γ hγ)
   · intro y hy γ hγ; rw [map_neg, map_neg, neg_smul]; exact neg_mem (hy γ hγ)
 
 end GlobalTheory.InertLat
@@ -190,7 +190,7 @@ theorem kap_mem_latAtV_iff : ∀ (F E : Type) [Field F] [NumberField F] [Field E
       | zero => intro k l; simp [Ψ]
       | add x y _ _ hx hy =>
         intro k l
-        simp only [Ψ, map_add, Matrix.mul_add, Matrix.add_mul, Matrix.add_apply]
+        simp only [Ψ, map_add (f := _), Matrix.mul_add, Matrix.add_mul, Matrix.add_apply]
         exact add_mem (hx k l) (hy k l)
       | neg x _ hx =>
         intro k l

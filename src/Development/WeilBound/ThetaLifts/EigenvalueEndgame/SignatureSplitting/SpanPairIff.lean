@@ -58,7 +58,7 @@ theorem emb2_norm (g : SL(2, E)) : ∀ u ∈ Submodule.span E {H.x, H.ι *ᵥ H�
   obtain ⟨a, b, rfl⟩ := Submodule.mem_span_pair.1 hu
   refine ⟨_, Submodule.mem_span_pair.2 ⟨a * g.1 0 0 + b * g.1 0 1, a * g.1 1 0 + b * g.1 1 1, rfl⟩, ?_⟩
   rw [incV_lin, incV_lin, Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_smul, (emb2_mulVec_incV_x_and_complement_x h hJ hH hH₁ _).1, (emb2_mulVec_incV_x_and_complement_x h hJ hH hH₁ _).2]
-  simp only [map_add, map_mul, smul_add, add_smul, smul_smul]
+  simp only [map_add (f := _), map_mul, smul_add, add_smul, smul_smul]
   exact add_add_add_comm _ _ _ _
 
 theorem mem_pair (hJ₁ : ∀ i j, σ (W₁.J j i) = -W₁.J i j) {u : UA σ W.J} {y : UA σ W₁.J} (hx : mat u *ᵥ incV F H.x = incV F H.x)
@@ -84,7 +84,7 @@ theorem mem_pair (hJ₁ : ∀ i j, σ (W₁.J j i) = -W₁.J i j) {u : UA σ W.J
         have z1 := congrArg (inclR (F := F) (AF F)) (hz _ (Submodule.mem_span_singleton_self _))
         rw [← fa_inc, map_zero] at z1
         have : ∀ w p q : Fin d → AE F E, fa σ W.J w (p + q) = fa σ W.J w p + fa σ W.J w q := fun w p q => by
-          simp only [fa, Pi.add_apply, map_add]
+          simp only [fa, Pi.add_apply, map_add (f := _)]
           rw [← dotProduct_add, ← Matrix.mulVec_add]; rfl
         rw [← fa_inc, incV_lin, this, fa_smul, fa_smul, ← incM_mulVec, ← incM_mulVec, fa_iota hH, fa_iota2 hH, z1]
         simp)

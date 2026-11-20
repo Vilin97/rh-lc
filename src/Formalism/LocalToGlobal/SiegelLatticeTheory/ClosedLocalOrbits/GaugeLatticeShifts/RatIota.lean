@@ -209,7 +209,7 @@ theorem rep_exists {F : LFlag S r T} {F' : LFlag S r T'} (hg0 : ((g : ℕ) : E) 
       rw [star_mul, ← hk', star_natCast]
       ring
     · rintro u v ⟨o1, h1⟩ ⟨o2, h2⟩
-      exact ⟨o1 + o2, by rw [map_add, LinearMap.add_apply, h1, h2]; push_cast; ring⟩
+      exact ⟨o1 + o2, by rw [map_add (f := _), LinearMap.add_apply, h1, h2]; push_cast; ring⟩
 
   set β : Fin r → E := fun b => S.hT (F.fl.e b) x' with hβ
   have hβf : ∀ b, β b • f b ∈ Ideal.span {(g : 𝓞 E)} • Λ := by
@@ -229,14 +229,14 @@ theorem rep_exists {F : LFlag S r T} {F' : LFlag S r T'} (hg0 : ((g : ℕ) : E) 
       have e1 : star α * β b = (g : E) * (o : E) := by
         rw [hβ]
         dsimp only
-        rw [← hsmulE, ← huw, map_add, LinearMap.add_apply, ho, hw0, add_zero]
+        rw [← hsmulE, ← huw, map_add (f := _), LinearMap.add_apply, ho, hw0, add_zero]
       refine ⟨o, ?_⟩
       rw [hc, div_mul_eq_mul_div, eq_div_iff hg0, mul_comm (β b), e1, mul_comm]
     let W : Submodule (𝓞 E) S.V :=
       { carrier := {y | ∃ o : 𝓞 E, (o : E) = c * S.hT y (f b)}
         add_mem' := by
           rintro y z ⟨o1, h1⟩ ⟨o2, h2⟩
-          exact ⟨o1 + o2, by rw [map_add, LinearMap.add_apply, mul_add, ← h1, ← h2]; simp⟩
+          exact ⟨o1 + o2, by rw [map_add (f := _), LinearMap.add_apply, mul_add, ← h1, ← h2]; simp⟩
         zero_mem' := ⟨0, by simp⟩
         smul_mem' := by
           rintro o y ⟨o1, h1⟩
@@ -290,7 +290,7 @@ theorem rep_exists {F : LFlag S r T} {F' : LFlag S r T'} (hg0 : ((g : ℕ) : E) 
       set_option synthInstance.maxHeartbeats 100000 in
         simp [β, map_sub, map_sum, hef, Finset.sum_ite_eq]
     | zero => simp
-    | add w1 w2 _ _ h1 h2 => rw [map_add, LinearMap.add_apply, h1, h2, add_zero]
+    | add w1 w2 _ _ h1 h2 => rw [map_add (f := _), LinearMap.add_apply, h1, h2, add_zero]
     | smul c w _ h => rw [LinearMap.map_smulₛₗ₂, h, smul_zero]
 
 theorem gmap_gSmul {β : S.V ≃ₗ[E] S.V} (hβΛ : Formalism.HermitianLatticesTheory.gmap β Λ = Λ) {x : S.V}
@@ -302,7 +302,7 @@ theorem gmap_gSmul {β : S.V ≃ₗ[E] S.V} (hβΛ : Formalism.HermitianLattices
     rw [← hβΛ]
     exact Submodule.mem_map_of_mem hn
   · intro x y hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
 
 theorem iotaCompat_iff {F : LFlag S r T} {F1 F2 : LFlag S r T'} (β : S.V ≃ₗ[E] S.V)
@@ -324,7 +324,7 @@ theorem iotaCompat_iff {F : LFlag S r T} {F1 F2 : LFlag S r T'} (β : S.V ≃ₗ
     intro y hy
     obtain ⟨u, hu, v, hv, rfl⟩ := Submodule.mem_sup.1 hy
     obtain ⟨w, hw, z, hz, rfl⟩ := Submodule.mem_sup.1 (hN1' hv)
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     refine N.add_mem (hgN (gmap_gSmul Λ g hβΛ hu)) (N.add_mem (hgN (gmap_gSmul Λ g hβΛ hw)) ?_)
     have := hN2 (hβX z hz)
     exact this

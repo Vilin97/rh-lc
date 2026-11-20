@@ -201,7 +201,7 @@ def homLoc (s : Finset ι) (n : ℤ) : Submodule R (LocalizedModule.Away (xProd 
     rintro _ _ ⟨k, m, hm, rfl⟩ ⟨j, m', hm', rfl⟩
     refine ⟨k + j, xProd R s ^ j • m + xProd R s ^ k • m',
       add_mem (xProd_pow_smul_mem ℳ hm j) (add_comm j k ▸ xProd_pow_smul_mem ℳ hm' k), ?_⟩
-    rw [map_add, awayFrac_add_pow_smul, add_comm k j, awayFrac_add_pow_smul]
+    rw [map_add (f := _), awayFrac_add_pow_smul, add_comm k j, awayFrac_add_pow_smul]
   smul_mem' := by
     rintro r _ ⟨k, m, hm, rfl⟩
     exact ⟨k, r • m, Submodule.smul_mem _ r hm, LinearMap.map_smul_of_tower _ r m⟩
@@ -250,7 +250,7 @@ instance homLoc.decomposition [Decomposition ℳ] (s : Finset ι) : Decompositio
       | zero => rw [map_zero]; exact zero_mem _
       | @homogeneous n m =>
         exact Submodule.mem_iSup_of_mem (n - k * s.card) (awayFrac_mem_homLoc m.2 (by ring))
-      | add a b ha hb => rw [map_add]; exact add_mem ha hb
+      | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
 
 theorem isGradedMap_awayFrac (s : Finset ι) (k : ℕ) :
     IsGradedMap (grShift ℳ (k * s.card)) (homLoc ℳ s) (awayFrac M (xProd R s) k) :=
@@ -490,7 +490,7 @@ def homLocLift : homLoc ℳ s n →ₗ[R] T :=
       obtain ⟨y, hy, ey⟩ := hb (max a b) (le_max_right _ _)
       obtain rfl : homLocMk ℳ s n _ ⟨x, hx⟩ = z := Subtype.ext ex
       obtain rfl : homLocMk ℳ s n _ ⟨y, hy⟩ = w := Subtype.ext ey
-      rw [← map_add, key, key, key, map_add]
+      rw [← map_add (f := _), key, key, key, map_add (f := _)]
     map_smul' r z := by
       obtain ⟨k, m, rfl⟩ := exists_homLocMk z
       rw [← map_smul, key, key, map_smul, RingHom.id_apply] }

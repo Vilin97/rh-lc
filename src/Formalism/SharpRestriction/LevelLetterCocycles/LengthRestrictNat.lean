@@ -148,7 +148,7 @@ theorem prj_bρ (φ : LL' →ₗ[LL] LL) {V : Type} [AddCommGroup V] [Module LL 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a v => rw [bρ_tmul, prj_tmul, prj_tmul, map_smul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem prj_bf (φ : LL' →ₗ[LL] LL) {V V₂ : Type} [AddCommGroup V] [Module LL V] [AddCommGroup V₂]
     [Module LL V₂] (f : V →ₗ[LL] V₂) (x : LL' ⊗[LL] V) :
@@ -156,7 +156,7 @@ theorem prj_bf (φ : LL' →ₗ[LL] LL) {V V₂ : Type} [AddCommGroup V] [Module
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a v => simp [bf, prj_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 end Proj
 
@@ -195,7 +195,7 @@ theorem prj_bT (bO : Module.Basis ι O O') (bL : Module.Basis ι LL LL')
     rw [TensorProduct.smul_tmul', prj_tmul, Algebra.smul_def, mul_one, coord_alg bO bL hb,
       algebraMap_smul]
     exact T.smul_mem _ t.2
-  · rw [smul_add, map_add]; exact T.add_mem (ha c) (hb c)
+  · rw [smul_add, map_add (f := _)]; exact T.add_mem (ha c) (hb c)
   · rw [smul_smul]; exact ha _
 
 theorem prj_smul_one (bO : Module.Basis ι O O') (bL : Module.Basis ι LL LL')
@@ -231,14 +231,14 @@ theorem mJ_act (ρ : Representation LL G V) (g : G) (y : V ⊗[Qp] B) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [mJ, actVB, bρ_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem mapPoint_act (φ : LL' →ₗ[LL] LL) (ρ : Representation LL G V) (g : G) (y : (LL' ⊗[LL] V) ⊗[Qp] B) :
     mP (B := B) φ (actVB PD (bρ LL' ρ) g y) = actVB PD ρ g (mP φ y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [mP, actVB, prj_bρ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem mJ_eq (ρ : Representation LL G V) (g : G) (v : V) (x : V ⊗[Qp] B)
     (h : v ⊗ₜ[Qp] (1 : B) = actVB PD ρ g x - x) :
@@ -257,13 +257,13 @@ theorem mP_eq (φ : LL' →ₗ[LL] LL) (ρ : Representation LL G V) (g : G) (u :
 
 theorem prj_coc (φ : LL' →ₗ[LL] LL) (ρ : Representation LL G V) (g : G) (a b : LL' ⊗[LL] V) :
     prj φ V (a + bρ LL' ρ g b) = prj φ V a + ρ g (prj φ V b) := by
-  rw [map_add, prj_bρ]
+  rw [map_add (f := _), prj_bρ]
 
 theorem core_eq (φ : LL' →ₗ[LL] LL) {V₂ : Type} [AddCommGroup V₂] [Module LL V₂] (f : V →ₗ[LL] V₂)
     (ρ₂ : Representation LL G V₂) (g : G) (a : LL' ⊗[LL] V) (t : LL' ⊗[LL] V₂) :
     prj φ V₂ (bf (LL' := LL') f a + (bρ LL' ρ₂ g t - t)) =
       f (prj φ V a) + (ρ₂ g (prj φ V₂ t) - prj φ V₂ t) := by
-  rw [map_add, map_sub, prj_bf, prj_bρ]
+  rw [map_add (f := _), map_sub, prj_bf, prj_bρ]
 
 theorem jp_eq {V₂ : Type} [AddCommGroup V₂] [Module LL V₂] (f : V →ₗ[LL] V₂)
     (ρ₂ : Representation LL G V₂) (g : G) (a : V) (t : V₂) :
@@ -345,9 +345,9 @@ theorem cont_prj (T : LocLat G Qp LL O) (φ : LL' →ₗ[LL] LL) :
           refine Finset.sum_congr rfl fun j _ => ?_
           rw [h1 j, mul_comm, mul_smul]
     | add x y hx hy =>
-      rw [map_add, hx, hy, ← Finset.sum_add_distrib]
+      rw [map_add (f := _), hx, hy, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun j _ => ?_
-      rw [map_add, map_add, add_smul]
+      rw [map_add (f := _), map_add (f := _), add_smul]
   have hcj : ∀ j, Continuous (fun x : LL' ⊗[LL] T.V => e'.coord j x) := fun j =>
     IsModuleTopology.continuous_of_linearMap (e'.coord j)
   have : (fun x : LL' ⊗[LL] T.V => prj φ T.V x) = fun x => ∑ j, φ (e'.coord j x) • e j := funext key
@@ -497,7 +497,7 @@ theorem descCol [IsLocalRing O'] (hk : lenOl PD (O := O) ≠ ⊤) (T₁ T₂ : L
   let jZ : Z →ₗ[O] (Z' ⧸ N') :=
     { toFun := fun z => N'.mkQ ⟨jp (O' := O') hc hO' T₂ z, hjZ z⟩
       map_add' := fun a b => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         ext1
         exact jp_add hc hO' T₂ a b
@@ -510,7 +510,7 @@ theorem descCol [IsLocalRing O'] (hk : lenOl PD (O := O) ≠ ⊤) (T₁ T₂ : L
   let ψ : (ι → Z) →ₗ[O] (Z' ⧸ N') :=
     { toFun := fun q => ∑ i, bO i • jZ (q i)
       map_add' := fun q r => by
-        simp only [Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib]
+        simp only [Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
       map_smul' := fun a q => by
         simp only [Pi.smul_apply, map_smul, RingHom.id_apply]
         rw [Finset.smul_sum]

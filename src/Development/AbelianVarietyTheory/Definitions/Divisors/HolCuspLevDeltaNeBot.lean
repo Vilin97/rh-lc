@@ -193,9 +193,9 @@ private theorem casimir' {V : Type} [AddCommGroup V] [Module ℂ V] (E : Fin 2 �
     conv_lhs => rw [ha]
     simp
   rw [qdet_two']
-  simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.add_apply, Module.algebraMap_end_apply, map_add,
+  simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.add_apply, Module.algebraMap_end_apply, map_add (f := _),
     map_smul, hd, map_sub, r2, r3, r1]
-  simp only [hc, ha, map_add, map_smul, map_sub]
+  simp only [hc, ha, map_add (f := _), map_smul, map_sub]
   match_scalars <;> ring_nf <;> simp [Complex.I_sq] <;> ring_nf
 
 end Casimir
@@ -258,11 +258,11 @@ def holCusp (lam : InfinitePlace F → DomWeight 2) : Submodule ℂ (TR.Sm F 2) 
   carrier := {φ | IsHolo lam φ}
   add_mem' {φ ψ} h h' := by
     refine ⟨Fb.mem_range_ofCusp.1 (add_mem (Fb.mem_range_ofCusp.2 h.1) (Fb.mem_range_ofCusp.2 h'.1)), fun v => ⟨?_, ?_, fun u => ?_⟩⟩
-    · simp only [map_add]
+    · simp only [map_add (f := _)]
       linear_combination (norm := module) (h.2 v).1 + (h'.2 v).1
-    · simp only [map_add]
+    · simp only [map_add (f := _)]
       linear_combination (norm := module) (h.2 v).2.1 + (h'.2 v).2.1
-    · rw [map_add, (h.2 v).2.2, (h'.2 v).2.2, smul_add]
+    · rw [map_add (f := _), (h.2 v).2.2, (h'.2 v).2.2, smul_add]
   zero_mem' := ⟨Fb.mem_range_ofCusp.1 (zero_mem _), fun v => by simp⟩
   smul_mem' c φ h := by
     refine ⟨Fb.mem_range_ofCusp.1 (Submodule.smul_mem _ c (Fb.mem_range_ofCusp.2 h.1)), fun v => ⟨?_, ?_, fun u => ?_⟩⟩
@@ -279,7 +279,7 @@ theorem finRep_mem_holCusp (lam : InfinitePlace F → DomWeight 2) (g : GF F) (�
   rw [mem_holCusp, isHolo_iff] at h ⊢
   refine ⟨Fb.isCuspForm_act (.fin g) h.1, fun v => ?_⟩
   simp only [Eop_finRep]
-  rw [← map_sub, ← map_sub, ← map_add, ← map_add, (h.2 v).1, (h.2 v).2.1, (h.2 v).2.2, map_smul, map_smul, map_smul]
+  rw [← map_sub, ← map_sub, ← map_add (f := _), ← map_add (f := _), (h.2 v).1, (h.2 v).2.1, (h.2 v).2.2, map_smul, map_smul, map_smul]
   exact ⟨rfl, rfl, rfl⟩
 
 def holRep (lam : InfinitePlace F → DomWeight 2) : Representation ℂ (GF F) (holCusp lam) :=

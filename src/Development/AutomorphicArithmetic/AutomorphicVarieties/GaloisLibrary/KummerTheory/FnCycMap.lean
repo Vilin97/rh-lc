@@ -28,7 +28,7 @@ private theorem apply_mem_fn_of_isLift (F Ω : Type) [Field F] [Field Ω] [Algeb
     rw [h c]
     exact IntermediateField.algebraMap_mem _ _
   · intro y z _ _ hy hz
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hy hz
   · intro y _ hy
     rw [map_inv₀]

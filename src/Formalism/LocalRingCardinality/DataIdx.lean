@@ -32,7 +32,7 @@ def TjDual (μ : D.what₂.Tup) (j : ℕ) : Submodule (𝓞 D.what₂.LL) (D.wha
     refine ⟨(TjV D μ j).add_mem hx hy, fun a ha => ?_⟩
     obtain ⟨c, hc⟩ := h1 a ha
     obtain ⟨d, hd⟩ := h2 a ha
-    exact ⟨c + d, by rw [map_add, inner_add_right, hc, hd]; simp⟩
+    exact ⟨c + d, by rw [map_add (f := _), inner_add_right, hc, hd]; simp⟩
   zero_mem' := ⟨(TjV D μ j).zero_mem, fun a _ => ⟨0, by simp⟩⟩
   smul_mem' := by
     rintro s x ⟨hx, h1⟩
@@ -47,7 +47,7 @@ def thImg (μ : D.what₂.Tup) (j : ℕ) (A : Submodule (𝓞 D.what₂.LL) (D.w
   carrier := {y | ∃ x ∈ A, X.jM j y = D.what₂.thetaP μ j (D.what₂.jMt μ j x)}
   add_mem' := by
     rintro a b ⟨x, hx, h1⟩ ⟨y, hy, h2⟩
-    exact ⟨x + y, A.add_mem hx hy, by rw [map_add, map_add, map_add, h1, h2]⟩
+    exact ⟨x + y, A.add_mem hx hy, by rw [map_add (f := _), map_add (f := _), map_add (f := _), h1, h2]⟩
   zero_mem' := ⟨0, A.zero_mem, by simp⟩
   smul_mem' := by
     rintro s a ⟨x, hx, h1⟩
@@ -268,7 +268,7 @@ theorem NChoice.thPe_one (D : D7) (c : NChoice D) (w : D.what₂.places.Pl) (j :
   | tmul a f =>
     rw [TensorProduct.AlgebraTensorModule.cancelBaseChange_tmul, LinearMap.rTensor_tmul]
     simp [Algebra.smul_def]
-  | add x y hx hy => rw [TensorProduct.tmul_add, map_add, hx, hy, map_add]
+  | add x y hx hy => rw [TensorProduct.tmul_add, map_add (f := _), hx, hy, map_add (f := _)]
 
 set_option synthInstance.maxHeartbeats 400000 in
 

@@ -32,9 +32,9 @@ theorem lTensor_defect (ε : Matrix (Fin d) (Fin d) (B ⊗[A] B)) (x : B ⊗[A] 
     ext i
     simp [Matrix.mulVec, dotProduct]
   | add x y hx hy =>
-    rw [map_add, map_add, hx, hy, map_add]
+    rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
     ext i
-    simp only [Matrix.mulVec, dotProduct, Pi.add_apply, Pi.sub_apply, map_add, mul_add,
+    simp only [Matrix.mulVec, dotProduct, Pi.add_apply, Pi.sub_apply, map_add (f := _), mul_add,
       Finset.sum_add_distrib]
     abel
   | tmul b z =>
@@ -57,7 +57,7 @@ theorem isBaseChange [Module.Flat A B] (ε : Matrix (Fin d) (Fin d) (B ⊗[A] B)
     induction x with
     | zero => ext i; simp
     | add x y hx hy =>
-      rw [map_add, map_add, map_add, Matrix.mulVec_add, ← hx, ← hy]
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), Matrix.mulVec_add, ← hx, ← hy]
       ext i
       simp [add_tmul]
     | tmul b n =>

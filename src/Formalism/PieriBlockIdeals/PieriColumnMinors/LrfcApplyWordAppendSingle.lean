@@ -348,7 +348,7 @@ theorem lrf_pt (L : List (Fin r × Fin r × (Fin r × Fin n)))
       simp
     rw [lrfc_Phi_append_single, lrfc_tau, aeval_X]
     by_cases hv : v.1 = l.2.1
-    · rw [if_pos hv, map_add, map_mul, map_add, map_mul, ihw v, ihw (l.1, v.2)]
+    · rw [if_pos hv, map_add (f := _), map_mul, map_add (f := _), map_mul, ihw v, ihw (l.1, v.2)]
       have hC : lrfc_Phi w (C (X l.2.2)) = C (X l.2.2 : MvPolynomial (Fin r × Fin n) R) :=
         (lrfc_Phi w).commutes (X l.2.2)
       rw [hC, eval_C]
@@ -417,7 +417,7 @@ theorem lrf_eval_coeffT (d : Fin r × Fin n →₀ ℕ)
     have h : (u.prod fun i k => lrf_idS R r n i ^ k) = C (u.prod fun i k => idFrame R r n i ^ k) := by
       simp only [lrf_idS, Finsupp.prod, map_prod, map_pow]
     rw [h, mul_comm c, coeff_C_mul, mul_comm]
-  | add p q hp hq => rw [lrfc_coeffT_add, map_add, map_add, MvPolynomial.coeff_add, hp, hq]
+  | add p q hp hq => rw [lrfc_coeffT_add, map_add (f := _), map_add (f := _), MvPolynomial.coeff_add, hp, hq]
 
 def lrf_off (m : Fin r × Fin n →₀ ℕ) : Fin r × Fin n →₀ ℕ := m.filter fun v => v.2.val < v.1.val
 

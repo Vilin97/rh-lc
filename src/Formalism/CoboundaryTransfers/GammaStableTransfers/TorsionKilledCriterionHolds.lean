@@ -60,7 +60,7 @@ lemma aeval_stable (δ : D →ₗ[O] D) (S : Submodule O D) (hS : ∀ y ∈ S, �
     exact S.smul_mem a hy
   | add p q hp hq =>
     intro y hy
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact S.add_mem (hp y hy) (hq y hy)
   | monomial n a ih =>
     intro y hy
@@ -151,7 +151,7 @@ lemma claim_key (W : WachMod B M D) (δ : D →ₗ[O] D) (R : Polynomial O) (a k
   have eA : B.X • (cΓ • ((B.p : O) ^ j) • w - δ Y' - B.X ^ a • (z' - m')) = 0 := by
     have e1 : cΓ • ((B.p : O) ^ j) • (B.X • w) = cΓ • W.d1 y (B.X • n) := by rw [hj]
     have e2 : cΓ • W.d1 y (B.X • n) = (W.γ Y' - Y') + (B.X ^ (a + 1) • z' - B.X ^ (a + 1) • m') := by
-      simp only [WachMod.d1, smul_sub, ← LinearMap.map_smul, hc, hY', map_sub, map_add, W.comm, hφm]
+      simp only [WachMod.d1, smul_sub, ← LinearMap.map_smul, hc, hY', map_sub, map_add (f := _), W.comm, hφm]
       abel
     rw [smul_sub, smul_sub, h2, smul_comm B.X cΓ, smul_comm B.X ((B.p : O) ^ j), e1, e2,
       smul_smul, ← pow_succ', smul_sub]
@@ -159,7 +159,7 @@ lemma claim_key (W : WachMod B M D) (δ : D →ₗ[O] D) (R : Polynomial O) (a k
   have eA' : cΓ • ((B.p : O) ^ j) • w = δ Y' + B.X ^ a • (z' - m') := by
     have := W.X_inj _ eA; rw [sub_sub, sub_eq_zero] at this; exact this
   have eB : ((B.p : O) ^ j) • (cΓ • Polynomial.aeval δ R w) ∈ W.N := by
-    rw [smul_comm, ← LinearMap.map_smul, ← LinearMap.map_smul, eA', map_add]
+    rw [smul_comm, ← LinearMap.map_smul, ← LinearMap.map_smul, eA', map_add (f := _)]
     refine W.N.add_mem ?_ (RN R _ (W.N.smul_mem _ (W.N.sub_mem hz' hm')))
     have : Polynomial.aeval δ R (δ Y') = Polynomial.aeval δ (Polynomial.X * R) Y' := by
       rw [mul_comm, map_mul, Polynomial.aeval_X, Module.End.mul_apply]
@@ -180,7 +180,7 @@ lemma claim_fin (W : WachMod B M D) (δ : D →ₗ[O] D) (R : Polynomial O) (a :
   have eD : (R.eval 0) • w = Polynomial.aeval δ R w - δ (Polynomial.aeval δ R1 w) := by
     have : R = Polynomial.C (R.coeff 0) + Polynomial.X * R1 := by rw [← hR1]; ring
     conv_rhs => rw [this]
-    rw [map_add, map_mul, Polynomial.aeval_C, Polynomial.aeval_X, LinearMap.add_apply,
+    rw [map_add (f := _), map_mul, Polynomial.aeval_C, Polynomial.aeval_X, LinearMap.add_apply,
       Module.End.mul_apply, Polynomial.coeff_zero_eq_eval_zero, Algebra.algebraMap_eq_smul_one,
       LinearMap.smul_apply, Module.End.one_apply]
     abel

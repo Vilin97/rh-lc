@@ -365,7 +365,7 @@ theorem mulF_mem (c : 𝓞 D.F) {v : AfP p ⊗[ℚ] VQ D} (hv : v ∈ LaHat D) :
     simp [mulF, actQ]
     rfl
   | zero => rw [_root_.map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [_root_.map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [_root_.map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [_root_.map_neg]; exact neg_mem hx
 
 theorem inAf_add' (x y : D.La) : inAf D (x + y) = inAf D x + inAf D y := by
@@ -436,7 +436,7 @@ theorem lat_main (q : ℕ) (r : ℤ) (𝔴 : Ideal (𝓞 D.F)) (i : ℕ) (h₀ u
     exact ha v
   let J : (AfP p ⊗[ℚ] VQ D) →ₗ[𝓞 D.F] (AfP p ⊗[ℚ] VQ D) :=
     { toFun := fun v => a • L.actG (h₀ * u) v
-      map_add' := fun v w => by rw [map_add, smul_add]
+      map_add' := fun v w => by rw [map_add (f := _), smul_add]
       map_smul' := fun c v => by
         simp only [RingHom.id_apply, hsm]
         rw [actG_mulF, LinearMap.map_smul] }

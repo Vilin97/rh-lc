@@ -121,7 +121,7 @@ theorem isNoetherianRing_holGerms_option (hD : WeierstrassDivision.Statement)
   let Φ : (Fin d → holGerms (0 : σ → ℂ)) → holGerms (0 : Option σ → ℂ) :=
     fun a => ∑ j : Fin d, ι (a j) * τ ^ (j : ℕ)
   have Φ_add : ∀ a b, Φ (a + b) = Φ a + Φ b := fun a b => by
-    simp only [Φ, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [Φ, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
   have Φ_smul : ∀ (r : holGerms (0 : σ → ℂ)) a, Φ (r • a) = ι r * Φ a := fun r a => by
     simp only [Φ, Pi.smul_apply, smul_eq_mul, map_mul, mul_assoc, Finset.mul_sum]
   have Φ_zero : Φ 0 = 0 := by simp [Φ]
@@ -171,7 +171,7 @@ theorem isNoetherianRing_holGerms_option (hD : WeierstrassDivision.Statement)
       change (↑g : Germ (𝓝 (0 : Option σ → ℂ)) ℂ) = Germ.coeRingHom _ (q ∘ A.symm) * Germ.coeRingHom _ f +
         ∑ j : Fin d, Germ.coeRingHom _ (a j ∘ Pl) * Germ.coeRingHom _ (Tl : (Option σ → ℂ) → ℂ) ^ (j : ℕ)
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [← map_mul, ← map_pow, ← map_sum, ← map_add]
+        simp only [← map_mul, ← map_pow, ← map_sum, ← map_add (f := _)]
       refine Germ.coe_eq.2 ?_
       filter_upwards [hev'] with y hy
       simp [hy, Finset.sum_apply]

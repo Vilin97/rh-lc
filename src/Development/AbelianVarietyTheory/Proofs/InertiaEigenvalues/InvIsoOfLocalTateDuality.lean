@@ -52,7 +52,7 @@ theorem colim_equiv {O : Type} [CommRing O] [TopologicalSpace O] {G : Type} [Gro
         have hy : y ∈ N (max (nn y) (nn y')) := hmono (le_max_left _ _) (hnn y)
         have hy' : y' ∈ N (max (nn y) (nn y')) := hmono (le_max_right _ _) (hnn y')
         refine (hind _ _ (y + y') (hnn _) (add_mem hy hy')).trans ?_
-        rw [hind _ _ y (hnn y) hy, hind _ _ y' (hnn y') hy', ← map_add]
+        rw [hind _ _ y (hnn y) hy, hind _ _ y' (hnn y') hy', ← map_add (f := _)]
         rfl
       map_smul' := fun c y => by
         refine (hind _ (nn y) (c • y) (hnn _) (Submodule.smul_mem _ c (hnn y))).trans ?_

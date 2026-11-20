@@ -203,7 +203,7 @@ private theorem prod_inert (q : ℕ) (B : Multiset ℂˣ) :
   have e : ((q ^ 2 : ℕ) : ℝ) ^ ((((2 : ℕ) : ℝ) - 1) / 2) = ((q : ℝ) ^ ((((2 : ℕ) : ℝ) - 1) / 2)) ^ 2 := by
     rw [Nat.cast_pow, ← Real.rpow_natCast, ← Real.rpow_natCast, ← Real.rpow_mul (Nat.cast_nonneg q),
       ← Real.rpow_mul (Nat.cast_nonneg q), mul_comm]
-  simp only [algSat_eq, e, Multiset.map_add, Multiset.map_map, Multiset.prod_add, ← Multiset.prod_map_mul, multiset_prod_comp]
+  simp only [algSat_eq, e, Multiset.map_add (f := _), Multiset.map_map, Multiset.prod_add, ← Multiset.prod_map_mul, multiset_prod_comp]
   refine congrArg _ (Multiset.map_congr rfl fun b _ => ?_)
   generalize (q : ℝ) ^ ((((2 : ℕ) : ℝ) - 1) / 2) = c
   simp only [Function.comp_apply, sub_comp, mul_comp, pow_comp, X_comp, C_comp, Complex.ofReal_pow, Units.val_pow_eq_pow_val, Units.val_neg, map_mul,
@@ -267,7 +267,7 @@ private theorem loc {F E Ω : Type} [Field F] [NumberField F] [Field E] [NumberF
     have e1 := (hE A hw).2 g (hq ▸ frob_emb (F := F) hσ)
     have e2 := (hE' _ hw').2 g' (hq' ▸ frob_emb (F := F) (hg' ▸ frob_conj hσ t))
     rw [← map_inv (galEmb F E Ω), (H t ht).1 g⁻¹ g'⁻¹ (by rw [map_inv, map_inv, hg']; group), Polynomial.map_mul, e1, e2, hq, hq']
-    simp only [algSat_eq, Multiset.map_add, Multiset.prod_add]
+    simp only [algSat_eq, Multiset.map_add (f := _), Multiset.prod_add]
   · have hq := normV_sq h2 w fun h => hs ((hsg w rfl).2 h)
     obtain ⟨_, B', k1, rfl, k3⟩ := (hc w rfl).2 hq
     obtain rfl := hu _ _ _ k1 hB

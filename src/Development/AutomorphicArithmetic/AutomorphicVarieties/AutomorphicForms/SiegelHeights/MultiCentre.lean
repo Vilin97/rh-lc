@@ -81,11 +81,11 @@ theorem exists_re_im {B : Type} [Ring B] [Algebra ℝ B] (w : ℂ ⊗[ℝ] B) (h
   have hl : ∀ f (x : B) (w : ℂ ⊗[ℝ] B), P f ((1 ⊗ₜ x) * w) = x * P f w := fun f x w => by
     induction w with
     | tmul c y => rw [Algebra.TensorProduct.tmul_mul_tmul, hP, hP, one_mul, mul_smul_comm]
-    | add a b ha hb => rw [mul_add, map_add, map_add, ha, hb, mul_add]
+    | add a b ha hb => rw [mul_add, map_add (f := _), map_add (f := _), ha, hb, mul_add]
   have hr : ∀ f (x : B) (w : ℂ ⊗[ℝ] B), P f (w * (1 ⊗ₜ x)) = P f w * x := fun f x w => by
     induction w with
     | tmul c y => rw [Algebra.TensorProduct.tmul_mul_tmul, hP, hP, mul_one, smul_mul_assoc]
-    | add a b ha hb => rw [add_mul, map_add, map_add, ha, hb, add_mul]
+    | add a b ha hb => rw [add_mul, map_add (f := _), map_add (f := _), ha, hb, add_mul]
   have hc : ∀ f, P f w ∈ Subalgebra.center ℝ B := fun f =>
     Subalgebra.mem_center_iff.2 fun x => by rw [← hl, hw, hr]
   refine ⟨_, hc Complex.reLm, _, hc Complex.imLm, ?_⟩
@@ -96,7 +96,7 @@ theorem exists_re_im {B : Type} [Ring B] [Algebra ℝ B] (w : ℂ ⊗[ℝ] B) (h
     congr 1
     simp
   | add a b ha hb =>
-    rw [map_add, map_add, TensorProduct.tmul_add, TensorProduct.tmul_add, add_add_add_comm, ← ha, ← hb]
+    rw [map_add (f := _), map_add (f := _), TensorProduct.tmul_add, TensorProduct.tmul_add, add_add_add_comm, ← ha, ← hb]
 
 theorem qdet_mem_span_center [Algebra ℝ A] [IsScalarTower ℝ ℂ A] {B : Type} [Ring B] [Algebra ℝ B]
     (X : ι → Fin n → Fin n → B) (hX : ∀ i, GlRel (X i))
@@ -125,7 +125,7 @@ theorem qdet_mem_span_center [Algebra ℝ A] [IsScalarTower ℝ ℂ A] {B : Type
     congr 1
     funext a b
     exact (hψ 1 _).trans (one_smul _ _)
-  rw [← h2, e, map_add, hψ, hψ]
+  rw [← h2, e, map_add (f := _), hψ, hψ]
   exact add_mem (Submodule.smul_mem _ _ (Submodule.subset_span ⟨p, hp, rfl⟩))
     (Submodule.smul_mem _ _ (Submodule.subset_span ⟨q, hq, rfl⟩))
 

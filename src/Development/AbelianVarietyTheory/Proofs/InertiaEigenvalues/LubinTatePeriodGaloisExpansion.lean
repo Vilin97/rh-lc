@@ -190,7 +190,7 @@ theorem thetaK_eq (hπ : Irreducible π) {v : ℕ → OC l}
     | zero => exact hω
     | succ n ih =>
       apply (frobq_bijective K).1
-      rw [map_add, map_mul, map_pow, frobq_inO, hw, ih]
+      rw [map_add (f := _), map_mul, map_pow, frobq_inO, hw, ih]
   have hr : ∀ n, red K ω = red K (w n) ^ l ^ (fK K * n) := fun n => by
     induction n with
     | zero => simp [w]
@@ -208,7 +208,7 @@ theorem thetaK_eq (hπ : Irreducible π) {v : ℕ → OC l}
     | zero => simpa using h0
     | succ k ih =>
       intro n
-      rw [← hw n, hwe, map_add, map_mul, map_pow, thetaK_inO, ← hv n]
+      rw [← hw n, hwe, map_add (f := _), map_mul, map_pow, thetaK_inO, ← hv n]
       exact step (Ideal.mem_span_singleton.1 hl) fK_pos (ih (n + 1))
   exact sub_eq_zero.1 (eq_zero_of_pow_dvd (not_isUnit_intToOC K hπ) fun k =>
     (pow_dvd_pow _ k.le_succ).trans (key k 0))
@@ -250,7 +250,7 @@ theorem core (hπ : Irreducible π) {v : ℕ → OC l} (h0 : v 0 = 0) (h1 : v 1 
     have e3 := dvd_sub e1 e2
     rwa [sub_sub_sub_cancel_right, ← red_gal] at e3
   · rw [frobE_apply, ← gal_frobq, hω]
-    simp only [map_add, map_mul, map_pow, gal_inO]
+    simp only [map_add (f := _), map_mul, map_pow, gal_inO]
   · rw [frobE_apply]
     refine sub_eq_zero.1 (eq_zero_of_haus ω _ fun n => Ideal.mem_span_singleton.2 ?_)
     have hq : l ^ fK K ≠ 0 := pow_ne_zero _ (Fact.out : l.Prime).ne_zero
@@ -299,7 +299,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (χ : ↥(GK K) →* 
     (fun h => hz1 ((algebraMap (Om l) ℂ_[l]).injective (by rw [← hvc, h, map_zero]; rfl))) fun n =>
       Subtype.ext (by
         push_cast
-        rw [hcoe, hvc, hvc, ← hz n, map_add, map_mul, map_pow]
+        rw [hcoe, hvc, hvc, ← hz n, map_add (f := _), map_mul, map_pow]
         rfl)
   refine ⟨ω, hω0, hθ, hF, fun g a φ ha hφ n => ?_⟩
   obtain ⟨a', ha', φ', hφ', hs⟩ := hg g

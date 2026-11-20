@@ -63,7 +63,7 @@ theorem mono_norm : ∃ D : ℝ, 1 ≤ D ∧ ∀ α : Ix K n →₀ ℕ, ‖B ^ 
     | zero => rintro rfl; simpa [zm_zero] using h1
     | add a b ha hb =>
       rintro rfl
-      rw [zm_add, map_add, pow_add]
+      rw [zm_add, map_add (f := _), pow_add]
       exact (norm_mul_le _ _).trans (mul_le_mul (ha _ rfl) (hb _ rfl) (norm_nonneg _) (by positivity))
     | single i e =>
       rintro rfl

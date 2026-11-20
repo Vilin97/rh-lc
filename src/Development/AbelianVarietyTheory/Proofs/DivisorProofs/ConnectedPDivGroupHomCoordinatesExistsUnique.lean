@@ -72,7 +72,7 @@ theorem isMapOf_existsUnique_and : ∀ (p : ℕ) (k : Type) [CommRing k] (d e : 
       (c'.x₂ n) (c'.nil₂ n) _ hy (fun _ => rfl) s
     have h3 : pullbackTwo (f.app n) (c'.ev₂ n s) = F (c'.ev₂ n s) := by
       induction (c'.ev₂ n s) with
-      | add x y hx hy => rw [map_add, map_add, hx, hy]
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
       | tmul a b => rfl
     unfold pull2 at2
     rw [h1, h3]

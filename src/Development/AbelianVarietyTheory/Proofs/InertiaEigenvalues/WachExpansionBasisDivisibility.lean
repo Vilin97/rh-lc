@@ -132,7 +132,7 @@ theorem core {H A N : Type} [AddCommGroup H] [Module (PowerSeries L) H] [CommRin
     | add f g _ _ hf hg =>
       obtain ⟨e, rfl⟩ := hf
       obtain ⟨e', rfl⟩ := hg
-      exact ⟨e + e', by simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add]⟩
+      exact ⟨e + e', by simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add (f := _)]⟩
     | smul s f _ hf =>
       obtain ⟨e, rfl⟩ := hf
       refine ⟨fun j => PowerSeries.C s * e j, ?_⟩

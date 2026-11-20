@@ -38,8 +38,8 @@ def jL (hS : Setup P P₁ j L) : (V₁ × V₁) →ₗ[ℝ] (V × V) where
 def LSub (hS : Setup P P₁ j L) : Submodule ℝ (V × V) where
   carrier := L
   add_mem' {a b} ha hb := hS.max _ (fun l hl => by
-      rw [← omegaL_apply hS.pair, map_add, LinearMap.add_apply]; simp [hS.iso _ ha _ hl, hS.iso _ hb _ hl])
-    (fun w => by rw [← omegaL_apply hS.pair, map_add, LinearMap.add_apply]; simp [hS.orth _ ha, hS.orth _ hb])
+      rw [← omegaL_apply hS.pair, map_add (f := _), LinearMap.add_apply]; simp [hS.iso _ ha _ hl, hS.iso _ hb _ hl])
+    (fun w => by rw [← omegaL_apply hS.pair, map_add (f := _), LinearMap.add_apply]; simp [hS.orth _ ha, hS.orth _ hb])
   zero_mem' := hS.max _ (fun l _ => by simp [omega, hS.pair.zero_left, hS.pair.zero_right])
     (fun w => by simp [omega, hS.pair.zero_left, hS.pair.zero_right])
   smul_mem' c a ha := hS.max _ (fun l hl => by

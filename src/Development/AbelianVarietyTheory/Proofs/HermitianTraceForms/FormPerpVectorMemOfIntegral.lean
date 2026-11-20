@@ -347,7 +347,7 @@ theorem normSq_place_form_le (h : M →ₗ[R] M →ₗ⋆[R] R) (hh : ∀ u v, h
         + τ y * starRingEnd ℂ (τ x) * starRingEnd ℂ (τ (h u v))
         + τ y * starRingEnd ℂ (τ y) * τ (h v v) := by
     intro x y
-    simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply,
+    simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply,
       LinearMap.map_smulₛₗ, smul_eq_mul, map_mul, starRingEnd_apply, hτ, hvu]
     ring
   rw [← Complex.normSq_eq_norm_sq, Complex.normSq_apply]
@@ -408,7 +408,7 @@ theorem places_formPerpVector_le [Fintype T] {p : ℕ} (h : M →ₗ[R] M →ₗ
   let ν : RingSeminorm R :=
     { toFun := fun x => ‖π x‖
       map_zero' := by simp
-      add_le' := fun x y => by rw [map_add]; exact norm_add_le _ _
+      add_le' := fun x y => by rw [map_add (f := _)]; exact norm_add_le _ _
       neg' := fun x => by rw [map_neg, norm_neg]
       mul_le' := fun x y => by rw [map_mul]; exact norm_mul_le _ _ }
   have hν : ∀ t x, ‖τ t x‖ ≤ ν x := fun t x => norm_le_pi_norm (π x) t
@@ -427,7 +427,7 @@ theorem places_formPerpVector_le [Fintype T] {p : ℕ} (h : M →ₗ[R] M →ₗ
           refine Finset.sum_le_sum fun t _ => ?_
           have a1 := (Complex.re_le_norm _).trans (hcs1 t u v)
           have a2 := (Complex.re_le_norm _).trans (hcs1 t v u)
-          simp only [map_add, LinearMap.add_apply, Complex.add_re]
+          simp only [map_add (f := _), LinearMap.add_apply, Complex.add_re]
           nlinarith
         rw [Finset.sum_add_distrib, Finset.sum_add_distrib, ← Finset.mul_sum] at h2
         rw [add_sq, Real.sq_sqrt (hsum u), Real.sq_sqrt (hsum v)]

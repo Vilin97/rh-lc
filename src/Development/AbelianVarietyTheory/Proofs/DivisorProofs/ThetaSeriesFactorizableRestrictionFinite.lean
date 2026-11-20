@@ -32,7 +32,7 @@ theorem exists_haar_factor {G : Type} [AddCommGroup G] [TopologicalSpace G] [IsT
   haveI : SecondCountableTopology H₁ := TopologicalSpace.Subtype.secondCountableTopology _
   haveI : SecondCountableTopology H₂ := TopologicalSpace.Subtype.secondCountableTopology _
   have k₁ : ∀ z : H₁ × H₂, p ((z.1 : G) + z.2) = z.1 := fun z => by
-    rw [map_add, (m₂ _).1 z.2.2, add_zero]
+    rw [map_add (f := _), (m₂ _).1 z.2.2, add_zero]
     exact (sub_eq_zero.1 ((m₁ _).1 z.1.2)).symm
   let e : (H₁ × H₂) ≃ₜ+ G :=
     { toFun := fun z => (z.1 : G) + z.2
@@ -68,7 +68,7 @@ theorem proportional {G : Type} [AddCommGroup G] (p : G →+ G) (hpp : ∀ x, p 
   have hv : v (x₀ - p x₀) ≠ 0 := fun hv => hx₀' (by rw [hΨ, hv, mul_zero])
   refine ⟨conj (Φ x₀) / conj (Ψ x₀), funext fun x => ?_⟩
   have h1 := h x₀ (p x - p x₀) (by rw [map_sub, hpp, hpp])
-  have e1 : p (x₀ + (p x - p x₀)) = p x := by rw [map_add, map_sub, hpp, hpp, add_sub_cancel]
+  have e1 : p (x₀ + (p x - p x₀)) = p x := by rw [map_add (f := _), map_sub, hpp, hpp, add_sub_cancel]
   have e2 : x₀ + (p x - p x₀) - p x = x₀ - p x₀ := by abel
   rw [hΨ (x₀ + _), hΦ (x₀ + _), e1, e2] at h1
   have h2 := congrArg conj h1
@@ -215,7 +215,7 @@ theorem fstA_idem (S : Finset (Pl F)) : fstA F (idem S) = 1 := by
   have h0 : fstA F (infOne (F := F)) = 1 := rfl
   have hl : ∀ w : Pl F, fstA F (GlobalTheory.LatVac.liftV w 1) = 0 := fun w => rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [idem, map_add, map_sum, h0, Finset.sum_eq_zero fun w _ => hl w, add_zero]
+    rw [idem, map_add (f := _), map_sum, h0, Finset.sum_eq_zero fun w _ => hl w, add_zero]
 
 open Classical in
 theorem evFin_idem (S : Finset (Pl F)) (w : Pl F) : evFin F w (idem S) = if w ∈ S then 1 else 0 := by
@@ -227,7 +227,7 @@ theorem evFin_idem (S : Finset (Pl F)) (w : Pl F) : evFin F w (idem S) = if w �
     · subst hx; rw [if_pos rfl, GlobalTheory.LatVac.evFin_liftV]
     · rw [if_neg hx]; exact evalV_singleFin_ne hx _
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [idem, map_add, map_sum, h0, hs, Finset.sum_ite_eq S w (fun _ => (1 : Fv F w)), zero_add]
+    rw [idem, map_add (f := _), map_sum, h0, hs, Finset.sum_ite_eq S w (fun _ => (1 : Fv F w)), zero_add]
 
 theorem evI_idem_mul (S : Finset (Pl F)) (t : AF F) : evI F (idem S * t) = evI F t := by
   change InfiniteAdeleRing.ringEquiv_mixedSpace F (fstA F (idem S * t)) =

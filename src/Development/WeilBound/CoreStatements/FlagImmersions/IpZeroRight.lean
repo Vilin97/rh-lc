@@ -99,7 +99,7 @@ theorem exists_real (R : RiemLat E g Λ) (e : Fin g → ℂ) : ∃ ξ, star ξ =
   | add x y _ _ hx hy =>
     obtain ⟨ξ, h1, h2⟩ := hx
     obtain ⟨ξ', h1', h2'⟩ := hy
-    exact ⟨ξ + ξ', by rw [star_add, h1, h1'], by rw [map_add, h2, h2']⟩
+    exact ⟨ξ + ξ', by rw [star_add, h1, h1'], by rw [map_add (f := _), h2, h2']⟩
   | smul r x _ hx =>
     obtain ⟨ξ, h1, h2⟩ := hx
     exact ⟨(r : ℂ) • ξ, by rw [star_smul, h1]; simp, by rw [map_smul, h2]; rfl⟩
@@ -108,11 +108,11 @@ theorem exists_pair (R : RiemLat E g Λ) (e e' : Fin g → ℂ) : ∃ η, Pc b R
   obtain ⟨ξ, h1, h2⟩ := exists_real b R ((2⁻¹ : ℂ) • (e + e'))
   obtain ⟨ξ', h1', h2'⟩ := exists_real b R ((2⁻¹ * Complex.I : ℂ) • (e' - e))
   refine ⟨ξ + Complex.I • ξ', ?_, ?_⟩
-  · rw [map_add, map_smul, h2, h2', smul_smul]
+  · rw [map_add (f := _), map_smul, h2, h2', smul_smul]
     ext k
     simp only [Pi.add_apply, Pi.smul_apply, Pi.sub_apply, smul_eq_mul]
     linear_combination (2⁻¹ * (e' k - e k)) * Complex.I_mul_I
-  · rw [star_add, star_smul, h1, h1', map_add, map_smul, h2, h2', smul_smul]
+  · rw [star_add, star_smul, h1, h1', map_add (f := _), map_smul, h2, h2', smul_smul]
     ext k
     simp only [Pi.add_apply, Pi.smul_apply, Pi.sub_apply, smul_eq_mul, Complex.star_def, Complex.conj_I]
     linear_combination (-2⁻¹ * (e' k - e k)) * Complex.I_mul_I

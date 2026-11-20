@@ -236,7 +236,7 @@ theorem gal_smul_fontaineT {L : IntermediateField ℚ_[p] (PadicAlgCl p)} (σ : 
   have E_Pμ : logPoly k μ = W (logPoly k Zμ) := by rw [hμ, map_logPoly]
   have E_αβ : W (logPoly k Z1) - W (logPoly k Z0) =
       (p : 𝔹) ^ M * W α' + W ξ ^ k * W β' := by
-    rw [← map_sub, ← hαβ, map_add, map_mul, map_mul, map_pow, map_pow, map_natCast]
+    rw [← map_sub, ← hαβ, map_add (f := _), map_mul, map_mul, map_pow, map_pow, map_natCast]
   have E_a : algebraMap ℚ_[p] 𝔹 (a : ℚ_[p]) =
       (aN : 𝔹) - (p : 𝔹) ^ (M + k) * W (IsPerfectoidField.padicIntToWitt (K := ℂ_[p]) p γ) := by
     have h : a = (aN : ℤ_[p]) - (p : ℤ_[p]) ^ (M + k) * γ := by rw [← hγ]; ring
@@ -256,7 +256,7 @@ theorem gal_smul_fontaineT {L : IntermediateField ℚ_[p] (PadicAlgCl p)} (σ : 
         ((k.factorial : 𝔹) * tN - logPoly k ((1 + μ) ^ aN - 1)) + W ξ ^ k * W β' +
         (p : 𝔹) ^ (M + k) * W (IsPerfectoidField.padicIntToWitt (K := ℂ_[p]) p γ) *
           ((k.factorial : 𝔹) * t - logPoly k μ) := by
-    rw [map_add, map_mul, map_mul, map_pow, map_natCast]
+    rw [map_add (f := _), map_mul, map_mul, map_pow, map_natCast]
     linear_combination (k.factorial : 𝔹) * E_σ + (k.factorial : 𝔹) * E_N -
       (k.factorial : 𝔹) * t * E_a + E_P1 - E_P0 + E_αβ +
       (p : 𝔹) ^ (M + k) * W (IsPerfectoidField.padicIntToWitt (K := ℂ_[p]) p γ) * E_Pμ

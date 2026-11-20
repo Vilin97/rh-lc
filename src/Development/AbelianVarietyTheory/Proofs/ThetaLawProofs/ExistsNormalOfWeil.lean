@@ -70,7 +70,7 @@ theorem exists_normal_of_weil (hT : ThetaUnifAV) (hmul : Out.MulNSt) (x : KeyIn 
       intro m; ext k; simp [Finset.sum_apply, Pi.single_apply]
     rw [h1 m, h1 n]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Matrix.mulVec_sum, Matrix.mulVec_smul, map_add, map_sum, map_zsmul, (hφ _).1, (hφ _).2]
+      simp only [Matrix.mulVec_sum, Matrix.mulVec_smul, map_add (f := _), map_sum, map_zsmul, (hφ _).1, (hφ _).2]
   have hΛ : ∀ z, φ z ∈ u.Λ ↔ ∃ m n : Fin x.P.g → ℤ, z = (fun i => (m i : ℂ)) + τ.mulVec (fun i => (n i : ℂ)) := by
     refine fun z => ⟨fun hz => ?_, ?_⟩
     · obtain ⟨l, hl⟩ := (hFΛ (F.symm (φ z))).1 (by rwa [F.apply_symm_apply])
@@ -92,7 +92,7 @@ theorem exists_normal_of_weil (hT : ThetaUnifAV) (hmul : Out.MulNSt) (x : KeyIn 
     (fun m n l z hl => by
       subst hl
       have := hθl ⟨_, (hΛ _).2 ⟨m, n, rfl⟩⟩ (φ z)
-      rw [pow_one, hH, hH, ← map_add] at this
+      rw [pow_one, hH, hH, ← map_add (f := _)] at this
       exact this)
   have hQ : Differentiable ℂ fun z : Fin x.P.g → ℂ =>
       (Real.pi : ℂ) / 2 * (z ⬝ᵥ (CanTh.imInv τ).mulVec z) := by
@@ -195,7 +195,7 @@ theorem exists_normal_fibre (hT : ThetaUnifAV) (hmul : Out.MulNSt) {S : Type} [C
   obtain rfl : F = Chart.dualMapR f := RingHom.ext fun d => by
     have hd : d = algebraMap S _ d.fst + algebraMap S _ d.snd * DualNumber.eps := by
       ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
-    rw [hd, map_add, map_mul, hF₁, hF₁, hF₂]
+    rw [hd, map_add (f := _), map_mul, hF₁, hF₁, hF₂]
     ext <;> simp [Chart.dualMapR, TrivSqZeroExt.algebraMap_eq_inl]
   obtain ⟨⟨A, isAb, g, sm, L, isLB, rigid, sym, ample, ktriv⟩, gp, rig, rg, th, tn, v, vb⟩ := y
   obtain rfl : x.P.g = g := hg

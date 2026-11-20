@@ -43,7 +43,7 @@ theorem exist (A : Submodule ℂ (X → ℂ)) (hA : ∀ f ∈ A, Continuous f �
   have hint : Integrable f.1 ν := (hA _ f.2).1.integrable_of_hasCompactSupport (hA _ f.2).2
   have hre : (∫ x, f.1 x ∂ν).re = ∫ x, (f.1 x).re ∂ν := (integral_re hint).symm
   have him : (∫ x, f.1 x ∂ν).im = ∫ x, (f.1 x).im ∂ν := (integral_im hint).symm
-  rw [hsplit, map_add, map_smul, ← hsplit]
+  rw [hsplit, map_add (f := _), map_smul, ← hsplit]
   apply Complex.ext
   · rw [hre, Complex.add_re, smul_eq_mul, Complex.mul_re, Complex.I_re, Complex.I_im, iv, ru]; ring
   · rw [him, Complex.add_im, smul_eq_mul, Complex.mul_im, Complex.I_re, Complex.I_im, iu, rv]; ring

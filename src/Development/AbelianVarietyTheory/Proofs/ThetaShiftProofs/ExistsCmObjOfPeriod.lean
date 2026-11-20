@@ -62,7 +62,7 @@ theorem isExp_move {R : Type} [CommRing R] {T : GlobalTheory.CM.PAT H (Sp R)} {�
   · exact (hol U f).1.preimage hd.continuous
   · exact (hol U f).2.comp hd.differentiableOn fun z hz => hz
   · beta_reduce
-    rw [map_add, add]
+    rw [map_add (f := _), add]
   · refine (ker _).trans ⟨?_, ?_⟩
     · rintro ⟨a, ha⟩
       exact ⟨gam.symm a, h.injective (by rw [← hh, gam.apply_symm_apply, ha])⟩

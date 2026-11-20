@@ -174,7 +174,7 @@ theorem exists_rep [CharZero Ω] {y : (Σ k, J k) → Ω} {p : ℕ} [hp : Fact p
   · rintro u v ⟨n, g, h1, h2, h3⟩ ⟨n', g', h1', h2', h3'⟩
     refine ⟨n * n', n' * g + n * g', fun h => (hp.out.dvd_mul.1 h).elim h1 h1',
       hom_add (hom_nat_mul _ h2) (hom_nat_mul _ h2'), ?_⟩
-    simp only [map_add, map_mul, map_natCast, ← h3, ← h3']
+    simp only [map_add (f := _), map_mul, map_natCast, ← h3, ← h3']
     push_cast; ring
   · exact ⟨1, 0, hp.out.not_dvd_one, hom_zero _, by simp⟩
   · intro m hm

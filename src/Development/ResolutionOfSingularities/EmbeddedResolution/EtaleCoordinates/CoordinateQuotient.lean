@@ -138,7 +138,7 @@ private theorem algebraMap_etaleChartCoord_notMem_maximalIdeal_sq_sup (k : Type 
       rw [DA.leibniz, smul_eq_mul, smul_eq_mul]
       exact add_mem (Ideal.mul_mem_right _ _ hp) (Ideal.mul_mem_right _ _ hr)
     · intro x y hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
   rw [hmapeq] at hb
   have hDb : DA b ∈ IsLocalRing.maximalIdeal A := by
@@ -149,7 +149,7 @@ private theorem algebraMap_etaleChartCoord_notMem_maximalIdeal_sq_sup (k : Type 
     · rw [map_zero]
       exact zero_mem _
     · intro x y hx hy px py
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem px py
     · intro c x hx px
       have hxm : x ∈ IsLocalRing.maximalIdeal A := hspan_le hx
@@ -157,7 +157,7 @@ private theorem algebraMap_etaleChartCoord_notMem_maximalIdeal_sq_sup (k : Type 
       exact add_mem (Ideal.mul_mem_left _ _ px) (Ideal.mul_mem_right _ _ hxm)
   have hone : DA (algebraMap S A (etaleChartCoord k m S j)) = 1 := by
     rw [hderivAlgebraMap, hDx, map_one]
-  rw [← hab, map_add] at hone
+  rw [← hab, map_add (f := _)] at hone
   have h1 : (1 : A) ∈ IsLocalRing.maximalIdeal A := by
     rw [← hone]
     exact add_mem hDa hDb

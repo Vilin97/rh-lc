@@ -109,7 +109,7 @@ theorem exists_mod_idempotent {R : Type} [CommRing R] (s : R →+* R) (hs : ∀ 
   have hsurj : Function.Surjective π := Ideal.Quotient.mk_surjective
   obtain ⟨a, ha⟩ := ih t
     (by intro x; obtain ⟨y, rfl⟩ := hsurj x; rw [ht, ht, hs])
-    (by obtain ⟨τ, hτ⟩ := hτ; exact ⟨π τ, by rw [ht, ← map_add, hτ, map_one]⟩)
+    (by obtain ⟨τ, hτ⟩ := hτ; exact ⟨π τ, by rw [ht, ← map_add (f := _), hτ, map_one]⟩)
     (by
       intro u hu1 hu2
       obtain ⟨w, hw⟩ := hu1.exists_right_inv
@@ -122,9 +122,9 @@ theorem exists_mod_idempotent {R : Type} [CommRing R] (s : R →+* R) (hs : ∀ 
       obtain ⟨x, hx⟩ := hn ((1 - e) * u + e)
         (IsUnit.of_mul_eq_one ((1 - e) * w + e) (by
           linear_combination (u * w) * h11 + e1 + (u + w) * h01 + hee))
-        (by rw [map_add, map_mul, map_sub, map_one, hse, e2])
+        (by rw [map_add (f := _), map_mul, map_sub, map_one, hse, e2])
       refine ⟨π x, ?_⟩
-      rw [ht, ← map_mul, hx, map_add, map_mul, map_sub, map_one, hπe]
+      rw [ht, ← map_mul, hx, map_add (f := _), map_mul, map_sub, map_one, hπe]
       ring)
     n (Q.map π)
     (by
@@ -194,7 +194,7 @@ theorem hasOrthonormal_of_finite (k : ℕ) :
           · exact absurd (by linear_combination (1 - e) * h + s e * hee) h1
         have ho : e + s e = 1 := by
           rcases hfix (e + s e) (show (e + s e) * (e + s e) = e + s e by
-            linear_combination hee + hff + 2 * hz) (by rw [map_add, hs, add_comm]) with h | h
+            linear_combination hee + hff + 2 * hz) (by rw [map_add (f := _), hs, add_comm]) with h | h
           · exact absurd (by linear_combination e * h - hee - hz) h0
           · exact h
         exact exists_of_split s e he (by linear_combination ho) Q hQ hu

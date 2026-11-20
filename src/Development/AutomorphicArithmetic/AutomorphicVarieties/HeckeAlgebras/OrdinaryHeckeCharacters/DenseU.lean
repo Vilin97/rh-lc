@@ -99,7 +99,7 @@ private theorem du_root {ζ : Qbar l} {n : ℕ} (h : ζ ^ l ^ n = 1) : ‖ζ - 1
   let z : B := ⟨ζ, h1.le⟩
   obtain ⟨r, hr⟩ := exists_add_pow_prime_pow_eq hl (z - 1) 1 n
   have hr' := congrArg B.subtype hr
-  simp only [map_pow, map_add, map_mul, map_sub, map_one, map_natCast, sub_add_cancel, one_pow,
+  simp only [map_pow, map_add (f := _), map_mul, map_sub, map_one, map_natCast, sub_add_cancel, one_pow,
     Subring.coe_subtype, mul_one] at hr'
   have hz : (z : Qbar l) = ζ := rfl
   rw [hz, h] at hr'
@@ -467,7 +467,7 @@ theorem UpperTheory.V.Hi.denseU :
   have hx : ∀ v i j, (Φ x v i (γ v j) : Qbar l) = η ⟨v, i, j⟩ := fun v i j => by
     have h4 := congrArg x (he v i j ⟨γ v j, hγI v j⟩ (hγ v j))
     have h5 : x (e (MvPowerSeries.X ⟨v, i, j⟩)) = y (MvPowerSeries.X ⟨v, i, j⟩) := congrArg y (e.symm_apply_apply _)
-    rw [hκ, map_mul, map_add, map_one, x.commutes, h5, h3] at h4
+    rw [hκ, map_mul, map_add (f := _), map_one, x.commutes, h5, h3] at h4
     show x (ψ v i (γ v j)) * (ω v i (γ v j) : Qbar l) = _
     refine (congrArg (· * _) h4).trans ?_
     have h6 : (χ v i (γ v j) : Qbar l) = (algebraMap c.O (Qbar l) (ψ₀ v i (γ v j)) * ω v i (γ v j))⁻¹ :=

@@ -75,10 +75,10 @@ theorem exists_ring_section {A : Type} [Ring A] [TopologicalSpace A] [IsTopologi
     (fun u v => e (k * (τ (e.symm u) * d * e.symm v)))
     (by
       intro u u' v
-      simp only [map_add, add_mul, mul_add])
+      simp only [map_add (f := _), add_mul, mul_add])
     (by
       intro u v v'
-      simp only [map_add, add_mul, mul_add])
+      simp only [map_add (f := _), add_mul, mul_add])
     (by
       have h1 : Continuous (fun p : (Fin N → ℝ) × (Fin N → ℝ) => e.symm p.1) :=
         he'.comp continuous_fst
@@ -90,7 +90,7 @@ theorem exists_ring_section {A : Type} [Ring A] [TopologicalSpace A] [IsTopologi
   · exact he'.comp_continuousOn (hψ.comp he.continuousOn (fun x hx => hx))
   · intro S hS
     have h := congrArg e.symm (hs (e S) hS)
-    simpa [map_add] using h
+    simpa [map_add (f := _)] using h
 
 theorem tau_mul_mul_eq {A : Type} [Ring A] (τ : A →+ A) (hτm : ∀ x y, τ (x * y) = τ y * τ x)
     (hτ1 : τ 1 = 1) (hττ : ∀ x, τ (τ x) = x) (h c d S Y : A) (hcen : ∀ x, h * x = x * h)
@@ -103,7 +103,7 @@ theorem tau_mul_mul_eq {A : Type} [Ring A] (τ : A →+ A) (hτm : ∀ x y, τ (
       _ = d := by rw [hcd, hτ1, one_mul]
   have hYY : τ Y = Y := by
     have h3 := congrArg τ hY
-    simp only [map_add, hτm, hτc, hττ, hτd, hτh, hτS] at h3
+    simp only [map_add (f := _), hτm, hτc, hττ, hτd, hτh, hτS] at h3
     have h4 : τ Y * (d * Y) * (h * h) = h * h * (τ Y * d * Y) := by
       rw [mul_assoc (τ Y) d Y]
       generalize τ Y * (d * Y) = x
@@ -116,7 +116,7 @@ theorem tau_mul_mul_eq {A : Type} [Ring A] (τ : A →+ A) (hτm : ∀ x y, τ (
     exact add_left_cancel (add_right_cancel (h3.trans hY.symm))
   rw [hYY] at hY
   have e1 : τ (1 + h * (d * Y)) = 1 + h * (Y * d) := by
-    rw [map_add, hτ1, hτm, hτm, hτd, hYY, hτh, hcen]
+    rw [map_add (f := _), hτ1, hτm, hτm, hτd, hYY, hτh, hcen]
   have e2 : c * (h * (d * Y)) = h * Y := by
     rw [← mul_assoc, ← hcen, mul_assoc, ← mul_assoc c, hcd, one_mul]
   have e3 : h * (Y * d) * c = h * Y := by
@@ -289,10 +289,10 @@ theorem secInf : PositivityTheory.PfSWUS.SchInf.SecInf := by
     induction b using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [sigR, hσσ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have ht2 : algebraMap F (Ainf F ⊗[F] E) (1 / 2) + algebraMap F (Ainf F ⊗[F] E) (1 / 2) = 1 := by
     have h12 : (1 / 2 : F) + 1 / 2 = 1 := by norm_num
-    rw [← map_add, h12, map_one]
+    rw [← map_add (f := _), h12, map_one]
   have hst : sigR (Ainf F) σ (algebraMap F (Ainf F ⊗[F] E) (1 / 2)) = algebraMap F (Ainf F ⊗[F] E) (1 / 2) :=
     (Algebra.TensorProduct.map (AlgHom.id F (Ainf F)) σ).commutes (1 / 2)
   exact exists_section_matrix (X := HermR (Ainf F) σ n) hunits e₀ he₀ he₀' (sigR (Ainf F) σ) hsig hinvol _ ht2 hst

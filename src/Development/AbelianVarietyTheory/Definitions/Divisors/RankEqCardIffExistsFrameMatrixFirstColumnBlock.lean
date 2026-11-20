@@ -134,7 +134,7 @@ theorem exists_ramified {ϖ : kˣ} (hϖ : IsUnif ϖ) :
     { toFun := fun x => Circle.toUnits (AddCircle.toCircle (ratCircle (c' (Additive.ofMul (QuotientGroup.mk x)))))
       map_one' := by simp
       map_mul' := fun x y => by
-        rw [QuotientGroup.mk_mul, ofMul_mul, map_add, map_add, AddCircle.toCircle_add, map_mul] }
+        rw [QuotientGroup.mk_mul, ofMul_mul, map_add (f := _), map_add (f := _), AddCircle.toCircle_add, map_mul] }
   refine ⟨f, fun h => hc (ratCircle_eq_zero _ (AddCircle.injective_toCircle one_ne_zero ?_)), fun x hx => ?_,
     fun x => Circle.norm_coe _⟩
   · have := congrArg Units.val (h u h1)

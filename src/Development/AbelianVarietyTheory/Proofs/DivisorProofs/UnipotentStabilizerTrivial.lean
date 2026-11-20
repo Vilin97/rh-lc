@@ -70,7 +70,7 @@ theorem bigCell_uniq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   have hss : ∀ a : AF F ⊗[F] E, S (S a) = a := fun a => by
     induction a using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a e => exact congrArg (a ⊗ₜ[F] ·) (GlobalTheory.SiegelSet.sigma_sigma hcm e)
   have hB0 : B = 0 := by
     ext i j

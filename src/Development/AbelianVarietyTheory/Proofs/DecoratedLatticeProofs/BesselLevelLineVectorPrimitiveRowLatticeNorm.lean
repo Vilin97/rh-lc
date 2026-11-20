@@ -80,7 +80,7 @@ theorem smul_zu_mem_iff (X : HidaSetting D) (u : D.what₂.Word) (c : D.host.E) 
         obtain ⟨a, rfl⟩ := hy
         rw [map_smulₛₗ, ← hz, (X.Fu u).z_orth a, smul_zero]
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply, hx, hy, add_zero]
       | smul a x _ hx => rw [LinearMap.map_smulₛₗ₂, hx, smul_zero]
     exact Submodule.mem_inf.2 ⟨Submodule.mem_sup_left (Submodule.mem_inf.2 ⟨hc, horth⟩), horth⟩
   · rintro ⟨o, rfl⟩

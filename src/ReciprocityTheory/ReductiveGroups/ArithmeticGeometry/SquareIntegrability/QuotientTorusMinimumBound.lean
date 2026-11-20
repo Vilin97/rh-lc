@@ -106,7 +106,7 @@ theorem GB_span (hP : Ext.PackingCount) :
     refine ⟨wmap (IR I) (γ - y'), wmap_mem_GB hIp, ?_⟩
     have ht : t = wmap (IR I) v := (wmap_jj _ t).symm
     have : t - wmap (IR I) (γ - y') = wmap (IR I) (v - γ) + wmap (IR I) y' := by
-      rw [ht, ← map_sub, ← map_add]; congr 1; abel
+      rw [ht, ← map_sub, ← map_add (f := _)]; congr 1; abel
     rw [this]
     refine (norm_add_le _ _).trans (add_le_add ?_ ?_)
     · rw [norm_wmap hK]; exact (norm_proj_two_le hK _).trans hvγ
@@ -273,7 +273,7 @@ theorem YB_coc (q : ℕ) : (YB hI hP q).Coc q := by
   obtain ⟨y, hy, rfl⟩ := mem_GB.1 hγ'
   have hxy : x + y ∈ Ip X I := (Ip X I).add_mem hx hy
   obtain ⟨k, hk⟩ := X.integral x y hx.1 hy.1
-  rw [← map_add, YB_ka hI hP q hxy, YB_ka hI hP q hx, YB_ka hI hP q hy, Hf_wmap (hK_of hI),
+  rw [← map_add (f := _), YB_ka hI hP q hxy, YB_ka hI hP q hx, YB_ka hI hP q hy, Hf_wmap (hK_of hI),
     herm_im_proj_two hI hx hy, hk, exp_sign]
   have he := X.eps_add x hx.1 y hy.1
   rw [hk, show Real.pi * (k : ℝ) = (k : ℝ) * Real.pi by ring, Real.cos_int_mul_pi] at he

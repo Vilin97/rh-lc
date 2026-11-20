@@ -105,7 +105,7 @@ section Herm
 variable {K : GlobalTheory.UnitLemma.UQ} (B : GlobalTheory.UnitLemma.InvAlg K) (β : B.A) {a : ℕ}
 
 theorem herm_add_left (y y' z : B.A) : B.herm β (y + y') z = B.herm β y z + B.herm β y' z := by
-  simp [GlobalTheory.UnitLemma.InvAlg.herm, mul_add, add_mul, map_add]
+  simp [GlobalTheory.UnitLemma.InvAlg.herm, mul_add, add_mul, map_add (f := _)]
 
 theorem herm_zero_left (z : B.A) : B.herm β 0 z = 0 := by
   simp [GlobalTheory.UnitLemma.InvAlg.herm]

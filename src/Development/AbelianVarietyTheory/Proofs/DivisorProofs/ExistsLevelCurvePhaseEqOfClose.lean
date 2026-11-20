@@ -52,7 +52,7 @@ theorem sq_unitary : ∀ {D : D7} {a d : ℕ} (x : Formalism.MainNotions.Standar
       simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
       congr 1
       exact hinv e
-    | add u v hu hv => rw [map_add, map_add, hu, hv]
+    | add u v hu hv => rw [map_add (f := _), map_add (f := _), hu, hv]
   have hΦ : ∀ B : Matrix (Fin d) (Fin a) (Formalism.MainNotions.StandardLatticesGL3.AE D), (∑ i, ∑ j, B i j * Formalism.MainNotions.StandardLatticesGL3.sgA D (B i j)) = (B * cTA D B).trace := fun B => by
     simp [cTA, Matrix.trace, Matrix.mul_apply]
   have hmul : ∀ {m p q : ℕ} (B : Matrix (Fin m) (Fin p) (Formalism.MainNotions.StandardLatticesGL3.AE D)) (C : Matrix (Fin p) (Fin q) (Formalism.MainNotions.StandardLatticesGL3.AE D)), cTA D (B * C) = cTA D C * cTA D B := fun B C => by
@@ -97,7 +97,7 @@ theorem sq_move_int : ∀ {D : D7} (cc : Ideal (𝓞 D.host.K)) {a d : ℕ} (A :
     rw [← et i j]; ring
   simp only [hA', Finset.mul_sum, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
-  simp only [map_add, map_mul, map_natCast]
+  simp only [map_add (f := _), map_mul, map_natCast]
   push_cast
   ring
 
@@ -170,7 +170,7 @@ theorem phase_eq : ∀ {D : D7} (cc : Ideal (𝓞 D.host.K)) (δ : ℂ), Formali
     field_simp; ring
   have key : (∑ τ, embT D τ S').re = (∑ τ, embT D τ S).re + 4 * (Ideal.absNorm cc : ℝ) * m := by
     rw [hsplit]
-    simp only [map_add, map_mul, map_natCast, Finset.sum_add_distrib, ← Finset.mul_sum, Complex.add_re]
+    simp only [map_add (f := _), map_mul, map_natCast, Finset.sum_add_distrib, ← Finset.mul_sum, Complex.add_re]
     have e : ((8 * Ideal.absNorm cc : ℕ) : ℂ) = (((8 * Ideal.absNorm cc : ℕ) : ℝ) : ℂ) := rfl
     rw [e, Complex.re_ofReal_mul]
     push_cast at hm ⊢

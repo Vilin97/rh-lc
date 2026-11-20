@@ -56,7 +56,7 @@ theorem deep_eq_of_congMod : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
   have h1 := he a ν ha
   have h2 := he a' ν' ha'
   obtain ⟨w, hw⟩ := hcong
-  have hc : CongMod D.m (e ν) (e ν') := ⟨e w, by rw [hw, map_add, map_nsmul]⟩
+  have hc : CongMod D.m (e ν) (e ν') := ⟨e w, by rw [hw, map_add (f := _), map_nsmul]⟩
   have hfin : ∀ δ : ℝ, 0 < δ → ‖D.X.M.val (gPt p ≫ y') (f a κ) - D.X.M.val (gPt p ≫ y') (f a' κ)‖ ≤ 2 * δ := by
     intro δ hδ
     obtain ⟨S₀, hS₀⟩ := hsum ct₁ yy₁ hyy₁.uIsLab y' rfl hcen yy hyy.uIsLab hcomp a (e ν) κ h1 δ hδ

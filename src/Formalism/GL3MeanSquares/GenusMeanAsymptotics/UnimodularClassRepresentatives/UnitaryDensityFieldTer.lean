@@ -23,7 +23,7 @@ private theorem exists_mem_ideal_form_eq_of_mem_ideal_smul {h : V →ₗ⋆[K] V
     rw [Submodule.coe_smul, ← algebraMap_smul K r (m : V), map_smul, smul_eq_mul, map_mul, ho]
   · obtain ⟨u, hu, hu'⟩ := hx
     obtain ⟨v, hv, hv'⟩ := hy
-    exact ⟨u + v, Ideal.add_mem _ hu hv, by rw [Submodule.coe_add, map_add, hu', hv', map_add]⟩
+    exact ⟨u + v, Ideal.add_mem _ hu hv, by rw [Submodule.coe_add, map_add (f := _), hu', hv', map_add (f := _)]⟩
 
 private theorem exists_mem_extP_pow_form_eq_of_mem_extP_pow_smul (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule (𝓞 K) V}
     (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) (𝔭 : Ideal (𝓞 F)) (k : ℕ) (w x : ↥L)
@@ -38,7 +38,7 @@ private theorem exists_mem_extP_pow_form_eq_of_mem_extP_pow_smul (hF : IsFixF K 
   · obtain ⟨u, hu, hu'⟩ := hx
     obtain ⟨v, hv, hv'⟩ := hy
     exact ⟨u + v, Ideal.add_mem _ hu hv, by
-      rw [Submodule.coe_add, map_add, LinearMap.add_apply, hu', hv', map_add]⟩
+      rw [Submodule.coe_add, map_add (f := _), LinearMap.add_apply, hu', hv', map_add (f := _)]⟩
 
 theorem nk_iff (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) {L : Submodule (𝓞 K) V}
     (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (k : ℕ) (n : 𝓞 F)
@@ -64,7 +64,7 @@ theorem nk_iff (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSy
     have hsum : o = o₀ + u1 + u2 + u3 := by
       apply IsFractionRing.injective (𝓞 K) K
       rw [← ho, hyx]
-      simp only [Submodule.coe_add, map_add, LinearMap.add_apply]
+      simp only [Submodule.coe_add, map_add (f := _), LinearMap.add_apply]
       rw [he1, he2, he3, ← ho₀]
       ring
     rw [Ideal.Quotient.eq, hsum, show o₀ + u1 + u2 + u3 - o₀ = u1 + u2 + u3 by ring]
@@ -137,7 +137,7 @@ theorem mk_lin_eq_iff (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L
         rw [Submodule.coe_smul, ← algebraMap_smul K r (m : V), map_smul, smul_eq_mul, map_mul, ho]
       · obtain ⟨u, hu, hu'⟩ := hx
         obtain ⟨w, hw, hw'⟩ := hy
-        exact ⟨u + w, Ideal.add_mem _ hu hw, by rw [Submodule.coe_add, map_add, hu', hw', map_add]⟩
+        exact ⟨u + w, Ideal.add_mem _ hu hw, by rw [Submodule.coe_add, map_add (f := _), hu', hw', map_add (f := _)]⟩
     obtain ⟨y, hy, hyeq⟩ := key _ hmem
     rw [form_right hzo hzg] at hyeq
     have h1 : (a - b) i * g i ∈ extP K 𝔭 ^ k := by
@@ -169,7 +169,7 @@ private theorem quotient_norm_congr_of_quotient_eq (hF : IsFixF K F) {h : V →�
   have hsum : o = o₀ + u1 + u2 + u3 := by
     apply IsFractionRing.injective (𝓞 K) K
     rw [← ho, hyx]
-    simp only [Submodule.coe_add, map_add, LinearMap.add_apply]
+    simp only [Submodule.coe_add, map_add (f := _), LinearMap.add_apply]
     rw [he1, he2, he3, ← ho₀]
     ring
   rw [Ideal.Quotient.eq, hsum, show o₀ + u1 + u2 + u3 - o₀ = u1 + u2 + u3 by ring]

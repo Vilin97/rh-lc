@@ -26,7 +26,7 @@ theorem pInf_posIdele (r : ℝ) (hr : 0 < r) :
   rw [GlobalTheory.CuspBoundSiegel.posIdele_congr hr (Real.exp_pos _) (Real.exp_log hr).symm,
     GlobalTheory.CuspBoundSiegel.posIdele_exp]
   change pInf E (1 - GlobalTheory.CuspRep.sInf E 1 + GlobalTheory.CuspRep.sInf E _) = _
-  simp only [map_add, map_sub, map_one, h, sub_self, zero_add]
+  simp only [map_add (f := _), map_sub, map_one, h, sub_self, zero_add]
   funext w
   simp [expU]
   rw [← Complex.ofReal_exp, Real.exp_log hr]

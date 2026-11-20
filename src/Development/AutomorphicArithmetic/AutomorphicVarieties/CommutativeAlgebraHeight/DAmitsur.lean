@@ -99,18 +99,18 @@ private theorem am_univ (k N : ℕ) :
     clear h
     induction hd using AddSubmonoid.closure_induction with
     | zero => simp
-    | add u v _ _ hu hv => rw [map_add, hu, hv, add_zero]
+    | add u v _ _ hu hv => rw [map_add (f := _), hu, hv, add_zero]
     | mem u hu =>
       obtain ⟨c, w, hw', rfl⟩ := hu
       rw [map_zsmul, hw, hx w (by omega), smul_zero]
   have := congrArg (FreeAlgebra.lift ℤ x) h
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_add, h0, add_zero, map_one, map_sum, amP, map_list_prod, List.map_map] at this
+    rw [map_add (f := _), map_add (f := _), h0, add_zero, map_one, map_sum, amP, map_list_prod, List.map_map] at this
   simp only [FreeAlgebra.lift_ι_apply] at this
   rw [this, amP]
   congr 1
   refine List.map_congr_left fun p _ => ?_
-  simp only [Function.comp, map_add, map_one, map_zsmul, hw]
+  simp only [Function.comp, map_add (f := _), map_one, map_zsmul, hw]
 
 end Fac
 
@@ -180,9 +180,9 @@ private theorem amWt_degree (w : FreeMonoid (Fin k)) : (amWt w).degree = w.lengt
   | one => simp [amWt]
   | of_mul a w ih =>
     have : amWt (FreeMonoid.of a * w) = Finsupp.single a 1 + amWt w := by
-      simp only [amWt, FreeMonoid.toList_of_mul, ← Multiset.cons_coe, ← Multiset.singleton_add, map_add,
+      simp only [amWt, FreeMonoid.toList_of_mul, ← Multiset.cons_coe, ← Multiset.singleton_add, map_add (f := _),
         Multiset.toFinsupp_singleton]
-    rw [this, map_add, ih]; simp
+    rw [this, map_add (f := _), ih]; simp
 
 private theorem am_lift {A E B : Type} [CommRing A] [Ring E] [Algebra A E] [CommRing B] [Algebra A B]
     (π : MvPolynomial (Fin k) A →ₐ[A] B) (x : Fin k → E) (w : FreeMonoid (Fin k)) :
@@ -192,7 +192,7 @@ private theorem am_lift {A E B : Type} [CommRing A] [Ring E] [Algebra A E] [Comm
   | one => simp [amWt, Algebra.TensorProduct.one_def]
   | of_mul a w ih =>
     have : amWt (FreeMonoid.of a * w) = Finsupp.single a 1 + amWt w := by
-      simp only [amWt, FreeMonoid.toList_of_mul, ← Multiset.cons_coe, ← Multiset.singleton_add, map_add,
+      simp only [amWt, FreeMonoid.toList_of_mul, ← Multiset.cons_coe, ← Multiset.singleton_add, map_add (f := _),
         Multiset.toFinsupp_singleton]
     rw [this, map_mul, map_mul, ih, FreeMonoid.lift_eval_of, FreeMonoid.lift_eval_of,
       Algebra.TensorProduct.tmul_mul_tmul, ← map_mul, MvPolynomial.X, MvPolynomial.monomial_mul, one_mul]
@@ -202,7 +202,7 @@ private theorem am_one {n : ℕ} {A E B : Type} [CommRing A] [Ring E] [Algebra A
     D.D B (1 + b ⊗ₜ y) = 1 + ∑ i ∈ Finset.range n, algebraMap A B (D.lam (i + 1) y) * b ^ (i + 1) := by
   obtain ⟨h0, -, h, -⟩ := d_chi D y
   have := D.nat A[X] B (Polynomial.aeval b) (1 + X ⊗ₜ y)
-  rw [h, map_add, map_one, Algebra.TensorProduct.map_tmul, aeval_X, AlgHom.id_apply] at this
+  rw [h, map_add (f := _), map_one, Algebra.TensorProduct.map_tmul, aeval_X, AlgHom.id_apply] at this
   rw [this, Finset.sum_range_succ', h0, add_comm]
   simp
 
@@ -228,14 +228,14 @@ theorem UpperTheory.V.CA.d_amitsur :
     rw [am_lift, this, zero_tmul]
   have h2 : π (D.D (MvPolynomial (Fin k) A) (1 + Det.gen x)) = π (MvPolynomial.map φ (L.map (amF n)).prod) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← D.nat, map_add, map_one, Det.gen, map_sum]
+      rw [← D.nat, map_add (f := _), map_one, Det.gen, map_sum]
     simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
     rw [h1, amP, map_list_prod, map_list_prod, map_list_prod, List.map_map, List.map_map, List.map_map]
     congr 1
     refine List.map_congr_left fun p _ => ?_
     simp only [Function.comp]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [am_lift, smul_tmul', am_one, amF, map_add, map_add, map_one (MvPolynomial.map φ), map_one π, map_sum, map_sum]
+      rw [am_lift, smul_tmul', am_one, amF, map_add (f := _), map_add (f := _), map_one (MvPolynomial.map φ), map_one π, map_sum, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [← map_zsmul, ← map_pow, ← π.commutes, ← map_mul]

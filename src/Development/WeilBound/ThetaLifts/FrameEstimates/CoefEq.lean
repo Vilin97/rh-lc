@@ -27,7 +27,7 @@ theorem integral_sq_eq {X : Type} [MeasurableSpace X] {μ : Measure X} {f : X �
 theorem polar_pt (a b : ℂ) : a * (starRingEnd ℂ) b =
     (1 / 4 : ℂ) * (((‖a + b‖ ^ 2 : ℝ) : ℂ) - ((‖a - b‖ ^ 2 : ℝ) : ℂ) +
       (Complex.I * ((‖a + Complex.I * b‖ ^ 2 : ℝ) : ℂ) - Complex.I * ((‖a - Complex.I * b‖ ^ 2 : ℝ) : ℂ))) := by
-  simp only [← Complex.normSq_eq_norm_sq, ← Complex.mul_conj, map_add, map_sub, map_mul, Complex.conj_I]
+  simp only [← Complex.normSq_eq_norm_sq, ← Complex.mul_conj, map_add (f := _), map_sub, map_mul, Complex.conj_I]
   linear_combination (a * (starRingEnd ℂ) b - b * (starRingEnd ℂ) a) / 2 * Complex.I_mul_I
 
 theorem polar_int {X : Type} [MeasurableSpace X] {μ : Measure X} {f g : X → ℂ} (hf : MemLp f 2 μ) (hg : MemLp g 2 μ) :

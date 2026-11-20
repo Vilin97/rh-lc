@@ -28,7 +28,7 @@ theorem kappa_conj (y : AL L) :
     change kappa L ((IsCMField.complexConj L x) ⊗ₜ a) = _
     rw [kappa_tmul, kappa_tmul, map_mul, conjFin_adMap, conjFin_algebraMap]
     rfl
-  | add y z hy hz => rw [map_add, map_add, map_add, hy, hz, map_add]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), map_add (f := _), hy, hz, map_add (f := _)]
 
 def psi0 : GAf L n →* GL (Fin n) (FiniteAdeleRing (𝓞 L) L) :=
   (Matrix.GeneralLinearGroup.map (kappa L).toRingHom).comp (ReciprocityTheory.Aut.GA L n).subtype
@@ -94,7 +94,7 @@ theorem kappa_eq (F G : FinIso L n) : F.κ = G.κ := by
   refine RingEquiv.ext fun y => ?_
   induction y using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
-  | add y z hy hz => rw [map_add, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
   | tmul x a =>
     have e : x ⊗ₜ[F₀] a = (x ⊗ₜ[F₀] (1 : AFplus L)) * ((1 : L) ⊗ₜ[F₀] a) := by
       rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]

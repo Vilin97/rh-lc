@@ -22,10 +22,10 @@ theorem fderiv_cplx (D : V →L[ℝ] W) (c : ℂ) (w : V) :
   have hc : c • w = c.re • w + c.im • (Complex.I • w) := by
     conv_lhs => rw [← Complex.re_add_im c]
     rw [add_smul, mul_smul, Complex.coe_smul, Complex.coe_smul]
-  rw [hc, map_add, map_smul, map_smul, Complex.coe_smul, Complex.coe_smul]
+  rw [hc, map_add (f := _), map_smul, map_smul, Complex.coe_smul, Complex.coe_smul]
 
 theorem dz_add_vector (f : V → W) (P v w : V) : d10 f P (v + w) = d10 f P v + d10 f P w := by
-  unfold d10; simp only [smul_add, map_add]; module
+  unfold d10; simp only [smul_add, map_add (f := _)]; module
 
 theorem d10_smul (f : V → W) (P v : V) (c : ℂ) : d10 f P (c • v) = c • d10 f P v := by
   unfold d10
@@ -37,7 +37,7 @@ theorem d10_smul (f : V → W) (P v : V) (c : ℂ) : d10 f P (c • v) = c • d
   match_scalars <;> ring_nf <;> simp [Complex.I_sq] <;> ring
 
 theorem dbar_add_vector (f : V → W) (P v w : V) : d01 f P (v + w) = d01 f P v + d01 f P w := by
-  unfold d01; simp only [smul_add, map_add]; module
+  unfold d01; simp only [smul_add, map_add (f := _)]; module
 
 theorem d01_smul (f : V → W) (P v : V) (c : ℂ) : d01 f P (c • v) = star c • d01 f P v := by
   unfold d01
@@ -86,7 +86,7 @@ theorem d01_comp_continuousLinearMap {m m' : ℕ} (L : Ext m →L[ℂ] Ext m') (
     (hs : DifferentiableAt ℝ s P) : d01 (fun Q => L (s Q)) P v = L (d01 s P v) := by
   have hd : fderiv ℝ (fun Q => L (s Q)) P = (L.restrictScalars ℝ).comp (fderiv ℝ s P) :=
     ((L.restrictScalars ℝ).hasFDerivAt.comp P hs.hasFDerivAt).fderiv
-  unfold d01; rw [hd]; simp [map_add, map_smul]
+  unfold d01; rw [hd]; simp [map_add (f := _), map_smul]
 
 end Lin2
 
@@ -111,7 +111,7 @@ theorem nab10_sum {m n : ℕ} (h : Pt E g → ℝ) (s : Pt E g → Ext (m + m + 
 theorem nab10_comp {m m' : ℕ} (h : Pt E g → ℝ) (L : Ext (m + m + g) →L[ℂ] Ext (m' + m' + g))
     (s : Pt E g → Ext (m + m + g)) (P v : Pt E g) (hs : DifferentiableAt ℝ s P) :
     pointDifference h (fun Q => L (s Q)) P v = L (pointDifference h s P v) := by
-  unfold pointDifference; rw [d10_comp_continuousLinearMap L s P v hs, map_add, map_smul]
+  unfold pointDifference; rw [d10_comp_continuousLinearMap L s P v hs, map_add (f := _), map_smul]
 
 theorem wedge_smul' {m : ℕ} (i : Fin m) (c : ℂ) (w : Ext m) : wedge i (c • w) = c • wedge i w :=
   (wedgeL i).map_smul c w
@@ -423,7 +423,7 @@ theorem superconn_comp {n : ℕ} (τ : E → Matrix (Fin g) (Fin g) ℂ) (h : Pt
       simp only [map_sum, map_smul]
     simp only [wedge_sum', wedge_smul', hdt, hdtb]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, Finset.smul_sum, map_add, smul_add, Finset.sum_add_distrib]
+      simp only [map_sum, Finset.smul_sum, map_add (f := _), smul_add, Finset.sum_add_distrib]
   have hdbar : dbarV (fun Q => L (s Q)) P = ε • L (dbarV s P) := by
     unfold dbarV
     set_option synthInstance.maxHeartbeats 100000 in
@@ -436,7 +436,7 @@ theorem superconn_comp {n : ℕ} (τ : E → Matrix (Fin g) (Fin g) ℂ) (h : Pt
     refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => ?_
     rw [smul_comm]
   unfold superconn
-  rw [hnab, hdbar, hadj, map_add, map_smul, map_add]
+  rw [hnab, hdbar, hadj, map_add (f := _), map_smul, map_add (f := _)]
   module
 
 end Key

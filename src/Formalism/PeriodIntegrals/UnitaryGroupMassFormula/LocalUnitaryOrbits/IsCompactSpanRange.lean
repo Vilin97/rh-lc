@@ -123,7 +123,7 @@ variable {n : ℕ} (Λ : Set (Fin n → E))
 theorem ratV_add (x y : Fin n → E) :
     ratV (F := F) (Fv F v) (x + y) = ratV (F := F) (Fv F v) x + ratV (F := F) (Fv F v) y := by
   funext i
-  simp [ratV, map_add]
+  simp [ratV, map_add (f := _)]
 
 theorem ratV_zsmul (c : ℤ) (x : Fin n → E) :
     ratV (F := F) (Fv F v) (c • x) = c • ratV (F := F) (Fv F v) x := by

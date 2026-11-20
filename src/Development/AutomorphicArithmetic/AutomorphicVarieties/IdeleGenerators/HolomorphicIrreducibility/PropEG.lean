@@ -94,7 +94,7 @@ private theorem resSum_of {Γ : Type} [Group Γ] (ρ : Γ →* GL (Fin 2) (Qbar 
       C (-((ρ s : Matrix (Fin 2) (Fin 2) (Qbar l)).trace - (1 + Φ s))) * X +
         C ((ρ s : Matrix (Fin 2) (Fin 2) (Qbar l)).det - Φ s) := by
     rw [Matrix.charpoly_fin_two, Fin.prod_univ_two]
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, MonoidHom.one_apply, Units.val_one, map_one, map_neg, map_sub, map_add]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, MonoidHom.one_apply, Units.val_one, map_one, map_neg, map_sub, map_add (f := _)]
     ring
   rw [← coeff_sub, e, coeff_add, coeff_C_mul_X, coeff_C]
   refine small_add ?_ ?_
@@ -325,7 +325,7 @@ private theorem core (P : Hypotheses₂) (ι : Qbar l ≃+* ℂ) {k N : ℕ} [Ne
       exact pow_lt_one₀ (norm_nonneg _) norm_l (by omega)
     have ha : ‖ι.symm (g.a l) - 1‖ < 1 := by
       have := small_add (hg l hl.out) hs
-      rw [← map_add] at this
+      rw [← map_add (f := _)] at this
       rw [← map_one ι.symm, ← map_sub]
       convert this using 3
       ring
@@ -333,7 +333,7 @@ private theorem core (P : Hypotheses₂) (ι : Qbar l ≃+* ℂ) {k N : ℕ} [Ne
     have key := above_of hc hw hκ hI (fun σ hσ => by
       obtain ⟨h1, h2⟩ := hFr σ (hwl ▸ hσ)
       have h3 := congrArg ι.symm h2
-      rw [map_add, map_sub, map_mul, map_pow, RingEquiv.symm_apply_apply, map_zero] at h3
+      rw [map_add (f := _), map_sub, map_mul, map_pow, RingEquiv.symm_apply_apply, map_zero] at h3
       have h4 : (κ 1 σ : Qbar l) * (κ 1 σ - ι.symm (g.a l)) = -ι.symm (χ (l : ZMod N) * (l : ℂ) ^ (k - 1)) := by
         linear_combination h3
       have h5 := congrArg norm h4

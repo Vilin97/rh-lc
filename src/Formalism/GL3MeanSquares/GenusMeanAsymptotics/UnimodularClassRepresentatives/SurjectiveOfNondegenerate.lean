@@ -83,7 +83,7 @@ theorem exists_adj {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hn : h.No
   refine ⟨{ toFun := Y, map_add' := fun a b => ?_, map_smul' := fun a b => ?_ }, fun x y => hY y x⟩
   · rw [← sub_eq_zero]
     refine hn.2 _ (fun x => ?_)
-    rw [map_sub, map_add, hY, hY, hY, map_add, sub_self]
+    rw [map_sub, map_add (f := _), hY, hY, hY, map_add (f := _), sub_self]
   · rw [← sub_eq_zero]
     refine hn.2 _ (fun x => ?_)
     rw [RingHom.id_apply, map_sub, map_smul, hY, hY, map_smul, sub_self]

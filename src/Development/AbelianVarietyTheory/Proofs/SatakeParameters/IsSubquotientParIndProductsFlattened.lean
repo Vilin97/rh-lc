@@ -43,13 +43,13 @@ theorem piTensor_tmulEquivDep {β₀ β₁ : Type} {Γ X : β₀ ⊕ₗ β₁ �
         (piTensor (fun j => ρ (toLex (.inr j))) fun j => g (toLex (.inr j))) x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]; exact map_zero (piTensor ρ g)
-  | add x y hx hy => simp only [map_add]; exact (map_add (piTensor ρ g) _ _).trans (by rw [hx, hy]; rfl)
+  | add x y hx hy => simp only [map_add (f := _)]; exact (map_add (piTensor ρ g) _ _).trans (by rw [hx, hy]; rfl)
   | tmul v w =>
     induction v using PiTensorProduct.induction_on with
-    | add v v' hv hv' => simp only [TensorProduct.add_tmul, map_add]; exact (map_add (piTensor ρ g) _ _).trans (by rw [hv, hv']; rfl)
+    | add v v' hv hv' => simp only [TensorProduct.add_tmul, map_add (f := _)]; exact (map_add (piTensor ρ g) _ _).trans (by rw [hv, hv']; rfl)
     | smul_tprod c v =>
       induction w using PiTensorProduct.induction_on with
-      | add w w' hw hw' => simp only [TensorProduct.tmul_add, map_add]; exact (map_add (piTensor ρ g) _ _).trans (by rw [hw, hw']; rfl)
+      | add w w' hw hw' => simp only [TensorProduct.tmul_add, map_add (f := _)]; exact (map_add (piTensor ρ g) _ _).trans (by rw [hw, hw']; rfl)
       | smul_tprod c' w =>
         have key : piTensor ρ g (PiTensorProduct.tmulEquivDep ℂ (fun c => X (toLex c))
             (PiTensorProduct.tprod ℂ v ⊗ₜ PiTensorProduct.tprod ℂ w)) =

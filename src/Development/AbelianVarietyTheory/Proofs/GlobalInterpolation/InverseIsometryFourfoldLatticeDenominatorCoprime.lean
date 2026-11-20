@@ -30,7 +30,7 @@ theorem lamMM_form (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) :
   | add x y _ _ h1 h2 =>
     obtain ⟨e1, he1, rfl⟩ := h1
     obtain ⟨e2, he2, rfl⟩ := h2
-    exact ⟨e1 + e2, Submodule.add_mem _ he1 he2, by funext τ; simp only [Pi.add_apply, map_add]; ring⟩
+    exact ⟨e1 + e2, Submodule.add_mem _ he1 he2, by funext τ; simp only [Pi.add_apply, map_add (f := _)]; ring⟩
   | neg x _ h1 =>
     obtain ⟨e1, he1, rfl⟩ := h1
     exact ⟨-e1, Submodule.neg_mem _ he1, by funext τ; simp only [Pi.neg_apply, map_neg]; ring⟩

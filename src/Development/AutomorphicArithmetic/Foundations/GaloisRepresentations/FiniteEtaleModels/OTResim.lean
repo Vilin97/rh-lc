@@ -28,7 +28,7 @@ theorem tResim : TResim := by
             isom := ?_ }, ?_⟩
   · intro n x y
     by_cases h0 : 0 < n
-    · simp only [if_pos h0, map_add, I.add]
+    · simp only [if_pos h0, map_add (f := _), I.add]
     · simp only [if_neg h0, I.add]
   · intro n b x
     by_cases h0 : 0 < n

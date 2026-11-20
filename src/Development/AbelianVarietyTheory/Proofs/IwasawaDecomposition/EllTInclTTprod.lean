@@ -40,9 +40,9 @@ theorem schur_tensor : ∀ (D : D7) (θ : InfF D) (V : HSp D) (S : D.what₂.Tau
     have e : (fun g => star (x (a + b) g) * y (PiTensorProduct.tprod ℂ w) g) =
         fun g => star (x a g) * y (PiTensorProduct.tprod ℂ w) g + star (x b g) * y (PiTensorProduct.tprod ℂ w) g := by
       funext g
-      rw [map_add, Pi.add_apply, star_add, add_mul]
+      rw [map_add (f := _), Pi.add_apply, star_add, add_mul]
     rw [e]
     refine ⟨ha.1.add hb.1, ?_⟩
-    rw [integral_add ha.1 hb.1, ha.2, hb.2, map_add, map_add, star_add, mul_add]
+    rw [integral_add ha.1 hb.1, ha.2, hb.2, map_add (f := _), map_add (f := _), star_add, mul_add]
 
 end GlobalTheory.Mem.SchurTensor

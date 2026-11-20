@@ -189,8 +189,8 @@ theorem cpt_I {a : AE F E} (ha : a * a = a) (h0 : infTens F E a = 0) :
   have hc := hS.prod (hS.image MulOpposite.continuous_op)
   have key : ∀ l ∈ (part PI ⊤ a : Set (AE F E)ˣ) ∩ UI F E, ∃ y, (∀ w, y w ∈ HeightOneSpectrum.adicCompletionIntegers E w) ∧
       j y = (l : AE F E) := fun l hl => ⟨fc F E l, fun w => (hl.2 w).le, tens_ext
-        (by rw [inf_of_part ha h0 hl.1, map_add, map_sub, map_one, infTens_extZero, infTens_extZero, sub_zero, add_zero])
-        (by rw [map_add, map_sub, map_one, finTens_extZero, finTens_extZero, sub_self, zero_add]
+        (by rw [inf_of_part ha h0 hl.1, map_add (f := _), map_sub, map_one, infTens_extZero, infTens_extZero, sub_zero, add_zero])
+        (by rw [map_add (f := _), map_sub, map_one, finTens_extZero, finTens_extZero, sub_self, zero_add]
             exact (finAdEquiv F E).symm_apply_apply _)⟩
   refine (Units.isClosedEmbedding_embedProduct.isCompact_preimage hc).of_isClosed_subset
     ((sysI.closed ha).inter ((UI F E).isClosed_of_isOpen isOpen_UI)) fun l hl => ⟨key l hl, _, key l⁻¹

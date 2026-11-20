@@ -108,7 +108,7 @@ theorem mem_fixG (L : LocE F E) {n m : ℕ} (Hm : Matrix (Fin n) (Fin n) E)
       induction hv using Submodule.span_induction with
       | mem v hv => obtain ⟨a, rfl⟩ := hv; exact h2 a
       | zero => simp
-      | add u v _ _ hu hv => rw [map_add, hu, hv]
+      | add u v _ _ hu hv => rw [map_add (f := _), hu, hv]
       | smul c v _ hv => rw [map_smul, hv]
     refine ⟨h1, fun v => ⟨fun hv => ?_, fun hv => by rw [key v hv]; exact hv⟩, fun v hv => ?_⟩
     · have := g.injective (key _ hv)

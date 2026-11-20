@@ -119,10 +119,10 @@ theorem level : ∀ (Λ : Type) [CommRing Λ] [IsLocalRing Λ] [IsNoetherianRing
   obtain ⟨C, f, z, hf, hz, hC⟩ := exists_min F hF A (fun a => ⟨n, fun r hr => hAn r hr a⟩)
     ((F.map i1).hom ξ + (F.map i2).hom η)
   have hz1 : (F.map (f ≫ q1)).hom z = ξ := by
-    rw [← map_map, hz, map_add, map_map, map_map, e11, e21, F.map_id, F.map_zero]
+    rw [← map_map, hz, map_add (f := _), map_map, map_map, e11, e21, F.map_id, F.map_zero]
     exact add_zero _
   have hz2 : (F.map (f ≫ q2)).hom z = η := by
-    rw [← map_map, hz, map_add, map_map, map_map, e12, e22, F.map_id, F.map_zero]
+    rw [← map_map, hz, map_add (f := _), map_map, map_map, e12, e22, F.map_id, F.map_zero]
     exact zero_add _
   haveI hCf : Finite C := Finite.of_injective _ hf
   set g := f ≫ q1 with hg

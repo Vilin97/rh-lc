@@ -695,7 +695,7 @@ theorem isQuasiRegularSeq_X (ι : Type*) [Finite ι] :
     intro hle
     obtain ⟨γ, hγ⟩ := exists_add_of_le hle
     have hd := congrArg Finsupp.degree hγ
-    rw [map_add, α.2, β.2] at hd
+    rw [map_add (f := _), α.2, β.2] at hd
     obtain rfl : γ = 0 := (Finsupp.degree_eq_zero_iff γ).mp (by omega)
     exact hβ (Subtype.ext (by simpa using hγ.symm))
   · simp

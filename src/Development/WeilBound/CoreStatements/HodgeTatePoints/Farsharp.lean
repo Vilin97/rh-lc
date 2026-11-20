@@ -44,7 +44,7 @@ theorem smul_dUnit_mem (A : Type) [CommRing A] [Bialgebra O A] [IsCocomm O A] [M
         have h0 : ∀ a, ε (π a) = 0 := fun a => by rw [hπ]; simp
         rw [Submodule.mem_comap, hμ, AugCot.d_mul, h0, h0, zero_smul, zero_smul, add_zero]
         exact zero_mem _
-      | add x y hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     · rintro _ ⟨a, rfl⟩
       rw [Submodule.mem_comap, LinearMap.smul_apply, map_smul]
       exact hqM _
@@ -62,7 +62,7 @@ theorem smul_dUnit_mem (A : Type) [CommRing A] [Bialgebra O A] [IsCocomm O A] [M
     rw [hμ, hπ, hπ]
     simp only [Algebra.smul_def, map_mul]
     ring
-  rw [h3, map_add, map_sub, map_sub, map_smul, map_smul, map_smul] at h1
+  rw [h3, map_add (f := _), map_sub, map_sub, map_smul, map_smul, map_smul] at h1
   exact (dvd_add_left h2).1 h1
 
 include hv hp in
@@ -108,6 +108,6 @@ theorem hodgeTateCokerSharp : GlobalTheory.CompanionTheory.Ar.HT.HodgeTateCokerS
   | tmul c χ =>
     obtain ⟨t, rfl⟩ := (tateCongr O G.bidual).surjective χ
     exact ⟨c ⊗ₜ t, rfl⟩
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 end PositivityTheory.HtPt.Farsharp

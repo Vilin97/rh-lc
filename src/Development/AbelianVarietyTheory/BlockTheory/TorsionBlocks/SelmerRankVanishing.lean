@@ -230,7 +230,7 @@ def latticeFiniteCocycles (s : D.ntw.Sig i) (w : PlE D.host) (hw : w ∈ PlL D i
     exact Submodule.zero_mem _
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_setOf_eq, Pi.add_apply, map_add] at ha hb ⊢
+    simp only [Set.mem_setOf_eq, Pi.add_apply, map_add (f := _)] at ha hb ⊢
     exact Submodule.add_mem _ ha hb
   smul_mem' := by
     intro c a ha

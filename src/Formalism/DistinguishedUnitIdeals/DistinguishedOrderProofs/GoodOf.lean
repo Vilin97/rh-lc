@@ -25,7 +25,7 @@ theorem it_mul (f : PowerSeries O →ₐ[O] PowerSeries O) (k : ℕ) (a b : Powe
 
 theorem it_add (f : PowerSeries O →ₐ[O] PowerSeries O) (k : ℕ) (a b : PowerSeries O) :
     (⇑f)^[k] (a + b) = (⇑f)^[k] a + (⇑f)^[k] b := by
-  rw [it_eq, map_add]
+  rw [it_eq, map_add (f := _)]
 
 theorem it_dvd (f : PowerSeries O →ₐ[O] PowerSeries O) (k : ℕ) {a b : PowerSeries O}
     (h : a ∣ b) : (⇑f)^[k] a ∣ (⇑f)^[k] b := by
@@ -95,7 +95,7 @@ theorem itX_mem (B : Base O) (hl : 1 ≤ B.ℓ) (h : B.E3) (s : ℕ) :
     obtain ⟨c, d, hcd⟩ := Ideal.mem_span_pair.1 ih
     obtain ⟨c', d', hcd'⟩ := Ideal.mem_span_pair.1 (pow_mem_pair (φX_mem B hl h) (B.ℓ ^ s))
     refine Ideal.mem_span_pair.2 ⟨B.φ c + B.φ d * c', B.φ d * d', ?_⟩
-    rw [Function.iterate_succ_apply', ← hcd, map_add, map_mul, map_mul, map_pow, ← hcd']
+    rw [Function.iterate_succ_apply', ← hcd, map_add (f := _), map_mul, map_mul, map_pow, ← hcd']
     have : B.φ B.lc = B.lc := alg_C B.φ _
     rw [this, pow_succ, pow_mul', ← pow_mul]
     ring
@@ -112,7 +112,7 @@ theorem q_dvd_γq (B : Base O) (h : B.E4) : B.q ∣ B.γ B.q := by
   refine ⟨1 + (e : PowerSeries O) * X, ?_⟩
   have : B.γ B.q = B.γ X + C (B.ℓ : O) := by
     simp only [Base.q]
-    rw [map_add, alg_C]
+    rw [map_add (f := _), alg_C]
   rw [this, he]
   simp only [Base.q]
   ring
@@ -429,7 +429,7 @@ theorem sa_p_ne {O : Type} [CommRing O] [IsDomain O] (ϖ : O) [(Ideal.span {ϖ})
     have hp : B.p s = (u : PowerSeries O) * X * ∏ k ∈ Finset.range s, B.p k ^ (B.ℓ - 1)
         + C (B.ℓ : O) := by
       rw [Base.p, Base.q, sa_it_add, IdempotentNormalFormsRhoFacts.it_C, hu]
-    rw [hp, map_add, PowerSeries.map_C, hl, map_zero, add_zero, map_mul, map_mul, map_prod,
+    rw [hp, map_add (f := _), PowerSeries.map_C, hl, map_zero, add_zero, map_mul, map_mul, map_prod,
       PowerSeries.map_X]
     refine mul_ne_zero (mul_ne_zero ?_ X_ne_zero) ?_
     · exact (u.isUnit.map (PowerSeries.map (Ideal.Quotient.mk (Ideal.span {ϖ})))).ne_zero
@@ -747,7 +747,7 @@ theorem hh_main {u₁ : O} (hE : B.GammaXUnitShape u₁) (h9 : L.P9) (c : ZMod n
               C εi • (X : PowerSeries O) ^ (k + 1) • ρ := by
           rw [← hP, mul_sub, mul_one, sub_smul, mul_smul]
         have hA : hhA B.ℓ (k + 1) = hhA B.ℓ k + e := rfl
-        rw [map_add, γ_lc, hγ', hA, pow_add B.lc (hhA B.ℓ k) e, hG, hγv, smul_neg, smul_comm _ (C εi) ρ, smul_add,
+        rw [map_add (f := _), γ_lc, hγ', hA, pow_add B.lc (hhA B.ℓ k) e, hG, hγv, smul_neg, smul_comm _ (C εi) ρ, smul_add,
           smul_add, hP']
         generalize (X : PowerSeries O) ^ (k + 1) • ρ = P
         simp only [smul_add, smul_neg, smul_smul, mul_comm]
@@ -937,7 +937,7 @@ theorem phi_maps_filtered_lattice (h3 : B.E3) {M : ℕ} (hq : L.FrobeniusMapsXPo
     rw [pow_succ]
     exact Ideal.mul_mem_mul (frobenius_preserves_maximal_power h3 k ha) uniformizer_mem_maximal_ideal
   | add x _ y _ hx hy =>
-    rw [smul_add, map_add]
+    rw [smul_add, map_add (f := _)]
     exact Submodule.add_mem _ hx hy
 
 theorem power_series_X_cancel (hX : L.XReg) (i : ZMod n) (M : ℕ) {w : V} (hw : w ∈ L.N i)
@@ -1214,7 +1214,7 @@ theorem one_add_unit_pow_formula : ExistsGammaXUnitShape := by
     ring
   rw [he]
   conv_lhs => rw [h5]
-  simp only [Base.q, map_add, map_mul, map_one, map_natCast]
+  simp only [Base.q, map_add (f := _), map_mul, map_one, map_natCast]
   ring
 
 namespace GoodPlacesAlt
@@ -1224,7 +1224,7 @@ variable {O : Type} [CommRing O]
 
 def cpI (l : O) (m : ℕ) : Ideal (PowerSeries O) where
   carrier := {f | ∀ k, k < m → l ^ (m - k) ∣ coeff k f}
-  add_mem' := fun ha hb k hk => by rw [map_add]; exact dvd_add (ha k hk) (hb k hk)
+  add_mem' := fun ha hb k hk => by rw [map_add (f := _)]; exact dvd_add (ha k hk) (hb k hk)
   zero_mem' := fun k _ => by simp
   smul_mem' := fun a f hf k hk => by
     rw [smul_eq_mul, coeff_mul]
@@ -1311,7 +1311,7 @@ theorem cp_mem_equiv {R M : Type} [CommRing R] [AddCommGroup M] [Module R M] (J 
       exact Ideal.mul_mem_right _ _ ha
     | add y _ z _ hy hz =>
       intro t
-      rw [map_add, Pi.add_apply]
+      rw [map_add (f := _), Pi.add_apply]
       exact Ideal.add_mem _ (hy t) (hz t)
   · intro h
     have h1 : Φ x = ∑ t, Φ x t • (Pi.single t (1 : R) : Fin r → R) := by

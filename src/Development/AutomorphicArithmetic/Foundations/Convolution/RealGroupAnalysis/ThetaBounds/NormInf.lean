@@ -66,7 +66,7 @@ private theorem pInf_bar (D : Dat F E) (x : A E) (w : InfinitePlace E) :
     GlobalTheory.CuspRep.pInf E (D.bar x) w = (starRingEnd ℂ) (GlobalTheory.CuspRep.pInf E x w) := by
   obtain ⟨u, t, rfl⟩ := D.exists_mkE x
   rw [Dat.bar_mkE, Dat.mkE_def, Dat.mkE_def]
-  simp only [map_add, map_mul, map_neg, Pi.add_apply, Pi.mul_apply, Pi.neg_apply, pInf_rt_conj, pInf_am,
+  simp only [map_add (f := _), map_mul, map_neg, Pi.add_apply, Pi.mul_apply, Pi.neg_apply, pInf_rt_conj, pInf_am,
     TR.pInf, Complex.conj_ofReal]
   simp
 
@@ -137,14 +137,14 @@ private theorem place_unique (D : Dat F E) {w w' : InfinitePlace E}
     obtain ⟨a, b, rfl⟩ := exists_repr D x
     have ha : ∀ c : F, w'.embedding (algebraMap F E c) = w.embedding (algebraMap F E c) := fun c =>
       (congrArg (fun f : F →+* ℂ => f c) he).symm
-    simp only [map_add, map_mul, ha, h1]
+    simp only [map_add (f := _), map_mul, ha, h1]
   · have : ComplexEmbedding.conjugate w.embedding = w'.embedding := by
       ext x
       obtain ⟨a, b, rfl⟩ := exists_repr D x
       have ha : ∀ c : F, w'.embedding (algebraMap F E c) = w.embedding (algebraMap F E c) := fun c =>
         (congrArg (fun f : F →+* ℂ => f c) he).symm
       rw [ComplexEmbedding.conjugate_coe_eq]
-      simp only [map_add, map_mul, ha, h1, hneg, hreal_val]
+      simp only [map_add (f := _), map_mul, ha, h1, hneg, hreal_val]
     rw [← this, InfinitePlace.mk_conjugate_eq]
 
 end UpperTheory.ConvolutionTheory.R2.Ff.NI

@@ -71,7 +71,7 @@ theorem lev_Eat_simple (D : D7) (HW : HWOf D.loc) (l : ℕ) [Fact l.Prime] (hl :
     map_one PowerSeries.C, one_mul, ← mul_geom_sum, hF1, hw, map_mul (W.lev c ζ)] at hlq
   have hy0 : PowerSeries.constantCoeff (W.lev c ζ letπ) ≠ 0 := by
     have h := congrArg PowerSeries.constantCoeff hFπ
-    rw [map_add, map_one, map_mul, PowerSeries.constantCoeff_C, hF0, mul_one] at h
+    rw [map_add (f := _), map_one, map_mul, PowerSeries.constantCoeff_C, hF0, mul_one] at h
     have h' : PowerSeries.constantCoeff (W.lev c ζ letπ) = ζ - 1 := by linear_combination h
     rw [h']
     exact sub_ne_zero.mpr hne

@@ -22,7 +22,7 @@ def hhaSub {T : Type} (r : T → ℕ) (n : ℕ) (k : Type) [Field k] (cc : T →
   add_mem' := by
     intro P Q hP hQ
     refine ⟨add_mem hP.1 hQ.1, fun σ i i' h t => ?_, fun m hm => ?_⟩
-    · rw [map_add, hP.2.1 σ i i' h t, hQ.2.1 σ i i' h t]
+    · rw [map_add (f := _), hP.2.1 σ i i' h t, hQ.2.1 σ i i' h t]
     · rcases Finset.mem_union.1 (support_add hm) with h | h
       · exact hP.2.2 m h
       · exact hQ.2.2 m h

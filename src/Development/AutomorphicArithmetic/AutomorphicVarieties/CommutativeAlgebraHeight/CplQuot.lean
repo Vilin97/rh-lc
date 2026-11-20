@@ -23,7 +23,7 @@ private theorem precomplete_quot {R : Type} [CommRing R] (I K : Ideal R) [IsPrec
     | zero => simpa [g] using ha
     | succ n ih =>
       have : g (n + 1) = g n + d n := by simp only [g, Finset.sum_range_succ, add_assoc]
-      rw [this, map_add, ih, hd']; abel
+      rw [this, map_add (f := _), ih, hd']; abel
   have hc : ∀ {m n : ℕ}, m ≤ n → g m ≡ g n [SMOD (I ^ m • ⊤ : Submodule R R)] := by
     intro m n h
     induction h with

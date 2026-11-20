@@ -81,7 +81,7 @@ variable {p : ℕ} [Fact p.Prime] (ι : ℂ ≃+* ℂ_[p])
 theorem sum_bar (dK : ℕ) (m : ℤ) :
     ι ((m : ℂ) + ((1 : ℤ) : ℂ) * omegaK dK) + ι ((m : ℂ) + ((1 : ℤ) : ℂ) * (1 - omegaK dK)) =
       ((2 * m + 1 : ℤ) : ℂ_[p]) := by
-  rw [← map_add]
+  rw [← map_add (f := _)]
   have e : ((m : ℂ) + ((1 : ℤ) : ℂ) * omegaK dK) + ((m : ℂ) + ((1 : ℤ) : ℂ) * (1 - omegaK dK)) =
       ((2 * m + 1 : ℤ) : ℂ) := by
     push_cast

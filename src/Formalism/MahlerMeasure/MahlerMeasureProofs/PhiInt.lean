@@ -86,11 +86,11 @@ theorem pderiv_comm' (i j : σ) (f : MvPolynomial σ ℚ_[p]) :
   classical
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | mul_X f k ih =>
     have h0 : ∀ a b : σ, pderiv a ((Pi.single b (1 : MvPolynomial σ ℚ_[p]) : σ → MvPolynomial σ ℚ_[p]) k) = 0 := by
       intro a b; rw [Pi.single_apply]; split_ifs <;> simp
-    simp only [Derivation.leibniz, map_add, pderiv_X, smul_eq_mul, ih, h0]
+    simp only [Derivation.leibniz, map_add (f := _), pderiv_X, smul_eq_mul, ih, h0]
     ring
 
 theorem commute_pderiv (i j : σ) :

@@ -217,7 +217,7 @@ theorem rep_of_mem [CharZero Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc
     refine ⟨d₁ + d₂, g₁ * h₂ + g₂ * h₁, h₁ * h₂, (hg₁.mul hh₂).add hg₂₁, hh₁.mul hh₂, ?_, ?_⟩
     · rw [map_mul]
       exact mul_ne_zero n₁ n₂
-    · rw [map_add, map_mul, map_mul, map_mul, e₁, e₂]
+    · rw [map_add (f := _), map_mul, map_mul, map_mul, e₁, e₂]
       ring
   | inv x _ ih =>
     obtain ⟨d, g, h, hg, hh, n, e⟩ := ih
@@ -309,7 +309,7 @@ theorem CoordConeArithVar.proof (hDim : IntDomainDim.Statement) : CoordConeArith
   rw [mCoordIdeal_ratioPtL y c hc, trdeg_ratioField y c d t ht htL halg] at htr
   have hA := hDim (MRing ι ⧸ mCoordIdeal y) (CoordinateConeArithVar.algebraMap_injective _ hhor)
   rw [hA, htr]
-  simp only [map_add, map_natCast]
+  simp only [map_add (f := _), map_natCast]
   norm_cast
   omega
 

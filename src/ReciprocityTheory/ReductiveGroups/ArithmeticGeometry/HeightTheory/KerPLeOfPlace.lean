@@ -153,7 +153,7 @@ theorem w0rat_eq_base (hd : d.AxH 𝒜) (c : ι) :
   unfold Data.rationalBaseRow
   rw [Fin.sum_univ_succAbove _ (d.jc c), hr1, map_one, mul_one]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [sH_X, sImg_succAbove, sImg_base, map_add, map_sum, map_mul]
+    simp only [sH_X, sImg_succAbove, sImg_base, map_add (f := _), map_sum, map_mul]
   congr 1
 
 theorem ker_eval_le_of_place (hd : d.AxH 𝒜) (c : ι) {p : Ideal (KTp K d.D d.N)}
@@ -212,7 +212,7 @@ theorem ker_eval_le_of_place (hd : d.AxH 𝒜) (c : ι) {p : Ideal (KTp K d.D d.
       rw [← hC k, sub_self, AddValuation.map_zero]
       exact ⟨(hw2 _).1, by simp⟩
     · rename_i p q hp hq
-      simp only [map_add]
+      simp only [map_add (f := _)]
       refine ⟨le_trans (le_min hp.1 hq.1) (AddValuation.map_add _ _ _), ?_⟩
       have e : d.sH c p + d.sH c q - (psiS (chiP (K := K) (D := d.D) (d.jc c) (d.x c) p) + psiS (chiP (K := K) (D := d.D) (d.jc c) (d.x c) q)) =
           (d.sH c p - psiS (chiP (K := K) (D := d.D) (d.jc c) (d.x c) p)) + (d.sH c q - psiS (chiP (K := K) (D := d.D) (d.jc c) (d.x c) q)) := by ring

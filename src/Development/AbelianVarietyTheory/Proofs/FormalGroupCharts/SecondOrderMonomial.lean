@@ -44,7 +44,7 @@ theorem dpolyOf_monomial (m : ι →₀ ℕ) (a : k) (f : PS k 1 d) :
 
 theorem secondOrder_add (c : ι → ι → k) (P Q : MvPolynomial ι k) :
     secondOrder k c (P + Q) = secondOrder k c P + secondOrder k c Q := by
-  simp only [secondOrder, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [secondOrder, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem secondOrder_monomial (c : ι → ι → k) (m : ι →₀ ℕ) (a : k) :
     secondOrder k c (MvPolynomial.monomial m a) =
@@ -64,7 +64,7 @@ theorem halfSt : GE.HalfSt := by
   classical
   induction P using MvPolynomial.induction_on' with
   | add P Q hP hQ =>
-    rw [secondOrder_add, GE.dpolyOf_add_P, GE.dpolyOf_add_P, map_add, map_add, hP, hQ, mul_add]
+    rw [secondOrder_add, GE.dpolyOf_add_P, GE.dpolyOf_add_P, map_add (f := _), map_add (f := _), hP, hQ, mul_add]
   | monomial m a =>
     have h2 : algebraMap ℚ k (1 / 2) * 2 = 1 := by
       rw [show (2 : k) = algebraMap ℚ k 2 from (map_ofNat _ 2).symm, ← map_mul]

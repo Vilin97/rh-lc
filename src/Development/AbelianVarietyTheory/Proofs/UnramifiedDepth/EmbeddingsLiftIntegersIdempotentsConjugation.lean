@@ -31,7 +31,7 @@ private theorem existsUnique_lift_integers {C : Type} [Field C] {v : Valuation C
             map_one' := hv.hom_inj (by rw [hf, map_one, map_one])
             map_mul' := fun a b => hv.hom_inj (by rw [hf, map_mul, map_mul, hf, hf])
             map_zero' := hv.hom_inj (by rw [hf, map_zero, map_zero])
-            map_add' := fun a b => hv.hom_inj (by rw [hf, map_add, map_add, hf, hf]) }, ?_, ?_⟩
+            map_add' := fun a b => hv.hom_inj (by rw [hf, map_add (f := _), map_add (f := _), hf, hf]) }, ?_, ?_⟩
   · exact RingHom.ext hf
   · intro g hg
     refine RingHom.ext fun x => hv.hom_inj ?_
@@ -55,6 +55,6 @@ theorem embeddings_idempotents_conjugation : ∀ (p : ℕ) [Fact p.Prime] (C : T
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [tauExt, sig]
-    | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 end GlobalTheory.ChF

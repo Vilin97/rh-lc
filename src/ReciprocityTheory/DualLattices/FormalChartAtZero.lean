@@ -32,7 +32,7 @@ def IsNilOver {R K : LAlg R₀} (ρ : LHom R K) : Prop :=
 
 lemma map_add_ker (B : BX R₀) {R K : LAlg R₀} (ρ : LHom R K) (x y : {x : B.G R // B.map ρ x = 0}) :
     B.map ρ (x.1 + y.1) = 0 := by
-  rw [map_add, x.2, y.2, add_zero]
+  rw [map_add (f := _), x.2, y.2, add_zero]
 
 lemma map_nat_ker (B : BX R₀) {R R' K : LAlg R₀} (ρ : LHom R K) (ρ' : LHom R' K) (f : LHom R R')
     (hf : ρ'.comp f = ρ) (x : {x : B.G R // B.map ρ x = 0}) : B.map ρ' (B.map f x.1) = 0 := by

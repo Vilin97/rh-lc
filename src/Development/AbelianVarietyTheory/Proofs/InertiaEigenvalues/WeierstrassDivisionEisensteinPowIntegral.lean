@@ -56,7 +56,7 @@ theorem coeff_E_pow_vanish (n : ℕ) : ∀ k, e * n < k → coeff k (E K l e ^ n
     intro k hk
     rw [pow_succ]
     refine coeff_vanish_mul ih (b := e) (fun j hj => ?_) k (by rw [Nat.mul_succ] at hk; exact hk)
-    rw [E, map_add, coeff_X_pow, ← map_natCast (C : K →+* K⟦X⟧), coeff_C]
+    rw [E, map_add (f := _), coeff_X_pow, ← map_natCast (C : K →+* K⟦X⟧), coeff_C]
     rw [if_neg (by omega), if_neg (by omega), add_zero]
 
 theorem div_E_pow (n : ℕ) {f : K⟦X⟧} (hf : f ∈ A O K) : ∃ P g, P ∈ A O K ∧
@@ -69,7 +69,7 @@ theorem div_E_pow (n : ℕ) {f : K⟦X⟧} (hf : f ∈ A O K) : ∃ P g, P ∈ A
     refine ⟨P + E K l e ^ n * Q, h, add_mem hP (mul_mem (pow_mem (E_mem l e _) n) hQ),
       fun k hk => ?_, hh, by ring⟩
     have he := NeZero.pos e
-    rw [map_add, hPv k (by rw [Nat.mul_succ] at hk; omega), zero_add]
+    rw [map_add (f := _), hPv k (by rw [Nat.mul_succ] at hk; omega), zero_add]
     exact coeff_vanish_mul (coeff_E_pow_vanish l e n) (b := e - 1)
       (fun j hj => hQv j (by omega)) k (by rw [Nat.mul_succ] at hk; omega)
 

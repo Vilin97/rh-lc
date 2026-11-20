@@ -76,7 +76,7 @@ theorem mem_intAt_iff_halves : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k
     set_option synthInstance.maxHeartbeats 100000 in
       rw [ha, map_sum]
     refine AddSubgroup.sum_mem _ fun i _ => ?_
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem ((GlobalTheory.Core.Mi.LatMatch.mul_sec_mem_intAt_iff (p i) a 1).2 (by simpa using (hh i).1)).2
       ((GlobalTheory.Core.Mi.LatMatch.mul_cA_sec_mem_intAt_iff (p i) a 1).2 (by simpa using (hh i).2)).2
 

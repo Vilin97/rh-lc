@@ -25,7 +25,7 @@ def nilPart (I : Ideal R) (U : Module.End R M) : Submodule R M where
     obtain ⟨n, hn⟩ := hx k
     obtain ⟨m, hm⟩ := hy k
     refine ⟨n + m, ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     refine Submodule.add_mem _ ?_ ?_
     · rw [add_comm, pow_add, Module.End.mul_apply]; exact map_mem_smul_top _ _ hn
     · rw [pow_add, Module.End.mul_apply]; exact map_mem_smul_top _ _ hm

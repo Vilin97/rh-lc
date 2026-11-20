@@ -94,7 +94,7 @@ theorem algebraic {O Q L L' : Type} [CommRing O] [Group Q] [AddCommGroup L] [Mod
   obtain ⟨c, hc⟩ := hab
   refine ⟨c, iP' ?_⟩
   show P' (ga a) = _
-  rw [map_add, map_nsmul, hc, ← Nat.cast_smul_eq_nsmul ℂ, ← smul_sub, smul_smul, mul_inv_cancel₀ hk1, one_smul]
+  rw [map_add (f := _), map_nsmul, hc, ← Nat.cast_smul_eq_nsmul ℂ, ← smul_sub, smul_smul, mul_inv_cancel₀ hk1, one_smul]
   abel
 
 theorem isHolTo_fibre {V W : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] [NormedAddCommGroup W] [NormedSpace ℂ W]

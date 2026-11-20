@@ -249,8 +249,8 @@ private theorem lmap_alg (f : K →+* K') (Δ x : K) :
 
 private theorem elmap_mul (f : K →+* K') {Δ τ : K} (x y : EL Δ τ) : elmap f (x * y) = elmap f x * elmap f y := by
   ext1
-  · simp only [elmap, re_mul, map_add, map_mul, map_neg, map_one, lmap_alg]
-  · simp only [elmap, im_mul, map_add, map_mul, lmap_alg]
+  · simp only [elmap, re_mul, map_add (f := _), map_mul, map_neg, map_one, lmap_alg]
+  · simp only [elmap, im_mul, map_add (f := _), map_mul, lmap_alg]
 
 private theorem elmap_one (f : K →+* K') {Δ τ : K} : elmap f (1 : EL Δ τ) = 1 := by
   ext1 <;> simp [elmap, QuadraticAlgebra.re_one, QuadraticAlgebra.im_one]

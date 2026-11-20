@@ -48,7 +48,7 @@ theorem restricted_derivative_linear (G : GlobalFamilyData X ka wL wF) (la : Hei
     · exact h0
     · simpa [h0] using hq
   have hdeg : Finsupp.degree q.2 < k := by
-    have e1 : Finsupp.degree β = Finsupp.degree q.1 + Finsupp.degree q.2 := by rw [← hq, map_add]
+    have e1 : Finsupp.degree β = Finsupp.degree q.1 + Finsupp.degree q.2 := by rw [← hq, map_add (f := _)]
     have e2 : Finsupp.degree q.1 ≠ 0 := fun h => hq1 ((Finsupp.degree_eq_zero_iff q.1).1 h)
     rw [PI.HJP.sum_eq_degree] at hβ
     omega

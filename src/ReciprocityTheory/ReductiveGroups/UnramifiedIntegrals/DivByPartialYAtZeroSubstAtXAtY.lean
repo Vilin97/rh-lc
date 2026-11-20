@@ -114,7 +114,7 @@ theorem hom_deriv (hl1 : ‖(l : K)‖ ≤ 1) (h₁ : LawD lam₁ Φ₁) (h₂ :
     have h4 := IsUltrametricDist.norm_add_le_max
       (coeff n (derivative K g * d2 Φ₁ - d2 (Φ₂.subst ![atX g, atY g])))
       (coeff n (d2 (Φ₂.subst ![atX g, atY g])))
-    rw [← map_add, sub_add_cancel] at h4
+    rw [← map_add (f := _), sub_add_cancel] at h4
     exact h4.trans (max_le (h1 n) (h2 n))
   have e : derivative K g = derivative K lam₁ * (derivative K g * d2 Φ₁) := by
     linear_combination (-derivative K g) * h₁.deriv_mul

@@ -119,7 +119,7 @@ theorem FibreDim.proof : FibreDimStatement := by
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp
-    | add f g hf hg => simp only [map_add, IntermediateField.coe_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), IntermediateField.coe_add, hf, hg]
     | mul_X f i hf =>
       simp only [map_mul, IntermediateField.coe_mul, hf, aeval_X]
       rfl
@@ -156,7 +156,7 @@ theorem FibreDim.proof : FibreDimStatement := by
           intro f
           induction f using MvPolynomial.induction_on with
           | C a => simp
-          | add f g hf hg => simp only [map_add, hf, hg]
+          | add f g hf hg => simp only [map_add (f := _), hf, hg]
           | mul_X f i hf => simp only [map_mul, hf, aeval_X, rename_X, G.compat]
         rw [map_div₀, key, key]
         exact div_mem (aeval_mem_closure _ _) (aeval_mem_closure _ _)

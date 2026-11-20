@@ -82,7 +82,7 @@ theorem inverse_of_dense [CompleteSpace H] (M : Submodule ℂ H) (Ω : M →ₗ[
     exact sub_eq_zero.1 hw1
   refine ⟨fun x => ?_, key⟩
   obtain ⟨v, hv, hv2⟩ := twice M Ω T hTM x
-  exact ⟨v, hv, by rw [hv, hv2, ← map_add]; exact key x⟩
+  exact ⟨v, hv, by rw [hv, hv2, ← map_add (f := _)]; exact key x⟩
 
 end Abstract
 
@@ -402,7 +402,7 @@ theorem concT : ConcT := by
     obtain ⟨v, hv, hv2⟩ := twice (Msob μ V) Ω (rR μ V h) (hRΩ h) ⟨x, hDM x.2⟩
     refine ⟨⟨rR μ V h x, hy⟩, rfl, ?_⟩
     have hvv : (⟨rR μ V h x, hDM hy⟩ : Msob μ V) = v := Subtype.ext hv.symm
-    rw [hA, hA, map_add, ← hv2]
+    rw [hA, hA, map_add (f := _), ← hv2]
     change rR μ V h x + (Ω (Ω ⟨rR μ V h x, hDM hy⟩) : Lp V 2 μ) = _
     rw [hvv]
   have hcomm : ∀ h : G n, T * rR μ V h = rR μ V h * T := by

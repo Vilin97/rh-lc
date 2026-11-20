@@ -88,7 +88,7 @@ theorem orthLattice_isIntegral_of_unimodular (hu : Formalism.HermitianLatticesTh
   have h1 : (hS D).hT l ξ' = 0 := c_symm0 (c_mem_orth.1 hl.2 ξ' hξ')
   have h2 : (hS D).hT ξ l' = 0 := c_mem_orth.1 hl'.2 ξ hξ
   have h3 : (hS D).hT ξ ξ' = 0 := p_X_iso F hξ hξ'
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   rw [h1, h2, h3, add_zero, add_zero, add_zero]
   exact i_int Λ hu hl.1 hl'.1
 

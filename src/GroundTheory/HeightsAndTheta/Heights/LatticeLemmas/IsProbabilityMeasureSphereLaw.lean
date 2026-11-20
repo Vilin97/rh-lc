@@ -151,7 +151,7 @@ def archFunctional (τ : K →+* ℂ) (yv : DualVec F W K) :
         z * ofComplex _ (τ (yv x)))
       (fun z₁ z₂ x ↦ add_mul _ _ _)
       (fun a z x ↦ smul_mul_assoc _ _ _)
-      (fun z x₁ x₂ ↦ by rw [map_add, map_add, map_add, mul_add])
+      (fun z x₁ x₂ ↦ by rw [map_add (f := _), map_add (f := _), map_add (f := _), mul_add])
       (fun a z x ↦ by
         rw [map_smulₛₗ, smul_eq_mul, map_mul, map_mul, smul_def]
         simp only [intToField, RingHom.comp_apply]
@@ -308,7 +308,7 @@ theorem linear_form_hyps :
 
 def ratPointVec : DualVec ℚ (Fin 2 → 𝓞 ℚ) ℚ where
   toFun x := (x 0 : ℚ) + 2 * (x 1 : ℚ)
-  map_add' x y := by simp only [Pi.add_apply, map_add]; ring
+  map_add' x y := by simp only [Pi.add_apply, map_add (f := _)]; ring
   map_smul' a x := by
     simp only [Pi.smul_apply, smul_eq_mul, intToField, RingHom.comp_apply,
       map_mul, Algebra.algebraMap_self, RingHom.id_apply]

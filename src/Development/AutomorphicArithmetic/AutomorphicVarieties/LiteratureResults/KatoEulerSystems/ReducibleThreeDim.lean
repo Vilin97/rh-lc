@@ -23,13 +23,13 @@ private theorem bk_map {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algeb
     (ρ : Representation C (G F Ω) V) (ρ' : Representation C (G F Ω) V') (f : V →ₗ[C] V') (hfc : Continuous f)
     (hf : ∀ g x, f (ρ g x) = ρ' g (f x)) {γ : G F Ω → V} (h1 : γ ∈ Z1 ρ) (h2 : Af.IsBK l ρ γ) :
     (fun g => f (γ g)) ∈ Z1 ρ' ∧ Af.IsBK l ρ' (fun g => f (γ g)) := by
-  refine ⟨⟨hfc.comp h1.1, fun g h => by simp only [h1.2 g h, map_add, hf]⟩, fun w hw => ?_, fun τ => ?_⟩
+  refine ⟨⟨hfc.comp h1.1, fun g h => by simp only [h1.2 g h, map_add (f := _), hf]⟩, fun w hw => ?_, fun τ => ?_⟩
   · obtain ⟨A, hA, x, hx⟩ := h2.away w hw
     exact ⟨A, hA, f x, fun s hs => by simp only [hx s hs, map_sub, hf]⟩
   · obtain ⟨j, hj, ⟨hc, hcc⟩, x, hx⟩ := h2.above τ
     refine ⟨j, hj, ⟨hfc.comp hc, fun g h => ?_⟩, LinearMap.rTensor (Loc.Bcr l) (f.restrictScalars ℚ_[l]) x, fun g => ?_⟩
     · have := congrArg f (hcc g h)
-      rw [map_add] at this
+      rw [map_add (f := _)] at this
       exact this.trans (congrArg _ (hf _ _))
     · have key : ∀ y : V ⊗[ℚ_[l]] Loc.Bcr l, LinearMap.rTensor (Loc.Bcr l) (f.restrictScalars ℚ_[l])
           (Loc.actC ((MonoidHom.snd _ _).comp (Af.decJ F j).subtype)
@@ -41,7 +41,7 @@ private theorem bk_map {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algeb
         induction y using TensorProduct.induction_on with
         | zero => simp
         | tmul a b => simp [Loc.actC, hf]
-        | add a b ha hb => simp only [map_add, ha, hb]
+        | add a b ha hb => simp only [map_add (f := _), ha, hb]
       rw [← key, ← map_sub, ← hx g, LinearMap.rTensor_tmul]
       rfl
 
@@ -380,5 +380,5 @@ theorem UpperTheory.V.Lit.KN.blochKatoSelmer_adRep_vanishes_of_typeII_modular :
     (bloch_kato_nonpositive_weight inp.toCohInp D 0 le_rfl _ zC (fun g => pC_mem (γ g)) bC)
   refine (mem_coboundaries1 _ _).2 ⟨sA xA + (2⁻¹ : PadicAlgCl l) • sB 1 x1 + (2⁻¹ : PadicAlgCl l) • sB (-1) x2 + pC xC, fun g => ?_⟩
   rw [decomp (2⁻¹ : PadicAlgCl l) (by norm_num) (γ g), hxA g, hx1 g, hx2 g, hxC g]
-  simp only [map_sub, map_add, map_smul, eA', eB1', eB2', eC', smul_sub]
+  simp only [map_sub, map_add (f := _), map_smul, eA', eB1', eB2', eC', smul_sub]
   abel

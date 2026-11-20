@@ -172,7 +172,7 @@ theorem phi_log_series (K : Type) [Field K] [CharZero K] [Algebra ℤ_[l] K] (t 
   · have e : derivative K (phi l K t) = phi l K (derivative K t) * derivative K ((1 + X) ^ l - 1) := by
       rw [phi, act_apply, act_apply, derivative_subst hs, cyc_natCast]
     have e2 := congrArg (phi l K) h1
-    rw [map_mul, map_add, map_one, phi_X, add_sub_cancel] at e2
+    rw [map_mul, map_add (f := _), map_one, phi_X, add_sub_cancel] at e2
     have e3 : derivative K ((1 + X : K⟦X⟧) ^ l - 1) = (l : K⟦X⟧) * (1 + X : K⟦X⟧) ^ (l - 1) := by
       simp [Derivation.leibniz_pow]
     have e4 : derivative K ((l : K⟦X⟧) * t) = (l : K⟦X⟧) * derivative K t := by
@@ -204,11 +204,11 @@ theorem bd_log_div (a : (↥LL.1)⟦X⟧) (h1 : (1 + X) * derivative _ (X * a) =
     induction k with
     | zero =>
       have := congrArg (coeff 0) h1
-      rw [add_mul, one_mul, map_add, coeff_zero_X_mul, add_zero, coeff_one, if_pos rfl] at this
+      rw [add_mul, one_mul, map_add (f := _), coeff_zero_X_mul, add_zero, coeff_one, if_pos rfl] at this
       rw [this, norm_one]
     | succ k ih =>
       have := congrArg (coeff (k + 1)) h1
-      rw [add_mul, one_mul, map_add, coeff_succ_X_mul, coeff_one, if_neg k.succ_ne_zero] at this
+      rw [add_mul, one_mul, map_add (f := _), coeff_succ_X_mul, coeff_one, if_neg k.succ_ne_zero] at this
       rw [eq_neg_of_add_eq_zero_left this, norm_neg, ih]
   have hb : ∀ k, ‖coeff k a‖ ≤ k + 1 := by
     intro k
@@ -232,7 +232,7 @@ theorem bd_phi_X (r : ℝ) (hr : 0 < r) (hr1 : r < 1) :
   have e : phi l ↥LL.1 X = X ^ l + C (l : ↥LL.1) * X *
       PowerSeries.map (algebraMap ↥(OL LL) ↥LL.1) b := by
     have := congrArg (PowerSeries.map (algebraMap ↥(OL LL) ↥LL.1)) hb
-    simp only [map_add, map_pow, map_mul, map_one, map_X, map_natCast] at this
+    simp only [map_add (f := _), map_pow, map_mul, map_one, map_X, map_natCast] at this
     rw [phi_X, map_natCast, add_comm 1 X, this]
     ring
   rw [e]

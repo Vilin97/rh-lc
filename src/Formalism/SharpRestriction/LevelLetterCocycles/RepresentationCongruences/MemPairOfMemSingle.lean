@@ -221,7 +221,7 @@ theorem m3 {g f : O⟦X⟧} (hg : IsDist g) (hf : IsDist f) (hlt : wdeg f < wdeg
   obtain ⟨u, v, huv⟩ := Ideal.mem_span_pair.1 h2
   have hmap : f.map (IsLocalRing.residue O) =
       v.map (IsLocalRing.residue O) * g.map (IsLocalRing.residue O) := by
-    rw [← huv, map_add, map_mul, map_mul, pow_one, PowerSeries.map_C, Cont.residue_unif hϖ, map_zero,
+    rw [← huv, map_add (f := _), map_mul, map_mul, pow_one, PowerSeries.map_C, Cont.residue_unif hϖ, map_zero,
       mul_zero, zero_add]
   have hord : (g.map (IsLocalRing.residue O)).order ≤ (f.map (IsLocalRing.residue O)).order := by
     rw [hmap, PowerSeries.order_mul]

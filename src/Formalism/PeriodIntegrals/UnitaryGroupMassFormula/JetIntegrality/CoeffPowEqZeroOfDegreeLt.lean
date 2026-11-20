@@ -21,7 +21,7 @@ theorem dX_eq (f : PowerSeries R) : dX f = PowerSeries.derivative (R := R) f := 
 
 theorem degree_le_of_le {y e : σ →₀ ℕ} (h : y ≤ e) : y.degree ≤ e.degree := by
   obtain ⟨z, rfl⟩ := exists_add_of_le h
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Nat.le_add_right _ _
 
 theorem coeff_pow_eq_zero_of_degree_lt {a : MvPowerSeries σ R} (ha : MvPowerSeries.constantCoeff a = 0)
@@ -70,7 +70,7 @@ theorem pderiv_subst (i : σ) {a : MvPowerSeries σ R} (ha : MvPowerSeries.const
     congr 1
     refine coeff_subst_congr ha (N := e.degree + 2) (fun k hk => ?_) ?_
     · exact (PowerSeries.coeff_coe_trunc_of_lt hk).symm
-    · rw [map_add, Finsupp.degree_single]
+    · rw [map_add (f := _), Finsupp.degree_single]
       omega
   have h2 : MvPowerSeries.coeff e (MvPowerSeries.pderiv (R := R) i a * PowerSeries.subst a (PI.JetsPhW.dX g)) =
       MvPowerSeries.coeff e (MvPowerSeries.pderiv (R := R) i a *

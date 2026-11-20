@@ -79,7 +79,7 @@ theorem exists_archProj_eq_conj {r : ℕ} (x : normOneGL K n) (P : UPos n r → 
   rw [hC2]
   have h1 : ((x⁻¹ * unipOne K n r P * x : normOneGL K n) : AdelicGLn.AdelicGL K n) =
       (x : AdelicGLn.AdelicGL K n)⁻¹ * unipGL P * (x : AdelicGLn.AdelicGL K n) := rfl
-  rw [h1, coe_conj_unipGL, map_add, map_one]
+  rw [h1, coe_conj_unipGL, map_add (f := _), map_one]
   rfl
 
 theorem map_altPoint {V W : Type*} [AddCommGroup V] [AddCommGroup W] (φ : V →+ W) {k : ℕ}

@@ -28,7 +28,7 @@ theorem schur_relation_add_first {x1 x2 y x' y' : Hs} (h1 : pj_Q μ σ d x1 y x'
   have e : (fun g => ⟪y, σ g (x1 + x2)⟫_ℂ * star ⟪y', σ g x'⟫_ℂ) =
       fun g => ⟪y, σ g x1⟫_ℂ * star ⟪y', σ g x'⟫_ℂ + ⟪y, σ g x2⟫_ℂ * star ⟪y', σ g x'⟫_ℂ := by
     funext g
-    rw [map_add, inner_add_right, add_mul]
+    rw [map_add (f := _), inner_add_right, add_mul]
   unfold pj_Q
   rw [e]
   refine ⟨h1.1.add h2.1, ?_⟩

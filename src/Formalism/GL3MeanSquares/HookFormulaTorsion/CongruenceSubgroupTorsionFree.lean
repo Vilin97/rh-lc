@@ -700,7 +700,7 @@ theorem hostEOverF : HostEOverF := by
       ∃ u ∈ hostF ζ a b, ∃ v ∈ hostF ζ a b, x = u + v * t := by
     intro t ht ht0
     refine ⟨(x + c x) / 2, hmem _ ?_, (x - c x) / (2 * t), hmem _ ?_, ?_⟩
-    · simp only [map_div₀, map_add, hcc', map_ofNat]; ring
+    · simp only [map_div₀, map_add (f := _), hcc', map_ofNat]; ring
     · simp only [map_div₀, map_sub, map_mul, hcc', map_ofNat, ht]
       field_simp
       ring
@@ -807,7 +807,7 @@ theorem conjNorm (K : IntermediateField ℚ E) (hK : Module.finrank ℚ K = 2) (
       rw [hky] at ey
       rw [hkxy] at exy
       push_cast at ex ey exy
-      rw [map_add] at exy
+      rw [map_add (f := _)] at exy
       obtain ⟨X, hX⟩ : ∃ X : E, X = ((x : K) : E) := ⟨_, rfl⟩
       obtain ⟨Y, hY⟩ : ∃ Y : E, Y = ((y : K) : E) := ⟨_, rfl⟩
       obtain ⟨X', hX'⟩ : ∃ X' : E, X' = σ ((x : K) : E) := ⟨_, rfl⟩

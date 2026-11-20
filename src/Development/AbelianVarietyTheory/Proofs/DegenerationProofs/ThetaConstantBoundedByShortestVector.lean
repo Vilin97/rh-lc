@@ -121,7 +121,7 @@ theorem exists_scale (hL : Laws) (hL₂ : Laws2) {ρ : S.Real} {p : ℕ} [Fact p
     obtain ⟨z, hz⟩ := (QuotientAddGroup.eq_zero_iff _).1 (hq₂.symm.trans ha)
     have hz' : (S.r * S.N) • z = q.y := hz
     let q₀ : QkPt u.D.toPre (PadicAlgCl p) (S.r * S.N) := qkMk hB 0 (q.g + iota hB _ (-z)) (by
-      rw [smul_add, qk_nsmul hB, ← map_nsmul, ← map_add, smul_neg, hz', add_neg_cancel])
+      rw [smul_add, qk_nsmul hB, ← map_nsmul, ← map_add (f := _), smul_neg, hz', add_neg_cancel])
     have e₀ : f q = f q₀ := (f₃ _ _).2 ((equiv_iff hB _ _).2 ⟨-z, by
       rw [smul_neg, hz', add_neg_cancel]; rfl, rfl⟩)
     obtain ⟨q', x', hy', hx', hpow, hval⟩ := (key q₀ (x a) ((f₁ _ _).2 (((f₁ _ _).1 hq₁).trans e₀))).2 n hn hnm rfl

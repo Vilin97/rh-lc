@@ -17,7 +17,7 @@ theorem piTensor_mulSingle {α : Type} [DecidableEq α] {Γ X : α → Type} [�
     (a : α) (g : Γ a) (c : ℂ) (h : ∀ v, ρ a g v = c • v) (y : ⨂[ℂ] a, X a) :
     piTensor ρ (Pi.mulSingle a g) y = c • y := by
   induction y using PiTensorProduct.induction_on with
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul_tprod r x =>
     rw [map_smul, smul_comm, piTensor_tprod]
     congr 1

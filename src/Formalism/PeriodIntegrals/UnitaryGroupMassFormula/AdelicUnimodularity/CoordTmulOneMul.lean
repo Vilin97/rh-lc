@@ -38,7 +38,7 @@ theorem emb_coord (x : E ⊗[F] B) : emb b (coord b x) = x := by
     rw [TensorProduct.smul_tmul]
   | add x y hx hy =>
     have : emb b (coord b (x + y)) = emb b (coord b x) + emb b (coord b y) := by
-      simp [emb, map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
+      simp [emb, map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib]
     rw [this, hx, hy]
 
 theorem coord_injective : Function.Injective (coord b : E ⊗[F] B → ι → B) :=

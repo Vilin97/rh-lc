@@ -117,7 +117,7 @@ theorem Gom_orth (F : LFlag (VS D) D.R.rS T) (F' : LFlag (VS D) D.R.rS T') :
     rw [← fvec_cs' F' i, PI.NRL.herm_eq, Formalism.L2.SG.Pf.ScalarFramePf.om_pair,
       if_neg (Fin.castSucc_lt_last i).ne, star_zero]
   | zero => simp
-  | add y z _ _ hy hz => simp [map_add, hy, hz]
+  | add y z _ _ hy hz => simp [map_add (f := _), hy, hz]
   | smul a y _ hy => simp [hy]
 
 end BwdBetaCut

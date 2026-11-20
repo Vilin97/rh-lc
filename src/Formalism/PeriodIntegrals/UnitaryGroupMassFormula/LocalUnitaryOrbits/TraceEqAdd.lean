@@ -67,14 +67,14 @@ theorem trace_v (σ : E →ₐ[F] E) (hinv : ∀ y, σ (σ y) = y) (hnt : ∃ x,
     simp only [sigR, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Algebra.TensorProduct.map_tmul,
       AlgHom.id_apply]
     rw [← TensorProduct.tmul_add, ← trace_eq_add σ hinv hnt hfin e, Algebra.algebraMap_eq_smul_one]
-  | add w1 w2 h1 h2 => rw [map_add, map_add, h1, h2, map_add]; abel
+  | add w1 w2 h1 h2 => rw [map_add (f := _), map_add (f := _), h1, h2, map_add (f := _)]; abel
 
 theorem sigR_sigR (σ : E →ₐ[F] E) (hinv : ∀ y, σ (σ y) = y) (w : Fv F v ⊗[F] E) :
     sigR (Fv F v) σ (sigR (Fv F v) σ w) = w := by
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul c e => simp [sigR, hinv]
-  | add w1 w2 h1 h2 => rw [map_add, map_add, h1, h2]
+  | add w1 w2 h1 h2 => rw [map_add (f := _), map_add (f := _), h1, h2]
 
 theorem b_inclR_mem (a : 𝓞 E) : inclR (F := F) (Fv F v) (a : E) ∈ OEv (E := E) v :=
   Submodule.subset_span ⟨a, Set.mem_univ _, rfl⟩
@@ -119,7 +119,7 @@ theorem b_trace_mem {x : Fv F v ⊗[F] E} (hx : x ∈ OEv (E := E) v) :
     have hint : IsIntegral ℤ (Algebra.trace F E (a : E)) := Algebra.isIntegral_trace a.2
     exact HeightOneSpectrum.coe_algebraMap_mem (𝓞 F) F v ⟨_, hint⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x1 x2 _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+  | add x1 x2 _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
   | smul c x _ h =>
     have e : c • x = (c : Fv F v) • x := rfl
     rw [e, map_smul, smul_eq_mul]

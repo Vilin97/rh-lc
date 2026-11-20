@@ -566,17 +566,17 @@ theorem exists_zetaOn_const : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F]
       rw [hc g hg φv hφv φ₁ hφ₁ hact] at hY
       have h2 := (hl _ (hsupp _ (right_ne_zero_of_mul hY))).2
       rw [Matrix.mul_sub, ← Matrix.mul_assoc, Units.mul_inv, Matrix.one_mul] at h2
-      rw [← sub_add_cancel Y ((L g).val * frame (Fv F v) hnd.le), map_add, AddChar.map_add_eq_mul, h2, one_mul]
+      rw [← sub_add_cancel Y ((L g).val * frame (Fv F v) hnd.le), map_add (f := _), AddChar.map_add_eq_mul, h2, one_mul]
     have e2 := eig φv hφv (GlobalTheory.LatVac.psiAt B.ψ v (l (frame (Fv F v) hnd.le))) fun Y hY => by
       have h2 := (hl _ (hsupp _ hY)).1
-      rw [← sub_add_cancel Y (frame (Fv F v) hnd.le), map_add, AddChar.map_add_eq_mul, h2, one_mul]
+      rw [← sub_add_cancel Y (frame (Fv F v) hnd.le), map_add (f := _), AddChar.map_add_eq_mul, h2, one_mul]
     unfold Bot.coef
     rw [← hpure, hact ρ hRest]
     refine integral_eq_zero_of_eigen m hψn _ e1 e2 ?_
     have e3 : (L g).val * frame (Fv F v) hnd.le = ((L g).val - 1) * frame (Fv F v) hnd.le + frame (Fv F v) hnd.le := by
       rw [Matrix.sub_mul, Matrix.one_mul, sub_add_cancel]
     have e4 : ‖GlobalTheory.LatVac.psiAt B.ψ v (l (frame (Fv F v) hnd.le))‖ = 1 := hψn _
-    rw [e3, map_add, AddChar.map_add_eq_mul, mul_assoc, Complex.mul_conj, Complex.normSq_eq_norm_sq, e4]
+    rw [e3, map_add (f := _), AddChar.map_add_eq_mul, mul_assoc, Complex.mul_conj, Complex.normSq_eq_norm_sq, e4]
     simpa using hl1
   haveI : BorelSpace (UA σ X.J) := ⟨rfl⟩
   haveI : BorelSpace (UAtSub σ X (evFin F v)) := Subtype.borelSpace _

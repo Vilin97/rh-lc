@@ -64,6 +64,6 @@ theorem fourU_isLocallyConstant : ∀ (F E : Type) [NontriviallyNormedField F] [
       _ = 1 := by field_simp
   have hsplit : star c ⬝ᵥ X.2.1 = star c ⬝ᵥ X₀.2.1 + star c ⬝ᵥ (X.2.1 - X₀.2.1) := by
     rw [dotProduct_sub]; ring
-  rw [hsplit, map_add, AddChar.map_add_eq_mul, htr1 _ hs, mul_one]
+  rw [hsplit, map_add (f := _), AddChar.map_add_eq_mul, htr1 _ hs, mul_one]
 
 end GlobalTheory

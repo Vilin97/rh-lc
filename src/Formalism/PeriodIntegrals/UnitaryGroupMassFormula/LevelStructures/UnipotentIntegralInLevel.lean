@@ -38,7 +38,7 @@ theorem psiV_liftS_same (p : HeightOneSpectrum (𝓞 I.F)) (c : Fv I.F p ⊗[I.F
     simp only [PI.MassDataKppVolLemmas.thetaP, TensorProduct.map_tmul, LinearMap.id_apply, PI.MassDataKppVolLemmas.tV]
     simp [PI.MassDataKppVolLemmas.sL, tensMap]
     rw [show evalV I.F p (singleV I.F p a) = a from PI.MassDataKppVolLemmas.Comp_single_same I p a]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem psiV_liftS_ne (p v : HeightOneSpectrum (𝓞 I.F)) (h : v ≠ p) (c : Fv I.F p ⊗[I.F] I.E) :
     PI.FinKW.psiV I v (liftS I p c) = 0 := by
@@ -49,7 +49,7 @@ theorem psiV_liftS_ne (p v : HeightOneSpectrum (𝓞 I.F)) (h : v ≠ p) (c : Fv
     simp [PI.MassDataKppVolLemmas.thetaP, PI.MassDataKppVolLemmas.tV, PI.MassDataKppVolLemmas.sL, tensMap]
     rw [show evalV I.F v (singleV I.F p a) = 0 from PI.MassDataKppVolLemmas.Comp_single_ne I p v h a,
       TensorProduct.zero_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 theorem vecV_incl (v : HeightOneSpectrum (𝓞 I.F)) (x : Fin I.n → I.E) :
     PI.FinKW.vecV I v (incl I x) = ratV (F := I.F) (Fv I.F v) x := by
@@ -123,7 +123,7 @@ theorem psiV_sigR (v : HeightOneSpectrum (𝓞 I.F)) (t : I.E ⊗[I.F] Af I.F) :
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [PI.FinKW.psiV, Formalism.UG.sigR, sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem psiV_inclE (v : HeightOneSpectrum (𝓞 I.F)) (a : I.E) :
     PI.FinKW.psiV I v (Formalism.UG.inclE (F := I.F) (Af I.F) a) = inclR (Fv I.F v) a := by

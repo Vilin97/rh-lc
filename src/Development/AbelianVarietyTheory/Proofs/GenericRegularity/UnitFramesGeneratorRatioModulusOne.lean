@@ -112,7 +112,7 @@ theorem mean_comp_eq {g : ℕ} (Λ Λ' : AddSubgroup (Fin g → ℂ)) [Countable
   have hF2 : IsAddFundamentalDomain Λ (e ⁻¹' Fd') volume :=
     hF'.preimage_of_equiv hq hε fun a z => by
       change L (L.symm a + z) = a + L z
-      rw [map_add, L.apply_symm_apply]
+      rw [map_add (f := _), L.apply_symm_apply]
   have i1 : ∫ z in Fd, f (h *ᵥ z) = ∫ z in e ⁻¹' Fd', f (h *ᵥ z) :=
     hF.setIntegral_eq hF2 fun a z => by
       change f (h *ᵥ ((a : Fin g → ℂ) + z)) = _

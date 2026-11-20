@@ -94,7 +94,7 @@ theorem hodgeTateLinear_dual_eq_zero_iff [Algebra ℤ_[p] O] (G : PDivGroup p O)
   have h : G.dual.hodgeTateLinear z = omegaMap _ _ G.bidual.inv (dlogLinear G z) := by
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul c χ =>
       rw [hodgeTateLinear_tmul, dlogLinear_tmul, map_smul, hodgeTate_apply, ← dlog_tateMap,
         dualHom_bidual_inv]
@@ -148,7 +148,7 @@ theorem exists_pol (SW : GlobalTheory.Published.ScholzeWeinsteinB) (hv : v.Integ
       d * (TensorProduct.rid ℤ_[p] O) ((B.flip (f t)).baseChange O x) := fun x d t => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy, mul_add]
+    | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy, mul_add]
     | tmul a s =>
       rw [LinearMap.BilinForm.baseChange_tmul, LinearMap.baseChange_tmul, LinearMap.flip_apply, hf,
         TensorProduct.rid_tmul, mul_smul_comm, mul_comm]
@@ -158,7 +158,7 @@ theorem exists_pol (SW : GlobalTheory.Published.ScholzeWeinsteinB) (hv : v.Integ
     fun x c y h z => by
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add z w hz hw => simp only [map_add, hz, hw, mul_add]
+      | add z w hz hw => simp only [map_add (f := _), hz, hw, mul_add]
       | tmul d t =>
         rw [h1, LinearMap.baseChange_tmul, dlogLinear_tmul, map_smul, ← h, smul_eq_mul,
           mul_left_comm]
@@ -224,7 +224,7 @@ theorem exists_action (SW : GlobalTheory.Published.ScholzeWeinsteinB) (hv : v.In
         rw [map_mul, ← hφ a, ← hφ b]; rfl)).symm
       map_zero' := (hu 0 _ (by rw [map_zero]; exact map_zero _)).symm
       map_add' := fun a b => (hu (a + b) (φ a + φ b) (by
-        rw [map_add, ← hφ a, ← hφ b]; exact map_add _ _ _)).symm }
+        rw [map_add (f := _), ← hφ a, ← hφ b]; exact map_add _ _ _)).symm }
   obtain ⟨ρ, hρ⟩ := exists_lift (R := ℤ_[p]) ψ
   exact ⟨ρ, fun a => by rw [Action.onTate_apply, hρ]; exact hφ a⟩
 

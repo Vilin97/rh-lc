@@ -71,7 +71,7 @@ private theorem pa_stab (Y : Submodule A M) (op : ι → Module.End A M) (opC : 
   induction ht using Algebra.adjoin_induction with
   | mem x hx => obtain ⟨i, hi⟩ := hx; intro F hF; rw [h2 i x hi]; exact hZ i _ ⟨hF, F.2⟩
   | algebraMap b => intro F hF; rw [h3]; exact Z.smul_mem _ hF
-  | add x y _ _ hx hy => intro F hF; rw [map_add]; exact Z.add_mem (hx F hF) (hy F hF)
+  | add x y _ _ hx hy => intro F hF; rw [map_add (f := _)]; exact Z.add_mem (hx F hF) (hy F hF)
   | mul x y _ _ hx hy => intro F hF; rw [map_mul]; exact hx _ (hy F hF)
 
 private theorem pa_eig {T E : Type} {J : Type u} [CommRing T] [AddCommGroup E] [Module K E] [FiniteDimensional K E]
@@ -102,7 +102,7 @@ private theorem pa_chr {T E : Type} [CommRing T] [AddCommGroup E] [Module K E]
   · change z 0 • v = _
     rw [← hz _ v hv]; simp
   · change z (s + t) • v = (z s + z t) • v
-    rw [← hz _ v hv, map_add, LinearMap.add_apply, hz t v hv, hz s v hv, add_smul]
+    rw [← hz _ v hv, map_add (f := _), LinearMap.add_apply, hz t v hv, hz s v hv, add_smul]
 
 private theorem pa_inst {J : Type u} (Y0 Y : Submodule A M) [Module.Finite A Y] (hle : Y ≤ Y0) (op : ι → Module.End A M)
     [hc : Fact (CommOn Y op)] (e : Module.End A Y0) (he : e ∈ heckeAlg Y0 op)
@@ -162,7 +162,7 @@ private theorem pa_inst {J : Type u} (Y0 Y : Submodule A M) [Module.Finite A Y] 
         obtain ⟨hx, hx'⟩ := hx
         obtain ⟨hy, hy'⟩ := hy
         exact ⟨add_mem hx hy, by
-          rw [show (⟨x + y, add_mem hx hy⟩ : O) = ⟨x, hx⟩ + ⟨y, hy⟩ from rfl, map_add]; exact add_mem hx' hy'⟩
+          rw [show (⟨x + y, add_mem hx hy⟩ : O) = ⟨x, hx⟩ + ⟨y, hy⟩ from rfl, map_add (f := _)]; exact add_mem hx' hy'⟩
     obtain ⟨h, h'⟩ := key F (hOZ ▸ hEO hF)
     rwa [show (ρ0 e ⟨F, h⟩ : W) = F from hfix ⟨F, hF⟩] at h'
   let act : heckeAlg Y op →+* Module.End K E := ρ.comp (heckeAlg Y op).val.toRingHom
@@ -194,7 +194,7 @@ private theorem pa_inst {J : Type u} (Y0 Y : Submodule A M) [Module.Finite A Y] 
         | add x y _ _ hx hy =>
           obtain ⟨μ, hμ⟩ := hx
           obtain ⟨ν, hν⟩ := hy
-          exact ⟨μ + ν, fun F hF => by rw [map_add, LinearMap.add_apply, hμ F hF, hν F hF, add_smul]⟩
+          exact ⟨μ + ν, fun F hF => by rw [map_add (f := _), LinearMap.add_apply, hμ F hF, hν F hF, add_smul]⟩
         | mul x y _ _ hx hy =>
           obtain ⟨μ, hμ⟩ := hx
           obtain ⟨ν, hν⟩ := hy

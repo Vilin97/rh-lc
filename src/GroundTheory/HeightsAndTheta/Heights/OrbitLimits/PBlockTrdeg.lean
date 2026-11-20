@@ -96,7 +96,7 @@ theorem isWeightedHomogeneous_rename (κ : K → K') {v : (Σ k, ι k) → (Σ k
     IsWeightedHomogeneous (forgetWeight κ) (rename v g) 0 := by
   induction g using MvPolynomial.induction_on with
   | C a => rw [rename_C]; exact isWeightedHomogeneous_C _ _
-  | add p q hp hq => rw [map_add]; exact hp.add hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add hq
   | mul_X p q hp =>
     rw [map_mul, rename_X]
     have h0 : forgetWeight κ (v q) = 0 := by

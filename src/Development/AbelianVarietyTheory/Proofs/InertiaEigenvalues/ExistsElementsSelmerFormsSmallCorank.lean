@@ -301,7 +301,7 @@ theorem abs_two (hcc : ∀ g, cj (cj g) = g) (A : (Fin r → K) ≃ₗ[K] (Fin r
         change A ((x a).1 (cj (cj g))) = _
         rw [hcc]) c hc) (fun a => hω0 _) fun a b => by
       have := hω0 (bT a + bT b)
-      simp only [map_add, LinearMap.add_apply, hω0, zero_add, add_zero] at this
+      simp only [map_add (f := _), LinearMap.add_apply, hω0, zero_add, add_zero] at this
       rw [add_comm]; exact this
   refine ⟨h, U, h1, h2, h3, fun R φ hφ => ?_⟩
   obtain ⟨c, hc⟩ := h4 R φ hφ
@@ -485,7 +485,7 @@ def mapC (f : K →ₐ[X.O0 i] K') {ρ : GE N →* GL (Fin D.R.r) (X.O0 i)} (x :
   ⟨fun g a => f (x.1 g a),
     (continuous_of_discreteTopology (f := fun (v : Fin D.R.r → K) a => f (v a))).comp x.2.1, fun g h => funext fun a => by
       dsimp only
-      rw [x.2.2, Pi.add_apply, map_add, red_map]; rfl⟩
+      rw [x.2.2, Pi.add_apply, map_add (f := _), red_map]; rfl⟩
 
 theorem fm_mapC (f : K →ₐ[X.O0 i] K') {ρ ρ' : GE N →* GL (Fin D.R.r) (X.O0 i)} (x : Z1 (red i K ρ)) (y : Z1 (red i K ρ'))
     (h : GE N) : fm (cConj X) (mapC f x) (mapC f y) h = f (fm (cConj X) x y h) := by

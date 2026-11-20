@@ -10,7 +10,7 @@ private theorem tensV_eq_rT {l : ℕ} [Fact l.Prime] (P : LocPrime l) {LL : Type
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem UpperTheory.weilDeligne_dpst_leftExact :
     UpperTheory.V.Af.Wd.DLeft := by

@@ -137,7 +137,7 @@ def TypeSp (ρ : Representation ℂ (GQ L n) W) (J : Subgroup (GAf L n)) (χ : J
   zero_mem' := ⟨Submodule.zero_mem _, fun _ => by simp⟩
   add_mem' := by
     rintro f f' ⟨h1, h2⟩ ⟨h1', h2'⟩
-    exact ⟨Submodule.add_mem _ h1 h1', fun κ => by rw [map_add, h2, h2', smul_add]⟩
+    exact ⟨Submodule.add_mem _ h1 h1', fun κ => by rw [map_add (f := _), h2, h2', smul_add]⟩
   smul_mem' := by
     rintro c f ⟨h1, h2⟩
     exact ⟨Submodule.smul_mem _ c h1, fun κ => by rw [map_smul, h2, smul_comm]⟩

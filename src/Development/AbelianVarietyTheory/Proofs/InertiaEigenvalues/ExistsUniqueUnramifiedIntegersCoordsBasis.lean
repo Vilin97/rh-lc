@@ -51,7 +51,7 @@ theorem existsUnique_of_separated {R W O ι : Type} [CommRing R] [Nontrivial R] 
   have h1 : ∀ t, Φ t ∈ LinearMap.range F := by
     intro t
     induction t with
-    | add s t hs ht => rw [map_add]; exact add_mem hs ht
+    | add s t hs ht => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hs ht
     | tmul a w =>
       refine ⟨fun i => o.repr a i • w, ?_⟩
       funext k

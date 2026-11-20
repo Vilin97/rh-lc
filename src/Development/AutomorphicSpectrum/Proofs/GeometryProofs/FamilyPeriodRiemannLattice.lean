@@ -44,7 +44,7 @@ theorem exists_reparam_isAH {g g' : ℕ} (u : HolUnif A L g') (X : (Fin g → �
     unfold hermForm at e1 e2
     show u.fr i (X z) / 1 = χ ⟨X l, l.2⟩ * Complex.exp (Real.pi * (z ⬝ᵥ Hf.mulVec (star (l : Fin g → ℂ))) +
       Real.pi / 2 * ((l : Fin g → ℂ) ⬝ᵥ Hf.mulVec (star (l : Fin g → ℂ)))) * (u.fr i (X (z + l)) / 1)
-    rw [div_one, div_one, map_add, h, e1, e2]
+    rw [div_one, div_one, map_add (f := _), h, e1, e2]
   · intro w v hv U h f
     rw [hv U h f]
     have key := X.toContinuousLinearEquiv.comp_right_fderiv

@@ -78,7 +78,7 @@ theorem phiIt_add (i : ZMod n) (k : ℕ) (u v : V) :
     L.phiIt i k (u + v) = L.phiIt i k u + L.phiIt i k v := by
   induction k with
   | zero => rfl
-  | succ k ih => simp only [phiIt_succ_lemma, ih, map_add]
+  | succ k ih => simp only [phiIt_succ_lemma, ih, map_add (f := _)]
 
 theorem phiIt_sub (i : ZMod n) (k : ℕ) (u v : V) :
     L.phiIt i k (u - v) = L.phiIt i k u - L.phiIt i k v := by
@@ -139,7 +139,7 @@ theorem γ_pull (h1 : ∀ i, ∀ v ∈ L.N i, L.γ i v - v ∈ sm X (L.N i)) {i 
     { carrier := {x | L.γ (i + (k : ZMod n)) x ∈ L.pull i k}
       add_mem' := fun {x y} hx hy => by
         show L.γ (i + (k : ZMod n)) (x + y) ∈ L.pull i k
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem hx hy
       zero_mem' := by
         show L.γ (i + (k : ZMod n)) 0 ∈ L.pull i k

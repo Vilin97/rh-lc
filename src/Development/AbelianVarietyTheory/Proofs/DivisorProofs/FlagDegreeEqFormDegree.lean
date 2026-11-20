@@ -78,7 +78,7 @@ theorem pderiv_aeval_lin (r : V → MvPolynomial E ℝ) (e : E) (c : V → ℝ) 
     pderiv e (aeval r P) = aeval r (∑ x, C (c x) * pderiv x P) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p y hp =>
     have : ∑ x, C (c x) * pderiv x (p * X y) = (∑ x, C (c x) * pderiv x p) * X y + p * C (c y) := by
       simp only [Derivation.leibniz, smul_eq_mul, mul_add, Finset.sum_add_distrib, Finset.sum_mul, pderiv_X,
@@ -87,7 +87,7 @@ theorem pderiv_aeval_lin (r : V → MvPolynomial E ℝ) (e : E) (c : V → ℝ) 
       congr 1
       · exact Finset.sum_congr rfl fun _ _ => by ring
       · simp [mul_comm]
-    rw [this, map_mul, Derivation.leibniz, hp, aeval_X, h, map_add, map_mul, map_mul, aeval_X, aeval_C]
+    rw [this, map_mul, Derivation.leibniz, hp, aeval_X, h, map_add (f := _), map_mul, map_mul, aeval_X, aeval_C]
     simp only [smul_eq_mul, algebraMap_eq]
     ring
 
@@ -100,7 +100,7 @@ theorem coeff_aeval_lin (r : V → MvPolynomial E ℝ) (c : E → V → ℝ) (h 
     have : constantCoeff (aeval r P) = constantCoeff P := by
       induction P using MvPolynomial.induction_on with
       | C a => simp
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
       | mul_X p y hp => simp [h0]
     simpa [constantCoeff_eq] using this
   | insert e S he ih =>

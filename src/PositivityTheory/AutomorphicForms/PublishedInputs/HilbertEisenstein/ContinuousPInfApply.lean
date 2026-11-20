@@ -107,11 +107,11 @@ theorem norm_gJ_invN (J : (FractionalIdeal (𝓞 F)⁰ F)ˣ) (N : ℕ) (x : Ad F
 theorem pInf_vecMul (y : Fin 2 → Ad F) (A : Matrix (Fin 2) (Fin 2) (Ad F)) (i : Fin 2) (v : InfinitePlace F) :
     UpperTheory.V.TR.pInf F ((y ᵥ* A) i) v =
       UpperTheory.V.TR.pInf F (y 0) v * UpperTheory.V.TR.pInf F (A 0 i) v + UpperTheory.V.TR.pInf F (y 1) v * UpperTheory.V.TR.pInf F (A 1 i) v := by
-  simp [Matrix.vecMul, dotProduct, Fin.sum_univ_two, map_add, map_mul]
+  simp [Matrix.vecMul, dotProduct, Fin.sum_univ_two, map_add (f := _), map_mul]
 
 theorem pFin_vecMul (y : Fin 2 → Ad F) (A : Matrix (Fin 2) (Fin 2) (Ad F)) (i : Fin 2) :
     pFin F ((y ᵥ* A) i) = pFin F (y 0) * pFin F (A 0 i) + pFin F (y 1) * pFin F (A 1 i) := by
-  simp [Matrix.vecMul, dotProduct, Fin.sum_univ_two, map_add, map_mul]
+  simp [Matrix.vecMul, dotProduct, Fin.sum_univ_two, map_add (f := _), map_mul]
 
 private theorem sq_lin_le {a b p q H : ℝ} (hp : |p| ≤ H) (hq : |q| ≤ H) :
     (a * p + b * q) ^ 2 ≤ 2 * H ^ 2 * (a ^ 2 + b ^ 2) := by

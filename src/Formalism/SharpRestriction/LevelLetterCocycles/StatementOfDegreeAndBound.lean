@@ -84,7 +84,7 @@ theorem image_le (hlS : ¬ l ∣ H.QS) (M : IntermediateField ℚ_[l] (Om l)) (h
   | algebraMap r =>
     rw [eq_ratCast, map_ratCast]
     exact SubfieldClass.ratCast_mem M r
-  | add a b _ _ ha hb => rw [map_add]; exact M.add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact M.add_mem ha hb
   | inv a _ ha => rw [map_inv₀]; exact M.inv_mem ha
   | mul a b _ _ ha hb => rw [map_mul]; exact M.mul_mem ha hb
 

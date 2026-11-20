@@ -27,7 +27,7 @@ theorem exists_avg (ρ : G → H →L[ℂ] H) (hρ : ∀ u, Continuous fun x => 
   let L : H →ₗ[ℂ] H :=
     { toFun := fun u => ∫ x, w x • ρ x u ∂μ
       map_add' := fun u v => by
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
         exact integral_add (CompanionTheory.D.gk.admitted.Gard.integrable_w μ ρ hρ hw hc u)
           (CompanionTheory.D.gk.admitted.Gard.integrable_w μ ρ hρ hw hc v)
       map_smul' := fun c u => by

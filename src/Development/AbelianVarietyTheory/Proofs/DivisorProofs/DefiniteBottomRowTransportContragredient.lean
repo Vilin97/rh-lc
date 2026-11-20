@@ -43,7 +43,7 @@ theorem exists_nodes (T G : Module.End ℂ V) (t : ℂ) (v : V) (hv : v ∈ Subm
     obtain ⟨s, hs⟩ := hx
     obtain ⟨s', hs'⟩ := hy
     refine ⟨s ∪ s', fun p hp => ?_⟩
-    rw [map_add, map_add, hs p fun k hk => hp k (by simp [hk]), hs' p fun k hk => hp k (by simp [hk])]
+    rw [map_add (f := _), map_add (f := _), hs p fun k hk => hp k (by simp [hk]), hs' p fun k hk => hp k (by simp [hk])]
   | smul c x _ hx =>
     obtain ⟨s, hs⟩ := hx
     exact ⟨s, fun p hp => by rw [map_smul, map_smul, hs p hp]⟩
@@ -60,7 +60,7 @@ theorem transfer (q : V →ₗ[ℂ] Q) (q' : V' →ₗ[ℂ] Q) (T G : Module.End
   generalize Lagrange.interpolate (s ∪ s') (fun k : ℤ => (k : ℂ)) (fun k => t ^ k) = p
   induction p using Polynomial.induction_on with
   | C c => simp [hP]
-  | add p r hp hr => simp only [map_add, LinearMap.add_apply, hp, hr]
+  | add p r hp hr => simp only [map_add (f := _), LinearMap.add_apply, hp, hr]
   | monomial n c ih =>
     have e : Polynomial.C c * Polynomial.X ^ (n + 1) = Polynomial.X * (Polynomial.C c * Polynomial.X ^ n) := by ring
     rw [e, map_mul, map_mul (Polynomial.aeval T'), Polynomial.aeval_X, Polynomial.aeval_X, Module.End.mul_apply,
@@ -482,8 +482,8 @@ theorem row_transport : ∀ (D : D7) (M M' X : HSp D) (A : GlobalTheory.ChainFr.
     have hc : (n₀ τ : ℂ) = (eS τ : ℂ) - eS' τ - ((M.rank : ℂ) + M'.rank) / 2 := by
       have := congrArg (fun x : ℚ => (x : ℂ)) (hn τ)
       simpa using this
-    simp only [map_add, map_neg, map_smul, ← hP] at h
-    rw [map_add, map_neg, map_smul]
+    simp only [map_add (f := _), map_neg, map_smul, ← hP] at h
+    rw [map_add (f := _), map_neg, map_smul]
     exact scalar_shift _ _ _ _ _ _ _ _ _ hc h
   have hdet : ∀ τ, (κ τ : Matrix (Fin X.rank) (Fin X.rank) ℂ).det ≠ 0 := fun τ =>
     (Matrix.UnitaryGroup.det_isUnit (κ τ)).ne_zero

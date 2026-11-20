@@ -90,7 +90,7 @@ def cjEnd {X Y : Type} (e : Y ≃ X) : Module.End ℂ (X → ℂ) →* Module.En
     { toFun := fun f => cj e (L (cj e.symm f))
       map_add' := fun f f' => by
         have : cj e.symm (f + f') = cj e.symm f + cj e.symm f' := by funext x; simp [cj]
-        rw [this, map_add]; funext y; simp [cj]
+        rw [this, map_add (f := _)]; funext y; simp [cj]
       map_smul' := fun c f => by
         have : cj e.symm (c • f) = starRingEnd ℂ c • cj e.symm f := by funext x; simp [cj]
         rw [this, map_smul]; funext y; simp [cj] }

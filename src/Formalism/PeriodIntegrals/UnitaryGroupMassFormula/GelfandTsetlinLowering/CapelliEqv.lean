@@ -156,7 +156,7 @@ theorem eqv_pol {n N : ℕ} (h : n + 1 = N) (mu : DomWeight n) (lam : DomWeight 
       rw [← map_natCast C]; congr 1; exact_mod_cast he1
     have c2 : ((e2 : ℕ) : MvPolynomial (Fin (n + 1) × Fin (n + 1)) ℂ) = C ((d2 : ℂ) + (K : ℂ)) := by
       rw [← map_natCast C]; congr 1; exact_mod_cast he2
-    rw [c1, c2, map_add, map_add] at h1
+    rw [c1, c2, map_add (f := _), map_add (f := _)] at h1
     rw [smul_eq_C_mul, smul_eq_C_mul]
     subst hab
     linear_combination h1

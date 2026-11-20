@@ -45,7 +45,7 @@ def trO (hs : M.split = some g) : M.R →+ 𝒪[F] where
   map_zero' := by apply Subtype.ext; simp
   map_add' x y := by
     apply Subtype.ext
-    simp only [Subring.coe_add, map_add, Prod.fst_add, Prod.snd_add]
+    simp only [Subring.coe_add, map_add (f := _), Prod.fst_add, Prod.snd_add]
     push_cast
     ring
 
@@ -76,7 +76,7 @@ theorem R_decomp (hs : M.split = some g) (s : M.R) :
   refine ⟨⟨(g.e s).1, h1⟩, -c, ?_⟩
   apply Subtype.ext
   apply g.e.injective
-  rw [AddMemClass.coe_add, MulMemClass.coe_mul, map_add, map_mul, e_dgR, e_dgR, embedding_uniformizer]
+  rw [AddMemClass.coe_add, MulMemClass.coe_mul, map_add (f := _), map_mul, e_dgR, e_dgR, embedding_uniformizer]
   ext
   · simp
   · simp only [Prod.snd_add, Prod.snd_mul]
@@ -95,7 +95,7 @@ def llMap (Z : M.Mat (r + 1)) (TT : M.R) : (Fin (r + 1) → M.R) →+ (Fin (r + 
   toFun m := Z.Z.mulVec m - (TT * dgR hs (trO hs (m (Fin.last r)))) • eV r
   map_zero' := by simp
   map_add' x y := by
-    simp only [Matrix.mulVec_add, Pi.add_apply, map_add, mul_add, add_smul]
+    simp only [Matrix.mulVec_add, Pi.add_apply, map_add (f := _), mul_add, add_smul]
     abel
 
 def LL (Z : M.Mat (r + 1)) (TT : M.R) : AddSubgroup (Fin (r + 1) → M.R) := (llMap hs Z TT).range

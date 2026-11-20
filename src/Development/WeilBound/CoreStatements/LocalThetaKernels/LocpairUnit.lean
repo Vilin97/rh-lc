@@ -28,8 +28,8 @@ theorem exists_factor {A K : Type} [AddCommGroup A] [AddCommGroup K] {ev : A →
     rw [lintegral_map hf (measurable_const_add g), hν (fun a => f (g + a)) (hf.comp (measurable_const_add g)), hν f hf,
       ← lintegral_add_left_eq_self (μ := μ) (fun x => w x * f (ev x)) (ι g)]
     refine lintegral_congr fun x => ?_
-    have : put ev ι (ι g + x) 0 = put ev ι x 0 := by simp only [put, map_add, h]; abel
-    simp only [w, this, map_add, h]⟩
+    have : put ev ι (ι g + x) 0 = put ev ι x 0 := by simp only [put, map_add (f := _), h]; abel
+    simp only [w, this, map_add (f := _), h]⟩
   have : IsFiniteMeasureOnCompacts ν := ⟨fun S hS => by
     obtain ⟨C, hC⟩ := h1.bounded_above_of_compact_support h2
     obtain ⟨S', hS', hSS⟩ := exists_compact_superset hS

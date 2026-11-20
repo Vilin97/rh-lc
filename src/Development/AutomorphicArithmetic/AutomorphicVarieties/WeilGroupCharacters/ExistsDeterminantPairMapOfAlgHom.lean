@@ -29,7 +29,7 @@ private theorem pm_chi_map (D : GDet n A G) (f : A →+* A') (y : MonoidAlgebra 
   · clear h
     induction y using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp
 
 private theorem pm_lam_map (D : GDet n A G) (f : A →+* A') (i : ℕ) (y : MonoidAlgebra A G) :

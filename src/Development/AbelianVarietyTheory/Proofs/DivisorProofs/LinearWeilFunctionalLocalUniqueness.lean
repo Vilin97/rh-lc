@@ -98,10 +98,10 @@ theorem proj_schr_off (ψ : AddChar (AF F) ℂ) (v : Pl F) (φ₀ : (κ → Fv F
     have e1 : repl v y x ⬝ᵥ q = y ⬝ᵥ q := by
       simp only [dotProduct, repl, add_mul, sub_mul, liftV_mul, hq, mul_zero, map_zero, sub_zero, add_zero]
     have e2 : repl v y x + p = repl v (y + p) x := by
-      funext i; simp only [repl, Pi.add_apply, map_add, hp, add_zero]; ring
+      funext i; simp only [repl, Pi.add_apply, map_add (f := _), hp, add_zero]; ring
     simp only [schr, e1, e2, Pi.smul_apply, smul_eq_mul]
   rw [proj_apply, e, map_smul]
-  simp only [schr, proj_apply, Pi.add_apply, map_add, hp, add_zero, smul_eq_mul]
+  simp only [schr, proj_apply, Pi.add_apply, map_add (f := _), hp, add_zero, smul_eq_mul]
   ring
 
 theorem proj_schr_at (ψ : AddChar (AF F) ℂ) (v : Pl F) (φ₀ : (κ → Fv F v) → ℂ) (l : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ℂ)
@@ -116,12 +116,12 @@ theorem proj_schr_at (ψ : AddChar (AF F) ℂ) (v : Pl F) (φ₀ : (κ → Fv F 
       schr (psiAt ψ v) (p, q) fun x => Φ (repl v y x) := by
     funext x
     have e2 : (repl v y x + fun i => liftV v (p i)) = repl v y (x + p) := by
-      funext i; simp only [repl, Pi.add_apply, map_add]; ring
+      funext i; simp only [repl, Pi.add_apply, map_add (f := _)]; ring
     have e1 : (repl v y x ⬝ᵥ fun i => liftV v (q i)) +
         ⅟(2 : AF F) * ((fun i => liftV v (p i)) ⬝ᵥ fun i => liftV v (q i)) =
         liftV v (x ⬝ᵥ q + ⅟(2 : Fv F v) * (p ⬝ᵥ q)) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [dotProduct, mul_liftV, evFin_repl, evFin_liftV, ← map_sum, GlobalTheory.VacAny.evFin_invOf_two, map_add]
+        simp only [dotProduct, mul_liftV, evFin_repl, evFin_liftV, ← map_sum, GlobalTheory.VacAny.evFin_invOf_two, map_add (f := _)]
     simp only [schr, e1, e2]
     rfl
   rw [proj_apply, proj_apply, e, h _ hs]
@@ -269,7 +269,7 @@ theorem exists_idem (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) : ∃ ε : AE 
   · rw [hc]
     refine (GlobalTheory.EmbChart.sigR_tensAt v σ _).trans (congrArg _ ?_)
     rw [map_sub, map_one, sigR_splitIdem, sub_sub_cancel]
-  · rw [hc, ← map_add, add_sub_cancel]; rfl
+  · rw [hc, ← map_add (f := _), add_sub_cancel]; rfl
   · rw [hp, splitProj_splitIdem]
   · rw [hc, hp, map_sub, map_one, splitProj_splitIdem, sub_self]
   · rw [hc, hp, map_sub, map_one, splitProj_comp_splitIdem, sub_zero]
@@ -388,7 +388,7 @@ theorem star_mem_SB {Y : Type} [TopologicalSpace Y] {f : Y → ℂ} (hf : f ∈ 
 
 def conjForm {Y : Type} (l : (Y → ℂ) →ₗ[ℂ] ℂ) : (Y → ℂ) →ₗ[ℂ] ℂ where
   toFun f := star (l (star f))
-  map_add' f g := by rw [star_add, map_add, star_add]
+  map_add' f g := by rw [star_add, map_add (f := _), star_add]
   map_smul' c f := by rw [star_smul, map_smul, star_smul, star_star]; rfl
 
 theorem star_schr {R : Type} [CommRing R] [Invertible (2 : R)] (ψ : AddChar R ℂ) (hψ : ∀ x, ‖ψ x‖ = 1) {κ : Type} [Fintype κ]

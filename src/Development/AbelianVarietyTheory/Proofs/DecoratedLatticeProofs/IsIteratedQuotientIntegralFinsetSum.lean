@@ -156,7 +156,7 @@ theorem isFinComb_aconv {S T : HSp D} (l : List (WO S T →₀ ℂ)) (hl : ∀ c
     have h3 : infPart D (a i j) = 0 := congrFun (congrFun h1 i) j
     have h4 : infPart D (b i j) = 0 := congrFun (congrFun h2 i) j
     show infPart D (a i j + b i j) = 0
-    rw [RingHom.map_add, h3, h4, add_zero]
+    rw [RingHom.map_add (f := _), h3, h4, add_zero]
 
 theorem aconv_single_cons {G : Type} [AddMonoid G] (l : List (G →₀ ℂ)) : aconv (Finsupp.single 0 1 :: l) = aconv l := by
   show (Finsupp.single (0 : G) (1 : ℂ)).sum (fun g a => (aconv l).sum fun h b => Finsupp.single (g + h) (a * b)) = aconv l

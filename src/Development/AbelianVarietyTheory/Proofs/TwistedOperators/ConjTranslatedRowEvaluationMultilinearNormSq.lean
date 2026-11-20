@@ -169,7 +169,7 @@ theorem evF_multilinear_norm : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl
   let f : MultilinearMap ℂ (fun τ => ↥(Wsub R X c τ)) (L2X X) :=
     { toFun := fun y => conjL (muX X) (L y)
       map_update_add' := fun y τ z₁ z₂ => by
-        rw [hL_add, map_add]
+        rw [hL_add, map_add (f := _)]
       map_update_smul' := fun y τ a z => by
         rw [hL_smul, LinearIsometryEquiv.map_smulₛₗ, starRingEnd_self_apply] }
   refine ⟨f, K, fun y => ?_, fun y => ?_⟩

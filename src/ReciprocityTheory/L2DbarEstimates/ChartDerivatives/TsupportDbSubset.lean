@@ -211,7 +211,7 @@ private theorem wdb_conj_eq_conj_wd_and_wd_conj (n : ℕ) (j : Fin n) (F : V n �
   have h2 : ∀ v, fderiv ℝ (fun y => (starRingEnd ℂ) (F y)) w v = (starRingEnd ℂ) (fderiv ℝ F w v) := by
     intro v; rw [h1, Complex.conjCLE.comp_fderiv]; simp
   refine ⟨?_, ?_⟩ <;>
-    simp only [wd, wdb, h2, map_div₀, map_sub, map_add, map_mul, Complex.conj_I, map_ofNat] <;> ring
+    simp only [wd, wdb, h2, map_div₀, map_sub, map_add (f := _), map_mul, Complex.conj_I, map_ofNat] <;> ring
 
 private theorem wd_wdb_ofReal_comp_real_chain (n : ℕ) (j : Fin n) (k : ℝ → ℝ) (hk : Differentiable ℝ k)
     (P : V n → ℝ) (w : V n) (hP : DifferentiableAt ℝ P w) :

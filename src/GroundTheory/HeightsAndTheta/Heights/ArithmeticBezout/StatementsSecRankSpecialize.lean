@@ -47,7 +47,7 @@ theorem SecRankSpecialize.hypotheses_inhabited :
     | add p q hp hq =>
       obtain ⟨a, ha⟩ := hp
       obtain ⟨b, hb⟩ := hq
-      exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
     | mul_X p j hp =>
       obtain ⟨a, ha⟩ := hp
       exact ⟨a, by rw [map_mul, hX, mul_one, ha]⟩

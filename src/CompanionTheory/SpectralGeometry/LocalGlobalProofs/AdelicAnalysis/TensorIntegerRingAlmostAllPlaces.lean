@@ -93,7 +93,7 @@ theorem finite_maxSpec [IsLocalRing R] (hsp : ∀ y : O, ∃ p q : R, y = ι p +
 
 theorem norm_eq (hδ : δ * δ = ι D) (hτι : ∀ r, τ (ι r) = ι r) (hτδ : τ δ = -δ) (p q : R) :
     (ι p + ι q * δ) * τ (ι p + ι q * δ) = ι (p ^ 2 - D * q ^ 2) := by
-  simp only [map_add, map_mul, hτι, hτδ, map_sub, map_pow]
+  simp only [map_add (f := _), map_mul, hτι, hτδ, map_sub, map_pow]
   linear_combination (-(ι q) ^ 2) * hδ
 
 theorem fixed_unit (hτι : ∀ r, τ (ι r) = ι r) (hτδ : τ δ = -δ)
@@ -104,7 +104,7 @@ theorem fixed_unit (hτι : ∀ r, τ (ι r) = ι r) (hτδ : τ δ = -δ)
   have hq : q = 0 := by
     have h := hinj 0 (2 * q) (by
       have := hτβ
-      simp only [map_add, map_mul, hτι, hτδ] at this
+      simp only [map_add (f := _), map_mul, hτι, hτδ] at this
       simp only [map_zero, map_mul, map_ofNat]
       linear_combination -this)
     exact (h2.mul_right_eq_zero).1 h.2
@@ -169,7 +169,7 @@ theorem exists_eps [IsLocalRing R] (hδ : δ * δ = ι D) (hτι : ∀ r, τ (ι
     have : φ (P ^ 2 - D * Q ^ 2) = (φ b - φ s0) ^ 2 - φ D * φ s1 ^ 2 +
         4 * φ D * φ b * φ s1 * (a : IsLocalRing.ResidueField R) +
         (φ D ^ 2 * φ s1 ^ 2 - φ D * (φ b + φ s0) ^ 2) * (a : IsLocalRing.ResidueField R) ^ 2 := by
-      simp only [P, Q, map_sub, map_add, map_mul, map_pow, hφc]
+      simp only [P, Q, map_sub, map_add (f := _), map_mul, map_pow, hφc]
       ring
     rw [this]; exact ha2)
   obtain ⟨e1, he1⟩ := hn1.exists_right_inv
@@ -178,7 +178,7 @@ theorem exists_eps [IsLocalRing R] (hδ : δ * δ = ι D) (hτι : ∀ r, τ (ι
   have he2' : ι (P ^ 2 - D * Q ^ 2) * ι e2 = 1 := by rw [← map_mul, he2, map_one]
   let u : O := ι 1 + ι c * δ
   have hτu : τ u = 1 - ι c * δ := by
-    simp only [u, map_add, map_mul, hτι, hτδ, map_one]; ring
+    simp only [u, map_add (f := _), map_mul, hτι, hτδ, map_one]; ring
   have huu : u * τ u = ι (1 - D * c ^ 2) := by
     have := norm_eq ι τ δ D hδ hτι hτδ 1 c
     simpa [u, one_pow] using this
@@ -186,7 +186,7 @@ theorem exists_eps [IsLocalRing R] (hδ : δ * δ = ι D) (hτι : ∀ r, τ (ι
   have htt : t * τ t = ι (P ^ 2 - D * Q ^ 2) := norm_eq ι τ δ D hδ hτι hτδ P Q
   have ht : ι b * u - τ u * (ι s0 + ι s1 * δ) = t := by
     rw [hτu]
-    simp only [t, u, P, Q, map_add, map_sub, map_mul, map_one]
+    simp only [t, u, P, Q, map_add (f := _), map_sub, map_mul, map_one]
     linear_combination (ι c * ι s1) * hδ
   refine ⟨u * u * ι e1, u * τ t * ι e2, ?_, ?_⟩
   · simp only [map_mul, hτι]
@@ -245,7 +245,7 @@ theorem exists_subring {d : ℕ} (B : Module.Basis (Fin 2) K A) (C : Module.Basi
         · rw [h.2]; exact R.zero_mem
       add_mem' := by
         intro a b ha hb j
-        rw [map_add, Finsupp.add_apply]
+        rw [map_add (f := _), Finsupp.add_apply]
         exact R.add_mem (ha j) (hb j)
       neg_mem' := by
         intro a ha j
@@ -256,7 +256,7 @@ theorem exists_subring {d : ℕ} (B : Module.Basis (Fin 2) K A) (C : Module.Basi
         have e : a * b = algebraMap K A (B.repr a 0 * B.repr b 0 + B.repr a 1 * B.repr b 1 * D) +
             algebraMap K A (B.repr a 0 * B.repr b 1 + B.repr a 1 * B.repr b 0) * B 1 := by
           conv_lhs => rw [eq_coord B hB0 a, eq_coord B hB0 b]
-          simp only [map_add, map_mul]
+          simp only [map_add (f := _), map_mul]
           linear_combination (algebraMap K A (B.repr a 1) * algebraMap K A (B.repr b 1)) * hD
         have h := coord_two B hB0
           (B.repr a 0 * B.repr b 0 + B.repr a 1 * B.repr b 1 * D)
@@ -348,7 +348,7 @@ theorem good_at (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin d) F E)
   have hstab : ∀ y ∈ O, sigR K σ y ∈ O := by
     intro y hy
     have hy' := (hOB y).1 hy
-    rw [eq_coord B hB0 y, map_add, map_mul, sigR_algebraMap σ v, sigR_algebraMap σ v, hσB]
+    rw [eq_coord B hB0 y, map_add (f := _), map_mul, sigR_algebraMap σ v, sigR_algebraMap σ v, hσB]
     have := hpq (B.repr y 0) (-(B.repr y 1)) (hy' 0) (Rs.neg_mem (hy' 1))
     simpa [map_neg] using this
   let τ : O →+* O := (sigR K σ).restrict O O hstab

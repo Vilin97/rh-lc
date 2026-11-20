@@ -37,7 +37,7 @@ lemma eS_mul (T : GoodSet K G) (s : T.S) (a : MonoidAlgebra K G) :
     simp only [Equiv.coe_mulRight, smul_mul_assoc, ← map_mul, mul_inv_rev]
     congr 2
     rw [mul_inv_cancel_left]
-  | add a b ha hb => rw [mul_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [mul_add, ha, hb, map_add (f := _), map_add (f := _)]
   | smul r a ha => rw [mul_smul_comm, ha, map_smul, map_smul]
 
 lemma exists_sum_eq_one {W : Type} [AddCommGroup W] [Module K W] [FiniteDimensional K W]

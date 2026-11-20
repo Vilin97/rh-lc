@@ -296,7 +296,7 @@ theorem kummer_eq_dlog : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∃ c : ℕ, 
     simpa only [Int.cast_sub, Int.cast_mul, Int.cast_natCast, Nat.cast_pow, Int.cast_pow] using this
   refine ⟨_, int_add (int_add (int_mul j1 l1) (int_mul j2 l2))
     (int_mul (int_pow (int_nat p) 7) (int_int t)), ?_⟩
-  simp only [map_add, map_sub, map_mul, map_div₀, map_natCast, map_intCast, map_one, map_zero,
+  simp only [map_add (f := _), map_sub, map_mul, map_div₀, map_natCast, map_intCast, map_one, map_zero,
     hfix g hg, hι.1, (mem_Gn.1 hg).1] at f1 f2 ⊢
   have hinv : (T.ζ n - 1) * (T.ζ n - 1)⁻¹ = 1 := mul_inv_cancel₀ hπ
   simp only [div_eq_mul_inv]

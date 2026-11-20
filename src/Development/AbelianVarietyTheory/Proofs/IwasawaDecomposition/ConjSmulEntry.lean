@@ -55,7 +55,7 @@ theorem redM_adj_congr : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EAf 
       intro y z
       apply Subtype.ext
       show uMat S T βS βT e (fun b => ι (y b + z b)) i j = _ + _
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact adj_add S T βS βT e _ _ i j)
   let g : (Fin S.rank → La) →+ kP PP := (resS D.host.F PP).toAddMonoidHom.comp f
   have hg : ∀ y, redM PP (uMat S T βS βT e fun b => ι (y b)) i j = g y := by
@@ -81,7 +81,7 @@ theorem redM_adj_congr : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EAf 
       rw [Pi.single_smul']
       exact hs a ha _
     · intro u v hu hv
-      rw [Pi.single_add, map_add, hu, hv, add_zero]
+      rw [Pi.single_add, map_add (f := _), hu, hv, add_zero]
   have h3 : g (x - x') = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← Finset.univ_sum_single (x - x'), map_sum]

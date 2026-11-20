@@ -92,10 +92,10 @@ theorem Stabs.aeval {f f' : Module.End E M} (hAB : A ≤ B) (hf : Stabs A B f) (
     · simp [zero_mem]
   | add p q hp hq =>
     refine ⟨⟨fun x hx => ?_, fun x hx => ?_⟩, ?_⟩
-    · rw [map_add, LinearMap.add_apply]; exact add_mem (hp.1.1 x hx) (hq.1.1 x hx)
-    · rw [map_add, LinearMap.add_apply]; exact add_mem (hp.1.2 x hx) (hq.1.2 x hx)
+    · rw [map_add (f := _), LinearMap.add_apply]; exact add_mem (hp.1.1 x hx) (hq.1.1 x hx)
+    · rw [map_add (f := _), LinearMap.add_apply]; exact add_mem (hp.1.2 x hx) (hq.1.2 x hx)
     · have := add_mem hp.2 hq.2
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       convert this using 1
       abel
   | monomial k a ih =>
@@ -114,7 +114,7 @@ theorem aeval_intertwine {f f' T : Module.End E M} (h : T * f = f' * T) (r : E[X
     T * Polynomial.aeval f r = Polynomial.aeval f' r * T := by
   induction r using Polynomial.induction_on with
   | C a => rw [aeval_C, aeval_C]; exact (Algebra.commutes a T).symm
-  | add p q hp hq => simp only [map_add, mul_add, add_mul, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), mul_add, add_mul, hp, hq]
   | monomial k a ih =>
     have e : ∀ g : Module.End E M, Polynomial.aeval g (C a * X ^ (k + 1)) = Polynomial.aeval g (C a * X ^ k) * g := fun g => by
       rw [pow_succ, ← mul_assoc, map_mul _ (C a * X ^ k) X, aeval_X]
@@ -244,7 +244,7 @@ theorem conj_of_isotropic {W : Submodule D.host.E V.V} (hW : GlobalTheory.Indefi
   obtain ⟨Y, hY⟩ := exists_adjoint (1 + T)
   have hTR : ∀ x y, V.hT (T x) y = V.hT x ((Y - 1) y) := fun x y => by
     have := hY x y
-    simp only [LinearMap.add_apply, Module.End.one_apply, map_add, LinearMap.sub_apply, map_sub] at this ⊢
+    simp only [LinearMap.add_apply, Module.End.one_apply, map_add (f := _), LinearMap.sub_apply, map_sub] at this ⊢
     rw [← this]; abel
   have hR : Y - 1 ∈ strictUp A B := by
     refine ⟨fun a ha => ?_, fun b hb => ?_, fun x => ?_⟩

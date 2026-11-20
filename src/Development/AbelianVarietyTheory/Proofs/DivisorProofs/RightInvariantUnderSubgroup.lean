@@ -14,7 +14,7 @@ theorem rStable_sup {G₀ : Subgroup H} {A B : Submodule ℂ (H → ℂ)} (hA : 
     RStable G₀ (A ⊔ B) := by
   intro φ hφ k hk
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hφ
-  rw [← rtL_apply, map_add]
+  rw [← rtL_apply, map_add (f := _)]
   exact Submodule.add_mem_sup (hA a ha k hk) (hB b hb k hk)
 
 theorem rStable_inf {G₀ : Subgroup H} {A B : Submodule ℂ (H → ℂ)} (hA : RStable G₀ A) (hB : RStable G₀ B) :

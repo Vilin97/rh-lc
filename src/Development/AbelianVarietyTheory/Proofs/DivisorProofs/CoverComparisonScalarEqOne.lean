@@ -45,7 +45,7 @@ theorem isIntegral_eig_of_congr (Λ : Submodule (𝓞 E) (Fin r → E)) (hfg : �
       induction hx using Submodule.span_induction with
       | mem x hx => exact h1 x hx
       | zero => exact map_zero φ
-      | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
       | smul a x _ hx =>
         have : (τ ∘ (a • x)) = τ a • (τ ∘ x) := by funext i; simp
         rw [hφ] at hx

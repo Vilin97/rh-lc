@@ -28,7 +28,7 @@ private theorem eq_zero_of_sum_eigenvectors_eq_zero_of_injective {M ι α : Type
       · rw [map_smul, hv i (Finset.mem_insert_of_mem hi) b, smul_comm]
       · have h1 := congrArg (T a) hsum
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [map_add, map_sum, map_zero, hv j (Finset.mem_insert_self _ _)] at h1
+          rw [map_add (f := _), map_sum, map_zero, hv j (Finset.mem_insert_self _ _)] at h1
         have h2 : v j = -∑ i ∈ s, v i := eq_neg_of_add_eq_zero_left hsum
         rw [Finset.sum_congr rfl fun i hi => hv i (Finset.mem_insert_of_mem hi) a] at h1
         simp only [sub_smul, Finset.sum_sub_distrib]
@@ -176,7 +176,7 @@ private theorem isHeis_sum_map_eq_zero_of_sum_eq_zero {R X M : Type} [CommRing R
         rw [map_smul, mul_smul]
         congr 1
         have h := isHeis_apply_add_eq_inv_smul_of_fixes hW (hL _ (he i)) (hfixρ i hi) (ρ x0)
-        rw [← map_add, ← hxi, ← ρ.map_smul w x0, hρ] at h
+        rw [← map_add (f := _), ← hxi, ← ρ.map_smul w x0, hρ] at h
         exact h
     _ = W (ρ x0) (L u) := by
         set_option synthInstance.maxHeartbeats 100000 in
@@ -265,7 +265,7 @@ theorem _root_.GlobalTheory.FinWeil.exists_weil_rep_of_vacua : ∀ {R X M : Type
     intro g x
     refine hext _ _ fun y e he => ?_
     simp only [LinearMap.comp_apply]
-    rw [hmul, map_smul, hgen _ _ _ he, hgen _ _ _ he, hmul, map_add, ← (ρ g).map_smul, hρ]
+    rw [hmul, map_smul, hgen _ _ _ he, hgen _ _ _ he, hmul, map_add (f := _), ← (ρ g).map_smul, hρ]
   have hmapmul : ∀ g h, A.map (ρ (g * h)) = (A.map (ρ h)).map (ρ g) := by
     intro g h; rw [map_mul, Module.End.mul_eq_comp, Submodule.map_comp]
   let Om : Γ →* Module.End ℂ M :=

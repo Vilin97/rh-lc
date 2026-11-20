@@ -74,7 +74,7 @@ theorem exists_primitive (p : ℕ) [Fact p.Prime] {N : Type} [AddCommGroup N] (n
   have hv : (PadicInt.toZModPow (p := p) M z).val < p ^ M := ZMod.val_lt _
   have hval : (PadicInt.toZModPow (p := p) M (z + 1)).val
       = ((PadicInt.toZModPow (p := p) M z).val + 1) % p ^ M := by
-    rw [map_add, map_one, ← ZMod.val_natCast]
+    rw [map_add (f := _), map_one, ← ZMod.val_natCast]
     push_cast
     rw [ZMod.natCast_zmod_val]
   simp only [hval]

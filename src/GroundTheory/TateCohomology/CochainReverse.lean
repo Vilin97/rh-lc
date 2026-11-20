@@ -176,7 +176,7 @@ def revₗ (n : ℕ) : ((Fin n → G) → A) →ₗ[k] ((Fin n → G) → A) whe
   toFun := revCochain n
   map_add' f g := by
     funext x
-    simp only [revCochain_apply, Pi.add_apply, map_add, smul_add]
+    simp only [revCochain_apply, Pi.add_apply, map_add (f := _), smul_add]
   map_smul' c f := by
     funext x
     simp only [revCochain_apply, Pi.smul_apply, map_smul, RingHom.id_apply]

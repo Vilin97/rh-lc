@@ -16,7 +16,7 @@ theorem ringHom_eq_on_adjoin_simple {E : Type} [Field E] [Algebra ℚ E] (f g : 
   induction hx using IntermediateField.adjoin_induction with
   | mem y hy => rw [Set.mem_singleton_iff.1 hy]; exact h
   | algebraMap q => simp
-  | add a b _ _ ha hb => rw [map_add, map_add, ha, hb]
+  | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   | inv a _ ha => rw [map_inv₀, map_inv₀, ha]
   | mul a b _ _ ha hb => rw [map_mul, map_mul, ha, hb]
 

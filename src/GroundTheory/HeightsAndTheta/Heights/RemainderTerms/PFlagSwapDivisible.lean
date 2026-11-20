@@ -17,7 +17,7 @@ theorem FlagSwapDivisible.dvd_sub_substitute {R σ : Type} [CommRing R] [Decidab
   induction Q using MvPolynomial.induction_on with
   | C r => simp [MvPolynomial.algebraMap_eq]
   | add p q hp hq =>
-    rw [map_add, add_sub_add_comm]
+    rw [map_add (f := _), add_sub_add_comm]
     exact dvd_add hp hq
   | mul_X p k hp =>
     rw [map_mul, aeval_X]

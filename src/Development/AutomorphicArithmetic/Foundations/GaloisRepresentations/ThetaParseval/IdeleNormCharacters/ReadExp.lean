@@ -95,7 +95,7 @@ private theorem piInf_read {F E : Type} [Field F] [NumberField F] [Field E] [Num
     rw [map_zero, map_zero]
     exact (map_zero ρ).symm
   | add x y hx hy =>
-    rw [map_add, hx, hy, map_add, ← map_add]
+    rw [map_add (f := _), hx, hy, map_add (f := _), ← map_add (f := _)]
     rfl
   | tmul a e =>
     rw [GlobalTheory.UnitaryHeckeBaseChange.toAdele_tmul]

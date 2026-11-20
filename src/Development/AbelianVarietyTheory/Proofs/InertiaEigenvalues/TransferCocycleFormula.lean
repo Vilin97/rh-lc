@@ -26,7 +26,7 @@ theorem transfer_cocycle_formula : ∀ (R G X : Type) [CommRing R] [Group G] [Ad
       rw [mul_smul]
       have e : (a • b • q).out⁻¹ * (a * b) * q.out
           = ((a • b • q).out⁻¹ * a * (b • q).out) * ((b • q).out⁻¹ * b * q.out) := by group
-      rw [e, hf _ (mem a (b • q)) _ (mem b q), map_add, rmul, rmul]
+      rw [e, hf _ (mem a (b • q)) _ (mem b q), map_add (f := _), rmul, rmul]
       congr 3
       group
     show ∑ q : G ⧸ H, ρ ((a * b) • q).out (f (((a * b) • q).out⁻¹ * (a * b) * q.out))
@@ -59,7 +59,7 @@ theorem transfer_cocycle_formula : ∀ (R G X : Type) [CommRing R] [Group G] [Ad
     have key : ∀ q : G ⧸ H, ρ (g • q).out (f ((g • q).out⁻¹ * g * q.out))
         = (f g + ρ g (f q.out)) - f (g • q).out := by
       intro q
-      rw [mul_assoc, hf, map_add, finv, rmul, mul_inv_cancel, map_one, Module.End.one_apply, hf]
+      rw [mul_assoc, hf, map_add (f := _), finv, rmul, mul_inv_cancel, map_one, Module.End.one_apply, hf]
       abel
     show ∑ q : G ⧸ H, ρ (g • q).out (f ((g • q).out⁻¹ * g * q.out)) = _
     set_option synthInstance.maxHeartbeats 100000 in

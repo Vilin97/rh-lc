@@ -18,7 +18,7 @@ theorem nonempty_invFun_dual_tprod_equiv (G V W : Type) [Group G] [AddCommGroup 
           simp only [Representation.tprod_apply, TensorProduct.map_tmul, TensorProduct.lift.tmul,
             LinearMap.lcomp_apply, Representation.dual_apply, Module.Dual.transpose_apply, LinearMap.comp_apply, h,
             Representation.inv_self_apply]
-        | add a b ha hb => simp only [map_add, ha, hb]⟩
+        | add a b ha hb => simp only [map_add (f := _), ha, hb]⟩
       map_add' := fun f f' => Subtype.ext (TensorProduct.ext' fun ξ w => by
         change ξ (f.toLinearMap w + f'.toLinearMap w) = ξ (f.toLinearMap w) + ξ (f'.toLinearMap w)
         exact map_add _ _ _)

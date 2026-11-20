@@ -134,7 +134,7 @@ theorem trHom_continuous : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
         Φ.symm (0, ((((x.2 : Formalism.UG.UPts σ J' (Formalism.MainNotions.S.Af F)) : GL (Fin n) (E ⊗[F] Formalism.MainNotions.S.Af F)) :
           Matrix (Fin n) (Fin n) (E ⊗[F] Formalism.MainNotions.S.Af F)) - 1) i j) := by
     funext x
-    rw [GlobalTheory.ThKUTr.mat_trHom, GlobalTheory.ThKUTr.rawT_val, GlobalTheory.ThKUTr.glueM_apply, ← map_add, ← map_add]
+    rw [GlobalTheory.ThKUTr.mat_trHom, GlobalTheory.ThKUTr.rawT_val, GlobalTheory.ThKUTr.glueM_apply, ← map_add (f := _), ← map_add (f := _)]
     congr 1
     ext <;> simp
   rw [key]

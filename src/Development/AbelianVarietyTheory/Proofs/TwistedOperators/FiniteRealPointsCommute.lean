@@ -25,7 +25,7 @@ private theorem eq_map_inl_fst_add_map_inr_snd_tmul {F A B E : Type} [CommRing F
     congr 1
     ext <;> simp
   | add u v hu hv =>
-    rw [map_add, map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _)]
     conv_lhs => rw [hu, hv]
     abel
 

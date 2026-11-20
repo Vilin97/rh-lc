@@ -115,7 +115,7 @@ theorem UpperTheory.V.Sd.finDim :
       { toFun := fun f i => (qExpansion 1 f).coeff i
         map_add' := fun f g => by
           ext i
-          simp only [CuspForm.coe_add, ModularForm.qExpansion_add one_pos hΓ f g, map_add,
+          simp only [CuspForm.coe_add, ModularForm.qExpansion_add one_pos hΓ f g, map_add (f := _),
             Pi.add_apply]
         map_smul' := fun c f => by
           ext i

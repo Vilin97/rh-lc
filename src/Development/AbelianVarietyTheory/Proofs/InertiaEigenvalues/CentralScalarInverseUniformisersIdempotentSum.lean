@@ -76,10 +76,10 @@ theorem map_comp (c : R →+* R) (hc : ∀ x, c (c x) = x) (u v : ι → R) :
     c (comp s p (fun i => c (p i)) u v) = comp s p (fun i => c (p i)) (fun i => c (v i)) (fun i => c (u i)) := by
   unfold comp
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_one, map_sum]
+    rw [map_add (f := _), map_one, map_sum]
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
-  simp only [map_add, map_mul, map_sub, map_one, hc]
+  simp only [map_add (f := _), map_mul, map_sub, map_one, hc]
   ring
 
 end Alg
@@ -174,10 +174,10 @@ theorem centralScalar : ∀ (D : D7) (V : HSp D) (Q : Finset (Pl D.host.E)) (es 
   refine ⟨exists_scalar V a hn, fun z hz => ⟨scalar_central V hz, scalar_fin V ?_ hz, scalar_supp V ?_ hz, ?_,
     scalar_inv V hn hz, ?_, ?_, ?_, ?_⟩⟩
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [ha, map_add, map_one, map_sum, Finset.sum_eq_zero, add_zero]
+    · rw [ha, map_add (f := _), map_one, map_sum, Finset.sum_eq_zero, add_zero]
     intro i hi
     have h0 := Formalism.IndefR.Fin.LevelGroupLemmas.Lat.infPart_of_splitIdem (hes i hi).1
-    rw [map_add, map_mul, map_mul, h0, GlobalTheory.PlaceVec.infPart_cA h0, zero_mul, zero_mul, add_zero]
+    rw [map_add (f := _), map_mul, map_mul, h0, GlobalTheory.PlaceVec.infPart_cA h0, zero_mul, zero_mul, add_zero]
   · have : a - 1 = ∑ PP ∈ Q, (es PP * (incA D ((ϖ PP : D.host.E)⁻¹) - 1) +
       cA D (es PP) * (incA D (star (ϖ PP : D.host.E)) - 1)) := by rw [ha, add_sub_cancel_left]
     conv_rhs => rw [this]

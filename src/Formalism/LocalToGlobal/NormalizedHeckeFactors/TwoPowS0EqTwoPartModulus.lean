@@ -295,7 +295,7 @@ def latRelSub {O : Type} [CommRing O] {φ : O →+* ℂ} {V : Type} [AddCommGrou
   zero_mem' := by simp [latRel]
   add_mem' := by
     intro a b ha hb
-    simp only [latRel, Set.mem_ofPred_eq, Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib] at ha hb ⊢
+    simp only [latRel, Set.mem_ofPred_eq, Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib] at ha hb ⊢
     rw [ha, hb, add_zero]
   smul_mem' := by
     intro c a ha

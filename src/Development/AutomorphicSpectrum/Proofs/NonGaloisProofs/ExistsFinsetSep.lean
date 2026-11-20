@@ -19,7 +19,7 @@ theorem mem_of_forall_pow {O M : Type} [CommRing O] [IsLocalRing O] [IsNoetheria
   haveI : Module.Finite O N := Module.Finite.iff_fg.2 hNfg
   have hE : ∀ e ∈ E, E.mkQ e = 0 := fun e he => (Submodule.Quotient.mk_eq_zero E).2 he
   obtain ⟨e₀, he₀, t₀, ht₀, hw₀⟩ := h 0
-  have hwN : E.mkQ w ∈ N := ⟨t₀, ht₀, by rw [hw₀, pow_zero, one_smul, map_add, hE e₀ he₀, zero_add]⟩
+  have hwN : E.mkQ w ∈ N := ⟨t₀, ht₀, by rw [hw₀, pow_zero, one_smul, map_add (f := _), hE e₀ he₀, zero_add]⟩
   have hI : Ideal.span {ϖ} ≠ ⊤ := fun h' => hϖ (Ideal.span_singleton_eq_top.1 h')
   have hbot := Ideal.iInf_pow_smul_eq_bot_of_isLocalRing (M := N) (Ideal.span {ϖ}) hI
   have hmem : (⟨E.mkQ w, hwN⟩ : N) ∈ (⨅ i : ℕ, Ideal.span {ϖ} ^ i • ⊤ : Submodule O N) := by
@@ -30,7 +30,7 @@ theorem mem_of_forall_pow {O M : Type} [CommRing O] [IsLocalRing O] [IsNoetheria
       apply Subtype.ext
       rw [Submodule.coe_smul]
       show E.mkQ w = ϖ ^ i • E.mkQ t
-      rw [hw, map_add, map_smul, hE e he, zero_add]
+      rw [hw, map_add (f := _), map_smul, hE e he, zero_add]
     rw [heq]
     exact Submodule.smul_mem_smul (Ideal.pow_mem_pow (Ideal.mem_span_singleton_self ϖ) i) Submodule.mem_top
   rw [hbot, Submodule.mem_bot] at hmem

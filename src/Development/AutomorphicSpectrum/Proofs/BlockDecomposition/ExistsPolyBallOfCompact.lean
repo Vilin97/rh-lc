@@ -492,7 +492,7 @@ theorem exists_polyBall_of_qC (z : τ.V ⊗[ℂ] σ.V) (hz : qC τ σ z = 0) :
     obtain ⟨s₂, h₂⟩ := hb
     obtain ⟨s, u, v⟩ := exists_val_ge s₁ s₂
     refine ⟨s, ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem (twKer_one_mono _ (polyBall_mono _ u) h₁) (twKer_one_mono _ (polyBall_mono _ v) h₂)
 
 variable (k) in

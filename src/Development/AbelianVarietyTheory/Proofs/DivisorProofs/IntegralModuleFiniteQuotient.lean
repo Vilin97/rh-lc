@@ -53,7 +53,7 @@ theorem finiteDimensional_span_pow_mul_pow :
       have e : H ^ i * H' ^ j * z = H ^ (i - N) * (H' ^ j * (ι * z)) + H ^ (i - N) * H' ^ j * s * z := by
         rw [← pow_sub_mul_pow H hi, mul_assoc (H ^ (i - N)), (hc.pow_pow N j).eq, ← hsum]
         simp only [mul_add, add_mul, mul_assoc]
-      rw [e, map_add, hΛ _ (pow_mul_mem_of_mul_mem hHI _ (pow_mul_mem_of_mul_mem hH'I _ (hIZ _ hι _ hz))), zero_add]
+      rw [e, map_add (f := _), hΛ _ (pow_mul_mem_of_mul_mem hHI _ (pow_mul_mem_of_mul_mem hH'I _ (hIZ _ hι _ hz))), zero_add]
       clear e hsum
       induction hs using Submodule.span_induction with
       | mem x hx =>
@@ -66,14 +66,14 @@ theorem finiteDimensional_span_pow_mul_pow :
         rw [e2]
         exact ih (i - N + k + j) (by omega) _ _ le_rfl _ (Z.mul_mem hzk hz)
       | zero => simp
-      | add x y _ _ hx hy => rw [mul_add, add_mul, map_add]; exact V.add_mem hx hy
+      | add x y _ _ hx hy => rw [mul_add, add_mul, map_add (f := _)]; exact V.add_mem hx hy
       | smul c x _ hx => rw [mul_smul_comm, smul_mul_assoc, map_smul]; exact V.smul_mem c hx
     by_cases hj : N' ≤ j
     · obtain ⟨ι, hι, s, hs, hsum⟩ := Submodule.mem_sup.1 hN'
       have e : H ^ i * H' ^ j * z = H ^ i * (H' ^ (j - N') * (ι * z)) + H ^ i * H' ^ (j - N') * s * z := by
         rw [← pow_sub_mul_pow H' hj, ← hsum]
         simp only [mul_add, add_mul, mul_assoc]
-      rw [e, map_add, hΛ _ (pow_mul_mem_of_mul_mem hHI _ (pow_mul_mem_of_mul_mem hH'I _ (hIZ _ hι _ hz))), zero_add]
+      rw [e, map_add (f := _), hΛ _ (pow_mul_mem_of_mul_mem hHI _ (pow_mul_mem_of_mul_mem hH'I _ (hIZ _ hι _ hz))), zero_add]
       clear e hsum
       induction hs using Submodule.span_induction with
       | mem x hx =>
@@ -83,7 +83,7 @@ theorem finiteDimensional_span_pow_mul_pow :
         rw [e2]
         exact ih (i + (j - N' + k)) (by omega) _ _ le_rfl _ (Z.mul_mem hzk hz)
       | zero => simp
-      | add x y _ _ hx hy => rw [mul_add, add_mul, map_add]; exact V.add_mem hx hy
+      | add x y _ _ hx hy => rw [mul_add, add_mul, map_add (f := _)]; exact V.add_mem hx hy
       | smul c x _ hx => rw [mul_smul_comm, smul_mul_assoc, map_smul]; exact V.smul_mem c hx
     exact hbase i j (by omega) (by omega) z hz
   apply Submodule.finiteDimensional_of_le (S₂ := V)

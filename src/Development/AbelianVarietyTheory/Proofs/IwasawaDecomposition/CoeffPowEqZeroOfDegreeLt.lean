@@ -21,7 +21,7 @@ theorem coeff_pow_eq_zero_of_degree_lt {σ : Type} [DecidableEq σ] (q : MvPolyn
     by_cases h2 : x.2 = 0
     · rw [h2, hq, mul_zero]
     · have hd : x.2.degree ≠ 0 := fun h0 => h2 ((Finsupp.degree_eq_zero_iff _).1 h0)
-      have hs : x.1.degree + x.2.degree = γ.degree := by rw [← hx', map_add]
+      have hs : x.1.degree + x.2.degree = γ.degree := by rw [← hx', map_add (f := _)]
       rw [ih x.1 (by omega), zero_mul]
 
 theorem coeff_expPS_eq_sum {σ : Type} [DecidableEq σ] (q : MvPolynomial σ ℂ)
@@ -40,7 +40,7 @@ theorem coeff_deriv_expPS : ∀ (σ : Type) [DecidableEq σ] (q : MvPolynomial �
           (((MvPolynomial.pderiv l q : MvPolynomial σ ℂ) : MvPowerSeries σ ℂ) * expPS q) := by
   intro σ _ q hq l α
   rw [coeff_expPS_eq_sum q hq _ (α.degree + 1 + 1)
-    (by rw [map_add, Finsupp.degree_single]; omega), Finset.mul_sum, MvPowerSeries.coeff_mul]
+    (by rw [map_add (f := _), Finsupp.degree_single]; omega), Finset.mul_sum, MvPowerSeries.coeff_mul]
   have h1 : ∀ n : ℕ, ((α l : ℂ) + 1) *
       (AddMonoidAlgebra.coeff (q ^ n) (α + Finsupp.single l 1) / (n.factorial : ℂ)) =
       AddMonoidAlgebra.coeff (MvPolynomial.pderiv l (q ^ n)) α / (n.factorial : ℂ) := by
@@ -67,7 +67,7 @@ theorem coeff_deriv_expPS : ∀ (σ : Type) [DecidableEq σ] (q : MvPolynomial �
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun x hx => ?_
   have hx' : x.1 + x.2 = α := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
-  have hs : x.1.degree + x.2.degree = α.degree := by rw [← hx', map_add]
+  have hs : x.1.degree + x.2.degree = α.degree := by rw [← hx', map_add (f := _)]
   rw [coeff_expPS_eq_sum q hq x.2 (α.degree + 1) (by omega), MvPolynomial.coeff_coe, Finset.mul_sum]
 
 end GlobalTheory.OscExpDeriv

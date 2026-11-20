@@ -92,7 +92,7 @@ theorem rowDiv_fullMinor_mul_self (R : Type) [CommRing R] {m : ℕ} (a : Fin m) 
 theorem rowDiv_add' (R : Type) [CommRing R] {r n : ℕ} (a b : Fin r) (k : ℕ) (f g : MvPolynomial (Fin r × Fin n) R) :
     rowDiv R a b k (f + g) = rowDiv R a b k f + rowDiv R a b k g := by
   unfold rowDiv
-  rw [map_add, Polynomial.coeff_add]
+  rw [map_add (f := _), Polynomial.coeff_add]
 
 theorem rowDiv_smul' (R : Type) [CommRing R] {r n : ℕ} (a b : Fin r) (k : ℕ) (t : R)
     (f : MvPolynomial (Fin r × Fin n) R) : rowDiv R a b k (t • f) = t • rowDiv R a b k f := by

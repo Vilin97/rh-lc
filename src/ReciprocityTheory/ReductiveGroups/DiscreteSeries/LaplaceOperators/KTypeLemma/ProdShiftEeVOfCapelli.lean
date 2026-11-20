@@ -312,7 +312,7 @@ theorem prodShift_eeV_of_capelli (E : Fin (m + 1) → Fin (m + 1) → Module.End
     intro k hk
     have e1 : ((shiftPoly θ).coeff k • (-eeV E) ^ k) f =
         ((-eeV E) ^ k) (eeV E (g k)) + ((-eeV E) ^ k) (if k = 0 then 0 else g (k - 1)) := by
-      rw [LinearMap.smul_apply, ← map_smul ((-eeV E) ^ k), ← hcoef k (Finset.mem_range.1 hk), map_add]
+      rw [LinearMap.smul_apply, ← map_smul ((-eeV E) ^ k), ← hcoef k (Finset.mem_range.1 hk), map_add (f := _)]
     have e2 : ((-eeV E) ^ k) (eeV E (g k)) = -(((-eeV E) ^ (k + 1)) (g k)) := by
       rw [pow_succ, Module.End.mul_apply, LinearMap.neg_apply, map_neg, neg_neg]
     rw [e1, e2]

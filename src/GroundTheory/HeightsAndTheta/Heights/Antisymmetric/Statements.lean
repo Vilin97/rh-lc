@@ -41,7 +41,7 @@ def antisymSpace (j : ℕ) : Submodule ℝ (MvPolynomial (T × Fin N) ℝ) where
   add_mem' := by
     rintro P Q ⟨hP, hP'⟩ ⟨hQ, hQ'⟩
     refine ⟨Submodule.add_mem _ hP hQ, fun σ hσ => ?_⟩
-    rw [map_add, hP' σ hσ, hQ' σ hσ, neg_add]
+    rw [map_add (f := _), hP' σ hσ, hQ' σ hσ, neg_add]
   smul_mem' := by
     rintro c P ⟨hP, hP'⟩
     refine ⟨Submodule.smul_mem _ c hP, fun σ hσ => ?_⟩
@@ -54,7 +54,7 @@ def antisymInv (j : ℕ) : Submodule ℝ (MvPolynomial (T × Fin N) ℝ) where
   add_mem' := by
     rintro P Q ⟨hP, hP'⟩ ⟨hQ, hQ'⟩
     refine ⟨Submodule.add_mem _ hP hQ, fun σ hσ => ?_⟩
-    rw [map_add, hP' σ hσ, hQ' σ hσ]
+    rw [map_add (f := _), hP' σ hσ, hQ' σ hσ]
   smul_mem' := by
     rintro c P ⟨hP, hP'⟩
     refine ⟨Submodule.smul_mem _ c hP, fun σ hσ => ?_⟩

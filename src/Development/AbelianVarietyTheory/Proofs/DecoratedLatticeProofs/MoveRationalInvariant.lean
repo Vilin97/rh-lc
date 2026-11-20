@@ -46,7 +46,7 @@ theorem finG_congr (V : HSp D) {g g' : GA D V} (h : finHom V g = finHom V g') : 
 theorem toEAf_cA (a : AE D) : toEAf D (cA D a) = Formalism.UG.sigR D.sp.cm.sig (Af D.host.F) (toEAf D a) := by
   induction a using TensorProduct.induction_on with
   | zero => simp only [RingHom.map_zero]
-  | add a b ha hb => simp only [RingHom.map_add, ha, hb]
+  | add a b ha hb => simp only [RingHom.map_add (f := _), ha, hb]
   | tmul y e => rfl
 
 theorem sd_lat (V : HSp D) (hV : V.gram = 1) (g : GA D V) :

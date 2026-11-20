@@ -138,7 +138,7 @@ theorem cmExists : CMCurve → CMPoint → ThetaUnifAV → Out.Laws → Out.Laws
     refine additive_ext (he j.isLeft).1.2.2.2.1 (u := fun z => κ (κ'.symm (e _ z ≫ Φ j)))
       (v := fun z => FU.ex i Pe (F j z)) (fun z w => ?_) (fun z w => ?_) (fun a s => ?_) z
     · simp only [hadd, map_mul]
-    · simp only [map_add, FU.ex_add i Pe hP]
+    · simp only [map_add (f := _), FU.ex_add i Pe hP]
     · apply Over.OverMorphism.ext
       simp only [map_smul, hFP, hκ]
       refine htie j.isLeft ⟨Z.f j a, Z.pure j a⟩ s _ (Over.w _) ?_

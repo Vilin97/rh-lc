@@ -33,7 +33,7 @@ theorem existsUnique_coords_baseChange (K : Type) [CommRing K] [Algebra ℚ K]
     | tmul a c =>
       simp [F, P, E, φ, TensorProduct.tmul_sum]
     | add a b ha hb =>
-      simp only [map_add, ha, hb, Pi.add_apply, add_mul, Finset.sum_add_distrib]
+      simp only [map_add (f := _), ha, hb, Pi.add_apply, add_mul, Finset.sum_add_distrib]
   refine ⟨P (F.symm y), ?_, ?_⟩
   · show y = _
     rw [← key, LinearEquiv.apply_symm_apply]

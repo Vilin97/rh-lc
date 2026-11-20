@@ -42,7 +42,7 @@ theorem series_sum {D : D7} {S T : HSp D} (B : Base S T) (hB : B.Good) (ω : Pai
       (c a • f a + ∑ τ ∈ s, c τ • f τ) P) 0 = c a * ω (h, g) (pureTensorO B.F.ψ B.F.θ S T (fun _ => 1) B.F.sT (fun τ => (B.F.BS τ).val) B.F.BT
       (f a) P) 0 + ω (h, g) (pureTensorO B.F.ψ B.F.θ S T (fun _ => 1) B.F.sT (fun τ => (B.F.BS τ).val) B.F.BT
       (∑ τ ∈ s, c τ • f τ) P) 0
-    rw [GlobalTheory.FockFiniteHeis.pureTensorO_lin _ _ _ _ hB.frame.vac.1 hB.frame.vac.2.inf _ _ _ _ _ (hf a) (hθ s), map_add, map_smul]
+    rw [GlobalTheory.FockFiniteHeis.pureTensorO_lin _ _ _ _ hB.frame.vac.1 hB.frame.vac.2.inf _ _ _ _ _ (hf a) (hθ s), map_add (f := _), map_smul]
     rfl
 
 theorem theta_vecAt {D : D7} {S T : HSp D} {B : Base S T} (hB : B.Good) {Q : Finset (Pl D.host.E)} (hQ : B.admitted Q)

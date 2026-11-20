@@ -40,7 +40,7 @@ theorem sigA_sigA (x : (I.E ⊗[I.F] Af I.F)) : sigA I (sigA I x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a b => rw [e, e, star_star]
-  | add y z hy hz => rw [map_add, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
 
 theorem sigA_mem {x : (I.E ⊗[I.F] Af I.F)} (hx : x ∈ IntAf I.F I.E) : sigA I x ∈ IntAf I.F I.E := by
   have e1 : ∀ r : Af I.F, sigA I ((1 : I.E) ⊗ₜ[I.F] r) = (1 : I.E) ⊗ₜ[I.F] r := fun r => by
@@ -70,7 +70,7 @@ theorem natCast_eq (m : ℕ) : (m : (I.E ⊗[I.F] Af I.F)) = Formalism.UG.inclE 
 theorem hA_add_left (x y z : VA I) : hA I (x + y) z = hA I x z + hA I y z := by
   simp only [hA, Formalism.UG.hform, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
-  simp only [Pi.add_apply, map_add]
+  simp only [Pi.add_apply, map_add (f := _)]
   ring
 
 theorem hA_add_right (x y z : VA I) : hA I x (y + z) = hA I x y + hA I x z := by
@@ -114,7 +114,7 @@ theorem incl_apply (x : Fin I.n → I.E) (i : Fin I.n) :
 
 theorem incl_add (x y : Fin I.n → I.E) : incl I (x + y) = incl I x + incl I y := by
   funext i
-  simp only [incl, Pi.add_apply, map_add]
+  simp only [incl, Pi.add_apply, map_add (f := _)]
 
 theorem incl_sub (x y : Fin I.n → I.E) : incl I (x - y) = incl I x - incl I y := by
   funext i

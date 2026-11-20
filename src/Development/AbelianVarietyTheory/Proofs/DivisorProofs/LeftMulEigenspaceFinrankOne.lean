@@ -9,7 +9,7 @@ theorem eig_leftMulMatrix_finrank : ∀ (C : Type) [Field C] (O : Type) [CommRin
   set ψ : R →+* C := (algebraMap O C).comp φ with hψ
   let f : (Fin n → C) → Λ → C := fun w x => ∑ i, ψ (b.repr x i) * w i
   have f_add : ∀ w x y, f w (x + y) = f w x + f w y := by
-    intro w x y; simp [f, map_add, add_mul, Finset.sum_add_distrib]
+    intro w x y; simp [f, map_add (f := _), add_mul, Finset.sum_add_distrib]
   have f_smul : ∀ w (r : R) x, f w (r • x) = ψ r * f w x := by
     intro w r x; simp [f, map_mul, Finset.mul_sum, mul_assoc]
   have f_basis : ∀ w j, f w (b j) = w j := by

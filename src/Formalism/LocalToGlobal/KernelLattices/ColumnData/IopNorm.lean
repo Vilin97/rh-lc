@@ -183,7 +183,7 @@ theorem re_Hf_add' (T : Tor D) (z x : VC D N N') :
       (Hf D T z z).re + 2 * (Hf D T z x).re + (Hf D T x x).re := by
   have hadd : Hf D T (z + x) (z + x) = Hf D T z z + Hf D T z x + Hf D T x z + Hf D T x x := by
     unfold Formalism.L2.Ker.Cd.TaylorLogMetric.Hf
-    simp only [Pi.add_apply, map_add, add_mul, mul_add, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib]
     ring
   rw [hadd, Hf_swap_eq_conj T z x]
   simp only [Complex.add_re, Complex.conj_re]

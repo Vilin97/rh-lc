@@ -40,7 +40,7 @@ def starL (G : HTGroup p) : ℚ_[p] ⊗[ℚ] G.C →ₗ[ℚ_[p]] ℚ_[p] ⊗[ℚ
     | tmul a c =>
       rw [TensorProduct.smul_tmul', starT_tmul, starT_tmul, TensorProduct.smul_tmul']; rfl
     | add x y hx hy =>
-      simp only [smul_add, map_add, MulOpposite.unop_add, RingHom.id_apply] at hx hy ⊢
+      simp only [smul_add, map_add (f := _), MulOpposite.unop_add, RingHom.id_apply] at hx hy ⊢
       rw [hx, hy]
 
 def ent (G : HTGroup p) (w : Fin G.m) (r s : Fin G.n) : ℚ_[p] ⊗[ℚ] G.C →ₗ[ℚ_[p]] PadicAlgCl p :=

@@ -97,7 +97,7 @@ private lemma val_untilt_sub_one (hv : v.Integers O) (x : PreTilt O p)
     (hlt : v (p : C) < v (algebraMap O C x.untilt - 1)) :
     v (algebraMap O C (x - 1).untilt) = v (algebraMap O C x.untilt - 1) := by
   obtain ⟨t, ht⟩ := untilt_sub_one x
-  rw [ht, map_add, map_sub, map_one]
+  rw [ht, map_add (f := _), map_sub, map_one]
   have hpt : v (algebraMap O C ((p : O) * t)) ≤ v (p : C) := by
     rw [map_mul, map_natCast, map_mul]
     calc v (p : C) * v (algebraMap O C t) ≤ v (p : C) * 1 := mul_le_mul_of_nonneg_left (hv.map_le_one t) (by positivity)

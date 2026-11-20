@@ -260,7 +260,7 @@ theorem exists_approx (hv : ∀ x : K, vLa la' (algebraMap K K' x) = vLa la x) {
       obtain ⟨x, hx⟩ := ih
       obtain ⟨y, hy⟩ := step n _ hx
       refine ⟨x + y, ?_⟩
-      simpa only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib, sub_sub] using hy
+      simpa only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, sub_sub] using hy
   have hκ' : algebraMap K K' κ ≠ 0 := by simpa using hκ
   have hκv : la'.valuation K' (algebraMap K K' κ) ≠ 0 := by simpa using hκ
   obtain ⟨x, hx⟩ := all (-WithZero.log (la'.valuation K' (algebraMap K K' κ)))
@@ -372,7 +372,7 @@ theorem supSet_descent : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hx i]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_mul, h', add_mul, Finset.sum_mul, mul_assoc]
+      simp only [map_add (f := _), map_sum, map_mul, h', add_mul, Finset.sum_mul, mul_assoc]
     congr 1
     exact Finset.sum_congr rfl fun j _ => by ring
   refine ⟨d + m, Fin.append (fun j => (b j : c'.F)) ρ, Fin.append F fun i => κ i • fs i, fun i => ?_, fun i => ?_, ?_⟩

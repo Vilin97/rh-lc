@@ -69,7 +69,7 @@ theorem span_twistDets_eq {E K : Type} [Field E] [NumberField E] [Field K] [Numb
         exact key c hc
       | zero => intro m _; simp
       | add x y _ _ hx hy =>
-        intro m hm; rw [map_add, mul_add]; exact add_mem (hx m hm) (hy m hm)
+        intro m hm; rw [map_add (f := _), mul_add]; exact add_mem (hx m hm) (hy m hm)
       | smul a x _ hx =>
         intro m hm
         rw [Algebra.smul_def, map_mul]

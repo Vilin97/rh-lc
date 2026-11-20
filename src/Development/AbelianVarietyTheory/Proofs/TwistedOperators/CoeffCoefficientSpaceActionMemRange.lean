@@ -34,7 +34,7 @@ theorem coeff_rhoVr_mem_range : ∀ {ι : Type} [Fintype ι] {n : ℕ} {E : Type
       rw [map_C, Formalism.GradedWeylDivisibility.blockAct, aeval_C]
       exact ⟨C a, by rw [map_C]; rfl⟩
     | add p q hp hq =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem hp hq
     | mul_X p w hp =>
       rw [map_mul, map_mul, map_X]

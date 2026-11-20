@@ -79,7 +79,7 @@ def image (om : G × H →* Module.End ℂ (Y → ℂ)) (hom : ∀ x, ∀ φ ∈
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mem_image_iff (om : G × H →* Module.End ℂ (Y → ℂ)) (hom : ∀ x, ∀ φ ∈ SB Y, om x φ ∈ SB Y)
     {Θ : Representation ℂ H T} {p : SB Y →ₗ[ℂ] ℂ ⊗[ℂ] T}
@@ -136,7 +136,7 @@ theorem chain_bounded_and_sup_proper :
     obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.1 hm
     have e1 : φ = (⟨a, hs.2.1 ha⟩ : SB Y) + ⟨b, hs'.2.1 hb⟩ := Subtype.ext hab.symm
     have e2 : t = TensorProduct.lid ℂ T (p ⟨a, hs.2.1 ha⟩) + TensorProduct.lid ℂ T (p ⟨b, hs'.2.1 hb⟩) := by
-      rw [← map_add, ← map_add, ← e1, hφ, LinearEquiv.apply_symm_apply]
+      rw [← map_add (f := _), ← map_add (f := _), ← e1, hφ, LinearEquiv.apply_symm_apply]
     rw [e2]
     exact Submodule.add_mem_sup ⟨_, ha, rfl⟩ ⟨_, hb, rfl⟩
 

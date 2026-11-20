@@ -103,7 +103,7 @@ def OE : Subring (WCb l) where
     obtain ⟨m, s, y, h⟩ := hw n
     obtain ⟨m', s', y', h'⟩ := hw' n
     refine ⟨m + m', X ^ m' * s + X ^ m * s', bk.evW X ^ m' * y + bk.evW X ^ m * y', ?_⟩
-    rw [map_add, map_mul, map_mul, map_pow, map_pow]
+    rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow]
     linear_combination bk.evW X ^ m' * h + bk.evW X ^ m * h'
   mul_mem' {w w'} hw hw' n := by
     obtain ⟨m, s, y, h⟩ := hw n

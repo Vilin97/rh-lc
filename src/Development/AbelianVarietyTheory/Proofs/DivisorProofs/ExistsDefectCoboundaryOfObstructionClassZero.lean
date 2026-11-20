@@ -26,7 +26,7 @@ theorem exists_cob : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Ideal
       (L.ker T') (L.B T'') (F.obj T'') (L.p T'') (L.semi T'') (L.surj T'') (L.ker T'') (L.ρ b) (mp F b)
       (L.nat b) (σ T') (σ T'') (hσ T') (hσ T'')).1 (f T T' a)
     have e := congrFun (congrFun (congrFun (congrFun (congrFun hf T) T') T'') a) b
-    rw [← e, d1_apply, map_add, map_sub, hnat]
+    rw [← e, d1_apply, map_add (f := _), map_sub, hnat]
     rfl
 
 end GlobalTheory.ObsCob

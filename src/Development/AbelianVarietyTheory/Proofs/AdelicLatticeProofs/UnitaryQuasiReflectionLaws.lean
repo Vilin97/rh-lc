@@ -70,7 +70,7 @@ private theorem hermE_add_smul_right' (v x y : Fin n → E) (t : E) :
       _root_.GlobalTheory.UnRep.hermE c G v y + c t * _root_.GlobalTheory.UnRep.hermE c G v x := by
   have hfun : (fun b => c ((y + t • x) b)) = (fun b => c (y b)) + c t • fun b => c (x b) := by
     funext b
-    simp [map_add, map_mul]
+    simp [map_add (f := _), map_mul]
   simp only [_root_.GlobalTheory.UnRep.ReflLaws.hermE_eq_dot, hfun, Matrix.mulVec_add,
     Matrix.mulVec_smul, add_dotProduct, smul_dotProduct, smul_eq_mul]
 

@@ -180,13 +180,13 @@ theorem ideal_ne_zero_and_count_eq_zero : ∀ {F E : Type} [Field F] [NumberFiel
   have hzy : ∀ z ∈ Y.L, form σ Y.J z H.y • H.x ∈ Y.L := fun z hz => by
     obtain ⟨a, t, u, ha, -, -, rfl⟩ := hH.split z hz
     have : formL σ Y.J H.y (a • H.x + H.ι *ᵥ u + t • H.y) = a := by
-      rw [map_add, map_add, map_smul, map_smul]
+      rw [map_add (f := _), map_add (f := _), map_smul, map_smul]
       simp [formL_apply, hH.xy, hH.yy, (hH.orth u).2]
     rwa [show form σ Y.J _ H.y = a from this]
   have hzx : ∀ z ∈ Y.L, form σ Y.J z H.x • H.y ∈ Y.L := fun z hz => by
     obtain ⟨a, t, u, -, ht, -, rfl⟩ := hH.split z hz
     have : formL σ Y.J H.x (a • H.x + H.ι *ᵥ u + t • H.y) = -t := by
-      rw [map_add, map_add, map_smul, map_smul]
+      rw [map_add (f := _), map_add (f := _), map_smul, map_smul]
       simp [formL_apply, hH.xx, hyx, (hH.orth u).1]
     rw [show form σ Y.J _ H.x = -t from this, neg_smul]
     exact neg_mem ht

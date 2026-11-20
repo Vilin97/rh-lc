@@ -115,7 +115,7 @@ theorem pow_bound (𝔞 : Submodule (𝓞 E) E) (B : ℝ) (hB : ∀ x ∈ 𝔞, 
     refine Submodule.mul_induction_on hy (fun m hm k hk => ?_) (fun x y hx hy => ?_)
     · rw [map_mul, norm_mul, pow_succ]
       exact mul_le_mul (pow_bound 𝔞 B hB hB0 n m hm) (hB k hk) (norm_nonneg _) (pow_nonneg hB0 n)
-    · rw [map_add]
+    · rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
 
 theorem nu_pow (𝔞 : Submodule (𝓞 E) E) (h : ℕ) (h0 : h ≠ 0) (z : E)

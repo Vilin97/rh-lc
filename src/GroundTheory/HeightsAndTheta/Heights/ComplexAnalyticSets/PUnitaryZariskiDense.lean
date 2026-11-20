@@ -14,7 +14,7 @@ theorem eval_aeval_subst {σ τ : Type*} (F : σ → MvPolynomial τ ℂ) (p : M
     (x : τ → ℂ) : eval x (aeval F p) = eval (fun i => eval x (F i)) p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p i hp => rw [map_mul, map_mul, hp, aeval_X, map_mul, eval_X]
 
 theorem polyEval_aeval_subst {σ : Type*} (F : σ → Polynomial ℂ) (p : MvPolynomial σ ℂ) (z : ℂ) :

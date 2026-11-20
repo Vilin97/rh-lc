@@ -112,7 +112,7 @@ theorem _root_.GlobalTheory.UnramifiedDiscriminant.exists_discr_notMem (F E : Ty
   have hy : (y : E) = σ x := rfl
   obtain ⟨t, ht⟩ := _root_.GlobalTheory.UnramifiedDiscriminant.exists_int_of_conj_eq h (x + y) (by
     show σ ((x : E) + σ x) = (x : E) + σ x
-    rw [map_add, isCMExt_conj_conj h, add_comm])
+    rw [map_add (f := _), isCMExt_conj_conj h, add_comm])
   obtain ⟨n, hn⟩ := _root_.GlobalTheory.UnramifiedDiscriminant.exists_int_of_conj_eq h (x * y) (by
     show σ ((x : E) * σ x) = (x : E) * σ x
     rw [map_mul, isCMExt_conj_conj h, mul_comm])

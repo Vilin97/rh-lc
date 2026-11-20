@@ -49,7 +49,7 @@ theorem GlobalTheory.BKGal.gal_sub_value_sigma_sub_y_mem_filZero : ∀ (l : ℕ)
   have key : R.jB (toBcris t ϖ D.toPhiMod σ) - b₂ = R.jB (toBcris t ϖ D.toPhiMod ξw) +
       (R.jB (toBcris t ϖ D.toPhiMod (σ - ξw)) - b₂) := by
     rw [map_sub, map_sub]; abel
-  rw [key, map_add]
+  rw [key, map_add (f := _)]
   convert add_mem h2 (sub_mem h4 h3) using 1
   abel
 

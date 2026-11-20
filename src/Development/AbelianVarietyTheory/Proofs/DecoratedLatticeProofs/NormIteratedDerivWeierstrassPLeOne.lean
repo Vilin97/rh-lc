@@ -18,7 +18,7 @@ def intAt (ι : ℂ ≃+* ℂ_[p]) : Subring ℂ where
     exact mul_le_one₀ ha (norm_nonneg _) hb
   one_mem' := by simp
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
   zero_mem' := by simp
   neg_mem' := fun {a} ha => by simpa using ha

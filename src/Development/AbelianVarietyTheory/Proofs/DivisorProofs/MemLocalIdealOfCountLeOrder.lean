@@ -158,7 +158,7 @@ theorem val_le_of_mem_locId {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpect
     calc _ ≤ 1 * WithZero.exp (-FractionalIdeal.count E w 𝔞) := mul_le_mul' h1 h2
       _ = _ := one_mul _
   | zero => rw [map_zero, map_zero]; exact zero_le'
-  | add y z _ _ hy hz => rw [map_add]; exact (Valuation.map_add _ _ _).trans (max_le hy hz)
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact (Valuation.map_add _ _ _).trans (max_le hy hz)
   | neg y _ hy => rw [map_neg, Valuation.map_neg]; exact hy
 
 theorem mem_locId_of_count_le_ordAt (v : Pl F) (𝔞 : FractionalIdeal (𝓞 E)⁰ E) (h𝔞 : 𝔞 ≠ 0)

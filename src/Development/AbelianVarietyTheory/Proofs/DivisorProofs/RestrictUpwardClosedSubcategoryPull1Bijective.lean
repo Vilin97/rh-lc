@@ -86,7 +86,7 @@ theorem restrict_upwardClosed_subcategory_pull1_bijective : ∀ (R : Type) [Comm
     · have k1 := hf _ _ (φ ≫ ψ) S u hp
       have k2 := hf _ _ φ S (ψ ≫ u) hp
       have k3 := hf _ _ ψ S u hp
-      simp only [map_sub, map_add, mp_comp, Category.assoc] at k1 k2 ⊢
+      simp only [map_sub, map_add (f := _), mp_comp, Category.assoc] at k1 k2 ⊢
       linear_combination k1 - k2 - k3
     · rw [CoefMap.pullCohomologyOne_class]
       congr 1

@@ -222,7 +222,7 @@ theorem mem_GK_iff (K : Loc.FinExt l)
     induction hy using IntermediateField.adjoin_induction with
     | mem y hy => obtain ⟨x, rfl⟩ := hy; exact h x
     | algebraMap y => exact τ.commutes y
-    | add a b _ _ ha hb => rw [map_add, ha, hb]
+    | add a b _ _ ha hb => rw [map_add (f := _), ha, hb]
     | inv a _ ha => rw [map_inv₀, ha]
     | mul a b _ _ ha hb => rw [map_mul, ha, hb]
 

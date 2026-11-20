@@ -51,7 +51,7 @@ theorem invariant_factors_submodule : InvariantFactorsSubmodule := by
     have hfa : f (fun c => coef c) = P.mkQ (π ^ E • x) := by
       show ∑ c : C, coef c • P.mkQ (c : X) = _
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [← hpz, map_add, Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero P).mpr hp, zero_add,
+        rw [← hpz, map_add (f := _), Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero P).mpr hp, zero_add,
         ← hcoef, map_sum, ← Finset.sum_coe_sort C]
       refine Finset.sum_congr rfl fun c _ => ?_
       rw [map_smul]

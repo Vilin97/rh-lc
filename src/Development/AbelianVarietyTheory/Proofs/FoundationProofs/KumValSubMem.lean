@@ -174,7 +174,7 @@ theorem htv_coeff : ∀ (l : ℕ) [Fact l.Prime], l ≠ 2 → ∃ c : ℕ, ∀ (
     have h3 := (hj _).1 (hgA i)
     generalize ζ ^ (y : ZMod (l ^ m)).val * (Polynomial.derivative (P i)).eval (ζ ^ (y : ZMod (l ^ m)).val) /
         (P i).eval (ζ ^ (y : ZMod (l ^ m)).val) = g at h2 h3 ⊢
-    simp only [map_mul, map_add, map_sub, map_pow, map_natCast] at h2
+    simp only [map_mul, map_add (f := _), map_sub, map_pow, map_natCast] at h2
     have h4 := mul_mem_ball (ho i) (add_mem (add_mem (mul_mem_ball hpc h1) (ball_pow_mono hp1 (Nat.sub_le m c₀) h2))
       (mul_mem_ball hpc (mul_mem_ball h3 (ball_pow_mono hp1 (Nat.sub_le m c₀) hlam))))
     convert h4 using 1

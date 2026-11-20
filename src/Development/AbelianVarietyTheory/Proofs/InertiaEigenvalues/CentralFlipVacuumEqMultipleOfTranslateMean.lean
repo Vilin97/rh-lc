@@ -137,7 +137,7 @@ theorem moved_vacuum_eq_mean : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ
     rw [c1, c2, Matrix.one_mul, Matrix.mul_one] at e1 e2
     have h0 := hGf τ z'
     unfold annih at h0 ⊢
-    rw [hH, ← e1, ← e2, ← map_smul, ← map_add, h0, map_zero]
+    rw [hH, ← e1, ← e2, ← map_smul, ← map_add (f := _), h0, map_zero]
   have hHl : IsLatVac (heisO ψ V W) (latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) (fun _ => True)) H := by
     refine ⟨fun u hu => ?_, fun e he u hu hh => ?_⟩
     · rw [hHh, hfix2 u hu]

@@ -77,13 +77,13 @@ theorem fock_keeps_ker : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Num
       · intro w' _ h
         simp [Yg, Function.update_of_ne h, Main.atPl_zero]
       · simp
-    rw [hsum, map_zero, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add, map_add, map_smul,
+    rw [hsum, map_zero, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add (f := _), map_add (f := _), map_smul,
       map_smul] at key
     change R.p (Φ T) = 0 at hT
     rw [hT, smul_zero, add_zero] at key
     exact key
   obtain ⟨Y₁, h₁, Y₂, h₂, rfl⟩ := GlobalTheory.CoverDS.exists_decomp Y
-  rw [map_add, map_smul, Main.atPl_add, Main.atPl_smul]
+  rw [map_add (f := _), map_smul, Main.atPl_add, Main.atPl_smul]
   exact keeps_add (hreal _ h₁) (keeps_smul _ (hreal _ h₂))
 
 end GlobalTheory.FockBridge.KerStable

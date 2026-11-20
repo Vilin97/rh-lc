@@ -63,7 +63,7 @@ theorem frame_coords_lift {W K₀ K₁ : Type} [CommRing W] [IsDomain W] [Field 
       have e := congrArg i₁ (hNJ j i)
       rw [h1J] at e
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [Fintype.sum_option, u, Option.elim_none, Option.elim_some, map_add, map_sum, map_mul, Finset.mul_sum] at e
+        simp only [Fintype.sum_option, u, Option.elim_none, Option.elim_some, map_add (f := _), map_sum, map_mul, Finset.mul_sum] at e
       simp only [sub_mul, Finset.sum_sub_distrib, _root_.mul_assoc]
       linear_combination -e)
     intro l

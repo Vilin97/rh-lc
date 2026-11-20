@@ -14,7 +14,7 @@ variable {O A R : Type} [CommRing O] [CommRing A] [Algebra O A] [CommRing R]
 
 private def zmJ (ι : ℕ → A →+ R) (p : Ideal R) : Ideal A where
   carrier := {a | ∀ h n, ι n (h * a) ∈ p}
-  add_mem' {a b} ha hb h n := by rw [mul_add, map_add]; exact add_mem (ha h n) (hb h n)
+  add_mem' {a b} ha hb h n := by rw [mul_add, map_add (f := _)]; exact add_mem (ha h n) (hb h n)
   zero_mem' h n := by simp
   smul_mem' c a ha h n := by rw [smul_eq_mul, ← mul_assoc]; exact ha _ n
 
@@ -113,7 +113,7 @@ private theorem zm_iota {O A : Type} [CommRing O] [CommRing A] [Algebra O A] (�
       map_add' := fun a b => by
         apply Subtype.ext
         show MvPolynomial.monomial _ _ = MvPolynomial.monomial _ _ + MvPolynomial.monomial _ _
-        simp [map_add] }
+        simp [map_add (f := _)] }
   refine ⟨ι, ?_, ?_⟩
   · intro n j a ha hj
     apply Subtype.ext

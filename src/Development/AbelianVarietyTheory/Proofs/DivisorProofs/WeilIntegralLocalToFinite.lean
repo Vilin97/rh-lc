@@ -42,7 +42,7 @@ theorem exists_factor_pi {O B : Type} [CommRing O] [IsDomain O] [CommRing B] [Al
       map_one' := h1
       map_mul' := fun a b => by rw [Pi.single_mul, map_mul]
       map_zero' := by simp only [Pi.single_zero, map_zero]
-      map_add' := fun a b => by simp only [Pi.single_add, map_add]
+      map_add' := fun a b => by simp only [Pi.single_add, map_add (f := _)]
       commutes' := fun r => by
         change χ (Pi.single i (algebraMap O (T i) r)) = _
         rw [Algebra.algebraMap_eq_smul_one, Pi.single_smul, map_smul, h1, smul_eq_mul, _root_.mul_one]

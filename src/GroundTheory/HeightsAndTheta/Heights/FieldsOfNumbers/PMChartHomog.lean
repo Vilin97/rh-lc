@@ -34,7 +34,7 @@ theorem finsuppProd_chartVar (u : ∀ k, ι k) (e : (Σ k, ι k) →₀ ℕ) :
   induction e using Finsupp.induction_linear with
   | zero => simp [chartMonomial]
   | add f g hf hg =>
-    rw [Finsupp.prod_add_index' (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _), hf, hg, map_add,
+    rw [Finsupp.prod_add_index' (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _), hf, hg, map_add (f := _),
       chartMonomial_add]
   | single v n =>
     rw [Finsupp.prod_single_index (by simp), Finsupp.weight_single]

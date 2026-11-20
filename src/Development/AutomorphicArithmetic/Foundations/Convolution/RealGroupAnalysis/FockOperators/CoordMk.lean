@@ -72,7 +72,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Fo.coordMk :
   have hsq : ∀ τ : E →+* ℂ, τ D.θ ^ 2 = cw (pl F τ) (rt D.δ) := fun τ => by
     rw [cw_rt_pl, ← map_pow, D.sq]
   refine ⟨fun τ u t => ?_, fun τ => ⟨hsq τ, ?_, ?_⟩, fun w => ?_, fun w => ?_⟩
-  · rw [Dat.mkE, map_add, map_add, map_mul, map_mul, coord_adeleMap, coord_adeleMap, coord_algebraMap, mul_comm (cw _ t)]
+  · rw [Dat.mkE, map_add (f := _), map_add (f := _), map_mul, map_mul, coord_adeleMap, coord_adeleMap, coord_algebraMap, mul_comm (cw _ t)]
   · obtain ⟨r, hr, e⟩ := hneg (pl F τ)
     have h := (hsq τ).trans e
     have hre := congrArg Complex.re h

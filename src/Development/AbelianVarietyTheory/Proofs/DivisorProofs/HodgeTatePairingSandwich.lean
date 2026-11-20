@@ -148,7 +148,7 @@ theorem al_coordO (R : IndefiniteRowSideFullHecke.EpsilonPairingZeta.Realizes h�
   | tmul c t =>
     rw [coordO_tmul, map_smul, R.al_eq, hodgeTateLinear_tmul, hodgeTate_eq_omegaMap, map_smul,
       Submodule.coe_smul, smul_comm]
-  | add x y hx hy => simp only [map_add, hx, hy, Submodule.coe_add, smul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, Submodule.coe_add, smul_add]
 
 theorem ht_eq_zero_iff (R : IndefiniteRowSideFullHecke.EpsilonPairingZeta.Realizes hε u₁ u₂ G G.padicAction D e fil lie) (x : O ⊗[ℤ_[p]] G.Tate) :
     G.hodgeTateLinear x = 0 ↔ D.al (coordO e x) = 0 := by
@@ -229,7 +229,7 @@ theorem ker_hodgeTateLinear : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] 
       rw [coordO_tmul, pairingO_smul, IndefiniteRowSideFullHecke.EpsilonPairingZeta.pairingO_toO, ← padicToO_unique p O (algebraMap ℤ_[p] O)]
       simp only [LinearMap.baseChange_tmul, LinearMap.flip_apply, rid_tmul, hBe, Algebra.smul_def, map_mul, W]
       ring
-    | add x y hx hy => simp only [map_add, hx, hy, pairingO_add, mul_add]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, pairingO_add, mul_add]
   have hb : ∀ (m : Fin G.height → O) χ, IndefiniteRowSideFullHecke.EpsilonPairingZeta.pairingO hε e (D.bb m) χ =
       u₂ * lie (D.Fil.mkQ m) (dlog (G := G) χ) := by
     intro m χ

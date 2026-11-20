@@ -100,9 +100,9 @@ theorem res_eq {F1 : Subfield E} (h : F1 = maximalRealSubfield E) (s : SplitPlac
         · have hsplit : (⟨_, Subring.subset_closure (Or.inr ⟨⟨a, ha⟩, rfl⟩)⟩ : Formalism.L2.Herm.intAf (maximalRealSubfield E) E) =
               Formalism.L2.DIV.adS (maximalRealSubfield E) E (⟨a, ha⟩ - Formalism.L2.DIV.oToAd (maximalRealSubfield E) r) +
                 Formalism.L2.DIV.oToS (maximalRealSubfield E) E (algebraMap (𝓞 (maximalRealSubfield E)) (𝓞 E) r) := by
-            rw [← Formalism.L2.DIV.adS_oToAd, ← map_add, sub_add_cancel]
+            rw [← Formalism.L2.DIV.adS_oToAd, ← map_add (f := _), sub_add_cancel]
             exact Subtype.ext (Formalism.L2.DIV.adS_coe (E := E) ⟨a, ha⟩).symm
-          rw [hsplit, map_add, Formalism.L2.DIV.resS_oToS, Formalism.L2.DIV.resS_adS_eq_zero s.w s.v s.w_under.symm, zero_add]
+          rw [hsplit, map_add (f := _), Formalism.L2.DIV.resS_oToS, Formalism.L2.DIV.resS_adS_eq_zero s.w s.v s.w_under.symm, zero_add]
           show Valued.v (a s.v - algebraMap (𝓞 (maximalRealSubfield E)) (s.v.adicCompletion (maximalRealSubfield E)) r) < 1
           exact hr.trans hlt
     · refine ⟨0, by simp, ?_⟩
@@ -115,12 +115,12 @@ theorem res_eq {F1 : Subfield E} (h : F1 = maximalRealSubfield E) (s : SplitPlac
       refine ⟨c1 + c2, ?_, ?_⟩
       · have : s.proj (x + y) - s.i ((c1 + c2 : 𝓞 E) : E) = (s.proj x - s.i (c1 : E)) + (s.proj y - s.i (c2 : E)) := by
           push_cast
-          rw [map_add, map_add]
+          rw [map_add (f := _), map_add (f := _)]
           ring
         rw [this]
         exact Valuation.map_add_lt _ h1 h2
       · change resS (maximalRealSubfield E) s.w (⟨x, hx⟩ + ⟨y, hy⟩) = _
-        rw [map_add, e1, e2, map_add]
+        rw [map_add (f := _), e1, e2, map_add (f := _)]
     · rintro x hx ⟨c1, h1, e1⟩
       refine ⟨-c1, ?_, ?_⟩
       · have : s.proj (-x) - s.i ((-c1 : 𝓞 E) : E) = -(s.proj x - s.i (c1 : E)) := by

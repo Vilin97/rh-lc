@@ -63,7 +63,7 @@ theorem glide {T ι : Type} (Z : T → Submodule ℂ V) (hZ : ∀ t, FiniteDimen
   obtain ⟨w, hw, q, hq, rfl⟩ := Submodule.mem_sup.1 hv
   obtain ⟨N, hN⟩ := (Submodule.mem_iSup_of_directed Wn hmono.directed_le).1 hw
   refine eventually_atTop.2 ⟨N, fun n hn => ?_⟩
-  rw [map_add, hβ0 n w (Submodule.mem_sup_left (hmono hn hN)), hβ0 n q (Submodule.mem_sup_right hq), add_zero]
+  rw [map_add (f := _), hβ0 n w (Submodule.mem_sup_left (hmono hn hN)), hβ0 n q (Submodule.mem_sup_right hq), add_zero]
 
 noncomputable def triSol (c : ℕ → ℕ → ℂ) : ℕ → ℂ
   | n => (n : ℂ) - ∑ m : Fin n, triSol c m * c n m
@@ -113,7 +113,7 @@ theorem slices_finDim (Φ : (κ → AF F) → ℂ) (hΦ : Φ ∈ schA F κ) :
     obtain ⟨W, hW, hxW⟩ := hx
     obtain ⟨W', hW', hxW'⟩ := hx'
     exact ⟨W ⊔ W', inferInstance, fun y => by
-      rw [map_add]; exact Submodule.add_mem_sup (hxW y) (hxW' y)⟩
+      rw [map_add (f := _)]; exact Submodule.add_mem_sup (hxW y) (hxW' y)⟩
   | smul a x _ hx =>
     obtain ⟨W, hW, hxW⟩ := hx
     exact ⟨W, hW, fun y => by rw [map_smul]; exact Submodule.smul_mem _ _ (hxW y)⟩
@@ -146,7 +146,7 @@ theorem slices_of_bounded : ∀ (F : Type) [Field F] [NumberField F] (κ : Type)
   let l₀ : schA F κ →ₗ[ℂ] ℂ :=
     { toFun := fun Φ => ∑ᶠ n, a n * β n (slice F (y n) Φ.1)
       map_add' := fun Φ Φ' => by
-        simp only [Submodule.coe_add, map_add, mul_add]
+        simp only [Submodule.coe_add, map_add (f := _), mul_add]
         exact finsum_add_distrib (support_finite_of_eventually (hev Φ.1 Φ.2) a)
           (support_finite_of_eventually (hev Φ'.1 Φ'.2) a)
       map_smul' := fun r Φ => by

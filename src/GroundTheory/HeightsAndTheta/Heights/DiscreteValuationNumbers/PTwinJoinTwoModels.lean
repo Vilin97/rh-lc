@@ -108,7 +108,7 @@ theorem JoinTwoModels.proof (hC : ConeTrdegFnField.Statement) : JoinTwoModels.St
   rw [hW.dim] at hdW
   erw [htW] at hdW
   erw [hdJ, htJ]
-  rw [map_add, map_natCast] at hdW ⊢
+  rw [map_add (f := _), map_natCast] at hdW ⊢
   have hT : Cardinal.toENat T = d := by
     have h1 : ((Cardinal.toENat T + (Fintype.card K : ℕ∞) + 1 : ℕ∞) : WithBot ℕ∞) =
         ((d + 1 + Fintype.card K : ℕ) : WithBot ℕ∞) := by exact_mod_cast hdW.symm

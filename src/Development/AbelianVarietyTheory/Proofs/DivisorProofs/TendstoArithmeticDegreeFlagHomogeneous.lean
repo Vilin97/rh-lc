@@ -79,7 +79,7 @@ theorem limVal : GlobalTheory.CovTop.HypothesesXH → Hypotheses2 → Hypotheses
     have hxy := hx.add hy
     rw [add_zero] at hxy
     refine hxy.congr fun R => ?_
-    simp only [mul_add, map_add, hd, Finset.sum_add_distrib]
+    simp only [mul_add, map_add (f := _), hd, Finset.sum_add_distrib]
     ring
   | smul a x _ hx =>
     show Tendsto _ _ _

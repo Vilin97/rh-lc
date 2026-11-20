@@ -48,7 +48,7 @@ theorem isPolynomial_capelliEntry {n : ℕ} (E : Fin n → Fin n → A) (x₀ : 
   by_cases h : a = b
   · have := IsP.lin (E a b + algebraMap ℂ A x₀) (1 : A)
     convert this using 2 with t
-    simp [capEntry, h, map_add, add_assoc]
+    simp [capEntry, h, map_add (f := _), add_assoc]
   · have := IsP.const (E a b)
     convert this using 2 with t
     simp [capEntry, h]
@@ -86,7 +86,7 @@ theorem coeff_extract {W : Type*} [AddCommGroup W] [Module ℂ W] (T : Module.En
       refine Polynomial.funext fun t => ?_
       have := congrArg φ (h t)
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_smul, smul_eq_mul] at this
+        simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul] at this
       simp only [eval_sub, eval_add, eval_mul, Polynomial.eval_finsetSum, eval_C, eval_X, eval_pow, eval_zero]
       rw [sub_eq_zero, mul_comm (φ u)]
       simp only [mul_comm (φ _) (t ^ _)]
@@ -98,7 +98,7 @@ theorem coeff_extract {W : Type*} [AddCommGroup W] [Module ℂ W] (T : Module.En
     simp only [coeff_sub, coeff_add, Polynomial.finsetSum_coeff, coeff_C_mul, coeff_X_pow, coeff_zero,
       mul_ite, mul_one, mul_zero, coeff_X_mul, coeff_X_mul_zero, hP0, hP1] at c0 c1
     simp [k0, k1] at c0 c1
-    exact ⟨c0, by rw [map_add]; exact c1⟩
+    exact ⟨c0, by rw [map_add (f := _)]; exact c1⟩
   exact ⟨(Module.forall_dual_apply_eq_zero_iff ℂ _).1 fun φ => (key φ).1,
     (Module.forall_dual_apply_eq_zero_iff ℂ _).1 fun φ => (key φ).2⟩
 

@@ -170,7 +170,7 @@ theorem main (hP : GlobalTheory.Published.RealMetaplecticRepresentation) (h : Is
   let E0 : (InfinitePlace F → Matrix α β ℂ) →ₗ[ℝ] (Fin n ⊕ Fin n → ℝ) :=
     { toFun := fun z => c.vec (d.e (L z))
       map_add' := fun z z' => by
-        rw [← c.vec_add, ← map_add]
+        rw [← c.vec_add, ← map_add (f := _)]
         congr 2
         refine ext_at h τ (At.sub' (hL _) fun a ha => by rw [smul_add, hL _ a ha, hL _ a ha, add_zero]) fun w => ?_
         rw [Matrix.map_add _ (map_add _), hL', hL', hL']

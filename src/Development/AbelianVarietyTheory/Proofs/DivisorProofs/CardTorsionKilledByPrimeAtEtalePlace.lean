@@ -61,7 +61,7 @@ theorem card_ker_place : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [
         show Additive.ofMul (g.toMul ≫ o.act.act (algebraMap (𝓞 D.F) D.O (a + b))) =
           Additive.ofMul ((g.toMul ≫ o.act.act (algebraMap (𝓞 D.F) D.O a)) *
             (g.toMul ≫ o.act.act (algebraMap (𝓞 D.F) D.O b)))
-        rw [map_add, o.act.add, MonObj.comp_mul]
+        rw [map_add (f := _), o.act.add, MonObj.comp_mul]
       zero_smul := fun g => by
         show Additive.ofMul (g.toMul ≫ o.act.act (algebraMap (𝓞 D.F) D.O 0)) = Additive.ofMul 1
         rw [map_zero, act0, MonObj.comp_one] }

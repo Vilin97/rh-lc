@@ -230,7 +230,7 @@ private theorem step4 (h : IsLoc O Δ) (hτ : τ ^ 2 - 4 ≠ 0) (φ : Sp Δ τ �
       ext <;> simp [j, cmp]
   refine (((h1.mul (Bd.const K (φ (1, 0)))).add (hre.mul (Bd.const K (φ (0, 1))))).add
     (him.mul (Bd.const K (φ (0, ω))))).congr fun i => ?_
-  simp only [← smul_eq_mul, ← map_smul, ← map_add]
+  simp only [← smul_eq_mul, ← map_smul, ← map_add (f := _)]
   congr 1
   refine Prod.ext (by simp) (QuadraticAlgebra.ext ?_ ?_) <;> simp [QuadraticAlgebra.re_one, QuadraticAlgebra.im_one]
 

@@ -59,7 +59,7 @@ theorem half_eq_two_smul {v : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D.host
       Algebra.algebraMap_self, RingHom.id_apply, GlobalTheory.VacLat.pairA_mul]
   refine ⟨a₀ • u, key hu, ?_⟩
   have he : algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 α) = a₀ + a₀ := by
-    rw [ha₀, ← map_add, hαγ]
+    rw [ha₀, ← map_add (f := _), hαγ]
     congr 1
     exact Prod.ext (add_zero 0).symm rfl
   ext i j

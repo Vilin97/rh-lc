@@ -360,7 +360,7 @@ theorem exists_untilt_limit (q : ℕ → T.Untilt ξ)
     obtain ⟨A, rfl⟩ := Ideal.Quotient.mk_surjective a
     refine ⟨Y + T.πInt ^ k * A, ?_, A, ?_⟩
     · have ha' : T.toUntilt ξ A * T.toUntilt ξ T.πInt ^ k = q (k + 1) - q k := ha
-      rw [map_add, hY, map_mul, map_pow, mul_comm, ha']; ring
+      rw [map_add (f := _), hY, map_mul, map_pow, mul_comm, ha']; ring
     · push_cast [coe_πInt]; ring
   obtain ⟨Y0, hY0⟩ := Ideal.Quotient.mk_surjective (q 0)
 
@@ -422,7 +422,7 @@ theorem toUntilt_dichotomy (k : ℕ) : ∀ Y : T.int,
     have hy0 : ‖y0‖ ≤ 1 := T.norm_coeff_zero_le Y
     have hYeq : T.toUntilt ξ Y = T.toUntilt ξ (T.teichInt hy0) +
         T.toUntilt ξ T.πInt * T.toUntilt ξ (T.ξtail Y) := by
-      rw [← map_mul, ← map_add]
+      rw [← map_mul, ← map_add (f := _)]
       congr 1
       apply Subtype.ext
       push_cast

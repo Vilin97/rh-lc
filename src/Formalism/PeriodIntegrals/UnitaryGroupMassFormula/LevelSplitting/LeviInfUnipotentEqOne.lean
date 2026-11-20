@@ -202,7 +202,7 @@ theorem pXv_of_span (H : (datR R σ J P T).Hyp) {x : Fin M → R ⊗[F] E}
     rw [PG.Dat.pXv_apply]
     simp [H.ef]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul c x _ hx => rw [map_smul, hx]
 
 theorem pX_mem (x : Fin M → R ⊗[F] E) :
@@ -335,7 +335,7 @@ theorem levi_inf_unipotent_eq_one (u : HA R σ J) (hu : u ∈ Asub R σ J P) (hu
   intro x
   rw [lin_one]
   conv_lhs => rw [decomp (datR R σ J P T) x]
-  rw [map_add, map_add, hW _ (pV_mem_Wp H x),
+  rw [map_add (f := _), map_add (f := _), hW _ (pV_mem_Wp H x),
     PI.LevelKSplit.W.Glob.lin_fix_span u P.e hS _ (pX_mem x),
     PI.LevelKSplit.W.Glob.lin_fix_span u P.f hf _ (pXv_mem x)]
   exact (decomp (datR R σ J P T) x).symm
@@ -389,7 +389,7 @@ theorem H_comm_A (H : (datR R σ J P T).Hyp) (h u : HA R σ J) (hh : h ∈ Hsub 
   rw [lin_mul, lin_mul]
   conv_lhs => rw [decomp (datR R σ J P T) x]
   conv_rhs => rw [decomp (datR R σ J P T) x]
-  simp only [map_add]
+  simp only [map_add (f := _)]
   rw [hW _ (pV_mem_Wp H x), hW _ hWx, hhe _ (pX_mem x), hhf _ (pXv_mem x),
     hhe _ uE, hhf _ uF]
 

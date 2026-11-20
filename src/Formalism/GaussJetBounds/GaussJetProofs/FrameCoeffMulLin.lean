@@ -154,7 +154,7 @@ private theorem frame_pure_formula {K : Type u} [Field K] {d N0 N1 : ℕ} [NeZer
   have hwt : Finsupp.weight (fun y => Finsupp.single (lt y) 1)
       (Finsupp.single i A + Finsupp.single j B) =
       Finsupp.single (lt i) A + Finsupp.single (lt j) B := by
-    simp only [map_add, Finsupp.weight_single, Finsupp.smul_single_one]
+    simp only [map_add (f := _), Finsupp.weight_single, Finsupp.smul_single_one]
   have hij' : i ≠ j := fun h => hij (congrArg lt h)
   have hterm : ∀ e : ZMod d →₀ ℕ, MvPowerSeries.coeff (Finsupp.single i A + Finsupp.single j B)
       (e.prod fun t k => linSub M (t, ab.1, ab.2) ^ k) =

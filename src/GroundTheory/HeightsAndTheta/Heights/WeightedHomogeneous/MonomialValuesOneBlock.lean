@@ -176,12 +176,12 @@ theorem isSmallH_monomial {Ω : Type} [Field Ω] (y : Coord n → Ω) (A : Geo.H
     fun m hm ↦ hmh m (by simpa using hm)
   have hF := LowerBoundFree.isMultiHomog_add hg hneg
   have hF0 : aeval y (g + -(monomial μ (1 : ℤ) * h)) = 0 := by
-    rw [map_add, map_neg, map_mul, aeval_monomial_one, hgh]
+    rw [map_add (f := _), map_neg, map_mul, aeval_monomial_one, hgh]
     ring
   have hz0 := hz.2 _ (LowerBoundFree.mem_mCoordIdeal_of_aeval_eq_zero y hF hF0)
   have hmz : eval z (map (Int.castRingHom ℂ) (monomial μ (1 : ℤ))) = ∏ p, z p ^ μ p := by
     rw [map_monomial, eval_monomial, Finsupp.prod_fintype _ _ (fun _ ↦ pow_zero _), map_one, one_mul]
-  rw [map_add, map_neg, map_mul, eval_add, eval_neg, eval_mul, hmz, add_neg_eq_zero] at hz0
+  rw [map_add (f := _), map_neg, map_mul, eval_add, eval_neg, eval_mul, hmz, add_neg_eq_zero] at hz0
   rw [hz0, norm_mul, mul_comm]
   exact mul_le_mul_of_nonneg_left (monomial_bound hA hz τ μ hμ) (norm_nonneg _)
 

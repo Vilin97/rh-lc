@@ -180,7 +180,7 @@ private theorem locA (O A M V : Type) [CommRing O] [IsDomain O] [CommRing A] [Al
       intro v
       apply Subtype.ext
       rw [hC, hj, map_smul, ← MvPolynomial.algebraMap_eq, th.commutes, Module.algebraMap_end_apply, Submodule.coe_smul, hs, hj]
-    | add p q hp hq => intro v; simp only [map_add, LinearMap.add_apply, hp, hq]
+    | add p q hp hq => intro v; simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
     | mul_X p i hp => intro v; simp only [map_mul, Module.End.mul_apply, hp, jX]
   refine ⟨fun z hz => LinearMap.ext fun v => jinj ?_, fun J _ a b hd => LinearMap.ext fun v => jinj ?_, fun y v hv => ?_⟩
   · simp only [Module.End.mul_apply, je, jφ]

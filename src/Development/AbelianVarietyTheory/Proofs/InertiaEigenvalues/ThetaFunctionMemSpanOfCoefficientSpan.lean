@@ -25,7 +25,7 @@ theorem heisO_lin_sub (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (x : WO S T
 
 theorem heisO_lin_add (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (x : WO S T) (f g : WO S T → ℂ) :
     heisO ψ S T x (f + g) = heisO ψ S T x f + heisO ψ S T x g := by
-  rw [← GlobalTheory.SplitScalar.heisL_apply, map_add]; rfl
+  rw [← GlobalTheory.SplitScalar.heisL_apply, map_add (f := _)]; rfl
 
 theorem heisO_lin_zero (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (x : WO S T) :
     heisO ψ S T x (0 : WO S T → ℂ) = 0 := by
@@ -125,7 +125,7 @@ theorem mem_span_of_coef_mem_span : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ
       obtain ⟨φ₁, m1, e1⟩ := h1
       obtain ⟨φ₂, m2, e2⟩ := h2
       refine ⟨φ₁ + φ₂, add_mem m1 m2, fun ℓ hℓ x hx => ?_⟩
-      rw [heisO_lin_add, map_add, e1 ℓ hℓ x hx, e2 ℓ hℓ x hx, Pi.add_apply, add_mul]
+      rw [heisO_lin_add, map_add (f := _), e1 ℓ hℓ x hx, e2 ℓ hℓ x hx, Pi.add_apply, add_mul]
     | smul c Ψ _ h =>
       obtain ⟨φ, m, e⟩ := h
       refine ⟨c • φ, Submodule.smul_mem _ c m, fun ℓ hℓ x hx => ?_⟩

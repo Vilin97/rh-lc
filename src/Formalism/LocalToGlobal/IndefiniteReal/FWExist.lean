@@ -118,7 +118,7 @@ variable {G : Type} [Group G] {WL : Type} [AddCommGroup WL] [Module L WL]
 def resK [Module K WL] [IsScalarTower K L WL] (σ : L →+* ℂ) (j : WL →ₛₗ[σ] H) (ι : C →ₗ[K] WL) :
     C →ₛₗ[σ.comp (algebraMap K L)] H where
   toFun f := j (ι f)
-  map_add' f g := by rw [map_add, map_add]
+  map_add' f g := by rw [map_add (f := _), map_add (f := _)]
   map_smul' a f := by
     rw [LinearMap.map_smul, ← algebraMap_smul L a, map_smulₛₗ]
     rfl
@@ -201,7 +201,7 @@ theorem exists_ext_of_isKsForm (F : FormsL L K WL W G) (h : F.IsKsForm) (e : C �
     | zero => intro _; rw [map_zero, show (⟨0, _⟩ : F.WK) = 0 from rfl, map_zero, map_zero]
     | add x y hx hy ihx ihy =>
       intro _
-      rw [map_add, ihx (h2.le hx), ihy (h2.le hy), ← map_add, ← map_add]
+      rw [map_add (f := _), ihx (h2.le hx), ihy (h2.le hy), ← map_add (f := _), ← map_add (f := _)]
       rfl
     | smul a x hx ih =>
       intro _
@@ -471,7 +471,7 @@ def formsN (i : Fin D.R.m) (n : ℕ) : FormsL D.what₂.LL T.Q.c.F (Fin n → D.
   nrm la y w := T.nrmM ((i : ℕ) + 1) la y (secOr T.Q.c.F D.what₂.LL (Cu T κ i) n w : T.R ((i : ℕ) + 1))
   nrm_nonneg la _ _ := nrmOf_nonneg la _
   nrm_zero la y := by rw [map_zero]; exact nrmM_zero T.toCore _ la y
-  nrm_add la y w w' := by rw [map_add]; exact nrmM_add T.toCore _ la y _ _
+  nrm_add la y w w' := by rw [map_add (f := _)]; exact nrmM_add T.toCore _ la y _ _
   nrm_smul la y a w := by
     rw [LinearMap.map_smul]
     exact nrmM_smul T.toCore _ la y a _

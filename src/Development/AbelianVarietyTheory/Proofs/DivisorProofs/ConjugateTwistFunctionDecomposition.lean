@@ -102,6 +102,6 @@ theorem pt_conj_onto_add : ∀ (Λ₀ Λ₁ : PeriodPair) (Ω₀ Ω₁ : ℂ) (g
     refine ⟨Ω₀⁻¹ * t, (R _ _).2 ((hs _ _).2 ?_)⟩
     rw [← _root_.mul_assoc, mul_inv_cancel₀ hΩ₀, _root_.one_mul, ht, AddEquiv.apply_symm_apply]
   · rw [R, hs] at hz hw ⊢
-    rw [_root_.mul_add, _root_.mul_add, GlobalTheory.latticePoint_add, GlobalTheory.latticePoint_add, map_add, hz, hw]
+    rw [_root_.mul_add, _root_.mul_add, GlobalTheory.latticePoint_add, GlobalTheory.latticePoint_add, map_add (f := _), hz, hw]
 
 end GlobalTheory.CMTorsion.Conj

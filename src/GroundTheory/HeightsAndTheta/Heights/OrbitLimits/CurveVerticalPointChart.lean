@@ -107,7 +107,7 @@ theorem chartPrime_add (y : (Σ k, ι k) → Ω) {c : ∀ k, ι k} {W : Ideal (M
   have h2 := Inter.AvoidRing.isMultiHomog_mul hg' (HilbertSamuel.SmallSectionsNonzero.isMultiHomog_chartMono c d)
   rw [add_comm e d] at h2
   refine ⟨d + e, _, form_add h1 h2, W.add_mem (W.mul_mem_right _ hgW) (W.mul_mem_right _ hg'W), ?_⟩
-  simp only [map_add, map_mul, HilbertSamuel.SmallSectionsNonzero.aeval_chartMono]
+  simp only [map_add (f := _), map_mul, HilbertSamuel.SmallSectionsNonzero.aeval_chartMono]
   rw [prod_pow_add]
   linear_combination (∏ k, y ⟨k, c k⟩ ^ e k) * hd + (∏ k, y ⟨k, c k⟩ ^ d k) * he
 

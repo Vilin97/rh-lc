@@ -69,7 +69,7 @@ theorem isLattice_capX_and_exists_glue (D : D7) (u : D.what₂.Word) (Y X : HSp 
     have : Y.hD (ι x + s • z) z = -(s * Tu D u) := by
       have h1 := ho x
       simp only [HSpace.hD] at h1 hz ⊢
-      rw [map_add, map_smul, h1, hz, smul_eq_mul]; ring
+      rw [map_add (f := _), map_smul, h1, hz, smul_eq_mul]; ring
     rw [this]
     congr 2
     field_simp
@@ -118,7 +118,7 @@ theorem isLattice_capX_and_exists_glue (D : D7) (u : D.what₂.Word) (Y X : HSp 
     obtain ⟨x, hx⟩ := hdec y hy
     obtain ⟨b, hb⟩ := hint y hy
     have e : y + b • l = ι (x + b • x₀) := by
-      rw [← algebraMap_smul D.host.E b, ← algebraMap_smul D.host.E b x₀, hb, map_add, map_smul, hl2]
+      rw [← algebraMap_smul D.host.E b, ← algebraMap_smul D.host.E b x₀, hb, map_add (f := _), map_smul, hl2]
       generalize Y.hD y z = t at hx ⊢
       rw [hx]
       module

@@ -31,7 +31,7 @@ theorem exists_pow_smul_of_mem_span {R R' M M' I : Type} [CommRing R] [CommRing 
     obtain ⟨k, v, hv, e'⟩ := hz
     refine ⟨n + k, f ^ k • u + f ^ n • v,
       Submodule.add_mem _ (Submodule.smul_mem _ _ hu) (Submodule.smul_mem _ _ hv), ?_⟩
-    rw [map_add, LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, e, e', smul_add, smul_smul, smul_smul,
+    rw [map_add (f := _), LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, e, e', smul_add, smul_smul, smul_smul,
       ← map_mul, ← map_mul, ← pow_add, ← pow_add, add_comm k n]
   | smul d y _ hy =>
     obtain ⟨n, u, hu, e⟩ := hy

@@ -20,7 +20,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 theorem compFin_unitAt (v : Pl F) (l : (AE F E)ˣ) :
     compFin F E v (unitAt E v l : AE F E) = compFin F E v (l : AE F E) := by
-  rw [unitAt, val_idemUnit, map_add, compFin_smul, compFin_smul, map_sub, map_one, eFin, GlobalTheory.LatVac.evFin_liftV,
+  rw [unitAt, val_idemUnit, map_add (f := _), compFin_smul, compFin_smul, map_sub, map_one, eFin, GlobalTheory.LatVac.evFin_liftV,
     sub_self, zero_smul, one_smul, add_zero]
 
 theorem unitAt_mem_unitsAt_iff (v : Pl F) (l : (AE F E)ˣ) :
@@ -37,7 +37,7 @@ theorem isOpen_integral_everywhere : IsOpen {z : AE F E | ∀ v : Pl F, compFin 
   let S : AddSubgroup (AE F E) :=
     { carrier := {z | ∀ v : Pl F, compFin F E v z ∈ intLoc F E v}
       zero_mem' := fun v => by rw [map_zero]; exact zero_mem _
-      add_mem' := fun ha hb v => by rw [map_add]; exact add_mem (ha v) (hb v)
+      add_mem' := fun ha hb v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
       neg_mem' := fun ha v => by rw [map_neg]; exact neg_mem (ha v) }
   let b := integralBasis E
   let φ : (Module.Free.ChooseBasisIndex ℤ (𝓞 E) → AF F) →ₗ[AF F] AE F E :=

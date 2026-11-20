@@ -69,11 +69,11 @@ theorem exists_fixed_of_mem_span {D : D7} (j : Fin D.R.m) {W M : Type} [AddCommG
   | add P₁ P₂ _ _ h1 h2 =>
     obtain ⟨y1, rfl, c1⟩ := h1
     obtain ⟨y2, rfl, c2⟩ := h2
-    refine ⟨y1 + y2, by rw [c.map_add, Φ.map_add, smul_add], fun τ hτ => ?_⟩
+    refine ⟨y1 + y2, by rw [c.map_add (f := _), Φ.map_add (f := _), smul_add], fun τ hτ => ?_⟩
     have e1 := c1 τ hτ
     have e2 := c2 τ hτ
     unfold ConjVec at e1 e2 ⊢
-    rw [Submodule.coe_add, map_add, ← e1, ← e2]
+    rw [Submodule.coe_add, map_add (f := _), ← e1, ← e2]
   | smul a P₁ _ h1 =>
     obtain ⟨y1, rfl, c1⟩ := h1
     refine ⟨(a : ℂ) • y1, ?_, fun τ hτ => ?_⟩

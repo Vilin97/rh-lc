@@ -70,13 +70,13 @@ def sg {ε : B} (hε : ε * ε = 0) : FR ε →+* B where
   map_one' := by simp
   map_zero' := by simp
   map_add' r s := by
-    simp only [map_add, TrivSqZeroExt.snd_add]
+    simp only [map_add (f := _), TrivSqZeroExt.snd_add]
     ring
   map_mul' r s := by
     obtain ⟨c, hc⟩ : ∃ c, mkE ε c = (p2 ε r).snd := Ideal.Quotient.mk_surjective _
     obtain ⟨d, hd⟩ : ∃ d, mkE ε d = (p2 ε s).snd := Ideal.Quotient.mk_surjective _
     have e : (p2 ε (r * s)).snd = mkE ε (p1 ε r * d + c * p1 ε s) := by
-      rw [map_mul, DualNumber.snd_mul, map_add, map_mul, map_mul, hc, hd, epsFibreProduct_quotient_fst_eq_dual_fst, epsFibreProduct_quotient_fst_eq_dual_fst]
+      rw [map_mul, DualNumber.snd_mul, map_add (f := _), map_mul, map_mul, hc, hd, epsFibreProduct_quotient_fst_eq_dual_fst, epsFibreProduct_quotient_fst_eq_dual_fst]
     rw [e, ← hc, ← hd, map_mul, mulE_mk, mulE_mk, mulE_mk]
     linear_combination (-(c * d)) * hε
 
@@ -145,7 +145,7 @@ theorem valR_sub_eq_eps_mul_of_affine : ∀ {K : Type} [Field K] {A : Over (Sp K
     (fun g => by
       obtain ⟨c, hc⟩ := h₂ g
       rw [valR_eq_ev _ _ hΩ₂, valR_eq_ev _ _ hxm] at hc
-      rw [hc, map_add, map_mul, hmkε, MulZeroClass.zero_mul, add_zero, ← hfst]
+      rw [hc, map_add (f := _), map_mul, hmkε, MulZeroClass.zero_mul, add_zero, ← hfst]
       simp [dualMap])
   let j2 : DualNumber K →+* DualNumber (B ⧸ Ideal.span {ε}) :=
     ((dualMap (mkE ε)).comp ((algebraMap B (DualNumber B)).comp (baseMap K B))).comp
@@ -157,7 +157,7 @@ theorem valR_sub_eq_eps_mul_of_affine : ∀ {K : Type} [Field K] {A : Over (Sp K
       ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
     rw [hj2, TrivSqZeroExt.fst_inl]
     conv_lhs => rw [ha]
-    rw [map_add, map_mul, ← hεd, map_add, map_mul, hmkε, MulZeroClass.zero_mul, add_zero]
+    rw [map_add (f := _), map_mul, ← hεd, map_add (f := _), map_mul, hmkε, MulZeroClass.zero_mul, add_zero]
     rfl)
   have b1 : spMap (p1 ε) ≫ spMap j = l₂ ≫ A'.hom := by rw [spc, hl₂, hja]
   have b2 : spMap (p2 ε) ≫ spMap j = (spMap (dualMap (mkE ε)) ≫ S ≫ i) ≫ A'.hom := by

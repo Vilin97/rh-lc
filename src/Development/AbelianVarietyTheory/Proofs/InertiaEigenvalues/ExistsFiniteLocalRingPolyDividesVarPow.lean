@@ -193,7 +193,7 @@ theorem exists_lift {R k L ι : Type} [CommRing R] [Finite R] [Field k] [Finite 
     have hsplit : h = C π * u + g * t' := by
       rw [← hu]
       ring
-    rw [hsplit, map_add, map_mul, map_mul, AdjoinRoot.mk_self, zero_mul, add_zero, AdjoinRoot.mk_C]
+    rw [hsplit, map_add (f := _), map_mul, map_mul, AdjoinRoot.mk_self, zero_mul, add_zero, AdjoinRoot.mk_C]
   · intro q
     obtain ⟨r, hr⟩ := Polynomial.map_surjective φ hφ (p q)
     refine ⟨AdjoinRoot.mk g r, ?_⟩
@@ -219,7 +219,7 @@ theorem exists_truncation {R L : Type} [CommRing R] [Finite R] [Field L] (ψ : R
     rw [AdjoinRoot.lift_mk, Polynomial.eval₂_at_zero] at hz
     have hsplit : h = C (h.coeff 0) + X * h.divX :=
       (Polynomial.X_mul_divX_add h).symm.trans (add_comm _ _)
-    rw [hsplit, map_add, map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_X]
+    rw [hsplit, map_add (f := _), map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_X]
     refine Commute.isNilpotent_add (Commute.all _ _) ((hnil _ hz).map _) ?_
     exact ⟨N + 1, by rw [mul_pow, hroot, zero_mul]⟩
   refine ⟨isLocalRing_of_map _ hnil', ?_⟩
@@ -261,14 +261,14 @@ theorem exists_truncation {R L : Type} [CommRing R] [Finite R] [Field L] (ψ : R
     have hP' : P = C π * A' + X ^ d0 * V := by
       rw [← hV]
       ring
-    rw [hP', map_add, map_mul, map_mul, map_pow, AdjoinRoot.mk_C, AdjoinRoot.mk_X]
+    rw [hP', map_add (f := _), map_mul, map_mul, map_pow, AdjoinRoot.mk_C, AdjoinRoot.mk_X]
   have hπ0 : AdjoinRoot.of (X ^ (N + 1) : R[X]) π ^ n = 0 := by
     rw [← map_pow, hn, map_zero]
   rw [← Ideal.mem_span_singleton, ← Ideal.Quotient.eq_zero_iff_mem]
   set J := Ideal.span {AdjoinRoot.mk (X ^ (N + 1) : R[X]) P} with hJ
   have h1 : Ideal.Quotient.mk J (AdjoinRoot.mk (X ^ (N + 1) : R[X]) P) = 0 :=
     Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mem_span_singleton_self _)
-  rw [hy, map_add] at h1
+  rw [hy, map_add (f := _)] at h1
   have h2 := eq_neg_of_add_eq_zero_right h1
   have h3 : Ideal.Quotient.mk J ((AdjoinRoot.root (X ^ (N + 1) : R[X]) ^ d0 *
       AdjoinRoot.mk (X ^ (N + 1) : R[X]) V) ^ n) = 0 := by

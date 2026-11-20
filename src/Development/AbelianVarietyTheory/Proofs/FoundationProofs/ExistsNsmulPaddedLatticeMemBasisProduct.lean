@@ -16,7 +16,7 @@ def sat {V V' : Type*} [AddCommGroup V] [AddCommGroup V'] (f : V →+ V') (B : A
   add_mem' := by
     rintro x y ⟨n, hn, hx⟩ ⟨k, hk, hy⟩
     refine ⟨n * k, Nat.mul_pos hn hk, ?_⟩
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     refine B.add_mem ?_ ?_
     · rw [mul_comm, mul_smul]; exact B.nsmul_mem hx _
     · rw [mul_smul]; exact B.nsmul_mem hy _
@@ -36,7 +36,7 @@ theorem uniform_of_fg {V V' : Type*} [AddCommGroup V] [AddCommGroup V'] (f : V �
     rw [hc, mul_comm, mul_smul]
     exact B.nsmul_mem (hy ⟨x, hx⟩) _
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, smul_add]; exact B.add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact B.add_mem hx hy
   | neg x _ hx => rw [map_neg, smul_neg]; exact B.neg_mem hx
 
 theorem exists_nat_mul_int {K : Type*} [Field K] [NumberField K] (κ : K) :

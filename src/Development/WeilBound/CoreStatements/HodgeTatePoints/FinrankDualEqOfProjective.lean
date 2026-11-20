@@ -90,7 +90,7 @@ theorem chart_sequence : ChartSequence := by
     obtain ⟨y0, hy0, h0⟩ := hcz w
     refine ⟨y0 + D.q σ x', (D.omHT σ).add_mem hy0 (PositivityTheory.HtPt.Ga.q_mem D σ x'), ?_⟩
     have hq : ∀ z, D.q σ z = qLin D σ z := fun _ => rfl
-    rw [hq, map_add, map_smul, ← hq, ← hq, h0, smul_add]
+    rw [hq, map_add (f := _), map_smul, ← hq, ← hq, h0, smul_add]
     all_goals rfl
 
 end PositivityTheory.HtPt.Ge

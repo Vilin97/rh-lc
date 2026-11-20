@@ -29,7 +29,7 @@ private theorem span_top {n : ℕ} {A L : Type} [CommRing A] [Field L] [Algebra 
     induction hZ using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     | smul c y _ hy =>
       have : (algebraMap A L).mapMatrix (c • y) = algebraMap A L c • (algebraMap A L).mapMatrix y := by
         ext i j; simp

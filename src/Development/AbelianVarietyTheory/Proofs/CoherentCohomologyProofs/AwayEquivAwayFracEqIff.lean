@@ -171,11 +171,11 @@ def res (h : W ≤ V) : SecModule F L V →ₗ[SecRing L] SecModule F L W where
     change resAdd F L h (r • y) = r • resAdd F L h y
     induction r using DirectSum.induction_on with
     | zero => rw [zero_smul, zero_smul, map_zero]
-    | add r s hr hs => rw [add_smul, add_smul, map_add, hr, hs]
+    | add r s hr hs => rw [add_smul, add_smul, map_add (f := _), hr, hs]
     | of p σ =>
       induction y using induction_on with
       | zero => rw [smul_zero, map_zero, smul_zero]
-      | add y z hy hz => rw [smul_add, map_add, map_add, smul_add, hy, hz]
+      | add y z hy hz => rw [smul_add, map_add (f := _), map_add (f := _), smul_add, hy, hz]
       | hof q a =>
         change resAdd F L h (SecRing.of p σ • _) = SecRing.of p σ • _
         rw [resAdd_of, of_smul_of σ a rfl, of_smul_of σ _ rfl, resAdd_of, app_resM]
@@ -205,7 +205,7 @@ theorem smul_bijective (hL : L.IsLB) (σ : LB.Sec (lbZPow L m)) (hV : V ≤ Out.
   refine ⟨Function.LeftInverse.injective (g := g) fun y => ?_, fun y => ?_⟩
   · induction y using induction_on with
     | zero => simp only [smul_zero, map_zero]
-    | add y z hy hz => simp only [smul_add, map_add] at hy hz ⊢; rw [hy, hz]
+    | add y z hy hz => simp only [smul_add, map_add (f := _)] at hy hz ⊢; rw [hy, hz]
     | hof n a => simp only [of_smul_of σ a rfl, hg]
   · induction y using induction_on with
     | zero => exact ⟨0, smul_zero _⟩
@@ -231,7 +231,7 @@ theorem isLocalizedModule_res [F.IsQuasicoherent] (hL : L.IsLB) (σ : LB.Sec (lb
     induction y using induction_on with
     | zero => exact .of_forall fun k => ⟨0, by rw [smul_zero, map_zero]⟩
     | add y z hy hz =>
-      exact (hy.and hz).mono fun k ⟨⟨a, ha⟩, ⟨b, hb⟩⟩ => ⟨a + b, by rw [smul_add, map_add, ha, hb]⟩
+      exact (hy.and hz).mono fun k ⟨⟨a, ha⟩, ⟨b, hb⟩⟩ => ⟨a + b, by rw [smul_add, map_add (f := _), ha, hb]⟩
     | hof n b =>
       refine (eventually_exists_resM_eq_mulSecOfEq_zpowSec hL σ hW hW' h hV b).mono fun k hk => ?_
       obtain ⟨a, ha⟩ := hk _ rfl

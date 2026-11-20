@@ -15,7 +15,7 @@ theorem norm_le_of_mem_span {R : Type} [CommRing R] {C : Type} [NormedField C] [
   induction hy using Submodule.span_induction with
   | mem y hy => exact hc y hy
   | zero => simpa using hc0
-  | add y z _ _ a b => rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le a b)
+  | add y z _ _ a b => rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le a b)
   | smul a y _ b =>
     rw [hφ, norm_mul]
     exact (mul_le_mul (h1 a) b (norm_nonneg _) zero_le_one).trans_eq (one_mul c)
@@ -109,7 +109,7 @@ private lemma exists_uniform_norm_bound_lt_one_of_fg {R C : Type} [CommRing R] [
       exact NNReal.coe_le_coe.mpr (Finset.le_sup (f := fun g => ‖φ g‖₊) hg)
     · simp
     · intro a b _ _ ha hb
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
     · intro a b _ hb
       rw [smul_eq_mul, map_mul, norm_mul]
@@ -146,7 +146,7 @@ private lemma norm_le_pow_of_mem_ideal_pow {R C : Type} [CommRing R] [NormedFiel
       rw [map_mul, norm_mul, pow_succ]
       exact mul_le_mul (ih a ha) (hI b hb) (norm_nonneg _) (pow_nonneg hc0 n)
     · intro a b ha hb
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
 
 open Filter Topology in

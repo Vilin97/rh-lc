@@ -39,7 +39,7 @@ theorem exists_monic_aeval_add {M : Type*} [AddCommGroup M] [Module ℂ M] (Ω T
       have h2 : Polynomial.aeval Ω (q * (Polynomial.X ^ m /ₘ q)) w = 0 := by
         rw [mul_comm, map_mul, Module.End.mul_apply, hqW w hw, map_zero]
       have h3 := congrArg (fun p => Polynomial.aeval Ω p w) h1
-      simp only [map_add, LinearMap.add_apply, h2, add_zero, map_pow, Polynomial.aeval_X] at h3
+      simp only [map_add (f := _), LinearMap.add_apply, h2, add_zero, map_pow, Polynomial.aeval_X] at h3
       exact h3.symm
     rw [e, Polynomial.aeval_eq_sum_range' (n := q.natDegree + 1)
       (Nat.lt_succ_of_le (Polynomial.natDegree_modByMonic_le _ hq)), LinearMap.sum_apply]
@@ -86,7 +86,7 @@ theorem exists_aeval_lapOp_eq_zero (φ : Sm E a) (hA : IsAutForm φ) {d : ℕ}
     · rintro _ ⟨z, hz, rfl⟩
       exact Submodule.subset_span ⟨Ω * z, Subalgebra.mul_mem _ hZ hz, rfl⟩
     · rw [map_zero]; exact Submodule.zero_mem _
-    · intro x y _ _ hx hy; rw [map_add]; exact Submodule.add_mem _ hx hy
+    · intro x y _ _ hx hy; rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     · intro c x _ hx; rw [map_smul]; exact Submodule.smul_mem _ c hx
   have hφV : φ ∈ Vz := Submodule.subset_span ⟨1, Subalgebra.one_mem _, rfl⟩
   obtain ⟨q, hqm, -, hq⟩ := AutomorphicForm.exists_monic_aeval_apply_eq_zero Ω Vz hVs hφV
@@ -101,7 +101,7 @@ theorem exists_aeval_lapOp_eq_zero (φ : Sm E a) (hA : IsAutForm φ) {d : ℕ}
       rw [hq, map_zero] at this
       exact this.symm
     · rw [map_zero]
-    · intro x y _ _ hx hy; rw [map_add, hx, hy, add_zero]
+    · intro x y _ _ hx hy; rw [map_add (f := _), hx, hy, add_zero]
     · intro c x _ hx; rw [map_smul, hx, smul_zero]
   have hlap : Commute Ω (lapOp (⇑b)) := by
     simp only [lapOp, Commute, SemiconjBy]

@@ -84,7 +84,7 @@ theorem exists_denom_latQ (hS : ΛS.FG) (hT : ΛT.FG) :
       obtain ⟨α, hα, -, a, ha, s, hs, t, ht, rfl⟩ := hw
       exact AddSubgroup.subset_closure ⟨α, hα, _, (mem_spanSingleton_inv d hd _).2 (hgen a ha s hs t ht i j), rfl⟩
     | zero => rw [Matrix.zero_apply, RingHom.map_zero]; exact zero_mem _
-    | add x z _ _ hx hz => rw [Matrix.add_apply, RingHom.map_add]; exact add_mem hx hz
+    | add x z _ _ hx hz => rw [Matrix.add_apply, RingHom.map_add (f := _)]; exact add_mem hx hz
     | neg x _ hx => rw [Matrix.neg_apply, RingHom.map_neg]; exact neg_mem hx
   exact ⟨d, hd, fun x hx i j =>
     (mem_spanSingleton_inv d hd _).1 (((GlobalTheory.AdLat.adelicCompletion_fractionalIdeal_properties D.host.F D.host.E).2.1 _ (x i j)).1 (hlat _ hx i j))⟩
@@ -100,11 +100,11 @@ theorem exists_rat_add_nsmul (Λ : AddSubgroup (WO S T)) (hinf : ∀ u ∈ Λ, u
     · have e0 : infPart D (γ i j) = 0 := congrFun (congrFun hγ i) j
       have e1 : infPart D (finRat S T y₀ i j) = 0 := congrFun (congrFun (finRat_inf S T y₀) i) j
       have e2 : infPart D (u i j) = 0 := congrFun (congrFun (hinf u hu) i) j
-      rw [Matrix.add_apply, RingHom.map_add, e0, e1, e2, add_zero]
+      rw [Matrix.add_apply, RingHom.map_add (f := _), e0, e1, e2, add_zero]
     · have e0 : finPart D (γ i j - ρ i j - u i j) = 0 := congrFun (congrFun hz i) j
       have e1 : finPart D (finRat S T y₀ i j) = finPart D (ρ i j) := by rw [← hy₀]; rfl
       rw [RingHom.map_sub, RingHom.map_sub, sub_sub, sub_eq_zero] at e0
-      rw [Matrix.add_apply, RingHom.map_add, e1, e0]
+      rw [Matrix.add_apply, RingHom.map_add (f := _), e1, e0]
   exact ⟨N • y₀, u, hu, by rw [← hNγ, hγe, nsmul_add, (finRat S T).map_nsmul]⟩
 
 theorem actO_inv_actO (g : GA D S) (h : GA D T) (x : XF S T) :

@@ -59,7 +59,7 @@ theorem maxV_detLat (E : Type) [Field E] [NumberField E] [StarRing E] (n : ℕ) 
         obtain ⟨i, rfl⟩ := hx
         exact ht' i
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add, smul_add]; exact N.add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact N.add_mem hx hy
       | smul r x _ hx =>
         rw [← algebraMap_smul E r x, map_smul, algebraMap_smul, smul_comm]
         exact N.smul_mem r hx

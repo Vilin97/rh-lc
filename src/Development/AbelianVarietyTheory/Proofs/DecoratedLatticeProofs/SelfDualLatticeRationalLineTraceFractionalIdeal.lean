@@ -140,7 +140,7 @@ theorem line_trace : ∀ (D : D7) (S : HSp D) (L : Lat S) (x : Fin S.rank → D.
     have := pairing_int hL (hs' l) h
     rwa [pairing_smul_ratV] at this
   | zero => rw [map_zero, zero_mul]; exact intAt_zero
-  | add y z _ _ hy hz => rw [map_add, add_mul]; exact intAt_add hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _), add_mul]; exact intAt_add hy hz
   | smul o y hy' hy =>
     have h1 := GlobalTheory.IdVGen.gen_mem_intAt (v := v) (GlobalTheory.FinPlLoc.ePl_int (· = v))
       (fun w hw => by rw [GlobalTheory.FinPlLoc.evalV_ePl, if_neg hw]) o

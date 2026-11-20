@@ -100,7 +100,7 @@ theorem _root_.GlobalTheory.BI.virt_mul_comap_conj_ind_linear : ∀ (G : Type) [
       exact AddSubgroup.subset_closure
         (_root_.GlobalTheory.BI.isChar_ind ℂ ℂ G H ψ hψ')
     | zero => simpa using zero_mem _
-    | add ψ φ _ _ hψ hφ => simpa [map_add] using add_mem hψ hφ
+    | add ψ φ _ _ hψ hφ => simpa [map_add (f := _)] using add_mem hψ hφ
     | neg ψ _ hψ => simpa [map_neg] using neg_mem hψ
   · intro lam
     exact _root_.GlobalTheory.BI.isChar_mem_virt_complex (_root_.GlobalTheory.BI.isChar_monoidHom_complex lam)

@@ -13,7 +13,7 @@ theorem cov_self (p : ℕ) (A : Type) [CommRing A] (r : ℕ → A) : Cov p r A :
       induction w using TensorProduct.induction_on with
       | zero => simp
       | tmul a x => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [hw] at h1
     simpa using h1
   rw [key, ← map_smul]
@@ -30,7 +30,7 @@ theorem cov_of_algHom (p : ℕ) (A : Type) [CommRing A] (r : ℕ → A)
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [← h1, hw]
   simp
 

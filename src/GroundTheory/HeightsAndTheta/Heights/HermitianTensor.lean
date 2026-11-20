@@ -89,19 +89,19 @@ theorem tensorCoord_inner_conjMap (σ : K →+* ℂ) (x y : Fibre σ (E ⊗[𝓞
       starRingEnd ℂ (inner ℂ (tensorCoord hE hF σ x) (tensorCoord hE hF σ y)) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero, inner_zero_left]
-  | add x x' hx hx' => simp only [map_add, inner_add_left, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), inner_add_left, hx, hx']
   | tmul z t =>
     induction t using TensorProduct.induction_on with
     | zero => simp only [tmul_zero, map_zero, inner_zero_left]
-    | add t t' ht ht' => simp only [tmul_add, map_add, inner_add_left, ht, ht']
+    | add t t' ht ht' => simp only [tmul_add, map_add (f := _), inner_add_left, ht, ht']
     | tmul e f =>
       induction y using TensorProduct.induction_on with
       | zero => simp only [map_zero, inner_zero_right]
-      | add y y' hy hy' => simp only [map_add, inner_add_right, hy, hy']
+      | add y y' hy hy' => simp only [map_add (f := _), inner_add_right, hy, hy']
       | tmul w s =>
         induction s using TensorProduct.induction_on with
         | zero => simp only [tmul_zero, map_zero, inner_zero_right]
-        | add s s' hs hs' => simp only [tmul_add, map_add, inner_add_right, hs, hs']
+        | add s s' hs hs' => simp only [tmul_add, map_add (f := _), inner_add_right, hs, hs']
         | tmul e' f' =>
           rw [conjMap_tmul, conjMap_tmul, tensorCoord_inner_tmul, tensorCoord_inner_tmul, map_mul,
             ← hE.form_conj, ← hF.form_conj, conjMap_tmul, conjMap_tmul, conjMap_tmul,

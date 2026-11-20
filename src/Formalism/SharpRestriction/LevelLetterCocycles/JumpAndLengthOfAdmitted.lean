@@ -163,7 +163,7 @@ theorem lenModPow_le_of_retract (E : LatHom L L') (E' : LatHom L' L) (hE : ∀ x
     change E.post c ∈ powB PD L' n
     have hmem' : c ∈ powB PD L n := hmem
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hmem'
-    rw [map_add]
+    rw [map_add (f := _)]
     refine Submodule.add_mem_sup ?_ (E.post_B1T b hb)
     obtain ⟨a0, ha0, rfl⟩ := ha
     refine ⟨E.post a0, E.post_Z1fT PD a0 ha0, ?_⟩

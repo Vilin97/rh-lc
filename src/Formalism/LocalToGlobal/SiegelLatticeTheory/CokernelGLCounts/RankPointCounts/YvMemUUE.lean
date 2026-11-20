@@ -106,7 +106,7 @@ theorem line_pair (k : ℕ) (hdim : finrank E S.V = k + 2 * r + 1) (Λ : Submodu
     obtain ⟨-, hp2, hpX, -⟩ := hp
     have e : p.1 = (p.1 - p.2) + p.2 := by abel
     simp only [LinearMap.fst_apply]
-    rw [e, map_add, LinearMap.add_apply, hT_X_yv Fl.fl F2.fl hpX,
+    rw [e, map_add (f := _), LinearMap.add_apply, hT_X_yv Fl.fl F2.fl hpX,
       hT_Hp_UUE Λ Fl F2 hp2 (yv_mem_UUE Λ hΛ Fl F2 hL hL2), add_zero]
   have hv : y2 - c • y1 ∈ Fl.fl.X := by
     refine Formalism.L2.SG.NGCut.NormalVectorPairings.line Fl.fl hT (Hp Λ Fl F1) ?_ ?_ ?_ ?_ ?_ hb1 ?_ ?_

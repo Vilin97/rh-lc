@@ -55,7 +55,7 @@ theorem pderiv_fwd (c : Ix r s) (x : Ix p q) (P : LPol b a) :
         · simp [Ne.symm hc]
       · simp [Ne.symm hx]
     rw [map_mul, Derivation.leibniz, Derivation.leibniz, h, hP]
-    simp only [smul_eq_mul, map_add, map_mul, smul_add, mul_smul_comm]
+    simp only [smul_eq_mul, map_add (f := _), map_mul, smul_add, mul_smul_comm]
 
 variable {ε ε' e e'}
 
@@ -106,7 +106,7 @@ theorem fwd_locS (h : SignCompat ε e) (h' : SignCompat ε' e') (Z : Mat p q) (P
     Matrix.submatrix_apply, Equiv.symm_apply_apply]
   congr 1
   refine Finset.sum_congr rfl fun c _ => ?_
-  simp only [omE, LinearMap.add_apply, map_add, Module.End.mul_apply, fwd_rai h h', fwd_low h h']
+  simp only [omE, LinearMap.add_apply, map_add (f := _), Module.End.mul_apply, fwd_rai h h', fwd_low h h']
   congr 1
   by_cases hxy : x = y <;> simp [hxy]
 
@@ -124,7 +124,7 @@ theorem fwd_locT (h : SignCompat ε e) (h' : SignCompat ε' e') (Z : Mat r s) (P
     Matrix.submatrix_apply, Equiv.symm_apply_apply]
   congr 1
   refine Finset.sum_congr rfl fun x _ => ?_
-  simp only [omE, LinearMap.add_apply, map_add, Module.End.mul_apply, fwd_rai h h', fwd_low h h']
+  simp only [omE, LinearMap.add_apply, map_add (f := _), Module.End.mul_apply, fwd_rai h h', fwd_low h h']
   congr 1
   by_cases hcd : c = d <;> simp [hcd]
 

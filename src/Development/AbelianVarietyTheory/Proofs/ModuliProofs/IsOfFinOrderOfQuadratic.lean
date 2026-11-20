@@ -152,7 +152,7 @@ theorem cmHost_bar_halfIntegerGenerator (H : Host E) : H.bar H.w0 = 1 - H.w0 := 
     rcases map_rt H τ with h | h <;> rw [h] <;> simp [e']
   apply mul_left_cancel₀ (two_ne_zero : (2 : 𝓞 E) ≠ 0)
   have := congrArg H.bar H.two_weight_eq_one_add_root
-  rw [map_mul, map_add, map_one, h1, map_ofNat] at this
+  rw [map_mul, map_add (f := _), map_one, h1, map_ofNat] at this
   linear_combination this + H.two_weight_eq_one_add_root
 
 end Multiplication

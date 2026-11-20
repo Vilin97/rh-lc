@@ -241,10 +241,10 @@ theorem _root_.GlobalTheory.Klein.norm_weierstrassP_sub_eq_one (p : ℕ) [Fact p
   have key := norm_sub_eq_one_of_discriminant_relations (padicComplex_norm_two_eq_one_of_ne_two hp) hXu hXv hS hT h12r hc
     hΔ (Y₁ := ι y₁) (Y₂ := ι y₂)
     (by rw [← map_sub]; exact (map_ne_zero ι).2 (by rwa [sub_sub_sub_cancel_right]))
-    (by simpa only [map_sub, map_mul, map_add, map_pow, map_ofNat, map_div₀] using congrArg ι cA)
-    (by simpa only [map_sub, map_mul, map_add, map_pow, map_ofNat, map_div₀] using congrArg ι cB)
-    (by simpa only [map_sub, map_mul, map_add, map_pow, map_ofNat, map_div₀] using congrArg ι cS)
-    (by simpa only [map_sub, map_mul, map_add, map_pow, map_ofNat, map_div₀] using congrArg ι cD)
+    (by simpa only [map_sub, map_mul, map_add (f := _), map_pow, map_ofNat, map_div₀] using congrArg ι cA)
+    (by simpa only [map_sub, map_mul, map_add (f := _), map_pow, map_ofNat, map_div₀] using congrArg ι cB)
+    (by simpa only [map_sub, map_mul, map_add (f := _), map_pow, map_ofNat, map_div₀] using congrArg ι cS)
+    (by simpa only [map_sub, map_mul, map_add (f := _), map_pow, map_ofNat, map_div₀] using congrArg ι cD)
   rwa [← map_sub, sub_sub_sub_cancel_right] at key
 
 end GlobalTheory.Klein

@@ -134,11 +134,11 @@ theorem step_mem {w y : Γ} {n : ℕ} (hy : F.φ y - w * y ∈ Ideal.span {T.π 
   have he : T.coeff (F.φ y - w * y) n = T.red z := by
     rw [hz]; simpa using T.coeff_π_pow_mul_add n z 0
   have hred : T.red (z + F.u ^ n * T.teich (t ^ p ^ F.a) - w * T.teich t) = 0 := by
-    rw [map_sub, map_add, map_mul, map_mul, map_pow, T.red_teich, T.red_teich, ← he]
+    rw [map_sub, map_add (f := _), map_mul, map_mul, map_pow, T.red_teich, T.red_teich, ← he]
     linear_combination ht
   obtain ⟨z', hz'⟩ := T.red_eq_zero_iff.1 hred
   have : F.φ (y + T.π ^ n * T.teich t) - w * (y + T.π ^ n * T.teich t) = T.π ^ (n + 1) * z' := by
-    rw [map_add, F.φ_π_pow_mul_teich, pow_succ, mul_assoc, ← hz']
+    rw [map_add (f := _), F.φ_π_pow_mul_teich, pow_succ, mul_assoc, ← hz']
     linear_combination hz
   rw [this]; exact T.π_pow_mul_mem le_rfl _
 

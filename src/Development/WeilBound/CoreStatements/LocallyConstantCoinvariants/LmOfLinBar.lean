@@ -118,7 +118,7 @@ theorem lm_of_linBar (hA : AdSt) (hψ : IsStd ψ) (h : IsSec σ t sec) (hG : Gra
   rw [← he]
   obtain ⟨y, z⟩ := coord σ t (incM F X.J) (incM F W.J) u
   have b := a1 y _ (schr_mem hc (e (0, z)) hφ)
-  rw [a2 z φ hφ, schr_schr, schr_schr, he1, ← map_add, map_smul] at b
+  rw [a2 z φ hφ, schr_schr, schr_schr, he1, ← map_add (f := _), map_smul] at b
   simp only [Prod.mk_add_mk, add_zero, zero_add] at b
   exact smul_right_injective _ (AddChar.val_isUnit _ _).ne_zero b
 

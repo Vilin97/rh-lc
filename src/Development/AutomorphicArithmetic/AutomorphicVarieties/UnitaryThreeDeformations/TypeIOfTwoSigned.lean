@@ -215,7 +215,7 @@ private theorem coc_rel [IsDomain A] (hr : Red η Ψ r) (h21 : ∀ g, (r g).mat 
     rw [hb, hb, hb] at E
     have E2 : b (g * h) = b g * (r h).mat 0 0 + (r g).mat 2 2 * b h :=
       mul_left_cancel₀ hx (by rw [E]; ring)
-    rw [E2, map_add, map_mul, map_mul, ent_ofSL_eq_coe hr h 0 0, ent_ofSL_eq_coe hr g 2 2]
+    rw [E2, map_add (f := _), map_mul, map_mul, ent_ofSL_eq_coe hr h 0 0, ent_ofSL_eq_coe hr g 2 2]
     simp [he, w0, w2]
   · have hne : η g ≠ 1 := by
       rw [he]
@@ -246,7 +246,7 @@ private theorem coc_rel [IsDomain A] (hr : Red η Ψ r) (h21 : ∀ g, (r g).mat 
         ((r h).mat 0 0 * (r h).mat 1 1 - (r h).mat 0 1 * (r h).mat 1 0) * hbg - (r g).mat 2 2 * (r h).mat 1 1 * hbh
     have rd : residue A ((r h).mat).det = 1 := by
       rw [Matrix.det_fin_three]
-      simp only [map_sub, map_add, map_mul, ent_ofSL_eq_coe hr h]
+      simp only [map_sub, map_add (f := _), map_mul, ent_ofSL_eq_coe hr h]
       simp [w0, w1, w2, pq]
     have F := congrArg (residue A) E3
     simp only [map_sub, map_mul, rd, one_mul, ent_ofSL_eq_coe hr] at F
@@ -294,7 +294,7 @@ private theorem loc_rel [IsDomain A] (hr : Red η Ψ r) (h21 : ∀ g, (r g).mat 
     linear_combination (-(H 0 0)) * e20 + (H 2 0) * e00
   have rV : ∀ g, residue A (V g) = residue A (algebraMap O A (Ψ g)) - residue A (algebraMap O A ((Ψ g)⁻¹ : Oˣ)) := by
     intro g
-    simp only [V, map_sub, map_add, map_mul, hHc, ent_ofSL_eq_coe hr]
+    simp only [V, map_sub, map_add (f := _), map_mul, hHc, ent_ofSL_eq_coe hr]
     simp [w0, w2]
   have hVs : residue A (V s) ≠ 0 := by
     rw [rV s]
@@ -435,7 +435,7 @@ private theorem ent_zero {O A : Type} [CommRing O] [IsLocalRing O] [CommRing A] 
     refine coc_zero F hF hX (fun g => φ (z g)) (hzc.comp φ) ?_ ?_ ?_ ?_ g0
     · intro g h
       show φ (z (g * h)) = φ (z g) + P g * φ (z h)
-      rw [hz, map_add, ← Algebra.smul_def, map_smul, smul_eq_mul]
+      rw [hz, map_add (f := _), ← Algebra.smul_def, map_smul, smul_eq_mul]
     · simp [hzc0]
     · intro v hv s hs
       have h1 := (hr.toCondN.toCond.loc v).2.2 hv s hs

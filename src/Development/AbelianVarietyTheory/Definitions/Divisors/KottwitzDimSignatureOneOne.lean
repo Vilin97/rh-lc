@@ -83,11 +83,11 @@ def ksSub (ρ : O →+* Module.End k H) (φ : LinearMap.BilinForm k H) (Fil Z : 
   zero_mem' := ⟨by simp, by simp, by simp⟩
   add_mem' {f g} hf hg := ⟨fun a x hx => by
       convert add_mem (hf.1 a x hx) (hg.1 a x hx) using 1
-      simp only [LinearMap.add_apply, map_add]; abel,
+      simp only [LinearMap.add_apply, map_add (f := _)]; abel,
     fun x hx => add_mem (hf.2.1 x hx) (hg.2.1 x hx), fun x hx y hy => by
       have h1 := hf.2.2 x hx y hy
       have h2 := hg.2.2 x hx y hy
-      simp only [LinearMap.add_apply, map_add]
+      simp only [LinearMap.add_apply, map_add (f := _)]
       linear_combination h1 + h2⟩
   smul_mem' c f hf := ⟨fun a x hx => by
       convert Fil.smul_mem c (hf.1 a x hx) using 1
@@ -221,7 +221,7 @@ theorem kottwitzDim_signatureOneOne : KSDim (act₄ k) (ω₄ k) (F₄ k) ⊥ 1 
     refine ⟨fun _ => g e 1, fun x hx => ?_, fun c hc => ?_⟩
     · have : x = x 0 • e + x 3 • e' := by
         funext i; fin_cases i <;> simp [e, e', hx.1, hx.2, ((mem_F₄ k x).1 hx).1, ((mem_F₄ k x).1 hx).2]
-      have hgx : g x = x 0 • g e + x 3 • g e' := by conv_lhs => rw [this, map_add, map_smul, map_smul]
+      have hgx : g x = x 0 • g e + x 3 • g e' := by conv_lhs => rw [this, map_add (f := _), map_smul, map_smul]
       rw [mem_F₄, hgx]
       simp [hf, h1, h2]
       constructor

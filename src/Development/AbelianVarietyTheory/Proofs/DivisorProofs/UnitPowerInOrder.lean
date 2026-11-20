@@ -20,7 +20,7 @@ theorem order_conductor_exists (K F : Type) [CommRing K] [IsDomain K] [Module.Fi
   | add z w _ _ hz hw =>
     obtain ⟨y1, h1⟩ := hz
     obtain ⟨y2, h2⟩ := hw
-    exact ⟨y1 + y2, by rw [map_add, h1, h2]; push_cast; ring⟩
+    exact ⟨y1 + y2, by rw [map_add (f := _), h1, h2]; push_cast; ring⟩
   | smul n z _ hz =>
     obtain ⟨y, h⟩ := hz
     exact ⟨n • y, by rw [zsmul_eq_mul, map_mul, map_intCast, h]; push_cast; ring⟩
@@ -58,7 +58,7 @@ theorem order_unit_pow_mem (K F : Type) [CommRing K] [IsDomain K] [Module.Finite
     have hcF : (c : F) * (D : F) = ((w : 𝓞 F) : F) ^ e - 1 := by
       have := congrArg (fun z : 𝓞 F => (z : F)) hc
       simpa using this
-    rw [map_add, map_one, hy, ← hDF, mul_comm, hcF]; ring
+    rw [map_add (f := _), map_one, hy, ← hDF, mul_comm, hcF]; ring
   obtain ⟨y1, hy1⟩ := key u (pow_orderOf_eq_one _)
   obtain ⟨y2, hy2⟩ := key u⁻¹ (by rw [map_inv, inv_pow, pow_orderOf_eq_one, inv_one])
   have h12 : y1 * y2 = 1 := by

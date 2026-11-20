@@ -124,7 +124,7 @@ theorem coeff_diag {σ : Type} (L : Module.End ℂ (MvPolynomial σ ℂ)) (g : (
     by_cases h : β = α
     · subst h; simp; ring
     · simp [h]
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem coeff_eig {σ : Type} (L : Module.End ℂ (MvPolynomial σ ℂ)) (g : (σ →₀ ℕ) → ℂ)
     (hL : ∀ α, L (monomial α 1) = g α • monomial α 1) (f : MvPolynomial σ ℂ) (c : ℂ) (hf : L f = c • f)

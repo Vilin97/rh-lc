@@ -25,7 +25,7 @@ theorem exists_finite_subspaces {ι : Type} {E : ι → Type} [∀ i, AddCommGro
     refine ⟨fun i => W₁ i ⊔ W₂ i, fun i => by have := h₁ i; have := h₂ i; infer_instance,
       PiTensorProduct.map (fun i => Submodule.inclusion (le_sup_left : W₁ i ≤ W₁ i ⊔ W₂ i)) y₁ +
         PiTensorProduct.map (fun i => Submodule.inclusion (le_sup_right : W₂ i ≤ W₁ i ⊔ W₂ i)) y₂, ?_⟩
-    rw [map_add, ← LinearMap.comp_apply, ← LinearMap.comp_apply, ← PiTensorProduct.map_comp,
+    rw [map_add (f := _), ← LinearMap.comp_apply, ← LinearMap.comp_apply, ← PiTensorProduct.map_comp,
       ← PiTensorProduct.map_comp]
     rfl
 
@@ -62,7 +62,7 @@ theorem exists_ellT_ne_zero : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SP
       rw [OrthonormalBasis.coe_toBasis_repr_apply, OrthonormalBasis.repr_apply_apply]
       rfl
     | add a b ha hb =>
-      simp only [map_add, Finsupp.add_apply] at ha hb ⊢
+      simp only [map_add (f := _), Finsupp.add_apply] at ha hb ⊢
       rw [ha, hb]
   exact fun h => hk ((key y).symm.trans h)
 

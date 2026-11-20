@@ -86,7 +86,7 @@ theorem five (δ : ∀ (q : ℕ) (P : Arrow Spc) (n i : ℤ), Ht q P.left n i �
     obtain ⟨u', hu'⟩ := (e3' _).1 hd
     obtain ⟨u, rfl⟩ := (hl i m).2 u'
     refine ⟨x + δ q P m i u, ?_⟩
-    rw [map_add, hnat q P' P φ h' h m i u, hu', add_sub_cancel]
+    rw [map_add (f := _), hnat q P' P φ h' h m i u, hu', add_sub_cancel]
 
 theorem leafFive : LeafFive := by
   intro δ hδ q P' P φ h' h hl hr n i

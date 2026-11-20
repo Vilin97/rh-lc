@@ -24,7 +24,7 @@ theorem rat_surj (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E
   let e' : Matrix (Fin n) (Fin d) E →ₗ[F] (Fin n × Fin d → AF F) × (Fin n × Fin d → AF F) :=
     { toFun := fun x => M.co.e (incM F x)
       map_add' := fun x x' => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         ext i j
         simp [incM, Matrix.map_apply]

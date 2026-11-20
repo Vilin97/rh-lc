@@ -61,7 +61,7 @@ theorem coeff_ev (δ : C →+* R) (ψ : Multiplicative X →* Rˣ) (f : AddMonoi
       δ (f.coeff x) * (ψ (Multiplicative.ofAdd x)).val := by
   induction f using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hf, hg, add_mul]
+  | add f g hf hg => simp only [map_add (f := _), AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hf, hg, add_mul]
   | single y c =>
     rw [ev_single]
     change (AddMonoidAlgebra.single 0 (δ c) * (AddMonoidAlgebra.single y 1 *

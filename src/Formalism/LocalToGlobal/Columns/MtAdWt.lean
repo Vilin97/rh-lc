@@ -142,7 +142,7 @@ theorem mtwUniv_map (M : ι → Matrix (Fin n) (Fin n) ℂ) (F : Pol ℂ ι n) :
   induction F using MvPolynomial.induction_on
   · simp [mtwUniv, Formalism.GradedWeylDivisibility.blockAct, MvPolynomial.algebraMap_apply]
   · rename_i p q hp hq
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   · rename_i p v hp
     have hX : MvPolynomial.map (eval fun y : ι × Fin n × Fin n => M y.1 y.2.1 y.2.2) (mtwUniv (X v)) =
         Formalism.GradedWeylDivisibility.blockAct ℂ (fun τ => (M τ)ᵀ) (X v) := by
@@ -188,7 +188,7 @@ theorem mtw_eval_aeval {σ ρ : Type} (f : σ → MvPolynomial ρ ℂ) (d : ρ �
   induction P using MvPolynomial.induction_on
   · simp [MvPolynomial.algebraMap_eq]
   · rename_i p q hp hq
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   · rename_i p v hp
     simp only [map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.eval_X]
 

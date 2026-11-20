@@ -51,7 +51,7 @@ lemma bd_pow {α c : ℝ} (hα : 0 ≤ α) {f : PowerSeries ℚ_[p]} (hf : Bd p 
 
 lemma bd_add {α c : ℝ} {f g : PowerSeries ℚ_[p]} (hf : Bd p α c f) (hg : Bd p α c g) :
     Bd p α c (f + g) := by
-  intro b; rw [map_add]
+  intro b; rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf b) (hg b))
 
 lemma bd_neg {α c : ℝ} {f : PowerSeries ℚ_[p]} (hf : Bd p α c f) : Bd p α c (-f) := by
@@ -88,7 +88,7 @@ lemma dg_mono {D D' : ℕ} {f : PowerSeries ℚ_[p]} (h : D ≤ D') (hf : Dg p D
 
 lemma dg_add {D : ℕ} {f g : PowerSeries ℚ_[p]} (hf : Dg p D f) (hg : Dg p D g) :
     Dg p D (f + g) := by
-  intro b hb; rw [map_add, hf b hb, hg b hb, add_zero]
+  intro b hb; rw [map_add (f := _), hf b hb, hg b hb, add_zero]
 
 lemma dg_sub {D : ℕ} {f g : PowerSeries ℚ_[p]} (hf : Dg p D f) (hg : Dg p D g) :
     Dg p D (f - g) := by
@@ -230,7 +230,7 @@ lemma level_succ {g : ℕ} (L : Level p g) : Level p (g + 1) := by
   have hQ : (0 : ℝ) < (p : ℝ) ^ g := pow_pos p_pos g
   refine ⟨?_, ?_, ?_, ?_⟩
   · intro b
-    rw [uu_succ, map_add]
+    rw [uu_succ, map_add (f := _)]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ?_ ?_)
     · exact bd_one (by positivity) b
     · by_cases hb : p ^ (g + 1) < b
@@ -247,8 +247,8 @@ lemma level_succ {g : ℕ} (L : Level p g) : Level p (g + 1) := by
         nlinarith
   · rw [uu_succ]
     exact dg_add (dg_mono (Nat.zero_le _) dg_one) H.dg
-  · rw [uu_succ, map_add, coeff_one, if_neg (pow_pos hp.out.pos _).ne', zero_add, H.top]
-  · right; rw [uu_succ, map_add, coeff_one, if_pos rfl, H.c0, add_zero]
+  · rw [uu_succ, map_add (f := _), coeff_one, if_neg (pow_pos hp.out.pos _).ne', zero_add, H.top]
+  · right; rw [uu_succ, map_add (f := _), coeff_one, if_pos rfl, H.c0, add_zero]
 
 lemma level : ∀ g : ℕ, Level p g
   | 0 => level_zero

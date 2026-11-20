@@ -231,7 +231,7 @@ theorem lift_fn (U : A.left.Opens) (ℓ : Ω[Sec (str A) U⁄ℂ] →+ (Fin g �
     rfl
   | zero =>
     rw [map_zero, map_zero, Pi.zero_apply, ← Hol.ev_apply p hp, map_zero]; rfl
-  | add x y _ _ hx hy => rw [map_add, map_add, Pi.add_apply, Hol.fn_add _ _ hp, hx, hy]; rfl
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), Pi.add_apply, Hol.fn_add _ _ hp, hx, hy]; rfl
   | smul b x _ hx => rw [h, e2, Pi.smul_apply, smul_eq_mul, Hol.fn_mul _ _ hp, hx, fn_valHom u U b hp]; rfl
 
 set_option maxHeartbeats 800000 in

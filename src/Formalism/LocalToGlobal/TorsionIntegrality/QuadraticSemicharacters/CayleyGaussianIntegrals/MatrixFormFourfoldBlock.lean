@@ -30,7 +30,7 @@ theorem heisenbergMul : OpUMul := by
   simp only [opU]
   rw [mul_assoc, ← Complex.exp_add, mul_left_comm, ← Complex.exp_add, add_assoc z x y]
   congr 2
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   linear_combination (-(Real.pi : ℂ) / 2) * hs
 
 theorem heisenbergComm : OpUComm := by
@@ -52,7 +52,7 @@ theorem heisenbergNorm : OpUNorm := by
       -Real.pi * (H z x).re - Real.pi * (H x x).re / 2 := by
     simp [Complex.sub_re, Complex.mul_re]
   have hzz : (H (z + x) (z + x)).re = (H z z).re + 2 * (H z x).re + (H x x).re := by
-    simp only [map_add, LinearMap.add_apply, Complex.add_re]
+    simp only [map_add (f := _), LinearMap.add_apply, Complex.add_re]
     linarith
   simp only [opU, norm_mul, Complex.norm_exp, hE]
   rw [hzz, mul_pow, ← Real.exp_nat_mul, mul_assoc, ← Real.exp_add]
@@ -62,7 +62,7 @@ theorem heisenbergNorm : OpUNorm := by
 
 theorem heisenbergIsometry : OpUIsom := by
   intro V W _ _ _ _ H H' g hg x G z
-  simp only [opU, map_add]
+  simp only [opU, map_add (f := _)]
   rw [hg z x, hg x x]
 
 theorem precompHeisenberg : PullOpU := by
@@ -74,7 +74,7 @@ theorem precompHeisenberg : PullOpU := by
   have h2 : H (δ x) (δ x) = H x x := by
     have h := hδ x x
     simpa only [LinearEquiv.coe_coe] using h
-  simp only [pullInv, opU, map_add, LinearEquiv.symm_apply_apply, h1, h2]
+  simp only [pullInv, opU, map_add (f := _), LinearEquiv.symm_apply_apply, h1, h2]
 
 theorem semicharacterBasic : SemiCharBasic := by
   intro V _ _ H hH Λ α hα
@@ -142,7 +142,7 @@ theorem heisenbergAnalytic : OpUAnalytic := by
   intro V _ _ _ H x F hF z _
   let L : V →ₗ[ℂ] ℂ :=
     { toFun := fun v => H v x
-      map_add' := fun a b => by simp only [map_add, LinearMap.add_apply]
+      map_add' := fun a b => by simp only [map_add (f := _), LinearMap.add_apply]
       map_smul' := fun c a => by simp only [map_smul, LinearMap.smul_apply, RingHom.id_apply] }
   have hlin : AnalyticAt ℂ (fun v => H v x) z := (LinearMap.toContinuousLinearMap L).analyticAt z
   have hF' : AnalyticAt ℂ (fun v => F (v + x)) z :=

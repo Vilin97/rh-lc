@@ -79,7 +79,7 @@ theorem denseRange_finiteAdele : DenseRange (algebraMap K (FiniteAdeleRing R K))
   have hx : algebraMap K (FiniteAdeleRing R K) (u + algebraMap R K a) - b =
       -((b - algebraMap K (FiniteAdeleRing R K) u) -
         algebraMap K (FiniteAdeleRing R K) (algebraMap R K a)) := by
-    rw [map_add]; ring
+    rw [map_add (f := _)]; ring
   have hmem := hrN (algebraMap K (FiniteAdeleRing R K) (u + algebraMap R K a) - b) (by
     rw [hx]
     intro v

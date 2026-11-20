@@ -35,7 +35,7 @@ theorem evW_toEAf (τ : D.host.E →ₐ[D.host.F] Fv D.host.F v) (a : AE D) : ev
     congr 1
     rw [← FlipMatch.complMap_apply_under (splitPrime_under τ)]
     rfl
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 end GlobalTheory.BotMatch
 

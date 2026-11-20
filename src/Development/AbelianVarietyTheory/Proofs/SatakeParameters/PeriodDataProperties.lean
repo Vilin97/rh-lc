@@ -28,7 +28,7 @@ theorem map_mem_FilV (f : V →ₗ[LL] V') (a : ℤ) (x : V ⊗[Qp] BdR)
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem map_mem_DdRE (ρ : Representation LL G V) (ρ' : Representation LL G V') (f : V →ₗ[LL] V')
     (hf : ∀ g v, f (ρ g v) = ρ' g (f v)) (τ : K →ₐ[Qp] LL) (x : V ⊗[Qp] BdR)
@@ -41,7 +41,7 @@ theorem map_mem_DdRE (ρ : Representation LL G V) (ρ' : Representation LL G V')
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVdR, hf]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   have h2 : ∀ (c : K) (y : V ⊗[Qp] BdR),
       mulVdR (K := K) (BdR := BdR) (V := V') (LL := LL) c
         (AlgebraTensorModule.map f (LinearMap.id : BdR →ₗ[Qp] BdR) y)
@@ -51,7 +51,7 @@ theorem map_mem_DdRE (ρ : Representation LL G V) (ρ' : Representation LL G V')
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [mulVdR]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   simp only [DdRE, DdR, Submodule.mem_inf, Submodule.mem_iInf, LinearMap.mem_ker,
     LinearMap.sub_apply, LinearMap.id_apply, LinearMap.smul_apply, sub_eq_zero] at hx ⊢
   refine ⟨fun g => ?_, fun c => ?_⟩
@@ -64,7 +64,7 @@ theorem FilV_anti (a : ℤ) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => exact ⟨v ⊗ₜ ⟨b.1, PD.Fil_anti a b.2⟩, by simp⟩
-  | add y z hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 end
 
@@ -98,7 +98,7 @@ theorem jumpsInV_of_isSubOfSums : ∀ {G : Type} [Group G] [TopologicalSpace G] 
       congr 1
       exact (Finset.univ_sum_single (j v)).symm
     | add y z hy hz =>
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       rw [← hy, ← hz]
   rw [hdec x]
   refine Submodule.sum_mem _ fun b _ => map_mem_FilV PD (s b) (a + 1) _ ?_

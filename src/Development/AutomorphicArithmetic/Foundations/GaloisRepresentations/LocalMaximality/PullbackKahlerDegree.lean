@@ -24,7 +24,7 @@ private theorem mapDR_deg {q : ℕ} {w : DR k K} (hw : w ∈ ⋀[K]^q Ω[K⁄k])
     rw [GlobalTheory.W1.Base.mapDR_ιMulti]
     exact ExteriorAlgebra.ιMulti_range L q ⟨_, rfl⟩
   | zero => simp
-  | add a c _ _ ha hc => rw [map_add]; exact add_mem ha hc
+  | add a c _ _ ha hc => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hc
   | smul r a _ ha => rw [mapDR_smul']; exact Submodule.smul_mem _ _ ha
 
 private theorem omB_deg {B : Subalgebra k K} {q : ℕ} {w : DR k K} (hw : w ∈ omB k K B q) :
@@ -85,7 +85,7 @@ private theorem val_ring (hV : ValBasic) {L : Type} [Field L] [Algebra ℂ L] (B
   intro v c v' c' h h'
   obtain ⟨hv, rfl⟩ := (hev _ _).1 h
   obtain ⟨hv', rfl⟩ := (hev _ _).1 h'
-  exact ⟨(hev _ _).2 ⟨add_mem hv hv', by rw [← map_add]; rfl⟩,
+  exact ⟨(hev _ _).2 ⟨add_mem hv hv', by rw [← map_add (f := _)]; rfl⟩,
     (hev _ _).2 ⟨mul_mem hv hv', by rw [← map_mul]; rfl⟩⟩
 
 private theorem val_sum (hV : ValBasic) {L : Type} [Field L] [Algebra ℂ L] (B : Subalgebra ℂ L) (e : B →ₐ[ℂ] ℂ)

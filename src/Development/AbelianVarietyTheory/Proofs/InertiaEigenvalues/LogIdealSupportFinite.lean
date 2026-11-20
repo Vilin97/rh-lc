@@ -177,8 +177,8 @@ theorem schur_data_mul_finGL : ∀ (E : Type) [Field E] [NumberField E] [IsTotal
   · have hSgK : IsUnit (Scof (g * K)).det := by rw [a4, Matrix.det_mul]; exact hS.mul hSL
     rw [coe_mkGL hSgK, Units.val_mul, coe_mkGL hS, Scof_map _ _ hDL, coe_finGL_mkGL _ hSi hSL, a4]
   · have h0 : pInf E (Yof L i j) = 0 := congrFun (congrFun hYi i) j
-    rw [a3, Matrix.add_apply, map_add, h0, add_zero]
-  · rw [a3, Matrix.add_apply, map_add, Yof_map _ _ hDL, Matrix.map_apply]
+    rw [a3, Matrix.add_apply, map_add (f := _), h0, add_zero]
+  · rw [a3, Matrix.add_apply, map_add (f := _), Yof_map _ _ hDL, Matrix.map_apply]
   · rw [a5, Matrix.add_apply, Xof_map _ _ hDL]
     congr 1
     refine ad_ext ?_ ?_

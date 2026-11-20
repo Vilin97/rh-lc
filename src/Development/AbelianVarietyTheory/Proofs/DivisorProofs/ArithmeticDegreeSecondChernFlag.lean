@@ -134,7 +134,7 @@ theorem deg_twiceCh_succ (H : h.IsCInf) (fl : Vert.Flag E r) (i : Fin r) {x : �
     rw [hc]
     linear_combination 2 * hw
   have hsq : R.deg (R.c1 (VMetric.grLB fl i H) ^ 2) = x := R.degreeFirstChernPow _ _ hx
-  rw [e₃, map_add, map_add, map_add, hsq, R.deg_a θ hθ, hint]
+  rw [e₃, map_add (f := _), map_add (f := _), map_add (f := _), hsq, R.deg_a θ hθ, hint]
   ring
 
 end GlobalTheory.FlagCh2Ring

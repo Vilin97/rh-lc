@@ -159,7 +159,7 @@ structure IsKerSys (θ : InfF D) (V W : HSp D) {M : Type} [AddCommGroup M] [Modu
 def swapKer {V W : HSp D} {M : Type} [AddCommGroup M] [Module ℂ M] (κ : M →ₗ[ℂ] (GA D V → GA D W → ℂ)) :
     M →ₗ[ℂ] (GA D W → GA D V → ℂ) where
   toFun f h g := κ f g h
-  map_add' f f' := by rw [map_add]; rfl
+  map_add' f f' := by rw [map_add (f := _)]; rfl
   map_smul' c f := by rw [map_smul]; rfl
 
 theorem IsKerSys.swap {θ : InfF D} {V W : HSp D} {M : Type} [AddCommGroup M] [Module ℂ M]

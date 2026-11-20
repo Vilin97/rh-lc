@@ -104,6 +104,6 @@ theorem norm_z_bounds : ∀ {l : ℕ} [Fact l.Prime] (K : FinExt l) (χ : ↥(GK
     show GlobalTheory.CompanionTheory.LTPer.Tilt.omC (z (n + 1)) ^ qOf π + GlobalTheory.CompanionTheory.LTPer.Tilt.oc K π * GlobalTheory.CompanionTheory.LTPer.Tilt.omC (z (n + 1))
       = GlobalTheory.CompanionTheory.LTPer.Tilt.omC (z n)
     have hr' : z (n + 1) ^ qOf π + ((π : ↥K.1) : Om l) * z (n + 1) = z n := hr n
-    rw [← e, ← map_pow, ← map_mul, ← map_add, hr']
+    rw [← e, ← map_pow, ← map_mul, ← map_add (f := _), hr']
 
 end GlobalTheory.CompanionTheory.LTPer.Tilt.Normz

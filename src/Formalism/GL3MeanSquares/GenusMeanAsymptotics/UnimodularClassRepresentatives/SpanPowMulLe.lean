@@ -30,7 +30,7 @@ theorem InP.add {𝔭 : Ideal (𝓞 F)} [h𝔭 : 𝔭.IsPrime] {k : ℕ} {a b : 
   obtain ⟨t₂, ht₂, z₂, hz₂, e₂⟩ := hb
   refine ⟨t₁ * t₂, fun hm => (h𝔭.mem_or_mem hm).elim ht₁ ht₂, ι t₂ * z₁ + ι t₁ * z₂,
     Ideal.add_mem _ (Ideal.mul_mem_left _ _ hz₁) (Ideal.mul_mem_left _ _ hz₂), ?_⟩
-  simp only [map_add, map_mul, e₁, e₂]
+  simp only [map_add (f := _), map_mul, e₁, e₂]
   ring
 
 theorem InP.neg {𝔭 : Ideal (𝓞 F)} {k : ℕ} {a : K} (ha : InP 𝔭 k a) : InP 𝔭 k (-a) := by

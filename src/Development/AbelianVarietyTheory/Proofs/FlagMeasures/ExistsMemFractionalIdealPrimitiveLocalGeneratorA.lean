@@ -42,7 +42,7 @@ theorem basis_repr_mem_of_mem_latSpanV_two {F E : Type} [Field F] [NumberField F
     · rw [smul_zero]; exact (C i : Submodule (𝓞 F) F).zero_mem
   | zero => rw [map_zero, Finsupp.zero_apply]; exact (C i : Submodule (𝓞 F) F).zero_mem
   | add x y _ _ hx hy =>
-    rw [map_add, Finsupp.add_apply]; exact (C i : Submodule (𝓞 F) F).add_mem hx hy
+    rw [map_add (f := _), Finsupp.add_apply]; exact (C i : Submodule (𝓞 F) F).add_mem hx hy
   | smul r x _ hx =>
     rw [← algebraMap_smul F r x, map_smul, Finsupp.smul_apply, algebraMap_smul]
     exact (C i : Submodule (𝓞 F) F).smul_mem r hx
@@ -76,7 +76,7 @@ theorem basis_repr_mem_of_mem_map_mul_two {F E : Type} [Field F] [NumberField F]
       exact hgen π hπ
     | zero => intro z _; simp [T.zero_mem]
     | add x y _ _ hx hy =>
-      intro z hz; rw [map_add, add_mul, map_add, Finsupp.add_apply]; exact T.add_mem (hx z hz) (hy z hz)
+      intro z hz; rw [map_add (f := _), add_mul, map_add (f := _), Finsupp.add_apply]; exact T.add_mem (hx z hz) (hy z hz)
     | smul r x _ hx =>
       intro z hz
       have e1 : algebraMap (𝓞 E) E (r * x) * z = algebraMap (𝓞 E) E x * (algebraMap (𝓞 E) E r * z) := by
@@ -88,7 +88,7 @@ theorem basis_repr_mem_of_mem_map_mul_two {F E : Type} [Field F] [NumberField F]
     obtain ⟨q, hq', rfl⟩ := (FractionalIdeal.mem_coeIdeal _).mp hu
     exact hq q hq' z hz
   · intro x y hx hy
-    simp only [map_add, Finsupp.add_apply]
+    simp only [map_add (f := _), Finsupp.add_apply]
     exact T.add_mem hx hy
 
 theorem mem_map_mul_of_basis_repr_mem_two {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
@@ -181,14 +181,14 @@ theorem exists_mem_fractionalIdeal_primitive_local_generator : ∀ (F E : Type) 
     have hr : ∀ i, B.repr (a₀ + (m : F) • w) i = B.repr a₀ i + (m : F) * ((algebraMap (𝓞 F) F s) *
         (Finsupp.single 0 1 : Fin 2 →₀ F) i + t * (Finsupp.single 1 1 : Fin 2 →₀ F) i) := by
       intro i
-      simp only [w, map_add, map_smul, B.repr_self, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul]
+      simp only [w, map_add (f := _), map_smul, B.repr_self, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul]
     refine hst p hp ⟨?_, ?_⟩
     · have h0 := h 0
       rw [hC0, mul_one, hr 0] at h0
       obtain ⟨x', hx'p, hx'⟩ := (FractionalIdeal.mem_coeIdeal _).mp h0
       have : x' = x₀ + (m : 𝓞 F) * s := by
         apply IsFractionRing.injective (𝓞 F) F
-        rw [hx', map_add, map_mul, map_natCast, hx₀]
+        rw [hx', map_add (f := _), map_mul, map_natCast, hx₀]
         simp
       exact this ▸ hx'p
     · have h1 := h 1

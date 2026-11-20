@@ -70,7 +70,7 @@ private theorem crd_mul_lemma_2 {l : ℕ} [Fact l.Prime] (LL : FinExt l)
   | tmul o w =>
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, crd_tmul_lemma, crd_tmul_lemma, mul_smul_comm]
   | add y z hy hz =>
-    rw [mul_add, LinearMap.map_add, LinearMap.map_add, hy, hz]
+    rw [mul_add, LinearMap.map_add (f := _), LinearMap.map_add (f := _), hy, hz]
     exact (mul_add q _ _).symm
 
 private theorem expand_lemma_3 {l : ℕ} [Fact l.Prime] (LL : FinExt l) (y : RW LL) :
@@ -82,7 +82,7 @@ private theorem expand_lemma_3 {l : ℕ} [Fact l.Prime] (LL : FinExt l) (y : RW 
     rw [← TensorProduct.sum_tmul]
     simp_rw [Module.Basis.coord_apply]
     rw [Module.Basis.sum_repr]
-  | add y z hy hz => simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib, hy, hz]
 
 private theorem crd_sum_lemma_4 {l : ℕ} [Fact l.Prime] (LL : FinExt l)
     (i : Fin (Module.finrank ℤ_[l] ↥(OL LL))) (w : Fin (Module.finrank ℤ_[l] ↥(OL LL)) → WCb l) :
@@ -145,7 +145,7 @@ private theorem cc_inclR_lemma_11 {l : ℕ} [Fact l.Prime] (LL : FinExt l)
     obtain ⟨c2, h2⟩ := hb
     refine ⟨c1 + c2, ?_⟩
     have e : (inclR LL) (a + b) = (inclR LL) a + (inclR LL) b := (inclR LL).toRingHom.map_add a b
-    rw [e, LinearMap.map_add, (algebraMap (OCb l) (Cb l)).map_add, ← h1, ← h2]
+    rw [e, LinearMap.map_add (f := _), (algebraMap (OCb l) (Cb l)).map_add (f := _), ← h1, ← h2]
     exact WittVector.add_coeff_zero _ _
 
 private theorem coord_of_near_lemma_12 {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P)
@@ -156,7 +156,7 @@ private theorem coord_of_near_lemma_12 {l : ℕ} [Fact l.Prime] (P : LocPrime l)
   obtain ⟨a, r, rfl⟩ := h
   obtain ⟨c, hc⟩ := cc_inclR_lemma_11 LL i a
   refine ⟨c, ?_⟩
-  rw [map_add, ← nsmul_eq_mul, map_nsmul, nsmul_eq_mul, crdZero_apply, inclR_piR_lemma_9,
+  rw [map_add (f := _), ← nsmul_eq_mul, map_nsmul, nsmul_eq_mul, crdZero_apply, inclR_piR_lemma_9,
     Algebra.TensorProduct.tmul_pow, one_pow, crd_mul_lemma_2]
   change WittVector.constantCoeff (p := l) (R := Cb l) (_ * _) + _ = _
   rw [map_mul, map_pow]

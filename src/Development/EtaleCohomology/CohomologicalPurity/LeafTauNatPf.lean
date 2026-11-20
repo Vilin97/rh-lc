@@ -68,13 +68,13 @@ theorem LeafTauNat_of (hG : LeafGeo) : LeafTauNat := by
       change pull _ (dbl.inl _) _ _ (pull _ (dbl.map g) _ _ τ.1) =
         pull _ g.right _ _ (pull _ (dbl.inl _) _ _ τ.1)
       rw [← pull_comp, ← pull_comp, inl_map]
-    rw [e, ha, map_add, tn_pull_cpow h6 q (E := PR (d + 1) 0 B) (E' := PR (d + 1) 0 A) g.right hI,
+    rw [e, ha, map_add (f := _), tn_pull_cpow h6 q (E := PR (d + 1) 0 B) (E' := PR (d + 1) 0 A) g.right hI,
       tn_pull_hyp h6 q (d + 1) g.right hI hl, tn_pull_poly h6 q (d + 1) φ g.right hI hl hs]
   · have e : Hs.fgt r (pr d A) _ _ τ' = red q r (PR (d + 1) 0 A) _ _
         (show Ht q (PR (d + 1) 0 A) _ _ from Hs.fgt q (pr d A) _ _ τ) := by
       change pull _ (dbl.inl _) _ _ τ'.1 = red q r _ _ _ (pull _ (dbl.inl _) _ _ τ.1)
       rw [hτ', pull_red]
-    rw [e, ha, map_add, tn_red_poly h11 q r hr (d + 1) hI]
+    rw [e, ha, map_add (f := _), tn_red_poly h11 q r hr (d + 1) hI]
     unfold hyp
     rw [tn_red_cpow h11 q r hr hI]
 

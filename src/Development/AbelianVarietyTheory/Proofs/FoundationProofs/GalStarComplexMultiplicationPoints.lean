@@ -194,7 +194,7 @@ lemma IsConj.add (h₂ : L'.g₂ = σ L.g₂) (h₃ : L'.g₃ = σ L.g₃) {t t'
     (ht : IsConj L L' σ t t') (hu : IsConj L L' σ u u') : IsConj L L' σ (t + u) (t' + u') := by
   obtain ⟨s, -, hc⟩ := exists_conjEquiv h₂ h₃
   rw [hc] at ht hu ⊢
-  rw [latticePoint_add, latticePoint_add, map_add, ht, hu]
+  rw [latticePoint_add, latticePoint_add, map_add (f := _), ht, hu]
 
 lemma IsConj.nsmul_mem_iff (h₂ : L'.g₂ = σ L.g₂) (h₃ : L'.g₃ = σ L.g₃) {t t' : ℂ}
     (ht : IsConj L L' σ t t') (n : ℕ) : (n : ℂ) * t ∈ L.lattice ↔ (n : ℂ) * t' ∈ L'.lattice := by

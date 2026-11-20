@@ -24,7 +24,7 @@ theorem theta_integral_finite_relation_eq_zero : _root_.GlobalTheory.FunPr.Theta
   have hsub : ∀ g k (Φ Ψ : WO M X → ℂ), thetaKO ω g k (Φ - Ψ) = thetaKO ω g k Φ - thetaKO ω g k Ψ := by
     intros; simp [thetaKO, map_sub]
   have hadd : ∀ g k (Φ Ψ : WO M X → ℂ), thetaKO ω g k (Φ + Ψ) = thetaKO ω g k Φ + thetaKO ω g k Ψ := by
-    intros; simp [thetaKO, map_add]
+    intros; simp [thetaKO, map_add (f := _)]
   have hsmul : ∀ g k (c : ℂ) (Φ : WO M X → ℂ), thetaKO ω g k (c • Φ) = c * thetaKO ω g k Φ := by
     intros; simp [thetaKO, map_smul]
   have hzero : ∀ g k, thetaKO ω g k (0 : WO M X → ℂ) = 0 := by

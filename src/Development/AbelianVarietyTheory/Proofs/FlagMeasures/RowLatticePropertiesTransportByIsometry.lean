@@ -119,7 +119,7 @@ theorem mem_Lsub (hg : g ∈ Formalism.HermitianLatticesTheory.isom (VS D).hT) (
   refine ⟨?_, (mem_orth hg hfr v).1 ho⟩
   obtain ⟨y, hy, w, hw, rfl⟩ := Submodule.mem_sup.1 hs
   obtain ⟨hyΛ, hyo⟩ := hy
-  rw [map_add]
+  rw [map_add (f := _)]
   refine Submodule.add_mem_sup ⟨(mem_gmap_inv g Λ y).1 hyΛ, (mem_orth hg hfr y).1 hyo⟩ ?_
   exact (mem_X hfr w).1 hw
 

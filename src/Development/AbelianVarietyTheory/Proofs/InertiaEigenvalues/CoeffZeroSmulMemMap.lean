@@ -15,7 +15,7 @@ theorem aeval_mem {O V : Type} [CommRing O] [AddCommGroup V] [Module O V] (T : M
       exact hZ _ ih
   induction q using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact Z.add_mem hp hq
   | monomial n a =>
     rw [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply]
@@ -27,7 +27,7 @@ theorem coeff_zero_smul_mem_map : ∀ {O V : Type} [inst : CommRing O] [inst_1 :
   have key : (Polynomial.aeval T Rp) (T v) =
       T ((Polynomial.aeval T Rp.divX) (T v)) + Rp.coeff 0 • T v := by
     conv_lhs => rw [← Polynomial.X_mul_divX_add Rp]
-    rw [map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C, LinearMap.add_apply,
+    rw [map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C, LinearMap.add_apply,
       Module.End.mul_apply, Module.algebraMap_end_apply]
   have h0 : (Polynomial.aeval T Rp) (T v) = 0 := by
     have := congrArg (fun f : Module.End O V => f v) hR

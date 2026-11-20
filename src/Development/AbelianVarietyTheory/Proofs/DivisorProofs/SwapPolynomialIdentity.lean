@@ -36,7 +36,7 @@ theorem mid_lin {x y : κ} (hxy : x ≠ y) (c r : κ → ℝ) (hrx : r x = 0) (h
     by_cases hy : z = y
     · subst hy; rw [hry, C_0, zero_mul, zero_mul]
     rw [mid_X_of_ne hx hy]
-  rw [lin_split hxy c r hrx hry hr, map_add, map_add, hmr, map_mul, map_mul, algHom_C, algHom_C, algebraMap_eq,
+  rw [lin_split hxy c r hrx hry hr, map_add (f := _), map_add (f := _), hmr, map_mul, map_mul, algHom_C, algHom_C, algebraMap_eq,
     mid_X_left, mid_X_right, div_eq_mul_one_div (c x + c y), C_mul, C_add]
   ring
 
@@ -100,7 +100,7 @@ theorem key [DecidableEq κ] {x y : κ} (hxy : x ≠ y) (D : ℕ) (Φ Ψ : MvPol
       rw [← e1, ← e2, hs n, swapPol, swapG, map_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hnx, hny]
-    simp only [map_mul, map_pow, map_sub, map_add, aeval_C, aeval_X, algebraMap_eq, Matrix.cons_val_zero,
+    simp only [map_mul, map_pow, map_sub, map_add (f := _), aeval_C, aeval_X, algebraMap_eq, Matrix.cons_val_zero,
       Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
     have es : (((c x - j : ℤ) : ℝ) + ((c y + j : ℤ) : ℝ)) / 2 = ((c x : ℝ) + c y) / 2 := by push_cast; ring
     have et : (((c y + j : ℤ) : ℝ) - ((c x - j : ℤ) : ℝ)) / 2 = t := by rw [ht]; push_cast; ring

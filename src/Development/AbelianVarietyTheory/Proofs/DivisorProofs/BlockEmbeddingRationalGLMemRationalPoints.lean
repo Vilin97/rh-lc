@@ -57,7 +57,7 @@ theorem blockEmb_ratGL_mem_ratPts : ∀ (F E : Type) [Field F] [NumberField F] [
     GlobalTheory.BlockForms.blkCols h Yf * (cT (σ : E →+* E) (γ⁻¹).1 - 1) *
       (cT (σ : E →+* E) (GlobalTheory.BlockForms.blkCols h Xf) * J)) ?_ hinj
   rw [hmat, ← map_inv, hrat, hrat, GlobalTheory.CuspBlockLeft.cT_inclR]
-  simp [Matrix.map_add, Matrix.map_sub, Matrix.map_mul, Matrix.map_one]
+  simp [Matrix.map_add (f := _), Matrix.map_sub, Matrix.map_mul, Matrix.map_one]
 
 end GlobalTheory.CuspBlockRat
 

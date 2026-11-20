@@ -66,7 +66,7 @@ theorem placeModel_induction (ψ : AddChar (AF D.host.F) ℂ) {e : AE D} (Λ : A
     rw [e1, h₁.trans _ s1 x ((isHalf_iff S T).2 hx), h₁.modul _ s0 y ((isHalf_iff S T).2 hy), v1]
     exact px x hx _ (py y hy _ pf)
   | zero => rw [LinearMap.map_zero]; exact p0
-  | add f g _ _ hf hg => rw [LinearMap.map_add]; exact padd _ _ hf hg
+  | add f g _ _ hf hg => rw [LinearMap.map_add (f := _)]; exact padd _ _ hf hg
   | smul c f _ hf => rw [LinearMap.map_smul]; exact psmul _ _ hf
 
 theorem isTheta_heis_fin {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {f : WO S T → ℂ}

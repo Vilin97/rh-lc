@@ -173,7 +173,7 @@ theorem key (Y : Scheme.{0}) [IsIntegral Y] [IsLocallyNoetherian Y] (q : Y ⟶ S
     refine (Ideal.span_le.2 ?_) hb
     rintro _ ⟨j, rfl⟩
     exact Ideal.mem_map_of_mem (algebraMap Γ(Y, U) (Y.presheaf.stalk y)) (Ideal.subset_span ⟨j, j.2, rfl⟩)
-  rw [← hab, map_add, Ideal.Quotient.eq_zero_iff_mem.2 hbI, add_zero]
+  rw [← hab, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hbI, add_zero]
   have hma : Ideal.Quotient.mk IS a ∈ (maximalIdeal (Y.presheaf.stalk y)).map (Ideal.Quotient.mk IS) ^ 2 := by
     rw [← Ideal.map_pow]; exact Ideal.mem_map_of_mem _ ha
   exact Ideal.pow_right_mono (Ideal.map_le_iff_le_comap.2 hmk) 2 hma

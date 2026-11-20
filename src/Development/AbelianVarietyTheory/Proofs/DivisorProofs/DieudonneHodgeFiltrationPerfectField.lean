@@ -84,7 +84,7 @@ theorem hodge_filtration : ∀ (p : ℕ) [Fact p.Prime] (T : Theory p) (k : Type
     have h0 : T.red G (m - T.V G m') = 0 := by rw [map_sub, hm', sub_self]
     obtain ⟨n, hn⟩ := (T.base.red_eq_zero G trivial _).1 h0
     refine ⟨m' + T.F G n, ?_⟩
-    rw [map_add, T.V_F G n, ← hn, add_sub_cancel]
+    rw [map_add (f := _), T.V_F G n, ← hn, add_sub_cancel]
   · rintro ⟨n, rfl⟩
     obtain ⟨w, hw⟩ := (h1 (T.red G (T.V G n))).1 ⟨n, rfl⟩
     exact ⟨w, hw⟩

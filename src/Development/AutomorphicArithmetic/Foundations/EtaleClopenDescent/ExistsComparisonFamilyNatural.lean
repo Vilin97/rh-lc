@@ -425,7 +425,7 @@ theorem gm_pull (hinst : inst = ffAlg p) (hinst' : inst' = ffAlg p') (hU : IsAff
         SemiHom.mDR_ι, SemiHom.m1_D]
       rfl
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add, map_add, hy, hz]
+    | add y z _ _ hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
     | smul r y _ hy =>
       rw [map_smul, hy, ← algebraMap_smul Z.functionField r y, SemiHom.mDR_smul,
         ← algebraMap_smul Z'.functionField r]
@@ -596,7 +596,7 @@ private theorem mapDR_eq_semiHom_algebraMap_mDR (K L : Type) [Field K] [Field L]
     rw [ExteriorAlgebra.lift_ι_apply]
     rfl
   | mul a b ha hb => rw [map_mul, map_mul, ha, hb]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 private theorem isTrDR_trDR (K L : Type) [Field K] [Field L] [Algebra ℂ K] [Algebra ℂ L] [Algebra K L]
     [IsScalarTower ℂ K L] [FiniteDimensional K L] : IsTrDR ℂ K L (trDR ℂ K L) := by
@@ -616,7 +616,7 @@ private theorem isTrDR_trDR (K L : Type) [Field K] [Field L] [Algebra ℂ K] [Al
     intro r y
     induction y using DirectSum.Decomposition.inductionOn (fun i : ℕ => ⋀[L]^i (Ω[L⁄ℂ])) with
     | zero => simp
-    | add m m' hm hm' => rw [smul_add, map_add, map_add, hm, hm', smul_add]
+    | add m m' hm hm' => rw [smul_add, map_add (f := _), map_add (f := _), hm, hm', smul_add]
     | homogeneous m =>
       rw [← algebraMap_smul K r (m : DR ℂ L), ← Submodule.coe_smul_of_tower, hT0, hT0, map_smul,
         Submodule.coe_smul_of_tower, algebraMap_smul]
@@ -625,7 +625,7 @@ private theorem isTrDR_trDR (K L : Type) [Field K] [Field L] [Algebra ℂ K] [Al
     intro b ω
     induction ω using DirectSum.Decomposition.inductionOn (fun i : ℕ => ⋀[K]^i (Ω[K⁄ℂ])) with
     | zero => simp
-    | add m m' hm hm' => rw [map_add, smul_add, map_add, hm, hm', smul_add]
+    | add m m' hm hm' => rw [map_add (f := _), smul_add, map_add (f := _), hm, hm', smul_add]
     | homogeneous x =>
       have hx : mapDR ℂ K L (x : DR ℂ K) = ((formLin ℂ K L _ x : Om ℂ L _) : DR ℂ L) := by
         rw [mapDR_eq_semiHom_algebraMap_mDR]
@@ -714,7 +714,7 @@ private theorem kaehlerDifferential_map_eq_semiHom_m1 (K L : Type) [Field K] [Fi
     obtain ⟨t, rfl⟩ := hy
     rw [KaehlerDifferential.map_D, SemiHom.m1_D]
   | zero => simp
-  | add y z _ _ hy hz => rw [map_add, map_add, hy, hz]
+  | add y z _ _ hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
   | smul r y _ hy =>
     rw [LinearMap.map_smul_of_tower, hy]
     show _ = (semiHom_algebraMap ℂ K L).m1' (r • y)
@@ -735,7 +735,7 @@ private theorem mapDR_eq_semiHom_mDR (K L : Type) [Field K] [Field L] [Algebra �
     show ExteriorAlgebra.ι L (KaehlerDifferential.map ℂ ℂ K L ω) = _
     rw [kaehlerDifferential_map_eq_semiHom_m1]
   | mul x y hx hy => rw [map_mul, map_mul, hx, hy]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 set_option maxHeartbeats 800000 in
 
@@ -782,7 +782,7 @@ theorem gm_trace (hc : c ≫ p = p') (hinst : inst = ffAlg p) (hinst' : inst' = 
   induction η using formOm_induction hc hW with
   | h0 => simp
   | ha y z hy hz =>
-    rw [map_add, Submodule.coe_add, map_add, hy, hz, Submodule.coe_add, map_add, map_add]
+    rw [map_add (f := _), Submodule.coe_add, map_add (f := _), hy, hz, Submodule.coe_add, map_add (f := _), map_add (f := _)]
   | hm b' ω =>
     have e1 : formTraceU hc hW a (b' • formPull hc _ a ω) = secTrace p p' hW b' • ω :=
       formTraceU_smul_formPull hc hW b' ω

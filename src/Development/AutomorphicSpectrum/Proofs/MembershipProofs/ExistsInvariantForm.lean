@@ -101,7 +101,7 @@ theorem exists_invariant_form : ∀ (k : Type) [Field k] [ValuativeRel k] [Topol
       have e2 := hL _ (hσ t₁) w hw
       have e3 := hL _ (hσ t) _ (hσ t₁)
       simp only [← ht₁] at e1 e2 e3
-      simp only [hg, schr, ← ht₁, map_add, ← mul_assoc, ← AddChar.map_add_eq_mul, add_dotProduct, dotProduct_add]
+      simp only [hg, schr, ← ht₁, map_add (f := _), ← mul_assoc, ← AddChar.map_add_eq_mul, add_dotProduct, dotProduct_add]
       congr 2
       have h2 : ⅟(2 : k) * 2 = 1 := invOf_mul_self _
       linear_combination e1 + ⅟(2 : k) * e2 - ⅟(2 : k) * e3 - (j t₁ ⬝ᵥ σ t) * h2

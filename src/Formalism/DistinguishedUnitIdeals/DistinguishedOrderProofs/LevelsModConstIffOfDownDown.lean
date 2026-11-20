@@ -420,7 +420,7 @@ theorem const_reduce [IsDiscreteValuationRing O] (ϖ : O) (hϖ : Irreducible ϖ)
   funext i
   have h1 := congrFun hz i
   have h2 := congrArg C (congrFun hδ i)
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul] at h2
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul] at h2
   simp only [Pi.smul_apply, smul_eq_mul, Pi.add_apply, Pi.sub_apply, cst] at h1 ⊢
   rw [h2] at h1
   linear_combination h1
@@ -461,13 +461,13 @@ theorem two_const_reduce [IsDiscreteValuationRing O] (ϖ : O) (hϖ : Irreducible
   · funext i
     have e0 := congrFun h₀ i
     have hC := congrArg C (congrFun hδ i)
-    simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, map_add, map_sub,
+    simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_sub,
       map_mul] at hC
-    simp only [Pi.smul_apply, smul_eq_mul, Pi.add_apply, Pi.sub_apply, cst, map_add] at e0 ⊢
+    simp only [Pi.smul_apply, smul_eq_mul, Pi.add_apply, Pi.sub_apply, cst, map_add (f := _)] at e0 ⊢
     linear_combination e0 + hC + C (lam' i) * hh
   · funext i
     have e1 := congrFun h₁ i
-    simp only [Pi.smul_apply, smul_eq_mul, Pi.add_apply, Pi.sub_apply, cst, map_add] at e1 ⊢
+    simp only [Pi.smul_apply, smul_eq_mul, Pi.add_apply, Pi.sub_apply, cst, map_add (f := _)] at e1 ⊢
     linear_combination e1 + C (lam' i) * hg
 
 end Steps

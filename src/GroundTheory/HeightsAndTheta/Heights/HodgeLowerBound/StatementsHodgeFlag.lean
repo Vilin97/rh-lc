@@ -52,7 +52,7 @@ theorem mConeMap_yY_rename_xV (f : MRing ι) :
       rename (Sum.inl : K → K ⊕ (Ψ × Fin (D.N - 1))) (MvPolynomial.map Pl.ofΩHom (mConeMap D.y f)) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p x hp =>
     simp only [map_mul, hp, rename_X]
     congr 1
@@ -89,7 +89,7 @@ theorem mConeMap_flagGenericPoint_rename (f : MRing ι) :
       rename (Sum.inl : K → K ⊕ (Ψ × Fin (D.N - 1))) (MvPolynomial.map Pl.ofΩHom (mConeMap D.y f)) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p x hp =>
     simp only [map_mul, hp, rename_X]
     congr 1

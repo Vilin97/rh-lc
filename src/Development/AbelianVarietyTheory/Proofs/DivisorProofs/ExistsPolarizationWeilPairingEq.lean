@@ -136,13 +136,13 @@ theorem latPt_eq_of_forall (n : ℕ) {b b' : Dw.La}
     have h2 := ((I.ζ_prim (p ^ n) hp).zpow_eq_one_iff_dvd _).1 h1
     have skew : Dw.EF (b - b') a = - Dw.EF a (b - b') := by
       have := Dw.alt (a + (b - b'))
-      simp only [map_add, LinearMap.add_apply, Dw.alt] at this
+      simp only [map_add (f := _), LinearMap.add_apply, Dw.alt] at this
       linarith
     rw [skew]
     exact dvd_neg.2 h2
   let lf : Dw.La →ₗ[ℤ] ℤ :=
     { toFun := fun a => Dw.EF (b - b') a / ((p ^ n : ℕ) : ℤ)
-      map_add' := fun x y => by rw [map_add, Int.add_ediv_of_dvd_left (hdvd x)]
+      map_add' := fun x y => by rw [map_add (f := _), Int.add_ediv_of_dvd_left (hdvd x)]
       map_smul' := fun m x => by
         rw [map_zsmul, RingHom.id_apply, smul_eq_mul, smul_eq_mul]
         exact Int.mul_ediv_assoc m (hdvd x) }
@@ -170,10 +170,10 @@ theorem exists_pol_pairing {E : Type} [Field E] [NumberField E] [IsCMField E] {H
   have hpp : 0 < p := (Fact.out : p.Prime).pos
   have vl : ∀ n a a' c b, a = a' + p ^ n • c →
       I.ζ (p ^ n) ^ Dw.EF a b = I.ζ (p ^ n) ^ Dw.EF a' b := fun n a a' c b h => by
-    rw [h, map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, zeta_zpow_add I hpp]
+    rw [h, map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, zeta_zpow_add I hpp]
   have vr : ∀ n a b b' c, b = b' + p ^ n • c →
       I.ζ (p ^ n) ^ Dw.EF a b = I.ζ (p ^ n) ^ Dw.EF a b' := fun n a b b' c h => by
-    rw [h, map_add, map_nsmul, zeta_zpow_add I hpp]
+    rw [h, map_add (f := _), map_nsmul, zeta_zpow_add I hpp]
   choose rep hrep using latPt_surj tw I
   have hval : ∀ n a b, I.ζ (p ^ n) ^ Dw.EF (rep n (latPt tw I n a)) (rep n (latPt tw I n b)) =
       I.ζ (p ^ n) ^ Dw.EF a b := fun n a b => by
@@ -203,13 +203,13 @@ theorem exists_pol_pairing {E : Type} [Field E] [NumberField E] [IsCMField E] {H
         obtain ⟨a, ha⟩ := latPt_surj tw I n y.ofConv
         obtain ⟨a', ha'⟩ := latPt_surj tw I n y'.ofConv
         obtain ⟨b, rfl⟩ := latPt_surj tw I n x
-        rw [hmul n y y' a a' ha ha', ← ha, ← ha', hf, hf, hf, map_add, LinearMap.add_apply, zpow_add,
+        rw [hmul n y y' a a' ha ha', ← ha, ← ha', hf, hf, hf, map_add (f := _), LinearMap.add_apply, zpow_add,
           Units.val_mul]
       mul_right := fun y y' x => by
         obtain ⟨a, ha⟩ := latPt_surj tw I n y.ofConv
         obtain ⟨a', ha'⟩ := latPt_surj tw I n y'.ofConv
         obtain ⟨b, rfl⟩ := latPt_surj tw I n x
-        rw [hmul n y y' a a' ha ha', ← ha, ← ha', hf, hf, hf, map_add, zpow_add, Units.val_mul] }
+        rw [hmul n y y' a a' ha ha', ← ha, ← ha', hf, hf, hf, map_add (f := _), zpow_add, Units.val_mul] }
   have hl : ∀ (n : ℕ) (y : GG.A (n + 1) →ₐ[k] k) (x : GG.A n →ₐ[k] k),
       WeilPhi.ev y (x.comp (GG.res n : GG.A (n + 1) →ₐ[k] GG.A n)) (u (n + 1)) =
         WeilPhi.ev (y.comp (GG.mulP n : GG.A n →ₐ[k] GG.A (n + 1))) x (u n) := fun n y x => by

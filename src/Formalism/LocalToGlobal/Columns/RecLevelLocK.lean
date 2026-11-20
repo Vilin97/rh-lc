@@ -73,7 +73,7 @@ private theorem sigR_sigR_apply (x : Rv) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigR, Formalism.BasicNotions.CMData.sig, starRingEnd_apply]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem rll_col {g : GL (Fin n) Rv} (hg : g ∈ UPts hc.sig (1 : Matrix (Fin n) (Fin n) E) (v.adicCompletion F))
     (hi : rowLocalCondition n π v g⁻¹) (i : Fin n) (hne : i ≠ lastIdx n) :
@@ -242,7 +242,7 @@ theorem rll_Row_of_maps {g : GL (Fin n) Rv}
   refine ⟨hint, fun j => ?_⟩
   obtain ⟨a, b, hab⟩ := h.cop
   have hab' : ιv (algebraMap (𝓞 E) E a) * ιv pE + ιv (algebraMap (𝓞 E) E b) * ιv (star pE) = 1 := by
-    rw [← algebraMap_cO, ← map_mul, ← map_mul, ← map_mul, ← map_mul, ← map_add, ← map_add, hab, map_one, map_one]
+    rw [← algebraMap_cO, ← map_mul, ← map_mul, ← map_mul, ← map_mul, ← map_add (f := _), ← map_add (f := _), hab, map_one, map_one]
   have h1 := H3 _ (rll_single_mem_Sh n v h j)
   rw [rll_mem_loc_dLat n v _ (div_ne_zero h.star_ne_zero h.coe_ne_zero)] at h1
   have h2 := h1.2
@@ -281,7 +281,7 @@ theorem rll_IE_incl_mul (e : E) (x : Rv) :
     show LinearMap.lTensor E (afsplitI v) (inclE (F := F) (v.adicCompletion F) e * a ⊗ₜ[F] b) =
       inclE (F := F) (Formalism.L2.Herm.Af F) e * LinearMap.lTensor E (afsplitI v) (a ⊗ₜ[F] b)
     simp [inclE, Algebra.TensorProduct.tmul_mul_tmul, LinearMap.lTensor_tmul]
-  | add x y hx hy => simp only [mul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]
 
 theorem rll_resS_one (P : Pl E) (i j : Fin n) :
     resS F P ((1 : Matrix (Fin n) (Fin n) (Formalism.L2.Herm.intAf F E)) i j) = if j = i then 1 else 0 := by

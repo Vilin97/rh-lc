@@ -72,8 +72,8 @@ theorem adjoint_of_im (Hm : Matrix (Fin g) (Fin g) ℂ) (F F' : (Fin g → ℂ) 
     | mem_mem a b ha hb => exact h a ha b hb
     | zero_left b _ => simp [hermForm]
     | zero_right a _ => simp [hermForm]
-    | add_left a a' b _ _ _ h₁ h₂ => rw [map_add, al, al, Complex.add_im, Complex.add_im, h₁, h₂]
-    | add_right a b b' _ _ _ h₁ h₂ => rw [map_add, ar, ar, Complex.add_im, Complex.add_im, h₁, h₂]
+    | add_left a a' b _ _ _ h₁ h₂ => rw [map_add (f := _), al, al, Complex.add_im, Complex.add_im, h₁, h₂]
+    | add_right a b b' _ _ _ h₁ h₂ => rw [map_add (f := _), ar, ar, Complex.add_im, Complex.add_im, h₁, h₂]
     | smul_left t a b _ _ h₁ =>
       rw [← Complex.coe_smul, map_smul, sl, sl, Complex.im_ofReal_mul, Complex.im_ofReal_mul, h₁]
     | smul_right t a b _ _ h₁ =>

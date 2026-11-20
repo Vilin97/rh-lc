@@ -100,7 +100,7 @@ theorem coordR_zero' : coordR (F := F) V R 0 = 0 := by
   funext i; simp [coordR]
 
 theorem coordR_add' (x y : V.V) : coordR (F := F) V R (x + y) = coordR (F := F) V R x + coordR (F := F) V R y := by
-  funext i; simp [coordR, map_add]
+  funext i; simp [coordR, map_add (f := _)]
 
 theorem coordR_smul' (c : E) (x : V.V) : coordR (F := F) V R (c • x) = inclR (F := F) R c • coordR (F := F) V R x := by
   funext i; simp [coordR, map_mul]
@@ -115,7 +115,7 @@ theorem span_coord (N : Submodule (R ⊗[F] E) (Fin V.rank → R ⊗[F] E)) (S :
 
 theorem hR_add_l (a b y : Fin V.rank → R ⊗[F] E) :
     hR R hc.sig V.gram (a + b) y = hR R hc.sig V.gram a y + hR R hc.sig V.gram b y := by
-  simp only [GlobalTheory.Cusp.hR_eq hc V, Pi.add_apply, map_add]
+  simp only [GlobalTheory.Cusp.hR_eq hc V, Pi.add_apply, map_add (f := _)]
   rw [← add_dotProduct]; rfl
 
 theorem hR_smul_l (c : R ⊗[F] E) (a y : Fin V.rank → R ⊗[F] E) :

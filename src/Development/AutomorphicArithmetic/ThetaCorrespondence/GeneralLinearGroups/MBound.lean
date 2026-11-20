@@ -135,7 +135,7 @@ theorem UpperTheory.Lit.Mix.bound :
   let e := stdSum (rfl : m + n = m + n)
   let φ : V →ₗ[ℂ] TensorProduct ℂ W₁ W₂ :=
     { toFun := fun v => (f v).1.1 1
-      map_add' := fun v w => by rw [map_add]; rfl
+      map_add' := fun v w => by rw [map_add (f := _)]; rfl
       map_smul' := fun r v => by rw [map_smul]; rfl }
   have hφ : ∀ g v, φ (σ g v) = (f v).1.1 g := fun g v => by
     show (f (σ g v)).1.1 1 = _
@@ -161,7 +161,7 @@ theorem UpperTheory.Lit.Mix.bound :
       induction w using TensorProduct.induction_on with
       | zero => simp
       | tmul x y => simp [hc, TensorProduct.smul_tmul']
-      | add x y hx hy => rw [map_add, hx, hy, smul_add]
+      | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     have h2 : Matrix.GeneralLinearGroup.det (Matrix.GeneralLinearGroup.scalar (Fin m) t) = t ^ m := by
       ext; simp [Matrix.GeneralLinearGroup.scalar]
     refine h.trans ?_

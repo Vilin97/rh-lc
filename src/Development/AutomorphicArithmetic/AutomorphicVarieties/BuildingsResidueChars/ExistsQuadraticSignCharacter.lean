@@ -85,7 +85,7 @@ theorem UpperTheory.exists_quadratic_sign_character :
       refine ⟨AlgEquiv.ofRingEquiv (f := s.toRingEquiv) fun x => ?_, rfl⟩
       obtain ⟨a, b, rfl⟩ := hx x
       show s _ = _
-      rw [map_add, map_mul, ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply, map_add, map_mul,
+      rw [map_add (f := _), map_mul, ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply, map_add (f := _), map_mul,
         AlgEquiv.commutes, AlgEquiv.commutes, ← hθ, hs]
     · rintro ⟨u, rfl⟩
       exact u.commutes t

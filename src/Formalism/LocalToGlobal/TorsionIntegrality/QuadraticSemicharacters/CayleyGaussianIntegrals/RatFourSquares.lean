@@ -20,7 +20,7 @@ theorem sqrtNeg_conj (d : ℕ) :
 theorem InK.conj {d : ℕ} {z : ℂ} (hz : InK d z) : InK d (conj z) := by
   obtain ⟨p, q, rfl⟩ := hz
   refine ⟨p, -q, ?_⟩
-  rw [map_add, map_mul, sqrtNeg_conj, map_ratCast, map_ratCast]
+  rw [map_add (f := _), map_mul, sqrtNeg_conj, map_ratCast, map_ratCast]
   push_cast
   ring
 
@@ -48,7 +48,7 @@ def fieldK (d : ℕ) : Subfield ℂ where
     obtain ⟨p, q, rfl⟩ := hz
     have hc : conj ((p : ℂ) + (q : ℂ) * (Complex.I * ((Real.sqrt d : ℝ) : ℂ)))
         = (p : ℂ) - (q : ℂ) * (Complex.I * ((Real.sqrt d : ℝ) : ℂ)) := by
-      rw [map_add, map_mul, sqrtNeg_conj, map_ratCast, map_ratCast]
+      rw [map_add (f := _), map_mul, sqrtNeg_conj, map_ratCast, map_ratCast]
       ring
     rw [hc] at hc0
     have hN : ((p : ℂ) + (q : ℂ) * (Complex.I * ((Real.sqrt d : ℝ) : ℂ)))

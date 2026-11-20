@@ -68,7 +68,7 @@ theorem exists_trace_pairing_of_integral : ∀ (F : Type) [Field F] [NumberField
           push_cast
           rw [hq, hq, hq, ← Finset.sum_add_distrib]
           refine Finset.sum_congr rfl fun j _ => ?_
-          rw [map_add]; ring
+          rw [map_add (f := _)]; ring
         map_smul' := fun r x => by
           apply Rat.cast_injective (α := ℝ)
           simp only [RingHom.id_apply, smul_eq_mul]
@@ -101,7 +101,7 @@ theorem exists_trace_pairing_of_integral : ∀ (F : Type) [Field F] [NumberField
     simp only
     rw [← add_div]; congr 1
     apply uniq; intro t
-    rw [mul_add, map_add, Rat.cast_add, hQ, hQ, hQ, ← Finset.sum_add_distrib]
+    rw [mul_add, map_add (f := _), Rat.cast_add, hQ, hQ, hQ, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun j _ => ?_
     simp only [G, Submodule.coe_add, Pi.add_apply, add_mul, Complex.add_im]
     ring

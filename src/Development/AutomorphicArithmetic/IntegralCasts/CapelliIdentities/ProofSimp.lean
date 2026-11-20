@@ -31,7 +31,7 @@ theorem UpperTheory.Reformulated.B.GenericNoetherNormalisationCapelliIdentities.
   obtain ⟨k, s, r, hk, hr⟩ := UpperTheory.pseudo_division (MvPolynomial (Fin n) A) (e f) p hg
   have h1 : a ^ k • π p = π r := by
     have := congrArg π hk
-    rw [map_add, map_mul π (e f), hπf, zero_mul, zero_add, hlc, map_mul, ← hz, ← map_pow,
+    rw [map_add (f := _), map_mul π (e f), hπf, zero_mul, zero_add, hlc, map_mul, ← hz, ← map_pow,
       MvPolynomial.aeval_C, ← Algebra.smul_def] at this
     exact this
   have h2 : r = ∑ j ∈ Finset.range N, Polynomial.C (r.coeff j) * Polynomial.X ^ j := by

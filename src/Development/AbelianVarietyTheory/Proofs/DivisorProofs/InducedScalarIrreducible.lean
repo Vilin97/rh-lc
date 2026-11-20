@@ -48,7 +48,7 @@ def indScalVal (ν β : kˣ →* ℂˣ) (a b : ℕ) :
   map_add' F G := by
     funext x
     show TensorProduct.lid ℂ ℂ (F.1.1 x + G.1.1 x) = _
-    rw [map_add]
+    rw [map_add (f := _)]
     rfl
   map_smul' c F := by
     funext x

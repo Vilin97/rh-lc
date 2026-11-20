@@ -60,7 +60,7 @@ def coMap {H : Subgroup G} {Q : Subgroup M} (s : M →* G) (hs : Continuous s) (
     apply Subtype.ext
     funext x
     show ((χ x : ℂˣ) : ℂ) • c (a.1.1.1 (s x) + b.1.1.1 (s x)) = _
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     rfl
   map_smul' r a := by
     apply Subtype.ext

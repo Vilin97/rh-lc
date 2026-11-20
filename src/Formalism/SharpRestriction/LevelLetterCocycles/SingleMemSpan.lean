@@ -97,7 +97,7 @@ theorem univGenCore_of' [IsDomain O] [IsPrincipalIdealRing O] [NeZero n]
           simp only [map_mul]; ring
         have hfk : ιE Λ * f k = ιE (letE c * ∑ j : Fin D, algebraMap O (LetA O n) (cc j) * W.π₀ ^ (j : ℕ)) +
             ιE Λ * ιE (letE c * (W.π₀ * Λ) * w) := by
-          rw [hfu, mul_one, hcw, map_add, ← map_mul]; congr 1; congr 1; ring
+          rw [hfu, mul_one, hcw, map_add (f := _), ← map_mul]; congr 1; congr 1; ring
         rw [hsm]
         linear_combination Λi * hfk - (f k - ιE (letE c * (W.π₀ * Λ) * w)) * hΛinv
       · exact ⟨0, 0, ⟨0, W.AΔ.zero_mem, by simp⟩, fun _ => rfl, by simp [hf.2 k hk]⟩

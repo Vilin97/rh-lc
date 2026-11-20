@@ -19,7 +19,7 @@ theorem B_inv {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} (X : T
   induction hb using Submodule.span_induction with
   | mem x hx => exact hx.2 γ hγ
   | zero => exact map_zero _
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul a x _ hx => rw [map_smul, hx]
 
 def trSL (t : ℤ) : SL(2, ℤ) := ⟨!![1, t; 0, 1], by simp [Matrix.det_fin_two_of]⟩
@@ -59,7 +59,7 @@ theorem op_galB_comm : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure
     have hqN : Nat.Coprime q N :=
       (Nat.Coprime.coprime_dvd_right (Dvd.intro l rfl) ((Nat.Prime.coprime_iff_not_dvd hqp).mpr hqd))
     have hq : 0 < q := hqp.pos
-    simp only [Tower.op, Tower.heckeT, LinearMap.add_apply, map_add]
+    simp only [Tower.op, Tower.heckeT, LinearMap.add_apply, map_add (f := _)]
     rw [hup q hq]
     congr 1
     have hdet1 : 0 < (sgD N l q : Matrix (Fin 2) (Fin 2) ℤ).det := by

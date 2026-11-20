@@ -56,11 +56,11 @@ theorem exists_section (he : e * e = e) (hπ : Chart e v π) :
     rw [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, RingHom.map_mul, chart_e he hπ, one_mul, Matrix.map_apply, hs]
   exact ⟨AddMonoidHom.mk' (fun w => e • w.map s) fun w w' => chart_inj hπ (isHalf_smul' he _)
     (GlobalTheory.SplitScalar.isHalf_add (isHalf_smul' he _) (isHalf_smul' he _)) (by
-      rw [Matrix.map_add _ π.map_add, p1, p1, p1]), p1, fun w => isHalf_smul' he _⟩
+      rw [Matrix.map_add _ π.map_add (f := _), p1, p1, p1]), p1, fun w => isHalf_smul' he _⟩
 
 theorem chart_det (he : e * e = e) (hπ : Chart e v π) {V : HSp D} {k : GA D V} {z : (AE D)ˣ} (hz : IsDetAt e V k z) :
     ((mt V k).map π).det = π z := by
-  rw [hz, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, chart_e he hπ, one_mul, sub_self, add_zero,
+  rw [hz, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, chart_e he hπ, one_mul, sub_self, add_zero,
     RingHom.map_det]
   rfl
 
@@ -366,7 +366,7 @@ theorem idempotent_mul_add_one_sub_inverse {R : Type} [CommRing R] {c d d' : R} 
 
 theorem det_conj {e : AE D} (he : cA D e * cA D e = cA D e) {V : HSp D} {g : GA D V} {x : (AE D)ˣ}
     (hx : IsDetAt e V g x) : (detAt (cA D e) he V g : AE D) * cA D x = 1 := by
-  rw [hx, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
+  rw [hx, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
   exact idempotent_mul_add_one_sub_inverse he (GlobalTheory.SplitDetCharacter.det_mul_conj V g)
 
 theorem norm_aux {R : Type} [CommRing R] {x y x' y' : R} (h : y * x' = 1) (h' : y' * x = 1) : y * x * (y' * x') = 1 := by

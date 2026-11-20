@@ -29,7 +29,7 @@ theorem uniformizer_of_residue_indep {Ω : Type} [Field Ω] {σ τ : Type}
     | C a =>
       rw [bind₁_C_right, aeval_C, ← MvPolynomial.algebraMap_eq,
         ← IsScalarTower.algebraMap_apply]
-    | add P Q hP hQ => simp only [map_add, hP, hQ]
+    | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
     | mul_X P x hP => simp only [map_mul, hP, bind₁_X_right, hg]
   have hinj := IsFractionRing.injective (MvPolynomial σ Ω) (FractionRing (MvPolynomial σ Ω))
   have hp0 : p ≠ 0 := by

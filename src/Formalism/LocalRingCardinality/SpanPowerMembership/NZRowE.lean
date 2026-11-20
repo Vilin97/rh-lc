@@ -38,7 +38,7 @@ theorem chainOpM_add {Rg : Type} [CommSemiring Rg] {ι : ℕ → Type} [∀ j, F
   | succ m ih =>
     simp only [Formalism.ThetaLiftIndependence.chainOpM, ih]
     funext j
-    simp only [Formalism.ThetaLiftIndependence.kerOpM, Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib]
+    simp only [Formalism.ThetaLiftIndependence.kerOpM, Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
 
 theorem chainOpM_smul {Rg : Type} [CommSemiring Rg] {ι : ℕ → Type} [∀ j, Fintype (ι j)]
     {M : ℕ → Type} [∀ j, AddCommMonoid (M j)] [∀ j, Module Rg (M j)]
@@ -91,14 +91,14 @@ def perN (u : W) (μ : Bool) (φ : MuN ((K u).cls 0)) (F : En d) : ℂ :=
 theorem perN_linL (u : W) (μ : Bool) (F : En d) : IsLinearMap ℂ (fun φ => perN hcW K d per u μ φ F) := by
   refine ⟨fun x y => ?_, fun c x => ?_⟩
   · unfold perN Formalism.BasicNotions.PeriodMap.PtilCol Formalism.BasicNotions.PeriodMap.Ptil
-    rw [map_add, col_add, map_add, map_add, map_add, LinearMap.add_apply]
+    rw [map_add (f := _), col_add, map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply]
   · unfold perN Formalism.BasicNotions.PeriodMap.PtilCol Formalism.BasicNotions.PeriodMap.Ptil
     rw [map_smul, col_smul, map_smul, map_smul, map_smul, LinearMap.smul_apply, smul_eq_mul]
 
 theorem perN_linR (u : W) (μ : Bool) (φ : MuN ((K u).cls 0)) : IsLinearMap ℂ (fun F => perN hcW K d per u μ φ F) := by
   refine ⟨fun x y => ?_, fun c x => ?_⟩
   · unfold perN Formalism.BasicNotions.PeriodMap.PtilCol Formalism.BasicNotions.PeriodMap.Ptil
-    rw [map_add]
+    rw [map_add (f := _)]
   · unfold perN Formalism.BasicNotions.PeriodMap.PtilCol Formalism.BasicNotions.PeriodMap.Ptil
     rw [map_smul, smul_eq_mul]
 

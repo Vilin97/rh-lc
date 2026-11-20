@@ -125,7 +125,7 @@ theorem transfer (t₁ t₂ : Term V M r) (ψ : ↥(H.W0 t₁.f t₁.f') ≃ₗ[
     b = ψ n ∧ χ (H.mkW g₁ ⟨u₁, hu₁p⟩) = H.mkW g₂ ⟨a, hap⟩ := by
   obtain ⟨u', hu'U, hu'p, hχu⟩ := hC2 u₁ hu₁U hu₁p
   have hsplit : (⟨u₁ + n, hx₁⟩ : H.perp (H.X g₁)) = ⟨u₁, hu₁p⟩ + ⟨(n : V), hW₁ n.2⟩ := rfl
-  rw [hsplit, map_add, map_add, hχu, hC1, ← map_add] at h
+  rw [hsplit, map_add (f := _), map_add (f := _), hχu, hC1, ← map_add (f := _)] at h
   unfold HermSp.mkW at h
   rw [Submodule.mkQ_apply, Submodule.mkQ_apply, Submodule.Quotient.eq] at h
   have hz : u' + (ψ n : V) - (a + b) ∈ H.X g₂ := h

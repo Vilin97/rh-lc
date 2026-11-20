@@ -47,7 +47,7 @@ theorem kernel_mem_span_core : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl
     span_eq_top_of_model (R.HV i t).e (hR.models.HV i t).1 (jVx R i t) _ he (h0.2.trans hr.symm)
   let T : (R.HV i t).H →ₗ[ℂ] (GA D (Wc D i) → ℂ) :=
     { toFun := fun y => R.thF i t y (fun ρ => u ρ)
-      map_add' := fun y y' => by rw [map_add]; rfl
+      map_add' := fun y y' => by rw [map_add (f := _)]; rfl
       map_smul' := fun c y => by rw [map_smul]; rfl }
   refine mem_span_of_linear (jVx R i t) hsp T y a ha.1 _ (funext fun g => ?_)
   have h1 := congrFun (hPF.2 y u) g

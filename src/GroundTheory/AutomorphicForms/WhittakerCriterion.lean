@@ -193,7 +193,7 @@ def coeffL [μ.IsMulRightInvariant] (ℓ : Module.Dual ℂ V) :
   toFun f := ⟨ℓ ∘ₗ heckeLin μ hρ f, comp_heckeLin_mem μ hρ ℓ f⟩
   map_add' f g := Subtype.ext <| LinearMap.ext fun v => by
     simp only [LinearMap.comp_apply, heckeLin_apply, Submodule.coe_add, LinearMap.add_apply]
-    rw [heckeAct_add_left f.2 g.2 (hρ v), map_add]
+    rw [heckeAct_add_left f.2 g.2 (hρ v), map_add (f := _)]
   map_smul' c f := Subtype.ext <| LinearMap.ext fun v => by
     simp only [LinearMap.comp_apply, heckeLin_apply, SetLike.val_smul, LinearMap.smul_apply,
       RingHom.id_apply]
@@ -346,7 +346,7 @@ def annihilatorSubrep (W : Subrepresentation (contragredient ρ)) : Subrepresent
       add_mem' := fun {a b} ha hb => by
         show ∀ ξ ∈ W, (ξ : Module.Dual ℂ V) (a + b) = 0
         intro ξ hξ
-        rw [map_add, ha ξ hξ, hb ξ hξ, add_zero]
+        rw [map_add (f := _), ha ξ hξ, hb ξ hξ, add_zero]
       zero_mem' := by
         show ∀ ξ ∈ W, (ξ : Module.Dual ℂ V) 0 = 0
         intro ξ _
@@ -552,7 +552,7 @@ def coeffKer (hρ : IsSmooth ρ) (ℓt : Module.Dual ℂ (smoothVectors (Represe
   carrier := {k | ∀ ξ : smoothVectors (Representation.dual ρ),
     ℓt (coeffL μ hρ (ξ : Module.Dual ℂ V) k) = 0}
   add_mem' {a b} ha hb ξ := by
-    rw [map_add, map_add, ha ξ, hb ξ, add_zero]
+    rw [map_add (f := _), map_add (f := _), ha ξ, hb ξ, add_zero]
   zero_mem' ξ := by rw [map_zero, map_zero]
   smul_mem' c k hk ξ := by
     rw [map_smul, map_smul, hk ξ, smul_zero]

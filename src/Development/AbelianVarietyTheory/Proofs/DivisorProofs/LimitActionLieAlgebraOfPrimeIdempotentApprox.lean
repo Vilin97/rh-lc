@@ -181,13 +181,13 @@ theorem limActSt_of_epsSt (hε : EpsSt) : LimActSt := by
       ⟨z0 + u * t + (p : T.V) ^ N * u * z0, by rw [map_mul, hu, hz0, hP]; ring⟩
     have hj : ∀ r : T.V, jX X r = algebraMap X.O X.C (X.ι r) := fun r => X.comp r
     have he := congrFun (dActX_mulVec_lieVec Ch X hst φ τ (fun a => hφ a) (ε N * x N) i) e
-    rw [hz, map_add, map_mul, map_pow, map_natCast] at he
+    rw [hz, map_add (f := _), map_mul, map_pow, map_natCast] at he
     simp only [Matrix.mulVec, dotProduct, Pi.smul_apply, smul_eq_mul, Matrix.of_apply] at he ⊢
     have key : ∑ e', algebraMap X.O X.C (L e e') * lieVec Ch X ⟨τ, i⟩ e' - jX X t * lieVec Ch X ⟨τ, i⟩ e =
         (p : X.C) ^ N * algebraMap X.O X.C
           (∑ e', W e e' N * X.ι (Ch.uvecT ⟨τ, i⟩ e') + X.ι z * X.ι (Ch.uvecT ⟨τ, i⟩ e)) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [hA N, add_mul, Finset.sum_add_distrib, he, map_add, map_sum, map_mul, ← hj, mul_add, Finset.mul_sum,
+        simp only [hA N, add_mul, Finset.sum_add_distrib, he, map_add (f := _), map_sum, map_mul, ← hj, mul_add, Finset.mul_sum,
         mul_assoc]
       simp only [lieVec]
       ring

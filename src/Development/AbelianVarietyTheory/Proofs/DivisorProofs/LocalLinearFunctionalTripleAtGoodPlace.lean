@@ -111,7 +111,7 @@ private theorem exists_isQuad (h : IsCMExt F E σ) : ∃ ξ : AE F E, IsQuad (cA
     intro s u hsu
     simp only [Algebra.smul_def, mul_one] at hsu
     have h2 := congrArg σ hsu
-    simp only [map_add, map_mul, AlgHom.commutes, hξ, map_zero] at h2
+    simp only [map_add (f := _), map_mul, AlgHom.commutes, hξ, map_zero] at h2
     have h3 : algebraMap F E u * ξ = 0 := by linear_combination (hsu - h2) / 2
     have hu : u = 0 := (map_eq_zero (algebraMap F E)).mp ((mul_eq_zero.mp h3).resolve_right hξ0)
     subst hu
@@ -142,7 +142,7 @@ private theorem chrW_comp (h : IsCMExt F E σ) (χ : Chr F E) {m : ℕ}
   have key : ∀ p q : Fv F v × Fv F v, p + q + p * q = 0 → (1 + L p) * (1 + L q) = 1 := by
     intro p q hpq
     have := congrArg L hpq
-    rw [map_add, map_add, map_mul, map_zero] at this
+    rw [map_add (f := _), map_add (f := _), map_mul, map_zero] at this
     linear_combination this
   have hx1 : ((x : Fv F v) - 1, (0 : Fv F v)) + (((x⁻¹ : (Fv F v)ˣ) : Fv F v) - 1, 0) +
       ((x : Fv F v) - 1, (0 : Fv F v)) * (((x⁻¹ : (Fv F v)ˣ) : Fv F v) - 1, 0) = 0 := by

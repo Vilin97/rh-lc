@@ -176,7 +176,7 @@ theorem heisO_rat {g : WO S T → ℂ} (hg : IsThetaFunO ψ S T g) (x : Matrix (
     ← map_add, add_halves, map_one, one_mul]
 
 theorem symplO_eq_add (x y : WO S T) : symplO S T x y = symplOH S T x y + symplOH S T x y := by
-  rw [symplOH, ← add_mul, ← map_add, add_halves, map_one, one_mul]
+  rw [symplOH, ← add_mul, ← map_add (f := _), add_halves, map_one, one_mul]
 
 def alongHom (S T : HSp D) (ξ : Fin T.rank → D.host.E) : (Fin S.rank → AE D) →+ WO S T :=
   AddMonoidHom.mk' (along S T ξ) along_add

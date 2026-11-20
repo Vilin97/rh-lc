@@ -95,7 +95,7 @@ theorem killedBy_span (ρ : RingAct A O) (s : Set O) {T : Over S} (x : T ⟶ A) 
     KilledBy ρ (Ideal.span s) x ↔ ∀ a ∈ s, x ≫ ρ.act a = 1 := by
   refine ⟨fun h a ha => h a (Ideal.subset_span ha), fun h a ha => ?_⟩
   have hadd : ∀ a b, x ≫ ρ.act (a + b) = (x ≫ ρ.act a) * (x ≫ ρ.act b) := fun a b => by
-    rw [ρ.map_add]; exact MonObj.comp_mul x _ _
+    rw [ρ.map_add (f := _)]; exact MonObj.comp_mul x _ _
   induction ha using Submodule.span_induction with
   | mem a ha => exact h a ha
   | zero =>
@@ -113,7 +113,7 @@ def actPull (ρ : RingAct A O) (f : S' ⟶ S) : RingAct ((Over.pullback f).obj A
   map_one := by rw [ρ.map_one, CategoryTheory.Functor.map_id]
   map_mul a b := by rw [ρ.map_mul, CategoryTheory.Functor.map_comp]
   map_add a b := by
-    rw [ρ.map_add]
+    rw [ρ.map_add (f := _)]
     exact map_mul (Over.pullback f).homMonoidHom (ρ.act a) (ρ.act b)
 
 theorem IsLin.pull {ρ : RingAct A O} {ρ' : RingAct A' O} {g : A ⟶ A'} (h : IsLin ρ ρ' g) (f : S' ⟶ S) :

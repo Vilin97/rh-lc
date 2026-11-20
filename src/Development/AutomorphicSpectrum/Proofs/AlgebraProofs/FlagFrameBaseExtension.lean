@@ -77,7 +77,7 @@ theorem map_mem_chartRing_bc (x : (Σ k, ι k) → Ω) (z : (Σ k, ι' k) → Ω
   | algebraMap r =>
     rw [← IsScalarTower.algebraMap_apply O Ω Ω₁]
     exact Subalgebra.algebraMap_mem _ r
-  | add s t _ _ hs ht => rw [map_add]; exact Subalgebra.add_mem _ hs ht
+  | add s t _ _ hs ht => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hs ht
   | mul s t _ _ hs ht => rw [map_mul]; exact Subalgebra.mul_mem _ hs ht
 
 variable {N : ℕ} {V : Type} [AddCommGroup V] [Module Ω V]

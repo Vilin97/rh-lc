@@ -15,7 +15,7 @@ theorem conjT_conjT (y : ℚ_[p] ⊗[ℚ] G.F) : conjT G.F ℚ_[p] (conjT G.F �
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [conjT_tmul, NumberField.IsCMField.complexConj_apply_apply]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem eq_sigma_liftW (f : ℚ_[p] ⊗[ℚ] G.F →+* PadicAlgCl p)
     (hf : ∀ a : ℚ_[p], f (a ⊗ₜ 1) = algebraMap ℚ_[p] (PadicAlgCl p) a)
@@ -33,7 +33,7 @@ theorem eq_sigma_liftW (f : ℚ_[p] ⊗[ℚ] G.F →+* PadicAlgCl p)
     · congr 1
       simp only [HTGroup.liftW, Algebra.TensorProduct.lift_tmul, map_one, one_mul]
       rfl
-  | add x y hx hy => rw [map_add, hx, hy, map_add, AddMemClass.coe_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _), AddMemClass.coe_add, map_add (f := _)]
 
 theorem main : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (M : Ideal (TensorProduct ℚ ℚ_[p] G.F)), M.IsMaximal →
     ∃ i : Fin G.m, M = RingHom.ker (G.liftW i) ∨

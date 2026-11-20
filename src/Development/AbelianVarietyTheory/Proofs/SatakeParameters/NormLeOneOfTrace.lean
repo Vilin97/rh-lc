@@ -95,7 +95,7 @@ theorem norm_eq_one {a : ℕ} {b c : ℤ} {d : ℕ} (hok : PI.UnitDetRootDefs.Cm
       _ = -(d : ℂ) := by rw [Complex.I_mul_I, h2]; ring
   have hcs : conj s = -s := by simp [hs_def]
   have hconj : conj ((p : ℂ) + (q : ℂ) * s) = (p : ℂ) - (q : ℂ) * s := by
-    rw [map_add, map_mul, hcs, map_ratCast, map_ratCast]; ring
+    rw [map_add (f := _), map_mul, hcs, map_ratCast, map_ratCast]; ring
   rw [hconj] at h1
 
   have hpq : (p ^ 2 + d * q ^ 2 : ℚ) = 1 := by
@@ -114,7 +114,7 @@ theorem norm_eq_one {a : ℕ} {b c : ℤ} {d : ℕ} (hok : PI.UnitDetRootDefs.Cm
     intro r
     rw [← PadicComplex.norm_extends', map_ratCast, PadicComplex.coe_eq, map_ratCast]
   have hsum : y + y' = ((2 * p : ℚ) : ℂ_[l]) := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     have : (p : ℂ) + (q : ℂ) * s + ((p : ℂ) - (q : ℂ) * s) = ((2 * p : ℚ) : ℂ) := by push_cast; ring
     rw [this, map_ratCast]
   have htr : ‖y + y'‖ ≤ 1 := by rw [hsum, hnr]; exact hT'

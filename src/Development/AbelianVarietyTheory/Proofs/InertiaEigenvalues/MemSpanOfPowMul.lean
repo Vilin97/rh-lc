@@ -32,7 +32,7 @@ theorem TWact_smul_of {G Qp LL R : Type} [Group G] [TopologicalSpace G] [Field Q
   | tmul x y =>
     simp only [TWact, TensorProduct.smul_tmul', TensorProduct.map_tmul, AlgHom.toLinearMap_apply, smul_eq_mul,
       map_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 def rhoD {LL : FinExt l} {ι : Type} (T : QLat LL)
     (jD : (ι → OD l ↥(OL LL)) ≃ₗ[OD l ↥(OL LL)] TW (OD l ↥(OL LL)) T) (g : Gl l)
@@ -92,7 +92,7 @@ theorem YD_add {P : PhiMod O K l e a ι} {v v' : Vec K a ι} (hv : v ∈ P.Man) 
     YD t ϖ (v + v') = YD t ϖ v + YD t ϖ v' := by
   funext i
   simp only [YD, Pi.add_apply]
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
   funext τ
   rw [Pi.add_apply, hatR_of_mem (O := O) (add_mem (mem_Rpi_of_mem_Man hv τ i) (mem_Rpi_of_mem_Man hv' τ i)),

@@ -56,7 +56,7 @@ theorem coeff_killB (B : Set K) (p : MRing ι R) (d : (Σ k, ι k) →₀ ℕ) :
       split_ifs <;> simp
     · split_ifs <;> simp [coeff_monomial, hed]
   | add p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, hp, hq]
+    rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq]
     split_ifs <;> simp
 
 theorem sub_killB_mem (B : Set K) (p : MRing ι R) : p - killB B p ∈ varIdeal (R := R) B := by
@@ -64,7 +64,7 @@ theorem sub_killB_mem (B : Set K) (p : MRing ι R) : p - killB B p ∈ varIdeal 
   induction p using MvPolynomial.induction_on with
   | C a => simp
   | add p q hp hq =>
-    rw [map_add, add_sub_add_comm]
+    rw [map_add (f := _), add_sub_add_comm]
     exact add_mem hp hq
   | mul_X p v hp =>
     have e : p * X v - killB B (p * X v) =

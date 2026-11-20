@@ -118,7 +118,7 @@ variable {k K : Type u} [CommRing k] [Group K] {A B C : Rep.{u} k K}
 
 def pairWithLinear (μ : A ⊗ B ⟶ C) (b : B) : A →ₗ[k] C where
   toFun a := μ.hom (a ⊗ₜ[k] b)
-  map_add' a a' := by rw [TensorProduct.add_tmul, map_add]
+  map_add' a a' := by rw [TensorProduct.add_tmul, map_add (f := _)]
   map_smul' c a := by rw [← TensorProduct.smul_tmul', map_smul]; rfl
 
 def pairWith (μ : A ⊗ B ⟶ C) (b : B) (hb : ∀ g : K, B.ρ g b = b) : A ⟶ C :=
@@ -235,7 +235,7 @@ variable {G : Type u} [Group G] {n : ℕ} (D : Rep.{u} (ULift.{u} ℤ) G) (e : D
 
 def cyclicToZMod : D ⟶ zmodRep.{u} G n :=
   Rep.ofHom ⟨{ toFun := fun d => ULift.up (e d)
-               map_add' := fun d d' => by rw [map_add]; rfl
+               map_add' := fun d d' => by rw [map_add (f := _)]; rfl
                map_smul' := fun c d => by
                  rw [RingHom.id_apply]
                  obtain ⟨c⟩ := c
@@ -577,7 +577,7 @@ theorem injective_two (h : 2 + 1 = 3) : Function.Injective (compactZmodDualityMa
       (xc + (localToCompact φ (zmodRep.{u} G n) (fun v => Rep.res (φ v).toMonoidHom (zmodRep.{u} G n))
         (fun _ => 𝟙 _) 1).hom ξ) y) = 0 := by
     intro y
-    rw [map_add, LinearMap.add_apply, map_add, hyp.T_compactCupRes_localToCompact_one]
+    rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), hyp.T_compactCupRes_localToCompact_one]
     have h1 : T (compactCupRes φ (zmodMulPairing n D hD) (show 2 + 1 = 3 from rfl) xc y) =
         ∑ v, t v (cupPairing (pairingRes (φ v).toMonoidHom (zmodMulPairingRight n D hD)) (show 1 + 1 = 2 from rfl)
           ((cohomologyMapAlong (φ v).toMonoidHom (continuous_toMonoidHom (φ v)) (𝟙 _) 1).hom y) (ξ v)) := by
@@ -741,7 +741,7 @@ theorem surjective_two (h : 2 + 1 = 3) : Function.Surjective (compactZmodDuality
   refine ⟨x₀ + (compactToGlobal φ (zmodRep.{u} G n) (fun v => Rep.res (φ v).toMonoidHom (zmodRep.{u} G n))
     (fun _ => 𝟙 _) 2).hom ((compactCohomologyResMap φ (cyclicToZMod D e hyp.triv) 2).hom y'),
     AddMonoidHom.ext fun yc => ?_⟩
-  rw [map_add, AddMonoidHom.add_apply, compactZmodDualityMap_apply φ D hD T h
+  rw [map_add (f := _), AddMonoidHom.add_apply, compactZmodDualityMap_apply φ D hD T h
     ((compactToGlobal φ (zmodRep.{u} G n) (fun v => Rep.res (φ v).toMonoidHom (zmodRep.{u} G n))
       (fun _ => 𝟙 _) 2).hom ((compactCohomologyResMap φ (cyclicToZMod D e hyp.triv) 2).hom y')) yc,
     hyp.swap yc, hw]

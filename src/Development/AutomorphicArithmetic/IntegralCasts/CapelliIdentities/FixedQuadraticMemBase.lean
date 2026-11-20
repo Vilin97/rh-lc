@@ -35,5 +35,5 @@ theorem UpperTheory.fixed_quadratic_mem_base :
     · simp
     · simpa using hx
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, ha, hb]
+  | add a b _ _ ha hb => rw [map_add (f := _), ha, hb]
   | smul c a _ ha => rw [map_smul, ha]

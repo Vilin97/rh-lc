@@ -169,7 +169,7 @@ theorem IntIn.smul {e : D.host.E} (he : ‖ρ e‖ ≤ 1) {B : Matrix (Fin N') (
 
 theorem IntIn.add {B C : Matrix (Fin N') (Fin N) D.host.E} (hB : IntIn ρ Q' P B) (hC : IntIn ρ Q' P C) :
     IntIn ρ Q' P (B + C) := fun b a => by
-  rw [Matrix.mul_add, Matrix.add_mul, Matrix.add_apply, map_add]
+  rw [Matrix.mul_add, Matrix.add_mul, Matrix.add_apply, map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hB b a) (hC b a))
 
 theorem IntIn.zero : IntIn ρ Q' P (0 : Matrix (Fin N') (Fin N) D.host.E) := fun b a => by

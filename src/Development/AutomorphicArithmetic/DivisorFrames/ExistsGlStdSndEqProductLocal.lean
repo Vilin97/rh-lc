@@ -39,7 +39,7 @@ private theorem piW_cA' {D : D7} {v : GlobalTheory.IndefiniteRowSideFullHecke.We
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem piW_incA' {D : D7} {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl D.host.F} (t : D.host.E →ₐ[D.host.F] Fv D.host.F v)
     (e : D.host.E) : piW t (incA D e) = t e := by

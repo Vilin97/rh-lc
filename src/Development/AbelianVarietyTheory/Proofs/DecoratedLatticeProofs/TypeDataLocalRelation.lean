@@ -20,12 +20,12 @@ theorem natCast_mem_of_isConjPl {D : D7} (n : ℕ) {PP PP' : Formalism.L2.DIV.Pl
   rw [Ideal.eq_top_iff_one]
   have key : (1 : 𝓞 D.host.E) = RingOfIntegers.mapRingHom (starRingEnd D.host.E) y * ((n : ℕ) : 𝓞 D.host.E) + c' := by
     have h1 := congrArg (fun z : 𝓞 D.host.E => star (algebraMap (𝓞 D.host.E) D.host.E z)) hyc
-    simp only [map_add, map_mul, map_natCast, map_one, star_add, star_mul', star_natCast, star_one] at h1
+    simp only [map_add (f := _), map_mul, map_natCast, map_one, star_add, star_mul', star_natCast, star_one] at h1
     have hy : algebraMap (𝓞 D.host.E) D.host.E (RingOfIntegers.mapRingHom (starRingEnd D.host.E) y) =
         star (algebraMap (𝓞 D.host.E) D.host.E y) := rfl
     have hc2 : algebraMap (𝓞 D.host.E) D.host.E c' = star (algebraMap (𝓞 D.host.E) D.host.E c) := e
     apply FaithfulSMul.algebraMap_injective (𝓞 D.host.E) D.host.E
-    simp only [map_add, map_mul, map_natCast, map_one, hy, hc2]
+    simp only [map_add (f := _), map_mul, map_natCast, map_one, hy, hc2]
     rw [← h1]
   rw [key]
   exact PP.asIdeal.add_mem (PP.asIdeal.mul_mem_left _ hn) hc'

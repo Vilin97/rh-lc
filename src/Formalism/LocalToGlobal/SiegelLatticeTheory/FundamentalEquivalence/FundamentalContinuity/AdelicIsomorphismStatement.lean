@@ -425,7 +425,7 @@ theorem TT_surj (z : InfinitePlace I.F → ℂ) (w : EAf I) :
   let A : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF I.F := (xa, c 0)
   let B : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF I.F := (ya, c 1)
   refine ⟨A ⊗ₜ[I.F] (1 : I.E) + B ⊗ₜ[I.F] beta I, fun v => ?_, ?_⟩
-  · rw [map_add, thetaV_tmul_lemma_2, thetaV_tmul_lemma_2, map_one, mul_one]
+  · rw [map_add (f := _), thetaV_tmul_lemma_2, thetaV_tmul_lemma_2, map_one, mul_one]
     have hA : evV I v A = (xr v : ℂ) := by
       rw [alg_evV_apply, ← NumberField.InfinitePlace.Completion.extensionEmbeddingOfIsReal_apply (hv v)]
       exact congrArg _ (Function.surjInv_eq (he v) (xr v))
@@ -440,7 +440,7 @@ theorem TT_surj (z : InfinitePlace I.F → ℂ) (w : EAf I) :
     · simp only [Complex.add_im, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im, zero_mul, add_zero,
         zero_add, yr]
       exact div_mul_cancel₀ _ hb
-  · rw [map_add, tauF_tmul_lemma, tauF_tmul_lemma]
+  · rw [map_add (f := _), tauF_tmul_lemma, tauF_tmul_lemma]
     exact hc
 
 section AfFacts
@@ -778,7 +778,7 @@ theorem top_kappa_int (D : ℕ)
     rw [map_zero, mul_zero]
     exact zero_mem _
   | add a b _ _ ha hb =>
-    rw [map_add, mul_add]
+    rw [map_add (f := _), mul_add]
     exact add_mem ha hb
   | neg a _ ha =>
     rw [map_neg, mul_neg]
@@ -1029,7 +1029,7 @@ theorem tauF_sigR (x : TT I) :
       simp only [Formalism.UG.sigR, AlgHom.toRingHom_eq_coe, RingHom.coe_coe,
         Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
     rw [h1, tauF_tmul_lemma, tauF_tmul_lemma, h2]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem Fm_injective : Function.Injective (Fm I) := by
   rw [injective_iff_map_eq_one]

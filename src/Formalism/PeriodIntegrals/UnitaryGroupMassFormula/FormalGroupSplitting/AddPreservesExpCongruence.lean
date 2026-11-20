@@ -24,7 +24,7 @@ private theorem coeff_pow_eq_zero_of_degree_lt_formal_group_splitting {f : MvPow
     by_cases h2 : p.2 = 0
     · rw [h2, coeff_zero_eq_constantCoeff_apply, hf, mul_zero]
     · have hd : Finsupp.degree p.1 + Finsupp.degree p.2 = Finsupp.degree α := by
-        rw [← hp, map_add]
+        rw [← hp, map_add (f := _)]
       have h2' : 0 < Finsupp.degree p.2 := by
         rw [Nat.pos_iff_ne_zero]
         intro h0
@@ -39,7 +39,7 @@ theorem coeff_pow_mul_pow_eq_zero {f g : MvPowerSeries σ K} (hf : constantCoeff
   refine Finset.sum_eq_zero fun p hp => ?_
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
   have hd : Finsupp.degree p.1 + Finsupp.degree p.2 = Finsupp.degree α := by
-    rw [← hp, map_add]
+    rw [← hp, map_add (f := _)]
   by_cases h1 : Finsupp.degree p.1 < i
   · rw [coeff_pow_eq_zero_of_degree_lt_formal_group_splitting hf i h1, zero_mul]
   · rw [coeff_pow_eq_zero_of_degree_lt_formal_group_splitting hg j (by omega), mul_zero]
@@ -122,14 +122,14 @@ theorem expMv_add [CharZero K] {f g : MvPowerSeries σ K} (hf : constantCoeff f 
     (hg : constantCoeff g = 0) : expMv (f + g) = expMv f * expMv g := by
   classical
   ext α
-  have hfg : constantCoeff (f + g) = 0 := by rw [map_add, hf, hg, add_zero]
+  have hfg : constantCoeff (f + g) = 0 := by rw [map_add (f := _), hf, hg, add_zero]
   rw [coeff_expMv_eq_expT hfg (Nat.lt_succ_self (Finsupp.degree α)), coeff_mul]
   have key : ∀ p ∈ antidiagonal α, coeff p.1 (expMv f) * coeff p.2 (expMv g) =
       coeff p.1 (expT f (Finsupp.degree α + 1)) * coeff p.2 (expT g (Finsupp.degree α + 1)) := by
     intro p hp
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
     have hd : Finsupp.degree p.1 + Finsupp.degree p.2 = Finsupp.degree α := by
-      rw [← hp, map_add]
+      rw [← hp, map_add (f := _)]
     rw [coeff_expMv_eq_expT hf (N := Finsupp.degree α + 1) (by omega),
       coeff_expMv_eq_expT hg (N := Finsupp.degree α + 1) (by omega)]
   rw [Finset.sum_congr rfl key, ← coeff_mul]
@@ -141,7 +141,7 @@ theorem simeqW_add [CharZero K] {W : Subring K} {f g f' g' : MvPowerSeries σ K}
   obtain ⟨h0, hW⟩ := h
   obtain ⟨h0', hW'⟩ := h'
   have e : f + f' - (g + g') = (f - g) + (f' - g') := by ring
-  refine ⟨by rw [e, map_add, h0, h0', add_zero], fun n => ?_⟩
+  refine ⟨by rw [e, map_add (f := _), h0, h0', add_zero], fun n => ?_⟩
   rw [e, expMv_add h0 h0', coeff_mul]
   exact W.sum_mem fun p _ => W.mul_mem (hW _) (hW' _)
 

@@ -181,7 +181,7 @@ def evLin (I : ∀ k, Finset (ι k)) (hI : Good y I) :
         have hs0 := aeval_ne_zero_of_mem hI s.2
         have hs0' := aeval_ne_zero_of_mem hI s'.2
         rw [LocalizedModule.mk_add_mk, ev_mk, ev_mk, ev_mk]
-        simp only [Submonoid.smul_def, map_add, evalAtPoint_smul, Submonoid.coe_mul, map_mul]
+        simp only [Submonoid.smul_def, map_add (f := _), evalAtPoint_smul, Submonoid.coe_mul, map_mul]
         field_simp
   map_smul' s x := by
     induction x using LocalizedModule.induction_on with

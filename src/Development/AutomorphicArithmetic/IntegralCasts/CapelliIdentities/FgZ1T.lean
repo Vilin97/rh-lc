@@ -499,7 +499,7 @@ theorem UpperTheory.Reformulated.B.Gub2.fg_Z1T :
           = Formalism.WeaklyAdmissibleFiltrations.evT L g c + Formalism.WeaklyAdmissibleFiltrations.actT L g (Formalism.WeaklyAdmissibleFiltrations.evT L h c) :=
         Subtype.ext (c.2.1.2 g h)
       change Submodule.mkQ _ (Formalism.WeaklyAdmissibleFiltrations.evT L (g * h) c) = _
-      rw [this, map_add]
+      rw [this, map_add (f := _)]
       rfl
   refine UpperTheory.compact_quotient_submodule (LL := LL) (Formalism.WeaklyAdmissibleFiltrations.latticeCocycles L) ϖ
     ((Formalism.WeaklyAdmissibleFiltrations.redT L _).codRestrict (Formalism.WeaklyAdmissibleFiltrations.quotientCocycles L _ hI) hred) hc ?_ ?_

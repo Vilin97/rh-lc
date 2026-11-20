@@ -27,7 +27,7 @@ theorem eval_bind₁_scale {ι : Type} (r w : ι → ℂ) (f : MvPolynomial ι �
       MvPolynomial.eval (fun j => r j * w j) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p j hp => simp only [map_mul, hp, MvPolynomial.bind₁_X_right, MvPolynomial.eval_X,
       MvPolynomial.eval_C]
 

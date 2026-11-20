@@ -120,7 +120,7 @@ private theorem intR_C_of_mem {ι F : Type} [Field F] (R : Subring F) {c : F} (h
 private theorem intR_add' {ι F : Type} [Field F] (R : Subring F) {f g : MvPowerSeries ι F}
     (hf : IntR R f) (hg : IntR R g) : IntR R (f + g) := by
   intro n
-  rw [map_add]
+  rw [map_add (f := _)]
   exact R.add_mem (hf n) (hg n)
 
 private theorem intR_mul' {ι F : Type} [Field F] (R : Subring F) {f g : MvPowerSeries ι F}

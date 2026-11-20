@@ -251,7 +251,7 @@ theorem GlobalTheory.Dict.analyticFibre_principalBundle_sign_eq : ∀ (E : Type)
       (fun J i hi => by
         have := A.fr_per _ (huL J.down) i _ hi
         rw [hx_eq_hermForm, hx_eq_hermForm, hup] at this
-        rw [map_add]
+        rw [map_add (f := _)]
         exact this)
     rw [prod_finset_fin_two (fun J : Finset (Fin 2) =>
       (A.χ (u J) * cexp (Real.pi * hermForm M (lam ⟨J⟩ z) (lam ⟨J⟩ (pv X idx x v)) +
@@ -276,10 +276,10 @@ theorem GlobalTheory.Dict.analyticFibre_principalBundle_sign_eq : ∀ (E : Type)
     (fun z w => hermForm M z (F w) + hermForm M (F z) w - hermForm M z w)
     (((herm_continuous M continuous_id hFc).add (herm_continuous M hFc continuous_id)).sub
       (herm_continuous M continuous_id continuous_id))
-    (fun z z' w => by simp only [map_add, herm_add_left]; ring)
+    (fun z z' w => by simp only [map_add (f := _), herm_add_left]; ring)
     (fun t z w => by simp only [map_smul, herm_smul_left]; ring)
     (fun z w => by
-      simp only [Complex.star_def, map_add, map_sub, ← herm_conj M hH]; ring)
+      simp only [Complex.star_def, map_add (f := _), map_sub, ← herm_conj M hH]; ring)
     (by
       rintro _ ⟨v, hv, rfl⟩
       refine ⟨_, ?_, key v hv⟩

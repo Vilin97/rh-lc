@@ -65,7 +65,7 @@ theorem pe_conj {Z : Subalgebra k (Matrix (Fin N) (Fin N) k)} {d : ℕ} (c : Fin
 theorem aeval_conj (g : GL (Fin N) k) (x : Matrix (Fin N) (Fin N) k) (χ : k[X]) :
     aeval (g.val * x * g⁻¹.val) χ = g.val * aeval x χ * g⁻¹.val := by
   induction χ using Polynomial.induction_on' with
-  | add p r hp hr => simp only [map_add, hp, hr, mul_add, add_mul]
+  | add p r hp hr => simp only [map_add (f := _), hp, hr, mul_add, add_mul]
   | monomial n a =>
     simp only [aeval_monomial, Units.conj_pow, ← Algebra.smul_def, mul_smul_comm, smul_mul_assoc]
 

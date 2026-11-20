@@ -54,7 +54,7 @@ theorem tame_conjFun {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)
     (h : Tame ψ S T ℓ) : Tame ψ (negSp S) T (conjFun ℓ) where
   add f f' hf hf' := by
     simp only [conjFun]
-    rw [cj_add, h.add _ _ (theta_cj hψ f hf) (theta_cj hψ f' hf'), map_add]
+    rw [cj_add, h.add _ _ (theta_cj hψ f hf) (theta_cj hψ f' hf'), map_add (f := _)]
   smul c f hf := by
     simp only [conjFun]
     rw [cj_smul, h.smul _ _ (theta_cj hψ f hf), map_mul, Complex.conj_conj]
@@ -168,7 +168,7 @@ theorem infPart_latO' {S T : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LT : S
     exact (show infPart D (pairA D.host.F 0 α ⊗ₜ[D.host.F] (a * t i * ∑ k, star (s k) * S.gram k j)) =
       (0 : Ainf D.host.F) ⊗ₜ[D.host.F] (a * t i * ∑ k, star (s k) * S.gram k j) from rfl).trans (TensorProduct.zero_tmul _ _)
   · simp
-  · intro x y _ _ hx hy; rw [Matrix.add_apply, RingHom.map_add, hx, hy, add_zero]
+  · intro x y _ _ hx hy; rw [Matrix.add_apply, RingHom.map_add (f := _), hx, hy, add_zero]
   · intro x _ hx; rw [Matrix.neg_apply, RingHom.map_neg, hx, neg_zero]
 
 section

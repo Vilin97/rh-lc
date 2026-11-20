@@ -155,7 +155,7 @@ theorem symB_graph {K : Type} [Field K] {A : Over (Sp K)} [GrpObj A] {L : LB A.l
     rw [← Over.comp_left, ← Over.comp_left, GrpObj.inv_hom]
   refine (cls_eq_iff hM hMi).1 ?_
   rw [cls_pull hM _ hMi, cls_linComb hL _ _ hM, Fin.sum_univ_two]
-  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, GlobalTheory.CechPic.pull_id, map_add, map_zsmul]
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, GlobalTheory.CechPic.pull_id, map_add (f := _), map_zsmul]
   rw [e0, ← GlobalTheory.CechPic.pull_comp, e1, GlobalTheory.CechPic.pull_comp, e0]
 
 theorem eq_of_sq_eq {k B a b : ℕ} (hB : B ^ 2 < k) (ha : a ≤ B) (hb : b ≤ B)

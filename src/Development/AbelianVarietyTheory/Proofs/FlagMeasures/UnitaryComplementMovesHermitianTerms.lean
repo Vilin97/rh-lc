@@ -33,7 +33,7 @@ lemma bbne_img (g : V ≃ₗ[E] V) (f f' : Fin (r + 1) → V) (hfix : ∀ b, g (
     induction hv using Submodule.span_induction with
     | mem x hx => obtain ⟨i, rfl⟩ := hx; exact hfam i
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | smul s x _ hx => rw [map_smul, hx]
   have e : H.MMfam (⟨LocNG.img g Λ, f, f', T, T'⟩ : Term V M r) = H.MMfam (⟨Λ, f, f', T, T'⟩ : Term V M r) := rfl
   unfold LocNG.BBne

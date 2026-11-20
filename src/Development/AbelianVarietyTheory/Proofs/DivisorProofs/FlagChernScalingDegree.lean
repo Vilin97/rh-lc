@@ -80,7 +80,7 @@ theorem gdeg_tens (HC : GlobalTheory.Published.ArCalc) {k : Type} [CommRing k] {
   have hl : (lin fun i => (((Pi.single (0 : Fin 2) (1 : ℤ) + Pi.single 1 1 : Fin 2 → ℤ) i : ℤ) : ℝ)) =
       MvPolynomial.X 0 + MvPolynomial.X 1 := by
     simp [lin, Fin.sum_univ_two, Pi.single_apply]
-  rw [hl, pow_one, map_add, e₀, e₁] at e₂
+  rw [hl, pow_one, map_add (f := _), e₀, e₁] at e₂
   simpa using e₂.symm
 
 theorem sum_gdeg_grLB (HC : GlobalTheory.Published.ArCalc) {k : Type} [CommRing k] {X : Scheme.{0}} [IsIntegral X] {p : X ⟶ Sp k}

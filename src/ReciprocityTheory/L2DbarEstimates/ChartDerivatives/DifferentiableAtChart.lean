@@ -101,7 +101,7 @@ theorem wdb_conj' (n : ℕ) (j : Fin n) (g : V n → ℂ) (y : V n) :
 
 theorem wd_conj' (n : ℕ) (j : Fin n) (g : V n → ℂ) (y : V n) :
     wd n j (fun w => (starRingEnd ℂ) (g w)) y = (starRingEnd ℂ) (wdb n j g y) := by
-  simp only [wdb, wd, fderiv_conj', map_div₀, map_add, map_mul, Complex.conj_I, map_ofNat]
+  simp only [wdb, wd, fderiv_conj', map_div₀, map_add (f := _), map_mul, Complex.conj_I, map_ofNat]
   ring
 
 theorem wd_comp_real' (n : ℕ) (j : Fin n) (k : ℝ → ℝ) (p : V n → ℝ) (y : V n)

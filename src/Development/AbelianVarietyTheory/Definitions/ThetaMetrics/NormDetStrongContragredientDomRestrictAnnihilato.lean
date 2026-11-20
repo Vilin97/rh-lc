@@ -244,7 +244,7 @@ instance dualInnerProductSpace : InnerProductSpace 𝕜 (StrongDual 𝕜 V) wher
   inner φ ψ := ⟪(rieszEquiv 𝕜 V).symm ψ, (rieszEquiv 𝕜 V).symm φ⟫_𝕜
   norm_sq_eq_re_inner φ := by rw [inner_self_eq_norm_sq, LinearIsometryEquiv.norm_map]
   conj_inner_symm φ ψ := inner_conj_symm _ _
-  add_left φ ψ χ := by rw [map_add, inner_add_right]
+  add_left φ ψ χ := by rw [map_add (f := _), inner_add_right]
   smul_left φ ψ r := by rw [map_smulₛₗ, inner_smul_right]
 
 @[simp] theorem inner_rieszEquiv (x y : V) :

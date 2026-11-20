@@ -46,7 +46,7 @@ theorem good_val (hP : GlobalTheory.Published.CuspRapidDecay) {θ : InfFam D} (h
     exact ⟨(hT.aut x).cont, GlobalTheory.CuspDecay.bounded_of_cuspForm hP hθ (hT.aut x) (hT.cusp x), (hT.aut x).left,
       hT.lev x⟩
   | add x y hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hx.add hy
 
 theorem conj_eq_one_iff' (z : ℂ) : conj z = 1 ↔ z = 1 := by

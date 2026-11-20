@@ -19,7 +19,7 @@ theorem Agree.pderiv {N : ℕ} {f g : MvPowerSeries σ R} (h : Agree (N + 1) f g
   classical
   intro d hd
   rw [coeff_pderiv, coeff_pderiv, h (d + Finsupp.single i 1) ?_]
-  rw [map_add, Finsupp.degree_single]
+  rw [map_add (f := _), Finsupp.degree_single]
   omega
 
 theorem Agree.mul {N : ℕ} {x x' y y' : MvPowerSeries σ R} (hx : Agree N x x')
@@ -70,7 +70,7 @@ theorem pderiv_aeval [Fintype σ] (p : MvPolynomial σ R) (A : σ → MvPowerSer
   | C r => simp
   | add p q hp hq => simp [hp, hq, add_mul, Finset.sum_add_distrib]
   | mul_X p j hp =>
-    simp only [MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X, map_add, map_mul,
+    simp only [MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X, map_add (f := _), map_mul,
       MvPolynomial.aeval_X, add_mul, Finset.sum_add_distrib]
     rw [Derivation.leibniz, hp, smul_eq_mul, smul_eq_mul]
     rw [add_comm]

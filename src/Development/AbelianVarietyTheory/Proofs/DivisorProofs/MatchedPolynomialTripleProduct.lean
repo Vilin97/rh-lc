@@ -37,7 +37,7 @@ theorem exists_rest (κ : Type) [Fintype κ] : ∃ r : (κ → AF F) → ℂ, (�
       rw [evFin, AlgHom.comp_apply]
       convert map_zero (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v)
       exact h2
-    simp only [rr, Pi.add_apply, map_add, hz0, add_zero]
+    simp only [rr, Pi.add_apply, map_add (f := _), hz0, add_zero]
   have hr0 : rr 0 = 1 := by
     refine finprod_eq_one_of_forall_eq_one fun v => ?_
     simp only [φs, Pi.zero_apply, map_zero]

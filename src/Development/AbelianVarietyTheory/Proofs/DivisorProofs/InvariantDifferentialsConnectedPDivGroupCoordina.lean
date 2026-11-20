@@ -23,14 +23,14 @@ theorem coeff_eq_zero_of_mem_sq {g : MvPowerSeries (Fin d) k}
   · rw [coeff_mul]
     refine Finset.sum_eq_zero fun q hq => ?_
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hq
-    have hdeg : q.1.degree + q.2.degree < 2 := by rw [← map_add, hq]; exact hα
+    have hdeg : q.1.degree + q.2.degree < 2 := by rw [← map_add (f := _), hq]; exact hα
     rw [RingHom.mem_ker] at ha hb
     rcases Nat.lt_or_ge q.1.degree 1 with h | h
     · have : q.1 = 0 := (Finsupp.degree_eq_zero_iff _).1 (by omega)
       rw [this, coeff_zero_eq_constantCoeff_apply, ha, zero_mul]
     · have : q.2 = 0 := (Finsupp.degree_eq_zero_iff _).1 (by omega)
       rw [this, coeff_zero_eq_constantCoeff_apply, hb, mul_zero]
-  · rw [map_add, ha, hb, add_zero]
+  · rw [map_add (f := _), ha, hb, add_zero]
 
 variable {A : Type} [CommRing A] [Bialgebra k A] (x : Fin d → A) (hx : ∀ i, IsNilpotent (x i))
   (haug : ∀ i, Coalgebra.counit (R := k) (x i) = 0)

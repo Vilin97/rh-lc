@@ -76,7 +76,7 @@ def lin {M : Type w} {N : Type w'} [AddCommGroup M] [AddCommGroup N] [Module ℤ
   map_smul' p x := by
     induction p using Polynomial.induction_on generalizing x with
     | C a => rw [RingHom.id_apply, eq_intCast, Int.cast_smul_eq_zsmul, Int.cast_smul_eq_zsmul, map_zsmul]
-    | add p q hp hq => rw [RingHom.id_apply, add_smul, map_add, add_smul, hp, hq]; rfl
+    | add p q hp hq => rw [RingHom.id_apply, add_smul, map_add (f := _), add_smul, hp, hq]; rfl
     | monomial n a ih =>
       rw [RingHom.id_apply, pow_succ, ← mul_assoc, mul_smul _ X x, mul_smul _ X (f x), ih, h]; rfl
 

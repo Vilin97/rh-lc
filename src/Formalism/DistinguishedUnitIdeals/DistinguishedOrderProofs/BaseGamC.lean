@@ -28,7 +28,7 @@ theorem cob_add (L : Lat B n V) {y z y' z' : ZMod n → V} (h : L.IsCobound y z)
     (h' : L.IsCobound y' z') : L.IsCobound (y + y') (z + z') := by
   obtain ⟨m, rfl, rfl⟩ := h
   obtain ⟨m', rfl, rfl⟩ := h'
-  refine ⟨m + m', ?_, ?_⟩ <;> funext i <;> simp only [Lat.dφ, Lat.dγ, Pi.add_apply, map_add] <;> abel
+  refine ⟨m + m', ?_, ?_⟩ <;> funext i <;> simp only [Lat.dφ, Lat.dγ, Pi.add_apply, map_add (f := _)] <;> abel
 
 theorem cob_neg (L : Lat B n V) {y z : ZMod n → V} (h : L.IsCobound y z) :
     L.IsCobound (-y) (-z) := by

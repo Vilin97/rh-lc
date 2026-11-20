@@ -165,7 +165,7 @@ theorem exists_open_fix [TopologicalSpace G] [IsTopologicalGroup G] (ρ : Repres
     obtain ⟨H₁, o₁, i₁, f₁⟩ := ha
     obtain ⟨H₂, o₂, i₂, f₂⟩ := hb
     refine ⟨H₁ ⊓ H₂, o₁.inter o₂, Subgroup.relIndex_inf_ne_zero i₁ i₂, fun h hh => ?_⟩
-    rw [map_add, f₁ h hh.1, f₂ h hh.2]
+    rw [map_add (f := _), f₁ h hh.1, f₂ h hh.2]
   | smul a b _ hb =>
     obtain ⟨H, o, i, f⟩ := hb
     exact ⟨H, o, i, fun h hh => by rw [map_smul, f h hh]⟩
@@ -300,7 +300,7 @@ theorem GlobalTheory.spherical_eigenvector_generates_irreducible :
       obtain ⟨a, rfl⟩ := h
       exact Submodule.subset_span ⟨g * a, by simp [map_mul]⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul a b _ hb => rw [map_smul]; exact Submodule.smul_mem _ _ hb
   have hxU : x ∈ Submodule.span ℂ (Set.range fun g : G => ρ g x) :=
     Submodule.subset_span ⟨1, by simp⟩

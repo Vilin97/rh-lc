@@ -16,7 +16,7 @@ theorem aeval_mulVec_mem_of_stable {K : Type} [Field K] {n : ℕ} (γ : Matrix (
     exact W.smul_mem _ hz
   | add p q hp hq =>
     intro z hz
-    rw [map_add, Matrix.add_mulVec]
+    rw [map_add (f := _), Matrix.add_mulVec]
     exact W.add_mem (hp z hz) (hq z hz)
   | monomial m c h =>
     intro z hz
@@ -140,7 +140,7 @@ theorem ker_orthogonal_of_coprime :
   have hy₁ : (y₁ : Fin n → K) = 0 := by
     have h1 : aeval γ (a * q₁ + b * q₂) *ᵥ (y₁ : Fin n → K) = y₁ := by
       rw [hab, map_one, Matrix.one_mulVec]
-    rw [← h1, map_add, map_mul, map_mul, Matrix.add_mulVec, ← Matrix.mulVec_mulVec,
+    rw [← h1, map_add (f := _), map_mul, map_mul, Matrix.add_mulVec, ← Matrix.mulVec_mulVec,
       ← Matrix.mulVec_mulVec, hq₁, hq₂, Matrix.mulVec_zero, Matrix.mulVec_zero, add_zero]
   rw [hy₁, sub_zero] at hy₀
   exact (hWmem y).mp hy₀ x hx

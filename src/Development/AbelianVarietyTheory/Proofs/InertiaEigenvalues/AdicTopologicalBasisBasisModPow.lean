@@ -15,7 +15,7 @@ private theorem TopBasis.c_mem_of_mem_map_pow {S A : Type} [CommRing S] [CommRin
     exact Ideal.mul_mem_right _ _ ha
   · intro r; simp
   · intro x y _ _ hx hy r
-    rw [mul_add, map_add]
+    rw [mul_add, map_add (f := _)]
     exact Ideal.add_mem _ (hx r) (hy r)
   · intro a x _ hx r
     rw [smul_eq_mul, ← mul_assoc]

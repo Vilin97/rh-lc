@@ -204,7 +204,7 @@ theorem normPt_eq : T.normPt hξ =
   rw [normPt, normU]
   generalize T.coeff (ξ : Γ) 0 = c0 at hξe ⊢
   rw [hξe]
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   linear_combination (-(algebraMap Γ T.B (T.ξtail ξ : Γ) * algebraMap Γ T.B (T.vInv hξ : Γ)) *
     hinv - hV)
 

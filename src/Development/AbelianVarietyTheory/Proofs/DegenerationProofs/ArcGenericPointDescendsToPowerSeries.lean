@@ -50,7 +50,7 @@ theorem exists_finset {V F R A : Type} [CommRing V] [CommRing F] [Algebra V F] [
     induction ha using Submodule.span_induction with
     | mem x hx => exact hW _ (Finset.mem_image_of_mem _ hx)
     | zero => rw [map_zero]; exact W.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact W.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact W.add_mem hx hy
     | smul r x _ hx =>
       rw [Algebra.smul_def, map_mul]
       exact W.mul_mem (by rw [show algebraMap R A r = g r from rfl, h]; exact W.algebraMap_mem _) hx

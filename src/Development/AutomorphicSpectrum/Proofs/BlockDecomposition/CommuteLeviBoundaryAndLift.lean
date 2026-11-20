@@ -38,7 +38,7 @@ theorem commute_ev (T : Module.End ℂ W) (E : Fin n → Fin n → Module.End �
   | grade0 r => rw [AlgHom.commutes]; exact (Algebra.commutes r T).symm
   | grade1 p => simpa [CompanionTheory.D.LK.ev] using h p.1 p.2
   | mul a b ha hb => rw [map_mul]; exact ha.mul_right hb
-  | add a b ha hb => rw [map_add]; exact ha.add_right hb
+  | add a b ha hb => rw [map_add (f := _)]; exact ha.add_right hb
 
 def wL {V : Type} [AddCommGroup V] [Module ℂ V] (s : Bool) (w : Pos n → V) (l : Lt n) : V :=
   (1 / 2 : ℂ) • (if l.1 || s then w l.2 else -w l.2)

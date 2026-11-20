@@ -87,7 +87,7 @@ theorem reversed_relation_mod : ∀ (F : Type) [Field F] [NumberField F] (v : He
     have e : R i j = (if i = Fin.rev j then 1 else 0) + (g : v.adicCompletion F) * s i j := by
       rw [← this]; ring
     rw [e]
-    simp only [Ro, map_add, map_mul, map_natCast, hφS]
+    simp only [Ro, map_add (f := _), map_mul, map_natCast, hφS]
     congr 1
     split_ifs <;> simp
   have hinj : Function.Injective φ := Subtype.val_injective
@@ -104,7 +104,7 @@ theorem reversed_relation_mod : ∀ (F : Type) [Field F] [NumberField F] (v : He
     exact Ideal.mem_span_singleton_self _
   have hρR : ∀ i j, ρ (Ro i j) = if i = Fin.rev j then 1 else 0 := by
     intro i j
-    simp only [Ro, map_add, map_mul, hg0, zero_mul, add_zero]
+    simp only [Ro, map_add (f := _), map_mul, hg0, zero_mul, add_zero]
     split_ifs <;> simp
   have hρA : ∀ a c, ρ (Ao a c) = redM F v A a c := fun a c => (show redM F v A a c = ρ (Ao a c) from dif_pos (hA a c)).symm
   have hρM : ∀ a c, ρ (Mo a c) = redM F v M a c := fun a c => (show redM F v M a c = ρ (Mo a c) from dif_pos (hM a c)).symm
@@ -146,7 +146,7 @@ theorem residue_character : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     intro r r'
     have : ((0 : v.adicCompletion F), r + r') = (0, r) + (0, r') := by simp
     simp only [P]
-    rw [this, map_add, mul_add, map_add, hadd]
+    rw [this, map_add (f := _), mul_add, map_add (f := _), hadd]
   have hP1 : ∀ r : v.adicCompletionIntegers F, P ((g : v.adicCompletion F) * r) = 1 := by
     intro r
     have : algebraMap F (E ⊗[F] v.adicCompletion F) ((g : F)⁻¹) * sp.symm (0, (g : v.adicCompletion F) * r) =
@@ -194,7 +194,7 @@ theorem residue_character : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
       map_add_eq_mul' := fun a b => by
         rw [← hQadd]
         apply hQres
-        rw [map_add, hlift, hlift, hlift] }
+        rw [map_add (f := _), hlift, hlift, hlift] }
   have hψ : ∀ u, ψ (IsLocalRing.residue _ u) = Q u := fun u => hQres _ _ (hlift _)
   refine ⟨ψ, ?_, ?_⟩
   · intro h1

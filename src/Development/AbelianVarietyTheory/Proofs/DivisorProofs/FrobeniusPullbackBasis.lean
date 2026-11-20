@@ -32,7 +32,7 @@ theorem span_range_of_liftSemi_surjective (f : M →ₛₗ[algebraMap R R'] N)
   refine eq_top_iff.2 fun z _ => ?_
   obtain ⟨y, rfl⟩ := hf z
   induction y with
-  | add x y hx hy => rw [map_add]; exact add_mem (hx trivial) (hy trivial)
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx trivial) (hy trivial)
   | tmul r m => exact Submodule.smul_mem _ r (Submodule.subset_span ⟨m, rfl⟩)
 
 theorem flat_of_injective_of_isBezout [IsDomain R] [IsBezout R] [IsDomain R']

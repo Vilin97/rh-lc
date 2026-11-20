@@ -109,7 +109,7 @@ private theorem stab_iff (L : IsLoc O Δ) (hD : τ ^ 2 - 4 ≠ 0) {s : K} {β : 
         rw [hi, hi3, ← algebraMap_smul K (i ^ 2), ← algebraMap_smul K (r ^ 2 - 1), map_sub, map_pow _ r, hr, map_one, smul_mul_assoc]
         congr 1
         rw [show (star ω : Etau K τ) = algebraMap K _ τ - ω by ext <;> simp, Algebra.smul_def]
-        simp only [map_sub, map_add, map_one, map_ofNat]
+        simp only [map_sub, map_add (f := _), map_one, map_ofNat]
         ring
       rw [this]
       exact Submodule.smul_mem _ _ (sub_mem (Submodule.smul_mem _ _ hy) (H y hy))

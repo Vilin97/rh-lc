@@ -62,7 +62,7 @@ theorem conj_conj (z : D.host.E) : D.host.conj (D.host.conj z) = z := by
 theorem sgA_sgA (x : AE D) : sgA D (sgA D x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   | tmul a b => simp [sgA, Formalism.UG.sigR, conj_conj]
 
 theorem sgU_sgU (x : (AE D)ˣ) : sgU D (sgU D x) = x := Units.ext (sgA_sgA D x)

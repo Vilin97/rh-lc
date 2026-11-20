@@ -27,10 +27,10 @@ theorem form_eq_zero_of_im {V : Type} [AddCommGroup V] [Module ℂ V] (f : V →
       induction hw using Submodule.span_induction with
       | mem v hv => exact h u hu v hv
       | zero => rw [(h2 u).map_zero, zero_im]
-      | add a b _ _ ha hb => rw [(h2 u).map_add, add_im, ha, hb, add_zero]
+      | add a b _ _ ha hb => rw [(h2 u).map_add (f := _), add_im, ha, hb, add_zero]
       | smul t a _ ha => rw [(h2 u).map_smul, smul_im, ha, smul_zero]
     | zero => rw [(h1 w).map_zero, zero_im]
-    | add a b _ _ ha hb => rw [(h1 w).map_add, add_im, ha, hb, add_zero]
+    | add a b _ _ ha hb => rw [(h1 w).map_add (f := _), add_im, ha, hb, add_zero]
     | smul t a _ ha =>
       rw [← Complex.coe_smul, (h1 w).map_smul, smul_eq_mul, im_ofReal_mul, ha, mul_zero]
   have h3 := key (I • z) w

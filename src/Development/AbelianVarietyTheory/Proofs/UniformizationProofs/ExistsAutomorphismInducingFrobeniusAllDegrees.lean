@@ -160,7 +160,7 @@ theorem exists_transport (hG : GlobalFnsSt) (U : Unif I D A G) (F : Type) [Field
     let t' : SecOver (abelianBase A F) (LPow A.A A.L (N : ℤ) (TFK (R := R) F)) := s'
     let t'' : SecOver (abelianBase A F) (LPow A.A A.L (N : ℤ) (TFK (R := R) F)) := s''
     have e₁ : t'' = c • t + t' := SecOver.ext _ _ fun j => (h j).trans rfl
-    have e₂ : Ψ t'' = c • Ψ t + Ψ t' := by rw [e₁, map_add, map_smul]
+    have e₂ : Ψ t'' = c • Ψ t + Ψ t' := by rw [e₁, map_add (f := _), map_smul]
     exact (congrArg (chartFun _ _ j) e₂).trans rfl
   · obtain ⟨c, hc⟩ := expandsF_change hG U.toUnifPre F N hw₀ hw₁
     have a := (he _ _).1 (hc t s h)

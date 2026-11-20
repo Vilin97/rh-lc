@@ -358,7 +358,7 @@ instance : Nontrivial (etaleColimit R K) :=
 instance isLocalRing : IsLocalRing (etaleColimit R K) :=
   .of_nonunits_add fun a b ha hb ↦ by
     simp only [mem_nonunits_iff, isUnit_iff_toK_ne_zero, not_not] at ha hb ⊢
-    rw [map_add, ha, hb, add_zero]
+    rw [map_add (f := _), ha, hb, add_zero]
 
 theorem maximalIdeal_eq : maximalIdeal (etaleColimit R K) = RingHom.ker toK := by
   ext y

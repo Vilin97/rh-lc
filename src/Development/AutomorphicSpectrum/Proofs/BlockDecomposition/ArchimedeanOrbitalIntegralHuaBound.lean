@@ -131,7 +131,7 @@ theorem trace_gram {n M : ℕ} (J : Matrix (Fin M) (Fin M) ℂ) (b : Matrix (Fin
 
 theorem sesq_add_left {n M : ℕ} (J : Matrix (Fin M) (Fin M) ℂ) (b : Matrix (Fin n) (Fin n) ℂ)
     (X X' Y : Fin n → Fin M → ℂ) : sesq J b (X + X') Y = sesq J b X Y + sesq J b X' Y := by
-  simp only [sesq, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [sesq, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem sesq_add_right {n M : ℕ} (J : Matrix (Fin M) (Fin M) ℂ) (b : Matrix (Fin n) (Fin n) ℂ)
     (X Y Y' : Fin n → Fin M → ℂ) : sesq J b X (Y + Y') = sesq J b X Y + sesq J b X Y' := by
@@ -190,7 +190,7 @@ theorem phase_polar : ∀ (W : Type) [Fintype W] (n M : ℕ) (J : W → Matrix (
     ∀ x y : TupV W n M, phaseM J b (tupCoord (x + y)) =
       phaseM J b (tupCoord x) + phaseM J b (tupCoord y) + inner ℝ x (polarOp J b y) := by
   intro W _ n M J hJ b hb x y
-  simp only [phaseM, trace_gram, map_add, Pi.add_apply, inner_polarOp]
+  simp only [phaseM, trace_gram, map_add (f := _), Pi.add_apply, inner_polarOp]
   rw [← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
   exact Finset.sum_congr rfl fun w _ => sesq_re_add (hJ w) (hb w) _ _
 

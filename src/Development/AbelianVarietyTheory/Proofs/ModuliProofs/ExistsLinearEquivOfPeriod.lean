@@ -78,7 +78,7 @@ theorem exists_isometry {t : SAB H S} {y : Sp ℂ ⟶ S} {D D' : Datum H} {ty : 
   choose r₀ hr₀ using hmem
   let r₁ : D.La →ₗ[𝓞 E] D'.La :=
     { toFun := r₀
-      map_add' := fun a b => hP'.2.1 (by rw [map_add, hr₀, hr₀, hr₀, map_add, map_add])
+      map_add' := fun a b => hP'.2.1 (by rw [map_add (f := _), hr₀, hr₀, hr₀, map_add (f := _), map_add (f := _)])
       map_smul' := fun c a => hP'.2.1 (by
         rw [hr₀, show P (c • a) = fun k => ty k (c : E) * P a k from funext (hP.1 c a), hcomm, ← hr₀]
         exact (funext (hP'.1 c (r₀ a))).symm) }

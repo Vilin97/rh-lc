@@ -48,7 +48,7 @@ theorem exists_realLinear_lift {V W Q T : Type*} [NormedAddCommGroup V] [NormedS
     refine ⟨?_⟩
     rw [← (Submodule.mkQ_surjective Λ).range_eq]
     refine IsZLattice.isCompact_range_of_periodic Λ _ Λ.isOpenQuotientMap_mkQ.continuous fun z w hw => ?_
-    rw [map_add, Submodule.mkQ_apply _ w, (Submodule.Quotient.mk_eq_zero Λ).2 hw, add_zero]
+    rw [map_add (f := _), Submodule.mkQ_apply _ w, (Submodule.Quotient.mk_eq_zero Λ).2 hw, add_zero]
   let ē : W ⧸ Λ → T := Quotient.lift (j ∘ e) fun a b hab =>
     congrArg j ((heq a b).2 ((Submodule.quotientRel_def Λ).1 hab))
   have hē : ∀ w, ē (Λ.mkQ w) = j (e w) := fun _ => rfl
@@ -59,7 +59,7 @@ theorem exists_realLinear_lift {V W Q T : Type*} [NormedAddCommGroup V] [NormedS
     exact (Submodule.Quotient.eq Λ).2 ((heq a b).1 (hj hab))
   choose σ hσ using hs
   let φ : V →+ W ⧸ Λ := AddMonoidHom.mk' (fun z => Λ.mkQ (σ (e₀ z))) fun a b => by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     exact (Submodule.Quotient.eq Λ).2 ((heq _ _).1 (by rw [he, hσ, hσ, hσ, he₀]))
   have hφ : Continuous φ := hemb.isEmbedding.continuous_iff.2 (hc₀.congr fun z => by
     show j (e₀ z) = j (e (σ (e₀ z)))

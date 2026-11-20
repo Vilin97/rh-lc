@@ -119,7 +119,7 @@ theorem restWord : RestWord := by
     have hw1 : Finsupp.weight (wtI isVec i) e1 = Finsupp.weight (torusW isVec) e1 :=
       partialWeight_eq_torusWeight_of_lt isVec i fun x hx =>
         DominanceOrderLemmas.vars_act isVec g gi hv1 x ((mem_vars_iff_mem_support x).2 ⟨e1, he1, hx⟩)
-    rw [map_add, hw2, add_zero, hw1]
+    rw [map_add (f := _), hw2, add_zero, hw1]
     exact fullAct_pathWord_support_dominated isVec B μ i I' gu hpi hidx e1 he1
   · exfalso
     have hz : ∏ c ∈ F, pathWord isVec μ c (fun j a => (X (j, a) : MvPolynomial (ℕ × Fin n) L)) i (I' c) = 0 := by

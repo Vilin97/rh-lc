@@ -226,12 +226,12 @@ theorem pick3 (hp : p = 3) {x : ℂ_[p]} (hx : ‖x‖ ≤ 1) :
 
 theorem em_fst (a : ℤ × ℤ) : (em dK ι a).1 = (a.1 : ℂ_[p]) + (a.2 : ℂ_[p]) * ι (omegaK dK) := by
   show ι _ = _
-  simp [map_add, map_mul, map_intCast]
+  simp [map_add (f := _), map_mul, map_intCast]
 
 theorem em_snd (a : ℤ × ℤ) :
     (em dK ι a).2 = (a.1 : ℂ_[p]) + (a.2 : ℂ_[p]) * (1 - ι (omegaK dK)) := by
   show ι _ = _
-  simp [map_add, map_mul, map_intCast, map_sub, map_one]
+  simp [map_add (f := _), map_mul, map_intCast, map_sub, map_one]
 
 theorem cand3 (hw : ‖ι (omegaK dK)‖ < 1 ∨ ‖ι (omegaK dK) - 1‖ < 1) (r s : ℤ) (hr : r = 1 ∨ r = 2)
     (hs : s = 1 ∨ s = 2) :
@@ -361,7 +361,7 @@ theorem split_w {p : ℕ} [Fact p.Prime] (ι : ℂ ≃+* ℂ_[p]) {dK : ℕ} (hm
     have e : ι (((3 * a : ℤ) : ℂ) + ((3 * b : ℤ) : ℂ) * omegaK dK) =
         ((3 : ℤ) : ℂ_[p]) * (em dK ι (a, b)).1 := by
       rw [em_fst]
-      simp only [map_add, map_mul, map_intCast]
+      simp only [map_add (f := _), map_mul, map_intCast]
       push_cast
       ring
     rw [e, norm_mul] at hα1

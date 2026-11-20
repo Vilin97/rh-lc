@@ -22,7 +22,7 @@ def ltIdeal : Ideal (𝓞 K) where
     intro a b ha hb
     have e : ((a + b : 𝓞 K) : K) = (a : K) + (b : K) := by norm_cast
     show A.valuation (algebraMap K Ω' ((a + b : 𝓞 K) : K)) < 1
-    rw [e, map_add]
+    rw [e, map_add (f := _)]
     exact Valuation.map_add_lt _ ha hb
   zero_mem' := by simp
   smul_mem' := by

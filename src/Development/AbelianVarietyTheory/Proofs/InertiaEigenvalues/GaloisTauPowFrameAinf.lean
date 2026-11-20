@@ -18,7 +18,7 @@ private theorem witt_padicInt_hom_ext (l : ℕ) [Fact l.Prime] {k : Type} [CommR
   have hx : x = (x.appr (n + 1) : ℤ_[l]) + y * (l : ℤ_[l]) ^ (n + 1) := by rw [hy]; ring
   have h : f x - g x = (f y - g y) * (l : WittVector l k) ^ (n + 1) := by
     rw [hx]
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
     ring
   rw [h, WittVector.zero_coeff]
   exact WittVector.mul_pow_charP_coeff_zero _ (Nat.lt_succ_self n)

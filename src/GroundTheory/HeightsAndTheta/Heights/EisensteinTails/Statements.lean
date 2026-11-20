@@ -147,7 +147,7 @@ theorem fibrePi_conjMap (σ : L →+* ℂ) (x : Fibre σ (∀ i, E i)) (i : ι) 
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero, Pi.zero_apply]
   | tmul z v => rfl
-  | add x y hx hy => rw [map_add, map_add, Pi.add_apply, hx, hy, map_add, Pi.add_apply, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), Pi.add_apply, hx, hy, map_add (f := _), Pi.add_apply, map_add (f := _)]
 
 variable [NumberField L] [∀ i, Module.Finite (𝓞 L) (E i)] [∀ i, Module.Projective (𝓞 L) (E i)]
 

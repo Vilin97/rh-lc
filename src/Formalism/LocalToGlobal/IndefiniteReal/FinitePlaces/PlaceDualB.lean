@@ -285,7 +285,7 @@ def IntF (y : AE D) : Prop := y * fI D = y ∧ finPart D y ∈ intAE D
 lemma intF_zero : IntF (0 : AE D) := ⟨zero_mul _, by rw [map_zero]; exact zero_mem _⟩
 
 lemma intF_add {y y' : AE D} (h : IntF y) (h' : IntF y') : IntF (y + y') :=
-  ⟨by rw [add_mul, h.1, h'.1], by rw [map_add]; exact add_mem h.2 h'.2⟩
+  ⟨by rw [add_mul, h.1, h'.1], by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h.2 h'.2⟩
 
 lemma intF_neg {y : AE D} (h : IntF y) : IntF (-y) :=
   ⟨by rw [neg_mul, h.1], by rw [map_neg]; exact neg_mem h.2⟩
@@ -309,7 +309,7 @@ lemma mul_fI_eq (y : AE D) : y * fI D = finiteEmbeddingTensor D (finPart D y) :=
   induction y using TensorProduct.induction_on with
   | zero => rw [zero_mul, map_zero, map_zero]
   | tmul a z => rw [tmul_fI]; rfl
-  | add y y' h h' => rw [add_mul, h, h', map_add, map_add]
+  | add y y' h h' => rw [add_mul, h, h', map_add (f := _), map_add (f := _)]
 
 lemma exists_nat_mul_intAE (w : Af D.host.F ⊗[D.host.F] D.host.E) : ∃ k : ℕ, 0 < k ∧ k • w ∈ intAE D := by
   induction w using TensorProduct.induction_on with
@@ -374,7 +374,7 @@ lemma lower (hS : IsSelfDualC S ΛS) (hT : IsSelfDualC T ΛT) :
           push_cast; ring
         rw [heq]; exact hm
       | zero => rw [map_zero, Matrix.single_zero, smul_zero]; exact zero_mem _
-      | add x x' _ _ h h' => rw [map_add, Matrix.single_add, smul_add]; exact add_mem h h'
+      | add x x' _ _ h h' => rw [map_add (f := _), Matrix.single_add, smul_add]; exact add_mem h h'
       | neg x _ h =>
         have e : Matrix.single i j (-(finiteEmbeddingTensor D x)) = -Matrix.single i j (finiteEmbeddingTensor D x) := by
           ext a b; simp only [Matrix.single_apply, Matrix.neg_apply]; split_ifs <;> simp

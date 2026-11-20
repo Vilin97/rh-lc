@@ -154,7 +154,7 @@ theorem triv_mul {n : ℕ} (hn : 0 < n) {x x' y : Q} (hx : x ^ n = 1) (hx' : x' 
   obtain ⟨a', rfl⟩ := (I.onto n hn _).1 hx'
   obtain ⟨b, rfl⟩ := (I.onto n hn _).1 hy
   rw [triv_iff I hu hn] at h h'
-  rw [← I.add, triv_iff I hu hn, map_add, LinearMap.add_apply]
+  rw [← I.add, triv_iff I hu hn, map_add (f := _), LinearMap.add_apply]
   exact dvd_add h h'
 
 theorem triv_symm {n : ℕ} (hn : 0 < n) {x y : Q} (hx : x ^ n = 1) (hy : y ^ n = 1)
@@ -205,10 +205,10 @@ theorem card_orth [IsAlgClosed k] [CharZero k] {p : ℕ} (hp : 0 < p) (hf : Fini
     fun x y a b ha hb => hu p x y _ _ hp x.2 y.2 (by simpa only [hs] using I.isom p hp (s x) (s y))
       (by simpa only [ha, hb] using I.isom p hp a b)
   let B : G →* G →* kˣ := MonoidHom.mk' (fun x => MonoidHom.mk' (fun y => I.ζ p ^ D.EF (s x) (s y)) fun y y' => by
-      rw [hv x (y * y') (s x) (s y + s y') (hs x) (by rw [I.add, hs, hs]; rfl), map_add, zpow_add])
+      rw [hv x (y * y') (s x) (s y + s y') (hs x) (by rw [I.add, hs, hs]; rfl), map_add (f := _), zpow_add])
     fun x x' => MonoidHom.ext fun y => by
       show I.ζ p ^ D.EF (s (x * x')) (s y) = I.ζ p ^ D.EF (s x) (s y) * I.ζ p ^ D.EF (s x') (s y)
-      rw [hv (x * x') y (s x + s x') (s y) (by rw [I.add, hs, hs]; rfl) (hs y), map_add, LinearMap.add_apply, zpow_add]
+      rw [hv (x * x') y (s x + s x') (s y) (by rw [I.add, hs, hs]; rfl) (hs y), map_add (f := _), LinearMap.add_apply, zpow_add]
   have hB1 : ∀ x y : G, B x y = 1 ↔ e p x y 1 := fun x y => by
     rw [← hs x, ← hs y, triv_iff I hu hp, ← (I.ζ_prim p hp).zpow_eq_one_iff_dvd]
     rfl
@@ -219,7 +219,7 @@ theorem card_orth [IsAlgClosed k] [CharZero k] {p : ℕ} (hp : 0 < p) (hf : Fini
     choose f hf using h₁
     have hp' : (p : ℤ) ≠ 0 := Nat.cast_ne_zero.2 hp.ne'
     obtain ⟨a, ha⟩ := D.unimod.2 (AddMonoidHom.mk' f fun b b' => mul_left_cancel₀ hp' (by
-      rw [mul_add, ← hf, ← hf, ← hf, map_add])).toIntLinearMap
+      rw [mul_add, ← hf, ← hf, ← hf, map_add (f := _)])).toIntLinearMap
     refine Subtype.ext ((hs x).symm.trans ((I.ker p hp _).2 ⟨a, D.unimod.1 (LinearMap.ext fun b => ?_)⟩))
     rw [map_nsmul, LinearMap.smul_apply, ha, hf, nsmul_eq_mul]
     rfl

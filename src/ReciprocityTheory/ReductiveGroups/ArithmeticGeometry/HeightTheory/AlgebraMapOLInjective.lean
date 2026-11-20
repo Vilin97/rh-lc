@@ -299,7 +299,7 @@ theorem placesOver_bij : ∃ e : HeightOneSpectrum (integralClosure O L) ≃ Pla
     let Qw : Ideal (integralClosure O L) :=
       { carrier := {b | 0 < w (algebraMap (integralClosure O L) L b)}
         add_mem' := fun {a b} ha hb => by
-          simp only [Set.mem_setOf_eq, map_add] at ha hb ⊢
+          simp only [Set.mem_setOf_eq, map_add (f := _)] at ha hb ⊢
           exact lt_of_lt_of_le (lt_min ha hb) (w.map_add _ _)
         zero_mem' := by simp
         smul_mem' := fun c b hb => by

@@ -195,7 +195,7 @@ theorem exists_kerUPart : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) 
       x ≫ o.act.act (algebraMap (𝓞 D.F) D.O a) = 1 →
       x ≫ o.act.act (algebraMap (𝓞 D.F) D.O (u * a + v * (p : 𝓞 D.F) ^ E)) = 1 := by
     intro T x a u v h1 h2
-    rw [map_add, map_mul, map_mul, ← Nat.cast_pow, map_natCast, o.act.add, o.act.mul, o.act.mul, hnat,
+    rw [map_add (f := _), map_mul, map_mul, ← Nat.cast_pow, map_natCast, o.act.add, o.act.mul, o.act.mul, hnat,
       MonObj.comp_mul, ← Category.assoc, ← Category.assoc, h2, MonObj.comp_pow, Category.comp_id, h1,
       MonObj.one_comp, MonObj.one_comp, _root_.mul_one]
   have key : ∀ (T : Over S) (x : T ⟶ o.A),

@@ -18,11 +18,11 @@ def sympBil {R S : Type} [CommRing R] [CommRing S] [Algebra R S] (c : S →ₐ[R
     (JB : Matrix β β S) : LinearMap.BilinForm R (Matrix α β S) :=
   LinearMap.mk₂ R (symp c ξ JA JB)
     (fun x x' y => by
-      simp only [symp, hTens, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add])
+      simp only [symp, hTens, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add (f := _)])
     (fun a x y => by
       simp only [symp, hTens, Matrix.smul_apply, smul_mul_assoc, ← Finset.smul_sum, mul_smul_comm, map_smul])
     (fun x y y' => by
-      simp only [symp, hTens, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add])
+      simp only [symp, hTens, Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add (f := _)])
     (fun a x y => by
       simp only [symp, hTens, Matrix.smul_apply, smul_mul_assoc, ← Finset.smul_sum, mul_smul_comm, map_smul])
 
@@ -47,7 +47,7 @@ theorem exists_darboux_of_basis {R W κ : Type} [CommRing R] [Invertible (2 : R)
     (fun k => b.repr w' (.inl k)) ⬝ᵥ (fun k => b.repr w (.inr k))
   conv_lhs => rw [← b.sum_repr w, ← b.sum_repr w']
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Fintype.sum_sum_type, map_add,
+    simp only [map_sum, map_smul, LinearMap.sum_apply, LinearMap.smul_apply, Fintype.sum_sum_type, map_add (f := _),
     LinearMap.add_apply, h11, h22, e12, e21, smul_eq_mul, mul_zero, Finset.sum_const_zero, zero_add, add_zero,
     mul_ite, Finset.sum_ite_eq', Finset.mem_univ, if_true, dotProduct, mul_one, mul_neg, Finset.sum_neg_distrib]
   rw [sub_eq_add_neg, add_comm]

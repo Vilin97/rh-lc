@@ -80,7 +80,7 @@ theorem map_smul_cut (v : HeightOneSpectrum (𝓞 F)) (c : Af F) (z : Af F ⊗[F
       Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v c • Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v) (AlgHom.id F E) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   | tmul a x => simp [TensorProduct.smul_tmul']
 
 omit [NumberField E] in
@@ -97,7 +97,7 @@ theorem cutPt_entry (T : Finset (HeightOneSpectrum (𝓞 F))) (g : GAd σ J) (i 
     by_cases h : i = j <;> simp [Matrix.one_apply, h]
   change Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v) (AlgHom.id F E) _ =
     Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v) (AlgHom.id F E) _
-  rw [map_add, map_smul_cut, map_sub, e, e, e1]
+  rw [map_add (f := _), map_smul_cut, map_sub, e, e, e1]
   by_cases hv : v ∈ T
   · have : proj σ J v (cutPt σ J T g) = proj σ J v g := proj_embAt σ J T _ ⟨v, hv⟩
     rw [this, evalV_cutIdem_of_mem hv, one_smul, sub_add_cancel]

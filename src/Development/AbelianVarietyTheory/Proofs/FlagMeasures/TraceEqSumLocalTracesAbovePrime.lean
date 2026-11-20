@@ -71,7 +71,7 @@ def ker (σ : F →+* Ω) : Ideal (𝓞 F) where
   carrier := {a | ‖σ a‖ < 1}
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_setOf_eq, RingOfIntegers.coe_eq_algebraMap, map_add] at *
+    simp only [Set.mem_setOf_eq, RingOfIntegers.coe_eq_algebraMap, map_add (f := _)] at *
     exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
   zero_mem' := by simp
   smul_mem' := by

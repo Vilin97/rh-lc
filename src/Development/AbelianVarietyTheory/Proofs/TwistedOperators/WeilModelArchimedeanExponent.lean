@@ -134,7 +134,7 @@ theorem dRho_ptF {V W : HSp D} (A : Fr V) (B : Fr W) {θ : InfFam D} {ψ : AddCh
   refine ⟨(1 / 2 : ℂ) • (Q₁ + Q₂), ?_⟩
   have e : ptF ψ θ A B f ((1 / 2 : ℂ) • (Q₁ + Q₂)) = (1 / 2 : ℂ) • (ptF ψ θ A B f Q₁ + ptF ψ θ A B f Q₂) := by
     unfold ptF
-    rw [map_smul, map_add]
+    rw [map_smul, map_add (f := _)]
   rw [e, ← h1, ← h2, crea, annih]
   module
 
@@ -198,7 +198,7 @@ theorem exists_co (hX : Xs.J = sgE (D := D) ε • M.gram)
 theorem thetaSum_rho_rho {F : Type} [Field F] [NumberField F] {U : Type} [AddCommGroup U] [Module (AF F) U]
     {B : U → U → AF F} {κ : Type} [Fintype κ] (co : Darboux B κ) (ψ : AddChar (AF F) ℂ) (Φ : (κ → AF F) → ℂ) (x y : U) :
     thetaSum F (co.rho ψ x (co.rho ψ y Φ)) = ψ (⅟(2 : AF F) * B x y) * thetaSum F (co.rho ψ (x + y) Φ) := by
-  simp only [Darboux.rho, schr_schr, thetaSum, map_add, Pi.smul_apply, smul_eq_mul, tsum_mul_left, co.form]
+  simp only [Darboux.rho, schr_schr, thetaSum, map_add (f := _), Pi.smul_apply, smul_eq_mul, tsum_mul_left, co.form]
 
 theorem heisO_thetaTr {S T : HSp D} {JA : Matrix (Fin T.rank) (Fin T.rank) D.host.E}
     {JB : Matrix (Fin S.rank) (Fin S.rank) D.host.E} {ξ : AE D} {κ : Type} [Fintype κ]
@@ -407,7 +407,7 @@ theorem exists_vacuum (A : Fr (sgn ε M)) (B : Fr X) : ∃ g₀ : SInf D.host.F 
       · rw [GlobalTheory.RealLift.pureA_ptAt, mul_comm]; rfl
       · rw [GlobalTheory.RealLift.pureA_ptAt, mul_comm, map_smul]; rfl
       · change annih _ θ t _ z (thL Mo hψ hθ hX hW hM hg f) = thL Mo hψ hθ hX hW hM hg (An t z f)
-        rw [annih, dRho_thL Mo hψ hθ hX hW hM hD, dRho_thL Mo hψ hθ hX hW hM hD, hAn, map_add, map_smul]
+        rw [annih, dRho_thL Mo hψ hθ hX hW hM hD, dRho_thL Mo hψ hθ hX hW hM hD, hAn, map_add (f := _), map_smul]
     | zero =>
       refine ⟨0, fun _ _ => rfl, fun t z => ⟨0, zero_mem _, fun a y => by rw [Pi.zero_apply y, map_zero]; rfl, ?_⟩⟩
       rw [t0]
@@ -419,7 +419,7 @@ theorem exists_vacuum (A : Fr (sgn ε M)) (B : Fr X) : ∃ g₀ : SInf D.host.F 
       refine ⟨s₁ + s₂, fun a y => by rw [Pi.add_apply, a1, a2]; rfl, fun t z => ?_⟩
       obtain ⟨Ψ₁', n1, c1, d1⟩ := b1 t z
       obtain ⟨Ψ₂', n2, c2, d2⟩ := b2 t z
-      refine ⟨Ψ₁' + Ψ₂', add_mem n1 n2, fun a y => by rw [Pi.add_apply, c1, c2, Pi.add_apply, map_add]; rfl, ?_⟩
+      refine ⟨Ψ₁' + Ψ₂', add_mem n1 n2, fun a y => by rw [Pi.add_apply, c1, c2, Pi.add_apply, map_add (f := _)]; rfl, ?_⟩
       rw [tadd _ m1 _ m2, tadd _ n1 _ n2, ← d1, ← d2]
       exact GlobalTheory.FockIndep.annih_add hψ hθ _ _ _ ((tth _).2 ⟨_, m1, rfl⟩) ((tth _).2 ⟨_, m2, rfl⟩)
     | smul c Ψ₁ m1 h1 =>
@@ -472,7 +472,7 @@ theorem exists_fockMap_of (hψ : IsStdChar D ψ (-1)) {θ : InfFam D} (hθ : IsI
     rwa [GlobalTheory.RealLift.pureA_ptAt, GlobalTheory.RealLift.pureA_ptAt, Set.indicator_of_mem GlobalTheory.RealLift.zero_mem_intPts,
       Pi.one_apply, mul_one, mul_one] at e2
   have hv : IsVacF ψ θ (frSgn ε A) B (Θ g₀) := ⟨(tth _).2 ⟨_, pureA_mem g₀ hg, by rw [hΘ]; rfl⟩, fun t z => by
-    rw [annih, hd, hd, ← map_smul, ← map_add, hg₀, map_zero]⟩
+    rw [annih, hd, hd, ← map_smul, ← map_add (f := _), hg₀, map_zero]⟩
   have hv0 : Θ g₀ ≠ 0 := fun h => g0 (hi (h.trans (map_zero Θ).symm))
   let um : FVar D X.rank M.rank → Matrix (Fin X.rank) (Fin M.rank) ℂ := fun k =>
     Formalism.IndefR.Datum.unitMap ((frSgn ε A).onb k.1) (B.onb k.1) k.2.1 k.2.2

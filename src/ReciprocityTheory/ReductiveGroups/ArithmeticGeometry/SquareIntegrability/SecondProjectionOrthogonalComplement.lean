@@ -21,7 +21,7 @@ theorem Hf_smul_l (c : ℂ) (v w : EuclideanSpace ℂ ι) : Hf (c • v) w = c *
   simp only [Hf, PiLp.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc]
 
 theorem Hf_add_r (v w w' : EuclideanSpace ℂ ι) : Hf v (w + w') = Hf v w + Hf v w' := by
-  simp only [Hf, PiLp.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Hf, PiLp.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem Hf_sub_r (v w w' : EuclideanSpace ℂ ι) : Hf v (w - w') = Hf v w - Hf v w' := by
   simp only [Hf, PiLp.sub_apply, map_sub, mul_sub, Finset.sum_sub_distrib]

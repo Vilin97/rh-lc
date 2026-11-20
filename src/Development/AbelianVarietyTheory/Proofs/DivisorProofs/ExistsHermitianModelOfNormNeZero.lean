@@ -59,7 +59,7 @@ theorem herm_smul_right (h : V → V → K.E)
 
 theorem herm_add_right (h : V → V → K.E) (hadd : ∀ y y' z, h (y + y') z = h y z + h y' z)
     (hsym : ∀ y z, h z y = K.c (h y z)) (y z z' : V) : h y (z + z') = h y z + h y z' := by
-  rw [hsym (z + z') y, hadd, map_add, ← hsym, ← hsym]
+  rw [hsym (z + z') y, hadd, map_add (f := _), ← hsym, ← hsym]
 
 theorem herm_expand (h : V → V → K.E) (hadd : ∀ y y' z, h (y + y') z = h y z + h y' z)
     (hsmul : ∀ (a : K.E) y z, h (a • y) z = a * h y z) (hsym : ∀ y z, h z y = K.c (h y z))
@@ -116,9 +116,9 @@ theorem exists_unit_vector [FiniteDimensional K.E V] (h : V → V → K.E)
     rw [← algebraMap_smul K.E (1 : K.O) y, herm_expand h hadd hsmul hsym, ha2, ha3, ← ha, hzy,
       map_one, map_one] at ha4
     have e1 : a1 = θ * θ' * a2 + θ * a + θ' * UnramNorm.cO K a + a3 := hinj (by
-      rw [← ha1]; simp only [map_add, map_mul]; rfl)
+      rw [← ha1]; simp only [map_add (f := _), map_mul]; rfl)
     have e4 : a4 = a2 + a + UnramNorm.cO K a + a3 := hinj (by
-      rw [← ha4]; simp only [map_add, map_mul]; ring)
+      rw [← ha4]; simp only [map_add (f := _), map_mul]; ring)
     have hmem : (θ - θ') * a ∈ m := by
       have : (θ - θ') * a = (a1 - θ * θ' * a2 - a3) - θ' * (a4 - a2 - a3) := by
         rw [e1, e4]; ring
@@ -279,7 +279,7 @@ theorem exists_model : ∀ (K : GlobalTheory.UnitLemma.UQ) (B : GlobalTheory.Uni
   obtain ⟨L, ⟨hfg, hspan⟩, -, hdual⟩ := exists_mem_X_of_N_ne_zero B (x : B.A) hN
   have hadd : ∀ y y' z, B.herm x (y + y') z = B.herm x y z + B.herm x y' z := by
     intro y y' z
-    simp only [InvAlg.herm, mul_add, add_mul, map_add]
+    simp only [InvAlg.herm, mul_add, add_mul, map_add (f := _)]
   have hsmul : ∀ (a : K.E) y z, B.herm x (a • y) z = a * B.herm x y z := by
     intro a y z
     simp only [InvAlg.herm, mul_smul_comm, smul_mul_assoc, map_smul, smul_eq_mul]

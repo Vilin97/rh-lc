@@ -40,7 +40,7 @@ theorem map_substR [CommRing R] [CommRing S] (f : R →+* S)
     MvPolynomial.map f (substR P R G Q) = substR P S (fun v s => (G v s).map f) (MvPolynomial.map f Q) := by
   induction Q using MvPolynomial.induction_on with
   | C a => simp [substR]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp]
     set_option synthInstance.maxHeartbeats 100000 in
@@ -137,7 +137,7 @@ theorem evC_natAct (h : P.m + 1 = n) (pos : (Σ v : Fin P.nV, Fin (P.n' v)) ≃ 
     intro Q
     induction Q using MvPolynomial.induction_on with
     | C a => simp [substR]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p x hp =>
       rw [map_mul, map_mul, map_mul, hp]
       congr 1

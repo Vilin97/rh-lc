@@ -39,7 +39,7 @@ theorem isIntAf_adBasis_repr {D : Datum p} {J : Type} (b : Module.Basis J ℤ D.
     exact zero_mem _
   | add x y _ _ hx hy =>
     intro v
-    rw [map_add, Finsupp.add_apply, map_add]
+    rw [map_add (f := _), Finsupp.add_apply, map_add (f := _)]
     exact add_mem (hx v) (hy v)
   | neg x _ hx =>
     intro v

@@ -79,7 +79,7 @@ def imgL {i j : ℕ} (w : D.what₂.places.Pl) (f : Fn D u i →ₗ[ℂ] Fn D u 
   carrier := {y | ∃ x ∈ A, (D.fm u).emb j y = f ((D.fm u).emb i x)}
   add_mem' := by
     rintro a b ⟨x, hx, h1⟩ ⟨y, hy, h2⟩
-    exact ⟨x + y, A.add_mem hx hy, by rw [map_add, map_add, map_add, h1, h2]⟩
+    exact ⟨x + y, A.add_mem hx hy, by rw [map_add (f := _), map_add (f := _), map_add (f := _), h1, h2]⟩
   zero_mem' := ⟨0, A.zero_mem, by simp⟩
   smul_mem' := by
     rintro r a ⟨x, hx, h1⟩

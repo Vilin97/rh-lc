@@ -95,7 +95,7 @@ theorem fin_smul_eq {x : AE F E} (hx : Algebra.TensorProduct.map (fstA F) (AlgHo
       · change 1 * a.2 + 0 = a.2
         rw [one_mul, add_zero]
     | add x y hx hy =>
-      rw [map_add, map_add, smul_add, add_add_add_comm, hx, hy]
+      rw [map_add (f := _), map_add (f := _), smul_add, add_add_add_comm, hx, hy]
   have := key x
   rwa [hx, map_zero, add_zero] at this
 
@@ -131,7 +131,7 @@ theorem exists_prod (W : Spc F E n) (g : UA σ W.J) (T : Finset (Pl F)) :
     have h0 : (idem v : AE F E) * algebraMap (AF F) (AE F E) (idemS T) = 0 := by
       rw [idem, ← map_mul, liftV_one_mul_eq, evFin_idemS, if_neg hv, map_zero, map_zero]
     have hs : algebraMap (AF F) (AE F E) (idemS (insert v T)) = idem v + algebraMap (AF F) (AE F E) (idemS T) := by
-      rw [idemS, Finset.sum_insert hv, map_add]
+      rw [idemS, Finset.sum_insert hv, map_add (f := _)]
       rfl
     refine ⟨atV v g * k, mul_mem (Subgroup.subset_closure (Set.mem_iUnion.2 ⟨v, ?_⟩)) hk, ?_, ?_⟩
     · intro w hw
@@ -161,7 +161,7 @@ theorem exists_closure_mod_open : ∀ (F E : Type) [Field F] [NumberField F] [Fi
     rw [Algebra.TensorProduct.algebraMap_apply, Algebra.TensorProduct.map_tmul]
     simp [idemS_fst]
   ext i j
-  simp only [cut, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_sub, h0,
+  simp only [cut, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_sub, h0,
     Matrix.one_apply]
   split_ifs <;> simp
 

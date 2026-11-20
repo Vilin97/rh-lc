@@ -411,7 +411,7 @@ theorem powerSum_two_eq : Hypotheses2 → GlobalTheory.Published.RegularAlterati
   change (d • Ψ) _ = 0
   generalize d • Ψ = Φ at hΦ
   induction g using MvPolynomial.induction_on' with
-  | add P Q hP hQ => rw [mul_add, map_add, hP, hQ, add_zero]
+  | add P Q hP hQ => rw [mul_add, map_add (f := _), hP, hQ, add_zero]
   | monomial u a =>
     obtain ⟨n, ν, hν⟩ := exists_monomial_eq_prod u
     have e₁ : (monomial u a : MvPolynomial ι ℝ) = a • ∏ j, X (ν j) := by rw [← hν, smul_monomial, smul_eq_mul, mul_one]

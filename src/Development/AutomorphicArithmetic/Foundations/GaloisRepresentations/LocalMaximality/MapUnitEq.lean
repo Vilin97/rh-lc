@@ -183,7 +183,7 @@ theorem UpperTheory.Gal.productCup_of_system.locD_of :
         add_mem' := by
           rintro x y ⟨N₁, h₁⟩ ⟨N₂, h₂⟩
           refine ⟨N₁ + N₂, ?_⟩
-          rw [map_add]
+          rw [map_add (f := _)]
           refine Submodule.add_mem _ ?_ ?_
           · rw [add_comm, pow_add, map_mul, Module.End.mul_apply]
             exact sm_stab act R M T hSt _ (R.pow_mem ha _) _ h₁

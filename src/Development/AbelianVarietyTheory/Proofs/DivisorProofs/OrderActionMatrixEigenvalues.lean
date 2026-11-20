@@ -52,7 +52,7 @@ theorem finrank_eigK_eq {E : Type} [Field E] [NumberField E] [IsCMField E] {c : 
       simp only [Matrix.mulVec, dotProduct, Finset.sum_smul, Matrix.map_apply]
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [Algebra.smul_def, Algebra.smul_def, map_mul, _root_.mul_assoc]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   have hmap : Submodule.map (e : K ⊗[R] (Fin n → R) →ₗ[K] (Fin n → K)) (GlobalTheory.IndefiniteRowSideFullHecke.DifferentConductorValuations.eigK ρ σ) =
       ⨅ a : orderC c, LinearMap.ker (Matrix.toLin' ((LinearMap.toMatrix' (ρ a)).map (algebraMap R K))
         - σ a • LinearMap.id) := by

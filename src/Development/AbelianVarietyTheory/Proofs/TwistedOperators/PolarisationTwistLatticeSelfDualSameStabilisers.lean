@@ -49,7 +49,7 @@ theorem mem_iff_of_pass (hL : ScalarsPass ι Lc) {𝔞 𝔠 : FractionalIdeal (�
       (fun e e' he he' => ?_)
     · rw [map_mul, mul_smul]
       exact hL N M a (hi a ha) _ (h c hc)
-    · rw [map_add, add_smul]
+    · rw [map_add (f := _), add_smul]
       exact add_mem he he'
   simpa using key
 

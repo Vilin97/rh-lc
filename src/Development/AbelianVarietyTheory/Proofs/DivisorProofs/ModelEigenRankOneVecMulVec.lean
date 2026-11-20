@@ -93,7 +93,7 @@ theorem ev_law : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
   have hsplit : M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) y + incM F H.ι * uᵀ) Φ =
       M.co.rho B.ψ (incM F H.ι * uᵀ) (M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) y) Φ) := by
     rw [add_comm]
-    simp only [Darboux.rho, map_add]
+    simp only [Darboux.rho, map_add (f := _)]
     exact GlobalTheory.LagrUniq.schr_add_of_orth B.ψ _ _ hs Φ
   have hq : M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) y) Φ ∈ schA F (Fin n × Fin d) :=
     GlobalTheory.HeisSchA.rho_mem_schA M B.ψ hψ _ Φ hΦ

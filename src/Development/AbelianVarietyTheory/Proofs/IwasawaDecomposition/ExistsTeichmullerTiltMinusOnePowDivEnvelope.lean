@@ -54,7 +54,7 @@ theorem exists_div_prime_pow_dvd {R A : Type} [CommRing R] [CommRing A] [Algebra
   let a : S := (((l - 1).factorial : ℕ) : S) * ⟨g₁, m₁⟩
   let b : S := algebraMap R S z
   refine ⟨a + b, ?_, ?_⟩
-  · rw [map_add, map_mul, map_pow, map_natCast, ← h₁, hf]
+  · rw [map_add (f := _), map_mul, map_pow, map_natCast, ← h₁, hf]
     simp only [a, b]
     push_cast
     ring

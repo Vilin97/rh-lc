@@ -79,7 +79,7 @@ theorem latAll_inf (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank �
     have h1 : infPart D (x i j) = 0 := congrFun (congrFun hx i) j
     have h2 : infPart D (y i j) = 0 := congrFun (congrFun hy i) j
     show infPart D (x i j + y i j) = 0
-    rw [(infPart D).map_add, h1, h2, add_zero]
+    rw [(infPart D).map_add (f := _), h1, h2, add_zero]
   | neg x _ hx =>
     ext i j
     have h1 : infPart D (x i j) = 0 := congrFun (congrFun hx i) j

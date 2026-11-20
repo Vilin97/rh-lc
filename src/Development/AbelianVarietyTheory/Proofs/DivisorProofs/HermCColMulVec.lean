@@ -25,7 +25,7 @@ def perL (X : Data E r) (x : Frame X.Ψ r) : (X.Ψ → Fin r → ℂ) →ₗ[ℝ
     funext p
     simp only [perC, Pi.add_apply]
     split_ifs
-    · simp only [hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    · simp only [hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
     · rw [Matrix.mulVec_add, Pi.add_apply]
   map_smul' c u := by
     funext p
@@ -105,7 +105,7 @@ theorem realM_add (θ : InfFam D) {m n : ℕ} (v w : Mx D m n) (τ : D.host.E �
   split_ifs with h
   · funext i j
     show θ _ (infPart D (v i j + w i j)) = θ _ (infPart D (v i j)) + θ _ (infPart D (w i j))
-    rw [RingHom.map_add, RingHom.map_add]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _)]
   · rw [add_zero]
 
 theorem continuous_realM {θ : InfFam D} (hθ : IsInfFam θ) {m n : ℕ} (τ : D.host.E →+* ℂ) (i : Fin m) (j : Fin n) :
@@ -145,7 +145,7 @@ theorem zOf_coordinates : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : In
     rw [hρ, realM_tauE, ← GlobalTheory.FockCompare.comp_incA hθ, ← e]
     rfl
   · funext b j
-    rw [Pi.add_apply, Pi.add_apply, hz, hz, hz, ← Pi.add_apply (perL X x _), ← map_add]
+    rw [Pi.add_apply, Pi.add_apply, hz, hz, hz, ← Pi.add_apply (perL X x _), ← map_add (f := _)]
     refine congrFun (congrArg (perL X x) ?_) _
     funext τ a
     rw [realM_add]
@@ -174,7 +174,7 @@ theorem zOf_coordinates : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : In
         map_add' := fun z z' => by
           funext i b
           have : (fun q => (z + z') b (idx.symm q)) = (fun q => z b (idx.symm q)) + fun q => z' b (idx.symm q) := rfl
-          rw [Matrix.of_apply, this, map_add]
+          rw [Matrix.of_apply, this, map_add (f := _)]
           exact σ.map_add _ _ }
     have hp : ∀ z i b, p z i b = σ fun ρ => L.symm (fun q => z b (idx.symm q)) (pl ρ) (Fin.cast hr i) :=
       fun _ _ _ => rfl

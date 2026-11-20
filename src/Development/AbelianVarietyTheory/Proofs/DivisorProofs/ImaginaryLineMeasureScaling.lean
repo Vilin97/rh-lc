@@ -38,7 +38,7 @@ theorem linIndep_one_anti {σ : E →ₐ[F] E} {δ : E} (hδ : δ ≠ 0) (hσδ 
   intro s t hst
   rw [Algebra.smul_def, Algebra.smul_def, mul_one] at hst
   have h2 : σ (algebraMap F E s + algebraMap F E t * δ) = 0 := by rw [hst, map_zero]
-  rw [map_add, map_mul, AlgHom.commutes, AlgHom.commutes, hσδ] at h2
+  rw [map_add (f := _), map_mul, AlgHom.commutes, AlgHom.commutes, hσδ] at h2
   have hs2 : algebraMap F E s * 2 = 0 := by linear_combination hst + h2
   have ht2 : algebraMap F E t * δ * 2 = 0 := by linear_combination hst - h2
   have h2ne : (2 : E) ≠ 0 := two_ne_zero
@@ -53,7 +53,7 @@ theorem cA_eq_sigR (σ : E →ₐ[F] E) (x : AE F E) : cA σ x = sigR (AF F) σ 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.UnipConj.LineModulus
 
@@ -99,7 +99,7 @@ theorem repr_zero_of_mem (h : IsCMExt F E σ) {t : AE F E} (ht : t ∈ imLine σ
   set c1 := (basisA h).repr t 1
   have key : t + cA σ t = (c0 + c0) • basisA h 0 := by
     conv_lhs => rw [← hsum]
-    rw [map_add, map_smul, map_smul, cA_basisA_zero, cA_basisA_one, add_smul, smul_neg]
+    rw [map_add (f := _), map_smul, map_smul, cA_basisA_zero, cA_basisA_one, add_smul, smul_neg]
     abel
   rw [mem_imLine.1 ht] at key
   have h0 := congrArg (fun x => (basisA h).repr x 0) key

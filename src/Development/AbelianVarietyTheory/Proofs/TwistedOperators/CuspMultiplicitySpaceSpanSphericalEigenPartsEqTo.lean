@@ -125,7 +125,7 @@ theorem cc_span_partFull : GlobalTheory.Published.CuspRapidDecay → ∀ D : D7,
     rw [this, LinearEquiv.symm_apply_apply]
     exact he
   · rw [map_zero]; exact zero_mem _
-  · intro a b ha hb; rw [map_add]; exact add_mem ha hb
+  · intro a b ha hb; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
 
 end GlobalTheory.EvenOntoDecomp
 

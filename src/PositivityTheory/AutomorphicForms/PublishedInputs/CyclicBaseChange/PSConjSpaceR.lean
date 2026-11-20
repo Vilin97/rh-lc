@@ -105,7 +105,7 @@ theorem pFin_sInf (x : Rinf M) : pFin M (sInf M x) = 0 := rfl
 theorem pFin_sFin (y : Af M) : pFin M (sFin M y) = y := rfl
 
 theorem decomp (x : Ad M) : sInf M (pInf M x) + sFin M (pFin M x) = x :=
-  ad_ext (by rw [map_add, pInf_sInf, pInf_sFin, add_zero]) (by rw [map_add, pFin_sInf, pFin_sFin, zero_add])
+  ad_ext (by rw [map_add (f := _), pInf_sInf, pInf_sFin, add_zero]) (by rw [map_add (f := _), pFin_sInf, pFin_sFin, zero_add])
 
 theorem continuous_pInf : Continuous (pInf M) := by
   have h : Continuous fun x : InfiniteAdeleRing M => (infEq M).symm x :=
@@ -135,7 +135,7 @@ theorem pInf_s_sFin_one (hs : IsGalAd σ s) : pInf M (s (sFin M 1)) = 0 := by
       map_one' := h1
       map_mul' := fun x y => by simp only [map_mul, Pi.mul_apply]
       map_zero' := by simp only [map_zero, Pi.zero_apply]
-      map_add' := fun x y => by simp only [map_add, Pi.add_apply] }
+      map_add' := fun x y => by simp only [map_add (f := _), Pi.add_apply] }
   have hc : Continuous ψ := (continuous_apply w).comp (continuous_pInf.comp (hs.1.comp continuous_sFin))
   have hK := (GroundTheory.Global.isCompact_integralFiniteAdeles M).image hc
   obtain ⟨C, hC⟩ := hK.isBounded.exists_norm_le
@@ -156,7 +156,7 @@ theorem pFin_s_sInf (hs : IsGalAd σ s) (z : Rinf M) : pFin M (s (sInf M z)) = 0
 
 theorem pInf_s (hs : IsGalAd σ s) (x : Ad M) : pInf M (s x) = pInf M (s (sInf M (pInf M x))) := by
   conv_lhs => rw [← decomp x]
-  rw [map_add, map_add, pInf_s_sFin hs, add_zero]
+  rw [map_add (f := _), map_add (f := _), pInf_s_sFin hs, add_zero]
 
 theorem free_etale_sheaf_zmod_exists_hom_sending_generator (hs : IsGalAd σ s) :
     ∃ t : Rinf M →+* Rinf M, Function.Surjective t ∧ ∀ x, pInf M (s x) = t (pInf M x) := by
@@ -169,7 +169,7 @@ theorem free_etale_sheaf_zmod_exists_hom_sending_generator (hs : IsGalAd σ s) :
       map_one' := h1
       map_mul' := fun x y => by simp only [map_mul]
       map_zero' := by simp only [map_zero]
-      map_add' := fun x y => by simp only [map_add] }
+      map_add' := fun x y => by simp only [map_add (f := _)] }
   refine ⟨t, fun z => ⟨pInf M (s.symm (sInf M z)), ?_⟩, fun x => pInf_s hs x⟩
   change pInf M (s (sInf M (pInf M (s.symm (sInf M z))))) = z
   rw [← pInf_s hs, RingEquiv.apply_symm_apply, pInf_sInf]
@@ -498,7 +498,7 @@ theorem isCuspidal_pull {φ : GA M a → ℂ} (hφ : IsCuspidal φ) : IsCuspidal
   have h2 := hφ r h0 h1 (μ.map m) (m '' 𝓕) (β.isAddHaarMeasure_map μ)
     (hF.image_of_equiv m.toEquiv (MeasurePreserving.symm m ⟨m.measurable, rfl⟩).quasiMeasurePreserving e fun y x => by
       change β (β.symm y + x) = y + β x
-      rw [map_add, β.apply_symm_apply]) (sA M a s g)
+      rw [map_add (f := _), β.apply_symm_apply]) (sA M a s g)
   rw [m.measurableEmbedding.setIntegral_map, m.injective.preimage_image] at h2
   rw [← h2]
   congr 1

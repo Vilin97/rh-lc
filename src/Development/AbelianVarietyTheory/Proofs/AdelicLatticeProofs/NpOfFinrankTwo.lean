@@ -31,7 +31,7 @@ theorem exists_basis_one_sqrt_of_finrank_two {F E : Type} [Field F] [CharZero F]
       = algebraMap F E (p + (q / 2) ^ 2) := by
     have hq : algebraMap F E q = 2 * algebraMap F E (q / 2) := by
       rw [← map_ofNat (algebraMap F E) 2, ← map_mul]; congr 1; ring
-    rw [map_add, map_pow]
+    rw [map_add (f := _), map_pow]
     rw [hq] at hpq
     linear_combination hpq
   refine ⟨basisOfLinearIndependentOfCardEqFinrank ht (by simp [h]), p + (q / 2) ^ 2, ?_,

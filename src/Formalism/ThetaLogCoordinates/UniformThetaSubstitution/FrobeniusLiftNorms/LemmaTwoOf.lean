@@ -370,14 +370,14 @@ theorem LemmaTwo_of (h1 : LemmaOne) (hL : LawSymm) : LemmaTwo := by
     intro i m
     have h3 := congrArg (PowerSeries.coeff i) (hsl m)
     rw [sl, PowerSeries.coeff_mk] at h3
-    rw [h3, map_add, map_add, PowerSeries.coeff_C_mul, PowerSeries.coeff_C_mul]
+    rw [h3, map_add (f := _), map_add (f := _), PowerSeries.coeff_C_mul, PowerSeries.coeff_C_mul]
   have cH' : ∀ i m, MvPowerSeries.coeff (Finsupp.single 0 i + Finsupp.single 1 m) H =
       α' i * PowerSeries.coeff m (g0F K p) + β' i * PowerSeries.coeff m (lgF K p) +
         PowerSeries.coeff m (R' i) := by
     intro i m
     have h3 := congrArg (PowerSeries.coeff m) (hsl' i)
     rw [sl, PowerSeries.coeff_mk, LemTwo.coeff_swap2] at h3
-    rw [h3, map_add, map_add, PowerSeries.coeff_C_mul, PowerSeries.coeff_C_mul]
+    rw [h3, map_add (f := _), map_add (f := _), PowerSeries.coeff_C_mul, PowerSeries.coeff_C_mul]
   have star : ∀ i m, ‖(α m * PowerSeries.coeff i (g0F K p) + β m * PowerSeries.coeff i (lgF K p)) -
       (α' i * PowerSeries.coeff m (g0F K p) + β' i * PowerSeries.coeff m (lgF K p))‖ ≤ 1 := by
     intro i m

@@ -106,7 +106,7 @@ theorem base_case_a : StatBaseA := by
     obtain ⟨a', ha', hpa⟩ := hcap z hinv
     obtain ⟨t₀, ht₀⟩ := (IB.j_range a').1 ha'
     refine ⟨t₀, IB.j_inj ?_⟩
-    rw [IB.j_γ, map_mul, map_add, map_mul, ht₀, IB.j.commutes, map_pow, hz, hpa]
+    rw [IB.j_γ, map_mul, map_add (f := _), map_mul, ht₀, IB.j.commutes, map_pow, hz, hpa]
 
 theorem gamma_quotient_case_a : StatGammaQA := by
   intro O A₀ _ _ _ B hQ hw hrad
@@ -118,7 +118,7 @@ theorem gamma_quotient_case_a : StatGammaQA := by
   · have h2 : B.γ B.X = B.X + B.X * B.Q * w := by linear_combination hw
     have h3 : B.γ B.Q = B.γ B.X + (B.p : A₀) := by
       conv_lhs => rw [hQ']
-      rw [map_add, map_natCast]
+      rw [map_add (f := _), map_natCast]
     rw [h3, h2]
     linear_combination (-1 : A₀) * hQ'
 

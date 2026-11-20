@@ -73,7 +73,7 @@ private lemma sum_evFull {F : Type} [Field F] [NumberField F] {g : ℕ} (ty : Fi
       rw [hc, cc]
     · intro hn
       exact absurd (Finset.mem_univ _) hn
-  simp_rw [evFull, Multiset.map_add, Multiset.sum_add, mul_add]
+  simp_rw [evFull, Multiset.map_add (f := _), Multiset.sum_add, mul_add]
   rw [Finset.sum_add_distrib, h1, h2]
 
 theorem UpperTheory.Gal.W2.powSumRat_of :

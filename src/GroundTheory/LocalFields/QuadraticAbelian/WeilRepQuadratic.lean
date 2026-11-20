@@ -122,7 +122,7 @@ theorem norm_add (x y : E) :
     Algebra.norm K (x + y) =
       Algebra.norm K x + Algebra.norm K y + Algebra.trace K E (x * conj K E y) := by
   apply (algebraMap K E).injective
-  simp only [map_add, algebraMap_norm_eq_mul_conj, algebraMap_trace_eq_add_conj, map_mul,
+  simp only [map_add (f := _), algebraMap_norm_eq_mul_conj, algebraMap_trace_eq_add_conj, map_mul,
     conj_conj]
   ring
 

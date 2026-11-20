@@ -10,7 +10,7 @@ namespace ReciprocityTheory.ChartRestriction.L1
 variable {K : Type} [Field K] (U : PowerSeries K)
 
 theorem homS_add (m : ℕ) (P Q : K[X]) : homS U m (P + Q) = homS U m P + homS U m Q := by
-  simp only [homS, coeff_add, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [homS, coeff_add, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem homS_sub (m : ℕ) (P Q : K[X]) : homS U m (P - Q) = homS U m P - homS U m Q := by
   simp only [homS, coeff_sub, map_sub, sub_mul, Finset.sum_sub_distrib]

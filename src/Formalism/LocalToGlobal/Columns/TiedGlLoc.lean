@@ -97,7 +97,7 @@ theorem glo_res_surj (z : kv F v) : ∃ r : 𝓞 F,
   have hmem : algebraMap (𝓞 F) (v.adicCompletion F) D * y v ∈ v.adicCompletionIntegers F :=
     (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).2 hlt.le
   have hx : x = ⟨algebraMap (𝓞 F) (v.adicCompletion F) r, glo_algMap_int v r⟩ + ⟨_, hmem⟩ := Subtype.ext ev
-  rw [hx, map_add, glo_res_zero v ⟨_, hmem⟩ hlt, add_zero]
+  rw [hx, map_add (f := _), glo_res_zero v ⟨_, hmem⟩ hlt, add_zero]
 
 theorem gloRho_algMap (r : 𝓞 F) : gloRho v spl halg (oToS F E (algebraMap (𝓞 F) (𝓞 E) r)) =
     IsLocalRing.residue (v.adicCompletionIntegers F) ⟨algebraMap (𝓞 F) (v.adicCompletion F) r, glo_algMap_int v r⟩ := by

@@ -178,7 +178,7 @@ theorem pi_scale : ∀ (F : Type) [Field F] [NumberField F], ∀ [MeasurableSpac
         simp [Bf_one]
       have hB : Bf (transvection t.i t.j (-t.c)) =
           transvection t.i t.j (algebraMap F (A F) (-t.c)) := by
-        simp [Bf, transvection, Matrix.map_add, Matrix.map_one]
+        simp [Bf, transvection, Matrix.map_add (f := _), Matrix.map_one]
       rw [image_mulVec_eq_preimage _ _ hinv hinv', hB,
         (measurePreserving_transvection lf t.i t.j t.hij _).measure_preimage hs.nullMeasurableSet,
         hdet]

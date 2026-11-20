@@ -28,7 +28,7 @@ def ySide (e : Fin p → Fin n → R) (b : Fin q) :
     refine ⟨fun j => ?_, fun j j' => ?_, fun b' => ?_⟩
     · simp [hA1, hB1]
     · simp [hA2, hB2]
-    · simp only [map_add, mul_add, Finset.sum_add_distrib, hA3, hB3, add_zero]
+    · simp only [map_add (f := _), mul_add, Finset.sum_add_distrib, hA3, hB3, add_zero]
   algebraMap_mem' := by
     intro r
     refine ⟨fun j => ?_, fun j j' => ?_, fun b' => ?_⟩ <;> simp [MvPolynomial.algebraMap_eq]
@@ -51,7 +51,7 @@ def xSide (e : Fin p → Fin n → R) (a : Fin p) (b : Fin q) :
     rintro A A' ⟨hA1, hA2⟩ ⟨hA'1, hA'2⟩
     refine ⟨fun j => ?_, fun B hB => ?_⟩
     · simp [hA1, hA'1]
-    · simp only [map_add, add_mul, Finset.sum_add_distrib, hA2 B hB, hA'2 B hB, add_zero]
+    · simp only [map_add (f := _), add_mul, Finset.sum_add_distrib, hA2 B hB, hA'2 B hB, add_zero]
   algebraMap_mem' := by
     intro r
     refine ⟨fun j => ?_, fun B _ => ?_⟩ <;> simp [MvPolynomial.algebraMap_eq]

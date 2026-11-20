@@ -56,7 +56,7 @@ theorem not_isConjPl_self {l : ℕ} (hl : l.Prime) (hl2 : l ≠ 2) (hld : l ≠ 
   have hiff : b - n ∈ w.asIdeal ↔ b + n ∈ w.asIdeal := by
     rw [h (b - n) (-(b + n)) ?_, neg_mem_iff]
     have e : ((b : 𝓞 H.E) : H.E) = H.sqd := rfl
-    simp only [map_neg, map_add, map_sub, map_intCast, e, conj_sqrt]
+    simp only [map_neg, map_add (f := _), map_sub, map_intCast, e, conj_sqrt]
     ring
   have hprod : (b - n) * (b + n) ∈ w.asIdeal := by
     obtain ⟨k, hk⟩ := hdvd

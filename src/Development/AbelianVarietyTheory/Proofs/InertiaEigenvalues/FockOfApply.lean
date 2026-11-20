@@ -66,7 +66,7 @@ def rdE (T : CellTie hρ D.nexp rd) {ε : KE c w →+* ℂ} (hε : Extends ρ ε
     map_smul' := fun s x => by
       induction x using TensorProduct.induction_on with
       | zero => rw [smul_zero, map_zero, smul_zero]
-      | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+      | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
       | tmul a f =>
         change ε (s • a) • T.rdV _ _ _ f = ε s • ε a • T.rdV _ _ _ f
         rw [smul_eq_mul, map_mul, mul_smul] }
@@ -91,7 +91,7 @@ def rdF (hρ : ρ.Good) {ε : KE c w →+* ℂ} (hε : Extends ρ ε) :
     map_smul' := fun s x => by
       induction x using TensorProduct.induction_on with
       | zero => rw [smul_zero, map_zero, smul_zero]
-      | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+      | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
       | tmul a f =>
         change ε (s • a) • rd f = ε s • ε a • rd f
         rw [smul_eq_mul, map_mul, mul_smul] }

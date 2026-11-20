@@ -333,7 +333,7 @@ theorem vacuum_char : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam
       rw [hW.om_heis g h _ _ h₀.2.theta, actO_fin hg hh x.2, (hc g h ⟨hg, cS⟩ ⟨hh, cT⟩).2,
         GlobalTheory.SplitScalar.heisO_smul]
     | zero => rw [map_zero, smul_zero]
-    | add a b _ _ ha hb => rw [map_add, ha, hb, smul_add]
+    | add a b _ _ ha hb => rw [map_add (f := _), ha, hb, smul_add]
     | smul r a _ ha => rw [map_smul, ha, smul_comm]
   have e2 := hm 1 h g 1 oS ⟨hh, cT⟩ ⟨hg, cS⟩ oT
   rw [one_mul, mul_one] at e2

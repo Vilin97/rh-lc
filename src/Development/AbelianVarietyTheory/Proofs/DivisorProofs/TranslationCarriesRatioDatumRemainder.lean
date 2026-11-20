@@ -162,5 +162,5 @@ theorem GlobalTheory.HeatShiftW.shift_ratio_rem : ∀ (E : Type) [Field E] [Numb
     have hm := hrem (T z) hz _ hJ'
     rw [esp _ (𝟙 _) z J hJ, esp' _ (𝟙 _) z J hJ, e1 z J hJ, e2 z J hJ, e3 z J hJ, e4 z J hJ, hsv σ z J hJ,
       hsv σ' z J hJ, hsv σp z J hJ, hsv σp' z J hJ, hgs z hz f, hgs z hz g, he, hm]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     ring

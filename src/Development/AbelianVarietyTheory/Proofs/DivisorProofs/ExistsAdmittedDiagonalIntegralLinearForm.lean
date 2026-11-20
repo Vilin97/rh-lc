@@ -44,14 +44,14 @@ theorem continuous_sgl (v : Pl F) : Continuous (sgl (ι := ι) v) :=
 omit [Fintype ι] in
 theorem prj_sgl_add (v : Pl F) (t : ι → Fv F v) (y : ι → Af F) : prj v (sgl v t + y) = t + prj v y := by
   funext i
-  simp only [prj, sgl, Pi.add_apply, map_add, evalV_singleFin_self]
+  simp only [prj, sgl, Pi.add_apply, map_add (f := _), evalV_singleFin_self]
 
 omit [Fintype ι] in
 theorem sgl_add_mem_away (v : Pl F) (t : ι → Fv F v) (y : ι → Af F) : sgl v t + y ∈ away v ι ↔ y ∈ away v ι := by
   have e : sgl v t + y - sgl v (prj v (sgl v t + y)) = y - sgl v (prj v y) := by
     rw [prj_sgl_add]
     funext i
-    simp only [sgl, Pi.add_apply, Pi.sub_apply, map_add]
+    simp only [sgl, Pi.add_apply, Pi.sub_apply, map_add (f := _)]
     abel
   simp only [away, Set.mem_preimage, e]
 

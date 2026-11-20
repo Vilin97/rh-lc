@@ -75,7 +75,7 @@ theorem traitLabels : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (F
     have := congrFun hw a
     simp only [jj, AddEquiv.trans_apply, AddEquiv.piCongrRight_apply, Pi.add_apply, Pi.smul_apply, Finset.sum_apply] at this ⊢
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [this, map_add, map_sum, map_nsmul]
+      rw [this, map_add (f := _), map_sum, map_nsmul]
     simp [map_zsmul]
 
 end GlobalTheory.Poinc

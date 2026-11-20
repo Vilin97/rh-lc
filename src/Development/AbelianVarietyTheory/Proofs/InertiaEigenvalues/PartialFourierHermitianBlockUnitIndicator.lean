@@ -72,7 +72,7 @@ theorem integral_ball_char (hU : Unram F E) [MeasurableSpace E] [BorelSpace E] (
       exact (mul_le_of_le_one_right (norm_nonneg _) hu1).trans hx₀y
     have hpos : 0 < ‖y‖ := by linarith
     refine integral_indicator_char_eq_zero μ _ _ (fun a b => ?_) (star (w * y⁻¹)) (fun z => ?_) ?_
-    · rw [star_add, add_mul, map_add, AddChar.map_add_eq_mul]
+    · rw [star_add, add_mul, map_add (f := _), AddChar.map_add_eq_mul]
     · have ht : ‖star (w * y⁻¹)‖ ≤ 1 := by
         rw [hU.norm_star, norm_mul, norm_inv, mul_inv_le_iff₀ hpos, one_mul]; exact hnw
       simp only [mem_closedBall_zero_iff]

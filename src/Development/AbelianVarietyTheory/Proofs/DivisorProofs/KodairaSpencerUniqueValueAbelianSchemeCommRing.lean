@@ -36,7 +36,7 @@ theorem IsKSValue.exists_of_isAbelianScheme_ring (P : AbelianDeRham) {K : Type} 
   have rB := P.2.2.2.1.crysToDR_bijective hA hg (κ := epsDP K) (isDPNilpotent_squareZero _) su rfl h
   let φL : primDR A' →ₗ[DualNumber K] K :=
     { toFun := fun c => f ((bcMor h).pull c)
-      map_add' := fun x y => by simp only [map_add]
+      map_add' := fun x y => by simp only [map_add (f := _)]
       map_smul' := fun r c => by
         rw [LinearMap.map_smulₛₗ, map_smul, smul_eq_mul, RingHom.id_apply, Algebra.smul_def] }
   obtain ⟨u, hu⟩ := Module.projective_lifting_property (Algebra.linearMap (DualNumber K) K) φL
@@ -55,11 +55,11 @@ theorem IsKSValue.exists_of_isAbelianScheme_ring (P : AbelianDeRham) {K : Type} 
       exact (Submodule.mem_dualAnnihilator _).1 hf _
         (Submodule.subset_span ⟨_, Submodule.projection_apply_mem _ _, rfl⟩)
     change (u _).fst = _
-    rw [e1, ← add_zero (f ((bcMor h).pull _)), ← e3, ← map_add, ← map_add, e2]
+    rw [e1, ← add_zero (f ((bcMor h).pull _)), ← e3, ← map_add (f := _), ← map_add (f := _), e2]
   obtain ⟨d, hd⟩ := rB.2 d'
   let k : HdR A :=
     { toFun := fun c => (d ((constMor A).pull c)).snd
-      map_add' := fun x y => by simp only [map_add, TrivSqZeroExt.snd_add]
+      map_add' := fun x y => by simp only [map_add (f := _), TrivSqZeroExt.snd_add]
       map_smul' := fun r c => by
         rw [LinearMap.map_smulₛₗ, map_smul, smul_eq_mul, RingHom.id_apply, smul_eq_mul,
           TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.snd_mul]

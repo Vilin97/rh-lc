@@ -195,7 +195,7 @@ theorem orbitDerMult_holds (D : D7) : OrbitDerMult D := by
   rw [← hℓ w, hasDerivAt_iff_isLittleO]
   refine ho.congr_left (fun t => ?_)
   rw [hf t, hf 0, hut0]
-  simp only [Dt, map_add, LinearMap.map_smul_of_tower, Complex.real_smul, sub_zero]
+  simp only [Dt, map_add (f := _), LinearMap.map_smul_of_tower, Complex.real_smul, sub_zero]
   push_cast
   ring
 

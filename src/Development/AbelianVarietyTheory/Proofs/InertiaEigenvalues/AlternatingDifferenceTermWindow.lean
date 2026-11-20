@@ -124,7 +124,7 @@ def dualSub (M : Submodule K.O B.A) : AddSubgroup B.A where
   zero_mem' := by intro z _; simp
   add_mem' := by
     intro s t hs ht z hz
-    rw [add_mul, map_add]
+    rw [add_mul, map_add (f := _)]
     exact add_mem (hs z hz) (ht z hz)
   neg_mem' := by
     intro s hs z hz

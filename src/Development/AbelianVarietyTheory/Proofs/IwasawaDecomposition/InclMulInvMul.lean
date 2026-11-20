@@ -74,7 +74,7 @@ local notation "pE" => algebraMap (𝓞 E) E π
 theorem sig_sig (x : Rv) : sigR hc.sig (v.adicCompletion F) (sigR hc.sig (v.adicCompletion F) x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul a b =>
     have e : ∀ a : E, (hc.sig a) = star a := fun a => by
       simp [Formalism.BasicNotions.CMData.sig, starRingEnd_apply]
@@ -116,7 +116,7 @@ theorem fT_last (c : 𝒪v) (hcM : ∀ m : M, c • m = 0) (x : baseDualV hc n S
     · show ιv pE⁻¹ * (x.1 (lastIdx n) - c.1 * (Pi.single (lastIdx n) s : Fin n → Rv) (lastIdx n)) ∈ 𝒪v
       rw [Pi.single_eq_same, e, sub_self, mul_zero]
       exact zero_mem _
-  have e2 : fT x = fT (x - c • t) + c • fT t := by rw [← map_smul, ← map_add, sub_add_cancel]
+  have e2 : fT x = fT (x - c • t) + c • fT t := by rw [← map_smul, ← map_add (f := _), sub_add_cancel]
   rw [e2, hy, hcM, add_zero]
 
 omit hL in
@@ -152,7 +152,7 @@ def psiC (P : Pl E) : baseDualV hc n ST v →+ kP P :=
     (⟨sigR hc.sig (v.adicCompletion F) (ιv (star pE) * x.1 (lastIdx n)), rll_sigV_mem hc v (rll_last_mem hc n v h x)⟩ : 𝒪v))
     (fun a b => Subtype.ext (by
       show sigR hc.sig (v.adicCompletion F) (ιv (star pE) * (a.1 (lastIdx n) + b.1 (lastIdx n))) = _
-      rw [mul_add, map_add]
+      rw [mul_add, map_add (f := _)]
       rfl)))
 
 theorem last_of_psiC {P : Pl E} (huniq : ∀ Q ∈ ST, IsOver v Q → Q = P) (x : baseDualV hc n ST v)

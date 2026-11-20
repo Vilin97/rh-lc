@@ -38,7 +38,7 @@ theorem exists_natLift_of_defect : ∀ (R R₀ : Type) [CommRing R] [CommRing R�
     change -ξ T _ = l T b - ψ T b at h
     linear_combination h
   refine ⟨ψ, fun T b ↦ ?_, fun T T' a b ↦ ?_⟩
-  · rw [hψv, map_add, hl, (L'.ker T _).2 ((hξ T).2.1 _), add_zero]
+  · rw [hψv, map_add (f := _), hl, (L'.ker T _).2 ((hξ T).2.1 _), add_zero]
   · let α : L.B (n.G.obj T) →ₐ[R] L'.B T' := (L'.ρ a).comp (l T)
     let χ : Ω[Sec s₀ (n.G.obj T).unop.1⁄R₀] →+ L'.B T' := κ T T' a + (L'.ρ a).toAddMonoidHom.comp (ξ T) -
       (ξ T').comp (p1 (OAff s₀) (n.G.map a)).toAddMonoidHom
@@ -71,7 +71,7 @@ theorem exists_natLift_of_defect : ∀ (R R₀ : Type) [CommRing R] [CommRing R�
     rw [hn] at h0
     have h1 := (hκ T T' a).der b
     simp only [α, AlgHom.coe_comp, Function.comp_apply] at h1
-    rw [hψv, hψv, map_add]
+    rw [hψv, hψv, map_add (f := _)]
     linear_combination h0 - h1
 
 end GlobalTheory.LiftSys

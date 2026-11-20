@@ -61,7 +61,7 @@ theorem evalMatrix_bind₁_mulLeft (A : Matrix (Fin n) (Fin n) ℂ) (q : MvPolyn
   next a =>
     simp [evP]
   next p r hp hr =>
-    simp only [evP, map_add] at hp hr ⊢
+    simp only [evP, map_add (f := _)] at hp hr ⊢
     rw [hp, hr]
   next p v hp =>
     simp only [evP, map_mul, MvPolynomial.bind₁_X_right, MvPolynomial.eval_X] at hp ⊢

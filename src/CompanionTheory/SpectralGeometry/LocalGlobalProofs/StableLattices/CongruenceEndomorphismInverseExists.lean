@@ -52,7 +52,7 @@ theorem exists_coord {m : ℕ} (b : Module.Basis (Fin m) L V) {Λ : AddSubgroup 
   have hGx : b.repr ((1 + g) x) i = c * (1 + π * b.repr z i) := by
     have : (1 + g) x = x + c • π • z := by
       rw [LinearMap.add_apply, Module.End.one_apply, hval]
-    rw [this, map_add, map_smul, map_smul, Finsupp.add_apply, Finsupp.smul_apply,
+    rw [this, map_add (f := _), map_smul, map_smul, Finsupp.add_apply, Finsupp.smul_apply,
       Finsupp.smul_apply, smul_eq_mul, smul_eq_mul, ← hcdef]
     ring
   have ht : ‖π * b.repr z i‖ < 1 := by

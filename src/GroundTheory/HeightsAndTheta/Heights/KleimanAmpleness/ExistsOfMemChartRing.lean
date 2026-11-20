@@ -79,7 +79,7 @@ theorem exists_of_mem_chartRing (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ �
     · refine isMultiHomog_add (isMultiHomog_mul hp (isMultiHomog_prod_X c b')) ?_
       rw [add_comm b b']
       exact isMultiHomog_mul hp' (isMultiHomog_prod_X c b)
-    · rw [map_add, map_mul, map_mul, aeval_prod_X, aeval_prod_X, prod_pow_add]
+    · rw [map_add (f := _), map_mul, map_mul, aeval_prod_X, aeval_prod_X, prod_pow_add]
       field_simp [hP b, hP b']
   | mul x x' _ _ h h' =>
     obtain ⟨b, p, hp, rfl⟩ := h

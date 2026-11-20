@@ -30,7 +30,7 @@ theorem UpperTheory.V.Alg.M.fil_holds :
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
     have hw : Finsupp.weight (negW wt) p.1 + Finsupp.weight (negW wt) p.2 =
         Finsupp.weight (negW wt) ν := by
-      rw [← hp, map_add]
+      rw [← hp, map_add (f := _)]
     by_cases h1 : Finsupp.weight (negW wt) p.1 < a
     · rw [hg p.1 h1, zero_mul]
     · rw [hh p.2 (by omega), mul_zero]

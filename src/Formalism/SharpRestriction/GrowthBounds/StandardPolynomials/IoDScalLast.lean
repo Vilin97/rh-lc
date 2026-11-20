@@ -69,7 +69,7 @@ theorem ioD_Ehat (l : Fin (BDk C0 CE1 CE2 mu X β j).T.t) :
       EhatT O X (topOdd X j (uTop (X.seg C0 CE1 CE2 j) l)) ((X.seg C0 CE1 CE2 j).P X.p (uTop (X.seg C0 CE1 CE2 j) l)) := by
   unfold BlockData.Ehat EhatT scalZ scalS
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_mul, map_sum, ioD_scal, ioD_scal]
+    rw [map_add (f := _), map_mul, map_sum, ioD_scal, ioD_scal]
   congr 1
   refine Finset.sum_congr rfl fun c _ => ?_
   have hu := (uTop (X.seg C0 CE1 CE2 j) l).2
@@ -87,7 +87,7 @@ theorem ioD_Eplus :
   rw [Fin.sum_univ_succ]
   unfold BlockData.Eplus scalZ scalS xiVar
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_mul, map_sum, ioD_scalLast, ioD_scalLast]
+    rw [map_add (f := _), map_mul, map_sum, ioD_scalLast, ioD_scalLast]
   congr 1
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, ioD_end β j 0 (by omega) _ (by rfl), ioD_end β j 1 (by omega) _ (by rfl)]

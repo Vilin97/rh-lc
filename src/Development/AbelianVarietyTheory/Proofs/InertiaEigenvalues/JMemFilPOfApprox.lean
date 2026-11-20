@@ -76,7 +76,7 @@ theorem toOB_mem_filO_zero (C : GlobalTheory.MemLoc.Core l) (x : OCr l O) : toOB
       rw [smul_tmul', smul_eq_mul, mul_one]
     rw [this, map_smul]
     exact Submodule.smul_mem _ o (toOB_tmul_mem_filO (n := 0) (GlobalTheory.BdRQuot.mem_filtration_zero _))
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 theorem isUnit_l_BdRp : IsUnit (l : Per.BdRp l) := by
   refine (GlobalTheory.MemLoc.thetaD_props l).2.2.1 _ ?_
@@ -130,7 +130,7 @@ theorem j_mem_FilP_of_approx (C : GlobalTheory.MemLoc.Core l) (m : ℕ) (x : Per
     refine ⟨b, ?_⟩
     have hy' : Per.ev l m (C.j y) = 0 := (GlobalTheory.RingIface.mem_filtration_iff_mem_kerTheta_pow l m _).1 hy
     rw [← ha, ← hb, hxyz]
-    simp only [map_add, map_mul, map_pow, map_natCast, hy']
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast, hy']
     ring
   have h1 : Per.ev l m (C.j x) = 0 := by
     rw [← ha, map_mul, map_pow, map_natCast] at hq

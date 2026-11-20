@@ -21,7 +21,7 @@ theorem homog_isHomogeneous {ι : Type*} [DecidableEq ι] (i₀ : ι) {N : ℕ} 
   apply isHomogeneous_monomial
   have : m.degree ≤ N := le_trans (le_totalDegree hm) hN
   have h := Finsupp.degree_single (R := ℕ) i₀ (N - m.degree)
-  simp only [map_add, h]
+  simp only [map_add (f := _), h]
   omega
 
 theorem eval₂_homog {ι S : Type*} [Fintype ι] [DecidableEq ι] [Field S] (v : ι → S) (i₀ : ι)

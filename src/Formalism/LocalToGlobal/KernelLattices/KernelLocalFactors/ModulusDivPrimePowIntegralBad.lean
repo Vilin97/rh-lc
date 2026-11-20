@@ -219,7 +219,7 @@ theorem psi_at_coupling_representative (hQ : QE sel (mu : Chr X.F X.E X.K) = ∅
   have hz' := (xqMem_stdAt (P := P.1) _).1 hz
   have e : (frsF sel mu p P).symm (γ.symm (repY ((fun v => γ v) '' Y))) =
       (frsF sel mu p P).symm (repY Y) + (frsF sel mu p P).symm (γ.symm (repY ((fun v => γ v) '' Y)) - repY Y) := by
-    rw [← map_add, add_sub_cancel]
+    rw [← map_add (f := _), add_sub_cancel]
   rw [e]
   refine hL.psiInv al P x₀ _ _ fun i => ?_
   rw [if_pos hP, pow_zero, inv_one, one_mul]

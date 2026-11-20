@@ -73,7 +73,7 @@ theorem exists_locIdele {D : D7} {e : AE D} (he : IsSplitIdem D e) (x : (AE D)ˣ
   · intro u hu
     rw [h1, ← smul_mul_assoc, hA u hu, zero_mul]
   · obtain ⟨-, e0⟩ := GlobalTheory.LatSplit.piW_splitIdemAd (isCMExt_host D) τ
-    rw [hx, map_add, map_mul, map_sub, map_one, e0]
+    rw [hx, map_add (f := _), map_mul, map_sub, map_one, e0]
     ring
 
 end GlobalTheory.SplitCharAlg

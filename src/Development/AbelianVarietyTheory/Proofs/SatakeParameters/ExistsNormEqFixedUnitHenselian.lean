@@ -33,7 +33,7 @@ theorem exists_norm_eq_one_add {R : Type*} [CommRing R] (I : Ideal R) [Henselian
   have hct : c t = t := by
     have h1 : c t + w * c w * c t ^ 2 = e := by
       have h := congrArg c ht
-      simp only [map_add, map_mul, map_pow, hc, hce] at h
+      simp only [map_add (f := _), map_mul, map_pow, hc, hce] at h
       linear_combination h
     have hm : w * c w * (t + c t) ∈ I := I.mul_mem_left _ (I.add_mem htI (hI t htI))
     obtain ⟨U, hU⟩ := (Ideal.mem_jacobson_bot.mp (HenselianRing.jac hm)) 1
@@ -43,7 +43,7 @@ theorem exists_norm_eq_one_add {R : Type*} [CommRing R] (I : Ideal R) [Henselian
     have h2 := (U.isUnit.mul_left_eq_zero).mp hz
     linear_combination -h2
   refine ⟨1 + w * t, ?_⟩
-  rw [map_add, map_one, map_mul, hct]
+  rw [map_add (f := _), map_one, map_mul, hct]
   linear_combination ht + t * hw
 
 theorem exists_norm_eq : ∀ (R : Type) [CommRing R] (I : Ideal R) [HenselianRing R I]
@@ -87,7 +87,7 @@ theorem exists_norm_eq : ∀ (R : Type) [CommRing R] (I : Ideal R) [HenselianRin
     simp only [map_mul, map_sub, hc, hcu, hcU]
     ring
   obtain ⟨V, hV⟩ := (Ideal.mem_jacobson_bot.mp (HenselianRing.jac haI)) 1
-  have hcV : c ↑V = ↑V := by rw [hV, map_add, map_mul, map_one, hca]
+  have hcV : c ↑V = ↑V := by rw [hV, map_add (f := _), map_mul, map_one, hca]
   have hcVi : c ↑V⁻¹ = ↑V⁻¹ := by
     have h : (V : R) * c ↑V⁻¹ = 1 := by
       rw [← hcV, ← map_mul, V.mul_inv, map_one]

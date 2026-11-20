@@ -72,7 +72,7 @@ private theorem UpperTheory.Lit.Full.count_msupp (m : Segment k →₀ ℕ) :
     msupp (Finsupp.toMultiset m) = GlobalTheory.CompanionTheory.Hypotheses₂.RankOne.msum m := by
   induction m using Finsupp.induction_linear with
   | zero => simp [msupp, GlobalTheory.CompanionTheory.Hypotheses₂.RankOne.msum]
-  | add a b ha hb => rw [map_add, msupp_add, ha, hb, GlobalTheory.CompanionTheory.Hypotheses₂.RankOne.msum_add]
+  | add a b ha hb => rw [map_add (f := _), msupp_add, ha, hb, GlobalTheory.CompanionTheory.Hypotheses₂.RankOne.msum_add]
   | single Δ c =>
     rw [GlobalTheory.CompanionTheory.Hypotheses₂.RankOne.msum_eq, Finsupp.sum_single_index (zero_smul ℕ Δ.ms), Finsupp.toMultiset_single]
     induction c with

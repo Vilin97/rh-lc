@@ -175,7 +175,7 @@ theorem exists_famDown (hF : Compat φ F) {k : ℕ} (s : Fam D F k) :
     subst e
     exact hs α
   refine ⟨⟨s', fun mu α => ?_⟩, hs'⟩
-  have e₁ : hD.xe (α + k • mu) = hD.xe α + k • hD.xe mu := by rw [map_add, map_nsmul]
+  have e₁ : hD.xe (α + k • mu) = hD.xe α + k • hD.xe mu := by rw [map_add (f := _), map_nsmul]
   exact secRel_down hκ hF rfl e₁ ((cPoint_proj hD (T := TF (R := R) F) (T' := TF (R := R') F) (𝟙 _)
     (hF.base.trans (Category.id_comp _).symm) mu).trans (Category.id_comp _)) (trF_eq D' F mu) (trF_eq D F _)
     (hs' _ _ rfl) (hs' _ _ e₁) (famMult_val hF k mu α) (s.fe (hD.xe mu) (hD.xe α))
@@ -186,7 +186,7 @@ theorem phiRel_down (hF : Compat φ F) {k : ℕ} {p : QkPt D F k} {p' : QkPt D' 
     {s t : Fam D F k} {s' t' : Fam D' F k} (hs : ∀ α β, hD.xe α = β → SecUp hD κ (s'.s α) (s.s β))
     (ht : ∀ α β, hD.xe α = β → SecUp hD κ (t'.s α) (t.s β)) (H : PhiRel D F k p w s t) : PhiRel D' F k p' w' s' t' := by
   intro α
-  have e₁ : hD.xe (α + p'.y) = hD.xe α + p.y := by rw [map_add, hy, AddEquiv.apply_symm_apply]
+  have e₁ : hD.xe (α + p'.y) = hD.xe α + p.y := by rw [map_add (f := _), hy, AddEquiv.apply_symm_apply]
   refine secRel_down hκ hF rfl e₁ hg.1 rfl rfl (hs _ _ rfl) (ht _ _ e₁) (fun y J J' hJ hJ' => ?_) (H (hD.xe α))
   have b := pullGt_val hD hg α (𝟙 _) hJ hJ'
   simp only [Category.id_comp] at b

@@ -33,7 +33,7 @@ theorem differentiable_eval {φ : ι → E → ℂ} (hφ : ∀ c, Differentiable
     simp only [eval_C]
     exact differentiable_const a
   · intro p q hp hq
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   · intro p c hp
     simp only [map_mul, eval_X]

@@ -77,7 +77,7 @@ lemma inj_pi {T : Type} [Fintype T] [DecidableEq T] (κ : FractionRing R →+* F
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul r f => simp [TensorProduct.piRight_apply, LinearMap.liftBaseChange_tmul]
-    | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
   apply (TensorProduct.piRight R R' R' (fun _ : T => FractionRing R)).injective
   rw [map_zero]
   funext h
@@ -94,7 +94,7 @@ lemma tensor_pi_ext {T Q : Type} [Fintype T] [DecidableEq T] [AddCommGroup Q] [M
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul r f => simp [TensorProduct.piRight_apply]
-    | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
   apply (TensorProduct.piRight R R' R' (fun _ : T => Q)).injective
   rw [map_zero]
   funext t
@@ -153,7 +153,7 @@ theorem alg_core {T : Type} [CommGroup T] [Finite T] [Module.Flat R R']
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul r n => simp [cN, cW, LinearMap.liftBaseChange_tmul]
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
     have hle : Submodule.span R' {w : T → FractionRing R' | ∃ n ∈ N, w = fun h => κ (n h)} ≤
         LinearMap.range cN := by
       rw [Submodule.span_le]
@@ -194,7 +194,7 @@ theorem alg_core {T : Type} [CommGroup T] [Finite T] [Module.Flat R R']
       simp only [LinearMap.lTensor_tmul, e, LinearMap.liftBaseChange_tmul]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨m, m.2, rfl⟩)
     | add p q hp hq =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact Submodule.add_mem _ hp hq
   rw [← hez, ← hy]
   exact hall y

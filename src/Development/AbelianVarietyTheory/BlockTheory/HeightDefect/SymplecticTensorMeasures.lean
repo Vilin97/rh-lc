@@ -26,7 +26,7 @@ theorem cA_cA (x : AE D) : cA D (cA D x) = x := by
   | tmul a e =>
     have : D.sp.cm.sig (D.sp.cm.sig e) = e := star_star e
     simp [cA, sigR, this]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem conj_map_mem_unitaryGroup {R : Type} [CommRing R] {n : ℕ} (c : R →+* R) (J : Matrix (Fin n) (Fin n) R) (P g : GL (Fin n) R)
     (hP : Formalism.UG.cT c P.val * J * P.val = J.map c) (hg : g ∈ Formalism.UG.UJ c J) :

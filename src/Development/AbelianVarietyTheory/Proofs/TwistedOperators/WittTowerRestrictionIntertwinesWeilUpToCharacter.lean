@@ -196,10 +196,10 @@ theorem per_h {V V' W : HSp D} {r : ℕ} {C : Matrix (Fin V.rank) (Fin r) D.host
       exact integral_add ((hR a ha).1 z) ((hR b hb).1 z)
     have hv' : ω' (1, h) (res V V' W C B μ 𝓨 (f₀ + g)) =
         ω' (1, h) (res V V' W C B μ 𝓨 f₀) + ω' (1, h) (res V V' W C B μ 𝓨 g) := by
-      rw [hRadd _ _ hf₀ hg, map_add]
+      rw [hRadd _ _ hf₀ hg, map_add (f := _)]
     have hu' : res V V' W C B μ 𝓨 (ω (1, h) (f₀ + g)) =
         res V V' W C B μ 𝓨 (ω (1, h) f₀) + res V V' W C B μ 𝓨 (ω (1, h) g) := by
-      rw [map_add, hRadd _ _ (hω.om_pres _ _ hf₀) (hω.om_pres _ _ hg)]
+      rw [map_add (f := _), hRadd _ _ (hω.om_pres _ _ hf₀) (hω.om_pres _ _ hg)]
     have hvg : IsThetaFunO ψ V' W (ω' (1, h) (res V V' W C B μ 𝓨 g)) := hω'.om_pres _ _ (hR g hg).2.1
     have key := hA (f₀ + g) (GlobalTheory.WeilVacMove.isTheta_add hf₀ hg) ⟨x₁, by
       rw [hv']

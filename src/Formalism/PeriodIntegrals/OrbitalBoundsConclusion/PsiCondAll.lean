@@ -102,7 +102,7 @@ theorem tT_at (t : I.E ⊗[I.F] Af I.F) (w : HeightOneSpectrum (𝓞 I.F)) :
     rw [PI.ScPsiExists.UnitaryGroupMassFormula.tT_tmul, hp, Formalism.L2.SG.Pf.TypedLoc.trV_tmul, Formalism.UG.P.afsplit_mul_apply,
       FiniteAdeleRing.algebraMap_apply, tlin_eq, Algebra.smul_def]
     rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, Formalism.UG.P.afsplit_add_apply, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), Formalism.UG.P.afsplit_add_apply, hx, hy]
 
 theorem tT_ew (ew : I.E ⊗[I.F] Af I.F) (v : HeightOneSpectrum (𝓞 I.F))
     (htr : Formalism.L2.SG.Pf.TypedLoc.trV I v (Formalism.UG.prV (E := I.E) v ew) = 1) (o : v.adicCompletion I.F) :
@@ -133,7 +133,7 @@ theorem trace_of_psi (x : I.E) (h : Formalism.L2.SG.HidaSetting.psiEinf I x = 1)
   have h2 : ∀ v : InfinitePlace I.F,
       I.φ v x + star (I.φ v x) = v.embedding (PI.ScPsiExists.UnitaryGroupMassFormula.tau I.cm.fixed x) := by
     intro v
-    rw [← I.φ_over, PI.ScPsiExists.UnitaryGroupMassFormula.tau_apply, map_add, I.cm.cmUnram.2.1 (I.φ v) x]
+    rw [← I.φ_over, PI.ScPsiExists.UnitaryGroupMassFormula.tau_apply, map_add (f := _), I.cm.cmUnram.2.1 (I.φ v) x]
     rfl
   have h3 : ((PI.ScPsiExists.UnitaryGroupMassFormula.sHom I x : ℝ) : ℂ) =
       algebraMap ℚ ℂ (Algebra.trace ℚ I.F (PI.ScPsiExists.UnitaryGroupMassFormula.tau I.cm.fixed x)) := by

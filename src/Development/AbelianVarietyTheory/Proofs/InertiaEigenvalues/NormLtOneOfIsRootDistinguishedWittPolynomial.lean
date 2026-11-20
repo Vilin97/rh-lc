@@ -32,7 +32,7 @@ theorem norm_iotaO_le_one (l : ℕ) [Fact l.Prime] (a : ℕ) [NeZero a] (w : Wq 
     exact lt_irrefl _ h3
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   | smul c x _ hx =>
     rw [Algebra.smul_def, map_mul, GlobalTheory.TameFrob.iotaO_algebraMap, norm_mul]
@@ -68,7 +68,7 @@ theorem norm_lt_one_of_isRoot : ∀ (l : ℕ) [Fact l.Prime] (a : ℕ) [NeZero a
     have h := hx
     rw [Polynomial.IsRoot, hP.as_sum] at h
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa [Polynomial.eval_finsetSum, Polynomial.map_add, Polynomial.map_pow, Polynomial.map_sum,
+      simpa [Polynomial.eval_finsetSum, Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_sum,
       Polynomial.map_mul] using h
   have hsum : ‖∑ i ∈ Finset.range d, GlobalTheory.TameFrob.iotaO l a (P.coeff i) * x ^ i‖ ≤ (l : ℝ)⁻¹ * ‖x‖ ^ d := by
     refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (by positivity) fun i hi => ?_

@@ -40,7 +40,7 @@ theorem kerZero : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
       have hyS := hPol hyD.1
       funext h
       have e : ∀ g, theta om' (x + y) g h = theta om' x g h + theta om' y g h := fun g => by
-        simp only [theta, map_add]
+        simp only [theta, map_add (f := _)]
         exact thetaSum_add F (pres _ x hxS) (pres _ y hyS)
       have ix := (hdec x hxD.2).2.1 h
       have iy := (hdec y hyD.2).2.1 h

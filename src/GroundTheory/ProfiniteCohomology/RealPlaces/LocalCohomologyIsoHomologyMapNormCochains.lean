@@ -374,7 +374,7 @@ theorem tateGlobalZeroToLocal_hom_apply (x : cohomology A 0) (e : ∀ w, Aᵣ w)
     change (localCohomologyIso Aᵣ 0).hom.hom
       ((HomologicalComplex.homologyMap (prodSnd _ _) 0).hom
         ((HomologicalComplex.homologyMap (tateCompactRes φ ψ A Aᵥ a Aᵣ ar) 0).hom z)) = _
-    rw [hom_apply_hom_apply_of_comp_eq e2 z, ModuleCat.hom_add, LinearMap.add_apply, map_add]
+    rw [hom_apply_hom_apply_of_comp_eq e2 z, ModuleCat.hom_add, LinearMap.add_apply, map_add (f := _)]
     congr 1
     · rw [← hx]
       exact hom_apply_hom_apply_of_comp_eq

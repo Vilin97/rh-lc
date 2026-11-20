@@ -12,7 +12,7 @@ theorem totallyComplex_of_root_quadratic_neg_disc :
   intro hv
   set φ : K →+* ℝ := NumberField.InfinitePlace.embedding_of_isReal hv
   have h := congrArg φ hx
-  simp only [map_add, map_mul, map_pow, map_intCast, map_zero] at h
+  simp only [map_add (f := _), map_mul, map_pow, map_intCast, map_zero] at h
   have hab' : ((a : ℝ)) ^ 2 < 4 * (b : ℝ) := by exact_mod_cast hab
   nlinarith [sq_nonneg (2 * φ x + (a : ℝ))]
 

@@ -167,7 +167,7 @@ def rlt_comm : 𝒜 →ₗ[𝔸] 𝔸 ⊗[F] E where
     | tmul e b =>
       rw [rlt_smul_tmul]
       simp only [TensorProduct.comm_tmul, RingHom.id_apply, TensorProduct.smul_tmul', smul_eq_mul]
-    | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 theorem adeles_t2Space : T2Space 𝒜 := by
   let bas := Algebra.TensorProduct.basis 𝔸 (Module.finBasis F E)
@@ -251,7 +251,7 @@ theorem mem_kOne_of_congruent_one (a : 𝓞 E) (haT : ∀ P ∈ ST, a ∈ P.asId
       congr 1
       rw [Matrix.one_apply, Matrix.one_apply]
       split_ifs <;> rfl
-    rw [e, map_add, map_mul, Formalism.L2.DIV.resS_oToS, Ideal.Quotient.eq_zero_iff_mem.2 hP, zero_mul, add_zero]
+    rw [e, map_add (f := _), map_mul, Formalism.L2.DIV.resS_oToS, Ideal.Quotient.eq_zero_iff_mem.2 hP, zero_mul, add_zero]
     show _ = (1 : Matrix (Fin n) (Fin n) (kP P)) i j
     rw [Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp

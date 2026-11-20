@@ -158,7 +158,7 @@ theorem congrP_add_of_mem (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} {
   rw [D2.congrP_algebraMap_iff_sub_mem h𝔭] at hc ⊢
   have hzA : z ∈ A := Submodule.smul_le_right hz
   have e : h (y + z) (y + z) - c = (h y y - c) + h y z + h z y + h z z := by
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     ring
   rw [e]
   exact add_mem (add_mem (add_mem hc (form_right_mem h𝔭 hA hAi hy hz))
@@ -246,7 +246,7 @@ theorem cnt_sub (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} {𝔭 : Ide
       have e1 := congrArg Subtype.val e
       rw [hFn, hFn] at e1
       have e2 := congrArg φ e1
-      simp only [map_add, hφψ, hφy, add_zero] at e2
+      simp only [map_add (f := _), hφψ, hφy, add_zero] at e2
       have e3 : x = x' := Subtype.ext e2
       subst e3
       have e4 : q = q' := ψb_inj (add_left_cancel e1)

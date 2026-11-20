@@ -125,7 +125,7 @@ theorem kill_of_win {n : ℕ} (x : WDRep h (Fin n → ℂ)) (χ : ↥(Ine (F := 
   obtain ⟨m, hm, hc⟩ := GlobalTheory.IrrWeilAbs.exists_pow_central x (deg_frob (h := h))
   let U : Submodule ℂ (Fin n → ℂ) :=
     { carrier := {u | EV x χ u}
-      add_mem' := fun {p q} hp hq s => by rw [map_add, hp s, hq s, smul_add]
+      add_mem' := fun {p q} hp hq s => by rw [map_add (f := _), hp s, hq s, smul_add]
       zero_mem' := fun s => by simp
       smul_mem' := fun c p hp s => by rw [map_smul, hp s, smul_comm] }
   let ψ := x.ρ (frob h ^ m)

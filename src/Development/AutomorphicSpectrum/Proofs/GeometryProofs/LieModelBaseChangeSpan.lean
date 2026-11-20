@@ -58,7 +58,7 @@ theorem span_range_pullback : ∀ (S : Scheme.{0}) (G : Over S) [GrpObj G] [Smoo
     rw [hb.equiv_tmul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨e, rfl⟩)
   | add a b ha hb' =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ ha hb'
 
 end GlobalTheory.CompanionTheory.Ar.LieSpan

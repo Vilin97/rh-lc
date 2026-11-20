@@ -28,7 +28,7 @@ private theorem conj_mem {d : ℕ} {x : E} (hd : 0 < d) (hx : x ^ 2 = -(d : E)) 
     have : conjE E (algebraMap ℚ E q) = algebraMap ℚ E q := by simp
     rw [this]
     exact IntermediateField.algebraMap_mem _ q
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | inv a _ ha => rw [map_inv₀]; exact inv_mem ha
   | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
 

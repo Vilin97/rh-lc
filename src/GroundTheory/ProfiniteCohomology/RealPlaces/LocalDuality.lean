@@ -67,7 +67,7 @@ theorem realDualityPairing_zero_two_eq_zero (x : cohomology M 0) (hx : x ∈ nor
     rw [cartierDual_ρ_apply, inv_eq_self hG hc, ← Module.End.mul_apply, ← map_mul,
       mul_self_eq_one hG hc, map_one, Module.End.one_apply]
   change (φ : M →ₗ[ULift.{0} ℤ] galUnits.{0} F Ω) (M.ρ.norm b) = _
-  rw [norm_apply _ hG hc, map_add, hφb]
+  rw [norm_apply _ hG hc, map_add (f := _), hφb]
 
 end Generic
 

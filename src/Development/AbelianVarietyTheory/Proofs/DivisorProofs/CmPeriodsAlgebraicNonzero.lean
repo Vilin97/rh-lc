@@ -38,7 +38,7 @@ theorem mul_comm_of_rank_coker {K V : Type*} [Field K] [AddCommGroup V] [Module 
       simpa [Submodule.Quotient.mk_add, Submodule.Quotient.mk_smul] using hg
     have e1 := vanish f hf _ hg
     have e2 := vanish f' hf' _ hg
-    simp only [map_add, map_smul, smul_eq_mul, hf0, hf'0, mul_zero, zero_add] at e1 e2
+    simp only [map_add (f := _), map_smul, smul_eq_mul, hf0, hf'0, mul_zero, zero_add] at e1 e2
     have hb : g 1 = 0 := by
       have : g 1 * (f x * f' y - f y * f' x) = 0 := by linear_combination f' y * e1 - f y * e2
       exact (mul_eq_zero.1 this).resolve_right hD'

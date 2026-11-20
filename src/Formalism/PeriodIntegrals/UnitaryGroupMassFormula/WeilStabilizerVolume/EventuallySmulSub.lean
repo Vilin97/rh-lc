@@ -79,7 +79,7 @@ theorem reach_of_approx (π : K) (hπ : Tendsto (fun k : ℕ => π ^ k) atTop (�
       obtain ⟨l', hl', hpl'⟩ := hbase p' hp'
       obtain ⟨p'', hp'', e2⟩ := (mem_smulSub _ _ _).1 hpl'
       refine ⟨l + π ^ k • l', L.add_mem hl (hπkL k l' hl'), (mem_smulSub _ _ _).2 ⟨p'', hp'', ?_⟩⟩
-      rw [map_add, hDs, pow_succ, mul_smul, e2, smul_sub, e1]
+      rw [map_add (f := _), hDs, pow_succ, mul_smul, e2, smul_sub, e1]
       abel
   set S : Set X := D '' (L : Set V) with hS
   have hSc : IsClosed S := (hLc.image hDc).isClosed

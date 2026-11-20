@@ -163,7 +163,7 @@ def comapOAct {O O' : Type} [Ring O] [StarRing O] [Ring O'] [StarRing O'] (ρ : 
   hom _ := ρ.hom _
   map_one := by rw [map_one, ρ.map_one]
   map_mul a b := by rw [map_mul, ρ.map_mul]
-  map_add a b := by rw [map_add, ρ.map_add]
+  map_add a b := by rw [map_add (f := _), ρ.map_add (f := _)]
   rosati a := by rw [h]; exact ρ.rosati _
 
 end AdjRing

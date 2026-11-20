@@ -56,7 +56,7 @@ theorem hermForm_zero_right (H : Matrix (Fin N) (Fin N) Em) (x : Fin N → Em) :
 
 theorem hermForm_add_left (H : Matrix (Fin N) (Fin N) Em) (x x' y : Fin N → Em) :
     hermForm Em H (x + x') y = hermForm Em H x y + hermForm Em H x' y := by
-  simp only [hermForm, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hermForm, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hermForm_add_right (H : Matrix (Fin N) (Fin N) Em) (x y y' : Fin N → Em) :
     hermForm Em H x (y + y') = hermForm Em H x y + hermForm Em H x y' := by

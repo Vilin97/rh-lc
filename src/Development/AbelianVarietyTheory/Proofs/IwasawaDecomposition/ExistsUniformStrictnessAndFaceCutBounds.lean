@@ -94,7 +94,7 @@ theorem le_of_mem_closure (hP : IsPolyFanOn bar φ X) {m N : ℕ} {ℓ : LinearM
     · have h1 := evalZ_add_ge hP hx.1 hx.2.1 hy.1 hy.2.1
       have h2 := mul_le_mul_of_nonneg_left h1 (Nat.cast_nonneg (α := ℝ) N)
       rw [mul_add] at h2
-      rw [map_add, Int.cast_add]
+      rw [map_add (f := _), Int.cast_add]
       linarith [hx.2.2, hy.2.2]
 
 theorem strictWith_of_ratCone (hP : IsPolyFanOn bar φ X) {m n N : ℕ} {ℓ : LinearMap.BilinForm ℤ X →ₗ[ℤ] ℤ}

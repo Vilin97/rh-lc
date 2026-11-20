@@ -20,7 +20,7 @@ theorem eq_one_of_restrict_eq_one {l : ℕ} [Fact l.Prime] [IsCyclotomicExtensio
     have := AlgEquiv.restrictNormal_commutes h K r
     rw [hK, AlgEquiv.one_apply] at this
     exact this.symm
-  | add y z _ _ hy hz => rw [map_add, hy, hz]
+  | add y z _ _ hy hz => rw [map_add (f := _), hy, hz]
   | mul y z _ _ hy hz => rw [map_mul, hy, hz]
 
 theorem pow_apply_zeta_of_apply_eq_pow {ζ : M} (g : Gal(M/ℚ)) (t : ℕ) (hg : g ζ = ζ ^ t) (m : ℕ) :

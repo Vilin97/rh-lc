@@ -67,7 +67,7 @@ private theorem exists_linearMap_eq_psiK {R : RealDat D A Ks} (ch : Choice R) (h
   ⟨fun a =>
     { toFun := psiK ch a
       map_add' := fun u u' => by
-        simp only [psiK, map_add]
+        simp only [psiK, map_add (f := _)]
         exact GlobalTheory.FunObj.fPsiPhi_add ch.W ch.M (hlin a u) (hlin a u')
       map_smul' := fun b u => by
         have h1 := GlobalTheory.FunObj.fPsiPhi_smul ch.W ch.M ch.ρ ch.ξ 1 b (ch.col a) (ch.Phi a) (ch.form u)

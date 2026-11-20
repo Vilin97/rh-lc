@@ -29,7 +29,7 @@ variable {D : D7}
 theorem symplO_add_right (S T : HSp D) (x y y' : WO S T) :
     symplO S T x (y + y') = symplO S T x y + symplO S T x y' := by
   unfold symplO hO
-  simp only [Matrix.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [Matrix.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 theorem hO_smul_left (S T : HSp D) (a : AE D) (x y : WO S T) : hO S T (a • x) y = a * hO S T x y := by
   unfold hO
@@ -105,13 +105,13 @@ theorem heisO_offPart_vac : All fun {D} _ _ _ {G} W _ => ∀ i, i < D.R.m → �
       rw [Matrix.smul_apply, smul_eq_mul]
       exact GlobalTheory.SelfDualAt.algebraMap_placeIdempotent_mul _ _ (GlobalTheory.FinPl.LatMem.latO_mxAt hv a b)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← hvc, hdec, map_add, map_sum]
+      rw [← hvc, hdec, map_add (f := _), map_sum]
     refine hadd _ _ ?_ ?_
     · have hβ := GlobalTheory.FinPl.FlatFix.int_alg_pair (D := D) (GlobalTheory.FinPl.FlatFix.halfOff_int (D := D) fun _ => True)
       have e2 : algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 (GlobalTheory.FinPl.FlatFix.halfOff (fun _ => True) +
           GlobalTheory.FinPl.FlatFix.halfOff (D := D) (fun _ => True))) • v =
           2 • (algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 (GlobalTheory.FinPl.FlatFix.halfOff (D := D) (fun _ => True))) • v) := by
-        rw [GlobalTheory.FinPl.FlatFix.pair_add, map_add, add_smul, two_nsmul]
+        rw [GlobalTheory.FinPl.FlatFix.pair_add, map_add (f := _), add_smul, two_nsmul]
       rw [e2]
       exact hw.1 _ (hpiece _ hβ)
     · refine Finset.sum_induction _ (fun c => W.ψ (symplO _ _ w (c • v)) = 1) hadd ?_ ?_

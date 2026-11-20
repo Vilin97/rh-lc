@@ -346,7 +346,7 @@ theorem GActsAt.mem_latMonoid {S : Scheme.{0}} {s : S ⟶ Sp R} {N N' : ℕ} {o'
     rw [e3, map_smul, e]
     exact smul_mem_laHat ha hw
   | zero => rw [map_zero]; exact zero_mem _
-  | add u u' _ _ hu hu' => rw [map_add]; exact add_mem hu hu'
+  | add u u' _ _ hu hu' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hu'
   | neg u _ hu => rw [map_neg]; exact neg_mem hu
 
 theorem GActsAt.comp {S : Scheme.{0}} {s : S ⟶ Sp R} {N₁ N₂ N₃ : ℕ} {o₁ : GObj gb N₁ s} {o₂ : GObj gb N₂ s}
@@ -362,7 +362,7 @@ theorem GActsAt.comp {S : Scheme.{0}} {s : S ⟶ Sp R} {N₁ N₂ N₃ : ℕ} {o
   obtain ⟨w, hw, e⟩ := (H₁ n hn hnp x y).1 hy.symm
   rw [← Category.assoc, ← hy, H₂ n hn hnp y z]
   simp only [one_smul] at e ⊢
-  rw [map_mul, Module.End.mul_apply, e, map_add, map_nsmul]
+  rw [map_mul, Module.End.mul_apply, e, map_add (f := _), map_nsmul]
   constructor
   · rintro ⟨v, hv, e'⟩
     exact ⟨v + L.actG h₂ w, add_mem hv (hΔ w hw), by rw [e', smul_add, add_assoc]⟩

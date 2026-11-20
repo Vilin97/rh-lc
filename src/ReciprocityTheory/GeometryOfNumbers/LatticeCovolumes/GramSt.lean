@@ -15,7 +15,7 @@ theorem gramSt_det_one_add_eq {Q : Matrix ι ι ℂ} (hQ : Q.PosSemidef) :
   have hspec := hQ.1.spectral_theorem
   have h1 : (1 + Q) = Unitary.conjStarAlgAut ℂ _ U
       (1 + diagonal (RCLike.ofReal ∘ hQ.1.eigenvalues)) := by
-    rw [map_add, map_one, ← hspec]
+    rw [map_add (f := _), map_one, ← hspec]
   have hd : (1 + diagonal (RCLike.ofReal ∘ hQ.1.eigenvalues) : Matrix ι ι ℂ) =
       diagonal (fun i => ((1 + hQ.1.eigenvalues i : ℝ) : ℂ)) := by
     ext i j

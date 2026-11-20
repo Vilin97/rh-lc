@@ -149,7 +149,7 @@ theorem th_conj {τ : D.host.E →+* ℂ} {θ : Ainf D.host.F ⊗[D.host.F] D.ho
     rw [(D.sp.cm.fixed _).2 ⟨f, rfl⟩]
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
   | tmul a x =>
     have e : ∀ y : D.host.E, a ⊗ₜ[D.host.F] y =
         (a ⊗ₜ[D.host.F] (1 : D.host.E)) * ((1 : Ainf D.host.F) ⊗ₜ[D.host.F] y) := by
@@ -161,13 +161,13 @@ theorem infPart_cA (x : AE D) : infPart D (cA D x) = sigR (Ainf D.host.F) D.sp.c
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem finPart_cA (x : AE D) : finPart D (cA D x) = sigR (Af D.host.F) D.sp.cm.sig (finPart D x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem aut_mem_GinfC (s : ConjIsom V) {k : GA D V} (hk : k ∈ GinfC V) : s.aut k ∈ GinfC V := by
   have hk' : Formalism.UG.bc (finPart D) (matHom V k) = 1 := hk

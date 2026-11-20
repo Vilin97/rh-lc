@@ -125,11 +125,11 @@ theorem per_add (Γ : Subgroup SL(2, ℤ)) (w : ℕ) {f g : ℍ → ℂ} (hf : M
       ring
     rw [hint, mul_add, C_add, add_mul]
   funext γ
-  simp only [per, Pi.add_apply, he, map_add]
+  simp only [per, Pi.add_apply, he, map_add (f := _)]
 
 theorem cj_add {Γ : Type} (x y : Γ → ℂ[X]) : cj (x + y) = cj x + cj y := by
   funext γ
-  simp [cj, Polynomial.map_add]
+  simp [cj, Polynomial.map_add (f := _)]
 
 theorem cj_real_smul {Γ : Type} (r : ℝ) (x : Γ → ℂ[X]) : cj ((r : ℂ) • x) = (r : ℂ) • cj x := by
   funext γ

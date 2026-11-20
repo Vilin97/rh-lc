@@ -85,8 +85,8 @@ theorem fix_subst (hR : Ring9 W) (g : PowerSeries O →ₐ[O] PowerSeries O) (hg
   have hf : f = (trunc N f : PowerSeries O) + X ^ N * h := by rw [← hh]; ring
   have e1 : subst W.π₀₁ f = Polynomial.aeval W.π₀₁ (trunc N f) + W.π₀₁ ^ N * subst W.π₀₁ h := by
     conv_lhs => rw [hf]
-    rw [← coe_substAlgHom ha, map_add, map_mul, map_pow, coe_substAlgHom ha, subst_coe ha, subst_X ha]
-  rw [e1, map_add, map_mul, map_pow, hg, ← Polynomial.aeval_algHom_apply, hg]
+    rw [← coe_substAlgHom ha, map_add (f := _), map_mul, map_pow, coe_substAlgHom ha, subst_coe ha, subst_X ha]
+  rw [e1, map_add (f := _), map_mul, map_pow, hg, ← Polynomial.aeval_algHom_apply, hg]
   have e2 : Polynomial.aeval W.π₀₁ (trunc N f) + W.π₀₁ ^ N * g (subst W.π₀₁ h) -
       (Polynomial.aeval W.π₀₁ (trunc N f) + W.π₀₁ ^ N * subst W.π₀₁ h) =
       W.π₀₁ ^ N * (g (subst W.π₀₁ h) - subst W.π₀₁ h) := by ring
@@ -857,7 +857,7 @@ theorem evaluation_X (hR : BT.Ring9 W) : BT.at0H W hR X = W.π₀ := by
   rfl
 
 theorem evaluation_at_uniformizer_power (hR : BT.Ring9 W) : BT.at0H W hR (Yp PD O) = Formalism.MainNotions.LiftingTheory.qp W := by
-  rw [Yp, map_add, evaluation_X, map_natCast]
+  rw [Yp, map_add (f := _), evaluation_X, map_natCast]
   rfl
 
 theorem evaluation_uniformizer_pow (hR : BT.Ring9 W) (k : ℕ) : at0 W (Yp PD O ^ k) = Formalism.MainNotions.LiftingTheory.qp W ^ k := by
@@ -876,7 +876,7 @@ theorem yp_pow_dvd [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalIdeal O) 
     ∃ h : PowerSeries O, g = Yp PD O ^ b * h := by
   obtain ⟨u, hu, hY⟩ := levA_Yp W hR hA i ζ hζ
   have hres : PowerSeries.map (IsLocalRing.residue O) (Yp PD O) = X ^ 1 := by
-    rw [Yp, map_add, map_X, map_natCast, pow_one]
+    rw [Yp, map_add (f := _), map_X, map_natCast, pow_one]
     have h1 : ((PD.p : ℕ) : IsLocalRing.ResidueField O) = 0 := by
       rw [← map_natCast (IsLocalRing.residue O), IsLocalRing.residue_eq_zero_iff]
       exact hpm
@@ -886,7 +886,7 @@ theorem yp_pow_dvd [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalIdeal O) 
   have hu0 : constantCoeff u ≠ 0 := fun h0 =>
     (PowerSeries.isUnit_iff_constantCoeff.1 hu).ne_zero h0
   have hXval : levA W hR i ζ X = PowerSeries.C (-(PD.p : LL)) + levA W hR i ζ (Yp PD O) := by
-    rw [Yp, map_add, map_natCast, ← map_natCast (PowerSeries.C (R := LL)), ← add_assoc, add_comm _ (levA W hR i ζ X),
+    rw [Yp, map_add (f := _), map_natCast, ← map_natCast (PowerSeries.C (R := LL)), ← add_assoc, add_comm _ (levA W hR i ζ X),
       add_assoc, ← map_add]
     simp
   refine Formalism.MainNotions.RamifiedCoefficientChains.S9.Ring.dvd_of_vanish hinj (Yp PD O) 1 hres {-(PD.p : LL)} (by simp)
@@ -903,7 +903,7 @@ theorem yp_pow_dvd [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalIdeal O) 
 theorem Yp_ne_zero [Nontrivial O] : Yp PD O ≠ 0 := by
   intro h
   have h1 : coeff 1 (Yp PD O) = 1 := by
-    rw [Yp, map_add, coeff_X, ← map_natCast (PowerSeries.C (R := O)), coeff_C]
+    rw [Yp, map_add (f := _), coeff_X, ← map_natCast (PowerSeries.C (R := O)), coeff_C]
     simp
   rw [h, map_zero] at h1
   exact zero_ne_one h1

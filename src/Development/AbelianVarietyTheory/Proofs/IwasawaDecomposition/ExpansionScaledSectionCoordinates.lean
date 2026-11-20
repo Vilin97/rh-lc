@@ -24,7 +24,7 @@ def cstHom (p : X ⟶ Sp V) (x : X) : V →+* X.presheaf.stalk x where
   map_one' := by rw [cst, map_one, gs_eq p x ⊤ trivial, map_one, map_one]
   map_mul' a b := by rw [cst, map_mul]; exact gs_mul p x ⊤ trivial _ _
   map_zero' := by rw [cst, map_zero]; exact gs_zero p x ⊤ trivial
-  map_add' a b := by rw [cst, map_add]; exact gs_add p x ⊤ trivial _ _
+  map_add' a b := by rw [cst, map_add (f := _)]; exact gs_add p x ⊤ trivial _ _
 
 theorem cstHom_apply (p : X ⟶ Sp V) (x : X) (a : V) : cstHom p x a = cst p x a := rfl
 
@@ -133,7 +133,7 @@ theorem mem_span_of_forall_pow {A : Type*} [CommRing A] [IsLocalRing A] [IsNoeth
   intro i
   obtain ⟨u, hu, v, hv, rfl⟩ := Submodule.mem_sup.1 (h i)
   have hv' : v ∈ I ^ i := Ideal.pow_le_pow_right (Nat.le_succ i) hv
-  rw [map_add, Ideal.Quotient.eq_zero_iff_mem.2 hu, zero_add]
+  rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hu, zero_add]
   have e : Ideal.Quotient.mk (Ideal.span {c}) v = v • (1 : A ⧸ Ideal.span {c}) := by
     rw [Algebra.smul_def, mul_one]; rfl
   rw [e]

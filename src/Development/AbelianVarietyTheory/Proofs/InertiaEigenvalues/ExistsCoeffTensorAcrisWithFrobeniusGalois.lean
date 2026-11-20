@@ -132,7 +132,7 @@ theorem bounded_OL (P : LocPrime l) (AI : LocAinf l P) (T : LocTied l P AI) (LL 
     exact Lat_anti AI (Nat.zero_le _) ((pow_mul_mem_Lat_iff AI).2 (hk i))
   | zero => simpa using zero_mem _
   | add x y _ _ hx hy =>
-    rw [Subalgebra.coe_add, map_add, mul_add]
+    rw [Subalgebra.coe_add, map_add (f := _), mul_add]
     exact add_mem hx hy
   | smul z x _ hx =>
     have := qB_mul_mem_Lat AI T z hx
@@ -190,17 +190,17 @@ theorem exists_tensor_acris : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI 
   · induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul o w => rw [hb', hκ, hca, hβ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · rw [hb', hb', hΦ, hφa]
   · induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul o w => rw [hΦ, hκ, hκ, hcφ]; rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · rw [hb', hb', hΓ, hγa]
   · induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul o w => rw [hΓ, hκ, hκ, hcγ]; rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · rw [← hct]
     exact hκ 1 t
   · have hl : 1 < l := (Fact.out : l.Prime).one_lt
@@ -233,7 +233,7 @@ theorem exists_tensor_acris : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI 
       rw [hκ, Algebra.TensorProduct.productMap_apply_tmul, pow_add, mul_mul_mul_comm]
       exact Lat_anti AI (Nat.zero_le _) (Lat_mul AI (hk o) (hN w))
     | add x y hx hy =>
-      rw [map_add, map_add, mul_add]
+      rw [map_add (f := _), map_add (f := _), mul_add]
       exact add_mem hx hy
 
 end GlobalTheory.HWLCris

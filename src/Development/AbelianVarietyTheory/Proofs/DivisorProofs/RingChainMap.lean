@@ -184,7 +184,7 @@ theorem exists_congr_of_mem_span {A A' R R' : Type} [CommRing A] [CommRing A'] [
     obtain ⟨b, hb, h2⟩ := hy
     refine ⟨a + b, Submodule.add_mem _ ha hb, fun j => ?_⟩
     convert (h1 j).add (h2 j) using 1
-    simp only [Pi.add_apply, map_add]; ring
+    simp only [Pi.add_apply, map_add (f := _)]; ring
   | smul r x _ hx =>
     obtain ⟨a, ha, h1⟩ := hx
     obtain ⟨s, hs⟩ := hπ'.1 r
@@ -216,7 +216,7 @@ theorem mapSt : MapSt := by
   · obtain ⟨x₀, h0, h1, h2⟩ := (hC.ρ w x).1 k
     refine (hC'.ρ _ _).2 ⟨_, tr_mem_H hα hT 0 h0, hm w x₀ h1, ?_⟩
     obtain ⟨u, hu, _, ⟨v, rfl⟩, h3⟩ := Submodule.mem_sup.1 h2
-    rw [hR hx, ← map_sub, ← h3, map_add]
+    rw [hR hx, ← map_sub, ← h3, map_add (f := _)]
     exact Submodule.add_mem_sup (tr_mem_base hα hu) (tr_alDual hα hT v)
   · obtain ⟨k₀, h0, h1, y₀, h2, h3⟩ := (hC.ψ n hn x y).1 k
     refine (hC'.ψ n hn _ _).2 ⟨_, tr_mem_K hα hT _ h0, hR hx ▸ tr_theta hα h1, tr e e' M (algebraMap S.R S'.R) y₀, ?_, ?_⟩

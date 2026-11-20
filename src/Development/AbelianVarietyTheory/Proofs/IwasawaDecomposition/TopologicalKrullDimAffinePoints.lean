@@ -76,7 +76,7 @@ theorem eval_affPtsProj (S : Set J) (x : AffPts k J) (p : MvPolynomial J k) :
   | C a =>
     rw [MvPolynomial.bind₁_C_right]
     exact (MvPolynomial.eval_C (f := affPtsProj S x) a).trans (MvPolynomial.eval_C (f := x) a).symm
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p j hp =>
     rw [map_mul, map_mul, map_mul, hp, MvPolynomial.bind₁_X_right]
     congr 1

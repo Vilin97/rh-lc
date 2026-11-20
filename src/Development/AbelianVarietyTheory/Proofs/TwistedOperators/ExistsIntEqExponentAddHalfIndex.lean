@@ -40,7 +40,7 @@ theorem exists_eq_of_sigR_fixed {F E R : Type} [Field F] [CharZero F] [Field E] 
   set x := B.repr z 0
   set y := B.repr z 1
   have e : sigR R σ (x • B 0 + y • B 1) = x • B 0 - y • B 1 := by
-    rw [map_add, hB, hB, TensorProduct.smul_tmul', TensorProduct.smul_tmul', hs, hs, hb1, hb0,
+    rw [map_add (f := _), hB, hB, TensorProduct.smul_tmul', TensorProduct.smul_tmul', hs, hs, hb1, hb0,
       map_one, TensorProduct.tmul_neg, sub_eq_add_neg]
   rw [← hz', e] at hz
   have h2 : (2 * y) • B 1 = 0 := by

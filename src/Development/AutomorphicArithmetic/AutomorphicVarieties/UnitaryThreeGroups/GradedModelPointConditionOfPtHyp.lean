@@ -48,7 +48,7 @@ private theorem hom_ext_gr {O A K : Type} [CommRing O] [CommRing A] [Algebra O A
   induction f using DirectSum.Decomposition.inductionOn 𝒜 with
   | zero => simp
   | homogeneous m => exact h _ _ m.2
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem UpperTheory.V.U3.gradedModel_pointCondition_of_ptHyp :
     ∀ {l : ℕ} [Fact l.Prime] {c : Coef l} {Γ H : Type} [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [Group H] [TopologicalSpace H] [IsTopologicalGroup H]

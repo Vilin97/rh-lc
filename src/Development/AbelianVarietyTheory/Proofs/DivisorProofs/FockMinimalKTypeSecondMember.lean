@@ -78,7 +78,7 @@ theorem GlobalTheory.FockAlg.min_second : ∀ (p q r s : ℕ) (M1 : GKMod p q) (
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [hc]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hgI : Intw M2 M1 g := by
     refine ⟨fun X => LinearMap.ext fun P => ?_, fun X => LinearMap.ext fun P => ?_⟩
     · have := LinearMap.congr_fun (hf.2 X) (e P)

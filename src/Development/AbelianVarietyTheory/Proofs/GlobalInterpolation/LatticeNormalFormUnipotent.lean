@@ -119,7 +119,7 @@ theorem exists_unip [FiniteDimensional F Y] {X : Submodule F Y} {a : Fin c → Y
         refine ⟨x + φ ⟨k, hk⟩ y • a ⟨k, hk⟩, fun j hj => ?_, ?_⟩
         · have : (⟨k, hk⟩ : Fin c) ≠ j := fun h => by rw [← h] at hj; simp at hj
           simp [hx j (by omega), ha, this]
-        · rw [map_add, map_smul, hxy, hma, sub_add_cancel]
+        · rw [map_add (f := _), map_smul, hxy, hma, sub_add_cancel]
       · obtain ⟨x, hx, hxy⟩ := ih y (fun j hj => by have := j.2; omega)
         exact ⟨x, fun j hj => hx j (by omega), hxy⟩
   have hsurj : Function.Surjective m := fun y => by
@@ -279,7 +279,7 @@ theorem latticeNormalFormUnip : LatticeNormalFormUnip := by
         · intro j _ hj
           rw [hu0 _ j (Fin.lt_def.2 (Nat.pos_of_ne_zero fun h => hj (Fin.ext h))), zero_smul]
         · simp
-      rw [h1, map_add, hn0 _ rfl, hnX z hz]
+      rw [h1, map_add (f := _), hn0 _ rfl, hnX z hz]
       simp
     · simpa [hi] using hnu i
 
@@ -326,7 +326,7 @@ theorem latticeNormalForm : LatticeNormalForm := by
     ext x
     exact hgX x
   · refine iSup_congr fun i => ?_
-    rw [map_smul, map_add, hga]
+    rw [map_smul, map_add (f := _), hga]
     congr 4
     split_ifs
     · exact hgX ⟨z, hz⟩

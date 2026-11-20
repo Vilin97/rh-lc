@@ -24,7 +24,7 @@ theorem coord_prV {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
     simp only [Algebra.smul_def]
     rfl
   | add x y hx hy =>
-    simp only [map_add, Finsupp.coe_add, Pi.add_apply, hx, hy]
+    simp only [map_add (f := _), Finsupp.coe_add, Pi.add_apply, hx, hy]
     try rfl
 
 theorem plInj : PLInj := by

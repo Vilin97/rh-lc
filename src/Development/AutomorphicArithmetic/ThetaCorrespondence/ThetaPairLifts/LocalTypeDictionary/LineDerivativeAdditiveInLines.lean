@@ -73,7 +73,7 @@ theorem line_sum_curve_eq_prod (hP : _root_.GlobalTheory.FunPr.ThetaLocalInputs)
       · simp only [s, if_neg ht, smul_smul, mul_inv_cancel₀ ht, one_smul, add_sub_cancel]
     refine ⟨fun t => ci t + t • k t, fun t => ?_, ?_, ?_⟩
     · simp only [List.map_cons, List.prod_cons]
-      rw [om_prod_one, hc' t, hcs t, tens_add_smul, map_add, map_smul, hci t, hk t, tens_add_smul]
+      rw [om_prod_one, hc' t, hcs t, tens_add_smul, map_add (f := _), map_smul, hci t, hk t, tens_add_smul]
     · simp [hci0]
     · simp only [List.map_cons, List.sum_cons]
       refine (hlimi.add (hk'.mono_left nhdsWithin_le_nhds)).congr' ?_

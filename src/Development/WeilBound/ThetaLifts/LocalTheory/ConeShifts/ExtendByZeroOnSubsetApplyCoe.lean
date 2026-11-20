@@ -139,7 +139,7 @@ def PU (J : Matrix (Fin n) (Fin n) E) (a : AF F) : UA σ J →* UA σ J :=
       have e : (a • (g.1 : Matrix (Fin n) (Fin n) (AE F E)) + (1 - a) • (1 : Matrix (Fin n) (Fin n) (AE F E))).map (cA σ) =
           a • (g.1 : Matrix (Fin n) (Fin n) (AE F E)).map (cA σ) + (1 - a) • (1 : Matrix (Fin n) (Fin n) (AE F E)) := by
         ext i j
-        simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add, map_smul, Matrix.one_apply]
+        simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _), map_smul, Matrix.one_apply]
         split_ifs <;> simp
       have h1 : a * (1 - a) = 0 := by linear_combination -h
       have h2 : (1 - a) * a = 0 := by linear_combination -h
@@ -190,14 +190,14 @@ theorem PU_mem {B : Base F E} {X : Spc F E n} {K : Subgroup (UA σ X.J)} (hK : I
   · have : (mat (PU σ X.J a g)).map (piInf (B.emb w)) = 1 := by
       rw [mat_PU ha.1, ← Matrix.map_one (piInf (B.emb w)) (map_zero _) (map_one _)]
       ext i j
-      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add]
+      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _)]
       rw [piInf_alg _ (b := 0) e, piInf_alg _ (a := 1 - a) (b := 1) (show (1 : Ainf F) - a.1 = 1 by rw [e, sub_zero])]
       simp
     rw [this]; exact Commute.one_left _
   · have : (mat (PU σ X.J a g)).map (piInf (B.emb w)) = (mat g).map (piInf (B.emb w)) := by
       rw [mat_PU ha.1]
       ext i j
-      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add]
+      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _)]
       rw [piInf_alg _ (b := 1) e, piInf_alg _ (a := 1 - a) (b := 0) (show (1 : Ainf F) - a.1 = 0 by rw [e, sub_self])]
       simp
     rw [this]; exact h1 w

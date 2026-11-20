@@ -44,7 +44,7 @@ private theorem exists_smul_mem {S M M' : Type} [CommRing S] (T : Submonoid S) [
       obtain ⟨s2, m2, hm2, h2⟩ := hy
       refine ⟨s1 * s2, (s2 : S) • m1 + (s1 : S) • m2,
         Submodule.add_mem _ (Submodule.smul_mem _ _ hm1) (Submodule.smul_mem _ _ hm2), ?_⟩
-      rw [map_add, map_smul, map_smul, ← h1, ← h2, smul_add, Submonoid.coe_mul, mul_smul, mul_smul,
+      rw [map_add (f := _), map_smul, map_smul, ← h1, ← h2, smul_add, Submonoid.coe_mul, mul_smul, mul_smul,
         smul_comm (s1 : S) (s2 : S) x]
   obtain ⟨s, m', hm', he⟩ := key _ h
   rw [← map_smul] at he

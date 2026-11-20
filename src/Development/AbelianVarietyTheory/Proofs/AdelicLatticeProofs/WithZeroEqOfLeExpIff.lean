@@ -90,7 +90,7 @@ private lemma exists_algebraMap_eq_mul_conj_of_isQuad {F E : Type} [Field F] [Nu
   obtain ⟨a, b, hab⟩ := hq.span (x : E)
   have hprod : (x : E) * σ (x : E) = algebraMap F E (a ^ 2 - b ^ 2 * δ) := by
     rw [hab]
-    simp only [map_add, map_mul, AlgEquiv.commutes, hq.conj]
+    simp only [map_add (f := _), map_mul, AlgEquiv.commutes, hq.conj]
     rw [map_sub, map_mul, map_pow, map_pow, ← hq.sq]
     ring
   have hint : IsIntegral ℤ (algebraMap F E (a ^ 2 - b ^ 2 * δ)) := by

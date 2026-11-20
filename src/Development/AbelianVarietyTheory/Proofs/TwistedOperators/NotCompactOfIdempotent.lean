@@ -521,7 +521,7 @@ theorem _root_.GlobalTheory.RegSS.quad_exists_basis [CharZero F]
     rw [LinearIndependent.pair_iff]
     intro s t hst
     have hσst := congrArg σ hst
-    simp only [map_add, map_smul, map_one, hσw, map_zero, smul_neg] at hσst
+    simp only [map_add (f := _), map_smul, map_one, hσw, map_zero, smul_neg] at hσst
     have ht : t • w = -(t • w) := by
       have := hst.trans hσst.symm
       exact add_left_cancel this
@@ -543,7 +543,7 @@ theorem _root_.GlobalTheory.RegSS.quad_exists_basis [CharZero F]
     apply hkill
     have := congrArg σ hsum
     rw [hσ2] at this
-    simp only [map_add, map_smul, map_one, hσw, smul_neg] at this
+    simp only [map_add (f := _), map_smul, map_one, hσw, smul_neg] at this
     have := hsum.symm.trans this
     exact add_left_cancel this
   refine ⟨b, b.repr (w * w) 0, hb0, by rw [hb1, hσw], ?_, ?_⟩
@@ -568,7 +568,7 @@ theorem _root_.GlobalTheory.RegSS.sigR_sigR (hσ : ∀ x, σ (σ x) = x) (R : Ty
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul e r => simp [_root_.Formalism.UG.sigR, hσ]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 open Matrix NumberField in
 open scoped TensorProduct in
@@ -599,7 +599,7 @@ theorem _root_.GlobalTheory.RegSS.continuous_rTensor {B B' : Type} [CommRing B] 
           show LinearMap.rTensor R f (((1 : B) ⊗ₜ[F] r) * b ⊗ₜ[F] s) =
             ((1 : B') ⊗ₜ[F] r) * f b ⊗ₜ[F] s
           simp
-        | add x y hx hy => simp only [mul_add, map_add, hx, hy] }
+        | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy] }
   exact IsModuleTopology.continuous_of_linearMap g
 
 open Matrix NumberField in
@@ -614,7 +614,7 @@ theorem _root_.GlobalTheory.RegSS.continuous_sigR (σ : E →ₐ[F] E) (R : Type
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul e r => simp [_root_.Formalism.UG.sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [hσR]
   exact _root_.GlobalTheory.RegSS.continuous_rTensor R _
 
@@ -739,7 +739,7 @@ theorem _root_.GlobalTheory.RegSS.plusTensor_tConj (h : _root_.GlobalTheory.Inde
       Algebra.commutes]
     rfl
   | add x y hx hy =>
-    simp only [map_add, AddMemClass.coe_add, _root_.GlobalTheory.RegSS.adj_add, hx, hy]
+    simp only [map_add (f := _), AddMemClass.coe_add, _root_.GlobalTheory.RegSS.adj_add, hx, hy]
 
 end Quad
 

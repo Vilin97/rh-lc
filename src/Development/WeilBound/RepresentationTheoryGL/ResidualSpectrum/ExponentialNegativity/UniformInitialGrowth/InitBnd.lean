@@ -89,7 +89,7 @@ def dg (x : Fin n → ℝ) : GL (Fin n) (Cinf E) := diagUnits n fun i => expU fu
 theorem pInf_infId (v : (Cinf E)ˣ) : pInf E (infId E v) = v := by
   have h : ∀ x, pInf E (sInf E x) = x := fun x => (infEq E).symm_apply_apply x
   change pInf E (1 - sInf E 1 + sInf E _) = _
-  simp only [map_add, map_sub, map_one, h, sub_self, zero_add]
+  simp only [map_add (f := _), map_sub, map_one, h, sub_self, zero_add]
 
 theorem pInf_tor (x : Fin n → ℝ) : Matrix.GeneralLinearGroup.map (pInf E) (An.tor E x) = dg x := by
   refine Units.ext (Matrix.ext fun i j => ?_)

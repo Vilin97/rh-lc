@@ -35,7 +35,7 @@ theorem UpperTheory.V.Pa.BC.star_map :
   · intro n y
     induction y using MonoidAlgebra.induction_linear with
     | zero => rw [hz, map_zero, hz']
-    | add a b ha hb => rw [hadd, map_add, ha, hb, map_add, hadd']
+    | add a b ha hb => rw [hadd, map_add (f := _), ha, hb, map_add (f := _), hadd']
     | single h r =>
       rw [hs, MonoidAlgebra.mapRingHom_single, MonoidAlgebra.mapRingHom_single, hs', map_mul, he]
   · intro n v ψ γ

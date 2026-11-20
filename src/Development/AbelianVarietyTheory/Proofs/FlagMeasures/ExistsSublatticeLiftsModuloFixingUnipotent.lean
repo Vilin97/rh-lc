@@ -206,7 +206,7 @@ theorem mem_of_split {u : D.what₂.Word} {F0 : Fb D u} {Λ : LatV D} (hB : IsBa
       rw [expand (hS D) D.sp.hypE D.sp.hypF (hyp_fe D) hx2]
       set_option synthInstance.maxHeartbeats 100000 in
         simp [map_sum, D.sp.hyp_ee]
-    rw [map_add, h2, zero_add] at h1
+    rw [map_add (f := _), h2, zero_add] at h1
     rw [h1, zero_smul]
   rw [hy0, add_zero] at hw e'
   have hx0 : x₁ + x = 0 := by
@@ -291,7 +291,7 @@ theorem coef_mem {u : D.what₂.Word} {F0 : Fb D u} (hB : IsBase D u F0) (a : Fi
     · rw [smul_zero]; exact FractionalIdeal.zero_mem _
   | zero => rw [map_zero]; exact FractionalIdeal.zero_mem _
   | add y z _ _ h1 h2 =>
-    rw [map_add]; exact (coefI D a : Submodule (𝓞 D.host.E) D.host.E).add_mem h1 h2
+    rw [map_add (f := _)]; exact (coefI D a : Submodule (𝓞 D.host.E) D.host.E).add_mem h1 h2
   | smul c y _ h =>
     rw [LinearMap.map_smul_of_tower]
     exact (coefI D a : Submodule (𝓞 D.host.E) D.host.E).smul_mem c h
@@ -416,7 +416,7 @@ theorem main : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D),
       rfl
     obtain ⟨-, n, hn, e⟩ := h2
     refine ⟨rep g, Finset.mem_image_of_mem _ (Fintype.mem_piFinset.2 hg), n, hn, fun p => ?_⟩
-    rw [map_add, e, integralUnipotentFixingFrame_fixes_isotropic hn (hφ p).2, LinearMap.sub_apply]
+    rw [map_add (f := _), e, integralUnipotentFixingFrame_fixes_isotropic hn (hφ p).2, LinearMap.sub_apply]
     abel
 
 end Record

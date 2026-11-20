@@ -233,7 +233,7 @@ theorem red_shift : ∀ (k : Type) [Field k] [TopologicalSpace k] [MeasurableSpa
     rw [← smul_eq_mul, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
   have h1 : ψ (-w (Matrix.single e.1 e.2 u)) = 1 := by rw [AddChar.map_neg_eq_inv, hw, hψ, inv_one]
   unfold red
-  simp only [fill_add_single β E I x _ e hI hE u, hΦ, map_add, neg_add, AddChar.map_add_eq_mul, h1, mul_one]
+  simp only [fill_add_single β E I x _ e hI hE u, hΦ, map_add (f := _), neg_add, AddChar.map_add_eq_mul, h1, mul_one]
 
 theorem red_indicator : ∀ (k : Type) [Field k] [TopologicalSpace k] [MeasurableSpace k] (ψ : AddChar k Circle) (ν : Measure k) (R Q : Type) [Fintype R] [Fintype Q] [DecidableEq R] [DecidableEq Q] (w : Matrix R Q k →ₗ[k] k) (β : Matrix R Q k) (E I : Finset (R × Q)) (e : R × Q), e ∉ E → e ∉ I → ∀ (Φ : Matrix R Q k → ℂ) (A : Set k) (x : Matrix R Q k), red ψ ν w β E I (Set.indicator {t : Matrix R Q k | t e.1 e.2 ∈ A} Φ) x = Set.indicator {z : Matrix R Q k | z e.1 e.2 ∈ A} (red ψ ν w β E I Φ) x := by
   intro k _ _ _ ψ ν R Q _ _ _ _ w β E I e hE hI Φ A x

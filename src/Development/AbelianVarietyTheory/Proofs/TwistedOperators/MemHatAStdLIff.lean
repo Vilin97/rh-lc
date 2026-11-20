@@ -32,7 +32,7 @@ theorem embInf_add_emb (w : AE D) :
   induction w using TensorProduct.induction_on with
   | zero => simp
   | add a b ha hb =>
-    rw [map_add, map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _)]
     conv_rhs => rw [← ha, ← hb]
     abel
   | tmul a e =>

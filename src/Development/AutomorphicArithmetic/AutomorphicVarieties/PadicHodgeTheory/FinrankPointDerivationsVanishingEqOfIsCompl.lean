@@ -22,7 +22,7 @@ private theorem low_mem {R σ : Type} [CommRing R] [Finite σ] (m : Ideal (MvPow
     refine Submodule.smul_induction_on hy (fun p hp z _ => ?_) (fun a b ha hb => ?_)
     · rw [map_smul, Algebra.smul_def]
       exact Ideal.mul_mem_right _ _ (hIn hp)
-    · rw [map_add]; exact add_mem ha hb
+    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   have h := key (e g) (by
     rw [AdicCompletion.pow_smul_top_eq_ker_eval (MvPolynomial.idealOfVars_fg σ R), LinearMap.mem_ker,
       AdicCompletion.eval_apply, toAdicCompletionAlgEquiv_apply, toAdicCompletion_apply_eq_mk_truncTotal]
@@ -67,7 +67,7 @@ private theorem of_mem_sq {E σ : Type} [Field E] (g : MvPowerSeries σ E)
   rw [pow_two] at h
   refine Submodule.mul_induction_on h (fun a ha b hb => ?_) (fun a b ha hb => ?_)
   · rw [coeff_single_mul, (mem_max _).1 ha, (mem_max _).1 hb]; simp
-  · rw [map_add, ha, hb, add_zero]
+  · rw [map_add (f := _), ha, hb, add_zero]
 
 end SlopeTestRemainingChoices
 
@@ -110,12 +110,12 @@ theorem UpperTheory.finrank_pointDerivations_vanishing_eq_of_isCompl :
     have hz : ∀ s ∈ RingHom.ker x ^ 2 ⊔ P, δ s = 0 := by
       intro s hs
       obtain ⟨u, hu, v, hv, rfl⟩ := Submodule.mem_sup.1 hs
-      rw [map_add, ((hT δ).1 hδ).2 v hv, add_zero]
+      rw [map_add (f := _), ((hT δ).1 hδ).2 v hv, add_zero]
       rw [pow_two] at hu
       refine Submodule.mul_induction_on hu (fun p hp q hq => ?_) (fun p q hp hq => ?_)
       · rw [RingHom.mem_ker] at hp hq
         rw [((hT δ).1 hδ).1, hp, hq]; simp
-      · rw [map_add, hp, hq, add_zero]
+      · rw [map_add (f := _), hp, hq, add_zero]
     have := hz _ hmem
     rw [map_smul, hsub δ hδ, Algebra.smul_def] at this
     exact (mul_eq_zero.1 this).resolve_left (hne k hk)

@@ -98,7 +98,7 @@ def homOf (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsInfFam θ) (f : 
     W →ₗ[ℂ] ContinuousMultilinearMap ℂ M.H (DividedPowerChartLift V μ) where
   toFun w := phiOf μ (f w)
   map_add' w w' := by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact phiOf_eq hP hθ (add_mem (hf w) (hf w')) ((phiOf_spec hP hθ (hf w)).2.add (phiOf_spec hP hθ (hf w')).2)
   map_smul' c w := by
     rw [map_smul]
@@ -174,7 +174,7 @@ theorem toHom_surjective (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : IsI
   let f : W →ₗ[ℂ] MMap M :=
     { toFun := T
       map_add' := fun w w' => eq_of_represents_cont (hc _) (fun v => (hc w v).add (hc w' v)) (hr (w + w'))
-        (by rw [map_add]; exact (hr w).add (hr w'))
+        (by rw [map_add (f := _)]; exact (hr w).add (hr w'))
       map_smul' := fun c w => eq_of_represents_cont (hc _) (fun v => (hc w v).const_smul c) (hr (c • w))
         (by rw [map_smul]; exact (hr w).smul c) }
   have hf : f ∈ homInto σ (finRep M) (allMaps θ M) :=

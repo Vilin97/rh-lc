@@ -76,7 +76,7 @@ theorem isWq_scale (W : WeierstrassCurve ℂ_[p]) (wq : PowerSeries ℂ_[p]) (h 
   dsimp only at h ⊢
   conv_lhs => rw [h]
   rw [scale_weierstrass_a1, scale_weierstrass_a2, scale_weierstrass_a3, scale_weierstrass_a4, scale_weierstrass_a6]
-  simp only [map_add, map_mul, map_pow, map_one, PowerSeries.rescale_X, PowerSeries.algebraMap_eq, rescale_C']
+  simp only [map_add (f := _), map_mul, map_pow, map_one, PowerSeries.rescale_X, PowerSeries.algebraMap_eq, rescale_C']
   ring
 
 theorem omegaW_scale (W : WeierstrassCurve ℂ_[p]) (wq : PowerSeries ℂ_[p]) :
@@ -93,7 +93,7 @@ theorem omegaW_scale (W : WeierstrassCurve ℂ_[p]) (wq : PowerSeries ℂ_[p]) :
       algebraMap ℂ_[p] (PowerSeries ℂ_[p]) (ν⁻¹ ^ 3 * W.a₃) * PowerSeries.X ^ 3 * PowerSeries.rescale ν⁻¹ wq - 2) =
       PowerSeries.rescale ν⁻¹ (wq * (algebraMap ℂ_[p] (PowerSeries ℂ_[p]) W.a₁ * PowerSeries.X +
         algebraMap ℂ_[p] (PowerSeries ℂ_[p]) W.a₃ * PowerSeries.X ^ 3 * wq - 2)) := by
-    simp only [map_add, map_sub, map_mul, map_pow, map_ofNat, PowerSeries.rescale_X,
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_ofNat, PowerSeries.rescale_X,
       PowerSeries.algebraMap_eq, rescale_C']
     ring
   rw [hnum, hden, ← rescale_inv, ← map_mul]
@@ -426,7 +426,7 @@ theorem rdictMain : Formalism.L2.KerInert.Rep.CurveDict := by
     have hw := (sqrtKur D.host.d hsqf hd4 l h5 hsq' ι).1
     have hmem : ∀ m n : ℤ, ι ((m : ℂ) + (n : ℂ) * omegaK D.host.d) ∈ MaximalUnramifiedExtension l := by
       intro m n
-      rw [map_add, map_mul, map_intCast, map_intCast]
+      rw [map_add (f := _), map_mul, map_intCast, map_intCast]
       exact add_mem (intCast_mem _ m) (mul_mem (intCast_mem _ n) hw)
     let S : Set (MaximalUnramifiedExtension l) := {a | ∃ m n : ℤ, ¬ (l : ℤ) ∣ normInt D.host.d m n ∧
       (a : ℂ_[l]) = ι ((m : ℂ) + (n : ℂ) * omegaK D.host.d)}

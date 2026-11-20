@@ -146,7 +146,7 @@ theorem kstLoc (σ : E →ₐ[F] E) (J : Matrix n n E) (Λ : Submodule (𝓞 E) 
       induction a using TensorProduct.induction_on with
       | zero => simp
       | tmul e r => simp [prV, sigR, Algebra.TensorProduct.map_tmul]
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
     have eJ : J.map (inclE (F := F) (v.adicCompletion F)) =
         (J.map (inclE (F := F) 𝔸)).map (prV (E := E) v) := by
       ext i j

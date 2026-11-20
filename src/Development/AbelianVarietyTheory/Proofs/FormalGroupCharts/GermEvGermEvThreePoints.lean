@@ -173,7 +173,7 @@ theorem exists_gauge_second_law : (∀ (k : Type) [CommRing k] [Algebra ℚ k] (
       have v : (Fin.cons 0 (fun j : Fin 2 => pt k d j) : Fin 3 → Pt k 2 d) =
           ![0, pt k d 0, pt k d 1] := by
         funext j; fin_cases j <;> rfl
-      rw [v, map_sub, map_add, pderiv_ev_fst _ _ (by gp) _ (pderiv_pt_ne (by decide) i),
+      rw [v, map_sub, map_add (f := _), pderiv_ev_fst _ _ (by gp) _ (pderiv_pt_ne (by decide) i),
         pderiv_ev_fst _ _ (by gp) _ (pderiv_pt_ne (by decide) i),
         pderiv_ev_fst _ _ (by gp) _ (pderiv_addOf_zero _ _ _ (by gp) (by gp) _
           (pderiv_pt_ne (by decide) i) (pderiv_pt_ne (by decide) i))]

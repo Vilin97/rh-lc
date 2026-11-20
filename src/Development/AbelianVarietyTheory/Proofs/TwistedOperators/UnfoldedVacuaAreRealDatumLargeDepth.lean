@@ -28,7 +28,7 @@ theorem mem_GfC_of_idemSum {e : AE D} {Q : Finset (Formalism.L2.DIV.Pl D.host.E)
     (hs : SuppAt e V g) : g ∈ GfC V := by
   have h0 : infPart D (e + cA D e) = 0 := by
     have h1 := GlobalTheory.FinRestComm.infPart_of_idemSum he
-    rw [RingHom.map_add, h1, GlobalTheory.AdjointPair.infPart_zero e h1, add_zero]
+    rw [RingHom.map_add (f := _), h1, GlobalTheory.AdjointPair.infPart_zero e h1, add_zero]
   show g ∈ (infHom V).ker
   rw [MonoidHom.mem_ker]
   apply Units.ext

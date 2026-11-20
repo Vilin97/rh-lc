@@ -143,7 +143,7 @@ theorem restrict_core_k : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
       funext x; simp only [deltaT_apply, Pi.smul_apply, smul_eq_mul, mul_assoc]
     let ℓ₁ : (WOF F E nS nT → ℂ) →ₗ[ℂ] ℂ :=
       { toFun := fun f => ℓ (deltaT f b)
-        map_add' := fun f f' => by simp only [dadd, map_add]
+        map_add' := fun f f' => by simp only [dadd, map_add (f := _)]
         map_smul' := fun s f => by simp only [dsmul, map_smul, RingHom.id_apply] }
     have hℓ₁ : ∀ u : WOF F E nS nT, (∀ i j, cAF σ e * u i j = u i j) → ∀ f, IsThetaFunOF σ JS JT ξ₀ B.ψ f →
         ℓ₁ (heisOF σ JS JT ξ₀ B.ψ u f) = ℓ₁ f := by

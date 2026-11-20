@@ -102,7 +102,7 @@ private theorem lie_mem (N : Submodule ℂ (Sm E n))
     · simp
   rw [hX]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_add, map_smul, ← lieS_apply, lieS_atEmb_one, lieS_atEmb_I, LinearMap.sum_apply,
+    simp only [map_sum, map_add (f := _), map_smul, ← lieS_apply, lieS_atEmb_one, lieS_atEmb_I, LinearMap.sum_apply,
     LinearMap.add_apply, LinearMap.smul_apply, LinearMap.sub_apply]
   refine N.sum_mem fun i _ => N.sum_mem fun j _ => N.sum_mem fun w _ => N.add_mem ?_ ?_
   · exact N.smul_of_tower_mem _ (N.add_mem (h1 w i j x hx) (h2 w i j x hx))
@@ -218,7 +218,7 @@ theorem UpperTheory.V.Z.GSp4Splitting.rlSimple :
       obtain ⟨x, hx, e⟩ := iha (hle ha)
       obtain ⟨y, hy, e'⟩ := ihb (hle hb)
       refine ⟨x + y, W.add_mem hx hy, fun u => ?_⟩
-      rw [map_add, map_add, ← e, ← e', ← map_add]
+      rw [map_add (f := _), map_add (f := _), ← e, ← e', ← map_add (f := _)]
       rfl
     | smul c a ha iha =>
       intro _

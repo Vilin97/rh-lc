@@ -28,7 +28,7 @@ theorem chr_comb_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) (β G
       d.B.ψ (-(d.tt ((⅟(2 : AF F) • G + T) * β))) := by
   rw [← AddChar.map_add_eq_mul]
   congr 1
-  simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, add_mul, Matrix.trace_add, smul_mul_assoc, Matrix.trace_smul, map_add, map_smul, smul_eq_mul,
+  simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, add_mul, Matrix.trace_add, smul_mul_assoc, Matrix.trace_smul, map_add (f := _), map_smul, smul_eq_mul,
     Matrix.trace_mul_comm G β]
   ring
 theorem half_eq_iff_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) (G T : Matrix (Fin d.n) (Fin d.n) (AE F E)) :

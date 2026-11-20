@@ -229,7 +229,7 @@ theorem S_add (w h : V × (V →L[ℝ] ℝ)) (f : SchwartzMap V ℂ) :
   rw [SchwartzMap.smul_apply, S_apply, S_apply, S_apply, ph, ph, ph, smul_eq_mul, ← mul_assoc, ← mul_assoc, ← Complex.exp_add,
     ← Complex.exp_add, Prod.fst_add, add_assoc x]
   congr 2
-  simp only [Prod.snd_add, ContinuousLinearMap.add_apply, map_add]
+  simp only [Prod.snd_add, ContinuousLinearMap.add_apply, map_add (f := _)]
   push_cast
   ring
 

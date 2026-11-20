@@ -190,7 +190,7 @@ theorem IsPhiTranslate.lin (c : R) {s s' : SecBMod D j α} {t t' : SecBMod D j (
   refine (secRel_iff D.P.isLB _ _ _ _ _ _ _ _ _ u).2 fun y J hJ => ?_
   have e : (𝟙 _ ≫ (DegPre.trPt D F q.g.b).left) ≫ strF D F = 𝟙 _ ≫ strF D F := by
     rw [Category.assoc, ← Over.comp_left, tr_fst]
-  rw [map_add, map_add, map_smulₛₗ, map_smulₛₗ, sval_add' hJ, sval_add' hJ, sval_smul' hJ, sval_smul' hJ,
+  rw [map_add (f := _), map_add (f := _), map_smulₛₗ, map_smulₛₗ, sval_add' hJ, sval_add' hJ, sval_smul' hJ, sval_smul' hJ,
     (secRel_iff D.P.isLB _ _ _ _ _ _ _ _ _ u).1 (h u hu hc) _ _ y J hJ,
     (secRel_iff D.P.isLB _ _ _ _ _ _ _ _ _ u).1 (h' u hu hc) _ _ y J hJ, e]
   ring
@@ -361,7 +361,7 @@ theorem phiRel_constFam (hy : p.y = e q₀.y) (hm : p.g.b.left ≫ φ = spMap f 
     {s₀ : SecBMod a.D₀ j α} {t₀ : SecBMod a.D₀ j (α + q₀.y)} (h₀ : IsPhiTranslate a.D₀ k₀ j q₀ v₀ α s₀ t₀) :
     PhiRel P.toPre F j p v (constFam hW F hG hj α s₀) (((κ * ξ : Fˣ) : F) • constFam hW F hG hj (α + q₀.y) t₀) := by
   obtain ⟨h, h₁, h₂, h₃⟩ := exists_down hW hm
-  have hi : e α + p.y = e (α + q₀.y) := by rw [map_add, hy]
+  have hi : e α + p.y = e (α + q₀.y) := by rw [map_add (f := _), hy]
   have fam : ∀ χ i, DegPre.famφ P.toPre F (e χ) i ≫ φ = h ≫ DegPre.famφ a.D₀ k₀ χ i := fun χ i => by
     rw [famφ_comp hW, GC.famφ_eq, ← h₁, Category.assoc]
   have hψ : ∀ i, DegPre.phiφ P.toPre F p.y (e α) p.g.b i ≫ φ = h ≫ DegPre.phiφ a.D₀ k₀ q₀.y α q₀.g.b i := by
@@ -499,7 +499,7 @@ theorem exists_transport (hG : GlobalFnsSt) {j : ℕ} (q : QkPt a.D₀ F j) (hd 
   have ex : ∀ (i : ℕ) (g₀ : GtPtF a.D₀ F), ∃ g : GtPtF P.toPre F, GtRel w e.toAddEquiv
       (fun z => Units.mk0 _ (toF_X_ne_zero (k := k) F) ^ ((i : ℤ) * (a.be q.y z / j))) g₀ g :=
     fun i g₀ => exists_gtRel gp hT (e := e.toAddEquiv) hc hw' hG _ (fun x y => by
-      rw [map_add, Int.add_ediv_of_dvd_left (hd _), mul_add, zpow_add]) g₀
+      rw [map_add (f := _), Int.add_ediv_of_dvd_left (hd _), mul_add, zpow_add]) g₀
   choose dn hdn using ex
   obtain ⟨h, ⟨gs, g₀, gst, gl⟩, hι⟩ := q.eq
   refine ⟨⟨e q.y, dn 1 q.g, dn j h, ⟨fun i => dn i (gs i), ?_, fun i => ?_, congrArg (dn j) gl⟩, hι' _ h _ ?_ hι⟩,
@@ -526,12 +526,12 @@ theorem equiv_of_transport (hG : GlobalFnsSt) {j : ℕ} (hj : 1 ≤ j) {q q' : Q
   have hw' := (isGen_iff w).1 hw
   obtain ⟨z, hz, g₀, hι, hadd⟩ := hq
   obtain ⟨g, hg⟩ := exists_gtRel gp hT (e := e.toAddEquiv) hc hw' hG
-    (fun χ => Units.mk0 _ (toF_X_ne_zero (k := k) F) ^ a.be z χ) (fun x y => by rw [map_add, zpow_add]) g₀
-  refine ⟨e z, by rw [hy', hy, hz, map_add, map_nsmul], g, hι' z g₀ g hg hι, ?_⟩
+    (fun χ => Units.mk0 _ (toF_X_ne_zero (k := k) F) ^ a.be z χ) (fun x y => by rw [map_add (f := _), zpow_add]) g₀
+  refine ⟨e z, by rw [hy', hy, hz, map_add (f := _), map_nsmul], g, hι' z g₀ g hg hι, ?_⟩
   refine GtRel.isAdd gp hT (e := e.toAddEquiv) hc hw' hG (fun χ => ?_)
     ((gtRel_zpow_iff (toF_X_ne_zero (k := k) F) _ _ _).2 h) hg
     ((gtRel_zpow_iff (toF_X_ne_zero (k := k) F) _ _ _).2 h') hadd
-  rw [← zpow_add, hz, map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul,
+  rw [← zpow_add, hz, map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul,
     Int.add_mul_ediv_left _ _ (Int.natCast_ne_zero.2 (by omega))]
 
 end Transport

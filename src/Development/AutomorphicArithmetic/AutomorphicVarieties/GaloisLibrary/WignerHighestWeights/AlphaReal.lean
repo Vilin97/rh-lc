@@ -92,7 +92,7 @@ theorem UpperTheory.V.AlgRepEndIrreducible.alphaReal :
   have e : ∀ (r : ℝ) (v : M), r • v = (r : ℂ) • v := fun r v => (algebraMap_smul ℂ r v).symm
   let α : (Lie E a →ₗ[ℝ] M) →ₗ[ℝ] M :=
     { toFun := fun f => s • α₀ (hol τ f)
-      map_add' := fun f g => by rw [hol_add, map_add, smul_add]
+      map_add' := fun f g => by rw [hol_add, map_add (f := _), smul_add]
       map_smul' := fun r f => by rw [hol_smul, map_smul, RingHom.id_apply, e, smul_comm] }
   have hα : ∀ f, α f = s • α₀ (hol τ f) := fun _ => rfl
   refine ⟨α, fun Y f f' hf => ?_, fun k f f' hf => ?_, fun m f hf => ?_⟩

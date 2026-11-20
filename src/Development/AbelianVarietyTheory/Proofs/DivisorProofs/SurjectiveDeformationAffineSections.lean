@@ -38,7 +38,7 @@ theorem mem_map_of_smul_eq_zero_of_flat {R S : Type} [CommRing R] [CommRing S] [
     | tmul s j =>
       rw [LinearMap.lTensor_tmul, TensorProduct.rid_tmul, Algebra.smul_def]
       exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ j.2)
-    | add x z hx hz => rw [map_add, map_add]; exact add_mem hx hz
+    | add x z hx hz => rw [map_add (f := _), map_add (f := _)]; exact add_mem hx hz
   have := key y
   rwa [hy, TensorProduct.rid_tmul, _root_.one_smul] at this
 

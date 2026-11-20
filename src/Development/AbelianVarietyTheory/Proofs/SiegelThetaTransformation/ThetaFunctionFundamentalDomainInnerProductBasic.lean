@@ -23,7 +23,7 @@ theorem mul_conj_polar (a b : ℂ) : a * conj b =
   have h : ∀ z : ℂ, ((‖z‖ ^ 2 : ℝ) : ℂ) = z * conj z := fun z => by
     rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
   rw [h, h, h, h]
-  simp only [map_add, map_mul, map_neg, map_one, Complex.conj_I]
+  simp only [map_add (f := _), map_mul, map_neg, map_one, Complex.conj_I]
   linear_combination ((a * conj b - b * conj a) / 2) * Complex.I_sq
 
 section Meas
@@ -227,7 +227,7 @@ theorem ip_basic : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), (∃ (μ : Measure 
         ∫ x, ‖(f + c • f') x‖ ^ 2 ∂(μ.restrict 𝓕) := by
       intro c
       have hg : C.IsTh (f + c • f') := GlobalTheory.WeilVacMove.isTheta_add hf (GlobalTheory.WeilVacMove.isTheta_smul c hf2)
-      have e : om p f + c • om p f' = om p (f + c • f') := by rw [map_add, map_smul]
+      have e : om p f + c • om p f' = om p (f + c • f') := by rw [map_add (f := _), map_smul]
       rw [e, integral_normSq_eq _ (hbm _ (hth _ hg)).1, integral_normSq_eq _ (hbm _ hg).1,
         hw.om_unit μ 𝓕 hH hFD p _ hg]
     unfold ipO

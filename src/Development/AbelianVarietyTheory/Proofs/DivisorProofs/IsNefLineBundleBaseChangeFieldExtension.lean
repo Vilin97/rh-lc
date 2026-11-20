@@ -89,7 +89,7 @@ theorem isNef_pull (hN : Published.NefNumerics) [IsProper (strHom k X)] {L H : L
       change pull (redι C) (cls _ (isLB_lbPow hT' r)) = pull φ (cls _ hr')
       rw [cls_lbPow_tens_lbPow hL hA, cls_lbPow_tens_lbPow hLZ' hHZ', cls_pull h.isLB, cls_pull hH.isLB,
         cls_pull h.isLB, cls_pull hH.isLB]
-      simp only [map_nsmul, map_add, ← pull_comp, hφ]
+      simp only [map_nsmul, map_add (f := _), ← pull_comp, hφ]
     rw [← h1, hC.interNumRed_lbPow hH' hT', hC.interNumRed_of_cls_eq_add hH' hT' (isLB_lbPow hL m) hA rfl,
       hC.interNumRed_lbPow hH' hL] at h0
     exact nonneg_of_mul_nonneg_right h0 (Nat.cast_pos.2 hr)

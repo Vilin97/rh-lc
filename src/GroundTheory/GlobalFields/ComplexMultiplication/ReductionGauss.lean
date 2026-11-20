@@ -51,7 +51,7 @@ theorem gaussPrime_eq {ϖ : 𝒪} (hϖ : Irreducible ϖ) :
   · intro y hy
     obtain ⟨p, q, rfl⟩ := CoordinateRing.exists_smul_basis_eq y
     have hy' : coordReduce W (p • 1 + q • CoordinateRing.mk W Y) = 0 := hy
-    simp_rw [map_add, CoordinateRing.map_smul, map_one, CoordinateRing.map_mk, Polynomial.map_X]
+    simp_rw [map_add (f := _), CoordinateRing.map_smul, map_one, CoordinateRing.map_mk, Polynomial.map_X]
       at hy'
     obtain ⟨hp, hq⟩ := CoordinateRing.smul_basis_eq_zero hy'
     have hker : ∀ r : 𝒪[X], r.map (residue 𝒪) = 0 → ∃ r' : 𝒪[X], r = C ϖ * r' := by
@@ -149,7 +149,7 @@ theorem exists_map_eq_smul (α : (W.baseChange K).toAffine.CoordinateRing) :
     (b • IsLocalization.integerNormalization (nonZeroDivisors 𝒪) q) • CoordinateRing.mk W Y,
     mul_ne_zero (nonZeroDivisors.ne_zero hb) (nonZeroDivisors.ne_zero hb'), ?_⟩
   change CoordinateRing.map W (algebraMap 𝒪 K) _ = _
-  rw [map_add, CoordinateRing.map_smul, CoordinateRing.map_smul, map_one, CoordinateRing.map_mk,
+  rw [map_add (f := _), CoordinateRing.map_smul, CoordinateRing.map_smul, map_one, CoordinateRing.map_mk,
     Polynomial.map_X, Polynomial.map_smul, Polynomial.map_smul, hbp, hbq, smul_add]
   simp only [algebraMap_smul, smul_assoc, smul_smul, mul_comm b b']
   rfl

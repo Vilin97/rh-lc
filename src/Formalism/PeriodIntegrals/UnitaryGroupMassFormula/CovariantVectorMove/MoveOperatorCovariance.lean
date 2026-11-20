@@ -46,7 +46,7 @@ theorem midC (hη : ∀ a b c, E a b * η c - η c * E a b = if b = c then η a 
   simp only [Tm, symC, mul_add, add_mul, hk]
   by_cases hxd : x = d
   · simp only [if_pos hxd]
-    rw [hc, map_add, map_one, add_mul, one_mul]
+    rw [hc, map_add (f := _), map_one, add_mul, one_mul]
     abel
   · simp only [if_neg hxd, mul_zero, zero_mul, zero_add]
     abel

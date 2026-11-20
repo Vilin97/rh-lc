@@ -260,7 +260,7 @@ lemma pullbackSection_mem_thetaSpace {q n : ℕ} {π : Vsp X.dim →ₗ[ℂ] Vsp
       intro k
       have h := hs.2 (fun _ => π (γ k)) (fun _ => hπ.2.1 _ (hγ k)) (fun _ => π (v k))
       have e1 : (fun _ : Fin 1 => π ((v + γ) k)) = (fun _ => π (v k)) + (fun _ => π (γ k)) := by
-        funext; simp [map_add]
+        funext; simp [map_add (f := _)]
       rw [e1, h]
       simp only [HC, Finset.univ_unique, Finset.sum_singleton, Finset.prod_singleton, hπ.2.2.1,
         hπ.2.2.2 _ (hγ k), pow_one]
@@ -282,7 +282,7 @@ lemma translate_pullbackSection {q n : ℕ} {π : Vsp X.dim →ₗ[ℂ] Vsp X.di
     intro j
     have h := hs.2 (fun _ => π (k j)) (fun _ => hk j) (fun _ => π ((v - k) j))
     have e1 : (fun _ : Fin 1 => π ((v - k) j)) + (fun _ => π (k j)) = (fun _ => π (v j)) := by
-      funext; simp [← map_add]
+      funext; simp [← map_add (f := _)]
     rw [e1] at h
     simp only [HC, Finset.univ_unique, Finset.sum_singleton, Finset.prod_singleton, hπ.2.2.1,
       pow_one] at h

@@ -85,7 +85,7 @@ theorem exists_comb_model {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D
         have a1 := congrFun (congrFun h1 i) j
         have a2 := congrFun (congrFun h2 i) j
         simp only [Matrix.map_apply, Matrix.add_apply, Matrix.zero_apply] at a1 a2 ⊢
-        rw [RingHom.map_add, a1, a2, add_zero]
+        rw [RingHom.map_add (f := _), a1, a2, add_zero]
       · rw [Matrix.add_apply, mul_add, half1 x ((isHalf_iff S T).2 hx) i j, half2 y ((isHalf_iff S T).2 hy) i j]
     have s0 := GlobalTheory.isSBHalf_halfInd e (latO S T ΛS ΛT fun _ => True)
     have s1 : IsSBHalf e (latO S T ΛS ΛT fun _ => True)
@@ -119,7 +119,7 @@ theorem exists_comb_model {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D
     obtain ⟨c, h1, h2⟩ := hg
     obtain ⟨c', h1', h2'⟩ := hg'
     exact ⟨c + c', fun w hw => (Finset.mem_union.1 (Finsupp.support_add hw)).elim (h1 w) (h1' w), fun f₀ Tm h => by
-      rw [LinearMap.map_add, GlobalTheory.LocComb.comb_add, h2 f₀ Tm h, h2' f₀ Tm h]⟩
+      rw [LinearMap.map_add (f := _), GlobalTheory.LocComb.comb_add, h2 f₀ Tm h, h2' f₀ Tm h]⟩
   | smul a g _ hg =>
     obtain ⟨c, h1, h2⟩ := hg
     exact ⟨a • c, fun w hw => h1 w (Finsupp.support_smul hw), fun f₀ Tm h => by

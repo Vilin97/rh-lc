@@ -34,7 +34,7 @@ def truncEval {n : ℕ} (s : S) (hs : s ^ n = 0) : ℚ⟦X⟧ →ₐ[ℚ] S wher
   map_zero' := by
     rw [map_zero, map_zero]
   map_add' f g := by
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
   commutes' r := by
     rw [Algebra.algebraMap_eq_smul_one, map_smul, map_smul, ← Polynomial.coe_one,
       aeval_trunc_coe_of_pow_eq_zero hs, map_one, ← Algebra.algebraMap_eq_smul_one]
@@ -199,7 +199,7 @@ section Log
 
 theorem one_add_X_mul_geom : (1 + X : ℚ⟦X⟧) * mk (fun n => algebraMap ℚ ℚ ((-1) ^ n)) = 1 := by
   ext n
-  rw [add_mul, one_mul, map_add, coeff_one]
+  rw [add_mul, one_mul, map_add (f := _), coeff_one]
   rcases n with _ | n
   · simp
   · rw [coeff_succ_X_mul, coeff_mk, coeff_mk, if_neg (Nat.succ_ne_zero n)]
@@ -213,13 +213,13 @@ theorem log_subst_one_add_X_pow_sub_one (k : ℕ) :
   · set G : ℚ⟦X⟧ := mk (fun n => algebraMap ℚ ℚ ((-1) ^ n)) with hG
     have hsub : ((1 + X : ℚ⟦X⟧) ^ k) * G.subst ((1 + X) ^ k - 1 : ℚ⟦X⟧) = 1 := by
       have h := congrArg (substAlgHom hS) one_add_X_mul_geom
-      rw [map_mul, map_one, map_add, map_one, coe_substAlgHom, subst_X hS, add_sub_cancel] at h
+      rw [map_mul, map_one, map_add (f := _), map_one, coe_substAlgHom, subst_X hS, add_sub_cancel] at h
       exact h
     rw [derivative_subst hS, deriv_log, ← hG]
     have hd : d⁄dX ℚ ((k : ℚ⟦X⟧) * log ℚ) = (k : ℚ⟦X⟧) * G := by
       rw [Derivation.leibniz, deriv_log, ← hG, Derivation.map_natCast, smul_zero, add_zero,
         smul_eq_mul]
-    rw [hd, map_sub, derivative_pow, derivative_one, sub_zero, map_add, derivative_one,
+    rw [hd, map_sub, derivative_pow, derivative_one, sub_zero, map_add (f := _), derivative_one,
       derivative_X, zero_add, mul_one]
     have hne : ((1 + X : ℚ⟦X⟧) ^ k) ≠ 0 := by
       refine pow_ne_zero _ fun h => ?_

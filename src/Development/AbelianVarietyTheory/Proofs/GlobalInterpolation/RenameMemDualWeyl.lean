@@ -63,7 +63,7 @@ theorem _root_.GlobalTheory.SubstMem.rename_mem_dualWeyl {a b : ℕ} (hab : a �
         · subst hv
           simp only [AlgHom.comp_apply, rename_X, _root_.Formalism.GradedWeylDivisibility.colAddGen, aeval_X, Prod.map_snd, Prod.map_fst,
             if_pos rfl]
-          simp only [ite_true, if_true, map_add, map_mul, rename_X]
+          simp only [ite_true, if_true, map_add (f := _), map_mul, rename_X]
           rfl
         · have hv' : Fin.castLE hab v2 ≠ Fin.castLE hab j' :=
             fun h => hv (Fin.castLE_injective hab h)
@@ -213,7 +213,7 @@ theorem _root_.GlobalTheory.SubstMem.substAdj_sharp_mem : ∀ (K : Type) [Field 
       rw [frDet_eq_blockEmb_initMinor_id, ← map_pow, ← map_mul, _root_.GlobalTheory.SubstMem.substAdj_blockEmb]
   | zero => simp [hsharp]
   | add x y _ _ hx hy =>
-    rw [hsharp, add_mul, map_add]
+    rw [hsharp, add_mul, map_add (f := _)]
     exact add_mem (by rw [← hsharp]; exact hx) (by rw [← hsharp]; exact hy)
   | smul c x _ hx =>
     rw [hsharp, smul_mul_assoc, map_smul]

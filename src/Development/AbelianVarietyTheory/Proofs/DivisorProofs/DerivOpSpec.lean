@@ -24,7 +24,7 @@ def derivOp (hex : ∀ Φ ∈ D, ∃ Φ₁ ∈ D, ∀ x, HasDerivAt (fun t => T 
     have h3 := (hex (Φ + Ψ).1 (Φ + Ψ).2).choose_spec.2 x
     have h4 : HasDerivAt (fun t => T t (Φ + Ψ).1 x) ((hex Φ.1 Φ.2).choose x + (hex Ψ.1 Ψ.2).choose x) 0 := by
       have e : (fun t => T t (Φ + Ψ).1 x) = fun t => T t Φ.1 x + T t Ψ.1 x := by
-        funext t; simp [map_add]
+        funext t; simp [map_add (f := _)]
       rw [e]; exact h1.add h2
     exact h3.unique h4
   map_smul' c Φ := by
@@ -90,7 +90,7 @@ def quotSub (Nr : Submodule (Algebra.adjoin ℂ s) M) (T : Submodule ℂ (M ⧸ 
       rw [this]; exact T.smul_mem c hq
     | add A A' _ _ h h' =>
       have : Nr.mkQ ((A + A') x) = Nr.mkQ (A x) + Nr.mkQ (A' x) := by
-        rw [LinearMap.add_apply, map_add]
+        rw [LinearMap.add_apply, map_add (f := _)]
       rw [this]; exact T.add_mem (h x hq) (h' x hq)
     | mul A A' _ _ h h' => exact h _ (h' x hq)
 

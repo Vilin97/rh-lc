@@ -162,7 +162,7 @@ variable {R : Type v} [Ring R] [Algebra K R] {D : Type w} [DivisionRing D] [Alge
 def columnIdeal (e : R ≃ₐ[K] Matrix ι ι D) (i₀ : ι) : Ideal R where
   carrier := {x | ∀ i j, j ≠ i₀ → e x i j = 0}
   add_mem' {x y} hx hy i j hj := by
-    simp only [map_add, Matrix.add_apply, hx i j hj, hy i j hj, add_zero]
+    simp only [map_add (f := _), Matrix.add_apply, hx i j hj, hy i j hj, add_zero]
   zero_mem' i j _ := by simp
   smul_mem' c x hx i j hj := by
     simp only [smul_eq_mul, map_mul, Matrix.mul_apply]

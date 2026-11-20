@@ -130,7 +130,7 @@ theorem exists_pow_dvd [IsDomain R] (e : Tilt p R) (he : PreTilt.untilt e = 1) :
     have : (∑ i ∈ Finset.range p, w ^ i) = p + ∑ i ∈ Finset.range p, (w ^ i - 1) := by
       simp [Finset.sum_sub_distrib]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [this, map_add, map_natCast, map_sum]
+      rw [this, map_add (f := _), map_natCast, map_sum]
     refine add_mem p_mem (Ideal.sum_mem _ fun i _ => ?_)
     obtain ⟨c, hc⟩ := sub_one_dvd_pow_sub_one w i
     rw [hc, map_mul]
@@ -378,7 +378,7 @@ theorem exists_pow_eq_p_mul (η : tateModule p R) : ∃ y ∈ (⊥ : Ideal (Acri
       (Ideal.mul_mem_right _ _ (mem_jac (p_dvd_gamma_pow x hx))), ?_⟩
   have h1 := fact_gamma p x hx
   rw [← Nat.mul_factorial_pred hp.ne_zero, Nat.cast_mul] at h1
-  rw [← map_pow, eq_add_of_sub_eq ha, map_add, map_mul, map_mul, map_pow, map_natCast, ← h1]
+  rw [← map_pow, eq_add_of_sub_eq ha, map_add (f := _), map_mul, map_mul, map_pow, map_natCast, ← h1]
   ring
 
 theorem assoc_pow (η : tateModule p R) :
@@ -1011,7 +1011,7 @@ theorem exists_one_add_pow {p : ℕ} (hp : p.Prime) {A : Type*} [CommRing A] (y 
   refine ⟨Polynomial.aeval y s, ?_⟩
   rw [eq_add_of_sub_eq hs] at hr
   have h5 := congrArg (Polynomial.aeval y) hr
-  simp only [map_pow, map_add, map_mul, map_one, Polynomial.aeval_X, map_natCast] at h5
+  simp only [map_pow, map_add (f := _), map_mul, map_one, Polynomial.aeval_X, map_natCast] at h5
   rw [show m + 2 - 1 = m + 1 from rfl]
   linear_combination h5
 

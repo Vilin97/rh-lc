@@ -198,7 +198,7 @@ def inc0 : WO S T₀ →+ WO S T where
 def incAdj : Mx D S.rank ρ →+ WO S T where
   toFun y := d.incY S (incA D (-D.host.xi0⁻¹) • (adj y ⬝ gA S))
   map_zero' := by rw [adj_zero, Matrix.zero_mul, smul_zero, map_zero]
-  map_add' _ _ := by rw [adj_add, Matrix.add_mul, smul_add, map_add]
+  map_add' _ _ := by rw [adj_add, Matrix.add_mul, smul_add, map_add (f := _)]
 
 theorem incX_apply (ξ : Mx D ρ S.rank) : d.incX S ξ = d.jX ⬝ ξ := rfl
 
@@ -397,7 +397,7 @@ theorem pairS_plus (S₀ T : HSp D) {ρ : ℕ} (x : Mx D T.rank ρ) (b b' : Mx D
   simp only [Matrix.mul_assoc]
 
 theorem trHalf_half (z : AE D) : trHalf D (half D * z) + trHalf D (half D * z) = trHalf D z := by
-  rw [← map_add, ← add_mul, half_add_half, one_mul]
+  rw [← map_add (f := _), ← add_mul, half_add_half, one_mul]
 
 example {S S₀ T : HSp D} (d : HypDec S S₀ 0) (ψ : AddChar (AF D.host.F) ℂ) (f : WO S T → ℂ) (x a : Mx D T.rank 0)
     (w₀ : WO S₀ T) :

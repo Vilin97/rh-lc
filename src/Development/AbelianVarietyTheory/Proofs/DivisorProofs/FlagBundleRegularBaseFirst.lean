@@ -41,7 +41,7 @@ theorem evenPow_eq_upP (i : ℕ) (R : MvPolynomial (Fin 3) ℝ) :
   rw [pow_mul, show ((X 3 + X 4 - 2 * X 0) ^ 2 : MvPolynomial (Fin 5) ℝ) =
     (-4) * (X 0 * (X 3 + X 4 - X 0)) + (X 3 + X 4) ^ 2 by ring, add_pow, upperParabolic, Finset.sum_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
-  simp only [coefE, map_mul, map_pow, map_add, e, aeval_X, aeval_C, algebraMap_eq, h4, map_natCast, id]
+  simp only [coefE, map_mul, map_pow, map_add (f := _), e, aeval_X, aeval_C, algebraMap_eq, h4, map_natCast, id]
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, mul_pow,
     ← pow_mul]
   ring
@@ -77,7 +77,7 @@ theorem dvd_sub_subst (Z : MvPolynomial (Fin 4) ℝ) :
   induction Z using MvPolynomial.induction_on with
   | C a => simp
   | add P Q hP hQ =>
-    rw [map_add, add_sub_add_comm]
+    rw [map_add (f := _), add_sub_add_comm]
     exact dvd_add hP hQ
   | mul_X P n hP =>
     have hn : (X 3 - X 1 * X 2 : MvPolynomial (Fin 4) ℝ) ∣ X n - aeval ![X 0, X 1, X 2, X 1 * X 2] (X n : MvPolynomial (Fin 4) ℝ) := by
@@ -93,7 +93,7 @@ theorem downP_subst (i : ℕ) (R : MvPolynomial (Fin 3) ℝ) :
   rw [← coe_aeval_eq_eval]
   change aeval x _ = aeval x _
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [downP, coefE, map_sum, map_mul, map_pow, map_add, map_sub, aeval_rename, rename_C, rename_X, aeval_C, aeval_X, id]
+    simp only [downP, coefE, map_sum, map_mul, map_pow, map_add (f := _), map_sub, aeval_rename, rename_C, rename_X, aeval_C, aeval_X, id]
   simp only [← AlgHom.comp_apply, comp_aeval]
   have e₁ : (fun l => (aeval fun l => (aeval x) ((![X 0, X 1, X 2, X 1 * X 2] : Fin 4 → MvPolynomial (Fin 4) ℝ) l))
       ((![X 1 + X 2, X 3] : Fin 2 → MvPolynomial (Fin 4) ℝ) l)) = ![x 1 + x 2, x 1 * x 2] := by

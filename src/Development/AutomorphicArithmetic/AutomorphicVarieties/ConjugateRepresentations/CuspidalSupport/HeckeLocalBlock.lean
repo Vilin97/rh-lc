@@ -19,7 +19,7 @@ def hkOp {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] (ρ : Representa
     (hK : IsCommensurated K) {h : G → ℂ} (hh : h ∈ Hecke ℂ K) : Module.End ℂ V where
   toFun := heckeVec ρ K h
   map_add' x y := by
-    simp only [heckeVec, map_add, smul_add]
+    simp only [heckeVec, map_add (f := _), smul_add]
     exact finsum_add_distrib (finite_heckeVec hK hh ρ x) (finite_heckeVec hK hh ρ y)
   map_smul' c x := (map_heckeVec hK hh (ρ' := ρ) (c • LinearMap.id) (fun g y => (map_smul (ρ g) c y).symm) x).symm
 

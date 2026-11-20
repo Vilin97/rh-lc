@@ -28,7 +28,7 @@ theorem card_small : ((jT2 P j s).filter fun u : ℤ => |u| ≤ (n : ℤ)).card 
   have h : jT2 P j s = (Finset.univ : Finset (Fin (R.k - 1))).val.map (fun i => dj P j s ⌊P.v i⌋) +
       (Finset.univ : Finset (Fin R.m)).val.map (fun i => dj P j s (-⌊P.b i⌋)) := by
     cases s <;>
-      simp only [jT2, GlobalTheory.HTW.jW, cloud, lows, dj, Multiset.map_add, Multiset.map_map, if_true,
+      simp only [jT2, GlobalTheory.HTW.jW, cloud, lows, dj, Multiset.map_add (f := _), Multiset.map_map, if_true,
         Bool.false_eq_true, if_false] <;>
       congr 1 <;> refine Multiset.map_congr rfl fun i _ => ?_ <;>
       simp only [Function.comp] <;> omega

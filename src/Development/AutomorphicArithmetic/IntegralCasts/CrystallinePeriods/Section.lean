@@ -175,7 +175,7 @@ theorem Ainf.theta_algebraMap_padicInt (g : ℤ_[p] →+* R) (a : ℤ_[p]) :
   obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.1 (PadicInt.appr_spec n a)
   have ha : a = (PadicInt.appr a n : ℤ_[p]) + c * (p : ℤ_[p]) ^ n := by rw [hc]; ring
   rw [ha, Ideal.span_singleton_pow, Ideal.mem_span_singleton]
-  simp only [map_add, map_mul, map_pow, map_natCast]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast]
   exact ⟨Ainf.theta p R (algebraMap ℤ_[p] _ c) - g c, by ring⟩
 
 variable {p} in

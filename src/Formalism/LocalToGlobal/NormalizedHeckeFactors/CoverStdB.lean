@@ -186,7 +186,7 @@ theorem heckeStd_of_plain (T : NormalizedLocalCompatibility D M) (hP : HeckeStdP
         map_add' := fun y y' => by
           have := Plin (Mw.real y) (hTS y) (Mw.real y') (hTS y') 1
           rw [one_smul, one_smul] at this
-          simp only [map_add]
+          simp only [map_add (f := _)]
           exact this
         map_smul' := fun c y => by
           have := Plin (Mw.real y) (hTS y) 0 (Submodule.zero_mem _) c

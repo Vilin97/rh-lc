@@ -36,7 +36,7 @@ theorem charpoly_of_bijective {R K M V : Type*} [CommRing R] [Field K] [Algebra 
     obtain ⟨z, rfl⟩ := e.surjective v
     rw [LinearEquiv.conj_apply_apply, e.symm_apply_apply]
     induction z with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul x m =>
       have : x ⊗ₜ[R] m = x • ((1 : K) ⊗ₜ[R] m) := by simp [TensorProduct.smul_tmul']
       rw [this, map_smul, map_smul, map_smul, map_smul]

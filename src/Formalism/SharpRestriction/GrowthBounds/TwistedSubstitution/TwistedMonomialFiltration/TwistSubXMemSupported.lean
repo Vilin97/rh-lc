@@ -253,7 +253,7 @@ theorem twistSub_monomial_w (w : Set ι) (hd : Disjoint S w) (j : Fin n) (M' : �
 theorem twistSub_wCoeff (w : Set ι) (hd : Disjoint S w) (j : Fin n) (M : ι × Fin n →₀ ℕ)
     (F : MvPolynomial (ι × Fin n) R) : twistSub LL S j (wCoeff w M F) = wCoeff w M (twistSub LL S j F) := by
   induction F using MvPolynomial.induction_on' with
-  | add P Q hP hQ => rw [wCoeff_add, map_add, map_add, wCoeff_add, hP, hQ]
+  | add P Q hP hQ => rw [wCoeff_add, map_add (f := _), map_add (f := _), wCoeff_add, hP, hQ]
   | monomial μ c =>
     rw [wCoeff_monomial, monomial_split w μ c, map_mul, twistSub_monomial_w LL S w hd j _ (filter_neg_filter_pos w μ),
       wCoeff_mul_monomial w M _ _ (twistSub_wfree LL S w j _ (wfree_monomial w μ c)) (filter_neg_filter_pos w μ)]

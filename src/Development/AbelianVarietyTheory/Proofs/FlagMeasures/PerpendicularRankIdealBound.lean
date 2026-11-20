@@ -191,10 +191,10 @@ theorem key (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h.Nondegene
         have := L.sub_mem (L.smul_mem b hz) hbm.1
         rw [smul_add, add_sub_cancel_left] at this
         exact this
-      rw [smul_add, map_add, LinearMap.add_apply, (hT x).1 hxT _ hbm.2, zero_add]
+      rw [smul_add, map_add (f := _), LinearMap.add_apply, (hT x).1 hxT _ hbm.2, zero_add]
       exact (mem_dual h _ x).1 hx1 _ hbt
     · intro a b ha hb
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact Submodule.add_mem _ ha hb
   obtain ⟨a, haI, rfl⟩ := (Ideal.mem_map_of_equiv _ r).1 hr
   change _ ∈ L

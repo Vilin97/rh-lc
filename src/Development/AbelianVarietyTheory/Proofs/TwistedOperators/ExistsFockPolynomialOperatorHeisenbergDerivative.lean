@@ -121,10 +121,10 @@ theorem pure_deriv {B : (X → ℂ) → (X → ℂ)} {c : ι → ℂ}
   induction Q using MvPolynomial.induction_on with
   | C a => simp [hC, Bsm _ _ hf, hv]
   | add p q hp hq =>
-    rw [map_add, Badd _ _ (hm _) (hm _), hp, hq, ← map_add, ← Finset.sum_add_distrib]
-    simp only [map_add, smul_add]
+    rw [map_add (f := _), Badd _ _ (hm _) (hm _), hp, hq, ← map_add (f := _), ← Finset.sum_add_distrib]
+    simp only [map_add (f := _), smul_add]
   | mul_X p j hp =>
-    rw [mul_comm, hX, hBA _ _ (hm _), hp, ← hX, ← map_smul, ← map_add]
+    rw [mul_comm, hX, hBA _ _ (hm _), hp, ← hX, ← map_smul, ← map_add (f := _)]
     congr 1
     simp only [MvPolynomial.pderiv_mul, smul_add, Finset.sum_add_distrib, Finset.mul_sum, mul_smul_comm]
     rw [add_comm]
@@ -237,7 +237,7 @@ theorem exists_dRho_ptAt : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : I
     rw [aPlus, smul_smul, mul_inv_cancel₀ (fockScale_ne_zero τ), one_smul, annih, crea]
     module
   change dRho (heisO ψ S T) θ τ z (pureTensorL A f P) = pureTensorL A f _
-  rw [h3, h1, h2, ← map_smul, ← map_add, ← map_smul]
+  rw [h3, h1, h2, ← map_smul, ← map_add (f := _), ← map_smul]
   congr 1
   simp only [LinearMap.smul_apply, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.mulLeft_apply]
   rfl

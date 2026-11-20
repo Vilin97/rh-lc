@@ -38,11 +38,11 @@ theorem bal_alg (O X U : Type) [CommRing O] [StarRing O] [AddCommGroup X] [Modul
     induction v using Finsupp.induction with
     | zero => simp [hy0]
     | single_add x a f hxf ha0 ih =>
-      rw [map_add, hy, ih, Finsupp.prod_add_index' (fun x => by simp [hy0]) (fun x a₁ a₂ => by rw [add_smul, hy]),
+      rw [map_add (f := _), hy, ih, Finsupp.prod_add_index' (fun x => by simp [hy0]) (fun x a₁ a₂ => by rw [add_smul, hy]),
         Finsupp.prod_single_index (by simp [hy0])]
       simp
   refine ⟨fun y z => (s y).prod (fun x a => (δ a x z)⁻¹), fun y y' z => ?_, fun y z z' => ?_, fun b y z => ?_⟩
-  · simp only [map_add]
+  · simp only [map_add (f := _)]
     exact Finsupp.prod_add_index' (fun x => by simp [h0]) (fun x a₁ a₂ => by rw [ha, mul_inv])
   · simp only [hz, mul_inv]
     exact Finsupp.prod_mul
@@ -196,7 +196,7 @@ theorem exists_balTau : ∀ (R : Type) [CommRing R] [IsLocalRing R] (B : Over (S
     have a1 := hadd (a • y) (b • y) z p J hJ
     have a2 := hadd2 y (star a • z) (star b • z) p J hJ
     have r := GlobalTheory.T.rosatiGenerator_value_add_endomorphisms_cubical cub hG hA (act.act a) (act.act (star a)) (act.act b) (act.act (star b)) (act.act (a + b))
-      (act.act (star (a + b))) (act.map_add a b) (by rw [star_add, act.map_add]) (u a) (u b) (u (a + b)) (hug a) (hug b)
+      (act.act (star (a + b))) (act.map_add a b) (by rw [star_add, act.map_add (f := _)]) (u a) (u b) (u (a + b)) (hug a) (hug b)
       (hug (a + b)) (hu0 a) (hu0 b) (hu0 (a + b)) hJ (c y) (c z)
     rw [← c_lin, ← c_lin, ← c_lin, ← c_lin] at r
     rw [add_smul, show star (a + b) • z = star a • z + star b • z by rw [star_add, add_smul]] at e1

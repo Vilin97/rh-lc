@@ -25,7 +25,7 @@ theorem exists_monic_aeval_eq_zero {R E : Type*} [CommRing R] [Field E] [Algebra
       simp [Algebra.algebraMap_eq_smul_one, Matrix.smul_mulVec]
     | add a b ha hb =>
       intro x
-      simp only [map_add, Polynomial.map_add, LinearMap.add_apply, Submodule.coe_add, ha, hb,
+      simp only [map_add (f := _), Polynomial.map_add (f := _), LinearMap.add_apply, Submodule.coe_add, ha, hb,
         Matrix.add_mulVec]
     | monomial k a ih =>
       intro x

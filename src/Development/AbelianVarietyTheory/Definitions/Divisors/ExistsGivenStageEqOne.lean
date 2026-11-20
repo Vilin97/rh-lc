@@ -193,8 +193,8 @@ theorem ae_ext {z z' : AE D} (h : infPart D z = infPart D z') (h' : ∀ Q, cpt (
 
 theorem atPl_add (w : Pl D.host.E) (x y : Kw w) : atPl w (x + y) = atPl w x + atPl w y := by
   classical
-  refine ae_ext (by rw [RingHom.map_add, (atPl_spec w _).1, (atPl_spec w _).1, (atPl_spec w _).1, add_zero]) fun Q => ?_
-  rw [RingHom.map_add, RingHom.map_add, (atPl_spec w _).2, (atPl_spec w _).2, (atPl_spec w _).2, Pi.single_add, Pi.add_apply]
+  refine ae_ext (by rw [RingHom.map_add (f := _), (atPl_spec w _).1, (atPl_spec w _).1, (atPl_spec w _).1, add_zero]) fun Q => ?_
+  rw [RingHom.map_add (f := _), RingHom.map_add (f := _), (atPl_spec w _).2, (atPl_spec w _).2, (atPl_spec w _).2, Pi.single_add, Pi.add_apply]
 
 def psiAt {G : GridData L sc} (W : G.Weil) (w : Pl D.host.E) : AddChar (Kw w) Circle where
   toFun x := ⟨W.ψ (Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * atPl w x)),
@@ -204,7 +204,7 @@ def psiAt {G : GridData L sc} (W : G.Weil) (w : Pl D.host.E) : AddChar (Kw w) Ci
     simp [this])
   map_add_eq_mul' x y := Circle.ext (by
     change W.ψ _ = W.ψ _ * W.ψ _
-    rw [atPl_add, mul_add, map_add, AddChar.map_add_eq_mul])
+    rw [atPl_add, mul_add, map_add (f := _), AddChar.map_add_eq_mul])
 
 def colFrame (L : LevCh D T) : ∀ j, GL (Fin (columnBlock L j).sp.rank) (Formalism.IndefR.Lev.EAf D)
   | 0 => L.βY 0

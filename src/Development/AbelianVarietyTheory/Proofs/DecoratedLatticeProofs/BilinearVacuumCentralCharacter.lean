@@ -115,7 +115,7 @@ theorem fderiv_om (hom : IsWeilDatumO ψ S T χS χT om) (hc : Chart θ σ) {n :
     rw [← this]
     congr 1
     funext y
-    rw [map_add, add_assoc]
+    rw [map_add (f := _), add_assoc]
   have h3 : dv θ σ S T (mov θ g⁻¹ h⁻¹ u) f = ∑ j, ((e.repr (mov θ g⁻¹ h⁻¹ u) j : ℝ) : ℂ) • dv θ σ S T (e j) f := by
     have := congrArg (fun z => ((dvL hc hψ S T z ⟨f, hf⟩ : thetaSub ψ S T) : WO S T → ℂ)) (e.sum_repr (mov θ g⁻¹ h⁻¹ u))
     set_option synthInstance.maxHeartbeats 100000 in

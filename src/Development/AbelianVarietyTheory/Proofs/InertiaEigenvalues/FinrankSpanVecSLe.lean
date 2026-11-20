@@ -30,7 +30,7 @@ theorem span_vecS_span (S : Set (Fin a → Fin n → K)) :
     induction hv using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul c x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
   · exact Submodule.span_mono (Set.image_mono Submodule.subset_span)
 
@@ -79,7 +79,7 @@ theorem isCompl_span_vecS {W W' : Submodule K (Fin a → Fin n → K)} (h : IsCo
     rintro _ ⟨v, rfl⟩
     have hv : v ∈ W ⊔ W' := by rw [h.sup_eq_top]; trivial
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hv
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem (Submodule.mem_sup_left (Submodule.subset_span ⟨y, hy, rfl⟩))
       (Submodule.mem_sup_right (Submodule.subset_span ⟨z, hz, rfl⟩))
   have h1 : finrank L A ≤ finrank K W := finrank_span_vecS_le W

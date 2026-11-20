@@ -16,7 +16,7 @@ theorem smul_eq_zero_finite_part_zero (u : AF F) (hu : u.1 = 0) (z : AF F ⊗[F]
     intro z
     induction z using TensorProduct.induction_on with
     | zero => rw [smul_zero, map_zero, map_zero]; rfl
-    | add x y hx hy => rw [smul_add, hx, hy, map_add, map_add]; rfl
+    | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]; rfl
     | tmul a x =>
       rw [TensorProduct.smul_tmul', Algebra.TensorProduct.map_tmul, LinearMap.rTensor_tmul]
       congr 1

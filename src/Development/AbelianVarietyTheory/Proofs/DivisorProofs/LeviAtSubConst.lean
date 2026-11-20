@@ -222,7 +222,7 @@ theorem nefAn_and_famS : ∀ (D : D7) (Y : ShimX D.what₂.Tau) (T : Real0 Y) (c
   intro D Y T c h
   refine ⟨nefAn (T.th_pot c) h, fun d hQ hS => famS (T.th_pot c) (T.a_pot c) (fun σ j y hy w => ⟨?_, ?_⟩) h hQ hS⟩
   · intro u v
-    rw [← T.c1_L 0 c _ σ j y hy, ← T.c1_L 0 c _ σ j y hy, ← T.c1_L 0 c _ σ j y hy, map_add,
+    rw [← T.c1_L 0 c _ σ j y hy, ← T.c1_L 0 c _ σ j y hy, ← T.c1_L 0 c _ σ j y hy, map_add (f := _),
       (T.K 0 c).isOneCochain_add _ _ σ j y hy, leviAt_add _ ((T.K 0 c).firstChern_isPotential _ σ) ((T.K 0 c).firstChern_isPotential _ σ) j hy]
   · intro t u
     rw [← T.c1_L 0 c _ σ j y hy, ← T.c1_L 0 c _ σ j y hy, map_smul, (T.K 0 c).firstChern_smul_leviEq _ _ σ j y hy, leviAt_rsmul,

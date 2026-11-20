@@ -29,7 +29,7 @@ def V (p : ℕ) (J : Ideal B) : Submodule B Q where
     rintro q₁ q₂ ⟨k₁, b₁, hb₁, h₁⟩ ⟨k₂, b₂, hb₂, h₂⟩
     refine ⟨k₁ + k₂, (p : B) ^ k₂ * b₁ + (p : B) ^ k₁ * b₂,
       J.add_mem (J.mul_mem_left _ hb₁) (J.mul_mem_left _ hb₂), ?_⟩
-    simp only [map_add, map_mul, map_pow, map_natCast, ← h₁, ← h₂]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast, ← h₁, ← h₂]
     ring
   smul_mem' := by
     rintro b q ⟨k, b₁, hb₁, h₁⟩

@@ -23,7 +23,7 @@ theorem qExpansion_E₄ :
   have hb : bernoulli 4 = -1 / 30 := by decide +kernel
   rcases eq_or_ne m 0 with rfl | hm
   · simp [sigmaSeries]
-  · rw [map_add, map_zsmul]
+  · rw [map_add (f := _), map_zsmul]
     simp [hm, sigmaSeries, hb, coeff_one]
     norm_num
 
@@ -53,7 +53,7 @@ theorem twelve_smul_cSeries :
     (12 : ℤ) • cSeries = (5 : ℤ) • sigmaSeries 3 + (7 : ℤ) • sigmaSeries 5 := by
   ext n
   have h := Nat.mul_div_cancel' (twelve_dvd n)
-  rw [map_add, map_zsmul, map_zsmul, map_zsmul]
+  rw [map_add (f := _), map_zsmul, map_zsmul, map_zsmul]
   simp only [cSeries, sigmaSeries, coeff_mk, smul_eq_mul]
   exact_mod_cast h
 

@@ -155,7 +155,7 @@ theorem tensNU_mul_inclR (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [inclR]
-  | add y z hy hz => rw [add_mul, map_add, map_add, hy, hz, add_mul]
+  | add y z hy hz => rw [add_mul, map_add (f := _), map_add (f := _), hy, hz, add_mul]
 
 theorem glue_mul_rect {A B : Type} [CommRing A] [CommRing B] (j : B →ₙ+* A) {M : Matrix (Fin n) (Fin n) B}
     {β : Matrix (Fin r) (Fin r) B} {X : Matrix (Fin n) (Fin r) B} {X' : Matrix (Fin n) (Fin r) A}
@@ -205,7 +205,7 @@ theorem exists_of_inert {F E : Type} [Field F] [NumberField F] [Field E] [Number
     (σ := Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (Fv F v) σ) (fun _ => sigR_mem_intLoc σ) (sigR_invol (InertChart.conj_conj hσ))
     (τ := ι c) (tmul_mem_intLoc (one_mem _) c)
     (by change ι c + ι (σ c) = 1
-        rw [← map_add, hc, map_one]) hN
+        rw [← map_add (f := _), hc, map_one]) hN
     (J := JR (Fv F v) J) (by ext i j; exact congrArg ι (hJ.1 i j))
     ((Matrix.isUnit_iff_isUnit_det _).2 (isUnit_det_JR hJ.2)) (Λ := latLoc F L v)
     (fun y => Submodule.ext_iff.1 hL y) (ha v) (X := e.map ι) (P := p.map ι)

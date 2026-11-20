@@ -56,7 +56,7 @@ theorem IsTensorMap.unique {lam : ι → DomWeight n} {lam' : ι → DomWeight n
     exact (h fun τ => ⟨f τ, hf τ⟩).trans (h' fun τ => ⟨f τ, hf τ⟩).symm
   | zero => exact (map_zero T).trans (map_zero T').symm
   | add x y hx hy ihx ihy =>
-    have e : T (⟨x, hx⟩ + ⟨y, hy⟩) = T' (⟨x, hx⟩ + ⟨y, hy⟩) := by rw [map_add, map_add, ihx, ihy]
+    have e : T (⟨x, hx⟩ + ⟨y, hy⟩) = T' (⟨x, hx⟩ + ⟨y, hy⟩) := by rw [map_add (f := _), map_add (f := _), ihx, ihy]
     exact e
   | smul a x hx ih =>
     have e : T (a • ⟨x, hx⟩) = T' (a • ⟨x, hx⟩) := by rw [map_smul, map_smul, ih]

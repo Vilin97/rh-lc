@@ -36,7 +36,7 @@ def term (p : ℕ) : Cube.Term A p →ₛₗ[σ] Cube.Term B p where
   map_add' x y := by
     funext t
     by_cases h : Set.InjOn τ (t.1 : Set κ)
-    · simp only [dif_pos h, Pi.add_apply, map_add, smul_add]
+    · simp only [dif_pos h, Pi.add_apply, map_add (f := _), smul_add]
     · simp only [dif_neg h, Pi.add_apply, add_zero]
   map_smul' r x := by
     funext t

@@ -92,11 +92,11 @@ theorem exists_rat_bound (hσ : ∀ x, σ (σ x) = x) (hp : ∀ x, x ≠ 0 → 0
     rw [← Algebra.trace_eq_of_algEquiv σ (σ v * u), map_mul σ, hσ, mul_comm]
   obtain ⟨e, he⟩ := LinearMap.BilinForm.exists_orthogonal_basis
     (B := LinearMap.mk₂ ℚ (fun u v : E => Algebra.trace ℚ E (σ u * v))
-      (fun a b c => by rw [map_add, add_mul, map_add])
+      (fun a b c => by rw [map_add (f := _), add_mul, map_add (f := _)])
       (fun r a b => by
         rw [show σ (r • a) = r • σ a by rw [Rat.smul_def, Rat.smul_def, map_mul, map_ratCast],
           smul_mul_assoc, map_smul])
-      (fun a b c => by rw [mul_add, map_add])
+      (fun a b c => by rw [mul_add, map_add (f := _)])
       (fun r a b => by rw [mul_smul_comm, map_smul]))
     (LinearMap.isSymm_def.mpr fun u v => by simp only [LinearMap.mk₂_apply, RingHom.id_apply]; exact hsym u v)
   rw [LinearMap.isOrthoᵢ_def] at he
@@ -130,7 +130,7 @@ theorem exists_rat_bound (hσ : ∀ x, σ (σ x) = x) (hp : ∀ x, x ≠ 0 → 0
     refine ⟨2 * a + 2 * b, ?_⟩
     have h : ((2 * a + 2 * b : ℚ) : E) - σ (u + v) * (u + v) =
         ((2 : ℚ) : E) * ((a : E) - σ u * u) + ((2 : ℚ) : E) * ((b : E) - σ v * v) + σ (u - v) * (u - v) := by
-      rw [map_add, map_sub]
+      rw [map_add (f := _), map_sub]
       push_cast
       ring
     rw [h]

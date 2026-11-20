@@ -17,7 +17,7 @@ private theorem chi_comap (D : GDet n A G) (φ : H →* G) (y : MonoidAlgebra A 
   · simp
   · induction y using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp
 
 private theorem lam_comap (D : GDet n A G) (φ : H →* G) (i : ℕ) (y : MonoidAlgebra A H) :
@@ -52,7 +52,7 @@ private theorem ofRep_comap (ρ : G →* Matrix (Fin n) (Fin n) A) (φ : H →* 
   congr 1
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single g r => simp [GDet.repAlg]
 
 end Det

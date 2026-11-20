@@ -44,7 +44,7 @@ theorem exists_galois (B : Type) [CommRing B] [Module.Finite ℤ B] :
       congr 1
       exact RingHom.ext_int _ _
     | zero => rw [map_zero]; exact zero_mem _
-    | add _ _ _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add _ _ _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | smul r c _ hc => rw [map_zsmul]; exact zsmul_mem hc r
   let χ₁ : B →+* N := χ.codRestrict N hm
   exact ⟨χ₁.codRestrict (integralClosure ℤ N) fun b => (IsIntegral.of_finite ℤ b).map χ₁.toIntAlgHom, rfl⟩

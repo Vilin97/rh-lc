@@ -49,7 +49,7 @@ theorem exists_unique_dual_of_compatible_mod_pow :
   refine ⟨{ toFun := f, map_add' := ?_, map_smul' := ?_ }, ?_, ?_⟩
   · intro w w'
     refine (huniq (w + w') _ fun n => ?_).symm
-    rw [map_add, map_add, hf, hf]
+    rw [map_add (f := _), map_add (f := _), hf, hf]
   · intro c w
     refine (huniq (c • w) _ fun n => ?_).symm
     rw [RingHom.id_apply, smul_eq_mul, map_mul, map_smul, ← hf w n, Algebra.smul_def,

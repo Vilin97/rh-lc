@@ -180,7 +180,7 @@ theorem functional_eq_zero {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) {N : �
           rw [add_comm]
         rw [← h ⟨_, hm⟩]
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [← smul_eq_mul, ← map_smul, ← map_add, ← map_sum]
+          simp only [← smul_eq_mul, ← map_smul, ← map_add (f := _), ← map_sum]
         congr 1
         funext σ
         rw [Finset.sum_apply, Finset.sum_eq_single σ]

@@ -125,7 +125,7 @@ theorem dblz_shift (x₁ x₂ : Frame X.Ψ r) (τ : X.Ψ) (h : (aAnti X x₁ x�
   conv_rhs => rw [← one_mulVec (star (w τ k)), ← e, ← mulVec_mulVec, ← mulVec_add]
   congr 1
   by_cases hc : (c : ℕ) < X.p0
-  · simp only [if_pos hc, hermC, map_add, mulVec, dotProduct,
+  · simp only [if_pos hc, hermC, map_add (f := _), mulVec, dotProduct,
       aAnti, of_apply, Finset.sum_mul, FD.col, mat, Pi.add_apply, Pi.star_apply, RCLike.star_def]
     rw [Finset.sum_comm (f := fun i j => x₁ τ j c * τ.1 (X.Gm j i) * conj (w τ k i)),
       ← Finset.sum_add_distrib]
@@ -171,7 +171,7 @@ theorem expo_shift (x₁ x₂ : Frame X.Ψ r) (h : ∀ τ, (aLin X x₁ x₂ τ)
   ring
 
 theorem EFR_add_right (u v w : WR X n) : EFR X u (v + w) = EFR X u v + EFR X u w := by
-  simp only [EFR, hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib, add_re]
+  simp only [EFR, hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib, add_re]
 
 theorem EFR_smul_right (t : ℝ) (u v : WR X n) : EFR X u (t • v) = t * EFR X u v := by
   simp only [EFR, Finset.mul_sum]

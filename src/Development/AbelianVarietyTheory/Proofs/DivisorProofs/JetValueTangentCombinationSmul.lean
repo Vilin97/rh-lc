@@ -164,7 +164,7 @@ theorem coeff_scalePoly (a : R) {k : ℕ} (m : Fin k →₀ ℕ) (p : MvPolynomi
     split_ifs with h
     · rw [h]
     · rw [mul_zero]
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem sum_topMon (k : ℕ) : ∑ j, topMon k j = k := by
   have h : ∀ j : Fin k, topMon k j = 1 := fun j => by

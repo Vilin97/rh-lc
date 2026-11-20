@@ -16,7 +16,7 @@ variable (n) in
 def antisymm : LaurentRing n →ₗ[ℂ] LaurentRing n where
   toFun p := ∑ σ : Equiv.Perm (Fin n), Equiv.Perm.sign σ • permAct σ p
   map_add' p q := by
-    simp only [map_add, smul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), smul_add, Finset.sum_add_distrib]
   map_smul' c p := by
     simp only [map_smul, RingHom.id_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun σ _ => ?_
@@ -248,7 +248,7 @@ theorem exists_antisymm_eq_mul (p : LaurentRing n) :
   | add x y hx hy =>
     obtain ⟨qx, hqx⟩ := hx
     obtain ⟨qy, hqy⟩ := hy
-    exact ⟨qx + qy, by rw [map_add, hqx, hqy, mul_add]⟩
+    exact ⟨qx + qy, by rw [map_add (f := _), hqx, hqy, mul_add]⟩
   | single μ c =>
     obtain ⟨q, hq⟩ := exists_alternant_eq_mul μ
     refine ⟨c • q, ?_⟩
@@ -293,7 +293,7 @@ theorem altQuot_eq_of_mul {p q : LaurentRing n} (h : alternant (staircase n) * q
   mul_left_cancel₀ alternant_staircase_ne_zero ((alternant_mul_altQuot p).trans h.symm)
 
 theorem altQuot_add (p q : LaurentRing n) : altQuot (p + q) = altQuot p + altQuot q :=
-  altQuot_eq_of_mul (by rw [mul_add, alternant_mul_altQuot, alternant_mul_altQuot, map_add])
+  altQuot_eq_of_mul (by rw [mul_add, alternant_mul_altQuot, alternant_mul_altQuot, map_add (f := _)])
 
 theorem altQuot_sum {ι : Type*} (s : Finset ι) (f : ι → LaurentRing n) :
     altQuot (∑ i ∈ s, f i) = ∑ i ∈ s, altQuot (f i) :=

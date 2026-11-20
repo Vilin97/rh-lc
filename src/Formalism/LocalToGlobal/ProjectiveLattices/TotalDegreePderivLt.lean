@@ -50,7 +50,7 @@ theorem der_aeval {δ : F → F} (h : IsDer δ) {E : Type} [CommRing E] [Algebra
   next a =>
     simp [hE]
   next p q hp hq =>
-    simp only [map_add, h.add, hp, hq, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), h.add, hp, hq, add_mul, Finset.sum_add_distrib]
   next p n hp =>
     have hsingle : ∀ i, MvPolynomial.aeval t (MvPolynomial.pderiv i (MvPolynomial.X n : MvPolynomial σ E)) =
         if i = n then 1 else 0 := by
@@ -59,7 +59,7 @@ theorem der_aeval {δ : F → F} (h : IsDer δ) {E : Type} [CommRing E] [Algebra
       · subst hi
         simp
       · simp [MvPolynomial.pderiv_X, Pi.single_apply, hi, Ne.symm hi]
-    simp only [map_mul, MvPolynomial.aeval_X, h.mul, hp, MvPolynomial.pderiv_mul, map_add, hsingle,
+    simp only [map_mul, MvPolynomial.aeval_X, h.mul, hp, MvPolynomial.pderiv_mul, map_add (f := _), hsingle,
       add_mul, Finset.sum_add_distrib, mul_ite, mul_one, mul_zero, ite_mul, zero_mul,
       Finset.sum_ite_eq', Finset.mem_univ, if_true]
     rw [Finset.mul_sum, add_comm]

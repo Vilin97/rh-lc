@@ -48,7 +48,7 @@ theorem unimodular_symplectic_coordinates_and_lattice_rank :
     classical
     refine ⟨b.equivFun.symm, fun x y => ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Module.Basis.equivFun_symm_apply, Fintype.sum_sum_type, map_add, LinearMap.add_apply,
+      simp only [Module.Basis.equivFun_symm_apply, Fintype.sum_sum_type, map_add (f := _), LinearMap.add_apply,
       map_sum, LinearMap.sum_apply, map_smul, LinearMap.smul_apply, smul_eq_mul]
     simp only [hf.left_left, hf.right_right, hf.left_right, hf.right_left halt, mul_zero,
       Finset.sum_const_zero, add_zero, zero_add, mul_ite, _root_.mul_one, mul_neg,

@@ -38,7 +38,7 @@ theorem GlobalTheory.DualFrobNil.isNil_dual_frobenius : ∀ (p : ℕ) [Fact p.Pr
     intro x hx
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
     obtain ⟨w, rfl⟩ := Ideal.mem_span_singleton'.1 hz
-    rw [map_add, RingHom.mem_ker.1 hy, zero_add, map_mul, map_natCast]
+    rw [map_add (f := _), RingHom.mem_ker.1 hy, zero_add, map_mul, map_natCast]
     exact m.mul_mem_left _ hp
   have step : ∀ (u : Fin d → O) (φ : G.dual.A n), (∀ Fs, φ (c.ev n Fs) - ∑ i, u i * lin Fs i ∈ m) →
       ∃ u' : Fin d → O, (∀ Fs, (φ ^ p) (c.ev n Fs) - ∑ i, u' i * lin Fs i ∈ m) ∧

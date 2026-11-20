@@ -50,7 +50,7 @@ theorem card_qk_eq_mul {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} {F : 
       rw [show k • z = _ from hz, add_neg_cancel_left]
     refine ⟨⟨QuotientAddGroup.mk p.y, p.g + iota hB F z - r (QuotientAddGroup.mk p.y : D.X ⧸ K).out, ?_⟩,
       (Quot.sound ((equiv_iff hB _ _).2 ⟨z, hy, ?_⟩)).symm⟩
-    · rw [nsmul_sub, hr, hy, nsmul_add, qk_nsmul hB, map_add, map_nsmul, sub_self]
+    · rw [nsmul_sub, hr, hy, nsmul_add, qk_nsmul hB, map_add (f := _), map_nsmul, sub_self]
     · exact add_sub_cancel _ _
 
 theorem card_qk : LL → AllD fun {R} _ _ {I} D F _ _ => ∀ (k : ℕ), 1 ≤ k → Nat.card (Quot (QkPt.Equiv D.toPre F (k := k))) = k ^ (2 * (D.toPre.rank + D.toPre.P.g)) := by

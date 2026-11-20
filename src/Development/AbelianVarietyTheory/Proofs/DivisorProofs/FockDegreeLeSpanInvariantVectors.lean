@@ -144,7 +144,7 @@ theorem fockDeg_le_span_eigen : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
       map_add' := fun f g => by
         refine (MemLp.toLp_congr (hmem _) ((hmem f).add (hmem g)) (Filter.EventuallyEq.of_eq ?_)).trans
           (MemLp.toLp_add _ _)
-        simp [map_add]
+        simp [map_add (f := _)]
       map_smul' := fun c f => by
         refine (MemLp.toLp_congr (hmem _) ((hmem f).const_smul c) (Filter.EventuallyEq.of_eq ?_)).trans
           (MemLp.toLp_const_smul _ _)

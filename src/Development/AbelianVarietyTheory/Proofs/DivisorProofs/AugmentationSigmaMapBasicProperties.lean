@@ -18,7 +18,7 @@ theorem Obs.sig_basic : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Id
     | tmul y' b₀ =>
       obtain ⟨b', rfl⟩ := hp b₀
       rw [Algebra.TensorProduct.tmul_mul_tmul, _root_.one_mul, ← map_mul, hσ, hσ, mul_smul_comm]
-    | add x y hx hy => rw [mul_add, map_add, map_add, hx, hy, mul_add]
+    | add x y hx hy => rw [mul_add, map_add (f := _), map_add (f := _), hx, hy, mul_add]
   refine ⟨?_, h2, ?_, ?_⟩
   · intro y
     induction y using TensorProduct.induction_on with
@@ -27,7 +27,7 @@ theorem Obs.sig_basic : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Id
       obtain ⟨b', rfl⟩ := hp b₀
       rw [hσ, Algebra.smul_def]
       exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ (α.mem y'))
-    | add x y hx hy => rw [map_add]; exact Ideal.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Ideal.add_mem _ hx hy
   · intro b₀
     obtain ⟨b', rfl⟩ := hp b₀
     rw [hσ, α.one, zero_smul]
@@ -44,8 +44,8 @@ theorem Obs.sig_basic : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Id
     | add x x' _ _ hx hx' =>
       obtain ⟨y, hy, rfl⟩ := hx
       obtain ⟨y', hy', rfl⟩ := hx'
-      refine ⟨y + y', ?_, by rw [map_add]⟩
-      simp only [Obs.Aug.KerQ, map_add] at *; rw [hy, hy', add_zero]
+      refine ⟨y + y', ?_, by rw [map_add (f := _)]⟩
+      simp only [Obs.Aug.KerQ, map_add (f := _)] at *; rw [hy, hy', add_zero]
     | smul b x _ hx =>
       obtain ⟨y, hy, rfl⟩ := hx
       refine ⟨(1 ⊗ₜ p b) * y, ?_, by rw [h2, smul_eq_mul]⟩

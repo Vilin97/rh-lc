@@ -22,7 +22,7 @@ private theorem X_pow_dvd_algHom_sub_aeval_trunc {O : Type} [CommRing O] (f : O�
   rw [← algHom_coe_polynomial_eq_aeval]
   have hdiff : f a - f ↑(trunc n a) = f X ^ n * f s := by
     calc f a - f ↑(trunc n a) = f (X ^ n * s + ↑(trunc n a)) - f ↑(trunc n a) := by rw [← hs]
-      _ = f X ^ n * f s := by rw [map_add, map_mul, map_pow, add_sub_cancel_right]
+      _ = f X ^ n * f s := by rw [map_add (f := _), map_mul, map_pow, add_sub_cancel_right]
   rw [hdiff]
   exact Dvd.dvd.mul_right (pow_dvd_pow_of_dvd hf n) _
 
@@ -54,7 +54,7 @@ theorem _root_.GlobalTheory.CycFr.constantCoeff_algHom {O : Type} [CommRing O] (
   have h0 : constantCoeff (f X) = 0 := X_dvd_iff.mp hf
   calc constantCoeff (f a) = constantCoeff (f (s * X + C (constantCoeff a))) := by rw [← hs]
     _ = constantCoeff a := by
-      rw [map_add, map_mul, _root_.GlobalTheory.CycFr.algHom_C, map_add, map_mul, h0, mul_zero,
+      rw [map_add (f := _), map_mul, _root_.GlobalTheory.CycFr.algHom_C, map_add (f := _), map_mul, h0, mul_zero,
         zero_add]
       simp
 
@@ -90,7 +90,7 @@ open PowerSeries in
 variable {l : ℕ} [Fact l.Prime] (O : Type) [CommRing O] [Algebra ℤ_[l] O] in
 variable {O} in
 theorem _root_.GlobalTheory.CycFr.act_one_add_X (c : ℤ_[l]) : _root_.GlobalTheory.CycFr.act O c (1 + X) = _root_.GlobalTheory.CycFr.bin O c := by
-  rw [map_add, map_one, _root_.GlobalTheory.CycFr.act_X]
+  rw [map_add (f := _), map_one, _root_.GlobalTheory.CycFr.act_X]
   ring
 
 open PowerSeries in

@@ -118,7 +118,7 @@ theorem eq_zero_of_map {A B M N Q : Type*} [CommRing A] [CommRing B] [Algebra A 
         change p (ιMulti A a fun k => s (Function.update v i (x + y) k)) =
           p (ιMulti A a fun k => s (Function.update v i x k)) +
           p (ιMulti A a fun k => s (Function.update v i y k))
-        rw [hcomp, hcomp, hcomp, ← map_add, ← AlternatingMap.map_update_add]
+        rw [hcomp, hcomp, hcomp, ← map_add (f := _), ← AlternatingMap.map_update_add]
         refine cong _ _ fun k => ?_
         by_cases hki : k = i
         · subst hki; simp [hs']
@@ -344,7 +344,7 @@ theorem formLaws : FormLaws := by
         unfold form
         rw [(ιMulti B a (M := Ω[B⁄K])).map_coord_zero k (by simp [hk']), smul_zero]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | smul c x _ hx => rw [h3, hx, smul_zero]
 
 end GlobalTheory.CompanionTheory.OntoForms

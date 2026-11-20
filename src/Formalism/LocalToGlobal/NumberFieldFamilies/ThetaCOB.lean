@@ -27,9 +27,9 @@ theorem aniso_ex (W : Submodule E V.V) (hW : ∀ y ∈ W, (∀ z ∈ W, V.hT y z
     push_neg at h
     exact hy0 (hW y hy h)
   have q0 : V.hT (y + z) (y + z) = V.hT y y + V.hT y z + V.hT z y + V.hT z z := by
-    simp only [map_add, LinearMap.add_apply]; ring
+    simp only [map_add (f := _), LinearMap.add_apply]; ring
   have q1 : V.hT (y + δ • z) (y + δ • z) = V.hT y y + δ * V.hT y z + star δ * V.hT z y + star δ * δ * V.hT z z := by
-    simp only [map_add, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, map_smul, smul_eq_mul, starRingEnd_apply,
+    simp only [map_add (f := _), map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, map_smul, smul_eq_mul, starRingEnd_apply,
       RingHom.id_apply]
     ring
   have s : V.hT z y = star (V.hT y z) := (V.herm.eq y z).symm
@@ -76,7 +76,7 @@ theorem orth_ex : ∀ (n : ℕ) (W : Submodule E V.V), Module.finrank E W = n �
     obtain ⟨v, a, b, c⟩ := ih W' hr fun y hy hz => hW y hy.1 fun w hw => by
       obtain ⟨c, hc⟩ := hdec w hw
       have e : w = c • x + (w - c • x) := by abel
-      rw [e, map_add, map_smul, hz _ hc, add_zero, smul_eq_mul]
+      rw [e, map_add (f := _), map_smul, hz _ hc, add_zero, smul_eq_mul]
       have : V.hT y x = 0 := by rw [← V.herm.eq]; rw [show V.hT x y = 0 from hy.2, map_zero]
       rw [this, mul_zero]
     refine ⟨Fin.cons x v, fun i => Fin.cases hx (fun i => (a i).1) i, fun i j hij => ?_, fun i => Fin.cases hxx (fun i => c i) i⟩

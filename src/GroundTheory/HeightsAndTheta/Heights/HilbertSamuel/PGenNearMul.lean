@@ -65,7 +65,7 @@ def locMul (hW : W ≤ Module.annihilator (MRingOver S ι) M) :
       induction y with | h m t =>
       rw [LocalizedModule.mk_add_mk, locMulFun_mk, locMulFun_mk, locMulFun_mk, LocalizedModule.mk_add_mk]
       refine LocalizedModule.mk_eq.mpr ⟨1, ?_⟩
-      simp only [Submonoid.smul_def, Submonoid.coe_mul, one_smul, map_add, map_smul,
+      simp only [Submonoid.smul_def, Submonoid.coe_mul, one_smul, map_add (f := _), map_smul,
         LinearMap.add_apply, LinearMap.smul_apply, smul_add, smul_smul]
       module)
     (by
@@ -81,7 +81,7 @@ def locMul (hW : W ≤ Module.annihilator (MRingOver S ι) M) :
       induction y₂ with | h m₂ t₂ =>
       rw [LocalizedModule.mk_add_mk, locMulFun_mk, locMulFun_mk, locMulFun_mk, LocalizedModule.mk_add_mk]
       refine LocalizedModule.mk_eq.mpr ⟨1, ?_⟩
-      simp only [Submonoid.smul_def, Submonoid.coe_mul, one_smul, map_add, map_smul,
+      simp only [Submonoid.smul_def, Submonoid.coe_mul, one_smul, map_add (f := _), map_smul,
         smul_add, smul_smul]
       module)
     (by
@@ -128,7 +128,7 @@ theorem act_mem (hW : W ≤ Module.annihilator (MRingOver S ι) M) {𝓜 : (K �
     funext k
     simp [hc k]
   | zero => rw [map_zero, LinearMap.zero_apply]; exact zero_mem _
-  | add a₁ a₂ _ _ h₁ h₂ => rw [map_add, LinearMap.add_apply]; exact add_mem h₁ h₂
+  | add a₁ a₂ _ _ h₁ h₂ => rw [map_add (f := _), LinearMap.add_apply]; exact add_mem h₁ h₂
   | smul s a _ h => rw [act_smulS]; exact Submodule.smul_mem _ s h
 
 theorem locMul_mem (hW : W ≤ Module.annihilator (MRingOver S ι) M) {𝓜 : (K → ℤ) → Submodule S M}
@@ -149,10 +149,10 @@ theorem locMul_mem (hW : W ≤ Module.annihilator (MRingOver S ι) M) {𝓜 : (K
       convert this using 2
       ring
     | zero => rw [map_zero]; exact zero_mem _
-    | add y₁ y₂ _ _ h₁ h₂ => rw [map_add]; exact add_mem h₁ h₂
+    | add y₁ y₂ _ _ h₁ h₂ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
     | smul c y _ h => rw [(locMul_smulS T hW c x y).2]; exact Submodule.smul_mem _ c h
   | zero => rw [map_zero, LinearMap.zero_apply]; exact zero_mem _
-  | add x₁ x₂ _ _ h₁ h₂ => rw [map_add, LinearMap.add_apply]; exact add_mem h₁ h₂
+  | add x₁ x₂ _ _ h₁ h₂ => rw [map_add (f := _), LinearMap.add_apply]; exact add_mem h₁ h₂
   | smul c x _ h => rw [(locMul_smulS T hW c x y).1]; exact Submodule.smul_mem _ c h
 
 theorem cechD_zero_apply_uniform (I : KH.Cell K ι 1) :
@@ -300,7 +300,7 @@ theorem exists_div (hW : W ≤ Module.annihilator (MRingOver S ι) M) {𝓜 : (K
   | add x₁ x₂ _ _ h₁ h₂ =>
     obtain ⟨y₁, hy₁, e₁⟩ := h₁
     obtain ⟨y₂, hy₂, e₂⟩ := h₂
-    exact ⟨y₁ + y₂, add_mem hy₁ hy₂, by rw [map_add, e₁, e₂]⟩
+    exact ⟨y₁ + y₂, add_mem hy₁ hy₂, by rw [map_add (f := _), e₁, e₂]⟩
   | smul c x _ h =>
     obtain ⟨y, hy, e⟩ := h
     exact ⟨c • y, Submodule.smul_mem _ c hy, by rw [(locMul_smulS _ hW c _ y).2, e]⟩

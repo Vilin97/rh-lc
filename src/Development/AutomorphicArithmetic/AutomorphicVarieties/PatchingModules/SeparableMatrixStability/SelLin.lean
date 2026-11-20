@@ -8,7 +8,7 @@ private theorem adic_lin {G R : Type} [TopologicalSpace G] [CommRing R] (I : Ide
   have e : (fun g => (Ideal.Quotient.mk (I ^ N)) (c * f g + f' g)) =
       fun g => Ideal.Quotient.mk (I ^ N) c * Ideal.Quotient.mk (I ^ N) (f g) + Ideal.Quotient.mk (I ^ N) (f' g) := by
     funext g
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
   rw [e]
   exact ((IsLocallyConstant.const _).mul (h N)).add (h' N)
 

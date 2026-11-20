@@ -73,7 +73,7 @@ private theorem isX_unit (N : ℕ) [NeZero N] (K : Type) [Field K] [NumberField 
       exact Ideal.mul_mem_left _ _ hv
     have h1 : (1 : 𝓞 K) ∈ v.asIdeal := by
       have e : (1 : 𝓞 K) = (sgO N K t).symm a + (sgO N K t).symm (r * (q : 𝓞 K)) := by
-        rw [← map_add, hac, map_one]
+        rw [← map_add (f := _), hac, map_one]
       rw [e]
       exact Ideal.add_mem _ ha' hc''
     exact v.isPrime.ne_top ((Ideal.eq_top_iff_one _).mpr h1)

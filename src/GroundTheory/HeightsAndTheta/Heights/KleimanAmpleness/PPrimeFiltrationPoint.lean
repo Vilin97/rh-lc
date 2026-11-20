@@ -97,7 +97,7 @@ def chartPrimeIdeal (hj : x j ≠ 0) (pp : Ideal (Poly S N)) :
       mul_mem hs ht, (hfe.mul htd).add (hse.mul hgd), hse.mul htd, ?_⟩
     rw [Subalgebra.coe_add, ha, hb, div_add_div _ _ (eval_ne_zero_of_mem_monos (singleChart hj) hs)
       (eval_ne_zero_of_mem_monos (singleChart hj) ht)]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
   smul_mem' := by
     rintro c a ⟨g, t, d, hg, ht, hgd, htd, ha⟩
     obtain ⟨f, s, e, hs, hfe, hse, hc⟩ := c.2

@@ -74,7 +74,7 @@ theorem mixT_zero_heis {S T T₀ : HSp D} {ρ : ℕ} (d : HypDec T T₀ ρ) (v :
       HypDec.wittDecomp_sympl_inclIsotropic_inclAnisotropic, HypDec.wittDecomp_sympl_inclAnisotropic_inclAnisotropic, zero_add]
     rw [symplOH_skew S T (d.incX S _) (d.inc0 S _), HypDec.wittDecomp_sympl_inclIsotropic_inclAnisotropic, neg_zero, zero_add]
   have e2 : d.incX S ξ + d.inc0 S w₀ + (d.incX S η + d.inc0 S w) = d.incX S (ξ + η) + d.inc0 S (w₀ + w) := by
-    rw [map_add, map_add]; abel
+    rw [map_add (f := _), map_add (f := _)]; abel
   rw [heisO, e1, e2, Pi.smul_apply, smul_eq_mul]
   ring
 
@@ -226,7 +226,7 @@ theorem pairKer_heis {σ : ℕ} {J : JacLev D (σ + 1)} {B : BesLev D σ} (s : S
     have q1 := hY.quasi (h₀ * h) γ₁ w
     have e2 : ratW B.V₀ J.W₀ γ₂ = (B.o.resT J.W₀).symm (0, γ) := hγ₂
     have e1 : ratW B.L J.W₀ γ₁ = γ := hγ₁
-    rw [e2, ← map_add, Prod.mk_add_mk, zero_add, hT] at q2
+    rw [e2, ← map_add (f := _), Prod.mk_add_mk, zero_add, hT] at q2
     rw [e1] at q1
     rw [q2, q1, star_mul', mul_mul_mul_comm, mul_star_psi hψ, one_mul]
   simp only [contractT, thPair]
@@ -234,7 +234,7 @@ theorem pairKer_heis {σ : ℕ} {J : JacLev D (σ + 1)} {B : BesLev D σ} (s : S
     (p ⬝ mt J.W₀ h₀⁻¹)]
   congr 1
   funext w
-  rw [hY', Pi.smul_apply, smul_eq_mul, heisO, hT, ← map_add, Prod.mk_add_mk, add_zero, star_mul', star_mul', star_star]
+  rw [hY', Pi.smul_apply, smul_eq_mul, heisO, hT, ← map_add (f := _), Prod.mk_add_mk, add_zero, star_mul', star_mul', star_star]
   have h1 := mul_star_psi hψ (symplOH J.W₀ B.L w (p ⬝ mt J.W₀ h₀⁻¹))
   generalize F _ = z
   generalize star (Y _ _) = y

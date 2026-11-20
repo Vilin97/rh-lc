@@ -53,7 +53,7 @@ theorem normEx_of : MatRep → DetSplit → NormEx := by
   rw [RingHom.map_det]
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_sub, map_add, map_sub, map_one, map_sum]
+    rw [map_sub, map_add (f := _), map_sub, map_one, map_sum]
   simp only [hs, RingHom.mapMatrix_apply, hmap, h1, Matrix.mul_one]
   rw [hd, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one, Matrix.mul_sum,
     Matrix.sum_mul]

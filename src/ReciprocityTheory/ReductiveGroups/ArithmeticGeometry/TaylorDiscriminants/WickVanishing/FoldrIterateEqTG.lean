@@ -81,7 +81,7 @@ theorem kill_gen [Algebra ℚ k] [Fintype ι]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [TG_add, mul_add]
     exact hadd
-  rw [hsplit, hlin, map_add, half_gen D κ hadd hC hmul e he c q hc hq0 hq1 hq2 P (G * Y), hP]
+  rw [hsplit, hlin, map_add (f := _), half_gen D κ hadd hC hmul e he c q hc hq0 hq1 hq2 P (G * Y), hP]
   simp [PolG]
 
 end ReciprocityTheory.ChartRestriction.G.TB.G2.Gen

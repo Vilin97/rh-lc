@@ -181,7 +181,7 @@ theorem lbIso_pow_of_hermForm_pull_eq :
       congr 1
       ring
     simp only [hH, e] at h1
-    simp only [map_add, h1]
+    simp only [map_add (f := _), h1]
     generalize Complex.exp (Real.pi * hermForm Hm z l + Real.pi / 2 * hermForm Hm l l) = a
     generalize χ' ⟨F l, hΛ l l.2⟩ = b at c2
     generalize χ l = c at c1

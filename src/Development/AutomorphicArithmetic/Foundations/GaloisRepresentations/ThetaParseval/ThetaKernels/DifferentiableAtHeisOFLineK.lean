@@ -30,7 +30,7 @@ theorem GlobalTheory.HeisLineDiffF.differentiableAt_heisOF_line_k : ∀ (F E : T
   let φ : ℝ →+ ℂ :=
     { toFun := fun t => lam (symplOHF σ JS JT ξ₀ w (L t))
       map_zero' := by rw [map_zero L, GlobalTheory.HeisLineDiffF.symplOHF_zero_right, map_zero]
-      map_add' := fun x y => by rw [map_add L, GlobalTheory.HeisLineDiffF.symplOHF_add_right, map_add] }
+      map_add' := fun x y => by rw [map_add L, GlobalTheory.HeisLineDiffF.symplOHF_add_right, map_add (f := _)] }
   have hφ : Continuous φ := hl.comp (GlobalTheory.HeisLineDiffF.continuous_symplOHF σ JS JT ξ₀ w hL)
   let L' : (Fin 1 → ℝ) →+ WOF F E nS nT := L.comp (Pi.evalAddMonoidHom (fun _ : Fin 1 => ℝ) 0)
   have hL' : Continuous L' := hL.comp (continuous_apply 0)

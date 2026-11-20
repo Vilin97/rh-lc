@@ -118,7 +118,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
 
 noncomputable def traceFormOf (G : Matrix (Fin r) (Fin r) E) : LinearMap.BilinForm ℚ (Fin r → E) :=
   LinearMap.mk₂ ℚ (fun x y => Algebra.trace ℚ E (herm G x y))
-    (fun x x' y => by rw [HermitianTraceFormVanishing.herm_add_left, map_add])
+    (fun x x' y => by rw [HermitianTraceFormVanishing.herm_add_left, map_add (f := _)])
     (fun c x y => by
       rw [← map_smul, ← algebraMap_smul E c x, HermitianTraceFormVanishing.herm_smul_left, Algebra.smul_def])
     (fun x y y' => by simp [herm, cc, mul_add, Finset.sum_add_distrib])
@@ -228,7 +228,7 @@ noncomputable def embHom (X : Data E r) : (Fin r → E) →+ (X.Ψ → Fin r →
 noncomputable def reflHom (X : Data E r) (x : Frame X.Ψ r) : (Fin r → E) →+ (X.Ψ → Fin r → ℂ) :=
   AddMonoidHom.mk' (fun v τ => (2 : ℂ) • X.jp x τ (embHom X v τ)) fun u v => by
     funext τ
-    simp only [map_add, Pi.add_apply, Data.jp_add, smul_add]
+    simp only [map_add (f := _), Pi.add_apply, Data.jp_add, smul_add]
 
 open NumberField Module Submodule in
 open scoped nonZeroDivisors in
@@ -358,7 +358,7 @@ theorem _root_.GlobalTheory.exists_short_basis_at {r : ℕ} (X : _root_.Reciproc
       | add y z _ _ hy hz =>
         obtain ⟨k, hk⟩ := hy
         obtain ⟨l, hl⟩ := hz
-        exact ⟨k + l, by rw [map_add, hk, hl]; push_cast; ring⟩
+        exact ⟨k + l, by rw [map_add (f := _), hk, hl]; push_cast; ring⟩
       | smul n y _ hy =>
         obtain ⟨k, hk⟩ := hy
         exact ⟨n * k, by rw [map_zsmul, hk]; push_cast; simp⟩

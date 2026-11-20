@@ -13,7 +13,7 @@ theorem exists_unitary {A : Type} [CommRing A] (σ : A →+* A) (hσ : ∀ x, σ
   have he' : σ e * σ e = σ e := by rw [← map_mul, he]
   have hab' : σ a * σ b = 1 := by rw [← map_mul, hab, map_one]
   refine ⟨e * a + σ e * σ b + (1 - e - σ e), ?_, ?_, ?_⟩
-  · simp only [map_add, map_mul, map_sub, map_one, hσ]
+  · simp only [map_add (f := _), map_mul, map_sub, map_one, hσ]
     linear_combination (a * b - a - b + 1) * he + (σ a * σ b - σ a - σ b + 1) * he' +
       (a * σ a + b * σ b - a - b - σ a - σ b + 2) * hc + e * hab + σ e * hab'
   · linear_combination (a - 1) * he + (σ b - 1) * he' + (a + σ b - 2) * hc
@@ -57,7 +57,7 @@ theorem cA_cA (D : D7) (x : Formalism.L2.Theta.AE D) : cA D (cA D x) = x := by
   | tmul a b =>
     have : D.sp.cm.sig (D.sp.cm.sig b) = b := star_star b
     simp [cA, sigR, this]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mulVec_shift {R : Type} [CommRing R] {n : ℕ} (B M : Matrix (Fin n) (Fin n) R) (e u p : R)
     (h : e * u = e * p) (c c' z y : Fin n → R) (hc : ∀ i, c' i = p * c i)

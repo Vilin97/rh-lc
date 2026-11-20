@@ -63,7 +63,7 @@ theorem dv_third (φ'' : Z.GenIso E E'') (h : φ''.hom = φ.hom ≫ φ'.hom) (i 
       (P.toFPair p).Dv i + ((second P fl'' gen₂ h₂).toFPair p).Dv i := by
   change toQ ((third P fl'' gen₂ h₂ φ'' h).div i).cls =
     toQ (P.div i).cls + toQ ((second P fl'' gen₂ h₂).div i).cls
-  rw [← map_add]
+  rw [← map_add (f := _)]
   refine congrArg toQ ?_
   show (((third P fl'' gen₂ h₂ φ'' h).grIso i).div _ _).cls = _
   rw [grIso_third]

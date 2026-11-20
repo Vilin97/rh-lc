@@ -25,7 +25,7 @@ theorem joinBlock_sepBlock (k₀ : ι) (q : MvPolynomial (Coord n) ℤ) :
     joinBlock k₀ (sepBlock k₀ q) = q := by
   induction q using MvPolynomial.induction_on with
   | C a => simp [sepBlock, joinBlock]
-  | add p q hp hq => rw [map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, hp]
     congr 1
@@ -290,7 +290,7 @@ theorem coeffVec_mul_atBlock_mem (P : ArithVariety n) (k₀ : ι) (w : Cone (fun
     exact Submodule.smul_mem _ a (coeffVec_atBlock_mem P k₀ w D hp)
   | add f g hf hg =>
     intro p hp
-    rw [add_mul, map_add]
+    rw [add_mul, map_add (f := _)]
     exact Submodule.add_mem _ (hf p hp) (hg p hp)
   | mul_X f v hf =>
     intro p hp
@@ -327,7 +327,7 @@ theorem coeffVec_mem_span (P : ArithVariety n) (k₀ : ι) (w : Cone (fun _ : Un
       rw [mul_zero, map_zero]
       exact Submodule.zero_mem _
     · intro x y _ _ hx hy h
-      rw [mul_add, map_add]
+      rw [mul_add, map_add (f := _)]
       exact Submodule.add_mem _ (hx h) (hy h)
     · intro a x _ hx h
       rw [smul_eq_mul, ← mul_assoc]

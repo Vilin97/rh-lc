@@ -63,7 +63,7 @@ variable {E} {n : ℕ}
 def lat (β : Matrix (Fin n) (Fin n) (FiniteAdeleRing (𝓞 E) E)) : Submodule (𝓞 E) (Fin n → E) where
   carrier := {x | ∀ j, ∑ k, algebraMap E (FiniteAdeleRing (𝓞 E) E) (x k) * β k j ∈ intAdeles E}
   add_mem' {x y} hx hy j := by
-    simpa only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib] using add_mem (hx j) (hy j)
+    simpa only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib] using add_mem (hx j) (hy j)
   zero_mem' j := by simp
   smul_mem' c x hx j := by
     have h : algebraMap E (FiniteAdeleRing (𝓞 E) E) (c : E) ∈ intAdeles E :=

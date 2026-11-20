@@ -25,7 +25,7 @@ theorem pEvDC : PEvDC := by
   refine Finsupp.induction_linear z ?_ ?_ ?_
   · simp [ev_zero]
   · intro a b ha hb
-    rw [ev_add, map_add, ev_add, ha, hb]
+    rw [ev_add, map_add (f := _), ev_add, ha, hb]
   · intro g a
     have hbd : bd G m (Finsupp.single g a) = a • bd G m (Finsupp.single g 1) := by
       rw [← map_smul, Finsupp.smul_single, smul_eq_mul, mul_one]
@@ -73,7 +73,7 @@ theorem pCob : PCob := by
     intro w
     refine Finsupp.induction_linear w ?_ ?_ ?_
     · simp [ev_zero]
-    · intro a b ha hb; rw [ev_add, ha, hb, map_add]
+    · intro a b ha hb; rw [ev_add, ha, hb, map_add (f := _)]
     · intro g a
       rw [ev_single]
       simp only [E, MonoidHom.id_apply, smul_eq_mul, mul_one, Fin.partialProd_right_inv]

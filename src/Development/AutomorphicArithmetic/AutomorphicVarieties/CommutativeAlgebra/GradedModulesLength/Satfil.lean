@@ -48,7 +48,7 @@ theorem UpperTheory.V.Alg.M.satfil_holds :
       intro p hp
       rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
       have hd : Finsupp.degree p.1 + Finsupp.degree p.2 ≤ 1 := by
-        rw [← map_add, hp]
+        rw [← map_add (f := _), hp]
         exact hν
       have hm0 : MvPowerSeries.coeff 0 (φ m) = 0 := by
         rw [MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hφ.const, RingHom.mem_ker.mp hm, map_zero]
@@ -59,7 +59,7 @@ theorem UpperTheory.V.Alg.M.satfil_holds :
       · have h2 : Finsupp.degree p.2 = 0 := by omega
         rw [(Finsupp.degree_eq_zero_iff _).mp h2, hn0, mul_zero]
     · intro a b ha hb ν hν
-      rw [map_add, map_add, ha ν hν, hb ν hν, add_zero]
+      rw [map_add (f := _), map_add (f := _), ha ν hν, hb ν hν, add_zero]
   refine ⟨?_, ?_⟩
   · intro f hf hsat ν hν
     obtain ⟨c, hc, hcf⟩ := hsat

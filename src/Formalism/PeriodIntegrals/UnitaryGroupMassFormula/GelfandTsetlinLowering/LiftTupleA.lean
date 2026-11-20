@@ -223,9 +223,9 @@ theorem rowDiv_comb {r c n K : ℕ} (e : Fin n → Fin r) (sz : Fin K → ℕ)
   · unfold rowDiv
     simp
   · intro f g hf hg
-    rw [map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _)]
     unfold rowDiv at hf hg ⊢
-    rw [map_add, Polynomial.coeff_add, hf, hg]
+    rw [map_add (f := _), Polynomial.coeff_add, hf, hg]
   · intro J c
     unfold tlin
     rw [Finsupp.linearCombination_single, Finsupp.linearCombination_single, map_smul, hsm,

@@ -29,7 +29,7 @@ def primeOf {E : Type} [Field E] {l : ℕ} [Fact l.Prime] (ρ : E →+* ℂ_[l])
   add_mem' := by
     intro a b ha hb
     simp only [Set.mem_setOf_eq] at ha hb ⊢
-    rw [RingOfIntegers.coe_eq_algebraMap, map_add, map_add]
+    rw [RingOfIntegers.coe_eq_algebraMap, map_add (f := _), map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
   zero_mem' := by simp
   smul_mem' := by
@@ -161,7 +161,7 @@ theorem norm_coord_le (lam : Qbar →+* ℂ_[l]) (h2 : l ∉ D.host.small) (hq :
     exact norm_padicEmbedding_le_one_of_mem_inverseHalfDifferent D h2 hq _ ha
   | zero => simp
   | add v w _ _ hv hw =>
-    rw [Pi.add_apply, map_add]
+    rw [Pi.add_apply, map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hv hw)
   | smul c v _ hv =>
     rw [Pi.smul_apply, Algebra.smul_def, map_mul, norm_mul]

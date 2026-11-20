@@ -116,7 +116,7 @@ theorem homogeneousComponent_mul_mem (D : SubSystem S x Ω) (σ : Ω) (I : Chart
   | zero => intro δ _; rw [map_zero, map_zero, zero_mul]; exact Submodule.zero_mem _
   | add f g _ _ hf hg =>
     intro δ hδ
-    rw [map_add, map_add, add_mul]
+    rw [map_add (f := _), map_add (f := _), add_mul]
     exact Submodule.add_mem _ (hf e δ hδ) (hg e δ hδ)
   | smul r f _ hf =>
     intro δ hδ

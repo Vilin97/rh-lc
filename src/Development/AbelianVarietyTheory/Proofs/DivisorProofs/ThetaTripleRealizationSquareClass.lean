@@ -262,7 +262,7 @@ theorem exists_right_translate (hT : IsTriple B G X om om') (dV : G.V.J.det ≠ 
     intro x hx y hy r
     have hz : r • x + y ∈ GlobalTheory.WeilM.SB (Fin a × Fin (a + a') → Fv F v) := add_mem (Submodule.smul_mem _ r hx) hy
     apply eq_of_tens_eq v R hR0 hinv
-    rw [← hS _ hz R (hR _ hz), tens_add_smul, map_add, map_smul, hS x hx R (hR x hx), hS y hy R (hR y hy), ← tens_add_smul]
+    rw [← hS _ hz R (hR _ hz), tens_add_smul, map_add (f := _), map_smul, hS x hx R (hR x hx), hS y hy R (hR y hy), ← tens_add_smul]
   have hsb := fun (u : Matrix (Fin a) (Fin (a + a')) (AE F E)) (φ : (Fin a × Fin (a + a') → Fv F v) → ℂ) (hφ : φ ∈ GlobalTheory.WeilM.SB _) =>
     GlobalTheory.SchrSB.schr_mem_SB B.ψ hstd.1 v (GlobalTheory.LatVac.locCo G.M.co v u) φ hφ
   have hbr := GlobalTheory.VacBridge.rho_acts_locCo G.M.co B.ψ v
@@ -331,7 +331,7 @@ theorem exists_right_translate (hT : IsTriple B G X om om') (dV : G.V.J.det ≠ 
   have p1 : ∀ Z : Matrix (Fin a) (Fin (a + a')) (Fv F v), pairM 0 Z = 0 := fun Z => by simp [pairM]
   obtain ⟨c', hc'⟩ := GlobalTheory.T.eq_smul_of_commute_heisenberg_linearModel_schwartzBruhat (GlobalTheory.WeilM.SB (Fin a × Fin (a + a') → Fv F v)) (GlobalTheory.LatVac.psiAt B.ψ v)
     (GlobalTheory.SchrSB.continuous_psiAt _ hstd.1 _) (GlobalTheory.PsiNontriv.psiAt_ne_one _ hstd _) ι (fun x Y => ι (S x) (Y * H.valᵀ)) hι.bij
-    (fun x hx y hy r => by funext Y; simp only [hlin x hx y hy r, map_add, map_smul, Pi.add_apply, Pi.smul_apply])
+    (fun x hx y hy r => by funext Y; simp only [hlin x hx y hy r, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply])
     (fun C => schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo G.M.co v (uT C)))
     (fun l => schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo G.M.co v (uM (Matrix.of fun k j => l (Matrix.single k j 1)))))
     (fun C x hx => ⟨hsb _ x hx, funext fun Y => by

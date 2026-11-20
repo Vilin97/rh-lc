@@ -132,7 +132,7 @@ def dualL (G : Matrix κ κ ℤ) : AddSubgroup (κ → F) where
     obtain ⟨n, hn⟩ := hy l hl
     refine ⟨m + n, ?_⟩
     simp only [BF] at hm hn ⊢
-    rw [add_dotProduct, map_add, hm, hn, Int.cast_add]
+    rw [add_dotProduct, map_add (f := _), hm, hn, Int.cast_add]
   neg_mem' {x} hx := fun l hl => by
     obtain ⟨m, hm⟩ := hx l hl
     refine ⟨-m, ?_⟩

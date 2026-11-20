@@ -64,9 +64,9 @@ theorem kernel_diag : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r 
   obtain ⟨⟨L₁, hL₁⟩, im₁, -, hd, -⟩ := GlobalTheory.T.realPeriodMap_homeomorph_riemannForm_density E r X g q0 hr bas idx n hs hn x₁ h₁
   obtain ⟨⟨L₂, hL₂⟩, im₂, -⟩ := GlobalTheory.T.realPeriodMap_homeomorph_riemannForm_density E r X g q0 hr bas idx n hs hn x₂ h₂
   have add₁ (u v : WR X n) : zR X idx x₁ (u + v) = zR X idx x₁ u + zR X idx x₁ v := by
-    rw [← hL₁, ← hL₁, ← hL₁, map_add]
+    rw [← hL₁, ← hL₁, ← hL₁, map_add (f := _)]
   have add₂ (u v : WR X n) : zR X idx x₂ (u + v) = zR X idx x₂ u + zR X idx x₂ v := by
-    rw [← hL₂, ← hL₂, ← hL₂, map_add]
+    rw [← hL₂, ← hL₂, ← hL₂, map_add (f := _)]
   have hE (w : WR X n) : EFR X w (a - b) = EFR X w a - EFR X w b := by
     rw [← im₁, ← im₁, ← im₁, ← sub_im, ← Finset.sum_sub_distrib]
     congr 1

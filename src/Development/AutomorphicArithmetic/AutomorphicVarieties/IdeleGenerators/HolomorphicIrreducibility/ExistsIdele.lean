@@ -321,7 +321,7 @@ private theorem hk_hk {k : ℕ} {c : Pl F → ℕ} {ω : HChar F} {φ : TR.Sm F 
   rw [hA _ ((hk_hol h w').level w), hA _ (h.level w)]
   refine hk_comm k w' _ (h.level w') A fun g ψ => ?_
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [A, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.sum_apply, map_smul, map_add, map_sum, locSm_comm e]
+    simp only [A, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.sum_apply, map_smul, map_add (f := _), map_sum, locSm_comm e]
   split_ifs
   · rw [locSm_comm e]
   · simp

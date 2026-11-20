@@ -35,7 +35,7 @@ theorem defCoord_eq (φ : I → E →+* ℂ) (e : I ≃ Emb (maximalRealSubfield
   have hπ : (2 * (Real.pi : ℂ) * Complex.I) ≠ 0 := by
     have : (Real.pi : ℂ) ≠ 0 := by exact_mod_cast Real.pi_ne_zero
     exact mul_ne_zero (mul_ne_zero two_ne_zero this) Complex.I_ne_zero
-  simp only [defCoord, latPt, modPt, Equiv.symm_apply_apply, map_add, map_mul, he, Complex.conj_ofReal]
+  simp only [defCoord, latPt, modPt, Equiv.symm_apply_apply, map_add (f := _), map_mul, he, Complex.conj_ofReal]
   field_simp
   ring
 

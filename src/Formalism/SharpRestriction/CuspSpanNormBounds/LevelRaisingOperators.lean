@@ -101,7 +101,7 @@ theorem good_opD (hU : IsOpen U) (u w : Fin m → ℂ) (s : ℂ) : GoodOp U (opD
   smooth := fun g hg x hx => (contDiffAt_Wc (cda hU hg hx) u w s).contDiffWithinAt
   add := fun g g' hg hg' x hx => by
     simp only [opD]
-    rw [fderiv_add (diff_of_reg (cda hU hg hx)) (diff_of_reg (cda hU hg' hx)), map_add]
+    rw [fderiv_add (diff_of_reg (cda hU hg hx)) (diff_of_reg (cda hU hg' hx)), map_add (f := _)]
   smul := fun a g hg x hx => by
     simp only [opD]
     rw [fderiv_const_smul (diff_of_reg (cda hU hg hx)) a, Wc_smul_const]
@@ -157,7 +157,7 @@ theorem Wc_clm {e : (Fin m → ℂ) → E →L[ℂ] E} {h : (Fin m → ℂ) → 
       ((ContinuousLinearMap.restrictScalarsL ℂ E E ℝ ℝ : (E →L[ℂ] E) →L[ℝ] (E →L[ℝ] E)) ∘SL fderiv ℝ e x).flip (h x)) v =
       e x (fderiv ℝ h x v) + (fderiv ℝ e x v) (h x) := fun v => rfl
   rw [Wc_apply, Wc_apply, Wc_apply, e1, e1]
-  simp only [_root_.add_apply, _root_.smul_apply, map_add, map_smul]
+  simp only [_root_.add_apply, _root_.smul_apply, map_add (f := _), map_smul]
   module
 
 theorem fn_comm {f g : (Fin m → ℂ) → ℂ} (hf : ContDiffOn ℝ ∞ f U) (hg : ContDiffOn ℝ ∞ g U) :

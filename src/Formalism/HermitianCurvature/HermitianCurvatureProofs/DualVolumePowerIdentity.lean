@@ -44,7 +44,7 @@ theorem omega_norm_formula : Formalism.FourierDecayAlt.OmNorm := by
   intro V _ _ ip hadd hsmul hconj z x T T' Dr hT hzz hxx
   have hadd2 : ∀ w x y, ip w (x + y) = ip w x + ip w y := by
     intro w x y
-    rw [hconj (x + y) w, hadd, map_add, ← hconj, ← hconj]
+    rw [hconj (x + y) w, hadd, map_add (f := _), ← hconj, ← hconj]
   have hsmul2 : ∀ (s : ℂ) w y, ip w (s • y) = starRingEnd ℂ s * ip w y := by
     intro s w y
     rw [hconj (s • y) w, hsmul, map_mul, ← hconj]

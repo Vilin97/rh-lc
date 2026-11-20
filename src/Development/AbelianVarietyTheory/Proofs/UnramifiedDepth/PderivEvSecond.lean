@@ -60,7 +60,7 @@ theorem main : (∀ (R : Type) [CommRing R] (d : ℕ) (O : Type) [CommRing O] [S
     CZ.cons (cc_pt 0) (CZ.cons hA CZ.nil)
   have hH0 : constantCoeff (ev (n := 3) ![pt k d 0, pt k d 1] h + ev (n := 3) ![pt k d 0, pt k d 2] h -
       ev (n := 3) ![pt k d 0, addOf (B.FK k) (pt k d 1) (pt k d 2)] h) = 0 := by
-    rw [map_sub, map_add, cc_ev' cz01, cc_ev' c02, cc_ev' cA, cc_h hc]
+    rw [map_sub, map_add (f := _), cc_ev' cz01, cc_ev' c02, cc_ev' cA, cc_h hc]
     simp
   have hH := ig_dlog B.ph2 (constantCoeff_second_factor B) _ hH0 hc.ph2 ((2 : Fin 3), b)
   have h2 := ig_ev czZ integral_family_pair_zero hH
@@ -92,7 +92,7 @@ theorem main : (∀ (R : Type) [CommRing R] (d : ℕ) (O : Type) [CommRing O] [S
     rw [ev_mul czZ, ev_ev czZ cA, e, ev_pt, mul_comm]
     congr 1
     exact ev_pderiv_add (B.FK k j) b
-  rw [map_sub, map_add, t1, zero_add, ev_sub czZ, t2, t3] at h2
+  rw [map_sub, map_add (f := _), t1, zero_add, ev_sub czZ, t2, t3] at h2
   obtain ⟨K, hK⟩ := RingHom.mem_range.1 h2
   refine ⟨-K, ?_⟩
   rw [FB.toK, map_neg, hK]

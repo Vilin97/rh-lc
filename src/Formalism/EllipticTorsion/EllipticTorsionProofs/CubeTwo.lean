@@ -188,7 +188,7 @@ theorem invSer_subst (hw : WFixed W w) (i : Fin 2) :
   have hs : (-1 + C W.a₁ * X + C W.a₃ * w : PowerSeries K).subst
       (MvPowerSeries.X i : MvPowerSeries (Fin 2) K) = dI W w i := by
     rw [← PowerSeries.coe_substAlgHom ha]
-    simp only [map_add, map_neg, map_one, map_mul]
+    simp only [map_add (f := _), map_neg, map_one, map_mul]
     rw [PowerSeries.coe_substAlgHom ha, PowerSeries.subst_C, PowerSeries.subst_C,
       PowerSeries.subst_X ha]
     rfl

@@ -30,26 +30,26 @@ theorem mulVR_mulVR (T : LocLat G Qp LL O) (b b' : BdR) (z : T.V ⊗[Qp] BdR) :
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul x c => rw [mulVR_tmul, mulVR_tmul, mulVR_tmul, mul_assoc]
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem mulVR_one (T : LocLat G Qp LL O) (z : T.V ⊗[Qp] BdR) : mulVR T 1 z = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul x c => rw [mulVR_tmul, one_mul]
-  | add x y hx hy => rw [map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), hx, hy]
 
 theorem mulVR_add (T : LocLat G Qp LL O) (b b' : BdR) (z : T.V ⊗[Qp] BdR) :
     mulVR T (b + b') z = mulVR T b z + mulVR T b' z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero, add_zero]
   | tmul x c => rw [mulVR_tmul, mulVR_tmul, mulVR_tmul, add_mul, TensorProduct.tmul_add]
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]; abel
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]; abel
 
 theorem mulVR_zero (T : LocLat G Qp LL O) (z : T.V ⊗[Qp] BdR) : mulVR T 0 z = 0 := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul x c => rw [mulVR_tmul, zero_mul, TensorProduct.tmul_zero]
-  | add x y hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, add_zero]
 
 theorem mulVR_comm (T : LocLat G Qp LL O) (b b' : BdR) (z : T.V ⊗[Qp] BdR) :
     mulVR T b (mulVR T b' z) = mulVR T b' (mulVR T b z) := by
@@ -63,7 +63,7 @@ theorem mulVR_compKer (T : LocLat G Qp LL O) (ι : LL →ₐ[Qp] BdR) (b : BdR) 
     refine Submodule.subset_span ⟨c, mulVR T b y, ?_⟩
     rw [map_sub, map_smul, mulVR_comm]
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem mulVR_FilV (T : LocLat G Qp LL O) {e a : ℤ} {b : BdR} (hb : b ∈ PD.Fil e) {z : T.V ⊗[Qp] BdR}
@@ -74,7 +74,7 @@ theorem mulVR_FilV (T : LocLat G Qp LL O) {e a : ℤ} {b : BdR} (hb : b ∈ PD.F
   | tmul x c =>
     refine ⟨x ⊗ₜ (⟨b * c, PD.Fil_mul _ _ _ _ hb c.2⟩ : ↥((PD.Fil (e + a)).restrictScalars Qp)), ?_⟩
     rfl
-  | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
 
 theorem tmul_mem_FilV (T : LocLat G Qp LL O) {a : ℤ} (x : T.V) {c : BdR} (hc : c ∈ PD.Fil a) :
     x ⊗ₜ[Qp] c ∈ FilV PD (LL := LL) (V := T.V) a :=
@@ -84,7 +84,7 @@ theorem mulVR_sup (T : LocLat G Qp LL O) (ι : LL →ₐ[Qp] BdR) {a : ℤ} {b :
     {z : T.V ⊗[Qp] BdR} (hz : z ∈ compKer T ι ⊔ FilV PD (LL := LL) (V := T.V) a) :
     mulVR T b z ∈ compKer T ι ⊔ FilV PD (LL := LL) (V := T.V) a := by
   obtain ⟨y, hy, w, hw, rfl⟩ := Submodule.mem_sup.1 hz
-  rw [map_add]
+  rw [map_add (f := _)]
   refine Submodule.add_mem_sup (mulVR_compKer T ι b hy) ?_
   simpa using mulVR_FilV T hb hw
 
@@ -115,7 +115,7 @@ theorem mulVR_gen (T : LocLat G Qp LL O) (ι : LL →ₐ[Qp] BdR) {N : Type} (Ψ
     mulVR T b z ∈ Gen PD T ι Ψ := by
   obtain ⟨y, hy, w, hw, rfl⟩ := Submodule.mem_sup.1 hz
   clear hz
-  rw [map_add]
+  rw [map_add (f := _)]
   refine add_mem (Submodule.mem_sup_left (mulVR_compKer T ι b hy)) ?_
   induction hw using Submodule.span_induction with
   | mem x hx =>
@@ -123,7 +123,7 @@ theorem mulVR_gen (T : LocLat G Qp LL O) (ι : LL →ₐ[Qp] BdR) {N : Type} (Ψ
     rw [mulVR_mulVR]
     exact mem_gen T ι Ψ (by simpa using PD.Fil_mul _ _ _ _ hb hb') x
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem gen_form (T : LocLat G Qp LL O) (ι : LL →ₐ[Qp] BdR) (hι : ∀ c, ι c ∈ PD.Fil 0) {N : Type}
@@ -182,7 +182,7 @@ theorem act_βdR {W : LocWach PD LL O v n} {RW : Type} [CommRing RW] [Algebra O 
     obtain ⟨β, hβ, h⟩ := ha
     obtain ⟨β', hβ', h'⟩ := ha'
     refine ⟨β + β', add_mem hβ hβ', fun Y => ?_⟩
-    rw [add_smul, map_add, mulVR_add]
+    rw [add_smul, map_add (f := _), mulVR_add]
     convert add_mem (h Y) (h' Y) using 1
     abel
   | tmul o w =>
@@ -190,14 +190,14 @@ theorem act_βdR {W : LocWach PD LL O v n} {RW : Type} [CommRing RW] [Algebra O 
     induction Y using TensorProduct.induction_on with
     | zero => rw [smul_zero, map_zero, map_zero, sub_zero]; exact zero_mem _
     | add Y Y' h h' =>
-      rw [smul_add, map_add, map_add, map_add]
+      rw [smul_add, map_add (f := _), map_add (f := _), map_add (f := _)]
       convert add_mem h h' using 1
       abel
     | tmul r t =>
       induction r using TensorProduct.induction_on with
       | zero => rw [TensorProduct.zero_tmul, smul_zero, map_zero, map_zero, sub_zero]; exact zero_mem _
       | add r r' h h' =>
-        rw [TensorProduct.add_tmul, smul_add, map_add, map_add, map_add]
+        rw [TensorProduct.add_tmul, smul_add, map_add (f := _), map_add (f := _), map_add (f := _)]
         convert add_mem h h' using 1
         abel
       | tmul o' w' =>
@@ -238,11 +238,11 @@ theorem βdR_mem_FilV (Ct : CmpTie W E ιdR p1 tS zS) (T : LocLat G Qp LL O) (hA
     (y : TW (O ⊗[Zl] Ai) T) : Ct.βdR T y ∈ FilV PD (LL := LL) (V := T.V) 0 := by
   induction y using TensorProduct.induction_on with
   | zero => rw [map_zero]; exact zero_mem _
-  | add y y' hy hy' => rw [map_add]; exact add_mem hy hy'
+  | add y y' hy hy' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hy'
   | tmul r t =>
     induction r using TensorProduct.induction_on with
     | zero => rw [TensorProduct.zero_tmul, map_zero]; exact zero_mem _
-    | add r r' hr hr' => rw [TensorProduct.add_tmul, map_add]; exact add_mem hr hr'
+    | add r r' hr hr' => rw [TensorProduct.add_tmul, map_add (f := _)]; exact add_mem hr hr'
     | tmul o w =>
       rw [Ct.βdR_tmul]
       exact tmul_mem_FilV T _ (hA w)
@@ -295,7 +295,7 @@ theorem core_gen (Ct : CmpTie W E ιdR p1 tS zS) (T : LocLat G Qp LL O) (hT : Is
       | add Z Z' _ _ h h' =>
         obtain ⟨Yv, hYv, e⟩ := h
         obtain ⟨Yv', hYv', e'⟩ := h'
-        exact ⟨Yv + Yv', add_mem hYv hYv', by rw [map_add, e, e', smul_add]⟩
+        exact ⟨Yv + Yv', add_mem hYv hYv', by rw [map_add (f := _), e, e', smul_add]⟩
       | smul o Z _ h =>
         obtain ⟨Yv, hYv, e⟩ := h
         refine ⟨o • Yv, Submodule.smul_mem _ o hYv, ?_⟩
@@ -319,7 +319,7 @@ theorem core_gen (Ct : CmpTie W E ιdR p1 tS zS) (T : LocLat G Qp LL O) (hT : Is
         have h2 := PD.Fil_mul _ _ _ _ hb h1
         simpa using h2
       | zero => intro b hb; rw [map_zero, map_zero]; exact zero_mem _
-      | add Yv Yv' _ _ h h' => intro b hb; rw [map_add, map_add]; exact add_mem (h b hb) (h' b hb)
+      | add Yv Yv' _ _ h h' => intro b hb; rw [map_add (f := _), map_add (f := _)]; exact add_mem (h b hb) (h' b hb)
       | smul o Yv _ h =>
         intro b hb
         obtain ⟨β, hβ, hβY⟩ := act_βdR Ct T ι hι hA (algebraMap O (O ⊗[Zl] Ai) o)
@@ -364,7 +364,7 @@ theorem core_gen (Ct : CmpTie W E ιdR p1 tS zS) (T : LocLat G Qp LL O) (hT : Is
         rw [mulVR_tmul, mul_one]; rfl
       rw [this]
       exact mulVR_gen T ι Ψ c.2 (hv v)
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · have hlev : ∀ r : ℤ, r < -(a : ℤ) → W.levN T i ζ x r = 0 := fun r hr => by
       rw [Ct.levN_eq, hex r hr, map_zero]
     obtain ⟨c, hc⟩ := Ct.levN_dR T hT i ζ ι hιK hζ x m (Y x) (hY x) a hlev

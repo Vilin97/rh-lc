@@ -29,8 +29,8 @@ def singleL (v : HeightOneSpectrum (𝓞 F)) : Fv F v →ₗ[F] Af F where
   toFun := singleV F v
   map_add' x y := af_ext fun w => by
     by_cases hw : w = v
-    · subst hw; rw [map_add, ev_same, ev_same, ev_same]
-    · rw [map_add, ev_ne hw, ev_ne hw, ev_ne hw, add_zero]
+    · subst hw; rw [map_add (f := _), ev_same, ev_same, ev_same]
+    · rw [map_add (f := _), ev_ne hw, ev_ne hw, ev_ne hw, add_zero]
   map_smul' c x := af_ext fun w => by
     by_cases hw : w = v
     · subst hw; rw [map_smul, ev_same, ev_same]; rfl
@@ -59,7 +59,7 @@ theorem idem_mul (v : HeightOneSpectrum (𝓞 F)) (y : Af F ⊗[F] E) :
     rw [Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.map_tmul, TensorProduct.map_tmul, one_mul,
       ← single_ev]
     rfl
-  | add x y hx hy => rw [mul_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [mul_add, map_add (f := _), map_add (f := _), hx, hy]
 
 theorem ev_mem_compLat (v : HeightOneSpectrum (𝓞 F)) (L : Set (Fin M → E)) {y : Fin M → Af F ⊗[F] E}
     (hy : y ∈ latHat F E L) :
@@ -69,7 +69,7 @@ theorem ev_mem_compLat (v : HeightOneSpectrum (𝓞 F)) (L : Set (Fin M → E)) 
     obtain ⟨a, ha, x, hx, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨evalV F v a, ha v, x, hx, rfl⟩
   | zero => simp only [Pi.zero_apply, map_zero, mul_zero]; exact zero_mem _
-  | add x y _ _ hx hy => simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => simp only [Pi.neg_apply, map_neg]; exact neg_mem hx
 
 theorem single_mem_latHat (v : HeightOneSpectrum (𝓞 F)) (L : Set (Fin M → E)) {y : Fin M → Fv F v ⊗[F] E}
@@ -80,7 +80,7 @@ theorem single_mem_latHat (v : HeightOneSpectrum (𝓞 F)) (L : Set (Fin M → E
     obtain ⟨a, ha, x, hx, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨singleV F v a, single_int ha, x, hx, rfl⟩
   | zero => simp only [Pi.zero_apply, map_zero, mul_zero]; exact zero_mem _
-  | add x y _ _ hx hy => simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => simp only [Pi.neg_apply, map_neg]; exact neg_mem hx
 
 theorem inv_int_away {v w : HeightOneSpectrum (𝓞 F)} (h : w ≠ v) {t : F}

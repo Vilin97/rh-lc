@@ -52,7 +52,7 @@ theorem det_add_ones {R : Type*} [CommRing R] [IsDomain R] {n : ℕ}
     simp
   rw [hsum, ← hdet, ← hdet, hadj] at h
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [h, map_add, map_sum]
+    rw [h, map_add (f := _), map_sum]
   set_option synthInstance.maxHeartbeats 100000 in
     simp [map_sum]
 

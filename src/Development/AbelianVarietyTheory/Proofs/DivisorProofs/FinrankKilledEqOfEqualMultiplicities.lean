@@ -75,7 +75,7 @@ theorem mem_of_mem_sSup_pieces {ρ : Representation ℂ H X} {C : Submodule ℂ 
     exact hU.1 hy
   · simp
   · intro a b ha hb
-    rw [map_add]
+    rw [map_add (f := _)]
     exact C.add_mem ha hb
 
 theorem semisimple_sSup_pieces (ρ : Representation ℂ H X) (C : Submodule ℂ X) :

@@ -51,7 +51,7 @@ private theorem eigen_ext {p : ℕ} [Fact p.Prime] {O OE κ : Type} [CommRing O]
     ρ x * e = tauExt t x • e := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, add_mul, add_smul, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), add_mul, add_smul, hx, hy]
   | tmul c a =>
     have h1 : (c ⊗ₜ[ℤ] a : ℤ_[p] ⊗[ℤ] OE) = (c ⊗ₜ[ℤ] 1) * (1 ⊗ₜ[ℤ] a) := by simp
     have h2 : tauExt t (c ⊗ₜ[ℤ] a : ℤ_[p] ⊗[ℤ] OE) = algebraMap ℤ_[p] O c * t a := by
@@ -73,7 +73,7 @@ private theorem frob_ext {p : ℕ} [Fact p.Prime] {O OE : Type} [CommRing O] [Is
   rw [key]
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c a =>
     have h2 : ∀ u : OE →+* O, tauExt u (c ⊗ₜ[ℤ] a : ℤ_[p] ⊗[ℤ] OE) = algebraMap ℤ_[p] O c * u a := by
       intro u

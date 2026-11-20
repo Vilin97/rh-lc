@@ -186,8 +186,8 @@ theorem exists_graph_lt [FiniteDimensional E V] (h2 : (2 : E) ≠ 0) (hc : ∀ t
     have hs : c ((B w₁ w₁ - B w w) / 2) = (B w₁ w₁ - B w w) / 2 := by
       rw [map_div₀, map_sub, hB, hB, map_ofNat]
     refine ⟨w + ((B w₁ w₁ - B w w) / 2) • r.2, fun p hp => ?_, ?_⟩
-    · rw [map_add, LinearMap.map_smulₛₗ, hrad2 p hp, smul_zero, add_zero, hw' p hp]
-    · simp only [map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+    · rw [map_add (f := _), LinearMap.map_smulₛₗ, hrad2 p hp, smul_zero, add_zero, hw' p hp]
+    · simp only [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
         RingHom.id_apply, hs, smul_eq_mul, hr2w, hwr2, hrad2 r hr]
       field_simp
       ring
@@ -223,7 +223,7 @@ theorem exists_graph_lt [FiniteDimensional E V] (h2 : (2 : E) ≠ 0) (hc : ∀ t
   · intro p hp p' hp'
     obtain ⟨q, hq, t, rfl⟩ := hmem p hp
     obtain ⟨q', hq', t', rfl⟩ := hmem p' hp'
-    simp only [map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+    simp only [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
       hΓ q hq q' hq', ha q hq, ha' q' hq', hb]
 
 theorem exists_isometry_of_graph [FiniteDimensional E V] (h2 : (2 : E) ≠ 0)

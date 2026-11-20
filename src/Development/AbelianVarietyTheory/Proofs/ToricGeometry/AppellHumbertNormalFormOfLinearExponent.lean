@@ -50,7 +50,7 @@ theorem exists_split {g : ℕ} (F : (Fin g → ℂ) →ₗ[ℝ] ((Fin g → ℂ)
   congr 1
   conv_lhs => rw [eq_sum_re_im u]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_add, map_smul, LinearMap.sum_apply, LinearMap.add_apply,
+    simp only [map_sum, map_add (f := _), map_smul, LinearMap.sum_apply, LinearMap.add_apply,
     LinearMap.smul_apply, Pi.add_apply, mulVec, dotProduct, of_apply, ← Finset.sum_add_distrib,
     Pi.star_apply, real_smul]
   refine Finset.sum_congr rfl fun b _ => ?_
@@ -102,7 +102,7 @@ theorem _root_.GlobalTheory.appellHumbert_normal_form_of_linear_exponent :
     intro u m
     refine hlin (fun u => (F u ⬝ᵥ m - F m ⬝ᵥ u).re = 0) (by simp) (fun x y hx hy => ?_)
       (fun c x hx => ?_) (fun l => ?_) u
-    · simp only [map_add, add_dotProduct, dotProduct_add, Complex.sub_re, Complex.add_re] at hx hy ⊢
+    · simp only [map_add (f := _), add_dotProduct, dotProduct_add, Complex.sub_re, Complex.add_re] at hx hy ⊢
       linarith
     · simp only [map_smul, smul_dotProduct, dotProduct_smul, Complex.sub_re, Complex.smul_re,
         smul_eq_mul] at hx ⊢
@@ -113,7 +113,7 @@ theorem _root_.GlobalTheory.appellHumbert_normal_form_of_linear_exponent :
     intro u v
     refine hlin (fun v => (F u ⬝ᵥ v - F v ⬝ᵥ u).re = 0) (by simp) (fun x y hx hy => ?_)
       (fun c x hx => ?_) (fun m => hD1 u m) v
-    · simp only [map_add, add_dotProduct, dotProduct_add, Complex.sub_re, Complex.add_re] at hx hy ⊢
+    · simp only [map_add (f := _), add_dotProduct, dotProduct_add, Complex.sub_re, Complex.add_re] at hx hy ⊢
       linarith
     · simp only [map_smul, smul_dotProduct, dotProduct_smul, Complex.sub_re, Complex.smul_re,
         smul_eq_mul] at hx ⊢
@@ -126,7 +126,7 @@ theorem _root_.GlobalTheory.appellHumbert_normal_form_of_linear_exponent :
     intro u; ext j
     conv_lhs => rw [_root_.GlobalTheory.AppellHumbert.eq_sum_re_im u]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_add, map_smul, Finset.sum_apply, Pi.add_apply, Pi.smul_apply, vecMul,
+      simp only [map_sum, map_add (f := _), map_smul, Finset.sum_apply, Pi.add_apply, Pi.smul_apply, vecMul,
       dotProduct, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
     apply Complex.ext <;> simp [M, N, Complex.mul_re, Complex.mul_im] <;> ring
@@ -239,7 +239,7 @@ theorem _root_.GlobalTheory.appellHumbert_normal_form_of_linear_exponent :
     intro u
     conv_rhs => rw [_root_.GlobalTheory.AppellHumbert.eq_sum_re_im u]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_add, map_smul, smul_eq_mul, dotProduct, Complex.re_sum]
+      simp only [map_sum, map_add (f := _), map_smul, smul_eq_mul, dotProduct, Complex.re_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     simp [c, Complex.mul_re]
     ring

@@ -58,7 +58,7 @@ theorem glue (D : SB X →ₗ[ℂ] ℂ) (𝒞 : Set X → Prop) (hcl : ∀ C, �
         rw [hψ]
         ext x
         by_cases a : x ∈ C' <;> by_cases b : x ∈ C <;> simp [Set.indicator, a, b]
-      rw [this, map_add, a1, a2, add_zero]
+      rw [this, map_add (f := _), a1, a2, add_zero]
     · intro x hx
       obtain ⟨C, h1, h2, h3⟩ := h x hx
       exact ⟨C, mem_nhdsWithin_of_mem_nhds ((hcl _ h1).2.mem_nhds h2), C, h1, subset_rfl, h3⟩

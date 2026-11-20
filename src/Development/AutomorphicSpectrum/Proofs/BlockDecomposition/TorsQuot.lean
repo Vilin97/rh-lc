@@ -77,7 +77,7 @@ theorem tors_quot : ∀ (p : ℕ) [Fact p.Prime] (B : Type) [CommRing B] (π : B
     obtain ⟨a, rfl⟩ := hsurj a₁
     obtain ⟨b, rfl⟩ := hsurj b₁
     have ht : π * (a * f + b * g - π ^ N) = 0 := by
-      rw [← hI, map_sub, map_add, map_mul, map_mul, map_pow, hab, sub_self]
+      rw [← hI, map_sub, map_add (f := _), map_mul, map_mul, map_pow, hab, sub_self]
     have hmem : π ^ (N + 1) ∈ Ideal.span {f, g} := by
       refine Ideal.mem_span_pair.2 ⟨π * a, π * b, ?_⟩
       linear_combination ht

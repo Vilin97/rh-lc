@@ -531,7 +531,7 @@ theorem levStab : LevStab := by
   constructor
   · refine Submodule.mem_map.2 ⟨(1 / 2 : ℂ) • (evLc lev E1 E2 (FreeAlgebra.ι ℂ (false, p, q)) y +
       evLc lev E1 E2 (FreeAlgebra.ι ℂ (true, p, q)) y), Submodule.smul_mem _ _ (add_mem (mem _) (mem _)), ?_⟩
-    simp only [firstLeviFamily, LinearMap.smul_apply, LinearMap.add_apply, map_smul, map_add, key]
+    simp only [firstLeviFamily, LinearMap.smul_apply, LinearMap.add_apply, map_smul, map_add (f := _), key]
   · refine Submodule.mem_map.2 ⟨(1 / 2 : ℂ) • (evLc lev E1 E2 (FreeAlgebra.ι ℂ (false, p, q)) y -
       evLc lev E1 E2 (FreeAlgebra.ι ℂ (true, p, q)) y), Submodule.smul_mem _ _ (sub_mem (mem _) (mem _)), ?_⟩
     simp only [secondLeviFamily, LinearMap.smul_apply, LinearMap.sub_apply, map_smul, map_sub, key]

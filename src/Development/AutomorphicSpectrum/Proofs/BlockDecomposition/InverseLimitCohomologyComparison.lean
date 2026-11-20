@@ -116,6 +116,6 @@ theorem lim_lift : ∀ {R : Type} [CommRing R] {K : Cx.{1} R} (Kn : ℕ → Cx.{
   refine ⟨z, fun n => ?_⟩
   obtain ⟨u, hu⟩ := hz n
   have e : z = c ^ k • y n + c ^ n • u := by rw [← hu]; abel
-  rw [e, map_add, map_smul, map_smul, hy, kill_H c n (red n) (hs n) (hk n), add_zero, smul_smul, ← pow_add, two_mul]
+  rw [e, map_add (f := _), map_smul, map_smul, hy, kill_H c n (red n) (hs n) (hk n), add_zero, smul_smul, ← pow_add, two_mul]
 
 end GlobalTheory.CompanionTheory.LimLift

@@ -36,7 +36,7 @@ theorem intAt_zero {P : Pl D → Prop} : (0 : AE D) ∈ intAt D P :=
 
 theorem intAt_add {P : Pl D → Prop} {a b : AE D} (ha : a ∈ intAt D P) (hb : b ∈ intAt D P) :
     a + b ∈ intAt D P :=
-  ⟨add_mem ha.1 hb.1, by rw [(finPart D).map_add]; exact add_mem ha.2 hb.2⟩
+  ⟨add_mem ha.1 hb.1, by rw [(finPart D).map_add (f := _)]; exact add_mem ha.2 hb.2⟩
 
 theorem intAt_mul {P : Pl D → Prop} {a b : AE D} (ha : a ∈ intAt D P) (hb : b ∈ intAt D P) :
     a * b ∈ intAt D P :=

@@ -270,7 +270,7 @@ theorem coeff_lgCurve_low (G : LogFGL v d) {ga : Fin d â†’ PowerSeries C} {k : â
     rw [Finsupp.degree_single]
     refine lt_of_lt_of_le ?_ (le_trans (mul_le_mul' hord (order_lg_sub_X G a)) hR)
     exact_mod_cast (show j < k * 2 by omega)
-  rw [hsplit, map_add]
+  rw [hsplit, map_add (f := _)]
   have := coeff_of_lt_order hlt
   change _ + coeff (Finsupp.single () j) _ = _
   rw [this, add_zero]

@@ -47,7 +47,7 @@ theorem UpperTheory.V.Ws.Po.nonAlg :
       rw [h1, ← map_pow, ← hm, FiniteField.pow_card]
     | add x z _ _ hx hz =>
       obtain ⟨n, hn, hxn, hzn⟩ := fix_both hx hz
-      exact ⟨n, hn, by rw [map_add, add_pow_char_pow, hxn, hzn]⟩
+      exact ⟨n, hn, by rw [map_add (f := _), add_pow_char_pow, hxn, hzn]⟩
     | mul x z _ _ hx hz =>
       obtain ⟨n, hn, hxn, hzn⟩ := fix_both hx hz
       exact ⟨n, hn, by rw [map_mul, mul_pow, hxn, hzn]⟩

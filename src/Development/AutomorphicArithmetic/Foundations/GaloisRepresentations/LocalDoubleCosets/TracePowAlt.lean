@@ -17,7 +17,7 @@ theorem tracePow : TracePow := by
   have hinv : φ * Polynomial.aeval φ t = 1 := by
     have h := congrArg (Polynomial.aeval φ) (Polynomial.X_mul_divX_add p)
     rw [hp, LinearMap.aeval_self_charpoly, ← hp] at h
-    simp only [map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C] at h
+    simp only [map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C] at h
     have h' : φ * Polynomial.aeval φ (Polynomial.divX p) = -(algebraMap ℂ _ (p.coeff 0)) :=
       eq_neg_of_add_eq_zero_left h
     rw [ht, map_mul, map_neg, Polynomial.aeval_C, neg_mul, mul_neg, ← mul_assoc,

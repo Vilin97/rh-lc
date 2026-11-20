@@ -49,7 +49,7 @@ theorem exists_theta : ∃ (θ : D.host.E) (c tr nm : 𝓞 D.host.F), IsIntegral
   obtain ⟨c, hc⟩ := mem_OF (((θ : D.host.E) - D.conjF (θ : D.host.E)) ^ 2)
     (by rw [map_pow, map_sub, hinv]; ring) ((hθ.sub ht').pow 2)
   obtain ⟨tr, htr⟩ := mem_OF ((θ : D.host.E) + D.conjF (θ : D.host.E))
-    (by rw [map_add, hinv, add_comm]) (hθ.add ht')
+    (by rw [map_add (f := _), hinv, add_comm]) (hθ.add ht')
   obtain ⟨nm, hnm⟩ := mem_OF ((θ : D.host.E) * D.conjF (θ : D.host.E))
     (by rw [map_mul, hinv, mul_comm]) (hθ.mul ht')
   refine ⟨θ, c, tr, nm, hθ, hc, ?_, htr, hnm⟩
@@ -201,7 +201,7 @@ theorem trace_mem (y : (D.s.atP p).Ep) (hy : y ∈ (D.s.atP p).O) :
     exact (D.s.atP p).compat _
   have hT : (D.s.atP p).ιE θ + (D.s.atP p).cj ((D.s.atP p).ιE θ) =
       algebraMap (D.s.atP p).Fp (D.s.atP p).Ep ((D.s.atP p).ιF (tr : D.host.F)) := by
-    rw [(D.s.atP p).cj_ιE, ← map_add, ← htr]
+    rw [(D.s.atP p).cj_ιE, ← map_add (f := _), ← htr]
     exact (D.s.atP p).compat _
   have hne : (D.s.atP p).cj ((D.s.atP p).ιE θ) ≠ (D.s.atP p).ιE θ := by
     intro h
@@ -213,13 +213,13 @@ theorem trace_mem (y : (D.s.atP p).Ep) (hy : y ∈ (D.s.atP p).O) :
     have e : algebraMap (D.s.atP p).Fp (D.s.atP p).Ep (a + a + b * (D.s.atP p).ιF (tr : D.host.F)) =
         y + (D.s.atP p).cj y := by
       rw [hab]
-      simp only [map_add, map_mul, AlgEquiv.commutes]
+      simp only [map_add (f := _), map_mul, AlgEquiv.commutes]
       linear_combination (-(algebraMap (D.s.atP p).Fp (D.s.atP p).Ep b)) * hT
     rw [e]
     have hyI := ((D.s.atP p).O_def y).1 hy
     exact hyI.add (hyI.map ((D.s.atP p).cj.toAlgHom.restrictScalars 𝒪[(D.s.atP p).Fp]))
   · rw [hab]
-    simp only [map_add, map_mul, AlgEquiv.commutes]
+    simp only [map_add (f := _), map_mul, AlgEquiv.commutes]
     linear_combination (algebraMap (D.s.atP p).Fp (D.s.atP p).Ep b) * hT
 
 end Formalism.L2.SG.Pf.LocUnramP
@@ -239,7 +239,7 @@ variable (θ : D.host.E) (c tr nm : 𝓞 D.host.F)
 theorem om_tr (htr : ((tr : D.host.F) : D.host.E) = θ + D.conjF θ) :
     (D.s.atP p).ιE θ + (D.s.atP p).cj ((D.s.atP p).ιE θ) =
       algebraMap (D.s.atP p).Fp (D.s.atP p).Ep ((D.s.atP p).ιF (tr : D.host.F)) := by
-  rw [(D.s.atP p).cj_ιE, ← map_add, ← htr]
+  rw [(D.s.atP p).cj_ιE, ← map_add (f := _), ← htr]
   exact (D.s.atP p).compat _
 
 theorem om_nm (hnm : ((nm : D.host.F) : D.host.E) = θ * D.conjF θ) :
@@ -332,7 +332,7 @@ theorem coords_mem (θ : D.host.E) (c tr nm : 𝓞 D.host.F) (hθ : IsIntegral �
       algebraMap (D.s.atP p).Fp (D.s.atP p).Ep b * ((D.s.atP p).ιE θ - (D.s.atP p).cj ((D.s.atP p).ιE θ)) ^ 2 := by
     simp only [map_mul, map_sub, hcc]
     rw [hab]
-    simp only [map_add, map_mul, AlgEquiv.commutes]
+    simp only [map_add (f := _), map_mul, AlgEquiv.commutes]
     ring
   have hsb : s = b * (D.s.atP p).ιF (c : D.host.F) := by
     apply algebraMap_Fp_Ep_injective p
@@ -398,7 +398,7 @@ theorem sq_coords (θ : D.host.E) (tr nm : 𝓞 D.host.F)
         (D.s.atP p).ιE θ := by
   have h1 := om_tr p θ tr htr
   have h2 := om_nm p θ nm hnm
-  simp only [map_sub, map_add, map_mul, map_pow, map_ofNat]
+  simp only [map_sub, map_add (f := _), map_mul, map_pow, map_ofNat]
   linear_combination (algebraMap (D.s.atP p).Fp (D.s.atP p).Ep b ^ 2 * (D.s.atP p).ιE θ) * h1 -
     algebraMap (D.s.atP p).Fp (D.s.atP p).Ep b ^ 2 * h2
 

@@ -129,7 +129,7 @@ def factorSpace (ρ : ι → Module.End ℂ Pr) (σ : ι → Module.End ℂ Pi) 
     rintro φ ψ ⟨f, hf, hφ, hβ⟩ ⟨g, hg, hψ, hβ'⟩
     refine ⟨f + g, S.add_mem hf hg, fun i => ?_, ?_⟩
     · rw [LinearMap.add_comp, LinearMap.comp_add, hφ, hψ]
-    · rw [map_add, hβ, hβ', LinearMap.add_comp]
+    · rw [map_add (f := _), hβ, hβ', LinearMap.add_comp]
   smul_mem' := by
     rintro a φ ⟨f, hf, hφ, hβ⟩
     refine ⟨a • f, S.smul_mem a hf, fun i => ?_, ?_⟩
@@ -269,7 +269,7 @@ theorem exists_lift (ρ : ι → Module.End ℂ Pr) (σ : ι → Module.End ℂ 
         ext1
         change g (f + f') = g f + g f'
         apply comp_cancel hq
-        rw [LinearMap.add_comp, ← hgβ, ← hgβ, ← hgβ, Submodule.coe_add, map_add]
+        rw [LinearMap.add_comp, ← hgβ, ← hgβ, ← hgβ, Submodule.coe_add, map_add (f := _)]
       map_smul' := fun a f => by
         ext1
         change g (a • f) = a • g f

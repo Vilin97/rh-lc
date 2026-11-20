@@ -35,7 +35,7 @@ theorem values_mem_sSup (W : Wt E n) [Nontrivial W.Sp] (f : W.Sp →ₗ[ℂ] (UA
     intro x hx y hy z hz c
     rw [hB2 x hx _ (C.add_mem hy (C.smul_mem c hz)), hB2 x hx y hy, hB2 x hx z hz]
     have e : (⟨y + c • z, C.add_mem hy (C.smul_mem c hz)⟩ : C) = ⟨y, hy⟩ + c • ⟨z, hz⟩ := rfl
-    rw [e, map_add, map_smul, smul_eq_mul]
+    rw [e, map_add (f := _), map_smul, smul_eq_mul]
   have h2 : ∀ x ∈ C, ∀ y ∈ C, B2 x y = starRingEnd ℂ (B2 y x) := by
     intro x hx y hy
     rw [hB2 x hx y hy, hB2 y hy x hx, ← form_herm B hh W.rep ⟨y, hy⟩ ⟨x, hx⟩]
@@ -68,7 +68,7 @@ theorem values_mem_sSup (W : Wt E n) [Nontrivial W.Sp] (f : W.Sp →ₗ[ℂ] (UA
   let F : Submodule ℂ C :=
     { carrier := {w | ∀ k ∈ K, ρC k w = w}
       zero_mem' := fun k _ => map_zero _
-      add_mem' := fun ha hb k hk => by rw [map_add, ha k hk, hb k hk]
+      add_mem' := fun ha hb k hk => by rw [map_add (f := _), ha k hk, hb k hk]
       smul_mem' := fun c w hw k hk => by rw [map_smul, hw k hk] }
   have hF : ∀ w, w ∈ F ↔ ∀ k ∈ K, ρC k w = w := fun w => Iff.rfl
   haveI := rep_fd W.rep K hKo
@@ -270,7 +270,7 @@ theorem eigen_decomp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n
     { toFun := fun v => c v U
       map_add' := fun v w => congrFun (hkey (v + w) (fun U => c v U + c w U) (fun U => U.add_mem (hcm v U) (hcm w U))
         (fun U hU => by rw [hc0 v U hU, hc0 w U hU, add_zero])
-        (by rw [Finset.sum_add_distrib, hcs, hcs, map_add])).symm U
+        (by rw [Finset.sum_add_distrib, hcs, hcs, map_add (f := _)])).symm U
       map_smul' := fun r v => congrFun (hkey (r • v) (fun U => r • c v U) (fun U => U.smul_mem r (hcm v U))
         (fun U hU => by rw [hc0 v U hU, smul_zero])
         (by rw [← Finset.smul_sum, hcs, map_smul])).symm U }

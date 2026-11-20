@@ -153,7 +153,7 @@ theorem kernel_harmonic : KHarm := by
   rw [harmIff] at hP ⊢
   intro c d hcd
   rw [fock_operators_kernel p q r s a b hab]
-  simp only [LinearMap.add_apply, LinearMap.sub_apply, map_add, map_sub, lowOp_posOp c d hcd,
+  simp only [LinearMap.add_apply, LinearMap.sub_apply, map_add (f := _), map_sub, lowOp_posOp c d hcd,
     lowOp_negOp c d hcd a b hab, hP c d hcd, map_zero, zero_add, sub_self]
   split_ifs <;> simp [hP c d hcd]
 

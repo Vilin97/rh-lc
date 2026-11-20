@@ -359,7 +359,7 @@ theorem surj {r : ℕ} (hU : Formalism.HermitianLatticesTheory.IsUnimodular S.hT
   have iv_add : ∀ a, ∀ x ∈ Λ, ∀ y ∈ Λ, iv (ε a) (x + y) = iv (ε a) x + iv (ε a) y := by
     intro a x hx y hy
     apply algebraMap_injO
-    rw [map_add, iv_spec hU (hε a) hx, iv_spec hU (hε a) hy, iv_spec hU (hε a) (Λ.add_mem hx hy),
+    rw [map_add (f := _), iv_spec hU (hε a) hx, iv_spec hU (hε a) hy, iv_spec hU (hε a) (Λ.add_mem hx hy),
       map_add]
   have iv_smul : ∀ a, ∀ (o : 𝓞 E), ∀ x ∈ Λ, iv (ε a) (o • x) = o * iv (ε a) x := by
     intro a o x hx
@@ -375,7 +375,7 @@ theorem surj {r : ℕ} (hU : Formalism.HermitianLatticesTheory.IsUnimodular S.hT
       add_mem' := by
         rintro _ _ ⟨x, hx, rfl⟩ ⟨y, hy, rfl⟩
         refine ⟨x + y, Λ.add_mem hx hy, ?_⟩
-        funext a; simp only [ρ, Pi.add_apply, iv_add a x hx y hy, map_add]
+        funext a; simp only [ρ, Pi.add_apply, iv_add a x hx y hy, map_add (f := _)]
       zero_mem' := ⟨0, Λ.zero_mem, by funext a; simp [ρ, iv_zero]⟩
       smul_mem' := by
         rintro q _ ⟨x, hx, rfl⟩
@@ -500,7 +500,7 @@ theorem iotaLift {g r : ℕ} {T T' : E} {F : LFlag S r T} {F' : LFlag S r T'}
     refine ⟨cO s₀ * o, ?_⟩
     have h0 : S.hT y₂ x' = 0 := (mem_orth S).mp hx'o y₂ hy₂.2
     have h1 : S.hT (s₁' • F.fl.e a) x' = (g : E) * algebraMap (𝓞 E) E o := by
-      rw [← hsum, map_add, LinearMap.add_apply, h0, add_zero, hT_gl, ho]
+      rw [← hsum, map_add (f := _), LinearMap.add_apply, h0, add_zero, hT_gl, ho]
     rw [smulO, hT_smul_left, ← cO_coe] at h1
     simp only [ε]
     rw [smulO, hT_smul_left, ← cO_coe, map_mul]
@@ -600,7 +600,7 @@ theorem cong {g r : ℕ} {T T' : E} {F : LFlag S r T} {F' F'' : LFlag S r T'}
   · have key : (s * t) • (β₁.symm (β₂ y) - y) = β₁.symm (s • (β₂ x - β₁ x)) := by
       simp only [x, smulO, map_smul, map_sub, LinearEquiv.symm_apply_apply, smul_sub, map_mul,
         mul_smul]
-    rw [key, ← hz, map_add, smulO, map_smul, ← smulO]
+    rw [key, ← hz, map_add (f := _), smulO, map_smul, ← smulO]
     refine Submodule.add_mem _ (Submodule.mem_sup_left (g_mem_gΛ (Λ := Λ) g
       (symm_mem hP1.1 hl₁))) (Submodule.mem_sup_right ⟨symm_mem hP1.1 hz₂.1, ?_⟩)
     exact symm_mem_X hP1.2.1 hz₂.2

@@ -123,7 +123,7 @@ theorem chars_ne (β : R →+* k) : ∀ i j : Fin D.a, i ≠ j → ∃ x, β (b.
 
 theorem delta_ne (β : R →+* k) : β b.ρ - ((D.tr : k) - β b.ρ) ≠ 0 := by
   have hρ := congrArg β b.ρ_root
-  simp only [map_add, map_sub, map_pow, map_mul, map_intCast, map_zero] at hρ
+  simp only [map_add (f := _), map_sub, map_pow, map_mul, map_intCast, map_zero] at hρ
   set n : ℕ := (4 * D.nm - D.tr ^ 2).toNat
   have hpos : 0 < 4 * D.nm - D.tr ^ 2 := by linarith [D.disc_neg]
   have hn : (n : ℤ) = 4 * D.nm - D.tr ^ 2 := Int.toNat_of_nonneg hpos.le
@@ -177,7 +177,7 @@ theorem inv_sub_smul_sub_sub_inv_sub_smul_sub_eq {k V : Type*} [Field k] [AddCom
 
 theorem smul_add_sub_linearMap_smul_add_eq {k V : Type*} [Field k] [AddCommGroup V] [Module k V] (f : V →ₗ[k] V) (a : k)
     (X Y P Q : V) : (a • Y + Q) - f (a • X + P) = a • (Y - f X) + (Q - f P) := by
-  rw [map_add, map_smul, smul_sub]
+  rw [map_add (f := _), map_smul, smul_sub]
   abel
 
 theorem sub_eq_neg_smul_add_of_sub_smul_eq {k V : Type*} [Field k] [AddCommGroup V] [Module k V] (u u' S X : V) (a : k)

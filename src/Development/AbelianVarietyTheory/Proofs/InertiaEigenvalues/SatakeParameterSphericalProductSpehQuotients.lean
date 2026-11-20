@@ -32,7 +32,7 @@ theorem idem_mem_of_orbit (hs : IsSmooth π) (hi : π.IsIrreducible) (hc : IsCom
       show π.asAlgebraHom (MonoidAlgebra.of ℂ G g) y = _
       simp
     rw [this]; exact h g
-  | add a b ha hb => rw [map_add, map_add]; exact add_mem ha hb
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
   | smul r a ha => rw [map_smul, map_smul]; exact S.smul_mem _ ha
 
 theorem exists_scalar [TopologicalSpace.SeparableSpace G] (hs : IsSmooth π) (hi : π.IsIrreducible)
@@ -142,7 +142,7 @@ theorem map_idem_of_fixed (hs : ∀ a, IsSmooth (ρ a)) (hc : ∀ a, IsCompact (
       congr 1
       funext a
       exact GlobalTheory.LGrp.mem_fixed.1 (idem_mem _ _ _) _ (hg a trivial)
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   rw [h3, idem_of_mem hS hC (GlobalTheory.LGrp.mem_fixed.2 fun g hg => hv g fun a => hg a trivial)]
 
 end Abstract
@@ -417,7 +417,7 @@ theorem exists_map_isSatVecGL {X : Fin c → Type} [∀ a, AddCommGroup (X a)] [
     | smul_tprod t z =>
       rw [map_smul, map_smul, map_smul, piTensor_tprod, hev, hev, smul_eq_mul, smul_eq_mul, mul_left_comm,
         ← Finset.prod_mul_distrib, Finset.prod_congr rfl fun a _ => hl a _ (hg a) _]
-    | add z z' hz hz' => rw [map_add, map_add, map_add, hz, hz', mul_add]
+    | add z z' hz hz' => rw [map_add (f := _), map_add (f := _), map_add (f := _), hz, hz', mul_add]
   let γ : Fin n → ℂˣ := (fun s : Σ a, Fin (N a) => β s.1 s.2) ∘ (stdBlocks N h).symm
   have hγ : Finset.univ.val.map γ = ∑ a, Finset.univ.val.map (β a) := by
     rw [← Multiset.map_map, Multiset.map_univ_val_equiv, ← Finset.univ_sigma_univ]
@@ -458,7 +458,7 @@ theorem exists_sat_multiProd {X : Fin c → Type} [∀ a, AddCommGroup (X a)] [�
       rw [map_smul, PiTensorProduct.map_tprod, MultilinearMap.map_coord_zero _ a, smul_zero]
       have := idem_mem (hs a) GlobalTheory.SplitFlip.isCompact_KO (x a)
       rwa [e] at this
-    | add x y hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, add_zero]
   choose S hS using fun a => exists_hasSatGL_of_isIrreducible (hs a) (hi a) (hsph a)
   choose x hx using fun a => (hS a).exists_vec
   have hr : ∀ u, ∃ r : ℂ, PiTensorProduct.map (fun a => idem (hs a) (H := KO _ _) GlobalTheory.SplitFlip.isCompact_KO) u =
@@ -472,7 +472,7 @@ theorem exists_sat_multiProd {X : Fin c → Type} [∀ a, AddCommGroup (X a)] [�
     | add y z hy hz =>
       obtain ⟨r, hr⟩ := hy
       obtain ⟨t, ht⟩ := hz
-      exact ⟨r + t, by rw [map_add, hr, ht, add_smul]⟩
+      exact ⟨r + t, by rw [map_add (f := _), hr, ht, add_smul]⟩
   obtain ⟨r, hr⟩ := hr (f.1.1 1)
   rw [hv] at hr
   choose Z iZ mZ R β l y hR hβ hyS h1 hl using fun a => exists_model (w := w) (hS a).card

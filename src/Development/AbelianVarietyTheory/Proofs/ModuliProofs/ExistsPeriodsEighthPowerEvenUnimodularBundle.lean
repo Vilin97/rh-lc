@@ -120,7 +120,7 @@ theorem exists_lattice_action {R La : Type} [Ring R] [AddCommGroup La] (Q : La �
   have Fadd : ∀ m m', F (m + m') = F m + F m' := fun m m' => lift_unique u fun z => by
     rw [hF, hadd, LinearMap.add_apply, u.ex_add, hF, hF, MonObj.comp_mul]
   let r₀ : R → Module.End ℤ La := fun m => (AddMonoidHom.mk' (f m) fun x y => hQ (by
-    rw [map_add, hf, hf, hf, map_add, map_add])).toIntLinearMap
+    rw [map_add (f := _), hf, hf, hf, map_add (f := _), map_add (f := _)])).toIntLinearMap
   have hr₀ : ∀ m x, Q (r₀ m x) = F m (Q x) := hf
   refine ⟨RingHom.mk' ⟨⟨r₀, ?_⟩, ?_⟩ ?_, fun m x => (hr₀ m x).symm⟩
   · ext x
@@ -134,7 +134,7 @@ theorem exists_lattice_action {R La : Type} [Ring R] [AddCommGroup La] (Q : La �
     ext x
     apply hQ
     change Q (r₀ (m + m') x) = Q (r₀ m x + r₀ m' x)
-    simp only [map_add, hr₀, Fadd, LinearMap.add_apply]
+    simp only [map_add (f := _), hr₀, Fadd, LinearMap.add_apply]
 end Unif
 
 theorem exists_level_map {P P' I : Type} [Group P] [CommGroup P'] [Fintype I] {n k : ℕ} (u₀ : Fin n)
@@ -195,7 +195,7 @@ theorem multiplier_of_power {G₀ : Type} [CommGroup G₀] {h g k : ℕ} (G : Ma
     obtain ⟨y', hy'⟩ := hlam j
     simp only [Module.Basis.map_apply, Pi.basisFun_apply, LinearMap.compl₁₂_apply]
     rw [← hlev, hy, hy']
-    simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, zpow_add, hk, _root_.mul_one]
+    simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, zpow_add, hk, _root_.mul_one]
     rfl)
   have hc : ∑ v, G 0 v * G.adjugate v 0 = 1 := by
     have := congrFun (congrFun (Matrix.mul_adjugate G) 0) 0
@@ -284,7 +284,7 @@ theorem GlobalTheory.exists_periods_of_sharpClass : Out.Laws → Out.Laws2 → (
     change u.ex _ ≫ pr v = u.ex _ ≫ pr 0
     rw [h2, ← hr, ← LinearMap.map_smul, hF, Category.assoc, h1]
   obtain ⟨m, hm⟩ := exists_level_map (k := k) 0 π (hext _) (fun y => (huniv _ y).exists) φ
-    (fun x y => by simp only [φ, map_add, smul_add, u.ex_add])
+    (fun x y => by simp only [φ, map_add (f := _), smul_add, u.ex_add])
     (fun p hp => by
       obtain ⟨z, rfl⟩ := u.ex_onto p
       obtain ⟨x, hx⟩ := (hΛ _).1 ((u.ker _).1 ((holUnif_ex_nsmul_eq_pow u z k).trans hp))
@@ -299,10 +299,10 @@ theorem GlobalTheory.exists_periods_of_sharpClass : Out.Laws → Out.Laws2 → (
       rw [← hptpr, Over.comp_left, Over.comp_left, hpt]
     obtain ⟨y, hy⟩ := (hΛ _).1 ((ex_eq_iff u _ _).1 h1)
     refine ⟨e y, ?_⟩
-    rw [← e.apply_symm_apply (fun u => m (bas (Pi.single i 1) u)), ← map_nsmul, ← map_add]
+    rw [← e.apply_symm_apply (fun u => m (bas (Pi.single i 1) u)), ← map_nsmul, ← map_add (f := _)]
     congr 1
     apply hpol.1
-    rw [map_add, map_nsmul, hy, ← smul_sub, hmul, add_sub_cancel]
+    rw [map_add (f := _), map_nsmul, hy, ← smul_sub, hmul, add_sub_cancel]
   have hEe' : ∀ x y, EF (e x) (e y) = EF0 x y := fun x y => by rw [hEF, hEe]
   refine ⟨τ, m, Q, Hm, ⟨hτ1, hτ2⟩, ?_, hQ, hpol', ?_⟩
   · let ξ : ℂˣ := Units.mk0 (Complex.exp (-(2 * Real.pi * Complex.I) / k)) (Complex.exp_ne_zero _)

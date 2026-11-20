@@ -30,7 +30,7 @@ theorem liftV_smul_liftE (v : Pl F) (a : Fv F v) (z : Fv F v ⊗[F] E) :
     GlobalTheory.LatVac.liftV v a • liftE (E := E) v z = liftE v (a • z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, smul_add, hx, hy, smul_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy, smul_add, map_add (f := _)]
   | tmul b e =>
     rw [TensorProduct.smul_tmul', liftE, TensorProduct.map_tmul, TensorProduct.map_tmul, TensorProduct.smul_tmul',
       smul_eq_mul, smul_eq_mul, liftV_mul, GlobalTheory.LatVac.evFin_liftV]
@@ -38,7 +38,7 @@ theorem liftV_smul_liftE (v : Pl F) (a : Fv F v) (z : Fv F v ⊗[F] E) :
 theorem compFin_liftE (v : Pl F) (z : Fv F v ⊗[F] E) : compFin F E v (liftE v z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul b e =>
     rw [liftE, TensorProduct.map_tmul]
     change evFin F v (GlobalTheory.LatVac.liftV v b) ⊗ₜ[F] e = b ⊗ₜ[F] e
@@ -48,7 +48,7 @@ theorem liftV_one_smul (v : Pl F) (z : AE F E) :
     GlobalTheory.LatVac.liftV v 1 • z = liftE v (compFin F E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [smul_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
   | tmul b e =>
     rw [TensorProduct.smul_tmul', smul_eq_mul, liftV_mul, one_mul]
     change _ = liftE v (evFin F v b ⊗ₜ[F] e)
@@ -59,7 +59,7 @@ theorem compFin_cA (σ : E →ₐ[F] E) (v : Pl F) (z : AE F E) :
     compFin F E v (cA σ z) = cv σ v (compFin F E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
   | tmul b e => rfl
 
 theorem trace_tmul (R : Type) [CommRing R] [Algebra F R] (a : R) (e : E) :
@@ -73,7 +73,7 @@ theorem evFin_trace (v : Pl F) (z : AE F E) :
     evFin F v (Algebra.trace (AF F) (AE F E) z) = Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (compFin F E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
   | tmul b e =>
     change _ = Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (evFin F v b ⊗ₜ[F] e)
     rw [trace_tmul, trace_tmul, map_mul, AlgHom.commutes]
@@ -98,7 +98,7 @@ theorem symp_lift (σ : E →ₐ[F] E) (v : Pl F) {n d : ℕ} (JX : Matrix (Fin 
 def locE (σ : E →ₐ[F] E) {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (v : Pl F) :
     Matrix (Fin n) (Fin d) (Fv F v ⊗[F] E) ≃ₗ[Fv F v] (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v) where
   toFun x := GlobalTheory.LatVac.locCo M.co v (x.map (liftE v))
-  map_add' x y := by rw [Matrix.map_add _ (map_add _), map_add]
+  map_add' x y := by rw [Matrix.map_add _ (map_add _), map_add (f := _)]
   map_smul' a x := by
     have h : (a • x).map (liftE v) = GlobalTheory.LatVac.liftV v a • x.map (liftE v) := by
       ext i j; simp only [Matrix.map_apply, Matrix.smul_apply, liftV_smul_liftE]

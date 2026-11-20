@@ -35,7 +35,7 @@ theorem exists_eigen_line {Qp K LL : Type} [Field Qp] [Field K] [Field LL] [Alge
       have : a ⊗ₜ[Qp] c = a • ((1 : LL) ⊗ₜ[Qp] c) := by rw [smul_tmul', smul_eq_mul, mul_one]
       rw [this, smul_mul_assoc, hy, map_smul, smul_smul]
       simp [φ]
-    | add a b ha hb => rw [add_mul, ha, hb, map_add, add_smul]
+    | add a b ha hb => rw [add_mul, ha, hb, map_add (f := _), add_smul]
   have hu : ∀ c : K, ((1 : LL) ⊗ₜ[Qp] c) * (1 - e) = τ c • (1 - e) := by
     intro c
     have h1 : (1 : LL) ⊗ₜ[Qp] c - algebraMap LL _ (τ c) ∈ RingHom.ker φ := by
@@ -156,7 +156,7 @@ theorem multV_twist [Algebra.IsSeparable Qp K] (hs : ∃ s ∈ PD.Fil (-1), PD.�
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v k => simp [hΨ, mulVdR, drTwistMap_apply, mul_assoc]
-    | add x y hx hy => simp only [map_add, mul_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), mul_add, hx, hy]
   obtain ⟨u, hu0, hu⟩ := exists_eigen_line τ
   have hE : DdRE PD ρ τ = Submodule.span LL {Ψ u} := by
     rw [← Set.image_singleton, ← Submodule.map_span]
@@ -176,7 +176,7 @@ theorem multV_twist [Algebra.IsSeparable Qp K] (hs : ∃ s ∈ PD.Fil (-1), PD.�
     rintro _ ⟨x, rfl⟩
     induction x using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add a b ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | tmul v k =>
       refine ⟨v ⊗ₜ ⟨drTwistMap PD e k, ?_⟩, rfl⟩
       rw [drTwistMap_apply, ← Algebra.smul_def]

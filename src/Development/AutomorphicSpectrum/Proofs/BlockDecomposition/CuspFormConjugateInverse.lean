@@ -30,7 +30,7 @@ theorem qdet_semilinear {n : ℕ} (D : V →ₗ⋆[ℂ] V) (X Y : Fin n → Fin 
   have hT : ∀ (w : ℂ) (i j : Fin n) (v : V),
       Formalism.REAL.Tm Y (star w) i j (D v) = D (Formalism.REAL.Tm X w i j v) := by
     intro w i j v
-    simp only [Formalism.REAL.Tm, LinearMap.add_apply, map_add, h]
+    simp only [Formalism.REAL.Tm, LinearMap.add_apply, map_add (f := _), h]
     split_ifs
     · simp [Module.algebraMap_end_apply]
     · simp
@@ -236,7 +236,7 @@ theorem isCuspidal_dual {φ : GA E a → ℂ} (hl : ∀ γ g, φ (ratGL E a γ *
   have h2 := hφ s (by omega) (by omega) (μ.map m) (m '' 𝓕) (β.isAddHaarMeasure_map μ)
     (hF.image_of_equiv m.toEquiv (MeasurePreserving.symm m ⟨m.measurable, rfl⟩).quasiMeasurePreserving e fun y x => by
       change β (β.symm y + x) = y + β x
-      rw [map_add, β.apply_symm_apply]) (PhiU a (Ad E) * invA E a g)
+      rw [map_add (f := _), β.apply_symm_apply]) (PhiU a (Ad E) * invA E a g)
   rw [m.measurableEmbedding.setIntegral_map, m.injective.preimage_image] at h2
   have e1 : ∀ x : BlockIx a r → Ad E,
       φ (invA E a (unip x * g)) = φ (unip (m x) * (PhiU a (Ad E) * invA E a g)) := fun x => by

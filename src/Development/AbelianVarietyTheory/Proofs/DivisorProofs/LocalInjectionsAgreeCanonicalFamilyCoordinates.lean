@@ -91,8 +91,8 @@ theorem second_diff {X Y K I : Type} [AddCommGroup X] [Module (𝓞 E) X] [AddCo
   congr 1
   have h1 : ε k (e a') (H.w0 • e a) = ε k (e a) (H.bar H.w0 • e a') := by rw [(hε k).1, (hε k).2]
   have h2 : ε k (e a) (H.w0 • e a') + ε k (e a) (H.bar H.w0 • e a') = ε k (e a) (e a') := by
-    rw [← map_add, ← add_smul, hw, one_smul]
-  simp only [map_add, smul_add, LinearMap.add_apply, h1]
+    rw [← map_add (f := _), ← add_smul, hw, one_smul]
+  simp only [map_add (f := _), smul_add, LinearMap.add_apply, h1]
   rw [← h2]
   ring
 
@@ -254,7 +254,7 @@ theorem coords_eq : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H : 
       have h := LinearMap.congr_fun₂ hsum (e a) (e a')
       simpa [LinearMap.sum_apply, hδ] using h) hn (fun x => by
       obtain ⟨p₁, p₂, hy₁, -, hy₂, -, p', hp', -, z, hz, -⟩ := htaut (e x)
-      have h : hD₂.xe p₂.y = hD₂.xe (ph p₁.y) + l.M' • hD₂.xe z := by rw [hz, map_add, hp', map_nsmul]
+      have h : hD₂.xe p₂.y = hD₂.xe (ph p₁.y) + l.M' • hD₂.xe z := by rw [hz, map_add (f := _), hp', map_nsmul]
       rw [hy₂, hy₁] at h
       refine ⟨-(hD₂.xe z), ?_⟩
       rw [smul_neg, eq_add_neg_iff_add_eq, hga]

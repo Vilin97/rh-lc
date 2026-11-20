@@ -32,7 +32,7 @@ theorem first_partial_law_at_points : MvPowerSeries.subst (P3 a b c) Y.B.ph1 =
   have hcc : MvPowerSeries.constantCoeff (hAt Y (pt C dd (0 : Fin 3)) (pt C dd (2 : Fin 3)) +
       hAt Y (pt C dd (1 : Fin 3)) (pt C dd (2 : Fin 3)) -
       hAt Y (addAt Y (pt C dd (0 : Fin 3)) (pt C dd (1 : Fin 3))) (pt C dd (2 : Fin 3))) = 0 := by
-    rw [map_sub, map_add, cc_hAt Y k0 k2, cc_hAt Y k1 k2, cc_hAt Y (cc_addAt Y k0 k1) k2]
+    rw [map_sub, map_add (f := _), cc_hAt Y k0 k2, cc_hAt Y k1 k2, cc_hAt Y (cc_addAt Y k0 k1) k2]
     simp
   have h' : Y.B.ph1 = FB.expS C (hAt Y (pt C dd (0 : Fin 3)) (pt C dd (2 : Fin 3)) +
       hAt Y (pt C dd (1 : Fin 3)) (pt C dd (2 : Fin 3)) -
@@ -220,7 +220,7 @@ theorem biadd_left {c : Fin dd → MvPowerSeries τ C} (hc : GoodPt V c) :
       have c3 := cc_hAt Y (cc_addAt Y ha.1 hl.1) hc.1
       have e2 : mvExp (hAt Y (addAt Y a (sumL Y l)) c) * MvPowerSeries.subst (P3 a (sumL Y l) c) Y.B.ph1 =
           mvExp (hAt Y a c) * mvExp (hAt Y (sumL Y l) c) := by
-        rw [hp, ← exp_add c3 (by rw [map_sub, map_add, c1, c2, c3]; simp), ← exp_add c1 c2]
+        rw [hp, ← exp_add c3 (by rw [map_sub, map_add (f := _), c1, c2, c3]; simp), ← exp_add c1 c2]
         congr 1
         ring
       show mvExp (hAt Y (addAt Y a (sumL Y l)) c) * _ = _
@@ -245,7 +245,7 @@ theorem biadd_right {c : Fin dd → MvPowerSeries τ C} (hc : GoodPt V c) :
       have c3 := cc_hAt Y hc.1 (cc_addAt Y ha.1 hl.1)
       have e2 : mvExp (hAt Y c (addAt Y a (sumL Y l))) * MvPowerSeries.subst (P3 c a (sumL Y l)) Y.B.ph2 =
           mvExp (hAt Y c a) * mvExp (hAt Y c (sumL Y l)) := by
-        rw [hp, ← exp_add c3 (by rw [map_sub, map_add, c1, c2, c3]; simp), ← exp_add c1 c2]
+        rw [hp, ← exp_add c3 (by rw [map_sub, map_add (f := _), c1, c2, c3]; simp), ← exp_add c1 c2]
         congr 1
         ring
       show mvExp (hAt Y c (addAt Y a (sumL Y l))) * _ = _

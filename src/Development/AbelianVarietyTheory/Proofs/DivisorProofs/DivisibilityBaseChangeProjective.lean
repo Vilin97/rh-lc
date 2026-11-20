@@ -75,7 +75,7 @@ theorem dvd_of_map_dvd_and_mem_smul_top :
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
     | tmul c n =>
       have : c ⊗ₜ[A] n = c • ((1 : A') ⊗ₜ[A] n) := by simp [TensorProduct.smul_tmul']
       rw [LinearMap.rTensor_tmul, this, map_smul, map_smulₛₗ, hl, TensorProduct.smul_tmul',
@@ -85,7 +85,7 @@ theorem dvd_of_map_dvd_and_mem_smul_top :
     intro w
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add u v hu hv => rw [smul_add, map_add, hu, hv, add_zero]
+    | add u v hu hv => rw [smul_add, map_add (f := _), hu, hv, add_zero]
     | tmul c n =>
       have : π (g a • c) = 0 := by
         change Ideal.Quotient.mk I (g a * c) = 0
@@ -96,7 +96,7 @@ theorem dvd_of_map_dvd_and_mem_smul_top :
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add u v hu hv => rw [smul_add, map_add, hu, hv]
+    | add u v hu hv => rw [smul_add, map_add (f := _), hu, hv]
     | tmul c n => rw [LinearMap.rTensor_tmul, TensorProduct.smul_tmul']; rfl
   obtain ⟨z, rfl⟩ := e.surjective y
   obtain ⟨w, -, hw⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).mp hy

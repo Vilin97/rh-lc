@@ -176,7 +176,7 @@ theorem exists_rp (W : Y.Opens) {d : ℕ} (t : Fin d → Γ(Y, W)) (u : Fin d �
 
 theorem lft_add_sub {W : Y.Opens} (T : Thick L) (h : InY 𝔭 W T) (f g : Γ(Y, W)) :
     lft 𝔭 W T (f + g) - (lft 𝔭 W T f + lft 𝔭 W T g) ∈ T.J := by
-  rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_add, lft_spec 𝔭 T h, lft_spec 𝔭 T h, lft_spec 𝔭 T h, map_add, sub_self]
+  rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_add (f := _), lft_spec 𝔭 T h, lft_spec 𝔭 T h, lft_spec 𝔭 T h, map_add (f := _), sub_self]
 
 theorem lft_neg_sub {W : Y.Opens} (T : Thick L) (h : InY 𝔭 W T) (f : Γ(Y, W)) :
     lft 𝔭 W T (-f) - (-lft 𝔭 W T f) ∈ T.J := by

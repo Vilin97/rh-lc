@@ -86,7 +86,7 @@ theorem exists_projector (τ : Representation ℂ H V)
         obtain ⟨N, h1, h2, h3⟩ := hx
         obtain ⟨N', h1', h2', h3'⟩ := hy
         refine ⟨N ⊓ N', inferInstance, inferInstance, fun M hM hn _ => ?_⟩
-        rw [map_add, h3 M (hM.trans inf_le_left) hn, h3' M (hM.trans inf_le_right) hn, add_zero]
+        rw [map_add (f := _), h3 M (hM.trans inf_le_left) hn, h3' M (hM.trans inf_le_right) hn, add_zero]
       | smul c x _ hx =>
         obtain ⟨N, h1, h2, h3⟩ := hx
         exact ⟨N, h1, h2, fun M hM hn _ => by rw [map_smul, h3 M hM hn, smul_zero]⟩

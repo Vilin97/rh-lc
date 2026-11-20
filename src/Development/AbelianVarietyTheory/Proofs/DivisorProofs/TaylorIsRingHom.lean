@@ -22,7 +22,7 @@ def iterHom {A : Type} [CommRing A] (D : Derivation ℤ A A) (k : ℕ) : A →+ 
   map_add' x y := by
     induction k with
     | zero => rfl
-    | succ k ih => rw [Function.iterate_succ_apply', ih, map_add, Function.iterate_succ_apply',
+    | succ k ih => rw [Function.iterate_succ_apply', ih, map_add (f := _), Function.iterate_succ_apply',
         Function.iterate_succ_apply']
 
 theorem iterHom_apply {A : Type} [CommRing A] (D : Derivation ℤ A A) (k : ℕ) (x : A) :
@@ -138,7 +138,7 @@ theorem iterOp_one {A : Type} [CommRing A] : ∀ {n : ℕ} (ds : Fin n → Deriv
 theorem iterOp_add {A : Type} [CommRing A] {n : ℕ} (ds : Fin n → Derivation ℤ A A) (α : Fin n →₀ ℕ) (f g : A) :
     iterOp (fun i => ⇑(ds i)) α (f + g) = iterOp (fun i => ⇑(ds i)) α f + iterOp (fun i => ⇑(ds i)) α g := by
   obtain ⟨F, hF⟩ := exists_iterOpHom ds α
-  rw [← hF, ← hF, ← hF, map_add]
+  rw [← hF, ← hF, ← hF, map_add (f := _)]
 
 theorem iterOp_zero' {A : Type} [CommRing A] {n : ℕ} (ds : Fin n → Derivation ℤ A A) (α : Fin n →₀ ℕ) :
     iterOp (fun i => ⇑(ds i)) α 0 = 0 := by
@@ -209,8 +209,8 @@ theorem taylor_isRingHom : ∀ (A B : Type) [CommRing A] [CommRing B] [Algebra �
     rw [iterOp_zero', map_zero, smul_zero]
   · intro f g
     ext α
-    rw [MvPowerSeries.coeff_apply, map_add, MvPowerSeries.coeff_apply, MvPowerSeries.coeff_apply]
+    rw [MvPowerSeries.coeff_apply, map_add (f := _), MvPowerSeries.coeff_apply, MvPowerSeries.coeff_apply]
     unfold taylor
-    rw [iterOp_add, map_add, smul_add]
+    rw [iterOp_add, map_add (f := _), smul_add]
 
 end GlobalTheory.FormalOrigin

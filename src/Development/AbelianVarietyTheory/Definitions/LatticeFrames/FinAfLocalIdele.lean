@@ -157,7 +157,7 @@ theorem finAf_localIdele {e : AfE F E} {P : HeightOneSpectrum (𝓞 E)} (he : e 
   refine (afIso F E).injective (FiniteAdeleRing.ext _ fun Q => ?_)
   have e1 : afIso F E (1 + e * ((k : E) ⊗ₜ[F] (1 : FiniteAdeleRing (𝓞 F) F) - 1)) Q =
       1 + afIso F E e Q * (algebraMap E (Q.adicCompletion E) (k : E) - 1) := by
-    rw [map_add, map_mul, map_sub, map_one, afIso_tmul_one]; rfl
+    rw [map_add (f := _), map_mul, map_sub, map_one, afIso_tmul_one]; rfl
   rw [e1, GlobalTheory.Mem.ReadTwist.afIso_finAf_apply]
   by_cases hQ : Q = P
   · subst hQ

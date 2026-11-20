@@ -45,7 +45,7 @@ private theorem abs_mono {n : ℕ} {A H : Type} [CommRing A] [Ring H] [Algebra A
       ∀ c : Fin n → ℤ, (∀ i j, i < j → c j + ((a + b).degree : ℤ) ≤ c i) →
         ∃ m : ℕ, T c * th (MvPolynomial.monomial (a + b) 1) = q ^ m • T (c + fun i => ((a + b) i : ℤ)) := by
     intro a b ha hb c hc
-    rw [map_add] at hc
+    rw [map_add (f := _)] at hc
     obtain ⟨m, hm⟩ := ha c fun i j hij => by
       have := hc i j hij
       push_cast at this

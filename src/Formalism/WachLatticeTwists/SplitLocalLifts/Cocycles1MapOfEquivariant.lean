@@ -20,7 +20,7 @@ def cocycles1MapOfEquivariant (ρ₁ : Representation O D M₁) (ρ₂ : Represe
     (hp : IsEquivMap ρ₁ ρ₂ p) : coZ1s ρ₁ →ₗ[O] coZ1s ρ₂ where
   toFun c := ⟨fun g => p ((c : D → M₁) g), fun g h => by
     show p ((c : D → M₁) (g * h)) = p ((c : D → M₁) g) + ρ₂ g (p ((c : D → M₁) h))
-    rw [c.2 g h, map_add, hp]⟩
+    rw [c.2 g h, map_add (f := _), hp]⟩
   map_add' a b := Subtype.ext (funext fun g => map_add p _ _)
   map_smul' c a := Subtype.ext (funext fun g => map_smul p _ _)
 

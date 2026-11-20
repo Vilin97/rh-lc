@@ -122,7 +122,7 @@ theorem piTensor_flatHom_equiv : ∀ (s : ℕ) (t : Fin s → ℕ) (Γ : ∀ a, 
       rw [reindex_tprod, MonoidHom.comp_apply, piTensor_tprod]
       exact flatTensorEquiv_tprod Y fun p => ρ p.1 p.2 (g p.1 p.2) (x p)
     | add w w' hw hw' =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [hw, hw']
   refine LinearMap.ext fun v => ?_
   obtain ⟨w, rfl⟩ := (reindex ℂ (fun p : Σ a, Fin (t a) => Y p.1 p.2) finSigmaFinEquiv).surjective v

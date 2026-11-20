@@ -145,7 +145,7 @@ theorem toITh_capDeg_eq_zero (D : Z.VDivQ) {n : ℕ} (hn : n ≠ Z.relDim) {x : 
   induction D using TensorProduct.induction_on with
   | zero => simp
   | tmul a D => simp [capDeg_vp, vDegQ, vDeg_eq_zero D hn hx]
-  | add a b ha hb => rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+  | add a b ha hb => rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
 
 variable {E E' : Z.X.Modules} {N : ℕ} {φ : Z.GenIso E E'}
 
@@ -343,7 +343,7 @@ example (h : IsVB (toMod (formalTwistingSheaf O 1)) 1) :
   have h₁ := capDeg_divP_line O p
   have h₂ : ((projSpace O 1).toITh p).capDeg ((projSpace O 1).toITh p).divP
     (symOf (smallCls (formalTwistingSheaf O 1) (O1_isLB O 1))) = 1 := h₁
-  simp only [pow_zero, pow_one, one_mul, mul_one, zero_add, Nat.sub_self, Nat.reduceSub, map_add,
+  simp only [pow_zero, pow_one, one_mul, mul_one, zero_add, Nat.sub_self, Nat.reduceSub, map_add (f := _),
     h₁, h₂]
   norm_num
 

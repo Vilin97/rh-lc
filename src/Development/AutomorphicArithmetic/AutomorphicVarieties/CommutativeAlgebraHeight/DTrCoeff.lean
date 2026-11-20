@@ -16,14 +16,14 @@ private theorem UpperTheory.V.CA.d_tr_dual {n : ℕ} {A E : Type} [CommRing A] [
     (hn : 1 ≤ n) (x : E) :
     D.D (DualNumber A) (1 + DualNumber.eps ⊗ₜ x) = 1 + D.tr x • DualNumber.eps := by
   have h := D.nat A[X] (DualNumber A) (aeval DualNumber.eps) (1 + X ⊗ₜ x)
-  rw [map_add, map_one, Algebra.TensorProduct.map_tmul, aeval_X, AlgHom.id_apply] at h
+  rw [map_add (f := _), map_one, Algebra.TensorProduct.map_tmul, aeval_X, AlgHom.id_apply] at h
   rw [h, (d_chi D x).2.2.1]
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, by omega⟩
   rw [Finset.sum_range_succ', Finset.sum_range_succ', (d_chi D x).1]
   have h2 : ∀ k : ℕ, (DualNumber.eps : DualNumber A) ^ (k + 1 + 1) = 0 := fun k => by
     rw [pow_succ, pow_succ, mul_assoc, DualNumber.eps_mul_eps, mul_zero]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_mul, map_pow, aeval_X, aeval_C, h2, mul_zero, Finset.sum_const_zero]
+    simp only [map_add (f := _), map_sum, map_mul, map_pow, aeval_X, aeval_C, h2, mul_zero, Finset.sum_const_zero]
   simp [Det.tr, Algebra.smul_def, add_comm]
 
 theorem UpperTheory.V.CA.d_tr :

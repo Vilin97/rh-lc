@@ -38,7 +38,7 @@ theorem hermPair_zero_right (x : ι → E) : hermPair K H x 0 = 0 := by
 
 theorem hermPair_add_left (x y z : ι → E) :
     hermPair K H (x + y) z = hermPair K H x z + hermPair K H y z := by
-  simp only [hermPair, Pi.add_apply, map_add]
+  simp only [hermPair, Pi.add_apply, map_add (f := _)]
   rw [show (fun i => conj K E (x i) + conj K E (y i)) =
     (fun i => conj K E (x i)) + (fun i => conj K E (y i)) from rfl, add_dotProduct]
 

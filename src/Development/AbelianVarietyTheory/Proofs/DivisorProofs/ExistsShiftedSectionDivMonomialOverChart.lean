@@ -140,7 +140,7 @@ theorem nonneg_shift {X : Type} [AddCommGroup X] (g : LinearMap.BilinForm ℤ X)
   · subst h0
     have key : ∀ x : ℤ, 0 ≤ 2 * x * g mu α + g α α := fun x => by
       have := hnn (x • mu + α)
-      simp only [map_add, map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hn, ← hs] at this
+      simp only [map_add (f := _), map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hn, ← hs] at this
       push_cast at this
       linarith
     have h0 : g mu α = 0 := by

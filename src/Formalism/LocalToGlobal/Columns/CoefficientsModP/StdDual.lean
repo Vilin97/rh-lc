@@ -93,7 +93,7 @@ theorem sd_bDual : Formalism.GradedWeylDivisibility.bDual n n le_rfl ν ((Formal
       induction hy using Submodule.span_induction with
       | mem y hy => obtain ⟨k, rfl⟩ := hy; exact h0 k
       | zero => exact map_zero _
-      | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
       | smul c x _ hx => rw [map_smul, hx, smul_zero]
     have h2 : P - ∑ k, z k • sdDelta ν k = 0 := by
       by_contra hne
@@ -122,7 +122,7 @@ theorem sd_bDual : Formalism.GradedWeylDivisibility.bDual n n le_rfl ν ((Formal
       obtain ⟨b, hb⟩ := hy
       refine ⟨a + b, ?_⟩
       rw [← sd_fockB_rat, ← fockBL_apply] at ha hb ⊢
-      rw [map_add, map_add, ha, hb]
+      rw [map_add (f := _), map_add (f := _), ha, hb]
       push_cast; ring
     | smul c x _ hx =>
       obtain ⟨a, ha⟩ := hx
@@ -157,12 +157,12 @@ theorem sd_dual_bases {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) 
         · exact Submodule.one_le.mp le_rfl
         · exact Submodule.zero_mem _
       | zero => rw [map_zero]; exact Submodule.zero_mem _
-      | add y y' _ _ hy hy' => rw [map_add]; exact Submodule.add_mem _ hy hy'
+      | add y y' _ _ hy hy' => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hy'
       | smul r y _ hy => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ r hy
     | zero => intro y _; rw [map_zero, LinearMap.zero_apply]; exact Submodule.zero_mem _
     | add x x' _ _ hx hx' =>
       intro y hy
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact Submodule.add_mem _ (hx y hy) (hx' y hy)
     | smul r x _ hx =>
       intro y hy

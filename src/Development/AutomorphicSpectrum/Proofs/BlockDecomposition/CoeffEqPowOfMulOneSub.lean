@@ -39,7 +39,7 @@ theorem coeff_eq_pow_of_mul_one_sub (H : ℂ⟦X⟧) (b : ℂ) (h : H * (1 - C b
   | zero =>
     rw [e]; simp
   | succ j ih =>
-    rw [e, map_add, coeff_C_mul, coeff_succ_mul_X, ih, pow_succ]
+    rw [e, map_add (f := _), coeff_C_mul, coeff_succ_mul_X, ih, pow_succ]
     simp [coeff_one, mul_comm]
 
 theorem coeff_prod_one_sub {n : ℕ} (β : Fin n → ℂ) (r : ℕ) :

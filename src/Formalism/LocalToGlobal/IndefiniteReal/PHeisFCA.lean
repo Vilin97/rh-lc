@@ -44,7 +44,7 @@ theorem inf_exU (x : InfiniteAdeleRing F) : ∃! a : 𝓞 F, algebraMap F (Infin
       mixedEmbedding F (a : F) + eM F x ∈ ZSpan.fundamentalDomain (mixedEmbedding.latticeBasis F) := by
     intro a
     show eM F (algebraMap F (InfiniteAdeleRing F) (a : F) + x) ∈ ZSpan.fundamentalDomain (mixedEmbedding.latticeBasis F) ↔ _
-    rw [map_add, eM_algebraMap]
+    rw [map_add (f := _), eM_algebraMap]
   have hmem : ∀ a : 𝓞 F, mixedEmbedding F (a : F) ∈
       Submodule.span ℤ (Set.range (mixedEmbedding.latticeBasis F)) := by
     intro a
@@ -150,12 +150,12 @@ theorem ad_exU (x : AdeleRing (𝓞 F) F) : ∃! q : F, algebraMap F (AdeleRing 
     · change algebraMap F (InfiniteAdeleRing F) (-u + (a : F)) + x.1 ∈ Pinf F
       have e : algebraMap F (InfiniteAdeleRing F) (-u + (a : F)) + x.1 =
           algebraMap F (InfiniteAdeleRing F) (a : F) + (algebraMap F (InfiniteAdeleRing F) (-u) + x.1) := by
-        rw [map_add]; abel
+        rw [map_add (f := _)]; abel
       rw [e]; exact ha
     · change algebraMap F (FiniteAdeleRing (𝓞 F) F) (-u + (a : F)) + x.2 ∈ Formalism.L2.GlobalTheoryTheory.FiltrationBoundaryCriterion.CompactFixesLatticeTheory.intAd F
       have e : algebraMap F (FiniteAdeleRing (𝓞 F) F) (-u + (a : F)) + x.2 =
           (x.2 - algebraMap F (FiniteAdeleRing (𝓞 F) F) u) + algebraMap F (FiniteAdeleRing (𝓞 F) F) (a : F) := by
-        rw [map_add, map_neg]; abel
+        rw [map_add (f := _), map_neg]; abel
       rw [e]; exact add_mem hu (hOa a)
   · intro q hq
     simp only [F0, Set.mem_setOf_eq] at hq
@@ -166,13 +166,13 @@ theorem ad_exU (x : AdeleRing (𝓞 F) F) : ∃! q : F, algebraMap F (AdeleRing 
       have h4 := sub_mem h2' hu
       have e : algebraMap F (FiniteAdeleRing (𝓞 F) F) (q + u) =
           algebraMap F (FiniteAdeleRing (𝓞 F) F) q + x.2 - (x.2 - algebraMap F (FiniteAdeleRing (𝓞 F) F) u) := by
-        rw [map_add]; abel
+        rw [map_add (f := _)]; abel
       rw [e]; exact h4
     obtain ⟨b, hb⟩ := hint (q + u) h3
     have h5 : algebraMap F (InfiniteAdeleRing F) (b : F) + (algebraMap F (InfiniteAdeleRing F) (-u) + x.1) ∈ Pinf F := by
       have e : algebraMap F (InfiniteAdeleRing F) (b : F) + (algebraMap F (InfiniteAdeleRing F) (-u) + x.1) =
           algebraMap F (InfiniteAdeleRing F) q + x.1 := by
-        rw [hb, map_add, map_neg]; abel
+        rw [hb, map_add (f := _), map_neg]; abel
       rw [e]; exact h1'
     have hba : b = a := hauniq b h5
     rw [hba] at hb

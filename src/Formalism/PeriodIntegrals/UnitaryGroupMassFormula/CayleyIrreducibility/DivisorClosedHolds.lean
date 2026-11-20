@@ -32,7 +32,7 @@ lemma map_genAct (τ : ι) (g : Matrix (Fin n) (Fin n) ℂ) (P : MvPolynomial (�
     map (eval fun x => g x.1 x.2) (genAct τ P) = famAct (Function.update (fun _ => 1) τ g) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [genAct, famAct]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p v hp => rw [map_mul, map_mul, hp, map_mul, map_genAct_X]
 
 def pushφ (φ : Module.Dual ℂ (MvPolynomial (ι × Fin n × Fin n) ℂ))
@@ -66,7 +66,7 @@ lemma famAct_elem_X (τ : ι) (a b : Fin n) (t : ℂ) (v : ι × Fin n × Fin n)
   obtain ⟨τ', r, s⟩ := v
   by_cases hv : τ' = τ
   · subst hv
-    simp only [famAct, aeval_X, Function.update_self, elem_apply, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [famAct, aeval_X, Function.update_self, elem_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
     rw [Finset.sum_eq_single r (fun c _ hc => by rw [if_neg (Ne.symm hc), map_zero, zero_mul]) (by simp),
       if_pos rfl, map_one, one_mul]
     simp only [bigGen, aeval_X, true_and, Polynomial.eval_add, Polynomial.eval_C]
@@ -85,7 +85,7 @@ lemma famAct_elem (τ : ι) (a b : Fin n) (t : ℂ) (P : MvPolynomial (ι × Fin
     famAct (Function.update (fun _ => 1) τ (elem a b t)) P = (bigGen τ a b P).eval (C t) := by
   induction P using MvPolynomial.induction_on with
   | C c => simp [famAct, bigGen]
-  | add p q hp hq => rw [map_add, hp, hq, map_add, Polynomial.eval_add]
+  | add p q hp hq => rw [map_add (f := _), hp, hq, map_add (f := _), Polynomial.eval_add]
   | mul_X p v hp => rw [map_mul, hp, map_mul, Polynomial.eval_mul, famAct_elem_X]
 
 lemma isUnit_one_add_elem (a b : Fin n) (m : ℕ) : IsUnit (1 + elem a b (m : ℂ)).det := by

@@ -52,7 +52,7 @@ theorem liftSat_of (hL : LiftIso) (hS : SrcGood) (hI : ContraIrr) (hU : ContraUn
   have s6 := hC K w (n + t) _ _ (isSmooth_contra π) (hI _ _ W π hs' hi').1 u5 _ s5
   obtain ⟨e'⟩ := (hI _ _ W π hs' hi').2
   have s7 := GlobalTheory.PrinSat.hasSatGL_of_equiv e' s6
-  rw [Multiset.map_add, hG] at s7
+  rw [Multiset.map_add (f := _), hG] at s7
   simpa [Multiset.map_map, mul_comm] using s7
 
 end UpperTheory.Gal.TP.Loc

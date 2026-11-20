@@ -20,7 +20,7 @@ namespace GlobalTheory.AdTh.VacLine
 theorem hostHalfRoot_add_conj_eq_one {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Geo.Tor.Host E) :
     (H.w0 : E) + cc (H.w0 : E) = 1 := by
   have := congrArg (algebraMap (𝓞 E) E) (PullbackSections.CVA.cmHostUnit_add_conj_eq_one H)
-  rw [map_add, map_one] at this
+  rw [map_add (f := _), map_one] at this
   exact (congrArg _ (H.bar_eq _).symm).trans this
 
 theorem isRelTraceOneIdempotentModTwo_hostElement {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Geo.Tor.Host E) :

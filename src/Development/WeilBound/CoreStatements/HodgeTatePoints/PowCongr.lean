@@ -23,7 +23,7 @@ theorem powadd : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] (v : Valuatio
   obtain ⟨s, hs⟩ := sub_dvd_pow_sub_pow Z (X + Y) p
   have hr' := congrArg v.integer.subtype hr
   have hs' := congrArg v.integer.subtype hs
-  simp only [map_add, map_mul, map_pow, map_sub, map_natCast, Subring.subtype_apply, X, Y, Z]
+  simp only [map_add (f := _), map_mul, map_pow, map_sub, map_natCast, Subring.subtype_apply, X, Y, Z]
     at hr' hs'
   have e : z ^ p - x ^ p - y ^ p = (z - x - y) * (s : C) + (p : C) * (x * y * (r : C)) := by
     linear_combination hr' + hs'

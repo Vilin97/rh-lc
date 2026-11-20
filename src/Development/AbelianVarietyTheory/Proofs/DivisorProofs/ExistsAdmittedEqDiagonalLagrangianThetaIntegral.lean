@@ -59,7 +59,7 @@ theorem uniform_majorant {g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ} (hg :
   have hb : b ∈ Kκ := fun i _ => hy i
   have hab : ∀ ξ : κ → F, (fun i => algebraMap F (AdeleRing (𝓞 F) F) (ξ i)) + a =
       (fun i => algebraMap F (AdeleRing (𝓞 F) F) ((ξ + y) i)) + b := by
-    intro ξ; funext i; simp [b, map_add]
+    intro ξ; funext i; simp [b, map_add (f := _)]
   refine ⟨fun ξ => B * ((1 + R') ^ k * (2 ^ k * C)) * w (ξ + y), ?_, ?_, fun ξ => ?_⟩
   · exact ((Equiv.addRight y).summable_iff.2 hw).mul_left _
   · have e : ∑' x, w (x + y) = ∑' η, w η := (Equiv.addRight y).tsum_eq w
@@ -221,7 +221,7 @@ theorem exists_admitted_eq_diagonalLagrangian_thetaIntegral_alt : ∀ (F E : Typ
   refine ⟨SchwartzMap.mkCLMtoNormedSpace (σ := RingHom.id ℂ) (fun f => L ⟨pureA F f g, hmem f⟩)
     (fun f f' => ?_) (fun a f => ?_) ⟨Finset.Iic (k, 0), c * ν.real 𝓕, mul_nonneg hc measureReal_nonneg, fun f => ?_⟩,
     fun f => ?_⟩
-  · rw [← map_add]
+  · rw [← map_add (f := _)]
     congr 1
     exact Subtype.ext (funext fun x => by simp [pureA, add_mul])
   · rw [RingHom.id_apply, ← map_smul]

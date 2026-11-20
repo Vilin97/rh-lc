@@ -390,7 +390,7 @@ def uniTrue (ct : At S κ p) : UniSt ct where
 
 theorem amb_w0_eq_boundaryLocalData_w0 (A : Amb D) : A.H.w0 = BoundaryLocalData.w0 D := RingOfIntegers.ext (by
   have h := congrArg (algebraMap (𝓞 D.host.E) D.host.E) A.H.two_weight_eq_one_add_root
-  rw [map_mul, map_add, map_one, map_ofNat] at h
+  rw [map_mul, map_add (f := _), map_one, map_ofNat] at h
   change algebraMap (𝓞 D.host.E) D.host.E A.H.w0 = (1 + D.host.sqrtMinusD) / 2
   rw [← A.rt_eq, eq_div_iff two_ne_zero, mul_comm]
   exact h)

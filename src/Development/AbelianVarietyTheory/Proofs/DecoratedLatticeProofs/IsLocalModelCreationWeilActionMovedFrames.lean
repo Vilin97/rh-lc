@@ -106,7 +106,7 @@ theorem isModel_move : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topol
   let L : SB (Matrix Y Y' k) →ₗ[ℂ] (WO S T → ℂ) :=
     { toFun := fun Φ => pureTensorO ψ θ S T sS sT BS BT (T₁ Φ) P
       map_add' := fun Φ Φ' => by
-        simp only [map_add]; exact pt_add _ _ (hT₁.theta Φ) (hT₁.theta Φ')
+        simp only [map_add (f := _)]; exact pt_add _ _ (hT₁.theta Φ) (hT₁.theta Φ')
       map_smul' := fun c Φ => by
         simp only [map_smul, RingHom.id_apply]; exact pt_smul c _ (hT₁.theta Φ) }
   have comm : ∀ u : WO S T, u.map (infPart D) = 0 → ∀ Φ,

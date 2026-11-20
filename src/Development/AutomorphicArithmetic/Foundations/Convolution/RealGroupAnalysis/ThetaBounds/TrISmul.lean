@@ -81,7 +81,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.derT :
     rw [hsSmul, zE_smul, smul_sub]
   have hLieAdd : ∀ X X', TR.lie F 2 (zF (trI F (s (X + X')))) f =
       TR.lie F 2 (zF (trI F (s X))) f + TR.lie F 2 (zF (trI F (s X'))) f := fun X X' => by
-    rw [hsAdd, trI_add, zF_add, map_add, LinearMap.add_apply]
+    rw [hsAdd, trI_add, zF_add, map_add (f := _), LinearMap.add_apply]
   have hLieSmul : ∀ (c : ℝ) X, TR.lie F 2 (zF (trI F (s (c • X)))) f =
       (c : ℂ) • TR.lie F 2 (zF (trI F (s X))) f := fun c X => by
     rw [hsSmul, trI_smul, zF_smul, map_smul, LinearMap.smul_apply, Complex.coe_smul]

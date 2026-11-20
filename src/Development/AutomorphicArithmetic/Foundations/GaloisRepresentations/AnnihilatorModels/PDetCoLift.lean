@@ -14,7 +14,7 @@ theorem UpperTheory.Gal.crystallineComparison.detCoLift_of :
     fun j hj => ⟨j, fun x i => by rw [hj]⟩
   · intro x y
     funext i
-    rw [Submodule.coe_add, f1, Pi.add_apply, Pi.add_apply, map_add]
+    rw [Submodule.coe_add, f1, Pi.add_apply, Pi.add_apply, map_add (f := _)]
   · intro c x
     funext i
     rw [Submodule.coe_smul, f2, Pi.smul_apply, Pi.smul_apply, smul_eq_mul, map_mul, h1,

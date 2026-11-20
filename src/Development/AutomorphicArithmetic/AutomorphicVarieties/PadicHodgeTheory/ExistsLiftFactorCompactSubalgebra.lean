@@ -90,7 +90,7 @@ private theorem isUnit_of_nilpotent_kernel {O C A : Type} [CommRing O] [CommRing
     conv_lhs => rw [← Polynomial.X_mul_divX_add p.reverse]
     rw [Polynomial.coeff_zero_reverse, hp.leadingCoeff]
   have h5 := (hπ _ h1).isUnit_sub_one
-  rw [h4, map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C, map_one, add_sub_cancel_right] at h5
+  rw [h4, map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C, map_one, add_sub_cancel_right] at h5
   exact isUnit_of_mul_isUnit_left h5
 
 private theorem complete_of_nilpotent_kernel_finite {O C A : Type} [CommRing O] [IsLocalRing O] [IsNoetherianRing O]

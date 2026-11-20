@@ -106,7 +106,7 @@ theorem expRules_of (h4 : Formalism.MainNotions.WachCoordinates.LevelMapHodgeFil
       Subtype.ext (by
         simp only [Submodule.coe_add, SetLike.val_smul]
         rw [smul_add, smul_smul, smul_smul, mul_comm b a])
-    rw [e1, map_add, Pi.add_apply, levN_smulS, levN_smulS, funext hd, funext he]
+    rw [e1, map_add (f := _), Pi.add_apply, levN_smulS, levN_smulS, funext hd, funext he]
     show smulS (W.lev i ζ b) (smulS (W.lev i ζ a) d) k + smulS (W.lev i ζ a) (smulS (W.lev i ζ b) e) k =
       smulS (W.lev i ζ (a * b)) (d + e) k
     rw [map_mul, smulS_add hdl hel, ← smulS_mul hdl, ← smulS_mul hel, mul_comm (W.lev i ζ b)]

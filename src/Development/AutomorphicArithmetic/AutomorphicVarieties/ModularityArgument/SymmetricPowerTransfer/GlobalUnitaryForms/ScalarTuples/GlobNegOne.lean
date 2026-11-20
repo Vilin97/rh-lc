@@ -64,7 +64,7 @@ theorem UpperTheory.V.Z.Sym.Glob.embEx :
     have hA : p₁ ^ 2 - Δ * q₁ ^ 2 ≠ 0 := fun h => by
       have h1 : p₀ ^ 2 + 1 - Δ * q₀ ^ 2 = 0 := by linear_combination e₁ - (τ ^ 2 - 4) * h
       have h2 := congrArg σ₀ h1
-      simp only [map_sub, map_add, map_mul, map_pow, map_one, map_zero] at h2
+      simp only [map_sub, map_add (f := _), map_mul, map_pow, map_one, map_zero] at h2
       nlinarith [hD.neg σ₀, sq_nonneg (σ₀ p₀), sq_nonneg (σ₀ q₀)]
     obtain ⟨A, hAe⟩ : ∃ A, A = p₁ ^ 2 - Δ * q₁ ^ 2 := ⟨_, rfl⟩
     rw [← hAe] at hA

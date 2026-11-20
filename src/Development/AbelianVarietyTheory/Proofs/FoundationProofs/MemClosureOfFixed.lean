@@ -26,7 +26,7 @@ def fixSub : Subfield K where
   one_mem' := by intro δ _; simp
   add_mem' := by
     intro a b ha hb δ hδ
-    simp [map_add, ha δ hδ, hb δ hδ]
+    simp [map_add (f := _), ha δ hδ, hb δ hδ]
   zero_mem' := by intro δ _; simp
   neg_mem' := by
     intro a ha δ hδ

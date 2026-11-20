@@ -98,7 +98,7 @@ theorem leftRep_prod (n : ℕ) (g : UG ι n) (f : ι → MvPolynomial (Fin n × 
   generalize f τ = q
   induction q using MvPolynomial.induction_on with
   | C a => simp [Formalism.GradedWeylDivisibility.rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp]
     congr 1
@@ -259,7 +259,7 @@ theorem outer_irr_iso_weylRep (ι : Type) [Fintype ι] [DecidableEq ι] (n : ℕ
     intro g x
     induction x using PiTensorProduct.induction_on with
     | smul_tprod c f => rw [map_smul, map_smul, map_smul, map_smul, htp, smul_comm]
-    | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add, smul_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _), smul_add]
   have hv := span_orbit_outer (fun τ => irr n (μ τ))
     (fun τ => (⟨extremal ℂ n (μ τ), extremal_mem_nablaSq n (μ τ)⟩ : nablaSq ℂ n (μ τ))) (fun τ => span_irr_orbit_extremal_eq_univ n (μ τ))
   have hw : j (PiTensorProduct.tprod ℂ

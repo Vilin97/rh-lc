@@ -96,7 +96,7 @@ theorem hasSum_sq_integral {X A : Type} [TopologicalSpace X] [CompactSpace X] [M
       obtain ⟨a, rfl⟩ := hx
       exact Submodule.le_topologicalClosure _ (Submodule.subset_span ⟨a, rfl⟩)
     | zero => rw [map_zero]; exact W.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact W.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact W.add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact W.smul_mem _ hx
   have hφ : φ ∈ S.topologicalClosure := by rw [hS]; trivial
   have h0 : T φ ∈ W := closure_minimal hsub hcl hφ

@@ -32,7 +32,7 @@ theorem exists_multiplicative_ideal_extension :
     · simp [hJ]
     have hIJ : I * J ≠ ⊥ := mul_ne_zero hI hJ
     simp only [if_neg hI, if_neg hJ, if_neg hIJ]
-    rw [normalizedFactors_mul hI hJ, Multiset.map_add, Multiset.prod_add]
+    rw [normalizedFactors_mul hI hJ, Multiset.map_add (f := _), Multiset.prod_add]
   · intro I hI hm
     simp only [if_neg hI]
     refine Multiset.prod_induction (fun z : ℂ => ‖z‖ = 1) _ ?_ (by simp) ?_

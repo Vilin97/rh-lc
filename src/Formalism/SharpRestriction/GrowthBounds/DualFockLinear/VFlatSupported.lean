@@ -211,7 +211,7 @@ theorem rho_peel (D : Formalism.BasicNotions.D7) {p n' : ℕ} {W Qq O Kf : Type}
         rw [smul_smul, smul_mul_assoc, mul_smul_comm]
       | zero => simp
       | add a b _ _ ha hb =>
-        simp only [map_add, smul_add, add_mul, Finset.sum_add_distrib]
+        simp only [map_add (f := _), smul_add, add_mul, Finset.sum_add_distrib]
         rw [← ha, ← hb]
       | smul t a _ ha =>
         conv_lhs => rw [ha]

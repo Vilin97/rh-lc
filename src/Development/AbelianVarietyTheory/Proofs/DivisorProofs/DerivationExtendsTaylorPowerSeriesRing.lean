@@ -55,9 +55,9 @@ theorem derivation_extends : ∀ (R A : Type) [CommRing R] [IsLocalRing R] [IsNo
   ·
     set e : A → MvPowerSeries (Fin n) R := fun f => dΩ (T f) - T (d f) with he
     have e_add : ∀ f g, e (f + g) = e f + e g := by
-      intro f g; simp only [he, map_add]; ring
+      intro f g; simp only [he, map_add (f := _)]; ring
     have e_mul : ∀ f g, e (f * g) = T f * e g + T g * e f := by
-      intro f g; simp only [he, map_mul, Derivation.leibniz, smul_eq_mul, map_add]; ring
+      intro f g; simp only [he, map_mul, Derivation.leibniz, smul_eq_mul, map_add (f := _)]; ring
     have e_neg : ∀ f, e (-f) = - e f := by
       intro f; simp only [he, map_neg]; ring
     have e_one : e 1 = 0 := by simp [he]
@@ -114,7 +114,7 @@ theorem derivation_extends : ∀ (R A : Type) [CommRing R] [IsLocalRing R] [IsNo
         refine Submodule.mul_induction_on hx (fun a ha b hb => ?_) (fun a b ha hb => ?_)
         · rw [map_mul, add_comm]
           exact GlobalTheory.T.mvPowerSeriesDegreeAdicFiltration_mul_le (Fin n) R _ 1 k (Ideal.mul_mem_mul (hT1 a ha) (ih b hb))
-        · rw [map_add]; exact Ideal.add_mem _ ha hb
+        · rw [map_add (f := _)]; exact Ideal.add_mem _ ha hb
     have hek : ∀ k, ∀ x ∈ maximalIdeal A ^ (k + 1), e x ∈ filt (maximalIdeal R) k := by
       intro k
       induction k with

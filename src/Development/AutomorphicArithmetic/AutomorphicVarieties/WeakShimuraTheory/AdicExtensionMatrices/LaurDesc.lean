@@ -8,7 +8,7 @@ theorem UpperTheory.V.Ws.sxLaurDesc :
   let φ : ∀ j, W.gr j →ₗ[Λ] R' := fun j =>
     { toFun := fun x => (e (F ((x : W.A) : R))).coeff (τ j)
       map_add' := fun x y => by
-        simp only [Submodule.coe_add, Subalgebra.coe_add, map_add, HahnSeries.coeff_add]
+        simp only [Submodule.coe_add, Subalgebra.coe_add, map_add (f := _), HahnSeries.coeff_add]
       map_smul' := fun a x => by
         have h1 : (((a • x : W.gr j) : W.A) : R) = algebraMap Λ R a * ((x : W.A) : R) := by
           rw [← Algebra.smul_def]; rfl
@@ -27,7 +27,7 @@ theorem UpperTheory.V.Ws.sxLaurDesc :
   have hmul : ∀ {i j} (a : W.gr i) (b : W.gr j), φ _ (GradedMonoid.GMul.mul (A := fun j => W.gr j) a b) = φ i a * φ j b := by
     intro i j a b
     show (e (F (((a : W.A) : R) * ((b : W.A) : R)))).coeff (τ (i + j)) = _
-    rw [map_mul, map_mul, key, key, HahnSeries.single_mul_single, map_add, HahnSeries.coeff_single_same]
+    rw [map_mul, map_mul, key, key, HahnSeries.single_mul_single, map_add (f := _), HahnSeries.coeff_single_same]
   refine ⟨(DirectSum.toAlgebra Λ (fun j => W.gr j) φ hone hmul).comp
     (DirectSum.decomposeAlgEquiv W.gr).toAlgHom, fun j x hx => ?_⟩
   have h : DirectSum.decompose W.gr x = DirectSum.of (fun j => W.gr j) j ⟨x, hx⟩ :=

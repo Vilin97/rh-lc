@@ -92,7 +92,7 @@ theorem stepHom_isIntegral : (stepHom R).IsIntegral := by
   obtain ⟨q, rfl⟩ := Ideal.Quotient.mk_surjective z
   induction q using MvPolynomial.induction_on with
   | C a => exact isIntegral_algebraMap
-  | add a b ha hb => rw [map_add]; exact ha.add hb
+  | add a b ha hb => rw [map_add (f := _)]; exact ha.add hb
   | mul_X a p ha =>
     rw [map_mul]
     refine ha.mul ⟨p.1, p.2.1, ?_⟩

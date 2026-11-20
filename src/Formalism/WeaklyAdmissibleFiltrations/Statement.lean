@@ -176,7 +176,7 @@ def continuousCocycles : Submodule LL (G → V) where
   add_mem' := by
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
     refine ⟨ha.add hb, fun g h => ?_⟩
-    simp only [Pi.add_apply, ha', hb', map_add]
+    simp only [Pi.add_apply, ha', hb', map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, ha'⟩
@@ -193,7 +193,7 @@ def finiteCocycles : Submodule LL (G → V) where
   add_mem' := by
     rintro a b ⟨ha, x, hx⟩ ⟨hb, y, hy⟩
     refine ⟨(continuousCocycles ρ).add_mem ha hb, x + y, fun g => ?_⟩
-    simp only [Pi.add_apply, add_tmul, hx, hy, map_add]
+    simp only [Pi.add_apply, add_tmul, hx, hy, map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, x, hx⟩
@@ -277,7 +277,7 @@ theorem LatHom.post_Z1T (c : G → V) (hc : c ∈ latticeCocycles L) : F.post c 
     rw [hp]
     refine ⟨F.cont.comp hz.1, fun g h => ?_⟩
     show F.f (c (g * h)) = F.f (c g) + ρ' g (F.f (c h))
-    rw [hz.2, map_add, F.equiv]
+    rw [hz.2, map_add (f := _), F.equiv]
   · rw [hp]
     exact F.T_le _ (hT g)
 
@@ -502,7 +502,7 @@ def Z1ur (ρ : Representation LL G V) (I : Subgroup G) : Submodule LL (G → V) 
   add_mem' := by
     rintro a b ⟨ha, x, hx⟩ ⟨hb, y, hy⟩
     refine ⟨(continuousCocycles ρ).add_mem ha hb, x + y, fun g hg => ?_⟩
-    simp only [Pi.add_apply, hx g hg, hy g hg, map_add]
+    simp only [Pi.add_apply, hx g hg, hy g hg, map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, x, hx⟩
@@ -524,7 +524,7 @@ theorem LatHom.post_Z1fT (c : G → V) (hc : c ∈ latticeFiniteCocycles PD L) :
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVB, M, AlgebraTensorModule.map_tmul, F.equiv]
-    | add y z hy hz => rw [map_add, map_add, hy, hz, map_add, map_add]
+    | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, map_add (f := _), map_add (f := _)]
   show F.post c ∈ continuousCocycles ρ' ∧ ∃ x : V' ⊗[Qp] B, ∀ g, F.post c g ⊗ₜ[Qp] (1 : B) = actVB PD ρ' g x - x
   refine ⟨hz', M x, fun g => ?_⟩
   have h := congrArg M (hx g)

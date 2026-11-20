@@ -137,7 +137,7 @@ def d (n : ℕ) : Cn F n →ₗ[R] Cn F (n + 1) where
   toFun f s := ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • (F.map (toLast i s)).hom (f (face i s))
   map_add' f g := by
     funext s
-    simp only [Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
   map_smul' r f := by
     funext s
     simp only [Pi.smul_apply, map_smul, RingHom.id_apply, Finset.smul_sum]
@@ -348,7 +348,7 @@ attribute [instance] Sys.ab Sys.md
 
 def Sys.lim {R : Type} [CommRing R] (S : Sys.{w} R) : Submodule R (∀ n, S.M n) where
   carrier := {x | ∀ n, S.r n (x (n + 1)) = x n}
-  add_mem' ha hb n := by rw [Pi.add_apply, map_add, ha n, hb n]; rfl
+  add_mem' ha hb n := by rw [Pi.add_apply, map_add (f := _), ha n, hb n]; rfl
   zero_mem' n := map_zero _
   smul_mem' c x hx n := by rw [Pi.smul_apply, map_smul, hx n]; rfl
 

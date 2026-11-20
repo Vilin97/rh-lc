@@ -30,7 +30,7 @@ theorem constantCoeff_psubst {l : PowerSeries K} (hl : constantCoeff l = 0) (g :
     constantCoeff_subst_eq_zero hl _ (by simp)
   have hg : g = C (constantCoeff g) + (g - C (constantCoeff g)) := by ring
   conv_lhs => rw [hg]
-  rw [subst_add (hs hl), map_add, h0, subst_C, add_zero]
+  rw [subst_add (hs hl), map_add (f := _), h0, subst_C, add_zero]
   rfl
 
 theorem psubst_fExp {l f : PowerSeries K} (hl : constantCoeff l = 0) (hf : constantCoeff f = 0) :
@@ -119,12 +119,12 @@ theorem constantCoeff_phO (s2 : K) (P : PowerSeries K) {l : PowerSeries K}
     rw [hl1] at this
     exact this
   have hF : constantCoeff (fLog (lU l)) = 0 := constantCoeff_fLog hlu
-  rw [phO, map_sub, map_add, map_neg, constantCoeff_psubst hl, constantCoeff_sigS, map_mul, map_pow, hl, hF]
+  rw [phO, map_sub, map_add (f := _), map_neg, constantCoeff_psubst hl, constantCoeff_sigS, map_mul, map_pow, hl, hF]
   simp
 
 theorem constantCoeff_phE (s2 e1 kap : K) (w : PowerSeries K) {l : PowerSeries K}
     (hl : constantCoeff l = 0) : constantCoeff (phE s2 e1 kap w l) = 0 := by
-  rw [phE, map_add, map_neg, constantCoeff_psubst hl, constantCoeff_sig1S, map_mul, map_pow, hl]
+  rw [phE, map_add (f := _), map_neg, constantCoeff_psubst hl, constantCoeff_sig1S, map_mul, map_pow, hl]
   simp
 
 end Alg
@@ -139,7 +139,7 @@ theorem logSigmaPullbackSpec : PhODef := by
   have hA : constantCoeff (fLog (lU l)) = 0 := constantCoeff_fLog hlu
   have hB : constantCoeff (subst l (sigS P)) = 0 := by rw [constantCoeff_psubst hl, constantCoeff_sigS]
   have hC : constantCoeff (-(C (s2 / 2) * l ^ 2)) = 0 := constantCoeff_gauss _ hl
-  have hAB : constantCoeff (fLog (lU l) + subst l (sigS P)) = 0 := by rw [map_add, hA, hB, add_zero]
+  have hAB : constantCoeff (fLog (lU l) + subst l (sigS P)) = 0 := by rw [map_add (f := _), hA, hB, add_zero]
   have e : -phO s2 P l = fLog (lU l) + subst l (sigS P) + -(C (s2 / 2) * l ^ 2) := by
     rw [phO]
     ring

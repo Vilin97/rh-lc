@@ -64,7 +64,7 @@ theorem dvd_sq (A K : Type) [CommRing A] [IsDomain A] [Field K] [Algebra A K] (h
     rw [this]
     norm_num
   · obtain ⟨ζ, hζ, e⟩ := h
-    have e' : algebraMap A K (κ + 1) = ζ := by rw [map_add, e]; simp
+    have e' : algebraMap A K (κ + 1) = ζ := by rw [map_add (f := _), e]; simp
     have hz : IsPrimitiveRoot (κ + 1) p := IsPrimitiveRoot.of_map_of_injective (f := algebraMap A K) (by rwa [e']) hinj
     obtain ⟨n, rfl⟩ : ∃ n, p = n + 1 := ⟨p - 1, by have := hp.pos; omega⟩
     have hn : 0 < n := by have := hp.one_lt; omega
@@ -236,7 +236,7 @@ theorem chart_pack : ∀ (A K : Type) [CommRing A] [IsDomain A] [IsNoetherianRin
       rw [this, map_smul, smul_eq_mul]
     have e2 : ∀ l, algebraMap A K (i f l) = algebraMap A K u * J e l := fun l => by
       rw [← hf l, hJu]
-    simp only [e2, map_add, map_mul, map_pow, map_natCast, e1] at hz
+    simp only [e2, map_add (f := _), map_mul, map_pow, map_natCast, e1] at hz
     have e3 : algebraMap A K u * ∑ l, J e l * D.gram σ d l j =
         algebraMap A K u * (algebraMap A K d * D.h (Pi.single j 1) e + (p : K) ^ m * ((algebraMap A K u)⁻¹ * algebraMap A K z)) := by
       rw [Finset.mul_sum]
@@ -446,7 +446,7 @@ theorem exactModLat_hodgeTate : FarguesHodgeTate → ∀ (E : Type) [Field E] [N
       · ext i j
         have h1 := congrArg (algebraMap (chartRing o (mseg y) s.1) Ω) (congrFun (congrFun hGH i) j)
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [Matrix.mul_apply, map_sum, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_pow, map_natCast] at h1
+          rw [Matrix.mul_apply, map_sum, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_pow, map_natCast] at h1
         simp only [map_mul] at h1
         simp only [Matrix.mul_apply, Matrix.of_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
         have e0 : ∀ k, (Dc s).gram σ (ds s) i k = algebraMap (chartRing o (mseg y) s.1) Ω (G i k) := fun k => (hGg i k).symm

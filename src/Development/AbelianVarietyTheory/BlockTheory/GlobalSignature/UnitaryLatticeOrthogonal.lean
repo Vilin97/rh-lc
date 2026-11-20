@@ -143,7 +143,7 @@ private lemma involution_apply_eq_tensorProductMap_restrictScalars (a : _root_.G
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => unfold _root_.Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR; simp
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 open scoped TensorProduct in
 open NumberField IsDedekindDomain in

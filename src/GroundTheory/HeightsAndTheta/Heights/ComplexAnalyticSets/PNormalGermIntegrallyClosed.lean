@@ -84,7 +84,7 @@ theorem exists_eq_mul_of_integral_relation {S : Type*} [CommRing S] [IsDomain S]
       algebraMap S K g ^ (d - (j : ℕ)) = 0 := by
     have h2 := congrArg (algebraMap S K) hrel
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_mul, map_pow, map_zero] at h2
+      simp only [map_add (f := _), map_sum, map_mul, map_pow, map_zero] at h2
     exact h2
   have hg0 : algebraMap S K g ≠ 0 := fun h0 => hg (hinj (by rw [h0, map_zero]))
   generalize hfK : algebraMap S K f = fK at hrelK
@@ -175,7 +175,7 @@ theorem proof (hRueckert : RueckertNullstellensatz.Statement)
   obtain ⟨y, hy⟩ := exists_eq_mul_of_integral_relation (π FA) (π GA) (fun j => π (aA j)) hGS (by
     rw [← hPS]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [PA, map_add, map_sum, map_mul, map_pow])
+      simp only [PA, map_add (f := _), map_sum, map_mul, map_pow])
   obtain ⟨φ, rfl⟩ := Ideal.Quotient.mk_surjective y
   obtain ⟨HA, rfl⟩ := toGerm_surjective w φ
   have hdiff : π (FA - GA * HA) = 0 := by

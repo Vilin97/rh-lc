@@ -62,7 +62,7 @@ theorem exists_split_prime_outside_level : ∀ (E : Type) [Field E] [NumberField
     simpa using hm2
   rcases hQ.isPrime.mem_or_mem hprod with h | h
   · refine key _ h ?_
-    rw [map_add, map_mul, map_one, map_natCast, HostModel.bar_rt]; ring
+    rw [map_add (f := _), map_mul, map_one, map_natCast, HostModel.bar_rt]; ring
   · refine key _ h ?_
     rw [map_sub, map_mul, map_one, map_natCast, HostModel.bar_rt]; ring
 

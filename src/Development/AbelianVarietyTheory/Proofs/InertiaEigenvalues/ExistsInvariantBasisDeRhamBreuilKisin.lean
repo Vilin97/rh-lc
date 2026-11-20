@@ -43,7 +43,7 @@ theorem padicInt_hom_ext_pt (f g : ℤ_[l] →+* Per.Ainf l) : f = g := by
   have hz : z = (z.appr n : ℤ_[l]) + (l : ℤ_[l]) ^ n * c := by rw [← hc]; ring
   refine ⟨f c - g c, ?_⟩
   conv_lhs => rw [hz]
-  simp only [map_add, map_mul, map_pow, map_natCast]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast]
   ring
 
 theorem zD_eq_pt (z : ℤ_[l]) :

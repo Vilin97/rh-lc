@@ -58,13 +58,13 @@ theorem isBaseChange_of_pushout {P Q R₀ R M N : Type*} [CommRing P] [CommRing 
       φ.liftBaseChange R ∘ (Algebra.IsPushout.cancelBaseChange P Q R₀ R M).symm := by
     funext z
     induction z with
-    | add x y hx hy => simp only [Function.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [Function.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
     | tmul s m => simp [e]
   have hb : Function.Bijective (φ.liftBaseChange R) := by
     have : (φ.liftBaseChange R : R ⊗[R₀] M → N) = hφ.equiv := by
       funext z
       induction z with
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul s m => simp
     rw [this]
     exact hφ.equiv.bijective
@@ -84,7 +84,7 @@ theorem isBaseChange_restrict {P Q U M V N : Type*} [CommRing P] [CommRing Q] [A
   have hc : ∀ z : Q ⊗[P] U, j (g.liftBaseChange Q z) = hf.equiv (u.lTensor Q z) := by
     intro z
     induction z with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul s m => simp [hg]
   have hinj : Function.Injective (g.liftBaseChange Q) := fun x y h => by
     have h2 := congrArg j h
@@ -232,7 +232,7 @@ theorem relOm_le_span {K R₀ R : Type} [CommRing K] [CommRing R₀] [CommRing R
       exact ⟨hDy y hy, hWs y hy⟩
     | zero => exact ⟨by rw [map_zero]; exact W.zero_mem, fun ω => by rw [zero_smul]; exact W.zero_mem⟩
     | add x y _ _ hx hy =>
-      exact ⟨by rw [map_add]; exact W.add_mem hx.1 hy.1, fun ω => by rw [add_smul]; exact W.add_mem (hx.2 ω) (hy.2 ω)⟩
+      exact ⟨by rw [map_add (f := _)]; exact W.add_mem hx.1 hy.1, fun ω => by rw [add_smul]; exact W.add_mem (hx.2 ω) (hy.2 ω)⟩
     | smul c x _ hx =>
       refine ⟨?_, fun ω => ?_⟩
       · rw [smul_eq_mul, Derivation.leibniz]
@@ -289,7 +289,7 @@ theorem isBaseChange_relOm {K P Q R₀ R : Type} [CommRing K] [CommRing P] [Comm
         rw [KaehlerDifferential.map_D]
         exact Submodule.subset_span ⟨y, rfl⟩
       | zero => rw [map_zero]; exact Submodule.zero_mem _
-      | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
       | smul c x _ hx =>
         rw [map_smul, ← algebraMap_smul R c]
         exact Submodule.smul_mem _ _ hx
@@ -303,7 +303,7 @@ theorem isBaseChange_relOm {K P Q R₀ R : Type} [CommRing K] [CommRing P] [Comm
       obtain ⟨v, rfl⟩ := hx
       rw [GlobalTheory.exteriorPowerMapOver_ιMulti, omMap_ιMulti]
     | zero => rw [map_zero, map_zero]
-    | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     | smul c x _ hx =>
       rw [map_smul, omMap_smul, hx]
       exact (algebraMap_smul R c _).symm

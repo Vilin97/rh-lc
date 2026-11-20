@@ -23,9 +23,9 @@ theorem approx_add {F G : P} {r : ℕ} {y z : R} (hF : Approx l ι f F r y) (hG 
   obtain ⟨n, b, p, h, hn, hp, hF, hy⟩ := hF
   obtain ⟨m, c, q, k, hm, hq, hG, hz⟩ := hG
   refine ⟨n * m, (m : B) * b + (n : B) * c, p + q, h + k, mul_ne_zero hn hm, ?_, ?_, ?_⟩
-  · rw [map_add, map_mul, map_mul, map_natCast, map_natCast, ← hp, ← hq]; push_cast; ring
+  · rw [map_add (f := _), map_mul, map_mul, map_natCast, map_natCast, ← hp, ← hq]; push_cast; ring
   · rw [hF, hG]; ring
-  · rw [map_add, map_mul, map_mul, map_natCast, map_natCast, ← hy, ← hz]; push_cast; ring
+  · rw [map_add (f := _), map_mul, map_mul, map_natCast, map_natCast, ← hy, ← hz]; push_cast; ring
 
 theorem approx_mul {F G : P} {r : ℕ} {y z : R} (hF : Approx l ι f F r y) (hG : Approx l ι f G r z) :
     Approx l ι f (F * G) r (y * z) := by
@@ -141,7 +141,7 @@ theorem ringHom_ext_dense (G₁ G₂ : P →+* R) (h : ∀ b, G₁ (ι b) = G₂
   have e1 : (n : R) * (G₁ p - G₂ p) = G₁ ((n : P) * p) - G₂ ((n : P) * p) := by
     rw [map_mul, map_mul, map_natCast, map_natCast]; ring
   have h1 : G₁ p = G₂ p := sub_eq_zero.1 (htf n _ hn (by rw [e1, hp, h, sub_self]))
-  exact ⟨G₁ k - G₂ k, by rw [hF, map_add, map_add, map_mul, map_mul, map_pow, map_pow, map_natCast, map_natCast, h1]; ring⟩
+  exact ⟨G₁ k - G₂ k, by rw [hF, map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, map_natCast, map_natCast, h1]; ring⟩
 
 end Abstract
 

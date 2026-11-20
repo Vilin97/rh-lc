@@ -310,7 +310,7 @@ lemma repartitionToH1_eq_zero_iff (a : repartitions k X) :
     exact Submodule.mem_sup.mpr ⟨_, hb, _, ⟨_, rfl⟩, sub_add_cancel _ _⟩
   · intro h
     obtain ⟨b, hb, d, ⟨f, rfl⟩, rfl⟩ := Submodule.mem_sup.mp h
-    rw [map_add]
+    rw [map_add (f := _)]
     have h1 : repartitionToH1.{w'} k hX D b = 0 := by
       have : repToQuotTop k D b = repToQuotTop k D 0 :=
         ((repToQuot_eq_zero_iff D b).mpr hb).trans (map_zero (repToQuot k D)).symm

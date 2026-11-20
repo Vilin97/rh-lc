@@ -515,7 +515,7 @@ theorem step {d : ℕ} (IH : St d) : St (d + 1) := by
       obtain ⟨x', rfl, rfl⟩ := glue xs xz
       have hx' : ∀ I, x' I ∈ (Fil q).S E.D := idx_all (P := fun I => x' I ∈ (Fil q).S E.D) hxs hxz
       refine ⟨x', hx', (rep_iff hF E σ hr x' hx' c).2 ⟨d_fs Q hF E σ hc r hQ hr x' hx', ?_⟩⟩
-      exact hc'.trans ((CrystallineSemistableComparison.CechClassBoundaries.cls_add _ _ _ _ (by rw [map_add, d_fsS Q E σ hF hc r hQ hr _ hxs, d_fsZ Q E σ hF hc r hQ hr _ hxz, add_zero])).symm.trans
+      exact hc'.trans ((CrystallineSemistableComparison.CechClassBoundaries.cls_add _ _ _ _ (by rw [map_add (f := _), d_fsS Q E σ hF hc r hQ hr _ hxs, d_fsZ Q E σ hF hc r hQ hr _ hxz, add_zero])).symm.trans
         (cls_congr (fs_split E σ hF hr x' hx').symm _ _))
   · obtain ⟨h, h0⟩ := (rep_iff hF E σ hr x hx 0).1 hrep
     cases j with
@@ -531,7 +531,7 @@ theorem step {d : ℕ} (IH : St d) : St (d + 1) := by
       have hxz : ∀ I, (x ∘ idxZ) I ∈ (Fil q).S E.D := fun I => hx _
       have e0 : (CH.cx _).cls _ (d_fsS Q E σ hF hc r hQ hr (x ∘ idxS) hxs) +
           (CH.cx _).cls _ (d_fsZ Q E σ hF hc r hQ hr (x ∘ idxZ) hxz) = 0 :=
-        ((CrystallineSemistableComparison.CechClassBoundaries.cls_add _ _ _ _ (by rw [map_add, d_fsS Q E σ hF hc r hQ hr _ hxs, d_fsZ Q E σ hF hc r hQ hr _ hxz, add_zero])).symm.trans
+        ((CrystallineSemistableComparison.CechClassBoundaries.cls_add _ _ _ _ (by rw [map_add (f := _), d_fsS Q E σ hF hc r hQ hr _ hxs, d_fsZ Q E σ hF hc r hQ hr _ hxz, add_zero])).symm.trans
           (cls_congr (fs_split E σ hF hr x hx).symm _ _)).trans h0.symm
       have hd := D hr hn (x ∘ idxZ) hxz
       have e1' : (CH.cx _).cls _ (d_fsS Q E σ hF hc r hQ hr (x ∘ idxS) hxs) =

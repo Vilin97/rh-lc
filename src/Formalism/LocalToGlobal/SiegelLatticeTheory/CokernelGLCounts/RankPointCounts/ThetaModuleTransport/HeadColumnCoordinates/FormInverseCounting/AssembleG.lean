@@ -66,7 +66,7 @@ theorem stepPairG_of_fwd_bwd (hf : FwdEx) (hb : BwdEx) : StepPairG := by
     intro d
     obtain ⟨Y, rfl⟩ := Submodule.Quotient.mk_surjective _ d
     show B (F θ hθ) (Submodule.Quotient.mk Y) = θ (Submodule.Quotient.mk Y)
-    rw [elim_eta O Y, mk_elim O cj hO Z₁ t t', map_add, map_add, (hB _).1, (hB _).2, (hF θ hθ).1,
+    rw [elim_eta O Y, mk_elim O cj hO Z₁ t t', map_add (f := _), map_add (f := _), (hB _).1, (hB _).2, (hF θ hθ).1,
       (hF θ hθ).2]
   · intro p
     set q := F (B p) (hBmem p)

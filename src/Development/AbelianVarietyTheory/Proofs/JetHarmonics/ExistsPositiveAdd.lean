@@ -15,7 +15,7 @@ theorem _root_.GlobalTheory.LeastExponentCompare.isCMField_of_conj (E : Type) [F
   let φ₀ : E →+* ℂ := (Classical.arbitrary (InfinitePlace E)).embedding
   have inj := φ₀.injective
   have hadd : ∀ a b, cj (a + b) = cj a + cj b := fun a b =>
-    inj (by rw [h, map_add, map_add, h, h, star_add])
+    inj (by rw [h, map_add (f := _), map_add (f := _), h, h, star_add])
   have hmul : ∀ a b, cj (a * b) = cj a * cj b := fun a b =>
     inj (by rw [h, map_mul, map_mul, h, h, star_mul'])
   have hinv : ∀ z, cj (cj z) = z := fun z => inj (by rw [h, h, star_star])

@@ -51,12 +51,12 @@ theorem sgRel_mapL (F : LFlag S r T) (F' : LFlag S r T') (y y' : S.V) (al al' : 
     obtain ⟨x0, hx0, rfl⟩ := Submodule.mem_map.1 hx
     obtain ⟨x0', hx0', rfl⟩ := Submodule.mem_map.1 hx'
     refine ⟨x0, hx0, x0', hx0', β.injective ?_⟩
-    simp only [map_sub, map_add, map_smul, LinearEquiv.coe_coe] at h ⊢
+    simp only [map_sub, map_add (f := _), map_smul, LinearEquiv.coe_coe] at h ⊢
     exact h
   · rintro ⟨x, hx, x', hx', h⟩
     refine ⟨β x, Submodule.mem_map_of_mem hx, β x', Submodule.mem_map_of_mem hx', ?_⟩
     rw [← map_sub, h]
-    simp only [map_add, map_smul]
+    simp only [map_add (f := _), map_smul]
 
 end Gen
 

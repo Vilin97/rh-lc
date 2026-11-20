@@ -127,7 +127,7 @@ theorem GlobalTheory.SquareAgree.kernel_maximal_thetaSubspace : GlobalTheory.Fun
       add_mem' := by
         rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
         refine ⟨add_mem ha hb, ?_⟩
-        rw [dF_add a (hS _ ha) b (hS _ hb), map_add, ha', hb', add_zero]
+        rw [dF_add a (hS _ ha) b (hS _ hb), map_add (f := _), ha', hb', add_zero]
       zero_mem' := ⟨zero_mem _, by rw [dF_zero, map_zero]⟩
       smul_mem' := by
         rintro c a ⟨ha, ha'⟩
@@ -191,7 +191,7 @@ theorem GlobalTheory.SquareAgree.kernel_maximal_thetaSubspace : GlobalTheory.Fun
       { carrier := {y | ∃ ΦD ∈ N, p (dF ΦD) = y}
         add_mem' := by
           rintro _ _ ⟨a, ha, rfl⟩ ⟨b, hb, rfl⟩
-          exact ⟨a + b, add_mem ha hb, by rw [dF_add a (hS _ (hNS _ ha)) b (hS _ (hNS _ hb)), map_add]⟩
+          exact ⟨a + b, add_mem ha hb, by rw [dF_add a (hS _ (hNS _ ha)) b (hS _ (hNS _ hb)), map_add (f := _)]⟩
         zero_mem' := ⟨0, zero_mem _, by rw [dF_zero, map_zero]⟩
         smul_mem' := by
           rintro c _ ⟨a, ha, rfl⟩

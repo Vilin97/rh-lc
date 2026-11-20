@@ -131,10 +131,10 @@ theorem addition_neg_y : PlusNegY.{u} := by
     linear_combination (yS W + C W.a₁ * X * xS W + C W.a₃ * X ^ 3 + C yP * X ^ 3) * n' * v ^ 3
         * ((q * r) ^ 5 + (q * r) ^ 4 + (q * r) ^ 3 + (q * r) ^ 2 + q * r + 1) * hqr
       + C W.a₁ * X * n' * v ^ 2 * htv
-  · simp only [xPlus, tS, nS, WeierstrassCurve.Affine.negY, map_add, map_sub, map_neg, map_mul,
+  · simp only [xPlus, tS, nS, WeierstrassCurve.Affine.negY, map_add (f := _), map_sub, map_neg, map_mul,
       map_pow, map_ofNat]
     ring
-  · rw [xPlus, map_add, coeff_C, if_neg one_ne_zero, zero_add, mul_assoc, coeff_succ_X_mul,
+  · rw [xPlus, map_add (f := _), coeff_C, if_neg one_ne_zero, zero_add, mul_assoc, coeff_succ_X_mul,
       coeff_zero_eq_constantCoeff_apply, map_mul, map_pow, Plus.nS_cc, Plus.inv_cc]
     ring
 
@@ -159,7 +159,7 @@ theorem expSeriesAdd : ExpAdd.{u} := by
       · exact ce1)
   have cl : MvPowerSeries.constantCoeff ((logSer W).subst (U₁ : MvPowerSeries (Fin 2) K)
       + (logSer W).subst (U₂ : MvPowerSeries (Fin 2) K)) = 0 := by
-    rw [map_add, PowerSeries.constantCoeff_subst_eq_zero c0 _ l0,
+    rw [map_add (f := _), PowerSeries.constantCoeff_subst_eq_zero c0 _ l0,
       PowerSeries.constantCoeff_subst_eq_zero c1 _ l0, add_zero]
   have k0 : (logSer W).subst ((expSer W).subst (U₁ : MvPowerSeries (Fin 2) K)) = U₁ := by
     have key := subst_comp_subst_apply he hU0 (logSer W)
@@ -194,7 +194,7 @@ theorem plusZCleared_of (hZ : PlusZ.{u}) (hT : TInZ.{u}) : PlusZCleared.{u} := b
   have hTg : T = X ^ 2 * g := by linear_combination g * hTf - T * hfg
   have hdf : X * derivative K f = 2 * (f - 1) + X ^ 3 * derivative K P := by
     rw [hf]
-    simp only [map_add, map_sub, Derivation.leibniz, Derivation.leibniz_pow, derivative_X,
+    simp only [map_add (f := _), map_sub, Derivation.leibniz, Derivation.leibniz_pow, derivative_X,
       derivative_C, Derivation.map_one_eq_zero, smul_eq_mul, nsmul_eq_mul]
     push_cast
     ring
@@ -209,8 +209,8 @@ theorem plusZCleared_of (hZ : PlusZ.{u}) (hT : TInZ.{u}) : PlusZCleared.{u} := b
   have hdwp : dL (wpL W) = uPow (-1) ^ 3 * (toL X * toL (derivative K f) - 2 * toL f) := by
     have h1 : toL X * toL (derivative K f) = 2 * (toL f - 1) + toL X ^ 3 * toL (derivative K P) := by
       rw [← map_mul, hdf]
-      simp only [map_add, map_sub, map_mul, map_pow, map_one, map_ofNat]
-    rw [hsh, map_add, dL_uPow, dL_toL, h1]
+      simp only [map_add (f := _), map_sub, map_mul, map_pow, map_one, map_ofNat]
+    rw [hsh, map_add (f := _), dL_uPow, dL_toL, h1]
     have e3 : (uPow (-2 - 1) : LaurentSeries K) = uPow (-1) ^ 3 := by
       rw [← Plus.uPow_neg_three]; norm_num
     rw [e3]
@@ -237,7 +237,7 @@ theorem plusZCleared_of (hZ : PlusZ.{u}) (hT : TInZ.{u}) : PlusZCleared.{u} := b
   have hmain : derivative K (g * derivative K f) = 2 * P - (xp + C (W.b₂ / 12))
       - (xm + C (W.b₂ / 12)) := by
     apply toL_injective
-    simp only [map_add, map_sub, map_mul, map_ofNat, toL_C]
+    simp only [map_add (f := _), map_sub, map_mul, map_ofNat, toL_C]
     linear_combination hlog
   rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, hdg] at hmain
   rw [← hmain]

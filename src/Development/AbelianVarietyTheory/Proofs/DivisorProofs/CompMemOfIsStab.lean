@@ -20,7 +20,7 @@ theorem map_piInf_of_one {n : ℕ} {w : InfinitePlace F} (τ : EmbOver E w) {ε 
     (ε • G + (1 - ε) • (1 : Matrix (Fin n) (Fin n) (AE F E))).map (piInf τ) = G.map (piInf τ) := by
   refine Matrix.ext fun i j => ?_
   simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply]
-  simp only [piInf, RingHom.comp_apply, map_add, compInf_smul, map_sub, map_one, hε, sub_self, zero_smul, one_smul,
+  simp only [piInf, RingHom.comp_apply, map_add (f := _), compInf_smul, map_sub, map_one, hε, sub_self, zero_smul, one_smul,
     map_zero, add_zero]
 
 theorem map_piInf_of_zero {n : ℕ} {w : InfinitePlace F} (τ : EmbOver E w) {ε : AF F} (hε : evInf F w ε = 0)
@@ -29,7 +29,7 @@ theorem map_piInf_of_zero {n : ℕ} {w : InfinitePlace F} (τ : EmbOver E w) {ε
   rw [← Matrix.map_one (piInf (F := F) τ) (map_zero _) (map_one _)]
   refine Matrix.ext fun i j => ?_
   simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply]
-  simp only [piInf, RingHom.comp_apply, map_add, compInf_smul, map_sub, map_one, hε, sub_zero, zero_smul, one_smul,
+  simp only [piInf, RingHom.comp_apply, map_add (f := _), compInf_smul, map_sub, map_one, hε, sub_zero, zero_smul, one_smul,
     map_zero, zero_add]
 
 theorem smul_mem_latHat {n : ℕ} {X : Spc F E n} {c : AF F} (hc : ∀ v, evFin F v c ∈ v.adicCompletionIntegers F)

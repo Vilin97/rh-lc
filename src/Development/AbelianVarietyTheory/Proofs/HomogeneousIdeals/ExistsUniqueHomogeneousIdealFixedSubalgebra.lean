@@ -71,7 +71,7 @@ theorem liftBaseChange_injective_of_fixed [IsGaloisGroup G K L] {N : Type*} [Add
     intro g t
     induction t with
     | tmul a n => simp [smul_distrib_smul, h]
-    | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
   have h1 := baseChange_rationalPart (fun g : G => MulSemiringAction.toAlgHom K L g)
     (mem_range_of_forall_smul_eq K L G) (LinearMap.ker (f.liftBaseChange L)) fun g w hw => by
       rw [LinearMap.mem_ker] at hw ⊢
@@ -209,7 +209,7 @@ noncomputable def fixedAlgEquiv [Finite G] [IsGaloisGroup G K L] :
       funext t
       induction t with
       | tmul a v => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [this]
     exact LinearEquiv.bijective _)
 

@@ -650,7 +650,7 @@ theorem evR_toRule_of_isReduced [_root_.IsReduced S] (s : X.SecO e) (P : FrPt Xo
 theorem val_add {s s₁ s₂ : X.SecO e} (h : ∀ j, s.f j = s₁.f j + s₂.f j) (P : FrPt Xo c S) :
     val s P = val s₁ P + val s₂ P := by
   refine (IsVal.eq_val fun S' _ _ ψ P' hP k hz Q t hQ ht => ?_).symm
-  rw [map_add, isVal_val s₁ P S' ψ P' hP k hz Q t hQ ht, isVal_val s₂ P S' ψ P' hP k hz Q t hQ ht, ← mul_add]
+  rw [map_add (f := _), isVal_val s₁ P S' ψ P' hP k hz Q t hQ ht, isVal_val s₂ P S' ψ P' hP k hz Q t hQ ht, ← mul_add]
   exact congrArg _ ((congrArg _ (h _)).trans (map_add _ _ _)).symm
 
 theorem val_mul {e₁ e₂ : Ix Dw → ℤ} {s : X.SecO (e₁ + e₂)} {s₁ : X.SecO e₁} {s₂ : X.SecO e₂}

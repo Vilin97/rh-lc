@@ -44,7 +44,7 @@ theorem class_eq_of_conj :
   have hφp : ∀ (f : K.E[X]) y, φ (aeval B.g f * y) = aeval B.g f * φ y := by
     intro f
     induction f using Polynomial.induction_on' with
-    | add p q hp hq => intro y; rw [map_add, add_mul, add_mul, map_add, hp, hq]
+    | add p q hp hq => intro y; rw [map_add (f := _), add_mul, add_mul, map_add (f := _), hp, hq]
     | monomial k e =>
       intro y
       rw [aeval_monomial, mul_assoc, ← Algebra.smul_def, map_smul, hpow, Algebra.smul_def, mul_assoc]

@@ -74,7 +74,7 @@ theorem dep_fibre : DepSt → ∀ (R : Type) [CommRing R] [IsLocalRing R] (X : S
       rs _ (le₁₃ V' a c d) (α i a d) := by
     intro i a c d
     have h0 := app_eq_zero_of_mem_ext hw (V a ⊓ V c ⊓ V d) (hb i a c d)
-    rw [map_sub, map_add, app_rs_eq_rs_app φ (le₁₂ V a c d) (le₁₂ V' a c d),
+    rw [map_sub, map_add (f := _), app_rs_eq_rs_app φ (le₁₂ V a c d) (le₁₂ V' a c d),
       app_rs_eq_rs_app φ (le₂₃ V a c d) (le₂₃ V' a c d), app_rs_eq_rs_app φ (le₁₃ V a c d) (le₁₃ V' a c d)] at h0
     exact sub_eq_zero.mp h0
   obtain ⟨c, ψ, hc0, hcψ⟩ := hD (IsLocalRing.ResidueField R) (pullback s g) s' hsep n r hfin hrank hnr A V'

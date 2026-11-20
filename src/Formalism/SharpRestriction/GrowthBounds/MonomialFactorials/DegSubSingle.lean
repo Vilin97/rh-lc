@@ -31,7 +31,7 @@ theorem pderiv_glAct (LL : M.Letters N) (J : ℕ) (a : Fin N) (c c' d' : Fin r)
         have h2 : (s - Finsupp.single u 1 : Fin N × Fin r →₀ ℕ) v = s v := by
           rw [Finsupp.tsub_apply, Finsupp.single_apply, if_neg huv, Nat.sub_zero]
         rw [h1, h2, tsub_right_comm, mul_assoc, mul_assoc, mul_comm ((s u : ℚ_[p]))]
-    · simp only [map_add, hq, hq']
+    · simp only [map_add (f := _), hq, hq']
   have hg : ∀ y, M.glAct p LL J c' d' y = ∑ i : Fin N, (if (i : ℕ) < J then
       (if LL.vec i then X (i, c') * pderiv (i, d') y else -(X (i, d') * pderiv (i, c') y)) else 0) := by
     intro y
@@ -184,7 +184,7 @@ theorem pderiv_ycond (LL : M.Letters N) (J : ℕ) (Mt : WithTop ℤ) (a : Fin N)
       exact S'.sub_mem (hgen c'' _ hy') hext
     | zero => simp
     | add z z' _ _ hz hz' =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact S'.add_mem hz hz'
     | smul t z _ hz =>
       rw [map_smul]
@@ -210,7 +210,7 @@ theorem tieF_ycond (LL : M.Letters N) (J : ℕ) (Mt : WithTop ℤ) (W E : Fin N)
         (if c0 = c then pderiv (W, d) (pderiv (E, c0) y) else 0) +
         (if c0 = d then -pderiv (W, c0) (pderiv (E, c) y) else 0) := by
       intro c0
-      rw [pderiv_glAct LL J E c0 c d y, map_add, pderiv_glAct LL J W c0 c d (pderiv (E, c0) y)]
+      rw [pderiv_glAct LL J E c0 c d y, map_add (f := _), pderiv_glAct LL J W c0 c d (pderiv (E, c0) y)]
       simp only [hE, hW, hvW, hvE, if_true, Bool.false_eq_true, if_false]
       split_ifs <;> simp [map_neg]
     set_option synthInstance.maxHeartbeats 100000 in

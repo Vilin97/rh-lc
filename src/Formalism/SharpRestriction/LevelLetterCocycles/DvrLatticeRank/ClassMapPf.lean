@@ -78,7 +78,7 @@ theorem classMapPf_local (π' Eπ : LetA O n) (h' M : ℕ) (c : ZMod n)
       have key : (W.γD T W.gamK pr.1.1 - pr.1.1 - (W.φD T pr.1.2 - pr.1.2)) -
           (W.γD T W.gamK pr'.1.1 - pr'.1.1 - (W.φD T pr'.1.2 - pr'.1.2)) = 0 := by
         rw [hc, hc']; abel
-      simp only [map_sub, map_add, W.φγ_comm, hm']
+      simp only [map_sub, map_add (f := _), W.φγ_comm, hm']
       rw [← key]
       abel
     have hw0 : W.γD T W.gamK m - m - (pr.1.2 - pr'.1.2) = 0 := by

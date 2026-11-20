@@ -35,7 +35,7 @@ theorem rr_step : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k]
     obtain rfl : Ψ' = omR μ (g, h) Ψ := Subtype.ext e
     induction φ using Finsupp.induction_linear with
     | zero => simp
-    | add f₁ f₂ h₁ h₂ => simp only [map_add, LinearMap.add_apply, h₁, h₂]
+    | add f₁ f₂ h₁ h₂ => simp only [map_add (f := _), LinearMap.add_apply, h₁, h₂]
     | single g₀ a =>
       simp only [π', MonoidHom.coe_mk, OneHom.coe_mk, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single, θ, Finsupp.lsum_single,
         LinearMap.toSpanSingleton_apply, LinearMap.smul_apply, map_smul, π, MonoidHom.coe_comp,

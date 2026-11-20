@@ -86,7 +86,7 @@ theorem idempotent_det_conj_identity (e : R) (h1 : e * e = e) (h2 : e * c e = 0)
     cases n with
     | zero => rw [Matrix.det_isEmpty, mul_one]
     | succ k => rw [hp k] at hd'; exact hd'
-  simp only [map_add, map_mul, map_sub, map_one]
+  simp only [map_add (f := _), map_mul, map_sub, map_one]
   linear_combination -key - c e * hd
 
 end Generic
@@ -103,7 +103,7 @@ theorem cA_cA (a : AE D) : cA D (cA D a) = a := by
   | zero => simp
   | tmul a b => simp [Algebra.TensorProduct.map_tmul, hs]
   | add x y hx hy =>
-    simp only [map_add] at *
+    simp only [map_add (f := _)] at *
     rw [hx, hy]
 
 theorem mt_rel (V : HSp D) (g : GA D V) :

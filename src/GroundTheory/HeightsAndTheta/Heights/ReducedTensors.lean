@@ -217,7 +217,7 @@ def evalFibre (σ : K →+* ℂ) (x : X.complexPoints (intEmb σ)) :
     | tmul z s =>
       rw [TensorProduct.smul_tmul', liftAddHom_tmul, liftAddHom_tmul, evalPair_apply,
         evalPair_apply, RingHom.id_apply, smul_smul, map_smul, smul_eq_mul]
-    | add t₁ t₂ h₁ h₂ => simp only [smul_add, map_add, h₁, h₂]
+    | add t₁ t₂ h₁ h₂ => simp only [smul_add, map_add (f := _), h₁, h₂]
 
 omit [NumberField K] in
 theorem evalFibre_tmul (σ : K →+* ℂ) (x : X.complexPoints (intEmb σ)) (z : ComplexAt σ)

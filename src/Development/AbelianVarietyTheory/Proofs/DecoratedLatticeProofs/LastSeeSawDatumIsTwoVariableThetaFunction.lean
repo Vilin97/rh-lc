@@ -81,7 +81,7 @@ theorem isBiTheta_lastBi : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdC
       show Φ₂ (o''.resT S (v + L₂ t)).1 * Ξ ((o.resS S).symm (u + L₁ t, kap τ S (o''.resT S (v + L₂ t)).2)) =
         Φ₂ ((o''.resT S v).1 + (o''.resT S (L₂ t)).1) *
           Ξ ((o.resS S).symm (u, kap τ S (o''.resT S v).2) + (o.resS S).symm (L₁ t, kap τ S (o''.resT S (L₂ t)).2))
-      rw [map_add, Prod.fst_add, Prod.snd_add, kadd, ← map_add, Prod.mk_add_mk]
+      rw [map_add (f := _), Prod.fst_add, Prod.snd_add, kadd, ← map_add (f := _), Prod.mk_add_mk]
     rw [e]
     exact (hΦ.smooth n M₁ cM₁ fM₁ _).mul (hΞ.smooth n M₂ cM₂ fM₂ _)
   ·
@@ -89,7 +89,7 @@ theorem isBiTheta_lastBi : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdC
     rw [hC, hC]
     have e : (o.resS S).symm (ratW S A γ + u, kap τ S (o''.resT S v).2) =
         (o.resS S).symm (ratW S A γ, 0) + (o.resS S).symm (u, kap τ S (o''.resT S v).2) := by
-      rw [← map_add, Prod.mk_add_mk, zero_add]
+      rw [← map_add (f := _), Prod.mk_add_mk, zero_add]
     have hγ : ratW S A γ ∈ ratMx D S.rank A.rank := rat_mem γ
     rw [e, quasi_of_mem hΞ (resS_symm_mem o S hγ (zero_mem _)), sOH_resS_symm, sOH_zero_left, add_zero]
     ring
@@ -100,12 +100,12 @@ theorem isBiTheta_lastBi : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdC
     have h2 : (o''.resT S (ratW X S γ)).2 ∈ ratMx D L''.rank S.rank := ratMx_mul (rat_mem _) (rat_mem γ)
     have e : (o.resS S).symm (u, kap τ S ((o''.resT S (ratW X S γ)).2 + (o''.resT S v).2)) =
         (o.resS S).symm (0, kap τ S (o''.resT S (ratW X S γ)).2) + (o.resS S).symm (u, kap τ S (o''.resT S v).2) := by
-      rw [kadd, ← map_add, Prod.mk_add_mk, zero_add]
+      rw [kadd, ← map_add (f := _), Prod.mk_add_mk, zero_add]
     have ph : ψ (-symplOH S X (ratW X S γ) v) = ψ (-symplOH S T (o''.resT S (ratW X S γ)).1 (o''.resT S v).1) *
         ψ (-symplOH S L'' (o''.resT S (ratW X S γ)).2 (o''.resT S v).2) := by
       rw [← AddChar.map_add_eq_mul, o''.symplOH_resT S (ratW X S γ) v]
       exact congrArg ψ (neg_add _ _)
-    rw [map_add, Prod.fst_add, Prod.snd_add, e, quasi_of_mem hΦ h1,
+    rw [map_add (f := _), Prod.fst_add, Prod.snd_add, e, quasi_of_mem hΦ h1,
       quasi_of_mem hΞ (resS_symm_mem o S (zero_mem _) (krat _ h2)), sOH_resS_symm, sOH_zero_left, zero_add, kH, ph]
     ring
   ·
@@ -120,7 +120,7 @@ theorem isBiTheta_lastBi : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdC
     have e : (o.resS S).symm (u + a, kap τ S (o''.resT S v).2) =
         (o.resS S).symm (u, kap τ S (o''.resT S v).2) + iA a := by
       show _ = _ + (o.resS S).symm (a, 0)
-      rw [← map_add, Prod.mk_add_mk, add_zero]
+      rw [← map_add (f := _), Prod.mk_add_mk, add_zero]
     have ph : symplOH V₀ S ((o.resS S).symm (u, kap τ S (o''.resT S v).2)) (iA a) = symplOH A S u a := by
       show symplOH V₀ S ((o.resS S).symm (u, _)) ((o.resS S).symm (a, 0)) = _
       rw [sOH_resS_symm, sOH_zero_right, add_zero]
@@ -146,7 +146,7 @@ theorem isBiTheta_lastBi : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdC
     have h2 := congrFun (hUΞ (jL b) hb.2 hJ) ((o.resS S).symm (u, kap τ S w))
     have e : (o.resS S).symm (u, kap τ S (w + (o''.resT S b).2)) = (o.resS S).symm (u, kap τ S w) + jL b := by
       show _ = _ + (o.resS S).symm (0, kap τ S (o''.resT S b).2)
-      rw [kadd, ← map_add, Prod.mk_add_mk, add_zero]
+      rw [kadd, ← map_add (f := _), Prod.mk_add_mk, add_zero]
     have ph : symplOH V₀ S ((o.resS S).symm (u, kap τ S w)) (jL b) = symplOH S L'' w (o''.resT S b).2 := by
       show symplOH V₀ S ((o.resS S).symm (u, _)) ((o.resS S).symm (0, kap τ S (o''.resT S b).2)) = _
       rw [sOH_resS_symm, sOH_zero_right, zero_add, kH]

@@ -76,7 +76,7 @@ theorem imA_lat_OEp (p : TypX X) {t : Fv X.B.I.F p.1 ⊗[X.B.I.F] X.B.I.E} (ht :
         simp [PI.FinKW.psiV] <;> rfl
     | zero => intro w _; simp
     | one => intro w hw; simpa using hw
-    | add a b _ _ ha hb => intro w hw; rw [map_add, add_smul]; exact add_mem (ha w hw) (hb w hw)
+    | add a b _ _ ha hb => intro w hw; rw [map_add (f := _), add_smul]; exact add_mem (ha w hw) (hb w hw)
     | neg a _ ha => intro w hw; rw [map_neg, neg_smul]; exact neg_mem (ha w hw)
     | mul a b _ _ ha hb => intro w hw; rw [map_mul, mul_smul]; exact ha _ (hb w hw)
   obtain ⟨a, ha, rfl⟩ := ht

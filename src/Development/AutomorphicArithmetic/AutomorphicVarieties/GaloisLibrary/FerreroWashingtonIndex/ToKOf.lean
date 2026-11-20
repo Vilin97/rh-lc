@@ -34,4 +34,4 @@ theorem UpperTheory.V.FW.memZ :
     (toK (AlgebraicClosure (ZMod l)) _ (thetaH (f * l ^ n) c)) hml hγ1 hpz
     (fun g => by rw [← ham]; exact hpow g) hpJ hπ1 hπ2
     (fun χ hχ => hnv n h hn _ χ hχ)
-  simpa only [map_pow, map_sub, map_add, map_one, toK_of] using key
+  simpa only [map_pow, map_sub, map_add (f := _), map_one, toK_of] using key

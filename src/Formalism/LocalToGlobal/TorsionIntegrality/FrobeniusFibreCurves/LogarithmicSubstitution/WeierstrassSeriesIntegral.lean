@@ -33,7 +33,7 @@ theorem subst_phE (s2 e1 kap : K) (w : PowerSeries K) {l : PowerSeries K}
     simpa [MvPowerSeries.algebraMap_apply, PowerSeries.algebraMap_apply] using h
   unfold phE
   rw [← PowerSeries.coe_substAlgHom ha]
-  simp only [map_add, map_neg, map_mul, map_pow]
+  simp only [map_add (f := _), map_neg, map_mul, map_pow]
   rw [PowerSeries.coe_substAlgHom ha, hC,
     PowerSeries.subst_comp_subst_apply (PowerSeries.HasSubst.of_constantCoeff_zero hl) ha]
 
@@ -61,10 +61,10 @@ theorem subst_parallelogram_defect (f : PowerSeries K) {U V : MvPowerSeries ι K
     fun s => MvPowerSeries.subst_X hb s
   unfold par0 atS atD at1
   rw [← MvPowerSeries.coe_substAlgHom hb]
-  simp only [map_add, map_sub, map_mul, map_ofNat]
+  simp only [map_add (f := _), map_sub, map_mul, map_ofNat]
   rw [MvPowerSeries.coe_substAlgHom hb, key _ (by simp), key _ (by simp), key _ (by simp), key _ (by simp),
     ← MvPowerSeries.coe_substAlgHom hb]
-  simp only [map_add, map_sub]
+  simp only [map_add (f := _), map_sub]
   rw [MvPowerSeries.coe_substAlgHom hb, hX 0, hX 1]
   simp
 
@@ -107,7 +107,7 @@ theorem ParEFormula_of (hA : AddSigma1Log) : ParEFormula := by
       rw [hat, hat, ← PowerSeries.coe_substAlgHom
         (PowerSeries.HasSubst.of_constantCoeff_zero (MvPowerSeries.constantCoeff_X (1 : Fin 2))), map_neg]
     unfold FI
-    rw [← mvSubst_powerSeries_subst_eq_subst_mvSubst hc hLL.1 l, L1, ← MvPowerSeries.coe_substAlgHom hc, map_add,
+    rw [← mvSubst_powerSeries_subst_eq_subst_mvSubst hc hLL.1 l, L1, ← MvPowerSeries.coe_substAlgHom hc, map_add (f := _),
       MvPowerSeries.coe_substAlgHom hc, hat 0 l, hat 1 l,
       mvSubst_powerSeries_subst_eq_subst_mvSubst hc (MvPowerSeries.constantCoeff_X 0) l, mvSubst_powerSeries_subst_eq_subst_mvSubst hc (MvPowerSeries.constantCoeff_X 1) l,
       MvPowerSeries.subst_X hc, MvPowerSeries.subst_X hc]
@@ -166,7 +166,7 @@ theorem integral_sub' {f g : MvPowerSeries ι K} (hf : Integral f) (hg : Integra
 theorem integral_add' {f g : MvPowerSeries ι K} (hf : Integral f) (hg : Integral g) :
     Integral (f + g) := by
   intro n
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf n) (hg n))
 
 theorem integral_C' {c : K} (hc : ‖c‖ ≤ 1) : Integral (MvPowerSeries.C c : MvPowerSeries ι K) := by
@@ -218,7 +218,7 @@ theorem weierstrass_series_integral : WIntegral := by
       (1 + l ^ 2 * PowerSeries.subst l P - PowerSeries.C e1 * l ^ 2) = l ^ 2 := by
     have h := congrArg (PowerSeries.subst l) hw
     rw [← PowerSeries.coe_substAlgHom ha] at h
-    simp only [map_add, map_sub, map_one, map_mul, map_pow] at h
+    simp only [map_add (f := _), map_sub, map_one, map_mul, map_pow] at h
     rw [PowerSeries.coe_substAlgHom ha, PowerSeries.subst_X ha, hCe] at h
     exact h
   have hkey : PowerSeries.subst l (wOf e1 P) * (ep + PowerSeries.C (c0 - e1) * PowerSeries.X ^ 2) * l ^ 2 =

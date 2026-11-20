@@ -203,7 +203,7 @@ theorem exists_approx_notMem : ∀ (F : Type) [Field F] [NumberField F], ∀ (S�
   have e₂ : algebraMap F (AF F) (f * t₀ + (q : F) * f₂) +
       ε * (algebraMap F (AF F) f * c - algebraMap F (AF F) ((q : F) * f₂)) =
       x + (-((1 - ε) * algebraMap F (AF F) f * c) + ((q : ℕ) : AF F) * ((1 - ε) * algebraMap F (AF F) f₂)) := by
-    rw [map_add, map_mul (algebraMap F (AF F)) (q : F) f₂, map_natCast]
+    rw [map_add (f := _), map_mul (algebraMap F (AF F)) (q : F) f₂, map_natCast]
     linear_combination e₁
   rw [e₂]
   exact hV (Set.mk_mem_prod hd₁ (hf₂M q hq))

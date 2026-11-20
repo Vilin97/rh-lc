@@ -36,7 +36,7 @@ theorem coordOf_ofCoord (t : BIdx K → ℝ) : coordOf (ofCoord t) = t := by
     LinearEquiv.apply_symm_apply]
 
 theorem ofCoord_add (s t : BIdx K → ℝ) : ofCoord (s + t) = ofCoord s + ofCoord t := by
-  simp [ofCoord, map_add]
+  simp [ofCoord, map_add (f := _)]
 
 theorem continuous_ofCoord : Continuous (ofCoord (K := K)) :=
   GroundTheory.Global.continuous_mixedToInfinite.comp (LinearMap.continuous_of_finiteDimensional _)

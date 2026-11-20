@@ -21,7 +21,7 @@ theorem OrdGE.zero {n : ℕ} : OrdGE n (0 : MvPowerSeries Z k) := by
 theorem OrdGE.add {n : ℕ} {f g : MvPowerSeries Z k} (hf : OrdGE n f) (hg : OrdGE n g) :
     OrdGE n (f + g) := by
   intro A hA
-  rw [map_add, hf A hA, hg A hA, add_zero]
+  rw [map_add (f := _), hf A hA, hg A hA, add_zero]
 
 theorem OrdGE.neg {n : ℕ} {f : MvPowerSeries Z k} (hf : OrdGE n f) : OrdGE n (-f) := by
   intro A hA
@@ -46,7 +46,7 @@ theorem OrdGE.mul {a b : ℕ} {f g : MvPowerSeries Z k} (hf : OrdGE a f) (hg : O
   refine Finset.sum_eq_zero fun p hp => ?_
   have hp' : p.1 + p.2 = A := by simpa using hp
   have hd : p.1.degree + p.2.degree = A.degree := by
-    rw [← hp', map_add]
+    rw [← hp', map_add (f := _)]
   by_cases h1 : p.1.degree < a
   · rw [hf _ h1, zero_mul]
   · rw [hg _ (by omega), mul_zero]

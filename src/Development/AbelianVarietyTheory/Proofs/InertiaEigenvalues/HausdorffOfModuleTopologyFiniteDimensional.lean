@@ -57,7 +57,7 @@ theorem oneTensor_map {R : Type} [CommRing R] [Algebra O R] {T T' : LocLat G Qp 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a t => simp [oneTensor, TWmap]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem oneTensor_act {R : Type} [CommRing R] [Algebra O R] {T T' : LocLat G Qp LL O}
     (f : LatHom T.L T'.L) (φ : R →ₐ[O] R) (g : G) (x : TW R T) :
@@ -68,7 +68,7 @@ theorem oneTensor_act {R : Type} [CommRing R] [Algebra O R] {T T' : LocLat G Qp 
     simp only [oneTensor, TWact, TensorProduct.map_tmul]
     congr 1
     exact Subtype.ext (f.equiv g t)
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem one_tmul_inj {R : Type} [CommRing R] [Algebra O R] (hR : Function.Injective (algebraMap O R))
     (T : LocLat G Qp LL O) (t t' : ↥T.L.T) (h : (1 : R) ⊗ₜ[O] t = (1 : R) ⊗ₜ[O] t') : t = t' := by

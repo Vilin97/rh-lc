@@ -61,7 +61,7 @@ def der (hc : IsHolTo Set.univ c) (h0 : c 0 = x ≫ e) (hπ : ∀ u, c u ≫ π 
       change cst (x ⁻¹ᵁ V) _ = cst (x ⁻¹ᵁ V) _ + cst (x ⁻¹ᵁ V) _
       refine ext fun hx => ?_
       have hW := le_of h0 h hx
-      rw [← map_add, val_cst hx, val_cst hx]
+      rw [← map_add (f := _), val_cst hx, val_cst hx]
       simp only [GlobalTheory.valAt'_add]
       rw [fderiv_fun_add (differentiableAt hc hW f) (differentiableAt hc hW g)]
       rfl

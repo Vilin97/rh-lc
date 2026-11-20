@@ -104,7 +104,7 @@ theorem relation_ker_le_valuation_prime (hd : d.AxH 𝒜) (c : ι) (p : Ideal (K
         AddValuation.map_zero]
       exact htop
     next P₁ P₂ h₁ h₂ =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [add_sub_add_comm]
       exact lt_of_lt_of_le (lt_min h₁ h₂) (AddValuation.map_add _ _ _)
     next P n hP =>

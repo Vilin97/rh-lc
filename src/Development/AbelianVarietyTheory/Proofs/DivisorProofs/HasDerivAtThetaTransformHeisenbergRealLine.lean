@@ -83,7 +83,7 @@ theorem continuous_realAd : Continuous (realAd F) :=
   Continuous.prodMk (continuous_ofMixed.comp (continuous_algebraMap ℝ _)) continuous_const
 
 theorem realAd_add (s t : ℝ) : realAd F (s + t) = realAd F s + realAd F t := by
-  simp only [realAd, map_add]
+  simp only [realAd, map_add (f := _)]
   rfl
 
 theorem realAd_zero : realAd F 0 = 0 := by

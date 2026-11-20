@@ -321,7 +321,7 @@ theorem rap_rho (hρ : PolyBd ρ) {u : V → GL (Fin a) (ι → ℂ)} {L : V →
     refine squeeze_zero_norm (fun y => ?_) ht
     exact ((ρ (u y)).le_opNorm _).trans (mul_le_mul_of_nonneg_right (hbd y) (norm_nonneg _))
   have e : (fun y => ρ (u y) (H y)) = fun y => ρ (u y) (H y - H y0) + ρ (u y) (H y0) := by
-    funext y; rw [← map_add, sub_add_cancel]
+    funext y; rw [← map_add (f := _), sub_add_cancel]
   rw [e]
   unfold ContinuousAt
   have := h1.add h2

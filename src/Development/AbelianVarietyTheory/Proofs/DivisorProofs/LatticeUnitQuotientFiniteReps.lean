@@ -23,7 +23,7 @@ def intAd : AddSubgroup (AF F) where
     refine ⟨?_, fun w => ?_⟩
     · have e : evI F (a + b) = evI F a + evI F b := map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1 b.1
       rw [e, ha.1, hb.1, add_zero]
-    · rw [map_add]; exact add_mem (ha.2 w) (hb.2 w)
+    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha.2 w) (hb.2 w)
   zero_mem' := by
     refine ⟨?_, fun w => ?_⟩
     · show InfiniteAdeleRing.ringEquiv_mixedSpace F (0 : InfiniteAdeleRing F) = 0
@@ -165,7 +165,7 @@ theorem smul_latHat_finite_mod : ∀ (F E : Type) [Field F] [NumberField F] [Fie
       ∑ j, atPl v (γ j) • incV F (g j), AddSubgroup.sum_mem _ fun j _ => gen _ (hγ j) j, ?_⟩
     rw [Finset.smul_sum, Finset.smul_sum, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun j _ => ?_
-    rw [smul_smul, hua j, hsplit j, map_add, add_smul, add_sub_cancel_left, ← nsmul_eq_mul, map_nsmul, smul_assoc]
+    rw [smul_smul, hua j, hsplit j, map_add (f := _), add_smul, add_sub_cancel_left, ← nsmul_eq_mul, map_nsmul, smul_assoc]
 
 end GlobalTheory.SphLineComm
 

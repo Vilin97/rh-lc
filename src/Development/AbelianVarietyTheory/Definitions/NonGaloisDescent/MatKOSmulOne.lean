@@ -146,9 +146,9 @@ theorem cocW_cocycle {k : ℕ} (ψ : (S.X' → MatN D.nd i) → Matrix (Fin k) (
       intro a A x
       rw [← matKO_smul_one, ← matKO_mul, smul_mul_assoc, one_mul]
     simp only []
-    rw [e, map_add, map_smul, h1 _ hg _ (inY_yg i r S h), WKG_eq_matKO, hψ, e2]
+    rw [e, map_add (f := _), map_smul, h1 _ hg _ (inY_yg i r S h), WKG_eq_matKO, hψ, e2]
   | zero => simp
-  | add a b _ _ ha hb => simp only [Pi.add_apply, ha, hb, map_add]; abel
+  | add a b _ _ ha hb => simp only [Pi.add_apply, ha, hb, map_add (f := _)]; abel
   | smul a b _ hb => simp only [Pi.smul_apply, hb, map_smul, smul_add]
 
 theorem cocW_quad {k : ℕ} (ψ : (S.X' → MatN D.nd i) → Matrix (Fin k) (Fin k) (D.nd.O i)) {v} (hq : QuadAt i r Xs v)
@@ -177,7 +177,7 @@ theorem cocW_quad {k : ℕ} (ψ : (S.X' → MatN D.nd i) → Matrix (Fin k) (Fin
     rw [map_sub, sub_eq_zero, h1 _ hg _ (inY_yg i r S γ)] at this
     exact this
   | zero => simp
-  | add a b _ _ ha hb => simp only [Pi.add_apply, ha, hb, map_add]
+  | add a b _ _ ha hb => simp only [Pi.add_apply, ha, hb, map_add (f := _)]
   | smul a b _ hb => simp only [Pi.smul_apply, hb, map_smul]
 
 end GlobalTheory.Cut.Check

@@ -173,7 +173,7 @@ def mvPolynomialProductExtension {ι σ : Type} [Fintype ι] [DecidableEq ι] (�
     (b : ∀ τ, κ τ → MvPolynomial σ K) :
     ((∀ τ : {τ // τ ≠ τ₀}, κ τ.1) → MvPolynomial σ K) →ₗ[K] MvPolynomial (ι × σ) K where
   toFun h := ∑ g, rename (Prod.mk τ₀) (h g) * ∏ τ : {τ // τ ≠ τ₀}, rename (Prod.mk τ.1) (b τ.1 (g τ))
-  map_add' h h' := by simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  map_add' h h' := by simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
   map_smul' c h := by simp only [Pi.smul_apply, map_smul, smul_mul_assoc, Finset.smul_sum, RingHom.id_apply]
 
 theorem factorMap_injective {ι σ : Type} [Fintype ι] [DecidableEq ι] (τ₀ : ι) (κ : ι → Type) [∀ τ, Fintype (κ τ)]

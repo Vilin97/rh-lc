@@ -144,7 +144,7 @@ theorem _root_.GlobalTheory.exists_level_goodAt_all_primes_and_idx :
     simpa using this
   set al := ((2 : ℕ) + H.rt) * ((c : 𝓞 E) + H.rt) with hal
   have hbar : H.bar al = ((2 : ℕ) - H.rt) * ((c : 𝓞 E) - H.rt) := by
-    simp only [hal, map_mul, map_add, map_natCast, host_bar_rt', sub_eq_add_neg]
+    simp only [hal, map_mul, map_add (f := _), map_natCast, host_bar_rt', sub_eq_add_neg]
   have hmem : al ∈ Algebra.adjoin ℤ {H.w0} :=
     mul_mem (natCast_add_rt_mem_adjoin_w0 H 2) (natCast_add_rt_mem_adjoin_w0 H c)
   have hprod : al * H.bar al = ((M₁ * M₂ : ℕ) : 𝓞 E) := by

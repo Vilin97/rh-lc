@@ -113,7 +113,7 @@ def dehomLoc (T : Submonoid (MRingOver (ZMod ℓ) ι)) (hT : ∀ t ∈ T, dehomM
   map_add' x x' := by
     induction x, x' using LocalizedModule.induction_on₂ with
     | h m m' s s' =>
-      rw [LocalizedModule.mk_add_mk, dehomLocFun_mk, dehomLocFun_mk, dehomLocFun_mk, map_add,
+      rw [LocalizedModule.mk_add_mk, dehomLocFun_mk, dehomLocFun_mk, dehomLocFun_mk, map_add (f := _),
         Submonoid.smul_def, Submonoid.smul_def, dehomQuot_smul, dehomQuot_smul, hT _ s.2, hT _ s'.2,
         one_mul, one_mul]
 

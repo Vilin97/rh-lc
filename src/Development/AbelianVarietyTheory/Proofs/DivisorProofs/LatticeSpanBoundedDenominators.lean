@@ -64,7 +64,7 @@ theorem mem_of_piMap_mem_span {A R L : Type} [CommRing A] [IsDomain A] [IsIntegr
         rw [smul_eq_mul, map_mul, e', hj, hKL]
         rfl
       | zero => simp
-      | add x y _ _ hx hy => simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib, hx, hy, add_zero]
+      | add x y _ _ hx hy => simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, hx, hy, add_zero]
       | smul b x _ hx =>
         simp only [Pi.smul_apply, smul_eq_mul, map_mul, mul_assoc, ← Finset.mul_sum, hx, mul_zero]
     refine (Pi.basisFun K (Fin n)).ext fun i => ?_

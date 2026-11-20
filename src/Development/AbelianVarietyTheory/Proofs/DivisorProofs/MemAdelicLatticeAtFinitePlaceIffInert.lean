@@ -85,12 +85,12 @@ theorem mem_latAt_iff {v : Pl F} {w : HeightOneSpectrum (𝓞 E)} (hw : Formalis
           simp
         · convert add_mem hp hq using 1
           funext i
-          simp [add_mul, map_add]
+          simp [add_mul, map_add (f := _)]
         · convert neg_mem hp using 1
           funext i
           simp [neg_mul, map_neg]
       | zero => intro o; rw [smul_zero, map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => intro o; rw [smul_add, map_add]; exact add_mem (hx o) (hy o)
+      | add x y _ _ hx hy => intro o; rw [smul_add, map_add (f := _)]; exact add_mem (hx o) (hy o)
       | smul a x _ hx => intro o; rw [smul_smul]; exact hx (o * a)
     have := key u hu 1
     rw [one_smul] at this

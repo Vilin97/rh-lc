@@ -174,7 +174,7 @@ theorem tau_sum_fst : ∀ (R : Type) [CommRing R] [IsDomain R] (I : Ideal R) (D 
   have ψb := ψ y'
   have ψab := ψ (j₁ y + y')
   rw [hj₁, hj₂] at ψa
-  rw [map_add, map_add, hj₁, hj₂, zero_add] at ψab
+  rw [map_add (f := _), map_add (f := _), hj₁, hj₂, zero_add] at ψab
   rw [K, val_tau D _ _ hJ₂, val_tau D₁ _ _ hJ₁, ← inv_mul_eq_iff_eq_mul.2 ψa, ← inv_mul_eq_iff_eq_mul.2 ψb,
     ← inv_mul_eq_iff_eq_mul.2 ψab, ← inv_mul_eq_iff_eq_mul.2 ρ, eq_inv_of_mul_eq_one_left z₂]
   apply Additive.ofMul.injective

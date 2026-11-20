@@ -102,7 +102,7 @@ theorem lifted_column_congruence (S : UniformizedDVR p O) (LL : LiftLetters (Fin
     intro F
     induction F using MvPolynomial.induction_on with
     | C a => simp [powSubst, MvPolynomial.algebraMap_eq]
-    | add F G hF hG => simp only [map_add, hF, hG]
+    | add F G hF hG => simp only [map_add (f := _), hF, hG]
     | mul_X F v hF => simp [powSubst, hF, P] at hF ⊢
   have hres : ∀ F : MvPolynomial (Fin N × Fin (r + K)) ℤ,
       MvPolynomial.map (IsLocalRing.residue O) (aeval P (MvPolynomial.map (Int.castRingHom O) F)) =
@@ -110,7 +110,7 @@ theorem lifted_column_congruence (S : UniformizedDVR p O) (LL : LiftLetters (Fin
     intro F
     induction F using MvPolynomial.induction_on with
     | C a => simp [piS]
-    | add F G hF hG => simp only [map_add, hF, hG]
+    | add F G hF hG => simp only [map_add (f := _), hF, hG]
     | mul_X F v hF => simp [piS, hF, P] at hF ⊢
   set Q := aeval P (SgW O LL mu c N J) with hQ
   have hQres : MvPolynomial.map (IsLocalRing.residue O) Q = piS p O LL.pos z (SgW ℤ LL mu c N J) := by

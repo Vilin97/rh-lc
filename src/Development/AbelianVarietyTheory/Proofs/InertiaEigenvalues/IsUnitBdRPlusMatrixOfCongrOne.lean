@@ -25,8 +25,8 @@ theorem isUnit_of_congr_one : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : 
     have hb : bk.ev (β i j) = (l : Ainf l) ^ k * bk.ev ((1 : Matrix (Fin d) (Fin d) bk.S) i j) + bk.ev bk.E * bk.ev c := by
       have : β i j = (l : bk.S) ^ k * (1 : Matrix (Fin d) (Fin d) bk.S) i j + bk.E * c := by
         rw [← hc]; simp [Matrix.sub_apply, Matrix.smul_apply]
-      rw [this, map_add, map_mul, map_mul, map_pow, map_natCast]
-    rw [map_sub, haD, hb, map_add, map_mul, map_mul, hE, zero_mul, add_zero, map_mul] at ha
+      rw [this, map_add (f := _), map_mul, map_mul, map_pow, map_natCast]
+    rw [map_sub, haD, hb, map_add (f := _), map_mul, map_mul, hE, zero_mul, add_zero, map_mul] at ha
     simp only [map_pow, map_natCast] at ha
     by_cases hij : i = j
     · subst hij

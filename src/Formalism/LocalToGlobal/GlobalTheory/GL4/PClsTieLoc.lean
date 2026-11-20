@@ -134,7 +134,7 @@ theorem mem_intOE_of_inclE (F E : Type) [Field F] [NumberField F] [Field E] [Num
       rw [HeightOneSpectrum.mem_adicCompletionIntegers, HeightOneSpectrum.valuedAdicCompletion_eq_valuation']
       exact HeightOneSpectrum.valuation_le_one v o
     | zero => rw [map_zero]; exact zero_mem _
-    | add y y' _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+    | add y y' _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
     | neg y _ h1 => rw [map_neg]; exact neg_mem h1
   have hint : IsIntegral ℤ x := by
     apply isIntegral_of_trace_pow_mul E x

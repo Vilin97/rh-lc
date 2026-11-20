@@ -84,7 +84,7 @@ theorem polynomial_matching_on_succ : _root_.GlobalTheory.FunPr.ThetaLocalInputs
         intro y z
         obtain ⟨x, hx, rfl⟩ := pre y
         obtain ⟨w, hw, rfl⟩ := pre z
-        rw [← map_add, K _ (add_mem hx hw), K x hx, K w hw, ← map_add]
+        rw [← map_add (f := _), K _ (add_mem hx hw), K x hx, K w hw, ← map_add (f := _)]
         congr 1
         simpa using Klin x hx w hw 1 1
       map_smul' := by

@@ -89,7 +89,7 @@ theorem vv_bound {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n) :
       omega
     · rfl
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul a x _ hx => rw [map_smul, hx, smul_zero]
 
 theorem hwFixedEx_main : HwFixedEx := by

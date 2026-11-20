@@ -271,7 +271,7 @@ theorem exists_levGrp_covol : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
       intro n a b h
       apply (φ k).injective
       apply Subtype.ext
-      rw [hg, h, map_add, map_nsmul]
+      rw [hg, h, map_add (f := _), map_nsmul]
       rfl
     obtain ⟨-, hpt, hex⟩ := FamRigid.ex_eq_of_level_group latMinkowski E H Dw l Xo _ g _ F (ik k) Pm Pm' gam 1 p p'
       (fun a b => by

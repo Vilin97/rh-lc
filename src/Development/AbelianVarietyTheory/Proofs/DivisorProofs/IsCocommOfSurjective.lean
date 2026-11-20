@@ -27,7 +27,7 @@ theorem _root_.GlobalTheory.PDivGroup.KerGrp.isCocomm_of_surjective {k A B : Typ
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hA : TensorProduct.comm k A A (comul a) = comul a :=
     LinearMap.congr_fun (Coalgebra.comm_comp_comul (R := k) (A := A)) a
   simp only [LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply]
@@ -176,7 +176,7 @@ theorem _root_.GlobalTheory.PDivGroup.KerGrp.exists_kernel (p : ℕ) [Fact p.Pri
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [hφ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   let r : ∀ n, (G.A (n + 1) ⧸ I (n + 1)) →ₐc[k] (G.A n ⧸ I n) :=
     fun n => BialgHom.ofAlgHom (φ n) (hcounit n) (hcomul n)
   have hr : ∀ n a, r n (Ideal.Quotient.mk (I (n + 1)) a) =

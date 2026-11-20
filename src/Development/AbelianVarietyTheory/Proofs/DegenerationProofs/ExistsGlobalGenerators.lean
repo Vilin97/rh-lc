@@ -70,7 +70,7 @@ theorem proj_mul_self {T : AddSubgroup S.Gam} (hT : S.IsoFree T) (c : T →+ ZMo
     refine Finset.sum_congr rfl fun s _ => ?_
     rw [Finset.mul_sum, ← Equiv.sum_comp (Equiv.addLeft s) fun t : T => chi S (c t) • S.ρ t]
     refine Finset.sum_congr rfl fun t _ => ?_
-    rw [smul_mul_smul_comm, ρ_mul_ρ hT, ← chi_add, ← map_add]
+    rw [smul_mul_smul_comm, ρ_mul_ρ hT, ← chi_add, ← map_add (f := _)]
     rfl
   rw [proj_eq, smul_mul_smul_comm, e, smul_smul, _root_.mul_assoc, Ring.inverse_mul_cancel _ (isUnit_card hT),
     _root_.mul_one]
@@ -111,7 +111,7 @@ theorem sum_proj [IsDomain o] {T : AddSubgroup S.Gam} (hT : S.IsoFree T) [Fintyp
     · simp [chi_zero]
     · intro c _ hc
       obtain ⟨t, ht⟩ := DFunLike.ne_iff.1 hc
-      exact sum_eq_zero_of_mul (fun t : T => chi S (c t)) (fun a b => by rw [map_add, chi_add]) (chi_ne_one S ht)
+      exact sum_eq_zero_of_mul (fun t : T => chi S (c t)) (fun a b => by rw [map_add (f := _), chi_add]) (chi_ne_one S ht)
     · simp
   simp only [e1]
   rw [← Finset.sum_smul, Finset.sum_comm, e2, smul_smul, Ring.inverse_mul_cancel _ (isUnit_card hT), one_smul]

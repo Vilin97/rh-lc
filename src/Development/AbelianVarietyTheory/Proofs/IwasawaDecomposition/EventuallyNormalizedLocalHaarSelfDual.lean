@@ -170,7 +170,7 @@ def intGrp (v : HeightOneSpectrum (𝓞 F)) : AddSubgroup (Fv F v ⊗[F] E) wher
   zero_mem' := by intro k; simp
   add_mem' := by
     intro x y hx hy k
-    rw [map_add]; exact add_mem (hx k) (hy k)
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx k) (hy k)
   neg_mem' := by
     intro x hx k
     rw [map_neg]; exact neg_mem (hx k)
@@ -192,7 +192,7 @@ variable (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
 omit [NumberField F] [NumberField E] in
 theorem BR_add (R : Type) [CommRing R] [Algebra F R] {n : ℕ} (X X' Y : Fin n → Fin M → R ⊗[F] E) :
     BR R σ J (X + X') Y = BR R σ J X Y + BR R σ J X' Y := by
-  simp only [BR, hR, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [BR, hR, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 omit [NumberField F] [NumberField E] in
 theorem BR_zero (R : Type) [CommRing R] [Algebra F R] {n : ℕ} (X : Fin n → Fin M → R ⊗[F] E) :
@@ -205,7 +205,7 @@ theorem sigR_smul (R : Type) [CommRing R] [Algebra F R] (t : R) (y : R ⊗[F] E)
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [sigR, TensorProduct.smul_tmul']
-  | add y₁ y₂ h₁ h₂ => rw [smul_add, map_add, map_add, h₁, h₂, smul_add]
+  | add y₁ y₂ h₁ h₂ => rw [smul_add, map_add (f := _), map_add (f := _), h₁, h₂, smul_add]
 
 omit [NumberField F] [NumberField E] in
 theorem BR_smul (R : Type) [CommRing R] [Algebra F R] {n : ℕ} (t : R)

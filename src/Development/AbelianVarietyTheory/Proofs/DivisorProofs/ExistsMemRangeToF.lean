@@ -20,7 +20,7 @@ theorem exists_coord {I : Type} (ψ : I → E →ₗ[ℂ] ℂ) (ι : V →ₛₗ
     ∃ f : V →ₗ[K] (I → K), ∀ x a, σ (f x a) = ψ a (ι x) := by
   choose f hf using h
   refine ⟨⟨⟨f, fun x y => funext fun a => σ.injective ?_⟩, fun c x => funext fun a => σ.injective ?_⟩, hf⟩
-  · rw [Pi.add_apply, map_add, hf, hf, hf, map_add, map_add]
+  · rw [Pi.add_apply, map_add (f := _), hf, hf, hf, map_add (f := _), map_add (f := _)]
   · simp only [RingHom.id_apply, Pi.smul_apply, smul_eq_mul, map_mul, hf, map_smulₛₗ]
 
 theorem semi_apply_pi {n : ℕ} (ι : (Fin n → K) →ₛₗ[σ] E) (u : Fin n → K) :

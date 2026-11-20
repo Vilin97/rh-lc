@@ -28,7 +28,7 @@ theorem good_duality_holds : GoodDual := by
     rw [hH x y]
     simp
   have hadd : ∀ w y₁ y₂ : V, altE H w (y₁ + y₂) = altE H w y₁ + altE H w y₂ := by
-    intro w y₁ y₂; simp [altE, map_add]
+    intro w y₁ y₂; simp [altE, map_add (f := _)]
   constructor
   · intro a ha h
     apply hsd

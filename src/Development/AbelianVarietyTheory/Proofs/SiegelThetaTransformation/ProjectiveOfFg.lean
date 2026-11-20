@@ -150,7 +150,7 @@ theorem iso_mod (Λ : GenLat E n) {N k : ℕ} (f : Λ.La →ₗ[𝓞 E] (Fin n �
   · obtain ⟨x, rfl⟩ := inc_surjective a'
     obtain ⟨a, z, e⟩ := hs' x
     refine ⟨a, inc E n (k • z), ?_⟩
-    rw [e, map_add, mul_smul, map_nsmul]
+    rw [e, map_add (f := _), mul_smul, map_nsmul]
     rfl
 
 theorem sum_one (x y : Fin n → E) :
@@ -178,7 +178,7 @@ theorem exists_adelic (hur : Algebra.Unramified (𝓞 (maximalRealSubfield E)) (
       obtain ⟨z, hz⟩ := hcomp N (N * k) (Nat.le_mul_of_pos_right N hk) a
       obtain ⟨c, hc⟩ := hfac N hN
       refine ⟨inc E n (c • z), ?_⟩
-      rw [LinearMap.comp_apply, LinearMap.comp_apply, hz, hc, map_add, mul_smul, map_nsmul])
+      rw [LinearMap.comp_apply, LinearMap.comp_apply, hz, hc, map_add (f := _), mul_smul, map_nsmul])
     (fun N hN => by
       obtain ⟨c, hc⟩ := hfac N hN
       have := hiso N
@@ -210,7 +210,7 @@ theorem exists_adelic (hur : Algebra.Unramified (𝓞 (maximalRealSubfield E)) (
     have e1 : f m v = x + m • (z' + z) := by
       rw [hz, hz', smul_add, add_assoc]
       simp
-    rw [e, LinearMap.comp_apply, e1, map_add, map_nsmul, Submodule.coe_add, AddSubmonoidClass.coe_nsmul,
+    rw [e, LinearMap.comp_apply, e1, map_add (f := _), map_nsmul, Submodule.coe_add, AddSubmonoidClass.coe_nsmul,
       cap_fv_add, cap_fv_nsmul, smul_add, add_assoc]
     rfl
 

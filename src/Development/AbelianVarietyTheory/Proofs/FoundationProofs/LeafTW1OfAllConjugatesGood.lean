@@ -116,7 +116,7 @@ theorem relLength_read (h : Induces emb v) (rd : V →ₛₗ[emb] W) {ι : Type}
         rw [← TensorProduct.tmul_smul, LinearMap.lTensor_tmul]
         congr 1
         exact inv_smul_smul₀ cK x
-      | add x y hx hy => rw [smul_add, map_add, hx, hy]
+      | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy]
     rw [← h4 t, h3, map_zero]
   have hsp : ∀ A : Submodule (𝓞 K) V, Submodule.span O' (rd '' A) = ((atW v A).baseChange O').map g := by
     intro A

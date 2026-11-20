@@ -53,7 +53,7 @@ theorem proj_idemU_apply {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (ε : AF F) (h
   rw [← LemF.QuotInv.IwasawaAt.compFin_mat, ← LemF.QuotInv.IwasawaAt.compFin_mat, GlobalTheory.IwLine.matHom_ofGAd_symm,
     GlobalTheory.IwLine.matHom_ofGAd_symm]
   show compFin F E v ((ε • mat x + (1 - ε) • (1 : Matrix (Fin n) (Fin n) (AE F E))) r s) = _
-  rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, map_add, compFin_smul, compFin_smul, compFin_one_apply]
+  rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, map_add (f := _), compFin_smul, compFin_smul, compFin_one_apply]
 
 theorem projArch_idemU_apply {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (ε : AF F) (hε : ε * ε = ε) (x : UA σ J)
     (w : InfinitePlace F) (r s : Fin n) :
@@ -63,7 +63,7 @@ theorem projArch_idemU_apply {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (ε : AF F
   rw [← LemF.QuotInv.IwasawaAt.compInf_mat, ← LemF.QuotInv.IwasawaAt.compInf_mat, GlobalTheory.IwLine.matHom_ofGAd_symm,
     GlobalTheory.IwLine.matHom_ofGAd_symm]
   show compInf F E w ((ε • mat x + (1 - ε) • (1 : Matrix (Fin n) (Fin n) (AE F E))) r s) = _
-  rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, map_add, compInf_smul, compInf_smul, compInf_one_apply]
+  rw [Matrix.add_apply, Matrix.smul_apply, Matrix.smul_apply, map_add (f := _), compInf_smul, compInf_smul, compInf_one_apply]
 
 theorem evFin_eFin_self (v : Pl F) : evFin F v (eFin v) = 1 := GlobalTheory.LatVac.evFin_liftV v 1
 

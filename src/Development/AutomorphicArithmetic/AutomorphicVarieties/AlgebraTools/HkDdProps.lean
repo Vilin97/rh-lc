@@ -16,7 +16,7 @@ private theorem rename_alt {R : Type} [CommRing R] {n : ℕ} (u : Perm (Fin n)) 
 
 private theorem antisymmetrizer_add {R : Type} [CommRing R] {n : ℕ} (x y : MvPolynomial (Fin n) R) :
     alt (x + y) = alt x + alt y := by
-  simp only [alt, map_add, smul_add, Finset.sum_add_distrib]
+  simp only [alt, map_add (f := _), smul_add, Finset.sum_add_distrib]
 
 private theorem antisymmetrizer_symmetric_mul {R : Type} [CommRing R] {n : ℕ} (z x : MvPolynomial (Fin n) R)
     (hz : z.IsSymmetric) : alt (z * x) = z * alt x := by

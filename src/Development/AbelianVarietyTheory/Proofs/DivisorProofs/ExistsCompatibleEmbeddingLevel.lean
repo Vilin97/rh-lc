@@ -70,7 +70,7 @@ theorem exists_sigma (P : LocPrime l) (K : FinExt l) (κ : W0 K → ↥(K0 K))
       rw [sigma_pow_teich, map_pow, map_pow, ← hκ]
       exact h5.symm
   | zero => simp only [map_zero, ZeroMemClass.coe_zero]
-  | add x y _ _ hx hy => simp only [map_add, AddMemClass.coe_add, hx, hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), AddMemClass.coe_add, hx, hy]
   | smul c x _ hx =>
     have hc : oK K (algebraMap ℤ_[l] ↥(OL K) c) = algebraMap ℚ_[l] ↥K.1 (c : ℚ_[l]) := rfl
     rw [Algebra.smul_def, map_mul, map_mul, map_mul, map_mul, map_mul, map_mul, AlgEquiv.commutes,

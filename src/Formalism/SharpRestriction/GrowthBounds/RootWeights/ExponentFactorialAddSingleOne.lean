@@ -93,7 +93,7 @@ theorem fock_mul_adjoint_pderiv {σ : Type} [Fintype σ] (v : σ) (F G : MvPolyn
             exact Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hv)
           simp [h', hv]
         · simp [h']
-    | add G1 G2 h1 h2 => rw [fock_form_add_right, map_add, fock_form_add_right, h1, h2]
+    | add G1 G2 h1 h2 => rw [fock_form_add_right, map_add (f := _), fock_form_add_right, h1, h2]
   | add F1 F2 h1 h2 => rw [mul_add, addL, addL, h1, h2]
 
 theorem fock_pderiv_adjoint_mul {σ : Type} [Fintype σ] (v : σ) (F G : MvPolynomial σ K) :

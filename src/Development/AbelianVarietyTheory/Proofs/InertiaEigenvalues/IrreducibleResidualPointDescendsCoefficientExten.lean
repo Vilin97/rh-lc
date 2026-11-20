@@ -98,7 +98,7 @@ theorem trace_of_isDecomp {Γ A : Type} [Group Γ] [CommRing A] [IsDomain A] [Is
   rw [LinearMap.trace_conj', LinearMap.trace_prodMap', Matrix.trace_toLin'_eq, Matrix.trace_toLin'_eq,
     Matrix.trace_toLin'_eq, Matrix.trace_diagonal] at h2
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, AddMonoidHom.map_trace, AddMonoidHom.map_trace]
+    rw [map_add (f := _), map_sum, AddMonoidHom.map_trace, AddMonoidHom.map_trace]
   exact h2
 
 section Record
@@ -160,7 +160,7 @@ theorem live_of_locExt : GlobalTheory.TwSys.Cheb → ∀ {R : Ranks} {H : Host R
     intro g
     have h := trace_eq hC a π _ r (hr₀ _) hr g
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [trace_of_isDecomp _ _ _ hd₀, trace_of_isDecomp _ _ _ hd, map_add, map_sum,
+      rw [trace_of_isDecomp _ _ _ hd₀, trace_of_isDecomp _ _ _ hd, map_add (f := _), map_sum,
       Finset.sum_congr rfl fun (c : Fin R.t) _ => a.chi ((c : ℕ) + 1) (by omega) c.2 g] at h
     exact add_right_cancel h
   haveI := isLocalHom_φ a

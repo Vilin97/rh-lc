@@ -74,7 +74,7 @@ lemma coeff_kill (S : σ → Prop) [DecidablePred S] (P : MvPolynomial σ R) (e 
     · subst hme
       split_ifs <;> simp
     · split_ifs <;> simp [MvPolynomial.coeff_monomial, hme]
-  · rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
+  · rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
     split_ifs <;> simp
 
 end Kill

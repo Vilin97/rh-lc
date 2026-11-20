@@ -33,7 +33,7 @@ private theorem tensorBasis_repr_psiV_eq_evalV_repr_comm (I : AutInst) (v : Heig
   | tmul e a =>
     simp [PI.FinKW.psiV, Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply,
       Finsupp.mapRange_apply, map_mul, AlgHom.commutes]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 theorem mat_ext_of_psiV (I : AutInst) (M N : Matrix (Fin I.n) (Fin I.n) (I.E ⊗[I.F] Af I.F))
     (h : ∀ v, M.map (PI.FinKW.psiV I v).toRingHom = N.map (PI.FinKW.psiV I v).toRingHom) :
@@ -64,7 +64,7 @@ theorem psiV_sigR (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (z : I.E ⊗[
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul e a => simp [PI.FinKW.psiV, Formalism.UG.sigR, sigV]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem psiV_inclE (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (e : I.E) :
     PI.FinKW.psiV I v (Formalism.UG.inclE (F := I.F) (Af I.F) e) = inclV I v e := by

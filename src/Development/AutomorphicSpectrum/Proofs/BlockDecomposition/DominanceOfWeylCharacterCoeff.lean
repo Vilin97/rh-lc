@@ -30,7 +30,7 @@ theorem exists_top_add (φ : (Fin n → ℤ) →+ ℤ) (f g : LP n) (hf : f ≠ 
   have hadd : ∀ x y, D (x + y) = D x + D y := by
     intro x y
     show toLex (φ (x + y), toLex (x + y)) = toLex (φ x, toLex x) + toLex (φ y, toLex y)
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   have hmono : ∀ x y, D x ≤ D y → φ x ≤ φ y := by
     intro x y h
     rcases Prod.Lex.toLex_le_toLex.1 h with h | h
@@ -85,7 +85,7 @@ theorem Bd.mul {φ : (Fin n → ℤ) →+ ℤ} {f g : LP n} {B C : ℤ} (hf : Bd
   rw [Finsupp.sum] at hx'
   obtain ⟨y, hy, hy'⟩ := Finset.exists_ne_zero_of_sum_ne_zero hx'
   by_cases he : x + y = ν
-  · rw [← he, map_add]
+  · rw [← he, map_add (f := _)]
     exact add_le_add (hf x (Finsupp.mem_support_iff.1 hx)) (hg y (Finsupp.mem_support_iff.1 hy))
   · exact absurd (if_neg he) hy'
 
@@ -210,8 +210,8 @@ theorem phw_le (w : Fin n → ℤ) (hw : Antitone w) (lam : Fin n → ℤ) (hlam
   have e3 := hcmax _ hab
   have e4 := hbmax _ hA1
   have e5 := hdmax _ hA1
-  rw [map_add] at e1 e3
-  rw [map_add] at e1
+  rw [map_add (f := _)] at e1 e3
+  rw [map_add (f := _)] at e1
   linarith
 
 end GlobalTheory.CompanionTheory.RealCountG.DomA

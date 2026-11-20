@@ -58,7 +58,7 @@ theorem mem_smul_iff {K W : Type} [Field K] [NumberField K] [AddCommGroup W] [Mo
       rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
       exact FractionalIdeal.mul_mem_mul hr ((hL y).1 hy i)
     · intro i
-      rw [map_add, Finsupp.add_apply]
+      rw [map_add (f := _), Finsupp.add_apply]
       exact Submodule.add_mem _ (hx i) (hy i)
   · intro hx
     rw [← e.sum_repr x]

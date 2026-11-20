@@ -114,7 +114,7 @@ theorem pairV_mem_range {w x : P.V} (hw : w ∈ P.latT) (hx : x ∈ P.latT) :
   obtain ⟨w, rfl⟩ := hw
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, LinearMap.add_apply]; exact add_mem ha hb
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), LinearMap.add_apply]; exact add_mem ha hb
   | tmul c s =>
     obtain ⟨d, hd⟩ := (P.mem_latT_iff x).1 hx s
     have e : (algebraMap 𝓞_ℂ_[p] ℂ_[p] c ⊗ₜ s : P.V) = algebraMap 𝓞_ℂ_[p] ℂ_[p] c • (1 ⊗ₜ s) := by

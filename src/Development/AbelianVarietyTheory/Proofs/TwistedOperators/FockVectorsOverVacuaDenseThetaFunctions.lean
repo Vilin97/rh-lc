@@ -94,7 +94,7 @@ include h hΦ in
 theorem adjoint (z : V) (x y : S) :
     inner ℂ (Φ (cE J hS hD z x)) (Φ y) = inner ℂ (Φ x) (Φ (aE J hS hD z y)) := by
   change inner ℂ (Φ (dH ρ z x - I • dH ρ (J z) x)) _ = inner ℂ _ (Φ (-(dH ρ z y + I • dH ρ (J z) y)))
-  simp only [map_sub, map_neg, map_add, map_smul, inner_sub_left, inner_neg_right, inner_add_right, inner_smul_left,
+  simp only [map_sub, map_neg, map_add (f := _), map_smul, inner_sub_left, inner_neg_right, inner_add_right, inner_smul_left,
     inner_smul_right, inner_dH hΦ h (hS _ x.2) (hS _ y.2), conj_I]
   ring
 

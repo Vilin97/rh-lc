@@ -53,15 +53,15 @@ theorem GlobalTheory.BSP.exists_resTilt_retract : ∀ (l : ℕ) [Fact l.Prime] (
     obtain ⟨z, hz⟩ := sub_teich_dvd l x
     conv_lhs => rw [hz]
     have e : (l : Ainf l) = bk.ev (l : bk.S) := (map_natCast _ _).symm
-    rw [map_add, e, tb.c_mul, map_add, map_mul, red_l l bk.a, zero_mul, add_zero]
+    rw [map_add (f := _), e, tb.c_mul, map_add (f := _), map_mul, red_l l bk.a, zero_mul, add_zero]
   let pr : OCb l →+ (Fq l bk.a)⟦X⟧ :=
     { toFun := P
       map_zero' := by simp [P]
       map_add' := fun y y' => by
         have h := hwd (WittVector.teichmuller l y + WittVector.teichmuller l y')
-        rw [map_add, map_add] at h
+        rw [map_add (f := _), map_add (f := _)] at h
         have h0 : (WittVector.teichmuller l y + WittVector.teichmuller l y').coeff 0 = y + y' := by
-          rw [← WittVector.constantCoeff_apply, map_add]; simp [WittVector.constantCoeff_apply]
+          rw [← WittVector.constantCoeff_apply, map_add (f := _)]; simp [WittVector.constantCoeff_apply]
         rw [h0] at h
         exact h.symm }
   have hmul : ∀ a y, pr (ek a * y) = a * pr y := fun f y => by

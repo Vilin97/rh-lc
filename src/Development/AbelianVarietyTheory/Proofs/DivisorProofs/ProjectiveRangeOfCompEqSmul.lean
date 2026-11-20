@@ -58,7 +58,7 @@ theorem projective_range_of_comp_eq_smul {A R M : Type} [CommRing A] [CommRing R
     · rintro _ ⟨x, rfl⟩
       induction x with
       | tmul r m => rw [hF]; exact Submodule.smul_mem _ _ ⟨m, rfl⟩
-      | add x y hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     · rintro _ ⟨m, rfl⟩
       exact ⟨1 ⊗ₜ m, (hF 1 m).trans (one_smul _ _)⟩
   have e := (LinearEquiv.ofInjective F ((TensorProduct.piScalarRight A R R (Fin h)).injective.comp hi)).trans

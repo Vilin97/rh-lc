@@ -30,7 +30,7 @@ theorem notMem_support_of_flat {B D M N : Type} [CommRing B] [CommRing D] [Algeb
         Q.asIdeal := by
     intro z
     induction z with
-    | add a b ha hb => rw [map_add, map_add]; exact Q.asIdeal.add_mem ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact Q.asIdeal.add_mem ha hb
     | tmul d r =>
       have hr : algebraMap B D r.1 ∈ Q.asIdeal := by
         by_contra h
@@ -55,7 +55,7 @@ theorem mem_etaleLocus_of_flat {A B C : Type} [CommRing A] [CommRing B] [CommRin
           (Algebra.IsPushout.cancelBaseChange A C B (C ⊗[A] B) Ω[B⁄A]).symm := by
       funext z
       induction z with
-      | add x y hx hy => simp only [Function.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
+      | add x y hx hy => simp only [Function.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
       | tmul s m =>
         rw [KaehlerDifferential.tensorKaehlerEquivBase_tmul, Function.comp_apply,
           Algebra.IsPushout.cancelBaseChange_symm_tmul, LinearMap.liftBaseChange_tmul, algebraMap_smul]
@@ -67,7 +67,7 @@ theorem mem_etaleLocus_of_flat {A B C : Type} [CommRing A] [CommRing B] [CommRin
           (Algebra.IsPushout.cancelBaseChange A C B (C ⊗[A] B) (Algebra.H1Cotangent A B)).symm := by
       funext z
       induction z with
-      | add x y hx hy => simp only [Function.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
+      | add x y hx hy => simp only [Function.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
       | tmul s m =>
         rw [Algebra.tensorH1CotangentOfFlat_tmul, Function.comp_apply, Algebra.IsPushout.cancelBaseChange_symm_tmul,
           LinearMap.liftBaseChange_tmul, algebraMap_smul]

@@ -73,7 +73,7 @@ theorem exists_hom_tmul (D : D7) : ∃ Θ : AE D →+* AdeleRing (𝓞 D.host.E)
   have hfin : ∀ z, (Θ z).2 = Φ z := fun z => by
     induction z using TensorProduct.induction_on with
     | zero => rw [RingHom.map_zero, RingHom.map_zero]; rfl
-    | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, ← hx, ← hy]; rfl
+    | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ← hx, ← hy]; rfl
     | tmul a x =>
       have e : (a ⊗ₜ[D.host.F] x : AE D) = algebraMap (AF D.host.F) (AE D) a * incA D x := by
         change _ = (a ⊗ₜ[D.host.F] (1 : D.host.E)) * ((1 : AF D.host.F) ⊗ₜ[D.host.F] x)

@@ -77,7 +77,7 @@ theorem sub_group {G : Type*} [AddCommGroup G] (a b c d : G) : a - b - (c - d) =
 theorem halfTr_eq (z : AE D) : halfTr z = algebraMap D.host.F (AF D.host.F) (1 / 2) * trA z := rfl
 
 theorem half_add_half : algebraMap D.host.F (AF D.host.F) (1 / 2) + algebraMap D.host.F (AF D.host.F) (1 / 2) = 1 := by
-  rw [← map_add, add_halves, map_one]
+  rw [← map_add (f := _), add_halves, map_one]
 
 theorem psi_halfTr_incA (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsCharAF D.host.F ψ) (e : D.host.E) :
     ψ (halfTr (incA D e)) = 1 := by
@@ -105,7 +105,7 @@ theorem psi_combine (ψ : AddChar (AF D.host.F) ℂ) (X Y T t₁ t₃ t₄ t₅ 
     ψ (trA X + halfTr Y) = ψ (trA t₅) * ψ (halfTr T) := by
   subst e₁ e₂ e₃
   have h : trA (-t₁ + t₅) + halfTr Y + halfTr t₄ = trA t₅ + halfTr (Y - cA D t₁ - t₁ + t₄) := by
-    simp only [halfTr_eq, trA, map_add, map_sub, map_neg, GlobalTheory.DualPairCheck.trace_cA]
+    simp only [halfTr_eq, trA, map_add (f := _), map_sub, map_neg, GlobalTheory.DualPairCheck.trace_cA]
     exact exp_ring _ _ _ _ _ half_add_half
   rw [← AddChar.map_add_eq_mul, ← h, AddChar.map_add_eq_mul ψ _ (halfTr t₄), e₄, mul_one]
 

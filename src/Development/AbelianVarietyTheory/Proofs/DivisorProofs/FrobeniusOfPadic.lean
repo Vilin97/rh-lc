@@ -72,13 +72,13 @@ theorem psi_phi_tensor : ∀ (p : ℕ) [Fact p.Prime] (O : Type) [CommRing O] [F
     | tmul a l =>
       change (frobAlg (phiInvAlg a)) ⊗ₜ l = a ⊗ₜ l
       exact congrArg (· ⊗ₜ[ℤ_[p]] l) (frobenius_phiInv' a)
-    | add x y hx hy => simp only [map_add] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [map_add (f := _)] at hx hy ⊢; rw [hx, hy]
   · intro r
     induction r using TensorProduct.induction_on with
     | zero => simp
     | tmul a l =>
       change (phiInvAlg (frobAlg a)) ⊗ₜ l = a ⊗ₜ l
       exact congrArg (· ⊗ₜ[ℤ_[p]] l) (phiInv_frobenius' a)
-    | add x y hx hy => simp only [map_add] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [map_add (f := _)] at hx hy ⊢; rw [hx, hy]
 
 end GlobalTheory.DetInv

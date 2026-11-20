@@ -41,7 +41,7 @@ theorem qsp_sp_P (r : 𝓞 E) : Valued.v (qbPhi hc P ϖ s (algebraMap (𝓞 E) E
   obtain ⟨y, i, hi, e⟩ := P.isMaximal.exists_inv hr
   have h1 : qbPhi hc P ϖ s (algebraMap (𝓞 E) E y) * qbPhi hc P ϖ s (algebraMap (𝓞 E) E r) +
       qbPhi hc P ϖ s (algebraMap (𝓞 E) E i) = 1 := by
-    rw [← map_mul, ← map_mul, ← map_add, ← map_add, e, map_one, map_one]
+    rw [← map_mul, ← map_mul, ← map_add (f := _), ← map_add (f := _), e, map_one, map_one]
   have h2 : Valued.v (qbPhi hc P ϖ s (algebraMap (𝓞 E) E y) * qbPhi hc P ϖ s (algebraMap (𝓞 E) E r)) < 1 := by
     rw [map_mul]; exact lt_of_le_of_lt (mul_le_of_le_one_left' (phi_integral_valuation_le_one hc P ϖ s y)) h
   have h3 := Valuation.map_add_lt Valued.v h2 (key i hi)

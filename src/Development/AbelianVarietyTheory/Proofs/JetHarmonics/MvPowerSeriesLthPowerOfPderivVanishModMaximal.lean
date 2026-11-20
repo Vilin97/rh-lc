@@ -106,8 +106,8 @@ theorem main : ∀ (C : Type) [Field C] [IsAlgClosed C] (V : VF C) (σ : Type) [
     obtain ⟨G, rfl⟩ := exists_lift hg
     rw [forall_and]
     constructor
-    · rw [← map_add, ← map_pow, ← map_pow, ← map_pow, ← map_sub, ← map_sub, mm_iff]
-      simp only [map_sub, map_pow, map_add, add_pow_char]
+    · rw [← map_add (f := _), ← map_pow, ← map_pow, ← map_pow, ← map_sub, ← map_sub, mm_iff]
+      simp only [map_sub, map_pow, map_add (f := _), add_pow_char]
       ring
     · rw [← map_sub, ← map_pow, ← map_pow, ← map_pow, ← map_sub, ← map_sub, mm_iff]
       simp only [map_sub, map_pow, sub_pow_char]

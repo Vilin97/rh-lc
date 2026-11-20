@@ -81,7 +81,7 @@ theorem base_σC_mul : ∀ (g h : GQ l) x, σC (g * h) x = σC g (σC h x) := by
 theorem base_σ_u : ∀ g : GQ l, σD g (uQ l) = uQ l + qQ l (κ g) * tQ l := by
   intro g
   show σD g (algebraMap (BdRp l) (BdR l) (uBdR l)) = _
-  rw [σD_alg, gal_smul_uBdR_eq untilt_epsilon untilt_frobeniusEquiv_symm_epsilon_ne_one (toBot g), map_add,
+  rw [σD_alg, gal_smul_uBdR_eq untilt_epsilon untilt_frobeniusEquiv_symm_epsilon_ne_one (toBot g), map_add (f := _),
     map_mul, tQ_alg]
   rfl
 
@@ -103,7 +103,7 @@ theorem base_th_σ : ∀ (g : GQ l) x, x ∈ Plus l → th l (σD g x) = σC g (
 
 theorem base_th_add : ∀ x ∈ Plus l, ∀ y ∈ Plus l, th l (x + y) = th l x + th l y := by
   rintro _ ⟨a, rfl⟩ _ ⟨b, rfl⟩
-  rw [← map_add, th_alg, th_alg, th_alg, map_add]
+  rw [← map_add (f := _), th_alg, th_alg, th_alg, map_add (f := _)]
 
 theorem base_th_mul : ∀ x ∈ Plus l, ∀ y ∈ Plus l, th l (x * y) = th l x * th l y := by
   rintro _ ⟨a, rfl⟩ _ ⟨b, rfl⟩

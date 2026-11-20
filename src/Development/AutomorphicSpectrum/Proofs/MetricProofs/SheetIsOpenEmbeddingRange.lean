@@ -36,7 +36,7 @@ theorem finite_ringHom (k : Type) [CommRing k] [Module.Finite ℤ k] : Finite (k
     induction hx using Submodule.span_induction with
     | mem x h => exact hs' x h
     | zero => simp
-    | add x y _ _ hx hy => simp [map_add, hx, hy]
+    | add x y _ _ hx hy => simp [map_add (f := _), hx, hy]
     | smul a x _ hx => simp [map_zsmul, hx]
   exact RingHom.ext fun x => hspan x (hs ▸ Submodule.mem_top)
 

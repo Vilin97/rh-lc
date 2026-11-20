@@ -25,7 +25,7 @@ theorem setIntegral_comp_aut {G : Type} [AddCommGroup G] [TopologicalSpace G] [I
         exact Subtype.ext (U.symm_apply_apply _)
       · intro γ x
         change U (U.symm γ + x) = (γ : G) + U x
-        rw [map_add, U.apply_symm_apply]
+        rw [map_add (f := _), U.apply_symm_apply]
     refine ⟨⟨hmeas, ?_⟩, hS⟩
     have h2 : μ (U ⁻¹' 𝓕) = 1 := (hS.measure_eq h𝓕).trans h1
     have h3 : μ.map U 𝓕 = 1 := by

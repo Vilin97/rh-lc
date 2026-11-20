@@ -61,7 +61,7 @@ theorem exists_finset_ext {S : Scheme.{0}} [IsAffine S] (G : Over S) [LocallyOfF
   induction hf using Algebra.adjoin_induction with
   | mem x hx => exact e x hx
   | algebraMap c => exact (key g h c).trans (key g' h' c).symm
-  | add x y _ _ a b => rw [map_add, map_add, a, b]
+  | add x y _ _ a b => rw [map_add (f := _), map_add (f := _), a, b]
   | mul x y _ _ a b => rw [map_mul, map_mul, a, b]
 
 section

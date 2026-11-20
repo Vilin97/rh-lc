@@ -155,7 +155,7 @@ theorem read_gen {A K : Type} [CommRing A] [CommRing K] (S : Subring A) (φ : S 
     (hd0 : ∀ i, φ ⟨_, hd i⟩ = 0) (hg0 : φ ⟨_, hg⟩ = 0) :
     φ ⟨_, hc p⟩ = φ ⟨_, hup⟩ := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [key_gen S M u c G d o gg z hu p hup hc hG hd ho hg hz, map_add, map_add, map_sum, map_sum, map_mul, hg0, zero_mul,
+    rw [key_gen S M u c G d o gg z hu p hup hc hG hd ho hg hz, map_add (f := _), map_add (f := _), map_sum, map_sum, map_mul, hg0, zero_mul,
     add_zero]
   simp only [map_mul, hd0, zero_mul, Finset.sum_const_zero, add_zero, hδ, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
     Finset.mem_univ, if_true]

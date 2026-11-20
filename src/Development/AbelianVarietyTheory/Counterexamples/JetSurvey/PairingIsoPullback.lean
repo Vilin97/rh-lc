@@ -460,7 +460,7 @@ section Act
 variable {S : Scheme.{0}} {B : Out.PolAV S} {O : Type} [Ring O] [StarRing O] (o : B.OAct O) {T : Over S}
 
 theorem pairing_act_add (z : T ⟶ B.A) (a b : O) : z ≫ o.act (a + b) = (z ≫ o.act a) * (z ≫ o.act b) := by
-  rw [o.map_add, H1.comp_padd]
+  rw [o.map_add (f := _), H1.comp_padd]
 
 theorem pairing_act_zero (z : T ⟶ B.A) : z ≫ o.act 0 = 1 := by
   have h := pairing_act_add o z 0 0

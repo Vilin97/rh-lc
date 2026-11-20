@@ -236,7 +236,7 @@ theorem exists_pair_lift_comb : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀]
     simp only [Fin.sum_univ_one, Matrix.cons_val_zero]
     rw [chartHom_spMap_comp V ρ _ htop, chartHom_fromSpec hV _ htop, chartHom_spMap_comp V ρ ea heaV]
     apply eP.injective
-    rw [map_add, map_mul, map_sub, map_pow, heP, heP, AlgEquiv.commutes,
+    rw [map_add (f := _), map_mul, map_sub, map_pow, heP, heP, AlgEquiv.commutes,
       IsScalarTower.algebraMap_apply R (Localization.Away a) (Localization.Away (algebraMap R (Localization.Away a) b))]
     exact hχ x
 

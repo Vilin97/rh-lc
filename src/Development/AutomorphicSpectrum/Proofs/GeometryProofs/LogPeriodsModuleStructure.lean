@@ -195,9 +195,9 @@ theorem exists_module_of_period_action : ∀ (E : Type) [Field E] [NumberField E
     rw [hf, hf, hf, map_mul, Module.End.mul_apply])
   have e3 : ∀ c, f c 0 = 0 := fun c => inj (by rw [hf]; simp)
   have e4 : ∀ c x y, f c (x + y) = f c x + f c y := fun c x y => inj (by
-    rw [map_add, hf, hf, hf, map_add, map_add])
+    rw [map_add (f := _), hf, hf, hf, map_add (f := _), map_add (f := _)])
   have e5 : ∀ c d x, f (c + d) x = f c x + f d x := fun c d x => inj (by
-    rw [map_add, hf, hf, hf, map_add, LinearMap.add_apply])
+    rw [map_add (f := _), hf, hf, hf, map_add (f := _), LinearMap.add_apply])
   have e6 : ∀ x, f 0 x = 0 := fun x => inj (by rw [hf]; simp)
   exact ⟨{ smul := f, one_smul := e1, mul_smul := e2, smul_zero := e3, smul_add := e4,
            add_smul := e5, zero_smul := e6 }, key⟩

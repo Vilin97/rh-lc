@@ -28,7 +28,7 @@ theorem CotangentSum.proof : CotangentSum.Statement := by
   have hwim : w.im = a := by simp [hw]
   have hw'im : w'.im = -a := by simp [hw']
   have hconj : conj w = w' := by
-    rw [hw, hw', map_add, map_mul, conj_ofReal, conj_ofReal, conj_I]
+    rw [hw, hw', map_add (f := _), map_mul, conj_ofReal, conj_ofReal, conj_I]
     ring
   have hdiff : w - w' = 2 * (a : ℂ) * I := by rw [hw, hw']; ring
   have hdiff0 : w - w' ≠ 0 := by
@@ -100,7 +100,7 @@ theorem CotangentSum.proof : CotangentSum.Statement := by
   apply Complex.ofReal_injective
   rw [Complex.ofReal_tsum, tsum_congr hF, hS, hcot', hq, hgeo]
   have hTc : T + conj T = 2 * (T.re : ℂ) := by rw [Complex.add_conj]; push_cast; ring
-  simp only [map_sub, map_mul, map_add, conj_ofReal, conj_I, map_one, map_ofNat]
+  simp only [map_sub, map_mul, map_add (f := _), conj_ofReal, conj_I, map_one, map_ofNat]
   rw [hdiff]
   have hI : I ≠ 0 := I_ne_zero
   have ha' : (a : ℂ) ≠ 0 := ofReal_ne_zero.mpr ha0

@@ -63,12 +63,12 @@ theorem shear_surjective : Function.Surjective (shear R Λ) := by
           ((TensorProduct.assoc R Λ Λ Λ).symm ((Coalgebra.comul (R := R)).lTensor Λ z)) := by
       intro z
       induction z with
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | tmul a b =>
         rw [LinearMap.rTensor_tmul, shear_tmul, LinearMap.lTensor_tmul]
         generalize Coalgebra.comul (R := R) b = w
         induction w with
-        | add u v hu hv => simp only [map_add, smul_add, tmul_add, hu, hv]
+        | add u v hu hv => simp only [map_add (f := _), smul_add, tmul_add, hu, hv]
         | tmul u v => simp [TensorProduct.smul_tmul']
     rw [h1, Coalgebra.coassoc_symm_apply, ← LinearMap.comp_apply, ← LinearMap.rTensor_comp,
       LinearMap.comp_assoc, HopfAlgebra.mul_antipode_rTensor_comul, LinearMap.rTensor_comp,
@@ -95,22 +95,22 @@ theorem shear_hit (f : Λ →ₗ[R] R) (z : Λ ⊗[R] Λ) :
         F (TensorProduct.assoc R Λ Λ Λ ((Coalgebra.comul (R := R)).rTensor Λ w)) := by
       intro w
       induction w with
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | tmul a b =>
         rw [ev_tmul, map_smul, LinearMap.rTensor_tmul]
         generalize Coalgebra.comul (R := R) a = w
         induction w with
-        | add u v hu hv => simp only [map_add, smul_add, add_tmul, hu, hv]
+        | add u v hu hv => simp only [map_add (f := _), smul_add, add_tmul, hu, hv]
         | tmul u v => simp [F]
     have h2 : ∀ w : Λ ⊗[R] Λ, (hit f).baseChange Λ w =
         F ((Coalgebra.comul (R := R)).lTensor Λ w) := by
       intro w
       induction w with
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | tmul a b => simp [F, hit_apply]
     rw [hit_apply, h1, h2, Coalgebra.coassoc_apply]
   induction z with
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a b =>
     rw [LinearMap.baseChange_tmul, shear_tmul, shear_tmul, map_smul, key]
 
@@ -129,7 +129,7 @@ theorem lam_integral [Module.Finite R Λ] (e : ι → Λ) (c : ι → Λ →ₗ[
   have h' : ∀ m, ∑ i, c' i m • e' i = m := by
     intro m
     induction m with
-    | add a b ha hb => simp only [map_add, add_smul, Finset.sum_add_distrib, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, ha, hb]
     | tmul a b =>
       conv_rhs => rw [← h b, tmul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
@@ -139,7 +139,7 @@ theorem lam_integral [Module.Finite R Λ] (e : ι → Λ) (c : ι → Λ →ₗ[
     intro z
     induction z with
     | add a b ha hb =>
-      rw [map_add, ha, hb]
+      rw [map_add (f := _), ha, hb]
       simp [tr, add_mul, Finset.sum_add_distrib]
     | tmul a b =>
       simp [lam_apply, tr, c', e', Finset.sum_smul]
@@ -179,7 +179,7 @@ theorem sum_lam (e : ι → Λ) (c : ι → Λ →ₗ[R] R)
     simp only [hit_apply]
     generalize Coalgebra.comul (R := R) y = w
     induction w with
-    | add u v hu hv => simp only [map_add, mul_add, Finset.sum_add_distrib, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), mul_add, Finset.sum_add_distrib, hu, hv]
     | tmul u v =>
       conv_rhs => rw [← h v]
       set_option synthInstance.maxHeartbeats 100000 in
@@ -229,18 +229,18 @@ theorem ev_mem_equalizer
       F (TensorProduct.assoc R B Λ Λ (ρ.toLinearMap.rTensor Λ w)) := by
     intro w
     induction w with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a b =>
       rw [ev_tmul, map_smul, LinearMap.rTensor_tmul, AlgHom.toLinearMap_apply]
       generalize ρ a = w
       induction w with
-      | add u v hu hv => simp only [map_add, smul_add, add_tmul, hu, hv]
+      | add u v hu hv => simp only [map_add (f := _), smul_add, add_tmul, hu, hv]
       | tmul u v => simp [F]
   have h2 : ∀ w : B ⊗[R] Λ, F ((Coalgebra.comul (R := R)).lTensor B w) =
       ev B l w ⊗ₜ 1 := by
     intro w
     induction w with
-    | add a b ha hb => simp only [map_add, add_tmul, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), add_tmul, ha, hb]
     | tmul a b => simp [F, hl, Algebra.algebraMap_eq_smul_one, smul_tmul]
   rw [AlgHom.mem_equalizer, h1, hassoc, h2]
   rfl
@@ -276,7 +276,7 @@ theorem exists_dual_family [Module.Finite R Λ] [Module.Projective R Λ]
     conv_rhs => rw [← hcounit u]
     generalize ρ u = w
     induction w with
-    | add u v hu hv => simp only [map_add, mul_add, Finset.sum_add_distrib, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), mul_add, Finset.sum_add_distrib, hu, hv]
     | tmul u v => simp [← Finset.sum_smul, hT]
 
 theorem finite_faithfullyFlat_ker [Module.Finite R Λ] [Module.Projective R Λ]
@@ -326,7 +326,7 @@ theorem finite_faithfullyFlat_ker [Module.Finite R Λ] [Module.Projective R Λ]
       intro z
       induction z with
       | add u v hu hv =>
-        simp only [map_add, add_tmul, Finset.sum_add_distrib]
+        simp only [map_add (f := _), add_tmul, Finset.sum_add_distrib]
         rw [add_sub_add_comm]
         exact I.add_mem hu hv
       | tmul x y =>

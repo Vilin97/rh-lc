@@ -62,7 +62,7 @@ theorem latO_le_left (S T : HSp D) (N M : Lat S) (LT : Set (Fin T.rank → D.hos
   let Φ : (Fin S.rank → AE D) →+ WO S T :=
     AddMonoidHom.mk' (fun y => Matrix.of fun i j => ((1 : AF D.host.F) ⊗ₜ[D.host.F] (a * t i)) *
       ∑ k, cA D (y k) * ((1 : AF D.host.F) ⊗ₜ[D.host.F] S.gram k j)) (by
-      intro u u'; ext i j; simp [map_add, add_mul, Finset.sum_add_distrib, mul_add])
+      intro u u'; ext i j; simp [map_add (f := _), add_mul, Finset.sum_add_distrib, mul_add])
   have gen : ∀ (γ : Af D.host.F) (x : Fin S.rank → D.host.E),
       Φ (fun k => pairA D.host.F 0 γ ⊗ₜ[D.host.F] (1 * x k)) =
         Matrix.of fun i j => pairA D.host.F 0 γ ⊗ₜ[D.host.F] (a * t i * ∑ k, star (x k) * S.gram k j) := by
@@ -109,7 +109,7 @@ theorem latV_le_of_local (S : HSp D) (N M : Lat S) (hN : Submodule.IsLattice D.h
     rw [← Finset.mul_sum, ← e, ← mul_add, add_sub_cancel, mul_one]
   show Ψ α ∈ latV S M P
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hsplit, map_add, map_sum]
+    rw [hsplit, map_add (f := _), map_sum]
   refine add_mem (AddSubgroup.sum_mem _ fun v _ => ?_) ?_
   · by_cases hv : P v
     · have h1 : Ψ (α * indQ D {v}) ∈ latV S N (· = v) := by

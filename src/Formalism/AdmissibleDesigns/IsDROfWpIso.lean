@@ -111,10 +111,10 @@ def eL : (Fin n → LL) ≃ₗ[LL] (Fin r → LL) × (Fin t → Fin 1 → LL) wh
     refine Prod.ext (funext fun a => ?_) (funext fun j => funext fun x => ?_)
     · show f ((e (fun b => f.symm ((u + v) b))).1 a) =
         f ((e (fun b => f.symm (u b))).1 a) + f ((e (fun b => f.symm (v b))).1 a)
-      rw [h, map_add, Prod.fst_add, Pi.add_apply, map_add]
+      rw [h, map_add (f := _), Prod.fst_add, Pi.add_apply, map_add (f := _)]
     · show f ((e (fun b => f.symm ((u + v) b))).2 j) =
         f ((e (fun b => f.symm (u b))).2 j) + f ((e (fun b => f.symm (v b))).2 j)
-      rw [h, map_add, Prod.snd_add, Pi.add_apply, map_add]
+      rw [h, map_add (f := _), Prod.snd_add, Pi.add_apply, map_add (f := _)]
   map_smul' c v := by
     have h : (fun b => f.symm ((c • v) b)) = f.symm c • (fun b => f.symm (v b)) :=
       funext fun b => by simp

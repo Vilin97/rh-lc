@@ -218,7 +218,7 @@ theorem ratVec_single_add_single {n : ℕ} (i i' : Fin n) (a c : K) :
     ratVec (Pi.single i a + Pi.single i' c : Fin n → K) =
       Pi.single i (algebraMap K 𝔸[K] a) + Pi.single i' (algebraMap K 𝔸[K] c) := by
   ext k
-  simp only [ratVec, Pi.add_apply, map_add]
+  simp only [ratVec, Pi.add_apply, map_add (f := _)]
   by_cases h1 : k = i <;> by_cases h2 : k = i' <;>
     simp [Pi.single_apply, h1, h2, apply_ite (algebraMap K 𝔸[K])]
 

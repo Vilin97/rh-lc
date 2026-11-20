@@ -127,7 +127,7 @@ theorem exists_trDual (hE : IsTotallyComplex E) {j : ℕ} (Λ : Submodule (𝓞 
       map_add' := by
         intro x y
         apply Rat.cast_injective (α := ℝ)
-        rw [Rat.cast_add, ← hq, ← hq, ← hq, map_add] }
+        rw [Rat.cast_add, ← hq, ← hq, ← hq, map_add (f := _)] }
   have hy : ∀ a : Fin j, ∃ y : E, ∀ e : E,
       Algebra.trace ℚ E (y * e) = 2 * q (Pi.single a e) := by
     intro a

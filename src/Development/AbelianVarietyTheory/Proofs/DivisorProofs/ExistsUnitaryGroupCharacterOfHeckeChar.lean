@@ -154,7 +154,7 @@ theorem cutDet_conj (ε : AE D) (h1 : ε * ε = ε) {e : AE D} (he : e * e = e) 
   have hx' : (x : AE D) = e * (Formalism.L2.Theta.mt V g).det + (1 - e) := hx
   have e2 : cA D e * cA D e = cA D e := by rw [← RingHom.map_mul, he]
   have e5 : cA D x = cA D e * cA D (Formalism.L2.Theta.mt V g).det + (1 - cA D e) := by
-    rw [hx', RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
+    rw [hx', RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
   rw [cutDet_val, e5]
   exact cut_mul e2 a1 a2 (det_supp hg) (det_mul_conj V g)
 

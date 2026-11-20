@@ -23,7 +23,7 @@ theorem sum_fixed_eq_zero (χ : AddChar E ℂ) (A b : E) (hb : τ b = b) (hχ : 
     refine Finset.sum_nbij' (fun t => t + b) (fun t => t - b) ?_ ?_ ?_ ?_ ?_
     · intro t ht
       simp only [Finset.mem_filter, Finset.mem_univ, true_and] at ht ⊢
-      rw [map_add, ht, hb]
+      rw [map_add (f := _), ht, hb]
     · intro t ht
       simp only [Finset.mem_filter, Finset.mem_univ, true_and] at ht ⊢
       rw [map_sub, ht, hb]

@@ -203,7 +203,7 @@ def tdt (R : Type) [CommRing R] : Form (lineStr R) :=
     have h3 : ψ.φ (T'.δ.dpow 2 (coordLift T' - φ.φ (coordLift T))) =
       T''.δ.dpow 2 (ψ.φ (coordLift T' - φ.φ (coordLift T))) := ψ.dp.map_dpow (coordLift_sub_mem φ)
     change (_ * _ + T''.δ.dpow 2 (_ - _) : T''.B) = ψ.φ (_ + _) + (_ * _ + _)
-    rw [e, dpow_two_add _ h1 h2, map_add, h3]
+    rw [e, dpow_two_add _ h1 h2, map_add (f := _), h3]
     simp only [map_mul, map_sub, Thick.comp_φ]
     ring⟩, fun T T' φ _ h ↦ by
     have := coordLift_sub_mem φ

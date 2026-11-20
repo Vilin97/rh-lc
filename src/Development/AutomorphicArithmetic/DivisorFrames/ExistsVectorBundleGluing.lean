@@ -72,7 +72,7 @@ private def loc (ξ : Sp K ⟶ X) (x : X) (h₀ : ⊤ ≤ ξ ⁻¹ᵁ ⊤) : Sub
   add_mem' := by
     rintro _ _ ⟨W, hx, h, a, rfl⟩ ⟨W', hx', h', a', rfl⟩
     exact ⟨W ⊓ W', ⟨hx, hx'⟩, le_inf_pre h h', resG X inf_le_left a + resG X inf_le_right a', by
-      rw [map_add, evalPt_res ξ _ h, evalPt_res ξ _ h']⟩
+      rw [map_add (f := _), evalPt_res ξ _ h, evalPt_res ξ _ h']⟩
   one_mem' := ⟨⊤, trivial, h₀, 1, map_one _⟩
   zero_mem' := ⟨⊤, trivial, h₀, 0, map_zero _⟩
   neg_mem' := by
@@ -104,7 +104,7 @@ theorem UpperTheory.exists_vector_bundle_gluing :
     { sec := fun U =>
         { carrier := {s | ∀ k x, x ∈ U → x ∈ V k → ∀ h i, ((P k)⁻¹ *ᵥ crd U h s) i ∈ loc ξ x h₀}
           add_mem' := fun hs ht k x hx hk h i => by
-            rw [map_add, mulVec_add]
+            rw [map_add (f := _), mulVec_add]
             exact add_mem (hs k x hx hk h i) (ht k x hx hk h i)
           zero_mem' := fun k x hx hk h i => by
             rw [map_zero, mulVec_zero]

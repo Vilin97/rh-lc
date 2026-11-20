@@ -32,7 +32,7 @@ theorem cc_subst_eq {σ τ : Type} [Finite σ] {a : σ → MvPowerSeries τ C}
       algebraMap C (MvPowerSeries τ C) c := by
     rw [← MvPowerSeries.coe_substAlgHom hs]
     exact (MvPowerSeries.substAlgHom hs).commutes c
-  rw [hf, MvPowerSeries.subst_add hs, map_add, h1, constantCoeff_subst_zero ha hg]
+  rw [hf, MvPowerSeries.subst_add hs, map_add (f := _), h1, constantCoeff_subst_zero ha hg]
   simp [MvPowerSeries.algebraMap_apply]
 
 private theorem jetAt0_zero_left' {σ : Type} (G : MvPowerSeries σ C) :

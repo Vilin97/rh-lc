@@ -148,7 +148,7 @@ theorem val_add (T : Submonoid (MRingOver ℚ ι)) (x x' : LocalizedModule T (MR
       induction x' using LocalizedModule.induction_on with
       | h m' s' =>
         rw [LocalizedModule.mk_add_mk, val_mk hT, val_mk hT, val_mk hT]
-        simp only [Submonoid.coe_mul, map_add, Submonoid.smul_def, evQ_smul, map_mul]
+        simp only [Submonoid.coe_mul, map_add (f := _), Submonoid.smul_def, evQ_smul, map_mul]
         have hs := hT _ s.2
         have hs' := hT _ s'.2
         field_simp
@@ -261,7 +261,7 @@ theorem exists_formQ (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {r : �
     · refine homog_add (homog_mul hF1 (homog_cmq c e2)) ?_
       rw [add_comm e1 e2]
       exact homog_mul hF2 (homog_cmq c e1)
-    · rw [map_add, map_mul, map_mul, hv1, hv2, aeval_cmq, aeval_cmq, prod_pow_add]
+    · rw [map_add (f := _), map_mul, map_mul, hv1, hv2, aeval_cmq, aeval_cmq, prod_pow_add]
       ring
   | mul x z _ _ hx hz =>
     obtain ⟨e1, F1, hF1, hv1⟩ := hx

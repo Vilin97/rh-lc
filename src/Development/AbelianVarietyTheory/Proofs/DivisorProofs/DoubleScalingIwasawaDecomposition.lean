@@ -73,7 +73,7 @@ theorem compFin_lift (Y : Matrix ι ι (Fv F v ⊗[F] E)) : (lift v Y).map (comp
   have h2 : (1 : Matrix ι ι (AE F E)).map (compFin F E v) = 1 := Matrix.map_one _ (map_zero _) (map_one _)
   have h1 : (lift v Y).map (compFin F E v) = (1 : Matrix ι ι (AE F E)).map (compFin F E v) +
       (ext0 v (Y - 1)).map (compFin F E v) := by
-    ext i j; simp only [lift, Matrix.map_apply, Matrix.add_apply, map_add]
+    ext i j; simp only [lift, Matrix.map_apply, Matrix.add_apply, map_add (f := _)]
   rw [h1, ext_zero_comp_finite, h2]
   abel
 

@@ -30,7 +30,7 @@ theorem t_ne_zero : ∀ {R : Type} [CommRing R] [IsDomain R] (Q : DegPre R) {m :
   have hz : gam i = 0 := by
     refine LinearMap.ext₂ fun y z => ?_
     have h := hdiag (y + z)
-    simp only [map_add, LinearMap.add_apply, hdiag y, hdiag z, hsym i z y] at h
+    simp only [map_add (f := _), LinearMap.add_apply, hdiag y, hdiag z, hsym i z y] at h
     simp only [LinearMap.zero_apply]
     omega
   exact hli.ne_zero i hz

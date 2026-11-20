@@ -30,7 +30,7 @@ theorem hyp2_eq_sum_cup_of_fn_exact : ∀ (R : Type) [CommRing R] (C : Type) [Ca
     intro T T' T'' φ ψ
     rw [ha, cechDeRhamTotalCocyclesTwo.one c' φ ψ, hz, map_zero, add_zero]
   let g : Fin m → Z1 F := fun i ↦ ⟨fun T T' φ ↦ fr.δ i T' (a T T' φ), fun T T' T'' φ ψ ↦ by
-    simp only [hacoc φ ψ, map_add, fr.nat]⟩
+    simp only [hacoc φ ψ, map_add (f := _), fr.nat]⟩
   have hE : ∀ i, ∃ e : cechDeRhamTotalCocyclesOne F, e.1.1 = (g i).1 := by
     intro i
     obtain ⟨x, hx⟩ := hs (H1.mk F (g i))
@@ -54,13 +54,13 @@ theorem hyp2_eq_sum_cup_of_fn_exact : ∀ (R : Type) [CommRing R] (C : Type) [Ca
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [η', map_sub, map_sum, pOm_wedge]
     rw [cechDeRhamTotalCocyclesTwo.two c' φ, ← ha, hd]
-    simp only [he', map_add, LinearMap.add_apply, Finset.sum_add_distrib, ← hw]
+    simp only [he', map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib, ← hw]
     abel
   obtain ⟨n, u, v, huv⟩ := GlobalTheory.T.globalTwoForm_eq_sumWedgeGlobalOneForms R C F ⟨m, ⟨fr⟩⟩ h0 η' hη'
   refine ⟨m + n, Fin.append (fun i ↦ Hyp1.mk F (e i)) (fun k ↦ clAll F hc (u k)), Fin.append fr.w v, ?_⟩
   rw [Fin.sum_univ_add]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Fin.append_left, Fin.append_right, hclAll, cupHyp_mk, ← map_sum, ← map_add, hmk]
+    simp only [Fin.append_left, Fin.append_right, hclAll, cupHyp_mk, ← map_sum, ← map_add (f := _), hmk]
   congr 1
   apply Subtype.ext
   refine Tot2.ext (fun T T' T'' φ ψ ↦ ?_) (fun T T' φ ↦ ?_) (fun T ↦ ?_)

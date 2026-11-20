@@ -55,7 +55,7 @@ private theorem finSplit_exists {O A : Type} [CommRing O] [IsLocalRing O] [CommR
     obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.1 h1
     refine ⟨b, fun _ _ => ⟨?_, RingHom.mem_ker.1 hb⟩⟩
     have hφab := congrArg φ hab
-    rw [map_add, RingHom.mem_ker.1 ha, zero_add, map_one] at hφab
+    rw [map_add (f := _), RingHom.mem_ker.1 ha, zero_add, map_one] at hφab
     exact hφab
   choose x hx using key
   refine ⟨1 - ∏ φ ∈ Finset.univ.filter (fun φ : A →ₐ[O] O => (maximalIdeal O).comap φ = M),

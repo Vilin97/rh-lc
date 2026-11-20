@@ -28,7 +28,7 @@ private theorem length_localization_bound {O B L P I : Type} [CommRing O] [IsDom
       induction hf using Submodule.span_induction with
       | mem f hf => exact Submodule.subset_span (by rw [Finset.coe_image]; exact ⟨f, hf, rfl⟩)
       | zero => rw [map_zero]; exact zero_mem _
-      | add f g _ _ hf hg => rw [map_add]; exact add_mem hf hg
+      | add f g _ _ hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
       | smul b f _ hf => rw [hlc]; exact Submodule.smul_mem _ _ hf
   have hfree : Module.Free O (LinearMap.range lc) := inferInstance
   have hrk : Module.finrank O (LinearMap.range lc) = Fintype.card I := by
@@ -128,7 +128,7 @@ private noncomputable def monoL {B A : Type} [CommRing B] [CommRing A] [Algebra 
   toFun f := mono N m f.1 f.2
   map_add' f g := Subtype.ext (by
     show MvPolynomial.monomial m (f.1 + g.1) = MvPolynomial.monomial m f.1 + MvPolynomial.monomial m g.1
-    rw [map_add])
+    rw [map_add (f := _)])
   map_smul' c f := Subtype.ext (by
     show MvPolynomial.monomial m (c • f.1) = c • MvPolynomial.monomial m f.1
     rw [MvPolynomial.smul_monomial])

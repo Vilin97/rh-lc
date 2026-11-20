@@ -72,7 +72,7 @@ theorem eta_cut_k (hB : _root_.UpperTheory.TP.W.GoodK σ B) (h2 : ResEtaF η 1) 
     rw [Units.val_mul, cutRat_val, cutRat_val, cutRat_val]
     linear_combination (-(incAF F E u - 1) ^ 2) * hε.orth)
   have e2 := GlobalTheory.SplitDetCharF.char_norm hB.cm h2 (cutRat _ h3 u) (cutRat ε hε.idem (Units.map (σ : E →* E) u)) (by
-    rw [cutRat_val, cutRat_val, map_add, map_sub, map_mul, map_one,
+    rw [cutRat_val, cutRat_val, map_add (f := _), map_sub, map_mul, map_one,
       GlobalTheory.HeisLineF.cAF_cAF σ (GlobalTheory.SplitDetCharF.sig_invol hB.cm), cAF_incAF']
     rfl)
   rw [e1, map_mul, mul_assoc, e2, mul_one]

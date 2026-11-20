@@ -195,7 +195,7 @@ theorem comp_scaleP {A : Type} [CommRing A] [IsReduced A] (ht : IsNilpotent ((t 
     linear_combination (r (PowerSeries.coeff n p)) * hc n
   have h1 : ρ (PowerSeries.C (t : R)) = 1 := map_eq_one ht (ρ.comp PowerSeries.C)
   simp only [RingHom.comp_apply]
-  rw [e, map_add, map_mul, map_sub, h1, map_one, sub_self, zero_mul, add_zero]
+  rw [e, map_add (f := _), map_mul, map_sub, h1, map_one, sub_self, zero_mul, add_zero]
 
 end Algebra
 

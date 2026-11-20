@@ -338,7 +338,7 @@ theorem lubinTateHom_add (a b : A) :
       fin_cases j <;> simpa [lubinTateHom_toPowerSeries] using isLubinTateLift_lubinTateLift hπ hf hg _)
   refine (eq_lubinTateLift_of hπ hf hg hS ?_).symm
   rw [subst_linearForm_one_one (constantCoeff_linearForm _) (constantCoeff_linearForm _)]
-  simp only [sum₂, Finset.univ_unique, Finset.sum_singleton, map_add]
+  simp only [sum₂, Finset.univ_unique, Finset.sum_singleton, map_add (f := _)]
   ring
 
 theorem lubinTateHom_mul (a b : A) :

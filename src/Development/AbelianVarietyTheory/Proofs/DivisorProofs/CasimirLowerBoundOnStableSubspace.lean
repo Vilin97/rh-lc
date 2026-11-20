@@ -107,9 +107,9 @@ lemma finiteRing_sq_sub_mul_sq_eq_of_card [FiniteDimensional ℂ W] (hL : IsKLie
     have hIH : z ≠ 0 → (c₀ : ℝ) * (B z z).re < (B z (casK actW z)).re := fun hz0 =>
       ih U₂ (by omega) hU₂s (fun ν y hy => hc ν y (hU₂U hy)) z hz hz0
     have ex1 : B (e + z) (e + z) = B e e + B z z := by
-      simp only [map_add, LinearMap.add_apply, horth e he z hz, hze]; ring
+      simp only [map_add (f := _), LinearMap.add_apply, horth e he z hz, hze]; ring
     have ex2 : B (e + z) (casK actW (e + z)) = c * B e e + B z (casK actW z) := by
-      simp only [map_add, LinearMap.add_apply, hce, LinearMap.map_smul, hcz, hze, smul_eq_mul]; ring
+      simp only [map_add (f := _), LinearMap.add_apply, hce, LinearMap.map_smul, hcz, hze, smul_eq_mul]; ring
     have hcr : (c * B e e).re = (casVal ν : ℝ) * (B e e).re := by
       simp [hcdef, Complex.mul_re]
     have hc' : (c₀ : ℝ) < (casVal ν : ℝ) := by exact_mod_cast hcv

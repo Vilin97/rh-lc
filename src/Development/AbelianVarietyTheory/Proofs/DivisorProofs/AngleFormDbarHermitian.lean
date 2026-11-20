@@ -19,7 +19,7 @@ theorem vec_eq_sum_single_smul {D : ℕ} (ξ : V D) :
 
 theorem angleForm_add_vec {D : ℕ} (n : ℕ) (a a' : V D → ℝ) (q : V D → ℂ) (ξ η z : V D) :
     angleForm n a a' q (ξ + η) z = angleForm n a a' q ξ z + angleForm n a a' q η z := by
-  simp only [angleForm, map_add, map_sub, map_mul]
+  simp only [angleForm, map_add (f := _), map_sub, map_mul]
   ring
 
 theorem angleForm_eq_sum_coeff {D : ℕ} (n : ℕ) (a a' : V D → ℝ) (q : V D → ℂ) (ξ z : V D) :

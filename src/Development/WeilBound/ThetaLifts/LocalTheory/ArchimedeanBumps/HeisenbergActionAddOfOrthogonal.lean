@@ -23,7 +23,7 @@ theorem rho_rho (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (u u' : Matrix (Fin
     M.co.rho ψ u (M.co.rho ψ u' Φ) = ψ (⅟(2 : AF F) * sy σ X W u u') • M.co.rho ψ (u + u') Φ := by
   funext x
   have h2 : ⅟(2 : AF F) * 2 = 1 := invOf_mul_self _
-  simp only [Darboux.rho, schr, Pi.smul_apply, smul_eq_mul, map_add, Prod.fst_add, Prod.snd_add, sy, M.co.2 u u', ← mul_assoc,
+  simp only [Darboux.rho, schr, Pi.smul_apply, smul_eq_mul, map_add (f := _), Prod.fst_add, Prod.snd_add, sy, M.co.2 u u', ← mul_assoc,
     ← AddChar.map_add_eq_mul, add_assoc]
   congr 2
   simp only [add_dotProduct, dotProduct_add]

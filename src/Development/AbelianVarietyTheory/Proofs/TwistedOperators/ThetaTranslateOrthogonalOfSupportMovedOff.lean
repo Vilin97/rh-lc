@@ -162,12 +162,12 @@ theorem pairing_charSpan {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {χS χT
     obtain ⟨a₁, b₁, c₁⟩ := h₁
     obtain ⟨a₂, b₂, c₂⟩ := h₂
     have e1 : (Tm fun t => (p₁ + p₂) t * Φ t) = (Tm fun t => p₁ t * Φ t) + Tm fun t => p₂ t * Φ t := by
-      rw [← map_add]; congr 1; funext t; simp [add_mul]
+      rw [← map_add (f := _)]; congr 1; funext t; simp [add_mul]
     have e2 : (Tm fun t => (starRingEnd ℂ) ((p₁ + p₂) (actO S T 1 g t)) * Φ t) =
         (Tm fun t => (starRingEnd ℂ) (p₁ (actO S T 1 g t)) * Φ t) +
           Tm fun t => (starRingEnd ℂ) (p₂ (actO S T 1 g t)) * Φ t := by
-      rw [← map_add]; congr 1; funext t; simp [add_mul]
-    rw [e1, e2, map_add]
+      rw [← map_add (f := _)]; congr 1; funext t; simp [add_mul]
+    rw [e1, e2, map_add (f := _)]
     refine ⟨GlobalTheory.WeilVacMove.isTheta_add a₁ a₂, GlobalTheory.WeilVacMove.isTheta_add b₁ b₂, ?_⟩
     rw [((laws a₁ hF).2.2.2.1 _ a₂).2, ((laws (hw.om_pres _ _ b₁) hf).2.2.2.1 _ (hw.om_pres _ _ b₂)).1, c₁, c₂]
   | smul c p _ h =>

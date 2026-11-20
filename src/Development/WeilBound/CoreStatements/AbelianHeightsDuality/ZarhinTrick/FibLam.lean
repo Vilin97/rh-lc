@@ -36,7 +36,7 @@ theorem lam_zb (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) {P : LB (A ⊗ 
     cls_tens (LB.isLB_linComb hL _ _) (LB.isLB_linComb hD.isLB _ _) (isLB_zb mu α s hD.isLB hL)
   rw [hc, cls_linComb hL, cls_linComb hD.isLB]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [lam_eq_lamHom, map_add, map_sum, map_sum]
+    rw [lam_eq_lamHom, map_add (f := _), map_sum, map_sum]
   simp only [map_zsmul, one_smul, ← lam_eq_lamHom, Fintype.sum_prod_type]
   simp only [Fin.sum_univ_four, line_bundle_pairing_zeroth hD l mu s L hL e, line_bundle_pairing_first hD hD' l mu s L hL e,
     line_bundle_pairing_second hD l mu s L hL e, line_bundle_pairing_third hD hD' l mu s L hL e, lam_phiP hD hD' s, zcPair, smul_add]

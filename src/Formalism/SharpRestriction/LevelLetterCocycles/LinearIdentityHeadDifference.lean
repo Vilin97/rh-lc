@@ -161,7 +161,7 @@ theorem hor_diff (C : LevC.Ctx W) {T₂ Y : LocLat G Qp LL O} (ι : LatHom T₂.
     have s12 : ∑ j, o k j • HhY j = lA W ^ κY • ∑ j, o k j • bY j + W.π₀ • ∑ j, o k j • SY j := by
       simp only [hSYe, smul_add, Finset.sum_add_distrib]
       rw [s1, s2]
-    rw [hD, hSe, map_add, Formalism.MainNotions.UnusedSlot80.Relay2.mapA_smul, Formalism.MainNotions.UnusedSlot80.Relay2.mapA_smul, hmk, s12]
+    rw [hD, hSe, map_add (f := _), Formalism.MainNotions.UnusedSlot80.Relay2.mapA_smul, Formalism.MainNotions.UnusedSlot80.Relay2.mapA_smul, hmk, s12]
     exact linear_identity_head_difference _ _ _ _ _ _ _ _
   have hγT := sub_eq_iff_eq_add'.1 hxe
   have hγι : W.γ Y (W.map ι (Hh k)) = W.map ι (Hh k) + W.π₀ ^ (A.M PD.p) • W.map ι x := by

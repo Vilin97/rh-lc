@@ -39,5 +39,5 @@ theorem UpperTheory.V.Ws.Lat.locVanK :
   have key := lvk_coord (fun g : D.Gp p => residue c.O (γ g : c.O)) z fun φ =>
     UpperTheory.V.GradeZeroInterpolatingElement.locVanP D hD hP (ResidueField c.O) (residue c.O)
       (fun a ha => (residue_eq_zero_iff a).2 ha) γ hγ p hp (fun g => φ (z g)) (hlc.comp φ) fun g h => by
-        simp only [hco, hs, map_add, map_smul, smul_eq_mul]
+        simp only [hco, hs, map_add (f := _), map_smul, smul_eq_mul]
   simpa only [hf] using key

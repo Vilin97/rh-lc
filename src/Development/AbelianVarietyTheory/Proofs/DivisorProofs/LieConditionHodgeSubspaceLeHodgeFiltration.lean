@@ -41,7 +41,7 @@ theorem lieZ_le_Fil : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.Dat
 
   have hρ : β b.ρ * ((D.tr : k) - β b.ρ) = (D.nm : k) := by
     have := congrArg β b.ρ_root
-    simp only [map_add, map_sub, map_mul, map_pow, map_intCast, map_zero] at this
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_intCast, map_zero] at this
     linear_combination -this
 
   have hy0 : T ((T - ((D.tr : k) - β b.ρ) • 1) x) - β b.ρ • (T - ((D.tr : k) - β b.ρ) • 1) x = 0 := by

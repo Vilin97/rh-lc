@@ -52,7 +52,7 @@ theorem psi_mul (c : R →+* R) (D : GL (Fin m) R) (x y : Matrix (Fin m) (Fin m)
 
 theorem psi_add (c : R →+* R) (D : GL (Fin m) R) (x y : Matrix (Fin m) (Fin m) R) :
     psi c D (x + y) = psi c D x + psi c D y := by
-  simp only [psi, map_add, Matrix.transpose_add, Matrix.mul_add, Matrix.add_mul]
+  simp only [psi, map_add (f := _), Matrix.transpose_add, Matrix.mul_add, Matrix.add_mul]
 
 theorem psi_smul (c : R →+* R) (D : GL (Fin m) R) (r : R) (x : Matrix (Fin m) (Fin m) R) :
     psi c D (r • x) = c r • psi c D x := by
@@ -72,7 +72,7 @@ theorem psi_pow (c : R →+* R) (D : GL (Fin m) R) (x : Matrix (Fin m) (Fin m) R
 theorem psi_aeval (c : R →+* R) (D : GL (Fin m) R) (x : Matrix (Fin m) (Fin m) R) (p : R[X]) :
     psi c D (aeval x p) = aeval (psi c D x) (p.map c) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, psi_add, hp, hq, Polynomial.map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), psi_add, hp, hq, Polynomial.map_add (f := _), map_add (f := _)]
   | monomial k r =>
     rw [aeval_monomial, Polynomial.map_monomial, aeval_monomial, Algebra.algebraMap_eq_smul_one, smul_mul_assoc,
       one_mul, psi_smul, psi_pow, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul]

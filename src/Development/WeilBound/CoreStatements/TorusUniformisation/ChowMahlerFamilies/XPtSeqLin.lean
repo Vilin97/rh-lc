@@ -65,7 +65,7 @@ theorem PositivityTheory.Xgn.t_pt_seq_lin : ∀ {o C : Type} [CommRing o] [Field
       obtain ⟨y, hy, hy'⟩ := AddSubgroup.mem_map.1 hc
       refine AddSubgroup.mem_map.2 ⟨b + y, add_mem hb1 (hS hy), ?_⟩
       simp only [LinearMap.toAddMonoidHom_coe] at hy' ⊢
-      simp [map_add, hy']
+      simp [map_add (f := _), hy']
     · rintro ⟨b, hb1, rfl⟩
       refine AddSubgroup.mem_map.2 ⟨(b, ht b), AddSubgroup.mem_inf.2 ⟨?_, AddSubgroup.mem_prod.2 ⟨hb1, AddSubgroup.mem_top _⟩⟩, rfl⟩
       rw [hDel]

@@ -24,7 +24,7 @@ theorem exists_form (e : A ≃+* (P → ℝ)) (he' : Continuous e.symm)
       ∀ x, χ x = Complex.exp (2 * Real.pi * Complex.I * ((∑ w, a w * e x w : ℝ) : ℂ)) := by
   classical
   obtain ⟨L, hLc, hLa, hL⟩ := GlobalTheory.GaugeEx.SdInf.exists_log_char (fun u => χ (e.symm u))
-    (hχc.comp he') (fun u => hχ1 _) (fun u v => by rw [map_add, hχa])
+    (hχc.comp he') (fun u => hχ1 _) (fun u v => by rw [map_add (f := _), hχa])
   let Lh : (P → ℝ) →+ ℝ := AddMonoidHom.mk' L hLa
   let Ll : (P → ℝ) →ₗ[ℝ] ℝ :=
     { toFun := L, map_add' := hLa, map_smul' := fun c u => map_real_smul Lh hLc c u }
@@ -173,7 +173,7 @@ theorem GlobalTheory.CompanionTheory.SW.selfDual_pi_inf : ∀ (F : Type) [Field 
   have hpc : Continuous (psiInf F ψ) := hψ.1.comp (continuous_id.prodMk continuous_const)
   obtain ⟨a, ha, hχ⟩ := exists_form (coord F) he' (psiInf F ψ) hpc (fun _ => hψ.2.1 _)
     (fun u v => by
-      simp only [psiInf, map_add, ← AddChar.map_add_eq_mul]
+      simp only [psiInf, map_add (f := _), ← AddChar.map_add_eq_mul]
       congr 1
       exact Prod.ext rfl (add_zero _).symm)
     (GlobalTheory.T.localComponents_nontrivial_adelic_character F ψ hψ).2.2

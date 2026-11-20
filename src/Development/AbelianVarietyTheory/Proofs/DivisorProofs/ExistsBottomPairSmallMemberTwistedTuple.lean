@@ -56,7 +56,7 @@ theorem conj_isCoprime_halfDifferent {I : Ideal (𝓞 D.host.E)}
   obtain ⟨a, ha, b, hb', e⟩ := Submodule.mem_sup.1 ((Ideal.eq_top_iff_one _).1 h)
   obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.1 hb'
   have e1 := congrArg (MulSemiringAction.toRingHom _ (𝓞 D.host.E) D.host.conj) e
-  rw [map_add, map_mul, map_natCast, map_one] at e1
+  rw [map_add (f := _), map_mul, map_natCast, map_one] at e1
   refine hM.ne_top ((Ideal.eq_top_iff_one _).2 ?_)
   rw [← e1]
   exact M.add_mem (hle (Ideal.mem_sup_left (Ideal.smul_mem_pointwise_smul D.host.conj _ _ ha))) (M.mul_mem_left _ h2)

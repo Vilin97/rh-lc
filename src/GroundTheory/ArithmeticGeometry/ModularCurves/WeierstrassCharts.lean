@@ -22,7 +22,7 @@ theorem equation_xC_yC :
       C (X ^ 3 + C W.a₂ * X ^ 2 + C W.a₄ * X + C W.a₆)) = 0 := AdjoinRoot.mk_self
   have ha : ∀ a : R, algebraMap R W.toAffine.CoordinateRing a =
       AdjoinRoot.mk W.toAffine.polynomial (C (C a)) := fun a => rfl
-  simp only [map_sub, map_add, map_mul, map_pow, AdjoinRoot.mk_X] at h
+  simp only [map_sub, map_add (f := _), map_mul, map_pow, AdjoinRoot.mk_X] at h
   simp only [xC, yC, ha]
   linear_combination h
 
@@ -54,7 +54,7 @@ theorem equation_xI_zI :
     AdjoinRoot.mk_self
   have ha : ∀ a : R, algebraMap R (InfChart W) a = AdjoinRoot.of (infPolynomial W) (C a) :=
     fun a => rfl
-  simp only [map_sub, map_add, map_mul, map_pow, AdjoinRoot.mk_X, AdjoinRoot.mk_C] at h
+  simp only [map_sub, map_add (f := _), map_mul, map_pow, AdjoinRoot.mk_X, AdjoinRoot.mk_C] at h
   simp only [xI, zI, ha]
   linear_combination h
 
@@ -70,7 +70,7 @@ theorem eval₂_infPolynomial :
       (algebraMap _ (Overlap W) (xC W) * yInv W) = 0 := by
   have E := congrArg (algebraMap W.toAffine.CoordinateRing (Overlap W)) (equation_xC_yC W)
   have H := yC_mul_yInv W
-  simp only [map_add, map_mul, map_pow, ← IsScalarTower.algebraMap_apply] at E
+  simp only [map_add (f := _), map_mul, map_pow, ← IsScalarTower.algebraMap_apply] at E
   simp only [infPolynomial, eval₂_add, eval₂_mul, eval₂_pow, eval₂_X, eval₂_C, eval₂_sub,
     Polynomial.coe_eval₂RingHom]
   set u := yInv W

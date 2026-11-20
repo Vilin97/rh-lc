@@ -230,7 +230,7 @@ theorem perp_of_fix {p : PlF D} (f : Fin (D.R.rS + 1) → Vp D p) (g : Vp D p �
 
 theorem h_add_right (p : PlF D) (x y y' : Vp D p) : (locH Z p).h x (y + y') = (locH Z p).h x y + (locH Z p).h x y' := by
   show LocFacts₂ _ _ _ _ = LocFacts₂ _ _ _ _ + LocFacts₂ _ _ _ _
-  simp only [LocFacts₂, Pi.add_apply, map_add, add_mul, mul_add, Finset.sum_add_distrib]
+  simp only [LocFacts₂, Pi.add_apply, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib]
 
 theorem h_smul_right (p : PlF D) (c) (x y : Vp D p) : (locH Z p).h x (c • y) = (Z.M p).L.cj c * (locH Z p).h x y := by
   show LocFacts₂ _ _ _ _ = _ * LocFacts₂ _ _ _ _
@@ -255,13 +255,13 @@ theorem ext_unitary {p : PlF D} {h : GV D} (hh : h ∈ Formalism.HermitianLattic
   have hy : y ∈ Submodule.span (D.s.atP p).Ep (Set.range (baseChange₂ D p)) := by rw [span_baseChange_eq_top]; trivial
   induction hx using Submodule.span_induction with
   | zero => rw [map_zero, z1, z1]
-  | add a b _ _ ha hb => rw [map_add, (locH Z p).h_add_left, (locH Z p).h_add_left, ha, hb]
+  | add a b _ _ ha hb => rw [map_add (f := _), (locH Z p).h_add_left, (locH Z p).h_add_left, ha, hb]
   | smul c a _ ha => rw [map_smul, (locH Z p).h_smul_left, (locH Z p).h_smul_left, ha]
   | mem a ha =>
     obtain ⟨a, rfl⟩ := ha
     induction hy using Submodule.span_induction with
     | zero => rw [map_zero, z2, z2]
-    | add a b _ _ ha hb => rw [map_add, h_add_right, h_add_right, ha, hb]
+    | add a b _ _ ha hb => rw [map_add (f := _), h_add_right, h_add_right, ha, hb]
     | smul c a _ ha => rw [map_smul, h_smul_right, h_smul_right, ha]
     | mem b hb => obtain ⟨b, rfl⟩ := hb; exact key a b
 

@@ -39,7 +39,7 @@ private theorem schr_left {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model
     have e1 : (mat u - 1) * c = (mat u - 1) * z := by
       rw [← hu', Matrix.smul_mul, ← Matrix.mul_smul, ← hz, Matrix.mul_smul, Matrix.smul_mul]
     rw [e1, Matrix.sub_mul, Matrix.one_mul, add_sub_cancel]
-  rw [e, map_add]
+  rw [e, map_add (f := _)]
   exact h1 c hc (by rw [← map_smul, ← Matrix.smul_mul, hu']) _ ⟨c, hc, rfl⟩ _ (by rw [← map_smul, ← map_smul, hz]) f
 
 end Left

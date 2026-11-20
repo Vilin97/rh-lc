@@ -57,7 +57,7 @@ theorem stMap_crisIncl_aeval {hL : L.1 ≤ L'.1} (hm : IsMor hL f ρ ρ') (g : �
         (stMap P f (crisIncl P ↥L.1 V x)) := by
   induction q using Polynomial.induction_on' with
   | add p r hp hr =>
-    simp only [Polynomial.map_add, map_add, LinearMap.add_apply, hp, hr]
+    simp only [Polynomial.map_add (f := _), map_add (f := _), LinearMap.add_apply, hp, hr]
   | monomial n a =>
     rw [Polynomial.map_monomial, aeval_monomial, aeval_monomial, Module.End.mul_apply, Module.End.mul_apply,
       Module.algebraMap_end_apply, Module.algebraMap_end_apply, map_smul, stMap_smul P f (hm.smul a),

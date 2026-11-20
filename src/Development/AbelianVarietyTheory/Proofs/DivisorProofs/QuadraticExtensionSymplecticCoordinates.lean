@@ -13,11 +13,11 @@ def pairBil {R S : Type} [CommRing R] [CommRing S] [Algebra R S] (c : S →ₐ[R
     (K : Matrix (Fin d) (Fin d) S) : LinearMap.BilinForm R (Fin d → S) :=
   LinearMap.mk₂ R (fun b a => Algebra.trace R S (-∑ j, ∑ l, b j * K j l * c (a l)))
     (fun b b' a => by
-      simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, neg_add, map_add])
+      simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, neg_add, map_add (f := _)])
     (fun r b a => by
       simp only [Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum, ← smul_neg, map_smul, smul_eq_mul])
     (fun b a a' => by
-      simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib, neg_add])
+      simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib, neg_add])
     (fun r b a => by
       simp only [Pi.smul_apply, map_smul, mul_smul_comm, ← Finset.smul_sum, ← smul_neg, smul_eq_mul])
 
@@ -80,7 +80,7 @@ theorem cA_cA (σ : E →ₐ[F] E) (hσ : ∀ a, σ (σ a) = a) (x : AE F E) : c
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [cA, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 end GlobalTheory.PairCoords
 

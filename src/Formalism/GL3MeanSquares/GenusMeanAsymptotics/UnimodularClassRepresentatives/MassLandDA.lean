@@ -34,13 +34,13 @@ theorem exists_rep (y : AdjoinRoot (X ^ 2 - C c)) :
     omega
   obtain ⟨b, a, hab⟩ := exists_eq_X_add_C_of_natDegree_le_one h2
   refine ⟨a, b, ?_⟩
-  rw [h1, hab, map_add, map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_C, AdjoinRoot.mk_X, add_comm]
+  rw [h1, hab, map_add (f := _), map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_C, AdjoinRoot.mk_X, add_comm]
 
 theorem rep_eq_zero {a b : F}
     (h : AdjoinRoot.of (X ^ 2 - C c) a + AdjoinRoot.of _ b * AdjoinRoot.root _ = 0) :
     a = 0 ∧ b = 0 := by
   have h1 : AdjoinRoot.mk (X ^ 2 - C c) (C b * X + C a) = 0 := by
-    rw [map_add, map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_C, AdjoinRoot.mk_X, add_comm]
+    rw [map_add (f := _), map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_C, AdjoinRoot.mk_X, add_comm]
     exact h
   by_contra hne
   have h0 : (C b * X + C a : F[X]) ≠ 0 := by

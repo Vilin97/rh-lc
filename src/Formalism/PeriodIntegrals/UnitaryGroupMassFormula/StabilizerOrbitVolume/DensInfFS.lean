@@ -95,7 +95,7 @@ theorem freeSurj_of (h : SemisimpleTens) : FreeSurj := by
     exact e2
   let half : Ainf F ⊗[F] E := algebraMap F (Ainf F ⊗[F] E) (1/2)
   have hh : half + half = 1 := by
-    simp only [half, ← map_add]; norm_num
+    simp only [half, ← map_add (f := _)]; norm_num
     first | rfl | exact Algebra.TensorProduct.one_def.symm
   have hsh : s half = half := (Algebra.TensorProduct.map (AlgHom.id F (Ainf F)) σ).commutes _
   have hw : ∀ j, ∃ w : Fin M → Ainf F ⊗[F] E, ∀ i, ∑ k, Z i k * w k =

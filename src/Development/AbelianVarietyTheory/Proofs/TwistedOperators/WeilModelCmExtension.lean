@@ -29,7 +29,7 @@ theorem finprod_add_of_at {F : Type} [Field F] [NumberField F] {κ : Type} [Fint
   refine finprod_congr fun v => ?_
   have hv : (fun i => evFin F v ((x + z) i)) = fun i => evFin F v (x i) := by
     funext i
-    rw [Pi.add_apply, map_add, GlobalTheory.ThK.EvUniqInf.evFin_eq_zero_of_at z hz v i, add_zero]
+    rw [Pi.add_apply, map_add (f := _), GlobalTheory.ThK.EvUniqInf.evFin_eq_zero_of_at z hz v i, add_zero]
   rw [hv]
 
 private theorem eq_of_pure_eq_twisted_operators {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
@@ -56,7 +56,7 @@ private theorem eq_of_pure_eq_twisted_operators {F : Type} [Field F] [NumberFiel
   have hev : (fun i => evI F ((y + z) i)) = a := by
     funext i
     show InfiniteAdeleRing.ringEquiv_mixedSpace F ((y i).1 + (z i).1) = a i
-    rw [map_add]
+    rw [map_add (f := _)]
     show InfiniteAdeleRing.ringEquiv_mixedSpace F (y i).1 + InfiniteAdeleRing.ringEquiv_mixedSpace F
       ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (a i - evI F (y i))) = a i
     rw [RingEquiv.apply_symm_apply]

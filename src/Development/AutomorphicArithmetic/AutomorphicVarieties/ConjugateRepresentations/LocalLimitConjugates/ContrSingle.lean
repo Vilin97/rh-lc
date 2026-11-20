@@ -38,7 +38,7 @@ private theorem contr_single {S : Type} [AddCommGroup S] [Module ℂ S] {d : ℕ
   induction m using TensorProduct.induction_on with
   | zero => simp
   | tmul φ u => simp [contr_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem abs_type {K H S : Type} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
     [AddCommGroup H] [Module ℝ H] [TopologicalSpace H] [IsTopologicalAddGroup H]
@@ -85,7 +85,7 @@ private theorem abs_type {K H S : Type} [Group K] [TopologicalSpace K] [IsTopolo
     fun ℓ w => ?_, fun ω hω X i => ?_⟩
   · induction w using ind with
     | h0 => simpa using continuous_const
-    | ha x y hx hy => simpa only [map_add] using hx.fun_add hy
+    | ha x y hx hy => simpa only [map_add (f := _)] using hx.fun_add hy
     | ht v X =>
       have e : (fun k => ℓ (ρ k (v ⊗ₜ[ℝ] PiTensorProduct.tprod ℝ X))) = fun k => ∑ j, ((M k⁻¹)ᵀ *ᵥ v) j *
           ((ℓ.restrictScalars ℝ ∘ₗ TensorProduct.mk ℝ (Fin d → ℂ) P (Pi.single j 1)).compMultilinearMap
@@ -112,12 +112,12 @@ private theorem abs_type {K H S : Type} [Group K] [TopologicalSpace K] [IsTopolo
     refine ⟨T, Pi.single i 1 ⊗ₜ[ℝ] PiTensorProduct.tprod ℝ X, fun k w => ?_, by rw [hT, contr_single]⟩
     induction w using ind with
     | h0 => simp
-    | ha x y hx hy => simp only [map_add, hx, hy]
+    | ha x y hx hy => simp only [map_add (f := _), hx, hy]
     | ht v Y =>
       rw [hρ, hT, hT, hω]
       induction ω Y using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul φ u =>
         rw [TensorProduct.map_tmul, contr_tmul, contr_tmul, map_smul, Matrix.toLin'_apply, Matrix.mulVec_transpose,
           ← Matrix.dotProduct_mulVec, Matrix.mulVec_mulVec, ← map_mul, inv_mul_cancel, map_one, Matrix.one_mulVec]

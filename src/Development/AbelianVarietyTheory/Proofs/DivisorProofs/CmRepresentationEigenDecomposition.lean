@@ -34,7 +34,7 @@ theorem finrank_common_eigenspace_eq_one :
       map_zero' := hext _ _ fun x => by
         rw [hT', LinearMap.zero_apply]; convert P.map_zero; ext; simp [mulL]
       map_add' := fun a b => hext _ _ fun x => by
-        rw [LinearMap.add_apply, hT', hT', hT', ← map_add]; congr 1; ext; simp [mulL, add_mul] }
+        rw [LinearMap.add_apply, hT', hT', hT', ← map_add (f := _)]; congr 1; ext; simp [mulL, add_mul] }
 
   obtain ⟨α, hα⟩ := Field.exists_primitive_element ℚ E
   obtain ⟨n, hn0, hnO⟩ := hO α
@@ -108,7 +108,7 @@ theorem finrank_common_eigenspace_eq_one :
       obtain ⟨k, rfl⟩ := hx
       rw [map_pow]; exact Submodule.subset_span ⟨k, rfl⟩
     | zero => rw [map_zero, LinearMap.zero_apply]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply]; exact Submodule.add_mem _ hx hy
     | smul m x _ hx =>
       rw [map_zsmul, LinearMap.smul_apply, ← Int.cast_smul_eq_zsmul ℂ]
       exact Submodule.smul_mem _ _ hx
@@ -238,7 +238,7 @@ theorem finrank_common_eigenspace_eq_one :
           simp [θO, r]
         | zero => simp
         | add x y _ _ hx hy =>
-          rw [map_add, LinearMap.add_apply, hx, hy, Subring.coe_add, map_add, add_smul]
+          rw [map_add (f := _), LinearMap.add_apply, hx, hy, Subring.coe_add, map_add (f := _), add_smul]
         | smul m x _ hx =>
           rw [map_zsmul, LinearMap.smul_apply, hx, AddSubgroupClass.coe_zsmul, map_zsmul, smul_assoc]
       obtain ⟨N, hN, z, hz, hzE⟩ := hA a

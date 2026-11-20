@@ -97,7 +97,7 @@ theorem liftE_eq (v : Pl F) (y : Fv F v ⊗[F] E) : liftE v y = Supp.singleTens 
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_liftE_mul (v : Pl F) {a b c : Type} [Fintype b] (x : Matrix a b (Fv F v ⊗[F] E)) (P : Matrix b c (AE F E)) :
     x.map (liftE v) * P = (x * P.map (compFin F E v)).map (liftE v) := by
@@ -135,7 +135,7 @@ theorem map_liftE_cA (σ : E →ₐ[F] E) (v : Pl F) {a b : Type} (x : Matrix a 
   induction x i j using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {β : Type} [Fintype β] [DecidableEq β]
 

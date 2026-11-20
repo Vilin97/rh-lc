@@ -114,7 +114,7 @@ theorem index_smul_mem [IsTopologicalGroup G'] (PD : PeriodData G Qp K₀ K B Bd
         rw [trCochain_apply, map_sum, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun q _ => ?_
       obtain ⟨a, ha⟩ := MonoidHom.mem_range.mp (hD.1 g q)
-      rw [← ha, hcsplit a, hinv, map_add]
+      rw [← ha, hcsplit a, hinv, map_add (f := _)]
       rfl
     rw [Nat.cast_smul_eq_nsmul]
     have hh : ι.range.index • c g = (∑ q : G' ⧸ ι.range, repD T.L (Quotient.out (g • q))

@@ -110,7 +110,7 @@ theorem GlobalTheory.ThK.UnipDom.coC_sub_conj_plane : ∀ (F E : Type) [Field F]
     rw [← hwx, dotProduct_comm]; simp only [fA]; rw [hcV, incM_mulVec_incV]
   have hrec : w = c • incV F H.x + incV F H.y + incM F H.ι *ᵥ (incM F (Y₁.Jᵀ)⁻¹ *ᵥ s) := by
     have h := congrArg (fun A => (inclR (F := F) (AF F)).mapMatrix A *ᵥ w) hM
-    simp only [map_add, map_sub, map_mul, map_one, Matrix.one_mulVec, Matrix.add_mulVec, Matrix.sub_mulVec,
+    simp only [map_add (f := _), map_sub, map_mul, map_one, Matrix.one_mulVec, Matrix.add_mulVec, Matrix.sub_mulVec,
       ← Matrix.mulVec_mulVec, hvm, hdy, hdx] at h
     rw [← hQ]
     conv_lhs => rw [← h]

@@ -24,7 +24,7 @@ lemma hC_smul_left (c : ℂ) (u v : Fin r → ℂ) : hermC τ G (c • u) v = c 
   ring
 
 lemma hC_add_right (u v v' : Fin r → ℂ) : hermC τ G u (v + v') = hermC τ G u v + hermC τ G u v' := by
-  simp only [hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 lemma hC_smul_right (c : ℂ) (u v : Fin r → ℂ) : hermC τ G u (c • v) = conj c * hermC τ G u v := by
   simp only [hermC, Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum]

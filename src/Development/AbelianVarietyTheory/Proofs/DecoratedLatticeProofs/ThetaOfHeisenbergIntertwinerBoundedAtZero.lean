@@ -49,6 +49,6 @@ theorem thetaMap : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ
     intro k L hL hLf w
     have h2 := hs k (ι.comp L) (hιc.comp hL) (fun t => hιf (L t) (hLf t)) (ι w)
     rw [hfun]
-    simpa [map_add] using h2
+    simpa [map_add (f := _)] using h2
 
 end GlobalTheory.ThetaMap

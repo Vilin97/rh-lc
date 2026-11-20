@@ -99,7 +99,7 @@ theorem AreaFormulaLocal.proof : AreaFormulaLocal.Statement := by
   obtain ⟨m, c, c', hcc, hc'⟩ := exists_frame (LinearMap.range (D : E →ₗ[ℝ] F)) hWk
   let Q : F →ₗ[ℝ] EuclideanSpace ℝ (Fin k ⊕ Fin m) :=
     { toFun := fun z => pairPt (c z) (c' z)
-      map_add' := fun z w => by rw [map_add, map_add, pairPt_add]
+      map_add' := fun z w => by rw [map_add (f := _), map_add (f := _), pairPt_add]
       map_smul' := fun r z => by rw [map_smul, map_smul, pairPt_smul]; rfl }
   have hQ : ∀ z, ‖Q z‖ = ‖z‖ := hcc
 

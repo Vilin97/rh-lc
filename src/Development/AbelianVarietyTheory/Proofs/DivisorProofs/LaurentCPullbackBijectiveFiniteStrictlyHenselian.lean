@@ -118,7 +118,7 @@ private lemma laurentMap_fst_prod_snd_bijective (T₁ T₂ : Type) [CommRing T�
   · obtain ⟨y₁, hy₁⟩ := hsurj (RingHom.fst T₁ T₂) (fun a => (a, 0)) (fun _ => rfl) p.1
     obtain ⟨y₂, hy₂⟩ := hsurj (RingHom.snd T₁ T₂) (fun a => (0, a)) (fun _ => rfl) p.2
     refine ⟨LaurentPolynomial.C (1, 0) * y₁ + LaurentPolynomial.C (0, 1) * y₂, ?_⟩
-    simp only [RingHom.prod_apply, map_add, map_mul, _root_.GlobalTheory.EtC.GmStep.laurentMap_C, hy₁, hy₂]
+    simp only [RingHom.prod_apply, map_add (f := _), map_mul, _root_.GlobalTheory.EtC.GmStep.laurentMap_C, hy₁, hy₂]
     refine Prod.ext ?_ ?_ <;> simp
 
 open CategoryTheory Limits AlgebraicGeometry Opposite Simplicial in

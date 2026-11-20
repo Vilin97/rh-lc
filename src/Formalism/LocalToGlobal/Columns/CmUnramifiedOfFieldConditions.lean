@@ -91,7 +91,7 @@ theorem exists_frameAt (w : HeightOneSpectrum (𝓞 K)) (N : Submodule (𝓞 K) 
     rw [hβ _ ((atW w N).add_mem hx' hy'), hβ _ hx', hβ _ hy']
     funext i
     have e : (⟨x + y, (atW w N).add_mem hx' hy'⟩ : atW w N) = ⟨x, hx'⟩ + ⟨y, hy'⟩ := rfl
-    rw [e, map_add, Finsupp.add_apply, map_add]
+    rw [e, map_add (f := _), Finsupp.add_apply, map_add (f := _)]
     rfl
   · intro x hx
     exact dif_neg fun h => hx ((hmem x).2 h)

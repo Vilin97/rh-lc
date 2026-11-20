@@ -32,7 +32,7 @@ theorem absIso : AbsIso := by
         change ρ (g * z) (f x) = ρ (h⁻¹ * g * z * h) (f x)
         rw [← e]
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
       | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
     · intro h0
       apply hf0
@@ -72,7 +72,7 @@ theorem absIso : AbsIso := by
     let q0 : I' →ₗ[ℂ] T :=
       { toFun := fun v => τ.asModuleEquiv (Q ⟨ρH.asModuleEquiv.symm v.1, v.2⟩)
         map_add' := fun a b => by
-          rw [← map_add]; congr 1; rw [← map_add]; congr 1
+          rw [← map_add (f := _)]; congr 1; rw [← map_add (f := _)]; congr 1
         map_smul' := fun c a => by
           rw [RingHom.id_apply, ← map_smul, ← LinearMap.map_smul_of_tower]; congr 2 }
     obtain ⟨p, hp⟩ := LinearMap.exists_extend q0

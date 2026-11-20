@@ -65,7 +65,7 @@ theorem haar_fundDomain_transfer_k : ∀ (F E : Type) [Field F] [NumberField F] 
       filter_upwards [h𝓕.ae_covers] with x ⟨g, hg⟩
       refine ⟨⟨co.e g, into g g.2⟩, g +ᵥ x, hg, ?_⟩
       show co.e ((g : WOF F E nS nT) + x) = co.e g + co.e x
-      rw [map_add]
+      rw [map_add (f := _)]
     · intro p q hpq
       let g : ratLF F E nS nT := ⟨co.e.symm p, onto' p p.2⟩
       let h : ratLF F E nS nT := ⟨co.e.symm q, onto' q q.2⟩
@@ -81,7 +81,7 @@ theorem haar_fundDomain_transfer_k : ∀ (F E : Type) [Field F] [NumberField F] 
         rw [← Set.image_vadd, ← Set.image_vadd, Set.image_image, Set.image_image]
         refine Set.image_congr fun w _ => ?_
         show (r : (κ → AF F) × (κ → AF F)) + co.e w = co.e ((k : WOF F E nS nT) + w)
-        rw [map_add, hk, LinearEquiv.apply_symm_apply]
+        rw [map_add (f := _), hk, LinearEquiv.apply_symm_apply]
       show MeasureTheory.AEDisjoint (ν.map me) (p +ᵥ me '' 𝓕) (q +ᵥ me '' 𝓕)
       rw [himg p g rfl, himg q h rfl, MeasureTheory.AEDisjoint, ← Set.image_inter me.injective, me.map_apply,
         me.preimage_image]

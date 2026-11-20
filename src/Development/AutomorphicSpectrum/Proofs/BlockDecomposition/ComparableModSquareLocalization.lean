@@ -39,7 +39,7 @@ theorem mem_span_or_mem_span {S : Type} [CommRing S] (ϖ : S)
   · right
     have hz := key e he heP
     have hb := congrArg (Ideal.Quotient.mk (compI P)) hcd'
-    simp only [map_mul, map_add, map_sub, map_one, map_pow, hz, sub_zero, one_mul] at hb
+    simp only [map_mul, map_add (f := _), map_sub, map_one, map_pow, hz, sub_zero, one_mul] at hb
     rw [hb]
     exact Ideal.mem_span_pair.2 ⟨Ideal.Quotient.mk _ c', Ideal.Quotient.mk _ d', by ring⟩
   · left
@@ -55,7 +55,7 @@ theorem mem_span_or_mem_span {S : Type} [CommRing S] (ϖ : S)
       rw [map_sub, map_one] at hz
       exact (sub_eq_zero.1 hz).symm
     have ha := congrArg (Ideal.Quotient.mk (compI P)) hcd
-    simp only [map_mul, map_add, map_pow, hz', one_mul] at ha
+    simp only [map_mul, map_add (f := _), map_pow, hz', one_mul] at ha
     rw [ha]
     exact Ideal.mem_span_pair.2 ⟨Ideal.Quotient.mk _ c, Ideal.Quotient.mk _ d, by ring⟩
 

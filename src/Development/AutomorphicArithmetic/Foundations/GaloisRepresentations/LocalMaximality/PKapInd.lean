@@ -95,7 +95,7 @@ private theorem ind_of {d : ℕ} {K S E : Type} [Field K] [Algebra ℂ K] [CommR
     simp [this, map_mu T π y hX hY l]
   rw [hl] at h1
   have h2 := congrArg π h1
-  rw [map_add, map_zsmul, hr, smul_zero, add_zero, map_sub] at h2
+  rw [map_add (f := _), map_zsmul, hr, smul_zero, add_zero, map_sub] at h2
   simpa [sub_eq_zero] using h2
 
 end UpperTheory.Gal.productCup_of_system

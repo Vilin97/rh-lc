@@ -84,12 +84,12 @@ theorem good_add (M : Model σ Y Wd) {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ)
   obtain ⟨ha, a', ha', hpa, hta⟩ := ha
   obtain ⟨hb, b', hb', hpb, htb⟩ := hb
   refine ⟨Submodule.add_mem _ ha hb, a' + b', Submodule.add_mem _ ha' hb', fun x => ?_, fun w => ?_⟩
-  · simp only [map_add, Pi.add_apply]
+  · simp only [map_add (f := _), Pi.add_apply]
     exact (hpa x).add (hpb x)
   · have e : (fun t => thetaSum F (M.co.rho ψ w (T t (a + b)))) =
         fun t => thetaSum F (M.co.rho ψ w (T t a)) + thetaSum F (M.co.rho ψ w (T t b)) := by
       funext t
-      rw [map_add, theta_add M hψ w (hT t a ha) (hT t b hb)]
+      rw [map_add (f := _), theta_add M hψ w (hT t a ha) (hT t b hb)]
     rw [e, theta_add M hψ w ha' hb']
     exact (hta w).add (htb w)
 

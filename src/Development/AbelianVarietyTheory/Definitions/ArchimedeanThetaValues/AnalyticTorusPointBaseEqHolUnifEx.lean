@@ -359,7 +359,7 @@ theorem isIota (la : Λ.A.La) : Out.GtPtF.IsIota (Λ.ε la.y) (Λ.ex0 (Λ.A.P0 l
       (DVR.invGen_isGen _ _ _ _ (a.D₀.psi_gen _)))
       (DVR.invGen_isGen _ _ _ _ (DVR.pullGen_isGen _ _ _ _ a.D₀.rig_gen _))) _
   · rintro (((k | k) | k) | k)
-    · exact (by rw [map_add]; rfl : _ = 𝟙 (Sp ℂ) ≫ Out.jFK (R := ℂ) ℂ ≫ a.D₀.xK (Λ.ε (la.y + x))).trans (hc _)
+    · exact (by rw [map_add (f := _)]; rfl : _ = 𝟙 (Sp ℂ) ≫ Out.jFK (R := ℂ) ℂ ≫ a.D₀.xK (Λ.ε (la.y + x))).trans (hc _)
     · exact hc _
     · exact hc _
     · change 𝟙 (Sp ℂ) ≫ Out.jFK (R := ℂ) ℂ ≫ Out.jK ℂ ≫ eSec a.D₀.P.A = (Λ.u.ex 0).left

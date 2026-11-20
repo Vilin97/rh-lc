@@ -25,7 +25,7 @@ theorem bar_bar [StarRing OE] (x : Op p OE) : bar p OE (bar p OE x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul z a => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 def extend {O : Type} [CommRing O] [Algebra ℤ_[p] O] (σ : OE →+* O) : Op p OE →ₐ[ℤ_[p]] O :=
   Algebra.TensorProduct.lift (Algebra.ofId ℤ_[p] O) σ.toIntAlgHom (fun _ _ => Commute.all _ _)
@@ -89,7 +89,7 @@ theorem conj_induces_iff [StarRing OE] (w : Place p OE) {O : Type} [CommRing O]
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul z a => rfl
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   unfold Induces
   rw [← this]; rfl
 
@@ -132,14 +132,14 @@ theorem gaussEmb_sqrtd (s : ℤ_[p]) (hs : s * s = -1) : gaussEmb s hs Zsqrtd.sq
 
 theorem extend_gaussIdem (s h : ℤ_[p]) (hs : s * s = -1) (hh : 2 * h = 1) :
     extend (gaussEmb s hs) (gaussIdem s h) = 1 := by
-  simp only [gaussIdem, map_add, extend_tmul, gaussEmb_sqrtd, map_one, Algebra.algebraMap_self,
+  simp only [gaussIdem, map_add (f := _), extend_tmul, gaussEmb_sqrtd, map_one, Algebra.algebraMap_self,
     RingHom.id_apply]
   linear_combination hh - h * hs
 
 theorem extend_bar_gaussIdem (s h : ℤ_[p]) (hs : s * s = -1) :
     extend (gaussEmb s hs) (bar p GaussianInt (gaussIdem s h)) = 0 := by
   have : star (Zsqrtd.sqrtd : GaussianInt) = -Zsqrtd.sqrtd := by ext <;> simp
-  simp only [gaussIdem, map_add, bar_tmul, this, star_one, extend_tmul, map_neg, gaussEmb_sqrtd,
+  simp only [gaussIdem, map_add (f := _), bar_tmul, this, star_one, extend_tmul, map_neg, gaussEmb_sqrtd,
     map_one, Algebra.algebraMap_self, RingHom.id_apply]
   linear_combination h * hs
 
@@ -163,15 +163,15 @@ theorem mul_gaussIdem (s h : ℤ_[p]) (hs : s * s = -1) (x : Op p GaussianInt) :
     have ha : a = (a.re : GaussianInt) + (a.im : GaussianInt) * Zsqrtd.sqrtd := by ext <;> simp
     have h1 : (1 ⊗ₜ a : Op p GaussianInt) = (a.re : Op p GaussianInt) + (a.im : _) * I := by
       have := congrArg (Algebra.TensorProduct.includeRight : GaussianInt →ₐ[ℤ] Op p GaussianInt) ha
-      rw [map_add, map_mul, map_intCast, map_intCast] at this
+      rw [map_add (f := _), map_mul, map_intCast, map_intCast] at this
       exact this
     have h2 : gaussEmb s hs a = a.re + a.im * s := by
       conv_lhs => rw [ha]
-      rw [map_add, map_mul, map_intCast, map_intCast, gaussEmb_sqrtd]
+      rw [map_add (f := _), map_mul, map_intCast, map_intCast, gaussEmb_sqrtd]
     rw [extend_tmul, hz, h1, h2, he]
-    simp only [Algebra.algebraMap_self, RingHom.id_apply, map_mul, map_add, map_intCast]
+    simp only [Algebra.algebraMap_self, RingHom.id_apply, map_mul, map_add (f := _), map_intCast]
     linear_combination (A z * (a.im : Op p GaussianInt) * A h) * (- A s * hII + I * hS)
-  | add x y hx hy => rw [add_mul, hx, hy, map_add, map_add, add_mul]
+  | add x y hx hy => rw [add_mul, hx, hy, map_add (f := _), map_add (f := _), add_mul]
 
 def gaussPlace (s h : ℤ_[p]) (hs : s * s = -1) (hh : 2 * h = 1) : SplitPlace p GaussianInt where
   e := gaussIdem s h

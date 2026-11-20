@@ -399,7 +399,7 @@ theorem secM_spec (S : B.RealPlaceData k r Wp Wq) (ν' : Fin (2 * r + k + 1) →
       simp only [hv1, hv2, mul_zero, Finset.sum_const_zero, zero_add, add_zero, xco] at h
       have h' := congrArg conj h
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_mul, Complex.conj_conj, map_zero] at h'
+        simp only [map_add (f := _), map_sum, map_mul, Complex.conj_conj, map_zero] at h'
       rw [← h']
     have htn : tn = 0 := by
       have hsum : ∑ b, kap Zm b * ((∑ a, Zm a.castSucc b * conj (t a)) + be T T' Zm b * conj tn) = 0 := by

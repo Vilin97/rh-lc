@@ -30,7 +30,7 @@ theorem GlobalTheory.BKLim.descend_rightInverse : ∀ (l : ℕ) [Fact l.Prime] (
     rw [Finset.sum_comm]
     exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring
   rw [Matrix.sub_apply, hG, hy']
-  simp only [map_add, hl, mul_add, Finset.sum_add_distrib]
+  simp only [map_add (f := _), hl, mul_add, Finset.sum_add_distrib]
   refine ⟨∑ k ∈ t.support, t k * TB.c k y, ?_⟩
   rw [← ht]
   by_cases hij : i = j

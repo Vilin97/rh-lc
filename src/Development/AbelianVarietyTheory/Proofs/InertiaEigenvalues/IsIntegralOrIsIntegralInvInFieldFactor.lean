@@ -14,7 +14,7 @@ theorem idem_mul_aeval_idem_mul {R A : Type} [CommRing R] [CommRing A] [Algebra 
     (hf : IsIdempotentElem f) (w : A) (p : R[X]) :
     f * aeval (f * w) p = f * aeval w p := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, mul_add, mul_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), mul_add, mul_add, hp, hq]
   | monomial n a =>
     rw [aeval_monomial, aeval_monomial, mul_pow]
     calc f * (algebraMap R A a * (f ^ n * w ^ n)) = algebraMap R A a * ((f * f ^ n) * w ^ n) := by ring

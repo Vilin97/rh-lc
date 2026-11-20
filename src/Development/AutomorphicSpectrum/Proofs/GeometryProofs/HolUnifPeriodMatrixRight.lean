@@ -198,7 +198,7 @@ theorem isHolTo_torusPt {V : Type} [NormedAddCommGroup V] [NormedSpace ℂ V] (c
       simp only [AddMonoidAlgebra.of_apply, hs]
       exact hc x
     | add a a' h h' =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact h.add h'
     | smul r a h =>
       have : ∀ z, φ z (r • a) = (r.down : ℂ) * φ z a := by

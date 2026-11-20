@@ -156,7 +156,7 @@ lemma fz_zero_of_inv (X : Data E r) (u : Fin 2 → Fin r → E) (hu : ∀ i k, h
     have h2 := herm_rank1 X s a τ i k
     simp only at h2
     show (B t + R s) τ k i = conj ((B t + R s) τ i k)
-    simp only [Pi.add_apply, B, R, map_add, h1, h2]
+    simp only [Pi.add_apply, B, R, map_add (f := _), h1, h2]
   have hdom : ∀ s t, X.Zb u (B t + R s) x0 ∈ X.dom := fun s t => X.Zb_dom u hu _ (hHerm s t) hx0
   have hN0 := BoundedSectionAlgebra.nfac_pos (X := X) hx0 la
   have hbdP : ∀ s t, ‖P (X.Zb u (B t + R s) x0)‖ ≤ C / X.nfac la x0 := by
@@ -236,7 +236,7 @@ private lemma herm_add_left_fundamental_domains (G : Matrix (Fin r) (Fin r) E) (
 
 private lemma herm_add_right_fundamental_domains (G : Matrix (Fin r) (Fin r) E) (x y z : Fin r → E) :
     herm G x (y + z) = herm G x y + herm G x z := by
-  simp only [herm, cc, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [herm, cc, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 private lemma herm_smul_left_fundamental_domains' (G : Matrix (Fin r) (Fin r) E) (t : E) (x y : Fin r → E) :
     herm G (t • x) y = t * herm G x y := by

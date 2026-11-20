@@ -36,7 +36,7 @@ theorem cm_trans {N : ℕ} {x y z : X} (h : CongMod N x y) (h' : CongMod N y z) 
 theorem cm_map {Y : Type} [AddCommGroup Y] (f : X →+ Y) {N : ℕ} {x y : X} (h : CongMod N x y) :
     CongMod N (f x) (f y) := by
   obtain ⟨w, hw⟩ := h
-  exact ⟨f w, by rw [hw, map_add, map_nsmul]⟩
+  exact ⟨f w, by rw [hw, map_add (f := _), map_nsmul]⟩
 
 theorem cm_of_mk {N : ℕ} {x y : X}
     (h : (QuotientAddGroup.mk x : X ⧸ (nsmulAddMonoidHom N : X →+ X).range) = QuotientAddGroup.mk y) :

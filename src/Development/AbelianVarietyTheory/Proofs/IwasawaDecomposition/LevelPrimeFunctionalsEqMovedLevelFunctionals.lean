@@ -22,10 +22,10 @@ theorem hasRes_add {P : HeightOneSpectrum (𝓞 E)} {a b : P.adicCompletion E} {
     (ha : HasRes P a c) (hb : HasRes P b d) : HasRes P (a + b) (c + d) := by
   obtain ⟨r, rfl, hr⟩ := ha
   obtain ⟨r', rfl, hr'⟩ := hb
-  refine ⟨r + r', by rw [map_add], ?_⟩
+  refine ⟨r + r', by rw [map_add (f := _)], ?_⟩
   have e : a + b - algebraMap E (P.adicCompletion E) (algebraMap (𝓞 E) E (r + r')) =
       (a - algebraMap E _ (algebraMap (𝓞 E) E r)) + (b - algebraMap E _ (algebraMap (𝓞 E) E r')) := by
-    simp only [map_add]; ring
+    simp only [map_add (f := _)]; ring
   rw [e]
   exact Valuation.map_add_lt _ hr hr'
 
@@ -124,7 +124,7 @@ def resL (hLb : IsBase S π) (hP : P.under (𝓞 F) = v) (h3 : π ∉ (conjPrime
     have hst := Classical.choose_spec (exists_hasRes hP ((s + t).1 r) (val_coord_le hLb hP h3 (s + t).2 r))
     refine hst.unique ?_
     have e : psi v P hP ((s + t).1 r) = psi v P hP (s.1 r) + psi v P hP (t.1 r) := by
-      rw [← map_add]; rfl
+      rw [← map_add (f := _)]; rfl
     rw [e]
     exact hasRes_add hs ht
 
@@ -171,9 +171,9 @@ theorem exists_fun (hLb : IsBase S π) (hv : (T : 𝓞 F) ∈ v.asIdeal) (hP : P
   · refine hker _ ?_
     rw [hg]
   · intro m m'
-    rw [← sub_eq_zero, ← map_add, ← map_sub]
+    rw [← sub_eq_zero, ← map_add (f := _), ← map_sub]
     refine hker _ ?_
-    rw [map_sub, map_add, hg, hg, hg, sub_self]
+    rw [map_sub, map_add (f := _), hg, hg, hg, sub_self]
   · show ψ (g (S.fT v hv s)) = c
     have e : ψ (g (S.fT v hv s)) = ψ s := by
       rw [← sub_eq_zero, ← map_sub]

@@ -80,7 +80,7 @@ def uActionKZ : UEnv K n →ₐ[ℝ] Module.End ℂ (smoothKZ K n) where
     rw [map_zero]; rfl)
   map_add' u v := LinearMap.ext fun φ => Subtype.ext (by
     show ((uAction (u + v) (toArchSmooth φ) : archSmooth K n) : AdelicGLn.AdelicGL K n → ℂ) = _
-    rw [map_add]; rfl)
+    rw [map_add (f := _)]; rfl)
   commutes' r := LinearMap.ext fun φ => Subtype.ext (by
     show ((uAction (algebraMap ℝ (UEnv K n) r) (toArchSmooth φ) : archSmooth K n) :
       AdelicGLn.AdelicGL K n → ℂ) = _
@@ -267,7 +267,7 @@ variable (K n) in
 def gkModule : (isExpLieAlgebra K n).GKModule (archCompact K n) (smoothKZ K n) where
   ρ :=
     { toFun := fun X => uActionKZ K n (UniversalEnvelopingAlgebra.ι ℝ X)
-      map_add' := fun X Y => by rw [map_add, map_add]
+      map_add' := fun X Y => by rw [map_add (f := _), map_add (f := _)]
       map_smul' := fun r X => by rw [map_smul, map_smul]; rfl
       map_lie' := fun {X Y} => by
         rw [LieHom.map_lie, Ring.lie_def, Ring.lie_def, map_sub, map_mul, map_mul] }

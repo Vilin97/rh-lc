@@ -427,8 +427,8 @@ theorem quotTriv_of_model (hK : GlobalTheory.ThK.KP) (hcm : IsCMExt F E σ) (ψ 
     funext g
     simp only [hΛ, Pi.add_apply, thLift_def, theta, ← integral_add (intg g u hu Φ hΦ) (intg g u hu Ψ hΨ)]
     refine integral_congr_ae (Eventually.of_forall fun h => ?_)
-    simp only [map_add]
-    rw [thetaSum_add F (pres _ _ hΦ) (pres _ _ hΨ), map_add, mul_add]
+    simp only [map_add (f := _)]
+    rw [thetaSum_add F (pres _ _ hΦ) (pres _ _ hΨ), map_add (f := _), mul_add]
   have ΛsmulΦ : ∀ (c : ℂ) u Φ, Λ u (c • Φ) = (starRingEnd ℂ) c • Λ u Φ := by
     intro c u Φ
     funext g
@@ -455,7 +455,7 @@ theorem quotTriv_of_model (hK : GlobalTheory.ThK.KP) (hcm : IsCMExt F E σ) (ψ 
     fun Ψ φ hφ e => hbij.injOn (hkapSB Ψ) hφ ((hkap Ψ).trans e.symm)
   have kapAdd : ∀ Ψ₁ Ψ₂, kap (Ψ₁ + Ψ₂) = kap Ψ₁ + kap Ψ₂ := fun Ψ₁ Ψ₂ =>
     kapEq _ _ (add_mem (hkapSB Ψ₁) (hkapSB Ψ₂)) (by
-      rw [map_add, hkap, hkap]; funext X; simp)
+      rw [map_add (f := _), hkap, hkap]; funext X; simp)
   have kapSmul : ∀ (c : ℂ) Ψ, kap (c • Ψ) = (starRingEnd ℂ) c • kap Ψ := fun c Ψ =>
     kapEq _ _ (Submodule.smul_mem _ _ (hkapSB Ψ)) (by
       rw [map_smul, hkap]; funext X; simp)
@@ -497,7 +497,7 @@ theorem quotTriv_of_model (hK : GlobalTheory.ThK.KP) (hcm : IsCMExt F E σ) (ψ 
         simp only [kapSmul, tens_smul]
         rw [ΛsmulΦ, Complex.conj_conj])
       (fun Ψ u w => by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact Λaddu _ (hT u) _ (hT w) _ (tmem Ψ))
       (fun c Ψ u => by
         simp only [map_smul]

@@ -136,7 +136,7 @@ theorem comp_isLift {P Q R S : ℕ} {x t : ℚ} {M N : GKMod R S} {pr : Formalis
   refine ⟨hπ.1.comp h.1, fun X f => ?_, fun Y f => ?_⟩
   · simp [h.2.1 X f]
   · simp only [LinearMap.comp_apply]
-    rw [← hπ.2, h.2.2 Y f, map_add, map_smul]
+    rw [← hπ.2, h.2.2 Y f, map_add (f := _), map_smul]
 
 theorem onePlace (P Q P' Q' R S : ℕ) (κ : ℤ) (h : Num P Q P' Q' R S κ) :
     ∃ (N : GKMod R S) (p : Formalism.BasicNotions.TH.Pol P Q R S →ₗ[ℂ] N.V) (p' : Formalism.BasicNotions.TH.Pol P' Q' R S →ₗ[ℂ] N.V),

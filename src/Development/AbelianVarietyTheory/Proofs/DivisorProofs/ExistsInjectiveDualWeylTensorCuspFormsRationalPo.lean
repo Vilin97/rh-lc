@@ -205,7 +205,7 @@ theorem reads_add {x x' : TIdx (part Dw a) → c.F} {f g : Rul Xo c} (h : Reads 
   refine ⟨add_mem h.1 h'.1, fun S _ _ z y Y s hY hs hz hc => ?_⟩
   refine (evalAt_add (K := c.F) (fun S _ _ => FrPt Xo c S) (fun φ y z => FrMap φ y z) f g y).trans
     ((congrArg₂ (· + ·) (h.2 S z y Y s hY hs hz hc) (h'.2 S z y Y s hY hs hz hc)).trans ?_)
-  simp only [tval, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+  simp only [tval, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, mul_add]
 
 theorem reads_smul (b : c.F) {x : TIdx (part Dw a) → c.F} {f : Rul Xo c} (h : Reads Z y₀ a n x f) :
     Reads Z y₀ a n (b • x) (b • f) := by

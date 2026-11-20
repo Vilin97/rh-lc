@@ -82,7 +82,7 @@ theorem UpperTheory.Reformulated.B.Qf25.trace_zero :
     linear_combination v 0 * b1 - w 0 * a1
   have hp : S.charpoly = (Polynomial.X - Polynomial.C b) * (Polynomial.X - Polynomial.C b) := by
     rw [Matrix.charpoly_fin_two, Matrix.trace_fin_two, Matrix.det_fin_two, s00, s01, s11]
-    simp only [map_add, map_sub, map_mul, map_zero]
+    simp only [map_add (f := _), map_sub, map_mul, map_zero]
     ring
   have hu := hsep.squarefree (Polynomial.X - Polynomial.C b) (hp ▸ dvd_rfl)
   exact Polynomial.not_isUnit_X_sub_C b hu

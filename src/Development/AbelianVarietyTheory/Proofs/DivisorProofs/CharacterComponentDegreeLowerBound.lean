@@ -33,7 +33,7 @@ theorem coeff_cartan {P Q R S : ℕ} (a : Ix P Q) (β : Ln P Q R S →₀ ℕ) (
     split_ifs with h
     · subst h; ring
     · simp
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add, mul_add]
 
 theorem lowerDeg : ∀ (P Q R S : ℕ) (x : ℚ) (k k' : ℕ), x - Formalism.BasicNotions.TH.cPair R S = k →
     x + Formalism.BasicNotions.TH.cPair R S = k' → ∀ f ∈ GlobalTheory.KFixIrr.chiOne P Q R S x, f ≠ 0 →

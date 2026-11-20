@@ -94,7 +94,7 @@ instance EpsDual.moduleOO : Module OO (EpsDual O OO Q ε) where
   add_smul a b φ := by
     refine LinearMap.ext fun x => ?_
     show φ (rightMulEps O ε (a + b) x) = φ (rightMulEps O ε a x) + φ (rightMulEps O ε b x)
-    rw [← map_add]; congr 1; ext; simp [rightMulEps, mul_add]
+    rw [← map_add (f := _)]; congr 1; ext; simp [rightMulEps, mul_add]
   zero_smul φ := by
     refine LinearMap.ext fun x => ?_
     show φ (rightMulEps O ε 0 x) = 0

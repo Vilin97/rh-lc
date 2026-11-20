@@ -63,7 +63,7 @@ theorem eq_zero_of_kills_both : ∀ (Z Z' X X' : Scheme.{0}) (p : Z ⟶ X) (p' :
         exact hp' D _ hDO htop r
     | zero => rw [map_zero, ← hδ, map_zero]
     | one => rw [map_one, h1]
-    | add x y _ _ hx hy => rw [map_add, hadd D hDO htop, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), hadd D hDO htop, hx, hy, add_zero]
     | neg x _ hx => rw [map_neg, ← hδ, map_neg, hδ, hx, neg_zero]
     | mul x y _ _ hx hy => rw [map_mul, hmul D hDO htop, hx, hy, mul_zero, mul_zero, add_zero]
   have hall : ∀ b : Γ(Z', D), Δ D b = 0 := by

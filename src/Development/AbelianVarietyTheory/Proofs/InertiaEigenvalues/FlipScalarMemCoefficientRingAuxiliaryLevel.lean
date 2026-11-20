@@ -54,7 +54,7 @@ theorem char_flipDet {D : D7} (c : (AE D)ˣ →* Circle) (χ : HChar D.host.E) (
     (GlobalTheory.PlaceIdem.exists_isPlIdem D ι h1 h2 h3) c χ hc
   have hinf : infPart D (x : AE D) = 1 := by
     have h0 := congrArg (infPart D) hx
-    simp only [map_mul, map_add, map_sub, map_one, GlobalTheory.PlaceVec.idemSum_infPart he, zero_mul, zero_add, sub_zero,
+    simp only [map_mul, map_add (f := _), map_sub, map_one, GlobalTheory.PlaceVec.idemSum_infPart he, zero_mul, zero_add, sub_zero,
       mul_one] at h0
     exact h0
   obtain ⟨⟨es, hes, hsum⟩, -⟩ := he
@@ -87,12 +87,12 @@ theorem char_flipDet {D : D7} (c : (AE D)ˣ →* Circle) (χ : HChar D.host.E) (
   have hxT : ∀ R ∈ T, ev R x = algebraMap D.host.E (R.adicCompletion D.host.E) ((m⁻¹ : D.host.Eˣ) : D.host.E) := by
     intro R hR
     have h0 := congrArg (ev R) hx
-    simp only [map_mul, map_add, map_sub, map_one, heT R hR, one_mul, sub_self, add_zero, hinc] at h0
+    simp only [map_mul, map_add (f := _), map_sub, map_one, heT R hR, one_mul, sub_self, add_zero, hinc] at h0
     rw [eq_inv_of_mul_eq_one_left h0, Units.val_inv_eq_inv_val, map_inv₀]
   have hxT' : ∀ R, R ∉ T → ev R x = 1 := by
     intro R hR
     have h0 := congrArg (ev R) hx
-    simp only [map_mul, map_add, map_sub, map_one, heT' R hR, zero_mul, zero_add, sub_zero, mul_one] at h0
+    simp only [map_mul, map_add (f := _), map_sub, map_one, heT' R hR, zero_mul, zero_add, sub_zero, mul_one] at h0
     exact h0
   have hfin : {R : HeightOneSpectrum (𝓞 D.host.E) | R.asIdeal ∣ Ideal.span {(N : 𝓞 D.host.E)}}.Finite :=
     Ideal.finite_factors (by simpa [Ideal.span_singleton_eq_bot] using hN.ne')

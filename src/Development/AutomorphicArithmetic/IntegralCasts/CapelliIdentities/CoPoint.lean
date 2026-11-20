@@ -57,7 +57,7 @@ theorem UpperTheory.Reformulated.B.CoPoint.coPt :
       obtain ⟨a, rfl⟩ := Ideal.mem_span_singleton'.1 ht
       refine ⟨_, Finset.mem_image.2 ⟨Ideal.Quotient.mk _ r, Finset.mem_univ _, rfl⟩, y a, ⟨a, rfl⟩, ?_⟩
       have h2 := congrArg y hjt
-      rw [map_add, RingHom.mem_ker.1 hj, map_sub, map_mul, AlgHom.commutes] at h2
+      rw [map_add (f := _), RingHom.mem_ker.1 hj, map_sub, map_mul, AlgHom.commutes] at h2
       rw [Algebra.smul_def, mul_comm]
       linear_combination -h2)
   exact key

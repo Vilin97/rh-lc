@@ -192,7 +192,7 @@ theorem split_idempotent_of_square_root (σ : E →ₐ[F] E) (v : HeightOneSpect
   · have h1 : (1 : v.adicCompletion F) = H + H := by linear_combination -hH2
     have hs1 : sigR σ (v.adicCompletion F) ((1 : E) ⊗ₜ[F] H + (α : E) ⊗ₜ[F] Y) =
         (1 : E) ⊗ₜ[F] H - (α : E) ⊗ₜ[F] Y := by
-      simp only [sigR, RingHom.coe_coe, AlgHom.toRingHom_eq_coe, map_add, Algebra.TensorProduct.map_tmul,
+      simp only [sigR, RingHom.coe_coe, AlgHom.toRingHom_eq_coe, map_add (f := _), Algebra.TensorProduct.map_tmul,
         map_one, AlgHom.id_apply, hσ, TensorProduct.neg_tmul, sub_eq_add_neg]
     rw [hs1, Algebra.TensorProduct.one_def]
     conv_rhs => rw [h1]

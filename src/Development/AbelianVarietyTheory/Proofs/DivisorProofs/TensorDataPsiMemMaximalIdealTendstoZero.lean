@@ -109,13 +109,13 @@ theorem scalars (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [IsInt
   let κ' : (Fin r → X) → (FractionRing R)ˣ := fun z => ∏ i, ∏ j, (κ (z i + z j) * (κ (z i))⁻¹ * (κ (z j))⁻¹) ^ W i j
   have eκ' : ∀ z, Additive.ofMul (κ' z) = ∑ i, ∑ j, W i j • (B (z i) (z j) + B (z j) (z i)) := by
     intro z
-    simp only [κ', κ, ofMul_prod, ofMul_zpow, ofMul_mul, ofMul_inv, ofMul_toMul, map_add, LinearMap.add_apply]
+    simp only [κ', κ, ofMul_prod, ofMul_zpow, ofMul_mul, ofMul_inv, ofMul_toMul, map_add (f := _), LinearMap.add_apply]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => congrArg _ ?_
     abel
   have κn : ∀ x, κ (-x) = κ x := fun x => by simp [κ]
   have κc : ∀ x y w, κ (x + y + w) * κ x * κ y * κ w = κ (x + y) * κ (x + w) * κ (y + w) := fun x y w => by
     apply Additive.ofMul.injective
-    simp only [κ, ofMul_mul, ofMul_toMul, map_add, LinearMap.add_apply]
+    simp only [κ, ofMul_mul, ofMul_toMul, map_add (f := _), LinearMap.add_apply]
     abel
   have κp : ∀ x, x ≠ 0 → ∃ s ∈ maximalIdeal R, (κ x : FractionRing R) = algebraMap R _ s := fun x hx => by
     have := mem_of_unit _ ((unitsK R).inv_mem (hu x)) (hp x hx)
@@ -125,7 +125,7 @@ theorem scalars (R : Type) [CommRing R] [IsDomain R] [IsNoetherianRing R] [IsInt
     simp [eκ']
   have κ'c : ∀ x y w, κ' (x + y + w) * κ' x * κ' y * κ' w = κ' (x + y) * κ' (x + w) * κ' (y + w) := fun x y w => by
     apply Additive.ofMul.injective
-    simp only [ofMul_mul, eκ', ← Finset.sum_add_distrib, ← smul_add, Pi.add_apply, map_add, LinearMap.add_apply]
+    simp only [ofMul_mul, eκ', ← Finset.sum_add_distrib, ← smul_add, Pi.add_apply, map_add (f := _), LinearMap.add_apply]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => congrArg _ ?_
     abel
   have κ'p := GlobalTheory.T.even_cubical_tensor_posDef_form_positive R X κ κn κc κp W hW

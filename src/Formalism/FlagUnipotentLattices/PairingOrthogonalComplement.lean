@@ -25,7 +25,7 @@ def InThO (O : Subring E) (th : E) (c : E) : Prop := ∃ d ∈ O, c = th * d
 def eichLin (h : V →ₗ[E] V →ₗ⋆[E] E) (x u : V) (s : E) : V →ₗ[E] V where
   toFun := eich h x u s
   map_add' v w := by
-    simp only [eich, map_add, LinearMap.add_apply, add_smul]; abel
+    simp only [eich, map_add (f := _), LinearMap.add_apply, add_smul]; abel
   map_smul' c v := by
     simp only [eich, map_smul, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply, smul_add,
       smul_sub, mul_smul]

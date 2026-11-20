@@ -22,7 +22,7 @@ theorem weighted_component_mul_lowest {f g : MvPolynomial σ R} {a b : ℕ}
   · refine Finset.sum_congr rfl fun x hx => ?_
     rw [coeff_weightedHomogeneousComponent, coeff_weightedHomogeneousComponent]
     have hx' : x.1 + x.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
-    have hw : Finsupp.weight wt x.1 + Finsupp.weight wt x.2 = a + b := by rw [← map_add, hx', h]
+    have hw : Finsupp.weight wt x.1 + Finsupp.weight wt x.2 = a + b := by rw [← map_add (f := _), hx', h]
     by_cases h1 : AddMonoidAlgebra.coeff f x.1 = 0
     · simp [h1]
     by_cases h2 : AddMonoidAlgebra.coeff g x.2 = 0
@@ -36,7 +36,7 @@ theorem weighted_component_mul_lowest {f g : MvPolynomial σ R} {a b : ℕ}
     have hx' : x.1 + x.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
     by_cases h1 : Finsupp.weight wt x.1 = a
     · by_cases h2 : Finsupp.weight wt x.2 = b
-      · exact absurd (by rw [← hx', map_add, h1, h2]) h
+      · exact absurd (by rw [← hx', map_add (f := _), h1, h2]) h
       · simp [h2]
     · simp [h1]
 
@@ -45,7 +45,7 @@ theorem support_weight_mul_lower {f g : MvPolynomial σ R} {a b : ℕ}
     ∀ m ∈ (f * g).support, a + b ≤ Finsupp.weight wt m := by
   intro m hm
   obtain ⟨m1, h1, m2, h2, rfl⟩ := Finset.mem_add.1 (MvPolynomial.support_mul f g hm)
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Nat.add_le_add (hf m1 h1) (hg m2 h2)
 
 theorem weighted_component_prod_lowest {ι : Type*} (s : Finset ι) (f : ι → MvPolynomial σ R) (o : ι → ℕ)
@@ -240,7 +240,7 @@ theorem segment_substitution_eq_rename (Y : MvPolynomial (Fin (Mj F j) × Fin (r
       unfold powSubst; rw [aeval_C]; rfl
     rw [e1, e2, map_C, rename_C]
   | add P Q hP hQ =>
-    simp only [map_add, hP, hQ]
+    simp only [map_add (f := _), hP, hQ]
   | mul_X P v hP =>
     simp only [map_mul]
     rw [hP]

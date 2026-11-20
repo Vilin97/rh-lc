@@ -307,7 +307,7 @@ theorem blockFormAt_of {C0 CYb Cde Ck CD Cb CE1 CE2 Cm Cc H : ℝ} (hCm : 17 ≤
       obtain ⟨y, hy⟩ := bb_pair DS hwsq _ u u' hu.2 hu'.2 μ
       refine ⟨h * y, ?_⟩
       rw [MvPolynomial.coeff_smul, MvPolynomial.coeff_smul, hEig, smul_eq_mul, smul_eq_mul]
-      simp only [map_mul, map_add, map_one, map_pow] at hh hy ⊢
+      simp only [map_mul, map_add (f := _), map_one, map_pow] at hh hy ⊢
       linear_combination (u.coeff μ * u'.coeff μ * zSeg (KK O) X j * (expFact (ioExp C0 CE1 CE2 X j b μ) : KK O) *
           algebraMap O (KK O) (gEv T q μ)) * hsc + (u.coeff μ * u'.coeff μ) * hh +
         (algebraMap O (KK O) κ * algebraMap O (KK O) w ^ X.c * algebraMap O (KK O) h) * hy
@@ -326,7 +326,7 @@ theorem blockFormAt_of {C0 CYb Cde Ck CD Cb CE1 CE2 Cm Cc H : ℝ} (hCm : 17 ≤
       rw [← Finset.mul_sum, ← Finset.mul_sum, ← ha]
       rfl
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hf, ← map_sum, ← map_mul, ← map_add]
+      rw [hf, ← map_sum, ← map_mul, ← map_add (f := _)]
     congr 1
     simp only [Finset.mul_sum, mul_add]
     congr 1

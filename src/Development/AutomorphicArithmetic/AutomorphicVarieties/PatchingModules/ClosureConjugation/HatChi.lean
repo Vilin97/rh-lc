@@ -21,7 +21,7 @@ private theorem characteristic_polynomial_compatibility {n : ℕ} {G B A Bh F E 
   congr 1
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | single s b =>
     have : (MonoidAlgebra.single s b : MonoidAlgebra Bh G) = b • MonoidAlgebra.single s 1 := by simp
     rw [MonoidAlgebra.mapRingHom_single]

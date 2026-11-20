@@ -43,7 +43,7 @@ theorem om_md {ψ : AddChar (AF D.host.F) ℂ} {χS χT : (AE D)ˣ →* Circle}
     show om (g, h) (heisO ψ S T (actO S T g⁻¹ h⁻¹ (L a)) f) = heisO ψ S T (L a) (om (g, h) f)
     rw [hω.om_heis g h _ f hf, actO_inv]
   | n + 1, v, r, a => by
-    rw [md_fun_succ, md_fun_succ (fun x => Gf ψ L (om (g, h) f) x), map_smul, map_add, map_smul,
+    rw [md_fun_succ, md_fun_succ (fun x => Gf ψ L (om (g, h) f) x), map_smul, map_add (f := _), map_smul,
       om_md hω hf L hL g h n, om_md hω hf L hL g h n]
 
 theorem md_tendsto_seq {φ : (Fin k → ℝ) → ℂ} (hφ : ContDiff ℝ ∞ φ) {n : ℕ} (v : Fin n → (Fin k → ℝ)) :

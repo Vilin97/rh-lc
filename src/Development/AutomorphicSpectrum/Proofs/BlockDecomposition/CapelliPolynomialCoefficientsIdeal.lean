@@ -49,7 +49,7 @@ lemma aeval_sub_aeval_mem (β D : Module.End ℂ V) (Wn I : Submodule ℂ V)
   | add p q hp hq =>
     intro F hF
     have := I.add_mem (hp F hF) (hq F hF)
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     convert this using 1
     abel
   | monomial n c =>

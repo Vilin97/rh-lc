@@ -85,7 +85,7 @@ theorem eval_conj_eq_zero [Fintype ι] [DecidableEq ι] (x : Cone n (AlgebraicCl
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [Geo.mConeMap]
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f p hf => simp only [map_mul, hf, eval_X, map_X, Geo.mConeMap, aeval_X, eval_C, mul_one]
   rw [h, hf, map_zero, map_zero]
 

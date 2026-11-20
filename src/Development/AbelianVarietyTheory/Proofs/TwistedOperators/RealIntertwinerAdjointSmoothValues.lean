@@ -173,7 +173,7 @@ theorem ellT_update_add {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V 
       rw [MultilinearMap.mkPiAlgebra_apply, ← e u]
     rw [e2, e2, e2, inner_add_left, h]
   | add a b ha hb =>
-    rw [map_add, map_add, map_add, ha, hb]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
     ring
 
 theorem ellT_update_smul {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (w : ∀ ρ, M.H ρ) (τ : D.what₂.Tau)
@@ -193,7 +193,7 @@ theorem ellT_update_smul {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V
     rw [e2, e2, inner_smul_left, h]
     ring
   | add a b ha hb =>
-    rw [map_add, map_add, ha, hb]
+    rw [map_add (f := _), map_add (f := _), ha, hb]
     ring
 
 theorem coe_update {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (w : M.Vec) (τ : D.what₂.Tau) (x : M.sm τ)
@@ -230,7 +230,7 @@ theorem adjoint_smooth : ∀ {D : D7} {V W : HSp D} {S S' : D.what₂.Tau → SP
     | add P Q _ _ h1 h2 =>
       obtain ⟨u1, h1⟩ := h1
       obtain ⟨u2, h2⟩ := h2
-      exact ⟨u1 + u2, fun v => by simp only [map_add, LinearMap.add_apply, h1, h2]⟩
+      exact ⟨u1 + u2, fun v => by simp only [map_add (f := _), LinearMap.add_apply, h1, h2]⟩
     | smul c P _ h1 =>
       obtain ⟨u, hu⟩ := h1
       exact ⟨conj c • u, fun v => by
@@ -248,7 +248,7 @@ theorem adjoint_smooth : ∀ {D : D7} {V W : HSp D} {S S' : D.what₂.Tau → SP
     { toFun := U P
       map_update_add' := fun w τ x y => by
         refine char P _ _ fun v => ?_
-        rw [coe_update, Submodule.coe_add, ellT_update_add, ← coe_update, ← coe_update, hU, hU, map_add, map_add,
+        rw [coe_update, Submodule.coe_add, ellT_update_add, ← coe_update, ← coe_update, hU, hU, map_add (f := _), map_add (f := _),
           map_add]
       map_update_smul' := fun w τ c x => by
         refine char P _ _ fun v => ?_
@@ -260,7 +260,7 @@ theorem adjoint_smooth : ∀ {D : D7} {V W : HSp D} {S S' : D.what₂.Tau → SP
             map_smul' := fun c P => PiTensorProduct.ext (MultilinearMap.ext fun w => ?_) }, fun P v w => ?_⟩
   · simp only [LinearMap.compMultilinearMap_apply, PiTensorProduct.lift.tprod, LinearMap.add_apply, hmm]
     refine char _ _ _ fun v => ?_
-    rw [map_add, LinearMap.add_apply, map_add, map_add, hU, hU, map_add, map_add, map_add]
+    rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), map_add (f := _), hU, hU, map_add (f := _), map_add (f := _), map_add (f := _)]
   · simp only [LinearMap.compMultilinearMap_apply, PiTensorProduct.lift.tprod, LinearMap.smul_apply, hmm,
       RingHom.id_apply]
     refine char _ _ _ fun v => ?_

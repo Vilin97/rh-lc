@@ -163,7 +163,7 @@ theorem mem_of_genU_mem (L : Subfield (GenField Ω r)) (hbase : ∀ b : Ω, alge
     | C b =>
       rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
       exact hbase b
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul]
       refine mul_mem hp ?_

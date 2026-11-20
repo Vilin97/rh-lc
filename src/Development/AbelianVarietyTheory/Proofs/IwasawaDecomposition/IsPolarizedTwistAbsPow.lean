@@ -41,7 +41,7 @@ theorem isSatVecGL_of_mem_iSup {V W I : Type} [AddCommGroup V] [Module ℂ V] [A
   have hpe : ∀ g m, p (τ g m) = ρ g (p m) := fun g m => by
     induction m using Finsupp.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single i v => rw [hτ, hp, hp, hf]
   obtain ⟨x₀, hx₀⟩ := h.exists_vec
   have hfin : ∀ m, m ∈ HeckeScalar.finOrbit τ (KGL w n) := fun m => by

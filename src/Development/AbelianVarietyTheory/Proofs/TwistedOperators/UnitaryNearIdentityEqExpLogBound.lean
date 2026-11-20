@@ -289,7 +289,7 @@ theorem logNear_holds : LogNear := by
     rw [hy] at this; linarith [norm_nonneg Y]
   · have := map_exp_of_mem_ball (𝕂 := ℂ) S.val hval (logS y) ((expSeries_radius_eq_top ℂ S).symm ▸ edist_lt_top _ _)
     rw [m1] at this
-    have h2 : S.val (1 + y) = 1 + Y := by rw [map_add, map_one]; rfl
+    have h2 : S.val (1 + y) = 1 + Y := by rw [map_add (f := _), map_one]; rfl
     rw [hgY, ← h2]
     exact this.symm.trans (congrArg S.val e1)
 

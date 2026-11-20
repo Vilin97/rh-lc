@@ -73,7 +73,7 @@ theorem isCompact_oev : IsCompact (OEv (E := E) v) := by
         | add p q _ _ hp hq =>
           have e1 : inclR (F := F) (Fv F v) (((p + q : 𝓞 E)) : E) =
               inclR (F := F) (Fv F v) (p : E) + inclR (F := F) (Fv F v) (q : E) := by
-            rw [← map_add]
+            rw [← map_add (f := _)]
             rfl
           show inclR (F := F) (Fv F v) (((p + q : 𝓞 E)) : E) ∈ _
           rw [e1]

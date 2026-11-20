@@ -13,9 +13,9 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 private noncomputable def ptForm (χ : HChar E) (g : GA E a) : Sm E a →ₗ⋆[ℂ] Sm E a →ₗ[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ)
     (fun φ ψ => starRingEnd ℂ ((mulChi a χ φ).1 g) * (mulChi a χ ψ).1 g)
-    (fun φ φ' ψ => by simp only [map_add, Submodule.coe_add, Pi.add_apply, add_mul])
+    (fun φ φ' ψ => by simp only [map_add (f := _), Submodule.coe_add, Pi.add_apply, add_mul])
     (fun c φ ψ => by simp only [map_smul, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, map_mul, mul_assoc])
-    (fun φ ψ ψ' => by simp only [map_add, Submodule.coe_add, Pi.add_apply, mul_add])
+    (fun φ ψ ψ' => by simp only [map_add (f := _), Submodule.coe_add, Pi.add_apply, mul_add])
     (fun c φ ψ => by
       simp only [map_smul, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, RingHom.id_apply]; ring)
 
@@ -32,7 +32,7 @@ private theorem cmp_rT {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} (S :
     cmp j (S.rTensor (Fin d → ℂ) y) = S (cmp j y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul φ v => simp only [LinearMap.rTensor_tmul, cmp_tmul, map_smul]
 
 private theorem sum_val {ι : Type} (s : Finset ι) (f : ι → Sm E a) (g : GA E a) :
@@ -68,10 +68,10 @@ theorem UpperTheory.V.Lit.Geo.Pf.ptDiv :
         smA_apply, cmp_rT, Finset.mul_sum, ← Finset.sum_add_distrib, ptForm_apply]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       rw [hχ.2, hχ.2, ← hc]
-      simp only [map_add, map_smul, Submodule.coe_add, Submodule.coe_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
+      simp only [map_add (f := _), map_smul, Submodule.coe_add, Submodule.coe_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul,
         map_mul, hcc]
       ring
     rw [e5, pt_tform, pt_tform, e3, e4, smB_apply]
-    simp only [map_add, map_sub, LinearMap.map_smulₛₗ, LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul, e1,
+    simp only [map_add (f := _), map_sub, LinearMap.map_smulₛₗ, LinearMap.sub_apply, LinearMap.smul_apply, smul_eq_mul, e1,
       map_mul, hcc, map_ofNat]
     ring

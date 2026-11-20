@@ -60,7 +60,7 @@ theorem re_swap (x y : X) (σ : ℝ) :
   refine congrArg _ (tsum_congr fun p => ?_)
   have h : conj ((q p.1 : ℂ) ^ (-(σ : ℂ))) = (q p.1 : ℂ) ^ (-(σ : ℂ)) := by
     rw [Common0Aux.cpow_real, Complex.conj_ofReal]
-  simp only [lterm, map_div₀, map_mul, map_pow, h, Complex.conj_conj, map_add, map_natCast, map_one]
+  simp only [lterm, map_div₀, map_mul, map_pow, h, Complex.conj_conj, map_add (f := _), map_natCast, map_one]
   ring
 
 open Classical in

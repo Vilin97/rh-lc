@@ -53,9 +53,9 @@ theorem isContAut_multT {V : HSp D} {S : D.what₂.Tau → SPar} {θ : InfFam D}
     | smul_tprod r v =>
       rw [map_smul, LinearEquiv.coe_coe, PiTensorProduct.lift.tprod]
       exact hsm ⟨(hT.aut v).left, (hT.aut v).cont⟩ r
-    | add x y hx hy => rw [map_add]; exact hadd hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact hadd hx hy
   | zero => simpa using h0
-  | add T₁ T₂ _ _ h₁ h₂ => rw [map_add, LinearMap.add_apply]; exact hadd (h₁ x) (h₂ x)
+  | add T₁ T₂ _ _ h₁ h₂ => rw [map_add (f := _), LinearMap.add_apply]; exact hadd (h₁ x) (h₂ x)
   | smul c T _ h => rw [map_smul, LinearMap.smul_apply]; exact hsm (h x) c
 
 theorem ontoUni_of_reindex {ι K : Type} [Group K] [TopologicalSpace K] {a b : ℕ} (hab : a = b)

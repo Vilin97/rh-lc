@@ -77,7 +77,7 @@ theorem exists_coords {Y : Scheme.{0}} (s : Y ⟶ Sp ℂ) [Smooth s] (x : Sp ℂ
       { toFun := fun f => (evalPt v U hvU f).snd - (evalPt v' U hvU' f).snd
         map_zero' := by simp
         map_add' := fun f f' => by
-          simp only [map_add, TrivSqZeroExt.snd_add]
+          simp only [map_add (f := _), TrivSqZeroExt.snd_add]
           ring }
     have hD : ∀ f, D f = (evalPt v U hvU f).snd - (evalPt v' U hvU' f).snd := fun _ => rfl
     have hz : D = 0 := by
@@ -117,7 +117,7 @@ theorem exists_isDerivAt_of_surjective : ∀ (G : Over (Sp ℂ)) [GrpObj G] (y :
   have hLP : ∀ z, L (P z) = L z := fun z =>
     congrArg Subtype.val (DFunLike.congr_fun hρ (L.rangeRestrict z))
   have hfac : e = fun z => e (P z) := by
-    refine eq_of_fderiv_eq he (fun z w => by rw [map_add, he]) hol
+    refine eq_of_fderiv_eq he (fun z w => by rw [map_add (f := _), he]) hol
       (isHolTo_of_holAt isOpen_univ fun z _ =>
         (holAt_of_isHolTo hol (Set.mem_univ (P z))).precomp P.differentiableAt) fun V hV f => ?_
     ext1 z

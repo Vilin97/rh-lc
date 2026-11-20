@@ -83,7 +83,7 @@ theorem pr_eSum (p : ι → SplitPt D k) (horth : ∀ i j, i ≠ j → (p i).e *
   | nil => simp at hi
   | cons j J ih =>
     rw [List.nodup_cons] at hJ
-    rw [eSum_cons, map_add]
+    rw [eSum_cons, map_add (f := _)]
     by_cases hij : i = j
     · subst hij
       rw [pr_e, pr_of_mul_eq_zero (p i) (mul_eSum p _ J fun j hj => horth i j fun h => hJ.1 (h ▸ hj)), add_zero]

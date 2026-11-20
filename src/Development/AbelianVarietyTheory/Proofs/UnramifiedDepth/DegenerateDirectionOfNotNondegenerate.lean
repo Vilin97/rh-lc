@@ -44,7 +44,7 @@ theorem map_addDefect (ψ : R →+* S) (F : Fin d → PS R 2 d) (ga : Fin d → 
       MvPowerSeries.constantCoeff_subst_eq_zero (hX q.1) (fun _ => by simp) (h0 q.2))
   unfold addDefect
   rw [map_sub, MvPowerSeries.map_subst hq, MvPowerSeries.map_subst hA]
-  simp only [MvPowerSeries.map_subst (hX _), map_add, MvPowerSeries.map_X]
+  simp only [MvPowerSeries.map_subst (hX _), map_add (f := _), MvPowerSeries.map_X]
   rfl
 
 theorem map_cob (ψ : R →+* S) (F : Fin d → PS R 2 d) (hF : ∀ i, MvPowerSeries.constantCoeff (F i) = 0)

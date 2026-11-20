@@ -44,7 +44,7 @@ theorem finrank_eigenspace_of_mul_self_eq_one [FiniteDimensional ℂ V] {T : Mod
   have hQ := (isProj_eigenspace_neg_one_of_mul_self_eq_one hT).trace
   rw [← hP, ← hQ]
   constructor
-  · rw [← map_add, ← smul_add, ← LinearMap.trace_one]
+  · rw [← map_add (f := _), ← smul_add, ← LinearMap.trace_one]
     congr 1
     rw [show (1 : Module.End ℂ V) + T + (1 - T) = (2 : ℂ) • 1 by
       rw [two_smul]; abel, smul_smul]

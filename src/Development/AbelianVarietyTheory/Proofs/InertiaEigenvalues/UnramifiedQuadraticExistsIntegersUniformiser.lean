@@ -159,7 +159,7 @@ theorem main : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedF
       rw [Algebra.IsPushout.equiv_tmul]
       exact Subalgebra.mul_mem _ (Subalgebra.algebraMap_mem _ k) (Algebra.subset_adjoin ⟨e, rfl⟩)
     | add a b ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Subalgebra.add_mem _ (ha trivial) (hb trivial)
   obtain ⟨ϖ, O, hO, hN, hϖO, hϖu, hunif, htr, hnrm, hsmall, hbig⟩ :=
     alg_main F E A.K A.L (fun y => U.unram y) hKL hgen

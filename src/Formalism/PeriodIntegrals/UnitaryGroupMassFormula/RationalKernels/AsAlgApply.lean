@@ -22,7 +22,7 @@ lemma mul_eS (T : GoodSet K G) (s : T.S) (z : MonoidAlgebra K G) :
   | add x y hx hy =>
     rw [add_mul, hx, hy, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun g _ => ?_
-    rw [map_add, mul_add, map_add, mul_add, add_smul]
+    rw [map_add (f := _), mul_add, map_add (f := _), mul_add, add_smul]
   | smul r x hx =>
     rw [smul_mul_assoc, hx, Finset.smul_sum]
     refine Finset.sum_congr rfl fun g _ => ?_

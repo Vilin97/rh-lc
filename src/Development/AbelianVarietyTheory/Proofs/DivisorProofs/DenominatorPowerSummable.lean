@@ -56,7 +56,7 @@ theorem _root_.GlobalTheory.AffGlue.existsUnique_ringHom_of_affineOpens : ∀ (Z
         rw [map_mul, hs a W, hs b W, map_mul]).symm
       map_zero' := (hu 0 0 fun W => by rw [map_zero, map_zero]).symm
       map_add' := fun a b => (hu (a + b) (s a + s b) fun W => by
-        rw [map_add, hs a W, hs b W, map_add]).symm }
+        rw [map_add (f := _), hs a W, hs b W, map_add (f := _)]).symm }
   refine ⟨Φ, fun W => RingHom.ext fun r => hs r W,
     fun Ψ hΨ => RingHom.ext fun r => hu r (Ψ r) fun W => ?_⟩
   exact RingHom.congr_fun (hΨ W) r

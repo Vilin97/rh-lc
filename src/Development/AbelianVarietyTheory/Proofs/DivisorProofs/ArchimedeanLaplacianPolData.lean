@@ -98,7 +98,7 @@ theorem exists_fockDer : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
   let D : Mat _ _ →ₗ[ℂ] Module.End ℂ (SInf F (Fin a × Fin (a + a'))) :=
     { toFun := fun Y => Φ ∘ₗ atPl w (fockAct2 _ _ _ _ Y + ((B.mβ w : ℂ) / 2 * Y.trace) • 1) ∘ₗ Ψ
       map_add' := fun Y Y' => by
-        rw [← LinearMap.comp_add, ← LinearMap.add_comp, ← atPl_add, map_add, Matrix.trace_add, mul_add, add_smul]
+        rw [← LinearMap.comp_add, ← LinearMap.add_comp, ← atPl_add, map_add (f := _), Matrix.trace_add, mul_add, add_smul]
         congr 3
         abel
       map_smul' := fun r Y => by

@@ -44,7 +44,7 @@ theorem conjSP_proj {L : Type} [Field L] [NumberField L] [IsCMField L] (s : Spli
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a b => simp [SplitPlace.proj, conjAL, Algebra.TensorProduct.lift_tmul, Algebra.TensorProduct.map_tmul]
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 theorem conjSP_loc {L : Type} [Field L] [NumberField L] [IsCMField L] (n : ℕ) (s : SplitPlace L) (κ : GA L n) :
     (conjSP s).loc n κ = invTranspose n (s.loc n κ) := by

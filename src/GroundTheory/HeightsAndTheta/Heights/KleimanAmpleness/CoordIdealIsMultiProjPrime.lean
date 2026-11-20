@@ -467,7 +467,7 @@ theorem coneMap_coeff (x : σ → Ω) (f : MvPolynomial σ S) (d : ℕ) :
     · rw [if_pos h, if_pos h, aeval_monomial]
     · rw [if_neg h, if_neg h, map_zero]
   | add p q hp hq =>
-    rw [map_add, Polynomial.coeff_add, hp, hq, map_add, map_add]
+    rw [map_add (f := _), Polynomial.coeff_add, hp, hq, map_add (f := _), map_add (f := _)]
 
 open GroundTheory.Heights₂.Heights.NumbersDVR in
 

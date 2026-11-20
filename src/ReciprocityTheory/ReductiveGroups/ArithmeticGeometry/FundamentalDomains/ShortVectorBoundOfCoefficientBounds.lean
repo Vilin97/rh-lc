@@ -76,7 +76,7 @@ private theorem herm_swap_eq_cc_of_conj_symm {r : ℕ} (G : Matrix (Fin r) (Fin 
 private theorem herm_add_smul_self_expand {r : ℕ} (G : Matrix (Fin r) (Fin r) E) (x y : Fin r → E) (c : E) :
     herm G (x + c • y) (x + c • y) =
       herm G x x + c * herm G y x + cc c * herm G x y + c * cc c * herm G y y := by
-  simp only [herm, cc, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, Finset.mul_sum,
+  simp only [herm, cc, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, Finset.mul_sum,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
   ring

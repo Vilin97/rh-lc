@@ -47,7 +47,7 @@ theorem th_gen_harm (c τ : ℂ) (c0 : ℚ) (hc : c = c0) (N : Submodule ℂ (Th
         have hs := harmonicSplitting_holds p q r s true true rfl e
         rw [hs] at hg
         obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hg
-        rw [map_add]
+        rw [map_add (f := _)]
         refine N.add_mem (hharm _ y hy.1 (Submodule.span_mono ?_ hy.2)) ?_
         · intro P hP
           exact ⟨hP.1 rfl, hP.2 rfl⟩

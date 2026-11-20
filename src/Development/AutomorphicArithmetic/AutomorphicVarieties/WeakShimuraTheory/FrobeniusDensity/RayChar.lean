@@ -66,7 +66,7 @@ private theorem rc_frac (𝔪 : Ideal (𝓞 K)) (h𝔪 : 𝔪 ≠ ⊥) (x : K)
       zero_mem' := ⟨0, by simp⟩
       add_mem' := by
         rintro a b ⟨d, hd⟩ ⟨e, he⟩
-        exact ⟨d + e, by rw [map_add, mul_add, hd, he, map_add]⟩
+        exact ⟨d + e, by rw [map_add (f := _), mul_add, hd, he, map_add (f := _)]⟩
       smul_mem' := by
         rintro r a ⟨d, hd⟩
         exact ⟨r * d, by rw [smul_eq_mul, map_mul, map_mul, ← hd]; ring⟩ }
@@ -132,7 +132,7 @@ private theorem rc_hom (𝔪 : GroundTheory.Global.Modulus K) (f : Ideal (𝓞 K
   obtain ⟨c, d, hc0, hc1, hd, hcd⟩ := rc_frac 𝔪.ideal 𝔪.ideal_ne_bot ((a : K) - 1) (𝔪.mem_rayUnits.1 ha).1
   have hcK : algebraMap (𝓞 K) K c ≠ 0 := (map_ne_zero_iff _ (IsFractionRing.injective (𝓞 K) K)).2 hc0
   have e2 : (a : K) * algebraMap (𝓞 K) K c = algebraMap (𝓞 K) K (c + d) := by
-    rw [map_add, ← hcd]; ring
+    rw [map_add (f := _), ← hcd]; ring
   have hb0 : c + d ≠ 0 := fun h => by
     rw [h, map_zero] at e2
     exact mul_ne_zero a.ne_zero hcK e2

@@ -38,7 +38,7 @@ theorem img_delta (hD : LateralTheory.EtaleFoundations.pp_ev_delta) (ρ : SemiMa
     rw [(hD R hm β U).1 x, (hD S hm α U).1 x, h, ρ.comm]
   | succ p =>
     rw [(hD R hm β U).2 p _ t rfl ht x, (hD S hm α U).2 p _ t rfl ht x]
-    rw [map_add, ← ρ.comm, ← h]
+    rw [map_add (f := _), ← ρ.comm, ← h]
     congr 1
     set_option synthInstance.maxHeartbeats 100000 in
       rw [Units.smul_def, Units.smul_def, map_zsmul, map_sum]
@@ -81,7 +81,7 @@ noncomputable def zmap (hB : LateralTheory.EtaleFoundations.pp_ev_basic) (hM : L
     have ha := img_spec hB hM hD ρ a p s h U x
     have hb := img_spec hB hM hD ρ b p s h U x
     change ev ((img hB hM hD ρ a).1 + (img hB hM hD ρ b).1) p s h U x = ρ.app U s (ev (a.1 + b.1) p s h U x)
-    rw [((hB R).1 _ _ p s h U x).1, ((hB S).1 _ _ p s h U x).1, map_add, ha, hb])
+    rw [((hB R).1 _ _ p s h U x).1, ((hB S).1 _ _ p s h U x).1, map_add (f := _), ha, hb])
 
 noncomputable def theOp (hB : LateralTheory.EtaleFoundations.pp_ev_basic) (hM : LateralTheory.EtaleFoundations.pp_ev_mk) (hD : LateralTheory.EtaleFoundations.pp_ev_delta)
     (ρ : SemiMap I J) : NatOp I J where

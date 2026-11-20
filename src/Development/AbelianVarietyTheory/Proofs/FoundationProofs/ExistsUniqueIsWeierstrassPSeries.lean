@@ -31,7 +31,7 @@ theorem euler_one_add (R : PowerSeries K) : euler (1 + X * R) = X * (R + euler R
   cases n with
   | zero => simp [coeff_euler]
   | succ n =>
-    simp only [coeff_euler, map_add, coeff_succ_X_mul, coeff_one]
+    simp only [coeff_euler, map_add (f := _), coeff_succ_X_mul, coeff_one]
     simp
     ring
 
@@ -46,7 +46,7 @@ theorem inverseShiftedEulerOperatorFour_eq_iff [CharZero K] (R S : PowerSeries K
   have hn : (4 * ((n : K) + 2)) ≠ 0 := by
     have : ((n : K) + 2) ≠ 0 := by exact_mod_cast (by omega : n + 2 ≠ 0)
     exact mul_ne_zero (by norm_num) this
-  rw [inv4, coeff_mk, div_eq_iff hn, h4, h2, coeff_C_mul, map_add, coeff_C_mul, coeff_euler]
+  rw [inv4, coeff_mk, div_eq_iff hn, h4, h2, coeff_C_mul, map_add (f := _), coeff_C_mul, coeff_euler]
   constructor <;> intro h <;> rw [h] <;> ring
 
 def rest (a b : K) (R : PowerSeries K) : PowerSeries K :=

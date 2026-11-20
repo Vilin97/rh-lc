@@ -160,7 +160,7 @@ theorem cls_diag_zP : ∀ (h M d : ℕ) (S : Scheme.{0}) (t : S ⟶ Sp (cycAway 
   unfold GlobalTheory.ZarhinFam.zCls
   rw [hP]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_zsmul, ← GlobalTheory.CechPic.pull_comp, ← Over.comp_left, comp_lift, lift_fst_assoc,
+    simp only [map_add (f := _), map_sum, map_zsmul, ← GlobalTheory.CechPic.pull_comp, ← Over.comp_left, comp_lift, lift_fst_assoc,
     lift_snd_assoc, Category.id_comp, lift_fst, lift_snd, Category.assoc]
   simp only [mul_smul, two_smul, Finset.sum_add_distrib]
   abel

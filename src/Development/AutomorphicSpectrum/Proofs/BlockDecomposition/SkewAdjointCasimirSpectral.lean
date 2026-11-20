@@ -110,7 +110,7 @@ lemma sum_sq_le [Fintype ι] (j : V →ₗ[ℂ] H) (Z : ι → Module.End ℂ V)
   have h2 : - RCLike.re (inner ℂ (j v) (j ((Ω + S + S) v))) ≤ ‖j v‖ * ‖j ((Ω + S + S) v)‖ :=
     (neg_le_abs _).trans ((RCLike.abs_re_le_norm _).trans (norm_inner_le_norm _ _))
   have h3 : ‖j ((Ω + S + S) v)‖ ≤ ‖j (Ω v)‖ + 2 * ‖j (S v)‖ := by
-    rw [LinearMap.add_apply, LinearMap.add_apply, map_add, map_add]
+    rw [LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), map_add (f := _)]
     calc _ ≤ ‖j (Ω v) + j (S v)‖ + ‖j (S v)‖ := norm_add_le _ _
       _ ≤ ‖j (Ω v)‖ + ‖j (S v)‖ + ‖j (S v)‖ := add_le_add (norm_add_le _ _) le_rfl
       _ = _ := by ring
@@ -143,7 +143,7 @@ lemma comm_term
   have hB0 := GlobalTheory.CompanionTheory.AnalyticWord.bnd_nonneg j Z y (p.length + l.length + 2)
   rw [hS i]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.add_apply, map_sum, map_smul, map_add]
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.add_apply, map_sum, map_smul, map_add (f := _)]
   calc _ ≤ ∑ κ ∈ K, ∑ n, ‖c κ i n‖ * (2 * GlobalTheory.CompanionTheory.AnalyticWord.bnd j Z y (p.length + l.length + 2)) := by
         refine (norm_sum_le _ _).trans (Finset.sum_le_sum fun κ _ =>
           (norm_sum_le _ _).trans (Finset.sum_le_sum fun n _ => ?_))
@@ -191,7 +191,7 @@ lemma comm_word
       simp only [List.length_append, List.length_cons, List.length_nil]; omega
     rw [e2, hlen2] at h2
     rw [hlen1] at h1
-    rw [hsplit, LinearMap.add_apply, Module.End.mul_apply, Module.End.mul_apply, map_add, map_add]
+    rw [hsplit, LinearMap.add_apply, Module.End.mul_apply, Module.End.mul_apply, map_add (f := _), map_add (f := _)]
     refine (norm_add_le _ _).trans ((add_le_add h1 h2).trans (le_of_eq ?_))
     rw [List.length_cons, Nat.cast_succ]
     ring
@@ -238,7 +238,7 @@ lemma word_sq_le
       abel
     have hc := GlobalTheory.CompanionTheory.AnalyticWord.comm_word j Z y S K c hS l [] e
     rw [List.length_nil, zero_add] at hc
-    rw [hdec, map_add]
+    rw [hdec, map_add (f := _)]
     exact (norm_add_le _ _).trans (add_le_add
       ((GlobalTheory.CompanionTheory.AnalyticWord.comb_le j Z y (l := l) rfl (d e)).trans
         (mul_le_mul_of_nonneg_right (GlobalTheory.CompanionTheory.AnalyticWord.row_le_tot d e) hB0)) hc)

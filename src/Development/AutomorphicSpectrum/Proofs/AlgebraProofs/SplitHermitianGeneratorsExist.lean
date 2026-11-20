@@ -114,7 +114,7 @@ theorem twist_act (K k O : Type) [Field K] [Field k] [Algebra k K] [CommRing O] 
     ext r s
     simp only [Matrix.smul_apply, RingHom.mapMatrix_apply, Matrix.map_apply, smul_eq_mul,
       frobenius_def, mul_pow]
-  | add u w hu hw => simp only [map_add, hu, hw]
+  | add u w hu hw => simp only [map_add (f := _), hu, hw]
 
 theorem idealV_ker (K k O V : Type) [Field K] [Field k] [Algebra k K] [CommRing O]
     [AddCommGroup V] [Module K V] (ρ : O →+* Module.End K V) (χ : O →+* k) :
@@ -133,7 +133,7 @@ theorem idealV_ker (K k O V : Type) [Field K] [Field k] [Algebra k K] [CommRing 
       exact Submodule.smul_mem _ _ (hmem a v)
     | add u w hu hw =>
       have := add_mem hu hw
-      simp only [map_add, LinearMap.add_apply, add_smul]
+      simp only [map_add (f := _), LinearMap.add_apply, add_smul]
       convert this using 1
       abel
   refine le_antisymm (iSup_le fun a => ?_) (iSup_le fun a => ?_)
@@ -184,7 +184,7 @@ theorem act_isHom {K : Type} [Field K] (C : ACurve K) {V : Type} [AddCommGroup V
     exact smul_mem_of_isBun C hL i (hk i c) (hρ a i y hy)
   | add u w hu hw =>
     intro i y hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem (hu i y hy) (hw i y hy)
 
 theorem act_comm {K : Type} [Field K] {V V' : Type} [AddCommGroup V] [Module K V]

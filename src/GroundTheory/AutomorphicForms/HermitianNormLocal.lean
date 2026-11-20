@@ -61,7 +61,7 @@ noncomputable def quadTensorInv (z : QuadraticAlgebra R (algebraMap L R d) 0) :
 
 theorem quadTensorHom_inv (z : QuadraticAlgebra R (algebraMap L R d) 0) :
     quadTensorHom d R (quadTensorInv d R z) = z := by
-  simp only [quadTensorInv, map_add, quadTensorHom_tmul]
+  simp only [quadTensorInv, map_add (f := _), quadTensorHom_tmul]
   ext <;> simp [quadraticAlgebra_re_one, quadraticAlgebra_im_one]
 
 theorem quadTensorInv_hom (z : R ⊗[L] QuadraticAlgebra L d 0) :
@@ -81,7 +81,7 @@ theorem quadTensorInv_hom (z : R ⊗[L] QuadraticAlgebra L d 0) :
   | add x y hx hy =>
     have hadd : quadTensorInv d R (quadTensorHom d R (x + y)) =
         quadTensorInv d R (quadTensorHom d R x) + quadTensorInv d R (quadTensorHom d R y) := by
-      simp only [map_add, quadTensorInv, QuadraticAlgebra.re_add, QuadraticAlgebra.im_add,
+      simp only [map_add (f := _), quadTensorInv, QuadraticAlgebra.re_add, QuadraticAlgebra.im_add,
         TensorProduct.add_tmul]
       abel
     rw [hadd, hx, hy]

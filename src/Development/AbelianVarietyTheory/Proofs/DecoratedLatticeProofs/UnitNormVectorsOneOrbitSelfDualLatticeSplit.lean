@@ -149,7 +149,7 @@ theorem mem_latV_of_forall {S : HSp D} {L : Lat S} {P : Pl D → Prop} {y : Fin 
     refine Submodule.mul_induction_on hc (fun a ha b hb => ?_) fun c c' h1 h2 => ?_
     · rw [mul_comm, map_mul, mul_smul]
       exact smul_mem_latV hb (h a ha)
-    · rw [map_add, add_smul]; exact add_mem h1 h2
+    · rw [map_add (f := _), add_smul]; exact add_mem h1 h2
   have := key 1 (by
     rw [← FractionalIdeal.coe_mul, mul_inv_cancel₀ (GlobalTheory.ModelLatticeCheck.AA_ne_zero D)]
     exact FractionalIdeal.one_mem_one _)

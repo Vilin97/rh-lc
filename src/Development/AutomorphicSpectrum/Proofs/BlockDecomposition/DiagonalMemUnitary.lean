@@ -53,7 +53,7 @@ theorem hw_stable' {n : ℕ} {V : Type} [NormedAddCommGroup V] [InnerProductSpac
       have h4 : ∀ u : V, A (A u) = u := fun u => LinearMap.congr_fun hA2 u
       rw [h4] at h3
       rw [← h3, h4]
-    simp only [kF, LinearMap.add_apply, map_add, h1, h2]
+    simp only [kF, LinearMap.add_apply, map_add (f := _), h1, h2]
     abel
   intro x hx
   refine ⟨fun a => ?_, fun a b hab he => ?_⟩

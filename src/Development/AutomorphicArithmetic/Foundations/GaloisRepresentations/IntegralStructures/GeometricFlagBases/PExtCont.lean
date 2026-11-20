@@ -13,7 +13,7 @@ theorem UpperTheory.Gal.Int.Geo.extCont_of :
   induction v using TensorProduct.induction_on with
   | zero => simpa using continuous_const
   | add x y hx hy =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hx.add hy
   | tmul l m =>
     let b := Module.finBasis F M

@@ -13,7 +13,7 @@ private theorem map_mem_smul {A M : Type} [CommRing A] [AddCommGroup M] [Module 
     rw [map_smul]
     exact Submodule.smul_mem_smul hr (hf y hy)
   · intro a b ha hb
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ ha hb
 
 private theorem mono_comap {A M : Type} [CommRing A] [AddCommGroup M] [Module A M]
@@ -114,10 +114,10 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.heckeLocal :
         obtain ⟨y, hy⟩ : ψ ∈ j.range := hrange ▸ hψ
         obtain ⟨c, hc⟩ := ihφ x hx
         obtain ⟨d, hd⟩ := ihψ y hy
-        obtain rfl : s = x + y := hj (by rw [hs, map_add, ← hx, ← hy]; rfl)
+        obtain rfl : s = x + y := hj (by rw [hs, map_add (f := _), ← hx, ← hy]; rfl)
         refine ⟨c + d, fun P hP => ?_⟩
         convert P.add_mem (hc P hP) (hd P hP) using 1
-        rw [map_add]; ring
+        rw [map_add (f := _)]; ring
       | mul φ ψ hφ hψ ihφ ihψ =>
         intro s hs
         obtain ⟨x, hx⟩ : φ ∈ j.range := hrange ▸ hφ

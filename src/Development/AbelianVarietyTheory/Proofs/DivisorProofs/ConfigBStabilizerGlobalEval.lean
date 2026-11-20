@@ -124,7 +124,7 @@ theorem exists_piInf_le (hcm : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, Em
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [cA, hσ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   set A := ∑ i, ∑ w, ‖(τ w).1 (σ (Module.finBasis F E i))‖ with hA
   have hA0 : 0 ≤ A := by positivity
   refine ⟨1 + A, by linarith, fun z => ?_⟩

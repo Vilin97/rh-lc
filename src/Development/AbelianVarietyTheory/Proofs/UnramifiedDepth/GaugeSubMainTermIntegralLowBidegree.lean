@@ -129,7 +129,7 @@ theorem mPlus_of_good_tangents : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [h91.1, hG, map_sub, map_sum, map_smul]
     abel
-  rw [hsplit, map_add]
+  rw [hsplit, map_add (f := _)]
   refine VF.Ge.add ?_ ?_
   · have h2 : ∀ j g : Fin 2, j = g ∨ j = 1 - g := by decide
     refine GlobalTheory.T.coeffIntegralOnExponents_subst_of_lower_set C V (Fin N ⊕ Fin X.n) (WV I)

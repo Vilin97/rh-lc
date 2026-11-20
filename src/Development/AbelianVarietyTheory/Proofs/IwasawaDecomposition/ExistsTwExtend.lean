@@ -18,7 +18,7 @@ theorem exists_tw_extend {H K X : Type} [NormedAddCommGroup H] [InnerProductSpac
   refine ⟨{ toFun := fun x => Tw.mk s (z • φ (g (Tw.out x))), map_add' := ?_, map_smul' := ?_ }, ?_⟩
   · intro x y
     show z • φ (g (Tw.out x + Tw.out y)) = z • φ (g (Tw.out x)) + z • φ (g (Tw.out y))
-    rw [map_add, map_add, smul_add]
+    rw [map_add (f := _), map_add (f := _), smul_add]
   · intro a x
     show z • φ (g (cj s a • Tw.out x)) = cj s (starRingEnd ℂ a) • z • φ (g (Tw.out x))
     rw [map_smul, map_smulₛₗ, cj_conj, smul_comm]

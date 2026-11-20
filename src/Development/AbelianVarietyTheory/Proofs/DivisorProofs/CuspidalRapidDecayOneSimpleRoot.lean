@@ -61,7 +61,7 @@ theorem span_fin {φ : Sm E a} (hφ : φ ∈ Submodule.span ℂ (formsGL E a L W
   induction hφ using Submodule.span_induction with
   | mem x hx => exact hx.2.1
   | zero => intro l _; exact map_zero _
-  | add x y _ _ hx hy => intro l hl; rw [map_add, hx l hl, hy l hl]
+  | add x y _ _ hx hy => intro l hl; rw [map_add (f := _), hx l hl, hy l hl]
   | smul c x _ hx => intro l hl; rw [map_smul, hx l hl]
 
 theorem span_right {φ : Sm E a} (hφ : φ ∈ Submodule.span ℂ (formsGL E a L W X N)) {l : GL (Fin a) (Af E)} (hl : l ∈ L)
@@ -93,7 +93,7 @@ theorem map_unip' {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {r : �
     Matrix.GeneralLinearGroup.map f (unip P) = unip (fun p => f (P p)) := by
   ext i j
   change f ((1 + nilM P : Matrix (Fin a) (Fin a) R) i j) = (1 + nilM (fun p => f (P p)) : Matrix (Fin a) (Fin a) S) i j
-  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add]
+  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add (f := _)]
   split_ifs <;> simp
 
 variable (E) in

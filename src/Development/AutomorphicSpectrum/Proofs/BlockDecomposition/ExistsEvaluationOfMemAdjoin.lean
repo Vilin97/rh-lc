@@ -186,7 +186,7 @@ theorem invLift2 {V : Type} [AddCommGroup V] [Module ℂ V] {E1 E2 : Fin n → F
         intro x y hx hy s hs
         have := hx s hs
         have := hy s hs
-        simp only [PiLp.add_apply, add_smul, Finset.sum_add_distrib, map_add, LinearMap.add_apply, *, add_zero]
+        simp only [PiLp.add_apply, add_smul, Finset.sum_add_distrib, map_add (f := _), LinearMap.add_apply, *, add_zero]
       zero_mem' := by intro s hs; simp
       smul_mem' := by
         intro r x hx s hs
@@ -231,7 +231,7 @@ theorem invLift2 {V : Type} [AddCommGroup V] [Module ℂ V] {E1 E2 : Fin n → F
   · intro s hs
     have e' : ∀ i, t i = k i + t' i := fun i => congrArg (fun x : EuclideanSpace ℂ ι => x i) e
     have := (hN k).1 hk s hs
-    simp only [e', add_smul, Finset.sum_add_distrib, map_add, LinearMap.add_apply, this, zero_add]
+    simp only [e', add_smul, Finset.sum_add_distrib, map_add (f := _), LinearMap.add_apply, this, zero_add]
 
 theorem liftInv : LiftInv := by
   classical

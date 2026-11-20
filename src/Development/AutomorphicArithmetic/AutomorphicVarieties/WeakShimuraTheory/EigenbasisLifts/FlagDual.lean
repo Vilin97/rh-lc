@@ -26,7 +26,7 @@ private theorem UpperTheory.V.Ws.Eb.charpoly_lift {A K H : Type} [CommRing A] [C
     induction y using MonoidAlgebra.induction_linear with
     | zero => simp
     | add x y hx hy =>
-      simp only [map_add, mul_add, add_mul, Matrix.add_apply]
+      simp only [map_add (f := _), mul_add, add_mul, Matrix.add_apply]
       exact ⟨fun i j hij => by rw [hx.1 i j hij, hy.1 i j hij, add_zero], fun i => by rw [hx.2, hy.2]⟩
     | single s a =>
       have e : (g : Matrix (Fin n) (Fin n) K) * f.mapMatrix (MonoidAlgebra.lift A (Matrix (Fin n) (Fin n) A) H ((Units.coeHom _).comp r) (MonoidAlgebra.single s a)) * ((g⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) = f a • ((g * ((GeneralLinearGroup.map f).comp r) s * g⁻¹ : GL (Fin n) K) : Matrix (Fin n) (Fin n) K) := by

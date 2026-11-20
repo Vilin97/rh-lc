@@ -55,7 +55,7 @@ theorem smul_eq_zero_of_fst (F E : Type) [Field F] [NumberField F] [Field E] [Nu
       refine Prod.ext ?_ ?_
       · exact one_mul _
       · exact zero_mul _
-    | add y z hy hz => rw [smul_add, hy, hz, map_add, map_add]
+    | add y z hy hz => rw [smul_add, hy, hz, map_add (f := _), map_add (f := _)]
   rw [hu', mul_smul, key, hx, map_zero, smul_zero]
 
 end GlobalTheory.InfKill

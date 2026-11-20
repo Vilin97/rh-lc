@@ -189,7 +189,7 @@ theorem isAlgebraic_ratio (y : (Σ k, ι k) → Ω) (k₀ : K)
       obtain ⟨h1, h1'⟩ := ha
       obtain ⟨h2, h2'⟩ := hb
       refine ⟨add_mem h1 h2, ?_⟩
-      have e1 : τ ⟨a + b, add_mem h1 h2⟩ = τ ⟨a, h1⟩ + τ ⟨b, h2⟩ := by rw [← map_add]; rfl
+      have e1 : τ ⟨a + b, add_mem h1 h2⟩ = τ ⟨a, h1⟩ + τ ⟨b, h2⟩ := by rw [← map_add (f := _)]; rfl
       rw [e1]
       exact h1'.add h2'
     | mul a b _ _ ha hb =>

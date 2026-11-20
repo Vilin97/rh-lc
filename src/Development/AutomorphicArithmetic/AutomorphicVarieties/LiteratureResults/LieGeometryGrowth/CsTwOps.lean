@@ -29,7 +29,7 @@ private theorem twOps_abs {V F : Type} [NormedAddCommGroup V] [NormedSpace ℝ V
       ∀ w : V → V [⋀^Fin (q + 1)]→L[ℝ] F, ContDiffOn ℝ ∞ w Y → ∀ p ∈ Y,
         tp A B (hom W w) p = hom (fun p => A' (W (A p))) (tp A B w) p := by
   have hf : ∀ t p, flow (fun p => A' (W (A p))) t p = A' (flow W t (A p)) := fun t p => by
-    simp only [flow, map_add, map_smul, h2]
+    simp only [flow, map_add (f := _), map_smul, h2]
   have hZ : IsField Y (fun p => A' (W (A p))) :=
     ⟨A'.contDiff.comp_contDiffOn (hW.1.comp A.contDiff.contDiffOn hA), fun p hp t ht => by
       rw [hf]; exact hA' _ (hW.2 _ (hA p hp) t ht)⟩

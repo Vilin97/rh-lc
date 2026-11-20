@@ -103,7 +103,7 @@ theorem gram (U U' : Matrix (Fin r) (Fin r) E) (hUU : ∀ a b, ∑ c, star (U c 
       ∑ a, star (S.hT (e a) x) * S.hT (f a) y :=
     algδ _ _ (fun c a => star (U' c a)) U hUU'
   rw [psiF_eq, psiF_eq]
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   simp only [pairL]
   simp only [pairR]
   simp only [hwe, hwf, e_w e f hee hef, f_w e f hff hef, hee, hff, hef, hfe', mul_zero, zero_mul,

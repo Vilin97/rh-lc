@@ -35,7 +35,7 @@ theorem isSimpleRing_of_isAzumaya (k B : Type) [Field k] [Ring B] [Algebra k B]
       rw [AlgHom.mulLeftRight_apply]
       exact I.mul_mem_right _ _ (I.mul_mem_left _ _ hzI)
     | add x y hx hy =>
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact I.add_mem hx hy
   rw [← TwoSidedIdeal.one_mem_iff, ← hf, ← ht]
   exact key t

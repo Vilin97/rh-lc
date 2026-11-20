@@ -33,7 +33,7 @@ theorem ker_add_smul (X : Tri T A A' WW) (ψ : AddChar (AF D.host.F) ℂ) (θ : 
     (P Q : PolF D WW.rank A.rank) (c : ℂ) (h : GA D WW) :
     X.ker ψ θ t (P + c • Q) h = fun g => X.ker ψ θ t P h g + c * X.ker ψ θ t Q h g := by
   funext g
-  simp [Tri.ker, thetaKO, map_add, map_smul]
+  simp [Tri.ker, thetaKO, map_add (f := _), map_smul]
 
 def linI (X : Tri T A A' WW) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (t : T)
     (hint : ∀ P h, IntegrableOn (X.ker ψ θ t P h) X.fd X.m) : PolF D WW.rank A.rank →ₗ[ℂ] (GA D WW → ℂ) where

@@ -69,7 +69,7 @@ theorem cohom_sndPull_zero : ∀ (R : Type) [CommRing R] (A B : Over (Sp R)) [Gr
   have s2 := congrArg TrivSqZeroExt.snd c1
   have s3 := congrArg TrivSqZeroExt.snd c3
   simp only [TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_sub, snd_epsHom, AlgHom.coe_coe, TrivSqZeroExt.inlAlgHom_apply, TrivSqZeroExt.snd_inl, zero_add] at s1 s2 s3
-  simp only [Fn1.add, Fn1.neg, Fn1.zero, sndPull, neg_zero, add_zero, TrivSqZeroExt.snd_add, map_add]
+  simp only [Fn1.add, Fn1.neg, Fn1.zero, sndPull, neg_zero, add_zero, TrivSqZeroExt.snd_add, map_add (f := _)]
   linear_combination -s1 - s2 - s3
 
 end GlobalTheory.PtExt

@@ -477,7 +477,7 @@ theorem partialSum_succ_alt (hU : IsKUnitary ε E) {Y : Type*} [AddCommGroup Y] 
   obtain ⟨hkS, hkf⟩ := hKmem k hk
   have hx : (WithLp.linearEquiv 2 ℂ (Fin n → D)) c = x₀ - (WithLp.linearEquiv 2 ℂ (Fin n → D)) k := by
     have h3 := congrArg (WithLp.linearEquiv 2 ℂ (Fin n → D)) hkc
-    rw [LinearEquiv.apply_symm_apply, map_add] at h3
+    rw [LinearEquiv.apply_symm_apply, map_add (f := _)] at h3
     rw [h3]
     abel
   have hxS : (WithLp.linearEquiv 2 ℂ (Fin n → D)) c ∈ S := by

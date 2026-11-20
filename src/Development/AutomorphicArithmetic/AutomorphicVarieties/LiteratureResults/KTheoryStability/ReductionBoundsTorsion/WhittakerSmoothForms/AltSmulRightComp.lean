@@ -148,7 +148,7 @@ theorem claim {U : Set V} {A : Γ →* (V →L[ℝ] V)} {φ : V → ℝ} (hL : P
       set_option synthInstance.maxHeartbeats 100000 in
         rw [hder, ← ContinuousAlternatingMap.alternatizeUncurryFinCLM_apply, map_sum]
       refine Finset.sum_congr rfl fun γ _ => ?_
-      rw [map_add, map_smul, ContinuousAlternatingMap.alternatizeUncurryFinCLM_apply,
+      rw [map_add (f := _), map_smul, ContinuousAlternatingMap.alternatizeUncurryFinCLM_apply,
         ContinuousAlternatingMap.alternatizeUncurryFinCLM_apply]
       have hz : ContinuousAlternatingMap.alternatizeUncurryFin
           (fderiv ℝ (eta A φ c j (cons γ σ)) h) = 0 := hCl H k c j (cons γ σ) h hh

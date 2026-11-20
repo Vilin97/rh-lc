@@ -23,7 +23,7 @@ theorem cc_C {σ : Type} : CC fun c : ℂ_[p] => (MvPowerSeries.C c : MvPowerSer
 
 theorem cc_add {σ : Type} {F G : ℂ_[p] → MvPowerSeries σ ℂ_[p]} (hF : CC F) (hG : CC G) :
     CC fun c => F c + G c := by
-  intro n; simp only [map_add]; exact (hF n).add (hG n)
+  intro n; simp only [map_add (f := _)]; exact (hF n).add (hG n)
 
 theorem cc_sub {σ : Type} {F G : ℂ_[p] → MvPowerSeries σ ℂ_[p]} (hF : CC F) (hG : CC G) :
     CC fun c => F c - G c := by

@@ -48,7 +48,7 @@ theorem baseMap_ofId_eq_includeRight (ξ : K ⊗[K] D) :
       Algebra.TensorProduct.includeRight_apply, ← TensorProduct.smul_tmul, Algebra.ofId_apply,
       Algebra.algebraMap_eq_smul_one]
     rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem rationalUnits'_eq (ξ : (K ⊗[K] D)ˣ) :
     rationalUnits' ξ = rationalUnits K D

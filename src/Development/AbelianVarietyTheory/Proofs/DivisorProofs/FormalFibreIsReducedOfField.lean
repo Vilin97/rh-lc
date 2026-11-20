@@ -33,7 +33,7 @@ theorem tensor_map_injective_of_field (A M K L : Type) [CommRing A] [CommRing M]
       induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp
-      | add a b ha hb => rw [map_add, map_add, ha, hb]
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     rw [e]
     exact LinearMap.congr_fun this z
   rwa [key, key] at h

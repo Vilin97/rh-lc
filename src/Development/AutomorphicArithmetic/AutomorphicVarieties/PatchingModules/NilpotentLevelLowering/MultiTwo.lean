@@ -37,14 +37,14 @@ private theorem comm_emb (H : HkHyp O Nq act e W) {j j' : Fin q} (h : j ≠ j') 
     Commute (e j) (act (emb O R j' x)) := by
   induction x using MvPolynomial.induction_on with
   | C r => rw [emb_C, AlgHom.commutes]; exact (Algebra.commutes _ _).symm
-  | add p p' hp hp' => rw [map_add, map_add]; exact hp.add_right hp'
+  | add p p' hp hp' => rw [map_add (f := _), map_add (f := _)]; exact hp.add_right hp'
   | mul_X p i hp => rw [map_mul, map_mul, emb_X]; exact hp.mul_right (H.eX j j' i h)
 
 private theorem mem_emb (H : HkHyp O Nq act e W) {j j' : Fin q} (h : j ≠ j') (x : MvPolynomial (Fin n) O) :
     ∀ v ∈ W j, act (emb O R j' x) v ∈ W j := by
   induction x using MvPolynomial.induction_on with
   | C r => intro v hv; rw [emb_C, AlgHom.commutes]; exact (W j).smul_mem _ hv
-  | add p p' hp hp' => intro v hv; rw [map_add, map_add]; exact (W j).add_mem (hp v hv) (hp' v hv)
+  | add p p' hp hp' => intro v hv; rw [map_add (f := _), map_add (f := _)]; exact (W j).add_mem (hp v hv) (hp' v hv)
   | mul_X p i hp => intro v hv; rw [map_mul, map_mul, emb_X]; exact hp _ (H.WX j j' i h v hv)
 
 private theorem comm_list (H : HkHyp O Nq act e W) {j : Fin q} {l : List (Fin q)} (h : j ∉ l)
@@ -197,7 +197,7 @@ theorem UpperTheory.V.Pa.Lev.multiTwo :
     rw [htr, ← this, ← htr, hembZ, hsym j k hk]
   let ψ : V →+ MSplitAlg P n ⊗[B] M := AddMonoidHom.mk' (fun v => ∑ i : Fin q → ι,
       mkq (MvPolynomial.map β (∏ j, emb O R j (a (i j)))) ⊗ₜ[B] tr (act (∏ j, emb O R j (c (i j))) v))
-    (by intro v w; simp [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib])
+    (by intro v w; simp [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib])
   have hψv : ∀ v, ψ v = ∑ i : Fin q → ι,
       mkq (MvPolynomial.map β (∏ j, emb O R j (a (i j)))) ⊗ₜ[B] tr (act (∏ j, emb O R j (c (i j))) v) := fun v => rfl
   have hψ := multiPsi O R B M V q n β P act tr ι a c hd hmon hdeg htrS htrE ψ hψv
@@ -225,8 +225,8 @@ theorem UpperTheory.V.Pa.Lev.multiTwo :
     rw [map_mul, Module.End.mul_apply, k2, k1, mul_smul]
   have hTadd : ∀ x y, T x → T y → T (x + y) := by
     rintro x y ⟨b1, h1, k1⟩ ⟨b2, h2, k2⟩
-    refine ⟨b1 + b2, by rw [map_add, map_add, map_add, h1, h2], fun m => ?_⟩
-    rw [map_add, LinearMap.add_apply, k2, k1, ← map_add, add_smul]
+    refine ⟨b1 + b2, by rw [map_add (f := _), map_add (f := _), map_add (f := _), h1, h2], fun m => ?_⟩
+    rw [map_add (f := _), LinearMap.add_apply, k2, k1, ← map_add (f := _), add_smul]
   have hTC : ∀ (j : Fin q) (r : O), T (emb O R j (MvPolynomial.C r)) := by
     intro j r
     refine ⟨β (algebraMap O R r), ?_, fun m => ?_⟩
@@ -248,7 +248,7 @@ theorem UpperTheory.V.Pa.Lev.multiTwo :
       rw [this]
       exact hTC j r
     | add p p' hp hp' =>
-      rw [map_add, Subalgebra.coe_add, map_add]
+      rw [map_add (f := _), Subalgebra.coe_add, map_add (f := _)]
       exact hTadd _ _ hp hp'
     | mul_X p i hp =>
       rw [map_mul, Subalgebra.coe_mul, map_mul]
@@ -302,7 +302,7 @@ theorem UpperTheory.V.Pa.Lev.multiTwo :
   intro z
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, smul_add]
   | tmul s m =>
     obtain ⟨p, rfl⟩ : ∃ p, mkq p = s := Ideal.Quotient.mk_surjective s
     induction p using MvPolynomial.induction_on' generalizing m with
@@ -315,4 +315,4 @@ theorem UpperTheory.V.Pa.Lev.multiTwo :
           MvPolynomial.C_mul_monomial, mul_one]
       rw [hs, hφ2, hφ1, hψ, hψinc, smul_smul, smul_smul, mul_comm]
     | add p1 p2 h1 h2 =>
-      rw [map_add, TensorProduct.add_tmul, map_add, map_add, h1, h2, smul_add]
+      rw [map_add (f := _), TensorProduct.add_tmul, map_add (f := _), map_add (f := _), h1, h2, smul_add]

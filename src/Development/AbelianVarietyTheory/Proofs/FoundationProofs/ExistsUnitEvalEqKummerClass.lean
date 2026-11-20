@@ -18,7 +18,7 @@ theorem exists_un_eval_eq_cls : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsA
   | add x y _ _ hx hy =>
     obtain ⟨f, hf, ef⟩ := hx
     obtain ⟨g, hg, eg⟩ := hy
-    exact ⟨f * g, umul f g hf hg, by rw [map_add, ef, eg, hmul]⟩
+    exact ⟨f * g, umul f g hf hg, by rw [map_add (f := _), ef, eg, hmul]⟩
   | smul c x _ hx =>
     obtain ⟨f, hf, ef⟩ := hx
     exact ⟨_, upow _ f hf, by rw [map_smul, ef, hsmul]⟩

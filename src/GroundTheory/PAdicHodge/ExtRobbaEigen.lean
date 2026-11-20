@@ -145,7 +145,7 @@ theorem exists_start (ha : 0 < F.a) {ρ : Set.Ioo (0 : ℝ) 1}
   have he0 : ∀ i, twistDiff (F := F) A N u i =
       F.twistFrob A N ρ (F.powRadius_le_self ρ) V0 i + -T.res hσρ (b0 i) := fun i => by
     have h1 := congrFun (twistFrob_res_untwist (F := F) A N A' hAA V0) i
-    simp only [twistDiff, hu, twistFrob_add, Pi.sub_apply, Pi.add_apply, map_add]
+    simp only [twistDiff, hu, twistFrob_add, Pi.sub_apply, Pi.add_apply, map_add (f := _)]
     rw [show F.twistFrob A N ρ (F.powRadius_le_self ρ) b0 i = T.res hσρ (V0 i) from h1]
     ring
   have he0b : ∀ i, T.extNorm (F.powRadius ρ) (topRad _) (twistDiff (F := F) A N u i) ≤ ‖c‖ / 2 :=

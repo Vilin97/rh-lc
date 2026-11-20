@@ -26,7 +26,7 @@ theorem nrm_det_one_add {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace 
   let π := Ideal.Quotient.mk (Ideal.span {ϖ'})
   have hπ : π ϖ' = 0 := Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.subset_span rfl)
   have hred : π.mapMatrix M = 1 := by
-    simp only [M, map_add, map_one]
+    simp only [M, map_add (f := _), map_one]
     have : π.mapMatrix (ϖ' • y) = 0 := by
       ext a b
       simp [hπ]

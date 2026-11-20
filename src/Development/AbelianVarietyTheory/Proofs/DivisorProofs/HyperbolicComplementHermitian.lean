@@ -66,7 +66,7 @@ theorem span_adelic : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     simp [Pi.single_apply, Finset.sum_ite_eq', eq_comm]
   rw [key]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [← hp, hL, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, map_add, map_mul, map_sum,
+    simp only [← hp, hL, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, map_add (f := _), map_mul, map_sum,
     incV, incM, Matrix.map_apply]
   simp only [Finset.sum_mul, Finset.mul_sum, mul_add, Finset.sum_add_distrib]
   rw [Finset.sum_comm (f := fun k i => R (ι j k) * (z i * R ((p i).2.1 k)))]

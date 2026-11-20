@@ -354,7 +354,7 @@ theorem X_det : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A
     rw [Units.val_mul, hy']
     refine eq_of_parts ?_ ?_
     · have h1 := congrArg (infPart D) hx1
-      simp only [map_mul, map_sub, map_add, map_one, hinf, sub_zero, one_mul, zero_mul, add_zero, zero_add] at h1 ⊢
+      simp only [map_mul, map_sub, map_add (f := _), map_one, hinf, sub_zero, one_mul, zero_mul, add_zero, zero_add] at h1 ⊢
       exact h1
     · have h1 := congrArg (toEAf D) hx1
       have h2 := congrArg (toEAf D) hk
@@ -362,7 +362,7 @@ theorem X_det : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type) (A
       have h4 : toEAf D (incA D ((u ^ m : D.host.Eˣ) : D.host.E)) = eToEAf D (ϖ : D.host.E) ^ m := by
         rw [← map_pow, Units.val_pow_eq_pow_val]; rfl
       rw [← h4] at hx2
-      simp only [map_mul, map_sub, map_add, map_one, ha] at h1 h2 h3 ⊢
+      simp only [map_mul, map_sub, map_add (f := _), map_one, ha] at h1 h2 h3 ⊢
       linear_combination h1 + toEAf D (incA D (((u ^ m)⁻¹ : D.host.Eˣ) : D.host.E)) * hx2 + toEAf D e * d * h2
   have hun : ∀ PP : Pl D.host.E, IsUnit (resS D.host.F PP ⟨d, hd⟩) := fun PP =>
     (IsUnit.of_mul_eq_one (⟨d', hd'⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) (Subtype.ext hdd)).map _

@@ -198,7 +198,7 @@ private theorem slice_dominated : GlobalTheory.ThK.KP → ∀ (F E : Type) [Fiel
       refine Prod.ext ?_ (add_zero _)
       show (x q).1 + (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (s q) =
         (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (s q + InfiniteAdeleRing.ringEquiv_mixedSpace F (x q).1)
-      rw [map_add, RingEquiv.symm_apply_apply, add_comm]
+      rw [map_add (f := _), RingEquiv.symm_apply_apply, add_comm]
     rw [h1]
     refine (translate_le f a _ n m t).trans ?_
     rw [norm_mul, Circle.norm_coe, one_mul, norm_pow, Complex.norm_real, Real.norm_of_nonneg (NNReal.coe_nonneg _)]

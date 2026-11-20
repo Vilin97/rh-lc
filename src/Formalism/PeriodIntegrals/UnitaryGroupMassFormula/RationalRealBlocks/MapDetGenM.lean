@@ -30,7 +30,7 @@ theorem map_dualSub {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (k :
     MvPolynomial.map φ (dualSub R k p) = dualSub S k (MvPolynomial.map φ p) := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [dualSub]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1

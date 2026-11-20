@@ -21,7 +21,7 @@ def leviOf (H : (Fin n → ℂ) →L[ℝ] (Fin n → ℂ) →L[ℝ] ℝ) (u v : 
 
 theorem leviOf_add_right (H : (Fin n → ℂ) →L[ℝ] (Fin n → ℂ) →L[ℝ] ℝ) (u v w : Fin n → ℂ) :
     leviOf H u (v + w) = leviOf H u v + leviOf H u w := by
-  simp only [leviOf, smul_add, map_add]
+  simp only [leviOf, smul_add, map_add (f := _)]
   push_cast
   ring
 

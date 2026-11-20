@@ -105,7 +105,7 @@ theorem IsOp.theta (h : IsOp ψ a e c ei ev) : ∀ Φ ∈ schA F κ, thetaSum F 
       carrier := {Φ | Φ ∈ schA F κ ∧ thetaSum F (e Φ) = c * thetaSum F Φ}
       zero_mem' := ⟨zero_mem _, by simp [thetaSum]⟩
       add_mem' := fun {x y} hx hy => ⟨add_mem hx.1 hy.1, by
-        rw [map_add, thetaSum_add F (h.maps _ hx.1) (h.maps _ hy.1), thetaSum_add F hx.1 hy.1, hx.2, hy.2, mul_add]⟩
+        rw [map_add (f := _), thetaSum_add F (h.maps _ hx.1) (h.maps _ hy.1), thetaSum_add F hx.1 hy.1, hx.2, hy.2, mul_add]⟩
       smul_mem' := fun r x hx => ⟨Submodule.smul_mem _ r hx.1, by
         rw [map_smul, thetaSum_smul, thetaSum_smul, hx.2, mul_left_comm]⟩ })
     (fun f φ hφ => ⟨pure_mem f hφ, (h.2.2.2.2.2 f φ hφ).2.2⟩) hΦ).2

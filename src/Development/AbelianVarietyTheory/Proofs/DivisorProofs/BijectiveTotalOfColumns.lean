@@ -48,8 +48,8 @@ theorem exists_graded (hA : IsFilt dA gA FA rA) (hB : IsFilt dB gB FB rB) (Φ : 
   choose s hs hs' using fun m => hA.surj p (m - p) m (by omega)
   let Ψ : ∀ m, GA p m →+ GB p m := fun m => AddMonoidHom.mk' (fun y => rB p (m - p) m (by omega) (Φ _ (s m y)))
     (fun y y' => by
-      rw [← map_add, ← map_add]
-      exact key _ _ _ _ (hs _ _) _ (add_mem (hs _ _) (hs _ _)) (by rw [map_add, hs', hs', hs']))
+      rw [← map_add (f := _), ← map_add (f := _)]
+      exact key _ _ _ _ (hs _ _) _ (add_mem (hs _ _) (hs _ _)) (by rw [map_add (f := _), hs', hs', hs']))
   have h1 : ∀ n m (h : n + p = m), ∀ x ∈ FA p n, Ψ m (rA p n m h x) = rB p n m h (Φ n x) := by
     intro n m h x hx
     obtain rfl : n = m - p := by omega
@@ -90,14 +90,14 @@ theorem coneAcyclic_of_graded (hA : IsFilt dA gA FA rA) (hB : IsFilt dB gB FB rB
         rwa [add_sub_cancel_right] at this
       have hy' : y - (Φ n₁ v + dB n₀ n₁ w) ∈ FB p n₁ := by
         have := (hB.ker _ _ _ rfl _ (sub_mem hy (add_mem (hF _ _ _ hvF) (hB.dF _ _ _ h₀ _ hwF)))).1
-          (by rw [map_sub, map_add, hB.rd _ _ _ _ _ rfl rfl h₀ w hwF, ← hΨ _ _ _ _ _ hvF, ← hw, sub_self])
+          (by rw [map_sub, map_add (f := _), hB.rd _ _ _ _ _ rfl rfl h₀ w hwF, ← hΨ _ _ _ _ _ hvF, ← hw, sub_self])
         rwa [add_sub_cancel_right] at this
       obtain ⟨v₂, w₂, e₁, e₂⟩ := ih (by omega) _ hx' _ hy'
         (by rw [map_sub, hdx, hA.dd, sub_self])
-        (by rw [map_sub, map_sub, map_add, hB.dd, add_zero, hxy, hd _ _ h₁])
+        (by rw [map_sub, map_sub, map_add (f := _), hB.dd, add_zero, hxy, hd _ _ h₁])
       refine ⟨v + v₂, w + w₂, ?_, ?_⟩
-      · rw [map_add, ← e₁]; abel
-      · rw [map_add, map_add, add_add_add_comm, ← e₂]; abel
+      · rw [map_add (f := _), ← e₁]; abel
+      · rw [map_add (f := _), map_add (f := _), add_add_add_comm, ← e₂]; abel
   intro x y
   exact main 0 (min_le_right _ _) le_rfl x (hA.top _ _) y (hB.top _ _)
 
@@ -185,11 +185,11 @@ theorem coneAcyclic_of_bijective
     mk_eq_mk_iff _ _ n₀ h₀] at hc
   obtain ⟨w, hw⟩ := hc
   refine ⟨v + fun j => (a' j).1, w, ?_, ?_⟩
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact (by rw [← hv']; exact ((congrArg₂ (· + ·) rfl h0).trans (add_zero _)).symm)
   · have hw' : δ n₀ n₁ w = y - Φ n₁ v - Φ n₁ fun j => (a' j).1 := hw
     change y = _ + δ n₀ n₁ w
-    rw [hw', map_add]; abel
+    rw [hw', map_add (f := _)]; abel
 
 end Classes
 

@@ -86,7 +86,7 @@ theorem twOrbit_gen (ρ : Representation ℂ G V) (L : Subgroup G) (θ : L →* 
 
 theorem twOrbit_add (ρ : Representation ℂ G V) (L : Subgroup G) (θ : L →* ℂˣ) (x y : V) (t : L) :
     twOrbit ρ L θ (x + y) t = twOrbit ρ L θ x t + twOrbit ρ L θ y t := by
-  simp only [twOrbit, map_add, smul_add]
+  simp only [twOrbit, map_add (f := _), smul_add]
 
 theorem twOrbit_smul (ρ : Representation ℂ G V) (L : Subgroup G) (θ : L →* ℂˣ) (c : ℂ) (x : V)
     (t : L) : twOrbit ρ L θ (c • x) t = c • twOrbit ρ L θ x t := by

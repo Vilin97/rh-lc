@@ -47,7 +47,7 @@ theorem conjMap_fmap (σ : K →+* ℂ) {E E' : Type*} [AddCommGroup E] [Module 
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul z e => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 omit [NumberField K] in
 
@@ -146,7 +146,7 @@ theorem quotMap_perp_bijective (σ : K →+* ℂ) :
     obtain ⟨w, hw, x, hx, rfl⟩ := Submodule.mem_sup.mp hy
     refine ⟨⟨x, hx⟩, ?_⟩
     change quotMap M F σ x = quotMap M F σ (w + x)
-    rw [map_add, (quotMap_eq_zero_iff M F σ w).mpr hw, zero_add]
+    rw [map_add (f := _), (quotMap_eq_zero_iff M F σ w).mpr hw, zero_add]
 
 def perpEquiv (σ : K →+* ℂ) : (subImage M F σ)ᗮ ≃ₗ[ℂ] Fibre σ (M.carrier ⧸ F) :=
   LinearEquiv.ofBijective _ (quotMap_perp_bijective M F σ)
@@ -221,7 +221,7 @@ def bcScalar (τ : E →+* ℂ) (z : ComplexAt τ) : 𝓞 E →ₗ[𝓞 K] Compl
   toFun b := ofComplex _ (τ (b : E) * (ofComplex τ).symm z)
   map_add' b b' := by
     change (τ ((b + b' : 𝓞 E) : E) * _ : ℂ) = τ (b : E) * _ + τ (b' : E) * _
-    push_cast; rw [map_add, add_mul]
+    push_cast; rw [map_add (f := _), add_mul]
   map_smul' a b := by
     rw [Algebra.smul_def]
     change τ ((algebraMap (𝓞 K) (𝓞 E) a : E) * (b : E)) * _ = τ (algebraMap K E (a : K)) * (τ (b : E) * _)
@@ -249,8 +249,8 @@ theorem bcInner_add (τ : E →+* ℂ) (z z' : ComplexAt τ) (t : 𝓞 E ⊗[�
     congr 1
     change (τ (b : E) * (ofComplex τ).symm (z + z') : ℂ) =
       τ (b : E) * (ofComplex τ).symm z + τ (b : E) * (ofComplex τ).symm z'
-    rw [map_add, mul_add]
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]; abel
+    rw [map_add (f := _), mul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]; abel
 
 def bcAdd (τ : E →+* ℂ) : ComplexAt τ →+ (𝓞 E ⊗[𝓞 K] M.carrier →+ Fibre (resEmb K τ) M.carrier) :=
   AddMonoidHom.mk' (fun z ↦ (bcInner M τ z).toAddMonoidHom)
@@ -268,7 +268,7 @@ def bcFwdAdd (τ : E →+* ℂ) :
       change (τ (b : E) * (ofComplex τ).symm (ofComplex τ (τ (e : E)) * z) : ℂ) =
         τ ((e : E) * (b : E)) * (ofComplex τ).symm z
       rw [map_mul, map_mul, AlgEquiv.symm_apply_apply]; ring
-    | add x y hx hy => rw [map_add, hx, hy, smul_add, map_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add, map_add (f := _)]
 
 theorem bcFwdAdd_tmul (τ : E →+* ℂ) (z : ComplexAt τ) (t : 𝓞 E ⊗[𝓞 K] M.carrier) :
     bcFwdAdd M τ (z ⊗ₜ t) = bcInner M τ z t := rfl
@@ -290,8 +290,8 @@ def bcFwd (τ : E →+* ℂ) :
         change (τ (b : E) * (ofComplex τ).symm (ofComplex τ c * z) : ℂ) =
           c * (τ (b : E) * (ofComplex τ).symm z)
         rw [map_mul, AlgEquiv.symm_apply_apply]; ring
-      | add x y hx hy => rw [map_add, map_add, hx, hy, smul_add]
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem bcFwd_tmul_tmul (τ : E →+* ℂ) (z : ComplexAt τ) (b : 𝓞 E) (m : M.carrier) :
     bcFwd M τ (z ⊗ₜ (b ⊗ₜ m)) = bcScalar K τ z b ⊗ₜ m := rfl
@@ -305,7 +305,7 @@ def bcInv (τ : E →+* ℂ) :
           ((1 : 𝓞 E) ⊗ₜ[𝓞 K] m) : Fibre τ (𝓞 E ⊗[𝓞 K] M.carrier)))
         (fun m m' ↦ by simp only [tmul_add]))
       (fun w w' ↦ AddMonoidHom.ext fun m ↦ by
-        simp only [AddMonoidHom.mk'_apply, AddMonoidHom.add_apply, map_add, add_tmul]))
+        simp only [AddMonoidHom.mk'_apply, AddMonoidHom.add_apply, map_add (f := _), add_tmul]))
     fun a w m ↦ by
       simp only [AddMonoidHom.mk'_apply]
       have h1 : (ofComplex τ ((ofComplex (resEmb K τ)).symm (a • w)) : ComplexAt τ) =
@@ -326,8 +326,8 @@ theorem bcInv_bcFwd (τ : E →+* ℂ) (t : Fibre τ (𝓞 E ⊗[𝓞 K] M.carri
       change (ofComplex τ (τ (b : E) * (ofComplex τ).symm z)) ⊗ₜ[𝓞 E] ((1 : 𝓞 E) ⊗ₜ[𝓞 K] m) = _
       have h1 : (ofComplex τ (τ (b : E) * (ofComplex τ).symm z) : ComplexAt τ) = b • z := rfl
       rw [h1, TensorProduct.smul_tmul, smul_tmul', smul_eq_mul, mul_one]
-    | add x y hx hy => rw [tmul_add, map_add, map_add, hx, hy]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [tmul_add, map_add (f := _), map_add (f := _), hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem bcFwd_injective (τ : E →+* ℂ) : Function.Injective (bcFwd M τ) := fun x y h ↦ by
   rw [← bcInv_bcFwd M τ x, ← bcInv_bcFwd M τ y, h]
@@ -345,8 +345,8 @@ theorem bcFwd_conj (τ : E →+* ℂ) (x : Fibre τ (𝓞 E ⊗[𝓞 K] M.carrie
       change (starRingEnd ℂ (τ (b : E)) * starRingEnd ℂ ((ofComplex τ).symm z) : ℂ) =
         starRingEnd ℂ (τ (b : E) * (ofComplex τ).symm z)
       rw [map_mul]
-    | add x y hx hy => simp only [tmul_add, map_add, hx, hy]
-  | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [tmul_add, map_add (f := _), hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def baseChangeMetric : HermitianMetric E (𝓞 E ⊗[𝓞 K] M.carrier) where
   form τ := coreOfInjective ((FibreSpace.equiv M.metric (resEmb K τ)).toLinearMap ∘ₗ bcFwd M τ)
@@ -402,14 +402,14 @@ def fieldCoordO (σ : K →+* ℂ) : Fibre σ K →ₗ[𝓞 K] ComplexAt σ :=
       change ofComplex σ (σ c) * (ofComplex σ (σ (a : K)) * z) =
         ofComplex σ (σ (a : K)) * (ofComplex σ (σ c) * z)
       ring)
-    (fun z c c' ↦ by rw [map_add, map_add, add_mul])
+    (fun z c c' ↦ by rw [map_add (f := _), map_add (f := _), add_mul])
     (fun a z c ↦ by
       change ofComplex σ (σ ((a : K) * c)) * z = ofComplex σ (σ (a : K)) * (ofComplex σ (σ c) * z)
       rw [map_mul, map_mul, mul_assoc]))
 
 def fieldCoord (σ : K →+* ℂ) : Fibre σ K →ₗ[ℂ] ℂ where
   toFun t := (ofComplex σ).symm (fieldCoordO σ t)
-  map_add' s t := by rw [map_add, map_add]
+  map_add' s t := by rw [map_add (f := _), map_add (f := _)]
   map_smul' c t := by
     induction t using TensorProduct.induction_on with
     | zero => simp only [smul_zero, map_zero]
@@ -418,7 +418,7 @@ def fieldCoord (σ : K →+* ℂ) : Fibre σ K →ₗ[ℂ] ℂ where
       change (ofComplex σ).symm (ofComplex σ (σ a) * (ofComplex σ c * z)) =
         c * (ofComplex σ).symm (ofComplex σ (σ a) * z)
       simp only [map_mul, AlgEquiv.symm_apply_apply]; ring
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 variable (r : ℕ)
 
@@ -450,8 +450,8 @@ theorem coordInv_coordMap (σ : K →+* ℂ) (t : Fibre σ (Fin r → K)) :
     ext j
     simp [Finset.sum_apply, Pi.single_apply]
   | add x y hx hy =>
-    rw [map_add]
-    simp only [coordInv, Pi.add_apply, map_add, add_tmul, Finset.sum_add_distrib] at hx hy ⊢
+    rw [map_add (f := _)]
+    simp only [coordInv, Pi.add_apply, map_add (f := _), add_tmul, Finset.sum_add_distrib] at hx hy ⊢
     rw [hx, hy]
 
 theorem coordMap_injective (σ : K →+* ℂ) : Function.Injective (coordMap r σ) := fun s t h ↦ by
@@ -477,7 +477,7 @@ theorem latticeMap_conj (σ : K →+* ℂ) (L : Submodule (𝓞 K) (Fin r → K)
       starRingEnd ℂ (coordMap r σ (z ⊗ₜ (l : Fin r → K)) i)
     rw [coordMap_tmul, coordMap_tmul, map_mul]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, star_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), star_add]
 
 def IsLattice (L : Submodule (𝓞 K) (Fin r → K)) : Prop :=
   L.FG ∧ Submodule.span K (L : Set (Fin r → K)) = ⊤

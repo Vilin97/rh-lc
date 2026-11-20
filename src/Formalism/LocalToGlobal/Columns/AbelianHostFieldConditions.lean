@@ -66,7 +66,7 @@ def Kq : Subfield X.E where
     rw [map_one, map_one]
   add_mem' := by
     intro a b ha hb τ τ'
-    rw [map_add, map_add, ha τ τ', hb τ τ']
+    rw [map_add (f := _), map_add (f := _), ha τ τ', hb τ τ']
   zero_mem' := by
     intro τ τ'
     rw [map_zero, map_zero]

@@ -86,7 +86,7 @@ theorem GlobalTheory.AnPer.exists_sliceTaylor_algHom : ∀ {I : Type} [Fintype I
     filter_upwards [eventually_mem (hW p hp)] with x hx using Hol.fn_algebraMap c hx
   have hA : ∀ f h : Hol W, r (f + h) = r f + r h := fun f h ↦ by
     refine GlobalTheory.T.tensor_holomorphic_ext_of_values W₀ D _ _ fun p hp ↦ ?_
-    rw [map_add, hr, hr, hr, ← hadd _ _ (analyticAt_slice f (hW p hp)) (analyticAt_slice h (hW p hp))]
+    rw [map_add (f := _), hr, hr, hr, ← hadd _ _ (analyticAt_slice f (hW p hp)) (analyticAt_slice h (hW p hp))]
     refine hcongr _ _ ?_
     filter_upwards [eventually_mem (hW p hp)] with x hx using Hol.fn_add f h hx
   have hM : ∀ f h : Hol W, r (f * h) = r f * r h := fun f h ↦ by

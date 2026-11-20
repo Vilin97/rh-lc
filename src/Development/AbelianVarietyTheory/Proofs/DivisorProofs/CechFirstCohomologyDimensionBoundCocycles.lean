@@ -159,7 +159,7 @@ theorem coc_tri (e : ∀ i i' : κ, Γ(Y, D i ⊓ D i')) (he : IsCoc D e) {a b c
   have hV : ⨅ j ∈ t.1, D j ≤ D a ⊓ D b ⊓ D c :=
     le_inf (le_inf (biInf_le _ ha) (biInf_le _ hb)) (biInf_le _ hc)
   have h' := congrArg (resG Y hV) (he a b c)
-  simp only [map_add, resG_resG] at h' ⊢
+  simp only [map_add (f := _), resG_resG] at h' ⊢
   rw [one_smul, one_smul, neg_smul, one_smul]
   linear_combination h'
 

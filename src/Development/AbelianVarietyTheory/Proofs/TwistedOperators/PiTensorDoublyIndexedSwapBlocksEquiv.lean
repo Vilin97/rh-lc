@@ -78,7 +78,7 @@ theorem piTensor_swapBlocks_equiv : ∀ (k : Type) [Field k] [ValuativeRel k] [T
         exact piTensor_tprod (fun i => σ i j) _ _
       rw [map_smul, map_smul, map_smul, map_smul, map_smul, map_smul, h, h', LinearEquiv.symm_apply_apply]
     | add w w' hw hw' =>
-      rw [map_add, map_add, map_add, map_add, map_add, map_add, hw, hw']
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hw, hw']
   refine LinearMap.ext fun v => ?_
   obtain ⟨w, rfl⟩ := e₁.surjective v
   have h := key w

@@ -40,7 +40,7 @@ theorem v_le_of_mem_idS {w : Pl D.host.E} {e : ℕ} {𝔪 : Ideal (𝓞 D.host.E
     exact (v_oToS_le w a e).2 (h ha)
   · simp
   · intro x y _ _ hx hy
-    rw [Subring.coe_add, RingHom.map_add]
+    rw [Subring.coe_add, RingHom.map_add (f := _)]
     exact Valuation.map_add_le _ hx hy
   · intro c x _ hx
     rw [smul_eq_mul, Subring.coe_mul, RingHom.map_mul, Valuation.map_mul]
@@ -116,7 +116,7 @@ theorem hom_sum {A B ι : Type} [CommRing A] [CommRing B] (f : A →+* B) (s : F
 theorem v_mul_add_le {w : Pl D.host.E} {z e a b : EAf D} {c : WithZero (Multiplicative ℤ)} (h : z = e * (a + b))
     (he : cpt (D := D) w e = 1) (ha : Valued.v (cpt (D := D) w a) ≤ c) (hb : Valued.v (cpt (D := D) w b) ≤ c) :
     Valued.v (cpt (D := D) w z) ≤ c := by
-  rw [h, RingHom.map_mul, he, one_mul, RingHom.map_add]
+  rw [h, RingHom.map_mul, he, one_mul, RingHom.map_add (f := _)]
   exact Valuation.map_add_le _ ha hb
 
 theorem cpt_mul_mem {w : Pl D.host.E} {z e a : EAf D} (h : z = e * a) (he : cpt (D := D) w e = 0) :

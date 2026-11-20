@@ -125,7 +125,7 @@ theorem lattice_indexOf : IndexOf := by
       map_smul' := fun o t => by simp only [Pi.smul_apply, smul_assoc, RingHom.id_apply, Finset.smul_sum] }
   let β : (Fin k → I.E) →+ (Fin I.n → I.E) :=
     AddMonoidHom.mk' (fun s => ∑ a, starRingEnd I.E (s a) • b' a) (fun s t => by
-      simp only [Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib])
+      simp only [Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib])
   have hι : ∀ t, ιL t = ∑ c, t c • v c := fun t => rfl
   have hβ : ∀ s, β s = ∑ a, starRingEnd I.E (s a) • b' a := fun s => rfl
   have hint_v : ∀ t : Fin k → I.E, ιL t ∈ Submodule.span (𝓞 I.E) (Set.range v) ↔ t ∈ oLat I.E k := by
@@ -218,7 +218,7 @@ theorem lattice_indexOf : IndexOf := by
 
   have hadd : ∀ x y z, hf I (x + y) z = hf I x z + hf I y z := by
     intro x y z
-    simp only [hf, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [hf, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
   have hsmul : ∀ (a : I.E) x z, hf I (a • x) z = starRingEnd I.E a * hf I x z := by
     intro a x z
     simp only [hf, Formalism.UG.hform, Pi.smul_apply, smul_eq_mul, map_mul, mul_assoc]

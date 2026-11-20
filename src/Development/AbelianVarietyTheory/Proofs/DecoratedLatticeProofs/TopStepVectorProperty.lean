@@ -32,7 +32,7 @@ theorem multT_apply_continuous {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar}
     rw [map_smul]
     exact h2.const_smul r
   | add x y hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hx.add hy
 
 theorem multT_apply_left {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (θ : InfFam D) (M : DSModel V S)
@@ -46,7 +46,7 @@ theorem multT_apply_left {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (θ :
       (GlobalTheory.mult_value_left_cont_level θ M J χ _ h1 f).1 γ hγ h
     rw [map_smul, Pi.smul_apply, Pi.smul_apply, h2]
   | add x y hx hy =>
-    rw [map_add, Pi.add_apply, Pi.add_apply, hx, hy]
+    rw [map_add (f := _), Pi.add_apply, Pi.add_apply, hx, hy]
 
 theorem weil_transport {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {T : HSp D} {a b : (AE D)ˣ →* Circle}
     (ω : Om (Yc D (D.R.m - 1)) T) (hω : IsWeilDatumO ψ _ _ a b ω) :

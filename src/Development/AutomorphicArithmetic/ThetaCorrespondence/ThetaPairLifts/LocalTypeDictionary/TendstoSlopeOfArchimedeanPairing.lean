@@ -123,7 +123,7 @@ theorem exists_orbit_pair_archimedean_line (hP : _root_.GlobalTheory.FunPr.Theta
     intro c f; funext x; simp [tens, mul_assoc]
   let T : ℝ → SInf F (Fin n × Fin d) →ₗ[ℂ] SInf F (Fin n × Fin d) := fun t =>
     { toFun := S t
-      map_add' := fun f g => hinj _ _ (by rw [← key, tadd, map_add, key, key, tadd])
+      map_add' := fun f g => hinj _ _ (by rw [← key, tadd, map_add (f := _), key, key, tadd])
       map_smul' := fun c f => hinj _ _ (by rw [← key, tsmul, map_smul, key, RingHom.id_apply, tsmul]) }
   have hT : ∀ t f, T t f = S t f := fun t f => rfl
   have hT0 : ∀ f, T 0 f = f := fun f => hinj _ _ (by rw [hT, ← key, hδ0, map_one, Module.End.one_apply])

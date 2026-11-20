@@ -164,7 +164,7 @@ theorem deriv (h : IsTensorOf T Θ) (γ : ∀ i, ℝ → GL (Fin (n i)) (Cinf E)
   | add F F' _ _ hF hF' =>
     obtain ⟨G, h1, h2⟩ := hF
     obtain ⟨G', h1', h2'⟩ := hF'
-    exact ⟨G + G', fun m => (h1 m).add (h1' m), fun m => by rw [map_add, map_add]; exact (h2 m).add (h2' m)⟩
+    exact ⟨G + G', fun m => (h1 m).add (h1' m), fun m => by rw [map_add (f := _), map_add (f := _)]; exact (h2 m).add (h2' m)⟩
   | smul z F _ hF =>
     obtain ⟨G, h1, h2⟩ := hF
     exact ⟨z • G, fun m => (h1 m).const_mul z, fun m => by rw [map_smul, map_smul]; exact (h2 m).const_mul z⟩

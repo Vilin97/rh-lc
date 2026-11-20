@@ -79,7 +79,7 @@ theorem exists_matRed : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.D
   have hψk : ∀ y, ψ y = 0 → y ∈ (w0 ^ r) • (⊤ : Submodule (𝓞 D.F) (𝓞 D.F ⊗[ℤ] ℤ_[p])) := by
     intro y hy
     obtain ⟨c, z, rfl⟩ := approx r y
-    rw [map_add, map_nsmul, hψ, nsmul_eq_mul, hA, zero_mul, add_zero] at hy
+    rw [map_add (f := _), map_nsmul, hψ, nsmul_eq_mul, hA, zero_mul, add_zero] at hy
     have hc : c ∈ w0 ^ r := Ideal.Quotient.eq_zero_iff_mem.1 hy
     have h1 : c ⊗ₜ[ℤ] (1 : ℤ_[p]) = c • (1 : 𝓞 D.F ⊗[ℤ] ℤ_[p]) := by
       rw [Algebra.TensorProduct.one_def, TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]

@@ -65,7 +65,7 @@ theorem linearIndependent_of_symbol_det_ne_zero :
         · intro hn; exact absurd (Finset.mem_univ a) hn
       have hGg := congrArg G hg'
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_smul, map_zero] at hGg
+        simp only [map_add (f := _), map_sum, map_smul, map_zero] at hGg
       rw [hS, hJ0, add_zero] at hGg
       have hM : Matrix.mulVec (Matrix.of fun i i' : I a => sym a ⟨v (ix ⟨a, i'⟩), hv ⟨a, i'⟩⟩ i)
           (fun i' => g (Sum.inl ⟨a, i'⟩)) = 0 := by

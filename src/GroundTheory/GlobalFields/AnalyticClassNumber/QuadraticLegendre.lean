@@ -91,7 +91,7 @@ theorem conj_smul_sub_mem_span (x : 𝓞 K) :
   simp only [zsmul_eq_mul] at h1 hx
   have h1c := congrArg (conjRing K) h1
   have hxc := congrArg (conjRing K) hx
-  simp only [map_add, map_mul, map_intCast, map_one] at h1c hxc
+  simp only [map_add (f := _), map_mul, map_intCast, map_one] at h1c hxc
   refine ⟨(b.repr x 1 * b.repr 1 0 - b.repr x 0 * b.repr 1 1 : ℤ), ?_⟩
   change _ = conjRing K x - x
   simp only [sqrtDiscr]

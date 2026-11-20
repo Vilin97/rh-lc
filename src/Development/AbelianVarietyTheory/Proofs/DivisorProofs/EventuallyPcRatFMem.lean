@@ -20,7 +20,7 @@ theorem pc_prjG (T : Finset (Pl E)) (g : GL (Fin n) (Af E)) (v : Pl E) :
   have hid : pLoc E v (idem E T) = if v ∈ T then 1 else 0 := rfl
   refine Units.ext (Matrix.ext fun i j => ?_)
   change pLoc E v ((idem E T • g.val + (1 - idem E T) • (1 : Matrix (Fin n) (Fin n) (Af E))) i j) = _
-  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_sub, map_one, hid]
+  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_sub, map_one, hid]
   split_ifs with h
   · simp [Matrix.one_apply, apply_ite (pLoc E v)]
   · simp [Matrix.one_apply, apply_ite (pLoc E v)]

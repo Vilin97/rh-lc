@@ -8,9 +8,9 @@ theorem pderiv_aeval_sum {σ δ : Type} [Fintype σ] [DecidableEq σ] (f : σ �
     (G : MvPolynomial σ ℂ) : pderiv i (aeval f G) = ∑ u, pderiv i (f u) * aeval f (pderiv u G) := by
   induction G using MvPolynomial.induction_on with
   | C c => simp
-  | add p q hp hq => simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p k hp =>
-    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add, aeval_X, hp, mul_add, Finset.sum_add_distrib]
+    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add (f := _), aeval_X, hp, mul_add, Finset.sum_add_distrib]
     congr 1
     · rw [Finset.sum_eq_single k]
       · simp [mul_comm]

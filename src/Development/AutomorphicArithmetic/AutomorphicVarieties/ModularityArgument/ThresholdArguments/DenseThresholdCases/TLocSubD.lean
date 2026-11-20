@@ -46,7 +46,7 @@ private theorem exists_nil {ρ : Representation ℂ G V} (hl : HasFiniteLength �
   obtain ⟨b, hb⟩ := hxc t
   let R : Subrepresentation ρ := ⟨N.toSubmodule ⊔ LinearMap.range (f ^ (a + b)), fun g v hv => by
     obtain ⟨y, hy, _, ⟨z, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hv
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (N.apply_mem_toSubmodule g hy) ⟨ρ g z, by rw [hf, pow_comm_rep]⟩⟩
   have hR : x ∉ R.toSubmodule := fun hv => by
     obtain ⟨y, hy, _, ⟨z, rfl⟩, h⟩ := Submodule.mem_sup.1 hv
@@ -354,7 +354,7 @@ private theorem mk_ne {T : Type} [AddCommGroup T] [Module ℂ T] (V : Sig.Lev k)
     | zero => simp
     | add a b _ _ ha hb =>
       filter_upwards [ha, hb] with m h1 h2
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem h1 h2
     | smul a y _ hy =>
       filter_upwards [hy] with m h1

@@ -33,7 +33,7 @@ theorem baseChange_injective {A R : Type} [CommRing A] [CommRing R] [Algebra A R
     | zero => simp
     | tmul r x =>
       rw [LinearMap.baseChange_tmul, LinearMap.baseChange_tmul, hσκ, algebraMap_smul, TensorProduct.tmul_smul]
-    | add a b ha hb => rw [map_add, map_add, ha, hb, smul_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, smul_add]
   have hr : IsSMulRegular (R ⊗[A] P) (algebraMap A R π) :=
     Module.Flat.isSMulRegular_of_nonZeroDivisors hπ
   intro a b hab
@@ -68,7 +68,7 @@ theorem main : ∀ (A R : Type) [CommRing A] [CommRing R] [Algebra A R] (h : ℕ
     | tmul a w =>
       rw [LinearMap.lTensor_tmul, hΦ]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨w.1, w.2, rfl⟩)
-    | add a b ha hb => rw [map_add, map_add]; exact Submodule.add_mem _ ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ ha hb
   · intro hy
     have hle : Submodule.span R {z | ∃ x₀ : P, t x₀ = 0 ∧ z = piMap (algebraMap A R) (Fin h) (κ x₀)}
         ≤ (LinearMap.ker (t.baseChange R)).map Φ := by

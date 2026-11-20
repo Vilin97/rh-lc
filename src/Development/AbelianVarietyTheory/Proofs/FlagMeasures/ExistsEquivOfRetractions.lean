@@ -218,7 +218,7 @@ private theorem isField_or_exists_swap_ringEquiv {F : Type} [Field F] [Valuative
     by_contra hcon
     push_neg at hcon
     exact hfield ⟨exists_pair_ne E, mul_comm, fun ha => hcon _ ha⟩
-  obtain ⟨t, ht⟩ := (L.cj_fix (u + L.cj u)).1 (by rw [map_add, L.cj_cj, add_comm])
+  obtain ⟨t, ht⟩ := (L.cj_fix (u + L.cj u)).1 (by rw [map_add (f := _), L.cj_cj, add_comm])
   obtain ⟨s, hs⟩ := (L.cj_fix (u * L.cj u)).1 (by rw [map_mul, L.cj_cj, mul_comm])
   have hs0 : s = 0 := by
     by_contra hs0
@@ -283,7 +283,7 @@ private theorem isField_or_exists_swap_ringEquiv {F : Type} [Field F] [Valuative
   have hcj : ∀ w : F × F, L.cj (φ w) = φ w.swap := by
     rintro ⟨a, b⟩
     rw [hφ, Prod.swap_prod_mk, hφ]
-    simp only [map_add, map_mul, AlgEquiv.commutes, hcp, hcq]
+    simp only [map_add (f := _), map_mul, AlgEquiv.commutes, hcp, hcq]
     ring
   let eφ := AlgEquiv.ofBijective φ hbij
   have hsymm : ∀ w, eφ.symm (φ w) = w := fun w => eφ.symm_apply_apply w

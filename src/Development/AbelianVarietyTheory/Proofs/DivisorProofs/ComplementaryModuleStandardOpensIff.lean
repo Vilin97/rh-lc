@@ -137,7 +137,7 @@ theorem unif (k : Type) [Field k] [CharZero k] (F K : Type) [Field F] [Field K] 
     | zero => simp
     | add a c _ _ ha hc =>
       have e : ((a + c : integralClosure (rA k x {i}) K) : K) = a + c := rfl
-      rw [e, mul_add, map_add, mul_add]
+      rw [e, mul_add, map_add (f := _), mul_add]
       exact add_mem ha hc
     | smul r a _ ha =>
       have e : ((r • a : integralClosure (rA k x {i}) K) : K) = algebraMap F K (r : F) * a := by

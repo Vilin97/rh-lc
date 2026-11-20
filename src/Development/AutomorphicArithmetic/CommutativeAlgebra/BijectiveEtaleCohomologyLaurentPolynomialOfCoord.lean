@@ -135,7 +135,7 @@ theorem UpperTheory.bijective_etaleCohomology_laurentPolynomial_of_coordinate_un
     have hadd : ∀ a b : Ht q (sp O) 0 j, cup q (pull _ (sch.map f) _ _ (a + b)) (kum q u) =
         cup q (pull _ (sch.map f) _ _ a) (kum q u) + cup q (pull _ (sch.map f) _ _ b) (kum q u) := by
       intro a b
-      rw [map_add, map_add, AddMonoidHom.add_apply]
+      rw [map_add (f := _), map_add (f := _), AddMonoidHom.add_apply]
     refine (injective_iff_map_eq_zero (AddMonoidHom.mk' _ hadd)).2 fun b hb => ?_
     change cup q (pull _ (sch.map f) _ _ b) (kum q u) = 0 at hb
     obtain ⟨c, rfl⟩ := root_every ζ j b

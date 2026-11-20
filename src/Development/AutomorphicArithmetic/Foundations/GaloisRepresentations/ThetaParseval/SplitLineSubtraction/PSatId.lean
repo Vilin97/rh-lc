@@ -34,7 +34,7 @@ theorem UpperTheory.Gal.TP.Sub.satId_holds :
     rfl
   simp only [algSat, GlobalTheory.LFun.seg, hs]
   rw [multiset_bind_pure_coe_eq_map, multiset_bind_pure_coe_eq_map]
-  simp only [Multiset.map_add, Multiset.map_map]
+  simp only [Multiset.map_add (f := _), Multiset.map_map]
   have hR := multiset_map_fin_eq_map_range t (fun j : ℕ => (x : ℂ) *
       ((Ideal.absNorm w.asIdeal : ℕ) : ℂ) ^ (((n : ℂ) + 2 * t - 2) / 2 - (j : ℂ)))
   have hc' : c = fun i : Fin t => (fun j : ℕ => (x : ℂ) *

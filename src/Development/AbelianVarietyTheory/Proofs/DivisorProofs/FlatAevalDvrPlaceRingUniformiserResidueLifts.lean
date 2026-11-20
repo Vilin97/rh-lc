@@ -100,7 +100,7 @@ theorem flat_aeval_placeAlg (k : ℕ) (R : Subring K)
     | C a =>
       rw [show (Polynomial.C (MvPolynomial.C a) : Polynomial (MvPolynomial (Fin k) ℂ)) =
         algebraMap ℂ _ a from rfl, AlgEquiv.commutes, AlgHom.commutes, aeval_C]
-    | add p r hp hr => rw [Polynomial.C_add, map_add, map_add, hp, hr, map_add]
+    | add p r hp hr => rw [Polynomial.C_add, RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), hp, hr, RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]
     | mul_X p i hp =>
       rw [Polynomial.C_mul, map_mul, map_mul, hp, ← finSuccEquiv_X_succ, AlgEquiv.symm_apply_apply,
         map_mul, aeval_X, aeval_X]
@@ -149,7 +149,7 @@ theorem flat_aeval_placeAlg (k : ℕ) (R : Subring K)
     set u : placeAlg E := aeval (fun i : Fin k => x i.succ) g
     set v : placeAlg E := φ ((finSuccEquiv ℂ k).symm p.divX)
     have hf' : φ f = x 0 * v + u := by
-      rw [hfp, hp, map_add, map_mul, map_add, map_mul, hX, hC]
+      rw [hfp, hp, map_add (f := _), map_mul, map_add (f := _), map_mul, hX, hC]
     let uE : E.ring := ⟨(u : K), u.2⟩
     let vE : E.ring := ⟨(v : K), v.2⟩
     have huE : IsUnit uE := isUnit_of_ord_eq_zero uE (by rw [← hwK] at *; simpa [uE, ← hwK] using hw0)

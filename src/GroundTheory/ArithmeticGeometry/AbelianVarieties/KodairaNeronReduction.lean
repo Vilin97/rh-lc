@@ -192,9 +192,9 @@ theorem splitPoly_origin {x₀ y₀ : 𝒪}
       exact dvd_add (dvd_pow h3 two_ne_zero) (dvd_mul_of_dvd_right h6 4)
     exact dvd_sub (dvd_mul_of_dvd_right hb6 54) (dvd_mul_of_dvd_right hb4 _)
   rw [(dvd_iff_residue_eq_zero hπ)] at hb
-  simp only [Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_pow,
+  simp only [Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_pow,
     map_C, map_X, ResidueField.algebraMap_eq]
-  rw [eb, map_add, hb, zero_add, ← e1]
+  rw [eb, map_add (f := _), hb, zero_add, ← e1]
   simp only [map_mul]
   ring
 

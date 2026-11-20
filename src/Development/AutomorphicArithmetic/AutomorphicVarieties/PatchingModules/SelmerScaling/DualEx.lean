@@ -35,7 +35,7 @@ private theorem UpperTheory.V.Pa.exists_dual_functional_complement {R F N V : Ty
         refine key _ _ _ (hc _ (μ + ν).2) ?_
         have e : T ((μ + ν : L) : N →+ F) - ∑ j, (c μ μ.2 + c ν ν.2) j • κ j
             = (T μ - ∑ j, c μ μ.2 j • κ j) + (T ν - ∑ j, c ν ν.2 j • κ j) := by
-          simp only [Submodule.coe_add, map_add, Pi.add_apply, add_smul, Finset.sum_add_distrib]
+          simp only [Submodule.coe_add, map_add (f := _), Pi.add_apply, add_smul, Finset.sum_add_distrib]
           abel
         rw [e]
         exact B.add_mem (hc _ μ.2) (hc _ ν.2)

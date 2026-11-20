@@ -148,7 +148,7 @@ private theorem phase_mul (hH : H.IsAdapted σ B X X₁ j₀ j₁) (w : Fin n₁
     rw [mul_inv_rev, GlobalTheory.UnipCT.mat_mul', ← Matrix.mulVec_mulVec, e1, Matrix.mulVec_add, GlobalTheory.UnipMass.hA_add_right,
       hvt, GlobalTheory.UnipMass.hA_add_right, haY, zero_add, add_comm]
   unfold GlobalTheory.IsoPhase.phase
-  rw [← ha, key, map_add, neg_add]
+  rw [← ha, key, map_add (f := _), neg_add]
 
 private theorem phase_cont (X : Spc F E n) (H : Plane E n n₁) (w : Fin n₁ → E) :
     Continuous fun u : UA σ X.J => GlobalTheory.IsoPhase.phase σ X H w u := by

@@ -106,7 +106,7 @@ lemma tensor_action_mul_apply (A : Fin n → Fin n → Module.End ℂ V) (D : Fi
       (∑ j, D a b i j • A c d (x j) + ∑ k, (D a b * D c d) i k • x k) := by
   rw [tensAct_apply_eq_add_sum_smul A D a b]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [tensAct_apply_eq_add_sum_smul A D c d, map_add, map_sum, map_smul, smul_add, Finset.sum_add_distrib,
+    simp only [tensAct_apply_eq_add_sum_smul A D c d, map_add (f := _), map_sum, map_smul, smul_add, Finset.sum_add_distrib,
     Finset.smul_sum, smul_smul, Matrix.mul_apply, Finset.sum_smul]
   rw [Finset.sum_comm]
 

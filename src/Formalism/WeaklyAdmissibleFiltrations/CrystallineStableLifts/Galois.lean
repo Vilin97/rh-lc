@@ -60,7 +60,7 @@ theorem cocyclesFunctorial_holds : CocyclesFunctorial := by
     rintro ⟨hc1, hc2⟩
     refine ⟨hf.comp hc1, fun g h => ?_⟩
     change f (c (g * h)) = f (c g) + ρ' g (f (c h))
-    rw [hc2, map_add, hequiv]
+    rw [hc2, map_add (f := _), hequiv]
   refine ⟨hZ, ?_⟩
   rintro ⟨hc, x, hx⟩
   let m := AlgebraTensorModule.map f (LinearMap.id : B →ₗ[Qp] B)
@@ -69,7 +69,7 @@ theorem cocyclesFunctorial_holds : CocyclesFunctorial := by
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [m, actVB, hequiv]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   refine ⟨hZ hc, m x, fun g => ?_⟩
   change f (c g) ⊗ₜ[Qp] (1 : B) = _
   have := congrArg m (hx g)

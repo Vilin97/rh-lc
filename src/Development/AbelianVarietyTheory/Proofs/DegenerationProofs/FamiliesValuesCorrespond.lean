@@ -124,7 +124,7 @@ theorem famMult_eq (k : ℕ) (mu α : N.X) :
   rw [Over.id_left, Category.id_comp] at this
   refine this.trans ?_
   erw [p₁, p₂, e]
-  rw [NumD.τ, map_mul, map_pow, map_div, map_div, psi_eq ν, psi_eq ν, psi_eq ν, map_add]
+  rw [NumD.τ, map_mul, map_pow, map_div, map_div, psi_eq ν, psi_eq ν, psi_eq ν, map_add (f := _)]
   apply Additive.ofMul.injective
   simp only [ofMul_mul, ofMul_inv, ofMul_div, ofMul_pow]
   module
@@ -173,7 +173,7 @@ theorem famV_fe (hG : GlobalFnsSt) {k : ℕ} {s : Fam D F k} {f : N.X → N.A �
   have e := (secRel_iff D.P.isLB _ _ _ _ _ _ _ _ _ u).1 (s.fe _ _ u hu hc) _ (pt ν x).left z ν.J hJ
   rw [hv u hu hc _ (pt ν x) z ν.J hJ, trF_eq, ← Over.comp_left, indicatorIdempotent_eq_add_sum, pt_tr, uVal_eq, pt_fst, ← H] at e
   have e₁ := H (α + k • mu) x
-  rw [map_add, map_nsmul, e] at e₁
+  rw [map_add (f := _), map_nsmul, e] at e₁
   have e₂ := famMult_eq ν z k mu α
   refine (toStk z).injective ((Units.mul_left_inj (rgU ν z ^ k)).1 (e₁.trans ?_))
   erw [e₂]
@@ -190,7 +190,7 @@ theorem phiVal_famV {k : ℕ} {p : QkPt D F k} {q : N.QT k} (hp : ν.QPt p q)
   have H := (famV_iff ν z s f).1 h
   obtain ⟨h₁, h₂, h₃⟩ := hp
   refine (famV_iff ν z t _).2 fun α x => ?_
-  have e := ht (ν.eX (α - q.1.1.toAdd)) (ν.eX α) (by rw [← h₁, ← map_add, sub_add_cancel]) _ (pt ν x) z ν.J hJ
+  have e := ht (ν.eX (α - q.1.1.toAdd)) (ν.eX α) (by rw [← h₁, ← map_add (f := _), sub_add_cancel]) _ (pt ν x) z ν.J hJ
   have e₁ : uVal D F k (ν.eX (α - q.1.1.toAdd)) p.g.b (pt ν x) z ν.J = _ := h₂ ▸ uVal_eq ν z k _ q.1.2.b x
   have e₂ : pt ν x ≫ DegPre.trPt D F p.g.b = pt ν (x * q.1.2.b) := h₂ ▸ pt_tr ν x q.1.2.b
   have e₃ : (val (LB.mulGen D.P.L _ _ _ _ (p.g.s (ν.eX (α - q.1.1.toAdd))) w) (𝟙 (Sp F)) z ν.J).val =

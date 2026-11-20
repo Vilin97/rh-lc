@@ -148,7 +148,7 @@ theorem isReading_ext : ∀ (p : ℕ) [Fact p.Prime] (F : Type) [Field F] [Numbe
   have hnk : ∀ y : T.Fr, ‖y‖ = ‖k y‖ := fun y => rfl
   haveI : IsUltrametricDist T.Fr :=
     IsUltrametricDist.isUltrametricDist_of_forall_norm_add_le_max_norm fun x y => by
-      rw [hnk, hnk, hnk, map_add]
+      rw [hnk, hnk, hnk, map_add (f := _)]
       exact IsUltrametricDist.norm_add_le_max _ _
   haveI : CompleteSpace T.Fr := Formalism.MainNotions.ExistsIdealDenominator.complete_of_adic (O := T.V) (K := T.Fr) (fun y => hk.int y) inferInstance
   letI := i.toAlgebra

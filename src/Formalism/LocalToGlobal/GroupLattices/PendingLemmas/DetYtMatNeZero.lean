@@ -164,7 +164,7 @@ theorem pairD_smul_right (j : ℕ) (c : X.G.Kf) (P : DA X Kc j) (f : MvPowerSeri
 
 def delF (j : ℕ) : (X.Pj j).Xsp →ₗ[X.G.Kf] MvPowerSeries (X.ZA j) Kc →ₗ[X.G.Kf] XspC (X.Pj (j + 1)) Kc :=
   LinearMap.mk₂ X.G.Kf (fun G f => pairD X Kc j (polDel X Kc j G) f)
-    (fun G G' f => by rw [map_add, pairD_add_left])
+    (fun G G' f => by rw [map_add (f := _), pairD_add_left])
     (fun c G f => by rw [map_smul, pairD_smul_left])
     (fun G f f' => pairD_add_right X Kc j _ f f')
     (fun c G f => pairD_smul_right X Kc j c _ f)

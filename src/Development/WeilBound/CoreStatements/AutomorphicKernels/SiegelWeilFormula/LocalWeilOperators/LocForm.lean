@@ -23,7 +23,7 @@ theorem _root_.PositivityTheory.SiegelWeilFormula.SD.T_lin (d : SD σ) (a : ℂ)
       funext x
       simp only [schr, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
       ring
-  simp only [SD.T, Darboux.rho, h, map_add, map_smul, Pi.add_apply, Pi.smul_apply]
+  simp only [SD.T, Darboux.rho, h, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply]
 
 theorem isSw_lin {m n : ℕ} {f g : (Fin m → Fin n → ℂ) → ℂ} (a : ℂ) (hf : IsSw f) (hg : IsSw g) : IsSw (a • f + g) := by
   obtain ⟨φ, hφ⟩ := hf
@@ -86,7 +86,7 @@ theorem locOp_lin (hT : TAll) (hG : GoodAwayEx) (hL : R.IsLocOp w L) :
   have e := (hL y (a • f + g) (isSw_lin a hf hg)).2 Ψ hΨ.1 _ hΦ hTΦ
   have ef := (hL y f hf).2 Ψ hΨ.1 Φf hΦf hTf
   have eg := (hL y g hg).2 Ψ hΨ.1 Φg hΦg hTg
-  rw [map_add, map_smul, d.T_lin, ef, eg] at e
+  rw [map_add (f := _), map_smul, d.T_lin, ef, eg] at e
   apply R.tens_cancel hΨ.1 hΨ.2.1
   rw [← e]
   funext X

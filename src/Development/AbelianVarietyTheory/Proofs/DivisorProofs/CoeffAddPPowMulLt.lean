@@ -20,7 +20,7 @@ theorem digits (p : ℕ) [Fact p.Prime] (S K : Type) [CommRing S] [IsDomain S] [
     obtain ⟨B, Z, Yn, h1, h2⟩ := ih
     obtain ⟨B', Z', Y', h3, h4⟩ := GlobalTheory.LemY.step p S K d U Z Yn h2
     refine ⟨fun i => B i + (p : WittVector p S) ^ n * B' i, Z', Y', fun i => ?_, h4⟩
-    rw [h1 i, h3 i, map_add, map_mul, map_pow, map_natCast]
+    rw [h1 i, h3 i, map_add (f := _), map_mul, map_pow, map_natCast]
     ring
 
 theorem coeff_add_p_pow_mul_lt (p : ℕ) [Fact p.Prime] {K : Type} [CommRing K] [CharP K p] (n k : ℕ)

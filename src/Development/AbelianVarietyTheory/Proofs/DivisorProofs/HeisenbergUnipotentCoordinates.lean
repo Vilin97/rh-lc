@@ -42,7 +42,7 @@ theorem exists_retraction {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) :
   rw [map_mul, map_ofNat, map_one] at h2'
   have e : z = algebraMap (AF F) (AE F E)
       (algebraMap F (AF F) 2⁻¹ * (Algebra.norm (AF F) (1 + z) - 1 - Algebra.norm (AF F) z)) := by
-    rw [map_mul, map_sub, map_sub, map_one, algebraMap_norm hcm, algebraMap_norm hcm, map_add, map_one, hz]
+    rw [map_mul, map_sub, map_sub, map_one, algebraMap_norm hcm, algebraMap_norm hcm, map_add (f := _), map_one, hz]
     linear_combination (-z) * h2'
   rw [e, hπ]
 
@@ -182,7 +182,7 @@ theorem exists_coord_skew (hcm : IsCMExt F E σ) (h : Hyp σ W H') (hd : d = d�
     simp only [φ, e2, e3]
   have hfix : ∀ b c, c - cA σ c = -hA σ W.J (ι *ᵥ b) (ι *ᵥ b) → cA σ (c + Q b) = c + Q b := by
     intro b c hc
-    simp only [Q, map_add, map_mul, hσhalf, hsk]
+    simp only [Q, map_add (f := _), map_mul, hσhalf, hsk]
     linear_combination (-1 : AE F E) * hc - (hA σ W.J (ι *ᵥ b) (ι *ᵥ b)) * hhalf
   have hcf : ∀ p : (Fin d₁ → AE F E) × AF F, (algebraMap (AF F) (AE F E) p.2 - Q (bar p.1)) -
       cA σ (algebraMap (AF F) (AE F E) p.2 - Q (bar p.1)) = -hA σ W.J (ι *ᵥ bar p.1) (ι *ᵥ bar p.1) := by
@@ -228,7 +228,7 @@ theorem exists_coord_skew (hcm : IsCMExt F E σ) (h : Hyp σ W H') (hd : d = d�
       π (half * (hA σ W.J (ι *ᵥ bar (φ u).1) (ι *ᵥ bar (φ v).1) - hA σ W.J (ι *ᵥ bar (φ v).1) (ι *ᵥ bar (φ u).1))))
     rw [hφ _ _ _ huv, hφ _ _ _ hu, hφ _ _ _ hv]
     refine Prod.ext (funext fun j => map_add (cA σ) _ _) ?_
-    simp only [hbar, ← map_add]
+    simp only [hbar, ← map_add (f := _)]
     congr 1
     simp only [Q, Matrix.mulVec_add, hA_add_left, hA_add_right]
     linear_combination (hA σ W.J (ι *ᵥ b') (ι *ᵥ b)) * hhalf

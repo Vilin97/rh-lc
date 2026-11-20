@@ -107,7 +107,7 @@ theorem det_filtration_symbols : ∀ (E A' : Type) [Field E] [AddCommGroup A'] [
     obtain ⟨c, hc0, hcL⟩ := conv _ _ hy
     refine ⟨c + ∑ i, sym a ⟨v (ix ⟨a, i'⟩), hv ⟨a, i'⟩⟩ i • Pi.single (ix ⟨a, i⟩) 1, ?_, ?_, ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_add, map_sum, hcL]
+      · rw [map_add (f := _), map_sum, hcL]
       simp only [map_smul, Fintype.linearCombination_apply_single, one_smul]
       abel
     · intro k hk

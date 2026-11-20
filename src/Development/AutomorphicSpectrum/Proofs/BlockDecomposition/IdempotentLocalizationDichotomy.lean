@@ -26,7 +26,7 @@ theorem dich_comp : ∀ {S : Type} [CommRing S] (ϖ : S) (P : Ideal S), P.IsPrim
     obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective b
     have h1 : ϖ ^ N - (a * f + b * g) ∈ compI P := by
       rw [← Ideal.Quotient.eq]
-      simpa only [map_add, map_mul, map_pow] using hab.symm
+      simpa only [map_add (f := _), map_mul, map_pow] using hab.symm
     obtain ⟨e, he, heP, hez⟩ := (GlobalTheory.CompanionTheory.CompIdeal.mem_compI_iff P hP _).1 h1
     have hc := one_sub_mem_compI hP he heP
     have hee : e * e = e := he

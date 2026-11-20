@@ -348,11 +348,11 @@ theorem isItW_of_globIt : ∀ {D : D7} {V W : HSp D} {S S' : D.what₂.Tau → S
   · intro τ X hX φ φ' v v' e e'
     have : φ' = tgtOp M M' τ (aS τ) X φ := hinj (funext fun z => (e z).unique (lie_tgt (hL τ) hX φ z))
     apply T.inj
-    rw [map_add, map_zero, h.incl, h.incl, this]
+    rw [map_add (f := _), map_zero, h.incl, h.incl, this]
     refine T.sep _ fun w => ?_
     have d := (span_deriv (ellT M') _ _ e' _ (h.adj φ w)).unique (h.tgt τ X hX φ (inclT M' v) w)
     rw [LinearMap.comp_apply] at d
-    rw [map_add, d, add_neg_cancel]
+    rw [map_add (f := _), d, add_neg_cancel]
 
 end Main
 

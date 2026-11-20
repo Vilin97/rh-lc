@@ -21,7 +21,7 @@ theorem UpperTheory.unipotent_schwartz_locally_constant :
   haveI : IsModuleTopology (Fv F v) (Fv F v ⊗[F] E) := ⟨rfl⟩
   let L : (Fv F v ⊗[F] E) →ₗ[Fv F v] (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v) :=
     { toFun := fun s => GlobalTheory.LatVac.locCo M.co v (uS σ H H' v s)
-      map_add' := fun s t => by rw [uS, uS, uS, map_add, map_add, add_smul, map_add]
+      map_add' := fun s t => by rw [uS, uS, uS, map_add (f := _), map_add (f := _), add_smul, map_add (f := _)]
       map_smul' := fun a t => by
         rw [RingHom.id_apply, ← GlobalTheory.VanishLocCont.locCo_smul, uS, uS, GlobalTheory.VanishLocCont.liftT_smul, map_smul (cA σ),
           smul_assoc] }

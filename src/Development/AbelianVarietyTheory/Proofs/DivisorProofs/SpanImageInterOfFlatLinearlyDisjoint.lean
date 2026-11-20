@@ -33,7 +33,7 @@ theorem smul_injective_tensor (hc₀ : Function.Injective (algebraMap R F)) {d :
     | tmul r f =>
       rw [← TensorProduct.tmul_smul, LinearMap.lTensor_tmul, LinearMap.mulLeft_apply, Algebra.smul_def,
         ← mul_assoc, hu, one_mul]
-    | add a b ha hb => rw [smul_add, map_add, ha, hb]
+    | add a b ha hb => rw [smul_add, map_add (f := _), ha, hb]
   rw [← key x, hx, map_zero]
 
 theorem free_injective (θ : F →ₐ[R] F₁)

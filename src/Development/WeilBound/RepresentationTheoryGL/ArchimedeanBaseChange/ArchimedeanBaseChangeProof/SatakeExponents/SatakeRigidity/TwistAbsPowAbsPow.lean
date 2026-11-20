@@ -72,7 +72,7 @@ theorem prod_map_sum {ι α β : Type*} [CommMonoid β] (s : Finset ι) (M : ι 
     ((∑ i ∈ s, M i).map f).prod = ∏ i ∈ s, ((M i).map f).prod := by
   induction s using Finset.cons_induction with
   | empty => simp
-  | cons j s hj ih => rw [Finset.sum_cons, Finset.prod_cons, Multiset.map_add, Multiset.prod_add, ih]
+  | cons j s hj ih => rw [Finset.sum_cons, Finset.prod_cons, Multiset.map_add (f := _), Multiset.prod_add, ih]
 
 theorem regTw {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} (D : Pre E n) (hr : D.Reg)
     (i : Fin D.c) {a d : ℕ} (P : CuspSub E a) (he : AscEmb (D.V i) P d) (k : Fin d) :

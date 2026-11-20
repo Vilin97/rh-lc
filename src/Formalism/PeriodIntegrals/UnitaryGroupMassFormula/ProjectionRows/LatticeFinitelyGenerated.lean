@@ -239,7 +239,7 @@ theorem lattice_finitely_generated : LamFG := by
         intro y1 y2
         funext g
         apply RingOfIntegers.ext
-        simp only [Submodule.coe_add, map_add]
+        simp only [Submodule.coe_add, map_add (f := _)]
         rfl
       map_smul' := by
         intro c y

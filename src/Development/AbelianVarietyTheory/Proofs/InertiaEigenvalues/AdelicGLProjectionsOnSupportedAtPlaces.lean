@@ -76,7 +76,7 @@ theorem prS_prO_supS (E : Type) [Field E] [NumberField E] (a : ℕ) (S : Finset 
     linear_combination (one_sub_idemS_mul_sub_eq_zero hg i j)
   · refine Units.ext (Matrix.ext fun i j => ?_)
     change pLoc E w (pFin E ((prS S a g : Matrix (Fin a) (Fin a) (Ad E)) i j)) = (1 : Matrix (Fin a) (Fin a) (w.adicCompletion E)) i j
-    rw [prS_apply, map_add, map_sub, map_mul, map_mul, map_add, map_sub, map_mul, map_mul,
+    rw [prS_apply, map_add (f := _), map_sub, map_mul, map_mul, map_add (f := _), map_sub, map_mul, map_mul,
       pLoc_pFin_idemS_of_not_mem hw, pLoc_pFin_one_apply]
     ring
 

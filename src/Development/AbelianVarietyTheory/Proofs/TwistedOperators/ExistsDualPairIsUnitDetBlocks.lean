@@ -41,7 +41,7 @@ theorem exists_det_add_mul_ne_zero_of_ker_inf {k : Type} [Field k] {n : ℕ}
     intro v hv
     have hvmem : v ∈ LinearMap.ker c ⊔ L' := by rw [hL'.sup_eq_top]; exact Submodule.mem_top
     obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.mp hvmem
-    rw [map_add, hgL x hx, hgL' y hy] at hv
+    rw [map_add (f := _), hgL x hx, hgL' y hy] at hv
     have hax : a x ∈ (LinearMap.ker c).map a ⊓ U := by
       refine ⟨Submodule.mem_map_of_mem hx, ?_⟩
       rw [eq_neg_of_add_eq_zero_left hv]

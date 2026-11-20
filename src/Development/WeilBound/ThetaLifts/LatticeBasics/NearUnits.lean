@@ -178,9 +178,9 @@ theorem bump : Bump := by
       mult _ (h.atM _ _) (h.sndM _ _) _ fun Y hY => ?_,
       mult _ ((h.atM _ _).kd_mul_left _) (by rw [Matrix.map_mul, h.sndM, Matrix.mul_zero]) _ fun Y hY => ?_⟩
     · refine mul_right_cancel₀ ((psiV B.ψ v).val_isUnit (l Y₀)).ne_zero ?_
-      rw [← AddChar.map_add_eq_mul, ← map_add, sub_add_cancel, one_mul, H]
+      rw [← AddChar.map_add_eq_mul, ← map_add (f := _), sub_add_cancel, one_mul, H]
       rfl
-    · rw [h.fstM, el, ← sub_add_cancel Y Y₀, map_add, AddChar.map_add_eq_mul, (h1 _ hY).1, one_mul]
+    · rw [h.fstM, el, ← sub_add_cancel Y Y₀, map_add (f := _), AddChar.map_add_eq_mul, (h1 _ hY).1, one_mul]
     · rw [Matrix.map_mul, h.fstM, ← Matrix.mul_neg, ← Matrix.mul_assoc, ← transpose_transpose (Yᵀ * _), transpose_mul,
         transpose_transpose, el, ← sub_add_cancel Y Y₀, Matrix.mul_add, map_add, AddChar.map_add_eq_mul]
       exact (congrArg (· * _) (h1 _ hY).2).trans (one_mul _)

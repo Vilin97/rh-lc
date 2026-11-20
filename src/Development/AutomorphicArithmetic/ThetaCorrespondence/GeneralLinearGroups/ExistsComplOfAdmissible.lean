@@ -112,7 +112,7 @@ private theorem isIrreducible_of_occurs (hBZ : GlobalTheory.Published.BernsteinZ
       have h0 : P w = 0 := Submodule.linearProjOfIsCompl_apply_right hc ⟨w, hw⟩
       have h1 : P (v - w) = ⟨v - w, hm⟩ := Submodule.linearProjOfIsCompl_apply_left hc ⟨v - w, hm⟩
       conv_lhs => rw [hv]
-      rw [map_add, h0, zero_add, h1]
+      rw [map_add (f := _), h0, zero_add, h1]
     have hPeq : ∀ g v, P (π g v) = A'.toRepresentation g (P v) := by
       intro g v
       obtain ⟨w, hw, hzw⟩ := hcod v

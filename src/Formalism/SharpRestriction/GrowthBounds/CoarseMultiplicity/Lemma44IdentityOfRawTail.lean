@@ -17,7 +17,7 @@ def wjSub (w : O) (j : ℕ) : Submodule O (MvPolynomial σ (KK O)) where
     intro P Q hP hQ m
     obtain ⟨a, ha⟩ := hP m
     obtain ⟨b, hb⟩ := hQ m
-    exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add, mul_add]⟩
+    exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add (f := _), mul_add]⟩
   zero_mem' := fun m => ⟨0, by simp⟩
   smul_mem' := by
     intro c P hP m
@@ -58,7 +58,7 @@ def cleanSub (o : ℕ) : Submodule O (MvPolynomial ((X.TT × Bool) × Fin (X.m +
     · rw [mul_add, inA_iff_wj w]
       exact (wjSub w 0).add_mem ((inA_iff_wj w).1 h2) ((inA_iff_wj w).1 k2)
     · unfold InWjRg
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (wjSub w X.c).add_mem (h3 g' hg' hne) (k3 g' hg' hne)
   zero_mem' := by
     refine ⟨Submodule.zero_mem _, ?_, fun g' _ _ => ?_⟩
@@ -112,7 +112,7 @@ theorem ioBlock_add (j : Fin (numSeg X.TT)) (b : SegBlock (segS X.TT j) X.m)
     ioBlock (KK O) X.p C0 CE1 CE2 X j b (u + v) =
       ioBlock (KK O) X.p C0 CE1 CE2 X j b u + ioBlock (KK O) X.p C0 CE1 CE2 X j b v := by
   unfold ioBlock
-  rw [map_add, mul_add]
+  rw [map_add (f := _), mul_add]
 
 theorem symFam_span (β : GlobalTheory X)
     (G : ∀ j : Fin (numSeg X.TT), Set (MvPolynomial (BVar (2 * segS X.TT j + 1) X.m (X.seg C0 CE1 CE2 j).t) (KK O)))
@@ -155,7 +155,7 @@ theorem t44 {C0 Cde CE1 CE2 : ℝ}
           add_mem' := by
             rintro σ σ' ⟨F, hF, hFσ⟩ ⟨F', hF', hFσ'⟩
             refine ⟨F + F', (cleanSub X O S.w g o).add_mem hF hF', ?_⟩
-            rw [map_add, add_sub_add_comm]
+            rw [map_add (f := _), add_sub_add_comm]
             exact (wjSub S.w n).add_mem hFσ hFσ'
           zero_mem' := by
             refine ⟨0, (cleanSub X O S.w g o).zero_mem, ?_⟩

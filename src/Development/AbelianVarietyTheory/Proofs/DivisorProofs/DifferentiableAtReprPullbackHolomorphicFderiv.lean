@@ -42,7 +42,7 @@ theorem differentiableAt_repr_map_toLin' {M : V n → Matrix (Fin n ⊕ Fin n) (
     rw [e]
     exact DifferentiableAt.fun_sum fun p _ => ((ha p.1).mul (hb p.2)).mul_const _
   | add a b ha hb =>
-    simp only [map_add, Finsupp.add_apply]
+    simp only [map_add (f := _), Finsupp.add_apply]
     exact (ha S).add (hb S)
 
 theorem differentiableAt_repr_pull_fderiv : ∀ {n : ℕ} {φ : ReciprocityTheory.L2DbarEstimates.V n → ReciprocityTheory.L2DbarEstimates.V n}

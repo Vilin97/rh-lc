@@ -28,7 +28,7 @@ lemma lfockq_eval_rowGen {r n : ℕ} (a b : Fin r) (t : ℂ) (f : MvPolynomial (
   | C c =>
     simp [rowGen, rowAct]
   | add p q hp hq =>
-    rw [map_add, Polynomial.eval_add, hp, hq, map_add]
+    rw [map_add (f := _), Polynomial.eval_add, hp, hq, map_add (f := _)]
   | mul_X p v hp =>
     rw [map_mul, Polynomial.eval_mul, hp, map_mul]
     congr 1

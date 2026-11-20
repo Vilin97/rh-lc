@@ -481,7 +481,7 @@ theorem joinCol_restr {n' c' n c : ℕ} (hc' : c' = 1) (hc : c = 0) (x : HomE E 
     · simp [Loc.inX, Loc.eN, j.2.ne, LinearMap.funLeft_apply]
       rfl
   rw [joinCol_apply]
-  conv_rhs => rw [e, map_add, map_smul]
+  conv_rhs => rw [e, map_add (f := _), map_smul]
   rfl
 
 omit [NumberField E] [StarRing E] in

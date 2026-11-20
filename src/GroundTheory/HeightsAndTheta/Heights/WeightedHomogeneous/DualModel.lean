@@ -17,7 +17,7 @@ def latticeDual {m : ℕ} (L : Submodule (𝓞 K) (Fin m → K)) : Submodule (�
     intro φ ψ hφ hψ v hv
     obtain ⟨a, ha⟩ := hφ v hv
     obtain ⟨b, hb⟩ := hψ v hv
-    exact ⟨a + b, by rw [map_add, ha, hb, add_dotProduct]⟩
+    exact ⟨a + b, by rw [map_add (f := _), ha, hb, add_dotProduct]⟩
   zero_mem' := fun v _ ↦ ⟨0, by rw [map_zero, zero_dotProduct]⟩
   smul_mem' := by
     intro c φ hφ v hv
@@ -85,7 +85,7 @@ theorem ratStandard_isDualBasis (r : ℕ) :
     | add x y _ _ hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [map_add, ha, hb, dotProduct_add]⟩
+      exact ⟨a + b, by rw [map_add (f := _), ha, hb, dotProduct_add]⟩
     | smul c x _ hx =>
       obtain ⟨a, ha⟩ := hx
       exact ⟨c * a, by rw [map_mul, ha, dotProduct_smul, Algebra.smul_def]⟩
@@ -160,7 +160,7 @@ theorem ratDoubled_isDualBasis (r : ℕ) :
     | add x y _ _ hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [map_add, ha, hb, dotProduct_add]⟩
+      exact ⟨a + b, by rw [map_add (f := _), ha, hb, dotProduct_add]⟩
     | smul c x _ hx =>
       obtain ⟨a, ha⟩ := hx
       exact ⟨c * a, by rw [map_mul, ha, dotProduct_smul, Algebra.smul_def]⟩

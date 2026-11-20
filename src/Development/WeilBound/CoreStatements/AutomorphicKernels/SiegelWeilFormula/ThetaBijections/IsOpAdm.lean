@@ -58,7 +58,7 @@ theorem isOp_adm {κ : Type} [Fintype κ] {ψ : AddChar (AF F) ℂ} {a : Matrix 
       have : pureA F f (p + q) = pureA F f p + pureA F f q := by
         funext x
         simp [pureA, mul_add]
-      rw [this, map_add, h1, h2]
+      rw [this, map_add (f := _), h1, h2]
       rfl
     | smul a p _ hp =>
       obtain ⟨T1, h1⟩ := hp

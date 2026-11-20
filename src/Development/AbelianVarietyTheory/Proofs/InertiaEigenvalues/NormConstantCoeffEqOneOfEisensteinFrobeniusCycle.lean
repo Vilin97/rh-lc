@@ -179,7 +179,7 @@ omit [IsUltrametricDist K] in
 theorem coeff_E (l e n : ℕ) (he : 0 < e) :
     coeff n (E K l e) = if n = e then 1 else if n = 0 then (l : K) else 0 := by
   unfold E
-  rw [map_add, coeff_X_pow, ← map_natCast (C (R := K)) l, coeff_C]
+  rw [map_add (f := _), coeff_X_pow, ← map_natCast (C (R := K)) l, coeff_C]
   split_ifs <;> first | omega | simp
 
 omit [IsUltrametricDist K] in

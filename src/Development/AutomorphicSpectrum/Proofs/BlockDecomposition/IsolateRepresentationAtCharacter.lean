@@ -30,7 +30,7 @@ variable {K : Subgroup (GL ι F)} {V : Type} [AddCommGroup V] [Module ℂ V]
 theorem hk_add_right {e : GL ι F → ℂ} (he : IsHk K e) (v w : V) :
     hk ρ K e (v + w) = hk ρ K e v + hk ρ K e w := by
   obtain ⟨A, hA⟩ := exists_finset he
-  simp only [hk_eq_sum ρ K e _ A hA, map_add, smul_add, Finset.sum_add_distrib]
+  simp only [hk_eq_sum ρ K e _ A hA, map_add (f := _), smul_add, Finset.sum_add_distrib]
 
 theorem hk_smul_right {e : GL ι F → ℂ} (he : IsHk K e) (c : ℂ) (v : V) :
     hk ρ K e (c • v) = c • hk ρ K e v := by
@@ -290,7 +290,7 @@ theorem stable_top {K : Subgroup (GL ι F)} (hKo : IsOpen (K : Set (GL ι F))) (
       obtain ⟨L₁, h₁, hx⟩ := hx
       obtain ⟨L₂, h₂, hy⟩ := hy
       refine ⟨L₁ ⊓ L₂, IsOpen.inter h₁ h₂, fun L hLo hL _ => ?_⟩
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       exact S.add_mem (hx L hLo (hL.trans inf_le_left)) (hy L hLo (hL.trans inf_le_right))
     | smul c x _ hx =>
       obtain ⟨L₁, h₁, hx⟩ := hx

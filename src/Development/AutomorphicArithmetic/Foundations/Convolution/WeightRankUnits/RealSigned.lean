@@ -41,7 +41,7 @@ theorem UpperTheory.ConvolutionTheory.G2.realSigned : ∀ (a b : ℕ) (lam : Dom
       simp only [Function.comp_apply, selW, selR, F, Pi.add_apply, delta_apply, hK]
       push_cast
       ring
-    rw [hL, hR, ← Multiset.map_add, val_add_compl]
+    rw [hL, hR, ← Multiset.map_add (f := _), val_add_compl]
     rfl
   · intro Q₁ Q₂ h1 h2 hd1 hd2 hsep hroot
     beta_reduce

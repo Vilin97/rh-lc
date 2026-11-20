@@ -20,7 +20,7 @@ private theorem pb_mono {N : Type} [AddCommGroup N] [Module A N] {G G' : Type} [
     i (ρ.asAlgebraHom r x) = ρ'.asAlgebraHom (MonoidAlgebra.mapDomainRingHom A e r) (i x) := by
   induction r using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]
   | single g a => simp [h]
 
 private theorem pb_proj {N : Type} [AddCommGroup N] [Module A N] {G G' : Type} [Group G] [Group G'] (e : G ≃* G')
@@ -63,7 +63,7 @@ private theorem pb_iSup {S S' : ℕ → Submodule A M} (φ : Module.End A M) (h 
 private theorem pb_smul {Y Y' : Submodule A M} (φ : Module.End A M) (h : ∀ x ∈ Y, φ x ∈ Y') (J : Ideal A) :
     ∀ x ∈ J • Y, φ x ∈ J • Y' := fun x hx =>
   Submodule.smul_induction_on hx (fun r hr z hz => by rw [map_smul]; exact Submodule.smul_mem_smul hr (h z hz))
-    fun a b ha hb => by rw [map_add]; exact add_mem ha hb
+    fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
 
 variable [IsLocalRing A]
 

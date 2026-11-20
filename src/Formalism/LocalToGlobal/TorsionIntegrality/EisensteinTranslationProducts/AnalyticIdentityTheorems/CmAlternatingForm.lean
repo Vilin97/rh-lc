@@ -33,7 +33,7 @@ lemma sqrt_pos' (d : ℕ) (hd : 0 < d) : 0 < Real.sqrt d :=
 lemma conj_theta (b : ℤ) (d : ℕ) :
     conj (cmTheta b d) = ((b : ℂ) - Complex.I * ((Real.sqrt d : ℝ) : ℂ)) / 2 := by
   rw [cmTheta_eq_half_b_add_sqrt_half_I]
-  simp only [map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+  simp only [map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
   push_cast
   ring
 
@@ -149,7 +149,7 @@ theorem cm_area : CmArea := by
 private theorem ofReal_add_mul_I_mul_conj (u v u' v' : ℝ) :
     ((u : ℂ) + (v : ℂ) * Complex.I) * conj ((u' : ℂ) + (v' : ℂ) * Complex.I)
       = ((u * u' + v * v' : ℝ) : ℂ) + ((v * u' - u * v' : ℝ) : ℂ) * Complex.I := by
-  simp only [map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+  simp only [map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
   push_cast
   linear_combination (-((v : ℂ) * (v' : ℂ))) * Complex.I_sq
 

@@ -167,7 +167,7 @@ theorem int_zSub {K : Type} [NormedField K] [IsUltrametricDist K] {ν r0 r1 : �
   intro n
   classical
   unfold zSub
-  rw [map_add]
+  rw [map_add (f := _)]
   refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ?_ ?_)
   · rw [MvPowerSeries.coeff_X]
     split_ifs <;> simp

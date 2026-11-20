@@ -82,7 +82,7 @@ theorem contrLin_left : Big fun ch => ContrLin ch 0 := by
   simp only [conAt, dif_neg h1, fockD]
   simp (disch := simp) only [Function.update_self, Function.update_of_ne]
   simp only [h2, ↓reduceDIte]
-  · rw [fock_comb ch.W (Pair.mu t D.R.m a) c hφ hφ' (P ⟨a, ha'⟩), map_add, map_smul]
+  · rw [fock_comb ch.W (Pair.mu t D.R.m a) c hφ hφ' (P ⟨a, ha'⟩), map_add (f := _), map_smul]
     refine contr_flatBF_smul_add ch.W.ψ_std (B := besAt ch.G hM a ((D.R.m - 4 - a) / 2 + 1) h2 _)
       (J := jacAt ch.G hM (a + 1) ((D.R.m - 4 - a) / 2 + 1) (by omega)) _ _ _ c ?_ ?_ ?_ _ _
     · exact (ch.W.om_is _ hin).om_pres _ _ (fock_theta ch.W _ hφ _)

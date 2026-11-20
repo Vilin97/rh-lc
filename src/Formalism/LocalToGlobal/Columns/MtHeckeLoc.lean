@@ -596,8 +596,8 @@ theorem mhl_exists_adapted {K : Type} [Field K] {n k : ℕ} (hk : k ≤ n) (ψ :
       map_add' := fun w w' => by
         funext j
         by_cases h : j.1 < k
-        · simp only [dif_pos h, map_add, Pi.add_apply]
-        · simp only [dif_neg h, map_add, Pi.add_apply]
+        · simp only [dif_pos h, map_add (f := _), Pi.add_apply]
+        · simp only [dif_neg h, map_add (f := _), Pi.add_apply]
       map_smul' := fun c w => by
         funext j
         by_cases h : j.1 < k

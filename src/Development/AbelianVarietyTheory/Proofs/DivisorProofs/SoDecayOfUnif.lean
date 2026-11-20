@@ -54,7 +54,7 @@ theorem soDecay_of_unif : GlobalTheory.FunPr.Hypotheses₂ → SoDecayUnif → S
     obtain ⟨C2, k2, h2⟩ := ihy N
     refine ⟨max C1 0 + max C2 0, max k1 k2, fun g h => ?_⟩
     have e : theta om (x + y) g h = theta om x g h + theta om y g h := by
-      rw [hlin _ (add_mem (hsch hx) (hsch hy)), hlin _ (hsch hx), hlin _ (hsch hy), map_add, map_add]
+      rw [hlin _ (add_mem (hsch hx) (hsch hy)), hlin _ (hsch hx), hlin _ (hsch hy), map_add (f := _), map_add (f := _)]
     have hh := one_le_ht h
     have hh0 : (0 : ℝ) ≤ (ht h : ℝ) := zero_le_one.trans hh
     have q0 : (0 : ℝ) ≤ (qht g : ℝ) ^ N := pow_nonneg (NNReal.coe_nonneg _) N

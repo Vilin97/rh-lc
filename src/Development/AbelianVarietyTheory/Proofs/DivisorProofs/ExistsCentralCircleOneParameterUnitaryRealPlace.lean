@@ -92,7 +92,7 @@ theorem exists_anti (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) (τ : E →+* �
     intro s t hst
     rw [Algebra.smul_def, Algebra.smul_def, mul_one] at hst
     have h2 := congrArg σ hst
-    rw [map_add, map_mul, AlgHom.commutes, AlgHom.commutes, hσθ, map_zero] at h2
+    rw [map_add (f := _), map_mul, AlgHom.commutes, AlgHom.commutes, hσθ, map_zero] at h2
     have h3 : algebraMap F E (2 * s) = 0 := by rw [map_mul, map_ofNat]; linear_combination hst + h2
     have hs : s = 0 := by
       have := hA (h3.trans (map_zero _).symm)
@@ -111,7 +111,7 @@ theorem exists_anti (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) (τ : E →+* �
   set c0 := b.repr (θ * θ) 0
   set c1 := b.repr (θ * θ) 1
   have h2 := congrArg σ hsum
-  rw [map_add, map_mul, map_mul, AlgHom.commutes, AlgHom.commutes, hσθ] at h2
+  rw [map_add (f := _), map_mul, map_mul, AlgHom.commutes, AlgHom.commutes, hσθ] at h2
   have h4 : algebraMap F E (2 * c1) * θ = 0 := by rw [map_mul, map_ofNat]; linear_combination hsum - h2
   rcases mul_eq_zero.1 h4 with h | h
   · have hc1 : 2 * c1 = 0 := hA (h.trans (map_zero _).symm)
@@ -212,7 +212,7 @@ theorem Z_add (i₀ : {w : InfinitePlace F // w.IsReal}) {c : ℝ} (hc : c ≠ 0
 
 theorem cA_Z {σ : E →ₐ[F] E} {θ : E} (hσθ : σ θ = -θ) (i₀ : {w : InfinitePlace F // w.IsReal}) (c t : ℝ) :
     cA σ (Z E i₀ c θ t) = Z E i₀ c θ (-t) := by
-  simp only [Z, cA, map_add, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, map_one, hσθ, TensorProduct.tmul_neg,
+  simp only [Z, cA, map_add (f := _), Algebra.TensorProduct.map_tmul, AlgHom.id_apply, map_one, hσθ, TensorProduct.tmul_neg,
     aF_neg, bF_neg, TensorProduct.neg_tmul]
 
 theorem Z_zero (i₀ : {w : InfinitePlace F // w.IsReal}) (c : ℝ) (θ : E) : Z E i₀ c θ 0 = 1 := by
@@ -228,7 +228,7 @@ theorem piInf_Z {w : InfinitePlace F} (τ : EmbOver E w) (hw : w.IsReal) (i₀ :
     (c : ℝ) (θ : E) (t : ℝ) :
     piInf τ (Z E i₀ c θ t) = (Function.update (1 : {w : InfinitePlace F // w.IsReal} → ℝ) i₀ (Real.cos t) ⟨w, hw⟩ : ℂ) +
       (Function.update (0 : {w : InfinitePlace F // w.IsReal} → ℝ) i₀ (Real.sin t / c) ⟨w, hw⟩ : ℂ) * τ.1 θ := by
-  rw [Z, map_add, piInf_tmul τ hw, piInf_tmul τ hw, aF, bF, mk_fst, mk_fst, map_one, mul_one]
+  rw [Z, map_add (f := _), piInf_tmul τ hw, piInf_tmul τ hw, aF, bF, mk_fst, mk_fst, map_one, mul_one]
 
 theorem continuous_Z (i₀ : {w : InfinitePlace F // w.IsReal}) (c : ℝ) (θ : E) : Continuous (Z E i₀ c θ) := by
   haveI : ContinuousSMul (AF F) (AE F E) := IsModuleTopology.toContinuousSMul (AF F) (AE F E)

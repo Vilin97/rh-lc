@@ -83,7 +83,7 @@ theorem UpperTheory.V.Z.Kato.Joint.rhsEq :
       ring
     haveI : NeZero (l ^ m) := ⟨pow_ne_zero _ (Fact.out : l.Prime).ne_zero⟩
     rw [sum_units (l ^ m) ψ (fun a => z ^ a.val)]
-    simp only [map_add, map_sub, map_smul, smul_eq_mul, hav _ _ h1 h1, hav _ _ hc' h1, hav _ _ h1 hd', hav _ _ hc' hd',
+    simp only [map_add (f := _), map_sub, map_smul, smul_eq_mul, hav _ _ h1 h1, hav _ _ hc' h1, hav _ _ h1 hd', hav _ _ hc' hd',
       Fin.sum_univ_four, smB, smT, Int.cast_natCast, Int.cast_one, map_one]
     simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three, Matrix.head_cons,
       Matrix.tail_cons, Nat.cast_mul, map_mul]

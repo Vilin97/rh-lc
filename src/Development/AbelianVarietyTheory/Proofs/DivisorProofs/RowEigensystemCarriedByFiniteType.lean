@@ -32,7 +32,7 @@ theorem span_range_comp_basis {K V W ι : Type} [Field K] [AddCommGroup V] [Modu
   induction hv using Submodule.span_induction with
   | mem y hy => obtain ⟨k, rfl⟩ := hy; exact Submodule.subset_span ⟨k, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul a y _ hy => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
 
 theorem exists_sys_of_mem_span {K V W I ι : Type} [Field K] [AddCommGroup V] [Module K V] [AddCommGroup W] [Module ℂ W]

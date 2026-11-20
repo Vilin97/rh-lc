@@ -20,7 +20,7 @@ def fixedSubspace (φ : B →+* B) (hφ : ∀ q : k, φ (algebraMap k B q) = alg
   carrier := {x | φ x = x}
   add_mem' {x y} hx hy := by
     simp only [Set.mem_ofPred_eq] at hx hy ⊢
-    rw [map_add, hx, hy]
+    rw [map_add (f := _), hx, hy]
   zero_mem' := map_zero φ
   smul_mem' q x hx := by
     simp only [Set.mem_ofPred_eq] at hx ⊢

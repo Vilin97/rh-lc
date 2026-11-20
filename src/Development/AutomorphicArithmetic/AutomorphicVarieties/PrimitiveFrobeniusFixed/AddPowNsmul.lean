@@ -227,7 +227,7 @@ theorem UpperTheory.V.ML.pick :
       refine ⟨K, hKo, fun h => h0 ?_, fun φ hφ hφK u hu => ?_⟩
       · obtain ⟨g, hg⟩ := hex (-1)
         have h1 := radEqv Ω l O (QO l O ⧸ P) m F r hF hMF hr.ne_zero ρ hρ (dualChar l α) (fun u => P.mkQ (ν u))
-          (fun u hu v hv => by rw [hν.add u hu v hv, map_add])
+          (fun u hu v hv => by rw [hν.add u hu v hv, map_add (f := _)])
           (fun g u hu => by rw [hν.eqv g u hu, map_smul])
           (fun u hu => by rw [← map_nsmul, hν.tors u hu, map_zero])
           (fun u hu hu' => (Submodule.Quotient.mk_eq_zero P).2 ((hK u).1 (h ⟨hu, hu'⟩)).2) g u₀ u₀.2

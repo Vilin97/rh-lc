@@ -89,7 +89,7 @@ theorem reach_of_approx (π : K) (hπ : Tendsto (fun k : ℕ => π ^ k) atTop (�
       rfl
     | succ k ih =>
       have e1 : σ (k + 1) = σ k + π ^ (k + 1) • fl (ps (k + 1)) := Finset.sum_range_succ _ _
-      rw [hpsS (k + 1), e1, map_add, hDs, sub_add_eq_sub_sub, ih, ← smul_sub,
+      rw [hpsS (k + 1), e1, map_add (f := _), hDs, sub_add_eq_sub_sub, ih, ← smul_sub,
         ← hrel _ (hpsP (k + 1)), smul_smul, ← pow_succ]
 
   have hsmallP : ∀ N ∈ 𝓝 (0 : X), ∀ᶠ c in 𝓝 (0 : K), ∀ q ∈ P, c • q ∈ N := fun N hN =>

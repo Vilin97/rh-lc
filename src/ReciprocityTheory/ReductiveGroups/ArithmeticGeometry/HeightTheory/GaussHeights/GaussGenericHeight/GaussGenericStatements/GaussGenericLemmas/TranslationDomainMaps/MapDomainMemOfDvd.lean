@@ -32,7 +32,7 @@ theorem coeff_diag (c : σ → K) (g : MvPolynomial σ K) (s : σ →₀ ℕ) :
     · subst h; ring
     · simp
   | add p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem support_diag {c : σ → K} (hc : ∀ t, c t ≠ 0) (g : MvPolynomial σ K) :
     (diag c g).support = g.support := by
@@ -184,7 +184,7 @@ theorem eval_transl (z : Fin (D + 1) × Fin (N + 1) → K)
   next c =>
     simp only [algHom_C, eval_C, AlgHom.commutes, algebraMap_eq]
   next p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   next p t hp =>
     obtain ⟨i, j⟩ := t
     simp only [map_mul, hp, transl_X]

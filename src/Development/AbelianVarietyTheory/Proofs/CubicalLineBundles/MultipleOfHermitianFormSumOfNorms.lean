@@ -155,7 +155,7 @@ theorem kForm_sum_sq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   obtain rfl := huniq h hh
   let g : D.La → D.La →ₗ[OK H] OK H := fun y =>
     { toFun := fun x => h₀ x y
-      map_add' := fun a b => by rw [map_add]; rfl
+      map_add' := fun a b => by rw [map_add (f := _)]; rfl
       map_smul' := fun c a => by rw [map_smul]; rfl }
   obtain ⟨N, m, l, r, hN, hr, hl⟩ := exists_split (br := br.toRingHom) g
     (fun x y => Subtype.ext ((hherm x y).trans (hbr _).symm))

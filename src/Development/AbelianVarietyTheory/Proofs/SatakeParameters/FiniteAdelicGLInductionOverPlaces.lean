@@ -100,7 +100,7 @@ theorem ind_epsOff (n N : ℕ) (p : GAf L n → Prop) (hC : ∀ κ, NG.Cong L n 
       intro w hw
       have hw' : w ≠ v := by simpa using hw
       ext i j
-      rw [Matrix.map_apply, gaFold_val, fold_apply, map_add, map_mul, map_mul, map_sub, map_one,
+      rw [Matrix.map_apply, gaFold_val, fold_apply, map_add (f := _), map_mul, map_mul, map_sub, map_one,
         compAt_idemAt_ne L v hw', compAt_one_apply]
       simp
     have hy : TrivOutside {v}ᶜ (gaFold he' hσ' g) := by
@@ -108,7 +108,7 @@ theorem ind_epsOff (n N : ℕ) (p : GAf L n → Prop) (hC : ∀ κ, NG.Cong L n 
       have hw' : w = v := by simpa using hw
       rw [hw']
       ext i j
-      simp only [Matrix.map_apply, gaFold_val, fold_apply, map_add, map_mul, map_sub, map_one,
+      simp only [Matrix.map_apply, gaFold_val, fold_apply, map_add (f := _), map_mul, map_sub, map_one,
         compAt_idemAt_self, compAt_one_apply]
       simp
     have hp : p (gaFold he' hσ' g) := by

@@ -61,7 +61,7 @@ def primeOf {p : ℕ} [Fact p.Prime] {E : Type} [Field E] (φ : E →+* ℂ_[p])
   zero_mem' := by simp
   add_mem' := fun {a b} ha hb => by
     change ‖φ (algebraMap (𝓞 E) E (a + b))‖ < 1
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
   smul_mem' := fun c a ha => by
     change ‖φ (algebraMap (𝓞 E) E (c * a))‖ < 1

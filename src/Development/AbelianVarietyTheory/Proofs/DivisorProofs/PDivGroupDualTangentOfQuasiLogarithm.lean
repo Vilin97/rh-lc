@@ -60,7 +60,7 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
       (hs _) (hs _) (hs _)
     refine ⟨c.ev (n + 1) (s p), ?_⟩
     show c.ev (n + 1) (s (p ^ (n + 1))) = G.mulP n (c.ev n (s (p ^ n))) + _
-    rw [pow_succ, h, map_add, map_smul, GlobalTheory.EvP.ev_subst_nmul_p p C v O hv G d c n, Nat.cast_pow]
+    rw [pow_succ, h, map_add (f := _), map_smul, GlobalTheory.EvP.ev_subst_nmul_p p C v O hv G d c n, Nat.cast_pow]
   have key : ∀ n (φ ψ : CartierDual O (G.A n)), PDiv.dUnit O φ = PDiv.dUnit O ψ →
       (p : O) ^ n ∣ φ (a n) - ψ (a n) := by
     intro n φ ψ h
@@ -88,7 +88,7 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
         exact (PDiv.cotMap_d (G.dual.res n) (φ (n + 1))).symm
       have h2 := key n _ _ (h1.trans (hφ n).symm)
       rw [CartierDual.map_apply] at h2
-      rw [hb, map_add, map_smul, smul_eq_mul]
+      rw [hb, map_add (f := _), map_smul, smul_eq_mul]
       have e : φ (n + 1) (G.mulP n (a n)) + (p : O) ^ n * φ (n + 1) b - φ n (a n) =
           (φ (n + 1) (G.mulP n (a n)) - φ n (a n)) + (p : O) ^ n * φ (n + 1) b := by ring
       rw [e]

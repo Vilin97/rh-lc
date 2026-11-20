@@ -29,7 +29,7 @@ theorem exists_triangular (hεc : c ε = ε) (hmul : ∀ a ∈ O, ∀ b ∈ O, a
       zero_mem' := ⟨0, fun _ _ => rfl, by rw [map_zero]; exact M.zero_mem, rfl⟩
       add_mem' := by
         rintro _ _ ⟨t, h1, h2, rfl⟩ ⟨s, g1, g2, rfl⟩
-        exact ⟨t + s, fun l hl => by simp [h1 l hl, g1 l hl], by rw [map_add]; exact M.add_mem h2 g2, rfl⟩
+        exact ⟨t + s, fun l hl => by simp [h1 l hl, g1 l hl], by rw [map_add (f := _)]; exact M.add_mem h2 g2, rfl⟩
       neg_mem' := by
         rintro _ ⟨t, h1, h2, rfl⟩
         exact ⟨-t, fun l hl => by simp [h1 l hl], by rw [map_neg]; exact M.neg_mem h2, rfl⟩ }
@@ -62,7 +62,7 @@ theorem exists_step (hcc : ∀ a, c (c a) = a) (hεε : ε * ε = ε) (hεc : c 
       zero_mem' := ⟨0, M.zero_mem, fun _ _ => map_zero _, map_zero _⟩
       add_mem' := by
         rintro _ _ ⟨t, h1, h2, rfl⟩ ⟨s, g1, g2, rfl⟩
-        exact ⟨t + s, M.add_mem h1 g1, fun l hl => by rw [map_add, h2 l hl, g2 l hl, add_zero], map_add _ _ _⟩
+        exact ⟨t + s, M.add_mem h1 g1, fun l hl => by rw [map_add (f := _), h2 l hl, g2 l hl, add_zero], map_add _ _ _⟩
       neg_mem' := by
         rintro _ ⟨t, h1, h2, rfl⟩
         exact ⟨-t, M.neg_mem h1, fun l hl => by rw [map_neg, h2 l hl, neg_zero], map_neg _ _⟩ }
@@ -154,7 +154,7 @@ theorem exists_flag_dual (hcc : ∀ a, c (c a) = a) (hεε : ε * ε = ε) (hεc
       obtain ⟨y, hy, hy'⟩ := ih (Nat.le_of_succ_le hn) z hz
       have ho : z j - h (X (b j)) y ∈ O := O.sub_mem (hz j) (hint j y hy)
       refine ⟨y + c (z j - h (X (b j)) y) • w, M.add_mem hy (smul_mem_of_sd hmul hM₁ hM₂ (hcO _ ho) hw), fun i hi => ?_⟩
-      rw [map_add, map_smulₛₗ, hcc, smul_eq_mul]
+      rw [map_add (f := _), map_smulₛₗ, hcc, smul_eq_mul]
       rcases Nat.lt_succ_iff_lt_or_eq.1 hi with hi | hi
       · rw [hw₁ i hi, hy' i hi, mul_zero, add_zero]
       · have : i = j := Fin.ext hi
@@ -176,7 +176,7 @@ def sesq (c : R →+* R) {n : ℕ} (G : Matrix (Fin n) (Fin n) R) : (Fin n → R
     (fun a x y => by
       simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply, Finset.mul_sum]
       exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)
-    (fun x y y' => by simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib])
+    (fun x y y' => by simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib])
     (fun a x y => by
       simp only [Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum]
       exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)

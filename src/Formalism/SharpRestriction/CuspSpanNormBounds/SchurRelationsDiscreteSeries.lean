@@ -193,7 +193,7 @@ def T (h : SqRep μ σ) (w : H) : H →ₗ[ℂ] Lp ℂ 2 μ where
     apply Lp.ext
     filter_upwards [(h.l2 (v + v') w).coeFn_toLp, (h.l2 v w).coeFn_toLp, (h.l2 v' w).coeFn_toLp,
       Lp.coeFn_add ((h.l2 v w).toLp _) ((h.l2 v' w).toLp _)] with g h1 h2 h3 h4
-    rw [h1, h4, Pi.add_apply, h2, h3, map_add, inner_add_right]
+    rw [h1, h4, Pi.add_apply, h2, h3, map_add (f := _), inner_add_right]
   map_smul' c v := by
     apply Lp.ext
     filter_upwards [(h.l2 (c • v) w).coeFn_toLp, (h.l2 v w).coeFn_toLp,

@@ -88,7 +88,7 @@ theorem finFree_revChar_of_isPushout {φ : A →+* B} {α : A →+* A'} {β : B 
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul r x => simp [IsBaseChange.equiv_tmul]; rfl
-    | add s t hs ht => simp only [map_add, hs, ht]
+    | add s t hs ht => simp only [map_add (f := _), hs, ht]
   simp only [revChar]
   rw [e, reverse, reverse, (LinearMap.charpoly_monic _).natDegree_map, reflect_map]
 

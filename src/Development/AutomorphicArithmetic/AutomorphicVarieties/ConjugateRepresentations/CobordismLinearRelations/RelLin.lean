@@ -14,7 +14,7 @@ theorem UpperTheory.V.Cj.relLin :
   · simpa only [one_smul] using (perEx E a U Ξ' q).2.2 β β' d d' (σ s) 1 p2 r2
   · have e : σ s • d + d' - sigC σ h (s • c + c') = σ s • (d - sigC σ h c) + (d' - sigC σ h c') := by
       funext z y i
-      simp only [sigC, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul]
+      simp only [sigC, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
       ring
     rw [e]
     exact cobLin _ _ _ q (σ s) _ _ p3 r3

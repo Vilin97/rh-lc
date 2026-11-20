@@ -359,7 +359,7 @@ theorem fockL_pderiv_X {σ : Type} [DecidableEq σ] (v : σ) (f g : MvPolynomial
       unfold mfact
       rw [Formalism.REAL.prod_factorial_support_sub_single u v hv, star_mul', star_natCast]
       push_cast; ring
-  | add p q hp hq => rw [map_add, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hp, hq]
 
 theorem fockL_X_pderiv {σ : Type} [DecidableEq σ] (v : σ) (f g : MvPolynomial σ K) :
     fockL (X v * f) g = fockL f (pderiv v g) := by
@@ -392,7 +392,7 @@ theorem pderiv_blockAct [DecidableEq ι] (V : ι → Matrix (Fin n) (Fin n) K) (
       ∑ b : Fin n, C (V s b a) * Formalism.GradedWeylDivisibility.blockAct K V (pderiv (s, (b, t)) g) := by
   induction g using MvPolynomial.induction_on with
   | C c => simp
-  | add p q hp hq => simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p k hp =>
     have hX : pderiv (s, (a, t)) (Formalism.GradedWeylDivisibility.blockAct K V (X k)) =
         if k.1 = s ∧ k.2.2 = t then C (V s k.2.1 a) else 0 := by
@@ -417,7 +417,7 @@ theorem pderiv_blockAct [DecidableEq ι] (V : ι → Matrix (Fin n) (Fin n) K) (
             by simpa using congrArg (fun z : ι × Fin n × Fin n => z.2.2) h⟩)]
         simp
     rw [map_mul, Derivation.leibniz, hX, hp, smul_eq_mul, smul_eq_mul]
-    simp_rw [Derivation.leibniz, smul_eq_mul, map_add, map_mul, mul_add, Finset.sum_add_distrib]
+    simp_rw [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, mul_add, Finset.sum_add_distrib]
     congr 1
     · by_cases hk : k.1 = s ∧ k.2.2 = t
       · obtain ⟨h1, h2⟩ := hk
@@ -447,7 +447,7 @@ theorem fockL_blockAct_adj (U : ι → Matrix (Fin n) (Fin n) K) (F F' : Pol K �
   classical
   induction F using MvPolynomial.induction_on generalizing F' with
   | C a => rw [algHom_C, algebraMap_eq, fockL_C_left, fockL_C_left, constantCoeff_blockAct]
-  | add p q hp hq => rw [map_add, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hp, hq]
   | mul_X p v hp =>
     have e1 : Formalism.GradedWeylDivisibility.blockAct K U (p * X v) =
         ∑ b : Fin n, U v.1 v.2.1 b • (X (v.1, (b, v.2.2)) * Formalism.GradedWeylDivisibility.blockAct K U p) := by

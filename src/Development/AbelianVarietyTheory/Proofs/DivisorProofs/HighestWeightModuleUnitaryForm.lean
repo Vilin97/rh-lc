@@ -28,7 +28,7 @@ lemma HasModel.add {Λ M : Ix R S → ℚ} (h : HasModel Λ) (h' : HasModel M) :
   obtain ⟨Y, _, _, σ, w, k1, k2, k3, k4, k5⟩ := h'
   let τ : Mat R S →ₗ[ℂ] Matrix (X × Y) (X × Y) ℂ :=
     { toFun := fun Z => ρ Z ⊗ₖ 1 + 1 ⊗ₖ σ Z
-      map_add' := fun Z Z' => by simp only [map_add, add_kronecker, kronecker_add]; abel
+      map_add' := fun Z Z' => by simp only [map_add (f := _), add_kronecker, kronecker_add]; abel
       map_smul' := fun c Z => by simp only [map_smul, smul_kronecker, kronecker_smul, RingHom.id_apply, smul_add] }
   have hτ : ∀ Z, τ Z = ρ Z ⊗ₖ 1 + 1 ⊗ₖ σ Z := fun _ => rfl
   refine ⟨X × Y, inferInstance, inferInstance, τ, fun x => u x.1 * w x.2, fun A B hA hB => ?_, fun a b => ?_,

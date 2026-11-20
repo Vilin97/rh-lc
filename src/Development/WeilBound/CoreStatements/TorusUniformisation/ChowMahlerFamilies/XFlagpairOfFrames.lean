@@ -125,7 +125,7 @@ private theorem exists_multiHomog_aeval_eq_mul_mseg_pow {O : Type} [CommRing O] 
         simp
       · funext k
         simp [add_comm]
-    · rw [map_add, map_mul, map_mul, he1, he2]
+    · rw [map_add (f := _), map_mul, map_mul, he1, he2]
       simp only [map_prod, map_pow, aeval_X, hmc, pow_add, Finset.prod_mul_distrib]
       ring
   | mul u v _ _ hu hv =>

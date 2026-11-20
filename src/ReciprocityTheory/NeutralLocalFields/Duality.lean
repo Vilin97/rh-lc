@@ -50,7 +50,7 @@ def Z1 : Submodule R (G → M) where
   carrier := {f | Continuous f ∧ ∀ g h, f (g * h) = f g + rho g (f h)}
   zero_mem' := ⟨continuous_const, fun g h => by simp⟩
   add_mem' := fun {f f'} hf hf' => ⟨hf.1.add hf'.1, fun g h => by
-    simp only [Pi.add_apply, hf.2, hf'.2, map_add]; abel⟩
+    simp only [Pi.add_apply, hf.2, hf'.2, map_add (f := _)]; abel⟩
   smul_mem' c f hf := ⟨hf.1.const_smul c, fun g h => by
     simp only [Pi.smul_apply, hf.2, map_smul, smul_add]⟩
 
@@ -76,7 +76,7 @@ def Z2 : Submodule R (G × G → M) where
   zero_mem' := ⟨continuous_const, fun g h k => by simp⟩
   add_mem' := fun {f f'} hf hf' => ⟨hf.1.add hf'.1, fun g h k => by
     have e1 := hf.2 g h k; have e2 := hf'.2 g h k
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     calc _ = (rho g (f (h, k)) - f (g * h, k) + f (g, h * k) - f (g, h)) +
           (rho g (f' (h, k)) - f' (g * h, k) + f' (g, h * k) - f' (g, h)) := by abel
       _ = 0 := by rw [e1, e2, add_zero]⟩
@@ -92,7 +92,7 @@ theorem mem_cocycles2 (f : G × G → M) :
 def d1 : (G → M) →ₗ[R] (G × G → M) where
   toFun c p := rho p.1 (c p.2) - c (p.1 * p.2) + c p.1
   map_add' c c' := by
-    funext p; simp only [Pi.add_apply, map_add]; abel
+    funext p; simp only [Pi.add_apply, map_add (f := _)]; abel
   map_smul' r c := by
     funext p; simp only [Pi.smul_apply, map_smul, RingHom.id_apply, smul_sub, smul_add]
 
@@ -187,7 +187,7 @@ include hu hequiv
 
 def cocycles1MapOfEquivariant : Z1 rho →ₗ[R] Z1 rho' where
   toFun f := ⟨u ∘ f.1, hu.comp f.2.1, fun g h => by
-    simp only [Function.comp_apply, f.2.2 g h, map_add, hequiv]⟩
+    simp only [Function.comp_apply, f.2.2 g h, map_add (f := _), hequiv]⟩
   map_add' f f' := Subtype.ext (funext fun g => map_add u _ _)
   map_smul' r f := Subtype.ext (funext fun g => map_smul u _ _)
 
@@ -202,7 +202,7 @@ def mapH1 : H1 rho →ₗ[R] H1 rho' :=
 
 def cocycles2Map : Z2 rho →ₗ[R] Z2 rho' where
   toFun f := ⟨u ∘ f.1, hu.comp f.2.1, fun g h k => by
-    simp only [Function.comp_apply, ← hequiv, ← map_sub, ← map_add, f.2.2 g h k, map_zero]⟩
+    simp only [Function.comp_apply, ← hequiv, ← map_sub, ← map_add (f := _), f.2.2 g h k, map_zero]⟩
   map_add' f f' := Subtype.ext (funext fun g => map_add u _ _)
   map_smul' r f := Subtype.ext (funext fun g => map_smul u _ _)
 
@@ -230,7 +230,7 @@ include hphi hu hcompat
 
 def compatiblePairCocycles1 : Z1 rho →ₗ[R] Z1 rho' where
   toFun f := ⟨fun g => u (f.1 (phi g)), hu.comp (f.2.1.comp hphi), fun g h => by
-    simp only [map_mul, f.2.2, map_add, hcompat]⟩
+    simp only [map_mul, f.2.2, map_add (f := _), hcompat]⟩
   map_add' f f' := Subtype.ext (funext fun g => map_add u _ _)
   map_smul' r f := Subtype.ext (funext fun g => map_smul u _ _)
 
@@ -250,7 +250,7 @@ def compatiblePairCocycles2 : Z2 rho →ₗ[R] Z2 rho' where
   toFun f := ⟨fun p => u (f.1 (phi p.1, phi p.2)), hu.comp (f.2.1.comp (hphi.prodMap hphi)),
     fun g h k => by
       have e := congrArg u (f.2.2 (phi g) (phi h) (phi k))
-      simp only [map_sub, map_add, map_zero, hcompat] at e
+      simp only [map_sub, map_add (f := _), map_zero, hcompat] at e
       simpa only [map_mul] using e⟩
   map_add' f f' := Subtype.ext (funext fun g => map_add u _ _)
   map_smul' r f := Subtype.ext (funext fun g => map_smul u _ _)
@@ -404,7 +404,7 @@ theorem contCoboundaries2_le_cocycles2 [ContinuousMul G] (h : ContAction rho) : 
   have hc' : Continuous c := hc
   refine ⟨((h.comp (continuous_fst.prodMk (hc'.comp continuous_snd))).sub
     (hc'.comp continuous_mul)).add (hc'.comp continuous_fst), fun g g' k => ?_⟩
-  simp only [d1_apply, map_add, map_sub, map_mul, Module.End.mul_apply, mul_assoc]
+  simp only [d1_apply, map_add (f := _), map_sub, map_mul, Module.End.mul_apply, mul_assoc]
   abel
 
 theorem mem_cocycles1_trivial (f : G → M) :
@@ -459,7 +459,7 @@ def cupCocycleZ1Z1 (hrho' : ContAction rho') : Z1 rho →ₗ[R] Z1 rho' →ₗ[R
         have hy := y.2.2 h k
         dsimp only
         rw [← hbe, hx, hy, map_mul, Module.End.mul_apply]
-        simp only [map_add, LinearMap.add_apply]
+        simp only [map_add (f := _), LinearMap.add_apply]
         abel⟩)
     (fun x x' y => Subtype.ext (funext fun p => by simp))
     (fun r x y => Subtype.ext (funext fun p => by simp))
@@ -482,7 +482,7 @@ def cupProductH1H1 (hrho' : ContAction rho') : H1 rho →ₗ[R] H1 rho' →ₗ[R
       obtain ⟨g, h⟩ := p
       have e := hm g
       simp only [Submodule.coe_subtype] at e
-      simp only [d1_apply, Submodule.coe_subtype, cupCocycleZ1Z1_apply, e, ← hbe, y.2.2 g h, map_add,
+      simp only [d1_apply, Submodule.coe_subtype, cupCocycleZ1Z1_apply, e, ← hbe, y.2.2 g h, map_add (f := _),
         map_sub, LinearMap.sub_apply]
       abel)
     (fun y hy => by
@@ -510,7 +510,7 @@ def cupCocycleH0Z2 : H0 rho →ₗ[R] Z2 rho' →ₗ[R] Z2 rhoP :=
     (fun m f => ⟨fun p => b m.1 (f.1 p), hb.comp (continuous_const.prodMk f.2.1),
       fun g h k => by
         have e := congrArg (b m.1) (f.2.2 g h k)
-        simp only [map_sub, map_add, map_zero] at e
+        simp only [map_sub, map_add (f := _), map_zero] at e
         rw [← hbe, (mem_riemannRochSpace_iff_regularAt_everywhere rho m.1).1 m.2 g]
         exact e⟩)
     (fun m m' f => Subtype.ext (funext fun p => by simp))
@@ -542,7 +542,7 @@ def cupCocycleZ2H0 : Z2 rho →ₗ[R] H0 rho' →ₗ[R] Z2 rhoP :=
     (fun f m => ⟨fun p => b (f.1 p) m.1, hb.comp (f.2.1.prodMk continuous_const),
       fun g h k => by
         have e := congrArg (b.flip m.1) (f.2.2 g h k)
-        simp only [map_sub, map_add, map_zero, LinearMap.flip_apply] at e
+        simp only [map_sub, map_add (f := _), map_zero, LinearMap.flip_apply] at e
         rw [← (mem_riemannRochSpace_iff_regularAt_everywhere rho' m.1).1 m.2 g, hbe, (mem_riemannRochSpace_iff_regularAt_everywhere rho' m.1).1 m.2 g] at e
         exact e⟩)
     (fun f f' m => Subtype.ext (funext fun p => by simp))
@@ -567,7 +567,7 @@ def cupProductH2H0 : H2 rho →ₗ[R] H0 rho' →ₗ[R] H2 rhoP :=
       have e := congrFun hcf (g, h)
       simp only [Submodule.coe_subtype] at e
       have hm := (mem_riemannRochSpace_iff_regularAt_everywhere rho' m.1).1 m.2 g
-      simp only [d1_apply, Submodule.coe_subtype, cupCocycleZ2H0_apply, ← e, map_add, map_sub,
+      simp only [d1_apply, Submodule.coe_subtype, cupCocycleZ2H0_apply, ← e, map_add (f := _), map_sub,
         LinearMap.add_apply, LinearMap.sub_apply]
       rw [← hbe, hm])
 

@@ -189,7 +189,7 @@ theorem locPair_act_vac_comb : ∀ (L : Type) [Field L] [CharZero L] [Valued L (
       obtain ⟨ca, hca⟩ := ha
       obtain ⟨cb, hcb⟩ := hb
       refine ⟨ca + cb, ?_⟩
-      rw [map_add, hca, hcb, Finsupp.sum_add_index']
+      rw [map_add (f := _), hca, hcb, Finsupp.sum_add_index']
       · intro x; simp
       · intro x z z'; rw [add_smul]
     | smul a b _ hb =>

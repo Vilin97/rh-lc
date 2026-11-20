@@ -51,7 +51,7 @@ theorem lieD_single_blkGL (hr : r ≤ a) (f : Sm E a)
     set N : Matrix (Fin a) (Fin a) (Ad E) := matN a (sInf E) (t • S) with hN
     have hinf : (infGL E a (c t)).val = 1 + N := by
       change 1 - matN a (sInf E) 1 + matN a (sInf E) (1 + t • S) = 1 + N
-      rw [map_add]; abel
+      rw [map_add (f := _)]; abel
     have hNsupp : ∀ p q : Fin a, ¬((p : ℕ) < r ∧ r ≤ (q : ℕ)) → N p q = 0 := by
       intro p q hpq
       have : (t • S) p q = 0 := by

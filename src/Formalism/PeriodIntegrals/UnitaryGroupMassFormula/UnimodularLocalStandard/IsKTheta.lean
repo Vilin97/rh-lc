@@ -42,7 +42,7 @@ lemma isK_sub {t t' : ℂ} (h : IsK b d t) (h' : IsK b d t') : IsK b d (t - t') 
 
 private lemma conj_cmTheta : conj (cmTheta b d) = (b : ℂ) - cmTheta b d := by
   unfold cmTheta
-  simp only [map_div₀, map_add, map_mul, Complex.conj_I, Complex.conj_ofReal, map_intCast, map_ofNat]
+  simp only [map_div₀, map_add (f := _), map_mul, Complex.conj_I, Complex.conj_ofReal, map_intCast, map_ofNat]
   ring
 
 lemma isK_conj {t : ℂ} (h : IsK b d t) : IsK b d (conj t) := by

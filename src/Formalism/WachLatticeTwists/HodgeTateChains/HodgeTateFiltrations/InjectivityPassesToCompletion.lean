@@ -30,7 +30,7 @@ theorem injectivity_passes_to_completion : InjectivityPassesToCompletion := by
     obtain ⟨x0, hx0, x', hxx⟩ := hdense x n
     have h1 : g x0 - x0 = (ϖ ^ n) • (x' - g x') := by
       have h2 : g x - x = 0 := sub_eq_zero.2 hx
-      rw [hxx, map_add, map_smul] at h2
+      rw [hxx, map_add (f := _), map_smul] at h2
       rw [smul_sub]
       have h3 : g x0 - x0 = (g x0 + ϖ ^ n • g x' - (x0 + ϖ ^ n • x')) + (ϖ ^ n • x' - ϖ ^ n • g x') := by
         abel

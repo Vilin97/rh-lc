@@ -186,7 +186,7 @@ theorem mixE_supported (Sx : Finset ℕ) (R : ℝ) (p : ℕ) (Q : MvPolynomial (
     mixE (S := S) Sx R p Q ∈ MvPolynomial.supported ℝ {w | HasPar R w} := by
   induction Q using MvPolynomial.induction_on with
   | C a => rw [← MvPolynomial.algebraMap_eq, AlgHom.commutes]; exact Subalgebra.algebraMap_mem _ a
-  | add P Q hP hQ => rw [map_add]; exact Subalgebra.add_mem _ hP hQ
+  | add P Q hP hQ => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hP hQ
   | mul_X P v hP =>
     rw [map_mul]
     refine Subalgebra.mul_mem _ hP ?_

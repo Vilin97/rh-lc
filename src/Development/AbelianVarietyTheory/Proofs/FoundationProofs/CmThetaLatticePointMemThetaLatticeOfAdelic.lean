@@ -105,7 +105,7 @@ theorem pt_smul_mem (D : D7) (hD : GL3Theta.InducedCMType D) (cc : Ideal (𝓞 D
       simp [pt, embV, tor0]
     rw [this]; exact zero_mem _
   | add b b' _ _ hb hb' =>
-    rw [map_add, add_smul, pt_add]
+    rw [map_add (f := _), add_smul, pt_add]
     exact add_mem (hb hy) (hb' hy)
   | smul r b _ hb =>
     have := hb ((YYl D L₁ L₁').smul_mem r hy)

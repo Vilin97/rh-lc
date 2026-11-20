@@ -133,7 +133,7 @@ theorem finrank_le_deg_poleDivisor {x : K} (hx : Transcendental k x) :
     simp only [Fintype.card_prod, Fintype.card_fin] at hcard
     have hLD := finrank_L_le_deg_add hD
     have hdeg : deg D = l * deg B + deg C := by
-      rw [hD', map_add, map_nsmul, nsmul_eq_mul]
+      rw [hD', map_add (f := _), map_nsmul, nsmul_eq_mul]
     have : ((l + 1 : ℕ) * n : ℕ) ≤ (finrank k (L D) : ℤ) := by exact_mod_cast hcard
     push_cast at this
     linarith
@@ -173,7 +173,7 @@ theorem L_eq_bot_of_deg_neg {D : Divisor k K} (hD : deg D < 0) : L D = ⊥ := by
   rw [Submodule.mem_bot]
   by_contra hz0
   have h := deg_nonneg ((mem_L_iff_le hz0).1 hz)
-  rw [map_add, deg_divisor, zero_add] at h
+  rw [map_add (f := _), deg_divisor, zero_add] at h
   omega
 
 theorem mul_mem_L {y : K} (hy : y ≠ 0) {E : Divisor k K} {z : K} (hz : z ∈ L (E + divisor y)) :

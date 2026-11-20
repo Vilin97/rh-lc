@@ -113,10 +113,10 @@ theorem rd_eq_sum {f : Matrix (Fin n) (Fin n) ℂ → ℂ} (hf : SmoothOnG ε f)
         have h2 : cpart2 ε (Y + Z) = cpart2 ε Y + cpart2 ε Z := by
           simp only [cpart2, Matrix.conjTranspose_add, Matrix.mul_add, Matrix.add_mul, ← smul_add]
           congr 1; abel
-        simp only [hE, h1, h2, Matrix.mul_add, map_add]
+        simp only [hE, h1, h2, Matrix.mul_add, map_add (f := _)]
         ring
       map_smul' := fun c Z => by
-        simp only [hE, cpart1_smul, cpart2_smul, Matrix.mul_add, Matrix.mul_smul, map_add, map_smul,
+        simp only [hE, cpart1_smul, cpart2_smul, Matrix.mul_add, Matrix.mul_smul, map_add (f := _), map_smul,
           RingHom.id_apply, smul_eq_mul, Complex.real_smul]
         apply Complex.ext <;> simp <;> ring }
   have hc := (cpartMem n ε X).2.2.2 hX

@@ -51,7 +51,7 @@ theorem singleTens_smul_mem {n d : ℕ} (X : Spc F E n) (W : Spc F E d) (v : Pl 
     rw [map_zero, zero_smul]; exact zero_mem _
   · intro y z h h'
     show singleTens E v (y + z) • γ ∈ latAtV X W v
-    rw [map_add, add_smul]; exact add_mem h h'
+    rw [map_add (f := _), add_smul]; exact add_mem h h'
   · intro y h
     show singleTens E v (-y) • γ ∈ latAtV X W v
     rw [map_neg, neg_smul]; exact neg_mem h

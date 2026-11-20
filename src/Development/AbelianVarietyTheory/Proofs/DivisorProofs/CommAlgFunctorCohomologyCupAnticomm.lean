@@ -15,7 +15,7 @@ theorem cup_anticomm (R : Type) [CommRing R] (C : Type) [Category.{0} C] (F : C 
   rw [eq_neg_iff_add_eq_zero]
   obtain ⟨a, rfl⟩ := GlobalTheory.CatCoh.H1.mk_surjective F a
   obtain ⟨b, rfl⟩ := GlobalTheory.CatCoh.H1.mk_surjective F b
-  rw [cup_mk, cup_mk, ← map_add]
+  rw [cup_mk, cup_mk, ← map_add (f := _)]
   refine GlobalTheory.CatCoh.H2.mk_eq_zero.2 ⟨fun T T' φ ↦ -(a.1 T T' φ * b.1 T T' φ), ?_⟩
   funext T T' T'' φ ψ
   simp only [d1_apply, Submodule.coe_add, Pi.add_apply, cupZ_apply, Z1.comp a, Z1.comp b, map_mul, map_neg]

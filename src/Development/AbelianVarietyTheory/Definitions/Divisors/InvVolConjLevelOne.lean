@@ -345,7 +345,7 @@ theorem SumOK.vCore_add (h : S.SumOK t Φ) (Ψ F F') : S.vCore t Φ Ψ (F + F') 
   refine finsum_mem_congr rfl fun β _ => ?_
   have := h.cls β
   rw [← mul_add, classSum, classSum, classSum, ← finsum_add_distrib (Set.toFinite _) (Set.toFinite _)]
-  simp only [Pi.add_apply, map_add, mul_add]
+  simp only [Pi.add_apply, map_add (f := _), mul_add]
 
 theorem SumOK.vCore_eq (h : S.SumOK t Φ) (τ : CosFam G t → PureDat G t →₀ ℂ) (hτ : ∀ β ∈ S.supp t Φ, S.IsExpansion t Φ β (τ β))
     (Ψ F) : S.vCore t Φ Ψ F = ∑ β ∈ h.fin.toFinset, (∏ w, ((S.term t Φ β w).coef : ℂ)) * S.classSum Φ β (τ β) Ψ F := by

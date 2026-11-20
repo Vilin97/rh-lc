@@ -68,7 +68,7 @@ include hE' in
 lemma lift_add (U : X.Opens) (a b : Γ(E, U)) :
     lift E E' φ hex U (a + b) = lift E E' φ hex U a + lift E E' φ hex U b :=
   section_ext E' hE' fun hU => by
-    rw [map_add, germ_lift, germ_lift, germ_lift, map_add, map_add]
+    rw [map_add (f := _), germ_lift, germ_lift, germ_lift, map_add (f := _), map_add (f := _)]
 
 include hE' in
 lemma lift_zero (U : X.Opens) : lift E E' φ hex U 0 = 0 :=

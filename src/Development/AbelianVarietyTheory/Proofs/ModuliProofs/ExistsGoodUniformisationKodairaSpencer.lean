@@ -55,7 +55,7 @@ theorem ksRel_const (w : Fin g → ℂ) :
         funext y
         simp only [fn, valAt', Pi.add_apply]
         split_ifs with hy
-        · simp only [valAt, map_add]
+        · simp only [valAt, map_add (f := _)]
         · exact (add_zero 0).symm
       show fderiv ℂ (fn u (𝟙 _) W (f + f')) z w =
         fderiv ℂ (fn u (𝟙 _) W f) z w + fderiv ℂ (fn u (𝟙 _) W f') z w

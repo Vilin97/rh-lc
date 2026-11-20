@@ -78,7 +78,7 @@ theorem UOrdGe.add (hx : UOrdGe M T ξ x a) (hy : UOrdGe M T ξ y a) : UOrdGe M 
   obtain ⟨hx0, w, hw⟩ := hx
   obtain ⟨hy0, w', hw'⟩ := hy
   refine ⟨Subalgebra.add_mem _ hx0 hy0, w + w', ?_⟩
-  rw [RatModel.val_add (specializes_genericImage T ξ) hx0 hy0, hw, hw', ← map_add, mul_add]
+  rw [RatModel.val_add (specializes_genericImage T ξ) hx0 hy0, hw, hw', ← map_add (f := _), mul_add]
 
 theorem UOrdGe.mul (hx : UOrdGe M T ξ x a) (hy : UOrdGe M T ξ y b) : UOrdGe M T ξ (x * y) (a + b) := by
   obtain ⟨hx0, w, hw⟩ := hx

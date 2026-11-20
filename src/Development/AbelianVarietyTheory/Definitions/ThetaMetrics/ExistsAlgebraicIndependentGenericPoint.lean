@@ -150,7 +150,7 @@ theorem algebraicIndependent_div {K F β : Type*} [Field K] [Field F] [Algebra K
       obtain ⟨m, p', hp, hp'⟩ := hp
       obtain ⟨n, q', hq, hq'⟩ := hq
       refine ⟨m + n, p' * X i₀ ^ n + q' * X i₀ ^ m, ?_, by simp [hπ0, hp', hq']⟩
-      simp only [map_add, map_mul, map_pow, aeval_X, hp, hq]
+      simp only [map_add (f := _), map_mul, map_pow, aeval_X, hp, hq]
       ring
     | mul_X p i hp =>
       obtain ⟨m, p', hp, hp'⟩ := hp

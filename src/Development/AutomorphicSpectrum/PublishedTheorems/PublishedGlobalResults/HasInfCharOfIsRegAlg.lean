@@ -63,10 +63,10 @@ theorem norm_chiInf_unit (χ : HChar E) (θ : (𝓞 E)ˣ) : ‖((chiInf χ (infU
       diagUnits E (Units.map (algebraMap (𝓞 E) E).toMonoidHom θ) := by
     refine Units.ext (ad_ext ?_ ?_)
     · change pInf E ((1 - sInf E 1 + sInf E _) * (1 - sFin E 1 + sFin E _)) = _
-      simp only [map_mul, map_add, map_sub, map_one, hi, hf, sub_self, zero_add, sub_zero, add_zero, mul_one]
+      simp only [map_mul, map_add (f := _), map_sub, map_one, hi, hf, sub_self, zero_add, sub_zero, add_zero, mul_one]
       rfl
     · change pFin E ((1 - sInf E 1 + sInf E _) * (1 - sFin E 1 + sFin E _)) = _
-      simp only [map_mul, map_add, map_sub, map_one, hi', hf', sub_self, zero_add, sub_zero, add_zero, one_mul]
+      simp only [map_mul, map_add (f := _), map_sub, map_one, hi', hf', sub_self, zero_add, sub_zero, add_zero, one_mul]
       rfl
   have h1 := χ.2.2 (Units.map (algebraMap (𝓞 E) E).toMonoidHom θ)
   rw [← e, map_mul] at h1

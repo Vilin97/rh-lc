@@ -91,7 +91,7 @@ theorem cA_invol (z : Formalism.L2.Theta.AE D) : cA D (cA D z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a x => rw [cA_tmul, cA_tmul, star_star]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem cA_fj (α : Af D.host.F) : cA D (fj D α) = fj D α := by
   show cA D (_ ⊗ₜ _) = _
@@ -111,7 +111,7 @@ theorem exists_add_cA (z : Formalism.L2.Theta.AE D) :
   | add x y hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by rw [RingHom.map_add, RingHom.map_add, ← ha, ← hb]; ring⟩
+    exact ⟨a + b, by rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ← ha, ← hb]; ring⟩
 
 theorem singleV_mul (v : HeightOneSpectrum (𝓞 D.host.F)) (y : Fv D.host.F v) (α : Af D.host.F) :
     α * singleV D.host.F v y = singleV D.host.F v (evalV D.host.F v α * y) := af_ext _ fun w => by
@@ -248,7 +248,7 @@ theorem inF_finPart (z : Formalism.L2.Theta.AE D) : inF D (finPart D z) = fj D 1
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul]
     congr 1
     exact Prod.ext (zero_mul _).symm (one_mul _).symm
-  | add x y hx hy => rw [RingHom.map_add, AddMonoidHom.map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [RingHom.map_add (f := _), AddMonoidHom.map_add (f := _), hx, hy, mul_add]
 
 theorem inF_mem {z : Af D.host.F ⊗[D.host.F] D.host.E} (hz : z ∈ intAE D) : inF D z ∈ intL D := by
   induction hz using AddSubgroup.closure_induction with
@@ -256,7 +256,7 @@ theorem inF_mem {z : Af D.host.F ⊗[D.host.F] D.host.E} (hz : z ∈ intAE D) : 
     obtain ⟨α, hα, o, rfl⟩ := hw
     exact AddSubgroup.subset_closure ⟨α, hα, o, rfl⟩
   | zero => rw [AddMonoidHom.map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [AddMonoidHom.map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [AddMonoidHom.map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [AddMonoidHom.map_neg]; exact neg_mem hx
 
 theorem SplitAt.one_mul' {v} {e : Formalism.L2.Theta.AE D} (he : SplitAt D v e) : fj D 1 * e = e := by
@@ -298,7 +298,7 @@ theorem exists_local (W : Formalism.L2.Theta.AE D) (h1 : W + cA D W = fj D 1) (t
   obtain ⟨⟨g, hg⟩, hga⟩ := val_two_lt D.host.F v hv t ht a ha
   have hgi : singleV D.host.F v g ∈ intAf D.host.F := singleV_mem_intAf D.host.F v ⟨g, hg⟩
   have h2g : fj D (singleV D.host.F v (2 * g)) = 2 * fj D (singleV D.host.F v g) := by
-    rw [← map_ofNat (evalV D.host.F v) 2, ← singleV_mul, two_mul, two_mul, map_add]
+    rw [← map_ofNat (evalV D.host.F v) 2, ← singleV_mul, two_mul, two_mul, map_add (f := _)]
   have h1g : fj D (singleV D.host.F v (1 - 2 * g)) = pl D v - 2 * fj D (singleV D.host.F v g) := by
     rw [singleV_sub, map_sub, h2g]
   rcases hga with rfl | hga
@@ -332,7 +332,7 @@ theorem exists_global (W : Formalism.L2.Theta.AE D) (hW : W ∈ intL D) (h3 : fj
     exact one_ne_zero h4
   have hone' : fj D 1 = ∑ v ∈ P, pl D v + 2 * fj D β := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hone, map_add, map_sum, two_mul, two_mul, map_add]
+      rw [hone, map_add (f := _), map_sum, two_mul, two_mul, map_add (f := _)]
   have h1L : fj D 1 ∈ intL D :=
     AddSubgroup.subset_closure ⟨1, fun v => by rw [map_one]; exact one_mem _, 1, rfl⟩
   refine ⟨P.image f, fun e he => ?_, ⟨∑ v ∈ P, g v + fj D β * W,

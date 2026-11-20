@@ -85,7 +85,7 @@ theorem FP_add (hI : IntG) (hA : AlgA) (hc : 0 < c) (P Q : PX m n) :
   rw [FP_eq_integral_Fi, FP_eq_integral_Fi, FP_eq_integral_Fi,
     ← integral_add (integrable_Fi hI hq hc P y) (integrable_Fi hI hq hc Q y)]
   refine integral_congr_ae (ae_of_all _ fun x => ?_)
-  simp only [Fi, evX, map_add]; ring
+  simp only [Fi, evX, map_add (f := _)]; ring
 
 theorem FP_C_mul (a : ℂ) (P : PX m n) :
     FP ε c t (MvPolynomial.C a * P) = a • FP ε c t P := by

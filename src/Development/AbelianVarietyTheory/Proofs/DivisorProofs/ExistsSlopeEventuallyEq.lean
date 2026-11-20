@@ -95,7 +95,7 @@ theorem exists_spans {y : CxPts p σ} (hy : y ∈ finPart π w hE cE fl σ) :
     have e := congrArg (resM _ hle) hα
     have e' (i : Fin 2) : resM _ (hle.trans inf_le_right) (c.e i) =
         pullbackSections π E (hle.trans inf_le_right) (cE.e i) := QCoh.res_pullbackSections π E _ _ _
-    simp only [resM_resM, map_add, resM_smul, Fin.sum_univ_two, ← hu, e'] at e
+    simp only [resM_resM, map_add (f := _), resM_smul, Fin.sum_univ_two, ← hu, e'] at e
     refine (congrArg _ (Fin.sum_univ_one _)).trans ((Scheme.Modules.Hom.app_smul _ _ _).trans ?_)
     refine (congrArg (_ • ·) ((app_resM _ _ _).trans e)).trans ?_
     change _ = cols π cE _ _ 0
@@ -257,7 +257,7 @@ theorem exists_prodChart (c : AlgChart q σ d) {W : Y.Opens} (hW : W ≤ π ⁻�
       refine hd.congr fun v hv => ?_
       rw [MvPolynomial.eval₂Hom_C, CellChart.ev_appLE π w hW (s₁ v hv), s₂ v hv]
     | add P Q hP hQ =>
-      simp only [map_add, ev_add]
+      simp only [map_add (f := _), ev_add]
       exact hP.add hQ
     | mul_X P i hP =>
       have hd : DifferentiableOn ℂ (fun v : V (d + 1) => v (Fin.last d)) (basePt ⁻¹' c.e.target) := by fun_prop

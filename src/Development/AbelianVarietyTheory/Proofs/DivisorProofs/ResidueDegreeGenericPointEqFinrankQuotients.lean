@@ -96,7 +96,7 @@ theorem residueDegree_eq_finrank_quotients : ∀ (k : Type) [CommRing k] (X : Sc
       rw [MvPolynomial.eval₂Hom_C]
       exact Subfield.subset_closure (Or.inl ⟨a, rfl⟩)
     | add q q' h1 h2 =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Subfield.add_mem _ h1 h2
     | mul_X q j h1 =>
       rw [map_mul, MvPolynomial.eval₂Hom_X']

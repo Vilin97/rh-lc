@@ -107,7 +107,7 @@ def frobInv (e : (Σ a, m a) ≃ n) {τ : Representation ℂ (GL n k) V} (hτ : 
       map_add' := fun v w => by
         refine Subtype.ext (Subtype.ext (funext fun g => ?_))
         show f (Submodule.Quotient.mk (τ g (v + w))) = f (Submodule.Quotient.mk (τ g v)) + f (Submodule.Quotient.mk (τ g w))
-        rw [map_add, Submodule.Quotient.mk_add, map_add]
+        rw [map_add (f := _), Submodule.Quotient.mk_add, map_add (f := _)]
       map_smul' := fun c v => by
         refine Subtype.ext (Subtype.ext (funext fun g => ?_))
         show f (Submodule.Quotient.mk (τ g (c • v))) = c • f (Submodule.Quotient.mk (τ g v))

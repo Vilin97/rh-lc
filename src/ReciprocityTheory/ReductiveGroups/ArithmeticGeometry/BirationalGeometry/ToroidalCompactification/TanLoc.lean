@@ -61,7 +61,7 @@ def ofLin (g : Ω[B⁄S] →ₗ[B] A) : B →ₐ[S] DualNumber A where
   map_mul' a b := by
     ext
     · simp
-    · simp only [map_mul, Derivation.leibniz, map_add, map_smul, hsm, TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl,
+    · simp only [map_mul, Derivation.leibniz, map_add (f := _), map_smul, hsm, TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl,
         TrivSqZeroExt.snd_inr, TrivSqZeroExt.snd_mul, TrivSqZeroExt.fst_add, TrivSqZeroExt.fst_inl,
         TrivSqZeroExt.fst_inr, smul_eq_mul, MulOpposite.smul_eq_mul_unop, MulOpposite.unop_op]
       ring

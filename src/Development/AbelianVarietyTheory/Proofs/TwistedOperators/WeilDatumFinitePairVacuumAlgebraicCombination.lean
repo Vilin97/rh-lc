@@ -54,7 +54,7 @@ theorem heisO_sum' {ι : Type} (s : Finset ι) (w : WO S T) (F : ι → WO S T �
 
 theorem symplOH_add_self (x y : WO S T) : symplOH S T x y + symplOH S T x y = symplO S T x y := by
   unfold symplOH
-  rw [← add_mul, ← map_add, show (1 / 2 : D.host.F) + 1 / 2 = 1 by norm_num, map_one, one_mul]
+  rw [← add_mul, ← map_add (f := _), show (1 / 2 : D.host.F) + 1 / 2 = 1 by norm_num, map_one, one_mul]
 
 theorem thetaInner_sign_smul_heisenberg (hψ : IsStdChar D ψ (-1)) {μ : Measure (WO S T)} {𝓕 : Set (WO S T)}
     (hc : IsCovolOne (ratL T S) μ 𝓕) {v φ : WO S T → ℂ} (hv : IsThetaFunO ψ S T v) (hφ : IsThetaFunO ψ S T φ)

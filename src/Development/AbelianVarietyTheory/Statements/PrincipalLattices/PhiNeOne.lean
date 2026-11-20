@@ -46,7 +46,7 @@ theorem hh_real {D : Datum H} {g : ℕ} {ty : Fin g → (E →+* ℂ)} {Pe : D.L
     {p q : ℕ} (Z : CMLat hP p q) (j : Fin p ⊕ Fin q) (a : (Z.D₁ j.isLeft).La) : H.bar (Z.hh j) • a = Z.hh j • a := by
   have skew : ∀ (D : Datum H) (x y : D.La), D.EF x y = -D.EF y x := fun D x y => by
     have := D.alt (x + y)
-    simp only [map_add, LinearMap.add_apply, D.alt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, D.alt] at this
     linarith
   apply (Z.D₁ j.isLeft).unimod.1
   ext b

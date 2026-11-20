@@ -126,7 +126,7 @@ theorem det_half_one_add_exp_mul_exp (n : ℕ) (ε : Fin n → Bool) (X : Matrix
   have hdet1 : ((2 : ℂ)⁻¹ • (1 + NormedSpace.exp X * NormedSpace.exp X)).det =
       ((2 : ℂ)⁻¹ • (1 + NormedSpace.exp (Matrix.fromBlocks 0 x xᴴ 0) *
         NormedSpace.exp (Matrix.fromBlocks 0 x xᴴ 0))).det := by
-    rw [← Matrix.det_reindex_self e.symm, ← Matrix.coe_reindexAlgEquiv ℂ ℂ, map_smul, map_add, map_one,
+    rw [← Matrix.det_reindex_self e.symm, ← Matrix.coe_reindexAlgEquiv ℂ ℂ, map_smul, map_add (f := _), map_one,
       map_mul, Matrix.coe_reindexAlgEquiv, ← GlobalTheory.FockEmbExp.exp_reindex', hX']
 
   set fm := Fintype.equivFin {i // ε i = true}
@@ -189,7 +189,7 @@ theorem det_half_one_add_exp_mul_exp (n : ℕ) (ε : Fin n → Bool) (X : Matrix
     rw [← hYP]; ext; simp
   have hdet3 : ((2 : ℂ)⁻¹ • (1 + NormedSpace.exp ((2 : ℝ) • Y))).det =
       ((2 : ℂ)⁻¹ • (1 + GlobalTheory.FockDecay.hypMat p q t 2)).det := by
-    rw [← Matrix.det_reindex_self σ', ← Matrix.coe_reindexAlgEquiv ℂ ℂ, map_smul, map_add, map_one,
+    rw [← Matrix.det_reindex_self σ', ← Matrix.coe_reindexAlgEquiv ℂ ℂ, map_smul, map_add (f := _), map_one,
       Matrix.coe_reindexAlgEquiv, ← GlobalTheory.FockEmbExp.exp_reindex', hs, GlobalTheory.FockDecay.exp_diagP t ht]
   rw [hdet1, hdet2, hdet3, det_half_one_add_hypMat p q t ht]
   rfl

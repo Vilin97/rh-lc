@@ -62,7 +62,7 @@ def isColimit_laurent {J : Type} [SmallCategory J] [IsFiltered J] {D : J ⥤ Com
       obtain ⟨j', y', rfl⟩ := hp'
       refine ⟨IsFiltered.max j j', laurentMap (D.map (IsFiltered.leftToMax j j')).hom y +
         laurentMap (D.map (IsFiltered.rightToMax j j')).hom y', ?_⟩
-      rw [map_add, hw, hw]
+      rw [map_add (f := _), hw, hw]
     | C_mul_T n a =>
       obtain ⟨j, b, rfl⟩ := hsurj a
       refine ⟨j, LaurentPolynomial.C b * LaurentPolynomial.T n, ?_⟩

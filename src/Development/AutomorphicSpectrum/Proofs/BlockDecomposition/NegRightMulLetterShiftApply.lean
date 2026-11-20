@@ -102,14 +102,14 @@ theorem evB_intertwine {W : Type} [AddCommGroup W] [Module ℂ W] {lev : Fin n �
         have e2 : X2 p q t = -(X1 p q t) + if p = q then τ p • t else 0 := by
           rw [← ht p q hpq, LinearMap.add_apply]; abel
         rw [e1, e2]
-        split_ifs <;> simp [map_add, map_neg, map_mul, hρ p q hpq, Module.End.mul_apply, LinearMap.add_apply]
+        split_ifs <;> simp [map_add (f := _), map_neg, map_mul, hρ p q hpq, Module.End.mul_apply, LinearMap.add_apply]
       · simp only [if_true, hpq, leftMulLetter_apply, map_mul, Module.End.mul_apply, hρ p q hpq]
     · simp [hpq]
   | mul a c ha hc' =>
     simp only [map_mul, Module.End.mul_apply]
     rw [hc', ha]
   | add a c ha hc' =>
-    simp only [map_add, LinearMap.add_apply, ha, hc']
+    simp only [map_add (f := _), LinearMap.add_apply, ha, hc']
 
 end Regular
 
@@ -216,7 +216,7 @@ theorem mem_of_eb (S : Subalgebra ℂ (UD d)) (h : ∀ i p q, eb d i p q ∈ S) 
     rw [AlgHom.id_apply, ← mi_ι]
     exact this _
   | add y z hy hz =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact add_mem hy hz
 
 theorem center_UD_le : Subalgebra.center ℂ (UD d) ≤

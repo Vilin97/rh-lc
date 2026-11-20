@@ -122,7 +122,7 @@ theorem wpNumEq_of (hS : WpShape.{0}) (hR : WpRecursion.{0}) : WpNumEq := by
   constructor
   · ext n
     unfold wpNum
-    rw [coeff_mk, map_add, coeff_one, coeff_X_pow_mul']
+    rw [coeff_mk, map_add (f := _), coeff_one, coeff_X_pow_mul']
     obtain ⟨j, rfl | rfl⟩ := Nat.even_or_odd' n
     · rcases Nat.lt_or_ge j 1 with hj | hj
       · interval_cases j
@@ -187,7 +187,7 @@ theorem uSerEq_of (hS : WpShape.{0}) (hR : WpRecursion.{0}) : USerEq := by
 
   have hrel : toL (expSer W) * dL (wpL W) = -2 * wpL W := by
     rw [hd, hx]; linear_combination 2 * hfl
-  rw [hshape, map_add, dL_uPow, dL_toL] at hrel
+  rw [hshape, map_add (f := _), dL_uPow, dL_toL] at hrel
   have h3 : (uPow (-2 - 1) : LaurentSeries K) * toL (X ^ 3) = 1 := by
     rw [← uPow_natCast]; exact uPow_neg_mul 3
   have h2 : (uPow (-2) : LaurentSeries K) * toL (X ^ 3) = toL X := by
@@ -200,7 +200,7 @@ theorem uSerEq_of (hS : WpShape.{0}) (hR : WpRecursion.{0}) : USerEq := by
     have hm2 : (toL (C (-2 : K)) : LaurentSeries K) = -2 := by
       rw [map_neg C, map_neg toL]; congr 1
       rw [map_ofNat C, map_ofNat toL]
-    simp only [map_mul, map_add]
+    simp only [map_mul, map_add (f := _)]
     rw [hC] at hrel
     linear_combination toL (X ^ 3) * hrel - toL (expSer W) * toL (C (-2 : K)) * h3 - 2 * h2
       - (toL X + toL (X ^ 3) * toL (wpReg W)) * hm2

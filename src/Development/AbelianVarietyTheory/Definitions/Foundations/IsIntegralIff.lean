@@ -24,7 +24,7 @@ theorem hf_smul_left (L : LocE F E) {n : ℕ} (H : Matrix (Fin n) (Fin n) E) (c 
 
 theorem hf_add_right (L : LocE F E) {n : ℕ} (H : Matrix (Fin n) (Fin n) E) (a b y : Fin n → E) :
     hf L H y (a + b) = hf L H y a + hf L H y b := by
-  simp [hf, map_add, mul_add, Finset.sum_add_distrib]
+  simp [hf, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hf_sub_right (L : LocE F E) {n : ℕ} (H : Matrix (Fin n) (Fin n) E) (a b y : Fin n → E) :
     hf L H y (a - b) = hf L H y a - hf L H y b := by

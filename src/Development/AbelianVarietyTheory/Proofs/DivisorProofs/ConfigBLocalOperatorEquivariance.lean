@@ -82,7 +82,7 @@ theorem finRel_unique : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [F
         refine ⟨z + z', y + y', ?_, ?_, ?_⟩
         · rw [Matrix.vecMulVec_add]; exact atAdd hz hz'
         · rw [Matrix.mulVec_add, Matrix.add_vecMulVec]; exact atAdd hy hy'
-        · rw [Matrix.vecMulVec_add, Matrix.mulVec_add, Matrix.add_vecMulVec, map_add, map_add]; abel
+        · rw [Matrix.vecMulVec_add, Matrix.mulVec_add, Matrix.add_vecMulVec, map_add (f := _), map_add (f := _)]; abel
       zero_mem' := ⟨0, 0, by simpa [vz] using at0,
         by simpa [vz] using at0, by simp [vz]⟩
       smul_mem' := by

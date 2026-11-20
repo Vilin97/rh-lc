@@ -43,7 +43,7 @@ theorem pull_fst_lam {S S' : Scheme.{0}} (f : S' ⟶ S) {X G : Over S} [GrpObj G
       lam (GlobalTheory.CechPic.pull (pullback.fst G.hom f) c) ((Over.pullback f).map x) ((Over.pullback f).map x') := by
   have hfst : ∀ z : X ⟶ G, pullback.fst X.hom f ≫ z.left = ((Over.pullback f).map z).left ≫ pullback.fst G.hom f :=
     fun z => by simp [pullback.lift_fst]
-  simp only [lam, map_add, map_sub, ← pull_comp, hfst, Functor.map_mul, Functor.map_one]
+  simp only [lam, map_add (f := _), map_sub, ← pull_comp, hfst, Functor.map_mul, Functor.map_one]
 
 open GlobalTheory.E8LatticePullbackGeneric GlobalTheory.CechPic in
 

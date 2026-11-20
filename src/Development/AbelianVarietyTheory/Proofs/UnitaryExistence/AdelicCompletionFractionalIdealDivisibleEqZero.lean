@@ -68,7 +68,7 @@ theorem lim_sg_smul (c : E ≃ₐ[F] E) (a : FiniteAdeleRing (𝓞 F) F) (z : RA
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul b y => simp [sg, TensorProduct.smul_tmul']
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 noncomputable def hermBil (c : E ≃ₐ[F] E) (G : Matrix (Fin n) (Fin n) E) :
     (Fin n → RA F E) →ₗ[FiniteAdeleRing (𝓞 F) F] (Fin n → RA F E) →ₗ[FiniteAdeleRing (𝓞 F) F] RA F E :=
@@ -91,12 +91,12 @@ theorem lim_herm_mem (c : E ≃ₐ[F] E) (G : Matrix (Fin n) (Fin n) E) {Λ : Se
     (hx : x ∈ hat F Λ) (hy : y ∈ hat F Λ) : hermBil F c G x y ∈ hat1 F J := by
   refine lim_hat_induction F (fun x => hermBil F c G x y ∈ hat1 F J) ?_ ?_ ?_ ?_ hx
   · simp
-  · intro x y hx hy; rw [map_add, LinearMap.add_apply]; exact add_mem hx hy
+  · intro x y hx hy; rw [map_add (f := _), LinearMap.add_apply]; exact add_mem hx hy
   · intro x hx; rw [map_neg, LinearMap.neg_apply]; exact neg_mem hx
   intro a ha x hx
   refine lim_hat_induction F (fun y => hermBil F c G (a • fv F x) y ∈ hat1 F J) ?_ ?_ ?_ ?_ hy
   · simp
-  · intro x y hx hy; rw [map_add]; exact add_mem hx hy
+  · intro x y hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · intro x hx; rw [map_neg]; exact neg_mem hx
   intro b hb y hy
   rw [map_smul, map_smul, LinearMap.smul_apply, smul_smul, lim_herm_fv, TensorProduct.smul_tmul',
@@ -199,7 +199,7 @@ theorem exists_adelic_matrix_of_tower : ∀ (F E : Type) [Field F] [NumberField 
     obtain ⟨w₁, hw₁, e₁⟩ := hφ a N hN
     obtain ⟨w₂, hw₂, e₂⟩ := hφ b N hN
     refine ⟨w - w₁ - w₂, sub_mem (sub_mem hw hw₁) hw₂, ?_⟩
-    rw [e, e₁, e₂, map_add, Submodule.coe_add, cap_fv_add, smul_sub, smul_sub]
+    rw [e, e₁, e₂, map_add (f := _), Submodule.coe_add, cap_fv_add, smul_sub, smul_sub]
     abel
   have hφsmul : ∀ (r : 𝓞 E) (a : L),
       φ (r • a) = ((1 : FiniteAdeleRing (𝓞 F) F) ⊗ₜ[F] (r : E) : RA F E) • φ a := by
@@ -304,12 +304,12 @@ theorem exists_adelic_matrix_of_tower : ∀ (F E : Type) [Field F] [NumberField 
     have : B (fv F (x : Fin n → E)) (fv F (y : Fin n → E)) = hermBil F c G (φ x) (φ y) -
         hermBil F c G (fv F (x : Fin n → E)) (fv F (y : Fin n → E)) := by
       rw [← hg, ← hg]; rfl
-    rw [this, e₁, map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply]
+    rw [this, e₁, map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply]
     have e₃ : hermBil F c G (fv F (f N x : Fin n → E)) (φ y) =
         hermBil F c G (fv F (x : Fin n → E)) (fv F (y : Fin n → E)) +
           N • (1 : FiniteAdeleRing (𝓞 F) F) ⊗ₜ[F] z +
           N • hermBil F c G (fv F (f N x : Fin n → E)) w₂ := by
-      rw [e₂, map_add, map_nsmul, lim_herm_fv, lim_herm_fv, e, TensorProduct.tmul_add,
+      rw [e₂, map_add (f := _), map_nsmul, lim_herm_fv, lim_herm_fv, e, TensorProduct.tmul_add,
         TensorProduct.tmul_smul]
     rw [e₃, smul_add, smul_add]
     abel
@@ -317,12 +317,12 @@ theorem exists_adelic_matrix_of_tower : ∀ (F E : Type) [Field F] [NumberField 
     intro x hx y hy
     refine lim_hat_induction F (fun x => B x y = 0) ?_ ?_ ?_ ?_ hx
     · simp only [map_zero, LinearMap.zero_apply]
-    · intro x y hx hy; rw [map_add, LinearMap.add_apply, hx, hy, add_zero]
+    · intro x y hx hy; rw [map_add (f := _), LinearMap.add_apply, hx, hy, add_zero]
     · intro x hx; rw [map_neg, LinearMap.neg_apply, hx, neg_zero]
     intro a ha x hx
     refine lim_hat_induction F (fun y => B (a • fv F x) y = 0) ?_ ?_ ?_ ?_ hy
     · simp only [map_zero]
-    · intro x y hx hy; rw [map_add, hx, hy, add_zero]
+    · intro x y hx hy; rw [map_add (f := _), hx, hy, add_zero]
     · intro x hx; rw [map_neg, hx, neg_zero]
     intro b hb y hy
     rw [map_smul, map_smul, LinearMap.smul_apply, hB0 ⟨x, hx⟩ ⟨y, hy⟩, smul_zero, smul_zero]

@@ -67,7 +67,7 @@ theorem exists_tame_scalar : ∀ (A B : Type) [CommRing A] [CommRing B] [Algebra
     set w := x - d * π with hw
     have hx' : x = d * π + w := by rw [hw]; ring
     have e : ρ x - c * x = (ρ d - d) * ρ π + d * (ρ π - c * π) + (ρ w - c * w) := by
-      rw [hx', map_add, map_mul]; ring
+      rw [hx', map_add (f := _), map_mul]; ring
     rw [e]
     refine Ideal.add_mem _ (Ideal.add_mem _ (hmul _ _ (hI d) (hρQ π hπ)) (Ideal.mul_mem_left _ _ hc)) ?_
     exact Ideal.sub_mem _ (hρQ2 w hd) (Ideal.mul_mem_left _ _ hd)

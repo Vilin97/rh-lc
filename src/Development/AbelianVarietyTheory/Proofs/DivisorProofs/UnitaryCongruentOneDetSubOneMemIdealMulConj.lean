@@ -36,7 +36,7 @@ theorem sgA_mem_hatId {𝔪 : Ideal (𝓞 D.host.E)} {y : AE D} (hy : y ∈ hatI
       VacMove.sgA_mem D hs, ?_⟩
     rw [map_mul, GlobalTheory.NormSum.PtsMem.sgA_inc]; rfl
   | zero => rw [map_zero]; exact zero_mem _
-  | add _ _ _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+  | add _ _ _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
   | neg _ _ h => rw [map_neg]; exact neg_mem h
 
 theorem prod_sub_prod_mem {𝔪 : Ideal (𝓞 D.host.E)} {ι : Type*} (s : Finset ι) (f g : ι → AE D)
@@ -92,7 +92,7 @@ theorem det_sub_one_mem : ∀ (D : D7) {a : ℕ} (𝔪 : Ideal (𝓞 D.host.E)),
   have h1m : (1 : 𝓞 D.host.E) ∈ 𝔪 ⊔ D.host.conj • 𝔪 := by rw [hsup]; exact Submodule.mem_top
   obtain ⟨s, hs, t, ht, hst⟩ := Submodule.mem_sup.1 h1m
   have e : u - 1 = inc D (s : D.host.E) * (u - 1) + inc D (t : D.host.E) * (u - 1) := by
-    rw [← add_mul, ← map_add, show (s : D.host.E) + t = ((s + t : 𝓞 D.host.E) : D.host.E) from rfl, hst]; simp
+    rw [← add_mul, ← map_add (f := _), show (s : D.host.E) + t = ((s + t : 𝓞 D.host.E) : D.host.E) from rfl, hst]; simp
   rw [e]
   refine add_mem (inc_mul_mem_hatId hs h2) ?_
   rw [mul_comm 𝔪]

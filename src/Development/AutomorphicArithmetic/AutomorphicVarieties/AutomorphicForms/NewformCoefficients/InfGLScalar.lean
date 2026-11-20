@@ -69,7 +69,7 @@ theorem UpperTheory.V.Af.Nf.zFin :
   have hcap : ∀ v u, ∃ c : ℂ, TR.cap v u φ = c • φ := fun v u => by
     have h0 : Eop v 0 0 φ + Eop v 1 1 φ = 0 := by
       classical
-      rw [← lie_scalar hω hc (Pi.single v 1), TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add]
+      rw [← lie_scalar hω hc (Pi.single v 1), TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add (f := _)]
       congr 2
       ext i j
       fin_cases i <;> fin_cases j <;> simp

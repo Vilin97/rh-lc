@@ -108,7 +108,7 @@ theorem classes_fin : ∀ (D : D7) {T T' : D.host.E} (F : LFlag (VS D) D.R.rS T)
     rw [hmem] at hx
     obtain ⟨u, hu, w, hw, huw⟩ := Submodule.mem_sup.mp (hNΛ _ hx)
     have hx' : (N : D.host.E) • x = γ.symm u + γ.symm w := by
-      rw [← map_add, huw, map_smul, LinearEquiv.symm_apply_apply]
+      rw [← map_add (f := _), huw, map_smul, LinearEquiv.symm_apply_apply]
     have hu' : γ.symm u = u := by
       rw [LinearEquiv.symm_apply_eq]; exact (hγU u hu.2).symm
     rw [hx', hu']

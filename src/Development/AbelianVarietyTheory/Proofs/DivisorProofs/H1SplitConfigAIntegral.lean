@@ -114,7 +114,7 @@ theorem indLine : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
     let N : Submodule ℂ (Rf.Pi v) :=
       { carrier := {x | ∀ h ∈ UAt σ G.W (evFin F v), A₁ x h = r • A₂ x h}
         add_mem' := fun {x y} hx hy h hh => by
-          simp only [map_add, Pi.add_apply, hx h hh, hy h hh, smul_add]
+          simp only [map_add (f := _), Pi.add_apply, hx h hh, hy h hh, smul_add]
         zero_mem' := fun h _ => by simp
         smul_mem' := fun c x hx h hh => by
           simp only [map_smul, Pi.smul_apply, hx h hh, smul_comm c r] }

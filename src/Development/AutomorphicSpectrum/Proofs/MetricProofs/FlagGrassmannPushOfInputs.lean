@@ -134,7 +134,7 @@ variable (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ)
 def flagIntAdd : RootPoly Ψ N →+ ℚ :=
   AddMonoidHom.mk' (flagInt Ψ N) fun a b => by
     unfold flagInt LowerBoundFree.antisym
-    simp only [map_add, smul_add, Finset.sum_add_distrib, MvPolynomial.coeff_add]
+    simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, MvPolynomial.coeff_add]
 
 theorem flagInt_prod_linForm {d : ℕ} (ℓ : Fin d → Ψ × Fin N → ℤ) :
     flagInt Ψ N (∏ i, LowerBoundFree.linForm Ψ N (ℓ i)) =

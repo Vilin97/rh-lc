@@ -80,7 +80,7 @@ theorem exists_isLamG [IsAlgClosure ℚ Ω] (ε : Ω →+* ℂ) (hl : l ≠ 2) {
   · have := congrArg (algebraMap ℤ_[l] (Qbar l)) (eq_add_of_sub_eq hu)
     rw [map_natCast] at this
     rw [this, hlam, hT]
-    simp only [map_add, map_mul, map_pow, map_natCast, map_one]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast, map_one]
     ring
 
 abbrev pushB {ε : Ω →+* ℂ} (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n m N : ℕ) [NeZero N] (bB : (Ω ≃ₐ[ℚ] Ω) → X.Fn l)
@@ -108,7 +108,7 @@ theorem cycMod_one_of {m : ℕ} (hm : 1 ≤ m) {s : G ℚ Ω} (hs : cycMod ℚ �
   ext
   change PadicInt.toZModPow 1 ((cycZ ℚ Ω l s : ℤ_[l]ˣ) : ℤ_[l]) = 1
   have e : (l : ℤ_[l]) ^ (1 + k) * a = ((l ^ 1 : ℕ) : ℤ_[l]) * ((l : ℤ_[l]) ^ k * a) := by push_cast; ring
-  rw [ha, e, map_add, map_one, map_mul, map_natCast, ZMod.natCast_self, zero_mul, add_zero]
+  rw [ha, e, map_add (f := _), map_one, map_mul, map_natCast, ZMod.natCast_self, zero_mul, add_zero]
 
 theorem cg_per {per : ℕ → Qbar l} (h : ∀ n, Cg n (per (n + 1)) (per n)) {m n : ℕ} (hmn : m ≤ n) : Cg m (per n) (per m) := by
   induction n, hmn using Nat.le_induction with
@@ -200,7 +200,7 @@ theorem exists_isThB_sum [IsAlgClosed Ω] {ε : Ω →+* ℂ} (X : Tower Ω ε) 
         (algebraMap ℤ_[l] (Qbar l) a * j (Φ.coeff r) + algebraMap ℤ_[l] (Qbar l) a' * j (Φ'.coeff r))‖ ≤ ‖(l : Qbar l) ^ n‖ := by
     intro a a' b b' Φ Φ' hb hb' h h'
     refine ⟨_, GlobalTheory.ThAdd.isThB_add Ω ε X A N l n w b b' hnon hb hb' a a' Φ Φ' h h', fun r => ?_⟩
-    simp only [HahnSeries.coeff_add, HahnSeries.coeff_smul, smul_eq_mul, map_add, map_mul, map_natCast]
+    simp only [HahnSeries.coeff_add, HahnSeries.coeff_smul, smul_eq_mul, map_add (f := _), map_mul, map_natCast]
     rw [add_sub_add_comm]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (happ _ _ (hint h r)) (happ _ _ (hint h' r)))
   induction hT using Finset.Nonempty.cons_induction with

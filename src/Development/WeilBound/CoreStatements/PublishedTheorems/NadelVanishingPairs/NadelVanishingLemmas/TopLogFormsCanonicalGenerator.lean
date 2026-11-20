@@ -175,7 +175,7 @@ theorem formOf_eq_regAt_smul (p : ℕ) [Fact p.Prime] {X : Scheme.{0}} [IsIntegr
         formsToLam (constFn f) (intCast_surj p) d (formOf U (gen_mem hy) ω) = u • W}
       add_mem' := by
         rintro a c ⟨u1, h1, e1⟩ ⟨u2, h2, e2⟩
-        exact ⟨u1 + u2, h1.add h2, by rw [map_add, map_add, e1, e2, add_smul]⟩
+        exact ⟨u1 + u2, h1.add h2, by rw [map_add (f := _), map_add (f := _), e1, e2, add_smul]⟩
       zero_mem' := ⟨0, regAt_zero y, by rw [map_zero, map_zero, zero_smul]⟩
       smul_mem' := by
         rintro a c ⟨u, hu, e⟩
@@ -367,7 +367,7 @@ private theorem logAt_top_lemma_6 {X : Scheme.{0}} [IsIntegral X] (Z : Set X) (G
     obtain ⟨u, m, hu, rfl⟩ := (hlog g).1 hg
     rw [dlog_prod_lemma_4]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, Finsupp.add_apply, Finsupp.finsetSum_apply, mul_add, Finset.mul_sum]
+      simp only [map_add (f := _), map_sum, Finsupp.add_apply, Finsupp.finsetSum_apply, mul_add, Finset.mul_sum]
     refine add_mem ?_ (sum_mem fun j hj => ?_)
     · rw [show dlog u = ((u⁻¹ : X.functionFieldˣ) : X.functionField) • dK (u : X.functionField) from rfl,
         map_smul, Finsupp.smul_apply, smul_eq_mul]

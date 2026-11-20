@@ -160,7 +160,7 @@ theorem exists_comp_off {R : Type} [CommRing R] [IsDomain R] {j : ℕ} {D D' : D
   push_neg at hn
   choose mu hmu using hn
   refine h (pD.xe.symm mu) (pD.xe.injective (funext fun i => ?_))
-  rw [map_add, map_nsmul, AddEquiv.apply_symm_apply]
+  rw [map_add (f := _), map_nsmul, AddEquiv.apply_symm_apply]
   exact hmu i
 
 set_option maxHeartbeats 800000 in

@@ -18,7 +18,7 @@ private theorem dc_fix (N w : ℕ) (γ : SL(2, ℤ)) (hγ : γ ∈ Gam N l) (b :
   induction hb using Submodule.span_induction with
   | mem x hx => exact hx.2 γ hγ
   | zero => exact map_zero _
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul a x _ hx => rw [map_smul, hx]
 
 private theorem dc_mul (σ τ : SL(2, ℤ)) (b : X.Fn l) :

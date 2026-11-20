@@ -131,7 +131,7 @@ theorem exists_generator : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   · have him : ((-1 + Complex.I * (Real.sqrt d : ℝ)) / 2 : ℂ).im = Real.sqrt d / 2 := by simp
     refine ⟨w, (-1 + w) / 2, ⟨(-1 + Complex.I * (Real.sqrt d : ℝ)) / 2, by rw [him]; positivity⟩, hw, hφ,
       by rw [if_pos h3], fun i => ?_, ⟨one_ne_zero, fun x => (hΛ x).trans (integers_three hd h3 x)⟩, Or.inl ⟨h3, him⟩⟩
-    rw [map_div₀, map_add, map_neg, map_one, map_ofNat, hφ]
+    rw [map_div₀, map_add (f := _), map_neg, map_one, map_ofNat, hφ]
   · have h1 : d % 4 = 1 := by omega
     have him : (Complex.I * (Real.sqrt d : ℝ) : ℂ).im = Real.sqrt d := by simp
     exact ⟨w, w, ⟨Complex.I * (Real.sqrt d : ℝ), by rw [him]; exact hs⟩, hw, hφ,

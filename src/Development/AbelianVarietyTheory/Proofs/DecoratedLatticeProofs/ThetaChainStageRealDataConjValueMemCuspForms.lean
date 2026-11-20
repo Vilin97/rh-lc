@@ -103,7 +103,7 @@ theorem exists_kStable (M : DSModel V S) (τ : D.what₂.Tau) {w : M.H τ} (hw :
     obtain ⟨W', h1', h2', h3'⟩ := hy
     refine ⟨W ⊔ W', inferInstance, Submodule.add_mem_sup h2 h2', fun g hg v hv => ?_⟩
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hv
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (h3 g hg y hy) (h3' g hg z hz)
   | smul a x _ hx =>
     obtain ⟨W, h1, h2, h3⟩ := hx

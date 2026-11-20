@@ -63,6 +63,6 @@ theorem integral_cob_defect_rules : ∀ (O E : Type) [CommRing O] [CommRing E] [
     · intro m t u ht hu
       obtain ⟨-, hd2⟩ := GlobalTheory.T.formalGroupLawCoboundary_multiplicationDefect_mul O E d μ hμ f m n
       apply inj1
-      rw [hu, hd2, map_add, hsmul, hsb, ← hupn, hs, ht]
+      rw [hu, hd2, map_add (f := _), hsmul, hsb, ← hupn, hs, ht]
 
 end GlobalTheory.QLog

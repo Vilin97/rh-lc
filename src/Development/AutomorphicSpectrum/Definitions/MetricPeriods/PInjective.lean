@@ -28,7 +28,7 @@ theorem stdE_bij : Function.Bijective stdE := by
     have hy : y = y 0 • ![1, 0] + y 1 • ![0, 1] := by
       funext i
       fin_cases i <;> simp
-    conv_rhs => rw [hy, map_add, map_smul, map_smul]
+    conv_rhs => rw [hy, map_add (f := _), map_smul, map_smul]
     simp [stdE_apply]
     ring
 

@@ -40,7 +40,7 @@ theorem HomG.mul {φ : (σ →₀ ℕ) →+ ℕ} {d d' : ℕ} {P Q : MvPolynomia
   classical
   intro m hm
   obtain ⟨a, ha, b, hb, rfl⟩ := Finset.mem_add.mp (MvPolynomial.support_mul P Q hm)
-  rw [map_add, hP a ha, hQ b hb]
+  rw [map_add (f := _), hP a ha, hQ b hb]
 
 theorem HomG.one (φ : (σ →₀ ℕ) →+ ℕ) : HomG φ 0 (1 : MvPolynomial σ R) := by
   intro m hm

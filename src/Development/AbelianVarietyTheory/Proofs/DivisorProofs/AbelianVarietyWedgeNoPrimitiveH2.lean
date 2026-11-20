@@ -66,16 +66,16 @@ theorem defect_eq (hp : StructureSheafH1Primitive A) (t : HO1 A.hom ⊗[K] HO1 A
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul a b =>
-    simp only [TensorProduct.lift.tmul, TensorProduct.comm_tmul, map_sub, overPullbackStructureSheaf_cohomology_cup, hp a, hp b, map_add,
+    simp only [TensorProduct.lift.tmul, TensorProduct.comm_tmul, map_sub, overPullbackStructureSheaf_cohomology_cup, hp a, hp b, map_add (f := _),
       LinearMap.add_apply, LinearMap.compl₁₂_apply]
     rw [GlobalTheory.T.commAlgFunctorCohomologyCup_anticomm K _ (OAff (A ⊗ A).hom) (pO1 (snd A A) a) (pO1 (fst A A) b)]
     abel
   | add s t hs ht =>
     have e : s + t - TensorProduct.comm K _ _ (s + t)
         = (s - TensorProduct.comm K _ _ s) + (t - TensorProduct.comm K _ _ t) := by
-      rw [map_add]; abel
+      rw [map_add (f := _)]; abel
     rw [e, map_add (TensorProduct.lift (mixed A)), ← hs, ← ht]
-    simp only [map_add]
+    simp only [map_add (f := _)]
     abel
 
 theorem mixed_injective [IsSeparated A.hom] [QuasiCompact A.hom] (u : HO1 A.hom ⊗[K] HO1 A.hom)

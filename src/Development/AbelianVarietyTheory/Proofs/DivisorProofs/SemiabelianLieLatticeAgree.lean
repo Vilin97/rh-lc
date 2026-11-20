@@ -24,7 +24,7 @@ theorem repr_isIntAf {p : ℕ} [Fact p.Prime] (D : Datum p) {κ : Type} (b : Mod
       eq_intCast (algebraMap ℤ ℚ), map_intCast, map_mul, map_intCast]
     exact mul_mem (ha v) (intCast_mem _ _)
   | zero => intro v; rw [map_zero, Finsupp.zero_apply, map_zero]; exact zero_mem _
-  | add u u' _ _ hu hu' => intro v; rw [map_add, Finsupp.add_apply, map_add]; exact add_mem (hu v) (hu' v)
+  | add u u' _ _ hu hu' => intro v; rw [map_add (f := _), Finsupp.add_apply, map_add (f := _)]; exact add_mem (hu v) (hu' v)
   | neg u _ hu => intro v; rw [map_neg, Finsupp.neg_apply, map_neg]; exact neg_mem (hu v)
 
 end GlobalTheory.LKGeo.ModZero

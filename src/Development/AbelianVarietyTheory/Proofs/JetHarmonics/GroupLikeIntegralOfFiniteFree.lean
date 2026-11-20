@@ -27,7 +27,7 @@ theorem dvd_of_smul_apply_eq_smul (O C A : Type) [CommRing O] [IsDomain O] [Fiel
       algebraMap O C (ε ((Polynomial.aeval T p) a)) = Polynomial.aeval x p * algebraMap O C (ε a) := by
     intro p
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq, add_mul]
+    | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq, add_mul]
     | monomial n r =>
       rw [Polynomial.aeval_monomial, Polynomial.aeval_monomial, Module.End.mul_apply,
         Module.algebraMap_end_apply, map_smul, smul_eq_mul, map_mul, hpow', mul_assoc]

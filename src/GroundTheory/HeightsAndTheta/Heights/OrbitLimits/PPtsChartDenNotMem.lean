@@ -186,7 +186,7 @@ theorem ringKrullDim_ker_segreConeMap (J : Ideal (MvPolynomial (Fin (Fintype.car
         rfl
       rwa [h3] at h2
     | add f g hf hg =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact AC.add_mem hf hg
     | mul_X f c hf =>
       rw [map_mul, map_mul]
@@ -281,7 +281,7 @@ theorem exists_ne_zero_mem_zeroLocus {σ : Type} [Fintype σ] (W : Ideal (MvPoly
     | add f g hf hg =>
       obtain ⟨c1, hc1⟩ := hf
       obtain ⟨c2, hc2⟩ := hg
-      exact ⟨c1 + c2, by rw [map_add, hc1, hc2, map_add]⟩
+      exact ⟨c1 + c2, by rw [map_add (f := _), hc1, hc2, map_add (f := _)]⟩
     | mul_X f a _ =>
       exact ⟨0, by rw [map_mul, Ideal.Quotient.eq_zero_iff_mem.2 (hX a), mul_zero, map_zero]⟩
   have hle := ringKrullDim_le_of_surjective _ hsurj
@@ -360,7 +360,7 @@ theorem PtsChartDenNotMem.proof (h : PtsChartDim.Statement) : PtsChartDenNotMem.
       intro g
       induction g using MvPolynomial.induction_on with
       | C c => simp [segreConeMap]
-      | add f g hf hg => simp only [map_add, hf, hg]
+      | add f g hf hg => simp only [map_add (f := _), hf, hg]
       | mul_X f a _ => simp [map_mul, segreConeMap]
     have := hε f
     rw [RingHom.mem_ker.1 hf, map_zero] at this

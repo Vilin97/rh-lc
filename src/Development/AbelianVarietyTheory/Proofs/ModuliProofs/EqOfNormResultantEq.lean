@@ -231,7 +231,7 @@ theorem eq_of_norm_resultant_eq : ∀ (l : ℕ) [Fact l.Prime] (Ω : Type) [Fiel
       ‖(a.map fun x => Polynomial.aeval x G + algebraMap ℚ_[l] Ω t).prod‖ =
       ‖(b.map fun x => Polynomial.aeval x G + algebraMap ℚ_[l] Ω t).prod‖ := by
     intro t
-    simpa only [map_add, Polynomial.aeval_C] using
+    simpa only [map_add (f := _), Polynomial.aeval_C] using
       ResultantNorm.padic_case (l := l) a b h1 (G + Polynomial.C t)
   exact le_antisymm (ResultantNorm.countP_le b a _ fun t => (h2 t).symm)
     (ResultantNorm.countP_le a b _ h2)

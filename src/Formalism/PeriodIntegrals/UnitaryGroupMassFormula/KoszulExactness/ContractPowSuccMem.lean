@@ -29,7 +29,7 @@ theorem contract_pow_eq_zero (N : Submodule R M) (f : Module.Dual R M) (hf : ∀
       obtain ⟨m, hm, rfl⟩ := ha
       rw [CliffordAlgebra.contractLeft_ι_mul, hf m hm, ih b hb, zero_smul, mul_zero, sub_zero]
     · intro a b ha hb
-      rw [map_add, ha, hb, add_zero]
+      rw [map_add (f := _), ha, hb, add_zero]
 
 end General
 

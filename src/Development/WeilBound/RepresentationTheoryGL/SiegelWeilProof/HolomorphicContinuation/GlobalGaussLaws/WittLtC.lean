@@ -74,7 +74,7 @@ theorem split {n : Type} [Fintype n] [DecidableEq n] {G : Matrix n n E} (hG : �
   have hLs : Function.Surjective L := by
     intro v
     refine ⟨v 0 • w + v 1 • z, ?_⟩
-    rw [map_add, map_smul, map_smul, hLz, hLw]
+    rw [map_add (f := _), map_smul, map_smul, hLz, hLw]
     ext i; fin_cases i <;> simp
   set K := LinearMap.ker L
   have hrk : Module.finrank E K + 2 = Fintype.card n := by

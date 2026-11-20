@@ -202,7 +202,7 @@ theorem coeff_graphLift_i2comp {g : (Σ k, ι₂ k) → MRing ι} {δ : K₂ →
   classical
   induction F using MvPolynomial.induction_on' with
   | add F F' hF hF' =>
-    rw [i2comp_add, map_add, MvPolynomial.coeff_add, hF, hF', map_add, MvPolynomial.coeff_add]
+    rw [i2comp_add, map_add (f := _), MvPolynomial.coeff_add, hF, hF', map_add (f := _), MvPolynomial.coeff_add]
     split_ifs
     · rw [i2comp_add]
     · simp
@@ -375,7 +375,7 @@ theorem graphPt_closure (hne : ∀ k₂, ∃ j, g ⟨k₂, j⟩ ∉ P) (z : L) :
         Subfield.closure (Set.range (graphPt P g L)) := fun b => by
     induction b using MvPolynomial.induction_on with
     | C a => exact hC a
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p k hp => rw [map_mul]; exact mul_mem hp (hT k)
   obtain ⟨x, y, _, rfl⟩ := IsFractionRing.div_surjective (A := MvPolynomial K₂ (MRing ι ⧸ P)) z
   exact div_mem (hB x) (hB y)

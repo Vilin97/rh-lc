@@ -118,7 +118,7 @@ theorem ker_le_span {R A : Type} [CommRing R] [IsLocalRing R] [CommRing A] [IsLo
     · simp
     · intro x y _ _ hx hy
       have := Ideal.add_mem _ hx hy
-      convert this using 1; simp only [map_add]; ring
+      convert this using 1; simp only [map_add (f := _)]; ring
     · intro a x hx' hx
       have e : a • x - inc (ev (a • x)) = (a - inc (ev a)) * x + inc (ev a) * (x - inc (ev x)) := by
         simp only [smul_eq_mul, map_mul]; ring

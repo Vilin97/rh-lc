@@ -29,7 +29,7 @@ theorem parCoc_spOver : ∀ (R : Type) [CommRing R] (A B : Over (Sp R)) (J : Typ
   have hc : ∀ i, a i D E ((ptAlg (z ≫ fst _ _)).comp φ) x =
       ptAlg (z ≫ fst _ _) (a i D D' φ x) + a i D' E (ptAlg (z ≫ fst _ _)) (spOver φ ≫ x) :=
     fun i ↦ ha i D D' E φ _ x (sm_whole x)
-  simp only [hc, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hc, map_add (f := _), add_mul, Finset.sum_add_distrib]
   ring
 
 end GlobalTheory.PtExt

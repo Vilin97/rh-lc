@@ -208,7 +208,7 @@ theorem repr_mem_of_mem_smul {ι : Type} (nb : Module.Basis ι (LetA O n) ↥(W.
   · rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
     refine ⟨(W.N T).add_mem ha hb, fun j => ?_⟩
     have e : (⟨a + b, (W.N T).add_mem ha hb⟩ : ↥(W.N T)) = ⟨a, ha⟩ + ⟨b, hb⟩ := rfl
-    rw [e, map_add, Finsupp.add_apply]
+    rw [e, map_add (f := _), Finsupp.add_apply]
     exact I.add_mem (ha' j) (hb' j)
 
 theorem mem_iff_roots (hunit : IsUnit (algebraMap (LetA O n) W.EE W.Q)) {ι : Type} [Fintype ι]
@@ -469,7 +469,7 @@ theorem heights_from_jumps : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.lo
   · refine mem_iff_roots W T hunit nb fun k a ha => hdiv k a fun i ζ hζ => ha i ζ ⟨?_, ⟨s, ?_⟩, ?_⟩
     · obtain ⟨x, -, hx, -⟩ := (hlev i ζ ⟨s, hζ⟩).1
       refine ⟨x + 1, ?_⟩
-      rw [map_add, map_one]
+      rw [map_add (f := _), map_one]
       exact eq_sub_iff_add_eq.1 hx
     · rw [hp]
       exact hζ.pow_eq_one

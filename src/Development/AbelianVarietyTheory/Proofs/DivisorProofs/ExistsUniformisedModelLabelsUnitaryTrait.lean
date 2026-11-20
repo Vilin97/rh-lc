@@ -79,6 +79,6 @@ theorem uTraitLabels : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   · intro m a pk pk' x x' w w' hm h1 h2 hw hw' hww
     have hx : x' = x ≫ T'.P.oA.act a := hact _ x x' w w' a hw hw' hww
     obtain ⟨z, hz⟩ := GlobalTheory.T.torsionLattice_moves_by_ringAction_completeDVR E H T'.V T'.cdvr T'.t T'.P (PadicAlgCl p) m a pk pk' x x' hm h1 h2 hx
-    exact ⟨e z, by simp [hz, map_add, map_nsmul]⟩
+    exact ⟨e z, by simp [hz, map_add (f := _), map_nsmul]⟩
 
 end GlobalTheory.UPoinc

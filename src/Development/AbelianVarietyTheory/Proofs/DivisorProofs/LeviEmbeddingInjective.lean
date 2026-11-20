@@ -128,7 +128,7 @@ theorem levi_unique : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
       incV F (c • u + v) = (inclR (AF F) c : AE F E) • incV F u + incV F v := fun n u c v => by
     funext i
     change inclR (AF F) (c * u i + v i) = (inclR (AF F) c : AE F E) * inclR (AF F) (u i) + inclR (AF F) (v i)
-    rw [map_add, map_mul]
+    rw [map_add (f := _), map_mul]
   have hincι : ∀ u, incV F (H.ι *ᵥ u) = incM F H.ι *ᵥ incV F u := fun u => by
     ext i; simp [incV, incM, RingHom.map_mulVec]; rfl
   have key : ∀ z : Fin (b + 2) → E, mat h *ᵥ incV F z = mat h' *ᵥ incV F z := fun z => by

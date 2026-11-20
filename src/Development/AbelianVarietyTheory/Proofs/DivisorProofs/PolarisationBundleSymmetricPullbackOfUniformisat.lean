@@ -64,14 +64,14 @@ theorem isPrim_of_unif : AllU fun {R} _ _ {I} {D} {A} {G} _ _ U => ∀ (O : Type
     (fun i => by
       fin_cases i
       · show (oG.act (1 + w)).left = (padd G (𝟙 _) (oG.act w)).left
-        rw [oG.map_add, oG.map_one]
+        rw [oG.map_add (f := _), oG.map_one]
       all_goals rfl)
     (ψ := ![(padd D.toPre.P.A (𝟙 _) (o.onB.act w)).left, 𝟙 D.toPre.P.A.left, (o.onB.act w).left,
       (toUnit D.toPre.P.A ≫ η[D.toPre.P.A]).left])
     (fun i => by
       fin_cases i
       · show (o.onB.act (1 + w)).left = (padd D.toPre.P.A (𝟙 _) (o.onB.act w)).left
-        rw [o.onB.map_add, o.onB.map_one]
+        rw [o.onB.map_add (f := _), o.onB.map_one]
       all_goals rfl) u hu hn
   exact ⟨κ, hκ.1⟩
 

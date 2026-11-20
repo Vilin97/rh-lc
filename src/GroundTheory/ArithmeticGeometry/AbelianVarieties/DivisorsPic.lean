@@ -94,14 +94,14 @@ theorem eq_mapDomain_affinePart_add (D : CurveDivisor W) :
 theorem divisorDegree_eq (D : CurveDivisor W) :
     divisorDegree W D = (affinePart W D).sum (fun _ n => n) + D 0 := by
   conv_lhs => rw [eq_mapDomain_affinePart_add W D]
-  rw [map_add, divisorDegree_single, divisorDegree, Finsupp.liftAddHom_apply,
+  rw [map_add (f := _), divisorDegree_single, divisorDegree, Finsupp.liftAddHom_apply,
     Finsupp.sum_mapDomain_index_addMonoidHom]
   rfl
 
 theorem divisorSum_eq (D : CurveDivisor W) :
     divisorSum W D = (affinePart W D).sum (fun v n => n • pointOfIdeal W v) := by
   conv_lhs => rw [eq_mapDomain_affinePart_add W D]
-  rw [map_add, divisorSum_single, smul_zero, add_zero, divisorSum, Finsupp.liftAddHom_apply,
+  rw [map_add (f := _), divisorSum_single, smul_zero, add_zero, divisorSum, Finsupp.liftAddHom_apply,
     Finsupp.sum_mapDomain_index_addMonoidHom]
   simp
 

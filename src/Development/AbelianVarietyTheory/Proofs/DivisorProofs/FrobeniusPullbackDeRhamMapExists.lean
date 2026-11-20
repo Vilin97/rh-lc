@@ -101,7 +101,7 @@ theorem exists_linFrob : GlobalTheory.CovTop.Hypotheses2 → ∀ (p : ℕ) [Fact
             (e V hV s)) := fun h0 => by
     refine exists_of_semilinear p h0 H _ (fun V hV s t => ?_) (fun V hV r s => ?_)
       fun V V' hV hV' h s => ?_
-    · rw [map_add, map_add, map_add]
+    · rw [map_add (f := _), map_add (f := _), map_add (f := _)]
     · rw [(e V hV).map_smul, frobDR_smul, (e V hV).symm.map_smul]
     · exact frobDR_res p h0 A H e he hV hV' h s
   obtain ⟨Ψ, hΨ⟩ := key (GlobalTheory.VB.natCast_eq_zero T p (ZMod p))

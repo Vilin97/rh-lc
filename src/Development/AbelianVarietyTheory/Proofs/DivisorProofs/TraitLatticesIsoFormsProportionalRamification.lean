@@ -51,7 +51,7 @@ theorem form_of_assoc {V V' W : Type} [CommRing V] [IsDomain V] [CommRing V'] [I
   have k := key (a + b)
   have ka := key a
   have kb := key b
-  simp only [map_add, LinearMap.add_apply] at k
+  simp only [map_add (f := _), LinearMap.add_apply] at k
   rw [hβ b a, hβ' (ε b) (ε a)] at k
   simp only [mul_add] at k
   linarith

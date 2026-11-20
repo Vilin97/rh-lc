@@ -31,7 +31,7 @@ private theorem span_of_casimir {O La V K : Type} [CommRing O] [AddCommGroup La]
     | tmul v' b =>
       rw [TensorProduct.smul_tmul', phi_tmul, phi_tmul, TensorProduct.smul_tmul']
       simp
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
   have hΦ : ∀ y ∈ Submodule.span V (Set.range fun i => ∑ m, T i m ⊗ₜ[ℤ] a m), phi y ∈ Sp := by
     intro y hy
     induction hy using Submodule.span_induction with
@@ -42,7 +42,7 @@ private theorem span_of_casimir {O La V K : Type} [CommRing O] [AddCommGroup La]
       simp only [phi_tmul]
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Sp.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Sp.add_mem hx hy
     | smul v x _ hx => rw [phi_smul]; exact Sp.smul_mem _ hx
   have hb : ∀ b : La, Q (1 ⊗ₜ b) ∈ Sp := by
     intro b
@@ -71,7 +71,7 @@ private theorem span_of_casimir {O La V K : Type} [CommRing O] [AddCommGroup La]
         rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
       rw [he, map_smul]
       exact Sp.smul_mem _ (hb t)
-    | add x y hx hy => rw [map_add]; exact Sp.add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Sp.add_mem hx hy
   have hQ : Q w = β (σ (∑ j, c j * θ j)) • w := by
     simp only [Q, LinearMap.sum_apply, LinearMap.smul_apply, hw, smul_smul]
     rw [← Finset.sum_smul]
@@ -143,7 +143,7 @@ theorem UpperTheory.lattice_data_gives_cut_and_dual :
   have halt : ∀ x y, Dw.EF x y = -Dw.EF y x := by
     intro x y
     have := Dw.alt (x + y)
-    simp only [map_add, LinearMap.add_apply, Dw.alt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, Dw.alt] at this
     linarith
   have hd : ∀ i j, ∑ m, ∑ m', (S i m : ℂ_[p]) * (T j m' : ℂ_[p]) * ((Dw.EF (a m) (a m') : ℤ) : ℂ_[p]) =
       if i = j then 1 else 0 := by

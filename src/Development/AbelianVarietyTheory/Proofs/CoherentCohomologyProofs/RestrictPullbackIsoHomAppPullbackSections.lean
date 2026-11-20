@@ -193,7 +193,7 @@ def pullbackSections (e : U ≤ f ⁻¹ᵁ V) :
   { toFun s := ((Scheme.Modules.pullback f).obj G).presheaf.map (homOfLE e).op
       (((Scheme.Modules.pullbackPushforwardAdjunction f).unit.app G).app V s)
     map_add' s t := by
-      rw [map_add]
+      rw [map_add (f := _)]
       exact map_add _ _ _
     map_smul' r s :=
       (congr(((Scheme.Modules.pullback f).obj G).presheaf.map (homOfLE e).op
@@ -482,7 +482,7 @@ theorem isBaseChange_pullbackSections_of_isPushout (hU : IsAffineOpen U) (hV : I
     .of_algebraMap_smul fun _ _ ↦ rfl
   have h := isBaseChange_of_eq_pullbackSections f G hU hV e halg
     { toFun := pullbackSections f G e
-      map_add' s t := by rw [← hl, ← hl, ← hl, map_add]
+      map_add' s t := by rw [← hl, ← hl, ← hl, map_add (f := _)]
       map_smul' r s := by
         rw [pullbackSections_smul, ← halg]
         rfl } fun _ ↦ rfl

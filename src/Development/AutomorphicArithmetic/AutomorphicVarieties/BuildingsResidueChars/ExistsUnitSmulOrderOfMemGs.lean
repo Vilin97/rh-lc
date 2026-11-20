@@ -25,7 +25,7 @@ theorem UpperTheory.exists_unit_smul_order_of_mem_gs :
         have key : (c : Etau K τ) * (algebraMap O (Etau K τ) (a1 + a2) + algebraMap O (Etau K τ) (b1 + b2) * x)
             = (c : Etau K τ) * (algebraMap O (Etau K τ) a1 + algebraMap O (Etau K τ) b1 * x)
               + (c : Etau K τ) * (algebraMap O (Etau K τ) a2 + algebraMap O (Etau K τ) b2 * x) := by
-          simp only [map_add]
+          simp only [map_add (f := _)]
           ring
         rw [key]
         exact N.add_mem h1 h2

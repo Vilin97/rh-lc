@@ -37,12 +37,12 @@ theorem qmap_place_ne {u u' : Pl F} (h : u' ≠ u) (x : Q d β (Kp u)) :
 def atPlace (u : Pl F) (y : Q d β (Kp u)) : Q d β (AF F) := 1 + place u (y - 1)
 
 theorem qmap_atPlace_same (u : Pl F) (y : Q d β (Kp u)) : qmap (proj u) (atPlace u y) = y := by
-  rw [atPlace, map_add, map_one, qmap_place_same]
+  rw [atPlace, map_add (f := _), map_one, qmap_place_same]
   abel
 
 theorem qmap_atPlace_ne {u u' : Pl F} (h : u' ≠ u) (y : Q d β (Kp u)) :
     qmap (proj u') (atPlace u y) = 1 := by
-  rw [atPlace, map_add, map_one, qmap_place_ne h, add_zero]
+  rw [atPlace, map_add (f := _), map_one, qmap_place_ne h, add_zero]
 
 theorem atPlace_mem_suppAt (u : Pl F) {y : Q d β (Kp u)} (hy : qn y = 1) :
     atPlace u y ∈ SuppAt d β {u} := by

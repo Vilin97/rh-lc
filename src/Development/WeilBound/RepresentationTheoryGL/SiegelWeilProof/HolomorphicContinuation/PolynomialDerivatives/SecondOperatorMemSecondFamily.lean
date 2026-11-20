@@ -70,7 +70,7 @@ theorem Bop_box (ε : Fin m → Bool) (c : ℝ) (Λ : PX m n →ₗ[ℂ] ℂ) (R
     obtain ⟨htF, htr⟩ := (mem_cand ε _ t).mp ht
     exact ⟨t, htF, by rw [htr]; exact hR, rfl⟩
   · simp
-  · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
+  · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · intro r x _ hx; rw [map_smul]; exact Submodule.smul_mem _ r hx
 
 end CoreC

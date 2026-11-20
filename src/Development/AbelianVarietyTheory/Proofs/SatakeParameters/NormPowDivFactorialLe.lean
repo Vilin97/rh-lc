@@ -96,7 +96,7 @@ theorem laK_funEq (hl : l.Prime) (j : ZMod d) :
   classical
   have hq : 1 < l ^ 2 := Nat.one_lt_pow two_ne_zero hl.one_lt
   ext n
-  rw [map_add, map_smul, smul_eq_mul, coeff_X]
+  rw [map_add (f := _), map_smul, smul_eq_mul, coeff_X]
   by_cases h : ∃ e : ℕ, n = Finsupp.single (j - ((2 * e : ℕ) : ZMod d)) (l ^ (2 * e))
   · obtain ⟨e, rfl⟩ := h
     rw [coeff_laK_single hl]
@@ -429,7 +429,7 @@ theorem exists_integral_point (a b : ZMod d → ℕ) (ha : ∀ s, a (s - 2) = a 
     have e : subst T (laK ℚ_[l] l d j) - (l : ℚ_[l])⁻¹ • expand (l ^ 2) hq (subst T (laK ℚ_[l] l d (j - 2))) =
         map PadicInt.Coe.ringHom (a j • X (false, j) + b j • X (true, j)) := by
       rw [hT, hT, ha, hb, hz false j, hz true j]
-      simp only [map_add, map_nsmul, map_X]
+      simp only [map_add (f := _), map_nsmul, map_X]
       module
     rw [e]
     exact integral_map _)
@@ -437,7 +437,7 @@ theorem exists_integral_point (a b : ZMod d → ℕ) (ha : ∀ s, a (s - 2) = a 
   · rw [coeff_map]
     exact algebraMap_mem_Wp (hint s n)
   · rw [← map_laK (algebraMap ℚ_[l] ℂ_[l]), ← map_subst (hasSubst_of_constantCoeff_zero hT0), hT]
-    simp only [map_add, map_nsmul, z, map_subst (hXs _), map_laK, map_X]
+    simp only [map_add (f := _), map_nsmul, z, map_subst (hXs _), map_laK, map_X]
     rfl
 
 theorem exists_isInv : ∃ h : ZMod d → MvPowerSeries (ZMod d) ℚ_[l],

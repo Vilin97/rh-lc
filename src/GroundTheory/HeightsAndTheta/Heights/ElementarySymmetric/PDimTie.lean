@@ -164,7 +164,7 @@ theorem ringKrullDim_eq (y : Fin (N + 1) → Ω) (hy : y ≠ 0) :
     (A' := (dehom (k := k) y hi₀).range) e
   rw [trdeg_range (k := k) y hi₀, ← trdeg_funField] at h
   have h2 := congrArg Cardinal.toENat h
-  simp only [toENat_lift, map_add, map_one] at h2
+  simp only [toENat_lift, map_add (f := _), map_one] at h2
   rw [h2]
 
 end DimTie

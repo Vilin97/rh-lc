@@ -129,7 +129,7 @@ theorem rename_omE (l l' : Ln p q r s) (P : Pol p q r s) :
     rename (sw p q r s) (omE l l' P) =
       omE (sw p q r s l) (sw p q r s l') (rename (sw p q r s) P) := by
   unfold omE
-  simp only [LinearMap.add_apply, Module.End.mul_apply, map_add, rename_raiB, rename_lowB]
+  simp only [LinearMap.add_apply, Module.End.mul_apply, map_add (f := _), rename_raiB, rename_lowB]
   congr 1
   by_cases h : l = l'
   · subst h

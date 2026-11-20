@@ -54,7 +54,7 @@ theorem associated_psEval {φ : PowerSeries 𝒪[K]} (h0 : PowerSeries.constantC
     rw [← hχ]
     ring
   have hunit : IsUnit (ε ψ) := by
-    rw [hψ', map_add, map_mul, hεX, hεC]
+    rw [hψ', map_add (f := _), map_mul, hεX, hεC]
     by_contra hnu
     have hm : algebraMap 𝒪[K] 𝒪[L] c + a * ε χ ∈ 𝓂[L] := (IsLocalRing.mem_maximalIdeal _).mpr hnu
     have hm' : algebraMap 𝒪[K] 𝒪[L] c ∈ 𝓂[L] := by

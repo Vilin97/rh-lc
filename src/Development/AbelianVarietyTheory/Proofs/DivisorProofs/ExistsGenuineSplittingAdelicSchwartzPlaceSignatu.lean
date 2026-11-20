@@ -60,7 +60,7 @@ theorem genRepD : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       rw [hω]
       exact Submodule.subset_span ⟨ρ g f, h, hh, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   have h1m : At (evI F) (((1 : UG (cA σ) JB).1 : Matrix β β (AE F E)) - 1) := fun u _ => by simp
   have hact1 : ∀ x : Matrix α β (AE F E), actB (cA σ) (1 : UG (cA σ) JB) x = x := fun x => by simp [actB]
@@ -78,7 +78,7 @@ theorem genRepD : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       rw [e1, hω, hω]
       exact (hsplit g hg (ρ g f) (ρ g f₁) h ((hR g hg).1 u hu f f₁ hf₁)).symm
     | zero => rw [rho_zero', map_zero, rho_zero']
-    | add x y _ _ hx hy => rw [rho_add', map_add, map_add, hx, hy, rho_add']
+    | add x y _ _ hx hy => rw [rho_add', map_add (f := _), map_add (f := _), hx, hy, rho_add']
     | smul c x _ hx => rw [rho_smul', map_smul, map_smul, hx, rho_smul']
   · unfold schA at hφ
     induction hφ using Submodule.span_induction with
@@ -89,7 +89,7 @@ theorem genRepD : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       rw [e]
       exact hcont T f
     | zero => simp only [map_zero]; exact continuousOn_const
-    | add x y _ _ hx hy => simp only [map_add]; exact hx.add hy
+    | add x y _ _ hx hy => simp only [map_add (f := _)]; exact hx.add hy
     | smul c x _ hx => simp only [map_smul, smul_eq_mul]; exact continuousOn_const.mul hx
   · intro γ hγ Y hY T h hh l hl
     obtain ⟨L, hL⟩ := hl h hh

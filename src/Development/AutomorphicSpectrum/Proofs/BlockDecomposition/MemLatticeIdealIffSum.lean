@@ -102,7 +102,7 @@ private theorem exists_repr_of_mem_closure_f_mul_dpE {y : B}
     obtain ⟨a, c, rfl⟩ := h1
     obtain ⟨b, d, rfl⟩ := h2
     refine ⟨a + b, c + d, ?_⟩
-    rw [Finsupp.sum_add_index', map_add]
+    rw [Finsupp.sum_add_index', map_add (f := _)]
     · ring
     · intro i
       simp

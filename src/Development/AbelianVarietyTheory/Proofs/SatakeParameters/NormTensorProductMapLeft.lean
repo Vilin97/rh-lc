@@ -18,7 +18,7 @@ theorem norm_tensorProduct_map_left {R B L : Type} [Field R] [CommRing B] [Algeb
       simp only [σ, b, Algebra.TensorProduct.map_tmul, AlgHom.id_apply,
         Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply,
         smul_eq_mul, map_mul, AlgHom.commutes]
-    | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   have hb : ∀ j, σ (b j) = b j := by
     intro j
     simp [σ, b, Algebra.TensorProduct.basis_apply]

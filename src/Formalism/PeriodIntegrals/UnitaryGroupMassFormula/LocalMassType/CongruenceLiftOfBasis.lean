@@ -144,12 +144,12 @@ theorem congruence_lift_of_basis {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin
     refine Matrix.ext fun i a => Subtype.ext ?_
     simp only [A1, A0, A', Matrix.of_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
     push_cast
-    rw [hZW a, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, (D.hsc _).1]
+    rw [hZW a, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, (D.hsc _).1]
   have hB1 : B1 = B0 + (g : v.adicCompletionIntegers F) • B' := by
     refine Matrix.ext fun i a => Subtype.ext ?_
     simp only [B1, B0, B', Matrix.of_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
     push_cast
-    rw [hZW a, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, (D.hsc _).2]
+    rw [hZW a, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, (D.hsc _).2]
   obtain ⟨k1, K', hk1u, hk1A, hk1B, hk1e⟩ := wCoreG (v.adicCompletionIntegers F)
     (g : v.adicCompletionIntegers F) (natCast_mem_max v hgv) A0 A1 B0 B1 A' B' L0 M1 hL0 hM1
     hgram hA1 hB1

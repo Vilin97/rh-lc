@@ -28,11 +28,11 @@ private theorem kill_aff_id {ι : Type} [Fintype ι] [DecidableEq ι] (f : EP ι
     simp only [h1]
     induction p using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => rw [map_add, hp, hq, AddMonoidAlgebra.single_add]
+    | add p q hp hq => rw [map_add (f := _), hp, hq, AddMonoidAlgebra.single_add]
     | mul_X p i hp => rw [map_mul, hp, aeval_X, AddMonoidAlgebra.single_mul_single, add_zero]
   induction f using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [map_add, hf, hg]
+  | add f g hf hg => rw [map_add (f := _), hf, hg]
   | single v p =>
     rw [aff, kill_lift_single, hx]
     simp [affChar, expChar, AddMonoidAlgebra.single_mul_single]

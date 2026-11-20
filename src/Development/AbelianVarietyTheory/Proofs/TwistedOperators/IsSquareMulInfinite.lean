@@ -285,7 +285,7 @@ theorem isSquare_mul_of_near {x y : v.adicCompletion F} (hx : Valued.v x = 1) (h
   have key : ∀ r s : v.adicCompletionIntegers F,
       residue _ s ^ 2 + residue _ s = residue _ r → IsSquare (1 + 4 * (r : v.adicCompletion F)) := by
     intro r s h
-    have h1 := (hres (r - (s ^ 2 + s))).1 (by rw [map_sub, map_add, map_pow, h, sub_self])
+    have h1 := (hres (r - (s ^ 2 + s))).1 (by rw [map_sub, map_add (f := _), map_pow, h, sub_self])
     refine isSquare_of_near Valued.v (GlobalTheory.LocalQuad.isSquare_of_valued_sub_one_lt F v)
       (s := 1 + 2 * (s : v.adicCompletion F)) (Valuation.map_one_add_of_lt _ ?_) ?_
     · rw [map_mul]
@@ -314,7 +314,7 @@ theorem isSquare_mul_of_near {x y : v.adicCompletion F} (hx : Valued.v x = 1) (h
       exact hy' (ey ▸ key t s h))
   obtain ⟨s, rfl⟩ := residue_surjective s
   have := key (r + t + 2 * (2 * r * t)) s (by
-    rw [hs, map_add, map_add, map_mul, map_ofNat, h20, zero_mul, add_zero])
+    rw [hs, map_add (f := _), map_add (f := _), map_mul, map_ofNat, h20, zero_mul, add_zero])
   have e : x * y = 1 + 4 * ((r : v.adicCompletion F) + t + 2 * (2 * r * t)) := by
     rw [ex, ey]; ring
   rw [e]

@@ -34,7 +34,7 @@ theorem smulLA_smulLA (a b : LetA O n) (x : LA W T π' c) :
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul e z => rw [smulLA_tmul, smulLA_tmul, smulLA_tmul, ← mul_assoc, ← map_mul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem γLA_smulLA (a : LetA O n) (x : LA W T π' c) :
     γLA W T π' c (smulLA W T π' c a x) = smulLA W T π' c (W.γA W.gamK a) (γLA W T π' c x) := by
@@ -43,7 +43,7 @@ theorem γLA_smulLA (a : LetA O n) (x : LA W T π' c) :
   | tmul e z =>
     rw [smulLA_tmul, γLA_tmul, γLA_tmul, smulLA_tmul, map_mul, W.γE_ext]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem γA_comm (g h : W.Gam) (a : LetA O n) : W.γA g (W.γA h a) = W.γA h (W.γA g a) := by
   funext i
@@ -155,7 +155,7 @@ theorem φspan_γ (g : W.Gam) {z : W.DD T} (hz : z ∈ Formalism.MainNotions.Del
     rw [γD_letE]
     exact ⟨W.γD T g x₀, W.N_Γ T g x₀ hx₀, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx => rw [Formalism.MainNotions.LiftingTheory.wmap_γD_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem DelS_γ (g : W.Gam) {x : W.DD T} (hx : x ∈ DelS W T) : W.γD T g x ∈ DelS W T := by

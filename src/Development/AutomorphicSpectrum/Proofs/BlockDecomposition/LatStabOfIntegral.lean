@@ -163,7 +163,7 @@ theorem prim_local : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
     | tmul a e =>
       show a ⊗ₜ[F] σ (σ e) = a ⊗ₜ[F] e
       rw [hinv]
-    | add p q hp hq => rw [map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
   have hmeas : MeasurableSet (latV b v : Set (Fin 1 → Fin (M + 2) → Fv F v ⊗[F] E)) :=
     GlobalTheory.CompanionTheory.Hypotheses₂.OneV.DxEuler.measurableSet_latV σ h b 1 (M + 2) v
   set H := hermOf (Fv F v) σ (0 : Matrix (Fin 1) (Fin 1) E) h₂ with hHdef

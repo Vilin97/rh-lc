@@ -72,7 +72,7 @@ theorem transport (u : D.what₂.Word) (δ : (VS D).V →ₗ[D.host.E] (VS D).V)
     δ x - (δ (l + x) - P (VS D).hT X.eX X.fY (δ (l + x))), ?_, ?_⟩
   · rw [GlobalTheory.RowsOrb.Basic.mem_XO]
     exact Submodule.sub_mem _ (hX x hx) (sub_proj_mem₂ X _)
-  · rw [map_add]; abel
+  · rw [map_add (f := _)]; abel
 
 end GlobalTheory.RowsOrb.StabAct
 

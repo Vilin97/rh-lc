@@ -53,7 +53,7 @@ theorem exists_spMap_ext : ∀ (n : ℕ) (R : Type) [CommRing R] [IsDomain R] [I
     | one => exact ⟨1, by rw [map_one]; exact (map_one φ).symm⟩
     | add w v hw hv ihw ihv =>
       have : (⟨w + v, add_mem hw hv⟩ : cycAway n) = ⟨w, hw⟩ + ⟨v, hv⟩ := rfl
-      rw [this, map_add]; exact A.range.add_mem ihw ihv
+      rw [this, map_add (f := _)]; exact A.range.add_mem ihw ihv
     | neg w hw ih =>
       have : (⟨-w, neg_mem hw⟩ : cycAway n) = -⟨w, hw⟩ := rfl
       rw [this, map_neg]; exact A.range.neg_mem ih

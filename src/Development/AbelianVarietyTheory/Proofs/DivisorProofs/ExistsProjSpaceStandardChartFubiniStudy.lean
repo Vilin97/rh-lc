@@ -209,7 +209,7 @@ private theorem bijective_dehom (k : Type) [CommRing k] (N : ℕ) (i : Fin (N + 
     intro P
     induction P using MvPolynomial.induction_on with
     | C c => simp [hκv]
-    | add p q hp hq => rw [map_add, HomogeneousLocalization.val_add, hp, hq, MvPolynomial.eval₂_add]
+    | add p q hp hq => rw [map_add (f := _), HomogeneousLocalization.val_add, hp, hq, MvPolynomial.eval₂_add]
     | mul_X p a hp =>
       rw [map_mul, HomogeneousLocalization.val_mul, hp, MvPolynomial.eval₂_mul, MvPolynomial.eval₂Hom_X',
         MvPolynomial.eval₂_X, hy, HomogeneousLocalization.Away.val_mk]
@@ -217,7 +217,7 @@ private theorem bijective_dehom (k : Type) [CommRing k] (N : ℕ) (i : Fin (N + 
     intro P
     induction P using MvPolynomial.induction_on with
     | C c => rw [MvPolynomial.eval₂Hom_C, hκv, hLa]; simp [ρ]
-    | add p q hp hq => rw [map_add, HomogeneousLocalization.val_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), HomogeneousLocalization.val_add, map_add (f := _), hp, hq]
     | mul_X p a hp =>
       rw [map_mul, HomogeneousLocalization.val_mul, map_mul, hp, MvPolynomial.eval₂Hom_X', hy,
         HomogeneousLocalization.Away.val_mk, hLmk, hρs]
@@ -246,7 +246,7 @@ private theorem bijective_dehom (k : Type) [CommRing k] (N : ℕ) (i : Fin (N + 
     intro b
     induction b using MvPolynomial.induction_on with
     | C c => simp [ρ]
-    | add p q hp hq => rw [map_add, MvPolynomial.eval₂_add, MvPolynomial.eval₂_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), MvPolynomial.eval₂_add, MvPolynomial.eval₂_add, hp, hq]
     | mul_X p j hp =>
       rw [map_mul, MvPolynomial.eval₂_mul, MvPolynomial.eval₂_mul, hp, MvPolynomial.eval₂_X, ← hz j]
       congr 1

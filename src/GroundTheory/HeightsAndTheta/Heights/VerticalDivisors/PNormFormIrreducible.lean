@@ -39,7 +39,7 @@ def polyTensorEquiv (R A : Type*) [CommRing R] [CommRing A] [Algebra R A] (n : �
       rw [smul_tmul', smul_eq_mul, polyTensorAlgEquiv_tmul, polyTensorAlgEquiv_tmul, RingHom.id_apply,
         Algebra.smul_def q, MvPolynomial.algebraMap_def, map_mul, mul_smul_comm]
     | add s t hs ht =>
-      rw [smul_add, map_add, map_add, hs, ht, smul_add]
+      rw [smul_add, map_add (f := _), map_add (f := _), hs, ht, smul_add]
 
 def polyBasis {ι : Type*} (b : Module.Basis ι R A) (n : ℕ) :
     Module.Basis ι (MvPolynomial (Fin n) R) (MvPolynomial (Fin n) A) :=

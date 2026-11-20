@@ -84,7 +84,7 @@ theorem principal_locRing (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {
     { carrier := {r | algebraMap (𝓞 K) K r * t⁻¹ ∈ A}
       add_mem' := by
         intro x y hx hy
-        simp only [Set.mem_ofPred_eq, map_add, add_mul] at *
+        simp only [Set.mem_ofPred_eq, map_add (f := _), add_mul] at *
         exact A.add_mem hx hy
       zero_mem' := by simp
       smul_mem' := by
@@ -158,7 +158,7 @@ theorem unit_or_locRing {p : Ideal (𝓞 K)} (hp : p.IsPrime) (a : K) (ha : a �
     rw [ea, ek, hS]; simp only [map_sub, map_mul]; field_simp
   have e2 : (1 - (κ + μ) * a)
       = algebraMap (𝓞 K) K (S - (k₁ * s₃ + m₁ * s₂) * a₁) / algebraMap (𝓞 K) K S := by
-    rw [ea, ek, em, hS]; simp only [map_sub, map_mul, map_add]; field_simp
+    rw [ea, ek, em, hS]; simp only [map_sub, map_mul, map_add (f := _)]; field_simp
   rw [e1, e2, isUnitIn_div_iff hp _ hSm, isUnitIn_div_iff hp _ hSm, mem_hcompl_iff hp,
     mem_hcompl_iff hp]
   have hor : a₁ ∈ p ∨ a₁ ∈ Formalism.HermitianLatticesTheory.conjIdeal (K := K) p := by

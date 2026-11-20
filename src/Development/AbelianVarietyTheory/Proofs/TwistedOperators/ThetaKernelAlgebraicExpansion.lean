@@ -243,7 +243,7 @@ theorem psiH_mem {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {S
     (hy : y.map (infPart D) = 0) : ψ (symplOH S T x y) ∈ Qb := by
   have h2 : symplOH S T x y + symplOH S T x y = symplO S T x y := by
     unfold symplOH
-    rw [← add_mul, ← map_add]
+    rw [← add_mul, ← map_add (f := _)]
     norm_num
   have hp : ψ (symplOH S T x y) ^ 2 = ψ (symplO S T x y) := by
     rw [sq, ← AddChar.map_add_eq_mul, h2]
@@ -388,9 +388,9 @@ theorem finDatum_eq_sum_heis : ∀ {D : D7} {T : Type} [Finite T] {L : LevCh D T
       have q1 : infPart D (x a b) = 0 := congrFun (congrFun (finX x hx) a) b
       have q2 : infPart D (y a b) = 0 := congrFun (congrFun (finY y hy) a) b
       change infPart D (x a b + y a b) = 0
-      rw [RingHom.map_add, q1, q2, add_zero]
+      rw [RingHom.map_add (f := _), q1, q2, add_zero]
     | zero => rw [map_zero]; exact zero_mem _
-    | add f g _ _ hf hg => rw [map_add]; exact add_mem hf hg
+    | add f g _ _ hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
     | smul c f _ hf =>
       change Tm ((c : ℂ) • f) ∈ V
       rw [map_smul]

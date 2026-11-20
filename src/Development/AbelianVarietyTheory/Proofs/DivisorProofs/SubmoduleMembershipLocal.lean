@@ -28,7 +28,7 @@ theorem exists_pow_smul_mem_of_mem_span_away {A B : Type} [CommRing A] [CommRing
       obtain ⟨n, t, ht, e⟩ := hx
       obtain ⟨m, s, hs, e'⟩ := hy
       refine ⟨n + m, r ^ m • t + r ^ n • s, add_mem (T.smul_mem _ ht) (T.smul_mem _ hs), ?_⟩
-      rw [map_add, LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, ← e, ← e', smul_smul, smul_smul, smul_add,
+      rw [map_add (f := _), LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, ← e, ← e', smul_smul, smul_smul, smul_add,
         ← map_mul, ← map_mul, pow_add, mul_comm (r ^ m)]
     | smul b x _ hx =>
       obtain ⟨n, t, ht, e⟩ := hx

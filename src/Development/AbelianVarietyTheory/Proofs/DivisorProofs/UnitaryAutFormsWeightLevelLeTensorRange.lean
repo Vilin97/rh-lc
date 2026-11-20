@@ -19,7 +19,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 def infHom (lam : InfinitePlace E → DomWeight n) : Submodule ℂ (Wsp lam →ₗ[ℂ] (UA E n → ℂ)) where
   carrier := {T | ∀ x ∈ infU E n, ∀ w, T (wInf lam x w) = RU E n x (T w)}
   add_mem' ha hb x hx w := by
-    simp only [LinearMap.add_apply, ha x hx, hb x hx, map_add]
+    simp only [LinearMap.add_apply, ha x hx, hb x hx, map_add (f := _)]
   zero_mem' x _ w := by simp
   smul_mem' c T hT x hx w := by
     simp only [LinearMap.smul_apply, hT x hx, map_smul]
@@ -85,7 +85,7 @@ theorem mem_span_values (lam : InfinitePlace E → DomWeight n) (π : Submodule 
       exact Submodule.subset_span ⟨_, comp_mem_infHom lam hT (splitFin E n g),
         fun w' => hπ.stable _ _ (hTπ w'), _, rfl⟩
     | zero => simp
-    | add a c _ _ ha hc => rw [map_add]; exact add_mem ha hc
+    | add a c _ _ ha hc => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hc
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
   obtain ⟨T, hT0, hTπ, hT⟩ := GlobalTheory.T.exists_ne_zero_weightTensor_intertwining_autRep E n lam π hπ hW
   obtain ⟨w, hw⟩ := DFunLike.ne_iff.1 hT0

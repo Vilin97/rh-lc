@@ -161,7 +161,7 @@ theorem lev_q_X_mul (i : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p) (hp2 
     simp only [Pi.mul_apply, Pi.sub_apply, Pi.pow_apply, Pi.add_apply, Pi.one_apply]
     exact W.q₀_def
   have hL := congrArg (W.lev i ζ) hpi
-  rw [map_mul, map_sub, map_pow, map_add, map_one] at hL
+  rw [map_mul, map_sub, map_pow, map_add (f := _), map_one] at hL
   obtain ⟨E, hE0, hED, hEπ⟩ := W.lev_π i ζ ⟨1, by rwa [pow_one]⟩
   have hζp : (PowerSeries.C ζ : PowerSeries LL) ^ PD.p = 1 := by
     rw [← map_pow, hζ.pow_eq_one, map_one]
@@ -169,7 +169,7 @@ theorem lev_q_X_mul (i : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p) (hp2 
   have hζ1 : ζ ≠ 1 := hζ.ne_one (by omega)
   have ht0 : PowerSeries.constantCoeff (W.lev i ζ letπ) = ζ - 1 := by
     have h := congrArg PowerSeries.constantCoeff hEπ
-    rw [map_add, map_one, map_mul, PowerSeries.constantCoeff_C, hE0, mul_one] at h
+    rw [map_add (f := _), map_one, map_mul, PowerSeries.constantCoeff_C, hE0, mul_one] at h
     linear_combination h
   have hq0 : PowerSeries.constantCoeff (W.lev i ζ W.q) = 0 := by
     have h := congrArg PowerSeries.constantCoeff hL
@@ -641,7 +641,7 @@ theorem lemmaDN0_of_admits [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalI
     show W.γ₀ δ (1 - (PD.p : PowerSeries O) + ∑ δ' ∈ W.DelF, W.γ₀ δ' (1 + PowerSeries.X)) =
       1 - (PD.p : PowerSeries O) + ∑ δ' ∈ W.DelF, W.γ₀ δ' (1 + PowerSeries.X)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sub, map_one, map_natCast, map_sum]
+      rw [map_add (f := _), map_sub, map_one, map_natCast, map_sum]
     congr 1
     simp only [← AlgHom.mul_apply, ← map_mul]
     exact Finset.sum_nbij' (fun x => δ * x) (fun x => δ⁻¹ * x)

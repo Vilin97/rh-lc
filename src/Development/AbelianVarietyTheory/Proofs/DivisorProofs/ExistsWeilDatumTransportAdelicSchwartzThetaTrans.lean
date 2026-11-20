@@ -44,12 +44,12 @@ variable {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {N : ℕ}
 theorem heisO_comp (he : ∀ w w', symplO S T w w' = symV (e w) (e w')) (u : WO S T) (f : VA D.host.F N → ℂ) :
     heisO ψ S T u (f ∘ e) = heisV ψ (e u) f ∘ e := by
   funext w
-  simp only [heisO, heisV, Function.comp_apply, symplOH, he, map_add, invOf_two_eq]
+  simp only [heisO, heisV, Function.comp_apply, symplOH, he, map_add (f := _), invOf_two_eq]
 
 theorem heisV_comp_symm (he : ∀ w w', symplO S T w w' = symV (e w) (e w')) (u : VA D.host.F N) (f : WO S T → ℂ) :
     heisV ψ u (f ∘ e.symm) = heisO ψ S T (e.symm u) f ∘ e.symm := by
   funext w
-  simp only [heisO, heisV, Function.comp_apply, symplOH, he, map_add, invOf_two_eq, LinearEquiv.apply_symm_apply]
+  simp only [heisO, heisV, Function.comp_apply, symplOH, he, map_add (f := _), invOf_two_eq, LinearEquiv.apply_symm_apply]
 
 theorem isThetaFunO_thV (hψ : IsStdChar D ψ (-1)) (he : ∀ w w', symplO S T w w' = symV (e w) (e w'))
     (hrat : ∀ x : Matrix (Fin T.rank) (Fin S.rank) D.host.E, ∃ y z : Fin N → D.host.F,
@@ -63,7 +63,7 @@ theorem isThetaFunO_thV (hψ : IsStdChar D ψ (-1)) (he : ∀ w w', symplO S T w
   refine ⟨fun γ w => ?_, ?_, hcont Φ hΦ, ?_⟩
   · obtain ⟨y, z, h⟩ := hrat γ
     have h' : e (ratW T S γ) = (rat y, rat z) := h
-    simp only [Function.comp_apply, map_add, symplOH, he, h', ← invOf_two_eq]
+    simp only [Function.comp_apply, map_add (f := _), symplOH, he, h', ← invOf_two_eq]
     exact quasiV_thV ψ hψ.1.2.2.1 Φ y z (e w)
   · obtain ⟨U, hUo, hU⟩ := GlobalTheory.T.adelicSchwartz_fixed_by_schroedinger_open_finite_subgroup D.host.F N ψ hR hψ.1 Φ hΦ
     refine ⟨U.comap e.toLinearMap.toAddMonoidHom, hUo.preimage hc, fun u hu h0 => ?_⟩
@@ -102,7 +102,7 @@ theorem exists_thV_eq (hψ : IsStdChar D ψ (-1)) (he : ∀ w w', symplO S T w w
     · obtain ⟨x, hx⟩ := GlobalTheory.T.adelicCoordinates_rationalMatrices_onto_rational D T.rank S.rank N e hrat a b
       have hx' : e.symm (rat a, rat b) = ratW T S x := by rw [← hx]; exact e.symm_apply_apply _
       have hx'' : e (ratW T S x) = (rat a, rat b) := hx
-      simp only [Function.comp_apply, map_add, hx', hf.quasi, symplOH, he, hx'', invOf_two_eq,
+      simp only [Function.comp_apply, map_add (f := _), hx', hf.quasi, symplOH, he, hx'', invOf_two_eq,
         LinearEquiv.apply_symm_apply]
     · obtain ⟨C, hC⟩ := GlobalTheory.OrientedHeis.theta_bounded hψ hf
       exact ⟨C, fun w => hC _⟩

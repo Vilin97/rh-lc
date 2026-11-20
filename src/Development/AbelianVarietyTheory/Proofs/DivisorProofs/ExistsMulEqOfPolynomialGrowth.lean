@@ -33,9 +33,9 @@ theorem exists_ringHom_of_denominator {P A : Type*} [CommRing P] [CommRing A] (�
     field_simp
     linear_combination this
   · simpa using h1 0
-  · rw [← add_div, ← map_add]
+  · rw [← add_div, ← map_add (f := _)]
     congr 1
-    exact hk' _ _ (by simp only [map_add, ← hr]; ring)
+    exact hk' _ _ (by simp only [map_add (f := _), ← hr]; ring)
 
 section Along
 
@@ -141,7 +141,7 @@ theorem exists_mul_eq_of_polynomial_growth : ∀ (Y : Scheme.{0}) (p : Y ⟶ Sp 
     have h0 : j q ≠ 0 := (map_ne_zero_iff _ hinj).2 hq
     refine mul_ne_zero h0 fun h => h0 ?_
     obtain ⟨v, w, hvw⟩ := Ideal.mem_span_pair.1 hqP
-    rw [← hα, ← hvw, map_add, map_mul, map_mul, h, show α P = 0 from (hdvd P).2 dvd_rfl]
+    rw [← hα, ← hvw, map_add (f := _), map_mul, map_mul, h, show α P = 0 from (hdvd P).2 dvd_rfl]
     simp
   rcases (ptsIn p (RingHom.id ℂ) V).eq_empty_or_nonempty with hE | ⟨y₀, -⟩
   · exact ⟨0, 1, one_ne_zero, by simp [hE]⟩

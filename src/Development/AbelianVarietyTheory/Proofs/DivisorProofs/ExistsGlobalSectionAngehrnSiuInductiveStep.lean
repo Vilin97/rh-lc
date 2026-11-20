@@ -147,7 +147,7 @@ theorem not_kltAt_of_local : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoeth
     rw [h1, h2]; push_cast; ring
   have hdψ (E : Place (Cartier.constFn p)) : E.disc ω (Finsupp.mapDomain (fun g : locRing x => (g : X.functionField)) φ) =
       E.formOrd η - E.ord gG / m - (1 - δ) * (E.ord fD / mD) := by
-    rw [Place.disc, hmap, map_add, map_sub, Place.ordQ_single, Place.ordQ_single, Place.ordQ_single, ← hF0,
+    rw [Place.disc, hmap, map_add (f := _), map_sub, Place.ordQ_single, Place.ordQ_single, Place.ordQ_single, ← hF0,
       E.formOrd_smul hxi hω0 hF0ne]
     have := hord E
     have e : (1 / (m : ℚ)) * E.ord a₁ - 1 / m * E.ord b₁ = E.ord gG / m - E.ord F0 := by
@@ -156,7 +156,7 @@ theorem not_kltAt_of_local : ∀ (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoeth
     linear_combination -e
   have hdψs (E : Place (Cartier.constFn p)) (ψ : X.functionField →₀ ℚ) (s : X.functionField) (t : ℚ) :
       E.disc ω (ψ + Finsupp.single s t) = E.disc ω ψ - t * E.ord s := by
-    rw [Place.disc, Place.disc, map_add, Place.ordQ_single]; ring
+    rw [Place.disc, Place.disc, map_add (f := _), Place.ordQ_single]; ring
   have hs0 : (g : X.functionField) * (aX : X.functionField) ^ l ≠ 0 :=
     mul_ne_zero g.ne_zero (pow_ne_zero _ aX.ne_zero)
   have hψ0 : Finsupp.mapDomain (fun g : locRing x => (g : X.functionField)) φ 0 = 0 := by

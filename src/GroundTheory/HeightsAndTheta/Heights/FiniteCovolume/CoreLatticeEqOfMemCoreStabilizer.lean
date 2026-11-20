@@ -265,7 +265,7 @@ def coreLattice (g : unitaryPoints K E H (FinAdele K)) : AddSubgroup (ι → K �
     exact zero_mem _
   add_mem' {x y} hx hy := by
     show unitaryMat g⁻¹ *ᵥ toFinAdele K E ι (x + y) ∈ integralCore ι b
-    rw [map_add, mulVec_add]
+    rw [map_add (f := _), mulVec_add]
     exact add_mem hx hy
   neg_mem' {x} hx := by
     show unitaryMat g⁻¹ *ᵥ toFinAdele K E ι (-x) ∈ integralCore ι b

@@ -30,7 +30,7 @@ theorem idem_avg {G K : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup
   let L : K →ₗ[ℂ] ℂ :=
     { toFun := fun a => ∫ h, φ h * ⟪b, ρ h a⟫_ℂ ∂ν
       map_add' := fun x y => by
-        simp only [map_add, inner_add_right, mul_add]
+        simp only [map_add (f := _), inner_add_right, mul_add]
         exact integral_add (hint b x) (hint b y)
       map_smul' := fun c x => by
         simp only [map_smul, inner_smul_right, RingHom.id_apply, smul_eq_mul]

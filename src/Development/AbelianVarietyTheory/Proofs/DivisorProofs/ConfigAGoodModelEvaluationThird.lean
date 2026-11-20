@@ -76,14 +76,14 @@ theorem comm_step (D : ι → M₀ →ₗ[ℂ] M₀) (IA IM ID : Set ι) (P0 : S
       rw [e]
       exact Submodule.smul_mem _ z (mem_wordsIn_succ D _ _ (Or.inl ha) (Submodule.subset_span hg))
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ r hx
   | succ j ih =>
     intro h hh
     refine red (j + 1) h hh fun d hd => ?_
     rw [wordsIn_succ] at hh
     obtain ⟨h₁, h₁m, h₂, h₂m, rfl⟩ := Submodule.mem_sup.1 hh
-    rw [map_add]
+    rw [map_add (f := _)]
     refine add_mem (wordsIn_le_succ D _ _ _ (ih h₁ h₁m d)) ?_
     clear hh
     induction h₂m using Submodule.span_induction with
@@ -95,7 +95,7 @@ theorem comm_step (D : ι → M₀ →ₗ[ℂ] M₀) (IA IM ID : Set ι) (P0 : S
       exact add_mem (mem_wordsIn_succ D _ _ hc' (ih x' hx' d))
         (Submodule.smul_mem _ s (wordsIn_mono D _ _ (by omega) hx'))
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ r hx
 
 theorem words_le (D : ι → M₀ →ₗ[ℂ] M₀) (IA IM ID : Set ι) (P0 : Set M₀)
@@ -126,20 +126,20 @@ theorem ev_step (D : ι → M₀ →ₗ[ℂ] M₀) (D₁ : ι₁ → M₁ →ₗ
     induction hh using Submodule.span_induction with
     | mem g hg => exact hbase g hg
     | zero => rw [map_zero, map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add, map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _)]; exact add_mem hx hy
     | smul r x _ hx => rw [map_smul, map_smul]; exact Submodule.smul_mem _ r hx
   | succ j ih =>
     intro h hh
     rw [wordsIn_succ] at hh
     obtain ⟨h₁, h₁m, h₂, h₂m, rfl⟩ := Submodule.mem_sup.1 hh
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     refine add_mem (wordsIn_le_succ _ _ _ _ (ih h₁ h₁m)) ?_
     clear hh
     induction h₂m using Submodule.span_induction with
     | mem x hx =>
       obtain ⟨c, hc, x', hx', rfl⟩ := hx
       obtain ⟨t, ht⟩ := hconj c
-      rw [ht, map_add, map_smul]
+      rw [ht, map_add (f := _), map_smul]
       refine add_mem ?_ (Submodule.smul_mem _ t (wordsIn_le_succ _ _ _ _ (ih x' hx')))
       rcases hc with hc | hc
       · rw [hkill c hc]; exact zero_mem _
@@ -147,7 +147,7 @@ theorem ev_step (D : ι → M₀ →ₗ[ℂ] M₀) (D₁ : ι₁ → M₁ →ₗ
         rw [hc₁]
         exact mem_wordsIn_succ D₁ _ _ (Set.mem_univ c₁) (ih x' hx')
     | zero => rw [map_zero, map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add, map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _)]; exact add_mem hx hy
     | smul r x _ hx => rw [map_smul, map_smul]; exact Submodule.smul_mem _ r hx
 
 end Core
@@ -157,7 +157,7 @@ variable {F : Type} [Field F] [NumberField F]
 theorem dOp_add {κ : Type} [Fintype κ] (a b a' b' : κ → mixedEmbedding.mixedSpace F) (f : SInf F κ) :
     dOp (a + a') (b + b') f = dOp a b f + dOp a' b' f := by
   ext x
-  simp only [dOp_apply, SchwartzMap.add_apply, map_add, lin, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+  simp only [dOp_apply, SchwartzMap.add_apply, map_add (f := _), lin, Pi.add_apply, mul_add, Finset.sum_add_distrib]
   push_cast
   ring
 
@@ -220,7 +220,7 @@ theorem GlobalTheory.ShiftEvPol.shiftEv_polLe : ∀ (F E : Type) [Field F] [Numb
     rintro c ⟨y, z, rfl⟩ x
     have k := GlobalTheory.T.standard_evaluation_good_model F E σ B _ _ _ _ G.V G.W G₁.V G₁.W G.M G₁.M H.ι H'.ι (isoA H H') e hψ hM hG hE ei ev
       (fun v => (hev v).1) hpe
-    rw [coordI_add, D_add, LinearMap.add_apply, map_add]
+    rw [coordI_add, D_add, LinearMap.add_apply, map_add (f := _)]
     have h1 := k (Matrix.vecMulVec y (incV F H'.x)) (fun t => Or.inl ⟨realAd F t • y, by rw [Matrix.smul_vecMulVec]⟩) x
     have h2 := k (Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ z))
       (fun t => Or.inr ⟨realAd F t • z, by rw [Matrix.mulVec_smul, Matrix.vecMulVec_smul]⟩) x

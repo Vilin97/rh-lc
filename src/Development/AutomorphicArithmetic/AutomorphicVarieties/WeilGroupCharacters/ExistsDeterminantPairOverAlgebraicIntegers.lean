@@ -84,7 +84,7 @@ private def qbRing (K : IntermediateField ℚ_[l] (PadicAlgCl l)) (hK : ∀ c, a
     rintro x y ⟨hx, a, ha⟩ ⟨hy, b, hb⟩
     refine ⟨add_mem hx hy, a + b, ?_⟩
     have : x + y - algebraMap O _ (a + b) = (x - algebraMap O _ a) + (y - algebraMap O _ b) := by
-      rw [map_add]; ring
+      rw [map_add (f := _)]; ring
     rw [this]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
   algebraMap_mem' c := ⟨hK c, c, by simp⟩

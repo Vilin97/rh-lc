@@ -89,7 +89,7 @@ def reesDeg (n : ℕ) : Γ(reesSheaf I F, reesPr I X ⁻¹ᵁ V) →+ Γ(idealPo
     apply idealPowι_app_injective I n
     refine (Equiv.apply_ofInjective_symm (idealPowι_app_injective (F := F) (V := V) I n) _).trans ?_
     change reesCoef I hF hV n (s + s') = _
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     congr 1
     · exact (Equiv.apply_ofInjective_symm (idealPowι_app_injective (F := F) (V := V) I n)
         ⟨reesCoef I hF hV n s, reesCoef_mem I hF hV n s⟩).symm

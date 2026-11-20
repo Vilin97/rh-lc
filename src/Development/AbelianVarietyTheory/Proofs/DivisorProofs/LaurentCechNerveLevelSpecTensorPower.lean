@@ -31,7 +31,7 @@ theorem laurent_ringHom_ext {B R : Type} [CommRing B] [CommRing R] {φ ψ : Laur
     rw [T_eq_unit_zpow, e φ, e ψ, hu]
   refine RingHom.ext fun p => ?_
   induction p using LaurentPolynomial.induction_on' with
-  | add p r hp hr => rw [map_add, map_add, hp, hr]
+  | add p r hp hr => rw [map_add (f := _), map_add (f := _), hp, hr]
   | C_mul_T n b => rw [map_mul, map_mul, hTm n, ← RingHom.comp_apply, hC, RingHom.comp_apply]
 
 theorem laurentMap_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* B) (g : B →+* C) :

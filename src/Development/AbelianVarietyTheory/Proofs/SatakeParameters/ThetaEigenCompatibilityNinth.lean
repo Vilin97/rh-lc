@@ -56,7 +56,7 @@ theorem heckeFunI_eigC (hL : GlobalTheory.Published.LocalLanglandsGL) (D : D7) (
   · simp [hC]
   · intro g1 g2 h1 h2
     rw [hC] at h1 h2 ⊢
-    simp only [map_add, smul_add, Finset.sum_add_distrib, h1, h2]
+    simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, h1, h2]
 
 open Formalism.IndefR Formalism.IndefR.Links in
 

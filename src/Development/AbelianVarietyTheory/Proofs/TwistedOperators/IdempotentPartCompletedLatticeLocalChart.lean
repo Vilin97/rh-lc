@@ -74,7 +74,7 @@ theorem exists_local_gen {E F : Type} [Field E] [NumberField E] [Field F] [Numbe
     rw [mem_Ov_iff, Valuation.map_mul, map_inv₀]
     exact mul_inv_le_one_of_le₀ (hmax a ha) zero_le'
   | zero => rw [map_zero, zero_mul]; exact zero_mem _
-  | add a b _ _ h h' => rw [map_add, add_mul]; exact add_mem h h'
+  | add a b _ _ h h' => rw [map_add (f := _), add_mul]; exact add_mem h h'
   | smul o a _ h =>
     rw [Algebra.smul_def, map_mul, mul_assoc]
     exact mul_mem (hφ o) h

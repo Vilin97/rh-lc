@@ -47,7 +47,7 @@ theorem exists_valuation_lt_one {F : Type} [Field F] [NumberField F] (u : Height
       _ ≤ 1 * Valued.v p := by gcongr
       _ < 1 := by rw [one_mul]; exact hvp
   have hhalf : h2 + h2 = 1 := by
-    rw [hh2, ← map_add, ← map_one (algebraMap F (u.adicCompletion F))]
+    rw [hh2, ← map_add (f := _), ← map_one (algebraMap F (u.adicCompletion F))]
     congr 1
     norm_num
   have hkey : algebraMap F (u.adicCompletion F) (1 / 4 - c ^ 2 * a) = -z * (1 + z) := by
@@ -125,7 +125,7 @@ theorem isSplitAt_of_isSquare : ∀ (L : Type) [Field L] [NumberField L] [IsCMFi
   set x : L := 2⁻¹ + (c : L) * δ with hx
   have hcc : IsCMField.complexConj L (c : L) = c := IsCMField.complexConj_apply_eq_self L c
   have hx' : IsCMField.complexConj L x = 2⁻¹ - (c : L) * δ := by
-    rw [hx, map_add, map_mul, hcc, hconj, map_inv₀, map_ofNat]
+    rw [hx, map_add (f := _), map_mul, hcc, hconj, map_inv₀, map_ofNat]
     ring
   have hsum : x + IsCMField.complexConj L x = 1 := by
     rw [hx', hx]

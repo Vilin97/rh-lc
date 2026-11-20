@@ -119,7 +119,7 @@ theorem exists_datum {E : Type} [Field E] [NumberField E] [IsCMField E] (F : Sub
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   refine ⟨v, ⟨e, τ, ϖ, k, ?_, hU, ?_, ?_, ?_⟩, rfl, rfl, rfl, rfl, fun z => ?_, fun M => ?_⟩
   · intro x
     show GlobalTheory.LFun.toCompl hunder (Algebra.TensorProduct.comm _ _ _
@@ -130,7 +130,7 @@ theorem exists_datum {E : Type} [Field E] [NumberField E] [IsCMField E] (F : Sub
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · intro x
     rw [GlobalTheory.InertDatumExist.mem_tensInt_iff, GlobalTheory.LFun.InertChart.mem_intLoc_iff hw hunder, hO]
     exact Iff.rfl

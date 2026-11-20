@@ -26,7 +26,7 @@ theorem tensMap_sigR {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Alg
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [tensMap, sigR]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem tensMap_inclR {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra F R']
     (φ : R →ₐ[F] R') (x : E) : tensMap (E := E) φ (inclR R x) = inclR R' x := by

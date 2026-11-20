@@ -190,7 +190,7 @@ theorem finPart_mem_intAE {w : AE D} (hw : toEAf D w ∈ Formalism.L2.Herm.intAf
       · exact AddSubgroup.subset_closure ⟨β, hβ, 1, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
     | one => rw [map_one]; exact AddSubgroup.subset_closure ⟨1, one_mem (Formalism.UG.intAd D.host.F), 1, rfl⟩
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | neg a _ ha => rw [map_neg]; exact neg_mem ha
     | mul a b _ _ ha hb => rw [map_mul]; exact GlobalTheory.HeckeConj.mul_mem_intAE D ha hb
   have := key _ hw
@@ -259,7 +259,7 @@ theorem exists_nsmul_latO_int (hS : ΛS.FG) (hT : ΛT.FG) : ∃ k : ℕ, 0 < k �
     rw [show (o : D.host.E) = _ from ho, ← TensorProduct.smul_tmul'] at h1
     exact h1
   | zero => rw [Matrix.zero_apply, RingHom.map_zero, smul_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [Matrix.add_apply, RingHom.map_add, smul_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [Matrix.add_apply, RingHom.map_add (f := _), smul_add]; exact add_mem hx hy
   | neg x _ hx => rw [Matrix.neg_apply, RingHom.map_neg, smul_neg]; exact neg_mem hx
 
 theorem exists_nsmul_int_mem_latO (hS : Submodule.IsLattice D.host.E ΛS) (hT : Submodule.IsLattice D.host.E ΛT) :
@@ -417,7 +417,7 @@ theorem redM_add_nsmul {b c : ℕ} (PP : Formalism.L2.DIV.Pl D.host.E) {n : ℕ}
   have h0 : (n : Formalism.L2.DIV.kP PP) = 0 := by
     rw [← map_natCast (Ideal.Quotient.mk PP.asIdeal), Ideal.Quotient.eq_zero_iff_mem]
     exact hn
-  rw [e, RingHom.map_add, nsmul_eq_mul, RingHom.map_mul, map_natCast, h0, zero_mul, add_zero]
+  rw [e, RingHom.map_add (f := _), nsmul_eq_mul, RingHom.map_mul, map_natCast, h0, zero_mul, add_zero]
 
 open Classical in
 

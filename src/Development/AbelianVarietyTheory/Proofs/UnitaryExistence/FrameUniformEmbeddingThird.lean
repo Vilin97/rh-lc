@@ -126,7 +126,7 @@ theorem coset_unscale_ideal {E R : Type} [Field E] [NumberField E] [CommRing R] 
       exact coset_scale κ N β _ _ z y e
     · obtain ⟨y, hy, e⟩ := hs
       obtain ⟨y', hy', e'⟩ := ht
-      exact ⟨y + y', add_mem hy hy', by rw [map_add]; exact coset_add N _ _ _ y y' e e'⟩
+      exact ⟨y + y', add_mem hy hy', by rw [map_add (f := _)]; exact coset_add N _ _ _ y y' e e'⟩
   have := key 1 (by rw [inv_mul_cancel₀ hA]; exact FractionalIdeal.one_mem_one _)
   rwa [map_one, one_smul] at this
 

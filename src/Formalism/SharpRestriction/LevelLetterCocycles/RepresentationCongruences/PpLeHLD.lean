@@ -39,7 +39,7 @@ def HLD (T : LocLat G Qp LL O) (c : ZMod n) : AddSubgroup (W.DD T) where
   zero_mem' := ⟨smul_zero _, fun δ _ => map_zero _⟩
   add_mem' := by
     rintro x y ⟨hx1, hx2⟩ ⟨hy1, hy2⟩
-    exact ⟨by rw [smul_add, hx1, hy1], fun δ hδ => by rw [map_add, hx2 δ hδ, hy2 δ hδ]⟩
+    exact ⟨by rw [smul_add, hx1, hy1], fun δ hδ => by rw [map_add (f := _), hx2 δ hδ, hy2 δ hδ]⟩
   neg_mem' := by
     rintro x ⟨hx1, hx2⟩
     exact ⟨by rw [smul_neg, hx1], fun δ hδ => by rw [map_neg, hx2 δ hδ]⟩
@@ -145,7 +145,7 @@ theorem Pp_γ (T : LocLat G Qp LL O) (c : ZMod n) {y : W.DD T} (hy : y ∈ Pp W 
     · show W.γD T W.gam (a • (W.φD T ^ 1) x) = W.γA W.gam a • (W.φD T ^ 1) (W.γD T W.gam x)
       rw [pow_one, hsl, W.φγ_comm]
   | zero => rw [map_zero]; exact zero_mem _
-  | add u w _ _ hu hw => rw [map_add]; exact add_mem hu hw
+  | add u w _ _ hu hw => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hw
   | neg u _ hu => rw [map_neg]; exact neg_mem hu
 
 theorem Pp_qpow (T : LocLat G Qp LL O) (c : ZMod n) (k : ℕ)
@@ -174,7 +174,7 @@ theorem Pp_qpow (T : LocLat G Qp LL O) (c : ZMod n) (k : ℕ)
     change W.γ₀ δ W.π₀₁ = W.π₀₁
     unfold LocWach.π₀₁
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sub, map_one, map_natCast, map_sum]
+      rw [map_add (f := _), map_sub, map_one, map_natCast, map_sum]
     congr 1
     have hm : ∀ δ' : W.Gam, W.γ₀ δ (W.γ₀ δ' (1 + PowerSeries.X)) = W.γ₀ (δ * δ') (1 + PowerSeries.X) :=
       fun δ' => by rw [map_mul, AlgHom.mul_apply]
@@ -185,7 +185,7 @@ theorem Pp_qpow (T : LocLat G Qp LL O) (c : ZMod n) (k : ℕ)
   have hqΔ : ∀ δ ∈ W.DelF, W.γA δ (qA W) = qA W := by
     intro δ hδ
     unfold qA lA
-    rw [map_add, hπ δ hδ, map_natCast]
+    rw [map_add (f := _), hπ δ hδ, map_natCast]
   unfold Pp at hy
   induction hy using AddSubgroup.closure_induction with
   | mem z hz =>

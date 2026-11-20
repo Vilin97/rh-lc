@@ -83,11 +83,11 @@ theorem exists_compact_adele : ∀ (F : Type) [Field F] [NumberField F], ∃ K :
   obtain ⟨y, hy⟩ := hK' (a.1 - algebraMap F (InfiniteAdeleRing F) x)
   refine ⟨x + y, ?_, ?_⟩
   · change a.1 - algebraMap F (InfiniteAdeleRing F) (x + y) ∈ K
-    rw [map_add, ← sub_sub]; exact hy
+    rw [map_add (f := _), ← sub_sub]; exact hy
   · change ∀ v, (a.2 - algebraMap F (FiniteAdeleRing (𝓞 F) F) (x + y)) v ∈ v.adicCompletionIntegers F
     have h : a.2 - algebraMap F (FiniteAdeleRing (𝓞 F) F) (x + y) =
         b - algebraMap F (FiniteAdeleRing (𝓞 F) F) y := by
-      rw [hab, map_add, one_smul]; ring
+      rw [hab, map_add (f := _), one_smul]; ring
     rw [h]
     intro v
     exact sub_mem (hb v) (HeightOneSpectrum.coe_mem_adicCompletionIntegers v y)

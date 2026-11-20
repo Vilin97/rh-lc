@@ -132,22 +132,22 @@ theorem tr_bilinMap (h : LinearMap.BilinMap ℚ V V') (x y : A ⊗[ℚ] V) :
     h.baseChange A' (tr e V x) (tr e V y) = tr e V' (h.baseChange A x y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul b x =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul c y => simp
 
 theorem tr_bilinForm (h : LinearMap.BilinForm ℚ V) (x y : A ⊗[ℚ] V) :
     h.baseChange A' (tr e V x) (tr e V y) = e (h.baseChange A x y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul b x =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul c y => simp
 
 def cj (V : Type) [AddCommGroup V] [Module ℚ V] (g : A ⊗[ℚ] V ≃ₗ[A] A ⊗[ℚ] V) :
@@ -234,7 +234,7 @@ theorem hat_iff {V : Type} [AddCommGroup V] [Module ℚ V] (L : Set V)
         simp [smul_tmul']
       rwa [h3] at h2
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
   · intro hx
     induction hx using Submodule.span_induction with
@@ -242,7 +242,7 @@ theorem hat_iff {V : Type} [AddCommGroup V] [Module ℚ V] (L : Set V)
       obtain ⟨x, hx, rfl⟩ := ht
       exact AddSubgroup.subset_closure ⟨1, one_mem _, x, hx, by simp⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul z x _ hx =>
       change tr e V ((z : IndefiniteRowSideFullHecke.IdeleNormTraceForm.Af) • x) ∈ _
       rw [tr_smul]

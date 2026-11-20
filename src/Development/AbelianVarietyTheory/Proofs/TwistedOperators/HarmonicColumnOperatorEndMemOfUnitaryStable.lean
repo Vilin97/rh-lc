@@ -61,7 +61,7 @@ theorem colActHom_colDerM (g : T → GL κ R) (t : T) (X : Matrix κ κ R) (P : 
       colDerM t ((g t : Matrix κ κ R) * X * (((g t)⁻¹ : GL κ R) : Matrix κ κ R)) (colActHom g P) := by
   induction P using MvPolynomial.induction_on with
   | C r => simp [colActHom, algHom_C]
-  | add P Q hP hQ => simp only [map_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
   | mul_X P v hP =>
     have hgen : colActHom g (colDerM t X (MvPolynomial.X v)) =
         colDerM t ((g t : Matrix κ κ R) * X * (((g t)⁻¹ : GL κ R) : Matrix κ κ R))
@@ -87,7 +87,7 @@ theorem colActHom_colDerM (g : T → GL κ R) (t : T) (X : Matrix κ κ R) (P : 
             fun M N j => by ext i; simp [mulVec, dotProduct, Matrix.mul_apply]
           rw [key, key, Matrix.mul_assoc, Units.inv_mul, Matrix.mul_one]
         · simp
-    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, map_mul,
+    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, map_mul,
       Derivation.leibniz, smul_eq_mul, smul_eq_mul, hP, hgen]
 
 end ColDerM
@@ -105,12 +105,12 @@ theorem colDerM_add (t : T) (X Y : Matrix κ κ R) :
   rcases r with a | b
   · rw [Derivation.add_apply, colDerM_X_xVar, colDerM_X_xVar, colDerM_X_xVar]
     split_ifs
-    · rw [show (X + Y) j = X j + Y j from rfl, map_add]
+    · rw [show (X + Y) j = X j + Y j from rfl, map_add (f := _)]
     · simp
   · rw [Derivation.add_apply, colDerM_X_yVar, colDerM_X_yVar, colDerM_X_yVar]
     split_ifs
     · have : (fun r => (X + Y) r j) = (fun r => X r j) + (fun r => Y r j) := rfl
-      rw [this, map_add, neg_add]
+      rw [this, map_add (f := _), neg_add]
     · simp
 
 theorem colDerM_smul (t : T) (c : R) (X : Matrix κ κ R) :
@@ -259,7 +259,7 @@ theorem infinite_unit_circle : {u : ℂ | u * star u = 1}.Infinite := by
     exact_mod_cast (by linarith : (a : ℝ) = b)
   · intro n
     rw [Set.mem_setOf_eq, Complex.star_def, map_div₀]
-    simp only [map_add, map_sub, map_one, map_mul, Complex.conj_ofReal, Complex.conj_I]
+    simp only [map_add (f := _), map_sub, map_one, map_mul, Complex.conj_ofReal, Complex.conj_I]
     rw [div_mul_div_comm, div_eq_one_iff_eq (mul_ne_zero (hne n) (by simpa using hne' n))]
     ring
 

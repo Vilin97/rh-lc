@@ -31,7 +31,7 @@ theorem descends (C : Type) [AddCommGroup C] [Module ℂ C] (L : Type) (l : L �
     · rename_i a b ha hb
       intro z; simp only [map_mul, Module.End.mul_apply, hb, ha]
     · rename_i a b ha hb
-      intro z; simp only [map_add, LinearMap.add_apply, Submodule.coe_add, ha, hb]
+      intro z; simp only [map_add (f := _), LinearMap.add_apply, Submodule.coe_add, ha, hb]
   have hQ : ∀ (y : FreeAlgebra ℂ L) (z : Z),
       FreeAlgebra.lift ℂ lQ y (Submodule.Quotient.mk z) = Submodule.Quotient.mk (FreeAlgebra.lift ℂ lZ y z) := by
     intro y
@@ -41,7 +41,7 @@ theorem descends (C : Type) [AddCommGroup C] [Module ℂ C] (L : Type) (l : L �
     · rename_i a b ha hb
       intro z; simp only [map_mul, Module.End.mul_apply, hb, ha]
     · rename_i a b ha hb
-      intro z; simp only [map_add, LinearMap.add_apply, Submodule.Quotient.mk_add, ha, hb]
+      intro z; simp only [map_add (f := _), LinearMap.add_apply, Submodule.Quotient.mk_add, ha, hb]
   refine ⟨FreeAlgebra.lift ℂ lQ, fun y z => ⟨by rw [hP y z]; exact (FreeAlgebra.lift ℂ lZ y z).2, ?_⟩⟩
   rw [hQ y z]
   congr 1

@@ -34,7 +34,7 @@ private theorem spl_prj (c : Fin 4 → R) (X : M4 R) (i : Fin 4) :
       Polynomial.aeval (f.mapMatrix X) (p.map f) = f.mapMatrix (Polynomial.aeval X p) := by
     intro p
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => rw [Polynomial.map_add, map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [Polynomial.map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | monomial n a =>
       rw [Polynomial.map_monomial, Polynomial.aeval_monomial, Polynomial.aeval_monomial, map_mul, map_pow,
         Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one, spl_smul, map_one]

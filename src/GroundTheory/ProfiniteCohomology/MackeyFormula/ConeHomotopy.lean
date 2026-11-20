@@ -64,7 +64,7 @@ theorem mapOfHomotopyF_comm (h : Homotopy (f ≫ β) (α ≫ f')) (n : ℕ) :
       (shiftNegOneMapF β (n + 1)).hom (shiftNegOneSucc L n ((f.f n).hom p.1) +
         (shiftNegOneD L n).hom p.2) -
           shiftNegOneSucc L' n ((h.hom (n + 1) n).hom ((K.d n (n + 1)).hom p.1))
-    rw [map_add, shiftNegOneMapF_succ_apply, hβ, map_sub, hcomm p.1]
+    rw [map_add (f := _), shiftNegOneMapF_succ_apply, hβ, map_sub, hcomm p.1]
     abel
 
 noncomputable def mapOfHomotopy (h : Homotopy (f ≫ β) (α ≫ f')) :
@@ -177,7 +177,7 @@ theorem isIso_homologyMap_of_comm (Φ : mappingCoconeNat f ⟶ mappingCoconeNat 
       obtain ⟨u', hu'⟩ := e2' m _ h2
       obtain ⟨u, rfl⟩ := (bβ m).2 u'
       refine ⟨x + (homologyδ f m).hom u, ?_⟩
-      rw [map_add, sδ]
+      rw [map_add (f := _), sδ]
       rw [show (homologyδ f' m).hom ((homologyMap β m).hom u) =
         y' - (homologyMap Φ (m + 1)).hom x from hu']
       abel

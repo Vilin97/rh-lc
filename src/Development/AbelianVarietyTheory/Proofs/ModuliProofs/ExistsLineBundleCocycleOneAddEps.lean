@@ -134,7 +134,7 @@ lemma eq_one_add_eps {Y Y' : Scheme.{0}} {q : Y ⟶ Sp ℂ} {π : Y' ⟶ Sp (Dua
   obtain ⟨a, b, hab⟩ := key _ O' (h₁ O') F
   refine ⟨b, fun h => ?_⟩
   have ha : a = 1 := by
-    rw [hab h, map_add, map_mul, appLE_constFn_eps hq, zero_mul, add_zero,
+    rw [hab h, map_add (f := _), map_mul, appLE_constFn_eps hq, zero_mul, add_zero,
       appLE_section hj h le_rfl le_rfl] at hF
     have e : resG Y (le_refl (j ⁻¹ᵁ O')) a = a := by
       change (Y.presheaf.map (𝟙 _)).hom a = a

@@ -96,7 +96,7 @@ theorem coeff_negX (m : Ψ × Fin N →₀ ℕ) (F : RP Ψ N) :
     split_ifs with h
     · rw [h]
     · simp
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]; ring
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]; ring
 
 end Poly
 
@@ -122,7 +122,7 @@ theorem hhFl_monomial (II : IntersectionSystem) (m : Ψ × Fin N →₀ ℕ) (c 
 theorem hhFl_eq (II : IntersectionSystem) (F : RP Ψ N) : hhFl Ψ N II F = hR Ψ N II (negX F) := by
   induction F using MvPolynomial.induction_on' with
   | monomial u c => rw [negX_monomial, hhFl_monomial, hR_monomial]; ring
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 theorem hFl_eq (II : IntersectionSystem) (G : GroundTheory.Heights₂.Heights.LowerBoundFree.RootPoly Ψ N) :
     GroundTheory.Heights₂.Heights.LowerBoundFree.hFl Ψ N II G = hR Ψ N II (map (algebraMap ℚ ℝ) G) := by
@@ -342,7 +342,7 @@ theorem hhFl_test (II : IntersectionSystem) {j d : ℕ}
       have e3 : 1 * i + 1 * (dimX Ψ N j + 1 - 1 - i) = dimX Ψ N j := by omega
       rwa [e3] at this
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [e2, map_add, sAll, Finset.sum_mul, map_sum, Finset.sum_eq_zero fun τ _ => hkill τ Q hQh, add_zero]
+      rw [e2, map_add (f := _), sAll, Finset.sum_mul, map_sum, Finset.sum_eq_zero fun τ _ => hkill τ Q hQh, add_zero]
 
 end Main
 

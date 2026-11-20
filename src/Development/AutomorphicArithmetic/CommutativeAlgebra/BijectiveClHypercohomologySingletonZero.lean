@@ -27,7 +27,7 @@ private lemma exists_lift {M F : Shv ℤ} (g : M ⟶ (res ℤ F).X 0) (hg : g �
           map_add' := fun x y => hinj _ (by
             rw [hφ]
             show (ModuleCat.Hom.hom _) (x + y) = (ModuleCat.Hom.hom _) (φ _ x + φ _ y)
-            rw [map_add, map_add]
+            rw [map_add (f := _), map_add (f := _)]
             exact congrArg₂ (· + ·) (hφ _ x).symm (hφ _ y).symm)
           map_smul' := fun r x => hinj _ (by
             rw [hφ, RingHom.id_apply]

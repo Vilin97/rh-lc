@@ -38,7 +38,7 @@ private theorem add_mem_sm {k r : ℕ} (R : BranchingSupport.Rep k r) {v w : R.H
   refine ⟨U1 ∩ U2, fun x => F1 x + F2 x, hU1.inter hU2, ⟨h1, h2⟩,
     (hF1.mono Set.inter_subset_left).add (hF2.mono Set.inter_subset_right), fun g hg hgH => ?_⟩
   show (R.σ g) (v + w) = F1 g + F2 g
-  rw [map_add]
+  rw [map_add (f := _)]
   exact congrArg₂ (· + ·) (e1 g hg.1 hgH) (e2 g hg.2 hgH)
 
 private theorem smul_mem_sm' {k r : ℕ} (R : BranchingSupport.Rep k r) (c : ℂ) {v : R.H} (hv : v ∈ R.sm) :

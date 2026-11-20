@@ -55,7 +55,7 @@ theorem conjMap_fibreMap (σ : K →+* ℂ) (f : E' →ₗ[𝓞 K] E) (x : Fibre
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul z e => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 def HermitianMetric.comap (h : HermitianMetric K E) (f : E' →ₗ[𝓞 K] E)
     (hf : Function.Injective f) : HermitianMetric K E' where

@@ -86,7 +86,7 @@ theorem ev_surjOn_SB : ∀ {F : Type} [Field F] [NumberField F] {κ : Type} [Fin
     exact GlobalTheory.LatVac.at_liftV v _ u hu
   have hev : (fun j => evFin F v ((x₀ + z) j)) = y := by
     funext j
-    rw [Pi.add_apply, map_add, GlobalTheory.LatVac.evFin_liftV]
+    rw [Pi.add_apply, map_add (f := _), GlobalTheory.LatVac.evFin_liftV]
     ring
   have key : χ y * r₀ x₀ = ∑ i, ev v (φ i v) y * r i x₀ := by
     have h := congrFun hid (x₀ + z)

@@ -23,7 +23,7 @@ theorem hf_add_smul_left (σ : R →+* R) (G : Matrix (Fin n) (Fin n) R) (v x y 
 
 theorem hf_add_smul_right (σ : R →+* R) (G : Matrix (Fin n) (Fin n) R) (v x y : Fin n → R) (c : R) :
     hf σ G y (v + c • x) = hf σ G y v + σ c * hf σ G y x := by
-  simp only [hf, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, mul_add,
+  simp only [hf, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, mul_add,
     Finset.sum_add_distrib, Finset.mul_sum]
   congr 1
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring

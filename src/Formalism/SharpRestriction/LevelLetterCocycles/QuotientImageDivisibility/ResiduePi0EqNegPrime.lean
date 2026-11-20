@@ -105,7 +105,7 @@ theorem resq_add (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP W) (i : Z
   obtain ⟨g₁, hg₁, e₁⟩ := resq_spec W hAq i hg
   obtain ⟨h₁, hh₁, e₂⟩ := resq_spec W hAq i hh
   refine resq_eq W hAq hqc i (W.AΔ.add_mem hg hh) (W.AΔ.add_mem hg₁ hh₁) ?_
-  rw [mul_add, e₁, e₂, map_add]
+  rw [mul_add, e₁, e₂, map_add (f := _)]
   ring
 
 include hqc in
@@ -251,7 +251,7 @@ theorem gamma_structure_of [NeZero n] [IsDomain O] (h9 : Formalism.MainNotions.D
     rw [hVq1, Pi.isUnit_iff]
     intro j
     rw [PowerSeries.isUnit_iff_constantCoeff]
-    simp only [Pi.add_apply, Pi.mul_apply, Pi.one_apply, map_add, map_mul, map_one]
+    simp only [Pi.add_apply, Pi.mul_apply, Pi.one_apply, map_add (f := _), map_mul, map_one]
     rw [show W.π₀ j = W.π₀₁ from rfl, Formalism.MainNotions.UnusedSlot80.ToolsR.π₀₁_cc hR, zero_mul, add_zero]
     exact isUnit_one
   obtain ⟨VqU, hVqU'⟩ := hVqU
@@ -456,7 +456,7 @@ theorem gamma_structure_of [NeZero n] [IsDomain O] (h9 : Formalism.MainNotions.D
       calc (qp ^ k * Y) • x = (qp ^ k * Y) • ((letE i : LetA O n) • x) := by rw [hxD.1]
         _ = (qp ^ k * ((letE i : LetA O n) * Y)) • x := by rw [smul_smul]; congr 1; ring
         _ = (qp ^ (k + 1) * Y') • x := by rw [hY', pow_succ]; congr 1; ring
-    rw [map_add, dop_smulA W T₂ hπU dop hdop hγr, hdx, hdn]
+    rw [map_add (f := _), dop_smulA W T₂ hπU dop hdop hγr, hdx, hdn]
     simp only [← algebraMap_smul (LetA O n) c]
     have e1 : W.γA W.gam (qp ^ k * g) * (Vqi ^ bb * Vp ^ hh * qp ^ a) =
         qp ^ a * (W.γA W.gam (qp ^ k * g) * (Vqi ^ bb * Vp ^ hh)) := by ring

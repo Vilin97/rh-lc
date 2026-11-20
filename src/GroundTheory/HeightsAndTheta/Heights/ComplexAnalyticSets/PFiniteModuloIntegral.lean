@@ -95,7 +95,7 @@ theorem FiniteModuloIntegral.proof : FiniteModuloIntegral.Statement := by
       (g ^ p.natDegree + ∑ j ∈ Finset.range p.natDegree, (a j ∘ L) * g ^ j) := by
     have := congrArg (holGerms x).subtype hc
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_mul, map_pow, hcI, hφI] at this ⊢
+      simp only [map_add (f := _), map_sum, map_mul, map_pow, hcI, hφI] at this ⊢
     exact this
   filter_upwards [Germ.coe_eq.1 hgerm] with z hz
   simp only [Finset.sum_apply, Pi.mul_apply, Pi.add_apply, Pi.pow_apply, Function.comp_apply] at hz

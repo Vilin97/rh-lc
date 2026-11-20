@@ -117,7 +117,7 @@ theorem comm_alg (ψ : AddChar (AF F) ℂ) (T : Module.End ℂ ((κ → AF F) �
   | add C D _ _ hC hD =>
     have e : (fun x : κ → AF F => (C + D) (fin x) * Φ x) =
         (fun x => C (fin x) * Φ x) + fun x => D (fin x) * Φ x := by funext x; simp [add_mul]
-    rw [e, map_add, hC, hD]
+    rw [e, map_add (f := _), hC, hD]
     funext x; simp [add_mul]
   | smul a C _ hC =>
     have e : (fun x : κ → AF F => (a • C) (fin x) * Φ x) = a • fun x => C (fin x) * Φ x := by

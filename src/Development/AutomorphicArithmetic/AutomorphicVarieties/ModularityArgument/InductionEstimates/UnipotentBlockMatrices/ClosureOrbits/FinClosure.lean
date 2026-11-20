@@ -87,7 +87,7 @@ theorem exists_monic_aeval_mem {V : Type*} [AddCommGroup V] [Module ℂ V] (C : 
     intro p
     induction p using Polynomial.induction_on with
     | C a => intro x; simp
-    | add p q hp hq => intro x; simp only [map_add, LinearMap.add_apply, hp, hq]
+    | add p q hp hq => intro x; simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
     | monomial n a h =>
       intro x
       rw [pow_succ, ← mul_assoc, map_mul, map_mul (Polynomial.aeval D), Polynomial.aeval_X, Polynomial.aeval_X,

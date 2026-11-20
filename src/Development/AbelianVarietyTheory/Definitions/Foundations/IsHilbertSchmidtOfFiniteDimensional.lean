@@ -394,7 +394,7 @@ theorem IsUnitaryRep.isRepOp_of_integrable (hπ : IsUnitaryRep π) (hf : Integra
     (hf.norm.mul_const ‖v‖).mono' (hm v) (.of_forall fun g => by simp [norm_smul, hπ.norm_apply])
   let T : H →ₗ[ℂ] H :=
     { toFun := fun v => ∫ g, f g • π g v ∂μ
-      map_add' := fun v w => by simp only [map_add, smul_add, integral_add (hi v) (hi w)]
+      map_add' := fun v w => by simp only [map_add (f := _), smul_add, integral_add (hi v) (hi w)]
       map_smul' := fun c v => by
         simp only [map_smul, RingHom.id_apply, ← integral_smul, smul_comm c] }
   have hT : IsRepOp π μ f (T.mkContinuous (∫ g, ‖f g‖ ∂μ) fun v => by
@@ -731,7 +731,7 @@ theorem _root_.GlobalTheory.PRep.IsSmooth.smoothOp_apply (hρ : IsSmooth ρ) (hf
         map_lcIntegral (hi _).1 (hi _).2, ← integral_add
           (integrable_map (hi _).1 (hi _).2 l l.map_zero)
           (integrable_map (hi _).1 (hi _).2 l l.map_zero)]
-      simp only [map_add, smul_add]
+      simp only [map_add (f := _), smul_add]
     · refine eq_of_forall_dual fun l => ?_
       rw [RingHom.id_apply, map_smul l, map_lcIntegral (hi _).1 (hi _).2,
         map_lcIntegral (hi _).1 (hi _).2, ← integral_smul]

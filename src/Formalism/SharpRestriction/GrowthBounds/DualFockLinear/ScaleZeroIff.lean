@@ -97,7 +97,7 @@ theorem realAt_gen (hS : HidaSetting p n' W Qq O Kf ι σ j w) (φ : WF p n' ≃
         rw [coeff_sub, coeff_C_mul]
         ring
       show AddMonoidAlgebra.coeff (subst p n' O w n' r gv Ff) mm = _
-      rw [e1, hc1, hc2, ← map_mul, ← map_add]
+      rw [e1, hc1, hc2, ← map_mul, ← map_add (f := _)]
       congr 1
       ring
     have h2 := (hv2 gv hgv e.dual hbv F' (o + 0)).1 h1
@@ -159,7 +159,7 @@ theorem realAt_gen (hS : HidaSetting p n' W Qq O Kf ι σ j w) (φ : WF p n' ≃
         algebraMap O Kf w ^ o * kapR hS ((p : KK O) ^ κ * fock SF sig / (((∏ s, (d s).factorial : ℕ) : ℕ) : KK O)) +
           algebraMap O Kf w ^ (o + cP) * algebraMap O Kf z := by
       rw [← hz]
-      simp only [map_div₀, map_mul, map_add, map_pow, map_natCast, kapR_alg, e3]
+      simp only [map_div₀, map_mul, map_add (f := _), map_pow, map_natCast, kapR_alg, e3]
       ring
     rw [e4, zpow_neg, zpow_natCast, map_mul, map_pow, pow_add]
     field_simp

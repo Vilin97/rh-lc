@@ -52,7 +52,7 @@ theorem mem_iSup_iff {V Wf : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup
     { carrier := {y | ∀ p, Good p → op p (real y) = lam p • real y}
       zero_mem' := fun p hp => by simp [hop0 p hp]
       add_mem' := fun {a b} ha hb p hp => by
-        simp only [map_add, hopadd p hp, ha p hp, hb p hp, smul_add]
+        simp only [map_add (f := _), hopadd p hp, ha p hp, hb p hp, smul_add]
       smul_mem' := fun c a ha p hp => by
         simp only [map_smul, hopsmul p hp, ha p hp, smul_comm c (lam p)] }
   show y ∈ _ ↔ y ∈ Es
@@ -86,7 +86,7 @@ theorem mem_iSup_iff {V Wf : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup
         intro s
         induction s using Finset.induction_on with
         | empty => simp [hop0 p hp]
-        | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, map_add, hopadd p hp, ih]
+        | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, map_add (f := _), hopadd p hp, ih]
       have e3 : (∑ P' ∈ f.support, f P') = y := hsum
       have e4 : ∑ P' ∈ f.support, op p (real (f P')) = op p (real y) := by rw [← e2, e3]
       have e5 : ∑ P' ∈ f.support, real (f P') = real y := by rw [← e3, map_sum]

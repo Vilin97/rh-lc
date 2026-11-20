@@ -34,9 +34,9 @@ def comp (he : SplitAt D v e) : AE D →+* Fv D.host.F v where
     rw [map_mul]
     linear_combination y * sc_spec he x + fj D (singleV D.host.F v (sc he x)) * sc_spec he y
   map_add' x y := by
-    rw [sc_eq he (α := singleV D.host.F v (sc he x) + singleV D.host.F v (sc he y)), map_add,
+    rw [sc_eq he (α := singleV D.host.F v (sc he x) + singleV D.host.F v (sc he y)), map_add (f := _),
       evalV_singleV_same, evalV_singleV_same]
-    rw [map_add]
+    rw [map_add (f := _)]
     linear_combination sc_spec he x + sc_spec he y
 
 theorem comp_apply (he : SplitAt D v e) (z : AE D) : comp he z = sc he z := rfl
@@ -75,7 +75,7 @@ theorem comp_mem (he : SplitAt D v e) {z : AE D} (hz : z ∈ intL D) :
     rw [← hy]
     exact y.2
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem finPart_mem {z : AE D} (hz : z ∈ intL D) : finPart D z ∈ intAE D := by
@@ -84,7 +84,7 @@ theorem finPart_mem {z : AE D} (hz : z ∈ intL D) : finPart D z ∈ intAE D := 
     obtain ⟨α, hα, o, rfl⟩ := hw
     exact AddSubgroup.subset_closure ⟨α, hα, o, rfl⟩
   | zero => rw [RingHom.map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [RingHom.map_neg]; exact neg_mem hx
 
 theorem chart_comp (he : SplitAt D v e) : Chart e v (comp he) := by

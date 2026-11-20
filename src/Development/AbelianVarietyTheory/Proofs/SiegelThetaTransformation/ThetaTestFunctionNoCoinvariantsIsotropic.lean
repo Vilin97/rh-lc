@@ -126,7 +126,7 @@ theorem not_smul_idq {𝔞 𝔟 : Ideal (𝓞 E)} (h0 : 𝔟 ≠ ⊥) (h1 : 𝔟
   have h3 : ((u * a : 𝓞 E) : E) + (m : E) = 1 := by
     have := congrArg (algebraMap (𝓞 E) E) ham
     rwa [map_add, map_one] at this
-  rw [map_add, hc]
+  rw [map_add (f := _), hc]
   change _ + (b : E) = _
   rw [hb]
   linear_combination t * h3

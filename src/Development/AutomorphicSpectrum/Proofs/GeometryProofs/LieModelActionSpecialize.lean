@@ -122,7 +122,7 @@ theorem value_span : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsCommMonObj 
     · rw [map_zero]
       exact Submodule.zero_mem _
     · intro x y _ _ hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
     · intro c x _ hx
       rw [map_smul]

@@ -81,7 +81,7 @@ theorem exists_centre {F Γ : Type} [Field F] [LinearOrderedCommGroupWithZero Γ
             zero_mem' := by simp
             smul_mem' := fun c r hr => ?_ }, ⟨?_, fun {a b} h => ?_⟩, fun _ => Iff.rfl⟩
   · change u _ < 1
-    rw [map_add]
+    rw [map_add (f := _)]
     exact u.map_add_lt ha hb
   · change u _ < 1
     rw [smul_eq_mul, map_mul, map_mul]

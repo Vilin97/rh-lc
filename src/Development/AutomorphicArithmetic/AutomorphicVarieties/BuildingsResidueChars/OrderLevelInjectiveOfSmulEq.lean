@@ -17,7 +17,7 @@ private theorem ord_mul {y : Etau K τ} {c : O} (hy : y * y = algebraMap O (Etau
   obtain ⟨a, b, rfl⟩ := ord_mem.1 hz
   obtain ⟨p, q, rfl⟩ := ord_mem.1 hz'
   refine ord_mem.2 ⟨a * p + b * q * c, a * q + b * p, ?_⟩
-  simp only [Algebra.smul_def, map_add, map_mul]
+  simp only [Algebra.smul_def, map_add (f := _), map_mul]
   linear_combination (-(algebraMap O (Etau K τ) b * algebraMap O (Etau K τ) q)) * hy
 
 private theorem ord_sub {y y' : Etau K τ} {c c' : O} (hy : y * y = algebraMap O (Etau K τ) c)

@@ -85,7 +85,7 @@ theorem main (l : ℕ) [Fact l.Prime] {B L : Type*} [CommRing B] [Field L]
       map_one' := hinj (by rw [hj]; simp)
       map_mul' := fun x y => hinj (by rw [map_mul, hj, hj, hj, map_mul, map_mul])
       map_zero' := hinj (by rw [hj]; simp)
-      map_add' := fun x y => hinj (by rw [map_add, hj, hj, hj, map_add, map_add]) }
+      map_add' := fun x y => hinj (by rw [map_add (f := _), hj, hj, hj, map_add (f := _), map_add (f := _)]) }
   have hj' : ∀ x, algebraMap _ (BdR l (Per.OC l)) (ι₀ x) = e (ι x) := hj
   haveI : IsAdicComplete (Ideal.span {π}) (BdRPlus l (Per.OC l)) := by
     rw [← hπ]; infer_instance
@@ -292,7 +292,7 @@ theorem exists_ev : ∃ ev : PowerSeries L →+* A, ∀ f M, t ^ M ∣ ev f - pa
   · simp [part]
   · have h' := dvd_add (he f M) (he g M)
     convert h' using 1
-    simp only [part, map_add]
+    simp only [part, map_add (f := _)]
     ring
 
 end General

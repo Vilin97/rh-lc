@@ -33,7 +33,7 @@ theorem _root_.GlobalTheory.ExtPrime.isPrime_map_and_generic_form_notMem (K L : 
     intro p
     induction p using MvPolynomial.induction_on with
     | C a => simp [e, ι, commAlgEquiv_C]
-    | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
     | mul_X p i hp => rw [map_mul, map_mul, hp, map_X]; simp [e, commAlgEquiv_X]
   have hQ : P.map ι = RingHom.ker π := by
     ext b

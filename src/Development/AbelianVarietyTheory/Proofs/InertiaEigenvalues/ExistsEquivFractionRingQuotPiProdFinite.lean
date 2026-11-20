@@ -218,7 +218,7 @@ theorem aux (hϖ : Irreducible ϖ) (k : ℕ) : ∀ {Y : Type} [AddCommGroup Y] [
         rintro ⟨s, t⟩ h
         have h1 : i s + t.1 = 0 := h
         have h2 := congrArg r h1
-        rw [map_add, hri, t.2, add_zero, map_zero] at h2
+        rw [map_add (f := _), hri, t.2, add_zero, map_zero] at h2
         subst h2
         rw [map_zero, zero_add] at h1
         exact Prod.ext rfl (Subtype.ext h1)

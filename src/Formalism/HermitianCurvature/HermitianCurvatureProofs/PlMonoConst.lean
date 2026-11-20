@@ -109,7 +109,7 @@ theorem prod_poly : ∀ (t : ℕ) (c δ : Fin t → ℂ) (F : Fin t → A),
         algebraMap ℂ A (u ^ t) * ((algebraMap ℂ A (c 0 * δ 0) + F 0) *
           algebraMap ℂ A (∏ k : Fin t, δ k.succ)) := by
       rw [map_mul (algebraMap ℂ A) (u ^ t), Algebra.left_comm]
-    rw [add_mul u (c 0) (δ 0), map_add, add_assoc,
+    rw [add_mul u (c 0) (δ 0), map_add (f := _), add_assoc,
       mul_add (algebraMap ℂ A (u * δ 0) + (algebraMap ℂ A (c 0 * δ 0) + F 0)),
       add_mul (algebraMap ℂ A (u * δ 0)) _ (algebraMap ℂ A (u ^ t * ∏ k : Fin t, δ k.succ)),
       add_mul (algebraMap ℂ A (u * δ 0)) _ (Q u), e1, e2, e3]

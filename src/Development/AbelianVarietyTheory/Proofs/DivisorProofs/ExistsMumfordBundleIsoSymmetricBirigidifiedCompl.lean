@@ -176,7 +176,7 @@ theorem exists_pull_isFactorAH : ∀ (A A' : Over (Sp ℂ)) [GrpObj A] [GrpObj A
   have e := hF.2.2 ⟨F l, hlat l l.2⟩ (j PUnit.unit) (F z) hc
   show ∏ k : PUnit, u'.fr (j k) (F z) ^ (1 : ℤ) =
     _ * ∏ k : PUnit, u'.fr (j k) (F (z + l)) ^ (1 : ℤ)
-  simp only [Finset.univ_unique, Finset.prod_singleton, zpow_one, map_add]
+  simp only [Finset.univ_unique, Finset.prod_singleton, zpow_one, map_add (f := _)]
   rw [e, hid, hid]
 
 theorem dot_blocks : ∀ (g : ℕ) (Hm : Matrix (Fin (g + g)) (Fin (g + g)) ℂ) (z l : Fin (g + g) → ℂ),

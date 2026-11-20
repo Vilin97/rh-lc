@@ -159,7 +159,7 @@ theorem fn_span {U : Y.Opens} (hU : IsAffineOpen U) (hc : ∀ y, ∃ a : Fin n �
   | add y z hy hz =>
     obtain ⟨a, rfl⟩ := hy
     obtain ⟨b, rfl⟩ := hz
-    exact ⟨a + b, by simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]⟩
+    exact ⟨a + b, by simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]⟩
 
 variable [Flat π] (hi : ∀ a : Fin n → S, ∑ i, fS (a i) * c i = 0 → ∀ i, a i = 0)
 include H hi

@@ -42,7 +42,7 @@ theorem exists_torusPt (u : D.X →+ Additive Γ(T.left, ⊤)ˣ) :
     (fun χ U i h => (GlobalTheory.FieldRestrictionTest.formEq_zero (D := D) (T := T) χ U h).symm)
     (fun y J hJ => by rw [val_unitGen _ _ hJ, map_zero, toMul_zero, map_one]) (fun χ χ' y J hJ => by
       have C : IsCub (th D (T := T) y J) := isCub_cubV D.cub hJ
-      rw [C.face₃, val_unitGen _ _ hJ, val_unitGen _ _ hJ, val_unitGen _ _ hJ, map_add, toMul_add, map_mul,
+      rw [C.face₃, val_unitGen _ _ hJ, val_unitGen _ _ hJ, val_unitGen _ _ hJ, map_add (f := _), toMul_add, map_mul,
         _root_.mul_one])
   exact ⟨g, fun χ => ⟨hb, corr_of_val D.P.isLB fun y J hJ => hv χ _ _ y J hJ⟩⟩
 

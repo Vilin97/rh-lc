@@ -9,7 +9,7 @@ variable {A : Type} [CommRing A] {n : ℕ}
 
 theorem hform_add_left (σ : A →+* A) (J : Matrix (Fin n) (Fin n) A) (x y z : Fin n → A) :
     hform σ J (x + y) z = hform σ J x z + hform σ J y z := by
-  simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hform_add_right (σ : A →+* A) (J : Matrix (Fin n) (Fin n) A) (x y z : Fin n → A) :
     hform σ J x (y + z) = hform σ J x y + hform σ J x z := by
@@ -227,7 +227,7 @@ theorem exists_maximal_even_lattice : ∀ (A : Type) [CommRing A] [TopologicalSp
       obtain ⟨l, hl, a, rfl⟩ := hdesc y hy
       obtain ⟨b, hb, hbeq⟩ := hLeven.2 l hl
       refine ⟨b + σ a * hform σ J x l, R.add_mem hb (R.mul_mem (hσR _ a.2) (hxL l hl)), ?_⟩
-      rw [hform_expand, hxx, mul_zero, mul_zero, add_zero, hform_swap σ hσ J hJ x l, hbeq, map_add,
+      rw [hform_expand, hxx, mul_zero, mul_zero, add_zero, hform_swap σ hσ J hJ x l, hbeq, map_add (f := _),
         map_mul, hσ]
       ring
   exact hLmax.2 hL' le_sup_left (Submodule.mem_sup_right (Submodule.mem_span_singleton_self x))

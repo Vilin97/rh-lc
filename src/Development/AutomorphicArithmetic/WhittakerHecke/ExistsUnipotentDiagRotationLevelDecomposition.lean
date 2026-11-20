@@ -69,7 +69,7 @@ private theorem real_rot (k : G1 ℚ) (hk : InfOrth k) (t : ℝ) (hs : re (k 1 0
     congrArg (fun x => (TR.infEq ℚ).symm x Rat.infinitePlace) (hk 0 1)
   have h2 := congrArg φ k.det_coe
   rw [Matrix.det_fin_two] at h2
-  simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.transpose_apply, map_add, map_mul, map_sub, map_one,
+  simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.transpose_apply, map_add (f := _), map_mul, map_sub, map_one,
     Matrix.one_apply_ne (show (0 : Fin 2) ≠ 1 by decide), map_zero] at h1 h2
   simp only [hφ] at hs hc ⊢
   rw [hs, hc] at h1 h2
@@ -157,7 +157,7 @@ theorem UpperTheory.exists_unipotent_diag_rotation_level_decomposition :
   · simpa [k', re, rZ, rZ', rB] using hs
   · simpa [k', re, rZ, rZ', rB] using hc
   · have h := (hd v i j).trans (hN v)
-    rw [← sub_add_cancel (k' i j) ((1 : Matrix (Fin 2) (Fin 2) (A ℚ)) i j), map_add]
+    rw [← sub_add_cancel (k' i j) ((1 : Matrix (Fin 2) (Fin 2) (A ℚ)) i j), map_add (f := _)]
     refine Valuation.map_add_le _ h ?_
     fin_cases i <;> fin_cases j <;> simp
   · rw [mul_assoc, mul_inv_cancel_left, ← map_mul, ← map_mul]

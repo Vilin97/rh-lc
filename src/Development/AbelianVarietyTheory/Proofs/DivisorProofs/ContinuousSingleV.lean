@@ -89,7 +89,7 @@ theorem sb_shift (v : Pl F) {κ : Type} [Fintype κ] (y₀ : κ → Fv F v) (c :
       · simp only [h, mul_zero]
     · funext i
       simp only [R]
-      rw [add_assoc, ← singleV_add, map_add, evalV_singleV]
+      rw [add_assoc, ← singleV_add, map_add (f := _), evalV_singleV]
       have e : y₀ i - evalV F v (y i) + (evalV F v (y i) - (evalV F v (y i) + (y₀ i - evalV F v (y i)))) = 0 := by ring
       rw [e, singleV_zero, add_zero]
 
@@ -108,7 +108,7 @@ theorem rest_of_rest : ∀ (F : Type) [Field F] [NumberField F] (v : Pl F) (κ :
   have hev : ∀ x : κ → AF F, (fun i => evFin F v ((x + z x) i)) = y₀ := fun x => by
     funext i
     show evalV F v ((x i).2 + singleV F v (y₀ i - evalV F v ((x i).2))) = y₀ i
-    rw [map_add, evalV_singleV, add_sub_cancel]
+    rw [map_add (f := _), evalV_singleV, add_sub_cancel]
   have hAt : ∀ x, At (evFin F v) (z x) := fun x u hu => by
     funext i
     refine Prod.ext (mul_zero _) ?_

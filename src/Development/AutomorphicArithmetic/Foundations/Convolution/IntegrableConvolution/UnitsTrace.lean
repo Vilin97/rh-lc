@@ -64,7 +64,7 @@ private def RM : MultilinearMap ℂ (fun _ : Fin (m + 1) => Mt d) (Module.End �
   map_update_add' := by
     intro inst a i x y
     obtain rfl : inst = instDecidableEqFin (m + 1) := Subsingleton.elim _ _
-    rw [RR_update r hc a i (x + y), RR_update r hc a i x, RR_update r hc a i y, map_add, add_mul]
+    rw [RR_update r hc a i (x + y), RR_update r hc a i x, RR_update r hc a i y, map_add (f := _), add_mul]
   map_update_smul' := by
     intro inst a i c x
     obtain rfl : inst = instDecidableEqFin (m + 1) := Subsingleton.elim _ _
@@ -310,7 +310,7 @@ private theorem exists_scalar [FiniteDimensional ℂ W] [Nontrivial W] (o : Fin 
           rw [map_mul, RR_single]
           rfl⟩
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add]; exact P.add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact P.add_mem hx hy
       | smul c x _ hx => rw [map_smul]; exact P.smul_mem c hx
     rcases hirr P hinvP with h | h
     · exfalso

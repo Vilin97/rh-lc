@@ -113,7 +113,7 @@ theorem exists_int_smul_mem (F : HermLattice K i) (v : Fin i → K) :
   | add x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨c, hc⟩ := hy
-    exact ⟨a + c, by rw [dotProduct_add, map_add, ha, hc]⟩
+    exact ⟨a + c, by rw [dotProduct_add, map_add (f := _), ha, hc]⟩
   | smul r x _ hx =>
     obtain ⟨a, ha⟩ := hx
     refine ⟨r * a, ?_⟩

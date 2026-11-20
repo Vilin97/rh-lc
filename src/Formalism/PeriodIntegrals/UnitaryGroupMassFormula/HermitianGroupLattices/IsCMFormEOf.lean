@@ -21,7 +21,7 @@ theorem isCM_cf (hS : StarIsConj K) (T : GoodSet K G) (g : G) : IsCM (cf T g) :=
 
 theorem isCM_add {a b : K} (ha : IsCM a) (hb : IsCM b) : IsCM (a + b) := by
   intro σ
-  rw [star_add, map_add, map_add, star_add, ha σ, hb σ]
+  rw [star_add, map_add (f := _), map_add (f := _), star_add, ha σ, hb σ]
 
 theorem isCM_zero : IsCM (0 : K) := by
   intro σ

@@ -77,7 +77,7 @@ theorem zval : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf 
     have hz : ∀ g'', Zf (D.locA l) T ((HW l).W K s LL h).GKs c b g'' =
         (1 : RW LL) ⊗ₜ[↥(OL LL)] (⟨(c : ↥((HW l).W K s LL h).GKs → T.V) g'', GlobalTheory.HerrClassMaps.mem_T c g''⟩ : ↥T.L.T) +
           (a g'' b - b) := fun _ => rfl
-    simp only [hz, map_add, map_sub, ha1t, hamul, e, TensorProduct.tmul_add]
+    simp only [hz, map_add (f := _), map_sub, ha1t, hamul, e, TensorProduct.tmul_add]
     abel
   have hZk' : ∀ h' : ↥((HW l).W K s LL h).GKs, lam h' = 1 → Zf (D.locA l) T ((HW l).W K s LL h).GKs c b h' = 0 :=
     fun h' hh => hZk h' (hl1 h' hh)

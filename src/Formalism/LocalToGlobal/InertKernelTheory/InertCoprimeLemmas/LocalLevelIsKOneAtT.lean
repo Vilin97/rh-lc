@@ -18,7 +18,7 @@ theorem degree_mapDomain (f : κ → ι) (n : κ →₀ ℕ) : (n.mapDomain f).d
   refine Finsupp.induction n ?_ ?_
   · simp
   · intro a b g _ _ ih
-    rw [Finsupp.mapDomain_add, Finsupp.mapDomain_single, map_add, map_add, Finsupp.degree_single,
+    rw [Finsupp.mapDomain_add, Finsupp.mapDomain_single, map_add (f := _), map_add (f := _), Finsupp.degree_single,
       Finsupp.degree_single, ih]
 
 def resFam (f : κ → ι) (i : ι) : MvPowerSeries κ R := by

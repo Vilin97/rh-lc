@@ -53,7 +53,7 @@ theorem biTheta_of_maps {ψ : AddChar (AF D.host.F) ℂ} {V₀ A S X T : HSp D} 
     have e : (fun t => Φ (p (v + L' t)) * Ξ (a (u + L t) + b (v + L' t))) =
         fun t => Φ (p v + (p.comp L') t) * Ξ (a u + b v + (a.comp L + b.comp L') t) := by
       funext t
-      simp only [map_add, AddMonoidHom.add_apply, AddMonoidHom.comp_apply, add_add_add_comm (a u) (a (L t))]
+      simp only [map_add (f := _), AddMonoidHom.add_apply, AddMonoidHom.comp_apply, add_add_add_comm (a u) (a (L t))]
     rw [e]
     exact h1.mul h2
   quasiL γ u v := by
@@ -61,7 +61,7 @@ theorem biTheta_of_maps {ψ : AddChar (AF D.host.F) ℂ} {V₀ A S X T : HSp D} 
     have h := hs (ratW S A γ) 0 u v
     simp only [map_zero, add_zero, sympl_zero_l, zero_add] at h
     show Φ (p v) * Ξ (a (ratW S A γ + u) + b v) = _ * (Φ (p v) * Ξ (a u + b v))
-    rw [map_add, add_assoc, ← h, e, hΞ.quasi]
+    rw [map_add (f := _), add_assoc, ← h, e, hΞ.quasi]
     ring
   quasiR γ u v := by
     obtain ⟨γ', e⟩ := rb γ
@@ -69,7 +69,7 @@ theorem biTheta_of_maps {ψ : AddChar (AF D.host.F) ℂ} {V₀ A S X T : HSp D} 
     have h := hs 0 (ratW X S γ) u v
     simp only [map_zero, sympl_zero_l, zero_add] at h
     show Φ (p (ratW X S γ + v)) * Ξ (a u + b (ratW X S γ + v)) = _ * (Φ (p v) * Ξ (a u + b v))
-    rw [map_add, map_add, add_left_comm, ← h, e, e', hΞ.quasi, hΦ.quasi, neg_add, AddChar.map_add_eq_mul]
+    rw [map_add (f := _), map_add (f := _), add_left_comm, ← h, e, e', hΞ.quasi, hΦ.quasi, neg_add, AddChar.map_add_eq_mul]
     ring
   levL := by
     obtain ⟨U, hU, k⟩ := hΞ.level
@@ -78,7 +78,7 @@ theorem biTheta_of_maps {ψ : AddChar (AF D.host.F) ℂ} {V₀ A S X T : HSp D} 
     have h := hs u v x 0
     simp only [map_zero, add_zero, sympl_zero_r, zero_add] at h
     simp only [heisO] at e ⊢
-    rw [← h, map_add, add_right_comm, mul_left_comm, e]
+    rw [← h, map_add (f := _), add_right_comm, mul_left_comm, e]
   levR := by
     obtain ⟨U, hU, k⟩ := hΞ.level
     obtain ⟨U', hU', k'⟩ := hΦ.level

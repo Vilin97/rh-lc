@@ -54,7 +54,7 @@ private theorem comm_io (c : R ≃ₐ[k] R) (z : R ⊗[k] A) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r a => simp [io]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem fixed_tmul {c : R ≃ₐ[k] R}
     (h : IsGal (Algebra.TensorProduct.congr AlgEquiv.refl c : A ⊗[k] R ≃ₐ[A] A ⊗[k] R) 2)

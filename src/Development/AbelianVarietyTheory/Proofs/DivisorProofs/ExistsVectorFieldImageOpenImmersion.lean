@@ -47,10 +47,10 @@ theorem isField_push (W₀ : Z'.Opens) (d : ∀ O : Z'.Opens, Γ(Z', O) → Γ(Z
   obtain ⟨hadd, hmul, hres⟩ := hd
   refine ⟨fun W hW f f' => ?_, fun W hW f f' => ?_, fun W W' h hW f => ?_⟩
   · apply inj_app φ (le_range φ hW)
-    rw [map_add, app_push φ d W (le_range φ hW), app_push φ d W (le_range φ hW),
+    rw [map_add (f := _), app_push φ d W (le_range φ hW), app_push φ d W (le_range φ hW),
       app_push φ d W (le_range φ hW), map_add, hadd _ (preimage_le φ hW)]
   · apply inj_app φ (le_range φ hW)
-    rw [map_add, map_mul, map_mul, app_push φ d W (le_range φ hW), app_push φ d W (le_range φ hW),
+    rw [map_add (f := _), map_mul, map_mul, app_push φ d W (le_range φ hW), app_push φ d W (le_range φ hW),
       app_push φ d W (le_range φ hW), map_mul, hmul _ (preimage_le φ hW)]
   · have hW' : W' ≤ φ ''ᵁ W₀ := h.trans hW
     apply inj_app φ (le_range φ hW')

@@ -102,7 +102,7 @@ theorem vacuum_annihilation : ∀ (D : D7) (θ : InfFam D) (σ : (D.what₂.Tau 
         Real.pi * Complex.I * (omO S T w z : ℂ) * f (iotaW σ T S w)
       map_zero' := by simp
       map_add' := fun x y => by
-        rw [ContinuousLinearMap.map_add, LinearMap.map_add, Complex.ofReal_add]
+        rw [ContinuousLinearMap.map_add (f := _), LinearMap.map_add (f := _), Complex.ofReal_add]
         ring }
   show A z + Complex.I * A (jO S T sS sT z) = 0
   set_option synthInstance.maxHeartbeats 100000 in

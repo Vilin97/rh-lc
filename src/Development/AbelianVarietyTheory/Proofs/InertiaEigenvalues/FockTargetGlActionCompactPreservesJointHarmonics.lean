@@ -30,7 +30,7 @@ theorem pd_comm {σ : Type*} (i j : σ) (f : MvPolynomial σ ℂ) :
   classical
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p k hp =>
     have h : ∀ a b : σ, pderiv a (pderiv b (X k : MvPolynomial σ ℂ)) = 0 := by
       intro a b
@@ -38,7 +38,7 @@ theorem pd_comm {σ : Type*} (i j : σ) (f : MvPolynomial σ ℂ) :
       by_cases hk : k = b
       · subst hk; simp
       · simp [Pi.single_eq_of_ne hk]
-    simp only [Derivation.leibniz, map_add, smul_eq_mul, hp, h]
+    simp only [Derivation.leibniz, map_add (f := _), smul_eq_mul, hp, h]
     ring
 
 theorem pd_X_mul {σ : Type*} [DecidableEq σ] (x u : σ) (Q : MvPolynomial σ ℂ) :
@@ -51,7 +51,7 @@ theorem pd_X_mul {σ : Type*} [DecidableEq σ] (x u : σ) (Q : MvPolynomial σ �
 theorem dd_X_mul {σ : Type*} [DecidableEq σ] (x y u : σ) (R : MvPolynomial σ ℂ) :
     pderiv x (pderiv y (X u * R)) = (if u = y then pderiv x R else 0) + (if u = x then pderiv y R else 0) +
       X u * pderiv x (pderiv y R) := by
-  rw [pd_X_mul, map_add, pd_X_mul]
+  rw [pd_X_mul, map_add (f := _), pd_X_mul]
   split_ifs <;> (try simp only [map_zero]) <;> ring
 
 theorem gen {σ : Type*} [DecidableEq σ] {n : ℕ} (x y u w : Fin n → σ) (P : MvPolynomial σ ℂ)
@@ -154,7 +154,7 @@ theorem fockT_compact_harm : ∀ (D : D7) (n m : ℕ) (p : D.what₂.Tau → ℕ
   rw [← hLop]
   by_cases ha : (a : ℕ) < p τ
   · have hb : (b : ℕ) < p τ := hab.1 ha
-    rw [up_eq τ _ a b (by simpa using ha) (by simpa using hb), map_add, hite, add_zero, hLop]
+    rw [up_eq τ _ a b (by simpa using ha) (by simpa using hb), map_add (f := _), hite, add_zero, hLop]
     refine gen (fun j => (τ', i, j)) (fun j => (τ', l, j)) (fun k => (τ, a, k)) (fun k => (τ, b, k)) P
       (hL τ' i l hi hl) ?_ ?_
     · by_cases h : τ = τ' ∧ a = l
@@ -175,7 +175,7 @@ theorem fockT_compact_harm : ∀ (D : D7) (n m : ℕ) (p : D.what₂.Tau → ℕ
         rw [map_sum]
       refine Finset.sum_eq_zero fun k _ => ?_
       split_ifs <;> simp [hP0]
-    rw [e, map_add, map_neg, map_add, hS1, zero_add, hite, add_zero, neg_eq_zero, hLop]
+    rw [e, map_add (f := _), map_neg, map_add (f := _), hS1, zero_add, hite, add_zero, neg_eq_zero, hLop]
     refine gen (fun j => (τ', i, j)) (fun j => (τ', l, j)) (fun k => (τ, b, k)) (fun k => (τ, a, k)) P
       (hL τ' i l hi hl) ?_ ?_
     · refine Finset.sum_eq_zero fun j _ => Finset.sum_eq_zero fun k _ => if_neg ?_

@@ -23,7 +23,7 @@ theorem c_arint : SheetIndepStatement → PtsIndepStatement → GoodProjExistsSt
           simp
         funext i
         show starRingEnd ℂ (hex.choose (fun c => starRingEnd ℂ ((a + b) c)) i) = _
-        rw [h, map_add]
+        rw [h, map_add (f := _)]
         simp
       map_smul' := by
         intro r a

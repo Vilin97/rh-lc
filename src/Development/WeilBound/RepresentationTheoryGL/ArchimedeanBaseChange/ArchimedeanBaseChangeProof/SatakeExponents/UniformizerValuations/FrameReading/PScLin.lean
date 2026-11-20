@@ -91,7 +91,7 @@ theorem extTensor_twRep {G₁ G₂ V₁ V₂ : Type} [Group G₁] [Group G₂] [
   | tmul v₁ v₂ =>
     simp only [GlobalTheory.SmGL.extTensor_tmul, twRep_apply, TensorProduct.tmul_smul, TensorProduct.smul_tmul', smul_smul,
       mul_comm]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem mu_fac (μ : HChar E) (w : Pl E) (m : GLw a w × GLw b w) :
     ((μ.loc w ((-1) ^ (a * b) * GeneralLinearGroup.det m.1 ^ b * GeneralLinearGroup.det m.2 ^ a) : ℂˣ) : ℂ) =

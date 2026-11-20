@@ -39,7 +39,7 @@ theorem invariant_coord_bounds : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (
       rw [PadicInt.algebraMap_apply]
       ring
     | add x y hx hy =>
-      rw [map_add, map_add, hx, hy, ← Matrix.mulVec_add]
+      rw [map_add (f := _), map_add (f := _), hx, hy, ← Matrix.mulVec_add]
       congr 1; funext i; simp
   set x : (Fin d → ℚ_[l]) ⊗[ℚ_[l]] P.R.BdR := ∑ i, Pi.single i (1 : ℚ_[l]) ⊗ₜ c i with hx
   have hex : e x = c := by
@@ -63,7 +63,7 @@ theorem invariant_coord_bounds : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (
       rw [he_tmul]
       exact ((P.PD K).Fil a |>.restrictScalars ℚ_[l]).smul_mem (v i) hβ
     · intro y z hy hz
-      simpa only [map_add, Pi.add_apply] using Submodule.add_mem _ hy hz
+      simpa only [map_add (f := _), Pi.add_apply] using Submodule.add_mem _ hy hz
   refine ⟨fun i => ?_, fun hall => hc0 ?_⟩
   · simpa [hex] using hcoord _ x (hlow hxD) i
   · have hxF : x ∈ FilV (P.PD K) (LL := ℚ_[l]) (V := Fin d → ℚ_[l]) ((N : ℤ) + 1) :=

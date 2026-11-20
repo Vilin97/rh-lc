@@ -64,7 +64,7 @@ include hE
 
 theorem heis_comp (u : WO S T) (f : WA V W → ℂ) : Heisenberg₂ ψ V W (E u) f ∘ E = heisO ψ S T u (f ∘ E) := by
   funext w
-  simp only [Function.comp_apply, Heisenberg₂, heisO, hE.sympl, map_add]
+  simp only [Function.comp_apply, Heisenberg₂, heisO, hE.sympl, map_add (f := _)]
 
 theorem theta_iff (f : WA V W → ℂ) : IsThetaFunO ψ S T (f ∘ E) ↔ IsThetaFun ψ V W f := by
   constructor
@@ -73,7 +73,7 @@ theorem theta_iff (f : WA V W → ℂ) : IsThetaFunO ψ S T (f ∘ E) ↔ IsThet
     · obtain ⟨δ, hδ⟩ := (hE.rat (E.symm (ratW V W γ))).2 (by rw [E.apply_symm_apply]; exact ⟨γ, rfl⟩)
       have hδ' : ratW T S δ = E.symm (ratW V W γ) := hδ
       have := hf.quasi δ (E.symm w)
-      simpa only [hδ', Function.comp_apply, map_add, hE.sympl, E.apply_symm_apply] using this
+      simpa only [hδ', Function.comp_apply, map_add (f := _), hE.sympl, E.apply_symm_apply] using this
     · obtain ⟨U, hU, hfix⟩ := hf.level
       refine ⟨U.comap E.symm.toAddMonoidHom, hU.preimage hE.cont', fun u hu h0 => ?_⟩
       have := hfix (E.symm u) hu ((hE.inf _).2 (by rwa [E.apply_symm_apply]))
@@ -89,7 +89,7 @@ theorem theta_iff (f : WA V W → ℂ) : IsThetaFunO ψ S T (f ∘ E) ↔ IsThet
     · obtain ⟨δ, hδ⟩ := (hE.rat (ratW T S γ)).1 ⟨γ, rfl⟩
       have hδ' : ratW V W δ = E (ratW T S γ) := hδ
       have := hf.quasi δ (E w)
-      simpa only [hδ', Function.comp_apply, map_add, hE.sympl] using this
+      simpa only [hδ', Function.comp_apply, map_add (f := _), hE.sympl] using this
     · obtain ⟨U, hU, hfix⟩ := hf.level
       refine ⟨U.comap E.toAddMonoidHom, hU.preimage hE.cont, fun u hu h0 => ?_⟩
       rw [← hE.heis_comp, hfix (E u) hu ((hE.inf _).1 h0)]

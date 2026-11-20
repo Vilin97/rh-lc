@@ -60,7 +60,7 @@ theorem exists_family_models (D : D7) (H : ReciprocityTheory.ChartRestriction.G.
       Algebra.trace ℚ D.host.E (-(-D.host.xi0) * herm (-V.gramᵀ) (ι x) (ι y)) := fun x y => by
     have h1 : Dw.EF x y = -Dw.EF y x := by
       have h := Dw.alt (x + y)
-      simp only [map_add, LinearMap.add_apply, Dw.alt] at h
+      simp only [map_add (f := _), LinearMap.add_apply, Dw.alt] at h
       linarith
     rw [h1, Int.cast_neg, hι.isom y x, hhT, ← map_neg]
     congr 1

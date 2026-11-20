@@ -152,7 +152,7 @@ theorem killInf (hU : Unimod) (hT : ThetaBasic) (hO : ArchOp) (hLie : ArchLie) (
     have a2 := (hiff (N'.comap Q.subtype)).2 (by rw [mc N' hN'.prop.1.1]; exact hN'.prop.1)
     have a3 := (hiff (N.comap Q.subtype ⊔ N'.comap Q.subtype)).1 ⟨a1.1.trans le_sup_left, fun T hT x hx => by
       obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem_sup (a1.2 T hT y hy) (a2.2 T hT z hz)⟩
     rw [Submodule.map_sup, mc N hN.prop.1.1, mc N' hN'.prop.1.1] at a3
     have a4 := hsum N N' hN.prop.1 hN'.prop.1 hN.prop.2 hN'.prop.2
@@ -178,7 +178,7 @@ theorem killInf (hU : Unimod) (hT : ThetaBasic) (hO : ArchOp) (hLie : ArchLie) (
         have hπ' : ∀ y : Q, π y = y := fun y => LinearMap.congr_fun hπ y
         refine ⟨t.image π, fun k => ?_⟩
         obtain ⟨y, hy, z, hz, e⟩ := Submodule.mem_sup.1 (ht k (kk k) _ ((hA k x _).2 rfl))
-        have e' : κ k x = π y + ⟨z, augle hz⟩ := by rw [← hπ' ⟨z, _⟩, ← map_add, e]; exact (hπ' _).symm
+        have e' : κ k x = π y + ⟨z, augle hz⟩ := by rw [← hπ' ⟨z, _⟩, ← map_add (f := _), e]; exact (hπ' _).symm
         rw [e', Finset.coe_image, ← Submodule.map_span]
         exact Submodule.add_mem_sup ⟨y, hy, rfl⟩ hz
       · obtain ⟨t, ht⟩ := hA2 m fun h => if hh : h ∈ K then ρ' ⟨h, hh⟩ else 0

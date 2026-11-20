@@ -162,7 +162,7 @@ theorem map_coordR {S : Type} [CommRing S] [Algebra F S] (f : R →ₐ[F] S) (z 
           (fun i => Algebra.TensorProduct.map f (AlgHom.id F E) (v i)) := by
       funext i
       simp
-    rw [hz, coordR_add, coordR_add, map_add, hu, hv]
+    rw [hz, coordR_add, coordR_add, map_add (f := _), hu, hv]
 
 end coord
 

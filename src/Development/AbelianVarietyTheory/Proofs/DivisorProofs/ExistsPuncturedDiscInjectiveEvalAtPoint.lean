@@ -20,7 +20,7 @@ noncomputable def absConv (u : ℂ) : Subring (PowerSeries ℂ) where
   add_mem' := by
     intro f g hf hg
     refine (Summable.add hf hg).of_nonneg_of_le (fun _ => norm_nonneg _) fun n => ?_
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
     exact norm_add_le _ _
   neg_mem' := by
     intro f hf
@@ -48,7 +48,7 @@ noncomputable def evalAt (u : ℂ) : absConv u →+* ℂ where
     intro f g
     have hf : Summable fun n => ‖PowerSeries.coeff n (f : PowerSeries ℂ) * u ^ n‖ := f.2
     have hg : Summable fun n => ‖PowerSeries.coeff n (g : PowerSeries ℂ) * u ^ n‖ := g.2
-    simp only [Subring.coe_add, map_add, add_mul]
+    simp only [Subring.coe_add, map_add (f := _), add_mul]
     exact hf.of_norm.tsum_add hg.of_norm
   map_mul' := by
     intro f g

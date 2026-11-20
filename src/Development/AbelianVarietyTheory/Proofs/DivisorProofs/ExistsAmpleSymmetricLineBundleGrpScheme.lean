@@ -31,7 +31,7 @@ theorem exists_isAmpleLB_symm (S : Scheme.{0}) (G : Over S) [GrpObj G] (M₀ : L
     rw [cls_div hd₁ (pull_isLB hL i), cls_div hM hL, hc, cls_pull hL]
     abel
   · refine (cls_eq_iff (pull_isLB hM i) hM).1 ?_
-    rw [cls_pull hM, hc, map_add, ← pull_comp, hii, pull_id]
+    rw [cls_pull hM, hc, map_add (f := _), ← pull_comp, hii, pull_id]
     exact add_comm _ _
 
 end GlobalTheory.SymAmple

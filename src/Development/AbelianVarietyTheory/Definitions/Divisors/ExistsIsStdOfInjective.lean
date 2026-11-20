@@ -29,18 +29,18 @@ theorem mem_ext_iff (Q : PDPoly B) (p : Q.P) : p ∈ Q.ext J ↔ Q.e.repr p 0 �
         rw [mul_comm, ← Algebra.smul_def, map_smul, Finsupp.smul_apply, smul_eq_mul]
         exact J.mul_mem_right _ hj
       · simp
-      · intro x y _ _ hx hy q; rw [mul_add, map_add]; exact add_mem (hx q) (hy q)
+      · intro x y _ _ hx hy q; rw [mul_add, map_add (f := _)]; exact add_mem (hx q) (hy q)
       · intro r x _ hx q; rw [smul_eq_mul, ← mul_assoc]; exact hx _
     have h2 : ∀ q, Q.e.repr (q * b) 0 = 0 := by
       refine Submodule.span_induction (p := fun a _ ↦ ∀ q, Q.e.repr (q * a) 0 = 0) ?_ ?_ ?_ ?_ hb
       · rintro _ ⟨j, rfl⟩ q; exact repr_mul_succ Q q j
       · simp
-      · intro x y _ _ hx hy q; rw [mul_add, map_add, Finsupp.add_apply, hx, hy, add_zero]
+      · intro x y _ _ hx hy q; rw [mul_add, map_add (f := _), Finsupp.add_apply, hx, hy, add_zero]
       · intro r x _ hx q; rw [smul_eq_mul, ← mul_assoc]; exact hx _
     have h1' := h1 1
     have h2' := h2 1
     rw [one_mul] at h1' h2'
-    rw [map_add, Finsupp.add_apply, h2', add_zero]; exact h1'
+    rw [map_add (f := _), Finsupp.add_apply, h2', add_zero]; exact h1'
   · intro h
     rw [← Q.e.linearCombination_repr p, Finsupp.linearCombination_apply, Finsupp.sum]
     refine Ideal.sum_mem _ fun n _ ↦ ?_
@@ -117,7 +117,7 @@ theorem exists_isStd_of_injective (K : Type) [CommRing K] [Algebra ℚ K] [Algeb
         · exact Ideal.mul_mem_left _ _ (hv _ (by omega))
         · exact Ideal.mul_mem_right _ _ (hu _ h0)
       set_option synthInstance.maxHeartbeats 100000 in
-        · rw [map_add, κ.dpow_add (Ideal.mem_map_of_mem f hx) (Ideal.mem_map_of_mem f hy), map_sum]
+        · rw [map_add (f := _), κ.dpow_add (Ideal.mem_map_of_mem f hx) (Ideal.mem_map_of_mem f hy), map_sum]
         simp only [map_mul, hu', hv']
     · intro a x hx ih n
       replace hx : x ∈ Q.ext J := hs.ge hx

@@ -46,7 +46,7 @@ theorem so_stable_kinf (hK : GlobalTheory.ThK.KP) {F E : Type} [Field F] [Number
     rw [e]
     exact Submodule.subset_span ⟨f₂, φ, hSB, hvac, hv₁, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 end GlobalTheory.ThKAutBoth

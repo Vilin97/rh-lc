@@ -17,7 +17,7 @@ theorem pair_eq {D : ℕ} {i j k l : Fin (D + 1)} (hij : i ≤ j) (hkl : k ≤ l
     i = k ∧ j = l := by
   have hm : ({i} + {j} : Multiset (Fin (D + 1))) = {k} + {l} := by
     have := congrArg Finsupp.toMultiset h
-    simpa only [map_add, Finsupp.toMultiset_single, one_nsmul] using this
+    simpa only [map_add (f := _), Finsupp.toMultiset_single, one_nsmul] using this
   have h1 : i = k ∨ i = l := by
     have : i ∈ ({k} + {l} : Multiset (Fin (D + 1))) := hm ▸ Multiset.mem_add.2 (Or.inl (Multiset.mem_singleton_self i))
     simpa using this

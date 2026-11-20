@@ -52,10 +52,10 @@ theorem evR_eq_of_marked_pow [inst : Algebra c.F ℂ] (hσ : GoodEmb c (algebraM
   have hz : ∀ z : FrPt Xo c ℂ, evHom z f ^ (m + 1) = evHom z f := fun z => by rw [← map_pow, hfm]
   have e1 : ∀ z : FrPt Xo c ℂ, evR Xo c (f + 1 - f ^ m) z = evHom z f + 1 - evHom z f ^ m := fun z => by
     change evHom z _ = _
-    rw [map_sub, map_add, map_one, map_pow]
+    rw [map_sub, map_add (f := _), map_one, map_pow]
   have e2 : ∀ z : FrPt Xo c ℂ, evR Xo c (1 - (f ^ m + f ^ m)) z = 1 - (evHom z f ^ m + evHom z f ^ m) := fun z => by
     change evHom z _ = _
-    rw [map_sub, map_add, map_one, map_pow]
+    rw [map_sub, map_add (f := _), map_one, map_pow]
   have h1 := evR_eq_of_marked σ hσ hA (f := f + 1 - f ^ m) (show _ ∈ secZero Xo c from sub_mem (add_mem hf' (one_mem _)) (pow_mem hf' m))
     (fun z => (congrArg norm (e1 z)).trans (cases_of_pow_succ hm0 (hz z)).1) hr hs hm x hx x' hx' y y' A A' hk hk'
   have h2 := evR_eq_of_marked σ hσ hA (f := 1 - (f ^ m + f ^ m))

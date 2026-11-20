@@ -90,7 +90,7 @@ theorem chartVal_spMap {Z : Scheme.{0}} (m : A.left ⟶ Z) (Ω : Z.Opens) (δ : 
     rw [baseMap_eq ρ]; exact transl_spMap _ _ x hx (u a)
   simp only [chartVal, hd, htr, Category.assoc]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [valR_spMap_comp _ _ _ hxm, valR_spMap_comp _ _ _ (ht _), dualMap_snd, map_add, map_mul, map_sum]
+    simp only [valR_spMap_comp _ _ _ hxm, valR_spMap_comp _ _ _ (ht _), dualMap_snd, map_add (f := _), map_mul, map_sum]
   simp only [RingHom.coe_coe, AlgHom.commutes, baseMap_eq ρ, RingHom.comp_apply]
 
 end Map

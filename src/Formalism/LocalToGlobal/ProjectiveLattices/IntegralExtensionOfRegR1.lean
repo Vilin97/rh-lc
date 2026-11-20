@@ -41,7 +41,7 @@ theorem iInf_span_eq {X : PJ D B P j} {wL : WeightFamilies.Wt D j} {n : ℕ} (g 
     | mem x hx => obtain ⟨k, rfl⟩ := hx; exact iInf_le _ k
     | zero => simp [hv0]
     | add x y _ _ hx hy =>
-      rw [map_add]; exact le_trans (le_min hx hy) (hadd _ _)
+      rw [map_add (f := _)]; exact le_trans (le_min hx hy) (hadd _ _)
     | smul a x _ hx =>
       by_cases ha : (a : B.KO) = 0
       · have : a = 0 := by exact_mod_cast ha

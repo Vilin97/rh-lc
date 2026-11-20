@@ -360,7 +360,7 @@ theorem unit_tensor_mem_deltaIn (O : Type) [CommRing O] (r n : ℕ) (hn : n ≤ 
     rw [map_smul, map_smul, PiTensorProduct.map_tprod, PiTensorProduct.subsingletonEquiv_apply_tprod]
     exact Submodule.smul_mem _ c (a ()).2
   | add x y hx hy =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact Submodule.add_mem _ hx hy
 
 theorem sharp_bound_exponent_one : TheoremASharpOne := by
@@ -459,7 +459,7 @@ theorem nablaRep_mem_delta (O : Type) [CommRing O] (ι : Type) (r n : ι → ℕ
     rw [PiTensorProduct.map_tprod]
     all_goals rfl
   | add x y ihx ihy =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact Submodule.add_mem _ ihx ihy
 
 theorem delta_stable_holds : DeltaStable := by
@@ -532,7 +532,7 @@ theorem tensor_injective_holds : TensorInj := by
         rfl
       rw [h2, MultilinearMap.map_smul_univ, Finset.prod_pow_eq_pow_sum]
       rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, smul_add]
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro z hz
   have h3 := key z

@@ -471,7 +471,7 @@ theorem UpperTheory.Kd.L.mackey :
       have h1 := (hξ i.1 i.2.1 i.2.2 (hIR i hi)).2 (σ i.1) (hσ _) (hσS _) t (hσt _) _ (hψ1 i.1 i.2.1 i.2.2) r
       have h2 := cgA_map (ρ i.1) h1
       rw [hσd] at h2
-      simp only [map_add, map_sub, map_mul, map_pow, map_natCast, conj_apply] at h2
+      simp only [map_add (f := _), map_sub, map_mul, map_pow, map_natCast, conj_apply] at h2
       exact h2
     have h3 := cgA_sum I mx _ _ hab
     have e1 : (l : Ω) ^ cc * ∑ i ∈ I, (mx i : Ω) * ρ i.1 ((ψ i.1 i.2.1 i.2.2).coeff r) =

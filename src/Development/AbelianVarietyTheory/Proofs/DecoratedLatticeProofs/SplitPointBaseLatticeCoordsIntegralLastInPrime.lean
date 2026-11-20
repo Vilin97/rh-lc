@@ -95,8 +95,8 @@ theorem coord_int_last : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Top
     | add a b _ _ ha hb =>
       intro r
       refine ⟨?_, fun hr => ?_⟩
-      · rw [Pi.add_apply, map_add]; exact add_mem (ha r).1 (hb r).1
-      · rw [Pi.add_apply, map_add]; exact Valuation.map_add_lt _ ((ha r).2 hr) ((hb r).2 hr)
+      · rw [Pi.add_apply, map_add (f := _)]; exact add_mem (ha r).1 (hb r).1
+      · rw [Pi.add_apply, map_add (f := _)]; exact Valuation.map_add_lt _ ((ha r).2 hr) ((hb r).2 hr)
     | smul s a _ ha =>
       intro r
       have hs : π s ∈ 𝒪[k] := hV s.2

@@ -40,7 +40,7 @@ theorem idealMod_le (j : Fin (N + 1)) (b : ℕ) (I : Chart x) {i : Fin (N + 1)} 
   let K : Ideal (Poly S N) :=
     { carrier := {f | aeval (fun l => x l / x i) f ∈ M}
       add_mem' := fun {f g} hf hg => by
-        simp only [Set.mem_ofPred_eq, map_add] at *; exact M.add_mem hf hg
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at *; exact M.add_mem hf hg
       zero_mem' := by simp only [Set.mem_ofPred_eq, map_zero]; exact M.zero_mem
       smul_mem' := fun r f hf => by
         simp only [Set.mem_ofPred_eq, smul_eq_mul, map_mul] at *

@@ -24,7 +24,7 @@ theorem φVB_inj : Function.Injective (φVB PD (LL := LL) (V := V)) := by
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x b => simp [φVB]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   intro a b hab
   rw [h, h] at hab
   exact Module.Flat.lTensor_preserves_injective_linearMap _ PD.φ_inj hab

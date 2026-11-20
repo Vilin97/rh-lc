@@ -21,6 +21,6 @@ theorem ConeProjHyperplaneNull.proof (hNull : NullSmaller.Statement)
   intro q hq
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hq
   obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp hb
-  rw [map_add, map_mul, hz.1 a ha, eval_coneFirstForm, hz.2, mul_zero, add_zero]
+  rw [map_add (f := _), map_mul, hz.1 a ha, eval_coneFirstForm, hz.2, mul_zero, add_zero]
 
 end GroundTheory.Heights₂.Heights

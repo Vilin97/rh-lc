@@ -204,7 +204,7 @@ theorem idAt_of_colMul {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) {L : L
 theorem psi_parts (ψ : AddChar (AF D.host.F) ℂ) {a b : AE D} (hab : a + b = 1) {s : AE D} (ha : psiE ψ (a * s) = 1)
     (hb : psiE ψ (b * s) = 1) : psiE ψ s = 1 := by
   unfold psiE at *
-  rw [← one_mul s, ← hab, add_mul, map_add, AddChar.map_add_eq_mul, ha, hb, one_mul]
+  rw [← one_mul s, ← hab, add_mul, map_add (f := _), AddChar.map_add_eq_mul, ha, hb, one_mul]
 
 theorem hO_extX {V V₀ W : HSp D} {ρ : ℕ} (dV : HypDec V V₀ ρ) (x : Mx D W.rank ρ) (u : WO V W) :
     hO V W (dV.extX W x) u = pairS W x (u ⬝ dV.jY) := by
@@ -287,7 +287,7 @@ theorem dual_col {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {V
       rw [e1, symplO_eq, hO_extX, HypDec.extY_apply, Matrix.mul_assoc, dV.pY_jY, Matrix.mul_one, hpair] at h2
       rw [mul_left_comm]
       exact h2
-    exact psi_parts ψ (a := cA D a) (b := cA D b) (by rw [← RingHom.map_add, hab, RingHom.map_one])
+    exact psi_parts ψ (a := cA D a) (b := cA D b) (by rw [← RingHom.map_add (f := _), hab, RingHom.map_one])
       (key a (hfix _ hπ).1) (key b (hfix _ hπ).2)
   have h := LatMem.latO_maps hV hU hc
   have e : (SelfDualAt.cP (· = v) • dV.extX W (y ⬝ E)) *ᵥ colMul dV.jX i c = colMul y i c := by
@@ -372,7 +372,7 @@ theorem int_of_stable {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) {L : La
   have e : c = c * eps v - eps v + 1 := by
     have := eps_mul hc1
     linear_combination -this
-  rw [e, RingHom.map_add, RingHom.map_sub]
+  rw [e, RingHom.map_add (f := _), RingHom.map_sub]
   exact add_mem (sub_mem h' (eps_int v)) (int_of_idem (one_mul 1))
 
 theorem stable_of_prim {ψ : AddChar (AF D.host.F) ℂ} {S S₀ : HSp D} {ρ : ℕ} (d : HypDec S S₀ ρ) {L : Lat S} {L₀ : Lat S₀}

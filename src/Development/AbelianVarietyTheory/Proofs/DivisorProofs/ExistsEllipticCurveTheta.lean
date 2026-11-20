@@ -54,7 +54,7 @@ def eps : 𝓞 realQuadraticSqrtTwentynine := ⟨epsK, isIntegral_epsK⟩
 
 theorem eps_sq : eps ^ 2 = 5 * eps + 1 := by
   apply RingOfIntegers.coe_injective
-  simp only [map_pow, map_add, map_mul, map_one, map_ofNat]
+  simp only [map_pow, map_add (f := _), map_mul, map_one, map_ofNat]
   exact epsK_sq
 
 def tateW : WeierstrassCurve (𝓞 realQuadraticSqrtTwentynine) := ⟨1, 0, eps ^ 2, 0, 0⟩

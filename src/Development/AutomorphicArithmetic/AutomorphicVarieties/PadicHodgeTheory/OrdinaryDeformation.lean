@@ -123,7 +123,7 @@ theorem lift_lower (f : R →+* S) (hf : Function.Surjective f)
     exact h0 a b h
   · refine Units.ext (Matrix.ext fun a b => ?_)
     change f ((Matrix.of X + 1) a b) = _
-    rw [Matrix.add_apply, map_add, Matrix.of_apply, hX, Matrix.sub_apply, Matrix.one_apply, Matrix.one_apply]
+    rw [Matrix.add_apply, map_add (f := _), Matrix.of_apply, hX, Matrix.sub_apply, Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp
 
 end Group
@@ -155,7 +155,7 @@ theorem qcont_pair {V W W' : Type} [AddCommGroup V] [Module ℚ_[l] V] [AddCommG
   have h3 := Continuous.add (M := V) h1 h2
   have e : (fun x => (L.comp (LinearMap.inl _ _ _)) (f (c x)) + (L.comp (LinearMap.inr _ _ _)) (f' (c x))) = c := by
     funext x
-    rw [LinearMap.comp_apply, LinearMap.comp_apply, ← map_add]
+    rw [LinearMap.comp_apply, LinearMap.comp_apply, ← map_add (f := _)]
     simpa using LinearMap.congr_fun hL (c x)
   rw [← e]
   exact h3

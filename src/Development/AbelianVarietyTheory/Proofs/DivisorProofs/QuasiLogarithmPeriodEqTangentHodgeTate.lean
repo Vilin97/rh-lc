@@ -156,8 +156,8 @@ private theorem dIn_univ_of_QL_of_isLaw {B Q : Type} [CommRing B] [CommRing Q] [
     rw [_root_.GlobalTheory.QLog.In.top_iff]
     refine ⟨subst eB (pderiv (R := B) (Sum.inr i) s₀) + C b, ?_⟩
     rw [hdec]
-    simp only [map_add]
-    rw [hleft, hright, add_zero, ← coe_substAlgHom he, map_add, coe_substAlgHom, hrr,
+    simp only [map_add (f := _)]
+    rw [hleft, hright, add_zero, ← coe_substAlgHom he, map_add (f := _), coe_substAlgHom, hrr,
       pderiv_map_algebraMap, hmapsub]
   have hsol := _root_.GlobalTheory.InvSolve.solve ⊤ M hM (fun j => pderiv (R := Q) j f)
     (fun i => subst e (pderiv (R := Q) (Sum.inr i) (subst μQ f))) hchain hg

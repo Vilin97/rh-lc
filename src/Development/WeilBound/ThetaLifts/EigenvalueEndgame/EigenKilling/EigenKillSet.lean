@@ -588,7 +588,7 @@ theorem sep {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) {s s' : Fv F v} (h : ∀ 
     have := sub_ne_zero.2 hne
     field_simp
     ring
-  rw [h2, map_add, AddChar.map_add_eq_mul] at h1
+  rw [h2, map_add (f := _), AddChar.map_add_eq_mul] at h1
   exact (mul_eq_right₀ (std_ne_zero hψ _)).1 h1
 
 theorem map_form (t : E →ₐ[F] Fv F v) (J : Matrix (Fin d) (Fin d) E) (x y : Fin d → E) :
@@ -780,7 +780,7 @@ theorem soLower_of (hMx : PositivityTheory.ThKG.MixW) : SoLower := by
     { carrier := {φ | φ ∈ SB _ ∧ Full (ι φ)}
       zero_mem' := ⟨zero_mem _, by rw [map_zero]; exact ⟨zero_mem _, fun _ _ => rfl⟩⟩
       add_mem' := fun a b => ⟨add_mem a.1 b.1, by
-        rw [map_add]; exact ⟨add_mem a.2.1 b.2.1, fun Y hY => by simp [a.2.2 Y hY, b.2.2 Y hY]⟩⟩
+        rw [map_add (f := _)]; exact ⟨add_mem a.2.1 b.2.1, fun Y hY => by simp [a.2.2 Y hY, b.2.2 Y hY]⟩⟩
       smul_mem' := fun c _ a => ⟨Submodule.smul_mem _ c a.1, by
         rw [map_smul]; exact ⟨Submodule.smul_mem _ c a.2.1, fun Y hY => by simp [a.2.2 Y hY]⟩⟩ }
   have hne : ∃ φ ∈ SB (Fin n × Fin d → Fv F B.v₁), (ι₁ ∘ₗ ev B.v₁) φ ≠ 0 := ⟨_, (hp.good.vac _).1, fun h0 => by

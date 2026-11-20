@@ -86,7 +86,7 @@ theorem exists_isIntw {D : D7} {V W : HSp D} {S S' : D.what₂.Tau → SPar} {σ
       rw [← hω' τ 1 (one_mem_UH _), GlobalTheory.PointAtPlaceHom.atTau_one hθ]
       exact congrArg (fun f : Module.End ℂ (Xs → ℂ) => f (pt ψ)) (map_one ω))
     apply hinj
-    rw [map_add, hIt, hIt, map_zero]
+    rw [map_add (f := _), hIt, hIt, map_zero]
     refine ellT_sep M (fun τ => (hM τ).1) _ fun w => ?_
     have hB := hasDerivAt_bilin (I.compr₂ (ellT M w)) (fun t : ℝ => ρ' τ (NormedSpace.exp (t • X)) φ) φ'
       (fun t : ℝ => actT M' τ (NormedSpace.exp (t • X)) (inclT M' v)) (inclT M' v')
@@ -96,7 +96,7 @@ theorem exists_isIntw {D : D7} {V W : HSp D} {S S' : D.what₂.Tau → SPar} {σ
     have h2 := hρ' τ 1 (one_mem_UH _) φ' (inclT M' v)
     rw [h1] at h2
     rw [h2] at hB
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hB.unique (hasDerivAt_const _ _)
 
 open GlobalTheory.CompactHowe.LastStep in

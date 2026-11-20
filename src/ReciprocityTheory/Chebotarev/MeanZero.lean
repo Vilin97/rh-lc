@@ -160,7 +160,7 @@ theorem exists_reps_meanZero {l : ℕ} [Fact l.Prime] (χ : DirichletCharacter �
   · intro l' hl' β hβ
     obtain ⟨y, hy, rfl⟩ := hmemreps β hβ
     obtain ⟨μ, hμ, rfl⟩ := mem_latOf.mp hl'
-    rw [← map_add, hcf, hcf, hper μ hμ _ hy]
+    rw [← map_add (f := _), hcf, hcf, hper μ hμ _ hy]
   · rw [hreps, Finset.sum_image (fun y₁ _ y₂ _ h => hσinj (embZ_injective h))]
     simp only [hcf]
     rw [Finset.sum_filter]

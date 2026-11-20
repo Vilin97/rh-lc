@@ -29,7 +29,7 @@ theorem q_eq : W.q = ∑ k ∈ Finset.range PD.p, (1 + (letπ : LetA O n)) ^ k :
   simp [LocWach.q, h3, letπ, Finset.sum_apply]
 
 theorem φ_one_add : W.φA (1 + letπ) = (1 + (letπ : LetA O n)) ^ PD.p := by
-  rw [map_add, map_one, W.φA_π]
+  rw [map_add (f := _), map_one, W.φA_π]
   funext i
   have h := W.q₀_def
   simp only [Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.one_apply, letπ, LocWach.q, h]
@@ -51,7 +51,7 @@ theorem value_Q (i : ZMod n) (ζ : LL) (hζ : ∃ j : ℕ, IsPrimitiveRoot ζ (P
   obtain ⟨E, hE, -, h⟩ := W.lev_π i ζ hζ
   rw [Q_eq]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_pow, map_add, map_one]
+    simp only [map_sum, map_pow, map_add (f := _), map_one]
   have : 1 + PowerSeries.constantCoeff (W.lev i ζ letπ) = ζ := by
     have := congrArg PowerSeries.constantCoeff h
     simpa [hE] using this

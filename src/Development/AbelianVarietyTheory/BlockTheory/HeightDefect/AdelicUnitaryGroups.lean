@@ -123,7 +123,7 @@ def mapH (φ : R →ₐ[F] R') : HA R σ J →* HA R' σ J :=
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a e => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-      | add x y hx hy => simp only [map_add, hx, hy])
+      | add x y hx hy => simp only [map_add (f := _), hx, hy])
     (JR R J) (JR R' J) (by ext r s; simp [JR, inclR])
 
 def diagH (R : Type) [CommRing R] [Algebra F R] : UJ (σ : E →+* E) J →* HA R σ J :=
@@ -137,11 +137,11 @@ def tensNU (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j b) : R ⊗[F]
     intro x y
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x x' hx hx' => simp only [add_mul, map_add, hx, hx']
+    | add x x' hx hx' => simp only [add_mul, map_add (f := _), hx, hx']
     | tmul a e =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add y y' hy hy' => simp only [mul_add, map_add, hy, hy']
+      | add y y' hy hy' => simp only [mul_add, map_add (f := _), hy, hy']
       | tmul b e' => simp [hj]
 
 @[simp] theorem tensNU_tmul (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j b) (a : R) (e : E) :
@@ -154,7 +154,7 @@ def extH (j : R →ₗ[F] R') (hj : ∀ a b, j (a * b) = j a * j b) : HA R σ J 
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a e => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-      | add x y hx hy => simp only [map_add, hx, hy])
+      | add x y hx hy => simp only [map_add (f := _), hx, hy])
     (JR R J) (JR R' J) (by
       ext r s
       simp [JR, inclR, Algebra.TensorProduct.one_def])
@@ -198,7 +198,7 @@ theorem locMap_sig (hc : CMData F E) (τ : E →+* ℂ) (y : (placeOf F τ).Comp
     starRingEnd ℂ (locMap hc τ y) = locMap hc τ (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ hc.sig y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e =>
     have h1 : τ (hc.sig e) = starRingEnd ℂ (τ e) := hc.cmUnram.2.1 τ e
     have h2 := InfinitePlace.Completion.extensionEmbeddingOfIsReal_apply (placeOf_isReal hc τ) a
@@ -226,7 +226,7 @@ theorem locMap_bijective (hc : CMData F E) (τ : E →+* ℂ) : Function.Bijecti
   have hsurj : Function.Surjective (locMap hc τ) := by
     intro z
     refine ⟨e.symm (z.re - z.im / (τ x).im * (τ x).re) ⊗ₜ[F] 1 + e.symm (z.im / (τ x).im) ⊗ₜ[F] x, ?_⟩
-    rw [map_add, locMap_tmul, locMap_tmul, he, he, e.apply_symm_apply, e.apply_symm_apply, map_one]
+    rw [map_add (f := _), locMap_tmul, locMap_tmul, he, he, e.apply_symm_apply, e.apply_symm_apply, map_one]
     apply Complex.ext
     · simp only [mul_one, Complex.add_re, Complex.ofReal_re, Complex.re_ofReal_mul]; ring
     · simp only [mul_one, Complex.add_im, Complex.ofReal_im, Complex.im_ofReal_mul]; field_simp; ring
@@ -420,7 +420,7 @@ def equivar {Γ G : Type} [Group Γ] [Group G] (φ : Γ →* G) {X : Type} [AddC
     (ρ : Representation ℂ Γ X) : Submodule ℂ (G → X) where
   carrier := {f | ∀ γ g, f (φ γ * g) = ρ γ (f g)}
   zero_mem' := fun _ _ => by simp
-  add_mem' := fun h h' γ g => by simp only [Pi.add_apply, h γ g, h' γ g, map_add]
+  add_mem' := fun h h' γ g => by simp only [Pi.add_apply, h γ g, h' γ g, map_add (f := _)]
   smul_mem' := fun c _ h γ g => by simp only [Pi.smul_apply, h γ g, map_smul]
 
 def contFun (G : Type) [TopologicalSpace G] : Submodule ℂ (G → ℂ) where

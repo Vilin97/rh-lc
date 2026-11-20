@@ -25,7 +25,7 @@ theorem key {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a t => simp [sigR, GlobalTheory.AdLat.sg, hσ]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   ext a b
   have e := hs'.2 (Pi.single b 1) (Pi.single a 1)
   simp only [GlobalTheory.AdLat.hermA, Matrix.mulVec_single, mul_one] at e

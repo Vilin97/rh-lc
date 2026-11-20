@@ -123,7 +123,7 @@ def typeG (π : Representation ℂ (GL (Fin (r + t)) k) W) (J : Subgroup (GL (Fi
     π (incl k (r + t) h) w = ((lam a * detChar (Fin t) χ (incl k t d) : ℂˣ) : ℂ) • w}
   add_mem' := by
     intro x y hx hy h a d H
-    rw [map_add, hx h a d H, hy h a d H, smul_add]
+    rw [map_add (f := _), hx h a d H, hy h a d H, smul_add]
   zero_mem' := by intro h a d _; simp
   smul_mem' := by
     intro c x hx h a d H

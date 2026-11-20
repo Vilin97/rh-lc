@@ -19,7 +19,7 @@ theorem exp_subst_log : (exp ℚ).subst (log ℚ) = (1 + X : ℚ⟦X⟧) := by
     rw [hF, derivative_subst hS, derivative_exp, deriv_log]
   have hG' : d⁄dX ℚ G = -(G * G) := by
     have h := congrArg (d⁄dX ℚ) h1
-    rw [Derivation.leibniz, derivative_one, map_add, derivative_one, derivative_X, zero_add,
+    rw [Derivation.leibniz, derivative_one, map_add (f := _), derivative_one, derivative_X, zero_add,
       smul_eq_mul, smul_eq_mul, mul_one] at h
     calc d⁄dX ℚ G = G * ((1 + X) * d⁄dX ℚ G) := by
           rw [← mul_assoc, mul_comm G, h1, one_mul]
@@ -146,9 +146,9 @@ theorem logOnePlus_mul {x y z : B} (hx : x ∈ I) (hy : y ∈ I) (hz : z ∈ I)
     (hxyz : 1 + z = (1 + x) * (1 + y)) :
     logOnePlus I z hz = logOnePlus I x hx + logOnePlus I y hy := by
   refine eq_of_forall_sub_mem_pow I fun n => ?_
-  rw [← Ideal.Quotient.eq, map_add, logOnePlus, logOnePlus, logOnePlus,
+  rw [← Ideal.Quotient.eq, map_add (f := _), logOnePlus, logOnePlus, logOnePlus,
     mk_seriesEval_eq_truncEval, mk_seriesEval_eq_truncEval, mk_seriesEval_eq_truncEval]
-  exact truncEval_log_mul _ _ _ (by rw [← map_one (Ideal.Quotient.mk (I ^ n)), ← map_add, hxyz,
+  exact truncEval_log_mul _ _ _ (by rw [← map_one (Ideal.Quotient.mk (I ^ n)), ← map_add (f := _), hxyz,
     map_mul, map_add, map_add, map_one])
 
 end Complete

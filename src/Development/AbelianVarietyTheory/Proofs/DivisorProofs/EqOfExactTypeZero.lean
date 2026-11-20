@@ -37,7 +37,7 @@ theorem eq_of_isExact_sub : ∀ (M : Type) [TopologicalSpace M] (n : ℕ) (A : H
   obtain ⟨c, hc⟩ := eq_algebraMap_of_isType (hα x)
   obtain ⟨d, hd⟩ := eq_algebraMap_of_isType (hβ x)
   have h := congrArg (fun γ : A.Fld => ExteriorAlgebra.algebraMapInv (γ x)) e
-  simp only [Pi.sub_apply, Pi.add_apply, HolAtlas.del, HolAtlas.dbar, map_add, map_sub, algebraMapInv_delAt,
+  simp only [Pi.sub_apply, Pi.add_apply, HolAtlas.del, HolAtlas.dbar, map_add (f := _), map_sub, algebraMapInv_delAt,
     algebraMapInv_dbarAt, hc, hd, AlgHom.commutes, add_zero, sub_eq_zero] at h
   rw [hc, hd]
   exact congrArg _ h

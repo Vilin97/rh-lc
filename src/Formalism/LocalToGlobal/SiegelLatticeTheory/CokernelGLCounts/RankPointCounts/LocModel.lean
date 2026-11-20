@@ -1013,7 +1013,7 @@ theorem good_place {δ : ∀ p : PlF D, (D.s.atP p).Fp}
       set k := hc.choose with hk
       have hku : IsUnit ((D.s.atP p).ιE t + (((k : Fin 3) : ℕ) : (D.s.atP p).Ep)) := hc.choose_spec
       have he : (D.s.atP p).ιE t + (((k : Fin 3) : ℕ) : (D.s.atP p).Ep) =
-          (D.s.atP p).ιE (t + (((k : Fin 3) : ℕ) : D.host.E)) := by rw [map_add, map_natCast]
+          (D.s.atP p).ιE (t + (((k : Fin 3) : ℕ) : D.host.E)) := by rw [map_add (f := _), map_natCast]
       rw [he] at hku ⊢
       have hne : t + (((k : Fin 3) : ℕ) : D.host.E) ≠ 0 := by
         intro h0'

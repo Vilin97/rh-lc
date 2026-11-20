@@ -53,7 +53,7 @@ theorem det_updateRow_alternating_mulVec_mem {T : Type} [CommRing T] {g : ℕ} (
     rw [h1, ← Ideal.Quotient.eq_zero_iff_mem, map_sum]
   refine Finset.sum_ninvolution Prod.swap ?_ ?_ (fun _ => Finset.mem_univ _) Prod.swap_swap
   · rintro ⟨i, j⟩
-    rw [← map_add, Ideal.Quotient.eq_zero_iff_mem]
+    rw [← map_add (f := _), Ideal.Quotient.eq_zero_iff_mem]
     have hji : s j i = - s i j := by
       have := congrFun (congrFun hs i) j
       simpa using this

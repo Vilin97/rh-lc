@@ -34,7 +34,7 @@ theorem primTangent_bijective {R A : Type} [CommRing R] [CommRing A] [Bialgebra 
       simpa using this
     have hmem : a ∈ LinearMap.ker (cobOne R A) := mem_ker_cobOne_of_mul fun φ ψ => by
       rw [hδ, hδ, hδ]
-      simp only [δ, LinearMap.comp_apply, AugCot.d_mul, map_add, map_smul, smul_eq_mul]
+      simp only [δ, LinearMap.comp_apply, AugCot.d_mul, map_add (f := _), map_smul, smul_eq_mul]
       rfl
     refine ⟨⟨a, hmem⟩, AugCot.hom_ext fun φ => ?_⟩
     rw [primTangent_d]

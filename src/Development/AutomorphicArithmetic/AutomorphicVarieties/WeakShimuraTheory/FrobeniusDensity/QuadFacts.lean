@@ -257,19 +257,19 @@ private theorem units_pm {K : Type} [Field K] [NumberField K] [IsTotallyComplex 
             exact eq_neg_of_add_eq_zero_left h2
         · exfalso
           have := congrArg φ h3
-          simp only [map_add, map_pow, map_one, map_zero] at this
+          simp only [map_add (f := _), map_pow, map_one, map_zero] at this
           exact (hφ _).1 this
       · exfalso
         have := congrArg φ h4
-        simp only [map_add, map_pow, map_one, map_zero] at this
+        simp only [map_add (f := _), map_pow, map_one, map_zero] at this
         exact (hφ _).2.1 this
     · exfalso
       have := congrArg φ h5
-      simp only [map_add, map_sub, map_pow, map_one, map_zero] at this
+      simp only [map_add (f := _), map_sub, map_pow, map_one, map_zero] at this
       exact (hφ _).2.2.1 this
   · exfalso
     have := congrArg φ h6
-    simp only [map_add, map_sub, map_pow, map_one, map_zero] at this
+    simp only [map_add (f := _), map_sub, map_pow, map_one, map_zero] at this
     exact (hφ _).2.2.2 this
 
 open Pointwise in

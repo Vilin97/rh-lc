@@ -79,7 +79,7 @@ theorem splitk : ∀ (D : D7) (X : Fields) (s : Seam D X) (ϖ : 𝓞 X.E) (p : �
       apply s.iE.injective
       rw [map_ratCast]
       push_cast
-      rw [map_add, hc, hab]; ring
+      rw [map_add (f := _), hc, hab]; ring
     obtain ⟨m, hm⟩ := rat_int_of_isIntegral (E := X.E) (2 * a) (hsum ▸ (ϖ + X.conjO ϖ).isIntegral_coe)
     have hprod : a ^ 2 + D.host.d * b ^ 2 = p := by
       have h1 := congrArg (fun z : 𝓞 X.E => s.iE (z : X.E)) hN

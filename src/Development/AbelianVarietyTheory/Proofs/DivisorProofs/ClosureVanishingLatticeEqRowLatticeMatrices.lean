@@ -413,7 +413,7 @@ theorem piW_smul {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.P
     piW t (a • z) = evFin F v a * piW t z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, mul_add]
   | tmul b e =>
     rw [TensorProduct.smul_tmul', smul_eq_mul]
     show evFin F v (a * b) * t e = evFin F v a * (evFin F v b * t e)

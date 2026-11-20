@@ -399,7 +399,7 @@ theorem isDatum_linB : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : GlobalTheor
         rw [map_zero]; simpa using thetaS_smul Γ W.ψ 0 0 u⟩
       add_mem' := fun {p q} ⟨hp, g, g1, g2, g3⟩ ⟨hq, k, k1, k2, k3⟩ => ⟨add_mem hp hq, g + k, sb_add g1 k1, by
         rw [Prod.fst_add, g2, k2]; rfl, by
-        rw [Prod.snd_add, hadd _ hp _ hq, g3, k3, map_add]; rfl⟩
+        rw [Prod.snd_add, hadd _ hp _ hq, g3, k3, map_add (f := _)]; rfl⟩
       smul_mem' := fun a p ⟨hp, g, g1, g2, g3⟩ => ⟨Submodule.smul_mem _ a hp, a • g, sb_smul a g1, by
         rw [Prod.smul_fst, g2]; rfl, funext fun u => by
         rw [Prod.smul_snd, thetaS_smul, g3, map_smul]; rfl⟩ }

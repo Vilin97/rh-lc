@@ -111,6 +111,6 @@ theorem thetaSum_coset (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype
   refine tsum_congr fun b => ?_
   congr 1
   funext i
-  simp [he1, he2, ratInf, map_add]
+  simp [he1, he2, ratInf, map_add (f := _)]
 
 end GlobalTheory.ThetaCoset

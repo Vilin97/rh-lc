@@ -62,7 +62,7 @@ theorem span_orbit_coeff_memLp {n : ℕ} {ε : Fin n → Bool} (μ : Measure (UJ
     | add x y _ _ hx hy =>
       have : (fun g => ⟪π h v, π g (x + y)⟫_ℂ) =
           (fun g => ⟪π h v, π g x⟫_ℂ) + (fun g => ⟪π h v, π g y⟫_ℂ) := by
-        funext g; simp [map_add, inner_add_right]
+        funext g; simp [map_add (f := _), inner_add_right]
       rw [this]; exact hx.add hy
     | smul c x _ hx =>
       have : (fun g => ⟪π h v, π g (c • x)⟫_ℂ) = c • (fun g => ⟪π h v, π g x⟫_ℂ) := by

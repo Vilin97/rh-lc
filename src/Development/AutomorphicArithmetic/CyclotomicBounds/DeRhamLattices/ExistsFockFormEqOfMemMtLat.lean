@@ -60,7 +60,7 @@ theorem _root_.UpperTheory.KN.exists_fock_form_eq_of_mem_mtLat :
     | add x y _ _ hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [map_add, map_add, map_add, Pi.add_apply, ← ha, ← hb]; rfl⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), map_add (f := _), Pi.add_apply, ← ha, ← hb]; rfl⟩
     | smul s x _ hx =>
       obtain ⟨a, ha⟩ := hx
       exact ⟨s • a, by rw [LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, map_smul, Pi.smul_apply, ← ha]; rfl⟩

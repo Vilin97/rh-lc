@@ -28,7 +28,7 @@ theorem lexOrder_add_of_lt' {g h : MvPowerSeries (Fin D) ℂ} (hlt : lexOrder g 
     obtain ⟨d, hd⟩ := exists_finsupp_eq_lexOrder_of_ne_zero hg
     rw [hd]
     apply lexOrder_le_of_coeff_ne_zero
-    rw [map_add, coeff_eq_zero_of_lt_lexOrder (φ := h) (d := d) (by rw [← hd]; exact hlt), add_zero]
+    rw [map_add (f := _), coeff_eq_zero_of_lt_lexOrder (φ := h) (d := d) (by rw [← hd]; exact hlt), add_zero]
     exact coeff_ne_zero_of_lexOrder hd.symm
   · calc lexOrder g = min (lexOrder g) (lexOrder h) := (min_eq_left hlt.le).symm
       _ ≤ _ := min_lexOrder_le

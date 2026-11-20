@@ -32,7 +32,7 @@ theorem latExt_stable {p : ℕ} [Fact p.Prime] {R K : Type} [CommRing R] [CommRi
 theorem lattice_stable : ∀ (p : ℕ) [Fact p.Prime] (R : Type) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R] (K : Type) [Field K] [Algebra R K] [IsFractionRing R K] (hR : (p : R) = 0) (hK : (p : K) = 0) (Γ' : PDivGroup p R) (𝒜 : PDivGroup p K) (κ : Γ'.baseChange K ⟶ 𝒜) (w : 𝒜 ⟶ 𝒜.dual) [Module R 𝒜.RigExt] [IsScalarTower R K 𝒜.RigExt] (f f' : 𝒜 ⟶ 𝒜) (g g' : Γ' ⟶ Γ'), PDivGroup.baseChangeMap K g ≫ κ = κ ≫ f → PDivGroup.baseChangeMap K g' ≫ κ = κ ≫ f' → f ≫ w = w ≫ dualHom _ _ f' → ∀ x ∈ lattice κ w, rigExtMap f x ∈ lattice κ w := by
   intro p _ R _ _ _ K _ _ _ hR hK Γ' 𝒜 κ w _ _ f f' g g' hg hg' hw x hx
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
-  rw [map_add]
+  rw [map_add (f := _)]
   refine add_mem (Submodule.mem_sup_left ?_) (Submodule.mem_sup_right ?_)
   · obtain ⟨e, e₀, rfl, h⟩ := hy
     refine ⟨PDivGroup.omegaMap _ _ f e, PDivGroup.omegaMap _ _ g e₀, rigExtMap_rigOfOmega f e, ?_⟩

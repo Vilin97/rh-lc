@@ -18,7 +18,7 @@ private theorem trM_add (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (N M w : ℕ)
   unfold trM
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun γ _ => ?_
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
   funext u
   simp [smul_add]

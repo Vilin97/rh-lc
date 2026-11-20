@@ -59,7 +59,7 @@ theorem sqrt_fixed {F : Type} [Field F] [NumberField F] {r p : ℕ} (hr : r.Prim
   have hmem := hall ω
   have hval : algebraMap (𝓞 F) F (σ • ω - ω) = -X := by
     show σ ((1 + X) / 2) - (1 + X) / 2 = -X
-    rw [map_div₀, map_add, map_one, hσX, map_ofNat]
+    rw [map_div₀, map_add (f := _), map_one, hσX, map_ofNat]
     ring
   have hy2 : (σ • ω - ω) * (σ • ω - ω) = -((r : ℤ) : 𝓞 F) := by
     apply FaithfulSMul.algebraMap_injective (𝓞 F) F
@@ -155,7 +155,7 @@ theorem hcl_eq_one (h : IsLayer (e + 2) q d ζ a b) (p : ℕ) (hp : p.Prime) (hp
     apply FaithfulSMul.algebraMap_injective (𝓞 L) L
     have e1 : algebraMap (𝓞 L) L (τ • Θ) = τ ζ + τ ζ⁻¹ := by
       show τ (Θ : L) = _
-      rw [hΘ, map_add]
+      rw [hΘ, map_add (f := _)]
     have e2 : algebraMap (𝓞 L) L Θ = ζ + ζ⁻¹ := hΘ
     simp only [map_sub, map_mul, map_pow, map_one, e1, e2, eZ, eZi, hτζ, hτζi, inv_pow]
     field_simp

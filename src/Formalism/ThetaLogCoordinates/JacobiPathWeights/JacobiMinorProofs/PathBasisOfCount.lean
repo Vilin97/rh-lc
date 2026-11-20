@@ -157,7 +157,7 @@ private theorem weight_indicator_fst_eq_sum {n : ℕ} (i : ℕ) (d : ℕ × Fin 
   induction d using Finsupp.induction_linear with
   | zero => simp
   | add d₁ d₂ h₁ h₂ =>
-    rw [map_add, h₁, h₂]
+    rw [map_add (f := _), h₁, h₂]
     simp [Finset.sum_add_distrib]
   | single x k =>
     obtain ⟨j, b⟩ := x

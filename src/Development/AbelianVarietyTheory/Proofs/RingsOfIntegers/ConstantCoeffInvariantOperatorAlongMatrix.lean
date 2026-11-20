@@ -33,7 +33,7 @@ theorem dofN_chain {m : ℕ} (F : Fin d → PS k 2 d) (b : Fin n) (u : Fin d →
 
 theorem dofN_add (F : Fin d → PS k 2 d) (b : Fin n) (u : Fin d → k) (f g : PS k n d) :
     DofN F b u (f + g) = DofN F b u f + DofN F b u g := by
-  simp only [DofN, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [DofN, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem dofN_C_mul (F : Fin d → PS k 2 d) (b : Fin n) (u : Fin d → k) (r : k) (g : PS k n d) :
     DofN F b u (C r * g) = C r * DofN F b u g :=
@@ -184,7 +184,7 @@ theorem Tan.add {a b : Pt k n d} {w w' : Fin d → k} (h : Tan G j v a w) (h' : 
   rw [dofN_chain _ _ _ hab, Fin.sum_univ_two]
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one, h.2, h'.2, pderiv_law_left, ev_swap h.1 h'.1]
   rw [jv_add_right G h'.1 h.1, jv_add_right G h.1 h'.1, hc]
-  simp only [jv, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [jv, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem foldr_add_single {ι β : Type} [DecidableEq ι] (D : ι → β → β) (hD : ∀ a b g, D a (D b g) = D b (D a g))
     (m : ι →₀ ℕ) (l : ι) (L : List ι) (hL : L.Nodup) (g : β) :
@@ -241,7 +241,7 @@ theorem dpoly_ev (G : FGLaw k d) {ι κ : Type} [Fintype ι] [Fintype κ] (cp : 
   | C a =>
     rw [MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq, MvPolynomial.C_apply, dpoly_monomial, dpoly_monomial,
       dmon_zero, dmon_zero, ev_mul hM, DerivEndo.ev_C]
-  | add P Q hP hQ => rw [map_add, dpoly_add, dpoly_add, ev_add hM, hP, hQ]
+  | add P Q hP hQ => rw [map_add (f := _), dpoly_add, dpoly_add, ev_add hM, hP, hQ]
   | mul_X P l hP =>
     rw [dpoly_mul_X, hP, h, map_mul, MvPolynomial.aeval_X, Finset.mul_sum]
     congr 1

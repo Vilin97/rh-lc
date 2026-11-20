@@ -18,7 +18,7 @@ private theorem lowZero_mul {ι K : Type} [Field K] {a b : ℕ} {f g : MvPowerSe
   rw [MvPowerSeries.coeff_mul]
   refine Finset.sum_eq_zero fun x hx => ?_
   have hx' : x.1 + x.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.mp hx
-  have hdeg : x.1.degree + x.2.degree = m.degree := by rw [← hx', map_add]
+  have hdeg : x.1.degree + x.2.degree = m.degree := by rw [← hx', map_add (f := _)]
   by_cases h : x.1.degree < a
   · rw [hf _ h, zero_mul]
   · rw [hg _ (by omega), mul_zero]

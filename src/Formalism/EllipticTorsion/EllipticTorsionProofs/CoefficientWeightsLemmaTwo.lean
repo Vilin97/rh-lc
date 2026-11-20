@@ -227,7 +227,7 @@ theorem main (hCE : Formalism.ELL.CompExpWeight.{u}) : Formalism.ELL.EllipticTor
       simp at this
       omega
     have edeg : (Finsupp.single (0 : Fin 2) i + Finsupp.single 1 j).degree = i + j := by
-      rw [map_add, Finsupp.degree_single, Finsupp.degree_single]
+      rw [map_add (f := _), Finsupp.degree_single, Finsupp.degree_single]
     rw [map_sub, map_sub, e1, e2, e3, sub_zero, sub_zero, norm_mul, edeg] at hw
     exact_mod_cast hw
 

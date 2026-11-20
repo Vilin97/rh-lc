@@ -55,8 +55,8 @@ theorem pair_holds (Y : FBChart C V O dd) (p : ∀ o, PairData Y d (I o)) : Pair
   have hprod : Aterm Y π (o, 0) (o, 1) * Aterm Y π (o, 1) (o, 0) =
       W ^ Y.k * mvExp ((Y.k : C) • VP.hAt Y (π o 0) (π o 1)) := by
     rw [VP.Aterm_eq Y π hπ.cc, VP.Aterm_eq Y π hπ.cc, ← VP.exp_add (VP.cc_smul _ c1) (VP.cc_smul _ c2), ← hid,
-      ← VP.exp_nsmul (by rw [map_sub, map_add, c1, c2, c3]; simp),
-      ← VP.exp_add (VP.cc_smul _ (by rw [map_sub, map_add, c1, c2, c3]; simp)) (VP.cc_smul _ c3)]
+      ← VP.exp_nsmul (by rw [map_sub, map_add (f := _), c1, c2, c3]; simp),
+      ← VP.exp_add (VP.cc_smul _ (by rw [map_sub, map_add (f := _), c1, c2, c3]; simp)) (VP.cc_smul _ c3)]
     congr 1
     rw [← smul_add, ← smul_add]
     congr 1

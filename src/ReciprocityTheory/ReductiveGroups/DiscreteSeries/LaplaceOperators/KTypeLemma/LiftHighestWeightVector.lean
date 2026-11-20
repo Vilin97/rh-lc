@@ -37,7 +37,7 @@ theorem lc_adLW (E : Fin n → Fin n → Module.End ℂ M) (hE : IsGlRep E) (a b
         E c d (Finsupp.linearCombination ℂ (fun w' => wordE E w' x) (adLW a b w)) := by
       rw [Finsupp.linearCombination_mapDomain, Finsupp.apply_linearCombination]
       congr 1
-    simp only [adLW, map_add]
+    simp only [adLW, map_add (f := _)]
     rw [h1, h2, ih, wordAction_cons, wordAction_cons, map_sub]
     abel
 
@@ -46,13 +46,13 @@ theorem contraction_compactWordAction (ε : Fin n → Bool) (E : Fin n → Fin n
     (x : KS (n := n) V) (d : Fin n) : sT E V (Cone.compactWordAction ε E V hV a b x) d = E a b (sT E V x d) := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
   | single p v =>
     obtain ⟨w, c⟩ := p
     have key := lc_adLW E hE a b (v : M) w
     rw [Finsupp.linearCombination_apply, Finsupp.sum] at key
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [Cone.compactWordAction_single, dif_pos hab, map_add, map_sum, sT_single, Pi.add_apply, Finset.sum_apply]
+      rw [Cone.compactWordAction_single, dif_pos hab, map_add (f := _), map_sum, sT_single, Pi.add_apply, Finset.sum_apply]
     simp only [map_smul, sT_single, Pi.smul_apply]
     by_cases hd : d = c
     · subst hd
@@ -66,7 +66,7 @@ theorem sT_sA (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End ℂ M) (
   have e : sA ε E V hV a b x = Cone.compactWordAction ε E V hV a b x + Cone.sC V a b x := by
     simp [Cone.compactWordAction]
   funext d
-  rw [e, map_add, Pi.add_apply, contraction_compactWordAction ε E V hV hE a b hab, Cone.sT_sC, Cone.tensV_eq]
+  rw [e, map_add (f := _), Pi.add_apply, contraction_compactWordAction ε E V hV hE a b hab, Cone.sT_sC, Cone.tensV_eq]
 
 theorem sA_single' (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End ℂ M) (V : Submodule ℂ M)
     (hV : IsKStableSub ε E V) (a b : Fin n) (p : List (Fin n × Fin n) × Fin n) (v : V) :
@@ -92,11 +92,11 @@ theorem ipK_sC (V : Submodule ℂ M) (a b : Fin n) (x y : KS (n := n) V) :
   classical
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x x' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+  | add x x' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
   | single p v =>
     induction y using Finsupp.induction_linear with
     | zero => simp
-    | add y y' h h' => simp only [map_add, h, h']
+    | add y y' h h' => simp only [map_add (f := _), h, h']
     | single q u =>
       obtain ⟨w, c⟩ := p
       obtain ⟨w', c'⟩ := q
@@ -109,7 +109,7 @@ theorem ipK_sA (ε : Fin n → Bool) (E : Fin n → Fin n → Module.End ℂ M) 
     (x y : KS (n := n) V) : Cone.ipK V (sA ε E V hV a b x) y = Cone.ipK V x (sA ε E V hV b a y) := by
   have e : ∀ a b (z : KS (n := n) V), sA ε E V hV a b z = Cone.compactWordAction ε E V hV a b z + Cone.sC V a b z := by
     intro a b z; simp [Cone.compactWordAction]
-  rw [e, e, map_add, LinearMap.add_apply, map_add, Cone.inner_compactWordAction_adjoint hV hU hab, ipK_sC]
+  rw [e, e, map_add (f := _), LinearMap.add_apply, map_add (f := _), Cone.inner_compactWordAction_adjoint hV hU hab, ipK_sC]
 
 theorem lift_highestWeightVector {M : Type*} [NormedAddCommGroup M] [InnerProductSpace ℂ M] (ε : Fin n → Bool)
     (E : Fin n → Fin n → Module.End ℂ M) (V : Submodule ℂ M) (hV : IsKStableSub ε E V)
@@ -148,7 +148,7 @@ theorem lift_highestWeightVector {M : Type*} [NormedAddCommGroup M] [InnerProduc
       re_inner_nonneg := fun x => by
         set_option synthInstance.maxHeartbeats 100000 in
           rw [Cone.ipK_apply, map_sum]; exact sum_nonneg fun p _ => inner_self_nonneg
-      add_left := fun x y z => by rw [map_add, LinearMap.add_apply]
+      add_left := fun x y z => by rw [map_add (f := _), LinearMap.add_apply]
       smul_left := fun x y r => by rw [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul]
       definite := fun x hx => by
         have h1 := congrArg RCLike.re hx

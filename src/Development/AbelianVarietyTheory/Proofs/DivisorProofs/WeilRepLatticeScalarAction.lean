@@ -81,7 +81,7 @@ theorem pure_update_add_at (f : SInf F κ) (φ : ∀ u : Pl F, (κ → Fv F u) �
   · rw [Function.update_of_ne e]
     congr 1
     funext i
-    rw [Pi.add_apply, map_add, eq_atPlace_of_at v hz i, evFin_atPlace_ne e, add_zero]
+    rw [Pi.add_apply, map_add (f := _), eq_atPlace_of_at v hz i, evFin_atPlace_ne e, add_zero]
 
 end GlobalTheory.FinComm.VacLaw
 

@@ -24,7 +24,7 @@ private theorem emb_eq {M Ω : Type} [Field M] [NumberField M] [Field Ω] [Algeb
       rw [show ((y * x : 𝓞 M) : M) = (y : M) * (x : M) from map_mul _ _ _, map_mul, norm_mul]
       exact mul_lt_one_of_nonneg_of_lt_one_right (PI.CompDegEF.norm_le_one_of_integer t y) (norm_nonneg _) hx
     have h3 := IsUltrametricDist.norm_add_le_max (t ((y * x : 𝓞 M) : M)) (t (a : M))
-    rw [← map_add, show ((y * x : 𝓞 M) : M) + (a : M) = 1 by
+    rw [← map_add (f := _), show ((y * x : 𝓞 M) : M) + (a : M) = 1 by
       rw [← map_add (algebraMap (𝓞 M) M), e, map_one], map_one, norm_one] at h3
     exact absurd (h3.trans_lt (max_lt h2 h1)) (lt_irrefl _)
   have hn := GlobalTheory.GalFirstClause.Emb.norm_eq_of_samePlace jE t u (hj.mem_placesOver h) hjE ht

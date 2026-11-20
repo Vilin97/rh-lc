@@ -73,7 +73,7 @@ def BlL (ρ : C) (ρ' : C') :
     Formalism.L2.SG.PackageTie.HS (PiLp 2 (fun _ : C' => V')) (PiLp 2 (fun _ : C => V)) →ₗ[ℂ]
       Formalism.L2.SG.PackageTie.HS V' V where
   toFun x := Formalism.L2.SG.PackageTie.hsEmb (blockOf (opOf x) ρ ρ')
-  map_add' x y := by rw [opOf_add, blockOf_add, map_add]
+  map_add' x y := by rw [opOf_add, blockOf_add, map_add (f := _)]
   map_smul' c x := by rw [opOf_smul, blockOf_smul, map_smul]; rfl
 
 def Bl (ρ : C) (ρ' : C') :

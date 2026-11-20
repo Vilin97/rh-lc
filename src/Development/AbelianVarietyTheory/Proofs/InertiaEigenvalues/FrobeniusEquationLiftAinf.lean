@@ -80,7 +80,7 @@ theorem span_mem_Lat {M n : ℕ} {a : Ainf l}
   have h := FilB_zero_mul (io_mem AI y) (FilB_pow (io_ξ_mem AI) M)
   rw [mul_one] at h
   convert h using 1
-  simp only [map_add, map_mul, map_pow]
+  simp only [map_add (f := _), map_mul, map_pow]
   ring
 
 theorem tail (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (hT : LocTied l P AI)
@@ -114,7 +114,7 @@ theorem tail (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (hT : 
   have hy : (D 0 + AI.μ * y') - WittVector.frobenius (D 0 + AI.μ * y') =
       ∑ i ∈ T, w i * WittVector.teichmuller l AI.ε ^ m i := by
     simp only [mul_sub, mul_one, Finset.sum_sub_distrib] at hq
-    rw [map_add]
+    rw [map_add (f := _)]
     linear_combination h0 + hy' - hq
   refine ⟨D 0 + AI.μ * y', hy, ?_⟩
   set y := D 0 + AI.μ * y' with hydef
@@ -182,7 +182,7 @@ theorem tail (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (hT : 
           (l : P.R.BdR) ^ ((j + 1) * n) * oK P K ((frK P K ^ n) (d (j + 1))) * u P (j + 1) := by
         simp only [E, hydef]
         rw [Finset.sum_range_succ', e0]
-        simp only [map_add, map_mul, u, zero_mul, pow_zero, Nat.factorial_zero, Nat.cast_one,
+        simp only [map_add (f := _), map_mul, u, zero_mul, pow_zero, Nat.factorial_zero, Nat.cast_one,
           inv_one, map_one]
         ring
       rw [e1]

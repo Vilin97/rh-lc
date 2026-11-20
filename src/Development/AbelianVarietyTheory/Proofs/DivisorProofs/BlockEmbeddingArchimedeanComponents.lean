@@ -34,7 +34,7 @@ theorem compInf_eq_evTens (w : InfinitePlace F) (z : AF F ⊗[F] E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_sigR {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra F R'] (a : R →ₐ[F] R')
     (σ : E →ₐ[F] E) (z : R ⊗[F] E) :
@@ -43,7 +43,7 @@ theorem map_sigR {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_cT_sigR_map {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra F R'] (a : R →ₐ[F] R')
     (σ : E →ₐ[F] E) {m p : Type} (M : Matrix m p (R ⊗[F] E)) :
@@ -150,7 +150,7 @@ theorem evTens_rTensor_self (w : InfinitePlace F) (s : w.Completion ⊗[F] E) :
     change (GlobalTheory.AutFunCompare.evW w (GlobalTheory.AutFunCompare.sgW w a)) ⊗ₜ[F] x = a ⊗ₜ[F] x
     congr 1
     exact Pi.single_eq_same w a
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem evTens_rTensor_ne {w u : InfinitePlace F} (h : u ≠ w) (s : w.Completion ⊗[F] E) :
     evTens u (LinearMap.rTensor E (GlobalTheory.AutFunCompare.sgW w) s) = 0 := by
@@ -161,7 +161,7 @@ theorem evTens_rTensor_ne {w u : InfinitePlace F} (h : u ≠ w) (s : w.Completio
     change (GlobalTheory.AutFunCompare.evW u (GlobalTheory.AutFunCompare.sgW w a)) ⊗ₜ[F] x = 0
     rw [show GlobalTheory.AutFunCompare.evW u (GlobalTheory.AutFunCompare.sgW w a) = 0 from Pi.single_eq_of_ne h a]
     exact TensorProduct.zero_tmul _ _
-  | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
 
 theorem evTens_pi_bijective : Function.Bijective (Pi.ringHom fun w : InfinitePlace F => (evTens w : Ainf F ⊗[F] E →+* _)) := by
   classical

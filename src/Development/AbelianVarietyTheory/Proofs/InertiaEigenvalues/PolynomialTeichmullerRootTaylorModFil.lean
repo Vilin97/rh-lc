@@ -46,7 +46,7 @@ theorem eval₂_sub_trunc_mem (φ : R →+* P.R.BdR) (hφ : ∀ x, φ x ∈ FilB
       simp
   | add p q hp hq =>
     have := add_mem hp hq
-    rw [map_add, map_add, Polynomial.eval₂_add, Polynomial.eval₂_add]
+    rw [map_add (f := _), map_add (f := _), Polynomial.eval₂_add, Polynomial.eval₂_add]
     convert this using 1
     ring
   | monomial n a h =>

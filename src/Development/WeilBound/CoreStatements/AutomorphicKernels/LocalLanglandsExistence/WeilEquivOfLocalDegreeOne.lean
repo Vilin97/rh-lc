@@ -164,7 +164,7 @@ theorem weil_fix_sqrt {Ω : Type} [Field Ω] {A : ValuationSubring Ω} {K : Type
       rw [one_mul] at this
       exact absurd hprod (not_lt.mpr this)
     have h2 : A.valuation ((σ : G K Ω) (y + 1)) < 1 := (valuation_apply_lt_one_iff hD _).mpr hy1
-    rw [map_add, map_one, hσy, show -1 - y + 1 = -y by ring, Valuation.map_neg] at h2
+    rw [map_add (f := _), map_one, hσy, show -1 - y + 1 = -y by ring, Valuation.map_neg] at h2
     exact absurd h2 (not_lt.mpr hyl')
 
 theorem exists_globalModel_fields {Ω : Type} [Field Ω] (A : ValuationSubring Ω) {K : Type} [Field K] [NumberField K]

@@ -44,13 +44,13 @@ theorem scalar_descent [IsDomain R'] (D : Set (R' ≃ₐ[R] R')) (ϖ : R)
       intro σ hσ
       have h := hx σ hσ
       have e : σ x - x = algebraMap R R' ϖ * (σ t - t) := by
-        rw [hx']; simp only [map_add, map_mul, AlgEquiv.commutes]; ring
+        rw [hx']; simp only [map_add (f := _), map_mul, AlgEquiv.commutes]; ring
       rw [e, pow_succ'] at h
       exact (mul_dvd_mul_iff_left hπ).mp h
     obtain ⟨c1, hc1⟩ := ih t ht'
     refine ⟨c0 + ϖ * c1, ?_⟩
     have e : x - algebraMap R R' (c0 + ϖ * c1) = algebraMap R R' ϖ * (t - algebraMap R R' c1) := by
-      rw [hx']; simp only [map_add, map_mul]; ring
+      rw [hx']; simp only [map_add (f := _), map_mul]; ring
     rw [e, pow_succ']
     exact mul_dvd_mul_left _ hc1
 

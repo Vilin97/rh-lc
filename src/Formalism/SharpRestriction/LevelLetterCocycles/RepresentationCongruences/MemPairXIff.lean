@@ -16,7 +16,7 @@ theorem mem_pair_X_iff (a : O) (f : O⟦X⟧) (B : ℕ) :
   constructor
   · intro hf j hj
     obtain ⟨u, w, huw⟩ := Ideal.mem_span_pair.mp hf
-    rw [← huw, map_add, PowerSeries.coeff_mul_C, PowerSeries.coeff_mul_X_pow', if_neg (by omega), add_zero]
+    rw [← huw, map_add (f := _), PowerSeries.coeff_mul_C, PowerSeries.coeff_mul_X_pow', if_neg (by omega), add_zero]
     exact dvd_mul_left _ _
   · intro h
     choose c hc using h

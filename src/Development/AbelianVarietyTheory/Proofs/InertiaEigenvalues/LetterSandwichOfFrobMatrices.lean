@@ -81,7 +81,7 @@ theorem isUnit_Q : IsUnit (algebraMap (LetA O n) W.EE W.Q) := by
     have h2 := (Ideal.mem_jacobson_bot.1 hj) (x * r * (↑u⁻¹ : W.EE))
     have h3 : x * algebraMap (LetA O n) W.EE W.q =
         (((PD.p : ℕ) : W.EE) * (x * r * (↑u⁻¹ : W.EE)) + 1) * u := by
-      rw [hx, ← map_mul, h1, map_sub, map_pow, map_add, map_one, ← hx, hr, ← hu]
+      rw [hx, ← map_mul, h1, map_sub, map_pow, map_add (f := _), map_one, ← hx, hr, ← hu]
       have := u.inv_mul
       linear_combination (-((PD.p : ℕ) : W.EE) * x * r) * this
     exact isUnit_of_mul_isUnit_right (h3 ▸ h2.mul u.isUnit)

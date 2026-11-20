@@ -102,7 +102,7 @@ theorem sb_decomp : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintyp
   let U : AddSubgroup (κ → FiniteAdeleRing (𝓞 F) F) :=
     { carrier := {y | ∀ i v, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (y i) ∈ N v}
       zero_mem' := fun i v => by simp
-      add_mem' := fun ha hb i v => by simpa [map_add] using add_mem (ha i v) (hb i v)
+      add_mem' := fun ha hb i v => by simpa [map_add (f := _)] using add_mem (ha i v) (hb i v)
       neg_mem' := fun ha i v => by simpa [map_neg] using neg_mem (ha i v) }
   have hinv : ∀ u ∈ U, ∀ z, g (z + u) = g z := fun u hu z => by
     by_cases hz : z ∈ tsupport g

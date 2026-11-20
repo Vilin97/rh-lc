@@ -67,7 +67,7 @@ theorem lemmaG3_of_inputs (hT : 3 ≤ Tu D u) (hT' : 3 ≤ Tu D u') (t0 t1 t2 : 
   · set ω := omp t1.frame.fl (X.Fu u) with hω
     have e : yT' Y u u' t2 - yT' Y u u' t1 =
         ((Tu D u' : ℕ) : D.host.E) • (s'.symm (t1.lin.symm ω) - t1.lin.symm ω) := by
-      simp only [yT', yv, o3, o4, frame_z_eq_lin_zu, map_add, map_smul, LinearEquiv.symm_apply_apply, hsymm, smul_sub]
+      simp only [yT', yv, o3, o4, frame_z_eq_lin_zu, map_add (f := _), map_smul, LinearEquiv.symm_apply_apply, hsymm, smul_sub]
       abel
     rw [e] at hy'
     have hv := (Submodule.smul_mem_iff _ hTE').1 hy'

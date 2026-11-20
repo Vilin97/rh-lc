@@ -67,8 +67,8 @@ theorem ipT_herm (w w' : ⨂[ℂ] i, E i) : ipT w w' = conj (ipT w' w) := by
       simp only [map_smul, map_smulₛₗ, LinearMap.smul_apply, ipT_tprod, smul_eq_mul, map_mul, map_prod, inner_conj_symm,
         RingHomCompTriple.comp_apply, RingHom.id_apply, Complex.conj_conj]
       ring
-    | add x y hx hy => rw [map_add, hx, hy, map_add, LinearMap.add_apply, map_add]
-  | add x y hx hy => simp [map_add, LinearMap.add_apply, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _), LinearMap.add_apply, map_add (f := _)]
+  | add x y hx hy => simp [map_add (f := _), LinearMap.add_apply, hx, hy]
 
 end GlobalTheory.PiTensorInner
 
@@ -86,8 +86,8 @@ theorem ipT_map {G : ι → Type*} [∀ i, NormedAddCommGroup (G i)] [∀ i, Inn
     induction y using PiTensorProduct.induction_on with
     | smul_tprod s b =>
       simp only [map_smul, map_smulₛₗ, LinearMap.smul_apply, PiTensorProduct.map_tprod, ipT_tprod, hf]
-    | add x y hx hy => simp only [map_add, hx, hy]
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
 
 theorem ipT_pos_fd [∀ i, FiniteDimensional ℂ (E i)] (x : ⨂[ℂ] i, E i) (hx : x ≠ 0) : 0 < (ipT x x).re := by
   classical
@@ -137,7 +137,7 @@ theorem exists_fd (w : ⨂[ℂ] i, E i) : ∃ F : ∀ i, Submodule ℂ (E i), (�
     refine ⟨fun i => F₁ i ⊔ F₂ i, fun i => inferInstance,
       PiTensorProduct.map (fun i => Submodule.inclusion (le_sup_left : F₁ i ≤ F₁ i ⊔ F₂ i)) x₀ +
       PiTensorProduct.map (fun i => Submodule.inclusion (le_sup_right : F₂ i ≤ F₁ i ⊔ F₂ i)) y₀, ?_⟩
-    rw [map_add, ← LinearMap.comp_apply, ← LinearMap.comp_apply, ← PiTensorProduct.map_comp, ← PiTensorProduct.map_comp]
+    rw [map_add (f := _), ← LinearMap.comp_apply, ← LinearMap.comp_apply, ← PiTensorProduct.map_comp, ← PiTensorProduct.map_comp]
     rfl
 
 theorem ipT_pos (w : ⨂[ℂ] i, E i) (hw : w ≠ 0) : 0 < (ipT w w).re := by

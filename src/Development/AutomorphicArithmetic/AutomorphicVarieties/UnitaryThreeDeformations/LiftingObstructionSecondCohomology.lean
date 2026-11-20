@@ -152,4 +152,4 @@ theorem UpperTheory.V.UnitaryThreeInertia.lifting_obstruction_second_cohomology 
     have hx : κ (g, h) a c = ((κK (g, h) a c : KO) : R) := rfl
     rw [hx, ← hpq (κK (g, h) a c)]
     simp_rw [e]
-    split_ifs <;> simp [map_add, map_sub, map_neg, map_smul, Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.smul_sum]
+    split_ifs <;> simp [map_add (f := _), map_sub, map_neg, map_smul, Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.smul_sum]

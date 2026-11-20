@@ -48,7 +48,7 @@ theorem toEAf_surjective (z : EAf D) : ∃ w : AE D, toEAf D w = z := by
   | add x y hx hy =>
     obtain ⟨s, hs⟩ := hx
     obtain ⟨t, ht⟩ := hy
-    exact ⟨s + t, by rw [RingHom.map_add, hs, ht]⟩
+    exact ⟨s + t, by rw [RingHom.map_add (f := _), hs, ht]⟩
 
 theorem exists_half_frMapAdj (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)) (βT : GL (Fin T.rank) (EAf D))
     {e : AE D} (he : e * e = e) (I : Matrix (Fin S.rank) (Fin T.rank) (EAf D)) :

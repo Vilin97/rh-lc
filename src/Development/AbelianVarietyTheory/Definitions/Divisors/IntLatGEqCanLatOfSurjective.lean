@@ -68,7 +68,7 @@ theorem intLat_pair_mem {h : HdR c.A} (hh : h ∈ intLat s c) {ψ : LinearMap.Bi
   induction hh using Submodule.span_induction with
   | mem x hx => exact hx.2 ψ hψ w hw
   | zero => exact ⟨0, by simp⟩
-  | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply]; exact (rangeSub c).add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply]; exact (rangeSub c).add_mem hx hy
   | smul r x _ hx =>
     rw [← algebraMap_smul c.S r x, map_smul, LinearMap.smul_apply, smul_eq_mul]
     obtain ⟨a, ha⟩ := hx

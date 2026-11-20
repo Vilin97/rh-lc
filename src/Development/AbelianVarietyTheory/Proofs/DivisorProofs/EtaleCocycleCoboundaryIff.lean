@@ -100,7 +100,7 @@ theorem rel_add (R : Type) [CommRing R] (F : Shv R) (u u' : Z1 F A B) (x x' : H 
   refine ⟨s + s', ?_, ?_⟩
   · rw [val_add, hs, hs']
     rfl
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact (GlobalTheory.T.simplicialCochain_classes_basic_properties R F _ 1).2.1 s s' _ _ hx hx'
 
 theorem rel_zero (R : Type) [CommRing R] (F : Shv R) : Rel A B R F 0 0 := by

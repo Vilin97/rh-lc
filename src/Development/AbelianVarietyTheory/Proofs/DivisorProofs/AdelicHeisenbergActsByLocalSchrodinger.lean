@@ -51,12 +51,12 @@ theorem rho_acts_locCo : ∀ {F : Type} [Field F] [NumberField F] {W : Type} [Ad
       (fun i => GlobalTheory.AdelicU.evFin F v (x i)) ⬝ᵥ (GlobalTheory.LatVac.locCo co v γ).2 +
         ⅟(2 : Fv F v) * ((GlobalTheory.LatVac.locCo co v γ).1 ⬝ᵥ (GlobalTheory.LatVac.locCo co v γ).2) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [dotProduct, map_add, map_sum, map_mul, GlobalTheory.VacAny.evFin_invOf_two, hw]
+      simp only [dotProduct, map_add (f := _), map_sum, map_mul, GlobalTheory.VacAny.evFin_invOf_two, hw]
     rfl
   have e2 : (fun i => GlobalTheory.AdelicU.evFin F v ((x + w.1) i)) =
       (fun i => GlobalTheory.AdelicU.evFin F v (x i)) + (GlobalTheory.LatVac.locCo co v γ).1 := by
     funext i
-    simp only [Pi.add_apply, map_add, hw]
+    simp only [Pi.add_apply, map_add (f := _), hw]
     rfl
   rw [e1, e2, mul_assoc]
 

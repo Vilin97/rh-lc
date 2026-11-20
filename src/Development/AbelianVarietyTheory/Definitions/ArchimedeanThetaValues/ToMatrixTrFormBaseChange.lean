@@ -142,7 +142,7 @@ theorem hypForm_bijective (H : Host E) : Function.Bijective (hypForm H) := by
     refine ⟨(x, (toDual H).symm (φ ∘ₗ LinearMap.inl ℤ _ _)), LinearMap.ext fun v => ?_⟩
     have h := LinearMap.congr_fun hx (toDual H v.2)
     simp at h
-    simp [h, ← map_add]
+    simp [h, ← map_add (f := _)]
 
 abbrev BasisIndex (E : Type) [Field E] [NumberField E] : Type := Free.ChooseBasisIndex ℤ (𝓞 E)
 

@@ -39,7 +39,7 @@ variable {Y : Model Xo c (RingHom.id c.F)} (X : FlagCover Y)
 def vanOut (e : Ix Dw → ℤ) : Submodule c.F (H0 (flagStr X) (X.LL e) ⊤) where
   carrier := {s | ∀ y, y ∉ flagOpen X → ∀ i hi, germ i y (memTop y) hi s ∈ IsLocalRing.maximalIdeal _}
   zero_mem' y _ i hi := by rw [map_zero]; exact zero_mem _
-  add_mem' hs ht y hy i hi := by rw [map_add]; exact add_mem (hs y hy i hi) (ht y hy i hi)
+  add_mem' hs ht y hy i hi := by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hs y hy i hi) (ht y hy i hi)
   smul_mem' a s hs y hy i hi := by rw [germ_smul]; exact Ideal.mul_mem_left _ _ (hs y hy i hi)
 
 def ruleTop (e : Ix Dw → ℤ) : H0 (flagStr X) (X.LL e) ⊤ →ₗ[c.F] Rul Xo c :=

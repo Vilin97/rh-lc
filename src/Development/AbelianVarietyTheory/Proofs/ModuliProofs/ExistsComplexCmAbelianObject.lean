@@ -52,7 +52,7 @@ theorem exists_obj_complex : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     exact ⟨a, rfl⟩
   have hadd : ∀ (n : ℕ) a b, u.ex ((n : ℂ)⁻¹ • P (f n (a + b))) =
       u.ex ((n : ℂ)⁻¹ • P (f n a)) * u.ex ((n : ℂ)⁻¹ • P (f n b)) := fun n a b => by
-    rw [map_add, map_add, smul_add, u.ex_add]
+    rw [map_add (f := _), map_add (f := _), smul_add, u.ex_add]
   have hM : 0 < l.M := lt_of_lt_of_le (by norm_num) l.three_le
   obtain ⟨κ, hκ₁, hκ₂, hκ₃⟩ := exists_halfLevel (D := D) l (fun a => u.ex ((l.M : ℂ)⁻¹ • P (f l.M a))) (hadd l.M)
     fun b => by rw [map_nsmul, hmul _ _ hM]

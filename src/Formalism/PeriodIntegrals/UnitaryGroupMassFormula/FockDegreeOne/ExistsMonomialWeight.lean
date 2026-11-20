@@ -15,7 +15,7 @@ theorem pd_comm {σ : Type*} (i j : σ) (P : MvPolynomial σ ℂ) :
   classical
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp =>
     have hc : ∀ a b : σ, pderiv a (pderiv b (X n : MvPolynomial σ ℂ)) = 0 := by
       intro a b
@@ -23,7 +23,7 @@ theorem pd_comm {σ : Type*} (i j : σ) (P : MvPolynomial σ ℂ) :
       split_ifs
       · exact Derivation.map_one_eq_zero _
       · exact map_zero _
-    simp only [Derivation.leibniz, map_add, smul_eq_mul]
+    simp only [Derivation.leibniz, map_add (f := _), smul_eq_mul]
     rw [hc i j, hc j i, hp]
     ring
 

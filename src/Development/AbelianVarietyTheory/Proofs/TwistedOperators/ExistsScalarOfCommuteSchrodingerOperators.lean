@@ -43,7 +43,7 @@ theorem inner_toLp_map_of_integral_norm_sq : ∀ (l : Type) [Fintype l] (S : Sch
   have e3 : f.toLp 2 volume = U f := rfl
   have e4 : g.toLp 2 volume = U g := rfl
   rw [e1, e2, e3, e4, inner_eq_sum_norm_sq_div_four, inner_eq_sum_norm_sq_div_four]
-  simp only [← map_add, ← map_sub, ← map_smul, hn]
+  simp only [← map_add (f := _), ← map_sub, ← map_smul, hn]
 
 theorem exists_eq_smul_of_commute_rhoFun : ∀ (l : Type) [Fintype l] (S : Sch l →ₗ[ℂ] Sch l),
     (∀ f, ∫ x, ‖S f x‖ ^ 2 = ∫ x, ‖f x‖ ^ 2) →

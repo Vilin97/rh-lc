@@ -52,7 +52,7 @@ theorem map_adjoin_mem (T : A →+* B) (g : B →+* C) (f : W →+* C)
     obtain ⟨n, rfl⟩ := hy
     exact map_dp_mem T g f hf ξ hl M n (hd n)
   | algebraMap x => rw [hf]; exact Subring.subset_closure (Or.inl (Set.mem_range_self x))
-  | add x y _ _ hx hy => rw [map_add, map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _)]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul, map_mul]; exact mul_mem hx hy
 
 end Abstract

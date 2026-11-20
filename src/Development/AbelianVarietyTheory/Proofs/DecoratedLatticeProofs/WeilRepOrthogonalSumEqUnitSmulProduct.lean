@@ -21,12 +21,12 @@ variable {D : D7} {S A B T : HSp D} (o : OrthDec S A B)
 
 def opA (M : Module.End ℂ (WO A T → ℂ)) : Module.End ℂ (WO S T → ℂ) where
   toFun f x := M (fun u => f ((o.resS T).symm (u, (o.resS T x).2))) (o.resS T x).1
-  map_add' f g := by funext x; show M (_ + _) _ = _; rw [map_add]; rfl
+  map_add' f g := by funext x; show M (_ + _) _ = _; rw [map_add (f := _)]; rfl
   map_smul' c f := by funext x; show M (c • _) _ = _; rw [map_smul]; rfl
 
 def opB (M : Module.End ℂ (WO B T → ℂ)) : Module.End ℂ (WO S T → ℂ) where
   toFun f x := M (fun v => f ((o.resS T).symm ((o.resS T x).1, v))) (o.resS T x).2
-  map_add' f g := by funext x; show M (_ + _) _ = _; rw [map_add]; rfl
+  map_add' f g := by funext x; show M (_ + _) _ = _; rw [map_add (f := _)]; rfl
   map_smul' c f := by funext x; show M (c • _) _ = _; rw [map_smul]; rfl
 
 theorem opA_apply (M : Module.End ℂ (WO A T → ℂ)) (f : WO S T → ℂ) (x : WO S T) :
@@ -42,7 +42,7 @@ theorem heisO_sum (ψ : AddChar (AF D.host.F) ℂ) (w : WO S T) (f : WO S T → 
   simp only [heisO]
   rw [o.symplOH_resS, AddEquiv.apply_symm_apply, AddChar.map_add_eq_mul]
   congr 2
-  rw [← Prod.mk_add_mk, map_add, AddEquiv.symm_apply_apply]
+  rw [← Prod.mk_add_mk, map_add (f := _), AddEquiv.symm_apply_apply]
 
 theorem opB_heisO {ψ : AddChar (AF D.host.F) ℂ} {χ χ' : (AE D)ˣ →* Circle} {om : Om B T}
     (hom : IsWeilDatumO ψ B T χ χ' om) (b : GA D B) (h : GA D T) (w : WO S T) {f : WO S T → ℂ}

@@ -102,7 +102,7 @@ theorem rho_eq_zero_iff {p : ℕ} [Fact p.Prime] {D : PrismData p} {S : CycPerfd
     rw [zero_sub, neg_mem_iff] at hm
     obtain ⟨u, hu, v, hv, rfl⟩ := Submodule.mem_sup.1 hm
     obtain ⟨y, rfl⟩ := (PerfdLat.mem_base S u).1 hu
-    rw [map_add, (c.mem_W v).1 (hW hv), add_zero, map_smul] at hx
+    rw [map_add (f := _), (c.mem_W v).1 (hW hv), add_zero, map_smul] at hx
     exact ⟨y, (reg hx).symm⟩
   · rintro ⟨y, hy⟩
     have hb := (PerfdLat.mem_base S _).2 ⟨y, rfl⟩
@@ -134,7 +134,7 @@ theorem ker_rho : RingRSt := by
   have hΦ : ∀ x, Φ x = P (eO x) := fun x => by
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r w =>
       have : r ⊗ₜ[A] w = r • ((1 : S.R) ⊗ₜ[A] w) := by rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
       rw [this, map_smul, map_smul, map_smul, hΦ1, hO]

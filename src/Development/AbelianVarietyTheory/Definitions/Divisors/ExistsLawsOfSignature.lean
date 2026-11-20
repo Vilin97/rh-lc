@@ -53,13 +53,13 @@ theorem det_eq_one_of_half (l : Level H) (Di : Datum H) {r : ℕ} (X : Data E r)
     (fun a ha => by
       obtain ⟨b, hb⟩ := hh a ha
       refine ⟨b, φ.injective (Subtype.ext ?_)⟩
-      rw [hf, hb, map_add, map_nsmul]; rfl)
+      rw [hf, hb, map_add (f := _), map_nsmul]; rfl)
   refine GlobalTheory.CongruenceDet.det_eq_one E r l.M X.Gm X.Λ γ X.Gm_det X.Λ_fg X.Λ_span l.three_le hU fun v hv => ?_
   obtain ⟨a, ha⟩ := φ.surjective ⟨v, hv⟩
   obtain ⟨e, he⟩ := hfull a
   have hv' : (φ a : Fin r → E) = v := congrArg Subtype.val ha
   refine ⟨φ e, (φ e).2, ?_⟩
-  rw [← hv', ← hf, he, map_add, map_nsmul]; rfl
+  rw [← hv', ← hf, he, map_add (f := _), map_nsmul]; rfl
 
 theorem exists_unf (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (r : ℕ) (ξ₀ : E)
     (Gm : Matrix (Fin r) (Fin r) E) (φ : Dw.La →ₗ[𝓞 E] (Fin r → E)) (hpq : 1 ≤ Dw.p + Dw.q) (hA : l.A = 1)

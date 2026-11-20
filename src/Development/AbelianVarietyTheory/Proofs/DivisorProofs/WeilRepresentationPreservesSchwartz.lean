@@ -94,7 +94,7 @@ variable {κ : Type} [Fintype κ]
 def trL (c : κ → mixedEmbedding.mixedSpace F) : (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap
     { toFun := fun y => Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (y ⬝ᵥ c)
-      map_add' := fun y y' => by rw [add_dotProduct, map_add]
+      map_add' := fun y y' => by rw [add_dotProduct, map_add (f := _)]
       map_smul' := fun r y => by rw [smul_dotProduct, map_smul]; rfl }
 
 theorem trL_apply (c y : κ → mixedEmbedding.mixedSpace F) :
@@ -147,13 +147,13 @@ theorem schr_pureA_mem [Invertible (2 : AdeleRing (𝓞 F) F)] (ψ : AddChar (Ad
     congr 1
     · have e1 : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F (mk (p1 (x ⬝ᵥ w.2 + h)) 0) = y ⬝ᵥ c + q h := by
         change q (x ⬝ᵥ w.2 + h) = _
-        rw [map_add, RingHom.map_dotProduct]
+        rw [map_add (f := _), RingHom.map_dotProduct]
         rfl
-      rw [e1, map_add, eChar_apply, ContinuousLinearMap.neg_apply, trL_apply]
+      rw [e1, map_add (f := _), eChar_apply, ContinuousLinearMap.neg_apply, trL_apply]
       congr 1
       push_cast
       ring
-    · rw [map_add, RingHom.map_dotProduct]
+    · rw [map_add (f := _), RingHom.map_dotProduct]
       rfl
   change ψ (x ⬝ᵥ w.2 + h) * (f (fun i => q ((x + w.1) i)) * g (fun i => p2 ((x + w.1) i))) =
     archS f c t k y * (finChar ψ (z ⬝ᵥ d + p2 h) * g (z + s))

@@ -247,7 +247,7 @@ theorem charUnramAt_of {χ : (AE D)ˣ →* Circle} {v : HeightOneSpectrum (𝓞 
     induction hy using AddSubgroup.closure_induction with
     | mem y hy => obtain ⟨α, hα, x, rfl⟩ := hy; exact GlobalTheory.AdelicU.tmul_mem_intLoc (hα v) x
     | zero => rw [RingHom.map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (f := _)]; exact add_mem hy hz
     | neg y _ hy => rw [RingHom.map_neg]; exact neg_mem hy
   have kin : ∀ z : (AE D)ˣ, finPart D (z : AE D) ∈ intAE D →
       (GlobalTheory.Doubling.unitFin D.host.F D.host.E v z).val ∈ GlobalTheory.AdelicU.intLoc D.host.F D.host.E v := fun z hz =>

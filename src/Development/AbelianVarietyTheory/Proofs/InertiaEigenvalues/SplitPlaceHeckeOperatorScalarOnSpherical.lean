@@ -290,7 +290,7 @@ theorem rank_le {ρ : Representation ℂ (GQ L n) W} {S : Submodule ℂ (GAf L n
       obtain ⟨h', rfl⟩ := hx
       exact Submodule.subset_span ⟨h * h', funext fun x => congrArg f (mul_assoc x h h').symm⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
   have hfT : f ∈ T := Submodule.subset_span ⟨1, funext fun g => congrArg f (mul_one g)⟩
   have hT : T = S := by

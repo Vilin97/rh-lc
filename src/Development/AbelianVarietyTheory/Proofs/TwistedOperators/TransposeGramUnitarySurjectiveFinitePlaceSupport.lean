@@ -78,7 +78,7 @@ theorem kapX_onto : ∀ (D : D7) (X : HSp D) {d : ℕ} (e : Fin X.rank ≃ Fin d
     have e2 : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.mat h (e i) (e j) =
         (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.mat h - 1) (e i) (e j) + (1 : Matrix (Fin d) (Fin d) (AE D)) (e i) (e j) := by
       rw [Matrix.sub_apply, sub_add_cancel]
-    rw [e2, map_add, hz, zero_add]
+    rw [e2, map_add (f := _), hz, zero_add]
     by_cases hij : i = j
     · subst hij
       rw [Matrix.one_apply_eq (α := AF D.host.F ⊗[D.host.F] D.host.E), map_one,

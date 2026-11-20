@@ -131,7 +131,7 @@ private theorem UpperTheory.ConvolutionTheory.Tf.crv_AdU (X : 𝔤) (u : Univers
     noncomm_ring
   | add a b ha hb =>
     have key := ha.add hb
-    simp only [map_add]
+    simp only [map_add (f := _)]
     convert key using 1
     noncomm_ring
 

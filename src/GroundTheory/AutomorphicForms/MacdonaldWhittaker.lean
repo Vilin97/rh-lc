@@ -38,7 +38,7 @@ def residueChar (ψ₀ : AddChar F ℂ) (hψ₀ : ∀ x ∈ 𝒪[F], ψ₀ x = 1
   map_add_eq_mul' x y := by
     have hm : residueLift F (x + y) - (residueLift F x + residueLift F y) ∈
         IsLocalRing.maximalIdeal 𝒪[F] := by
-      rw [← IsLocalRing.residue_eq_zero_iff, map_sub, map_add, residue_residueLift,
+      rw [← IsLocalRing.residue_eq_zero_iff, map_sub, map_add (f := _), residue_residueLift,
         residue_residueLift, residue_residueLift, sub_self]
     have h1 := hψ₀ _ (inv_mul_mem_of_mem_maximalIdeal hm)
     rw [← AddChar.map_add_eq_mul, ← mul_add]

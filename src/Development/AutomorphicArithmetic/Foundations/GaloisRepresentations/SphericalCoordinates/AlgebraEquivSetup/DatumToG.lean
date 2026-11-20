@@ -50,7 +50,7 @@ def trd : 𝓞 E →ₗ[ℤ] ℤ :=
         have h1 := (A.δ_int x).choose_spec
         have h2 := (A.δ_int y).choose_spec
         have : (((A.δ_int (x + y)).choose : ℤ) : ℚ) = ((A.δ_int x).choose : ℤ) + ((A.δ_int y).choose : ℤ) := by
-          rw [← h, ← h1, ← h2, ← map_add, ← mul_add]; simp
+          rw [← h, ← h1, ← h2, ← map_add (f := _), ← mul_add]; simp
         exact_mod_cast this }
 
 theorem trd_spec (x : 𝓞 E) : ((A.trd x : ℤ) : ℚ) = Algebra.trace ℚ E (A.δ * x) := (A.δ_int x).choose_spec.symm

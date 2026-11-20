@@ -327,7 +327,7 @@ theorem nonempty_jac_det_equiv (e : (Σ _ : Fin l, Fin 1) ≃ n) (χ : kˣ →* 
       (detLevi e (χ * absPow k (((l : ℂ) - 1) / 2)) g : ℂ) • y := by
     intro y
     induction y using PiTensorProduct.induction_on with
-    | add x y hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | smul_tprod c x =>
       rw [map_smul, smul_comm, piTensor_tprod, detLevi_apply, Units.coe_prod,
         ← MultilinearMap.map_smul_univ]

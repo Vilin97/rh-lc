@@ -93,7 +93,7 @@ def dehom : GrSum hx →ₛₗ[MvPolynomial.eval₂Hom (cst f V) r] SecOnR f (tw
         r j • GrSum.desc hx (fun t => SecOnR.lin f (divPow M (s i) h t)) m := by
       induction m using DirectSum.Decomposition.inductionOn (GrSum.grading hx) with
       | zero => simp
-      | add a b ha hb => rw [smul_add, map_add, map_add, smul_add, ha, hb]
+      | add a b ha hb => rw [smul_add, map_add (f := _), map_add (f := _), smul_add, ha, hb]
       | @homogeneous n a =>
         obtain ⟨_, a, rfl⟩ := a
         rw [GrSum.X_smul_of, GrSum.desc_of, GrSum.desc_of]
@@ -105,7 +105,7 @@ def dehom : GrSum hx →ₛₗ[MvPolynomial.eval₂Hom (cst f V) r] SecOnR f (tw
     | C a =>
       rw [MvPolynomial.eval₂Hom_C, ← MvPolynomial.algebraMap_eq, algebraMap_smul, map_smul]
       rfl
-    | add p q hp hq => rw [add_smul, map_add, map_add, add_smul, hp, hq]
+    | add p q hp hq => rw [add_smul, map_add (f := _), map_add (f := _), add_smul, hp, hq]
     | mul_X p j hp => rw [mul_smul, hp, hX, map_mul, MvPolynomial.eval₂Hom_X', mul_smul]
 
 theorem dehom_of (t : ℤ) (a : SecOnR f (tw M H t) V) :

@@ -86,7 +86,7 @@ theorem baseChangeHom_top_bijective [Module.Flat R R'] [CompactSpace Y] [IsSepar
       have h2 := secCubeBaseChange_app_tmul M D H.w u.1 (1 : R') (SecOnR.restrict f M le_top s0)
       rw [one_smul] at h2
       erw [← h1, ← h2]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hbij := termMap_bijOn hM H hD
   constructor
   · intro x y hxy

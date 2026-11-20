@@ -87,7 +87,7 @@ theorem rest_finPart {κ : Type} [Fintype κ] (f : SInf F κ) (φ : ∀ v : Pl F
     rw [evFin, AlgHom.comp_apply]
     convert map_zero (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v)
     exact h2
-  simp only [Pi.add_apply, map_add, hz0, add_zero]
+  simp only [Pi.add_apply, map_add (f := _), hz0, add_zero]
 
 theorem hasDerivAt_pure {κ : Type} [Fintype κ] {T : ℝ → ((κ → AF F) → ℂ) → (κ → AF F) → ℂ} {f f₁ : SInf F κ}
     (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (hSB : ∀ v, φ v ∈ SB (κ → Fv F v))
@@ -337,7 +337,7 @@ theorem radZero : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
     intro Q hQ hQs h hh Φ hΦ
     obtain ⟨n, hn, y, ⟨χ, hχ, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hΦ
     obtain ⟨χ₁, hχ₁, hA₁⟩ := hex h hh χ (hQ hχ)
-    rw [map_add, hact _ χ (hQ hχ) χ₁ hA₁]
+    rw [map_add (f := _), hact _ χ (hQ hχ) χ₁ hA₁]
     exact Submodule.add_mem_sup (hStN h hh n hn) ⟨χ₁, hQs h hh χ hχ χ₁ hχ₁ hA₁, rfl⟩
   have hStM : St M := hStImg SBv le_rfl (fun _ _ _ _ χ₁ hχ₁ _ => hχ₁)
   have hx : pure f φ ∈ M := by
@@ -350,7 +350,7 @@ theorem radZero : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
       exact (Submodule.mem_sSup_of_directed hne hc.directedOn).2 ⟨P, hP, hcs P hP h hh Φ hΦP⟩)
     (fun N₁ N₂ h₁ h₂ _ _ h hh Φ hΦ => by
       obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hΦ
-      rw [map_add]; exact Submodule.add_mem_sup (h₁ h hh y hy) (h₂ h hh z hz))
+      rw [map_add (f := _)]; exact Submodule.add_mem_sup (h₁ h hh y hy) (h₂ h hh z hz))
     (fun P hPSt hNP hPM => by
       obtain ⟨C, hCD, hCSt, hsup, hinf⟩ := stableComplementAt hKP F E σ B a a' G X om om' R Rf hM N hN hI v P hNP (hPM.trans hMD) hPSt
       refine ⟨C ⊓ M, fun h hh Φ hΦ => ⟨hCSt h hh Φ hΦ.1, hStM h hh Φ hΦ.2⟩, inf_le_right, ?_, ?_⟩

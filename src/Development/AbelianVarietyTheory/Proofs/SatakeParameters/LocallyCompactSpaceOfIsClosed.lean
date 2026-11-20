@@ -46,7 +46,7 @@ theorem infRep_apply (π : UnitaryRep (G × Gf) H) (g : G) (v : H) : infRep π g
 
 def fixSub (π : UnitaryRep (G × Gf) H) (Kf : Subgroup Gf) : Submodule ℂ H where
   carrier := {v | ∀ k ∈ Kf, π (1, k) v = v}
-  add_mem' {a b} ha hb k hk := by simp only [Set.mem_setOf_eq, map_add, ha k hk, hb k hk]
+  add_mem' {a b} ha hb k hk := by simp only [Set.mem_setOf_eq, map_add (f := _), ha k hk, hb k hk]
   zero_mem' k _ := map_zero _
   smul_mem' c v hv k hk := by simp only [Set.mem_setOf_eq, map_smul, hv k hk]
 

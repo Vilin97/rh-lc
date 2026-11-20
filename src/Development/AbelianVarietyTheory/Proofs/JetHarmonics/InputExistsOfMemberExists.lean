@@ -36,7 +36,7 @@ theorem cmHostUnit_add_conj_eq_one [IsCMField E] (H : ReciprocityTheory.ChartRes
 
 theorem pairE_add (ξ : Module.Dual ℤ X) (x y : X) :
     SemisimplePairingSeparation.pairE E ξ (x + y) = SemisimplePairingSeparation.pairE E ξ x + SemisimplePairingSeparation.pairE E ξ y := by
-  simp only [SemisimplePairingSeparation.pairE, smul_add, map_add, Int.cast_add, mul_add, Finset.sum_add_distrib]
+  simp only [SemisimplePairingSeparation.pairE, smul_add, map_add (f := _), Int.cast_add, mul_add, Finset.sum_add_distrib]
 
 theorem trace_pairE (ξ : Module.Dual ℤ X) (x : X) (b : 𝓞 E) :
     Algebra.trace ℚ E (SemisimplePairingSeparation.pairE E ξ x * b) = ((ξ (b • x) : ℤ) : ℚ) := by
@@ -59,7 +59,7 @@ theorem trace_pairE (ξ : Module.Dual ℤ X) (x : X) (b : 𝓞 E) :
   induction hb using Submodule.span_induction with
   | mem _ h => obtain ⟨k, rfl⟩ := h; rw [← hk k, integralBasis_apply]
   | zero => simp
-  | add a b _ _ ha hb => rw [add_smul, map_add, Int.cast_add, ← ha, ← hb, ← map_add, ← mul_add]; simp
+  | add a b _ _ ha hb => rw [add_smul, map_add (f := _), Int.cast_add, ← ha, ← hb, ← map_add (f := _), ← mul_add]; simp
   | smul n a _ ha =>
     have e : ((n • a : 𝓞 E) : E) = n • (a : E) := map_zsmul (algebraMap (𝓞 E) E) n a
     rw [smul_assoc, map_zsmul ξ, e, mul_smul_comm, map_zsmul, ha]
@@ -122,7 +122,7 @@ theorem congr_of_exp {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Rec
     ∃ w, b = a + n • w := by
   subst h
   have E : (fun z => ex (ρ z)) = F.ex i Pm :=
-    exp_unique (fun z w => by rw [map_add, b1]) (F.ex_add _ _ hper)
+    exp_unique (fun z w => by rw [map_add (f := _), b1]) (F.ex_add _ _ hper)
       (HolHom.isHolTo_of_holAt isOpen_univ fun z _ =>
         (HolHom.holAt_of_isHolTo b2 (Set.mem_univ (ρ z))).precomp ρ.differentiableAt) (isHolTo_ex F _ hper)
       u (fun m => isDerivAt0_comp b2 ρ (b3 m)) b4
@@ -136,7 +136,7 @@ theorem congr_of_exp {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Rec
   obtain ⟨w, hw⟩ := (F.ex_ker _ _ hper _).1 c4
   refine ⟨w, hper.2.1 ?_⟩
   have hn' : (n : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hn
-  rw [map_add, map_nsmul, hw, ← Nat.cast_smul_eq_nsmul ℂ, smul_sub, smul_smul, smul_smul, mul_inv_cancel₀ hn', one_smul,
+  rw [map_add (f := _), map_nsmul, hw, ← Nat.cast_smul_eq_nsmul ℂ, smul_sub, smul_smul, smul_smul, mul_inv_cancel₀ hn', one_smul,
     one_smul, add_sub_cancel]
 
 theorem exists_isMarkingAt {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E}
@@ -376,12 +376,12 @@ theorem isMotiveOf_remark : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
     have e : (k : ℂ)⁻¹ • P₀ (u + k • w : X.Λ) = (k : ℂ)⁻¹ • P₀ u + P₀ w := by
       have : P₀ (u + k • w : X.Λ) = P₀ u + k • P₀ w := by
         show Q ((u : Fin r → E) + k • (w : Fin r → E)) = Q u + k • Q w
-        rw [map_add, map_nsmul]
+        rw [map_add (f := _), map_nsmul]
       rw [this, smul_add, ← Nat.cast_smul_eq_nsmul ℂ k (P₀ w), smul_smul, inv_mul_cancel₀ hk', one_smul]
     refine ⟨TorusExt.qkShift a.bimult q (y w), ?_, ?_,
       TorusExt.equiv_symm a.bimult (TorusExt.equiv_qkShift a.bimult q (y w))⟩
     · show q.y + k • y w = _
-      rw [map_add, map_nsmul, h1]
+      rw [map_add (f := _), map_nsmul, h1]
     · rw [e]
       refine Eq.symm (((TorusExt.isAdd_iff_eq _ _ _).1 (m3 _ _)).trans ?_)
       rw [← h2, (TorusExt.isIota_iff_eq a.bimult _ _).1 (m9 w)]
@@ -424,7 +424,7 @@ theorem markingAt_of_marking : ∀ (D : D7) (T : Core D) (j : ℕ) (σ : T.Q.c.F
     rwa [Sigma.eta, Equiv.symm_apply_apply] at this
   have key := congr_of_exp F i hper ρ hu ex _ a1 a2 b3 b4
   have fin : ∀ (n : ℕ) v w, F.t i v = φ.symm (t v) + n • w → φ (F.t i v) = t v + n • φ w :=
-    fun n v w h => by rw [h, map_add, map_nsmul, LinearEquiv.apply_symm_apply]
+    fun n v w h => by rw [h, map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply]
   have hv' : ∀ v, MonomialNorms.perVec (σ := σ) _ e x.1 (t v : Fin D.R.r → D.host.E) = ρ (Pm (φ.symm (t v))) := fun v => by
     rw [← hv, LinearEquiv.apply_symm_apply]
   refine ⟨fun v => ?_, fun v hm => ?_⟩
@@ -498,7 +498,7 @@ theorem isExponent_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   have hw : H.w0 + H.bar H.w0 = 1 := cmHostUnit_add_conj_eq_one H
   have hw' : (H.w0 : E) + cc (H.w0 : E) = 1 := by
     have := congrArg (algebraMap (𝓞 E) E) hw
-    rw [map_add, map_one] at this
+    rw [map_add (f := _), map_one] at this
     rw [cc, ← H.bar_eq]
     exact this
   have ccm : ∀ a b : E, cc (a * b) = cc a * cc b := fun a b => map_mul (IsCMField.complexConj E) a b
@@ -506,7 +506,7 @@ theorem isExponent_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   have hbe : ∀ x, be x x = 2 * be x (H.w0 • x) := fun x => by
     have h1 : be x (H.bar H.w0 • x) = be x (H.w0 • x) := by rw [← ha, hs]
     calc be x x = be x ((H.w0 + H.bar H.w0) • x) := by rw [hw, one_smul]
-      _ = _ := by rw [add_smul, map_add, h1]; ring
+      _ = _ := by rw [add_smul, map_add (f := _), h1]; ring
   let N : (X →₀ ℤ) →+ E := Finsupp.liftAddHom fun x => (zmultiplesHom E (MonomialNorms.nrm (MonomialNorms.pairE ξ x)))
   let B : (X →₀ ℤ) →+ ℚ := Finsupp.liftAddHom fun x => (zmultiplesHom ℚ (((be x x : ℤ) : ℚ) / 2))
   let N' : (X × X →₀ ℤ) →+ E := Finsupp.liftAddHom fun p => zmultiplesHom E
@@ -524,7 +524,7 @@ theorem isExponent_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     | add f f' h h' =>
       obtain ⟨a, a1, a2⟩ := h
       obtain ⟨b, b1, b2⟩ := h'
-      exact ⟨a + b, by rw [map_add, map_add, a1, b1], by rw [map_add, map_add, a2, b2]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), a1, b1], by rw [map_add (f := _), map_add (f := _), a2, b2]⟩
     | single x m =>
       refine ⟨Finsupp.single (x, H.w0 • x) m, ?_, ?_⟩
       · simp only [N, N', Finsupp.liftAddHom_apply_single, zmultiplesHom_apply, pairE_smul, MonomialNorms.nrm, ccm]
@@ -542,14 +542,14 @@ theorem isExponent_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     | add f f' h h' =>
       obtain ⟨a, a1, a2⟩ := h
       obtain ⟨b, b1, b2⟩ := h'
-      exact ⟨a + b, by rw [map_add, map_add, a1, b1], by rw [map_add, map_add, a2, b2]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), a1, b1], by rw [map_add (f := _), map_add (f := _), a2, b2]⟩
     | single p m =>
       refine ⟨Finsupp.single (p.1 + p.2) m - Finsupp.single p.1 m - Finsupp.single p.2 m, ?_, ?_⟩
       · simp only [N, N', map_sub, Finsupp.liftAddHom_apply_single, zmultiplesHom_apply, MonomialNorms.nrm, zsmul_eq_mul]
         have e : MonomialNorms.pairE (E := E) ξ = SemisimplePairingSeparation.pairE E ξ := rfl
         rw [e, pairE_add, cca]
         ring
-      · simp only [B, B', map_sub, Finsupp.liftAddHom_apply_single, zmultiplesHom_apply, zsmul_eq_mul, map_add,
+      · simp only [B, B', map_sub, Finsupp.liftAddHom_apply_single, zmultiplesHom_apply, zsmul_eq_mul, map_add (f := _),
           LinearMap.add_apply, hs p.2 p.1]
         push_cast
         ring
@@ -587,7 +587,7 @@ theorem emb_ssNu (χ : X × X →₀ ℤ) (τ : E →+* ℂ) :
     (((τ (SemisimplePairingSeparation.ssNu E g ξ χ)).re : ℝ) : ℂ) = τ (SemisimplePairingSeparation.ssNu E g ξ χ) := by
   rw [← Complex.conj_eq_iff_re]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [SemisimplePairingSeparation.ssNu, Finsupp.sum, map_mul, map_sum, map_add, map_inv₀, map_natCast, map_intCast, emb_cc,
+    simp only [SemisimplePairingSeparation.ssNu, Finsupp.sum, map_mul, map_sum, map_add (f := _), map_inv₀, map_natCast, map_intCast, emb_cc,
     Complex.conj_conj]
   congr 1
   exact Finset.sum_congr rfl fun p _ => by ring
@@ -619,7 +619,7 @@ theorem perFr_add {r : ℕ} (Z : ReciprocityTheory.ChartRestriction.G.FD.Data E 
   split_ifs
   · rw [e, Matrix.mulVec_add]; rfl
   · simp
-  · simp only [e, hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  · simp only [e, hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   · simp
   · simp
 

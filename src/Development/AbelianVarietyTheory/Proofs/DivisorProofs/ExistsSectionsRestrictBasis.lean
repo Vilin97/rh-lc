@@ -21,7 +21,7 @@ theorem presents_lbPow_toLB {X : Scheme.{0}} [IsIntegral X] (A : CartierDiv X) (
 theorem secPull_add' {X Y : Scheme.{0}} {L : LB X} (s t : L.Sec) (f : Y ⟶ X) :
     GlobalTheory.secPull (s + t) f = GlobalTheory.secPull s f + GlobalTheory.secPull t f :=
   LB.f_injective (funext fun i => by
-    simp only [GlobalTheory.secPull, GlobalTheory.chartSec_f, LB.add_f, map_add])
+    simp only [GlobalTheory.secPull, GlobalTheory.chartSec_f, LB.add_f, map_add (f := _)])
 
 theorem secPull_smul' {X Y : Scheme.{0}} {L : LB X} (c : Γ(X, ⊤)) (s : L.Sec) (f : Y ⟶ X) :
     GlobalTheory.secPull (c • s) f = f.appTop c • GlobalTheory.secPull s f :=

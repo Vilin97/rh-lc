@@ -127,7 +127,7 @@ theorem exists_obj_level (c : Coeff l) (c₂ : Coeff l₂) (hle : c.F ≤ c₂.F
     induction hc using Submodule.span_induction with
     | mem x hx => exact IntermediateField.subset_adjoin _ _ (Or.inr ⟨x, hx, rfl⟩)
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul q x _ hx =>
       rw [Rat.smul_def, map_mul, map_ratCast]
       exact mul_mem (SubfieldClass.ratCast_mem L q) hx

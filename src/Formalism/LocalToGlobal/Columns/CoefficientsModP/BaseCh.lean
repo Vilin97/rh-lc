@@ -33,7 +33,7 @@ theorem bc_map_blockAct (g : ι → Matrix (Fin n) (Fin n) K) (P : Pol K ι n) :
       Formalism.GradedWeylDivisibility.blockAct K' (fun τ => (g τ).map j) (MvPolynomial.map j P) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [Formalism.GradedWeylDivisibility.blockAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p x hp =>
     simp only [map_mul, hp, map_X]
     congr 1
@@ -91,7 +91,7 @@ theorem bc_map_mem_span {σ : Type} (S : Set (MvPolynomial σ K)) {F : MvPolynom
   induction hF using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [bc_map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem bc_descent_span {σ κ : Type} [Fintype κ] (v : κ → MvPolynomial σ K) (c : κ → K') (F : MvPolynomial σ K)
@@ -282,7 +282,7 @@ theorem bc_bcPol_span {σ : Type} (S : Set (MvPolynomial σ K)) :
     induction hx using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => simp only [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => simp only [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => simp only [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul r x _ hx => exact bc_map_osmul_mem j _ r hx
   · exact Submodule.span_mono (Set.image_mono Submodule.subset_span)
 
@@ -428,7 +428,7 @@ theorem bc_transLat (lam : ι → DomWeight n) (T : Submodule (𝓞 K) (Pol K ι
         rw [hloc _ B hB]
         exact ⟨P, lc_le_locP _ _ hP, rfl⟩
       | zero => rw [map_zero]; exact Submodule.zero_mem _
-      | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
       | smul r x _ hx => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ _ hx
     obtain ⟨s, hs, hsx⟩ := (lc_mem_locP _ _ _).1 h1
     have h3 := key _ hsx

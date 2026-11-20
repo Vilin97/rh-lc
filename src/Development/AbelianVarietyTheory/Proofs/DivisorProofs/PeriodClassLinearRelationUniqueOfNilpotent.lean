@@ -53,7 +53,7 @@ theorem _root_.GlobalTheory.AnPer.perClD_relation_unique : ∀ {g : ℕ} {Λ : T
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul r h => simp [hΦ]
-      | add y z hy hz => simp only [map_add, hy, hz]
+      | add y z hy hz => simp only [map_add (f := _), hy, hz]
     have hΦs : ∀ {m k k'} (h : K₀.le m k' k) y,
         Φ k' (Algebra.TensorProduct.map (AlgHom.id ℂ R)
           (_root_.GlobalTheory.AnPer.Charts.shA h) y) =
@@ -63,7 +63,7 @@ theorem _root_.GlobalTheory.AnPer.perClD_relation_unique : ∀ {g : ℕ} {Λ : T
       | zero => simp
       | tmul r b =>
         simp [hΦ, ← _root_.GlobalTheory.AnPer.Charts.shA_apply]
-      | add y z hy hz => simp only [map_add, hy, hz]
+      | add y z hy hz => simp only [map_add (f := _), hy, hz]
     have hfsh : ∀ m k k' (h : K₀.le m k' k),
         _root_.GlobalTheory.AnPer.Charts.sh h (Φ k (G k)) =
           Φ k' (G k') + K₀.cst k' (algebraMap ℂ _ (-(φ (q'' m)))) := by

@@ -26,7 +26,7 @@ theorem pull_zCls {P : LB (A ⊗ A).left} (hP : P.IsLB) {Q : LB (A ⊗ B).left} 
       (∑ i, ∑ j, quat d j i • evc hQ (z' ≫ pa A B i) (z ≫ pb A B j)) +
       ∑ j, evc hQ (z' ≫ pb A B j ≫ mu) (z ≫ pb A B j) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [zCls, map_add, map_sum, map_zsmul, pull_pull_lift, lift_fst_assoc, lift_snd_assoc]
+    simp only [zCls, map_add (f := _), map_sum, map_zsmul, pull_pull_lift, lift_fst_assoc, lift_snd_assoc]
 
 theorem zarhinBundle_pull_trivial_iff {P : LB (A ⊗ A).left} (hP : P.IsLB) {Q : LB (A ⊗ B).left} (hQ : Q.IsLB) (d : ℕ)
     (mu : B ⟶ A) {Y : Over S} (u : Y ⟶ Zob A B ⊗ Zob A B) :

@@ -390,7 +390,7 @@ theorem tan_at (P : FP t x₀ q) {φ : A →+* S} {v : Sp (DualNumber S) ⟶ t.G
     refine RingHom.ext fun z => ?_
     have h0 : ρ (TrivSqZeroExt.inr z.snd) = 0 :=
       mul_self_eq_zero.1 (by rw [← map_mul, TrivSqZeroExt.inr_mul_inr, map_zero])
-    conv_lhs => rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq z, map_add, h0, add_zero]
+    conv_lhs => rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq z, map_add (f := _), h0, add_zero]
     rfl
   have e : spMap (Ideal.Quotient.mk 𝔪) ≫ spMap ψ ≫ v =
       (1 : Over.mk (spMap (ρ.comp (algebraMap S (DualNumber S))) ≫ spMap φ ≫ x₀) ⟶ t.G).left := by

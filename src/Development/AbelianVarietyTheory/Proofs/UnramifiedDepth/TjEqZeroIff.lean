@@ -58,7 +58,7 @@ theorem exists_expansion : ∀ (k : Type) [CommRing k] (g : ℕ), 0 < g → ∀ 
       map_one' := tj_ext fun m => by rw [hF, map_one, map_one]
       map_mul' := fun a b => tj_ext fun m => by rw [map_mul, hF, hF, hF, map_mul]
       map_zero' := tj_ext fun m => by rw [hF, map_zero, map_zero]
-      map_add' := fun a b => tj_ext fun m => by rw [map_add, hF, hF, hF, map_add]
+      map_add' := fun a b => tj_ext fun m => by rw [map_add (f := _), hF, hF, hF, map_add (f := _)]
       commutes' := fun r => tj_ext fun m => by rw [hF, AlgHom.commutes, AlgHom.commutes] }
   have hj : ∀ m a, tj m (j a) = τ m a := fun m a => hF a m
   refine ⟨j, fun m a => ?_, fun m s => ?_, fun a s h => ?_⟩

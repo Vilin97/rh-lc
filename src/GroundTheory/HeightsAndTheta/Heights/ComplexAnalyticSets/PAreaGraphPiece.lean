@@ -68,7 +68,7 @@ theorem norm_pairPt_zero (w : EuclideanSpace ℝ (Fin m)) :
 def graphLin (A : EuclideanSpace ℝ (Fin k) →L[ℝ] EuclideanSpace ℝ (Fin m)) :
     EuclideanSpace ℝ (Fin k) →ₗ[ℝ] EuclideanSpace ℝ (Fin k ⊕ Fin m) where
   toFun x := pairPt x (A x)
-  map_add' x y := by rw [map_add, pairPt_add]
+  map_add' x y := by rw [map_add (f := _), pairPt_add]
   map_smul' c x := by rw [map_smul, pairPt_smul]; rfl
 
 theorem graphLin_apply (A : EuclideanSpace ℝ (Fin k) →L[ℝ] EuclideanSpace ℝ (Fin m))

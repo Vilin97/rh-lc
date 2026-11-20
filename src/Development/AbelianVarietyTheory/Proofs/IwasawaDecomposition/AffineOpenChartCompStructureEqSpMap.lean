@@ -193,7 +193,7 @@ variable (t) in
 def eig {l : Level H} {c : Coeff l} (f : c.F →+* S) (x : Sp S ⟶ X) (σ : E →+* ℂ) : Submodule S (TanM x t.G) where
   carrier := {v | ∀ a : 𝓞 E, ReciprocityTheory.ChartRestriction.G.PullbackSections.actR t.act a v = f (embK c σ a) • v}
   zero_mem' := fun a => by rw [map_zero, smul_zero]
-  add_mem' := fun hu hv a => by rw [map_add, hu a, hv a, smul_add]
+  add_mem' := fun hu hv a => by rw [map_add (f := _), hu a, hv a, smul_add]
   smul_mem' := fun r v hv a => by rw [map_smul, hv a, smul_comm]
 
 theorem mem_eig_iff {l : Level H} {c : Coeff l} (f : c.F →+* S) (x : Sp S ⟶ X) (σ : E →+* ℂ) (v : TanM x t.G) :

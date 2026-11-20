@@ -62,7 +62,7 @@ theorem inner_eq_of_meanSquare {G : Type} [MeasurableSpace G] (ν : Measure G) [
       conj c * ∫ w, f w * conj (g w) ∂ν + c * ∫ w, g w * conj (f w) ∂ν := by
     intro c
     have h := hN _ (hadd f _ hf (hsmul c g hg))
-    rw [map_add, map_smul, ex c _ _ (hA f hf) (hA g hg), ex c f g hf hg, hN f hf, hN g hg] at h
+    rw [map_add (f := _), map_smul, ex c _ _ (hA f hf) (hA g hg), ex c f g hf hg, hN f hf, hN g hg] at h
     linear_combination h
   have h1 := key 1
   have h2 := key I

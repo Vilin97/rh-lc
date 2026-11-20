@@ -85,7 +85,7 @@ theorem exists_half_character {a : AE D} (ha : IsHalfIdem D a) (V : HSp D) (χ :
       have hcc : cA D e * cA D e = cA D e := by rw [← RingHom.map_mul, he.1]
       have hu := det_conj_mul V g
       have h1 : (cut a haa (d g) : AE D) * cA D x = 1 := by
-        rw [hy, hx', RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
+        rw [hy, hx', RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
         generalize (Formalism.L2.Theta.mt V g).det = z at hu
         linear_combination (z * cA D z - z - cA D z + 1) * hcc + cA D e * hu
       have h2 := char_norm hres x (x * (cut a haa (d g))⁻¹) (by

@@ -49,7 +49,7 @@ theorem core {V G T : Type} [AddCommGroup V] [Module ℂ V] [Group G] [Topologic
       have := hnorm h t hr _ hg
       rw [hLg, norm_zero, mul_zero] at this
       exact norm_eq_zero.1 this
-    rw [map_add, map_smul, map_smul, hL _ _ _ _ (hpres h f hf) (hpres h f₀ hf₀)] at hωg
+    rw [map_add (f := _), map_smul, map_smul, hL _ _ _ _ (hpres h f hf) (hpres h f₀ hf₀)] at hωg
     rw [hKap, div_mul_eq_mul_div, eq_div_iff hne]
     linear_combination hωg
   have hnK : ∀ h t, rel h t → ‖K h‖ = mf t := by

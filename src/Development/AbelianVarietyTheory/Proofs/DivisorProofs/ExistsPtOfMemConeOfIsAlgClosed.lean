@@ -99,7 +99,7 @@ theorem exists_pt_of_mem_cone_of_isAlgClosed : ∀ (F : Type) [Field F] (S : Lin
         cg i₀ ^ (k : ℕ) = 0 := h
     show aeval cg G = 0
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [G, σ, map_add, map_pow, map_sum, map_mul, aeval_X, aeval_bind₁, aeval_C]
+      simp only [G, σ, map_add (f := _), map_pow, map_sum, map_mul, aeval_X, aeval_bind₁, aeval_C]
     exact h'
 
   rw [← HeightExists.map_imageIdeal hS K] at hmem
@@ -121,7 +121,7 @@ theorem exists_pt_of_mem_cone_of_isAlgClosed : ∀ (F : Type) [Field F] (S : Lin
     exact (hA k).coeff_eq_zero (d := 0) (by simp; omega)
   have h3 : eval y G = y i₀ ^ m := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [G, map_add, map_pow, map_sum, map_mul, eval_X, hA0, zero_mul, Finset.sum_const_zero, add_zero]
+      simp only [G, map_add (f := _), map_pow, map_sum, map_mul, eval_X, hA0, zero_mul, Finset.sum_const_zero, add_zero]
   exact pow_ne_zero m hi₀ (h3.symm.trans h0)
 
 end GlobalTheory.ConeOnto

@@ -107,7 +107,7 @@ theorem polF_qdet {n : ℕ} (E : Fin n → Fin n → A) (c : ℂ) : PolF fun y :
 theorem eval_map_hom {B : Type*} [Ring B] (f : A →+* B) (p : A[X]) (x : A) :
     (p.map f).eval (f x) = f (p.eval x) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => simp only [Polynomial.map_add, eval_add, hp, hq, map_add]
+  | add p q hp hq => simp only [Polynomial.map_add (f := _), eval_add, hp, hq, map_add (f := _)]
   | monomial k a => simp only [map_monomial, eval_monomial, map_mul, map_pow]
 
 theorem prod_smul_ofFn {m : ℕ} (s : ℂ) (f : Fin m → A) :
@@ -162,10 +162,10 @@ theorem root (H : QdetTens) (M : GMod n) (c : ℂ) (pC : (Module.End ℂ (Fin n 
       have h := H n M (y + c)
       have e1 : algebraMap ℂ (Module.End ℂ (Fin n → M.V)) y + (algebraMap ℂ _ c + om M) =
           (y + c) • (1 : Module.End ℂ (Fin n → M.V)) + om M := by
-        rw [← add_assoc, ← map_add, Algebra.algebraMap_eq_smul_one]
+        rw [← add_assoc, ← map_add (f := _), Algebra.algebraMap_eq_smul_one]
       have e2 : algebraMap ℂ (Module.End ℂ (Fin n → M.V)) y + (algebraMap ℂ _ (c + 1) + om M) =
           (y + c + 1) • (1 : Module.End ℂ (Fin n → M.V)) + om M := by
-        rw [← add_assoc, ← map_add, Algebra.algebraMap_eq_smul_one, add_assoc]
+        rw [← add_assoc, ← map_add (f := _), Algebra.algebraMap_eq_smul_one, add_assoc]
       rw [e1, e2]
       exact h
   have hom : Commute (om M) (-om M - algebraMap ℂ _ c) :=
@@ -178,7 +178,7 @@ theorem root (H : QdetTens) (M : GMod n) (c : ℂ) (pC : (Module.End ℂ (Fin n 
   simp only [eval_add, eval_X, eval_C, eval_zero] at ht
   have a1 : -om M - algebraMap ℂ _ c + (algebraMap ℂ _ c + om M) = 0 := by abel
   have a2 : -om M - algebraMap ℂ _ c + (algebraMap ℂ _ (c + 1) + om M) = 1 := by
-    rw [map_add, map_one]; abel
+    rw [map_add (f := _), map_one]; abel
   rw [a1, a2] at ht
   simpa using ht.symm
 
@@ -209,7 +209,7 @@ theorem cayleyHam_of (H : QdetTens) : CayleyHam := by
   have hQy : ∀ y : ℂ, Q.eval (algebraMap ℂ _ y) = Formalism.QuantumDeterminants.capP χ y • (1 : Module.End ℂ (Fin n → M.V)) := by
     intro y
     rw [hQ]
-    simp only [← map_add]
+    simp only [← map_add (f := _)]
     rw [← Algebra.algebraMap_eq_smul_one]
     have h := map_list_prod (algebraMap ℂ (Module.End ℂ (Fin n → M.V))) (List.ofFn fun i => y + χ i)
     rw [List.map_ofFn] at h

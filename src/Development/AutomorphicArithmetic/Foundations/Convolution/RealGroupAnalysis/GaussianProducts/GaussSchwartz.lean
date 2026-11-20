@@ -78,7 +78,7 @@ private theorem gauss_schwartz {F : Type} [Field F] [NumberField F] [IsTotallyRe
       rw [coord_infPart, mul_pow, Real.sq_sqrt (ha _).le]
     have hd : TR.pInf F (rt δ) w = InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal w) δ :=
       congrFun (GlobalTheory.HilbertThetaSeries.RatPts.pInf_algebraMap F δ) w
-    simp only [Fin.sum_univ_four, h, map_add, map_mul, map_pow, map_sub, Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.sub_apply, map_ofNat, Pi.ofNat_apply, hd]
+    simp only [Fin.sum_univ_four, h, map_add (f := _), map_mul, map_pow, map_sub, Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.sub_apply, map_ofNat, Pi.ofNat_apply, hd]
     simp [a]
     ring
   simp only [SchwartzMap.compCLMOfContinuousLinearEquiv_apply, Function.comp_apply, gaussianSchwartz_apply, hn]

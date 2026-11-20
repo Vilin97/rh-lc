@@ -131,7 +131,7 @@ theorem _root_.GlobalTheory.exists_short_independent_integers (K : Type) [Field 
       simp [Algebra.traceForm_apply, mul_comm (β _) (α k), hαβ]
     · simp
     · intro x y _ _ hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
     · intro m x _ hx
       rw [map_zsmul]

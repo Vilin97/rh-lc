@@ -116,7 +116,7 @@ theorem extV_gen {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] 
 
 theorem extV_add {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {n : ℕ} (Φ : (Fin n → E) →ₗ[F] F)
     (y y' : Fin n → AF F ⊗[F] E) : extV Φ (y + y') = extV Φ y + extV Φ y' := by
-  simp [extV, map_add, Finset.sum_add_distrib]
+  simp [extV, map_add (f := _), Finset.sum_add_distrib]
 
 theorem extV_neg {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {n : ℕ} (Φ : (Fin n → E) →ₗ[F] F)
     (y : Fin n → AF F ⊗[F] E) : extV Φ (-y) = -extV Φ y := by
@@ -149,7 +149,7 @@ theorem coord_int {D : D7} {S : HSp D} (L : Lat S) (Φ : (Fin S.rank → D.host.
     | add y y' _ _ hy hy' =>
       obtain ⟨β, hβ, e⟩ := hy
       obtain ⟨β', hβ', e'⟩ := hy'
-      exact ⟨β + β', fun v => by rw [map_add]; exact add_mem (hβ v) (hβ' v),
+      exact ⟨β + β', fun v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hβ v) (hβ' v),
         by rw [extV_add, e, e', GlobalTheory.FinPlLoc.pairA_add]⟩
     | neg y _ hy =>
       obtain ⟨β, hβ, e⟩ := hy

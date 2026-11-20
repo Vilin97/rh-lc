@@ -101,7 +101,7 @@ theorem finsupp_two_cocycle_eq_coboundary (f : X × X →₀ N)
     induction f using Finsupp.induction_linear with
     | zero => simp
     | add f g hf hg =>
-      simp only [map_add, Finsupp.mapDomain_add, Finsupp.add_apply, Finsupp.sub_apply] at hf hg ⊢
+      simp only [map_add (f := _), Finsupp.mapDomain_add, Finsupp.add_apply, Finsupp.sub_apply] at hf hg ⊢
       rw [← hf, ← hg]; abel
     | single p m =>
       obtain ⟨y, z⟩ := p
@@ -193,17 +193,17 @@ theorem hochschild_homotopy_one (ρ : M →ₗ[R] M ⊗[R] R[X]) (f : M ⊗[R] R
       hochschildD₀ ρ (tensorCoeff R M 0 f) = f := by
   classical
   induction f with
-  | add a b ha hb => simp only [map_add]; rw [add_sub_add_comm, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _)]; rw [add_sub_add_comm, ha, hb]
   | tmul m p =>
     have h : ∀ (t : M ⊗[R] R[X]) (p : R[X]), (tensorCoeff R R[X] (0 : X)).lTensor M
         (TensorProduct.assoc R M R[X] R[X] (t ⊗ₜ p)) = p.coeff 0 • t := by
       intro t p
       induction t with
-      | add a b ha hb => simp only [add_tmul, map_add, ha, hb, smul_add]
+      | add a b ha hb => simp only [add_tmul, map_add (f := _), ha, hb, smul_add]
       | tmul m q => simp
     induction p using AddMonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [tmul_add, map_add]; rw [add_sub_add_comm, ha, hb]
+    | add a b ha hb => simp only [tmul_add, map_add (f := _)]; rw [add_sub_add_comm, ha, hb]
     | single y r =>
       simp only [hochschildD₁, hochschildD₀, LinearMap.add_apply, LinearMap.sub_apply,
         LinearMap.comp_apply, LinearEquiv.coe_coe, LinearMap.rTensor_tmul, map_add, map_sub, h]
@@ -216,7 +216,7 @@ theorem hochschild_homotopy_two (ρ : M →ₗ[R] M ⊗[R] R[X]) (f : M ⊗[R] (
       ((tensorCoeff R R[X] (0 : X)).lTensor R[X]).lTensor M (hochschildD₂ ρ f) = f := by
   classical
   induction f with
-  | add a b ha hb => simp only [map_add]; rw [add_sub_add_comm, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _)]; rw [add_sub_add_comm, ha, hb]
   | tmul m u =>
     have h : ∀ (t : M ⊗[R] R[X]) (u : R[X] ⊗[R] R[X]),
         ((tensorCoeff R R[X] (0 : X)).lTensor R[X]).lTensor M
@@ -224,18 +224,18 @@ theorem hochschild_homotopy_two (ρ : M →ₗ[R] M ⊗[R] R[X]) (f : M ⊗[R] (
         TensorProduct.assoc R M R[X] R[X] (t ⊗ₜ tensorCoeff R R[X] (0 : X) u) := by
       intro t u
       induction t with
-      | add a b ha hb => simp only [add_tmul, map_add, ha, hb]
+      | add a b ha hb => simp only [add_tmul, map_add (f := _), ha, hb]
       | tmul m q => simp
     induction u with
-    | add a b ha hb => simp only [tmul_add, map_add]; rw [add_sub_add_comm, ha, hb]
+    | add a b ha hb => simp only [tmul_add, map_add (f := _)]; rw [add_sub_add_comm, ha, hb]
     | tmul p q =>
       induction p using AddMonoidAlgebra.induction_linear with
       | zero => simp
-      | add a b ha hb => simp only [add_tmul, tmul_add, map_add]; rw [add_sub_add_comm, ha, hb]
+      | add a b ha hb => simp only [add_tmul, tmul_add, map_add (f := _)]; rw [add_sub_add_comm, ha, hb]
       | single x c =>
         induction q using AddMonoidAlgebra.induction_linear with
         | zero => simp
-        | add a b ha hb => simp only [tmul_add, map_add]; rw [add_sub_add_comm, ha, hb]
+        | add a b ha hb => simp only [tmul_add, map_add (f := _)]; rw [add_sub_add_comm, ha, hb]
         | single y r =>
           simp only [hochschildD₁, hochschildD₂, LinearMap.add_apply, LinearMap.sub_apply,
             LinearMap.comp_apply, LinearEquiv.coe_coe, LinearMap.rTensor_tmul,
@@ -258,7 +258,7 @@ theorem IsCoaction.exact_hochschildD₀_hochschildD₁ {ρ : M →ₗ[R] M ⊗[R
     let := h.decomposition
     induction m using DirectSum.Decomposition.inductionOn (torusWeightSpace ρ) with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb, add_zero]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, add_zero]
     | homogeneous m =>
       simp [hochschildD₀, hochschildD₁, mem_coactionWeightSpace.1 m.2, one_def]
 
@@ -271,15 +271,15 @@ theorem IsCoaction.exact_hochschildD₁_hochschildD₂ {ρ : M →ₗ[R] M ⊗[R
   · rintro ⟨g, rfl⟩
     let := h.decomposition
     induction g with
-    | add a b ha hb => simp only [map_add, ha, hb, add_zero]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, add_zero]
     | tmul m p =>
       induction m using DirectSum.Decomposition.inductionOn (torusWeightSpace ρ) with
       | zero => simp
-      | add a b ha hb => simp only [add_tmul, map_add, ha, hb, add_zero]
+      | add a b ha hb => simp only [add_tmul, map_add (f := _), ha, hb, add_zero]
       | homogeneous m =>
         induction p using AddMonoidAlgebra.induction_linear with
         | zero => simp
-        | add a b ha hb => simp only [tmul_add, map_add, ha, hb, add_zero]
+        | add a b ha hb => simp only [tmul_add, map_add (f := _), ha, hb, add_zero]
         | single y r =>
           rw [← _root_.mul_one r, ← smul_eq_mul, ← smul_single, tmul_smul, map_smul, map_smul]
           refine smul_eq_zero_of_right _ ?_

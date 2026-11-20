@@ -48,7 +48,7 @@ def chg (q : SplitPt D k) (q' : SplitPt D k') (h : q.e = q'.e) : k' →+* k wher
     rw [h1, ← h, pr_e]
   map_mul' x y := by rw [sec_mul_sec, map_mul]
   map_zero' := by rw [map_zero, map_zero]
-  map_add' x y := by rw [map_add, map_add]
+  map_add' x y := by rw [map_add (f := _), map_add (f := _)]
 
 theorem sec_chg (q : SplitPt D k) (q' : SplitPt D k') (h : q.e = q'.e) (x : k') : q.sec (chg q q' h x) = q'.sec x := by
   change q.sec (q.pr (q'.sec x)) = _
@@ -142,11 +142,11 @@ theorem exists_theta (q : SplitPt D k) {PP : Formalism.L2.DIV.Pl D.host.E} (he :
   refine ⟨(1 + s).1, (1 + s).2, ?_, ?_⟩
   · have h2 : Formalism.L2.DIV.resS D.host.F PP s = 0 :=
       (q.resS_eq_zero_iff he s).2 (by rw [hs, q.prF_toEAf, q.pr_sec]; exact ht)
-    rw [Subtype.coe_eta, map_add, h2, map_one, add_zero]
+    rw [Subtype.coe_eta, map_add (f := _), h2, map_one, add_zero]
   · have h1 := q.sec_pr 1
     rw [map_one, mul_one] at h1
     have h2 : q.e * (1 + q.sec (t - 1)) = q.sec t := by
-      rw [mul_add, mul_one, e_mul_sec, ← h1, ← map_add, add_sub_cancel]
+      rw [mul_add, mul_one, e_mul_sec, ← h1, ← map_add (f := _), add_sub_cancel]
     have h3 : (1 + s).1 = toEAf D (1 + q.sec (t - 1)) := by
       rw [Subring.coe_add, OneMemClass.coe_one, hs]
       exact ((congrArg₂ (· + ·) (toEAf D).map_one rfl).symm).trans ((toEAf D).map_add _ _).symm

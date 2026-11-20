@@ -108,7 +108,7 @@ theorem exists_mul_pow_eq_mkF {P : ArithVariety n} {c : (k : ι) → Fin (n k + 
     obtain ⟨N, E, hE⟩ := hx
     obtain ⟨N', E', hE'⟩ := hy
     refine ⟨N + N', E * chartMonomial c 1 ^ N' + E' * chartMonomial c 1 ^ N, ?_⟩
-    rw [map_add, map_mul, map_mul, map_pow, map_pow, ← hE, ← hE', pow_add]
+    rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, ← hE, ← hE', pow_add]
     ring
   | neg x _ hx =>
     obtain ⟨N, E, hE⟩ := hx

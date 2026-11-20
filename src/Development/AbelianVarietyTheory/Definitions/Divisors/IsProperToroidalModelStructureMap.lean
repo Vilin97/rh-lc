@@ -55,9 +55,9 @@ theorem mem_levelForms_iff_smul (hN : N ≠ 0) {β : LinearMap.BilinForm ℤ X} 
     choose g hg using h3
     have inj : ∀ {a b : ℤ}, (N : ℤ) * a = N * b → a = b := fun h => mul_left_cancel₀ hN' h
     let γ : LinearMap.BilinForm ℤ X := LinearMap.mk₂ ℤ g
-      (fun a b c => inj (by rw [mul_add, ← hg, ← hg, ← hg, map_add, LinearMap.add_apply]))
+      (fun a b c => inj (by rw [mul_add, ← hg, ← hg, ← hg, map_add (f := _), LinearMap.add_apply]))
       (fun n a b => inj (by rw [smul_eq_mul, mul_left_comm, ← hg, ← hg, map_smul, LinearMap.smul_apply, smul_eq_mul]))
-      (fun a b c => inj (by rw [mul_add, ← hg, ← hg, ← hg, map_add]))
+      (fun a b c => inj (by rw [mul_add, ← hg, ← hg, ← hg, map_add (f := _)]))
       (fun n a b => inj (by rw [smul_eq_mul, mul_left_comm, ← hg, ← hg, map_smul, smul_eq_mul]))
     refine ⟨γ, ⟨fun y z => inj ?_, fun a y z => inj ?_, fun y z => by simp⟩, ?_⟩
     · exact (hg y z).symm.trans ((h1 y z).trans (hg z y))
@@ -107,10 +107,10 @@ theorem mem_range_toSymB (B : Formalism.MainNotions.ModuliIntegralCharts.SymB (f
     have hg' : ∀ a b, (((N : ℤ) * g a b : ℤ) : ℝ) = (B : X →ₗ[ℤ] X →ₗ[ℤ] ℝ) a b := fun a b => by
       rw [hg]; push_cast; rfl
     let γ : LinearMap.BilinForm ℤ X := LinearMap.mk₂ ℤ (fun a b => (N : ℤ) * g a b)
-      (fun a b c => inj (by rw [Int.cast_add, hg', hg', hg', map_add, LinearMap.add_apply]))
+      (fun a b c => inj (by rw [Int.cast_add, hg', hg', hg', map_add (f := _), LinearMap.add_apply]))
       (fun n a b => inj (by
         rw [smul_eq_mul, Int.cast_mul n, hg', hg', map_smul, LinearMap.smul_apply, zsmul_eq_mul]))
-      (fun a b c => inj (by rw [Int.cast_add, hg', hg', hg', map_add]))
+      (fun a b c => inj (by rw [Int.cast_add, hg', hg', hg', map_add (f := _)]))
       (fun n a b => inj (by rw [smul_eq_mul, Int.cast_mul n, hg', hg', map_smul, zsmul_eq_mul]))
     refine ⟨⟨γ, fun y z => inj ?_, fun a y z => inj ?_, fun y z => Dvd.intro _ rfl⟩, ?_⟩
     · exact (hg' y z).trans ((B.2.1 y z).trans (hg' z y).symm)
@@ -227,7 +227,7 @@ theorem IsMonomial.tau (h : IsMonomial Dg t β) (hs : ∀ i y z, β i y z = β i
     (map_ne_zero_iff _ (IsFractionRing.injective R _)).2 hx
   have e : ∀ i, (n'' i : ℤ) = β i a b + n i + n' i := fun i => by
     have := hn'' i
-    simp only [map_add, LinearMap.add_apply, hs i b a, hn i, hn' i] at this
+    simp only [map_add (f := _), LinearMap.add_apply, hs i b a, hn i, hn' i] at this
     omega
   refine ⟨u'' * u⁻¹ * u'⁻¹, ?_⟩
   have hu := ne u.ne_zero
@@ -264,7 +264,7 @@ theorem IsMonomial.betaAt_eq (h : IsMonomial Dg t β) (hs : ∀ i y z, β i y z 
     ring
   rw [betaAt, key, key, key, ← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
-  simp only [map_add, LinearMap.add_apply, hs i b a]
+  simp only [map_add (f := _), LinearMap.add_apply, hs i b a]
   push_cast
   ring
 

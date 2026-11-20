@@ -27,7 +27,7 @@ def cupZ (hc : ContAction ρ') (hP : ∀ g x y, P (ρ g x) (ρ' g y) = ((χ g : 
     fun g h k => by
       dsimp only
       rw [charRep_apply, ← hP, x.2.2 g h, y.2.2 h k, map_mul, Module.End.mul_apply]
-      simp only [map_add, AddMonoidHom.add_apply]
+      simp only [map_add (f := _), AddMonoidHom.add_apply]
       abel⟩
 
 end Group
@@ -91,7 +91,7 @@ theorem loc_eq_zero (hc : ContAction ρ')
     change ((cycMod F Ω l n g : (ZMod (l ^ n))ˣ) : ZMod (l ^ n)) * (-P (x.1 h) (ρ' h m)) -
       (-P (x.1 (g * h)) (ρ' (g * h) m)) + -P (x.1 g) (ρ' g m) = P (x.1 g) (ρ' g (y.1 h))
     rw [mul_neg, ← hP, hm h h.2, x.2.2, map_mul, Module.End.mul_apply]
-    simp only [map_add, map_sub, AddMonoidHom.add_apply]
+    simp only [map_add (f := _), map_sub, AddMonoidHom.add_apply]
     abel
 
 end General

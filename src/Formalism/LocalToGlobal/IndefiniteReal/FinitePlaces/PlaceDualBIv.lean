@@ -41,7 +41,7 @@ lemma finite_part_finite_embedding (w : Af D.host.F ⊗[D.host.F] D.host.E) : fi
   induction w using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul β y => rfl
-  | add w w' h h' => rw [map_add, map_add, h, h']
+  | add w w' h h' => rw [map_add (f := _), map_add (f := _), h, h']
 
 lemma integral_of_finite_embedding {w : Af D.host.F ⊗[D.host.F] D.host.E} (hw : w ∈ intAE D) : IntF (finiteEmbeddingTensor D w) :=
   ⟨by rw [mul_fI_eq, finite_part_finite_embedding], by rw [finite_part_finite_embedding]; exact hw⟩
@@ -116,7 +116,7 @@ lemma intF_residues (N : ℕ) (hN : 0 < N) :
   obtain ⟨r, hr, w', hw', e⟩ := hR _ hy.2
   refine ⟨finiteEmbeddingTensor D r, Finset.mem_image_of_mem _ hr, finiteEmbeddingTensor D w', integral_of_finite_embedding hw', ?_⟩
   have hy' : y = finiteEmbeddingTensor D (finPart D y) := by rw [← mul_fI_eq, hy.1]
-  rw [hy', e, map_add, map_nsmul]
+  rw [hy', e, map_add (f := _), map_nsmul]
 
 set_option maxHeartbeats 800000 in
 

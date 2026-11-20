@@ -95,7 +95,7 @@ theorem JL_JF {V : VF C} {O : Type} [CommRing O] [StarRing O] (Y : FBChart C V O
     rw [pderiv_eval_single (P := pt C (n := 2) dd 1) (fun j => z0_pt 1 j),
       Finset.sum_eq_single i (fun j _ hj => by rw [pderiv_pt, if_neg (fun h => hj (Prod.mk.inj h).2), mul_zero])
         (fun h => absurd (Finset.mem_univ i) h), pderiv_pt, if_pos rfl, mul_one]
-  rw [map_add, pderiv_eval_single (P := Y.B.G.F) Y.B.G.const, hd0, hd1, zero_add] at h2
+  rw [map_add (f := _), pderiv_eval_single (P := Y.B.G.F) Y.B.G.const, hd0, hd1, zero_add] at h2
   have h3 := congrArg (ev (n := 1) ![pt C dd 0, 0]) h2
   rw [ev_sum constant_zero_first_then_zero] at h3
   have hL : ∀ j, ev (n := 1) ![pt C dd 0, 0] (ev ![Y.B.G.F] (pderiv C ((0 : Fin 1), j) (Y.lg k))) =

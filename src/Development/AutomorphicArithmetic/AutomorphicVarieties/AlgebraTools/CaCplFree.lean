@@ -68,7 +68,7 @@ private theorem rTensor_inj_of_map {Λ : Type} [CommRing Λ] (p : Ideal Λ) {L :
       change TensorProduct.lid L N (m.subtype.rTensor N ((⟨algebraMap Λ L a, hmem a⟩ : m) ⊗ₜ[L] n))
         = _
       simp [algebraMap_smul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro z hz
   obtain ⟨w, rfl⟩ := AddMonoidHom.mem_range.mp (hsurj z)

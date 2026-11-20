@@ -276,7 +276,7 @@ lemma hpart2_smul (c : ℂ) (W : Mx k r) :
 def phiL (L : Mx k r →L[ℝ] ℂ) (g : Mx k r) : Mx k r →ₗ[ℂ] ℂ where
   toFun W := L (g * hpart1 (Hpk k r) W) + Complex.I * L (g * hpart2 (Hpk k r) W)
   map_add' A B := by
-    simp only [hpart1_add, hpart2_add, Matrix.mul_add, map_add]
+    simp only [hpart1_add, hpart2_add, Matrix.mul_add, map_add (f := _)]
     ring
   map_smul' c W := by
     simp only [RingHom.id_apply, smul_eq_mul, hpart1_smul, hpart2_smul, Matrix.mul_sub,

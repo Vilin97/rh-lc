@@ -61,7 +61,7 @@ theorem GlobalTheory.FlatFactor.flCol_factor : ∀ (k : Type) [Field k] [Valuati
     { toFun := fun Θ => L (T Θ)
       map_add' := fun Θ₁ Θ₂ => by
         show L (T (Θ₁ + Θ₂)) = L (T Θ₁) + L (T Θ₂)
-        rw [← map_add]; congr 1; apply Subtype.ext; funext t
+        rw [← map_add (f := _)]; congr 1; apply Subtype.ext; funext t
         show (ψ (ch t) : ℂ) * (Θ₁.1 t + Θ₂.1 t) = (ψ (ch t) : ℂ) * Θ₁.1 t + (ψ (ch t) : ℂ) * Θ₂.1 t
         ring
       map_smul' := fun a Θ => by

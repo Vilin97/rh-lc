@@ -24,7 +24,7 @@ theorem finiteDimensional_of_involution (h2 : (2 : E) ≠ 0) (hc : ∀ t, c (c t
       have hne' : c u - u ≠ 0 := sub_ne_zero.2 hu
       refine ⟨u - c u, fun x => ?_⟩
       obtain ⟨s, hs⟩ := (hF ((x + c x) / 2)).1 (by
-        rw [map_div₀, map_add, hc, map_ofNat, add_comm])
+        rw [map_div₀, map_add (f := _), hc, map_ofNat, add_comm])
       obtain ⟨t, ht⟩ := (hF ((x - c x) / (2 * (u - c u)))).1 (by
         rw [map_div₀, map_sub, hc, map_mul, map_ofNat, map_sub, hc]
         field_simp
@@ -45,18 +45,18 @@ theorem exists_traceForm (hF : ∀ t : E, c t = t ↔ ∃ s : F, algebraMap F E 
     {B : V →ₗ[E] V →ₛₗ[c] E} (hB : ∀ x y, c (B x y) = B y x) :
     ∃ b : V →ₗ[F] V →ₗ[F] F, ∀ x y, algebraMap F E (b x y) = B x y + B y x := by
   have h : ∀ x y, ∃ s : F, algebraMap F E s = B x y + B y x := fun x y =>
-    (hF _).1 (by rw [map_add, hB, hB, add_comm])
+    (hF _).1 (by rw [map_add (f := _), hB, hB, add_comm])
   choose b hb using h
   have hi := (algebraMap F E).injective
   have hs : ∀ s : F, c (algebraMap F E s) = algebraMap F E s := fun s => (hF _).2 ⟨s, rfl⟩
   refine ⟨LinearMap.mk₂ F b (fun x x' y => hi ?_) (fun s x y => hi ?_) (fun x y y' => hi ?_)
     (fun s x y => hi ?_), hb⟩
-  · simp only [map_add, hb, LinearMap.add_apply]
+  · simp only [map_add (f := _), hb, LinearMap.add_apply]
     ring
   · rw [smul_eq_mul, map_mul, hb, hb, ← algebraMap_smul E s x]
     simp only [LinearMap.map_smulₛₗ, LinearMap.smul_apply, RingHom.id_apply, hs, smul_eq_mul]
     ring
-  · simp only [map_add, hb, LinearMap.add_apply]
+  · simp only [map_add (f := _), hb, LinearMap.add_apply]
     ring
   · rw [smul_eq_mul, map_mul, hb, hb, ← algebraMap_smul E s y]
     simp only [LinearMap.map_smulₛₗ, LinearMap.smul_apply, RingHom.id_apply, hs, smul_eq_mul]
@@ -68,7 +68,7 @@ theorem trace_eq_of_apply_self_eq {V W : Type*} [AddCommGroup V] [Module E V] [A
     B' (φ x) (φ y) + B' (φ y) (φ x) = B x y + B y x := by
   have h := hφ (x + y)
   rw [hadd] at h
-  simp only [map_add, LinearMap.add_apply, hφ] at h
+  simp only [map_add (f := _), LinearMap.add_apply, hφ] at h
   linear_combination h
 
 theorem exists_map_smul_eq (h2 : (2 : E) ≠ 0) (hc : ∀ t, c (c t) = t)

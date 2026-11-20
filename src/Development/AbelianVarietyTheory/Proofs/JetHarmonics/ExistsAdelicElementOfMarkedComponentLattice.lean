@@ -63,7 +63,7 @@ theorem exists_marked_of_component : ∀ (D : D7) (V : HSp D) (H : ReciprocityTh
     refine ⟨-(AdLat.fv D.host.F (φ e : Fin V.rank → D.host.E) + w),
       (hmem _).2 (neg_mem (add_mem ((hc _).2 (φ e).2) hw)), ?_⟩
     change AdLat.fv D.host.F (φ (F.t k a) : Fin V.rank → D.host.E) - gf.1 *ᵥ AdLat.fv D.host.F (io a) = _
-    rw [hgw, he, map_add, map_nsmul, Submodule.coe_add, Submodule.coe_smul_of_tower, AdLat.cap_fv_add,
+    rw [hgw, he, map_add (f := _), map_nsmul, Submodule.coe_add, Submodule.coe_smul_of_tower, AdLat.cap_fv_add,
       AdLat.cap_fv_nsmul]
     exact comp_sub_eq _ _ _ _
 

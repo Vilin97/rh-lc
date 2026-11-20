@@ -34,7 +34,7 @@ theorem eq_zero_of_mul_invariant {X : Type} [TopologicalSpace X] (l : (X → ℂ
       exact ⟨U, hU, hst.trans htU, h'⟩
     · rintro s t ⟨U, hU, hsU, h1⟩ ⟨V, hV, htV, h2⟩
       refine ⟨U ∪ V, hU.union hV, Set.union_subset_union hsU htV, fun φ' hφ' hs => ?_⟩
-      rw [← Set.indicator_self_add_compl U φ', map_add, h1 _ (hind U hU _ hφ') Set.support_indicator_subset,
+      rw [← Set.indicator_self_add_compl U φ', map_add (f := _), h1 _ (hind U hU _ hφ') Set.support_indicator_subset,
         h2 _ (hind _ hU.compl _ hφ'), add_zero]
       rw [Set.support_indicator]
       rintro x ⟨hx, hx'⟩

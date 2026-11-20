@@ -210,7 +210,7 @@ theorem le_closure_span (π : G →* (X →L[ℂ] X)) (hiso : ∀ g x, ‖π g x
     (fun g x hx => hH.2 _ x hx) hF (ε := ε / 2) (fun g => (hUs g.2 : _ < _).le)
   let Y : Submodule ℂ X :=
     { carrier := {x | x ∈ H ∧ ∀ u ∈ U, π (fin u) x = x}
-      add_mem' := fun {x y} hx hy => ⟨H.add_mem hx.1 hy.1, fun u hu => by rw [map_add, hx.2 u hu, hy.2 u hu]⟩
+      add_mem' := fun {x y} hx hy => ⟨H.add_mem hx.1 hy.1, fun u hu => by rw [map_add (f := _), hx.2 u hu, hy.2 u hu]⟩
       zero_mem' := ⟨H.zero_mem, fun u _ => map_zero _⟩
       smul_mem' := fun c x hx => ⟨H.smul_mem c hx.1, fun u hu => by rw [map_smul, hx.2 u hu]⟩ }
   have hYc : IsClosed (Y : Set X) := by

@@ -78,7 +78,7 @@ theorem coneMap_addBlockEquiv (f : MvPolynomial (Coord D.extSizes) ℤ) :
   change aeval (fun p : Coord D.extSizes ↦ C ((toIndefiniteRowSideFullHecke D).yPlus p) * X p.1) f = _
   induction f using MvPolynomial.induction_on with
   | C r => simp [GroundTheory.Heights₂.Heights.AddBlockData.extMap]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp]
     simp [GroundTheory.Heights₂.Heights.AddBlockData.extMap, addBlockEquiv_genericPoint]

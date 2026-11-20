@@ -182,7 +182,7 @@ theorem toNeg_mem {T : MMap M} (hT : T ∈ Mult θ M ∅ 1) : toNeg M θ hθ T �
   induction hT using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span (isMultMap_toNeg M θ hθ hx)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem ofNeg_mem {T : MMap (negM M)} (hT : T ∈ Mult θ (negM M) ∅ 1) : ofNeg M θ hθ T ∈ Mult θ M ∅ 1 := by
@@ -190,7 +190,7 @@ theorem ofNeg_mem {T : MMap (negM M)} (hT : T ∈ Mult θ (negM M) ∅ 1) : ofNe
   induction hT using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span (isMultMap_ofNeg M θ hθ hx)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 end GlobalTheory.NegModel

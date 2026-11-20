@@ -32,7 +32,7 @@ theorem sigR_compFin' (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (z :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem continuous_complEquiv_symm {σ : E →ₐ[F] E} {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum (𝓞 E)}
     (hE : IsCMExt F E σ) (h : w.under (𝓞 F) = v) {τ : E →ₐ[F] Fv F v} (hτ : splitPrime τ = w) :
@@ -104,10 +104,10 @@ theorem exists_iota_gen {σ : E →ₐ[F] E} {v : HeightOneSpectrum (𝓞 F)} {w
     · rw [map_mul, s2, s2, zero_mul]
   · intro a
     show _ = singleTens E v (s _) + Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ (singleTens E v (s _))
-    rw [hpl, singleTens_mul, one_mul, sigR_singleTens, ← map_add]
+    rw [hpl, singleTens_mul, one_mul, sigR_singleTens, ← map_add (f := _)]
     refine congrArg _ (split_ext hE τ ?_ ?_)
-    · rw [map_add, s1, hcw, RingEquiv.symm_apply_apply, ← splitProj_comp, s2, add_zero]
-    · rw [map_add, s2, zero_add, splitProj_comp_sigR hE, s1, hcw, RingEquiv.symm_apply_apply,
+    · rw [map_add (f := _), s1, hcw, RingEquiv.symm_apply_apply, ← splitProj_comp, s2, add_zero]
+    · rw [map_add (f := _), s2, zero_add, splitProj_comp_sigR hE, s1, hcw, RingEquiv.symm_apply_apply,
         ← sigR_compFin', splitProj_comp]
   · show singleTens E v (s 1) = _
     rw [hs1]

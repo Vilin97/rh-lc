@@ -90,9 +90,9 @@ theorem GlobalTheory.SympQ.compatible_symplectic_bases : ∀ (R : Type) [CommRin
   refine ⟨P, fun n hn a b => ?_, fun n hn a b => ?_, fun n hn p => ?_, fun n m hn hm a => ?_, fun n hn a b => ?_⟩
   · obtain ⟨r, hr⟩ := (gQ n).2.1 (q n a * q n b)
     refine ⟨r, ?_, (gAdd _ _ _ _ _ _ (hP n a).2 (hP n b).2 hr.2).2 rfl, ?_⟩
-    · rw [← hr.1, ← (hP n a).1, ← (hP n b).1, ← map_add]
+    · rw [← hr.1, ← (hP n a).1, ← (hP n b).1, ← map_add (f := _)]
       rfl
-    · rw [hcl n _ _ _ _ hr (hP n (a + b)), QuotientGroup.mk_mul, hq, hq, hq, map_add, toMul_add]
+    · rw [hcl n _ _ _ _ hr (hP n (a + b)), QuotientGroup.mk_mul, hq, hq, hq, map_add (f := _), toMul_add]
   · rw [hcl n _ _ _ _ (hP n a) (hP n b), hq, hq, Additive.toMul.injective.eq_iff]
     exact hker n hn a b
   · obtain ⟨v, hv⟩ := ((gQ n).1 p).exists

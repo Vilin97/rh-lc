@@ -10,9 +10,9 @@ private lemma polCoef_taylor {R₀ A : Type} [CommRing R₀] [CommRing A] [Algeb
       = MvPolynomial.aeval a G + MvPolynomial.aeval a (MvPolynomial.pderiv i G) * ε := by
   induction G using MvPolynomial.induction_on with
   | C r => simp
-  | add f h hf hh => simp only [map_add, hf, hh]; ring
+  | add f h hf hh => simp only [map_add (f := _), hf, hh]; ring
   | mul_X f j hf =>
-    simp only [map_mul, hf, MvPolynomial.aeval_X, Derivation.leibniz, smul_eq_mul, map_add,
+    simp only [map_mul, hf, MvPolynomial.aeval_X, Derivation.leibniz, smul_eq_mul, map_add (f := _),
       MvPolynomial.pderiv_X, Pi.add_apply]
     by_cases hij : j = i
     · subst hij
@@ -95,7 +95,7 @@ theorem coeff_dvd_of_aeval_add_sq_zero :
     intro f
     induction f using MvPolynomial.induction_on with
     | C r => simp only [MvPolynomial.aeval_C, MvPolynomial.map_C]; rfl
-    | add f h hf hh => simp only [map_add, hf, hh]
+    | add f h hf hh => simp only [map_add (f := _), hf, hh]
     | mul_X f j hf => simp only [map_mul, hf, MvPolynomial.aeval_X, MvPolynomial.map_X, x]
   rw [h5, Ideal.Quotient.eq_zero_iff_mem] at h4
   have hpos : 1 ≤ m i := by

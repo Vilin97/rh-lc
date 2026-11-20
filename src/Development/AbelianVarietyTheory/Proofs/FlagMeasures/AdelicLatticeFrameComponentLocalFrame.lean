@@ -21,7 +21,7 @@ theorem prV_OAd (v : HeightOneSpectrum (𝓞 F)) {a : E ⊗[F] Ad F} (ha : a ∈
 
 theorem prVec_add (v : HeightOneSpectrum (𝓞 F)) (x y : Fin n → E ⊗[F] Ad F) :
     prVec v (x + y) = prVec v x + prVec v y := by
-  funext i; simp [prVec, map_add]
+  funext i; simp [prVec, map_add (f := _)]
 
 theorem prVec_zero (v : HeightOneSpectrum (𝓞 F)) : prVec v (0 : Fin n → E ⊗[F] Ad F) = 0 := by
   funext i; simp [prVec]

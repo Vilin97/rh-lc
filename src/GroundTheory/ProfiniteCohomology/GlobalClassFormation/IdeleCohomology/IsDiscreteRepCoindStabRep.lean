@@ -104,7 +104,7 @@ noncomputable def toCoindLinear :
   map_add' f f' := by
     apply Subtype.ext
     funext h
-    simp only [map_add, Pi.add_apply, Submodule.coe_add]
+    simp only [map_add (f := _), Pi.add_apply, Submodule.coe_add]
   map_smul' c f := by
     apply Subtype.ext
     funext h

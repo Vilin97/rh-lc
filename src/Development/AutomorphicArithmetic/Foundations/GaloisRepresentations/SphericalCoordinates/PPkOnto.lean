@@ -38,7 +38,7 @@ private theorem pairL_add {G : HTGroup p} (a b b' : Loc G) : pairL a (b + b') = 
   unfold pairL
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun w _ => ?_
-  rw [Pi.add_apply, dotProduct_add, map_add]
+  rw [Pi.add_apply, dotProduct_add, map_add (f := _)]
 
 private theorem pair_small {G : HTGroup p} (t : Loc G) {e : ℝ} (he : 0 < e) :
     ∃ d : ℝ, 0 < d ∧ ∀ b : Loc G, (∀ w i, ‖(b w i : PadicAlgCl p)‖ < d) → ‖pairL t b‖ ≤ e := by
@@ -147,7 +147,7 @@ private theorem T_span (A : PFrame L β) (s₀ : Finset (VQ D)) (hs : Submodule.
       rw [map_zero]
       exact W.zero_mem
     | add x y _ _ hx hy =>
-      rw [map_add, Pi.add_apply]
+      rw [map_add (f := _), Pi.add_apply]
       exact W.add_mem hx hy
     | smul q x _ hx =>
       rw [map_rat_smul, Pi.smul_apply]

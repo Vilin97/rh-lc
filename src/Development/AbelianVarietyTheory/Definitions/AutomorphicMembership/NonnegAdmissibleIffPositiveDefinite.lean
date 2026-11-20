@@ -36,7 +36,7 @@ theorem IsFat.bound {k : ℕ} (h : ∀ γ ∈ P, ∀ δ : L, ∃ C : ℕ, ∀ N 
   refine ⟨max C₁ C₂, fun N hN => h₁ N ((le_max_left _ _).trans hN), fun χ hχ => ?_⟩
   have a := hχ _ (h₁ _ (le_max_left C₁ C₂))
   have b := hχ _ (h₂ _ (le_max_right C₁ C₂))
-  simp only [map_add, map_nsmul, map_neg, nsmul_eq_mul, mul_neg] at a b
+  simp only [map_add (f := _), map_nsmul, map_neg, nsmul_eq_mul, mul_neg] at a b
   exact abs_le.2 ⟨by linarith, by linarith⟩
 
 theorem IsFat.finite [Module.Finite ℤ L] (h : IsFat P) {γ : L} (hγ : γ ∈ P) (n : ℤ) :
@@ -63,7 +63,7 @@ theorem exists_forall_ne_zero {T : Set (Module.Dual ℤ L)} (hT : T.Finite) (h :
       exact h φ (Set.mem_insert _ _) (LinearMap.ext hh)
     have fin : (⋃ ψ ∈ insert φ T, {n : ℤ | ψ (n • δ + a) = 0}).Finite := by
       refine (hT.insert φ).biUnion fun ψ hψ => Set.Subsingleton.finite fun n hn n' hn' => ?_
-      simp only [Set.mem_setOf_eq, map_add, map_smul, smul_eq_mul] at hn hn'
+      simp only [Set.mem_setOf_eq, map_add (f := _), map_smul, smul_eq_mul] at hn hn'
       by_cases h0 : ψ δ = 0
       · rcases hψ with rfl | hψ
         · rw [h0] at hn; exact absurd (by simpa using hn) ha
@@ -82,7 +82,7 @@ theorem IsFat.exists_isolates [Module.Finite ℤ L] (h : IsFat P) (hne : P.Nonem
   obtain ⟨C, hC, hb⟩ := IsFat.bound h hγ δ
   obtain ⟨a, ha⟩ := Int.eq_ofNat_of_zero_le (hχ γ hγ)
   refine ⟨_, hC (C * (2 * a + 1) + 1) (by nlinarith), hχ, fun χ' h' e => ?_⟩
-  simp only [map_add, map_nsmul, nsmul_eq_mul] at e
+  simp only [map_add (f := _), map_nsmul, nsmul_eq_mul] at e
   push_cast at e
   have b := abs_le.1 (hb χ hχ)
   have b' := abs_le.1 (hb χ' h')

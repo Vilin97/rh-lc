@@ -34,7 +34,7 @@ noncomputable def cochainsMap (f : A ⟶ B) : cochainsComplex A ⟶ cochainsComp
     change (inhomogeneousCochains.d B n).hom (fun x => f.hom (c.1 x)) g =
       f.hom ((inhomogeneousCochains.d A n).hom c.1 g)
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [inhomogeneousCochains.d_hom_apply, Rep.hom_comm_apply, map_add, map_sum, map_smul]
+      simp [inhomogeneousCochains.d_hom_apply, Rep.hom_comm_apply, map_add (f := _), map_sum, map_smul]
 
 theorem cochainsMap_f_hom_apply (f : A ⟶ B) (n : ℕ) (c : locallyConstantCochains A n) :
     ((cochainsMap f).f n).hom c = cochainsMapLinear f n c :=

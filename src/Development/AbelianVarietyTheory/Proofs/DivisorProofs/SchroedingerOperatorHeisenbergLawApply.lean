@@ -75,7 +75,7 @@ theorem GlobalTheory.LinModelLocal.exists_omB_of_linBar : ∀ {F E : Type} [Fiel
       (fun l => GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt Bs.ψ Bs.v₁) (wM l)) ?_ ?_
     · intro x hx y hy c
       funext Y
-      simp only [hlin g x hx y hy c, map_add, map_smul, Pi.add_apply, Pi.smul_apply]
+      simp only [hlin g x hx y hy c, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply]
     · intro C x hx
       refine ⟨hU0 _ x hx, hT0 C x hx, ?_⟩
       funext Y
@@ -128,7 +128,7 @@ theorem GlobalTheory.LinModelLocal.exists_omB_of_linBar : ∀ {F E : Type} [Fiel
   intro ι hι g φ hφ
   obtain ⟨hT, hM, -, -⟩ := hA ι hι
   obtain ⟨c', hc'⟩ := GlobalTheory.T.eq_smul_of_commute_heisenberg_linearModel_schwartzBruhat (GlobalTheory.WeilM.SB (Fin a' × Fin (a + a') → Fv F Bs.v₁)) (GlobalTheory.LatVac.psiAt Bs.ψ Bs.v₁) hψc hψ1 ι₀
-    ι hbij0 (fun x _ y _ c => by rw [map_add, map_smul])
+    ι hbij0 (fun x _ y _ c => by rw [map_add (f := _), map_smul])
     (fun C => GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt Bs.ψ Bs.v₁) (wT C))
     (fun l => GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt Bs.ψ Bs.v₁) (wM l))
     (fun C x hx => ⟨hU0 _ x hx, hT0 C x hx, hT C x hx⟩) (fun l x hx => ⟨hU0 _ x hx, hM0 l x hx, hM l x hx⟩)

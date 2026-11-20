@@ -46,7 +46,7 @@ theorem inFr_add {a : ZMod n} {num den : LetA O n} {f f' : W.EE} (h : InFr W a n
   obtain ⟨u, hu, hf⟩ := h
   obtain ⟨u', hu', hf'⟩ := h'
   refine ⟨u + u', W.AΔ.add_mem hu hu', ?_⟩
-  rw [mul_add, hf, hf', ← map_add]
+  rw [mul_add, hf, hf', ← map_add (f := _)]
   congr 1; ring
 
 theorem inFr_sub {a : ZMod n} {num den : LetA O n} {f f' : W.EE} (h : InFr W a num den f)

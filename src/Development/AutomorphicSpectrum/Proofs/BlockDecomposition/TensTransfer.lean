@@ -50,7 +50,7 @@ theorem five_add {A₁ : Type w₁} {A₂ : Type w₂} {A₃ : Type w₃} {A₄ 
     obtain ⟨y', hy'⟩ := (eL₃ _).1 h2
     obtain ⟨y, rfl⟩ := b₂.2 y'
     refine ⟨q + u₂ y, ?_⟩
-    rw [map_add, c₂, hy']
+    rw [map_add (f := _), c₂, hy']
     abel
 
 variable {R : Type} [CommRing R] {ι : Type} [Fintype ι] [DecidableEq ι] {N : ι → Type}
@@ -62,7 +62,7 @@ theorem tens_ext {M : ι → Type w} [∀ i, AddCommGroup (M i)] [∀ i, Module 
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul n x => exact H i n x
-  | add x y hx hy => rw [Pi.single_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [Pi.single_add, map_add (f := _), map_add (f := _), hx, hy]
 
 def piT {M : ι → Type w} {M' : ι → Type w'} [∀ i, AddCommGroup (M i)] [∀ i, Module R (M i)]
     [∀ i, AddCommGroup (M' i)] [∀ i, Module R (M' i)] (u : ∀ i, M i →ₗ[R] M' i) :

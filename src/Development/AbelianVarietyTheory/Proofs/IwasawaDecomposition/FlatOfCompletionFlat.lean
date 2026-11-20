@@ -45,7 +45,7 @@ theorem flat_of_finite_of_flat_comp : ∀ {A R : Type} [CommRing A] [IsLocalRing
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a n => rw [hφ]; simp [j, algebraMap_smul]
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy, map_add, map_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
   have gen : ∀ (b : B) (hb : b ∈ mB) (n : R), ∃ y, φ y = (⟨b, hb⟩ : mB) ⊗ₜ n := by
     intro b hb
     have hb' : b ∈ Ideal.map (algebraMap A B) mA := hmap ▸ hb
@@ -59,7 +59,7 @@ theorem flat_of_finite_of_flat_comp : ∀ {A R : Type} [CommRing A] [IsLocalRing
       obtain ⟨u, hu⟩ := ihx (hmap ▸ hx) n
       obtain ⟨v, hv⟩ := ihy (hmap ▸ hy) n
       refine ⟨u + v, ?_⟩
-      rw [map_add, hu, hv, ← add_tmul]
+      rw [map_add (f := _), hu, hv, ← add_tmul]
       rfl
     · intro c x hx ihx hcx n
       obtain ⟨u, hu⟩ := ihx (hmap ▸ hx) (c • n)
@@ -74,7 +74,7 @@ theorem flat_of_finite_of_flat_comp : ∀ {A R : Type} [CommRing A] [IsLocalRing
     | add x z hx hz =>
       obtain ⟨u, hu⟩ := hx
       obtain ⟨v, hv⟩ := hz
-      exact ⟨u + v, by rw [map_add, hu, hv]⟩
+      exact ⟨u + v, by rw [map_add (f := _), hu, hv]⟩
   have hinjA : Function.Injective (mA.subtype.rTensor R) :=
     Module.Flat.rTensor_preserves_injective_linearMap mA.subtype Subtype.val_injective
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]

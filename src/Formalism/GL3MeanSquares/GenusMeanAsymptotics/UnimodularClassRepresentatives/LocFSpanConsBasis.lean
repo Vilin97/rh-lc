@@ -89,7 +89,7 @@ theorem locF_span_consBasis (S : VecSplit h h') {κ : Type} (b' : Basis κ K V')
           exact Submodule.subset_span ⟨Sum.inr i, rfl⟩
         · simp
         · intro x y _ _ hx hy
-          rw [map_add]
+          rw [map_add (f := _)]
           exact Submodule.add_mem _ hx hy
         · intro a x _ hx
           have e : S.ι (a • x) = a • S.ι x := (S.ι.restrictScalars (𝓞 K)).map_smul a x
@@ -118,7 +118,7 @@ theorem akCount_split (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
     have hv' : v = c • S.x₀ + S.ι a := by
       rw [← prodEquiv_apply, ← hv, LinearEquiv.apply_symm_apply]
     have hc : h S.x₀ v = c := by
-      rw [hv', map_add, map_smul, h1, S.orth]
+      rw [hv', map_add (f := _), map_smul, h1, S.orth]
       simp
     have ha : π v = a := by rw [hπ, hv]
     rw [hc, ha]

@@ -43,7 +43,7 @@ theorem factor_mem_Z1Q [TopologicalSpace G] (L : Lattice (O := O) ρ) {I J : Sub
     (hI : StableSub L I) (hJ : StableSub L J) (hIJ : I ≤ J) {z : G → ↥L.T ⧸ I}
     (hz : z ∈ quotientCocycles L I hI) : (fun g => Submodule.factor hIJ (z g)) ∈ quotientCocycles L J hJ := by
   refine ⟨hz.1.comp _, fun g h => ?_⟩
-  simp only [hz.2 g h, map_add, factor_actQ L hI hJ hIJ]
+  simp only [hz.2 g h, map_add (f := _), factor_actQ L hI hJ hIJ]
 
 end Gen
 
@@ -136,7 +136,7 @@ theorem mem_BD_of_orthogonal : Formalism.GaloisCohomology.LocalTateDualityK → 
     obtain ⟨e, he⟩ := (hm.2 _).1 (LA'.stable x.1 t ht) _ (hliftMem (I k) (z x.1))
     refine ⟨-e, ?_⟩
     rw [map_neg, ← he]
-    simp only [Φ, hteq, map_add, map_smul, smul_eq_mul, ← hπdef]
+    simp only [Φ, hteq, map_add (f := _), map_smul, smul_eq_mul, ← hπdef]
     rw [inv_pow]
     field_simp
     ring

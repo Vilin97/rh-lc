@@ -78,7 +78,7 @@ theorem existsUnique_coeff_alg [Smooth G.hom] {v : Fin n → (epsR K ⟶ G)} (hv
     have key : ∀ f, ((m' ≫ q).app W).hom f = (m'.app (q ⁻¹ᵁ W)).hom (e f) := fun _ => rfl
     obtain ⟨c, hc, hu⟩ := GlobalTheory.InvFieldBasis.existsUnique_coeff_alg hv hd x₀' p' m' H' y
       (hW.preimage_of_isOpenImmersion q hWq) h (fun f' => δ (e.symm f'))
-      (fun f f' => by rw [map_add, hadd])
+      (fun f f' => by rw [map_add (f := _), hadd])
       (fun f f' => by
         obtain ⟨f, rfl⟩ := e.surjective f
         obtain ⟨f', rfl⟩ := e.surjective f'
@@ -118,7 +118,7 @@ theorem existsUnique_coeff_affine [Smooth G.hom] {v : Fin n → (epsR K ⟶ G)} 
     have key : ∀ f, ((m' ≫ q).app W).hom f = (m'.app (q ⁻¹ᵁ W)).hom (e f) := fun _ => rfl
     obtain ⟨c, hc, hu⟩ := GlobalTheory.InvFieldBasis.existsUnique_coeff_affine hv hd x₀' p' m' H' y
       (hW.preimage_of_isOpenImmersion q hWq) hV h (fun f' => δ (e.symm f'))
-      (fun f f' => by rw [map_add, hadd])
+      (fun f f' => by rw [map_add (f := _), hadd])
       (fun f f' => by
         obtain ⟨f, rfl⟩ := e.surjective f
         obtain ⟨f', rfl⟩ := e.surjective f'
@@ -225,8 +225,8 @@ theorem existsUnique_coeff {A₀ : Over (Sp K)} [GrpObj A₀] {g : ℕ} {v : Fin
     have hL : LocDerK (y ≫ A₀.hom) p' (y ≫ m') (fun _ => 0) (q ⁻¹ᵁ W₀) d' := by
       refine ⟨fun W' hW' f f' => ?_, fun W' hW' f f' => ?_, fun W₁ W₂ h₂ hW₁ f => ?_,
         fun W' hW' r => ?_⟩
-      · simp only [d', map_add, hadd _ (hle W' hW')]
-      · simp only [d', map_mul, hmul _ (hle W' hW'), map_add, K1]
+      · simp only [d', map_add (f := _), hadd _ (hle W' hW')]
+      · simp only [d', map_mul, hmul _ (hle W' hW'), map_add (f := _), K1]
       · simp only [d']
         have hh : q ''ᵁ W₂ ≤ q ''ᵁ W₁ := (Scheme.Hom.image_le_image_iff q W₂ W₁).2 h₂
         have hi := congrArg (fun φ => φ.hom f) (Scheme.Hom.appIso_inv_naturality q (homOfLE h₂).op)

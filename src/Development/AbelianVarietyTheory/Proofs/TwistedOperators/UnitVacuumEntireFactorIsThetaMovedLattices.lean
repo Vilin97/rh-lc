@@ -84,7 +84,7 @@ theorem finRat_frame_mem_latO_sd {S T : HSp D} (frS : GL (Fin S.rank) D.host.E) 
   | zero => intro o; rw [smul_zero, Matrix.mul_zero, Matrix.zero_mul, map_zero]; exact zero_mem _
   | add x y _ _ hx hy =>
     intro o
-    rw [smul_add, Matrix.mul_add, Matrix.add_mul, map_add]
+    rw [smul_add, Matrix.mul_add, Matrix.add_mul, map_add (f := _)]
     exact add_mem (hx o) (hy o)
   | smul o' x _ hx => intro o; rw [smul_smul]; exact hx _
 

@@ -166,7 +166,7 @@ theorem exists_vac_of_lattice : ∀ {F : Type} [Field F] [NumberField F] {W : Ty
     (by rw [← map_zero (GlobalTheory.LatVac.locCo co v), hχ 0 (zero_mem _), hc0])
     (by
       rintro _ ⟨γ, hγ, rfl⟩ _ ⟨γ', hγ', rfl⟩
-      rw [← map_add, hχ _ (add_mem hγ hγ'), hχ _ hγ, hχ _ hγ', hcoc γ hγ γ' hγ']
+      rw [← map_add (f := _), hχ _ (add_mem hγ hγ'), hχ _ hγ, hχ _ hγ', hcoc γ hγ γ' hγ']
       congr 1
       have hA : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (GlobalTheory.AdelicU.evFin F v) (⅟(2 : AF F) * B γ γ') := by
         rw [co.form]
@@ -179,7 +179,7 @@ theorem exists_vac_of_lattice : ∀ {F : Type} [Field F] [NumberField F] {W : Ty
       rfl)
     (by
       rintro _ ⟨γ, hγ, rfl⟩
-      rw [← map_add, hχ _ (add_mem hγ hγ)]
+      rw [← map_add (f := _), hχ _ (add_mem hγ hγ)]
       have e : γ + γ = GlobalTheory.LatVac.liftV v 2 • γ := by
         have h := hAt γ hγ (GlobalTheory.LatVac.liftV v 2 - 2)
           (by rw [map_sub, GlobalTheory.LatVac.evFin_liftV, map_ofNat, sub_self])

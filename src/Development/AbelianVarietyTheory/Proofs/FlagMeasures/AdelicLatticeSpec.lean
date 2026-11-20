@@ -32,7 +32,7 @@ theorem exists_approx (L : Submodule (𝓞 E) (Fin n → E)) (g : ℕ) (hg : 1 �
     obtain ⟨x', hx', z', hz', rfl⟩ := hb
     refine ⟨x + x', add_mem hx hx', z + z', add_mem hz hz', ?_⟩
     funext i
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add]
+    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _)]
     ring
   | smul s a _ ha =>
     obtain ⟨x, hx, z, hz, rfl⟩ := ha

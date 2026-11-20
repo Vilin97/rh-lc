@@ -42,8 +42,8 @@ def toImage :
         ((preMod Y).obj N).obj (op (f ''ᵁ U)) :=
   TensorProduct.liftAddHom
     (AddMonoidHom.mk' (fun m => AddMonoidHom.mk' (fun n => sec f M U m ⊗ₜ sec f N U n)
-      (fun a b => by rw [map_add, tmul_add]))
-      (fun a b => by ext n; simp only [AddMonoidHom.mk'_apply, AddMonoidHom.add_apply, map_add,
+      (fun a b => by rw [map_add (f := _), tmul_add]))
+      (fun a b => by ext n; simp only [AddMonoidHom.mk'_apply, AddMonoidHom.add_apply, map_add (f := _),
         add_tmul]))
     (fun r m n => by
       simp only [AddMonoidHom.mk'_apply, sec_smul]
@@ -59,8 +59,8 @@ def ofImage :
         ((preMod X).obj (N.restrict f)).obj (op U) :=
   TensorProduct.liftAddHom
     (AddMonoidHom.mk' (fun m => AddMonoidHom.mk' (fun n => sec' f M U m ⊗ₜ sec' f N U n)
-      (fun a b => by rw [map_add, tmul_add]))
-      (fun a b => by ext n; simp only [AddMonoidHom.mk'_apply, AddMonoidHom.add_apply, map_add,
+      (fun a b => by rw [map_add (f := _), tmul_add]))
+      (fun a b => by ext n; simp only [AddMonoidHom.mk'_apply, AddMonoidHom.add_apply, map_add (f := _),
         add_tmul]))
     (fun r m n => by
       simp only [AddMonoidHom.mk'_apply, sec'_smul]
@@ -71,14 +71,14 @@ lemma ofImage_toImage (z : ((preMod X).obj (M.restrict f)).obj (op U) ⊗[ringOn
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul m n => rfl
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 lemma toImage_ofImage (z : ((preMod Y).obj M).obj (op (f ''ᵁ U)) ⊗[ringOn Y (f ''ᵁ U)]
     ((preMod Y).obj N).obj (op (f ''ᵁ U))) : toImage f M N U (ofImage f M N U z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul m n => rfl
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 lemma toImage_smul (r : ringOn X U) (z : ((preMod X).obj (M.restrict f)).obj (op U) ⊗[ringOn X U]
     ((preMod X).obj (N.restrict f)).obj (op U)) :
@@ -87,7 +87,7 @@ lemma toImage_smul (r : ringOn X U) (z : ((preMod X).obj (M.restrict f)).obj (op
   | zero => simp
   | tmul m n =>
     rw [TensorProduct.smul_tmul', toImage_tmul, toImage_tmul, sec_smul, TensorProduct.smul_tmul']
-  | add a b ha hb => rw [smul_add, map_add, map_add, ha, hb, smul_add]
+  | add a b ha hb => rw [smul_add, map_add (f := _), map_add (f := _), ha, hb, smul_add]
 
 def compApp : ((preMod X).obj (M.restrict f) ⊗ (preMod X).obj (N.restrict f)).obj (op U) →+
     ((preMod X).obj ((M ⊗ N).restrict f)).obj (op U) :=

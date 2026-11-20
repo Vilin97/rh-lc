@@ -63,7 +63,7 @@ theorem PlaceResGood_of : PlaceResGood := by
       rw [e]; exact Subalgebra.algebraMap_mem _ c
     | add x z hx hz ihx ihz =>
       have : (⟨x + z, hSm _ (add_mem hx hz)⟩ : S) = ⟨x, hSm _ hx⟩ + ⟨z, hSm _ hz⟩ := rfl
-      rw [this, map_add]; exact add_mem ihx ihz
+      rw [this, map_add (f := _)]; exact add_mem ihx ihz
     | mul x z hx hz ihx ihz =>
       have : (⟨x * z, hSm _ (mul_mem hx hz)⟩ : S) = ⟨x, hSm _ hx⟩ * ⟨z, hSm _ hz⟩ := rfl
       rw [this, map_mul]; exact mul_mem ihx ihz

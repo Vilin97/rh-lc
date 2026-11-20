@@ -40,7 +40,7 @@ theorem idem_trace_det (P : Matrix ι ι ℂ) (hP : P * P = P) :
             + (1 - LinearMap.prodMap LinearMap.id 0) := by
         refine LinearMap.ext fun x => ?_
         ext <;> simp
-      rw [this, map_add, map_add, map_smul, map_smul, map_sub, map_sub, ← e, Matrix.toLin'_one]
+      rw [this, map_add (f := _), map_add (f := _), map_smul, map_smul, map_sub, map_sub, ← e, Matrix.toLin'_one]
       congr 2
       exact (LinearEquiv.conj_id c).symm
     rw [e2, LinearEquiv.conj_apply, LinearMap.comp_assoc, LinearMap.det_conj, LinearMap.det_prodMap, LinearMap.det_smul,

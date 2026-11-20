@@ -38,7 +38,7 @@ theorem split_or_inert_idem : ∀ (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F
       by_cases e : u = v
       · subst e; rw [hα1, GlobalTheory.AdelicU.evalV_singleFin_self]
       · rw [hα0 u e, GlobalTheory.AdelicU.evalV_singleFin_ne e]
-    rw [GlobalTheory.EmbChart.cA_idem, GlobalTheory.EmbChart.idem, ← LinearMap.map_add, add_sub_cancel, hεα, hα]
+    rw [GlobalTheory.EmbChart.cA_idem, GlobalTheory.EmbChart.idem, ← LinearMap.map_add (f := _), add_sub_cancel, hεα, hα]
     rfl
   · right
     exact ⟨w, hw ▸ hi⟩

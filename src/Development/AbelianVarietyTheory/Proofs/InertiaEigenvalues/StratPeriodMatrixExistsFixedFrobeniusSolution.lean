@@ -15,7 +15,7 @@ theorem BK.X_pow_natDegree_mem {K : FinExt l} (bk : BK K) :
     (X : bk.S) ^ bk.Ep.natDegree ∈ Ideal.span {(l : bk.S)} ⊔ Ideal.span {bk.E} := by
   have h := congrArg (Polynomial.coeToPowerSeries.ringHom (R := Wq l bk.a)) bk.monic.as_sum
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_mul, map_pow, Polynomial.coeToPowerSeries.ringHom_apply,
+    simp only [map_add (f := _), map_sum, map_mul, map_pow, Polynomial.coeToPowerSeries.ringHom_apply,
     Polynomial.coe_C, Polynomial.coe_X] at h
   have hs : ∑ i ∈ Finset.range bk.Ep.natDegree, C (bk.Ep.coeff i) * (X : bk.S) ^ i ∈
       Ideal.span {(l : bk.S)} := by
@@ -62,7 +62,7 @@ theorem BK.hom_eq_of_X_C {K : FinExt l} (bk : BK K) {B : Obj l ↥(OL K)} (f g :
     rw [← hr]; ring
   have hd : BK.hf f s - BK.hf g s = BK.hf f X ^ (bk.Ep.natDegree * n) * (BK.hf f r - BK.hf g r) := by
     rw [e]
-    simp only [map_add, map_mul, map_pow]
+    simp only [map_add (f := _), map_mul, map_pow]
     rw [hpoly (trunc (bk.Ep.natDegree * n) s), ← hX]; ring
   have h2 : BK.hf f X ^ (bk.Ep.natDegree * n) * (BK.hf f r - BK.hf g r) ∈
       (Ideal.span {(l : B.A)} ⊔ B.I) ^ n := by

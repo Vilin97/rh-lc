@@ -150,7 +150,7 @@ theorem inId_of_kill (hψ : IsStdChar D ψ (-1)) (hcc : D.host.ccK = ⊤) (gS : 
         rfl
       rw [e1, RingHom.map_mul (incA D), mul_assoc]
       exact inId_mul (mem_conj_smul.1 hm') (h1 s hs)
-    · rw [star_add, RingHom.map_add, add_mul, RingHom.map_add]
+    · rw [star_add, RingHom.map_add (f := _), add_mul, RingHom.map_add (f := _)]
       exact inId_add hx hy
   obtain ⟨b, hb, a, ha, hab⟩ := Ideal.isCoprime_iff_exists.1 (isCoprime_conj he.1 c)
   have h3 := h2 _ (FractionalIdeal.mem_coeIdeal_of_mem _ (Ideal.smul_mem_pointwise_smul D.host.conj _ _ ha))
@@ -159,9 +159,9 @@ theorem inId_of_kill (hψ : IsStdChar D ψ (-1)) (hcc : D.host.ccK = ⊤) (gS : 
     rw [← star_eq, star_star]
   have e3 : t i j = incA D (b : D.host.E) * t i j + incA D (a : D.host.E) * t i j := by
     have : (b : D.host.E) + (a : D.host.E) = 1 := by exact_mod_cast congrArg (algebraMap (𝓞 D.host.E) D.host.E) hab
-    rw [← add_mul, ← RingHom.map_add, this, RingHom.map_one, one_mul]
+    rw [← add_mul, ← RingHom.map_add (f := _), this, RingHom.map_one, one_mul]
   rw [e2] at h3
-  rw [e3, RingHom.map_add]
+  rw [e3, RingHom.map_add (f := _)]
   exact inId_add (inId_mul hb ((half_mem_iff hcc hLS hLT hS hT he _ ht).1 htΛ i j)) h3
 
 theorem heisO_eq_half (hψ : IsStdChar D ψ (-1)) (hcc : D.host.ccK = ⊤) (gS : S.gram = 1) (hLS : IsStdLat LS)
@@ -196,7 +196,7 @@ theorem heisO_eq_half (hψ : IsStdChar D ψ (-1)) (hcc : D.host.ccK = ⊤) (gS :
       exact kill hψ hS hT hy (GlobalTheory.PlaceModelSum.idem_smul_latO hee ((finRat_mem_iff hψ hcc gS hLS hLT hS hT _).2 hγ)) hb'
     | zero => rw [map_zero, smul_zero, smul_zero, GlobalTheory.PlaceModel.symplO_zero_left, AddChar.map_zero_eq_one]
     | add x y _ _ hx hy =>
-      rw [map_add, smul_add, smul_add, GlobalTheory.PlaceModel.symplO_add_left, AddChar.map_add_eq_mul, hx, hy, one_mul]
+      rw [map_add (f := _), smul_add, smul_add, GlobalTheory.PlaceModel.symplO_add_left, AddChar.map_add_eq_mul, hx, hy, one_mul]
     | neg x _ hx =>
       have h := AddChar.map_zero_eq_one ψ
       rw [← GlobalTheory.PlaceModel.symplO_zero_left S T (GlobalTheory.VacUnique.finRat S T (2 • z)),

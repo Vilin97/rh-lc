@@ -84,7 +84,7 @@ theorem cj_mem {M : IntermediateField ℚ ℂ} (ρ : M →ₐ[ℚ] ℂ) {x : ℂ
 
 theorem cj_add {M : IntermediateField ℚ ℂ} (ρ : M →ₐ[ℚ] ℂ) {x y : ℂ} (hx : x ∈ M) (hy : y ∈ M) :
     cj M ρ (x + y) = cj M ρ x + cj M ρ y := by
-  rw [cj_mem ρ hx, cj_mem ρ hy, cj_mem ρ (add_mem hx hy), ← map_add]; rfl
+  rw [cj_mem ρ hx, cj_mem ρ hy, cj_mem ρ (add_mem hx hy), ← map_add (f := _)]; rfl
 
 theorem cj_mul {M : IntermediateField ℚ ℂ} (ρ : M →ₐ[ℚ] ℂ) {x y : ℂ} (hx : x ∈ M) (hy : y ∈ M) :
     cj M ρ (x * y) = cj M ρ x * cj M ρ y := by

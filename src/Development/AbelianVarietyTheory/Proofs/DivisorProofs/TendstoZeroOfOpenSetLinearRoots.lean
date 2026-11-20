@@ -7,7 +7,7 @@ namespace GlobalTheory
 
 theorem linRoot_add_smul {ι : Type} [Fintype ι] {N : ℕ} (u w : ι → Fin N → ℝ) (t : ℝ) :
     linRoot (u + t • w) = linRoot u + C t * linRoot w := by
-  simp only [linRoot, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, add_mul,
+  simp only [linRoot, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, add_mul,
     Finset.sum_add_distrib, Finset.mul_sum, mul_neg, neg_add, mul_assoc]
 
 theorem linRoot_add_smul_pow {ι : Type} [Fintype ι] {N : ℕ} (u w : ι → Fin N → ℝ) (t : ℝ)
@@ -28,7 +28,7 @@ theorem tendsto_zero_linRoot_pow_of_isOpen {α : Type} (l : Filter α) {ι : Typ
   let T : Submodule ℝ (MvPolynomial (ι × Fin N) ℝ) :=
     { carrier := {P | Tendsto (fun a => Λ a P) l (𝓝 0)}
       add_mem' := fun {P Q} hP hQ => by
-        simpa only [Set.mem_setOf_eq, map_add, add_zero] using hP.add hQ
+        simpa only [Set.mem_setOf_eq, map_add (f := _), add_zero] using hP.add hQ
       zero_mem' := by simpa only [Set.mem_setOf_eq, map_zero] using tendsto_const_nhds
       smul_mem' := fun c P hP => by
         simpa only [Set.mem_setOf_eq, map_smul, smul_eq_mul, mul_zero] using hP.const_mul c }

@@ -19,7 +19,7 @@ def crd (g : Sp E a ≃ₗ[E] Sp E a) (g' : Sp E b ≃ₗ[E] Sp E b) : HomE E a 
   toFun x := (LinearMap.toMatrix' ((g'.symm : Sp E b →ₗ[E] Sp E b) ∘ₗ x ∘ₗ (g : Sp E a →ₗ[E] Sp E a))).vec
   map_zero' := by simp
   map_add' x y := by
-    rw [LinearMap.add_comp, LinearMap.comp_add, map_add, Matrix.vec_add]
+    rw [LinearMap.add_comp, LinearMap.comp_add, map_add (f := _), Matrix.vec_add]
 
 theorem crd_apply (g : Sp E a ≃ₗ[E] Sp E a) (g' : Sp E b ≃ₗ[E] Sp E b) (x : HomE E a b) :
     crd g g' x = (LinearMap.toMatrix' ((g'.symm : Sp E b →ₗ[E] Sp E b) ∘ₗ x ∘ₗ (g : Sp E a →ₗ[E] Sp E a))).vec := rfl

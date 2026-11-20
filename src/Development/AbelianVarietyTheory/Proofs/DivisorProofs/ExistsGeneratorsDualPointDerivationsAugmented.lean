@@ -97,10 +97,10 @@ theorem exists_generators_dual_point_derivations :
       rw [Submodule.coe_add, Submodule.coe_smul, Submodule.coe_smul, hT, hT, hT]
       have h0 : W.mkQ (P (a * c) - (ε a • P c + ε c • P a)) = 0 := by
         rw [← LinearMap.mem_ker, Submodule.ker_mkQ]; exact hmem
-      rw [map_sub, map_add, map_smul, map_smul, sub_eq_zero] at h0
+      rw [map_sub, map_add (f := _), map_smul, map_smul, sub_eq_zero] at h0
       exact h0
     show b.coord i (T (a * c)) = ε a * b.coord i (T c) + ε c * b.coord i (T a)
-    rw [hTac, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
+    rw [hTac, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul]
   · intro i j
     have hTx : T (x j) = b j := by
       apply Subtype.ext

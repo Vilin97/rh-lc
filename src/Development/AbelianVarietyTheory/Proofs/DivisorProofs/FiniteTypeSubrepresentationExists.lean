@@ -18,7 +18,7 @@ theorem main : ∀ (G : Type) [Group G] (K : Set G) (V : Type) [AddCommGroup V] 
   refine ⟨{ carrier := {u | (((repD ρ D K h1 hmul hst).asModuleEquiv u : D) : V) ∈ Submodule.span ℂ (Set.range b)}
             add_mem' := ?_, zero_mem' := ?_, smul_mem' := ?_ }, fun u => Iff.rfl⟩
   · intro x y hx hy
-    simp only [Set.mem_setOf_eq, map_add, Submodule.coe_add] at hx hy ⊢
+    simp only [Set.mem_setOf_eq, map_add (f := _), Submodule.coe_add] at hx hy ⊢
     exact Submodule.add_mem _ hx hy
   · simp only [Set.mem_setOf_eq, map_zero, ZeroMemClass.coe_zero]
     exact Submodule.zero_mem _

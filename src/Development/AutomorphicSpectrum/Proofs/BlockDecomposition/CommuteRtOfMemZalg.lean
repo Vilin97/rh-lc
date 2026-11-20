@@ -165,7 +165,7 @@ theorem zfin_of_cofin {J : Set (Module.End ℂ (Sm E a))} (hJ : Cofin J) {φ : S
         obtain ⟨x, -, j, hj, rfl⟩ := hy
         rw [hev, Module.End.mul_apply, h j hj, map_zero]
       | zero => exact map_zero ev
-      | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
       | smul c x _ hx => rw [map_smul, hx, smul_zero]
   have hle : Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) '' Zalg E a) ≤ V.map ev := by
     rw [Submodule.span_le]
@@ -173,7 +173,7 @@ theorem zfin_of_cofin {J : Set (Module.End ℂ (Sm E a))} (hJ : Cofin J) {φ : S
     obtain ⟨v, hv, w, hw, hvw⟩ := Submodule.mem_sup.1 (hz z hz')
     refine ⟨v, hv, ?_⟩
     change ev v = ev z
-    rw [← hvw, map_add, hw0 w hw, add_zero]
+    rw [← hvw, map_add (f := _), hw0 w hw, add_zero]
   haveI := hV
   exact Submodule.finiteDimensional_of_le hle
 

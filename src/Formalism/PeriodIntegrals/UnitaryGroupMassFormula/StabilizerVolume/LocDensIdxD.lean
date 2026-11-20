@@ -27,7 +27,7 @@ theorem psi_surj (k0 : Fin 2) (hσ : ∀ x, σ (σ x) = x)
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => simp [sigR, hσ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   set u : Fv F v := algebraMap F (Fv F v) (b.repr 1 k0) with hu_def
   have hu0 : u ≠ 0 := (map_ne_zero (algebraMap F (Fv F v))).mpr hk0
   let Y : Fin a → Fin a → Fv F v ⊗[F] E := fun i j =>

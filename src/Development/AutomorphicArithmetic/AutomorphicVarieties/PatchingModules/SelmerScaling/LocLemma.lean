@@ -202,7 +202,7 @@ private theorem sep_good {F R H : Type} [Field F] [Infinite F] [CommRing R] [Alg
     | add x y _ _ hx hy =>
       obtain ⟨a, h1, ha⟩ := hx
       obtain ⟨b, h2, hb⟩ := hy
-      exact ⟨a + b, ga _ _ h1 h2, fun i => by rw [map_add, map_add, ha, hb]; rfl⟩
+      exact ⟨a + b, ga _ _ h1 h2, fun i => by rw [map_add (f := _), map_add (f := _), ha, hb]; rfl⟩
     | smul c x _ hx =>
       obtain ⟨a, h1, ha⟩ := hx
       exact ⟨algebraMap F R c • a, gs _ _ h1, fun i => by
@@ -282,7 +282,7 @@ theorem UpperTheory.V.Pa.locLemma :
     (by simp [Matrix.blockTriangular_zero])
     (by
       rintro x y ⟨⟨x1, x2, x3, x4⟩, ⟨x5, x6⟩, x7, x8⟩ ⟨⟨y1, y2, y3, y4⟩, ⟨y5, y6⟩, y7, y8⟩
-      simp only [map_add, Matrix.add_apply, add_sub_add_comm]
+      simp only [map_add (f := _), Matrix.add_apply, add_sub_add_comm]
       exact ⟨⟨E.add_mem x1 y1, E.add_mem x2 y2, fun i => E.add_mem (x3 i) (y3 i),
         fun i => E.add_mem (x4 i) (y4 i)⟩, ⟨fun i j => I.add_mem (x5 i j) (y5 i j),
         fun i => I.add_mem (x6 i) (y6 i)⟩, x7.add y7, fun i => by rw [x8, y8]⟩)

@@ -165,7 +165,7 @@ theorem coef_basic : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre R) (F 
     have a := isCoef_coef g hw χ s z J hJ
     have a' := isCoef_coef g hw χ s' z J hJ
     rw [sval_lin g.b s s' c χ hJ]
-    simp only [cst_eq, map_add, map_mul] at a a' ⊢
+    simp only [cst_eq, map_add (f := _), map_mul] at a a' ⊢
     linear_combination cstH z c * a + a'
   · intro w' hw'
     obtain ⟨c, hc, hv⟩ := exists_frame_ratio hw hw'

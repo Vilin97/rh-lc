@@ -88,7 +88,7 @@ theorem exists_compact_latHat (F E : Type) [Field F] [NumberField F] [Field E] [
     obtain ⟨c, hc, rfl⟩ := hy
     obtain ⟨d, hd, rfl⟩ := hz
     refine ⟨c + d, fun k _ w => ?_, ?_⟩
-    · rw [Pi.add_apply, map_add]
+    · rw [Pi.add_apply, map_add (f := _)]
       exact add_mem (hc k trivial w) (hd k trivial w)
     · funext i
       simp only [g, Pi.add_apply, TensorProduct.add_tmul, Finset.sum_add_distrib]
@@ -164,9 +164,9 @@ theorem exists_compact_adele (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F ⊗
   refine ⟨(fun ρ => θ ρ (infPart D z), finPart D z), ⟨fun ρ _ => mem_closedBall_zero_iff.2 (hR ρ), hz⟩, ?_⟩
   refine sub_eq_zero.1 (hs.ext _ ?_ fun τ => ?_)
   · change finPart D (s (fun ρ => θ ρ (infPart D z)) + j (finPart D z) - z) = 0
-    rw [RingHom.map_sub, RingHom.map_add, hs.fin, hj2, zero_add, sub_self]
+    rw [RingHom.map_sub, RingHom.map_add (f := _), hs.fin, hj2, zero_add, sub_self]
   · change θ τ (infPart D (s (fun ρ => θ ρ (infPart D z)) + j (finPart D z) - z)) = 0
-    rw [RingHom.map_sub, RingHom.map_add, hj1, add_zero, RingHom.map_sub, hs.comp, sub_self]
+    rw [RingHom.map_sub, RingHom.map_add (f := _), hj1, add_zero, RingHom.map_sub, hs.comp, sub_self]
 
 theorem exists_compact_stab : ∀ (D : D7) (V : HSp D) (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)), IsInfFam θ → ∀ R : ℝ, ∃ K : Set (GA D V), IsCompact K ∧ ∀ h : GA D V, (∀ y, y ∈ Formalism.MainNotions.StandardLattice.latHat D.host.F D.host.E (L0c D V) ↔ (finMat D.sp.cm.sig V.gram h).mulVec y ∈ Formalism.MainNotions.StandardLattice.latHat D.host.F D.host.E (L0c D V)) → (∀ ρ i j, ‖infMat D.sp.cm.sig V.gram (θ ρ) h i j‖ ≤ R) → h ∈ K := by
   intro D V θ hθ R

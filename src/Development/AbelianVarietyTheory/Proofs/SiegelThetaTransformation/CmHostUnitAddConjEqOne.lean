@@ -136,7 +136,7 @@ theorem cmHostUnit_add_conj_eq_one (H : Host E) : H.w0 + H.bar H.w0 = 1 := by
   have hb : H.bar H.rt = -H.rt := (sq_eq_sq_iff_eq_or_eq_neg.1 hsq).resolve_left hne
   have h2 : 2 * H.bar H.w0 = 1 - H.rt := by
     have := congrArg H.bar H.two_weight_eq_one_add_root
-    rw [map_mul, map_add, map_one, hb, map_ofNat] at this
+    rw [map_mul, map_add (f := _), map_one, hb, map_ofNat] at this
     rw [this]; ring
   have : (2 : 𝓞 E) * (H.w0 + H.bar H.w0) = 2 * 1 := by rw [mul_add, H.two_weight_eq_one_add_root, h2]; ring
   exact mul_left_cancel₀ two_ne_zero this
@@ -308,7 +308,7 @@ theorem EF_int (l : Geo.Tor.Level H) {X : Data E r} {L : Lt E r} (hL : SelfD X L
     rw [← hk]
     change EF X y ((m : E) • x) = EF X (((H.bar m : 𝓞 E) : E) • y) x
     rw [TensLat.EF_smul, H.bar_eq, cc, IsCMField.complexConj_apply_apply]
-  · exact ⟨k + k', by rw [TensLat.EF_eq_bilin, map_add, ← TensLat.EF_eq_bilin, ← TensLat.EF_eq_bilin, hk, hk',
+  · exact ⟨k + k', by rw [TensLat.EF_eq_bilin, map_add (f := _), ← TensLat.EF_eq_bilin, ← TensLat.EF_eq_bilin, hk, hk',
       Int.cast_add]⟩
 
 theorem mem_tens {Λ : Lt E n} {L : Lt E r} {M N : ℕ} (hΛ : Λ ∈ Vset E n M) (hN : NOK Λ N M)
@@ -360,7 +360,7 @@ theorem heis_eq {X : Data E r} {bas : (Fin g ⊕ Fin g → ℤ) ≃ₗ[ℤ] X.Λ
     rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun b _ => ?_
     change EF X (y b) (u b + u b) = _
-    rw [TensLat.EF_eq_bilin, map_add, ← TensLat.EF_eq_bilin, hk, two_mul]
+    rw [TensLat.EF_eq_bilin, map_add (f := _), ← TensLat.EF_eq_bilin, hk, two_mul]
   have h5 := Complex.exp_int_mul_two_pi_mul_I (-(∑ b, k b))
   rw [h3, h4]
   have h6 : -((Real.pi : ℂ) * I * ((2 * ((∑ b, k b : ℤ) : ℚ) : ℚ) : ℂ)) =
@@ -428,7 +428,7 @@ theorem gphi_move : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
       have hdiff : Y q b - Y' (fun b => σ (q b)) b ∈ L := by
         have h3 := add_mem (sub_mem h h') (sub_mem hu (hm₃.mem z))
         convert h3 using 1
-        rw [e2, eq_add_of_sub_eq' hz, map_add, map_nsmul, ← Nat.cast_smul_eq_nsmul E,
+        rw [e2, eq_add_of_sub_eq' hz, map_add (f := _), map_nsmul, ← Nat.cast_smul_eq_nsmul E,
           ← Nat.cast_smul_eq_nsmul E, smul_add, smul_add, smul_smul, smul_smul, inv_mul_cancel₀ hM0,
           one_smul, one_smul]
         abel

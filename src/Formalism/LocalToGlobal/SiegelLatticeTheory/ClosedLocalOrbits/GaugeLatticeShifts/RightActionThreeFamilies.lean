@@ -61,7 +61,7 @@ def hsR (P : Wq ≃ₗᵢ[ℂ] Wq) :
       rw [← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [PiLp.add_apply, smul_add]
-    rw [e, ContinuousLinearMap.add_comp, map_add]
+    rw [e, ContinuousLinearMap.add_comp, map_add (f := _)]
   map_smul' c f := by
     have e : hsInv (c • f) = c • hsInv f := by
       ext ξ

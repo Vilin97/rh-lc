@@ -154,7 +154,7 @@ theorem KType.dτ_stable_of_stable {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T
     simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.sub_apply, smul_eq_mul]
     push_cast
     linear_combination ((Y i j + Yᴴ i j) / 2) * Complex.I_sq
-  rw [hdec, map_add, ContinuousLinearMap.add_apply,
+  rw [hdec, map_add (f := _), ContinuousLinearMap.add_apply,
     map_smul T.dτ (-(Complex.I / 2)) (Complex.I • (Y + Yᴴ)), ContinuousLinearMap.smul_apply]
   exact W.add_mem (key _ h1 h1J v hv) (W.smul_mem _ (key _ h2 h2J v hv))
 

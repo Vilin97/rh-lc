@@ -38,7 +38,7 @@ theorem φRW_surjective (LL : FinExt l) : Function.Surjective (φRW LL) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [φRW]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem isFractionRing_OL (LL : FinExt l) : IsFractionRing ↥(OL LL) ↥LL.1 := by
   have : FiniteDimensional ℚ_[l] LL.1 := LL.2

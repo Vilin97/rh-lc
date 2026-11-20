@@ -17,7 +17,7 @@ theorem hs_props : ∀ (Ω : Type) [Field Ω] (ε : Ω →+* ℂ), (∀ (C C' : 
   · intro C φ ψ h h' hφ hψ
     refine ⟨fun z hz => ?_, fun z hz => ?_⟩
     · have := (hφ z hz).add (hψ z hz)
-      simpa [HahnSeries.coeff_add, map_add, add_mul] using this
+      simpa [HahnSeries.coeff_add, map_add (f := _), add_mul] using this
     · have := (hφ z hz).sub (hψ z hz)
       simpa [HahnSeries.coeff_sub, map_sub, sub_mul] using this
   · intro C r c z _

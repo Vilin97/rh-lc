@@ -129,7 +129,7 @@ theorem isUnit_of_unit_coefficient (hOloc : IsLocalRing O)
     have h1 : x * algebraMap (LetA O n) W.EE (letπ ^ m) + (1 - k17e W i) -
         algebraMap (LetA O n) W.EE ((letE i : LetA O n) * a + (1 - letE i)) =
         k17e W i * (x * algebraMap (LetA O n) W.EE (letπ ^ m) - algebraMap (LetA O n) W.EE a) := by
-      rw [map_add, map_mul, map_sub, map_one]
+      rw [map_add (f := _), map_mul, map_sub, map_one]
       simp only [k17e] at hx ⊢
       linear_combination (-(algebraMap (LetA O n) W.EE (letπ ^ m))) * hx
     rw [h1, hI, ← pow_one ((PD.p : ℕ) : W.EE)]
@@ -137,7 +137,7 @@ theorem isUnit_of_unit_coefficient (hOloc : IsLocalRing O)
   have hunit : IsUnit (x * algebraMap (LetA O n) W.EE (letπ ^ m) + (1 - k17e W i)) := by
     apply isUnit_of_isUnit_mod_l
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hq, hdec, map_add, map_add, map_sum, map_sum]
+      rw [hq, hdec, map_add (f := _), map_add (f := _), map_sum, map_sum]
     exact (isNilpotent_sum hnil).isUnit_add_right_of_commute (hγ.map _) (Commute.all _ _)
   have hprod : (x + (1 - k17e W i)) * (k17e W i * algebraMap (LetA O n) W.EE (letπ ^ m) +
       (1 - k17e W i)) = x * algebraMap (LetA O n) W.EE (letπ ^ m) + (1 - k17e W i) := by
@@ -179,7 +179,7 @@ def k17S : Subring W.EE where
   carrier := {ε | ∀ δ ∈ W.DelF, W.γE δ ε = ε}
   mul_mem' {a b} ha hb δ hδ := by rw [map_mul, ha δ hδ, hb δ hδ]
   one_mem' δ _ := map_one _
-  add_mem' {a b} ha hb δ hδ := by rw [map_add, ha δ hδ, hb δ hδ]
+  add_mem' {a b} ha hb δ hδ := by rw [map_add (f := _), ha δ hδ, hb δ hδ]
   zero_mem' δ _ := map_zero _
   neg_mem' {a} ha δ hδ := by rw [map_neg, ha δ hδ]
 
@@ -216,7 +216,7 @@ theorem letterRing_isUnit_of (i : ZMod n) (t : k17S W)
   obtain ⟨u, hu⟩ := h
   have hz : ∀ δ ∈ W.DelF, W.γE δ (u : W.EE) = u := by
     intro δ hδ
-    rw [hu, map_add, map_mul, map_sub, map_one, idempotent_gamma_invariant, t.2 δ hδ]
+    rw [hu, map_add (f := _), map_mul, map_sub, map_one, idempotent_gamma_invariant, t.2 δ hδ]
   have hw : ∀ δ ∈ W.DelF, W.γE δ (↑u⁻¹ : W.EE) = ↑u⁻¹ := by
     intro δ hδ
     have h1 : W.γE δ (↑u⁻¹ : W.EE) * u = 1 := by
@@ -278,7 +278,7 @@ def letterRingVal (i : ZMod n) : k17R W i →+ W.EE where
   map_add' r r' := by
     obtain ⟨s, rfl⟩ := Ideal.Quotient.mk_surjective r
     obtain ⟨s', rfl⟩ := Ideal.Quotient.mk_surjective r'
-    rw [← map_add, letterRingValueFun_mk, letterRingValueFun_mk, letterRingValueFun_mk, AddMemClass.coe_add, mul_add]
+    rw [← map_add (f := _), letterRingValueFun_mk, letterRingValueFun_mk, letterRingValueFun_mk, AddMemClass.coe_add, mul_add]
 
 theorem letterRing_val_mk (i : ZMod n) (s : k17S W) :
     letterRingVal W i (Ideal.Quotient.mk (Ideal.span {1 - idempotentInvariant W i}) s) = k17e W i * s :=

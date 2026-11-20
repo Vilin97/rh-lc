@@ -105,7 +105,7 @@ private theorem gram_diag [CharZero K] {c : K} {d m : EL Δ τ} (h : IsDat c d m
     rw [tr_form]
     rw [hG] at hGi hG2 ⊢
     rw [QuadraticAlgebra.norm_def] at hy
-    simp only [map_sub, map_add, map_ofNat] at hG2 hy
+    simp only [map_sub, map_add (f := _), map_ofNat] at hG2 hy
     simp only [star_add, star_mul', star_sub, star_pow, st_alg', star_ofNat, hsr, hsi]
     linear_combination
       (-((algebraMap K (Lsq K Δ) τ * m.re + 2 * m.im) * u.2.re * star v.2.im) -
@@ -168,7 +168,7 @@ private theorem norm_pos_part {Δ : F} (hneg : ∀ σ : F →+* ℝ, σ Δ < 0) 
     0 ≤ σ (QuadraticAlgebra.norm y) := by
   have h := hneg σ
   rw [QuadraticAlgebra.norm_def]
-  simp only [map_add, map_sub, map_mul, map_zero, zero_mul, add_zero]
+  simp only [map_add (f := _), map_sub, map_mul, map_zero, zero_mul, add_zero]
   nlinarith [sq_nonneg (σ y.re), sq_nonneg (σ y.im), mul_nonneg (neg_nonneg.mpr h.le) (sq_nonneg (σ y.im))]
 
 end Main

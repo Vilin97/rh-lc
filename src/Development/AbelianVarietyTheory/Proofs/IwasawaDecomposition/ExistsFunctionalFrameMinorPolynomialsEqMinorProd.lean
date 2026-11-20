@@ -49,7 +49,7 @@ theorem exists_dual_baseChange {σ : Type} (k : Type) [Field k] [CharZero k] (ψ
     rw [e2, map_smul, Module.Basis.constr_basis]
     conv_rhs => rw [e1, map_smul, smul_eq_mul, map_mul]
     rw [smul_eq_mul]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
 
 theorem eval_nablaX_eq_minY {Lt k : Type} [Fintype Lt] [DecidableEq Lt] [CommRing k] (N : ℕ) (nu : Lt → YoungDiagram)
     (J : KM.ColChoice N nu) (y : Lt → Fin N → ℕ → k) :

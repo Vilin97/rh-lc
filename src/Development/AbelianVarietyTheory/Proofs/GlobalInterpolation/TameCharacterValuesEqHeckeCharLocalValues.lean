@@ -35,7 +35,7 @@ theorem valued_lt_of_mem {P : HeightOneSpectrum (𝓞 E)} {w : RInt F E} (h : w 
     exact (HeightOneSpectrum.valuation_lt_one_iff_mem _ _).2 hb
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [Subring.coe_add, map_add]
+    rw [Subring.coe_add, map_add (f := _)]
     exact Valuation.map_add_lt _ hx hy
   | smul a x _ hx =>
     rw [smul_eq_mul, Subring.coe_mul, map_mul, map_mul]

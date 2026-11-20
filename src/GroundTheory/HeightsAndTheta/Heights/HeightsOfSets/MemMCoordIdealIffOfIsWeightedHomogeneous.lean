@@ -70,7 +70,7 @@ theorem aeval_eq_zero_of_mem_mCoordIdeal {Ω : Type*} [Field Ω] (y : Coord n �
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simp [Geo.mConeMap]
-    | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
     | mul_X p v hp =>
       rw [map_mul, map_mul, hp, map_mul]
       simp [Geo.mConeMap]

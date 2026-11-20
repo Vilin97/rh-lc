@@ -58,7 +58,7 @@ theorem norm_one_add_sq (t : ℚ_[3]) (ht : ‖t‖ ≤ 1) : ‖1 + t ^ 2‖ = 1
     by_contra h
     have h1 : 1 + s ^ 2 ∈ RingHom.ker (PadicInt.toZMod (p := 3)) := by
       rw [PadicInt.ker_toZMod]; exact h
-    rw [RingHom.mem_ker, map_add, map_pow, map_one] at h1
+    rw [RingHom.mem_ker, map_add (f := _), map_pow, map_one] at h1
     revert h1
     generalize PadicInt.toZMod s = z
     revert z; decide

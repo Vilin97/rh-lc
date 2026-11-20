@@ -186,7 +186,7 @@ theorem isLat_inLat {N : (Sp K).Modules} {n : ℕ} (e : Fin n → Γ(N, ⊤)) : 
 theorem isLat_resSec (F : X.Modules) : IsLat R fun s => ∃ t, s = resSec w F t := by
   refine ⟨⟨0, by rw [resSec, map_zero, map_zero]⟩, ?_, ?_⟩
   · rintro _ _ ⟨t, rfl⟩ ⟨t', rfl⟩
-    exact ⟨t + t', by rw [resSec, resSec, resSec, map_add, map_add]⟩
+    exact ⟨t + t', by rw [resSec, resSec, resSec, map_add (f := _), map_add (f := _)]⟩
   · rintro c _ ⟨t, rfl⟩
     refine ⟨c • t, ?_⟩
     rw [resSec, resSec, pullbackSections_smul, Scheme.Modules.Hom.app_smul, Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
@@ -197,7 +197,7 @@ variable {L : Γ((pb ξ).obj M, ⊤) → Prop} {L' : Γ((pb ξ).obj M', ⊤) →
 def latSub (hL : IsLat R L) : Sub ((pf j).obj M) where
   sec W :=
     { carrier := {s | ∀ hx : x ∈ W, L (gen w hf M hx s)}
-      add_mem' := fun hs ht hx => by rw [map_add]; exact hL.2.1 _ _ (hs hx) (ht hx)
+      add_mem' := fun hs ht hx => by rw [map_add (f := _)]; exact hL.2.1 _ _ (hs hx) (ht hx)
       zero_mem' := fun hx => by rw [map_zero]; exact hL.1
       smul_mem' := fun a s hs hx => by rw [gen_smul]; exact hL.2.2 _ _ (hs hx) }
   res_mem h s hs hx := by rw [gen_res]; exact hs _

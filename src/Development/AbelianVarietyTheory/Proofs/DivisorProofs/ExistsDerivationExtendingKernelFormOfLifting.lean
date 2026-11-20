@@ -113,7 +113,7 @@ theorem exists_derivation_extending : ∀ (A P R K : Type) [CommRing A] [CommRin
   have hδadd : ∀ a b, δ (a + b) = δ a + δ b := by
     intro a b
     show Ideal.Quotient.mk S (a + b) - φ (algebraMap P R (a + b)) = _
-    rw [map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _)]
     show _ = (Ideal.Quotient.mk S a - φ (algebraMap P R a)) + (Ideal.Quotient.mk S b - φ (algebraMap P R b))
     ring
   have hδmul : ∀ a b, δ (a * b) = Ideal.Quotient.mk S a * δ b + Ideal.Quotient.mk S b * δ a := by
@@ -153,8 +153,8 @@ theorem exists_derivation_extending : ∀ (A P R K : Type) [CommRing A] [CommRin
   have hRadd : ∀ c c' v v', Rl c v → Rl c' v' → Rl (c + c') (v + v') := by
     rintro c c' v v' ⟨i, hi, z, hz, rfl, rfl⟩ ⟨i', hi', z', hz', rfl, rfl⟩
     refine ⟨i + i', I.add_mem hi hi', z + z', (Q ^ (k + 1)).add_mem hz hz', ?_, ?_⟩
-    · rw [← map_add]; congr 1; ring
-    · rw [← map_add]; rfl
+    · rw [← map_add (f := _)]; congr 1; ring
+    · rw [← map_add (f := _)]; rfl
   have hRsmul : ∀ c v (p : P), Rl c v → Rl (Ideal.Quotient.mk S p * c) (p • v) := by
     rintro c v p ⟨i, hi, z, hz, rfl, rfl⟩
     refine ⟨p * i, I.mul_mem_left p hi, p * z, Ideal.mul_mem_left _ p hz, ?_, ?_⟩

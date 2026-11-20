@@ -55,7 +55,7 @@ theorem cocP_laws : ∀ (w N l : ℕ), 0 < N → 0 < l → (∀ F ∈ Pot ℂ w 
     have e1 := d1 ((δ : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) _ (hom_inc hF (γ : SL(2, ℤ)) Complex.I)
     show deh (slP (((γ * δ : GlobalTheory.HeckeFamilyMatrices.Lev N l) : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ)
         (F (mob (ofSL ((γ * δ : GlobalTheory.HeckeFamilyMatrices.Lev N l) : SL(2, ℤ))) Complex.I)) - F Complex.I) = _
-    rw [Subgroup.coe_mul, key, map_add, e1]
+    rw [Subgroup.coe_mul, key, map_add (f := _), e1]
     rfl
   · show _ = deh _
     rw [inc_eq hF (show (γ : SL(2, ℤ)) ∈ Gam N l from γ.2) hτ]
@@ -72,7 +72,7 @@ theorem cocP_laws : ∀ (w N l : ℕ), 0 < N → 0 < l → (∀ F ∈ Pot ℂ w 
     simp only [map_sub]
     linear_combination e3 - e2
   · funext γ
-    simp only [cocP, Pi.add_apply, map_add, map_sub]
+    simp only [cocP, Pi.add_apply, map_add (f := _), map_sub]
     abel
   · funext γ
     simp only [cocP, Pi.smul_apply, map_smul, map_sub, smul_sub]

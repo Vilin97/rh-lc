@@ -84,7 +84,7 @@ theorem torsionFree_tensor {O R W : Type} [CommRing O] [IsDomain O] [CommRing R]
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a w => simp [TensorProduct.smul_tmul']
-    | add a b ha hb => rw [map_add, ha, hb, smul_add]
+    | add a b ha hb => rw [map_add (f := _), ha, hb, smul_add]
   rw [this, hx, map_zero]
 
 section Tower
@@ -98,7 +98,7 @@ theorem cancel_one_tmul (x : R ⊗[O] W) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a w => simp [Algebra.smul_def]
-  | add a b ha hb => rw [TensorProduct.tmul_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [TensorProduct.tmul_add, map_add (f := _), map_add (f := _), ha, hb]
 
 theorem span_rTensor (L : Submodule R (R ⊗[O] W)) :
     Submodule.span S ((LinearMap.rTensor W (IsScalarTower.toAlgHom O R S).toLinearMap) '' (L : Set (R ⊗[O] W))) =
@@ -271,7 +271,7 @@ theorem zO_mem (i : X.Tw) (j : ℕ) (b : Bool) (L : Submodule (X.O i) (Y.Fm i j 
   rw [h]
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [map_add, map_add]; exact L.add_mem hf hg
+  | add f g hf hg => rw [map_add (f := _), map_add (f := _)]; exact L.add_mem hf hg
   | single g r =>
     have : act Y i j b (MonoidAlgebra.mapRingHom (G0g N) (algebraMap (X.O i) (FractionRing (X.O i)))
         (MonoidAlgebra.single g r)) x = r • Y.actG i j b g x := by

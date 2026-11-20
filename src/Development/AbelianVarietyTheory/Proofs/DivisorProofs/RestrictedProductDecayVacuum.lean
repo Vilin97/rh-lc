@@ -40,7 +40,7 @@ theorem continuous_I_pure : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type
       theta om' (pure (u + u') φ) g h = theta om' (pure u φ) g h + theta om' (pure u' φ) g h := by
     intro u u' g
     have e : pure (u + u') φ = pure u φ + pure u' φ := funext fun x => by simp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure, add_mul]
-    simp only [theta, e, map_add]
+    simp only [theta, e, map_add (f := _)]
     exact thetaSum_add F (hpres _ _ (hsch u)) (hpres _ _ (hsch u'))
   have hsmul : ∀ (c : ℂ) (u : SInf F (Fin a' × Fin (a + a'))) g,
       theta om' (pure (c • u) φ) g h = c * theta om' (pure u φ) g h := by

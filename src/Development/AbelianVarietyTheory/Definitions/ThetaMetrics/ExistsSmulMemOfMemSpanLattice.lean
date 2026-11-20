@@ -86,7 +86,7 @@ def ofFun {ι : Type*} [Finite ι] (b : Basis ι K V) (H : (K →+* ℂ) → V �
     (pos : ∀ σ, (Matrix.of fun i j => H σ (b i) (b j)).PosDef) : ArchMetric K V :=
   ofBasis b
     (fun σ => LinearMap.mk₂'ₛₗ σ (ComplexEmbedding.conjugate σ) (H σ) (add σ) (smul σ)
-      (fun x y y' => by rw [symm σ (y + y') x, add, map_add, ← symm, ← symm])
+      (fun x y y' => by rw [symm σ (y + y') x, add, map_add (f := _), ← symm, ← symm])
       (fun a x y => by
         rw [symm σ (a • y) x, smul, map_mul, ← symm, ComplexEmbedding.conjugate_coe_eq,
           smul_eq_mul]))
@@ -392,7 +392,7 @@ theorem norm_form_le (σ : K →+* ℂ) (x y : V) : ‖h.form σ x y‖ ≤ h.no
 theorem norm_add_sq (σ : K →+* ℂ) (x y : V) :
     h.norm σ (x + y) ^ 2 = h.norm σ x ^ 2 + 2 * (h.form σ x y).re + h.norm σ y ^ 2 := by
   have : (h.form σ y x).re = (h.form σ x y).re := by rw [h.form_symm σ x y, Complex.conj_re]
-  simp only [norm_sq, map_add, LinearMap.add_apply, Complex.add_re, this]
+  simp only [norm_sq, map_add (f := _), LinearMap.add_apply, Complex.add_re, this]
   ring
 
 theorem norm_add_le (σ : K →+* ℂ) (x y : V) : h.norm σ (x + y) ≤ h.norm σ x + h.norm σ y := by

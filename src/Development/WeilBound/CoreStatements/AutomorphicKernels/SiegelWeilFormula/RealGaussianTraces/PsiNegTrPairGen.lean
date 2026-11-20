@@ -19,7 +19,7 @@ theorem th_half (θ : Ainf F ⊗[F] E →+* ℂ) :
 theorem th_trPair (σ : E →ₐ[F] E) (hCM : IsCMExt F E σ) (θ : Ainf F ⊗[F] E →+* ℂ)
     (hc : ∀ z, θ (sigR (Ainf F) σ z) = star (θ z)) {n : ℕ} (S G : Matrix (Fin n) (Fin n) (Ainf F ⊗[F] E)) :
     θ (algebraMap (Ainf F) (Ainf F ⊗[F] E) (trPair (Ainf F) S G)) = (((S.map θ * G.map θ).trace.re : ℝ) : ℂ) := by
-  rw [trPair, map_mul, map_mul, th_half, trace_add σ hCM, map_add, hc]
+  rw [trPair, map_mul, map_mul, th_half, trace_add σ hCM, map_add (f := _), hc]
   have e : θ (∑ a, ∑ c, S a c * G c a) = (S.map θ * G.map θ).trace := by
     set_option synthInstance.maxHeartbeats 100000 in
       simp [Matrix.trace, Matrix.mul_apply, map_sum, map_mul]

@@ -181,7 +181,7 @@ theorem GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.HS.LocalBound.local_boun
           ∑ j, σ ((c *ᵥ fun j => algebraMap (𝓞 E) E (yo j)) j) * algebraMap (𝓞 E) E (yo j) := by
       rw [Finset.mul_sum, ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun j _ => ?_
-      rw [← hyl j, map_add, map_mul]
+      rw [← hyl j, map_add (f := _), map_mul]
       ring
     have hs2 : algebraMap (𝓞 E) E (∑ j, sO σ (lo j) * yo j) =
         ∑ j, σ (algebraMap (𝓞 E) E (lo j)) * algebraMap (𝓞 E) E (yo j) := by
@@ -190,7 +190,7 @@ theorem GlobalTheory.CompanionTheory.SiegelND.Integ.Hua.HS.LocalBound.local_boun
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [map_mul]
       exact congrArg (· * _) (hsO (lo j))
-    rw [hs2, show ((sO σ t : 𝓞 E) : E) = σ (algebraMap (𝓞 E) E t) from hsO t, map_add, map_mul,
+    rw [hs2, show ((sO σ t : 𝓞 E) : E) = σ (algebraMap (𝓞 E) E t) from hsO t, map_add (f := _), map_mul,
       hf, hnorm]
     have hnorm' : (t : E) = algebraMap (𝓞 E) E t := rfl
     rw [hnorm']

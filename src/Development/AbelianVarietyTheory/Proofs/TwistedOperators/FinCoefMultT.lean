@@ -74,7 +74,7 @@ theorem finCoef_lift {θ : InfFam D} {V : HSp D} {S : D.what₂.Tau → SPar} (M
       smul_eq_mul, smul_eq_mul, e3, LinearMap.coe_toContinuousLinearMap']
     rfl
   | add a b ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact ha.add hb
 
 end GlobalTheory.ColTypeLift
@@ -93,7 +93,7 @@ theorem finCoef_multT {θ : InfFam D} {V : HSp D} {S : D.what₂.Tau → SPar} (
     induction hT using Submodule.span_induction with
     | mem x hx => exact finCoef_lift M τ hx z
     | zero => simpa using FinCoef.zero θ M τ
-    | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply]; exact hx.add hy
+    | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply]; exact hx.add hy
     | smul c x _ hx => rw [map_smul, LinearMap.smul_apply]; exact hx.smul c
   have := key _ hm
   rwa [LinearEquiv.apply_symm_apply] at this

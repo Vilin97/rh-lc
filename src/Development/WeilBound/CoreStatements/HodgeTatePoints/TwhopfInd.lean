@@ -98,7 +98,7 @@ theorem ind_hopf : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGrou
         Subalgebra.sum_mem _ (fun c _ => hext_mem c (a c) (a c).2)⟩
       map_add' := fun a b => by
         apply Subtype.ext
-        simp only [Pi.add_apply, Subalgebra.coe_add, map_add, Finset.sum_add_distrib]
+        simp only [Pi.add_apply, Subalgebra.coe_add, map_add (f := _), Finset.sum_add_distrib]
       map_smul' := fun r a => by
         apply Subtype.ext
         simp only [Pi.smul_apply, Subalgebra.coe_smul, map_smul, Finset.smul_sum,

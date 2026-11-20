@@ -68,7 +68,7 @@ theorem indA_cons {s : Finset (HeightOneSpectrum (𝓞 F))} {v : HeightOneSpectr
   constructor
   · apply af_ext F
     intro w
-    rw [map_add]
+    rw [map_add (f := _)]
     by_cases hw : w = v
     · subst hw
       rw [evalV_indA_of_mem F (by simp), evalV_indA_of_mem F (by simp), evalV_indA_of_notMem F h, add_zero]
@@ -196,7 +196,7 @@ theorem idemE_cons {s : Finset (HeightOneSpectrum (𝓞 D.host.F))} {v : HeightO
   obtain ⟨h1, h2⟩ := indA_cons D.host.F h
   constructor
   · unfold idemE
-    rw [h1, pairA_zero_add', map_add]
+    rw [h1, pairA_zero_add', map_add (f := _)]
   · unfold idemE
     rw [← map_mul, pairA_mul, h2]
     exact map_zero _
@@ -239,7 +239,7 @@ theorem one_fin_mul {z : AE D} (hz : infPart D z = 0) :
       congr 1
       show (1 * a.1, 0 * a.2) = (a.1, 0)
       rw [one_mul, zero_mul]
-    | add a b ha hb => rw [mul_add, ha, hb, map_add, map_add]; try rfl
+    | add a b ha hb => rw [mul_add, ha, hb, map_add (f := _), map_add (f := _)]; try rfl
   rw [hsum, map_sub, map_one, sub_mul, one_mul, key, hz, map_zero]
   exact sub_zero z
 

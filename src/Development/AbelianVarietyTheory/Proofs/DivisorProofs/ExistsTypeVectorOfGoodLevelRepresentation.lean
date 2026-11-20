@@ -227,7 +227,7 @@ theorem hasTypeVec_of_goodRep : GlobalTheory.Published.GreenCuspidal → ∀ {D 
         fun k z' => (congrArg (fun q : U.toSubmodule => σ a⁻¹ (((q : U.toSubmodule) : GlobalTheory.PRep.fixed σ ((levG (Yc D 0) (R.βY 0) (flag1L (R.dat0 R.triv))).subgroupOf (GfC (Yc D 0)))) : W))
           (hψ _ z')).trans (hkey k (ψ z')), z, rfl⟩
     | zero => simpa using zero_mem _
-    | add u u' _ _ hu hu' => simpa only [Submodule.coe_add, map_add] using add_mem hu hu'
+    | add u u' _ _ hu hu' => simpa only [Submodule.coe_add, map_add (f := _)] using add_mem hu hu'
     | smul c u _ hu => simpa only [Submodule.coe_smul, map_smul] using Submodule.smul_mem _ c hu
 
 end GlobalTheory.TypeVec

@@ -117,7 +117,7 @@ theorem exists_contraction {H : Type} [NormedAddCommGroup H] [InnerProductSpace 
   · intro c P v
     simp only [fischer_smul_left, Finset.smul_sum, smul_smul]
   · intro P v v'
-    simp only [map_add, LinearMap.add_apply, fischer_add_right, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), LinearMap.add_apply, fischer_add_right, add_smul, Finset.sum_add_distrib]
   · intro c P v
     simp only [LinearMap.map_smulₛₗ, map_smul, LinearMap.smul_apply, fischer_smul_right, Finset.smul_sum,
       smul_smul, Complex.conj_conj, RingHom.id_apply]

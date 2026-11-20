@@ -66,7 +66,7 @@ def powRingAct (p : IsPowGrp A' A n) {O : Type} [Ring O] (ρ : RingAct A O) : Ri
   map_mul a b := pow_ext p fun i => by
     simp only [powMap_pr, ρ.map_mul, Category.assoc, powMap_pr_assoc]
   map_add a b := pow_ext p fun i => by
-    rw [powMap_pr, ρ.map_add, padd_pr, powMap_pr, powMap_pr, padd, padd, comp_lift_assoc]
+    rw [powMap_pr, ρ.map_add (f := _), padd_pr, powMap_pr, powMap_pr, padd, padd, comp_lift_assoc]
 
 theorem powRingAct_pr (p : IsPowGrp A' A n) {O : Type} [Ring O] (ρ : RingAct A O) (a : O) (i : Fin n) :
     (powRingAct p ρ).act a ≫ p.pr i = p.pr i ≫ ρ.act a :=

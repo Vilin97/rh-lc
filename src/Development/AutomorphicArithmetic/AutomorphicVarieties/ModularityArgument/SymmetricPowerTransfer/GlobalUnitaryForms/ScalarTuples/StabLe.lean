@@ -45,7 +45,7 @@ private theorem isInt_inter {L R : Type} [CommRing L] [Algebra O L] [CommRing R]
       simp [Algebra.smul_def]
     | add p q hp hq =>
       intro c
-      simp only [map_add, Matrix.add_mulVec, hp, hq, add_mul, hadd]
+      simp only [map_add (f := _), Matrix.add_mulVec, hp, hq, add_mul, hadd]
     | monomial n r ih =>
       intro c
       have e1 : aeval M (C r * X ^ (n + 1)) = aeval M (C r * X ^ n) * M := by
@@ -99,7 +99,7 @@ private theorem jA_det (γ : DX Δ) (h : HasTr γ τ) (x : Etau K τ) :
   have ht' : mt γ 0 0 + mt γ 1 1 = algebraMap K _ τ := by rw [← h.2, Matrix.trace_fin_two]
   obtain ⟨e0, e1, e2, e3⟩ := jA_entries (Δ := Δ) (mt γ) x.re x.im
   rw [jA_apply, Matrix.det_fin_two, e0, e1, e2, e3, QuadraticAlgebra.norm_def]
-  simp only [map_add, map_sub, map_mul, map_neg, map_one]
+  simp only [map_add (f := _), map_sub, map_mul, map_neg, map_one]
   linear_combination (algebraMap K (Lsq K Δ) x.re * algebraMap K (Lsq K Δ) x.im) * ht' +
     (algebraMap K (Lsq K Δ) x.im) ^ 2 * hd'
 
@@ -288,7 +288,7 @@ private theorem int_U (O : Type) [CommRing O] [Algebra O K] {c : K} {d m : EL Δ
     · exact inj (h5.trans (map_zero _).symm)
     · exact inj (h6.trans (map_zero _).symm)
   · intro a b
-    rw [← map_add]
+    rw [← map_add (f := _)]
     simp [ofE_add]
   · intro r z
     rw [← map_smul, ofE_smul]

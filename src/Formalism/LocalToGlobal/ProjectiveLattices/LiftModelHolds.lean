@@ -75,11 +75,11 @@ theorem ball_of {g0 : B.Cusp j wF} (C : CurveModel G la g0) (FP FQ : ↥(Frac0 (
   | add a b _ _ iha ihb =>
     obtain ⟨r1, hr1, x1, hx1, h1⟩ := iha
     obtain ⟨r2, hr2, x2, hx2, h2⟩ := ihb
-    refine ⟨r1 + r2, (RGW hw).add_mem hr1 hr2, x1 + x2, by rw [map_add, hx1, hx2], ?_⟩
+    refine ⟨r1 + r2, (RGW hw).add_mem hr1 hr2, x1 + x2, by rw [map_add (f := _), hx1, hx2], ?_⟩
     have e : ιW (hsW hw) ((x1 + x2 : ↥(HK (xplus X E hM) la G.w wF)) : Lw (xplus X E hM) la G.w) - (r1 + r2) * e' =
         (ιW (hsW hw) (x1 : Lw (xplus X E hM) la G.w) - r1 * e') +
           (ιW (hsW hw) (x2 : Lw (xplus X E hM) la G.w) - r2 * e') := by
-      rw [Submodule.coe_add, map_add]; ring
+      rw [Submodule.coe_add, map_add (f := _)]; ring
     rw [e]; exact Ideal.add_mem _ h1 h2
   | smul b a _ iha =>
     obtain ⟨r, hr, x, hx, hxr⟩ := iha

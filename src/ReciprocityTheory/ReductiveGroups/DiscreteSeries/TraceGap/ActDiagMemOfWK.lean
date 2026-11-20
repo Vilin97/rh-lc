@@ -50,7 +50,7 @@ theorem tco_actDiag (E : Fin n → Fin n → Module.End ℂ N) (X : Matrix (Fin 
       refine Finset.sum_congr rfl fun b _ => ?_
       rw [smul_eq_mul]
   | add y y' hy hy' =>
-    rw [map_add, map_add, hy, hy', map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), hy, hy', map_add (f := _), map_add (f := _), map_add (f := _)]
     abel
 
 end T

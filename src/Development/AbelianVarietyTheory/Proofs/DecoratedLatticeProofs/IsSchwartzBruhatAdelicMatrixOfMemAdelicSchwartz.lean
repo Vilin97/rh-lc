@@ -94,7 +94,7 @@ theorem compAt_add (θ : InfFam D) (τ : D.what₂.Tau) (x y : Mx D m n) :
     compAt θ τ (x + y) = compAt θ τ x + compAt θ τ y := by
   ext i j
   simp only [compAt, Matrix.map_apply, Matrix.add_apply]
-  rw [(infPart D).map_add, (θ τ).map_add]
+  rw [(infPart D).map_add (f := _), (θ τ).map_add (f := _)]
 
 def realVec {k : ℕ} (θ : InfFam D) (L : (Fin k → ℝ) →+ Mx D m n) : (Fin k → ℝ) →+ (D.what₂.Tau → Fin m → Fin n → ℂ) where
   toFun t := fun τ i j => compAt θ τ (L t) i j
@@ -198,7 +198,7 @@ theorem pure (θ : InfFam D) (hθ : IsInfFam θ) (f : SchwartzMap (D.what₂.Tau
       ext i j
       have h := congrFun (congrFun (hL.2 t) i) j
       simp only [Matrix.map_apply, Matrix.zero_apply] at h
-      rw [Matrix.add_apply, (finPart D).map_add, h, add_zero]
+      rw [Matrix.add_apply, (finPart D).map_add (f := _), h, add_zero]
     simp only [e1, e2, SchwartzMap.smul_apply, SchwartzMap.compCLMOfAntilipschitz_apply, Function.comp_apply, smul_eq_mul]
     ring
 

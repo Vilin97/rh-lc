@@ -101,9 +101,9 @@ theorem ext_exists (p : ℕ) (π : A)
     obtain ⟨a', m', h1', h2'⟩ := hF x' k
     refine ⟨a * π ^ m' + a' * π ^ m, m + m', ?_, ?_⟩
     · convert dvd_add (h1.mul_right (algebraMap A E π ^ m')) (h1'.mul_right (algebraMap A E π ^ m)) using 1
-      simp only [map_add, map_mul, map_pow]; ring
+      simp only [map_add (f := _), map_mul, map_pow]; ring
     · convert dvd_add (h2.mul_right (f π ^ m')) (h2'.mul_right (f π ^ m)) using 1
-      simp only [map_add, map_mul, map_pow]; ring
+      simp only [map_add (f := _), map_mul, map_pow]; ring
   have hmul : ∀ x x', F (x * x') = F x * F x' := fun x x' => eqF _ _ fun k => by
     obtain ⟨a, m, h1, h2⟩ := hF x k
     obtain ⟨a', m', h1', h2'⟩ := hF x' k
@@ -142,7 +142,7 @@ theorem let_unique {n : ℕ} (f f' : LetA O n →ₐ[O] S) (hπ : f letπ = f' l
         funext i
         rw [cst_apply, add_comm]
         exact eq_X_mul_shift_add_const (a i)
-      rw [ha, map_add, map_add, map_mul, map_mul, hc, ← hπ, pow_succ', add_sub_add_left_eq_sub, ← mul_sub]
+      rw [ha, map_add (f := _), map_add (f := _), map_mul, map_mul, hc, ← hπ, pow_succ', add_sub_add_left_eq_sub, ← mul_sub]
       exact mul_dvd_mul_left _ (ih _)
   ext1 a
   rw [← sub_eq_zero]
@@ -254,7 +254,7 @@ theorem binomial_eval {B : Type} [CommRing B] [CharP B l] (ψ : ℤ_[l]⟦X⟧ �
     rw [X_dvd_iff]; simp
   have h3 : binomialSeries ℤ_[l] b = 1 + X * h := by linear_combination hh
   rw [h1, binomialSeries_add, binomialSeries_natMul, binomialSeries_nat, h3]
-  simp only [map_mul, map_pow, map_add, map_one]
+  simp only [map_mul, map_pow, map_add (f := _), map_one]
   rw [add_pow_char_pow, mul_pow, h2]
   simp
 
@@ -524,7 +524,7 @@ theorem comm_φ (p : ℕ) (φ₀ : O⟦X⟧ →ₐ[O] O⟦X⟧) (h0 : φ₀ X = 
     (hs : ∀ x : S, (∀ k, (t ^ p - 1) ^ k ∣ x) → x = 0) : f.comp (letφ φ₀) = φ.comp f := by
   have h1 : (f.comp (letφ φ₀)) letπ = t ^ p - 1 := by
     have : letφ φ₀ (letπ : LetA O n) = (1 + letπ) ^ p - 1 := funext fun i => h0
-    rw [AlgHom.comp_apply, this, map_sub, map_pow, map_add, map_one, ht]
+    rw [AlgHom.comp_apply, this, map_sub, map_pow, map_add (f := _), map_one, ht]
     ring
   refine let_unique _ _ ?_ (fun o => ?_) (by rw [h1]; exact hs)
   · rw [h1, AlgHom.comp_apply, ht, map_sub, map_one, hφ]

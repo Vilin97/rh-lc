@@ -248,7 +248,7 @@ theorem coord_frame {O K R' R : Type} [CommRing O] [Field K] [Algebra O K] [Comm
     (by
       rintro _ ⟨z, hz, rfl⟩
       obtain ⟨_, ⟨a, rfl⟩, w, hw, rfl⟩ := happ z hz
-      exact ⟨a, _, AddSubgroup.mem_map_of_mem _ hw, by rw [map_add, map_nsmul, hφ]⟩)
+      exact ⟨a, _, AddSubgroup.mem_map_of_mem _ hw, by rw [map_add (f := _), map_nsmul, hφ]⟩)
     (by
       rintro a _ ⟨w, hw, rfl⟩ h
       rw [hφ, ← map_nsmul] at h

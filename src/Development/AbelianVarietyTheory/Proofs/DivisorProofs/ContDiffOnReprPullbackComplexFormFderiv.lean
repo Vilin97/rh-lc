@@ -63,7 +63,7 @@ theorem contDiffOn_repr_pull_fderiv : ∀ (m n : ℕ) (τ : V m → V n) (U : Se
       ((ha S₁).mul (hb S₂)).mul contDiffOn_const
   | add a b ha hb =>
     intro S
-    simp only [map_add, Finsupp.add_apply]
+    simp only [map_add (f := _), Finsupp.add_apply]
     exact (ha S).add (hb S)
 
 end GlobalTheory.PullSmooth

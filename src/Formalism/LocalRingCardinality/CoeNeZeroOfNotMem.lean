@@ -552,13 +552,13 @@ def hSes (D : D7) (h : HermRat D) (μ : D.what₂.Tup) (j : ℕ) (h1 : 1 ≤ j) 
     D.what₂.MtL μ j →ₗ⋆[D.what₂.LL] D.what₂.MtL μ j →ₗ[D.what₂.LL] D.what₂.LL :=
   LinearMap.mk₂'ₛₗ (starRingEnd D.what₂.LL) (RingHom.id D.what₂.LL) (hLL D μ j)
     (fun x y z => D.what₂.embLL.injective (by
-      simp only [map_add, hLL_spec D h μ j h1 h2, inner_add_left]))
+      simp only [map_add (f := _), hLL_spec D h μ j h1 h2, inner_add_left]))
     (fun c x y => D.what₂.embLL.injective (by
       rw [smul_eq_mul, map_mul, hLL_spec D h μ j h1 h2, hLL_spec D h μ j h1 h2, LinearMap.map_smulₛₗ,
         inner_smul_left]
       exact congrArg (· * _) (D.starLL_cx c).symm))
     (fun x y z => D.what₂.embLL.injective (by
-      simp only [map_add, hLL_spec D h μ j h1 h2, inner_add_right]))
+      simp only [map_add (f := _), hLL_spec D h μ j h1 h2, inner_add_right]))
     (fun c x y => D.what₂.embLL.injective (by
       rw [RingHom.id_apply, smul_eq_mul, map_mul, hLL_spec D h μ j h1 h2, hLL_spec D h μ j h1 h2,
         LinearMap.map_smulₛₗ, inner_smul_right]))

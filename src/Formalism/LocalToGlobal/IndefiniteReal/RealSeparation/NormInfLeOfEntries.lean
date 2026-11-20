@@ -66,7 +66,7 @@ theorem s_entry_le (θ : InfFam D) (hι : HSpace.IsIsomEmb A T ι) (hemb : IsEmb
   have hFMP : ‖φ τ ((F * mt A h * P) i j)‖ ≤ A.rank * ((A.rank * (bF τ * b)) * bP τ) :=
     rect_entry_mul_le (φ τ) (F * mt A h) P i j hFM hPe
   have hsum : ‖φ τ ((F * mt A h * P + Q) i j)‖ ≤ A.rank * ((A.rank * (bF τ * b)) * bP τ) + cQ τ := by
-    rw [Matrix.add_apply, map_add]
+    rw [Matrix.add_apply, map_add (f := _)]
     exact (norm_add_le _ _).trans (add_le_add hFMP hQe)
   show ‖φ τ ((F * mt A h * P + Q) i j)‖ ≤ C * (b + 1)
   refine hsum.trans ?_

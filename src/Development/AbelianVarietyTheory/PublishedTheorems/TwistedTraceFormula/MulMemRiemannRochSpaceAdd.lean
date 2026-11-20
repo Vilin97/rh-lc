@@ -88,12 +88,12 @@ theorem exists_lattice {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
   have dec : ∀ x, ∃ c, x = ι c + (∑ i, V.hT (f i) x • e i + ∑ i, V.hT (e i) x • f i) := fun x => by
     obtain ⟨_, ⟨c, rfl⟩, y, hy, rfl⟩ := Submodule.mem_sup.1 (ht.ge (Submodule.mem_top (x := x)))
     refine ⟨c, ?_⟩
-    simp only [map_add, he', hf', zero_add, add_right_inj]
+    simp only [map_add (f := _), he', hf', zero_add, add_right_inj]
     induction hy using Submodule.span_induction with
     | mem y hy => rcases hy with ⟨a, rfl⟩ | ⟨a, rfl⟩ <;> simp [ee, ff, ef, fe]
     | zero => simp
     | add y z _ _ h1 h2 =>
-      simp only [map_add, add_smul, Finset.sum_add_distrib]
+      simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
       rw [add_add_add_comm, ← h1, ← h2]
     | smul a y _ h1 =>
       simp only [map_smul, smul_eq_mul, mul_smul, ← Finset.smul_sum, ← smul_add, ← h1]

@@ -136,7 +136,7 @@ theorem exists_alternating_bilinForm_eq_pairing : ∀ {F V : Type} [Field F] [Nu
     simp only [map_smul, LinearMap.smul_apply, smul_eq_mul]
   have eP := alternating_pairing_expand L hadd hsm P halt hPadd hPsmul hx hx' r₀ r₁ s₀ s₁
   have eB := alternating_pairing_expand L hadd hsm (fun u v => B u v)
-    (fun u _ v _ => by simp only [hB]; ring) (fun u₁ _ u₂ _ v _ => by rw [map_add, LinearMap.add_apply])
+    (fun u _ v _ => by simp only [hB]; ring) (fun u₁ _ u₂ _ v _ => by rw [map_add (f := _), LinearMap.add_apply])
     (fun a u _ v _ => by rw [map_smul, LinearMap.smul_apply, smul_eq_mul]) hx hx' r₀ r₁ s₀ s₁
   rw [← hez, ← hew, hPe] at eP
   rw [← hez, ← hew, hBe, hBxx'] at eB

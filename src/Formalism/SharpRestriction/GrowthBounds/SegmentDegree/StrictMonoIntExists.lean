@@ -35,7 +35,7 @@ theorem supp_prod_bound {ι : Type*} (w : (σ →₀ ℕ) →+ ℕ) (s : Finset 
     have hmem' : m1 + m2 = m := Finset.HasAntidiagonal.mem_antidiagonal.mp hmem
     have h1 : m1 ∈ (f a).support := MvPolynomial.mem_support_iff.mpr (left_ne_zero_of_mul hne)
     have h2 : m2 ∈ (∏ j ∈ s, f j).support := MvPolynomial.mem_support_iff.mpr (right_ne_zero_of_mul hne)
-    rw [Finset.sum_insert ha, ← hmem', map_add, Nat.cast_add]
+    rw [Finset.sum_insert ha, ← hmem', map_add (f := _), Nat.cast_add]
     exact add_le_add (h a (Finset.mem_insert_self a s) m1 h1)
       (ih (fun j hj => h j (Finset.mem_insert_of_mem hj)) m2 h2)
 
@@ -540,7 +540,7 @@ theorem gen_bound (O : Type) [CommRing O] (hX : X.Hyp p K) (hC : 0 ≤ X.CLa) {P
     exact MvPolynomial.mem_support_iff.mpr hcoef
   have hadd : vsDeg mm = vsDeg (mm - l) + vsDeg l := by
     conv_lhs => rw [← tsub_add_cancel_of_le hle]
-    rw [vsDeg_eq, vsDeg_eq, vsDeg_eq, map_add]
+    rw [vsDeg_eq, vsDeg_eq, vsDeg_eq, map_add (f := _)]
   unfold RRdeg Dat.d at hdeg
   rw [MvPolynomial.mem_restrictSupport_iff] at hdeg
   have hrow := hdeg (Finset.mem_coe.mpr hmm)

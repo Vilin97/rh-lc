@@ -115,7 +115,7 @@ theorem exists_l_pow_integral (hvl : v (PD.p : LL) = 1) (x : LL) : ∃ t : ℕ, 
 theorem frobenius_pow_mem_pullback (T : LocLat G Qp LL O) (c : ZMod n) (j k : ℕ) :
     ∀ y ∈ Pp W T c j, ((W.φD T) ^ k) y ∈ Pp W T c (k + j) := by
   refine Relay2.Pp_ind W T c j _ (by rw [map_zero]; exact (Pp W T c (k + j)).zero_mem)
-    (fun x y hx hy => by rw [map_add]; exact (Pp W T c (k + j)).add_mem hx hy)
+    (fun x y hx hy => by rw [map_add (f := _)]; exact (Pp W T c (k + j)).add_mem hx hy)
     (fun x hx => by rw [map_neg]; exact (Pp W T c (k + j)).neg_mem hx) ?_
   intro a ha x hx
   rw [Relay2.φpow_smul, ← Module.End.mul_apply, ← pow_add]
@@ -235,7 +235,7 @@ theorem arc_section_map (hinj : Function.Injective (algebraMap O LL))
       obtain ⟨a₀, tt, htt, hsplit⟩ := Formalism.MainNotions.LiftingTheory.invariants_eq_constants_add_uniformizer W h9 (β m k) ((hβ m).1 k).1
       have hμ : μ m k = a₀ c' := by
         show PowerSeries.constantCoeff (β m k c') = a₀ c'
-        rw [hsplit, Pi.add_apply, Pi.mul_apply, map_add, map_mul, Formalism.MainNotions.LiftingTheory.uniformizer_constantCoeff_zero W h9 c', zero_mul,
+        rw [hsplit, Pi.add_apply, Pi.mul_apply, map_add (f := _), map_mul, Formalism.MainNotions.LiftingTheory.uniformizer_constantCoeff_zero W h9 c', zero_mul,
           add_zero, PowerSeries.constantCoeff_C]
       have hCl : ((fun j => PowerSeries.C (a₀ j)) : LetA O n) * letE c' =
           algebraMap O (LetA O n) (a₀ c') * letE c' := by

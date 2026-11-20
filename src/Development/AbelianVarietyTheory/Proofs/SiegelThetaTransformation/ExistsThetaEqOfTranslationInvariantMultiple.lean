@@ -120,7 +120,7 @@ theorem exists_thA_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     have h1 : zR X idx x (N • embR X y) = fun k => N • pv X idx x (y k) := by
       rw [← hL, map_nsmul, hL]; rfl
     have h2 : zR X idx x (v + N • embR X y) = fun k => L v k + N • pv X idx x (y k) := by
-      rw [← hL, map_add, hL (N • _), h1]; rfl
+      rw [← hL, map_add (f := _), hL (N • _), h1]; rfl
     have h3 := hinv y hy v
     rw [← him, h1, h2, ← hL v, gaussR, gaussR, ← mul_assoc, ← Complex.exp_add,
       exponent_eq idx hconj (L v) fun k => N • pv X idx x (y k), Complex.exp_add, mul_assoc] at h3

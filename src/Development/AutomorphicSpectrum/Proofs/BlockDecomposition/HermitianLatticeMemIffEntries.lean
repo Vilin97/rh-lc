@@ -60,7 +60,7 @@ theorem trace_tmul_one {R : Type} [CommRing R] [Algebra F R] (σ : E →ₐ[F] E
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add x y hx hy =>
-    rw [map_add, TensorProduct.add_tmul, hx, hy, map_add]
+    rw [map_add (f := _), TensorProduct.add_tmul, hx, hy, map_add (f := _)]
     abel
   | tmul a e =>
     have h1 : (a * algebraMap F R (Algebra.trace F E e)) ⊗ₜ[F] (1 : E) =

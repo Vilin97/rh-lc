@@ -50,7 +50,7 @@ theorem exists_homog_val {w : (Σ k, J k) → K} {c : ∀ k, J k} (hc : ∀ k, w
     obtain ⟨M, g', h3, h4⟩ := hg
     refine ⟨N + M, f' * mon c (fun _ => M) + g' * mon c (fun _ => N), hom_add (hom_mul h1 (hom_mon _ _))
       (hom_of_eq (hom_mul h3 (hom_mon _ _)) fun k => add_comm _ _), ?_⟩
-    simp only [map_add, map_mul, hm, h2, h4, mul_one]
+    simp only [map_add (f := _), map_mul, hm, h2, h4, mul_one]
   | mul_X f q hf =>
     obtain ⟨N, f', h1, h2⟩ := hf
     refine ⟨N + 1, f' * mon (Function.update c q.1 q.2) (fun _ => 1), hom_mul h1 (hom_mon _ _), ?_⟩
@@ -79,7 +79,7 @@ theorem isFunctionField_of_dim {p : ℕ} [Fact p.Prime] [Algebra (ZMod p) K] {w 
       intro f
       induction f using MvPolynomial.induction_on with
       | C a => simp
-      | add f g hf hg => rw [map_add]; exact add_mem hf hg
+      | add f g hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
       | mul_X f q hf => rw [map_mul, aeval_X]; exact mul_mem hf (IntermediateField.subset_adjoin _ _ ⟨q, rfl⟩)
     obtain ⟨d, g, h, -, -, h0, h1⟩ := hb s
     rw [← div_eq_iff h0] at h1

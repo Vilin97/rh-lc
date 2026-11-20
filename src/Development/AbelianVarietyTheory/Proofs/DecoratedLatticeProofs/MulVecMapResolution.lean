@@ -42,7 +42,7 @@ theorem mulVec_map_resolution {R S : Type} [CommRing R] [CommRing S] (φ : R →
     {q0 : Matrix (Fin m) (Fin n) R} (h : e * qX + i₀ * q0 + e' * qY = 1) (y : Fin n → S) :
     y = e.map φ *ᵥ (qX.map φ *ᵥ y) + i₀.map φ *ᵥ (q0.map φ *ᵥ y) + e'.map φ *ᵥ (qY.map φ *ᵥ y) := by
   have h' := congrArg φ.mapMatrix h
-  simp only [map_add, map_one, RingHom.mapMatrix_apply, Matrix.map_mul] at h'
+  simp only [map_add (f := _), map_one, RingHom.mapMatrix_apply, Matrix.map_mul] at h'
   simp only [Matrix.mulVec_mulVec, ← Matrix.add_mulVec]
   rw [h', Matrix.one_mulVec]
 

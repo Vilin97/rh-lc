@@ -30,7 +30,7 @@ theorem exists_unitary_eval_ne {a d : ℕ} (h : a ≤ d) (P : Pol ι d a) (hP : 
     intro Q w
     induction Q using MvPolynomial.induction_on with
     | C c => simp
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p y hp => simp only [map_mul, hp, aeval_X, eval_X]
   have hF0 : aeval f P = 0 := by
     refine Formalism.L2.Col.eq_zero_of_forall_unitary (ι := ι) (n := d) (fun _ => 1) (fun _ => by simp) _ fun u hu => ?_
@@ -231,7 +231,7 @@ theorem inv_irreducible : ∀ {ι : Type} [Fintype ι] (a d : ℕ) (n : ι → �
   let M : Submodule ℂ (GlobalTheory.MinorFrame.Pol ι d a) :=
     { carrier := {R | R ∈ GlobalTheory.MinorFrame.inv a d n ∧ ∀ P ∈ N, Formalism.L2.DIV.fockS P R = 0}
       add_mem' := fun {R R'} hR hR' => ⟨(GlobalTheory.MinorFrame.inv a d n).add_mem hR.1 hR'.1, fun P hP => by
-        rw [← Formalism.L2.DIV.fockL_apply, map_add, Formalism.L2.DIV.fockL_apply, Formalism.L2.DIV.fockL_apply, hR.2 P hP, hR'.2 P hP,
+        rw [← Formalism.L2.DIV.fockL_apply, map_add (f := _), Formalism.L2.DIV.fockL_apply, Formalism.L2.DIV.fockL_apply, hR.2 P hP, hR'.2 P hP,
           add_zero]⟩
       zero_mem' := ⟨(GlobalTheory.MinorFrame.inv a d n).zero_mem, fun P _ => by
         rw [← Formalism.L2.DIV.fockL_apply, map_zero]⟩

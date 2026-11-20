@@ -42,7 +42,7 @@ theorem exists_loc {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
     (σ := Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (Fv F v) σ) (fun _ => sigR_mem_intLoc σ) (sigR_invol (InertChart.conj_conj hσ))
     (τ := ι c) (tmul_mem_intLoc (one_mem _) c)
     (by change ι c + ι (σ c) = 1
-        rw [← map_add, hc, map_one]) hN
+        rw [← map_add (f := _), hc, map_one]) hN
     (J := JR (Fv F v) J) (by ext i j; exact congrArg ι (hJ.1 i j))
     ((Matrix.isUnit_iff_isUnit_det _).2 (isUnit_det_JR hJ.2)) (Λ := latLoc F L v)
     (fun y => Submodule.ext_iff.1 hL y) (ha v) (X := e.map ι) (P := p.map ι)

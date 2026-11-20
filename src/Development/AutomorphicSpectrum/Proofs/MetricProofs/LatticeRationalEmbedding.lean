@@ -47,7 +47,7 @@ theorem exists_embedding : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     exact (smul_eq_zero.1 hkx).resolve_left (by exact_mod_cast hk)
   let g := (Module.finBasis E (E ⊗[𝓞 E] Λ)).equivFun
   refine ⟨Module.finrank E (E ⊗[𝓞 E] Λ), hrank,
-    AddMonoidHom.mk' (fun x => g (f x)) (fun x y => by simp only [map_add]), ?_, ?_, ?_⟩
+    AddMonoidHom.mk' (fun x => g (f x)) (fun x y => by simp only [map_add (f := _)]), ?_, ?_, ?_⟩
   · refine (injective_iff_map_eq_zero _).2 fun x hx => htors x ?_
     exact g.map_eq_zero_iff.1 hx
   · intro a x

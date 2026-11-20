@@ -28,7 +28,7 @@ theorem IsCplAt.approx_step {R S : Type} [CommRing R] [CommRing S] [IsLocalRing 
     refine ⟨b' * a + b * a', b * b', fun hh => (hq.mem_or_mem hh).elim hb hb', ?_⟩
     have : φ (b * b') * (c * (x + y)) - φ (b' * a + b * a')
         = φ b' * (φ b * (c * x) - φ a) + φ b * (φ b' * (c * y) - φ a') := by
-      simp only [map_mul, map_add]; ring
+      simp only [map_mul, map_add (f := _)]; ring
     rw [this]
     exact Ideal.add_mem _ (Ideal.mul_mem_left _ _ hab) (Ideal.mul_mem_left _ _ hab')
   | smul r x _ hx =>
@@ -46,7 +46,7 @@ theorem IsCplAt.approx_surj {R S : Type} [CommRing R] [CommRing S] [IsLocalRing 
     obtain ⟨a', b', hb', hab'⟩ := h.approx_step k _ hab 1
     refine ⟨b' * a + a', b * b', fun hh => (hq.mem_or_mem hh).elim hb hb', ?_⟩
     have : φ (b * b') * s - φ (b' * a + a') = φ b' * (1 * (φ b * s - φ a)) - φ a' := by
-      simp only [map_mul, map_add]; ring
+      simp only [map_mul, map_add (f := _)]; ring
     rw [this]
     exact hab'
 

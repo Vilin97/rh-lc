@@ -35,7 +35,7 @@ theorem UpperTheory.Gal.Wt.nearSub_of :
       noncomm_ring
     have e := congrFun (congrFun key i) j
     rw [Matrix.sub_apply] at e
-    rw [e, Matrix.add_apply, map_add]
+    rw [e, Matrix.add_apply, map_add (f := _)]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ?_ ?_)
     · have := entry_mul_le ι hε.le zero_le_one
         (A := ((φ g : GL (Fin a) ℂ) : Matrix (Fin a) (Fin a) ℂ) - 1)

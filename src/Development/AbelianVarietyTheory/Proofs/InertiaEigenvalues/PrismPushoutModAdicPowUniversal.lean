@@ -29,7 +29,7 @@ def deltaLocus {A B : Type} [CommRing A] [CommRing B] (D : Delta l A) (D' : Delt
     rw [add_neg_cancel, D.δ_zero] at e1
     rw [add_neg_cancel, D'.δ_zero] at e2
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_zero, map_sub, map_add, map_sum, map_mul, map_pow, map_natCast, map_neg, ha] at e1 ⊢
+      simp only [map_zero, map_sub, map_add (f := _), map_sum, map_mul, map_pow, map_natCast, map_neg, ha] at e1 ⊢
     linear_combination e2 - e1
 
 open CategoryTheory in
@@ -196,7 +196,7 @@ theorem _root_.GlobalTheory.BSP.PoUniv.isPO_univ (l : ℕ) [Fact l.Prime] (R : T
     have h2 := _root_.GlobalTheory.BSP.delta_add_sub_mem_pow l Q.A Q.D _ hlQ n (c0 s)
       (c0 (x - s)) (hmap _ _ hxs)
     rw [add_sub_cancel] at h1
-    rw [← map_add, add_sub_cancel] at h2
+    rw [← map_add (f := _), add_sub_cancel] at h2
     have h3 := hmap n _ h1
     rw [map_sub, hs'] at h3
     have h4 := Ideal.sub_mem _ h3 h2

@@ -97,7 +97,7 @@ theorem exists_family : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, Formalism
           exact hx0 i
         | zero => rw [Submodule.coe_zero, map_zero]; rfl
         | add g g' _ _ hg hg' =>
-          rw [Submodule.coe_add, map_add, Pi.add_apply, Pi.add_apply, hg, hg', add_zero]
+          rw [Submodule.coe_add, map_add (f := _), Pi.add_apply, Pi.add_apply, hg, hg', add_zero]
         | smul c g _ hg =>
           rw [Submodule.coe_smul, map_smulₛₗ, Pi.smul_apply, Pi.smul_apply, hg, smul_zero]
       exact key ⟨f, hf⟩ (B.mem_span _)

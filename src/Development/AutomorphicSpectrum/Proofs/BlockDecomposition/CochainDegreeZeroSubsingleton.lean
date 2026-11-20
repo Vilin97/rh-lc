@@ -344,14 +344,14 @@ theorem exact_hi {p : ℕ} (f : Ch (p + 2) → Vv N) (hf : d N (p + 2) (f : Cn N
     have h0 : dp N w (E a m) + (-1 : ℤ) ^ (p + 1) • v (E a m) = 0 := hR0 a m
     have hG : gp N 1 (dp N w (E a m)) + (-1 : ℤ) ^ (p + 1) • gp N 1 (v (E a m)) = 0 := by
       have := congrArg (gp N 1) h0
-      simpa only [map_add, map_zsmul, map_zero] using this
+      simpa only [map_add (f := _), map_zsmul, map_zero] using this
     have h1 : dp N u (E 0 (E a m)) + (-1 : ℤ) ^ (p + 2) • u (E a m) + (-1 : ℤ) ^ (p + 3) • gp N 1 (v (E a m)) = 0 :=
       rel N f hf 0 1 (E a m)
     have hB : dp N u (E 0 (E a m)) = dp N (fun x => u (E 0 x)) (E a m) + (-1 : ℤ) ^ (p + 1) • u (E a m) :=
       dp_EE N u a 0 m
     have hP : Pp N (fun i => u (E i m)) (a + 1) = gp N 1 (Pp N (fun i => u (E i m)) a) + u (E a m) := rfl
     rw [d_EE, hd, hz (a + 1) m, hz a m, hP, gp_add N a 1 (w m)]
-    simp only [map_add, map_zsmul]
+    simp only [map_add (f := _), map_zsmul]
     rcases neg_one_pow_eq_or ℤ p with hp | hp <;> simp only [pow_succ, hp] at hG h1 hB ⊢
     · linear_combination (norm := module) hB - h1 + hG
     · linear_combination (norm := module) h1 - hB - hG

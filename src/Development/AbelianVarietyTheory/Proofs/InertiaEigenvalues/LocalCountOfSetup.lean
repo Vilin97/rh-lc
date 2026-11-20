@@ -224,7 +224,7 @@ theorem card_local [IsDiscreteValuationRing O] [IsTopologicalRing O] (hO : IsAdi
         exact W.zero_mem
       add_mem' := fun {a b} ha hb => by
         have := W.add_mem ha hb
-        simp only [Set.mem_ofPred_eq, Pi.add_apply, map_add]
+        simp only [Set.mem_ofPred_eq, Pi.add_apply, map_add (f := _)]
         exact this
       smul_mem' := fun c y hy => by
         rw [Set.mem_ofPred_eq, hsm]
@@ -272,7 +272,7 @@ theorem card_local [IsDiscreteValuationRing O] [IsTopologicalRing O] (hO : IsAdi
         simp only [← map_mul, MulEquiv.symm_apply_apply, Pi.add_apply, GlobalTheory.LocalH1Finiteness.rep_apply, ← map_sum,
         ← map_add] at h1
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [Pi.add_apply, hρ, hf, hinj h1, map_add, map_sum, map_mul, add_smul, Finset.sum_smul, mul_smul]
+        simp only [Pi.add_apply, hρ, hf, hinj h1, map_add (f := _), map_sum, map_mul, add_smul, Finset.sum_smul, mul_smul]
   have hBS : B1 ρ ≤ Submodule.span Λ S := by
     rintro _ ⟨x, rfl⟩
     set_option synthInstance.maxHeartbeats 100000 in

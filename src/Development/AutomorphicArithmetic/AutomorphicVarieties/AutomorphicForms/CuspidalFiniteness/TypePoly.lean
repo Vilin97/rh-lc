@@ -31,7 +31,7 @@ theorem casMem : ∀ (A : Type) [Ring A] [Algebra ℂ A] (n : ℕ) (E : Fin n �
       have h2 := congrArg φ (hR Y).symm
       rw [h0 _ (h Y)] at h2
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_smul, smul_eq_mul, sub_eq_add_neg (a := Y)] at h2
+        simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, sub_eq_add_neg (a := Y)] at h2
       simp only [add_zero]
       rw [h2, h0 1 (one_mem S), mul_zero])
   have h2 := core.2

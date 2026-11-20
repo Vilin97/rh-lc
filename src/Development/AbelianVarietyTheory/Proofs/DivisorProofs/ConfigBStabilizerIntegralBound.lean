@@ -116,13 +116,13 @@ theorem schr_pureA_eq {κ : Type} [Fintype κ] {ψ : AddChar (AF F) ℂ} (hψ : 
     congr 1
     · have e1 : evI F (GlobalTheory.HeisSchA.mk (p1 (x ⬝ᵥ w.2 + h)) 0) = y ⬝ᵥ c + q h := by
         change q (x ⬝ᵥ w.2 + h) = _
-        rw [map_add, RingHom.map_dotProduct]
+        rw [map_add (f := _), RingHom.map_dotProduct]
         rfl
-      rw [e1, map_add, eChar_apply, ContinuousLinearMap.neg_apply, trL_apply]
+      rw [e1, map_add (f := _), eChar_apply, ContinuousLinearMap.neg_apply, trL_apply]
       congr 1
       push_cast
       ring
-    · rw [map_add, RingHom.map_dotProduct]
+    · rw [map_add (f := _), RingHom.map_dotProduct]
       rfl
   change ψ (x ⬝ᵥ w.2 + h) * (f (fun i => q ((x + w.1) i)) * g (fun i => p2 ((x + w.1) i))) =
     archS f c t k y * (finChar ψ (z ⬝ᵥ d + p2 h) * g (z + s))
@@ -134,7 +134,7 @@ theorem continuous_trL {κ : Type} [Fintype κ] :
     Continuous (trL : (κ → mixedEmbedding.mixedSpace F) → (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ) := by
   let A : (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ :=
     { toFun := trL
-      map_add' := fun c c' => by ext y; simp only [trL_apply, dotProduct_add, map_add, ContinuousLinearMap.add_apply]
+      map_add' := fun c c' => by ext y; simp only [trL_apply, dotProduct_add, map_add (f := _), ContinuousLinearMap.add_apply]
       map_smul' := fun r c => by
         ext y; simp only [trL_apply, dotProduct_smul, map_smul, ContinuousLinearMap.smul_apply, RingHom.id_apply] }
   exact A.continuous_of_finiteDimensional
@@ -145,7 +145,7 @@ theorem tendsto_schr_zero {κ : Type} [Fintype κ] {ψ : AddChar (AF F) ℂ} (h�
   classical
   induction hΦ using Submodule.span_induction with
   | zero => simpa using tendsto_const_nhds
-  | add Φ Ψ _ _ h1 h2 => simpa only [map_add] using h1.add h2
+  | add Φ Ψ _ _ h1 h2 => simpa only [map_add (f := _)] using h1.add h2
   | smul c Φ _ h => simpa only [map_smul] using h.const_smul c
   | mem Φ h =>
     obtain ⟨f, g, hg, rfl⟩ := h

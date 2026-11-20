@@ -380,7 +380,7 @@ theorem valued_sigR (P : HeightOneSpectrum (𝓞 E)) (z : AfE F E) :
       rw [← valued_algebraMap, ← adAt_inclE F, ← sub_eq_iff_eq_add.2 e, map_sub]
       exact Valuation.map_sub_lt _ hlt (valued_nat_mul_lt hr (hN _ (by simp)))
     have h2 : Valued.v (adAt F P (Formalism.UG.sigR hc.sig _ z)) < γ := by
-      rw [e, map_add, map_add, sigR_inclE, adAt_inclE, map_mul, map_natCast]
+      rw [e, map_add (f := _), map_add (f := _), sigR_inclE, adAt_inclE, map_mul, map_natCast]
       refine Valuation.map_add_lt _ ?_ (valued_nat_mul_lt (sigR_mem_rInt hc hr) (hN _ (by simp)))
       rw [valued_algebraMap, valuation_star]
       exact h1
@@ -400,9 +400,9 @@ theorem exists_real_approx {P : HeightOneSpectrum (𝓞 E)} (hP : conjPrime₂ P
   obtain ⟨y, N, r, hr, hN, e⟩ := exists_approx_small
     (finAf F E (localIdele E P u * localIdele E (conjPrime₂ P) (atFin _ (Units.mk0 _ hM0))) : AfE F E) {P, conjPrime₂ P} hγ
   have e1 := congrArg (adAt F P) e
-  rw [adAt_finAf, map_mul, compAt_localIdele_self, compAt_localIdele_ne hP.symm, mul_one, map_add, adAt_inclE] at e1
+  rw [adAt_finAf, map_mul, compAt_localIdele_self, compAt_localIdele_ne hP.symm, mul_one, map_add (f := _), adAt_inclE] at e1
   have e2 := congrArg (adAt F (conjPrime₂ P)) e
-  rw [adAt_finAf, map_mul, compAt_localIdele_self, compAt_localIdele_ne hP, one_mul, map_add, adAt_inclE] at e2
+  rw [adAt_finAf, map_mul, compAt_localIdele_self, compAt_localIdele_ne hP, one_mul, map_add (f := _), adAt_inclE] at e2
   have h1 : Valued.v ((u : P.adicCompletion E) - algebraMap E _ y) < Valued.v (u : P.adicCompletion E) := by
     rw [sub_eq_iff_eq_add'.2 e1]
     exact valued_nat_mul_lt hr (hN _ (by simp))
@@ -413,7 +413,7 @@ theorem exists_real_approx {P : HeightOneSpectrum (𝓞 E)} (hP : conjPrime₂ P
     rwa [map_natCast]
   obtain ⟨k, hk⟩ := (hc.fixed (y + star y)).1 (by rw [star_add, star_star, add_comm])
   have h3 : Valued.v ((u : P.adicCompletion E) - algebraMap E _ (algebraMap F E k)) < Valued.v (u : P.adicCompletion E) := by
-    rw [hk, map_add, ← sub_sub]
+    rw [hk, map_add (f := _), ← sub_sub]
     exact Valuation.map_sub_lt _ h1 h2
   refine ⟨Units.mk0 k ?_, h3⟩
   rintro rfl

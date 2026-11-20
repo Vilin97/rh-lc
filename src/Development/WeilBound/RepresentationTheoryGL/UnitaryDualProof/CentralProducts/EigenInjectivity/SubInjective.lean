@@ -38,7 +38,7 @@ theorem exists_fin (S : Module.End ℂ V) (T : Module.End ℂ W)
         (∀ u ∈ P, F u ∈ P) → (∀ u ∈ Q, F u ∈ Q) → ∀ u ∈ P ⊔ Q, F u ∈ P ⊔ Q := by
       intro M _ _ F P Q hP hQ u hu
       obtain ⟨p, hp, q, hq, rfl⟩ := Submodule.mem_sup.1 hu
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem_sup (hP p hp) (hQ q hq)
     have mono : ∀ (P P' : Submodule ℂ V) (Q Q' : Submodule ℂ W), P ≤ P' → Q ≤ Q' →
         LinearMap.range (TensorProduct.map P.subtype Q.subtype) ≤
@@ -162,7 +162,7 @@ theorem eigProd : EigProd k := by
       TensorProduct.map (A.ρ (sc r x)) (B.ρ (sc t x)) (Exponents.boolTensorEquiv (X := TwoT A.V B.V) z) := by
     intro z
     induction z using PiTensorProduct.induction_on with
-    | add z w hz hw => rw [map_add, map_add, hz, hw, map_add, map_add]
+    | add z w hz hw => rw [map_add (f := _), map_add (f := _), hz, hw, map_add (f := _), map_add (f := _)]
     | smul_tprod s z =>
       rw [map_smul, map_smul, map_smul, map_smul, piTensor_tprod, Exponents.boolTensorEquiv_tprod,
         Exponents.boolTensorEquiv_tprod, TensorProduct.map_tmul]

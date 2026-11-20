@@ -309,7 +309,7 @@ theorem exists_transport (G : GlW K V n) {W : Submodule K V} (hW : G.Stable W) (
       obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hx
       have hy' : G.E c d y ∈ G.gS {h} := G.gS_stable _ c d y hy
       have hz' : G.E c d z ∈ G.gS {h'} := G.gS_stable _ c d z hz
-      simp only [map_add]
+      simp only [map_add (f := _)]
       cases i
       · rw [hπ2 false _ hy', hπ2 false _ hy, hπ3 false true (by decide) _ hz', hπ3 false true (by decide) _ hz,
           map_zero]
@@ -318,7 +318,7 @@ theorem exists_transport (G : GlW K V n) {W : Submodule K V} (hW : G.Stable W) (
     have hW' : G.Stable (G.gS {h} ⊔ G.gS {h'}) := by
       intro a b x hx
       obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hx
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ (Submodule.mem_sup_left (G.gS_stable _ a b y hy))
         (Submodule.mem_sup_right (G.gS_stable _ a b z hz))
     have hWf' : G.FinW (G.gS {h} ⊔ G.gS {h'}) := ⟨S, fun x hx => hS x (sup_le hUW hU'W hx)⟩

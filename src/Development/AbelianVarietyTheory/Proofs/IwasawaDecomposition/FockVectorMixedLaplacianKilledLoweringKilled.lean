@@ -50,22 +50,22 @@ theorem quad_pure {B : ι → (X → ℂ) → (X → ℂ)} {G : Module.End ℂ (
     induction Q using MvPolynomial.induction_on with
     | C a => simp [hC, Bsm _ _ _ hf, hv]
     | add p q hp hq =>
-      rw [map_add, Badd _ _ _ (hm _) (hm _), hp, hq, ← map_add, ← Finset.sum_add_distrib]
-      simp only [map_add, smul_add]
+      rw [map_add (f := _), Badd _ _ _ (hm _) (hm _), hp, hq, ← map_add (f := _), ← Finset.sum_add_distrib]
+      simp only [map_add (f := _), smul_add]
     | mul_X p j hp =>
-      rw [mul_comm, hX, hBA _ _ _ (hm _), hp, ← hX, ← map_smul, ← map_add]
+      rw [mul_comm, hX, hBA _ _ _ (hm _), hp, ← hX, ← map_smul, ← map_add (f := _)]
       congr 1
       simp only [hd, smul_add, Finset.sum_add_distrib, Finset.mul_sum, mul_smul_comm, smul_ite, smul_zero,
         Finset.sum_ite_eq', Finset.mem_univ, if_true]
   induction Q using MvPolynomial.induction_on with
   | C a => simp [hC, hGf]
   | add p q hp hq =>
-    rw [map_add, map_add, hp, hq, ← map_add, ← Finset.sum_add_distrib]
-    simp only [map_add, smul_add, Finset.sum_add_distrib]
+    rw [map_add (f := _), map_add (f := _), hp, hq, ← map_add (f := _), ← Finset.sum_add_distrib]
+    simp only [map_add (f := _), smul_add, Finset.sum_add_distrib]
   | mul_X p j hp =>
-    rw [mul_comm, hX, hGA _ _ (hm _), hp, key, ← hX, ← map_add]
+    rw [mul_comm, hX, hGA _ _ (hm _), hp, key, ← hX, ← map_add (f := _)]
     congr 1
-    simp only [hd, map_add, apply_ite (MvPolynomial.pderiv _), map_zero, smul_add, add_smul, Finset.sum_add_distrib,
+    simp only [hd, map_add (f := _), apply_ite (MvPolynomial.pderiv _), map_zero, smul_add, add_smul, Finset.sum_add_distrib,
       Finset.mul_sum, mul_smul_comm, smul_ite, smul_zero,
       Finset.sum_ite_eq', Finset.mem_univ, if_true, add_assoc]
     congr 2
@@ -234,7 +234,7 @@ theorem gen_aPlus (τ' : D.what₂.Tau) (J : Matrix (Fin T.rank) (Fin S.rank) �
       aPlus (heisO ψ S T) θ τ' J u ((GX + Complex.I • GY) g) +
         ((fockScale D τ' : ℂ)⁻¹ * (if τ' = τ then (1 : ℂ) else 0)) • (annih (heisO ψ S T) θ τ (cplxO 1 s) (X * u) g +
           (-Complex.I) • annih (heisO ψ S T) θ τ (cplxO 1 s) (X * J u) g) := by
-  rw [aPlus_eq, aPlus_eq, map_smul, map_add, map_smul, gen_dRho hψ hθ hX hY _ _ hg, gen_dRho hψ hθ hX hY _ _ hg]
+  rw [aPlus_eq, aPlus_eq, map_smul, map_add (f := _), map_smul, gen_dRho hψ hθ hX hY _ _ hg, gen_dRho hψ hθ hX hY _ _ hg]
   module
 
 theorem gen_vac (τ' : D.what₂.Tau) (J : Matrix (Fin T.rank) (Fin S.rank) ℂ → Matrix (Fin T.rank) (Fin S.rank) ℂ)
@@ -242,7 +242,7 @@ theorem gen_vac (τ' : D.what₂.Tau) (J : Matrix (Fin T.rank) (Fin S.rank) ℂ 
     (hv' : IsFockVacAt (heisO ψ S T) θ τ' J f) : IsFockVacAt (heisO ψ S T) θ τ' J ((GX + Complex.I • GY) f) := by
   intro u
   have e := congrArg (GX + Complex.I • GY) (hv' u)
-  rw [annih, map_add, map_smul, gen_dRho hψ hθ hX hY _ _ hf, gen_dRho hψ hθ hX hY _ _ hf, hv, hv, smul_zero,
+  rw [annih, map_add (f := _), map_smul, gen_dRho hψ hθ hX hY _ _ hf, gen_dRho hψ hθ hX hY _ _ hf, hv, hv, smul_zero,
     add_zero, add_zero, map_zero] at e
   exact e
 
@@ -281,7 +281,7 @@ theorem gen_kill_vac (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ) 
   have h1 := hc _ (gen_theta hX hY hf) fun ρ => gen_vac hom.std hθ hX hY ρ _ hf (hv τ) (hv ρ)
   have h2 : om (1, atTau θ T τ (sT τ)) ((GX + Complex.I • GY) f) = -(c • (GX + Complex.I • GY) f) := by
     simp only [LinearMap.add_apply, LinearMap.smul_apply]
-    rw [map_add, map_smul, gen_anti hθ (hT τ) lX ha hX hf (hc f hf hv),
+    rw [map_add (f := _), map_smul, gen_anti hθ (hT τ) lX ha hX hf (hc f hf hv),
       gen_anti hθ (hT τ) lY (anti_I ha) hY hf (hc f hf hv)]
     module
   rw [← h1, eq_neg_iff_add_eq_zero, ← two_smul ℂ, smul_eq_zero_iff_right two_ne_zero] at h2
@@ -496,7 +496,7 @@ theorem rderC_theta_eq_zero : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T
   have a2 := ((hY φ hφ).2.2.2 (h, g) 0).deriv
   simp only [Prod.mk_mul_mk, mul_one] at a1 a2
   have a3 := congrFun (congrArg (om (h, g)) key) 0
-  rw [LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul, map_zero] at a3
+  rw [LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul, map_zero] at a3
   simp only [Pi.add_apply, Pi.smul_apply, Rder, thetaKO]
   rw [a1, a2]
   exact a3

@@ -246,7 +246,7 @@ theorem eq_one {g : Fin (r + 1) → S.V} {gs : Fin r → S.V}
   have hv : v = w + ∑ a : Fin r, hf L S.Hm v (g a.castSucc) • gs a := by rw [hw, sub_add_cancel]
   conv_lhs => rw [hv]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, hnw]
+    rw [map_add (f := _), map_sum, hnw]
   simp only [map_smul, (hfix _).2]
   exact hv.symm
 

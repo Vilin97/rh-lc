@@ -327,7 +327,7 @@ theorem IsIrrCharacter.exists_eq_indFun_inertia {χ : G → ℂ} (hχ : IsIrrCha
       rw [hIndA, map_smul, LinearMap.smul_apply, charInner_of_isIrrCharacter hθ (mem_irrChars.mp hφ),
         if_neg (Ne.symm hne), smul_zero]
     have h2 : res (indFun ι θ) = res ψ + res (indFun ι θ - ψ) := by simp
-    rw [h2, map_add, LinearMap.add_apply] at h1
+    rw [h2, map_add (f := _), LinearMap.add_apply] at h1
     obtain ⟨m, hm⟩ := (hψirr.isCharacter.comp ι).exists_nat_charInner (mem_irrChars.mp hφ).isCharacter
     obtain ⟨k, hk⟩ := (hη.comp ι).exists_nat_charInner (mem_irrChars.mp hφ).isCharacter
     change charInner A (res ψ) φ = m at hm
@@ -355,7 +355,7 @@ theorem IsIrrCharacter.exists_eq_indFun_inertia {χ : G → ℂ} (hχ : IsIrrCha
   have hef : e ≤ f := by
     have h3 : charInner A (res (χ ∘ T.subtype)) θ =
         charInner A (res ψ) θ + charInner A (res (χ ∘ T.subtype - ψ)) θ := by
-      rw [← LinearMap.add_apply, ← map_add, ← map_add, add_sub_cancel]
+      rw [← LinearMap.add_apply, ← map_add (f := _), ← map_add (f := _), add_sub_cancel]
     rw [← hχA, hf, he', hk2, ← Nat.cast_add] at h3
     have := Nat.cast_injective h3
     omega

@@ -80,7 +80,7 @@ theorem toLam_surjective (i : X.Tw) (M : ℕ) (ι : Type) [Fintype ι] : Functio
   have key : ∀ g : Del X i M ι, MonoidAlgebra.of (X.O0 i) (Del X i M ι) g ∈ (toLam X i M ι).range := by
     intro g
     refine ⟨∏ q, (1 + MvPolynomial.X q) ^ (Multiplicative.toAdd g q).val, ?_⟩
-    simp only [toLam, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_prod, map_pow, map_add, map_one, MvPolynomial.aeval_X, add_sub_cancel]
+    simp only [toLam, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_prod, map_pow, map_add (f := _), map_one, MvPolynomial.aeval_X, add_sub_cancel]
     simp only [← map_pow, ← map_prod]
     congr 1
     apply Multiplicative.toAdd.injective

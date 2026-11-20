@@ -54,7 +54,7 @@ theorem exists_invariant_core_of_equiv {G W E : Type} [Group G] [TopologicalSpac
       add_left := fun x y z => by
         show ∫ g, F (x + y) z g ∂μ = ∫ g, F x z g ∂μ + ∫ g, F y z g ∂μ
         rw [← integral_add (hI x z) (hI y z)]
-        simp only [F, A, map_add, inner_add_left]
+        simp only [F, A, map_add (f := _), inner_add_left]
       smul_left := fun x y a => by
         show ∫ g, F (a • x) y g ∂μ = conj a * ∫ g, F x y g ∂μ
         rw [← integral_const_mul]

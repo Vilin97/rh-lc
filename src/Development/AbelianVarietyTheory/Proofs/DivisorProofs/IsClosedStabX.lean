@@ -39,7 +39,7 @@ def skew (r : ℕ) : AddSubgroup (Matrix (Fin r) (Fin r) E) where
     ext i j
     have h1 := congrFun (congrFun hs i) j
     have h2 := congrFun (congrFun ht i) j
-    simp only [Matrix.add_apply, Matrix.transpose_apply, Matrix.map_apply, map_add, Matrix.zero_apply] at *
+    simp only [Matrix.add_apply, Matrix.transpose_apply, Matrix.map_apply, map_add (f := _), Matrix.zero_apply] at *
     linear_combination h1 + h2
   neg_mem' := by
     intro s hs

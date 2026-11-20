@@ -129,7 +129,7 @@ theorem homog {j : ℕ} {P : MvPolynomial (Fin n × Fin n) ℂ} (hP : P.IsHomoge
       Algebra.algebraMap_eq_smul_one, Subalgebra.coe_smul, Subalgebra.coe_smul, Subalgebra.coe_one, map_smul, map_one]
     exact ⟨isType_smul _ h1.1, h2.smul _⟩
   | add x y i hx hy ihx ihy =>
-    simp only [map_add, Subalgebra.coe_add, smul_add]
+    simp only [map_add (f := _), Subalgebra.coe_add, smul_add]
     exact ⟨isType_add ihx.1 ihy.1, ihx.2.add ihy.2⟩
   | mem_mul m hm i x hx ih =>
     have key : IsType 1 1 ((aeval sym m : Ev n) : Alt n) ∧
@@ -142,7 +142,7 @@ theorem homog {j : ℕ} {P : MvPolynomial (Fin n × Fin n) ℂ} (hP : P.IsHomoge
         exact ⟨isType_mul (isType_dz _) (isType_dzb _), isConj_sym y⟩
       | zero => simpa using ⟨isType_zero 1 1, fun S => by simp⟩
       | add x y _ _ ihx ihy =>
-        simp only [map_add, Subalgebra.coe_add, neg_add]
+        simp only [map_add (f := _), Subalgebra.coe_add, neg_add]
         exact ⟨isType_add ihx.1 ihy.1, ihx.2.add ihy.2⟩
       | smul c x _ ih =>
         rw [← C_mul', map_mul, map_mul, map_mul, star_C, aeval_C, aeval_C, ← Algebra.smul_def, ← Algebra.smul_def,

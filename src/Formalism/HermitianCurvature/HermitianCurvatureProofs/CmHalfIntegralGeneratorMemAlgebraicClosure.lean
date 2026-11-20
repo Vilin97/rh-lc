@@ -897,7 +897,7 @@ lemma heis_mem (x : HPar k r') : heis0 k r' x ∈ GV k (1 + r') := by
   simp only [herm_add_left, herm_add_right, herm_smul_left, herm_smul_right]
   have h1 := herm_conj (Hpk k r') (Hpk_herm k r') (mid v) x.1
   have h2 := hb_add_conj (k := k) x.1 x.2
-  simp only [map_add, map_sub, map_mul]
+  simp only [map_add (f := _), map_sub, map_mul]
   linear_combination (-(cL u)) * h1 + (cL u * (starRingEnd ℂ) (cL v)) * h2
 
 lemma cmHalfIntegralGenerator_mem_algebraicClosure (c : ℂ) (hc : c ≠ 0) : w0 k r' c ∈ GV k (1 + r') := by
@@ -1253,7 +1253,7 @@ lemma cf_heis_Ψt (x₀ : HPar k r') (p : ℂ × HPar k r') (h1 : p.1 ≠ 0) :
     have e3 : conj (herm (Hpk k r') y y₀) = herm (Hpk k r') y₀ y := herm_conj _ (Hpk_herm k r') _ _
     simp only [herm_add_left, herm_add_right, herm_smul_left, herm_smul_right]
     rw [hB]
-    simp only [map_add, map_sub, map_mul, Complex.conj_conj, Complex.conj_ofReal, e3]
+    simp only [map_add (f := _), map_sub, map_mul, Complex.conj_conj, Complex.conj_ofReal, e3]
     rw [hnorm]
     linear_combination e1 + c * conj c * e2
   have him : B.im = s - (conj c * herm (Hpk k r') y y₀).im + ‖c‖ ^ 2 * s₀ := by

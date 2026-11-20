@@ -96,7 +96,7 @@ theorem exists_eigenbasis {V : Type*} [AddCommGroup V] [Module ℂ V] {g : ℕ} 
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hw, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
-    rw [map_add, map_smul, map_smul]
+    rw [map_add (f := _), map_smul, map_smul]
     refine Submodule.add_mem _ ?_ ?_
     · exact Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨(j, false), rfl⟩)
     · exact Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨(j, true), rfl⟩)

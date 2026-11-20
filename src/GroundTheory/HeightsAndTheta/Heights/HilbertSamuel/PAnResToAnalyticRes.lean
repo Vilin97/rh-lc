@@ -77,7 +77,7 @@ theorem differentiable_evalPoly {I : Type} [Fintype I] (p : MvPolynomial I ℂ) 
   induction p using MvPolynomial.induction_on with
   | C a => simp
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p i hp =>
     simp only [map_mul, eval_X]

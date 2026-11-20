@@ -135,7 +135,7 @@ theorem leviM_one (v : TR.Pl) : leviM TR 1 v = 1 := by
     · exact zero_mem _
   have e : (⟨_, hI⟩ : IntAf X.B.I.F X.B.I.E) = ⟨_, sub_mem hI hIt⟩ + ⟨_, hIt⟩ := by
     apply Subtype.ext; simp
-  rw [e, map_add, res_eq_zero_of_Z TR v _ hZ, zero_add]
+  rw [e, map_add (f := _), res_eq_zero_of_Z TR v _ hZ, zero_add]
   by_cases h : i = j
   · subst h
     simp only [if_true, Matrix.one_apply_eq]

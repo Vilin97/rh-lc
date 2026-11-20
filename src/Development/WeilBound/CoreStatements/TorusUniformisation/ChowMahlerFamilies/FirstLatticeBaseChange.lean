@@ -101,7 +101,7 @@ theorem xId_retract [One F] (χ : F → Ω) (h1 : χ 1 = 1) (i : Fin n)
   · obtain ⟨m, hm, v, hv, h⟩ := (mem_xId D χ i c).1 hc
     show c • e - ρ (c • e) ∈ D.M
     have h' : c • e = m + v := h.symm
-    rw [h', map_add, a2 v hv, add_sub_add_right_eq_sub]
+    rw [h', map_add (f := _), a2 v hv, add_sub_add_right_eq_sub]
     exact D.M.sub_mem hm (a3 m hm)
   · obtain ⟨y, hy, z, hz, h⟩ := Submodule.mem_sup.1 (b1 v)
     obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hz
@@ -169,7 +169,7 @@ theorem charSub_bc (χ : F → Ω) (i : Fin n) :
     rintro _ ⟨g, hg, rfl⟩
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hg
     obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hz
-    rw [map_add, map_smul, ← algebraMap_smul C c]
+    rw [map_add (f := _), map_smul, ← algebraMap_smul C c]
     refine Submodule.add_mem_sup ?_ (Submodule.smul_mem _ _ (Submodule.subset_span rfl))
     rw [vanSub_bc (Ω := Ω)]
     exact Submodule.subset_span ⟨y, hy, rfl⟩
@@ -224,7 +224,7 @@ theorem first_lattice_base_change (hR : ∀ a ∈ R, algebraMap Ω C a ∈ RC) :
   · refine (AddSubgroup.closure_le _).2 ?_
     rintro _ ⟨a, ha, _, ⟨v, hv, rfl⟩, rfl⟩
     obtain ⟨y, hy, _, ⟨z, hz, rfl⟩, rfl⟩ := AddSubgroup.mem_sup.1 hv
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     refine AddSubgroup.add_mem_sup (smul_mem ha (mem_span ⟨y, hy, rfl⟩))
       ⟨a • bcMap Ω C _ z, (mem_stdLat RC _).2 fun x => ?_, ?_⟩
     · exact RC.mul_mem ha (hR _ ((mem_stdLat R z).1 hz x))
@@ -282,7 +282,7 @@ theorem xId_bc [One F] (χ : F → Ω) (h1 : χ 1 = 1) (i : Fin n)
       rw [a3, map_one] at this
       exact this
     have h2 := congrArg τ h
-    rw [map_add, h0, add_zero, map_smul, h1, smul_eq_mul, mul_one] at h2
+    rw [map_add (f := _), h0, add_zero, map_smul, h1, smul_eq_mul, mul_one] at h2
     rw [← h2]
     refine map_mem τ ?_ hm
     rintro _ ⟨v, hv, rfl⟩
@@ -295,7 +295,7 @@ theorem xId_bc [One F] (χ : F → Ω) (h1 : χ 1 = 1) (i : Fin n)
       a • bcMap Ω C _ v, Submodule.smul_mem _ _ ?_, ?_⟩
     · rw [vanSub_bc (Ω := Ω)]
       exact Submodule.subset_span ⟨v, hv, rfl⟩
-    · rw [← smul_add, ← map_add, h]
+    · rw [← smul_add, ← map_add (f := _), h]
       funext x
       show a * algebraMap Ω C (c * χ (x i)) = a * algebraMap Ω C c * algebraMap Ω C (χ (x i))
       rw [map_mul, mul_assoc]

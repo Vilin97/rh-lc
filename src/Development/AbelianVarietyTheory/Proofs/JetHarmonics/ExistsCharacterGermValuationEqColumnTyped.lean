@@ -21,7 +21,7 @@ def ballIdeal {C : Type} [Field C] {v : Valuation C NNReal} {O : Type} [CommRing
   add_mem' := by
     intro a b ha hb
     show v (algebraMap O C (a + b)) < t
-    rw [map_add]
+    rw [map_add (f := _)]
     exact v.map_add_lt ha hb
   smul_mem' := by
     intro c a ha
@@ -104,7 +104,7 @@ theorem exists_germ_valuation_eq : ∀ (C : Type) [Field C] [CharZero C] (v : Va
       (fun l i => algebraMap O C (u l i)) _ (fun _ => rfl) (fun _ => rfl),
     MvPolynomial.support_map_of_injective _ hinj]
   simp only [MvPolynomial.coeff_map]
-  rw [hsum, map_add]
+  rw [hsum, map_add (f := _)]
   exact v.map_add_eq_of_lt_left hρ
 
 end GlobalTheory.CharValue

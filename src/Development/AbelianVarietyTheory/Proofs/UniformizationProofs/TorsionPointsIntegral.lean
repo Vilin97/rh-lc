@@ -60,7 +60,7 @@ theorem exists_finset_extend {V F : Type} [CommRing V] [Field F] [Algebra V F]
       refine ⟨algebraMap W K a / algebraMap W K b, ?_⟩
       rw [map_div₀, hκ, hκ, ← e, mul_div_cancel_right₀ _ ((map_ne_zero_iff _ hinj).2 hb)]
     | algebraMap r => exact ⟨_, (hV r).symm⟩
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let e : K ≃+* κ.range := RingEquiv.ofBijective κ.rangeRestrict
     ⟨fun a b h => κ.injective (congrArg Subtype.val h), κ.rangeRestrict_surjective⟩

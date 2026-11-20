@@ -115,7 +115,7 @@ theorem eig_val : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommRi
       · subst h; exact Submodule.smul_mem _ _ hx
       · simp
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   have := key v (htop ▸ Submodule.mem_top)
   rwa [he3 s v hv] at this
 

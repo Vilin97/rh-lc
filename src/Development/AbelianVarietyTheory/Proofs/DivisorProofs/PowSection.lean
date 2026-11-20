@@ -59,7 +59,7 @@ def relabel (C : SiegPre h N ζ s) (T : (Fin h ⊕ Fin h → ℤ) →ₗ[ℤ] (F
   rig₂ := C.rig₂
   symm := C.symm
   lev x := C.lev (T x)
-  lev_add a b := by rw [map_add, C.lev_add]
+  lev_add a b := by rw [map_add (f := _), C.lev_add]
   lev_tors a := C.lev_tors _
   geom k _ _ x β z hx hz := by
     obtain ⟨β₀, hβ₀⟩ := exists_spMap (x ≫ s)

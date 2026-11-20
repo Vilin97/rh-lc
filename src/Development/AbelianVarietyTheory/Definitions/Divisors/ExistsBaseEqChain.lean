@@ -108,7 +108,7 @@ theorem sc_mkA (F : B.X.Modules) : Sc χ (mkA χ F) := fun c => by
 variable {χ}
 
 theorem Sc.isAdd {M : AM B Λ} (h : Sc χ M) : IsAdd M := fun a b => by
-  rw [h, h, h, map_add, add_smul]
+  rw [h, h, h, map_add (f := _), add_smul]
 
 def liftIso {M N : AM B Λ} (hM : Sc χ M) (hN : Sc χ N) (e : M.V ≅ N.V) : M ≅ N :=
   Action.mkIso e fun c => by

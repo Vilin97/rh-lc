@@ -58,7 +58,7 @@ def ker (V : VF C) {R : Type} [CommRing R] (f : R →+* C) (hf : ∀ x, V.Ge 0 (
   carrier := {x | V.MM (f x)}
   add_mem' := fun {a b} ha hb => by
     show V.MM (f (a + b))
-    rw [map_add]; exact mm_add ha hb
+    rw [map_add (f := _)]; exact mm_add ha hb
   zero_mem' := by
     show V.MM (f 0)
     simp [VF.MM]

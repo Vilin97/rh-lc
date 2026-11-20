@@ -281,7 +281,7 @@ theorem UpperTheory.exists_unique_eigenline_of_rankOne_occurs :
     | add a b _ _ ha hb =>
       obtain ⟨c, hc⟩ := ha
       obtain ⟨d, hd⟩ := hb
-      exact ⟨c + d, by rw [map_add, map_add, hc, hd, add_smul]⟩
+      exact ⟨c + d, by rw [map_add (f := _), map_add (f := _), hc, hd, add_smul]⟩
     | smul a b _ hb =>
       obtain ⟨c, hc⟩ := hb
       exact ⟨a * c, by rw [map_smul, map_smul, hc, smul_smul]⟩

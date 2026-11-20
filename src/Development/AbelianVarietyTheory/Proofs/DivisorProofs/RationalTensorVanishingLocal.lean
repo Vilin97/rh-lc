@@ -61,7 +61,7 @@ theorem affine_restrictions_zero_of_minimalPrimes_over :
         simp only [g0, g2, RingHom.comp_apply, ← map_mul]
         congr 1
         simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     have hz : algebraMap (Γ(M, W) ⊗[ℤ] K) (Localization.AtPrime q) h = 0 := by
       rw [← hG h]
       change G (LinearMap.rTensor K φ.toAddMonoidHom.toIntLinearMap h) = 0

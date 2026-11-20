@@ -32,7 +32,7 @@ theorem exists_pair_ne_zero {G V W : Type} [Group G] [AddCommGroup V] [Module �
   let K : Subrepresentation ρ :=
     { toSubmodule :=
         { carrier := {w | ∀ γ, B (ρ γ w) y = 0}
-          add_mem' := fun {a b} ha hb γ => by rw [map_add, map_add, LinearMap.add_apply, ha γ, hb γ, add_zero]
+          add_mem' := fun {a b} ha hb γ => by rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, ha γ, hb γ, add_zero]
           zero_mem' := fun γ => by simp
           smul_mem' := fun c a ha γ => by rw [map_smul, map_smul, LinearMap.smul_apply, ha γ, smul_zero] }
       apply_mem_toSubmodule := fun g w hw γ => by

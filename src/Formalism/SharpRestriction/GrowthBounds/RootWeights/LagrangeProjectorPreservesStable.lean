@@ -145,7 +145,7 @@ theorem sum_lagrange_projectors_eq_self (E : GLOps n K V) (t : Finset (Fin n →
       simp [this]
   · simp
   · intro y z hy hz
-    simp only [map_add, Finset.sum_add_distrib, hy, hz]
+    simp only [map_add (f := _), Finset.sum_add_distrib, hy, hz]
 
 theorem lagrange_projector_mem_weightSpace (E : GLOps n K V) (t : Finset (Fin n → ℤ))
     (ht : (⊤ : Submodule K V) ≤ ⨆ mu ∈ t, weightSp E mu) (mu : Fin n → ℤ) (x : V) :
@@ -164,7 +164,7 @@ theorem lagrange_projector_mem_weightSpace (E : GLOps n K V) (t : Finset (Fin n 
       simp [this]
   · simp
   · intro y z hy hz
-    rw [map_add]; exact Submodule.add_mem _ hy hz
+    rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 theorem nonzero_weight_mem_support (E : GLOps n K V) (t : Finset (Fin n → ℤ))
     (ht : (⊤ : Submodule K V) ≤ ⨆ mu ∈ t, weightSp E mu) {ka : Fin n → ℤ} {y : V}
@@ -266,7 +266,7 @@ theorem isotypic_subspaces_span_top (D : Formalism.BasicNotions.D7) (h2 : adm2 D
       exact Submodule.mem_iSup_of_mem mu (isotypic_stable_under_operators E mu a b hy)
     · simp
     · intro y z hy hz
-      rw [map_add]; exact Submodule.add_mem _ hy hz
+      rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   obtain ⟨W', hc, hW'⟩ := h2 K V n E ⟨hrel, ‹_›, hw⟩ _ hst
   obtain ⟨t, ht⟩ := CompleteLattice.IsCompactElement.exists_finset_of_le_iSup (Submodule K V)
     ((Submodule.fg_iff_compact (⊤ : Submodule K V)).1 Module.Finite.fg_top)
@@ -295,6 +295,6 @@ theorem isotypic_projector_fixed_mem (D : Formalism.BasicNotions.D7) (h2 : adm2 
     · rw [he.2 mu hm y hy]; exact Submodule.zero_mem _
   · simp
   · intro y z hy hz
-    rw [map_add]; exact Submodule.add_mem _ hy hz
+    rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 end Formalism.MainNotions.G.GLWeightTheory

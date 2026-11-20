@@ -32,7 +32,7 @@ theorem finiteDimensional_cuspSpan : ∀ (E : Type) [Field E] [NumberField E] [I
       change ∫ z in 𝓕, (0 : ℂ) ∂μ = 0
       exact integral_zero _ _
     | add x y _ _ hx hy =>
-      refine ⟨fun k hk => by rw [map_add, hx.1 k hk, hy.1 k hk], fun γ g => ?_, fun r h0 h1 _ _ μ 𝓕 hμ h𝓕 g => ?_⟩
+      refine ⟨fun k hk => by rw [map_add (f := _), hx.1 k hk, hy.1 k hk], fun γ g => ?_, fun r h0 h1 _ _ μ 𝓕 hμ h𝓕 g => ?_⟩
       · change x.1 _ + y.1 _ = x.1 g + y.1 g
         rw [hx.2.1, hy.2.1]
       · haveI := hμ

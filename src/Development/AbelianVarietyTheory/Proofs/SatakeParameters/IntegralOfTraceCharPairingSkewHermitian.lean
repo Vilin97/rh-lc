@@ -24,7 +24,7 @@ theorem int_of_psi_trace_gam : ∀ (L : Type) [Field L] [Valued L (WithZero (Mul
       exact mul_le_of_le_one_left' hb
     have hmem : Matrix.single k j c + Matrix.single j k (-σ c) ∈ gam σ ϖ e := by
       refine ⟨fun a a' => ?_, fun a a' => ?_⟩
-      · simp only [Matrix.add_apply, Matrix.single_apply, map_add, apply_ite σ, map_neg, hσ, map_zero,
+      · simp only [Matrix.add_apply, Matrix.single_apply, map_add (f := _), apply_ite σ, map_neg, hσ, map_zero,
           and_comm (a := k = a'), and_comm (a := j = a')]
         split_ifs <;> ring
       · rw [Matrix.add_apply]

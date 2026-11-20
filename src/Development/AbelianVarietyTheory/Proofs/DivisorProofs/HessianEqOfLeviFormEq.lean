@@ -53,7 +53,7 @@ theorem symm_of_hasFDerivAt_fderiv {E : Type*} [NormedAddCommGroup E] [NormedSpa
       refine (norm_add_le _ _).trans (le_of_eq ?_)
       rw [norm_smul, norm_smul, Real.norm_of_nonneg ha, Real.norm_of_nonneg hb]
     have hlin : H (a • (p - z) + b • (q - z)) w = a * H (p - z) w + b * H (q - z) w := by
-      simp [map_add, map_smul]
+      simp [map_add (f := _), map_smul]
     rw [hlin]
     calc κ * ‖a • (p - z) + b • (q - z)‖ ≤ κ * (a * ‖p - z‖ + b * ‖q - z‖) :=
           mul_le_mul_of_nonneg_left hn hκpos.le
@@ -124,7 +124,7 @@ theorem polar {n : ℕ} {H K : (Fin n → ℂ) →L[ℝ] (Fin n → ℂ) →L[�
   have h1 := hd (a + b)
   have h2 := hd a
   have h3 := hd b
-  simp only [smul_add, map_add, ContinuousLinearMap.add_apply] at h1
+  simp only [smul_add, map_add (f := _), ContinuousLinearMap.add_apply] at h1
   rw [hsH b a, hsH (Complex.I • b) (Complex.I • a), hsK b a,
     hsK (Complex.I • b) (Complex.I • a)] at h1
   linarith

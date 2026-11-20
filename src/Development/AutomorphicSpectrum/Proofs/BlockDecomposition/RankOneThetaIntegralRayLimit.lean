@@ -37,7 +37,7 @@ theorem map_sigR {F E : Type} [Field F] [Field E] [Algebra F E] {R R' : Type} [C
     Algebra.TensorProduct.map f (AlgHom.id F E) (sigR R σ x) =
       sigR R' σ (Algebra.TensorProduct.map f (AlgHom.id F E) x) := by
   induction x with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul r e => simp [sigR]
 
 section Comp

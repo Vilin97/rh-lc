@@ -106,7 +106,7 @@ theorem sq_le_local_index : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
         obtain ⟨ha, za, hza, hza'⟩ := ha
         obtain ⟨hc, zc, hzc, hzc'⟩ := hc
         refine ⟨Submodule.add_mem _ ha hc, za + zc, Submodule.add_mem _ hza hzc, fun b => ?_⟩
-        simp only [Pi.add_apply, map_add, Prod.fst_add, hza', hzc']
+        simp only [Pi.add_apply, map_add (f := _), Prod.fst_add, hza', hzc']
       zero_mem' := by
         refine ⟨Submodule.zero_mem _, 0, Submodule.zero_mem _, fun b => rfl⟩
       neg_mem' := by

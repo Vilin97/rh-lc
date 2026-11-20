@@ -135,7 +135,7 @@ theorem dual_baseChange : ∀ (K K' : Type) [Field K] [NumberField K] [StarRing 
   set ι : (Fin d → K) → (Fin d' → K') := fun x => Matrix.mulVec G fun k => φ (x k) with hι
   have ι_add : ∀ x y, ι (x + y) = ι x + ι y := by
     intro x y
-    simp only [hι, Pi.add_apply, map_add]
+    simp only [hι, Pi.add_apply, map_add (f := _)]
     rw [← Matrix.mulVec_add]
     rfl
   have ι_smul : ∀ (c : K) x, ι (c • x) = φ c • ι x := by
@@ -203,7 +203,7 @@ theorem dual_baseChange : ∀ (K K' : Type) [Field K] [NumberField K] [StarRing 
     | add y₁ y₂ _ _ h₁ h₂ =>
       obtain ⟨c₁, hc₁⟩ := h₁
       obtain ⟨c₂, hc₂⟩ := h₂
-      exact ⟨c₁ + c₂, by rw [map_add, map_add, LinearMap.add_apply, hc₁, hc₂]⟩
+      exact ⟨c₁ + c₂, by rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, hc₁, hc₂]⟩
     | smul r y _ h =>
       obtain ⟨c, hc⟩ := h
       refine ⟨Formalism.DivisionValues.cO K' r * c, ?_⟩

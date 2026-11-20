@@ -25,7 +25,7 @@ theorem mt_one'' (V : HSp D) : mt V 1 = 1 := by
 theorem cA_cA'' (x : AE D) : cA D (cA D x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul a e =>
     show (a ⊗ₜ[D.host.F] D.sp.cm.sig (D.sp.cm.sig e)) = _
     rw [show D.sp.cm.sig (D.sp.cm.sig e) = e from star_star e]

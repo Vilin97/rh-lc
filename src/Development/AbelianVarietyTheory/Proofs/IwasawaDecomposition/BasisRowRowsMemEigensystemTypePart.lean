@@ -62,7 +62,7 @@ theorem eq_zero_of_mem_iSup_eig {M : Type} [AddCommGroup M] [Module ℂ M] {ι �
     have hfx : f (y + z) = (evc k - ev a k) • (y + z) := by
       rw [hf, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply, hEc k _ hxc, sub_smul]
     have hmem : (evc k - ev a k) • (y + z) ∈ ⨆ b ∈ S, E b := by
-      rw [← hfx, map_add, hfy, zero_add]
+      rw [← hfx, map_add (f := _), hfy, zero_add]
       exact hfz
     have h0 := ih' _ (Ec.smul_mem _ hxc) hmem
     rcases smul_eq_zero.1 h0 with h | h

@@ -34,7 +34,7 @@ private theorem intAt_add_columns {a b : E} (ha : IntAt P a) (hb : IntAt P b) : 
   · rcases P.isPrime.mem_or_mem hm with h1 | h1
     · exact hs h1
     · exact hs' h1
-  · simp only [map_add, map_mul]
+  · simp only [map_add (f := _), map_mul]
     linear_combination (algebraMap (𝓞 E) E s') * h + (algebraMap (𝓞 E) E s) * h'
 
 private theorem intAt_zero_columns : IntAt P (0 : E) :=

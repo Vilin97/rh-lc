@@ -461,7 +461,7 @@ theorem lattices_of_tie (t : OnTie h fw hinj EX p ι wL wF nT O v i z act inc �
         intro a e
         obtain ⟨b, rfl⟩ := hb.2 b
         obtain ⟨c, rfl⟩ := hb.2 c
-        rw [hb.1 (e.trans (map_add _ _ _).symm), map_add]
+        rw [hb.1 (e.trans (map_add _ _ _).symm), map_add (f := _)]
         exact Submodule.add_mem _ (ib _ rfl) (ic _ rfl)
       | smul r b _ ib =>
         intro a e

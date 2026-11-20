@@ -33,7 +33,7 @@ theorem liftT_smul (v : Pl F) (t : Fv F v) (y : Fv F v ⊗[F] E) :
   | zero => simp
   | tmul a e =>
     rw [TensorProduct.smul_tmul', liftT_tmul, liftT_tmul, smul_eq_mul, liftV_mul, TensorProduct.smul_tmul', smul_eq_mul]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 theorem evT_smul (v : Pl F) (a : AF F) (x : AE F E) : evT E v (a • x) = evFin F v a • evT E v x := by
   induction x using TensorProduct.induction_on with
@@ -42,7 +42,7 @@ theorem evT_smul (v : Pl F) (a : AF F) (x : AE F E) : evT E v (a • x) = evFin 
     rw [TensorProduct.smul_tmul', smul_eq_mul]
     show evFin F v (a * b) ⊗ₜ[F] e = evFin F v a • (evFin F v b ⊗ₜ[F] e)
     rw [map_mul, TensorProduct.smul_tmul', smul_eq_mul]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 theorem smul_mem {d : ℕ} {W : Spc F E d} {v : Pl F} {t : Fv F v} (ht : t ∈ v.adicCompletionIntegers F)
     {z : Fin d → AE F E} (hz : z ∈ latAt W v) : GlobalTheory.LatVac.liftV v t • z ∈ latAt W v := by
@@ -154,7 +154,7 @@ theorem latV_le {d : ℕ} {W : Spc F E d} {v : Pl F} {p : ℕ} (hp : (p : 𝓞 F
   have hu' : u = f (fun i => evT E v (y i)) + (p : v.adicCompletionIntegers F) • fun i => evT E v (y' i) := by
     funext i
     have := congrArg (fun z => evT E v (z i)) e
-    simp only [Pi.add_apply, Pi.smul_apply, map_add, map_nsmul, evT_liftT] at this
+    simp only [Pi.add_apply, Pi.smul_apply, map_add (f := _), map_nsmul, evT_liftT] at this
     rw [this, Pi.add_apply, Pi.smul_apply, Nat.cast_smul_eq_nsmul]
     rfl
   rw [hu']
@@ -241,7 +241,7 @@ theorem mulVec_surj {d : ℕ} {W : Spc F E d} (hL : W.L.IsLattice E) (v : Pl F)
   let S : Submodule E (Fin d → E) :=
     { carrier := {x | oneT v d x ∈ T}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add] at ha hb ⊢
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at ha hb ⊢
         exact add_mem ha hb
       zero_mem' := by
         simp only [Set.mem_setOf_eq, map_zero]
@@ -324,7 +324,7 @@ theorem exists_inv_keeps_latAt : ∀ (F E : Type) [Field F] [NumberField F] [Fie
     ((↑hc.unit⁻¹ : AF F) * s) • (1 : Matrix (Fin d) (Fin d) (AE F E)) + Nv.map (liftT E v)
   have hM'v : M'.map (evT E v) = Nv := by
     ext i j
-    simp only [M', Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add, evT_smul, map_mul, hs0,
+    simp only [M', Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _), evT_smul, map_mul, hs0,
       mul_zero, zero_smul, zero_add, evT_liftT]
   have hsM : s • M = (s * c) • (1 : Matrix (Fin d) (Fin d) (AE F E)) := by
     have := hMc s hs0

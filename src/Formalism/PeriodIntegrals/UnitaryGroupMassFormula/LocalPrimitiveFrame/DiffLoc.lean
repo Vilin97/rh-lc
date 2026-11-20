@@ -46,7 +46,7 @@ theorem DiffLoc_span_le (Q : Submodule (v.adicCompletionIntegers F) (Fv F v ⊗[
   induction hx using Submodule.span_induction with
   | mem x hx => exact hT x hx
   | zero => rw [SetLike.mem_coe, map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [SetLike.mem_coe, map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [SetLike.mem_coe, map_add (f := _)]; exact add_mem hx hy
   | smul o x _ hx => rw [SetLike.mem_coe, Algebra.smul_def, map_mul]; exact hQ o _ hx
 
 theorem DiffLoc_frac_closed (I : FractionalIdeal (nonZeroDivisors (𝓞 E)) E) :

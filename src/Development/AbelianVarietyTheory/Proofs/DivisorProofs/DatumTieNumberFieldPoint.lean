@@ -35,7 +35,7 @@ theorem hom_ext_padicIncl {σ σ' : ℤ_[p] ⊗[ℤ] Λ →+* O}
   refine RingHom.ext fun x => ?_
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul r a =>
     rw [tmul_eq_algebraMap_mul, map_mul, map_mul, hom_algebraMap_padic, hom_algebraMap_padic]
     exact congrArg _ (RingHom.congr_fun h a)
@@ -61,7 +61,7 @@ theorem mem_eig_iff_padicIncl {C : Type} [Field C] [Algebra O C] {h : ℕ}
   induction g using TensorProduct.induction_on with
   | zero => simp
   | add x y hx hy =>
-    rw [map_add, Matrix.map_add _ (map_add _), Matrix.add_mulVec, hx, hy, map_add, map_add, add_smul]
+    rw [map_add (f := _), Matrix.map_add _ (map_add _), Matrix.add_mulVec, hx, hy, map_add (f := _), map_add (f := _), add_smul]
   | tmul r a =>
     have e : (padicToO p O r • ρ (padicIncl p Λ a)).map (algebraMap O C) =
         algebraMap O C (padicToO p O r) • (ρ (padicIncl p Λ a)).map (algebraMap O C) := by
@@ -181,7 +181,7 @@ theorem map_latTQuot (ht : IsTie P D (padicIncl p Λ) φ) {J : Type} [DecidableE
     have e : φ (EigenSplit.proj hτ P.actV i t) =
         φ t - ∑ k ∈ Finset.univ.erase i, φ (EigenSplit.proj hτ P.actV k t) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [eq_sub_iff_add_eq, ← map_sum, ← map_add,
+        rw [eq_sub_iff_add_eq, ← map_sum, ← map_add (f := _),
         Finset.add_sum_erase _ (fun k => EigenSplit.proj hτ P.actV k t) (Finset.mem_univ i),
         EigenSplit.sum_proj]
     rw [e]
@@ -199,7 +199,7 @@ theorem map_latTQuot (ht : IsTie P D (padicIncl p Λ) φ) {J : Type} [DecidableE
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hy2
     obtain ⟨a, rfl⟩ := φ.surjective a
     obtain ⟨b, rfl⟩ := φ.surjective b
-    have h1 : a + b ∈ P.eigV (τ i) := hσ ▸ (mem_eigV_iff ht σ _).2 (by rw [map_add]; exact hy1)
+    have h1 : a + b ∈ P.eigV (τ i) := hσ ▸ (mem_eigV_iff ht σ _).2 (by rw [map_add (f := _)]; exact hy1)
     have h2 : (⨆ s : {s : ℤ_[p] ⊗[ℤ] Λ →+* O // s ≠ σ}, eig C (actT D) s.1) ≤
         LinearMap.ker (EigenSplit.proj hτ P.actV i ∘ₗ φ.symm.toLinearMap) := by
       refine iSup_le fun s z hz => ?_
@@ -213,7 +213,7 @@ theorem map_latTQuot (ht : IsTie P D (padicIncl p Λ) φ) {J : Type} [DecidableE
     have h3 : EigenSplit.proj hτ P.actV i b = 0 := by simpa using h2 hb
     refine ⟨a + b, ⟨a, (mem_latT_iff_incl ht a).2 ha, ?_⟩, map_add φ a b⟩
     change EigenSplit.proj hτ P.actV i a = _
-    rw [← EigenSplit.proj_of_mem hτ h1, map_add, h3, add_zero]
+    rw [← EigenSplit.proj_of_mem hτ h1, map_add (f := _), h3, add_zero]
 
 end Comparison₂
 

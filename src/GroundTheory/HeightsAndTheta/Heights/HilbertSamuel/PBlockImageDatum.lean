@@ -30,7 +30,7 @@ theorem eval_blockSubst {J : Type} (k₀ : K) (M : Matrix J (ι k₀) ℤ) (f : 
       eval (blockMapC k₀ M z) (map (Int.castRingHom ℂ) f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [blockSubst]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p j hp =>
     simp only [map_mul, hp]
     congr 1
@@ -43,7 +43,7 @@ theorem mConeMap_blockSubst (hB : IsBlockImage y k₀ M N x) (f : MvPolynomial (
     mConeMap y (blockSubst k₀ M f) = Polynomial.aeval (X k₀ : MvPolynomial K Ω) (coneMap ℤ x f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [blockSubst, coneMap, mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p j hp =>
     simp only [map_mul, hp]
     congr 1

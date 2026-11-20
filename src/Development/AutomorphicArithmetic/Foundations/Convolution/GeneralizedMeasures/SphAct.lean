@@ -310,7 +310,7 @@ private theorem core (hm : m.real (integralGL (w.adicCompletion K) n : Set (GL (
     simp [atPl, hev.const]
   | add p q hp hq =>
     intro v
-    rw [map_add, add_smul, Submodule.coe_add, hp, hq]
+    rw [map_add (f := _), add_smul, Submodule.coe_add, hp, hq]
     simp [atPl]
   | mul_X p i ih =>
     intro v

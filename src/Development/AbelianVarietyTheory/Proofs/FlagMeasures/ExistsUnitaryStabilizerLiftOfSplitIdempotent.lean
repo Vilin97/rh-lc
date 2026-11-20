@@ -319,7 +319,7 @@ theorem exists_unitary_lift : ∀ (A : Type) [CommRing A] (s : A →+* A) (S : S
       apply Subtype.ext
       change glue s J ε (F N) (F N') *ᵥ (y : Fin n → A) = _
       rw [hglue, hz]; rfl
-    rw [this, map_add, map_add, map_smulₛₗ, map_smulₛₗ, hcz, hN, hrε']
+    rw [this, map_add (f := _), map_add (f := _), map_smulₛₗ, map_smulₛₗ, hcz, hN, hrε']
     simp [hrε, hrε']
   · intro y hy
     refine ⟨-y + F N *ᵥ y + adj s J (F N') *ᵥ y,

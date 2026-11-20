@@ -74,7 +74,7 @@ theorem relation_map_comm_transvection (c : ι) (i k : Fin (d.D + 1)) (hik : i �
     change _ = trv (R := Ω c) (D := d.D) (N := d.N) i k Polynomial.X (φ a)
     rw [hφtrv a]
     by_cases h1 : a = i
-    · simp only [h1, eq_self_iff_true, if_true, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C,
+    · simp only [h1, eq_self_iff_true, if_true, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C,
         Polynomial.map_X]
       rfl
     · simp only [h1, if_false, add_zero, Polynomial.map_C]

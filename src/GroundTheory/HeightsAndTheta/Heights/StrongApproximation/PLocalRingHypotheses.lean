@@ -34,7 +34,7 @@ theorem LocalRingHypotheses.proof : LocalRingHypotheses.Statement := by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rw [htmul, htmul, hcc]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
   obtain ⟨α, hα⟩ : ∃ α, c α ≠ α := by
     by_contra h
@@ -92,7 +92,7 @@ theorem LocalRingHypotheses.proof : LocalRingHypotheses.Statement := by
     constructor
     · intro hx
       obtain ⟨a, b, rfl⟩ := hdecomp x
-      rw [map_add, map_mul, AlgHom.commutes, AlgHom.commutes, hσt] at hx
+      rw [map_add (f := _), map_mul, AlgHom.commutes, AlgHom.commutes, hσt] at hx
       have h2b : algebraMap _ (Kv E v) (2 * b) * t = 0 := by
         rw [map_mul, map_ofNat]
         linear_combination -hx

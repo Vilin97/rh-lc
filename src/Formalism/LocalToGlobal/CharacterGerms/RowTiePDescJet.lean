@@ -26,7 +26,7 @@ theorem HiOrd.mul_left {K : ℕ} {g : PS k n d} (h : HiOrd K g) (a : PS k n d) :
   refine Finset.sum_eq_zero fun pq hpq => ?_
   have hpq' : pq.1 + pq.2 = μ := Finset.HasAntidiagonal.mem_antidiagonal.1 hpq
   have h2 : Finsupp.degree pq.2 < K :=
-    lt_of_le_of_lt (by rw [← hpq', map_add]; exact Nat.le_add_left _ _) hμ
+    lt_of_le_of_lt (by rw [← hpq', map_add (f := _)]; exact Nat.le_add_left _ _) hμ
   rw [h _ h2, mul_zero]
 
 theorem HiOrd.sum {K : ℕ} {α : Type} (s : Finset α) (g : α → PS k n d) (h : ∀ i ∈ s, HiOrd K (g i)) :
@@ -39,7 +39,7 @@ theorem HiOrd.sum {K : ℕ} {α : Type} (s : Finset α) (g : α → PS k n d) (h
 theorem HiOrd.deriv {K : ℕ} {g : PS k n d} (h : HiOrd (K + 1) g) (i : Fin n × Fin d) :
     HiOrd K (MvPowerSeries.pderiv (R := k) i g) := by
   intro μ hμ
-  rw [MvPowerSeries.coeff_pderiv, h _ (by rw [map_add, Finsupp.degree_single]; omega), zero_mul]
+  rw [MvPowerSeries.coeff_pderiv, h _ (by rw [map_add (f := _), Finsupp.degree_single]; omega), zero_mul]
 
 theorem HiOrd.dofN {K : ℕ} {g : PS k n d} (h : HiOrd (K + 1) g) (F : Fin d → PS k 2 d) (b : Fin n)
     (u : Fin d → k) : HiOrd K (DofN F b u g) := by
@@ -87,7 +87,7 @@ theorem const_dpolyN_eq_zero (F : Fin d → PS k 2 d) {ι : Type} [Fintype ι] (
 
 theorem dofN_add (F : Fin d → PS k 2 d) (b : Fin n) (u : Fin d → k) (f g : PS k n d) :
     DofN F b u (f + g) = DofN F b u f + DofN F b u g := by
-  simp only [DofN, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [DofN, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem dofN_smul (F : Fin d → PS k 2 d) (b : Fin n) (u : Fin d → k) (c : k) (f : PS k n d) :
     DofN F b u (c • f) = c • DofN F b u f := by
@@ -138,7 +138,7 @@ def nabL (F : Fin d → PS k 2 d) {ι : Type} [Fintype ι] (cp : ι → Fin n) (
     (P : MvPolynomial ι k) (G : PS k n d) : PS k n d →ₗ[k] k where
   toFun f := constantCoeff (DpolyN F cp u P (f * G))
   map_add' f g := by
-    rw [add_mul, dpolyN_add, map_add]
+    rw [add_mul, dpolyN_add, map_add (f := _)]
   map_smul' c f := by
     rw [smul_mul_assoc, dpolyN_smul, ← coeff_zero_eq_constantCoeff_apply, ← coeff_zero_eq_constantCoeff_apply,
       map_smul]
@@ -176,7 +176,7 @@ theorem nabL_trunc (F : Fin d → PS k 2 d) {ι : Type} [Fintype ι] (cp : ι �
     rw [mul_comm]
     exact const_dpolyN_eq_zero F cp u P ((hiOrd_sub_trunc f P.totalDegree).mul_left G)
   have hsplit : nabL F cp u P G f = nabL F cp u P G (f - T) + nabL F cp u P G T := by
-    rw [← map_add, sub_add_cancel]
+    rw [← map_add (f := _), sub_add_cancel]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [hsplit, h0, zero_add, hTdef, coe_eq_sum, map_sum]
   simp only [map_smul, smul_eq_mul]

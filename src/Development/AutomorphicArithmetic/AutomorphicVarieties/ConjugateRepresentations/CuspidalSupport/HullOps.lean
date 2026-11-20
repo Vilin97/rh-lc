@@ -26,7 +26,7 @@ private theorem aut_cap (t : E →+* ℂ) (u : ℂ) (φ : Sm E a) (h : IsAutForm
   obtain ⟨ψ, rfl⟩ := Cm.mem_range_ofAut.2 h
   refine Cm.mem_range_ofAut.1 ⟨GroundTheory.Automorphic.AutomorphicForm.uActionAF E a p ψ +
     Complex.I • GroundTheory.Automorphic.AutomorphicForm.uActionAF E a q ψ, ?_⟩
-  rw [e, map_add, map_smul]
+  rw [e, map_add (f := _), map_smul]
   rfl
 
 private theorem smEq_fin (g : GL (Fin a) (Af E)) (φ : Sm E a) :

@@ -29,7 +29,7 @@ theorem hasRes_add {P : HeightOneSpectrum (𝓞 E)} {a b : P.adicCompletion E} {
   have e : a + b - algebraMap E (P.adicCompletion E) (algebraMap (𝓞 E) E (r + s)) =
       (a - algebraMap E (P.adicCompletion E) (algebraMap (𝓞 E) E r)) +
         (b - algebraMap E (P.adicCompletion E) (algebraMap (𝓞 E) E s)) := by
-    rw [map_add, map_add]; ring
+    rw [map_add (f := _), map_add (f := _)]; ring
   rw [e]
   exact (Valuation.map_add _ _ _).trans_lt (max_lt hr hs)
 

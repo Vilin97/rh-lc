@@ -79,11 +79,11 @@ theorem UpperTheory.Gal.W2.Seed.pVecCoord :
   · intro w hw c v
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, smul_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), smul_add]
     | tmul r u =>
       induction u using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => rw [TensorProduct.tmul_add, map_add, map_add, hx, hy, map_add, smul_add]
+      | add x y hx hy => rw [TensorProduct.tmul_add, map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), smul_add]
       | tmul q y =>
         let y' : Fin n → 𝓞 E := y
         have key : UpperTheory.Gal.Int.Geo.mulF S.D c (r ⊗ₜ[ℚ] (q ⊗ₜ[ℤ] y)) =

@@ -51,7 +51,7 @@ theorem swap_mem_iff (e : TensorProduct D.host.F (Af D.host.F) D.host.E) (c : Fo
     induction e' using TensorProduct.induction_on with
     | zero => rfl
     | tmul a x => rfl
-    | add a b ha hb => rw [RingHom.map_add, map_add (Algebra.TensorProduct.comm D.host.F D.host.E (IsDedekindDomain.FiniteAdeleRing (𝓞 D.host.F) D.host.F)), ha, hb]
+    | add a b ha hb => rw [RingHom.map_add (f := _), map_add (Algebra.TensorProduct.comm D.host.F D.host.E (IsDedekindDomain.FiniteAdeleRing (𝓞 D.host.F) D.host.F)), ha, hb]
   rw [e1, h]
   rfl
 

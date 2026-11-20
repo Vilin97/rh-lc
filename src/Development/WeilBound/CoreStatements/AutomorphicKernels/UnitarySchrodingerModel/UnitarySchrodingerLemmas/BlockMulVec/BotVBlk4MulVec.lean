@@ -171,7 +171,7 @@ theorem hwFin : PositivityTheory.PfSWUS.SwFockk.HWFin := by
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul x y => rfl
   have hdetinv : ((a⁻¹ : GL (Fin n) (AE D)).1).det = (((Matrix.GeneralLinearGroup.det a)⁻¹ : (AE D)ˣ) : AE D) :=
     congrArg Units.val (map_inv Matrix.GeneralLinearGroup.det a)

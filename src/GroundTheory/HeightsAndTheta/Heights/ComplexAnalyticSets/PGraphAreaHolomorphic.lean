@@ -38,7 +38,7 @@ theorem adjoint_comp_self_of_norm {E H K : Type*} [NormedAddCommGroup E] [InnerP
   refine LinearMap.ext fun v => ext_inner_right ℝ fun w => ?_
   simp only [LinearMap.comp_apply, LinearMap.add_apply, Module.End.one_apply, inner_add_left,
     LinearMap.adjoint_inner_left]
-  simp only [real_inner_eq_norm_add_mul_self_sub_norm_mul_self_sub_norm_mul_self_div_two, ← map_add]
+  simp only [real_inner_eq_norm_add_mul_self_sub_norm_mul_self_sub_norm_mul_self_div_two, ← map_add (f := _)]
   have h1 := h (v + w)
   have h2 := h v
   have h3 := h w

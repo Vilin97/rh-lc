@@ -21,7 +21,7 @@ theorem translate_lift_linear_isometry : ∀ {D : D7} {G : Type} [Group G] [Fint
   · intro y z
     apply hinj
     funext h
-    simp only [map_add, Pi.add_apply, hS, smul_add]
+    simp only [map_add (f := _), Pi.add_apply, hS, smul_add]
   · intro a y
     apply hinj
     funext h

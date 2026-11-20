@@ -153,11 +153,11 @@ theorem trF_comm (a b : Mx D r r) : trF a b = trF b a := by
 
 theorem trF_add_left (a a' b : Mx D r r) : trF (a + a') b = trF a b + trF a' b := by
   unfold trF
-  rw [Matrix.add_mul, Matrix.trace_add, map_add]
+  rw [Matrix.add_mul, Matrix.trace_add, map_add (f := _)]
 
 theorem trF_add_right (a b b' : Mx D r r) : trF a (b + b') = trF a b + trF a b' := by
   unfold trF
-  rw [Matrix.mul_add, Matrix.trace_add, map_add]
+  rw [Matrix.mul_add, Matrix.trace_add, map_add (f := _)]
 
 theorem trF_adj (a b : Mx D r r) : trF (adj a) (adj b) = trF a b := by
   have h : Matrix.trace (adj a * adj b) = cA D (Matrix.trace (b * a)) := by

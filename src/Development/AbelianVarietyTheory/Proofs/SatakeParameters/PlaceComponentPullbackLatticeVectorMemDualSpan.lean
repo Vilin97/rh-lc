@@ -42,7 +42,7 @@ theorem prV_pullV_mem_latS_dual : ∀ {D : D7} (i : ℕ) (hi : i ≤ D.R.m) {T f
         (fun k => prV (E := D.host.E) v (pullV (F := D.host.F) x.1 a k)) +
           (fun k => prV (E := D.host.E) v (pullV (F := D.host.F) x.1 b k)) := by
       ext k
-      rw [Pi.add_apply, pullV_add, map_add]
+      rw [Pi.add_apply, pullV_add, map_add (f := _)]
     rw [this]; exact add_mem ha hb
   | smul c a _ ha =>
     have hc : inclE (F := D.host.F) (v.adicCompletion D.host.F) (algebraMap (𝓞 D.host.E) D.host.E c) ∈ intV D.host.E v :=

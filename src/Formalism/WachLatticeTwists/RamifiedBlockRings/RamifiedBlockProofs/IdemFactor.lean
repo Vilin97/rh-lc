@@ -50,7 +50,7 @@ theorem eCore {K : Type} [Field K] {S : Type} [Fintype S] [DecidableEq S] (A : M
       have : q = Polynomial.C δ + (Polynomial.X - Polynomial.C (α 0)) * h := by rw [← hh]; ring
       calc q * q = (Polynomial.C δ + (Polynomial.X - Polynomial.C (α 0)) * h) * q := by rw [← this]
         _ = _ := by ring
-    rw [hEA, ← map_mul, h3, map_add, map_mul, map_mul _ h, hCH, mul_zero, add_zero,
+    rw [hEA, ← map_mul, h3, map_add (f := _), map_mul, map_mul _ h, hCH, mul_zero, add_zero,
       Polynomial.aeval_C, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul]
   refine ⟨hsq, ?_, hAE, hδ⟩
   let φ : Module.End K (S → K) := Matrix.toLin' A

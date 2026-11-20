@@ -182,7 +182,7 @@ theorem witness_congr : ∀ (D : D7) (Z : LocDat D) (u u' : D.what₂.Word) (F0 
         (𝓞 D.host.E)) a b := by
       rw [Matrix.sub_apply, sub_add_cancel]
     rw [h1, h2, hy]
-    simp only [RingOfIntegers.coe_eq_algebraMap, map_add, map_mul, map_natCast, add_sub_cancel_right]
+    simp only [RingOfIntegers.coe_eq_algebraMap, map_add (f := _), map_mul, map_natCast, add_sub_cancel_right]
   obtain ⟨-, -, -, hO, -, hsp⟩ := Z.agree p
   have hyO : (D.s.atP p).ιE (y : D.host.E) ∈ (Z.M p).L.O := by
     rw [hO, (D.s.atP p).O_def]

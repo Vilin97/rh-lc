@@ -97,7 +97,7 @@ theorem hermitian_dual_lattice_identity : PerfectPairingQuotient (E := E) := by
         map_add' := by
           intro a b
           rw [← map_add φ]; congr 1; ext1
-          simp only [map_add]
+          simp only [map_add (f := _)]
           push_cast
           abel }
     obtain ⟨x, hxΛ, hx⟩ := X.EF_perf ψ

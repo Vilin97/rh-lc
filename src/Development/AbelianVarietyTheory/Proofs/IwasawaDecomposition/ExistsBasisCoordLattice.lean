@@ -47,7 +47,7 @@ theorem exists_basis_coord_lattice {O V : Type} [CommRing O] [IsDomain O] [IsPri
     | zero => intro s; exact ⟨0, by simp⟩
     | add x y _ _ hx hy =>
       intro s
-      rw [map_add, Finsupp.add_apply]
+      rw [map_add (f := _), Finsupp.add_apply]
       exact add_mem (hx s) (hy s)
     | smul a x _ hx =>
       intro s

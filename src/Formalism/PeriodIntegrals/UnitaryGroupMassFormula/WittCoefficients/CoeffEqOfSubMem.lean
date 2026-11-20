@@ -94,7 +94,7 @@ noncomputable def δ (x : WittVector p k) : WittVector p k := WittVector.map (fr
 theorem δ_add (a b : WittVector p k) : δ (a + b) = δ a + δ b := by
   show WittVector.map (frobenius k p) (a + b) - (a + b) =
     (WittVector.map (frobenius k p) a - a) + (WittVector.map (frobenius k p) b - b)
-  rw [map_add]
+  rw [map_add (f := _)]
   abel
 
 theorem δ_mem {n : ℕ} {z : WittVector p k} (hz : z ∈ I n) : δ z ∈ I n := by

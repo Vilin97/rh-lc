@@ -77,7 +77,7 @@ theorem symplOH_snd_eq_zero (u w : MO S T) (hu : u.map (finPart D) = 0) : sndA D
 def sndSympl (w : MO S T) : MO S T →+ Af D.host.F where
   toFun u := sndA D.host.F (symplO S T u w)
   map_zero' := by rw [symplO_zero_left, map_zero]
-  map_add' u u' := by rw [symplO_add_left, map_add]
+  map_add' u u' := by rw [symplO_add_left, map_add (f := _)]
 
 theorem heisStable : HeisStable D := by
   intro ψ hψ S T w f hf
@@ -118,7 +118,7 @@ theorem heisStable : HeisStable D := by
     let s : (Fin k → ℝ) →+ Ainf D.host.F :=
       { toFun := fun t => fstA D.host.F (symplOH S T (L t) w)
         map_zero' := by simp only [map_zero]; unfold symplOH; rw [symplO_zero_left, mul_zero, map_zero]
-        map_add' := fun t t' => by simp only [map_add]; rw [symplOH_add_left, map_add] }
+        map_add' := fun t t' => by simp only [map_add (f := _)]; rw [symplOH_add_left, map_add (f := _)] }
     have hs : Continuous s := continuous_fst.comp ((cont_symplOH_left S T w).comp hL)
     have e : (fun t => heisO ψ S T w f (x + L t)) =
         fun t => ψ (symplOH S T x w) * ψ (pairA D.host.F (s t) 0) * f (x + w + L t) := by

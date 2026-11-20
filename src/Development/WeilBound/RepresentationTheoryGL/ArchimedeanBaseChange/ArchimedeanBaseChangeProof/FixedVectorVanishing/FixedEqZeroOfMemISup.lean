@@ -61,7 +61,7 @@ theorem sum_fixed_eq_zero (ρ : Representation ℂ G V) (σ : Representation ℂ
         intro g hg
         apply hA
         have h1 := hfix g hg
-        rw [map_add] at h1
+        rw [map_add (f := _)] at h1
         have h2 : ρ g (f a x) - f a x = z - ρ g z := by
           rw [sub_eq_sub_iff_add_eq_add, h1, add_comm]
         rw [map_sub, hf, h2]
@@ -71,7 +71,7 @@ theorem sum_fixed_eq_zero (ρ : Representation ℂ G V) (σ : Representation ℂ
         have h1 := hfix g hg
         have h2 := hd g hg
         rw [map_sub, sub_eq_zero, hf] at h2
-        rw [map_add, h2] at h1
+        rw [map_add (f := _), h2] at h1
         exact add_left_cancel h1
       have hz0 : z = 0 := ih z hz hzfix
       subst hz0

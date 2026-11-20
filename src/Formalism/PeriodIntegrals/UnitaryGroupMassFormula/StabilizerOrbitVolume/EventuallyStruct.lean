@@ -22,7 +22,7 @@ theorem tmap_sigR (φ : R →ₐ[F] S) (x : R ⊗[F] E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem tmap_inclR (φ : R →ₐ[F] S) (e : E) :
     Algebra.TensorProduct.map φ (AlgHom.id F E) (inclR R e) = inclR S e := by
@@ -76,7 +76,7 @@ theorem tmap_comp {T : Type} [CommRing T] [Algebra F T] (f : R →ₐ[F] S) (g :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Gen
 

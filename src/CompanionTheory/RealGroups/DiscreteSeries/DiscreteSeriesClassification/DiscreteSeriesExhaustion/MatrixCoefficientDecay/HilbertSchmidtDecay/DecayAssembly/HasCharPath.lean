@@ -68,7 +68,7 @@ theorem assembly_of : Assembly := by
         · intro k g t hg
           have hd := line_deriv hRR hK χ ss hU (A j) (hgrad j).1 (hexp j) q.1
             (wv (path ⟨D, E, hK.gl⟩ χ ss) (A j) zs q.2 ((k : ℕ) + 1)) g hg t
-          rw [wv_succ _ (A j) zs q.2 k k.isLt, map_add, map_smul] at hd
+          rw [wv_succ _ (A j) zs q.2 k k.isLt, map_add (f := _), map_smul] at hd
           simpa only [Fin.val_succ, Fin.val_castSucc, LinearMap.add_apply, LinearMap.smul_apply, Pi.add_apply,
             Pi.smul_apply, smul_eq_mul] using hd
         · obtain ⟨m', Y, v, hY, hpu⟩ := hp j q.2

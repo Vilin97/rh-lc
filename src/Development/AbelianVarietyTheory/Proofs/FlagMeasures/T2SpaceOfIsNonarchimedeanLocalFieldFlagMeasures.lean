@@ -112,7 +112,7 @@ theorem locE_exists_coords [CharZero F] (L : LocE F E) :
     rw [hφ] at hp
     have hc : algebraMap F E p.1 - algebraMap F E p.2 * d = 0 := by
       have h' := congrArg L.cj hp
-      rw [map_add, map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hcj, map_zero] at h'
+      rw [map_add (f := _), map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hcj, map_zero] at h'
       rw [← h']; ring
     have hb : algebraMap F E (2 * p.2 * D) = 0 := by
       rw [map_mul, map_mul, ← hdd, map_ofNat]
@@ -145,7 +145,7 @@ theorem locE_exists_coords [CharZero F] (L : LocE F E) :
     have hcx : (L.cj.toAlgHom.restrictScalars 𝒪[F]) (algebraMap F E p.1 + algebraMap F E p.2 * d) =
         algebraMap F E p.1 - algebraMap F E p.2 * d := by
       change L.cj _ = _
-      rw [map_add, map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hcj]; ring
+      rw [map_add (f := _), map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hcj]; ring
     rw [hcx] at hq
     constructor
     · have h' := hp.add hq

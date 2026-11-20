@@ -82,7 +82,7 @@ theorem card_character_n_torsion {n : ℕ} (hn : 0 < n) (hμ : ∀ ζ : PadicAlg
   let Φ : Z1 (charRep (cycK p K n)) → {χ : charGrp (GK p K) // n • χ = 0} := fun f =>
     ⟨⟨AddMonoidHom.mk' (fun a : Additive (GK p K) => zmodToQZ n (f.1 a.toMul)) fun a b => by
         show zmodToQZ n (f.1 (a.toMul * b.toMul)) = _
-        rw [f.2.2, hrho, map_add],
+        rw [f.2.2, hrho, map_add (f := _)],
       ((IsLocallyConstant.iff_continuous _).2 f.2.1).comp (zmodToQZ n)⟩,
      Subtype.ext (AddMonoidHom.ext fun a => by
         show n • zmodToQZ n (f.1 a.toMul) = 0
@@ -102,7 +102,7 @@ theorem card_character_n_torsion {n : ℕ} (hn : 0 < n) (hμ : ∀ ζ : PadicAlg
         rw [this]
         exact χ.2
       refine ⟨⟨f, hlc.continuous, fun g h => zmodToQZ_injective n ?_⟩, ?_⟩
-      · rw [hrho, map_add, hf, hf, hf]
+      · rw [hrho, map_add (f := _), hf, hf, hf]
         exact map_add χ.1 (Additive.ofMul g) (Additive.ofMul h)
       · exact Subtype.ext (Subtype.ext (AddMonoidHom.ext fun a => hf a.toMul))
   rw [← Nat.card_congr (Equiv.ofBijective Φ hΦ), ← Nat.card_congr (Submodule.quotEquivOfEqBot _ hbot).toEquiv,

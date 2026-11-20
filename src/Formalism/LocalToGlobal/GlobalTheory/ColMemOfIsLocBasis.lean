@@ -161,7 +161,7 @@ theorem mem_intSpanAt_iff_map (w : D.what₂.places.Pl) {n : ℕ} (lam : D.what�
       obtain ⟨r, f, hr, hf, rfl⟩ := hq
       exact AddSubgroup.subset_closure ⟨r, f, hr, hf, map_gen D r f⟩
     | zero => rw [map_zero]; exact AddSubgroup.zero_mem _
-    | add q q' _ _ h1 h2 => rw [map_add]; exact AddSubgroup.add_mem _ h1 h2
+    | add q q' _ _ h1 h2 => rw [map_add (f := _)]; exact AddSubgroup.add_mem _ h1 h2
     | neg q _ h1 => rw [map_neg]; exact AddSubgroup.neg_mem _ h1
   · intro hp
     have hle : Formalism.L2.Forms.IntSpan D w lam ≤

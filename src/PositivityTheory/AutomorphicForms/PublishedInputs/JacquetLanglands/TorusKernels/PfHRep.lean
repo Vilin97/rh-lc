@@ -36,7 +36,7 @@ theorem proj {φ : TR.Sm F a} (h0 : φ ≠ 0) (h : φ ∈ ⨆ π : TR.CuspSub F 
       by_cases h3 : ψ = 0
       · exact ih (by rw [← e2, h3, zero_add]; exact h2)
       refine ⟨π, ψ, h1, h3, fun z hz c hc => ?_⟩
-      rw [← e2, map_add, smul_add] at hc
+      rw [← e2, map_add (f := _), smul_add] at hc
       have h4 : z ψ - c • ψ ∈ π.V ⊓ ⨆ π ∈ S, π.V := by
         refine ⟨sub_mem (hz _ π.stable _ h1) (π.V.smul_mem c h1), ?_⟩
         have : z ψ - c • ψ = c • ψ' - z ψ' := by linear_combination (norm := module) hc
@@ -206,7 +206,7 @@ theorem uop_map {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [M
   have hd : ∀ u, GeneralLinearGroup.det (aff (atFin w (unif w)) u) = atFin w (unif w) := fun u =>
     Units.ext (by simp [aff, Matrix.det_fin_two])
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [(uopSum F w V ρ c x hx).2 _ hS, (uopSum F w W ρ' c _ hx').2 _ hS, map_add, map_sum, smul_add, Finset.smul_sum]
+    rw [(uopSum F w V ρ c x hx).2 _ hS, (uopSum F w W ρ' c _ hx').2 _ hS, map_add (f := _), map_sum, smul_add, Finset.smul_sum]
   simp only [hf, hd]
   congr 1
   split_ifs

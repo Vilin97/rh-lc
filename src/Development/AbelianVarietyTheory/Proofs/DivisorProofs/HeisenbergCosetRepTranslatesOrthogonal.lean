@@ -34,7 +34,7 @@ theorem mu_tr_eq_smul (ψ0 : AddChar k ℂ)
   simp only [Pi.smul_apply, smul_eq_mul, intInd]
   by_cases h : ∀ i j, (Y + C) i j ∈ 𝒪[k]
   · have e : ψ0 (l Y) = ψ0 (l (-C)) := by
-      calc ψ0 (l Y) = ψ0 (l (Y + C) + l (-C)) := by rw [← map_add]; congr 2; abel
+      calc ψ0 (l Y) = ψ0 (l (Y + C) + l (-C)) := by rw [← map_add (f := _)]; congr 2; abel
         _ = ψ0 (l (-C)) := by rw [AddChar.map_add_eq_mul, hl _ h, one_mul]
     rw [e]
   · rw [Set.indicator_of_notMem (show Y + C ∉ {Y : Matrix (Fin n) (Fin d) k | ∀ i j, Y i j ∈ 𝒪[k]} from h)]
@@ -103,7 +103,7 @@ theorem orth_of_charsep {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace 
   have e2 := mu_tr_eq_smul ψ0 ι hι Tr hTr Mu hMu φ0 hφ0 hι0 _ hl C'
   have hI := inner_eq_mul_inner ψ0 Mu hMuI μ hμ (entryForm c i0 j) _ _ (hTr C φ0 hφ0).1 (hTr C' φ0 hφ0).1 _ _ e1 e2
   have hA : ψ0 (entryForm c i0 j (-C)) * (starRingEnd ℂ) (ψ0 (entryForm c i0 j (-C'))) ≠ 1 := by
-    rw [← Complex.inv_eq_conj (hcs.1 _), ← AddChar.map_neg_eq_inv, ← AddChar.map_add_eq_mul, ← map_neg, ← map_add,
+    rw [← Complex.inv_eq_conj (hcs.1 _), ← AddChar.map_neg_eq_inv, ← AddChar.map_add_eq_mul, ← map_neg, ← map_add (f := _),
       neg_neg, neg_add_eq_sub]
     exact hc2
   set I := ∫ y, Tr C φ0 y * (starRingEnd ℂ) (Tr C' φ0 y) ∂μ

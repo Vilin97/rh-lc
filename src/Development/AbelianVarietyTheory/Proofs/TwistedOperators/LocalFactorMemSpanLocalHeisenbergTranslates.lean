@@ -149,7 +149,7 @@ theorem mem_span_local : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : Inf
         rwa [wAt_eq_smul, hy] at h⟩
       map_add' := fun m m' => Subtype.ext (by
         show heisO ψ S T (y : WO S T) ((m : WO S T → ℂ) + m') = heisO ψ S T y m + heisO ψ S T y m'
-        rw [← GlobalTheory.SplitScalar.heisL_apply, map_add, GlobalTheory.SplitScalar.heisL_apply, GlobalTheory.SplitScalar.heisL_apply])
+        rw [← GlobalTheory.SplitScalar.heisL_apply, map_add (f := _), GlobalTheory.SplitScalar.heisL_apply, GlobalTheory.SplitScalar.heisL_apply])
       map_smul' := fun c m => Subtype.ext (by
         show heisO ψ S T (y : WO S T) (c • (m : WO S T → ℂ)) = c • heisO ψ S T y m
         exact GlobalTheory.SplitScalar.heisO_smul ψ S T y c m) }

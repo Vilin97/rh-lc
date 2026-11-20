@@ -58,7 +58,7 @@ theorem cmQuadraticForm_half_add_translation (D : D7) (Λ : AddSubgroup ℂ) (x 
   unfold gl3FieldFirst
   rw [← add_div, ← add_div, ← add_div, ← Complex.add_im, ← Complex.add_im, ← Complex.add_im]
   congr 2
-  simp only [map_add, map_mul, map_natCast, map_ofNat]
+  simp only [map_add (f := _), map_mul, map_natCast, map_ofNat]
   push_cast
   ring
 

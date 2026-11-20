@@ -28,7 +28,7 @@ theorem exists_basis [IsNonarchimedeanLocalField F] [CharZero F] (L : LocE F E) 
     intro s t h
     simp only [Algebra.smul_def, mul_one] at h
     have h' := congrArg L.cj h
-    simp only [map_add, map_mul, AlgEquiv.commutes, map_zero] at h'
+    simp only [map_add (f := _), map_mul, AlgEquiv.commutes, map_zero] at h'
     have ht : algebraMap F E t = 0 := by
       linear_combination e * h - e * h' - algebraMap F E t * hωe
     have hs : algebraMap F E s = 0 := by rw [ht] at h; simpa using h
@@ -46,7 +46,7 @@ theorem exists_basis [IsNonarchimedeanLocalField F] [CharZero F] (L : LocE F E) 
   refine ⟨b, fun x => ⟨fun h => ?_, fun h => ?_⟩, fun x => ?_⟩
   · have h1 := hx x
     have h2 := congrArg L.cj h1
-    simp only [map_add, map_mul, AlgEquiv.commutes] at h2
+    simp only [map_add (f := _), map_mul, AlgEquiv.commutes] at h2
     have h3 : algebraMap F E (b.repr x 1) = (x - L.cj x) * e := by
       linear_combination -e * h1 + e * h2 - algebraMap F E (b.repr x 1) * hωe
     have h4 : algebraMap F E (b.repr x 1) ∈ L.O := by
@@ -69,7 +69,7 @@ theorem exists_basis [IsNonarchimedeanLocalField F] [CharZero F] (L : LocE F E) 
     have h2 := congrArg L.cj h1
     have h3 := hx (x * ω)
     have h4 := congrArg L.cj h3
-    simp only [map_add, map_mul, AlgEquiv.commutes] at h2 h4
+    simp only [map_add (f := _), map_mul, AlgEquiv.commutes] at h2 h4
     generalize algebraMap F E (b.repr x 0) = a at *
     generalize algebraMap F E (b.repr x 1) = c at *
     generalize algebraMap F E (b.repr (x * ω) 0) = a' at *

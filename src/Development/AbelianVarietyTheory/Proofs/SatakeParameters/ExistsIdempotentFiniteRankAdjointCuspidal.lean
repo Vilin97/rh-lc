@@ -61,7 +61,7 @@ theorem adj_of_isCompl {V V' : Type} [AddCommGroup V] [Module ℂ V] [AddCommGro
   calc B (X.projection Y h φ) ψ = B (X.projection Y h φ) (X'.projection Y' h' ψ + Y'.projection X' h'.symm ψ) := by
         rw [eψ]
     _ = B (X.projection Y h φ + Y.projection X h.symm φ) (X'.projection Y' h' ψ) := by
-        rw [map_add, map_add, LinearMap.add_apply, m1, m2]
+        rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, m1, m2]
     _ = _ := by rw [eφ]
 
 theorem idem_adj {G V : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [AddCommGroup V] [Module ℂ V]
@@ -191,7 +191,7 @@ theorem exists_idem_adj : AutomorphicFormsFiniteGL → ∀ (L : Type) [Field L] 
       obtain ⟨n, w, rfl⟩ := hz
       exact Submodule.subset_span ⟨n, cptOn π k w, by rw [map_sub, map_smul, hcomm]⟩
     | zero => simp
-    | add u v _ _ hu hv => rw [map_add]; exact add_mem hu hv
+    | add u v _ _ hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
     | smul c u _ hu => rw [map_smul]; exact Submodule.smul_mem _ c hu
   have hee : ∀ v, e (e v) = e v := fun v => LocGL.idem_of_mem _ _ (LocGL.idem_mem _ _ v)
   have heq : ∀ k v, e (cptOn π k v) = cptOn π k (e v) := by
@@ -199,7 +199,7 @@ theorem exists_idem_adj : AutomorphicFormsFiniteGL → ∀ (L : Type) [Field L] 
     have hd : v - e v ∈ twKer π.finPart K' 1 := by
       rw [← LocGL.idem_eq_zero_iff π.isSmooth_finPart hKc, map_sub, hee, sub_self]
     have hv : v = e v + (v - e v) := by abel
-    conv_lhs => rw [hv, map_add, map_add]
+    conv_lhs => rw [hv, map_add (f := _), map_add (f := _)]
     rw [LocGL.idem_of_mem _ _ (hfixS k _ (LocGL.idem_mem _ _ v)),
       (LocGL.idem_eq_zero_iff π.isSmooth_finPart hKc).2 (hkerS k _ hd), add_zero]
   obtain ⟨heX, heY⟩ := hT e heq
@@ -216,7 +216,7 @@ theorem exists_idem_adj : AutomorphicFormsFiniteGL → ∀ (L : Type) [Field L] 
   have hPTe : ∀ v, PT (e v) = e (PT v) := by
     intro v
     have hv := hPTs v
-    conv_lhs => rw [← hv, map_add, map_add]
+    conv_lhs => rw [← hv, map_add (f := _), map_add (f := _)]
     rw [hPTl _ (heX _ (hPTm v)), hPTr _ (heY _ (Submodule.projection_apply_mem hXY.symm v)), add_zero]
   have hPT2 : ∀ v, PT (PT v) = PT v := fun v => hPTl _ (hPTm v)
   refine ⟨e ∘ₗ PT, ?_, ?_, ?_, ?_⟩

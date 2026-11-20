@@ -33,11 +33,11 @@ theorem altE_swap (hH : IsHerm H) (x y : V) : altE H y x = -altE H x y := by
   simp [altE, hH x y]
 
 theorem chi_add_left (x x' y : V) : chi H (x + x') y = chi H x y * chi H x' y := by
-  simp only [chi, ← Complex.exp_add, altE, map_add, LinearMap.add_apply, add_im]
+  simp only [chi, ← Complex.exp_add, altE, map_add (f := _), LinearMap.add_apply, add_im]
   congr 1; push_cast; ring
 
 theorem chi_add_right (x y y' : V) : chi H x (y + y') = chi H x y * chi H x y' := by
-  simp only [chi, ← Complex.exp_add, altE, map_add, add_im]
+  simp only [chi, ← Complex.exp_add, altE, map_add (f := _), add_im]
   congr 1; push_cast; ring
 
 theorem chi_eq_one_iff (x y : V) : chi H x y = 1 ↔ ∃ m : ℤ, altE H x y = m := by
@@ -63,7 +63,7 @@ theorem int_swap (hH : IsHerm H) {x y : V} (h : ∃ m : ℤ, altE H x y = m) : �
 
 theorem opU_opU (hH : IsHerm H) (x y : V) (F : V → ℂ) (z : V) :
     opU H x (opU H y F) z = cexp (-(Real.pi * I * (altE H x y : ℂ))) * opU H (x + y) F z := by
-  simp only [opU, add_assoc, map_add, LinearMap.add_apply]
+  simp only [opU, add_assoc, map_add (f := _), LinearMap.add_apply]
   rw [mul_assoc, mul_left_comm _ (F _), ← Complex.exp_add, ← Complex.exp_add, sub_swap hH x y]
   congr 2
   ring
@@ -243,7 +243,7 @@ theorem isSemiChar_round (hH : IsHerm H) (s : ℝ) {A : AddSubgroup V} (hint : A
       simp
       ring
     have hs : s / 2 * (H (x + y) (x + y)).re = ((a + b + e + 2 * (k - e) : ℤ) : ℝ) := by
-      simp only [map_add, LinearMap.add_apply, add_re, hH x y, conj_re]
+      simp only [map_add (f := _), LinearMap.add_apply, add_re, hH x y, conj_re]
       rw [altE] at he
       push_cast
       linarith
@@ -337,7 +337,7 @@ theorem discrete_of_selfDual (hH : IsHerm H) {A : AddSubgroup W} (hd : IsSelfDua
           have : |m| < 1 := by exact_mod_cast this
           exact_mod_cast Int.abs_lt_one_iff.1 this
         | zero => simp [altE]
-        | add a b _ _ ha hb => simp only [altE, map_add, add_im] at ha hb ⊢; rw [ha, hb, add_zero]
+        | add a b _ _ ha hb => simp only [altE, map_add (f := _), add_im] at ha hb ⊢; rw [ha, hb, add_zero]
         | neg a _ ha => simp only [altE, map_neg, neg_im] at ha ⊢; rw [ha, neg_zero]
       by_contra hx
       have hx' : (x : W) ≠ 0 := fun h => hx (Subtype.ext h)

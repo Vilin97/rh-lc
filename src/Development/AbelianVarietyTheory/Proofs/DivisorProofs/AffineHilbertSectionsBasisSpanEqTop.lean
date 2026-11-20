@@ -91,7 +91,7 @@ theorem span_gen_eq_top (A B : Type) [CommRing A] [CommRing B] [Algebra A B] (N 
     rw [hι]
     exact Submodule.smul_mem _ _ hn
   · intro a b ha hb
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem ha hb
 
 end GlobalTheory.HilbAff

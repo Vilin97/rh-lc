@@ -59,7 +59,7 @@ theorem second_deriv (B : FB K d O) (h : PS K 2 d) (hc : B.IsCanonGauge K h) (b 
   have hH0 : constantCoeff (ev (n := 3) ![pt K d 0, pt K d 1] h +
       ev (n := 3) ![pt K d 0, pt K d 2] h -
       ev (n := 3) ![pt K d 0, addOf B.G.F (pt K d 1) (pt K d 2)] h) = 0 := by
-    rw [map_sub, map_add, cc_ev' cz01, cc_ev' c02, cc_ev' cA, cc_h hc]
+    rw [map_sub, map_add (f := _), cc_ev' cz01, cc_ev' c02, cc_ev' cA, cc_h hc]
     simp
   have hE := hc.ph2
   rw [FB.toK, map_self, FK_self] at hE
@@ -93,7 +93,7 @@ theorem second_deriv (B : FB K d O) (h : PS K 2 d) (hc : B.IsCanonGauge K h) (b 
     rw [ev_mul czZ, ev_ev czZ cA, e, ev_pt, mul_comm]
     congr 1
     exact ev_pderiv_add (B.G.F j) b
-  rw [hH, ev_mul czZ, B.cocycleRight_zero_thd, one_mul, map_sub, map_add, t1, zero_add, ev_sub czZ, t2, t3]
+  rw [hH, ev_mul czZ, B.cocycleRight_zero_thd, one_mul, map_sub, map_add (f := _), t1, zero_add, ev_sub czZ, t2, t3]
   ring
 
 variable {V : VF K}

@@ -105,14 +105,14 @@ theorem exists_detAt {χ : (AE D)ˣ →* Circle} {P : Finset (Pl D.host.E)} {es 
     GlobalTheory.IdemRes.toEAf_mem_of_finPart (GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← RingHom.map_mul, ha]))
   have hint : ∀ d : AE D, toEAf D d ∈ Formalism.L2.Herm.intAf D.host.F D.host.E →
       toEAf D (a * d + (1 - a)) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := fun d hd => by
-    rw [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
+    rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
     exact mem_aux hai hd
   obtain ⟨x, hx, hx'⟩ := exists_unit ha (det_mul_det_inv V g)
   have i1 : toEAf D (x : AE D) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by rw [hx]; exact hint _ h1
   have i2 : toEAf D ((x⁻¹ : (AE D)ˣ) : AE D) ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := by rw [hx']; exact hint _ h2
   refine ⟨x, hx, hχ x ?_ i1 i2 (mul_of_orth hx hc)
     (fun PP => Matrix.GeneralLinearGroup.det (redFn β PP (finE V g))) fun PP hPP => ?_⟩
-  · rw [hx, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hinf, zero_mul, zero_add, sub_zero]
+  · rw [hx, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hinf, zero_mul, zero_add, sub_zero]
   · have k : es PP * (Formalism.L2.Theta.mt V g).det = es PP * (x : AE D) := by
       rcases hP PP hPP with h | ⟨k1, k2⟩
       · rw [h]; exact (mul_of_idem hx ha).symm

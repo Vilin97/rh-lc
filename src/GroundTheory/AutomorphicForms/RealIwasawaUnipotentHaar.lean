@@ -28,7 +28,7 @@ theorem det_one_add_of_isNilpotent {m K : Type*} [Fintype m] [DecidableEq m] [Fi
 theorem det_one_add_linearMap_of_isNilpotent {K E : Type*} [Field K] [AddCommGroup E] [Module K E]
     [FiniteDimensional K E] {f : E →ₗ[K] E} (hf : IsNilpotent f) : LinearMap.det (1 + f) = 1 := by
   let b := Module.finBasis K E
-  rw [← LinearMap.det_toMatrix b, map_add, LinearMap.toMatrix_one]
+  rw [← LinearMap.det_toMatrix b, map_add (f := _), LinearMap.toMatrix_one]
   apply det_one_add_of_isNilpotent
   obtain ⟨k, hk⟩ := hf
   exact ⟨k, by rw [LinearMap.toMatrix_pow, hk, map_zero]⟩

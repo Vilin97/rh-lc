@@ -166,7 +166,7 @@ theorem cs_aeval {κ : Type} (P : MvPolynomial κ ℤ) {w : κ → CxPts X.str �
     CS (fun z => aeval (fun a => w a z) P) y := by
   induction P using MvPolynomial.induction_on with
   | C a => simpa using cs_const (y := y) (a : ℂ)
-  | add p q hp hq => simpa only [map_add] using hp.add hq
+  | add p q hp hq => simpa only [map_add (f := _)] using hp.add hq
   | mul_X p a hp => simpa only [map_mul, aeval_X] using hp.mul (h a)
 
 theorem cs_ratVal {f : X.Fn} (hf : RegAt (under y) f) : CS (fun z => ratVal f z) y :=

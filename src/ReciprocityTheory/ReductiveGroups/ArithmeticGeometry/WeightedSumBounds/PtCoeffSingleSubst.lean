@@ -34,7 +34,7 @@ def ptIntSer (σ : Type*) : Subring (MvPowerSeries σ C) where
     split_ifs
     · exact Subring.one_mem _
     · exact Subring.zero_mem _
-  add_mem' {f g} hf hg α := by rw [map_add]; exact Subring.add_mem _ (hf α) (hg α)
+  add_mem' {f g} hf hg α := by rw [map_add (f := _)]; exact Subring.add_mem _ (hf α) (hg α)
   zero_mem' α := by rw [map_zero]; exact Subring.zero_mem _
   neg_mem' {f} hf α := by rw [map_neg]; exact Subring.neg_mem _ (hf α)
 
@@ -289,7 +289,7 @@ theorem pt_F_lin (G : LogFGL v d) (a : Fin d) (i : Fin d ⊕ Fin d) :
     | exact HasSubst.of_constantCoeff_zero fun b => constantCoeff_X _
     | exact hasSubst_of_constantCoeff_zero fun b => constantCoeff_X _
   have key := congrArg (coeff (Finsupp.single i 1)) (G.lg_F a)
-  rw [map_add, pt_coeff_single_subst hF G.F_const (G.lg_const a),
+  rw [map_add (f := _), pt_coeff_single_subst hF G.F_const (G.lg_const a),
     pt_coeff_single_subst (hX Sum.inl) (fun b => constantCoeff_X _) (G.lg_const a),
     pt_coeff_single_subst (hX Sum.inr) (fun b => constantCoeff_X _) (G.lg_const a)] at key
   simp only [G.lg_lin, pt_coeff_single_X, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq,

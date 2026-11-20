@@ -34,7 +34,7 @@ theorem rho_id_eq {R R₀ : Type} [CommRing R] [CommRing R₀] {I : Ideal R} (hI
       obtain ⟨i, -, rfl⟩ := hx
       exact e.commutes i
     | zero => exact map_zero e
-    | add x w _ _ hx hw => rw [map_add, hx, hw]
+    | add x w _ _ hx hw => rw [map_add (f := _), hx, hw]
     | smul b x hxm hx =>
       rw [smul_eq_mul, map_mul, hx]
       have := sq0 _ _ (memJ b) hxm

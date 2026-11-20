@@ -49,7 +49,7 @@ theorem polyDeriv_subst [Fintype κ] {F : W → ℂ} (hF : ContDiff ℂ (⊤ : �
   | C a =>
     rw [MvPolynomial.algHom_C]
     exact polyDeriv_C_indep a _ _ F x
-  | add p q hp hq => rw [map_add, I2.polyDeriv_add, I2.polyDeriv_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), I2.polyDeriv_add, I2.polyDeriv_add, hp, hq]
   | mul_X p l hp =>
     have e1 : (fun y => I2.polyDeriv (Φ p) u F y) =
         fun y => I2.polyDeriv p (fun l => ∑ k, s l k • u (j l k)) F y := funext hp

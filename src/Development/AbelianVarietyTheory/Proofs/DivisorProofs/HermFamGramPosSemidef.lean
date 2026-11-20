@@ -26,7 +26,7 @@ section Gram
 variable {K : Type} [Field K] {V : Type} [AddCommGroup V] [Module K V] (h : HermFam K V) (σ : K →+* ℂ)
 
 theorem hermFam_add_left (x y z : V) : h.form σ (x + y) z = h.form σ x z + h.form σ y z := by
-  rw [← h.conj_symm σ z (x + y), h.add_right, map_add, h.conj_symm, h.conj_symm]
+  rw [← h.conj_symm σ z (x + y), h.add_right, map_add (f := _), h.conj_symm, h.conj_symm]
 
 theorem hermFam_smul_left (a : K) (x y : V) : h.form σ (a • x) y = starRingEnd ℂ (σ a) * h.form σ x y := by
   rw [← h.conj_symm σ y (a • x), h.smul_right, map_mul, h.conj_symm]

@@ -123,7 +123,7 @@ theorem affine_action : (∀ (F : Type) [Field F] (n' c' n c : ℕ), 1 ≤ c →
     ⟨{ toFun := fun t p => (r.toLinearMap ∘ₗ linPart xj t ∘ₗ r'.toLinearMap) (Pi.single p.1.2 1) p.1.1
        map_add' := fun t u => by
          funext p
-         simp only [map_add, LinearMap.add_comp, LinearMap.comp_add, LinearMap.add_apply, Pi.add_apply]
+         simp only [map_add (f := _), LinearMap.add_comp, LinearMap.comp_add, LinearMap.add_apply, Pi.add_apply]
        map_smul' := fun a t => by
          funext p
          simp only [map_smul, LinearMap.smul_comp, LinearMap.comp_smul, LinearMap.smul_apply, Pi.smul_apply,

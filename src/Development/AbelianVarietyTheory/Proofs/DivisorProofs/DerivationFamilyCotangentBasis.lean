@@ -66,7 +66,7 @@ theorem coords_of_derivation_basis : ∀ (R A : Type) [CommRing R] [IsLocalRing 
     let D : A → R := fun x => φ (I.toCotangent ⟨_, hdec x⟩)
     have Dadd : ∀ x y, D (x + y) = D x + D y := by
       intro x y
-      simp only [D, ← map_add]
+      simp only [D, ← map_add (f := _)]
       congr 2
       ext; simp; ring
     have Dalg : ∀ r, D (algebraMap R A r) = 0 := by
@@ -87,7 +87,7 @@ theorem coords_of_derivation_basis : ∀ (R A : Type) [CommRing R] [IsLocalRing 
           Ideal.pow_le_self two_ne_zero hsq⟩ = 0 := (I.toCotangent_eq_zero _).2 hsq
       simp only [D]
       rw [key]
-      simp only [map_add, LinearMap.map_smul_of_tower, hw0,
+      simp only [map_add (f := _), LinearMap.map_smul_of_tower, hw0,
         map_zero, add_zero, map_smul, smul_eq_mul]
     obtain ⟨c, hc, -⟩ := huniq D Dadd Dmul Dalg
     refine ⟨c, ?_⟩

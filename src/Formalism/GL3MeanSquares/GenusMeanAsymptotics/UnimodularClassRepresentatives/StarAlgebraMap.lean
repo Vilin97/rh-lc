@@ -142,7 +142,7 @@ theorem star_mem_extP (hF : IsFixF K F) (𝔭 : Ideal (𝓞 F)) (k : ℕ) {z : �
   | add x y _ _ hx hy =>
     obtain ⟨x', hx', ex⟩ := hx
     obtain ⟨y', hy', ey⟩ := hy
-    exact ⟨x' + y', add_mem hx' hy', by rw [map_add, map_add, star_add, ex, ey]⟩
+    exact ⟨x' + y', add_mem hx' hy', by rw [map_add (f := _), map_add (f := _), star_add, ex, ey]⟩
   | smul a x _ hx =>
     obtain ⟨x', hx', ex⟩ := hx
     obtain ⟨a', ea⟩ := exists_star_int a
@@ -192,7 +192,7 @@ theorem form_mem_right (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h 
   | add a _ b _ ha hb =>
     obtain ⟨x', hx', ex⟩ := ha
     obtain ⟨y', hy', ey⟩ := hb
-    exact ⟨x' + y', add_mem hx' hy', by rw [map_add, ex, ey, Submodule.coe_add, map_add]⟩
+    exact ⟨x' + y', add_mem hx' hy', by rw [map_add (f := _), ex, ey, Submodule.coe_add, map_add (f := _)]⟩
 
 theorem val_congr (hF : IsFixF K F) (hs : h.IsSymm) (hLi : Formalism.HermitianLatticesTheory.IsIntegralLat h L)
     (𝔭 : Ideal (𝓞 F)) (k : ℕ) {y y' : ↥L} {n n' : 𝓞 F}
@@ -206,7 +206,7 @@ theorem val_congr (hF : IsFixF K F) (hs : h.IsSymm) (hLi : Formalism.HermitianLa
   have : algebraMap (𝓞 F) (𝓞 K) (n - n') = z1 + z2 + z3 := by
     apply RingOfIntegers.coe_injective
     have h3 : star (h (y' : V) ((y - y' : ↥L) : V)) = h ((y - y' : ↥L) : V) (y' : V) := hs.eq _ _
-    rw [algebraMap_comp, map_add, map_add, e1, e2, e3, e1, h3]
+    rw [algebraMap_comp, map_add (f := _), map_add (f := _), e1, e2, e3, e1, h3]
     have : algebraMap F K ((n - n' : 𝓞 F) : F) = algebraMap F K (n : F) - algebraMap F K (n' : F) := by
       simp
     rw [this, ← e, ← e']

@@ -86,7 +86,7 @@ theorem mem_span_of_vanish_roots {O O' : Type} [CommRing O] [CommRing O'] [IsDom
         (Polynomial.X_pow_sub_one_eq_prod hn hζ)
       simp only [Sum.elim_inl]
       rw [Finset.prod_image (fun _ _ _ _ h => sub_left_injective h)]
-      simp only [map_sub, map_pow, map_add, map_one, map_X, Polynomial.aeval_X, map_prod, Polynomial.aeval_C,
+      simp only [map_sub, map_pow, map_add (f := _), map_one, map_X, Polynomial.aeval_X, map_prod, Polynomial.aeval_C,
         algebraMap_eq] at h1 ⊢
       rw [h1]
       exact Finset.prod_congr rfl fun y _ => by ring

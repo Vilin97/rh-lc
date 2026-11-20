@@ -95,7 +95,7 @@ theorem satInd2_holds : SatInd2 := by
   have hBeq := GlobalTheory.LFun.IsSatVecGL.unique hFB hcore
   have q0 : ((Ideal.absNorm w.asIdeal : ℕ) : ℂ) ≠ 0 :=
     Nat.cast_ne_zero.2 (NumberField.HeightOneSpectrum.one_lt_absNorm w).ne_bot
-  rw [hBeq, Fin.sum_univ_two, Multiset.map_add]
+  rw [hBeq, Fin.sum_univ_two, Multiset.map_add (f := _)]
   congr 1
   · change ((B₁.map (· * qU w (-z₁))).map (· * qU w ((modExp (fun i => Fin (![r, s] i)) 0 : ℂ) / 2))).map
       (fun b : ℂˣ => (b : ℂ)) = _

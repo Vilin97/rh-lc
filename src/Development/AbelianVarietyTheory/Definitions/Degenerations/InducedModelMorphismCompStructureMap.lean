@@ -176,7 +176,7 @@ def O (z : M.Z) : Subalgebra o Ω where
     rintro _ _ ⟨U, f, hU, rfl⟩ ⟨V, g, hV, rfl⟩
     have h : ((U ⊓ V : M.Z.Opens) : Set M.Z).Nonempty := ⟨z, hU, hV⟩
     refine ⟨U ⊓ V, resG M.Z inf_le_left f + resG M.Z inf_le_right g, ⟨hU, hV⟩, ?_⟩
-    rw [← M.res_apply _ h, map_add, res_apply, res_apply, M.valF_resG _ h, M.valF_resG _ h]
+    rw [← M.res_apply _ h, map_add (f := _), res_apply, res_apply, M.valF_resG _ h, M.valF_resG _ h]
   algebraMap_mem' a := ⟨⊤, constFn M.s ⊤ a, trivial, M.valF_constFn (U := ⊤) ⟨z, trivial⟩ a⟩
 
 def ringOn (U : Set M.Z) : Subalgebra o Ω := ⨅ z ∈ U, M.O z

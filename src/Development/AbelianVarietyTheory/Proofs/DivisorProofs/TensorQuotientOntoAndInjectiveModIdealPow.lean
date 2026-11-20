@@ -34,7 +34,7 @@ theorem quot_tensor_level : ∀ (R : Type) [CommRing R] (I : Ideal R) (R' : Type
       | add a b ha hb =>
         obtain ⟨ta, hta⟩ := ha
         obtain ⟨tb, htb⟩ := hb
-        exact ⟨ta + tb, by rw [map_add, hta, htb, map_add, map_add]⟩
+        exact ⟨ta + tb, by rw [map_add (f := _), hta, htb, map_add (f := _), map_add (f := _)]⟩
     obtain ⟨s, hs⟩ := (hi 0).1 (Ideal.Quotient.mk _ y)
     obtain ⟨t, ht⟩ := key s
     refine ⟨t, ?_⟩
@@ -94,7 +94,7 @@ theorem quot_tensor_level : ∀ (R : Type) [CommRing R] (I : Ideal R) (R' : Type
         show Ideal.Quotient.liftₐ K _ hvan (gm e (Ideal.Quotient.mk _ x)) * _ = _
         rw [← hc, ← hc']
         congr 1
-      | add a b ha hb => rw [map_add, map_add, ha, hb, map_add]
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _)]
     have hΛπ' : Λ.comp πC = (Ideal.Quotient.mkₐ R _).comp (φ.restrictScalars R) := by
       refine Algebra.TensorProduct.ext' fun c r => ?_
       simp only [AlgHom.comp_apply, AlgHom.restrictScalars_apply, πC, Λ, Algebra.TensorProduct.map_tmul,

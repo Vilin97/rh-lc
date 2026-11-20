@@ -180,7 +180,7 @@ theorem quad_fockD : ∀ (ι l : Type) [Fintype ι] [DecidableEq ι] [Fintype l]
     dsimp only
     rw [GlobalTheory.T.fockAct2_eq_symmetrised_heisenbergQuadratic (P w) (Q w) (R w) (S w) (Y w) (hY w)]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [← atPlLin_apply, map_smul, map_sum, map_sub, map_add, atPlLin_mul]
+      simp only [← atPlLin_apply, map_smul, map_sum, map_sub, map_add (f := _), atPlLin_mul]
     congr 1
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
     rw [lineSign_eq_sgn]

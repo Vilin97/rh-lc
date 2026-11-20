@@ -181,7 +181,7 @@ theorem Mon_eq (y : Vec K a ι) : D.Mon y = D.Lc (D.cls y) - D.cls (E K l e • 
 
 theorem Mon_add_phi_sub (y : Vec K a ι) {m : Vec K a ι} (hm : m ∈ D.Man) :
     D.Mon (y + (D.phi m - m)) = D.Mon y := by
-  rw [map_add, PhiMod.Mon_phi_sub, D.cls_eq_zero_iff.2 (D.EN_mem_Man hm), neg_zero, add_zero]
+  rw [map_add (f := _), PhiMod.Mon_phi_sub, D.cls_eq_zero_iff.2 (D.EN_mem_Man hm), neg_zero, add_zero]
 
 theorem Mon_mem_Zl_of_zeta_mem {y : Vec K a ι} (hy : y ∈ D.Yl)
     (hz : D.zeta y ∈ D.ext (Rpi O K l e)) : D.Mon y ∈ D.Zl := by
@@ -377,7 +377,7 @@ theorem Lc_rankOneDat (χ : TameGal K l e a →* O) :
     rw [E] at h2 ⊢
     push_cast
     linear_combination (γ - (j + 1) * e) * h2
-  rw [BKDat.Lc_cls, h3, map_add, map_smul, add_eq_left, PhiMod.cls_eq_zero_iff]
+  rw [BKDat.Lc_cls, h3, map_add (f := _), map_smul, add_eq_left, PhiMod.cls_eq_zero_iff]
   exact PhiMod.smul_mem_Man _ (sub_mem (S_le_R l e hγ) (intCast_mem _ _))
     (PhiMod.M_le_Man _ (PhiMod.bas_mem_M _ _))
 

@@ -137,6 +137,6 @@ theorem GlobalTheory.FinPl.ratio_of_colsAt : ∀ (D : D7) (V V₀ W W₀ : HSp D
         rw [colMul_mul] at h5
         convert h5 using 2
         rw [map_mul]; ring
-      · rw [map_add, add_mul, colMul_add]; exact add_mem hx hy
+      · rw [map_add (f := _), add_mul, colMul_add]; exact add_mem hx hy
     have := key 1 (by rw [mul_inv_cancel₀ hAA]; exact FractionalIdeal.one_mem_one _)
     simpa using this

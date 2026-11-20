@@ -52,7 +52,7 @@ theorem pure_mem (hadd : ∀ f f', P f → P f' → P (f + f')) (hsm : ∀ (a : 
     rw [pure_monomial]
     exact hsm c _ (foldr_mem hA hf _)
   | add p q hp hq =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hadd _ _ hp hq
 
 private theorem opPow_single_add (hA : ∀ i f, P f → P (A i f))
@@ -61,7 +61,7 @@ private theorem opPow_single_add (hA : ∀ i f, P f → P (A i f))
   show List.foldr (fun i g => A i g) f (Finsupp.toMultiset (Finsupp.single v 1 + k)).toList =
     List.foldr (fun i g => A i g) f (v :: (Finsupp.toMultiset k).toList)
   apply foldr_perm hA hc hf
-  rw [← Multiset.coe_eq_coe, Multiset.coe_toList, ← Multiset.cons_coe, Multiset.coe_toList, map_add,
+  rw [← Multiset.coe_eq_coe, Multiset.coe_toList, ← Multiset.cons_coe, Multiset.coe_toList, map_add (f := _),
     Finsupp.toMultiset_single, one_nsmul, Multiset.singleton_add]
 
 theorem pure_X_mul (hadd : ∀ f f', P f → P f' → P (f + f')) (hsm : ∀ (a : ℂ) f, P f → P (a • f))
@@ -77,7 +77,7 @@ theorem pure_X_mul (hadd : ∀ f f', P f → P f' → P (f + f')) (hsm : ∀ (a 
     rw [MvPolynomial.monomial_mul, one_mul, pure_monomial, pure_monomial,
       opPow_single_add hA hc hf, Asm v c _ hk]
   | add p q hp hq =>
-    rw [mul_add, map_add, map_add, hp, hq,
+    rw [mul_add, map_add (f := _), map_add (f := _), hp, hq,
       Aadd v _ _ (pure_mem hadd hsm hA hf p) (pure_mem hadd hsm hA hf q)]
 
 private theorem foldr_apply_add (hA : ∀ i f, P f → P (A i f))
@@ -101,7 +101,7 @@ theorem pure_add (hA : ∀ i f, P f → P (A i f))
     congr 1
     exact foldr_apply_add hA Aadd hf hf' _
   | add p q hp hq =>
-    rw [map_add, map_add, map_add, hp, hq]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     abel
 
 private theorem foldr_apply_comm (hA : ∀ i f, P f → P (A i f)) (R : (X → ℂ) → (X → ℂ))
@@ -125,7 +125,7 @@ theorem pure_comm (hA : ∀ i f, P f → P (A i f)) (R : (X → ℂ) → (X → 
     congr 1
     exact foldr_apply_comm hA R hR hf _
   | add p q hp hq =>
-    rw [map_add, map_add, hp, hq, Radd]
+    rw [map_add (f := _), map_add (f := _), hp, hq, Radd]
 
 end Generic
 

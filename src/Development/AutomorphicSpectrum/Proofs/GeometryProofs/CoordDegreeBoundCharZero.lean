@@ -196,7 +196,7 @@ theorem core (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Sp Ω ⟶ X) (K : Typ
         obtain ⟨h₁, e₁⟩ := i₁
         obtain ⟨h₂, e₂⟩ := i₂
         refine ⟨add_mem h₁ h₂, ?_⟩
-        have : D (⟨y₁, h₁⟩ + ⟨y₂, h₂⟩) = 0 := by rw [map_add, e₁, e₂, add_zero]
+        have : D (⟨y₁, h₁⟩ + ⟨y₂, h₂⟩) = 0 := by rw [map_add (f := _), e₁, e₂, add_zero]
         exact this
       | smul s y _ i₁ =>
         obtain ⟨h₁, e₁⟩ := i₁

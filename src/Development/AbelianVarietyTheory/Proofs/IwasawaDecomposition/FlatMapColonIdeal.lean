@@ -63,7 +63,7 @@ theorem _root_.GlobalTheory.ideal_map_colon_eq_of_flat : ∀ {A R : Type} [CommR
       have hw : w = w.1 • ((1 : A), (0 : Fin n × Fin m → A)) + ((0 : A), w.2) := by
         ext <;> simp
       conv_lhs => rw [hw]
-      rw [map_add, map_smul]
+      rw [map_add (f := _), map_smul]
       congr 1
       exact LinearMap.pi_apply_eq_sum_univ (g ∘ₗ LinearMap.inr A A (Fin n × Fin m → A)) w.2
     have key : ∀ q, g (1, 0) q ∈

@@ -187,7 +187,7 @@ theorem ringKrullDim_quotient_le_of_chartIdeal_le {P : Ideal (MvPolynomial (Σ k
       simp only [θ, aeval_C, MvPolynomial.algebraMap_apply]
       rfl
     · intro f g hf hg
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact AC.add_mem hf hg
     · intro f q hf
       rw [map_mul, map_mul]

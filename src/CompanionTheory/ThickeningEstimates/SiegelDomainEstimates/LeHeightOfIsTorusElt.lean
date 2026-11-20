@@ -27,7 +27,7 @@ theorem rId_snd (t : ℝ) : (rId F t).2 = 1 := add_zero _
 theorem rId_inf [IsTotallyReal F] (w : InfinitePlace F) (t : ℝ) :
     InfinitePlace.Completion.extensionEmbedding w ((rId F t).1 w) = Real.exp t := by
   change InfinitePlace.Completion.extensionEmbedding w (1 + (realAd F (Real.exp t - 1)).1 w) = _
-  rw [map_add, map_one, realAd_inf]
+  rw [map_add (f := _), map_one, realAd_inf]
   push_cast
   ring
 

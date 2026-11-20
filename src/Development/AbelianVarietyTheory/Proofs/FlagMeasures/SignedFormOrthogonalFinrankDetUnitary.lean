@@ -171,7 +171,7 @@ theorem det_of_intertwine {X Y : Type} [AddCommGroup X] [Module ℂ X] [AddCommG
     intro x
     conv_lhs => rw [← (Submodule.prodEquivOfIsCompl W C hC).apply_symm_apply x,
       Submodule.coe_prodEquivOfIsCompl']
-    rw [map_add, hπW _ ((Submodule.prodEquivOfIsCompl W C hC).symm x).1.2, zero_add]
+    rw [map_add (f := _), hπW _ ((Submodule.prodEquivOfIsCompl W C hC).symm x).1.2, zero_add]
   have hinj : Function.Injective (π ∘ₗ C.subtype) := by
     rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
     intro c hc

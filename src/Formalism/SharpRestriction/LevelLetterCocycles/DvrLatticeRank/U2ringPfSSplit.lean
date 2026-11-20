@@ -80,7 +80,7 @@ theorem u2ringPfS_split [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
       rw [map_mul, DualFramesAlt.eigenRingInvariants.mk_X, hqv, ← map_mul, ← map_mul]
     have e2 : (mkI (xs i)) ((1 + PowerSeries.X) ^ p - 1) =
         (mkI (xs i)) (PowerSeries.C ((1 + xs i) ^ p - 1)) := by
-      simp only [map_sub, map_pow, map_add, map_one, DualFramesAlt.eigenRingInvariants.mk_X]
+      simp only [map_sub, map_pow, map_add (f := _), map_one, DualFramesAlt.eigenRingInvariants.mk_X]
     rw [e1, e2, hxroot i, sub_self] at h1
     have h3 := DualFramesAlt.eigenRingInvariants.ev_inj (hxm i) h1
     have hqv0 : qv = 0 := (mul_eq_zero.1 h3).resolve_left hxne

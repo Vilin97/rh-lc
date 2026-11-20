@@ -84,7 +84,7 @@ theorem gInt_shift (h1 : ord (algebraMap F E (unifUnit F : F)) = 1) (χ : AddCha
       δ * Algebra.norm F (u - b) + -(Algebra.norm F y) / δ := by
     intro u
     apply (algebraMap F E).injective
-    simp only [map_add, map_sub, map_mul, map_div₀, map_neg, algebraMap_norm_eq_mul_conj, algebraMap_trace_eq_add_conj, hb,
+    simp only [map_add (f := _), map_sub, map_mul, map_div₀, map_neg, algebraMap_norm_eq_mul_conj, algebraMap_trace_eq_add_conj, hb,
       conj_conj, conj_algebraMap, map_inv₀]
     field_simp
     ring
@@ -128,7 +128,7 @@ theorem gInt_eq_zero (h1 : ord (algebraMap F E (unifUnit F : F)) = 1) {χ : AddC
         Algebra.norm F a * δ⁻¹ + -Algebra.trace F E (a * y') := by
     intro u
     apply (algebraMap F E).injective
-    simp only [map_add, map_sub, map_mul, map_neg, algebraMap_norm_eq_mul_conj, algebraMap_trace_eq_add_conj, hv, hy',
+    simp only [map_add (f := _), map_sub, map_mul, map_neg, algebraMap_norm_eq_mul_conj, algebraMap_trace_eq_add_conj, hv, hy',
       conj_conj, conj_algebraMap, map_inv₀]
     field_simp
     ring

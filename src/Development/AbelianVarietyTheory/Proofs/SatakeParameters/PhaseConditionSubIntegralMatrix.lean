@@ -40,7 +40,7 @@ theorem phase_shift (σ : L →+* L) (hσσ : ∀ x, σ (σ x) = x) (hσ : ∀ x
     show Valued.v (σ (u - u')) ≤ 1
     rw [hσ]; exact hd
   have hs : σ (((u - u') + σ (u - u')) / 2) = ((u - u') + σ (u - u')) / 2 := by
-    rw [map_div₀, map_add, hσσ, map_ofNat]; ring
+    rw [map_div₀, map_add (f := _), hσσ, map_ofNat]; ring
   have heq : (u' + σ u') / 2 = (u + σ u) / 2 - ((u - u') + σ (u - u')) / 2 := by
     rw [map_sub]; ring
   rw [heq, AddChar.map_sub_eq_div, h, hψ _ he hs, div_one]

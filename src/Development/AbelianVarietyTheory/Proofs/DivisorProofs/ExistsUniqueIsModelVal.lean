@@ -68,7 +68,7 @@ theorem tensorEval_comp {R₀ A R R' : Type} [CommRing R₀] [CommRing A] [CommR
     tensorEval ((τ : R →+* R').comp ψ) h = τ (tensorEval ψ h) := by
   induction h with
   | tmul r a => simp
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 variable {F : Type} [Field F] [NumberField F] {𝔠 : FracId F}
 

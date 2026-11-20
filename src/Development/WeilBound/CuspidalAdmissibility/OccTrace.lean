@@ -72,10 +72,10 @@ theorem exists_integralOp (m : Measure G) [m.IsHaarMeasure] (ρ : Representation
   let A : X →ₗ[ℂ] X :=
     { toFun := A0
       map_add' := fun v v' => huniq _ _ fun l => by
-        rw [map_add, hA0, hA0, hA0, ← integral_add (hint v l) (hint v' l)]
+        rw [map_add (f := _), hA0, hA0, hA0, ← integral_add (hint v l) (hint v' l)]
         congr 1
         funext g
-        rw [map_add, map_add, mul_add]
+        rw [map_add (f := _), map_add (f := _), mul_add]
       map_smul' := fun c v => huniq _ _ fun l => by
         rw [map_smul, hA0, hA0, RingHom.id_apply, smul_eq_mul, ← integral_const_mul]
         congr 1

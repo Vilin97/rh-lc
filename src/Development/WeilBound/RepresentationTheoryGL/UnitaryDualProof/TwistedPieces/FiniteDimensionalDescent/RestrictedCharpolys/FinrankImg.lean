@@ -62,7 +62,7 @@ def Lmap (S : Submodule k (Matrix (Fin n) (Fin n) k)) :
     ⟨_, ((Module.finBasis k S).equivFun.symm (coefF B w)).2, rfl⟩⟩
   map_add' w w' := by
     apply Subtype.ext
-    simp only [coefF_add, map_add, Submodule.coe_add]
+    simp only [coefF_add, map_add (f := _), Submodule.coe_add]
   map_smul' l w := by
     apply Subtype.ext
     simp only [coefF_smul, map_smul, SetLike.val_smul, RingHom.id_apply]

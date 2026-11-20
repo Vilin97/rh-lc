@@ -66,7 +66,7 @@ variable (K η M) in
 def perZD (q : Λ →+ R) : Z1 (K.OD η M) :=
   ⟨fun _ S' f ↦ algebraMap R S'.T.C (q f.1.deg), fun S S' S'' f f' ↦ by
     change algebraMap _ S''.T.C (q (f.1.deg + f'.1.deg)) = f'.1.φ (algebraMap _ _ _) + algebraMap _ S''.T.C _
-    rw [f'.2, map_add, map_add]⟩
+    rw [f'.2, map_add (f := _), map_add (f := _)]⟩
 
 variable (K η M) in
 
@@ -219,11 +219,11 @@ def tay1 {W : Opens (Tot I g)} {W₀ : Opens (Tot Empty g)} (hW : ∀ p ∈ W₀
   toFun h := 1 ⊗ₜ resFib hW h + DualNumber.eps ⊗ₜ resFib hW (Hol.der (v, 0) h)
   map_one' := by simp [Algebra.TensorProduct.one_def]
   map_mul' x y := by
-    simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul, tmul_add, add_mul, mul_add,
+    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, tmul_add, add_mul, mul_add,
       Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one, DualNumber.eps_mul_eps, zero_tmul, add_zero]
     rw [mul_comm (resFib hW y)]; abel
   map_zero' := by simp
-  map_add' x y := by simp only [map_add, tmul_add]; abel
+  map_add' x y := by simp only [map_add (f := _), tmul_add]; abel
 
 theorem isTaylorExpansion_orderOne [DecidableEq I] {W : Opens (Tot I g)} {W₀ : Opens (Tot Empty g)}
     (hW : ∀ p ∈ W₀, ((0 : I → ℂ), p.2) ∈ W) (v : I → ℂ) :
@@ -243,7 +243,7 @@ theorem isTaylorExpansion_orderOne [DecidableEq I] {W : Opens (Tot I g)} {W₀ :
     set_option synthInstance.maxHeartbeats 100000 in
       rw [this, map_sum]; simp only [map_smul, smul_eq_mul]
   change evT _ p hp (_ + _) = _
-  rw [map_add, Algebra.TensorProduct.lift_tmul, Algebra.TensorProduct.lift_tmul, AlgHom.comp_apply,
+  rw [map_add (f := _), Algebra.TensorProduct.lift_tmul, Algebra.TensorProduct.lift_tmul, AlgHom.comp_apply,
     AlgHom.comp_apply, e1, e2]
   unfold GlobalTheory.PeriodFamily.taylor
   rw [Finset.sum_range_succ, Finset.sum_range_one]

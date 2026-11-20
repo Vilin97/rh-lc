@@ -26,7 +26,7 @@ theorem compAt_conjAL (u : HeightOneSpectrum (𝓞 (maximalRealSubfield L))) (z 
   | tmul a b =>
     simp only [conjAL, RingHom.coe_coe, AlgHom.toRingHom_eq_coe, Algebra.TensorProduct.map_tmul,
       GlobalTheory.InertUmax.compAt_tmul, Formalism.UG.sigR, AlgHom.coe_id, id_eq]
-  | add a b ha hb => simp only [map_add]; rw [ha, hb]
+  | add a b ha hb => simp only [map_add (f := _)]; rw [ha, hb]
 
 theorem exists_supported (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L)))
     (t : L ⊗[maximalRealSubfield L] v.adicCompletion (maximalRealSubfield L)) :
@@ -35,10 +35,10 @@ theorem exists_supported (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L)))
     (Algebra.IsQuadraticExtension.finrank_eq_two (maximalRealSubfield L) L)
   obtain ⟨a, c, rfl⟩ := GlobalTheory.InertUmax.tensor_decomp b t
   refine ⟨b 0 ⊗ₜ GlobalTheory.InertUmax.sgl L v a + b 1 ⊗ₜ GlobalTheory.InertUmax.sgl L v c, ?_, ?_⟩
-  · rw [map_add, GlobalTheory.InertUmax.compAt_tmul, GlobalTheory.InertUmax.compAt_tmul, GlobalTheory.InertUmax.sgl_same,
+  · rw [map_add (f := _), GlobalTheory.InertUmax.compAt_tmul, GlobalTheory.InertUmax.compAt_tmul, GlobalTheory.InertUmax.sgl_same,
       GlobalTheory.InertUmax.sgl_same]
   · intro u hu
-    rw [map_add, GlobalTheory.InertUmax.compAt_tmul, GlobalTheory.InertUmax.compAt_tmul, GlobalTheory.InertUmax.sgl_ne L v a hu,
+    rw [map_add (f := _), GlobalTheory.InertUmax.compAt_tmul, GlobalTheory.InertUmax.compAt_tmul, GlobalTheory.InertUmax.sgl_ne L v a hu,
       GlobalTheory.InertUmax.sgl_ne L v c hu, tmul_zero, tmul_zero, add_zero]
 
 theorem exists_trivOutside_loc_eq : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ)
@@ -102,16 +102,16 @@ theorem exists_trivOutside_loc_eq : ∀ (L : Type) [Field L] [NumberField L] [Is
     ext i j
     show compAt L v (T (Xv i j) + if i = j then 1 - E else 0) = Xv i j
     by_cases h : i = j
-    · rw [if_pos h, map_add, hTv, map_sub, map_one, hEv, sub_self, add_zero]
-    · rw [if_neg h, map_add, hTv, map_zero, add_zero]
+    · rw [if_pos h, map_add (f := _), hTv, map_sub, map_one, hEv, sub_self, add_zero]
+    · rw [if_neg h, map_add (f := _), hTv, map_zero, add_zero]
   have hAu : ∀ u, u ≠ v → A.map (compAt L u) = 1 := by
     intro u hu
     ext i j
     show compAt L u (T (Xv i j) + if i = j then 1 - E else 0) = (1 : Matrix (Fin n) (Fin n) _) i j
     rw [Matrix.one_apply]
     by_cases h : i = j
-    · rw [if_pos h, if_pos h, map_add, hTu _ u hu, map_sub, map_one, hEu u hu, zero_add, sub_zero]
-    · rw [if_neg h, if_neg h, map_add, hTu _ u hu, map_zero, add_zero]
+    · rw [if_pos h, if_pos h, map_add (f := _), hTu _ u hu, map_sub, map_one, hEu u hu, zero_add, sub_zero]
+    · rw [if_neg h, if_neg h, map_add (f := _), hTu _ u hu, map_zero, add_zero]
   have hmap : ∀ u, (A * conjT (conjAL L) A).map (compAt L u) =
       A.map (compAt L u) * conjT (Formalism.UG.sigR (IsCMField.complexConj L).toAlgHom
         (u.adicCompletion (maximalRealSubfield L))) (A.map (compAt L u)) := by

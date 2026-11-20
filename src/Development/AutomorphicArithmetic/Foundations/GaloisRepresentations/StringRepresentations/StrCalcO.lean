@@ -37,7 +37,7 @@ theorem strCalc_o : GlobalTheory.Published.AutomorphicFormsFiniteGL → ∀ (hL 
   have hθ := unr_of_speh D.naut _ D.R.t ht w hb
   obtain ⟨-, hblk⟩ := GlobalTheory.RowModelRoad.frobEig_block D.naut _ D.R.t w z⁻¹ hθ hz
   refine ⟨(D.naut.frobEig (D.naut.locG (D.naut.tw π D.naut.etaTinv) w)).map (fun a : ℂ => a⁻¹), ?_, ?_⟩
-  · rw [eV, D.naut.frobEig_sum _ _ ha hb, Multiset.map_add, hblk, ← normV_eq_absNorm, inv_block]
+  · rw [eV, D.naut.frobEig_sum _ _ ha hb, Multiset.map_add (f := _), hblk, ← normV_eq_absNorm, inv_block]
   ·
     obtain ⟨hTie, -⟩ := GlobalTheory.AutomorphismSplitting.tieAut_and_split hAF hL D P
     have hEta : GlobalTheory.LocalInv.EtaType D.nd D.naut := by

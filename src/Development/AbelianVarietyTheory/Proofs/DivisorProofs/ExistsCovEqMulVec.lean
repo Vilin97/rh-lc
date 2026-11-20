@@ -35,7 +35,7 @@ theorem cov_add (h : ⊤ ≤ (y ≫ unitSec P.A) ⁻¹ᵁ W) (f g : Γ(P.A.left,
     d.cov W (f + g) = d.cov W f + d.cov W g := by
   have : d.fn W (f + g) =ᶠ[𝓝 0] d.fn W f + d.fn W g :=
     (eventually_le d h).mono fun z hz => by
-      simp only [PPAS.RiemannData.fn, Pi.add_apply, valR_eq _ _ hz, map_add]
+      simp only [PPAS.RiemannData.fn, Pi.add_apply, valR_eq _ _ hz, map_add (f := _)]
   funext a
   simp only [PPAS.RiemannData.cov, this.fderiv_eq,
     fderiv_add (d.differentiableAt_fn f h) (d.differentiableAt_fn g h), Pi.add_apply,

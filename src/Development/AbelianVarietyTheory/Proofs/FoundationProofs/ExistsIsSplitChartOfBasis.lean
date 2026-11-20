@@ -389,7 +389,7 @@ theorem eq_map_inv_of_hasParam (hE : IsCMExt F E σ) (hJ : IsHermND σ J) (hL : 
   exact eq_map_inv_of_isParamVec hE hJ hL hne hx (hρ'.isParamVec hx.mem_fixed hx.ne_zero)
 
 theorem bcParam_map_inv (n : ℕ) (α : Fin (n / 2) → ℂˣ) : (bcParam n α).map (·⁻¹) = bcParam n α := by
-  simp only [bcParam, Multiset.map_add, Multiset.map_map, Function.comp_def, inv_inv, Multiset.map_replicate, inv_one]
+  simp only [bcParam, Multiset.map_add (f := _), Multiset.map_map, Function.comp_def, inv_inv, Multiset.map_replicate, inv_one]
   rw [add_comm (Multiset.map _ _)]
 
 theorem map_inv_of_isParamVec (hw : IsInertAt F E v w) {h : w.under (𝓞 F) = v} (hx : IsParamVec σ J L h ρ x B) :

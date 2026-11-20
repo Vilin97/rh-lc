@@ -32,7 +32,7 @@ theorem exists_algebraMap_of_sigR_fixed {F E : Type} [Field F] [CharZero F] [Fie
       obtain ⟨t, ht⟩ := hx
       obtain ⟨t', ht'⟩ := hy
       refine ⟨t + t', ?_⟩
-      rw [map_add, TensorProduct.add_tmul, ← ht, ← ht']; ring
+      rw [map_add (f := _), TensorProduct.add_tmul, ← ht, ← ht']; ring
   obtain ⟨t, ht⟩ := hT z
   refine ⟨(2 : F)⁻¹ • t, ?_⟩
   rw [Algebra.TensorProduct.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply,
@@ -62,7 +62,7 @@ theorem exists_root_of_norm_one {E : Type} [Field E] (σ : E →+* E) (hσ : ∀
     rw [Units.val_mk0, map_sub, hσ]
     linear_combination (y - σ y) * h
   · refine ⟨Units.mk0 (1 + u) h, ?_⟩
-    rw [Units.val_mk0, map_add, map_one]
+    rw [Units.val_mk0, map_add (f := _), map_one]
     linear_combination - hu
 
 theorem isDetRoot_mul {D : D7} (V : HSp D) (g g' : GA D V) (x x' : (AE D)ˣ) (hx : IsDetRoot V g x)
@@ -81,7 +81,7 @@ theorem isDetRoot_laws : ∀ (D : D7) (V : HSp D), (∀ g : GA D V, ∃ x, IsDet
       intro x
       apply (D.sp.cm.fixed _).1
       change D.sp.cm.sig _ = _
-      rw [map_add, hσ, add_comm]
+      rw [map_add (f := _), hσ, add_comm]
     unfold IsDetRoot at hx hx'
     obtain ⟨a, ha⟩ := exists_unit_of_sigR_fixed (AF D.host.F) D.sp.cm.sig htr (x⁻¹ * x') (by
       apply (x.isUnit.map (sigR (AF D.host.F) D.sp.cm.sig)).mul_left_cancel

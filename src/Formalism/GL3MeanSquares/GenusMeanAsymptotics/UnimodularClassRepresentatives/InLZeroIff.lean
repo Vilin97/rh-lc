@@ -37,7 +37,7 @@ theorem InI.add (hp : 𝔭.IsPrime) {k : ℕ} {a b : K} (ha : InI 𝔭 k a) (hb 
   obtain ⟨u, hu, y, hy, f⟩ := hb
   refine ⟨t * u, fun h => (hp.mem_or_mem h).elim ht hu, ι u * z + ι t * y,
     add_mem (Ideal.mul_mem_left _ _ hz) (Ideal.mul_mem_left _ _ hy), ?_⟩
-  simp only [map_add, map_mul, e, f]
+  simp only [map_add (f := _), map_mul, e, f]
   ring
 
 theorem InI.neg {k : ℕ} {a : K} (ha : InI 𝔭 k a) : InI 𝔭 k (-a) := by
@@ -121,7 +121,7 @@ theorem form_mem_right {h : V →ₗ⋆[K] V →ₗ[K] K} (hA : Formalism.Hermit
   | add x _ y _ hx hy =>
     obtain ⟨z, hz, e⟩ := hx
     obtain ⟨w, hw, f⟩ := hy
-    exact ⟨z + w, add_mem hz hw, by rw [map_add, map_add, e, f]⟩
+    exact ⟨z + w, add_mem hz hw, by rw [map_add (f := _), map_add (f := _), e, f]⟩
 
 theorem form_mem (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (hA : Formalism.HermitianLatticesTheory.IsIntegralLat h A)
     {i k : ℕ} {p q : V} (hp : p ∈ extP K 𝔭 ^ i • A) (hq : q ∈ extP K 𝔭 ^ k • A) :
@@ -137,7 +137,7 @@ theorem form_mem (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (hA : Form
   | add x _ y _ hx hy =>
     obtain ⟨z, hz, e⟩ := hx
     obtain ⟨w, hw, f⟩ := hy
-    exact ⟨z + w, add_mem hz hw, by rw [map_add, map_add, LinearMap.add_apply, e, f]⟩
+    exact ⟨z + w, add_mem hz hw, by rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, e, f]⟩
 
 theorem InL.form (hp : 𝔭.IsPrime) (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K}
     (hA : Formalism.HermitianLatticesTheory.IsIntegralLat h A) {i k : ℕ} {v w : V} (hv : InL 𝔭 A i v) (hw : InL 𝔭 A k w) :
@@ -220,7 +220,7 @@ theorem InI.unit (h𝔭 : 𝔭.IsMaximal) (hF : IsFixF K F) {ε : K} (hε : InI 
     1 + ε ≠ 0 ∧ InI 𝔭 0 ((1 + ε)⁻¹) := by
   obtain ⟨t, ht, z, hz, e⟩ := hε
   set a : 𝓞 K := ι t + z with ha
-  have hκa : κ a = κ (ι t) * (1 + ε) := by rw [ha, map_add, e]; ring
+  have hκa : κ a = κ (ι t) * (1 + ε) := by rw [ha, map_add (f := _), e]; ring
   obtain ⟨b, hb⟩ := (conjO_eq_iff_mem_range hF (a * conjO K a)).1 (by
     rw [map_mul, conjO_conjO, mul_comm])
   have hz' : conjO K z ∈ extP K 𝔭 ^ 1 := conjO_mem_pow hF 𝔭 1 z hz
@@ -229,7 +229,7 @@ theorem InI.unit (h𝔭 : 𝔭.IsMaximal) (hF : IsFixF K F) {ε : K} (hε : InI 
     have h1 : ι b ∈ extP K 𝔭 ^ 1 := ι_mem_pow (by simpa using hbp)
     have h2 : ι (t * t) ∈ extP K 𝔭 ^ 1 := by
       have : ι (t * t) = ι b - (ι t * conjO K z + z * ι t + z * conjO K z) := by
-        rw [hb, ha, map_add, conjO_map hF, map_mul]; ring
+        rw [hb, ha, map_add (f := _), conjO_map hF, map_mul]; ring
       rw [this]
       exact sub_mem h1 (add_mem (add_mem (Ideal.mul_mem_left _ _ hz') (Ideal.mul_mem_right _ _ hz))
         (Ideal.mul_mem_right _ _ hz))

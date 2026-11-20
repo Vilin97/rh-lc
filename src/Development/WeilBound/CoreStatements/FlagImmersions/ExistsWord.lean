@@ -33,7 +33,7 @@ theorem exists_word {J : Type} : ∀ (d : ℕ) (m : J →₀ ℕ), m.degree = d 
       (add_tsub_cancel_of_le hle).symm
     have hdeg : Finsupp.degree (m - Finsupp.single j 1) = d := by
       have h2 := congrArg Finsupp.degree hsplit
-      rw [map_add, Finsupp.degree_single, hm] at h2
+      rw [map_add (f := _), Finsupp.degree_single, hm] at h2
       omega
     obtain ⟨w', hw'⟩ := ih _ hdeg
     refine ⟨Fin.cons j w', ?_⟩

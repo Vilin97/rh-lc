@@ -48,7 +48,7 @@ theorem eval_rowOps_eq {K σ : Type*} [Field K] [DecidableEq σ] {p n : ℕ} (z 
         · simp [hy]
         · simp
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, eval_X, map_sum, Finset.sum_congr rfl fun k _ => he k, Finset.sum_insert hq, hy_def]
+        rw [map_add (f := _), eval_X, map_sum, Finset.sum_congr rfl fun k _ => he k, Finset.sum_insert hq, hy_def]
       ring
     rw [hfun, ← hb, hinv q.1 q.2 hab (c q), ih fun q' h => hT q' (Finset.mem_insert_of_mem h)]
 

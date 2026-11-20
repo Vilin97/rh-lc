@@ -33,7 +33,7 @@ theorem piF_toEAf {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.
     piF t (toEAf D z) = piW t z := by
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero]
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   | tmul a x => exact mul_comm _ _
 
 structure IsPair (ψ : AddChar (AF D.host.F) ℂ) (ε : Bool) (S X : HSp D) {d : ℕ} (e : Fin d ≃ Fin X.rank)

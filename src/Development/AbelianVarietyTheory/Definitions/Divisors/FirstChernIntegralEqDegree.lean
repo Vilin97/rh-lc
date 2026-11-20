@@ -161,7 +161,7 @@ theorem crd_resM (s : Γ(E, V)) (h : W ≤ V) (hy : y ∈ ptsIn p σ W) :
 
 theorem crd_add (s t : Γ(E, V)) (y : CxPts p σ) :
     c.crd p σ (s + t) y = c.crd p σ s y + c.crd p σ t y := funext fun a => by
-  simp only [crd, map_add, Finsupp.add_apply, ev_add, Pi.add_apply]
+  simp only [crd, map_add (f := _), Finsupp.add_apply, ev_add, Pi.add_apply]
 
 theorem crd_smul (g : Γ(X, V)) (s : Γ(E, V)) (y : CxPts p σ) :
     c.crd p σ (g • s) y = ev p σ V g y • c.crd p σ s y := funext fun a => by

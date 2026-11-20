@@ -68,7 +68,7 @@ theorem IsNTr.apply_eq_of_mem_adjoin {z F : Ω} (hF : F ∈ IntermediateField.ad
   induction hF using IntermediateField.adjoin_induction with
   | mem x hx => rw [Set.mem_singleton_iff.1 hx, h]
   | algebraMap r => rw [AlgEquiv.commutes, AlgEquiv.commutes]
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | inv x _ hx => rw [map_inv₀, map_inv₀, hx]
   | mul x y _ _ hx hy => rw [map_mul, map_mul, hx, hy]
 
@@ -86,7 +86,7 @@ theorem IsNTr.add {l n m : ℕ} [NeZero l] {F F' G G' : Ω} (h : IsNTr ε l n m 
   refine ⟨h1, h2, add_mem hF hG, τ, hτ, ?_⟩
   rw [mul_add, e, e', ← Finset.sum_add_distrib]
   exact Finset.sum_congr rfl fun a _ => by
-    rw [map_add, IsNTr.apply_eq_of_mem_adjoin hG ((hτ a).trans (hτ' a).symm)]
+    rw [map_add (f := _), IsNTr.apply_eq_of_mem_adjoin hG ((hτ a).trans (hτ' a).symm)]
 
 example (l : ℕ) [NeZero l] (F F' : Ω) : ¬ IsNTr ε l 0 1 F F' ∧ ¬ IsNTr ε l 0 0 F F' ∧ ¬ IsNTr ε l 3 0 F F' :=
   ⟨fun h => by have := h.2.1; omega, fun h => by have := h.1; omega, fun h => by have := h.1; omega⟩

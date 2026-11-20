@@ -14,11 +14,11 @@ theorem pderiv_comm' (i j : σ) (p : MvPolynomial σ R) :
   classical
   induction p using MvPolynomial.induction_on
   · simp
-  · rename_i p q hp hq; simp only [map_add, hp, hq]
+  · rename_i p q hp hq; simp only [map_add (f := _), hp, hq]
   · rename_i p n hp
     have h0 : ∀ a b : σ, pderiv a (Pi.single (M := fun _ => MvPolynomial σ R) b 1 n) = 0 := by
       intro a b; rw [Pi.single_apply]; split_ifs <;> simp
-    simp only [Derivation.leibniz, map_add, smul_eq_mul, pderiv_X, h0, hp, mul_zero, zero_add, add_zero]
+    simp only [Derivation.leibniz, map_add (f := _), smul_eq_mul, pderiv_X, h0, hp, mul_zero, zero_add, add_zero]
     ring
 
 noncomputable abbrev Dp (v : σ) : Module.End R (MvPolynomial σ R) := (pderiv v).toLinearMap
@@ -183,7 +183,7 @@ private theorem coeff_pderiv_lemma_7 (v : σ) (b : MvPolynomial σ ℚ_[p]) (m :
         simp [ht]
       · rfl
   · rename_i f g hf hg
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, add_mul]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, add_mul]
 
 theorem fock_X_mul (v : σ) (a b : MvPolynomial σ ℚ_[p]) :
     M.fock p (X v * a) b = M.fock p a (pderiv v b) := by
@@ -308,7 +308,7 @@ theorem F_E_k (hw : Function.Injective w) (he : Function.Injective e) (hwe : ∀
       (∑ c', X (w c') * X (e c')) * pderiv (w c) (pderiv (e c) Y) + X (e c) * pderiv (e c) Y + Y +
         X (w c) * pderiv (w c) Y := by
     intro c
-    simp only [Derivation.leibniz, smul_eq_mul, map_add, hdE, hdW, pderiv_X, Pi.single_eq_same]
+    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), hdE, hdW, pderiv_X, Pi.single_eq_same]
     ring
   rw [tieF_apply_lemma, tieF_apply_lemma]
   simp only [tieE, LinearMap.mulLeft_apply]
@@ -349,7 +349,7 @@ theorem Fpow_E (hw : Function.Injective w) (he : Function.Injective e) (hwe : �
   | succ j ih =>
     have hs : ∀ (i : ℕ) (x : MvPolynomial σ k), (tieF w e ^ (i + 1)) x = tieF w e ((tieF w e ^ i) x) := by
       intro i x; rw [pow_succ'] <;> rfl
-    rw [hs (j + 1), ih, map_add, map_smul, F_E_k hw he hwe (α - ((j + 1 : ℕ) : k)) (β - ((j + 1 : ℕ) : k)) _
+    rw [hs (j + 1), ih, map_add (f := _), map_smul, F_E_k hw he hwe (α - ((j + 1 : ℕ) : k)) (β - ((j + 1 : ℕ) : k)) _
       (EW_Fpow hw hwe α Z hW (j + 1)) (EH_Fpow he hwe β Z hE (j + 1)), ← hs (j + 1), ← hs j]
     rw [add_assoc, ← add_smul]
     congr 2
@@ -381,7 +381,7 @@ private theorem coeff_X_mul_pderiv_lemma_4 (v : σ) (g : MvPolynomial σ k) (s :
     · subst h; ring
     · simp
   · rename_i p q hp hq
-    rw [map_add, mul_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]; ring
+    rw [map_add (f := _), mul_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]; ring
 
 private theorem coeff_EW_lemma_5 (g : MvPolynomial σ k) (s : σ →₀ ℕ) :
     AddMonoidAlgebra.coeff (EW w g) s = ((∑ c, s (w c) : ℕ) : k) * AddMonoidAlgebra.coeff g s := by
@@ -476,7 +476,7 @@ theorem phi_E_step (hw : Function.Injective w) (he : Function.Injective e) (hwe 
       (tieE w e ^ (t + 1 + 1)) ((tieF w e ^ (t + 1)) Z) +
         (((t : k) + 1) * ((o' : k) + n' + r - t)) • (tieE w e ^ (t + 1)) ((tieF w e ^ t) Z) := by
     intro t
-    rw [Fpow_E hw he hwe (o' : k) (n' : k) Z hW hE t, map_add, map_smul, hE1]
+    rw [Fpow_E hw he hwe (o' : k) (n' : k) Z hW hE t, map_add (f := _), map_smul, hE1]
   have hA1 : o' + 1 + (n' + 1) + r + z - 1 = o' + n' + r + z + 1 := by omega
   have hA2 : o' + n' + r + (z + 1) - 1 = o' + n' + r + z := by omega
   set_option synthInstance.maxHeartbeats 100000 in

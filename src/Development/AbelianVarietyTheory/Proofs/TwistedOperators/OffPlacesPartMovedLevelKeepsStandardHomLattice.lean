@@ -52,7 +52,7 @@ theorem cpt_cA_idemSum (V : HSp D) {e : AE D} {P : Finset (Pl D.host.E)} (he : I
 
 theorem cpt_pair_zero (V : HSp D) {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) (Q : Pl D.host.E)
     (hQ : ∀ w ∈ P, Q.under (𝓞 D.host.F) ≠ w.under (𝓞 D.host.F)) : cpt Q (toEAf D (e + cA D e)) = 0 := by
-  rw [map_add, map_add, cpt_idemSum he, cpt_cA_idemSum V he, if_neg, if_neg, add_zero]
+  rw [map_add (f := _), map_add (f := _), cpt_idemSum he, cpt_cA_idemSum V he, if_neg, if_neg, add_zero]
   · exact fun h => hQ _ h (GlobalTheory.IdemSupport.under_cP Q).symm
   · exact fun h => hQ Q h rfl
 
@@ -61,7 +61,7 @@ theorem cpt_pair_one (V : HSp D) {e : AE D} {P : Finset (Pl D.host.E)} (he : IsI
   have h0 : cpt Q (toEAf D e) * cpt Q (toEAf D (cA D e)) = 0 := by
     rw [← map_mul, ← map_mul, he.2, map_zero, map_zero]
   rw [cpt_idemSum he, cpt_cA_idemSum V he] at h0
-  rw [map_add, map_add, cpt_idemSum he, cpt_cA_idemSum V he]
+  rw [map_add (f := _), map_add (f := _), cpt_idemSum he, cpt_cA_idemSum V he]
   obtain ⟨w, hw, hu⟩ := hQ
   rcases GlobalTheory.IdemSupport.eq_or_eq_cP hu with rfl | rfl
   · rw [if_pos hw, one_mul] at h0
@@ -108,12 +108,12 @@ theorem inBasis_mix {n : ℕ} (β X Y : GL (Fin n) (Lev.EAf D)) (c : Lev.EAf D)
     rw [← map_one (inBasis rfl β Q)]
     refine Units.ext (Matrix.ext fun i j => ?_)
     rw [inBasis_apply, inBasis_apply, hM, h1]
-    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_sub, map_one, h0, zero_mul,
+    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_sub, map_one, h0, zero_mul,
       zero_add, sub_zero, one_mul, Units.val_one]
   · intro h0
     refine Units.ext (Matrix.ext fun i j => ?_)
     rw [inBasis_apply, inBasis_apply, hM]
-    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_sub, map_one, h0, one_mul,
+    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_sub, map_one, h0, one_mul,
       sub_self, zero_mul, add_zero]
 
 theorem mulVec_mem_hatL_of_St {n : ℕ} {β : GL (Fin n) (Lev.EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E)}

@@ -219,7 +219,7 @@ theorem B_inv (X : Tower Ω ε) (N l w : ℕ) [Fact l.Prime] (b : X.Fn l) (hb : 
   induction hb using Submodule.span_induction with
   | mem x hx => exact hx.2 g hg
   | zero => exact map_zero _
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul c x _ hx => rw [map_smul, hx]
 
 theorem det1 (g : SL(2, ℤ)) : 0 < (g : M₂).det := by

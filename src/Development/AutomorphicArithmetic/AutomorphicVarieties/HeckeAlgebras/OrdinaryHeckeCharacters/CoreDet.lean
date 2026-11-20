@@ -56,7 +56,7 @@ private theorem cd_pow {l : ℕ} [Fact l.Prime] (c : Coef l) {R : Type} [CommRin
     { carrier := {a | ‖y a‖ ≤ max b 0}
       add_mem' := fun {p q} hp hq => by
         change ‖y (p + q)‖ ≤ _
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hp hq)
       zero_mem' := by simp
       smul_mem' := fun r p hp => by

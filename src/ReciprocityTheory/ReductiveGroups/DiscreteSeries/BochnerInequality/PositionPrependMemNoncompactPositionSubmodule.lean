@@ -100,9 +100,9 @@ theorem positionTensorAction_apply (k : ℕ) (a b : Fin n) (F : Big n k M) (κ :
     bAct E k a b F κ = E a b (F κ) + ∑ i, factorAd (M := M) k i a b F κ := by
   rw [← coord_apply' k κ (bAct E k a b F)]
   first
-  | (simp only [bAct, LinearMap.add_apply, LinearMap.coeFn_sum, Finset.sum_apply, map_add, map_sum]
+  | (simp only [bAct, LinearMap.add_apply, LinearMap.coeFn_sum, Finset.sum_apply, map_add (f := _), map_sum]
      simp only [coord_apply', mAct_apply'])
-  | (simp only [bAct, LinearMap.add_apply, LinearMap.sum_apply, map_add, map_sum]
+  | (simp only [bAct, LinearMap.add_apply, LinearMap.sum_apply, map_add (f := _), map_sum]
      simp only [coord_apply', mAct_apply'])
 
 private theorem linearMap_apply_ite_zero (T : Module.End ℂ M) (c : Prop) [Decidable c] (x : M) :
@@ -145,7 +145,7 @@ theorem wordContraction_tensorAction (hE : IsGlRep E) (k : ℕ) (a b : Fin n) (F
   set_option synthInstance.maxHeartbeats 100000 in
     rw [wordContraction_apply, wordContraction_apply, map_sum]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [positionTensorAction_apply, factorAd_apply', map_add, map_sum, map_sub,
+    simp only [positionTensorAction_apply, factorAd_apply', map_add (f := _), map_sum, map_sub,
     linearMap_apply_ite_zero, hc, Finset.sum_add_distrib]
   congr 1
   conv_lhs => rw [Finset.sum_comm]
@@ -269,7 +269,7 @@ theorem map_noncompactLayer_le_sup : ∀ (k : ℕ) (a b : Fin n), ε a ≠ ε b 
       simp only [Submodule.mem_comap]
       have h1 := map_noncompactLayer_le_sup k c d hcd (Submodule.mem_map_of_mem hw)
       obtain ⟨u, hu, y, ⟨G, hG, rfl⟩, hsum⟩ := Submodule.mem_sup.1 h1
-      rw [← hsum, map_add]
+      rw [← hsum, map_add (f := _)]
       refine add_mem (Submodule.mem_sup_left (apply_mem_noncompactLayer_succ hab hu))
         (Submodule.mem_sup_right ⟨indexPairPrepend (a, b) G, positionPrepend_mem_noncompactPositionSubmodule hab hG, ?_⟩)
       rw [wordContraction_prepend]

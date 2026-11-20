@@ -122,16 +122,16 @@ theorem polLe_stable : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       intro f hf
       rw [GlobalTheory.FockKFin.polLe_zero] at hf ⊢
       refine Submodule.span_induction (fun g hg => Submodule.subset_span (hgauss g hg))
-        (by rw [map_zero]; exact Submodule.zero_mem _) (fun x y _ _ hx hy => by rw [map_add]; exact Submodule.add_mem _ hx hy)
+        (by rw [map_zero]; exact Submodule.zero_mem _) (fun x y _ _ hx hy => by rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy)
         (fun c x _ hx => by rw [map_smul]; exact Submodule.smul_mem _ c hx) hf
     | succ m ih =>
       intro f hf
       rw [GlobalTheory.FockKFin.polLe_succ] at hf ⊢
       obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hf
-      rw [map_add]
+      rw [map_add (f := _)]
       refine Submodule.add_mem _ (Submodule.mem_sup_left (ih y hy)) (Submodule.mem_sup_right ?_)
       refine Submodule.span_induction (fun g hg => ?_)
-        (by rw [map_zero]; exact Submodule.zero_mem _) (fun x y _ _ hx hy => by rw [map_add]; exact Submodule.add_mem _ hx hy)
+        (by rw [map_zero]; exact Submodule.zero_mem _) (fun x y _ _ hx hy => by rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy)
         (fun c x _ hx => by rw [map_smul]; exact Submodule.smul_mem _ c hx) hz
       obtain ⟨a₁, b₁, g₀, hg₀, rfl⟩ := hg
       obtain ⟨a₂, b₂, hab⟩ := hdab a₁ b₁

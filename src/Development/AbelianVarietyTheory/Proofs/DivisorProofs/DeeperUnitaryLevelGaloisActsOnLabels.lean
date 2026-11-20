@@ -65,7 +65,7 @@ theorem eq_of_diag_congMod (T : UTrait Xo cf) (κ : T.P.D.toPre.X ≃+ T.P.D.toP
   have hiso : ∀ u v, β (e u) (e v) = β u v := by
     intro u v
     have huv := hd (u + v)
-    simp only [map_add, LinearMap.add_apply] at huv
+    simp only [map_add (f := _), LinearMap.add_apply] at huv
     rw [hd u, hd v] at huv
     rw [hβ, hβ]
     show T.be (κ u) (κ v) + T.be (κ v) (κ u) = _

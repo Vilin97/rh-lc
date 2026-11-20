@@ -25,7 +25,7 @@ theorem Family.weight_isLinearMap (F : Family A) {Λ : Type*} [AddCommGroup Λ] 
     IsLinearMap ℝ (F.weight φ₀ φc c t) where
   map_add a b := by
     funext x
-    simp only [Family.weight, map_add, Pi.add_apply, add_mul, Finset.sum_add_distrib]
+    simp only [Family.weight, map_add (f := _), Pi.add_apply, add_mul, Finset.sum_add_distrib]
     ring
   map_smul s a := by
     funext x
@@ -40,7 +40,7 @@ theorem Family.chernForm_isLinearMap (F : Family A) {Λ : Type*} [AddCommGroup �
     fun lam => lincomb_φ _ _ _ _ _
   constructor
   · intro a b
-    rw [h (a + b), h a, h b, map_add, ← Finset.sum_add_distrib]
+    rw [h (a + b), h a, h b, map_add (f := _), ← Finset.sum_add_distrib]
     simp only [Pi.add_apply, add_mul]
   · intro s a
     rw [h (s • a), h a, map_smul, smul_eq_mul, Finset.mul_sum]

@@ -114,7 +114,7 @@ lemma orderTop_aeval {k : Type} [Field k] (J : HahnSeries ℚ k) (hJ : J.orderTo
       rw [Polynomial.natDegree_divX_eq_natDegree_tsub_one, hn]; rfl
     have hsplit := Polynomial.X_mul_divX_add Q
     have hR := ih Q.divX hd hdn
-    rw [← hsplit, map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C]
+    rw [← hsplit, map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C]
     have hm : (J * Polynomial.aeval J Q.divX).orderTop = ((-((n + 1 : ℕ) : ℚ) : ℚ) : WithTop ℚ) := by
       rw [HahnSeries.orderTop_mul, hJ, hR, ← WithTop.coe_add]
       congr 1

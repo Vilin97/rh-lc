@@ -36,7 +36,7 @@ theorem lossLe_sum_and_pow : ∀ {D : D7} (w : PlL D),
       rw [Finset.sum_insert hj]
       obtain ⟨y1, e1, h1⟩ := h j (Finset.mem_insert_self _ _)
       obtain ⟨y2, e2, h2⟩ := ih fun i hi => h i (Finset.mem_insert_of_mem hi)
-      refine ⟨y1 + y2, by rw [map_add, e1, e2], ?_⟩
+      refine ⟨y1 + y2, by rw [map_add (f := _), e1, e2], ?_⟩
       by_cases hy1 : y1 = 0
       · subst hy1; simpa using h2
       by_cases hy2 : y2 = 0

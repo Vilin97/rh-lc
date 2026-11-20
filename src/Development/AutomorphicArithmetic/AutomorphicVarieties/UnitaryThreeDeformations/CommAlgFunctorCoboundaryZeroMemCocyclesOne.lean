@@ -364,7 +364,7 @@ private theorem finrank_quot_le {k V U : Type} [Field k] [AddCommGroup V] [Modul
     obtain ⟨b, hb, hx⟩ := h1 x
     refine ⟨⟨_, hx⟩, ?_⟩
     show B.mkQ (x + b) = B.mkQ x
-    rw [map_add, Submodule.mkQ_apply B b, (Submodule.Quotient.mk_eq_zero B).2 hb, add_zero]
+    rw [map_add (f := _), Submodule.mkQ_apply B b, (Submodule.Quotient.mk_eq_zero B).2 hb, add_zero]
   exact (LinearMap.finrank_le_finrank_of_surjective hs).trans (LinearMap.finrank_le_finrank_of_injective hi)
 
 end UpperTheory.V.UnitaryThreeInertia.Tan

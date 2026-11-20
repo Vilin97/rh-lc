@@ -59,7 +59,7 @@ theorem recOK_isom (M : GlobalTheory.FrameUnif.ModelsOf F r) (V : HSp D) (hr : V
       (D.host.xi0 * V.hT (V.frame.equivFun.symm (io x)) (V.frame.equivFun.symm (io y))) := by
   have h1 : Dw.EF x y = -Dw.EF y x := by
     have h := Dw.alt (x + y)
-    simp only [map_add, LinearMap.add_apply, Dw.alt] at h
+    simp only [map_add (f := _), LinearMap.add_apply, Dw.alt] at h
     linarith
   rw [h1, Int.cast_neg, hR.2.2.2.1 y x, herm_gmW, ← map_neg]
   congr 1
@@ -115,7 +115,7 @@ theorem th_conj {τ : D.host.E →+* ℂ} {θ : Ainf D.host.F ⊗[D.host.F] D.ho
     rw [(D.sp.cm.fixed _).2 ⟨f, rfl⟩]
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
   | tmul a x =>
     have e : ∀ y : D.host.E, a ⊗ₜ[D.host.F] y = (a ⊗ₜ[D.host.F] (1 : D.host.E)) * ((1 : Ainf D.host.F) ⊗ₜ[D.host.F] y) := by
       intro y; simp
@@ -146,7 +146,7 @@ theorem archM_unitary (V : HSp D) {τ : D.host.E →+* ℂ} {θ : Ainf D.host.F 
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
     | tmul a x => rfl
   have hJ : (JR (AF D.host.F) V.gram).map (θ.comp π) = V.gram.map τ := by
     ext a b

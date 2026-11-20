@@ -86,7 +86,7 @@ theorem eab_of_rightOK {X : GMod n} {c : X.V →ₗ[ℂ] (Matrix (Fin n) (Fin n)
     rw [Finset.smul_sum, ← Finset.sum_add_distrib]
     refine sum_congr rfl fun q _ => ?_
     rw [e5, add_smul, mul_smul]
-  rw [e3, e1, e2, e4, map_add, map_smul]
+  rw [e3, e1, e2, e4, map_add (f := _), map_smul]
   rfl
 
 section Log

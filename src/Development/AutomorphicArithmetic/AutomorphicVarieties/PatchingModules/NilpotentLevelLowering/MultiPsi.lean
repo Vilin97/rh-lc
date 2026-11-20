@@ -94,7 +94,7 @@ theorem UpperTheory.V.Pa.Lev.multiPsi :
       exact hC _
     | add p p' hp hp' =>
       intro y w
-      rw [map_add, map_add, map_add, map_add, LinearMap.add_apply, map_add, TensorProduct.tmul_add, hp, hp', mul_add,
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply, map_add (f := _), TensorProduct.tmul_add, hp, hp', mul_add,
         TensorProduct.add_tmul]
     | mul_X p i hp =>
       intro y w
@@ -110,7 +110,7 @@ theorem UpperTheory.V.Pa.Lev.multiPsi :
       smul_eq_mul, mul_comm]
   | add p p' hp hp' =>
     intro v
-    rw [map_add, map_add, LinearMap.add_apply, map_add, hp, hp', add_smul]
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, map_add (f := _), hp, hp', add_smul]
   | mul_X p ji hp =>
     intro v
     obtain ⟨j, i⟩ := ji

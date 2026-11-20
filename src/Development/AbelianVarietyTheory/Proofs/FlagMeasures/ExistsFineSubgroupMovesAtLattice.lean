@@ -281,7 +281,7 @@ theorem one_add_unit {z : E} (hz : z ∈ L.O) : ∃ e ∈ L.O, e * (1 + algebraM
   obtain ⟨v, hv⟩ := hu.exists_left_inv
   have hv' := congrArg (fun c : 𝒪[F] => algebraMap F E (c : F)) hv
   push_cast at hv'
-  simp only [map_mul, map_add, map_one, ← ht, ← hn] at hv'
+  simp only [map_mul, map_add (f := _), map_one, ← ht, ← hn] at hv'
   refine ⟨algebraMap F E v * (1 + algebraMap F E S.ϖ * L.cj z),
     L.O.mul_mem (algO S v) (L.O.add_mem L.O.one_mem (L.O.mul_mem (algO S _) hc)), ?_⟩
   linear_combination hv'
@@ -369,8 +369,8 @@ variable [IsNonarchimedeanLocalField F] [CharZero F]
 
 theorem sOf_tr (w : S.MW) : S.sOf w + L.cj (S.sOf w) = S.h w.2.1 w.2.1 + (w.2.2 + L.cj w.2.2) := by
   have h2 : algebraMap F E 2⁻¹ + algebraMap F E 2⁻¹ = 1 := by
-    rw [← map_add, ← map_one (algebraMap F E)]; congr 1; norm_num
-  simp only [Frames.sOf, map_add, map_mul, AlgEquiv.commutes, h_cj]
+    rw [← map_add (f := _), ← map_one (algebraMap F E)]; congr 1; norm_num
+  simp only [Frames.sOf, map_add (f := _), map_mul, AlgEquiv.commutes, h_cj]
   linear_combination S.h w.2.1 w.2.1 * h2
 
 theorem Mv_lin {J : ℕ} {d : S.Datum} {Λ : Submodule L.O S.V} {w : S.MW} (h : S.Mv J d Λ w) : w ∈ lin S J := by

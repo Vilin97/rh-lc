@@ -59,7 +59,7 @@ theorem blockAct_diag_mem_VV {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → Fo
       GlobalTheory.CoefScale.rowAct_scalar_dualWeyl _ _ _ (hF τ)
     simp_rw [h2, map_smul, Algebra.smul_def, Finset.prod_mul_distrib, map_prod]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul a x _ hx => rw [map_smul, hx, smul_comm]
 
 end GlobalTheory

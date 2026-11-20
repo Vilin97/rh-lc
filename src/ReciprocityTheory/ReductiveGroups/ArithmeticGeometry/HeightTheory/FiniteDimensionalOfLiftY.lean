@@ -21,7 +21,7 @@ theorem clear_denoms (P : MvPolynomial σ (FractionRing A)) :
     obtain ⟨b₁, p₁, hb₁, h₁⟩ := hp
     obtain ⟨b₂, p₂, hb₂, h₂⟩ := hq
     refine ⟨b₁ * b₂, C b₂ * p₁ + C b₁ * p₂, mul_ne_zero hb₁ hb₂, ?_⟩
-    simp only [_root_.map_add, _root_.map_mul, MvPolynomial.map_C, h₁, h₂]
+    simp only [_root_.map_add (f := _), _root_.map_mul, MvPolynomial.map_C, h₁, h₂]
     ring
   next p n hp =>
     obtain ⟨b, q, hb, h⟩ := hp

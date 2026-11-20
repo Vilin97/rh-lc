@@ -35,7 +35,7 @@ theorem ringAct_natCast {S : Scheme.{0}} {A : Over S} [GrpObj A] [IsCommMonObj A
     rw [Nat.cast_zero, pow_zero]
     exact left_eq_mul.mp h
   | succ n ih =>
-    rw [Nat.cast_succ, ρ.map_add, ih, ρ.map_one, pow_succ]
+    rw [Nat.cast_succ, ρ.map_add (f := _), ih, ρ.map_one, pow_succ]
     rfl
 
 abbrev Admissible {V O : Type} [CommRing V] [IsLocalRing V] [CommRing O] (f : V →+* O) (A : Type) [CommRing A]

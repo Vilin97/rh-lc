@@ -51,7 +51,7 @@ theorem exists_ray (hRF : GlobalTheory.NT.RayField) {E : Type} [Field E] [Number
   let φ : K₀ →+* ℂ := algebraMap K₀ ℂ
   have hw' : φ w = (1 + H.rt0) / 2 := by
     have := congrArg φ hw
-    rw [map_mul, map_add, map_one, map_ofNat] at this
+    rw [map_mul, map_add (f := _), map_one, map_ofNat] at this
     change _ = 1 + H.rt0 at this
     linear_combination this / 2
   have hc : ∀ a b : ℤ, φ ((a : 𝓞 K₀) + b * w : 𝓞 K₀) = a + b * ((1 + H.rt0) / 2) := fun a b => by

@@ -190,7 +190,7 @@ theorem w_eq (X : CMPack Z c FU i hP) (b : Bool) (τ : E →+* ℂ) (hτ : τ (H
   have e3 : 2 * τ (H.w0 : E) = 1 + τ (H.rt : E) := by
     have h0 : (2 : E) * (H.w0 : E) = 1 + (H.rt : E) := by
       have := congrArg (algebraMap (𝓞 E) E) H.two_weight_eq_one_add_root
-      simp only [map_mul, map_add, map_one, map_ofNat] at this
+      simp only [map_mul, map_add (f := _), map_one, map_ofNat] at this
       exact this
     have := congrArg τ h0
     rwa [map_mul, map_add, map_one, map_ofNat] at this

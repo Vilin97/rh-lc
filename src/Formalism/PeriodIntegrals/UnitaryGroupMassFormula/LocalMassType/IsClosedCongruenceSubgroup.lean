@@ -55,7 +55,7 @@ theorem continuous_sigR : Continuous (sigR (Fv F v) σ) := by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [f, sigR]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   rw [heq]
   exact hf
 

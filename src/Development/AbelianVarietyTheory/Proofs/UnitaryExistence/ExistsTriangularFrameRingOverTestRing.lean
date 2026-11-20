@@ -64,7 +64,7 @@ theorem exists_testRing_universal_partially_invertible (K : Type) [Field K] (σ 
         | C r =>
           have := AlgHom.congr_fun h1 r
           exact this.trans (MvPolynomial.aevalTower_algebraMap ψ t r).symm
-        | add a b ha hb => simp only [map_add, ha, hb]
+        | add a b ha hb => simp only [map_add (f := _), ha, hb]
         | mul_X a i ha =>
           simp only [map_mul, ha, h2]
           rw [show φ (MvPolynomial.X i) = t i from MvPolynomial.aevalTower_X ψ t i]

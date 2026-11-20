@@ -19,20 +19,20 @@ theorem smul_smul_mem_range {A B D K₁ K₀ : Type*} [CommRing A] [CommRing B] 
     intro t
     induction t with
     | tmul b k => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have comm₂ : ∀ t : B ⊗[A] LinearMap.ker d,
       (LinearMap.ker d).subtype.lTensor D (ρ.rTensor _ t)
         = ρ.rTensor K₁ ((LinearMap.ker d).subtype.lTensor B t) := by
     intro t
     induction t with
     | tmul b k => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have dker : ∀ t : B ⊗[A] LinearMap.ker d,
       d.lTensor B ((LinearMap.ker d).subtype.lTensor B t) = 0 := by
     intro t
     induction t with
     | tmul b k => simp
-    | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
   have hw' : d.lTensor D (ρ.rTensor K₁ w) = 0 := by
     rw [comm₁, ← hw]; simp [h1]
   obtain ⟨v', hv'⟩ := hGood _ hw'

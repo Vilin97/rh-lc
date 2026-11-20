@@ -195,7 +195,7 @@ theorem log_nSer (hL : FglLog.{u}) (n : ℕ) :
     rw [nSer_zero, Nat.cast_zero, map_zero, zero_mul]
     exact PowerSeries.subst_zero_of_constantCoeff_zero (log_cc W)
   | succ n ih =>
-    rw [nSer_succ, log_FF W hL constantCoeff_X (nSer_cc W n), ih, hX, Nat.cast_succ, map_add, map_one,
+    rw [nSer_succ, log_FF W hL constantCoeff_X (nSer_cc W n), ih, hX, Nat.cast_succ, map_add (f := _), map_one,
       add_mul, one_mul, add_comm]
 
 theorem log_zSer (hL : FglLog.{u}) (n : ℤ) :

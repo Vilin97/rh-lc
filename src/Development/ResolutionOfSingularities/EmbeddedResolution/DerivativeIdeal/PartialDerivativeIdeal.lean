@@ -131,7 +131,7 @@ private def idealInfComapPartialDeriv (h : ι) (K : Ideal S) : Ideal S where
     obtain ⟨ha1, ha2⟩ := ha
     obtain ⟨hb1, hb2⟩ := hb
     refine ⟨Submodule.add_mem K ha1 hb1, ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem K ha2 hb2
   zero_mem' := by
     refine ⟨Submodule.zero_mem K, ?_⟩

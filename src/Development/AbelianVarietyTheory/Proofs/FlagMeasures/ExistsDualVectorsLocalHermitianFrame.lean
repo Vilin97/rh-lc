@@ -13,7 +13,7 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
   {M : Model F E} {V : Type} [AddCommGroup V] [Module E V]
 
 private lemma h_add_right (H : HermSp M V) (x y y' : V) : H.h x (y + y') = H.h x y + H.h x y' := by
-  rw [H.h_herm (y + y') x, H.h_add_left, map_add, ← H.h_herm y x, ← H.h_herm y' x]
+  rw [H.h_herm (y + y') x, H.h_add_left, map_add (f := _), ← H.h_herm y x, ← H.h_herm y' x]
 
 private lemma h_smul_right (H : HermSp M V) (a : E) (x y : V) : H.h x (a • y) = M.L.cj a * H.h x y := by
   rw [H.h_herm (a • y) x, H.h_smul_left, map_mul, ← H.h_herm y x]
@@ -65,7 +65,7 @@ theorem GlobalTheory.LocDual.frameD_exists : ∀ {F : Type} [Field F] [Valuative
   let half : E := algebraMap F E (1 / 2)
   have hhalf : M.L.cj half = half := M.L.cj.commutes _
   have hhalf2 : half + half = 1 := by
-    simp only [half, ← map_add, add_halves, map_one]
+    simp only [half, ← map_add (f := _), add_halves, map_one]
   let b : Fin r → Fin r → E := fun j k => half * H.h (y' j) (y' k)
   let es : Fin r → V := fun j => y' j - ∑ k, b j k • e k
   have hesL : ∀ i v, H.h (es i) v = H.h (y' i) v - ∑ k, b i k * H.h (e k) v := by

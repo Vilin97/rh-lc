@@ -28,7 +28,7 @@ theorem rsT_rsT {Z : Scheme.{0}} {O₀ T : Z.Opens} (s : Γ(Z, O₀)) (hT : T �
 theorem rsT_add {Z : Scheme.{0}} {O₀ : Z.Opens} (s t : Γ(Z, O₀)) (O : Z.Opens) (hO : O ≤ O₀) :
     rsT (s + t) O = rsT s O + rsT t O := by
   unfold rsT
-  rw [dif_pos hO, dif_pos hO, dif_pos hO, map_add]
+  rw [dif_pos hO, dif_pos hO, dif_pos hO, map_add (f := _)]
 
 theorem rsT_sub {Z : Scheme.{0}} {O₀ : Z.Opens} (s t : Γ(Z, O₀)) (O : Z.Opens) (hO : O ≤ O₀) :
     rsT (s - t) O = rsT s O - rsT t O := by

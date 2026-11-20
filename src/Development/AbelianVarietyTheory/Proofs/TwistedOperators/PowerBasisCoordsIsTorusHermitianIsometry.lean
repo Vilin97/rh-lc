@@ -37,12 +37,12 @@ theorem isIsom_coordEquiv : ∀ (F E : Type) [Field F] [Field E] [Algebra F E] (
   induction y using TensorProduct.induction_on with
   | zero => simp
   | add y₁ y₂ h₁ h₂ =>
-    simp only [map_add, mul_add, add_mul, Finset.sum_add_distrib, h₁, h₂]
+    simp only [map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib, h₁, h₂]
   | tmul a z =>
     induction y' using TensorProduct.induction_on with
     | zero => simp
     | add y₁ y₂ h₁ h₂ =>
-      simp only [map_add, mul_add, add_mul, Finset.sum_add_distrib, h₁, h₂]
+      simp only [map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib, h₁, h₂]
     | tmul a' z' =>
       have e1 : ∀ e : E, sigR k σ (a' ⊗ₜ[F] e) = a' ⊗ₜ[F] σ e := fun e => rfl
       have e2 : sigR k (star' P) (a' ⊗ₜ[F] z') = a' ⊗ₜ[F] star' P z' := rfl

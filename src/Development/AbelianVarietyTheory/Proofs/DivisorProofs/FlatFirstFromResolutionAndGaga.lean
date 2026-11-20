@@ -65,7 +65,7 @@ theorem HasLev.mul {I J : Ideal A} (hIJ : I ⊔ J = ⊤) (hI : HasLev O L M I) (
     obtain ⟨y₂, hy₂⟩ := s₂ (a • g) fun c hc => by
       rw [smul_smul, mul_comm]; exact hg _ (Ideal.mul_mem_mul ha hc)
     refine ⟨b • y₁ + a • y₂, ?_⟩
-    simp only [LinearMap.add_apply, map_add, LinearMap.map_smul_of_tower, smul_add]
+    simp only [LinearMap.add_apply, map_add (f := _), LinearMap.map_smul_of_tower, smul_add]
     rw [u₁, u₂, t₁ a ha, t₂ b hb, hy₁, hy₂, add_zero, zero_add, ← add_smul, add_comm, hab, one_smul]
 
 theorem hasLev_of_prime_pow [IsDedekindDomain A] (q : A) (hq : q ≠ 0) (e : ℕ)
@@ -301,7 +301,7 @@ theorem exists_lev_of_card (G : Type) [CommGroup G] (act : D.O → G → G)
     have hall := GlobalTheory.torsion_pow_card D.F _ w (D.m * D.n) hw hne hdiv' h1
     obtain ⟨f, hf1, hf2, hf3⟩ := GlobalTheory.torsionBySet_pow_free_of_natCard D.F _ w (D.m * D.n) r hw hne hall
     obtain ⟨l, l1, l2, l3, l4⟩ := GlobalTheory.EtLevMorita.exists_lev p D w r hw hpw G act hmul hone hcomp hadd
-      (fun a => (f a).toMul) (fun a a' => by rw [map_add]; rfl) (fun c a => by rw [hf1]; rfl)
+      (fun a => (f a).toMul) (fun a a' => by rw [map_add (f := _)]; rfl) (fun c a => by rw [hf1]; rfl)
       (fun a a' h => hf2 h) (fun g hg => hf3 (Additive.ofMul g) hg)
     refine ⟨{ toFun := fun y => Additive.ofMul (l y)
               map_add' := fun y z => congrArg Additive.ofMul (l1 y z)

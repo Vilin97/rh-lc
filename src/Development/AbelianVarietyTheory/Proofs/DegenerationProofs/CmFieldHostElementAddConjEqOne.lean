@@ -50,7 +50,7 @@ theorem exists_ringHom_lift {S : Scheme.{0}} {A : Over S} [GrpObj A] [IsCommMonO
     ∃ F : O →+* Module.End ℂ V, ∀ a z, ex (F a z) = ex z ≫ act.act a := by
   choose F hF hU using fun a => hlift (act.act a) (act.hom a)
   have add : ∀ a b, F (a + b) = F a + F b := fun a b => (hU _ _ fun z => by
-    rw [LinearMap.add_apply, hadd, hF, hF, act.map_add]
+    rw [LinearMap.add_apply, hadd, hF, hF, act.map_add (f := _)]
     exact (MonObj.comp_mul _ _ _).symm).symm
   refine ⟨RingHom.mk' ⟨⟨F, (hU _ _ fun z => ?_).symm⟩, fun a b => (hU _ _ fun z => ?_).symm⟩ add, hF⟩
   · rw [act.map_one, Category.comp_id]; rfl
@@ -89,7 +89,7 @@ theorem valSt (hL : Laws) (hFam : BrFamSt) (hEx : FibExSt) (hGrp : FibGrpSt) (hC
   have hw : ∀ z w, hermForm Hm z w = hermForm Hm z (F H.w0 w) + hermForm Hm (F H.w0 z) w := fun z w => by
     rw [hadj]
     refine Eq.trans ?_ (B.H_add_right z (F H.w0 w) (F (star H.w0) w))
-    rw [← LinearMap.add_apply, ← map_add, show H.w0 + star H.w0 = 1 from cmField_host_element_add_conj_eq_one H, map_one]
+    rw [← LinearMap.add_apply, ← map_add (f := _), show H.w0 + star H.w0 = 1 from cmField_host_element_add_conj_eq_one H, map_one]
     rfl
   have hp := hprim _ (A.oa.onB.hom H.w0) (F H.w0) (hmem H.w0) (hF H.w0) hw Ef hEf
   have hth : ∀ z, A.N.th (A.ν.eA.symm (ex z)) = θ z * fr 0 / A.ν.rg * ((fr z / fr 0 : ℂˣ) : ℂ) := fun z => by

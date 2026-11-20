@@ -25,7 +25,7 @@ theorem expOf_cons {d : ℕ} (i : Fin d) (L : List (Fin d)) :
 theorem degree_expOf {d : ℕ} (L : List (Fin d)) : (expOf L).degree = L.length := by
   induction L with
   | nil => simp [expOf]
-  | cons i L ih => rw [expOf_cons, map_add, ih, Finsupp.degree_single]; simp; omega
+  | cons i L ih => rw [expOf_cons, map_add (f := _), ih, Finsupp.degree_single]; simp; omega
 
 theorem expOf_apply_le {d : ℕ} (L : List (Fin d)) (i : Fin d) : expOf L i ≤ L.length := by
   rw [expOf, Multiset.toFinsupp_apply, Multiset.coe_count]
@@ -55,7 +55,7 @@ theorem der_mem_pow {R A : Type} [CommRing R] [CommRing A] [Algebra R A]
       rw [pow_succ']
       exact Ideal.mul_mem_mul ha (der_mem_pow D J k b hb)
     · intro x y hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Ideal.add_mem _ hx hy
 
 theorem iterDer_mem {R A : Type} [CommRing R] [CommRing A] [Algebra R A] {d : ℕ}
@@ -74,10 +74,10 @@ theorem der_aeval {R B : Type} [CommRing R] [CommRing B] [Algebra R B] {d : ℕ}
     D (aeval y Q) = ∑ j, aeval y (pderiv j Q) * D (y j) := by
   induction Q using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp [map_add, hp, hq, add_mul, Finset.sum_add_distrib]
+  | add p q hp hq => simp [map_add (f := _), hp, hq, add_mul, Finset.sum_add_distrib]
   | mul_X p i hp =>
     rw [map_mul, aeval_X, D.leibniz, hp, smul_eq_mul, smul_eq_mul]
-    simp only [pderiv_mul, pderiv_X, map_add, map_mul, aeval_X, add_mul, Finset.sum_add_distrib,
+    simp only [pderiv_mul, pderiv_X, map_add (f := _), map_mul, aeval_X, add_mul, Finset.sum_add_distrib,
       Finset.mul_sum]
     rw [add_comm]
     congr 1
@@ -141,7 +141,7 @@ theorem eval_iterDer_aeval {R B : Type} [CommRing R] [CommRing B] [Algebra R B] 
         have := iterDer_mem D (RingHom.ker ε) L 1 _ hmem
         rw [pow_one, RingHom.mem_ker] at this
         exact this
-      rw [split, map_add, map_add, h0, add_zero, map_smul, map_smul, smul_eq_mul,
+      rw [split, map_add (f := _), map_add (f := _), h0, add_zero, map_smul, map_smul, smul_eq_mul,
         eval_iterDer_aeval ε y D hy hD L (pderiv j Q) (hP j)]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [der_aeval, map_sum, map_sum]

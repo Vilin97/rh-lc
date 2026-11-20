@@ -183,7 +183,7 @@ theorem isSplitPl_of_two_mem {R : Ranks} (H : Host R) (w : PlE H) (h2 : (2 : �
     ⟨Polynomial.X ^ 2 - Polynomial.X + Polynomial.C ((2 * k : ℕ) : ℤ), by monicity!, by
       simpa [Polynomial.eval₂_sub, Polynomial.eval₂_add] using hc⟩
   have hconj : H.conj c = 1 - c := by
-    simp only [hcdef, map_div₀, map_add, map_one, H.conj_sqrtMinusD, map_ofNat]
+    simp only [hcdef, map_div₀, map_add (f := _), map_one, H.conj_sqrtMinusD, map_ofNat]
     ring
   let ω : 𝓞 H.E := ⟨c, hint⟩
   have hω : (ω : H.E) = c := rfl

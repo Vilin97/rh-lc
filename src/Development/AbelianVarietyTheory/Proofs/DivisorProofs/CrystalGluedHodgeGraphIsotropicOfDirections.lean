@@ -73,7 +73,7 @@ theorem eq_of_liftSemi_surj' {K C C' : Type} [Field K] [CommRing C] [CommRing C'
   obtain ⟨u, rfl⟩ := hP c
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add u v hu hv => rw [map_add, map_add, map_add, map_add, map_add, hu, hv]
+  | add u v hu hv => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hu, hv]
   | tmul r c =>
     rw [liftSemi_tmul, LinearMap.map_smulₛₗ, map_smul, map_smul, hQ, h, smul_eq_mul, smul_eq_mul, map_mul]
 

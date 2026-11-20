@@ -28,7 +28,7 @@ def cobK : V →ₗ[FractionRing O] (Γ → V) where
   toFun v γ := ρ γ v - v
   map_add' u v := by
     funext γ
-    simp only [map_add, Pi.add_apply]
+    simp only [map_add (f := _), Pi.add_apply]
     abel
   map_smul' k v := by
     funext γ
@@ -280,7 +280,7 @@ theorem filV_mono {a b : ℤ} (h : a ≤ b) : FilV PD (LL := LL) (V := V) b ≤ 
   induction y using TensorProduct.induction_on with
   | zero => rw [map_zero]; exact Submodule.zero_mem _
   | tmul v f => exact LinearMap.mem_range.mpr ⟨v ⊗ₜ[Qp] Submodule.inclusion hle f, rfl⟩
-  | add y z hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 theorem exists_filV (x : TensorProduct Qp V BdR) : ∃ a, x ∈ FilV PD (LL := LL) a := by
   induction x using TensorProduct.induction_on with

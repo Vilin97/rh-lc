@@ -38,7 +38,7 @@ private theorem conj_explicit {F : Type} [Field F] [NumberField F] {κ : Type} [
   have hL : ∀ x c : κ → mixedEmbedding.mixedSpace F, linL c x = trP F κ x c := fun x c => by
     rw [linL_apply]; rfl
   have hadd : trP F κ (y + w.1) b = trP F κ y b + trP F κ w.1 b := by
-    simp [trP, add_mul, Finset.sum_add_distrib, map_add]
+    simp [trP, add_mul, Finset.sum_add_distrib, map_add (f := _)]
   set φ : (κ → mixedEmbedding.mixedSpace F) → ℂ := fun z =>
     Complex.exp (-(2 * Real.pi * Complex.I) * ((trP F κ z w.2 + trP F κ w.1 w.2 / 2 : ℝ) : ℂ)) with hφdef
   have hS : ∀ h : (κ → mixedEmbedding.mixedSpace F) → ℂ, schrF (trP F κ) w h = fun z => φ z * h (z + w.1) :=
@@ -152,11 +152,11 @@ theorem _root_.GlobalTheory.T.configuration_a_local_evaluation : ∀ (F E : Type
   have hadd : ∀ (p q p' q' : Fin (b + 2) × Fin (b + 2 + a') → mixedEmbedding.mixedSpace F) f,
       dOp (p + p') (q + q') f = dOp p q f + dOp p' q' f := fun p q p' q' f => by
     ext x
-    simp only [dOp_apply, SchwartzMap.add_apply, map_add, lin, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+    simp only [dOp_apply, SchwartzMap.add_apply, map_add (f := _), lin, Pi.add_apply, mul_add, Finset.sum_add_distrib]
     push_cast
     ring
   obtain ⟨c, hc⟩ := line_core _ _ _ _ _ g _ hv (locOpInf_rho G.M.co hψ (shiftA H H' l) g).2
   refine ⟨c, SchwartzMap.ext fun x => ?_⟩
   refine hc (((BoundedContinuousFunction.evalCLM ℂ x).comp
     (SchwartzMap.toBoundedContinuousFunctionCLM ℂ _ ℂ)).comp ei) fun f => ?_
-  rw [ContinuousLinearMap.comp_apply, coordI_add, Prod.fst_add, Prod.snd_add, hadd, map_add, h1, h2, add_zero, map_zero]
+  rw [ContinuousLinearMap.comp_apply, coordI_add, Prod.fst_add, Prod.snd_add, hadd, map_add (f := _), h1, h2, add_zero, map_zero]

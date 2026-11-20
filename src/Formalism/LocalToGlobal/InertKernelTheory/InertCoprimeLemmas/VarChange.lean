@@ -106,7 +106,7 @@ theorem D_phi : D W (phi W C) = PowerSeries.C (C.u : R) * (fw (C • W)).subst (
     have h2 := den_mul_vv W C
     linear_combination (vv W C) * h1 - (D W (vv W C)) * h2
   have hdenD : D W (den W C) = PowerSeries.C C.s * D W X + PowerSeries.C (C.t - C.s * C.r) * D W (wSer W) := by
-    simp only [den, map_add, Derivation.leibniz, smul_eq_mul, D_C, Derivation.map_one_eq_zero]
+    simp only [den, map_add (f := _), Derivation.leibniz, smul_eq_mul, D_C, Derivation.map_one_eq_zero]
     ring
   have hphiD : D W (phi W C) = PowerSeries.C (C.u : R) * ((D W X - PowerSeries.C C.r * D W (wSer W)) * vv W C
       + (X - PowerSeries.C C.r * wSer W) * D W (vv W C)) := by
@@ -226,7 +226,7 @@ theorem intPS_X' : IntPS R' (X : K⟦X⟧) := by
   intro n; rw [coeff_X]; split_ifs; exacts [R'.one_mem, R'.zero_mem]
 
 theorem intPS_add' {f g : K⟦X⟧} (hf : IntPS R' f) (hg : IntPS R' g) : IntPS R' (f + g) := by
-  intro n; rw [map_add]; exact R'.add_mem (hf n) (hg n)
+  intro n; rw [map_add (f := _)]; exact R'.add_mem (hf n) (hg n)
 
 theorem intPS_sub' {f g : K⟦X⟧} (hf : IntPS R' f) (hg : IntPS R' g) : IntPS R' (f - g) := by
   intro n; rw [map_sub]; exact R'.sub_mem (hf n) (hg n)

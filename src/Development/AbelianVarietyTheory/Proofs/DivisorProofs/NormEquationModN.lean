@@ -134,7 +134,7 @@ theorem exists_mul_bar_sub_eq_nsmul : ∀ {E : Type} [Field E] [NumberField E] [
   set u' := H.w0 * u + H.bar (H.w0 * u) with hu'
   have hfix : (H.bar : 𝓞 E →+* 𝓞 E) u' = u' := by
     show H.bar u' = u'
-    rw [hu', map_add, hσ, add_comm]
+    rw [hu', map_add (f := _), hσ, add_comm]
   have hdiff : u' - u = H.bar H.w0 * (N • b0) := by
     rw [hu', map_mul, ← hb0]
     linear_combination u * hw

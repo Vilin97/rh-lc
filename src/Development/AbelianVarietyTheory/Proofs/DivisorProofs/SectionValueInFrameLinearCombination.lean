@@ -45,7 +45,7 @@ theorem exists_isValue_lin : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) (L : 
     (show Γ(G.left, ⊤) from G.hom.appTop.hom ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom b)) • σ₂,
     fun Z r z J hJ => ?_⟩
   refine (sval_smul_add_smul σ₁ σ₂ _ _ (r ≫ x') z hJ).trans ?_
-  rw [h₁ Z r z J hJ, h₂ Z r z J hJ, map_add, map_mul, map_mul, gs_add r z ⊤ trivial, gs_mul r z ⊤ trivial,
+  rw [h₁ Z r z J hJ, h₂ Z r z J hJ, map_add (f := _), map_mul, map_mul, gs_add r z ⊤ trivial, gs_mul r z ⊤ trivial,
     gs_mul r z ⊤ trivial, ← gs_base_fn G.hom φ x' h r z a, ← gs_base_fn G.hom φ x' h r z b, add_mul, _root_.mul_assoc,
     _root_.mul_assoc]
 

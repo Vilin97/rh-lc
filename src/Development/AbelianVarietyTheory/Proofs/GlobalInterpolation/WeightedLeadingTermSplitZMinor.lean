@@ -35,7 +35,7 @@ theorem TopTerm.mul {f g : MvPolynomial σ A} {d e : σ →₀ ℕ} {c c' : A} (
       have hy := hg.2 y (mem_support_iff.2 (right_ne_zero_of_mul h0))
       have hs : x + y = d + e := by simpa using hxy
       have hw := congrArg (Finsupp.weight w) hs
-      rw [map_add, map_add] at hw
+      rw [map_add (f := _), map_add (f := _)] at hw
       rcases hx with rfl | hx <;> rcases hy with rfl | hy
       · exact hne rfl
       all_goals omega
@@ -43,7 +43,7 @@ theorem TopTerm.mul {f g : MvPolynomial σ A} {d e : σ →₀ ℕ} {c c' : A} (
       exact absurd (by simp) h
   · intro m hm
     obtain ⟨x, hx, y, hy, rfl⟩ := Finset.mem_add.1 (support_mul f g hm)
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     rcases hf.2 x hx with rfl | hx <;> rcases hg.2 y hy with rfl | hy
     · exact Or.inl rfl
     all_goals right; omega

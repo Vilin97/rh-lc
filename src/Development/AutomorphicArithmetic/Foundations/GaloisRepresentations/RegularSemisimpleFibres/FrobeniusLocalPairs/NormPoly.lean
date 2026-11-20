@@ -57,7 +57,7 @@ private theorem isNonarchimedeanLocalField_of_ringEquiv_of_isInducing {L M : Typ
       refine ⟨e.symm c₁, by simpa using hc₁, fun z hz => hts ?_⟩
       rw [hlt, RingEquiv.apply_symm_apply] at hz
       show e (x + z) ∈ t
-      rw [map_add]
+      rw [map_add (f := _)]
       exact h _ hz
     · rintro ⟨c, hc, h⟩
       refine ⟨e '' u, ?_, fun z hz => ?_⟩
@@ -66,7 +66,7 @@ private theorem isNonarchimedeanLocalField_of_ringEquiv_of_isInducing {L M : Typ
         refine ⟨x + e.symm w, h _ ?_, ?_⟩
         · rw [hlt, RingEquiv.apply_symm_apply]
           exact hw
-        · rw [map_add, RingEquiv.apply_symm_apply]
+        · rw [map_add (f := _), RingEquiv.apply_symm_apply]
       · obtain ⟨z', hz', hzz⟩ := hz
         rw [e.injective hzz] at hz'
         exact hz'⟩

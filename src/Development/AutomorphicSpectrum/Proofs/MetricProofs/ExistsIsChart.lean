@@ -104,7 +104,7 @@ def chartW (bas : Module.Basis (Fin g ⊕ Fin g) ℤ Λ) (B : Fin a → Matrix (
 def chartPer (bas : Module.Basis (Fin g ⊕ Fin g) ℤ Λ) (A T0 : (Fin n → ℂ) → Matrix (Fin g) (Fin g) ℂ)
     (B : Fin a → Matrix (Fin g) (Fin g) ℤ) : chartW bas B →+ (Fin g → ℂ) :=
   AddMonoidHom.mk' (fun x => chartS bas A T0 (x : Λ) 0) (fun x y => by
-    simp only [chartS, Submodule.coe_add, map_add, cst_add, mulVec_add]
+    simp only [chartS, Submodule.coe_add, map_add (f := _), cst_add, mulVec_add]
     abel_nf)
 
 def IsKerProj (S : Matrix (Fin g) (Fin g) ℤ) (Pr : Matrix (Fin g) (Fin g) ℝ) : Prop :=

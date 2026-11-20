@@ -137,7 +137,7 @@ theorem DD_stable {σ : Mat k r → (H →L[ℂ] H)} (hG : IsClosedSub k r (GG k
     rw [hσ.1.2 g hg h hh] at this
     exact this
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact (DD σ w).add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact (DD σ w).add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact (DD σ w).smul_mem c hx
 
 theorem integral_coef_translate {σ : Mat k r → (H →L[ℂ] H)} [CompleteSpace H]

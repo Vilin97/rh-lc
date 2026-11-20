@@ -38,16 +38,16 @@ theorem exists_linearEquiv_of_rational {K R E α β κ : Type} [Field K] [CommRi
       map_add' := by
         intro a b
         have key := hyz (a + b)
-        rw [hadd, map_add, hyz a, hyz b] at key
+        rw [hadd, map_add (f := _), hyz a, hyz b] at key
         have h1 : ∀ i, algebraMap K R (y a i) + algebraMap K R (y b i) = algebraMap K R (y (a + b) i) :=
           fun i => congrFun (congrArg Prod.fst key) i
         have h2 : ∀ i, algebraMap K R (z a i) + algebraMap K R (z b i) = algebraMap K R (z (a + b) i) :=
           fun i => congrFun (congrArg Prod.snd key) i
         refine Prod.ext (funext fun i => hinj ?_) (funext fun i => hinj ?_)
         · change algebraMap K R (y (a + b) i) = algebraMap K R (y a i + y b i)
-          rw [map_add, h1]
+          rw [map_add (f := _), h1]
         · change algebraMap K R (z (a + b) i) = algebraMap K R (z a i + z b i)
-          rw [map_add, h2]
+          rw [map_add (f := _), h2]
       map_smul' := by
         intro c a
         have key := hyz (c • a)

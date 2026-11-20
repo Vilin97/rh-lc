@@ -203,7 +203,7 @@ def rdK (hρ : ρ.Good) (k : ℕ) : X.Ok i k ⊗[X.O i] Y.Fm i ((j : ℕ) + 1) b
     map_smul' := fun c x => by
       induction x using TensorProduct.induction_on with
       | zero => rw [smul_zero, map_zero, smul_zero]
-      | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+      | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
       | tmul a f =>
         change ρ.eOk i b k (c • a) • rd f = ρ.eOk i b k c • ρ.eOk i b k a • rd f
         rw [smul_eq_mul, map_mul, mul_smul] }
@@ -257,7 +257,7 @@ theorem Faithful.injective_rdK (h : Faithful rd) (hρ : ρ.Good) (k : ℕ) : Fun
         Module.End (FractionRing (X.O i)) (Y.Fm i ((j : ℕ) + 1) b)).restrictScalars (X.O i)) (d • x) = x := fun x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [smul_add, map_add, hx, hy]
+    | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy]
     | tmul a f =>
       rw [← TensorProduct.tmul_smul, LinearMap.lTensor_tmul]
       congr 1

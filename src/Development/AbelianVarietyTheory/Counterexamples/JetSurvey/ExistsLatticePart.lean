@@ -79,7 +79,7 @@ theorem mem_closure_level (F : Type) [Field F] [IsAlgClosed F] [Algebra (Fractio
     rwa [← _root_.mul_one (l.M : 𝓞 E), act_nsmul, a.oa.onB.map_one, MonObj.comp_pow, Category.comp_id] at e
   have ex : x ≫ a.oa.onB.act mb = x := by
     have e₁ : x ≫ a.oa.onB.act (m + mb) = x := by rw [hsum, a.oa.onB.map_one, Category.comp_id]
-    rw [a.oa.onB.map_add] at e₁
+    rw [a.oa.onB.map_add (f := _)] at e₁
     exact ((_root_.one_mul _).symm.trans (congrArg (· * _) (hx m hm).symm)).trans ((MonObj.comp_mul _ _ _).symm.trans e₁)
   obtain ⟨p, -, hp⟩ := exists_qkPt_of_torsion a.bimult h₀.ne' xM
   obtain ⟨-, I, -, -, hI⟩ := a.geom F ⟨H.rt0, c.le (IntermediateField.subset_adjoin _ _ (by simp))⟩

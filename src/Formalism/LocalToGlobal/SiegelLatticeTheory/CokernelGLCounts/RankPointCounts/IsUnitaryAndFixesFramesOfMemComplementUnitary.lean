@@ -43,7 +43,7 @@ theorem fix_X (f : Fin (r + 1) → V) {g : V ≃ₗ[E] V} (hg : ∀ b, g (f b) =
     obtain ⟨a, rfl⟩ := hy
     exact hg _
   | zero => exact map_zero g
-  | add u v _ _ hu hv => rw [map_add, hu, hv]
+  | add u v _ _ hu hv => rw [map_add (f := _), hu, hv]
   | smul c u _ hu => rw [map_smul, hu]
 
 theorem N_perp (Fr : FrameD H r) {s : V ≃ₗ[E] V} (hs : s ∈ Fr.N) {v : V} (hv : v ∈ H.perp (H.X Fr.f)) :
@@ -271,7 +271,7 @@ theorem prF_mem_perp (v : V) : Fr.prF v ∈ H.perp (H.X Fr.f) := by
     obtain ⟨a, rfl⟩ := hz'
     exact (hkey v a).1
   | zero => rw [hR, hz, map_zero]
-  | add a b _ _ ha hb => rw [hR, H.h_add_left, map_add, ← hR, ← hR, ha, hb, add_zero]
+  | add a b _ _ ha hb => rw [hR, H.h_add_left, map_add (f := _), ← hR, ← hR, ha, hb, add_zero]
   | smul c a _ ha => rw [hR, H.h_smul_left, map_mul, ← hR, ha, mul_zero]
 
 theorem prF_prF' (v : V) : Fr.prF (Fr.prF v) = Fr.prF v := by
@@ -361,7 +361,7 @@ theorem lset_LamStd (L : Submodule M.L.O (H.Wb Fr.f)) (w : H.Wb Fr.f) :
       | add a b _ _ ha hb =>
         have h6 : (⟨Fr.prF (a + b), prF_mem_perp Fr _⟩ : ↥(H.perp (H.X Fr.f))) =
             ⟨Fr.prF a, prF_mem_perp Fr a⟩ + ⟨Fr.prF b, prF_mem_perp Fr b⟩ := Subtype.ext (prF_add' Fr a b)
-        rw [h6, map_add]
+        rw [h6, map_add (f := _)]
         exact add_mem ha hb
       | smul c a _ ha =>
         have h6 : (⟨Fr.prF (c • a), prF_mem_perp Fr _⟩ : ↥(H.perp (H.X Fr.f))) = (c : E) • ⟨Fr.prF a, prF_mem_perp Fr a⟩ :=

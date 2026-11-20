@@ -93,7 +93,7 @@ theorem exists_ann {R : Type} [CommRing R] (p : Ideal R) [p.IsPrime] (I : Ideal 
     · intro x hx
       obtain ⟨y, hy, z, hz, hyz⟩ := Submodule.mem_sup.1 (h₃ (Ideal.mem_map_of_mem _ hx))
       obtain ⟨w, rfl⟩ := Ideal.mem_span_singleton'.1 hz
-      rw [RingHom.mem_ker, RingHom.comp_apply, RingHom.comp_apply, ← hyz, map_add,
+      rw [RingHom.mem_ker, RingHom.comp_apply, RingHom.comp_apply, ← hyz, map_add (f := _),
         Ideal.Quotient.eq_zero_iff_mem.2 hy, zero_add, Ideal.Quotient.eq_zero_iff_mem, map_mul]
       exact Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self _)
   have hx : ∀ x ∈ I, ∃ c ∉ p, c * x = 0 := fun x hx => by

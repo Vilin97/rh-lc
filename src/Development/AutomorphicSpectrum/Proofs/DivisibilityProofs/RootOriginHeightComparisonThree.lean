@@ -256,9 +256,9 @@ theorem val_rel {Ω₀ Ω₁ Ω : Type} [Field Ω₀] [Field Ω₁] [Field Ω] {
       (GroundTheory.Heights₂.Heights.HilbertSamuel.ProjLine.mhNeg (hdeg ▸ GroundTheory.Heights₂.Heights.HilbertSamuel.ProjLine.mhMul (GroundTheory.Heights₂.Heights.HilbertSamuel.ProjLine.mhMul hg (isMultiHomog_rename hu₀ hG₀))
         (isMultiHomog_rename hu₁ hH₁)))
   have hmem := hz _ (Small.LineModel.mem_of_aeval y hA (by
-    simp only [map_add, map_neg, map_mul, rn₀, rn₁, e₀, e₁]
+    simp only [map_add (f := _), map_neg, map_mul, rn₀, rn₁, e₀, e₁]
     linear_combination (i₀ (aeval y₀ H₀) * i₁ (aeval y₁ H₁)) * hval))
-  simp only [map_add, map_neg, map_mul, aeval_rename] at hmem
+  simp only [map_add (f := _), map_neg, map_mul, aeval_rename] at hmem
   have c₀ : z ∘ u₀ = fun p => z (u₀ p) := rfl
   have c₁ : z ∘ u₁ = fun p => z (u₁ p) := rfl
   rw [c₀, c₁, v₀, v₁] at hmem

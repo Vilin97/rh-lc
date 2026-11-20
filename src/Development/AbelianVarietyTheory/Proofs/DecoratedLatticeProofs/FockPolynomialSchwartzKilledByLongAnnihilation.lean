@@ -28,10 +28,10 @@ theorem hasDerivAt_eval_line {σ : Type} [Fintype σ] [DecidableEq σ] (p : MvPo
   induction p using MvPolynomial.induction_on with
   | C a => simpa using hasDerivAt_const t (eval (v + (t : ℂ) • c) (C a))
   | add p q hp hq =>
-    simp only [map_add, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
     exact hp.add hq
   | mul_X p k hp =>
-    simp only [map_mul, eval_X, Derivation.leibniz, pderiv_X, smul_eq_mul, map_add, mul_add]
+    simp only [map_mul, eval_X, Derivation.leibniz, pderiv_X, smul_eq_mul, map_add (f := _), mul_add]
     have h := hp.mul (hl k)
     refine h.congr_deriv ?_
     have hs : ∀ j, eval (v + (t : ℂ) • c) (Pi.single (M := fun _ : σ => MvPolynomial σ ℂ) j 1 k) = if j = k then 1 else 0 := by
@@ -118,7 +118,7 @@ theorem compAt_add' (τ : D.what₂.Tau) {m : ℕ} (x y : Mx D m n) :
     compAt θ τ (x + y) = compAt θ τ x + compAt θ τ y := by
   ext i j
   simp only [compAt, Matrix.map_apply, Matrix.add_apply]
-  rw [(infPart D).map_add, (θ τ).map_add]
+  rw [(infPart D).map_add (f := _), (θ τ).map_add (f := _)]
 
 theorem compAt_add_lineAt (hθ : IsInfFam θ) {m : ℕ} (x : Mx D m n) (τ : D.what₂.Tau) (X : Matrix (Fin m) (Fin n) ℂ) (t : ℝ) :
     (fun τ' => compAt θ τ' (x + lineAt θ τ X t)) = (fun τ' => compAt θ τ' x) + (t : ℂ) • dirAt τ X := by
@@ -132,7 +132,7 @@ theorem finPart_add_lineAt (hθ : IsInfFam θ) {m : ℕ} (x : Mx D m n) (τ : D.
   funext i j
   have h := congrFun (congrFun ((GlobalTheory.OrientedHeis.isLineAt_lineAt hθ τ X).2.1 t) i) j
   simp only [Matrix.map_apply, Matrix.zero_apply] at h
-  rw [Matrix.add_apply, (finPart D).map_add, h, add_zero]
+  rw [Matrix.add_apply, (finPart D).map_add (f := _), h, add_zero]
 
 end Line
 
@@ -217,7 +217,7 @@ theorem degree_sub_single_lt {σ : Type} {N : ℕ} (e : σ →₀ ℕ) (k : σ) 
   have h2 : e = (e - Finsupp.single k 1) + Finsupp.single k 1 := (tsub_add_cancel_of_le h1).symm
   have h3 : Finsupp.degree e = Finsupp.degree (e - Finsupp.single k 1) + 1 := by
     conv_lhs => rw [h2]
-    rw [map_add, Finsupp.degree_single]
+    rw [map_add (f := _), Finsupp.degree_single]
   omega
 
 theorem annS_mem (hθ : IsInfFam θ) (hM : ∀ τ, (gramAt D V τ * s τ).IsHermitian) {N : ℕ}

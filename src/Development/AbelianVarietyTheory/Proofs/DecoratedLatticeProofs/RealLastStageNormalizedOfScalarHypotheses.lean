@@ -60,7 +60,7 @@ theorem normX : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A 
     refine LinearMap.ext fun w => LinearMap.ext fun x => ?_
     induction x using PiTensorProduct.induction_on with
     | smul_tprod r v => simp [hc w v]
-    | add x y hx hy => simp [map_add, hx, hy]
+    | add x y hx hy => simp [map_add (f := _), hx, hy]
   obtain ⟨a, ha⟩ := riesz (R.prX.flip (PiTensorProduct.tprod ℂ v0))
   have ha' : ∀ w, R.prX w (PiTensorProduct.tprod ℂ v0) = ⟪a, w⟫_ℂ := fun w => ha w
   have hna : a ≠ 0 := by

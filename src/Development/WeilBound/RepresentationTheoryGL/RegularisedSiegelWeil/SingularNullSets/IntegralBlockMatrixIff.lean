@@ -25,7 +25,7 @@ namespace IntM
 variable {v : Pl D} {m p q : ℕ}
 
 theorem add {M N : Mx D m p} (hM : IntM v M) (hN : IntM v N) : IntM v (M + N) := fun i j => by
-  rw [Matrix.add_apply, map_add]; exact add_mem (hM i j) (hN i j)
+  rw [Matrix.add_apply, map_add (f := _)]; exact add_mem (hM i j) (hN i j)
 
 theorem neg {M : Mx D m p} (hM : IntM v M) : IntM v (-M) := fun i j => by
   rw [Matrix.neg_apply, map_neg]; exact neg_mem (hM i j)

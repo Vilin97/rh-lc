@@ -68,7 +68,7 @@ private def mlin (σ : R →+* S) :
     have e : ∀ v, (fun τ => onFactor σ N N (Formalism.CohomologicalDescent.LD.res N (mu τ)) (Function.update x i v τ)) =
         Function.update (fun τ => onFactor σ N N _ (x τ)) i (onFactor σ N N _ v) := fun v =>
       funext fun τ => Function.apply_update (fun τ => onFactor σ N N (Formalism.CohomologicalDescent.LD.res N (mu τ))) x i v τ
-    simp only [e, map_add]
+    simp only [e, map_add (f := _)]
     exact (PiTensorProduct.tprod S).map_update_add _ i _ _
   map_update_smul' := by
     intro _ x i c a
@@ -101,7 +101,7 @@ private theorem semi_left_inv (g : R ≃+* S) (y : NablaT R N mu) :
       funext τ
       ext1
       simp [onFactor, map_map, MvPolynomial.map_id]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 private theorem onFactor_rep (σ : R →+* S) (u : GL (Fin N) R) (ν : Fin N → ℕ)
     (f : Formalism.GradedWeylDivisibility.dualWeyl R N N ν) :
@@ -126,7 +126,7 @@ private theorem semi_grp [DecidableEq ι] (σ : R →+* S) (h : ι → GL (Fin N
     congr 2
     funext τ
     exact onFactor_rep N σ (h τ) _ (x τ)
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
 private theorem det_map (σ : R →+* S) (u : GL (Fin N) R) :
     Matrix.GeneralLinearGroup.det (Matrix.GeneralLinearGroup.map σ u) =

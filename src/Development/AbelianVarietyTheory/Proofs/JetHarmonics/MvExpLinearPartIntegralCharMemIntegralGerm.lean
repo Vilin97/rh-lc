@@ -20,7 +20,7 @@ theorem const_subst {σ τ : Type} [Finite σ] {a : σ → MvPowerSeries τ C} (
     (F : MvPowerSeries σ C) : constantCoeff (subst a F) = constantCoeff F := by
   have hs := hasSubst_of_constantCoeff_zero ha
   have e : F = (F - MvPowerSeries.C (constantCoeff F)) + MvPowerSeries.C (constantCoeff F) := by ring
-  rw [e, subst_add hs, map_add, constantCoeff_subst_zero ha (by simp), subst_C]
+  rw [e, subst_add hs, map_add (f := _), constantCoeff_subst_zero ha (by simp), subst_C]
   simp
 
 theorem coeff_single_subst_lg (hY : RLaw Y V) (F : MvPowerSeries κ C) (i : κ) :
@@ -33,8 +33,8 @@ theorem coeff_single_subst_lg (hY : RLaw Y V) (F : MvPowerSeries κ C) (i : κ) 
   have h2 := mem_degGe.1 h (Finsupp.single i 1) (by simp)
   have e : F = (F - MvPowerSeries.C (constantCoeff F)) + MvPowerSeries.C (constantCoeff F) := by ring
   rw [map_sub, sub_eq_zero, congrFun subst_self] at h2
-  conv_lhs => rw [e, subst_add hs, map_add, h2, subst_C]
-  rw [← map_add]
+  conv_lhs => rw [e, subst_add hs, map_add (f := _), h2, subst_C]
+  rw [← map_add (f := _)]
   exact congrArg _ e.symm
 
 theorem subst_ex_eq_mvExp (hY : RLaw Y V) (χ : MvPowerSeries κ C) (h0 : constantCoeff χ = 1)

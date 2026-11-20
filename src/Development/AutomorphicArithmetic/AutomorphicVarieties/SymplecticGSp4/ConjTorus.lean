@@ -222,7 +222,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.conjTorus :
         (s D.g0⁻¹ i i - algebraMap c.O (PadicAlgCl l) (D.ps i D.g0⁻¹ : c.O))‖ < 1 := by
       rw [norm_mul, hth, one_mul]; exact h2
     convert add_lt h1 h3 using 2
-    rw [Raw.hEl, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul]
+    rw [Raw.hEl, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
     ring
   have hne : residue c.O ((D.ps 0 D.g0 : c.O) + (D.th D.g0 : c.O) * (D.ps 0 D.g0⁻¹ : c.O)) ≠
       residue c.O ((D.ps 2 D.g0 : c.O) + (D.th D.g0 : c.O) * (D.ps 2 D.g0⁻¹ : c.O)) := by
@@ -233,7 +233,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.conjTorus :
     have q1 : (D.th D.g0 : c.O) = (D.al D.g0 : c.O) * (D.Psi D.g0 : c.O) := rfl
     have q2 : (D.al D.g0 : c.O) * (D.al D.g0⁻¹ : c.O) = 1 := by
       rw [← Units.val_mul, ← map_mul, mul_inv_cancel, map_one, Units.val_one]
-    rw [p0, p2, q0, q1, mul_right_comm, q2, one_mul, map_add, map_add, map_mul, map_one]
+    rw [p0, p2, q0, q1, mul_right_comm, q2, one_mul, map_add (f := _), map_add (f := _), map_mul, map_one]
     intro h
     have : (Raw.bar D.al D.g0 - 1) * (Raw.bar D.Psi D.g0 - 1) = 0 := by linear_combination h
     exact (mul_eq_zero.1 this).elim (sub_ne_zero.2 hD.genElt_alpha) (sub_ne_zero.2 hD.genElt_Psi)

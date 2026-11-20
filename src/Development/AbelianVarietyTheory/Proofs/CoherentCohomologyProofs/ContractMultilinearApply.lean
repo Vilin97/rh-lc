@@ -32,7 +32,7 @@ def contractMultilinear (φ : ∀ i, X i →ₗ[R] R) (j : ι) : MultilinearMap 
       simp only [Finset.prod_update_of_notMem h₁,
         Function.update_self, smul_add]
     · have hk := h₂ h
-      simp only [Finset.prod_update_of_mem hk, Function.update_of_ne (Ne.symm h), map_add,
+      simp only [Finset.prod_update_of_mem hk, Function.update_of_ne (Ne.symm h), map_add (f := _),
         add_mul, add_smul]
   map_update_smul' := by
     intro inst x k c y

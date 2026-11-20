@@ -72,7 +72,7 @@ theorem mvInner_re_nonneg {ε : Fin n → Bool} {m : Fin n → ℤ} (f : MV ε m
 
 theorem mvInner_add_left {ε : Fin n → Bool} {m : Fin n → ℤ} (f g h : MV ε m) :
     mvInner (f + g) h = mvInner f h + mvInner g h := by
-  simp only [mvInner, MV.fn_add, Pi.add_apply, map_add, add_mul]
+  simp only [mvInner, MV.fn_add, Pi.add_apply, map_add (f := _), add_mul]
   exact integral_add (mvInner_integrable f h) (mvInner_integrable g h)
 
 theorem mvInner_smul_left {ε : Fin n → Bool} {m : Fin n → ℤ} (f g : MV ε m) (c : ℂ) :

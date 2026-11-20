@@ -249,9 +249,9 @@ theorem ext_top (hn : n = a + 1) {x y : Sp E n} (h1 : cpy E n (a + 0) x = cpy E 
 theorem decomp (hn : n = a + 1) (x : Sp E n) :
     x = cpy E (a + 0) n (cpy E n (a + 0) x) + atNL E n a x • Loc.eN E n a := by
   apply ext_top hn
-  · rw [map_add, map_smul, cpy_cpy hn, cpy_eN hn, smul_zero]
+  · rw [map_add (f := _), map_smul, cpy_cpy hn, cpy_eN hn, smul_zero]
     exact (add_zero _).symm
-  · rw [map_add, map_smul, last_cpy hn, last_eN hn, zero_add, smul_eq_mul, mul_one]
+  · rw [map_add (f := _), map_smul, last_cpy hn, last_eN hn, zero_add, smul_eq_mul, mul_one]
 
 def Ext (a : ℕ) (jx : Sp E n ≃ₗ[E] Sp E n) (j : Sp E (a + 0) ≃ₗ[E] Sp E (a + 0)) : Prop :=
   (∀ x, cpy E n (a + 0) (jx x) = j (cpy E n (a + 0) x)) ∧ ∀ x, atNL E n a (jx x) = atNL E n a x
@@ -267,11 +267,11 @@ theorem ext_iff' (hn : n = a + 1) (jx : Sp E n ≃ₗ[E] Sp E n) (j : Sp E (a + 
   · rintro ⟨h1, h2⟩
     have e : ∀ x, jx x = cpy E (a + 0) n (j (cpy E n (a + 0) x)) + atNL E n a x • Loc.eN E n a := fun x => by
       conv_lhs => rw [decomp hn x]
-      rw [map_add, map_smul, h1, h2]
+      rw [map_add (f := _), map_smul, h1, h2]
     refine ⟨fun x => ?_, fun x => ?_⟩
-    · rw [e, map_add, map_smul, cpy_cpy hn, cpy_eN hn, smul_zero]
+    · rw [e, map_add (f := _), map_smul, cpy_cpy hn, cpy_eN hn, smul_zero]
       exact add_zero _
-    · rw [e, map_add, map_smul, last_cpy hn, last_eN hn, zero_add, smul_eq_mul, mul_one]
+    · rw [e, map_add (f := _), map_smul, last_cpy hn, last_eN hn, zero_add, smul_eq_mul, mul_one]
 
 theorem Ext.one : Ext a (1 : Sp E n ≃ₗ[E] Sp E n) 1 := ⟨fun _ => rfl, fun _ => rfl⟩
 
@@ -328,7 +328,7 @@ open Classical in
 def topM (i : ℕ) (P : T.SB) : AddSubgroup (Sp T.X.E (D.R.N i)) where
   carrier := {y | T.InTopLat i P y}
   zero_mem' := ⟨by rw [map_zero]; exact zero_mem _, by rw [map_zero]; simpa using IntAt.coe P.1 0⟩
-  add_mem' := fun hx hy => ⟨by rw [map_add]; exact add_mem hx.1 hy.1, by rw [map_add]; exact hx.2.add hy.2⟩
+  add_mem' := fun hx hy => ⟨by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx.1 hy.1, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact hx.2.add hy.2⟩
   neg_mem' := fun hx => ⟨by rw [map_neg]; exact neg_mem hx.1, by rw [map_neg]; exact intAt_neg hx.2⟩
 
 open Classical in

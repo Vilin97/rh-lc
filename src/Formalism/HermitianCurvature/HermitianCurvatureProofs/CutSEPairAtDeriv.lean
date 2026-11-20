@@ -27,7 +27,7 @@ theorem pi_single_decomp (l : Fin r) (h : ℂ) :
 theorem clm_single_wirt (L : (Fin r → ℂ) →L[ℝ] E) (l : Fin r) (h : ℂ) :
     L (Pi.single l h) = h • ((1 / 2 : ℂ) • (L (Pi.single l 1) - Complex.I • L (Pi.single l Complex.I))) +
       conj h • ((1 / 2 : ℂ) • (L (Pi.single l 1) + Complex.I • L (Pi.single l Complex.I))) := by
-  rw [pi_single_decomp l h, map_add, map_smul, map_smul]
+  rw [pi_single_decomp l h, map_add (f := _), map_smul, map_smul]
   rw [← Complex.coe_smul, ← Complex.coe_smul]
   simp only [smul_add, smul_sub, smul_smul]
   match_scalars

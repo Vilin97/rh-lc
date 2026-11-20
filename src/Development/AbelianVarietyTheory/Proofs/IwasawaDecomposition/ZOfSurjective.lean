@@ -55,7 +55,7 @@ theorem zOf_mem (x : Fin (dimP W Ch sel mu P hX) → X.K) :
 
 def zOf : (Fin (dimP W Ch sel mu P hX) → X.K) →ₗ[X.K] MtildeV W Ch sel mu P where
   toFun x := ⟨_, zOf_mem W Ch sel mu P hX x⟩
-  map_add' x y := Subtype.ext (by simp only [map_add]; rfl)
+  map_add' x y := Subtype.ext (by simp only [map_add (f := _)]; rfl)
   map_smul' c x := Subtype.ext (by simp only [map_smul]; rfl)
 
 theorem zOf_val (x : Fin (dimP W Ch sel mu P hX) → X.K) :

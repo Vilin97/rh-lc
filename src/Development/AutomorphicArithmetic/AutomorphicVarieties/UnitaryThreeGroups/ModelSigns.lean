@@ -41,7 +41,7 @@ private theorem exists_rho {f : R →ₐ[O] K} (hf : IsLocPt f) :
     | zero => intro x; simp
     | add a b _ _ ha hb =>
       intro x
-      rw [mul_add, map_add]
+      rw [mul_add, map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (ha x) (hb x))
     | smul a b _ hb =>
       intro x
@@ -62,7 +62,7 @@ private theorem exists_pow {f : R →ₐ[O] K} (hf : IsLocPt f) {ε : ℝ} (hε 
       refine Submodule.mul_induction_on hz (fun a ha b hb => ?_) (fun a b ha hb => ?_)
       · rw [map_mul, norm_mul, pow_succ]
         exact mul_le_mul (ih a ha) (h b hb) (norm_nonneg _) (pow_nonneg h0 _)
-      · rw [map_add]
+      · rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
   obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one hε h1
   exact ⟨n + 1, fun z hz => (key n z hz).trans_lt
@@ -76,7 +76,7 @@ private theorem eq_of_dense {f f' : R →ₐ[O] K} (hf : IsLocPt f) (hf' : IsLoc
     induction hy using Submodule.span_induction with
     | mem z hz => exact hT z hz
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, map_add, ha, hb, mul_add]
+    | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, mul_add]
     | smul a b _ hb => rw [map_smul, map_smul, hb, mul_smul_comm]
   rw [← sub_eq_zero, ← norm_le_zero_iff]
   refine le_of_forall_pos_le_add fun ε hε => ?_
@@ -180,7 +180,7 @@ theorem UpperTheory.V.U3.model_signs :
     refine AlgHom.ext fun x => ?_
     induction x using DirectSum.Decomposition.inductionOn M.𝒜 with
     | zero => rw [map_zero, map_zero]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     | @homogeneous j x =>
       rw [act_of_mem M.𝒜 _ _ x.2]
       exact eq_of_dense hf hf' _ (M.q x) (entMon S.r.hom j) (mon_tor _ f f' t h' j) (M.dense j x x.2)

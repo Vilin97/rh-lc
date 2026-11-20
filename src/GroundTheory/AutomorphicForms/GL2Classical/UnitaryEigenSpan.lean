@@ -75,7 +75,7 @@ theorem mem_of_stable_of_eigen
       obtain ⟨h, rfl⟩ := hx
       exact Submodule.subset_span ⟨g * h, by show ρ (g * h) φ = _; rw [map_mul, Module.End.mul_apply]⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
   have hadj : ∀ g, ∀ v ∈ T, ∀ w ∈ T, ⟪ι v, ι (ρ g w)⟫_ℂ = ⟪ι (ρ g⁻¹ v), ι w⟫_ℂ := by
@@ -108,7 +108,7 @@ theorem mem_of_stable_of_eigen
         rw [hadj _ φ hφT y hyT, inv_inv] at this
         exact this
       | zero => rw [map_zero, inner_zero_left]
-      | add x x' _ _ hx hx' => rw [map_add, inner_add_left, hx, hx', add_zero]
+      | add x x' _ _ hx hx' => rw [map_add (f := _), inner_add_left, hx, hx', add_zero]
       | smul c x _ hx => rw [map_smul, inner_smul_left, hx, mul_zero]
     exact hy0 (hinj y hyT (inner_self_eq_zero.1 (horth y hyT)))
   set y' := ρ g y

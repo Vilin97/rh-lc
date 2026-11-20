@@ -175,7 +175,7 @@ theorem shift_of_le {l : ℕ} (R : RingPG k l) {g : V →ₗ[k] V} (hg : Semi R.
       rw [condC_iff_nab_mem]
       intro y hy
       obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem_sup (Window.nab_mem cQ ha) (Window.nab_mem_sh R hg cP 1 hb)
     have h' : sh ((m + 1 : ℕ) : ℤ) (sh 1 P) ≤ sh 1 Q := by
       rw [sh_sh_eq, add_comm, ← sh_sh_eq]; exact sh_le_sh 1 h

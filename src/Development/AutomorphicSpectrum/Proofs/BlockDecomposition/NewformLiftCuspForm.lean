@@ -202,7 +202,7 @@ theorem valued_entry {u : FiniteAdelicGL ℚ 2} (hu : u ∈ Gamma0Level N) (v : 
   have h11 := congrFun (congrFun hVW 1) 1
   rw [Matrix.mul_apply, Fin.sum_univ_two, Matrix.one_apply_eq] at h11
   have hloc := congrArg (GodementSection.adeleAt v) h11
-  simp only [map_add, map_mul, map_one, GodementSection.adeleAt_apply] at hloc
+  simp only [map_add (f := _), map_mul, map_one, GodementSection.adeleAt_apply] at hloc
   have ha : Valued.v ((u : Matrix (Fin 2) (Fin 2) 𝔸f) 1 1 v) ≤ 1 := hi.1 1 1 v
   have hb : Valued.v (((u⁻¹ : FiniteAdelicGL ℚ 2) : Matrix (Fin 2) (Fin 2) 𝔸f) 1 1 v) ≤ 1 := hi.2 1 1 v
   have hs : Valued.v (((u⁻¹ : FiniteAdelicGL ℚ 2) : Matrix (Fin 2) (Fin 2) 𝔸f) 0 1 v) ≤ 1 := hi.2 0 1 v

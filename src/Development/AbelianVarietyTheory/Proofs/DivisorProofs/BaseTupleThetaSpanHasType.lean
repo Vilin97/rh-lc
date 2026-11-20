@@ -117,7 +117,7 @@ theorem thetaBase_hasType : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T
   induction hx using Submodule.span_induction with
   | mem y hy => exact hgen u y hy
   | zero => rw [map_zero, smul_zero]
-  | add a b _ _ ha hb => rw [map_add, ha, hb, smul_add]
+  | add a b _ _ ha hb => rw [map_add (f := _), ha, hb, smul_add]
   | smul a y _ hy => rw [LinearMap.map_smul_of_tower, hy, smul_comm]
 
 end GlobalTheory.BaseKernelType

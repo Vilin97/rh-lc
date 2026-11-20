@@ -122,7 +122,7 @@ theorem ycond_mul (LL : ChainLetters N) (j : ℕ) (M M' : WithTop ℤ) {f h : Mv
       · rw [glAct_mul']
         exact Submodule.add_mem _ (Submodule.mul_mem_mul (ycond_stable LL j M c d f hf) hh)
           (Submodule.mul_mem_mul hf (ycond_stable LL j M' c d h hh))
-      · rw [map_add]
+      · rw [map_add (f := _)]
         exact Submodule.add_mem _ hx hy
   exact key (Submodule.mul_mem_mul hf hh)
 
@@ -188,7 +188,7 @@ theorem ycond_X (LL : ChainLetters N) (j : ℕ) (a : Fin N) (e : Fin r) :
         · exact Submodule.zero_mem _
         · exact Submodule.zero_mem _
       | zero => rw [map_zero]; exact Submodule.zero_mem _
-      | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
       | smul t x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
   exact key (Submodule.subset_span ⟨e, rfl⟩)
 

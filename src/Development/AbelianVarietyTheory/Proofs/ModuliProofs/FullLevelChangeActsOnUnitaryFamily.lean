@@ -134,7 +134,7 @@ theorem exists_restrict (l : Level H) (n : ℕ) (β : RZ H n l.A →+* KA l)
     rintro x (rfl | rfl | rfl)
     · refine ⟨(1 + (baseKA l).ρ) / 2, ?_, hw⟩
       have : σ ((1 + (baseKA l).ρ) / 2) = (1 + (baseKA l).ρ) / 2 := by
-        rw [map_div₀, map_add, map_one, hσ, map_ofNat]
+        rw [map_div₀, map_add (f := _), map_one, hσ, map_ofNat]
       change ((σ _ : KA l) : ℂ) ∈ RZ H n l.A
       rw [this]
       exact Subring.subset_closure (Or.inl hw)
@@ -225,7 +225,7 @@ theorem GlobalTheory.famCore_exists_aut : Out.Laws → Out.Laws2 → ∀ (E : Ty
 
   have o₁ := fullObj_of_obj Xo.s Xo.univ β hβ
   have o₂ : FullObj D (r.hom ≫ a ≫ sM) Xo.univ.t (fun x => Xo.univ.etaA (g x)) := by
-    refine ⟨o₁.proper, o₁.ample, o₁.ktriv, fun x y => by rw [map_add, o₁.add], fun x => by rw [map_nsmul, o₁.ker],
+    refine ⟨o₁.proper, o₁.ample, o₁.ktriv, fun x y => by rw [map_add (f := _), o₁.add], fun x => by rw [map_nsmul, o₁.ker],
       fun k _ _ _ x δ hx => ?_⟩
     exact (geomAt_iff ν hν x _ _).2 (o₁.geom k _ δ (by rw [← hx, ← h, Category.assoc]))
 

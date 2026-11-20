@@ -43,7 +43,7 @@ theorem eq_zero_of_isNormForms {K : Type} [Fintype K] {ι : K → Type} [∀ k, 
       obtain ⟨i, j, hj, rfl⟩ := hx
       rw [map_div₀, hL, hL, mul_div_mul_left _ _ hμ0]
     | algebraMap r => exact σ.toRatAlgHom.commutes r
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | inv x _ hx => rw [map_inv₀, hx]
     | mul x y _ _ hx hy => rw [map_mul, hx, hy]
   set v : ℕ → Ω := fun i => aeval (fun j => aeval y (L j)) (c i) with hv
@@ -179,7 +179,7 @@ theorem swapF_Lc (j : Fin 2) : swapF (aeval y (Lc j)) = (uF ^ 2)⁻¹ * aeval y 
     rw [aeval_Lc_zero, swapF_uF]
     field_simp
   · show swapF (aeval y (Lc 1)) = _ * aeval y (Lc 1)
-    rw [aeval_Lc_one, map_add, map_one, map_pow, swapF_uF]
+    rw [aeval_Lc_one, map_add (f := _), map_one, map_pow, swapF_uF]
     field_simp
     ring
 

@@ -92,7 +92,7 @@ theorem tensInt_separated_complete (E : Type) [Field E] [NumberField E] :
       intro i
       refine hcpl (fun N => coord i (x N)) (fun N => coord_mem (hx N) i) fun N k hN hk => ?_
       obtain ⟨w, hw, h⟩ := hxx N k hN hk
-      exact ⟨_, coord_mem hw i, by rw [h, map_add, map_nsmul]⟩
+      exact ⟨_, coord_mem hw i, by rw [h, map_add (f := _), map_nsmul]⟩
     choose y hy using key
     have main : ∀ N : ℕ, 0 < N → ∃ w ∈ tensInt (F := ℚ) 𝔸 (intOE E) (intAd ℚ),
         comb y = x N + N • w := by
@@ -100,7 +100,7 @@ theorem tensInt_separated_complete (E : Type) [Field E] [NumberField E] :
       choose a ha hya using fun i => hy i N hN
       refine ⟨comb a, comb_mem a ha, ?_⟩
       have : y = (fun i => coord i (x N)) + N • a := funext hya
-      rw [this, map_add, map_nsmul, comb_coord (hx N)]
+      rw [this, map_add (f := _), map_nsmul, comb_coord (hx N)]
     refine ⟨comb y, ?_, main⟩
     obtain ⟨w, hw, h⟩ := main 1 one_pos
     rw [h]

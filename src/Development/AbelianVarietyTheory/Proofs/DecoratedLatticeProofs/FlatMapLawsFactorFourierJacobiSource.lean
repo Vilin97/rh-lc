@@ -82,7 +82,7 @@ theorem intLaw_direct (ψ : AddChar k Circle) (ν : Measure k) (L : SB (Matrix R
     simp only [Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, Φa]
     congr 1
     funext y
-    rw [← fillAt_add_single β E I x y e hI hE a, map_add, neg_add, AddChar.map_add_eq_mul, Circle.coe_mul]
+    rw [← fillAt_add_single β E I x y e hI hE a, map_add (f := _), neg_add, AddChar.map_add_eq_mul, Circle.coe_mul]
     ring
 
 theorem kills_empty (ψ : AddChar k Circle) (ν : Measure k) (L : SB (Matrix R Q k) →ₗ[ℂ] M)

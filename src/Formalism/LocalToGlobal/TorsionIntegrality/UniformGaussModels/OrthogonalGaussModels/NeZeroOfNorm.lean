@@ -89,12 +89,12 @@ theorem pairsK_eq : pairsK dK p ι = closure (Set.range (em dK ι)) := rfl
 theorem em_add (a b : ℤ × ℤ) : em dK ι a + em dK ι b = em dK ι (a.1 + b.1, a.2 + b.2) := by
   refine Prod.ext ?_ ?_
   · show ι _ + ι _ = ι _
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     push_cast
     ring
   · show ι _ + ι _ = ι _
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     push_cast
     ring
@@ -157,7 +157,7 @@ theorem em_mul (hmod : dK % 4 = 3) (a b : ℤ × ℤ) : em dK ι a * em dK ι b 
 
 theorem em_sum (a : ℤ × ℤ) : (em dK ι a).1 + (em dK ι a).2 = ((2 * a.1 + a.2 : ℤ) : ℂ_[p]) := by
   show ι _ + ι _ = _
-  rw [← map_add, ← map_intCast ι]
+  rw [← map_add (f := _), ← map_intCast ι]
   congr 1
   push_cast
   ring

@@ -69,7 +69,7 @@ theorem UpperTheory.V.Pa.trConst :
     induction ha using Algebra.adjoin_induction with
     | mem y hy => exact hgen y hy
     | algebraMap c => exact hO c
-    | add y z _ _ hy hz => rw [map_add, map_add, hy, hz]
+    | add y z _ _ hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
     | mul y z _ _ hy hz => rw [map_mul, map_mul, hy, hz]
   have ht : S.x.t ∈ maximalIdeal S.x.A := by
     rw [mem_maximalIdeal, mem_nonunits_iff, PowerSeries.isUnit_iff_constantCoeff]

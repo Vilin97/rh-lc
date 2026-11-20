@@ -166,8 +166,8 @@ theorem hasForm_of_pairing : ∀ (P Q R S : ℕ) (x : ℚ) (b : Pol P Q R 0 →�
       intro t
       induction t using TensorProduct.induction_on with
       | zero => simp
-      | tmul f g => rw [hμ, fockAct1_rename_mul, map_add, hl, hl, hl, hinv]
-      | add t₁ t₂ h₁ h₂ => simp only [map_add, h₁, h₂, mul_add]
+      | tmul f g => rw [hμ, fockAct1_rename_mul, map_add (f := _), hl, hl, hl, hinv]
+      | add t₁ t₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂, mul_add]
     have hF : μ (φ F) = F := by simpa using congrArg (fun h => h F) hμφ
     simpa [hF] using key (φ F)
 

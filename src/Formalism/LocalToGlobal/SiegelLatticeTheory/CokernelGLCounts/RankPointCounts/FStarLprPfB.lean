@@ -172,8 +172,8 @@ theorem psi_unique {r : ℕ} (t₁ t₂ : Term V M r) (φ : H.Wb t₁.f ≃ₗ[E
       ⟨xX, X_le_perp hK1 hxX⟩ + c • ⟨t₁.f' (Fin.last r), z_mem_perp hK1⟩ := Subtype.ext hdec
   have h0 : H.mkW t₁.f' ⟨xX, X_le_perp hK1 hxX⟩ = 0 := (Submodule.Quotient.mk_eq_zero _).2 hxX
   show ψ (H.mkW t₁.f' ⟨x, hx⟩) = ψ' (H.mkW t₁.f' ⟨x, hx⟩)
-  rw [hq, map_add, map_add, map_add, map_smul, map_smul, h0, add_zero]
-  simp only [map_add, map_smul]
+  rw [hq, map_add (f := _), map_add (f := _), map_add (f := _), map_smul, map_smul, h0, add_zero]
+  simp only [map_add (f := _), map_smul]
   rw [gW w hw, gom, gz]
 
 end Formalism.MainNotions.S.Loc.HermSp.LprU

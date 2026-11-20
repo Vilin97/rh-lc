@@ -239,7 +239,7 @@ theorem sum_etaLoc_eq_etaRat : ∀ (D : D7) (M : MtFam D) (T : NormalizedLocalCo
     have hm : b a ∈ U ⊔ U' := by rw [hUU]; exact Submodule.mem_top
     obtain ⟨u, hu, u', hu', e⟩ := Submodule.mem_sup.1 hm
     show T.B.iV j w (b a) ∈ G' ⊔ B'
-    rw [← e, map_add]
+    rw [← e, map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨u, hu, rfl⟩) (Submodule.subset_span ⟨u', hu', rfl⟩)
   have key : ∀ {a c d e : Submodule (FractionRing (T.B.Oc j w)) (T.B.V j w)},
       a ≤ c → d ≤ e → a ⊔ d = ⊤ → Disjoint c e → c = a := by
@@ -276,7 +276,7 @@ theorem sum_etaLoc_eq_etaRat : ∀ (D : D7) (M : MtFam D) (T : NormalizedLocalCo
     have hy : y ∈ D.nd.eigSum i.1 ↑(D.nd.Zgood i.1) ⊔ D.nd.eigSum i.1 (↑(D.nd.Zgood i.1))ᶜ := by
       rw [GlobalTheory.T.goodEigSum_sup_compl_eigSum_eq_top D i.1 (zrat_loc i.2 hZ) (hSP i.1 i.2)]; exact Submodule.mem_top
     obtain ⟨a, ha, c, hc', e⟩ := Submodule.mem_sup.1 hy
-    rw [← Submodule.restrictScalars_sup, Submodule.restrictScalars_mem, psiO_apply, ← e, map_add]
+    rw [← Submodule.restrictScalars_sup, Submodule.restrictScalars_mem, psiO_apply, ← e, map_add (f := _)]
     exact Submodule.add_mem_sup ((mem_gK T i _ _).2 ⟨a, ha, rfl⟩) ((mem_gK T i _ _).2 ⟨c, hc', rfl⟩)
   have hEL : F.sup (lO T) = latC T.B j w := by
     ext y

@@ -202,17 +202,17 @@ def rootInt {R : Ranks} (H : Host R) : 𝓞 H.E :=
 theorem norm_one_add {R : Ranks} (H : Host R) (c : ℕ) :
     ((1 + c * rootInt H : 𝓞 H.E) : H.E) * H.conj ((1 + c * rootInt H : 𝓞 H.E) : H.E) = ((1 + H.d * c ^ 2 : ℕ) : H.E) := by
   have h : ((1 + c * rootInt H : 𝓞 H.E) : H.E) = 1 + c * H.sqrtMinusD := by
-    simp only [RingOfIntegers.coe_eq_algebraMap, map_add, map_one, map_mul, map_natCast]
+    simp only [RingOfIntegers.coe_eq_algebraMap, map_add (f := _), map_one, map_mul, map_natCast]
     rfl
   have h1 : H.conj H.sqrtMinusD = -H.sqrtMinusD := H.conj_sqd
   have h2 : H.sqrtMinusD ^ 2 = -(H.d : H.E) := H.sqd_sq
-  rw [h, map_add, map_one, map_mul, map_natCast, h1]
+  rw [h, map_add (f := _), map_one, map_mul, map_natCast, h1]
   push_cast
   linear_combination (-(c : H.E) ^ 2) * h2
 
 theorem one_add_mem {R : Ranks} (H : Host R) (c : ℕ) : ((1 + c * rootInt H : 𝓞 H.E) : H.E) ∈ H.K := by
   have h : ((1 + c * rootInt H : 𝓞 H.E) : H.E) = 1 + c * H.sqrtMinusD := by
-    simp only [RingOfIntegers.coe_eq_algebraMap, map_add, map_one, map_mul, map_natCast]
+    simp only [RingOfIntegers.coe_eq_algebraMap, map_add (f := _), map_one, map_mul, map_natCast]
     rfl
   rw [h]
   exact add_mem (one_mem _) (mul_mem (natCast_mem _ _) (IntermediateField.mem_adjoin_simple_self ℚ _))

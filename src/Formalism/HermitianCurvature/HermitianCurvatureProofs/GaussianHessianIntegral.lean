@@ -45,7 +45,7 @@ theorem exists_takagi_vector (T : E →ₗ⋆[ℂ] E) (hT : ∀ x y, ⟪T x, y�
     have hTx : T x = -((σ : ℂ) • (x : E)) := eq_neg_of_add_eq_zero_left hy
     rw [T.map_smulₛₗ, hTx, Complex.conj_I, smul_neg, neg_smul, neg_neg, smul_comm]
   · refine key _ (S.add_mem (hS _ x.2) (S.smul_mem _ x.2)) hy ?_
-    rw [map_add, T.map_smulₛₗ, hAx, hμσ, Complex.conj_ofReal, smul_add, smul_smul, pow_two, add_comm]
+    rw [map_add (f := _), T.map_smulₛₗ, hAx, hμσ, Complex.conj_ofReal, smul_add, smul_smul, pow_two, add_comm]
 
 theorem exists_takagi_family (T : E →ₗ⋆[ℂ] E) (hT : ∀ x y, ⟪T x, y⟫_ℂ = ⟪T y, x⟫_ℂ) :
     ∀ (n : ℕ) (S : Submodule ℂ E), finrank ℂ S = n → (∀ x ∈ S, T x ∈ S) →

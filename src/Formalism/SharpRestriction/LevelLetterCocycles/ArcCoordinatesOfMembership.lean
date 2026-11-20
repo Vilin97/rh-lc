@@ -43,7 +43,7 @@ theorem cmp_smul_letter (T : LocLat G Qp LL O) (i : ZMod n) (a : LetA O n) (w : 
   have e : (⟨a • w, (W.N T).smul_mem a hw⟩ : ↥(W.N T)) =
       c • (⟨w, hw⟩ : ↥(W.N T)) + (letπ : LetA O n) • (⟨a' • w, (W.N T).smul_mem a' hw⟩ : ↥(W.N T)) :=
     Subtype.ext (by simpa using hkey)
-  rw [e, map_add, W.cmp_smul, W.cmp_π, add_zero]
+  rw [e, map_add (f := _), W.cmp_smul, W.cmp_π, add_zero]
 
 theorem mem_Dcris_iff (T : LocLat G Qp LL O) (x : T.V ⊗[Qp] B) :
     x ∈ Dcris PD T.ρ ↔ ∀ g, actVB PD T.ρ g x = x := by
@@ -102,7 +102,7 @@ theorem φVB_act (T : LocLat G Qp LL O) (g : G) (x : T.V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB, φVB, PD.φ_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem φVB_mul (T : LocLat G Qp LL O) (c : K₀) (x : T.V ⊗[Qp] B) :
     mulVB (K₀ := K₀) (B := B) (V := T.V) (LL := LL) (PD.σ c) (φVB PD (LL := LL) (V := T.V) x) =
@@ -110,7 +110,7 @@ theorem φVB_mul (T : LocLat G Qp LL O) (c : K₀) (x : T.V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [mulVB, φVB, PD.φ_K₀]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem φVB_letter (T : LocLat G Qp LL O) (i : ZMod n) {x : T.V ⊗[Qp] B}
     (hx : x ∈ DcrisL PD T.ρ (W.emb i)) :
@@ -142,7 +142,7 @@ theorem φVB_inj (T : LocLat G Qp LL O) : Function.Injective (φVB PD (LL := LL)
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [φVB]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   intro x y hxy
   rw [e, e] at hxy
   exact h hxy
@@ -439,7 +439,7 @@ theorem dcrisL_succ_le [NeZero n] (hs : W.s = 1) (T : LocLat G Qp LL O) (h3 : Fo
         fun hz => ?_⟩
       have e : (⟨W.Q ^ k • (z₁ + z₂), hz⟩ : ↥(W.N T)) = ⟨_, h₁.2.1⟩ + ⟨_, h₂.2.1⟩ :=
         Subtype.ext (by simp [smul_add])
-      rw [e, map_add]; exact S.add_mem (h₁.2.2 _) (h₂.2.2 _)
+      rw [e, map_add (f := _)]; exact S.add_mem (h₁.2.2 _) (h₂.2.2 _)
     | smul a z _ h₁ =>
       have hl : (letE (i + 1) : LetA O n) • (W.Q ^ k • z) = W.Q ^ k • z := by rw [smul_comm, h₁.1]
       refine ⟨by rw [smul_comm, h₁.1], by rw [smul_comm]; exact (W.N T).smul_mem a h₁.2.1, fun hz => ?_⟩
@@ -586,7 +586,7 @@ theorem pOfSec [IsDomain O] (hO2 : ∀ x : LL, 0 ≤ v x → ∃ o : O, algebraM
             algebraMap O (LetA O n) (yy k r m) * uu * (W.φA ^ (e - A.j)) (tB r)) := by
     intro k r m hr
     have H := congrArg (W.φA ^ (e - A.j)) (htr r)
-    rw [map_mul, map_pow, map_natCast, phiA_pow_comp W e A.j hje, map_add, map_mul, map_mul, map_pow,
+    rw [map_mul, map_pow, map_natCast, phiA_pow_comp W e A.j hje, map_add (f := _), map_mul, map_mul, map_pow,
       map_natCast, hJJ] at H
     have hle := Formalism.MainNotions.UnusedSlot80.Relay2.Ex_mono PD.p hl hr.le
     have hEx : Formalism.MainNotions.UnusedSlot80.Relay2.Ex PD.p r = ⌈(r : ℝ) * PD.p / ((PD.p : ℝ) - 1)⌉₊ := rfl
@@ -689,7 +689,7 @@ theorem tr_mono [IsDomain O] (hR : Formalism.MainNotions.LiftingTheory.Uniformiz
     Formalism.MainNotions.LiftingTheory.tr_trunc_int W hR hCA.2.2 A.j (2 * A.G₀) (A.M PD.p) r hA.2.1
   obtain ⟨uu, huu, hJJ⟩ := Formalism.MainNotions.UnusedSlot80.ArcC.arc_ring W (hTr hCA).2.1 hR.1 h5p A hA a e hje
   have H := congrArg (W.φA ^ (e - A.j)) htr
-  rw [map_mul, map_pow, map_natCast, phiA_pow_comp W e A.j hje, map_add, map_mul, map_mul, map_pow,
+  rw [map_mul, map_pow, map_natCast, phiA_pow_comp W e A.j hje, map_add (f := _), map_mul, map_mul, map_pow,
     map_natCast, hJJ] at H
   have hpA : ∀ t : ℕ, ((PD.p : ℕ) : LetA O n) ^ t ∈ W.AΔ := fun t => W.AΔ.pow_mem (W.AΔ.natCast_mem _) t
   refine ⟨((PD.p : ℕ) : LetA O n) ^ (A.σ PD.p - Formalism.NOK.sigNOK PD.p (2 * A.G₀) (A.M PD.p) A.j) *

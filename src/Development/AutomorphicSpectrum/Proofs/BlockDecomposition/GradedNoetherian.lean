@@ -27,7 +27,7 @@ theorem shiftOp_succ (T : ∀ e, M e →ₗ[R] M (e + 1)) (y : ⨁ e, M e) (e : 
     by_cases h : i = e
     · subst h; simp [DirectSum.of_eq_same]
     · rw [DirectSum.of_eq_of_ne _ _ _ (by omega), DirectSum.of_eq_of_ne _ _ _ (by omega), map_zero]
-  | add a b ha hb => simp only [map_add, DirectSum.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), DirectSum.add_apply, ha, hb]
 
 theorem shiftOp_zero (T : ∀ e, M e →ₗ[R] M (e + 1)) (y : ⨁ e, M e) :
     shiftOp T y 0 = 0 := by
@@ -36,7 +36,7 @@ theorem shiftOp_zero (T : ∀ e, M e →ₗ[R] M (e + 1)) (y : ⨁ e, M e) :
   | of i x =>
     rw [← DirectSum.lof_eq_of R, shiftOp_lof, DirectSum.lof_eq_of]
     exact DirectSum.of_eq_of_ne _ _ _ (by omega)
-  | add a b ha hb => simp only [map_add, DirectSum.add_apply, ha, hb, add_zero]
+  | add a b ha hb => simp only [map_add (f := _), DirectSum.add_apply, ha, hb, add_zero]
 
 theorem eventually_zero (f : ⨁ e, M e) : ∃ n : ℕ, ∀ e, n ≤ e → f e = 0 := by
   induction f using DirectSum.induction_on with
@@ -98,7 +98,7 @@ theorem gradedNoeth : GradedNoeth := by
     | mem x hx =>
       exact Submodule.subset_span (Set.mem_biUnion (Finset.mem_range.2 (by omega)) ⟨x, hx, rfl⟩)
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact P.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact P.add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_of_tower_mem P c hx
   have hall : ∀ e (m : M e), DirectSum.lof R ℕ M e m ∈ P := by
     intro e
@@ -120,7 +120,7 @@ theorem gradedNoeth : GradedNoeth := by
           exact P.smul_mem _ (ih y)
         · simp
         · intro x y hx hy
-          rw [map_add]
+          rw [map_add (f := _)]
           exact P.add_mem hx hy
   have hP : ∀ y : ⨁ e, M e, y ∈ P := by
     intro y

@@ -148,7 +148,7 @@ theorem map_evalV_finPart (D : D7) (v : HeightOneSpectrum (NumberField.RingOfInt
     simp only [Formalism.L2.Theta.finPart, AlgHom.toRingHom_eq_coe, RingHom.coe_coe,
       Algebra.TensorProduct.map_tmul, AlgHom.coe_comp, Function.comp_apply, AlgHom.id_apply]
     rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem isPureFin_twist : ∀ (D : D7) (n M d : ℕ) (bs : Module.Basis (Fin d) D.host.F D.host.E) (g : (Fin M → Fin n → Af D.host.F ⊗[D.host.F] D.host.E) → ℂ) (gv : ∀ v : IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers D.host.F), (Fin n → Fin M → HeckeCharacterZeroLocus.SiegelWeilU.Fv D.host.F v ⊗[D.host.F] D.host.E) → ℂ) (a : GL (Fin n) (AE D)), HeckeCharacterZeroLocus.SiegelWeilU.IsPureFin bs (fun X => g fun i j => X j i) gv → HeckeCharacterZeroLocus.SiegelWeilU.IsPureFin bs (fun Y => g fun i j => ∑ k, Y k i * finPart D (a.1 k j)) (fun v Y => gv v (fun j i => ∑ k, Y k i * PositivityTheory.SiegelWeilFormula.Gen.matV v a.1 k j)) := by
   intro D n M d bs g gv a H

@@ -28,7 +28,7 @@ theorem const_mem_of_stable {R κ : Type} [CommRing R] (hR : ∀ n : ℕ, IsUnit
       have hu' : (C u : R⟦X⟧) * ((m : R⟦X⟧) + 1) = 1 := by
         have := congrArg (C (R := R)) hu
         simpa using this
-      simp only [Pi.add_apply, Pi.smul_apply, Pi.sub_apply, smul_eq_mul, c, map_add, derivative_C,
+      simp only [Pi.add_apply, Pi.smul_apply, Pi.sub_apply, smul_eq_mul, c, map_add (f := _), derivative_C,
         Derivation.leibniz, Derivation.leibniz_pow, derivative_X, nsmul_eq_mul, Nat.add_sub_cancel]
       push_cast
       linear_combination (X ^ (m + 1) * h k) * hu'
@@ -58,11 +58,11 @@ theorem isUnit_uhat : IsUnit (uhat O K l e) := by
     exact this
   rw [← h1]
   refine IsUnit.map _ ?_
-  rw [isUnit_iff_constantCoeff, map_add, constantCoeff_C, constantCoeff_X, add_zero]
+  rw [isUnit_iff_constantCoeff, map_add (f := _), constantCoeff_C, constantCoeff_X, add_zero]
   have h2 : (AdjoinRoot.root (Polynomial.X ^ e + Polynomial.C (l : K))) ^ e =
       algebraMap K _ (-(l : K)) := by
     have := AdjoinRoot.mk_self (f := Polynomial.X ^ e + Polynomial.C (l : K))
-    rw [map_add, map_pow, AdjoinRoot.mk_X, AdjoinRoot.mk_C] at this
+    rw [map_add (f := _), map_pow, AdjoinRoot.mk_X, AdjoinRoot.mk_C] at this
     rw [map_neg, eq_neg_iff_add_eq_zero]
     exact this
   refine (isUnit_pow_iff (NeZero.ne e)).1 ?_
@@ -137,7 +137,7 @@ theorem stable_EN {κ : Type} [Fintype κ] (Ξ : κ → ι → AhatE O K l e) (�
     linear_combination (-(s * Γ j i)) * hx' j
   refine ⟨Ehat O K l e * (uhat O K l e * dHat O K l e (x i)) + ((p : Ahat O K l e) - N) * ν * x i +
     ∑ j, x j * γ j i, ?_⟩
-  rw [h1, map_mul, map_pow, map_pow, map_add, map_add, map_mul, map_mul, map_mul φ _ (x i), map_mul φ _ ν, map_sub, map_natCast,
+  rw [h1, map_mul, map_pow, map_pow, map_add (f := _), map_add (f := _), map_mul, map_mul, map_mul φ _ (x i), map_mul φ _ ν, map_sub, map_natCast,
     map_natCast, ← hs]
   rw [map_mul] at h3
   linear_combination h3 - h6 - φ (x i) * h4 + w i * h5 - N * φ ν * hx' i
@@ -179,7 +179,7 @@ theorem grading [NeZero a] (P : PhiMod O K l e a ι) (hP : ∀ m ∈ P.M, P.EN m
         obtain ⟨x, hx⟩ := hv i
         obtain ⟨x', hx'⟩ := hv' i
         refine ⟨x + x', ?_⟩
-        simp only [mul_add, map_add, hx, hx', Pi.add_apply, add_mul, Finset.sum_add_distrib]
+        simp only [mul_add, map_add (f := _), hx, hx', Pi.add_apply, add_mul, Finset.sum_add_distrib]
       zero_mem' := fun i => ⟨0, by simp⟩
       smul_mem' := fun c v hv i => by
         obtain ⟨x, hx⟩ := hv i
@@ -214,7 +214,7 @@ theorem exists_eq_cterm_add (x : Ahat O K l e) :
   obtain ⟨w, hw⟩ := exists_Ehat_eq O K l e
   obtain ⟨v, rfl⟩ := (AhatEq.equivAhat O K l e).surjective x
   refine ⟨AhatEq.equivAhat O K l e (w * PowerSeries.mk fun n => coeff (n + 1) v), ?_⟩
-  rw [cterm, AlgEquiv.symm_apply_apply, map_mul, ← mul_assoc, ← hw, ← map_mul, ← map_add]
+  rw [cterm, AlgEquiv.symm_apply_apply, map_mul, ← mul_assoc, ← hw, ← map_mul, ← map_add (f := _)]
   exact congrArg _ ((PowerSeries.eq_X_mul_shift_add_const v).trans (add_comm _ _))
 
 theorem hat_mulVec {Y : Matrix ι ι K⟦X⟧} (hY : ∀ i j, Y i j ∈ RpiE O K l e) {m : ι → K⟦X⟧}
@@ -313,7 +313,7 @@ theorem not_next [NeZero a] (P : PhiMod O K l e a ι) (i : ℤ) {y : Vec K a ι}
         ∑ j', hat O l e (P.mx τ j j') * φ (toHat O K l e ⟨m k τ j', hm k τ j'⟩) := by
       rw [← hat_mulVec (hX τ) (hm k τ), ← hv]
       rfl
-    conv_lhs => rw [hr k τ, map_add, add_mul]
+    conv_lhs => rw [hr k τ, map_add (f := _), add_mul]
     congr 1
     rw [h4, Finset.mul_sum]
     refine Finset.sum_congr rfl fun j' _ => ?_
@@ -328,10 +328,10 @@ theorem not_next [NeZero a] (P : PhiMod O K l e a ι) (i : ℤ) {y : Vec K a ι}
       (hμ (τ, j, j')).trans (by rw [map_pow])
     have h7 : ∑ k, r k τ * toHat O K l e ⟨m k τ j', hm k τ j'⟩ =
       ofAl O K l e (ρ τ j') + Ehat O K l e ^ (α + p) * s τ j' := hρ τ j'
-    rw [h7, map_add, map_mul, map_mul, map_pow, h6]
+    rw [h7, map_add (f := _), map_mul, map_mul, map_pow, h6]
     ring
   have h8 := hx τ j
-  rw [h1, h3, h5, mul_add, map_add, h8]
+  rw [h1, h3, h5, mul_add, map_add (f := _), h8]
   simp only [map_mul, map_pow]
   ring
 

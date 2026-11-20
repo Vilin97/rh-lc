@@ -51,7 +51,7 @@ theorem halfUnit_add_star {E : Type} [Field E] [NumberField E] [IsCMField E] (H 
   have hb : H.bar H.rt = -H.rt := (sq_eq_sq_iff_eq_or_eq_neg.1 hsq).resolve_left hne
   have h2 : 2 * H.bar H.w0 = 1 - H.rt := by
     have := congrArg H.bar H.two_weight_eq_one_add_root
-    rw [map_mul, map_add, map_one, hb, map_ofNat] at this
+    rw [map_mul, map_add (f := _), map_one, hb, map_ofNat] at this
     rw [this]; ring
   have : (2 : 𝓞 E) * (H.w0 + H.bar H.w0) = 2 * 1 := by rw [mul_add, H.two_weight_eq_one_add_root, h2]; ring
   exact mul_left_cancel₀ two_ne_zero this

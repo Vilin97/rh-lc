@@ -122,7 +122,7 @@ theorem repr_map {d : ℕ} (b : Module.Basis (Fin d) F E) {R R' : Type} [CommRin
     (Algebra.TensorProduct.basis R' b).repr (Algebra.TensorProduct.map f (AlgHom.id F E) y) k =
       f ((Algebra.TensorProduct.basis R b).repr y k) := by
   induction y with
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   | tmul r e =>
     simp [Algebra.TensorProduct.basis_repr_tmul, Finsupp.mapRange_apply]
 

@@ -49,7 +49,7 @@ theorem isIsoGm_of_map {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S)
     apply hφ
     rw [← MvPowerSeries.coeff_map, ← MvPowerSeries.coeff_map, hab]
   apply hinj
-  rw [map_add, map_add, map_mul, PowerSeries.map_subst hF, PowerSeries.map_subst (hX 0),
+  rw [map_add (f := _), map_add (f := _), map_mul, PowerSeries.map_subst hF, PowerSeries.map_subst (hX 0),
     PowerSeries.map_subst (hX 1), MvPowerSeries.map_X, MvPowerSeries.map_X]
   exact h
 

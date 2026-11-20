@@ -421,7 +421,7 @@ theorem frobW_map_fixed_iff {T : Type} [AddCommGroup T] [Module ℤ_[l] T] [Modu
     | tmul a t =>
       rw [TensorProduct.map_tmul, Module.Basis.baseChange_repr_tmul, Module.Basis.baseChange_repr_tmul,
         map_smul, AlgHom.toLinearMap_apply, LinearMap.id_apply]
-    | add y z hy hz => rw [map_add, map_add, map_add, Finsupp.add_apply, Finsupp.add_apply, map_add, hy, hz]
+    | add y z hy hz => rw [map_add (f := _), map_add (f := _), map_add (f := _), Finsupp.add_apply, Finsupp.add_apply, map_add (f := _), hy, hz]
   have h1 : ∀ i, ∃ z : ℤ_[l], (b.baseChange (WCb l)).repr y i = algebraMap ℤ_[l] (WCb l) z := fun i =>
     (frobW_fixed_iff _).1 (by rw [← key, h])
   choose z hz using h1
@@ -462,7 +462,7 @@ theorem end_ext (bc : SemiBC j) (s : WCb l ≃ₐ[ℤ_[l]] WCb l) {r r' : T →�
         r.baseChange (WCb l) y := fun r y => by
     induction y with
     | tmul a t => simp
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   have h1 : r.baseChange (WCb l) = r'.baseChange (WCb l) :=
     bc.hom_ext fun x => by rw [← key, ← key, h]
   ext t

@@ -107,14 +107,14 @@ theorem approx (m : ℕ) (hm : 0 < m) (x : AdE E) : ∃ e : E, ∃ u ∈ intAd E
     obtain ⟨x, a', ha', h'⟩ := GlobalTheory.AdLat.exists_eq_algebraMap_add_nsmul _ m hm (algebraMap _ (AdF E) t * a)
     refine ⟨algebraMap _ E x * o, inclF E a' * diagE E o, mul_mem (incl_mem ha') (diag_int_mem o), ?_⟩
     refine (tmul_eq a e).trans ?_
-    rw [h, h', map_add, map_mul, diag_algebraMap, map_nsmul, nsmul_eq_mul]
+    rw [h, h', map_add (f := _), map_mul, diag_algebraMap, map_nsmul, nsmul_eq_mul]
     ring
   | add x y hx hy =>
     obtain ⟨e, u, hu, hx⟩ := hx
     obtain ⟨e', u', hu', hy⟩ := hy
     refine ⟨e + e', u + u', add_mem hu hu', ?_⟩
     show (show AdE E from x) + (show AdE E from y) = _
-    rw [show (show AdE E from x) = _ from hx, show (show AdE E from y) = _ from hy, map_add]
+    rw [show (show AdE E from x) = _ from hx, show (show AdE E from y) = _ from hy, map_add (f := _)]
     ring
 
 end GlobalTheory.ClassSumCompare

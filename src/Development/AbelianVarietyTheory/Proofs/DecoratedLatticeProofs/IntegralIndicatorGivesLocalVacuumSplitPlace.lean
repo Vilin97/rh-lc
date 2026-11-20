@@ -125,7 +125,7 @@ theorem GlobalTheory.LocMod.indicator_vac : ∀ (D : D7) (k : Type) [Field k] [V
       have hph : ψ (symplOH S T (a + a) ((u - a) + (u - a))) = 1 := by
         obtain ⟨x, hx, hxa⟩ := GlobalTheory.T.exists_integral_matrix_up_image_completed_hom_lattice D k q hU Y Y' S T FS FT LS LT hS hT hFS hFT a ha haH0
         have h3 : symplOH S T (a + a) ((u - a) + (u - a)) = symplO S T a ((u - a) + (u - a)) := by
-          rw [symplOH, GlobalTheory.LatVac.symplO_add_left, mul_add, ← add_mul, ← RingHom.map_add, add_halves,
+          rw [symplOH, GlobalTheory.LatVac.symplO_add_left, mul_add, ← add_mul, ← RingHom.map_add (f := _), add_halves,
             RingHom.map_one, one_mul]
         rw [h3]
         have := hsy x hx _ (add_mem hb hb)

@@ -56,7 +56,7 @@ private theorem extend {M : Type} [AddCommGroup M] [Module ℤ_[l] M] (B : Submo
       rw [← norm_neg] at h
       have := nadd (nadd hx hy) h
       convert this using 2
-      simp only [map_add, Pi.add_apply, Submodule.coe_add]
+      simp only [map_add (f := _), Pi.add_apply, Submodule.coe_add]
       ring
     | smul c x _ hx =>
       have h := hf x x.2 0 B.zero_mem c 0 i
@@ -96,7 +96,7 @@ private theorem act_fix {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* �
   induction hb using Submodule.span_induction with
   | mem x hx => exact hx.2 γ hγ
   | zero => exact map_zero _
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul c x _ hx => rw [map_smul, hx]
 
 end UpperTheory.V.Z.Kato.Joint.ThetaLinearAlt
@@ -125,7 +125,7 @@ theorem UpperTheory.V.Z.Kato.Joint.thLin :
   obtain ⟨z, hz, h⟩ := GlobalTheory.T.cuspFunctionalValueModPrimePow_unique_oddWeight Ω ε X A N l X.j_hol h2 hlN h5 hA n w hw _ hm _ _ (hth _ hm)
     (GlobalTheory.T.theta_basis_linear_combination Ω ε X A N l n w b b' hb hb' c c' _ _ (hth b hb) (hth b' hb')) ((i : ℚ) / ((1 : ℕ) : ℚ))
   have h1 := congrArg j h
-  simp only [HahnSeries.coeff_add, HahnSeries.coeff_smul, smul_eq_mul, map_sub, map_add, map_mul, map_pow,
+  simp only [HahnSeries.coeff_add, HahnSeries.coeff_smul, smul_eq_mul, map_sub, map_add (f := _), map_mul, map_pow,
     map_natCast] at h1
   have h3 : ‖j z * ((l : ℕ) : Qbar l) ^ n‖ ≤ ‖((l : ℕ) : Qbar l) ^ n‖ := nmul (hj z hz) le_rfl
   have := nadd (nadd h3 (nmul (hint b hb i) (nappr n c))) (nmul (hint b' hb' i) (nappr n c'))

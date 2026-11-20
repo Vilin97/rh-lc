@@ -52,7 +52,7 @@ private theorem differentiableOn_conj_comp_star {m : ℕ} {g : (Fin m → ℂ) �
   have hR := ((starL' ℝ : ℂ ≃L[ℝ] ℂ) : ℂ →L[ℝ] ℂ).hasFDerivAt.comp_hasFDerivWithinAt b h3
   let L' : (Fin m → ℂ) →L[ℂ] ℂ :=
     { toFun := fun v => star (L (star v))
-      map_add' := fun v w => by simp [star_add, map_add]
+      map_add' := fun v w => by simp [star_add, map_add (f := _)]
       map_smul' := fun c v => by simp [star_smul, map_smul]
       cont := continuous_star.comp (L.continuous.comp continuous_star) }
   exact ⟨L', HasFDerivWithinAt.of_restrictScalars (𝕜 := ℝ) hR (by ext v; rfl)⟩

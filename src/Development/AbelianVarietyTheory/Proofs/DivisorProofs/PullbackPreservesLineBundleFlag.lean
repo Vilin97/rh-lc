@@ -63,7 +63,7 @@ theorem isQuasicoherent_X₂ {X : Scheme.{0}} (S : ShortComplex X.Modules) (hS :
     have e₂ : S.X₂.presheaf.map (homOfLE hD).op (S.f.app U' u') =
         S.f.app _ (S.X₁.presheaf.map (homOfLE hD).op u') := (QCoh.app_res S.f hD u').symm
     have e₃ : t = σ _ (hD.trans hle) (S.g.app _ t) + S.f.app _ u := by rw [hu]; abel
-    rw [map_add, S.X₂.map_smul, S.X₂.map_smul, e₁, e₂, ← ht₃, ← hu', map_smul,
+    rw [map_add (f := _), S.X₂.map_smul, S.X₂.map_smul, e₁, e₂, ← ht₃, ← hu', map_smul,
       Scheme.Modules.Hom.app_smul, map_pow, map_pow, smul_smul, smul_smul]
     conv_lhs => rw [e₃]
     rw [smul_add, pow_add]

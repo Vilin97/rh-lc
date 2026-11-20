@@ -91,7 +91,7 @@ theorem det_block_conj {r : ℕ} (P m : Matrix (Fin r) (Fin r) ℂ) (hPP : P * P
       Matrix.mul_assoc, a1, a2, hPP]
     abel
   have h2 : P * m.map conj + (1 - P) = (starRingEnd ℂ).mapMatrix (P * m + (1 - P)) := by
-    rw [map_add, map_mul, map_sub, map_one, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply, hP']
+    rw [map_add (f := _), map_mul, map_sub, map_one, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply, hP']
   have h3 := congrArg det h1
   rw [det_mul, det_conjTranspose, det_one] at h3
   rw [h2, ← RingHom.map_det]

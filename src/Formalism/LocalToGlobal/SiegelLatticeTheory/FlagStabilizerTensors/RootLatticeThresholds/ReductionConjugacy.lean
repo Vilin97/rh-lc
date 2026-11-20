@@ -182,7 +182,7 @@ theorem reduction_conjugacy : Formalism.L2.SG.Pf.RowDictPf.RedConj0 := by
     have hz : (Lw I w).mkQ (I.fmat x *ᵥ iv I (b' i - ∑ k, CM k i • b k)) = 0 :=
       (Submodule.Quotient.mk_eq_zero _).2 (hTe i)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [h0, map_add, hz, zero_add, map_sum]
+      rw [h0, map_add (f := _), hz, zero_add, map_sum]
     simp only [map_zsmul, red_eq I w hMb]
     exact comb (fun l => (Lw I w).mkQ (iv I (b l))) Mz CM i
   have hMCz : ∀ l i, (((Mz * CM - CM * M'z) l i : ℤ) : ZMod p) = 0 := by

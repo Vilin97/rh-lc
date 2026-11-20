@@ -66,7 +66,7 @@ theorem eq_zero_of_evalAt_shift (k : ℕ) (x : V ⊗[ℂ] (Fin (k + 1) → ℂ))
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul v t => simp [evalAt_tmul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [key, LinearEquiv.map_eq_zero_iff] at hx
   rw [hx, map_zero]
 
@@ -290,7 +290,7 @@ theorem eq_of_hasCopy (a : WDRep h V) (ha : a.ρ.IsIrreducible) (a' : WDRep h V'
     | tmul v y =>
       rw [WDRep.tensor_ρ, TensorProduct.map_tmul, evalAt_tmul, evalAt_tmul, sp_ρ_apply, map_smul, smul_smul]
       rfl
-    | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   let G : V →ₗ[ℂ] V' := evalAt (⟨m, by omega⟩ : Fin (m + 1)) ∘ₗ f
   have hG : ∀ σ v, G (a.ρ σ v) = a'.ρ σ (G v) := by
     intro σ v

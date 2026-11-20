@@ -22,7 +22,7 @@ theorem dualNumber_ringHom_ext {R S : Type} [CommRing R] [CommRing S] {F G : Dua
   refine RingHom.ext fun z => ?_
   have e : z = algebraMap R _ z.fst + algebraMap R _ z.snd * DualNumber.eps := by
     ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
-  rw [e, map_add, map_add, map_mul, map_mul, h, h, he]
+  rw [e, map_add (f := _), map_add (f := _), map_mul, map_mul, h, h, he]
 
 section Sec
 

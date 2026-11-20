@@ -18,7 +18,7 @@ theorem sigR_eq (z : AF F ⊗[F] E) : HeckeCharacterZeroLocus.SiegelWeilU.sigR (
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem incM_scalar_mul {k p : ℕ} (η : E) (M : Matrix (Fin k) (Fin p) (AE F E)) :
     incM F (Matrix.scalar (Fin k) η) * M = inclR (F := F) (AF F) η • M := by

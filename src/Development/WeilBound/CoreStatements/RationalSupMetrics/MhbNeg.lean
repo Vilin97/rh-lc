@@ -61,8 +61,8 @@ theorem V.rep (hz : ∀ f ∈ mCoordIdeal y, aeval z f = 0) {s : Ω} {w : 𝕜} 
     aeval z g = w * aeval z h := by
   obtain ⟨d', g', h', hg', hh', e', n', f'⟩ := hv
   have h1 : IsMultiHomog (g * h' + -(h * g')) (d + d') := mhb_add (mhb_mul hg hh') (mhb_neg (mhb_mul hh hg'))
-  have h2 := hz _ ((mem_iff y h1).2 (by simp only [map_add, map_neg, map_mul, e, e']; ring))
-  simp only [map_add, map_neg, map_mul, f'] at h2
+  have h2 := hz _ ((mem_iff y h1).2 (by simp only [map_add (f := _), map_neg, map_mul, e, e']; ring))
+  simp only [map_add (f := _), map_neg, map_mul, f'] at h2
   apply mul_right_cancel₀ n'
   linear_combination h2
 
@@ -76,9 +76,9 @@ theorem V.add {s t : Ω} {w x : 𝕜} (h1 : V y z s w) (h2 : V y z t x) : V y z 
   obtain ⟨d, g, h, hg, hh, e, n, f⟩ := h1
   obtain ⟨d', g', h', hg', hh', e', n', f'⟩ := h2
   refine ⟨d + d', g * h' + h * g', h * h', mhb_add (mhb_mul hg hh') (mhb_mul hh hg'), mhb_mul hh hh', ?_, ?_, ?_⟩
-  · simp only [map_add, map_mul, e, e']; ring
+  · simp only [map_add (f := _), map_mul, e, e']; ring
   · rw [map_mul]; exact mul_ne_zero n n'
-  · simp only [map_add, map_mul, f, f']; ring
+  · simp only [map_add (f := _), map_mul, f, f']; ring
 
 omit [Fintype K] in
 theorem V.mul {s t : Ω} {w x : 𝕜} (h1 : V y z s w) (h2 : V y z t x) : V y z (s * t) (w * x) := by
@@ -115,7 +115,7 @@ theorem exists_hom [CharZero 𝕜] {F : Type} [Field F] [NumberField F] [Algebra
     | add a b _ _ ha hb =>
       obtain ⟨u, hu⟩ := ha
       obtain ⟨v, hv⟩ := hb
-      exact ⟨_, by rw [map_add]; exact hu.add hv⟩
+      exact ⟨_, by rw [map_add (f := _)]; exact hu.add hv⟩
     | mul a b _ _ ha hb =>
       obtain ⟨u, hu⟩ := ha
       obtain ⟨v, hv⟩ := hb
@@ -127,7 +127,7 @@ theorem exists_hom [CharZero 𝕜] {F : Type} [Field F] [NumberField F] [Algebra
     exact (hφ _).uniq hz (by rw [map_mul]; exact (hφ a).mul (hφ b))
   · exact (hφ 0).uniq hz (by simpa using V.int (y := y) (z := z) 0)
   · intro a b
-    exact (hφ _).uniq hz (by rw [map_add]; exact (hφ a).add (hφ b))
+    exact (hφ _).uniq hz (by rw [map_add (f := _)]; exact (hφ a).add (hφ b))
 
 theorem exists_prim (F : Type) [Field F] [NumberField F] :
     ∃ ω : F, IsIntegral ℤ ω ∧ Algebra.adjoin ℚ {ω} = ⊤ := by

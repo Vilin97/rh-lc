@@ -98,8 +98,8 @@ theorem surj_of_small [CompleteSpace C] {r : ℕ} (X : AddSubgroup C) (hX : IsCl
       have e : ∀ b, Y (N + 1) b = Y N b + q ^ N * S (v N b) := fun b => Finset.sum_range_succ _ _
       have e2 : (fun b => g (Y (N + 1) b))
           = (fun b => g (Y N b)) + q ^ N • fun b => g (S (v N b)) := by
-        funext b; rw [e, map_add, map_mul, map_pow, hgq]; rfl
-      rw [e2, e, map_add, map_mul, map_pow, hgq, Matrix.mulVec_add, Matrix.mulVec_smul, hvs]
+        funext b; rw [e, map_add (f := _), map_mul, map_pow, hgq]; rfl
+      rw [e2, e, map_add (f := _), map_mul, map_pow, hgq, Matrix.mulVec_add, Matrix.mulVec_smul, hvs]
       simp only [T, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
       linear_combination ih + q ^ N * (hS _ (hv N a)).2
   have t1 : Filter.Tendsto (fun N => g (Y N a) - Y N a + p * q * B.mulVec (fun b => g (Y N b)) a)

@@ -40,7 +40,7 @@ private theorem sp_opE {A C M₀ W G : Type} [CommRing A] [CommRing C] [AddCommG
       refine ⟨a g • ⟨ρ g m, hm⟩ + v, ?_, ?_⟩
       · rw [Finset.sum_insert hg, ← h1]
         simp
-      · rw [Finset.sum_insert hg, map_add, map_zsmul, h2, ← hs]
+      · rw [Finset.sum_insert hg, map_add (f := _), map_zsmul, h2, ← hs]
         rfl
   obtain ⟨v, h1, h2⟩ := key _ subset_rfl
   have e1 : opE ρ a m = ∑ g ∈ a.support, a g • ρ g m := by
@@ -126,12 +126,12 @@ private theorem mu_eqE [Module.Free A M] {I : Type} (g : I → B)
   have hΨ : ∀ i v, Ψ ((actL lam M hs (g i)).baseChange K v) = γ i (Ψ v) := fun i v => by
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
     | tmul k m => rw [LinearMap.baseChange_tmul, ht, ht, map_smul, ← hop]; rfl
   have hΨe : ∀ v, (N : C) • Ψ (e.baseChange K v) = E (Ψ v) := fun v => by
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add u v hu hv => simp only [map_add, smul_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), smul_add, hu, hv]
     | tmul k m => rw [LinearMap.baseChange_tmul, ht, ht, map_smul, ← hE, smul_comm]
   have p : ∀ i (k : ℕ) (v : K ⊗[A] M), Ψ ((((actL lam M hs (g i)).baseChange K - y (g i) • 1) ^ k) v) =
       ((γ i - ι (y (g i)) • 1) ^ k) (Ψ v) := by

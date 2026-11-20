@@ -31,7 +31,7 @@ def homIns {e : ι → Γ(F, U)} (he : IsFrame e) (h : V ≤ U) (i : ι) : Γ(G,
     simp only [LinearMap.smulRight_apply, Module.Basis.coord_apply, resM_smul, resM_resM]
     rw [← he.repr_resM]
   map_add' a b := VB.hom_ext fun W hW s => by
-    simp only [homApp_homMk, homApp_add, LinearMap.add_apply, LinearMap.smulRight_apply, map_add, smul_add]
+    simp only [homApp_homMk, homApp_add, LinearMap.add_apply, LinearMap.smulRight_apply, map_add (f := _), smul_add]
   map_smul' a b := VB.hom_ext fun W hW s => by
     simp only [homApp_homMk, homApp_smul, LinearMap.smul_apply, LinearMap.smulRight_apply, resM_smul, RingHom.id_apply]
     rw [smul_comm]
@@ -124,7 +124,7 @@ theorem appIm_res (φ : F.restrict U.ι ⟶ G.restrict U.ι) {T T' : U.toScheme.
 def homOfRestrict (φ : F.restrict U.ι ⟶ G.restrict U.ι) : Γ(homMod F G, U) :=
   homMk (fun W h =>
     { toFun s := resM G (image_preimage_ι h).ge (appIm φ (U.ι ⁻¹ᵁ W) (resM F (image_preimage_ι h).le s))
-      map_add' a b := by rw [map_add, map_add, map_add]
+      map_add' a b := by rw [map_add (f := _), map_add (f := _), map_add (f := _)]
       map_smul' a s := by
         rw [resM_smul, map_smul, resM_smul, resG_resG, resG_self, RingHom.id_apply] })
     fun W W' h h' s => by
@@ -187,7 +187,7 @@ theorem top_le_preimage_iff [IsLocalRing R] (z : Sp R ⟶ X) :
 def resForm (h : V ≤ U) {ε : Γ(X, V) →+* R} {ε' : Γ(X, U) →+* R} (hε : ∀ a, ε (resG X h a) = ε' a)
     (μ : Γ(F, V) →ₛₗ[ε] R) : Γ(F, U) →ₛₗ[ε'] R where
   toFun s := μ (resM F h s)
-  map_add' a b := by rw [map_add, map_add]
+  map_add' a b := by rw [map_add (f := _), map_add (f := _)]
   map_smul' a s := by rw [resM_smul, μ.map_smulₛₗ, hε]
 
 theorem exists_extend [F.IsQuasicoherent] (hU : IsAffineOpen U) (hV : IsAffineOpen V) (h : V ≤ U)
@@ -211,7 +211,7 @@ theorem form_ext [F.IsQuasicoherent] (hU : IsAffineOpen U) (hV : IsAffineOpen V)
   refine LinearMap.ext fun t => (QCoh.isBaseChange_resLinear F hU hV h).inductionOn t
     (fun t => μ t = μ' t) (by simp) H (fun a t ht => ?_) fun a b ha hb => ?_
   · rw [μ.map_smulₛₗ, μ'.map_smulₛₗ, ht]
-  · rw [map_add, map_add, ha, hb]
+  · rw [map_add (f := _), map_add (f := _), ha, hb]
 
 def IsLineForm {A M : Type} [CommRing A] [AddCommGroup M] [Module A M] {ε : A →+* R} (μ₀ : M →ₛₗ[ε] R) : Prop :=
   μ₀ ≠ 0 ∧ ∀ μ : M →ₛₗ[ε] R, ∃ c : R, μ = c • μ₀
@@ -259,7 +259,7 @@ theorem exists_isGreatest {A M C : Type} [CommRing A] [AddCommGroup M] [Module A
   | mem x hx => exact hm₀ x (Finset.mem_insert_of_mem hx)
   | zero => simp
   | add x y _ _ hx hy =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   | smul a x _ hx =>
     simp only [ν.map_smulₛₗ, smul_eq_mul, norm_mul]
@@ -356,7 +356,7 @@ theorem nrmSet_eq [F.IsQuasicoherent] (hU : IsAffineOpen U) (h : ⊤ ≤ z ⁻¹
     obtain ⟨l₁, hl₁⟩ := exists_extend hU' hT h₂ (evz_res z hz h' h₂) lam
     obtain ⟨μ, hμ⟩ := exists_extend hT (isAffineOpen_inf_gen (p := p) hT) inf_le_left (evq_res z hp hz)
       { toFun m := (l₁ m : C.S)
-        map_add' a b := by rw [map_add]; rfl
+        map_add' a b := by rw [map_add (f := _)]; rfl
         map_smul' a m := by rw [l₁.map_smulₛₗ]; rfl }
     have h₃ : T ⊓ gen X p ≤ U ⊓ gen X p := inf_le_inf_right _ h₁
     refine ⟨resForm h₃ (evz_res (zq z) _ _ h₃) μ, fun m => ?_, ?_⟩

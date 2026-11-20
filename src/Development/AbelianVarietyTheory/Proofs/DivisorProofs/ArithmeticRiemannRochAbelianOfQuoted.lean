@@ -61,8 +61,8 @@ theorem isArForm_add (h : IsRegVar p D) {j : ℕ} {α β : h.Fld} (hα : h.IsArF
   · by_cases h0 : (bas D).repr (α σ x) T = 0
     · exact ((hβ.1 σ).2 x).1 T (by simpa [h0] using hT)
     · exact ((hα.1 σ).2 x).1 T h0
-  · simp only [Pi.add_apply, map_add, Finsupp.add_apply, ((hα.1 σ).2 x).2 T, ((hβ.1 σ).2 x).2 T]
-  · simp only [Pi.add_apply, map_add, smul_add, hα.2 σ σ' x x' e e', hβ.2 σ σ' x x' e e']
+  · simp only [Pi.add_apply, map_add (f := _), Finsupp.add_apply, ((hα.1 σ).2 x).2 T, ((hβ.1 σ).2 x).2 T]
+  · simp only [Pi.add_apply, map_add (f := _), smul_add, hα.2 σ σ' x x' e e', hβ.2 σ σ' x x' e e']
 
 theorem isArForm_const (h : IsRegVar p D) (c : ℝ) : h.IsArForm 0 fun σ => (h.atlas σ).fn fun _ => c :=
   h.isArForm_fn (u := fun _ _ => c) (fun _ y => cInfAt_const c y) fun _ _ _ _ _ _ _ => rfl
@@ -74,11 +74,11 @@ theorem parts_eq {A : Type} [CommRing A] [Algebra ℚ A] (gr : ℕ → Submodule
   have n {i : ℕ} {x : A} (hx : x ∈ gr i) (j : ℕ) (hij : i ≠ j) : GradedAlgebra.proj gr j x = 0 :=
     DirectSum.decompose_of_mem_ne gr hx hij
   refine ⟨?_, ?_, ?_⟩
-  · simpa only [map_add, s h₀, s k₀, n h₁ 0 (by decide), n h₂ 0 (by decide), n k₁ 0 (by decide), n k₂ 0 (by decide),
+  · simpa only [map_add (f := _), s h₀, s k₀, n h₁ 0 (by decide), n h₂ 0 (by decide), n k₁ 0 (by decide), n k₂ 0 (by decide),
       add_zero] using congrArg (GradedAlgebra.proj gr 0) e
-  · simpa only [map_add, s h₁, s k₁, n h₀ 1 (by decide), n h₂ 1 (by decide), n k₀ 1 (by decide), n k₂ 1 (by decide),
+  · simpa only [map_add (f := _), s h₁, s k₁, n h₀ 1 (by decide), n h₂ 1 (by decide), n k₀ 1 (by decide), n k₂ 1 (by decide),
       add_zero, zero_add] using congrArg (GradedAlgebra.proj gr 1) e
-  · simpa only [map_add, s h₂, s k₂, n h₀ 2 (by decide), n h₁ 2 (by decide), n k₀ 2 (by decide), n k₁ 2 (by decide),
+  · simpa only [map_add (f := _), s h₂, s k₂, n h₀ 2 (by decide), n h₁ 2 (by decide), n k₀ 2 (by decide), n k₁ 2 (by decide),
       add_zero, zero_add] using congrArg (GradedAlgebra.proj gr 2) e
 
 theorem parts_of_identity {A : Type} [CommRing A] [Algebra ℚ A] (gr : ℕ → Submodule ℚ A) [GradedAlgebra gr]
@@ -123,7 +123,7 @@ theorem ringdeg : ∀ (B : BottChern) (k : Type) [CommRing k] (X Y : Scheme.{0})
   have htd : R'.td E' = F (1 + R.char E (tdPart r 1) + R.char E (tdPart r 2)) := by
     rw [CxForm.ArRing.td, show g + 1 + 2 = 3 + g by omega, Finset.sum_range_add,
       Finset.sum_eq_zero (s := Finset.range g), add_zero]
-    · simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, hch, map_add, R.char_tdPart_zero]
+    · simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, hch, map_add (f := _), R.char_tdPart_zero]
     · intro j _
       rw [hch, hz (hm _).2 (by omega), map_zero]
   have hr : R'.a (R'.rForm E') = F (u * R.cl E 1) := by
@@ -144,8 +144,8 @@ theorem ringdeg : ∀ (B : BottChern) (k : Type) [CommRing k] (X Y : Scheme.{0})
   have hy (i : ℕ) : y i ∈ R.gr i := Submodule.smul_mem _ _ (hmem (g + i) i (by omega) _ (hl _))
   have hL : G (R'.ch (.ofLB L)) = y 0 + y 1 + y 2 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [GlobalTheory.T.chern_character_line_bundle_exp, show g + 1 + 2 = g + 3 by omega, Finset.sum_range_add, map_add, map_sum, Finset.sum_eq_zero, zero_add]
-    · simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, map_add, map_smul, y]
+      rw [GlobalTheory.T.chern_character_line_bundle_exp, show g + 1 + 2 = g + 3 by omega, Finset.sum_range_add, map_add (f := _), map_sum, Finset.sum_eq_zero, zero_add]
+    · simp only [Finset.sum_range_succ, Finset.sum_range_zero, zero_add, map_add (f := _), map_smul, y]
     · intro j hj
       rw [map_smul, hzero j (by simpa using hj) _ (hl _), smul_zero]
   have hM : R.ch (.ofLB M) = 1 + R.c1 M + (1 / 2 : ℚ) • R.c1 M ^ 2 := by
@@ -154,7 +154,7 @@ theorem ringdeg : ∀ (B : BottChern) (k : Type) [CommRing k] (X Y : Scheme.{0})
   have hdeg (x : R.CH) (z : R'.CH) : R.deg (G z * x) = R'.deg (z * F x) := by
     rw [mul_comm, ← hproj, mul_comm]
     exact hGdeg _
-  rw [htd, hr, ← map_one F, ← map_sub, ← map_mul, hproj, hL, hM, map_add] at hid
+  rw [htd, hr, ← map_one F, ← map_sub, ← map_mul, hproj, hL, hM, map_add (f := _)] at hid
   have hu1 : u ∈ R.gr 1 := R.a_mem 0 _ (isArForm_const h _)
   obtain ⟨e₁, e₂⟩ := parts_of_identity R.gr R.gr_eq_bot (R.constant_one_mem_nonvanishing M)
     (Submodule.smul_mem _ _ (by simpa using SetLike.pow_mem_graded 2 (R.constant_one_mem_nonvanishing M))) (R.a_mem 0 _ h₀) (R.a_mem 1 _ h₁)
@@ -163,7 +163,7 @@ theorem ringdeg : ∀ (B : BottChern) (k : Type) [CommRing k] (X Y : Scheme.{0})
   rw [(GlobalTheory.T.todd_part_low_degree r).2, map_sub, map_smul, map_smul, map_pow, R.char_chPart_one] at e₂
   refine ⟨fun N => ?_, ?_⟩
   · have := congrArg (fun z => R.deg (z * R.c1 N)) e₁
-    simp only [sub_mul, add_mul, map_sub, map_add, y, smul_mul_assoc, map_smul, hdeg, Rat.smul_def] at this
+    simp only [sub_mul, add_mul, map_sub, map_add (f := _), y, smul_mul_assoc, map_smul, hdeg, Rat.smul_def] at this
     rw [this]
     push_cast
     ring
@@ -171,7 +171,7 @@ theorem ringdeg : ∀ (B : BottChern) (k : Type) [CommRing k] (X Y : Scheme.{0})
     have d₂ := hdeg 1 (R'.c1 L ^ (g + 2))
     rw [_root_.mul_one, map_one, _root_.mul_one] at d₂
     rw [mul_comm _ (y 1)] at this
-    simp only [map_sub, map_add, y, smul_mul_assoc, mul_smul_comm, map_smul, hdeg, d₂, Rat.smul_def] at this
+    simp only [map_sub, map_add (f := _), y, smul_mul_assoc, mul_smul_comm, map_smul, hdeg, d₂, Rat.smul_def] at this
     push_cast at this
     linear_combination this
 

@@ -18,7 +18,7 @@ theorem dbl (L : PeriodPair) {w : ℂ} (hw : w ∉ L.lattice) (h2 : w + w ∉ L.
       (GlobalTheory.latticeCurve L).toAffine.negY (L.weierstrassP w) (L.derivWeierstrassP w / 2) := by
     simp [GlobalTheory.latticeCurve]
     intro h; apply hy; linear_combination h
-  rw [QuotientAddGroup.mk_add, map_add, e1, WeierstrassCurve.Affine.Point.add_self_of_Y_ne hne] at e2
+  rw [QuotientAddGroup.mk_add, map_add (f := _), e1, WeierstrassCurve.Affine.Point.add_self_of_Y_ne hne] at e2
   have e3 := (WeierstrassCurve.Affine.Point.some.inj e2).1
   rw [WeierstrassCurve.Affine.slope_of_Y_ne rfl hne] at e3
   simp [GlobalTheory.latticeCurve] at e3
@@ -285,7 +285,7 @@ theorem torsion_integral_distinct : ∀ (L : PeriodPair) (W : ValuationSubring �
   have f2 := congrArg (residue W) e2
   have f3 := congrArg (residue W) e3
   have f4 := congrArg (residue W) e4
-  simp only [map_mul, map_add, map_sub, map_pow, map_ofNat, map_one] at f1 f2 f3 f4 e5
+  simp only [map_mul, map_add (f := _), map_sub, map_pow, map_ofNat, map_one] at f1 f2 f3 f4 e5
   rw [sub_eq_zero] at e5
   rw [← e5] at f1 f2
   generalize residue W x1 = x at *

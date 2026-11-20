@@ -135,7 +135,7 @@ theorem exists_ev_eq {V : (Sp R).Opens} (hV : IsAffineOpen V) (h : ⊤ ≤ jK R 
     (ha : ∀ Q ∈ V, RegAt a Q) : ∃ r, ev V h r = a := by
   let d : Ideal Γ(Sp R, V) :=
     { carrier := {s | ∃ r, ev V h r = ev V h s * a}
-      add_mem' := by rintro s t ⟨r, hr⟩ ⟨r', hr'⟩; exact ⟨r + r', by rw [map_add, map_add, hr, hr', add_mul]⟩
+      add_mem' := by rintro s t ⟨r, hr⟩ ⟨r', hr'⟩; exact ⟨r + r', by rw [map_add (f := _), map_add (f := _), hr, hr', add_mul]⟩
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := by rintro t s ⟨r, hr⟩; exact ⟨t * r, by rw [smul_eq_mul, map_mul, map_mul, hr, _root_.mul_assoc]⟩ }
   have : Ideal.span (d : Set Γ(Sp R, V)) = ⊤ := by

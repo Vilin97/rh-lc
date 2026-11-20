@@ -199,7 +199,7 @@ theorem proof : IntegralPointOfAlgebraicDomain.Statement := by
       rw [map_mul, map_mul]
       exact lt_of_le_of_lt (mul_le_of_le_one_left zero_le (hw1 b)) hlt
     have h2 := (w.valuation K).map_add_lt h1 (hw2 m hm)
-    rw [← map_add, hbm, map_one, map_one] at h2
+    rw [← map_add (f := _), hbm, map_one, map_one] at h2
     exact lt_irrefl _ h2
   have hyinj : Function.Injective ((algebraMap K (w.adicCompletion K)).comp (algebraMap S K)) :=
     (algebraMap K (w.adicCompletion K)).injective.comp (IsFractionRing.injective S K)

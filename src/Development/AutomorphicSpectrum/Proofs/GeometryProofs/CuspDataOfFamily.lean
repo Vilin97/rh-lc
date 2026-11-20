@@ -34,7 +34,7 @@ def ipL (x : Fin g → ℂ) : (Fin g → ℂ) →ₗ[ℂ] ℂ where
   map_smul' c y := ip_smul_right R c x y
 
 theorem ip_add_left (x x' y : Fin g → ℂ) : R.ip (x + x') y = R.ip x y + R.ip x' y := by
-  rw [← ip_conj R y, ip_add_right, map_add, ip_conj, ip_conj]
+  rw [← ip_conj R y, ip_add_right, map_add (f := _), ip_conj, ip_conj]
 
 theorem ip_smul_left (c : ℂ) (x y : Fin g → ℂ) : R.ip (c • x) y = starRingEnd ℂ c * R.ip x y := by
   rw [← ip_conj R y, ip_smul_right, map_mul, ip_conj]
@@ -185,7 +185,7 @@ theorem lieOf_add (s : 𝓞 E →+* ℂ) (m : ℕ) (v w : Λ) :
   funext c
   have h := (h3 s).2.2.1 1 (R.P v) (R.P w)
   rw [one_smul, one_smul] at h
-  simp only [lieOf, map_add, h, ip_add_right, Pi.add_apply]
+  simp only [lieOf, map_add (f := _), h, ip_add_right, Pi.add_apply]
 
 theorem lieOf_smul (s : 𝓞 E →+* ℂ) (m : ℕ) (a : 𝓞 E) (v : Λ) :
     lieOf R s m (a • v) = s a • lieOf R s m v := by

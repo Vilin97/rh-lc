@@ -23,7 +23,7 @@ theorem exists_next_unit (hS : IsHermSemilocal S)
   have hquad : ∀ (p q : V) (m : K), h (p + m • q) (p + m • q) =
       h p p + m * h p q + star m * h q p + star m * m * h q q := by
     intro p q m
-    simp only [map_add, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul,
+    simp only [map_add (f := _), map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul,
       starRingEnd_apply, map_smul, RingHom.id_apply]
     ring
   obtain ⟨hstar, -, hunram, hprinc, -⟩ := hS
@@ -146,7 +146,7 @@ theorem exists_next_unit (hS : IsHermSemilocal S)
       rw [this]
       exact S.mul_mem (S.mul_mem (hstar _ hμS) hμS) hbi
   · intro i hi
-    rw [map_add, map_smul, hyo i hi, hwo i hi, smul_zero, add_zero]
+    rw [map_add (f := _), map_smul, hyo i hi, hwo i hi, smul_zero, add_zero]
 
 theorem exists_orth_unit_frame [FiniteDimensional K V] (hS : IsHermSemilocal S)
     (hloc : ∀ a ∈ S, ∀ b ∈ S, star a = a → star b = b → ¬ IsUnitIn S a → ¬ IsUnitIn S b →

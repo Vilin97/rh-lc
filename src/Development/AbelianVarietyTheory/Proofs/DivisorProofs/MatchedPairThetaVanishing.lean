@@ -28,7 +28,7 @@ theorem rest_finPart {κ : Type} [Fintype κ] (f : SInf F κ) (φ : ∀ v : Pl F
     rw [evFin, AlgHom.comp_apply]
     convert map_zero (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v)
     exact h2
-  simp only [Pi.add_apply, map_add, hz0, add_zero]
+  simp only [Pi.add_apply, map_add (f := _), hz0, add_zero]
 
 theorem hasDerivAt_pure {κ : Type} [Fintype κ] {T : ℝ → ((κ → AF F) → ℂ) → (κ → AF F) → ℂ} {f f₁ : SInf F κ}
     (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (hSB : ∀ v, φ v ∈ SB (κ → Fv F v))

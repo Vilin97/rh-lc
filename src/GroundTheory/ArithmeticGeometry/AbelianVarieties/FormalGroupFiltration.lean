@@ -259,10 +259,10 @@ theorem pointE_add_of_ne {x y : MaxIdealPoint (formalGroup W)} (hx : x.val ≠ 0
     have := congrArg ι rb; rwa [map_mul, map_secantB, map_one] at this
   have hz₃' : ι z₃ = -ι x.val - ι y.val - secantA V (ι l) (ι n) * ι b := by
     rw [rz₃, map_sub, map_sub, map_neg, map_mul, map_secantA]
-  have hw₃' : ι w₃ = ι l * ι z₃ + ι n := by rw [rw₃, map_add, map_mul]
+  have hw₃' : ι w₃ = ι l * ι z₃ + ι n := by rw [rw₃, map_add (f := _), map_mul]
   obtain ⟨h₃, hw₃0, hsum⟩ := secant_spec V (zwPoly_wVal_map K W x.val_mem)
-    (zwPoly_wVal_map K W y.val_mem) hw₁ hw₂ (by rw [rl₁, map_add, map_mul])
-    (by rw [rl₂, map_add, map_mul]) hb' hxy hz₃' hw₃'
+    (zwPoly_wVal_map K W y.val_mem) hw₁ hw₂ (by rw [rl₁, map_add (f := _), map_mul])
+    (by rw [rl₂, map_add (f := _), map_mul]) hb' hxy hz₃' hw₃'
   have he' : (1 - V.a₁ * ι z₃ - V.a₃ * ι w₃) * ι e = 1 := by
     have := congrArg ι re
     rwa [map_mul, map_sub, map_sub, map_mul, map_mul, map_one] at this
@@ -408,7 +408,7 @@ theorem mem_range_pointE_iff (P : (W.map (algebraMap 𝒪 K)).toAffine.Point) :
       rintro ⟨u, hu⟩
       have key : (algebraMap 𝒪 K) (u ^ 2 * t + W.a₁ * u * t + W.a₃ * u * t ^ 2 -
           (1 + W.a₂ * t + W.a₄ * t ^ 2 + W.a₆ * t ^ 3)) = 0 := by
-        simp only [map_sub, map_add, map_mul, map_pow, map_one, hu, ht]
+        simp only [map_sub, map_add (f := _), map_mul, map_pow, map_one, hu, ht]
         simp only [WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃,
           WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆] at hE
         field_simp

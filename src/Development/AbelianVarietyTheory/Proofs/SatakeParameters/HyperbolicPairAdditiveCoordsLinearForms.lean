@@ -157,7 +157,7 @@ theorem hypZ_of_inHyp : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (hp : 5 ≤ p) (σ
 
   rw [← coe_substAlgHom hW]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_add, map_mul]
+    simp only [map_sum, map_add (f := _), map_mul]
   simp only [coe_substAlgHom hW, subst_C, hWx, hEv, hOd]
   rfl
 

@@ -289,9 +289,9 @@ theorem pderiv_aeval_eq_sum_chain_rule {σ : Type} [Fintype σ] (u : σ → MvPo
   classical
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq, add_mul, Finset.sum_add_distrib]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, add_mul, Finset.sum_add_distrib]
   | mul_X p n hp =>
-    simp only [map_mul, aeval_X, Derivation.leibniz, smul_eq_mul, hp, map_add, pderiv_X, add_mul,
+    simp only [map_mul, aeval_X, Derivation.leibniz, smul_eq_mul, hp, map_add (f := _), pderiv_X, add_mul,
       Finset.sum_add_distrib]
     have h1 : ∑ w : σ, aeval u p * aeval u ((Pi.single w 1 : σ → MvPolynomial σ K) n) * pderiv v (u w) =
         aeval u p * pderiv v (u n) := by

@@ -26,7 +26,7 @@ theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] {a : σ → Mv
     pderiv S t (subst a g) = ∑ s, subst a (pderiv S s g) * pderiv S t (a s) := by
   classical
   have hsa : ∀ x y : MvPowerSeries σ S, subst a (x + y) = subst a x + subst a y := fun x y => by
-    rw [← coe_substAlgHom ha, map_add]
+    rw [← coe_substAlgHom ha, map_add (f := _)]
   have hm : ∀ x y : MvPowerSeries σ S, subst a (x * y) = subst a x * subst a y := fun x y => by
     rw [← coe_substAlgHom ha, map_mul]
   have hz : subst a (0 : MvPowerSeries σ S) = 0 := by
@@ -45,7 +45,7 @@ theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] {a : σ → Mv
     next c =>
       simp [MvPolynomial.coe_C, hcC, pderiv_C, hz]
     next p q hp hq =>
-      simp only [MvPolynomial.coe_add, map_add, hsa, add_mul, Finset.sum_add_distrib, hp, hq]
+      simp only [MvPolynomial.coe_add, map_add (f := _), hsa, add_mul, Finset.sum_add_distrib, hp, hq]
     next p n hp =>
       simp only [MvPolynomial.coe_mul, MvPolynomial.coe_X, hm, subst_X ha, Derivation.leibniz, smul_eq_mul,
         map_add, hsa, pderiv_X, add_mul, Finset.sum_add_distrib, hp, Pi.single_apply, apply_ite (subst a), h1, hz,
@@ -93,7 +93,7 @@ theorem subst_sum' {σ τ : Type} {a : σ → MvPowerSeries τ S} (ha : HasSubst
   | (rw [← coe_substAlgHom ha, map_sum])
   | (induction s using Finset.cons_induction with
       | empty => simp [← coe_substAlgHom ha]
-      | cons i s hi ih => rw [Finset.sum_cons, Finset.sum_cons, ← ih, ← coe_substAlgHom ha, map_add])
+      | cons i s hi ih => rw [Finset.sum_cons, Finset.sum_cons, ← ih, ← coe_substAlgHom ha, map_add (f := _)])
 
 variable {N d : ℕ}
 
@@ -223,7 +223,7 @@ theorem key (h0 : ∀ j, constantCoeff (φ j) = 0) (w : Fin N → Fin d → S)
         if r = ((0 : Fin 1), q) then 1 else 0 := by
       rintro ⟨i, r⟩
       fin_cases i
-      rw [map_add, pderiv_X_of_ne (by simp [Prod.ext_iff]), zero_add]
+      rw [map_add (f := _), pderiv_X_of_ne (by simp [Prod.ext_iff]), zero_add]
       by_cases h : r = q
       · subst h; simp
       · rw [pderiv_X_of_ne (by simp [Prod.ext_iff, h]), if_neg (by simp [Prod.ext_iff, h])]

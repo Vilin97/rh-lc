@@ -84,7 +84,7 @@ theorem DivisorRegularGeneric.proof (hG : FrameGraphGeneric.Statement) : Divisor
       obtain ⟨V, hV, hqV⟩ := hcomp q hqJ hqu
       exact RingHom.mem_ker.mpr (hqV p (hV.1.2 hp))
     exact RingHom.mem_ker.mp (hle hp)
-  rw [hsplit W ((hmemT W).mpr hW), map_add, hqW _ (hrest W hW), add_zero, map_mul] at hfq
+  rw [hsplit W ((hmemT W).mpr hW), map_add (f := _), hqW _ (hrest W hW), add_zero, map_mul] at hfq
   refine graphChart_of_eq_on_open (U := {x | eval x (e W) ≠ 0})
     (isOpen_ne_fun (MvPolynomial.continuous_eval _) continuous_const) (right_ne_zero_of_mul hfq) ?_
     (hhchart W hW q hqW (left_ne_zero_of_mul hfq))

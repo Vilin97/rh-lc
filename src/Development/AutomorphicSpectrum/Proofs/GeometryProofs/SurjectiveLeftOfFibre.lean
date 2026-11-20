@@ -93,7 +93,7 @@ theorem isIso_of_fibre (R : Type) [CommRing R] [IsLocalRing R] [IsNoetherianRing
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hφ : Function.Bijective φ :=
     bijective_of_lTensor R Q P φ.toLinearMap (by rw [hco]; exact h2')
   have hS : IsIso (Spec.map (CommRingCat.ofHom φ.toRingHom)) := isIso_SpecMap_iff.2 hφ

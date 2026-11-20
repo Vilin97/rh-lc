@@ -91,7 +91,7 @@ def conjForm {X : Type} (l : (X → ℂ) →ₗ[ℂ] ℂ) : (X → ℂ) →ₗ[�
   map_add' φ ψ := by
     have h : (fun x => starRingEnd ℂ ((φ + ψ) x)) = (fun x => starRingEnd ℂ (φ x)) + fun x => starRingEnd ℂ (ψ x) :=
       funext fun x => map_add _ _ _
-    rw [h, map_add, map_add]
+    rw [h, map_add (f := _), map_add (f := _)]
   map_smul' c φ := by
     have h : (fun x => starRingEnd ℂ ((c • φ) x)) = starRingEnd ℂ c • fun x => starRingEnd ℂ (φ x) :=
       funext fun x => by simp
@@ -131,7 +131,7 @@ theorem adm_of_box {κ κ₁ κ' κ₁' : Type} [Fintype κ] [Fintype κ₁] [Fi
       induction hφ using Submodule.span_induction with
       | mem x hx => obtain ⟨f, g, hg, rfl⟩ := hx; exact hc f g hg
       | zero => exact map_zero _
-      | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
       | smul c x _ hx => rw [map_smul, hx, smul_zero]
     exact hφne (hz φ hφ)
   obtain ⟨t₀, ht₀⟩ : ∃ t, e₁ (pureA F f₁ g₁) t ≠ 0 := by

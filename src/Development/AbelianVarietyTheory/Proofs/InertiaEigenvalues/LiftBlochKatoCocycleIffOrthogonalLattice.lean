@@ -223,7 +223,7 @@ theorem lift_iff [TopologicalSpace Qp] [TopologicalSpace LL] [IsTopologicalRing 
       obtain ⟨g', rfl⟩ := e.surjective g'
       change (Submodule.Quotient.mk _ : (Fin r → LL) ⧸ L'.T) =
         Submodule.Quotient.mk (_ + ρ' (e g) ((algebraMap O LL ϖ)⁻¹ • incl LL (y (e.symm (e g')))))
-      rw [map_smul, hρ', incl_mulVec, ← smul_add, ← map_add, key, ← map_mul]
+      rw [map_smul, hρ', incl_mulVec, ← smul_add, ← map_add (f := _), key, ← map_mul]
       simp only [MulEquiv.symm_apply_apply]
       exact hyc g g'
   have main : c ∈ HfD PD L' ↔ ∀ d ∈ latticeFiniteCocycles PD L, CobO PD L1 (cupLD L' (dotProductBilin LL LL) d c) :=
@@ -237,7 +237,7 @@ theorem lift_iff [TopologicalSpace Qp] [TopologicalSpace LL] [IsTopologicalRing 
         refine ⟨d g ⬝ᵥ (M' g).mulVec t, ?_⟩
         change incl LL (d (e.symm (e g))) ⬝ᵥ ρ' (e g) (liftD L' (c (e h))) = _
         rw [eq_sub_iff_add_eq] at ht
-        rw [← ht, map_add, map_smul, hρ', hρ', incl_mulVec, incl_mulVec, dotProduct_add, dotProduct_smul, incl_dot,
+        rw [← ht, map_add (f := _), map_smul, hρ', hρ', incl_mulVec, incl_mulVec, dotProduct_add, dotProduct_smul, incl_dot,
           incl_dot, add_comm]
         simp
   refine Iff.trans ?_ (main.trans ?_)

@@ -18,7 +18,7 @@ theorem hform_smul_right (c : A) (u v : Fin n → A) : hform σ J u (c • v) = 
   simp only [hform_eq, Matrix.mulVec_smul, dotProduct_smul, smul_eq_mul]
 
 theorem hform_add_left (u v w : Fin n → A) : hform σ J (u + v) w = hform σ J u w + hform σ J v w := by
-  simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hform_smul_left (c : A) (u v : Fin n → A) : hform σ J (c • u) v = σ c * hform σ J u v := by
   simp only [hform, Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum, mul_assoc]

@@ -121,7 +121,7 @@ theorem euler_eq_dg {σ : Type} (x : σ) (G : MvPolynomial σ K) :
     X x * pderiv x G = dg (fun ξ => (ξ x : K)) G := by
   refine MvPolynomial.induction_on' G (fun α c => ?_) (fun P Q hP hQ => ?_)
   · rw [MvPolynomial.X_mul_pderiv_monomial, dg_monomial, MvPolynomial.smul_monomial, nsmul_eq_mul]
-  · rw [map_add, mul_add, hP, hQ, map_add]
+  · rw [map_add (f := _), mul_add, hP, hQ, map_add (f := _)]
 
 private theorem coeff_dg_eq_mul_coeff {σ : Type} (f : (σ →₀ ℕ) → K) (F : MvPolynomial σ K)
     (α : σ →₀ ℕ) : (dg f F).coeff α = f α * F.coeff α := by

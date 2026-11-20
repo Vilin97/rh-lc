@@ -47,7 +47,7 @@ theorem nondeg {h1 : V1 →ₗ⋆[K] V1 →ₗ[K] K} {z : V1} {t : ℕ} (hH : Gl
     rw [this, map_zero]
   have e1 := hx z
   change h1 (c • z + w.1) z = 0 at e1
-  rw [map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, hwz, add_zero,
+  rw [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, hwz, add_zero,
     smul_eq_mul] at e1
   have hc : c = 0 := by
     have h2 : (starRingEnd K) c = 0 := (mul_eq_zero.1 e1).resolve_right hz0

@@ -37,7 +37,7 @@ theorem jetCoef_add {n : ρ →₀ ℕ} (hn : n.degree ≤ m) (a b : Jet K ρ m)
     jetCoef n (a + b) = jetCoef n a + jetCoef n b := by
   obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective a
   obtain ⟨q, rfl⟩ := Ideal.Quotient.mk_surjective b
-  rw [← map_add, jetCoef_mk hn, jetCoef_mk hn, jetCoef_mk hn, MvPolynomial.coeff_add]
+  rw [← map_add (f := _), jetCoef_mk hn, jetCoef_mk hn, jetCoef_mk hn, MvPolynomial.coeff_add]
 
 theorem jetCoef_smul {n : ρ →₀ ℕ} (hn : n.degree ≤ m) (c : K) (a : Jet K ρ m) :
     jetCoef n (algebraMap K (Jet K ρ m) c * a) = c * jetCoef n a := by
@@ -77,7 +77,7 @@ variable {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C] {R : Type}
 def normIdeal (hf : ∀ r, ‖f r‖ ≤ 1) (c : ℝ) (hc : 0 ≤ c) : Ideal R where
   carrier := {a | ‖f a‖ ≤ c}
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
   zero_mem' := by simp [hc]
   smul_mem' := fun r a ha => by
@@ -115,7 +115,7 @@ def normSub (hf : ∀ r, ‖f r‖ ≤ 1) (Λ : W →+ C) (hΛ : ∀ (r : R) (w 
     (hc : 0 ≤ c) : Submodule R W where
   carrier := {w | ‖Λ w‖ ≤ c}
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
   zero_mem' := by simp [hc]
   smul_mem' := fun r a ha => by
@@ -176,7 +176,7 @@ theorem converge : ∀ (C : Type) [NontriviallyNormedField C] [IsUltrametricDist
       HasSum (fun α => MvPowerSeries.coeff n (g α)) (jetCoef n (u * κ s)) := by
     intro n hn
     let Λ : W →+ C := AddMonoidHom.mk' (fun w => jetCoef n (u * κ w)) (fun a b => by
-      simp only [map_add, mul_add]; exact jetCoef_add hn _ _)
+      simp only [map_add (f := _), mul_add]; exact jetCoef_add hn _ _)
     have hΛ : ∀ (r : R) (w : W), Λ (r • w) = f r * Λ w := by
       intro r w
       show jetCoef n (u * κ (r • w)) = f r * jetCoef n (u * κ w)

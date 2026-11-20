@@ -82,7 +82,7 @@ theorem SemiHom.rigExtMap_lift_comp_liftSemi [Algebra R S] {G : PDivGroup p R} {
     rigExtMap s.lift ∘ₗ liftSemi (G.toBase S).rig = liftSemi s.rig :=
   LinearMap.ext fun y => by
     induction y with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r x =>
       rw [LinearMap.comp_apply, liftSemi_tmul, liftSemi_tmul, map_smul, ← SemiHom.ofHom_rig,
         (G.toBase S).rig_rig _ s fun n a => ((s.lift_app n 1 a).trans (one_smul _ _)).symm]
@@ -119,7 +119,7 @@ theorem frobProj_app_relFrob_app (n : ℕ) (x : (frobTwist h G).A n) :
   rw [← absFrob_app h]
   induction x using frobTwist_induction h n with
   | h0 => simp only [map_zero]
-  | h2 x y hx hy => simp only [map_add, hx, hy]
+  | h2 x y hx hy => simp only [map_add (f := _), hx, hy]
   | h1 r a =>
     rw [map_smul, SemiBialgHom.smul_map, SemiBialgHom.smul_map, relFrob_app_frobProj, map_pow,
       absFrob_app]
@@ -161,7 +161,7 @@ theorem SemiHom.app_relFrob (n : ℕ) (x : (PDivGroup.frobTwist h G).A n) :
     s.app n ((relFrob h G).app n x) = (relFrob h' G').app n ((s.frobTwist h h').app n x) := by
   induction x using frobTwist_induction h n with
   | h0 => simp only [map_zero]
-  | h2 x y hx hy => simp only [map_add, hx, hy]
+  | h2 x y hx hy => simp only [map_add (f := _), hx, hy]
   | h1 r a =>
     rw [map_smul, SemiBialgHom.smul_map, SemiBialgHom.smul_map, map_smul, relFrob_app_frobProj,
       SemiHom.frobTwist_app_frobProj, relFrob_app_frobProj, map_pow]
@@ -228,7 +228,7 @@ theorem omegaMap_relFrob : omegaMap _ _ (relFrob h G) = 0 :=
     clear hx
     induction x using frobTwist_induction h n with
     | h0 => simp only [map_zero]
-    | h2 x y hx hy => simp only [map_add, hx, hy, add_zero]
+    | h2 x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
     | h1 r a => rw [map_smul, relFrob_app_frobProj, dUnit, map_smul, ← dUnit, dUnit_pow_prime h, smul_zero])
 
 theorem rigExtMap_relFrob_comp_rigOfOmega :

@@ -21,7 +21,7 @@ theorem rowDiv_succ_rec (R : Type) [CommRing R] {r m : ℕ} (a b : Fin r) (f : M
     | zero => simp [rowE_C, Polynomial.coeff_C]
     | succ k => simp
   | add p q hp hq =>
-    simp only [map_add, Polynomial.coeff_add, ← hp, ← hq]
+    simp only [map_add (f := _), Polynomial.coeff_add, ← hp, ← hq]
     ring
   | mul_X p v hp =>
     obtain ⟨c, s⟩ := v
@@ -54,7 +54,7 @@ theorem rowDiv_succ_rec (R : Type) [CommRing R] {r m : ℕ} (a b : Fin r) (f : M
       push_cast
       ring
     | succ k =>
-      rw [hs, hs, map_add, rowE_mul, rowE_mul, hx, hy', ← hp, ← hp]
+      rw [hs, hs, map_add (f := _), rowE_mul, rowE_mul, hx, hy', ← hp, ← hp]
       push_cast
       ring
 

@@ -128,7 +128,7 @@ theorem puniq_psi_eq (hgap : StdGap ε lam) {Ψ' : Matrix (Fin n) (Fin n) ℂ �
   have hAadd : ∀ v w, A (v + w) = A v + A w := by
     intro v w
     apply hj'
-    rw [← hAv, xv_add, map_add, Submodule.coe_add, hAv, hAv, datumEmbedding_add hP']
+    rw [← hAv, xv_add, map_add (f := _), Submodule.coe_add, hAv, hAv, datumEmbedding_add hP']
   have hAsmul : ∀ (c : ℂ) v, A (c • v) = c • A v := by
     intro c v
     apply hj'

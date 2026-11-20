@@ -42,7 +42,7 @@ theorem det_gram_contraction_le : ∀ (r : ℕ) (V W : Type) [NormedAddCommGroup
       simp only [Fin.cons_succ]
       have h1 : a b.succ = c b • a 0 + w b := hc b
       have h2 : T (w b) = c' b • T (a 0) + T' (w b) := hc' b
-      rw [h1, map_add, map_smul, add_smul, add_assoc, ← h2]
+      rw [h1, map_add (f := _), map_smul, add_smul, add_assoc, ← h2]
     have g1 := Formalism.HermitianLatticeCounting.P.s5b7_gram_cons r (a 0) c w (fun b => orth V _ _)
     have g2 := Formalism.HermitianLatticeCounting.P.s5b7_gram_cons r (T (a 0)) (fun b => c b + c' b) (fun b => T' (w b))
       (fun b => orth W _ _)

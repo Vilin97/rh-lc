@@ -249,7 +249,7 @@ private theorem abs_main {l : ℕ} [Fact l.Prime] {A M J E : Type} [CommRing A] 
     intro i
     obtain ⟨k, hk⟩ := (Module.End.mem_maxGenEigenspace _ _ _).1 ((Submodule.mem_iInf _).1 hF2 i)
     refine (Module.End.mem_maxGenEigenspace _ _ _).2 ⟨k, ?_⟩
-    rw [map_add] at hk
+    rw [map_add (f := _)] at hk
     have h3 := pow_mem_of E1 (opC i) (μ i) (hst1 i) k F1 h1
     have h4 := pow_mem_of E2 (opC i) (μ i) (hst2 i) k F2 h2
     refine Submodule.disjoint_def.1 hdisE _ ?_ h4
@@ -305,7 +305,7 @@ private theorem abs_nil {A P : Type} [CommRing A] [AddCommGroup P] [Module A P] 
     refine Submodule.smul_induction_on hy (fun r hr n _ => ?_) (fun y y' h h' => ?_)
     · rw [map_smul]
       exact Submodule.smul_mem_smul hr trivial
-    · rw [map_add]
+    · rw [map_add (f := _)]
       exact add_mem h h'
   have hmono : ∀ (n k : ℕ) (y : P), (D ^ n) y ∈ I • (⊤ : Submodule A P) → (D ^ (n + k)) y ∈ I • (⊤ : Submodule A P) := by
     intro n k y hy
@@ -362,7 +362,7 @@ private theorem abs_cong {l : ℕ} [Fact l.Prime] {A M J : Type} [CommRing A] [I
         have := hD ⟨m, hm⟩
         rw [← this]
         exact (D ⟨m, hm⟩).2
-      · rw [map_add]
+      · rw [map_add (f := _)]
         exact add_mem h h'
     obtain ⟨n, hn⟩ := (Submodule.mem_iSup_of_directed _ hmono.directed_le).1 h1
     refine ⟨n, (Submodule.mem_smul_top_iff _ _ _).2 ?_⟩

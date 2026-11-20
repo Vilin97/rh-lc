@@ -86,7 +86,7 @@ theorem actB_smul {G : Type} [Group G] [TopologicalSpace G] (s : G →* GQ l) (T
   | zero => simp only [smul_zero, map_zero]
   | tmul w x =>
     simp only [actB, TWact, smul_tmul', TensorProduct.map_tmul, AlgHom.toLinearMap_apply, smul_eq_mul, map_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 variable [TameDescentExponentData K l e a]
 

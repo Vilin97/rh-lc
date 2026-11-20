@@ -278,7 +278,7 @@ theorem linearIndependent_trW : LinearIndependent ℂ fun z : IrrW h => trW z.1 
     rw [← this]
     refine Finset.sum_congr rfl fun z _ => ?_
     rw [← ha z, trW_mk, MonoidAlgebra.of_apply, Representation.asAlgebraHom_single_one]
-  | add t t' ht ht' => simp only [map_add, mul_add, Finset.sum_add_distrib, ht, ht', add_zero]
+  | add t t' ht ht' => simp only [map_add (f := _), mul_add, Finset.sum_add_distrib, ht, ht', add_zero]
   | smul c t ht =>
     simp only [map_smul, smul_eq_mul, mul_left_comm _ c, ← Finset.mul_sum, ht, mul_zero]
 

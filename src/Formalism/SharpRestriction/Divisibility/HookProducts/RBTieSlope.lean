@@ -30,9 +30,9 @@ theorem slope_eq_of_norm_eq {R V E F : Type*} [Ring R] [AddCommGroup V] [Module 
       intro y z
       apply Subtype.ext
       show ρ₂ (pre (y + z)) = ρ₂ (pre y) + ρ₂ (pre z)
-      rw [← map_add]
+      rw [← map_add (f := _)]
       apply Formalism.HN.Rerealization.eq_of_eq ρ ρ₂ hn
-      rw [map_add, pre_eq, pre_eq, pre_eq]
+      rw [map_add (f := _), pre_eq, pre_eq, pre_eq]
       rfl)
   have f0_apply : ∀ y, ((f0 y : Formalism.HN.zl ρ₂ N) : F) = ρ₂ (pre y) := fun y => rfl
   have f0_norm : ∀ y, ‖((f0 y : Formalism.HN.zl ρ₂ N) : F)‖ = ‖(y : E)‖ := by

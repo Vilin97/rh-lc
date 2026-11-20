@@ -97,7 +97,7 @@ theorem letter_cases {O E : Type} [CommRing O] [IsDomain O] [IsDiscreteValuation
       have h2 : IsUnit (ψ (f i) + w * z) := by
         have h3 := (Ideal.mem_jacobson_bot.1 hjac ((ψ g + z) * ↑s⁻¹)).mul s.isUnit
         convert h3 using 1
-        rw [hg, map_add, map_mul, map_mul, map_pow, ← hs, add_mul, mul_assoc, mul_assoc,
+        rw [hg, map_add (f := _), map_mul, map_mul, map_pow, ← hs, add_mul, mul_assoc, mul_assoc,
           Units.inv_mul]
         ring
       refine ⟨(ψ (f i) + w * z) * ↑t⁻¹, h2.mul t⁻¹.isUnit, ?_⟩
@@ -281,12 +281,12 @@ theorem map_mem_span {M : Type} [AddCommGroup M] [Module O M] (f : RW →ₐ[O] 
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a t => simp [TensorProduct.smul_tmul']
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   intro x hx
   induction hx using Submodule.span_induction with
   | mem z hz => exact Submodule.subset_span (hs z hz)
   | zero => simp
-  | add z w _ _ hz hw => rw [map_add]; exact Submodule.add_mem _ hz hw
+  | add z w _ _ hz hw => rw [map_add (f := _)]; exact Submodule.add_mem _ hz hw
   | smul r z _ hz => rw [hsm]; exact Submodule.smul_mem _ _ hz
 
 theorem exists_sub_of_tie [IsDomain O] [IsPrincipalIdealRing O]
@@ -323,7 +323,7 @@ theorem exists_sub_of_tie [IsDomain O] [IsPrincipalIdealRing O]
         have h1 : latMap ι t ∈ S := hr ▸ LinearMap.mem_range_self _ t
         have h2 := U.smul_mem r ((hSm _).1 h1)
         simpa [TensorProduct.smul_tmul'] using h2
-      | add x y hx hy => rw [map_add]; exact U.add_mem hx hy
+      | add x y hx hy => rw [map_add (f := _)]; exact U.add_mem hx hy
     · refine (tensor_le_span φR hs hI U hUφ).trans (Submodule.span_le.2 ?_)
       rintro x ⟨hx, hx'⟩
       obtain ⟨t, rfl⟩ := hfix x hx'

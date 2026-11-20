@@ -93,7 +93,7 @@ theorem scalar_decay_pure {ι : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (h�
           exact pureA_add _ _ _
         rw [hLs, h1]
         change e (schrL ψ s _) = 0
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
         change e (schr ψ s _) + e (schr ψ s _) = 0
         rw [schr_comm, map_smul, hinv _ _ _ (schr_mem_schA ψ hψ s _ hΦ), hω, ha, neg_one_smul, neg_add_cancel]
       change ‖L _‖ = 0
@@ -119,7 +119,7 @@ theorem scalar_decay {ι : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (hψ : I
     obtain ⟨C₂, h2⟩ := h2
     refine ⟨C₁ + C₂, fun x hx => ?_⟩
     change ‖e (schrL ψ _ (Φ + Φ'))‖ ≤ _
-    rw [map_add, map_add, add_mul]
+    rw [map_add (f := _), map_add (f := _), add_mul]
     exact (norm_add_le _ _).trans (add_le_add (h1 x hx) (h2 x hx))
   | smul c Φ _ h =>
     obtain ⟨C, h⟩ := h

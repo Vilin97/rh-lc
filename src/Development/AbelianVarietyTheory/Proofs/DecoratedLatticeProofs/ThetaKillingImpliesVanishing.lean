@@ -47,7 +47,7 @@ theorem dblInt_thetaInt_eq_zero : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) 
   have hker : ∀ h, thetaKO omh 1 h φ' = 0 := by
     intro h
     have e := hΛ (fun f => thetaKO omh 1 h f)
-      (fun f f' _ _ => by simp only [thetaKO, map_add, Pi.add_apply])
+      (fun f f' _ _ => by simp only [thetaKO, map_add (f := _), Pi.add_apply])
       (fun c f _ => by simp only [thetaKO, map_smul, Pi.smul_apply, smul_eq_mul])
       (fun γ hγ g => by
         simp only [thetaKO_one_translate]
@@ -62,7 +62,7 @@ theorem dblInt_thetaInt_eq_zero : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) 
           = fun q => GlobalTheory.AutomorphicL2Unitary.descend (GQ W) (fun h => thetaKO omh 1 h f * (1 : GA D W → ℂ) h) q
             + GlobalTheory.AutomorphicL2Unitary.descend (GQ W) (fun h => thetaKO omh 1 h f' * (1 : GA D W → ℂ) h) q := by
         funext q
-        simp only [GlobalTheory.AutomorphicL2Unitary.descend, thetaKO, map_add, Pi.add_apply, add_mul]
+        simp only [GlobalTheory.AutomorphicL2Unitary.descend, thetaKO, map_add (f := _), Pi.add_apply, add_mul]
       rw [e, average_eq, average_eq, average_eq, integral_add (hconv f hf 1) (hconv f' hf' 1), smul_add])
     (fun c f _ => by
       simp only [thetaInt, thetaPair]

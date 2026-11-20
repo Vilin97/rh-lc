@@ -94,7 +94,7 @@ private theorem exists_idempotent_approx_at_maximal (V : Type) [CommRing V] [IsD
   set g := ((s.filter (fun α => f α ∈ m)).map f).prod with hg
   set h := ((s.filter (fun α => ¬ f α ∈ m)).map f).prod with hh
   have hgh : g * h = 0 := by
-    rw [hg, hh, ← Multiset.prod_add, ← Multiset.map_add, Multiset.filter_add_not, hprod]
+    rw [hg, hh, ← Multiset.prod_add, ← Multiset.map_add (f := _), Multiset.filter_add_not, hprod]
   have hhm : h ∉ m := prod_notMem m _ f (fun α hα => (Multiset.mem_filter.mp hα).2)
   have hgm : g ∈ m := by
     have hz : g * h ∈ m := by
@@ -190,7 +190,7 @@ theorem UpperTheory.Gal.Mod.hensSplit :
         refine ⟨β + γ, ?_⟩
         have hyz : y + z - algebraMap V A (β + γ) =
             (y - algebraMap V A β) + (z - algebraMap V A γ) := by
-          rw [map_add]
+          rw [map_add (f := _)]
           ring
         rw [hyz]
         exact (m ⊓ m').add_mem hβ hγ

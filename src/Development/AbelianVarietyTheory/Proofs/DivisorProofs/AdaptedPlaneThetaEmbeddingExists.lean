@@ -48,7 +48,7 @@ open Matrix
 theorem hTens_add_right (σ : E →ₐ[F] E) {n d : ℕ} (JA : Matrix (Fin n) (Fin n) (AE F E)) (JB : Matrix (Fin d) (Fin d) (AE F E))
     (x y y' : Matrix (Fin n) (Fin d) (AE F E)) :
     hTens (cA σ) JA JB x (y + y') = hTens (cA σ) JA JB x y + hTens (cA σ) JA JB x y' := by
-  simp only [hTens, Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hTens, Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hTens_smul_right (σ : E →ₐ[F] E) {n d : ℕ} (JA : Matrix (Fin n) (Fin n) (AE F E)) (JB : Matrix (Fin d) (Fin d) (AE F E))
     (x y : Matrix (Fin n) (Fin d) (AE F E)) (r : AF F) :
@@ -161,7 +161,7 @@ theorem realTr_one_ne (h : Module.finrank F E = 2) : realTr F (1 : E) ≠ 0 := b
   have h2 : Algebra.trace F E (1 : E) = 1 + 1 := by
     rw [← map_one (algebraMap F E), Algebra.trace_algebraMap, h]; norm_num
   have h3 : evI F (1 : AF F) = 1 := by unfold evI; exact map_one _
-  rw [h1, trace_baseChange_tmul', h2, map_add, map_one, one_mul, evI_add, h3, map_add,
+  rw [h1, trace_baseChange_tmul', h2, map_add (f := _), map_one, one_mul, evI_add, h3, map_add (f := _),
     ← map_one (algebraMap ℝ (mixedEmbedding.mixedSpace F)), Algebra.trace_algebraMap, mixedEmbedding.finrank]
   have : 0 < Module.finrank ℚ F := Module.finrank_pos
   simp only [nsmul_eq_mul, mul_one]

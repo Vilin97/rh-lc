@@ -10,7 +10,7 @@ theorem ta_sumToIter_rename_inr {R S₁ S₂ : Type} [CommRing R] (q : MvPolynom
     sumRingEquiv R S₁ S₂ (rename Sum.inr q) = C q := by
   induction q using MvPolynomial.induction_on with
   | C a => rw [rename_C, MvPolynomial.sumRingEquiv_C]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p n hp => rw [map_mul, map_mul, hp, rename_X, MvPolynomial.sumRingEquiv_X_inr, map_mul]
 
 section A

@@ -139,7 +139,7 @@ theorem intertwine {D : D7} {A B : Type} [AddCommGroup A] [Module ℂ A] [AddCom
     intro z z' hz hz'
     obtain ⟨a1, a2⟩ := ha z z' hz hz'
     obtain ⟨c1, c2⟩ := hc z z' hz hz'
-    simp only [map_add, LinearMap.add_apply, Submodule.coe_add]
+    simp only [map_add (f := _), LinearMap.add_apply, Submodule.coe_add]
     exact ⟨N.add_mem a1 c1, by rw [a2, c2]⟩
   | smul c a ha =>
     intro z z' hz hz'

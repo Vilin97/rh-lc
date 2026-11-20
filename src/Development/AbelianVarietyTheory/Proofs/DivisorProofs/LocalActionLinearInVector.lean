@@ -30,7 +30,7 @@ theorem acts_lin : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype
     simp only [tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     ring
   have key : tens (evFin F v) ζ R = tens (evFin F v) (c • η + η') R := by
-    rw [← h₃ R (hR _ hs), e, map_add, map_smul, h₁ R (hR φ hφ), h₂ R (hR φ' hφ'), e]
+    rw [← h₃ R (hR _ hs), e, map_add (f := _), map_smul, h₁ R (hR φ hφ), h₂ R (hR φ' hφ'), e]
   funext y
   have hz : At (evFin F v) (fun i => GlobalTheory.LatVac.liftV v (y i)) := by
     intro u' hu'

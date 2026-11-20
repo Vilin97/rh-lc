@@ -36,7 +36,7 @@ theorem UpperTheory.V.ZK.Cl.cChain :
       rw [hcyc, map_zero, add_zero, ← h2] at e
       rw [e, hconj t]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sub, map_sum, h1, h1, hb]
+      rw [map_add (f := _), map_sub, map_sum, h1, h1, hb]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_smul, hp, map_sum, ← h2, smul_sub, Finset.sum_sub_distrib]
     abel
@@ -62,6 +62,6 @@ theorem UpperTheory.V.ZK.Cl.cChain :
       rw [map_sub, map_sum, eq_sub_of_add_eq hS]
     simp only [map_smul, he, mul_inv_cancel_left]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sub, map_sum, map_smul, h3, hk, ← h2, hincl1, hincl2, hincl3]
+      simp only [map_add (f := _), map_sub, map_sum, map_smul, h3, hk, ← h2, hincl1, hincl2, hincl3]
     simp only [smul_sub, Finset.sum_sub_distrib]
     abel

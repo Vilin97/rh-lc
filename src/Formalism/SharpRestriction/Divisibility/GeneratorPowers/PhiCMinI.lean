@@ -45,7 +45,7 @@ private theorem pos_lemma {cj : E → E} (hcj : ∀ (φ : E →+* ℂ) (z : E), 
   have hadd2 : ∀ a b b' : Y, (comp η σ a * conj (comp η σ (b + b'))).re =
       (comp η σ a * conj (comp η σ b)).re + (comp η σ a * conj (comp η σ b')).re := by
     intro a b b'
-    rw [comp_add, map_add, mul_add, Complex.add_re]
+    rw [comp_add, map_add (f := _), mul_add, Complex.add_re]
   let β : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ :=
     (AddMonoidHom.mk' (fun a => (AddMonoidHom.mk' (fun b => (comp η σ a * conj (comp η σ b)).re)
       (hadd2 a)).toIntLinearMap) (fun a a' => LinearMap.ext fun b => hadd1 a a' b)).toIntLinearMap
@@ -239,7 +239,7 @@ theorem lower_bound {cj : E → E} (hcj : ∀ (φ : E →+* ℂ) (z : E), φ (cj
     set_option synthInstance.maxHeartbeats 100000 in
       rw [ht, hL, Finset.mul_sum, Complex.ofReal_sum, map_sum]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_add, map_mul, map_mul, hcj', hcj', hv, hv]
+    rw [map_add (f := _), map_mul, map_mul, hcj', hcj', hv, hv]
     apply Complex.ext <;>
       simp only [Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im, Complex.conj_re,
         Complex.conj_im, Complex.ofReal_re, Complex.ofReal_im] <;> ring

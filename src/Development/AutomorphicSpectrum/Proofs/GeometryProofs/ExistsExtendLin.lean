@@ -52,7 +52,7 @@ theorem exists_extend_lin {A K V W : Type} [CommRing A] [IsDomain A] [Field K] [
       have h1 : x ∈ M := Submodule.span_le.2 hbM hx
       have h2 : y ∈ M := Submodule.span_le.2 hbM hy
       have : (⟨x + y, h⟩ : M) = ⟨x, h1⟩ + ⟨y, h2⟩ := rfl
-      rw [map_add, ihx h1, ihy h2, this, map_add]
+      rw [map_add (f := _), ihx h1, ihy h2, this, map_add (f := _)]
     | smul a x hx ih =>
       intro h
       have h1 : x ∈ M := Submodule.span_le.2 hbM hx

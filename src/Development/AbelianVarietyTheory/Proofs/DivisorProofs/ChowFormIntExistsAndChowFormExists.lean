@@ -176,7 +176,7 @@ theorem comap_map_eq {L σ : Type} [Field L] [Algebra K L] (I : Ideal (MvPolynom
     · rfl
     · rw [notMem_support_iff.1 h, map_zero]
   have hadd : ∀ p q, ρ (p + q) = ρ p + ρ q := fun p q => MvPolynomial.ext _ _ fun s => by
-    simp only [hρ, MvPolynomial.coeff_add, map_add]
+    simp only [hρ, MvPolynomial.coeff_add, map_add (f := _)]
   have hmul : ∀ p (g : MvPolynomial σ K), ρ (p * map (algebraMap K L) g) = ρ p * g := fun p g =>
     MvPolynomial.ext _ _ fun s => by
       classical

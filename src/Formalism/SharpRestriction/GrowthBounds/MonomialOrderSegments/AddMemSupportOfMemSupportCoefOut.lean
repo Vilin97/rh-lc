@@ -128,7 +128,7 @@ theorem valS_zero : valS sg S (0 : MvPolynomial (L × Fin r) K) = ⊤ := by
 
 theorem valS_add_le (F G : MvPolynomial (L × Fin r) K) :
     min (valS sg S F) (valS sg S G) ≤ valS sg S (F + G) := by
-  rw [le_valS_iff_pge, map_add]
+  rw [le_valS_iff_pge, map_add (f := _)]
   exact pge_add (pge_mono (min_le_left _ _) (pge_valS sg S F))
     (pge_mono (min_le_right _ _) (pge_valS sg S G))
 
@@ -378,7 +378,7 @@ theorem coefOut_add (μ : L × Fin r →₀ ℕ) (F G : MvPolynomial (L × Fin r
     coefOut_eq_sum out μ G (F.support ∪ G.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun α _ => ?_
   split_ifs
-  · rw [MvPolynomial.coeff_add, map_add]
+  · rw [MvPolynomial.coeff_add, map_add (f := _)]
   · rw [add_zero]
 
 theorem coefOut_smul (μ : L × Fin r →₀ ℕ) (a : K) (F : MvPolynomial (L × Fin r) K) :
@@ -798,7 +798,7 @@ theorem hcomp_eq_dg (d : L → ℕ) (F : MvPolynomial (L × Fin r) K) :
 
 theorem hcomp_add (d : L → ℕ) (F G : MvPolynomial (L × Fin r) K) :
     hcomp d (F + G) = hcomp d F + hcomp d G := by
-  simp only [hcomp_eq_dg, map_add]
+  simp only [hcomp_eq_dg, map_add (f := _)]
 
 theorem hcomp_smul (d : L → ℕ) (a : K) (F : MvPolynomial (L × Fin r) K) :
     hcomp d (a • F) = a • hcomp d F := by
@@ -1176,7 +1176,7 @@ theorem dg_monomial_mul {σ : Type} (g : (σ →₀ ℕ) → K) (μ : σ →₀ 
     dg g (monomial μ 1 * Q) = monomial μ 1 * dg (fun β => g (μ + β)) Q := by
   induction Q using MvPolynomial.induction_on' with
   | monomial β c => rw [monomial_mul, dg_monomial, dg_monomial, monomial_mul, one_mul, one_mul]
-  | add p q hp hq => rw [mul_add, map_add, map_add, mul_add, hp, hq]
+  | add p q hp hq => rw [mul_add, map_add (f := _), map_add (f := _), mul_add, hp, hq]
 
 variable {L : Type} [DecidableEq L] {r : ℕ} {sg : L → Bool} {S : Finset L}
 

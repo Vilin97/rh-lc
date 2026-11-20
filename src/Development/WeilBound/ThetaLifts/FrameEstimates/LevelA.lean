@@ -62,7 +62,7 @@ theorem exists_lattice (V : Set (AE F E)) (hV : V ∈ 𝓝 (0 : AE F E)) :
         refine ⟨by rw [smul_add, h, h'], a + a', fun i => int_add (ha i) (ha' i), ?_⟩
         rw [smul_add, ← e, ← e']
         funext i
-        simp only [c, map_add]
+        simp only [c, map_add (f := _)]
         rfl
       neg_mem' := fun {x} hx => by
         obtain ⟨h, a, ha, e⟩ := hx

@@ -146,7 +146,7 @@ def fnField (y : (Σ k, ι k) → Ω) : Subfield Ω where
     rintro s t ⟨d, g, h, hg, hh, hh0, hgs⟩ ⟨e, g', h', hg', hh', hh0', hgt⟩
     refine ⟨d + e, g * h' + h * g', h * h', homog_add (homog_mul hg hh') (homog_mul hh hg'),
       homog_mul hh hh', by rw [map_mul]; exact mul_ne_zero hh0 hh0', ?_⟩
-    rw [map_add, map_mul, map_mul, map_mul, hgs, hgt]
+    rw [map_add (f := _), map_mul, map_mul, map_mul, hgs, hgt]
     ring
   zero_mem' := ⟨0, 0, 1, homog_zero 0, homog_one, by simp, by simp⟩
   neg_mem' := by

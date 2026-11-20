@@ -173,7 +173,7 @@ theorem lamDet_of (hB : BetaIso) (hM : MuBridge) (hN : NuBridge) (hD : DKForm) (
   · apply Bc.injective
     rw [hΦ, ContinuousLinearEquiv.apply_symm_apply, hFe]
     unfold LamMap
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
     have e1 : Bc (fderiv ℝ (KapOrb X u' (kap0 X hb c L)) 0 z.1) =
         reimV (fun v => uMat (c v) * L z.1 v * uMat (c v)⁻¹ * betaV X v (Y0 X u')) := by
       rw [← (tupCoord X).apply_symm_apply (fderiv ℝ (KapOrb X u' (kap0 X hb c L)) 0 z.1), hBc]

@@ -40,7 +40,7 @@ theorem cls_mix_pull {K : Type} [Field K] (A : Over (Sp K)) [GrpObj A] {L : LB A
   refine (cls_pull (L := LB.LinComb L ![𝟙 A.left, (GrpObj.inv : A ⟶ A).left] ![a, b])
     (LB.isLB_linComb hL _ _) _ _).trans ?_
   rw [cls_linComb hL, Fin.sum_univ_two]
-  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, map_add, map_zsmul, pull_id, ← pull_comp,
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, map_add (f := _), map_zsmul, pull_id, ← pull_comp,
     ← Over.comp_left, Hom.inv_def]
 
 end GlobalTheory.AmpleGen
@@ -68,7 +68,7 @@ theorem lbIso_pull_psiMap {K : Type} [Field K] (A : Over (Sp K)) [GrpObj A] (hA 
     (LB.isLB_pull (hP' _ _) _) 1)).1 ?_
   rw [cls_pull h₁, cls_tw_one, cls_tw_one, cls_mix_pull A hL, cls_mix_pull A hL, cls_mix_pull A hL,
     cls_mix_pull A hL]
-  simp only [map_add, map_zsmul, ← pull_comp, ← Over.comp_left, GrpObj.comp_inv, psiMap, lift_fst, lift_snd]
+  simp only [map_add (f := _), map_zsmul, ← pull_comp, ← Over.comp_left, GrpObj.comp_inv, psiMap, lift_fst, lift_snd]
   set c := cls L hL
   set x := fst A A
   set y := snd A A

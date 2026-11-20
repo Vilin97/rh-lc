@@ -25,7 +25,7 @@ theorem finPart_cA_eq (z : AE D) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [cA, sigR, finPart]
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb, map_add (f := _)]
 
 open Classical in
 

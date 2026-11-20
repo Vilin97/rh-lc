@@ -70,7 +70,7 @@ theorem exists_deco_of_frames : ∀ (E : Type) [Field E] [NumberField E] [StarRi
         intro w x hx y hy
         replace hx : x ∈ d.1.at w.1 := hx
         replace hy : y ∈ d.1.at w.1 := hy
-        rw [hbe w _ (Submodule.add_mem _ hx hy), hbe w _ hx, hbe w _ hy, map_add,
+        rw [hbe w _ (Submodule.add_mem _ hx hy), hbe w _ hx, hbe w _ hy, map_add (f := _),
           redV_add _ (hf' w x hx) (hf' w y hy)]
       be_smul := hsm
       be_off := fun w x hx => if_neg hx

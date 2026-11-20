@@ -60,7 +60,7 @@ theorem goal_of (hK : LeafKill) (hT : LeafTriv) (hR : LeafRefine) (hD : LeafDesc
         obtain ⟨W, ⟨g1⟩, ⟨g2⟩⟩ := hR A (U x) (U y)
         have hx := kerH_mono A _ W g1 (hU x)
         have hy := kerH_mono A _ W g2 (hU y)
-        rw [← key x W hx, ← key y W hy, ← key (x + y) W (add_mem hx hy), ← AddSubgroup.coe_add, ← map_add]
+        rw [← key x W hx, ← key y W hy, ← key (x + y) W (add_mem hx hy), ← AddSubgroup.coe_add, ← map_add (f := _)]
         rfl }
   refine ⟨AddEquiv.ofBijective f ⟨?_, ?_⟩⟩
   · intro x y h

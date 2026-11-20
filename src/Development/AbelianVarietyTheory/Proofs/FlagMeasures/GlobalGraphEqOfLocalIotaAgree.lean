@@ -107,7 +107,7 @@ theorem bcP_mem_X (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (VS D) D.
     rw [e]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [baseChange_smul₂]; exact Submodule.smul_mem _ _ hx
 
 theorem X_le_span (Z : LocDat D) (p : PlF D) {T : D.host.E} (G : LFlag (VS D) D.R.rS T)
@@ -154,10 +154,10 @@ theorem X_le_orth {T : D.host.E} (G : LFlag (VS D) D.R.rS T) : Xsp G ≤ orth (V
     induction hu' using Submodule.span_induction with
     | mem x hx => obtain ⟨a, rfl⟩ := hx; exact G.fl.e_iso a b
     | zero => simp
-    | add x y _ _ hx hy => simp [map_add, hx, hy]
+    | add x y _ _ hx hy => simp [map_add (f := _), hx, hy]
     | smul c x _ hx => simp [hx]
   | zero => simp
-  | add x y _ _ hx hy => simp [map_add, hx, hy]
+  | add x y _ _ hx hy => simp [map_add (f := _), hx, hy]
   | smul c x _ hx => simp [hx]
 
 theorem gS_ne : ((gS D : ℕ) : D.host.E) ≠ 0 := by
@@ -224,11 +224,11 @@ theorem of_mem_iota2 (Z : LocDat D) (p : PlF D) (g : Loc.SplitG (Z.M p).L) (L₁
 
 theorem bc1 (p : PlF D) (a c d : (VS D).V) (y : Vp D p) :
     baseChange₂ D p a - y = baseChange₂ D p (d - c) + (baseChange₂ D p (a + c - d) - y) := by
-  simp only [map_sub, map_add]; abel
+  simp only [map_sub, map_add (f := _)]; abel
 
 theorem bc2 (p : PlF D) (a c d : (VS D).V) (y : Vp D p) :
     baseChange₂ D p a - y = baseChange₂ D p (-(d + c)) + (baseChange₂ D p (a + c + d) - y) := by
-  simp only [map_neg, map_add]; abel
+  simp only [map_neg, map_add (f := _)]; abel
 
 theorem bc3 (p : PlF D) (a a' : (VS D).V) (y y' : Vp D p) :
     baseChange₂ D p (a - a') = (baseChange₂ D p a - y) - (baseChange₂ D p a' - y') + (y - y') := by

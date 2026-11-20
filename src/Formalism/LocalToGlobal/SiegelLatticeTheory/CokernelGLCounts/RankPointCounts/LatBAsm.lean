@@ -333,7 +333,7 @@ theorem stabilizer_lattice_twisted_prod : Formalism.L2.SG.NGCut.StabilizerCovolu
         have hv := congrFun he v
         change 1 * Formalism.L2.SG.Pf.VolPinAsm.phiV X v l = y v p -
           Formalism.L2.SG.Pf.VolPinAsm.phiV X v (τA w p (recov (Formalism.L2.SG.Pf.VolPinAsm.phiV X) y)) at hv
-        rw [map_add]
+        rw [map_add (f := _)]
         linear_combination -hv
       have hzv : ∀ p v, y v p = Formalism.L2.SG.Pf.VolPinAsm.phiV X v (recov (Formalism.L2.SG.Pf.VolPinAsm.phiV X) y p) := by
         intro p v

@@ -124,7 +124,7 @@ def bdyTrue (ct : At S κ p) : BdySt ct where
 example (A : Amb D) : w0 D = A.H.w0 := by
   apply RingOfIntegers.ext
   have h := congrArg (algebraMap (𝓞 D.host.E) D.host.E) A.H.two_weight_eq_one_add_root
-  rw [map_mul, map_add, map_one, map_ofNat] at h
+  rw [map_mul, map_add (f := _), map_one, map_ofNat] at h
   have h' : algebraMap (𝓞 D.host.E) D.host.E A.H.rt = D.host.sqrtMinusD := A.rt_eq
   change (1 + D.host.sqrtMinusD) / 2 = algebraMap (𝓞 D.host.E) D.host.E A.H.w0
   rw [← h', ← h]

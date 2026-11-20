@@ -172,7 +172,7 @@ theorem comb_exists {q : Y ⟶ Sp K} {p : X ⟶ Sp R} {m : Y ⟶ X} {dd : Fin g 
 private lemma pbT_add_of_open {Y Z : Scheme.{0}} (f : Z ⟶ Y) {O₀ : Y.Opens} (a b : Γ(Y, O₀)) (V : Z.Opens) :
     pbT f (a + b) V = pbT f a V + pbT f b V := by
   by_cases h : V ≤ f ⁻¹ᵁ O₀
-  · simp only [pbT, dif_pos h, map_add]
+  · simp only [pbT, dif_pos h, map_add (f := _)]
   · simp only [pbT, dif_neg h, add_zero]
 
 private lemma pbT_mul_of_le_preimage {Y Z : Scheme.{0}} (f : Z ⟶ Y) {O₀ : Y.Opens} (a b : Γ(Y, O₀)) {V : Z.Opens}

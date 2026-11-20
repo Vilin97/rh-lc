@@ -80,7 +80,7 @@ theorem shapeX : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F]
     have et : ∀ (ψ₁ ψ₂ : (Fin n × Fin d → Fv F v) → ℂ), tens (evFin F v) (c • ψ₁ + ψ₂) r =
         c • tens (evFin F v) ψ₁ r + tens (evFin F v) ψ₂ r := fun ψ₁ ψ₂ => by
       funext x; simp only [tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
-    rw [← (hA _ hsum).2 r r0, et, map_add, map_smul, (hA φ hφ).2 r r1, (hA φ' hφ').2 r r2, et]
+    rw [← (hA _ hsum).2 r r0, et, map_add (f := _), map_smul, (hA φ hφ).2 r r1, (hA φ' hφ').2 r r2, et]
 
   have hact : ∀ γ : Matrix (Fin n) (Fin d) (AE F E),
       actAB (cA σ) (g, (1 : UA σ W.J)) γ = mat g * γ := by
@@ -220,7 +220,7 @@ theorem shapeX : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F]
           (fun (Y : Matrix (Fin n) (Fin d) (Fv F v)) => ι (A y) ((locMat t b g).val * Y)) := by
     intro x hx y hy c
     funext Y
-    simp only [hlin x hx y hy c, map_add, map_smul, Pi.add_apply, Pi.smul_apply]
+    simp only [hlin x hx y hy c, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply]
   have h2tr : ∀ C : Matrix (Fin n) (Fin d) (Fv F v), ∀ x ∈ SB (Fin n × Fin d → Fv F v),
       schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo M.co v (U (b.val * C * (c.val)ᵀ) 0)) x ∈ SB (Fin n × Fin d → Fv F v) ∧
       ι (schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo M.co v (U (b.val * C * (c.val)ᵀ) 0)) x) = (fun Y => ι x (Y + C)) ∧

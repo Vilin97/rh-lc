@@ -970,7 +970,7 @@ theorem corr_add {f g : Op X} {a b : A} (hf : Corr K res φ f a) (hg : Corr K re
   refine ⟨?_, ?_⟩
   · rw [LZ.ap_add]
     exact K.add_mem f1 g1
-  · rw [LZ.ap_add, map_add, f2, g2, map_add, LinearMap.add_apply]
+  · rw [LZ.ap_add, map_add (f := _), f2, g2, map_add (f := _), LinearMap.add_apply]
 
 theorem corr_sum {ι : Type} (s : Finset ι) (f : ι → Op X) (a : ι → A)
     (h : ∀ i ∈ s, Corr K res φ (f i) (a i)) : Corr K res φ (∑ i ∈ s, f i) (∑ i ∈ s, a i) := by

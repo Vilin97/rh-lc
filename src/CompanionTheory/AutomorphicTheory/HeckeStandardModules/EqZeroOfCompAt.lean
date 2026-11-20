@@ -69,12 +69,12 @@ theorem eq_zero_of_proj {z : AL L} (hz : ∀ w, w ≠ s.v → compAt L w z = 0) 
   rcases eq_or_ne w s.v with rfl | hw
   · obtain ⟨A, B, rfl⟩ := GlobalTheory.tensor_exists_decomp b z
     rw [hb0, hb1] at *
-    rw [map_add, proj_tmul, proj_tmul, map_one] at h1
-    rw [map_add, conj_tmul, conj_tmul, map_add, proj_tmul, proj_tmul, map_one, map_one] at h2
+    rw [map_add (f := _), proj_tmul, proj_tmul, map_one] at h1
+    rw [map_add (f := _), conj_tmul, conj_tmul, map_add (f := _), proj_tmul, proj_tmul, map_one, map_one] at h2
     have hB : B s.v = 0 := (mul_eq_zero.1 (show (s.i (IsCMField.complexConj L e) - s.i e) * B s.v = 0 by
       linear_combination h2 - h1)).resolve_left (sub_ne_zero.2 he)
     have hA : A s.v = 0 := by simpa [hB] using h1
-    rw [map_add, compAt_tmul, compAt_tmul, hA, hB, tmul_zero, tmul_zero, add_zero]
+    rw [map_add (f := _), compAt_tmul, compAt_tmul, hA, hB, tmul_zero, tmul_zero, add_zero]
   · exact hz w hw
 
 theorem exists_pair (a b : s.v.adicCompletion L⁺) :
@@ -83,10 +83,10 @@ theorem exists_pair (a b : s.v.adicCompletion L⁺) :
   have hd := sub_ne_zero.2 he
   set β := (b - a) / (s.i (IsCMField.complexConj L e) - s.i e) with hβ
   refine ⟨(1 : L) ⊗ₜ[L⁺] sgl s.v (a - s.i e * β) + e ⊗ₜ[L⁺] sgl s.v β, fun w hw => ?_, ?_, ?_⟩
-  · rw [map_add, compAt_tmul, compAt_tmul, sgl_ne _ _ hw, sgl_ne _ _ hw, tmul_zero, tmul_zero, add_zero]
-  · rw [map_add, proj_tmul, proj_tmul, sgl_same, sgl_same, map_one]
+  · rw [map_add (f := _), compAt_tmul, compAt_tmul, sgl_ne _ _ hw, sgl_ne _ _ hw, tmul_zero, tmul_zero, add_zero]
+  · rw [map_add (f := _), proj_tmul, proj_tmul, sgl_same, sgl_same, map_one]
     ring
-  · rw [map_add, conj_tmul, conj_tmul, map_add, proj_tmul, proj_tmul, sgl_same, sgl_same, map_one, map_one]
+  · rw [map_add (f := _), conj_tmul, conj_tmul, map_add (f := _), proj_tmul, proj_tmul, sgl_same, sgl_same, map_one, map_one]
     have := div_mul_cancel₀ (b - a) hd
     linear_combination this
 
@@ -96,7 +96,7 @@ theorem compAt_conj {w : HeightOneSpectrum (𝓞 L⁺)} {z : AL L} (h : compAt L
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul x a => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [this, h, map_zero]
 
 abbrev ent (x : GA L n) : Matrix (Fin n) (Fin n) (AL L) := x.1
@@ -148,16 +148,16 @@ theorem exists_loc (g : GL (Fin n) (s.v.adicCompletion L⁺)) : ∃ x : GA L n, 
     (((g⁻¹ : GL (Fin n) _) : Matrix (Fin n) (Fin n) _) j i - (1 : Matrix (Fin n) (Fin n) _) i j)
   set X : Matrix (Fin n) (Fin n) (AL L) := 1 + Matrix.of Z with hX
   have e0 : ∀ w, w ≠ s.v → X.map (compAt L w) = 1 := fun w hw => Matrix.ext fun i j => by
-    rw [Matrix.map_apply, hX, Matrix.add_apply, map_add, Matrix.of_apply, h0 i j w hw, add_zero, map_one_apply]
+    rw [Matrix.map_apply, hX, Matrix.add_apply, map_add (f := _), Matrix.of_apply, h0 i j w hw, add_zero, map_one_apply]
   have e0' : ∀ w, w ≠ s.v → (conjT (conjAL L) X).map (compAt L w) = 1 := fun w hw => Matrix.ext fun i j => by
     show compAt L w (conjAL L (X j i)) = _
-    rw [hX, Matrix.add_apply, map_add, map_add, Matrix.of_apply, compAt_conj (h0 j i w hw), add_zero, map_one_apply,
+    rw [hX, Matrix.add_apply, map_add (f := _), map_add (f := _), Matrix.of_apply, compAt_conj (h0 j i w hw), add_zero, map_one_apply,
       map_one_apply, one_apply_symm]
   have e1 : X.map s.proj = g := Matrix.ext fun i j => by
-    rw [Matrix.map_apply, hX, Matrix.add_apply, map_add, Matrix.of_apply, h1, map_one_apply, add_sub_cancel]
+    rw [Matrix.map_apply, hX, Matrix.add_apply, map_add (f := _), Matrix.of_apply, h1, map_one_apply, add_sub_cancel]
   have e2 : (conjT (conjAL L) X).map s.proj = (g⁻¹ : GL (Fin n) _) := Matrix.ext fun i j => by
     show s.proj (conjAL L (X j i)) = _
-    rw [hX, Matrix.add_apply, map_add, map_add, Matrix.of_apply, h2, map_one_apply, map_one_apply, add_sub_cancel]
+    rw [hX, Matrix.add_apply, map_add (f := _), map_add (f := _), Matrix.of_apply, h2, map_one_apply, map_one_apply, add_sub_cancel]
   have e3 : (X * conjT (conjAL L) X).map s.proj = 1 := by rw [Matrix.map_mul, e1, e2, Units.mul_inv]
   have hU : X * conjT (conjAL L) X = 1 := Matrix.ext fun i j => sub_eq_zero.1 (eq_zero_of_proj s (fun w hw => by
       rw [map_sub, ← Matrix.map_apply (f := compAt L w), Matrix.map_mul, e0 w hw, e0' w hw, one_mul, map_one_apply, sub_self])

@@ -118,7 +118,7 @@ theorem coord_decomp {n m k : ℕ} (a : Fin n → FractionalIdeal (𝓞 K)⁰ K)
     obtain ⟨β, hβ⟩ := hx
     obtain ⟨β', hβ'⟩ := hy
     refine ⟨β + β', ?_⟩
-    rw [map_add, map_add, map_add, hβ, hβ', ← mulVec_add, Sum.elim_add_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hβ, hβ', ← mulVec_add, Sum.elim_add_add]
 
 theorem orth_sub {n m : ℕ} {a : Fin n → FractionalIdeal (𝓞 K)⁰ K} (ha : ∀ x, a x ≠ 0)
     {d : (K →+* ℂ) → Fin n → ℝ} (hd : ∀ σ x, 0 < d σ x) (hc : ∀ σ x, d (conjugate σ) x = d σ x)

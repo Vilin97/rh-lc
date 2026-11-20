@@ -138,7 +138,7 @@ theorem exists_eigenvectors {L : Type} [Field L] [CharZero L] (φ : K →+* L) {
     obtain ⟨v, hv, hve⟩ := ih (fun c => χ c.succ) C C'.toRepresentation
       (semisimple_of_injective hρ C.subtype C.injective_subtype fun g x => rfl) fun g => by
         have h1 := h g
-        rw [trace_eq_add (ρ g) hv₀ (he g) (hC g) hc, map_add, Fin.sum_univ_succ] at h1
+        rw [trace_eq_add (ρ g) hv₀ (he g) (hC g) hc, map_add (f := _), Fin.sum_univ_succ] at h1
         change φ (LinearMap.trace K C ((ρ g).restrict (hC g))) = _
         linear_combination h1
     refine ⟨Fin.cons v₀ fun c => (v c : V), ?_, fun c g => ?_⟩
@@ -198,7 +198,7 @@ theorem exists_complement {L : Type} [Field L] [CharZero L] (φ : FractionRing O
     · rw [← LinearMap.range_eq_top, LinearMap.range_coprod, hkW, hcW.symm.sup_eq_top]
   have hee : ∀ g x, k.coprod j (blockRep ρ χ t g x) = fracRep r g (k.coprod j x) := by
     intro g x
-    rw [LinearMap.coprod_apply, LinearMap.coprod_apply, map_add, hke, hje]
+    rw [LinearMap.coprod_apply, LinearMap.coprod_apply, map_add (f := _), hke, hje]
     rfl
   refine ⟨ρ, ⟨(LinearEquiv.ofBijective _ hb).symm, fun g x => ?_⟩,
     semisimple_of_injective hs' _ hb.1 hee, hρ⟩
@@ -326,7 +326,7 @@ theorem HasTrace.list_sum {α : Type} (l : List α) (F : α → PlE H → ℂ) (
     obtain ⟨T, h1, h2, h3⟩ := h a List.mem_cons_self
     obtain ⟨T', h1', h2', h3'⟩ := ih fun b hb => h b (List.mem_cons_of_mem _ hb)
     refine ⟨_, h1.add h1', h2.add h2', (h3.and h3').mono fun w σ e => ?_⟩
-    rw [map_add, e.1, e.2]
+    rw [map_add (f := _), e.1, e.2]
     simp
 
 theorem HasTrace.twist {F c : PlE H → ℂ} (h : HasTrace A i F) (ψ : G H.E N.Om →* Qbar (N.l i))
@@ -560,7 +560,7 @@ theorem complement_at (hC : GlobalTheory.TwSys.Cheb) (D : D7) (hG : GaloisRepsCu
     rw [← hr3 w (h4 hw) B σ hB hσ, ← hB4 w hw] at h6
     refine (map_trace_eq_sum _ _ _ h6).trans ?_
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [D.naut.frobEig_tw _ _ h5.1, Multiset.sum_map_mul_right, Multiset.map_id', h5.2, map_add,
+      rw [D.naut.frobEig_tw _ _ h5.1, Multiset.sum_map_mul_right, Multiset.map_id', h5.2, map_add (f := _),
       h1 hw B σ hB hσ, map_sum, List.sum_map_mul_right]
     have h7 : ∑ c : Fin D.R.t, D.naut.iotaQC i (chiBar D.naut i (c.1 + 1) σ) =
         sumPart D.naut ⟨1, muEta D.naut i, D.R.t⟩ w *

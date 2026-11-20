@@ -183,7 +183,7 @@ theorem idealMod_fg [IsNoetherianRing S] (J' : Ideal (Poly S N))
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨g, hg, rfl⟩)
       · simp
       · intro p q _ _ hp hq
-        rw [map_add, add_div]
+        rw [map_add (f := _), add_div]
         exact Submodule.add_mem _ hp hq
       · intro r p _ hp
         rw [map_smul, smul_div_assoc]

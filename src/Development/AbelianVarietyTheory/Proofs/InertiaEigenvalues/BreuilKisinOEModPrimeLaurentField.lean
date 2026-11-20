@@ -62,13 +62,13 @@ theorem exists_unit (s : bk.S) (hs : ψ bk s ≠ 0) :
     exact hk
   have hsplit : s = X ^ k * s₁ + (l : bk.S) * s₂ := by
     ext i
-    rw [map_add, coeff_X_pow_mul', ← map_natCast (C (R := Wq l bk.a)), coeff_C_mul, coeff_mk, coeff_mk]
+    rw [map_add (f := _), coeff_X_pow_mul', ← map_natCast (C (R := Wq l bk.a)), coeff_C_mul, coeff_mk, coeff_mk]
     by_cases hi : i < k
     · rw [if_neg (by omega), if_pos hi, zero_add, hc i hi]
     · rw [if_pos (by omega), if_neg hi, mul_zero, add_zero, Nat.sub_add_cancel (by omega)]
   refine ⟨k, s₁, hs₁, ?_⟩
   conv_lhs => rw [hsplit]
-  rw [map_add, map_mul, map_mul, map_pow, map_natCast, CharP.cast_eq_zero, zero_mul, add_zero]
+  rw [map_add (f := _), map_mul, map_mul, map_pow, map_natCast, CharP.cast_eq_zero, zero_mul, add_zero]
 
 end GlobalTheory.BSP.OEmod
 
@@ -92,7 +92,7 @@ theorem GlobalTheory.BSP.oe_mod_l : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) 
       obtain ⟨m, s, z, h⟩ := hw 1
       refine ⟨m, s, ?_⟩
       have := congrArg (WittVector.constantCoeff (p := l) (R := Cb l)) h
-      rw [map_mul, map_pow, map_add, pow_one, cc_l_mul, add_zero, cc_evW_X] at this
+      rw [map_mul, map_pow, map_add (f := _), pow_one, cc_l_mul, add_zero, cc_evW_X] at this
       rw [this, ← ψ_apply]
       rfl
     · rintro ⟨m, s, h⟩

@@ -53,7 +53,7 @@ private theorem opOf_eq (ρ : Representation ℂ G V) (f : G →₀ ℂ) (v : V)
 
 private theorem opOf_add (ρ : Representation ℂ G V) (A B : G →₀ ℂ) (v : V) :
     opOf ρ (A + B) v = opOf ρ A v + opOf ρ B v := by
-  simp only [opOf_eq, map_add]
+  simp only [opOf_eq, map_add (f := _)]
 
 private theorem opOf_smul (ρ : Representation ℂ G V) (c : ℂ) (A : G →₀ ℂ) (v : V) :
     opOf ρ (c • A) v = c • opOf ρ A v := by
@@ -96,7 +96,7 @@ private theorem poly_op (R : Subring ℂ) {I : Type} (f : I → G →₀ ℂ) (h
     obtain ⟨F₁, a₁, b₁⟩ := hp
     obtain ⟨F₂, a₂, b₂⟩ := hr
     refine ⟨F₁ + F₂, fun g => R.add_mem (a₁ g) (a₂ g), fun V _ _ ρ v z h => ?_⟩
-    rw [opOf_add, b₁ V ρ v z h, b₂ V ρ v z h, map_add, add_smul]
+    rw [opOf_add, b₁ V ρ v z h, b₂ V ρ v z h, map_add (f := _), add_smul]
   | mul_X p i hp =>
     obtain ⟨F, a, b⟩ := hp
     refine ⟨cv F (f i), cv_mem R a (hf i), fun V _ _ ρ v z h => ?_⟩

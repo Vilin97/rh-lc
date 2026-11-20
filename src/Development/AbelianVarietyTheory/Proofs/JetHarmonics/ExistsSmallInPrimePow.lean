@@ -83,7 +83,7 @@ theorem exists_small_in_prime_pow : ∀ (d q : ℕ) [Fact q.Prime] (ι : ℂ ≃
     have : u ^ 2 + u * v + e * v ^ 2 = 0 := by exact_mod_cast hN.symm
     omega
   · have : ι ((u : ℂ) + (v : ℂ) * wK d) = zc ((u : ℤ_[q]) + (v : ℤ_[q]) * a) := by
-      rw [map_add, map_mul, ha]
+      rw [map_add (f := _), map_mul, ha]
       simp [zc]
     rw [this, thue_norm_zc]
     exact hn

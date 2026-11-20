@@ -30,7 +30,7 @@ theorem frame_coord : ∀ (R : Type) [CommRing R] (C : Type) [Category.{0} C] (F
   refine ⟨fun i ↦
     { toFun := c i
       map_add' := fun w w' ↦ uniq i (w + w') _ (fun T ↦ by
-        rw [Submodule.coe_add, Pi.add_apply, map_add, hc, hc, map_add])
+        rw [Submodule.coe_add, Pi.add_apply, map_add (f := _), hc, hc, map_add (f := _)])
       map_smul' := fun r w ↦ uniq i (r • w) _ (fun T ↦ by
         rw [Submodule.coe_smul, Pi.smul_apply, ← algebraMap_smul (F.obj T) r (w.1 T), map_smul, hc,
           RingHom.id_apply, smul_eq_mul, smul_eq_mul, map_mul]) },

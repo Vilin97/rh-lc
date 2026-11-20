@@ -60,7 +60,7 @@ theorem support_prod_mem {G ι : Type} [AddCommMonoid G] (M : AddSubmonoid G) (s
 theorem symplO_add_right (S T : HSp D) (x y y' : WO S T) :
     symplO S T x (y + y') = symplO S T x y + symplO S T x y' := by
   unfold symplO hO
-  simp only [Matrix.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [Matrix.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 theorem symplO_zero_right (S T : HSp D) (x : WO S T) : symplO S T x 0 = 0 := by
   unfold symplO hO

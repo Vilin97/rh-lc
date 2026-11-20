@@ -113,7 +113,7 @@ theorem sg_sg (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hc : c ≠ 1) (
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rw [sg_tmul, sg_tmul, invol c h2 hc]
-  | add y z h1 h2 => rw [map_add, map_add, h1, h2]
+  | add y z h1 h2 => rw [map_add (f := _), map_add (f := _), h1, h2]
 
 theorem trace_mem (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hc : c ≠ 1) {z : RA F E}
     (hz : z ∈ hat1 F (Set.range (algebraMap (𝓞 E) E))) :
@@ -122,15 +122,15 @@ theorem trace_mem (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hc : c ≠ 
   | mem x hx =>
     obtain ⟨a, ha, x, hx, rfl⟩ := hx
     rw [sg_tmul, ← TensorProduct.tmul_add]
-    refine tmul_fixed c h2 hc ha ?_ (by rw [map_add, invol c h2 hc, add_comm])
+    refine tmul_fixed c h2 hc ha ?_ (by rw [map_add (f := _), invol c h2 hc, add_comm])
     obtain ⟨s, hs⟩ := conj_mem c x hx
     obtain ⟨t, rfl⟩ := hx
-    exact ⟨t + s, by rw [map_add, hs]⟩
+    exact ⟨t + s, by rw [map_add (f := _), hs]⟩
   | zero => exact ⟨0, by simp⟩
   | add y z _ _ h1 h2 =>
     obtain ⟨a, ha⟩ := h1
     obtain ⟨b, hb⟩ := h2
-    exact ⟨a + b, by rw [map_add, map_add, TensorProduct.add_tmul, ← ha, ← hb]; ring⟩
+    exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), TensorProduct.add_tmul, ← ha, ← hb]; ring⟩
   | neg y _ h1 =>
     obtain ⟨a, ha⟩ := h1
     exact ⟨-a, by rw [map_neg, map_neg, TensorProduct.neg_tmul, ← ha]; ring⟩
@@ -155,7 +155,7 @@ theorem norm_mem (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hc : c ≠ 1
       (galoisAut_mem_adelicCompletionOfElementSet F c (conj_mem c) hz))
     rw [map_mul, sg_sg c h2 hc] at hd
     exact ⟨a + b + d, by
-      rw [map_add, map_add, map_add, TensorProduct.add_tmul, TensorProduct.add_tmul,
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), TensorProduct.add_tmul, TensorProduct.add_tmul,
         ← ha, ← hb, ← hd]; ring⟩
   | neg y _ h1 =>
     obtain ⟨a, ha⟩ := h1
@@ -226,7 +226,7 @@ private lemma sg_sg_of_quadratic {F E : Type} [Field F] [NumberField F] [Field E
     simp only [_root_.GlobalTheory.AdLat.sg, Algebra.TensorProduct.map_tmul, AlgHom.id_apply,
       AlgEquiv.coe_algHom]
     rw [← AlgEquiv.mul_apply, hcc, AlgEquiv.one_apply]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 open NumberField IsDedekindDomain in
 open scoped TensorProduct Topology Matrix in
@@ -299,7 +299,7 @@ private lemma exists_add_sg_eq_tmul_one_of_mem_closure {F E : Type} [Field F] [N
     obtain ⟨a, ha, x, hx, rfl⟩ := hz
     have hcc := mul_self_eq_one_of_quadratic c h2 hc
     have hfix : c (x + c x) = x + c x := by
-      rw [map_add, ← AlgEquiv.mul_apply, hcc, AlgEquiv.one_apply, add_comm]
+      rw [map_add (f := _), ← AlgEquiv.mul_apply, hcc, AlgEquiv.one_apply, add_comm]
     obtain ⟨y, rfl⟩ := hx
     obtain ⟨w, hw⟩ := _root_.GlobalTheory.AdLat.UnitRoot.conj_mem c _ ⟨y, rfl⟩
     obtain ⟨f, hf⟩ := exists_integer_of_fixed_integral c h2 hc _ hfix ⟨y + w, by simp [hw]⟩
@@ -312,7 +312,7 @@ private lemma exists_add_sg_eq_tmul_one_of_mem_closure {F E : Type} [Field F] [N
   | add x y _ _ hx hy =>
     obtain ⟨n, hn, e⟩ := hx
     obtain ⟨m, hm, e'⟩ := hy
-    exact ⟨n + m, hadd _ _ hn hm, by rw [map_add, TensorProduct.add_tmul, ← e, ← e']; abel⟩
+    exact ⟨n + m, hadd _ _ hn hm, by rw [map_add (f := _), TensorProduct.add_tmul, ← e, ← e']; abel⟩
   | neg x _ hx =>
     obtain ⟨n, hn, e⟩ := hx
     exact ⟨-n, hneg _ hn, by rw [map_neg, TensorProduct.neg_tmul, ← e]; abel⟩
@@ -354,7 +354,7 @@ private lemma exists_norm_sum_tmul_eq_tmul_one {F E : Type} [Field F] [NumberFie
         (algebraMap F _ (f : F) * (a k * a k)) ⊗ₜ[F] (1 : E) := by
       rw [Algebra.TensorProduct.tmul_mul_tmul, ← hf, Algebra.algebraMap_eq_smul_one,
         TensorProduct.tmul_smul, TensorProduct.smul_tmul', Algebra.smul_def]
-    rw [Finset.sum_insert hk, map_add, TensorProduct.add_tmul, TensorProduct.add_tmul, ← e, ← e',
+    rw [Finset.sum_insert hk, map_add (f := _), TensorProduct.add_tmul, TensorProduct.add_tmul, ← e, ← e',
       map_mul, sg_sg_of_quadratic c h2 hc, hσ]
     linear_combination hN
 
@@ -392,7 +392,7 @@ theorem _root_.GlobalTheory.AdLat.exists_integral_unit_root : ∀ (F E : Type) [
     rw [hρ, hσ, hρ, hCX, ← AlgEquiv.mul_apply, hcc, AlgEquiv.one_apply]
   let m : Option (Fin n) → _root_.GlobalTheory.AdLat.RA F E := fun i => ρ (X i) + u * ρ (CX i)
   have hum : ∀ i, u * σ (m i) = m i := fun i => by
-    simp only [m, map_add, map_mul, hσX, hσCX]
+    simp only [m, map_add (f := _), map_mul, hσX, hσCX]
     linear_combination ρ (X i) * hnorm
   let H := _root_.GlobalTheory.AdLat.hat1 F (Set.range (algebraMap (𝓞 E) E))
   have hρmem : ∀ x, ρ x ∈ H := fun x => _root_.GlobalTheory.AdLat.one_tmul_mem_adelicCompletionOfElementSet F ⟨x, rfl⟩

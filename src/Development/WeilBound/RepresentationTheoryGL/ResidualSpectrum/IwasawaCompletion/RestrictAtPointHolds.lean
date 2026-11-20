@@ -35,7 +35,7 @@ theorem restrictAtPoint_holds : RestrictAtPoint := by
     { toFun := Lf
       map_add' := fun v v' => by
         funext m
-        simp only [Lf, map_add]
+        simp only [Lf, map_add (f := _)]
         rfl
       map_smul' := fun z v => by
         funext m

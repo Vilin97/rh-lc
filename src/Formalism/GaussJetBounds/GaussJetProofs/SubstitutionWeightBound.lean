@@ -44,7 +44,7 @@ theorem wtGe_add {pi : ℝ} (h0 : 0 < pi) (h1 : pi ≤ 1) {r : ι → ℝ} {w1 w
     {f g : MvPowerSeries ι K} (hf : WtGe pi r w1 f) (hg : WtGe pi r w2 g) :
     WtGe pi r (min w1 w2) (f + g) := by
   intro n
-  rw [monoWtGe_iff, map_add]
+  rw [monoWtGe_iff, map_add (f := _)]
   refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ?_ ?_)
   · exact wtGe_mono h0 h1 (min_le_left w1 w2) hf n
   · exact wtGe_mono h0 h1 (min_le_right w1 w2) hg n

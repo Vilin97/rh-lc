@@ -93,7 +93,7 @@ theorem UnipotentHorizontal.proof (h : HermitianForm F E W) (v : Basis ι E W)
     refine ⟨-h.toSesq y (z - h.toSesq w₀ z • x₀), ?_⟩
     have e : (γ : W ≃ₗ[E] W) z = (γ : W ≃ₗ[E] W) (z - h.toSesq w₀ z • x₀) +
         h.toSesq w₀ z • (γ : W ≃ₗ[E] W) x₀ := by
-      rw [← map_smul, ← map_add, sub_add_cancel]
+      rw [← map_smul, ← map_add (f := _), sub_add_cancel]
     have e1 : (γ : W ≃ₗ[E] W) (z - h.toSesq w₀ z • x₀) =
         (z - h.toSesq w₀ z • x₀) - h.toSesq y (z - h.toSesq w₀ z • x₀) • x₀ := hγz _ hz'
     have e2 : (γ : W ≃ₗ[E] W) x₀ = x₀ := hγx

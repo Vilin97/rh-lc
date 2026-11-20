@@ -119,7 +119,7 @@ theorem frame_pull_eq_transition_mul : ∀ (E : Type) [Field E] [NumberField E] 
       have := GlobalTheory.UnitFrameGen.norm_factor Hm' _ _ _ _ _ (ha' _ (hΛΛ' a haa) q.1 (h z)).1
         ((ha' _ (hΛΛ' a haa) q.1 (h z)).2 hz.1)
       rw [hHH, hHH] at this
-      rw [map_add, this, hsm, hsm])
+      rw [map_add (f := _), this, hsm, hsm])
   exact key (i, j) w ⟨hi, hj⟩
 
 end GlobalTheory.HeckeEx

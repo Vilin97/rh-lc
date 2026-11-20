@@ -55,7 +55,7 @@ theorem cut_add {a b : AE D} (ha : a * a = a ∧ cA D a = a) (hb : b * b = b ∧
     (g : GA D V) : cutPart a V g * cutPart b V g = cutPart (b + a) V g := by
   have hab' : b * a = 0 := by rw [mul_comm]; exact hab
   have hba : (b + a) * (b + a) = b + a ∧ cA D (b + a) = b + a := by
-    refine ⟨?_, by rw [map_add, ha.2, hb.2]⟩
+    refine ⟨?_, by rw [map_add (f := _), ha.2, hb.2]⟩
     rw [add_mul, mul_add, mul_add, hb.1, ha.1, hab, hab', add_zero, zero_add]
   apply GlobalTheory.IdemSupport.mt_inj V
   rw [GlobalTheory.IdemSupport.mt_mul, eq_add_of_sub_eq (mt_cut ha V g), eq_add_of_sub_eq (mt_cut hb V g),
@@ -82,7 +82,7 @@ theorem loc_cut {e : AE D} {w : Pl D.host.E} (he : Formalism.L2.NTheta.IsIdemAt 
   intro i j
   simp only [GlobalTheory.StdFrames.loc, Matrix.GeneralLinearGroup.map_apply]
   rw [GlobalTheory.LevSplit.finE_val, GlobalTheory.LevSplit.finE_val, Matrix.map_apply, Matrix.map_apply, mt_cutPart hf.1 hf.2]
-  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_sub, map_one, c1, c2]
+  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_sub, map_one, c1, c2]
   ring
 
 theorem inBasis_cut {e : AE D} {w : Pl D.host.E} (he : Formalism.L2.NTheta.IsIdemAt e w) (V : HSp D) {n : ℕ} (h : n = V.rank)

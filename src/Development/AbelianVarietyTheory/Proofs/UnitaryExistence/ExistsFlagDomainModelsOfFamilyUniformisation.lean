@@ -131,7 +131,7 @@ theorem exists_modelsOf : GlobalTheory.Published.HasseNormSt → ∀ (E : Type) 
     simpa using hneg τ hτ
   have hκ : ∀ τ : Ψ, (τ.1 (2 * ξ₀)).im < 0 := fun τ => by
     have := hneg τ.1 ((hmem τ.1).1 τ.2)
-    rw [two_mul, map_add, Complex.add_im]
+    rw [two_mul, map_add (f := _), Complex.add_im]
     linarith
   have hL : ∀ i, LatModel l Ψ Gm ξ₀ Dw.q (F.Di i) := fun i =>
     GlobalTheory.T.latticeModel_of_same_signature_hasseNorm hN E H l Dw (F.Di i) r Ψ ξ₀ Gm φ (F.sig i).1 (F.sig i).2 hmem hξ hφ

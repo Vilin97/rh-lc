@@ -46,7 +46,7 @@ theorem perFr_cast {r : ℕ} {X' X : Data E r} (h : SameSp X' X)
 
 theorem hostHalfRoot_add_conj_eq_one (H : Geo.Tor.Host E) : (H.w0 : E) + cc (H.w0 : E) = 1 := by
   have := congrArg (algebraMap (𝓞 E) E) (PullbackSections.CVA.cmHostUnit_add_conj_eq_one H)
-  rw [map_add, map_one] at this
+  rw [map_add (f := _), map_one] at this
   exact (congrArg _ (H.bar_eq _).symm).trans this
 
 variable {H : Geo.Tor.Host E} {Dw : Datum H} {l : Geo.Tor.Level H} {Xo : Moduli Dw l} {c : Coeff l} [Algebra c.F ℂ]

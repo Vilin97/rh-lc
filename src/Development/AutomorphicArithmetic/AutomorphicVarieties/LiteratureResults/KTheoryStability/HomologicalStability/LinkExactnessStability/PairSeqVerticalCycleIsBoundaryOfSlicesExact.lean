@@ -34,7 +34,7 @@ lemma vbd_mapDomain {V W : Type} (l : List V) (c : List W →₀ ℤ) :
   induction c using Finsupp.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    rw [Finsupp.mapDomain_add, map_add, hf, hg, map_add, Finsupp.mapDomain_add]
+    rw [Finsupp.mapDomain_add, map_add (f := _), hf, hg, map_add (f := _), Finsupp.mapDomain_add]
   | single w k =>
     rw [Finsupp.mapDomain_single]
     simp only [vbd, bd, Finsupp.linearCombination_single]

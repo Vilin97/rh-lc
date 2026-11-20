@@ -58,7 +58,7 @@ private theorem exDiag (hSim : SimDiag) (hExt : ExtendEmb) {F : Type} [Field F] 
         rw [hent, map_zero, map_zero]
         simp
       map_add' := fun c c' => by
-        rw [hent, hent, hent, map_add, map_add, Matrix.mul_add, Matrix.add_mul, Matrix.add_apply] }
+        rw [hent, hent, hent, map_add (f := _), map_add (f := _), Matrix.mul_add, Matrix.add_mul, Matrix.add_apply] }
   choose ty hty using fun i => hExt F (f i)
   refine ⟨Sb, ty, hdet, fun c => ?_, ?_⟩
   · have h1 : (fun i => ty i (c : F)) = d c := funext fun i => (hty i c).symm

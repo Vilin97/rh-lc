@@ -19,7 +19,7 @@ def powerSeriesBlockSplit (m : ℕ) (g : ℕ → O) : Fin m → PowerSeries O :=
 
 theorem blockSum_add (ι : PowerSeries O →ₐ[O] PowerSeries O) (m : ℕ) (b b' : Fin m → PowerSeries O) :
     powerSeriesBlockSum ι m (b + b') = powerSeriesBlockSum ι m b + powerSeriesBlockSum ι m b' := by
-  simp only [powerSeriesBlockSum, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [powerSeriesBlockSum, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem blockSum_sub (ι : PowerSeries O →ₐ[O] PowerSeries O) (m : ℕ) (b b' : Fin m → PowerSeries O) :
     powerSeriesBlockSum ι m (b - b') = powerSeriesBlockSum ι m b - powerSeriesBlockSum ι m b' := by
@@ -136,7 +136,7 @@ theorem coeff_blockSum_triangular {ι : PowerSeries O →ₐ[O] PowerSeries O} {
     · simp
     · rw [if_neg (not_lt.mpr h.le), if_neg h.ne', if_pos h, zero_add, zero_add]
   conv_lhs => rw [hsplit]
-  rw [blockSplit_add, blockSplit_add, blockSum_add, blockSum_add, map_add, map_add,
+  rw [blockSplit_add, blockSplit_add, blockSum_add, blockSum_add, map_add (f := _), map_add (f := _),
     coeff_blockSum_single hX hm n (g n),
     coeff_blockSum_eq_zero hX hm (fun n' => if n < n' then g n' else 0) n
       (fun n' hn' => if_neg (not_lt.mpr hn')), add_zero]

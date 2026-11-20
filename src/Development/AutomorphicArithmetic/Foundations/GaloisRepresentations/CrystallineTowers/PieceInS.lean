@@ -74,7 +74,7 @@ private theorem bc_range {R L M M' N : Type*} [CommRing R] [CommRing L] [Algebra
     obtain ⟨n, hn⟩ := h m
     exact ⟨a ⊗ₜ n, by simp [hn]⟩
   | add x y hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
 
 private theorem bc_sum {R L M N J : Type*} [CommRing R] [CommRing L] [Algebra R L] [AddCommGroup M] [AddCommGroup N]
@@ -83,7 +83,7 @@ private theorem bc_sum {R L M N J : Type*} [CommRing R] [CommRing L] [Algebra R 
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul a m => simp [TensorProduct.tmul_sum]
-  | add x y hx hy => simp only [map_add, hx, hy, Finset.sum_add_distrib]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, Finset.sum_add_distrib]
 
 private theorem inv_mem (hV : VInv) (l : ℕ) [Fact l.Prime] {W Z : Scheme.{0}} (f : W ⟶ Z) (G : Type) [Group G] [Finite G]
     (b : G → (W ⟶ W)) (hG : IsGalois f G b) (L : Type) [Field L] [Algebra ℚ_[l] L] (y : L ⊗[ℚ_[l]] Htot l (sch.obj W))

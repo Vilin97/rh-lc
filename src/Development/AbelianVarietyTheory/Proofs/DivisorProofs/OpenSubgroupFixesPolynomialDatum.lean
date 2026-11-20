@@ -28,7 +28,7 @@ theorem level : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
     | add x y _ _ hx hy =>
       obtain ⟨U, hU, h⟩ := hx
       obtain ⟨V, hV, h'⟩ := hy
-      exact ⟨U ⊓ V, hU.inter hV, fun k hk hf => by rw [map_add, h k hk.1 hf, h' k hk.2 hf]⟩
+      exact ⟨U ⊓ V, hU.inter hV, fun k hk hf => by rw [map_add (f := _), h k hk.1 hf, h' k hk.2 hf]⟩
     | smul t x _ hx =>
       obtain ⟨U, hU, h⟩ := hx
       exact ⟨U, hU, fun k hk hf => by rw [map_smul, h k hk hf]⟩

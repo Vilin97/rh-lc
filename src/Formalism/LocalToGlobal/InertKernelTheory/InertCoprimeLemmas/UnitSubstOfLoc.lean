@@ -144,7 +144,7 @@ theorem keyInt (k : D.host.K) (h1 : ‖tauK D lam k‖ ≤ 1) (h2 : ‖tauKc D l
     rw [tauK_mul, tauK_nat]
   have hK : c' ^ 2 - (t' : D.host.K) * c' + (n'' : D.host.K) = 0 := by
     apply (tauKp D lam).injective
-    rw [map_zero, map_add, map_sub, map_mul, map_pow, map_intCast, map_intCast, htc']
+    rw [map_zero, map_add (f := _), map_sub, map_mul, map_pow, map_intCast, map_intCast, htc']
     linear_combination (↑n' * tauK D lam k) * hsum - hprod
   have hc'I : IsIntegral ℤ c' := by
     refine ⟨Polynomial.X ^ 2 - Polynomial.C t' * Polynomial.X + Polynomial.C n'', ?_, ?_⟩

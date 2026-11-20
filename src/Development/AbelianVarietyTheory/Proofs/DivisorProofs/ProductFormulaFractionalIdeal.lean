@@ -71,7 +71,7 @@ theorem abv_le_pow_of_mem_pow (u : AbsoluteValue K ℝ) (hu : ∀ x y, u (x + y)
     refine Submodule.mul_induction_on hy (fun m hm r hr => ?_) (fun x y hx hy => ?_)
     · rw [RingOfIntegers.coe_eq_algebraMap, map_mul, map_mul, pow_succ]
       exact mul_le_mul (ih m hm) (hT r hr) (u.nonneg _) (pow_nonneg hT0 _)
-    · rw [RingOfIntegers.coe_eq_algebraMap, map_add]
+    · rw [RingOfIntegers.coe_eq_algebraMap, map_add (f := _)]
       exact (hu _ _).trans (max_le hx hy)
 
 omit [NumberField K] in
@@ -207,7 +207,7 @@ theorem finsum_sum_log_iSup_eq_idealLog : ∀ {F : Type} [Field F] [NumberField 
     exact log_iSup_abv_eq ((extOf v).w.comp θ.1.injective)
       (fun x y => by
         change (extOf v).w (θ.1 (x + y)) ≤ max ((extOf v).w (θ.1 x)) ((extOf v).w (θ.1 y))
-        rw [map_add]
+        rw [map_add (f := _)]
         exact TrueGeo.Ext.w_add_le_max F v _ _ _)
       (fun x => (extOf v).w_le_one_of_isIntegral (x.isIntegral_coe.map θ.1.toIntAlgHom)) 𝔞 hd hI hh hb hIb
   obtain ⟨b1, b2⟩ := finsum_sum_log_embOver_eq φ (b : K) hbK

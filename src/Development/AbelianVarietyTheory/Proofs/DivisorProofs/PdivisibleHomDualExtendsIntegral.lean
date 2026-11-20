@@ -29,7 +29,7 @@ theorem omegaMap_baseChangeMap_injective (S : Type) [CommRing S] [Algebra R S] (
       PDiv.liftSemi (G.toBase S).omega (e x) := fun x => by
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r w =>
       simp only [PDiv.liftSemi_tmul, map_smul, e, LinearEquiv.baseChange_tmul, LinearEquiv.ofBijective_apply]
       exact congrArg _ ((G.toBase S).omega_naturality (H.toBase S) f _ (fun _ _ => rfl) w).symm

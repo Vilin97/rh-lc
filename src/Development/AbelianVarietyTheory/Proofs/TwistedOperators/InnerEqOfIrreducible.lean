@@ -116,7 +116,7 @@ theorem inner_eq_of_irreducible (p q : ℕ) (M : GKMod p q) (H₁ : Type) [Norme
         intro a b ha hb
         simp only [Set.mem_ofPred_eq] at ha hb ⊢
         intro w
-        rw [map_add, map_add, inner_add_left, inner_add_left, ha, hb]
+        rw [map_add (f := _), map_add (f := _), inner_add_left, inner_add_left, ha, hb]
       zero_mem' := by
         simp only [Set.mem_ofPred_eq, map_zero, inner_zero_left, implies_true]
       smul_mem' := by

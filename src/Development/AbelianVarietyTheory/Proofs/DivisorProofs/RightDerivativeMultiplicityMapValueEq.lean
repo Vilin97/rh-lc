@@ -24,7 +24,7 @@ theorem smoothVec_of_mem {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M : 
   | zero => exact smoothVec_zero _ _
   | add x y _ _ hx hy =>
     intro k Xs h
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (hx k Xs h).add (hy k Xs h)
   | smul c x _ hx =>
     intro k Xs h

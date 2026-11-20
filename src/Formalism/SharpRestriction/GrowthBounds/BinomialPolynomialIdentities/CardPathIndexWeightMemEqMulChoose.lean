@@ -278,7 +278,7 @@ theorem restSplit : RestSplit := by
       refine Finset.sum_eq_zero fun x hx => ?_
       have : ¬ x.1 < i := fun h => (Finsupp.mem_support_iff.1 hx) (hlow β₀ hβ₀ x h)
       simp [wtI, this]
-    rw [map_add, h0, add_zero]
+    rw [map_add (f := _), h0, add_zero]
   have hfin := hg (e + β₀) hmem (by rw [hw]; exact ha)
   rwa [hw] at hfin
 

@@ -64,7 +64,7 @@ theorem good_twist_mul (x : Fin (D + 1) → K) {c : ℕ} {A : ℕ → AddSubgrou
     ∀ p : Polynomial K, Good c A p → Good c A (twist x r * p) := by
   induction r using MvPolynomial.induction_on with
   | C a => intro p hp; simpa [twist] using good_int_mul hp a
-  | add r s hr hs => intro p hp; rw [map_add, add_mul]; exact good_add (hr p hp) (hs p hp)
+  | add r s hr hs => intro p hp; rw [map_add (f := _), add_mul]; exact good_add (hr p hp) (hs p hp)
   | mul_X r l hr =>
     intro p hp
     have h1 : twist x (r * X l) * p = twist x r * (Polynomial.C (x l) * Polynomial.X * p) := by

@@ -115,7 +115,7 @@ theorem scales_of_box {κ : Type} [Fintype κ] {v : Pl F} (ψ : AddChar (Fv F v)
       map_add' := fun f f' => by
         have e : tens (evFin F v) (f + f') r = tens (evFin F v) f r + tens (evFin F v) f' r := by
           funext x; simp [tens, add_mul]
-        funext t; simp only [e, map_add, Pi.add_apply]; ring
+        funext t; simp only [e, map_add (f := _), Pi.add_apply]; ring
       map_smul' := fun c f => by
         have e : tens (evFin F v) (c • f) r = c • tens (evFin F v) f r := by
           funext x; simp [tens, mul_assoc]

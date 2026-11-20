@@ -89,7 +89,7 @@ def cutAct : cutT T S →ₐ[O] Module.End O (cutM T act S) :=
       obtain ⟨m, rfl⟩ := (outM T act S).mkQ_surjective u
       obtain ⟨f, rfl⟩ := resT_surj T S a
       obtain ⟨g, rfl⟩ := resT_surj T S b
-      rw [key _ (f + g) (map_add _ _ _), LinearMap.add_apply, key _ g rfl, key _ f rfl, map_add, LinearMap.add_apply, map_add]
+      rw [key _ (f + g) (map_add _ _ _), LinearMap.add_apply, key _ g rfl, key _ f rfl, map_add (f := _), LinearMap.add_apply, map_add (f := _)]
     commutes' := fun c => LinearMap.ext fun u => by
       obtain ⟨m, rfl⟩ := (outM T act S).mkQ_surjective u
       rw [key _ (algebraMap O T c) (AlgHom.commutes _ _), AlgHom.commutes, Module.algebraMap_end_apply,
@@ -114,7 +114,7 @@ theorem qK_comm {β : Module.End O M} {γ : Module.End O (cutM T act S)}
   induction v using TensorProduct.induction_on with
   | zero => simp
   | tmul a m => rw [qK_tmul, LinearMap.baseChange_tmul, LinearMap.baseChange_tmul, qK_tmul, h]
-  | add u v hu hv => simp only [map_add, hu, hv]
+  | add u v hu hv => simp only [map_add (f := _), hu, hv]
 
 theorem qK_act (f : T) (v : FractionRing O ⊗[O] M) :
     (cutAct T act S (resT T S f)).baseChange (FractionRing O) (qK T act S v) =
@@ -182,7 +182,7 @@ theorem act_eq_zero_of_qK {v : FractionRing O ⊗[O] M} (hv : qK T act S v = 0) 
     induction u using TensorProduct.induction_on with
     | zero => simp
     | tmul a m => rfl
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
   rw [this, hv, map_zero]
 
 variable [Fintype X] (hs : ∀ x y : X, x ≠ y → ∃ f ∈ T, (f : X → O) x ≠ (f : X → O) y)
@@ -255,7 +255,7 @@ theorem iSup_eig : ⨆ x, heckeEig T act x = ⊤ := by
         (act (∑ x ∈ s, c x • f x)).baseChange (FractionRing O) v := fun s => by
       induction s using Finset.induction_on with
       | empty => simp
-      | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, ih, map_add, LinearMap.baseChange_add, LinearMap.add_apply]
+      | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, ih, map_add (f := _), LinearMap.baseChange_add, LinearMap.add_apply]
     rw [a, e, AlgHom.commutes, Algebra.algebraMap_eq_smul_one, LinearMap.baseChange_smul, LinearMap.baseChange_one]; rfl
   rw [this]
   exact Submodule.sum_mem _ fun x _ => Submodule.mem_iSup_of_mem x (sep_mem T act (fun y hy => by simp [h1 x y hy]) v)

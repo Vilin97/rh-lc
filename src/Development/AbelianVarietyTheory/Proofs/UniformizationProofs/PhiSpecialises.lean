@@ -379,7 +379,7 @@ theorem special_fibre (hG : GlobalFnsSt) {k : ℕ} (y : D.X) (gp : GtPt D T) (p 
     (β : D'.X) : SecMaps hD Θ β (g₂ (hD.xe β)) (s₂'.s β) := by
   obtain ⟨α, rfl⟩ : ∃ α, α + p.y = β := ⟨β - p.y, sub_add_cancel _ _⟩
   refine secMaps_of_sval hD hT hΘ₁ hΘ₂ _ _ _ fun T' ρ z J J' hJ hJ' Ω hΩ => ?_
-  have e := HT (hD.xe α) (hD.xe (α + p.y)) (by rw [map_add, hy, AddEquiv.apply_symm_apply]) _ (liftB hT hΘ₁ ρ) z J hJ
+  have e := HT (hD.xe α) (hD.xe (α + p.y)) (by rw [map_add (f := _), hy, AddEquiv.apply_symm_apply]) _ (liftB hT hΘ₁ ρ) z J hJ
   have e' := H α _ rfl T' ρ z J' hJ'
   have v₁ := sval_rel hD hT hΘ₁ hΘ₂ _ _ _ (H₁ α) (ρ ≫ DegPre.trPt D' F p.g.b) hJ hJ' Ω hΩ
   let σ : T' ⟶ TF (R := R') F := ρ ≫ fst _ _

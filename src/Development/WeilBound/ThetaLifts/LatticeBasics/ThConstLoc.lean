@@ -142,8 +142,8 @@ theorem locBil (hL : LocDist) {F : Type} [Field F] [NumberField F] (v : Pl F) {n
     induction x using TensorProduct.induction_on with
     | zero => simp [← Pi.zero_def]
     | add x y hx hy =>
-      simp only [map_add, Pi.add_apply]
-      rw [← Pi.add_def, ← Pi.add_def, map_add, map_add, hx, hy, mul_add]
+      simp only [map_add (f := _), Pi.add_apply]
+      rw [← Pi.add_def, ← Pi.add_def, map_add (f := _), map_add (f := _), hx, hy, mul_add]
     | tmul a b =>
       rw [hl, TensorProduct.lift.tmul, ← hβ, ← TensorProduct.lift.tmul, ← hl]
       rfl

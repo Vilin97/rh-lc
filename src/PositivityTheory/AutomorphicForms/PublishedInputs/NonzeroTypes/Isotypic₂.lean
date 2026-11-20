@@ -18,7 +18,7 @@ def eigSub (R : Γ →* Module.End ℂ V) (χ : Γ →* ℂˣ) : Submodule ℂ V
   add_mem' := by
     intro x y hx hy g
     simp only [Set.mem_setOf_eq] at hx hy
-    rw [map_add, hx g, hy g, smul_add]
+    rw [map_add (f := _), hx g, hy g, smul_add]
   zero_mem' := by
     intro g
     simp
@@ -283,7 +283,7 @@ theorem res_ρ_apply (a : WDRep h V) (U : Submodule ℂ V) (hU : ∀ σ, ∀ v �
 theorem iso_sum (a : WDRep h V) (hN : a.N = 0) (U W : Submodule ℂ V) (hU : ∀ σ, ∀ v ∈ U, a.ρ σ v ∈ U)
     (hW : ∀ σ, ∀ v ∈ W, a.ρ σ v ∈ W) (hc : IsCompl U W) : ((res a U hU).sum (res a W hW)).Iso a :=
   ⟨Submodule.prodEquivOfIsCompl U W hc, fun σ x => by
-      simp only [Submodule.coe_prodEquivOfIsCompl', WDRep.sum_ρ, LinearMap.prodMap_apply, res_ρ_apply, map_add],
+      simp only [Submodule.coe_prodEquivOfIsCompl', WDRep.sum_ρ, LinearMap.prodMap_apply, res_ρ_apply, map_add (f := _)],
     fun x => by simp [hN, res]⟩
 
 theorem sumList_cons (x : WD h) (l : List (WD h)) : sumList (x :: l) = x.lpSum (sumList l) := rfl
@@ -338,7 +338,7 @@ theorem key : ∀ (s : ℕ) {V : Type*} [AddCommGroup V] [Module ℂ V] [FiniteD
         exact Submodule.mem_iSup_of_mem b (stable a ψ _ σ hx)
       · simp
       · intro x y hx hy
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hx hy
     have hWker : ∀ v ∈ ⨆ b : Fin s, eigSub (Rg a ψ) (chig a ψ b.succ), proj (Rg a ψ) (chig a ψ 0) v = 0 := by
       intro v hv
@@ -347,7 +347,7 @@ theorem key : ∀ (s : ℕ) {V : Type*} [AddCommGroup V] [Module ℂ V] [FiniteD
         exact proj_ne_of_mem _ (fun h => Fin.succ_ne_zero b (hinj h).symm) hx
       · simp
       · intro x y hx hy
-        rw [map_add, hx, hy, add_zero]
+        rw [map_add (f := _), hx, hy, add_zero]
     have hc : IsCompl (eigSub (Rg a ψ) (chig a ψ 0)) (⨆ b : Fin s, eigSub (Rg a ψ) (chig a ψ b.succ)) := by
       constructor
       · rw [Submodule.disjoint_def]

@@ -20,7 +20,7 @@ theorem UpperTheory.V.Ws.Gys.cupRaw :
   refine ⟨N', hN', fun s => p (c s), fun v => -p (mm v), ?_, ?_, ?_, ?_⟩
   · refine ⟨hlc.comp p, ?_, ?_⟩
     · intro s t
-      rw [hrt, hcoc, map_add, hp]
+      rw [hrt, hcoc, map_add (f := _), hp]
     · intro s hs
       simp [hc0 s hs]
   · intro v s hs
@@ -39,7 +39,7 @@ theorem UpperTheory.V.Ws.Gys.cupRaw :
     refine ⟨fun s => q j (c s), hlc.comp (q j), ?_, ?_, ?_⟩
     · intro s t
       simp only [hrt]
-      rw [hcoc, map_add, hq]
+      rw [hcoc, map_add (f := _), hq]
       ring
     · intro s hs
       simp [hc0 s hs]

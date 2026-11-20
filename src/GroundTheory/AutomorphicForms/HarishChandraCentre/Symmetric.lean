@@ -39,7 +39,7 @@ theorem aeval_mem_of_forall_mem {A : Subalgebra ℂ (MvPolynomial (Fin n) ℂ)}
     aeval f F ∈ A := by
   induction F using MvPolynomial.induction_on with
   | C r => rw [aeval_C]; exact A.algebraMap_mem r
-  | add p q hp hq => rw [map_add]; exact A.add_mem hp hq
+  | add p q hp hq => rw [map_add (f := _)]; exact A.add_mem hp hq
   | mul_X p i hp => rw [map_mul, aeval_X]; exact A.mul_mem hp (hf i)
 
 theorem mem_adjoin_psum_of_isSymmetric {p : MvPolynomial (Fin n) ℂ} (hp : p.IsSymmetric) :

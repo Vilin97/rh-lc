@@ -59,7 +59,7 @@ theorem repr_Pt (x y : Fv F v) :
     (Algebra.TensorProduct.basis (Fv F v) A.c).repr (Pt v A x y) = Finsupp.single 0 x + Finsupp.single 1 y := by
   have h1 : A.c.repr 1 = Finsupp.single 0 1 := by rw [← A.hc0, Module.Basis.repr_self]
   have h2 : A.c.repr A.δ = Finsupp.single 1 1 := by rw [← A.hc1, Module.Basis.repr_self]
-  rw [Pt, map_add, Algebra.TensorProduct.basis_repr_tmul, Algebra.TensorProduct.basis_repr_tmul, h1, h2]
+  rw [Pt, map_add (f := _), Algebra.TensorProduct.basis_repr_tmul, Algebra.TensorProduct.basis_repr_tmul, h1, h2]
   simp
 
 theorem Xc_Pt (x y : Fv F v) : Xc v A (Pt v A x y) = x := by
@@ -120,10 +120,10 @@ theorem repr_incl (e : E) (j : Fin 2) :
   simp [inclR, Algebra.TensorProduct.basis_repr_tmul]
 
 theorem Xc_add (z w : Fv F v ⊗[F] E) : Xc v A (z + w) = Xc v A z + Xc v A w := by
-  simp only [Xc, map_add, Finsupp.add_apply]
+  simp only [Xc, map_add (f := _), Finsupp.add_apply]
 
 theorem Yc_add (z w : Fv F v ⊗[F] E) : Yc v A (z + w) = Yc v A z + Yc v A w := by
-  simp only [Yc, map_add, Finsupp.add_apply]
+  simp only [Yc, map_add (f := _), Finsupp.add_apply]
 
 theorem Xc_neg (z : Fv F v ⊗[F] E) : Xc v A (-z) = -Xc v A z := by
   simp only [Xc, map_neg, Finsupp.neg_apply]
@@ -216,7 +216,7 @@ def rho : lamC v A hD →+* K where
       red_add v (mul_mem hz.1 hw.2) (mul_mem hz.2 hw.1), red_mul v hz.1 hw.1,
       red_mul v (mul_mem hz.2 hw.2) hD, red_mul v hz.2 hw.2, red_mul v hz.1 hw.2,
       red_mul v hz.2 hw.1]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     linear_combination (-(algebraMap _ K (red v (Yc v A z)) * algebraMap _ K (red v (Yc v A w)))) * hr
   map_zero' := by
     simp only [ZeroMemClass.coe_zero, Xc_zero, Yc_zero, red_zero, map_zero, zero_mul, add_zero]
@@ -226,7 +226,7 @@ def rho : lamC v A hD →+* K where
     rw [mem_lamC] at hz hw
     simp only [AddMemClass.coe_add, Xc_add, Yc_add]
     rw [red_add v hz.1 hw.1, red_add v hz.2 hw.2]
-    simp only [map_add]
+    simp only [map_add (f := _)]
     ring
 
 theorem rho_apply (z : lamC v A hD) : rho v A hD r hr z =
@@ -235,7 +235,7 @@ theorem rho_apply (z : lamC v A hD) : rho v A hD r hr z =
 theorem rho_sig (σ' : K ≃ₐ[𝓞 F ⧸ v.asIdeal] K) (hσr : σ' r = -r)
     (z : lamC v A hD) : rho v A hD r hr (sigC v A hD z) = σ' (rho v A hD r hr z) := by
   have hz := (mem_lamC v A hD _).1 z.2
-  rw [rho_apply, rho_apply, coe_sigC, Xc_sig, Yc_sig, red_neg v hz.2, map_add, map_mul, AlgEquiv.commutes,
+  rw [rho_apply, rho_apply, coe_sigC, Xc_sig, Yc_sig, red_neg v hz.2, map_add (f := _), map_mul, AlgEquiv.commutes,
     AlgEquiv.commutes, hσr, map_neg]
   ring
 

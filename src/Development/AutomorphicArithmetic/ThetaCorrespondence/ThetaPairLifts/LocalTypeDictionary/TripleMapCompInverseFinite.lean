@@ -57,7 +57,7 @@ theorem triple_map_comp_inverse_finite : GlobalTheory.Published.HoweDualityReal 
         · rfl
       | zero => simp
       | add x y _ _ hx hy =>
-        rw [map_add, map_add, map_add, hx.2, hy.2]
+        rw [map_add (f := _), map_add (f := _), map_add (f := _), hx.2, hy.2]
         exact ⟨Submodule.add_mem _ hx.1 hy.1, rfl⟩
       | smul c x _ hx =>
         rw [map_smul, map_smul, map_smul, hx.2]
@@ -96,7 +96,7 @@ theorem triple_map_comp_inverse_finite : GlobalTheory.Published.HoweDualityReal 
         · rfl
       | zero => simp
       | add x y _ _ hx hy =>
-        rw [map_add, map_add, map_add, hx.2, hy.2]
+        rw [map_add (f := _), map_add (f := _), map_add (f := _), hx.2, hy.2]
         exact ⟨Submodule.add_mem _ hx.1 hy.1, rfl⟩
       | smul c x _ hx =>
         rw [map_smul, map_smul, map_smul, hx.2]

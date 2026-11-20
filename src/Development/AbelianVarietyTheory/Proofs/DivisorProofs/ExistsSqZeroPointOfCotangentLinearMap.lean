@@ -184,7 +184,7 @@ def psiM (W : A.left.Opens) : Γ(A.left, W) →+* Γ((TM O M).left, (TM O M).hom
     linear_combination -hm
   map_zero' := by simp only [map_zero, toFn_zero, add_zero]
   map_add' f g := by
-    simp only [map_add, toFn_add]
+    simp only [map_add (f := _), toFn_add]
     abel
 
 theorem psiM_apply (W : A.left.Opens) (f : Γ(A.left, W)) : psiM D hD W f =
@@ -194,7 +194,7 @@ theorem psiM_apply (W : A.left.Opens) (f : Γ(A.left, W)) : psiM D hD W f =
 theorem psiM_nat (W W' : A.left.Opens) (h : W' ≤ W) (f : Γ(A.left, W)) :
     psiM D hD W' (resG A.left h f) =
       resG (TM O M).left ((TM O M).hom.preimage_mono ((unitSec A).preimage_mono h)) (psiM D hD W f) := by
-  rw [psiM_apply, psiM_apply, map_add, D.app_res, ← D.res_app le_rfl ((unitSec A).preimage_mono h),
+  rw [psiM_apply, psiM_apply, map_add (f := _), D.app_res, ← D.res_app le_rfl ((unitSec A).preimage_mono h),
     toFn_resM, GlobalTheory.DualPull.resG_appLE, GlobalTheory.DualPull.appLE_resG (unitSec A),
     ← GlobalTheory.DualPull.resG_appLE (unitSec A) ((unitSec A).preimage_mono h) le_rfl,
     GlobalTheory.DualPull.appLE_resG (TM O M).hom]
@@ -239,7 +239,7 @@ theorem deformM_comp : deformM D hD ≫ A.hom = (TM O M).hom := by
 theorem zeroSec_psiM {W : A.left.Opens} (k : unitSec A ⁻¹ᵁ W ≤
       sec (zeroSec O M) ⁻¹ᵁ (TM O M).hom ⁻¹ᵁ unitSec A ⁻¹ᵁ W) (f : Γ(A.left, W)) :
     (sec (zeroSec O M)).appLE _ _ k (psiM D hD W f) = (unitSec A).appLE W _ le_rfl f := by
-  rw [psiM_apply, map_add, appLE_base (sec_hom (zeroSec O M)) _ _ le_rfl, resG_self]
+  rw [psiM_apply, map_add (f := _), appLE_base (sec_hom (zeroSec O M)) _ _ le_rfl, resG_self]
   have h0 : (sec (zeroSec O M)).appLE _ _ k (toFn (D.app (le_refl (unitSec A ⁻¹ᵁ W)) f)) = 0 :=
     hD _ _ le_rfl f
   rw [h0, add_zero]
@@ -293,7 +293,7 @@ def centerDer : Der (TM O M).hom (sec (zeroSec O M)) (pushO O M) where
   app {W V} h := AddMonoidHom.mk' (fun b => ofFn (centerFn h b)) fun a b => by
     rw [← ofFn_add]
     congr 1
-    simp only [centerFn, map_add]
+    simp only [centerFn, map_add (f := _)]
     abel
   res_app {W V V'} h h' b := by
     change ofFn (resG (TM O M).left _ (centerFn h b)) = ofFn (centerFn (h'.trans h) b)
@@ -395,7 +395,7 @@ theorem exists_Phi_eq_of_linearMap : ∀ (O : Type) [CommRing O] (A : Over (Sp O
     { toFun := fun w => ofFn (ofT (TrivSqZeroExt.inr (l' w)))
       map_add' := fun w w' => by
         refine (congrArg (fun m => ofFn (ofT (TrivSqZeroExt.inr m))) (hl'add w w')).trans ?_
-        rw [TrivSqZeroExt.inr_add, map_add, ofFn_add]
+        rw [TrivSqZeroExt.inr_add, map_add (f := _), ofFn_add]
       map_smul' := fun r w => by
         obtain ⟨a, rfl⟩ : ∃ a, r = cst O a := ⟨toO O r, (Iso.hom_inv_id_apply _ _).symm⟩
         have e : l' (cst O a • w) = a • l' w := hl'smul a w

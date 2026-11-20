@@ -185,7 +185,7 @@ theorem stepT_mem {τ : ι} {w : Fin N → ℕ} {ψ : Gm →+ MvPolynomial (BVar
     · rw [map_mul, MvPolynomial.algHom_C]
       refine congrArg (· * _) ?_
       rw [monomial_eq, monomial_eq, C_1, C_1, one_mul, one_mul]
-      simp only [Finsupp.prod, map_prod, map_pow, colAddGen, aeval_X, apply_ite θ, map_add, map_mul, θ]
+      simp only [Finsupp.prod, map_prod, map_pow, colAddGen, aeval_X, apply_ite θ, map_add (f := _), map_mul, θ]
     · rw [map_mul, rename_C]
       refine congrArg (· * _) ?_
       rw [monomial_eq, monomial_eq, C_1, C_1, one_mul, one_mul]

@@ -30,7 +30,7 @@ theorem HasWt.zero : HasWt v r w (0 : MvPowerSeries Z k) := by
 theorem HasWt.add (hf : HasWt v r w f) (hg : HasWt v r w g) : HasWt v r w (f + g) := by
   rw [hasWt_iff] at *
   intro A
-  rw [map_add]
+  rw [map_add (f := _)]
   exact le_trans (le_min (hf A) (hg A)) (v.map_add _ _)
 
 theorem HasWt.neg (hf : HasWt v r w f) : HasWt v r w (-f) := by
@@ -59,7 +59,7 @@ theorem HasWt.mul (hf : HasWt v r w1 f) (hg : HasWt v r w2 g) : HasWt v r (w1 + 
   rw [v.map_mul]
   have hA : A = p.1 + p.2 := (Finset.HasAntidiagonal.mem_antidiagonal.1 hp).symm
   have hd : ((A.degree : ℕ) : ℝ) = ((p.1.degree : ℕ) : ℝ) + ((p.2.degree : ℕ) : ℝ) := by
-    rw [hA, map_add]; push_cast; ring
+    rw [hA, map_add (f := _)]; push_cast; ring
   have : ((w1 + w2 - ((A.degree : ℕ) : ℝ) * r : ℝ) : WithTop ℝ)
       = ((w1 - ((p.1.degree : ℕ) : ℝ) * r : ℝ) : WithTop ℝ)
         + ((w2 - ((p.2.degree : ℕ) : ℝ) * r : ℝ) : WithTop ℝ) := by

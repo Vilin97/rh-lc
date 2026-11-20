@@ -40,7 +40,7 @@ private theorem sumList_spec (g : Weil h) : ∀ (c : ℕ) (f : Fin c → WD h) (
     obtain ⟨h1, h2⟩ := ih (fun i => f i.succ) (fun i => M i.succ) fun i => H i.succ
     have e : sumList (List.ofFn f) = (f 0).lpSum (sumList (List.ofFn fun i => f (Fin.succ i))) := by
       rw [List.ofFn_succ]; rfl
-    rw [e, WD.charPol_lpSum, h2, (H 0).2, Fin.sum_univ_succ, Multiset.map_add, Multiset.prod_add]
+    rw [e, WD.charPol_lpSum, h2, (H 0).2, Fin.sum_univ_succ, Multiset.map_add (f := _), Multiset.prod_add]
     exact ⟨unr_lpSum (H 0).1 h1, rfl⟩
 private theorem rec_eq_diagV {rc : IrrGL (w.adicCompletion E) → WD h} (H : IsRecV h rc) {a : ℕ}
     {σ : IrrRep (GL (Fin a) (w.adicCompletion E))} {α : Fin a → ℂˣ} (hα : HasSatake σ.ρ α) :

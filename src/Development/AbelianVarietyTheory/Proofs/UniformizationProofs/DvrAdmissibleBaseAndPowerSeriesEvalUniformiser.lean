@@ -40,7 +40,7 @@ theorem translate_C {a : V} (ha : a ∈ IsLocalRing.maximalIdeal V) (x : V) :
 theorem translate_neg_comp {a : V} (ha : a ∈ IsLocalRing.maximalIdeal V) :
     (translate (neg_mem ha)).comp (translate ha) = AlgHom.id V _ := by
   have h : (translate (neg_mem ha)).comp (translate ha) PowerSeries.X = PowerSeries.X := by
-    rw [AlgHom.comp_apply, translate_X, map_add, translate_C, translate_X, map_neg]
+    rw [AlgHom.comp_apply, translate_X, map_add (f := _), translate_C, translate_X, map_neg]
     ring
   refine algHom_ext_of_isHausdorff (IsLocalRing.maximalIdeal (PowerSeries V)) ?_ h
   rw [h]

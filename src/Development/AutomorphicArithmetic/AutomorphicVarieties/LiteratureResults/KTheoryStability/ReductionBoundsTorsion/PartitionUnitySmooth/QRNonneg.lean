@@ -170,7 +170,7 @@ theorem pf_GRLow : GRLow := by
     linarith [mul_comm (μ h) (q h u), mul_assoc 16 (q h u) (μ h)]
   change _ ≤ evR (toR u) (ret μ h)
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [ret, finsum_eq_sum_of_support_subset _ hsupp, map_add, map_sum]
+    rw [ret, finsum_eq_sum_of_support_subset _ hsupp, map_add (f := _), map_sum]
   simp only [map_smul, smul_eq_mul, evR_apply]
   refine le_add_of_nonneg_of_le (mul_nonneg hμ0.le (qR_nonneg hh _)) ?_
   refine le_trans (le_of_eq ?_) (Finset.single_le_sum (f := fun j : ℤ => rho ((4 : ℝ) ^ j * μ h) * qR (term ((4 : ℝ) ^ j) h) (toR u))

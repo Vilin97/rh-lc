@@ -39,7 +39,7 @@ theorem exists_relation {R M J : Type} [CommRing R] [IsDomain R] [AddCommGroup M
 theorem map_relation {R M J : Type} [CommRing R] [AddCommGroup M] [Module R M] [Fintype J] {t : R} {s : M} {r : J → R}
     {σ : J → M} (h : t • s + ∑ i, r i • σ i = 0) (ev : M →ₗ[R] R) : t * ev s + ∑ i, r i * ev (σ i) = 0 := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simpa only [map_add, map_sum, map_smul, map_zero, smul_eq_mul] using congrArg ev h
+    simpa only [map_add (f := _), map_sum, map_smul, map_zero, smul_eq_mul] using congrArg ev h
 
 theorem smul_eq_zero_of_relation {R M J : Type} [CommRing R] [AddCommGroup M] [Module R M] [Fintype J] {t : R} {s : M}
     {r : J → R} {σ : J → M} (h : t • s + ∑ i, r i • σ i = 0) (hr : ∀ i, r i = 0) : t • s = 0 := by
@@ -114,9 +114,9 @@ theorem main : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField 
   have hrep' : ∀ α, ∃! x, ∃ mu, Λ.ε (rep x) + j • mu = α := fun α => by
     refine (existsUnique_congr fun x => ⟨?_, ?_⟩).1 (hrep (Λ.ε.symm α))
     · rintro ⟨m, hm⟩
-      exact ⟨Λ.ε m, by rw [← map_nsmul, ← map_add, ← hm, LinearEquiv.apply_symm_apply]⟩
+      exact ⟨Λ.ε m, by rw [← map_nsmul, ← map_add (f := _), ← hm, LinearEquiv.apply_symm_apply]⟩
     · rintro ⟨m, rfl⟩
-      exact ⟨Λ.ε.symm m, by rw [map_add, map_nsmul, LinearEquiv.symm_apply_apply]⟩
+      exact ⟨Λ.ε.symm m, by rw [map_add (f := _), map_nsmul, LinearEquiv.symm_apply_apply]⟩
   have hrep'' : ∀ x x' mu, rep x = rep x' + j • mu → x = x' := fun x x' mu h =>
     (hrep (rep x)).unique ⟨0, by simp⟩ ⟨mu, h⟩
   choose m₀ hm₀ using fun i : Σ x, Fin (Module.finrank ℂ (ConstFam.SecBMod a.D₀ j (Λ.ε (rep x)))) =>
@@ -143,7 +143,7 @@ theorem main : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [NumberField 
         ∑ i, r i * FormalValue.secVal W.P.U.toUnifPre (σ' i) (Ξ.x v).left jL = 0 := map_relation hrel ev
     have e := congrArg φ e₀
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_zero, map_mul] at e
+      simp only [map_add (f := _), map_sum, map_zero, map_mul] at e
     refine Eq.trans (congrArg₂ (· + ·) rfl ?_) e
     rw [Finset.sum_mul]
     refine Finset.sum_congr rfl fun i _ => ?_

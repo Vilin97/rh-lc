@@ -122,7 +122,7 @@ theorem val_cpt_le_one {𝔪 : Ideal (𝓞 D.host.E)} (h𝔪 : 𝔪 ≠ ⊥) {Q 
       AddSubgroup.subset_closure ⟨α, hα, 1, rfl⟩
     exact mul_le_one' (((GlobalTheory.StdFrames.comp_toAd D).int _).1 hi Q) (val_le_one_of_mem_inv h𝔪 hQ hc)
   | zero => simp
-  | add x y _ _ hx hy => rw [RingHom.map_add, RingHom.map_add]; exact Valuation.map_add_le _ hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _)]; exact Valuation.map_add_le _ hx hy
   | neg x _ hx => rw [RingHom.map_neg, RingHom.map_neg, Valuation.map_neg]; exact hx
 
 theorem cpt_idemSum_of_mem {e : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (he : IsIdemSum e P)

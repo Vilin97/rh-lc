@@ -111,7 +111,7 @@ theorem isCompl_map_rename (O : MonomialOrder σ) {τ : Type*} {φ : σ → τ}
       have h1 := monomial_mem_sup O c hlc e (g.coeff (Finsupp.mapDomain φ e))
       rw [← MvPolynomial.rename_monomial]
       obtain ⟨y, hy, z, hz, hyz⟩ := Submodule.mem_sup.mp h1
-      rw [← hyz, map_add]
+      rw [← hyz, map_add (f := _)]
       refine Submodule.add_mem_sup (Submodule.mem_map_of_mem hy) ?_
       rw [MvPolynomial.mem_restrictSupport_iff] at hz ⊢
       intro d' hd'

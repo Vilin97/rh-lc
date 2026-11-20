@@ -146,7 +146,7 @@ theorem rd_add (α β : A.Fld) (i : A.ι) (v : V n) : rd A (α + β) i v = rd A 
     unfold HolAtlas.loc; split_ifs
     · rfl
     · exact (add_zero 0).symm
-  simp only [rd, this, dens, map_add, Finsupp.add_apply, add_div, Complex.add_re]
+  simp only [rd, this, dens, map_add (f := _), Finsupp.add_apply, add_div, Complex.add_re]
 
 theorem rd_zero (i : A.ι) (v : V n) : rd A 0 i v = 0 := by
   have : A.loc 0 i v = 0 := by

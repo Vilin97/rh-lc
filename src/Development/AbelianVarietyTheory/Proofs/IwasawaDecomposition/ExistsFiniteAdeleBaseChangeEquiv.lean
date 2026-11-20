@@ -156,7 +156,7 @@ theorem coord_tmul (i : Fin (Module.finrank F E)) (x : E) (a : FiniteAdeleRing (
 theorem sum_coord (y : AfE F E) : ∑ i, Module.finBasis F E i ⊗ₜ[F] coord i y = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add y y' hy hy' => simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib, hy, hy']
+  | add y y' hy hy' => simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib, hy, hy']
   | tmul x a =>
     simp only [coord_tmul, ← TensorProduct.smul_tmul]
     rw [← TensorProduct.sum_tmul, Module.Basis.sum_repr]
@@ -206,7 +206,7 @@ theorem exists_limit (x : ℕ → AfE F E) (hx : ∀ N, x N ∈ RInt F E)
     refine (GlobalTheory.AdLat.integral_finiteAdele_complete_separated F).2 (fun N => D • coord i (x N))
       (fun N => hc _ (hx N) i) fun N k hN hk => ?_
     obtain ⟨w, hw, e⟩ := h N k hN hk
-    exact ⟨_, hc w hw i, by rw [e, map_add, map_nsmul, smul_add, smul_comm D N]⟩
+    exact ⟨_, hc w hw i, by rw [e, map_add (f := _), map_nsmul, smul_add, smul_comm D N]⟩
   choose y hy using key
   refine ⟨M * D, Nat.mul_pos hM hD, ∑ i, algebraMap (𝓞 E) E (o i) ⊗ₜ[F] y i, fun N hN => ?_⟩
   choose a ha hya using fun i => hy i N hN
@@ -237,7 +237,7 @@ theorem map_mem_int {y : AfE F E} (hy : y ∈ RInt F E) : ι y ∈ intAd E := by
 
 theorem mem_int_of_map {y : AfE F E} (hy : ι y ∈ intAd E) : y ∈ RInt F E := by
   obtain ⟨x, r, hr, rfl⟩ := exists_approx y
-  rw [map_add, map_tmul_one hι] at hy
+  rw [map_add (f := _), map_tmul_one hι] at hy
   have h1 := sub_mem hy (map_mem_int hι hr)
   rw [add_sub_cancel_right] at h1
   obtain ⟨o, rfl⟩ := exists_int_of_mem h1
@@ -284,7 +284,7 @@ theorem exists_map_eq_of_int {s : FiniteAdeleRing (𝓞 E) E} (hs : s ∈ intAd 
     refine (GlobalTheory.AdLat.integral_finiteAdele_complete_separated E).1 _ fun N hN => ?_
     obtain ⟨w, hw, e⟩ := hy N hN
     refine ⟨ι w - D • a N, sub_mem (map_mem_int hι hw) (nsmul_mem (ha N) D), ?_⟩
-    rw [e, map_add, map_nsmul, map_nsmul, map_tmul_one hι]
+    rw [e, map_add (f := _), map_nsmul, map_nsmul, map_tmul_one hι]
     conv_lhs => rw [hxa N hN]
     rw [smul_add, smul_sub, smul_comm D N]
     abel
@@ -295,7 +295,7 @@ theorem map_surjective : Function.Surjective ι := by
   intro z
   obtain ⟨x, a, ha, rfl⟩ := (GlobalTheory.AdLat.strong_approximation_mod_nat E 1 one_pos).1 z
   obtain ⟨y, rfl⟩ := exists_map_eq_of_int hι ha
-  exact ⟨x ⊗ₜ[F] 1 + y, by rw [map_add, map_tmul_one hι, one_smul]⟩
+  exact ⟨x ⊗ₜ[F] 1 + y, by rw [map_add (f := _), map_tmul_one hι, one_smul]⟩
 
 theorem map_eps_mul_apply (v : HeightOneSpectrum (𝓞 F)) (z : AfE F E)
     (P : HeightOneSpectrum (𝓞 E)) :

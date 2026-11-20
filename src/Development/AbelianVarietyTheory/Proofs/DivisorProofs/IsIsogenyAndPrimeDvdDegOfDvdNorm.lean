@@ -25,7 +25,7 @@ theorem dvd_algebraMap_norm {S : Type} [CommRing S] [Module.Free ℤ S] [Module.
     exact Matrix.aeval_self_charpoly M
   have hsplit : aeval x M.charpoly = x * aeval x M.charpoly.divX + algebraMap ℤ S (M.charpoly.coeff 0) := by
     conv_lhs => rw [← X_mul_divX_add M.charpoly]
-    rw [map_add, map_mul, aeval_X, aeval_C]
+    rw [map_add (f := _), map_mul, aeval_X, aeval_C]
   rw [h0] at hsplit
   refine ⟨-(algebraMap ℤ S ((-1) ^ Fintype.card (Module.Free.ChooseBasisIndex ℤ S)) * aeval x M.charpoly.divX), ?_⟩
   rw [Algebra.norm_eq_matrix_det b, Matrix.det_eq_sign_charpoly_coeff, map_mul]

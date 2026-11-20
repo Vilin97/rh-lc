@@ -79,7 +79,7 @@ theorem quotient_eq_linear_pow_char_of_derivative_eq_zero
     (map_mul _ _ _).symm, ?_⟩
   have hdd : (C d : k[X]) * C d⁻¹ = 1 := by rw [← map_mul, mul_inv_cancel₀ hd, map_one]
   rw [← eA, ← hab]
-  simp only [map_add, map_mul, expand_C, expand_X]
+  simp only [map_add (f := _), map_mul, expand_C, expand_X]
   linear_combination (-(C γ * (C a * X ^ p + C b))) * hdd
 
 end GlobalTheory

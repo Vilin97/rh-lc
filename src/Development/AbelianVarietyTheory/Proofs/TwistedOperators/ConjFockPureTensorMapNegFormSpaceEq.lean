@@ -76,7 +76,7 @@ theorem cj_ptF_neg {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} (hψ : IsStd
     funext x
     simp [GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj]
   | add p q hp hq =>
-    rw [map_add, GlobalTheory.FockAdjoint.ptF_add, GlobalTheory.FockAdjoint.ptF_add, ← hp, ← hq]
+    rw [map_add (f := _), GlobalTheory.FockAdjoint.ptF_add, GlobalTheory.FockAdjoint.ptF_add, ← hp, ← hq]
     funext x
     simp [GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj]
   | mul_X p v hp =>

@@ -27,7 +27,7 @@ private lemma map_aeval_eq_aeval_map' {α β : Type} (g : α → MvPolynomial β
   | C a =>
     simp only [MvPolynomial.aeval_C, MvPolynomial.map_C, MvPolynomial.algebraMap_eq]
   | add p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, MvPolynomial.aeval_X, MvPolynomial.map_X, hp, hg]
 
@@ -67,7 +67,7 @@ theorem hfs_map_mem_VV {F : Pol K σ n} (hF : F ∈ VV K lam) : MvPolynomial.map
       exact Finset.prod_congr rfl fun s _ => hfs_map_blockEmb ι s (G s)
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]

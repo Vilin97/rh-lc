@@ -30,7 +30,7 @@ theorem sub_mem_pow_succ {B : Type} [CommRing B] (Q : Ideal B) (ρ : B →+* B)
         exact h4
     · intro a b ha hb
       have e : ρ (a + b) - (a + b) = (ρ a - a) + (ρ b - b) := by
-        rw [map_add]; ring
+        rw [map_add (f := _)]; ring
       rw [e]
       exact Ideal.add_mem _ ha hb
 

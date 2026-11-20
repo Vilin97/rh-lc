@@ -51,7 +51,7 @@ theorem UpperTheory.exists_quadratic_of_inertia :
   refine ⟨K, i1, i2, i3, i4, i5, i6, i7, hK, fun j L hL x => ?_, w, A, ?_, hw, t, hs, ?_⟩
   · obtain ⟨a, b, rfl⟩ := hgenK x
     obtain ⟨z, hz⟩ := Cq.embPadic K₀ hK₀ l hl (j.comp (algebraMap K₀ Ω)) y₀
-    rw [map_add, map_mul, hy, ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply, map_add, map_mul]
+    rw [map_add (f := _), map_mul, hy, ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply, map_add (f := _), map_mul]
     refine add_mem (hL a) (mul_mem (hL b) ?_)
     rw [RingHom.comp_apply] at hz
     rw [← hz]
@@ -63,4 +63,4 @@ theorem UpperTheory.exists_quadratic_of_inertia :
     refine hsn ⟨{ u.toRingEquiv with commutes' := fun x => ?_ }, AlgEquiv.ext fun _ => rfl⟩
     obtain ⟨a, b, rfl⟩ := hgen x
     show u _ = _
-    simp only [map_add, map_mul, map_ratCast, hu]
+    simp only [map_add (f := _), map_mul, map_ratCast, hu]

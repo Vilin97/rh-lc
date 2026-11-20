@@ -71,7 +71,7 @@ theorem wp_homotopy : ∀ (A : Type) [CommRing A](B : Type) [CommRing B] [Algebr
       induction t using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     have a1 : alt (δ (n + 1)) z = δ (n + 1) 0 z +
         ∑ k : Fin (n + 1), -((-1 : ℤ) ^ (k : ℕ) • δ (n + 1) k.succ z) := by
       simp [alt, Fin.sum_univ_succ, LinearMap.sum_apply, pow_succ]
@@ -84,12 +84,12 @@ theorem wp_homotopy : ∀ (A : Type) [CommRing A](B : Type) [CommRing B] [Algebr
         simp only [alt, LinearMap.lTensor_tmul, LinearMap.sum_apply, LinearMap.smul_apply,
           TensorProduct.tmul_sum, TensorProduct.tmul_smul]
       | add x y hx hy =>
-        simp only [map_add, hx, hy, smul_add, Finset.sum_add_distrib]
+        simp only [map_add (f := _), hx, hy, smul_add, Finset.sum_add_distrib]
     show (alt (δ n)).lTensor B (h n z) + h (n + 1) (alt (δ (n + 1)) z) = (1 : B) ⊗ₜ[A] z
     have e1 : h (n + 1) (δ (n + 1) 0 z) = (1 : B) ⊗ₜ[A] z := by
       simpa using e0
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [a1, a2, map_add, e1, map_sum, add_left_comm, ← Finset.sum_add_distrib]
+      rw [a1, a2, map_add (f := _), e1, map_sum, add_left_comm, ← Finset.sum_add_distrib]
     have : ∀ k : Fin (n + 1), (-1 : ℤ) ^ (k : ℕ) • ((δ n k).toLinearMap.lTensor B) (h n z) +
         h (n + 1) (-((-1 : ℤ) ^ (k : ℕ) • δ (n + 1) k.succ z)) = 0 := by
       intro k

@@ -281,7 +281,7 @@ theorem sphMatchAll : SphMatchAll := by
     obtain ⟨V', _, _, ρ', x', hx'⟩ := exists_sat (v := v) (c + t) (B + seg v 1 t)
       (by rw [Multiset.card_add, hB, seg_card])
     have e1 := l1 V _ x (sat_theta hx)
-    have e2 := l2 V' _ x' (by simpa only [Multiset.map_add, seg_inv] using sat_theta hx')
+    have e2 := l2 V' _ x' (by simpa only [Multiset.map_add (f := _), seg_inv] using sat_theta hx')
     rw [heckeVec_theta hx'.2.1, theta_theta] at e2
     have e3 : ∀ e, heckeVec (ρ.comp (theta c).symm.toMonoidHom) (KGL v c)
         (dosetInd ℂ (KGL v c) (tor h0 e)) x = lam e • x := fun e => by

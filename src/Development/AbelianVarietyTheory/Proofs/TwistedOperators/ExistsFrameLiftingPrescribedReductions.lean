@@ -70,7 +70,7 @@ theorem res_eq (Q : Pl D.host.E) (x : EAf D) (hmem : x ∈ Formalism.L2.Herm.int
     change Valued.v (GlobalTheory.StdFrames.cpt Q (x - δ)) < 1
     rw [map_sub, hcpt, sub_self, map_zero]
     exact zero_lt_one)
-  rw [e0, map_add, e1, zero_add]
+  rw [e0, map_add (f := _), e1, zero_add]
 
 end GlobalTheory.SeeConjRead.CyclotomicLifting
 

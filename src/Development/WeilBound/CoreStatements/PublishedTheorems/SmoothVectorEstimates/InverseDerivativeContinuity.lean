@@ -169,7 +169,7 @@ def toXB (π : CuspSub E a) (hπ : IsNormalised π) : π.V →ₗ[ℂ] XB E a wh
 
 theorem opLie_add (π : CuspSub E a) (Z Z' : Lie E a) (ψ : π.V) :
     π.op (.lie (Z + Z')) ψ = π.op (.lie Z) ψ + π.op (.lie Z') ψ :=
-  Subtype.ext (by change lie E a (Z + Z') ψ.1 = lie E a Z ψ.1 + lie E a Z' ψ.1; rw [map_add]; rfl)
+  Subtype.ext (by change lie E a (Z + Z') ψ.1 = lie E a Z ψ.1 + lie E a Z' ψ.1; rw [map_add (f := _)]; rfl)
 
 theorem opLie_smul (π : CuspSub E a) (c : ℝ) (Z : Lie E a) (ψ : π.V) :
     π.op (.lie (c • Z)) ψ = (c : ℂ) • π.op (.lie Z) ψ :=
@@ -183,7 +183,7 @@ theorem real_smul_XB (c : ℝ) (f : XB E a) : (c : ℂ) • f = c • f := by
 
 def dL (π : CuspSub E a) (hπ : IsNormalised π) (ψ : π.V) : Lie E a →ₗ[ℝ] XB E a where
   toFun Z := toXB π hπ (π.op (.lie Z) ψ)
-  map_add' Z Z' := by rw [opLie_add, map_add]
+  map_add' Z Z' := by rw [opLie_add, map_add (f := _)]
   map_smul' c Z := by rw [opLie_smul, map_smul, RingHom.id_apply, real_smul_XB]
 
 def B2 (π : CuspSub E a) (hπ : IsNormalised π) (ψ : π.V) : Lie E a →ₗ[ℝ] Lie E a →ₗ[ℝ] XB E a :=
@@ -191,7 +191,7 @@ def B2 (π : CuspSub E a) (hπ : IsNormalised π) (ψ : π.V) : Lie E a →ₗ[�
     (fun Y Y' Z => by
       show toXB π hπ (π.op (.lie Z) (π.op (.lie (Y + Y')) ψ)) =
         toXB π hπ (π.op (.lie Z) (π.op (.lie Y) ψ)) + toXB π hπ (π.op (.lie Z) (π.op (.lie Y') ψ))
-      rw [opLie_add, map_add, map_add])
+      rw [opLie_add, map_add (f := _), map_add (f := _)])
     (fun c Y Z => by
       show toXB π hπ (π.op (.lie Z) (π.op (.lie (c • Y)) ψ)) = c • toXB π hπ (π.op (.lie Z) (π.op (.lie Y) ψ))
       rw [opLie_smul, map_smul, map_smul, real_smul_XB])

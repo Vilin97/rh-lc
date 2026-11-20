@@ -46,7 +46,7 @@ theorem stabSub_add_le (ρ : Representation ℂ G V) (x y : V) :
   show ρ g (x + y) = x + y
   have h1 : ρ g x = x := hg.1
   have h2 : ρ g y = y := hg.2
-  rw [map_add, h1, h2]
+  rw [map_add (f := _), h1, h2]
 
 end GlobalTheory.CompanionTheory.BZPsiPG.FibKer.SmTop
 

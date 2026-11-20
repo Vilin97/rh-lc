@@ -221,7 +221,7 @@ theorem tsum_coefficients_eq_value_zero : ∀ (G : Type) [AddCommGroup G] [Topol
     | zero => simp
     | add x y _ _ hx hy =>
       simp only [Set.mem_setOf_eq] at hx hy ⊢
-      rw [add_mul, map_add, hx, hy, add_zero]
+      rw [add_mul, map_add (f := _), hx, hy, add_zero]
     | smul r x _ hx =>
       simp only [Set.mem_setOf_eq] at hx ⊢
       rw [smul_mul_assoc, map_smul, hx, smul_zero]

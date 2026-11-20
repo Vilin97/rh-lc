@@ -322,7 +322,7 @@ theorem tie_core (D : SW.Level X) {𝔐 J : Ideal (𝓞 E)} (hprod : D.𝔪 = �
         rw [← map_sub]
         refine Submodule.smul_induction_on this (fun m hm x _ => ?_) fun x y hx hy => ?_
         · rw [map_smul, smul_comm]; exact Submodule.smul_mem_smul hm (h1 _ (hδ x))
-        · rw [map_add, smul_add]; exact add_mem hx hy
+        · rw [map_add (f := _), smul_add]; exact add_mem hx hy
 
 theorem image_lt_eq_range {Q : Type} {n : ℕ} (hn : r ≤ n) (x : Fin n → Q) :
     x '' {b | b.val < r} = Set.range fun i => x (Fin.castLE hn i) := by

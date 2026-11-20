@@ -145,7 +145,7 @@ theorem coeff_single_eq_zero {k σ : Type} [Field k] {g : MvPowerSeries σ k}
     MvPowerSeries.coeff (Finsupp.single s 1) g = 0 := by
   classical
   rw [pow_two] at hg
-  refine Submodule.mul_induction_on hg (fun a ha b hb => ?_) fun a b ha hb => by rw [map_add, ha, hb, add_zero]
+  refine Submodule.mul_induction_on hg (fun a ha b hb => ?_) fun a b ha hb => by rw [map_add (f := _), ha, hb, add_zero]
   rw [GlobalTheory.FormalIsogeny.mem_maximalIdeal_iff_constantCoeff, maximalIdeal_eq_bot, Ideal.mem_bot] at ha hb
   rw [MvPowerSeries.coeff_mul, Finsupp.antidiagonal_single]
   simp [Finset.Nat.antidiagonal_succ, ha, hb]

@@ -54,9 +54,9 @@ namespace GlobalTheory.ArchFourier
 noncomputable def traceDot (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] :
     (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ℝ :=
   LinearMap.mk₂ ℝ (fun x y => Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (x ⬝ᵥ y))
-    (fun x x' y => by simp only [add_dotProduct, map_add])
+    (fun x x' y => by simp only [add_dotProduct, map_add (f := _)])
     (fun c x y => by simp only [smul_dotProduct, map_smul, smul_eq_mul])
-    (fun x y y' => by simp only [dotProduct_add, map_add])
+    (fun x y y' => by simp only [dotProduct_add, map_add (f := _)])
     (fun c x y => by simp only [dotProduct_smul, map_smul, smul_eq_mul])
 
 theorem traceDot_apply {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]

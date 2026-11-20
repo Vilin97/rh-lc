@@ -39,7 +39,7 @@ theorem exists_descend {U P : Type} [AddCommGroup U] [Module ℂ U] [AddCommGrou
     simpa [add_neg_eq_zero] using this
   have lin : ∀ (a b : ℂ) x y, p (t (a • x + b • y)) = a • p (t x) + b • p (t y) := fun a b x y => by
     have := key _ (add_mem (S.smul_mem a (hs x)) (S.smul_mem b (hs y))) _ (hlin _ (hs x) _ (hs y) _ _ (ht x) (ht y) a b)
-    simp only [map_add, map_smul, hps] at this
+    simp only [map_add (f := _), map_smul, hps] at this
     exact this.symm
   refine ⟨{ toFun := fun x => p (t x), map_add' := fun x y => ?_, map_smul' := fun a x => ?_ }, key⟩
   · simpa using lin 1 1 x y
@@ -514,7 +514,7 @@ theorem isIrred_piT : GlobalTheory.Published.HoweDualityReal → GlobalTheory.Fu
         rintro γ ⟨τ, Y, hY, hγt⟩ hγ f hf f₁ hact hfQ
         obtain ⟨δ, hδ⟩ := hδ γ hγ
         obtain ⟨b, hb⟩ := exists_descend _ R.p hm.real.quot.onto (fun f g => g = δ f) (fun f _ => ⟨_, rfl⟩)
-          (fun f _ f' _ k k' hk hk' a b => by rw [hk, hk', map_add, map_smul, map_smul])
+          (fun f _ f' _ k k' hk hk' a b => by rw [hk, hk', map_add (f := _), map_smul, map_smul])
           (fun f hf k hk h0 => by
             rw [hm.real.lie γ hγ f hf 0 (zero_mem _) k 0 (((hδ f hf).2 k).2 hk) (fun r _ x => by
               have e : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) (⇑(0 : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf D.host.F

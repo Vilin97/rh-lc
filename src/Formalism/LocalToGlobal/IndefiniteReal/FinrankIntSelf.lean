@@ -45,10 +45,10 @@ lemma eS_mul_asAlg {T V : Type} [AddCommGroup T] [Module K T] [AddCommGroup V] [
     rw [Representation.asAlgebraHom_of, Representation.asAlgebraHom_of, eS_mul_rho]
     simp only [charOf, ← map_mul]
   | add f g hf hg =>
-    rw [map_add, mul_add, hf, hg, ← smul_add, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), mul_add, hf, hg, ← smul_add, ← Finset.sum_add_distrib]
     congr 1
     refine Finset.sum_congr rfl fun x _ => ?_
-    rw [map_add, add_mul, map_add, add_smul]
+    rw [map_add (f := _), add_mul, map_add (f := _), add_smul]
   | smul r f hf =>
     rw [map_smul, mul_smul_comm, hf, smul_comm r, Finset.smul_sum]
     congr 1

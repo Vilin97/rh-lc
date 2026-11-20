@@ -161,11 +161,11 @@ theorem commute_toMatrix_toMatrixRight (x : CrossedProduct hf) (y : CrossedProdu
     exact h
   induction x using induction_on with
   | zero => rw [map_zero]; exact Commute.zero_left _
-  | add x x' hx hx' => rw [map_add]; exact hx.add_left hx'
+  | add x x' hx hx' => rw [map_add (f := _)]; exact hx.add_left hx'
   | single σ a =>
   induction y using induction_on with
   | zero => rw [map_zero]; exact Commute.zero_right _
-  | add y y' hy hy' => rw [map_add]; exact hy.add_right hy'
+  | add y y' hy hy' => rw [map_add (f := _)]; exact hy.add_right hy'
   | single τ b =>
   rw [← incl_mul_u, ← incl_mul_u, map_mul, map_mul, toMatrix_incl, toMatrix_u, toMatrixRight_incl,
     toMatrixRight_u]

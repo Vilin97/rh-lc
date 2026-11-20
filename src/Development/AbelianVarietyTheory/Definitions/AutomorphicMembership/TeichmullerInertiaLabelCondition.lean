@@ -509,7 +509,7 @@ theorem lab_lpSum (τ : Fbar g →* ℂ) (γ : G E Ω) (x y : WD h) :
     lab τ γ (lpSum x y) = lab τ γ x * lab τ γ y := by
   by_cases H : TeichmullerInertiaLabelCondition A w τ γ
   · have hm := (lab_monic τ γ x).mul (lab_monic τ γ y)
-    rw [lab_eq_iff H, GlobalTheory.TameLabels.rootsBar_mul hm.ne_zero, Multiset.map_add, map_rootsBar_lab H,
+    rw [lab_eq_iff H, GlobalTheory.TameLabels.rootsBar_mul hm.ne_zero, Multiset.map_add (f := _), map_rootsBar_lab H,
       map_rootsBar_lab H, tameEig_lpSum _ _ (Ine_le_Weil h H.2.1)]
     exact ⟨hm, rfl⟩
   · simp [lab_of_not H]

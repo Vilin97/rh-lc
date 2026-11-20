@@ -23,7 +23,7 @@ variable {K : Type} [Field K] {n : ℕ}
 noncomputable def emb (σ : K →+* ℂ) (S : Matrix (Fin n) (Fin n) ℂ) : (Fin n → K) →ₛₗ[σ] EuclideanSpace ℂ (Fin n) where
   toFun x := Matrix.toEuclideanLin S (WithLp.toLp 2 fun i => σ (x i))
   map_add' x y := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     ext i
     simp
@@ -54,7 +54,7 @@ noncomputable def act (σ : K →+* ℂ) (S T : Matrix (Fin n) (Fin n) ℂ) (h1 
       _ = _ := by simp only [mul_assoc]
   map_zero' := by simp
   map_add' E F := by
-    rw [← map_add, Matrix.map_add _ (map_add σ), mul_add, add_mul]
+    rw [← map_add (f := _), Matrix.map_add _ (map_add σ), mul_add, add_mul]
 
 theorem emb_single (σ : K →+* ℂ) (S : Matrix (Fin n) (Fin n) ℂ) (i : Fin n) :
     emb σ S (Pi.single i 1) = Matrix.toEuclideanLin S (EuclideanSpace.basisFun (Fin n) ℂ i) := by
@@ -147,7 +147,7 @@ theorem exists_lat [NumberField K] {O : Type} [CommRing O] (o : O →+* K) (σ :
     induction hy using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span (Finset.mem_coe.mpr (Finset.mem_image_of_mem j (Finset.mem_coe.mp hx)))
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a x _ hx => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
   have hGK : Submodule.span K (G : Set (Fin n → K)) = ⊤ := by
     intro s hs hli

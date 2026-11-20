@@ -28,7 +28,7 @@ theorem thetaSignExpEF_add_selfDual_lattice {L : Lt E r} (hL : SelfD X L) {w : E
   have hB : ∀ a b c d : Fin r → E,
       EF X (a + b) (c + d) = EF X a c + EF X a d + EF X b c + EF X b d := by
     intro a b c d
-    simp only [GlobalTheory.SW.TensLat.EF_eq_bilin, map_add, LinearMap.add_apply]
+    simp only [GlobalTheory.SW.TensLat.EF_eq_bilin, map_add (f := _), LinearMap.add_apply]
     ring
   have hvu : EF X v (w • u) = EF X u (w • v) - EF X u v := by
     rw [GlobalTheory.SW.TensLat.EF_swap X (w • u) v, GlobalTheory.SW.TensLat.EF_smul, hcc, sub_smul, one_smul]

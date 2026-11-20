@@ -59,7 +59,7 @@ theorem mapsTo_hatL_lat (d : HermitianOrthogonalExtensionData A B c ε) (Λ : Su
         (((frameMat B A d.ι) *ᵥ y0 + d.a *ᵥ u) i)) =
         (frameMat B A d.ι).map (eToEAf D) *ᵥ (fun i => eToEAf D (y0 i)) + d.a.map (eToEAf D) *ᵥ (fun p => eToEAf D (u p)) := by
       funext i
-      rw [Pi.add_apply, Pi.add_apply, map_add]
+      rw [Pi.add_apply, Pi.add_apply, map_add (f := _)]
       exact congrArg₂ (· + ·) (RingHom.map_mulVec (eToEAf D) _ y0 i) (RingHom.map_mulVec (eToEAf D) d.a u i)
     show M *ᵥ (fun i => Formalism.UG.inclE (F := D.host.F) (Formalism.L2.Herm.Af D.host.F)
         (((frameMat B A d.ι) *ᵥ y0 + d.a *ᵥ u) i)) ∈ _

@@ -214,7 +214,7 @@ theorem quotProj_coe (c : ℤ) (v : DirectSum ℤ fun c => quotPiece M₁ M₂ c
       rw [DirectSum.of_eq_same, ← hz, quotProj_iota_self]
     · rw [DirectSum.of_eq_of_ne _ _ _ (Ne.symm h), ← hz, quotProj_iota_ne M₁ M₂ h]
       rfl
-  | add a b ha hb => rw [map_add, map_add, ha, hb, DirectSum.add_apply, Submodule.coe_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, DirectSum.add_apply, Submodule.coe_add]
 
 theorem laurent_eq_sum (m : M₁.laurent) :
     m = ∑ c ∈ (m : LaurentSpace x E).support,
@@ -390,7 +390,7 @@ theorem isProjStable_sup {A : Submodule (Poly S N) (quotLaurent M₁ M₂)} (hA 
   intro y hy c
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hy
   obtain ⟨r, rfl⟩ := Submodule.mem_span_singleton.mp hb
-  rw [map_add]
+  rw [map_add (f := _)]
   exact add_mem (Submodule.mem_sup_left (hA a ha c))
     (Submodule.mem_sup_right (quotProj_smul_iota_mem r g c))
 
@@ -417,7 +417,7 @@ theorem filtPiece_sup {A : Submodule (Poly S N) (quotLaurent M₁ M₂)} (hA : I
     have hw1 : w ∈ M₁.piece c :=
       FinGradedSub.mem_laurent.mp (M₁.laurent.smul_mem r (laurentSingle_mem g.2)) c
     have key : quotIota M₁ M₂ c ⟨z, hz1⟩ = quotProj M₁ M₂ c a + quotIota M₁ M₂ c ⟨w, hw1⟩ := by
-      rw [← quotProj_iota_self M₁ M₂ c ⟨z, hz1⟩, ← hab, map_add]
+      rw [← quotProj_iota_self M₁ M₂ c ⟨z, hz1⟩, ← hab, map_add (f := _)]
       congr 1
     have hzw : z - w ∈ filtPiece M₁ M₂ A c := by
       refine mem_filtPiece.mpr ⟨sub_mem hz1 hw1, ?_⟩

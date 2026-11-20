@@ -17,13 +17,13 @@ theorem hasDerivAt_eval_curve_of_derivation {σ : Type}
     simp only [MvPolynomial.eval_C, h0, map_zero]
     exact hasDerivAt_const s a
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p v hp =>
     have e : MvPolynomial.eval (γ s) (D (p * MvPolynomial.X v)) =
         MvPolynomial.eval (γ s) (D p) * γ s v +
           MvPolynomial.eval (γ s) p * MvPolynomial.eval (γ s) (D (MvPolynomial.X v)) := by
-      rw [Derivation.leibniz, map_add, smul_eq_mul, smul_eq_mul, map_mul, map_mul, MvPolynomial.eval_X]
+      rw [Derivation.leibniz, map_add (f := _), smul_eq_mul, smul_eq_mul, map_mul, map_mul, MvPolynomial.eval_X]
       ring
     have hf : (fun u => MvPolynomial.eval (γ u) (p * MvPolynomial.X v)) =
         fun u => MvPolynomial.eval (γ u) p * γ u v := by

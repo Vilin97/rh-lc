@@ -77,7 +77,7 @@ theorem exists_decomp_of_mem_dpowSpan {ξ : AInf K p} (hξ : RingHom.ker θ = Id
   | add x z _ _ hx hz =>
     obtain ⟨x', hx', wx, rx, hwx, hrx⟩ := hx
     obtain ⟨z', hz', wz, rz, hwz, hrz⟩ := hz
-    exact ⟨x' + z', add_mem hx' hz', wx + wz, rx + rz, by rw [mul_add, hwx, hwz, map_add],
+    exact ⟨x' + z', add_mem hx' hz', wx + wz, rx + rz, by rw [mul_add, hwx, hwz, map_add (f := _)],
       by rw [hrx, hrz]; ring⟩
   | smul a x _ hx =>
     obtain ⟨x', hx', wx, rx, hwx, hrx⟩ := hx
@@ -282,7 +282,7 @@ theorem pow_mul_mem_latticeQ (m : ℕ) :
           ((p : 𝔸) ^ v * y') := by rw [← hfac]; ring
       _ = (p : 𝔸) ^ v * y' := by rw [hinv, one_mul]
   show Ideal.Quotient.mk _ (algebraMap (AInf K p) 𝔸 (↑hu.unit⁻¹ * w)) = _
-  rw [hcalc, map_mul, map_pow, map_natCast, map_add, hz, add_zero]
+  rw [hcalc, map_mul, map_pow, map_natCast, map_add (f := _), hz, add_zero]
 
 variable (K p) in
 

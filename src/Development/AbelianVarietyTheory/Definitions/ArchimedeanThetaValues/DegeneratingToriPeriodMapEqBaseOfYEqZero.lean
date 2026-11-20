@@ -370,15 +370,15 @@ def P0 : A.La →+ A.V where
   toFun v :=
     ({ toFun := fun x => A.T v.y x + v.n x - A.H (A.ct x) v.l / (2 * Complex.I)
        map_zero' := by simp
-       map_add' := fun x x' => by simp only [map_add, H_add_left]; push_cast; ring },
+       map_add' := fun x x' => by simp only [map_add (f := _), H_add_left]; push_cast; ring },
       A.ct v.y + v.l)
   map_zero' := by ext <;> simp
   map_add' v v' := by
     refine Prod.ext (AddMonoidHom.ext fun x => ?_) ?_
-    · simp only [La.add_y, La.add_n, La.add_l, map_add, AddMonoidHom.add_apply, Submodule.coe_add, H_add_right,
+    · simp only [La.add_y, La.add_n, La.add_l, map_add (f := _), AddMonoidHom.add_apply, Submodule.coe_add, H_add_right,
         Prod.fst_add, AddMonoidHom.coe_mk, ZeroHom.coe_mk]
       push_cast; ring
-    · simp only [La.add_y, La.add_l, map_add, Submodule.coe_add, Prod.snd_add]
+    · simp only [La.add_y, La.add_l, map_add (f := _), Submodule.coe_add, Prod.snd_add]
       abel
 
 @[simp] theorem degeneratingTori_basePeriodMap_fst_apply (v : A.La) (x : A.X) :
@@ -419,7 +419,7 @@ theorem N_smul (a : O) (v : A.La) : A.N (a • v) = A.actV a (A.N v) := by
   · simp
 
 theorem Pw_smul (w : ℂ) (a : O) (v : A.La) : A.Pw w (a • v) = A.actV a (A.Pw w v) := by
-  rw [Pw_apply, Pw_apply, degeneratingTori_basePeriodMap_smul, N_smul, map_add, map_smul]
+  rw [Pw_apply, Pw_apply, degeneratingTori_basePeriodMap_smul, N_smul, map_add (f := _), map_smul]
 
 def nn : A.La →ₗ[O] A.La where
   toFun v := La.mk 0 (A.be v.y).toAddMonoidHom 0
@@ -485,13 +485,13 @@ theorem mem_Theta {j : ℕ} {α : A.X} {th : (Fin A.gB → ℂ) → ℂ} : th �
 theorem mul_mem_Theta {j j' : ℕ} {α α' : A.X} {th th' : (Fin A.gB → ℂ) → ℂ} (h : th ∈ A.Theta j α)
     (h' : th' ∈ A.Theta j' α') : th * th' ∈ A.Theta (j + j') (α + α') :=
   ⟨h.1.mul h'.1, fun l z => by
-    simp only [Pi.mul_apply, h.2 l z, h'.2 l z, map_add, H_add_left, mul_add, Complex.exp_add]; ring⟩
+    simp only [Pi.mul_apply, h.2 l z, h'.2 l z, map_add (f := _), H_add_left, mul_add, Complex.exp_add]; ring⟩
 
 theorem translate_mem_Theta {j : ℕ} {α : A.X} {th : (Fin A.gB → ℂ) → ℂ} (h : th ∈ A.Theta j α) (μ : A.X) :
     (fun z => th (z + A.ct μ)) ∈ A.Theta j (α + j • μ) :=
   ⟨h.1.comp (differentiable_id.add_const _), fun l z => by
     have h1 : A.H (A.ct (α + j • μ)) l = A.H (A.ct α) l + j * A.H (A.ct μ) l := by
-      rw [map_add, map_nsmul, H_add_left, ← Nat.cast_smul_eq_nsmul ℂ, H_smul_left]
+      rw [map_add (f := _), map_nsmul, H_add_left, ← Nat.cast_smul_eq_nsmul ℂ, H_smul_left]
     show th (z + l + A.ct μ) = _ * _ * th (z + A.ct μ)
     rw [add_right_comm, h.2, ah_add, h1, mul_pow, ← Complex.exp_nat_mul, mul_add, Complex.exp_add,
       mul_left_comm (Real.pi : ℂ) (j : ℂ)]
@@ -519,7 +519,7 @@ theorem q_add (μ ν : A.X) : A.q (μ + ν) = A.q μ + A.q ν + A.be μ ν := by
   have h1 := A.two_mul_q (μ + ν)
   have h2 := A.two_mul_q μ
   have h3 := A.two_mul_q ν
-  simp only [map_add, LinearMap.add_apply, A.be_symm ν μ] at h1
+  simp only [map_add (f := _), LinearMap.add_apply, A.be_symm ν μ] at h1
   omega
 
 theorem be_self_nonneg (μ : A.X) : 0 ≤ A.be μ μ := by
@@ -559,7 +559,7 @@ theorem finite_be_le (R : ℤ) : {μ : A.X | A.be μ μ ≤ R}.Finite := by
     have h1 := A.be_self_nonneg (μ + b i)
     have h2 := A.be_self_nonneg (μ - b i)
     have h3 := A.be_self_nonneg (b i)
-    simp only [map_add, map_sub, LinearMap.add_apply, LinearMap.sub_apply, A.be_symm (b i) μ] at h1 h2
+    simp only [map_add (f := _), map_sub, LinearMap.add_apply, LinearMap.sub_apply, A.be_symm (b i) μ] at h1 h2
     constructor <;> omega
   exact ⟨fun i => (key i).1, fun i => (key i).2⟩
 
@@ -568,7 +568,7 @@ theorem be_le_exponent {j : ℕ} (hj : j ≠ 0) (α μ : A.X) :
   have h1 := A.two_mul_exponent j α μ
   have h2 := A.be_self_nonneg (μ + (α + α))
   have h0 := A.be_self_nonneg μ
-  simp only [map_add, LinearMap.add_apply, A.be_symm α μ] at h2
+  simp only [map_add (f := _), LinearMap.add_apply, A.be_symm α μ] at h2
   have hj' : (1 : ℤ) ≤ j := by exact_mod_cast Nat.one_le_iff_ne_zero.2 hj
   nlinarith [mul_le_mul_of_nonneg_right hj' h0]
 
@@ -799,7 +799,7 @@ theorem gaussEf_bij : Function.Bijective gaussEf := by
     obtain ⟨b, rfl⟩ := gaussEquiv.surjective m
     have hb : b = b.re • (1 : GaussianInt) + b.im • (⟨0, 1⟩ : GaussianInt) := by ext <;> simp
     rw [gaussEf_apply]
-    conv_rhs => rw [hb, map_add, map_add, map_zsmul, map_zsmul, map_zsmul, map_zsmul]
+    conv_rhs => rw [hb, map_add (f := _), map_add (f := _), map_zsmul, map_zsmul, map_zsmul, map_zsmul]
     simp; ring
 
 theorem gaussLam_discrete : DiscreteTopology gaussLam := by

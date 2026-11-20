@@ -180,7 +180,7 @@ theorem glueBack_of (M : Model F E) (r n : ℕ) (hM : M.OK) (hC : CorrIso M r n)
             rw [← hS1]
             exact hy
           have h0 : (⟨x + y, h⟩ : H.W0 t₁.f t₁.f') = ⟨x, hx'⟩ + ⟨y, hy'⟩ := rfl
-          rw [h0, map_add, Submodule.coe_add]
+          rw [h0, map_add (f := _), Submodule.coe_add]
           exact Submodule.add_mem _ (ihx hx') (ihy hy')
         | smul a x hx ihx =>
           intro h

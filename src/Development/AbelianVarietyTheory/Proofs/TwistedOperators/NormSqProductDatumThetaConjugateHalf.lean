@@ -23,7 +23,7 @@ namespace GlobalTheory.PlancherelHalf
 
 theorem symplO_add_left {D : D7} (S T : HSp D) (t k y : WO S T) :
     symplO S T (t + k) y = symplO S T t y + symplO S T k y := by
-  simp only [symplO, hO, Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  simp only [symplO, hO, Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem heisO_lin {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (w : WO S T) (a : ℂ) (f₁ f₂ : WO S T → ℂ) :
     heisO ψ S T w (a • f₁ + f₂) = a • heisO ψ S T w f₁ + heisO ψ S T w f₂ := by

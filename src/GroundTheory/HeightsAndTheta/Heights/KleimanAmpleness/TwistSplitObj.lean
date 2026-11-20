@@ -54,7 +54,7 @@ theorem yHom_mem_tDeg (c : MvPolynomial (Fin (r + 1)) S) : yHom S η c ∈ tDeg 
   | C a =>
     rw [yHom_C]
     exact single_mem_tDeg (0 : ℤ × ℤ) _
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | mul_X p j hp =>
     rw [map_mul, yHom_X]
     have h2 : single ((1, 0) : ℤ × ℤ) (η j) ∈ tDeg Ω 0 := single_mem_tDeg ((1, 0) : ℤ × ℤ) _
@@ -200,7 +200,7 @@ theorem isTw_xyHom_mul (M₀ : FinGradedSub (S := S) (x := x) Ω)
       rw [yHom_C, coeff_single_mul_sub, sub_zero]
       have := Submodule.smul_mem _ c (hv k)
       rwa [Algebra.smul_def] at this
-    | add p q hp hq => rw [map_add, add_mul]; exact isTw_add η M₀ (hp hv) (hq hv)
+    | add p q hp hq => rw [map_add (f := _), add_mul]; exact isTw_add η M₀ (hp hv) (hq hv)
     | mul_X p j hp =>
       rw [map_mul, mul_assoc]
       apply hp
@@ -208,7 +208,7 @@ theorem isTw_xyHom_mul (M₀ : FinGradedSub (S := S) (x := x) Ω)
       rw [yHom_X, coeff_single_mul_sub]
       have := twPart_eta_mul η M₀ j (hv (k - (1, 0)))
       simpa using this
-  | add p q hp hq => rw [map_add, add_mul]; exact isTw_add η M₀ (hp hv) (hq hv)
+  | add p q hp hq => rw [map_add (f := _), add_mul]; exact isTw_add η M₀ (hp hv) (hq hv)
   | mul_X p i hp =>
     rw [map_mul, mul_assoc]
     apply hp

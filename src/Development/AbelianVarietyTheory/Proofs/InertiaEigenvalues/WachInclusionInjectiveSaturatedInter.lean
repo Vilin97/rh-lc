@@ -30,7 +30,7 @@ theorem series_form {O : Type} [CommRing O] (ϖ : O) (hO : ∀ a, IsUnit a ∨ �
     · rw [isUnit_iff_constantCoeff]
       simpa using (hO _).resolve_right h1
     · ext n
-      rw [map_add, coeff_C_mul, coeff_X_pow_mul', coeff_mk]
+      rw [map_add (f := _), coeff_C_mul, coeff_X_pow_mul', coeff_mk]
       by_cases hn : n < Nat.find h
       · rw [if_pos hn, if_neg (by omega), hd n hn, add_zero]
       · rw [if_neg hn, if_pos (by omega), coeff_mk, Nat.sub_add_cancel (by omega), mul_zero, zero_add]
@@ -152,7 +152,7 @@ theorem abstract (j : A →+* E) (f : E →+* W) (g : A →+* B) (c : B →+* W)
     have ha : f (j t) ∣ f (j a) := by
       have : f (j a) = f x * f (j π) ^ m - f (j t) * f z := by
         have := congrArg f h
-        simp only [map_mul, map_add, map_pow] at this
+        simp only [map_mul, map_add (f := _), map_pow] at this
         linear_combination -this
       rw [this]
       exact dvd_sub (hx.mul_right _) (dvd_mul_right _ _)
@@ -163,7 +163,7 @@ theorem abstract (j : A →+* E) (f : E →+* W) (g : A →+* B) (c : B →+* W)
       · exfalso
         apply hne' i
         have h3 := congrArg (fun x => f (j x)) hb
-        simp only [map_mul, map_add, map_pow] at h3
+        simp only [map_mul, map_add (f := _), map_pow] at h3
         have h4 : IsUnit (f (j π) ^ k * f (j u)) := ((hπ.map f).pow k).mul ((hu.map j).map f)
         rw [← h4.dvd_mul_left]
         have : f (j π) ^ k * f (j u) * f (j (e i)) = f (j (e i)) * f (j a) - f (j t) * f (j b) := by
@@ -203,13 +203,13 @@ theorem abstract (j : A →+* E) (f : E →+* W) (g : A →+* B) (c : B →+* W)
           obtain ⟨r, rfl⟩ := Nat.exists_eq_add_of_lt (not_le.mp hk)
           apply hne' i
           have h3 := congrArg (fun x => f (j x)) hb
-          simp only [map_mul, map_add, map_pow] at h3
+          simp only [map_mul, map_add (f := _), map_pow] at h3
           have h4 := congrArg f h
-          simp only [map_mul, map_add, map_pow] at h4
+          simp only [map_mul, map_add (f := _), map_pow] at h4
           obtain ⟨v, hv⟩ := hu.exists_right_inv
           have h5 : IsUnit (c (g π * (-(y * g π ^ r * g v)) + 1)) :=
             (Ideal.mem_jacobson_bot.mp hBJ _).map c
-          simp only [map_mul, map_add, map_pow, map_neg, map_one, ← hcomm, hy] at h5
+          simp only [map_mul, map_add (f := _), map_pow, map_neg, map_one, ← hcomm, hy] at h5
           have h6 : f (j u) * f (j v) = 1 := by rw [← map_mul, ← map_mul, hv, map_one, map_one]
           rw [← (h5.mul ((hπ.map f).pow k)).dvd_mul_left]
           refine ⟨-(f (j v)) * (f (j b) + f (j (e i)) * f z), ?_⟩
@@ -220,12 +220,12 @@ theorem abstract (j : A →+* E) (f : E →+* W) (g : A →+* B) (c : B →+* W)
       exact Finset.sum_congr rfl fun i _ => hbd i
     have h6 : x = j (∑ i, d i) + j t * ((j (∑ i, b i) + z) * πi ^ m) := by
       rw [h5] at h
-      simp only [map_mul, map_add, map_pow] at h
+      simp only [map_mul, map_add (f := _), map_pow] at h
       linear_combination πi ^ m * h - (x - j (∑ i, d i)) * hπm m
     refine ⟨_, _, h6, ?_⟩
     apply hcs (g U * g t ^ n * (y - g (∑ i, d i)))
     have h7 := congrArg f h6
-    rw [map_add, map_mul] at h7
+    rw [map_add (f := _), map_mul] at h7
     simp only [map_mul c, map_pow c, map_sub c, ← hcomm, hy, hpW]
     linear_combination f (j U) * f (j t) ^ n * h7
   have key2' : ∀ (k : ℕ) (x : E), (∃ y, c y = f x) → ∃ a : A, j t ^ k ∣ x - j a := by
@@ -237,7 +237,7 @@ theorem abstract (j : A →+* E) (f : E →+* W) (g : A →+* B) (c : B →+* W)
       obtain ⟨a, x', rfl, hx'⟩ := key2 x hx
       obtain ⟨a', w, hw⟩ := ih x' hx'
       refine ⟨a + t * a', w, ?_⟩
-      rw [map_add, map_mul]
+      rw [map_add (f := _), map_mul]
       linear_combination j t * hw
   refine ⟨?_, ?_, ?_, ?_⟩
   · rw [injective_iff_map_eq_zero]
@@ -262,12 +262,12 @@ theorem abstract (j : A →+* E) (f : E →+* W) (g : A →+* B) (c : B →+* W)
       have h3 := congrArg (fun x => f (j x)) hb
       simp only [map_mul] at h3
       have h4 := congrArg f h
-      simp only [map_mul, map_add, map_pow] at h4
+      simp only [map_mul, map_add (f := _), map_pow] at h4
       rw [← (hx.mul ((hπ.map f).pow m)).dvd_mul_left]
       refine ⟨f (j b) + f (j (e i)) * f z, ?_⟩
       linear_combination h3 + f (j (e i)) * h4
     · have h3 := congrArg j hb
-      simp only [map_mul, map_add, map_pow] at h3
+      simp only [map_mul, map_add (f := _), map_pow] at h3
       rw [← Ideal.unit_mul_mem_iff_mem M ((hπ.pow k).mul (hu.map j))]
       have : j π ^ k * j u * j (e i) = j (e i) * j a - j t * j b := by linear_combination -h3
       rw [this]

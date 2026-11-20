@@ -158,10 +158,10 @@ theorem tau_part {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : KType ε Λ) {B
       ContinuousLinearMap.smul_apply, hP, mul_smul]
   have eB1 : T.dτ B = T.dτ (lowMinusUp B) + (2 : ℂ) • T.dτ (upPart B) + T.dτ (diagPart B) := by
     conv_lhs => rw [decomp_up B]
-    rw [map_add, map_add, map_smul]
+    rw [map_add (f := _), map_add (f := _), map_smul]
   have eB2 : T.dτ B = -T.dτ (lowMinusUp B) + (2 : ℂ) • T.dτ (lowPart B) + T.dτ (diagPart B) := by
     conv_lhs => rw [decomp_low B]
-    rw [map_add, map_add, map_smul, map_neg]
+    rw [map_add (f := _), map_add (f := _), map_smul, map_neg]
   have hL : T.dτ B * projW T =
       T.dτ (lowMinusUp B) * projW T + (∑ a, ((Λ a : ℝ) : ℂ) * B a a) • projW T := by
     rw [eB1, add_mul, add_mul, smul_mul_assoc, h1, smul_zero, add_zero, h2]

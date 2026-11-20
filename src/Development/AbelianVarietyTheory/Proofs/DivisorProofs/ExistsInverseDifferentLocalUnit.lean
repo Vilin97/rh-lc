@@ -53,7 +53,7 @@ theorem exists_sub_notMem {A B : Type} [CommRing A] [CommRing B] [IsDomain B] [A
       rw [← mul_sub]
       exact w.mul_mem_left _ (hcon b)
     | add a b ha hb =>
-      rw [map_add, map_add, add_sub_add_comm]
+      rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
       exact w.add_mem ha hb
   have := hall t
   rw [ht1, h0, sub_zero] at this

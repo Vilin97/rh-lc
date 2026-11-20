@@ -188,7 +188,7 @@ theorem mem_intLoc_of_idem {y : Fv F v ⊗[F] E} (hy : y * y = y) : y ∈ intLoc
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hi : sgE E v y * sgE E v y = sgE E v y := by
     refine sub_eq_zero.1 (eq_zero_of_at (v := v) (at_sub (at_mul_l (at_sgE _) _) (at_sgE _)) ?_)
     simp [comp_sgE, hy]
@@ -206,7 +206,7 @@ theorem mem_intLoc_of_idem {y : Fv F v ⊗[F] E} (hy : y * y = y) : y ∈ intLoc
       obtain ⟨a, ha, x, rfl⟩ := hZ
       exact AddSubgroup.subset_closure ⟨_, ha v, x, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
   have := this Y hY
   rwa [ev, comp_sgE] at this
@@ -288,10 +288,10 @@ theorem exists_eta (hσ : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) :
     simp [comp_sgE, hy]
   · have e : sgE E v y = sg v 2⁻¹ ⊗ₜ[F] 1 + sg v (2 * τ ξ)⁻¹ ⊗ₜ[F] ξ := by simp [y, sgE]
     have e2 : cA σ (sgE E v y) = sg v 2⁻¹ ⊗ₜ[F] 1 - sg v (2 * τ ξ)⁻¹ ⊗ₜ[F] ξ := by
-      rw [e, map_add]
+      rw [e, map_add (f := _)]
       change _ ⊗ₜ[F] σ 1 + _ ⊗ₜ[F] σ ξ = _
       rw [map_one, hc, TensorProduct.tmul_neg, ← sub_eq_add_neg]; rfl
-    rw [e2, e, add_add_sub_cancel, ← TensorProduct.add_tmul, ← map_add]
+    rw [e2, e, add_add_sub_cancel, ← TensorProduct.add_tmul, ← map_add (f := _)]
     norm_num
     rfl
 
@@ -303,7 +303,7 @@ theorem exists_beta {B : Base F E} (hB : B.IsGood σ) {X : Spc F E n} (hL : X.L.
   have hm : At (evFin F v) (1 - mat k) := by simpa using at_sub at_zero h0
   have hk : mat k * mat k⁻¹ = 1 := k.1.mul_inv
   set h : AE F E := algebraMap (AF F) (AE F E) ⅟(2 : AF F) with hh
-  have hh2 : h + h = 1 := by rw [hh, ← map_add, invOf_two_add_invOf_two, map_one]
+  have hh2 : h + h = 1 := by rw [hh, ← map_add (f := _), invOf_two_add_invOf_two, map_one]
   have ch : cA σ h = h := (cA σ).commutes _
   have ce : cA σ (eps v) = eps v := (cA σ).commutes _
   rcases isEmpty_or_nonempty (E →ₐ[F] Fv F v) with he | ⟨⟨τ⟩⟩
@@ -319,7 +319,7 @@ theorem exists_beta {B : Base F E} (hB : B.IsGood σ) {X : Spc F E n} (hL : X.L.
         ((toCompl_bijective hw hu).1 ?_))
       · rw [← map_smul, at_sgE y u hu, map_zero]
       · change piE hu _ = _
-        rw [map_add, piE_cA hc, pδ, map_sub, hcc, map_zero]; ring
+        rw [map_add (f := _), piE_cA hc, pδ, map_sub, hcc, map_zero]; ring
     have iδ : compFin F E v δ ∈ intLoc F E v := (mem_intLoc_iff hw hu _).2 (by
       change piE hu δ ∈ _
       rw [pδ]; exact (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).2 hx1.le)
@@ -345,7 +345,7 @@ theorem exists_beta {B : Base F E} (hB : B.IsGood σ) {X : Spc F E n} (hL : X.L.
     have hNN : N' * N = 1 := inj (by rw [map_mul, hN, hN', ← map_mul, mul_eq_one_comm.1 hk, map_one, map_one])
     obtain ⟨m, hm'⟩ := exists_det_ne (k := r.mapMatrix N) (k' := r.mapMatrix N') (h := r ⟨_, ih⟩) (δ := r ⟨_, iδ⟩)
       (by rw [← map_mul, hNN, map_one])
-      (by rw [← map_add, ← map_one r]; congr 1; exact Subtype.ext (by change _ + _ = 1; rw [← map_add, hh2, map_one]))
+      (by rw [← map_add (f := _), ← map_one r]; congr 1; exact Subtype.ext (by change _ + _ = 1; rw [← map_add (f := _), hh2, map_one]))
       ((un _).2 (HeightOneSpectrum.adicCompletionIntegers.isUnit_iff_valued_eq_one.2 (by
         change Valued.v (piE hu δ) = 1
         rw [pδ, hx1])))
@@ -361,7 +361,7 @@ theorem exists_beta {B : Base F E} (hB : B.IsGood σ) {X : Spc F E n} (hL : X.L.
     have hfu : IsUnit fN.det := by
       have : r fN.det ≠ 0 := by
         rw [RingHom.map_det]
-        simpa only [fN, map_add, map_mul, map_sub, map_one, map_pow, ms, map_neg] using hm'
+        simpa only [fN, map_add (f := _), map_mul, map_sub, map_one, map_pow, ms, map_neg] using hm'
       obtain ⟨u, hu'⟩ := ((un _).1 this).exists_right_inv
       obtain ⟨z, hz⟩ := (toCompl_bijective hw hu).2 u.1
       refine IsUnit.of_mul_eq_one ⟨z, (mem_intLoc_iff hw hu _).2 (hz ▸ u.2)⟩ (Subtype.ext ((toCompl_bijective hw hu).1 ?_))
@@ -371,7 +371,7 @@ theorem exists_beta {B : Base F E} (hB : B.IsGood σ) {X : Spc F E n} (hL : X.L.
     have xp : x ∈ Pres v X := add_mem (add_mem (add_mem (one_mem _) (one_mem _)) h1) h2
     obtain ⟨f', hf', e⟩ := exists_inv ha (f := 1 + (1 - mat k) * ((-h) • 1 + δ • (1 - x ^ m))) (N := fN)
       (by rw [add_sub_cancel_left]; exact at_mul_left hm _) (by
-        simp only [fN, hxd, map_add, map_mul, map_sub, map_one, map_pow, ms, fr_smul, map_neg, hN, hN']
+        simp only [fN, hxd, map_add (f := _), map_mul, map_sub, map_one, map_pow, ms, fr_smul, map_neg, hN, hN']
         rfl) hfu
     refine ⟨(-h) • 1 + δ • (1 - x ^ m), (-h) • 1 + (-δ) • (1 - x ^ m), f',
       (Adj.one.smul (by rw [map_neg, ch])).add (ap.smul (by rw [map_neg, cδ, neg_neg])),
@@ -387,9 +387,9 @@ theorem exists_beta {B : Base F E} (hB : B.IsGood σ) {X : Spc F E n} (hL : X.L.
       have : (1 - eps v : AE F E) • (1 - mat k) = 0 := by rw [sub_smul, one_smul, eps_smul hm, sub_self]
       rw [Matrix.mul_smul, Matrix.mul_one, neg_smul, hθ, add_smul, mul_comm, mul_smul, this, smul_zero, add_zero]
     refine ⟨(-θ) • 1, (-cA σ θ) • 1, 1 - η • (1 - mat k⁻¹), Adj.one.smul (by rw [map_neg, cc]), Adj.one.smul (map_neg _ _), ?_,
-      smul_mem_Pres hL (by rw [map_neg, hθ, map_add, map_mul, map_sub, map_one, c1, sub_self, zero_mul, add_zero]; exact neg_mem iη)
+      smul_mem_Pres hL (by rw [map_neg, hθ, map_add (f := _), map_mul, map_sub, map_one, c1, sub_self, zero_mul, add_zero]; exact neg_mem iη)
         (one_mem _), sub_mem (one_mem _) (smul_mem_Pres hL iη (sub_mem (one_mem _) h2)), ?_⟩
-    · rw [← add_smul, ← neg_add, neg_smul, hθ, map_add, map_mul, map_sub, map_one, ce, ch,
+    · rw [← add_smul, ← neg_add, neg_smul, hθ, map_add (f := _), map_mul, map_sub, map_one, ce, ch,
         show η + (1 - eps v) * h + (cA σ η + (1 - eps v) * h) = 1 by linear_combination a3 + (1 - eps v) * hh2, one_smul]
     · rw [e1, Matrix.add_mul, Matrix.one_mul, Matrix.neg_mul, Matrix.mul_sub, Matrix.mul_one, Matrix.smul_mul, Matrix.mul_smul,
         smul_smul, a2, Matrix.sub_mul, Matrix.one_mul, Matrix.mul_sub, Matrix.mul_one, hk]

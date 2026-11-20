@@ -27,7 +27,7 @@ theorem sub_mem_differentIdeal {F E : Type} [Field F] [NumberField F] [Field E] 
       rw [minpoly.isIntegrallyClosed_eq_field_fractions F E hAx, derivative_map,
         aeval_map_algebraMap, aeval_algebraMap_apply]
     rw [← h1, hmin, map_sub, ht]
-    simp only [derivative_X_pow, derivative_mul, derivative_C, derivative_X, map_add, map_sub,
+    simp only [derivative_X_pow, derivative_mul, derivative_C, derivative_X, map_add (f := _), map_sub,
       map_mul, map_pow, aeval_X, aeval_C, hs, zero_mul, zero_add, mul_one, add_zero,
       Nat.cast_ofNat, map_ofNat]
     ring

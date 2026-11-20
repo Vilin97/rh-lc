@@ -16,7 +16,7 @@ theorem norm_le_one (f : O →+* PadicAlgCl l)
     one_mul] at hp0
   have hp1 := congrArg f hp0
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_mul, map_pow, map_zero, hf] at hp1
+    simp only [map_add (f := _), map_sum, map_mul, map_pow, map_zero, hf] at hp1
   set y := f a
   have h1 : y ^ p.natDegree =
       - ∑ i ∈ Finset.range p.natDegree,
@@ -189,7 +189,7 @@ theorem _root_.GlobalTheory.CoefEmbed.embedding_closed_integral : ∀ (l : ℕ) 
     induction hx using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => rw [map_zero]; exact V.zero_mem
-    | add y z _ _ hy hz => rw [map_add]; exact V.add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact V.add_mem hy hz
     | smul z y _ hy =>
       rw [Algebra.smul_def, map_mul, hgz, ← Algebra.smul_def]
       exact V.smul_mem _ hy

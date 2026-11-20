@@ -102,7 +102,7 @@ theorem idx_dual_sup (H : HermSpace K V) (W I : Submodule K V) (A : Submodule R 
       refine (mem_dual_iff H _ _).2 ⟨?_, fun x hx => ?_⟩
       · rw [hspan]; exact Submodule.add_mem_sup ha1 hi
       · obtain ⟨a', ha', i', hi', rfl⟩ := Submodule.mem_sup.1 hx
-        rw [map_add, h1 (a + i) (Submodule.add_mem_sup (hsp ha1) hi) i' hi', add_zero, map_add,
+        rw [map_add (f := _), h1 (a + i) (Submodule.add_mem_sup (hsp ha1) hi) i' hi', add_zero, map_add (f := _),
           LinearMap.add_apply, h2 a' (Submodule.mem_sup_left (hA ha')) i hi, add_zero]
         exact ha2 a' ha'
   have hinf : (A ⊔ rs R I) ⊓ dual H A = A := by
@@ -209,7 +209,7 @@ theorem idx_dual_le (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (N : NF
     refine (isIntegralLat_iff H _).2 fun x hx y hy => ?_
     obtain ⟨a, ha, i, hi, rfl⟩ := Submodule.mem_sup.1 hx
     obtain ⟨a', ha', i', hi', rfl⟩ := Submodule.mem_sup.1 hy
-    rw [map_add, h1 (a + i) (Submodule.add_mem_sup ha.2 hi) i' hi', add_zero, map_add,
+    rw [map_add (f := _), h1 (a + i) (Submodule.add_mem_sup ha.2 hi) i' hi', add_zero, map_add (f := _),
       LinearMap.add_apply, h2 a' (Submodule.mem_sup_left ha'.2) i hi, add_zero]
     exact hintΛ a ha.1 a' ha'.1
   have hrad : ∀ x ∈ wSp N.F N.F', (∀ y ∈ wSp N.F N.F', H.B x y = 0) ↔ x ∈ II N.F N.F' := by
@@ -218,7 +218,7 @@ theorem idx_dual_le (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (N : NF
     refine ⟨fun hx0 => ?_, fun hxI y hy => h2 y hy x hxI⟩
     obtain ⟨a, ha, i, hi, rfl⟩ := Submodule.mem_sup.1 hx
     have haa := hx0 a (Submodule.mem_sup_left ha)
-    rw [map_add, LinearMap.add_apply, h2 a (Submodule.mem_sup_left ha) i hi, add_zero] at haa
+    rw [map_add (f := _), LinearMap.add_apply, h2 a (Submodule.mem_sup_left ha) i hi, add_zero] at haa
     obtain ⟨τ⟩ : Nonempty (K →+* ℂ) := inferInstance
     have ha0 : a = 0 := by
       by_contra hne

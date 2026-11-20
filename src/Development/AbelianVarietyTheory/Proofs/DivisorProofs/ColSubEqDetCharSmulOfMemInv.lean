@@ -18,7 +18,7 @@ theorem map_eval_genColSub {d a : ℕ} (g : ι → Matrix (Fin a) (Fin a) ℂ) (
     map (eval fun x : ι × Fin a × Fin a => g x.1 x.2.1 x.2.2) (genColSub d a P) = colSub g P := by
   induction P using MvPolynomial.induction_on with
   | C c => simp [genColSub, colSub, algebraMap_eq]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p y hp =>
     simp only [map_mul, hp]
     set_option synthInstance.maxHeartbeats 100000 in

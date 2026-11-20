@@ -185,7 +185,7 @@ theorem expand (hβ : IsBaseChange B β) (he : ∀ y, ∑ k, w k y • e k = y) 
     simp only [map_smul, smul_eq_mul, mul_smul, ← Finset.smul_sum]
     rw [← h]
   · intro a b ha hb
-    simp only [map_add, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
     rw [← ha, ← hb]
 
 theorem dual_expand (he : ∀ y, ∑ k, w k y • e k = y) (f : Module.Dual R L) : ∑ k, f (e k) • w k = f := by

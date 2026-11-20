@@ -41,7 +41,7 @@ theorem exists_retraction (hb : Function.Bijective
     rw [e.symm_apply_apply]
     induction c using AddMonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single x a => rw [hσ, he, map_mul, map_mul, hs, hε]
 
 theorem mem_of_derivation {N κ : Type} [AddCommGroup N] [Module R N] [Fintype κ]
@@ -67,7 +67,7 @@ theorem mem_of_derivation {N κ : Type} [AddCommGroup N] [Module R N] [Fintype �
   obtain ⟨c, rfl⟩ := hb c
   induction c using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add]; exact p.add_mem ha hb
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact p.add_mem ha hb
   | single x a =>
     rw [AddMonoidAlgebra.liftNCRingHom_single, hD]
     exact p.add_mem (p.smul_mem _ (hx x)) (p.smul_mem _ (hA a))
@@ -113,7 +113,7 @@ theorem injective_omegaMap {G B : Over S} [GrpObj G] [GrpObj B] [QuasiSeparated 
   letI := cG.algebra
   let D : Γ(G.left, W) →ₗ[Γ(S, U)] Γ(omega B, U) :=
     { toFun := fun c => dUnit B cB.le (ρ c)
-      map_add' := fun a c => by rw [map_add, map_add]
+      map_add' := fun a c => by rw [map_add (f := _), map_add (f := _)]
       map_smul' := fun r c => by
         have e : ρ (G.hom.appLE U W cG.le_base r) = B.hom.appLE U V cB.le_base r := by
           rw [← appLE_appLE (Over.w q) cB.le_base k, h₁]

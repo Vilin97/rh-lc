@@ -114,7 +114,7 @@ theorem pi_conj (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) (a
     piInf τ (cA σ a) = starRingEnd ℂ (piInf τ a) := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c x =>
     change piInf τ (c ⊗ₜ[F] σ x) = _
     rw [pi_tmul, pi_tmul, map_mul, emb_real h, h.2.2.2]; rfl
@@ -146,11 +146,11 @@ theorem emb_trace (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) 
   induction a using TensorProduct.induction_on with
   | zero => simp only [map_zero, add_zero]; exact map_zero _
   | add x y hx hy =>
-    rw [map_add (piInf τ), map_add (cA σ), map_add (piInf τ), add_add_add_comm, ← hx, ← hy, ← map_add,
+    rw [map_add (piInf τ), map_add (cA σ), map_add (piInf τ), add_add_add_comm, ← hx, ← hy, ← map_add (f := _),
       map_add (Algebra.trace (AF F) (AE F E))]; rfl
   | tmul c x =>
     change _ = _ + piInf τ (c ⊗ₜ[F] σ x)
-    rw [← map_add, ← TensorProduct.tmul_add, ← trace_E h, trace_tmul, Algebra.algebraMap_eq_smul_one (A := E),
+    rw [← map_add (f := _), ← TensorProduct.tmul_add, ← trace_E h, trace_tmul, Algebra.algebraMap_eq_smul_one (A := E),
       TensorProduct.tmul_smul, TensorProduct.smul_tmul', pi_tmul, map_one, mul_one, Algebra.smul_def, mul_comm]
 
 theorem trace_pi_real {ι : Type} [Fintype ι] (y : ι → ℝ) : Algebra.trace ℝ (ι → ℝ) y = ∑ i, y i := by
@@ -189,10 +189,10 @@ def uv (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver E w) (c : Inf
   1 + lft h τ (c - 1)
 
 theorem fin_uv (h : IsCMExt F E σ) (τ) (c) (v : Pl F) : compFin F E v (uv h τ c) = 1 := by
-  rw [uv, map_add, map_one, fin_lft, add_zero]
+  rw [uv, map_add (f := _), map_one, fin_lft, add_zero]
 
 theorem pi_uv (h : IsCMExt F E σ) (τ) (c) (w : InfinitePlace F) : piInf (τ w) (uv h τ c) = c w := by
-  rw [uv, map_add, map_one, pi_lft]; simp
+  rw [uv, map_add (f := _), map_one, pi_lft]; simp
 
 theorem uv_mul (h : IsCMExt F E σ) (τ) {c c' : InfinitePlace F → ℂ} (e : ∀ w, c w * c' w = 1) : uv h τ c * uv h τ c' = 1 :=
   ext_at h τ (fun v => by rw [map_mul, fin_uv, fin_uv, one_mul, map_one]) fun w => by rw [map_mul, pi_uv, pi_uv, e, map_one]

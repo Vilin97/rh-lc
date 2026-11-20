@@ -112,7 +112,7 @@ theorem windowEmbed_mem (t : ⨂[ℂ] v : S, fixedVectors (π v) (K' v)) :
   | add a b ha hb =>
     obtain ⟨ha1, ha2⟩ := ha
     obtain ⟨hb1, hb2⟩ := hb
-    refine ⟨by rw [map_add]; exact Submodule.add_mem _ ha1 hb1, ?_⟩
+    refine ⟨by rw [map_add (f := _)]; exact Submodule.add_mem _ ha1 hb1, ?_⟩
     have := Submodule.add_mem _ ha2 hb2
     convert this using 1
     exact Subtype.ext (map_add _ _ _)
@@ -175,7 +175,7 @@ theorem lift_adjoin_heckeOps (v : S) {a : End ℂ (fixedVectors (π v) (K' v))}
           rw [Function.update_of_ne hne]
           exact fixedProj_apply_of_mem (hπ u) (hK'c u) (hK'o u) (w ⟨u, hu⟩).2
         · exact fixedProj_apply_of_mem (hπ u) (hK'c u) (hK'o u) (hSK u hu ▸ hSξ u hu)
-    | add a b ha hb => rw [map_add, map_add, map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
   | algebraMap c =>
     refine ⟨algebraMap ℂ _ c, Subalgebra.algebraMap_mem _ c, fun t => ?_⟩
     rw [Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one,
@@ -319,7 +319,7 @@ theorem isSimpleUnder_heckeOps_box (hπ : ∀ v, IsAdmissible (π v))
     obtain ⟨w, rfl⟩ := hu
     exact htarget w
   | zero => rw [map_zero]; exact p.zero_mem
-  | add a b _ _ ha hb => rw [map_add]; exact p.add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact p.add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact p.smul_mem c ha
 
 theorem isIrreducible_restrictedTensorRep (hπ : ∀ v, IsAdmissible (π v))

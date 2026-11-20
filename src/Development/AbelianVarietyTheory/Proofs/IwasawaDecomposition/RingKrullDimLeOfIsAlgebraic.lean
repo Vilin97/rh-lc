@@ -60,7 +60,7 @@ theorem ringKrullDim_le_of_isAlgebraic (A B : Type) [CommRing A] [IsDomain A] [I
         | add y z _ _ hy hz =>
           obtain ⟨p, hp⟩ := hy
           obtain ⟨q, hq⟩ := hz
-          exact ⟨p + q, by rw [map_add, hp, hq]; rfl⟩
+          exact ⟨p + q, by rw [map_add (f := _), hp, hq]; rfl⟩
         | mul y z _ _ hy hz =>
           obtain ⟨p, hp⟩ := hy
           obtain ⟨q, hq⟩ := hz

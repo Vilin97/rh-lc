@@ -214,7 +214,7 @@ theorem count (hH : Heis) (hL : LatIndex) (hT : TraceIndex) : Count := by
       refine ⟨by simpa using hzcorner, ?_⟩
       have h1 := (mem_traceZero.mp (Quotient.out t : traceZero σ (ϖ ^ f)).2).2
       have h2 := (mem_traceZero.mp (Quotient.out t' : traceZero σ (ϖ ^ f)).2).2
-      simp only [AddSubgroup.coe_add, AddSubgroup.coe_neg, map_add, map_neg]
+      simp only [AddSubgroup.coe_add, AddSubgroup.coe_neg, map_add (f := _), map_neg]
       linear_combination -h1 + h2)
     rw [htt]
   have hsurjG : Function.Surjective G := by

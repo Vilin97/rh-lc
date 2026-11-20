@@ -105,7 +105,7 @@ theorem piW_comp_cA (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (z : AE F E)
 
 theorem compFin_ptA (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (p q : Fv F v) :
     compFin F E v (ptA hcm t p q) = (splitAlgEquiv hcm t).symm (p, q) := by
-  rw [ptA, map_add, map_one, compFin_tensAt]; ring
+  rw [ptA, map_add (f := _), map_one, compFin_tensAt]; ring
 
 theorem piW_ptA (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (p q : Fv F v) : piW t (ptA hcm t p q) = p := by
   rw [piW_eq, compFin_ptA, splitProj_symm]

@@ -124,7 +124,7 @@ theorem UpperTheory.V.U3.modelIdeal_finiteness_of_weightZero_finite :
       map_zero' := by simp [F]
       map_add' := by
         intro v w
-        simp only [F, Function.comp_apply, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib] }
+        simp only [F, Function.comp_apply, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib] }
   have hφB : ∀ v, φ v ∈ weightZeroSubalgebra c.O S.r.hom := by
     intro v
     show (∑ q : Fin n × Fin t, F (v ∘ finProdFinEquiv) q) ∈ _

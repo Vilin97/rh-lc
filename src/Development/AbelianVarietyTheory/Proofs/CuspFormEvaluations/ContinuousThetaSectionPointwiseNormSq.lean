@@ -105,7 +105,7 @@ theorem pairing_density_add (Y : GT ι) {F : EuclideanSpace ℂ ι → ℂ} (hF 
   have hk : Y.ka x * (starRingEnd ℂ) (Y.ka x) = 1 := by
     rw [Complex.mul_conj, Complex.normSq_eq_norm_sq, Y.ka_abs x hx]; simp
   have e : ∀ z, v + x - z = (v - z) + x := fun z => by abel
-  simp only [hU, e, hF.2 x hx, map_mul, ← Complex.exp_conj, map_add, map_sub, map_div₀,
+  simp only [hU, e, hF.2 x hx, map_mul, ← Complex.exp_conj, map_add (f := _), map_sub, map_div₀,
     herm_conj, Complex.conj_ofReal, Nat.cast_one, one_mul, map_ofNat]
   have key : cexp (Real.pi * Hf (v + x) y - Real.pi * Hf y y / 2) *
       cexp (Real.pi * Hf (v - y) x + Real.pi * Hf x x / 2) *

@@ -275,7 +275,7 @@ theorem psiR_star (G : HTGroup p) (w : InfinitePlace G.F) (x : ℝ ⊗[ℚ] G.C)
     rw [starT_tmul, psiR_tmul, psiR_tmul, G.psi_star, conjTranspose_smul]
     simp
   | add x y hx hy =>
-    simp only [map_add, MulOpposite.unop_add, hx, hy, conjTranspose_add, mul_add, add_mul]
+    simp only [map_add (f := _), MulOpposite.unop_add, hx, hy, conjTranspose_add, mul_add, add_mul]
 
 theorem herm_eq (G : HTGroup p) (w : InfinitePlace G.F) (β : G.Cˣ) (z : (ℝ ⊗[ℚ] G.C)ˣ) (hz : Triv G ℝ β z 1) :
     herm G w β = (G.psiR w z)ᴴ * G.gram w * G.psiR w z := by

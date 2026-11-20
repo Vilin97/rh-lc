@@ -87,7 +87,7 @@ def GaloisOfRegularForms : Prop :=
     IsInfFam θ → RegularWt M → SphOff J χ Sb → partFull θ M J χ Sb c ≠ ⊥ → HasGalois V J χ Sb c
 
 theorem bcPar_map_inv (n : ℕ) (α : Fin (n / 2) → ℂ) : (bcPar n α).map (·⁻¹) = bcPar n α := by
-  simp only [bcPar, Multiset.map_add, Multiset.map_map, Function.comp_def, inv_inv, Multiset.map_replicate, inv_one]
+  simp only [bcPar, Multiset.map_add (f := _), Multiset.map_map, Function.comp_def, inv_inv, Multiset.map_replicate, inv_one]
   rw [add_comm (Multiset.map (fun i => (α i)⁻¹) _)]
 
 end GlobalTheory.SphPar

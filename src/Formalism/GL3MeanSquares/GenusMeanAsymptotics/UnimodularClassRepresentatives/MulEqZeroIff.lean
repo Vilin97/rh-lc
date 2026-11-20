@@ -123,13 +123,13 @@ private theorem card_subtype_comp_eq_card_mul_card_ker_of_surjective {A B : Type
     { toFun := fun a => (⟨f a.1, a.2⟩, ⟨a.1 - Function.surjInv hf (f a.1), by
         rw [AddMonoidHom.mem_ker, map_sub, hs, sub_self]⟩)
       invFun := fun p => ⟨Function.surjInv hf p.1.1 + p.2.1, by
-        rw [map_add, hs, AddMonoidHom.mem_ker.mp p.2.2, add_zero]; exact p.1.2⟩
+        rw [map_add (f := _), hs, AddMonoidHom.mem_ker.mp p.2.2, add_zero]; exact p.1.2⟩
       left_inv := fun a => Subtype.ext (by
         show Function.surjInv hf (f a.1) + (a.1 - Function.surjInv hf (f a.1)) = a.1
         abel)
       right_inv := fun p => by
         have e : f (Function.surjInv hf p.1.1 + p.2.1) = p.1.1 := by
-          rw [map_add, hs, AddMonoidHom.mem_ker.mp p.2.2, add_zero]
+          rw [map_add (f := _), hs, AddMonoidHom.mem_ker.mp p.2.2, add_zero]
         refine Prod.ext (Subtype.ext e) (Subtype.ext ?_)
         show Function.surjInv hf p.1.1 + p.2.1 - Function.surjInv hf (f (Function.surjInv hf p.1.1 + p.2.1)) = p.2.1
         rw [e]; abel }

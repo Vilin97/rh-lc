@@ -15,7 +15,7 @@ def actH (q : ℕ) {P : Arrow Spc} (n : ℤ) {m i j : ℤ} (b : Hs q P m j) :
     simp [Hs.act, Hs.proj]
   map_add' x y := by
     apply Subtype.ext
-    simp only [Hs.act, Hs.proj, map_add, AddMonoidHom.add_apply, AddSubgroup.coe_add]
+    simp only [Hs.act, Hs.proj, map_add (f := _), AddMonoidHom.add_apply, AddSubgroup.coe_add]
     abel
 
 theorem bij_comp {A B C : Type*} [AddZeroClass A] [AddZeroClass B] [AddZeroClass C] {f : B →+ C} {g : A →+ B}

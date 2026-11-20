@@ -21,7 +21,7 @@ theorem symp_split_hyperbolic_plane : ∀ {F E : Type} [Field F] [NumberField F]
         Algebra.trace (AF F) (AE F E) (-∑ j, ∑ l, z (Fin.natAdd n₁ 1) j * incM F K j l * cA σ (z' (Fin.natAdd n₁ 0) l)) := by
   intro F E _ _ _ _ _ σ n₁ d G J₁ K hJ h1 h2 h00 h11 h01 h10 z z'
   simp only [symp, hTens, incM, Matrix.map_apply, Matrix.of_apply]
-  rw [← map_add, ← map_add]
+  rw [← map_add (f := _), ← map_add (f := _)]
   congr 1
   simp only [Fin.sum_univ_add, Fin.sum_univ_two, hJ, h1, h2, h00, h11, h01, h10, map_zero, map_one, mul_zero, zero_mul,
     Finset.sum_const_zero, add_zero, zero_add, mul_one, Finset.sum_add_distrib]

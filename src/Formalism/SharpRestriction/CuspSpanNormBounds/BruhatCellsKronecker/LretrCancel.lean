@@ -85,7 +85,7 @@ theorem l_retr : IntegralRetraction := by
       have hxΛ : x ∈ Λ := Submodule.span_le.2 hbΛ hx
       have hyΛ' : y ∈ Λ := Submodule.span_le.2 hbΛ hy
       have : (⟨x + y, hyΛ⟩ : Λ) = ⟨x, hxΛ⟩ + ⟨y, hyΛ'⟩ := rfl
-      rw [this, map_add, map_add, ihx hxΛ, ihy hyΛ']; rfl
+      rw [this, map_add (f := _), map_add (f := _), ihx hxΛ, ihy hyΛ']; rfl
     | smul c x hx ihx =>
       intro hyΛ
       have hxΛ : x ∈ Λ := Submodule.span_le.2 hbΛ hx

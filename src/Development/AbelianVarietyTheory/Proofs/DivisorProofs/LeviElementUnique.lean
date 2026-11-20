@@ -22,7 +22,7 @@ theorem levi_unique : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
         intro a b ha hb
         simp only [Set.mem_setOf_eq] at *
         have : incV F (a + b) = incV F a + incV F b := by
-          funext i; simp [incV, map_add]
+          funext i; simp [incV, map_add (f := _)]
         rw [this, Matrix.mulVec_add, Matrix.mulVec_add, ha, hb]
       zero_mem' := by
         simp only [Set.mem_setOf_eq]

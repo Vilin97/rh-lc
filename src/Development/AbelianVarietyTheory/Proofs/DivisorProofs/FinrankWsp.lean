@@ -25,7 +25,7 @@ def vecM (S : Set (Pl E)) (lam : InfinitePlace E → DomWeight n) (K' : ∀ w : 
   add_mem' := by
     intro a b ha hb
     refine ⟨fun γ x => ?_, fun k hk x => ?_⟩
-    · simp only [Pi.add_apply, ha.1 γ x, hb.1 γ x, map_add]
+    · simp only [Pi.add_apply, ha.1 γ x, hb.1 γ x, map_add (f := _)]
     · simp only [Pi.add_apply, ha.2 k hk x, hb.2 k hk x]
   zero_mem' := ⟨fun _ _ => by simp, fun _ _ _ => rfl⟩
   smul_mem' := by

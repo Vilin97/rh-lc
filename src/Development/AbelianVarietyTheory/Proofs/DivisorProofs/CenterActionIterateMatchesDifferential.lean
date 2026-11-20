@@ -395,7 +395,7 @@ theorem infEmb_compInf (v : InfinitePlace I.F) (y : AF I.F ⊗[I.F] I.E) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rw [thetaV_tmul]; rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem archMat_bridge (x : I.GA) (v : InfinitePlace I.F) :
     archMat I.cm.sig I.J (embAtPlace I v) (projArch I.cm.sig I.J v (bridgeS I I.cm.sig rfl x)) =
@@ -413,7 +413,7 @@ theorem tauF_eq (z : AF I.F ⊗[I.F] I.E) :
   | tmul a x =>
     rw [tauF_tmul, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.comm_tmul]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem bridge_mem_infPts (y : I.Ginf) : bridgeS I I.cm.sig rfl (y, 1) ∈ infPts I.cm.sig I.J := by
   have h := (bridgeS_isBridge I (y, 1)).2

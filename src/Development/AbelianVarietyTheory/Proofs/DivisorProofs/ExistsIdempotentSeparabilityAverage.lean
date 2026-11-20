@@ -101,7 +101,7 @@ theorem exists_idempotent_average : ∀ (C O : Type) [CommRing C] [Ring O] (I : 
     have hv : ε (ρ (y j) z) ∈ F := hεF _ (hρF _ _ hzF)
     rw [← hEF] at hv
     obtain ⟨e, he, t, ht, het⟩ := Submodule.mem_sup.mp hv
-    rw [← het, map_add, hσE e he, zero_add]
+    rw [← het, map_add (f := _), hσE e he, zero_add]
     exact hpres σ t ht
   set u : Module.End C H := p * p - p with hu_def
   have hu : ∀ z, u z ∈ I • (⊤ : Submodule C H) := by

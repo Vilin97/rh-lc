@@ -28,7 +28,7 @@ theorem LocZero.add {π : Y ⟶ B} {c d : Pic Y} (hc : LocZero π c) (hd : LocZe
   obtain ⟨V, hV, H⟩ := hc p
   obtain ⟨V', hV', H'⟩ := hd p
   refine ⟨V ⊓ V', ⟨hV, hV'⟩, fun Z f hf => ?_⟩
-  rw [map_add, H Z f fun z => (hf z).1, H' Z f fun z => (hf z).2, add_zero]
+  rw [map_add (f := _), H Z f fun z => (hf z).1, H' Z f fun z => (hf z).2, add_zero]
 
 theorem LocZero.pull {π : Y ⟶ B} {c : Pic Y} (hc : LocZero π c) (k : Y' ⟶ Y) :
     LocZero (k ≫ π) (pull k c) := by

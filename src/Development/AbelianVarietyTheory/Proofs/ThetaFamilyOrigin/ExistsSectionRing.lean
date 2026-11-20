@@ -154,7 +154,7 @@ def secs (e : ℕ) : Submodule K (Fam p L) where
         (X.presheaf.map (homOfLE (inf_le_right : chart L i ⊓ chart L j ≤ chart L j)).op).hom
           (evalFam p L j f)}
   add_mem' := fun {a b} ha hb i j => by
-    simp only [map_add, ha i j, hb i j, _root_.mul_add]
+    simp only [map_add (f := _), ha i j, hb i j, _root_.mul_add]
   zero_mem' := fun i j => by simp only [map_zero, MulZeroClass.mul_zero]
   smul_mem' := fun c a ha i j => by
     have h : ∀ k, evalFam p L k (c • a) = constHom p _ c * evalFam p L k a := fun k => rfl

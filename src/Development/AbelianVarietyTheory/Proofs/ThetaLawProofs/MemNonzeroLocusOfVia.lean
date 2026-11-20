@@ -235,7 +235,7 @@ theorem via_lineFn {X Y : Scheme.{0}} {L : LB X} {L' : LB Y} {φ : Y ⟶ X} (f :
     KeyVia.Via w l (lineFn p' (f τ) a' b') (lineFn p τ a b) := by
   intro j i h
   simp only [lineFn]
-  rw [map_add, map_mul, map_mul, ha j i h, hb j i h, KeyVia.appLE_cst f p p' hφ, KeyVia.appLE_cst f p p' hφ, map_add,
+  rw [map_add (f := _), map_mul, map_mul, ha j i h, hb j i h, KeyVia.appLE_cst f p p' hφ, KeyVia.appLE_cst f p p' hφ, map_add (f := _),
     map_mul, map_mul, rs_cst, rs_cst, map_sub f, map_one f]
   exact (congrArg₂ (· + ·) (mul_left_comm _ _ _) (mul_left_comm _ _ _)).trans (mul_add _ _ _).symm
 
@@ -245,7 +245,7 @@ theorem exists_lineSec {X : Scheme.{0}} {M : LB X} (p : X ⟶ Sp R) (τ : R) (a 
   have ha := a.compat i j
   have hb := b.compat i j
   simp only [lineFn]
-  rw [map_add, map_add, map_mul, map_mul, map_mul, map_mul, ha, hb, rs_cst, rs_cst, rs_cst, rs_cst]
+  rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_mul, map_mul, ha, hb, rs_cst, rs_cst, rs_cst, rs_cst]
   ring
 
 def OnLine (y : KeyIn R) (τ : R) (a b s : RR y n) : Prop :=

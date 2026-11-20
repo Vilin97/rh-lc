@@ -92,7 +92,7 @@ theorem funFieldEquiv_aeval {P : ArithVariety n} (D : AddBlockData P) (F : MvPol
   | C r =>
     rw [eval₂_C, eval₂_C]
     exact map_intCast (funFieldEquiv P) r
-  | add p q hp hq => simp only [eval₂_add, map_add, hp, hq]
+  | add p q hp hq => simp only [eval₂_add, map_add (f := _), hp, hq]
   | mul_X p j hp =>
     simp only [eval₂_mul, eval₂_X, map_mul, hp]
     exact congrArg _ (RingEquiv.apply_symm_apply _ _)

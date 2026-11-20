@@ -34,7 +34,7 @@ theorem ev_ne_zero : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (L : PowerSerie
   obtain ⟨ψ, hψ⟩ := GlobalTheory.T.theta_extension_to_complete l K
   rw [PowerSeries.coeff_zero_eq_constantCoeff_apply, h0, map_zero, zero_add, e] at hyu
   have h2 := congrArg ψ hu'
-  rw [GlobalTheory.T.period_ring_no_zero_divisors l K x hx0 u hyu.symm, hc, zero_add, h1, map_zero, map_one, map_add, map_one, map_mul, hψ, hx] at h2
+  rw [GlobalTheory.T.period_ring_no_zero_divisors l K x hx0 u hyu.symm, hc, zero_add, h1, map_zero, map_one, map_add (f := _), map_one, map_mul, hψ, hx] at h2
   simp at h2
 
 theorem exists_period (l : ℕ) [Fact l.Prime] (K : FinExt l) (χ : ↥(GK K) →* (↥K.1)ˣ) (π : ↥(OL K)) (z : ℕ → Om l)
@@ -65,7 +65,7 @@ theorem exists_period (l : ℕ) [Fact l.Prime] (K : FinExt l) (χ : ↥(GK K) �
     have hq : resCard K = l ^ fK K := rfl
     have e : ∀ j, inO K (PowerSeries.coeff j (ltSeries K π)) * ω₀ ^ j =
         (if j = 1 then inO K π * ω₀ ^ j else 0) + if j = l ^ fK K then ω₀ ^ j else 0 := fun j => by
-      rw [ltSeries, map_add, PowerSeries.coeff_C_mul, PowerSeries.coeff_X, PowerSeries.coeff_X_pow, hq]
+      rw [ltSeries, map_add (f := _), PowerSeries.coeff_C_mul, PowerSeries.coeff_X, PowerSeries.coeff_X_pow, hq]
       split_ifs <;> simp [add_mul]
     simp only [e, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.mem_range, hω₀]
     rw [add_sub_add_comm]

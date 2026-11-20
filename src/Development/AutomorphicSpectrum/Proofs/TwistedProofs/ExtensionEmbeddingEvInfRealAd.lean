@@ -31,7 +31,7 @@ theorem piInf_realAd_smul {F E : Type} [Field F] [NumberField F] [Field E] [Numb
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piInf τ (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.realAd F t • x) = (t : ℂ) * GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piInf τ x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, mul_add]
   | tmul a e =>
     have h : ∀ b : AF F, piInf τ (b ⊗ₜ[F] e) =
         InfinitePlace.Completion.extensionEmbedding w (evInf F w b) * τ.1 e := fun b => rfl

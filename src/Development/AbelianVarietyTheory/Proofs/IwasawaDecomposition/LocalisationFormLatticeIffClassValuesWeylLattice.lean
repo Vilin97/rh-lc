@@ -32,7 +32,7 @@ def primeW : Ideal (𝓞 K) where
   carrier := {a | (0 : WithTop ℤ) < Pl.val w (a : K)}
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_ofPred_eq, map_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
     exact lt_of_lt_of_le (lt_min ha hb) (AddValuation.map_add _ _ _)
   zero_mem' := by simp
   smul_mem' := by

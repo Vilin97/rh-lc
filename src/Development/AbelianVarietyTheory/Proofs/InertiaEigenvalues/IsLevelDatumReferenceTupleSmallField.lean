@@ -100,7 +100,7 @@ theorem redM_add_nsmul (PP : Formalism.L2.DIV.Pl D.host.E) {b a : ℕ} {N N' : M
       ⟨N i j, hN i j⟩ + ((k : ℕ) : Formalism.L2.Herm.intAf D.host.F D.host.E) * ⟨N' i j, hN' i j⟩ := by
     apply Subtype.ext
     simp [Matrix.add_apply, Matrix.smul_apply, nsmul_eq_mul]
-  rw [h2, map_add, map_mul, map_natCast, hk0, zero_mul, add_zero]
+  rw [h2, map_add (f := _), map_mul, map_natCast, hk0, zero_mul, add_zero]
 
 theorem omegaK_congr {a b : ℕ} (Pg : Finset (Formalism.L2.DIV.Pl D.host.E))
     {y y' : ∀ PP : Formalism.L2.DIV.Pl D.host.E, Matrix (Fin b) (Fin a) (Formalism.L2.DIV.kP PP)}

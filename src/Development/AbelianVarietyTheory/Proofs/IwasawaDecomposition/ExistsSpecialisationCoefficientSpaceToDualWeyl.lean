@@ -82,7 +82,7 @@ theorem specAt_mem (lam : ι → DomWeight n) (τ₀ : ι) (y : ι × Fin n × F
     rw [this, ← MvPolynomial.smul_eq_C_mul]
     exact Submodule.smul_mem _ _ (hF τ₀)
   | zero => simp
-  | add x z _ _ hx hz => rw [map_add]; exact Submodule.add_mem _ hx hz
+  | add x z _ _ hx hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hz
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem specAt_blockAct (τ₀ : ι) (y : ι × Fin n × Fin n → K) (M : Matrix (Fin n) (Fin n) K)

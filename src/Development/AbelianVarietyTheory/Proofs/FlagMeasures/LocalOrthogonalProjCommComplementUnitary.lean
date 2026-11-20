@@ -79,7 +79,7 @@ theorem localLattice_sup (Λ₁ Λ₂ : LV D) : lattice₂ D Z.M p (Λ₁ ⊔ Λ
   rw [lattice₂, Submodule.span_le]
   rintro _ ⟨x, hx, rfl⟩
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hx
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem _ (Submodule.mem_sup_left (Submodule.subset_span ⟨a, ha, rfl⟩))
     (Submodule.mem_sup_right (Submodule.subset_span ⟨b, hb, rfl⟩))
 
@@ -186,7 +186,7 @@ def fixSub (g : Vp D p ≃ₗ[(D.s.atP p).Ep] Vp D p) : Submodule D.host.E (VS D
   add_mem' := by
     intro a b ha hb
     simp only [Set.mem_setOf_eq] at *
-    rw [map_add, map_add, ha, hb]
+    rw [map_add (f := _), map_add (f := _), ha, hb]
   zero_mem' := by simp
   smul_mem' := by
     intro c a ha

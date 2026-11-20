@@ -14,7 +14,7 @@ namespace GlobalTheory.OrbDesc
 theorem commute_aeval_of_commute {K V : Type} [Field K] [AddCommGroup V] [Module K V]
     {F f : Module.End K V} (h : Commute F f) (p : K[X]) : Commute F (aeval f p) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add]; exact hp.add_right hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add_right hq
   | monomial n c =>
     rw [aeval_monomial]
     exact (Algebra.commute_algebraMap_right c F).mul_right (h.pow_right n)

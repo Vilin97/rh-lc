@@ -21,7 +21,7 @@ private theorem X_pow_dvd_algHom_sub_of_X_eq (α β : PowerSeries O →ₐ[O] Po
       ⟨_, _, eq_X_mul_shift_add_const f⟩
     subst hf
     have key : α (X * g + C c) - β (X * g + C c) = α X * (α g - β g) := by
-      rw [map_add, map_add, map_mul, map_mul, powerSeries_algHom_C_eq α, powerSeries_algHom_C_eq β, ← hX]; ring
+      rw [map_add (f := _), map_add (f := _), map_mul, map_mul, powerSeries_algHom_C_eq α, powerSeries_algHom_C_eq β, ← hX]; ring
     rw [key, pow_succ']
     exact mul_dvd_mul (X_dvd_iff.mpr h0) (ih g)
 
@@ -100,7 +100,7 @@ end Coordinate
 private theorem algHom_eq_C_constantCoeff_add_X_mul (α : PowerSeries O →ₐ[O] PowerSeries O) (f : PowerSeries O) :
     α f = C (constantCoeff f) + α X * α (mk fun n => coeff (n + 1) f) := by
   conv_lhs => rw [eq_X_mul_shift_add_const f]
-  rw [map_add, map_mul, powerSeries_algHom_C_eq, add_comm]
+  rw [map_add (f := _), map_mul, powerSeries_algHom_C_eq, add_comm]
 
 theorem subst_eq_C_add {a : PowerSeries O} (ha : constantCoeff a = 0) (f : PowerSeries O) :
     PowerSeries.subst a f = C (constantCoeff f) +

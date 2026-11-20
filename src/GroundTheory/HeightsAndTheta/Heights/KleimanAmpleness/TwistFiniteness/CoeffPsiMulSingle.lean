@@ -46,7 +46,7 @@ theorem single_mem_TMod (M0 : FinGradedSub (S := S) (x := x) Ω)
     rw [this]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
   | zero => rw [single_zero, map_zero]; exact zero_mem _
-  | add p q _ _ hp hq => rw [single_add, map_add]; exact add_mem hp hq
+  | add p q _ _ hp hq => rw [single_add, map_add (f := _)]; exact add_mem hp hq
   | smul s p _ hp =>
     have : (toA x η).symm (single (a, (0 : ℤ)) (s • p)) =
         (C (C s) : Poly (Sy S r) N) • (toA x η).symm (single (a, (0 : ℤ)) p) := by
@@ -188,7 +188,7 @@ theorem chart_pre (G B : LineBundle S x)
   | add p q _ _ hp hq =>
     obtain ⟨z1, hz1, e1⟩ := hp
     obtain ⟨z2, hz2, e2⟩ := hq
-    exact ⟨z1 + z2, add_mem hz1 hz2, by rw [map_add, e1, e2, single_add, map_add]⟩
+    exact ⟨z1 + z2, add_mem hz1 hz2, by rw [map_add (f := _), e1, e2, single_add, map_add (f := _)]⟩
   | smul s p _ hp =>
     obtain ⟨z1, hz1, e1⟩ := hp
     refine ⟨(C s : Sy S r) • z1, Submodule.smul_mem _ _ hz1, ?_⟩

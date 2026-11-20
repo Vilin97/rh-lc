@@ -102,7 +102,7 @@ theorem transferOn_isSplit : ∀ D : D7, TransferOn D fun v => IsSplit (E := D.h
   have hB'inv : (stepPar χS χT t (fun _ => B) w).map (·⁻¹) =
       (B.map (·⁻¹)).map ((val (F := D.host.F) χS w)⁻¹ * ((val (F := D.host.F) χT w)⁻¹)⁻¹ * ·) +
         GlobalTheory.LFun.seg w (val (F := D.host.F) χS w)⁻¹ t := by
-    rw [stepPar, Multiset.map_add, seg_map_inv, Multiset.map_map, Multiset.map_map]
+    rw [stepPar, Multiset.map_add (f := _), seg_map_inv, Multiset.map_map, Multiset.map_map]
     congr 1
     refine Multiset.map_congr rfl fun c _ => ?_
     simp only [Function.comp_apply, mul_inv]

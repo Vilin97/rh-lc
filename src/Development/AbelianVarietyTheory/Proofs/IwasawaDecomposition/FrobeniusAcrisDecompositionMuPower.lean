@@ -38,7 +38,7 @@ theorem approx {R A : Type} [CommRing R] [CommRing A] (ι : R →+* A) (p : ℕ)
     induction k with
     | zero => simp
     | succ k ih =>
-      rw [Finset.sum_range_succ, Finset.sum_range_succ, Function.iterate_succ_apply', map_add, map_mul,
+      rw [Finset.sum_range_succ, Finset.sum_range_succ, Function.iterate_succ_apply', map_add (f := _), map_mul,
         map_pow, map_natCast]
       linear_combination ih + (p : A) ^ k * h (nx^[k] y)
   refine ⟨α, ζ, sub_eq_zero.1 (IsHausdorff.haus (I := Ideal.span {(p : A)}) inferInstance _ fun k => ?_)⟩
@@ -132,7 +132,7 @@ theorem on_span {R P A : Type} [CommRing R] [CommRing P] [Algebra R P] [CommRing
     obtain ⟨a', z', h'⟩ := ihy ((hB y).2 hy)
     have : (⟨x + y, hs⟩ : B) = ⟨x, (hB x).2 hx⟩ + ⟨y, (hB y).2 hy⟩ := rfl
     refine ⟨a + a', z + z', ?_⟩
-    rw [this, map_add, map_add, h, h', map_add, map_add]
+    rw [this, map_add (f := _), map_add (f := _), h, h', map_add (f := _), map_add (f := _)]
     ring
   | smul r x hx ihx =>
     obtain ⟨a, z, h⟩ := ihx ((hB x).2 hx)
@@ -155,9 +155,9 @@ theorem phiA_mem_ainf_add : ∀ (l : ℕ) [Fact l.Prime], ∀ e : Per.Fl l, IsEp
   obtain ⟨s, y', hy⟩ := hd y 1
   obtain ⟨a, z, h⟩ := on_span (l := l) (Per.Acris0 l) (algebraMap (Per.Acris0 l) (Per.Acris l)) (Per.zA l) ht
     (phiA l) (Per.φA l) (fun a => by rw [alg_tower, alg_tower, phiA_alg]) (xi e) c w
-    (by rw [alg_tower, alg_tower, hc', map_add, map_mul, map_natCast, map_pow, mul_add, hw])
+    (by rw [alg_tower, alg_tower, hc', map_add (f := _), map_mul, map_natCast, map_pow, mul_add, hw])
     (mem_Acris0_iff_span l e he) s
   refine ⟨a, z, y', ?_⟩
-  rw [hy, map_add, h, alg_tower, pow_one, map_mul, map_natCast]
+  rw [hy, map_add (f := _), h, alg_tower, pow_one, map_mul, map_natCast]
 
 end GlobalTheory.MemLoc

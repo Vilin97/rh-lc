@@ -197,8 +197,8 @@ theorem aeval {σ : Type} {a : σ → Ω} {r : σ → ℂ} (hz : genPt ξ ⤳ ce
   | add p q hp hq =>
     obtain ⟨_, x, hx, hx'⟩ := hp
     obtain ⟨_, y, hy, hy'⟩ := hq
-    exact ⟨hz, x + y, by rw [map_add, map_add, hx, hy],
-      (map_add (Scheme.stalkClosedPointTo z).hom x y).trans (by rw [map_add, ← hx', ← hy']; rfl)⟩
+    exact ⟨hz, x + y, by rw [map_add (f := _), map_add (f := _), hx, hy],
+      (map_add (Scheme.stalkClosedPointTo z).hom x y).trans (by rw [map_add (f := _), ← hx', ← hy']; rfl)⟩
   | mul_X p i hp => simpa using mul hp (h i)
 
 theorem unique {a : Ω} {r s : ℂ} (h : ValAt ξ z a r) (h' : ValAt ξ z a s) : r = s := by

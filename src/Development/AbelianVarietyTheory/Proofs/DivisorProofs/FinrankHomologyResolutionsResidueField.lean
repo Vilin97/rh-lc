@@ -98,7 +98,7 @@ theorem finrank_homology_base_change_resolutions : ∀ (O : Type) [CommRing O] (
       refine ⟨b₂.baseChange K y + h₁.baseChange K x, ?_⟩
       have := q5 x
       rw [hx, map_zero, add_zero, ← hy, ← q4] at this
-      rw [map_add, ← this]; abel
+      rw [map_add (f := _), ← this]; abel
   · refine finrank_add_le_of_image_mem (b₁.baseChange K) _ _ _ _ ?_ ?_ ?_
     · rintro _ ⟨y, rfl⟩; exact z12 y
     · intro x hx; rw [LinearMap.mem_ker] at hx ⊢; rw [q3, hx, map_zero]
@@ -107,7 +107,7 @@ theorem finrank_homology_base_change_resolutions : ∀ (O : Type) [CommRing O] (
       refine ⟨a₂.baseChange K y + k₁.baseChange K x, ?_⟩
       have := q7 x
       rw [hx, map_zero, add_zero, ← hy, ← q2] at this
-      rw [map_add, ← this]; abel
+      rw [map_add (f := _), ← this]; abel
   · have := finrank_add_le_of_image_mem (a₂.baseChange K) (LinearMap.ker (d₂.baseChange K))
       (LinearMap.range (d₃.baseChange K)) ⊤ ⊥ bot_le (fun _ _ => Submodule.mem_top) (by
         intro x hx h0

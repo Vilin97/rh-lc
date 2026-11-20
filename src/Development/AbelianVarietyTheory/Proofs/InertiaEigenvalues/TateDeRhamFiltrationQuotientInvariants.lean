@@ -117,7 +117,7 @@ theorem invariant_mod
         (fun g => by
           rw [← e, map_sub, hwg, sub_sub_sub_cancel_right]
           exact hMa hcb' (hg g))
-      refine ⟨w + w', (FM _).add_mem hw (hMa hc hw'), fun g => by rw [map_add, hwg, hwg'], ?_⟩
+      refine ⟨w + w', (FM _).add_mem hw (hMa hc hw'), fun g => by rw [map_add (f := _), hwg, hwg'], ?_⟩
       rwa [← e, sub_sub] at hzw'
   obtain ⟨w, hw, hwg, hzw⟩ := key (max a b) (le_max_left _ _) le_rfl
   exact ⟨w, hw, hwg, hMa (le_max_right _ _) hzw⟩
@@ -157,7 +157,7 @@ theorem tied_invariant_mod (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAi
     induction z using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact S.zero_mem
     | tmul v x => exact hS v x x.2
-    | add x y hx hy => rw [map_add]; exact S.add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact S.add_mem hx hy
   have hFa : Antitone fun a => ((P.PD K).Fil a).toAddSubgroup :=
     antitone_int_of_succ_le fun a => (P.PD K).Fil_anti a
   have hMa : Antitone fun a => (FilV (P.PD K) (LL := LL) (V := V) a).toAddSubgroup :=
@@ -172,7 +172,7 @@ theorem tied_invariant_mod (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAi
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul v x => simp [actVdR]
-      | add x y hx hy => simp only [map_add, hx, hy])
+      | add x y hx hy => simp only [map_add (f := _), hx, hy])
     (P.PD K).Fil_mul
     (fun a c x z hx hz => hind c
       ((FilV (P.PD K) (LL := LL) (V := V) (a + c)).toAddSubgroup.comap (φ x).toAddMonoidHom)

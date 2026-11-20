@@ -22,7 +22,7 @@ variable {D : D7} {ρ p : ℕ}
 theorem rt_add_periodic (ξ ξ' : Matrix (Fin ρ) (Fin p) D.host.E) :
     rt (ξ + ξ') = (rt ξ + rt ξ' : Mx D ρ p) := by
   ext i j
-  simp [rt, Matrix.map_apply, Matrix.add_apply, map_add]
+  simp [rt, Matrix.map_apply, Matrix.add_apply, map_add (f := _)]
 
 theorem dsum_add_rt (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsCharAF D.host.F ψ) (b₀ : HermE D ρ)
     (Φ : Mx D ρ p → ℂ) (ξ : Matrix (Fin ρ) (Fin p) D.host.E) (x y : Mx D ρ p) :

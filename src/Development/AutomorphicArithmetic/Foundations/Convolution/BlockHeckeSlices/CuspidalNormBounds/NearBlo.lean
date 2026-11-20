@@ -44,7 +44,7 @@ private theorem cenScalar (z : UC E r) (hz : z ∈ Subalgebra.center ℂ (UC E r
   | add x y _ _ hx hy =>
     obtain ⟨a, ha, h1⟩ := hx
     obtain ⟨b, hb, h2⟩ := hy
-    exact ⟨a + b, ha.add hb, fun f Λ h => by rw [map_add, LinearMap.add_apply, h1 f Λ h, h2 f Λ h, Pi.add_apply, add_smul]⟩
+    exact ⟨a + b, ha.add hb, fun f Λ h => by rw [map_add (f := _), LinearMap.add_apply, h1 f Λ h, h2 f Λ h, Pi.add_apply, add_smul]⟩
   | mul x y _ _ hx hy =>
     obtain ⟨a, ha, h1⟩ := hx
     obtain ⟨b, hb, h2⟩ := hy
@@ -63,7 +63,7 @@ private theorem typeMap (ρ : Typ E r) : ∃ (X : Submodule ℂ (Matrix (Fin ρ.
     intro k x
     induction x using Finsupp.induction_linear with
     | zero => simp
-    | add x y hx hy => rw [Finsupp.mapDomain_add, map_add, map_add, hx, hy, mul_add]
+    | add x y hx hy => rw [Finsupp.mapDomain_add, map_add (f := _), map_add (f := _), hx, hy, mul_add]
     | single a c => simp [A]
   have hst : ∀ (k : KA E r), ∀ y ∈ LinearMap.range A, LinearMap.mulLeft ℂ (ρ.ρ k) y ∈ LinearMap.range A := by
     rintro k _ ⟨x, rfl⟩
@@ -80,7 +80,7 @@ private theorem typeMap (ρ : Typ E r) : ∃ (X : Submodule ℂ (Matrix (Fin ρ.
     induction x using Finsupp.induction_linear with
     | zero => simp
     | add x y hx hy =>
-      rw [map_add, Finsupp.sum_add_index' (fun _ => zero_mul _) (fun _ _ _ => add_mul _ _ _), ← hx, ← hy]
+      rw [map_add (f := _), Finsupp.sum_add_index' (fun _ => zero_mul _) (fun _ _ _ => add_mul _ _ _), ← hx, ← hy]
       rfl
     | single a c =>
       rw [Finsupp.sum_single_index (zero_mul _)]

@@ -19,7 +19,7 @@ theorem eval_lineRestr {K : Type*} (p : MvPolynomial K ℚ) (a m : K → ℚ) (t
     (lineRestr p a m).eval t = MvPolynomial.eval (fun k => m k + a k * t) p := by
   induction p using MvPolynomial.induction_on with
   | C c => simp [lineRestr]
-  | add p q hp hq => simp only [lineRestr, map_add, Polynomial.eval_add] at *; rw [hp, hq]
+  | add p q hp hq => simp only [lineRestr, map_add (f := _), Polynomial.eval_add] at *; rw [hp, hq]
   | mul_X p k hp =>
     simp only [lineRestr, map_mul, Polynomial.eval_mul] at *
     rw [hp]

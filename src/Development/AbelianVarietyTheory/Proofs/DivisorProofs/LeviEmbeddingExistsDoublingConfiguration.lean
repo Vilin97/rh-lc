@@ -162,7 +162,7 @@ theorem cA_invol {σ : E →ₐ[F] E} (hσ : ∀ z, σ (σ z) = z) (z : AE F E) 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, hσ]
-  | add u v hu hv => simp [map_add, hu, hv]
+  | add u v hu hv => simp [map_add (f := _), hu, hv]
 
 theorem levi_exists : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (b a' : ℕ) (G : Geo σ (b + 2) a') (G₁ : Geo σ b a')
     (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a')), CfgA B G G₁ H H' → B.IsGood σ → G.IsGood B → G₁.IsGood B →

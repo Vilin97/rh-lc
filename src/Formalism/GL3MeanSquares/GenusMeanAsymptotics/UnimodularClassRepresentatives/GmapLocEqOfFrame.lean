@@ -77,7 +77,7 @@ theorem gmap_loc_eq_of_frame {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule (
       simp
     | zero => simp
     | add x y _ _ hx hy =>
-      simp only [map_add, add_smul, Finset.sum_add_distrib]
+      simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
       rw [← hx, ← hy]
     | smul a x _ hx =>
       simp only [map_smul, smul_eq_mul, mul_smul]
@@ -91,7 +91,7 @@ theorem gmap_loc_eq_of_frame {h : V →ₗ⋆[K] V →ₗ[K] K} {L : Submodule (
       induction hv using Submodule.span_induction with
       | mem x hx => obtain ⟨j, rfl⟩ := hx; exact hge j
       | zero => rw [map_zero]; exact Submodule.zero_mem _
-      | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
       | smul a x _ hx => rw [Formalism.HermitianLatticesTheory.isomAct_smul]; exact Submodule.smul_mem _ a hx
     have h1 := hall _ hsx
     rw [Formalism.HermitianLatticesTheory.isomAct_smul, LinearEquiv.apply_symm_apply] at h1

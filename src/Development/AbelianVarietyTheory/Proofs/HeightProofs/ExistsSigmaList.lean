@@ -319,7 +319,7 @@ theorem exists_gelf (R : RealPoints θ V) (τ : D.what₂.Tau) : ∃ c : ℕ →
       ∀ k (φ : SmF θ V), gelf θ V τ k φ.1 = (envRep R τ (c k) φ).1 := by
   obtain ⟨P, Q, hPQ, h⟩ := GlobalTheory.T.unitary_lie_generators_rep _ _ (R.1 τ).1 (R.1 τ).2
   obtain ⟨h1, h2⟩ := h (EnvAt V τ) (fun X => UniversalEnvelopingAlgebra.ι ℂ ((1 : ℂ) ⊗ₜ[ℝ] X))
-    (fun X Y => by rw [TensorProduct.tmul_add, map_add])
+    (fun X Y => by rw [TensorProduct.tmul_add, map_add (f := _)])
     (fun c X => by
       rw [← map_smul, TensorProduct.tmul_smul, TensorProduct.smul_tmul', TensorProduct.smul_tmul']
       simp)
@@ -336,7 +336,7 @@ theorem exists_gelf (R : RealPoints θ V) (τ : D.what₂.Tau) : ∃ c : ℕ →
     refine Finset.sum_congr rfl fun idx _ => ?_
     rw [map_list_prod, List.map_ofFn]
     refine foldr_ofFn_eq _ _ _ _ (fun i x => ?_) φ
-    simp only [Function.comp, map_add, map_smul, envRep_ι]
+    simp only [Function.comp, map_add (f := _), map_smul, envRep_ι]
     rw [RderC, conjAt, ← (hPQ _ _).1, ← (hPQ _ _).2, Rder_eq R, Rder_eq R]
     rfl
 
@@ -352,7 +352,7 @@ theorem zfin_iff (R : RealPoints θ V) {φ : GA D V → ℂ} (hφ : IsSmoothInf 
       induction hz using Algebra.adjoin_induction with
       | mem x hx => obtain ⟨k, rfl⟩ := hx; intro f hf; rw [← hg]; exact hs τ k _ hf
       | algebraMap r => intro f hf; rw [AlgHom.commutes]; exact W.smul_mem r hf
-      | add x y _ _ hx hy => intro f hf; rw [map_add]; exact add_mem (hx f hf) (hy f hf)
+      | add x y _ _ hx hy => intro f hf; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx f hf) (hy f hf)
       | mul x y _ _ hx hy => intro f hf; rw [map_mul]; exact hx _ (hy f hf)
     refine Submodule.finiteDimensional_of_le (S₂ := W) (Submodule.span_le.2 ?_)
     rintro _ ⟨w, hw, rfl⟩

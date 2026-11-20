@@ -68,7 +68,7 @@ private theorem UpperTheory.Reformulated.B.SplittingFieldConstruction.factor {A 
     induction hb using Submodule.span_induction with
     | mem x hx => exact hgen x hx
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a x _ hx =>
       rw [Algebra.smul_def, map_mul, hzA]
       exact mul_mem ⟨_, rfl⟩ hx
@@ -78,7 +78,7 @@ private theorem UpperTheory.Reformulated.B.SplittingFieldConstruction.factor {A 
       map_one' := hφ (by rw [hg, map_one, map_one])
       map_mul' := fun x y => hφ (by rw [map_mul φ, hg, hg, hg, map_mul])
       map_zero' := hφ (by rw [hg, map_zero, map_zero])
-      map_add' := fun x y => hφ (by rw [map_add φ, hg, hg, hg, map_add])
+      map_add' := fun x y => hφ (by rw [map_add φ, hg, hg, hg, map_add (f := _)])
       commutes' := fun a => hφ (by rw [hg, hzA]) }
   refine ⟨σ, RingHom.ext fun b => hg b, fun τ hτ => AlgHom.ext fun b => hφ ?_⟩
   exact (DFunLike.congr_fun hτ b).trans (hg b).symm

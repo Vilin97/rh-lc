@@ -51,7 +51,7 @@ def lvl (T : Tower Ω ε) (M : ℕ) : IntermediateField (IntermediateField.adjoi
   carrier := {f | ∀ γ ∈ CongruenceSubgroup.Gamma M, T.sl (ofSL γ) f = f}
   mul_mem' {a b} ha hb γ hγ := by rw [map_mul, ha γ hγ, hb γ hγ]
   one_mem' γ _ := map_one _
-  add_mem' {a b} ha hb γ hγ := by rw [map_add, ha γ hγ, hb γ hγ]
+  add_mem' {a b} ha hb γ hγ := by rw [map_add (f := _), ha γ hγ, hb γ hγ]
   zero_mem' γ _ := map_zero _
   algebraMap_mem' c γ _ := by
     rw [IntermediateField.algebraMap_apply]

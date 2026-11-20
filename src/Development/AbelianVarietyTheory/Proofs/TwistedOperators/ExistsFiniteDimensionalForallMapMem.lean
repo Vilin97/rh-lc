@@ -39,7 +39,7 @@ theorem kStable_sup {p q : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
     (hB : KStable act B) : KStable act (A ⊔ B) := by
   intro X hX w hw
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hw
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem_sup (hA X hX y hy) (hB X hX z hz)
 
 theorem exists_kStable_ge {p q : ℕ} (M : GKMod p q) (H : Submodule ℂ M.V)
@@ -118,7 +118,7 @@ theorem exists_finiteDimensional_forall_map_mem :
       exact hEμK X hX _ hx
   rw [← hsup] at hw
   obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.mp hw
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem_sup (hNφ hx) (hE'mem φ hφ y hy)
 
 end GlobalTheory.KHomFinite

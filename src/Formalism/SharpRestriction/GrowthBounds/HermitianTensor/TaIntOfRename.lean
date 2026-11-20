@@ -28,7 +28,7 @@ theorem ta_aeval_map {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) (m 
     map φ (aeval (ta_covR A m) β) = aeval (ta_covR B m) (map φ β) := by
   induction β using MvPolynomial.induction_on with
   | C a => simp [MvPolynomial.algebraMap_eq]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp => simp only [map_mul, hp, map_X, aeval_X, ta_covR_map]
 
 section Int

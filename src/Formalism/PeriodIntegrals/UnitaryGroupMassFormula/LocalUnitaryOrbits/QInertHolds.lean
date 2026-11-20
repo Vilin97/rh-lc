@@ -79,10 +79,10 @@ theorem qInert_holds : QInert σ J ψ v := by
     have hs : Ideal.Quotient.mk (IE (E := E) v) (sigO σ y) = Ideal.Quotient.mk _ y := by
       rw [← sigQ_mk]; exact hsig _
     have hss : sigO σ (sigO σ y) = y := RingOfIntegers.ext (by simp only [sigO_coe]; exact sig_sig σ hstd.1 _)
-    obtain ⟨a, ha⟩ := fix_int σ hstd.1 (y + sigO σ y) (by rw [map_add, hss, add_comm])
+    obtain ⟨a, ha⟩ := fix_int σ hstd.1 (y + sigO σ y) (by rw [map_add (f := _), hss, add_comm])
     obtain ⟨b, hb⟩ := fix_int σ hstd.1 (y * sigO σ y) (by rw [map_mul, hss, mul_comm])
     refine ⟨⟨Ideal.Quotient.mk _ a, ?_⟩, ⟨Ideal.Quotient.mk _ b, ?_⟩⟩
-    · rw [Ideal.Quotient.algebraMap_quotient_map_quotient, ha, map_add, hs]
+    · rw [Ideal.Quotient.algebraMap_quotient_map_quotient, ha, map_add (f := _), hs]
     · rw [Ideal.Quotient.algebraMap_quotient_map_quotient, hb, map_mul, hs]
   haveI : Module.Finite (𝓞 F ⧸ v.asIdeal) (QE (E := E) v) := Module.finite_of_finrank_pos (by omega)
   haveI : Finite (QE (E := E) v) := Module.finite_of_finite (𝓞 F ⧸ v.asIdeal)

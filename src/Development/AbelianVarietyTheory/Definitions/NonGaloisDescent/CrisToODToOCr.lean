@@ -80,7 +80,7 @@ theorem crisToOD_toOCr (x : OA l O) : crisToOD l O (toOCr l O x) = toOD l O x :=
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul o w => exact congrArg (fun y : Per.BdRp l => o ⊗ₜ[ℤ_[l]] y) (crisP_ainf w)
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem isUnit_l_OD : IsUnit (l : OD l O) := by
   simpa only [map_natCast] using (GlobalTheory.MemLoc.isUnit_l_BdRp l).map

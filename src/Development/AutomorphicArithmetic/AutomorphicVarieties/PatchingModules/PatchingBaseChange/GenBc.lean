@@ -24,7 +24,7 @@ theorem UpperTheory.V.Pa.BC.gen_bc :
     induction ha using Algebra.adjoin_induction with
     | mem x hx => exact Algebra.subset_adjoin (hS x hx)
     | algebraMap r => rw [Til.ι_algebraMap]; exact Subalgebra.algebraMap_mem _ _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   have hmap : Ideal.map (Til.ι O O' B) (maximalIdeal B ^ N) ≤ maximalIdeal (Til O O' B) ^ N := by
     rw [Ideal.map_pow]
@@ -42,7 +42,7 @@ theorem UpperTheory.V.Pa.BC.gen_bc :
     intro t
     induction t using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact Pmem _ (zero_mem _)
-    | add x y hx hy => rw [map_add]; exact Padd _ _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Padd _ _ hx hy
     | tmul o b =>
       have h : algebraMap O' (Til O O' B) o = Til.C O O' B (algebraMap O' (O' ⊗[O] B) o) :=
         PowerSeries.algebraMap_apply

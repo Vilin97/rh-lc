@@ -301,7 +301,7 @@ end FlatFJ
 theorem psiE_zero (ψ : AddChar (AF D.host.F) ℂ) : psiE ψ 0 = 1 := by rw [psiE, map_zero, AddChar.map_zero_eq_one]
 
 theorem psiE_add (ψ : AddChar (AF D.host.F) ℂ) (x y : AE D) : psiE ψ (x + y) = psiE ψ x * psiE ψ y := by
-  rw [psiE, map_add, AddChar.map_add_eq_mul]; rfl
+  rw [psiE, map_add (f := _), AddChar.map_add_eq_mul]; rfl
 
 theorem upSum_one (ρ : ℕ) : upSum (1 : Mx D ρ ρ) = 0 :=
   Finset.sum_eq_zero fun i _ => Finset.sum_eq_zero fun j _ => by

@@ -75,7 +75,7 @@ theorem kfin : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F
       · refine Submodule.subset_span (Or.inr ⟨k * k', kInf_mul hk hk', ?_⟩)
         rw [← Module.End.mul_apply, ← map_mul, Prod.mk_mul_mk, one_mul]
     | zero => rw [map_zero]; exact V.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact V.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact V.add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact V.smul_mem c hx
   obtain ⟨Bf, hsym, hpos, hinv⟩ := exists_matched_l2_inner_product F E σ B a a' G X om om' R Rf h
   let ι : V →ₗ[ℂ] D := Submodule.inclusion hVD

@@ -107,7 +107,7 @@ theorem exists_chartRing (c : (k : ι) → Fin (n k + 1)) {r : Ω}
   | add x x' _ _ hx hx' =>
     obtain ⟨η, hη, he⟩ := hx
     obtain ⟨η', hη', he'⟩ := hx'
-    exact ⟨η + η', add_mem hη hη', by rw [map_add, map_add, he, he']⟩
+    exact ⟨η + η', add_mem hη hη', by rw [map_add (f := _), map_add (f := _), he, he']⟩
   | mul x x' _ _ hx hx' =>
     obtain ⟨η, hη, he⟩ := hx
     obtain ⟨η', hη', he'⟩ := hx'

@@ -25,7 +25,7 @@ theorem loc_pullback_fib : ∀ (M : Type) [TopologicalSpace M] (A : HolAtlas M 1
         fun w => headIn w + appendV 1 1 (0, sphere.e k t) := by
       filter_upwards [(A.e j).open_target.mem_nhds hv] with w hw
       show appendV 1 1 (A.e j ((A.e j).symm w), sphere.e k t) = _
-      rw [(A.e j).right_inv hw, headIn_apply, ← map_add]
+      rw [(A.e j).right_inv hw, headIn_apply, ← map_add (f := _)]
       simp
     have hd : fderiv ℂ ((famAtlas A).e (j, k) ∘ fib t ∘ (A.e j).symm) (A.e j ((A.e j).symm v)) = headIn := by
       rw [hr, hev.fderiv_eq]

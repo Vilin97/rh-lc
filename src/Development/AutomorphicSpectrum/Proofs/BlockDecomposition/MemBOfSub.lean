@@ -110,7 +110,7 @@ def cone (t : AD K L) : Cx.{w} R where
   dd n x := by
     refine Prod.ext ?_ (K.dd n x.2)
     change L.d (n + 1) (L.d n x.1 + t.r n x.2) + t.r (n + 1) (K.d n x.2) = 0
-    rw [map_add, L.dd, zero_add, t.anti]
+    rw [map_add (f := _), L.dd, zero_add, t.anti]
 
 theorem cone_d (t : AD K L) (n : ℕ) (b : L.X n) (x : K.X n) :
     (cone t).d n ((b, x) : L.X n × K.X n) = ((L.d n b + t.r n x, K.d n x) : L.X (n + 1) × K.X (n + 1)) := rfl
@@ -145,7 +145,7 @@ theorem cone_one (t : AD K L) (u : NH t) (j : ℕ) (hL : Subsingleton (L.H j)) (
   have h3 : L.d j (b + u.h j x) = 0 := by
     have := u.eq j x
     rw [h2, map_zero, sub_zero] at this
-    rw [map_add, this, h1]
+    rw [map_add (f := _), this, h1]
   have m1 := mem_B_of_sub hL _ h3
   have m2 := mem_B_of_sub hK _ h2
   cases j with
@@ -200,7 +200,7 @@ theorem pr_secM (t : AD K L) (u : NH t) (c : ℕ) (l : K.H c →ₗ[R] L.H c) (y
     (pr t).mapH c (secM t u c l y) = y := by
   obtain ⟨x, hx, rfl⟩ := cls_surj K c y
   change (pr t).mapH c ((sec u).mapH c (K.cls x hx) + (inc t).mapH c (l (K.cls x hx))) = _
-  rw [map_add, pr_inc, add_zero]
+  rw [map_add (f := _), pr_inc, add_zero]
   rfl
 
 theorem secM_eq (t : AD K L) (u u' : NH t) (c : ℕ) (l l' : K.H c →ₗ[R] L.H c)
@@ -244,7 +244,7 @@ def coneHom (t : AD K L) (t' : AD K' L') (f : Cx.Hom K K' (RingHom.id R)) (g : C
   comm n x := by
     refine Prod.ext ?_ (f.comm n x.2)
     change L'.d n (g.f n x.1) + t'.r n (f.f n x.2) = g.f (n + 1) (L.d n x.1 + t.r n x.2)
-    rw [hc, g.comm, map_add]
+    rw [hc, g.comm, map_add (f := _)]
 
 theorem secM_nat (t : AD K L) (t' : AD K' L') (f : Cx.Hom K K' (RingHom.id R)) (g : Cx.Hom L L' (RingHom.id R))
     (hc : ∀ n x, t'.r n (f.f n x) = g.f (n + 1) (t.r n x)) (u : NH t) (u' : NH t') (c : ℕ) (l : K.H c →ₗ[R] L.H c)
@@ -260,7 +260,7 @@ theorem secM_nat (t : AD K L) (t' : AD K' L') (f : Cx.Hom K K' (RingHom.id R)) (
   obtain ⟨x, hx, rfl⟩ := cls_surj K c y
   change (sec u').mapH c (f.mapH c (K.cls x hx)) + (inc t').mapH c (l' (f.mapH c (K.cls x hx))) =
     (coneHom t t' f g hc).mapH c ((sec u).mapH c (K.cls x hx) + (inc t).mapH c (l (K.cls x hx)))
-  rw [map_add, hl, hi]
+  rw [map_add (f := _), hl, hi]
   congr 1
   have e : (sec u').f c (f.f c x) = (coneHom t t' f g hc).f c ((sec u).f c x) :=
     Prod.ext (by change -(u'.h c (f.f c x)) = g.f c (-(u.h c x)); rw [hu, map_neg]) rfl

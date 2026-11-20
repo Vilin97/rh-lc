@@ -28,7 +28,7 @@ theorem evAt_swapCast_symm (D : D7) (hF : D.host.F = maximalRealSubfield D.host.
   induction x using TensorProduct.induction_on with
   | zero => rw [RingEquiv.map_zero, RingHom.map_zero, RingHom.map_zero, _root_.map_zero]
   | tmul e a => rfl
-  | add x y hx hy => rw [RingEquiv.map_add, RingHom.map_add, RingHom.map_add, _root_.map_add, hx, hy]
+  | add x y hx hy => rw [RingEquiv.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), _root_.map_add (f := _), hx, hy]
 
 theorem map_evAt_eq_one (D : D7) (hF : D.host.F = maximalRealSubfield D.host.E) {n : ℕ}
     (A : Set (HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E)))) (v : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E)))

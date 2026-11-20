@@ -14,11 +14,11 @@ private noncomputable def ipL {E : Type} [Field E] [NumberField E] [IsTotallyCom
     (H : Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ) →ₗ⋆[ℂ] Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ) →ₗ[ℂ] ℂ) : Co Ξ q →ₗ⋆[ℂ] Co Ξ q →ₗ[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (fun ω η => ip e H ω η)
     (fun ω ω' η => by
-      simp only [ip, AlternatingMap.add_apply, map_add, LinearMap.add_apply, Finset.sum_add_distrib])
+      simp only [ip, AlternatingMap.add_apply, map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib])
     (fun c ω η => by
       simp only [ip, AlternatingMap.smul_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, Finset.smul_sum])
     (fun ω η η' => by
-      simp only [ip, AlternatingMap.add_apply, map_add, Finset.sum_add_distrib])
+      simp only [ip, AlternatingMap.add_apply, map_add (f := _), Finset.sum_add_distrib])
     (fun c ω η => by
       simp only [ip, AlternatingMap.smul_apply, map_smul, Finset.smul_sum, RingHom.id_apply])
 

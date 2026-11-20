@@ -33,7 +33,7 @@ theorem actVB_one_apply (ρ : Representation LL G V) (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem inertialEig_inf_iSup_eq_bot (ρ : Representation LL G V) (I : Subgroup G) (b : I →* LLˣ)
     (T : Finset (I →* LLˣ)) (hb : b ∉ T) :
@@ -77,7 +77,7 @@ theorem inertialEig_inf_iSup_eq_bot (ρ : Representation LL G V) (I : Subgroup G
     have hmem : (((b g : LLˣ) : LL) - ((a0 g : LLˣ) : LL)) • (y + z) ∈
         PC.Eig ρ I b ⊓ (⨆ a ∈ T', PC.Eig ρ I a) := by
       refine ⟨Submodule.smul_mem _ _ hxb, ?_⟩
-      rw [← hfx, map_add, hfy, zero_add]
+      rw [← hfx, map_add (f := _), hfy, zero_add]
       exact hmapT z hz
     rw [ih'] at hmem
     rw [Submodule.mem_bot] at hmem ⊢

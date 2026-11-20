@@ -23,7 +23,7 @@ variable {D : D7}
 
 theorem locH_add_right (Z : LocDat D) (p : PlF D) (x y y' : Vp D p) :
     (locH Z p).h x (y + y') = (locH Z p).h x y + (locH Z p).h x y' := by
-  rw [(locH Z p).h_herm (y + y') x, (locH Z p).h_add_left, map_add, ← (locH Z p).h_herm,
+  rw [(locH Z p).h_herm (y + y') x, (locH Z p).h_add_left, map_add (f := _), ← (locH Z p).h_herm,
     ← (locH Z p).h_herm]
 
 theorem locH_smul_right (Z : LocDat D) (p : PlF D) (c : (D.s.atP p).Ep) (x y : Vp D p) :
@@ -67,7 +67,7 @@ theorem cong_of_mem (Z : LocDat D) (p : PlF D) (g : Formalism.MainNotions.S.Loc.
     GlobalTheory.LocExt.bcP_Xsp_mem Z p F hξX, GlobalTheory.LocExt.bcP_Xsp_mem Z p F' hξ'X, ?_⟩
   · rw [theta_of_split Z p g hs]
     exact Submodule.subset_span ⟨_, Formalism.L2.SG.Pf.LocalDenominators.smul_mem_localLattice Z p hw (BwdNP.baseChange_mem_localLattice Z hl p), rfl⟩
-  · rw [map_add, map_add, baseChange_smul₂, he, mul_smul]
+  · rw [map_add (f := _), map_add (f := _), baseChange_smul₂, he, mul_smul]
 
 theorem mem_localLattice_of_cong (Z : LocDat D) (p : PlF D) (g : Formalism.MainNotions.S.Loc.SplitG (Z.M p).L)
     (hs : (Z.M p).split = some g) {Λ : Submodule (𝓞 D.host.E) (VS D).V} (hΛ : Λ.FG) {T T' : D.host.E}

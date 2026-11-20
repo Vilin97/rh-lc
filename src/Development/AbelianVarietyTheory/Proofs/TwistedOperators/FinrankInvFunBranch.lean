@@ -36,10 +36,10 @@ theorem Contracts.outer {ι H G : Type} [Fintype ι] [DecidableEq ι] [Monoid H]
   obtain ⟨h1, h2⟩ := GlobalTheory.T.piTensorProduct_map_surjective_and_dual_vanishes ι _ _ π hs
   refine ⟨PiTensorProduct.map π ∘ₗ e.toLinearMap, h1.comp e.surjective, fun h g f v => ?_, fun l hl x hx => ?_⟩
   · induction f using PiTensorProduct.induction_on with
-    | add a b ha hb => simp only [map_add, TensorProduct.add_tmul, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), TensorProduct.add_tmul, ha, hb]
     | smul_tprod c f =>
       induction v using PiTensorProduct.induction_on with
-      | add a b ha hb => simp only [map_add, TensorProduct.tmul_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), TensorProduct.tmul_add, ha, hb]
       | smul_tprod d v =>
         simp [outer_apply, outer₂_apply, TensorProduct.smul_tmul, TensorProduct.tmul_smul, hE, he]
   · obtain ⟨x, rfl⟩ := e.symm.surjective x
@@ -86,7 +86,7 @@ theorem finrank_invFun_outer {ι H : Type} [Fintype ι] [DecidableEq ι] [Monoid
         intro k z
         induction z with
         | tmul a b => exact hl k a b
-        | add a b ha hb => simp only [map_add, ha, hb]
+        | add a b ha hb => simp only [map_add (f := _), ha, hb]
       obtain ⟨c, hc⟩ := hε ⟨l, hl'⟩
       have : c • ε.1 = l := congrArg Subtype.val hc
       rw [← this, LinearMap.smul_apply, hx, smul_zero]
@@ -100,7 +100,7 @@ theorem finrank_invFun_outer {ι H : Type} [Fintype ι] [DecidableEq ι] [Monoid
       have := he k 1 a b
       rw [map_one] at this
       exact congrArg (PiTensorProduct.constantBaseRingEquiv ι ℂ) this
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   obtain ⟨z, hz⟩ := hs' 1
   refine finrank_eq_one_iff'.2 ⟨⟨ε, hε⟩, fun e => ?_, fun l => ⟨l.1 z, Subtype.ext (LinearMap.ext fun x => ?_)⟩⟩
   · have : ε = 0 := congrArg Subtype.val e

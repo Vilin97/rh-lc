@@ -28,7 +28,7 @@ theorem map_fin_add {m n : ℕ} {x y : Mx D m n} (hx : x.map (finPart D) = 0) (h
   have e1 : finPart D (x i j) = 0 := congrFun (congrFun hx i) j
   have e2 : finPart D (y i j) = 0 := congrFun (congrFun hy i) j
   show finPart D (x i j + y i j) = 0
-  rw [RingHom.map_add, e1, e2, add_zero]
+  rw [RingHom.map_add (f := _), e1, e2, add_zero]
 
 theorem map_fin_neg {m n : ℕ} {x : Mx D m n} (hx : x.map (finPart D) = 0) : (-x).map (finPart D) = 0 := by
   funext i j

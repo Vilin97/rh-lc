@@ -23,7 +23,7 @@ private theorem ac_add {Γ : Type} [TopologicalSpace Γ] {I : Ideal R} {f f' : �
   have key := (h N).add (h' N)
   convert key using 1
   funext g
-  simp [map_add]
+  simp [map_add (f := _)]
 
 private theorem ac_smul {Γ : Type} [TopologicalSpace Γ] {I : Ideal R} {f : Γ → R} (c : A) (h : AdicCont I f) :
     AdicCont I fun g => c • f g := by

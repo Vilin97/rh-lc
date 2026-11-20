@@ -22,7 +22,7 @@ theorem sigR_sigR (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (hc
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [sigR, sig_sig_of_cm σ hcm e]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 def rowMix {A : Type} [CommRing A] {n M : ℕ} (C : Matrix (Fin n) (Fin n) A) (Y : Fin n → Fin M → A) :
     Fin n → Fin M → A :=

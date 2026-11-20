@@ -98,7 +98,7 @@ theorem lr_eq : lr (Z.Z.map M.R.subtype) = toE M al := by
 
 include hY hbe hal hsch in
 theorem hb_corner : alQ M Y al (Submodule.Quotient.mk be) + (Rs M.R).mkQ u = 0 := by
-  rw [linQ_mk, ← map_add, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
+  rw [linQ_mk, ← map_add (f := _), Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
   refine ⟨Z.Z (Fin.last m) (Fin.last m), ?_⟩
   rw [← hsch, hd_eq M Y Z hY, lc_eq M Z be hbe, lr_eq M Z al hal]
   simp only [Algebra.linearMap_apply]
@@ -146,7 +146,7 @@ theorem thetaRaw_mem (v : Fin (m + 1) → M.R) : thetaRaw M Y Z u v ∈ NF (alQ 
   show _ ∈ LinearMap.ker _
   rw [LinearMap.mem_ker, thetaRaw_apply]
   simp only [LinearMap.add_apply, LinearMap.comp_apply, LinearMap.fst_apply, LinearMap.snd_apply]
-  rw [linQ_mk, ← map_add, schur_M M Y Z be al hY hbe hal u hsch (toE M v), Submodule.mkQ_apply,
+  rw [linQ_mk, ← map_add (f := _), schur_M M Y Z be al hY hbe hal u hsch (toE M v), Submodule.mkQ_apply,
     Submodule.Quotient.mk_eq_zero]
   exact ⟨v (Fin.last m), rfl⟩
 
@@ -174,7 +174,7 @@ theorem Theta_surjective : Function.Surjective (Theta M Y Z be al hY hbe hal u h
       rw [LinearMap.mem_ker] at hce'
       simp only [LinearMap.add_apply, LinearMap.comp_apply, LinearMap.fst_apply,
         LinearMap.snd_apply] at hce'
-      rw [linQ_mk, ← map_add, Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at hce'
+      rw [linQ_mk, ← map_add (f := _), Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at hce'
       obtain ⟨r, hr⟩ := hce'
       change ((r : M.R) : E) = _ at hr
       refine ⟨Fin.snoc (α := fun _ => M.R) x r, ?_⟩

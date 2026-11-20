@@ -25,7 +25,7 @@ theorem UpperTheory.V.Lit.JL.tw :
   · have h1 := h.twist (Model.absC F s)
     rwa [TR.SS.expo_absC] at h1
   · have h1 := TR.Eop_mulChi (Model.absC F s) v i j φ.1
-    rw [TR.SS.expo_absC, map_add, map_smul] at h1
+    rw [TR.SS.expo_absC, map_add (f := _), map_smul] at h1
     exact h1
   · rintro τ τ' ⟨e, he⟩
     exact exists_intertwiner_iff (fun g => τ.ρ g) (fun g => τ'.ρ g) (fun g => π.finPart g)

@@ -311,7 +311,7 @@ theorem twistSub_empty {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} (LL : Let
     twistSub LL (∅ : Set ι) j F = MvPolynomial.map (coefL R n) F := by
   induction F using MvPolynomial.induction_on with
   | C a => simp [twistSub]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1

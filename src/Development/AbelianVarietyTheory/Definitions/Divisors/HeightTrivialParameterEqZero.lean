@@ -57,7 +57,7 @@ variable (l : ℕ) [Fact l.Prime]
 theorem grp_rank_one {R : Type} [CommRing R] (mu : Unit → ℕ → ℕ) (g : Unit → GL (Fin 1) R) (v : NablaT R 1 mu) :
     grp R 1 mu g v = ((g ())⁻¹.val 0 0) ^ (mu () 0) • v := by
   induction v using PiTensorProduct.induction_on with
-  | add a b ha hb => rw [map_add, ha, hb, smul_add]
+  | add a b ha hb => rw [map_add (f := _), ha, hb, smul_add]
   | smul_tprod c x =>
     rw [map_smul, smul_comm]
     congr 1
@@ -78,7 +78,7 @@ theorem grp_rank_one {R : Type} [CommRing R] (mu : Unit → ℕ → ℕ) (g : Un
     clear hp
     induction hp1 using MvPolynomial.IsWeightedHomogeneous.induction_on with
     | zero => simp
-    | add p q _ _ hp hq => rw [map_add, hp, hq, smul_add]
+    | add p q _ _ hp hq => rw [map_add (f := _), hp, hq, smul_add]
     | monomial d r hr =>
       have hd : d (0, 0) = mu () 0 := by
         have := congrFun hr 0

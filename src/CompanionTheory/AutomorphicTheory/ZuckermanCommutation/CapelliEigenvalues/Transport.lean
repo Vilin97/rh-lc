@@ -67,7 +67,7 @@ theorem eab_clm (φ : E →L[ℂ] E') {f : Matrix (Fin n) (Fin n) ℂ → E} (hf
     {g : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ ε g) : φ (EabV ε a b f g) = EabV ε a b (fun x => φ (f x)) g := by
   obtain ⟨h1, h2, -, -⟩ := cpartMem n ε (Matrix.single a b 1)
   unfold EabV EcV
-  rw [map_add, map_smul, (rdVPair n ε E E' φ f _ g hf h1 hg).2, (rdVPair n ε E E' φ f _ g hf h2 hg).2]
+  rw [map_add (f := _), map_smul, (rdVPair n ε E E' φ f _ g hf h1 hg).2, (rdVPair n ε E E' φ f _ g hf h2 hg).2]
 
 theorem capelli_clm (φ : E →L[ℂ] E') {f : Matrix (Fin n) (Fin n) ℂ → E} (hf : SmoothOnGV ε f) (u : ℂ)
     {g : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ ε g) : φ (capelli ε u f g) = capelli ε u (fun x => φ (f x)) g := by
@@ -77,7 +77,7 @@ theorem capelli_clm (φ : E →L[ℂ] E') {f : Matrix (Fin n) (Fin n) ℂ → E}
   rintro u a b f f' ⟨hs, he⟩
   refine ⟨top_smooth hs u a b, fun x hx => ?_⟩
   unfold Formalism.QuantumDeterminants.Top
-  rw [map_add, eab_clm φ hs a b hx, io_eab_congr he a b hx]
+  rw [map_add (f := _), eab_clm φ hs a b hx, io_eab_congr he a b hx]
   congr 1
   split_ifs
   · rw [map_smul, he x hx]

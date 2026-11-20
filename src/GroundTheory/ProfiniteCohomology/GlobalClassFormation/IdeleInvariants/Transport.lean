@@ -122,7 +122,7 @@ theorem exists_galCupClass_eq (x : cohomology (galUnitsZ F Ω) 2) :
         rw [map_one, toAdd_one, map_zero, map_zero]
       map_add' := fun g h => by
         change χ₀ (proj n (Multiplicative.toAdd (unramifiedDegree F Ω (Additive.toMul g * Additive.toMul h)))) = _
-        rw [map_mul, toAdd_mul, map_add, map_add]
+        rw [map_mul, toAdd_mul, map_add (f := _), map_add (f := _)]
       continuous_toFun := continuous_of_discreteTopology.comp ((continuous_proj n).comp
         (continuous_toAdd.comp ((continuous_unramifiedDegree (K := F) (Ω := Ω)).comp continuous_toMul))) }
   obtain ⟨π, hπ⟩ : ∃ π : Fˣ, ord (π : F) = 1 := by

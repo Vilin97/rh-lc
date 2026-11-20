@@ -102,7 +102,7 @@ theorem etale_map_left {S A T : Type} [CommRing S] [CommRing A] [CommRing T] [Al
   convert h3 using 1
   refine RingHom.ext fun z => ?_
   induction z with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul s t =>
     change f s ⊗ₜ[K] t = Algebra.TensorProduct.cancelBaseChange K S S A T
       (Algebra.TensorProduct.comm S (TensorProduct K S T) A ((s ⊗ₜ[K] t) ⊗ₜ[S] (1 : A)))
@@ -118,7 +118,7 @@ theorem etale_map_right {S A T : Type} [CommRing S] [CommRing A] [CommRing T] [A
   convert h3 using 1
   refine RingHom.ext fun z => ?_
   induction z with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul s t => simp
 
 def polyEquiv (d d' : ℕ) : MvPolynomial (Fin (d + d')) K ≃ₐ[K] TensorProduct K (MvPolynomial (Fin d) K) (MvPolynomial (Fin d') K) :=
@@ -283,7 +283,7 @@ theorem pushout_bij {K A B C : Type} [CommRing K] [CommRing A] [CommRing B] [Com
   have h : ∀ z, Algebra.TensorProduct.productMap φ₁ φ₂ z = i.hom.hom z := by
     intro z
     induction z with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a b =>
       have : a ⊗ₜ[K] b = (a ⊗ₜ[K] (1 : B)) * ((1 : A) ⊗ₜ[K] b) := by simp
       rw [this, map_mul, map_mul, e₁, e₂]

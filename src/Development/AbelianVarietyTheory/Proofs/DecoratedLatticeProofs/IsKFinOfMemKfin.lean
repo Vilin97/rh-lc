@@ -28,7 +28,7 @@ theorem isKFin_of_mem_kfin {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M 
     obtain ⟨S₂, k1, k2, k3⟩ := hy
     refine ⟨S₁ ⊔ S₂, inferInstance, Submodule.add_mem_sup h2 k2, fun g hg v hv => ?_⟩
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hv
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (h3 g hg a ha) (k3 g hg b hb)
   | smul c x _ hx =>
     obtain ⟨S₁, h1, h2, h3⟩ := hx

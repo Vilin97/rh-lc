@@ -36,7 +36,7 @@ theorem ineTriv_of_isSst [FiniteDimensional ↥L.1 V] (ρ : Representation ↥L.
   · rintro _ ⟨c, s, hs', rfl⟩
     rw [← Module.End.mul_apply, stRep_mulV P ρ g c c ((IntermediateField.mem_fixingSubgroup_iff _ _).mp hg _ c.2),
       Module.End.mul_apply, (mem_Dst P ρ).mp hs' g]
-  · intro y z _ _ hy hz; rw [map_add, hy, hz]
+  · intro y z _ _ hy hz; rw [map_add (f := _), hy, hz]
   · intro y _ hy; rw [map_neg, hy]
 
 end GlobalTheory.SstTwist
@@ -67,7 +67,7 @@ theorem isSst_twist (T : LocTied l P AI) [FiniteDimensional ↥L.1 V] (ρs ρt :
 
   let Φ : DpstUr P ρs →ₗ[↥(MaximalUnramifiedExtension l)] DpstUr P ρt :=
     { toFun := fun x => toUr P ρt (dmul P ρs ρt ρm χ hm ht ((toUr P ρs).symm x) y₀)
-      map_add' := fun x x' => by simp only [map_add, LinearMap.add_apply]
+      map_add' := fun x x' => by simp only [map_add (f := _), LinearMap.add_apply]
       map_smul' := fun c x => dmul_mulD_left P ρs ρt ρm χ hm ht c _ y₀ }
   have hinj : Function.Injective Φ := by
     intro x x' hxx

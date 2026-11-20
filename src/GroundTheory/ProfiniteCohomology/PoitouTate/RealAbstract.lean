@@ -137,7 +137,7 @@ theorem bijective_ptTCompactDualMap (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a f => rfl
-    | add z z' hz hz' => simp only [map_add, hz, hz']
+    | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
   let β : tateCompactCohomologyRes φ ψ M r →+ (cohomology (dualRep D M) s →+ ZMod n) :=
     (AddMonoidHom.compHom t).comp (bilinAddHom (tateCompactCupRes φ ψ (evalPairing D M) h))
   have hβ : Function.Bijective β := by
@@ -314,7 +314,7 @@ theorem surjective_ptTLocalDualMap_two (hM : ∀ m : M, n • m = 0) :
     · simp only [Prod.snd_add, AddMonoidHom.inl_apply, AddMonoidHom.inr_apply, zero_add]
       exact (Finset.univ_sum_single _).symm
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [ptTLocalDualMap_apply, ← hg, AddMonoidHom.comp_apply, hdec, map_add, map_sum, map_sum]
+    rw [ptTLocalDualMap_apply, ← hg, AddMonoidHom.comp_apply, hdec, map_add (f := _), map_sum, map_sum]
   congr 1
   · refine Finset.sum_congr rfl fun v _ => ?_
     rw [hξ₁]
@@ -408,7 +408,7 @@ theorem bijective_ptTShaPairing (hM : ∀ m : M, n • m = 0) :
       rw [ptTLocalDualMap_apply, ← hg, AddMonoidHom.comp_apply]
       change _ = g ((ptTGlobalToLocal φ ψ (dualRep D M) 2).hom y)
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [hdec, map_add, map_sum, map_sum]
+        rw [hdec, map_add (f := _), map_sum, map_sum]
       congr 1
       · refine Finset.sum_congr rfl fun v _ => ?_
         rw [hξ₁]

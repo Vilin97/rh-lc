@@ -242,7 +242,7 @@ variable {ch} in
 
 theorem psiK_add {a : Fin ch.n} {u u' : R.HE.H} (h : ConvK ch a u) (h' : ConvK ch a u') :
     psiK ch a (u + u') = psiK ch a u + psiK ch a u' := by
-  rw [psiK, map_add]; exact fPsiPhi_add ch.W ch.M h h'
+  rw [psiK, map_add (f := _)]; exact fPsiPhi_add ch.W ch.M h h'
 
 def psiL (a : Fin ch.n) (h : ∀ u, ConvK ch a u) : R.HE.H →ₗ[ℂ] ℂ where
   toFun := psiK ch a

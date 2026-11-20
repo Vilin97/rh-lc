@@ -37,7 +37,7 @@ theorem algChart_of_relativeDimension {R : Type} [CommRing R] (B : Type) [CommRi
   have hπ : ∀ m : ℕ, ∃ π : B →ₐ[R] JetR R (Fin n) m, (jetAug R (Fin n) m).comp π = ε' ∧
       ∀ j, π (sX R j) = algebraMap R _ (ε' (sX R j)) + zR m j := fun m =>
     etale_exists (n := n) ε' (jetAug R (Fin n) m) (ker_jetAug_nil (Fin n) m) _ (fun j => by
-      rw [map_add, AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply, jetAug_zR, add_zero])
+      rw [map_add (f := _), AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply, jetAug_zR, add_zero])
   choose π hπaug hπX using hπ
   refine ⟨π, ?_, ?_, ?_⟩
   · intro m
@@ -46,7 +46,7 @@ theorem algChart_of_relativeDimension {R : Type} [CommRing R] (B : Type) [CommRi
       exact hπaug (m + 1)
     · exact hπaug m
     · intro j
-      rw [AlgHom.comp_apply, hπX, hπX, map_add, AlgHom.commutes]
+      rw [AlgHom.comp_apply, hπX, hπX, map_add (f := _), AlgHom.commutes]
       rfl
   · intro m
     refine etale_ext (n := n) ε' (jetAug R (Fin n) 0) (ker_jetAug_nil (Fin n) 0) _ _ ?_ ?_ ?_
@@ -55,7 +55,7 @@ theorem algChart_of_relativeDimension {R : Type} [CommRing R] (B : Type) [CommRi
     · ext s
       simp
     · intro j
-      rw [AlgHom.comp_apply, hπX, map_add, AlgHom.commutes, AlgHom.comp_apply, jetZero_zR, add_zero]
+      rw [AlgHom.comp_apply, hπX, map_add (f := _), AlgHom.commutes, AlgHom.comp_apply, jetZero_zR, add_zero]
       rfl
   · intro A _ _ aug m hJ φ' hφ'aug
     have hJn := nil_of_pow _ hJ
@@ -74,14 +74,14 @@ theorem algChart_of_relativeDimension {R : Type} [CommRing R] (B : Type) [CommRi
         exact hπaug m
       · exact hφ'aug
       · intro j
-        rw [AlgHom.comp_apply, hπX, map_add, AlgHom.commutes, jetLift_zR, add_sub_cancel]
+        rw [AlgHom.comp_apply, hπX, map_add (f := _), AlgHom.commutes, jetLift_zR, add_sub_cancel]
     refine ⟨ψ, ⟨hψaug, hψπ⟩, ?_⟩
     rintro ψ₂ ⟨_, h4⟩
     apply jet_ext
     intro j
     rw [jetLift_zR]
     have := AlgHom.congr_fun h4 (sX R j)
-    rw [AlgHom.comp_apply, hπX, map_add, AlgHom.commutes] at this
+    rw [AlgHom.comp_apply, hπX, map_add (f := _), AlgHom.commutes] at this
     rw [← this, add_sub_cancel_left]
 
 theorem univChart_of_relativeDimension {k : Type} [Field k] (G : Over (Spec (CommRingCat.of k))) [GrpObj G] {n : ℕ}

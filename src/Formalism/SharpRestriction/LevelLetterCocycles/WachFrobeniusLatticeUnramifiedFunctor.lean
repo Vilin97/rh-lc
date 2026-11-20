@@ -170,7 +170,7 @@ theorem latD_p5M (I : BaseId W) (T : LocLat G Qp LL O) (hs : W.s = 1) (hR : Ring
   have hq : I.d I.Bs.q = Formalism.MainNotions.WachCoordinates.qP W := by
     funext k
     change I.ι (PowerSeries.X + PowerSeries.C (I.Bs.ℓ : O)) = W.π₀₁ + ((PD.p : ℕ) : PowerSeries O)
-    rw [map_add, I.ι_X, I.ℓ_eq, map_natCast PowerSeries.C, map_natCast]
+    rw [map_add (f := _), I.ι_X, I.ℓ_eq, map_natCast PowerSeries.C, map_natCast]
   have hQ : W.Q = W.q := by
     show (W.φA ^ (W.s - 1)) W.q = W.q
     simp [hs]
@@ -455,7 +455,7 @@ theorem wach_frobenius_lattice_unramified_functor [IsDomain O] (hA : Formalism.M
           have e3 := coc_of x₃
           have e1 := coc_of x₁
           have e2 := coc_of x₂
-          rw [he, map_add] at e3
+          rw [he, map_add (f := _)] at e3
           have e4 : W.φD T (x₃ : W.DD T × W.DD T).2 - (x₃ : W.DD T × W.DD T).2 =
               (W.φD T (x₁ : W.DD T × W.DD T).2 - (x₁ : W.DD T × W.DD T).2) +
                 (W.φD T (x₂ : W.DD T × W.DD T).2 - (x₂ : W.DD T × W.DD T).2) := by

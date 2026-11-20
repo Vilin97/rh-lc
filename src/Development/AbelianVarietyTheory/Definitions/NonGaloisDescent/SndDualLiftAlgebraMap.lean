@@ -116,7 +116,7 @@ theorem complDerFun_mul (x y : AdicCompletion I A') :
   refine AdicCompletion.ext_evalₐ fun n => ?_
   obtain ⟨r, hr⟩ := Ideal.Quotient.mk_surjective (AdicCompletion.evalₐ I (n + 1) x)
   obtain ⟨t, ht⟩ := Ideal.Quotient.mk_surjective (AdicCompletion.evalₐ I (n + 1) y)
-  rw [evalₐ_complDerFun I D (r := r * t) (by rw [map_mul, map_mul, hr, ht]), map_add,
+  rw [evalₐ_complDerFun I D (r := r * t) (by rw [map_mul, map_mul, hr, ht]), map_add (f := _),
     map_mul (AdicCompletion.evalₐ I n), map_mul (AdicCompletion.evalₐ I n),
     evalₐ_complDerFun I D hr.symm, evalₐ_complDerFun I D ht.symm,
     evalₐ_of_succ I hr.symm, evalₐ_of_succ I ht.symm, D.leibniz]
@@ -135,7 +135,7 @@ def complDer : Derivation k (AdicCompletion I A') (AdicCompletion I A') :=
         refine AdicCompletion.ext_evalₐ fun n => ?_
         obtain ⟨r, hr⟩ := Ideal.Quotient.mk_surjective (AdicCompletion.evalₐ I (n + 1) x)
         obtain ⟨t, ht⟩ := Ideal.Quotient.mk_surjective (AdicCompletion.evalₐ I (n + 1) y)
-        rw [evalₐ_complDerFun I D (r := r + t) (by rw [map_add, map_add, hr, ht]), map_add,
+        rw [evalₐ_complDerFun I D (r := r + t) (by rw [map_add (f := _), map_add (f := _), hr, ht]), map_add (f := _),
           map_add, map_add, evalₐ_complDerFun I D hr.symm, evalₐ_complDerFun I D ht.symm]
       map_smul' := fun c x => by
         have h : algebraMap k (AdicCompletion I A') c = algebraMap A' _ (algebraMap k A' c) := rfl
@@ -187,7 +187,7 @@ theorem snd_dualLift_algebraMap (s r : A') :
 def awayDer (s : A') : Derivation k (Localization.Away s) (Localization.Away s) :=
   Derivation.mk'
     { toFun := fun x => (dualLift D s x).snd
-      map_add' := fun x y => by rw [map_add, TrivSqZeroExt.snd_add]
+      map_add' := fun x y => by rw [map_add (f := _), TrivSqZeroExt.snd_add]
       map_smul' := fun c x => by
         rw [Algebra.smul_def, snd_dualLift_mul, RingHom.id_apply, Algebra.smul_def,
           IsScalarTower.algebraMap_apply k A' (Localization.Away s), snd_dualLift_algebraMap,
@@ -237,7 +237,7 @@ theorem invL_S_le_Rpi : invL l (S O K e) ≤ Rpi O K l e := invL_le l (S_le_R l 
 omit [IsUltrametricDist K] [Fact l.Prime] [NormedAlgebra ℚ_[l] K] [NeZero e] in
 theorem coeff_E_mul (g : K⟦X⟧) (n : ℕ) :
     coeff (n + e) (E K l e * g) = coeff n g + l * coeff (n + e) g := by
-  rw [E, add_mul, map_add, coeff_X_pow_mul, ← map_natCast (C : K →+* K⟦X⟧), coeff_C_mul]
+  rw [E, add_mul, map_add (f := _), coeff_X_pow_mul, ← map_natCast (C : K →+* K⟦X⟧), coeff_C_mul]
 
 theorem tendsto_add_mul (n : ℕ) : Tendsto (fun j : ℕ => n + j * e) atTop atTop :=
   tendsto_atTop_mono (fun j => (Nat.le_mul_of_pos_right j (NeZero.pos e)).trans

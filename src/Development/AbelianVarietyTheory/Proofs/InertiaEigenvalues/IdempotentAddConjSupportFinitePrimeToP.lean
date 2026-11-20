@@ -49,6 +49,6 @@ theorem idemSum_add_conj_support_finite : ∀ (D : D7) (ι : (Af D.host.F ⊗[D.
     have h2 : GlobalTheory.IdemSupport.cP Q ∉ P := fun h => hQ.2 _ h (GlobalTheory.ClassScalarValue.cP_cP Q)
     have a := hcj e (GlobalTheory.IdemSupport.cP Q)
     rw [e2 _ h2, map_zero, GlobalTheory.ClassScalarValue.cP_cP, map_eq_zero] at a
-    rw [map_add, e2 Q h1, a, add_zero]
+    rw [map_add (f := _), e2 Q h1, a, add_zero]
 
 end GlobalTheory

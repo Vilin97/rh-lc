@@ -66,7 +66,7 @@ theorem exists_perfect_mod {R R₀ : Type} [CommRing R] [CommRing R₀] (π : R 
     intro x hx
     refine Submodule.smul_induction_on (p := fun y : D ↦ π (l y) = 0) hx (fun r hr y _ ↦ ?_) fun y z hy hz ↦ ?_
     · rw [map_smul, smul_eq_mul, map_mul, RingHom.mem_ker.1 hr, zero_mul]
-    · rw [map_add, map_add, hy, hz, add_zero]
+    · rw [map_add (f := _), map_add (f := _), hy, hz, add_zero]
   let s := Function.surjInv hred
   have hs : ∀ h, red (s h) = h := Function.surjInv_eq hred
   have key : ∀ x x', red x = red x' → π (l x) = π (l x') := fun x x' e ↦ by
@@ -75,7 +75,7 @@ theorem exists_perfect_mod {R R₀ : Type} [CommRing R] [CommRing R₀] (π : R 
   let l₀ : H →ₗ[R₀] R₀ :=
     { toFun h := π (l (s h))
       map_add' a b := by
-        rw [key (s (a + b)) (s a + s b) (by rw [map_add, hs, hs, hs]), map_add, map_add]
+        rw [key (s (a + b)) (s a + s b) (by rw [map_add (f := _), hs, hs, hs]), map_add (f := _), map_add (f := _)]
       map_smul' r h := by
         obtain ⟨r', rfl⟩ := hπ r
         rw [key (s (π r' • h)) (r' • s h) (by rw [map_smulₛₗ, hs, hs]), map_smul, smul_eq_mul, map_mul]

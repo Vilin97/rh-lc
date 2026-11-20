@@ -155,6 +155,6 @@ theorem starT_starT {p : ℕ} [Fact p.Prime] (G : HTGroup p) (R : Type) [CommRin
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul r y => rw [starT_tmul, starT_tmul, G.star_star]
-  | add a b ha hb => rw [map_add, MulOpposite.unop_add, map_add, MulOpposite.unop_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), MulOpposite.unop_add, map_add (f := _), MulOpposite.unop_add, ha, hb]
 
 end GlobalTheory.OrbFinAf.KottAlmost

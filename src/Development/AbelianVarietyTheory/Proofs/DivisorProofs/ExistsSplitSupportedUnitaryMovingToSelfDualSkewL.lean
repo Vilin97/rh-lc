@@ -244,9 +244,9 @@ theorem exists_skew_move : ∀ (D : D7) (𝔪 : Ideal (𝓞 D.host.E)), 𝔪 ≠
     ring
   obtain ⟨v, hv_def⟩ : ∃ v : (AE D)ˣ, v = u * (sgU D u)⁻¹ := ⟨_, rfl⟩
   have hv : (v : AE D) = ((1 - e) * (y : AE D) + e) * ((1 - e) * sgA D ((y⁻¹ : (AE D)ˣ) : AE D) + e) := by
-    rw [hv_def, Units.val_mul, hsi, hu_val, hu_inv, map_add, map_mul, map_sub, map_one, hse]
+    rw [hv_def, Units.val_mul, hsi, hu_val, hu_inv, map_add (f := _), map_mul, map_sub, map_one, hse]
   have hvi : ((v⁻¹ : (AE D)ˣ) : AE D) = ((1 - e) * ((y⁻¹ : (AE D)ˣ) : AE D) + e) * ((1 - e) * sgA D (y : AE D) + e) := by
-    rw [hv_def, mul_inv_rev, inv_inv, Units.val_mul, hsv, hu_val, hu_inv, map_add, map_mul, map_sub, map_one, hse, mul_comm]
+    rw [hv_def, mul_inv_rev, inv_inv, Units.val_mul, hsv, hu_val, hu_inv, map_add (f := _), map_mul, map_sub, map_one, hse, mul_comm]
   have hv2 : ((1 - e) * sgA D (y : AE D) + e) * ((1 - e) * sgA D ((y⁻¹ : (AE D)ˣ) : AE D) + e) = 1 := by
     linear_combination (1 - e) ^ 2 * hY + (2 - sgA D (y : AE D) - sgA D ((y⁻¹ : (AE D)ˣ) : AE D)) * he
   have hss : sgU D (sgU D u) = u := Units.ext (VacMove.sgA_sgA D _)

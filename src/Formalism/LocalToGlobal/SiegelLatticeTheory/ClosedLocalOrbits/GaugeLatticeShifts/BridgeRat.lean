@@ -23,7 +23,7 @@ theorem hat_add (A : X.B.I.Gf) (y z : (VS D).V) : hat X A (y + z) = hat X A y + 
   rw [← Matrix.mulVec_add]
   congr 1
   funext i
-  simp [incl, Formalism.L2.SG.HidaSetting.HidaSetting.crd, crdOf, map_add]
+  simp [incl, Formalism.L2.SG.HidaSetting.HidaSetting.crd, crdOf, map_add (f := _)]
 
 theorem hat_sub (A : X.B.I.Gf) (y z : (VS D).V) : hat X A (y - z) = hat X A y - hat X A z := by
   simp only [hat]

@@ -50,7 +50,7 @@ theorem exists_unit_of_cls_ne (ψ ψ' : Algebra.adjoin O S →ₐ[O] O) (h : cls
       rw [e, AlgHom.commutes, AlgHom.commutes]
     | add x y hx hy ihx ihy =>
       have e : (⟨x + y, add_mem hx hy⟩ : Algebra.adjoin O S) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-      rw [e, map_add, map_add, map_add, map_add, ihx, ihy]
+      rw [e, map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ihx, ihy]
     | mul x y hx hy ihx ihy =>
       have e : (⟨x * y, mul_mem hx hy⟩ : Algebra.adjoin O S) = ⟨x, hx⟩ * ⟨y, hy⟩ := rfl
       rw [e, map_mul, map_mul, map_mul, map_mul, ihx, ihy]

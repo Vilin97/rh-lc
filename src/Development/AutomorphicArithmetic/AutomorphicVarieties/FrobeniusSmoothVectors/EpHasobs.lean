@@ -26,7 +26,7 @@ theorem UpperTheory.V.Fr.ep_hasobs :
       map_add' := by
         intro u w
         refine Prod.ext (funext fun x => Subtype.ext ?_) (funext fun v => funext fun s => Subtype.ext ?_) <;>
-          simp [map_add]
+          simp [map_add (f := _)]
       map_smul' := by
         intro c u
         refine Prod.ext (funext fun x => Subtype.ext ?_) (funext fun v => funext fun s => Subtype.ext ?_) <;>

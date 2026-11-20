@@ -290,7 +290,7 @@ theorem divided_integral_holds : DivInt := by
     exact LinearMap.mem_range.2 ⟨u' * w', by rw [← hu', ← hw']; simp⟩
   have hadd : ∀ u w, Pr u → Pr w → Pr (u + w) := by
     intro u w hu hw k
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     exact Submodule.add_mem _ (hu k) (hw k)
   have hall : ∀ y : MvPolynomial (Fin N × Fin r) ℤ_[p],
       Pr (MvPolynomial.map (algebraMap ℤ_[p] ℚ_[p]) y) := by
@@ -300,7 +300,7 @@ theorem divided_integral_holds : DivInt := by
       rw [map_C]
       exact fun k => divPow_C_int LL j c d a k
     next u w hu hw =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact hadd _ _ hu hw
     next u v hu =>
       rw [map_mul, map_X]

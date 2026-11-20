@@ -272,7 +272,7 @@ def tensorK (π : CuspSub E a) (Ξ : AlgRep E a) (k : Kinf E a) : Module.End ℂ
 
 def tensorLie (π : CuspSub E a) (Ξ : AlgRep E a) : Lie E a →ₗ[ℝ] Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ)) where
   toFun X := (lieOp π X).rTensor _ + (Matrix.toLin' (Ξ.dmat X)).lTensor _
-  map_add' X Y := by simp only [map_add, LinearMap.rTensor_add, LinearMap.lTensor_add]; abel
+  map_add' X Y := by simp only [map_add (f := _), LinearMap.rTensor_add, LinearMap.lTensor_add]; abel
   map_smul' c X := by
     rw [map_smul, map_smul, RingHom.id_apply, ← algebraMap_smul ℂ c (lieOp π X), ← algebraMap_smul ℂ c (Ξ.dmat X),
       ← algebraMap_smul ℂ c (_ + _ : Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))), map_smul,
@@ -288,7 +288,7 @@ theorem tensorK_mul_tensorLie (π : CuspSub E a) (Ξ : AlgRep E a) (k : Kinf E a
     Subtype.ext (LinearMap.congr_fun (GlobalTheory.CapAdInv.rt_lie (Unitary.toUnits k) X.1) φ.1)
   have h2 : Ξ.mat (Unitary.toUnits k) * Ξ.dmat (toL X.1) = Ξ.dmat (toL (adHerm k X).1) * Ξ.mat (Unitary.toUnits k) :=
     Ξ.mat_mul_dmat (Unitary.toUnits k) X.1
-  simp only [Module.End.mul_apply, tensorK, tensorLie_tmul, map_add, TensorProduct.map_tmul, Matrix.toLin'_apply,
+  simp only [Module.End.mul_apply, tensorK, tensorLie_tmul, map_add (f := _), TensorProduct.map_tmul, Matrix.toLin'_apply,
     Matrix.mulVec_mulVec, h1, h2]
 
 def IsCohFor (π : CuspSub E a) (Ξ : AlgRep E a) : Prop := HasCohomology (tensorK π Ξ) (tensorLie π Ξ)
@@ -316,7 +316,7 @@ theorem not_isCohFor_triv_std (τ : E →+* ℂ) : ¬ IsCohFor (CuspSub.triv E l
   refine not_hasCohomology_of_central one_ne_zero fun m => ?_
   induction m using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | tmul φ v =>
     have e : (CuspSub.triv E le_rfl).op (.lie (oneL E 1)) φ = 0 := by
       obtain ⟨c, e⟩ := Submodule.mem_span_singleton.1 φ.2

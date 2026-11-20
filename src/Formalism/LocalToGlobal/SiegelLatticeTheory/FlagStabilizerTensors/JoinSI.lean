@@ -83,7 +83,7 @@ theorem exists_conj_op (hR : RowTieT P eV s σ cF eR) (V : P.EE →ₗ[ℂ] P.EE
   refine ⟨⟨⟨g, ?_⟩, ?_⟩, hg⟩
   · intro a b
     apply hinj
-    simp only [hg, map_add]
+    simp only [hg, map_add (f := _)]
   · intro r a
     apply hinj
     simp only [hg, map_smulₛₗ, RingHom.id_apply]
@@ -114,7 +114,7 @@ theorem kerJoinS_of_miT (hs : ∀ a, Bs.v0.embedding a = Formalism.IndefR.Links.
   let U1 : D.what₂.Mu u →ₗ[ℂ] D.what₂.Mu u :=
     { toFun := fun φ => (cφ u).symm (cjv s (Mu.mulVec (cjv s (cφ u φ))))
       map_add' := fun φ ψ => by
-        simp only [map_add, cjv_add, Matrix.mulVec_add]
+        simp only [map_add (f := _), cjv_add, Matrix.mulVec_add]
       map_smul' := fun r φ => by
         simp only [map_smul, cjv_smul, Matrix.mulVec_smul, Formalism.IndefR.Links.cj_cj, RingHom.id_apply] }
   have hU1 : ∀ φ, cjv s (cφ u (U1 φ)) = Mu.mulVec (cjv s (cφ u φ)) := by
@@ -137,13 +137,13 @@ theorem kerJoinS_of_miT (hs : ∀ a, Bs.v0.embedding a = Formalism.IndefR.Links.
   let B2 : (Fin ((fc P.zs).Dc.a (m u)) → ℂ) →ₗ[ℂ] (Fin ((fc P.zs).Df1.nV Bs.μ0) → ℂ) →ₗ[ℂ] ℂ :=
     LinearMap.mk₂ ℂ (fun x y => Formalism.IndefR.Links.cj s (d.a (m u) * lam * ⟪S y, Q x⟫_ℂ))
       (fun x x' y => by
-        simp only [Q, cjv_add, Matrix.mulVec_add, map_add, inner_add_right, mul_add])
+        simp only [Q, cjv_add, Matrix.mulVec_add, map_add (f := _), inner_add_right, mul_add])
       (fun r x y => by
         simp only [Q, cjv_smul, Matrix.mulVec_smul, map_smul, inner_smul_right, smul_eq_mul, map_mul,
           Formalism.IndefR.Links.cj_cj]
         ring)
       (fun x y y' => by
-        simp only [S, map_add, inner_add_left, mul_add])
+        simp only [S, map_add (f := _), inner_add_left, mul_add])
       (fun r x y => by
         simp only [S, map_smul, LinearMap.map_smulₛₗ, inner_smul_left, smul_eq_mul, map_mul,
           Formalism.IndefR.Links.cj_cj, starRingEnd_self_apply]

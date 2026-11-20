@@ -56,7 +56,7 @@ theorem exists_algHom_localizationAway_of_rational_points :
           IsScalarTower.algebraMap_apply k (Polynomial k) (Localization.Away (Polynomial.X * Pd)),
           he]
         simp
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
       | mul_X p i hp =>
         rw [map_mul, map_mul, map_mul, map_mul, hp]
         congr 1

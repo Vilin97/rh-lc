@@ -122,7 +122,7 @@ theorem _root_.GlobalTheory.ProjFrac.frac_add {a₂ : A} {ha₂ : a₂ ∈ 𝒜 
       _root_.GlobalTheory.ProjFrac.frac 𝒜 U a b ha hb hU +
         _root_.GlobalTheory.ProjFrac.frac 𝒜 U a₂ b ha₂ hb hU := by
   refine _root_.GlobalTheory.ProjFrac.ext fun x hx => ?_
-  rw [map_add, _root_.GlobalTheory.ProjFrac.ev_frac, _root_.GlobalTheory.ProjFrac.ev_frac,
+  rw [map_add (f := _), _root_.GlobalTheory.ProjFrac.ev_frac, _root_.GlobalTheory.ProjFrac.ev_frac,
     _root_.GlobalTheory.ProjFrac.ev_frac, Localization.add_mk_self]
 
 open AlgebraicGeometry CategoryTheory TopologicalSpace Opposite in

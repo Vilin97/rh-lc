@@ -22,7 +22,7 @@ private theorem eigen_low {R S σ : Type} [CommRing R] [CommRing S] [Finite σ] 
     refine Submodule.smul_induction_on hy (fun p hp z _ => ?_) (fun a b ha hb => ?_)
     · rw [map_smul, Algebra.smul_def, map_mul]
       exact Ideal.mul_mem_right _ _ (hIn hp)
-    · rw [map_add, map_add]; exact add_mem ha hb
+    · rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
   have h := key (e g) (by
     rw [AdicCompletion.pow_smul_top_eq_ker_eval (MvPolynomial.idealOfVars_fg σ R), LinearMap.mem_ker,
       AdicCompletion.eval_apply, toAdicCompletionAlgEquiv_apply, toAdicCompletion_apply_eq_mk_truncTotal]

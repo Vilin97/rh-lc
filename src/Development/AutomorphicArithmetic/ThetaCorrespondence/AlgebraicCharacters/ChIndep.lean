@@ -113,7 +113,7 @@ private theorem exists_st {P Q : LocPrime l} {AP : LocAinf l P} {AQ : LocAinf l 
       refine algHom_ext' (AlgHom.ext fun b => ?_) ?_
       · simp [stMap_C, h1]
       · have : (e : P.R.B →ₐ[ℚ_[l]] Q.R.B) P.tB = u • Q.tB := ht
-        simp only [AlgHom.comp_apply, actSt_X, map_add, stMap_X, stMap_C, map_smul, this, smul_add, smul_C, smul_smul,
+        simp only [AlgHom.comp_apply, actSt_X, map_add (f := _), stMap_X, stMap_C, map_smul, this, smul_add, smul_C, smul_smul,
           hk, PadicInt.coe_mul, hzd]
         congr 3
         ring
@@ -144,7 +144,7 @@ private theorem exists_D {P Q : LocPrime l} {AP : LocAinf l P} {AQ : LocAinf l Q
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => exact h v b
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have a1 : ∀ g x, S (stRep P ρ g x) = stRep Q ρ g (S x) := fun g =>
     ext _ _ fun v b => by rw [stRep_tmul, stRep_tmul, hS, h1]
   have a2 := ext (phiV P LL V) (phiV Q LL V) fun v b => by rw [phiV_tmul, phiV_tmul, hS, h2]

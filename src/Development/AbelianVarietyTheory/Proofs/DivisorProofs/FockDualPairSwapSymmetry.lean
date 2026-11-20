@@ -33,7 +33,7 @@ theorem rename_omE (l l' : Ln p q r s) (P : Pol p q r s) :
     rename Prod.swap (omE l l' P) =
       omE (l.swap : Ln r s p q) l'.swap (rename Prod.swap P) := by
   unfold omE
-  simp only [LinearMap.add_apply, map_add, Module.End.mul_apply, rename_raiB, rename_lowB,
+  simp only [LinearMap.add_apply, map_add (f := _), Module.End.mul_apply, rename_raiB, rename_lowB,
     Prod.swap_inj]
   congr 1
   split_ifs <;> simp

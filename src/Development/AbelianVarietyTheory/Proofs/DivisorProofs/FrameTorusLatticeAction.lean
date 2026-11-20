@@ -79,11 +79,11 @@ theorem GlobalTheory.ThKTorus.frameCo_vecMulVec_mem_block : ∀ (F E : Type) [Fi
       simp [Matrix.vecMulVec_apply, smul_mul_assoc]
     have h2 : w = M₁.co.e.symm (fun j => algebraMap F (AF F) (u j), 0) +
         M₁.co.e.symm (0, fun j => algebraMap F (AF F) (v j)) := by
-      rw [← map_add, Prod.mk_add_mk, add_zero, zero_add, ← huv, LinearEquiv.symm_apply_apply]
+      rw [← map_add (f := _), Prod.mk_add_mk, add_zero, zero_add, ← huv, LinearEquiv.symm_apply_apply]
     have h3 : M₁.co.e (mat a * w) = (blkScale blk (fun k => (t k)⁻¹) fun j => algebraMap F (AF F) (u j),
         blkScale blk t fun j => algebraMap F (AF F) (v j)) := by
       conv_lhs => rw [h2]
-      rw [Matrix.mul_add, map_add, (hF.2 t a ht ha _).1, (hF.2 t a ht ha _).2, Prod.mk_add_mk, add_zero, zero_add]
+      rw [Matrix.mul_add, map_add (f := _), (hF.2 t a ht ha _).1, (hF.2 t a ht ha _).2, Prod.mk_add_mk, add_zero, zero_add]
     rw [h1, map_smul, huv] at h3
     rw [huv]
     refine ⟨funext fun j => ?_, fun j hj => ?_⟩
@@ -114,8 +114,8 @@ theorem GlobalTheory.ThKTorus.frameCo_vecMulVec_mem_block : ∀ (F E : Type) [Fi
       ext r l
       simp [Matrix.vecMulVec_apply, mul_add]
     refine ⟨?_, fun j hj => ?_⟩
-    · rw [e, map_add, Prod.fst_add, h.1, h'.1, add_zero]
-    · rw [e, map_add, Prod.snd_add, Pi.add_apply, h.2 j hj, h'.2 j hj, add_zero]
+    · rw [e, map_add (f := _), Prod.fst_add, h.1, h'.1, add_zero]
+    · rw [e, map_add (f := _), Prod.snd_add, Pi.add_apply, h.2 j hj, h'.2 j hj, add_zero]
   have hPsmul : ∀ (c : AF F) z, P z → P (c • z) := by
     intro c z h
     have e : Matrix.vecMulVec (incV F (x i)) (c • z) = c • Matrix.vecMulVec (incV F (x i)) z := by

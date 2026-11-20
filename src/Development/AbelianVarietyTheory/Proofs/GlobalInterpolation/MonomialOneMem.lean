@@ -26,7 +26,7 @@ lemma monomial_one_mem (v : Fin a →₀ ℕ) :
   induction v using Finsupp.induction with
   | zero => simp
   | single_add i k w hi hk ih =>
-    rw [← one_mul (1 : O), ← monomial_mul_monomial, map_add, Finsupp.degree_single, pow_add, ← X_pow_eq]
+    rw [← one_mul (1 : O), ← monomial_mul_monomial, map_add (f := _), Finsupp.degree_single, pow_add, ← X_pow_eq]
     exact Ideal.mul_mem_mul (Ideal.pow_mem_pow (X_mem_max i) k) ih
 
 theorem main : ∀ {O : Type} [inst : CommRing O] [inst_1 : IsLocalRing O] {a N : ℕ} (v : Fin a →₀ ℕ) {c : O}, c ∈ IsLocalRing.maximalIdeal O ^ (N - (Finsupp.degree : (Fin a →₀ ℕ) → ℕ) v) → (MvPowerSeries.monomial v : O → MvPowerSeries (Fin a) O) c ∈ IsLocalRing.maximalIdeal (MvPowerSeries (Fin a) O) ^ N := by

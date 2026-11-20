@@ -172,7 +172,7 @@ theorem exists_frame (x : GL (Fin n) (AfE F E)) (P : HeightOneSpectrum (𝓞 E))
     have e1 : (ratM P f⁻¹ * locM P x) i j = adAt F P (((mat f⁻¹).map ι * (x : Matrix (Fin n) (Fin n) (AfE F E))) i j) := by
       set_option synthInstance.maxHeartbeats 100000 in
         simp only [Matrix.mul_apply, map_sum, map_mul, Matrix.map_apply, adAt_inclE, ratM, locM]
-    rw [e1, e, map_add, adAt_inclE, sub_add_cancel_left, Valuation.map_neg]
+    rw [e1, e, map_add (f := _), adAt_inclE, sub_add_cancel_left, Valuation.map_neg]
     exact (valued_nat_mul_lt hr (hN P (by simp))).le
   choose κ hκ using hap
   let M : Matrix (Fin n) (Fin n) (P.adicCompletion E) := (Matrix.of κ).map (algebraMap E _)

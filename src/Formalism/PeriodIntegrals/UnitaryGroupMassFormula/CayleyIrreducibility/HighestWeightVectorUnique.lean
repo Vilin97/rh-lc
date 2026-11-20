@@ -86,7 +86,7 @@ theorem sl_mem (lam : ι → DomWeight n) (τ₀ : ι) (x : ι × Fin n × Fin n
     rw [sl_tenV, MvPolynomial.C_mul']
     exact Submodule.smul_mem _ _ (hf τ₀)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add P R _ _ hP hR => rw [map_add]; exact Submodule.add_mem _ hP hR
+  | add P R _ _ hP hR => rw [map_add (f := _)]; exact Submodule.add_mem _ hP hR
   | smul c P _ hP => rw [map_smul]; exact Submodule.smul_mem _ c hP
 
 theorem rowGen_sl (τ₀ : ι) (x : ι × Fin n × Fin n → ℂ) (a b : Fin n) :
@@ -255,7 +255,7 @@ theorem generation_holds : Gen := by
           exact M.zero_mem
         · intro p q _ _ hp hq
           rw [tenV_update] at hp hq ⊢
-          rw [map_add, add_mul]
+          rw [map_add (f := _), add_mul]
           exact M.add_mem hp hq
         · intro c p _ hp
           rw [tenV_update] at hp ⊢

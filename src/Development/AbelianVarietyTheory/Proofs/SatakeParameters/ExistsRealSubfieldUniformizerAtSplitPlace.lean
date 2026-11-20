@@ -39,7 +39,7 @@ theorem val_sq_le {L : Type} [Field L] [NumberField L] [IsCMField L] (s : SplitP
       _ = WithZero.exp (-2) := by rw [← WithZero.exp_add]; norm_num
   · intro a b ha hb
     show Valued.v (s.i ((a : L) + (b : L))) ≤ _
-    rw [map_add]
+    rw [map_add (f := _)]
     exact le_trans (Valuation.map_add _ _ _) (max_le ha hb)
 
 end GlobalTheory.RealUnifSplit

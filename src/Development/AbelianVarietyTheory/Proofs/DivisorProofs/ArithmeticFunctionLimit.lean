@@ -70,7 +70,7 @@ theorem tendsto_of_pow {ι : Type} [Fintype ι] (d : ℕ) (Φ : ℝ → MvPolyno
     Tendsto (fun R => Φ R P) atTop (𝓝 (Φ₀ P)) := by
   let S : Submodule ℝ (MvPolynomial ι ℝ) :=
     { carrier := {P | Tendsto (fun R => Φ R P) atTop (𝓝 (Φ₀ P))}
-      add_mem' := fun {a b} ha hb => by simpa only [Set.mem_setOf_eq, map_add] using Tendsto.add ha hb
+      add_mem' := fun {a b} ha hb => by simpa only [Set.mem_setOf_eq, map_add (f := _)] using Tendsto.add ha hb
       zero_mem' := by simpa only [Set.mem_setOf_eq, map_zero] using tendsto_const_nhds
       smul_mem' := fun c a ha => by simpa only [Set.mem_setOf_eq, map_smul] using Tendsto.const_smul ha c }
   have hS : S = ⊤ := by

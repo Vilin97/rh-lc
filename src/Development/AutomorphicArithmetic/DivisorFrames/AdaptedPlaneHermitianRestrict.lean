@@ -29,7 +29,7 @@ private theorem rho_rho' {R : Type} [CommRing R] [Invertible (2 : R)] {V : Type}
     {Bf : V → V → R} {κ : Type} [Fintype κ] (d : Darboux Bf κ) (ψ : AddChar R ℂ) (w w' : V) (h : Bf w w' = 0)
     (φ : (κ → R) → ℂ) : d.rho ψ w (d.rho ψ w' φ) = d.rho ψ (w + w') φ := by
   simp only [Darboux.rho]
-  rw [schr_schr', map_add]
+  rw [schr_schr', map_add (f := _)]
   have := d.form w w'
   rw [h] at this
   exact sub_eq_zero.mp this.symm
@@ -142,7 +142,7 @@ private theorem coef_eq {B : Base F E} {n n₁ r s i₀ i₁ : ℕ} {X : Spc F E
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [cA, hσ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hsym : ∀ x y : Fin n → E, form σ X.J y x = σ (form σ X.J x y) := fun x y => by
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hS.herm, Finset.mul_sum]
@@ -156,7 +156,7 @@ private theorem coef_eq {B : Base F E} {n n₁ r s i₀ i₁ : ℕ} {X : Spc F E
         cA σ t • fun i => cA σ (incV F H.y i) := by
     funext i
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hu, Pi.add_apply, Pi.smul_apply, Finset.sum_apply, smul_eq_mul, map_add, map_mul, map_sum]
+      simp only [hu, Pi.add_apply, Pi.smul_apply, Finset.sum_apply, smul_eq_mul, map_add (f := _), map_mul, map_sum]
   have h0 : ∀ v, form σ X.J H.x (H.ι *ᵥ v) = 0 := fun v => by rw [hsym, (hA.orth v).1, map_zero]
   rw [e]
   simp only [Matrix.mulVec_add, Matrix.mulVec_sum, Matrix.mulVec_smul, dotProduct_add, dotProduct_sum, dotProduct_smul,
@@ -190,7 +190,7 @@ theorem UpperTheory.adapted_plane_hermitian_restrict :
     k hk u z f
   have hex := GlobalTheory.ArchLocalityX.acts_arch_left hP F E σ _ _ _ _ M B.ψ _ _ om hB.cm hB.std hW k hk
   obtain ⟨a, t, v, hv⟩ := span_ad hX hH (mat k *ᵥ u)
-  rw [← om_rho hB.std hW hex, Matrix.mul_vecMulVec, unit_move, map_add, hv, coef_eq hB hX hH, ← Matrix.smul_vecMulVec,
+  rw [← om_rho hB.std hW hex, Matrix.mul_vecMulVec, unit_move, map_add (f := _), hv, coef_eq hB hX hH, ← Matrix.smul_vecMulVec,
     ← Matrix.smul_vecMulVec, rho_add M hH' hB.std,
     show cA σ z • incV F H.y + (a • incV F H.x + incM F H.ι *ᵥ v + t • incV F H.y) =
       a • incV F H.x + (incM F H.ι *ᵥ v + (cA σ z + t) • incV F H.y) by rw [add_smul]; abel,

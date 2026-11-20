@@ -145,7 +145,7 @@ theorem idxDJacE : IdxDJacE := by
       = jaR F E e * ((1 + (g : E ⊗[F] Af F) * m) * (t : E ⊗[F] Af F)) * jaR F E y' := by
         simp only [jaR_apply]; ring
     _ = jaR F E (e * (1 + (g : Af F) * c') * y') := by
-        rw [h1]; simp only [map_mul, map_add, map_one, map_natCast]
+        rw [h1]; simp only [map_mul, map_add (f := _), map_one, map_natCast]
     _ = (1 : E) ⊗ₜ[F] e := by rw [hey, jaR_apply]
 
 end PI.UnitaryDimensionFormula

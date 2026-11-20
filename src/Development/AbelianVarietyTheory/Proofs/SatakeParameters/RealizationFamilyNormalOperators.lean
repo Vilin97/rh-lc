@@ -159,13 +159,13 @@ theorem exists_normalFam {D : D7} {X : Type} [AddCommGroup X] [Module ℂ X] (M 
   · have h0 : h P 0 = 0 := LinearMap.ext fun x => hM.1 (by
       rw [hh P _ hP, O0, LinearMap.zero_apply, LinearMap.zero_apply, map_zero])
     have ha : ∀ c c', h P (c + c') = h P c + h P c' := fun c c' => LinearMap.ext fun x => hM.1 (by
-      rw [LinearMap.add_apply, map_add, hh P _ hP, hh P _ hP, hh P _ hP, Oa, LinearMap.add_apply])
+      rw [LinearMap.add_apply, map_add (f := _), hh P _ hP, hh P _ hP, hh P _ hP, Oa, LinearMap.add_apply])
     have hs : ∀ d z, h P (Finsupp.single d z) = z • h P (Finsupp.single d 1) := fun d z => LinearMap.ext fun x => hM.1 (by
       rw [LinearMap.smul_apply, map_smul, hh P _ hP, hh P _ hP, Os, LinearMap.smul_apply])
     induction c using Finsupp.induction_linear with
     | zero => rw [Finsupp.mapRange_zero, dualC, Finsupp.mapDomain_zero, h0, map_zero]
     | add c c' e e' =>
-      rw [Finsupp.mapRange_add (star_add), dualC, Finsupp.mapDomain_add, ha, ha, map_add, e, e']
+      rw [Finsupp.mapRange_add (star_add), dualC, Finsupp.mapDomain_add, ha, ha, map_add (f := _), e, e']
       rfl
     | single d z =>
       rw [Finsupp.mapRange_single, dualC, Finsupp.mapDomain_single, hs d, hs (dualLab d), map_smulₛₗ]

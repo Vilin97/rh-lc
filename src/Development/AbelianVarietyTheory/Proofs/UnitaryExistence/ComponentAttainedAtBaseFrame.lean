@@ -55,7 +55,7 @@ theorem comp_adelic_of_tower (F E : Type) [Field F] [NumberField F] [Field E] [N
     (fun N m hN hm a => by
       obtain ⟨a, rfl⟩ := ψ.surjective a
       obtain ⟨e, he⟩ := h1 N m hN hm a
-      exact ⟨φ e, by rw [hf', hf', he, map_add, map_nsmul]⟩)
+      exact ⟨φ e, by rw [hf', hf', he, map_add (f := _), map_nsmul]⟩)
     (fun N hN => by
       refine ⟨fun a => ?_, fun a' => ?_⟩
       · obtain ⟨a, rfl⟩ := ψ.surjective a
@@ -71,7 +71,7 @@ theorem comp_adelic_of_tower (F E : Type) [Field F] [NumberField F] [Field E] [N
           exact ⟨φ e, by rw [he, map_nsmul]⟩
       · obtain ⟨b, rfl⟩ := φ.surjective a'
         obtain ⟨a, e, he⟩ := (h2 N hN).2 b
-        exact ⟨ψ a, φ e, by rw [hf', ← map_nsmul, ← map_add, ← he]⟩)
+        exact ⟨ψ a, φ e, by rw [hf', ← map_nsmul, ← map_add (f := _), ← he]⟩)
   refine ⟨g, hg1, fun N hN a => ?_, ?_⟩
   · obtain ⟨w, hw, h⟩ := hg2 N hN (ψ a)
     exact ⟨w, hw, by rw [← hf', ← h, hψ]⟩
@@ -248,7 +248,7 @@ theorem comp_attained (D : D7) (V : HSp D) {H : ReciprocityTheory.ChartRestricti
     refine ⟨-(AdLat.fv D.host.F (M.φ k e : Fin V.rank → D.host.E) + w),
       (hmem _).2 (neg_mem (add_mem ((hc _).2 (M.φ k e).2) hw)), ?_⟩
     change AdLat.fv D.host.F (M.φ k (F.t k a) : Fin V.rank → D.host.E) - gf.1 *ᵥ AdLat.fv D.host.F (io a) = _
-    rw [hgw, he, map_add, map_nsmul, Submodule.coe_add, Submodule.coe_smul_of_tower, AdLat.cap_fv_add,
+    rw [hgw, he, map_add (f := _), map_nsmul, Submodule.coe_add, Submodule.coe_smul_of_tower, AdLat.cap_fv_add,
       AdLat.cap_fv_nsmul]
     exact comp_sub_eq _ _ _ _
   · have hu' : infHom V u = 1 := hu

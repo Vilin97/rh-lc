@@ -51,7 +51,7 @@ private theorem exists_sq_eq_neg_of_quadratic_discr {K : Type*} [Field K] [Numbe
       Algebra.leftMulMatrix_eq_repr_mul]
     simp [hb, hrx, ← sq, B]
   have tx2 : Algebra.trace ℚ K (x ^ 2) = 2 * A + B ^ 2 := by
-    rw [hx2, map_add, map_smul, map_smul, t1, tx]
+    rw [hx2, map_add (f := _), map_smul, map_smul, t1, tx]
     simp
     ring
   have db : Algebra.discr ℚ b = 4 * A + B ^ 2 := by

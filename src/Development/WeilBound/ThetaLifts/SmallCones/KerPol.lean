@@ -239,7 +239,7 @@ theorem isEv_comp {n₂ d₂ : ℕ} {X₂ : Spc F E n₂} {W₂ : Spc F E d₂} 
     funext x
     simp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure]
   | zero => exact map_zero _
-  | add _ _ _ _ a b => rw [map_add, a, b, add_zero]
+  | add _ _ _ _ a b => rw [map_add (f := _), a, b, add_zero]
   | smul _ _ _ a => rw [map_smul, a, smul_zero]
 
 end PositivityTheory.ThKCT.Ker

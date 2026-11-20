@@ -34,7 +34,7 @@ theorem IsolatedPointsCountPrime.eval_aeval {n m : ℕ} (Q : Fin m → MvPolynom
     eval x (aeval Q f) = eval (fun i => eval x (Q i)) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add p p' hp hp' => rw [map_add, map_add, hp, hp', map_add]
+  | add p p' hp hp' => rw [map_add (f := _), map_add (f := _), hp, hp', map_add (f := _)]
   | mul_X p i hp => rw [map_mul, map_mul, hp, aeval_X, map_mul, eval_X]
 
 theorem IsolatedPointsCountPrime.exists_eval_ne_zero {d : ℕ} {Δ : MvPolynomial (Fin d) ℂ} (hΔ : Δ ≠ 0)

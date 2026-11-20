@@ -79,7 +79,7 @@ theorem exists_coords_of_mem_locOrder : ∀ (ℓ : ℕ) [Fact ℓ.Prime] (F B : 
     obtain ⟨c, hc, rfl⟩ := hy
     obtain ⟨c', hc', rfl⟩ := hz
     refine ⟨fun i => c i + c' i, fun i => Subalgebra.add_mem _ (hc i) (hc' i), ?_⟩
-    simp only [map_add, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_mul, Finset.sum_add_distrib]
   | mul y z _ _ hy hz =>
     obtain ⟨c, hc, rfl⟩ := hy
     obtain ⟨c', hc', rfl⟩ := hz
@@ -123,7 +123,7 @@ theorem exists_coordProj (ℓ : ℕ) [Fact ℓ.Prime] (F B : Type) [Field F] [Nu
       Basis.repr_self, Finsupp.single_apply, smul_eq_mul]
     split_ifs <;> simp
   | add a a' ha ha' =>
-    rw [map_add, add_mul, map_add, ha, ha']
+    rw [map_add (f := _), add_mul, map_add (f := _), ha, ha']
     split_ifs <;> simp
 
 theorem basisLoc : ∀ (F B : Type) [Field F] [NumberField F] [Ring B] [Algebra F B] [Algebra ℚ B]
@@ -208,7 +208,7 @@ theorem cenMap_injective (ℓ : ℕ) [Fact ℓ.Prime] (F B : Type) [Field F] [Nu
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul q f => simp [cenMap, g]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   rw [heq]
   exact Module.Flat.lTensor_preserves_injective_linearMap g hg
 

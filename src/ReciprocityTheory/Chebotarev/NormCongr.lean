@@ -14,7 +14,7 @@ theorem norm_modEq_of_sub_mem_span {S : Type*} [CommRing S] [Module.Free ℤ S] 
   rw [Int.modEq_iff_dvd, ← Int.natAbs_dvd, ← ZMod.intCast_eq_intCast_iff_dvd_sub]
   symm
   let b := Module.Free.chooseBasis ℤ S
-  rw [Algebra.norm_eq_matrix_det b, Algebra.norm_eq_matrix_det b, hα, map_add, map_mul,
+  rw [Algebra.norm_eq_matrix_det b, Algebra.norm_eq_matrix_det b, hα, map_add (f := _), map_mul,
     AlgHom.commutes]
   have key : ∀ M : Matrix (Module.Free.ChooseBasisIndex ℤ S) (Module.Free.ChooseBasisIndex ℤ S) ℤ,
       ((Int.castRingHom (ZMod m.natAbs)) M.det : ZMod m.natAbs) = ((Int.castRingHom (ZMod m.natAbs)).mapMatrix M).det :=
@@ -30,7 +30,7 @@ theorem norm_modEq_of_sub_mem_span {S : Type*} [CommRing S] [Module.Free ℤ S] 
     rw [eq_intCast, map_intCast]
     ext i j
     by_cases hij : i = j <;> simp [hij, h0, Matrix.diagonal, ← Matrix.diagonal_intCast']
-  rw [map_add, map_mul, hM, zero_mul, add_zero]
+  rw [map_add (f := _), map_mul, hM, zero_mul, add_zero]
 
 theorem absNorm_dvd_algebraNorm {S : Type*} [CommRing S] [IsDedekindDomain S] [Module.Free ℤ S]
     [Module.Finite ℤ S] {b : Ideal S} {α : S} (h : α ∈ b) :

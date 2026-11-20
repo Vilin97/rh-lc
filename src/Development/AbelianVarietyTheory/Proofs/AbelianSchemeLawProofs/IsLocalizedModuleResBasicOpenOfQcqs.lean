@@ -240,7 +240,7 @@ theorem baseChangeHom_restrict
       restrict f' _ h' (baseChangeHom M w V V' e x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c s =>
     rw [LinearMap.baseChange_tmul, baseChangeHom_tmul, baseChangeHom_tmul, map_smul,
       pull_restrict w h h' e e']

@@ -12,7 +12,7 @@ theorem lam_eq_of_red : ∀ {D : D7} {c : Comm D} {v : VCom c} (G : GLoc v) (PP 
   intro D c v G PP _ x g hx z hz
   have hadd : ∀ a b : D.host.E, (ofSplit G.q).pr (a + b) = (ofSplit G.q).pr a + (ofSplit G.q).pr b := by
     intro a b
-    simp only [GlobalTheory.LocMod.Place.pr, map_add]
+    simp only [GlobalTheory.LocMod.Place.pr, map_add (f := _)]
   have hr : D.R.r = D.R.k + (G.s + 1) := by
     have := G.hs
     unfold Ranks.r

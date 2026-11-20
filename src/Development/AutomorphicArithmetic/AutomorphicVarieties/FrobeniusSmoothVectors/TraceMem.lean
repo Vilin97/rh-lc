@@ -125,7 +125,7 @@ private theorem trace_mem {G C K : Type} [Monoid G] [CommRing C] [CommRing K] [A
   | add x y _ _ hx hy =>
     obtain ⟨c, h1⟩ := hx
     obtain ⟨d, h2⟩ := hy
-    exact ⟨c + d, by rw [map_add, h1, h2, trace_add]⟩
+    exact ⟨c + d, by rw [map_add (f := _), h1, h2, trace_add]⟩
   | smul a x _ hx =>
     obtain ⟨c, h1⟩ := hx
     exact ⟨a * c, by rw [map_mul, h1, trace_smul, Algebra.smul_def]⟩

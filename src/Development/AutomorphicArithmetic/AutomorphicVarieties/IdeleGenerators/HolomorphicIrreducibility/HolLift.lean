@@ -115,7 +115,7 @@ private theorem Phi_eq {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {k : ℕ
 private theorem fT_Phi {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {k : ℕ} {c : Pl F → ℕ} {ω : HChar F} (φ : SS k c ω) {c₀ a}
     (h : HasExp φ.1.1 k c₀ a) (w : Pl F) (𝔪 : Idx F) :
     fT w (ι.symm (chiI ω c w.asIdeal * (normV w : ℂ) ^ (k - 1))) (Phi ι k c ω φ) 𝔪 = ι.symm (hkCoef k c ω w a 𝔪.1) := by
-  rw [fT_apply, Phi_eq ι φ h, hkCoef, map_add, map_mul ι.symm _ (coefDiv _ _ _), coefDiv]
+  rw [fT_apply, Phi_eq ι φ h, hkCoef, map_add (f := _), map_mul ι.symm _ (coefDiv _ _ _), coefDiv]
   split_ifs with hd
   · rw [Phi_eq ι φ h]
   · rw [map_zero]

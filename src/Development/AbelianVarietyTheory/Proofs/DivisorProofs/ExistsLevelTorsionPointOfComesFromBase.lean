@@ -78,12 +78,12 @@ theorem exists_qkPt_of_divFrom : ∀ {E : Type} [Field E] [NumberField E] [IsCMF
   have hx : ∀ a, x (e' a) = e a := fun a => by simp [x]
   let ε' : I → LinearMap.BilinForm ℤ (Fin T.r → ℤ) := fun k =>
     LinearMap.mk₂ ℤ (fun u v => ε k (x u) (H.w0 • x v) + ε k (x v) (H.w0 • x u))
-      (fun m₁ m₂ n => by simp only [map_add, smul_add, LinearMap.add_apply]; ring)
+      (fun m₁ m₂ n => by simp only [map_add (f := _), smul_add, LinearMap.add_apply]; ring)
       (fun c m n => by
         simp only [map_zsmul, LinearMap.smul_apply, LinearMap.map_smul, smul_eq_mul]
         rw [smul_comm H.w0 c (x m)]
         simp only [LinearMap.map_smul, smul_eq_mul]; ring)
-      (fun m n₁ n₂ => by simp only [map_add, smul_add, LinearMap.add_apply]; ring)
+      (fun m n₁ n₂ => by simp only [map_add (f := _), smul_add, LinearMap.add_apply]; ring)
       (fun c m n => by
         simp only [map_zsmul, LinearMap.smul_apply, LinearMap.map_smul, smul_eq_mul]
         rw [smul_comm H.w0 c (x n)]
@@ -101,7 +101,7 @@ theorem exists_qkPt_of_divFrom : ∀ {E : Type} [Field E] [NumberField E] [IsCMF
     refine Finset.prod_congr rfl fun i _ => ?_
     rw [← zpow_neg, ← zpow_neg, ← zpow_add₀ (hne i), ← zpow_add₀ (hne i)]
     congr 1
-    simp only [ε', LinearMap.mk₂_apply, hx, map_add, smul_add, LinearMap.add_apply]
+    simp only [ε', LinearMap.mk₂_apply, hx, map_add (f := _), smul_add, LinearMap.add_apply]
     ring
   obtain ⟨β', ββ', w', hF'⟩ := GlobalTheory.T.comesFromTautBase_of_rescaled_pullback_monomial T l.M' (mulDeg DR l.M') (mulDeg_psiEven _ _ hevR)
     (mulDeg_tauBimult _ _ hbiR) (mulDeg_psiUnitOn _ _ hunR) ib β ββ w hF R (RingHom.id R) Function.injective_id

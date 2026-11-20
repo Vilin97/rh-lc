@@ -44,7 +44,7 @@ theorem exists_ext_of_integral {A B O C : Type} [CommRing A] [IsDomain A] [CommR
       map_one' := hinj (by rw [hf, map_one, map_one])
       map_mul' := fun x y => hinj (by rw [map_mul, hf, hf, hf, map_mul])
       map_zero' := hinj (by rw [hf, map_zero, map_zero])
-      map_add' := fun x y => hinj (by rw [map_add, hf, hf, hf, map_add]) }
+      map_add' := fun x y => hinj (by rw [map_add (f := _), hf, hf, hf, map_add (f := _)]) }
   have hcomp : j1.comp φ = j0 := by
     ext a
     apply hinj

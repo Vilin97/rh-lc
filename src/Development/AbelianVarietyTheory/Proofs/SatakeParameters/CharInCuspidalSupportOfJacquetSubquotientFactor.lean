@@ -141,7 +141,7 @@ theorem Flag.piTensor {α : Type} [Fintype α] [DecidableEq α] {Γ Y : α → T
     · simp [Function.update_of_ne hba, hl] at hb
   · rintro _ ⟨u, hu, rfl⟩ y
     induction y using PiTensorProduct.induction_on with
-    | add x y hx hy => rw [map_add, add_sub_add_comm]; exact add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _), add_sub_add_comm]; exact add_mem hx hy
     | smul_tprod r x =>
       rw [map_smul, ← smul_sub]
       refine Submodule.smul_mem _ _ ?_

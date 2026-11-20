@@ -45,7 +45,7 @@ theorem det_ne_zero_iff_span_eq {K S : Type} [Field K] [CommRing S] [IsLocalRing
     have hδ : ∀ b, δ b = l (b - algebraMap K S (u b)) := fun b => rfl
     obtain ⟨c, hc⟩ := hsurj δ fun a b => by
       have h0 := hz _ (Submodule.mem_sup_right (Submodule.smul_mem_smul (hsub a) (hsub b)))
-      rw [hδ, hδ, hδ, ← smul_eq_mul (u a), ← smul_eq_mul (u b), ← map_smul, ← map_smul, ← map_add,
+      rw [hδ, hδ, hδ, ← smul_eq_mul (u a), ← smul_eq_mul (u b), ← map_smul, ← map_smul, ← map_add (f := _),
         ← sub_eq_zero, ← map_sub, ← h0]
       congr 1
       rw [smul_eq_mul]

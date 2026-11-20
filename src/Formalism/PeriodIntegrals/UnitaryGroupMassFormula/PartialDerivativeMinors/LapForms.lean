@@ -285,7 +285,7 @@ lemma lap_tm_zero (t : H) (n : ℕ) :
         obtain ⟨L', h', k', rfl, h1, h2, h3⟩ := hx
         exact ih L' h' k' h1 h2 (by have := relL_lt h3; omega)
       | zero => exact map_zero _
-      | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
       | smul a x _ hx => rw [map_smul, hx, smul_zero]
     exact key _ (gf_mem t L h k hh hk)
 
@@ -389,7 +389,7 @@ theorem pLapForms : PLapForms := by
       rw [e]
       exact lap_tm_zero t n L g d (fun a b => hg a b) hd (by rw [e1, e2]; omega)
     | zero => rw [zero_mul, map_zero]
-    | add x y _ _ hx hy => rw [add_mul, map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [add_mul, map_add (f := _), hx, hy, add_zero]
     | smul r x _ hx => rw [smul_mul_assoc, map_smul, hx, smul_zero]
   exact key _ hF
 

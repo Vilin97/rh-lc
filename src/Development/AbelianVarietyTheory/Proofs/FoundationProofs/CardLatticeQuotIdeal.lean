@@ -81,7 +81,7 @@ theorem coefLat_eq (D : D7) (cc : Ideal (𝓞 D.host.K)) :
       obtain ⟨c, hc, rfl⟩ := hb
       exact Submodule.subset_span ⟨c, hc, y, hy, rfl⟩
     | zero => rw [map_zero, zero_mul]; exact zero_mem _
-    | add b b' _ _ hb hb' => rw [map_add, add_mul]; exact add_mem hb hb'
+    | add b b' _ _ hb hb' => rw [map_add (f := _), add_mul]; exact add_mem hb hb'
     | smul r b _ hb =>
       rw [smul_eq_mul, map_mul, mul_assoc, ← Algebra.smul_def]
       exact Submodule.smul_mem _ r hb

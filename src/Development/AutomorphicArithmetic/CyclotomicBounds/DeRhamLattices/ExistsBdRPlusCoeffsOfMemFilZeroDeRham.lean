@@ -24,9 +24,9 @@ private theorem span_abs {Q Z O D B V κ : Type} [CommRing Q] [CommRing Z] [Comm
     obtain ⟨d, hd⟩ := ha
     obtain ⟨d', hd'⟩ := ha'
     refine ⟨d + d', ?_⟩
-    rw [map_add, hd, hd', ← Finset.sum_add_distrib]
+    rw [map_add (f := _), hd, hd', ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [Pi.add_apply, map_add, AddMonoidHom.add_apply]
+    rw [Pi.add_apply, map_add (f := _), AddMonoidHom.add_apply]
   | tmul v x =>
     obtain ⟨y0, hy0⟩ := hF x x.2
     obtain ⟨q, t, y1, ht, hy⟩ := hT v y0

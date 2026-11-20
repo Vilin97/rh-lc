@@ -41,7 +41,7 @@ theorem sndPull_cohom_zero_of_hodgeDeRham : GlobalTheory.Published.AbelianHodgeD
   have e3 := c3 D D' φ x (sm_whole _)
   simp only [Fn1.add, Fn1.neg, Fn1.zero, sndPull, TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_neg,
     TrivSqZeroExt.snd_sub, spOver_epsHom_ptV, snd_epsHom] at e1 e2 e3 ⊢
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
   linear_combination e1 + e2 + e3
 
 end GlobalTheory.PtExt

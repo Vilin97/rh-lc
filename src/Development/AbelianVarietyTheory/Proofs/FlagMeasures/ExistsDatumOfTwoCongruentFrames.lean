@@ -84,7 +84,7 @@ lemma img_frame (H : HermSp M V) {g : V ≃ₗ[E] V} (hg : IsUnitary H g)
         exact Submodule.subset_span ⟨b, rfl⟩
       | zero => simp
       | add a b _ _ ha hb =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ ha hb
       | smul c a _ ha =>
         have : g (c • a) = c • g a := by

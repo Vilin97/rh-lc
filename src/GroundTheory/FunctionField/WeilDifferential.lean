@@ -74,7 +74,7 @@ theorem mem_weilSpace {D : Divisor k K} {ω : Module.Dual k (Repartition k K)} :
       fun x => h _ (Submodule.mem_sup_right (diag_mem_principal x))⟩
   · rintro ⟨h1, h2⟩ a ha
     obtain ⟨b, hb, c, ⟨x, rfl⟩, rfl⟩ := Submodule.mem_sup.1 ha
-    rw [map_add, h1 b hb, h2 x, add_zero]
+    rw [map_add (f := _), h1 b hb, h2 x, add_zero]
 
 theorem weilSpace_anti {D E : Divisor k K} (h : D ≤ E) : weilSpace E ≤ weilSpace D :=
   Submodule.dualAnnihilator_anti (sup_le_sup_right (A_mono h) _)
@@ -84,7 +84,7 @@ theorem weilSpace_sup {D E : Divisor k K} {ω : Module.Dual k (Repartition k K)}
   rw [mem_weilSpace] at hD hE ⊢
   refine ⟨fun a ha => ?_, hD.2⟩
   obtain ⟨b, hb, c, hc, rfl⟩ := Submodule.mem_sup.1 (A_sup_le D E ha)
-  rw [map_add, hD.1 b hb, hE.1 c hc, add_zero]
+  rw [map_add (f := _), hD.1 b hb, hE.1 c hc, add_zero]
 
 instance (D : Divisor k K) : FiniteDimensional k (weilSpace D) :=
   Module.Finite.equiv (Submodule.dualQuotEquivDualAnnihilator (A D ⊔ principal k K))
@@ -112,7 +112,7 @@ theorem exists_indexOfSpeciality_eq_zero :
     convert hzL using 1
     abel
   have hD' := eq_genusInt_of_le hE₀ hle
-  rw [finrank_L_add_divisor D hz0, map_add, deg_divisor, add_zero] at hD'
+  rw [finrank_L_add_divisor D hz0, map_add (f := _), deg_divisor, add_zero] at hD'
   have hi := indexOfSpeciality_eq_genusInt D
   have : (indexOfSpeciality D : ℤ) = 0 := by linarith
   exact_mod_cast this
@@ -236,7 +236,7 @@ theorem smul_smul_scalar (c : k) (y : K) (ω : WeilDifferential k K) :
 
 noncomputable def weilMap (ω : WeilDifferential k K) : K →ₗ[k] Module.Dual k (Repartition k K) where
   toFun y := toDual (y • ω)
-  map_add' y z := by rw [add_smul, map_add]
+  map_add' y z := by rw [add_smul, map_add (f := _)]
   map_smul' c y := by rw [smul_smul_scalar, map_smul, RingHom.id_apply]
 
 @[simp]
@@ -314,7 +314,7 @@ theorem exists_smul_eq {ω₁ : WeilDifferential k K} (h₁ : ω₁ ≠ 0) (ω�
     rintro ⟨⟨y, hy⟩, ⟨z, hz⟩⟩ hp
     have hsum : y • ω₁ + z • ω₂ = 0 := by
       apply toDual_injective
-      rw [map_add, map_zero]
+      rw [map_add (f := _), map_zero]
       exact hp
     by_cases hz0 : z = 0
     · subst hz0
@@ -349,7 +349,7 @@ theorem exists_smul_eq {ω₁ : WeilDifferential k K} (h₁ : ω₁ ≠ 0) (ω�
     simp
   have h1 := le_genusInt (B + D₁)
   have h2 := le_genusInt (B + D₂)
-  rw [map_add] at h1 h2
+  rw [map_add (f := _)] at h1 h2
   rw [hl0, map_neg] at hi
   have : ((finrank k (L (B + D₁)) + finrank k (L (B + D₂)) : ℕ) : ℤ) ≤
       indexOfSpeciality (-B) := by exact_mod_cast hfin

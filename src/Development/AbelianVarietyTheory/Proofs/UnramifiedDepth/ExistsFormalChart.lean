@@ -205,7 +205,7 @@ theorem exists_basis : ∃ gb : Module.Basis (Fin g) R₀ B.gg, ∀ w : B.gg,
   have hθadd : ∀ v w, θ (v + w) = θ v + θ w := by
     intro v w
     apply huniq
-    rw [← hθ, TensorProduct.add_tmul, map_add, hadd, hθ, hθ, first_order_add x h0 hnat hinj hsurj]
+    rw [← hθ, TensorProduct.add_tmul, map_add (f := _), hadd, hθ, hθ, first_order_add x h0 hnat hinj hsurj]
     rfl
   have hθsmul : ∀ (r : R₀) w, θ (r • w) = r • θ w := by
     intro r w

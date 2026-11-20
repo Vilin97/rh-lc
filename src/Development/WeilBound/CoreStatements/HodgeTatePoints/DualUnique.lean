@@ -68,7 +68,7 @@ theorem dual_split [Module.Projective A M] (y : Fin N → M) (t : A) (G : Matrix
   rw [hs' x]
   nth_rewrite 2 [← hs' x]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [hz, map_add, map_sum, map_smul, smul_eq_mul, add_mul, Finset.sum_add_distrib, mul_sub,
+    simp only [hz, map_add (f := _), map_sum, map_smul, smul_eq_mul, add_mul, Finset.sum_add_distrib, mul_sub,
     Finset.mul_sum, mul_assoc]
   simp only [mul_comm (w _)]
   ring

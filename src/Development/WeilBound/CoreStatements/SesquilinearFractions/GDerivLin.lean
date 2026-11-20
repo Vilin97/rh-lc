@@ -109,7 +109,7 @@ theorem lie_model_with_cm_action : ∀ (E : Type) [Field E] [NumberField E] [IsC
     have h2 := top_le_of_fst _ _ (he0 _ (htan w')) U hU
     have := epsPart_mul (FU.u i P) (htan w) (htan w') U h h1 h2 f
     simp only [epsPart] at this
-    rw [this, (hpt w).2 U h1 f, (hpt w').2 U h2 f, map_add]
+    rw [this, (hpt w).2 U h1 f, (hpt w').2 U h2 f, map_add (f := _)]
   let M : LieModel Xo.univ.t.G (FU.u i P) (Fin g → ℂ) :=
     { pt := pt
       tan := htan

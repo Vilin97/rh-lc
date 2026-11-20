@@ -151,7 +151,7 @@ theorem exists_realUnitsRes_two_eq
     · change sumPlaceInv K ((∑ w, DirectSum.of (localGaloisCohomology K 2) (.inl w.1)
         (realLocalEquiv w 2 (t w))) + DirectSum.of (localGaloisCohomology K 2) (.inr v₀) c) = 0
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, sumPlaceInv_of, hc]
+        rw [map_add (f := _), map_sum, sumPlaceInv_of, hc]
       simp only [sumPlaceInv_of]
       exact add_neg_cancel s
   let g₀ := (sUnitsH2PrimaryEquiv K S 2 Nat.prime_two h2S ι).symm ⟨T, hT⟩

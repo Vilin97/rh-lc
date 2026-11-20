@@ -229,7 +229,7 @@ theorem isAdicComplete_of_lattice (p N : ℕ) [IsAdicComplete (span {(p : A)}) A
       | succ k ih =>
         have : a (k + 1) = a k + (p : A) ^ k * b k := by
           simp only [a, Finset.sum_range_succ, add_assoc]
-        rw [this, map_add, ih, map_mul, map_pow, map_natCast, hb]; ring
+        rw [this, map_add (f := _), ih, map_mul, map_pow, map_natCast, hb]; ring
     obtain ⟨L, hL⟩ := IsPrecomplete.prec' (I := span {(p : A)}) a (fun {m n} hmn => by
       rw [SModEq.sub_mem, mem_span_natCast_pow_iff, ← dvd_neg, neg_sub]
       simp only [a, add_sub_add_left_eq_sub]

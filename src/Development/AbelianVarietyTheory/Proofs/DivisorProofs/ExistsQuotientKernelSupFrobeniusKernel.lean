@@ -18,7 +18,7 @@ theorem isHopfIdeal_sup {k A : Type} [CommRing k] [CommRing A] [HopfAlgebra k A]
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
     have h1 := Submodule.IsCoideal.counit_eq_zero (I := I.restrictScalars k) hy
     have h2 := Submodule.IsCoideal.counit_eq_zero (I := J.restrictScalars k) hz
-    rw [map_add, h1, h2, add_zero]
+    rw [map_add (f := _), h1, h2, add_zero]
   map_mkQ_comul_eq_zero x hx := by
     set K := (I ⊔ J).restrictScalars k
     have key : ∀ (L : Ideal A) [L.IsHopfIdeal k], L ≤ I ⊔ J → ∀ y ∈ L,
@@ -31,10 +31,10 @@ theorem isHopfIdeal_sup {k A : Type} [CommRing k] [CommRing A] [HopfAlgebra k A]
       rw [e, TensorProduct.map_comp, LinearMap.comp_apply,
         Submodule.IsCoideal.map_mkQ_comul_eq_zero (I := L.restrictScalars k) hy, map_zero]
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add, map_add, key I le_sup_left y hy, key J le_sup_right z hz, add_zero]
+    rw [map_add (f := _), map_add (f := _), key I le_sup_left y hy, key J le_sup_right z hz, add_zero]
   antipode_mem x hx := by
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (Ideal.IsHopfIdeal.antipode_mem (R := k) hy)
       (Ideal.IsHopfIdeal.antipode_mem (R := k) hz)
 

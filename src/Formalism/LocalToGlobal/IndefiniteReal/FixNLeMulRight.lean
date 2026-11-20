@@ -18,13 +18,13 @@ def StabA (ρ : Formalism.AUTREP.GAf L n →* Module.End ℂ A) (U : Submodule �
 def perpA (B : A →ₗ⋆[ℂ] A →ₗ[ℂ] ℂ) (U : Submodule ℂ A) : Submodule ℂ A where
   carrier := {x | ∀ u ∈ U, B u x = 0}
   zero_mem' := fun u _ => map_zero _
-  add_mem' := fun hx hy u hu => by rw [map_add, hx u hu, hy u hu, add_zero]
+  add_mem' := fun hx hy u hu => by rw [map_add (f := _), hx u hu, hy u hu, add_zero]
   smul_mem' := fun c x hx u hu => by rw [map_smul, hx u hu, smul_zero]
 
 def lperp (B : A →ₗ⋆[ℂ] A →ₗ[ℂ] ℂ) (U : Submodule ℂ A) : Submodule ℂ A where
   carrier := {x | ∀ u ∈ U, B x u = 0}
   zero_mem' := fun u _ => by simp
-  add_mem' := fun hx hy u hu => by rw [map_add, LinearMap.add_apply, hx u hu, hy u hu, add_zero]
+  add_mem' := fun hx hy u hu => by rw [map_add (f := _), LinearMap.add_apply, hx u hu, hy u hu, add_zero]
   smul_mem' := fun c x hx u hu => by rw [map_smulₛₗ, LinearMap.smul_apply, hx u hu, smul_zero]
 
 def cspan (ρ : Formalism.AUTREP.GAf L n →* Module.End ℂ A) (a : A) : Submodule ℂ A :=

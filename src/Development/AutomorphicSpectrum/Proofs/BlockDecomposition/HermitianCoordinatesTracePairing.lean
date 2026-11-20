@@ -31,7 +31,7 @@ def hermF (σ : E →ₐ[F] E) (r : ℕ) : Submodule F (Matrix (Fin r) (Fin r) E
     have h1 := congrFun (congrFun ha i) j
     have h2 := congrFun (congrFun hb i) j
     simp only [ct, Matrix.transpose_apply, Matrix.map_apply] at h1 h2 ⊢
-    rw [Matrix.add_apply, map_add, h1, h2, Matrix.add_apply]
+    rw [Matrix.add_apply, map_add (f := _), h1, h2, Matrix.add_apply]
   zero_mem' := by
     refine Matrix.ext fun i j => ?_
     simp [ct]
@@ -52,12 +52,12 @@ theorem tF_comm (a b : Matrix (Fin r) (Fin r) E) : (tF a b : F) = tF b a := by
 def tB (σ : E →ₐ[F] E) : LinearMap.BilinForm F (hermF σ r) :=
   LinearMap.mk₂ F (fun a b => tF a.1 b.1)
     (fun a b c => by
-      simp only [tF, Submodule.coe_add, Matrix.add_mul, Matrix.trace_add, map_add, mul_add])
+      simp only [tF, Submodule.coe_add, Matrix.add_mul, Matrix.trace_add, map_add (f := _), mul_add])
     (fun c a b => by
       simp only [tF, Submodule.coe_smul, Matrix.smul_mul, Matrix.trace_smul, map_smul, smul_eq_mul]
       ring)
     (fun a b c => by
-      simp only [tF, Submodule.coe_add, Matrix.mul_add, Matrix.trace_add, map_add, mul_add])
+      simp only [tF, Submodule.coe_add, Matrix.mul_add, Matrix.trace_add, map_add (f := _), mul_add])
     (fun c a b => by
       simp only [tF, Submodule.coe_smul, Matrix.mul_smul, Matrix.trace_smul, map_smul, smul_eq_mul]
       ring)
@@ -100,7 +100,7 @@ theorem exists_tF_ne (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {h : Matr
       rw [Matrix.map_mul, Matrix.transpose_mul]
     have h3 : h * ct σ m = ct σ (m * h) := by rw [hmul, hh]
     rw [h3, ht, Matrix.trace_mul_comm, h1]
-  rw [tF, Matrix.mul_add, Matrix.trace_add, h1, h2, map_add, hs, hz]
+  rw [tF, Matrix.mul_add, Matrix.trace_add, h1, h2, map_add (f := _), hs, hz]
   norm_num
 
 theorem tB_sep (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) (a : hermF σ r)
@@ -168,7 +168,7 @@ theorem sigR_smul_gen (σ : E →ₐ[F] E) (c : R) (x : R ⊗[F] E) : sigR R σ 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [sigR, TensorProduct.smul_tmul']
-  | add x y h1 h2 => rw [smul_add, map_add, h1, h2, map_add, smul_add]
+  | add x y h1 h2 => rw [smul_add, map_add (f := _), h1, h2, map_add (f := _), smul_add]
 
 theorem alg_smul_tmul (c : F) (e : E) :
     algebraMap F R c • ((1 : R) ⊗ₜ[F] e) = (1 : R) ⊗ₜ[F] (c • e) := by
@@ -270,7 +270,7 @@ theorem sum_uL_smul {n : ℕ} (m m' : Fin n → Matrix (Fin r) (Fin r) D.host.E)
       simp [h0]
     · intro x y hx hy
       rw [GlobalTheory.CompanionTheory.HermVol.hermPart_add]
-      simp only [map_add, add_smul, Finset.sum_add_distrib, hx, hy]
+      simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, hx, hy]
     · intro a g
       rw [hermPart_smul, hermPart_ratm]
       simp only [map_smul, smul_eq_mul, mul_smul, ← Finset.smul_sum]

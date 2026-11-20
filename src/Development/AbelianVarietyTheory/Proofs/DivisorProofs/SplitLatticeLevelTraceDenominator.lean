@@ -44,7 +44,7 @@ theorem trace_denominator_of_hasLevel : ∀ (F : Type) [Field F] [NumberField F]
     exact exists_int_mul_trace_of_hasLevel h hν (h2 1 trivial)
   · rintro a b ⟨⟨m, hm⟩, m', hm'⟩ ⟨⟨n, hn⟩, n', hn'⟩
     refine ⟨⟨m + n, ?_⟩, m' + n', ?_⟩
-    · rw [map_add, mul_add, hm, hn]; push_cast; ring
-    · rw [add_mul, map_add, mul_add, hm', hn']; push_cast; ring
+    · rw [map_add (f := _), mul_add, hm, hn]; push_cast; ring
+    · rw [add_mul, map_add (f := _), mul_add, hm', hn']; push_cast; ring
 
 end GlobalTheory.HilbFam

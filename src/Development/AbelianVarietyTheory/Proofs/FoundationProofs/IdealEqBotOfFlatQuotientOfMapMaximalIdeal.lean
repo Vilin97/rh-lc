@@ -134,7 +134,7 @@ theorem flat_of_relationsLift [IsNoetherianRing A] (B : Type v) [CommRing B] [Al
     obtain ⟨y, rfl⟩ := h (n + k) J J.subtype x (by rw [mem_ker.mp hx]; simp)
     clear hx
     induction y with
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | tmul m j =>
       obtain ⟨⟨j, hj⟩, hj'⟩ := j
       have h1 : j ∈ I ^ n • (J : Submodule A A) := by

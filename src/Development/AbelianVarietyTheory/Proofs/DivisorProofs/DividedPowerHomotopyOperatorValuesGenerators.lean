@@ -20,7 +20,7 @@ theorem ctr_mDR_of_kill (hv : ∀ b, v (α b) = 0) (x : DR R B) : ctr v (h.mDR x
   | h b => rw [h.mDR_algebraMap, ctr_algebraMap]
   | hd b => rw [h.mDR_ι, h.m1_D, ctr_ι, Derivation.liftKaehlerDifferential_comp_D, hv, map_zero]
   | hm x y hx hy => rw [map_mul, ctr_mul, hx, hy, zero_mul, mul_zero, add_zero]
-  | ha x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | ha x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 theorem lie_mDR_of_kill (hv : ∀ b, v (α b) = 0) (x : DR R B) : lie v (h.mDR x) = 0 := by
   rw [lie_apply, ctr_mDR_of_kill v h hv, map_zero, zero_add, ← h.mDR_dDR, ctr_mDR_of_kill v h hv]

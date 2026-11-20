@@ -29,7 +29,7 @@ theorem UpperTheory.V.X.Kato.desc :
       (hcont i).comp_continuous ((continuous_apply j).comp hcc) fun g => hmem g j
   have hB : ∀ i, ∃ m : Fin n → ↥E, ∀ g, f i (c g) = Loc.colRep r g m - m := fun i => by
     refine (mem_coboundaries1 _ _).1 (h (fun g => f i (c g)) ((mem_Z1_iff_cocycle _ _).2 ⟨hfc i, fun g g' => ?_⟩) ?_)
-    · rw [hcoc, map_add, hf]
+    · rw [hcoc, map_add (f := _), hf]
     · exact UpperTheory.V.X.Kato.bkMap l F Ω _ _ _ _ _ _ (f i) (hf i) c (hfc i) hbk
   choose m hm using hB
   refine (mem_coboundaries1 _ _).2 ⟨fun j => ∑ i, ε i * (m i j : Qbar l), fun g => ?_⟩

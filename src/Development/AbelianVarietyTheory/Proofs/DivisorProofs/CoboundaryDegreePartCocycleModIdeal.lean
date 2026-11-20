@@ -59,7 +59,7 @@ theorem cocycle_rel_mod : ∀ (B O Q : Type) [CommRing B] [CommRing Q] [CommRing
     omega
   set w : Fin d ⊕ (Fin d ⊕ Fin d) →₀ ℕ := Finsupp.sumElim a (Finsupp.sumElim b e) with hw_def
   have hw : w.degree = m := by
-    rw [← hn, ← hn', hw_def, degree_sumElim3, map_add, map_add]
+    rw [← hn, ← hn', hw_def, degree_sumElim3, map_add (f := _), map_add (f := _)]
   have hX : ∀ (R : Type) [CommRing R] (j : Fin d),
       constantCoeff (x1 j : MvPowerSeries (Fin d ⊕ (Fin d ⊕ Fin d)) R) = 0 ∧
       constantCoeff (x2 j : MvPowerSeries (Fin d ⊕ (Fin d ⊕ Fin d)) R) = 0 ∧
@@ -108,7 +108,7 @@ theorem cocycle_rel_mod : ∀ (B O Q : Type) [CommRing B] [CommRing Q] [CommRing
       Sum.elim (fun i => x1 i + x2 i) x3 := by
     funext s
     cases s with
-    | inl i => simp only [up, Sum.elim_inl, map_add, (hmX i).1, (hmX i).2.1]
+    | inl i => simp only [up, Sum.elim_inl, map_add (f := _), (hmX i).1, (hmX i).2.1]
     | inr i => simp only [up, Sum.elim_inr]; exact (hmX i).2.2
   rw [hu2, hl2] at h2
   have hv2 : coeff w (subst (Sum.elim (fun i => (x1 i + x2 i : MvPowerSeries (Fin d ⊕ (Fin d ⊕ Fin d)) Q)) x3) c) =
@@ -144,7 +144,7 @@ theorem cocycle_rel_mod : ∀ (B O Q : Type) [CommRing B] [CommRing Q] [CommRing
     funext s
     cases s with
     | inl i => simp only [up, Sum.elim_inl]; exact (hmX i).1
-    | inr i => simp only [up, Sum.elim_inr, map_add, (hmX i).2.1, (hmX i).2.2]
+    | inr i => simp only [up, Sum.elim_inr, map_add (f := _), (hmX i).2.1, (hmX i).2.2]
   rw [hu3, hl3] at h3
   have hv3 : coeff w (subst (Sum.elim x1 (fun i => (x2 i + x3 i : MvPowerSeries (Fin d ⊕ (Fin d ⊕ Fin d)) Q))) c) =
       (∏ i, ((b + e) i).choose (b i) : Q) * coeff (Finsupp.sumElim a (b + e)) c := by
@@ -158,11 +158,11 @@ theorem cocycle_rel_mod : ∀ (B O Q : Type) [CommRing B] [CommRing Q] [CommRing
   have hsplit : coeff w (cob2 (up Q μ) c) = coeff w (at2 c x2 x3) -
       coeff w (subst (Sum.elim (op (up Q μ) x1 x2) x3) c) +
       coeff w (subst (Sum.elim x1 (op (up Q μ) x2 x3)) c) - coeff w (at2 c x1 x2) := by
-    simp only [cob2, map_sub, map_add]; rfl
+    simp only [cob2, map_sub, map_add (f := _)]; rfl
   rw [hsplit, hw_def, coeff_evalTwoGroups_second_third_eq_zero c a b e ha, coeff_evalTwoGroups_first_second_eq_zero c a b e he, ← hw_def] at hk'
   rw [hbe] at hv3
   refine ⟨-k - r2 + r3, N.add_mem (N.sub_mem (N.neg_mem hk) hr2) hr3, ?_⟩
-  rw [map_add, map_sub, map_neg, ← hk', ← h2, ← h3, hv2, hv3]
+  rw [map_add (f := _), map_sub, map_neg, ← hk', ← h2, ← h3, hv2, hv3]
   ring
 
 end GlobalTheory.CobRel

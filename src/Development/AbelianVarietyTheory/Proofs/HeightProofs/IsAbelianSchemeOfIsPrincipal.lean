@@ -115,7 +115,7 @@ theorem mem_eigenSp_iff (τ : E →+* K) (c : Fin G.g → K) : c ∈ G.eigenSp �
     exact coord_unique G (hr a c x hx) (h x hx)
   refine ⟨fun h => (key c).2 fun a => ?_, fun h => Submodule.subset_span h⟩
   refine Submodule.span_induction (p := fun c _ => r a c = τ (a : E) • c) (fun c hc => (key c).1 hc a) (by simp)
-    (fun x y _ _ hx hy => by rw [map_add, hx, hy, smul_add]) (fun b x _ hx => by rw [map_smul, hx, smul_comm]) h
+    (fun x y _ _ hx hy => by rw [map_add (f := _), hx, hy, smul_add]) (fun b x _ hx => by rw [map_smul, hx, smul_comm]) h
 
 end Vec
 

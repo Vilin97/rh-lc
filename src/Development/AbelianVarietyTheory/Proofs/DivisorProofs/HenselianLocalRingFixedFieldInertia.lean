@@ -130,7 +130,7 @@ theorem henselianLocalRing_of_isSepClosed {Ω : Type} [Field Ω] [IsSepClosed Ω
     intro e
     apply hFd
     have : aeval (ιW r') (derivative F₀) = 0 := by
-      rw [hh, derivative_mul, map_add, map_mul, map_mul, e, minpoly.aeval]
+      rw [hh, derivative_mul, map_add (f := _), map_mul, map_mul, e, minpoly.aeval]
       ring
     rw [aeval_def, ← Polynomial.eval_map, ← Polynomial.derivative_map, hF₀F] at this
     exact this

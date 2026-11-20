@@ -72,7 +72,7 @@ theorem algebraMap_smul_basis (p q : F[X]) :
       (p • (1 : W.toAffine.CoordinateRing) + q • AdjoinRoot.mk W.toAffine.polynomial X) =
       algebraMap F[X] W.toAffine.FunctionField p +
         algebraMap F[X] W.toAffine.FunctionField q * genY W := by
-  rw [map_add, Algebra.smul_def, Algebra.smul_def, mul_one, map_mul,
+  rw [map_add (f := _), Algebra.smul_def, Algebra.smul_def, mul_one, map_mul,
     ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
   rfl
 
@@ -87,7 +87,7 @@ theorem valuation_poly_le_one (w : Valuation W.toAffine.FunctionField ℤᵐ⁰)
     rcases eq_or_ne c 0 with rfl | hc
     · simp
     · exact (hF c hc).le
-  | add p q hp hq => rw [map_add]; exact w.map_add_le hp hq
+  | add p q hp hq => rw [map_add (f := _)]; exact w.map_add_le hp hq
   | monomial n c ih =>
     rw [pow_succ, ← mul_assoc, map_mul, map_mul, ← genX_eq]
     exact mul_le_one' ih hx
@@ -102,7 +102,7 @@ theorem valuation_poly_of_one_lt (w : Valuation W.toAffine.FunctionField ℤᵐ�
         (C p.leadingCoeff * X ^ p.natDegree)) = exp (d * k) := by
       rw [map_mul, map_pow, algebraMap_C_functionField, Valuation.map_mul, Valuation.map_pow,
         hF _ (leadingCoeff_ne_zero.mpr hp), ← genX_eq, hk, one_mul, ← exp_nsmul, h, nsmul_eq_mul]
-    rw [← eraseLead_add_C_mul_X_pow p, map_add]
+    rw [← eraseLead_add_C_mul_X_pow p, map_add (f := _)]
     rcases (eraseLead_natDegree_lt_or_eraseLead_eq_zero p) with hlt | he
     · by_cases he : p.eraseLead = 0
       · rw [he, map_zero, zero_add, hlead]
@@ -133,7 +133,7 @@ noncomputable def weierstrassRHS : F[X] := X ^ 3 + C W.a₂ * X ^ 2 + C W.a₄ *
 theorem genY_sq_add_weierstrassB :
     genY W ^ 2 + algebraMap F[X] W.toAffine.FunctionField (weierstrassB W) * genY W =
       algebraMap F[X] W.toAffine.FunctionField (weierstrassRHS W) := by
-  simp only [weierstrassB, weierstrassRHS, map_add, map_mul, map_pow,
+  simp only [weierstrassB, weierstrassRHS, map_add (f := _), map_mul, map_pow,
     algebraMap_C_functionField, ← genX_eq]
   linear_combination genY_sq_add W
 
@@ -310,7 +310,7 @@ theorem exists_eq_pow_valuation_of_le_one (w : Valuation W.toAffine.FunctionFiel
     { carrier := {a | w (algebraMap _ W.toAffine.FunctionField a) < 1}
       zero_mem' := by simp
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_ofPred_eq, map_add] at ha hb ⊢
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at ha hb ⊢
         exact lt_of_le_of_lt (w.map_add _ _) (max_lt ha hb)
       smul_mem' := fun c a ha => by
         simp only [Set.mem_ofPred_eq, smul_eq_mul, map_mul] at ha ⊢

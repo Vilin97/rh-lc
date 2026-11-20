@@ -150,7 +150,7 @@ def thetaL : ThetaL P AI where
   θ_add x hx y hy := by
     obtain ⟨a, ha⟩ := (fil_zero T x).1 hx
     obtain ⟨b, hb⟩ := (fil_zero T y).1 hy
-    rw [th_eq T ha, th_eq T hb, th_eq T (z := a + b) (by rw [map_add, map_add, ha, hb]), map_add]
+    rw [th_eq T ha, th_eq T hb, th_eq T (z := a + b) (by rw [map_add (f := _), map_add (f := _), ha, hb]), map_add (f := _)]
   θ_mul x hx y hy := by
     obtain ⟨a, ha⟩ := (fil_zero T x).1 hx
     obtain ⟨b, hb⟩ := (fil_zero T y).1 hy

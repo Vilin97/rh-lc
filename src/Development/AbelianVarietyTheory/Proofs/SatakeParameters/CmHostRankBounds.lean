@@ -25,7 +25,7 @@ theorem dv_mem_span_of_formallyUnramified : ∀ (k K L : Type) [Field k] [Field 
       (KaehlerDifferential.exact_mapBaseChange_map k B B' x).mp (Subsingleton.elim _ _)
     induction y with
     | zero => simp
-    | add _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+    | add _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
     | tmul b m =>
       rw [KaehlerDifferential.mapBaseChange_tmul]
       refine Submodule.smul_mem _ b ?_
@@ -37,7 +37,7 @@ theorem dv_mem_span_of_formallyUnramified : ∀ (k K L : Type) [Field k] [Field 
         rw [KaehlerDifferential.map_D]
         exact Submodule.subset_span ⟨a, rfl⟩
       | zero => simp
-      | add _ _ _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+      | add _ _ _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
       | smul a x _ hx =>
         rw [map_smul, ← algebraMap_smul B' a]
         exact Submodule.smul_mem _ _ hx

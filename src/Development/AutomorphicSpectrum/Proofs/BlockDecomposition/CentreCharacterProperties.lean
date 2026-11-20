@@ -27,7 +27,7 @@ theorem chz_facts : ∀ {D : D7} {ρ : ℕ} (ψ : AddChar (AF D.host.F) ℂ), Is
         (HMul.hMul (b₀.1.map (incA D)) z.1 : Mx D ρ ρ) + (HMul.hMul (b₀.1.map (incA D)) z'.1 : Mx D ρ ρ) :=
       Matrix.mul_add _ _ _
     have hadd : ∀ a c : AE D, halfTr (a + c) = halfTr a + halfTr c := fun a c => by
-      simp only [halfTr, trA, map_add, mul_add]
+      simp only [halfTr, trA, map_add (f := _), mul_add]
     unfold chz
     rw [e, Matrix.trace_add, hadd, AddChar.map_add_eq_mul]
   · obtain ⟨Z, hZ⟩ := hz

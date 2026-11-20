@@ -21,7 +21,7 @@ theorem deriv_pow (J : Ideal (On p n)) (D : Derivation (O0 p) (On p n) (On p n �
   induction i with
   | zero => simp
   | succ k ih =>
-    rw [pow_succ, Derivation.leibniz, ih, h, smul_mk, smul_mk, ← map_add]
+    rw [pow_succ, Derivation.leibniz, ih, h, smul_mk, smul_mk, ← map_add (f := _)]
     congr 1
     push_cast
     ring

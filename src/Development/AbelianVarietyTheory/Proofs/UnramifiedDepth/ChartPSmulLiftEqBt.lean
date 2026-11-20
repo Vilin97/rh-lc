@@ -77,7 +77,7 @@ private lemma btTan_chi_tg {R₀ : Type} [CommRing R₀] {g : ℕ} {B : BX R₀}
       exact hmul _ (hle (hM k j)) _ (btTanCrd ch.gb π.ker j y).2
     rw [Matrix.sub_mulVec, Matrix.one_mulVec, Pi.sub_apply, sub_eq_zero] at h0
     rw [Pi.add_apply, h0] at h
-    simp only [map_add, Submodule.coe_add]
+    simp only [map_add (f := _), Submodule.coe_add]
     exact h
 
 theorem chart_p_smul_lift_eq_bt :
@@ -136,7 +136,7 @@ theorem chart_p_smul_lift_eq_bt :
         have hp0 : (Tw.q 0).1 (p : (Tw.O : Type)) = 0 := by
           rw [← RingHom.mem_ker, D.tower_zero_ker]; exact Ideal.subset_span rfl
         rw [eq_add_of_sub_eq hc.symm]
-        simp only [map_add, map_mul, map_natCast (algebraMap ℤ_[p] (Tw.O : Type)), hp0]
+        simp only [map_add (f := _), map_mul, map_natCast (algebraMap ℤ_[p] (Tw.O : Type)), hp0]
         simp
       rw [h2, nsmul_eq_mul, mul_comm]
     · have h := btTan_chi_tg D.ch (hF D.ch _) D.wd.ρW D.sm.nil D.wd.πW hsq D.wd.ρ1 D.wd.ρW_eq v k

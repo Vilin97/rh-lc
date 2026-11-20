@@ -202,7 +202,7 @@ theorem rderC_theta_eq_zero_any : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) 
   have a2 := ((hY φ hφ).2.2.2 (h, g) 0).deriv
   simp only [Prod.mk_mul_mk, mul_one] at a1 a2
   have a3 := congrFun (congrArg (om (h, g)) key) 0
-  rw [LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul, map_zero] at a3
+  rw [LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul, map_zero] at a3
   simp only [Pi.add_apply, Pi.smul_apply, Rder, thetaKO]
   rw [a1, a2]
   exact a3

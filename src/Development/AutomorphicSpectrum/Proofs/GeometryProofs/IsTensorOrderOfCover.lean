@@ -229,7 +229,7 @@ theorem exists_inducesOnPts (Γ : QFGroup R T) {S : Scheme.{0}} {G : Over S} [Gr
 
 theorem valAt_add_one {B : Type} [CommRing B] {X : Scheme.{0}} (x : Spec (CommRingCat.of B) ⟶ X)
     (a : Γ(X, ⊤)) : valAt x ⊤ le_top (a + 1) = valAt x ⊤ le_top a + 1 := by
-  simp only [valAt_top, map_add, map_one]
+  simp only [valAt_top, map_add (f := _), map_one]
 
 theorem valAt_sub_one {B : Type} [CommRing B] {X : Scheme.{0}} (x : Spec (CommRingCat.of B) ⟶ X)
     (a : Γ(X, ⊤)) : valAt x ⊤ le_top (a - 1) = valAt x ⊤ le_top a - 1 := by
@@ -501,7 +501,7 @@ theorem exists_ev_eq : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [Comm
     { carrier := {a | ∃ b, ev b = ev a * f}
       add_mem' := by
         rintro a a' ⟨b, hb⟩ ⟨b', hb'⟩
-        exact ⟨b + b', by rw [map_add, map_add, hb, hb', add_mul]⟩
+        exact ⟨b + b', by rw [map_add (f := _), map_add (f := _), hb, hb', add_mul]⟩
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := by
         rintro c a ⟨b, hb⟩
@@ -576,7 +576,7 @@ theorem isTensorOrder_of_cover [Finite T] (Γ : QFGroup R T) (j : Γ.G.left ⟶ 
     induction c using TensorProduct.induction_on with
     | zero => simp
     | tmul r a => rw [hτ1, hev, hev]; rfl
-    | add a b ha hb => rw [map_add, map_add, map_add, Pi.add_apply, Pi.add_apply, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), Pi.add_apply, Pi.add_apply, ha, hb]
   obtain ⟨j', ho', hpt, hQ⟩ := exists_emb_baseChange R T Γ _ j hj ho R' Γ' F hF ev fun a t => by rw [hev, _root_.one_mul]
   have hcov : ∀ P : PrimeSpectrum (R' ⊗[R] (Γ.btOrder ⊤)), ∃ (t : T) (g : Γ'.G.left),
       ∀ c, c ∈ P.asIdeal ↔ τ t c ∈ (j' g).asIdeal := by

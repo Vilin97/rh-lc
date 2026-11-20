@@ -49,7 +49,7 @@ theorem coeff_zero_of_separated {ι V : Type*} [AddCommGroup V] [Module ℂ V] [
       have key : ∑ z ∈ s, (c z * (χ z - χ a)) • v z =
           A (c a • v a + ∑ z ∈ s, c z • v z) - χ a • (c a • v a + ∑ z ∈ s, c z • v z) := by
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [map_add, map_sum, map_smul, hA a (Finset.mem_insert_self a s), smul_add, Finset.smul_sum,
+          rw [map_add (f := _), map_sum, map_smul, hA a (Finset.mem_insert_self a s), smul_add, Finset.smul_sum,
           add_sub_add_comm, smul_comm (χ a) (c a), sub_self, zero_add, ← Finset.sum_sub_distrib]
         refine Finset.sum_congr rfl fun z hz => ?_
         rw [map_smul, hA z (Finset.mem_insert_of_mem hz), smul_smul, smul_smul, ← sub_smul]

@@ -19,7 +19,7 @@ theorem coeff_mem_of_mem_smul_top {O σ : Type} [CommRing O] (I : Ideal O)
   refine Submodule.smul_induction_on hh (fun a ha x _ => ?_) (fun x y hx hy => ?_)
   · rw [MvPowerSeries.coeff_smul]
     exact I.mul_mem_right _ ha
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact I.add_mem hx hy
 
 theorem presents_quotient :

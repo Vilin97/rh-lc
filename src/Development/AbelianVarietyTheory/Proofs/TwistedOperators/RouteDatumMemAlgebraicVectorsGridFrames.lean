@@ -234,7 +234,7 @@ theorem isVacF_cj (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {S T : HSp D} 
     dRho_neg' hψ hθ ht]
   funext x
   have h2 := congrArg (starRingEnd ℂ) (congrFun h0 x)
-  simp only [GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj, id_eq, Pi.add_apply, Pi.smul_apply, Pi.neg_apply, smul_eq_mul, Pi.zero_apply, map_add, map_mul,
+  simp only [GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj, id_eq, Pi.add_apply, Pi.smul_apply, Pi.neg_apply, smul_eq_mul, Pi.zero_apply, map_add (f := _), map_mul,
     Complex.conj_I, Complex.conj_conj, map_zero] at h2 ⊢
   linear_combination h2
 

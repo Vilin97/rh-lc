@@ -249,13 +249,13 @@ theorem translate_integral : ∀ (q : ℕ) [Fact q.Prime] (M : Mdl q) (ℓ : ℂ
     filter_upwards [hev, hev2] with z ⟨hz, _, hxu, hyw⟩ hzt
     obtain ⟨hz0, hφz⟩ := hφ z hz
     obtain ⟨hzt0, hφzt⟩ := hφ (z + t) hzt
-    have hsum : φ t + φ z = φ (z + t) := by rw [map_add, add_comm]
+    have hsum : φ t + φ z = φ (z + t) := by rw [map_add (f := _), add_comm]
     rw [hφt, hφz, hφzt] at hsum
     obtain ⟨c1, c2⟩ := chord M.W ht0 hz0 hzt0 (by convert hsum)
     rw [← hkd, ← hpd, ← hgd] at c1
     have c1' := congrArg M.ι.symm c1
     have c2' := congrArg M.ι.symm c2
-    simp only [map_add, map_sub, map_mul, map_pow, map_neg, RingEquiv.symm_apply_apply] at c1' c2'
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_neg, RingEquiv.symm_apply_apply] at c1' c2'
     rw [← hxu]
     constructor
     · linear_combination M.w z ^ 2 * c1' - M.ι.symm p * M.w z * hyw
@@ -271,7 +271,7 @@ theorem translate_integral : ∀ (q : ℕ) [Fact q.Prime] (M : Mdl q) (ℓ : ℂ
     ((1 + cst (M.ι.symm t₀) * w) * (F - cst (M.ι.symm s₀)) -
       (cst (M.ι.symm t₀) + cst (M.ι.symm M.W.a₁) * F + cst (M.ι.symm M.W.a₃)) * (u - cst (M.ι.symm s₀) * w))
     (key.mono fun z hz => hz.2)
-  simp only [map_add, map_sub, map_mul, map_pow, map_one, hatHom_cst] at E₁ E₂
+  simp only [map_add (f := _), map_sub, map_mul, map_pow, map_one, hatHom_cst] at E₁ E₂
   obtain ⟨r1, r2, r3⟩ := series (U := hatHom M.ι ℓ hℓ u) (V := hatHom M.ι ℓ hℓ w) hv hys hv0 hys0 hU hV
     hs ht h1 h3 hk hp hg E₁ E₂
   refine ⟨r1, r2, fun r hr => ?_⟩

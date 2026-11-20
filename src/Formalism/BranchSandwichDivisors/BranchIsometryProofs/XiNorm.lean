@@ -155,7 +155,7 @@ lemma xn_key (ι : κ → Fin r) (hι : Function.Injective ι) {p : ℕ} (hp : p
         Finset.sum_const, Finset.card_image_of_injective _ ha]
       simp only [Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
       ring
-    rw [hsum, map_add, map_sub, map_natCast, map_natCast]
+    rw [hsum, map_add (f := _), map_sub, map_natCast, map_natCast]
     ring
   · have hz : initMinor ℂ (ι ∘ a) (Nat.le_of_succ_le hp) = 0 :=
       xn_minor_zero _ _ fun h => ha h.of_comp
@@ -261,7 +261,7 @@ private lemma coeff_pderiv_eq_mul_coeff_single_add (v : Fin r × Fin n) (m : (Fi
         simp
       · rfl
   next p q hp hq =>
-    simp only [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+    simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq, mul_add]
 
 private lemma fockF_X_mul_eq_pderiv (v : Fin r × Fin n) (G H : MvPolynomial (Fin r × Fin n) ℂ) :
     fockF (X v * G) H = fockF G (pderiv v H) := by
@@ -525,7 +525,7 @@ lemma xn_E_eq (t s : Fin n) (f : MvPolynomial (Fin r × Fin n) ℂ) :
   next a =>
     simp [MvPolynomial.derivation_C]
   next p q hp hq =>
-    simp only [map_add, mul_add, Finset.sum_add_distrib, hp, hq]
+    simp only [map_add (f := _), mul_add, Finset.sum_add_distrib, hp, hq]
   next p v hp =>
     have e := xn_E_X t s v
     simp only [Derivation.leibniz, smul_eq_mul, mul_add, Finset.sum_add_distrib, ← hp]
@@ -570,7 +570,7 @@ lemma xn_hR {μ : Fin n → ℕ} {f : MvPolynomial (Fin r × Fin n) ℂ} (hf : f
     intro g
     induction g using MvPolynomial.induction_on
     next a => simp [MvPolynomial.derivation_C]
-    next p q hp hq => simp only [map_add, hp, hq]
+    next p q hp hq => simp only [map_add (f := _), hp, hq]
     next p v hp =>
       rw [map_mul (colAddGen ℂ (r := r) t s), Derivation.leibniz (pderiv (R := ℂ) none), smul_eq_mul,
         smul_eq_mul, map_add, map_mul ε, map_mul ε, hp, hεc, hεc, hXv,
@@ -597,7 +597,7 @@ lemma xn_hW {μ : Fin n → ℕ} {f : MvPolynomial (Fin r × Fin n) ℂ} (hf : f
     next v k d hv hk ih =>
       obtain ⟨k', rfl⟩ : ∃ k', k = k' + 1 := ⟨k - 1, by omega⟩
       rw [MvPolynomial.monomial_single_add, Derivation.leibniz, ih, Derivation.leibniz_pow]
-      simp only [ndEul, MvPolynomial.mkDerivation_X, map_add, Pi.add_apply, Nat.add_sub_cancel]
+      simp only [ndEul, MvPolynomial.mkDerivation_X, map_add (f := _), Pi.add_apply, Nat.add_sub_cancel]
       first
       | rw [Finsupp.weight_single_index]
       | rw [Finsupp.weight_single]

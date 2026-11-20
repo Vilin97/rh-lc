@@ -1334,7 +1334,7 @@ theorem lead_kap (n : ℕ) (p : Ty P → ℂ[X]) (c : Ty P → ℂ) (hp : ∀ π
     simp [mul_comm]
   beta_reduce
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [h, map_add, map_smul, map_sum]
+    rw [h, map_add (f := _), map_smul, map_sum]
   simp only [map_smul]
 
 theorem lead_prod (s : Finset ℕ) :
@@ -2554,7 +2554,7 @@ theorem IsPoly.const (b : B) : IsPoly fun _ => b := ⟨C b, fun y => (ev_C y b).
 
 theorem IsPoly.add {f g : ℂ → B} (hf : IsPoly f) (hg : IsPoly g) : IsPoly fun y => f y + g y := by
   obtain ⟨p, hp⟩ := hf; obtain ⟨q, hq⟩ := hg
-  exact ⟨p + q, fun y => by show f y + g y = _; rw [hp, hq, map_add]⟩
+  exact ⟨p + q, fun y => by show f y + g y = _; rw [hp, hq, map_add (f := _)]⟩
 
 theorem IsPoly.sub {f g : ℂ → B} (hf : IsPoly f) (hg : IsPoly g) : IsPoly fun y => f y - g y := by
   obtain ⟨p, hp⟩ := hf; obtain ⟨q, hq⟩ := hg
@@ -3385,7 +3385,7 @@ theorem relD4core (hN : SSNorm) (hM : SSMixed) (hS : NabSS) (hK : Curvature) (hP
   have e2 : ∀ z : ℂ, z • (ggiA P D * ggiA P D) = kap P D (fun _ => z) * (ggiA P D * ggiA P D) := fun z => by
     have : kap P D (fun _ => z) = algebraMap ℂ (A P D) z := (kap P D).commutes z
     rw [this, Algebra.smul_def]
-  rw [e1, e2, ← add_mul, ← add_mul, ← map_add, ← map_add, ← smul_mul_assoc, ← map_smul]
+  rw [e1, e2, ← add_mul, ← add_mul, ← map_add (f := _), ← map_add (f := _), ← smul_mul_assoc, ← map_smul]
   congr 2
   funext π
   have hs := WB.scalar_partial_fraction_identity P hP π u v hu hv
@@ -3518,7 +3518,7 @@ theorem nf11 (hN : SSNorm) (hP : P.OK) {u : ℂ} (hu : Good P u) :
     L4.upper_sum_mul_lambda P D hP hu hN, t11, mul_add]
   have e : ggiA P D * (kap P D fun π => wC P π u) = dA P D u + ggiA P D * kap P D fun π =>
       ∑ l ∈ Icc 1 (P.k - 1), ((Nrm P l π : ℝ) : ℂ) * xEx P {l} π u / (u + (rho P π l : ℂ) + 1) := by
-    rw [dA, ← mul_smul_comm, ← map_smul, ← mul_add, ← map_add]
+    rw [dA, ← mul_smul_comm, ← map_smul, ← mul_add, ← map_add (f := _)]
     congr 2
     funext π
     rw [WB.wC_eq P hP π u hu]
@@ -3749,7 +3749,7 @@ theorem absCombo {C : Type*} [CommRing C] [Algebra ℂ C] (κ : C →ₐ[ℂ] R)
     κ φ1 * ((-N - cu • b) + b) + κ φ2 * (-N - cv • b) = κ ψ1 * ((-N - cv • b) + b) + κ ψ2 * (-N - cu • b) := by
   have e1 := congrArg (fun f => κ f * N) h1
   have e2 := congrArg (fun f => κ f * b) h2
-  simp only [map_add, map_sub, map_smul, add_mul, sub_mul, smul_mul_assoc] at e1 e2
+  simp only [map_add (f := _), map_sub, map_smul, add_mul, sub_mul, smul_mul_assoc] at e1 e2
   simp only [mul_add, mul_sub, mul_neg, mul_smul_comm]
   linear_combination (norm := module) -e1 + e2
 
@@ -4395,8 +4395,8 @@ theorem ev_eq_sum (Y : ℂ) (p : B[X]) : ev Y p = ∑ i ∈ p.support, Y ^ i •
 
 theorem ev_comp (Y c : ℂ) (p : B[X]) : ev Y (p.comp (X + C (algebraMap ℂ B c))) = ev (Y + c) p := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [add_comp, map_add, map_add, hp, hq]
-  | monomial n a => rw [monomial_comp, map_mul, map_pow, map_add, ev_C, ev_X, ev_C, ev_monomial, map_add]
+  | add p q hp hq => rw [add_comp, map_add (f := _), map_add (f := _), hp, hq]
+  | monomial n a => rw [monomial_comp, map_mul, map_pow, map_add (f := _), ev_C, ev_X, ev_C, ev_monomial, map_add (f := _)]
 
 def IsPoly (F : ℂ → B) : Prop := ∃ p : B[X], ∀ Y, F Y = ev Y p
 
@@ -4408,7 +4408,7 @@ theorem IsPoly.const (a : B) : IsPoly (fun _ => a) := ⟨C a, fun Y => (ev_C Y a
 
 theorem IsPoly.add {F G : ℂ → B} (hF : IsPoly F) (hG : IsPoly G) : IsPoly (fun Y => F Y + G Y) := by
   obtain ⟨p, hp⟩ := hF; obtain ⟨q, hq⟩ := hG
-  exact ⟨p + q, fun Y => by show F Y + G Y = _; rw [map_add, hp, hq]⟩
+  exact ⟨p + q, fun Y => by show F Y + G Y = _; rw [map_add (f := _), hp, hq]⟩
 
 theorem IsPoly.sub {F G : ℂ → B} (hF : IsPoly F) (hG : IsPoly G) : IsPoly (fun Y => F Y - G Y) := by
   obtain ⟨p, hp⟩ := hF; obtain ⟨q, hq⟩ := hG
@@ -4972,7 +4972,7 @@ theorem raising_lowering_commutator_alt (hSc : SSScalar) (hSh : SSShift) (hR : R
     absC _ _ _ _ _ _ _ _ hGGi hGdef czzb.eq cGiz.eq cGizb.eq nz nGi nszb nsGi (hCurv P D), ti_mul, ti_mul,
     absFin _ _ _ _ cK, ← mul_smul_comm, ← mul_smul_comm, ← mul_sub]
   refine congrArg (fun t => ggiA P D * ggiA P D * t) ?_
-  rw [← map_smul, ← map_smul, ← map_sub, ← map_one (kap P D), ← map_smul, ← map_add, ← map_add]
+  rw [← map_smul, ← map_smul, ← map_sub, ← map_one (kap P D), ← map_smul, ← map_add (f := _), ← map_add (f := _)]
   refine congrArg (kap P D) (funext fun π => ?_)
   have := pf P hP π u (h0 π) (h1 π) (h2 π)
   simp only [Pi.add_apply, Pi.smul_apply, Pi.sub_apply, Pi.one_apply, smul_eq_mul]
@@ -5946,7 +5946,7 @@ theorem wirt_wirt (v w : M.Var r) {F : E r → ℂ} {s : Set (E r)} (hs : IsOpen
   have e1 : wirt v (wirt w F) x = WL v (fderiv ℝ (wirt w F) x) := by rw [wirt_eq v (wirt w F)]
   have e2 : wirt w (wirt v F) x = WL w (fderiv ℝ (wirt v F) x) := by rw [wirt_eq w (wirt v F)]
   rw [e1, e2, key, key]
-  simp only [WL_apply, ContinuousLinearMap.coe_comp, Function.comp_apply, map_add, map_smul,
+  simp only [WL_apply, ContinuousLinearMap.coe_comp, Function.comp_apply, map_add (f := _), map_smul,
     add_apply, smul_apply, smul_eq_mul]
   rw [hsym (dirE w) (dirE v), hsym (dirE w) (Complex.I • dirE v), hsym (Complex.I • dirE w) (dirE v),
     hsym (Complex.I • dirE w) (Complex.I • dirE v)]

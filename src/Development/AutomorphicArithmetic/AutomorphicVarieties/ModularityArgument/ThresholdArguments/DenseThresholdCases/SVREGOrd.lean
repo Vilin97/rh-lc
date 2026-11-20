@@ -89,7 +89,7 @@ theorem exists_ordinary_form_trace_near_one_add_cyc (P : _root_.UpperTheory.V.Af
       rw [hDv, cyc_frob (normV_prime w) hAq (fun h => hq (h.mul_right _)) hσ, dirG_frob _ (normV_prime w) hAq hqN hσ]
       simp [mul_comm]
     have h4 := hg _ (normV_prime w)
-    rw [map_sub, map_add, map_one, ← h1, ← h2] at h4
+    rw [map_sub, map_add (f := _), map_one, ← h1, ← h2] at h4
     exact ⟨h4, by rw [Set.mem_setOf_eq, h3, h1, (hval w hqN).2]⟩
   have hlev : ∀ w : Pl ℚ, ((l : ℕ) : 𝓞 ℚ) ∉ w.asIdeal → levL l c w = c w := fun w hw => if_neg hw
   have hlev1 : ∀ w : Pl ℚ, ((l : ℕ) : 𝓞 ℚ) ∈ w.asIdeal → levL l c w = 1 := fun w hw => if_pos hw
@@ -141,7 +141,7 @@ theorem exists_ordinary_form_trace_near_one_add_cyc (P : _root_.UpperTheory.V.Af
       exact pow_lt_self_of_lt_one₀ (norm_pos_iff.2 (Nat.cast_ne_zero.2 (normV_prime w).ne_zero)) h3 (by omega)
     have ha : ‖ι.symm (g.a (normV w)) - 1‖ < 1 := by
       have := small_add (hg _ (normV_prime w)) (hs.trans h3)
-      rw [← map_add] at this
+      rw [← map_add (f := _)] at this
       rw [← map_one ι.symm, ← map_sub]
       convert this using 3
       ring

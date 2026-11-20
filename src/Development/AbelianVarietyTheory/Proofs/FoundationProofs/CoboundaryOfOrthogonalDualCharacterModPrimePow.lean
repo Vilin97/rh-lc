@@ -134,7 +134,7 @@ theorem GlobalTheory.Ord2.LocCharPerfect.perfect : LocalFiniteness → LocalTate
     refine ⟨hbsc, fun s t => ?_⟩
     refine TDual.ext fun m => ?_
     show φ₀ (b (s * t) • m) = φ₀ (b s • m) + ((χ s : (ZMod (l ^ n))ˣ) : ZMod (l ^ n)) * φ₀ (b t • rho s⁻¹ m)
-    rw [key, ← map_add, ← add_smul, smul_congr c n (hbc s t) m]
+    rw [key, ← map_add (f := _), ← add_smul, smul_congr c n (hbc s t) m]
   obtain ⟨-, -, hbij, -, -⟩ := hT ℚ Ω l n (Lev ((l : c.O) ^ n)) A rho v (by omega) hv hc
   have h0 : (Submodule.Quotient.mk ⟨bs, hz⟩ : H1 ((twDual χ rho).comp (MonoidHom.id _))) = 0 := by
     refine hbij.1 (Eq.trans ?_ (LinearMap.map_zero _).symm)
@@ -146,7 +146,7 @@ theorem GlobalTheory.Ord2.LocCharPerfect.perfect : LocalFiniteness → LocalTate
       intro s t
       have hm : Lev.mk ((l : c.O) ^ n) (((θ' s : c.Oˣ) : c.O) * at' t) = ((θ' s : c.Oˣ) : c.O) • Lev.mk ((l : c.O) ^ n) (at' t) := by
         rw [← smul_eq_mul, map_smul]
-      rw [← Lev.mk_eq_zero, map_sub, map_add, hm, hat, hat, hat, y.2.2 s t]
+      rw [← Lev.mk_eq_zero, map_sub, map_add (f := _), hm, hat, hat, hat, y.2.2 s t]
       exact sub_self _
     obtain ⟨u, hu, hdiv⟩ := hcup at' hac hacoc
     change (Submodule.Quotient.mk (cupCocycleZ1Z1 _ _ _ _ _ _ _ _ _) : H2 _) = 0
@@ -157,7 +157,7 @@ theorem GlobalTheory.Ord2.LocCharPerfect.perfect : LocalFiniteness → LocalTate
     have e1 : (((θ g : c.Oˣ) : c.O) * ((θ' g : c.Oˣ) : c.O)) • Lev.mk ((l : c.O) ^ n) (u h) -
         Lev.mk ((l : c.O) ^ n) (u (g * h)) + Lev.mk ((l : c.O) ^ n) (u g) =
         b g • ((θ' g : c.Oˣ) : c.O) • y.1 h := by
-      rw [← hat h, ← map_smul, ← map_smul, ← map_smul, ← map_sub, ← map_add, smul_eq_mul, smul_eq_mul,
+      rw [← hat h, ← map_smul, ← map_smul, ← map_smul, ← map_sub, ← map_add (f := _), smul_eq_mul, smul_eq_mul,
         smul_eq_mul]
       have := (Lev.mk_eq_zero _ _).2 (hdiv g h)
       rw [map_sub, sub_eq_zero] at this
@@ -165,7 +165,7 @@ theorem GlobalTheory.Ord2.LocCharPerfect.perfect : LocalFiniteness → LocalTate
     show ((χ g : (ZMod (l ^ n))ˣ) : ZMod (l ^ n)) * φ₀ (Lev.mk ((l : c.O) ^ n) (u h)) -
       φ₀ (Lev.mk ((l : c.O) ^ n) (u (g * h))) + φ₀ (Lev.mk ((l : c.O) ^ n) (u g)) =
       φ₀ (b g • ((θ' g : c.Oˣ) : c.O) • y.1 h)
-    rw [← e1, map_add, map_sub, ← hχs, map_smul, smul_eq_mul]
+    rw [← e1, map_add (f := _), map_sub, ← hχs, map_smul, smul_eq_mul]
   rw [Submodule.Quotient.mk_eq_zero] at h0
   obtain ⟨ψ, hψ⟩ := (mem_coboundaries1 _ _).1 (Submodule.mem_comap.1 h0)
   obtain ⟨x, hx⟩ := hφall ψ

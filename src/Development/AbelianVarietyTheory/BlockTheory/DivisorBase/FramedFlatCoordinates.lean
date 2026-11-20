@@ -138,7 +138,7 @@ def sections (Y : Model Xo c β) (Xc : (Xo.XF c).Opens) (τ : E →+* ℂ) : Sub
     IsChange a a' f M N → s R' j' a' * M.det = f (s R j a) * N.det}
   add_mem' := by
     intro s s' hs hs' R R' _ _ j j' a a' f M N h
-    rw [Rule.add_apply, Rule.add_apply, add_mul, map_add, add_mul, hs R R' j j' a a' f M N h,
+    rw [Rule.add_apply, Rule.add_apply, add_mul, map_add (f := _), add_mul, hs R R' j j' a a' f M N h,
       hs' R R' j j' a a' f M N h]
   zero_mem' := by
     intro R R' _ _ j j' a a' f M N h

@@ -96,7 +96,7 @@ theorem IsForm.orthogonal [FiniteDimensional ℂ E] (h : IsForm j) {W : Submodul
       map_add' := fun x y => by
         funext i
         apply σ.injective
-        simp only [Pi.add_apply, map_add, ← hp, inner_add_right]
+        simp only [Pi.add_apply, map_add (f := _), ← hp, inner_add_right]
       map_smul' := fun a x => by
         funext i
         apply σ.injective

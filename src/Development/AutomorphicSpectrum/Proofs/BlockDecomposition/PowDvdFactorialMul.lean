@@ -38,7 +38,7 @@ theorem ringHom_eq {B C : Type} [CommRing B] [CommRing C] (Q : PDPoly B) {f g : 
   induction hp using Submodule.span_induction with
   | mem x hx => obtain ⟨k, rfl⟩ := hx; exact h2 k
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | smul b x _ hx => rw [Algebra.smul_def, map_mul, map_mul, hx, h1]
 
 theorem e_one_mem {B : Type} [CommRing B] (Q : PDPoly B) (J : Ideal B) : Q.e 1 ∈ Q.ext J :=

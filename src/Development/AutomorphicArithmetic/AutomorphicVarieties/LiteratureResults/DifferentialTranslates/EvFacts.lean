@@ -18,7 +18,7 @@ private theorem ev_comp {E : Type} [Field E] [NumberField E] [IsTotallyComplex E
     funext g
     simp [mul_comm]
   | add x y hx hy =>
-    rw [map_add, map_add, Pi.add_apply, Submodule.coe_add, ← hx, ← hy]
+    rw [map_add (f := _), map_add (f := _), Pi.add_apply, Submodule.coe_add, ← hx, ← hy]
     rfl
 
 theorem evFacts : EvFacts := by

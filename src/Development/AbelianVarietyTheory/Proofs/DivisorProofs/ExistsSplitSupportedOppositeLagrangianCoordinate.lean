@@ -86,11 +86,11 @@ theorem exists_at_coBar_eq : ∀ {D : D7} {a a' : ℕ} (Bs : GlobalTheory.Indefi
       Algebra.TensorProduct.map_tmul, AlgHom.coe_id, id_eq]
     rfl
   have hz0 : ∀ t, piW Bs.τ₁ (z t) = 0 := fun t => by
-    simp only [z, map_add, hpi, GlobalTheory.LatVac.evFin_liftV, map_one]
+    simp only [z, map_add (f := _), hpi, GlobalTheory.LatVac.evFin_liftV, map_one]
     field_simp
     ring
   have hz1 : ∀ t, piW (Bs.τ₁.comp D.sp.cm.sig) (z t) = t := fun t => by
-    simp only [z, map_add, hpi, GlobalTheory.LatVac.evFin_liftV, map_one, AlgHom.comp_apply]
+    simp only [z, map_add (f := _), hpi, GlobalTheory.LatVac.evFin_liftV, map_one, AlgHom.comp_apply]
     rw [hd] at hd0 ⊢
     field_simp
     ring

@@ -206,7 +206,7 @@ theorem gauss_ne_zero : ∀ (l : ℕ) [Fact l.Prime] (N : ℝ → Per.Acris l �
   refine ⟨(l : Per.Ainf l) ^ N₀ * c + (l : Per.Ainf l) ^ m * a', ?_⟩
   rw [← Ideal.Quotient.eq_zero_iff_mem] at hc ⊢
   rw [hs] at ha
-  simp only [map_add, map_sub, map_mul, map_pow, map_natCast, hj.on0, hev] at ha ha' hc ⊢
+  simp only [map_add (f := _), map_sub, map_mul, map_pow, map_natCast, hj.on0, hev] at ha ha' hc ⊢
   linear_combination -ha + (l : Per.AinfP l ⧸ Per.kerP l ^ m) ^ (k + m) * ha' +
     (l : Per.AinfP l ⧸ Per.kerP l ^ m) ^ N₀ * hc
 

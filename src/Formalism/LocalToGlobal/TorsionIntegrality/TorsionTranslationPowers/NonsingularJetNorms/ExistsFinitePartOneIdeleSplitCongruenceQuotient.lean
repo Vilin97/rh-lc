@@ -147,7 +147,7 @@ theorem nonsing (t : ℂ) (ht : t ∉ L.lattice) :
   haveI : (curveL l L ι).IsElliptic := ⟨(disc_ne l L ι).isUnit⟩
   rw [← WeierstrassCurve.Affine.equation_iff_nonsingular, WeierstrassCurve.Affine.equation_iff]
   have h := congrArg ι (L.derivWeierstrassP_sq t ht)
-  simp only [map_sub, map_mul, map_pow, map_ofNat, map_add] at h
+  simp only [map_sub, map_mul, map_pow, map_ofNat, map_add (f := _)] at h
   simp only [curveL, Formalism.L2.Th1.A.shortW]
   linear_combination (1 / 4 : ℂ_[l]) * h
 
@@ -195,7 +195,7 @@ theorem ptOf_add_generic (s t : ℂ) (hs : s ∉ L.lattice) (ht : t ∉ L.lattic
   have hx : ι (L.weierstrassP s) ≠ ι (L.weierstrassP t) := sub_ne_zero.1 hne'
   have hX := congrArg ι (AddThm.P_add L s t hs ht hp hm)
   have hY := congrArg ι (AddThm.collinear L s t hs ht hp)
-  simp only [map_pow, map_sub, map_mul, map_add, map_neg, map_div₀, map_ofNat] at hX hY
+  simp only [map_pow, map_sub, map_mul, map_add (f := _), map_neg, map_div₀, map_ofNat] at hX hY
   rw [ptOf_some l L ι s hs, ptOf_some l L ι t ht, ptOf_some l L ι _ hp,
     WeierstrassCurve.Affine.Point.add_of_X_ne hx]
   have e1 : ι (L.weierstrassP (s + t)) =

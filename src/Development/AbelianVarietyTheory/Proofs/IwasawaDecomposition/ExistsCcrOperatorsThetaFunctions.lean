@@ -11,7 +11,7 @@ theorem exists_restrict {Θ M : Type} [AddCommGroup Θ] [Module ℂ Θ] [AddComm
     ∃ a : Module.End ℂ Θ, ∀ f, j (a f) = A (j f) := by
   choose a ha using hA
   exact ⟨{ toFun := a
-           map_add' := fun f g => hj (by simp only [map_add, ha])
+           map_add' := fun f g => hj (by simp only [map_add (f := _), ha])
            map_smul' := fun c f => hj (by simp only [map_smul, ha, RingHom.id_apply]) }, ha⟩
 
 theorem isCCR_restrict {Θ M κ : Type} [DecidableEq κ] [AddCommGroup Θ] [Module ℂ Θ] [AddCommGroup M] [Module ℂ M]
@@ -51,7 +51,7 @@ theorem exists_ops {ι : Type} [Fintype ι] [DecidableEq ι] (H : Matrix ι ι �
     refine ⟨(-(1 / (4 * Real.pi)) : ℂ) • (g₁ + Complex.I • g₂), Subtype.ext ?_⟩
     rw [hd₀]
     change J _ = dOp ρ H k (J f)
-    rw [dOp, map_smul, map_add, map_smul, e₁, e₂]
+    rw [dOp, map_smul, map_add (f := _), map_smul, e₁, e₂]
   choose x hx using h1
   choose d hd' using h2
   refine ⟨x, d, isCCR_restrict j hj hx hd' hc, fun X f => ?_⟩

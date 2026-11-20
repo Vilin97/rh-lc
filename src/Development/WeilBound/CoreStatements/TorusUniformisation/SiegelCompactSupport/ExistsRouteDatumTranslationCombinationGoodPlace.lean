@@ -654,7 +654,7 @@ theorem L_form (hc : Continuous ψ) (s : ((κ → k) × (κ → k)) →ₗ[k] (�
     obtain ⟨a, ha, c, hc', rfl⟩ := Submodule.mem_sup.1 (hU.sup_eq_top.ge (Submodule.mem_top (x := y)))
     refine ⟨(Module.finBasis k U).equivFun ⟨c, hc'⟩, (m a).2, ?_⟩
     have e : b ((Module.finBasis k U).equivFun ⟨c, hc'⟩) = c := by simp only [b, LinearMap.comp_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply]; rfl
-    rw [e, map_add, add_comm]
+    rw [e, map_add (f := _), add_comm]
     congr 1
     exact Prod.ext ha rfl
   have cb : Continuous b := LinearMap.continuous_on_pi b
@@ -714,7 +714,7 @@ theorem L_form (hc : Continuous ψ) (s : ((κ → k) × (κ → k)) →ₗ[k] (�
     rw [h2, mul_zero, AddChar.map_zero_eq_one, one_smul] at h4
     show schr ψ (m (b u)) (schr ψ (m y) φ) 0 = schr ψ (m (b (u + u₀))) φ 0
     rw [schr_schr, h1, mul_zero, AddChar.map_zero_eq_one, one_smul,
-      show m (b u) + m y = (0, η) + m (b (u + u₀)) by rw [h, map_add, map_add]; abel, ← h4]
+      show m (b u) + m y = (0, η) + m (b (u + u₀)) by rw [h, map_add (f := _), map_add (f := _)]; abel, ← h4]
     simp [schr]
 
 theorem L_half (hc : Continuous ψ) (h1 : ψ ≠ 1) (s : ((κ → k) × (κ → k)) →ₗ[k] (κ → k) × (κ → k))
@@ -726,8 +726,8 @@ theorem L_half (hc : Continuous ψ) (h1 : ψ ≠ 1) (s : ((κ → k) × (κ → 
   have hI : ∀ φ x, I φ x = l (schr ψ (s (x, 0)) φ) := fun _ _ => rfl
   have key : ∀ w, ∀ φ ∈ SB (κ → k), I (schr ψ (s w) φ) = schr ψ w (I φ) := fun w φ hφ => funext fun x => by
     have e1 := hl w.2 _ (L_schr_mem hc (s (x + w.1, 0)) hφ)
-    rw [schr_schr, hs, map_smul, ← map_add] at e1
-    rw [hI, schr_schr, hs, map_smul, ← map_add, schr, hI, ← e1,
+    rw [schr_schr, hs, map_smul, ← map_add (f := _)] at e1
+    rw [hI, schr_schr, hs, map_smul, ← map_add (f := _), schr, hI, ← e1,
       show ((x, 0) : (κ → k) × (κ → k)) + w = (0, w.2) + (x + w.1, 0) by ext <;> simp, smul_eq_mul, smul_eq_mul,
       ← mul_assoc, ← AddChar.map_add_eq_mul]
     congr 2
@@ -735,7 +735,7 @@ theorem L_half (hc : Continuous ψ) (h1 : ψ ≠ 1) (s : ((κ → k) × (κ → 
     linear_combination (x ⬝ᵥ w.2) * (invOf_two_add_invOf_two (R := k))
   have cs : Continuous s := by
     have : (s : _ → _) = fun w => (s ∘ₗ LinearMap.inl k _ _) w.1 + (s ∘ₗ LinearMap.inr k _ _) w.2 := funext fun w => by
-      simp [← map_add]
+      simp [← map_add (f := _)]
     rw [this]
     exact ((LinearMap.continuous_on_pi _).comp continuous_fst).add ((LinearMap.continuous_on_pi _).comp continuous_snd)
   refine ⟨I, fun φ hφ => L_mem_of_fix h1 ?_, ⟨φ₀, h0, fun e => hne ?_⟩, key⟩
@@ -811,7 +811,7 @@ theorem svn {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarc
     refine ⟨(hJ _ hf').1, funext fun x => ?_⟩
     exact (congrFun (hJ _ hf').2 (H x)).trans (congrArg f (H.symm_apply_apply x))
   · show I _ (H Y) = I φ (H (Y + Y₀))
-    rw [kI' _ _ _ hφ, hH, hH, map_add]; simp [schr]
+    rw [kI' _ _ _ hφ, hH, hH, map_add (f := _)]; simp [schr]
   · show I _ (H Y) = _ * I φ (H Y)
     rw [kI' _ _ _ hφ, hH, ← hd]; simp [schr]
 
@@ -874,7 +874,7 @@ theorem L_stable {K : Type} [Field K] {n : ℕ} (A B : Matrix (Fin n) (Fin n) K)
   refine ⟨LinearMap.toMatrix' c, fun h0 => ?_⟩
   obtain ⟨x, hx0, hx⟩ := Matrix.exists_mulVec_eq_zero_iff.2 h0
   have e : a x + c (nn x) = 0 := by
-    rw [← hx, ← Matrix.toLin'_apply, map_add, Matrix.toLin'_mul, Matrix.toLin'_toMatrix']; rfl
+    rw [← hx, ← Matrix.toLin'_apply, map_add (f := _), Matrix.toLin'_mul, Matrix.toLin'_toMatrix']; rfl
   have h1 : a x ∈ LinearMap.range a ⊓ Q := ⟨⟨x, rfl⟩, by
     rw [eq_neg_of_add_eq_zero_left e]; exact neg_mem (j (g (nn x))).2⟩
   rw [hQ.inf_eq_bot, Submodule.mem_bot] at h1
@@ -909,13 +909,13 @@ theorem L_move {n d : ℕ} {Y Y' : Matrix (Fin n) (Fin d) k} (hY : Y.rank ≠ n)
     rw [← IsLocalRing.residue_ne_zero_iff_isUnit, RingHom.map_det]
     have : (C'.map l).map π = C' := Matrix.ext fun i j => hl _
     have e : π.mapMatrix K = A.map π + C' * (1 - B.map π * A.map π) := by
-      simp only [K, map_add, map_mul, map_sub, map_one]
+      simp only [K, map_add (f := _), map_mul, map_sub, map_one]
       simp only [RingHom.mapMatrix_apply, this]
     rwa [e]
   have hKY : K.map (algebraMap 𝒪[k] k) * Y = Y' := by
     have : K.map (algebraMap 𝒪[k] k) = A.map (algebraMap 𝒪[k] k) + (C'.map l).map (algebraMap 𝒪[k] k) *
         (1 - B.map (algebraMap 𝒪[k] k) * A.map (algebraMap 𝒪[k] k)) := by
-      simp only [K, ← RingHom.mapMatrix_apply, map_add, map_mul, map_sub, map_one]
+      simp only [K, ← RingHom.mapMatrix_apply, map_add (f := _), map_mul, map_sub, map_one]
     rw [this, Matrix.add_mul, Matrix.mul_assoc, Matrix.sub_mul, Matrix.mul_assoc, hA1, hB1, Matrix.one_mul, sub_self,
       Matrix.mul_zero, add_zero]
   obtain ⟨p, hp0, hp⟩ : ∃ p : Fin n → k, p ≠ 0 ∧ p ᵥ* Y = 0 := by
@@ -946,7 +946,7 @@ theorem L_move {n d : ℕ} {Y Y' : Matrix (Fin n) (Fin d) k} (hY : Y.rank ≠ n)
     simp only [vecMul, dotProduct, Pi.zero_apply] at h0
     have h1 : ∑ x, p x / p i * Y x b = 0 := by
       simp only [div_mul_eq_mul_div, ← Finset.sum_div, h0, zero_div]
-    simp only [K', ← RingHom.mapMatrix_apply, map_add, map_one, Matrix.add_mul, Matrix.one_mul, Matrix.add_apply,
+    simp only [K', ← RingHom.mapMatrix_apply, map_add (f := _), map_one, Matrix.add_mul, Matrix.one_mul, Matrix.add_apply,
       add_eq_left]
     simp only [Matrix.mul_apply, RingHom.mapMatrix_apply, map_apply, vecMulVec_apply, map_mul, mul_assoc,
       ← Finset.mul_sum]
@@ -1122,7 +1122,7 @@ theorem L_orth (ψ : AddChar k ℂ) (hc : Continuous ψ) (h1 : ψ ≠ 1) {n d : 
       add_mem' := fun {a b} ha hb => ⟨ha.1.add hb.1, fun f f' g g' e e' => by
         rw [show f' = ⟨_, L_mul_mem ha.1 f.2⟩ + ⟨_, L_mul_mem hb.1 f.2⟩ from Subtype.ext (by rw [e, add_mul]; rfl),
           show g' = ⟨_, L_mul_mem (ha.1.comp star) g.2⟩ + ⟨_, L_mul_mem (hb.1.comp star) g.2⟩ from
-            Subtype.ext (by rw [e', star_add, add_mul]; rfl), map_add, map_add, LinearMap.add_apply,
+            Subtype.ext (by rw [e', star_add, add_mul]; rfl), map_add (f := _), map_add (f := _), LinearMap.add_apply,
           ha.2 f _ g ⟨_, L_mul_mem (ha.1.comp star) g.2⟩ rfl rfl, hb.2 f _ g ⟨_, L_mul_mem (hb.1.comp star) g.2⟩ rfl rfl]⟩
       algebraMap_mem' := fun r => ⟨IsLocallyConstant.const r, fun f f' g g' e e' => by
         rw [show f' = r • f from Subtype.ext e, show g' = star r • g from Subtype.ext e', map_smul, map_smulₛₗ]
@@ -1727,8 +1727,8 @@ theorem schur (F : Type) [Field F] [NumberField F] [IsTotallyReal F] {κ : Type}
       rw [(map_eq_zero_iff _ r.injective).1 hu, zero_mul]) (mul_zero _)
   let β : LinearMap.BilinForm ℝ (κ → mixedEmbedding.mixedSpace F) := LinearMap.mk₂ ℝ
     (fun x y => Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (x ⬝ᵥ y))
-    (fun _ _ _ => by rw [add_dotProduct, map_add]) (fun _ _ _ => by rw [smul_dotProduct, map_smul])
-    (fun _ _ _ => by rw [dotProduct_add, map_add]) (fun _ _ _ => by rw [dotProduct_smul, map_smul])
+    (fun _ _ _ => by rw [add_dotProduct, map_add (f := _)]) (fun _ _ _ => by rw [smul_dotProduct, map_smul])
+    (fun _ _ _ => by rw [dotProduct_add, map_add (f := _)]) (fun _ _ _ => by rw [dotProduct_smul, map_smul])
   have hβ : Function.Surjective β := by
     refine (LinearMap.injective_iff_surjective_of_finrank_eq_finrank Subspace.dual_finrank_eq.symm).1
       ((injective_iff_map_eq_zero _).2 fun x hx => funext fun i => ?_)
@@ -1786,7 +1786,7 @@ theorem schur (F : Type) [Field F] [NumberField F] [IsTotallyReal F] {κ : Type}
   | zero =>
     rw [show schr ψ (x, 0) 0 = 0 from funext fun _ => mul_zero _, map_zero]; simp
   | add Φ Ψ _ _ h h' =>
-    rw [show schr ψ (x, 0) (Φ + Ψ) = schr ψ (x, 0) Φ + schr ψ (x, 0) Ψ from funext fun _ => mul_add _ _ _, map_add, h, h']
+    rw [show schr ψ (x, 0) (Φ + Ψ) = schr ψ (x, 0) Φ + schr ψ (x, 0) Ψ from funext fun _ => mul_add _ _ _, map_add (f := _), h, h']
     simp [mul_add]
   | smul c Φ _ h =>
     rw [show schr ψ (x, 0) (c • Φ) = c • schr ψ (x, 0) Φ from funext fun _ => mul_left_comm _ _ _, map_smul, h]
@@ -1934,7 +1934,7 @@ def box (K : ∀ u : HeightOneSpectrum (𝓞 F), OpenAddSubgroup (κ → Fv F u)
   carrier := {y | ∀ u, (fun i => evalV F u (y i)) ∈ K u}
   add_mem' {a b} ha hb u := by
     have := add_mem (ha u) (hb u)
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     exact this
   zero_mem' u := by
     simp only [Pi.zero_apply, map_zero]
@@ -2063,7 +2063,7 @@ theorem ev_off (a : AF F) : evFin F v (off v a) = 0 := by simp [off, evFin_atPla
 
 theorem off_at (t : Fv F v) : off v (atPlace v t) = 0 := by simp [off, evFin_atPlace]
 
-theorem off_add (a b : AF F) : off v (a + b) = off v a + off v b := by simp only [off, map_add]; ring
+theorem off_add (a b : AF F) : off v (a + b) = off v a + off v b := by simp only [off, map_add (f := _)]; ring
 
 theorem off_mul (a b : AF F) : off v (a * b) = a * off v b := by
   rw [off, off, mul_sub, mul_comm a (atPlace v _), atPlace_mul_right, map_mul, mul_comm (evFin F v a)]
@@ -2112,7 +2112,7 @@ theorem lift_tens (S : Module.End ℂ ((κ → Fv F v) → ℂ)) (φ : (κ → F
     funext t
     have := h (fun i => off v (x i)) t
     rw [h.off] at this
-    simp only [tens, map_add, ev_off, evFin_atPlace, zero_add, Pi.smul_apply, smul_eq_mul]
+    simp only [tens, map_add (f := _), ev_off, evFin_atPlace, zero_add, Pi.smul_apply, smul_eq_mul]
     rw [mul_comm]
     exact congrArg (· * φ t) this
   rw [lift_apply, e, map_smul, Pi.smul_apply, smul_eq_mul, mul_comm]
@@ -2155,7 +2155,7 @@ theorem indep_pure (f : SInf F κ) (φ : ∀ u : HeightOneSpectrum (𝓞 F), (κ
     by_cases h : u = v
     · subst h; simp
     · refine congrArg _ (funext fun i => ?_)
-      rw [Pi.add_apply, map_add]
+      rw [Pi.add_apply, map_add (f := _)]
       exact add_eq_left.2 (evalV_singleFin_ne h _)
 
 open Classical in
@@ -2189,7 +2189,7 @@ theorem lift_mem {S : Module.End ℂ ((κ → Fv F v) → ℂ)} (hS : ∀ φ ∈
     {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) : lift v S Φ ∈ schA F κ := by
   refine schA_ind (P := fun Φ => lift v S Φ ∈ schA F κ) (by simp) (fun x y hx hy => ?_) (fun c x hx => ?_)
     (fun f φ hφ => ?_) hΦ
-  · rw [map_add]; exact add_mem hx hy
+  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · rw [map_smul]; exact Submodule.smul_mem _ _ hx
   · rw [lift_pure S f hφ]; exact pure_mem f (hφ.update (hS _ (hφ.1 v)))
 
@@ -2207,7 +2207,7 @@ theorem lift_adm {S : Module.End ℂ ((κ → Fv F v) → ℂ)} (hS : ∀ φ ∈
     | add x y _ _ hx hy =>
       obtain ⟨a, ha, hx⟩ := hx
       obtain ⟨b, hb, hy⟩ := hy
-      exact ⟨a + b, add_mem ha hb, fun f => by rw [pureA_add, map_add, hx, hy, pureA_add]⟩
+      exact ⟨a + b, add_mem ha hb, fun f => by rw [pureA_add, map_add (f := _), hx, hy, pureA_add]⟩
     | smul c x _ hx =>
       obtain ⟨a, ha, hx⟩ := hx
       exact ⟨c • a, Submodule.smul_mem _ _ ha, fun f => by rw [pureA_smul, map_smul, hx, pureA_smul]⟩
@@ -2221,7 +2221,7 @@ theorem lift_lift {S S' : Module.End ℂ ((κ → Fv F v) → ℂ)} (hS : ∀ φ
   classical
   refine schA_ind (P := fun Φ => lift v S (lift v S' Φ) = lift v S'' Φ) (by simp) (fun x y hx hy => ?_)
     (fun c x hx => ?_) (fun f φ hφ => ?_) hΦ
-  · simp only [map_add, hx, hy]
+  · simp only [map_add (f := _), hx, hy]
   · simp only [map_smul, hx]
   · rw [lift_pure S' f hφ, lift_pure S f (hφ.update (hS _ (hφ.1 v))), lift_pure S'' f hφ, Function.update_self,
       Function.update_idem, h _ (hφ.1 v)]
@@ -2260,13 +2260,13 @@ theorem schr_tens (ψ : AddChar (AF F) ℂ) (w : (κ → AF F) × (κ → AF F))
       ψ (x ⬝ᵥ (offP v w).2 + ⅟(2 : AF F) * ((offP v w).1 ⬝ᵥ (offP v w).2)) := by
     rw [psv_apply, ← AddChar.map_add_eq_mul, ← off_add_at v (x ⬝ᵥ w.2 + _), add_comm (off v _)]
     congr 2
-    · rw [map_add, map_mul, ev_dot, ev_dot]; rfl
+    · rw [map_add (f := _), map_mul, ev_dot, ev_dot]; rfl
     · rw [off_add, off_mul, off_dot, ← off_off v (w.1 ⬝ᵥ w.2), off_dot v w.1 w.2, dotProduct_comm w.1, off_dot,
         dotProduct_comm (fun i => off v (w.2 i))]
       rfl
   simp only [schr, tens]
   rw [e1, e2]
-  simp only [Pi.add_apply, map_add]
+  simp only [Pi.add_apply, map_add (f := _)]
   show _ = _ * φ (fun i => evFin F v (x i) + evFin F v (w.1 i)) * _
   ring
 
@@ -2296,7 +2296,7 @@ theorem lift_schr (ψ : AddChar (AF F) ℂ) {S : Module.End ℂ ((κ → Fv F v)
     (fun c x hx => ?_) (fun f φ hφ => ?_) hΦ
   · have : ∀ w, schr ψ w (0 : (κ → AF F) → ℂ) = 0 := fun w => funext fun _ => mul_zero _
     simp only [this, map_zero]
-  · simp only [map_add, schr_add, hx, hy]
+  · simp only [map_add (f := _), schr_add, hx, hy]
   · simp only [map_smul, schr_smul, hx]
   · have hi := indep_pure (v := v) f φ
     rw [← Function.update_eq_self v φ, pure_update f hφ.2, schr_tens ψ w _ hi, lift_tens _ _ (hi.schr ψ w),
@@ -2350,7 +2350,7 @@ theorem piW_inc (t : E →ₐ[F] Fv F v) (x : E) : piW t (inclR (F := F) (AF F) 
 theorem piW_cA (t : E →ₐ[F] Fv F v) (z : AE F E) : piW t (cA σ z) = piW (t.comp σ) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 theorem trace_cm (h : IsCMExt F E σ) (x : E) : algebraMap F E (Algebra.trace F E x) = x + σ x := by
@@ -2362,7 +2362,7 @@ theorem trace_cm (h : IsCMExt F E σ) (x : E) : algebraMap F E (Algebra.trace F 
     simpa using eq_or_eq_comp_conj h τ τ'
   rw [h2, Finset.sum_pair (comp_conj_ne h τ).symm] at h1
   apply (algebraMap E (AlgebraicClosure E)).injective
-  rw [← IsScalarTower.algebraMap_apply, h1, map_add]
+  rw [← IsScalarTower.algebraMap_apply, h1, map_add (f := _)]
   rfl
 
 theorem trace_tmul {R : Type} [CommRing R] [Algebra F R] (r : R) (x : E) :
@@ -2376,9 +2376,9 @@ theorem ev_trace (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (z : AE F E) :
     evFin F v (Algebra.trace (AF F) (AE F E) z) = piW t z + piW (t.comp σ) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero, add_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]; ring
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]; ring
   | tmul a x =>
-    rw [trace_tmul, map_mul, AlgHom.commutes, piW_tmul, piW_tmul, ← t.commutes, trace_cm h, map_add, mul_add]
+    rw [trace_tmul, map_mul, AlgHom.commutes, piW_tmul, piW_tmul, ← t.commutes, trace_cm h, map_add (f := _), mul_add]
     rfl
 
 variable (v) in
@@ -2606,7 +2606,7 @@ theorem gen [IsTotallyReal F] (ψ : AddChar (AF F) ℂ) (hψ : IsCharAF F ψ) (h
   have hfull : ∀ φ ∈ SB _, ∀ Y₀ Z Y, I (schr (psv v ψ) (e (Y₀, Z)) φ) Y =
       psv v ψ (-(⅟2 * trace (Y₀ * Zᵀ))) * (psv v ψ (trace ((Y + Y₀) * Zᵀ)) * I φ (Y + Y₀)) := fun φ hφ Y₀ Z Y => by
     have := congrArg (fun f => I f Y) (schr_schr (psv v ψ) (e (Y₀, 0)) (e (0, Z)) φ)
-    simp only [he, ← map_add, Prod.mk_add_mk, add_zero, zero_add, map_smul, Pi.smul_apply, smul_eq_mul, Matrix.zero_mul,
+    simp only [he, ← map_add (f := _), Prod.mk_add_mk, add_zero, zero_add, map_smul, Pi.smul_apply, smul_eq_mul, Matrix.zero_mul,
       trace_zero, sub_zero] at this
     rw [htr _ (schr_mem_SB hc _ hφ), hmod _ hφ] at this
     rw [this, ← mul_assoc, ← AddChar.map_add_eq_mul, neg_add_cancel, AddChar.map_zero_eq_one, one_mul]
@@ -2652,7 +2652,7 @@ theorem gen [IsTotallyReal F] (ψ : AddChar (AF F) ℂ) (hψ : IsCharAF F ψ) (h
       have : tens (evFin F v) (J f) r (fun i => atPlace v (t i)) = 0 := congrFun h _
       rwa [tens_at hr, show r 0 = 1 from rest_zero hf0, mul_one] at this
     rw [← (hJ f hf).2, this, map_zero]
-  have Ψa : ∀ f g, Ψ (f + g) = Ψ f + Ψ g := fun f g => funext fun x => by simp only [Ψ, tens, map_add, Pi.add_apply, add_mul]
+  have Ψa : ∀ f g, Ψ (f + g) = Ψ f + Ψ g := fun f g => funext fun x => by simp only [Ψ, tens, map_add (f := _), Pi.add_apply, add_mul]
   have Ψsm : ∀ (c : ℂ) f, Ψ (c • f) = c • Ψ f := fun c f => funext fun x => by
     simp only [Ψ, tens, map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc]
   have ΨO : ∀ γ, ∀ f ∈ SB _, O γ (Ψ f) = χ₀ γ • Ψ (sub γ f) := fun γ f hf => by
@@ -2699,7 +2699,7 @@ theorem gen [IsTotallyReal F] (ψ : AddChar (AF F) ℂ) (hψ : IsCharAF F ψ) (h
         simp only [Submodule.coe_smul, Ψsm, Pi.smul_apply, smul_eq_mul, mul_assoc, RingHom.id_apply, integral_const_mul])
       (fun f g g' => by
         rw [← integral_add (hint _ _) (hint _ _)]
-        simp only [Submodule.coe_add, Ψa, Pi.add_apply, map_add, mul_add])
+        simp only [Submodule.coe_add, Ψa, Pi.add_apply, map_add (f := _), mul_add])
       (fun c f g => by
         simp only [Submodule.coe_smul, Ψsm, Pi.smul_apply, smul_eq_mul, map_mul, mul_left_comm _ ((starRingEnd ℂ) c),
           integral_const_mul])

@@ -25,7 +25,7 @@ theorem sig_sig (z : I.E ⊗[I.F] Af I.F) : sigR I.cm.sig (Af I.F) (sigR I.cm.si
   | tmul a b =>
     show star (star a) ⊗ₜ b = _
     rw [star_star]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem sig_hAf (x y : Fin I.n → I.E ⊗[I.F] Af I.F) : sigR I.cm.sig (Af I.F) (hAf I x y) = hAf I y x := by
   unfold hAf hform
@@ -96,7 +96,7 @@ theorem exists_frame_of_dual {N p : ℕ} {w : HeightOneSpectrum (𝓞 I.E)} (hn 
     ∃ fr : PlFrame I N p w, fr.r = r ∧ ∀ y i, fr.c y i = r (hI (b' i) y) := by
   let c : I.Lf →ₛₗ[r] (Fin N → ZMod p) :=
     { toFun := fun y i => r (hI (b' i) y)
-      map_add' := fun x y => funext fun i => by rw [hI_add, map_add]; rfl
+      map_add' := fun x y => funext fun i => by rw [hI_add, map_add (f := _)]; rfl
       map_smul' := fun a y => funext fun i => by rw [hI_smul, map_mul]; rfl }
   have hs : Function.Surjective c := fun t => by
     choose s hs using ZMod.ringHom_surjective r

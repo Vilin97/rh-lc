@@ -23,7 +23,7 @@ theorem mq_smul' (c : ℝ) (S : Eu l →L[ℝ] Eu l) (g : Sch l) : mq (c • S) 
 
 theorem vf_add' (H K : Eu l →L[ℝ] Eu l) (g : Sch l) : vf (H + K) g = vf H g + vf K g := by
   ext x
-  simp only [vf_apply, SchwartzMap.add_apply, ContinuousLinearMap.add_apply, map_add]
+  simp only [vf_apply, SchwartzMap.add_apply, ContinuousLinearMap.add_apply, map_add (f := _)]
 
 theorem vf_smul' (c : ℝ) (H : Eu l →L[ℝ] Eu l) (g : Sch l) : vf (c • H) g = c • vf H g := by
   ext x
@@ -33,7 +33,7 @@ def qdLin (f : Sch l) : Mat l →ₗ[ℝ] Sch l where
   toFun X := Qd X f
   map_add' X Y := by
     have ht : (X + Y).toBlocks₁₁ = X.toBlocks₁₁ + Y.toBlocks₁₁ := Matrix.ext fun _ _ => rfl
-    simp only [Qd, map_add, neg_add, mq_add', vf_add', ht, trace_add, add_div, ofReal_add, add_smul]
+    simp only [Qd, map_add (f := _), neg_add, mq_add', vf_add', ht, trace_add, add_div, ofReal_add, add_smul]
     abel
   map_smul' c X := by
     have ht : (c • X).toBlocks₁₁ = c • X.toBlocks₁₁ := Matrix.ext fun _ _ => rfl

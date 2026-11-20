@@ -111,7 +111,7 @@ lemma rep_eabV (hσ : IsURepOn (UJset ε) σ) {u : H} (hu : SmoothOnGV ε (fun g
     σ g (EabV ε a b (fun x => σ x u) 1) = EabV ε a b (fun x => σ x u) g := by
   obtain ⟨h1, h2, -, -⟩ := complex_parts_mem_lie_algebra_holds n ε (Matrix.single a b 1)
   unfold EabV EcV
-  rw [map_add, map_smul, rep_rdV hσ hu h1 hg, rep_rdV hσ hu h2 hg]
+  rw [map_add (f := _), map_smul, rep_rdV hσ hu h1 hg, rep_rdV hσ hu h2 hg]
 
 lemma rep_inner (hσ : IsURepOn (UJset ε) σ) {g : Matrix (Fin n) (Fin n) ℂ} (hg : inUJ ε g)
     (u v : H) : ⟪σ g u, σ g v⟫_ℂ = ⟪u, v⟫_ℂ :=

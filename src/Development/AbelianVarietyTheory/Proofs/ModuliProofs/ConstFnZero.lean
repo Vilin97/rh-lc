@@ -24,7 +24,7 @@ theorem rsT_rsT {Y : Scheme.{0}} {O₀ O₁ O₂ : Y.Opens} (h : O₁ ≤ O₀) 
 
 theorem rsT_add {Y : Scheme.{0}} {O₀ O : Y.Opens} (h : O ≤ O₀) (s t : Γ(Y, O₀)) :
     rsT (s + t) O = rsT s O + rsT t O := by
-  simp only [rsT_of_le h, map_add]
+  simp only [rsT_of_le h, map_add (f := _)]
 
 theorem rsT_sub {Y : Scheme.{0}} {O₀ O : Y.Opens} (h : O ≤ O₀) (s t : Γ(Y, O₀)) :
     rsT (s - t) O = rsT s O - rsT t O := by

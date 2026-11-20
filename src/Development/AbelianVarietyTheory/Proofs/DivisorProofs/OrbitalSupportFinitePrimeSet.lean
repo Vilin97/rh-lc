@@ -30,6 +30,6 @@ theorem starT_invol {p : ℕ} [Fact p.Prime] (G : HTGroup p) (K : Type) [CommRin
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r c => rw [starT_tmul, starT_tmul, G.star_star]
-  | add x y hx hy => simp only [map_add, MulOpposite.unop_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), MulOpposite.unop_add, hx, hy]
 
 end GlobalTheory.FinClsLoc

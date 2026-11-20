@@ -87,7 +87,7 @@ theorem frob_congr (y : ℂ_[p]) (hy : y ∈ S0 p) :
     | zero => exact ⟨1, one_pos, by rw [show (⟨0, _⟩ : S0 p) = 0 from rfl, map_zero, zero_pow (pow_ne_zero _ hp.out.ne_zero)]⟩
     | one => exact ⟨1, one_pos, by rw [show (⟨1, _⟩ : S0 p) = 1 from rfl, map_one, one_pow]⟩
     | add x y hx hy ihx ihy =>
-        rw [show (⟨x + y, _⟩ : S0 p) = ⟨x, hx⟩ + ⟨y, hy⟩ from rfl, map_add]
+        rw [show (⟨x + y, _⟩ : S0 p) = ⟨x, hx⟩ + ⟨y, hy⟩ from rfl, map_add (f := _)]
         exact Fx.add p ihx ihy
     | neg x hx ih =>
         rw [show (⟨-x, _⟩ : S0 p) = -⟨x, hx⟩ from rfl, map_neg]

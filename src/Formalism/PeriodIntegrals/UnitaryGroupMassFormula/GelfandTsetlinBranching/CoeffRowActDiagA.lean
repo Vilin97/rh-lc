@@ -134,7 +134,7 @@ theorem coeff_rowAct_diag_A {r c : ℕ} (s : Fin r → ℂ) (f : MvPolynomial (F
       simp only [weight_row_A]
     · simp
   | add p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem zpow_two_inj_A (a b : ℤ) (h : (2 : ℂ) ^ a = 2 ^ b) : a = b := by
   have h2 := congrArg (fun z : ℂ => ‖z‖) h

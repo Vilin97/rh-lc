@@ -49,7 +49,7 @@ theorem perLift (hA : AbsThm) (hT : TAll) (hTC : ThetaCoef) (hAux : AuxiliaryPri
     rw [← Tl_apply, map_sub, Tl_apply, Tl_apply, h1, (hφ _).2, sub_self]
   let Il : PX d.m d.n →ₗ[ℂ] (d.G → ℂ) :=
     { toFun := fun P => d.I (φ P)
-      map_add' := fun P Q => by rw [map_add]; exact I_add d hTT hTA (hφ P).1 (hφ Q).1
+      map_add' := fun P Q => by rw [map_add (f := _)]; exact I_add d hTT hTA (hφ P).1 (hφ Q).1
       map_smul' := fun a P => by rw [map_smul]; exact I_smul d hTT a (hφ P).1 }
   let sl : PX d.m d.n →ₗ[ℂ] (d.G → ℂ) := (secl d).comp φ
   obtain ⟨-, ⟨ε, ww, hww, -⟩, hTG, hLC, hT2, hSC⟩ := hAux F E σ d

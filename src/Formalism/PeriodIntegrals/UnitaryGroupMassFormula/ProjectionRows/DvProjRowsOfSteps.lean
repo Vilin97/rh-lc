@@ -21,11 +21,11 @@ def lamSub (A : HLat K) (e : Module.End K A.V) (h : A.V →ₗ⋆[K] A.V →ₗ[
   add_mem' := by
     rintro x y ⟨hx1, hx2, hx3⟩ ⟨hy1, hy2, hy3⟩
     refine ⟨Submodule.add_mem _ hx1 hy1, fun u hu => ?_, fun m hm => ?_⟩
-    · rw [map_add, LinearMap.add_apply, hx2 u hu, hy2 u hu, add_zero]
-    · rw [map_add, LinearMap.add_apply]
+    · rw [map_add (f := _), LinearMap.add_apply, hx2 u hu, hy2 u hu, add_zero]
+    · rw [map_add (f := _), LinearMap.add_apply]
       obtain ⟨a, ha⟩ := hx3 m hm
       obtain ⟨b, hb⟩ := hy3 m hm
-      exact ⟨a + b, by rw [map_add, ha, hb]⟩
+      exact ⟨a + b, by rw [map_add (f := _), ha, hb]⟩
   zero_mem' := by
     refine ⟨Submodule.zero_mem _, fun u _ => by simp, fun m _ => ⟨0, by simp⟩⟩
   smul_mem' := by

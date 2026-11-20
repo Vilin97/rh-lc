@@ -79,7 +79,7 @@ theorem isDiff_iff_rel [IsIso p] (h : IsGrpPullback A' A (spMap (g : ℂ →+* �
 theorem rel_add [IsIso p] {L : LB A.left} {L' : LB A'.left} {N : ℕ} (u : HolUnif A L N) (u' : HolUnif A' L' N)
     {w₁' w₁ w₂' w₂ : Fin N → ℂ} (h₁ : Rel p g u u' w₁' w₁) (h₂ : Rel p g u u' w₂' w₂) :
     Rel p g u u' (w₁' + w₂') (w₁ + w₂) := fun U hU f => by
-  rw [map_add, map_add, map_add, h₁ U hU f, h₂ U hU f]
+  rw [map_add (f := _), map_add (f := _), map_add (f := _), h₁ U hU f, h₂ U hU f]
 
 theorem rel_smul [IsIso p] {L : LB A.left} {L' : LB A'.left} {N : ℕ} (u : HolUnif A L N) (u' : HolUnif A' L' N)
     {w' w : Fin N → ℂ} (c : ℂ) (h₁ : Rel p g u u' w' w) : Rel p g u u' (g c • w') (c • w) := fun U hU f => by

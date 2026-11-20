@@ -15,7 +15,7 @@ theorem piScalarRight_lTensor_vecMul {a b : Type} [Fintype a] [Fintype b] [Decid
       = (TensorProduct.piScalarRight A B B a x) ᵥ* U.map (algebraMap A B) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, Matrix.add_vecMul]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, Matrix.add_vecMul]
   | tmul s v =>
     ext j
     simp [Matrix.vecMul, dotProduct, Algebra.smul_def, Finset.sum_mul, mul_right_comm]

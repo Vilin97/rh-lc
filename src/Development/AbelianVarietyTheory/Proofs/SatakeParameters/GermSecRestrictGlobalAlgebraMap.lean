@@ -43,7 +43,7 @@ def formGerm (j : ℕ) {V : X.Opens} (hV : IsAffineOpen V) (hη : genericPoint X
   { toFun := fun x ↦ (semiHom_germSec s hη).mDR
       ((toOmEquiv s j hV).symm (sectionsOn.toΓ _ _ x) : DR k (Sec s V))
     map_add' := fun x y ↦ by
-      rw [map_add, map_add, Submodule.coe_add, map_add]
+      rw [map_add (f := _), map_add (f := _), Submodule.coe_add, map_add (f := _)]
     map_smul' := fun r x ↦ by
       rw [sectionsOn.toΓ_smul]
       have h1 : (toOmEquiv s j hV).symm (restrictGlobal X V (algebraMap k Γ(X, ⊤) r) •

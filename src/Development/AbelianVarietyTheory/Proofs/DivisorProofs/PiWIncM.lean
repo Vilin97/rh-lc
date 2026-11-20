@@ -20,7 +20,7 @@ theorem piW_cA (σ : E →ₐ[F] E) {v : Pl F} (τ : E →ₐ[F] Fv F v) (z : AE
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [piW, cA, GlobalTheory.AdelicU.compFin, GlobalTheory.AdelicU.splitProj_tmul]
-  | add y z hy hz => rw [map_add, map_add, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), map_add (f := _), hy, hz]
 
 theorem piW_incM {v : Pl F} (τ : E →ₐ[F] Fv F v) {m : ℕ} (J : Matrix (Fin m) (Fin m) E) (i j : Fin m) :
     piW τ (incM F J i j) = τ (J i j) := by

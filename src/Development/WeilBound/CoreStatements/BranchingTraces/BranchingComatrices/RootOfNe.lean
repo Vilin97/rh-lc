@@ -125,7 +125,7 @@ theorem prod_bd {v : V} {S : ℕ} {M R : ℝ} (hR : 0 ≤ R) (hM : 0 ≤ M)
       · simpa [Function.comp_def] using hR
     simp only [List.map_append, List.prod_append, List.map_cons, List.map_nil, List.prod_cons, List.prod_nil, mul_one,
       Module.End.mul_apply, List.length_append, List.length_cons, List.length_nil, zero_add] at h2
-    rw [e, map_add, map_smul]
+    rw [e, map_add (f := _), map_smul]
     refine (norm_add_le _ _).trans ?_
     rw [norm_smul, List.length_cons]
     calc _ ≤ R * ((R + M) ^ L.length * M ^ W.length * ‖v‖) + (R + M) ^ L.length * M ^ (W.length + 1) * ‖v‖ :=

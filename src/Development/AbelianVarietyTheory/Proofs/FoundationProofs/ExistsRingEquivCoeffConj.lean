@@ -58,6 +58,6 @@ theorem exists_ringEquiv_coeff_conj : ∀ (Ω : Type) [Field Ω] (ε : Ω →+* 
     simp only [map_mul, ec]
   · intro a b
     apply he_inj
-    simp only [map_add, ec]
+    simp only [map_add (f := _), ec]
 
 end GlobalTheory.FN

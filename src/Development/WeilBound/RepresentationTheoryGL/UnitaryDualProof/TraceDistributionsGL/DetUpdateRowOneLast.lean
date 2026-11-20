@@ -95,7 +95,7 @@ theorem phiLin : PhiLin k := by
   simp only [Pi.add_apply, Pi.smul_apply]
   split_ifs
   · simp
-  · rw [← map_smul, ← map_smul, ← map_add]
+  · rw [← map_smul, ← map_smul, ← map_add (f := _)]
     congr 1
 
 theorem phiEquiv : PhiEquiv k := by

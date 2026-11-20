@@ -21,7 +21,7 @@ theorem GlobalTheory.LTDegOne.main : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime 
   have hXXU : Ψ (toB K (ofA K ω)) * (Ψ (toB K (ofA K ω)) * Ψ u) ∈ (P.PD K).Fil 2 := by
     simpa [one_add_one_eq_two] using (P.PD K).Fil_mul 1 1 _ _ hX1 hXU
   have hY : Ψ t = Ψ (toB K (ofA K ω)) + Ψ (toB K (ofA K ω)) * (Ψ (toB K (ofA K ω)) * Ψ u) := by
-    rw [ht, map_mul, map_add, map_one, map_mul]; ring
+    rw [ht, map_mul, map_add (f := _), map_one, map_mul]; ring
   refine GlobalTheory.T.lubin_tate_period_filtration_exact l P K LL χ τ₀ (Ψ t) (fun g => ?_) ?_ ?_
   · rw [hG, hg, map_mul, hK]
   · rw [hY]

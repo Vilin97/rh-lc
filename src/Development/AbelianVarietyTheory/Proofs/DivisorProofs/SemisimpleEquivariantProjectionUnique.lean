@@ -16,13 +16,13 @@ theorem GlobalTheory.LocFinIso.hermitian_matrix_of_commuting_idempotent : ∀ (G
       rw [hAct k hk j]
       exact Submodule.sum_mem _ (fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩))
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
   let W : Submodule (MonoidAlgebra ℂ (subK K h1 hmul)) (repD ρ D K h1 hmul hst).asModule :=
     { carrier := {u | ((e u : D) : V) ∈ Sb}
       add_mem' := by
         intro u v hu hv
-        simp only [Set.mem_setOf_eq, map_add, Submodule.coe_add] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _), Submodule.coe_add] at *
         exact Submodule.add_mem _ hu hv
       zero_mem' := by simp
       smul_mem' := by
@@ -111,7 +111,7 @@ theorem GlobalTheory.LocFinIso.hermitian_matrix_of_commuting_idempotent : ∀ (G
             Subtype.ext (by simp)
           show e.symm (incl (LQ ⟨((e (π (u + v)) : D) : V), hπmem (u + v)⟩)) =
             e.symm (incl (LQ ⟨((e (π u) : D) : V), hπmem u⟩)) + e.symm (incl (LQ ⟨((e (π v) : D) : V), hπmem v⟩))
-          rw [h, map_add, map_add, map_add]
+          rw [h, map_add (f := _), map_add (f := _), map_add (f := _)]
         map_smul' := by
           intro a u
           apply e.injective

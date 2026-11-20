@@ -144,7 +144,7 @@ theorem exists_letters_harm_mem_HHa : ∀ (D : D7) (H : Geo.Tor.Host D.host.E) (
     exact Submodule.smul_mem _ _ (Submodule.smul_mem _ _
       (GlobalTheory.Harm.colAct_mem_rowHighest g (GlobalTheory.Harm.basePoly_mem_rowHighest hn _ _)))
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
   | smul r x _ h1 =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.rename_C, ← MvPolynomial.smul_eq_C_mul]
     exact Submodule.smul_mem _ r h1

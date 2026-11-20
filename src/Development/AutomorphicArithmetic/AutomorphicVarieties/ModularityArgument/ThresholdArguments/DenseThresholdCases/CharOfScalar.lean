@@ -54,7 +54,7 @@ private theorem unit_eig {A N M κ : Type} [CommRing A] [AddCommGroup N] [Module
     | succ k ih => intro f; rw [pow_succ, pow_succ, Module.End.mul_apply, Module.End.mul_apply, ih, hs]
   have hpol : ∀ (p : A[X]) f, s (aeval U p f) = aeval T (p.map (ι.toRingHom.comp x)) (s f) := fun p f => by
     induction p using Polynomial.induction_on' with
-    | add a b ha hb => simp only [map_add, Polynomial.map_add, LinearMap.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Polynomial.map_add (f := _), LinearMap.add_apply, ha, hb]
     | monomial k a =>
       rw [map_monomial, aeval_monomial, aeval_monomial, Module.End.mul_apply, Module.End.mul_apply,
         Module.algebraMap_end_apply, Module.algebraMap_end_apply, s.map_smulₛₗ, hpow]

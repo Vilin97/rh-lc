@@ -249,7 +249,7 @@ theorem exists_of_fixed {z : E} (hz : c z = z) : ∃ a : R, z = algebraMap R E a
   refine ⟨a, ?_⟩
   have h2 : algebraMap R E (⅟(2 : R)) * 2 = 1 := by
     rw [← map_ofNat (algebraMap R E) 2, ← map_mul, invOf_mul_self, map_one]
-  rw [map_add, map_mul, c.commutes, c.commutes, h.anti] at hz
+  rw [map_add (f := _), map_mul, c.commutes, c.commutes, h.anti] at hz
   linear_combination (-algebraMap R E (⅟(2 : R))) * hz - algebraMap R E b * ξ * h2
 
 theorem exists_unit_of_fixed {z : Eˣ} (hz : c z = z) : ∃ a : Rˣ, z = Units.map (algebraMap R E : R →* E) a := by
@@ -301,12 +301,12 @@ theorem IsQuad.h90_range_eq_normOne_of_isQuad {R : Type} [Field R] [Invertible (
     linear_combination (-ξ) * ha'
   · have hz : IsUnit ((1 + (u : E)) * (1 + c u)) := by
       have : (1 + (u : E)) * (1 + c u) = algebraMap R E (2 * (1 + a)) := by
-        rw [map_mul, map_add, map_one, map_ofNat]
+        rw [map_mul, map_add (f := _), map_one, map_ofNat]
         linear_combination hu + hab + hc
       rw [this]
       exact (Ne.isUnit (mul_ne_zero (Invertible.ne_zero 2) ha)).map _
     refine ⟨(isUnit_of_mul_isUnit_left hz).unit, hilbertNinetyQuotientHom_eq_iff.mpr ?_⟩
-    rw [IsUnit.unit_spec, map_add, map_one]
+    rw [IsUnit.unit_spec, map_add (f := _), map_one]
     linear_combination hu
 
 theorem det_mem_normOne {ι : Type} [Fintype ι] [DecidableEq ι] {J : Matrix ι ι E} (hJ : IsHerm c J) (g : UG c J) :
@@ -346,7 +346,7 @@ variable [Invertible (2 : R)]
 
 theorem isLagr_diagCols (JB : Matrix β β E) : IsLagr c (dbl JB) (diagCols β : Matrix (β ⊕ β) β E) := by
   have h2 : algebraMap R E (⅟(2 : R)) + algebraMap R E (⅟(2 : R)) = 1 := by
-    rw [← map_add, invOf_two_add_invOf_two, map_one]
+    rw [← map_add (f := _), invOf_two_add_invOf_two, map_one]
   have h1 : (1 : Matrix β β E).map c = 1 := Matrix.map_one _ (map_zero c) (map_one c)
   have h1' : (-1 : Matrix β β E).map c = -1 := by rw [Matrix.map_neg _ (map_neg c), h1]
   have h3 : ∀ s : Matrix β β E, (fromRows 1 s : Matrix (β ⊕ β) β E).map c = fromRows 1 (s.map c) := fun s => by

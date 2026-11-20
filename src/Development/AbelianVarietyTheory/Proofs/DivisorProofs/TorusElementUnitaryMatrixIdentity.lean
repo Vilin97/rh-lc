@@ -31,7 +31,7 @@ theorem ae_ext {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {z z' : AE F E} (hf : f
       congr 1
       exact Prod.ext (by change x.1 = x.1 + 0; simp) (by change x.2 = 0 + x.2; simp)
     | add x y hx hy =>
-      rw [map_add, map_add, map_add, map_add, add_add_add_comm, ← hx, ← hy]; exact rfl
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), add_add_add_comm, ← hx, ← hy]; exact rfl
   have e : ∀ (w : InfinitePlace F) (z : AE F E), Algebra.TensorProduct.map (GlobalTheory.AutFunCompare.evW w) (AlgHom.id F E)
       (Algebra.TensorProduct.map (fstA F) (AlgHom.id F E) z) = compInf F E w z := fun w z => by
     rw [← AlgHom.comp_apply, ← Algebra.TensorProduct.map_comp, AlgHom.comp_id]

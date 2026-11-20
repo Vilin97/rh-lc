@@ -27,7 +27,7 @@ def phi (x : KeyIn K) {l N : ℕ} (b : Fin N → RR x l) (v : Fin N → K) (c : 
 
 theorem phi_add (x : KeyIn K) {l N : ℕ} (b : Fin N → RR x l) (v w : Fin N → K) (c) :
     phi x b (v + w) c = phi x b v c + phi x b w c := by
-  simp only [phi, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [phi, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem phi_zero (x : KeyIn K) {l N : ℕ} (b : Fin N → RR x l) (c) : phi x b 0 c = 0 := by
   simp only [phi, Pi.zero_apply, map_zero, zero_mul, Finset.sum_const_zero]

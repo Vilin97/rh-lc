@@ -163,7 +163,7 @@ noncomputable def serHom : A →ₐ[k] PowerSeries k where
     refine ⟨approx Q π hex m u + approx Q π hex m v, ?_, ?_⟩
     · have e : u + v - aeval π (approx Q π hex m u + approx Q π hex m v) =
           (u - aeval π (approx Q π hex m u)) + (v - aeval π (approx Q π hex m v)) := by
-        rw [map_add]; ring
+        rw [map_add (f := _)]; ring
       rw [e]
       exact Ideal.add_mem _ (approx_spec Q π hex m u) (approx_spec Q π hex m v)
     · have e : ser Q π hex u + ser Q π hex v -

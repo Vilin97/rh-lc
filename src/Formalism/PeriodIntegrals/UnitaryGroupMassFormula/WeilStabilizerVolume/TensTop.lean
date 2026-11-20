@@ -107,7 +107,7 @@ theorem continuous_hR (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M)
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul r e => simp [sigR]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [e]
     exact IsModuleTopology.continuous_of_linearMap _
   unfold hR Formalism.UG.hform
@@ -125,7 +125,7 @@ theorem continuous_gramR_apply (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul r e => simp [sigR]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [e]
     exact IsModuleTopology.continuous_of_linearMap _
   unfold gramR hR Formalism.UG.hform
@@ -146,7 +146,7 @@ theorem isClosed_HermR (σ : E →ₐ[F] E) (n : ℕ) :
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul r e => simp [sigR]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [e]
     exact IsModuleTopology.continuous_of_linearMap _
   let b := Algebra.TensorProduct.basis R (Module.finBasis F E)
@@ -180,7 +180,7 @@ theorem sigR_invol (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) (x : R ⊗[
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [sigR, hσ]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem gramR_mem (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {M n : ℕ}
     (J : Matrix (Fin M) (Fin M) E) (hJ : ∀ i j, σ (J j i) = J i j)

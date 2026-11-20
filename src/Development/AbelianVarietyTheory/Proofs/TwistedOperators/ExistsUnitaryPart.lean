@@ -263,7 +263,7 @@ theorem exists_idem_set {T : Set (Pl D.host.E)} (hT : OnePlaceOver T) :
       induction w using TensorProduct.induction_on with
       | zero => simp
       | tmul a x => simp [Formalism.UG.sigR, Formalism.IndefR.Lev.swapAE, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [hsw, ← map_mul, hzc, map_zero]
   · intro P hP
     obtain ⟨e, he⟩ := GlobalTheory.ParahoricLift.exists_isIdemAt (hT P hP P hP)
@@ -285,7 +285,7 @@ theorem sigR_sigR (z : EAf D) : Formalism.UG.sigR D.sp.cm.sig (Formalism.L2.Herm
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [Formalism.UG.sigR, CMData.sig]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 set_option maxHeartbeats 800000 in
 theorem exists_latIsom (V V' : HSp D) (h : V.rank = V'.rank)
@@ -313,7 +313,7 @@ theorem exists_latIsom (V V' : HSp D) (h : V.rank = V'.rank)
       · exact Or.inr ⟨w, by simp [Formalism.UG.sigR]⟩
     | zero => simp
     | one => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   obtain ⟨j, U, hbij, hiso, himg, hU, hpU⟩ := exists_isom (Formalism.L2.Herm.intAf D.host.F D.host.E)
@@ -405,7 +405,7 @@ theorem loc_maps (v : HeightOneSpectrum (𝓞 F)) (Λ : Submodule (𝓞 E) (Fin 
           by rw [Formalism.UG.P.afsplit_prV_tmul]⟩
     | zero => simp
     | one => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 

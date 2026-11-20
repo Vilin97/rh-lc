@@ -194,7 +194,7 @@ theorem lift_homeo {X W : Type*} [AddCommGroup X] [TopologicalSpace X] [NormedAd
     rw [he, Homeomorph.apply_symm_apply, Homeomorph.apply_symm_apply, Homeomorph.apply_symm_apply]
   obtain ⟨ℓ', hℓc, hℓ⟩ := lift_normed (fun w => χ (e.symm w)) (hc.comp e.symm.continuous)
     (fun w w' => by simp only [hsadd, hadd]) (by simp only [hs0, h0])
-  refine ⟨AddMonoidHom.mk' (fun x => ℓ' (e x)) (fun x y => by simp only [he, map_add]),
+  refine ⟨AddMonoidHom.mk' (fun x => ℓ' (e x)) (fun x y => by simp only [he, map_add (f := _)]),
     hℓc.comp e.continuous, fun x => ?_⟩
   have h1 := hℓ (e x)
   simp only [Homeomorph.symm_apply_apply] at h1
@@ -254,7 +254,7 @@ theorem chLift_holds : ChLift := by
   refine ⟨AddMonoidHom.mk' (fun x => ∑ v, ℓ v (x v)) (fun x y => ?_), ?_, fun x => ?_⟩
   · rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun v _ => ?_
-    rw [← map_add]
+    rw [← map_add (f := _)]
     rfl
   · exact continuous_finsetSum _ fun v _ => (hℓc v).comp (continuous_apply v)
   · show χ x = Complex.exp (∑ v, ℓ v (x v))

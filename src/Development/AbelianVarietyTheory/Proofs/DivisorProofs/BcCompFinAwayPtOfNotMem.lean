@@ -16,14 +16,14 @@ theorem compFin_smul_away (v : HeightOneSpectrum (𝓞 F)) (a : AF F) (z : AF F 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul b x => exact congrArg (· ⊗ₜ[F] x) (map_mul (evFin F v) a b)
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem compInf_smul_away (w : InfinitePlace F) (a : AF F) (z : AF F ⊗[F] E) :
     compInf F E w (a • z) = evInf F w a • compInf F E w z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul b x => exact congrArg (· ⊗ₜ[F] x) (map_mul (evInf F w) a b)
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 variable {σ : E →ₐ[F] E} {N : ℕ} {Q : Matrix (Fin N) (Fin N) E}
 

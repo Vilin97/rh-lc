@@ -59,7 +59,7 @@ theorem res_aeval (k : Type) [Field k] (F : Type) [Field F] [Algebra k F] (d : �
         rw [Finset.prod_congr rfl (fun j _ ↦ div_pow (x j.succ) (x 0) (n j)), Finset.prod_div_distrib,
           Finset.prod_pow_eq_pow_sum, ← Nat.cast_sum, zpow_natCast, div_eq_inv_mul]
       rw [hprod, hρ.2 m hsum hm, mul_zero]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
 
 end GlobalTheory.PD.ResEv
 

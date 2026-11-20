@@ -120,7 +120,7 @@ theorem mulVec_period_basis {g : ℕ} {La : Type} [AddCommGroup La] (P : La →+
   rw [h1 fun i => v (.inl i), h1 fun i => v (.inr i)]
   conv_lhs => rw [h2]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_zsmul, Fintype.sum_sum_type, map_add, (hh _).1, (hh _).2, Matrix.mulVec_sum,
+    simp only [map_sum, map_zsmul, Fintype.sum_sum_type, map_add (f := _), (hh _).1, (hh _).2, Matrix.mulVec_sum,
     Matrix.mulVec_smul, Matrix.mulVec_add]
 
 theorem existsUnique_char_of_triple (hT : ThetaUnifAV) (hmul : Out.MulNSt) {E : Type} [Field E] [NumberField E]

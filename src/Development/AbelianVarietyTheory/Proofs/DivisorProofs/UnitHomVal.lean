@@ -78,7 +78,7 @@ theorem ptA_mul (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (p q p' q' : Fv 
   have e1 : Y * Z - 1 = (Y - 1) + (Z - 1) + (Y - 1) * (Z - 1) := by ring
   have e2 : tensAt E v (Y - 1) * tensAt E v (Z - 1) = tensAt E v ((Y - 1) * (Z - 1)) := by
     rw [tensAt_mul_right, compFin_tensAt]
-  simp only [ptA, hYZ, e1, map_add, ← e2]
+  simp only [ptA, hYZ, e1, map_add (f := _), ← e2]
   ring
 
 theorem ptA_one (hcm : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) : ptA hcm t 1 1 = 1 := by

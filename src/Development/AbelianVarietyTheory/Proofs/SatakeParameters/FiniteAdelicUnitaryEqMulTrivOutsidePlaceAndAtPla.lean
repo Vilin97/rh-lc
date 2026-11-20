@@ -40,11 +40,11 @@ theorem decomp : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ
       map_add' := fun q q' => by simp only [Prod.fst_add, Prod.snd_add]; ring }
   have hθ : ∀ q, θ q = e * q.1 + (1 - e) * q.2 := fun _ => rfl
   have hθc : ∀ a b, conjAL L (θ (a, b)) = θ (conjAL L a, conjAL L b) := by
-    intro a b; rw [hθ, hθ, map_add, map_mul, map_mul, map_sub, map_one, hce]
+    intro a b; rw [hθ, hθ, map_add (f := _), map_mul, map_mul, map_sub, map_one, hce]
   have hθv : ∀ q, compAt L v (θ q) = compAt L v q.1 := by
-    intro q; rw [hθ, map_add, map_mul, map_mul, map_sub, map_one, hcv]; ring
+    intro q; rw [hθ, map_add (f := _), map_mul, map_mul, map_sub, map_one, hcv]; ring
   have hθw : ∀ w, w ≠ v → ∀ q, compAt L w (θ q) = compAt L w q.2 := by
-    intro w hw q; rw [hθ, map_add, map_mul, map_mul, map_sub, map_one, hcw w hw]; ring
+    intro w hw q; rw [hθ, map_add (f := _), map_mul, map_mul, map_sub, map_one, hcw w hw]; ring
   let pr : Matrix (Fin n) (Fin n) (AL L) → Matrix (Fin n) (Fin n) (AL L) →
       Matrix (Fin n) (Fin n) (AL L × AL L) :=
     fun A B i j => (A i j, B i j)

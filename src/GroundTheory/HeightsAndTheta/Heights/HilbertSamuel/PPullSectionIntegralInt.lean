@@ -16,7 +16,7 @@ theorem aeval_mem_of_forall {σ Ω : Type} [Field Ω] (V : Subring Ω) (y' : σ 
     (b : MvPolynomial σ ℤ) : aeval y' b ∈ V := by
   induction b using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => rw [map_add]; exact V.add_mem hp hq
+  | add p q hp hq => rw [map_add (f := _)]; exact V.add_mem hp hq
   | mul_X p i hp => rw [map_mul, aeval_X]; exact V.mul_mem hp (hy i)
 
 theorem proof : PullSectionIntegralInt.Statement := by

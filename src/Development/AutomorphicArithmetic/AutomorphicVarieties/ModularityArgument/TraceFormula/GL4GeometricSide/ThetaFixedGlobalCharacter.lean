@@ -93,7 +93,7 @@ private theorem exists_hecke (hM : HeckeMem) (π : CuspSub E n) {K : Subgroup (G
   choose f hf using hex
   refine ⟨⟨⟨f, fun a b => D.inj ?_⟩, fun c a => D.inj ?_⟩, hf⟩
   · refine Subtype.ext (Subtype.ext (funext fun x => ?_))
-    rw [map_add]
+    rw [map_add (f := _)]
     change (D.i (f (a + b))).1.1 x = (D.i (f a)).1.1 x + (D.i (f b)).1.1 x
     rw [hf, hf, hf, heckeOp, heckeOp, heckeOp,
       ← integral_add (integrable_hecke π hKo μf hh a x) (integrable_hecke π hKo μf hh b x)]

@@ -168,7 +168,7 @@ theorem emb_coord (x : E ⊗[F] B) : emb b (coord b x) = x := by
     rw [TensorProduct.smul_tmul]
   | add x y hx hy =>
     have : emb b (coord b (x + y)) = emb b (coord b x) + emb b (coord b y) := by
-      simp [emb, map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
+      simp [emb, map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib]
     rw [this, hx, hy]
 
 theorem coord_injective : Function.Injective (coord b : E ⊗[F] B → ι → B) :=
@@ -228,7 +228,7 @@ theorem ctsA_emb {g : X → ι → B} (hg : Continuous g) : CtsA b (fun x => emb
 
 theorem ctsA_add {f g : X → E ⊗[F] B} (hf : CtsA b f) (hg : CtsA b g) : CtsA b (fun x => f x + g x) := by
   unfold CtsA at *
-  simp only [map_add]
+  simp only [map_add (f := _)]
   exact hf.add hg
 
 theorem ctsA_sub {f g : X → E ⊗[F] B} (hf : CtsA b f) (hg : CtsA b g) : CtsA b (fun x => f x - g x) := by
@@ -357,7 +357,7 @@ def IntC (x : E ⊗[F] Af) : Prop := ∀ k, coord b x k ∈ Ohat F
 variable {b}
 
 theorem intC_add {x y : E ⊗[F] Af} (hx : IntC b x) (hy : IntC b y) : IntC b (x + y) := fun k => by
-  rw [map_add]; exact ohat_add (hx k) (hy k)
+  rw [map_add (f := _)]; exact ohat_add (hx k) (hy k)
 
 theorem intC_nsmul {x : E ⊗[F] Af} (hx : IntC b x) (m : ℕ) : IntC b (m • x) := fun k => by
   rw [map_nsmul]; exact ohat_nsmul (hx k) m

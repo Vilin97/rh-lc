@@ -21,7 +21,7 @@ theorem infPart_conj_eq_zero {a : AE D} (h : infPart D a = 0) : infPart D (cA D 
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a x => rfl
-    | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingHom.map_add, ha, hb]
+    | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
   rw [e, h, map_zero]
 
 theorem adj_fin {m n : ℕ} {x : Mx D m n} (h : x.map (infPart D) = 0) : (adj x).map (infPart D) = 0 := by

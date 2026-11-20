@@ -147,7 +147,7 @@ theorem exists_primitive_data {R B : Type*} [CommRing R] [IsDomain R] [IsIntegra
       C α * IsLocalization.integerNormalization (nonZeroDivisors R) b * derivative (minpoly R ℓ) =
       C (α * β) := by
     apply hinjK
-    simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C, hαa, hβb,
+    simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C, hαa, hβb,
       Algebra.smul_def, Polynomial.algebraMap_apply, map_mul]
     linear_combination (C (algebraMap R K α) * C (algebraMap R K β)) * hab
 

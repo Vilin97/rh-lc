@@ -179,14 +179,14 @@ theorem twAn_joinCol {n' c' n c : ℕ} (hc : 1 ≤ c') (x₀ : HomE E n' n) (y' 
 theorem twAn_joinCol_sub_y {n' c' n c : ℕ} (x₀ : HomE E n' n) (y' z : Sp E n) (v : Sp E (n' + c')) :
     joinCol (c' := c') (c := c) x₀ (y' + z) v - joinCol (c' := c') (c := c) x₀ y' v = Loc.inX E n c (atNL E (n' + c') n' v • z) := by
   unfold joinCol
-  simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smulRight_apply, smul_add, map_add]
+  simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smulRight_apply, smul_add, map_add (f := _)]
   abel
 
 theorem joinColumn_add_sub {n' c' n c : ℕ} (x₀ z : HomE E n' n) (y' : Sp E n) (v : Sp E (n' + c')) :
     joinCol (c' := c') (c := c) (x₀ + z) y' v - joinCol (c' := c') (c := c) x₀ y' v =
       Loc.inX E n c (z (LinearMap.funLeft E E (Fin.castAdd c') v)) := by
   unfold joinCol
-  simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smulRight_apply, map_add]
+  simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smulRight_apply, map_add (f := _)]
   abel
 
 theorem columns_twAn_fact {n' c' n c : ℕ} (xj xj' : (Fin n' → E) →ₗ[E] (Fin n → E)) (t : Loc.FC n' c' n c → E)

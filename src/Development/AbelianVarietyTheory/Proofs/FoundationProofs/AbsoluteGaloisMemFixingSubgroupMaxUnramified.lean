@@ -254,7 +254,7 @@ theorem qpost_inv {F : LatHom L L'} {F' : LatHom L' L} (h : ∀ x, F'.f (F.f x) 
 theorem qpost_Z1D (F : LatHom L L') (c : G → V ⧸ L.T) (hc : c ∈ divisibleCocycles L) : qpost F c ∈ divisibleCocycles L' := by
   refine ⟨hc.1.comp (qmap F), fun g h => ?_⟩
   change qmap F (c (g * h)) = qmap F (c g) + actD L' g (qmap F (c h))
-  rw [hc.2, map_add, qmap_act]
+  rw [hc.2, map_add (f := _), qmap_act]
 
 theorem mem_BD (c : G → V ⧸ L.T) : c ∈ BD L ↔ ∃ x, ∀ g, c g = actD L g x - x :=
   ⟨fun ⟨x, hx⟩ => ⟨x, fun g => (congrFun hx g).symm⟩, fun ⟨x, hx⟩ => ⟨x, funext fun g => (hx g).symm⟩⟩
@@ -268,7 +268,7 @@ theorem qpost_BD (F : LatHom L L') (c : G → V ⧸ L.T) (hc : c ∈ BD L) : qpo
 theorem post_compose_bloch_kato_cocycle (F : LatHom L L') (c : G → V) (hc : c ∈ finiteCocycles PD ρ) :
     (fun g => F.f (c g)) ∈ finiteCocycles PD ρ' := by
   obtain ⟨⟨h1, h2⟩, x, hx⟩ := hc
-  refine ⟨⟨F.cont.comp h1, fun g h => by simp only [h2, map_add, F.equiv]⟩,
+  refine ⟨⟨F.cont.comp h1, fun g h => by simp only [h2, map_add (f := _), F.equiv]⟩,
     AlgebraTensorModule.map F.f (LinearMap.id : B →ₗ[Qp] B) x, fun g => ?_⟩
   have h3 : ∀ y, actVB PD ρ' g (AlgebraTensorModule.map F.f (LinearMap.id : B →ₗ[Qp] B) y) =
       AlgebraTensorModule.map F.f (LinearMap.id : B →ₗ[Qp] B) (actVB PD ρ g y) := by
@@ -283,7 +283,7 @@ theorem post_compose_bloch_kato_cocycle (F : LatHom L L') (c : G → V) (hc : c 
 theorem qpost_HfD (F : LatHom L L') (c : G → V ⧸ L.T) (hc : c ∈ HfD PD L) :
     qpost F c ∈ HfD PD L' := by
   obtain ⟨_, ⟨a, ha, rfl⟩, b, hb, rfl⟩ := Submodule.mem_sup.mp hc
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem_sup ⟨_, post_compose_bloch_kato_cocycle PD F a ha, rfl⟩ (qpost_BD F b hb)
 
 theorem mk_mem_H1fD (z : ↥(divisibleCocycles L)) :
@@ -344,7 +344,7 @@ theorem HfD_le (hT : IsOpen (L.T : Set V)) (hc : ∀ x, Continuous fun g => ρ g
     refine ⟨key _ ((hc x).add continuous_const), fun g h => ?_⟩
     change _ = Submodule.Quotient.mk (ρ g x + -x + ρ g (ρ h x + -x))
     congr 1
-    simp only [map_mul, Module.End.mul_apply, map_add, map_neg]
+    simp only [map_mul, Module.End.mul_apply, map_add (f := _), map_neg]
     abel
 
 variable (L) in

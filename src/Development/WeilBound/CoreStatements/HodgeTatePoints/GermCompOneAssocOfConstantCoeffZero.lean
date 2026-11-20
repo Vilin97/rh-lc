@@ -36,7 +36,7 @@ theorem cc_ev {m n : ℕ} {a : Fin m → Pt R n d} (ha : ZZ a) (f : PS R m d) :
     constantCoeff_subst_eq_zero (ev_sub_lemma ha) (fun p => ha p.1 p.2) (by simp)
   have e : ev a f = ev a (C (constantCoeff f)) + ev a (f - C (constantCoeff f)) := by
     rw [← ev_add a ha, add_sub_cancel]
-  rw [e, map_add, h0, ev_C, constantCoeff_C, add_zero]
+  rw [e, map_add (f := _), h0, ev_C, constantCoeff_C, add_zero]
 
 theorem ev_ev {l m n : ℕ} {a : Fin l → Pt R m d} {b : Fin m → Pt R n d} (ha : ZZ a) (hb : ZZ b) (f : PS R l d) :
     ev b (ev a f) = ev (fun j => evP b (a j)) f :=
@@ -127,7 +127,7 @@ private theorem cc_d_ev_lemma_2 {m n : ℕ} {a : Fin m → Pt R n d} (ha : ZZ a)
     rw [MvPolynomial.coe_C, ← cc_d_ev_lemma ha, ev_C, pderiv_C]
     simp [-coe_substAlgHom, -substAlgHom_apply]
   next p q hp hq =>
-    simp only [MvPolynomial.coe_add, map_add, hp, hq, add_mul, Finset.sum_add_distrib]
+    simp only [MvPolynomial.coe_add, map_add (f := _), hp, hq, add_mul, Finset.sum_add_distrib]
   next p k hp =>
     simp only [MvPolynomial.coe_mul, MvPolynomial.coe_X, map_mul, substAlgHom_X, Derivation.leibniz,
       smul_eq_mul, hp, map_add, pderiv_X, Pi.single_apply, add_mul, Finset.sum_add_distrib]
@@ -158,7 +158,7 @@ private theorem cc_d_ev_lemma_4 {m n : ℕ} {a : Fin m → Pt R n d} (ha : ZZ a)
   set P : MvPolynomial (Fin m × Fin d) R := truncTotal (e.degree + 2) f with hP
   have hL : coeff e (pderiv R t (ev a (f - (P : PS R m d)))) = 0 := by
     rw [coeff_pderiv, cc_d_ev_lemma_3 ha hh _ ?_, zero_mul]
-    simp [map_add, Finsupp.degree_single]
+    simp [map_add (f := _), Finsupp.degree_single]
   have hR : coeff e (∑ p : Fin m × Fin d,
       ev a (pderiv R p (f - (P : PS R m d))) * pderiv R t (a p.1 p.2)) = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
@@ -169,19 +169,19 @@ private theorem cc_d_ev_lemma_4 {m n : ℕ} {a : Fin m → Pt R n d} (ha : ZZ a)
     have hx' := Finset.HasAntidiagonal.mem_antidiagonal.mp hx
     have hdeg : x.1.degree ≤ e.degree := by
       rw [← hx']
-      simp [map_add]
+      simp [map_add (f := _)]
     rw [cc_d_ev_lemma_3 ha (K := e.degree + 1) ?_ x.1 (by omega), zero_mul]
     intro y hy
-    rw [coeff_pderiv, hh _ (by simp [map_add, Finsupp.degree_single]; omega), zero_mul]
+    rw [coeff_pderiv, hh _ (by simp [map_add (f := _), Finsupp.degree_single]; omega), zero_mul]
   have lin1 : pderiv R t (ev a f) = pderiv R t (ev a (P : PS R m d)) + pderiv R t (ev a (f - P)) := by
-    rw [← map_add, ← ev_add a ha, add_sub_cancel]
+    rw [← map_add (f := _), ← ev_add a ha, add_sub_cancel]
   have lin2 : (∑ p : Fin m × Fin d, ev a (pderiv R p f) * pderiv R t (a p.1 p.2)) =
       (∑ p : Fin m × Fin d, ev a (pderiv R p (P : PS R m d)) * pderiv R t (a p.1 p.2)) +
       ∑ p : Fin m × Fin d, ev a (pderiv R p (f - (P : PS R m d))) * pderiv R t (a p.1 p.2) := by
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun p _ => ?_
-    rw [← add_mul, ← ev_add a ha, ← map_add, add_sub_cancel]
-  rw [lin1, lin2, map_add, map_add, hL, hR, cc_d_ev_lemma_2 ha t P]
+    rw [← add_mul, ← ev_add a ha, ← map_add (f := _), add_sub_cancel]
+  rw [lin1, lin2, map_add (f := _), map_add (f := _), hL, hR, cc_d_ev_lemma_2 ha t P]
 
 theorem cc_d_ev {m n : ℕ} {a : Fin m → Pt R n d} (ha : ZZ a) (t : Fin n × Fin d) (f : PS R m d) :
     constantCoeff (pderiv R t (ev a f)) =
@@ -199,7 +199,7 @@ theorem cc_dd_ev {m n : ℕ} {a : Fin m → Pt R n d} (ha : ZZ a) (s t : Fin n �
   set_option synthInstance.maxHeartbeats 100000 in
     rw [ReciprocityTheory.ChartRestriction.G.TB.ChartChgPfTP.pderiv_ev a ha, map_sum, map_sum]
   refine Finset.sum_congr rfl fun p _ => ?_
-  rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, cc_ev ha, hf, zero_mul, zero_add,
+  rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, cc_ev ha, hf, zero_mul, zero_add,
     cc_d_ev ha, mul_comm]
 
 theorem lin_one (φ : Pt R 1 d) (i j : Fin d) : lin φ 1 i j = constantCoeff (pderiv R ((0 : Fin 1), j) (φ i)) :=

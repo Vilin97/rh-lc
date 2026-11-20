@@ -359,7 +359,7 @@ theorem descent (T : Submodule R F) (y : F) (h : bcC (K := K) v y ∈ locC (K :=
     | zero => intro i; simp
     | add x z _ _ hx hz =>
       intro i
-      rw [map_add, Finsupp.add_apply]
+      rw [map_add (f := _), Finsupp.add_apply]
       exact ⟨Subalgebra.add_mem _ (hx i).1 (hz i).1, fun h => by rw [(hx i).2 h, (hz i).2 h, add_zero]⟩
     | smul a x _ hx =>
       intro i
@@ -383,7 +383,7 @@ theorem descent (T : Submodule R F) (y : F) (h : bcC (K := K) v y ∈ locC (K :=
     | zero => intro i; simp
     | add x z _ _ hx hz =>
       intro i
-      rw [map_add, Finsupp.add_apply]
+      rw [map_add (f := _), Finsupp.add_apply]
       exact ⟨Valuation.map_add_le _ (hx i).1 (hz i).1, fun h => by rw [(hx i).2 h, (hz i).2 h, add_zero]⟩
     | smul a x _ hx =>
       intro i
@@ -707,7 +707,7 @@ theorem l1b : CompletionPreservesFinrank (K := K) (F := F) v := by
         rw [e]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨w, w.2, rfl⟩)
       | add x y hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hx hy
     · unfold locKC
       rw [Submodule.span_le]
@@ -796,7 +796,7 @@ theorem up_span_range (ι : Z0 →ₗ[K0] (Fin n → K)) {I : Type} (a : I → Z
       obtain ⟨i, rfl⟩ := hy
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul s y _ hy => rw [iota_smul]; exact Submodule.smul_mem _ _ hy
   · refine Submodule.span_mono ?_
     rintro _ ⟨i, rfl⟩
@@ -1200,7 +1200,7 @@ theorem up_top (ι : Z0 →ₗ[K0] (Fin n → K)) (htop : Submodule.span K (Set.
   induction hz using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span (Submodule.subset_span ⟨x, hx, rfl⟩)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     rw [map_smul, ← algebraMap_smul K a (ι x)]
     exact Submodule.smul_mem _ _ hx

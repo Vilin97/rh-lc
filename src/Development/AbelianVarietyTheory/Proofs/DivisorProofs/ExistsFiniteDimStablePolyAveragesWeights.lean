@@ -94,7 +94,7 @@ def avg (hσ : IsURepOn (UJset ε) σ) (u : H) : Poly n →ₗ[ℂ] H where
   toFun P := ∫ k : KG ε, ev (toMK k) P • σ (toMK k) u ∂(muK ε)
   map_add' P Q := by
     rw [← integral_add (integrable_avg hσ u P) (integrable_avg hσ u Q)]
-    simp only [map_add, add_smul]
+    simp only [map_add (f := _), add_smul]
   map_smul' c P := by
     rw [RingHom.id_apply, ← integral_smul]
     simp [ev, smul_eq_C_mul, mul_smul]

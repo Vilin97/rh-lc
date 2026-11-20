@@ -238,7 +238,7 @@ theorem ring_objects_of_matrix_data (hEM : StatEMat) (hSP : StatSplitPts) (hKO :
       map_add' := fun a b => by
         ext i j; apply hι; rw [hent]
         show a.1 π' i j + b.1 π' i j = ι (ρf a i j + ρf b i j)
-        rw [map_add, hent, hent]
+        rw [map_add (f := _), hent, hent]
       commutes' := fun c => by
         ext i j; apply hι; rw [hent]
         show (algebraMap O (Matrix d d K) c) i j = ι ((algebraMap O (Matrix d d O) c) i j)
@@ -263,7 +263,7 @@ theorem ring_objects_of_matrix_data (hEM : StatEMat) (hSP : StatSplitPts) (hKO :
           simp [Matrix.toSquareBlock_def, Matrix.one_apply, h, h']
       map_mul' := fun a b => by rw [map_mul]; exact blk_mul bl (hBD a) k
       map_zero' := by rw [map_zero]; ext i j; simp [Matrix.toSquareBlock_def]
-      map_add' := fun a b => by rw [map_add]; ext i j; simp [Matrix.toSquareBlock_def]
+      map_add' := fun a b => by rw [map_add (f := _)]; ext i j; simp [Matrix.toSquareBlock_def]
       commutes' := fun c => by
         rw [AlgHom.commutes]
         ext i j

@@ -289,7 +289,7 @@ theorem uE_mem : ∀ x ∈ lieE (Nset k r), uE k r x ∈ lieE (Nset k r) := by
     rw [uE_realify]
     exact Submodule.subset_span ⟨_, conjI_mem_lieOf X hX, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ c hy
 
 theorem uEI_mem : ∀ x ∈ lieE (Nset k r), uEI k r x ∈ lieE (Nset k r) := by
@@ -302,7 +302,7 @@ theorem uEI_mem : ∀ x ∈ lieE (Nset k r), uEI k r x ∈ lieE (Nset k r) := by
     rw [uEI_realify]
     exact Submodule.subset_span ⟨_, conj_mem_lieOf X hX, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ c hy
 
 def uL (k r : ℕ) : lieE (Nset k r) ≃ₗᵢ[ℝ] lieE (Nset k r) where

@@ -78,7 +78,7 @@ theorem gammaD_idempotent_smul' (T : LocLat G Qp LL O) (g : W.Gam) (i : ZMod n) 
 theorem gammaA_q_of_mem_delta (hπΔ : W.π₀ ∈ W.AΔ) (δ : W.Gam) (hδ : δ ∈ W.DelF) :
     W.γA δ (Formalism.MainNotions.LiftingTheory.qp W) = Formalism.MainNotions.LiftingTheory.qp W := by
   unfold Formalism.MainNotions.LiftingTheory.qp
-  rw [map_add, (hπΔ : ∀ δ ∈ W.DelF, W.γA δ W.π₀ = W.π₀) δ hδ, map_natCast]
+  rw [map_add (f := _), (hπΔ : ∀ δ ∈ W.DelF, W.γA δ W.π₀ = W.π₀) δ hδ, map_natCast]
 
 theorem uniformizer_unit_and_delta_card (h9 : Formalism.MainNotions.DeltaInvariantLattices.P9W W) (hA : Formalism.MainNotions.LiftingTheory.CaseA W) {T : LocLat G Qp LL O}
     (hT : IsCrys PD T.ρ) :
@@ -105,7 +105,7 @@ theorem isUnit_q_of_uniformizer_unit (hπ : IsUnit (algebraMap (LetA O n) W.EE W
   obtain ⟨u, hu⟩ := hπ
   have h1 := (Ideal.mem_jacobson_bot.mp hj) (↑u⁻¹)
   unfold Formalism.MainNotions.LiftingTheory.qp
-  rw [map_add, map_natCast, ← hu]
+  rw [map_add (f := _), map_natCast, ← hu]
   have e : (u : W.EE) + ((PD.p : ℕ) : W.EE) = u * (((PD.p : ℕ) : W.EE) * ↑u⁻¹ + 1) := by
     rw [mul_add, mul_one, mul_left_comm, Units.mul_inv, mul_one, add_comm]
   rw [e]
@@ -117,7 +117,7 @@ theorem exists_derivation_gamma_sub (T : LocLat G Qp LL O) (hπ : IsUnit (algebr
   refine ⟨{ toFun := fun z => ((u⁻¹ : W.EEˣ) : W.EE) • (W.γ T z - z),
             map_add' := ?_, map_smul' := ?_ }, ?_⟩
   · intro a b
-    simp only [map_add, smul_sub, smul_add]
+    simp only [map_add (f := _), smul_sub, smul_add]
     abel
   · intro c z
     simp only [RingHom.id_apply]

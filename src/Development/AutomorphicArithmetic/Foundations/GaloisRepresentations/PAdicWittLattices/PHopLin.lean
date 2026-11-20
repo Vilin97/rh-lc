@@ -41,7 +41,7 @@ theorem UpperTheory.Gal.G3.pHopLin :
         simp [h1, h2]
       · exact hA1 g h1
     · intro x
-      rw [LinearMap.add_apply, map_add, e1 x, e2 x,
+      rw [LinearMap.add_apply, map_add (f := _), e1 x, e2 x,
         ← finsum_add_distrib (supp_fin (m := m) X T hf x) (supp_fin (m := m) X T hf' x)]
       apply finsum_congr
       intro y

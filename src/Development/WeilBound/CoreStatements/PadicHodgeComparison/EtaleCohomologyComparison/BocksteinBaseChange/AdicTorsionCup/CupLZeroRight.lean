@@ -43,7 +43,7 @@ theorem cupL_add_left (x x' : Hl l E n i) (y : Hl l E m j) :
   apply Subtype.ext
   funext k
   change (cup _ (x.1 k + x'.1 k) (y.1 k)).cast h1 h2 = (cup _ _ _).cast h1 h2 + (cup _ _ _).cast h1 h2
-  rw [map_add, AddMonoidHom.add_apply, cast_add]
+  rw [map_add (f := _), AddMonoidHom.add_apply, cast_add]
 
 theorem cupL_smul_left (r : ℤ_[l]) (x : Hl l E n i) (y : Hl l E m j) :
     cupL l hI h1 h2 (r • x) y = r • cupL l hI h1 h2 x y := by

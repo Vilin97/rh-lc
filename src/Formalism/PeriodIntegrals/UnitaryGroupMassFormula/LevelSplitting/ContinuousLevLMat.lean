@@ -37,7 +37,7 @@ theorem continuous_levL_mat (T : F) (P : Frame E M r) {X : Type} [TopologicalSpa
     (hU : ∀ a b, Continuous fun x => U x a b) (hW : ∀ a b, Continuous fun x => W x a b) :
     Continuous fun x => LinearMap.toMatrix' (levL (datR (Af F) σ J P T) (U x) (W x)) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [levL, map_add, map_sum, map_smul]
+    simp only [levL, map_add (f := _), map_sum, map_smul]
   refine (continuous_const.add (continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ =>
     (hU a b).smul continuous_const)).add
     (continuous_finsetSum _ fun d _ => continuous_finsetSum _ fun b _ => (hW d b).smul continuous_const)

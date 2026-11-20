@@ -54,7 +54,7 @@ theorem _root_.GlobalTheory.exists_smul_mem_of_dense_fibres :
       obtain ⟨p', hp', w, hw, hpw⟩ := Submodule.mem_sup.1 hn
       have h1 : P.mkQ (a ^ n • y) ∈ Submodule.span R (Set.range fun i : s => P.mkQ (i : A)) := by
         have hp0 : P.mkQ p' = 0 := (Submodule.Quotient.mk_eq_zero P).2 hp'
-        rw [← hpw, map_add, hp0, zero_add]
+        rw [← hpw, map_add (f := _), hp0, zero_add]
         have := Submodule.mem_map_of_mem (f := P.mkQ) hw
         rwa [Submodule.map_span, Set.image_eq_range] at this
       have h2 : f (P.mkQ (a ^ n • y)) ∈ Submodule.span (Localization S) (Set.range (⇑f ∘ fun i : s => P.mkQ (i : A))) := by
@@ -96,7 +96,7 @@ theorem _root_.GlobalTheory.exists_smul_mem_of_dense_fibres :
       | zero => simp
       | tmul k y =>
         rw [Algebra.TensorProduct.map_tmul, hΘ, hθP (A₀.val y) ((hP _).2 y.2), mul_zero]
-      | add z₁ z₂ h₁ h₂ => simp only [map_add, h₁, h₂, add_zero]
+      | add z₁ z₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂, add_zero]
     have hx : θ x = 0 := by
       have hΘ0 := hΘ0' z
       rw [hz, hΘ, _root_.one_mul] at hΘ0
@@ -109,7 +109,7 @@ theorem _root_.GlobalTheory.exists_smul_mem_of_dense_fibres :
           rw [map_smul, hθs m (hcs hm), if_neg hmj, smul_zero]
         · intro h; exact absurd hjs h
       have h0 : θ (a ^ N • x) = 0 := by rw [map_smul, hx, smul_zero]
-      rw [← hpv, map_add, hθP p hp, zero_add, hθv, Algebra.smul_def, _root_.mul_one] at h0
+      rw [← hpv, map_add (f := _), hθP p hp, zero_add, hθv, Algebra.smul_def, _root_.mul_one] at h0
       rw [← hker]
       exact RingHom.mem_ker.2 h0
     · rw [Finsupp.notMem_support_iff.1 hjs]

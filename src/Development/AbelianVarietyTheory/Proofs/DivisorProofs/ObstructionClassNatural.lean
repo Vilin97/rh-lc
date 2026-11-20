@@ -96,7 +96,7 @@ theorem bock_natural : ∀ (R R' R₀ : Type) [CommRing R] [CommRing R'] [CommRi
     have e := congrFun (congrFun (congrFun (congrFun (congrFun hfv _) _) _)
       ((pairPull w).G.map u)) ((pairPull w).G.map u')
     simp only [d1_apply, Pi.smul_apply] at e ⊢
-    rw [hF1, hF1, hF1, hW1, ← (pairPull w).naturality, Functor.map_comp, ← map_sub, ← map_add, e,
+    rw [hF1, hF1, hF1, hW1, ← (pairPull w).naturality, Functor.map_comp, ← map_sub, ← map_add (f := _), e,
       (pairPull w).smul]
     rfl
   have hdF2 : d1 (OPair ψ q) F2 = t • W2 := by
@@ -124,7 +124,7 @@ theorem bock_natural : ∀ (R R' R₀ : Type) [CommRing R] [CommRing R'] [CommRi
     refine H2.mk_eq_mk.2 ⟨ub, ?_⟩
     funext a b c u u'
     have E := hzero a b c u u'
-    simp only [Pi.sub_apply, d1_apply, map_sub, map_add] at E
+    simp only [Pi.sub_apply, d1_apply, map_sub, map_add (f := _)] at E
     have E1 : preα χ₀ q q₀ ((pairFst ψ).obj c) (mp (OPair ψ q) u' (u₀ a b u)) =
         mp (pairFst ψ ⋙ OPre χ₀ q₀) u' (ub a b u) := by
       rw [hub]; exact nat₀ ((pairFst ψ).map u') (u₀ a b u)

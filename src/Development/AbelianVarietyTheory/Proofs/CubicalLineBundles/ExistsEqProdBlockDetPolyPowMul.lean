@@ -283,7 +283,7 @@ theorem coeff_aeval_scale {K σ : Type} [CommRing K] (t : K) (G : MvPolynomial �
     split_ifs with hu
     · rw [hu]
     · simp
-  | add p q hp hq => simp only [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem isHomogeneous_of_scaling {K σ : Type} [Field K] [CharZero K] (G D : MvPolynomial σ K) (hD : D ≠ 0) (d : ℕ)
     (h : ∀ x : σ → K, MvPolynomial.eval x D ≠ 0 →
@@ -300,7 +300,7 @@ theorem isHomogeneous_of_scaling {K σ : Type} [Field K] [CharZero K] (G D : MvP
         clear h
         induction G using MvPolynomial.induction_on with
         | C r => simp
-        | add p q hp hq => simp only [map_add, hp, hq]
+        | add p q hp hq => simp only [map_add (f := _), hp, hq]
         | mul_X p v hp => simp only [map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.eval_C, MvPolynomial.eval_X]
       rw [map_mul, map_sub, e, h x hx]
       simp

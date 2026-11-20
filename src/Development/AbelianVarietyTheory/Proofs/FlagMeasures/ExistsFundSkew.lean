@@ -137,7 +137,7 @@ theorem exists_fund_skew : ∀ (K : Type) [Field K] [NumberField K] [StarRing K]
   obtain ⟨u, -⟩ := (hσ.2 (Classical.arbitrary _)).exists
   have hre : ∀ t : K, t + star t = 0 → ∀ v, (σ v t).re = 0 := fun t ht v => by
     have := congrArg (fun x => (σ v x).re) ht
-    simp only [map_add, hσ.1, map_zero, Complex.add_re, Complex.conj_re, Complex.zero_re] at this
+    simp only [map_add (f := _), hσ.1, map_zero, Complex.add_re, Complex.conj_re, Complex.zero_re] at this
     linarith
   have hB' : ∀ y, y ∈ B ↔ ∃ t : K, (t ∈ ipow 𝔡 (-(2 * (n : ℤ))) ∧ t + star t = 0) ∧
       y = fun v => c * (σ v t).im := by
@@ -147,7 +147,7 @@ theorem exists_fund_skew : ∀ (K : Type) [Field K] [NumberField K] [StarRing K]
     · rintro ⟨t, ht, hy⟩
       refine ⟨t, ⟨ht, (σ u).injective ?_⟩, funext fun v => by simpa using congrArg Complex.im (congrFun hy v)⟩
       have h1 : (σ u t).re = 0 := by simpa [hc0.ne'] using congrArg Complex.re (congrFun hy u)
-      rw [map_add, hσ.1, map_zero]
+      rw [map_add (f := _), hσ.1, map_zero]
       apply Complex.ext <;> simp [h1]
     · rintro ⟨t, ⟨ht, ht'⟩, rfl⟩
       exact ⟨t, ht, funext fun v => by apply Complex.ext <;> simp [hre t ht']⟩

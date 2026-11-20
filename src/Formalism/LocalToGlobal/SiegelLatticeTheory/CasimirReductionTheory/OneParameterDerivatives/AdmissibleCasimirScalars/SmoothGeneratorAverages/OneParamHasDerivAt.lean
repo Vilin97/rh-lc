@@ -190,7 +190,7 @@ def Ev (X : Matrix (Fin n) (Fin n) ℂ) (μ : ℝ) : Submodule ℂ H where
     exact hasDerivAt_const _ _
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_ofPred_eq, map_add, smul_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _), smul_add] at *
     exact ha.add hb
   smul_mem' := by
     intro c a ha

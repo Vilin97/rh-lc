@@ -79,7 +79,7 @@ theorem exists_expansion {x : Fam G (Fin d)} (hu : IsUnivChart G d x) (C : Chart
   · simp only [hτ', map_one]
   · simp only [hτ', map_mul]
   · simp only [hτ', map_zero]
-  · simp only [hτ', map_add]
+  · simp only [hτ', map_add (f := _)]
   · simp only [hτ', AlgHom.commutes]
 
 theorem le_preimage_of_local (C : Chart G) {P P₀ : Type} [CommRing P] [IsLocalRing P] [Algebra V P] [CommRing P₀]
@@ -261,7 +261,7 @@ theorem mem_range_of_dense [IsLocalRing V] [IsNoetherianRing V] [IsAdicComplete 
       rw [this]
       exact Submodule.smul_mem_smul hc (hN r)
     | zero => intro r; simp
-    | add u v _ _ hu hv => intro r; rw [mul_add, map_add]; exact add_mem (hu r) (hv r)
+    | add u v _ _ hu hv => intro r; rw [mul_add, map_add (f := _)]; exact add_mem (hu r) (hv r)
     | smul a v _ hv => intro r; rw [smul_eq_mul, ← mul_assoc]; exact hv _
   have hle : N ≤ LinearMap.range (Algebra.linearMap V Ω) := by
     refine Submodule.le_of_le_smul_of_le_jacobson_bot (I := maximalIdeal V) hfg (maximalIdeal_le_jacobson _) ?_
@@ -270,7 +270,7 @@ theorem mem_range_of_dense [IsLocalRing V] [IsNoetherianRing V] [IsAdicComplete 
     obtain ⟨g', ⟨c, hc⟩, hg⟩ := H M g
     obtain ⟨u, hu, v, hv, e⟩ := Submodule.mem_sup.1 (hlift (Ideal.pow_le_pow_right (Nat.le_succ M) hg))
     have : χ g = χ g' + χ (1 * v) := by
-      rw [one_mul, show g = g' + (u + v) by rw [e]; ring, map_add, map_add, show χ u = 0 from hker hu, zero_add]
+      rw [one_mul, show g = g' + (u + v) by rw [e]; ring, map_add (f := _), map_add (f := _), show χ u = 0 from hker hu, zero_add]
     change χ g ∈ _
     rw [this]
     exact Submodule.add_mem_sup ⟨c, hc⟩ (hm v hv 1)

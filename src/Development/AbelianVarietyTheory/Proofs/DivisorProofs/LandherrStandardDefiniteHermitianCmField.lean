@@ -113,7 +113,7 @@ theorem exists_sq_sub_mul_sq (hU : Unr E) (θ : E) (hθ0 : θ ≠ 0) (hθ : IsCM
     simp [b, hsm]
   obtain ⟨A, C, hAC⟩ : ∃ A C : Fv, z = ι A + ι C * t := ⟨_, _, hzb⟩
   refine ⟨A, C, ι.injective ?_⟩
-  rw [hι, hz, hAC, map_add, map_mul, hcj, hcj, hct, map_sub, map_mul, map_pow, map_pow, ← ht2]
+  rw [hι, hz, hAC, map_add (f := _), map_mul, hcj, hcj, hct, map_sub, map_mul, map_pow, map_pow, ← ht2]
   ring
 
 theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E → ∀ (n : ℕ)
@@ -193,7 +193,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E], Unr E →
     have h1 := congrArg (Subtype.val : maximalRealSubfield E → E) hxy
     have h2 : IsCMField.complexConj E θ = -θ := hθ
     simp [a, hdθ] at h1
-    simp only [Matrix.det_one, one_div, ReciprocityTheory.ChartRestriction.G.FD.cc, map_add, map_mul,
+    simp only [Matrix.det_one, one_div, ReciprocityTheory.ChartRestriction.G.FD.cc, map_add (f := _), map_mul,
       IsCMField.complexConj_apply_eq_self, h2]
     linear_combination h1
   have hPc : (P.map ReciprocityTheory.ChartRestriction.G.FD.cc).det ≠ 0 := by

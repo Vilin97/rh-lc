@@ -68,7 +68,7 @@ theorem preimage_finite_projective : ∀ (p : ℕ) [Fact p.Prime] (D : PrismData
     obtain ⟨a, y, hy⟩ := adic_surj A (p : A) (e.symm r)
     refine ⟨a, e y, ?_⟩
     have h1 := congrArg e hy
-    rw [e.apply_symm_apply, map_add, map_mul, he, he, map_natCast] at h1
+    rw [e.apply_symm_apply, map_add (f := _), map_mul, he, he, map_natCast] at h1
     exact h1
   have hspan : Submodule.span S.R (piMap (algebraMap A S.R) (Fin G.height) '' (L : Set (Fin G.height → A))) =
       H D c n := by

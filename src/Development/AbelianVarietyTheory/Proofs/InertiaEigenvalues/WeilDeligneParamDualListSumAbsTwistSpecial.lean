@@ -28,14 +28,14 @@ theorem iso_tensor_dual (a : WDRep h V) (b : WDRep h V') :
     | tmul f g =>
       refine TensorProduct.ext' fun m n => ?_
       simp [TensorProduct.dualDistrib_apply]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul f g =>
       refine TensorProduct.ext' fun m n => ?_
       simp [TensorProduct.dualDistrib_apply]
       ring
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [IsAlgClosure E Ω] in
 

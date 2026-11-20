@@ -14,7 +14,7 @@ private theorem ac_mul {G R : Type} [TopologicalSpace G] [CommRing R] {I : Ideal
 private theorem ac_add {G R : Type} [TopologicalSpace G] [CommRing R] {I : Ideal R} {f h : G → R}
     (hf : AdicCont I f) (hh : AdicCont I h) : AdicCont I fun g => f g + h g := by
   intro N
-  simpa only [map_add] using (hf N).comp₂ (hh N) (· + ·)
+  simpa only [map_add (f := _)] using (hf N).comp₂ (hh N) (· + ·)
 
 private theorem ac_const {G R : Type} [TopologicalSpace G] [CommRing R] {I : Ideal R} (c : R) :
     AdicCont I fun _ : G => c := fun _ => IsLocallyConstant.const _
@@ -121,7 +121,7 @@ private theorem lc_zp {l : ℕ} [Fact l.Prime] {G R : Type} [TopologicalSpace G]
     rw [Metric.mem_ball, dist_eq_norm, PadicInt.norm_lt_one_iff_dvd] at hy
     obtain ⟨c, hc⟩ := hy
     have hy' : y = x + (l : ℤ_[l]) * c := by rw [← hc]; ring
-    rw [hy', map_add, map_mul, map_natCast, hl, zero_mul, add_zero]
+    rw [hy', map_add (f := _), map_mul, map_natCast, hl, zero_mul, add_zero]
   exact hφ.comp_continuous he
 
 theorem UpperTheory.V.Pa.Det.detFin :

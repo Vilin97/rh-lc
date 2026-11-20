@@ -21,7 +21,7 @@ def fixedSubmodule (M : Rep k G) (W : Subgroup G) : Submodule k M where
   carrier := {m | ∀ g ∈ W, M.ρ g m = m}
   add_mem' {a b} ha hb g hg := by
     simp only [Set.mem_ofPred_eq] at ha hb ⊢
-    rw [map_add, ha g hg, hb g hg]
+    rw [map_add (f := _), ha g hg, hb g hg]
   zero_mem' g _ := map_zero _
   smul_mem' c m hm g hg := by
     simp only [Set.mem_ofPred_eq] at hm ⊢

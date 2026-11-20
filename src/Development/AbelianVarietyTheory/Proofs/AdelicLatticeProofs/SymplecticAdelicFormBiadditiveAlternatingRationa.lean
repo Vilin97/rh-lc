@@ -44,8 +44,8 @@ theorem symplO_alt : ∀ (D : D7) (S T : HSp D), (∀ x x' y : WO S T, symplO S 
   refine ⟨fun x x' y => ?_, fun x y y' => ?_, fun x y => GlobalTheory.WeilVacMove.symplO_skew S T y x,
     fun x => eq_zero_of_eq_neg (F := D.host.F) (GlobalTheory.WeilVacMove.symplO_skew S T x x), symplO_rat D S T⟩
   · unfold symplO hO
-    simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+    simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
   · unfold symplO hO
-    simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add]
+    simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add (f := _)]
 
 end GlobalTheory.SymplecticOrthogonalSesquilinear

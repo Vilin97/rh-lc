@@ -39,7 +39,7 @@ theorem locGlobIntE : LocGlobIntE := by
   obtain ⟨t, ht⟩ := (D.sp.cm.fixed (x + star x)).1 (by rw [star_add, star_star, add_comm])
   obtain ⟨n, hn⟩ := (D.sp.cm.fixed (x * star x)).1 (by rw [star_mul, star_star, mul_comm])
   obtain ⟨t', ht'⟩ := mem_OF_of_loc D t fun p => by
-    rw [ht, map_add]; exact (D.s.atP p).O.add_mem (hx p) (hcjO p)
+    rw [ht, map_add (f := _)]; exact (D.s.atP p).O.add_mem (hx p) (hcjO p)
   obtain ⟨n', hn'⟩ := mem_OF_of_loc D n fun p => by
     rw [hn, map_mul]; exact (D.s.atP p).O.mul_mem (hx p) (hcjO p)
 

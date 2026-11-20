@@ -126,7 +126,7 @@ theorem exists_unramified_extension :
       induction s using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp
-      | add x y hx hy => rw [map_add, hx, hy, mul_add]
+      | add x y hx hy => rw [map_add (f := _), hx, hy, mul_add]
     exact hinj (by rw [key, hs, map_zero])
   obtain ⟨V, i1, i2, i3, q, hq⟩ := exists_dvr_of_isRadical _ _ hrad hne hreg
   let i : T →+* V := q.comp Algebra.TensorProduct.includeLeftRingHom

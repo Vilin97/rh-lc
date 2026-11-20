@@ -167,7 +167,7 @@ theorem exists_half_of_nonSplit {v : HeightOneSpectrum (𝓞 D.host.F)} {η : AF
   have hy' : (2 : Fv D.host.F v) * y = 1 := congrArg Subtype.val hy
   refine ⟨algebraMap (AF D.host.F) (AE D) (GlobalTheory.SplitIdem.placeHom D.host.F v y), ?_, ?_⟩
   · exact AddSubgroup.subset_closure ⟨_, GlobalTheory.SplitIdem.singleV_mem_intAf D.host.F v y, 1, rfl⟩
-  · rw [two_mul, ← map_add, ← map_add, ← two_mul, hy', hα]
+  · rw [two_mul, ← map_add (f := _), ← map_add (f := _), ← two_mul, hy', hα]
     rfl
 
 theorem finPart_placeIdem {v : HeightOneSpectrum (𝓞 D.host.F)} {η : AF D.host.F} (h : IsPlaceIdem D v η) :

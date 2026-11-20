@@ -126,7 +126,7 @@ theorem exists_denom {X ι : Type} [AddCommGroup X] [Module ℂ X] (J : X →ₗ
       exact mul_mem (pow_mem (natCast_mem O l) _) h1
     · rw [MvPolynomial.coeff_smul, MvPolynomial.notMem_support_iff.1 hmo, smul_zero]; exact zero_mem _
   | zero => intro mo; simp
-  | add x y _ _ hx hy => intro mo; rw [map_add, smul_add, MvPolynomial.coeff_add]; exact add_mem (hx mo) (hy mo)
+  | add x y _ _ hx hy => intro mo; rw [map_add (f := _), smul_add, MvPolynomial.coeff_add]; exact add_mem (hx mo) (hy mo)
   | smul n x _ hx =>
     intro mo
     rw [map_zsmul, smul_comm, MvPolynomial.coeff_smul]

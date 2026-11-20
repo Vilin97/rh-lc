@@ -331,7 +331,7 @@ theorem exists_isometry {S : Scheme.{0}} {t : SAB H S} {x : Sp ℂ ⟶ S} {e₁ 
     exact (hh _).trans ((lin₁ a v).trans (((lin₂ a (h v)).trans (by rw [hh])).symm))
   have hz₁ := UnifPoint.map_zero_of_add add₁
   choose ψ hψ using fun a => (ker₂ (h (P₁ a))).1 ((hh _).trans ((ker₁ _).2 ⟨a, rfl⟩))
-  refine ⟨⟨⟨ψ, fun a b => hP₂.2.1 (by rw [map_add, hψ, hψ, hψ, map_add, map_add])⟩, fun s a => hP₂.2.1 ?_⟩, h,
+  refine ⟨⟨⟨ψ, fun a b => hP₂.2.1 (by rw [map_add (f := _), hψ, hψ, hψ, map_add (f := _), map_add (f := _)])⟩, fun s a => hP₂.2.1 ?_⟩, h,
     fun b => ?_, fun a b => ?_, hψ, hh, hc⟩
   · rw [hψ, show P₁ (s • a) = _ from funext (hP₁.1 s a), hc]
     funext k

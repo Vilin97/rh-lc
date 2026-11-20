@@ -81,7 +81,7 @@ theorem sep_int {K : Type} [Field K] [Valued K (WithZero (Multiplicative ℤ))] 
   obtain ⟨BO, hBO⟩ := hlift B hB
   refine ⟨γO.charpoly, by rw [← Matrix.charpoly_map, hγO], ?_⟩
   refine ⟨AO, BO, Polynomial.map_injective (intL K).subtype Subtype.val_injective ?_⟩
-  rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, ← Polynomial.derivative_map, hAO, hBO,
+  rw [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, ← Polynomial.derivative_map, hAO, hBO,
     ← Matrix.charpoly_map, hγO, hAB, Polynomial.map_one]
 
 theorem local_good (E : Type) [Field E] [NumberField E] [IsCMField E] (hU : Unr E) (n : ℕ) (γ₀ : GL (Fin n) E)

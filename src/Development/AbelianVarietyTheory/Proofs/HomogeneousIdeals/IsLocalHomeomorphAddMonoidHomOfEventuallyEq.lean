@@ -107,7 +107,7 @@ theorem of_unit (ha : AnalyticAt ℂ m 0) (hu : ∀ᶠ x in 𝓝 (0 : V), m (x, 
   have e : p = (p.1, 0) + (0, p.2) := by simp
   have e1 : fderiv ℂ m 0 (p.1, 0) = p.1 := DFunLike.congr_fun h1 p.1
   have e2 : fderiv ℂ m 0 (0, p.2) = p.2 := DFunLike.congr_fun h2 p.2
-  conv_lhs => rw [show fderiv ℂ m 0 p = fderiv ℂ m 0 ((p.1, 0) + (0, p.2)) by rw [← e], map_add,
+  conv_lhs => rw [show fderiv ℂ m 0 p = fderiv ℂ m 0 ((p.1, 0) + (0, p.2)) by rw [← e], map_add (f := _),
     e1, e2]
 
 variable (h : IsLocalCommGroupLaw m)

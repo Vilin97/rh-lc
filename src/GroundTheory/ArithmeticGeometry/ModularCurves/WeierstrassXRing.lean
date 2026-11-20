@@ -34,7 +34,7 @@ theorem eval₂_polynomial_XRing :
       (AdjoinRoot.root (xPolynomial W))) (AdjoinRoot.of (xPolynomial W) X) = 0 := by
   have h : AdjoinRoot.mk (xPolynomial W) (Y ^ 3 + C (C W.a₂) * Y ^ 2 + C (C W.a₄ - C W.a₁ * X) * Y +
       C (C W.a₆ - X ^ 2 - C W.a₃ * X)) = 0 := AdjoinRoot.mk_self
-  simp only [map_sub, map_add, map_mul, map_pow, AdjoinRoot.mk_X, AdjoinRoot.mk_C] at h
+  simp only [map_sub, map_add (f := _), map_mul, map_pow, AdjoinRoot.mk_X, AdjoinRoot.mk_C] at h
   simp only [WeierstrassCurve.Affine.polynomial, eval₂_sub, eval₂_add, eval₂_mul, eval₂_pow,
     eval₂_X, eval₂_C, coe_eval₂RingHom]
   have ha : ∀ a : R, algebraMap R (XRing W) a = AdjoinRoot.of (xPolynomial W) (C a) := fun a => rfl

@@ -40,7 +40,7 @@ theorem mem_intAt_iff_pr (q : GlobalTheory.FinPl.SplitPt D k) (a : AE D) (ha : a
     refine ⟨ha, ?_⟩
     rw [q.int_iff, q.sec_pr] at h1 h2
     rw [← GlobalTheory.FinPl.FrameLat.cA_int_iff, RingHom.map_mul, GlobalTheory.LocSympl.conj_conj] at h2
-    rw [← (GlobalTheory.FinPl.FrameLat.idem_iff q a).1 ha, add_mul, RingHom.map_add]
+    rw [← (GlobalTheory.FinPl.FrameLat.idem_iff q a).1 ha, add_mul, RingHom.map_add (f := _)]
     exact add_mem h1 h2
 
 theorem incAdj_yZero_apply {ρ : ℕ} (hρ : 0 < ρ) {S T T₀ : HSp D} (d : HypDec T T₀ ρ) (z : Fin S.rank → D.host.E)

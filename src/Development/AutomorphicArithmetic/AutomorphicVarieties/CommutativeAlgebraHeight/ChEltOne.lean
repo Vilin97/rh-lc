@@ -21,7 +21,7 @@ private theorem chiS_map (S T : Type) [CommRing S] [Algebra A S] [CommRing T] [A
   · clear h
     induction y with
     | tmul s x => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 private theorem F_map (S T : Type) [CommRing S] [Algebra A S] [CommRing T] [Algebra A T] (f : S →ₐ[A] T)
     (y : S ⊗[A] E) :
@@ -31,7 +31,7 @@ private theorem F_map (S T : Type) [CommRing S] [Algebra A S] [CommRing T] [Alge
   rw [chiS_map]
   generalize D.chiS S y = p
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => simp only [Polynomial.map_add, map_add, hp, hq]
+  | add p q hp hq => simp only [Polynomial.map_add (f := _), map_add (f := _), hp, hq]
   | monomial k a =>
     simp [Polynomial.aeval_monomial, Algebra.TensorProduct.algebraMap_apply]
 
@@ -48,7 +48,7 @@ private theorem expand {ι : Type} (S : Type) [CommRing S] [Algebra A S] (f : Mv
       obtain ⟨s, hs⟩ := ha
       obtain ⟨s', hs'⟩ := hb
       refine ⟨s ∪ s', fun t ht => ?_⟩
-      simp only [map_add, tmul_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), tmul_add, Finset.sum_add_distrib]
       rw [← hs t (Finset.subset_union_left.trans ht), ← hs' t (Finset.subset_union_right.trans ht)]
     | tmul p z =>
       refine ⟨p.support, fun t ht => ?_⟩
@@ -88,7 +88,7 @@ private theorem rT_mem (P S : Type) [CommRing P] [Algebra A P] [CommRing S] [Alg
     rw [smul_tmul', LinearMap.rTensor_tmul, ← mul_one (g _), ← smul_eq_mul, ← smul_tmul']
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, hz, rfl⟩)
   | zero => intro p; simp
-  | add x y _ _ hx hy => intro p; rw [smul_add, map_add]; exact add_mem (hx p) (hy p)
+  | add x y _ _ hx hy => intro p; rw [smul_add, map_add (f := _)]; exact add_mem (hx p) (hy p)
   | smul a x _ hx => intro p; rw [smul_smul]; exact hx _
 
 private theorem chElt_bc (S : Type) [CommRing S] [Algebra A S] {k : ℕ} (x : Fin k → S ⊗[A] E) (α : Fin k →₀ ℕ) :
@@ -106,18 +106,18 @@ private theorem chElt_bc (S : Type) [CommRing S] [Algebra A S] {k : ℕ} (x : Fi
     congr 1
     · rw [Algebra.TensorProduct.one_def, Det.cancel_tmul]; simp
     · induction y with
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | tmul s y =>
         induction y with
-        | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
+        | add a b ha hb => simp only [tmul_add, map_add (f := _), ha, hb]
         | tmul b z => simp [Det.cancel_tmul]
   rw [h1, Polynomial.aeval_algHom_apply]
   generalize Polynomial.aeval y (D.chiS _ (Det.cancel A E S (MvPolynomial (Fin k) S) y)) = w
   induction w with
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul s y =>
     induction y with
-    | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
+    | add a b ha hb => simp only [tmul_add, map_add (f := _), ha, hb]
     | tmul b z =>
       rw [Det.cancel_tmul, mul_comm]
       simp [smul_tmul', MvPolynomial.coeff_C_mul, mul_comm b]
@@ -134,7 +134,7 @@ private theorem chElt_one (S : Type) [CommRing S] [Algebra A S] {k : ℕ} (x : F
   unfold Det.chElt
   generalize Polynomial.aeval (Det.gen (A := A) x) (D.chiS (MvPolynomial (Fin k) A) (Det.gen x)) = w
   induction w with
-  | add a b ha hb => simp only [map_add, tmul_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), tmul_add, ha, hb]
   | tmul s y =>
     simp [MvPolynomial.coeff_map, Algebra.ofId_apply, Algebra.algebraMap_eq_smul_one, smul_tmul]
 

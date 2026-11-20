@@ -31,7 +31,7 @@ theorem realRd_scale {ρ : Setup D.ntw} (hρ : ρ.Good) (i : D.ntw.Tw) {j : Fin 
   have key : ∀ x, evK YS v₁ hρ i j b x = C • evK YS v₀ hρ i j b x := fun x => by
     induction x using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero, smul_zero]
-    | add x y hx hy => rw [map_add, map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, smul_add]
     | tmul a f => rw [evK_tmul, evK_tmul, h, smul_comm]
   refine LinearMap.ext fun f => ?_
   change (C * ν)⁻¹ • evK YS v₁ hρ i j b _ = ν⁻¹ • evK YS v₀ hρ i j b _

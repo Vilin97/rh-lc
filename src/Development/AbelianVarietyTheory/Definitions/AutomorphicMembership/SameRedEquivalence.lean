@@ -133,7 +133,7 @@ theorem isComp (h : Carry s F F₁) (k : Carry s F' G') {u : V} {a a' : K} (e : 
   obtain ⟨x, hx, x', hx', rfl⟩ := (isComp_iff _ _ _ _ _).1 e
   refine (isComp_iff _ _ _ _ _).2 ⟨s x + a • (s F.z - F₁.z), add_mem ((h.2.1 x).2 hx) (Submodule.smul_mem _ _ h.2.2),
     s x' + a' • (s F'.z - G'.z), add_mem ((k.2.1 x').2 hx') (Submodule.smul_mem _ _ k.2.2), ?_⟩
-  simp only [map_add, map_smul, smul_sub]
+  simp only [map_add (f := _), map_smul, smul_sub]
   abel
 
 theorem V0 (h : Carry s F F₁) (k : Carry s F' G') (x : V) : s x ∈ V0 F₁ G' ↔ x ∈ V0 F F' := by

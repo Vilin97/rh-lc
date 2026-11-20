@@ -27,7 +27,7 @@ theorem exists_denom {E : Type} [Field E] [NumberField E] (ρ : E →+* ℂ_[p])
     { carrier := {y | ‖ρ (y : E)‖ < 1}
       zero_mem' := by simp
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add] at ha hb ⊢
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at ha hb ⊢
         exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
       smul_mem' := fun c {a} ha => by
         simp only [Set.mem_setOf_eq, smul_eq_mul, map_mul, norm_mul] at ha ⊢
@@ -108,7 +108,7 @@ theorem exists_locBasis (D : D7) (ρ : D.host.E →+* ℂ_[p]) {N : ℕ} (L : Su
         obtain ⟨c, hc, rfl⟩ := hy
         obtain ⟨c', hc', rfl⟩ := hz
         refine ⟨c + c', fun a => ?_, by rw [Matrix.mulVec_add]⟩
-        rw [Pi.add_apply, map_add]
+        rw [Pi.add_apply, map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hc a) (hc' a))
       | smul r y _ hy =>
         obtain ⟨c, hc, rfl⟩ := hy

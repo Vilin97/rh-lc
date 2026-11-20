@@ -76,7 +76,7 @@ private theorem abs_main (J : L V →ₗᵢ[ℂ] H) (J' : L W →ₗᵢ[ℂ] H) 
       · filter_upwards [hu, hv'] with x a b hx
         exact t.injective (by rw [← b, a hx, map_zero])
       · apply U.injective
-        rw [e, map_add, hs u' v hu', ht v' u hv', add_comm]
+        rw [e, map_add (f := _), hs u' v hu', ht v' u hv', add_comm]
     · rintro ⟨u, v, hu, hv, e⟩
       obtain ⟨v', hv'⟩ := lift_ex s u
       obtain ⟨u', hu'⟩ := lift_ex t v
@@ -85,7 +85,7 @@ private theorem abs_main (J : L V →ₗᵢ[ℂ] H) (J' : L W →ₗᵢ[ℂ] H) 
         rw [b, a hx, map_zero]
       · filter_upwards [hu, hv'] with x a b hx
         rw [b, a hx, map_zero]
-      · rw [e, map_add, hs u v' hv', ht v u' hu', add_comm]
+      · rw [e, map_add (f := _), hs u v' hv', ht v u' hu', add_comm]
 
 end Abstract
 

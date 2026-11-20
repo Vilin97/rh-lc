@@ -18,7 +18,7 @@ private theorem ent {M k : ℕ} [NeZero M] (hk : k ∣ M) (h : Matrix (Fin 2) (F
       ((m i 0).val : ZMod k) * (h 0 j : ZMod k) + ((m i 1).val : ZMod k) * (h 1 j : ZMod k) := by
   have h0 : (m * h.map (Int.castRingHom (ZMod M))) i j = m i 0 * (h 0 j : ZMod M) + m i 1 * (h 1 j : ZMod M) := by
     simp [Matrix.mul_apply, Fin.sum_univ_two]
-  rw [h0, vc hk, vc hk, vc hk, map_add, map_mul, map_mul, map_intCast, map_intCast]
+  rw [h0, vc hk, vc hk, vc hk, map_add (f := _), map_mul, map_mul, map_intCast, map_intCast]
 
 private theorem cnd_iff (l N M : ℕ) [Fact l.Prime] [NeZero M] (hN : N ∣ M) (hl : l ∣ M) (g : SL(2, ℤ))
     (h : Matrix (Fin 2) (Fin 2) ℤ) (hN1 : ((h 1 0 : ℤ) : ZMod N) = 0) (hl1 : ((h 1 0 : ℤ) : ZMod l) = 0)
@@ -41,7 +41,7 @@ private theorem wt_dvd (l n M w p : ℕ) [Fact l.Prime] [NeZero M] (hl : l ^ n �
     intro i
     simp [mZl, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
   rw [ev, ev]
-  simp only [map_sub, map_mul, map_pow, map_add, map_natCast, map_intCast]
+  simp only [map_sub, map_mul, map_pow, map_add (f := _), map_natCast, map_intCast]
   rw [ed, ent hl, ent hl, sub_eq_zero, mul_assoc]
   congr 3
   ring

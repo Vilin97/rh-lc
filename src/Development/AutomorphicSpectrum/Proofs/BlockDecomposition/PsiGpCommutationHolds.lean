@@ -67,7 +67,7 @@ theorem cMap_eq_zero (i : V₁ ≃ₗ[ℂ] V) (mk : Z →ₗ[ℂ] Y) (h : Functi
       intro w
       induction w using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a b => simp
     rw [← e, h0, map_zero]
   have hex : Function.Exact (LinearMap.ker mk).subtype mk := LinearMap.exact_subtype_ker_map mk
@@ -205,7 +205,7 @@ theorem hcomp (p : parab k (eMJ m j)) (w : Vt (j := j) ρ ⊗[ℂ] Zt τ m) :
         cc ρ τ (sig ρ τ ⟨levi k (m + j) p, levi_mem_HGP _ p.2⟩ w) = sigP ρ τ p (cc ρ τ w) := by
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul a b =>
     set g₁ : GL (Fin m) k := leviProj k (eMJ m j) p false with hg₁
     set g₂ : GL (Fin j) k := leviProj k (eMJ m j) p true with hg₂
@@ -306,7 +306,7 @@ theorem hck (w : Vt (j := j) ρ ⊗[ℂ] Zt τ m) :
     induction y using TensorProduct.induction_on with
     | zero => simp
     | add x y hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
     | tmul a t =>
       exact tmul_mem_twKer ρ τ a _ ((Submodule.Quotient.mk_eq_zero _).1 t.2)
@@ -320,7 +320,7 @@ theorem hck (w : Vt (j := j) ρ ⊗[ℂ] Zt τ m) :
         intro w
         induction w using TensorProduct.induction_on with
         | zero => simp
-        | add x y hx hy => simp only [map_add, hx, hy]
+        | add x y hx hy => simp only [map_add (f := _), hx, hy]
         | tmul a b =>
           rw [sig_tmul ρ τ _ a b h1 h2]
           exact (cc_tmul ρ τ _ _).trans ((congrArg (fun y => PiTensorProduct.tprod ℂ (pair (V := ρ.V) a y)) (mkY_unip τ _ h2 b)).trans

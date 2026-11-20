@@ -71,7 +71,7 @@ theorem exists_scalar_readings_on_net : ∀ (D : D7) (T : Top D) (h : LawsP T), 
       map_add' := fun F G => by
         show (a y : ℂ) * rdU (T.U j σ) (F.1 + G.1) (pt y).1 (pt y).2 =
           (a y : ℂ) * rdU (T.U j σ) F.1 (pt y).1 (pt y).2 + (a y : ℂ) * rdU (T.U j σ) G.1 (pt y).1 (pt y).2
-        rw [map_add, Pi.add_apply, Pi.add_apply, mul_add]
+        rw [map_add (f := _), Pi.add_apply, Pi.add_apply, mul_add]
       map_smul' := fun c F => by
         show (a y : ℂ) * rdU (T.U j σ) (c • F.1) (pt y).1 (pt y).2 =
           σ c • ((a y : ℂ) * rdU (T.U j σ) F.1 (pt y).1 (pt y).2)

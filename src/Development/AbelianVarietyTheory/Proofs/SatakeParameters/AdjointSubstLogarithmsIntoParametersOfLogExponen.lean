@@ -146,7 +146,7 @@ theorem biadditive_substLogarithmsIntoParameters_of_logExponent {σ : ℂ_[l] �
   have hl : 2 ≤ l := (Fact.out : l.Prime).two_le
   have hL : ∀ i : Fin 3, constantCoeff (at1 i (lgF (MaximalUnramifiedExtension l) l)) = 0 := fun i => constantCoeff_inVar_eq_zero _ (cc_lgF hl)
   have hL2 : ∀ i j : Fin 3, constantCoeff (at1 i (lgF (MaximalUnramifiedExtension l) l) + at1 j (lgF (MaximalUnramifiedExtension l) l)) = 0 := fun i j => by
-    rw [map_add, hL, hL, add_zero]
+    rw [map_add (f := _), hL, hL, add_zero]
   have hin : constantCoeff (in3 F) = 0 := by
     unfold in3
     exact constantCoeff_subst_eq_zero (hs2 (by simp) (by simp))
@@ -162,7 +162,7 @@ theorem biadditive_substLogarithmsIntoParameters_of_logExponent {σ : ℂ_[l] �
       subst_inPar hl b (constantCoeff_X _) (constantCoeff_X _), hlaw]
     refine simeq_zero ((simeqW_map_iff _ _).1 ?_)
     have h := hb.add₁
-    rw [← map_lg, ← map_lg, ← map_lg, ← map_add, ← map_pair b (hL2 _ _) (hL _), ← map_pair b (hL _) (hL _),
+    rw [← map_lg, ← map_lg, ← map_lg, ← map_add (f := _), ← map_pair b (hL2 _ _) (hL _), ← map_pair b (hL _) (hL _),
       ← map_pair b (hL _) (hL _), ← map_add] at h
     exact h
   · unfold d1
@@ -172,7 +172,7 @@ theorem biadditive_substLogarithmsIntoParameters_of_logExponent {σ : ℂ_[l] �
       subst_inPar hl b (constantCoeff_X _) (constantCoeff_X _), hlaw]
     refine simeq_zero ?_
     have h := hb.add₂
-    rw [← map_lg, ← map_lg, ← map_lg, ← map_add, ← map_pair b (hL _) (hL2 _ _), ← map_pair b (hL _) (hL _),
+    rw [← map_lg, ← map_lg, ← map_lg, ← map_add (f := _), ← map_pair b (hL _) (hL2 _ _), ← map_pair b (hL _) (hL _),
       ← map_pair b (hL _) (hL _), ← map_add, simeqW_map_iff] at h
     have hs : HasSubst ![(X 2 : MvPowerSeries (Fin 3) (MaximalUnramifiedExtension l)), X 0, X 1] :=
       hs3 (constantCoeff_X _) (constantCoeff_X _) (constantCoeff_X _)

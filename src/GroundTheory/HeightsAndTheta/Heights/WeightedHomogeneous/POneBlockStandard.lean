@@ -24,7 +24,7 @@ theorem standard_coord_integral {m : ℕ} {v : Fin m → K}
   | add x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by rw [map_add, ← ha, ← hb, Pi.add_apply]⟩
+    exact ⟨a + b, by rw [map_add (f := _), ← ha, ← hb, Pi.add_apply]⟩
   | smul c x _ hx =>
     obtain ⟨a, ha⟩ := hx
     exact ⟨c * a, by rw [map_mul, ← ha, Pi.smul_apply, Algebra.smul_def]⟩

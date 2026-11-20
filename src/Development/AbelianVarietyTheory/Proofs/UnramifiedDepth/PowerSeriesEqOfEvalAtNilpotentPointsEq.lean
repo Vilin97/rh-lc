@@ -21,7 +21,7 @@ namespace GlobalTheory.ChF
 
 private def lowZero {A κ : Type} [CommRing A] (e : κ →₀ ℕ) : Ideal (MvPowerSeries κ A) where
   carrier := {g | ∀ e' ≤ e, MvPowerSeries.coeff e' g = 0}
-  add_mem' {a b} ha hb e' h := by rw [map_add, ha e' h, hb e' h, add_zero]
+  add_mem' {a b} ha hb e' h := by rw [map_add (f := _), ha e' h, hb e' h, add_zero]
   zero_mem' e' _ := map_zero _
   smul_mem' c x hx e' h := by
     classical

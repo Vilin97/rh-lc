@@ -16,7 +16,7 @@ def towerLimit : Submodule A (∀ n, E n) where
   carrier := {x | ∀ n, τ n (x (n + 1)) = x n}
   add_mem' {x y} hx hy n := by
     change τ n (x (n + 1) + y (n + 1)) = x n + y n
-    rw [map_add, hx n, hy n]
+    rw [map_add (f := _), hx n, hy n]
   zero_mem' n := by
     change τ n 0 = 0
     exact map_zero _

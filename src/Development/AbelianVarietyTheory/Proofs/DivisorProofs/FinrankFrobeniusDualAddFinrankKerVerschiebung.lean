@@ -17,7 +17,7 @@ theorem finrank_range_relFrob_dual_add_finrank_ker_verschiebung (p : ℕ) [Fact 
       change e ((relFrob h G.dual).app 1 x) a = 0
       induction x using frobTwist_induction h (G := G.dual) 1 with
       | h0 => simp
-      | h2 x y hx hy => rw [map_add, map_add, LinearMap.add_apply, hx, hy, add_zero]
+      | h2 x y hx hy => rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, hx, hy, add_zero]
       | h1 r χ =>
         rw [map_smul, map_smul, LinearMap.smul_apply, relFrob_app_frobProj]
         have := frobTwistDual_verschiebung h 1 χ a

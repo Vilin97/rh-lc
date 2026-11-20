@@ -148,7 +148,7 @@ theorem off_two : ∀ (D : D7) (e : AE D) (SS : Finset (Formalism.L2.DIV.Pl D.ho
     · exact Or.inl (hzero Q (hcd Q h.1 h.2))
     · exact Or.inr (hy Q h)
   · have h1 := congrArg (incA D) hxy
-    rw [map_add, map_mul, map_mul, map_one] at h1
+    rw [map_add (f := _), map_mul, map_mul, map_one] at h1
     rw [mul_assoc, mul_assoc, ← mul_add, h1, mul_one]
 
 end GlobalTheory.OffIdemTwo

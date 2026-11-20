@@ -192,7 +192,7 @@ theorem irr_zero_eq {g : ℕ} (L : LzData g) (τ σ : L.Irr 0) : τ = σ := by
     · intro f₁ f₂ h₁ h₂
       obtain ⟨c₁, e₁⟩ := h₁
       obtain ⟨c₂, e₂⟩ := h₂
-      exact ⟨c₁ + c₂, by rw [e₁, e₂, map_add]⟩
+      exact ⟨c₁ + c₂, by rw [e₁, e₂, map_add (f := _)]⟩
     · intro r f₁ h₁
       obtain ⟨c₁, e₁⟩ := h₁
       exact ⟨r * c₁, by rw [e₁, map_mul, Algebra.smul_def]⟩

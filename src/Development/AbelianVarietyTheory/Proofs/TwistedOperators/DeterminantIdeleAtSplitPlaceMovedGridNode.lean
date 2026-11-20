@@ -21,7 +21,7 @@ theorem toFinAd_eq (z : TensorProduct D.host.F (Af D.host.F) D.host.E) :
   | tmul a x =>
     rw [Algebra.TensorProduct.comm_tmul, GlobalTheory.StdFrames.toAd_spec, mul_comm]
     rfl
-  | add x y hx hy => rw [map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem compAt_eq_cpt (w : Pl D.host.E) (a : AE D) :
     GlobalTheory.LFun.compAt D.host.F w (finPart D a) = GlobalTheory.StdFrames.cpt w (toEAf D a) := by

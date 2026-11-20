@@ -25,9 +25,9 @@ def locRep (V : Submodule ℂ (Sm E a)) (hs : IsStable V) (w : HeightOneSpectrum
 def pairing {X W : Type} [AddCommGroup X] [Module ℂ X] [NormedAddCommGroup W] [InnerProductSpace ℂ W]
     (F : X →ₗ[ℂ] W) : X →ₗ[ℂ] X →ₗ⋆[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun x y => inner ℂ (F y) (F x))
-    (fun x x' y => by simp only [map_add, inner_add_right])
+    (fun x x' y => by simp only [map_add (f := _), inner_add_right])
     (fun c x y => by simp only [map_smul, inner_smul_right, smul_eq_mul, RingHom.id_apply])
-    (fun x y y' => by simp only [map_add, inner_add_left])
+    (fun x y y' => by simp only [map_add (f := _), inner_add_left])
     (fun c x y => by simp only [map_smul, inner_smul_left, smul_eq_mul])
 
 theorem pairing_apply {X W : Type} [AddCommGroup X] [Module ℂ X] [NormedAddCommGroup W] [InnerProductSpace ℂ W]

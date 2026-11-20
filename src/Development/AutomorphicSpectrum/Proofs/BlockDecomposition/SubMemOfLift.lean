@@ -69,7 +69,7 @@ variable {Q : ObjectProperty (Thick L)} (hF : IsFil (sP Q) (sFil Q)) {W : Y.Open
 theorem fAct_add (f g : Γ(Y, W)) (c : HU (GF L r) Q r) :
     fAct 𝔭 hF hQ r (f + g) c = fAct 𝔭 hF hQ r f c + fAct 𝔭 hF hQ r g c := by
   refine mulMor_add hF r _ _ _ (fun T => sub_mem_of_mk (T := T.obj) ?_) r c
-  rw [mk_evLift 𝔭, map_add (Ideal.Quotient.mk T.obj.J), mk_evLift 𝔭, mk_evLift 𝔭, map_add]
+  rw [mk_evLift 𝔭, map_add (Ideal.Quotient.mk T.obj.J), mk_evLift 𝔭, mk_evLift 𝔭, map_add (f := _)]
 
 theorem fAct_mul (f g : Γ(Y, W)) (c : HU (GF L r) Q r) :
     fAct 𝔭 hF hQ r (f * g) c = fAct 𝔭 hF hQ r f (fAct 𝔭 hF hQ r g c) := by

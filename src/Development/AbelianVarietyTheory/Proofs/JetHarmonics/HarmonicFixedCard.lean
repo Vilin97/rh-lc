@@ -24,7 +24,7 @@ theorem cc_ev {m : ℕ} {a : Fin m → Pt k n d} (ha : ∀ j i, constantCoeff (a
   have h0 : constantCoeff (ev a (f - C (constantCoeff f))) = 0 :=
     constantCoeff_subst_eq_zero hs (fun p => ha p.1 p.2) (by simp)
   have hadd : ∀ f g : PS k m d, ev a (f + g) = ev a f + ev a g := fun f g => subst_add hs f g
-  conv_lhs => rw [e, hadd, map_add, h0]
+  conv_lhs => rw [e, hadd, map_add (f := _), h0]
   simp [ev]
 
 theorem expS_sum {ι : Type} (s : Finset ι) (g : ι → PS k n d) (hg : ∀ i, constantCoeff (g i) = 0) :

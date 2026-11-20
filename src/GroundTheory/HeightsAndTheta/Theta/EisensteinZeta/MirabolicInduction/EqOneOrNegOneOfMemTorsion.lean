@@ -67,14 +67,14 @@ theorem conj_alt_bis (hd : 0 < d) (hx : x ^ 2 = -(d : K)) : GroundTheory.Global.
     apply GroundTheory.Global.Quadratic.conj_ne_one K
     refine AlgEquiv.ext fun y => ?_
     obtain ⟨a, b, rfl⟩ := exists_rat hd hx y
-    rw [AlgEquiv.one_apply, map_add, map_mul, AlgEquiv.commutes, AlgEquiv.commutes,
+    rw [AlgEquiv.one_apply, map_add (f := _), map_mul, AlgEquiv.commutes, AlgEquiv.commutes,
       sub_eq_zero.mp h]
   · exact eq_neg_of_add_eq_zero_left h
 
 theorem conj_apply (hd : 0 < d) (hx : x ^ 2 = -(d : K)) (a b : ℚ) :
     GroundTheory.Global.Quadratic.conj K (algebraMap ℚ K a + algebraMap ℚ K b * x) =
       algebraMap ℚ K a - algebraMap ℚ K b * x := by
-  rw [map_add, map_mul, AlgEquiv.commutes, AlgEquiv.commutes, conj_alt_bis hd hx]
+  rw [map_add (f := _), map_mul, AlgEquiv.commutes, AlgEquiv.commutes, conj_alt_bis hd hx]
   ring
 
 omit [Algebra.IsQuadraticExtension ℚ K] in
@@ -115,7 +115,7 @@ theorem coords_of_isIntegral (hdp : d.Prime) (hx : x ^ 2 = -(d : K)) {a b : ℚ}
   have hnm : IsIntegral ℤ (algebraMap ℚ K (a ^ 2 + d * b ^ 2)) := by
     have e : algebraMap ℚ K (a ^ 2 + d * b ^ 2) =
         y * (algebraMap ℚ K a - algebraMap ℚ K b * x) := by
-      rw [map_add, map_mul, map_pow, map_pow, ← hdK, hy_def]
+      rw [map_add (f := _), map_mul, map_pow, map_pow, ← hdK, hy_def]
       linear_combination (algebraMap ℚ K b) ^ 2 * hx
     rw [e]; exact hy.mul hc
   obtain ⟨N, hN⟩ := exists_int_of_isIntegral _ hnm
@@ -207,7 +207,7 @@ theorem isIntegral_omega (hd4 : d % 4 = 3) (hx : x ^ 2 = -(d : K)) :
       have e : (d + 1) / 4 * 4 = d + 1 := Nat.div_mul_cancel (by omega)
       calc (((d + 1) / 4 : ℕ) : K) * 4 = (((d + 1) / 4 * 4 : ℕ) : K) := by push_cast; ring
         _ = d + 1 := by rw [e]; push_cast; ring
-    simp only [map_add, map_sub, map_pow, aeval_X, map_natCast]
+    simp only [map_add (f := _), map_sub, map_pow, aeval_X, map_natCast]
     linear_combination (1 / 4 : K) * hx + (1 / 4 : K) * h4
 
 def omega (hd4 : d % 4 = 3) (hx : x ^ 2 = -(d : K)) : 𝓞 K :=
@@ -227,7 +227,7 @@ theorem exists_int_coords (hdp : d.Prime) (hd4 : d % 4 = 3) (hx : x ^ 2 = -(d : 
   apply RingOfIntegers.ext
   rw [hab]
   change _ = algebraMap (𝓞 K) K (m • (1 : 𝓞 K) + B • omega hd4 hx)
-  rw [map_add, map_zsmul, map_zsmul, map_one, ← RingOfIntegers.coe_eq_algebraMap, coe_omega,
+  rw [map_add (f := _), map_zsmul, map_zsmul, map_one, ← RingOfIntegers.coe_eq_algebraMap, coe_omega,
     zsmul_eq_mul, zsmul_eq_mul]
   have ha : algebraMap ℚ K a = (A : K) / 2 := by
     rw [eq_div_iff two_ne_zero, ← map_intCast (algebraMap ℚ K), ← hA]; simp [mul_comm]
@@ -242,7 +242,7 @@ theorem linearIndependent_one_omega (hd : 0 < d) (hd4 : d % 4 = 3) (hx : x ^ 2 =
   rw [LinearIndependent.pair_iff]
   intro m n hmn
   have h := congrArg (algebraMap (𝓞 K) K) hmn
-  rw [map_add, map_zsmul, map_zsmul, map_one, map_zero, ← RingOfIntegers.coe_eq_algebraMap,
+  rw [map_add (f := _), map_zsmul, map_zsmul, map_one, map_zero, ← RingOfIntegers.coe_eq_algebraMap,
     coe_omega, zsmul_eq_mul, zsmul_eq_mul, mul_one] at h
   by_cases hn : n = 0
   · subst hn
@@ -251,7 +251,7 @@ theorem linearIndependent_one_omega (hd : 0 < d) (hd4 : d % 4 = 3) (hx : x ^ 2 =
   · exfalso
     apply not_mem_range_of_sq hd hx (-(2 * m + n) / n)
     have hn' : (n : K) ≠ 0 := Int.cast_ne_zero.mpr hn
-    rw [map_div₀, map_neg, map_add, map_mul, map_intCast, map_intCast, map_ofNat]
+    rw [map_div₀, map_neg, map_add (f := _), map_mul, map_intCast, map_intCast, map_ofNat]
     field_simp
     linear_combination (-2 : K) * h
 
@@ -286,10 +286,10 @@ theorem discr_eq (hdp : d.Prime) (hd4 : d % 4 = 3) (hx : x ^ 2 = -(d : K)) :
   have c := conj_alt_bis (K := K) hd hx
   have t1 : Algebra.trace ℚ K 1 = 2 := trace_eq_of _ _ (by rw [map_one, map_ofNat]; norm_num)
   have tω : Algebra.trace ℚ K ((1 + x) / 2) = 1 :=
-    trace_eq_of _ _ (by rw [map_div₀, map_add, map_one, c, map_one, map_ofNat]; ring)
+    trace_eq_of _ _ (by rw [map_div₀, map_add (f := _), map_one, c, map_one, map_ofNat]; ring)
   have tω2 : Algebra.trace ℚ K ((1 + x) / 2 * ((1 + x) / 2)) = (1 - d) / 2 :=
     trace_eq_of _ _ (by
-      rw [map_mul, map_div₀, map_add, map_one, c, map_ofNat, map_div₀, map_sub, map_one,
+      rw [map_mul, map_div₀, map_add (f := _), map_one, c, map_ofNat, map_div₀, map_sub, map_one,
         map_natCast, map_ofNat]
       linear_combination (1 / 2 : K) * hx)
   rw [t1, tω, tω2] at h1
@@ -315,7 +315,7 @@ theorem eq_one_or_neg_one_of_mem_torsion (hdp : d.Prime) (hd7 : 4 < d) (hx : x ^
   obtain ⟨A, B, N, hA, hB, -⟩ := coords_of_isIntegral hdp hx hint
   set c := GroundTheory.Global.Quadratic.conj K
   have hnorm : algebraMap ℚ K (a ^ 2 + d * b ^ 2) = y * c y := by
-    rw [hab, conj_apply hd hx, map_add, map_mul, map_pow, map_pow, map_natCast]
+    rw [hab, conj_apply hd hx, map_add (f := _), map_mul, map_pow, map_pow, map_natCast]
     linear_combination (algebraMap ℚ K b) ^ 2 * hx
   have h1 : (a ^ 2 + d * b ^ 2) ^ n = 1 := by
     apply (algebraMap ℚ K).injective

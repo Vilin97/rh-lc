@@ -298,7 +298,7 @@ theorem norm_off (he : IsSplitIdem D e) (hπ : GlobalTheory.SplitHecke.Chart e v
   have hv : v' = v := by
     by_contra hne
     have h1 := hπ.2.2.1 (pairA D.host.F 0 α)
-    rw [← hsum, map_add, chart_e hee hπ, (hπ.2.1 _).2 hec, add_zero] at h1
+    rw [← hsum, map_add (f := _), chart_e hee hπ, (hπ.2.1 _).2 hec, add_zero] at h1
     have h2 : evalV D.host.F v (sndA D.host.F (pairA D.host.F 0 α)) = 0 := hα0 v (Ne.symm hne)
     rw [h2] at h1
     exact one_ne_zero h1

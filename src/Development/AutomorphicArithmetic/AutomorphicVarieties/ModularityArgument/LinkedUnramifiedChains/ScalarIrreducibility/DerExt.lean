@@ -136,7 +136,7 @@ private theorem kill (A : Subalgebra O R) (ξ : A →ₐ[O] K) (D : A →ₗ[O] 
     obtain ⟨b, hb⟩ := hy
     refine ⟨add_mem a b, ?_⟩
     have : (⟨x + y, add_mem a b⟩ : A) = ⟨x, a⟩ + ⟨y, b⟩ := rfl
-    rw [this, map_add, ha, hb, add_zero]
+    rw [this, map_add (f := _), ha, hb, add_zero]
   | mul x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy

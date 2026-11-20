@@ -13,7 +13,7 @@ theorem hf_add_left (x y z : Fin g → ℂ) : hf Hm (x + y) z = hf Hm x z + hf H
   simp only [hf, Pi.add_apply, add_mul, Finset.sum_add_distrib]
 
 theorem hf_add_right (x y z : Fin g → ℂ) : hf Hm x (y + z) = hf Hm x y + hf Hm x z := by
-  simp only [hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hf_zero_right (x : Fin g → ℂ) : hf Hm x 0 = 0 := by simp [hf]
 

@@ -78,7 +78,7 @@ theorem segreLiftMap_monomial (W : Ideal (MRing ι F)) (s : (Σ c, segreIdx ι c
     have hm : (monomial (Finsupp.single v n + s) r : MRing (segreIdx ι) F) =
         X v ^ n * monomial s r := by
       rw [X_pow_eq_monomial, monomial_mul, one_mul]
-    rw [hm, map_mul, map_pow, ha, segreLiftMap, aeval_X, hβ, map_add, Pi.add_apply,
+    rw [hm, map_mul, map_pow, ha, segreLiftMap, aeval_X, hβ, map_add (f := _), Pi.add_apply,
       Finsupp.weight_single, Pi.smul_apply, smul_eq_mul, map_mul, map_pow]
     ring
 

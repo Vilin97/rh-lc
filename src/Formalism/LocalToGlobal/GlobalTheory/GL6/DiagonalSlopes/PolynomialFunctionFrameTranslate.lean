@@ -54,7 +54,7 @@ theorem substitution_polynomial_map (φ : K →+* ℂ) (M : ι → Matrix (Fin n
   unfold t2iSub subP
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p x hp =>
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.map_X, map_sum, MvPolynomial.map_C, Matrix.map_apply]

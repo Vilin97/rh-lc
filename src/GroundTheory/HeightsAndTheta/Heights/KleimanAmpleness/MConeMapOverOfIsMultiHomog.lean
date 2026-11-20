@@ -134,7 +134,7 @@ def locR {y : (Σ k, ι k) → Ω} {y' : (Σ k, ι k) → K'} (hle : mIdealOver 
       rw [add_comm]; exact isMultiHomog_mul hf₂ hg
     refine ⟨f * g₂ + f₂ * g, g * g₂, n + n₂, isMultiHomog_add (isMultiHomog_mul hf hg₂) h2,
       isMultiHomog_mul hg hg₂, by rw [map_mul]; exact mul_ne_zero hg' hg₂', ?_⟩
-    rw [div_add_div _ _ (ne_zero_of hle hg hg') (ne_zero_of hle hg₂ hg₂'), map_add, map_mul, map_mul, map_mul]
+    rw [div_add_div _ _ (ne_zero_of hle hg hg') (ne_zero_of hle hg₂ hg₂'), map_add (f := _), map_mul, map_mul, map_mul]
     ring
   algebraMap_mem' r := ⟨C r, 1, 0, isMultiHomog_C r, isMultiHomog_one, by simp, by simp⟩
 
@@ -230,7 +230,7 @@ theorem ResidueMap.proof : ResidueMap.Statement := by
       obtain ⟨h, hσ⟩ := ih
       obtain ⟨h', hσ'⟩ := ih'
       refine ⟨add_mem h h', ?_⟩
-      rw [show (⟨x + x', add_mem h h'⟩ : locR hle) = ⟨x, h⟩ + ⟨x', h'⟩ from rfl, map_add]
+      rw [show (⟨x + x', add_mem h h'⟩ : locR hle) = ⟨x, h⟩ + ⟨x', h'⟩ from rfl, map_add (f := _)]
       exact add_mem hσ hσ'
     | mul x x' _ _ ih ih' =>
       obtain ⟨h, hσ⟩ := ih

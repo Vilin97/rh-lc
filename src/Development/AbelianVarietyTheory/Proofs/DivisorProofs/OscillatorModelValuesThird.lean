@@ -135,7 +135,7 @@ theorem mem_hLat (ι : (Af D.host.F ⊗[D.host.F] D.host.E) ≃+* FiniteAdeleRin
     exact (congrArg _ (GlobalTheory.PlaceIdem.zero_ap Q)).trans_le (by simp)
   | add x y _ _ hx hy =>
     intro i Q
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     rw [← Pi.add_def, Matrix.mulVec_add]
     exact Valuation.map_add_le _ (hx i Q) (hy i Q)
   | smul a x _ hx =>
@@ -236,7 +236,7 @@ theorem exists_ideal (V : HSp D) (hg : V.gram = 1) (hL : Bridge.hLat V 1 = stdLa
     refine det_supp (ev Q) hs ?_
     have a := hcj e (cP Q)
     rw [e2 _ hQ', map_zero, cP_cP, map_eq_zero] at a
-    rw [map_add, e2 Q hQ, a, add_zero]
+    rw [map_add (f := _), e2 Q hQ, a, add_zero]
   have d2 : ∀ Q, Valued.v (ev Q d) * Valued.v (ev (cP Q) d) = 1 := fun Q => by
     rw [← hcj, ← map_mul, ← map_mul, hd, det_unitary V hg h, map_one, map_one]
   have d3 : ∀ Q, Valued.v (ev Q d) ≠ 0 := fun Q => left_ne_zero_of_mul_eq_one (d2 Q)
@@ -279,10 +279,10 @@ theorem exists_ideal (V : HSp D) (hg : V.gram = 1) (hL : Bridge.hLat V 1 = stdLa
     rw [onId_eq χ _ δ c2 P hP δ0 δ1 fun Q hQ => val_mul_val hv χ (fun a => hP Q hQ (a.symm ▸ hQ))
       (hr Q fun a => hP Q hQ (a.symm ▸ hQ)) (hu Q (hb Q hQ)) (hu _ fun a => hb Q hQ ((hbc Q).1 a))]
     refine GlobalTheory.T.idelicCharacter_eq_prod_unramifiedValue_zpow D ι h1 h2 h4 c χ hc y ?_ P δ (fun Q hQ => ⟨hu Q (hb Q hQ), ?_⟩) fun Q hQ => ?_
-    · rw [hy', RingHom.map_add, RingHom.map_mul, RingHom.map_sub, e0, RingHom.map_one, zero_mul, zero_add, sub_zero]
-    · rw [← hev, ← hδ, hy', RingHom.map_add, RingHom.map_mul, RingHom.map_sub, e1 Q hQ, RingHom.map_one, one_mul, sub_self,
+    · rw [hy', RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, e0, RingHom.map_one, zero_mul, zero_add, sub_zero]
+    · rw [← hev, ← hδ, hy', RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, e1 Q hQ, RingHom.map_one, one_mul, sub_self,
         add_zero]
-    · rw [← hev, hy', RingHom.map_add, RingHom.map_mul, RingHom.map_sub, e2 Q hQ, RingHom.map_one, zero_mul, zero_add,
+    · rw [← hev, hy', RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, e2 Q hQ, RingHom.map_one, zero_mul, zero_add,
         sub_zero]
 
 theorem chrEq_mul_inv {a b c : (AE D)ˣ →* Circle} {α β γ : HChar D.host.E} (ha : ChrEq a α) (hb : ChrEq b β)

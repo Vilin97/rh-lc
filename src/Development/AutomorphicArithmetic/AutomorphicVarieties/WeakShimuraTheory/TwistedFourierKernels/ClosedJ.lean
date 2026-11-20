@@ -14,7 +14,7 @@ theorem UpperTheory.V.Ws.H5.closedJ :
     · simp
     · obtain ⟨j, hj, y, hy, rfl⟩ := Submodule.mem_sup.mp (hb N)
       have he : Ideal.Quotient.mk J (j + y) = y • (Ideal.Quotient.mk J 1 : R ⧸ J) := by
-        rw [map_add, Ideal.Quotient.eq_zero_iff_mem.mpr hj, zero_add, Algebra.smul_def,
+        rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.mpr hj, zero_add, Algebra.smul_def,
           Ideal.Quotient.algebraMap_eq, map_one, mul_one]
       rw [he]
       exact Submodule.smul_mem_smul hy Submodule.mem_top

@@ -84,7 +84,7 @@ theorem mem_HfQ (L : Lattice (O := O) A.ρ) (I : Submodule O ↥L.T) (hI : Stabl
     have ht : cob A.ρ (t : A.V) ∈ latticeCocycles L :=
       ⟨coboundary_mem_cocycles A _, fun g _ => L.T.sub_mem (L.stable g _ t.2) t.2⟩
     refine ⟨d + ⟨_, ht⟩, (latticeFiniteCocycles PD L).add_mem hd ⟨ht, coboundary_mem_finite_cocycles PD A _⟩, ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     rfl
   · rintro ⟨d, hd, rfl⟩
     exact Submodule.mem_sup_left ⟨d, hd, rfl⟩
@@ -225,7 +225,7 @@ theorem cupQ_flip (hopen : IsOpen (Set.range (algebraMap O LL))) (hI : StableSub
         Submodule.Quotient.mk (cupQ LA LA' P a c (redT LA' _ d') (g, h)))
     rw [cupQ_red_left PD hfl L1 hL1 ha, cupQ_red_right PD hd L1 hL1 ha, ← torsionPairing_equivariant, e1,
       lattice_cocycle_mul]
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     abel
   unfold CobO
   constructor

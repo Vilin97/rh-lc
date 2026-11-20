@@ -200,7 +200,7 @@ theorem map_padic_smul {p : ℕ} [Fact p.Prime] [IsHausdorff (span {(p : A)}) M]
   have h := sub_eq_iff_eq_add.1 hc
   have h1 : T (a • f) - φ a • T f = (p : A) ^ n • (T (c • f) - φ c • T f) := by
     conv_lhs => rw [h]
-    rw [add_smul, map_add, map_add, add_smul, Nat.cast_smul_eq_nsmul, map_nsmul, map_natCast,
+    rw [add_smul, map_add (f := _), map_add (f := _), add_smul, Nat.cast_smul_eq_nsmul, map_nsmul, map_natCast,
       Nat.cast_smul_eq_nsmul, mul_smul, ← Nat.cast_pow, Nat.cast_smul_eq_nsmul, map_nsmul, map_mul,
       map_natCast, mul_smul, ← Nat.cast_pow, Nat.cast_smul_eq_nsmul, Nat.cast_smul_eq_nsmul,
       smul_sub]
@@ -309,7 +309,7 @@ theorem Published.PrismaticDieudonneHodgeAt.covariant {C : Type} [Field C] [IsAl
   choose s hs using hφ
   let ψ : ∀ G : PDivGroup p O, M.obj (op G) →ₛₗ[phiInv p O] M.obj (op G) := fun G =>
     { toFun := s G
-      map_add' := fun a b => inj G (by rw [map_add, hs, hs, hs, smul_add])
+      map_add' := fun a b => inj G (by rw [map_add (f := _), hs, hs, hs, smul_add])
       map_smul' := fun a m => inj G (by rw [map_smulₛₗ, hs, hs, frobenius_phiInv, smul_comm]) }
   have hψ : ∀ G m, φ G (ψ G m) = (WittVector.frobenius (xi ε) : Ainf p O) • m := hs
   have nψ : ∀ (G H : PDivGroup p O) (f : G ⟶ H) (m : M.obj (op H)),
@@ -320,7 +320,7 @@ theorem Published.PrismaticDieudonneHodgeAt.covariant {C : Type} [Field C] [IsAl
   let t := muTate O (fun n => (root^[n] ε).untilt) h0 (untilt_root_succ_pow ε)
   let T : (const p O ⟶ PDivGroup.mu p O) →+ Ainf p O :=
     AddMonoidHom.mk' (fun f => ec (M.map f.op (em.symm 1))) fun f g => by
-      rw [op_add, M.map_add, ← map_add]; rfl
+      rw [op_add, M.map_add (f := _), ← map_add (f := _)]; rfl
   let g : M.obj (op (PDivGroup.mu p O)) →ₗ[Ainf p O] M.obj (op (const p O)) :=
     ec.symm.toLinearMap ∘ₗ (Sandwich.mu ε • em.toLinearMap)
   obtain ⟨f, hf, -⟩ := hff g fun m => ec.injective (by

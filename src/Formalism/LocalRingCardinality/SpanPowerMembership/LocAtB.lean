@@ -111,7 +111,7 @@ theorem splitAt_nonempty (φ : E →ₐ[F] v.adicCompletion F) (b : E) (hb0 : b 
     rintro ⟨x, y⟩
     refine ⟨((x + y) / 2) ⊗ₜ 1 + ((x - y) / (2 * φ b)) ⊗ₜ b, ?_⟩
     have h2K : (2 : K) ≠ 0 := two_ne_zero
-    rw [map_add, he, he, hb, map_one sig, map_one φ, map_neg]
+    rw [map_add (f := _), he, he, hb, map_one sig, map_one φ, map_neg]
     have aux : ∀ r : K, r ≠ 0 → ((x + y) / 2 * 1 + (x - y) / (2 * r) * r = x ∧
         (x + y) / 2 * 1 + (x - y) / (2 * r) * -r = y) := fun r hr => by
       have h1 : (x - y) / (2 * r) * r = (x - y) / 2 := by
@@ -145,7 +145,7 @@ theorem splitAt_nonempty (φ : E →ₐ[F] v.adicCompletion F) (b : E) (hb0 : b 
   · show e (cjT sig hsig v x) = (e x).swap
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add, map_add, ha, hb, Prod.swap_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb, Prod.swap_add]
     | tmul a x => rw [cjT_tmul, he, he, hsig]; rfl
   · show Irreducible ((resChar v : ℕ) : 𝒪[K])
     rw [← MulEquiv.irreducible_iff ι.toMulEquiv]
@@ -180,7 +180,7 @@ theorem exists_emb {K : Type} [Field K] [Algebra F K]
       apply hbF
       have ha' : a ^ 2 + (d : F) = 0 := by simpa using ha
       have hx : (algebraMap F E a) ^ 2 + (d : E) = 0 := by
-        rw [← map_pow, ← map_natCast (algebraMap F E) d, ← map_add, ha', map_zero]
+        rw [← map_pow, ← map_natCast (algebraMap F E) d, ← map_add (f := _), ha', map_zero]
       have hsq : (b - algebraMap F E a) * (b + algebraMap F E a) = 0 := by
         linear_combination hb2 - hx
       rcases mul_eq_zero.mp hsq with h | h
@@ -193,7 +193,7 @@ theorem exists_emb {K : Type} [Field K] [Algebra F K]
     rw [eq_top_iff]
     intro x _
     have hA : sig ((x + sig x) / 2) = (x + sig x) / 2 := by
-      rw [map_div₀, map_add, hsig, map_ofNat]
+      rw [map_div₀, map_add (f := _), hsig, map_ofNat]
       ring
     have hB : sig ((x - sig x) / (2 * b)) = (x - sig x) / (2 * b) := by
       rw [map_div₀, map_sub, map_mul, hsig, map_ofNat, hb]
@@ -356,7 +356,7 @@ theorem finrank_FE : Module.finrank H.F H.E = 2 := by
       apply hbF
       have ha' : a ^ 2 + (H.d : H.F) = 0 := by simpa using ha
       have hx : (algebraMap H.F H.E a) ^ 2 + (H.d : H.E) = 0 := by
-        rw [← map_pow, ← map_natCast (algebraMap H.F H.E) H.d, ← map_add, ha', map_zero]
+        rw [← map_pow, ← map_natCast (algebraMap H.F H.E) H.d, ← map_add (f := _), ha', map_zero]
       have hsq : (H.sqd - algebraMap H.F H.E a) * (H.sqd + algebraMap H.F H.E a) = 0 := by
         linear_combination H.sqd_sq - hx
       rcases mul_eq_zero.mp hsq with h | h
@@ -369,7 +369,7 @@ theorem finrank_FE : Module.finrank H.F H.E = 2 := by
     rw [eq_top_iff]
     intro x _
     have hA : conjF H ((x + conjF H x) / 2) = (x + conjF H x) / 2 := by
-      rw [map_div₀, map_add, hcc, map_ofNat]
+      rw [map_div₀, map_add (f := _), hcc, map_ofNat]
       ring
     have hB : conjF H ((x - conjF H x) / (2 * H.sqd)) = (x - conjF H x) / (2 * H.sqd) := by
       rw [map_div₀, map_sub, map_mul, hcc, map_ofNat, hb]

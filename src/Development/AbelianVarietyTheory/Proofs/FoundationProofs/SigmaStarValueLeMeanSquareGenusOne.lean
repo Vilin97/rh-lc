@@ -127,7 +127,7 @@ theorem sup_le_mean (Λ : AddSubgroup ℂ) (a v : ℝ) (F : Set ℂ) (g : ℂ �
     rw [hn, div_eq_mul_one_div] at this
     exact le_of_mul_le_mul_left this ha
   · intro x hx y
-    simp only [hw, map_add]
+    simp only [hw, map_add (f := _)]
     exact hper _ hx _
   · simp only [hw]
     refine (hmp.integrableOn_comp_preimage hemb

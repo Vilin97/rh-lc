@@ -157,7 +157,7 @@ theorem FBChart.raw_lin (i : Fin dd) (μ : Fin dd →₀ ℕ) (hμ : μ.degree �
       refine Finsupp.induction_linear ν ?_ ?_ ?_
       · simp
       · intro f g hf hg
-        rw [Finsupp.mapDomain_add, map_add, map_add, hf, hg]
+        rw [Finsupp.mapDomain_add, map_add (f := _), map_add (f := _), hf, hg]
       · intro a b
         rw [Finsupp.mapDomain_single]
         simp

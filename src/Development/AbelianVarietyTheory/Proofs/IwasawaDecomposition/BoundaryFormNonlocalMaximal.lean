@@ -58,7 +58,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host 
   have hb := diag b
   have s' := hbe'.1 (r a) (r b)
   have s := hbe.1 a b
-  simp only [map_add, LinearMap.add_apply] at hab
+  simp only [map_add (f := _), LinearMap.add_apply] at hab
   have h2 : (2 : ℤ) * be' (r a) (r b) = 2 * ((e : ℤ) * be a b) := by
     linear_combination hab - ha - hb + s' - (e : ℤ) * s
   exact mul_left_cancel₀ (by norm_num) h2

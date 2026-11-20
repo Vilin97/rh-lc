@@ -27,7 +27,7 @@ theorem UpperTheory.exists_invariant_of_dpst_phi_fixed_of_nonneg_weights :
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have h1 : LinearMap.lTensor V P.φB.toLinearMap y = y := by
     apply crisIncl_injective (LL := ↥L.1) P
     rw [← c1, e]
@@ -42,7 +42,7 @@ theorem UpperTheory.exists_invariant_of_dpst_phi_fixed_of_nonneg_weights :
       have := (P.PD K).ι_comm g b
       rw [P.PD_ι, P.PD_ι] at this
       simp [actVdR, actVB, this]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have h2 : LinearMap.lTensor V P.ιB.toLinearMap y ∈ DdR (P.PD K) ρ := by
     refine (Submodule.mem_iInf _).mpr fun g => ?_
     rw [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply, sub_eq_zero, c2, hy']

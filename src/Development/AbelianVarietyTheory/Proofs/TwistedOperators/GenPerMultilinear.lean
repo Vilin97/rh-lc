@@ -19,7 +19,7 @@ variable {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridData L sc} (
 theorem kerA_col_add (t : T) (j : ℕ) (f f' : Sch G (.col t j)) :
     ∀ g h, W.kerA (.col t j) (f + f') g h = W.kerA (.col t j) f g h + W.kerA (.col t j) f' g h := by
   intro g h
-  simp only [GridData.Weil.kerA, GridData.Weil.ker, thetaKO, map_add, Pi.add_apply]
+  simp only [GridData.Weil.kerA, GridData.Weil.ker, thetaKO, map_add (f := _), Pi.add_apply]
 
 theorem kerA_col_smul (t : T) (j : ℕ) (c : ℂ) (f : Sch G (.col t j)) :
     ∀ g h, W.kerA (.col t j) (c • f) g h = c * W.kerA (.col t j) f g h := by
@@ -29,7 +29,7 @@ theorem kerA_col_smul (t : T) (j : ℕ) (c : ℂ) (f : Sch G (.col t j)) :
 theorem kerA_right_add (i j : ℕ) (f f' : Sch G (.right i j)) :
     ∀ g h, W.kerA (.right i j) (f + f') g h = W.kerA (.right i j) f g h + W.kerA (.right i j) f' g h := by
   intro g h
-  simp only [GridData.Weil.kerA, GridData.Weil.ker, thetaKO, map_add, Pi.add_apply]
+  simp only [GridData.Weil.kerA, GridData.Weil.ker, thetaKO, map_add (f := _), Pi.add_apply]
 
 theorem kerA_right_smul (i j : ℕ) (c : ℂ) (f : Sch G (.right i j)) :
     ∀ g h, W.kerA (.right i j) (c • f) g h = c * W.kerA (.right i j) f g h := by
@@ -217,7 +217,7 @@ theorem colLift_add [DecidableEq (Fin D.R.m)] (Q1 : PolCol ch.G) (i : Fin D.R.m)
     (fun j => ch.W.fock (.top t j) (movedVec t ch.S.toGridChoice (d.1 j)) (Function.update Q1 i x' j))
     (fun j => ch.W.fock (.top t j) (movedVec t ch.S.toGridChoice (d.1 j)) (Function.update Q1 i (x + x') j)) i
     (fun j hj => by simp only [Function.update_of_ne hj, and_self])
-    (by simp only [Function.update_self, map_add]) _ h1 h2
+    (by simp only [Function.update_self, map_add (f := _)]) _ h1 h2
 
 theorem colLift_smul [DecidableEq (Fin D.R.m)] (Q1 : PolCol ch.G) (i : Fin D.R.m) (c : ℂ)
     (x : PolF D (ch.G.V (.top ((i : ℕ) + 1))).rank (ch.G.V (.top i)).rank) ξ :
@@ -243,7 +243,7 @@ theorem rowLift_add [DecidableEq (Fin D.R.m)] (Q2 : PolRow ch.G) (i : Fin D.R.m)
     (fun j => ch.W.fock (.chi j D.R.m) (movedVec t ch.S.toGridChoice (d.2 j)) (Function.update Q2 i x' j))
     (fun j => ch.W.fock (.chi j D.R.m) (movedVec t ch.S.toGridChoice (d.2 j)) (Function.update Q2 i (x + x') j)) i
     (fun j hj => by simp only [Function.update_of_ne hj, and_self])
-    (by simp only [Function.update_self, map_add]) _ h1 h2
+    (by simp only [Function.update_self, map_add (f := _)]) _ h1 h2
 
 theorem rowLift_smul [DecidableEq (Fin D.R.m)] (Q2 : PolRow ch.G) (i : Fin D.R.m) (c : ℂ)
     (x : PolF D (ch.G.V (.grid i D.R.m)).rank (ch.G.V (.grid ((i : ℕ) + 1) D.R.m)).rank) η :

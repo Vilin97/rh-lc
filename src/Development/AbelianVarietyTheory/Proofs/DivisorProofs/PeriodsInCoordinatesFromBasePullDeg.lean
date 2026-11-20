@@ -38,7 +38,7 @@ theorem exists_moved (p : IsPullDeg ρ Q D) (τ₀ : GlobalTheory.UChart.Gens Q)
         spMap ρ ≫ (![(Q.c (p.xe a + p.xe b)).left, (Q.c (p.xe a)).left, (Q.c (p.xe b)).left, (Q.c 0).left] k) := by
       intro k
       fin_cases k
-      · simpa [map_add] using p.c_pr (a + b)
+      · simpa [map_add (f := _)] using p.c_pr (a + b)
       · simpa using p.c_pr a
       · simpa using p.c_pr b
       · simpa [map_zero] using p.c_pr 0
@@ -178,7 +178,7 @@ theorem fromBase_moved (p : IsPullDeg ρ Q D) (τ₀ : GlobalTheory.UChart.Gens 
   have hw₂ : w₂.IsGen :=
     (isGen_iff w₂).2 (hT.pgen_comp Q.P.isLB ((isGen_iff w).1 hw) ((isGen_iff p.w).1 p.w_gen))
   have hφ : ∀ a b : D.X, ![c₀ (p.xe a + p.xe b), c₀ (p.xe a), c₀ (p.xe b), c₀ 0] =
-      ![c₀ (p.xe (a + b)), c₀ (p.xe a), c₀ (p.xe b), c₀ (p.xe 0)] := fun a b => by rw [map_add, map_zero]
+      ![c₀ (p.xe (a + b)), c₀ (p.xe a), c₀ (p.xe b), c₀ (p.xe 0)] := fun a b => by rw [map_add (f := _), map_zero]
   have ec : ∀ t : D.X, GlobalTheory.UChart.cpt D t ≫ (p.e.hom.left ≫ pullback.fst Q.P.A.hom (specOf ρ)) =
       spMap ρ ≫ GlobalTheory.UChart.cpt Q (p.xe t) := fun t => p.c_pr t
   refine ⟨B₀, iG, M₀, fun a => c₀ (p.xe a), fun a b => trGen (hφ a b) (σ (p.xe a) (p.xe b)),
@@ -208,7 +208,7 @@ theorem fromBase_moved (p : IsPullDeg ρ Q D) (τ₀ : GlobalTheory.UChart.Gens 
     have m := hmv a b _ (𝟙 _) zz JQ J hJQ hJ
     have k := key (p.xe a) (p.xe b) _ (spMap ρ) zz JQ J₀ hJQ hJ₀
     simp only [Category.id_comp] at m
-    rw [tri (a + b) (p.xe a + p.xe b) (by rw [← map_add]; exact ec _), tri a _ (ec a), tri b _ (ec b),
+    rw [tri (a + b) (p.xe a + p.xe b) (by rw [← map_add (f := _)]; exact ec _), tri a _ (ec a), tri b _ (ec b),
       tri 0 0 (by rw [ec, map_zero]), val_trGen, spMap_comp, k, m]
     apply Additive.ofMul.injective
     simp only [ofMul_mul, ofMul_inv]

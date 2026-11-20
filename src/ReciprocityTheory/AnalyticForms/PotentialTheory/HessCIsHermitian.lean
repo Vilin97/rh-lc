@@ -79,7 +79,7 @@ theorem hessC_isHermitian' (φ : (Fin D → ℂ) → ℝ) (z : Fin D → ℂ) (h
 
 theorem leviC_add_right (H : (Fin D → ℂ) →L[ℝ] (Fin D → ℂ) →L[ℝ] ℝ) (a b b' : Fin D → ℂ) :
     leviC H a (b + b') = leviC H a b + leviC H a b' := by
-  simp only [leviC, smul_add, map_add]
+  simp only [leviC, smul_add, map_add (f := _)]
   push_cast
   ring
 
@@ -97,7 +97,7 @@ theorem leviC_smul_right (H : (Fin D → ℂ) →L[ℝ] (Fin D → ℂ) →L[ℝ
     linear_combination ((c.im : ℂ) * b k) * Complex.I_sq
   unfold leviC
   rw [h2, h1]
-  simp only [map_add, map_sub, map_smul, ContinuousLinearMap.add_apply,
+  simp only [map_add (f := _), map_sub, map_smul, ContinuousLinearMap.add_apply,
     ContinuousLinearMap.sub_apply, ContinuousLinearMap.smul_apply, smul_eq_mul]
   apply Complex.ext <;> simp <;> ring
 

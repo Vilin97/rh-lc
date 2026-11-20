@@ -50,7 +50,7 @@ lemma jetLin_scaleDer (c : ι → ℂ) (J : (DVar ι a b →₀ ℕ) → ℂ) (Q
     simp [wDer, Finsupp.comapDomain_apply]
     congr 1
     ring
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 lemma blockAct_diag (c : ι → ℂ) :
     Formalism.GradedWeylDivisibility.blockAct ℂ (n := b) (fun τ => Matrix.diagonal fun _ : Fin b => c τ) = scaleVar (fun v : ι × Fin b × Fin b => c v.1) := by
@@ -66,7 +66,7 @@ lemma jetLin_scaleCoord (c : ι → ℂ) (J : (DVar ι a b →₀ ℕ) → ℂ) 
     simp [wCoord, Finsupp.comapDomain_apply]
     congr 1
     ring
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 lemma scale_subD (c : ι → ℂ) :
     (scaleVar (wDer (a := a) (b := b) c)).comp (subD ℂ ι a b) = (scaleVar (wCoord c)).comp (subD ℂ ι a b) := by
@@ -87,7 +87,7 @@ lemma jetLin_smul_table (u : ℂ) (J : (DVar ι a b →₀ ℕ) → ℂ) (Q : Mv
     rw [jetLin_monomial, jetLin_monomial, smul_monomial, smul_eq_mul]
     congr 1
     ring
-  | add p q hp hq => simp only [map_add, hp, hq, smul_add]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, smul_add]
 
 end Jet
 

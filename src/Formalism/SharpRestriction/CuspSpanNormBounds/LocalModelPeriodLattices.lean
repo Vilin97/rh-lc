@@ -786,7 +786,7 @@ theorem exists_pow_mul_mem [IsNonarchimedeanLocalField F] (π : 𝒪[F]) (hπ : 
 variable (L : LocE F E)
 
 theorem tr_ex (x : E) : ∃ a : F, algebraMap F E a = x + L.cj x := by
-  exact (L.cj_fix _).mp (by rw [map_add, L.cj_cj, add_comm])
+  exact (L.cj_fix _).mp (by rw [map_add (f := _), L.cj_cj, add_comm])
 
 theorem nm_ex (x : E) : ∃ a : F, algebraMap F E a = x * L.cj x := by
   exact (L.cj_fix _).mp (by rw [map_mul, L.cj_cj, mul_comm])
@@ -945,7 +945,7 @@ theorem R_top (M : Model F E) (hOK : M.OK) :
       refine mem_O_of_quad L x ⟨(g.e x).1 + (g.e x).2, (𝒪[F]).add_mem ha hb⟩
         ⟨(g.e x).1 * (g.e x).2, (𝒪[F]).mul_mem ha hb⟩ ?_
       apply g.e.injective
-      rw [map_add, map_sub, map_mul, map_mul, e_algebraMap, e_algebraMap, map_zero]
+      rw [map_add (f := _), map_sub, map_mul, map_mul, e_algebraMap, e_algebraMap, map_zero]
       refine Prod.ext ?_ ?_ <;> simp <;> ring
     have hqO : ∀ y ∈ L.O, algebraMap F E g.q * y ∈ (⟨L, some g, mu⟩ : Model F E).R := by
       intro y hy

@@ -59,10 +59,10 @@ theorem herm_smul_left {A B : HSp D} (c : AE D) (x y : WA A B) : herm (c • x) 
   simp [herm, colMat, Matrix.transpose_smul, Matrix.mul_smul, Matrix.trace_smul]
 
 theorem symp_add_left {A B : HSp D} (x y z : WA A B) : symp (x + y) z = symp x z + symp y z := by
-  simp only [symp, herm_add_left, mul_add, map_add]
+  simp only [symp, herm_add_left, mul_add, map_add (f := _)]
 
 theorem symp_add_right {A B : HSp D} (x y z : WA A B) : symp x (y + z) = symp x y + symp x z := by
-  simp only [symp, herm_add_right, mul_add, map_add]
+  simp only [symp, herm_add_right, mul_add, map_add (f := _)]
 
 theorem symp_zero_left {A B : HSp D} (x : WA A B) : symp 0 x = 0 := by
   have := symp_add_left (0 : WA A B) 0 x
@@ -184,7 +184,7 @@ def Theta (ψ : AddChar (AF D.host.F) ℂ) (A B : HSp D) : Submodule ℂ (WA A B
     rintro f g ⟨f1, f2, U, hU, f3⟩ ⟨g1, g2, U', hU', g3⟩
     refine ⟨fun γ hγ w => ?_, fun w => (f2 w).add (g2 w), U ⊓ U', hU.inter hU', fun u hu h0 => ?_⟩
     · simp only [Pi.add_apply, f1 γ hγ w, g1 γ hγ w, mul_add]
-    · rw [map_add, f3 u hu.1 h0, g3 u hu.2 h0]
+    · rw [map_add (f := _), f3 u hu.1 h0, g3 u hu.2 h0]
   smul_mem' := by
     rintro c f ⟨f1, f2, U, hU, f3⟩
     refine ⟨fun γ hγ w => ?_, fun w => (f2 w).const_smul c, U, hU, fun u hu h0 => ?_⟩

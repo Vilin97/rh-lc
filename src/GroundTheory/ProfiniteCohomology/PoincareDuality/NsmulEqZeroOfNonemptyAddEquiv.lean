@@ -72,7 +72,7 @@ theorem tensorHom_evalPairing (D : Rep.{u} k G) {A B : Rep.{u} k G} (φ : A ⟶ 
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a f => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def toDualDual (D M : Rep.{u} k G) : M ⟶ dualRep D (dualRep D M) :=
   Rep.ofHom ⟨dualEvalBilin D M, fun σ => by

@@ -71,7 +71,7 @@ lemma hurwitz_conj_real {a : ℝ} (ha : a ∈ Icc (0 : ℝ) 1) (s : ℂ) :
   rw [Complex.conj_conj] at h3
   have e : ∀ w, hurwitzZeta a w = reg a w + 1 / (w - 1) / Gammaℝ w := fun w => by
     rw [reg, sub_add_cancel]
-  rw [e ((starRingEnd ℂ) s), e s, map_add, ← h3, pole_conj]
+  rw [e ((starRingEnd ℂ) s), e s, map_add (f := _), ← h3, pole_conj]
 
 lemma hurwitz_conj (a : UnitAddCircle) (s : ℂ) :
     hurwitzZeta a ((starRingEnd ℂ) s) = (starRingEnd ℂ) (hurwitzZeta a s) := by

@@ -26,7 +26,7 @@ theorem lpr_inv {K A : Type*} [Field K] [AddCommGroup A] [Module K A] (f : Modul
       p.sub_mem (hp _ hsum) (p.smul_mem a hsum)
     have e : f (x a + ∑ μ ∈ s, x μ) - a • (x a + ∑ μ ∈ s, x μ) = ∑ μ ∈ s, (μ - a) • x μ := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, smul_add, Finset.smul_sum, Finset.sum_congr rfl hxs, hxa]
+        rw [map_add (f := _), map_sum, smul_add, Finset.smul_sum, Finset.sum_congr rfl hxs, hxa]
       rw [show a • x a + ∑ μ ∈ s, μ • x μ - (a • x a + ∑ μ ∈ s, a • x μ) =
           ∑ μ ∈ s, μ • x μ - ∑ μ ∈ s, a • x μ by abel, ← Finset.sum_sub_distrib]
       exact Finset.sum_congr rfl fun μ _ => (sub_smul μ a (x μ)).symm

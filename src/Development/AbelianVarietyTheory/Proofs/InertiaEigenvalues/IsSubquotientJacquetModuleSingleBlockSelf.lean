@@ -64,7 +64,7 @@ def toJac {V : Type} [AddCommGroup V] [Module ℂ V] (N : ℕ) (π : Representat
       rw [jac_mk, deltaHalf_one, leviEmb_oneBlock]
       simp [Subsingleton.elim (0 : Fin 1) 0]
     | add x y hx hy =>
-      simp only [map_add] at hx hy ⊢
+      simp only [map_add (f := _)] at hx hy ⊢
       rw [hx, hy]
 
 theorem toJac_injective {V : Type} [AddCommGroup V] [Module ℂ V] (N : ℕ) (π : Representation ℂ (GL (Fin N) k) V) :

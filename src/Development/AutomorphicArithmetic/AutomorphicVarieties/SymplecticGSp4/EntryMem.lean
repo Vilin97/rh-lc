@@ -136,7 +136,7 @@ def eqns : Eqns M.gr M.x0 M.r 0 M.r' 0 M.m where
 theorem π_mem (f : M.A) : M.π f ∈ M.SS := by
   obtain ⟨f, hf⟩ := f
   refine Submodule.iSup_induction M.aPart (motive := fun f => M.π f ∈ M.SS) hf (fun n a ha => ?_) (by simp)
-    (fun a b ha hb => by rw [map_add]; exact add_mem ha hb)
+    (fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb)
   exact M.sPart_le (j := (0, n)) ⟨a, ha, rfl⟩
 
 def toSS : M.A →ₐ[c.O] M.SS := (M.π.comp M.A.val).codRestrict M.SS M.π_mem

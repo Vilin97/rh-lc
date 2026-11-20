@@ -205,7 +205,7 @@ def quotField (φ : Fin (N + 1) → Fin (r + 1) → K) : Subfield (LatticeField 
     rintro s s' ⟨d, g, h, hg, hh, hne, he⟩ ⟨d', g', h', hg', hh', hne', he'⟩
     refine ⟨d + d', g * h' + h * g', h * h', (hg.mul hh').add (hh.mul hg'), hh.mul hh',
       by rw [map_mul]; exact mul_ne_zero hne hne', ?_⟩
-    rw [map_add, map_mul, map_mul, map_mul, he, he']
+    rw [map_add (f := _), map_mul, map_mul, map_mul, he, he']
     ring
   zero_mem' := ⟨0, 0, 1, isHomogeneous_zero _ _ _, isHomogeneous_one _ _, by simp, by simp⟩
   neg_mem' := by
@@ -247,7 +247,7 @@ theorem mem_quotField (hL : L.FG) (hφ : IsDualBasis L φ) (s : LatticeField K r
         simp [dehom, latticeForm, Pi.single_apply, genericVal, algebraMap_C, Fin.sum_univ_succ]
       rw [e]
       exact dehom_mem_quotField hL hφ _
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p j hp =>
       rw [map_mul]
       refine mul_mem hp ?_

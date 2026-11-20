@@ -45,10 +45,10 @@ theorem eq_zero_of_trace (x : mixedEmbedding.mixedSpace F)
 
 theorem isPairing_trP (κ : Type) [Fintype κ] : IsPairing (trP F κ) where
   addL x x' y := by
-    simp only [trP, Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add]
+    simp only [trP, Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)]
   addR := by
     intros
-    simp only [trP, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+    simp only [trP, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
   smulL := by
     intros
     simp only [trP, Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum, map_smul, smul_eq_mul]
@@ -112,7 +112,7 @@ theorem loc_lift (y : κ → mixedEmbedding.mixedSpace F) : locV (liftV y) = y :
 
 theorem loc_add (x y : κ → AF F) : locV (x + y) = locV x + locV y := by
   funext i
-  simp only [locV, Pi.add_apply, evI_eq, map_add]
+  simp only [locV, Pi.add_apply, evI_eq, map_add (f := _)]
 
 theorem loc_smul (c : ℝ) (x : κ → AF F) : locV (realAd F c • x) = c • locV x := by
   funext i
@@ -121,7 +121,7 @@ theorem loc_smul (c : ℝ) (x : κ → AF F) : locV (realAd F c • x) = c • l
 
 theorem lift_add (x y : κ → mixedEmbedding.mixedSpace F) : liftV (x + y) = liftV x + liftV y := by
   funext i
-  simp only [liftV, Pi.add_apply, map_add]
+  simp only [liftV, Pi.add_apply, map_add (f := _)]
   first
     | exact Prod.ext rfl (add_zero 0).symm
     | exact Prod.ext (by simp) (by simp)
@@ -215,7 +215,7 @@ def coordI (u : Matrix (Fin n) (Fin d) (AE F E)) :
 
 theorem coordI_add (u u' : Matrix (Fin n) (Fin d) (AE F E)) : coordI M (u + u') = coordI M u + coordI M u' := by
   first
-    | simp only [coordI, map_add, Prod.fst_add, Prod.snd_add, loc_add, Prod.mk_add_mk]
+    | simp only [coordI, map_add (f := _), Prod.fst_add, Prod.snd_add, loc_add, Prod.mk_add_mk]
     | simp [coordI, loc_add]
 
 theorem coordI_smul (c : ℝ) (u : Matrix (Fin n) (Fin d) (AE F E)) :
@@ -252,7 +252,7 @@ theorem sympM_add_right (M : Model σ X W) (u v v' : Matrix (Fin n) (Fin d) (AE 
     sympM (σ := σ) X W u (v + v') = sympM (σ := σ) X W u v + sympM (σ := σ) X W u v' := by
   simp only [sympM]
   unfold symp hTens
-  simp only [Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem sympM_anti (M : Model σ X W) (u v : Matrix (Fin n) (Fin d) (AE F E)) :
     sympM (σ := σ) X W u v = -sympM (σ := σ) X W v u := by

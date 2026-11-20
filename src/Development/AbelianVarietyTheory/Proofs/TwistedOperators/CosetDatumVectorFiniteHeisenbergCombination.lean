@@ -52,7 +52,7 @@ theorem pow_psi_eq_one {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) (
     | succ m ih => rw [succ_nsmul, GlobalTheory.FinTranslate.symplOH_add_right, ih, succ_nsmul]
   have h2 : ∀ a b : WO S T, symplOH S T a b + symplOH S T a b = symplO S T a b := fun a b => by
     unfold symplOH
-    rw [← add_mul, ← map_add]
+    rw [← add_mul, ← map_add (f := _)]
     norm_num
   have e1 : (2 * k * k) • symplOH S T x y = symplO S T (k • x) (k • y) := by
     rw [← h2, hl, hr, ← two_nsmul, ← mul_nsmul, ← mul_nsmul]
@@ -189,7 +189,7 @@ theorem model_coset {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D)
       rwa [Matrix.map_apply, Matrix.zero_apply] at this
     rw [Matrix.map_apply]
     dsimp only
-    rw [Matrix.add_apply, RingHom.map_add, e1, e2, add_zero, Matrix.zero_apply]
+    rw [Matrix.add_apply, RingHom.map_add (f := _), e1, e2, add_zero, Matrix.zero_apply]
   · have hc0 : ((R.card : ℕ) : Formalism.MainNotions.TaylorLogMetric.Qbar) ≠ 0 := Nat.cast_ne_zero.2 hcard
     have e1 : (k : Formalism.MainNotions.TaylorLogMetric.Qbar) ^ (D.R.f * S.rank * T.rank) * cc (R.equivFin.symm i) =
         (m : Formalism.MainNotions.TaylorLogMetric.Qbar) * ζ (R.equivFin.symm i) := by

@@ -20,7 +20,7 @@ theorem unit_surjective {R S : Type 1} [CommRing R] [CommRing S] (f : R →+* S)
       (congrArg (fun t : S => t ⊗ₜ[R,f] m) (mul_one _))
   | add x y hx hy =>
     obtain ⟨a, ha⟩ := hx; obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by rw [map_add, ha, hb]; rfl⟩
+    exact ⟨a + b, by rw [map_add (f := _), ha, hb]; rfl⟩
 
 theorem uliftHom_surjective {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (hφ : Function.Surjective φ) :
     Function.Surjective (uliftHom φ) := by

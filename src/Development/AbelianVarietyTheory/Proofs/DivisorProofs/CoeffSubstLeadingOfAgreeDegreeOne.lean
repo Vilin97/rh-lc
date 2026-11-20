@@ -41,7 +41,7 @@ theorem Near.prod {a b : σ → MvPowerSeries τ R}
   | zero => simpa using (Near.one : Near 0 (1 : MvPowerSeries τ R) 1)
   | add f g hf hg =>
     rw [Finsupp.prod_add_index' (by simp) (by simp [pow_add]),
-      Finsupp.prod_add_index' (by simp) (by simp [pow_add]), map_add]
+      Finsupp.prod_add_index' (by simp) (by simp [pow_add]), map_add (f := _)]
     exact hf.mul hg
   | single s n =>
     rw [Finsupp.prod_single_index (by simp), Finsupp.prod_single_index (by simp),

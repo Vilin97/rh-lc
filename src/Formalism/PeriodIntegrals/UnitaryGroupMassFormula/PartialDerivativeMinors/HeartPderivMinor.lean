@@ -24,7 +24,7 @@ def heartKer : Subring A where
   add_mem' := by
     intro a b ha hb
     simp only [Set.mem_ofPred_eq] at *
-    rw [map_add, ha, hb, add_zero]
+    rw [map_add (f := _), ha, hb, add_zero]
   zero_mem' := D.map_zero
   neg_mem' := by
     intro a ha

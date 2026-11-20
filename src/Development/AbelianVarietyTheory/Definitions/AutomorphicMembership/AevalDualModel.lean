@@ -54,7 +54,7 @@ theorem aeval_dual_model {σ : Type} [Fintype σ] {R : Type} [CommRing R] (x a :
   classical
   induction p using MvPolynomial.induction_on with
   | C c => ext <;> simp
-  | add p q hp hq => rw [map_add, hp, hq]; ext <;> simp [add_mul, Finset.sum_add_distrib]
+  | add p q hp hq => rw [map_add (f := _), hp, hq]; ext <;> simp [add_mul, Finset.sum_add_distrib]
   | mul_X p i hp =>
     rw [map_mul, hp]
     ext
@@ -74,7 +74,7 @@ private lemma aeval_dualNumber_inl_add_inr {σ : Type} [Fintype σ] {R : Type} [
   induction p using MvPolynomial.induction_on with
   | C a => ext <;> simp
   | add p q hp hq =>
-    rw [map_add, hp, hq]
+    rw [map_add (f := _), hp, hq]
     ext <;> simp [Finset.sum_add_distrib, add_mul]
   | mul_X p v hp =>
     rw [map_mul, hp, aeval_X]

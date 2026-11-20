@@ -107,11 +107,11 @@ theorem pairB_mB (m : V →ₗ[LL] U →ₗ[LL] W) (b : B) (x : V ⊗[Qp] B) (y 
     pairB Qp B m x (mB LL b y) = mB LL b (pairB Qp B m x y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, LinearMap.add_apply, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), LinearMap.add_apply, ha, hc]
   | tmul v c =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
     | tmul v' c' => simp [mul_left_comm]
 
 theorem act_pairB {ρ : Representation LL G V} {σ : Representation LL G U} {τ : Representation LL G W}
@@ -120,11 +120,11 @@ theorem act_pairB {ρ : Representation LL G V} {σ : Representation LL G U} {τ 
     pairB Qp B m (actVB PD ρ g x) (actVB PD σ g y) = actVB PD τ g (pairB Qp B m x y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, LinearMap.add_apply, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), LinearMap.add_apply, ha, hc]
   | tmul v c =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
     | tmul v' c' => simp [actVB, hm]
 
 theorem pairB_sep [FiniteDimensional LL U] {m : V →ₗ[LL] U →ₗ[LL] W} (hm : Function.Injective m)
@@ -145,7 +145,7 @@ theorem pairB_sep [FiniteDimensional LL U] {m : V →ₗ[LL] U →ₗ[LL] W} (hm
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add a c ha hc => simp only [map_add, LinearMap.add_apply, Finset.sum_add_distrib, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib, ha, hc]
     | tmul v c => simp [tensorB, ← TensorProduct.sum_tmul, hs]
   rw [← key x]
   simp [hx]
@@ -154,7 +154,7 @@ theorem actVB_mul (ρ : Representation LL G V) (g h : G) (x : V ⊗[Qp] B) :
     actVB PD ρ (g * h) x = actVB PD ρ g (actVB PD ρ h x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), ha, hc]
   | tmul v c => simp [actVB]
 
 theorem isCrys_of_pair [IsDomain B] [FiniteDimensional Qp LL] [FiniteDimensional LL V] [FiniteDimensional LL U]
@@ -181,7 +181,7 @@ theorem tate_twist_multiplication_intertwines (g : G) (x : LL ⊗[Qp] B) :
       mB LL PD.t (actVB PD (WeaklyAdmissibleFiltrations.charRep (cycLL PD LL)) g x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), ha, hc]
   | tmul v c =>
     simp [actVB, PD.t_act, WeaklyAdmissibleFiltrations.charRep, cycLL, ← Algebra.smul_def, smul_tmul]
 
@@ -231,7 +231,7 @@ theorem actVB_resH (ρ : Representation LL G V) (h : PC.H) (x : V ⊗[Qp] B) :
     actVB PC.PD' (PC.resH ρ) h x = actVB PC.PD ρ h x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), ha, hc]
   | tmul v c => simp [actVB, PC.actB_eq, PotCrysData.resH]
 
 theorem mem_Dpcris (ρ : Representation LL G V) (x : V ⊗[Qp] B) :
@@ -297,7 +297,7 @@ theorem inertia_of_pair [FiniteDimensional LL V] [FiniteDimensional LL U] [Finit
     refine pairB_sep hi x fun y => ?_
     induction y using cmp_ind PC.PD' (comparison_bijective PC.PD' hf hu _ hσ) with
     | h0 => simp
-    | hadd y y' h h' => rw [map_add, h, h', add_zero]
+    | hadd y y' h h' => rw [map_add (f := _), h, h', add_zero]
     | hb b d => rw [pairB_mB, h1 d.2, map_zero]
 
 theorem inertia_cyc (hf : FracInv PC.PD') (hu : LineUnit PC.PD') :
@@ -322,7 +322,7 @@ theorem inertia_cyc (hf : FracInv PC.PD') (hu : LineUnit PC.PD') :
   clear hy
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add a c ha hc => simp only [map_add, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), ha, hc]
   | tmul v c => simp [actVB, g.2 c]
 
 theorem inertia_twist [FiniteDimensional LL V] [FiniteDimensional LL W]

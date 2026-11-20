@@ -48,7 +48,7 @@ lemma coefX_add (F : FlagG S r T) (a : Fin r) {x y : S.V} (hx : x ∈ F.X) (hy :
     F.coefX (x + y) a = F.coefX x a + F.coefX y a := by
   obtain ⟨l, rfl⟩ := exists_linearCombination_eq_of_mem_flagX F hx
   obtain ⟨m, rfl⟩ := exists_linearCombination_eq_of_mem_flagX F hy
-  rw [← map_add, coefX_linearCombination_eq, coefX_linearCombination_eq, coefX_linearCombination_eq, Finsupp.add_apply]
+  rw [← map_add (f := _), coefX_linearCombination_eq, coefX_linearCombination_eq, coefX_linearCombination_eq, Finsupp.add_apply]
 
 lemma coefX_smul (F : FlagG S r T) (a : Fin r) (c : E) {x : S.V} (hx : x ∈ F.X) :
     F.coefX (c • x) a = c * F.coefX x a := by

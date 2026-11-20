@@ -47,7 +47,7 @@ theorem UpperTheory.geometric_side_comparison :
       obtain ⟨y, hy, rfl⟩ := Finset.mem_image.mp hb
       refine Finset.mem_image.mpr ⟨x + y, ?_, map_add φ x y⟩
       simp only [hF, hH, Set.Finite.mem_toFinset, Set.mem_setOf_eq] at hx hy ⊢
-      rw [map_add]
+      rw [map_add (f := _)]
       calc ‖φ x + φ y‖ ≤ ‖φ x‖ + ‖φ y‖ := norm_add_le _ _
         _ < 1 := by linarith
     have hle := Finset.card_le_card hsub

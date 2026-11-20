@@ -84,7 +84,7 @@ theorem mem_latV_of_hatL : ∀ (D : D7) (S : HSp D) (L : Lat S) (P : Pl D → Pr
       rw [cut_tmul, one_mul]
   · rw [map_zero]; exact zero_mem _
   · intro a b _ _ ha hb
-    rw [map_add]; exact add_mem ha hb
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   · intro a _ ha
     rw [map_neg]; exact neg_mem ha
 

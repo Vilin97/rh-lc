@@ -54,7 +54,7 @@ theorem ιTwo_self (a : M) : ιTwo (R := R) a a = 0 := by
 
 theorem ιTwo_swap (a b : M) : ιTwo (R := R) b a = -ιTwo a b := by
   have h := ιTwo_self (R := R) (a + b)
-  simp only [map_add, LinearMap.add_apply, ιTwo_self, zero_add, add_zero] at h
+  simp only [map_add (f := _), LinearMap.add_apply, ιTwo_self, zero_add, add_zero] at h
   exact eq_neg_of_add_eq_zero_left h
 
 theorem sum_sum_ιTwo_of_symm {n : ℕ} (x : Fin n → M) (c : Fin n → Fin n → R)

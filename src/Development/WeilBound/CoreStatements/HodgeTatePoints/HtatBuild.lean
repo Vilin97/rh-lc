@@ -47,7 +47,7 @@ theorem chart_build : ∀ (A K : Type) [CommRing A] [IsDomain A] [Field K] [Alge
       rw [IsBaseChange.equiv_tmul]
       exact Submodule.smul_mem _ s (Submodule.subset_span ⟨w, rfl⟩)
     | add x y hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
   have hproj : Module.Projective A (LinearMap.range j) :=
     Module.Projective.of_equiv (LinearEquiv.ofInjective j hinjj)
@@ -70,6 +70,6 @@ theorem chart_build : ∀ (A K : Type) [CommRing A] [IsDomain A] [Field K] [Alge
     obtain ⟨y, hy⟩ := hlin a x
     refine ⟨j y, ⟨y, rfl⟩, ?_⟩
     show j (h (a • x)) = ρΩ a (j (h x)) + p ^ R • j y
-    rw [hy, map_add, map_nsmul, hρ]
+    rw [hy, map_add (f := _), map_nsmul, hρ]
 
 end PositivityTheory.HtPt.Htat

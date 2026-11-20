@@ -759,7 +759,7 @@ theorem KG.loc {i : ℕ} {s : ℝ} (h : KG M w i s) (z : (M.lat i).V) (hz : z �
   | add x y _ _ hx hy =>
     obtain ⟨y1, e1, v1⟩ := hx
     obtain ⟨y2, e2, v2⟩ := hy
-    exact ⟨y1 + y2, by rw [map_add, map_add, e1, e2]; exact ((C.Klin i).map_add _ _).symm, VGe.add v1 v2⟩
+    exact ⟨y1 + y2, by rw [map_add (f := _), map_add (f := _), e1, e2]; exact ((C.Klin i).map_add _ _).symm, VGe.add v1 v2⟩
   | smul r x _ hx =>
     obtain ⟨y1, e1, v1⟩ := hx
     refine ⟨(r : D.what₂.LL) • y1, ?_, ?_⟩
@@ -798,7 +798,7 @@ theorem base_map_mem_local_lattice (T : TwForms D) (u : D.what₂.Word) (μ : D.
   induction hx2 using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ((T.twist_preserves_base_lattice u μ x).1 hx)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul r x _ hx =>
     rw [Subring.smul_def, map_smul]
     exact Submodule.smul_mem _ r hx
@@ -1600,7 +1600,7 @@ theorem eMu0_symm_loc (T : TwForms D) (u : D.what₂.Word) (w : D.what₂.places
   | mem x hx =>
     exact Submodule.subset_span ((T.eMu0_lat u j hj _).2 (by rw [LinearEquiv.apply_symm_apply]; exact hx))
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul r x _ hx =>
     rw [Subring.smul_def, map_smul]
     exact Submodule.smul_mem _ r hx

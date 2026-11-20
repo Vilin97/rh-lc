@@ -23,7 +23,7 @@ theorem bidual_comp_dualHom_eq_neg : ∀ {E : Type} [Field E] [NumberField E] [I
   intro x y n
   have hskew : Dw.EF y x = -Dw.EF x y := by
     have h := Dw.alt (x + y)
-    simp only [map_add, LinearMap.add_apply, Dw.alt x, Dw.alt y, zero_add, add_zero] at h
+    simp only [map_add (f := _), LinearMap.add_apply, Dw.alt x, Dw.alt y, zero_add, add_zero] at h
     omega
   have hL : pairing GG k (tau tw I x) (tateMap GG GG.dual k (GG.bidual.hom ≫ dualHom GG GG.dual φ) (tau tw I y))
       = pairing GG k (tau tw I y) (tateMap GG GG.dual k φ (tau tw I x)) := by

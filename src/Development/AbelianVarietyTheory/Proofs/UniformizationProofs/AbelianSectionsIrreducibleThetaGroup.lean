@@ -34,7 +34,7 @@ theorem irreducible_of_ringEquiv (F : Type) [Field F] [IsAlgClosed F] (R : Type)
     { carrier := {v | j v ∈ U}
       add_mem' := fun {a b} ha hb => by
         show j (a + b) ∈ U
-        rw [map_add]; exact U.add_mem ha hb
+        rw [map_add (f := _)]; exact U.add_mem ha hb
       zero_mem' := by
         show j 0 ∈ U
         rw [map_zero]; exact U.zero_mem

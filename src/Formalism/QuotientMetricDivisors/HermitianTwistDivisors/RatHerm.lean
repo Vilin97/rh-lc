@@ -224,7 +224,7 @@ theorem jwGram_of (hIC : IdxChange) : JwGram := by
         · exact Submodule.mem_one.mpr ⟨1, map_one _⟩
         · exact Submodule.zero_mem _
       | zero => rw [map_zero, LinearMap.zero_apply]; exact Submodule.zero_mem _
-      | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply]; exact Submodule.add_mem _ hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply]; exact Submodule.add_mem _ hx hy
       | smul r x _ hx =>
         rw [Formalism.HermitianLatticesTheory.locDual_h_smul_left]
         exact hone _ hx r

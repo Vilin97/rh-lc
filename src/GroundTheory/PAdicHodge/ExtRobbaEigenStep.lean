@@ -82,7 +82,7 @@ theorem twistFrob_add {τ : Set.Ioo (0 : ℝ) 1} (hτ : ((F.powRadius τ : Set.I
     (w w' : Fin n → T.RobbaExt τ) :
     F.twistFrob A N τ hτ (w + w') = F.twistFrob A N τ hτ w + F.twistFrob A N τ hτ w' := by
   funext i
-  simp only [twistFrob, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [twistFrob, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem twistFrob_neg {τ : Set.Ioo (0 : ℝ) 1} (hτ : ((F.powRadius τ : Set.Ioo (0 : ℝ) 1) : ℝ) ≤ ρ)
     (w : Fin n → T.RobbaExt τ) : F.twistFrob A N τ hτ (-w) = -F.twistFrob A N τ hτ w := by
@@ -307,7 +307,7 @@ theorem exists_solve_approx (ha : 0 < F.a) {ρ : Set.Ioo (0 : ℝ) 1}
       simp only [Pi.add_apply, Pi.neg_apply, hwdef, res_ofAll]
     have e1 : T.res (F.powRadius_le_self ρ) (z i) = -T.ofAll (ys i) (hys i) (F.powRadius ρ) +
         T.res (hσρ.trans hρr) (F.untwist A' N w i) := by
-      simp only [hzdef, map_add, map_neg, res_ofAll, res_res]
+      simp only [hzdef, map_add (f := _), map_neg, res_ofAll, res_res]
     have e2 : T.ofAll (y i) (hy i) (F.powRadius ρ) = T.ofAll (ys i) (hys i) (F.powRadius ρ) +
         T.ofAll (yb i) (hyb i) (F.powRadius ρ) := by
       rw [← ofAll_add]; exact ofAll_congr _ _ (T.smallPart_add_bigPart θ (y i)).symm _

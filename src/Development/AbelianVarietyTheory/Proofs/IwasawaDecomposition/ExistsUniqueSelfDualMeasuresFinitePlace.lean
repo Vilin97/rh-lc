@@ -239,7 +239,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem sigR_smul (c : R) (z : R ⊗[F] E) : sigR R σ (c • z) = c • sigR R σ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [smul_add, map_add, ha, hb]
+  | add a b ha hb => simp only [smul_add, map_add (f := _), ha, hb]
   | tmul a e => rfl
 
 noncomputable def bilin (n : ℕ) : LinearMap.BilinForm R (Fin n → Fin M → R ⊗[F] E) :=

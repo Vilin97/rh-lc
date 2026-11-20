@@ -31,7 +31,7 @@ theorem span_one_tmul_eq_top (S B : Type) [CommRing S] [CommRing B] [Algebra S B
     have : s ⊗ₜ[A₀] b = s • ((1 : S) ⊗ₜ[A₀] b) := by rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     rw [this, map_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨b, rfl⟩)
-  | add x z hx hz => rw [map_add]; exact add_mem hx hz
+  | add x z hx hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hz
 
 theorem fg_le_member {R S : Type} [CommRing R] [CommRing S] [Algebra R S] {ι : Type} [Preorder ι]
     [IsDirected ι (· ≤ ·)] [Nonempty ι] (Si : ι → Subalgebra R S) (hmono : Monotone Si)

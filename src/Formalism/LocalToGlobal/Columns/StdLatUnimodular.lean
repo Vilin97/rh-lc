@@ -256,7 +256,7 @@ theorem Deco.Ok.act {d : Deco E n ST SG} (hd : d.Ok) {ga : Sp E n ≃ₗ[E] Sp E
     rw [dual_gmap ga hga, hd.uni]
   f_add P x hx y hy := by
     change d.f P (ga.symm (x + y)) = _
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hd.f_add P _ ((mem_localization_gmap _ _ _ _).1 hx) _ ((mem_localization_gmap _ _ _ _).1 hy)
   f_smul P a x hx := by
     change d.f P (ga.symm (a • x)) = _
@@ -270,7 +270,7 @@ theorem Deco.Ok.act {d : Deco E n ST SG} (hd : d.Ok) {ga : Sp E n ≃ₗ[E] Sp E
     simpa using hne
   be_add w x hx y hy := by
     change (h w).1.mulVec (d.be w (ga.symm (x + y))) = _
-    rw [map_add, hd.be_add w _ ((mem_localization_gmap _ _ _ _).1 hx) _ ((mem_localization_gmap _ _ _ _).1 hy),
+    rw [map_add (f := _), hd.be_add w _ ((mem_localization_gmap _ _ _ _).1 hx) _ ((mem_localization_gmap _ _ _ _).1 hy),
       Matrix.mulVec_add]
     rfl
   be_smul w a x hx := by
@@ -410,7 +410,7 @@ theorem reduction_spec (P : HeightOneSpectrum (𝓞 E)) {a : E} {r s : 𝓞 E} (
   have e : s * r' = s' * r := by
     apply RingOfIntegers.ext
     change algebraMap (𝓞 E) E (s * r') = algebraMap (𝓞 E) E (s' * r)
-    simp only [map_mul, map_add]
+    simp only [map_mul, map_add (f := _)]
     rw [← h', ← h]
     ring
   apply mul_left_cancel₀ (mk_ne_zero hs')
@@ -440,7 +440,7 @@ theorem IntAt.add {P : HeightOneSpectrum (𝓞 E)} {a b : E} (ha : IntAt P a) (h
   obtain ⟨r, s, hs, h⟩ := ha
   obtain ⟨r', s', hs', h'⟩ := hb
   refine ⟨s' * r + s * r', s * s', fun hm => (P.isPrime.mem_or_mem hm).elim hs hs', ?_⟩
-  simp only [map_mul, map_add]
+  simp only [map_mul, map_add (f := _)]
   rw [← h, ← h']
   ring
 
@@ -449,7 +449,7 @@ theorem IntAt.mul {P : HeightOneSpectrum (𝓞 E)} {a b : E} (ha : IntAt P a) (h
   obtain ⟨r, s, hs, h⟩ := ha
   obtain ⟨r', s', hs', h'⟩ := hb
   refine ⟨r * r', s * s', fun hm => (P.isPrime.mem_or_mem hm).elim hs hs', ?_⟩
-  simp only [map_mul, map_add]
+  simp only [map_mul, map_add (f := _)]
   rw [← h, ← h']
   ring
 
@@ -459,10 +459,10 @@ theorem reduction_add {P : HeightOneSpectrum (𝓞 E)} {a b : E} (ha : IntAt P a
   obtain ⟨r', s', hs', h'⟩ := hb
   refine redP_eq P (r := s' * r + s * r') (s := s * s')
     (fun hm => (P.isPrime.mem_or_mem hm).elim hs hs') ?_ ?_
-  · simp only [map_mul, map_add]
+  · simp only [map_mul, map_add (f := _)]
     rw [← h, ← h']
     ring
-  · rw [map_add, map_mul, map_mul, map_mul, ← reduction_spec P hs h, ← reduction_spec P hs' h']
+  · rw [map_add (f := _), map_mul, map_mul, map_mul, ← reduction_spec P hs h, ← reduction_spec P hs' h']
     ring
 
 theorem reduction_mul {P : HeightOneSpectrum (𝓞 E)} {a b : E} (ha : IntAt P a) (hb : IntAt P b) :
@@ -471,7 +471,7 @@ theorem reduction_mul {P : HeightOneSpectrum (𝓞 E)} {a b : E} (ha : IntAt P a
   obtain ⟨r', s', hs', h'⟩ := hb
   refine redP_eq P (r := r * r') (s := s * s')
     (fun hm => (P.isPrime.mem_or_mem hm).elim hs hs') ?_ ?_
-  · simp only [map_mul, map_add]
+  · simp only [map_mul, map_add (f := _)]
     rw [← h, ← h']
     ring
   · rw [map_mul, map_mul, ← reduction_spec P hs h, ← reduction_spec P hs' h']

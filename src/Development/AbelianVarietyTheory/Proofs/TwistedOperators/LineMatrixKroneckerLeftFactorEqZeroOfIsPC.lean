@@ -24,7 +24,7 @@ theorem plusPart_add (U D : Module.End ℂ (MvPolynomial σ ℂ))
       U (homogeneousComponent d P) := by
     intro d
     have hm := homogeneousComponent_mem d P
-    rw [LinearMap.add_apply, map_add, homogeneousComponent_of_mem (hU d _ hm),
+    rw [LinearMap.add_apply, map_add (f := _), homogeneousComponent_of_mem (hU d _ hm),
       homogeneousComponent_of_mem (hD d _ hm), if_pos rfl, if_neg (by omega), add_zero]
   unfold plusPart
   simp only [h]
@@ -46,7 +46,7 @@ theorem minusPart_add (U D : Module.End ℂ (MvPolynomial σ ℂ))
       D (homogeneousComponent (d + 2) P) := by
     intro d
     have hm := homogeneousComponent_mem (d + 2) P
-    rw [LinearMap.add_apply, map_add, homogeneousComponent_of_mem (hU _ _ hm),
+    rw [LinearMap.add_apply, map_add (f := _), homogeneousComponent_of_mem (hU _ _ hm),
       homogeneousComponent_of_mem (hD _ _ hm), if_neg (by omega), if_pos (by omega), zero_add]
   unfold minusPart
   simp only [h]
@@ -118,10 +118,10 @@ theorem inner_X_mul [DecidableEq σ] {H : Type} [NormedAddCommGroup H] [InnerPro
   have hm : ∀ (α : σ →₀ ℕ) (c : ℂ), (monomial α c : MvPolynomial σ ℂ) = c • monomial α 1 := by
     intro α c; rw [smul_monomial]; simp
   induction P using MvPolynomial.induction_on' with
-  | add P P' h h' => simp only [mul_add, map_add, inner_add_left, h, h']
+  | add P P' h h' => simp only [mul_add, map_add (f := _), inner_add_left, h, h']
   | monomial α a =>
     induction Q using MvPolynomial.induction_on' with
-    | add Q Q' h h' => simp only [map_add, inner_add_right, h, h']
+    | add Q Q' h h' => simp only [map_add (f := _), inner_add_right, h, h']
     | monomial β b =>
       rw [hm α a, hm β b, mul_smul_comm, Derivation.map_smul]
       simp only [map_smul, inner_smul_left, inner_smul_right, key]

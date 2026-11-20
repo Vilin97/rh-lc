@@ -10,7 +10,7 @@ theorem card_fibre {K V U : Type} [Field K] [Fintype K] [AddCommGroup V] [Module
     Nat.card {x : V // φ x = a} = Fintype.card K ^ finrank K (LinearMap.ker φ) := by
   have e : {x : V // φ x = a} ≃ LinearMap.ker φ :=
     { toFun := fun x => ⟨x.1 - x0, by rw [LinearMap.mem_ker, map_sub, x.2, hx0, sub_self]⟩
-      invFun := fun y => ⟨y.1 + x0, by rw [map_add, LinearMap.mem_ker.mp y.2, zero_add, hx0]⟩
+      invFun := fun y => ⟨y.1 + x0, by rw [map_add (f := _), LinearMap.mem_ker.mp y.2, zero_add, hx0]⟩
       left_inv := fun x => Subtype.ext (sub_add_cancel _ _)
       right_inv := fun y => Subtype.ext (add_sub_cancel_right _ _) }
   haveI : Finite V := Module.finite_of_finite K
@@ -33,7 +33,7 @@ theorem card_fibre_compl {K V U : Type} [Field K] [Fintype K] [AddCommGroup V] [
   let ψ : (Fin k → K) →ₗ[K] U :=
     { toFun := fun c => φ (∑ j, c j • z j)
       map_add' := fun c d => by
-        simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add]
+        simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add (f := _)]
       map_smul' := fun t c => by
         simp only [Pi.smul_apply, smul_eq_mul, mul_smul, ← Finset.smul_sum, map_smul,
           RingHom.id_apply] }

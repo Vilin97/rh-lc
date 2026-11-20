@@ -94,7 +94,7 @@ theorem algVec_correspond : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : 
     | add p q hp hq =>
       obtain ⟨a, ha, h1⟩ := hp
       obtain ⟨b, hb, h2⟩ := hq
-      exact ⟨a + b, add_mem ha hb, by rw [map_add]; exact hadd h1 h2⟩
+      exact ⟨a + b, add_mem ha hb, by rw [map_add (f := _)]; exact hadd h1 h2⟩
   have fin_mem : ∀ f, IsFinF ψ θ ε A B f → f ∈ algF ψ θ ε A B := by
     intro f hf
     refine Submodule.subset_span ⟨f, 1, hf, ?_⟩

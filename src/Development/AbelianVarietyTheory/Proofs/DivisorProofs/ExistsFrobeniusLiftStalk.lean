@@ -58,6 +58,6 @@ theorem exists_frobLift_stalk_of_etCoord :
     refine ⟨_, ⟨w, rfl⟩, ?_⟩
     have := congrArg (· a) hc
     simp only [RingHom.comp_apply] at this
-    rw [this, hw, map_add, map_mul, map_pow, map_natCast]
+    rw [this, hw, map_add (f := _), map_mul, map_pow, map_natCast]
 
 end GlobalTheory.DI

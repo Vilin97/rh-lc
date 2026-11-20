@@ -55,7 +55,7 @@ theorem cas_mem_of_qdet_mem {A : Type} [Ring A] [Algebra ℂ A] (S : Subalgebra 
         rw [hR] at h1
         have e : f 1 = 0 := hf 1 (Subalgebra.one_mem _)
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [map_add, map_sum, map_smul, smul_eq_mul, add_sub_assoc] at h1
+          simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, add_sub_assoc] at h1
         simp only [e, mul_zero] at h1 ⊢
         exact h1)
   have hT : ∑ i, E i i ∈ S := by

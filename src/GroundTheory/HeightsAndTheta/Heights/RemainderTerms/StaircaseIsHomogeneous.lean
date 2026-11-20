@@ -69,7 +69,7 @@ theorem eval_top (f j k : ℕ) (L : IndefiniteRowSideFullHecke.RestTerms.Roots f
     split_ifs with h
     · exact hL m b (Q m b) hm1 (by omega) (hQ m b)
     · exact map_zero L
-  calc L G = L (G - C c * s) + L (C c * s) := by rw [← map_add, sub_add_cancel]
+  calc L G = L (G - C c * s) + L (C c * s) := by rw [← map_add (f := _), sub_add_cancel]
     _ = c * L s := by rw [hzero, zero_add, C_mul', map_smul, smul_eq_mul]
 
 end FlagProportional

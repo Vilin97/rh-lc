@@ -44,7 +44,7 @@ theorem ev_sigR (hc : CMData 𝔽 E) (v : HeightOneSpectrum (𝓞 𝔽)) (z : �
     ev v (Formalism.UG.sigR hc.sig (Formalism.L2.Herm.Af 𝔽) z) = locConj v (ev v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x a => rfl
 
 theorem ev_mem (v : HeightOneSpectrum (𝓞 𝔽)) {z : 𝔸} (hz : z ∈ 𝕆) : ev v z ∈ locOrder v := by
@@ -126,7 +126,7 @@ theorem ev_mem_locLattice (v : HeightOneSpectrum (𝓞 𝔽)) {Λ : Submodule (�
   · simp only [Pi.zero_apply, map_zero]
     exact zero_mem _
   · intro a b _ _ ha hb
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     exact add_mem ha hb
   · intro c a _ ha
     have := smul_mem_locLattice v (ev_mem v c.2) ha

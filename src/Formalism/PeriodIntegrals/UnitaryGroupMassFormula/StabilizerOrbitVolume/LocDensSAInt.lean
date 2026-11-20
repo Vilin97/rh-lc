@@ -28,7 +28,7 @@ private theorem exists_mul_integers_of_fg {F : Type} [Field F] [NumberField F]
     { carrier := {a | ∃ r : 𝓞 F, algebraMap (𝓞 F) F b * a = algebraMap (𝓞 F) F r}
       add_mem' := by
         rintro a a' ⟨r, hr⟩ ⟨r', hr'⟩
-        exact ⟨r + r', by rw [mul_add, hr, hr', map_add]⟩
+        exact ⟨r + r', by rw [mul_add, hr, hr', map_add (f := _)]⟩
       zero_mem' := ⟨0, by rw [mul_zero, map_zero]⟩
       smul_mem' := by
         rintro n a ⟨r, hr⟩
@@ -52,7 +52,7 @@ private theorem fg_of_addHom_intValued {F : Type} [Field F] [NumberField F] (Λ 
   classical
   let φ : F →ₗ[ℤ] (Module.Free.ChooseBasisIndex ℤ (𝓞 F) → ℂ) :=
     { toFun := fun y i => g (integralBasis F i * y)
-      map_add' := fun y y' => by funext i; simp only [mul_add, map_add, Pi.add_apply]
+      map_add' := fun y y' => by funext i; simp only [mul_add, map_add (f := _), Pi.add_apply]
       map_smul' := fun n y => by
         funext i; simp only [mul_smul_comm, map_zsmul, RingHom.id_apply, Pi.smul_apply] }
   let ψ : (Module.Free.ChooseBasisIndex ℤ (𝓞 F) → ℤ) →ₗ[ℤ]

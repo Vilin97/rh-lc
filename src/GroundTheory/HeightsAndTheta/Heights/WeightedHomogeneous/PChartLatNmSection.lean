@@ -123,9 +123,9 @@ def theta (hP : P.ideal = Geo.mCoordIdeal (ι := blockIdx n) y)
     rw [thetaFun_eq P y hP hb hg hq hq0 he, thetaFun_eq P y hP hb hg' hq' hq0' he',
       thetaFun_eq P y hP hb ((hg.mul hq').add h2) (hq.mul hq')
         (by rw [map_mul]; exact mul_ne_zero hq0 hq0')
-        (by simp only [map_add, map_mul]; rw [he, he']; ring)]
+        (by simp only [map_add (f := _), map_mul]; rw [he, he']; ring)]
     rw [div_add_div _ _ hQ0 hQ0']
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     ring
 
 theorem mkF_X_ne_zero (hP : P.ideal = Geo.mCoordIdeal (ι := blockIdx n) y) (c : (k : ι) → Fin (n k + 1))
@@ -227,7 +227,7 @@ theorem theta_mem_chartRing (c : (k : ι) → Fin (n k + 1)) (hc : ∀ k, y ⟨k
     rw [eq_intCast, map_intCast]
     exact intCast_mem _ r
   | add u v _ _ hu hv =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hu hv
   | mul u v _ _ hu hv =>
     rw [map_mul]

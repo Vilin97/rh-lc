@@ -71,7 +71,7 @@ theorem UpperTheory.V.AlgRepEndIrreducible.lowLine :
       ring
     · simp
     · intro x y hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
   let P : Submodule ℂ V := (ℂ ∙ v) ⊔ M
   have hvP : v ∈ P := Submodule.mem_sup_left (Submodule.mem_span_singleton_self v)
@@ -79,7 +79,7 @@ theorem UpperTheory.V.AlgRepEndIrreducible.lowLine :
     intro t i j hji x hx
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hx
     obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.mp hy
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
     refine Submodule.mem_sup_right (add_mem (Submodule.smul_mem _ _ ?_) (hFM t i j hji z hz))
     obtain ⟨d, hd⟩ := hdist i j hji
     refine (le_iSup (fun k : ℕ => H.eigenspace (l0 + ((k : ℂ) + 1))) d) ?_

@@ -117,7 +117,7 @@ theorem proof (h : HermitianForm F E W) (v : Basis ι E W) (h0 : RationalUnipote
   have hcre : ∀ w : InfinitePlace E, (w.embedding ((m : E) * a)).re = 0 := by
     intro w
     have e := congrArg w.embedding ha
-    rw [map_add, embedding_conj (F := F) w.embedding, map_zero, Complex.add_conj] at e
+    rw [map_add (f := _), embedding_conj (F := F) w.embedding, map_zero, Complex.add_conj] at e
     have e2 := congrArg Complex.re e
     simp only [Complex.ofReal_re, Complex.zero_re, mul_eq_zero, two_ne_zero, false_or] at e2
     exact e2
@@ -139,7 +139,7 @@ theorem proof (h : HermitianForm F E W) (v : Basis ι E W) (h0 : RationalUnipote
     have hdec : z = h.toSesq w₀ z • x₀ + (z - h.toSesq w₀ z • x₀) := by abel
     show (γ : W ≃ₗ[E] W) z = z + (0 : E) • x₀
     conv_lhs => rw [hdec]
-    rw [map_add, map_smul, hγx', e, zero_smul, add_zero]
+    rw [map_add (f := _), map_smul, hγx', e, zero_smul, add_zero]
     abel
   have hδN : archEmbed h v γ ∈ unipRadical h v x₀ := h4 x₀ γ hγx hγN
   refine ⟨⟨archEmbed h v γ, hδN⟩, ⟨⟨γ, hγLa⟩, hγx, rfl⟩, ?_⟩

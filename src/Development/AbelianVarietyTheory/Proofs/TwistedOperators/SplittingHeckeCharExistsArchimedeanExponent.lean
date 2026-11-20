@@ -46,9 +46,9 @@ theorem ext_of_chart {σ : (D.what₂.Tau → ℂ) →+ AE D} (h : GlobalTheory.
 theorem exists_real_hom {σ : (D.what₂.Tau → ℂ) →+ AE D} (h : GlobalTheory.FockCompare.Chart θ σ) :
     ∃ e : (D.what₂.Tau → ℂ) →* AE D, Continuous e ∧ (∀ z, finPart D (e z) = 1) ∧
       ∀ z τ, θ τ (infPart D (e z)) = z τ := by
-  have a1 : ∀ z, finPart D (1 + σ (z - 1)) = 1 := fun z => by rw [RingHom.map_add, h.fin, add_zero, RingHom.map_one]
+  have a1 : ∀ z, finPart D (1 + σ (z - 1)) = 1 := fun z => by rw [RingHom.map_add (f := _), h.fin, add_zero, RingHom.map_one]
   have a2 : ∀ z τ, θ τ (infPart D (1 + σ (z - 1))) = z τ := fun z τ => by
-    rw [RingHom.map_add, RingHom.map_add, h.comp, RingHom.map_one, RingHom.map_one]; simp
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _), h.comp, RingHom.map_one, RingHom.map_one]; simp
   refine ⟨{ toFun := fun z => 1 + σ (z - 1)
             map_one' := by rw [sub_self, σ.map_zero, add_zero]
             map_mul' := fun z w => ext_of_chart h (by rw [RingHom.map_mul, a1, a1, a1, mul_one]) fun τ => by

@@ -324,7 +324,7 @@ theorem total_mem (hp : ∀ i, IsMonHom (pr i)) (H : AddSubgroup (FreeAbelianGro
   rw [v0, v1, v2, v3, v4, v5, show rosatiε 0 = 1 from rfl, show rosatiε 1 = -1 from rfl,
     show rosatiε 2 = -1 from rfl, show rosatiε 3 = -1 from rfl, show rosatiε 4 = 1 from rfl,
     show rosatiε 5 = 1 from rfl]
-  simp only [map_add, map_zsmul, one_smul, neg_smul, map_neg, mk_qf]
+  simp only [map_add (f := _), map_zsmul, one_smul, neg_smul, map_neg, mk_qf]
   have hm : ∀ (a b : T ⟶ A') (i : Fin r), (a * b) ≫ pr i = (a ≫ pr i) * (b ≫ pr i) := fun a b i => by
     have := hp i
     exact MonObj.mul_comp a b (pr i)

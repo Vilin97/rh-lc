@@ -60,7 +60,7 @@ theorem isPoly_Tm {n : ℕ} (E : Fin n → Fin n → B) (c : ℂ) (a b : Fin n) 
     IsPolyFun (fun u => Tm E (u - c) a b) := by
   unfold Tm
   by_cases h : a = b
-  · simp only [h, if_true, sub_eq_add_neg, map_add]
+  · simp only [h, if_true, sub_eq_add_neg, map_add (f := _)]
     exact (IsPolyFun.scalar.add (IsPolyFun.const _)).add (IsPolyFun.const _)
   · simp only [h, if_false]
     exact IsPolyFun.const _

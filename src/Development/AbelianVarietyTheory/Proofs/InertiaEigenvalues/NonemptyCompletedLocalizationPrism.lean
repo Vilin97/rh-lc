@@ -34,7 +34,7 @@ theorem locAway_iterate_sub_mem {l : ℕ} {A : Type} [CommRing A] (D : Delta l A
     have hl0 : ((l : A ⧸ Ideal.span {(l : A)})) = 0 := by
       rw [← map_natCast (Ideal.Quotient.mk (Ideal.span {(l : A)})), Ideal.Quotient.eq_zero_iff_mem]
       exact Ideal.mem_span_singleton_self _
-    rw [Function.iterate_succ_apply', D.φ_eq, map_add, map_mul, map_pow, ih, map_natCast, hl0, zero_mul,
+    rw [Function.iterate_succ_apply', D.φ_eq, map_add (f := _), map_mul, map_pow, ih, map_natCast, hl0, zero_mul,
       add_zero, map_pow, map_pow, ← pow_mul, pow_succ]
 
 theorem locAway_dvd_mod {l : ℕ} {A : Type} [CommRing A] (D : Delta l A) (f : A) (J : Ideal A)

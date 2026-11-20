@@ -153,7 +153,7 @@ theorem GlobalTheory.FormalAlg.towerCech_h1_uniform : ∀ (R : Type) [CommRing R
     have hyp := hcoc i j l
     have hz : rs (Y e).left hTi (C.ev e i (MvPolynomial.X l ^ N * F i j + MvPolynomial.X i ^ N * F j l -
         MvPolynomial.X j ^ N * F i l)) = 0 := by
-      simp only [map_add, map_sub, map_mul, map_pow, ev_X]
+      simp only [map_add (f := _), map_sub, map_mul, map_pow, ev_X]
       rw [h1, h2, h3]
       linear_combination (rs (Y e).left hTi (C.ρ e i j) ^ (k + 2 * N) * rs (Y e).left hTj (C.ρ e j l) ^ N) * e1 -
         rs (Y e).left hTi (C.ρ e i j) ^ (k + N) * e2 +

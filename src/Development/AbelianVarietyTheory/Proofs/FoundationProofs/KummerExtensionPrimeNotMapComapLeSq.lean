@@ -8,7 +8,7 @@ theorem kummer_aeval_mem_integralClosure {A₀ F E : Type} [CommRing A₀] [Fiel
     [Algebra F E] [Algebra A₀ E] [IsScalarTower A₀ F E] {x : E} (hx : IsIntegral A₀ x)
     (p : (integralClosure A₀ F)[X]) : IsIntegral A₀ (aeval x p) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add]; exact hp.add hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add hq
   | monomial n c =>
     rw [aeval_monomial]
     refine IsIntegral.mul ?_ (hx.pow n)
@@ -70,7 +70,7 @@ theorem kummer_dual_step (A₀ K₀ F E : Type) [CommRing A₀] [IsDomain A₀] 
     simp [hx, ← IsScalarTower.algebraMap_apply]
   obtain ⟨g, hg⟩ := hdvd
   have hder := congrArg (fun p => aeval x (derivative p)) hg
-  simp only [derivative_sub, derivative_X_pow, derivative_C, sub_zero, derivative_mul, map_add, map_mul,
+  simp only [derivative_sub, derivative_X_pow, derivative_C, sub_zero, derivative_mul, map_add (f := _), map_mul,
     minpoly.aeval, zero_mul, add_zero] at hder
   set d := aeval x (derivative (minpoly C x))
   let v : A₀ˣ := hN.unit * u

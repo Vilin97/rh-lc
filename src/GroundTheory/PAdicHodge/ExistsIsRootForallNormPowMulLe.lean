@@ -71,7 +71,7 @@ theorem exists_isRoot_forall_norm_pow_mul_le {g : F[X]} (hd : 0 < g.natDegree)
           ((S - T).map fun a => ‖a‖₊).prod :=
           mul_le_mul_of_nonneg_left hpow (by positivity)
       _ = (S.map fun a => ‖a‖₊).prod := by
-          rw [← Multiset.prod_add, ← Multiset.map_add, ← hsplitS]
+          rw [← Multiset.prod_add, ← Multiset.map_add (f := _), ← hsplitS]
   have hesymm : ‖S.esymm (d - j)‖₊ ≤ (S.map fun a => ‖a‖₊).prod / ‖s‖₊ ^ j := by
     rw [Multiset.esymm]
     refine nnnorm_multiset_sum_le_of_forall fun x hx => ?_

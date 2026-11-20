@@ -126,7 +126,7 @@ theorem isHolTo_expPt {m : ℂ → Λ →+ ℂ} (hm : ∀ x, Differentiable ℂ 
     refine AddMonoidAlgebra.induction_linear u ?_ ?_ ?_
     · simp
     · intro f g hf hg
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact hf.add hg
     · intro a c
       simp only [hψs]

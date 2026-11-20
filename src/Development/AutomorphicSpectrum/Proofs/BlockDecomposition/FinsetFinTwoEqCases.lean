@@ -806,7 +806,7 @@ def halfR (F E : Type) [Field F] [Field E] [Algebra F E] (R : Type) [CommRing R]
 
 theorem halfR_add [CharZero E] : halfR F E R + halfR F E R = 1 := by
   have h : (2⁻¹ : E) + 2⁻¹ = 1 := by norm_num
-  rw [halfR, ← map_add, h, map_one]
+  rw [halfR, ← map_add (f := _), h, map_one]
 
 theorem sigR_halfR (σ : E →ₐ[F] E) [CharZero E] : sigR R σ (halfR F E R) = halfR F E R := by
   rw [halfR, sigR_incl, map_inv₀, map_ofNat]
@@ -818,7 +818,7 @@ theorem exists_coord {σ : E →ₐ[F] E} [CharZero E] (h2 : Module.finrank F E 
     intro a b hab
     rw [Algebra.smul_def, Algebra.smul_def] at hab
     have h1 := congrArg σ hab
-    simp only [map_add, map_mul, AlgHom.commutes, map_one, hσδ, map_zero] at h1
+    simp only [map_add (f := _), map_mul, AlgHom.commutes, map_one, hσδ, map_zero] at h1
     have ha : (2 : E) * algebraMap F E a = 0 := by linear_combination hab + h1
     have ha0 : a = 0 := by simpa using ha
     subst ha0
@@ -850,7 +850,7 @@ theorem eq_tmul_of_skew {σ : E →ₐ[F] E} [CharZero E] (h2 : Module.finrank F
     ∃ b : R, t = b ⊗ₜ[F] δ := by
   obtain ⟨a, b, rfl⟩ := exists_tensor_coord R h2 hδ hσδ t
   refine ⟨b, ?_⟩
-  rw [map_add, HaarCoord.sigR_tmul, HaarCoord.sigR_tmul, map_one, hσδ, TensorProduct.tmul_neg] at ht
+  rw [map_add (f := _), HaarCoord.sigR_tmul, HaarCoord.sigR_tmul, map_one, hσδ, TensorProduct.tmul_neg] at ht
   have h0 : a ⊗ₜ[F] (1 : E) + a ⊗ₜ[F] (1 : E) = 0 := by linear_combination ht
   have h1 : a ⊗ₜ[F] (1 : E) = 0 := by
     have h3 := halfR_add (F := F) (E := E) R

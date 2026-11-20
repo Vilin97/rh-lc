@@ -157,7 +157,7 @@ theorem inner [FiniteDimensional K V] (F : FlagD H r) {Λ : Submodule (𝓞 K) V
       obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hw
       have e1 : H.B a x = 0 := by rw [← H.herm, (mem_perp_iff H S x).1 hp a ha, star_zero]
       have e2 : H.B b x = 0 := (mem_perp_iff H S b).1 (hZ b hb) x (hXS hx)
-      rw [map_add, LinearMap.add_apply, e1, e2, add_zero]
+      rw [map_add (f := _), LinearMap.add_apply, e1, e2, add_zero]
     · intro hx
       refine ⟨(mem_perp_iff H S x).2 fun v hv => ?_, hIX hx⟩
       rw [← H.herm, (hI x (hIX hx)).2 hx v (Submodule.mem_sup_left hv), star_zero]
@@ -286,7 +286,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
   refine ⟨a1, hsw ▸ b1, a2, hsw ▸ b2, ⟨(hermFramePairNormalForm_baseLattice_fg N).sup (fg_inf a1.1 fun x hx hxI => ?_), ?_⟩, ?_⟩
   · obtain ⟨w, hw, t, rfl⟩ := hdec x hx
     have h1 := z_X N.F _ hxI.1
-    rw [map_add, hL.1 w hw _ hzV, zero_add, LinearMap.map_smulₛₗ, show H.B N.F.z N.F.z = -N.F.T from N.F.zz,
+    rw [map_add (f := _), hL.1 w hw _ hzV, zero_add, LinearMap.map_smulₛₗ, show H.B N.F.z N.F.z = -N.F.T from N.F.zz,
       smul_eq_mul, mul_eq_zero, neg_eq_zero, map_eq_zero] at h1
     have ht : t = 0 := h1.resolve_right N.F.hT
     subst ht

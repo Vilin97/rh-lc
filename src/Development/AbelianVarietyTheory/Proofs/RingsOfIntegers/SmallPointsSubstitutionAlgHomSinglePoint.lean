@@ -87,7 +87,7 @@ def jetA (κ : Type) [Fintype κ] [DecidableEq κ] (m : ℕ) : MvPowerSeries κ 
   map_one' := FBIdJet.psJet_one m
   map_mul' := FBIdJet.psJet_mul m
   map_zero' := FrameBiextId.psJet_zero m
-  map_add' f g := by simp only [psJet, FBIdJet.psTrunc_eq, map_add]
+  map_add' f g := by simp only [psJet, FBIdJet.psTrunc_eq, map_add (f := _)]
   commutes' c := by
     have := RegularGerm.psJet_smul (κ := κ) m c 1
     rw [FBIdJet.psJet_one, _root_.mul_one] at this

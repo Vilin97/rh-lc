@@ -67,7 +67,7 @@ theorem rho_hat (P : Formalism.L2.DIV.Pl D.host.E) {x : Formalism.MainNotions.St
     obtain ⟨h3, h4⟩ := hb
     refine ⟨add_mem h1 h3, ?_⟩
     change rho P (⟨_, h1⟩ + ⟨_, h3⟩) = 0
-    rw [RingHom.map_add, h2, h4, add_zero]
+    rw [RingHom.map_add (f := _), h2, h4, add_zero]
   | neg a _ ha =>
     obtain ⟨h1, h2⟩ := ha
     refine ⟨neg_mem h1, ?_⟩
@@ -82,7 +82,7 @@ theorem hat_of_rho (P : Formalism.L2.DIV.Pl D.host.E) {x : Formalism.MainNotions
     AddSubgroup.subset_closure ⟨_, Ideal.absNorm_mem _, w, hw, by simp⟩
   obtain ⟨h1, h2⟩ := rho_hat P hN
   have e' : (⟨x, h⟩ : OhE D) = ⟨_, inc_int b⟩ + ⟨_, h1⟩ := Subtype.ext e
-  rw [e', RingHom.map_add, h2, add_zero, rho_inc, Ideal.Quotient.eq_zero_iff_mem] at h0
+  rw [e', RingHom.map_add (f := _), h2, add_zero, rho_inc, Ideal.Quotient.eq_zero_iff_mem] at h0
   rw [e]
   exact add_mem (AddSubgroup.subset_closure ⟨b, h0, 1, one_mem _, (mul_one _).symm⟩) hN
 
@@ -275,7 +275,7 @@ theorem om_vac_eq : ∀ {D : D7}, GlobalTheory.NormSum.Inp D → ∀ {δ t0 : �
     have c' := congrArg (Formalism.MainNotions.StandardLatticesGL3.sgA D) c
     rw [map_mul, map_mul, map_pow, map_natCast, map_natCast] at c'
     rw [mul_add, mul_add, c, c']
-  have hse : Formalism.MainNotions.StandardLatticesGL3.sgA D (ε + Formalism.MainNotions.StandardLatticesGL3.sgA D ε) = ε + Formalism.MainNotions.StandardLatticesGL3.sgA D ε := by rw [map_add, hss, add_comm]
+  have hse : Formalism.MainNotions.StandardLatticesGL3.sgA D (ε + Formalism.MainNotions.StandardLatticesGL3.sgA D ε) = ε + Formalism.MainNotions.StandardLatticesGL3.sgA D ε := by rw [map_add (f := _), hss, add_comm]
   generalize hη : Formalism.MainNotions.StandardLatticesGL3.sgA D ε = η at h2 h1' hss hm' hηO hz' hse
   have hee : (ε + η) * (ε + η) = ε + η := by linear_combination h1 + h1' + 2 * h2
   have hsf : Formalism.MainNotions.StandardLatticesGL3.sgA D (1 - (ε + η)) = 1 - (ε + η) := by rw [map_sub, map_one, hse]
@@ -315,7 +315,7 @@ theorem om_vac_eq : ∀ {D : D7}, GlobalTheory.NormSum.Inp D → ∀ {δ t0 : �
   obtain ⟨x, hx, hx1, hx2⟩ := exists_finIdl y
   have hU : IsUnitDet e (matE k) x := by
     refine ⟨hx.1, ?_, ?_⟩
-    · rw [hx1, hyv, hdet, RingHom.map_add, RingHom.map_sub, RingHom.map_mul, RingHom.map_one, hte]
+    · rw [hx1, hyv, hdet, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_mul, RingHom.map_one, hte]
     · rw [hx2, toE_int_iff, hyi]
       exact add_mem (sub_mem (one_mem _) hO) (mul_mem hO (GlobalTheory.NormSum.VacMove.sgA_mem D huO))
   have hsp := om_split P (GlobalTheory.CongSplitFactor.part_intG hee hse hfO hk) (fun q hq hi i j => by
@@ -329,7 +329,7 @@ theorem om_vac_eq : ∀ {D : D7}, GlobalTheory.NormSum.Inp D → ∀ {δ t0 : �
       rw [Units.val_mul, hdv]
       change (1 - ε) + ε * u = w * Formalism.MainNotions.StandardLatticesGL3.sgA D ((1 - ε) + ε * u)
       have hw : w = 1 - (ε + η) + (ε + η) * u := by linear_combination d1 + d2
-      rw [map_add, map_mul, map_sub, map_one, hη, hw]
+      rw [map_add (f := _), map_mul, map_sub, map_one, hη, hw]
       linear_combination (-η) * hn + (-1 + u + Formalism.MainNotions.StandardLatticesGL3.sgA D u - u * Formalism.MainNotions.StandardLatticesGL3.sgA D u) * (h1' + h2))
   have em := P.W.mul (GlobalTheory.CongSplitFactor.part hee hse k) (GlobalTheory.CongSplitFactor.part hff hsf k) 1 1 P.e0
     (GlobalTheory.NormSum.VacMove.vac_TT hI.g1 P.crv P.vac.1)

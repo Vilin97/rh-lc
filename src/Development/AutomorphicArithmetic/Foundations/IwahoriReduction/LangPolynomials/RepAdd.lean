@@ -96,12 +96,12 @@ theorem UpperTheory.Kd.C7.pRepAdd :
       have hs : Φ.ser (P i * P' i) = Φ.ser (P i) * Φ.ser (P' i) := by
         simp [Fr.ser, Polynomial.map_mul, Polynomial.eval₂_mul]
       have ht : Φ.tw m ((D + D') i) = Φ.tw m (D i) + Φ.tw m (D' i) := by
-        simp [Fr.tw, map_add]
+        simp [Fr.tw, map_add (f := _)]
       have e₁ := hPL i
       have e₂ := hPL' i
       unfold LC at e₁ e₂ ⊢
       dsimp only
-      rw [ht, hs, dl_mul_eq_add_of_isUnit hU hU', map_add, map_add]
+      rw [ht, hs, dl_mul_eq_add_of_isUnit hU hU', map_add (f := _), map_add (f := _)]
       have f₁ := Ideal.span_singleton_le_span_singleton.mpr (pow_dvd_pow _ hc₁) e₁
       have f₂ := Ideal.span_singleton_le_span_singleton.mpr (pow_dvd_pow _ hc₂) e₂
       convert Ideal.add_mem _ f₁ f₂ using 1

@@ -30,7 +30,7 @@ theorem Step.tensor_comp {I I₀ : Type} [Fintype I] [Fintype I₀] {g : ℕ} {D
       simp only [RingHom.coe_coe] at this
       simp [this, tmul_add, tmul_sum]
     | add x y hx hy =>
-      simp only [map_add, hx, hy, add_mul, Finset.sum_add_distrib]
+      simp only [map_add (f := _), hx, hy, add_mul, Finset.sum_add_distrib]
       abel
   simpa [hT] using key (Ta f)
 

@@ -27,7 +27,7 @@ theorem key₁ {B B' : Type} [CommRing B] [CommRing B'] {n : ℕ} (ρ : B →+* 
   have hs := Finset.sum_congr rfl (fun k (_ : k ∈ Finset.univ) => e k)
   simp only [Finset.sum_add_distrib] at hs
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum]
+    rw [map_add (f := _), map_sum]
   simp only [map_mul]
   linear_combination hs - h1
 
@@ -45,7 +45,7 @@ theorem key₂ {B B' : Type} [CommRing B] [CommRing B'] {n : ℕ} (ρ : B →+* 
   have hs := Finset.sum_congr rfl (fun k (_ : k ∈ Finset.univ) => e k)
   simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib] at hs
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum]
+    rw [map_add (f := _), map_sum]
   simp only [map_mul]
   linear_combination hs + h2 - h1
 
@@ -154,7 +154,7 @@ theorem hZ_rel (H : Bounds hp α β f) {T' : Pt sY} (τ : T ⟶ T') {X'' : Schem
     fun z => CoefMap.pullCohomologyOne_class _ _
   simp only [e1, e2]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [← LinearMap.map_smul, ← map_sum, ← map_sub, ← map_add]
+    simp only [← LinearMap.map_smul, ← map_sum, ← map_sub, ← map_add (f := _)]
   rw [H1.mk_eq_zero]
   let u : ∀ S : Pt s'', pushPt hw (pushPt hj S) ⟶ pushPt hw' S := fun S =>
     { ρ := { RingHom.id S.B with commutes' := fun r => congrArg (algebraMap T'.B S.B) (τ.ρ.commutes r) }
@@ -178,7 +178,7 @@ theorem hZ_rel (H : Bounds hp α β f) {T' : Pt sY} (τ : T ⟶ T') {X'' : Schem
     rfl
   rw [hR]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum]
+    rw [map_add (f := _), map_sum]
   simp only [map_mul]
   have B1 : mp (FP s'') φ (v1 f (u S)) - v1 f (u S ≫ pushHom hw' φ) + v1 f (pushHom hw' φ)
       = ∑ k, mp (FP s'') φ (v1 (α k).1 (u S)) * v1 (β k).1 (pushHom hp (pushHom hw' φ)) :=
@@ -275,7 +275,7 @@ theorem exists_fun (hF : AbelianDeRham.Free) (hB : AbelianDeRham.BaseChange) (hA
       rw [hl, Submodule.coe_smul, map_smul, ← hpt]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨c, rfl⟩)
     | add a b ha hb =>
-      rw [map_add, Submodule.coe_add, map_add]
+      rw [map_add (f := _), Submodule.coe_add, map_add (f := _)]
       exact Submodule.add_mem _ ha hb
 
 end Fun
@@ -394,7 +394,7 @@ theorem orth_of_surj (hF : AbelianDeRham.Free) (hB : AbelianDeRham.BaseChange) {
         exact (τ.ρ.commutes _).symm
       · simp
       · intro u v _ _ hu hv
-        simp only [map_add, hu, hv]
+        simp only [map_add (f := _), hu, hv]
       · intro c u _ hu
         simp only [map_smulₛₗ, smul_eq_mul, map_mul, hu]
         rfl
@@ -404,7 +404,7 @@ theorem orth_of_surj (hF : AbelianDeRham.Free) (hB : AbelianDeRham.BaseChange) {
         pullP_pullP (hφ' T) hj (hφ' T') (fun r => τ.ρ.commutes r) hjf, hXc]
     have h1 := congrArg (X T') hrel
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sub, map_sum, map_smul, smul_eq_mul, hii, map_zero] at h1
+      simp only [map_add (f := _), map_sub, map_sum, map_smul, smul_eq_mul, hii, map_zero] at h1
     simp only [hi] at h1
     exact h1
   have hcob : ∃ g : C0 (FP (B.hom ≫ 𝟙 (Sp R))), d0 _ g = ↑(∑ k, x (a k) • β k) := by

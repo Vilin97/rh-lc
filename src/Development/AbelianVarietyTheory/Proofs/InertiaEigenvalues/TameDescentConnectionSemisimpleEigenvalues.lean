@@ -48,7 +48,7 @@ theorem chain_aeval_mem : ∀ {K V : Type} [Field K] [AddCommGroup V] [Module K 
       · have hkJ0 : k ∉ J := fun h => hkJ (hJ' k h (by push_cast; omega) (by omega))
         have h1 := hJ k (by push_cast at hn; omega) (by omega) hkJ0 (Submodule.mem_inf.2 ⟨hx1, hx2⟩)
         obtain ⟨w, hw, f, hf, rfl⟩ := Submodule.mem_sup.1 h1
-        rw [map_add]
+        rw [map_add (f := _)]
         have hf' : f ∈ W' ⊓ F (b - n) := by
           refine Submodule.mem_inf.2 ⟨?_, hk1 ▸ hf⟩
           simpa using W'.sub_mem hx1 (hWW' (Submodule.mem_inf.1 hw).1)

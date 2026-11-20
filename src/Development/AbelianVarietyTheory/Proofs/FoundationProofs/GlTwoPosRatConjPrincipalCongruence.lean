@@ -57,7 +57,7 @@ theorem conj_Gamma_den_mul (g : GL (Fin 2) ℚ) (M : ℕ) (y : SL(2, ℤ))
   refine ⟨⟨z, hz_det⟩, ?_, hz_coe⟩
   rw [CongruenceSubgroup.Gamma_mem', Subtype.ext_iff]
   ext i j
-  simp_rw [Matrix.SpecialLinearGroup.map_apply_coe, z, map_add, map_one, RingHom.mapMatrix_apply, Int.coe_castRingHom,
+  simp_rw [Matrix.SpecialLinearGroup.map_apply_coe, z, map_add (f := _), map_one, RingHom.mapMatrix_apply, Int.coe_castRingHom,
     Matrix.add_apply, map_apply, Matrix.SpecialLinearGroup.coe_one, add_eq_left, Matrix.smul_apply, nsmul_eq_mul,
     Int.cast_mul, Int.cast_natCast, ZMod.natCast_self M, zero_mul]
 

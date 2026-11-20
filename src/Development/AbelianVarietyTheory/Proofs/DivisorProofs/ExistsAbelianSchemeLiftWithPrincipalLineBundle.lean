@@ -35,7 +35,7 @@ theorem altLagr : ∀ (R : Type) [CommRing R] (I : Ideal R) (D : Type) [AddCommG
   have hskew : ∀ x y, φ x y = -φ y x := by
     intro x y
     have h := halt (x + y)
-    simp only [map_add, LinearMap.add_apply, halt, zero_add, add_zero] at h
+    simp only [map_add (f := _), LinearMap.add_apply, halt, zero_add, add_zero] at h
     exact eq_neg_of_add_eq_zero_right h
   have hII : ∀ a ∈ I, ∀ b ∈ I, a * b = 0 := by
     intro a ha b hb
@@ -48,7 +48,7 @@ theorem altLagr : ∀ (R : Type) [CommRing R] (I : Ideal R) (D : Type) [AddCommG
       simp only [map_smul, LinearMap.smul_apply, smul_eq_mul]
       exact I.mul_mem_right _ hr
     · intro x z hx hz
-      simp only [map_add, LinearMap.add_apply]
+      simp only [map_add (f := _), LinearMap.add_apply]
       exact I.add_mem hx hz
   have hφII : ∀ a ∈ I • (⊤ : Submodule R D), ∀ b ∈ I • (⊤ : Submodule R D), φ a b = 0 := by
     intro a ha b hb
@@ -58,7 +58,7 @@ theorem altLagr : ∀ (R : Type) [CommRing R] (I : Ideal R) (D : Type) [AddCommG
       have : φ m b ∈ I := by rw [hskew]; exact I.neg_mem (hφI b hb m)
       exact hII r hr _ this
     · intro x z hx hz
-      simp only [map_add, LinearMap.add_apply, hx, hz, add_zero]
+      simp only [map_add (f := _), LinearMap.add_apply, hx, hz, add_zero]
   have hsmul0 : ∀ r ∈ I, ∀ w ∈ I • (⊤ : Submodule R D), r • w = 0 := by
     intro r hr w hw
     refine Submodule.smul_induction_on (p := fun w => r • w = 0) hw ?_ ?_
@@ -140,7 +140,7 @@ theorem altLagr : ∀ (R : Type) [CommRing R] (I : Ideal R) (D : Type) [AddCommG
     · intro r hr m _
       rw [map_smul]; exact hsmul0 r hr _ (hTr m)
     · intro x w hx hw
-      rw [map_add, hx, hw, add_zero]
+      rw [map_add (f := _), hx, hw, add_zero]
   have hTT : ∀ y, T (T y) = 0 := fun y => hTI _ (hTr y)
   have hkey : ∀ x y, φ x (T y) = -β x y := by
     intro x y
@@ -160,7 +160,7 @@ theorem altLagr : ∀ (R : Type) [CommRing R] (I : Ideal R) (D : Type) [AddCommG
   · exact (Submodule.orderIsoMapComap u).isCompl hFN
   · rintro _ ⟨x, hx, rfl⟩ _ ⟨y, hy, rfl⟩
     show φ (u x) (u y) = 0
-    rw [hu, hu, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply]
+    rw [hu, hu, map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply]
     have h1 := hkey x y
     have h2 := hkey y x
     have h3 := hskew (T x) y

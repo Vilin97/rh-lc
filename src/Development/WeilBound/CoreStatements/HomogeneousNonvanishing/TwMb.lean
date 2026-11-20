@@ -24,14 +24,14 @@ private theorem fix_gen_lemma_2 {E : Type} [Field E] [NumberField E] [IsCMField 
   constructor
   · apply mul_left_cancel₀ two_ne
     have h := congrArg g.s H.two_weight_eq_one_add_root
-    rw [map_mul, map_ofNat, map_add, map_one, hr] at h
+    rw [map_mul, map_ofNat, map_add (f := _), map_one, hr] at h
     rw [h, H.two_weight_eq_one_add_root]
   · apply mul_left_cancel₀ two_ne
     have h := congrArg (fun x => g.s (H.bar x)) H.two_weight_eq_one_add_root
-    simp only [map_mul, map_ofNat, map_add, map_one] at h
+    simp only [map_mul, map_ofNat, map_add (f := _), map_one] at h
     rw [h, hbr]
     have h2 := congrArg H.bar H.two_weight_eq_one_add_root
-    rw [map_mul, map_ofNat, map_add, map_one] at h2
+    rw [map_mul, map_ofNat, map_add (f := _), map_one] at h2
     exact h2.symm
 
 private theorem fix_adj_lemma_3 {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} (g : HostAut H) (a : 𝓞 E) (ha : a ∈ Algebra.adjoin ℤ ({H.w0} : Set (𝓞 E))) : g.s a = a ∧ g.s (H.bar a) = H.bar a := by
@@ -43,7 +43,7 @@ private theorem fix_adj_lemma_3 {E : Type} [Field E] [NumberField E] [IsCMField 
   | algebraMap r =>
     simp
   | add x y _ _ hx hy =>
-    simp only [map_add, hx.1, hy.1, hx.2, hy.2]
+    simp only [map_add (f := _), hx.1, hy.1, hx.2, hy.2]
     exact ⟨trivial, trivial⟩
   | mul x y _ _ hx hy =>
     simp only [map_mul, hx.1, hy.1, hx.2, hy.2]

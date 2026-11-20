@@ -26,6 +26,6 @@ theorem exists_addEquiv_of_surjective_of_ker_iff {A : Type u_1} {B : Type u_2} {
               rw [h1, ht]
             map_add' := fun x y => by
               show g (s (x + y)) = g (s x) + g (s y)
-              rw [← map_add, ← key, map_add, hs, hs, hs] }, fun a => h1 a⟩
+              rw [← map_add (f := _), ← key, map_add (f := _), hs, hs, hs] }, fun a => h1 a⟩
 
 end GlobalTheory.AddEquivOfSurjectiveKernel

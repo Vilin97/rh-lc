@@ -144,12 +144,12 @@ theorem exists_inf (ψ : AddChar (AF F) ℂ) [IsTotallyReal F] (hψ : IsCharAF F
   have hpc : Continuous (psiInf F ψ) := hψ.1.comp (continuous_id.prodMk continuous_const)
   obtain ⟨L₀, hL₀c, hL₀a, hL₀⟩ := SdInf.exists_log_char (fun u => psiInf F ψ (A.symm u)) (hpc.comp hA')
     (fun u => hψ.2.1 _) (fun u v => by
-      simp only [psiInf, map_add, ← AddChar.map_add_eq_mul]
+      simp only [psiInf, map_add (f := _), ← AddChar.map_add_eq_mul]
       congr 1
       exact Prod.ext rfl (add_zero _).symm)
   let L : Ainf F → ℝ := fun x => L₀ (A x)
   have hLc : Continuous L := hL₀c.comp hA
-  have hLa : ∀ x y, L (x + y) = L x + L y := fun x y => by simp only [L, map_add, hL₀a]
+  have hLa : ∀ x y, L (x + y) = L x + L y := fun x y => by simp only [L, map_add (f := _), hL₀a]
   have hL : ∀ x, psiInf F ψ x = Complex.exp (2 * Real.pi * Complex.I * ((L x : ℝ) : ℂ)) :=
     fun x => by simpa using hL₀ (A x)
   have hLn : ∀ x, (∀ y, L (x * y) = 0) → x = 0 := fun x h => hnd x fun y => by simp [hL, h]
@@ -253,7 +253,7 @@ theorem exists_isLam (ψ : AddChar (AF F) ℂ) [IsTotallyReal F] (hψ : IsCharAF
   have hpc : Continuous (psiInf F ψ) := hψ.1.comp (continuous_id.prodMk continuous_const)
   obtain ⟨L₀, hL₀c, hL₀a, hL₀⟩ := SdInf.exists_log_char (fun u => psiInf F ψ (A.symm u)) (hpc.comp hA')
     (fun u => hψ.2.1 _) (fun u v => by
-      simp only [psiInf, map_add, ← AddChar.map_add_eq_mul]
+      simp only [psiInf, map_add (f := _), ← AddChar.map_add_eq_mul]
       congr 1
       exact Prod.ext rfl (add_zero _).symm)
   let L : (InfinitePlace F → ℝ) →L[ℝ] ℝ := (AddMonoidHom.mk' L₀ hL₀a).toRealLinearMap hL₀c

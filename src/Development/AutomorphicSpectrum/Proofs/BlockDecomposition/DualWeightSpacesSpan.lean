@@ -205,7 +205,7 @@ theorem iSup_wtDual_eq_top {n : ℕ} (E : KMod n) : (⨆ μ, wtDual E μ) = ⊤ 
     rw [← htz, map_zpow₀, ← Circle.coe_inv_eq_conj, ← Circle.coe_zpow, ← Circle.coe_zpow, _root_.inv_zpow', Pi.neg_apply]
   · simp
   · intro x y hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
 
 end GlobalTheory.CompanionTheory.RealCount.Tope

@@ -67,7 +67,7 @@ def bdL (S : Lt n → Prop) (E1 E2 : Fin n → Fin n → Module.End ℂ V) : Mod
 
 def FtL (E1 E2 : Fin n → Fin n → Module.End ℂ V) (c : Fin n) : Module.End ℂ (Cq n V) where
   toFun x := fun A => kA E1 E2 c c (x A) + (wtL A c : ℂ) • x A
-  map_add' x y := by funext A; simp only [Pi.add_apply, map_add, smul_add]; abel
+  map_add' x y := by funext A; simp only [Pi.add_apply, map_add (f := _), smul_add]; abel
   map_smul' s x := by funext A; simp only [Pi.smul_apply, map_smul, RingHom.id_apply, smul_add, smul_comm s]
 
 def WtL (E1 E2 : Fin n → Fin n → Module.End ℂ V) (τ : Fin n → ℝ) (x : Cq n V) : Prop :=

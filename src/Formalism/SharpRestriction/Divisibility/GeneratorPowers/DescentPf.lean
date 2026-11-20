@@ -31,7 +31,7 @@ def DofNL (F : Fin d → PS k 2 d) (b : Fin n) (u : Fin d → k) : PS k n d →�
   toFun := DofN F b u
   map_add' := by
     intro x y
-    simp only [DofN, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [DofN, map_add (f := _), mul_add, Finset.sum_add_distrib]
   map_smul' := by
     intro c x
     simp only [DofN, Derivation.map_smul, RingHom.id_apply, Finset.smul_sum, mul_smul_comm]
@@ -52,7 +52,7 @@ theorem DpolyN_addP {ι : Type} [Fintype ι] (F : Fin d → PS k 2 d) (cp : ι �
     DpolyN_sub F cp u P g (P.support ∪ Q.support) Finset.subset_union_left,
     DpolyN_sub F cp u Q g (P.support ∪ Q.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun e _ => ?_
-  rw [MvPolynomial.coeff_add, map_add, add_mul]
+  rw [MvPolynomial.coeff_add, map_add (f := _), add_mul]
 
 theorem DpolyN_smulP {ι : Type} [Fintype ι] (F : Fin d → PS k 2 d) (cp : ι → Fin n) (u : ι → Fin d → k)
     (c : k) (P : MvPolynomial ι k) (g : PS k n d) :
@@ -69,7 +69,7 @@ theorem nabValN_addP (B : FB R d O) (k : Type) [CommRing k] [Algebra ℚ k] [Alg
     (f : PS k n d) :
     nabValN B k h w0 m f cp u (P + Q) = nabValN B k h w0 m f cp u P + nabValN B k h w0 m f cp u Q := by
   unfold nabValN
-  rw [DpolyN_addP, map_add]
+  rw [DpolyN_addP, map_add (f := _)]
 
 theorem nabValN_smulP (B : FB R d O) (k : Type) [CommRing k] [Algebra ℚ k] [Algebra R k] (h : PS k 2 d) (w0 : O)
     (m : ℕ) {n : ℕ} {ι : Type} [Fintype ι] (cp : ι → Fin n) (u : ι → Fin d → k) (c : k) (P : MvPolynomial ι k)

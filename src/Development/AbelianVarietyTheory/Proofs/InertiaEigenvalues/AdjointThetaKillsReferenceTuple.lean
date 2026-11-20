@@ -111,7 +111,7 @@ theorem adjoint_eW_eq_zero : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 
       obtain ⟨f, hf, rfl⟩ := hz
       exact horth f hf
     | zero => rw [map_zero, inner_zero_right]
-    | add a b _ _ ha hb => rw [map_add, inner_add_right, ha, hb, add_zero]
+    | add a b _ _ ha hb => rw [map_add (f := _), inner_add_right, ha, hb, add_zero]
     | smul c a _ ha => rw [map_smul, inner_smul_right, ha, mul_zero]
   have h0 : ⟪LinearMap.adjoint (R.thG i A3.A.μ0) (Y.mj.eW i y), LinearMap.adjoint (R.thG i A3.A.μ0) (Y.mj.eW i y)⟫_ℂ = 0 := by
     rw [LinearMap.adjoint_inner_left]

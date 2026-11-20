@@ -36,7 +36,7 @@ theorem fibSys_finite {W : Type*} [Fintype W] (r : W → ℕ) (H : W → MvPolyn
       obtain ⟨u', hu'⟩ : ∃ u', u = u' + Finsupp.single i (r i) :=
         ⟨u - Finsupp.single i (r i), (tsub_add_cancel_of_le hle).symm⟩
       have hdeg : u'.degree + r i = u.degree := by
-        rw [hu', map_add, Finsupp.degree_single]
+        rw [hu', map_add (f := _), Finsupp.degree_single]
       have hsplit : ∀ w : W → ℂ, (∀ i, w i ^ r i = eval w (H i)) →
           eval w (monomial u a) = eval w (monomial u' a * H i) := by
         intro w hw
@@ -53,7 +53,7 @@ theorem fibSys_finite {W : Type*} [Fintype W] (r : W → ℕ) (H : W → MvPolyn
         intro v hv
         have hv' : v.degree ≤ (H i).totalDegree := le_totalDegree hv
         have hlt : (u' + v).degree < n := by
-          rw [map_add]
+          rw [map_add (f := _)]
           have := hH i
           omega
         exact ih _ hlt _ le_rfl _
@@ -69,7 +69,7 @@ theorem fibSys_finite {W : Type*} [Fintype W] (r : W → ℕ) (H : W → MvPolyn
     refine MvPolynomial.induction_on' p (fun u a => hmon _ u le_rfl a) (fun p q hp hq => ?_)
     obtain ⟨p', hp'M, hp'⟩ := hp
     obtain ⟨q', hq'M, hq'⟩ := hq
-    exact ⟨p' + q', M.add_mem hp'M hq'M, fun w hw => by rw [map_add, map_add, hp' w hw, hq' w hw]⟩
+    exact ⟨p' + q', M.add_mem hp'M hq'M, fun w hw => by rw [map_add (f := _), map_add (f := _), hp' w hw, hq' w hw]⟩
   have hex : ∀ x y : W → ℂ, ∃ i, x ≠ y → x i ≠ y i := fun x y => by
     by_cases h : x = y
     · exact ⟨Classical.arbitrary W, fun h' => (h' h).elim⟩
@@ -105,7 +105,7 @@ theorem fibSys_finite {W : Type*} [Fintype W] (r : W → ℕ) (H : W → MvPolyn
     | add x y _ _ hx hy =>
       obtain ⟨c, hc⟩ := hx
       obtain ⟨c', hc'⟩ := hy
-      exact ⟨c + c', fun t => by rw [map_add, hc, hc', map_add]; rfl⟩
+      exact ⟨c + c', fun t => by rw [map_add (f := _), hc, hc', map_add (f := _)]; rfl⟩
     | smul a x _ hx =>
       obtain ⟨c, hc⟩ := hx
       exact ⟨a • c, fun t => by rw [MvPolynomial.smul_eval, hc, map_smul]; rfl⟩

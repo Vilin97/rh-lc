@@ -150,7 +150,7 @@ theorem index_mul_gram [FiniteDimensional C U] (hv : v.Integers O) {p q : ℕ} (
   let x : Fin q → U := fun k => ∑ b, Q⁻¹ k b • z b
   have htz : ∀ j b, B (t j) (z b) = Q b j := fun j b => by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [t, map_add, map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply, horth, hGram,
+      simp only [t, map_add (f := _), map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply, horth, hGram,
       smul_zero, Finset.sum_const_zero, zero_add]
     rfl
   have htx : ∀ j (c : Fin q → C), B (t j) (∑ k, c k • x k) = c j := fun j c => by

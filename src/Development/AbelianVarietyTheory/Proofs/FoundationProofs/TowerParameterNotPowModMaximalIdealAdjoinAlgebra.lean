@@ -89,7 +89,7 @@ theorem residue_core : ∀ (p : ℕ) [Fact p.Prime] (O Ω : Type) [CommRing O] [
     obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective a
     obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective b
     have hxy : x + y - 1 ∈ I := by
-      rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_add, hab, map_one, sub_self]
+      rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_add (f := _), hab, map_one, sub_self]
     have hv1 := hvI _ hxy
     have key : v x = 1 ∨ v y = 1 := by
       by_contra hcon
@@ -133,7 +133,7 @@ theorem residue_core : ∀ (p : ℕ) [Fact p.Prime] (O Ω : Type) [CommRing O] [
       rfl
     | add x y hx hy ihx ihy =>
       have e : (⟨x + y, add_mem hx hy⟩ : Algebra.adjoin O (T : Set Ω)) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-      rw [e, map_add]
+      rw [e, map_add (f := _)]
       exact add_mem ihx ihy
     | mul x y hx hy ihx ihy =>
       have e : (⟨x * y, mul_mem hx hy⟩ : Algebra.adjoin O (T : Set Ω)) = ⟨x, hx⟩ * ⟨y, hy⟩ := rfl

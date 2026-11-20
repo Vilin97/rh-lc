@@ -150,7 +150,7 @@ theorem UpperTheory.Gal.W2.isogAt_of :
   have hinj'' : Function.Injective P'' := hper''.2.1
   let inc : D'.La →ₗ[D.O] D''.La :=
     { toFun := fι
-      map_add' := fun u v => hinj'' (by rw [map_add, hPf, hPf, hPf, map_add])
+      map_add' := fun u v => hinj'' (by rw [map_add (f := _), hPf, hPf, hPf, map_add (f := _)])
       map_smul' := fun a u => hinj'' (by rw [RingHom.id_apply, hper''.1, hPf, hPf]; exact hU.2.1.1 a u) }
   have hPinc : ∀ u, P'' (inc u) = P u := hPf
   obtain ⟨I', I'', hI', hI'', hT⟩ := hTate ℂ x (RingHom.id ℂ) hU.1

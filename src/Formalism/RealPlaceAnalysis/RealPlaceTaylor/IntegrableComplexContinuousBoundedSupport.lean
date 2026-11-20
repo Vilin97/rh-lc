@@ -256,7 +256,7 @@ lemma lie_derivative_conj {f : Matrix (Fin n) (Fin n) ℂ → ℂ} (a b : Fin n)
   rw [lie_derivative_swap a b hf hg, lie_derivative_def, right_derivative_conj hf (real_part_single_mem ε a b) hg,
     right_derivative_conj hf (imaginary_part_single_mem ε a b) hg]
   have hs := signature_sign_mul_self ε a b
-  simp only [map_add, map_mul, map_neg, Complex.conj_ofReal, Complex.conj_I]
+  simp only [map_add (f := _), map_mul, map_neg, Complex.conj_ofReal, Complex.conj_I]
   linear_combination (starRingEnd ℂ (Rd (cpart1 ε (Matrix.single a b 1)) f g) +
     Complex.I * starRingEnd ℂ (Rd (cpart2 ε (Matrix.single a b 1)) f g)) * (-hs)
 

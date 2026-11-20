@@ -166,7 +166,7 @@ theorem lemA (hef : e * f = f * e + h) (hhf : h * f = f * h - (2 : K) • f) {v 
   | zero => simp [hef', hv]
   | succ k ih =>
     have hfk := hF_pow hhf hv (k + 1)
-    rw [hp (k + 1) v, hef', ih, hfk, map_add, map_smul, ← hp (k + 1) (e v), ← hp k v,
+    rw [hp (k + 1) v, hef', ih, hfk, map_add (f := _), map_smul, ← hp (k + 1) (e v), ← hp k v,
       add_assoc, ← add_smul]
     congr 2
     push_cast
@@ -184,7 +184,7 @@ theorem lemB (hef : e * f = f * e + h) (hhe : h * e = e * h + (2 : K) • e) {v 
   | zero => simp [hef', hv]
   | succ k ih =>
     have hek := hE_pow hhe hv (k + 1)
-    rw [hp (k + 1) (f v), ih, map_add, map_smul, hef', hek, ← hp (k + 1) v, ← hp k v,
+    rw [hp (k + 1) (f v), ih, map_add (f := _), map_smul, hef', hek, ← hp (k + 1) v, ← hp k v,
       add_assoc, ← add_smul]
     congr 2
     push_cast
@@ -229,7 +229,7 @@ theorem sl2_projector_apply_f_eq_smul_f_projector_succ (hef : e * f = f * e + h)
     cases k with
     | zero => simp
     | succ j =>
-      rw [lemB hef hhe hz j, map_add, map_smul, ← hpf (j + 1), Nat.add_sub_cancel]
+      rw [lemB hef hhe hz j, map_add (f := _), map_smul, ← hpf (j + 1), Nat.add_sub_cancel]
       congr 2
       push_cast
       ring

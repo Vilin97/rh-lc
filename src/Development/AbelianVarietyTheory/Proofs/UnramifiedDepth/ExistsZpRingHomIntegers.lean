@@ -89,7 +89,7 @@ private theorem zpMap_surj (p M : ℕ) (x : ℂ) (hx : x ∈ Geo.Tor.ZP p M) :
     obtain ⟨n, hn, g, hg⟩ := hx
     obtain ⟨m, hm, k, hk⟩ := hy
     refine ⟨n * m, mul_mem hn hm, g * (m : ℤ[X]) + k * (n : ℤ[X]), ?_⟩
-    simp only [map_add, map_mul, map_natCast, Nat.cast_mul, ← hg, ← hk]
+    simp only [map_add (f := _), map_mul, map_natCast, Nat.cast_mul, ← hg, ← hk]
     ring
   | neg x _ hx =>
     obtain ⟨n, hn, g, hg⟩ := hx

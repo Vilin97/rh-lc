@@ -100,7 +100,7 @@ theorem inf_mem {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] (
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
     | tmul a x => rfl
   have hg' : Formalism.UG.cT (sigR (AF F) σ) g.1 * JR (AF F) J * g.1 = JR (AF F) J := hg
   have hJ : (JR (F := F) (AF F) J).map π = JR (Ainf F) J := rfl

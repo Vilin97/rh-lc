@@ -35,7 +35,7 @@ theorem levi_step (hg : Formalism.REAL.GlRel K) (lev : Fin n → ℕ) (C : Fin n
   let S : Submodule ℂ V :=
     { carrier := {z | z ∈ Z ∧ ∀ a b, C a b → K a b z ∈ Z}
       add_mem' := fun {u w} hu hw => ⟨Z.add_mem hu.1 hw.1, fun a b h => by
-        rw [map_add]; exact Z.add_mem (hu.2 a b h) (hw.2 a b h)⟩
+        rw [map_add (f := _)]; exact Z.add_mem (hu.2 a b h) (hw.2 a b h)⟩
       zero_mem' := ⟨Z.zero_mem, fun a b _ => by rw [map_zero]; exact Z.zero_mem⟩
       smul_mem' := fun r u hu => ⟨Z.smul_mem r hu.1, fun a b h => by
         rw [map_smul]; exact Z.smul_mem r (hu.2 a b h)⟩ }
@@ -108,7 +108,7 @@ theorem coneSpan_letter (hg : Formalism.REAL.GlRel K) (lev : Fin n → ℕ) (ν 
       push_cast
       ring
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add u w _ _ hu hw => rw [map_add]; exact Submodule.add_mem _ hu hw
+  | add u w _ _ hu hw => rw [map_add (f := _)]; exact Submodule.add_mem _ hu hw
   | smul r u _ hu => rw [map_smul]; exact Submodule.smul_mem _ r hu
 
 theorem inCone_of_ne (lev : Fin n → ℕ) (ev : V →ₗ[ℂ] ℂ) (μ ν : Fin n → ℝ)
@@ -167,7 +167,7 @@ theorem inCone_of_highest : ∀ (n : ℕ) (V : Type) [AddCommGroup V] [Module �
     let S : Submodule ℂ V :=
       { carrier := {y | y ∈ Y ∧ ∀ a b, K a b y ∈ Z}
         add_mem' := fun {u w} hu hw => ⟨Y.add_mem hu.1 hw.1, fun a b => by
-          rw [map_add]; exact Z.add_mem (hu.2 a b) (hw.2 a b)⟩
+          rw [map_add (f := _)]; exact Z.add_mem (hu.2 a b) (hw.2 a b)⟩
         zero_mem' := ⟨Y.zero_mem, fun a b => by rw [map_zero]; exact Z.zero_mem⟩
         smul_mem' := fun r u hu => ⟨Y.smul_mem r hu.1, fun a b => by
           rw [map_smul]; exact Z.smul_mem r (hu.2 a b)⟩ }

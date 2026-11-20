@@ -176,7 +176,7 @@ theorem finPart_one_sub_cA_mem {es : AE D} {PP : Formalism.L2.DIV.Pl D.host.E} (
   have e1 : 1 - cA D es = es + (1 - algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 α)) := by
     rw [← h3]; ring
   have e2 : finPart D (algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 α)) = α ⊗ₜ[D.host.F] (1 : D.host.E) := rfl
-  rw [e1, map_add, map_sub, map_one, e2, Algebra.TensorProduct.one_def, ← TensorProduct.sub_tmul]
+  rw [e1, map_add (f := _), map_sub, map_one, e2, Algebra.TensorProduct.one_def, ← TensorProduct.sub_tmul]
   exact add_mem (finPart_es_mem h hne) (one_sub_mem hQv hα1 hα0)
 
 theorem offConj : ∀ (D : D7) (Pg Q : Finset (Formalism.L2.DIV.Pl D.host.E)) (e : AE D), IsIdemSum e (Pg ∪ Q) →

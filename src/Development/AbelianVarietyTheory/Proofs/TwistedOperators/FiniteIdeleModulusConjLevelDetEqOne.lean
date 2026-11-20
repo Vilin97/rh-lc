@@ -58,7 +58,7 @@ theorem absFin_single {es : AE D} {PP : Pl D.host.E} (he : IsIdemAt es PP) (u : 
   have hu1 : (1 - es) * (u : AE D) = 1 - es := by rw [hu]; linear_combination (1 - c) * hee
   rw [GlobalTheory.SplitLinear.absFin_split D es v π he.1 hπ u hu1, GlobalTheory.IndefiniteRowSideFullHecke.SplitLinearModelNorm.absV]
   have hπu : π (u : AE D) = π c := by
-    rw [hu, map_add, map_mul, map_sub, map_one, hπ.map_e hee, one_mul, sub_self, add_zero]
+    rw [hu, map_add (f := _), map_mul, map_sub, map_one, hπ.map_e hee, one_mul, sub_self, add_zero]
   change ((Ideal.absNorm v.asIdeal : ℕ) : ℝ) ^ (WithZero.log (Valued.v (π (u : AE D)))) = 1
   rw [hπu, chart_val_eq_one he hπ hcc hc, WithZero.log_one, zpow_zero]
 
@@ -133,12 +133,12 @@ theorem cpt_det_cutPart {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e 
   have hψc : ψ (cA D e) = 0 := by
     have := congrArg ψ hc0
     rwa [map_mul, hψe, one_mul, map_zero] at this
-  have hψa : ψ (e + cA D e) = 1 := by rw [map_add, hψe, hψc, add_zero]
+  have hψa : ψ (e + cA D e) = 1 := by rw [map_add (f := _), hψe, hψc, add_zero]
   show ψ _ = ψ _
   rw [RingHom.map_det, RingHom.map_det, mt_cutPart hf1 hf2]
   congr 1
   ext a b
-  simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add,
+  simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _),
     map_mul, map_sub, map_one, hψa, one_mul, sub_self, zero_mul, add_zero]
 
 theorem absFin_detAt_cutPart {e : AE D} {P : Finset (Pl D.host.E)} (he : IsIdemSum e P) (hee : e * e = e) (V : HSp D)

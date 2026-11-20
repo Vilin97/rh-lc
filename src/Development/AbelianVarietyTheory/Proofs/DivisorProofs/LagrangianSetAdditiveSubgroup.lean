@@ -59,13 +59,13 @@ theorem lagL_at_smul {M : Type} [AddCommGroup M] [Module (AF F) M] {x : M} (c : 
 
 theorem lagL_dar_add_left {κ : Type} [Fintype κ] {V : Type} [AddCommGroup V] [Module (AF F) V]
     {Bf : V → V → AF F} (dd : Darboux Bf κ) (x y w : V) : Bf (x + y) w = Bf x w + Bf y w := by
-  rw [dd.form, dd.form, dd.form, map_add]
+  rw [dd.form, dd.form, dd.form, map_add (f := _)]
   simp only [Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   ring
 
 theorem lagL_dar_add_right {κ : Type} [Fintype κ] {V : Type} [AddCommGroup V] [Module (AF F) V]
     {Bf : V → V → AF F} (dd : Darboux Bf κ) (x y w : V) : Bf w (x + y) = Bf w x + Bf w y := by
-  rw [dd.form, dd.form, dd.form, map_add]
+  rw [dd.form, dd.form, dd.form, map_add (f := _)]
   simp only [Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   ring
 
@@ -112,13 +112,13 @@ theorem lagSet_isLagrangian : ∀ {F E : Type} [Field F] [NumberField F] [Field 
   ·
     rintro l ⟨u, ⟨y, rfl⟩, hu, z, hz, hz1, rfl⟩ l' ⟨u', ⟨y', rfl⟩, hu', z', hz', hz1', rfl⟩
     refine ⟨_, ⟨y + y', rfl⟩, by rw [Matrix.add_vecMulVec]; exact lagL_at_add hu hu', z + z', lagL_at_add hz hz', ?_, ?_⟩
-    · rw [map_add, Prod.fst_add, lagL_arch_add, hz1, hz1', add_zero]
+    · rw [map_add (f := _), Prod.fst_add, lagL_arch_add, hz1, hz1', add_zero]
     · have : Matrix.vecMulVec (y + y') (incV F H'.x) + incM F (1 : Matrix (Fin n) (Fin n) E) * (z + z') * (incM F H'.ι)ᵀ =
           (Matrix.vecMulVec y (incV F H'.x) + incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ) +
           (Matrix.vecMulVec y' (incV F H'.x) + incM F (1 : Matrix (Fin n) (Fin n) E) * z' * (incM F H'.ι)ᵀ) := by
         rw [Matrix.add_vecMulVec, Matrix.mul_add, Matrix.add_mul]; abel
       rw [this]
-      ext : 1 <;> simp only [Prod.fst_add, Prod.snd_add, LinearEquiv.map_add, lagL_arch_add] <;> abel
+      ext : 1 <;> simp only [Prod.fst_add, Prod.snd_add, LinearEquiv.map_add (f := _), lagL_arch_add] <;> abel
   ·
     rintro t l ⟨u, ⟨y, rfl⟩, hu, z, hz, hz1, rfl⟩
     refine ⟨_, ⟨realAd F t • y, rfl⟩, ?_, realAd F t • z, lagL_at_smul _ hz, ?_, ?_⟩

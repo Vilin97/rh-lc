@@ -24,8 +24,8 @@ private theorem exists_tr (h : IsGal σ q) :
     ∃ t : R →ₗ[k] k, ∀ r, algebraMap k R (t r) = ∑ j ∈ Finset.range q, (σ ^ j) r := by
   choose t ht using fun r => h.fix _ (sum_fixed h r)
   refine ⟨⟨⟨t, fun a b => h.inj ?_⟩, fun c a => h.inj ?_⟩, ht⟩
-  · rw [map_add, ht, ht, ht, ← Finset.sum_add_distrib]
-    simp only [map_add]
+  · rw [map_add (f := _), ht, ht, ht, ← Finset.sum_add_distrib]
+    simp only [map_add (f := _)]
   · simp only [RingHom.id_apply, smul_eq_mul]
     rw [map_mul, ht, ht, Finset.mul_sum]
     simp only [Algebra.smul_def, map_mul, AlgEquiv.commutes]
@@ -87,7 +87,7 @@ theorem galBase : GalBase := by
       intro r hr
       refine Submodule.smul_induction_on hr (fun a ha n _ => ?_) (fun a b ha hb => ?_)
       · rw [map_smul, smul_eq_mul]; exact m.mul_mem_right _ ha
-      · rw [map_add]; exact m.add_mem ha hb
+      · rw [map_add (f := _)]; exact m.add_mem ha hb
     rw [Ideal.eq_top_iff_one, ← hc]
     exact key c (by rw [hm']; exact Submodule.mem_top)
   · set τ : A ⊗[k] R ≃ₐ[A] A ⊗[k] R := Algebra.TensorProduct.congr AlgEquiv.refl σ with hτ
@@ -100,7 +100,7 @@ theorem galBase : GalBase := by
       induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul a r => rw [hp, h.pow]; rfl
-      | add a b ha hb => rw [map_add, map_add, ha, hb]
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     · refine Function.LeftInverse.injective (g := p) fun a => ?_
       rw [Algebra.TensorProduct.algebraMap_apply, hpp, mul_one, hc, one_smul]
       rfl
@@ -116,7 +116,7 @@ theorem galBase : GalBase := by
             Algebra.algebraMap_eq_smul_one (t (c * r)), ← TensorProduct.smul_tmul]
           rfl
         | add a b ha hb =>
-          simp only [map_add, mul_add, ha, hb, Finset.sum_add_distrib]
+          simp only [map_add (f := _), mul_add, ha, hb, Finset.sum_add_distrib]
       have h2 : ∀ j : ℕ, (τ ^ j) z = z := by
         intro j
         induction j with

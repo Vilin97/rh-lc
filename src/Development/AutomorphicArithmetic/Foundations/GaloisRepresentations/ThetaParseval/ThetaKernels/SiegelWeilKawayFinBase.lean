@@ -73,9 +73,9 @@ theorem gram_inf_fin_k {X Z : Mx F E d.m d.n} (hX : finOne F • X = 0) (hZ : eI
   rw [eZ, _root_.PositivityTheory.SiegelWeilFormula.KAway.SDf.gram_smul_right_k, ← _root_.PositivityTheory.SiegelWeilFormula.KAway.SDf.gram_smul_left_k, hX]
   simp [_root_.PositivityTheory.SiegelWeilFormula.SD_k.gram]
 theorem tt_add_k (M M' : Mx F E d.n d.n) : d.tt (M + M') = d.tt M + d.tt M' := by
-  simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, Matrix.trace_add, map_add]
+  simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, Matrix.trace_add, map_add (f := _)]
 theorem crd_add_k (X Z : Mx F E d.m d.n) (k) : d.crd (X + Z) k = d.crd X k + d.crd Z k := by
-  simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.crd, Matrix.add_apply, map_add, Finsupp.add_apply]
+  simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.crd, Matrix.add_apply, map_add (f := _), Finsupp.add_apply]
 theorem crd_smul_k (c : AF F) (X : Mx F E d.m d.n) (k) : d.crd (c • X) k = c * d.crd X k := by
   simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.crd, Matrix.smul_apply, map_smul, Finsupp.smul_apply, smul_eq_mul]
 theorem cmb_crd_k (X : Mx F E d.m d.n) : d.cmb (d.crd X) = X := by

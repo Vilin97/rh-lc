@@ -217,7 +217,7 @@ theorem sum_colInd {m n : ℕ} {ϖ : kˣ} (hϖ : GlobalTheory.SplitFlip.IsUnif �
       refine ⟨fun i j => add_mem (hZ i j) (hint _ i j), fun i => ?_⟩
       have := (hI (⟨Z i j₀, hZ i j₀⟩ + Quotient.out
         (-Ideal.Quotient.mk (IsLocalRing.maximalIdeal 𝒪[k] ^ c) (⟨Z i j₀, hZ i j₀⟩ : 𝒪[k])))).1 (by
-          rw [← Ideal.Quotient.eq_zero_iff_mem, map_add, Ideal.Quotient.mk_out, add_neg_cancel])
+          rw [← Ideal.Quotient.eq_zero_iff_mem, map_add (f := _), Ideal.Quotient.mk_out, add_neg_cancel])
       simpa [Matrix.vecMulVec_apply] using this
     · intro ρ _ hρ
       unfold colInd
@@ -226,7 +226,7 @@ theorem sum_colInd {m n : ℕ} {ϖ : kˣ} (hϖ : GlobalTheory.SplitFlip.IsUnif �
       apply hρ
       funext i
       have := (hI (⟨Z i j₀, hZ i j₀⟩ + Quotient.out (ρ i))).2 (by simpa [Matrix.vecMulVec_apply] using h i)
-      rw [← Ideal.Quotient.eq_zero_iff_mem, map_add, Ideal.Quotient.mk_out] at this
+      rw [← Ideal.Quotient.eq_zero_iff_mem, map_add (f := _), Ideal.Quotient.mk_out] at this
       exact eq_neg_of_add_eq_zero_right this
     · simp
   · rw [Set.indicator_of_notMem (by exact hZ)]

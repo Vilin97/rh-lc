@@ -80,7 +80,7 @@ theorem upts_props (R : Type) [CommRing R] [Algebra ℚ R] [TopologicalSpace R] 
     | tmul r x =>
       rw [starT_tmul, LinearMap.baseChange_tmul]
       rfl
-    | add x y hx hy => simp only [map_add, MulOpposite.unop_add] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), MulOpposite.unop_add] at hx hy ⊢; rw [hx, hy]
   have hσ : Continuous (fun y : R ⊗[ℚ] C => (starT star R y).unop) := by
     rw [hσeq]
     exact IsModuleTopology.continuous_of_linearMap _

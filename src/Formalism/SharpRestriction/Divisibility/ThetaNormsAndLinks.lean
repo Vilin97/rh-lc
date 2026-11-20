@@ -429,7 +429,7 @@ theorem QPack.htb_at {D : D7} {r j p : ℕ} {Lc : ModuliIntegralCharts.Loc D r j
     | add a b _ _ ha hb =>
       have : (⟨Q.i (a + b), Q.i_mem _⟩ : Q.FilM) = ⟨Q.i a, Q.i_mem a⟩ + ⟨Q.i b, Q.i_mem b⟩ :=
         Subtype.ext (map_add _ _ _)
-      rw [this, map_add]; exact add_mem ha hb
+      rw [this, map_add (f := _)]; exact add_mem ha hb
     | smul a x _ hx =>
       have : (⟨Q.i (a • x), Q.i_mem _⟩ : Q.FilM) = a • ⟨Q.i x, Q.i_mem x⟩ := Subtype.ext (map_smul _ _ _)
       rw [this, Q.red_smul]; exact ospan_smul ((Q.th_range _).2 ⟨a, rfl⟩) hx
@@ -525,7 +525,7 @@ theorem zO_mem (D : D7) (i : D.ntw.Tw) (j : ℕ) (b : Bool)
   | zero => simp [IntegralHeckeForms.zO, MonoidAlgebra.map_zero]
   | add f g hf hg =>
     have : IntegralHeckeForms.zO D.nexp i j b (f + g) x = IntegralHeckeForms.zO D.nexp i j b f x + IntegralHeckeForms.zO D.nexp i j b g x := by
-      simp [IntegralHeckeForms.zO, MonoidAlgebra.map_add]
+      simp [IntegralHeckeForms.zO, MonoidAlgebra.map_add (f := _)]
     rw [this]; exact add_mem hf hg
   | single g a =>
     have : IntegralHeckeForms.zO D.nexp i j b (MonoidAlgebra.single g a) x = a • (D.nexp.actG i j b g x) := by
@@ -705,7 +705,7 @@ theorem stmtLK (D : D7) {nch : NChoice D} (X : LiftErrorLocal.Loc D nch) : LinkL
         induction hF using Submodule.span_induction with
         | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
         | zero => rw [map_zero]; exact zero_mem _
-        | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+        | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
         | smul a x _ hx =>
           obtain ⟨o, ho⟩ := (X.embK_int w b (a : X.B.KO)).1 (vAdd_nonneg_int _ a)
           have : X.toFm w j b (a • x) = o • X.toFm w j b x := by

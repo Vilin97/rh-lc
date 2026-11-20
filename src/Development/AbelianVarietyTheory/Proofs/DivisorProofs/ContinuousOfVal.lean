@@ -494,7 +494,7 @@ theorem exists_isValChar (E : Type) [Field E] [NumberField E] [IsCMField E] {I :
   have hu1 : ∀ P, Over P v → toLoc P u ∈ cong (Valued.v : Valuation (P.adicCompletion E) ℤᵐ⁰) 1 := fun P hP => by
     have e : (toLoc P u : P.adicCompletion E) = 1 + algebraMap E _ (l : E) := by
       change algebraMap E _ (1 + (l : E)) = _
-      rw [map_add, map_one]
+      rw [map_add (f := _), map_one]
     refine ⟨?_, ?_⟩ <;> rw [e]
     · refine Valuation.map_one_add_of_lt _ ?_
       rw [val_alg, hval P hP, ← WithZero.exp_zero, WithZero.exp_lt_exp]; norm_num

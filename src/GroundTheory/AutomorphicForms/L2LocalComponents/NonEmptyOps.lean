@@ -62,7 +62,7 @@ theorem uAction_of_commute (S : E →L[ℂ] E) (hS : ∀ g, S ∘L π g = π g �
           h.isSmoothVector_of_commute π S hS (h.uAction π _ v).2⟩ := Subtype.ext (ihb v)
     rw [e, iha]
   | add a b iha ihb =>
-    rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, Submodule.coe_add, Submodule.coe_add,
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, Submodule.coe_add, Submodule.coe_add,
       iha, ihb, map_add]
 
 end IsExpLieAlgebra
@@ -141,7 +141,7 @@ theorem archOp_comm_archCompact {κ : archGroup K n → ℂ} (hκ : (isExpLieAlg
 
 def fixU (U : Subgroup (AdelicGLn.integralFiniteGL K n)) : Submodule ℂ (CuspL2 μ) where
   carrier := {y | ∀ u ∈ U, cuspRepT μ (finOne K n u) y = y}
-  add_mem' hx hy u hu := by rw [map_add, hx u hu, hy u hu]
+  add_mem' hx hy u hu := by rw [map_add (f := _), hx u hu, hy u hu]
   zero_mem' u _ := map_zero _
   smul_mem' c x hx u hu := by rw [map_smul, hx u hu]
 

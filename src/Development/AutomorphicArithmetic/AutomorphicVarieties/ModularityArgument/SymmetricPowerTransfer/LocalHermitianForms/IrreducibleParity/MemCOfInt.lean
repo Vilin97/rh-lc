@@ -289,7 +289,7 @@ private theorem exists_denominator_norm_span_finset [IsFractionRing O K] (f : Fi
   obtain ⟨⟨p, hp⟩, ⟨q, hq⟩⟩ := hint w hw
   obtain ⟨u, hu⟩ := hb τ (Finset.mem_insert_self _ _)
   refine ⟨(b : O) * p * p + u * p * q + (b : O) * q * q, ?_⟩
-  simp only [map_add, map_mul, map_pow, hp, hq, hu, Algebra.smul_def, norm_def]
+  simp only [map_add (f := _), map_mul, map_pow, hp, hq, hu, Algebra.smul_def, norm_def]
   ring
 
 private theorem exists_norm_ne_zero_norm_div_integral_of_isLat {Δ : K} (L : IsLoc O Δ) (hτ : τ ^ 2 - 4 ≠ 0) {S : Set (Etau K τ)}

@@ -20,7 +20,7 @@ theorem rTensor_pairing_eq_zero_of_flip_injective : ∀ (F : Type) [Field F] (B 
       simp_rw [← TensorProduct.smul_tmul, ← TensorProduct.sum_tmul, b.sum_repr]
     | add z₁ z₂ h₁ h₂ =>
       conv_lhs => rw [h₁, h₂]
-      simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib]
   rw [key y]
   refine Finset.sum_eq_zero fun j _ => ?_
   obtain ⟨v, hv⟩ := hsurj (b.coord j)

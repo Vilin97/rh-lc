@@ -36,7 +36,7 @@ def inv (a d : ℕ) (n : ι → ℕ) : Submodule ℂ (Pol ι d a) where
   add_mem' := by
     intro P Q hP hQ g
     simp only [Set.mem_setOf_eq] at *
-    rw [map_add, hP g, hQ g, smul_add]
+    rw [map_add (f := _), hP g, hQ g, smul_add]
   zero_mem' := by
     intro g
     simp

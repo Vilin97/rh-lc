@@ -61,7 +61,7 @@ theorem eq_of_formAt {R : Type} [CommRing R] [IsDomain R] (Dg : DegPre R) {W W' 
     rw [hn, hn', hnn]
   ext y z
   have e := hdiag (y + z)
-  simp only [map_add, LinearMap.add_apply] at e
+  simp only [map_add (f := _), LinearMap.add_apply] at e
   rw [hdiag y, hdiag z, hb z y, hb' z y] at e
   linarith
 

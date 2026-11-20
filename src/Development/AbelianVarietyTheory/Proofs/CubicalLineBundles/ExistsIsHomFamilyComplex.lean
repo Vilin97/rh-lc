@@ -57,7 +57,7 @@ theorem hermForm_of_isQuadLattice {g : ℕ} (hg : g = 1) {Λ : Submodule ℤ (Fi
       ring
     exact_mod_cast this
   let f : Λ →+ ℤ := AddMonoidHom.mk' (fun b => Ef e₂ b / Ef e₂ e₁) fun a b => by
-    rw [map_add, Int.add_ediv_of_dvd_left (hdvd _ _)]
+    rw [map_add (f := _), Int.add_ediv_of_dvd_left (hdvd _ _)]
   obtain ⟨a, ha⟩ := hb f.toIntLinearMap
   have h1 : Ef a e₁ = 1 := by
     rw [ha]
@@ -205,7 +205,7 @@ theorem exists_isHomFamily_complex (hT : ThetaUnifAV) (hW : Out.WeilSt) {D : Dat
     erw [m.act s, ← hex]
     rfl
   refine ⟨φ, fun v hv => ⟨hφ, fun a b => ext _ _ fun z => ?_, hlin, fun a => ?_, fun a _ => ?_⟩, fun a z => ?_⟩
-  · rw [MonObj.comp_mul, hφz, hφz, hφz, ← u.ex_add, ← map_add, ← smul_add, ← map_add]
+  · rw [MonObj.comp_mul, hφz, hφz, hφz, ← u.ex_add, ← map_add (f := _), ← smul_add, ← map_add (f := _)]
     rfl
   · obtain ⟨w, hw, -⟩ := hD₀ v hv
     have := hφ a

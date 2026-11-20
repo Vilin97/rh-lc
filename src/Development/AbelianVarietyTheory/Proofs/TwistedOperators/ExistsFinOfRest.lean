@@ -93,13 +93,13 @@ theorem schr_pureA_eq [Invertible (2 : AdeleRing (𝓞 F) F)] (ψ : AddChar (Ade
     congr 1
     · have e1 : evI F (mk (p1 (x ⬝ᵥ w.2 + h)) 0) = y ⬝ᵥ c + q h := by
         change q (x ⬝ᵥ w.2 + h) = _
-        rw [map_add, RingHom.map_dotProduct]
+        rw [map_add (f := _), RingHom.map_dotProduct]
         rfl
-      rw [e1, map_add, eChar_apply, ContinuousLinearMap.neg_apply, trL_apply]
+      rw [e1, map_add (f := _), eChar_apply, ContinuousLinearMap.neg_apply, trL_apply]
       congr 1
       push_cast
       ring
-    · rw [map_add, RingHom.map_dotProduct]
+    · rw [map_add (f := _), RingHom.map_dotProduct]
       rfl
   change ψ (x ⬝ᵥ w.2 + h) * (f (fun i => q ((x + w.1) i)) * g (fun i => p2 ((x + w.1) i))) =
     archS f c t k y * (finChar ψ (z ⬝ᵥ d + p2 h) * g (z + s))

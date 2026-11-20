@@ -127,7 +127,7 @@ theorem sig_TK (hR : IsURepOn (GG k r) R.σ) {g : MM k r} (hg : g ∈ GG k r) {v
     obtain ⟨a, ha, v₀, hv₀, rfl⟩ := hx
     exact Submodule.subset_span ⟨g * a, mul_mem' hg ha, v₀, hv₀, (sig_mul hR hg ha v₀).symm⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem sig_inner (hR : IsURepOn (GG k r) R.σ) {g : MM k r} (hg : g ∈ GG k r) (v w : R.H) :
@@ -144,7 +144,7 @@ theorem bessel_transport (hR : IsURepOn (GG k r) R.σ) {Wp : Type} [NormedAddCom
   refine ⟨fun v hv w hw => ?_, fun a v hv => ?_, fun h hh m hm v hv => ?_,
     GlobalTheory.SmMapAct.cw_comp (smMap_sigma hR ht) h4⟩
   · show B (R.σ t (v + w)) = _
-    rw [map_add, h1 _ (sig_sm hR ht hv) _ (sig_sm hR ht hw)]
+    rw [map_add (f := _), h1 _ (sig_sm hR ht hv) _ (sig_sm hR ht hw)]
   · show B (R.σ t (a • v)) = _
     rw [map_smul, h2 _ _ (sig_sm hR ht hv)]
   · show B (R.σ t (R.σ (h * m) v)) = _

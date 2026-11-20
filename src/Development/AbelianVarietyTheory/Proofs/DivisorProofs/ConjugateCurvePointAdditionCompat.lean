@@ -65,7 +65,7 @@ theorem sigR_locIdele {σ : E →ₐ[F] E} {c : E ≃+* E} (hc : ∀ x, σ x = c
     sigR (AF F) σ (locIdele F (conjSrc c w) x : AF F ⊗[F] E) =
       locIdele F w (Units.map (conjLoc c w).toMonoidHom x) := by
   classical
-  rw [coe_locIdele, coe_locIdele, RingHom.map_add, RingHom.map_sub, RingHom.map_one, SplitVal.sigR_extZero,
+  rw [coe_locIdele, coe_locIdele, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_one, SplitVal.sigR_extZero,
     SplitVal.sigR_extZero, RingHom.map_one]
   congr 2
   rw [RingEquiv.eq_symm_apply, GlobalTheory.DefU.ClassFin.finAdEquiv_sigR σ c hc, RingEquiv.apply_symm_apply]

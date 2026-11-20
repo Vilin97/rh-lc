@@ -41,7 +41,7 @@ theorem cS_span_le (S : Set D.host.E) :
     induction hy using Submodule.span_induction with
     | mem z hz => exact Submodule.subset_span ⟨z, hz, rfl⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul r a _ ha => rw [CU.conj_smul]; exact Submodule.smul_mem _ _ ha
   have h := key _ hx'
   rwa [Formalism.HC.HostRaw.conj_conj] at h

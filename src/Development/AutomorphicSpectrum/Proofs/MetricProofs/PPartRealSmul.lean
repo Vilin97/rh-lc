@@ -18,7 +18,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {Ψ : Type} [Fintype
 
 open Classical in
 theorem pPart_add (y y' : Fin (j + j') → ℂ) : C.pPart R τ (y + y') = C.pPart R τ y + C.pPart R τ y' := by
-  simp only [LatEmb.pPart, smul_add, Pi.single_add, map_add, smul_sub]
+  simp only [LatEmb.pPart, smul_add, Pi.single_add, map_add (f := _), smul_sub]
   abel
 
 open Classical in
@@ -66,7 +66,7 @@ theorem pPart_elim (A : Matrix (Fin (j + j')) (Sg j j') ℂ) (v : Fin j → ℂ)
     · simp [Finset.sum_apply, Pi.single_apply]
   change pPartL C R τ _ = ∑ i, v i • pPartL C R τ _ + ∑ b, x b • pPartL C R τ _
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hs, Matrix.mulVec_add, map_add, Matrix.mulVec_sum, Matrix.mulVec_sum, map_sum, map_sum]
+    rw [hs, Matrix.mulVec_add, map_add (f := _), Matrix.mulVec_sum, Matrix.mulVec_sum, map_sum, map_sum]
   simp [Matrix.mulVec_smul]
 
 end

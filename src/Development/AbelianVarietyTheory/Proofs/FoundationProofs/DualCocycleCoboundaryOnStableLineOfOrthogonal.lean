@@ -83,7 +83,7 @@ theorem dual_cob_on_line : GlobalTheory.Mem.LiteralAutomorphy.LitCoh → ∀ (l 
       refine ⟨(continuous_of_discreteTopology (f := ι)).comp a0.2.1, fun g h => ?_⟩
       show ι (a0.1 (g * h)) = ι (a0.1 g) +
         rhoS c n W hint S hN (locHom (S : Set Pl) B g) (Pi.single 0 (a0.1 h))
-      rw [a0.2.2 g h, map_add, hs]
+      rw [a0.2.2 g h, map_add (f := _), hs]
       rfl
     have hmem : Submodule.mkQ _ (⟨_, ha⟩ : Z1 _) ∈ ordCond c n W hint S hN B := by
       refine Submodule.mem_map.2 ⟨⟨_, ha⟩, (mem_ordZ _).2 ⟨0, fun s => ?_⟩, rfl⟩

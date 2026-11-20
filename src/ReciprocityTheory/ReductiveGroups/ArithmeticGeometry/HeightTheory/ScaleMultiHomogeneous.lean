@@ -201,7 +201,7 @@ theorem tauF_sHom (b : Fin (D + 1)) (hb : b ≠ 0) (u : Kˣ) (j₀ : Fin (N + 1)
     have e2 : sigP (K := K) (D := D) (N := N) b u (C a) = C a := scaleEquiv_C _ _ _
     rw [e2, e1, algebraMap_K_OmS, tauF_algebraMap', scaleEquiv_C]
   next p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   next p v hp =>
     simp only [map_mul, hp]
     congr 1

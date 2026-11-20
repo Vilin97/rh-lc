@@ -85,7 +85,7 @@ theorem brp_aeval_scale_rename {σ τ : Type} (f : σ → τ) (t : K) (Q : MvPol
     aeval (fun v => C t * X v) (rename f Q) = rename f (aeval (fun v => C t * X v) Q) := by
   induction Q using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp => simp only [map_mul, rename_X, aeval_X, rename_C, hp]
 
 theorem brp_trAct_scalar (lam : DomWeight n) (t : Kˣ) (F : Pol K Unit n) (hF : F ∈ VV K (oneW lam)) :
@@ -102,7 +102,7 @@ theorem brp_trAct_scalar (lam : DomWeight n) (t : Kˣ) (F : Pol K Unit n) (hF : 
       (Submodule.mem_inf.1 (hG default)).1
     rw [brp_aeval_scale_rename, brp_aeval_scale_whom _ _ hW, map_smul]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul a x _ hx => rw [map_smul, hx, smul_comm]
 
 end Scalar

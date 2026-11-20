@@ -23,7 +23,7 @@ theorem eq_zero_of_pow {σ : Type} [Fintype σ] (f : MvPolynomial σ ℂ) :
     ∀ l : MvPolynomial σ ℂ →ₗ[ℂ] ℂ, (∀ u n, l (lin u ^ n) = 0) → l f = 0 := by
   induction f using MvPolynomial.induction_on with
   | C a => intro l h; rw [← mul_one (MvPolynomial.C a), ← smul_eq_C_mul, map_smul, ← pow_zero (lin 0), h, smul_zero]
-  | add p q hp hq => intro l h; rw [map_add, hp l h, hq l h, add_zero]
+  | add p q hp hq => intro l h; rw [map_add (f := _), hp l h, hq l h, add_zero]
   | mul_X p i hp =>
     intro l h
     refine hp (l ∘ₗ LinearMap.mulRight ℂ (X i)) fun u n => ?_
@@ -32,7 +32,7 @@ theorem eq_zero_of_pow {σ : Type} [Fintype σ] (f : MvPolynomial σ ℂ) :
     have hc : c = 0 := Polynomial.funext fun s => by
       have := h (s • Pi.single i 1 + u) (n + 1)
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_smul, ← hx, add_pow, map_sum] at this
+        rw [map_add (f := _), map_smul, ← hx, add_pow, map_sum] at this
       rw [Polynomial.eval_zero, ← this, Polynomial.eval_finsetSum]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [Polynomial.eval_monomial, smul_pow, smul_mul_assoc, smul_mul_assoc, map_smul, ← nsmul_eq_mul' (X i ^ m * lin u ^ (n + 1 - m)), map_nsmul]
@@ -179,7 +179,7 @@ theorem noForm (m : ℤ) (hm : ((R + S : ℕ) : ℤ) < |m|) (hr : min R S < min 
       · have : ¬ b.isLeft = t := fun hb => hab (by subst ha; cases a <;> cases b <;> simp_all [sameBlock])
         simp [Matrix.vecMulVec_apply, (h0 b this).2]
       · simp [Matrix.vecMulVec_apply, (h0 a ha).1]) f
-    rw [fockAction_first_eq t v w h0 h1, map_add, map_smul, Matrix.trace_vecMulVec, dotProduct, h1, smul_eq_mul] at this
+    rw [fockAction_first_eq t v w h0 h1, map_add (f := _), map_smul, Matrix.trace_vecMulVec, dotProduct, h1, smul_eq_mul] at this
     rw [Complex.ofReal_sub]
     push_cast at this ⊢
     linear_combination this

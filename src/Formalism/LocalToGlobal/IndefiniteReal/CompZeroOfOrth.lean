@@ -147,7 +147,7 @@ def ipA (hHP : HermPosLev θ P M μ 𝓕) : Minf θ P M →ₗ⋆[ℂ] Minf θ P
       have h3 := hp.herm ⟨y', hy'⟩ ⟨x, hx⟩
       have h4 := hp.add ⟨y, hy⟩ ⟨y', hy'⟩ ⟨x, hx⟩
       simp only [Submodule.coe_add] at h1 h2 h3 h4 ⊢
-      rw [← h1, ← h2, ← h3, h4, map_add])
+      rw [← h1, ← h2, ← h3, h4, map_add (f := _)])
     (fun s x y => by
       obtain ⟨N, hp, hx, hy, -⟩ := hp3 μ 𝓕 hHP x y y
       have h1 := hp.herm ⟨s • (y : Mult.MMap M), Submodule.smul_mem _ s hy⟩ ⟨x, hx⟩

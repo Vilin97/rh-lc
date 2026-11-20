@@ -31,7 +31,7 @@ theorem core {G : Type} [Group G] {W U : Type} [AddCommGroup W] [Module ℂ W] [
     refine MonoidAlgebra.induction_linear r ?_ ?_ ?_
     · rw [zero_smul, zero_smul, map_zero]
     · intro a b ha hb
-      rw [add_smul, map_add, ha, hb, add_smul]
+      rw [add_smul, map_add (f := _), ha, hb, add_smul]
     · intro g c
       show F ((MonoidAlgebra.lift ℂ (Module.End ℂ U) G σ (MonoidAlgebra.single g c)) v) =
         (MonoidAlgebra.lift ℂ (Module.End ℂ W) G τ (MonoidAlgebra.single g c)) (F v)

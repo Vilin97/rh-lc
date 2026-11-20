@@ -98,7 +98,7 @@ theorem rt_Eop (y : GL (Fin a) (Cinf E)) (τ : E →+* ℂ) (i j : Fin a) :
   generalize coord τ (y.val k i) * coord τ ((y⁻¹).val j l) = c
   have hL : ∀ w : ℂ, lieS E a k l (atEmb τ w) =
       (w.re : ℂ) • lieS E a k l (atEmb τ 1) + (w.im : ℂ) • lieS E a k l (atEmb τ Complex.I) := fun w => by
-    rw [atEmb_eq τ w, map_add, map_smul, map_smul]
+    rw [atEmb_eq τ w, map_add (f := _), map_smul, map_smul]
     rfl
   rw [hL (c * 1), hL (c * Complex.I), Eop]
   conv_rhs => rw [← Complex.re_add_im c]

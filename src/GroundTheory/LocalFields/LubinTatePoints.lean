@@ -468,7 +468,7 @@ def Hom.pointMap (φ : Hom F G) : IdealPoint Ω F →+ IdealPoint Ω G :=
       apply IdealPoint.ext
       simp only [IdealPoint.val_mk, IdealPoint.val_add]
       have hx := fin_two_valuation_lt_one a b
-      rw [← psEval_powerSeries_subst F.zero_constantCoeff _ _ hx, φ.map_add,
+      rw [← psEval_powerSeries_subst F.zero_constantCoeff _ _ hx, φ.map_add (f := _),
         psEval_subst' _ _ _ hx]
       · congr 1
         funext i

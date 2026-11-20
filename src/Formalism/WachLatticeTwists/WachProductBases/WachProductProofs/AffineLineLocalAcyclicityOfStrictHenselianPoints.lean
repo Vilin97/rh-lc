@@ -36,14 +36,14 @@ theorem cokernel_killed_holds : CokernelKilledByPower := by
     obtain ⟨d, rfl⟩ := hsurj n
     obtain ⟨k, n₁, hn₁, d', hd⟩ := hdens d
     have h1 : l ^ a • f d' = π ^ k • f d - f n₁ := by
-      rw [← map_smul, ← map_smul, hd, map_add]
+      rw [← map_smul, ← map_smul, hd, map_add (f := _)]
       abel
     obtain ⟨j, hj⟩ := hsat' a (f d') ⟨0, by
       rw [pow_zero, one_smul, h1]
       exact N₂.sub_mem (N₂.smul_mem _ hn) (hfN _ hn₁)⟩
     obtain ⟨n₁', hn₁', hf'⟩ := hl _ hj
     refine ⟨j + k, π ^ j • n₁ + n₁', N₁.add_mem (N₁.smul_mem _ hn₁) hn₁', ?_⟩
-    rw [map_add, map_smul, hf', pow_add, mul_smul, smul_comm (l ^ a), h1, smul_sub]
+    rw [map_add (f := _), map_smul, hf', pow_add, mul_smul, smul_comm (l ^ a), h1, smul_sub]
     abel
   have huni : ∀ s : Finset D₂, (∀ x ∈ s, x ∈ N₂) →
       ∃ c : ℕ, ∀ x ∈ s, ∃ n₁ ∈ N₁, f n₁ = π ^ c • x := by
@@ -93,7 +93,7 @@ theorem aeval_intertwine_on (T : Submodule O M) (f : M →ₗ[O] M') (g : M →�
       intro d hd
       rw [pow_succ, pow_succ, Module.End.mul_apply, Module.End.mul_apply, ih _ (hT d hd), h d hd]
   induction q using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial n a =>
     simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply,
       map_smul, hpow n d hd]
@@ -110,7 +110,7 @@ theorem aeval_mem (T : Submodule O M) (g : M →ₗ[O] M) (h : ∀ d ∈ T, g d 
       exact ih _ (h d hd)
   induction q using Polynomial.induction_on' with
   | add p q hp hq =>
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     exact T.add_mem hp hq
   | monomial n a =>
     simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply]

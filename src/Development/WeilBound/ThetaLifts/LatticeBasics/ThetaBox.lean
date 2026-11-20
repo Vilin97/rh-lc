@@ -140,7 +140,7 @@ theorem lD_unit {G : Type} [Group G] {om : G →* Module.End ℂ ((κ → AF F) 
     rw [lD_sq h, lD_sq (hp g φ h), hu _ inferInstance g φ h]
   have k1 := k _ (add_mem h h')
   have k2 := k _ (add_mem h (Submodule.smul_mem _ Complex.I h'))
-  simp only [map_add, map_smul, star_add, star_smul, GlobalTheory.SchwartzBox.boxFun_add_left, GlobalTheory.SchwartzBox.boxFun_add_right,
+  simp only [map_add (f := _), map_smul, star_add, star_smul, GlobalTheory.SchwartzBox.boxFun_add_left, GlobalTheory.SchwartzBox.boxFun_add_right,
     GlobalTheory.SchwartzBox.boxFun_smul_left, GlobalTheory.SchwartzBox.boxFun_smul_right, k φ h, k φ' h', smul_eq_mul,
     Complex.star_def, Complex.conj_I] at k1 k2
   linear_combination (1 / 2) * k1 + (Complex.I / 2) * k2 + (1 / 2 * (lD F κ (boxFun (om g φ) (star (om g φ'))) -

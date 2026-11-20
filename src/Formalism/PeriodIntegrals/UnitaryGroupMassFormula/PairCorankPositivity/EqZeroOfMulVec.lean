@@ -84,7 +84,7 @@ theorem linIndep {S : HSpace E} {r : ℕ} {T T' : E} (F : FlagG S r T) (F' : Fla
     intro c
     have h0 := congrArg (S.hT (F.fvec c)) hsum
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, LinearMap.map_smulₛₗ, RingHom.id_apply, map_zero,
+      simp only [map_add (f := _), map_sum, LinearMap.map_smulₛₗ, RingHom.id_apply, map_zero,
       smul_eq_mul, gram_fvec] at h0
     have e1 : ∑ i, a i * (if c = Fin.last r ∧ i = Fin.last r then -T else 0) =
         if c = Fin.last r then -T * a (Fin.last r) else 0 := by
@@ -105,7 +105,7 @@ theorem linIndep {S : HSpace E} {r : ℕ} {T T' : E} (F : FlagG S r T) (F' : Fla
     intro d
     have h0 := congrArg (S.hT (F'.fvec d)) hsum
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, LinearMap.map_smulₛₗ, RingHom.id_apply, map_zero,
+      simp only [map_add (f := _), map_sum, LinearMap.map_smulₛₗ, RingHom.id_apply, map_zero,
       smul_eq_mul, gram_fvec] at h0
     have e1 : ∑ j, b j * (if d = Fin.last r ∧ j = Fin.last r then -T' else 0) =
         if d = Fin.last r then -T' * b (Fin.last r) else 0 := by

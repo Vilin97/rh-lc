@@ -25,7 +25,7 @@ theorem coeff_bind₁_scale {ι R : Type} [CommRing R] (a : ι → R) (q : MvPol
       ring
     · simp
   · intro p q hp hq
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {Dw : Datum H}
 

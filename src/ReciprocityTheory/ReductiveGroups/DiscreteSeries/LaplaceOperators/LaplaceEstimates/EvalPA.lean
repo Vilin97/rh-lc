@@ -49,7 +49,7 @@ theorem capEntry_resE {n : ℕ} (E : Fin n → Fin n → Module.End ℂ M) (S : 
     (hS : ∀ a b, ∀ x ∈ S, E a b x ∈ S) (t : ℂ) (a b : Fin n) :
     S.subtype ∘ₗ Capelli.capEntry (resE E S hS) t a b = Capelli.capEntry E t a b ∘ₗ S.subtype := by
   ext m
-  simp only [Capelli.capEntry, LinearMap.comp_apply, LinearMap.add_apply, map_add, resE,
+  simp only [Capelli.capEntry, LinearMap.comp_apply, LinearMap.add_apply, map_add (f := _), resE,
     Submodule.subtype_apply, LinearMap.coe_restrict_apply]
   split_ifs <;> simp
 

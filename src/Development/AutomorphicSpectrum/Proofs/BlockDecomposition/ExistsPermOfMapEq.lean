@@ -276,7 +276,7 @@ theorem kill_list {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
           (List.map (fun p => etr E p.1 - p.2 • (1 : Module.End ℂ V)) L₁).prod (T q) := by
         rw [List.map_append, List.prod_append]
         simp only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil, mul_one, Module.End.mul_apply]
-        rw [← hT, hpq, map_add, hkL p hp, zero_add]
+        rw [← hT, hpq, map_add (f := _), hkL p hp, zero_add]
       rw [e]
       exact hk₁ _ hTq
 
@@ -372,7 +372,7 @@ theorem evd_wt (E : Fin n → Fin n → Module.End ℂ V) (τ : Fin n → ℝ) (
   | grade0 r => simp [evd, Algebra.algebraMap_eq_smul_one]
   | grade1 c => simp [evd]; exact hz c
   | mul a b ha hb => rw [map_mul, map_mul, Module.End.mul_apply, hb, map_smul, ha, smul_smul, mul_comm]
-  | add a b ha hb => rw [map_add, map_add, LinearMap.add_apply, ha, hb, add_smul]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, ha, hb, add_smul]
 
 theorem ref_all (x : Cn n V) : Ref (allT n) (allT n) x := fun _ _ _ _ h => h
 
@@ -486,7 +486,7 @@ theorem chain_list (E : Fin n → Fin n → Module.End ℂ V) (hE : GlRel E) (j 
         lift n T (lift n (List.map (fun p => etr E p.1 - p.2 • (1 : Module.End ℂ V)) L).prod z) := by
       funext A
       simp [hT]
-    rw [e, hw2, map_add, map_smul, hz1, CompanionTheory.D.LK.lift_bd T E E hTE, map_add, map_smul, smul_add, smul_smul, add_assoc]
+    rw [e, hw2, map_add (f := _), map_smul, hz1, CompanionTheory.D.LK.lift_bd T E E hTE, map_add (f := _), map_smul, smul_add, smul_smul, add_assoc]
 
 end
 

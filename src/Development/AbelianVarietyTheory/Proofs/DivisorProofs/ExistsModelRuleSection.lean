@@ -93,7 +93,7 @@ theorem flatCoord_ne_zero (hP : IsPeriod D ty P) (hE : ∀ x y, (hermForm Hm (P 
     simp only [hz₀, tyAct, Pi.smul_apply, smul_eq_mul, Finset.sum_apply, Finset.mul_sum, mul_left_comm _ (c _), this]
   let f : (Fin g → ℂ) →ₗ[ℝ] ℂ :=
     { toFun z := -(Real.pi : ℂ) * hermForm Hm z₀ z + lam (pr z)
-      map_add' z w := by rw [hermForm_add_right, map_add, map_add]; ring
+      map_add' z w := by rw [hermForm_add_right, map_add (f := _), map_add (f := _)]; ring
       map_smul' r z := by
         rw [← Complex.coe_smul, hermForm_smul_right, map_smul, map_smul]
         simp only [Complex.star_def, Complex.conj_ofReal, smul_eq_mul, RingHom.id_apply, Complex.real_smul]; ring }
@@ -130,7 +130,7 @@ theorem flatCoord_ne_zero (hP : IsPeriod D ty P) (hE : ∀ x y, (hermForm Hm (P 
       · exact Fintype.linearIndependent_iff.1 hx (fun k => t (some k)) ht i)
     have h2 := congrArg (fun y => f (P y)) ht
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, fa, Option.casesOn'_none, Option.casesOn'_some, fx, mul_zero, Finset.sum_const_zero, add_zero, map_zero] at h2
+      simp only [map_add (f := _), map_sum, fa, Option.casesOn'_none, Option.casesOn'_some, fx, mul_zero, Finset.sum_const_zero, add_zero, map_zero] at h2
     exact (mul_eq_zero.1 h2).resolve_left (by simpa using h1)
   have both : ∀ z, hermForm Hm z₀ z = 0 ∧ lam (pr z) = 0 := fun z => by
     have h1 := (hf z).symm.trans (LinearMap.congr_fun fz z)

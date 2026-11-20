@@ -90,7 +90,7 @@ theorem trace_nondeg [Algebra.IsSeparable F E] (z : R ⊗[F] E)
     intro k z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy, add_mul]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy, add_mul]
     | tmul a e =>
       rw [Algebra.TensorProduct.tmul_mul_tmul, trace_tmul, Algebra.TensorProduct.basis_repr_tmul]
       simp [b', LinearMap.BilinForm.dualBasis_repr_apply, Algebra.traceForm_apply]
@@ -103,7 +103,7 @@ omit [FiniteDimensional F E] in
 theorem sigR_sigR (hσ : ∀ x, σ (σ x) = x) (z : R ⊗[F] E) : sigR R σ (sigR R σ z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e =>
     show a ⊗ₜ[F] σ (σ e) = _
     rw [hσ]
@@ -112,7 +112,7 @@ theorem trace_sigR (z : R ⊗[F] E) :
     Algebra.trace R (R ⊗[F] E) (sigR R σ z) = Algebra.trace R (R ⊗[F] E) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e =>
     show Algebra.trace R (R ⊗[F] E) (a ⊗ₜ[F] σ e) = _
     rw [trace_tmul, trace_tmul]
@@ -125,7 +125,7 @@ variable {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
 omit [FiniteDimensional F E] in
 theorem BR_add (X X' Y : Fin 1 → Fin M → R ⊗[F] E) :
     BR R σ J (X + X') Y = BR R σ J X Y + BR R σ J X' Y := by
-  simp only [BR, hR, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [BR, hR, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 omit [FiniteDimensional F E] in
 theorem BR_smul (t : R) (X Y : Fin 1 → Fin M → R ⊗[F] E) :
@@ -198,12 +198,12 @@ theorem existsUnique_selfDual_inf : ∀ (F E : Type) [Field F] [NumberField F] [
   have hpc : Continuous (psiInf F ψ) := hψ.1.comp (continuous_id.prodMk continuous_const)
   obtain ⟨L₀, hL₀c, hL₀a, hL₀⟩ := exists_log_char (fun u => psiInf F ψ (a.symm u)) (hpc.comp ha')
     (fun u => hψ.2.1 _) (fun u v => by
-      simp only [psiInf, map_add, ← AddChar.map_add_eq_mul]
+      simp only [psiInf, map_add (f := _), ← AddChar.map_add_eq_mul]
       congr 1
       exact Prod.ext rfl (add_zero _).symm)
   let L : Ainf F → ℝ := fun x => L₀ (a x)
   have hLc : Continuous L := hL₀c.comp ha
-  have hLa : ∀ x y, L (x + y) = L x + L y := fun x y => by simp only [L, map_add, hL₀a]
+  have hLa : ∀ x y, L (x + y) = L x + L y := fun x y => by simp only [L, map_add (f := _), hL₀a]
   have hL : ∀ x, psiInf F ψ x = Complex.exp (2 * Real.pi * Complex.I * ((L x : ℝ) : ℂ)) :=
     fun x => by simpa using hL₀ (a x)
   have hLn : ∀ x, (∀ y, L (x * y) = 0) → x = 0 := fun x h => hnd x fun y => by simp [hL, h]

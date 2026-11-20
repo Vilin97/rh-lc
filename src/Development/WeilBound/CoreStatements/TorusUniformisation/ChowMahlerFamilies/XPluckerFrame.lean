@@ -133,7 +133,7 @@ theorem genDual_span {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (R₀ 
       rw [map_zero]
       exact R.zero_mem
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact R.add_mem hx hy
     | neg x _ hx =>
       rw [map_neg]

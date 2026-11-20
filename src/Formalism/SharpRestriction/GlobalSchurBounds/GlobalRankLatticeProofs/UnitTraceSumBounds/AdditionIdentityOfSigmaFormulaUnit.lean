@@ -23,7 +23,7 @@ theorem lamPhi_int (n : ℤ) : lamC lam (D.host.φ₀ (n : D.host.E)) = (n : ℂ
 
 theorem tauK_add (a b : D.host.K) : tauK D lam (a + b) = tauK D lam a + tauK D lam b := by
   unfold tauK
-  rw [lamC_hom_lemma, lamC_hom_lemma, lamC_hom_lemma, ← map_add]
+  rw [lamC_hom_lemma, lamC_hom_lemma, lamC_hom_lemma, ← map_add (f := _)]
   congr 1
   ext
   simp
@@ -42,7 +42,7 @@ private lemma lamC_hom_lemma_2 (z : D.host.E) :
 
 theorem tauKc_add (a b : D.host.K) : tauKc D lam (a + b) = tauKc D lam a + tauKc D lam b := by
   unfold tauKc
-  rw [lamC_hom_lemma_2, lamC_hom_lemma_2, lamC_hom_lemma_2, ← map_add]
+  rw [lamC_hom_lemma_2, lamC_hom_lemma_2, lamC_hom_lemma_2, ← map_add (f := _)]
   congr 1
   ext
   simp
@@ -469,8 +469,8 @@ theorem coeff_one_subst (f s : PowerSeries ℂ_[p]) (hf : PowerSeries.constantCo
   have c0 : ∀ t : PowerSeries ℂ_[p], PowerSeries.constantCoeff (PowerSeries.subst f t : PowerSeries ℂ_[p]) =
       PowerSeries.constantCoeff t := by
     intro t
-    rw [key t, map_add, map_mul, hf, mul_zero, zero_add, PowerSeries.constantCoeff_C]
-  rw [key s, map_add, PowerSeries.coeff_C, if_neg one_ne_zero, add_zero, PowerSeries.coeff_mul,
+    rw [key t, map_add (f := _), map_mul, hf, mul_zero, zero_add, PowerSeries.constantCoeff_C]
+  rw [key s, map_add (f := _), PowerSeries.coeff_C, if_neg one_ne_zero, add_zero, PowerSeries.coeff_mul,
     Finset.Nat.antidiagonal_succ]
   simp only [Finset.Nat.antidiagonal_zero, Finset.map_singleton, Finset.sum_cons, Finset.sum_singleton]
   simp [PowerSeries.coeff_zero_eq_constantCoeff_apply, hf, c0]

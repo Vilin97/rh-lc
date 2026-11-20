@@ -282,7 +282,7 @@ lemma span_fixed_integral_real_parts : Submodule.span ℝ {p : X.Ψ → ℝ | �
     rw [LinearMap.mem_ker, hlam] at h
     have e : ∀ τ : X.Ψ, (τ.1 ((x : E) + cc (x : E))).re = 2 * (τ.1 (x : E)).re := by
       intro τ
-      rw [map_add, show τ.1 (cc (x : E)) = conj (τ.1 (x : E)) from
+      rw [map_add (f := _), show τ.1 (cc (x : E)) = conj (τ.1 (x : E)) from
         NumberField.IsCMField.complexEmbedding_complexConj E τ.1 (x : E), Complex.add_re, Complex.conj_re]
       ring
     simp only [e] at h

@@ -91,7 +91,7 @@ theorem sub_const_mem_orig (P : MvPolynomial ι R) :
   next p q hp hq =>
     have h : p + q - C (MvPolynomial.constantCoeff (p + q)) =
         (p - C (MvPolynomial.constantCoeff p)) + (q - C (MvPolynomial.constantCoeff q)) := by
-      simp only [map_add]
+      simp only [map_add (f := _)]
       ring
     rw [h]
     exact Ideal.add_mem _ hp hq

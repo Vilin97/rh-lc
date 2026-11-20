@@ -65,7 +65,7 @@ theorem exists_isHecke : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [
       lie := hlie
       lieRank := hlieR
       eta := fun x => o.eta (g x) ≫ ψ
-      eta_add := fun x y => by rw [map_add, o.eta_add, mul_comp]
+      eta_add := fun x y => by rw [map_add (f := _), o.eta_add, mul_comp]
       eta_lin := fun c' x => by
         show o.eta (g (c' • x)) ≫ ψ = (o.eta (g x) ≫ ψ) ≫ act'.act c'
         rw [map_smul, o.eta_lin, Category.assoc, hcomp, Category.assoc]

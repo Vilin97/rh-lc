@@ -126,7 +126,7 @@ private theorem good_n (b : F) : Good W (nF b) := by
   rw [hψ, one_mul]
   congr 1
   funext i
-  fin_cases i <;> simp [Function.update, map_add, map_mul]
+  fin_cases i <;> simp [Function.update, map_add (f := _), map_mul]
 
 private theorem good_w : Good W (wF F) := by
   intro r φ

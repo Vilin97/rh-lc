@@ -46,13 +46,13 @@ def tensorIntEquiv : A ⊗[ℤ] K ≃+* A ⊗[R] K :=
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a k => simp [ofR_tmul, toR_tmul]
-      | add x y hx hy => simp only [map_add, RingHom.comp_apply, RingHom.id_apply] at hx hy ⊢; rw [hx, hy])
+      | add x y hx hy => simp only [map_add (f := _), RingHom.comp_apply, RingHom.id_apply] at hx hy ⊢; rw [hx, hy])
     (by
       refine RingHom.ext fun x => ?_
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a k => simp [ofR_tmul, toR_tmul]
-      | add x y hx hy => simp only [map_add, RingHom.comp_apply, RingHom.id_apply] at hx hy ⊢; rw [hx, hy])
+      | add x y hx hy => simp only [map_add (f := _), RingHom.comp_apply, RingHom.id_apply] at hx hy ⊢; rw [hx, hy])
 
 lemma tensorIntEquiv_tmul (a : A) (k : K) : tensorIntEquiv R A K hR (a ⊗ₜ[ℤ] k) = a ⊗ₜ[R] k := toR_tmul R A K a k
 

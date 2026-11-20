@@ -106,7 +106,7 @@ theorem stab_coordLat : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSp
         · simp only [th1, inv_one, map_one, one_smul, map_sub]
           exact (coordLat S).sub_mem (gf' g h2 b) (gf g h1 b)
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add]; exact (coordLat S).add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact (coordLat S).add_mem hx hy
       | smul c x _ hx =>
         have e : g (c • x) = c • g x := by
           first
@@ -125,7 +125,7 @@ theorem stab_coordLat : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSp
       have h1 := hM 1 (one_smul _ _) (one_smul _ _) m hmM
       have : w = (m + w) - m := by abel
       rw [this]; exact (coordLat S).sub_mem hx h1
-    rw [map_add, (GlobalTheory.HL.FrameStab.stab_eq L r k S).1 g hgSt w hw]
+    rw [map_add (f := _), (GlobalTheory.HL.FrameStab.stab_eq L r k S).1 g hgSt w hw]
     exact (coordLat S).add_mem (hM g hgf hgf' m hmM) hw'
   ext h
   simp only [Subgroup.mem_inf, MulAction.mem_stabilizer_iff, Frames.K0]

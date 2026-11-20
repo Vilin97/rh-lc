@@ -53,14 +53,14 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] [Pe
     · subst hj; omega
     · omega
   have hβdeg : β.degree + 1 = N := by
-    rw [← hα, hαβ, map_add, Finsupp.degree_single]
+    rw [← hα, hαβ, map_add (f := _), Finsupp.degree_single]
   have hβ0 : β ≠ 0 := by
     rintro h0
     rw [h0, map_zero] at hβdeg
     omega
   set γ : Fin d ⊕ Fin d →₀ ℕ := β.mapDomain Sum.inl + Finsupp.single (Sum.inr i) 1 with hγdef
   have hγdeg : γ.degree = N := by
-    rw [hγdef, map_add, Finsupp.degree_mapDomain, Finsupp.degree_single, hβdeg]
+    rw [hγdef, map_add (f := _), Finsupp.degree_mapDomain, Finsupp.degree_single, hβdeg]
   have hγi : γ (Sum.inr i) = 1 := by
     rw [hγdef, Finsupp.add_apply, Finsupp.mapDomain_of_notMem_range, Finsupp.single_eq_same, zero_add]
     rintro ⟨j, hj⟩
@@ -76,7 +76,7 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] [Pe
   have hlead := ((GlobalTheory.T.coboundary_eq_additive_leading_terms (Fr p k) d (fun j => lift p (μ j)) N hlin).1 h hh γ).2
     hγdeg.le
   have hhom := (GlobalTheory.T.additive_formal_group_coboundary_homogeneous (Fr p k) d N).2.2.2 h β i hβ0
-  rw [formalCoboundary_add (fun j => constantCoeff_lift p (hμ.const j)), map_add, hwg, hlead,
+  rw [formalCoboundary_add (fun j => constantCoeff_lift p (hμ.const j)), map_add (f := _), hwg, hlead,
     hhom, ← hαβ] at hwt
   refine ⟨wt - wg, ?_⟩
   have hai : α i = β i + 1 := by

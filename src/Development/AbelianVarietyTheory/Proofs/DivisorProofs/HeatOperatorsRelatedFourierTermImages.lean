@@ -51,7 +51,7 @@ theorem images_eq : ∀ (R : Type) [CommRing R] [IsDomain R] (Q : DegPre R) (O :
       rw [← rsT_of_le hO, rsT_rsT le_rfl hO]
     rw [rsT_of_le hO, rsT_of_le hO]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [op, map_add, map_sub, map_mul, map_sum, map_pow, map_natCast, map_ofNat, hd, hdd', hc, hp]
+      simp only [op, map_add (f := _), map_sub, map_mul, map_sum, map_pow, map_natCast, map_ofNat, hd, hdd', hc, hp]
 
   have actO : ∀ (hh : Heat Y.H Y.q.left Q.P.L dd D) (τ τ' : SecM Y.q.left Q.P.L k), hh.Acts k τ τ' →
       ∀ (i : hh.J) (O : Y.H.left.Opens), O ≤ hh.W i →

@@ -169,7 +169,7 @@ theorem logTail_succ {ρ : Set.Ioo (0 : ℝ) 1} {z : 𝔸} {a : ℝ} (ha0 : 0 < 
   have h2 := (tendsto_const_nhds (x := awayToExt p ρ (logCoeff p k))).add
     ((tendsto_const_nhds (x := awayToExt p ρ z)).mul (tendsto_logTail ha0 ha1 hz (k + 1)))
   refine tendsto_nhds_unique h1 (h2.congr fun N => ?_)
-  simp only [Function.comp_apply, logPSum_succ, map_add, map_mul]
+  simp only [Function.comp_apply, logPSum_succ, map_add (f := _), map_mul]
 
 theorem res_logTail {ρ0 ρ1 : Set.Ioo (0 : ℝ) 1} {z : 𝔸} (h : (ρ1 : ℝ) ≤ ρ0) {a b : ℝ} (ha0 : 0 < a) (ha1 : a < 1)
     (hz : ∀ σ : Set.Ioc (0 : ℝ) ρ0, (𝓣).extNorm ρ0 σ (awayToExt p ρ0 z) ≤ a)
@@ -188,7 +188,7 @@ theorem logTail_eq_sum {ρ : Set.Ioo (0 : ℝ) 1} {z : 𝔸} {a : ℝ} (ha0 : 0 
   induction m with
   | zero => simp
   | succ m ih =>
-    rw [ih, logTail_succ ha0 ha1 hz (m + 1), Finset.sum_range_succ, map_add, map_mul, map_pow]
+    rw [ih, logTail_succ ha0 ha1 hz (m + 1), Finset.sum_range_succ, map_add (f := _), map_mul, map_pow]
     ring
 
 end Series
@@ -361,7 +361,7 @@ theorem map_tTildeExt (ρ : Set.Ioo (0 : ℝ) 1) (g : (𝓣).RobbaExt ρ →+* �
   have e : g (tTildeExt p ε ρ) - logOnePlus 𝔪 w hw =
       g (awayToExt p ρ (muA p ε)) ^ (n + 1) * g (logTail p ρ (muA p ε) (n + 1)) -
         (logOnePlus 𝔪 w hw - ∑ i ∈ Finset.Ico 1 (n + 1), algebraMap ℚ 𝔹 ((-1) ^ (i + 1) / i) * w ^ i) := by
-    rw [tTildeExt_eq_sum hε hζ ρ n, map_add, map_mul, map_pow, hsum]
+    rw [tTildeExt_eq_sum hε hζ ρ n, map_add (f := _), map_mul, map_pow, hsum]
     ring
   rw [e]
   exact sub_mem h2 h1

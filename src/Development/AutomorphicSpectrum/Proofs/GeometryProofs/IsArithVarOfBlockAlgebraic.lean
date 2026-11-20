@@ -101,7 +101,7 @@ theorem isArithVar_of_isAlgebraic_image (K : Type) [Fintype K] (ι : K → Type)
     horizontal y, ?_⟩
   rw [ringKrullDim_coord y c' hc', htr]
   generalize Algebra.trdeg ℤ ↥(blockFnField (y ∘ v)) = T at e1 ⊢
-  simp only [map_add, map_natCast] at e1 ⊢
+  simp only [map_add (f := _), map_natCast] at e1 ⊢
   generalize Cardinal.toENat T = e at e1 ⊢
   induction e using ENat.recTopCoe with
   | top =>

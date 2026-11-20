@@ -13,7 +13,7 @@ variable {p : ℕ} [Fact p.Prime]
 theorem Gv_algHom {R R' : Type*} [CommRing R] [Algebra ℂ_[p] R] [CommRing R'] [Algebra ℂ_[p] R']
     (φ : R →ₐ[ℂ_[p]] R') (W : WeierstrassCurve ℂ_[p]) (u v : R) :
     φ (Gv W u v) = Gv W (φ u) (φ v) := by
-  simp [Gv, map_add, map_mul, map_sub, map_pow, AlgHom.commutes, map_ofNat]
+  simp [Gv, map_add (f := _), map_mul, map_sub, map_pow, AlgHom.commutes, map_ofNat]
 
 theorem omega_at {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h : IsWq W wq)
     {r : MvPowerSeries (Fin 2) ℂ_[p]} (hr : MvPowerSeries.constantCoeff r = 0) :
@@ -36,7 +36,7 @@ theorem root_rel {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h : 
   rw [hw] at hω
   have hD := congrArg D hG
   rw [map_zero] at hD
-  simp only [G, map_add, map_sub, Derivation.leibniz, Derivation.leibniz_pow,
+  simp only [G, map_add (f := _), map_sub, Derivation.leibniz, Derivation.leibniz_pow,
     Derivation.map_algebraMap, smul_eq_mul, nsmul_eq_mul, smul_zero, zero_smul, mul_zero, zero_mul,
     add_zero, zero_add, Nat.cast_ofNat] at hD
   simp only [Gv] at hω
@@ -132,7 +132,7 @@ theorem abel {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h : IsWq
       PowerSeries.subst (Xv 1 : MvPowerSeries (Fin 2) ℂ_[p]) (flog W wq) +
       PowerSeries.subst (Z3 W wq) (flog W wq) with hFdef
   have hF : ∀ j, MvPowerSeries.pderiv (R := ℂ_[p]) j F = 0 := fun j => by
-    rw [hFdef, map_add, map_add, hsub _ hc0, hsub _ hc1, hsub _ hc2]
+    rw [hFdef, map_add (f := _), map_add (f := _), hsub _ hc0, hsub _ hc1, hsub _ hc2]
     exact key j
   obtain ⟨g, hg⟩ := PowerSeries.X_dvd_iff.2 (abel_cc_flog W wq)
   have hcc : ∀ r : MvPowerSeries (Fin 2) ℂ_[p], MvPowerSeries.constantCoeff r = 0 →
@@ -146,7 +146,7 @@ theorem abel {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h : IsWq
   rw [map_zero]
   by_cases he : e = 0
   · subst he
-    rw [MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hFdef, map_add, map_add, hcc _ hc0, hcc _ hc1,
+    rw [MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hFdef, map_add (f := _), map_add (f := _), hcc _ hc0, hcc _ hc1,
       hcc _ hc2, add_zero, add_zero]
   · obtain ⟨i, hi⟩ := Finsupp.ne_iff.1 he
     have hle : Finsupp.single i 1 ≤ e := Finsupp.single_le_iff.2 (Nat.one_le_iff_ne_zero.2 hi)

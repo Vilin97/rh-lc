@@ -86,7 +86,7 @@ theorem baseChange_avg_of_weight (hu : u * (Fintype.card T : o) = 1) (A : Type) 
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a m => simp [avg_apply, TensorProduct.tmul_sum, TensorProduct.tmul_smul]
-    | add y z hy hz => simp only [map_add, hy, hz, smul_add, Finset.sum_add_distrib]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz, smul_add, Finset.sum_add_distrib]
   rw [h]
   simp only [hx, algebraMap_smul, smul_smul, Units.inv_mul, one_smul, Finset.sum_const,
     Finset.card_univ]
@@ -190,7 +190,7 @@ theorem finiteAbelian_weightDecomposition :
         rw [LinearMap.baseChange_tmul]
         exact Submodule.tmul_mem_baseChange_of_mem a (hmem c m)
       | add y z hy hz =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hy hz
     · rw [Submodule.baseChange_eq_span, Submodule.span_le]
       rintro _ ⟨m, hm, rfl⟩

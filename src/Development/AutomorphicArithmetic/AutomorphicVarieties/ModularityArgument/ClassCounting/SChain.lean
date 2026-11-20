@@ -22,7 +22,7 @@ private theorem bd_eq (G : Type) [Group G] (m : ℕ) (z : Ch A G (m + 1)) :
     bd A G m z = groupHomology.inhomogeneousChains.d (Rep.trivial A G A) m z := by
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add x y hx hy => rw [map_add, hx, hy, map_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _)]
   | single g a =>
     rw [bd_single, groupHomology.inhomogeneousChains.d_single]
     simp
@@ -37,10 +37,10 @@ private theorem bd_cm (G H : Type) [Group G] [Group H] (f : G →* H) (m : ℕ) 
     bd A H m (cm A f (m + 1) z) = cm A f m (bd A G m z) := by
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | single g a =>
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [cm_single, bd_single, bd_single, map_add, cm_single, map_sum]
+      rw [cm_single, bd_single, bd_single, map_add (f := _), cm_single, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_smul, cm_single]
@@ -62,7 +62,7 @@ private theorem cm_prism (G H : Type) [Group G] [Group H] (f : G →* H) (k : G)
       split_ifs <;> simp [map_mul]
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | single g a =>
     rw [cm_single]
     set_option synthInstance.maxHeartbeats 100000 in

@@ -34,7 +34,7 @@ theorem grSup_exists_max {K : Type} [Field K] {C : Type} [NormedField C] [IsUltr
     | mem y hy => exact hmax y hy
     | zero => simp
     | add y z _ _ hy hz =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hy hz)
     | smul c y _ hy =>
       rw [Algebra.smul_def, map_mul, norm_mul]
@@ -76,7 +76,7 @@ theorem grSup_exists_form {K : Type} [Field K] [NumberField K] {V : Type} [AddCo
     have h1 := LinearMap.ofIsCompl_apply_right hc (φ := 0) (ψ := g.comp W₀.subtype) ⟨a, haW⟩
     have h2 := LinearMap.ofIsCompl_apply_left hc (φ := 0) (ψ := g.comp W₀.subtype)
       ⟨c, hU (Submodule.subset_span hcC)⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     erw [h1, h2]
     obtain ⟨d, hdS, rfl⟩ := haW
     rw [Fintype.linearCombination_apply] at haL
@@ -117,7 +117,7 @@ theorem grNorm_latC_eq_inv_iSup : ∀ {K : Type} [Field K] [NumberField K] {C : 
         exact hmax _ (hf2 x hx)
       | zero => simp
       | add y z _ _ hy hz =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hy hz)
       | smul c y _ hy =>
         have hc : ‖(c : C)‖ ≤ 1 := c.2

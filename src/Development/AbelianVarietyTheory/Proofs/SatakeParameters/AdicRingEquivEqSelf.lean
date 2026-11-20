@@ -122,7 +122,7 @@ theorem firstFactor_agree : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
       have : a ⊗ₜ[F] c = (a ⊗ₜ[F] (1 : w.adicCompletion F)) * ((1 : E) ⊗ₜ[F] c) := by
         simp [Algebra.TensorProduct.tmul_mul_tmul]
       rw [this, map_mul, map_mul, map_mul, map_mul, hφ, hφ', hE a, hc]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 end GlobalTheory.TwV.Xc
 

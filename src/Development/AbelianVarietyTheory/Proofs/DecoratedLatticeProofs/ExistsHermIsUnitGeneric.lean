@@ -57,8 +57,8 @@ theorem exists_herm_notMem (σ : E →+* E) (δ : E) (hδ : δ ≠ 0) (hσδ : �
   let φ : E →+* R ⧸ M := π₀.comp ι
   let π := π₀.mapMatrix (m := Fin n)
   let ψ := (π₀.comp τ).mapMatrix (m := Fin n)
-  have h1 : π c * π p + π d * π q = 1 := by rw [← map_mul, ← map_mul, ← map_add, h, map_one]
-  have h2 : ψ c * ψ p + ψ d * ψ q = 1 := by rw [← map_mul, ← map_mul, ← map_add, h, map_one]
+  have h1 : π c * π p + π d * π q = 1 := by rw [← map_mul, ← map_mul, ← map_add (f := _), h, map_one]
+  have h2 : ψ c * ψ p + ψ d * ψ q = 1 := by rw [← map_mul, ← map_mul, ← map_add (f := _), h, map_one]
   obtain ⟨y, hy⟩ := GlobalTheory.T.matrix_field_stableRange_one_det_ne_zero _ n _ _ _ _ h1
   obtain ⟨y', hy'⟩ := GlobalTheory.T.matrix_field_stableRange_one_det_ne_zero _ n _ _ _ _ h2
   obtain ⟨x, hxs, hx1, hx2⟩ := GlobalTheory.T.exists_hermitian_two_det_ne_zero E (R ⧸ M) σ φ δ hδ hσδ n _ _ _ _ _ _ hy hy'
@@ -69,13 +69,13 @@ theorem exists_herm_notMem (σ : E →+* E) (δ : E) (hδ : δ ≠ 0) (hσδ : �
     have e : π₀ (c * x.map ι + d).det = 0 := Ideal.Quotient.eq_zero_iff_mem.2 h'
     rw [RingHom.map_det] at e
     change (π (c * x.map ι + d)).det = 0 at e
-    rw [map_add, map_mul] at e
+    rw [map_add (f := _), map_mul] at e
     exact e
   · apply hx2
     have e : (π₀.comp τ) (c * x.map ι + d).det = 0 := Ideal.Quotient.eq_zero_iff_mem.2 h'
     rw [RingHom.map_det] at e
     change (ψ (c * x.map ι + d)).det = 0 at e
-    rw [map_add, map_mul] at e
+    rw [map_add (f := _), map_mul] at e
     have e2 : ψ (x.map ι) = x.transpose.map φ := by
       funext i j
       change π₀ (τ (ι (x i j))) = π₀ (ι (x j i))
@@ -110,7 +110,7 @@ theorem exists_herm_isUnit_generic {A : Type} [CommRing A] (σ : E →+* E) (δ 
     rw [map_mul, hττ, mul_comm]
   choose g hg using fun x => hfix (f x) (hf x)
   have hs : ∀ x, τ (C x + τ (C x)) = C x + τ (C x) := fun x => by
-    rw [map_add, hττ, add_comm]
+    rw [map_add (f := _), hττ, add_comm]
   choose s hs' using fun x => hfix _ (hs x)
   have h2 : ∑ i : C.support, s i * g i = 2 := by
     apply ha

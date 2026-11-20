@@ -25,14 +25,14 @@ theorem exists_inclPlus_half (z : k ⊗[maximalRealSubfield E] Fld Q) :
   | tmul s y =>
     refine ⟨s ⊗ₜ ⟨(y + invol Q y) / 2, ?_⟩, ?_⟩
     · change invol Q _ = _
-      simp only [map_div₀, map_add, invol_invol, map_ofNat, AlgHom.id_apply, add_comm]
+      simp only [map_div₀, map_add (f := _), invol_invol, map_ofNat, AlgHom.id_apply, add_comm]
     · change s ⊗ₜ[maximalRealSubfield E] ((y + invol Q y) / 2) = _ * (s ⊗ₜ y + s ⊗ₜ invol Q y)
       rw [← TensorProduct.tmul_add, Algebra.TensorProduct.tmul_mul_tmul, one_mul, div_eq_inv_mul]
   | add x y hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
     refine ⟨a + b, ?_⟩
-    rw [map_add, ha, hb, map_add]
+    rw [map_add (f := _), ha, hb, map_add (f := _)]
     ring
 
 theorem exists_inclPlus_of_fixed {z : k ⊗[maximalRealSubfield E] Fld Q} (hz : involBase Q k z = z) :
@@ -77,7 +77,7 @@ section Matrix
 theorem aeval_mul_of_intertwine {K : Type} [Field K] {n : ℕ} {B C H : Matrix (Fin n) (Fin n) K}
     (h : B * H = H * C) (g : K[X]) : aeval B g * H = H * aeval C g := by
   induction g using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, add_mul, mul_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), add_mul, mul_add, hp, hq]
   | monomial d a =>
     have e : B ^ d * H = H * C ^ d :=
       (((show SemiconjBy H C B from h.symm).pow_right d).eq).symm
@@ -112,7 +112,7 @@ theorem involBase_locPhi (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w)
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [inclBase, involBase, invol_algebraMap]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   let ib : k ⊗[maximalRealSubfield E] Fld Q →+* k ⊗[maximalRealSubfield E] Fld Q :=
     (involBase Q k).toRingHom
   have hR : locPhi hU w hw v hv Q (atPl w r₀) = (1 : k) ⊗ₜ (alpha Q)⁻¹ := by

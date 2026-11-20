@@ -26,7 +26,7 @@ theorem exists_pow_mul_eq_map {R : Type*} [CommRing R] (E : R) {Q : Type*}
     obtain ⟨n, F', hF'⟩ := hF
     obtain ⟨k, G', hG'⟩ := hG
     refine ⟨n + k, MvPolynomial.C (E ^ k) * F' + MvPolynomial.C (E ^ n) * G', ?_⟩
-    simp only [map_add, map_mul, MvPolynomial.map_C, hF', hG', pow_add, map_pow]
+    simp only [map_add (f := _), map_mul, MvPolynomial.map_C, hF', hG', pow_add, map_pow]
     ring
   | mul_X F i hF =>
     obtain ⟨n, F', hF'⟩ := hF
@@ -59,7 +59,7 @@ theorem dvd_map_of_dvd_map {A Φ K : Type*} [CommRing A] [Field Φ] [CommRing K]
     exact RingHom.mem_ker.mp (hker (RingHom.mem_ker.mpr (by rw [← coeff_map, h0, coeff_zero])))
   refine ⟨(p /ₘ mA).map σ, ?_⟩
   conv_lhs => rw [← modByMonic_add_div p mA]
-  rw [Polynomial.map_add, Polynomial.map_mul, h1, zero_add]
+  rw [Polynomial.map_add (f := _), Polynomial.map_mul, h1, zero_add]
 
 end ChartSpecCount
 

@@ -55,7 +55,7 @@ theorem lifting_along_exact_triple : GlobalTheory.IndefiniteRowSideFullHecke.Con
   obtain ⟨m₁, hm₁, hGm₁⟩ := hkMinv m₂ hm₂
   rw [hcast] at hGy₁ hGm₁
   have hG1 : G.app (y₁ + D₁.phi m₁) = (l : K) ^ ρ • (y₂ + D₂.phi m₂) := by
-    rw [map_add, G.app_phi, hGy₁, hGm₁, map_smul, smul_add]
+    rw [map_add (f := _), G.app_phi, hGy₁, hGm₁, map_smul, smul_add]
 
   set ω := D₁.Mon (y₁ + D₁.phi m₁) with hω
   have hω1 : (l : K) ^ (η * (r + 1)) • ω ∈ D₁.Z :=

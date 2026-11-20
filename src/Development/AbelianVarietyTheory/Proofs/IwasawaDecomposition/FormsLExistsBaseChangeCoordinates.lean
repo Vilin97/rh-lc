@@ -33,7 +33,7 @@ theorem formsL_exists_baseChange_coordinates : ∀ {L L' Ks : Type} [Field L] [N
   let j' : ∀ σ' : L' →+* ℂ, (Fin n → L') →ₛₗ[σ'] W (σ'.comp ι) := fun σ' =>
     { toFun := fun x' => ∑ k, σ' (x' k) • F.j (σ'.comp ι) (Pi.single k 1)
       map_add' := fun x y => by
-        simp only [Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+        simp only [Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
       map_smul' := fun c x => by
         simp only [Pi.smul_apply, smul_eq_mul, map_mul, mul_smul, Finset.smul_sum] }
   let F' : Formalism.IndefR.Arith.FormsL L' Ks (Fin n → L') (fun σ' => W (σ'.comp ι)) G :=
@@ -42,7 +42,7 @@ theorem formsL_exists_baseChange_coordinates : ∀ {L L' Ks : Type} [Field L] [N
       nrm := fun lp y φ' => F.nrm lp y (e.symm φ')
       nrm_nonneg := fun lp y f => F.nrm_nonneg lp y _
       nrm_zero := fun lp y => by simp only [map_zero]; exact F.nrm_zero lp y
-      nrm_add := fun lp y f g => by simp only [map_add]; exact F.nrm_add lp y _ _
+      nrm_add := fun lp y f g => by simp only [map_add (f := _)]; exact F.nrm_add lp y _ _
       nrm_smul := fun lp y a f => by simp only [map_smul]; exact F.nrm_smul lp y a _
       towKs := inferInstance
       ρ := ρ'

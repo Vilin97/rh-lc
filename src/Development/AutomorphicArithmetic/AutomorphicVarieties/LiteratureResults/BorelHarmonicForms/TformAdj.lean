@@ -12,14 +12,14 @@ private theorem cmp_lTensor_toLin {W : Type} [AddCommGroup W] [Module ℂ W] {d 
     simp only [LinearMap.lTensor_tmul, cmp_tmul, Matrix.toLin'_apply, Matrix.mulVec, dotProduct,
       Finset.sum_smul, smul_smul]
   | add a b ha hb =>
-    simp only [map_add, ha, hb, smul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), ha, hb, smul_add, Finset.sum_add_distrib]
 
 private theorem cmp_rTensor_end {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} (S : Module.End ℂ W)
     (y : W ⊗[ℂ] (Fin d → ℂ)) (j : Fin d) :
     cmp j (S.rTensor (Fin d → ℂ) y) = S (cmp j y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul φ v => simp only [LinearMap.rTensor_tmul, cmp_tmul, map_smul]
 
 theorem UpperTheory.V.Lit.Bor.tformAdj :

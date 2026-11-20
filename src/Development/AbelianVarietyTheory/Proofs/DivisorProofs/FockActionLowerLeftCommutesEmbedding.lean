@@ -171,7 +171,7 @@ theorem partial_derivative_weight_space_formula (h : P ≤ R) (k : ℕ) (a : Fin
     · exact Finset.sum_congr rfl fun b' _ => by ring
     · simp only [Pi.single_apply, Prod.mk.injEq, Sum.inr.injEq, and_true, mul_ite, mul_one, mul_zero]
       simp
-  rw [Derivation.leibniz, map_add, smul_eq_mul, smul_eq_mul, Derivation.leibniz, Derivation.leibniz,
+  rw [Derivation.leibniz, map_add (f := _), smul_eq_mul, smul_eq_mul, Derivation.leibniz, Derivation.leibniz,
     pderiv_s_phiR, hw, pderiv_w_phiR, pderiv_w_s_detR_pow, pderiv_w_detR_pow]
   simp only [smul_eq_mul, mul_zero, add_zero]
   rw [Finset.mul_sum, Finset.sum_congr rfl fun a' _ => (by ring :
@@ -226,7 +226,7 @@ theorem fockAct1_embR_inr_inl (P Q R : ℕ) (h : P ≤ R) (k : ℕ) (a : Fin P) 
   simp only [omE_down, partial_derivative_weight_space_formula, Finset.sum_neg_distrib, Finset.sum_add_distrib, sum_A, sum_C,
     Finset.sum_const, Finset.card_univ, Fintype.card_fin]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_neg, map_add, map_sum, map_mul, map_smul, phiR, aeval_X]
+    simp only [map_neg, map_add (f := _), map_sum, map_mul, map_smul, phiR, aeval_X]
   rw [nsmul_eq_mul, Algebra.smul_def, map_natCast]
   push_cast
   ring

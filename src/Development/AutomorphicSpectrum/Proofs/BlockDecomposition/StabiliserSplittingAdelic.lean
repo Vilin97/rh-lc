@@ -54,7 +54,7 @@ theorem lift_hz {w : Fin M → E} {z : E} (hz : z + σ z + hv (σ : E →+* E) J
     inclR R z + sigR R σ (inclR R z) +
       hv (sigR R σ) (JR R J) (fun i => inclR R (w i)) (fun i => inclR R (w i)) = 0 := by
   have h := congrArg (inclR (F := F) (E := E) R) hz
-  rw [map_add, map_add, hv_map (inclR R) (s := (σ : E →+* E)) (s' := sigR R σ)
+  rw [map_add (f := _), map_add (f := _), hv_map (inclR R) (s := (σ : E →+* E)) (s' := sigR R σ)
     (fun x => (sigR_incl R σ x).symm), map_zero] at h
   rw [sigR_incl]
   exact h
@@ -95,7 +95,7 @@ theorem exists_move_alt [CharZero E] (hσ : ∀ x, σ (σ x) = x) (hJ : ∀ i j,
   have hHs := sigR_halfR (F := F) (E := E) R σ
   have hskt : sigR R σ (z + halfR F E R * hv (sigR R σ) (JR R J) w w) =
       -(z + halfR F E R * hv (sigR R σ) (JR R J) w w) := by
-    rw [map_add, map_mul, hHs, s_hv hsR hJR]
+    rw [map_add (f := _), map_mul, hHs, s_hv hsR hJR]
     linear_combination hz + (hv (sigR R σ) (JR R J) w w) * hH
   obtain ⟨b, hb⟩ := eq_tmul_of_skew R h2 hδ hσδ hskt
   obtain ⟨x, hx⟩ := hC₀c b

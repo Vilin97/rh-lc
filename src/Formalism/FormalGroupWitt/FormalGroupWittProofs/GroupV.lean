@@ -108,7 +108,7 @@ theorem lin (hf : IsIdMod2 f) (hF0 : ∀ i, constantCoeff (F i) = 0)
     (hFG : ∀ j, subst F (f j) = atXv (f j) + atYv (f j)) (i : ι) (x : Fin 2 × ι) :
     coeff (Finsupp.single x 1) (F i) = if x.2 = i then 1 else 0 := by
   have h := congrArg (coeff (Finsupp.single x 1)) (hFG i)
-  rw [lin_subst hF0, map_add, atXv, atYv, lin_subst (fun _ => cc_X _),
+  rw [lin_subst hF0, map_add (f := _), atXv, atYv, lin_subst (fun _ => cc_X _),
     lin_subst (fun _ => cc_X _)] at h
   simp only [hf.2, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ,
     if_true] at h

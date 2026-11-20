@@ -56,7 +56,7 @@ theorem derivation_mem_of_aeval_mem {σ : Type*} (W : Submodule K (MvPolynomial 
       (Φ P).eval (C s) = aeval (fun v => X v + s • D (X v)) P := by
     induction P using MvPolynomial.induction_on with
     | C r => simp [Φ, algHom_C]
-    | add P Q hP hQ => simp only [map_add, Polynomial.eval_add, hP, hQ]
+    | add P Q hP hQ => simp only [map_add (f := _), Polynomial.eval_add, hP, hQ]
     | mul_X P v hP =>
       rw [map_mul, map_mul, Polynomial.eval_mul, hP]
       simp only [Φ, aeval_X, Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_C,
@@ -64,7 +64,7 @@ theorem derivation_mem_of_aeval_mem {σ : Type*} (W : Submodule K (MvPolynomial 
   have hco (P : MvPolynomial σ K) : (Φ P).coeff 0 = P ∧ (Φ P).coeff 1 = D P := by
     induction P using MvPolynomial.induction_on with
     | C r => simp [Φ, algHom_C, Polynomial.coeff_C]
-    | add P Q hP hQ => simp only [map_add, Polynomial.coeff_add, hP, hQ, and_self]
+    | add P Q hP hQ => simp only [map_add (f := _), Polynomial.coeff_add, hP, hQ, and_self]
     | mul_X P v hP =>
       have e : Φ (P * X v) = Φ P * Polynomial.C (X v) +
           Polynomial.X * (Φ P * Polynomial.C (D (X v))) := by
@@ -240,7 +240,7 @@ theorem exists_colAct_eq_aeval (t : T) {k l : κ} (hkl : k ≠ l) (s : R) :
         ext i
         simp [g₀, transvection, Matrix.one_apply, Matrix.single_apply, Pi.single_apply, eq_comm, ite_and]
         split_ifs <;> simp_all
-      rw [this, map_add, map_smul, xForm_single, xForm_single]
+      rw [this, map_add (f := _), map_smul, xForm_single, xForm_single]
       by_cases hj : j = l <;> simp [hj]
     · have : (((Pi.mulSingle t g₀ : T → GL κ R) t')⁻¹ : GL κ R).val j = Pi.single j 1 := by
         ext i
@@ -254,7 +254,7 @@ theorem exists_colAct_eq_aeval (t : T) {k l : κ} (hkl : k ≠ l) (s : R) :
         ext i
         simp [g₀, transvection, Matrix.one_apply, Matrix.single_apply, Pi.single_apply, eq_comm, ite_and]
         split_ifs <;> simp_all
-      rw [this, map_add, map_smul, yForm_single, yForm_single]
+      rw [this, map_add (f := _), map_smul, yForm_single, yForm_single]
       by_cases hj : j = k <;> simp [hj]
     · have : (fun i => (((Pi.mulSingle t g₀ : T → GL κ R) t') : GL κ R).val i j) = Pi.single j 1 := by
         ext i

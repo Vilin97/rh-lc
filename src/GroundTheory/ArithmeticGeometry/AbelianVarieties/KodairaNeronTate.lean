@@ -260,7 +260,7 @@ theorem componentIndex_pair_nonintegral {P Q : (curveK K W).Point} {X Y : K} {hT
     rintro ⟨ℓ, rfl⟩
     apply hX
     exact ⟨ℓ ^ 2 + W.a₁ * ℓ - xP - xQ, by
-      simp only [map_sub, map_add, map_mul, map_pow]; linear_combination -v1⟩
+      simp only [map_sub, map_add (f := _), map_mul, map_pow]; linear_combination -v1⟩
   obtain ⟨μ, hμm, hμ⟩ := exists_inv_mem_of_notMem_range K hL
   have hL0 : L ≠ 0 := by rintro rfl; exact hL ⟨0, map_zero _⟩
   have hμL : ι μ * L = 1 := by rw [hμ, inv_mul_cancel₀ hL0]
@@ -273,17 +273,17 @@ theorem componentIndex_pair_nonintegral {P Q : (curveK K W).Point} {X Y : K} {hT
     linear_combination (ι μ) * l1 + (ι xP) * hμL
   have lQ : μ * yQ = 1 * (xQ + ν') := by
     apply hinj
-    simp only [map_mul, map_add, one_mul]
+    simp only [map_mul, map_add (f := _), one_mul]
     rw [hνK]
     linear_combination (ι μ) * l2 + (ι xQ) * hμL
   obtain ⟨T', hTdef⟩ : ∃ T', T' = 1 + W.a₁ * μ - μ ^ 2 * (xP + xQ) := ⟨_, rfl⟩
   have hTK : ι T' = (ι μ) ^ 2 * X := by
     rw [hTdef]
-    simp only [map_sub, map_add, map_mul, map_pow, map_one]
+    simp only [map_sub, map_add (f := _), map_mul, map_pow, map_one]
     linear_combination (-(ι μ * L + 1) - ι W.a₁ * ι μ) * hμL - (ι μ) ^ 2 * v1
   have S2 : μ ^ 2 * (xP * xQ) + T' * (xP + xQ) = -(2 + W.a₁ * μ) * ν' := by
     apply hinj
-    simp only [map_mul, map_add, map_neg, map_pow, map_ofNat]
+    simp only [map_mul, map_add (f := _), map_neg, map_pow, map_ofNat]
     rw [hTK, hνK]
     linear_combination (ι μ) ^ 2 * v2 - 2 * ι μ * N * hμL
   have S3 : xP * xQ * T' = ν' ^ 2 - μ ^ 2 * W.a₆ := by
@@ -457,7 +457,7 @@ theorem nonsingular_of_tate {x y : 𝒪} (h : y * (y + W.a₁ * x) = x ^ 3 + W.a
   simp only [WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃,
     WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆, h2, h3, h4, map_zero]
   have := congrArg (algebraMap 𝒪 K) h
-  simp only [map_mul, map_add, map_pow] at this
+  simp only [map_mul, map_add (f := _), map_pow] at this
   linear_combination this
 
 theorem exists_phiT_eq_one (hn2 : 2 ≤ (v W.a₆).toNat) : ∃ P, phiT K W P = 1 := by

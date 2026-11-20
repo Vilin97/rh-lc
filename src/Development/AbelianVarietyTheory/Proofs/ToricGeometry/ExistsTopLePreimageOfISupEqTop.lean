@@ -158,7 +158,7 @@ theorem exists_isMonHom_of_map_periodLattice :
     obtain ⟨w, hw⟩ := hsurj (y ≫ snd X X)
     have hy : y = lift (ex z) (ex w) := by
       ext1 <;> simp [hz, hw]
-    rw [hy, ← Category.assoc, ← Hom.mul_def, ← hadd, ← hfe, map_add, hadd, Hom.mul_def, ← Category.assoc, lift_map,
+    rw [hy, ← Category.assoc, ← Hom.mul_def, ← hadd, ← hfe, map_add (f := _), hadd, Hom.mul_def, ← Category.assoc, lift_map,
       ← hfe, ← hfe]
 
 end GlobalTheory

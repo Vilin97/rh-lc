@@ -60,7 +60,7 @@ theorem hasTr_map (f : K →+* K') {γ : DX Δ} {γ' : DX (f Δ)} (e : mt γ' = 
   constructor
   · rw [e, ← RingHom.mapMatrix_apply, ← RingHom.map_det, h.1, map_one]
   · have := congrArg (lmap f Δ) h.2
-    rw [e, trace_fin_two, map_apply, map_apply, ← map_add, ← trace_fin_two, this]
+    rw [e, trace_fin_two, map_apply, map_apply, ← map_add (f := _), ← trace_fin_two, this]
     ext <;> simp [lmap, QuadraticAlgebra.algebraMap_eq]
 
 theorem emb_map (f : K →+* K') {γ : DX Δ} {γ' : DX (f Δ)} (e : mt γ' = (mt γ).map (lmap f Δ)) {j j'} (h : IsEmb τ γ j)

@@ -17,7 +17,7 @@ theorem UpperTheory.semilinear_lattice_mem :
       obtain ⟨hyU, hy⟩ := hy
       refine ⟨U.add_mem hxU hyU, ?_⟩
       have h0 : (⟨x + y, U.add_mem hxU hyU⟩ : U) = ⟨x, hxU⟩ + ⟨y, hyU⟩ := rfl
-      rw [h0, map_add]
+      rw [h0, map_add (f := _)]
       exact L.add_mem hx hy
     | smul r x _ hx =>
       obtain ⟨hxU, hx⟩ := hx

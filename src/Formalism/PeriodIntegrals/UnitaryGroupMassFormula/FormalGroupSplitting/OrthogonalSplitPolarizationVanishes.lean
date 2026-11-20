@@ -17,7 +17,7 @@ theorem compositionalInverseSymm : S1 := by
       PowerSeries.constantCoeff_subst_eq_zero hex _ (by simp)
     have key : MvPowerSeries.constantCoeff (PowerSeries.subst ex l) = PowerSeries.constantCoeff l := by
       conv_lhs => rw [hsplit]
-      rw [PowerSeries.subst_add hsub, map_add, h0, PowerSeries.subst_C]
+      rw [PowerSeries.subst_add hsub, map_add (f := _), h0, PowerSeries.subst_C]
       simp
     rw [hinv] at key
     rw [← key]

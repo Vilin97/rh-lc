@@ -51,16 +51,16 @@ section Lin
 variable {m : ℕ}
 
 theorem dz_add_vector (f : Pt E g → Ext m) (P v w : Pt E g) : d10 f P (v + w) = d10 f P v + d10 f P w := by
-  simp only [d10, map_add, smul_add]; module
+  simp only [d10, map_add (f := _), smul_add]; module
 
 theorem dz_add_vector_scalar (f : Pt E g → ℂ) (P v w : Pt E g) : d10 f P (v + w) = d10 f P v + d10 f P w := by
-  simp only [d10, map_add, smul_add, smul_eq_mul]; ring
+  simp only [d10, map_add (f := _), smul_add, smul_eq_mul]; ring
 
 theorem dbar_add_vector (f : Pt E g → Ext m) (P v w : Pt E g) : d01 f P (v + w) = d01 f P v + d01 f P w := by
-  simp only [d01, map_add, smul_add]; module
+  simp only [d01, map_add (f := _), smul_add]; module
 
 theorem dbar_add_vector_scalar (f : E → ℂ) (b v w : E) : d01 f b (v + w) = d01 f b v + d01 f b w := by
-  simp only [d01, map_add, smul_add, smul_eq_mul]; ring
+  simp only [d01, map_add (f := _), smul_add, smul_eq_mul]; ring
 
 theorem dz_smul_I (f : Pt E g → Ext m) (P v : Pt E g) :
     d10 f P (Complex.I • v) = Complex.I • d10 f P v := by
@@ -105,7 +105,7 @@ section Lin2
 variable (τ : E → Matrix (Fin g) (Fin g) ℂ) (h : Pt E g → ℝ)
 
 theorem hor_add (Q : Pt E g) (v w : E) : hor τ Q (v + w) = hor τ Q v + hor τ Q w := by
-  simp [hor, map_add]
+  simp [hor, map_add (f := _)]
 
 theorem hor_I (Q : Pt E g) (v : E) : hor τ Q (Complex.I • v) = Complex.I • hor τ Q v := by
   simp [hor, map_smul]

@@ -65,7 +65,7 @@ theorem dbarAt_add {v : V n} {F G : V n → Alt n} (hF : ∀ S, DifferentiableAt
     dbarAt (fun x => F x + G x) v = dbarAt F v + dbarAt G v := by
   simp only [dbarAt, ← Finset.sum_add_distrib, ← mul_add]
   refine Finset.sum_congr rfl fun a _ => congrArg _ ((bas n).ext_elem fun S => ?_)
-  simp only [map_add, Finsupp.add_apply, FormMul.repr_coefwise]
+  simp only [map_add (f := _), Finsupp.add_apply, FormMul.repr_coefwise]
   rw [dbar_add (hF S) (hG S), ContinuousLinearMap.add_apply]
 
 theorem dbarAt_const (c : Alt n) (v : V n) : dbarAt (fun _ => c) v = 0 := by
@@ -92,7 +92,7 @@ def closedAt (v : V n) : Subsemiring (V n → Ev n) where
   add_mem' := by
     rintro F G ⟨hF, hF0⟩ ⟨hG, hG0⟩
     refine ⟨fun S => ?_, ?_⟩
-    · simp only [Pi.add_apply, Subalgebra.coe_add, map_add, Finsupp.add_apply]
+    · simp only [Pi.add_apply, Subalgebra.coe_add, map_add (f := _), Finsupp.add_apply]
       exact (hF S).add (hG S)
     · simp only [Pi.add_apply, Subalgebra.coe_add]
       rw [dbarAt_add hF hG, hF0, hG0, add_zero]

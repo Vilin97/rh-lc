@@ -337,9 +337,9 @@ theorem exists_uAction_integrated (u : UniversalEnvelopingAlgebra ℝ h.lieSubal
     obtain ⟨γa, hγa, ha1, ha2⟩ := ha hγ
     obtain ⟨γb, hγb, hb1, hb2⟩ := hb hγ
     refine ⟨fun y => γa y + γb y, hγa.add hγb, fun w => ?_, fun Ψ hΨ => ?_⟩
-    · rw [map_add, map_add, LinearMap.add_apply, Submodule.coe_add, ha1 w, hb1 w,
+    · rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, Submodule.coe_add, ha1 w, hb1 w,
         integrated_add_kernel h μ π hγa hγb]
-    · rw [map_add, map_add, LinearMap.add_apply, Submodule.coe_add, ha2 Ψ hΨ, hb2 Ψ hΨ]
+    · rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, Submodule.coe_add, ha2 Ψ hΨ, hb2 Ψ hΨ]
       funext g
       exact (h.integral_mul_add μ hΨ hγa hγb g).symm
 

@@ -139,7 +139,7 @@ theorem GlobalTheory.TensorFactor.exists_equiv_extTensor : ∀ (G H X Y : Type) 
               τ (g, h) (((ψ : homSpace τ ρ) : Y →ₗ[ℂ] X) z)
             rw [homRep_apply_coe, LinearMap.comp_apply, (ψ : homSpace τ ρ).2 h z, ← apply_pair]
           | add a b ha hb =>
-            rw [map_add, map_add]
+            rw [map_add (f := _), map_add (f := _)]
             exact add_mem ha hb }
     rcases IsSimpleOrder.eq_bot_or_eq_top U with hU | hU
     · left
@@ -163,7 +163,7 @@ theorem GlobalTheory.TensorFactor.exists_equiv_extTensor : ∀ (G H X Y : Type) 
         | zero => simp
         | tmul ψ z => simpa [P] using S.toSubmodule.smul_mem (l z) ψ.2
         | add a b ha hb =>
-          rw [map_add, map_add]
+          rw [map_add (f := _), map_add (f := _)]
           exact add_mem ha hb
       have hmem : evMap τ ρ (φ ⊗ₜ y0) ∈ U.toSubmodule := by
         rw [hU]

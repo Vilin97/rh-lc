@@ -37,7 +37,7 @@ theorem crys_projective : ∀ (F : Type) [Field F] [NumberField F] (C C₀ : Typ
       hom := fun x ↦ a.hom _
       one := by rw [map_one]; exact a.one
       mul := fun x y ↦ by rw [mul_comm, map_mul, a.mul]
-      add := fun x y ↦ by rw [map_add, a.add] }
+      add := fun x y ↦ by rw [map_add (f := _), a.add] }
   obtain ⟨f, fsurj, fker, fequiv⟩ := GlobalTheory.T.deRhamHomology_closedFibre_surjective_kernel C₀ A₀ hA (𝓞 F) a'
   have hB := GlobalTheory.isAbelianScheme_pullback_obj (spMap (algebraMap C₀ (IsLocalRing.ResidueField C₀))) A₀ hA
   have hP := GlobalTheory.T.firstDeRhamHomology_projective_over_tensor_integers F (IsLocalRing.ResidueField C₀) _ hB (OAct.pullback _ A₀ a')

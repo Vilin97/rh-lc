@@ -84,7 +84,7 @@ theorem qht_bdd_unip : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   obtain ⟨f₀, hf₀⟩ := GlobalTheory.T.bounded_adeles_mod_global_elements F E ι (fun t => 2 * α₂ t + Q t)
   let f : ι → E := fun t => -((2 : E)⁻¹ * (2 : E)⁻¹) * (f₀ t + σ (f₀ t))
   have hff : ∀ t, σ (f t) = f t := fun t => by
-    simp only [f, map_mul, map_neg, map_add, hσ, map_inv₀, map_ofNat]; ring
+    simp only [f, map_mul, map_neg, map_add (f := _), hσ, map_inv₀, map_ofNat]; ring
   have hz := fun t : ι => GlobalTheory.T.rational_heisenberg_center_exists F E σ hσ B W r s hW W₁ H' i₀ i₁ hA (f t) (hff t)
   choose γ₂ hγ₂ hγ₂c using hz
   let α₃ : ι → AE F E := fun t => inclR (F := F) (AF F) (f t) + α₂ t
@@ -116,7 +116,7 @@ theorem qht_bdd_unip : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
         inclR (F := F) (AF F) (2⁻¹ : E) * Q t := funext fun t => by
       have hz : cA σ (2 * α₂ t + Q t) = 2 * α₂ t + Q t := (hrel t).2
       rw [map_sub, hz, hcA]
-      simp only [α₃, f, map_mul, map_neg, map_add]
+      simp only [α₃, f, map_mul, map_neg, map_add (f := _)]
       exact alg _ _ _ _ _ hc2
     rw [e1]
     exact R.sub_mem (R.mul_mem (R.mul_mem (cst _) (cst _)) (R.add_mem hb (cnj _ hb))) (R.mul_mem (cst _) bQ)

@@ -127,7 +127,7 @@ theorem lang_semilinear {l : ℕ} {σ : K →+* K} (h : FrobField K l σ) (hR : 
     · rw [semilin_norm_add_of_lt (by rw [hε1]; exact hlδ.trans_lt hsm), hε1]
     · have e : ε + (l : K) ^ (n + 1) * δ - c * σ (σ (ε + (l : K) ^ (n + 1) * δ)) =
           (l : K) ^ (n + 1) * (-c * (δ ^ (l ^ 2) + -c⁻¹ * δ + -(c⁻¹ * ρ)) - c * (σ (σ δ) - δ ^ (l ^ 2))) := by
-        rw [map_add, map_add, map_mul, map_mul, hσl]
+        rw [map_add (f := _), map_add (f := _), map_mul, map_mul, hσl]
         linear_combination hρ - ((l : K) ^ (n + 1) * ρ + (l : K) ^ (n + 1) * δ) * hcc
       rw [e, norm_mul, hnl, pow_succ ‖(l : K)‖ (n + 1)]
       refine mul_le_mul_of_nonneg_left (semilin_norm_sub_le ?_ ?_) (by positivity)

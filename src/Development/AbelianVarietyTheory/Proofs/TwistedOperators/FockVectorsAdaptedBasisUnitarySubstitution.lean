@@ -432,7 +432,7 @@ theorem ptAt_basis : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam 
         unfold lsub
         rw [MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq]
       rw [e2, h0, h0]
-    | add Q R hQ hR => rw [map_add, map_add, map_add, hQ, hR]
+    | add Q R hQ hR => rw [map_add (f := _), map_add (f := _), map_add (f := _), hQ, hR]
     | mul_X Q v hQ =>
       set_option synthInstance.maxHeartbeats 100000 in
         rw [mul_comm, GlobalTheory.FockIndep.pure_X_mul hadd hsm hA' hc' Aadd' Asm' hf, hQ,

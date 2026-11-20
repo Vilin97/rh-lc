@@ -234,7 +234,7 @@ def iterate (Φ : M →ₛₗ[φ] M) (d : ℕ) : M →ₛₗ[φ ^ d] M where
   map_add' x y := by
     induction d with
     | zero => rfl
-    | succ d ih => simp only [Function.iterate_succ_apply', ih, map_add]
+    | succ d ih => simp only [Function.iterate_succ_apply', ih, map_add (f := _)]
   map_smul' r x := by
     induction d with
     | zero => simp

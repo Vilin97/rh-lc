@@ -130,7 +130,7 @@ theorem serSt_of_jetAlgSt : JetAlgSt → SerSt := by
                 rw [hT, ← hτ₁, map_mul, map_mul, hτ₁, hτ₁, hT, hT]
               map_zero' := hinj _ _ fun m => by rw [hT, ← hτ₁, map_zero, map_zero]
               map_add' := fun a b => hinj _ _ fun m => by
-                rw [hT, ← hτ₁, map_add, map_add, hτ₁, hτ₁, hT, hT] }, fun f g => ⟨fun H => ?_, fun H m => ?_⟩⟩
+                rw [hT, ← hτ₁, map_add (f := _), map_add (f := _), hτ₁, hτ₁, hT, hT] }, fun f g => ⟨fun H => ?_, fun H m => ?_⟩⟩
     · exact hinj _ _ fun m => by
         rw [← (H m).2, fnVal_eq_fnValHom _ _ (hU m)]
         exact (hT f m).symm

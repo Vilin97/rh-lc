@@ -289,7 +289,7 @@ noncomputable def quadraticInv (h2 : Module.finrank F Ω ≤ 2)
       hy (galCupClass_eq_zero_of_mem_range_norm F Ω _ h)
     have hab : (cupCharClassProf (galUnitsZ F Ω) (quadraticChar F Ω h2)).hom (unitsInvariant F Ω a) +
         (cupCharClassProf (galUnitsZ F Ω) (quadraticChar F Ω h2)).hom (unitsInvariant F Ω b) = 0 := by
-      rw [← map_add, ← unitsInvariant_mul]
+      rw [← map_add (f := _), ← unitsInvariant_mul]
       exact galCupClass_eq_zero_of_mem_range_norm F Ω _ (hN a b ha hb)
     rw [hab, quadraticInvFun_zero, quadraticInvFun_of_ne_zero F Ω hx,
       quadraticInvFun_of_ne_zero F Ω hy, QZ.mk_half_add_mk_half]

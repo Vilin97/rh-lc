@@ -27,7 +27,7 @@ def lieCoordLat (hx : spMap (algebraMap (𝓞 K) K) ≫ xO = xK) {n : ℕ} (b : 
   add_mem' := by
     rintro c c' ⟨w, hw⟩ ⟨w', hw'⟩
     refine ⟨w + w', ?_⟩
-    rw [map_add, hw, hw', ← Finset.sum_add_distrib]
+    rw [map_add (f := _), hw, hw', ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun i _ => (add_smul _ _ _).symm
   zero_mem' := ⟨0, by simp⟩
   smul_mem' := by

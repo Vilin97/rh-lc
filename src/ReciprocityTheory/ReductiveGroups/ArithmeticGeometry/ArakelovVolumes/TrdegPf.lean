@@ -11,12 +11,12 @@ theorem kaehlerD_aeval_eq_sum {K : Type*} {Ω : Type*} [Field K] [Field Ω] [Alg
   next a =>
     simp [Derivation.map_algebraMap]
   next p q hp hq =>
-    simp only [map_add, hp, hq, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hp, hq, add_smul, Finset.sum_add_distrib]
   next p j hp =>
     have h1 : ∀ i, aeval x (pderiv i (p * X j)) =
         x j * aeval x (pderiv i p) + (if j = i then aeval x p else 0) := by
       intro i
-      rw [Derivation.leibniz, pderiv_X, Pi.single_apply, smul_eq_mul, smul_eq_mul, map_add,
+      rw [Derivation.leibniz, pderiv_X, Pi.single_apply, smul_eq_mul, smul_eq_mul, map_add (f := _),
         map_mul, map_mul, aeval_X]
       split_ifs <;> simp only [map_one, map_zero, mul_one, mul_zero, zero_add, add_zero]
       ring
@@ -48,7 +48,7 @@ theorem exists_pderiv_ne_zero_lt {K : Type*} [Field K] [CharZero K] {D : ℕ}
           simp [hs]
         · rfl
     · intro p q hp hq
-      simp only [map_add, MvPolynomial.coeff_add, hp, hq, add_mul]
+      simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq, add_mul]
   classical
   obtain ⟨m, hm, hmdeg⟩ : ∃ m ∈ P.support, 0 < m.sum (fun _ e => e) := by
     by_contra h

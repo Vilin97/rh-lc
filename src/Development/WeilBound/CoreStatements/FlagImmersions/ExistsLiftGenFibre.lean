@@ -78,7 +78,7 @@ def primeOf {F : Type} [Field F] [NumberField F] {p : Nat.Primes} (κ : F →+* 
       have := IsUltrametricDist.norm_add_le_max (κ (a : F)) (κ (b : F))
       show ‖κ ((a + b : 𝓞 F) : F)‖ < 1
       push_cast
-      rw [map_add]
+      rw [map_add (f := _)]
       exact this.trans_lt (max_lt ha hb)
     zero_mem' := by simp
     smul_mem' := fun a b hb => by

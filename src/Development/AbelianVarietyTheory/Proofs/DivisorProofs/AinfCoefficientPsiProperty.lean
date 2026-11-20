@@ -21,7 +21,7 @@ theorem phiT_psi {ψ : RL p O Λ →+* RL p O Λ} (hψ : IsPsi ψ) (r : RL p O �
   induction r using TensorProduct.induction_on with
   | zero => simp
   | tmul a l => rw [hψ, phiT_tmul, PsiPhi.frobenius_phiInv']
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem phiT_inA (a : Ainf p O) : phiT (inA a : RL p O Λ) = inA (WittVector.frobenius a) := by
   show phiT (a ⊗ₜ 1) = WittVector.frobenius a ⊗ₜ 1
@@ -37,7 +37,7 @@ theorem repr_phiT {ι : Type} (b : Module.Basis ι ℤ_[p] Λ) (r : RL p O Λ) (
   | tmul a l =>
     rw [phiT_tmul, Algebra.TensorProduct.basis_repr_tmul, Algebra.TensorProduct.basis_repr_tmul]
     simp only [Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul, map_mul, hc]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 end GlobalTheory.LemYR
 

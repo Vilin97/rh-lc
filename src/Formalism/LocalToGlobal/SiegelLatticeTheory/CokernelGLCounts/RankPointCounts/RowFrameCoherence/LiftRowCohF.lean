@@ -68,7 +68,7 @@ theorem ff_split_eval {H : Submodule E S.V} {w w' P P' : S.V} (hw : w ∈ orth S
     (hP : P ∈ H) (hP' : P' ∈ H) : S.hT (w + P) (w' + P') = S.hT w w' + S.hT P P' := by
   have h1 : S.hT w P' = 0 := ff_swap (mem_orth_iff.1 hw P' hP')
   have h2 : S.hT P w' = 0 := mem_orth_iff.1 hw' P hP
-  simp only [map_add, LinearMap.add_apply, h1, h2]
+  simp only [map_add (f := _), LinearMap.add_apply, h1, h2]
   ring
 
 def ffC (f : Fin r → S.V) (v : S.V) : Fin r → E := fun a => S.hT (f a) v
@@ -226,7 +226,7 @@ theorem ff_lat_le {Λ' Me L Mf : Submodule (𝓞 E) S.V} {Yf : Submodule E S.V}
     refine (hmem _).2 fun y hy => ?_
     obtain ⟨y12, hy12, y3, hy3, rfl⟩ := Submodule.mem_sup.1 hy
     obtain ⟨y1, hy1, y2, hy2, rfl⟩ := Submodule.mem_sup.1 hy12
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     refine Submodule.add_mem _ (Submodule.add_mem _ ?_ ?_) ?_
     · rw [hsymm]
       exact (hmem n).1 hnΛ _ (hMe (h2 y1 hy1))
@@ -240,7 +240,7 @@ theorem ff_lat_le {Λ' Me L Mf : Submodule (𝓞 E) S.V} {Yf : Submodule E S.V}
   obtain ⟨z12, hz12, n, hn', rfl⟩ := Submodule.mem_sup.1 hz
   obtain ⟨m, hm, l, hl, rfl⟩ := Submodule.mem_sup.1 hz12
   show ν (m + l + n) ∈ Me ⊔ L ⊔ Mf
-  rw [map_add, map_add, h3 l hl]
+  rw [map_add (f := _), map_add (f := _), h3 l hl]
   exact Submodule.add_mem _ (Submodule.add_mem _ (hMe (h1 m hm)) (hL hl)) (hn n hn')
 
 end Gen

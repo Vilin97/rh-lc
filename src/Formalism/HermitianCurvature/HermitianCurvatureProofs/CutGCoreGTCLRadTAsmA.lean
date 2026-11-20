@@ -186,7 +186,7 @@ theorem VV_add (hG : Gd z z' μs π π' Pr) {p p' : ℂ → (Wq →L[ℂ] Wp)} (
     (hp' : ContDiff ℝ ∞ p') (ζ : ℂ) :
     VV z z' μs π π' Pr T c0 (fun ζ => p ζ + p' ζ) ζ = VV z z' μs π π' Pr T c0 p ζ + VV z z' μs π π' Pr T c0 p' ζ := by
   unfold VV
-  rw [PhiP_add hG hp hp', map_add, Submodule.coe_add, radR_add]
+  rw [PhiP_add hG hp hp', map_add (f := _), Submodule.coe_add, radR_add]
   rfl
 
 theorem VV_smul (hG : Gd z z' μs π π' Pr) {p : ℂ → (Wq →L[ℂ] Wp)} (hp : ContDiff ℝ ∞ p) (s : ℂ) (ζ : ℂ) :

@@ -16,12 +16,12 @@ variable {g : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
 
 def toConjLinear (L : (Fin g → ℂ) →ₗ[ℂ] V) : (Fin g → ℂ) →ₛₗ[starRingEnd ℂ] V where
   toFun z := L (star z)
-  map_add' z w := by rw [star_add, map_add]
+  map_add' z w := by rw [star_add, map_add (f := _)]
   map_smul' t z := by rw [star_smul, map_smul]; rfl
 
 def ofConjLinear (β : (Fin g → ℂ) →ₛₗ[starRingEnd ℂ] V) : (Fin g → ℂ) →ₗ[ℂ] V where
   toFun z := β (star z)
-  map_add' z w := by rw [star_add, map_add]
+  map_add' z w := by rw [star_add, map_add (f := _)]
   map_smul' t z := by rw [star_smul, map_smulₛₗ]; simp
 
 @[simp] theorem toConjLinear_apply (L : (Fin g → ℂ) →ₗ[ℂ] V) (z : Fin g → ℂ) :

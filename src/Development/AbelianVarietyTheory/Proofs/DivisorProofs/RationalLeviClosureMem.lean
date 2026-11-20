@@ -205,7 +205,7 @@ theorem decomp : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
     show g'.map f * H.ι.map f = H.ι.map f * g₀.map f + _
     rw [← Matrix.map_mul, ← Matrix.map_mul, hgι]
     ext r j
-    rw [Matrix.map_apply, Matrix.add_apply, map_add, Matrix.add_apply, Matrix.map_apply, vecMulVec_apply, vecMulVec_apply,
+    rw [Matrix.map_apply, Matrix.add_apply, map_add (f := _), Matrix.add_apply, Matrix.map_apply, vecMulVec_apply, vecMulVec_apply,
       map_mul]
     rfl
   obtain ⟨hmx, -, hmι⟩ := hm 1 γU

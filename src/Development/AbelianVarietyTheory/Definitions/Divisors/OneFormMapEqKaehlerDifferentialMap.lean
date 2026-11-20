@@ -38,7 +38,7 @@ theorem ι_mul (ω : Ω[B⁄R]) (x : DR R B) : ι1 ω * x = sgn x * ι1 ω := by
   | algebraMap b => rw [AlgHom.commutes, Algebra.commutes]
   | ι a => rw [sgn_ι, neg_mul]; exact ι_mul_ι_swap _ _
   | mul a b ha hb => rw [← mul_assoc, ha, mul_assoc, hb, map_mul, mul_assoc]
-  | add a b ha hb => rw [mul_add, ha, hb, map_add, add_mul]
+  | add a b ha hb => rw [mul_add, ha, hb, map_add (f := _), add_mul]
 
 theorem ind1 {P : Ω[B⁄R] → Prop} (h : ∀ b c : B, P (b • D R B c)) (h0 : P 0)
     (ha : ∀ x y, P x → P y → P (x + y)) (ω : Ω[B⁄R]) : P ω := by
@@ -59,7 +59,7 @@ theorem indDR {P : DR R B → Prop} (h : ∀ b : B, P (algebraMap B _ b)) (hd : 
     induction a using ind1 with
     | h b c => rw [map_smul, Algebra.smul_def]; exact hm _ _ (h b) (hd c)
     | h0 => simpa using h 0
-    | ha x y hx hy => rw [map_add]; exact ha _ _ hx hy
+    | ha x y hx hy => rw [map_add (f := _)]; exact ha _ _ hx hy
   | mul a b h1 h2 => exact hm _ _ h1 h2
   | add a b h1 h2 => exact ha _ _ h1 h2
 
@@ -157,11 +157,11 @@ theorem lift_anti (a b : Ω[B⁄R]) :
       der.liftKaehlerDifferential b * der.liftKaehlerDifferential a = (0 : Tw R B) := by
   induction a using ind1 with
   | h0 => simp
-  | ha x y hx hy => rw [map_add, add_mul, mul_add, add_add_add_comm, hx, hy, add_zero]
+  | ha x y hx hy => rw [map_add (f := _), add_mul, mul_add, add_add_add_comm, hx, hy, add_zero]
   | h a a' =>
     induction b using ind1 with
     | h0 => simp
-    | ha x y hx hy => rw [map_add, add_mul, mul_add, add_add_add_comm, hx, hy, add_zero]
+    | ha x y hx hy => rw [map_add (f := _), add_mul, mul_add, add_add_add_comm, hx, hy, add_zero]
     | h b b' =>
       simp only [map_smul, smul_mul_assoc, mul_smul_comm, Derivation.liftKaehlerDifferential_comp_D]
       rw [smul_comm a b, ← smul_add, ← smul_add]
@@ -174,7 +174,7 @@ theorem lift_sq (a : Ω[B⁄R]) :
   induction a using ind1 with
   | h0 => simp
   | ha x y hx hy =>
-    rw [map_add, add_mul, mul_add, mul_add, hx, hy, zero_add, add_zero, lift_anti]
+    rw [map_add (f := _), add_mul, mul_add, mul_add, hx, hy, zero_add, add_zero, lift_anti]
   | h a a' =>
     simp only [map_smul, smul_mul_assoc, mul_smul_comm, Derivation.liftKaehlerDifferential_comp_D]
     have : der (R := R) a' * der a' = 0 := by ext <;> simp [der_apply]
@@ -190,7 +190,7 @@ theorem graph_1 (x : DR R B) : (graph x).1 = x := by
   | h b => rw [AlgHom.commutes]; rfl
   | hd b => rw [graph_D]; rfl
   | hm x y hx hy => rw [map_mul, mul_1, hx, hy]
-  | ha x y hx hy => rw [map_add, add_1, hx, hy]
+  | ha x y hx hy => rw [map_add (f := _), add_1, hx, hy]
 
 end Tw
 
@@ -198,7 +198,7 @@ variable (R B) in
 
 def dDR : DR R B →ₗ[R] DR R B where
   toFun x := (Tw.graph x).2
-  map_add' x y := by rw [map_add, Tw.add_2]
+  map_add' x y := by rw [map_add (f := _), Tw.add_2]
   map_smul' r x := by
     rw [← algebraMap_smul B r x, map_smul, algebraMap_smul]; rfl
 
@@ -244,12 +244,12 @@ theorem dDR_ι_mem (ω : Ω[B⁄R]) : dDR R B (ι1 ω) ∈ ⋀[B]^2 Ω[B⁄R] :=
   induction ω using ind1 with
   | h b c => rw [map_smul, dDR_smul, dDR_D, smul_zero, add_zero]; exact mul_mem (ι_mem _) (ι_mem _)
   | h0 => simp
-  | ha x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+  | ha x y hx hy => rw [map_add (f := _), map_add (f := _)]; exact add_mem hx hy
 
 theorem dDR_mem {j : ℕ} {x : DR R B} (hx : x ∈ ⋀[B]^j Ω[B⁄R]) : dDR R B x ∈ ⋀[B]^(j + 1) Ω[B⁄R] := by
   induction hx using Submodule.pow_induction_on_left' with
   | algebraMap b => rw [dDR_algebraMap]; exact ι_mem _
-  | add x y i _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y i _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | mem_mul m hm i x hx ih =>
     obtain ⟨ω, rfl⟩ := hm
     rw [dDR_mul, sgn_ι, neg_mul]
@@ -262,7 +262,7 @@ theorem dDR_mem {j : ℕ} {x : DR R B} (hx : x ∈ ⋀[B]^j Ω[B⁄R]) : dDR R B
 theorem sgn_of_mem {j : ℕ} {x : DR R B} (hx : x ∈ ⋀[B]^j Ω[B⁄R]) : sgn x = (-1) ^ j * x := by
   induction hx using Submodule.pow_induction_on_left' with
   | algebraMap b => simp
-  | add x y i _ _ hx hy => rw [map_add, hx, hy, mul_add]
+  | add x y i _ _ hx hy => rw [map_add (f := _), hx, hy, mul_add]
   | mem_mul m hm i x hx ih =>
     obtain ⟨ω, rfl⟩ := hm
     rw [map_mul, sgn_ι, ih, pow_succ]
@@ -437,7 +437,7 @@ theorem SemiHom.mDR_mem (h : SemiHom σ α) {j : ℕ} {x : DR R B} (hx : x ∈ �
     rw [h.mDR_algebraMap]
     change _ ∈ LinearMap.range _ ^ 0
     rw [pow_zero]; exact Submodule.algebraMap_mem _
-  | add x y i _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y i _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | mem_mul m hm i x hx ih =>
     obtain ⟨ω, rfl⟩ := hm
     rw [map_mul, h.mDR_ι]
@@ -473,7 +473,7 @@ theorem SemiHom.oneFormMap_eq_self_of_id {τ : R →+* R} {β : B →+* B} (h : 
   induction ω using ind1 with
   | h b c => simp [e]
   | h0 => simp
-  | ha x y hx hy => rw [map_add, hx, hy]
+  | ha x y hx hy => rw [map_add (f := _), hx, hy]
 
 theorem SemiHom.mOm_id {τ : R →+* R} {β : B →+* B} (h : SemiHom τ β) (e : ∀ b, β b = b) {j : ℕ}
     (x : Om R B j) : h.mOm j x = x := by
@@ -483,7 +483,7 @@ theorem SemiHom.mOm_id {τ : R →+* R} {β : B →+* B} (h : SemiHom τ β) (e 
   | h b => simp [e]
   | hd b => simp [e]
   | hm x y hx hy => rw [map_mul, hx, hy]
-  | ha x y hx hy => rw [map_add, hx, hy]
+  | ha x y hx hy => rw [map_add (f := _), hx, hy]
 
 variable {τ : R' →+* R''} {β : B' →+* B''} {ρ : R →+* R''} {γ : B →+* B''}
 
@@ -495,7 +495,7 @@ theorem SemiHom.oneFormMap_comp_oneFormMap (h : SemiHom σ α) (h' : SemiHom τ 
   induction ω using ind1 with
   | h b c => simp [e]
   | h0 => simp
-  | ha x y hx hy => simp only [map_add, hx, hy]
+  | ha x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem SemiHom.mOm_mOm (h : SemiHom σ α) (h' : SemiHom τ β) (h'' : SemiHom ρ γ) (e : ∀ b, β (α b) = γ b)
     {j : ℕ} (x : Om R B j) : h'.mOm j (h.mOm j x) = h''.mOm j x := by
@@ -505,7 +505,7 @@ theorem SemiHom.mOm_mOm (h : SemiHom σ α) (h' : SemiHom τ β) (h'' : SemiHom 
   | h b => simp [e]
   | hd b => simp [e]
   | hm x y hx hy => simp only [map_mul, hx, hy]
-  | ha x y hx hy => simp only [map_add, hx, hy]
+  | ha x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem SemiHom.oneFormMap_eq_kaehlerDifferential_map [Algebra R B'] [Algebra B B'] [IsScalarTower R B B'] {τ : R →+* R}
     {β : B →+* B'} (h : SemiHom τ β) (e : ∀ b, β b = algebraMap B B' b) (ω : Ω[B⁄R]) :
@@ -513,7 +513,7 @@ theorem SemiHom.oneFormMap_eq_kaehlerDifferential_map [Algebra R B'] [Algebra B 
   induction ω using ind1 with
   | h b c => simp [e, KaehlerDifferential.map_D]
   | h0 => simp
-  | ha x y hx hy => simp only [map_add, hx, hy]
+  | ha x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Map
 

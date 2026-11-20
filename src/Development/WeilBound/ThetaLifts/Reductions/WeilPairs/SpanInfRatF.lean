@@ -85,9 +85,9 @@ theorem finIdem_add_iota (hι : IsChartF θ ι) (x : WOF F E nS nT) : x = finIde
   funext i j
   show x i j = finIdem F E * x i j + ι (fun w => θ w (infPartF F E (x i j)))
   refine (sub_eq_zero.1 (hι.ext _ ?_ ?_)).symm.symm
-  · simp only [map_sub, map_add, map_mul, finPartF_finIdem, one_mul, hι.fin, add_zero, sub_self]
+  · simp only [map_sub, map_add (f := _), map_mul, finPartF_finIdem, one_mul, hι.fin, add_zero, sub_self]
   · intro w
-    simp only [map_sub, map_add, map_mul, infPartF_finIdem, zero_mul, zero_add, hι.comp, sub_self]
+    simp only [map_sub, map_add (f := _), map_mul, infPartF_finIdem, zero_mul, zero_add, hι.comp, sub_self]
 
 theorem continuous_piWF (C : Ctx σ B JS JT ξ₀ θ ι) : Continuous (piWF (nS := nS) (nT := nT) θ) :=
   continuous_pi fun p => (PositivityTheory.ThKW.RealC.continuous_theta (C.inf p.2)).comp
@@ -228,7 +228,7 @@ theorem symplOF_actOF (C : Ctx σ B JS JT ξ₀ θ ι) (g : GAF σ JS) (h : GAF 
 
 theorem symplOF_eq_add (x y : WOF F E nS nT) :
     symplOF σ JS JT ξ₀ x y = symplOHF σ JS JT ξ₀ x y + symplOHF σ JS JT ξ₀ x y := by
-  rw [symplOHF, ← add_mul, ← map_add]
+  rw [symplOHF, ← add_mul, ← map_add (f := _)]
   norm_num
 
 theorem gamQF_eq_one_iff (C : Ctx σ B JS JT ξ₀ θ ι) (x y : Matrix (Fin nT) (Fin nS) E) :
@@ -428,7 +428,7 @@ theorem span_tau (hB : B.IsGood σ) :
       show (B.emb w).1 e = cw B w ((wE B w).embedding e)
       rw [cw_emb]
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   have htop : Submodule.span ℝ (Set.range (mixedEmbedding E)) = ⊤ := by
     refine eq_top_iff.2 (le_trans (le_of_eq (mixedEmbedding.latticeBasis E).span_eq.symm) (Submodule.span_mono ?_))

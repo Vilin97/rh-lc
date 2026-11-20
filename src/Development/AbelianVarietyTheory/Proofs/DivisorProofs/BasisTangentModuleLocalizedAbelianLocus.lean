@@ -85,7 +85,7 @@ theorem exists_pullField {Y Y' : Scheme.{0}} (io : Y' ⟶ Y) [IsOpenImmersion io
     rw [← pbT_rsT io h (hpi O), σ₂, rsT_of_le h]
   refine ⟨fun O f => pbT io (d (io ''ᵁ O) (σ O f)) O, ⟨fun O _ f f' => ?_, fun O _ f f' => ?_,
     fun O O' h _ f => ?_⟩, fun O₁ O h f => ?_⟩
-  · simp only [map_add, hd.1 _ le_top, pbT_add]
+  · simp only [map_add (f := _), hd.1 _ le_top, pbT_add]
   · simp only [map_mul, hd.2.1 _ le_top, pbT_add, pbT_mul, σ₁]
   · have h' := io.image_mono h
     have e : σ O' (resG _ h f) = resG _ h' (σ O f) := by

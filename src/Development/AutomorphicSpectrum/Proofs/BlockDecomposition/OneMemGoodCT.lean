@@ -30,7 +30,7 @@ def goodCT (L : Subgroup (GL (Fin (r + s)) (Af E))) {W : Type} [AddCommGroup W] 
       rw [a1, b1]
     · change F.1 _ + G.1 _ = F.1 _ + G.1 _
       rw [a2, b2]
-    · rw [map_add, a3 k hk, b3 k hk]
+    · rw [map_add (f := _), a3 k hk, b3 k hk]
     · convert (GlobalTheory.Published.AutFin.coeffSpan ρ).add_mem (a4 g) (b4 g) using 1
       funext k
       simp
@@ -50,7 +50,7 @@ def goodCT (L : Subgroup (GL (Fin (r + s)) (Af E))) {W : Type} [AddCommGroup W] 
           (mul_le_mul_of_nonneg_left e1 (abs_nonneg _))
       · exact (mul_le_mul_of_nonneg_right (le_abs_self C') p2).trans
           (mul_le_mul_of_nonneg_left e2 (abs_nonneg _))
-    · rw [map_add, a6 z hz, b6 z hz, add_zero]
+    · rw [map_add (f := _), a6 z hz, b6 z hz, add_zero]
   zero_mem' := by
     refine ⟨fun x g => rfl, fun γ g => rfl, fun k _ => map_zero _, fun g => ?_, fun g => ⟨0, 0, fun y => ?_⟩,
       fun z _ => map_zero z⟩

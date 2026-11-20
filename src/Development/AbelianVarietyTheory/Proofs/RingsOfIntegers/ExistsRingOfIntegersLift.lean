@@ -25,7 +25,7 @@ theorem _root_.GlobalTheory.PlaceInt.exists_ringOfIntegers_lift (E : Type) [Fiel
             map_one' := inj (by rw [hf, map_one]; simp)
             map_mul' := fun x y => inj (by rw [map_mul, hf, hf, hf]; push_cast; rw [map_mul])
             map_zero' := inj (by rw [hf, map_zero]; simp)
-            map_add' := fun x y => inj (by rw [map_add, hf, hf, hf]; push_cast; rw [map_add]) },
+            map_add' := fun x y => inj (by rw [map_add (f := _), hf, hf, hf]; push_cast; rw [map_add (f := _)]) },
     hf⟩
 
 open NumberField Polynomial IsLocalRing in

@@ -11,7 +11,7 @@ theorem UpperTheory.Gal.W2.hermOfJ_of :
   have hskew : ∀ x y, E x y = - E y x := by
     intro x y
     have h := halt (x + y)
-    simp only [map_add, LinearMap.add_apply, halt, zero_add, add_zero] at h
+    simp only [map_add (f := _), LinearMap.add_apply, halt, zero_add, add_zero] at h
     linarith
   have hII : ∀ x : Fin g → ℂ, Complex.I • Complex.I • x = -x := by
     intro x

@@ -115,7 +115,7 @@ theorem UpperTheory.Gal.W2.Seed.pAdTEx :
       obtain ⟨a, c, ha, rfl⟩ := hy
       exact AddSubgroup.subset_closure ⟨Q.ρ a, c, (Q.int a).2 fun v _ => ha v, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add u v _ _ hu hv => rw [map_add]; exact add_mem hu hv
+    | add u v _ _ hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
     | neg u _ hu => rw [map_neg]; exact neg_mem hu
   exact ⟨{ toAdQ := Q
            Φ := (M : AfQ ⊗[ℚ] E →+* AfP p ⊗[ℚ] E).comp (ι.symm : Af E →+* AfQ ⊗[ℚ] E)
@@ -167,4 +167,4 @@ theorem UpperTheory.Gal.W2.Seed.pAdTEx :
               rw [h1, map_mul, h3, conjFin_algebraMap, ← h1, ι.symm_apply_apply, hM, hM, conjT_tmul]
               rfl
             | add u v hu hv =>
-              simp only [map_add, hu, hv] }⟩
+              simp only [map_add (f := _), hu, hv] }⟩

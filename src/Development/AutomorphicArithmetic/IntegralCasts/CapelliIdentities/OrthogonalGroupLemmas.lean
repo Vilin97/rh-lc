@@ -28,7 +28,7 @@ theorem UpperTheory.Reformulated.B.OrthogonalGroupLemmas.aux1 :
   · have h : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F (a + b) = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F a + GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F b :=
       map_add (NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1 b.1
     rw [h, ha.1, hb.1, add_zero]
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact add_mem (ha.2 v) (hb.2 v)
 
 theorem UpperTheory.Reformulated.B.OrthogonalGroupLemmas.aux2 :

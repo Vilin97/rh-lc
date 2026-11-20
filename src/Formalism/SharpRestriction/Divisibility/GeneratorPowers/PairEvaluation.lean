@@ -87,7 +87,7 @@ lemma aeval_sub_mem_sq (g g' : σ → MvPolynomial τ S) (hg : ∀ i, g i ∈ Io
   | zero => simp
   | add x y _ _ hx hy =>
     have e : aeval g (x + y) - aeval g' (x + y) = (aeval g x - aeval g' x) + (aeval g y - aeval g' y) := by
-      simp only [map_add]; ring
+      simp only [map_add (f := _)]; ring
     rw [e]; exact add_mem hx hy
   | smul r x hxm hx =>
     have e : aeval g (r • x) - aeval g' (r • x) =
@@ -121,7 +121,7 @@ lemma aeval_sub_mem_pow (g g' : σ → MvPolynomial τ S) (hg : ∀ i, g i ∈ I
         exact Ideal.mul_mem_mul (aeval_mem_pow g' hg' k ha) (aeval_sub_mem_sq g g' hg hg' hgg hb)
     · intro x y hx hy
       have e : aeval g (x + y) - aeval g' (x + y) = (aeval g x - aeval g' x) + (aeval g y - aeval g' y) := by
-        simp only [map_add]; ring
+        simp only [map_add (f := _)]; ring
       rw [e]; exact add_mem hx hy
 
 lemma eq_zero_of_isHomogeneous {h : MvPolynomial σ S} {j : ℕ} (hh : h.IsHomogeneous j)
@@ -199,7 +199,7 @@ lemma eval_pair_additive_first {h : MvPolynomial (Fin 2 × Fin d) S}
     {τ : Type} (u u' v : Fin d → MvPolynomial τ S) :
     ev2 h (fun i => u i + u' i) v = ev2 h u v + ev2 h u' v := by
   have := congrArg (aeval (fun p : Fin 3 × Fin d => ![u, u', v] p.1 p.2)) hA
-  rw [map_add, aeval_eval_pair, aeval_eval_pair, aeval_eval_pair] at this
+  rw [map_add (f := _), aeval_eval_pair, aeval_eval_pair, aeval_eval_pair] at this
   have e0 : (fun i => aeval (fun p : Fin 3 × Fin d => ![u, u', v] p.1 p.2) (xs S d (0 : Fin 3) i + xs S d 1 i)) =
       fun i => u i + u' i := by funext i; simp [xs]
   have e1 : (fun i => aeval (fun p : Fin 3 × Fin d => ![u, u', v] p.1 p.2) (xs S d (0 : Fin 3) i)) = u := by
@@ -222,7 +222,7 @@ lemma symm_of {h : MvPolynomial (Fin 2 × Fin d) S} (hs : ev2 h (xs S d 1) (xs S
 lemma lin_add_lin (A Ab : Fin d → Fin d → S) (hAA : ∀ i l, A i l + Ab i l = if i = l then 1 else 0) {n : ℕ}
     (k : Fin n) : (fun i => lin A k i + lin Ab k i) = xs S d k := by
   funext i
-  simp only [lin, xs, ← Finset.sum_add_distrib, ← add_mul, ← map_add, hAA]
+  simp only [lin, xs, ← Finset.sum_add_distrib, ← add_mul, ← map_add (f := _), hAA]
   simp
 
 theorem step {P : MvPolynomial (Fin 2 × Fin d) S} {m j : ℕ} (hj1 : 1 ≤ j) (hjm : j ≤ m)

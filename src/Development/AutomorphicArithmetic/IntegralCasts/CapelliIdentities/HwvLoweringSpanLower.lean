@@ -70,7 +70,7 @@ theorem UpperTheory.Reformulated.B.Qk30.hwv_lowering_span_lower.{u_1, u_2} :
     rw [map_zero]
     exact Submodule.zero_mem _
   | add y z _ _ hy hz =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hy hz
   | smul c y _ hy =>
     rw [map_smul]

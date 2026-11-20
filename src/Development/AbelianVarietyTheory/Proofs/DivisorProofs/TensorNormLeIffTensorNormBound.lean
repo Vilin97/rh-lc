@@ -45,7 +45,7 @@ def fockCore (σ : Type) : InnerProductSpace.Core ℂ (MvPolynomial σ ℂ) wher
   re_inner_nonneg f := fockS_re_nonneg f
   add_left f f' g := by
     change fockL (f + f') g = fockL f g + fockL f' g
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
   smul_left f g r := by
     change fockL (r • f) g = _ * fockL f g
     rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul]

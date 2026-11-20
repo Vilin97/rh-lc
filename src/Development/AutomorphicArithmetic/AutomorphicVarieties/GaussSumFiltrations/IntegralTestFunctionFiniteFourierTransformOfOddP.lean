@@ -239,7 +239,7 @@ theorem good_wT : ∀ (F : Type) [Field F] [NumberField F] (p : ℕ) [Fact p.Pri
         rw [h] at h1
         exact hx0 (huniq x hx 0 h0 (by simpa using hfree N x hN hNp (hT.1 x hx) h1)))
       (fun x hx => hΦσ x (Finset.mem_of_mem_erase hx)) (fun x _ => hint x)
-    rw [e0, map_mul, map_add]
+    rw [e0, map_mul, map_add (f := _)]
     set a := ι.symm (wC (p - 1) t (N : F) c)
     set b := ι.symm (Φ 0)
     set r := ι.symm (∑ x ∈ T.erase 0, Φ x)

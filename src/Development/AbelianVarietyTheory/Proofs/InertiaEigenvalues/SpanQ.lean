@@ -51,7 +51,7 @@ theorem exists_inv : Formalism.GaloisCohomology.LocalTateDualityK → ∀ (l : �
       add_mem' := fun {a b} ha hb => by
         obtain ⟨f1, hf1, e1⟩ := ha
         obtain ⟨f2, hf2, e2⟩ := hb
-        exact ⟨f1 + f2, hf1.add hf2, by rw [map_add, e1, e2]; rfl⟩
+        exact ⟨f1 + f2, hf1.add hf2, by rw [map_add (f := _), e1, e2]; rfl⟩
       zero_mem' := ⟨0, continuous_const, by rw [map_zero]; rfl⟩
       smul_mem' := fun c a ha => by
         obtain ⟨f1, hf1, e1⟩ := ha

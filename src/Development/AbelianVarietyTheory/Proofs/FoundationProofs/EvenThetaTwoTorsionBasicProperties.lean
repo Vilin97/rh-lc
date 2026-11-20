@@ -108,7 +108,7 @@ theorem _root_.GlobalTheory.EvenTheta.evenThetaTwoTorsion_basic_properties : ∀
     rw [show t + 2 * t + ω = t + (ω + 2 * t) by ring, h1, h3] at h2
     have hε := mul_exp_eq_one_of_exp_relation
       (k := (↑Real.pi * t * (starRingEnd ℂ) ω - ↑Real.pi * ω * (starRingEnd ℂ) t) /
-        ↑(_root_.Formalism.MainNotions.TaylorLogMetric.area Λ)) hσt h2 (by simp only [map_add, map_mul, map_ofNat]; ring)
+        ↑(_root_.Formalism.MainNotions.TaylorLogMetric.area Λ)) hσt h2 (by simp only [map_add (f := _), map_mul, map_ofNat]; ring)
     unfold _root_.Formalism.MainNotions.GL3Theta.th0 _root_.Formalism.MainNotions.TaylorLogMetric.U1
     beta_reduce
     rw [show z + ω + t = z + t + ω by ring, sgStar_add_lattice_eq_mul_exp hΛ hω, div_mul_eq_mul_div]

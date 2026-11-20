@@ -557,11 +557,11 @@ theorem isFine_pull_iff {O : Type} [CommRing O] [Module O X] [Module O X₁] {r 
     obtain ⟨μ₀, h⟩ := h y
     refine ⟨r μ₀, fun i μ => ?_⟩
     obtain ⟨μ, rfl⟩ := hr μ
-    simpa only [pull_apply, r.map_add, map_nsmul r] using h i μ
+    simpa only [pull_apply, r.map_add (f := _), map_nsmul r] using h i μ
   · intro h y
     obtain ⟨μ₀, h⟩ := h (r y)
     obtain ⟨μ₀, rfl⟩ := hr μ₀
-    exact ⟨μ₀, fun i μ => by simpa only [pull_apply, r.map_add, map_nsmul r] using h i (r μ)⟩
+    exact ⟨μ₀, fun i μ => by simpa only [pull_apply, r.map_add (f := _), map_nsmul r] using h i (r μ)⟩
 
 theorem isFine_one (h : ∀ i y, 0 ≤ γ i y y) : IsFine 1 γ := fun y => ⟨-y, fun i μ => by simpa using h i (y + μ)⟩
 

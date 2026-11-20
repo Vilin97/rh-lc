@@ -99,7 +99,7 @@ theorem stab_finiteIndex {x : V} (hx : (Set.range fun l : L => π (l : G) x).Fin
 
 theorem stab_le_add (x y : V) : stab π L x ⊓ stab π L y ≤ stab π L (x + y) := by
   intro l hl
-  rw [mem_stab, map_add, (mem_stab π L).mp hl.1, (mem_stab π L).mp hl.2]
+  rw [mem_stab, map_add (f := _), (mem_stab π L).mp hl.1, (mem_stab π L).mp hl.2]
 
 theorem stab_le_smul (c : ℂ) (x : V) : stab π L x ≤ stab π L (c • x) := by
   intro l hl
@@ -110,7 +110,7 @@ theorem avgH_add (H : Subgroup L) [H.FiniteIndex] (x y : V) :
   classical
   haveI := Fintype.ofFinite (L ⧸ H)
   unfold avgH cv
-  simp only [finsum_eq_sum_of_fintype, map_add, Finset.sum_add_distrib, smul_add]
+  simp only [finsum_eq_sum_of_fintype, map_add (f := _), Finset.sum_add_distrib, smul_add]
 
 theorem avgH_smul (H : Subgroup L) [H.FiniteIndex] (c : ℂ) (x : V) :
     avgH π L H (c • x) = c • avgH π L H x := by

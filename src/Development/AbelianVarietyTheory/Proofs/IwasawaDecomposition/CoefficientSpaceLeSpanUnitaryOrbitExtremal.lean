@@ -55,7 +55,7 @@ theorem nablaSq_le_span_unitary (n : ℕ) (mu : DomWeight n) :
       rw [cyc_rowAct_rowAct]
       exact Submodule.subset_span ⟨v * u, mul_mem hv hu, rfl⟩
     | zero => rw [map_zero]; exact M.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact M.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact M.add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact M.smul_mem c hx
   have hne : M ≠ ⊥ := by
     intro e

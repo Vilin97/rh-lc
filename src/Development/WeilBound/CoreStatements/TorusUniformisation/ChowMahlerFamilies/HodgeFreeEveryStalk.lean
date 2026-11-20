@@ -58,7 +58,7 @@ theorem exists_hom (B : Germ.FB R d O) :
   · simp only [key]
     rw [map_mul, Module.End.mul_eq_comp, LinearEquiv.conj_comp, LinearMap.toMatrix'_comp]
   · simp only [key, map_zero]
-  · simp only [key, map_add]
+  · simp only [key, map_add (f := _)]
 
 end
 

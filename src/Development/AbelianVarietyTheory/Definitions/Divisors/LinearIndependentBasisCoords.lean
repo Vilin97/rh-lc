@@ -79,7 +79,7 @@ def ofCoords {P : (K →+* ℂ) → Type*} [∀ σ, Fintype (P σ)] (φ : ∀ σ
     (hφ : ∀ σ n (v : Fin n → V), LinearIndependent K v → LinearIndependent ℂ fun i => φ σ (v i)) :
     HermFam K V where
   form σ x y := star (φ σ x) ⬝ᵥ G σ *ᵥ φ σ y
-  add_right σ x y z := by rw [map_add, mulVec_add, dotProduct_add]
+  add_right σ x y z := by rw [map_add (f := _), mulVec_add, dotProduct_add]
   smul_right σ a x y := by rw [map_smulₛₗ, mulVec_smul, dotProduct_smul, smul_eq_mul]
   conj_symm σ x y := by
     rw [starRingEnd_apply, ← star_dotProduct_star, star_star, star_mulVec, (hG σ).1.eq, ← dotProduct_mulVec]
@@ -95,7 +95,7 @@ def ofCoords {P : (K →+* ℂ) → Type*} [∀ σ, Fintype (P σ)] (φ : ∀ σ
 def comap [AddCommGroup V'] [Module K V'] (h : HermFam K V) (f : V' →ₗ[K] V) (hf : Function.Injective f) :
     HermFam K V' where
   form σ x y := h.form σ (f x) (f y)
-  add_right σ x y z := by rw [map_add, h.add_right]
+  add_right σ x y z := by rw [map_add (f := _), h.add_right]
   smul_right σ a x y := by rw [map_smul, h.smul_right]
   conj_symm σ x y := h.conj_symm σ _ _
   posDef σ n v hv := h.posDef σ n _ (hv.map' f (LinearMap.ker_eq_bot.2 hf))

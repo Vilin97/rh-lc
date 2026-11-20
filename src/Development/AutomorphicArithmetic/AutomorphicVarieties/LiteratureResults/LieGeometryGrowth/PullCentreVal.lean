@@ -12,7 +12,7 @@ private theorem span_val {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
     obtain ⟨φ, v, hφ, rfl⟩ := hz
     rw [ev_tmul, ev_tmul, h φ hφ, mul_smul]
   | zero => simp
-  | add z w _ _ hz hw => simp only [map_add, Pi.add_apply, hz, hw, smul_add]
+  | add z w _ _ hz hw => simp only [map_add (f := _), Pi.add_apply, hz, hw, smul_add]
   | smul s z _ hz => simp only [map_smul, Pi.smul_apply, hz, smul_comm s c]
 
 theorem UpperTheory.V.Lit.Geo.centreVal :

@@ -172,7 +172,7 @@ private theorem lat_le {g g' : GL (Fin 2) K} : LL O τ g ⊆ LL O τ g' ↔ Ent 
     choose a ha using h
     choose v hv using hx
     refine ⟨a i 0 * v 0 + a i 1 * v 1, ?_⟩
-    rw [map_add, map_mul, map_mul, ha, ha, hv, hv]
+    rw [map_add (f := _), map_mul, map_mul, ha, ha, hv, hv]
     generalize ((g⁻¹ : GL (Fin 2) K) : Matrix (Fin 2) (Fin 2) K) *ᵥ (b0 τ).repr x = w
     simp [mulVec, dotProduct]
 

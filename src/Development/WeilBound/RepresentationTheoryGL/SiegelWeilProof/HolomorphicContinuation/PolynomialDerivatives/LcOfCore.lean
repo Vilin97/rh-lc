@@ -42,7 +42,7 @@ private theorem nullSec_fock_apply_of_mem_kAlg {m n : ℕ} {ε : Fin m → Bool}
     exact nullSec_smul' hc r hp
   | add x y _ _ hx hy =>
     intro p hp
-    rw [LinearMap.add_apply, hlin.map_add]
+    rw [LinearMap.add_apply, hlin.map_add (f := _)]
     exact nullSec_add' hc (hx p hp) (hy p hp)
   | mul x y _ _ hx hy =>
     intro p hp

@@ -221,7 +221,7 @@ theorem aLinAdj_holds : ALinAdjSt := by
   have k2 := congrArg (subst (fun q : Fin 1 × Fin dd => γ0 q.2)) key
   rw [subst_add hG, subst_add hG, ← MvPowerSeries.smul_eq_C_mul, subst_smul hG, hcomp e he0, hcomp M hM0] at k2
   have k3 := congrArg (PowerSeries.coeff V.l) k2
-  rw [map_add, map_add, map_smul, smul_eq_mul] at k3
+  rw [map_add (f := _), map_add (f := _), map_smul, smul_eq_mul] at k3
 
   have hA1 := coeff_l_frob (hSI v hv) (hS0 v) (linear_part_unit_frobenius Y hv) (hδcv e he0 heI)
   have hlin : ∀ i, PowerSeries.coeff 1 (subst (fun q : Fin 1 × Fin dd => γ0 q.2) (e i)) = linAct e u i := fun i => by

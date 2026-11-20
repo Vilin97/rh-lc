@@ -45,7 +45,7 @@ theorem tr_of_isPushout {φ : A →+* B} {α : A →+* A'} {β : B →+* B'} {φ
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul r x => simp [IsBaseChange.equiv_tmul]; rfl
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
 
 theorem tr_map (φ : A →+* B) (h : FinFree φ) (r : ℕ)
     (hr : Nontrivial A → (letI := φ.toAlgebra; Module.finrank A B) = r) (a : A) :
@@ -161,7 +161,7 @@ def trFun (V : Y.Opens) : Γ(X, f ⁻¹ᵁ V) →+ Γ(Y, V) where
   map_zero' := ext_freeOpen f fun W => by
     rw [(exists_trFun f V 0).choose_spec W, map_zero, map_zero, map_zero]
   map_add' a b := ext_freeOpen f fun W => by
-    rw [(exists_trFun f V _).choose_spec W, map_add, map_add, map_add,
+    rw [(exists_trFun f V _).choose_spec W, map_add (f := _), map_add (f := _), map_add (f := _),
       (exists_trFun f V a).choose_spec W, (exists_trFun f V b).choose_spec W]
 
 theorem resG_trFun_free {V : Y.Opens} (b : Γ(X, f ⁻¹ᵁ V)) (W : FreeOpen f V) :
@@ -278,7 +278,7 @@ variable (L) in
 def trR (V : Y.Opens) (V' : X.Opens) (e : f ⁻¹ᵁ V ≤ V') :
     SecOnR (f ≫ q) (L.pull f) V' →ₗ[R] SecOnR q L V where
   toFun x := SecOnR.of q L V (trSec f V (SecOn.restrict (L.pull f) e ((SecOnR.of (f ≫ q) _ V').symm x)))
-  map_add' x y := by simp only [map_add]
+  map_add' x y := by simp only [map_add (f := _)]
   map_smul' r x := by
     rw [SecOnR.smul_def, LinearEquiv.map_smul, (SecOn.restrict (L.pull f) e).map_smulₛₗ]
     erw [resG_cst_comp f q e r, trSec_smul]

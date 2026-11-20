@@ -169,7 +169,7 @@ theorem apply_mem_sup {τ : Representation ℂ (GL (Fin n) 𝓀[k]) W} (hτ : Fi
       rw [hc, torusElt_const, hω]
       exact Submodule.mem_sup_left (Submodule.smul_mem _ _ ⟨w', rfl⟩)
   obtain ⟨y, hy, z, hz, hyz⟩ := Submodule.mem_sup.1 hmid
-  rw [← hyz, map_add]
+  rw [← hyz, map_add (f := _)]
   obtain ⟨w'', rfl⟩ := hy
   refine add_mem (Submodule.mem_sup_left ⟨_, hj.2 ⟨k1, h1⟩ w''⟩) (Submodule.mem_sup_right ?_)
   exact apply_mem_twKer_of_normalizer (mem_normalizer_KOne h1) hz
@@ -189,7 +189,7 @@ theorem st6 : St6 := by
       refine Submodule.subset_span ⟨g * h, w, ?_⟩
       rw [map_mul, Module.End.mul_apply]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   let U : Subrepresentation π.ρ := ⟨S, fun g _ hx => hS g _ hx⟩
   obtain ⟨w0, hw0⟩ := exists_ne (0 : W)

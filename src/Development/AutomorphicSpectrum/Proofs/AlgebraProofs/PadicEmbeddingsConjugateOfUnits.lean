@@ -34,7 +34,7 @@ theorem exists_padicAlgCl_factor {K : Type} [Field K] [NumberField K] (κ : K �
             map_one' := hjinj (by rw [hf, map_one, map_one])
             map_mul' := fun a b => hjinj (by rw [hf, map_mul, map_mul, hf, hf])
             map_zero' := hjinj (by rw [hf, map_zero, map_zero])
-            map_add' := fun a b => hjinj (by rw [hf, map_add, map_add, hf, hf]) }, fun a => hf a⟩
+            map_add' := fun a b => hjinj (by rw [hf, map_add (f := _), map_add (f := _), hf, hf]) }, fun a => hf a⟩
 
 theorem norm_aeval_monomial_sub (x : PadicAlgCl p) (n : ℕ) (r : ℚ) (c : ℚ_[p]) :
     ‖aeval x (monomial n r) - aeval x (monomial n c)‖ = ‖(r : ℚ_[p]) - c‖ * ‖x‖ ^ n := by

@@ -314,7 +314,7 @@ theorem exists_mem_maximalIdeal_invConst (𝔭 : HeightOneSpectrum (𝓞 K))
       rw [← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply (𝓞 K) K L, map_mul,
         mul_assoc])
     (fun x y ⟨m₁, hm₁, e₁⟩ ⟨m₂, hm₂, e₂⟩ ↦
-      ⟨m₁ + m₂, add_mem hm₁ hm₂, by rw [map_add, e₁, e₂, map_add, mul_add]⟩)
+      ⟨m₁ + m₂, add_mem hm₁ hm₂, by rw [map_add (f := _), e₁, e₂, map_add (f := _), mul_add]⟩)
   obtain ⟨m, hm, e⟩ := key
   exact ⟨m, hm, by rw [e, map_one, mul_one]⟩
 

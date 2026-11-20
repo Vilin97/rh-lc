@@ -172,7 +172,7 @@ theorem isAlgebraic_adjoin [W.IsPrime] (j : Fin m)
       refine hT _ ?_
       have := hA (C c)
       rwa [phi_apply, baseRen_C] at this
-    | add f g hf hg => rw [map_add, map_add]; exact hf.add hg
+    | add f g hf hg => rw [map_add (f := _), map_add (f := _)]; exact hf.add hg
     | mul_X f v hf => rw [map_mul, map_mul]; exact hf.mul (hvar v)
   refine ⟨fun x => ?_⟩
   obtain ⟨a, d, -, rfl⟩ := IsFractionRing.div_surjective (A := R) x

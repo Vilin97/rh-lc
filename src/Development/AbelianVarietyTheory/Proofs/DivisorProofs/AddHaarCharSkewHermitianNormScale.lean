@@ -77,7 +77,7 @@ def split (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) (j : ℕ) (δ : E) (
     ⟨inclR (F := F) (AF F) (2⁻¹ : E) • inclR (F := F) (AF F) δ⁻¹ • (M + cT (sigR (AF F) σ) M), by
       rw [mem_skewA_iff]
       intro i k
-      simp only [Matrix.smul_apply, Matrix.add_apply, cT_apply, smul_eq_mul, map_mul, map_add, sigR_inclR,
+      simp only [Matrix.smul_apply, Matrix.add_apply, cT_apply, smul_eq_mul, map_mul, map_add (f := _), sigR_inclR,
         sigR_sigR hσ, map_inv₀ σ 2, map_ofNat σ 2, map_inv₀ σ δ, hδ, inv_neg, map_neg]
       ring⟩)
   left_inv p := by
@@ -94,12 +94,12 @@ def split (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) (j : ℕ) (δ : E) (
     · ext i k
       show inclR (F := F) (AF F) (2⁻¹ : E) * ((x i k + inclR (F := F) (AF F) δ * y i k) -
         sigR (AF F) σ (x k i + inclR (F := F) (AF F) δ * y k i)) = x i k
-      rw [map_add, map_mul, hx', hy', sigR_inclR, hδ, map_neg]
+      rw [map_add (f := _), map_mul, hx', hy', sigR_inclR, hδ, map_neg]
       linear_combination x i k * hh
     · ext i k
       show inclR (F := F) (AF F) (2⁻¹ : E) * (inclR (F := F) (AF F) δ⁻¹ * ((x i k + inclR (F := F) (AF F) δ * y i k) +
         sigR (AF F) σ (x k i + inclR (F := F) (AF F) δ * y k i))) = y i k
-      rw [map_add, map_mul, hx', hy', sigR_inclR, hδ, map_neg]
+      rw [map_add (f := _), map_mul, hx', hy', sigR_inclR, hδ, map_neg]
       linear_combination (y i k * inclR (F := F) (AF F) δ * inclR (F := F) (AF F) δ⁻¹) * hh + y i k * hc
   right_inv M := by
     have hh : inclR (F := F) (AF F) (2⁻¹ : E) * 2 = 1 := by

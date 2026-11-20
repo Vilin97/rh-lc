@@ -188,7 +188,7 @@ theorem place_facts {𝔪 : Ideal (𝓞 D.host.E)} {Sf : Finset (FinPl D)} (hG :
       obtain ⟨x, hx, y, hy, e⟩ := Ideal.isCoprime_iff_exists.1 hG.2.2.1
       obtain ⟨b, rfl⟩ := Ideal.mem_span_singleton'.1 hy
       have e2 := congrArg (MulSemiringAction.toRingHom _ (𝓞 D.host.E) D.host.conj) e
-      rw [map_add, map_mul, map_natCast, map_one] at e2
+      rw [map_add (f := _), map_mul, map_natCast, map_one] at e2
       refine w.isPrime.ne_top ((Ideal.eq_top_iff_one _).2 ?_)
       rw [← e2]
       exact add_mem (hw (Ideal.smul_mem_pointwise_smul _ _ _ hx)) (Ideal.mul_mem_left _ _ hq)
@@ -249,9 +249,9 @@ theorem mem_of_char_eq {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {r : D.hos
         congr 4
         ring
     convert h1 using 1
-    rw [(fe D).map_mul, (fe D).map_mul, hH1, ← e1, ← one_add_one_eq_two (R := AE D), (fe D).map_add, (fe D).map_one,
+    rw [(fe D).map_mul, (fe D).map_mul, hH1, ← e1, ← one_add_one_eq_two (R := AE D), (fe D).map_add (f := _), (fe D).map_one,
       ← one_add_one_eq_two (R := D.host.E)]
-    simp only [RingHom.map_mul, RingHom.map_add, RingHom.map_one]
+    simp only [RingHom.map_mul, RingHom.map_add (f := _), RingHom.map_one]
     ring
   have hc := GlobalTheory.T.unitaryFinitePoint_congr_one_of_inv_conj_congr (GlobalTheory.T.conjugatePlace_valuation_count_under D) 𝔪 Sf hG y (GlobalTheory.T.valued_finiteUnitary_le_one_off_openSubset S g y Sf gS hg hy) fun w hw => by
     obtain ⟨h1, h2, h3⟩ := place_facts hG hw k

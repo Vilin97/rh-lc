@@ -98,13 +98,13 @@ theorem lev_q_simple (c : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD.p) :
     simp only [letπ, LocWach.q, Pi.mul_apply, Pi.sub_apply, Pi.pow_apply, Pi.add_apply, Pi.one_apply]
     exact W.q₀_def
   have hl := congrArg (W.lev c ζ) hπq
-  rw [map_mul, map_sub, map_pow, map_add, map_one] at hl
+  rw [map_mul, map_sub, map_pow, map_add (f := _), map_one] at hl
   rw [hE, mul_pow, ← map_pow, hζ.pow_eq_one, map_one, one_mul] at hl
   obtain ⟨w, hw, hw0⟩ := exp_pow_sub_one E hE0 hEd PD.p
   rw [hw] at hl
   have hπc : constantCoeff (W.lev c ζ letπ) ≠ 0 := by
     have := congrArg constantCoeff hE
-    rw [map_add, map_one, map_mul, constantCoeff_C, hE0, mul_one] at this
+    rw [map_add (f := _), map_one, map_mul, constantCoeff_C, hE0, mul_one] at this
     intro h0
     rw [h0, add_zero] at this
     exact hζ1 this.symm

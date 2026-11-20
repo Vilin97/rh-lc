@@ -47,7 +47,7 @@ theorem pure_mem (hadd : ∀ f f', P f → P f' → P (f + f')) (hsm : ∀ (a : 
     (hA : ∀ i f, P f → P (A i f)) {f : X → ℂ} (hf : P f) (Q : MvPolynomial ι ℂ) : P (pureTensorL A f Q) := by
   induction Q using MvPolynomial.induction_on' with
   | monomial k c => rw [pure_monomial]; exact hsm _ _ (foldr_mem hA hf _)
-  | add p q hp hq => rw [map_add]; exact hadd _ _ hp hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hadd _ _ hp hq
 
 theorem pure_X_mul (hadd : ∀ f f', P f → P f' → P (f + f')) (hsm : ∀ (a : ℂ) f, P f → P (a • f))
     (hA : ∀ i f, P f → P (A i f)) (hc : ∀ i j f, P f → A i (A j f) = A j (A i f))
@@ -61,10 +61,10 @@ theorem pure_X_mul (hadd : ∀ f f', P f → P f' → P (f + f')) (hsm : ∀ (a 
       Asm _ _ (opPow A k f) (foldr_mem hA hf _)]
     congr 1
     refine foldr_perm hA hc hf (l' := v :: (Finsupp.toMultiset k).toList) ?_
-    rw [← Multiset.coe_eq_coe, ← Multiset.cons_coe, Multiset.coe_toList, Multiset.coe_toList, map_add,
+    rw [← Multiset.coe_eq_coe, ← Multiset.cons_coe, Multiset.coe_toList, Multiset.coe_toList, map_add (f := _),
       Finsupp.toMultiset_single, one_smul, Multiset.singleton_add]
   | add p q hp hq =>
-    rw [mul_add, map_add, map_add, hp, hq, Aadd _ _ _ (pure_mem hadd hsm hA hf _) (pure_mem hadd hsm hA hf _)]
+    rw [mul_add, map_add (f := _), map_add (f := _), hp, hq, Aadd _ _ _ (pure_mem hadd hsm hA hf _) (pure_mem hadd hsm hA hf _)]
 
 theorem injective_of_pderiv {Y : Type} [AddCommGroup Y] [Module ℂ Y] (L : MvPolynomial ι ℂ →ₗ[ℂ] Y)
     (hd : ∀ Q, L Q = 0 → ∀ i, L (MvPolynomial.pderiv i Q) = 0) (hC : ∀ c : ℂ, L (MvPolynomial.C c) = 0 → c = 0) :
@@ -99,9 +99,9 @@ theorem pure_injective (hadd : ∀ f f', P f → P f' → P (f + f')) (hsm : ∀
     intro i Q
     induction Q using MvPolynomial.induction_on with
     | C a => rw [pure_C, Bsm _ _ _ hf, hB, MvPolynomial.pderiv_C, map_zero, smul_zero, smul_zero]
-    | add p q hp hq => rw [map_add, Badd _ _ _ (hm _) (hm _), hp, hq, map_add, map_add, smul_add]
+    | add p q hp hq => rw [map_add (f := _), Badd _ _ _ (hm _) (hm _), hp, hq, map_add (f := _), map_add (f := _), smul_add]
     | mul_X p j hp =>
-      rw [mul_comm, hX, hBA _ _ _ (hm _), hp, Asm _ _ _ (hm _), ← hX, MvPolynomial.pderiv_mul, map_add, smul_add,
+      rw [mul_comm, hX, hBA _ _ _ (hm _), hp, Asm _ _ _ (hm _), ← hX, MvPolynomial.pderiv_mul, map_add (f := _), smul_add,
         add_comm]
       congr 1
       by_cases h : i = j
@@ -231,7 +231,7 @@ theorem dRho_laws (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {f : WO S T �
     ring
   · have sk : ∀ u v, omO S T v u = -omO S T u v := fun u v => by
       have h1 := omO_self h (S := S) (T := T) (u + v)
-      simp only [LinearMap.map_add, LinearMap.add_apply, omO_self h] at h1
+      simp only [LinearMap.map_add (f := _), LinearMap.add_apply, omO_self h] at h1
       linarith
     refine eq_add_of_sub_eq' ?_
     rw [hE, hE, hE, hE, heisenberg_derivative_commutator _ _ _ _ _ (h.pi_iota T S)

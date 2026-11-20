@@ -235,7 +235,7 @@ theorem hW_sim (t₀ t : ℂ) (M : ℕ) (hM : 0 < M) (ht : (M : ℂ) * t ∈ L.l
       congr 1
       rw [show -(Real.pi : ℂ) * Complex.I * ((Formalism.L2.Th1.F.altE L t t₀ : ℝ) : ℂ)
           = -(Real.pi : ℂ) * (((Formalism.L2.Th1.F.altE L t t₀ : ℝ) : ℂ) * Complex.I) by ring, hc, hcj]
-      simp only [Formalism.L2.Th1.F.herm, map_add]
+      simp only [Formalism.L2.Th1.F.herm, map_add (f := _)]
       ring
     have hth : th0 L t₀ (z + t) = opU L t₀ (sgStar L) (z + t) * (opU L t₀ (sgStar L) 0)⁻¹ := by
       unfold th0
@@ -280,7 +280,7 @@ theorem opU_add_lattice (t ω : ℂ) (hω : ω ∈ L.lattice) :
     congr 1
     rw [show -(-(Real.pi : ℂ) * Complex.I * ((Formalism.L2.Th1.F.altE L t ω : ℝ) : ℂ))
         = (Real.pi : ℂ) * (((Formalism.L2.Th1.F.altE L t ω : ℝ) : ℂ) * Complex.I) by ring, hc, hcj]
-    simp only [Formalism.L2.Th1.F.herm, map_add]
+    simp only [Formalism.L2.Th1.F.herm, map_add (f := _)]
     ring
   simp only [opU]
   rw [show z + (t + ω) = z + t + ω by ring, hq]

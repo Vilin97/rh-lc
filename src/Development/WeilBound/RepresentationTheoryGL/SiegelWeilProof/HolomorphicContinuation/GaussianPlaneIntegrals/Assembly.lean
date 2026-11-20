@@ -17,7 +17,7 @@ variable (ι A B) in
 
 def invSub : Submodule ℂ (PV ι A B) where
   carrier := {q | IsInv q}
-  add_mem' := fun {a b} ha hb u hu => by rw [map_add, ha u hu, hb u hu]
+  add_mem' := fun {a b} ha hb u hu => by rw [map_add (f := _), ha u hu, hb u hu]
   zero_mem' := fun u _ => map_zero _
   smul_mem' := fun c q hq u hu => by rw [map_smul, hq u hu]
 
@@ -35,9 +35,9 @@ theorem integrable_eval_act_blk_toMK (hA : Avg) (z : (ι × A) ⊕ (ι × B) →
 
 theorem Tf_add (hA : Avg) (q1 q2 : PV ι A B) : Tf hA (q1 + q2) = Tf hA q1 + Tf hA q2 :=
   MvPolynomial.funext fun z => by
-    rw [map_add, eval_Tf, eval_Tf, eval_Tf, ← integral_add (integrable_eval_act_blk_toMK hA z q1) (integrable_eval_act_blk_toMK hA z q2)]
+    rw [map_add (f := _), eval_Tf, eval_Tf, eval_Tf, ← integral_add (integrable_eval_act_blk_toMK hA z q1) (integrable_eval_act_blk_toMK hA z q2)]
     refine integral_congr_ae (Filter.Eventually.of_forall fun k => ?_)
-    simp only [map_add]
+    simp only [map_add (f := _)]
 
 theorem Tf_smul (hA : Avg) (c : ℂ) (q : PV ι A B) : Tf hA (c • q) = c • Tf hA q :=
   MvPolynomial.funext fun z => by

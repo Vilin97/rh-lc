@@ -127,7 +127,7 @@ theorem ext_of_isBC {m : GrpMor κ t A κ' t' A' (algebraMap R R') b φ} (hm : m
   obtain ⟨z, rfl⟩ := hm.2 c
   induction z with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x c => rw [liftSemi_tmul, map_smul, map_smul, h c]
 
 end BC
@@ -157,11 +157,11 @@ theorem jetFil_isotropic : GlobalTheory.Published.GrothendieckDeformation → Gl
     intro x hx y hy d d' hdx hdy
     rw [hd x d hdx, hd y d' hdy]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply,
+      simp only [map_add (f := _), map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply,
       LinearMap.smul_apply, smul_eq_mul, hb, z0 x hx y hy, z2, map_zero, mul_zero, Finset.sum_const_zero, add_zero,
       zero_add]
     rw [← Finset.sum_add_distrib]
-    exact Finset.sum_eq_zero fun i _ ↦ by rw [← mul_add, ← map_add, z1, map_zero, mul_zero]
+    exact Finset.sum_eq_zero fun i _ ↦ by rw [← mul_add, ← map_add (f := _), z1, map_zero, mul_zero]
   intro a ha b hb
   induction ha using Submodule.span_induction generalizing b with
   | mem a ha' =>
@@ -171,10 +171,10 @@ theorem jetFil_isotropic : GlobalTheory.Published.GrothendieckDeformation → Gl
       obtain ⟨y, hy, hyb⟩ := hb'
       exact key x hx y hy a b hxa hyb
     | zero => exact map_zero _
-    | add u v _ _ hu hv => rw [map_add, hu, hv, add_zero]
+    | add u v _ _ hu hv => rw [map_add (f := _), hu, hv, add_zero]
     | smul r u _ hu => rw [map_smul, hu, smul_zero]
   | zero => rw [map_zero, LinearMap.zero_apply]
-  | add u v _ _ hu hv => rw [map_add, LinearMap.add_apply, hu b hb, hv b hb, add_zero]
+  | add u v _ _ hu hv => rw [map_add (f := _), LinearMap.add_apply, hu b hb, hv b hb, add_zero]
   | smul r u _ hu => rw [map_smul, LinearMap.smul_apply, hu b hb, smul_zero]
 
 end GlobalTheory.JetIsotropic

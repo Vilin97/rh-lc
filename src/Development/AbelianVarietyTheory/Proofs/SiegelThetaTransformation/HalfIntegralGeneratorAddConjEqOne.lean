@@ -53,7 +53,7 @@ theorem halfIntegralGenerator_add_conj_eq_one (H : Host E) : (H.w0 : E) + cc (H.
     rw [this] at a
     nlinarith [mul_self_nonneg (τ H.rt).re]
   apply τ.injective
-  rw [map_add, cc, IsCMField.complexEmbedding_complexConj, map_one, Complex.add_conj]
+  rw [map_add (f := _), cc, IsCMField.complexEmbedding_complexConj, map_one, Complex.add_conj]
   have h6 := congrArg Complex.re h4
   simp only [add_re, one_re, h5, add_zero, mul_re, re_ofNat, im_ofNat, zero_mul, sub_zero] at h6
   exact_mod_cast h6

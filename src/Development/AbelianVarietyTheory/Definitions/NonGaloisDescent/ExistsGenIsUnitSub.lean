@@ -87,14 +87,14 @@ theorem tensor_hom_ext {Z W J : Type} [CommRing Z] [CommRing W] [Algebra Z O] [A
     induction hw using Submodule.span_induction with
     | mem x hx => obtain ⟨i, rfl⟩ := hx; exact h i
     | zero => simp
-    | add x y _ _ hx hy => simp only [tmul_add, map_add, hx, hy]
+    | add x y _ _ hx hy => simp only [tmul_add, map_add (f := _), hx, hy]
     | smul c x _ hx => rw [tmul_smul, ← algebraMap_smul O c, map_smul, map_smul, hx]
   ext1 x
   induction x with
   | tmul o w =>
     have : o ⊗ₜ[Z] w = o • ((1 : O) ⊗ₜ[Z] w) := by rw [smul_tmul', smul_eq_mul, mul_one]
     rw [this, map_smul, map_smul, h1]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem bijective_lift {Z W J I : Type} [CommRing Z] [CommRing W] [Algebra Z O] [Algebra Z W] [Fintype I]
     (emb : I → W →ₐ[Z] O) {v : J → W} (hv : Submodule.span Z (Set.range v) = ⊤) (t : W)
@@ -283,25 +283,25 @@ theorem galOW_one (x : OW l O) : galOW O 1 x = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul o w => rw [galOW_tmul, map_one, AlgEquiv.one_apply]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem galOW_mul (g h : GQ l) (x : OW l O) : galOW O (g * h) x = galOW O g (galOW O h x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul o w => rw [galOW_tmul, galOW_tmul, galOW_tmul, map_mul, AlgEquiv.mul_apply]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem frobOW_inclO (x : OA l O) : frobOW l O (inclO l O x) = inclO l O (frobOA l O x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul o w => rw [frobOA_tmul, inclO_tmul, inclO_tmul, frobOW_tmul, frobW_inclW]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem galOW_inclO (g : GQ l) (x : OA l O) : galOW O g (inclO l O x) = inclO l O (galOA O g x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul o w => rw [galOA_tmul, inclO_tmul, inclO_tmul, galOW_tmul, galW_inclW]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem galOW_frobOW (g : GQ l) (x : OW l O) : galOW O g (frobOW l O x) = frobOW l O (galOW O g x) := by
   induction x using TensorProduct.induction_on with
@@ -310,7 +310,7 @@ theorem galOW_frobOW (g : GQ l) (x : OW l O) : galOW O g (frobOW l O x) = frobOW
     rw [frobOW_tmul, galOW_tmul, galOW_tmul, frobOW_tmul]
     exact congrArg (fun y : WCb l => o ⊗ₜ[ℤ_[l]] y)
       (WittVector.ext fun n => map_pow (autCb l (galTilt l g)) (w.coeff n) l)
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem inclO_injective [Module.Free ℤ_[l] O] : Function.Injective (inclO l O) :=
   Module.Flat.lTensor_preserves_injective_linearMap (M := O) (inclWA l).toLinearMap inclW_injective
@@ -341,7 +341,7 @@ theorem frobOA_constA (x : ZMod a → O) :
     rw [this, constA_splitHom, constA_splitHom]
     exact (frobOA_tmul o _).trans (congrArg (fun y : Ainf l => o ⊗ₜ[ℤ_[l]] y) (wA_sigma l a w).symm)
   | add y y' h h' =>
-    rw [map_add, map_add, map_add, h, h', ← map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), h, h', ← map_add (f := _)]
     rfl
 
 theorem frobOA_idem (τ : ZMod a) : frobOA l O (idem (constA t) τ) = idem (constA t) (τ + 1) := by
@@ -362,7 +362,7 @@ theorem galOA_constA {g : GQ l} (hg : ∀ x ∈ Kunr l a, g x = x) (x : ZMod a �
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul o w => exact congrArg (fun y : Ainf l => o ⊗ₜ[ℤ_[l]] y) (gal_wA l a hg w)
-  | add y y' h h' => simp only [map_add, h, h']
+  | add y y' h h' => simp only [map_add (f := _), h, h']
 
 variable (K : Type) [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K]
 
@@ -434,7 +434,7 @@ variable (a) in
 
 theorem iA_E : ϖ.iA O K (EIn l e _) = 1 ⊗ₜ ϖ.ev a (eis l a e) := by
   have : EIn l e (A O K) = uIn _ ^ e + (l : A O K) := Subtype.ext (by simp [E])
-  rw [this, map_add, map_pow, iA_u, map_natCast, eis, map_add, map_pow, ev_X, map_natCast, tmul_add, teichR,
+  rw [this, map_add (f := _), map_pow, iA_u, map_natCast, eis, map_add (f := _), map_pow, ev_X, map_natCast, tmul_add, teichR,
     Algebra.TensorProduct.tmul_pow, one_pow]
   exact congrArg _ (map_natCast (Algebra.TensorProduct.includeRight : Ainf l →ₐ[ℤ_[l]] OA l O) l).symm
 
@@ -549,17 +549,17 @@ theorem iTot_injective : Function.Injective (ϖ.iTot t K) := by
       induction y using TensorProduct.induction_on with
       | zero => simp only [map_zero]
       | tmul o w => rfl
-      | add y y' h h' => simp only [map_add, h, h']
+      | add y y' h h' => simp only [map_add (f := _), h, h']
     rw [Module.Flat.lTensor_preserves_injective_linearMap (M := O) _ hr (h1.trans (h.trans (map_zero _).symm)),
       map_zero]
   have key : ∀ (τ : ZMod a) (n : ℕ) (f : O⟦X⟧), idem (constA t) τ * ϖ.evO O f = 0 → coeff n f = 0 := by
     intro τ n
     have h0 : ∀ f : O⟦X⟧, idem (constA t) τ * ϖ.evO O f = 0 → constantCoeff f = 0 := fun f hf => by
       have h2 : ϖ.evO O (C (constantCoeff f)) = algebraMap O _ (constantCoeff f) := (ϖ.evO O).commutes _
-      rw [f.eq_X_mul_shift_add_const, map_add, map_mul, evO_X, mul_add, h2, mul_comm _ (algebraMap _ _ _),
+      rw [f.eq_X_mul_shift_add_const, map_add (f := _), map_mul, evO_X, mul_add, h2, mul_comm _ (algebraMap _ _ _),
         ← Algebra.smul_def, idem, ← map_smul] at hf
       have h1 := congrArg R hf
-      rw [map_add, map_mul, map_mul, hR, zero_mul, mul_zero, zero_add, map_zero] at h1
+      rw [map_add (f := _), map_mul, map_mul, hR, zero_mul, mul_zero, zero_add, map_zero] at h1
       simpa using congrFun (hc _ h1) τ
     induction n with
     | zero => exact fun f hf => by simpa using h0 f hf
@@ -661,7 +661,7 @@ theorem exists_intToOC_eq (w : Wq l a) : ∃ y, intToOC LL y = Per.θ l (wA l a 
   | add x y _ _ hx hy =>
     obtain ⟨x', hx⟩ := hx
     obtain ⟨y', hy⟩ := hy
-    exact ⟨x' + y', by rw [map_add, map_add, map_add, hx, hy]⟩
+    exact ⟨x' + y', by rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]⟩
   | smul c x _ hx =>
     obtain ⟨x', hx⟩ := hx
     exact ⟨algebraMap _ _ c * x', by

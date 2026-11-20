@@ -39,7 +39,7 @@ private theorem paired_twist {E : Type} [Field E] [NumberField E] [IsCMField E] 
     have e3 : opMul ξ (conjOp (.lie X)) = 1 := rfl
     have e4 : opMul α (.lie X) = 1 := rfl
     rw [e3, e4]
-    simp only [Units.val_one, one_smul, map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
+    simp only [Units.val_one, one_smul, map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
     linear_combination e + (B φ ψ) * e'
 
 private theorem chiDet_theta {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ} (χ : HChar E) (g : GA E n) :

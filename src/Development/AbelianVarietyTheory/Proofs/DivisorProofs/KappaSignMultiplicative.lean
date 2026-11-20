@@ -94,7 +94,7 @@ theorem dec_of_dvd {n : ℕ} (γ : Matrix (Fin n) (Fin n) K) (Q : K[X]) (hsep : 
   refine ⟨aeval γ a *ᵥ v, aeval γ (c * R) *ᵥ v, ?_, ?_⟩
   · rw [mulVec_mulVec, ← map_mul, show Q * (c * R) = c * (Q * R) by ring, ← hR, map_mul, aeval_self_charpoly,
       mul_zero, zero_mulVec]
-  · rw [mulVec_mulVec, ← map_mul, ← add_mulVec, ← map_add, show Q * a + c * R = a * Q + c * R by ring, hac, map_one,
+  · rw [mulVec_mulVec, ← map_mul, ← add_mulVec, ← map_add (f := _), show Q * a + c * R = a * Q + c * R by ring, hac, map_one,
       one_mulVec]
 
 theorem mem_im_of_coprime {n : ℕ} (γ : Matrix (Fin n) (Fin n) K) {Q₁ Q₂ : K[X]} (hcop : IsCoprime Q₁ Q₂)
@@ -104,7 +104,7 @@ theorem mem_im_of_coprime {n : ℕ} (γ : Matrix (Fin n) (Fin n) K) {Q₁ Q₂ :
   have : y = aeval γ (a * Q₁ + c * Q₂) *ᵥ y := by rw [hac, map_one, one_mulVec]
   rw [mulVec_mulVec, ← map_mul, mul_comm Q₁ a]
   conv_lhs => rw [this]
-  rw [map_add, add_mulVec, map_mul (aeval γ) c, ← mulVec_mulVec, hy, mulVec_zero, add_zero]
+  rw [map_add (f := _), add_mulVec, map_mul (aeval γ) c, ← mulVec_mulVec, hy, mulVec_zero, add_zero]
 
 theorem ker_toLin' {n : ℕ} (M : Matrix (Fin n) (Fin n) K) (P : K[X]) :
     LinearMap.ker (Matrix.toLin' (aeval M P)) = LinearMap.ker (aeval (Matrix.toLin' M) P) := by

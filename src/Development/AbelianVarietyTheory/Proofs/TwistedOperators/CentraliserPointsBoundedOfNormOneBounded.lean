@@ -19,12 +19,12 @@ theorem assoc_sigR (P : Type) [CommRing P] [Algebra F P] (σ : E →ₐ[F] E) (R
   | tmul a r =>
     induction a with
     | tmul p e => simp [sigR, tConj, tConj3]
-    | add a b ha hb => rw [TensorProduct.add_tmul, map_add, map_add, map_add, map_add, ha, hb]
-  | add a b ha hb => rw [map_add, map_add, map_add, map_add, ha, hb]
+    | add a b ha hb => rw [TensorProduct.add_tmul, map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 def entry (σ : E →ₐ[F] E) (J γ : Matrix n n E) (i j : n) : plusAlg σ J γ ⊗[F] E →ₗ[F] E where
   toFun x := (plusTensor σ J γ x : Matrix n n E) i j
-  map_add' a b := by rw [map_add]; rfl
+  map_add' a b := by rw [map_add (f := _)]; rfl
   map_smul' c a := by rw [map_smul]; rfl
 
 theorem toMat_assoc_apply (σ : E →ₐ[F] E) (J γ : Matrix n n E) (R : Type) [CommRing R]
@@ -46,8 +46,8 @@ theorem toMat_assoc_apply (σ : E →ₐ[F] E) (J γ : Matrix n n E) (R : Type) 
       rw [h, ← Algebra.commutes, ← Algebra.smul_def]
       simp [inclE]
     | add a b ha hb =>
-      rw [TensorProduct.add_tmul, map_add, map_add, map_add, Matrix.add_apply, ha, hb]
-  | add a b ha hb => rw [map_add, map_add, map_add, Matrix.add_apply, ha, hb]
+      rw [TensorProduct.add_tmul, map_add (f := _), map_add (f := _), map_add (f := _), Matrix.add_apply, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), Matrix.add_apply, ha, hb]
 
 theorem toMat_assoc_inclE (σ : E →ₐ[F] E) (J γ : Matrix n n E) (R : Type) [CommRing R]
     [Algebra F R] (β : plusAlg σ J γ ⊗[F] E) :

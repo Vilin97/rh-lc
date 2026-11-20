@@ -198,7 +198,7 @@ theorem IsSm.apply (h : RepOn G σ) {w : H} (hw : IsSm G σ w) {x : Mat n} (hx :
 theorem ds_add (h : RepOn G σ) {X : Mat n} (hX : ∀ t, ex X t ∈ G) {v v' : H} (hv : IsSm G σ v)
     (hv' : IsSm G σ v') : ds σ X (v + v') = ds σ X v + ds σ X v' := by
   unfold ds
-  simp only [map_add]
+  simp only [map_add (f := _)]
   exact deriv_fun_add (hv.differentiableAt h hX) (hv'.differentiableAt h hX)
 
 theorem ds_smul (h : RepOn G σ) {X : Mat n} (hX : ∀ t, ex X t ∈ G) {v : H} (hv : IsSm G σ v)

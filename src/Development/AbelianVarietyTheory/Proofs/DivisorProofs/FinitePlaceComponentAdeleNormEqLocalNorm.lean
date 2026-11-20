@@ -23,7 +23,7 @@ theorem evFin_norm_eq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
       simp only [compFin, b, b', AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Algebra.TensorProduct.map_tmul,
         AlgHom.id_apply, Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply,
         smul_eq_mul, map_mul, AlgHom.commutes]
-    | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), Finsupp.add_apply, hy, hz]
   have hb : ∀ j, compFin F E v (b j) = b' j := by
     intro j
     simp [compFin, b, b', Algebra.TensorProduct.basis_apply]

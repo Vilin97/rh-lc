@@ -143,7 +143,7 @@ theorem gder_monomial (p : D.what₂.Tau → ℕ) (τ : D.what₂.Tau) (c : Fin 
     obtain ⟨k', rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
     simp only [smul_eq_mul, nsmul_eq_mul, MvPolynomial.smul_eq_C_mul, Nat.succ_sub_one]
     push_cast
-    simp only [map_add, map_mul, map_intCast, map_natCast, map_one, pow_succ]
+    simp only [map_add (f := _), map_mul, map_intCast, map_natCast, map_one, pow_succ]
     ring
 
 end
@@ -438,9 +438,9 @@ theorem subst_comp_gder (p : D.what₂.Tau → ℕ) (τ : D.what₂.Tau) (g : Gl
   change GlobalTheory.ExportSeries.fockSubst (m := m) p g (gder p τ Z P) = gder p τ Z' (GlobalTheory.ExportSeries.fockSubst (m := m) p g P)
   induction P using MvPolynomial.induction_on with
   | C a => simp [MvPolynomial.derivation_C]
-  | add P Q hP hQ => simp only [map_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
   | mul_X P v hP =>
-    rw [Derivation.leibniz, map_mul, Derivation.leibniz, map_add, smul_eq_mul, smul_eq_mul, smul_eq_mul, smul_eq_mul,
+    rw [Derivation.leibniz, map_mul, Derivation.leibniz, map_add (f := _), smul_eq_mul, smul_eq_mul, smul_eq_mul, smul_eq_mul,
       map_mul, map_mul, hP, hX]
 
 theorem givens (a b : Fin n) (hab : a ≠ b) : ∃ G : GL (Fin n) ℂ,

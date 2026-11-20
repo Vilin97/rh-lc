@@ -59,10 +59,10 @@ theorem hermForm_adj {E : Type} [Field E] [NumberField E] [IsCMField E] {Λ : Ty
     hermForm R.Hm (R.B a x) y = hermForm R.Hm x (R.B a' y) := by
   let D : (Fin g → ℂ) → (Fin g → ℂ) → ℂ := fun x y => hermForm R.Hm (R.B a x) y - hermForm R.Hm x (R.B a' y)
   have hl : ∀ x x' y, D (x + x') y = D x y + D x' y := fun x x' y => by
-    simp only [D, map_add, hf_add_left]
+    simp only [D, map_add (f := _), hf_add_left]
     ring
   have hr : ∀ x y y', D x (y + y') = D x y + D x y' := fun x y y' => by
-    simp only [D, map_add, hf_add_right]
+    simp only [D, map_add (f := _), hf_add_right]
     ring
   have hc : ∀ (c : ℂ) x y, D (c • x) y = c * D x y := fun c x y => by
     simp only [D, map_smul, hf_smul_left]
@@ -210,7 +210,7 @@ theorem isAH_reparam (u : HolUnif A L g) (X : (Fin g → ℂ) ≃ₗ[ℂ] (Fin g
     unfold hermForm at e1 e2
     show u.fr i (X z) / 1 = χ ⟨X l, l.2⟩ * Complex.exp (Real.pi * (z ⬝ᵥ Hf.mulVec (star (l : Fin g → ℂ))) +
       Real.pi / 2 * ((l : Fin g → ℂ) ⬝ᵥ Hf.mulVec (star (l : Fin g → ℂ)))) * (u.fr i (X (z + l)) / 1)
-    rw [div_one, div_one, map_add, h, e1, e2]
+    rw [div_one, div_one, map_add (f := _), h, e1, e2]
   · intro w v hv U h f
     rw [hv U h f]
     have key := X.toContinuousLinearEquiv.comp_right_fderiv

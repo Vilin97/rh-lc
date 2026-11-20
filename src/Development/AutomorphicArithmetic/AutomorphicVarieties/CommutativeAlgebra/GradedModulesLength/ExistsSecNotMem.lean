@@ -134,7 +134,7 @@ theorem UpperTheory.V.Alg.M.zi_holds :
         rw [h0, map_zero]
         exact P.zero_mem
     | add a a' ha ha' =>
-      rw [add_mul, DirectSum.decompose_add, DirectSum.add_apply, map_add]
+      rw [add_mul, DirectSum.decompose_add, DirectSum.add_apply, map_add (f := _)]
       exact P.add_mem ha ha'
   intro b hb
   have hall : ∀ y ∈ Q.ideal, ∀ a : A, algebraMap (𝒜 0) (mR Q) (DirectSum.decompose 𝒜 (a * y) 0) ∈ P := by
@@ -185,7 +185,7 @@ theorem UpperTheory.V.Alg.M.zi_holds :
     | zero => intro a; simp
     | add y z _ _ hy hz =>
       intro a
-      rw [mul_add, DirectSum.decompose_add, DirectSum.add_apply, map_add]
+      rw [mul_add, DirectSum.decompose_add, DirectSum.add_apply, map_add (f := _)]
       exact P.add_mem (hy a) (hz a)
     | smul c y _ hy =>
       intro a

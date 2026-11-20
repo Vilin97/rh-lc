@@ -130,7 +130,7 @@ theorem smul_map_mem {L L' : Submodule O M} (f : M →ₗ[O] M) (h : ∀ v ∈ L
     (hv : v ∈ 𝔟 • L) : s • f v ∈ 𝔟 • L' := by
   refine Submodule.smul_induction_on hv (fun m hm x hx => ?_) fun x y hx hy => ?_
   · rw [map_smul, smul_comm]; exact Submodule.smul_mem_smul hm (h x hx)
-  · rw [map_add, smul_add]; exact add_mem hx hy
+  · rw [map_add (f := _), smul_add]; exact add_mem hx hy
 
 theorem relIndex_eq {A B C : AddSubgroup M} (h : C ≤ A) (h' : A ≤ C ⊔ B ⊓ A) :
     B.relIndex A = B.relIndex C := by
@@ -189,7 +189,7 @@ theorem cop_bar {P : Ideal (𝓞 E)} {s : 𝓞 E} (h : IsCoprime (Ideal.span {s}
     IsCoprime (Ideal.span {bar s}) (conjI P) := by
   obtain ⟨a, m, hm, e⟩ := cop_iff.1 h
   exact cop_iff.2 ⟨bar a, bar m, mem_conjI.2 (by rwa [bar_bar]),
-    by rw [← map_mul, ← map_add, e, map_one]⟩
+    by rw [← map_mul, ← map_add (f := _), e, map_one]⟩
 
 theorem O_smul (a : 𝓞 E) (v : Fin r → E) : a • v = (a : E) • v := rfl
 
@@ -202,10 +202,10 @@ theorem EF_smul (a : 𝓞 E) (u v : Fin r → E) : EF X (a • u) v = EF X u (ba
   rw [O_smul, O_smul, coe_bar, EF_smulE]
 
 theorem EF_add_left (u u' v : Fin r → E) : EF X (u + u') v = EF X u v + EF X u' v := by
-  simp only [EF_def, ← map_add, herm, Pi.add_apply, add_mul, Finset.sum_add_distrib, mul_add]
+  simp only [EF_def, ← map_add (f := _), herm, Pi.add_apply, add_mul, Finset.sum_add_distrib, mul_add]
 
 theorem EF_add_right (u v v' : Fin r → E) : EF X u (v + v') = EF X u v + EF X u v' := by
-  simp only [EF_def, herm, cc, Pi.add_apply, map_add, Finset.sum_add_distrib, mul_add]
+  simp only [EF_def, herm, cc, Pi.add_apply, map_add (f := _), Finset.sum_add_distrib, mul_add]
 
 theorem EF_zsmul (k : ℤ) (u v : Fin r → E) : EF X (k • u) v = k * EF X u v := by
   simp only [EF_def, herm, Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum, mul_smul_comm,

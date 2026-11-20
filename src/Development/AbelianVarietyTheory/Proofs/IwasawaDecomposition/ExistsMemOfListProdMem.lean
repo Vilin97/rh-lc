@@ -130,7 +130,7 @@ theorem exists_pow_smul_mem_span (hL : WL →ₗ[LL] WL) (T : Finset WL) (hT : �
     induction hfs using Submodule.span_induction with
     | mem t ht => exact hnf t ht n (Finset.le_sup ht)
     | zero => rw [map_zero, smul_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add, smul_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact add_mem hx hy
     | smul a x _ hx =>
       rw [← algebraMap_smul Ks a x, hks, algebraMap_smul, smul_comm]
       exact A.MK.smul_mem a hx
@@ -139,7 +139,7 @@ theorem exists_pow_smul_mem_span (hL : WL →ₗ[LL] WL) (T : Finset WL) (hT : �
   induction hx using Submodule.span_induction with
   | mem f hf => exact Submodule.subset_span (h1 f hf)
   | zero => rw [map_zero, smul_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add, smul_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact add_mem hx hy
   | smul b x _ hx =>
     rw [LinearMap.map_smul_of_tower, smul_comm]
     exact Submodule.smul_mem _ b hx

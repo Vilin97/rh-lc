@@ -126,7 +126,7 @@ theorem exists_entry_bound (f : Ad E →+* ℂ) (hf : Continuous f) (d : ℕ) :
   have h3 : ‖y.1 a b‖ ≤ ‖toL y.val‖ :=
     (norm_le_pi_norm (toL y.val a) b).trans (norm_le_pi_norm (toL y.val) a)
   have h4 : 0 ≤ ‖toL (y⁻¹).val‖ := norm_nonneg _
-  rw [e, map_add, map_sub]
+  rw [e, map_add (f := _), map_sub]
   calc ‖f ((1 : Matrix (Fin d) (Fin d) (Ad E)) a b) - f (sInf E ((1 : Matrix (Fin d) (Fin d) (Cinf E)) a b)) +
         f (sInf E (y.1 a b))‖
       ≤ 1 + L * 1 + L * ‖toL y.val‖ := by
@@ -157,7 +157,7 @@ theorem map_one_add_two_rank_perturbation {R T : Type} [CommRing R] [CommRing T]
     (A C : Matrix (Fin n) (Fin d) R) (B D : Matrix (Fin d) (Fin n) R) (P Q : Matrix (Fin d) (Fin d) R) :
     (1 + A * (P - 1) * B + C * (Q - 1) * D).map p =
       1 + A.map p * (P.map p - 1) * B.map p + C.map p * (Q.map p - 1) * D.map p := by
-  simp [Matrix.map_add, Matrix.map_mul, Matrix.map_sub, Matrix.map_one]
+  simp [Matrix.map_add (f := _), Matrix.map_mul, Matrix.map_sub, Matrix.map_one]
 
 variable {Φ : AF F ⊗[F] E ≃+* AdeleRing (𝓞 E) E} {j : Ainf F ⊗[F] E ≃+* InfiniteAdeleRing E}
   (hΦ : ∀ z, Φ z = (j (GlobalTheory.LFun.infTens F E z), GlobalTheory.LFun.finAdEquiv F E (GlobalTheory.LFun.finTens F E z)))

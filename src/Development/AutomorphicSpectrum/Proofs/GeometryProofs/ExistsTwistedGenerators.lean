@@ -87,7 +87,7 @@ theorem chart_data (h : CoordTie ℤ ξ x) {c : κ} (hc : x c ≠ 0) :
       { carrier := {d | ∃ r, θ d * a = θ r}
         add_mem' := by
           rintro d d' ⟨r, hr⟩ ⟨r', hr'⟩
-          exact ⟨r + r', by rw [map_add, map_add, add_mul, hr, hr']⟩
+          exact ⟨r + r', by rw [map_add (f := _), map_add (f := _), add_mul, hr, hr']⟩
         zero_mem' := ⟨0, by simp⟩
         smul_mem' := by
           rintro t d ⟨r, hr⟩
@@ -373,9 +373,9 @@ theorem frame_coords {L : Lat ξ E} {r : ℕ} {b : Fin r → E} {q : Cpt ξ} (hb
   | zero => simp [zero_mem]
   | add u v _ _ hu hv =>
     refine ⟨fun k => ?_, ?_⟩
-    · rw [map_add]
+    · rw [map_add (f := _)]
       exact add_mem (hu.1 k) (hv.1 k)
-    · simp only [map_add, add_smul, Finset.sum_add_distrib]
+    · simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
       rw [← hu.2, ← hv.2]
   | smul a v _ hv =>
     have e' : ∀ k, β k (a • v) = (a : Ω) * β k v := fun k => by

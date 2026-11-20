@@ -33,7 +33,7 @@ theorem exists_adjoint (u : U n) :
     obtain ⟨a', ha'⟩ := ha
     obtain ⟨b', hb'⟩ := hb
     refine ⟨a' + b', fun f g => ?_⟩
-    rw [map_add, LinearMap.add_apply, fischer_add_left, ha', hb', map_add, LinearMap.add_apply,
+    rw [map_add (f := _), LinearMap.add_apply, fischer_add_left, ha', hb', map_add (f := _), LinearMap.add_apply,
       fischer_add_right]
 
 theorem eq_zero_of_mem_center_of_hcProjLin_eq_zero {z : U n}

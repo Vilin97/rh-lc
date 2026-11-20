@@ -47,7 +47,7 @@ theorem bessel {V : Type} [AddCommGroup V] [Module ℂ V] (B : V →ₗ[ℂ] V �
   have key : B x x = B e e + B (x - e) (x - e) := by
     have hx : x = e + (x - e) := by abel
     conv_lhs => rw [hx]
-    simp only [map_add, map_sub, LinearMap.add_apply, LinearMap.sub_apply]
+    simp only [map_add (f := _), map_sub, LinearMap.add_apply, LinearMap.sub_apply]
     rw [h1, h2]
     ring
   rw [key, ← h1, Complex.add_re]
@@ -151,7 +151,7 @@ theorem P_pol (A : LT) (v w : V) : B (P A.1 v) w =
     (B (P A.1 (v + w)) (v + w) - B (P A.1 (v - w)) (v - w) + Complex.I * B (P A.1 (v + Complex.I • w)) (v + Complex.I • w)
       - Complex.I * B (P A.1 (v - Complex.I • w)) (v - Complex.I • w)) / 4 := by
   rw [P_add hπ A.2, wirtinger_sub hπ A.2, P_add hπ A.2, wirtinger_sub hπ A.2, P_smul hπ A.2]
-  simp only [map_add, map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, map_smulₛₗ,
+  simp only [map_add (f := _), map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply, map_smulₛₗ,
     smul_eq_mul, Complex.conj_I]
   linear_combination (B (P A.1 v) w - B (P A.1 w) v) / 2 * Complex.I_sq
 
@@ -182,13 +182,13 @@ def atomForm : V →ₗ[ℂ] V →ₗ⋆[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (lim₀ (h := h) (π := π) (B := B))
     (fun v₁ v₂ w => tendsto_nhds_unique (tendsto_lim₀ hπ hpsd hB (v₁ + v₂) w)
       (((tendsto_lim₀ hπ hpsd hB v₁ w).add (tendsto_lim₀ hπ hpsd hB v₂ w)).congr fun A => by
-        rw [P_add hπ A.2, map_add, LinearMap.add_apply]))
+        rw [P_add hπ A.2, map_add (f := _), LinearMap.add_apply]))
     (fun c v w => tendsto_nhds_unique (tendsto_lim₀ hπ hpsd hB (c • v) w)
       (((tendsto_lim₀ hπ hpsd hB v w).const_mul c).congr fun A => by
         rw [P_smul hπ A.2, map_smul, LinearMap.smul_apply, smul_eq_mul]))
     (fun v w₁ w₂ => tendsto_nhds_unique (tendsto_lim₀ hπ hpsd hB v (w₁ + w₂))
       (((tendsto_lim₀ hπ hpsd hB v w₁).add (tendsto_lim₀ hπ hpsd hB v w₂)).congr fun A => by
-        rw [map_add]))
+        rw [map_add (f := _)]))
     (fun c v w => tendsto_nhds_unique (tendsto_lim₀ hπ hpsd hB v (c • w))
       (((tendsto_lim₀ hπ hpsd hB v w).const_mul (starRingEnd ℂ c)).congr fun A => by
         rw [map_smulₛₗ, smul_eq_mul]))
@@ -274,7 +274,7 @@ theorem atom_kills_derKer (ψ : AddChar k Circle) (hkill : Kills ψ π (m + 2) B
     simp only [SetLike.mem_coe, LinearMap.mem_ker]
     rw [hsplit]
     ext w
-    rw [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, atom_colEl hπ hpsd hB x,
+    rw [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, atom_colEl hπ hpsd hB x,
       atom_kills_of hπ hpsd hB _ (fun w => hkill _ hz w) w, map_sub, LinearMap.sub_apply, atom_colEl hπ hpsd hB x,
       sub_self, smul_zero, add_zero, LinearMap.zero_apply]
   intro v hv w

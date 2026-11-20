@@ -154,7 +154,7 @@ def symplLin (y : WO S T) : WO S T →ₗ[AF D.host.F] AF D.host.F where
 theorem betaO_add_right (e γ γ' : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     betaO S T e (γ + γ') = betaO S T e γ + betaO S T e γ' := by
   unfold betaO hE
-  rw [← map_add, ← mul_add]
+  rw [← map_add (f := _), ← mul_add]
   congr 2
   simp only [Matrix.add_apply, star_add, mul_add, add_mul, Finset.sum_add_distrib]
 
@@ -186,7 +186,7 @@ theorem betaO_smul_right (q : D.host.F) (e γ : Matrix (Fin T.rank) (Fin S.rank)
 theorem betaO_add_left (e e' γ : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
     betaO S T (e + e') γ = betaO S T e γ + betaO S T e' γ := by
   unfold betaO hE
-  rw [← map_add, ← mul_add]
+  rw [← map_add (f := _), ← mul_add]
   congr 2
   simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib]
 

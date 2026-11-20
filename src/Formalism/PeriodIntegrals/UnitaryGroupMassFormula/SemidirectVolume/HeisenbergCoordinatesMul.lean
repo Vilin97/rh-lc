@@ -16,7 +16,7 @@ theorem S_L (H : D.Hyp) {S : (n → A) →ₗ[A] (n → A)} (hS : D.FixEZ S) (hf
   rw [L_apply, L_apply, pW_comm H hS hf hU]
   have hw : ∀ a, D.h (S (w a)) (S (D.pW u)) = D.h (w a) (D.pW u) := fun a => hU _ _
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sub, map_add, map_sum, map_smul, hS.1, h_e_S hS hU, hw]
+    simp only [map_sub, map_add (f := _), map_sum, map_smul, hS.1, h_e_S hS hU, hw]
 
 theorem h_neg_left' (x y : n → A) : D.h (-x) y = -D.h x y := by
   have := D.h_add_left (-x) x y
@@ -45,7 +45,7 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] {R : Type} [CommRing R] 
 
 theorem half_add_half (h2 : (2 : E) ≠ 0) : half F E R + half F E R = 1 := by
   have : (1 / 2 : E) + 1 / 2 = 1 := by rw [← two_mul, mul_one_div_cancel h2]
-  rw [half, ← map_add, this, map_one]
+  rw [half, ← map_add (f := _), this, map_one]
 
 theorem sigR_half : sigR R σ (half F E R) = half F E R := by
   rw [half, sigR_inclR, map_div₀, map_one, map_ofNat]
@@ -215,7 +215,7 @@ theorem phiSv_mem (n : FrameUnipotentSubgroup R σ J P) : phiSv hσσ hJ hP n �
     PG.Dat.h_symm H _ _
   show phiSv hσσ hJ hP n a b + sigR R σ (phiSv hσσ hJ hP n b a) = 0
   simp only [phiSv]
-  rw [map_add, map_mul, sigR_half, ← hsym]
+  rw [map_add (f := _), map_mul, sigR_half, ← hsym]
   have k := hN a b
   simp only [datR_h] at k
   change hR R σ J ((datR R σ J P T).f a) (lin R σ J n ((datR R σ J P T).f b)) +

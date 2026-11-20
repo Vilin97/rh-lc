@@ -33,7 +33,7 @@ theorem I'_add : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField
   have s₂ := polData_le_schA G.M' hT.geo.hM' h₂
   funext h
   have e : ∀ g, theta om' (Φ₁ + Φ₂) g h = theta om' Φ₁ g h + theta om' Φ₂ g h := fun g => by
-    simp only [theta, map_add]
+    simp only [theta, map_add (f := _)]
     exact thetaSum_add F (pres _ _ s₁) (pres _ _ s₂)
   simp only [Model.I, Pi.add_apply, e]
   exact integral_add (conv Φ₁ s₁ h) (conv Φ₂ s₂ h)

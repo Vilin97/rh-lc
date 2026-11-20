@@ -77,7 +77,7 @@ theorem wClauses (S : LocalSituation.Sit) (E : S.Comparison₂) (h1 : DeltaInvar
       exact hp.1 (j + 1) y (by simpa using hy)
     · simp
     · intro y z hy hz
-      simp only [map_add, smul_add]
+      simp only [map_add (f := _), smul_add]
       exact add_mem hy hz
   · intro y hy
     rw [hf.1] at hy

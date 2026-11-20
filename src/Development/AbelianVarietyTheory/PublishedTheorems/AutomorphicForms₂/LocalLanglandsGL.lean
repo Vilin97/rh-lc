@@ -119,11 +119,11 @@ theorem lpChar_lpOfChar (x : WD h) (ξ : Weil h →* ℂˣ) (hξ : WeilDeligne.I
   · induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [smul_smul, mul_comm]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable (w) in
 

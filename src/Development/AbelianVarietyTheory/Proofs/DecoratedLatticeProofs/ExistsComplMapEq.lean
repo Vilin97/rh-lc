@@ -49,7 +49,7 @@ theorem exists_gen {E : Type} [Field E] [NumberField E] (w : HeightOneSpectrum (
     induction ha using Submodule.span_induction with
     | mem x hx => exact hmax x hx
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact (Valuation.map_add _ _ _).trans (max_le hx hy)
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact (Valuation.map_add _ _ _).trans (max_le hx hy)
     | smul r x _ hx =>
       rw [Algebra.smul_def, map_mul, map_mul]
       have hr : Valued.v (algebraMap E (w.adicCompletion E) (algebraMap (𝓞 E) E r)) ≤ 1 :=
@@ -75,7 +75,7 @@ theorem mul_mem_gen {S : HSp D} {𝔞 : Set D.host.E} {L : Lat S} {P : FinPl D �
     (fun i => z * (pairA D.host.F 0 β ⊗ₜ[D.host.F] (a * x i))) ∈ latMul S 𝔞 L P := by
   let Φ : Af D.host.F ⊗[D.host.F] D.host.E →+ (Fin S.rank → AE D) :=
     AddMonoidHom.mk' (fun c i => GlobalTheory.LatticeStable.liftFin D (c * (β ⊗ₜ[D.host.F] (a * x i))))
-      fun c c' => funext fun i => by rw [add_mul, LinearMap.map_add]; rfl
+      fun c c' => funext fun i => by rw [add_mul, LinearMap.map_add (f := _)]; rfl
   have hle : intAE D ≤ (latMul S 𝔞 L P).comap Φ := by
     refine (AddSubgroup.closure_le _).2 ?_
     rintro _ ⟨γ, hγ, o, rfl⟩

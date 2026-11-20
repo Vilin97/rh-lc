@@ -26,7 +26,7 @@ def finSub (S T : HSp D) : Submodule (AE D) (WO S T) where
     have h1 : infPart D (x i j) = 0 := congrFun (congrFun hx i) j
     have h2 : infPart D (y i j) = 0 := congrFun (congrFun hy i) j
     show infPart D (x i j + y i j) = 0
-    rw [RingHom.map_add, h1, h2, add_zero]
+    rw [RingHom.map_add (f := _), h1, h2, add_zero]
   zero_mem' := by
     funext i j
     exact (infPart D).map_zero
@@ -220,7 +220,7 @@ theorem isHeis_opF (hψ : IsCharAF D.host.F ψ) (S T : HSp D) {w : 𝓞 D.host.E
       ← AddChar.map_add_eq_mul, coe_smul, XF.coe_add]
     congr 2
     have h1 : intA D w • (x : WO S T) + cA D (intA D w) • (x : WO S T) = x := by
-      rw [← add_smul, cA_intA, ← RingHom.map_add, hw, RingHom.map_one, one_smul]
+      rw [← add_smul, cA_intA, ← RingHom.map_add (f := _), hw, RingHom.map_one, one_smul]
     have h2 := congrArg (fun z => symplOH S T z y) h1
     simp only [symplOH_add_left] at h2
     have h3 := symplOH_smul (intA D w) (y : WO S T) x

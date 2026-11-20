@@ -47,7 +47,7 @@ theorem v2con_coeff_diag {R : Type*} [CommRing R] {ι : Type*} [Fintype ι] {n :
     · subst h; rfl
     · simp
   | add p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem monomials_are_weight_vectors : MonomialsAreWeightVectors := by
   intro R _ _ ι _ LL n S
@@ -97,9 +97,9 @@ theorem v2con_stable {R : Type*} [CommRing R] {ι : Type*} [Fintype ι] {n : ℕ
         rw [Finsupp.single_le_iff]; omega
       have e1 : (m - Finsupp.single w 1).degree + 1 = m.degree := by
         have := congrArg Finsupp.degree (tsub_add_cancel_of_le hle)
-        rw [map_add, Finsupp.degree_single] at this
+        rw [map_add (f := _), Finsupp.degree_single] at this
         exact this
-      rw [map_add, Finsupp.degree_single]
+      rw [map_add (f := _), Finsupp.degree_single]
       omega
   set_option synthInstance.maxHeartbeats 100000 in
     rw [x.as_sum, map_sum]

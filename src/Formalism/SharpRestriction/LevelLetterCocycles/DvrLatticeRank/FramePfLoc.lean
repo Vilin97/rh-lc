@@ -46,7 +46,7 @@ theorem framepf_ιV_inj : Function.Injective (ιV PD (LL := LL) (V := T.V)) := b
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x b => simp [ιV]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hi : Function.Injective (PD.ι.toLinearMap.restrictScalars Qp) := PD.ι_inj
   intro a b hab
   rw [h, h] at hab

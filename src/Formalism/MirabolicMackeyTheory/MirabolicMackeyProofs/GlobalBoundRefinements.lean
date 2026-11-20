@@ -79,13 +79,13 @@ theorem theta_identity_orthogonal : ThetaIdentityOrth := by
   have hcomm : ∀ x, p (eX x) = eX (p x) := by
     intro x
     have h1 : eX x = eX (p x) + eX (x - p x) := by
-      rw [← map_add]
+      rw [← map_add (f := _)]
       congr 1
       abel
     have h2 : p (eX (x - p x)) = 0 := by
       rw [← LinearMap.mem_ker, hker]
       exact hkerθ _ (hsub x)
-    rw [h1, map_add, h2, add_zero, hfix _ (hEr _ (hrp x))]
+    rw [h1, map_add (f := _), h2, add_zero, hfix _ (hEr _ (hrp x))]
   refine ⟨LinearMap.ext hcomm, fun x hx => ⟨?_, hsub x, fun k hk => (hrange (p x)).1 (hrp x) k hk⟩, fun Mt => ?_⟩
   · obtain ⟨y, rfl⟩ := hx
     rw [hcomm]

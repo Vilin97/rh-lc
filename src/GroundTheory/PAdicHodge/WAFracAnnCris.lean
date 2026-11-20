@@ -266,13 +266,13 @@ def acrisToAnn : ACris ℂ_[p] p →+* (𝓣).Ann ρ0 σ0 where
     rwa [map_zero, ZeroMemClass.coe_zero, map_zero] at this
   map_add' a b := by
     refine (eq_acrisToAnnFun hσ fun N => ⟨acrisApprox a N + acrisApprox b N, ?_, fun r => ?_⟩).symm
-    · rw [map_add, add_sub_add_comm]
+    · rw [map_add (f := _), add_sub_add_comm]
       exact add_mem (acrisApprox_spec a N) (acrisApprox_spec b N)
     · have e : acrisToAnnFun hσ a + acrisToAnnFun hσ b -
           awayToAnn ρ0 σ0 ((acrisApprox a N + acrisApprox b N : ACrisZero ℂ_[p] p) : 𝔸) =
           (acrisToAnnFun hσ a - awayToAnn ρ0 σ0 (acrisApprox a N : 𝔸)) +
             (acrisToAnnFun hσ b - awayToAnn ρ0 σ0 (acrisApprox b N : 𝔸)) := by
-        rw [Subalgebra.coe_add, map_add]; ring
+        rw [Subalgebra.coe_add, map_add (f := _)]; ring
       rw [e]
       exact ((𝓣).annNorm_add_le r _ _).trans (max_le
         ((annNorm_acrisToAnnFun_sub_le hσ a (acrisApprox_spec a N) r).trans (rad_pow_le hσ r N))

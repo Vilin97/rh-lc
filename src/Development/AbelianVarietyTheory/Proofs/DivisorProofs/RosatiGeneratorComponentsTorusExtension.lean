@@ -44,7 +44,7 @@ theorem left_sum {r : ℕ} (x : Fin r → Γ) (χ : Fin r → N.X) (hx : ∀ k, 
       have e : ev p.1.1 = N.c p.1.2.toAdd := p.2
       have e' : ev p'.1.1 = N.c p'.1.2.toAdd := p'.2
       have m := congrArg (fun u => κ (Additive.ofMul u)) (g.mult p.1.2.toAdd p'.1.2.toAdd)
-      simp only [ofMul_mul, map_add] at m
+      simp only [ofMul_mul, map_add (f := _)] at m
       rw [← ofAdd_add]
       congr 1
       show ℓ (p.1.1 * p'.1.1) b - κ (Additive.ofMul (g.s (p.1.2.toAdd + p'.1.2.toAdd))) = _
@@ -75,7 +75,7 @@ theorem right_sum {r : ℕ} (y : Fin r → Γ) (g : Fin r → N.Gt) (hy : ∀ k,
       congr 1
       show ℓ a (p.1.1 * p'.1.1) - κ (Additive.ofMul ((p.1.2 * p'.1.2).s χ)) = _
       rw [hs, hc _ _ _ h₀, e, e', ha, NumD.Gt.mul_s, hs a, hs a, N.cub.s12 p.1.2.b, N.cub.s01 p.1.2.b]
-      simp only [ofMul_mul, ofMul_div, map_add, map_sub]
+      simp only [ofMul_mul, ofMul_div, map_add (f := _), map_sub]
       abel
   let s : Fin r → S := fun k => ⟨(y k, g k), hy k⟩
   have h := congrArg Multiplicative.toAdd (map_prod φ (fun k => s k ^ n k) Finset.univ)
@@ -99,7 +99,7 @@ theorem quad_mul {r : ℕ} (W : Matrix (Fin r) (Fin r) ℤ) (a y : Fin r → Γ)
   congr 1
   rw [hc _ _ _ (by rw [map_mul, a₀, y₀, _root_.mul_one]), hs (a i), hs (y i), hc _ _ _ (a₀ i), hc _ _ _ (y₀ i), map_mul,
     ha, ha, hy, hy, hs (a j) (a i), hs (y j) (a i), hs (y j) (y i)]
-  simp only [ofMul_mul, ofMul_div, map_add, map_sub]
+  simp only [ofMul_mul, ofMul_div, map_add (f := _), map_sub]
   abel
 
 include hs hc in
@@ -327,7 +327,7 @@ theorem ros_value (T : Tens D D' W) (ν : NumOf D F N) (ν' : NumOf D' F N') (A 
         (QuotientAddGroup.mk' H).comp (AddMonoidHom.inl _ _) x + κ (Additive.ofMul v) := fun x v =>
       (congrArg _ (Prod.ext (add_zero _).symm (zero_add _).symm)).trans (map_add (QuotientAddGroup.mk' H) _ _)
     rw [s, ros_flat]
-    simp only [map_add, map_sub, mq, hm, ofMul_div]
+    simp only [map_add (f := _), map_sub, mq, hm, ofMul_div]
     rw [tot]
     abel
   obtain ⟨K, _, φ, ε, t, ht, hF, t₀, tv⟩ := mem

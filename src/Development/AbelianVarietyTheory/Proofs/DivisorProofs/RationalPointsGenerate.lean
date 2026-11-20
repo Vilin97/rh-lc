@@ -92,7 +92,7 @@ theorem preconnected_unitary {K R A : Type} [Field K] [CharZero K] [CommRing R] 
         one_smul, Matrix.map_one _ (map_zero σ) (map_one σ), Matrix.transpose_one, one_mul, mul_one])
     have m1 := step s (by
       have : (1 : Matrix (Fin n) (Fin n) R) + ι lam • 1 = ι (1 + lam) • 1 := by
-        rw [map_add, map_one, add_smul, one_smul]
+        rw [map_add (f := _), map_one, add_smul, one_smul]
       rw [hs, this, Matrix.det_smul, Matrix.det_one, mul_one]
       exact (hl1.isUnit.map ι).pow _)
     have m2 := step (s * g) (by

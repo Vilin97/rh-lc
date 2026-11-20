@@ -109,7 +109,7 @@ theorem fderiv_wirt (f : ℂ → ℂ) (w v : ℂ) :
     rw [← hv2, ← hs]
   rw [e]
   conv_lhs => rw [hv]
-  rw [map_add, map_smul, map_smul]
+  rw [map_add (f := _), map_smul, map_smul]
   simp only [dZ, dZb, Complex.real_smul]
   have hI : Complex.I * Complex.I = -1 := Complex.I_mul_I
   linear_combination ((v.im : ℂ) * fderiv ℝ f w Complex.I) * hI
@@ -982,7 +982,7 @@ theorem comm_of_sep {T : Type} [Fintype T] [DecidableEq T] {A : Type} [Ring A] [
         simp only [Set.mem_setOf_eq, map_mul] at *
         exact ha.mul_left hb
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at *
         exact ha.add_left hb
       algebraMap_mem' := fun c => by
         simp only [Set.mem_setOf_eq, AlgHom.commutes]

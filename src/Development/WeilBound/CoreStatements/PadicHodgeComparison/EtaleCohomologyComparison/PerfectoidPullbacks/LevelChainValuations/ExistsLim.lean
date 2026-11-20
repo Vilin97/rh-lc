@@ -37,12 +37,12 @@ theorem exists_lim (hS : S.Good) (P : RhoSys S G D c1K) {M : Model l K} (a : D.C
     intro x φ ψ
     apply ext_P hS
     intro m
-    rw [map_add, hk0, hk0, hk0, map_add]
+    rw [map_add (f := _), hk0, hk0, hk0, map_add (f := _)]
   have haddx : ∀ x y φ, k0 (x + y) φ = k0 x φ + k0 y φ := by
     intro x y φ
     apply ext_P hS
     intro m
-    rw [map_add, hk0, hk0, hk0]
+    rw [map_add (f := _), hk0, hk0, hk0]
     have e := P.uniq a hM j m (x + y) _ _ (hf m (x + y)) (P.add a hM j m x y _ _ (hf m x) (hf m y))
     rw [e]
     rfl

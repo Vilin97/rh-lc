@@ -106,7 +106,7 @@ theorem multT_left {θ : InfF D} {V : HSp D} {S : D.what₂.Tau → SPar} {M : D
     have h1 := (hm.aut u).left γ hγ g
     simp only [map_smul, Pi.smul_apply, smul_eq_mul]
     congr 1
-  | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
 
 theorem level (hP : GlobalTheory.Published.CuspRapidDecay) {θ : InfF D} (hθ : IsInfFam θ) {V V' : HSp D} {κ : GA D V ≃* GA D V'}
     (hκ : Moves V V' κ) (hV' : V'.SigOK) {S : D.what₂.Tau → SPar} (M : DSModel V S) (J : Set (GA D V)) (χ : GA D V → ℂ)

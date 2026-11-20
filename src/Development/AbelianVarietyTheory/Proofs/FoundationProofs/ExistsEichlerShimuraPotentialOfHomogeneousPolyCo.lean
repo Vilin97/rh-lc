@@ -84,7 +84,7 @@ theorem GlobalTheory.KZ.H3.exists_pot_of_isCoc : ∀ (R : Type) [CommRing R] (w 
     rw [hg, (hz.2 δ hδ g hg1)]
     have e1 : (δ * g)⁻¹ * δ = g⁻¹ := by group
     have e2 : g * (δ * g)⁻¹ * δ = 1 := by rw [mul_assoc, e1]; group
-    simp only [map_add, slPS, e1, e2, Matrix.SpecialLinearGroup.coe_one, polySlash_one]
+    simp only [map_add (f := _), slPS, e1, e2, Matrix.SpecialLinearGroup.coe_one, polySlash_one]
     abel
   refine ⟨potOf Γ z, ⟨fun τ => ?_, fun γ hγ => ⟨z γ, key γ hγ⟩⟩, key⟩
   by_cases hτ : τ ∈ Hs

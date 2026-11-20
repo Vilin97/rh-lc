@@ -22,7 +22,7 @@ theorem cobOne_dual_eq_zero_iff (φ : CartierDual R A) : cobOne R (CartierDual R
     ∀ a b, φ (a * b) = Coalgebra.counit (R := R) a * φ b + Coalgebra.counit (R := R) b * φ a := by
   rw [cobOne_apply, sub_sub, sub_eq_zero, CartierDual.comul_eq_iff]
   refine forall₂_congr fun a b => ?_
-  rw [map_add, LinearMap.add_apply, CartierDual.pair_tmul_tmul, CartierDual.pair_tmul_tmul,
+  rw [map_add (f := _), LinearMap.add_apply, CartierDual.pair_tmul_tmul, CartierDual.pair_tmul_tmul,
     CartierDual.one_apply, CartierDual.one_apply, eq_comm, add_comm, mul_comm (φ a)]
 
 theorem apply_eq_of_dUnit_eq {φ : CartierDual R A} (h : cobOne R (CartierDual R A) φ = 0) {a b : A}
@@ -35,7 +35,7 @@ theorem cobOne_toConv_comp_d (l : Cot R A →ₗ[R] R) :
     cobOne R (CartierDual R A) (WithConv.toConv (l ∘ₗ AugCot.d (Bialgebra.counitAlgHom R A))) = 0 :=
   (cobOne_dual_eq_zero_iff _).2 fun a b => by
     change l (AugCot.d _ (a * b)) = _
-    rw [AugCot.d_mul, map_add, map_smul, map_smul]
+    rw [AugCot.d_mul, map_add (f := _), map_smul, map_smul]
     rfl
 
 end Der
@@ -50,7 +50,7 @@ theorem exists_form_of_mem_dualSubmodule {R K : Type} [CommRing R] [IsDomain R] 
   let e := LinearEquiv.ofBijective _ hk
   let j : W₀ →ₗ[R] N :=
     { toFun := fun x₀ => ⟨a (e.symm (t x₀)), hN _ x₀ (e.apply_symm_apply _)⟩
-      map_add' := fun x y => Subtype.ext (by simp only [map_add]; rfl)
+      map_add' := fun x y => Subtype.ext (by simp only [map_add (f := _)]; rfl)
       map_smul' := fun r x => Subtype.ext (by
         change a (e.symm (t (r • x))) = r • a (e.symm (t x))
         rw [map_smulₛₗ, map_smul, map_smul, algebraMap_smul]) }
@@ -106,7 +106,7 @@ theorem eq_zero_of_forall_toBase (hR : (p : R) = 0) (κ : Γ'.baseChange K ⟶ �
   rw [← e.symm_apply_apply η', ← ht]
   clear ht
   induction t with
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy, add_zero]
   | tmul r η₀ =>
     rw [PDiv.liftSemi_tmul, map_smul, map_smul, hf _ η₀ (e.apply_symm_apply _), smul_zero]
 

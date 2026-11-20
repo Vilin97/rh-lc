@@ -42,9 +42,9 @@ theorem pairing_sum {R G : Type} [Ring R] [AddCommGroup G] (N : AddSubgroup G) (
     rw [← sub_eq_zero, ← map_sub]
     exact (QuotientAddGroup.eq_zero_iff _).2 h
   have b1 : ∀ A A' B, IE A → IE A' → IE B → q (H (A + A') B) = q (H A B) + q (H A' B) := fun A A' B a a' b => by
-    rw [← map_add, qe _ _ (hb A A' B a a' b).1]
+    rw [← map_add (f := _), qe _ _ (hb A A' B a a' b).1]
   have b2 : ∀ A A' B, IE A → IE A' → IE B → q (H B (A + A')) = q (H B A) + q (H B A') := fun A A' B a a' b => by
-    rw [← map_add, qe _ _ (hb A A' B a a' b).2]
+    rw [← map_add (f := _), qe _ _ (hb A A' B a a' b).2]
   have ies : ∀ (s : Finset (Orb × Fin 2)) (A : Orb × Fin 2 → R), (∀ i, IE (A i)) → IE (∑ i ∈ s, A i) := by
     intro s A hA
     induction s using Finset.induction_on with
@@ -380,7 +380,7 @@ theorem one_row (hs : PairsSep Y p) (gr : ∀ o, MvPowerSeries (WV (I o)) C)
       fin_cases g <;> rfl
     rw [hEnd_eq (M o 0) (M o 1), e2, proj o, RawChart.hRow, subst_smul (hasSubst_of_constantCoeff_zero (cU o))]
     rfl
-  rw [mul_assoc, ← mvExp_add kD.1 cL, subst_mul hEs, subst_mvExp hE (by rw [map_add, kD.1, cL, add_zero]),
+  rw [mul_assoc, ← mvExp_add kD.1 cL, subst_mul hEs, subst_mvExp hE (by rw [map_add (f := _), kD.1, cL, add_zero]),
     subst_prod' hE, subst_add hEs, subst_smul hEs, subst_smul hEs, hL, hD, subst_sub hEs, same, ← smul_add,
     sub_add_cancel, subst_sum'' hE, Finset.smul_sum]
   simp only [hrow]

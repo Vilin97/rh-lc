@@ -27,7 +27,7 @@ theorem eb_intertwine {k r m : ℕ} {Wp Wq : Type} [NormedAddCommGroup Wp] [Norm
   have hky := Qx8.hpart_kill Bs a b (Qx8.frame_orth h (v := y) (by simp))
   have hc := Qx8.hpart_conj Bs a b hg
   show A (dRep π' _ v + Complex.I • dRep π' _ v) = dRep π _ (A v) + Complex.I • dRep π _ (A v)
-  rw [map_add, map_smul, hc.1, hc.2]
+  rw [map_add (f := _), map_smul, hc.1, hc.2]
   congr 1
   · refine Qx8.dRep_intertwine A (Qx8.rep_hasDeriv hR'.1 hR'.2 hU.1 v) fun t => ?_
     rw [Qx8.exp_conj_uh hg]

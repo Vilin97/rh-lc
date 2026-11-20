@@ -31,7 +31,7 @@ theorem UpperTheory.integral_unipFundamentalDomain_comp_lattice_preserving :
       (unipMeasure K n r) :=
     hfd.preimage_of_equiv hqmp he (fun g x => by
       show α.symm (α g + x) = g + α.symm x
-      simp [map_add])
+      simp [map_add (f := _)])
   have hmeas := hfd'.measure_eq hfd
   have hpre := addEquivAddHaarChar_smul_preimage (unipMeasure K n r) (X := unipFundamentalDomain K n r) α.symm
   rw [hmeas, unipMeasure_unipFundamentalDomain, ENNReal.smul_def, smul_eq_mul, mul_one,

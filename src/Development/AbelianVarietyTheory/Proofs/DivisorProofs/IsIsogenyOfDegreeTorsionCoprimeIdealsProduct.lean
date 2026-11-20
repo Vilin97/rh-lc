@@ -27,7 +27,7 @@ theorem isIsogDeg_of_coprime : ∀ (S : Scheme.{0}) (A : Over S) [GrpObj A] [IsC
   have k₃ : ∀ a ∈ 𝔞 * 𝔟, i₃ ≫ ρ.act a = 1 := fun a ha => (h₃ K₃ i₃).1 ⟨𝟙 _, Category.id_comp _⟩ a ha
   have hadd : ∀ {T : Over S} (x : T ⟶ A) (a b : O),
       x ≫ ρ.act (a + b) = (x ≫ ρ.act a) * (x ≫ ρ.act b) := fun x a b => by
-    rw [ρ.map_add]; exact MonObj.comp_mul x _ _
+    rw [ρ.map_add (f := _)]; exact MonObj.comp_mul x _ _
   have hone : ∀ {T : Over S} (x : T ⟶ A), x ≫ ρ.act 1 = x := fun x => by
     rw [ρ.map_one, Category.comp_id]
   have e₁ : i₁ ≫ ρ.act v = i₁ := by

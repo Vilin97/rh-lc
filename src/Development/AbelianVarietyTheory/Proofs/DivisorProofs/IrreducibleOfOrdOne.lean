@@ -147,7 +147,7 @@ theorem disc_residue_eq : ∀ {L K : Type} [Field L] [Field K] (cL : ℂ →+* L
       P.ordQ (Finsupp.mapDomain (fun g : S.ring => (g : L)) (Finsupp.single h 1 - θ)) = 0 := by
     intro P hPQ hPS hPE
     have h1 := hP P hPQ hPS hPE
-    rw [Place.disc, map_add, Place.ordQ_single, hPη P hPQ] at h1
+    rw [Place.disc, map_add (f := _), Place.ordQ_single, hPη P hPQ] at h1
     have hPt : P.ord (t : L) = 0 := by
       by_contra hne'
       have h0 : 0 ≤ P.ord (t : L) := (P.ord_nonneg_iff ht0).2 (hPQ.1 t t.2)
@@ -162,7 +162,7 @@ theorem disc_residue_eq : ∀ {L K : Type} [Field L] [Field K] (cL : ℂ →+* L
   have hE2 := GlobalTheory.T.ordQ_mapDomain_residuePlace_transport cL cK Q u S E ψ F hS.1 hSu hu0 hψ hFr hFu hE1 _ hφs hφP
   rw [hmc, hmψ, map_sub, map_sub, Place.ordQ_single, Place.ordQ_single] at hE2
   refine ⟨F, hFr, ?_⟩
-  rw [Place.disc, Place.disc, hFw, map_add, Place.ordQ_single, hPη E hE]
+  rw [Place.disc, Place.disc, hFw, map_add (f := _), Place.ordQ_single, hPη E hE]
   have h2 := hPo E
   rw [hEt, add_zero] at h2
   have h3 : ((E.ord H : ℤ) : ℚ) = (E.ord (h : L) : ℚ) + (E.ord (f : L) : ℚ) := by

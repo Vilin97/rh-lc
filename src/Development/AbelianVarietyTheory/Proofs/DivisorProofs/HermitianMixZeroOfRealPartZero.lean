@@ -22,7 +22,7 @@ theorem mix_eq_zero_of_re_form_eq_zero : ∀ (d : ℕ) (A M : Matrix (Fin (d + 1
       a * M j j * starRingEnd ℂ a + a * M j l * starRingEnd ℂ b + b * M l j * starRingEnd ℂ a
         + b * M l l * starRingEnd ℂ b := by
     intro a b j l
-    simp only [Pi.add_apply, map_add, add_mul, mul_add, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib]
     simp [Pi.single_apply, apply_ite (starRingEnd ℂ), mul_ite, ite_mul, Finset.sum_ite_eq', Finset.sum_ite_eq]
     ring
   have h0 : ∀ j, (M j j).re = 0 := by

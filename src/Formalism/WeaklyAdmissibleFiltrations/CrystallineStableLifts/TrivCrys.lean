@@ -41,7 +41,7 @@ private theorem trivCrys_range_le (g : G) (y : LL ⊗[Qp] K₀) :
     simp only [trivCrysMap, trivCrysIncl, AlgebraTensorModule.lTensor_tmul, LinearMap.restrictScalars_apply,
       Algebra.linearMap_apply, trivCrys_act_tmul]
     rw [AlgEquiv.commutes]
-  | add y z hy hz => rw [map_add, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
 
 variable [FiniteDimensional Qp LL]
 
@@ -63,7 +63,7 @@ private theorem trivCrys_decomp (b : Basis (Fin (finrank Qp LL)) Qp LL) (x : LL 
   | add y z hy hz =>
     conv_lhs => rw [hy, hz]
     rw [← Finset.sum_add_distrib]
-    simp only [map_add, TensorProduct.tmul_add]
+    simp only [map_add (f := _), TensorProduct.tmul_add]
 
 private theorem trivCrysCoord_act (b : Basis (Fin (finrank Qp LL)) Qp LL) (i) (g : G)
     (x : LL ⊗[Qp] B) :
@@ -74,7 +74,7 @@ private theorem trivCrysCoord_act (b : Basis (Fin (finrank Qp LL)) Qp LL) (i) (g
   | tmul l c =>
     rw [trivCrys_act_tmul, trivCrysCoord_tmul, trivCrysCoord_tmul]
     exact (((PD.actB g).toAlgHom.toLinearMap).restrictScalars Qp).map_smul _ _ |>.symm
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 private theorem trivCrys_Dcris_eq :
     Dcris PD (1 : Representation LL G LL) = LinearMap.range (trivCrysMap (LL := LL) (K₀ := K₀) (B := B)) := by

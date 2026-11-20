@@ -17,7 +17,7 @@ theorem exists_smul_mem_range {E : Type} [Field E] [NumberField E] {Λ : Type} [
     obtain ⟨a, x, ha, hx⟩ := hu
     obtain ⟨b, y, hb, hy⟩ := hv
     refine ⟨a * b, b • x + a • y, mul_ne_zero ha hb, ?_⟩
-    rw [map_add, map_smul, map_smul, hx, hy, smul_add, smul_smul, smul_smul, mul_comm b a]
+    rw [map_add (f := _), map_smul, map_smul, hx, hy, smul_add, smul_smul, smul_smul, mul_comm b a]
   | smul t u _ hu =>
     obtain ⟨a, x, ha, hx⟩ := hu
     obtain ⟨p, q, hq, rfl⟩ := IsFractionRing.div_surjective (A := RingOfIntegers E) t

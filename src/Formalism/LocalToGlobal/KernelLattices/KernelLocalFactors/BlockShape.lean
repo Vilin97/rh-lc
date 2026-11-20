@@ -39,7 +39,7 @@ theorem map_jetLin {L : Type} [Field L] (σ : K →+* L) (J : (DVar ι a b →�
   refine MvPolynomial.induction_on' Q (fun s r => ?_) (fun p q hp hq => ?_)
   · rw [MvPolynomial.map_monomial, jetLin_monomial', jetLin_monomial', MvPolynomial.smul_monomial,
       MvPolynomial.smul_monomial, MvPolynomial.map_monomial, smul_eq_mul, smul_eq_mul, map_mul]
-  · rw [map_add, map_add, map_add, map_add, hp, hq]
+  · rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 theorem map_frDet {L : Type} [Field L] (σ : K →+* L) (τ : ι) :
     MvPolynomial.map σ (frDet K a τ) = frDet L a τ := by

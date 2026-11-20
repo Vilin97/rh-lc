@@ -24,7 +24,7 @@ theorem exists_bilinear {G G' H H' P : Type} [AddCommGroup H] [Module ℂ H] [Ad
   let 𝓗 : Submodule ℂ (H →ₗ[ℂ] P) :=
     { carrier := {A | ∀ g ∈ S, ∀ u, A (τ g u) = a g (A u)}
       add_mem' := fun {A B} hA hB g hg u => by
-        simp only [LinearMap.add_apply, map_add, hA g hg u, hB g hg u]
+        simp only [LinearMap.add_apply, map_add (f := _), hA g hg u, hB g hg u]
       zero_mem' := fun g _ u => by simp
       smul_mem' := fun c A hA g hg u => by
         simp only [LinearMap.smul_apply, map_smul, hA g hg u] }

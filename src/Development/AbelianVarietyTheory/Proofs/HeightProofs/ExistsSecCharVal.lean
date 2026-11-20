@@ -80,7 +80,7 @@ theorem normOne_det (V : HSp D) (h : GA D V) : NormOne (D := D) (Matrix.GeneralL
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a b => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   unfold NormOne
   rw [h2, Matrix.GeneralLinearGroup.val_det_apply]
   exact h1

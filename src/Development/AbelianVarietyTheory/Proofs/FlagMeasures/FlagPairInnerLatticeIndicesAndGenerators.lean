@@ -152,7 +152,7 @@ theorem rad_sup : ∀ x ∈ X ⊔ X', (∀ y ∈ X ⊔ X', H.B x y = 0) ↔ x �
     exact ⟨add_mem ha h2, add_mem h1 hb⟩
   · rintro ⟨h1, h2⟩ y hy
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hy
-    rw [map_add, hX x h1 a ha, hX' x h2 b hb, add_zero]
+    rw [map_add (f := _), hX x h1 a ha, hX' x h2 b hb, add_zero]
 
 omit [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] in
 
@@ -227,7 +227,7 @@ theorem inner_unimod (hU : IsUnimod H Λ) :
       rw [← hM.2, SetLike.mem_coe, mem_dual_iff, hM.1.2]
       refine ⟨perp_anti H le_sup_left h1, fun m hm => ?_⟩
       obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 (hdec hm)
-      rw [map_add, (mem_perp_iff H _ y).1 h1 b (Submodule.mem_sup_left hb), add_zero]
+      rw [map_add (f := _), (mem_perp_iff H _ y).1 h1 b (Submodule.mem_sup_left hb), add_zero]
       exact h2 a ⟨ha, by simpa using sub_mem hm (hle.1 hb)⟩
     · rintro ⟨h1, h2⟩
       refine ⟨h1, fun x hx => ?_⟩
@@ -381,7 +381,7 @@ theorem flag_rad (F F' : FlagD H r) {j : ℕ} (hj : j ≤ r) (hD : Dl F F' j (hj
     refine Matrix.eq_zero_of_vecMul_eq_zero hD (funext fun b => ?_)
     have hb := Xa_le F' j (e_mem F' hj b)
     have := h0 _ hb
-    rw [map_add, LinearMap.add_apply, iso_Xa F' hi hb, add_zero] at this
+    rw [map_add (f := _), LinearMap.add_apply, iso_Xa F' hi hb, add_zero] at this
     simpa [Matrix.vecMul, dotProduct, Zhat] using this
   simpa [this] using hi
 

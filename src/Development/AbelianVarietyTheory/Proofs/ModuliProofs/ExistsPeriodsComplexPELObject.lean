@@ -178,7 +178,7 @@ theorem exists_period : Out.Laws → Out.Laws2 → (∀ (S : Scheme.{0}) (P : Ou
       obtain ⟨y, hy⟩ := (hΛ _).1 (sub_mem_of_ex_eq u h1)
       refine ⟨e.symm y, e.injective (inj ?_)⟩
       show Q₀ (e (e.symm (lam i))) = Q₀ (e (f k (bas (Pi.single i 1)) + k • e.symm y))
-      rw [e.apply_symm_apply, map_add, map_nsmul, e.apply_symm_apply, map_add, map_nsmul, hy, hQ₂, ← smul_sub,
+      rw [e.apply_symm_apply, map_add (f := _), map_nsmul, e.apply_symm_apply, map_add (f := _), map_nsmul, hy, hQ₂, ← smul_sub,
         ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, mul_inv_cancel₀ hk, one_smul]
       abel
 

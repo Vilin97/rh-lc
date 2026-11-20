@@ -77,7 +77,7 @@ private theorem coeff_pderiv_eq_coeff_add_single_mul_multinomial_depth {σ : Typ
         simp [hu]
       · rfl
   next p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, add_mul]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, add_mul]
 
 theorem symbolMapMulRight : KappaRight := by
   intro K _ _ k d a b A

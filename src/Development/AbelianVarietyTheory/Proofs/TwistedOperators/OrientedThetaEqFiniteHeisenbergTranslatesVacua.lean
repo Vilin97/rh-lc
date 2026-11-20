@@ -43,7 +43,7 @@ theorem map_infPart_add_neg {x y : WO S T} (hx : x.map (infPart D) = 0) (hy : y.
   have h1 : infPart D (x i j) = 0 := congrFun (congrFun hx i) j
   have h2 : infPart D (y i j) = 0 := congrFun (congrFun hy i) j
   show infPart D (x i j + -y i j) = 0
-  rw [map_add, map_neg, h1, h2, neg_zero, add_zero]
+  rw [map_add (f := _), map_neg, h1, h2, neg_zero, add_zero]
 
 theorem symplO_neg_right (x y : WO S T) : symplO S T x (-y) = -symplO S T x y := by
   have h := symplO_add_right S T x y (-y)

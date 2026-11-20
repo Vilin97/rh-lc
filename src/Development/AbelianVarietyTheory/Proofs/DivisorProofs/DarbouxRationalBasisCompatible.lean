@@ -26,7 +26,7 @@ theorem exists_rat_matrix {F R V W ι : Type} [Field F] [CommRing R] [Nontrivial
     refine ⟨{ toFun := u, map_add' := ?_, map_smul' := ?_ }, fun x => rfl⟩
     · intro x y
       apply hvec
-      rw [← hu, map_add, map_add, hu, hu]
+      rw [← hu, map_add (f := _), map_add (f := _), hu, hu]
       funext i
       simp
     · intro c x

@@ -18,7 +18,7 @@ theorem modu_eq_modu_norm : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a e =>
       show a ⊗ₜ[F] σ (σ e) = _
       rw [hσ]

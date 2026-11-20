@@ -130,7 +130,7 @@ theorem eq_teich_add_π_mul_tail (x : Γ) : x = T.teich (T.red x) + T.π * T.tai
   rw [← T.sub_teich_eq_π_mul_tail]; ring
 
 theorem tail_eq {x y : Γ} {a : L} (h : x = T.teich a + T.π * y) : T.tail x = y := by
-  have ha : T.red x = a := by rw [h, map_add, map_mul, red_π, zero_mul, add_zero, red_teich]
+  have ha : T.red x = a := by rw [h, map_add (f := _), map_mul, red_π, zero_mul, add_zero, red_teich]
   refine T.π_mul_cancel ?_
   rw [← T.sub_teich_eq_π_mul_tail, ha, h]; ring
 
@@ -193,7 +193,7 @@ theorem sub_partialSum_mem (x : Γ) (n : ℕ) : x - T.partialSum x n ∈ Ideal.s
   T.mem_span_pow.2 ⟨_, T.sub_partialSum x n⟩
 
 theorem red_finSum (a : ℕ → L) (n : ℕ) : T.red (T.finSum a (n + 1)) = a 0 := by
-  rw [finSum_succ', map_add, map_mul, red_π, zero_mul, add_zero, red_teich]
+  rw [finSum_succ', map_add (f := _), map_mul, red_π, zero_mul, add_zero, red_teich]
 
 theorem coeff_eq_of_mem {n : ℕ} {x : Γ} {a : ℕ → L}
     (h : x - T.finSum a (n + 1) ∈ Ideal.span {T.π ^ (n + 1)}) : ∀ m ≤ n, T.coeff x m = a m := by
@@ -671,12 +671,12 @@ theorem norm_coeff_add_sub_le (n : ℕ) : ∀ {x y : Γ} {B δ : ℝ}, 0 ≤ δ 
   | zero =>
     intro x y B δ hδ hδB hx hy m hm
     obtain rfl : m = 0 := by omega
-    rw [coeff_zero, coeff_zero, map_add, add_sub_cancel_left]
+    rw [coeff_zero, coeff_zero, map_add (f := _), add_sub_cancel_left]
     exact (hy 0 le_rfl).trans (le_rpow_mix hδ hδB (coeffHolderExp_pos_le_one 0).2)
   | succ n ih =>
     intro x y B δ hδ hδB hx hy m hm
     rcases m with _ | m
-    · rw [coeff_zero, coeff_zero, map_add, add_sub_cancel_left]
+    · rw [coeff_zero, coeff_zero, map_add (f := _), add_sub_cancel_left]
       exact (hy 0 (Nat.zero_le _)).trans (le_rpow_mix hδ hδB (coeffHolderExp_pos_le_one _).2)
     obtain ⟨hs0, hs1⟩ := inv_pow_pos_le_one (p := p) (n + 1)
     set s := ((p ^ (n + 1) : ℕ) : ℝ)⁻¹ with hsdef

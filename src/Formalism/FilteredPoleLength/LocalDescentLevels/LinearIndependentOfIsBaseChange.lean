@@ -72,7 +72,7 @@ theorem isLattice_span_image_alt : IsLatticeSpanImage := by
     { carrier := {x | j x ∈ P}
       add_mem' := fun {a b} ha hb => by
         show j (a + b) ∈ P
-        rw [map_add]
+        rw [map_add (f := _)]
         exact P.add_mem ha hb
       zero_mem' := by
         show j 0 ∈ P

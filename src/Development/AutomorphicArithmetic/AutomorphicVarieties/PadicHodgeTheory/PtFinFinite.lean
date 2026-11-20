@@ -134,7 +134,7 @@ theorem UpperTheory.V.Loc.ptFin :
     induction ha using Submodule.span_induction with
     | mem z hz => exact hTE (Or.inr ⟨z, hz, rfl⟩)
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, TrivSqZeroExt.snd_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), TrivSqZeroExt.snd_add]; exact add_mem hx hy
     | smul c x hx0 hx =>
       have h0 : (F x).fst = 0 := by
         have : x ∈ RingHom.ker f := hP ▸ hx0

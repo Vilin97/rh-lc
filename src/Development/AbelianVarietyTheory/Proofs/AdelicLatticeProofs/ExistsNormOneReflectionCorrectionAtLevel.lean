@@ -47,7 +47,7 @@ theorem exists_nat_smul_map_mem {E : Type} [Field E] [NumberField E] {n : ℕ}
     exact L.toAddSubmonoid.nsmul_mem (hdL _) _
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     exact L.add_mem hx hy
   | smul a x _ hx =>
     have h1 : φ (a • x) = (a : E) • φ x := φ.map_smul (a : E) x

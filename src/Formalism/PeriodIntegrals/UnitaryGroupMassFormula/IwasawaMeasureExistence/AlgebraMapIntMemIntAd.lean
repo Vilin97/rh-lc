@@ -63,7 +63,7 @@ theorem IntAf_approx (N : ℕ) (hN : 1 ≤ N) (x : E ⊗[F] Af F) (hx : x ∈ In
   | add x y _ _ hx hy =>
     obtain ⟨a, ha, z, hz, rfl⟩ := hx
     obtain ⟨b, hb, w, hw, rfl⟩ := hy
-    exact ⟨a + b, add_mem ha hb, z + w, add_mem hz hw, by rw [map_add]; ring⟩
+    exact ⟨a + b, add_mem ha hb, z + w, add_mem hz hw, by rw [map_add (f := _)]; ring⟩
   | neg x _ hx =>
     obtain ⟨a, ha, z, hz, rfl⟩ := hx
     exact ⟨-a, neg_mem ha, -z, neg_mem hz, by rw [map_neg]; ring⟩
@@ -126,7 +126,7 @@ theorem trT_mem (z : E ⊗[F] Af F) (hz : z ∈ IntAf F E) : trT F E z ∈ Forma
     rw [← hc]
     exact mul_mem (algebraMap_int_mem_intAd c) y.2
   | add x y hx hy =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact add_mem hx hy
 
 theorem mem_intOE (e : E) (he : Formalism.UG.inclE (F := F) (Af F) e ∈ IntAf F E) : e ∈ Formalism.UG.intOE E := by
@@ -182,7 +182,7 @@ def cid (u : (AEf I)ˣ) : Submodule (𝓞 I.E) I.E where
   carrier := {e | ((u⁻¹ : (AEf I)ˣ) : AEf I) * iE I e ∈ IntAf I.F I.E}
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_ofPred_eq, map_add, mul_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _), mul_add] at *
     exact add_mem ha hb
   zero_mem' := by simp
   smul_mem' := by

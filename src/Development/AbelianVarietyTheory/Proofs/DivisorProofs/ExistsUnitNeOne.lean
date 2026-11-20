@@ -86,12 +86,12 @@ theorem exists_unit_ne_one {L : Type} [Field L] [NumberField L] (χ : HChar L) (
 
 theorem loc_sub_one {E A B : Type} [Field E] [CommRing A] [CommRing B] (i : E →+* A) (f : A →+* B) (e : A) (k : E) (N : ℕ)
     (hN : (N : E) ≠ 0) : f (1 + e * (i k - 1)) - 1 = N • f (e * i ((k - 1) / N)) := by
-  rw [← map_nsmul, ← mul_smul_comm, ← map_nsmul, nsmul_eq_mul, mul_div_cancel₀ _ hN, map_add, map_one, map_sub, map_one,
+  rw [← map_nsmul, ← mul_smul_comm, ← map_nsmul, nsmul_eq_mul, mul_div_cancel₀ _ hN, map_add (f := _), map_one, map_sub, map_one,
     add_sub_cancel_left]
 
 theorem loc_eq {E A B : Type} [Field E] [CommRing A] [CommRing B] (i : E →+* A) (f : A →+* B) (e : A) (k : E) :
     f (1 + e * (i k - 1)) = 1 + f (e * i (k - 1)) := by
-  rw [map_add, map_one, map_sub, map_one]
+  rw [map_add (f := _), map_one, map_sub, map_one]
 
 theorem loc_mul_inv {E A : Type} [Field E] [CommRing A] (i : E →+* A) (e : A) (he : e * e = e) (k : Eˣ) :
     (1 + e * (i k - 1)) * (1 + e * (i ((k⁻¹ : Eˣ) : E) - 1)) = 1 := by

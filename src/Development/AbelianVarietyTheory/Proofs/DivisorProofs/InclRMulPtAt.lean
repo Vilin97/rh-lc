@@ -67,7 +67,7 @@ theorem cA_ptAt (σ : E →ₐ[F] E) {c : w.adicCompletion E →+* w.adicComplet
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [e1, ptAt_apply, GlobalTheory.AdelicU.Supp.sigR_singleTens, ptAt_apply]
   congr 1
   apply (InertChart.complEquiv hw h).injective

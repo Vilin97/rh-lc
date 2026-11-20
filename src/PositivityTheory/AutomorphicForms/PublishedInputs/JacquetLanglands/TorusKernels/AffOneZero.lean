@@ -111,7 +111,7 @@ theorem ctLeftV [MeasurableSpace (NA F)] [BorelSpace (NA F)] (μ : Measure (NA F
   let L : TR.Lie F 2 →ₗ[ℝ] ℂ :=
     { toFun := fun X => cterm μ D (TR.lie F 2 X φ).1 g
       map_add' := fun X Y => by
-        rw [map_add]
+        rw [map_add (f := _)]
         exact integral_add (hi X) (hi Y)
       map_smul' := fun r X => by
         rw [map_smul]
@@ -145,17 +145,17 @@ theorem ctLeftV [MeasurableSpace (NA F)] [BorelSpace (NA F)] (μ : Measure (NA F
   have hv := fun v : InfinitePlace F => hA (GeneralLinearGroup.map (Pi.evalRingHom (fun _ => ℝ) v) h) (fun a b => L (E v a b))
     ((k v : ℂ) * cterm μ D φ.1 g)
     (by
-      rw [← map_add, hsm _ 0 φ, zero_mul]
-      rw [map_add, hE, hE, zero_smul]
+      rw [← map_add (f := _), hsm _ 0 φ, zero_mul]
+      rw [map_add (f := _), hE, hE, zero_smul]
       exact UpperTheory.V.Sd.Hm.trzero F ω hω φ hφ.cent v)
     (by
       rw [← map_sub, hsm _ (Complex.I * (k v : ℂ)) φ, mul_assoc]
       rw [map_sub, hE, hE]
       exact hφ.wt v)
     (by
-      rw [← map_sub, ← map_add, hsm _ Complex.I (TR.lie F 2 (E v 0 1 + E v 1 0) φ)]
+      rw [← map_sub, ← map_add (f := _), hsm _ Complex.I (TR.lie F 2 (E v 0 1 + E v 1 0) φ)]
       · rfl
-      rw [map_sub, map_add, hE, hE, hE, hE]
+      rw [map_sub, map_add (f := _), hE, hE, hE, hE]
       exact hφ.low v)
     (by
       have := hnil (Pi.single v 1)

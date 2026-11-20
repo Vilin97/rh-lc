@@ -16,7 +16,7 @@ theorem UpperTheory.Reformulated.B.AdmissibleSmoothRepresentations.aux2 :
         b ∈ {v : V | ∀ (h : ↥H), ((ρ : G → V →ₗ[k] V) (↑h : G) : V → V) v = (↑((χ : ↥H → kˣ) h) : k) • v} →
           ∀ (h : ↥H), ((ρ : G → V →ₗ[k] V) (↑h : G) : V → V) (a + b) = (↑((χ : ↥H → kˣ) h) : k) • (a + b) := by
   intro k G V _ _ _ _ ρ H χ a b ha hb h
-  rw [map_add, ha h, hb h, smul_add]
+  rw [map_add (f := _), ha h, hb h, smul_add]
 
 theorem UpperTheory.Reformulated.B.AdmissibleSmoothRepresentations.aux3 :
     ∀ {k G V : Type} [inst : Field k] [inst_1 : Group G] [inst_2 : AddCommGroup V] [inst_3 : _root_.Module k V]
@@ -207,7 +207,7 @@ theorem UpperTheory.Reformulated.B.AdmissibleSmoothRepresentations.isSemisimple 
     have hufix : ∀ k ∈ K, ρ k u = u := by
       intro k hk
       have hvk : ρ k v = v := hk.2
-      rw [hv, map_add, hafix k hk] at hvk
+      rw [hv, map_add (f := _), hafix k hk] at hvk
       exact add_left_cancel hvk
     have huW : u ∈ W.toSubmoduleᗮ := by
       rw [Submodule.mem_orthogonal]

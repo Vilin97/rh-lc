@@ -81,7 +81,7 @@ theorem wpF_conj (Λ : AddSubgroup ℂ) (z : ℂ) :
       left_inv := fun w => by ext; simp
       right_inv := fun w => by ext; simp }
   unfold wpF
-  rw [map_add, Complex.conj_tsum, ← e.tsum_eq]
+  rw [map_add (f := _), Complex.conj_tsum, ← e.tsum_eq]
   simp [e, map_sub]
   rfl
 

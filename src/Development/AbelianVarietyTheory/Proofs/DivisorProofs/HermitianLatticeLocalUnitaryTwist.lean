@@ -27,7 +27,7 @@ theorem model_aeval {B : InvAlg K} {n : ℕ} {γ : Matrix (Fin n) (Fin n) K.E} {
     {ψ : B.A ≃ₗ[K.E] (Fin n → K.E)} (h : IsModel B γ x ψ) (p : K.E[X]) (y : B.A) :
     ψ (aeval B.g p * y) = aeval γ p *ᵥ ψ y := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, add_mul, map_add, hp, hq, add_mulVec]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), add_mul, map_add (f := _), hp, hq, add_mulVec]
   | monomial k a =>
     rw [aeval_monomial, aeval_monomial, mul_assoc, ← Algebra.smul_def, map_smul, model_pow h,
       ← Algebra.smul_def, Matrix.smul_mulVec]
@@ -53,7 +53,7 @@ theorem ker_model (B₁ B₂ : InvAlg K) (hs : (B₁.P * B₂.P).Separable) {n :
   obtain ⟨a, c, hac⟩ := Polynomial.Separable.isCoprime hs
   have hu : IsUnit (aeval B₂.g B₁.P) := by
     have := congrArg (aeval B₂.g) hac
-    rw [map_add, map_mul, map_mul, aeval_g_P B₂, mul_zero, add_zero, map_one] at this
+    rw [map_add (f := _), map_mul, map_mul, aeval_g_P B₂, mul_zero, add_zero, map_one] at this
     exact isUnit_iff_exists_inv'.2 ⟨_, this⟩
   constructor
   · intro hz
@@ -75,7 +75,7 @@ theorem herm_fst (B₁ B₂ : InvAlg K) (x : (B₁.prod B₂).A) (a b : B₁.A) 
 theorem aeval_map_matrix {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {n : ℕ}
     (M : Matrix (Fin n) (Fin n) R) (p : R[X]) : aeval (M.map f) (p.map f) = (aeval M p).map f := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [Polynomial.map_add, map_add, map_add, hp, hq, Matrix.map_add _ (map_add f)]
+  | add p q hp hq => rw [Polynomial.map_add (f := _), map_add (f := _), map_add (f := _), hp, hq, Matrix.map_add _ (map_add f)]
   | monomial k a =>
     rw [Polynomial.map_monomial, aeval_monomial, aeval_monomial]
     change _ = f.mapMatrix _

@@ -44,7 +44,7 @@ variable {D : D7}
 
 theorem smallAt_add {PP : Pl D.host.E} {a b : EAf D} (ha : SmallAt PP a) (hb : SmallAt PP b) : SmallAt PP (a + b) := by
   unfold SmallAt at *
-  rw [RingHom.map_add]
+  rw [RingHom.map_add (f := _)]
   exact Valuation.map_add_lt _ ha hb
 
 theorem smallAt_of_mul {PP : Pl D.host.E} {g : ℕ} (hg : (g : 𝓞 D.host.E) ∈ PP.asIdeal) {t : EAf D}

@@ -142,7 +142,7 @@ theorem exists_calc (hA : GlobalTheory.Published.ArCalc) (V : Cover Y) {e : ℕ}
       · exact h ε π hd i
     · change leviL K a j y hy w _ = _
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [Fintype.sum_option, map_add, map_sum, map_smul, add_comm]
+        rw [Fintype.sum_option, map_add (f := _), map_sum, map_smul, add_comm]
       refine congrArg₂ (· + ·) (congrArg (_ * ·) (K.c1_ar u hu a j y hy w)) (Finset.sum_congr rfl fun i _ => ?_)
       refine ((leviL K a j y hy w).map_smul _ _).trans ?_
       exact congrArg (_ * ·) (leviEq_of_φ _ (first_chern_class_potential M P hP i a) j y hy w)

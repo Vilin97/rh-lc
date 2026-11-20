@@ -17,7 +17,7 @@ variable {K : Type} [NormedField K] [IsUltrametricDist K] [CharZero K]
 theorem integral_add {ι : Type} {f g : MvPowerSeries ι K} (hf : Integral f) (hg : Integral g) :
     Integral (f + g) := by
   intro n
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf n) (hg n))
 
 theorem integral_neg {ι : Type} {f : MvPowerSeries ι K} (hf : Integral f) : Integral (-f) := by
@@ -128,7 +128,7 @@ variable {K : Type} [Field K] [CharZero K]
 
 theorem fExp_three {ι : Type} {f : MvPowerSeries ι K} (hf : MvPowerSeries.constantCoeff f = 0) :
     fExp (3 * f) = fExp f ^ 3 := by
-  have h2 : MvPowerSeries.constantCoeff (f + f) = 0 := by rw [map_add, hf, add_zero]
+  have h2 : MvPowerSeries.constantCoeff (f + f) = 0 := by rw [map_add (f := _), hf, add_zero]
   have e : (3 : MvPowerSeries ι K) * f = f + f + f := by ring
   rw [e, fExp_add h2 hf, fExp_add hf hf]
   ring
@@ -150,7 +150,7 @@ theorem curve3_at {ι : Type} {l P ep : PowerSeries K} {a1 a3 : K}
         MvPowerSeries.C a3 * MvPowerSeries.X x ^ 3) := by
   have hx : PowerSeries.HasSubst (MvPowerSeries.X x : MvPowerSeries ι K) := PowerSeries.HasSubst.X x
   have e := congrArg (PowerSeries.substAlgHom hx) h
-  simp only [map_mul, map_add, map_pow, map_neg, map_ofNat, PowerSeries.coe_substAlgHom,
+  simp only [map_mul, map_add (f := _), map_pow, map_neg, map_ofNat, PowerSeries.coe_substAlgHom,
     PowerSeries.subst_X hx] at e
   have e1 : ∀ f : PowerSeries K,
       PowerSeries.subst (MvPowerSeries.X x : MvPowerSeries ι K) f = at1 x f := fun f => rfl
@@ -169,7 +169,7 @@ theorem subst_det_three_points {ι : Type} (P : PowerSeries K) {b : Fin 3 → Mv
   fin_cases c <;> simp [-MvPowerSeries.coe_substAlgHom]
   all_goals
     rw [← MvPowerSeries.coe_substAlgHom hb]
-    simp only [map_mul, map_pow, map_add, map_neg, map_one, map_ofNat]
+    simp only [map_mul, map_pow, map_add (f := _), map_neg, map_one, map_ofNat]
     simp only [MvPowerSeries.coe_substAlgHom, MvPowerSeries.subst_X hb, ParO.subst_inVar _ _ hb]
 
 theorem subst_series_at_sum_three {ι : Type} (g : PowerSeries K) {b : Fin 3 → MvPowerSeries ι K}
@@ -179,7 +179,7 @@ theorem subst_series_at_sum_three {ι : Type} (g : PowerSeries K) {b : Fin 3 →
   rw [psubst_subst g (u := (MvPowerSeries.X 0 + MvPowerSeries.X 1 + MvPowerSeries.X 2 :
     MvPowerSeries (Fin 3) K)) (by simp) hb]
   congr 1
-  rw [← MvPowerSeries.coe_substAlgHom hb, map_add, map_add, MvPowerSeries.coe_substAlgHom,
+  rw [← MvPowerSeries.coe_substAlgHom hb, map_add (f := _), map_add (f := _), MvPowerSeries.coe_substAlgHom,
     MvPowerSeries.subst_X hb, MvPowerSeries.subst_X hb, MvPowerSeries.subst_X hb]
 
 theorem subst_series_at_difference_three {ι : Type} (j k : Fin 3) (g : PowerSeries K) {b : Fin 3 → MvPowerSeries ι K}
@@ -246,7 +246,7 @@ theorem sum_log_three_variables_ne_zero {l : PowerSeries K} (hl1 : PowerSeries.c
     at1 (0 : Fin 3) l + at1 1 l + at1 2 l ≠ 0 := by
   intro h0
   have e := congrArg (MvPowerSeries.coeff (Finsupp.single (0 : Fin 3) 1)) h0
-  rw [map_add, map_add, map_zero, coeff_single_one_at1_eq_ite, coeff_single_one_at1_eq_ite, coeff_single_one_at1_eq_ite] at e
+  rw [map_add (f := _), map_add (f := _), map_zero, coeff_single_one_at1_eq_ite, coeff_single_one_at1_eq_ite, coeff_single_one_at1_eq_ite] at e
   simp [hl1] at e
 
 end Alg

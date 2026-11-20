@@ -86,7 +86,7 @@ theorem lg_mulBy (h : g.Ok) (c : ℂ_[p]) {a : MvPowerSeries σ ℂ_[p]} (ha : M
 
 theorem mulBy_add (h : g.Ok) (c c' : ℂ_[p]) {a : MvPowerSeries σ ℂ_[p]} (ha : MvPowerSeries.constantCoeff a = 0) :
     g.mulBy (c + c') a = g.add (g.mulBy c a) (g.mulBy c' a) := by
-  rw [G1.add, lg_mulBy g h c ha, lg_mulBy g h c' ha, G1.mulBy, map_add, add_mul]
+  rw [G1.add, lg_mulBy g h c ha, lg_mulBy g h c' ha, G1.mulBy, map_add (f := _), add_mul]
 
 theorem add_eq_subst (h : g.Ok) (A B : MvPowerSeries σ ℂ_[p]) (hA : MvPowerSeries.constantCoeff A = 0)
     (hB : MvPowerSeries.constantCoeff B = 0) :
@@ -94,7 +94,7 @@ theorem add_eq_subst (h : g.Ok) (A B : MvPowerSeries σ ℂ_[p]) (hA : MvPowerSe
   have hab : MvPowerSeries.HasSubst ![A, B] :=
     MvPowerSeries.hasSubst_of_constantCoeff_zero (fun i => by fin_cases i <;> simp [hA, hB])
   have hs : MvPowerSeries.constantCoeff (g.lg (Xv 0) + g.lg (Xv 1) : MvPowerSeries (Fin 2) ℂ_[p]) = 0 := by
-    rw [map_add, constantCoeff_lg g (MvPowerSeries.constantCoeff_X _),
+    rw [map_add (f := _), constantCoeff_lg g (MvPowerSeries.constantCoeff_X _),
       constantCoeff_lg g (MvPowerSeries.constantCoeff_X _), add_zero]
   have hsl : ∀ i : Fin 2, MvPowerSeries.subst ![A, B] (g.lg (Xv i) : MvPowerSeries (Fin 2) ℂ_[p]) =
       g.lg (![A, B] i) := by

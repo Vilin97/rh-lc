@@ -78,7 +78,7 @@ def typeP (J0 : Subgroup G0) (lam0 : J0 →* LLˣ) : Submodule LL WL where
   zero_mem' := fun p => by simp
   add_mem' := fun {F G} hF hG p => by
     show A.ρ p (F + G) = _
-    rw [map_add, hF p, hG p, smul_add]
+    rw [map_add (f := _), hF p, hG p, smul_add]
   smul_mem' := fun a F hF p => by
     show A.ρ p (a • F) = _
     rw [LinearMap.map_smul, hF p, smul_comm]
@@ -107,7 +107,7 @@ theorem pet_self (σ : LL →+* ℂ) (x : WL) : A.pet σ x x = ((A.nrmAt σ x : 
   simp [pet, nrmAt, inner_self_eq_norm_sq_to_K]
 
 theorem pet_add_left (σ : LL →+* ℂ) (x x' y : WL) : A.pet σ (x + x') y = A.pet σ x y + A.pet σ x' y := by
-  simp [pet, map_add, inner_add_right]
+  simp [pet, map_add (f := _), inner_add_right]
 
 theorem pet_smul_left (σ : LL →+* ℂ) (a : LL) (x y : WL) : A.pet σ (a • x) y = σ a * A.pet σ x y := by
   simp [pet, map_smulₛₗ, inner_smul_right]

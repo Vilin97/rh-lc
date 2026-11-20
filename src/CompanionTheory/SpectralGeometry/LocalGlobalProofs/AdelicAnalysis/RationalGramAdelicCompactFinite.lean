@@ -42,7 +42,7 @@ theorem fixed_mem (σ : E →ₐ[F] E) (h : IsCMExt F E σ) (e : E) (he : σ e =
     rw [LinearIndependent.pair_iff]
     intro s t hst
     have h2 := congrArg σ hst
-    simp only [Algebra.smul_def, map_add, map_mul, AlgHom.commutes, map_one, map_zero] at h2
+    simp only [Algebra.smul_def, map_add (f := _), map_mul, AlgHom.commutes, map_one, map_zero] at h2
     have h3 : t • (x - σ x) = 0 := by
       simp only [Algebra.smul_def] at hst ⊢
       linear_combination hst - h2
@@ -58,7 +58,7 @@ theorem fixed_mem (σ : E →ₐ[F] E) (h : IsCMExt F E σ) (e : E) (he : σ e =
   obtain ⟨a, b, hab⟩ := Submodule.mem_span_pair.mp hmem
   have h2 : a • (1 : E) + b • σ x = e := by
     have := congrArg σ hab
-    simp only [Algebra.smul_def, map_add, map_mul, AlgHom.commutes, map_one, he] at this
+    simp only [Algebra.smul_def, map_add (f := _), map_mul, AlgHom.commutes, map_one, he] at this
     simpa only [Algebra.smul_def] using this
   have h3 : b • (x - σ x) = 0 := by
     simp only [Algebra.smul_def] at hab h2 ⊢

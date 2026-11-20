@@ -113,7 +113,7 @@ theorem isUnitarisable_of_isLocS {L : Type} [Field L] [NumberField L] [IsCMField
   have hlin2 : ∀ y z : π.S, ∀ c : ℂ, B (y + c • z) = fun x => B y x + starRingEnd ℂ c * B z x := by
     intro y z c
     funext x
-    rw [hherm, hlin, map_add, map_mul, ← hherm, ← hherm]
+    rw [hherm, hlin, map_add (f := _), map_mul, ← hherm, ← hherm]
   have hadd1 : ∀ y z x : π.S, B (y + z) x = B y x + B z x := by
     intro y z x
     have := congrFun (hlin2 y z 1) x

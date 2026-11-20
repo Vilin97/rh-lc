@@ -26,13 +26,13 @@ theorem BR_symm (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {n a : ℕ}
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [φ, sigR, Algebra.TensorProduct.map_tmul]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hinv : ∀ z, φ (φ z) = z := by
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [φ, Algebra.TensorProduct.map_tmul, hσ]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   let e := AlgEquiv.ofBijective φ (Function.Involutive.bijective hinv)
   have htr : ∀ z, Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (sigR (Fv F v) σ z) =
       Algebra.trace (Fv F v) (Fv F v ⊗[F] E) z := by
@@ -73,7 +73,7 @@ theorem BR_cont_joint (σ : E →ₐ[F] E) {n a : ℕ} (J : Matrix (Fin n) (Fin 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [φ, sigR, Algebra.TensorProduct.map_tmul]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hsg : Continuous (sigR (Fv F v) σ) := by
     have h1 : ⇑(sigR (Fv F v) σ) = ⇑(φ.toLinearMap) := funext hφ
     rw [h1]

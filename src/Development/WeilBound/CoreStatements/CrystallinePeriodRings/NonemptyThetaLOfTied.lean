@@ -82,7 +82,7 @@ def thetaL : ThetaL P AI where
     obtain ⟨a, ha⟩ := (tie_fil_zero T _ x).1 hx
     obtain ⟨b, hb⟩ := (tie_fil_zero T _ y).1 hy
     rw [thetaExt_of_eq ha, thetaExt_of_eq hb,
-      thetaExt_of_eq (y := a + b) (by rw [map_add, map_add, ha, hb]), map_add]
+      thetaExt_of_eq (y := a + b) (by rw [map_add (f := _), map_add (f := _), ha, hb]), map_add (f := _)]
   θ_mul x hx y hy := by
     obtain ⟨a, ha⟩ := (tie_fil_zero T _ x).1 hx
     obtain ⟨b, hb⟩ := (tie_fil_zero T _ y).1 hy

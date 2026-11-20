@@ -42,7 +42,7 @@ theorem dense_span_unitMono (F : Fock σ) :
   refine closure_mono ?_ (F.dense x)
   rintro _ ⟨f, rfl⟩
   induction f using MvPolynomial.induction_on' with
-  | add f g hf hg => rw [map_add]; exact Submodule.add_mem _ hf hg
+  | add f g hf hg => rw [map_add (f := _)]; exact Submodule.add_mem _ hf hg
   | monomial α c =>
     have e : F.ι (monomial α c) = (c * wt α) • unitMono F α := by
       rw [unitMono, smul_smul, mul_assoc, mul_inv_cancel₀ (wt_ne_zero α), mul_one, ← map_smul, smul_monomial]

@@ -32,7 +32,7 @@ theorem appTop_joint_inj (β : TrivSqZeroExt R M →+* TrivSqZeroExt B M) (hβ :
   have e2 : TrivSqZeroExt.snd c' = 0 := by
     have : β c' = TrivSqZeroExt.inl (algebraMap R B (TrivSqZeroExt.fst c')) + TrivSqZeroExt.inr (TrivSqZeroExt.snd c') := by
       conv_lhs => rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq c']
-      rw [map_add, hβ.1, hβ.2]; rfl
+      rw [map_add (f := _), hβ.1, hβ.2]; rfl
     have := congrArg TrivSqZeroExt.snd this
     rw [← n2] at this
     simpa using this.symm

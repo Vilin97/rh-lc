@@ -37,6 +37,6 @@ theorem UpperTheory.Reformulated.B.LocalQuotientHomExt.hom_ext :
   apply RingHom.ext
   intro p
   induction p using LaurentPolynomial.induction_on' with
-  | add p r hp hr => rw [map_add, map_add, hp, hr]
+  | add p r hp hr => rw [map_add (f := _), map_add (f := _), hp, hr]
   | C_mul_T n a =>
     rw [map_mul, map_mul, hCa, hT]

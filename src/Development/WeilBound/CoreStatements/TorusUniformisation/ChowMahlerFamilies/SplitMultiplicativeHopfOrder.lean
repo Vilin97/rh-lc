@@ -314,7 +314,7 @@ theorem mu_torus : ∀ (R : Type) [CommRing R] [IsDomain R] [IsIntegrallyClosed 
       | add a b ha hb =>
         obtain ⟨f₁, h₁, h₁'⟩ := ha
         obtain ⟨f₂, h₂, h₂'⟩ := hb
-        exact ⟨f₁ + f₂, add_mem h₁ h₂, fun t => by rw [map_add, map_add, h₁', h₂', Pi.add_apply, map_add]⟩
+        exact ⟨f₁ + f₂, add_mem h₁ h₂, fun t => by rw [map_add (f := _), map_add (f := _), h₁', h₂', Pi.add_apply, map_add (f := _)]⟩
       | smul r a ha =>
         obtain ⟨f₁, h₁, h₁'⟩ := ha
         refine ⟨r • f₁, Subalgebra.smul_mem _ h₁ r, fun t => ?_⟩
@@ -541,7 +541,7 @@ theorem mem_iff_span {R A B H K T : Type} [CommRing R] [AddCommGroup A] [Module 
     induction x using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
     | tmul a b => exact Submodule.subset_span ⟨a, b, funext fun z => he a b z.1 z.2⟩
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · intro hf
     have key : ∀ F ∈ Submodule.span R {F : H × K → R | ∃ a b, F = fun z => φ a z.1 * ψ b z.2},
         ∃ g ∈ X, F = fun z => g (u z) := by

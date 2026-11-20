@@ -56,7 +56,7 @@ theorem addHom_eq_zero {k G V A : Type} [Field k] [Group G] [AddCommGroup V] [Mo
   let N : Submodule k V :=
     { carrier := {x | ∀ a : k, φ (a • x) = 0}
       zero_mem' := fun a => by simp
-      add_mem' := fun {x y} hx hy a => by rw [smul_add, map_add, hx, hy, add_zero]
+      add_mem' := fun {x y} hx hy a => by rw [smul_add, map_add (f := _), hx, hy, add_zero]
       smul_mem' := fun b x hx a => by rw [smul_smul]; exact hx _ }
   by_contra hne
   have hN : N < ⊤ := lt_top_iff_ne_top.2 fun hN => hne (AddMonoidHom.ext fun x => by

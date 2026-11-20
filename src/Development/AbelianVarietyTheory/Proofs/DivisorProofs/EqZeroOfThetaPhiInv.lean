@@ -81,7 +81,7 @@ theorem tateMap_eps (h : S.Over S' α) (j : PDivGroup.mu p S'.R ⟶ (PDivGroup.m
     change (eps S').pt n (j.app n (1 ⊗ₜ a)) = 1 * algebraMap S.R S'.R ((eps S).pt n a)
     induction a using AddMonoidAlgebra.induction_linear with
     | zero => simp
-    | add x y hx hy => simp only [TensorProduct.tmul_add, map_add, hx, hy, mul_add]
+    | add x y hx hy => simp only [TensorProduct.tmul_add, map_add (f := _), hx, hy, mul_add]
     | single k c =>
       have e : (AddMonoidAlgebra.single k c : AddMonoidAlgebra S.R (ZMod (p ^ n))) = c • PDiv.muT S.R _ ^ k.val := by
         rw [PDiv.muT_pow, ZMod.natCast_zmod_val]; simp
@@ -172,7 +172,7 @@ theorem baseChange_lattices : ∀ (p : ℕ) [Fact p.Prime] (D : PrismData p) (S 
     | add x y _ _ hx hy =>
       convert Submodule.add_mem _ hx hy using 1
       funext j
-      rw [map_add, Pi.add_apply, ← RingHom.coe_pow, map_add, map_add, mul_add, Pi.add_apply]
+      rw [map_add (f := _), Pi.add_apply, ← RingHom.coe_pow, map_add (f := _), map_add (f := _), mul_add, Pi.add_apply]
     | smul a x _ hx =>
       convert Submodule.smul_mem _ (fontaineTheta S'.R p ((phiInv p S'.R)^[n + 1] a)) hx using 1
       funext j

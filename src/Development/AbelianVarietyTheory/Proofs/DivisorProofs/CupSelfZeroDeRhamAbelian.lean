@@ -111,7 +111,7 @@ theorem cupHH_self_eq_zero : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpO
       deRhamH2Pullback (fst A A) (cupHH A.hom a a) + deRhamH2Pullback (snd A A) (cupHH A.hom a a) := by
     rw [pH2_cupHH_over, pH2_cupHH_over, pH2_cupHH_over, hP a]
     have h := anti (deRhamH1Pullback (fst A A) a) (deRhamH1Pullback (snd A A) a)
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     linear_combination (norm := module) h
 
   obtain ⟨c, rfl⟩ := Hyp1.mk_surjective _ a
@@ -126,7 +126,7 @@ theorem cupHH_self_eq_zero : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpO
     have h := hprim
     rw [hz] at h
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, pH2_cupHH_over, pH1_clAll_over _ hc hc2, hP, hPF, map_add, LinearMap.add_apply,
+      simp only [map_sum, pH2_cupHH_over, pH1_clAll_over _ hc hc2, hP, hPF, map_add (f := _), LinearMap.add_apply,
       Finset.sum_add_distrib] at h
     rw [Finset.sum_add_distrib]
     linear_combination (norm := module) h

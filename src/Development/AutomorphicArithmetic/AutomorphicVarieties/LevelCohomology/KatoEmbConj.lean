@@ -24,7 +24,7 @@ theorem UpperTheory.V.X.Kato.embConj :
       map_one' := j₀.injective (by rw [hf, map_one, map_one])
       map_mul' := fun a b => j₀.injective (by rw [hf, map_mul, map_mul, hf, hf])
       map_zero' := j₀.injective (by rw [hf, map_zero, map_zero])
-      map_add' := fun a b => j₀.injective (by rw [hf, map_add, map_add, hf, hf]) }
+      map_add' := fun a b => j₀.injective (by rw [hf, map_add (f := _), map_add (f := _), hf, hf]) }
   haveI : Normal ℚ Ω := IsAlgClosure.normal ℚ Ω
   let g0 : Ω →ₐ[ℚ] Ω := (τ'.toRatAlgHom).liftNormal Ω
   refine ⟨AlgEquiv.ofBijective g0 (Algebra.IsAlgebraic.algHom_bijective g0), ?_⟩

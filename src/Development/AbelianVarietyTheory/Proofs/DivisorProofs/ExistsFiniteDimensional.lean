@@ -88,7 +88,7 @@ theorem mem_of_avg {Z : Type} [AddCommGroup Z] [Module ℂ Z] (ζ : Representati
       obtain ⟨K₁, o₁, h₁⟩ := hx
       obtain ⟨K₂, o₂, h₂⟩ := hy
       refine ⟨K₁ ⊓ K₂, o₁.inter o₂, fun t ht => ?_⟩
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       exact add_mem (h₁ t (ht.mono inf_le_left)) (h₂ t (ht.mono inf_le_right))
     | smul c x _ hx =>
       obtain ⟨K₁, o₁, h₁⟩ := hx
@@ -154,7 +154,7 @@ theorem isAdmissible_orb {V U : Type} [AddCommGroup V] [Module ℂ V] [AddCommGr
     | add x y _ _ hx hy =>
       refine Filter.mem_of_superset (Filter.inter_mem hx hy) fun g hg => ?_
       show ρ g (x + y) = x + y
-      rw [map_add, show ρ g x = x from hg.1, show ρ g y = y from hg.2]
+      rw [map_add (f := _), show ρ g x = x from hg.1, show ρ g y = y from hg.2]
     | smul c x _ hx =>
       refine Filter.mem_of_superset hx fun g hg => ?_
       show ρ g (c • x) = c • x
@@ -228,7 +228,7 @@ theorem exists_finiteDimensional {G₂ : Type} [Group G₂] [TopologicalSpace G�
     rw [this]
     exact hA1 j a ha _
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [LinearMap.map_smulₛₗ]; exact W.smul_mem _ hx
 
 end GlobalTheory.ThK.CoinvFin

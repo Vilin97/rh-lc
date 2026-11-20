@@ -35,9 +35,9 @@ theorem homogeneousComponent_mul_mem_span_degree {K σ : Type} [Field K] (I : Id
         have h2 := (isHomogeneous_monomial (1 : K) hdeg).mul hG
         rwa [Nat.sub_add_cancel h₀] at h2
       · exact Ideal.zero_mem _
-    | add a b ha hb => rw [add_mul, map_add]; exact Ideal.add_mem _ ha hb
+    | add a b ha hb => rw [add_mul, map_add (f := _)]; exact Ideal.add_mem _ ha hb
   | zero => simp
-  | add x y _ _ hx hy => rw [mul_add, map_add]; exact Ideal.add_mem _ (hx a) (hy a)
+  | add x y _ _ hx hy => rw [mul_add, map_add (f := _)]; exact Ideal.add_mem _ (hx a) (hy a)
   | smul r x _ hx => rw [smul_eq_mul, ← _root_.mul_assoc]; exact hx _
 
 theorem cutBy_of_regular_of_zeroEstimate : ∀ (K σ Hh : Type) [Field K] (I : Ideal (MvPolynomial σ K)) (Q : Polynomial ℚ) (d₀ d : ℕ) (p : Hh → σ → K), d₀ ≤ d → (∀ e ≥ d₀, (dimDeg I e : ℚ) = Q.eval (e : ℚ) ∧ ∀ F ∈ I, F.IsHomogeneous e → F ∈ Ideal.span {G | G ∈ I ∧ G.IsHomogeneous d₀}) → (∀ F ∈ I, ∀ h, MvPolynomial.eval (p h) F = 0) → (∀ F : MvPolynomial σ K, F.IsHomogeneous d → (∀ h, MvPolynomial.eval (p h) F = 0) → F ∈ I) → CutBy I Q d p := by

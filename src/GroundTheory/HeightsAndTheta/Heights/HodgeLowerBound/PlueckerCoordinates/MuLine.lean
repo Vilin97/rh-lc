@@ -27,10 +27,10 @@ theorem isValueAt_unique {y : (Σ k, ι k) → Ωf} {s : Ωf} {z : (Σ k, ι k) 
     rw [add_comm]
     exact isMultiHomog_mul hg' hh
   have haev : aeval y (g * h0' + -(g' * h0)) = 0 := by
-    rw [map_add, map_neg, map_mul, map_mul, heq, heq']
+    rw [map_add (f := _), map_neg, map_mul, map_mul, heq, heq']
     ring
   have := eval_eq_zero_of_mem_mcPts hz (mem_mCoordIdeal_of_aeval_eq_zero y hhom haev)
-  simp only [map_add, map_neg, map_mul] at this
+  simp only [map_add (f := _), map_neg, map_mul] at this
   rw [div_eq_div_iff hz0 hz0']
   linear_combination this
 
@@ -52,9 +52,9 @@ theorem isValueAt_add {y : (Σ k, ι k) → Ωf} {s₁ s₂ : Ωf} {z : (Σ k, �
     isMultiHomog_mul hh hh', ?_, ?_, ?_, ?_⟩
   · rw [add_comm]; exact isMultiHomog_mul hg' hh
   · rw [map_mul]; exact mul_ne_zero hy hy'
-  · rw [map_add, map_mul, map_mul, map_mul, heq, heq']; ring
+  · rw [map_add (f := _), map_mul, map_mul, map_mul, heq, heq']; ring
   · rw [map_mul, map_mul]; exact mul_ne_zero hz0 hz0'
-  · simp only [map_add, map_mul]; field_simp
+  · simp only [map_add (f := _), map_mul]; field_simp
 
 theorem isValueAt_zero' (y : (Σ k, ι k) → Ωf) (z : (Σ k, ι k) → ℂ) : IsValueAt y 0 z 0 :=
   ⟨0, 0, 1, isMultiHomog_zero 0, isMultiHomog_one, by simp, by simp, by simp, by simp⟩

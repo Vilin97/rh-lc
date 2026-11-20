@@ -65,7 +65,7 @@ theorem RatioField.lineVal_cramer (e b : Module.Basis (Fin 2) Ω E) (φ : κ →
     rw [div_mul_eq_mul_div, div_mul_eq_mul_div, ← add_div, eq_div_iff hg]
     fin_cases q <;> simp <;> ring
   rw [hlin]
-  simp only [T.lineVal, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_add, map_mul]
+  simp only [T.lineVal, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
   ring
 
 theorem RatioField.det_ne_zero (e b : Module.Basis (Fin 2) Ω E) (φ : κ → E →ₗ[Ω] Ω) (g : κ → Fin 2 → Ω)
@@ -75,7 +75,7 @@ theorem RatioField.det_ne_zero (e b : Module.Basis (Fin 2) Ω E) (φ : κ → E 
   have hval : ∀ k q, φ k (b q) = e.repr (b q) 0 * φ k (e 0) + e.repr (b q) 1 * φ k (e 1) := by
     intro k q
     conv_lhs => rw [← e.sum_repr (b q)]
-    simp only [Fin.sum_univ_two, map_add, map_smul, smul_eq_mul]
+    simp only [Fin.sum_univ_two, map_add (f := _), map_smul, smul_eq_mul]
   intro h
   apply hg
   have hX2 : X * X ≠ 0 := mul_ne_zero hX hX

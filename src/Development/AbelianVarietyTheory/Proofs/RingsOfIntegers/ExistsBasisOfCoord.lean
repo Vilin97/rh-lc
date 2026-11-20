@@ -83,7 +83,7 @@ theorem main : GlobalFnsSt → TwistBaseChangeStatement → UUStatement := by
     rw [add_f, crd_spec s i j, crd_spec t i j, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [constBF_eq, constBF_eq, constBF_eq]
-    simp only [map_add, resTop, add_mul]
+    simp only [map_add (f := _), resTop, add_mul]
   have hsmul : ∀ (ζ : F) (s : Fam D.toPre F k) i, crd (ζ • s) i = fun c => ζ * crd s i c := by
     intro ζ s i
     refine ((hbb i).1 _).unique (crd_spec _ i) ?_

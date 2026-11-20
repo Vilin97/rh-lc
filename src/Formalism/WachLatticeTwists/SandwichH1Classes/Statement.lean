@@ -19,7 +19,7 @@ def Z1 (a : Representation ℤ_[ℓ] G M) : Submodule ℤ_[ℓ] (G → M) where
   add_mem' := by
     rintro c d ⟨hc, hc'⟩ ⟨hd, hd'⟩
     refine ⟨hc.add hd, fun g h => ?_⟩
-    simp only [Pi.add_apply, hc', hd', map_add]
+    simp only [Pi.add_apply, hc', hd', map_add (f := _)]
     abel
   zero_mem' := ⟨continuous_const, fun g h => by simp⟩
   smul_mem' := by
@@ -43,7 +43,7 @@ def EqMap.onZ {a : Representation ℤ_[ℓ] G M} {a' : Representation ℤ_[ℓ] 
   (F.f.compLeft G).restrict (by
     rintro c ⟨hc, hc'⟩
     refine ⟨F.cont.comp hc, fun g h => ?_⟩
-    simp only [LinearMap.compLeft_apply, Function.comp_apply, hc', map_add, F.eqv])
+    simp only [LinearMap.compLeft_apply, Function.comp_apply, hc', map_add (f := _), F.eqv])
 
 def EqMap.onH {a : Representation ℤ_[ℓ] G M} {a' : Representation ℤ_[ℓ] G M'} (F : EqMap a a') :
     H1 a →ₗ[ℤ_[ℓ]] H1 a' :=

@@ -52,7 +52,7 @@ theorem iso_MKFull (Y : NX.FormsIso A A') (h : A'.MKFull) : A.MKFull := by
         induction hy using Submodule.span_induction with
         | mem y hy => exact Submodule.subset_span (by rw [Finset.coe_image]; exact Set.mem_image_of_mem _ hy)
         | zero => simp
-        | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+        | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
         | smul c a _ ha => rw [iso_symm_smul_int]; exact Submodule.smul_mem _ _ ha
       simpa using h2 _ h1
   · apply le_antisymm
@@ -65,7 +65,7 @@ theorem iso_MKFull (Y : NX.FormsIso A A') (h : A'.MKFull) : A.MKFull := by
         induction hy using Submodule.span_induction with
         | mem y hy => exact Submodule.subset_span ((Y.mkK _).2 (by simpa using hy))
         | zero => simp
-        | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+        | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
         | smul c a _ ha => rw [iso_symm_smul]; exact Submodule.smul_mem _ _ ha
       simpa using h2 _ h1
 
@@ -251,7 +251,7 @@ theorem actG_Bsup [Finite S.G] (hst : RhoStab S j) (hχ : ChiInLL0 S j)
     rw [e]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, hM _ _ hx, rfl⟩)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx =>
     rw [← algebraMap_smul (FractionRing (tw.O i)) c x, map_smul, algebraMap_smul]
     exact Submodule.smul_mem _ _ hx

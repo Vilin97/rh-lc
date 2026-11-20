@@ -105,7 +105,7 @@ theorem jet_eval (hC : JetCalc) (J : JetRing ℂ I n) (Q : MvPolynomial I ℂ) :
     rw [MvPolynomial.aeval_C, ← h4 a]
     congr 1; funext z; simp
   | add p q hp hq =>
-    rw [map_add, ← hp, ← hq, ← (h2 _ _ (analyticAt_eval p 0) (analyticAt_eval q 0)).2]
+    rw [map_add (f := _), ← hp, ← hq, ← (h2 _ _ (analyticAt_eval p 0) (analyticAt_eval q 0)).2]
     congr 1; funext z; simp
   | mul_X p i hp =>
     rw [map_mul, ← hp, MvPolynomial.aeval_X, ← h5 i,

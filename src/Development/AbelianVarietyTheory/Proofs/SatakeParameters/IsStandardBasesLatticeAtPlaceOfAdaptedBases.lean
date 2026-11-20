@@ -88,7 +88,7 @@ theorem exists_intBasis (D : D7) (ρ : D.host.E →+* ℂ_[p]) {N : ℕ} (L : Su
     obtain ⟨c, hc, rfl⟩ := hy
     obtain ⟨c', hc', rfl⟩ := hz
     refine ⟨c + c', fun a => ?_, by rw [Matrix.mulVec_add]⟩
-    rw [Pi.add_apply, map_add]
+    rw [Pi.add_apply, map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hc a) (hc' a))
   | smul r y _ hy =>
     obtain ⟨c, hc, rfl⟩ := hy

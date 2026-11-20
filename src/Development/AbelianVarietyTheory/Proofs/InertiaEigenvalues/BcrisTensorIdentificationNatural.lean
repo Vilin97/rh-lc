@@ -43,7 +43,7 @@ theorem map_id_smul {G : Type} [Group G] [TopologicalSpace G] {T T' : LocLat G �
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul b y => simp [TensorProduct.smul_tmul']
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem toBcris_hom {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} (F : BK.Hom P Q) (m : P.MMl)
     (m' : Q.MMl) (hm : m'.1 = F.app m.1) :
@@ -130,7 +130,7 @@ theorem jB_hom {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} {T T' : LocLa
     exact (hsm b _).2 (by rw [hofT x])
   | add x y hx hy =>
     change jB' (H.map (toB l O) *ᵥ _) = Φ (jB _)
-    rw [map_add, Matrix.mulVec_add, map_add, map_add, map_add]
+    rw [map_add (f := _), Matrix.mulVec_add, map_add (f := _), map_add (f := _), map_add (f := _)]
     exact congrArg₂ (· + ·) hx hy
 
 theorem isCrisVal_hom {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} {T T' : LocLat (Gl l) ℚ_[l] K O}

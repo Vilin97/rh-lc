@@ -136,7 +136,7 @@ def OActN.toF {G : Over S} [GrpObj G] (act : OActN D.O G) : OAct (𝓞 D.F) G wh
   hom c := act.hom _
   one := by rw [map_one]; exact act.one
   mul b c := by rw [← act.mul, ← map_mul, mul_comm]
-  add b c := by rw [map_add]; exact act.add _ _
+  add b c := by rw [map_add (f := _)]; exact act.add _ _
 
 structure TateIsoO (k : Type) [Field k] (Q : Type) [Group Q] (act : D.O → Q → Q)
     (e : ℕ → Q → Q → kˣ → Prop) where

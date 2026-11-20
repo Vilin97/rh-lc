@@ -104,7 +104,7 @@ theorem box_stable (ε : Fin m → Bool) (i j : Fin n) (R : Set (Fin m → ℕ))
   · rintro x ⟨s, hs, hR, rfl⟩
     exact gen_stable ε i j R s hs hR
   · simp
-  · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
+  · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · intro r x _ hx; rw [map_smul]; exact Submodule.smul_mem _ r hx
 
 def symW (u : (Fin m × Fin n × Bool) ⊕ (Fin m × Fin n × Bool) →₀ ℕ) : ℂ := ∏ k ∈ u.support, ((u k).factorial : ℂ)

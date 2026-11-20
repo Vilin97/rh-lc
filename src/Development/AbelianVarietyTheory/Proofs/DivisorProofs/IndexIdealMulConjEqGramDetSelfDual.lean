@@ -228,7 +228,7 @@ theorem idx_mul_map_bar_eq : ∀ (E : Type) [Field E] [NumberField E] (bar : �
       obtain ⟨b, hb, hbe⟩ := hy
       refine ⟨a + b, J.add_mem ha hb, ?_⟩
       change (a : E) + (b : E) = _
-      rw [hae, hbe, map_add]; ring
+      rw [hae, hbe, map_add (f := _)]; ring
     | smul c x _ hx =>
       obtain ⟨a, ha, hae⟩ := hx
       refine ⟨bar c * a, J.mul_mem_left _ ha, ?_⟩
@@ -311,7 +311,7 @@ theorem idx_mul_map_bar_eq : ∀ (E : Type) [Field E] [NumberField E] (bar : �
           obtain ⟨z', hz', hze'⟩ := hy'
           refine ⟨z + z', add_mem hz hz', ?_⟩
           change (z : E) + (z' : E) = _
-          rw [hze, hze', map_add]; ring
+          rw [hze, hze', map_add (f := _)]; ring
       · intro y y' hy hy'
         obtain ⟨z, hz, hze⟩ := hy
         obtain ⟨z', hz', hze'⟩ := hy'

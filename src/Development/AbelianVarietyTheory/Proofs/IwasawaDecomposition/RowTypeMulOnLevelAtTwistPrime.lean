@@ -104,7 +104,7 @@ theorem block_mul' (P : HeightOneSpectrum (𝓞 E)) (q : ℕ) (hq0 : q ≠ 0) (h
     have h1 : g v ⟨kj + s.1, hs⟩ = g w ⟨kj + s.1, hs⟩ +
         ∑ u : Fin (n - kj), Loc.atN v (kj + u.1) * g (Loc.eN E (n + c) (kj + u.1)) ⟨kj + s.1, hs⟩ := by
       set_option synthInstance.maxHeartbeats 100000 in
-        conv_lhs => rw [hdec, map_add, map_sum]
+        conv_lhs => rw [hdec, map_add (f := _), map_sum]
       simp only [map_smul, Pi.add_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rw [h2, h1, Matrix.mul_apply, Subring.coe_add, AddSubmonoidClass.coe_finsetSum]
     congr 1
@@ -114,7 +114,7 @@ theorem block_mul' (P : HeightOneSpectrum (𝓞 E)) (q : ℕ) (hq0 : q ≠ 0) (h
     simp only [blockD, Matrix.of_apply, Loc.atN]
     rw [dif_pos hs]
   have h3 := congrArg (redHom P) key
-  rw [map_add, redHom_apply, hred, zero_add] at h3
+  rw [map_add (f := _), redHom_apply, hred, zero_add] at h3
   rw [RingHom.mapMatrix_apply, Matrix.map_apply, h3]
   rfl
 

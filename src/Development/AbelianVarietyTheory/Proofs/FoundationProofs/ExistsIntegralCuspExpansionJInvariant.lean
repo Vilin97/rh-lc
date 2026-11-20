@@ -78,7 +78,7 @@ theorem expansion_j : ∀ (Ω : Type) [Field Ω] (ε : Ω →+* ℂ), ∃ h : Ha
         ring
     convert H1.add H2 using 1
     · funext r
-      rw [HahnSeries.coeff_add, map_add, add_mul]
+      rw [HahnSeries.coeff_add, map_add (f := _), add_mul]
     · rw [hup]
       ring
   · rw [HahnSeries.coeff_add, HahnSeries.coeff_single_same, h0 _ (hneg _ (by norm_num)), add_zero]

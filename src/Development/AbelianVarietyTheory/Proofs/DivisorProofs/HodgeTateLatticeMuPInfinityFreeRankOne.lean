@@ -14,7 +14,7 @@ variable {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] [Fact ¬IsUnit (p : O)
 
 def muMap (hε : IsPrimitiveSystem ε) (a : Ainf p O) : TDual (PDivGroup.mu p O) where
   toFun t := ofPadic p O ((epsEquiv hε).symm t) * a
-  map_add' s t := by rw [map_add, map_add, add_mul]
+  map_add' s t := by rw [map_add (f := _), map_add (f := _), add_mul]
   map_smul' c t := by
     rw [map_smul, smul_eq_mul, map_mul, mul_assoc]; rfl
 

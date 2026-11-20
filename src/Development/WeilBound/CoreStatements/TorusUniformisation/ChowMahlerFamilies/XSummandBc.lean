@@ -20,7 +20,7 @@ theorem PositivityTheory.Xgn.t_summand_bc : ∀ {o Ω C : Type} [CommRing o] [Fi
       rw [map_zero]
       exact zero_mem _
     | add y z _ _ hy hz =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hy hz
     | neg y _ hy =>
       rw [map_neg]
@@ -32,7 +32,7 @@ theorem PositivityTheory.Xgn.t_summand_bc : ∀ {o Ω C : Type} [CommRing o] [Fi
       obtain ⟨e, he, rfl⟩ := hx
       rw [hρC, hρid e he]
     | zero => exact map_zero _
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | smul a x _ hx => rw [map_smul, hx]
   refine ⟨⟨ρC, fun v => ?_, hid, hmap hρL⟩, ?_⟩
   · refine hb.inductionOn v (fun v => ρC v ∈ Submodule.span C (b '' U)) ?_ ?_ ?_ ?_
@@ -49,7 +49,7 @@ theorem PositivityTheory.Xgn.t_summand_bc : ∀ {o Ω C : Type} [CommRing o] [Fi
       exact Submodule.smul_mem _ s hn
     · intro n₁ n₂ h₁ h₂
       show ρC (n₁ + n₂) ∈ _
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem h₁ h₂
   · apply le_antisymm
     · rintro x ⟨hx1, hx2⟩

@@ -211,7 +211,7 @@ theorem io_bc_weyl {R S : Type} [CommRing R] [IsDomain R] [Infinite R] [CommRing
     have hy1 := hle hy
     have e1 : (⟨_, h1⟩ : ↥(dualWeyl R n n σ)) = ⟨x, hx1⟩ + ⟨y, hy1⟩ := rfl
     have e2 : (⟨_, h2⟩ : ↥(dualWeyl S n n σ)) = ⟨_, hmp x hx1⟩ + ⟨_, hmp y hy1⟩ := Subtype.ext (map_add _ _ _)
-    rw [e1, e2, map_add, map_add, map_add, ihx hx1 (hmp x hx1), ihy hy1 (hmp y hy1)]
+    rw [e1, e2, map_add (f := _), map_add (f := _), map_add (f := _), ihx hx1 (hmp x hx1), ihy hy1 (hmp y hy1)]
   | smul c x hx ihx =>
     intro h1 h2
     have hx1 := hle hx

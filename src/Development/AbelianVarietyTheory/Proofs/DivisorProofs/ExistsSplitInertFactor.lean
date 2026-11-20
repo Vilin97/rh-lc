@@ -57,7 +57,7 @@ noncomputable def phiHom {e : AE D} (he : e * e = e) :
 theorem phi_map (e : AE D) (A : Matrix (Fin N) (Fin N) (AE D)) :
     (phi e A).map (sgA D) = phi (sgA D e) (A.map (sgA D)) := by
   ext i j
-  simp only [Matrix.map_apply, phi_apply, map_add, map_mul, map_sub, map_one]
+  simp only [Matrix.map_apply, phi_apply, map_add (f := _), map_mul, map_sub, map_one]
   by_cases h : i = j <;> simp [Matrix.one_apply, h]
 
 theorem phi_transpose (e : AE D) (A : Matrix (Fin N) (Fin N) (AE D)) :
@@ -122,7 +122,7 @@ theorem exists_split_inert_factor : ∀ {D : D7} {N : ℕ} {𝔪 : Ideal (𝓞 D
   obtain ⟨ε, hεO, hεε, hεs, hq⟩ := VacMove.exists_half_idem D
   set e := ε + sgA D ε with he_def
   have heO : e ∈ OhE D := add_mem hεO (VacMove.sgA_mem D hεO)
-  have hse : sgA D e = e := by rw [he_def, map_add, VacMove.sgA_sgA, add_comm]
+  have hse : sgA D e = e := by rw [he_def, map_add (f := _), VacMove.sgA_sgA, add_comm]
   have hee : e * e = e := by
     have h2 : sgA D ε * sgA D ε = sgA D ε := by rw [← map_mul, hεε]
     have h3 : sgA D ε * ε = 0 := by rw [mul_comm, hεs]

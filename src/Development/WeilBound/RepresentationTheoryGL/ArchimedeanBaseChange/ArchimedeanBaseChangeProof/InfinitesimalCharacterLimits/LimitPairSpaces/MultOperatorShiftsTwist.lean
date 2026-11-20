@@ -243,7 +243,7 @@ theorem mult_operator_shifts_twist {N : ℕ} (b : Tr E N) : ∀ (α β : ℕ →
         rw [e, Submodule.span_image]
         infer_instance
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 theorem flat {N : ℕ} (b : Tr E N) (hb : b.AllLeaves fun _ V => IsStable V) (α β : ℕ → ℂ) (φ : Sm E N)

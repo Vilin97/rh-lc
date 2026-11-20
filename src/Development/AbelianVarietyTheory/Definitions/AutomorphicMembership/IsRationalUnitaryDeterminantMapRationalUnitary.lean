@@ -304,7 +304,7 @@ theorem exists_eq_div_conj : letI := H.cmStar
     rw [Units.val_mk0, map_sub, hcc]
     linear_combination (x - H.conj x) * h
   · refine ⟨Units.mk0 _ h, ?_⟩
-    rw [Units.val_mk0, map_add, map_one]
+    rw [Units.val_mk0, map_add (f := _), map_one]
     linear_combination hz
 
 theorem mk_diag_eq {z : H.E} {k k' : (H.E)ˣ} (h : z * H.conj (k : H.E) = k) (h' : z * H.conj (k' : H.E) = k') :

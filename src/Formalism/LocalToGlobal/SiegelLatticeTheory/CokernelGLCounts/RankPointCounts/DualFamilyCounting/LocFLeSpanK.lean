@@ -197,7 +197,7 @@ theorem mem_locF_dualIn_iff (hF : IsFixF K F) (h𝔭 : 𝔭.IsMaximal) (hL : IsL
       | mem y hy => exact hgen ⟨y, hy⟩
       | zero => simp
       | add y w _ _ hy hw =>
-        rw [map_add, LinearMap.add_apply]
+        rw [map_add (f := _), LinearMap.add_apply]
         exact Submodule.add_mem _ hy hw
       | smul r y _ hy =>
         obtain ⟨r', hr'⟩ := star_jK r

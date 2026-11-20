@@ -70,7 +70,7 @@ theorem mem_coboundaries_of_forall_pow : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type
       fun p => PadicInt.toZModPow s (d1 ρ b p) := by
     intro s b
     funext ⟨g, h⟩
-    simp only [d1_apply, map_add, map_sub, hρ]
+    simp only [d1_apply, map_add (f := _), map_sub, hρ]
   let α : ∀ s : ℕ, Set (Γ → ZMod (l ^ s)) := fun s =>
     {β | Continuous β ∧ d1 (ρr s) β = fun p => PadicInt.toZModPow s (z p)}
   have hα : ∀ s, (α (s + 1)).Finite := by

@@ -9,9 +9,9 @@ variable {O : Type} [Ring O]
 
 def form (s : O →+ O) (φ : O →+ ℤ) : LinearMap.BilinForm ℤ O :=
   LinearMap.mk₂ ℤ (fun u v => φ (s u * v))
-    (fun u₁ u₂ v => by simp [map_add, add_mul])
+    (fun u₁ u₂ v => by simp [map_add (f := _), add_mul])
     (fun c u v => by rw [map_zsmul, smul_mul_assoc, map_zsmul])
-    (fun u v₁ v₂ => by simp [mul_add, map_add])
+    (fun u v₁ v₂ => by simp [mul_add, map_add (f := _)])
     (fun c u v => by rw [mul_smul_comm, map_zsmul])
 
 @[simp] theorem form_apply (s : O →+ O) (φ : O →+ ℤ) (u v : O) : form s φ u v = φ (s u * v) := rfl

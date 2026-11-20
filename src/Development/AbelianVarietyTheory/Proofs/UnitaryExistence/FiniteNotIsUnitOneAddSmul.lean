@@ -91,7 +91,7 @@ theorem exists_inv_one_add_smul {A : Type*} [CommRing A] (O : Subring A) {p : �
     exact IsUnit.of_mul_eq_one (⟨w, hw⟩ : O) (Subtype.ext h)
   refine ⟨O.subtype.mapMatrix (1 + (p : O) • Z')⁻¹, fun i j => ((1 + (p : O) • Z')⁻¹ i j).2, ?_⟩
   have := congrArg O.subtype.mapMatrix (Matrix.mul_nonsing_inv _ hd)
-  rw [map_mul, map_one, Nat.cast_smul_eq_nsmul, map_add, map_one, map_nsmul] at this
+  rw [map_mul, map_one, Nat.cast_smul_eq_nsmul, map_add (f := _), map_one, map_nsmul] at this
   rw [Nat.cast_smul_eq_nsmul]
   exact this
 
@@ -142,7 +142,7 @@ theorem exists_unitary_approx {E : Type*} [Field E] [CharZero E] [StarRing E] {�
   have e : (1 + (2 * t - 1)) * (1 + m • (Y - star Y)) = 2 := by
     rw [add_sub_cancel, mul_assoc, mul_eq_one_comm.1 ht, mul_one]
   have e' := congrArg (φ i).mapMatrix e
-  rw [map_mul, map_add, map_add, map_one, map_ofNat, map_nsmul, map_sub _ Y, hφ'] at e'
+  rw [map_mul, map_add (f := _), map_add (f := _), map_one, map_ofNat, map_nsmul, map_sub _ Y, hφ'] at e'
   rw [← e']
   congr 2
   rw [star_sub, star_smul, (hc i).1, ← hφ, star_inv₀, star_natCast, ← hm]
@@ -222,7 +222,7 @@ theorem exists_sub_mem_locOrder (T : Finset (HeightOneSpectrum (𝓞 (maximalRea
   obtain ⟨y, hy⟩ := app b
   refine ⟨x + y * θ, fun v => ?_⟩
   convert add_mem (hx v) (mul_mem (hy v) (locEmb_mem_locOrder v.1 θ)) using 1
-  rw [hab v, map_add, map_mul]
+  rw [hab v, map_add (f := _), map_mul]
   ring
 
 variable (v : HeightOneSpectrum (𝓞 (maximalRealSubfield E)))
@@ -252,7 +252,7 @@ theorem exists_norm_one_isUnit {p : ℕ} (hp0 : p ≠ 0) (hp : (p : 𝓞 (maxima
   haveI : IsArtinianRing (LocAlg v) := IsArtinianRing.of_finite (v.adicCompletion (maximalRealSubfield E)) _
   obtain ⟨θ, h0, hθ⟩ := exists_imaginary_integer E
   have hc : ∀ k : ℤ, IsCMField.complexConj E (1 + p * (k * θ : E)) = 1 - p * (k * θ) := fun k => by
-    rw [map_add, map_one, map_mul, map_mul, map_natCast, map_intCast, show IsCMField.complexConj E θ = -θ from hθ]
+    rw [map_add (f := _), map_one, map_mul, map_mul, map_natCast, map_intCast, show IsCMField.complexConj E θ = -θ from hθ]
     ring
   have hne : ∀ k : ℤ, 1 + p * (k * θ : E) ≠ 0 := fun k hk => by
     have := hc k
@@ -298,7 +298,7 @@ theorem isUnit_one_add_of_skew (S : Matrix (Fin n) (Fin n) E) (hS : star S = -S)
   open scoped ComplexOrder in
   have h2 := (Matrix.PosDef.one.add_posSemidef (Matrix.posSemidef_conjTranspose_mul_self (τ.mapMatrix S))).isUnit
   have h3 : 1 + (τ.mapMatrix S)ᴴ * τ.mapMatrix S = τ.mapMatrix (1 + S) * τ.mapMatrix (1 - S) := by
-    rw [h1, map_add, map_sub, map_one]; noncomm_ring
+    rw [h1, map_add (f := _), map_sub, map_one]; noncomm_ring
   rw [h3, Matrix.isUnit_iff_isUnit_det, Matrix.det_mul, ← RingHom.map_det] at h2
   rw [Matrix.isUnit_iff_isUnit_det, isUnit_iff_ne_zero, ← _root_.map_ne_zero τ]
   exact left_ne_zero_of_mul h2.ne_zero

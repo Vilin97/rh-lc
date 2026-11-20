@@ -19,7 +19,7 @@ def cj (σ : E ≃ₐ[ℚ] E) (M : Submodule (𝓞 E) E) : Submodule (𝓞 E) E 
   carrier := {x | σ x ∈ M}
   add_mem' {x y} hx hy := by
     show σ (x + y) ∈ M
-    rw [map_add]; exact M.add_mem hx hy
+    rw [map_add (f := _)]; exact M.add_mem hx hy
   zero_mem' := by
     show σ 0 ∈ M
     rw [map_zero]; exact M.zero_mem

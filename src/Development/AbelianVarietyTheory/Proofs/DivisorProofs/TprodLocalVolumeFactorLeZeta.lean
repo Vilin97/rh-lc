@@ -63,8 +63,8 @@ theorem locFactor_eq_of_isPrime (E : Type) [Field E] [NumberField E] [IsCMField 
     refine exists_star_ne_of_not_surjective f (fun x => ?_) (fun x => ?_) (fun hsurj => ?_)
     · obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
       obtain ⟨a, ha⟩ := (IsCMField.ringOfIntegersComplexConj_eq_self_iff E (y + c y)).1
-        (by change c _ = _; rw [map_add, hcc, add_comm])
-      exact ⟨Ideal.Quotient.mk _ a, by rw [hf, ha, hstar, map_add]⟩
+        (by change c _ = _; rw [map_add (f := _), hcc, add_comm])
+      exact ⟨Ideal.Quotient.mk _ a, by rw [hf, ha, hstar, map_add (f := _)]⟩
     · obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
       obtain ⟨a, ha⟩ := (IsCMField.ringOfIntegersComplexConj_eq_self_iff E (y * c y)).1
         (by change c _ = _; rw [map_mul, hcc, mul_comm])

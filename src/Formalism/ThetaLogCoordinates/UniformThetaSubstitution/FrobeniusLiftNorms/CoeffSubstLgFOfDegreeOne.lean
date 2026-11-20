@@ -53,7 +53,7 @@ theorem lgF_subst_inj {ι : Type} (p : ℕ) (hp : 2 ≤ p) (a b : MvPowerSeries 
 theorem law_exists (p : ℕ) (hp : 2 ≤ p) :
     ∃ F : MvPowerSeries (Fin 2) K, MvPowerSeries.constantCoeff F = 0 ∧ cob F (lgF K p) = 0 := by
   have h0 : MvPowerSeries.constantCoeff (at1 (0 : Fin 2) (lgF K p) + at1 1 (lgF K p)) = 0 := by
-    rw [map_add, constantCoeff_inVar _ _ (constantCoeff_lgF p hp),
+    rw [map_add (f := _), constantCoeff_inVar _ _ (constantCoeff_lgF p hp),
       constantCoeff_inVar _ _ (constantCoeff_lgF p hp), add_zero]
   obtain ⟨F, hF0, hF⟩ := Formalism.LT.SolveExists_proof K (Fin 2) (lgF K p) _
     (constantCoeff_lgF p hp) (coeff_one_lgF p hp) h0
@@ -208,7 +208,7 @@ theorem coeff_subst_lgF_of_degree_one {ι : Type} (p : ℕ) (hp : 2 ≤ p) (F : 
     simp [MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hF]
   · have hj : j = 0 := by
       have h1 := congrArg Finsupp.degree hij
-      rw [map_add, hn] at h1
+      rw [map_add (f := _), hn] at h1
       have h2 : i.degree ≠ 0 := fun h => hi ((Finsupp.degree_eq_zero_iff i).mp h)
       exact (Finsupp.degree_eq_zero_iff j).mp (by omega)
     subst hj
@@ -339,7 +339,7 @@ theorem formal_law_symmetric : LawSymm := by
         lgF_subst_C_mul hζ hp2 (MvPowerSeries.X (1 : Fin 2)) (by simp),
         lgF_subst_C_mul hζ hp2 F hF0, hFl, mul_add]
   · intro n hn
-    rw [← coeff_subst_lgF_of_degree_one p hp2 F hF0 n hn, hFl, map_add,
+    rw [← coeff_subst_lgF_of_degree_one p hp2 F hF0 n hn, hFl, map_add (f := _),
       coeff_subst_lgF_of_degree_one p hp2 (MvPowerSeries.X (0 : Fin 2)) (by simp) n hn,
       coeff_subst_lgF_of_degree_one p hp2 (MvPowerSeries.X (1 : Fin 2)) (by simp) n hn]
     have hsum : n 0 + n 1 = 1 := by

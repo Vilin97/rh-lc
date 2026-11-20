@@ -35,7 +35,7 @@ private theorem UpperTheory.Reformulated.B.FreeModuleQuotient.aux {R S M : Type}
       exact Ideal.Quotient.eq_zero_iff_mem.2 (K.mul_mem_right y hk)
     · intro x; simp
     · intro a b _ _ ha hb x
-      rw [add_smul, map_add, ha, hb, add_zero]
+      rw [add_smul, map_add (f := _), ha, hb, add_zero]
     · intro a b _ hb x
       rw [smul_eq_mul, mul_comm, mul_smul, hb]
   have hker : ∀ x : M, x ∈ (Ideal.map s K • ⊤ : Submodule R M) ↔ φ x = 0 := by
@@ -44,7 +44,7 @@ private theorem UpperTheory.Reformulated.B.FreeModuleQuotient.aux {R S M : Type}
     · intro hx
       refine Submodule.smul_induction_on (p := fun x => φ x = 0) hx ?_ ?_
       · intro r hr n _; exact h1 r hr n
-      · intro a b ha hb; rw [map_add, ha, hb, add_zero]
+      · intro a b ha hb; rw [map_add (f := _), ha, hb, add_zero]
     · intro hx
       choose t ht using fun i => Ideal.Quotient.mk_surjective (e x i)
       have htK : ∀ i, t i ∈ K := by

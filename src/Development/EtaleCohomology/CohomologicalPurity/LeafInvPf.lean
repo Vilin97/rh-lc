@@ -45,7 +45,7 @@ theorem inv_univ (I : Ideal A) (i : A) (hi : i ∈ I) : Univ (algebraMap A (Loca
 theorem LeafInv_of : LeafInv := by
   intro A _ I i hi
   have hx : Ideal.Quotient.mk I (1 + i) = 1 := by
-    rw [map_add, map_one, Ideal.Quotient.eq_zero_iff_mem.2 hi, add_zero]
+    rw [map_add (f := _), map_one, Ideal.Quotient.eq_zero_iff_mem.2 hi, add_zero]
   refine ⟨Localization.Away (1 + i), inferInstance, algebraMap A (Localization.Away (1 + i)),
     ⟨?_, inv_retr I _ hx, inv_surj I _ hx, inv_univ I i hi⟩, IsLocalization.Away.algebraMap_isUnit (1 + i)⟩
   rw [RingHom.etale_algebraMap]

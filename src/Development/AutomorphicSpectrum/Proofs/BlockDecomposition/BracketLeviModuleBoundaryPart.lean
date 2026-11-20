@@ -419,7 +419,7 @@ theorem lFq_bd (hP : PairRel E1 E2) {lev : Fin n → ℕ} (hm : Monotone lev) {x
       rw [annq_eq_zero hx ha, map_zero, map_zero, smul_zero]
   rw [bdq_eq]
   simp only [br, LinearMap.sub_apply, Module.End.mul_apply] at h1 h2
-  simp only [LinearMap.add_apply, map_add]
+  simp only [LinearMap.add_apply, map_add (f := _)]
   rw [sub_eq_zero.1 h1, sub_eq_zero.1 h2]
 
 theorem mt_id {lev : Fin n → ℕ} (hm : Monotone lev) {s t : Bool} {p q r v : Fin n} (hpq : lev p = lev q)
@@ -567,7 +567,7 @@ theorem leviRel : LeviRel := by
     have ff := R false false
     simp only [beq_self_eq_true, Bool.true_beq, Bool.false_beq, Bool.not_true, Bool.not_false,
       beq_iff_eq] at tt tf ft ff
-    simp only [c1, c2, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.sub_apply, map_smul, map_add, map_sub]
+    simp only [c1, c2, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.sub_apply, map_smul, map_add (f := _), map_sub]
     refine ⟨?_, ?_, ?_⟩
     · split_ifs at tt tf ft ff ⊢ <;>
         linear_combination (norm := module) (1 / 4 : ℂ) • tt + (1 / 4 : ℂ) • tf + (1 / 4 : ℂ) • ft + (1 / 4 : ℂ) • ff

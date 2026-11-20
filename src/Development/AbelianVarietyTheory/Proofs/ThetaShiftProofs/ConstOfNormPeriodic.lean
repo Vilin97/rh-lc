@@ -496,7 +496,7 @@ theorem genVal_rosati (hL : L.IsLB) (h : u.IsAH Hm χ) (hF : ∀ z, u.ex (F z) =
   have Bc : ∀ x z, hermForm Hm z (F x) - hermForm Hm (G z) x = starRingEnd ℂ (B x z) := fun x z => by
     rw [hB, map_sub, ← hermForm_conj Hm h.1, ← hermForm_conj Hm h.1]
   have Ba : ∀ x y z, B (x + y) z = B x z + B y z := fun x y z => by
-    simp only [hB, map_add, hermForm_add_left]; ring
+    simp only [hB, map_add (f := _), hermForm_add_left]; ring
   have Bs : ∀ (c : ℂ) x z, B (c • x) z = c * B x z := fun c x z => by
     simp only [hB, map_smul, hermForm_smul_left]; ring
   have Bs' : ∀ (c : ℂ) x z, B x (c • z) = starRingEnd ℂ c * B x z := fun c x z => by

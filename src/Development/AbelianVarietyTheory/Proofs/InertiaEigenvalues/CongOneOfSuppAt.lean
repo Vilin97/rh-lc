@@ -34,7 +34,7 @@ theorem cong_one_of_suppAt : ∀ (D : D7) (V : HSp D) (Q : Finset (Pl D.host.E))
   have hA1 : ∀ P, P ∉ Q → GlobalTheory.IdemSupport.cP P ∉ Q → (ev P).mapMatrix (mt V hQ) = 1 := fun P hP hP' => by
     have hc := hcj (idem Q) (GlobalTheory.IdemSupport.cP P)
     rw [e2 _ hP', map_zero, GlobalTheory.ClassScalarValue.cP_cP, map_eq_zero] at hc
-    have hu : ev P (idem Q + cA D (idem Q)) = 0 := by rw [map_add, e2 P hP, hc, add_zero]
+    have hu : ev P (idem Q + cA D (idem Q)) = 0 := by rw [map_add (f := _), e2 P hP, hc, add_zero]
     have : (ev P).mapMatrix (mt V hQ - 1) = 0 := by
       refine Matrix.ext fun i j => ?_
       change ev P ((mt V hQ - 1) i j) = 0

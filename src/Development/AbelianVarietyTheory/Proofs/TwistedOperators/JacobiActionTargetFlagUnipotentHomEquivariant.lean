@@ -58,7 +58,7 @@ theorem eq_zero_of_eq_neg {x : AF D.host.F} (h : x = -x) : x = 0 := by
     calc x + x = -x + x := by rw [← h]
       _ = 0 := neg_add_cancel x
   calc x = algebraMap D.host.F (AF D.host.F) (1 / 2) * (x + x) := by
-        rw [mul_add, ← add_mul, ← map_add, add_halves, map_one, one_mul]
+        rw [mul_add, ← add_mul, ← map_add (f := _), add_halves, map_one, one_mul]
     _ = 0 := by rw [h2, mul_zero]
 
 end Sympl

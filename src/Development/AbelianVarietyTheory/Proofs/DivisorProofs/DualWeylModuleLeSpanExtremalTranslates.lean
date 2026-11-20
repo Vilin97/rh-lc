@@ -57,7 +57,7 @@ theorem nablaSq_le_span_extremal : ∀ (K : Type) [Field K] [CharZero K] (n : �
       sqAct K n lam g (c • f₁ + f₂) = c • sqAct K n lam g f₁ + sqAct K n lam g f₂ := by
     intro g c f₁ f₂
     unfold sqAct
-    rw [map_add, map_smul, smul_add, smul_comm]
+    rw [map_add (f := _), map_smul, smul_add, smul_comm]
   have hMstab : ∀ g : GL (Fin n) K, ∀ f ∈ M, sqAct K n lam g f ∈ M := by
     intro g f hf
     induction hf using Submodule.span_induction with

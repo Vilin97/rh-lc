@@ -55,7 +55,7 @@ theorem map_subD {L : Type} [Field L] (s : K →+* L) (P : Formalism.L2.DIV.Pol 
     MvPolynomial.map s (subD K ι a b P) = subD L ι a b (MvPolynomial.map s P) := by
   induction P using MvPolynomial.induction_on with
   | C c => simp [subD]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1
@@ -104,7 +104,7 @@ theorem eval_jetMap (cD : ι → K) (T : (DVar ι a b →₀ ℕ) → K) (Q : Fo
   have h2 : ∀ S, eval (fun v : ι × Fin b × Fin b => y' v.1 v.2.1 v.2.2) (jetLin (fun q => (q.prod fun k n => cD k.1 ^ n) * T q) S) =
       l (φ S) := fun S => by
     induction S using MvPolynomial.induction_on' with
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | monomial μ c =>
       have e : φ (monomial μ c) = monomial (μ.comapDomain Sum.inr Sum.inr_injective.injOn)
           (c * ((μ.comapDomain Sum.inl Sum.inl_injective.injOn).prod fun v n => y' v.1 v.2.1 v.2.2 ^ n) *

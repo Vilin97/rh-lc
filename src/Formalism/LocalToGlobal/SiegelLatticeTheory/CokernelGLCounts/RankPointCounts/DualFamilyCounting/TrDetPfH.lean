@@ -44,7 +44,7 @@ theorem eq_zero_of_trB {x : (VS D).V} (hx : x ∈ X.Lb)
     intro y hy
     obtain ⟨α, β, l, hl, rfl⟩ := decomp X hy
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [map_add, map_sum, map_smul, he, hf, h1 l hl]
+      simp [map_add (f := _), map_sum, map_smul, he, hf, h1 l hl]
   have hle : Submodule.span D.host.E ((VS D).L0 : Set (VS D).V) ≤ LinearMap.ker ((VS D).hT x) :=
     Submodule.span_le.2 fun y hy => LinearMap.mem_ker.2 (h2 y hy)
   refine (VS D).nondeg.1 x fun v => ?_

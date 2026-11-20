@@ -65,7 +65,7 @@ theorem valAt_le_of_mem_locId (v : Pl F) (𝔞 : FractionalIdeal (𝓞 E)⁰ E) 
       (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 (complMap_mem h hc)
     exact (mul_le_mul' h1 (valuation_le_of_mem w hx)).trans_eq (one_mul _)
   | zero => rw [map_zero, map_zero]; exact zero_le'
-  | add y z _ _ hy hz => rw [map_add]; exact Valuation.map_add_le _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Valuation.map_add_le _ hy hz
   | neg y _ hy => rw [map_neg, Valuation.map_neg]; exact hy
 
 theorem count_le_ordAt_of_mem_locId : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (v : Pl F) (𝔞 : FractionalIdeal (𝓞 E)⁰ E) (x : (Fv F v ⊗[F] E)ˣ), (x : Fv F v ⊗[F] E) ∈ GlobalTheory.SnMass.locId v 𝔞 → ∀ w ∈ Formalism.L2.Host.aboveF (L := E) F v, FractionalIdeal.count E w 𝔞 ≤ GlobalTheory.UnrTate.ordAt v w x := by

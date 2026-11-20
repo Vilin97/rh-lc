@@ -82,7 +82,7 @@ private theorem fA_swap' {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {n : 
 
 private theorem fA_add_right' (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v w w' : Fin n → AE F E) :
     fA σ J v (w + w') = fA σ J v w + fA σ J v w' := by
-  simp only [fA, dotProduct, Matrix.mulVec, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [fA, dotProduct, Matrix.mulVec, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 private theorem symp_vmv (σ : E →ₐ[F] E) {n d : ℕ} (J : Matrix (Fin n) (Fin n) E) (JW : Matrix (Fin d) (Fin d) E)
     (p q : Fin n → AE F E) (w : Fin d → AE F E) :

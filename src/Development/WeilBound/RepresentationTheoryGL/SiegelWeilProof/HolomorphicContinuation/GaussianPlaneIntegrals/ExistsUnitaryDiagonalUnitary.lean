@@ -78,7 +78,7 @@ theorem eval_sub (g h : Matrix ι ι ℂ) (p : PV ι A B) (z : (ι × A) ⊕ (ι
     eval z (sub g h p) = eval (actZ g h z) p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [sub]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp]
     congr 1
@@ -109,7 +109,7 @@ theorem differentiable_eval' {σ : Type} (p : MvPolynomial σ ℂ) (f : ℂ → 
   induction p using MvPolynomial.induction_on with
   | C a => simp
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p v hp =>
     simp only [map_mul, MvPolynomial.eval_X]

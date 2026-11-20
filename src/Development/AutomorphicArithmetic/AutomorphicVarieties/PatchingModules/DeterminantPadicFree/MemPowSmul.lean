@@ -75,7 +75,7 @@ theorem UpperTheory.V.Pa.Det.z1Fg :
         · convert (ha1 N).add (hb1 N) using 1
           funext g
           simp
-        · simp only [Pi.add_apply, ha2, hb2, map_add]
+        · simp only [Pi.add_apply, ha2, hb2, map_add (f := _)]
           abel
       zero_mem' := by
         refine ⟨fun N => ?_, fun g h => by simp⟩
@@ -180,7 +180,7 @@ theorem UpperTheory.V.Pa.Det.z1Fg :
     obtain ⟨hz1, hz2⟩ := z.2
     refine ⟨hz1 1, fun g h => ?_⟩
     show Submodule.mkQ _ (z.1 (g * h)) = Submodule.mkQ _ (z.1 g) + Submodule.mkQ _ (ρ g (z.1 h))
-    rw [hz2, map_add]
+    rw [hz2, map_add (f := _)]
   have hS := Det.locallyConstant_cocycles_finite_of_phi l ρbar hΦ hl' hloc
   haveI : Finite (Set.range Ψ) := (hS.subset hrange).to_subtype
   haveI : Finite (C ⧸ Ideal.span {(PowerSeries.X : PowerSeries K)} • (⊤ : Submodule (PowerSeries K) C)) :=

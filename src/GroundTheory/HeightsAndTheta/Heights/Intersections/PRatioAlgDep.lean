@@ -63,7 +63,7 @@ theorem RatioAlgDep.proof : RatioAlgDep.Statement := by
   rw [hy] at htr
   have := hprime
   have hA := IntDomainDim.proof (MRing ι ⧸ Q) (CoordinateConeArithVar.algebraMap_injective Q hhor)
-  rw [hdim, htr, map_add, map_natCast] at hA
+  rw [hdim, htr, map_add (f := _), map_natCast] at hA
   have hA' : ((d + Fintype.card K : ℕ) : ℕ∞) =
       Cardinal.toENat (Algebra.trdeg ℤ Ω) + Fintype.card K + 1 := by exact_mod_cast hA
   have hlt : Algebra.trdeg ℤ Ω < d := by

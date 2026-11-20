@@ -41,11 +41,11 @@ theorem UpperTheory.Gal.TP.Loc.contraUnit :
   refine ⟨⟨LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun f f' => B (T f') (T f))
     ?_ ?_ ?_ ?_, ?_, ?_, ?_⟩, ⟨e, fun g x => hcomm g x⟩⟩
   · intro f₁ f₂ f'
-    simp [map_add]
+    simp [map_add (f := _)]
   · intro c f f'
     simp [LinearMap.map_smulₛₗ]
   · intro f f₁ f₂
-    simp [map_add]
+    simp [map_add (f := _)]
   · intro c f f'
     simp [LinearMap.map_smulₛₗ]
   · intro f f'

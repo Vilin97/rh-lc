@@ -510,7 +510,7 @@ theorem universal_lift_frame [IsDomain O] (hdvr : IsDiscreteValuationRing O) (hf
         xr + ∑ j, f' j ⊗ₜ mkL W T₂ π' c (repE j) (hrepE_mem j) := by
       conv_lhs => rw [hb₀dec]
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, map_sum]
+        rw [map_add (f := _), map_sum, map_sum]
       simp only [aeval_γLA_tmul, hgam, hmkE]
       rfl
     have hxrL : xr ∈ LamLA W T₂ π' Eπ h' c Lr := by

@@ -94,7 +94,7 @@ theorem localModel_rankZeroWitt_source_isModel : ∀ (D : D7) (k : Type) [Field 
     { toFun := fun Ψ w => Tm (R Ψ) (J.d.ext0 T w)
       map_add' := fun Ψ Ψ' => by
         funext w
-        rw [show R (Ψ + Ψ') = R Ψ + R Ψ' from Subtype.ext rfl, map_add]
+        rw [show R (Ψ + Ψ') = R Ψ + R Ψ' from Subtype.ext rfl, map_add (f := _)]
         rfl
       map_smul' := fun c Ψ => by
         funext w
@@ -111,13 +111,13 @@ theorem localModel_rankZeroWitt_source_isModel : ∀ (D : D7) (k : Type) [Field 
     funext w
     rw [hT₂, e1, ← splitLocalPlace_up_wittExtendByZero_rankZero p J s hh F₀ F hF T FT]
     simp only [heisO, hT₂]
-    rw [J.d.wittDecomp_sympl_extAnisotropic_extAnisotropic, map_add]
+    rw [J.d.wittDecomp_sympl_extAnisotropic_extAnisotropic, map_add (f := _)]
   · have e1 : Tm (R Ψ') = heisO ψ J.W T (J.d.ext0 T y) (Tm (R Ψ)) := hM.modul _ (wittExtensionByZero_preserves_isHalf J.d T hy) _ _ fun t => by
       rw [hR, hR, h, hup, wittExtensionByZero_symplectic_form_eq]
     funext w
     rw [hT₂, e1]
     simp only [heisO, hT₂]
-    rw [J.d.wittDecomp_sympl_extAnisotropic_extAnisotropic, map_add]
+    rw [J.d.wittDecomp_sympl_extAnisotropic_extAnisotropic, map_add (f := _)]
   · rw [hT₂, show R Ψ = Φ from Subtype.ext (funext fun x => by rw [hR, h, fromCols_toCols₁])]
 
 end GlobalTheory.LocMod.RankZeroSrc

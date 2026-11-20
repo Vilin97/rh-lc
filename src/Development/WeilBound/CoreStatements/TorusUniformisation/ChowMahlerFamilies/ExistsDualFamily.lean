@@ -57,7 +57,7 @@ theorem lattices_alg {O Ω C : Type} [CommRing O] [Field Ω] [Field C] [Algebra 
   classical
   have hadd : ∀ x (u u' : Fin g → RC), ev x (fun j => ((u + u') j : C)) =
       ev x (fun j => (u j : C)) + ev x fun j => (u' j : C) := fun x u u' => by
-    rw [← map_add]; rfl
+    rw [← map_add (f := _)]; rfl
   have hsm : ∀ x (s : RC) (u : Fin g → RC), ev x (fun j => ((s • u) j : C)) =
       (s : C) * ev x (fun j => (u j : C)) := fun x s u => by
     rw [← smul_eq_mul, ← map_smul]; rfl

@@ -64,7 +64,7 @@ theorem exists_tau (p : ℕ) {C : Type} [NormedField C] {Y : Type} [AddCommGroup
     | add x y hx hy =>
       obtain ⟨u, hu⟩ := hx
       obtain ⟨v, hv⟩ := hy
-      exact ⟨u + v, by rw [map_add, map_add, hu, hv]⟩
+      exact ⟨u + v, by rw [map_add (f := _), map_add (f := _), hu, hv]⟩
   have hM : ∀ m ∈ LinearMap.range (TensorProduct.lift β), ∃ u : Additive Cˣ, vHom p C u = m := by
     rintro m ⟨x, rfl⟩
     exact key x
@@ -78,18 +78,18 @@ theorem exists_tau (p : ℕ) {C : Type} [NormedField C] {Y : Type} [AddCommGroup
     show Additive.toMul (s ⟨β (a + a') b, mem _ _⟩) =
       Additive.toMul (s ⟨β a b, mem a b⟩) * Additive.toMul (s ⟨β a' b, mem a' b⟩)
     first
-    | (rw [e, map_add]; rfl)
-    | (rw [e, map_add, toMul_add])
-    | (simp only [e, map_add]; rfl)
+    | (rw [e, map_add (f := _)]; rfl)
+    | (rw [e, map_add (f := _), toMul_add])
+    | (simp only [e, map_add (f := _)]; rfl)
   · intro a b b'
     have e : (⟨β a (b + b'), mem _ _⟩ : LinearMap.range (TensorProduct.lift β)) =
         ⟨β a b, mem a b⟩ + ⟨β a b', mem a b'⟩ := Subtype.ext (by simp)
     show Additive.toMul (s ⟨β a (b + b'), mem _ _⟩) =
       Additive.toMul (s ⟨β a b, mem a b⟩) * Additive.toMul (s ⟨β a b', mem a b'⟩)
     first
-    | (rw [e, map_add]; rfl)
-    | (rw [e, map_add, toMul_add])
-    | (simp only [e, map_add]; rfl)
+    | (rw [e, map_add (f := _)]; rfl)
+    | (rw [e, map_add (f := _), toMul_add])
+    | (simp only [e, map_add (f := _)]; rfl)
   · intro a b a' b' hab
     have e : (⟨β a b, mem a b⟩ : LinearMap.range (TensorProduct.lift β)) = ⟨β a' b', mem a' b'⟩ :=
       Subtype.ext hab
@@ -189,7 +189,7 @@ theorem nonempty_boundary_local_trivial_biext (D : D7) {r j p : ℕ} (L : Moduli
       rw [this, XT.smul_mk]
     tau := fun {Z} y a χ => t Z y a ((XT.mk D (L.Ylat y)).symm χ)
     tau_add_left := fun {Z} y a a' χ => t1 Z y a a' _
-    tau_add_right := fun {Z} y a χ χ' => by rw [map_add]; exact t2 Z y a _ _
+    tau_add_right := fun {Z} y a χ χ' => by rw [map_add (f := _)]; exact t2 Z y a _ _
     tau_symm := fun {Z} y a b => t3 Z y _ _ _ _ (L.be_symm y a b)
     tau_smul := fun {Z} y c a χ => by
       rw [XT.symm_smul]

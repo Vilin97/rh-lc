@@ -30,7 +30,7 @@ theorem act_sum_act (x : R) (g : H) : act g (∑ k : H, act k x) = ∑ k : H, ac
 
 def invIn (V₁ : Submodule K R) : Submodule K R where
   carrier := {x | x ∈ V₁ ∧ ∀ h : H, act h x = x}
-  add_mem' := fun ha hb => ⟨V₁.add_mem ha.1 hb.1, fun h => by rw [map_add, ha.2, hb.2]⟩
+  add_mem' := fun ha hb => ⟨V₁.add_mem ha.1 hb.1, fun h => by rw [map_add (f := _), ha.2, hb.2]⟩
   zero_mem' := ⟨V₁.zero_mem, fun h => map_zero _⟩
   smul_mem' := fun c x hx => ⟨V₁.smul_mem c hx.1, fun h => by rw [map_smul, hx.2]⟩
 

@@ -58,9 +58,9 @@ theorem contAut_multT {V : HSp D} {S : D.what₂.Tau → SPar} {θ : InfFam D} {
     | smul_tprod r v =>
       rw [map_smul, LinearEquiv.coe_coe, PiTensorProduct.lift.tprod]
       exact contAut_smul ⟨(hT.aut v).left, (hT.aut v).cont⟩ r
-    | add x y hx hy => rw [map_add]; exact contAut_add hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact contAut_add hx hy
   | zero => simpa using contAut_zero V
-  | add T₁ T₂ _ _ h₁ h₂ => rw [map_add, LinearMap.add_apply]; exact contAut_add (h₁ x) (h₂ x)
+  | add T₁ T₂ _ _ h₁ h₂ => rw [map_add (f := _), LinearMap.add_apply]; exact contAut_add (h₁ x) (h₂ x)
   | smul c T _ h => rw [map_smul, LinearMap.smul_apply]; exact contAut_smul (h x) c
 
 theorem lev_multT {V : HSp D} {S : D.what₂.Tau → SPar} {θ : InfFam D} {M : DSModel V S} {J : Set (GA D V)}
@@ -73,9 +73,9 @@ theorem lev_multT {V : HSp D} {S : D.what₂.Tau → SPar} {θ : InfFam D} {M : 
     | smul_tprod r v =>
       rw [map_smul, LinearEquiv.coe_coe, PiTensorProduct.lift.tprod]
       simp only [Pi.smul_apply, smul_eq_mul, hT.lev v k hk g]; ring
-    | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]; ring
+    | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]; ring
   | zero => simp
-  | add T₁ T₂ _ _ h₁ h₂ => simp only [map_add, LinearMap.add_apply, Pi.add_apply, h₁, h₂]; ring
+  | add T₁ T₂ _ _ h₁ h₂ => simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply, h₁, h₂]; ring
   | smul c T _ h => simp only [map_smul, LinearMap.smul_apply, Pi.smul_apply, smul_eq_mul, h]; ring
 
 theorem shift_swap {G A B : Type} [Group G] [Group A] [Group B] (ι : G ≃* A × B) (g w : G) (y : A) (x : B)

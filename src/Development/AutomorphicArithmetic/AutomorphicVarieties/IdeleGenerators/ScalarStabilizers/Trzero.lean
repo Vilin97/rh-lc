@@ -62,7 +62,7 @@ theorem UpperTheory.V.Sd.Hm.trzero :
         ∀ v, TR.Eop v 0 0 φ + TR.Eop v 1 1 φ = 0 := by
   intro F _ _ _ ω hω φ hφ v
   classical
-  rw [← lie_scalar hω hφ (Pi.single v 1), TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add]
+  rw [← lie_scalar hω hφ (Pi.single v 1), TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add (f := _)]
   congr 2
   ext i j
   fin_cases i <;> fin_cases j <;> simp

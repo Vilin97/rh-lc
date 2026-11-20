@@ -51,7 +51,7 @@ theorem read_of_span {L L' : Type} [Field L] [Field L'] (φ : L →+* L') (σ : 
     rw [e, map_zero, map_zero]
   | add y z _ _ hy hz =>
     have e : (fun k => φ ((y + z) k)) = (fun k => φ (y k)) + fun k => φ (z k) := by funext k; simp
-    rw [e, map_add, map_add, hy, hz]
+    rw [e, map_add (f := _), map_add (f := _), hy, hz]
   | smul a y _ hy =>
     have e : (fun k => φ ((a • y) k)) = φ a • fun k => φ (y k) := by funext k; simp
     rw [e, map_smulₛₗ, map_smulₛₗ, hy, hφ]

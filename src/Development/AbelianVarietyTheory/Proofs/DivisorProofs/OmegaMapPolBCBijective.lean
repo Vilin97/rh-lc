@@ -47,12 +47,12 @@ theorem modIso_completion [Algebra A R] {q : A} (ec : AdicCompletion (Ideal.span
   refine ⟨fun r => ?_, fun x ⟨r, hr⟩ => ?_⟩
   · obtain ⟨x, y, hy⟩ := LatDescent.adic_surj A q (ec.symm r)
     have h1 := congrArg ec hy
-    rw [ec.apply_symm_apply, map_add, map_mul, he, he] at h1
+    rw [ec.apply_symm_apply, map_add (f := _), map_mul, he, he] at h1
     exact ⟨x, algebraMap A R t * ec y, by rw [h1, ← mul_assoc, ← map_mul, ← ht]; ring⟩
   · obtain ⟨x', y, hy⟩ := LatDescent.adic_surj A q (ec.symm r)
     obtain ⟨b, hb⟩ := LatDescent.adic_inj A q (x - a * x') (algebraMap A _ a * y) (ec.injective (by
       have h1 := congrArg ec hy
-      rw [ec.apply_symm_apply, map_add, map_mul, he, he] at h1
+      rw [ec.apply_symm_apply, map_add (f := _), map_mul, he, he] at h1
       rw [map_mul, map_mul, he, he, he, map_sub, map_mul, hr, h1]; ring))
     exact ⟨x' + t * b, by rw [mul_add, ← mul_assoc, ← ht, ← hb]; ring⟩
 
@@ -110,7 +110,7 @@ theorem hodgeTate_bcTate (R : Type) [CommRing R] [Algebra A R] (t : GG.Tate) :
     refine ((CartierDual.baseChange A R (GG.A n)).apply_symm_apply _).trans (CartierDual.ext_apply fun x => ?_)
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r a =>
       refine Eq.trans ?_ (CartierDual.baseChange_tmul_tmul _ _ _ _ _).symm
       change r * algebraMap A R (t.pt n a) = _
@@ -164,13 +164,13 @@ theorem exists_square (R R' : Type) [CommRing R] [CommRing R'] [Algebra A R] [Al
     rw [SemiHom.lift_app, one_smul]
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, TensorProduct.tmul_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), TensorProduct.tmul_add, hx, hy]
     | tmul r a =>
       rw [hs, map_smul, hF, algebraMap_smul, ← TensorProduct.tmul_smul, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
   · have key : ∀ x, s.lift.app n (k₀.app n x) = 1 ⊗ₜ f.hom.app n x := fun x => by
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, TensorProduct.tmul_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), TensorProduct.tmul_add, hx, hy]
       | tmul r a =>
         rw [hk, map_smul, SemiHom.lift_app, one_smul, hs, map_one, one_smul, algebraMap_smul, ← TensorProduct.tmul_smul,
           ← map_smul, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
@@ -226,7 +226,7 @@ theorem ringRes (hM : GlobalTheory.RingChain.MapSt) : GlobalTheory.ChainPts.SysB
     obtain ⟨u, rfl⟩ := eO.surjective u
     induction u using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
     | tmul r w =>
       rw [← mul_one r, ← smul_eq_mul, ← TensorProduct.smul_tmul', map_smul, map_smul, hO, map_smulₛₗ, map_smul, map_smul,
         hom, hL, hL', hpr, smul_eq_mul, smul_eq_mul, map_mul, hσ]

@@ -31,7 +31,7 @@ theorem biadd_eq_zero {M U : Type} [AddCommGroup M] [AddCommGroup U] {n r : ℕ}
       have a₁ := hr t a
       have a₂ := hr a t
       have a₃ := hr a (n • a)
-      simp only [map_add, map_nsmul, AddMonoidHom.add_apply, AddMonoidHom.nsmul_apply, hc t ht, pow_succ] at a₁ a₂ a₃ ⊢
+      simp only [map_add (f := _), map_nsmul, AddMonoidHom.add_apply, AddMonoidHom.nsmul_apply, hc t ht, pow_succ] at a₁ a₂ a₃ ⊢
       linear_combination (norm := module) a₁ + a₂ + a₃
     have h₀ : ∀ z, n ^ r • B z z = 0 := fun z => (h₁ z).trans ((h₁ 0).symm.trans (by simp))
     have h₂ := h₀ (x + y)
@@ -39,7 +39,7 @@ theorem biadd_eq_zero {M U : Type} [AddCommGroup M] [AddCommGroup U] {n r : ℕ}
     have h₄ := h₀ y
     have h₅ := hr x y
     obtain ⟨l, rfl⟩ := hn
-    simp only [map_add, AddMonoidHom.add_apply, hB y x, pow_succ] at h₂ h₅
+    simp only [map_add (f := _), AddMonoidHom.add_apply, hB y x, pow_succ] at h₂ h₅
     linear_combination (norm := module) h₅ - l • (h₂ - h₃ - h₄)
 
 theorem div_prod_pow_eq_one {H I : Type} [CommGroup H] [Fintype I] {k : ℕ} {y z : I → H} (hk : ∀ i, y i ^ k = z i ^ k)

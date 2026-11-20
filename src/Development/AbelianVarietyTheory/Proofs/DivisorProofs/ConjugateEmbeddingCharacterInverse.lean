@@ -52,7 +52,7 @@ theorem exists_isQuad (h : IsCMExt F E σ) : ∃ ξ : AE F E, IsQuad (cA σ) ξ 
     intro s u hsu
     simp only [Algebra.smul_def, mul_one] at hsu
     have h2 := congrArg σ hsu
-    simp only [map_add, map_mul, AlgHom.commutes, hξ, map_zero] at h2
+    simp only [map_add (f := _), map_mul, AlgHom.commutes, hξ, map_zero] at h2
     have h3 : algebraMap F E u * ξ = 0 := by linear_combination (hsu - h2) / 2
     have hu : u = 0 := (map_eq_zero (algebraMap F E)).mp ((mul_eq_zero.mp h3).resolve_right hξ0)
     subst hu

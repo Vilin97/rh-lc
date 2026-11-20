@@ -62,7 +62,7 @@ theorem _root_.GlobalTheory.differentiable_exp_mul_of_annihilated :
           simp only [Pi.smul_apply, Pi.add_apply, smul_eq_mul, Complex.real_smul]
           conv_lhs => rw [← Complex.re_add_im c]
           ring
-        rw [hc, T.map_add, T.map_smul, T.map_smul, key, RingHom.id_apply]
+        rw [hc, T.map_add (f := _), T.map_smul, T.map_smul, key, RingHom.id_apply]
         simp only [Complex.real_smul, smul_eq_mul]
         conv_rhs => rw [← Complex.re_add_im c]
         ring }

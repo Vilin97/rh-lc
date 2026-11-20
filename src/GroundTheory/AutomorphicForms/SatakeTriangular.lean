@@ -299,7 +299,7 @@ theorem satakeTransform_mem_symmetric (h : SphericalHecke μ (F := F) (n := n)) 
           cartanType_out g⟩)
     have heq : h = h' + ∑ ν ∈ Top, c ν • H ν := by
       simp only [h', sub_add_cancel]
-    rw [heq, map_add]
+    rw [heq, map_add (f := _)]
     exact Subalgebra.add_mem _ (ih h' hh') hsum
 
 end Spherical

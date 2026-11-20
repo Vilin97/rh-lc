@@ -94,7 +94,7 @@ theorem conv_add {a b : PowerSeries ↥LL.1} (ha : Conv a) (hb : Conv b) : Conv 
   have h := (ha r h0 h1).add (hb r h0 h1)
   rw [add_zero] at h
   refine squeeze_zero (fun k => by positivity) (fun k => ?_) h
-  rw [← add_mul, map_add, IntermediateField.coe_add]
+  rw [← add_mul, map_add (f := _), IntermediateField.coe_add]
   exact mul_le_mul_of_nonneg_right (norm_add_le _ _) (by positivity)
 
 theorem conv_neg {a : PowerSeries ↥LL.1} (ha : Conv a) : Conv (-a) := fun r h0 h1 => by
@@ -131,7 +131,7 @@ theorem logS_deriv : (1 + X) * derivative ↥LL.1 (logS LL) = 1 := by
     field_simp
     ring
   ext k
-  rw [add_mul, one_mul, map_add]
+  rw [add_mul, one_mul, map_add (f := _)]
   rcases k with _ | k
   · simp [h]
   · rw [coeff_succ_X_mul, h, h, coeff_one, if_neg k.succ_ne_zero, pow_succ]
@@ -171,7 +171,7 @@ theorem const_act (c : ℤ_[l]) (a : PowerSeries O) : constantCoeff (act l O c a
   obtain ⟨b, hb⟩ : X ∣ a - C (constantCoeff a) := by rw [X_dvd_iff]; simp
   rw [sub_eq_iff_eq_add] at hb
   conv_lhs => rw [hb]
-  rw [map_add, map_mul, act_C, act_X]
+  rw [map_add (f := _), map_mul, act_C, act_X]
   simp [cyc_const]
 
 theorem letter_formal (s r n m m' : ℕ) (hs : 1 ≤ s) (hl : (l : L) ≠ 0) {I : Type} (c : I → ℤ_[l])
@@ -244,7 +244,7 @@ theorem letφ_pow (n : ℕ) (φ : O⟦X⟧ →ₐ[O] O⟦X⟧) (q : O⟦X⟧) (h
     change φ ((letφ (n := n) φ ^ j) (fun _ => q) (k - 1)) = _
     set_option synthInstance.maxHeartbeats 100000 in
       rw [ih, map_sum]
-    simp only [map_pow, map_add, map_one, hφ, hq, add_sub_cancel, ← pow_mul, pow_succ', mul_assoc]
+    simp only [map_pow, map_add (f := _), map_one, hφ, hq, add_sub_cancel, ← pow_mul, pow_succ', mul_assoc]
 
 omit [Algebra ℤ_[l] O] in
 

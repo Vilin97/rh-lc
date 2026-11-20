@@ -122,7 +122,7 @@ theorem app_proj {Q : PhiMod O K l e a κ} (F : Hom P Q) (n : ℕ) (v : Vec K a 
   induction n with
   | zero => rfl
   | succ n ih =>
-    rw [proj_succ, proj_succ, map_add, Hom.app_EN, LinearMap.map_smul_of_tower, ih]
+    rw [proj_succ, proj_succ, map_add (f := _), Hom.app_EN, LinearMap.map_smul_of_tower, ih]
 
 theorem proj_mem_shiftE_Lan (D : BKDat O K l e a ι η H) (n : ℕ) {x : Vec K a ι}
     (hx : x ∈ shiftE l e 1 (D.ext (Rpi O K l e))) :
@@ -234,7 +234,7 @@ theorem app_mem_shiftE {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} (F : 
 theorem app_mem_filL {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} (F : Hom P Q) (k : ℤ)
     {v : Vec K a ι} (hv : v ∈ P.filL k) : F.app v ∈ Q.filL k := by
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hv
-  rw [map_add]
+  rw [map_add (f := _)]
   exact add_mem (Submodule.mem_sup_left (Submodule.mem_inf.2
       ⟨F.app_mem_ext (le_away _ _) hy.1,
         app_mem_shiftE F (fun v hv => F.app_mem_Mext (le_away _ _) hv) k hy.2⟩))
@@ -257,7 +257,7 @@ theorem mem_filL_of_app_mem (D₀ : BKDat O K l e a ι η H) (D₁ : BKDat O K l
   have h1 := proj_mem_shiftE_Man D₁ N k hyM'
   have h3 := mem_shiftE_Man_of_Lan D₁ (k := k) (by omega) (proj_mem_shiftE_Lan D₁ N hz')
   have hw : F.app (proj D₀.toPhiMod N x) ∈ shiftE l e k (D₁.Mext (Rpi O K l e)) := by
-    rw [app_proj, ← hyz, map_add]
+    rw [app_proj, ← hyz, map_add (f := _)]
     exact add_mem h1 h3
   have hw' := mem_of_app_mem F n hΛ k hw
   have hs := proj_sub_mem D₀ N hxL

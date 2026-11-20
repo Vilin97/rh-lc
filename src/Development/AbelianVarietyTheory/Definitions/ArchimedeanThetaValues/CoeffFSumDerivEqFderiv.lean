@@ -38,7 +38,7 @@ theorem _root_.GlobalTheory.AnArc.term_add_period {j : ℕ} {α : A.X} {th : (Fi
   set Y : A.La := _root_.GlobalTheory.AnArc.La.mk y 0 0
   have hPw : A.Pw w la = A.Pw w Y + A.P0 M + A.P0 L := by
     conv_lhs => rw [eq_add_parts la]
-    rw [map_add, map_add, _root_.GlobalTheory.AnArc.degeneratingTori_periodMap_eq_base_of_y_eq_zero _ _ (mk_y _ _ _),
+    rw [map_add (f := _), map_add (f := _), _root_.GlobalTheory.AnArc.degeneratingTori_periodMap_eq_base_of_y_eq_zero _ _ (mk_y _ _ _),
       _root_.GlobalTheory.AnArc.degeneratingTori_periodMap_eq_base_of_y_eq_zero _ _ (mk_y _ _ _)]
   set v' : A.V := v + A.P0 L + A.P0 M
   have hv : v + A.Pw w la = v' + A.Pw w Y := by

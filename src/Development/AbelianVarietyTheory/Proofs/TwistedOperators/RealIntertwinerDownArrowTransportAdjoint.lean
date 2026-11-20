@@ -51,7 +51,7 @@ theorem ptOf_dag {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D} (hψ : IsStdCh
   | C a =>
     rw [jHom_C, ← mul_one (MvPolynomial.C _), ptF_C, ptF_one, ← mul_one (MvPolynomial.C a), ptF_C, ptF_one,
       dag_smul']
-  | add p q hp hq => rw [map_add, ptF_add, ptF_add, hp, hq, dag_add]
+  | add p q hp hq => rw [map_add (f := _), ptF_add, ptF_add, hp, hq, dag_add]
   | mul_X p v hp =>
     obtain ⟨τ, i, j⟩ := v
     rw [map_mul, jHom_X, mul_comm (jHom A B p), mul_assoc, ptF_C, ptF_X_mul hψ hθ B A hd, hp, mul_comm p,
@@ -66,7 +66,7 @@ theorem jHom_map_conj {S T : HSp D} (A : Fr S) (B : Fr T) (P : PolF D T.rank S.r
     jHom A B (MvPolynomial.map (starRingEnd ℂ) P) = swapHom A B P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [jHom_C, swapHom]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p v hp => rw [map_mul, map_mul, hp, MvPolynomial.map_X, jHom_X, map_mul, swapHom_X]
 
 theorem dag_cj {S T : HSp D} (F : WO S T → ℂ) : dag S T (GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj id F) = F ∘ adjO S T := by

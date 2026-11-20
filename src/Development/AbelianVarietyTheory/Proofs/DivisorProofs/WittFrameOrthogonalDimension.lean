@@ -37,7 +37,7 @@ theorem dim_add_two (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
     rw [LinearMap.range_eq_top]
     rintro ⟨a, b⟩
     refine ⟨a • y₀ + b • x₀, ?_⟩
-    simp only [φ, LinearMap.prod_apply, Pi.prod, map_add, map_smul, Prod.mk.injEq]
+    simp only [φ, LinearMap.prod_apply, Pi.prod, map_add (f := _), map_smul, Prod.mk.injEq]
     simp only [hRight, LinearMap.coe_mk, AddHom.coe_mk, smul_eq_mul, Function.prod, Prod.smul_mk, Prod.mk_add_mk]
     rw [hxy, hyx', hxx, hyy]; simp
   have h := LinearMap.finrank_range_add_finrank_ker φ

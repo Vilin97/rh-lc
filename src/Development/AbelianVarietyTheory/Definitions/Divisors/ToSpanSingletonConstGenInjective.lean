@@ -285,7 +285,7 @@ theorem Action.eq_padicAction (ρ : Action ℤ_[p] G) : ρ = G.padicAction := by
     have h := congrArg ψ (sub_eq_iff_eq_add.1 hc)
     have h2 : (p : End G) ^ n * ψ c = (p : ℤ_[p]) ^ n • ψ c := by
       rw [Algebra.smul_def, map_pow, map_natCast]
-    rw [map_add, map_mul, map_pow, map_natCast, map_natCast, h2] at h
+    rw [map_add (f := _), map_mul, map_pow, map_natCast, map_natCast, h2] at h
     rw [h]
     exact (add_conv _ _ n).trans (by rw [pow_smul_conv, one_mul])
   exact RingHom.ext fun a => hom_ext_conv fun n => (key ρ a n).trans (key _ a n).symm
@@ -525,7 +525,7 @@ variable (G H K : PDivGroup p O)
 def omegaSub : Submodule O (∀ n, Cot O (G.A n)) where
   carrier := {w | ∀ n, cotMap (G.res n) (w (n + 1)) = w n}
   zero_mem' _ := map_zero _
-  add_mem' {v w} hv hw n := by rw [Pi.add_apply, map_add, hv n, hw n, Pi.add_apply]
+  add_mem' {v w} hv hw n := by rw [Pi.add_apply, map_add (f := _), hv n, hw n, Pi.add_apply]
   smul_mem' c w hw n := by rw [Pi.smul_apply, map_smul, hw n, Pi.smul_apply]
 
 abbrev omega : Type := G.omegaSub
@@ -542,7 +542,7 @@ theorem digit_smul_cot [Fact p.Prime] (φ : ℤ_[p] →+* O) (a : ℤ_[p]) (n : 
     digit n a • w = φ a • w := by
   obtain ⟨c, hc⟩ := pow_dvd_sub_digit n a
   have h := congrArg φ (sub_eq_iff_eq_add.1 hc)
-  rw [map_add, map_mul, map_pow, map_natCast, map_natCast, mul_comm] at h
+  rw [map_add (f := _), map_mul, map_pow, map_natCast, map_natCast, mul_comm] at h
   rw [h, add_smul, mul_smul, pow_smul_cot, smul_zero, zero_add, Nat.cast_smul_eq_nsmul]
 
 variable [Fact p.Prime]
@@ -581,7 +581,7 @@ variable (G H) in
 
 def lieMap : (G ⟶ H) →+ (G.Lie →ₗ[O] H.Lie) :=
   AddMonoidHom.mk' (fun f => (omegaMap G H f).dualMap) fun f g => by
-    rw [map_add]; ext; simp
+    rw [map_add (f := _)]; ext; simp
 
 @[simp] theorem lieMap_apply (f : G ⟶ H) (x : G.Lie) (w : H.omega) :
     lieMap G H f x w = x (omegaMap G H f w) := rfl
@@ -658,7 +658,7 @@ def dual {Λ : Type*} [CommSemiring Λ] (ρ : Action Λ G) : Action Λ G.dual wh
   map_one' := by rw [map_one]; rfl
   map_mul' a b := by rw [mul_comm, map_mul]; rfl
   map_zero' := by rw [map_zero]; exact map_zero _
-  map_add' a b := by rw [map_add]; exact map_add _ _ _
+  map_add' a b := by rw [map_add (f := _)]; exact map_add _ _ _
 
 end Action
 
@@ -1141,7 +1141,7 @@ theorem mu_cot_span (n : ℕ) (w : Cot O ((mu p O).A n)) :
   | add x y hx hy =>
     obtain ⟨c, hc⟩ := hx
     obtain ⟨c', hc'⟩ := hy
-    exact ⟨c + c', by rw [add_smul, hc, hc', map_add]⟩
+    exact ⟨c + c', by rw [add_smul, hc, hc', map_add (f := _)]⟩
   | single k r =>
     have h : ∀ j : ℕ, dUnit O (muT O (p ^ n) ^ j) = (j : O) • dUnit O (muT O (p ^ n)) := by
       intro j

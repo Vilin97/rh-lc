@@ -90,7 +90,7 @@ private theorem isPrecomplete_maximalIdeal_of_free_finite_zpadic {p : ℕ} [Fact
         simp only [map_smul, Pi.smul_apply, smul_eq_mul]
         exact Ideal.mul_mem_right _ _ hr
       · intro x y hx hy i
-        simp only [map_add, Pi.add_apply]
+        simp only [map_add (f := _), Pi.add_apply]
         exact add_mem (hx i) (hy i)
     · intro h
       rw [← b.sum_equivFun x]

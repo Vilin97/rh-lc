@@ -108,7 +108,7 @@ theorem exists_int (p : SplitPt D k) {PP : Formalism.L2.DIV.Pl D.host.E} (he : F
       rw [Matrix.one_apply]; split_ifs
       · rw [RingHom.map_one]; exact one_mem _
       · rw [RingHom.map_zero]; exact zero_mem _
-    rw [Matrix.sub_apply, RingHom.map_mul, RingHom.map_sub, RingHom.map_add, hcA, ← hxr] at hs
+    rw [Matrix.sub_apply, RingHom.map_mul, RingHom.map_sub, RingHom.map_add (f := _), hcA, ← hxr] at hs
     have hdec : x.1 r r' = toEAf D p.e * x.1 r r' + σ (toEAf D p.e * (x⁻¹).1 r' r) +
         (1 - toEAf D p.e - σ (toEAf D p.e)) *
           toEAf D ((1 : Matrix (Fin S.rank) (Fin S.rank) (AE D)) ((finCongr hn).symm r) ((finCongr hn).symm r')) := by

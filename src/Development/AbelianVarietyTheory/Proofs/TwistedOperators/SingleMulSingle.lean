@@ -327,7 +327,7 @@ theorem isPure_of_facts (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D
           have := hlin _ _ x'' _ _ (.inl (v j)) c hg hh
             (fun p hp => by rw [Function.update_of_ne hp, Function.update_of_ne hp])
             (fun p hp => by rw [Function.update_of_ne hp])
-            (by rw [hx''.1 j hjs, Function.update_self, Function.update_self, Function.update_self, map_add,
+            (by rw [hx''.1 j hjs, Function.update_self, Function.update_self, Function.update_self, map_add (f := _),
               map_smul])
           rwa [prodHalf_update s a Φ' hjs, map_add, map_smul]
         have hmem : ∀ G, G ∈ {G | ∃ xi yi : WO S T, IsHalf (a j) xi ∧ IsHalf (cA D (a j)) yi ∧

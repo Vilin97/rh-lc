@@ -101,7 +101,7 @@ theorem main : HodgeTateDatumStatement := by
       | tmul x y =>
         have h : ∀ (x : ℤ_[p]) (y : ℤ), sigE p ℤ (x ⊗ₜ[ℤ] y) = x ⊗ₜ[ℤ] star y := fun _ _ => rfl
         rw [h, h, star_star]
-      | add x y hx hy => rw [map_add, map_add, hx, hy]
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     obtain ⟨H⟩ := GlobalTheory.ChF.htd_dim_zero p C v R hv ℤ cp
     rw [← hg] at H
     obtain ⟨hS', H', -⟩ := GlobalTheory.T.hodge_tate_datum_reduce_scalars p P.g C v R (ℤ_[p] ⊗[ℤ] ℤ) (sigE p ℤ) cp hS H

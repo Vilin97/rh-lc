@@ -27,7 +27,7 @@ theorem repr_tensMap (b : Module.Basis ι F E) {R R' : Type} [CommRing R] [Algeb
   | zero => simp
   | tmul r x =>
     simp [tensMap, Algebra.TensorProduct.basis_repr_tmul]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 end Ring
 
@@ -304,7 +304,7 @@ theorem tauF_eq (y : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.A
     rw [tauF_tmul]
     simp [tensMap]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable (hb : AdBridgeIso I)
 

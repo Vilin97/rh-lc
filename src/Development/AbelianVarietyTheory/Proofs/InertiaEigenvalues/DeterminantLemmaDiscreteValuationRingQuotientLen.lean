@@ -198,7 +198,7 @@ theorem exists_relations {A : Type} [Ring A] [Algebra O A] {d : ℕ} (ψ : A →
         obtain ⟨θ, hθ, h⟩ := hv a
         obtain ⟨θ', hθ', h'⟩ := hw a
         refine ⟨θ + θ', Rel.add_mem hθ hθ', fun q a' b => ?_⟩
-        rw [Pi.add_apply, map_add, Matrix.add_apply, h, h']
+        rw [Pi.add_apply, map_add (f := _), Matrix.add_apply, h, h']
         split_ifs <;> simp
       zero_mem' := fun a => ⟨0, Rel.zero_mem, fun q a' b => by simp⟩
       smul_mem' := by

@@ -60,7 +60,7 @@ theorem coefLatFn_mem_span {D : D7} {n : ℕ} {K : Type} [Field K] [NumberField 
     induction hG using Submodule.span_induction with
     | mem _ h => obtain ⟨k, rfl⟩ := h; exact Submodule.subset_span ⟨k, rfl⟩
     | zero => rw [map_zero, map_zero]; exact zero_mem _
-    | add _ _ _ _ h1 h2 => rw [map_add, map_add]; exact add_mem h1 h2
+    | add _ _ _ _ h1 h2 => rw [map_add (f := _), map_add (f := _)]; exact add_mem h1 h2
     | smul a G _ h1 =>
       rw [LinearMap.map_smulₛₗ, map_smul]
       exact Submodule.smul_mem _ (⟨σ a, hσ a⟩ : F) h1

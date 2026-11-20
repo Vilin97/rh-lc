@@ -21,7 +21,7 @@ theorem exists_hom_spec_prod_self_preimage_eq_clopen :
         linear_combination -(φ x.1 * φ y.1 - φ x.1 * φ y.2 - φ x.2 * φ y.1 + φ x.2 * φ y.2) * he
       map_zero' := by simp
       map_add' := fun x y => by
-        simp only [Prod.fst_add, Prod.snd_add, map_add]
+        simp only [Prod.fst_add, Prod.snd_add, map_add (f := _)]
         ring }
   have hψ : ψ.comp (algebraMap O (O × O)) = φ := by
     ext a

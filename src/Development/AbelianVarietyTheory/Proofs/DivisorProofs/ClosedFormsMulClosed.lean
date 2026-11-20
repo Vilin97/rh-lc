@@ -46,7 +46,7 @@ theorem coefwise_mul {v : V n} {T : (V n → ℂ) → ℂ}
   have e : (fun x => (bas n).repr (F x * G x) S) = fun x => ∑ p : Finset (Fin (n + n)) × Finset (Fin (n + n)),
       (bas n).repr (F x) p.1 * (bas n).repr (G x) p.2 * (bas n).repr (bas n p.1 * bas n p.2) S :=
     funext fun x => repr_mul _ _ _
-  rw [repr_coefwise, e, map_add, Finsupp.add_apply, repr_mul (coefwise T F), repr_mul (F v)]
+  rw [repr_coefwise, e, map_add (f := _), Finsupp.add_apply, repr_mul (coefwise T F), repr_mul (F v)]
   simp only [repr_coefwise]
   rw [hsum (fun p x => (bas n).repr (F x) p.1 * (bas n).repr (G x) p.2 * (bas n).repr (bas n p.1 * bas n p.2) S)
     (fun p => ((hF p.1).mul (hG p.2)).mul (differentiableAt_const _)), ← Finset.sum_add_distrib]

@@ -50,7 +50,7 @@ theorem exists_approx_totally_positive (F : Type) [Field F] [NumberField F]
       rw [hN]; push_cast
       exact lt_of_le_of_lt (Nat.le_ceil B) (by linarith)
     have hN0 : (0 : ℝ) ≤ N := by positivity
-    rw [map_add, map_natCast]
+    rw [map_add (f := _), map_natCast]
     push_cast
     nlinarith
 

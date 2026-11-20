@@ -19,7 +19,7 @@ theorem chainLagrange_commute_aeval {V : Type} [AddCommGroup V] [Module ℂ V]
     {B T : Module.End ℂ V} (h : Commute B T) (p : ℂ[X]) : Commute B (aeval T p) := by
   induction p using Polynomial.induction_on with
   | C a => rw [aeval_C]; exact (Algebra.commutes a B).symm
-  | add p q hp hq => rw [map_add]; exact hp.add_right hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add_right hq
   | monomial n a _ =>
     rw [map_mul, map_pow, aeval_X, aeval_C]
     exact (Commute.symm (Algebra.commutes a B)).mul_right (h.pow_right (n + 1))

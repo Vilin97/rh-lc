@@ -33,9 +33,9 @@ theorem pderiv_shift {σ : Type} (i : σ) (a : ℝ) (P : MvPolynomial σ ℝ) :
   classical
   induction P using MvPolynomial.induction_on with
   | C r => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p j hp =>
-    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add, hp, aeval_X, pderiv_C, add_zero]
+    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add (f := _), hp, aeval_X, pderiv_C, add_zero]
     by_cases h : j = i
     · subst h; simp
     · simp [pderiv_X_of_ne h]
@@ -51,9 +51,9 @@ theorem eval_shift {σ : Type} (a : ℝ) (v : σ → ℝ) (P : MvPolynomial σ �
     eval (fun j => v j - a) (aeval (fun j : σ => (X j + C a : MvPolynomial σ ℝ)) P) = eval v P := by
   induction P using MvPolynomial.induction_on with
   | C r => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p j hp =>
-    simp only [map_mul, hp, aeval_X, map_add, eval_X, eval_C, sub_add_cancel]
+    simp only [map_mul, hp, aeval_X, map_add (f := _), eval_X, eval_C, sub_add_cancel]
 
 theorem eval_iterate_of_shift {σ : Type} (i : σ) (a : ℝ) (n : ℕ) (v : σ → ℝ) (P : MvPolynomial σ ℝ)
     (h : aeval (fun j : σ => (X j + C a : MvPolynomial σ ℝ)) P = P) :

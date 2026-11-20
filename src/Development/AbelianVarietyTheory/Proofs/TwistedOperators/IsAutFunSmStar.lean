@@ -289,7 +289,7 @@ theorem loc_ext (τ : D.what₂.Tau) {F F' : goodFun θ V} (h : ∀ x, loc τ x 
 
 theorem rho_add (τ : D.what₂.Tau) (X Y : lieU (gramAt D V τ)) : rho θ V τ (X + Y) = rho θ V τ X + rho θ V τ Y := by
   refine LinearMap.ext fun F => loc_ext τ fun x => ?_
-  rw [LinearMap.add_apply, map_add, loc_rho, loc_rho, loc_rho, ← LinearMap.add_apply, ← derOp_add]
+  rw [LinearMap.add_apply, map_add (f := _), loc_rho, loc_rho, loc_rho, ← LinearMap.add_apply, ← derOp_add]
   rfl
 
 theorem rho_smul (τ : D.what₂.Tau) (c : ℝ) (X : lieU (gramAt D V τ)) : rho θ V τ (c • X) = (c : ℂ) • rho θ V τ X := by
@@ -364,7 +364,7 @@ theorem exists_gelf_op (τ : D.what₂.Tau) : ∃ c : ℕ → Module.End ℂ (go
   obtain ⟨h1, h2⟩ := h _ (rho θ V τ) (rho_add τ) (rho_smul τ) (rho_bracket τ)
   refine ⟨_, map_gelfA_mem h1 (kappa θ V) (fun a => LinearMap.ext fun F => by simp only [kappa_apply, conjG_conjG])
     (fun a b => ?_), fun k F => ?_⟩
-  · rw [map_add, kappa_smul, kappa_rho, kappa_rho]
+  · rw [map_add (f := _), kappa_smul, kappa_rho, kappa_rho]
     exact add_mem (h2 _) (Submodule.smul_mem _ _ (h2 _))
   · rw [gelf, gelfA, LinearMap.sum_apply, Submodule.coe_sum]
     refine Finset.sum_congr rfl fun idx _ => ?_

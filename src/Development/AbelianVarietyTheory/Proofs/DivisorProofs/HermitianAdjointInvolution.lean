@@ -32,7 +32,7 @@ theorem cA_cA (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) (a : AE F E) : c
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [cA, hσ]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem incM_map_cA (σ : E →ₐ[F] E) {n : ℕ} (A : Matrix (Fin n) (Fin n) E) :
     (incM F A).map (cA σ) = incM F (A.map σ) := by

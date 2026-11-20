@@ -46,7 +46,7 @@ private theorem zaeval_mem {σ τ : Type} {p : MvPolynomial σ ℂ} (hp : p ∈ 
     refine RingHom.mem_range.mpr ⟨C z, ?_⟩
     simp [MvPolynomial.algebraMap_eq]
   | add p q hp' hq' =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact add_mem hp' hq'
   | mul_X p v hp' =>
     rw [map_mul, map_mul, MvPolynomial.map_X, MvPolynomial.aeval_X]

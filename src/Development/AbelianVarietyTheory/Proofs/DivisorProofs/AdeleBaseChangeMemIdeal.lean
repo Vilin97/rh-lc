@@ -25,7 +25,7 @@ theorem snd_apply (z : AE F E) (w : HeightOneSpectrum (𝓞 E)) :
     rw [h, SemiLocal.tensorMap_tmul, mul_comm]
     exact congrArg (fun y : AdeleRing (𝓞 E) E => y.2 w) (adeleTensorAlgEquivLeft_tmul a x)
   | add a b ha hb =>
-    rw [map_add, map_add, map_add, Pi.add_apply, ← ha, ← hb]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), Pi.add_apply, ← ha, ← hb]
     rfl
 
 theorem valued_le {𝔞 : FractionalIdeal (𝓞 E)⁰ E} (h𝔞 : 𝔞 ≠ 0) (w : HeightOneSpectrum (𝓞 E))
@@ -48,7 +48,7 @@ theorem valued_le {𝔞 : FractionalIdeal (𝓞 E)⁰ E} (h𝔞 : 𝔞 ≠ 0) (w
     exact (mul_le_mul' (pow_le_one' h1 _) h2).trans_eq (one_mul _)
   | zero => rw [map_zero, Pi.zero_apply, map_zero]; exact zero_le
   | add a b _ _ ha hb =>
-    rw [map_add, Pi.add_apply]
+    rw [map_add (f := _), Pi.add_apply]
     exact (Valuation.map_add _ _ _).trans (max_le ha hb)
   | neg a _ ha =>
     rw [map_neg, Pi.neg_apply, Valuation.map_neg]

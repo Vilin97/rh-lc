@@ -56,7 +56,7 @@ theorem charpoly_map_line {V L : Type*} [AddCommGroup V] [Module ℂ V] [FiniteD
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul v l =>
       simp [E, TensorProduct.map_tmul, smul_comm c, map_smul]
   have h2 : E.conj (TensorProduct.map f (c • (1 : Module.End ℂ L))) = c • f := by

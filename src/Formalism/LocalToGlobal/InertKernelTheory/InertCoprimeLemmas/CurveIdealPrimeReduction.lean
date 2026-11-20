@@ -24,7 +24,7 @@ theorem coprime_absNorm_of_not_le {p : ℕ} (hp : p.Prime) (hP : (Ideal.span {(p
   obtain ⟨y, rfl⟩ := Ideal.mem_span_singleton'.mp hz
   have hunit : Ideal.Quotient.mk I y * (p : 𝓞 K ⧸ I) = 1 := by
     have := congrArg (Ideal.Quotient.mk I) hiz
-    rw [map_add, Ideal.Quotient.eq_zero_iff_mem.mpr hi, zero_add, map_mul, map_one, map_natCast] at this
+    rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.mpr hi, zero_add, map_mul, map_one, map_natCast] at this
     exact this
   have hI0 : I ≠ ⊥ := fun h => hI (h ▸ bot_le)
   have hc : Nat.card (𝓞 K ⧸ I) = Ideal.absNorm I := by

@@ -78,7 +78,7 @@ theorem const_biadditive_coboundary_symm : ∀ {I : Type} [Fintype I] {g : ℕ} 
     have := hd' _ _ _ (s a (S b T)) (s b T)
     rw [hκ (a + b) _ _ (s a (S b T) ≫ s b T) (by rw [Charts.comp_deg, hs, hs]), hr, hr, hr, hs, hs,
       AlgHom.commutes] at this
-    rw [← this, map_add, map_sub]
+    rw [← this, map_add (f := _), map_sub]
   refine Charts.eq_of_cst_eq hR fun k ↦ ?_
   refine (main l m (K.triv k)).trans (Eq.trans ?_ (main m l (K.triv k)).symm)
   congr 1

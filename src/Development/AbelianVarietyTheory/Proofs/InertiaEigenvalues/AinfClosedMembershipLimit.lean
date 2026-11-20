@@ -45,7 +45,7 @@ theorem approx {S A : Type} [CommRing S] [CommRing A] (l : ℕ) (ev : S →+* A)
       have h2 : ys (k + 1) = nx (ys k) := Function.iterate_succ_apply' _ _ _
       have h3 : (Y *ᵥ fun a => ev (f (k + 1) a)) i =
           (Y *ᵥ fun a => ev (f k a)) i + (l : A) ^ k * (Y *ᵥ fun a => ev (c (ys k) a)) i := by
-        simp only [f, Finset.sum_range_succ, map_add, map_mul, map_pow, map_natCast, mulVec, dotProduct,
+        simp only [f, Finset.sum_range_succ, map_add (f := _), map_mul, map_pow, map_natCast, mulVec, dotProduct,
           Finset.mul_sum, ← Finset.sum_add_distrib]
         refine Finset.sum_congr rfl fun a _ => by ring
       rw [h3, h2]
@@ -94,7 +94,7 @@ theorem abstract {S R A F : Type} [CommRing S] [CommRing A] [IsDomain A] [CommRi
         refine ⟨y + y', hadd _ _ hy hy', funext fun i => ?_⟩
         have e := congrFun h i
         have e' := congrFun h' i
-        simp only [mulVec, dotProduct, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib] at e e' ⊢
+        simp only [mulVec, dotProduct, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib] at e e' ⊢
         rw [e, e']
       smul_mem' := by
         rintro t r ⟨y, hy, h⟩

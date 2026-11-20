@@ -336,7 +336,7 @@ theorem general (hP : Hypotheses2) {F : Type} [Field F] [NumberField F] {Y : Var
     · have e : ∑ o : Option R, (o.elim t u : ℝ) • (o.elim (((1 : ℝ) / k₀) • cl amp₀) fun r => -cl (L₀ r) : Cl V₀.p) =
           wtCl amp₀ k₀ L₀ u t := by
         simp [Fintype.sum_option, wtCl, smul_smul, sub_eq_add_neg, div_eq_mul_inv]
-      simp only [Fin.cons_succ, e, map_add, pullCl_wtCl]
+      simp only [Fin.cons_succ, e, map_add (f := _), pullCl_wtCl]
       split_ifs
       · simp [M₀]
       · simp [M₀, add_comm]

@@ -28,7 +28,7 @@ theorem φVB_inj (T : LocLat G Qp LL O) : Function.Injective (φVB PD (LL := LL)
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a c => simp [φVB]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [h]
   exact Module.Flat.lTensor_preserves_injective_linearMap _ hφ
 
@@ -38,7 +38,7 @@ theorem crisMap_φ {T₁ T₂ : LocLat G Qp LL O} (F : LatHom T₁.L T₂.L) (x 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a c => simp [φVB, Formalism.MainNotions.TruncatedSeriesCountingBounds.crisMap]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable (W : LocWach PD LL O v n)
 
@@ -102,7 +102,7 @@ theorem filS_anti (T : LocLat G Qp LL O) (a : ZMod n) (s : ℕ) {u u' : ℤ} (h 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a c => exact LinearMap.mem_range.mpr ⟨a ⊗ₜ ⟨c.1, hF c.2⟩, by simp⟩
-  | add z w hz hw => rw [map_add]; exact Submodule.add_mem _ hz hw
+  | add z w hz hw => rw [map_add (f := _)]; exact Submodule.add_mem _ hz hw
 
 theorem filS_zero_iff (T : LocLat G Qp LL O) (a : ZMod n) (u : ℤ) (x : T.V ⊗[Qp] B) :
     x ∈ FilS W T a 0 u ↔ x ∈ FilCris PD T.ρ u ⊓ DcrisL PD T.ρ (W.emb a) := by

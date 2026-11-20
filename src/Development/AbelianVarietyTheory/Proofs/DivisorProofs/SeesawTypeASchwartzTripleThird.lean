@@ -25,7 +25,7 @@ def evAt {Y : Type} (e : ((κ → AF F) → ℂ) →ₗ[ℂ] (Y → ℂ)) (g : (
   toFun h := e (pureA F h g) y
   map_add' h h' := by
     have : pureA F (h + h' : SInf F κ) g = pureA F h g + pureA F h' g := GlobalTheory.XTermDecay.pureA_add _ _ _
-    rw [this, map_add, Pi.add_apply]
+    rw [this, map_add (f := _), Pi.add_apply]
   map_smul' c h := by
     have : pureA F (c • h : SInf F κ) g = c • pureA F h g := funext fun _ => mul_assoc _ _ _
     rw [this, map_smul, Pi.smul_apply, RingHom.id_apply]
@@ -101,7 +101,7 @@ theorem core_decay {Y ι : Type} [Fintype ι] (ψ : AddChar (AF F) ℂ) (hψ : I
       have h2 : e (schr ψ s (pureA F (archOp (archW (mk a 0 • U i)) h + h : SInf F κ) g)) = 0 := by
         rw [h1]
         change e (schrL ψ s _) = 0
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
         change e (schr ψ s _) + e (schr ψ s _) = 0
         rw [schr_comm, map_smul, hinv _ _ _ (schr_mem_schA ψ hψ s _ hΦ), hω, ha, neg_one_smul, neg_add_cancel]
       rw [hLs, h2, Pi.zero_apply]

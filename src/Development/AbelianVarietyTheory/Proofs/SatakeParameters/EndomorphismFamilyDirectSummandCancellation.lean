@@ -55,9 +55,9 @@ theorem endFamily_cancel : ∀ (k ι V V' U : Type) [Field k] [AddCommGroup V] [
       have h2 := hs x
       have hsum : ((φa (r + s)) x.1, (φc (r + s)) x.2)
           = ((φa r) x.1, (φc r) x.2) + ((φa s) x.1, (φc s) x.2) := by
-        simp [map_add]
-      rw [hsum, map_add, h1, h2]
-      simp [map_add]
+        simp [map_add (f := _)]
+      rw [hsum, map_add (f := _), h1, h2]
+      simp [map_add (f := _)]
   let eR : (V × U) ≃ₗ[(FreeAlgebra k ι)] (V' × U) :=
     { e.toAddEquiv with
       map_smul' := fun r x => key r x }

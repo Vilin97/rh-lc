@@ -39,7 +39,7 @@ theorem isDetRoot_of_detAt {e : AE D} (he : IsSplitIdem D e) {V : HSp D} {g : GA
   have e3 : cA D e * cA D e = cA D e := by rw [← map_mul, e1]
   unfold IsDetRoot
   have hcx : cA D (x : AE D) = cA D e * cA D (Formalism.L2.Theta.mt V g).det + (1 - cA D e) := by
-    rw [hx, map_add, map_mul, map_sub, map_one]
+    rw [hx, map_add (f := _), map_mul, map_sub, map_one]
   rw [hcx, hx]
   change e * (Formalism.L2.Theta.mt V g).det + (1 - e) = (Formalism.L2.Theta.mt V g).det * (cA D e * cA D (Formalism.L2.Theta.mt V g).det + (1 - cA D e))
   set d := (Formalism.L2.Theta.mt V g).det
@@ -55,12 +55,12 @@ theorem unram_at_gen {A : Type} [CommGroup A] {χ : (AE D)ˣ →* A} {Q S' : Fin
   have key : ∀ z : AE D, (1 - idemAt P) * z = 1 - idemAt P → finPart D (idemAt P * z) ∈ intAE D → finPart D z ∈ intAE D :=
     fun z a b => by
       have : z = idemAt P * z + 1 - idemAt P := by linear_combination a
-      rw [this, RingHom.map_sub, RingHom.map_add, RingHom.map_one]
+      rw [this, RingHom.map_sub, RingHom.map_add (f := _), RingHom.map_one]
       exact sub_mem (add_mem b (GlobalTheory.SplitDivisors.one_mem_int D)) (finPart_idem_mem he)
   have hinf : infPart D (y : AE D) = 1 := by
     have h0 : infPart D (idemAt P) = 0 := GlobalTheory.StepVec.infPart_idemAt he
     have : (y : AE D) = idemAt P * (y : AE D) + (1 - idemAt P) := by linear_combination h1
-    rw [this, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, h0]
+    rw [this, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, h0]
     ring
   refine hχ y hinf (key _ h1 h2) (key _ h1' h3) ?_
   have h0 : idemAt P * (idem Q + cA D (idem Q)) = 0 := by

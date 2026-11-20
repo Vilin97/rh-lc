@@ -30,8 +30,8 @@ theorem exists_symm_balanced {k : Type} [CommRing k] [Algebra ℚ k] (S : Subrin
     exact_mod_cast mul_ne_zero two_ne_zero (discr_ne_zero E)
   obtain ⟨g, hg⟩ := GlobalTheory.exists_addHom_tensor_int_of_biadditive
     (fun a b : 𝓞 E => (A a)ᵀ * β * A (star b))
-    (fun m m' n => by simp only [map_add, transpose_add, Matrix.add_mul])
-    (fun m n n' => by simp only [star_add, map_add, Matrix.mul_add])
+    (fun m m' n => by simp only [map_add (f := _), transpose_add, Matrix.add_mul])
+    (fun m n n' => by simp only [star_add, map_add (f := _), Matrix.mul_add])
   have hT : ∀ a b : 𝓞 E, (A (a * b))ᵀ = (A a)ᵀ * (A b)ᵀ := fun a b => by
     rw [mul_comm a b, map_mul, transpose_mul]
   set γ : Matrix (Fin d) (Fin d) k := ∑ i, (A (x i))ᵀ * β * A (star (y i)) with hγ
@@ -197,14 +197,14 @@ theorem pow_mul_nabVal_mem {R : Type} [CommRing R] {d : ℕ} {O : Type} [CommRin
   have hl : DI (algebraMap R k) (defL (B.FK k) g) := by
     refine di_of_exp B.ph1 ?_ _ ?_ hg.ph1
     · rw [← gt_const_ev_eq _ (triple_points_zero_constant (n := 2) gp_zero₂ (gp_pt 0) (gp_pt 1)), B.cocycleLeft_zero_fst, map_one]
-    · rw [defL, map_sub, map_add, gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
+    · rw [defL, map_sub, map_add (f := _), gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (gp_addOf _ hF _ _ (hp _) (hp _)) (hp _)) _ c0]
       simp
   have hr : DI (algebraMap R k) (defR (B.FK k) g) := by
     refine di_of_exp B.ph2 ?_ _ ?_ hg.ph2
     · rw [← gt_const_ev_eq _ (triple_points_zero_constant (n := 2) gp_zero₂ (gp_pt 0) (gp_pt 1)), B.cocycleRight_zero_fst, map_one]
-    · rw [defR, map_sub, map_add, gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
+    · rw [defR, map_sub, map_add (f := _), gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (hp _) (gp_addOf _ hF _ _ (hp _) (hp _))) _ c0]
       simp

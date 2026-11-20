@@ -194,13 +194,13 @@ def pairSpace {m r : ℕ} (D : ModPG R n (Vc k m)) (Dt : TopData n r) (N : Lats 
     obtain ⟨a0, a1, a2, a3⟩ := hp i
     obtain ⟨b0, b1, b2, b3⟩ := hq i
     refine ⟨?_, Submodule.add_mem _ a1 b1, fun h => Submodule.add_mem _ (a2 h) (b2 h), fun h => ?_⟩
-    · simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add]
+    · simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add (f := _)]
       rw [add_sub_add_comm, add_sub_add_comm, a0, b0]
     · obtain ⟨c1, x, hx, c2⟩ := a3 h
       obtain ⟨d1, y, hy, d2⟩ := b3 h
       refine ⟨Submodule.add_mem _ c1 d1, x + y, Submodule.add_mem _ hx hy, ?_⟩
       have := Submodule.add_mem _ c2 d2
-      simp only [Prod.snd_add, Pi.add_apply, map_add]
+      simp only [Prod.snd_add, Pi.add_apply, map_add (f := _)]
       rwa [add_sub_add_comm (D.γ i x), add_sub_add_comm]
   smul_mem' := fun c p hp i => by
     obtain ⟨a0, a1, a2, a3⟩ := hp i

@@ -66,7 +66,7 @@ theorem exists_hom {F : Type} [Field F] [NumberField F] (v : Pl F) {κ : Type} [
         apply Subtype.ext
         show f γ _ _ = f γ m m.2 + f γ m' m'.2
         apply huniq
-        rw [Submodule.coe_add, htadd, map_add, hread γ m m.2 _ (hfA γ m m.2),
+        rw [Submodule.coe_add, htadd, map_add (f := _), hread γ m m.2 _ (hfA γ m m.2),
           hread γ m' m'.2 _ (hfA γ m' m'.2), htadd]
       map_smul' := fun c m => by
         apply Subtype.ext

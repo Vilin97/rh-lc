@@ -72,7 +72,7 @@ theorem pairs_of_cube {ι : Type} [LinearOrder ι] {A : Type} [CommRing A] (C : 
   have hv (i j : ι) : (ψ _ (n2 i j) (c' i j) : P {i, j}) = c i j := congrArg Subtype.val (hc' i j)
   obtain ⟨b', hb'⟩ := hpairs c' fun i j k => by
     refine (hb _ (n3 i j k)).1 (Subtype.ext ?_)
-    rw [map_add, Submodule.coe_add, hr _ _ (n2 i j) (n3 i j k), hr _ _ (n2 j k) (n3 i j k),
+    rw [map_add (f := _), Submodule.coe_add, hr _ _ (n2 i j) (n3 i j k), hr _ _ (n2 j k) (n3 i j k),
       hr _ _ (n2 i k) (n3 i j k), hv, hv, hv, hcoc]
   refine ⟨fun i => ψ _ (n1 i) (b' i), fun i => (ψ _ (n1 i) (b' i)).2, fun i j => ?_⟩
   rw [← hv i j, hb' i j, map_sub, Submodule.coe_sub, hr _ _ (n1 i) (n2 i j),

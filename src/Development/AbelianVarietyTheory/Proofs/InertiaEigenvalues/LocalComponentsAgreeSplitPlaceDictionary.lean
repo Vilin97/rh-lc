@@ -32,7 +32,7 @@ theorem exists_basis : ∃ b : Module.Basis (Fin 2) L⁺ L, b 0 = 1 := by
     rw [LinearIndependent.pair_iff]
     intro a t h
     have h' := congrArg (IsCMField.complexConj L) h
-    simp only [Algebra.smul_def, map_add, map_mul, AlgEquiv.commutes, map_one, map_zero] at h h'
+    simp only [Algebra.smul_def, map_add (f := _), map_mul, AlgEquiv.commutes, map_one, map_zero] at h h'
     have hd : algebraMap L⁺ L t * (e - IsCMField.complexConj L e) = 0 := by
       linear_combination h - h'
     have ht : t = 0 := by
@@ -59,7 +59,7 @@ theorem kappa_eq_zero (F : FinIso L n) (u : HeightOneSpectrum (𝓞 L)) (z : AL 
     exact hz
   have h2 : b 1 ⊗ₜ[L⁺] B = (b 1 ⊗ₜ[L⁺] (1 : AFplus L)) * ((1 : L) ⊗ₜ[L⁺] B) := by
     rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
-  rw [hAB, h2, map_add, map_mul]
+  rw [hAB, h2, map_add (f := _), map_mul]
   change F.κ (1 ⊗ₜ A) u + F.κ (b 1 ⊗ₜ 1) u * F.κ (1 ⊗ₜ B) u = 0
   rw [hi', hi', hAB0.1, hAB0.2, map_zero, mul_zero, add_zero]
 
@@ -115,7 +115,7 @@ theorem kappa_split (F : FinIso L n) (s : SplitPlace L) (i : s.v.adicCompletion 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | add x y hx hy =>
-    rw [map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _)]
     change F.κ x s.w + F.κ y s.w = _
     rw [hx, hy]
   | tmul l a =>

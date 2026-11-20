@@ -73,7 +73,7 @@ theorem bx_smul_left (c : ℂ) (f g : SInf F κ) : bx (c • f) g = c • bx f g
   ext x; simp only [SchwartzMap.smul_apply, bx_apply, smul_eq_mul]; ring
 
 theorem bx_add_right (f g g' : SInf F κ) : bx f (g + g') = bx f g + bx f g' := by
-  ext x; simp only [SchwartzMap.add_apply, bx_apply, map_add]; ring
+  ext x; simp only [SchwartzMap.add_apply, bx_apply, map_add (f := _)]; ring
 
 theorem bx_smul_right (c : ℂ) (f g : SInf F κ) : bx f (c • g) = starRingEnd ℂ c • bx f g := by
   ext x; simp only [SchwartzMap.smul_apply, bx_apply, smul_eq_mul, map_mul]; ring
@@ -354,7 +354,7 @@ theorem pol_mem (hσ : IsCMExt F E σ) (hψ : IsStd ψ) (hX : ∀ w, X.θ w * X.
       { carrier := {b | e (pureA F (bx a b) g) ∈ algN M₂ ψ τ}
         add_mem' := fun {b b'} hb hb' => by
           change e (pureA F (bx a (b + b')) g) ∈ algN M₂ ψ τ
-          rw [bx_add_right, pureA_add, map_add]
+          rw [bx_add_right, pureA_add, map_add (f := _)]
           exact add_mem hb hb'
         zero_mem' := by
           change e (pureA F (bx a 0) g) ∈ algN M₂ ψ τ
@@ -372,7 +372,7 @@ theorem pol_mem (hσ : IsCMExt F E σ) (hψ : IsStd ψ) (hX : ∀ w, X.θ w * X.
     { carrier := {a | e (pureA F (bx a f₂) g) ∈ algN M₂ ψ τ}
       add_mem' := fun {b b'} hb hb' => by
         change e (pureA F (bx (b + b') f₂) g) ∈ algN M₂ ψ τ
-        rw [bx_add_left, pureA_add, map_add]
+        rw [bx_add_left, pureA_add, map_add (f := _)]
         exact add_mem hb hb'
       zero_mem' := by
         change e (pureA F (bx 0 f₂) g) ∈ algN M₂ ψ τ
@@ -436,7 +436,7 @@ theorem dbl_pol : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       have : boxC (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₁ φ₁) (a + b) =
           boxC (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₁ φ₁) a + boxC (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₁ φ₁) b := by
         funext x; simp [boxC, boxFun, mul_add]
-      rw [this, map_add]; exact add_mem ha hb
+      rw [this, map_add (f := _)]; exact add_mem ha hb
     | smul c a _ ha =>
       have : boxC (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₁ φ₁) (c • a) = star c • boxC (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure f₁ φ₁) a := by
         funext x; simp only [boxC, boxFun, Pi.smul_apply, smul_eq_mul, star_mul']; ring
@@ -446,7 +446,7 @@ theorem dbl_pol : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
     rw [this, map_zero]; exact zero_mem _
   | add a b _ _ ha hb =>
     have : boxC (a + b) Φ₂ = boxC a Φ₂ + boxC b Φ₂ := by funext x; simp [boxC, boxFun, add_mul]
-    rw [this, map_add]; exact add_mem ha hb
+    rw [this, map_add (f := _)]; exact add_mem ha hb
   | smul c a _ ha =>
     have : boxC (c • a) Φ₂ = c • boxC a Φ₂ := by funext x; simp [boxC, boxFun, mul_assoc]
     rw [this, map_smul]; exact Submodule.smul_mem _ _ ha

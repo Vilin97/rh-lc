@@ -55,7 +55,7 @@ theorem goodOf_conj (c : Coeff l) (σ : c.F →+* ℂ) : goodOf c (ComplexEmbedd
 
 def coordAt (U : Unf Xo c σ r) (a : ℝ) (p : FPt U.X) : Rul Xo c →ₛₗ[σ] ℂ where
   toFun f := (a : ℂ) * rdU U f p.1 p.2
-  map_add' f g := by rw [map_add, Pi.add_apply, Pi.add_apply, mul_add]
+  map_add' f g := by rw [map_add (f := _), Pi.add_apply, Pi.add_apply, mul_add]
   map_smul' x f := by rw [map_smulₛₗ, Pi.smul_apply, Pi.smul_apply, smul_eq_mul, smul_eq_mul, mul_left_comm]
 
 end GlobalTheory.NetNormExamples

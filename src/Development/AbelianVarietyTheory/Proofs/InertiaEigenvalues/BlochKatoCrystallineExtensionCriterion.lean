@@ -22,7 +22,7 @@ theorem cocycle_of_ext {G LL V₀ V₁ : Type} [Group G] [TopologicalSpace G] [F
   · have : c = fun g => r (ρ₁ g x) + (- r x) := funext hrc
     rw [this]
     exact ((IsModuleTopology.continuous_of_linearMap r).comp hx).add continuous_const
-  · rw [map_add, hιρ, hc, hc, hc, map_mul, Module.End.mul_apply, map_sub]
+  · rw [map_add (f := _), hιρ, hc, hc, hc, map_mul, Module.End.mul_apply, map_sub]
     abel
 
 theorem finrank_ext {LL V₀ V₁ V₂ : Type} [Field LL] [AddCommGroup V₀] [Module LL V₀] [AddCommGroup V₁]

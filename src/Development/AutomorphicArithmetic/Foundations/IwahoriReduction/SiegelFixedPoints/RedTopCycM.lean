@@ -153,7 +153,7 @@ private theorem bTop_coc [IsAlgClosure ℚ Ω] [CharZero Ω] (ε : Ω →+* ℂ)
       s * repM (topM l n m (N * N)) (y * (cycM (topM l n m (N * N)) s)⁻¹) := by
     unfold shArg
     simp only [mul_assoc, mul_inv_cancel_left]
-  rw [← e, map_add, ← h2, e2, h2] at hc
+  rw [← e, map_add (f := _), ← h2, e2, h2] at hc
   exact hc
 
 private theorem bMid_coc [IsAlgClosure ℚ Ω] [CharZero Ω] (ε : Ω →+* ℂ) (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (N : ℕ) [NeZero N]
@@ -168,10 +168,10 @@ private theorem bMid_coc [IsAlgClosure ℚ Ω] [CharZero Ω] (ε : Ω →+* ℂ)
   have hinv : ∀ a, redTop l n m N a⁻¹ = (redTop l n m N a)⁻¹ := fun a => map_inv (Units.map _) a
   unfold E1 bMid
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [Finset.sum_apply, map_sum, map_sum (X.galB l s), Pi.add_apply, map_add, Finset.sum_apply, map_sum,
+    rw [Finset.sum_apply, map_sum, map_sum (X.galB l s), Pi.add_apply, map_add (f := _), Finset.sum_apply, map_sum,
     Finset.sum_apply, map_sum,
     Finset.sum_congr rfl (fun y _ => bTop_coc ε X l N c d gm hp x w m n c₀ hw hm bB hB s t y)]
-  simp only [Pi.add_apply, map_add, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), Finset.sum_add_distrib]
   congr 1
   refine Finset.sum_nbij' (fun y => y * (cycM (topM l n m (N * N)) s)⁻¹) (fun y => y * cycM (topM l n m (N * N)) s)
     ?_ ?_ ?_ ?_ ?_

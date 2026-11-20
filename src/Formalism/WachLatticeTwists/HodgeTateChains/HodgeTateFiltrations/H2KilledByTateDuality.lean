@@ -96,7 +96,7 @@ theorem freePiece : StatFreePiece := by
           congr 1
           ring
       _ = ((ℓ : ℤ_[ℓ]) ^ m) • (P.io (((ℓ : ℤ_[ℓ]) ^ (rI ℓ m U i)) • P.infm a) + ((ℓ : ℤ_[ℓ]) ^ (rI ℓ m U i)) • P.io (P.infX x)) := by
-          rw [hax, map_add, smul_add, map_smul]
+          rw [hax, map_add (f := _), smul_add, map_smul]
       _ = _ := by rw [h3, smul_add, hz]
   rw [h5, add_sub_cancel_left, pow_one, smul_comm, smul_comm (ℓ : ℤ_[ℓ]), ← map_smul, h4, map_zero, smul_zero,
     smul_zero]
@@ -124,7 +124,7 @@ theorem freeExt : StatFreeExt := by
   rw [map_smul, map_sub, map_smul, hy', ← hc1, map_zero] at h5
   have h6 : ((ℓ : ℤ_[ℓ]) ^ (al' + al'' + c' + c'')) • y - cup (((ℓ : ℤ_[ℓ]) ^ (al' + c'')) • z1 + i0 z')
       = ((ℓ : ℤ_[ℓ]) ^ al') • (((ℓ : ℤ_[ℓ]) ^ (c' + c'' + al'')) • y - cup (((ℓ : ℤ_[ℓ]) ^ c'') • z1)) - cup (i0 z') := by
-    rw [map_add, smul_sub, smul_smul, ← pow_add, map_smul, map_smul, smul_smul, ← pow_add]
+    rw [map_add (f := _), smul_sub, smul_smul, ← pow_add, map_smul, map_smul, smul_smul, ← pow_add]
     have e1 : al' + al'' + c' + c'' = al' + (c' + c'' + al'') := by ring
     rw [e1]; abel
   rw [h6]; exact h5

@@ -71,7 +71,7 @@ lemma one_char [IsCMField E] (hNP : Ext.NearestPlane) {dim : (E →+* ℂ) → �
       obtain ⟨c, y', hy', hy'W, rfl⟩ := hy
       rw [hMc1]; exact hUgen c y' hy' hy'W
     | zero => rw [map_zero]; exact U.zero_mem
-    | add a b _ _ ha hb => rw [map_add]; exact U.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact U.add_mem ha hb
     | smul r a _ ha => rw [LinearMap.map_smul_of_tower]; exact U.smul_mem r ha
 
   haveI : CompleteSpace U := FiniteDimensional.complete ℝ U

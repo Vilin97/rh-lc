@@ -121,7 +121,7 @@ theorem sig_sig (h : IsCMExt F E σ) (x : AF F ⊗[F] E) : sigR (AF F) σ (sigR 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigR, sigma_sigma h]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem gram_rat (f : Fr σ J C D Z J₀) : Gram (σ : E →+* E) J C D Z J₀ := by
   simp only [Gram, ← Matrix.mul_assoc]
@@ -138,7 +138,7 @@ theorem ad_carry (Ji : Matrix (Fin m) (Fin m) E) (C' D' : Matrix (Fin n) (Fin j)
     adMat F (carry (σ : E →+* E) J C D Z Ji C' D' Z') = carry (sigR (AF F) σ) (JR (AF F) J) (adMat F C) (adMat F D) (adMat F Z)
       (adMat F Ji) (adMat F C') (adMat F D') (adMat F Z') := by
   simp only [carry, JR, ← ad_cT, ← Matrix.map_mul]
-  ext; simp only [Matrix.map_apply, Matrix.add_apply, map_add]
+  ext; simp only [Matrix.map_apply, Matrix.add_apply, map_add (f := _)]
 
 theorem sum_ad (f : Fr σ J C D Z J₀) : carry (sigR (AF F) σ) (JR (AF F) J) (adMat F C) (adMat F D) (adMat F Z)
       (adMat F J₀⁻¹) (adMat F C) (adMat F D) (adMat F Z) = 1 := by
@@ -274,7 +274,7 @@ theorem inhabited : ∃ (F E : Type) (_ : Field F) (_ : NumberField F) (_ : Fiel
       ext i j; fin_cases i; fin_cases j; simp [cT, map_ofNat]; norm_num
     have := congrArg (adMat F) e
     rw [plus, cT_one, inv_one, ← ad_cT]
-    simpa [Matrix.map_add] using this)
+    simpa [Matrix.map_add (f := _)] using this)
   exact ⟨F, E, _, _, _, _, _, σ, _, _, _, _, _, lv f, u, _, f, isLv_lv f, isLv_injective f (isLv_lv f), hu, hu.onC⟩
 
 end GlobalTheory.SphEisModel

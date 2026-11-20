@@ -53,7 +53,7 @@ theorem tensorAction_comm_euler (hE : IsGlRep E) (a b : Fin n) (f : Fin n → M)
   funext c
   set_option synthInstance.maxHeartbeats 100000 in
     rw [entry_bounds_of_partialSum, eulerAction_apply, eulerAction_apply, eulerAction_apply, map_sum]
-  simp only [entry_bounds_of_partialSum, map_add, key, Finset.sum_add_distrib, Finset.sum_sub_distrib]
+  simp only [entry_bounds_of_partialSum, map_add (f := _), key, Finset.sum_add_distrib, Finset.sum_sub_distrib]
   have e1 : ∑ d, (if b = d then E a c (f d) else 0) = E a c (f b) := by simp
   have e2 : ∑ d, E d c (if d = a then f b else 0) = E a c (f b) := by simp [apply_ite]
   rw [e1, e2]
@@ -80,7 +80,7 @@ theorem aeval_induction (A : Module.End ℂ X') (P : Module.End ℂ X' → Prop)
     P (aeval A p) := by
   induction p using Polynomial.induction_on with
   | C a => rw [aeval_C, Algebra.algebraMap_eq_smul_one]; exact h1 a
-  | add p q hp hq => rw [map_add]; exact hadd _ _ hp hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hadd _ _ hp hq
   | monomial k a h =>
     rw [pow_succ, ← mul_assoc, map_mul, aeval_X]
     exact hmul _ h

@@ -29,7 +29,7 @@ theorem map_unip {r : ℕ} (c : R →+* S) (x : BlockIx a r → R) :
   ext i j
   change c ((1 + nilM x : Matrix (Fin a) (Fin a) R) i j) =
     (1 + nilM fun p => c (x p) : Matrix (Fin a) (Fin a) S) i j
-  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add]
+  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add (f := _)]
   split_ifs <;> simp
 
 end Ring
@@ -324,7 +324,7 @@ theorem isCuspidal_pull {φ : GA M a → ℂ} (hφ : IsCuspidal φ) : IsCuspidal
   have h2 := hφ r h0 h1 (μ.map m) (m '' 𝓕) (β.isAddHaarMeasure_map μ)
     (hF.image_of_equiv m.toEquiv (MeasurePreserving.symm m ⟨m.measurable, rfl⟩).quasiMeasurePreserving q fun y x => by
       change β (β.symm y + x) = y + β x
-      rw [map_add, β.apply_symm_apply]) (mapA a e g)
+      rw [map_add (f := _), β.apply_symm_apply]) (mapA a e g)
   rw [m.measurableEmbedding.setIntegral_map, m.injective.preimage_image] at h2
   rw [← h2]
   congr 1

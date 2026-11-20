@@ -153,7 +153,7 @@ theorem gram_cong {E : Type} [Field E] [NumberField E] {R : Type} [CommRing R] {
   have hskew : ∀ x y, e x y = - e y x := by
     intro x y
     have h := alt (x + y)
-    simp only [map_add, AddMonoidHom.add_apply, alt x, alt y, zero_add, add_zero] at h
+    simp only [map_add (f := _), AddMonoidHom.add_apply, alt x, alt y, zero_add, add_zero] at h
     exact eq_neg_of_add_eq_zero_left (by rw [add_comm]; exact h)
   set B := RingOfIntegers.basis E with hB
   let L : Fin n → 𝓞 E →+ (R ⧸ Ideal.span {(p : R)}) := fun l =>
@@ -209,7 +209,7 @@ theorem gram_cong {E : Type} [Field E] [NumberField E] {R : Type} [CommRing R] {
   rw [← Ideal.Quotient.eq_zero_iff_mem]
   change mk _ = 0
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_mul, hE', hφ]
+    simp only [map_add (f := _), map_sum, map_mul, hE', hφ]
   rw [Fintype.sum_prod_type, Finset.mul_sum, ← Finset.sum_add_distrib]
   apply Finset.sum_eq_zero
   intro l _
@@ -254,12 +254,12 @@ theorem ev_col (hRr : 1 ≤ Rr) (hact : ∀ a u, Dh.ρΩ a u = u ∘ₗ ρ (bar 
   have hhV : Dh.h (dl m) V = t * Dh.h (Pi.single m.1 1) V + (p : Ω) ^ Rr * y V := by
     rw [hdl, hyeq]
     simp [hact, hV, nsmul_eq_mul]
-  rw [hvec, hvec2, map_add, map_smul, map_add, map_smul, hev, hev, smul_eq_mul, smul_eq_mul, hhV]
+  rw [hvec, hvec2, map_add (f := _), map_smul, map_add (f := _), map_smul, hev, hev, smul_eq_mul, smul_eq_mul, hhV]
   have hRr' : (p : C) ^ Rr = p * p ^ (Rr - 1) := by
     rw [← pow_succ']
     congr 1
     omega
-  simp only [map_add, map_mul, map_pow, map_natCast]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast]
   rw [hRr']
   ring
 
@@ -322,7 +322,7 @@ theorem hdual_chart [Fact p.Prime] (hRr : 1 ≤ Rr) (hact : ∀ a u, Dh.ρΩ a u
       simp only [hGdef, HT.HTChart.gram, map_one, one_mul, map_sum, map_mul, map_natCast, hs]
   have hzC : algebraMap Ω C (∑ l, x l * Dh.gram σ 1 l m.1) =
       algebraMap Ω C (Dh.h (Pi.single m.1 1) (∑ k, a k • b k)) + (p : C) ^ M * algebraMap Ω C z := by
-    rw [hzeq, map_add, map_mul, map_pow, map_natCast]
+    rw [hzeq, map_add (f := _), map_mul, map_pow, map_natCast]
   have hsec : ∑ k, algebraMap Ω C (a k) * ev (b k) (fun j => (Hm j m : C)) =
       algebraMap Ω C t * algebraMap Ω C (Dh.h (Pi.single m.1 1) (∑ k, a k • b k)) + (p : C) * S := by
     rw [Finset.sum_congr rfl fun k _ => by rw [hu (b k) t (hb _ k)]]

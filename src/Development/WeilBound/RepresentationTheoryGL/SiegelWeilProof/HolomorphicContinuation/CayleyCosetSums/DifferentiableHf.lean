@@ -67,7 +67,7 @@ theorem inG_path {y a b : M2 n} (hy : InG y) (ha : InG a) (hb : InG b) (t : Fin 
     InG (y * a * nU (herm t) * b) := by
   have hH : (herm t)ᴴ = herm t := by
     ext i j
-    simp only [herm, Matrix.conjTranspose_apply, Complex.star_def, map_add, map_div₀, map_mul,
+    simp only [herm, Matrix.conjTranspose_apply, Complex.star_def, map_add (f := _), map_div₀, map_mul,
       Complex.conj_ofReal, Complex.conj_I, map_ofNat]
     push_cast
     ring

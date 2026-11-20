@@ -108,7 +108,7 @@ theorem mark_congr {J : Type} (e : Fin g ≃ J) (e' : Fin g' ≃ J) (F : FamilyU
   obtain ⟨b, hb⟩ := (F'.ex_ker i' P' hP' _).1 h4
   have hM : (l.M : ℂ) ≠ 0 := by have := l.three_le; exact Nat.cast_ne_zero.2 (by omega)
   refine ⟨b, hP'.2.1 ?_⟩
-  rw [map_add, map_nsmul, hb, ← smul_sub, ← Nat.cast_smul_eq_nsmul ℂ, smul_inv_smul₀ hM, add_sub_cancel]
+  rw [map_add (f := _), map_nsmul, hb, ← smul_sub, ← Nat.cast_smul_eq_nsmul ℂ, smul_inv_smul₀ hM, add_sub_cancel]
 
 end Geo
 
@@ -213,7 +213,7 @@ theorem GlobalTheory.AdTh.dict_atComp_markAd : ∀ (D : D7) (H : Geo.Tor.Host D.
     have hb' : (φ k (F.t (ik k) a) : Fin W.rank → D.host.E) =
         Wt.mark k a + l.M • (Wt.φ k b : Fin W.rank → D.host.E) := by
       have := congrArg (fun z => (Wt.φ k z : Fin W.rank → D.host.E)) hb
-      simp only [map_add, map_nsmul] at this
+      simp only [map_add (f := _), map_nsmul] at this
       exact (congrArg Subtype.val (hφ _)).symm.trans this
     refine ⟨w - finVec W (Wt.φ k b : Fin W.rank → D.host.E), sub_mem hw
       (((GlobalTheory.MarkCoset.latG_spec D W _).1 _).1 ((hmem _).1 (Wt.φ k b).2)), ?_⟩

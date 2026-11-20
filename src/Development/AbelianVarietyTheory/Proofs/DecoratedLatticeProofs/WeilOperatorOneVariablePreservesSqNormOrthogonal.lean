@@ -95,7 +95,7 @@ theorem lintegral_resS {S A B T : HSp D} (o : OrthDec S A B) (μ : Measure (WO S
     · refine ⟨⟨o.resS T h, AddSubgroup.mem_prod.2 ((o.mem_ratL_resS T h).1 h.2)⟩, Subtype.ext ?_⟩
       exact (o.resS T).symm_apply_apply h
     · change o.resS T ((o.resS T).symm (g : WO A T × WO B T) + x) = (g : WO A T × WO B T) + o.resS T x
-      rw [map_add, AddEquiv.apply_symm_apply]
+      rw [map_add (f := _), AddEquiv.apply_symm_apply]
   rw [h𝓕.setLIntegral_eq hP (fun x => Φ (o.resS T x)) (fun g x => hper g g.2 x)]
   change ∫⁻ x in em ⁻¹' (FA ×ˢ FB), Φ (em x) ∂μ = _
   rw [← lintegral_map_equiv _ em, ← em.restrict_map, hmeq, Measure.restrict_smul, lintegral_smul_measure,

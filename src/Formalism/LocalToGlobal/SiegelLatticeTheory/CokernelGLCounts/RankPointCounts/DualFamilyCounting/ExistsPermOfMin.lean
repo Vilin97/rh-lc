@@ -73,7 +73,7 @@ theorem nondegOn_orth {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) (hnd : 
   intro v
   have hv : v ∈ U ⊔ orthK h U := by rw [hUW.sup_eq_top]; exact Submodule.mem_top
   obtain ⟨u, hu, w, hw, rfl⟩ := Submodule.mem_sup.mp hv
-  rw [map_add, hxy w hw, add_zero]
+  rw [map_add (f := _), hxy w hw, add_zero]
   have h1 : h u x = 0 := by
     have hx' := hx
     simp only [orthK, Submodule.mem_iInf, LinearMap.mem_ker] at hx'

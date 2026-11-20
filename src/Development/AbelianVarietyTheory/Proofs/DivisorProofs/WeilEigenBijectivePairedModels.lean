@@ -44,7 +44,7 @@ def dblEquiv (d₁ : Darboux (symp c ξ JA JB) κ) : Matrix α (β ⊕ β) E ≃
   map_add' z z' := by
     have h1 : (z + z').toCols₁ = z.toCols₁ + z'.toCols₁ := by ext; simp [Matrix.toCols₁]
     have h2 : (z + z').toCols₂ = z.toCols₂ + z'.toCols₂ := by ext; simp [Matrix.toCols₂]
-    rw [h1, h2, map_add, map_add]
+    rw [h1, h2, map_add (f := _), map_add (f := _)]
     ext k <;> cases k <;> simp [add_comm]
   map_smul' a z := by
     have h1 : (a • z).toCols₁ = a • z.toCols₁ := by ext; simp [Matrix.toCols₁]

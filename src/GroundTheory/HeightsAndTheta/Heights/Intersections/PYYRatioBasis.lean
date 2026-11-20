@@ -30,7 +30,7 @@ theorem YYRatioBasis.proof (hM : MobiusAlgIndep.Statement) : YYRatioBasis.Statem
   have hφe : ∀ k p, φ k (e p) = x i₀ * (b.repr (e p) 0 * g k 0 + b.repr (e p) 1 * g k 1) := by
     intro k p
     conv_lhs => rw [← b.sum_repr (e p)]
-    simp only [map_add, map_smul, Fin.sum_univ_two, hφb, smul_eq_mul]; ring
+    simp only [map_add (f := _), map_smul, Fin.sum_univ_two, hφb, smul_eq_mul]; ring
   have hB : b.repr (e 0) 0 * b.repr (e 1) 1 - b.repr (e 1) 0 * b.repr (e 0) 1 ≠ 0 := by
     intro h0
     have h := congrArg Matrix.det (b.toMatrix_mul_toMatrix_flip e)
@@ -93,7 +93,7 @@ theorem YYRatioBasis.proof (hM : MobiusAlgIndep.Statement) : YYRatioBasis.Statem
     have hrA : r ∈ A := hMA r (IntermediateField.subset_adjoin _ _ hr_mem)
     have key : ∀ k, lineVal e (φ k) a = f (x i₀) * (f (g k 0) * (f (b.repr (e 0) 0) + a * f (b.repr (e 1) 0)) +
         f (g k 1) * (f (b.repr (e 0) 1) + a * f (b.repr (e 1) 1))) := by
-      intro k; simp only [lineVal, hφe, map_add, map_mul, hf]; ring
+      intro k; simp only [lineVal, hφe, map_add (f := _), map_mul, hf]; ring
     have hD' : f (g k₀ 0 * g k₁ 1 - g k₀ 1 * g k₁ 0) ≠ 0 := (map_ne_zero f).mpr hD
     have hline : ∀ k, lineVal e (φ k) a / lineVal e (φ k₀) a = (f (g k 0) * (f (g k₁ 1) - f (g k₀ 1) * r) +
         f (g k 1) * (f (g k₀ 0) * r - f (g k₁ 0))) / f (g k₀ 0 * g k₁ 1 - g k₀ 1 * g k₁ 0) := by

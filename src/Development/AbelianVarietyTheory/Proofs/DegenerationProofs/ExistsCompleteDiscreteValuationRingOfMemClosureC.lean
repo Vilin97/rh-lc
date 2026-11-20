@@ -23,7 +23,7 @@ theorem coeff_aeval_C_mul_X {K A J : Type*} [CommRing K] [CommRing A] [Algebra K
     rw [h, Polynomial.coeff_C_mul_X_pow, MvPolynomial.homogeneousComponent_of_mem
       (MvPolynomial.isHomogeneous_monomial a (rfl : u.degree = u.degree))]
     split_ifs <;> simp
-  | add p q hp hq => simp only [map_add, Polynomial.coeff_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), Polynomial.coeff_add, hp, hq]
 
 theorem exists_complete_discreteValuationRing_of_mem_closure_cone :
     ∀ (K A J : Type) [Field K] [CommRing A] [IsDomain A] [Algebra K A] [Fintype J], Algebra.FiniteType K A → ∀ (w : J → A) (v : J → K), v ≠ 0 → (∀ (G : MvPolynomial J K) (d : ℕ), G.IsHomogeneous d → MvPolynomial.aeval w G = 0 → MvPolynomial.eval v G = 0) → ∃ (W : Type) (_ : CommRing W) (_ : IsDomain W) (_ : IsDiscreteValuationRing W) (_ : Algebra K W) (f : A →ₐ[K] FractionRing W) (s : FractionRing W) (w' : J → W), IsAdicComplete (IsLocalRing.maximalIdeal W) W ∧ s ≠ 0 ∧ ∀ j, algebraMap W (FractionRing W) (w' j) = s * f (w j) ∧ w' j - algebraMap K W (v j) ∈ IsLocalRing.maximalIdeal W := by
@@ -96,7 +96,7 @@ theorem exists_complete_discreteValuationRing_of_mem_closure_cone :
   · rw [← hg]
     change g (t j + algebraMap (Polynomial A) L (Polynomial.C (algebraMap K A (v j)))) =
       _ * g (algebraMap (Polynomial A) L (Polynomial.C (w j)))
-    rw [ht, ← map_add, sub_add_cancel, mul_comm, map_mul, map_mul]
+    rw [ht, ← map_add (f := _), sub_add_cancel, mul_comm, map_mul, map_mul]
   · change ι _ - ι (κ (v j)) ∈ _
     rw [← map_sub, add_sub_cancel_right]
     exact map_nonunit ι _

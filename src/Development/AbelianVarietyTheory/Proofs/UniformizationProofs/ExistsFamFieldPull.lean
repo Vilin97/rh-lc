@@ -160,7 +160,7 @@ theorem deltaφ_pr (k : ℕ) (α mu : D'.X) (a : Fin 4 ⊕ Fin 4) :
     DegPre.deltaφ D' F k α mu a ≫ prA hD = Θ ≫ DegPre.deltaφ D F k (hD.xe α) (hD.xe mu) a := by
   rcases a with a | a
   · refine (famφ_pr hD F hT h₁ h₂ (α + k • mu) a).trans ?_
-    rw [map_add, map_nsmul]; rfl
+    rw [map_add (f := _), map_nsmul]; rfl
   · show ((DegPre.trF D' F mu).left ≫ DegPre.famφ D' F α a) ≫ _ =
       Θ ≫ (DegPre.trF D F (hD.xe mu)).left ≫ DegPre.famφ D F (hD.xe α) a
     rw [Category.assoc, famφ_pr hD F hT h₁ h₂, ← Category.assoc, trF_pr hD F hT h₁ h₂, Category.assoc]
@@ -201,7 +201,7 @@ theorem famMult_pr (k : ℕ) (α mu : D'.X) (y : Sp F) {J J'} (hJ : Good D.P.L y
         (vK D'.rigK y J')⁻¹) * vK D'.rigK y J' ^ k := BoxFamily.famMult_val F hJ' k _ _ _
   have p := BoxFamily.prod_delta_zero F D' k α mu (wGerm (Z := Sp F) hD.w y J J')
   refine m.trans (Eq.trans ?_ (congrArg₂ (· * ·) p m').symm)
-  rw [← map_add, vψ, vψ, vψ, vρ]
+  rw [← map_add (f := _), vψ, vψ, vψ, vρ]
   apply Additive.ofMul.injective
   simp only [ofMul_mul, ofMul_inv, ofMul_pow]
   module
@@ -247,7 +247,7 @@ theorem pull_fe (hG : GlobalFnsSt) (k : ℕ) (s : Fam D F k)
   have e₄ : sval (s.s (hD.xe (α + k • mu))) (𝟙 _ ≫ Θ) y J =
       sval (s.s (hD.xe α)) ((𝟙 _ ≫ (DegPre.trF D' F mu).left) ≫ Θ) y J * (val u (𝟙 _ ≫ Θ) y J).val := by
     have := (secRel_iff D.P.isLB _ _ _ _ _ _ _ _ _ u).1 (s.fe _ _ u hu hc) _ (𝟙 _ ≫ Θ) y J hJ
-    rw [map_add, map_nsmul, this, Category.assoc, Category.assoc, trF_pr hD F hT h₁ h₂]
+    rw [map_add (f := _), map_nsmul, this, Category.assoc, Category.assoc, trF_pr hD F hT h₁ h₂]
   have e₅ : (∏ a, wGerm hD.w y J J' (𝟙 _ ≫ DegPre.deltaφ D' F k α mu a) ^ DegPre.deltaε k a) =
       (∏ a, wGerm hD.w y J J' (𝟙 _ ≫ DegPre.famφ D' F (α + k • mu) a) ^ DegPre.famε k a) *
       (∏ a, wGerm hD.w y J J' ((𝟙 _ ≫ (DegPre.trF D' F mu).left) ≫ DegPre.famφ D' F α a) ^ DegPre.famε k a)⁻¹ := by

@@ -93,14 +93,14 @@ theorem exists_normOne_residues {A : Type} [CommRing A] {S : Subring A} {P : Typ
   · show (1 - E - F + a + y) * σ (1 - E - F + a + y) = 1
     have hσF : σ F = E := hσ E
     have hσy : σ y = bb := hσ bb
-    rw [map_add, map_add, map_sub, map_sub, map_one, hσF, hσy]
+    rw [map_add (f := _), map_add (f := _), map_sub, map_sub, map_one, hσF, hσy]
     linear_combination hE + hF + 2 * hEF - hEx - hb - hFx - hFb - ha - hFy - hFa - hEy + hax + hab + hxy + hby
   · intro Q hQ
     rw [← hs Q]
     refine Z.r_congr Q ?_
     show Z.p Q (1 - E - F + a + y) = Z.p Q (s Q)
     have hy0 : Z.p Q y = 0 := by rw [← hFy, map_mul, pF Q hQ, zero_mul]
-    rw [map_add, map_add, map_sub, map_sub, map_one, pE, if_pos hQ, pF Q hQ, pa, if_pos hQ, hy0]
+    rw [map_add (f := _), map_add (f := _), map_sub, map_sub, map_one, pE, if_pos hQ, pF Q hQ, pa, if_pos hQ, hy0]
     ring
   · intro w hw
     show (1 - (1 - E - F + a + y)) * w ∈ S

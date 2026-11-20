@@ -116,7 +116,7 @@ theorem schur_relation_polarized_first (σ : G →* (H →L[ℂ] H)) (hc : ∀ x
     have hpt : ∀ g, ⟪y, σ g (a + a')⟫_ℂ * (starRingEnd ℂ) ⟪y, σ g b⟫_ℂ =
         ⟪y, σ g a⟫_ℂ * (starRingEnd ℂ) ⟪y, σ g b⟫_ℂ + ⟪y, σ g a'⟫_ℂ * (starRingEnd ℂ) ⟪y, σ g b⟫_ℂ := by
       intro g
-      rw [map_add, inner_add_right, add_mul]
+      rw [map_add (f := _), inner_add_right, add_mul]
     simp only [hpt]
     rw [integral_add (hI a b) (hI a' b), inner_add_right]
     ring
@@ -132,7 +132,7 @@ theorem schur_relation_polarized_first (σ : G →* (H →L[ℂ] H)) (hc : ∀ x
     have hpt : ∀ g, ⟪y, σ g a⟫_ℂ * (starRingEnd ℂ) ⟪y, σ g (b + b')⟫_ℂ =
         ⟪y, σ g a⟫_ℂ * (starRingEnd ℂ) ⟪y, σ g b⟫_ℂ + ⟪y, σ g a⟫_ℂ * (starRingEnd ℂ) ⟪y, σ g b'⟫_ℂ := by
       intro g
-      rw [map_add, inner_add_right, map_add, mul_add]
+      rw [map_add (f := _), inner_add_right, map_add (f := _), mul_add]
     simp only [hpt]
     rw [integral_add (hI a b) (hI a b'), inner_add_left]
     ring
@@ -174,7 +174,7 @@ theorem schur_relation_polarized (σ : G →* (H →L[ℂ] H)) (hc : ∀ x, Cont
     have hpt : ∀ g, ⟪b, σ g x1⟫_ℂ * (starRingEnd ℂ) ⟪a + a', σ g x2⟫_ℂ =
         ⟪b, σ g x1⟫_ℂ * (starRingEnd ℂ) ⟪a, σ g x2⟫_ℂ + ⟪b, σ g x1⟫_ℂ * (starRingEnd ℂ) ⟪a', σ g x2⟫_ℂ := by
       intro g
-      rw [inner_add_left, map_add, mul_add]
+      rw [inner_add_left, map_add (f := _), mul_add]
     simp only [hpt]
     rw [integral_add (hI a b) (hI a' b), inner_add_right]
     ring
@@ -265,7 +265,7 @@ theorem convolution_operator_exists (φ : G → ℂ) (hφc : Continuous φ) (hφ
   refine ⟨LinearMap.mkContinuous
     { toFun := fun y => ∫ g, φ g • π g y ∂μ
       map_add' := fun y1 y2 => by
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
         exact integral_add (vector_valued_integrand_integrable μ φ hφc hφi π hU hc y1) (vector_valued_integrand_integrable μ φ hφc hφi π hU hc y2)
       map_smul' := fun c y => by
         simp only [map_smul, RingHom.id_apply]

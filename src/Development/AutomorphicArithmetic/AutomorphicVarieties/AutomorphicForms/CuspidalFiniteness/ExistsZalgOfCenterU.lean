@@ -86,7 +86,7 @@ theorem exists_Zalg_of_centerU {z : UEnv F a} (hz : z ∈ (isExpLieAlgebra F a).
     { carrier := {p | ∀ φ, p.1 (toArch F a φ) = toArch F a (p.2 φ)}
       mul_mem' := fun {x y} hx hy φ => (congrArg x.1 (hy φ)).trans (hx _)
       add_mem' := fun {x y} hx hy φ => by
-        simp only [Prod.fst_add, Prod.snd_add, LinearMap.add_apply, map_add, hx φ, hy φ]
+        simp only [Prod.fst_add, Prod.snd_add, LinearMap.add_apply, map_add (f := _), hx φ, hy φ]
       algebraMap_mem' := fun c φ => (map_smul (toArch F a) c φ).symm }
   have hle : capAlg (fun v i j => uAction (UniversalEnvelopingAlgebra.ι ℝ (b.map (Fb.lieEq F a) (v, i, j)))) ≤
       (S ⊓ (TR.Zalg F a).comap (AlgHom.snd ℂ _ _)).map (AlgHom.fst ℂ _ _) := by

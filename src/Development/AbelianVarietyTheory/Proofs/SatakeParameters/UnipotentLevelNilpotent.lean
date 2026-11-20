@@ -101,7 +101,7 @@ theorem smul_mem_of_pow {A V : Type*} [Ring A] [AddCommGroup V] [Module A V] (M 
         refine hdivk k _ ?_
         have h2 : aeval ν (((1 + X : ℤ[X]) ^ m - 1) ^ k) = ((1 + ν) ^ m - 1) ^ k := by simp
         have h3 := huk k x hx
-        rw [← h2, hv, map_add, add_smul] at h3
+        rw [← h2, hv, map_add (f := _), add_smul] at h3
         have h4 := ih (k + 1) (by omega) v x hx
         have h5 := M.sub_mem h3 h4
         rw [add_sub_cancel_right] at h5
@@ -110,7 +110,7 @@ theorem smul_mem_of_pow {A V : Type*} [Ring A] [AddCommGroup V] [Module A V] (M 
       have e : X ^ k * f = C (f.coeff 0) * X ^ k + X ^ (k + 1) * f.divX := by
         conv_lhs => rw [← divX_mul_X_add f]
         ring
-      rw [e, map_add, add_smul]
+      rw [e, map_add (f := _), add_smul]
       refine M.add_mem ?_ (ih (k + 1) (by omega) _ x hx)
       rw [map_mul, mul_smul, aeval_C]
       have : ∀ (a : ℤ) (y : V), y ∈ M → (algebraMap ℤ A a) • y ∈ M := by

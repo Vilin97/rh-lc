@@ -177,7 +177,7 @@ theorem rCuspCsd : RCuspCsd := by
           (Finset.mem_univ i)) (hmem z hz)
       rw [hlam] at h1
       have h2 := conj_of_mem_infOfWeight lam h1
-      rw [map_add, Complex.conj_ofReal] at h2
+      rw [map_add (f := _), Complex.conj_ofReal] at h2
       exact add_right_cancel h2
     have h20 : m2 = m0 := by
       rw [hm2.unique hθ, hconj, Multiset.map_map]

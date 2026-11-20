@@ -12,7 +12,7 @@ theorem linearMap_rat_valued_eq_trace : ∀ (E : Type) [Field E] [NumberField E]
       map_add' := by
         intro x y
         apply (Rat.cast_injective (α := ℝ))
-        rw [Rat.cast_add, ← hf, ← hf, ← hf, map_add]
+        rw [Rat.cast_add, ← hf, ← hf, ← hf, map_add (f := _)]
       map_smul' := by
         intro c x
         apply (Rat.cast_injective (α := ℝ))

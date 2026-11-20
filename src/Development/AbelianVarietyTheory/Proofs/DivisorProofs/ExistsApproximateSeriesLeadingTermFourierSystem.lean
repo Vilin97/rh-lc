@@ -29,7 +29,7 @@ theorem congMod_of_span {X ι : Type} [AddCommGroup X] (N : ℕ) (g : X →+ X) 
   | zero => exact ⟨0, by simp⟩
   | add y z _ _ hy hz =>
     obtain ⟨w, hw⟩ := hy; obtain ⟨w', hw'⟩ := hz
-    exact ⟨w + w', by rw [map_add, hw, hw', smul_add]; abel⟩
+    exact ⟨w + w', by rw [map_add (f := _), hw, hw', smul_add]; abel⟩
   | smul n y _ hy =>
     obtain ⟨w, hw⟩ := hy
     exact ⟨n • w, by rw [map_zsmul, hw, smul_add, smul_comm]⟩
@@ -44,7 +44,7 @@ theorem unimod_comp (O : Type) [CommRing O] {X₀ X : Type} [AddCommGroup X₀] 
     obtain ⟨w', hw'⟩ := hk1 c (g x)
     refine ⟨k w + w', ?_⟩
     simp only [LinearMap.comp_apply]
-    rw [hw, map_add, map_nsmul, hw', smul_add]; abel
+    rw [hw, map_add (f := _), map_nsmul, hw', smul_add]; abel
   · rw [← LinearMap.comp_assoc, LinearMap.det_comp]
     obtain ⟨u, hu⟩ := hε
     obtain ⟨v, hv⟩ := h2

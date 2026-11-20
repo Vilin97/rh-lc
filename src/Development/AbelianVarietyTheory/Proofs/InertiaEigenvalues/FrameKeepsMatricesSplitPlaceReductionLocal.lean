@@ -63,7 +63,7 @@ theorem proj_lt_one (s : ReciprocityTheory.Aut.SplitPlace L) (z : Formalism.L2.H
     exact hy
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [Subring.coe_add, map_add]
+    rw [Subring.coe_add, map_add (f := _)]
     exact lt_of_le_of_lt (Valuation.map_add _ _ _) (max_lt hx hy)
   | smul c x _ hx =>
     rw [smul_eq_mul, Subring.coe_mul, map_mul, map_mul]

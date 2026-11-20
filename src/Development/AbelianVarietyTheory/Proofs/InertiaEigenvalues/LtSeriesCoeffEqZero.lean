@@ -27,13 +27,13 @@ variable {l : ℕ} [Fact l.Prime]
 
 theorem coeff_ltSeries (K : FinExt l) (π : ↥(OL K)) (j : ℕ) :
     PowerSeries.coeff j (ltSeries K π) = (if j = 1 then π else 0) + (if j = resCard K then 1 else 0) := by
-  rw [ltSeries, map_add, PowerSeries.coeff_C_mul, PowerSeries.coeff_X, PowerSeries.coeff_X_pow, mul_ite, mul_one,
+  rw [ltSeries, map_add (f := _), PowerSeries.coeff_C_mul, PowerSeries.coeff_X, PowerSeries.coeff_X_pow, mul_ite, mul_one,
     mul_zero]
 
 theorem ltSeries_eval (K : FinExt l) (π : ↥(OL K)) (ω : AK K) :
     inO K π * ω + ω ^ resCard K =
       ∑ j ∈ Finset.range (resCard K + 2), inO K (PowerSeries.coeff j (ltSeries K π)) * ω ^ j := by
-  simp only [coeff_ltSeries, map_add, add_mul, Finset.sum_add_distrib, apply_ite (inO K), map_zero, map_one,
+  simp only [coeff_ltSeries, map_add (f := _), add_mul, Finset.sum_add_distrib, apply_ite (inO K), map_zero, map_one,
     ite_mul, zero_mul, one_mul, Finset.sum_ite_eq', Finset.mem_range]
   rw [if_pos (by omega), if_pos (by omega), pow_one]
 

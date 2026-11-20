@@ -131,7 +131,7 @@ theorem exists_flag_basis (τ : E →ₐ[F] Fv F v) (hJ : IsHermND σ J) {e e' :
     rw [Matrix.submatrix_mul_equiv, Matrix.submatrix_id_id, Matrix.fromCols_mul_fromRows, Matrix.fromCols_mul_fromRows,
       ← hm]
     have := congrArg (τ : E →+* Fv F v).mapMatrix hsum
-    rw [map_add, map_add, map_one] at this
+    rw [map_add (f := _), map_add (f := _), map_one] at this
     simp only [RingHom.mapMatrix_apply, Matrix.map_mul] at this
     rw [hm]
     exact this

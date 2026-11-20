@@ -246,7 +246,7 @@ theorem UpperTheory.V.Lit.KT.petAdj :
     quotInt_tower l1 _ ((G1 f).pinv (G1 g))
   have e1 := quotInt_petersson_eq_add_of_hecke_sum (G0 f) (Ga g) (Gb g) (hT f) (T_exp hk hp _ g Tg hTg ha hb)
   have e2 := congrArg conj (quotInt_petersson_eq_add_of_hecke_sum (G0 g) (Ga f) (Gb f) (hT g) (T_exp hk hp _ f Tf hTf ha hb))
-  rw [map_add, map_mul, map_mul, ← B_symm, ← B_symm, ← B_symm, Complex.conj_natCast] at e2
+  rw [map_add (f := _), map_mul, map_mul, ← B_symm, ← B_symm, ← B_symm, Complex.conj_natCast] at e2
   have e3 := B_adj hp.pos (by rw [dg_det, one_mul]) (dg_fin H 1 p hb) (dg_fin' H 1 p hb) (G0 f) (G0 g) (Ga f) (Gb g)
     (by rw [dg_mul, mul_one])
   have e4 := B_adj hp.pos (by rw [dg_det, mul_one]) (dg_fin H p 1 ha) (dg_fin' H p 1 ha) (G0 f) (G0 g) (Gb f) (Ga g)

@@ -28,7 +28,7 @@ theorem contDiff_heis_iota_k (σ : E →ₐ[F] E) (B : Base F E) (hB : _root_.Up
   let φ : (IxF F nS nT → ℂ) →+ ℂ :=
     { toFun := fun v => lam (symplOHF σ JS JT ξ₀ x (iotaVF ι v))
       map_zero' := by rw [iotaVF_zero, GlobalTheory.HeisLineDiffF.symplOHF_zero_right, map_zero]
-      map_add' := fun u v => by rw [iotaVF_add, GlobalTheory.HeisLineDiffF.symplOHF_add_right, map_add] }
+      map_add' := fun u v => by rw [iotaVF_add, GlobalTheory.HeisLineDiffF.symplOHF_add_right, map_add (f := _)] }
   have hφ : Continuous φ := hl.comp (GlobalTheory.HeisLineDiffF.continuous_symplOHF σ JS JT ξ₀ x (continuous_iotaVF hι))
   let eqv := (Module.finBasis ℝ (IxF F nS nT → ℂ)).equivFunL
   let L' : (Fin (Module.finrank ℝ (IxF F nS nT → ℂ)) → ℝ) →+ WOF F E nS nT :=

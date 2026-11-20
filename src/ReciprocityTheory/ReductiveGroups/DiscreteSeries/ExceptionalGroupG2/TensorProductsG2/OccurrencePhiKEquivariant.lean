@@ -94,7 +94,7 @@ theorem occurrence_projection_mem (dual : Bool) (hP : IsPsiFor ε lam T Ψ) (hv�
         have e : (fun c => (((u + u') c : W) : smD ε (rreg ε))) =
             (fun c => ((u c : W) : smD ε (rreg ε))) + (fun c => ((u' c : W) : smD ε (rreg ε))) := by
           funext c; simp
-        rw [e, occurrence_phi_add dual hW hη (hWM u) (hWM u'), map_add]
+        rw [e, occurrence_phi_add dual hW hη (hWM u) (hWM u'), map_add (f := _)]
       map_smul' := fun a u => by
         have e : (fun c => (((a • u) c : W) : smD ε (rreg ε))) = a • (fun c => ((u c : W) : smD ε (rreg ε))) := by
           funext c; simp

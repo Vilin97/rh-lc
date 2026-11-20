@@ -130,7 +130,7 @@ theorem multidegreeProj_glOperatorsEmbedded_comm (d : Fin N → ℕ) (a b : Fin 
       · rw [polProj_step, if_neg h]
       · rw [map_neg, polProj_step, if_neg h, neg_zero]
       · rw [map_zero]
-  | add p q hp hq => rw [map_add, map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 theorem glOperatorsEmbedded_mem_multidegree (d : Fin N → ℕ) (a b : Fin m) (G : MvPolynomial (Fin N × Fin k) F) (hG : G ∈ Pol F k d) :
     glOpsE F LL S e a b G ∈ Pol F k d := by

@@ -46,7 +46,7 @@ noncomputable def normHomotopyFun {s m : ℕ} (h : s = m + 1) (e : X) (y : (Fin 
 theorem normHomotopyFun_add_left {s m : ℕ} (h : s = m + 1) (e e' : X) (y : (Fin s → F) → Y) :
     normHomotopyFun μ h (e + e') y = normHomotopyFun μ h e y + normHomotopyFun μ h e' y := by
   funext g
-  simp only [normHomotopyFun, Pi.add_apply, TensorProduct.add_tmul, map_add,
+  simp only [normHomotopyFun, Pi.add_apply, TensorProduct.add_tmul, map_add (f := _),
     Finset.sum_add_distrib]
 
 theorem normHomotopyFun_smul_left {s m : ℕ} (h : s = m + 1) (c : k) (e : X) (y : (Fin s → F) → Y) :
@@ -57,7 +57,7 @@ theorem normHomotopyFun_smul_left {s m : ℕ} (h : s = m + 1) (c : k) (e : X) (y
 theorem normHomotopyFun_add_right {s m : ℕ} (h : s = m + 1) (e : X) (y y' : (Fin s → F) → Y) :
     normHomotopyFun μ h e (y + y') = normHomotopyFun μ h e y + normHomotopyFun μ h e y' := by
   funext g
-  simp only [normHomotopyFun, Pi.add_apply, TensorProduct.tmul_add, map_add,
+  simp only [normHomotopyFun, Pi.add_apply, TensorProduct.tmul_add, map_add (f := _),
     Finset.sum_add_distrib]
 
 theorem normHomotopyFun_smul_right {s m : ℕ} (h : s = m + 1) (c : k) (e : X)

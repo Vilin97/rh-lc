@@ -14,7 +14,7 @@ theorem pointwise {f g : E →+* ℂ} (h : ∀ x : FR E, f (x : E) = g (x : E)) 
     rw [← IsCMField.complexConj_eq_self_iff]; simp [mul_comm]
   have h1 := h ⟨_, hs⟩
   have h2 := h ⟨_, hp⟩
-  simp only [map_add, map_mul, IsCMField.complexEmbedding_complexConj] at h1 h2
+  simp only [map_add (f := _), map_mul, IsCMField.complexEmbedding_complexConj] at h1 h2
   have key : (g x - f x) * (g x - starRingEnd ℂ (f x)) = 0 := by
     linear_combination (-(g x)) * h1 + h2
   rcases mul_eq_zero.mp key with e | e
@@ -32,8 +32,8 @@ theorem eq_or_eq_conj {f g : E →+* ℂ} (h : ∀ x : FR E, f (x : E) = g (x : 
   have hx' : g x = starRingEnd ℂ (f x) := (pointwise h x).resolve_left hx
   have hy' : g y = f y := (pointwise h y).resolve_right hy
   rcases pointwise h (x + y) with e | e
-  · simp only [map_add] at e; exact hx (by linear_combination e - hy')
-  · simp only [map_add] at e; exact hy (by linear_combination e - hx')
+  · simp only [map_add (f := _)] at e; exact hx (by linear_combination e - hy')
+  · simp only [map_add (f := _)] at e; exact hy (by linear_combination e - hx')
 
 end GlobalTheory.CMSep
 

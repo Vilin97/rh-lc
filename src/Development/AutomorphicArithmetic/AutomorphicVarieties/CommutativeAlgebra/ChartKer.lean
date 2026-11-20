@@ -105,7 +105,7 @@ theorem UpperTheory.V.Alg.chart_ker :
       · rw [RingHom.mem_ker] at ha hb
         rw [hD a b, ha, hb, zero_smul, zero_smul, add_zero]
       · intro a b ha hb
-        rw [map_add, ha, hb, add_zero]
+        rw [map_add (f := _), ha, hb, add_zero]
     have := key _ hcf
     rw [map_smul, smul_eq_mul] at this
     exact (mul_eq_zero.1 this).resolve_left hc

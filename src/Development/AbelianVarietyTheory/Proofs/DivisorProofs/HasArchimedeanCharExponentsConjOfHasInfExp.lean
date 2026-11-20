@@ -49,7 +49,7 @@ theorem piInf_eq {D : D7} (θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D
       exact (RingHom.congr_fun h f).symm
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, ha, hb, map_add (starRingEnd ℂ)]
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb, map_add (starRingEnd ℂ)]
   | tmul a x =>
     have e : θ τ (fstA D.host.F a ⊗ₜ[D.host.F] x) = θ τ (fstA D.host.F a ⊗ₜ[D.host.F] (1 : D.host.E)) * tauE D τ x := by
       rw [← (hθ τ).1 x, ← map_mul, Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
@@ -76,7 +76,7 @@ theorem finPart_eq_one {D : D7} (z : AE D) (hz : GlobalTheory.IndefiniteRowSideF
     intro y
     induction y using TensorProduct.induction_on with
     | zero => rw [smul_zero]
-    | add a b ha hb => rw [smul_add, RingHom.map_add, RingHom.map_add, ha, hb]
+    | add a b ha hb => rw [smul_add, RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
     | tmul a x =>
       rw [TensorProduct.smul_tmul']
       simp only [finPart, AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom, Algebra.TensorProduct.map_tmul, AlgHom.coe_id, id_eq, smul_eq_mul, map_mul]
@@ -114,9 +114,9 @@ theorem hasExp_conj_of_hasInfExp : ∀ {D : D7} (c : (AE D)ˣ →* Circle) (a : 
       rw [RingHom.map_sub, RingHom.map_sub, h2, sub_self]
   let t : (D.what₂.Tau → ℂˣ) → AE D := fun z => s (fun τ => (z τ : ℂ)) + (1 - s 1)
   have tf : ∀ z, finPart D (t z) = 1 := fun z => by
-    simp only [t, RingHom.map_add, RingHom.map_sub, RingHom.map_one, hs.fin, zero_add, sub_zero]
+    simp only [t, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_one, hs.fin, zero_add, sub_zero]
   have ti : ∀ z τ, θ τ (infPart D (t z)) = z τ := fun z τ => by
-    simp only [t, RingHom.map_add, RingHom.map_sub, RingHom.map_one, hs.comp, Pi.one_apply, sub_self, add_zero]
+    simp only [t, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_one, hs.comp, Pi.one_apply, sub_self, add_zero]
   let T : (D.what₂.Tau → ℂˣ) →* AE D :=
     { toFun := t
       map_one' := ext _ _ (by rw [tf, RingHom.map_one]) fun τ => by

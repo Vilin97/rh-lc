@@ -24,6 +24,6 @@ theorem pointsAdjoint : PointsAdjoint := by
     rw [hc, pointsAdjoint_toMat_tmul,
       pointsAdjoint_toMat_tmul, adj_smul,
       adj_map (σ : E →+* E) (sigR σ R) (inclE (F := F) R) (inclE_conj σ R) h.nondeg, ha]
-  | add a b ha hb => rw [map_add, map_add, map_add, adj_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), adj_add, ha, hb]
 
 end GlobalTheory.RegSS

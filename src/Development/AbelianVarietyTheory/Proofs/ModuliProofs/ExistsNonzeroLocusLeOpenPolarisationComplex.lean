@@ -44,7 +44,7 @@ theorem Extends.add {f g : Γ(X, D)} {e : ℕ} (hf : Extends p L N D t f e)
   obtain ⟨σ, hσ, h⟩ := hf
   obtain ⟨τ, hτ, h'⟩ := hg
   refine ⟨σ + τ, add_mem hσ hτ, fun k => ?_⟩
-  simp only [map_add]
+  simp only [map_add (f := _)]
   rw [h k, h' k, add_mul]
 
 theorem extends_one (ht : t ∈ secs p L N) (e : ℕ) : Extends p L N D t 1 e := by

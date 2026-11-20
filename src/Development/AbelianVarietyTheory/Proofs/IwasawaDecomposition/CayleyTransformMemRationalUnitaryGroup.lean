@@ -17,7 +17,7 @@ theorem exists_mem_GQ0_eq_cayley_of_skew_hermitian : ∀ (L : Type) [Field L] [N
     rw [this, conjT_one, hSc, hU, sub_neg_eq_add]
   have hcU : conjT c U = T := by
     have : conjT c U = conjT c 1 + conjT c S := by
-      simp [conjT, hU, Matrix.map_add, Matrix.transpose_add]
+      simp [conjT, hU, Matrix.map_add (f := _), Matrix.transpose_add]
     rw [this, conjT_one, hSc, hT, sub_eq_add_neg]
   have hdetU : U.det ≠ 0 := by
     have : U.det = c T.det := by

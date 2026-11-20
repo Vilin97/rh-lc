@@ -134,7 +134,7 @@ theorem datum_of_placeModel (M : Model D.sp.cm.sig Y Z) {ψ : AddChar (AF D.host
     ⟨GlobalTheory.HeisSchA.rho_mem_schA M ψ hstd x Φ hD.1, fun u => by
       rw [rho_rho M.co ψ u x Φ, thetaSum_smul, hD.2 (u + x)]
       unfold heisO symplOH
-      rw [hs, map_add, invOf_two]⟩
+      rw [hs, map_add (f := _), invOf_two]⟩
   have hsmul : ∀ (b : ℂ) {Φ g}, GlobalTheory.SquareAgree.IsDatum M ψ p Φ g → GlobalTheory.SquareAgree.IsDatum M ψ p (b • Φ) (b • g) :=
     fun b {Φ g} hD => ⟨Submodule.smul_mem _ b hD.1, fun u => ((congrArg (thetaSum D.host.F) (show M.co.rho ψ u (b • Φ) = b • M.co.rho ψ u Φ from
       funext fun _ => mul_left_comm _ _ _)).trans (thetaSum_smul _ _ _)).trans
@@ -150,7 +150,7 @@ theorem datum_of_placeModel (M : Model D.sp.cm.sig Y Z) {ψ : AddChar (AF D.host
         refine ((congrArg (thetaSum D.host.F) (show M.co.rho ψ u (q.2 + q'.2) = M.co.rho ψ u q.2 + M.co.rho ψ u q'.2 from
             funext fun _ => mul_add _ _ _)).trans
           (thetaSum_add _ (GlobalTheory.HeisSchA.rho_mem_schA M ψ hstd u _ h3.1) (GlobalTheory.HeisSchA.rho_mem_schA M ψ hstd u _ h3'.1))).trans ?_
-        rw [h3.2, h3'.2, map_add]
+        rw [h3.2, h3'.2, map_add (f := _)]
         rfl
       smul_mem' := by
         rintro b q ⟨g, h1, h2, h3⟩
@@ -187,8 +187,8 @@ theorem datum_of_placeModel (M : Model D.sp.cm.sig Y Z) {ψ : AddChar (AF D.host
     (fun w hw u hu => ⟨a w • u, hsm w hw u, cA D (a w) • u, by
       show IsHalf _ (p _)
       rw [map_smul]; exact isHalf_smul_self (hcc w hw) _, smul_add_smul _ (ha w hw).2 hu⟩)
-    (fun w _ x _ u => by rw [map_add, ladd])
-    (fun w hw w' hw' hne x hx u => by rw [map_add, ladd, lne w hw w' hw' hne _ hx, add_zero])
+    (fun w _ x _ u => by rw [map_add (f := _), ladd])
+    (fun w hw w' hw' hne x hx u => by rw [map_add (f := _), ladd, lne w hw w' hw' hne _ hx, add_zero])
     (fun w hw u => ⟨a w • u, hsm w hw u, by rw [map_smul, lsm w hw], fun y hy => by
       rw [hs, hs, map_smul, ← symplO_cA_smul, smul_of_isHalf hy]⟩)
     (by

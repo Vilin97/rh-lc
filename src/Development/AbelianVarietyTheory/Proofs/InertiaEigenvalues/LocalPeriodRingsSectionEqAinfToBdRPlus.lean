@@ -85,8 +85,8 @@ theorem exists_sec (l : ℕ) [Fact l.Prime] (a : ℕ) [NeZero a] (C : Core l) (w
     obtain ⟨x, hx1, hx2⟩ := hy
     obtain ⟨x', hx1', hx2'⟩ := hy'
     refine ⟨x + x', ?_, ?_⟩
-    · rw [map_add, map_add, map_add, Subring.coe_add, hx1, hx1']
-    · rw [map_add, map_add, map_add, hx2, hx2']
+    · rw [map_add (f := _), map_add (f := _), map_add (f := _), Subring.coe_add, hx1, hx1']
+    · rw [map_add (f := _), map_add (f := _), map_add (f := _), hx2, hx2']
   | smul r y _ hy =>
     obtain ⟨x, hx1, hx2⟩ := hy
     have e : wA l a (r • y) = algebraMap ℤ_[l] (Ainf l) r * wA l a y := by

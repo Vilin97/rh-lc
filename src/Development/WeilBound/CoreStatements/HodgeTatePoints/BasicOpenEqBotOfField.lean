@@ -37,7 +37,7 @@ theorem basicOpen_eq_bot_of_field {K : Type} [Field K] {Y : Scheme.{0}} (π : Y 
     show v f = 0 ↔ v g ≠ 0
     constructor
     · intro h
-      rw [h2, map_add, map_mul, h, zero_mul, zero_add]
+      rw [h2, map_add (f := _), map_mul, h, zero_mul, zero_add]
       exact (map_ne_zero (v.comp φ)).2 hc
     · intro h
       have := congrArg v h1

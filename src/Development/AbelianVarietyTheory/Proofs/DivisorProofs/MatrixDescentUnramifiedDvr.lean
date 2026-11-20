@@ -30,7 +30,7 @@ theorem exists_restrict (R K W K' : Type) [CommRing R] [Field K] [Algebra R K] [
   have hm : ∀ x y, f (x * y) = f x * f y := by
     intro x y; apply hinj; rw [map_mul, ← hf, ← hf, ← hf, map_mul, map_mul]
   have ha : ∀ x y, f (x + y) = f x + f y := by
-    intro x y; apply hinj; rw [map_add, ← hf, ← hf, ← hf, map_add, map_add]
+    intro x y; apply hinj; rw [map_add (f := _), ← hf, ← hf, ← hf, map_add (f := _), map_add (f := _)]
   have hc : ∀ r : R, f (algebraMap R W r) = algebraMap R W r := by
     intro r; apply hinj; rw [← hf, ← IsScalarTower.algebraMap_apply,
       IsScalarTower.algebraMap_apply R K K', AlgEquiv.commutes]

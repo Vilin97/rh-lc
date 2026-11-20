@@ -112,7 +112,7 @@ theorem localForm_add_right₂ (Z : LocDat D) (p : PlF D) (x y y' : Vp D p) :
   change LocFacts₂ Z.M p x (y + y') = (Z.M p).L.cj (LocFacts₂ Z.M p (y + y') x) at h1
   change LocFacts₂ Z.M p x y = (Z.M p).L.cj (LocFacts₂ Z.M p y x) at h2
   change LocFacts₂ Z.M p x y' = (Z.M p).L.cj (LocFacts₂ Z.M p y' x) at h3
-  rw [h1, localForm_add_left, map_add, ← h2, ← h3]
+  rw [h1, localForm_add_left, map_add (f := _), ← h2, ← h3]
 
 theorem localForm_zero_right₂ (Z : LocDat D) (p : PlF D) (x : Vp D p) : LocFacts₂ Z.M p x 0 = 0 := by
   simp [LocFacts₂]
@@ -199,7 +199,7 @@ theorem scale_part : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.wha
     induction hb using Submodule.span_induction with
     | mem b hb => exact hd (⟨a, ha⟩, ⟨b, hb⟩)
     | zero => rw [map_zero, mul_zero]; exact hzero
-    | add x y _ _ hx hy => rw [map_add, mul_add]; exact range_add hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), mul_add]; exact range_add hx hy
     | smul o x _ hx =>
       rw [← algebraMap_smul D.host.E o x, map_smul, smul_eq_mul, mul_left_comm]
       exact range_mul ⟨o, rfl⟩ hx
@@ -209,7 +209,7 @@ theorem scale_part : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.wha
     induction ha using Submodule.span_induction with
     | mem a ha => exact hint1 a ha b hb
     | zero => rw [map_zero, LinearMap.zero_apply, mul_zero]; exact hzero
-    | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply, mul_add]; exact range_add hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply, mul_add]; exact range_add hx hy
     | smul o x _ hx =>
       rw [← algebraMap_smul D.host.E o x, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, mul_left_comm]
       exact range_mul (star_mem o) hx
@@ -350,7 +350,7 @@ theorem dual_part : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what
     refine (Submodule.span_le.2 ?_) this
     rintro _ ⟨x, rfl⟩
     obtain ⟨a, ha, b', hb', rfl⟩ := hdec x
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (hbcW a ha) (Submodule.subset_span ⟨b', hb', rfl⟩)
   have hy'Sb : h.symm (baseChange₂ D p y) ∈ Sb := by
     obtain ⟨s1, hs1, s2, hs2, hsum⟩ := Submodule.mem_sup.1 (htop (h.symm (baseChange₂ D p y)))

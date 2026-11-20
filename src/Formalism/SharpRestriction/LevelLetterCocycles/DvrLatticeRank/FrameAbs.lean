@@ -240,7 +240,7 @@ theorem invariants_const (h : Hyp O σ Γ π ev) (M : ℕ) (hM : 1 ≤ M) (a : A
     obtain ⟨r, hr⟩ := scalar_core h.hσ h.hσπ n b
     have ea : a = algebraMap O A o + π ^ n * b := by linear_combination -hb
     have e : σ a - a = π ^ n * (ev n * b + π * r) := by
-      rw [← hr, ea, map_add, h.hO]; ring
+      rw [← hr, ea, map_add (f := _), h.hO]; ring
     have hin : π ^ n * (ev n * b + π * r) ∈ (Ideal.span {π ^ (n + 1)} : Ideal A) := by
       rw [← e]; exact span_pow_mono π hle ha
     have e2 := cancel_pow h.hπ hin

@@ -260,7 +260,7 @@ theorem subsingleton_of_unit (𝔪 : GMem X₁ z₁ act V ev L mo hL) (h : ∀ m
 theorem hL_add (𝔪 : GMem X₁ z₁ act V ev L mo hL) (a : I) (mu nu : L) : hL a (mu + nu) = hL a mu + hL a nu := by
   obtain ⟨E, -, h⟩ := 𝔪.equiv a
   apply 𝔪.e₈.injective
-  rw [← h, map_add, map_add, h, h, map_add]
+  rw [← h, map_add (f := _), map_add (f := _), h, h, map_add (f := _)]
 
 theorem n_eq (T : Tower X₁ act) : T.X₂.ρ.n = X₁.ρ.n := by
   obtain ⟨j, hj, h₁⟩ := X₁.ρ.r_eq

@@ -106,14 +106,14 @@ theorem labels_hom : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fi
       choose w hw using hc
       refine ⟨𝔪.e₈ w, ?_⟩
       have e : nu = mu a + (X₁.S.r * X₁.S.N) • w := funext fun v => by simpa using hw v
-      rw [nsmulAddMonoidHom_apply, e, map_add, map_nsmul]
+      rw [nsmulAddMonoidHom_apply, e, map_add (f := _), map_nsmul]
       abel
     · rintro ⟨z, hz⟩
       rw [nsmulAddMonoidHom_apply] at hz
       intro v
       refine ⟨𝔪.e₈.symm z v, ?_⟩
       have e : nu = mu a + (X₁.S.r * X₁.S.N) • 𝔪.e₈.symm z := 𝔪.e₈.injective (by
-        rw [map_add, map_nsmul, AddEquiv.apply_symm_apply, hz]
+        rw [map_add (f := _), map_nsmul, AddEquiv.apply_symm_apply, hz]
         abel)
       rw [e]
       rfl
@@ -121,7 +121,7 @@ theorem labels_hom : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fi
     AddMonoidHom.mk' (fun a => QuotientAddGroup.mk (𝔪.e₈ (mu a))) fun a b => by
       have h := (key (a + b) (mu a + mu b)).1 (h4 a b (mu a) (mu b) (hmu a) (hmu b))
       refine h.trans ?_
-      rw [map_add, QuotientAddGroup.mk_add]
+      rw [map_add (f := _), QuotientAddGroup.mk_add]
   refine ⟨yy, fun c => ?_, fun a nu => (key a nu)⟩
   induction c using QuotientAddGroup.induction_on with
   | H α =>

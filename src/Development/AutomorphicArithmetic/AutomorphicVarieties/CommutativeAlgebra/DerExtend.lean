@@ -20,7 +20,7 @@ private theorem der_sq {O A Q : Type} [CommRing O] [CommRing A] [Algebra O A] [A
     [Module O Q] (x : A →ₐ[O] O) (D : A →ₗ[O] Q) (hD : D ∈ PtDer x Q) (f : A) (hf : f ∈ RingHom.ker x ^ 2) :
     D f = 0 := by
   rw [pow_two] at hf
-  refine Submodule.mul_induction_on hf (fun a ha b hb => ?_) (fun a b ha hb => by rw [map_add, ha, hb, add_zero])
+  refine Submodule.mul_induction_on hf (fun a ha b hb => ?_) (fun a b ha hb => by rw [map_add (f := _), ha, hb, add_zero])
   have h : D (a * b) = x a • D b + x b • D a := hD a b
   rw [h, (RingHom.mem_ker).1 ha, (RingHom.mem_ker).1 hb, zero_smul, zero_smul, add_zero]
 
@@ -46,7 +46,7 @@ theorem UpperTheory.V.Alg.der_extend :
     let D' : R →ₗ[O] Q :=
       { toFun := fun x => D (y x)
         map_add' := fun a b => by
-          rw [← map_add]
+          rw [← map_add (f := _)]
           refine key _ _ ?_
           have := add_mem (hy a) (hy b)
           convert this using 1

@@ -210,7 +210,7 @@ theorem decOfTrace : DecOfTrace := by
       rw [sub_smul, ← e1]
       abel
     have ht := congrArg (LinearMap.trace ℂ _) hA
-    rw [map_smul, LinearMap.trace_comp_comm', hid, LinearMap.trace_id, map_add, map_add, t₁, t₂, t₃,
+    rw [map_smul, LinearMap.trace_comp_comm', hid, LinearMap.trace_id, map_add (f := _), map_add (f := _), t₁, t₂, t₃,
       ← Finset.sum_add_distrib, ← Finset.sum_add_distrib, smul_eq_mul] at ht
     rw [ht]
     exact Finset.sum_congr rfl fun k _ => by ring

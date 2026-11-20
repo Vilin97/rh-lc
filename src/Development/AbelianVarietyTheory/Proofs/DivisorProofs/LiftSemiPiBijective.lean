@@ -19,7 +19,7 @@ theorem liftSemi_pi_bijective : ∀ (R R' : Type) [CommRing R] [CommRing R'] [Al
     | tmul x m =>
       funext i
       simp [liftSemi_tmul, hg, TensorProduct.piRight_apply, TensorProduct.piRightHom_tmul]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]; funext i; simp
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]; funext i; simp
   have : (liftSemi g : R' ⊗[R] (∀ i, M i) → ∀ i, M' i)
       = Pi.map (fun i => liftSemi (f i)) ∘ (TensorProduct.piRight R R' R' M) := funext key
   rw [this]

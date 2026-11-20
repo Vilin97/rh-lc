@@ -329,7 +329,7 @@ theorem derC_eq {Hm : ι → Mt n} {q : ι → ℕ} {x₀ : ι → Mt n}
   have e1 := der_eq h hP hfP τ l1 hu
   have e2 := der_eq h hP hfP τ l2 hu
   unfold derC
-  rw [e1, e2, ← smul_eq_mul, ← map_smul, ← map_add, ← map_smul, ← map_add]
+  rw [e1, e2, ← smul_eq_mul, ← map_smul, ← map_add (f := _), ← map_smul, ← map_add (f := _)]
   congr 2
   rw [smul_smul, show Complex.I * (1 / (2 * Complex.I)) = 1 / 2 by field_simp, ← smul_add,
     show Z + conjH (Hm τ) Z + (Z - conjH (Hm τ) Z) = (2 : ℂ) • Z by rw [two_smul]; abel, smul_smul]

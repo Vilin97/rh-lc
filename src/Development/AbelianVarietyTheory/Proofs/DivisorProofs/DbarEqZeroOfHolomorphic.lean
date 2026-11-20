@@ -152,7 +152,7 @@ theorem dbar_clinear_map_comm {m m' : ℕ} (L : Ext m →L[ℝ] Ext m') (hL : �
     d01 (fun Q => L (F Q)) P v = L (d01 F P v) := by
   have : fderiv ℝ (fun Q => L (F Q)) P = L.comp (fderiv ℝ F P) :=
     (L.hasFDerivAt.comp P hF.hasFDerivAt).fderiv
-  simp only [d01, this, ContinuousLinearMap.comp_apply, hL, map_add]
+  simp only [d01, this, ContinuousLinearMap.comp_apply, hL, map_add (f := _)]
 
 theorem dz_clinear_map_comm {m m' : ℕ} (L : Ext m →L[ℝ] Ext m') (hL : ∀ (c : ℂ) w, L (c • w) = c • L w)
     {F : V → Ext m} {P : V} (hF : DifferentiableAt ℝ F P) (v : V) :
@@ -221,7 +221,7 @@ theorem dz_conj_eq_conj_dbar {φ : V → ℂ} {P : V} (hφ : DifferentiableAt �
       (Complex.conjCLE.toContinuousLinearMap).comp (fderiv ℝ φ P) :=
     (Complex.conjCLE.toContinuousLinearMap.hasFDerivAt.comp P hφ.hasFDerivAt).fderiv
   simp only [d10, d01, this, ContinuousLinearMap.comp_apply, smul_eq_mul]
-  simp [map_add, map_mul, map_ofNat]
+  simp [map_add (f := _), map_mul, map_ofNat]
   ring
 
 end Deriv

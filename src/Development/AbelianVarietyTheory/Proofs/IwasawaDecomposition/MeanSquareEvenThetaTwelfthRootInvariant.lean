@@ -210,7 +210,7 @@ theorem span_gen [NumberField M] (hF : FieldOK D.host D.what₂.embLL D.embE) (h
     induction hy using Submodule.span_induction with
     | mem y hy => exact hS y hy
     | zero => rw [map_zero]; exact N.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact N.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact N.add_mem hx hy
     | smul r y _ hy =>
       have := N.smul_mem (RingOfIntegers.mapRingHom (into D M hL) r) hy
       rw [Algebra.smul_def, map_mul]

@@ -278,7 +278,7 @@ theorem isClosed_range (j : w.adicCompletion E →+* Om l) (hj : Continuous j) :
     · rw [map_sub, dist_sub_right]
       exact hx'.trans_le (min_le_left _ _)
   obtain ⟨x', -, hx'⟩ := h3
-  exact ⟨x' + x, by rw [map_add, hx', sub_add_cancel]⟩
+  exact ⟨x' + x, by rw [map_add (f := _), hx', sub_add_cancel]⟩
 
 variable {Ω : Type} [Field Ω] [Algebra E Ω] {Gw : Subgroup (Ω ≃ₐ[E] Ω)}
   {O : Type} [CommRing O] [Algebra ℤ_[l] O] [TopologicalSpace O]
@@ -437,7 +437,7 @@ theorem hasSum_σO (h : IsPlaceOver A w) (Bw : LocBridge l E Ω (Dec (F := E) A)
   letI : NormedField (Kbar w) := NormedField.induced (Kbar w) (Om l) (θ : Kbar w →+* Om l) θ.injective
   have hn : ∀ y : Kbar w, ‖y‖ = ‖θ y‖ := fun _ => rfl
   haveI : IsUltrametricDist (Kbar w) := IsUltrametricDist.isUltrametricDist_of_isNonarchimedean_norm fun x y => by
-    simp only [hn, map_add]
+    simp only [hn, map_add (f := _)]
     exact IsUltrametricDist.norm_add_le_max _ _
   letI : ValuativeRel (Kbar w) := ValuativeRel.ofValuation (NormedField.valuation (K := Kbar w))
   haveI hcomp : (NormedField.valuation (K := Kbar w)).Compatible := Valuation.Compatible.ofValuation _

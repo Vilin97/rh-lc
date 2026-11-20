@@ -92,7 +92,7 @@ theorem noratC_holds : NOratC := by
         exact hback _ _ h4
       | zero => simp
       | add a b _ _ ha hb =>
-        rw [map_add, add_sub_add_comm]
+        rw [map_add (f := _), add_sub_add_comm]
         exact add_mem ha hb
       | smul c a _ ha =>
         rw [map_smul, ← smul_sub]

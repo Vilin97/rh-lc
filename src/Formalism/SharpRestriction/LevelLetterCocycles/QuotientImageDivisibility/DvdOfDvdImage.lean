@@ -46,7 +46,7 @@ theorem poly_eq_zero : ∀ (k : ℕ) (r : Polynomial O), r.degree < k →
     exact dvd_mul_of_dvd_right h _
   have hψX : ψ PowerSeries.X = PowerSeries.X * u - PowerSeries.C (algebraMap O LL l) := by
     have h := hψ
-    rw [map_add, hψC] at h
+    rw [map_add (f := _), hψC] at h
     exact eq_sub_of_add_eq h
   intro k
   induction k with
@@ -114,7 +114,7 @@ theorem poly_eq_zero : ∀ (k : ℕ) (r : Polynomial O), r.degree < k →
       (dvd_pow_self _ (Nat.succ_ne_zero k)).trans hdvd
     rw [hψr, PowerSeries.X_dvd_iff] at hX
     first
-      | simp only [map_add, map_mul, PowerSeries.constantCoeff_C, PowerSeries.constantCoeff_X,
+      | simp only [map_add (f := _), map_mul, PowerSeries.constantCoeff_C, PowerSeries.constantCoeff_X,
           zero_mul, add_zero] at hX
       | simp at hX
     have hc0 : c = 0 := hinj (hX.trans (map_zero _).symm)
@@ -131,7 +131,7 @@ theorem dvd_of_dvd_image [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalIde
     (ha : PowerSeries.X ^ k ∣ ψ a) : (PowerSeries.X + PowerSeries.C l) ^ k ∣ a := by
   have hres : PowerSeries.map (IsLocalRing.residue O) ((PowerSeries.X + PowerSeries.C l) ^ k) =
       PowerSeries.X ^ k := by
-    rw [map_pow, map_add, PowerSeries.map_X, PowerSeries.map_C,
+    rw [map_pow, map_add (f := _), PowerSeries.map_X, PowerSeries.map_C,
       (IsLocalRing.residue_eq_zero_iff l).mpr hlm, map_zero, add_zero]
   have hg : PowerSeries.map (IsLocalRing.residue O) ((PowerSeries.X + PowerSeries.C l) ^ k) ≠ 0 := by
     rw [hres]; exact pow_ne_zero _ PowerSeries.X_ne_zero
@@ -146,7 +146,7 @@ theorem dvd_of_dvd_image [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalIde
       | (simp only [hres, PowerSeries.order_X_pow, ENat.toNat_coe] at h; exact h)
       | simpa [hres] using h
   have hψa : ψ a = (PowerSeries.X * u) ^ k * ψ q + ψ (r : PowerSeries O) := by
-    rw [hdiv.eq_mul_add, map_add, map_mul, map_pow, hψ]
+    rw [hdiv.eq_mul_add, map_add (f := _), map_mul, map_pow, hψ]
   have h1 : PowerSeries.X ^ k ∣ (PowerSeries.X * u) ^ k * ψ q :=
     dvd_mul_of_dvd_left (pow_dvd_pow_of_dvd (dvd_mul_right _ _) k) _
   have h2 : PowerSeries.X ^ k ∣ ψ (r : PowerSeries O) := by

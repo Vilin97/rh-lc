@@ -114,7 +114,7 @@ theorem mul_Phi_coeff {σ A : Type*} [CommRing A] (P : MvPolynomial σ (LaurentP
       simp [AddMonoidAlgebra.mapRingHom]
     rw [hmap, MvPolynomial.C_mul_monomial, mul_one, MvPolynomial.coeff_monomial, MvPolynomial.coeff_monomial]
     split_ifs <;> simp
-  | add p q hp hq => simp [map_add, hp, hq]
+  | add p q hp hq => simp [map_add (f := _), hp, hq]
 
 def mul_degs {σ A : Type*} [CommRing A] (P : MvPolynomial σ (LaurentPolynomial A)) : Finset ℤ :=
   P.support.biUnion fun m => (P.coeff m).coeff.support

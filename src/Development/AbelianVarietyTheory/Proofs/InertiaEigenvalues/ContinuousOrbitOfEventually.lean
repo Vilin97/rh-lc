@@ -68,7 +68,7 @@ theorem eventually_sub_mem_pow (N : ℕ) (y : Ainf l) :
   filter_upwards [hall] with g hg
   rw [sub_eq_iff_eq_add] at hc
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hc, map_add, map_mul, map_pow, map_natCast, map_sum, add_sub_add_comm, ← mul_sub,
+    rw [hc, map_add (f := _), map_mul, map_pow, map_natCast, map_sum, add_sub_add_comm, ← mul_sub,
     ← Finset.sum_sub_distrib]
   refine add_mem (Ideal.mul_mem_right _ _ (Ideal.pow_mem_pow hlI _)) (sum_mem fun i hi => ?_)
   rw [map_mul, map_pow, map_natCast, ← sub_mul]
@@ -114,7 +114,7 @@ theorem eventually_xi (r n : ℕ) :
   have hp : θ p = 0 := by
     have := congrArg θ hpq
     rw [hb2] at this
-    simp only [map_add, map_mul, map_pow, map_natCast, map_sub, hθξ, pow_succ, mul_zero, zero_mul,
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast, map_sub, hθξ, pow_succ, mul_zero, zero_mul,
       add_zero, sub_zero] at this
     have hl : ((l : ℕ) : OC l) ≠ 0 := Nat.cast_ne_zero.2 (Fact.out : l.Prime).ne_zero
     exact (mul_eq_zero.1 this).resolve_right (pow_ne_zero _ hl)
@@ -159,7 +159,7 @@ theorem eventually_actQab (a b : ℤ) (hab : a ≤ b) (r : ℕ) (x : Qab (AinfSu
   rw [map_mul, hz, inclW_act, mul_zpow, ← map_zpow, zpow_add, zpow_natCast, Units.val_mul,
     Units.val_mul, Units.val_pow_eq_pow_val, Algebra.smul_def, map_pow, map_natCast]
   have h3 := congrArg (inclW l) hpq
-  simp only [map_add, map_mul, map_pow, map_natCast, map_sub] at h3
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast, map_sub] at h3
   have e1 : ((xiU AI : (WCb l)ˣ) : WCb l) = inclW l AI.ξ := rfl
   have e2 : ((Units.map (inclW l).toMonoidHom (u ^ a) : (WCb l)ˣ) : WCb l) =
     inclW l ((u ^ a : (Ainf l)ˣ) : Ainf l) := rfl
@@ -273,7 +273,7 @@ theorem eventually_tensor {R G M N : Type} [CommRing R] [AddCommGroup M] [Module
     abel
   | add x x' hx hx' =>
     filter_upwards [hx, hx'] with g ⟨y, e⟩ ⟨y', e'⟩
-    exact ⟨y + y', by rw [map_add, smul_add, ← e, ← e']; abel⟩
+    exact ⟨y + y', by rw [map_add (f := _), smul_add, ← e, ← e']; abel⟩
 
 theorem continuous_repQ {P : LocPrime l} (AI : LocAinf l P) (K LL : FinExt l)
     (T : LocLat ↥(GK K) ℚ_[l] ↥LL.1 ↥(OL LL)) (a b : ℤ) (H : Subgroup (GQ l)) (hle : H ≤ GK K)

@@ -56,6 +56,6 @@ theorem exists_beta (P : HeightOneSpectrum (𝓞 E)) :
     push_cast at h1
     linear_combination (-β) * h1
   rw [this, ho, ho']
-  rw [map_add, map_mul]
+  rw [map_add (f := _), map_mul]
 
 end PI.NRL

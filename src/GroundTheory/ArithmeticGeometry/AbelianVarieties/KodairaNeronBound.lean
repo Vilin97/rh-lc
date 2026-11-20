@@ -193,7 +193,7 @@ theorem knBound_IV (h1 : π ∣ W.a₁) (h2 : π ∣ W.a₂) {A₃ A₆ : 𝒪} 
     obtain ⟨x, y, h, rfl, e, dx, Y, rfl⟩ := exists_of_notMem_E0Set K W hπ h3' h4' h6' hP
     refine ⟨residue 𝒪 Y, mem_quadRoots one_ne_zero ?_, x, π * Y, Y, h, rfl, dx, rfl, rfl⟩
     have := (dvd_iff_residue_eq_zero hπ).1 (dvd_quad_IV W hπ h1 h2 h3 h4 h6 e dx rfl)
-    simp only [map_sub, map_add, map_mul, map_pow] at this
+    simp only [map_sub, map_add (f := _), map_mul, map_pow] at this
     linear_combination this
   · rintro P Q c hP hQ ⟨x, y, Y, h, rfl, dx, rfl, rfl⟩ ⟨x', y', Y', h', rfl, dx', rfl, hc⟩
     by_contra hPQ

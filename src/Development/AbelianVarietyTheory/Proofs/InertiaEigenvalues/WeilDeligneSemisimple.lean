@@ -47,7 +47,7 @@ theorem isSemisimpleRepresentation_of_isSmooth [FiniteDimensional ℂ V]
     ext v
     obtain ⟨x, hx, y, hy, rfl⟩ :=
       Submodule.mem_sup.1 (show v ∈ P.toSubmodule ⊔ Q by rw [hc.sup_eq_top]; trivial)
-    simp only [Module.End.mul_apply, map_add, hp1 _ hx, hp2 _ hy, add_zero,
+    simp only [Module.End.mul_apply, map_add (f := _), hp1 _ hx, hp2 _ hy, add_zero,
       hp1 _ (hPinv hx), hp2 _ (hQ hy), map_zero]
   have hinv : ∀ σ : Weil h, ρ σ * ρ σ⁻¹ = 1 := fun σ => by rw [← map_mul, mul_inv_cancel, map_one]
   have hinv' : ∀ σ : Weil h, ρ σ⁻¹ * ρ σ = 1 := fun σ => by rw [← map_mul, inv_mul_cancel, map_one]

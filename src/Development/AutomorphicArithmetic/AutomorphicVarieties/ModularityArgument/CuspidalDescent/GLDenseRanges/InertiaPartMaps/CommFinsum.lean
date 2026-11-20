@@ -40,7 +40,7 @@ private theorem iSup_pres {T : Module.End A M} {P : ℕ → Module.End A M} {S :
     exact hS _ hy
   · simp
   · intro y z hy hz
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact Submodule.add_mem _ hy hz
 
 end Gen
@@ -166,7 +166,7 @@ private theorem tr_MK {g : H.Ga} (hg : Norm H g) (a : H.Op → c.O) (K : H.Lev) 
       rw [map_smul]
       exact Submodule.smul_mem_smul hr (tr_Ord H θ hg K hy)
     · intro y z hy hz
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hy hz
   refine iSup_pres (fun n => ?_) hle h2'
   refine Commute.pow_right ?_ n

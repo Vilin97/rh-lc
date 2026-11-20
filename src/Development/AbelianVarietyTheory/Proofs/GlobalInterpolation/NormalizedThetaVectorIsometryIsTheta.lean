@@ -41,7 +41,7 @@ theorem isTheta_eNat_comp : ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ)
         (B.eNat χ N N' L L' (e.symm (z + x)) *
           Complex.exp (-(Real.pi : ℂ) * JMB.hf S.Hm z x - (Real.pi : ℂ) / 2 * JMB.hf S.Hm x x)) =
       B.eNat χ N N' L L' (e.symm z)
-    rw [← key, hph, ← hal, h1, h2, map_add]
+    rw [← key, hph, ← hal, h1, h2, map_add (f := _)]
     unfold U
     ring_nf
 

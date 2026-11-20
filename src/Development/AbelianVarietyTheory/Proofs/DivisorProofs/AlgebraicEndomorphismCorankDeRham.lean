@@ -24,7 +24,7 @@ theorem ext_of_bc {φ₁ φ₂ : Module.Dual L P'} (h : ∀ c, φ₁ (mp c) = φ
   refine LinearMap.ext fun y ↦ ?_
   obtain ⟨z, rfl⟩ := hbc.2 y
   induction z with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x c => rw [liftSemi_tmul, map_smul, map_smul, h c]
 
 def extForm (v : Module.Dual K P) : Module.Dual L P' :=
@@ -90,7 +90,7 @@ theorem rank_coker_desc [FiniteDimensional K P]
   have hmem : ∀ z, j₀ z ∈ LinearMap.ker g := by
     intro z
     induction z with
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | tmul x c =>
       simp only [j₀, LinearMap.comp_apply, LinearMap.baseChange_tmul, Submodule.coe_subtype, liftSemi_tmul,
         LinearMap.mem_ker, map_smul, hg, LinearMap.mem_ker.1 c.2, map_zero, smul_zero]

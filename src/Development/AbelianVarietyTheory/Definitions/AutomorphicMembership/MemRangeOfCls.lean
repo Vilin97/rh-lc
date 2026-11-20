@@ -76,7 +76,7 @@ theorem exists_lift [IsIntegrallyClosed R] {X : Type} [AddCommGroup X] [Module.F
   refine ⟨fun a c => Additive.toMul (s (B.rangeRestrict (a ⊗ₜ c))), fun a c => ?_, fun a a' c => ?_, fun a c a' c' h => ?_⟩
   · exact congrArg Additive.toMul (LinearMap.congr_fun hs (B.rangeRestrict (a ⊗ₜ c)))
   · beta_reduce
-    rw [TensorProduct.add_tmul, map_add, map_add]; rfl
+    rw [TensorProduct.add_tmul, map_add (f := _), map_add (f := _)]; rfl
   · have : B.rangeRestrict (a ⊗ₜ c) = B.rangeRestrict (a' ⊗ₜ c') := Subtype.ext (by
       show B _ = B _
       rw [hB, hB, h])

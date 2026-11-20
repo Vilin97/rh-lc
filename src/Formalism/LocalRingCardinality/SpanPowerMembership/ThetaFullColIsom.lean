@@ -19,7 +19,7 @@ def cj (v : V) : V :=
 
 theorem cj_add (v w : V) : cj V (v + w) = cj V v + cj V w := by
   unfold cj
-  rw [map_add, Finsupp.mapRange_add (fun a b => map_add (starRingEnd ℂ) a b), map_add]
+  rw [map_add (f := _), Finsupp.mapRange_add (fun a b => map_add (starRingEnd ℂ) a b), map_add (f := _)]
 
 theorem cj_smul (c : ℂ) (v : V) : cj V (c • v) = star c • cj V v := by
   unfold cj

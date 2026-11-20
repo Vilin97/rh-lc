@@ -71,7 +71,7 @@ theorem UpperTheory.V.FW.embCyc :
       exact hroot _ m hmM (by rw [← map_pow, hbn, map_one])
     | algebraMap k => exact h2 k
     | add a b _ _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem ha hb
     | mul a b _ _ ha hb =>
       rw [map_mul]

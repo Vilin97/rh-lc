@@ -62,7 +62,7 @@ theorem mConeMap_comp {Ω Ω' : Type} [Field Ω] [Field Ω'] (φ : Ω →+* Ω')
   | C a =>
     simp
   | add p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul]
     rw [hp]
@@ -74,7 +74,7 @@ theorem aeval_comp_ringHom {Ω Ω' : Type} [Field Ω] [Field Ω'] (φ : Ω →+*
   | C a =>
     simp
   | add p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp, aeval_X, Function.comp_apply]
 

@@ -273,7 +273,7 @@ theorem pi_not_van (W : LocWach PD LL O v n) (i : ZMod n) (ζ : LL) (j : ℕ)
   intro h
   have h3 := h 0 (by omega)
   have h4 := congrArg (PowerSeries.coeff 0) h2
-  rw [map_add, h3] at h4
+  rw [map_add (f := _), h3] at h4
   simp [h0] at h4
   exact h1 h4.symm
 
@@ -295,7 +295,7 @@ theorem _root_.GlobalTheory.NL.Model.FilAt_anti (T : _root_.Formalism.BasicNotio
   | zero => exact ⟨0, by simp⟩
   | tmul w b => exact ⟨w ⊗ₜ ⟨b, PD.Fil_anti a b.2⟩, rfl⟩
   | add y z hy hz =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hy hz
 
 theorem wachExpansion_smul_compatible (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (i : ZMod n) (ζ : LL)

@@ -124,7 +124,7 @@ def mkHom (ev : A →ₐ[O] Matrix n n (FractionRing O))
     rw [← h, map_zero, Matrix.zero_mulVec, map_zero, Matrix.map_zero _ (map_zero _),
       Matrix.zero_mulVec]
   map_add' a b := mat_uniq pr hpr _ _ fun u => by
-    rw [← h, map_add, Matrix.add_mulVec, map_add, h, h,
+    rw [← h, map_add (f := _), Matrix.add_mulVec, map_add (f := _), h, h,
       Matrix.map_add _ (map_add _), Matrix.add_mulVec]
   commutes' c := mat_uniq pr hpr _ _ fun u => by
     rw [← h, AlgHom.commutes, Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one,

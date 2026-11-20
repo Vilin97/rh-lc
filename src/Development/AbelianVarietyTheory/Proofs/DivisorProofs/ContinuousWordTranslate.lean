@@ -94,7 +94,7 @@ theorem exists_invJ {g : Matrix (Fin n) (Fin n) ℂ} (hg : g ∈ UJset ε) : ∃
 
 def smSub (ε : Fin n → Bool) (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) : Submodule ℂ H where
   carrier := {w | SmoothVec (lieJ ε : Set _) σ w}
-  add_mem' := fun ha hb k Xs hX => by simpa only [map_add] using (ha k Xs hX).add (hb k Xs hX)
+  add_mem' := fun ha hb k Xs hX => by simpa only [map_add (f := _)] using (ha k Xs hX).add (hb k Xs hX)
   zero_mem' := fun k Xs _ => by simpa only [map_zero] using contDiff_const
   smul_mem' := fun c w hw k Xs hX => by simpa only [map_smul] using (hw k Xs hX).const_smul c
 
@@ -159,7 +159,7 @@ theorem exists_word (hσ : IsURepOn (UJset ε) σ) (l : List (Matrix (Fin n) (Fi
     let d : smSub ε σ →ₗ[ℂ] smSub ε σ :=
       { toFun := fun w => ⟨dRep σ X w, dRep_mem hσ w.2 hX⟩
         map_add' := fun a b => Subtype.ext (HasDerivAt.deriv (by
-          simpa only [Submodule.coe_add, map_add] using (hasDerivAt_dRep a.2 hX).fun_add (hasDerivAt_dRep b.2 hX)))
+          simpa only [Submodule.coe_add, map_add (f := _)] using (hasDerivAt_dRep a.2 hX).fun_add (hasDerivAt_dRep b.2 hX)))
         map_smul' := fun c a => Subtype.ext (HasDerivAt.deriv (by
           simpa only [Submodule.coe_smul, map_smul, RingHom.id_apply] using
             (hasDerivAt_dRep a.2 hX).fun_const_smul c)) }
@@ -215,7 +215,7 @@ theorem dense_of_stable (hirr : IsIrredOn (UJset ε) σ) {S : Submodule ℂ H} (
 def famSub (ε : Fin n → Bool) (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) : Submodule ℂ H where
   carrier := {w | ∀ (k : ℕ) (x : (Fin k → ℝ) → Matrix (Fin n) (Fin n) ℂ), ContDiff ℝ ∞ x →
       (∀ t, x t ∈ UJset ε) → ContDiff ℝ ∞ fun t => σ (x t) w}
-  add_mem' := fun ha hb k x hx hG => by simpa only [map_add] using (ha k x hx hG).add (hb k x hx hG)
+  add_mem' := fun ha hb k x hx hG => by simpa only [map_add (f := _)] using (ha k x hx hG).add (hb k x hx hG)
   zero_mem' := fun k x _ _ => by simpa only [map_zero] using contDiff_const
   smul_mem' := fun c w hw k x hx hG => by simpa only [map_smul] using (hw k x hx hG).const_smul c
 
@@ -249,7 +249,7 @@ theorem dRep_lin_fam {h : H} (hh : h ∈ famSub ε σ) {X Y : Matrix (Fin n) (Fi
   have e1 := key 1 0
   have e2 := key 0 1
   simp only [one_smul, zero_smul, add_zero, zero_add] at e1 e2
-  rw [key, e1, e2, ← map_smul, ← map_smul, ← map_add]
+  rw [key, e1, e2, ← map_smul, ← map_smul, ← map_add (f := _)]
   congr 1
   ext i; fin_cases i <;> simp
 
@@ -486,7 +486,7 @@ theorem cyclic_UJ [CompleteSpace H] (hσ : IsURepOn (UJset ε) σ) (hirr : IsIrr
       exact continuous_finset_sum _ fun i _ => (f i).continuous.comp (continuous_word_garding hσ hirr hφ hφc (hl i))
     let S : Submodule ℂ H :=
       { carrier := {v | ∀ g ∈ UJset ε, ℓ (garding hσ hφ.continuous hφc (σ g v)) = 0}
-        add_mem' := fun ha hb g hg => by simp only [map_add, ha g hg, hb g hg, add_zero]
+        add_mem' := fun ha hb g hg => by simp only [map_add (f := _), ha g hg, hb g hg, add_zero]
         zero_mem' := fun g _ => by simp only [map_zero]
         smul_mem' := fun c v hv g hg => by simp only [map_smul, hv g hg, smul_zero] }
     have hone : (1 : Matrix (Fin n) (Fin n) ℂ) ∈ UJset ε := (1 : Formalism.REAL.UJ ε).2

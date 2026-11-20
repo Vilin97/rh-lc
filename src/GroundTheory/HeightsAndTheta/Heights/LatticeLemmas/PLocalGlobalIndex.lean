@@ -42,7 +42,7 @@ theorem exists_approx_finset (T : Finset (HeightOneSpectrum (𝓞 K))) (N : 𝓞
     push_cast
     rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [e, map_add, map_sum, Finset.sum_congr rfl hov', ← Finset.mul_sum, mul_add, ← hov]
+    rw [e, map_add (f := _), map_sum, Finset.sum_congr rfl hov', ← Finset.mul_sum, mul_add, ← hov]
   ring
 
 theorem exists_mem_near (L : Submodule (𝓞 K) V) (hL : L.FG) (T : Finset (HeightOneSpectrum (𝓞 K)))

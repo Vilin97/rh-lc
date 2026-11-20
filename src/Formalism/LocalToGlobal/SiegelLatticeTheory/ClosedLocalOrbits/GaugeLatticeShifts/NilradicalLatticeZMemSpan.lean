@@ -26,7 +26,7 @@ theorem tr_span {E R M₁ M₂ : Type*} [Field E] [CommRing R] [AddCommGroup M�
   induction hx using Submodule.span_induction with
   | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul c a _ ha => rw [hs]; exact Submodule.smul_mem _ _ ha
 
 variable {E R : Type*} [Field E] [CommRing R] {n r : ℕ}
@@ -215,7 +215,7 @@ theorem orth_of_e {v : (VS D).V} (h : ∀ a, (VS D).hT (X.eX a) v = 0) :
   induction hw' using Submodule.span_induction with
   | mem y hy => obtain ⟨a, rfl⟩ := hy; exact h a
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+  | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
   | smul c a _ ha => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, ha, smul_zero]
 
 variable {Λ : Submodule (𝓞 D.host.E) (VS D).V} {n : (VS D).V ≃ₗ[D.host.E] (VS D).V}
@@ -389,7 +389,7 @@ theorem rootCoord_mul (ε : Fin n → Bool) (e f : Fin r → Fin n → ℂ) (z :
     · exact hh.1 ⟨a.1 + 1, hlt⟩
     · exact spL_mono e (by omega) hh.2
   have L : ∀ p q : Fin n → ℂ, hJ ε (f a) (p + q) = hJ ε (f a) p + hJ ε (f a) q := fun p q => by
-    rw [← hJL_apply, map_add]; rfl
+    rw [← hJL_apply, map_add (f := _)]; rfl
   have hgd := fl_step hg.1 a.1 hd
   have e2 : h *ᵥ nxt e z a = nxt e z a + (h - 1) *ᵥ nxt e z a := by
     rw [Matrix.sub_mulVec, Matrix.one_mulVec]; abel

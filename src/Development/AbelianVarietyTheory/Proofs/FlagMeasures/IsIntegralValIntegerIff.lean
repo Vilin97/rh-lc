@@ -38,7 +38,7 @@ theorem LocE_isField_or_split {F : Type} [Field F] [ValuativeRel F] [Topological
     push Not at hcon
     exact hE ⟨exists_pair_ne E, mul_comm, fun {a} ha => (hcon a ha).exists_right_inv⟩
   obtain ⟨n, hn⟩ := (L.cj_fix (x * L.cj x)).1 (by rw [map_mul, L.cj_cj, mul_comm])
-  obtain ⟨t, ht⟩ := (L.cj_fix (x + L.cj x)).1 (by rw [map_add, L.cj_cj, add_comm])
+  obtain ⟨t, ht⟩ := (L.cj_fix (x + L.cj x)).1 (by rw [map_add (f := _), L.cj_cj, add_comm])
   have hn0 : n = 0 := by
     by_contra h
     apply hxu
@@ -81,7 +81,7 @@ theorem LocE_isField_or_split {F : Type} [Field F] [ValuativeRel F] [Topological
   obtain ⟨y, rfl⟩ := (AlgEquiv.ofBijective φ ⟨hinj, hsurj⟩).surjective z
   rw [AlgEquiv.symm_apply_apply, AlgEquiv.symm_apply_eq]
   change L.cj (y.1 • p + y.2 • L.cj p) = y.2 • p + y.1 • L.cj p
-  rw [map_add, map_smul, map_smul, L.cj_cj, add_comm]
+  rw [map_add (f := _), map_smul, map_smul, L.cj_cj, add_comm]
 
 theorem isIntegral_valInteger_iff {F : Type} [Field F] [ValuativeRel F] (a : F) :
     IsIntegral 𝒪[F] a ↔ a ∈ 𝒪[F] :=

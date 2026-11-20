@@ -73,10 +73,10 @@ theorem companion_crd (S : HSpace E) (co : S.V ≃ₗ[E] (Fin n → E)) (hco : �
   constructor
   · rintro ⟨a', ha', b', hb', e⟩
     refine ⟨co.symm a', (hA _).2 (by simpa using ha'), co.symm b', (hB _).2 (by simpa using hb'), co.injective ?_⟩
-    rw [map_add, map_smul, co.apply_symm_apply, co.apply_symm_apply, e, hc]
+    rw [map_add (f := _), map_smul, co.apply_symm_apply, co.apply_symm_apply, e, hc]
   · rintro ⟨a, ha, b, hb, rfl⟩
     refine ⟨co a, (hA a).1 ha, co b, (hB b).1 hb, ?_⟩
-    rw [map_add, map_smul, hc]
+    rw [map_add (f := _), map_smul, hc]
 
 end Gen
 

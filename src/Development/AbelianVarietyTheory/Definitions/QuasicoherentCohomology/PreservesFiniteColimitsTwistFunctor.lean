@@ -28,7 +28,7 @@ def secGroup (V : X.Opens) : AddSubgroup (∀ i, Γ(F, V ⊓ L.U i)) where
       (L.g i j : Γ(X, L.U i ⊓ L.U j)) •
         resM F (inf_le_inf_right _ inf_le_left : V ⊓ L.U i ⊓ L.U j ≤ V ⊓ L.U j) (s j)}
   add_mem' := fun {s t} hs ht i j => by
-    simp only [Pi.add_apply, map_add, hs i j, ht i j, smul_add]
+    simp only [Pi.add_apply, map_add (f := _), hs i j, ht i j, smul_add]
   zero_mem' := fun i j => by simp only [Pi.zero_apply, map_zero, smul_zero]
   neg_mem' := fun {s} hs i j => by simp only [Pi.neg_apply, map_neg, hs i j, smul_neg]
 
@@ -55,7 +55,7 @@ instance secGroupModule (V : X.Opens) : Module Γ(X, V) (secGroup F L V) where
   add_smul a b s := Subtype.ext <| funext fun i => by
     change resG X (inf_le_left : V ⊓ L.U i ≤ V) (a + b) • s.1 i =
       resG X (inf_le_left : V ⊓ L.U i ≤ V) a • s.1 i + resG X (inf_le_left : V ⊓ L.U i ≤ V) b • s.1 i
-    rw [map_add, add_smul]
+    rw [map_add (f := _), add_smul]
   zero_smul s := Subtype.ext <| funext fun i => by
     change resG X _ 0 • s.1 i = 0
     rw [map_zero, zero_smul]
@@ -383,7 +383,7 @@ variable (F L) in
 def tmul (V : X.Opens) : Γ(F, V) →ₗ[Γ(X, V)] Γ(toMod L, V) →ₗ[Γ(X, V)] Γ(twist F L, V) :=
   LinearMap.mk₂ _ tmulFun
     (fun t t' σ => sec_ext fun i => by
-      rw [coord_add, coord_tmulFun, coord_tmulFun, coord_tmulFun, map_add, smul_add])
+      rw [coord_add, coord_tmulFun, coord_tmulFun, coord_tmulFun, map_add (f := _), smul_add])
     (fun a t σ => sec_ext fun i => by
       rw [coord_smul, coord_tmulFun, coord_tmulFun, resM_smul, smul_comm])
     (fun t σ σ' => sec_ext fun i => by
@@ -520,7 +520,7 @@ def divHom (hL : L.IsLB) : twist F N ⟶ twist (twist F L) (LB.div N L) :=
     (fun V =>
       { toFun := divFun hL
         map_add' := fun s t => sec_ext fun (p : (LB.div N L).ι) => by
-          rw [coord_add, coord_divFun, coord_divFun, coord_divFun, coord_add, map_add, map_add]
+          rw [coord_add, coord_divFun, coord_divFun, coord_divFun, coord_add, map_add (f := _), map_add (f := _)]
         map_smul' := fun a s => sec_ext fun (p : (LB.div N L).ι) => by
           rw [RingHom.id_apply, coord_smul, coord_divFun, coord_divFun, coord_smul, resM_smul,
             map_smul, resG_resG] })

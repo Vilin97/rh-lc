@@ -32,7 +32,7 @@ theorem map_pderiv' {σ : Type} (f : MvPowerSeries σ R) (v : σ) :
   unfold pderivFun
   show algebraMap R k (coeff (n + Finsupp.single v 1) f * ((n v : R) + 1)) =
     algebraMap R k (coeff (n + Finsupp.single v 1) f) * ((n v : k) + 1)
-  rw [map_mul, map_add, map_one, map_natCast]
+  rw [map_mul, map_add (f := _), map_one, map_natCast]
 
 theorem ig_pderiv {σ : Type} {f : MvPowerSeries σ k} (hf : f ∈ Ig R k σ) (v : σ) : pderiv k v f ∈ Ig R k σ := by
   obtain ⟨g, rfl⟩ := RingHom.mem_range.mp hf

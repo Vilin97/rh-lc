@@ -297,7 +297,7 @@ theorem core {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [A
     · have hj' : j ∈ (Finset.univ.filter fun j : Fin r => j ≤ i) := by simp [hj]
       rw [hform, hform, ((hQ i).1 j hj').1, ((hQ i).1 j hj').2, map_zero]
       exact ⟨rfl, rfl⟩
-    · rw [hform, ← (hQ i).2.1, map_add, hconj]
+    · rw [hform, ← (hQ i).2.1, map_add (f := _), hconj]
   refine ⟨(List.ofFn eR).prod, fun p => ⟨_, hmem p, ext_prod A p r eR (eL p) (heL p)⟩, ?_⟩
   intro p g' hg' x hx
   have hg'eq : g' = (List.ofFn (eL p)).prod :=

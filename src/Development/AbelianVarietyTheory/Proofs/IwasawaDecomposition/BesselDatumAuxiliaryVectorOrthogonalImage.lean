@@ -93,7 +93,7 @@ theorem hA_herm (x y : Fin B.rank → AE D) : cA D (hA B x y) = hA B y x := by
   exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring
 
 theorem hA_add_right (x y y' : Fin B.rank → AE D) : hA B x (y + y') = hA B x y + hA B x y' := by
-  simp only [hA, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hA, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hA_neg (x y : Fin B.rank → AE D) : hA B (-x) y = -hA B x y := by
   simp only [hA, Pi.neg_apply, mul_neg, Finset.sum_neg_distrib]
@@ -178,7 +178,7 @@ theorem Ex_le_ExGe (d : BesselDatum A B ι) (ε : AE D) {p : ℕ} {i : Fin (d.ρ
 theorem mem_GfC {e : AE D} (he : IsSplitIdem D e) {g : GA D B} (hg : SuppAt e B g) : g ∈ GfC B := by
   refine Units.ext (Matrix.ext fun i j => ?_)
   have h : infPart D ((mt B g - 1) i j) = 0 := by
-    rw [← hg i j, RingHom.map_mul, RingHom.map_add, GlobalTheory.SplitScalar.infPart_splitIdem he,
+    rw [← hg i j, RingHom.map_mul, RingHom.map_add (f := _), GlobalTheory.SplitScalar.infPart_splitIdem he,
       GlobalTheory.SplitScalar.infPart_splitIdem (GlobalTheory.SplitScalar.isSplitIdem_conj he), add_zero, zero_mul]
   rw [Matrix.sub_apply, RingHom.map_sub, sub_eq_zero] at h
   show infPart D (mt B g i j) = (1 : Matrix _ _ _) i j

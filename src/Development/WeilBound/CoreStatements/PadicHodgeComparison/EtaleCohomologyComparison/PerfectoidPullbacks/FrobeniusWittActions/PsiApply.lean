@@ -17,7 +17,7 @@ def T (c : A →+* C₀) (k : K₀ →+* C₀) (hk : ∀ w : W, k (algebraMap W 
     { toFun := fun a =>
         { toFun := fun y => c a * k (f (1 ⊗ₜ y))
           map_zero' := by simp
-          map_add' := fun y y' => by rw [tmul_add, map_add, map_add, mul_add] }
+          map_add' := fun y y' => by rw [tmul_add, map_add (f := _), map_add (f := _), mul_add] }
       map_zero' := by ext; simp
       map_add' := fun a a' => by ext; simp [add_mul] }
     (fun w a y => by
@@ -34,8 +34,8 @@ theorem T_add (c : A →+* C₀) (k : K₀ →+* C₀) (hk : ∀ w : W, k (algeb
     (f g : Module.Dual K₀ (K₀ ⊗[W] L)) (z : A ⊗[W] L) : T c k hk (f + g) z = T c k hk f z + T c k hk g z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | tmul a y => simp only [T_tmul, LinearMap.add_apply, map_add, mul_add]
-  | add z z' hz hz' => rw [map_add, map_add, map_add, hz, hz']; ring
+  | tmul a y => simp only [T_tmul, LinearMap.add_apply, map_add (f := _), mul_add]
+  | add z z' hz hz' => rw [map_add (f := _), map_add (f := _), map_add (f := _), hz, hz']; ring
 
 def psi (c : A →+* C₀) (k : K₀ →+* C₀) (hk : ∀ w : W, k (algebraMap W K₀ w) = c (algebraMap W A w)) (u : C₀)
     {Λ : Type*} [AddCommGroup Λ] (α : Λ →+ A ⊗[W] L) : Λ →+ (Module.Dual K₀ (K₀ ⊗[W] L) →+ C₀) where

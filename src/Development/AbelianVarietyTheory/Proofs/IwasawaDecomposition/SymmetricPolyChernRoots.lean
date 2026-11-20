@@ -47,7 +47,7 @@ theorem splitEquiv_symm_C (c : MvPolynomial (Root (fun τ : {τ // τ ≠ τ₀}
     simp only [rename_C]
     change _ = splitEquiv R τ₀ (algebraMap R _ r)
     rw [AlgEquiv.commutes]; rfl
-  | add p q hp hq => simp [map_add, ← hp, ← hq]
+  | add p q hp hq => simp [map_add (f := _), ← hp, ← hq]
   | mul_X p y hp =>
     simp only [map_mul, rename_X]
     rw [← hp, splitEquiv_X_ne R τ₀ y.1.2]
@@ -89,7 +89,7 @@ theorem rename_chernRootsOver (T : MvPolynomial ({τ // τ ≠ τ₀} × ℕ) R)
       chernRootsOver R m (rename (Prod.map Subtype.val id) T) := by
   induction T using MvPolynomial.induction_on with
   | C r => simp [chernRootsOver]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p x hp =>
     simp only [map_mul, hp]
     congr 1

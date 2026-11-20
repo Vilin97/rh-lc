@@ -92,7 +92,7 @@ theorem span_mod_pow {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] [IsDomain 
       (continuous_factor ϖ (Nat.le_succ n)).comp hb, fun g h => ?_⟩
     have e := hd g h
     rw [d1_apply] at e
-    rw [d1_apply, ← factor_quotRep_of_le ε ϖ (Nat.le_succ n), ← map_sub, ← map_add, e]
+    rw [d1_apply, ← factor_quotRep_of_le ε ϖ (Nat.le_succ n), ← map_sub, ← map_add (f := _), e]
     exact Submodule.factor_mk _ _
 
   have hclosed : ∀ n, IsClosed (S n) := by

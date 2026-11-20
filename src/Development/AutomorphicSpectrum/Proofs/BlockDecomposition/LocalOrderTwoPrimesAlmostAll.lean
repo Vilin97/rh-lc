@@ -61,7 +61,7 @@ theorem eq_span_of_factor (hδ : δ * δ = ι D) (hsp : ∀ y : O, ∃ p q : R, 
   obtain ⟨p, q, rfl⟩ := hsp y
   have hr : ι (p + q * s) ∈ P := by
     have e : ι (p + q * s) = (ι p + ι q * δ) - ι q * (δ - ι s) := by
-      simp only [map_add, map_mul]; ring
+      simp only [map_add (f := _), map_mul]; ring
     rw [e]
     exact P.sub_mem hy (P.mul_mem_left _ hπ)
   have hm' : p + q * s ∈ IsLocalRing.maximalIdeal R := by
@@ -70,7 +70,7 @@ theorem eq_span_of_factor (hδ : δ * δ = ι D) (hsp : ∀ y : O, ∃ p q : R, 
   rw [hm, Ideal.mem_span_singleton'] at hm'
   obtain ⟨a, ha⟩ := hm'
   have h1 : ι a * ι c = ι p + ι q * ι s := by
-    rw [← map_mul, ha, map_add, map_mul]
+    rw [← map_mul, ha, map_add (f := _), map_mul]
   refine Ideal.mem_span_singleton'.2 ⟨ι q + ι a * π', ?_⟩
   linear_combination (ι a) * hfac + h1
 

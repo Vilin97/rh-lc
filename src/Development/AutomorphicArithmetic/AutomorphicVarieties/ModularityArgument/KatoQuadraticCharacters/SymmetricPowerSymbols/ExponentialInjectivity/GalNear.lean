@@ -38,7 +38,7 @@ private theorem nr_adj (X : Tower Ω ε) (f : X.K) (hf : f ∈ IntermediateField
   | algebraMap c => exact nr_c X c
   | add x y _ _ hx hy =>
     obtain ⟨T, hT⟩ := nr_two X hx hy
-    exact ⟨T, fun s hs => by rw [map_add, (hT s hs).1, (hT s hs).2]⟩
+    exact ⟨T, fun s hs => by rw [map_add (f := _), (hT s hs).1, (hT s hs).2]⟩
   | inv x _ hx =>
     obtain ⟨T, hT⟩ := hx
     exact ⟨T, fun s hs => by rw [map_inv₀, hT s hs]⟩

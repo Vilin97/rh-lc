@@ -74,7 +74,7 @@ def typeSp (δ : Fˣ →* ℂˣ) (r c : ℕ) {V : Type} [NormedAddCommGroup V] [
   add_mem' := by
     rintro f f' ⟨h1, h2⟩ ⟨h3, h4⟩
     refine ⟨fun p m₁ m₂ a b c g => ?_, fun k hk g => ?_⟩
-    · simp only [Pi.add_apply, h1 p m₁ m₂ a b c g, h3 p m₁ m₂ a b c g, map_add, smul_add]
+    · simp only [Pi.add_apply, h1 p m₁ m₂ a b c g, h3 p m₁ m₂ a b c g, map_add (f := _), smul_add]
     · simp only [Pi.add_apply, h2 k hk g, h4 k hk g, smul_add]
   smul_mem' := by
     rintro z f ⟨h1, h2⟩

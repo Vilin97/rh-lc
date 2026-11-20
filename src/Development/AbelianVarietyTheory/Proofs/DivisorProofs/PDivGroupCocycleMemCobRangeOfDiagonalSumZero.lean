@@ -29,7 +29,7 @@ theorem lift_counit_pullTwo {R D D' : Type} [CommRing R] [CommRing D] [Bialgebra
   induction c using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [pullbackTwo]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem diagSum_one (R D : Type) [CommRing R] [CommRing D] [Bialgebra R D] [Coalgebra.IsCocomm R D] (m : ℕ) :
     diagSum R D m 1 = (m : D) := by

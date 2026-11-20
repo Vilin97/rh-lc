@@ -697,7 +697,7 @@ theorem domain_of_cell [NumberField K] (ι : Type) [Fintype ι] (τ : ι → (K 
         rw [e3] at e1
         rw [e4] at e2
         have : algebraMap (𝓞 K) K ((Ao *ᵥ fun q : R => xo q.1.1 q.1.2) s + (Do *ᵥ fun q : S => xo q.1.1 q.1.2) s) = 0 := by
-          rw [map_add, e1, e2]; exact key
+          rw [map_add (f := _), e1, e2]; exact key
         simpa using this
       · intro v
         rw [show c v = fun q : R => τ v ((U * x * U⁻¹) q.1.1 q.1.2) from funext (hcx v), hMx x hsx v]
@@ -717,7 +717,7 @@ theorem domain_of_cell [NumberField K] (ι : Type) [Fintype ι] (τ : ι → (K 
           rw [hAo] at e1
           rw [hDo] at e2
           have := congrArg (algebraMap (𝓞 K) K) (congrFun hz s)
-          rw [Pi.add_apply, map_add, e1, e2] at this
+          rw [Pi.add_apply, map_add (f := _), e1, e2] at this
           exact this
         have hxR : (fun q : R => x q.1.1 q.1.2) = fun q : R => (y q : K) := funext hxy
         rw [hxR] at k1

@@ -49,10 +49,10 @@ theorem pullHyp1_restrict_injective {R : Type} [CommRing R] {C : Type} [Category
     rw [hhG, map_sub, hω]))
   refine Hyp1.mk_eq_zero.2 ⟨g₀ + h, Tot1.ext (fun T T' φ ↦ ?_) fun T ↦ ?_⟩
   · rw [dTot0_f]
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     linear_combination hh φ + hg0 T T' φ
   · have e : x.1.2 T - D R _ (g₀ T) = D R _ (h T) := congrArg (fun ω : Glob1 F ↦ ω.1 T) hθψ
-    rw [dTot0_ω, Pi.add_apply, map_add, ← e]
+    rw [dTot0_ω, Pi.add_apply, map_add (f := _), ← e]
     abel
 
 end GlobalTheory.CechDR

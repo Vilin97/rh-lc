@@ -167,7 +167,7 @@ theorem trC_mem_Z1D {e : ℕ} (Cd : CoefDict PD LL O σ M r χ Dw eG e) [Topolog
   have hc : (z : Dw → M) (eG.symm g * eG.symm h) = (z : Dw → M) (eG.symm g) +
       resRep (uRep O' (M := M) r χ) Dw (eG.symm g) ((z : Dw → M) (eG.symm h)) := z.2 _ _
   simp only [trC, map_mul]
-  rw [hc, map_add]
+  rw [hc, map_add (f := _)]
   congr 1
   have hu := Cd.u_act (eG.symm g) ((z : Dw → M) (eG.symm h))
   rw [MulEquiv.apply_symm_apply] at hu

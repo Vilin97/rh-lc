@@ -160,7 +160,7 @@ theorem _root_.GlobalTheory.DownLift.SplitGen.exists_same_images_matrix (hr : r 
           Matrix.of_apply, mul_add, Finset.mul_sum]
         rw [e1, hz a b]
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [Matrix.mul_apply, map_add, map_sum, map_mul, map_pow, smul_eq_mul]
+          simp only [Matrix.mul_apply, map_add (f := _), map_sum, map_mul, map_pow, smul_eq_mul]
         have : ∀ k, ι d * (ι ((h : Matrix (Fin n) (Fin n) O) a k) * x k b) = ι ((h : Matrix (Fin n) (Fin n) O) a k) * ι (hx.choose k b) :=
           fun k => by rw [← e2 k]; ring
         simp only [this]

@@ -109,7 +109,7 @@ theorem colDet_sub {m : ℕ} (E : Fin (m + 1) → Fin (m + 1) → A) (c c' : Fin
     · rw [prod_ofFn_sub m _ (fun j => capEntry E (c' j) (σ j) j) d]
       · intro j hj
         simp only [h j hj]
-      · simp only [capEntry, hσ, if_true, hd, map_add, map_one]
+      · simp only [capEntry, hσ, if_true, hd, map_add (f := _), map_one]
         abel
     · have : (fun j => capEntry E (c j) (σ j) j) = fun j => capEntry E (c' j) (σ j) j := by
         funext j

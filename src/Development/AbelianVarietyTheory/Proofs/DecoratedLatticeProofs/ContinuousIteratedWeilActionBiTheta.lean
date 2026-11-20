@@ -59,7 +59,7 @@ theorem isThetaFunO_four (h : IsBiTheta ψ A S A' C) (h₁ : IsThetaFunO ψ A A'
     have e₄ : sandwich e.pA d.jA (ratW Y X γ) = ratW S S (e.qA * γ * d.iA) := by
       rw [ratW_eq, ratW_eq, rat_mul, rat_mul]; rfl
     rw [symplOH_four d e]
-    simp only [four, map_add]
+    simp only [four, map_add (f := _)]
     rw [e₁, e₂, e₃, e₄, h.quasiL, h.quasiR, h₁.quasi, h₂.quasi]
     simp only [neg_add, AddChar.map_add_eq_mul]
     ring
@@ -80,13 +80,13 @@ theorem isThetaFunO_four (h : IsBiTheta ψ A S A' C) (h₁ : IsThetaFunO ψ A A'
     have e₄ := congrFun (k₄ _ hu.2.2 (map_sandwich _ _ _ h0)) (sandwich e.pA d.jA w)
     simp only [heisO] at e₁ e₂ e₃ e₄ ⊢
     rw [symplOH_four d e]
-    simp only [four, map_add, AddChar.map_add_eq_mul]
+    simp only [four, map_add (f := _), AddChar.map_add_eq_mul]
     rw [← e₂, ← e₁, ← e₃, ← e₄]
     ring
   cont := (h.cont.comp ((continuous_sandwich _ _).prodMk (continuous_sandwich _ _))).mul
     ((h₁.cont.comp (continuous_sandwich _ _)).mul (h₂.cont.comp (continuous_sandwich _ _)))
   smooth k L hL h0 w := by
-    simp only [four, map_add]
+    simp only [four, map_add (f := _)]
     exact (h.smooth k ((sandwich e.pA d.jB).comp L) ((sandwich e.pB d.jA).comp L) ((continuous_sandwich _ _).comp hL)
       ((continuous_sandwich _ _).comp hL) (fun t => map_sandwich _ _ _ (h0 t)) (fun t => map_sandwich _ _ _ (h0 t)) _ _).mul
       ((h₁.smooth k ((sandwich e.pB d.jB).comp L) ((continuous_sandwich _ _).comp hL)

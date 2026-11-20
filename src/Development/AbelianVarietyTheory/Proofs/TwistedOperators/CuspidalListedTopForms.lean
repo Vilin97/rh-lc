@@ -121,7 +121,7 @@ theorem conj_finSum {V : HSp D} {S S' : D.what₂.Tau → SPar} {θ : InfFam D} 
     · refine Fin.addCases (fun i => ?_) (fun i => ?_) i
       · simpa using hv₁ i
       · simpa using hv₂ i
-    · rw [Fin.sum_univ_add, map_add, Pi.add_apply, star_add, h₁ g hg, h₂ g hg]
+    · rw [Fin.sum_univ_add, map_add (f := _), Pi.add_apply, star_add, h₁ g hg, h₂ g hg]
       simp
 
 end GlobalTheory.EndCusp
@@ -140,7 +140,7 @@ theorem isAutFunSm_lift {V : HSp D} {S : D.what₂.Tau → SPar} {θ : InfFam D}
     rw [map_smul, PiTensorProduct.lift.tprod]
     exact GlobalTheory.Mem.AutSpace.isAutFunSm_smul r (hT.aut f)
   | add a b ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact GlobalTheory.Mem.AutSpace.isAutFunSm_add ha hb
 
 variable {Γ : Type} [Group Γ] [Fintype Γ] {Pl0 T : Type} {A : FamIn D.what₂.LL Γ Pl0 T D.R.m}

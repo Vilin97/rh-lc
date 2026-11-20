@@ -30,7 +30,7 @@ def rulEv (U : Unf Xo c σ r)
     Rul Xo c →+* ((Σ k : U.Comp, (U.X k).dom) → ℂ) where
   toFun f y := rdU U f y.1 y.2.1
   map_zero' := by funext y; rw [map_zero]; rfl
-  map_add' f g := by funext y; rw [map_add]; rfl
+  map_add' f g := by funext y; rw [map_add (f := _)]; rfl
   map_mul' f g := by funext y; rw [rdU_mul]; rfl
   map_one' := by
     funext y

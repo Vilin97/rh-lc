@@ -93,7 +93,7 @@ private theorem exists_basicOpen_two {X : Scheme.{0}} {U O : X.Opens} (hU : IsAf
   · exact ⟨f₂, h₂, c₂, b₂⟩
   have key : ∀ (x : X) (hx : x ∈ U), x ∈ X.basicOpen (f₁ + f₂) ↔
       IsUnit ((X.presheaf.germ U x hx).hom f₁ + (X.presheaf.germ U x hx).hom f₂) := fun x hx => by
-    rw [Scheme.mem_basicOpen _ _ _ hx, map_add]
+    rw [Scheme.mem_basicOpen _ _ _ hx, map_add (f := _)]
   have mix : ∀ {R : Type} [CommRing R] [IsLocalRing R] {u v : R}, IsUnit u → ¬ IsUnit v → IsUnit (u + v) :=
     fun {R} _ _ {u v} hu hv => by
       have h : IsUnit ((u + v) + (-v)) := by simpa using hu

@@ -61,7 +61,7 @@ theorem exists_gens : ∃ (m : ℕ) (w : Fin m → Fv F v ⊗[F] E), (∀ k, w k
     | add a b _ _ ha hb =>
       have e : inclR (F := F) (Fv F v) (((a + b : 𝓞 E)) : E) =
           inclR (F := F) (Fv F v) (a : E) + inclR (F := F) (Fv F v) (b : E) := by
-        simp [map_add]
+        simp [map_add (f := _)]
       show inclR (F := F) (Fv F v) (((a + b : 𝓞 E)) : E) ∈ _
       rw [e]
       exact Submodule.add_mem _ ha hb
@@ -155,7 +155,7 @@ theorem isOpen_oev : IsOpen (OEv (E := E) v) :=
 
 def trC : (Fv F v ⊗[F] E) →ₗ[Fv F v] (Fin (Module.finrank F E) → Fv F v) where
   toFun y i := Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (bas (E := E) v i * y)
-  map_add' x y := by funext i; simp [mul_add, map_add]
+  map_add' x y := by funext i; simp [mul_add, map_add (f := _)]
   map_smul' c x := by funext i; simp [map_smul]
 
 theorem trC_apply (y : Fv F v ⊗[F] E) (i : Fin (Module.finrank F E)) :

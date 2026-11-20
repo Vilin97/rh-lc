@@ -39,7 +39,7 @@ theorem BaseChangeColon.cycNum_mul_expansion : ∀ (O : Type) [CommRing O] [IsDo
     intro ν μ
     have hp : (classList cls (ν + μ)).Perm (classList cls ν ++ classList cls μ) := by
       rw [← Multiset.coe_eq_coe, ← Multiset.coe_add]
-      simp only [classList, Multiset.coe_toList, Finsupp.toMultiset_add, Multiset.map_add]
+      simp only [classList, Multiset.coe_toList, Finsupp.toMultiset_add, Multiset.map_add (f := _)]
     rw [← List.append_assoc]
     exact BaseChangeColon.intersection_numbers_perm_invariant.2 O K ι Z _ _ (hp.append_right Q)
   conv_lhs => rw [H.as_sum, G.as_sum, Finset.sum_mul_sum]

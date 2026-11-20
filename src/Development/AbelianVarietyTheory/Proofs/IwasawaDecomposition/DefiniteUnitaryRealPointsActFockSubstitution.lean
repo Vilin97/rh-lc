@@ -61,7 +61,7 @@ theorem pureTensorO_mul_mul (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ)
   | C a =>
     rw [MvPolynomial.algHom_C, MvPolynomial.algebraMap_eq, ← mul_one (MvPolynomial.C a), ← MvPolynomial.smul_eq_C_mul,
       map_smul, map_smul, h1, h1]
-  | add P Q hP hQ => rw [map_add, map_add, map_add, hP, hQ]
+  | add P Q hP hQ => rw [map_add (f := _), map_add (f := _), map_add (f := _), hP, hQ]
   | mul_X P v hP =>
     obtain ⟨τ, i, j⟩ := v
     rw [mul_comm, hX, hP, map_mul]
@@ -103,7 +103,7 @@ theorem om_vac {χS χT : (AE D)ˣ →* Circle} {ω : GA D V × GA D W →* Modu
     show ω (g, h) (heisO ψ V W x f₀) = c • heisO ψ V W x f₀
     rw [hω.om_heis g h _ _ h₀.2.theta, GlobalTheory.VacuumChar.actO_fin hg hh x.2, e, GlobalTheory.SplitScalar.heisO_smul]
   | zero => rw [map_zero, smul_zero]
-  | add a b _ _ ha hb => rw [map_add, ha, hb, smul_add]
+  | add a b _ _ ha hb => rw [map_add (f := _), ha, hb, smul_add]
   | smul r a _ ha => rw [map_smul, ha, smul_comm]
 
 open Classical in

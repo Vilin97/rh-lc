@@ -24,7 +24,7 @@ theorem coeff_X_mul_pderiv (u : σ) (m : σ →₀ ℕ) (P : MvPolynomial σ K) 
     split_ifs with h
     · subst h; simp
     · simp
-  | add P Q hP hQ => simp only [map_add, mul_add, MvPolynomial.coeff_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), mul_add, MvPolynomial.coeff_add, hP, hQ]
 
 theorem eval_congr_vars {P : MvPolynomial σ K} {x x' : σ → K} (h : ∀ s ∈ P.vars, x s = x' s) :
     eval x P = eval x' P :=

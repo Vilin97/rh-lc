@@ -33,7 +33,7 @@ theorem incl_trA (z : AE D) : algebraMap (AF D.host.F) (AE D) (trA z) = z + cA D
       _ = a ⊗ₜ[D.host.F] e + cA D (a ⊗ₜ[D.host.F] e) := by
           rw [h, TensorProduct.tmul_add]; rfl
   | add x y hx hy =>
-    simp only [trA, map_add] at hx hy ⊢
+    simp only [trA, map_add (f := _)] at hx hy ⊢
     rw [hx, hy]; abel
 
 set_option synthInstance.maxHeartbeats 400000 in
@@ -59,13 +59,13 @@ theorem psi_trA_tau {θ : InfFam D} (hθ : IsInfFam θ) {ψ : AddChar (AF D.host
     (hzf : finPart D z = 0) :
     ψ (trA z) = Complex.exp (Complex.I * ((4 * Real.pi * l τ : ℝ) : ℂ) * ((psiT D τ z).re : ℂ)) := by
   have hfin : finPart D (algebraMap (AF D.host.F) (AE D) (trA z)) = 0 := by
-    rw [incl_trA, RingHom.map_add, hzf, cA, Formalism.IndefR.Eqv.finPart_sigR, hzf, RingHom.map_zero, add_zero]
+    rw [incl_trA, RingHom.map_add (f := _), hzf, cA, Formalism.IndefR.Eqv.finPart_sigR, hzf, RingHom.map_zero, add_zero]
   rw [psi_eq_of_fin hθ hl _ hfin, incl_trA]
   have hs : ∑ τ', (l τ' : ℂ) * psiT D τ' (z + cA D z) = (l τ : ℂ) * (2 * ((psiT D τ z).re : ℂ)) := by
     rw [Finset.sum_eq_single τ]
-    · rw [RingHom.map_add, cA, psiT_sigR, Complex.add_conj]; push_cast; ring
+    · rw [RingHom.map_add (f := _), cA, psiT_sigR, Complex.add_conj]; push_cast; ring
     · intro τ' _ hne
-      rw [RingHom.map_add, cA, psiT_sigR, hz τ' hne, map_zero, add_zero, mul_zero]
+      rw [RingHom.map_add (f := _), cA, psiT_sigR, hz τ' hne, map_zero, add_zero, mul_zero]
     · intro h; exact absurd (Finset.mem_univ τ) h
   rw [hs]
   congr 1

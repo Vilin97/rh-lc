@@ -72,7 +72,7 @@ theorem boost_mem (y : Fin k → ℂ) (c : ℂ)
       have h1 : ∀ l : Fin k, conj ((if l = i then 1 else 0) + y l * conj (y i) / (1 + (‖c‖ : ℂ))) * y l =
           (if l = i then y l else 0) + (y i / (1 + (‖c‖ : ℂ))) * (conj (y l) * y l) := by
         intro l
-        simp only [map_add, map_mul, map_div₀, map_one, Complex.conj_ofReal, Complex.conj_conj]
+        simp only [map_add (f := _), map_mul, map_div₀, map_one, Complex.conj_ofReal, Complex.conj_conj]
         split_ifs <;> simp <;> ring
       rw [Finset.sum_congr rfl (fun l _ => h1 l), Finset.sum_add_distrib, Finset.sum_ite_eq', ← Finset.mul_sum, hS]
       simp only [Finset.mem_univ, if_true, map_mul, map_div₀, Complex.conj_ofReal, Complex.conj_conj]
@@ -88,7 +88,7 @@ theorem boost_mem (y : Fin k → ℂ) (c : ℂ)
             (if l = j then conj (y l) * y i / (1 + (‖c‖ : ℂ)) else 0) +
             (y i * conj (y j) / (1 + (‖c‖ : ℂ)) ^ 2) * (conj (y l) * y l) := by
         intro l
-        simp only [map_add, map_mul, map_div₀, map_one, Complex.conj_ofReal, Complex.conj_conj]
+        simp only [map_add (f := _), map_mul, map_div₀, map_one, Complex.conj_ofReal, Complex.conj_conj]
         by_cases hi : l = i <;> by_cases hj : l = j
         · subst hi; subst hj; simp <;> field_simp <;> ring
         · subst hi; simp [hj] <;> field_simp <;> ring

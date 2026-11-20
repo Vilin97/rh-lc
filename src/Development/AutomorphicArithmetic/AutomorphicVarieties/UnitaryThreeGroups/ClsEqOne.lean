@@ -212,5 +212,5 @@ theorem UpperTheory.V.U3.typeII_ord :
       simp only [w0, w1, w2, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val,
         Matrix.cons_val_fin_one, _root_.zpow_one, _root_.zpow_zero, _root_.zpow_neg, Units.val_one] at htr
       linear_combination htr
-    rw [Matrix.charpoly_fin_two, ht, hd, ← hu, map_add, map_mul]
+    rw [Matrix.charpoly_fin_two, ht, hd, ← hu, map_add (f := _), map_mul]
     ring

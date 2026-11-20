@@ -87,7 +87,7 @@ theorem rho_apply_add_I {J : Matrix (Fin n) (Fin n) ℂ} {s : Matrix (Fin n) (Fi
     (Z₁ Z₂ : Matrix (Fin n) (Fin n) ℂ) (hY : Y = Z₁ + Complex.I • Z₂) (f : smLoc J s) (g : G) :
     (ρ Y f).1 g = (ρ Z₁ f).1 g + Complex.I * (ρ Z₂ f).1 g := by
   subst hY
-  rw [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, Submodule.coe_add, Submodule.coe_smul,
+  rw [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, Submodule.coe_add, Submodule.coe_smul,
     Pi.add_apply, Pi.smul_apply, smul_eq_mul]
 
 theorem isLeftInv_rho {J : Matrix (Fin n) (Fin n) ℂ} (hJh : Jᴴ = J) (hJ : IsUnit J.det)

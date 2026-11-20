@@ -139,7 +139,7 @@ theorem hasLen_ext {C : Type} [Field C] {v : Valuation C NNReal} {R : Type} [Com
       have hπs : ∑ j, p (Sum.inr j) • gD j = 0 := by
         have h1 := congrArg π hp
         set_option synthInstance.maxHeartbeats 100000 in
-          simpa [map_add, map_sum, map_smul, hb, hπι] using h1
+          simpa [map_add (f := _), map_sum, map_smul, hb, hπι] using h1
       choose t ht using fun j => Ideal.mem_span_singleton'.1 (memD _ hπs j)
       have hsb : ∑ j, p (Sum.inr j) • b j = ι (∑ i, (∑ j, t j * x j i) • gA i) := by
         set_option synthInstance.maxHeartbeats 100000 in
@@ -153,7 +153,7 @@ theorem hasLen_ext {C : Type} [Field C] {v : Valuation C NNReal} {R : Type} [Com
       have hι0 : ι (∑ i, (p (Sum.inl i) + ∑ j, t j * x j i) • gA i) = 0 := by
         rw [← hp, hsb]
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [add_smul, Finset.sum_add_distrib, map_add, map_sum, map_smul]
+          simp only [add_smul, Finset.sum_add_distrib, map_add (f := _), map_sum, map_smul]
       have hA0 : ∑ i, (p (Sum.inl i) + ∑ j, t j * x j i) • gA i = 0 :=
         hι (hι0.trans (map_zero ι).symm)
       choose q hq using fun i => Ideal.mem_span_singleton'.1 (memA _ hA0 i)

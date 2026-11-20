@@ -43,7 +43,7 @@ theorem fockNormO_of (hccr : CCRTheta D) (hnorm : FockNormAbs) (hskew : DRhoSkew
     simp only [hip, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     have e : (fun w => H w * starRingEnd ℂ (a * F w + b * G w)) =
         fun w => starRingEnd ℂ a * (H w * starRingEnd ℂ (F w)) + starRingEnd ℂ b * (H w * starRingEnd ℂ (G w)) := by
-      funext w; simp only [map_add, map_mul]; ring
+      funext w; simp only [map_add (f := _), map_mul]; ring
     rw [e, integral_add ((hI H F hH hF).const_mul _) ((hI H G hH hG).const_mul _), integral_const_mul,
       integral_const_mul]
   have skew : ∀ τ z F G, IsThetaFunO ψ S T F → IsThetaFunO ψ S T G →

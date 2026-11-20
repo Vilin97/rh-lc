@@ -28,7 +28,7 @@ theorem isIntegral_coord_of_isIntegral (E : Type) [Field E] [NumberField E] [IsC
   have hri : IsIntegral ℤ r := hθ.sub (hc _ hθ)
   have h0 : IsIntegral ℤ ((x 0 : E) * r) := by
     have := hu.sub (hc _ hu)
-    rw [map_add, map_mul, hfix, hfix] at this
+    rw [map_add (f := _), map_mul, hfix, hfix] at this
     have e : (x 0 : E) * r = (x 0 : E) * θ + (x 1 : E) -
         ((x 0 : E) * IsCMField.complexConj E θ + (x 1 : E)) := by rw [hrdef]; ring
     rw [e]; exact this

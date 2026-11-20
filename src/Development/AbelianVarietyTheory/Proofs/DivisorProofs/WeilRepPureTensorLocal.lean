@@ -83,7 +83,7 @@ theorem rho_pure_tensor {E : Type} [Field E] [NumberField E] [Algebra F E] {σ :
     rw [hfst, add_zero]
   have hFne : ∀ u, u ≠ v → ∀ i, evFin F u (x i + p.1 i) = evFin F u (x i) := by
     intro u hu i
-    rw [map_add]
+    rw [map_add (f := _)]
     show _ + evalV F u (p.1 i).2 = _
     rw [hsnd, evalV_singleFin_ne hu, add_zero]
   have hp2 : ∀ u : AF F, evFin F v u = 0 → u • p.2 = 0 := fun u hu => congrArg Prod.snd (hp u hu)
@@ -102,7 +102,7 @@ theorem rho_pure_tensor {E : Type} [Field E] [NumberField E] [Algebra F E] {σ :
       (GlobalTheory.FinComm.locPt v p).1 ⬝ᵥ (GlobalTheory.FinComm.locPt v p).2 / 2 := by
     rw [hs]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [GlobalTheory.FinComm.locPt, dotProduct, map_add, map_mul, map_sum, h2']
+      simp only [GlobalTheory.FinComm.locPt, dotProduct, map_add (f := _), map_mul, map_sum, h2']
     try ring
   set g : Pl F → ℂ := fun u => φ u fun i => evFin F u (x i + p.1 i) with hg
   have hfin : (Function.mulSupport g).Finite := mulSupport_finite φ hφ (x + p.1)

@@ -50,7 +50,7 @@ theorem main : ∀ {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (B : LocBase
     simp only [hTfun, dif_pos hvk]
     exact sub_mem_of_ker_eq x.1 y.1 (x.2.1.trans y.2.1.symm) _
   | algebraMap r => rfl
-  | add f g _ _ hf hg => simp only [Pi.add_apply, map_add, hf, hg]
+  | add f g _ _ hf hg => simp only [Pi.add_apply, map_add (f := _), hf, hg]
   | mul f g _ _ hf hg => simp only [Pi.mul_apply, map_mul, hf, hg]
 
 end GlobalTheory.HeckeLocN.TLocal

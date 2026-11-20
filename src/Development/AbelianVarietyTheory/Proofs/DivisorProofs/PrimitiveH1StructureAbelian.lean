@@ -34,7 +34,7 @@ theorem axesO1_of_isAbelianScheme (R : Type) [CommRing R] (A : Over (Sp R)) [Grp
     have e : f (a, b) = pO1 (fst A A) a + pO1 (snd A A) b := rfl
     have e2 : ∀ z, r z = (pO1 (lift (𝟙 A) (toUnit A ≫ η[A])) z, pO1 (lift (toUnit A ≫ η[A]) (𝟙 A)) z) :=
       fun _ ↦ rfl
-    rw [e2, e, map_add, map_add, (hax a).1, (hax b).2.1, (hax a).2.2.2.1, (hax b).2.2.2.2.1, add_zero, zero_add]
+    rw [e2, e, map_add (f := _), map_add (f := _), (hax a).1, (hax b).2.1, (hax a).2.2.2.1, (hax b).2.2.2.2.1, add_zero, zero_add]
   have hP := (GlobalTheory.T.fgProjectiveConstantRank_extension_and_prod).2 R _ _ g g h1 h1
   have hbij := GlobalTheory.T.bijective_of_split_injective_fgProjectiveConstantRank R _ _ (g + g) hP h2 f r hrf
   intro y hy1 hy2

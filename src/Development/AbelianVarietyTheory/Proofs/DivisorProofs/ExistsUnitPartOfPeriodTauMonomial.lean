@@ -71,7 +71,7 @@ theorem exists_isUnitTau : ∀ {R : Type} [CommRing R] [IsDomain R] (Q : DegPre 
     have b := hn2 i
     have c := hn3 i
     have s := hsym i y z
-    simp only [map_add, LinearMap.add_apply] at a
+    simp only [map_add (f := _), LinearMap.add_apply] at a
     linarith
   have hee : e1 = e' * e2 * e3 := by
     apply Units.ext

@@ -72,13 +72,13 @@ theorem UpperTheory.exists_homogeneous_lift_mod_ker_pow_succ_sup :
       · rintro a1 a2 ⟨e1, h1, he1, hh1, hm1, hs1⟩ ⟨e2, h2, he2, hh2, hm2, hs2⟩
         refine ⟨e1 * e2, MvPolynomial.C e2 * h1 + MvPolynomial.C e1 * h2, mul_ne_zero he1 he2,
           (hh1.C_mul _).add (hh2.C_mul _), ?_, ?_⟩
-        · rw [map_add, map_mul, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_C]
+        · rw [map_add (f := _), map_mul, map_mul, MvPolynomial.aeval_C, MvPolynomial.aeval_C]
           exact Ideal.add_mem _ (Ideal.mul_mem_left _ _ hm1) (Ideal.mul_mem_left _ _ hm2)
         · have eq : (e1 * e2) • (a1 + a2) - MvPolynomial.aeval t
                 (MvPolynomial.C e2 * h1 + MvPolynomial.C e1 * h2)
               = e2 • (e1 • a1 - MvPolynomial.aeval t h1)
                 + e1 • (e2 • a2 - MvPolynomial.aeval t h2) := by
-            simp only [map_add, map_mul, MvPolynomial.aeval_C, Algebra.smul_def]
+            simp only [map_add (f := _), map_mul, MvPolynomial.aeval_C, Algebra.smul_def]
             ring
           rw [eq]
           refine Submodule.add_mem _ ?_ ?_

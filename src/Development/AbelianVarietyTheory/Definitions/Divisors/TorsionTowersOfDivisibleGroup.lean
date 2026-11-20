@@ -640,7 +640,7 @@ theorem LieCorr.add (h : t.LieCorr x v) (h' : t.LieCorr x' v') : t.LieCorr (x + 
       _root_.mul_one])
   refine ⟨hv, fun n => ⟨(toConv (t.tanPt h.1 n) * toConv (t.tanPt h'.1 n)).ofConv, by
     rw [t.mul, tanPt_y, tanPt_y, ← MonObj.comp_mul], fun w a ha => ?_⟩⟩
-  rw [LinearMap.add_apply, map_add, (t.lieCorr_iff h.1 x).1 h, (t.lieCorr_iff h'.1 x').1 h', ← ha,
+  rw [LinearMap.add_apply, map_add (f := _), (t.lieCorr_iff h.1 x).1 h, (t.lieCorr_iff h'.1 x').1 h', ← ha,
     tanDer_d, tanDer_d, AlgHom.convMul_apply]
   have e1 := congrArg (t.tanPt h.1 n) (congrArg (TensorProduct.rid O _) (lTensor_counit_comul a))
   have e2 := congrArg (t.tanPt h'.1 n) (congrArg (TensorProduct.lid O _) (rTensor_counit_comul a))
@@ -649,7 +649,7 @@ theorem LieCorr.add (h : t.LieCorr x v) (h' : t.LieCorr x' v') : t.LieCorr (x + 
   rw [← e1, ← e2]
   generalize comul (R := O) a = c
   induction c with
-  | add c d hc hd => simp only [map_add, TrivSqZeroExt.snd_add, ← hc, ← hd]; abel
+  | add c d hc hd => simp only [map_add (f := _), TrivSqZeroExt.snd_add, ← hc, ← hd]; abel
   | tmul b c =>
     rw [Algebra.TensorProduct.lift_tmul, LinearMap.lTensor_tmul, LinearMap.rTensor_tmul,
       TensorProduct.rid_tmul, TensorProduct.lid_tmul, map_smul, map_smul, DualNumber.snd_mul,
@@ -771,7 +771,7 @@ theorem existsUnique_lieCorr [IsAdicComplete (Ideal.span {(p : O)}) O] (hv : IsT
         fun n => SModEq.zero.2 (SModEq.sub_mem.1 ((hm n a b).2 (h n)))
   let x : G.Lie :=
     { toFun := L
-      map_add' := fun w w' => hu _ _ fun n => by rw [map_add, hL, hL, hL, ← map_add]; rfl
+      map_add' := fun w w' => hu _ _ fun n => by rw [map_add (f := _), hL, hL, hL, ← map_add (f := _)]; rfl
       map_smul' := fun c w => hu _ _ fun n => by
         rw [RingHom.id_apply, smul_eq_mul, _root_.map_mul, hL, hL]
         exact (map_smul (t.tanDer hv n) c (w.1 n)).trans (Algebra.smul_def _ _) }

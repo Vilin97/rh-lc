@@ -304,7 +304,7 @@ theorem goal1 :
     { carrier := {r | ‖κ (algebraMap (NumberField.RingOfIntegers K) K r)‖ < 1}
       add_mem' := by
         intro a b ha hb
-        simp only [Set.mem_ofPred_eq, map_add] at ha hb ⊢
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at ha hb ⊢
         exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
       zero_mem' := by simp
       smul_mem' := by

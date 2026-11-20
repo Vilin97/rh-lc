@@ -73,7 +73,7 @@ theorem differentiable_eval {σ : Type} (p : MvPolynomial σ ℂ) (f : ℂ → �
     Differentiable ℂ (fun c => MvPolynomial.eval (f c) p) := by
   induction p using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add]; exact hp.fun_add hq
+  | add p q hp hq => simp only [map_add (f := _)]; exact hp.fun_add hq
   | mul_X p v hp => simp only [map_mul, MvPolynomial.eval_X]; exact hp.fun_mul (hf v)
 
 theorem eval_act_diagonal (p : MvPolynomial (T × Bool × Fin n × Fin N) ℂ)

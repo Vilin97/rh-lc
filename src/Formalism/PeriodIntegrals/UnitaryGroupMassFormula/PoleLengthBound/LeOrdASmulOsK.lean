@@ -22,7 +22,7 @@ theorem rD_eq (β : Idx D j G.N →₀ ℕ) (x : ↥(HK X la G.w wF))
 theorem rD_add (β : Idx D j G.N →₀ ℕ) (x y : ↥(HK X la G.w wF)) :
     rD G la β (x + y) = rD G la β x + rD G la β y := by
   have hP := hasse_preserves_kernel G la
-  rw [rD_eq G la β _ (hP β _ (x + y).2), rD_eq G la β _ (hP β _ x.2), rD_eq G la β _ (hP β _ y.2), ← map_add]
+  rw [rD_eq G la β _ (hP β _ (x + y).2), rD_eq G la β _ (hP β _ x.2), rD_eq G la β _ (hP β _ y.2), ← map_add (f := _)]
   congr 1
   apply Subtype.ext
   exact (hasse X la G.w β).map_add _ _
@@ -136,7 +136,7 @@ theorem good_smul (hC : Q.InCurve) {T : ℕ} {m : PtsG G la → ℕ} {x : ↥(HK
   refine le_ordA_sum Q hC ζ _ _ _ fun q hq => le_ordA_smul_Op Q hC ζ _ _ _ (hx q.2 ?_ ζ)
   rw [mem_antidiagonal] at hq
   rw [PI.HJP.sum_eq_degree] at hβ ⊢
-  have : Finsupp.degree β = Finsupp.degree q.1 + Finsupp.degree q.2 := by rw [← hq, map_add]
+  have : Finsupp.degree β = Finsupp.degree q.1 + Finsupp.degree q.2 := by rw [← hq, map_add (f := _)]
   omega
 
 theorem good_of_mem_AAp (hC : Q.InCurve) {T : ℕ} {m : PtsG G la → ℕ} (ha : 0 < a0 D j T)

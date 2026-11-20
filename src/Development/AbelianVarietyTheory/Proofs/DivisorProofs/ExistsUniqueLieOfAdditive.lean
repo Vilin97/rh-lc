@@ -31,7 +31,7 @@ theorem existsUnique_lie_of_additive : ∀ (p : ℕ) (O : Type) [CommRing O] [Is
     rw [hU (n + 1) w φ hφ] at hx
     obtain ⟨z, hz⟩ := hc n
     rw [Ideal.Quotient.eq, Ideal.mem_span_singleton] at hx ⊢
-    rw [hz, map_add, map_smul, smul_eq_mul] at hx
+    rw [hz, map_add (f := _), map_smul, smul_eq_mul] at hx
     obtain ⟨k, hk⟩ := hx
     exact ⟨(p : O) * k - φ z, by linear_combination hk⟩
   obtain ⟨l, hl, huniq⟩ := GlobalTheory.T.existsUnique_dual_of_compatible_mod_pow_of_adicComplete O G.dual.omega (p : O) U key

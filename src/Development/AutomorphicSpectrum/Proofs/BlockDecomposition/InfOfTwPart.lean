@@ -48,7 +48,7 @@ theorem sum_tw {n : ℕ} (P : Pre E n) (χ : HChar E) (τ : E →+* ℂ) :
     intro s
     induction s using Finset.induction_on with
     | empty => simp
-    | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, Multiset.map_add, ih]
+    | insert a s ha ih => rw [Finset.sum_insert ha, Finset.sum_insert ha, Multiset.map_add (f := _), ih]
   rw [hmap Finset.univ]
   refine Finset.sum_congr rfl fun i _ => ?_
   exact infOf_twPart P χ τ i

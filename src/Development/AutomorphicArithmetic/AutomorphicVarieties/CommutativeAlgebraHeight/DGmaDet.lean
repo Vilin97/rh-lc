@@ -113,7 +113,7 @@ theorem UpperTheory.V.CA.d_gma_det :
         intro B _ _ b
         letI : Algebra A B := ((algebraMap S B).comp (algebraMap A S)).toAlgebra
         haveI : IsScalarTower A S B := .of_algebraMap_eq fun _ => rfl
-        rw [(d_bc D S).1 B, hrep, map_add, map_add (Det.repS _ _), map_one, map_one (Det.repS _ _),
+        rw [(d_bc D S).1 B, hrep, map_add (f := _), map_add (Det.repS _ _), map_one, map_one (Det.repS _ _),
           Det.cancel_tmul, Det.repS_tmul, rS_tmul, map_one, mul_one, ← smul_tmul, ev_one_add D _ (h1 i), map_smul, hr, one_smul,
           ← det_one_add_single i (a • b)]
         congr 2

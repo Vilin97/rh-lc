@@ -1231,10 +1231,10 @@ def DecSys.projQ (h : DecSys W e) (Q : I → Prop) : Module.End K V where
   map_add' x y := by
     obtain ⟨T, h1, h2⟩ := h.cover2 x y
     have h3 : x + y = ∑ mu ∈ T, e mu (x + y) := by
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       rw [← h1, ← h2]
     rw [h.projFun_eq Q h1, h.projFun_eq Q h2, h.projFun_eq Q h3]
-    simp only [map_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Finset.sum_add_distrib]
   map_smul' c x := by
     obtain ⟨T, h1⟩ := h.cover x
     have h3 : c • x = ∑ mu ∈ T, e mu (c • x) := by
@@ -1316,7 +1316,7 @@ theorem isoSub_map_of_comm (E : GLOps n K V) (A : Module.End K V) (hA : ∀ a b 
         rw [h2, this, map_zero]
       · rw [← hA, hv.2.2 a b hab, map_zero]
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ _ hy
 
 end Iso
@@ -1386,7 +1386,7 @@ theorem polProj_mem (d : ι → ℕ) (F : MvPolynomial (ι × Fin r) K) : polPro
     split_ifs with h
     · exact monomial_mem_Pol d m c h
     · exact Submodule.zero_mem _
-  | add p q hp hq => rw [map_add]; exact Submodule.add_mem _ hp hq
+  | add p q hp hq => rw [map_add (f := _)]; exact Submodule.add_mem _ hp hq
 
 theorem polProj_of_mem (d : ι → ℕ) (F : MvPolynomial (ι × Fin r) K) (hF : F ∈ Pol K r d) : polProj K d F = F := by
   unfold Pol at hF
@@ -1447,7 +1447,7 @@ theorem polProj_glAct [Fintype ι] (d : ι → ℕ) (LL : Letters ι) (S : Set �
       · rw [polProj_step, if_neg h]
       · rw [map_neg, polProj_step, if_neg h, neg_zero]
       · rw [map_zero]
-  | add p q hp hq => rw [map_add, map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 theorem glAct_mem_Pol [Fintype ι] (d : ι → ℕ) (LL : Letters ι) (S : Set ι) (a b : Fin r)
     (F : MvPolynomial (ι × Fin r) K) (hF : F ∈ Pol K r d) : glAct K LL S a b F ∈ Pol K r d := by
@@ -1926,7 +1926,7 @@ theorem genSub_stab (E : GLOps n K V) (v : V) : Stab E (genSub E v) := by
     obtain ⟨u, hu, rfl⟩ := hy
     exact Submodule.subset_span ⟨E a b * u, (Umon E).mul_mem (isoH_E_mem_Umon E a b) hu, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ _ hy
 
 theorem mem_genSub_self (E : GLOps n K V) (v : V) : v ∈ genSub E v :=
@@ -1956,7 +1956,7 @@ theorem isoSub_stab (E : GLOps n K V) (mu : Fin n → ℤ) : Stab E (isoSub E mu
     obtain ⟨u, hu, v, hv, rfl⟩ := hy
     exact Submodule.subset_span ⟨E a b * u, (Umon E).mul_mem (isoH_E_mem_Umon E a b) hu, v, hv, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ _ hy
 
 theorem genSub_le_isoSub (E : GLOps n K V) (mu : Fin n → ℤ) (v : V) (hv : IsHWV E mu v) :
@@ -1982,7 +1982,7 @@ theorem isoH_Z_low (E : GLOps n K V) (v : V) (c d : Fin n) (hcd : d ≤ c) :
     exact Submodule.subset_span
       ⟨E c d * u, (isoH_lowMon E).mul_mem (Submonoid.subset_closure ⟨c, d, hcd, rfl⟩) hu, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul k y _ hy => rw [map_smul]; exact Submodule.smul_mem _ _ hy
 
 theorem isoH_comm (E : GLOps n K V) (h : GLRel E) (a b c d : Fin n) (x : V) :
@@ -2027,7 +2027,7 @@ theorem isoH_Z_stab (E : GLOps n K V) (h : GLRel E) (lam : Fin n → ℤ) (v : V
     exact isoH_Z_word E h lam v hv u hu a b
   | zero => rw [map_zero]; exact Submodule.zero_mem _
   | add y z hy' hz' hy hz =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ (hy hy') (hz hz')
   | smul k y hy' hy =>
     rw [map_smul]
@@ -2064,7 +2064,7 @@ theorem isoH_Y_low (E : GLOps n K V) (h : GLRel E) (lam : Fin n → ℤ) (v : V)
   intro y hy
   unfold isoH_Y at hy ⊢
   obtain ⟨y1, hy1, y2, hy2, rfl⟩ := Submodule.mem_sup.1 hy
-  rw [map_add]
+  rw [map_add (f := _)]
   refine Submodule.add_mem _ ?_ ?_
   · obtain ⟨k, rfl⟩ := Submodule.mem_span_singleton.1 hy1
     rw [map_smul]
@@ -2423,7 +2423,7 @@ theorem Stab_inf (A B : Submodule K V) (hA : Stab E A) (hB : Stab E B) : Stab E 
 theorem Stab_sup (A B : Submodule K V) (hA : Stab E A) (hB : Stab E B) : Stab E (A ⊔ B) := by
   intro a b x hx
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem _ (Submodule.mem_sup_left (hA a b y hy)) (Submodule.mem_sup_right (hB a b z hz))
 
 def isoSet (Om : Set (Fin n → ℤ)) (P : Submodule K V) : Set V :=
@@ -2444,7 +2444,7 @@ theorem split_hwv (A C : Submodule K V) (hA : Stab E A) (hC : Stab E C) (hAC : A
     a ∈ weightSp E nu ∧ ∀ i j, i < j → E i j a = 0 := by
   have key : ∀ T : Module.End K V, (∀ x ∈ A, T x ∈ A) → (∀ x ∈ C, T x ∈ C) → T (a + c) = 0 → T a = 0 := by
     intro T hTA hTC h0
-    rw [map_add] at h0
+    rw [map_add (f := _)] at h0
     have h1 : T a = -T c := eq_neg_of_add_eq_zero_left h0
     have h2 : T a ∈ A ⊓ C := ⟨hTA a ha, by rw [h1]; exact C.neg_mem (hTC c hc)⟩
     rw [hAC] at h2

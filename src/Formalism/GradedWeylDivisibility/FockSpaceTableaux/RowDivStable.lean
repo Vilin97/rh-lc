@@ -116,7 +116,7 @@ theorem rowGenO_comp_colAddGen (R : Type*) [CommRing R] {r n : ℕ} (a b : Fin r
   intro v
   simp only [AlgHom.comp_apply, colAddGen, rowGen, rowGenO, aeval_X, Polynomial.coe_mapAlgHom]
   by_cases h2 : v.2 = j <;> by_cases h1 : v.1 = b <;>
-    simp [h1, h2, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_X, Polynomial.map_C,
+    simp [h1, h2, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_X, Polynomial.map_C,
       aeval_X] <;> ring
 
 theorem rowGenO_comp_rename (R : Type*) [CommRing R] {r n : ℕ} (a b : Fin r) :
@@ -127,7 +127,7 @@ theorem rowGenO_comp_rename (R : Type*) [CommRing R] {r n : ℕ} (a b : Fin r) :
   intro v
   simp only [AlgHom.comp_apply, rename_X, rowGen, rowGenO, aeval_X, Polynomial.coe_mapAlgHom]
   by_cases h1 : v.1 = b <;>
-    simp [h1, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_X, Polynomial.map_C]
+    simp [h1, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_X, Polynomial.map_C]
 
 theorem rowDiv_colAddGen (R : Type*) [CommRing R] {r n : ℕ} (a b : Fin r) (k : ℕ) (l j : Fin n)
     (f : MvPolynomial (Fin r × Fin n) R) (hf : colAddGen R l j f = rename some f) :

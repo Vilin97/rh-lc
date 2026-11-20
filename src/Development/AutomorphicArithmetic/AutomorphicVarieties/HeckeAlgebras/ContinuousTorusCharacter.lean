@@ -128,7 +128,7 @@ def Smooth (π : Representation A G M) : Prop :=
 
 def eig (π : Representation A G M) (c : ℕ) (φ : I.T →* Aˣ) : Submodule A M where
   carrier := {v | v ∈ fixd π I.N ∧ v ∈ fixd π (I.Nm c) ∧ ∀ t : I.T, π t v = (((φ t)⁻¹ : Aˣ) : A) • v}
-  add_mem' ha hb := ⟨add_mem ha.1 hb.1, add_mem ha.2.1 hb.2.1, fun t => by rw [map_add, ha.2.2, hb.2.2, smul_add]⟩
+  add_mem' ha hb := ⟨add_mem ha.1 hb.1, add_mem ha.2.1 hb.2.1, fun t => by rw [map_add (f := _), ha.2.2, hb.2.2, smul_add]⟩
   zero_mem' := ⟨zero_mem _, zero_mem _, fun t => by simp⟩
   smul_mem' c v hv := ⟨Submodule.smul_mem _ c hv.1, Submodule.smul_mem _ c hv.2.1, fun t => by
     rw [map_smul, hv.2.2, smul_comm]⟩
@@ -201,7 +201,7 @@ def Amb : Submodule A (X.Fn A m) where
     (∀ t : X.I.T, X.rp A m t f = (((θ t)⁻¹ : Aˣ) : A) • f) ∧
     ∀ k : ℕ, ∃ c, ∀ y ∈ X.I.Nm c, ∀ g i, f (g * (1, y)) i - f g i ∈ maximalIdeal A ^ k}
   add_mem' {f f'} h h' := ⟨fun γ g => by simp [h.1, h'.1], add_mem h.2.1 h'.2.1,
-    fun t => by rw [map_add, h.2.2.1, h'.2.2.1, smul_add], fun k => by
+    fun t => by rw [map_add (f := _), h.2.2.1, h'.2.2.1, smul_add], fun k => by
       obtain ⟨c, hc⟩ := h.2.2.2 k
       obtain ⟨c', hc'⟩ := h'.2.2.2 k
       refine ⟨max c c', fun y hy g i => ?_⟩

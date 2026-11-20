@@ -95,7 +95,7 @@ private theorem hom_substInj {R : Type*} [CommRing R] {ι : Type*} (f : PowerSer
   have hU : IsUnit (MvPowerSeries.subst ![a, b] H) := by
     rw [MvPowerSeries.isUnit_iff_constantCoeff]
     have hsplit : H = 1 + (H - 1) := by ring
-    rw [hsplit, ← MvPowerSeries.coe_substAlgHom hv, map_add, map_one, MvPowerSeries.coe_substAlgHom,
+    rw [hsplit, ← MvPowerSeries.coe_substAlgHom hv, map_add (f := _), map_one, MvPowerSeries.coe_substAlgHom,
       map_add, map_one,
       MvPowerSeries.constantCoeff_subst_eq_zero hv (fun i => by fin_cases i <;> simp [ha, hb]) c1,
       add_zero]
@@ -152,7 +152,7 @@ theorem log_iff_hom_additive : LogIffHomGa := by
     have hv : MvPowerSeries.HasSubst ![atX f, atY f] :=
       hom_hasSubst_pair _ _ (hom_cc_at f 0 h0) (hom_cc_at f 1 h0)
     show MvPowerSeries.subst _ (MvPowerSeries.X 0 + MvPowerSeries.X 1) = _
-    rw [← MvPowerSeries.coe_substAlgHom hv, map_add, MvPowerSeries.coe_substAlgHom,
+    rw [← MvPowerSeries.coe_substAlgHom hv, map_add (f := _), MvPowerSeries.coe_substAlgHom,
       MvPowerSeries.subst_X hv, MvPowerSeries.subst_X hv]
     rfl
   unfold IsLog IsHom

@@ -128,7 +128,7 @@ theorem ev_map {H : Type} [Group H] (σ : Representation ℂ H V) (π : Represen
     (t : V ⊗[ℂ] smoothPart π.dual) (w : W) :
     ev V π (TensorProduct.map (σ g) (contra π h) t) w = σ g (ev V π t (π h⁻¹ w)) := by
   induction t with
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul v l => simp
 end General
 

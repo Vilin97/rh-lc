@@ -29,7 +29,7 @@ theorem span_orbit_stab {K : Type} [Group K] (κ : K →* Module.End ℂ U) (x :
   induction hy using Submodule.span_induction with
   | mem y h => obtain ⟨k', rfl⟩ := h; exact Submodule.subset_span ⟨k * k', by simp⟩
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
 
 def orb {K : Type} [Group K] (κ : K →* Module.End ℂ U) (x : U) : Submodule ℂ U := Submodule.span ℂ (Set.range fun k => κ k x)
@@ -44,7 +44,7 @@ def homs {K : Type} [Group K] (κ : K →* Module.End ℂ U) (W : Submodule ℂ 
 
 def ck (H : Submodule ℂ (U →ₗ[ℂ] U)) : Submodule ℂ U where
   carrier := {z | ∀ L ∈ H, L z = 0}
-  add_mem' := fun {a b} ha hb L hL => by rw [map_add, ha L hL, hb L hL, add_zero]
+  add_mem' := fun {a b} ha hb L hL => by rw [map_add (f := _), ha L hL, hb L hL, add_zero]
   zero_mem' := fun L _ => map_zero L
   smul_mem' := fun c a ha L hL => by rw [map_smul, ha L hL, smul_zero]
 

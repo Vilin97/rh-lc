@@ -27,7 +27,7 @@ theorem exists_isThetaP (ν : Measure H') (𝓕 : Set H') (th : G' → H' → S'
     fun f e g => rfl⟩
   · intro f f' e
     funext g
-    simp only [Submodule.coe_add, Pi.add_apply, map_add]
+    simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _)]
     exact integral_add (hint f e g) (hint f' e g)
   · intro c f e
     funext g
@@ -35,7 +35,7 @@ theorem exists_isThetaP (ν : Measure H') (𝓕 : Set H') (th : G' → H' → S'
     exact integral_smul c _
   · intro f e e'
     funext g
-    simp only [Pi.add_apply, map_add, LinearMap.add_apply]
+    simp only [Pi.add_apply, map_add (f := _), LinearMap.add_apply]
     exact integral_add (hint f e g) (hint f e' g)
   · intro c f e
     funext g

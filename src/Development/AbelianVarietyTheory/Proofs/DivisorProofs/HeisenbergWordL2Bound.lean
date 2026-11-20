@@ -53,7 +53,7 @@ variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 def trForm (c : κ → mixedEmbedding.mixedSpace F) : (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap
     { toFun := fun y => Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (y ⬝ᵥ c)
-      map_add' := fun y y' => by rw [add_dotProduct, map_add]
+      map_add' := fun y y' => by rw [add_dotProduct, map_add (f := _)]
       map_smul' := fun r y => by rw [smul_dotProduct, map_smul]; rfl }
 
 theorem trForm_apply (c y : κ → mixedEmbedding.mixedSpace F) :
@@ -78,7 +78,7 @@ def derLin (ι : Type) : ((κ → mixedEmbedding.mixedSpace F) × (κ → mixedE
   LinearMap.mk₂ ℝ (fun v f i => derOp v (f i))
     (fun v v' f => by
       funext i; ext x
-      simp only [Pi.add_apply, SchwartzMap.add_apply, derOp_apply, trForm_apply, Prod.fst_add, Prod.snd_add, map_add,
+      simp only [Pi.add_apply, SchwartzMap.add_apply, derOp_apply, trForm_apply, Prod.fst_add, Prod.snd_add, map_add (f := _),
         dotProduct_add]
       push_cast; ring)
     (fun c v f => by
@@ -88,7 +88,7 @@ def derLin (ι : Type) : ((κ → mixedEmbedding.mixedSpace F) × (κ → mixedE
       push_cast; ring)
     (fun v f f' => by
       funext i
-      simp only [Pi.add_apply, derOp, map_add, smul_add]
+      simp only [Pi.add_apply, derOp, map_add (f := _), smul_add]
       abel)
     (fun c v f => by
       funext i
@@ -141,7 +141,7 @@ theorem schr_pureA [Invertible (2 : AF F)] (ψ : AddChar (AF F) ℂ) (hψ : IsSt
       (fun i => evI F (x i)) + t • X1 := by
     funext i
     change evHom F (x i + realAd F t * a i) = evHom F (x i) + t • evHom F (a i)
-    rw [map_add, map_mul, evHom_realAd, Algebra.smul_def]
+    rw [map_add (f := _), map_mul, evHom_realAd, Algebra.smul_def]
   set A := x ⬝ᵥ (realAd F t • (a, b)).2 + ⅟(2 : AF F) * ((realAd F t • (a, b)).1 ⬝ᵥ (realAd F t • (a, b)).2) with hAdef
   have hA : A = realAd F t * (x ⬝ᵥ b + ⅟(2 : AF F) * (realAd F t * (a ⬝ᵥ b))) := by
     rw [hAdef]
@@ -161,10 +161,10 @@ theorem schr_pureA [Invertible (2 : AF F)] (ψ : AddChar (AF F) ℂ) (hψ : IsSt
     have e1 : evI F A = algebraMap ℝ (mixedEmbedding.mixedSpace F) t * ((⇑(evHom F) ∘ x) ⬝ᵥ (⇑(evHom F) ∘ b) +
         algebraMap ℝ (mixedEmbedding.mixedSpace F) (1 / 2) *
           (algebraMap ℝ (mixedEmbedding.mixedSpace F) t * ((⇑(evHom F) ∘ a) ⬝ᵥ (⇑(evHom F) ∘ b)))) := by
-      rw [← evHom_apply, hA, map_mul, map_add, map_mul, map_mul, evHom_realAd, RingHom.map_dotProduct,
+      rw [← evHom_apply, hA, map_mul, map_add (f := _), map_mul, map_mul, evHom_realAd, RingHom.map_dotProduct,
         RingHom.map_dotProduct, evHom_invOf_two]
     rw [e1, trForm_apply]
-    simp only [← Algebra.smul_def, map_add, map_smul, smul_eq_mul]
+    simp only [← Algebra.smul_def, map_add (f := _), map_smul, smul_eq_mul]
     change t * (Algebra.trace ℝ (mixedEmbedding.mixedSpace F) ((fun i => evHom F (x i)) ⬝ᵥ Y) +
       1 / 2 * (t * Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (X1 ⬝ᵥ Y))) =
       t * Algebra.trace ℝ (mixedEmbedding.mixedSpace F) ((fun i => evHom F (x i)) ⬝ᵥ Y) +

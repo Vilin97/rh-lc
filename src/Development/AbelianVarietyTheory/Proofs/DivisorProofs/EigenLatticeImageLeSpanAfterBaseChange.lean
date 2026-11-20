@@ -107,7 +107,7 @@ theorem eigLat_image_le_span_diff : ∀ (E : Type) [Field E] [NumberField E] [Is
       funext k
       simp
     | add x y _ _ hx hy =>
-      rw [hjadd, map_add, hx, hy, map_add, hjadd]
+      rw [hjadd, map_add (f := _), hx, hy, map_add (f := _), hjadd]
     | smul r x _ hx =>
       rw [hjsmul, ← algebraMap_smul K' (RingOfIntegers.mapRingHom j r), map_smul, hx, algebraMap_smul,
         ← algebraMap_smul K r x, map_smul, algebraMap_smul, hjsmul]
@@ -123,7 +123,7 @@ theorem eigLat_image_le_span_diff : ∀ (E : Type) [Field E] [NumberField E] [Is
       rw [map_zero]
       exact S.zero_mem
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact S.add_mem hx hy
     | smul s x _ hx =>
       rw [← algebraMap_smul K' s x, map_smul, algebraMap_smul]

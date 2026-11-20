@@ -25,7 +25,7 @@ theorem trace_form_scalar_norm_one : ∀ (E : Type) [Field E] [NumberField E] [I
         map_add' := by
           intro y y'
           set_option synthInstance.maxHeartbeats 100000 in
-            simp only [herm, cc, Pi.add_apply, map_add, map_sum, map_mul, mul_add, Finset.sum_add_distrib]
+            simp only [herm, cc, Pi.add_apply, map_add (f := _), map_sum, map_mul, mul_add, Finset.sum_add_distrib]
         map_smul' := by
           intro a y
           set_option synthInstance.maxHeartbeats 100000 in

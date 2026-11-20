@@ -167,7 +167,7 @@ theorem exists_dual_right (z : W ⊗[ℂ] W') (hz : z ≠ 0) : ∃ P : W ⊗[ℂ
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul u v => simp
-  | add u v hu hv => simp only [map_add, hu, hv]
+  | add u v hu hv => simp only [map_add (f := _), hu, hv]
 
 theorem exists_dual_left (z : W ⊗[ℂ] W') (hz : z ≠ 0) : ∃ P : W ⊗[ℂ] W' →ₗ[ℂ] W', P z ≠ 0 ∧
     ∀ (A : W' →ₗ[ℂ] W') (y : W ⊗[ℂ] W'), P (TensorProduct.map LinearMap.id A y) = A (P y) := by
@@ -178,7 +178,7 @@ theorem exists_dual_left (z : W ⊗[ℂ] W') (hz : z ≠ 0) : ∃ P : W ⊗[ℂ]
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul u v => simp
-  | add u v hu hv => simp only [map_add, hu, hv]
+  | add u v hu hv => simp only [map_add (f := _), hu, hv]
 
 theorem hasLab_of_eqv (L : LabelDatum g) {n : ℕ} (π : Representation ℂ (GL (Fin n) ℚ_[g]) V)
     (σ : Representation ℂ (GL (Fin a) ℚ_[g]) W) (i : Gn g a →* Gn g n) (T : fixK1 π →ₗ[ℂ] W)

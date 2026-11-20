@@ -72,7 +72,7 @@ theorem pos_of_mem_map {R R' C : Type} [CommRing R] [CommRing R'] [CommRing C] (
   induction hr using Submodule.span_induction with
   | mem r hr => obtain ⟨s, hs, rfl⟩ := hr; exact h1 s hs
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact lt_of_lt_of_le (lt_min ha hb) (u.map_add _ _)
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact lt_of_lt_of_le (lt_min ha hb) (u.map_add _ _)
   | smul a b _ hb =>
     rw [smul_eq_mul, map_mul, AddValuation.map_mul]
     exact lt_of_lt_of_le hb (le_add_of_nonneg_left (h0 a))
@@ -230,7 +230,7 @@ theorem ev_eq_zero (htr : Algebra.trdeg B.KO Ω = D')
       obtain ⟨F, rfl⟩ := hy
       rw [hΘ, h2, hc k _ (emb_mem_Vw X la N _ F)]
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, map_add, map_add, ha, hb, add_mul]
+    | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb, add_mul]
     | smul a b _ hb =>
       rw [GlobalTheory.SecPoint.ev_smul, hb, map_smul, Algebra.smul_def, map_mul, Algebra.TensorProduct.algebraMap_apply,
         Algebra.algebraMap_self, RingHom.id_apply, h1, mul_assoc]

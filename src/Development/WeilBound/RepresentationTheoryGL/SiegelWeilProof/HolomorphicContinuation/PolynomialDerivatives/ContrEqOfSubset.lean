@@ -107,6 +107,6 @@ theorem contr_X_mul (c : ℝ) (k : Fin m × Fin n × Bool) (p : PX m n) :
       rw [X, monomial_mul, one_mul]
     rw [hX, pderiv_monomial, contr_monomial, contr_monomial, wC_rel]
     ring
-  | add P Q hP hQ => rw [mul_add, contr_add, hP, hQ, map_add, contr_add, mul_add]
+  | add P Q hP hQ => rw [mul_add, contr_add, hP, hQ, map_add (f := _), contr_add, mul_add]
 
 end PositivityTheory.Rg.Sw.LC

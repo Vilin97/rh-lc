@@ -33,7 +33,7 @@ theorem eval_aeval_lin (d : ι → σ → ℂ) (y : σ → ℂ) (P : MvPolynomia
     eval y (aeval (fun l => lin (d l)) P) = eval (fun l => d l ⬝ᵥ y) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add P Q hP hQ => simp only [map_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
   | mul_X P l hP => simp only [map_mul, hP, aeval_X, eval_X, eval_lin]
 
 abbrev crdDir (σ : Type) [DecidableEq σ] : σ → σ → ℂ := fun v => Pi.single v 1
@@ -53,7 +53,7 @@ theorem polyDeriv_aeval_lin {F : (σ → ℂ) → ℂ} (hF : Differentiable ℂ 
     polyDeriv (aeval (fun l => lin (d l)) P) (crdDir σ) F x = polyDeriv P d F x := by
   induction P using MvPolynomial.induction_on generalizing x with
   | C a => rw [algHom_C, algebraMap_eq, polyDeriv_C, polyDeriv_C]
-  | add P Q hP hQ => simp only [map_add, I2.polyDeriv_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), I2.polyDeriv_add, hP, hQ]
   | mul_X P l hP =>
     rw [map_mul, aeval_X, lin, Finset.mul_sum, I2.jof_polyDeriv_sum,
       polyDeriv_mul_X (smooth hF)]
@@ -230,7 +230,7 @@ theorem eval_barP {σ : Type} (y : σ → ℂ) (P : MvPolynomial σ ℂ) :
     eval y (barP P) = conj (eval (fun l => conj (y l)) P) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [barP]
-  | add P Q hP hQ => simp only [barP, map_add] at *; rw [hP, hQ]
+  | add P Q hP hQ => simp only [barP, map_add (f := _)] at *; rw [hP, hQ]
   | mul_X P l hP => simp only [barP, map_mul, map_X, eval_X, conj_conj] at *; rw [hP]
 
 omit [Fintype T] in

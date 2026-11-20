@@ -20,7 +20,7 @@ lemma sqrt_sq_c (d : ℕ) : (Complex.I * ((Real.sqrt d : ℝ) : ℂ)) ^ 2 = -(d 
   ring
 
 lemma conj_omega (d : ℕ) : conj (omegaK d) = 1 - omegaK d := by
-  rw [omegaK, map_div₀, map_add, map_one, map_mul, Complex.conj_I, Complex.conj_ofReal, map_ofNat]
+  rw [omegaK, map_div₀, map_add (f := _), map_one, map_mul, Complex.conj_I, Complex.conj_ofReal, map_ofNat]
   ring
 
 def emb {n : Type} (b : Fin 4) (v : n → ℂ) : Fin 4 × n → ℂ := fun w => if w.1 = b then v w.2 else 0
@@ -133,13 +133,13 @@ theorem IotaOK_proof : IotaOK := by
   · rw [← hns, ← Real.sqrt_eq_rpow, Real.sqrt_sq (norm_nonneg _)]
   · intro m n
     refine ⟨?_, ?_⟩
-    · rw [map_add, map_mul, map_intCast, map_intCast]
+    · rw [map_add (f := _), map_mul, map_intCast, map_intCast]
       refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hint m) ?_)
       rw [norm_mul]
       exact mul_le_one₀ (hint n) (norm_nonneg _) hx
     · rw [← map_sub]
       have h1 : ((m : ℂ) + (n : ℂ) * omegaK d) - conj ((m : ℂ) + (n : ℂ) * omegaK d) = s * (n : ℂ) := by
-        rw [map_add, map_mul, conj_omega, map_intCast, map_intCast, hω]
+        rw [map_add (f := _), map_mul, conj_omega, map_intCast, map_intCast, hω]
         ring
       rw [h1, map_mul, map_intCast]
 

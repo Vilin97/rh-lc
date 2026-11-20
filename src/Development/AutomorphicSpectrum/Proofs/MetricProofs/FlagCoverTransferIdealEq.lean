@@ -31,7 +31,7 @@ theorem mConeMap_eq {A F : Type} [CommRing A] [Field F] (f : A →+* F) (Y : (Σ
     mConeMap z p = scaleBy c (MvPolynomial.map f (coneOver Y p)) := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [mConeMap, coneOver]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p q hp =>
     rw [map_mul, map_mul, map_mul, map_mul, hp]
     congr 1

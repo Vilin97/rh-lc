@@ -28,7 +28,7 @@ theorem sw_sig (y : ReciprocityTheory.Aut.AL D.host.E) :
   induction y using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingEquiv.map_zero, RingHom.map_zero]
   | tmul x a => rfl
-  | add x y hx hy => rw [RingHom.map_add, RingEquiv.map_add, RingEquiv.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingEquiv.map_add (f := _), RingEquiv.map_add (f := _), RingHom.map_add (f := _), hx, hy]
 
 theorem mem_GA_iff {V : HSp D} (hg : V.gram = 1) (κ : GL (Fin V.rank) (ReciprocityTheory.Aut.AL D.host.E)) :
     κ ∈ ReciprocityTheory.Aut.GA D.host.E V.rank ↔
@@ -97,7 +97,7 @@ theorem int_of_mem {V : HSp D} (h : OrthFrame V) {y : Fin V.rank → Af D.host.F
     rw [show (o : D.host.E) = x i from ho] at this
     exact this
   | zero => rw [Pi.zero_apply, RingEquiv.map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [Pi.add_apply, RingEquiv.map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [Pi.add_apply, RingEquiv.map_add (f := _)]; exact add_mem hy hz
   | neg y _ hy => rw [Pi.neg_apply, RingEquiv.map_neg]; exact neg_mem hy
 
 theorem smul_gen {M : ℕ} (L : Set (Fin M → D.host.E)) (c : Af D.host.F ⊗[D.host.F] D.host.E)
@@ -118,7 +118,7 @@ theorem smul_closure {A B : Type} [CommRing A] [CommRing B] {M : ℕ} (e : B →
   | mem r hr => exact h r hr
   | zero => intro w _; rw [map_zero, zero_smul]; exact zero_mem _
   | one => intro w hw; rwa [map_one, one_smul]
-  | add x y _ _ hx hy => intro w hw; rw [map_add, add_smul]; exact add_mem (hx w hw) (hy w hw)
+  | add x y _ _ hx hy => intro w hw; rw [map_add (f := _), add_smul]; exact add_mem (hx w hw) (hy w hw)
   | neg x _ hx => intro w hw; rw [map_neg, neg_smul]; exact neg_mem (hx w hw)
   | mul x y _ _ hx hy => intro w hw; rw [map_mul, mul_smul]; exact hx _ (hy w hw)
 
@@ -247,14 +247,14 @@ theorem exists_normOne : ∃ u : L, u * IsCMField.complexConj L u = 1 ∧ IsCMFi
   clear_value b
   have hp : 1 + b ≠ 0 := fun h => by
     have := congrArg (IsCMField.complexConj L) h
-    rw [map_add, map_one, h1, map_zero] at this
+    rw [map_add (f := _), map_one, h1, map_zero] at this
     exact two_ne_zero (α := L) (by linear_combination h + this)
   have hm : 1 - b ≠ 0 := fun h => by
     have := congrArg (IsCMField.complexConj L) h
     rw [map_sub, map_one, h1, map_zero] at this
     exact two_ne_zero (α := L) (by linear_combination h + this)
   have hc : IsCMField.complexConj L ((1 + b) / (1 - b)) = (1 - b) / (1 + b) := by
-    rw [map_div₀, map_add, map_sub, map_one, h1, sub_neg_eq_add, ← sub_eq_add_neg]
+    rw [map_div₀, map_add (f := _), map_sub, map_one, h1, sub_neg_eq_add, ← sub_eq_add_neg]
   refine ⟨(1 + b) / (1 - b), by rw [hc]; field_simp, fun h => h0 ?_⟩
   rw [hc, div_eq_div_iff hp hm] at h
   have h4 : (4 : L) * b = 0 := by linear_combination -h

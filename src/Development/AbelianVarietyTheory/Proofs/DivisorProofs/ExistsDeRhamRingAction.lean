@@ -123,5 +123,5 @@ theorem GlobalTheory.AbDatum.exists_isDRAct : ∀ (O : Type) [CommRing O] (T : S
   have h3 (x y : O) : u (x + y) = u x + u y := hom_ext_affine fun V hV s ↦ by
     change (u (x + y)).app V s = (u x).app V s + (u y).app V s
     apply (e V hV).injective
-    rw [map_add, hu, hu, hu, actPull_add]
+    rw [map_add (f := _), hu, hu, hu, actPull_add]
   exact ⟨RingHom.mk' { toFun x := (u x : End H), map_one' := h1, map_mul' := h2 } h3, hu⟩

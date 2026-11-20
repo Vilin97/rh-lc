@@ -176,7 +176,7 @@ theorem rhoSig_of : RhoSig := by
     intro τ
     have h1 := congrArg (fun x : 𝓞 D.F => τ (x : D.F)) D.tr_eq
     have h2 := congrArg (fun x : 𝓞 D.F => τ (x : D.F)) D.nm_eq
-    simp only [map_add, map_mul, map_intCast] at h1 h2
+    simp only [map_add (f := _), map_mul, map_intCast] at h1 h2
     rw [← h1, ← h2]
     ring
   have hcx : ∀ τ : D.F →+* ℂ, ComplexEmbedding.conjugate τ ≠ τ := by

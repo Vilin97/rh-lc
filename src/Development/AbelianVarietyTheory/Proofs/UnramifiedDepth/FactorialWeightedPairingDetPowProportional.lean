@@ -129,7 +129,7 @@ private theorem pairing_X_mul_eq_pairing_pderiv (x : κ) (F G : MvPolynomial κ 
         conv_lhs => rw [hA]
         rw [prod_factorial_add_single_one_eq_succ_mul_prod_factorial, hAx]
       rw [hf]; ring
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 open MvPolynomial in
 variable {C : Type} [CommRing C] {κ : Type} in

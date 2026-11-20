@@ -100,7 +100,7 @@ theorem _root_.GlobalTheory.EtC.GmStep.laurentMap_coeff {A B : Type} [CommRing A
     (p : LaurentPolynomial A) :
     (_root_.GlobalTheory.EtC.GmStep.laurentMap f p).coeff = Finsupp.mapRange f f.map_zero p.coeff := by
   refine LaurentPolynomial.induction_on' p (fun p q hp hq => ?_) (fun n a => ?_)
-  · rw [map_add, AddMonoidAlgebra.coeff_add, AddMonoidAlgebra.coeff_add, hp, hq,
+  · rw [map_add (f := _), AddMonoidAlgebra.coeff_add, AddMonoidAlgebra.coeff_add, hp, hq,
       Finsupp.mapRange_add (map_add f)]
   · rw [map_mul, _root_.GlobalTheory.EtC.GmStep.laurentMap_C, _root_.GlobalTheory.EtC.GmStep.laurentMap_T,
       ← LaurentPolynomial.single_eq_C_mul_T, ← LaurentPolynomial.single_eq_C_mul_T,
@@ -189,7 +189,7 @@ def rowOne (q : ℕ) (i : ℤ) (k : ℕ) :
   toFun a := (cup q (pull _ (disc.map ((cechC A A').app (op ⦋k⦌))) (tw q (i - 1)) 0 a)
     (pull _ (augK A A' k) (tw q 1) 1 (kum q (laurentVar A)))).cast (by ring) (by ring)
   map_zero' := by simp only [map_zero, AddMonoidHom.zero_apply]; exact GmPhi.cast_zero _ _
-  map_add' a b := by simp only [map_add, AddMonoidHom.add_apply]; exact GmPhi.cast_add _ _ _ _
+  map_add' a b := by simp only [map_add (f := _), AddMonoidHom.add_apply]; exact GmPhi.cast_add _ _ _ _
 
 end GlobalTheory.EtC.GmStep
 

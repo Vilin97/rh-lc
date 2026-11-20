@@ -75,7 +75,7 @@ theorem chartMeets : ChartMeets := by
         exact Ideal.subset_span hs
       rw [hscale c w s a ha, hconv, hw.2 s hsP, mul_zero]
     | zero => simp
-    | add f₁ f₂ _ _ h₁ h₂ => rw [map_add, h₁, h₂, add_zero]
+    | add f₁ f₂ _ _ h₁ h₂ => rw [map_add (f := _), h₁, h₂, add_zero]
     | smul r f₁ _ h₁ => rw [smul_eq_mul, map_mul, h₁, mul_zero]
   obtain ⟨g, hg, hgU⟩ := SheetDecomposition.ChartForm.exists_form htie U hU
   have h0b : (0 : Fin n → ℂ) ∈ Metric.ball (0 : Fin n → ℂ) 1 := Metric.mem_ball_self one_pos

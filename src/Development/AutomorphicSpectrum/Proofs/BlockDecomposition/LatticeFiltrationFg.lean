@@ -133,7 +133,7 @@ theorem exists_coeff {m : ℕ} (h : Lat.Hyp f ξ l m) {x : B} (hx : x ∈ Lat.su
         rw [dpE_eq_zero l M h.nil (not_lt.1 hjm), map_zero, zero_mul, mul_zero]
     refine ⟨c' + Pi.single (j + 1) e, fun i hi => ?_, ?_⟩
     · rw [Pi.add_apply, hz i (by omega), Pi.single_eq_of_ne (by omega), add_zero]
-    · simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    · simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
       rw [hsum, sum_single h.nil, ← he, sub_add_cancel]
 
 end

@@ -12,7 +12,7 @@ theorem symplectic_unipotent_shape : ∀ (g : ℕ) (Λ : Type) [AddCommGroup Λ]
   have skew : ∀ x y, B x y = -B y x := by
     intro x y
     have h := halt (x + y)
-    simp only [map_add, LinearMap.add_apply, halt, zero_add, add_zero] at h
+    simp only [map_add (f := _), LinearMap.add_apply, halt, zero_add, add_zero] at h
     linarith
   have hexp : ∀ v : Λ, v = ∑ k, bas.repr v (.inl k) • bas (.inl k) +
       ∑ k, bas.repr v (.inr k) • bas (.inr k) := by
@@ -43,7 +43,7 @@ theorem symplectic_unipotent_shape : ∀ (g : ℕ) (Λ : Type) [AddCommGroup Λ]
   ext i j
   show bas.repr (T (bas (.inr j))) (.inl i) = bas.repr (T (bas (.inr i))) (.inl j)
   have h0 : B (T (bas (.inr j))) (T (bas (.inr i))) = 0 := by rw [hT, hB2]
-  rw [hTb j, map_add, LinearMap.add_apply, pb j] at h0
+  rw [hTb j, map_add (f := _), LinearMap.add_apply, pb j] at h0
   set_option synthInstance.maxHeartbeats 100000 in
     simp [map_sum, LinearMap.sum_apply, pa, hd] at h0
   linarith

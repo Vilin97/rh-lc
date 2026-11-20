@@ -23,7 +23,7 @@ theorem symplOH_skew' (S T : HSp D) (x y : WO S T) : symplOH S T y x = -symplOH 
 
 theorem symplO_eq_two (S T : HSp D) (x y : WO S T) : symplO S T x y = symplOH S T x y + symplOH S T x y := by
   unfold symplOH
-  rw [← add_mul, ← map_add, add_halves, map_one, one_mul]
+  rw [← add_mul, ← map_add (f := _), add_halves, map_one, one_mul]
 
 variable {ψ : AddChar (AF D.host.F) ℂ} {S T T₀ : HSp D} {ρ : ℕ} (d : HypDec T T₀ ρ)
 

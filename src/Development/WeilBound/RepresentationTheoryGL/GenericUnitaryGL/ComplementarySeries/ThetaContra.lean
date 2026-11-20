@@ -55,7 +55,7 @@ theorem hasSesq_of {G V V₁ V₂ : Type} [Group G] [TopologicalSpace G] [IsTopo
   haveI := nontriv _ hi
   refine ⟨LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun v w => (Φ w : Module.Dual ℂ V) v)
     (fun v v' w => map_add _ v v') (fun c v w => map_smul _ c v)
-    (fun v w w' => by rw [map_add]; rfl) (fun c v w => by rw [map_smulₛₗ]; rfl), ?_, ?_⟩
+    (fun v w w' => by rw [map_add (f := _)]; rfl) (fun c v w => by rw [map_smulₛₗ]; rfl), ?_, ?_⟩
   · intro hB
     obtain ⟨w, hw⟩ := exists_ne (0 : V)
     refine hw (hΦb ((Subtype.ext (LinearMap.ext fun v => ?_)).trans (map_zero Φ).symm))

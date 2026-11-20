@@ -34,7 +34,7 @@ theorem fw_subst {s : MvPowerSeries (Fin 2) R} (hs : cc s = 0) :
     rw [← PowerSeries.coe_substAlgHom hs']
     exact (PowerSeries.substAlgHom hs').commutes a
   rw [← PowerSeries.coe_substAlgHom hs']
-  simp only [fw, fu, fwAt, fuAt, map_sub, map_mul, map_add, map_pow, map_ofNat, map_one]
+  simp only [fw, fu, fwAt, fuAt, map_sub, map_mul, map_add (f := _), map_pow, map_ofNat, map_one]
   rw [PowerSeries.coe_substAlgHom hs']
   simp only [hC, PowerSeries.subst_X hs', WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂,
     WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆]
@@ -47,7 +47,7 @@ theorem fu_subst {s : MvPowerSeries (Fin 2) R} (hs : cc s = 0) :
     rw [← PowerSeries.coe_substAlgHom hs']
     exact (PowerSeries.substAlgHom hs').commutes a
   rw [← PowerSeries.coe_substAlgHom hs']
-  simp only [fw, fu, fwAt, fuAt, map_sub, map_mul, map_add, map_pow, map_ofNat, map_one]
+  simp only [fw, fu, fwAt, fuAt, map_sub, map_mul, map_add (f := _), map_pow, map_ofNat, map_one]
   rw [PowerSeries.coe_substAlgHom hs']
   simp only [hC, PowerSeries.subst_X hs', WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂,
     WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆]
@@ -62,7 +62,7 @@ theorem weq_subst {s : MvPowerSeries (Fin 2) R} (hs : cc s = 0) :
   have h := (unit_flow R W).2.2.1.1
   unfold WEq at h ⊢
   have h2 := congrArg (PowerSeries.substAlgHom (R := R) hs') h
-  simp only [map_sub, map_mul, map_add, map_pow, map_ofNat, map_one] at h2
+  simp only [map_sub, map_mul, map_add (f := _), map_pow, map_ofNat, map_one] at h2
   rw [PowerSeries.coe_substAlgHom hs'] at h2
   simp only [hC, PowerSeries.subst_X hs', WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂,
     WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆] at h2 ⊢
@@ -74,7 +74,7 @@ def Dm (i : Fin 2) (a : MvPowerSeries (Fin 2) R) : MvPowerSeries (Fin 2) R :=
 theorem isDer_Dm (i : Fin 2) : IsDer (Dm W i) := by
   refine ⟨fun a b => ?_, fun a b => ?_⟩
   · unfold Dm
-    rw [map_add, mul_add]
+    rw [map_add (f := _), mul_add]
   · unfold Dm
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     ring
@@ -300,17 +300,17 @@ theorem log_fgl : (logSer W).subst (fgl W) = (logSer W).subst (U₁ : MvPowerSer
   have hF : MvPowerSeries.constantCoeff (fgl W) = 0 := Fgl1.fgl_cc W
   rw [← sub_eq_zero]
   apply eq_zero_of_pderiv_zero_of_pderiv_one_eq_zero
-  · rw [map_sub, map_add, Formalism.G.LogCR.pderiv_psubst hF, Formalism.G.LogCR.pderiv_psubst (MvPowerSeries.constantCoeff_X 0),
+  · rw [map_sub, map_add (f := _), Formalism.G.LogCR.pderiv_psubst hF, Formalism.G.LogCR.pderiv_psubst (MvPowerSeries.constantCoeff_X 0),
       Formalism.G.LogCR.pderiv_psubst (MvPowerSeries.constantCoeff_X 1), hL.2.2.1, om_fgl W 0,
       MvPowerSeries.pderiv_X_self, MvPowerSeries.pderiv_X_of_ne (by decide), mul_zero, mul_one, add_zero, sub_self]
-  · rw [map_sub, map_add, Formalism.G.LogCR.pderiv_psubst hF, Formalism.G.LogCR.pderiv_psubst (MvPowerSeries.constantCoeff_X 0),
+  · rw [map_sub, map_add (f := _), Formalism.G.LogCR.pderiv_psubst hF, Formalism.G.LogCR.pderiv_psubst (MvPowerSeries.constantCoeff_X 0),
       Formalism.G.LogCR.pderiv_psubst (MvPowerSeries.constantCoeff_X 1), hL.2.2.1, om_fgl W 1,
       MvPowerSeries.pderiv_X_self, MvPowerSeries.pderiv_X_of_ne (by decide), mul_zero, mul_one, zero_add, sub_self]
   · have hc : ∀ a : MvPowerSeries (Fin 2) K, MvPowerSeries.constantCoeff a = 0 →
         MvPowerSeries.constantCoeff ((logSer W).subst a) = 0 := fun a ha => by
       rw [PowerSeries.subst, Formalism.G.LogP.constantCoeff_subst_of_zero _ (fun _ => ha)]
       exact hL.1
-    rw [map_sub, map_add, hc _ hF, hc _ (MvPowerSeries.constantCoeff_X 0), hc _ (MvPowerSeries.constantCoeff_X 1)]
+    rw [map_sub, map_add (f := _), hc _ hF, hc _ (MvPowerSeries.constantCoeff_X 0), hc _ (MvPowerSeries.constantCoeff_X 1)]
     simp
 
 end Log
@@ -431,7 +431,7 @@ theorem fgl_symm : fgl W = (fgl W).subst
       exact hl0
     have hS : MvPowerSeries.constantCoeff ((logSer Univ.WK).subst (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) Univ.K₀)
         + (logSer Univ.WK).subst (MvPowerSeries.X 1 : MvPowerSeries (Fin 2) Univ.K₀)) = 0 := by
-      rw [map_add, hc _ (MvPowerSeries.constantCoeff_X 0), hc _ (MvPowerSeries.constantCoeff_X 1), add_zero]
+      rw [map_add (f := _), hc _ (MvPowerSeries.constantCoeff_X 0), hc _ (MvPowerSeries.constantCoeff_X 1), add_zero]
     conv_rhs => rw [hL]
     rw [mvsubst_psubst (PowerSeries.HasSubst.of_constantCoeff_zero hS) hsw, ← MvPowerSeries.coe_substAlgHom hsw,
       map_add, MvPowerSeries.coe_substAlgHom hsw,
@@ -502,7 +502,7 @@ theorem inv_field {K : Type u} [Field K] [CharZero K] (W : WeierstrassCurve K) :
   have hG := PowerSeries.HasSubst.of_constantCoeff_zero hcG
   have hlogG : (logSer W).subst (MvPowerSeries.subst (![X, iSer W] : Fin 2 → K⟦X⟧) (fgl W)) = 0 := by
     have h := congrArg (MvPowerSeries.subst (![X, iSer W] : Fin 2 → K⟦X⟧)) (log_fgl W)
-    rw [mvsubst_psubst hF hb, ← MvPowerSeries.coe_substAlgHom hb, map_add, MvPowerSeries.coe_substAlgHom hb,
+    rw [mvsubst_psubst hF hb, ← MvPowerSeries.coe_substAlgHom hb, map_add (f := _), MvPowerSeries.coe_substAlgHom hb,
       mvsubst_psubst (PowerSeries.HasSubst.of_constantCoeff_zero (MvPowerSeries.constantCoeff_X 0)) hb,
       mvsubst_psubst (PowerSeries.HasSubst.of_constantCoeff_zero (MvPowerSeries.constantCoeff_X 1)) hb,
       MvPowerSeries.subst_X hb, MvPowerSeries.subst_X hb] at h

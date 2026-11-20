@@ -719,7 +719,7 @@ theorem chart_eq_splitProj (hπ : Chart e v π) (z : AE D) :
     π z = splitProj (chartEmb hπ) (compFin D.host.F D.host.E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x =>
     have h1 : (a ⊗ₜ[D.host.F] x : AE D) = algebraMap (AF D.host.F) (AE D) a * incA D x :=
       ((Algebra.TensorProduct.tmul_mul_tmul a 1 1 x).trans (by rw [mul_one, one_mul])).symm
@@ -743,7 +743,7 @@ theorem compFin_eq_splitIdem (he : IsSplitIdem D e) (hπ : Chart e v π) :
         compFin D.host.F D.host.E v (cA D z) := fun z => by
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a x => rfl
     rw [splitProj_comp_splitIdem, splitProj_comp, h1, ← chart_eq_splitProj]
     exact (hπ.2.1 _).2 he.2.1
@@ -769,7 +769,7 @@ theorem one_lt_infinitePlace (h : IsCMExt F E σ) {a : E} (ha0 : a ≠ 0) (ha : 
     rw [Complex.neg_re, Complex.star_def, Complex.conj_re] at this
     linarith
   have h4 : (w.embedding a).im ≠ 0 := fun e => (map_ne_zero _).2 ha0 (Complex.ext h3 e)
-  rw [← InfinitePlace.norm_embedding_eq, map_add, map_one, map_mul, map_ofNat, ← Complex.one_lt_normSq_iff,
+  rw [← InfinitePlace.norm_embedding_eq, map_add (f := _), map_one, map_mul, map_ofNat, ← Complex.one_lt_normSq_iff,
     Complex.normSq_apply]
   simp [h3, h4]
 

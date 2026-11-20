@@ -21,7 +21,7 @@ private lemma exists_dual_of_dvd {R : Type} [CommRing R] [IsDomain R] {L : Type}
   refine ⟨{ toFun := f, map_add' := ?_, map_smul' := ?_ }, ?_⟩
   · intro x y
     apply mul_left_cancel₀ hc
-    rw [mul_add, ← hf, ← hf, ← hf, map_add]
+    rw [mul_add, ← hf, ← hf, ← hf, map_add (f := _)]
   · intro r x
     apply mul_left_cancel₀ hc
     simp only [RingHom.id_apply, smul_eq_mul]
@@ -64,6 +64,6 @@ theorem isHT_iff : ∀ (R : Type) [CommRing R] [IsDomain R] (T : Type) [CommGrou
       rw [Ideal.Quotient.eq_zero_iff_mem, Ideal.mem_span_singleton, ← Nat.cast_smul_eq_nsmul R,
         LinearMap.smul_apply, smul_eq_mul]
       exact dvd_mul_right _ _
-    rw [hv3, LinearMap.add_apply, map_add, h0, add_zero]
+    rw [hv3, LinearMap.add_apply, map_add (f := _), h0, add_zero]
 
 end GlobalTheory.CompanionTheory.Ar.BT.HT

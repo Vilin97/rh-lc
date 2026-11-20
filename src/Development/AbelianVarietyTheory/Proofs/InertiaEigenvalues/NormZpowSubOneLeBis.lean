@@ -234,7 +234,7 @@ theorem twAct_fixed_eq_zero {act : GQ l →* (PadicComplex l ≃+* PadicComplex 
   have hp0 : ζ - 1 ≠ 0 := sub_ne_zero.2 (hζ.ne_one hl.1.one_lt)
   refine eq_zero_of_small (Xj K j) (fun x hx => ohat_norm K (hO x hx)) _ hmul
     (fun x => S (act g x)) (fun x hx => (hS _ (hgX x hx)).1)
-    (fun x hx x' hx' => by rw [map_add, hadd _ (hgX x hx) _ (hgX x' hx')])
+    (fun x hx x' hx' => by rw [map_add (f := _), hadd _ (hgX x hx) _ (hgX x' hx')])
     (fun o ho x hx => by rw [map_mul, act_inC hact hg.1 ho.1, hlin _ ho _ (hgX x hx)])
     (-B) hBO' hc0 hc1 (fun a b => by rw [Matrix.neg_apply, norm_neg]; exact hB a b) y hy ?_
   rw [← map_mulVec (Xj K j) _ hmul S hadd hlin (-B) hBO' _ fun a => hgX _ (hy a)]

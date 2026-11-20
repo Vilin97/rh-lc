@@ -190,7 +190,7 @@ theorem block_mul (P : HeightOneSpectrum (𝓞 E)) (q : ℕ) (hq0 : q ≠ 0) (hq
     simp only [redHom_apply]
     rw [hlow u (Finset.mem_range.1 hu) s.1 (by omega), zero_mul]
   have h4 := congrArg (redHom P) hXY
-  rw [map_add, hred, add_zero] at h4
+  rw [map_add (f := _), hred, add_zero] at h4
   rw [h4, Matrix.one_apply, Matrix.one_apply]
   split_ifs <;> simp
 

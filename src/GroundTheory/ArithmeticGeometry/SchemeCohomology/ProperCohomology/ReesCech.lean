@@ -35,7 +35,7 @@ lemma reesMul_zero : reesMul I F 0 = 0 := by
   exact (Scheme.Modules.pushforward (reesPr I X)).map_zero _ _
 
 lemma reesMul_add (r s : reesAlgebra I) : reesMul I F (r + s) = reesMul I F r + reesMul I F s := by
-  rw [reesMul, reesMul, reesMul, map_add, ← smulRingHom_apply, map_add]
+  rw [reesMul, reesMul, reesMul, map_add (f := _), ← smulRingHom_apply, map_add (f := _)]
   exact (Scheme.Modules.pushforward (reesPr I X)).map_add
 
 variable {ι : Type w} (𝔘 : ι → X.Opens) (p : ℕ)

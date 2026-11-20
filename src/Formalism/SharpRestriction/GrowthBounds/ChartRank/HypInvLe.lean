@@ -136,7 +136,7 @@ theorem colAddGen_map {r n : ℕ} (l j : Fin n) (Q : MvPolynomial (Fin r × Fin 
   · rename_i a
     simp [Formalism.GradedWeylDivisibility.colAddGen]
   · rename_i p q hp hq
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   · rename_i p v hp
     simp only [map_mul]
     rw [hp, MvPolynomial.map_X]
@@ -238,7 +238,7 @@ def YInv (a : H.comp) (L : H.P.Tup) : Submodule LL (YR H LL) where
   carrier := {Q | MvPolynomial.map e Q ∈ H.P.Vtup ∧ ∀ γ : (H.lev a).Γ, (H.lev a).smul γ L = L →
     ((H.lev a).χ γ : H.O) • (H.lev a).actX γ (MvPolynomial.map e Q) = MvPolynomial.map e Q}
   add_mem' := fun {Q Q'} h h' => by
-    simp only [Set.mem_ofPred_eq, map_add] at h h' ⊢
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at h h' ⊢
     exact ⟨Submodule.add_mem _ h.1 h'.1, fun γ hγ => by rw [smul_add, h.2 γ hγ, h'.2 γ hγ]⟩
   zero_mem' := by
     simp only [Set.mem_ofPred_eq, map_zero]
@@ -272,7 +272,7 @@ theorem inv_le_span {a : H.comp} {L : H.P.Tup} (hL : H.P.IsLatTup L) (h1 : SpanR
   let Vr : Submodule LL (YR H LL) :=
     { carrier := {Q | MvPolynomial.map e Q ∈ H.P.Vtup}
       add_mem' := fun {Q Q'} h h' => by
-        simp only [Set.mem_ofPred_eq, map_add] at h h' ⊢
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at h h' ⊢
         exact Submodule.add_mem _ h h'
       zero_mem' := by
         simp only [Set.mem_ofPred_eq, map_zero]

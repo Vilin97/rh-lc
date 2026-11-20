@@ -16,7 +16,7 @@ theorem low_pderiv {N : ℕ} {g : MvPowerSeries τ k} (hg : Low (N + 1) g) (t : 
   rw [MvPowerSeries.coeff_pderiv, hg, zero_mul]
   have e : Finsupp.degree (d + Finsupp.single t 1) = Finsupp.degree d + 1 := by
     first
-    | rw [map_add, Finsupp.degree_single]
+    | rw [map_add (f := _), Finsupp.degree_single]
     | simp [Finsupp.degree, Finsupp.sum_add_index']
     | (unfold Finsupp.degree; rw [Finsupp.sum_add_index' (by simp) (by simp)]; simp)
   omega
@@ -94,10 +94,10 @@ theorem pderiv_aeval [Fintype σ] (a : σ → MvPowerSeries τ k) (p : MvPolynom
   next c =>
     simp
   next p q hp hq =>
-    simp only [map_add, hp, hq, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hp, hq, add_mul, Finset.sum_add_distrib]
   next p s0 hp =>
     rw [map_mul, MvPolynomial.aeval_X, Derivation.leibniz, hp, smul_eq_mul, smul_eq_mul, Finset.mul_sum]
-    simp only [Derivation.leibniz, MvPolynomial.pderiv_X, Pi.single_apply, smul_eq_mul, map_add, map_mul,
+    simp only [Derivation.leibniz, MvPolynomial.pderiv_X, Pi.single_apply, smul_eq_mul, map_add (f := _), map_mul,
       MvPolynomial.aeval_X, add_mul, Finset.sum_add_distrib, mul_ite, mul_one, mul_zero, map_one, map_zero,
       ite_mul, zero_mul, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     simp only [apply_ite (MvPolynomial.aeval a), map_zero, ite_mul, zero_mul, Finset.sum_ite_eq,
@@ -146,7 +146,7 @@ theorem pderiv_subst [Fintype σ] {a : σ → MvPowerSeries τ k} (ha : ∀ s, c
   generalize f - (p : MvPowerSeries σ k) = g at hp hf
   subst hf
   have hpol := pderiv_aeval a p t
-  simp only [map_add, MvPowerSeries.subst_add hS, MvPowerSeries.subst_coe, pderiv_coe_mvPolynomial, add_mul,
+  simp only [map_add (f := _), MvPowerSeries.subst_add hS, MvPowerSeries.subst_coe, pderiv_coe_mvPolynomial, add_mul,
     Finset.sum_add_distrib, hpol]
   congr 1
   have h1 : Low (d.degree + 1) (pderiv k t (subst a g)) := low_pderiv (low_subst_of_low ha1 hp) t

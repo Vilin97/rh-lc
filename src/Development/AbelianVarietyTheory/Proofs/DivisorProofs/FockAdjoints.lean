@@ -46,7 +46,7 @@ theorem inner_omE {ι : Pol p q r s →ₗ[ℂ] H} (hι : IsFockIP ι) (l l' : L
     congr 1
     cases linePos l <;> cases linePos l' <;> simp
   unfold omE
-  simp only [LinearMap.add_apply, Module.End.mul_apply, map_add, inner_add_left, inner_add_right,
+  simp only [LinearMap.add_apply, Module.End.mul_apply, map_add (f := _), inner_add_left, inner_add_right,
     mul_add, h1]
   congr 1
   by_cases h : l = l'

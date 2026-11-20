@@ -67,15 +67,15 @@ theorem delDet : DelDet := by
 
 theorem renInt : RenInt := by
   intro R _ r s I J α p q f
-  simp only [opE, LinearMap.add_apply, LinearMap.mulLeft_apply, Derivation.coeFn_coe, map_add, map_mul]
+  simp only [opE, LinearMap.add_apply, LinearMap.mulLeft_apply, Derivation.coeFn_coe, map_add (f := _), map_mul]
   congr 1
   · simp [ren, rename_X]
   · induction f using MvPolynomial.induction_on with
     | C a => simp [ren]
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f ad hf =>
       have e1 : ren I J (f * X ad) = ren I J f * X (J ad.1, I ad.2) := by simp [ren, rename_X]
-      rw [e1, Derivation.leibniz, Derivation.leibniz, map_add, hf, smul_eq_mul, smul_eq_mul, smul_eq_mul, smul_eq_mul,
+      rw [e1, Derivation.leibniz, Derivation.leibniz, map_add (f := _), hf, smul_eq_mul, smul_eq_mul, smul_eq_mul, smul_eq_mul,
         map_mul, map_mul]
       simp only [del, mkDerivation_X, ren, map_mul, rename_X]
 
@@ -89,9 +89,9 @@ theorem del_comm {R : Type} [CommRing R] {ρ : ℕ} (p q p' q' : Fin ρ) (g : Pm
     del p q (del p' q' g) = del p' q' (del p q g) := by
   induction g using MvPolynomial.induction_on with
   | C a => simp [del]
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | mul_X f ad hf =>
-    simp only [Derivation.leibniz, map_add, smul_eq_mul, hf]
+    simp only [Derivation.leibniz, map_add (f := _), smul_eq_mul, hf]
     simp only [del, mkDerivation_X, Derivation.leibniz, smul_eq_mul]
     ring
 
@@ -99,7 +99,7 @@ theorem mComm : MComm := by
   intro R _ ρ α p q p' q'
   apply LinearMap.ext
   intro f
-  simp only [LinearMap.comp_apply, opE, LinearMap.add_apply, LinearMap.mulLeft_apply, Derivation.coeFn_coe, map_add]
+  simp only [LinearMap.comp_apply, opE, LinearMap.add_apply, LinearMap.mulLeft_apply, Derivation.coeFn_coe, map_add (f := _)]
   rw [del_CX_mul, del_CX_mul, del_comm p q p' q']
   ring
 

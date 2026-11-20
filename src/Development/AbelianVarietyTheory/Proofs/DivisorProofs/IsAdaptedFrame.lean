@@ -94,7 +94,7 @@ def fockOp (q : Tens F p₁ q₁ r s →ₗ[ℂ] P) (w : InfinitePlace F) : Mat 
       map_add' := fun Y Z => by
         apply indOp_eq h.1 (h.2 _)
         intro t
-        rw [LinearMap.add_apply, indOp_apply h.1 (h.2 Y), indOp_apply h.1 (h.2 Z), map_add, Main.atPl_add,
+        rw [LinearMap.add_apply, indOp_apply h.1 (h.2 Y), indOp_apply h.1 (h.2 Z), map_add (f := _), Main.atPl_add,
           LinearMap.add_apply, map_add]
       map_smul' := fun c Y => by
         apply indOp_eq h.1 (h.2 _)

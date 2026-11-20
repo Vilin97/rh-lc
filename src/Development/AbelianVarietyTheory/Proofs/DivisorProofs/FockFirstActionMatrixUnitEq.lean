@@ -106,7 +106,7 @@ theorem mem_span_harm1_iff (P : Pol m 0 k l) :
   | add P Q _ _ hP hQ =>
     rw [mem_harm1_iff] at *
     intro c d
-    simp only [map_add, Finset.sum_add_distrib, hP, hQ, add_zero]
+    simp only [map_add (f := _), Finset.sum_add_distrib, hP, hQ, add_zero]
   | smul s P _ hP =>
     rw [mem_harm1_iff] at *
     intro c d

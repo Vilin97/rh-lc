@@ -117,16 +117,16 @@ theorem cv_inv_natCast_smul_mem : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) 
       obtain ⟨s, hs, hsa⟩ := ih
       have hr : a + -((N : C) • s) ∈ Cv X V g := hadd _ ha _ (hneg _ (hns s hs N))
       obtain ⟨b, hb, hba⟩ := step hX g hc m hr (fun i k hk => by
-        simp only [Prod.fst_add, Prod.fst_neg, Prod.smul_fst, Pi.add_apply, Pi.neg_apply, Pi.smul_apply, map_add,
+        simp only [Prod.fst_add, Prod.fst_neg, Prod.smul_fst, Pi.add_apply, Pi.neg_apply, Pi.smul_apply, map_add (f := _),
           map_neg, PowerSeries.coeff_smul, smul_eq_mul, (hsa k hk).1 i]
         field_simp
         ring)
       refine ⟨s + b, hadd _ hs _ hb, fun k hk => ⟨fun i => ?_, fun q => ?_⟩⟩
-      · simp only [Prod.fst_add, Prod.fst_neg, Prod.smul_fst, Pi.add_apply, Pi.neg_apply, Pi.smul_apply, map_add,
+      · simp only [Prod.fst_add, Prod.fst_neg, Prod.smul_fst, Pi.add_apply, Pi.neg_apply, Pi.smul_apply, map_add (f := _),
           map_neg, PowerSeries.coeff_smul, smul_eq_mul, (hba k (by omega)).1 i]
         field_simp
         ring
-      · simp only [Prod.snd_add, Prod.snd_neg, Prod.smul_snd, Pi.add_apply, Pi.neg_apply, Pi.smul_apply, map_add,
+      · simp only [Prod.snd_add, Prod.snd_neg, Prod.smul_snd, Pi.add_apply, Pi.neg_apply, Pi.smul_apply, map_add (f := _),
           map_neg, PowerSeries.coeff_smul, smul_eq_mul, (hba k (by omega)).2 q]
         field_simp
         ring

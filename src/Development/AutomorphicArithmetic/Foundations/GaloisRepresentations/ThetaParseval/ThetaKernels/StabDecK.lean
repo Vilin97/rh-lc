@@ -124,7 +124,7 @@ theorem stab_dec_k (h : _root_.PositivityTheory.SiegelWeilFormula.Act.C6.Hyp_k L
               TensorProduct.smul_tmul', TensorProduct.smul_tmul', smul_eq_mul, mul_one, ← Algebra.algebraMap_eq_smul_one]
           rw [e1, hz₀]
           set_option synthInstance.maxHeartbeats 100000 in
-            simp [incM, GlobalTheory.ThK.incV, GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR, map_add, map_sum, map_mul]
+            simp [incM, GlobalTheory.ThK.incV, GlobalTheory.EisBL.DoubledUnipotentRadical.cA_inclR, map_add (f := _), map_sum, map_mul]
         · obtain ⟨j, rfl⟩ := (L.rng k).1 hk
           rw [r2]; rfl
   have hS : inFrame d.b s = _root_.PositivityTheory.SiegelWeilFormula.Act.C6.sExp_k L e (GlobalTheory.ThK.incV F b₀) := by

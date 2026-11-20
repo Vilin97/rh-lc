@@ -16,7 +16,7 @@ theorem finEmb_sigR (σ : E →ₐ[F] E) (τ : E →ₐ[F] FvBar F v) (y : Fv F 
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [sigR, finEmb_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem sigR_mem (σ : E →ₐ[F] E) {y : Fv F v ⊗[F] E} (hy : y ∈ intLoc F E v) : sigR (Fv F v) σ y ∈ intLoc F E v := sigR_mem_intLoc σ hy
 
@@ -31,7 +31,7 @@ def p0 (τ : E →ₐ[F] FvBar F v) : Ideal (intLoc F E v) where
   carrier := {y | absBar F v (finEmb F v τ y) < 1}
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_setOf_eq, Subring.coe_add, map_add] at *
+    simp only [Set.mem_setOf_eq, Subring.coe_add, map_add (f := _)] at *
     exact (absBar_add_le F v _ _).trans_lt (max_lt ha hb)
   zero_mem' := by
     simp only [Set.mem_setOf_eq, ZeroMemClass.coe_zero, map_zero]

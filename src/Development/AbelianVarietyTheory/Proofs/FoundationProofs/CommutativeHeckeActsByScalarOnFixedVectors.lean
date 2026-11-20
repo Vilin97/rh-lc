@@ -73,7 +73,7 @@ theorem exists_scalar : ∀ (G V : Type) [Group G] [TopologicalSpace G] [IsTopol
       rw [this]; exact key g
     | add a b ha hb =>
       have : orbitMap π x₀ (a + b) = orbitMap π x₀ a + orbitMap π x₀ b := map_add _ _ _
-      rw [this, map_add, map_add, ha, hb, smul_add]
+      rw [this, map_add (f := _), map_add (f := _), ha, hb, smul_add]
     | smul r a ha =>
       have : orbitMap π x₀ (r • a) = r • orbitMap π x₀ a := map_smul _ _ _
       rw [this, map_smul, map_smul, ha, smul_comm]

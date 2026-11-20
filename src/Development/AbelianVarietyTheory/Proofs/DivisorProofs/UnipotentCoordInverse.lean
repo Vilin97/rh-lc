@@ -19,7 +19,7 @@ theorem cA_cA (hσ : ∀ x, σ (σ x) = x) (a : AE F E) : cA σ (cA σ a) = a :=
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [cA, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem fA_mat {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (u : UA σ J) (v w : Fin n → AE F E) :
     fA σ J (mat u *ᵥ v) (mat u *ᵥ w) = fA σ J v w := by

@@ -27,7 +27,7 @@ theorem anIso_constantCoeff_dblInt (e : PowerSeries K) :
 
 theorem anIso_map_lam (e : PowerSeries K) (s2 : K) :
     PowerSeries.map φ (C.lam e s2) = C.lam (PowerSeries.map φ e) (φ s2) := by
-  simp only [C.lam, map_add, map_mul, map_pow, anIso_map_dblInt, PowerSeries.map_C, PowerSeries.map_X,
+  simp only [C.lam, map_add (f := _), map_mul, map_pow, anIso_map_dblInt, PowerSeries.map_C, PowerSeries.map_X,
     map_div₀, map_ofNat]
 
 theorem anIso_constantCoeff_lam (e : PowerSeries K) (s2 : K) :
@@ -50,7 +50,7 @@ theorem anIso_map_sgStar [CharZero K] [CharZero K'] (e : PowerSeries K) (s2 : K)
 
 theorem anIso_map_wpShift (e : PowerSeries K) (c : K) :
     PowerSeries.map φ (C.wpShift e c) = C.wpShift (PowerSeries.map φ e) (φ c) := by
-  simp only [C.wpShift, map_add, map_one, map_mul, map_pow, map_sub, PowerSeries.map_C,
+  simp only [C.wpShift, map_add (f := _), map_one, map_mul, map_pow, map_sub, PowerSeries.map_C,
     PowerSeries.map_X]
 
 end MapLemmas

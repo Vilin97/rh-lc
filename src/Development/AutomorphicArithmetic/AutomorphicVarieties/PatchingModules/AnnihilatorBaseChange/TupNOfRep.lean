@@ -21,7 +21,7 @@ private theorem tupN_ofRep {n : ℕ} {A G H : Type} [CommRing A] [Group G] [Grou
   congr 1
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single g r => simp [GDet.repAlg]
 
 private theorem tupN_X {R σ : Type} [CommRing R] [IsLocalRing R] (a : σ) :

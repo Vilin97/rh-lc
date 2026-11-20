@@ -172,7 +172,7 @@ def matAct {O' : Type} [CommRing O'] (ψ : O' →+* Matrix (Fin 2) (Fin 2) O) : 
   hom _ := isMonHom_matEnd a p _
   one := by rw [map_one, matEnd_one]
   mul c d := by rw [_root_.mul_comm, map_mul, matEnd_mul]
-  add c d := by rw [map_add, matEnd_add]
+  add c d := by rw [map_add (f := _), matEnd_add]
 
 end Act
 

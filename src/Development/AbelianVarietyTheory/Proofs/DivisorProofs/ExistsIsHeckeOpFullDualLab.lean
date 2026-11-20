@@ -116,7 +116,7 @@ theorem modular_eq_one (hσ : ∀ x, σ (σ x) = x) {δ : E} (hδ : δ ≠ 0) (h
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [sigR, hσ]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   obtain ⟨T, hTc, hT, hT'⟩ := exists_involution (GlobalTheory.AdelicUnitaryTop.continuous_sigR (Fv F v) σ) hss hF
   have hgen : Generic (sigR (Fv F v) σ) :=
     generic_of_semilocal (δ := inclR (Fv F v) δ) (hδ.isUnit.map _) (by

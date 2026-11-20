@@ -60,7 +60,7 @@ theorem pow_smul_weighted_component_mem_weyl (R : Type) [CommRing R] [IsDomain R
       exact Submodule.zero_mem _
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     rw [map_smul, smul_comm]
@@ -289,12 +289,12 @@ theorem tensor_projection_kill_holds : TensorProjKill := by
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x b => rw [TensorProduct.map_tmul, TensorProduct.smul_tmul', h x, TensorProduct.zero_tmul]
-    | add x y hx hy => rw [map_add, smul_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a y =>
     rw [TensorProduct.map_tmul, ← TensorProduct.tmul_smul, h1 y, TensorProduct.tmul_zero]
-  | add x y hx hy => rw [map_add, smul_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
 
 def mulOntoScaledSubmodule {O : Type} [CommRing O] (A : Type) [Ring A] [Algebra O A] (V : Type) [AddCommGroup V]
     [Module O V] [Module A V] [IsScalarTower O A V] (c : O) : V →ₗ[A] scaleSub A V c where
@@ -533,7 +533,7 @@ theorem tensorSubmodule_le_of_tprod_mem {O : Type} [CommRing O] {ι : Type} [Fin
     rw [map_smul, PiTensorProduct.map_tprod]
     exact U.smul_mem _ (h _ fun τ => (u τ).2)
   | add a b ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact U.add_mem ha hb
 
 theorem tensor_weight_kill_holds : TensorWeightKill := by
@@ -839,7 +839,7 @@ theorem theorem_w_top_of_simple_quotients (hSS : SimpleSubquotOfPower) (hIso : S
     induction x using PiTensorProduct.induction_on with
     | smul_tprod r u =>
       rw [smul_comm, map_smul, he τ w u (pr τ w (u τ)) rfl, factor_action_on_tensor_product_holds]
-    | add a b ha hb => rw [smul_add, map_add, ha, hb]
+    | add a b ha hb => rw [smul_add, map_add (f := _), ha, hb]
   have hIN2 : ∀ τ ∈ T2, ∀ w, depthAt N k j lam τ w ≤ ((i τ : ℕ) : ℤ) →
       ∀ x : dualWeyl O N N (res N (lam τ)),
         (l : O) ^ cFloor l N k t h lam j q xm xp ecl i τ • pr τ w x ∈ deltaIn O N lam τ := by

@@ -44,7 +44,7 @@ theorem periodic_comp (e : Module.Basis ι ℝ V) (G : V → ℂ)
     (hper : ∀ l ∈ Submodule.span ℤ (Set.range e), ∀ x, G (l + x) = G x)
     (s : ι → ℝ) (n : ι → ℤ) :
     G (e.equivFunL.symm (s + fun i => (n i : ℝ))) = G (e.equivFunL.symm s) := by
-  rw [map_add, add_comm]
+  rw [map_add (f := _), add_comm]
   apply hper
   rw [equivFunL_symm_eq]
   refine Submodule.sum_mem _ fun i _ => ?_

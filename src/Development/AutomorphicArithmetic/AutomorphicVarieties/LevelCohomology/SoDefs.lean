@@ -79,7 +79,7 @@ variable {R R' Γ N W : Type} [CommRing R] [CommRing R'] [Group Γ] [Topological
 
 def cocycleMapOfEquivariant : Z1 τ →+ Z1 σ where
   toFun z := ⟨fun g => ι (z.1 g), continuous_of_discreteTopology.comp z.2.1, fun g g' => by
-    simp only [z.2.2 g g', map_add, h]⟩
+    simp only [z.2.2 g g', map_add (f := _), h]⟩
   map_zero' := Subtype.ext (funext fun _ => map_zero ι)
   map_add' _ _ := Subtype.ext (funext fun _ => map_add ι _ _)
 

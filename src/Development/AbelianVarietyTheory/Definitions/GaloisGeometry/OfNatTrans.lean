@@ -25,7 +25,7 @@ def d (n : ℕ) : Cn F n →ₗ[R] Cn F (n + 1) where
   toFun f s := ∑ i : Fin (n + 2), (-1 : ℤ) ^ (i : ℕ) • (F.map (toLast i s)).hom (f (face i s))
   map_add' f g := by
     funext s
-    simp only [Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
   map_smul' r f := by
     funext s
     simp only [Pi.smul_apply, map_smul, RingHom.id_apply, Finset.smul_sum]

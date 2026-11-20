@@ -226,7 +226,7 @@ theorem theta_triple_piT_irreducible : GlobalTheory.Published.HoweDualityReal �
         rintro γ ⟨τ, Y, hY, hγt⟩ hγ f hf f₁ hact hfQ
         obtain ⟨δ, hδ⟩ := hδ γ hγ
         obtain ⟨b, hb⟩ := exists_descend _ R.p hm.real.quot.onto (fun f g => g = δ f) (fun f _ => ⟨_, rfl⟩)
-          (fun f _ f' _ k k' hk hk' a b => by rw [hk, hk', map_add, map_smul, map_smul])
+          (fun f _ f' _ k k' hk hk' a b => by rw [hk, hk', map_add (f := _), map_smul, map_smul])
           (fun f hf k hk h0 => by
             rw [hm.real.lie γ hγ f hf 0 (zero_mem _) k 0 (((hδ f hf).2 k).2 hk) (fun r _ x => by
               have e : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F) (⇑(0 : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.SInf D.host.F

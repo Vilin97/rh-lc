@@ -29,7 +29,7 @@ private theorem grading_map_coeff_eq_monomial {K σ : Type} (s : σ → K)
     · simp
   · rename_i f1 f2 hf hg
     intro a
-    simp only [map_add, MvPolynomial.coeff_add, hf, hg]
+    simp only [map_add (f := _), MvPolynomial.coeff_add, hf, hg]
   · rename_i f n hf
     intro a
     rw [map_mul φ f (MvPolynomial.X n), hφ, mul_left_comm, MvPolynomial.coeff_C_mul,

@@ -109,7 +109,7 @@ theorem det_assoc_of_cok {n : Type*} [Fintype n] [DecidableEq n] (Z Z' : Matrix 
       · simp
   have key : LinearMap.range M1.mulVecLin = LinearMap.range M2.mulVecLin := by
     ext u
-    rw [c1, c2, map_add, hA', ← φ.apply_symm_apply (Submodule.mkQ _ (u ∘ Sum.inr)), ← hB', ← map_add, ← map_add,
+    rw [c1, c2, map_add (f := _), hA', ← φ.apply_symm_apply (Submodule.mkQ _ (u ∘ Sum.inr)), ← hB', ← map_add (f := _), ← map_add (f := _),
       LinearEquiv.map_eq_zero_iff]
   have d1 : M1.det = Z'.det := by simp [M1, Matrix.det_fromBlocks_zero₁₂]
   have d2 : M2.det = Z.det := by simp [M2]

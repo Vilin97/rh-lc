@@ -61,7 +61,7 @@ def Good (φ : TauV →ₗ[ℂ] (WO V W → ℂ)) : Prop :=
 
 theorem thetaKO_add (h : Formalism.L2.Theta.GA D V) (g : Formalism.L2.Theta.GA D W) (f f' : WO V W → ℂ) :
     thetaKO om h g (f + f') = thetaKO om h g f + thetaKO om h g f' := by
-  simp [thetaKO, map_add]
+  simp [thetaKO, map_add (f := _)]
 
 theorem thetaKO_smul (h : Formalism.L2.Theta.GA D V) (g : Formalism.L2.Theta.GA D W) (c : ℂ) (f : WO V W → ℂ) :
     thetaKO om h g (c • f) = c * thetaKO om h g f := by
@@ -145,7 +145,7 @@ def OmSub : Submodule ℂ (TauV →ₗ[ℂ] (WO V W → ℂ)) where
   carrier := {φ | ∀ p, ThV ψ (valAct1 ω p φ) ∧ Good om fV yv νV 𝓕V νW 𝓕W (valAct1 ω p φ)}
   add_mem' := by
     intro φ φ' hφ hφ' p
-    rw [map_add]
+    rw [map_add (f := _)]
     exact ⟨fun v => by
       simp only [LinearMap.add_apply]
       exact Formalism.IndefR.Fock.CCR.theta_add ((hφ p).1 v) ((hφ' p).1 v),

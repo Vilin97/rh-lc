@@ -77,12 +77,12 @@ private theorem indCore [IsTotallyComplex K] [IsTotallyComplex M]
       · left
         refine ⟨hN, w', hne, hu, ?_⟩
         have s3 := satM w' fun h => hw' (hu ▸ (memSM w').1 h)
-        rw [cx, cx, cx, sat_unique P s1 h4, sat_unique π s2 h1, sat_unique π s3 h3, Multiset.map_add]
+        rw [cx, cx, cx, sat_unique P s1 h4, sat_unique π s2 h1, sat_unique π s3 h3, Multiset.map_add (f := _)]
       · right
         refine ⟨hN, B'.map fun b : ℂˣ => (b : ℂ), ?_, ?_⟩
         · rw [cx, sat_unique π s2 h1, Multiset.map_map, Multiset.map_map]
           exact Multiset.map_congr rfl fun b _ => by simp
-        · rw [cx, sat_unique P s1 h4, h3, Multiset.map_add, Multiset.map_map, Multiset.map_map]
+        · rw [cx, sat_unique P s1 h4, h3, Multiset.map_add (f := _), Multiset.map_map, Multiset.map_map]
           congr 1)
   have pM' := hOps.2.2.1 _ _ _ _ _ _ _ c pM (fun s hs => ((hc s).1 hs).symm) (fun s hs => ((hc s).2 hs).symm)
   have e1 : ∏ w ∈ SM, (pol (sM w) 1).comp (X ^ v.asIdeal.inertiaDeg' w.asIdeal) =

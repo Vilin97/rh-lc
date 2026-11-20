@@ -37,7 +37,7 @@ theorem sigR_sigR {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) (u : K ⊗[F
   induction u using TensorProduct.induction_on with
   | zero => simp
   | tmul k e => simp [sigR, hσ]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem sigR_hR {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) {M : ℕ} {J : Matrix (Fin M) (Fin M) E}
     (hJ : ∀ i j, σ (J j i) = J i j) (a b : Fin M → K ⊗[F] E) :
@@ -62,7 +62,7 @@ theorem exists_lam [NumberField F] [NumberField E] {σ : E →ₐ[F] E} (h : IsC
   have hφ' : ∀ e, algebraMap F E (φ' e) = e + σ e := by
     intro e
     obtain ⟨f, hf⟩ := GlobalTheory.HermLineZeros.exists_of_fixed h (e + σ e)
-      (by rw [map_add, GlobalTheory.HermLineZeros.conj_invol h, add_comm])
+      (by rw [map_add (f := _), GlobalTheory.HermLineZeros.conj_invol h, add_comm])
     have h1 : φ' e = φ (e + σ e) := rfl
     rw [h1, ← hf]
     have := LinearMap.congr_fun hφ f
@@ -75,7 +75,7 @@ theorem exists_lam [NumberField F] [NumberField E] {σ : E →ₐ[F] E} (h : IsC
     have h2 : sigR K σ (k ⊗ₜ[F] e) = k ⊗ₜ[F] σ e := rfl
     rw [h2, ← TensorProduct.tmul_add, ← hφ', Algebra.algebraMap_eq_smul_one, ← TensorProduct.smul_tmul]
     simp [Algebra.TensorProduct.algebraMap_apply]
-  | add a b ha hb => rw [map_add, map_add, map_add, ← ha, ← hb]; abel
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ← ha, ← hb]; abel
 
 theorem two_ne_zero' (F₀ K₀ : Type) [Field F₀] [CharZero F₀] [Field K₀] [Algebra F₀ K₀] : (2 : K₀) ≠ 0 := by
   have : (2 : K₀) = algebraMap F₀ K₀ 2 := (map_ofNat (algebraMap F₀ K₀) 2).symm
@@ -273,7 +273,7 @@ theorem approx : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
       simp only [wε, hR, GlobalTheory.HermLineZeros.hform_expand]
       rw [hsig]
       ring
-    rw [e1, map_add, map_add, hlamsmul, hlamsmul, hlamsmul, hlamA]
+    rw [e1, map_add (f := _), map_add (f := _), hlamsmul, hlamsmul, hlamsmul, hlamA]
     ring
 
   set P : Polynomial K := Polynomial.X ^ 2 + Polynomial.C (lam (hR K σ J w xb + hR K σ J xb w)) * Polynomial.X

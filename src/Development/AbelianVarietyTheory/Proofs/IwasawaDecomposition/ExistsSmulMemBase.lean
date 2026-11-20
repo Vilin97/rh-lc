@@ -24,9 +24,9 @@ def lat (D : D7) (S : HSpace D.host.E) : Submodule (𝓞 D.host.E) S.V :=
 
 def formQ (D : D7) (S : HSpace D.host.E) : lat D S →ₗ[ℤ] lat D S →ₗ[ℤ] ℚ :=
   LinearMap.mk₂ ℤ (fun x y => Algebra.trace ℚ D.host.E (D.host.xi0 * S.hT x y))
-    (fun x x' y => by simp [map_add, mul_add])
+    (fun x x' y => by simp [map_add (f := _), mul_add])
     (fun c x y => by simp [map_zsmul]; rw [mul_left_comm, ← zsmul_eq_mul, map_zsmul, zsmul_eq_mul])
-    (fun x y y' => by simp [map_add, mul_add])
+    (fun x y y' => by simp [map_add (f := _), mul_add])
     (fun c x y => by simp [map_zsmul]; rw [mul_left_comm, ← zsmul_eq_mul, map_zsmul, zsmul_eq_mul])
 
 def FormInt (D : D7) (S : HSpace D.host.E) : Prop := ∀ x y : lat D S, ∃ n : ℤ, formQ D S x y = n
@@ -180,12 +180,12 @@ theorem herm_lat_mem (D : D7) (S : HSpace D.host.E) {v w : S.V} (hv : v ∈ lat 
       obtain ⟨b, hb, y, hy, rfl⟩ := hw
       exact herm_gen_mem D S ha hb hx hy
     | zero => simp
-    | add w w' _ _ h h' => rw [map_add]; exact add_mem h h'
+    | add w w' _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
     | smul c w _ h =>
       rw [← algebraMap_smul D.host.E c w, map_smul, smul_eq_mul, ← Algebra.smul_def]
       exact Submodule.smul_mem _ c h
   | zero => simp
-  | add v v' _ _ h h' => rw [map_add, LinearMap.add_apply]; exact add_mem (h hw) (h' hw)
+  | add v v' _ _ h h' => rw [map_add (f := _), LinearMap.add_apply]; exact add_mem (h hw) (h' hw)
   | smul c v _ h =>
     rw [← algebraMap_smul D.host.E c v, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul]
     have hc : (starRingEnd D.host.E) (algebraMap (𝓞 D.host.E) D.host.E c) =
@@ -207,7 +207,7 @@ def repMap (D : D7) (S : HSpace D.host.E) (f : lat D S →ₗ[ℤ] ℤ) : lat D 
   toFun := repOf D S f
   map_add' y y' := by
     have := trace_sep D (w := repOf D S f (y + y') - (repOf D S f y + repOf D S f y')) (fun c => by
-      rw [sub_mul, add_mul, map_sub, map_add, repOf_spec, repOf_spec, repOf_spec, smul_add, map_add]
+      rw [sub_mul, add_mul, map_sub, map_add (f := _), repOf_spec, repOf_spec, repOf_spec, smul_add, map_add (f := _)]
       push_cast; ring)
     exact sub_eq_zero.1 this
   map_smul' c' y := by
@@ -365,17 +365,17 @@ theorem formR_formula (D : D7) (S : HSpace D.host.E) (ε : ℤ) (hI : FormInt D 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add x1 x2 h1 h2 =>
-    rw [map_add, LinearMap.add_apply, h1, h2, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), LinearMap.add_apply, h1, h2, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl (fun τ _ => ?_)
-    simp only [map_add, Pi.add_apply, star_add, add_dotProduct, mul_add, Complex.add_re]
+    simp only [map_add (f := _), Pi.add_apply, star_add, add_dotProduct, mul_add, Complex.add_re]
     try ring
   | tmul a v =>
     induction y using TensorProduct.induction_on with
     | zero => simp
     | add y1 y2 h1 h2 =>
-      rw [map_add, h1, h2, ← Finset.sum_add_distrib]
+      rw [map_add (f := _), h1, h2, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl (fun τ _ => ?_)
-      simp only [map_add, Pi.add_apply, mulVec_add, dotProduct_add, mul_add, Complex.add_re]
+      simp only [map_add (f := _), Pi.add_apply, mulVec_add, dotProduct_add, mul_add, Complex.add_re]
       try ring
     | tmul a' w =>
       rw [LinearMap.BilinForm.baseChange_tmul, coord_tmul, coord_tmul]
@@ -417,7 +417,7 @@ theorem coord_mulAt (D : D7) (S : HSpace D.host.E) (a : 𝓞 D.host.E) (A : ℝ 
     try rfl
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add z1 z2 h1' h2' => rw [map_add, map_add, h1', h2', map_add (coord D S), map_add (mulAt D S a)]
+  | add z1 z2 h1' h2' => rw [map_add (f := _), map_add (f := _), h1', h2', map_add (coord D S), map_add (mulAt D S a)]
   | tmul x m =>
     have e : x ⊗ₜ[ℤ] m = x • ((1 : ℝ) ⊗ₜ[ℤ] m) := by
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]

@@ -38,7 +38,7 @@ theorem finPart_placeIdem_mem {D : D7} {P : Pl D.host.E} {e f : Formalism.L2.The
     (h : IsPrimeIdem P e f) : finPart D f ∈ intAE D := by
   rcases h with ⟨⟨_, h⟩, rfl⟩ | ⟨rfl, _, h⟩
   · have he := finPart_idem_mem h
-    rw [RingHom.map_add]
+    rw [RingHom.map_add (f := _)]
     exact add_mem he (GlobalTheory.IdemSupport.finPart_cA_mem he)
   · exact finPart_idem_mem h
 

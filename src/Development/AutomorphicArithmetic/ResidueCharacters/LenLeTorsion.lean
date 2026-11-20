@@ -105,7 +105,7 @@ theorem tbe_clauses (L : Lattice (O := O) ρ) (I J : Subgroup G) (hIJ : I = J) (
       obtain ⟨x, hx⟩ := hu
       obtain ⟨y, rfl⟩ := hb
       refine ⟨x + y, fun g hg => ?_⟩
-      simp only [Pi.add_apply, hx g hg, LinearMap.pi_apply, LinearMap.sub_apply, LinearMap.id_apply, map_add]
+      simp only [Pi.add_apply, hx g hg, LinearMap.pi_apply, LinearMap.sub_apply, LinearMap.id_apply, map_add (f := _)]
       abel
   · calc _ ≤ _ := len_le_torsion PD L _
       _ ≤ _ := hlen

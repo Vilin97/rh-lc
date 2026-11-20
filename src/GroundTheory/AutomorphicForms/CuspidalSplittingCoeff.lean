@@ -142,7 +142,7 @@ theorem coeffSum_add (w₁ w₂ : V) :
     (finite_support_coeffSum hπ hsc hKo hf w₂)]
   refine finsum_congr fun q => ?_
   dsimp only
-  rw [map_add, map_add, add_smul]
+  rw [map_add (f := _), map_add (f := _), add_smul]
 
 include hπ hsc hKo hf in
 theorem coeffSum_smul (c : ℂ) (w : V) :

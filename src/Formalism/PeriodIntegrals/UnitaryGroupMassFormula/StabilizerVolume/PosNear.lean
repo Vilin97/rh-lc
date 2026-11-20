@@ -29,7 +29,7 @@ theorem crd_map {R S : Type} [CommRing R] [Algebra F R] [CommRing S] [Algebra F 
     simp [crd, Algebra.TensorProduct.basis_repr_tmul, Algebra.TensorProduct.map_tmul]
   | add x y hx hy =>
     simp only [crd] at hx hy ⊢
-    rw [map_add, map_add, Finsupp.add_apply, hx, hy, map_add, Finsupp.add_apply, map_add]
+    rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, hx, hy, map_add (f := _), Finsupp.add_apply, map_add (f := _)]
 
 theorem crd_incl (R : Type) [CommRing R] [Algebra F R] (x : E) (k : Fin d) :
     crd b R (inclR R x) k = algebraMap F R (b.repr x k) := by

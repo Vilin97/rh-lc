@@ -55,7 +55,7 @@ theorem expMap_add (H : IsLieData σ j s) (X : L) (t u : ℝ) :
   have : CompleteSpace 𝔸 := FiniteDimensional.complete ℝ 𝔸
   let : NormedAlgebra ℚ 𝔸 := NormedAlgebra.restrictScalars ℚ ℝ 𝔸
   unfold expMap
-  rw [← H.mul _ _ (exp_unitary H _) (exp_unitary H _), add_smul, map_add, NormedSpace.exp_add_of_commute]
+  rw [← H.mul _ _ (exp_unitary H _) (exp_unitary H _), add_smul, map_add (f := _), NormedSpace.exp_add_of_commute]
   rw [map_smul, map_smul]
   exact ((Commute.refl _).smul_left _).smul_right _
 

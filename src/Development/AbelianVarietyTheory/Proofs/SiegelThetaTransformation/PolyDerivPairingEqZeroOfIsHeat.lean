@@ -254,7 +254,7 @@ theorem _root_.GlobalTheory.SW.polyDeriv_pairing_eq_zero_of_isHeat : ∀ (E : Ty
       exact mul_eq_zero_of_right a (h0 p1 hp)
     | add A B hA hB =>
       intro p hp hp0
-      rw [map_add, _root_.ReciprocityTheory.ChartRestriction.G.I2.polyDeriv_add, hA p hp hp0, hB p hp hp0, add_zero]
+      rw [map_add (f := _), _root_.ReciprocityTheory.ChartRestriction.G.I2.polyDeriv_add, hA p hp hp0, hB p hp hp0, add_zero]
     | mul_X A v ih =>
       intro p hp hp0
       rw [map_mul, MvPolynomial.aeval_X]

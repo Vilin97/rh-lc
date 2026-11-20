@@ -74,7 +74,7 @@ private theorem units_field {M L : Type} [CommRing M] [Algebra ℚ M] [Module.Fi
       map_add' := fun y y' => by
         obtain ⟨a, rfl⟩ := hπ y
         obtain ⟨b, rfl⟩ := hπ y'
-        rw [← map_add, hcomp, hcomp, hcomp, map_add, map_add]
+        rw [← map_add (f := _), hcomp, hcomp, hcomp, map_add (f := _), map_add (f := _)]
       commutes' := fun r => by
         have := hcomp (algebraMap ℚ M r)
         simpa using this }

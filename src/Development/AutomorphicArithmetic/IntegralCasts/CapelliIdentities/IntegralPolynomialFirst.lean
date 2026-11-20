@@ -16,5 +16,5 @@ theorem UpperTheory.Reformulated.B.IntegralPolynomialFirst.intMv_add.{u_1} :
   have h1 : ‖MvPowerSeries.coeff n F‖ ≤ (1 : ℝ) := hF n
   have h2 : ‖MvPowerSeries.coeff n G‖ ≤ (1 : ℝ) := hG n
   show ‖MvPowerSeries.coeff n (F + G)‖ ≤ (1 : ℝ)
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le h1 h2)

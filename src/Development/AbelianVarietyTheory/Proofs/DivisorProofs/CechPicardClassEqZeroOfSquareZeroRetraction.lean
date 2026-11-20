@@ -73,7 +73,7 @@ theorem GlobalTheory.CechPic.eq_zero_of_sqZero_retract : ∀ {X X' : Scheme.{0}}
       gr f z _ hz (t j) = gr (f ≫ q) z (W j) (hWf j f z hz) (t₀.s fun _ => j).val *
         (1 + gr f z _ hz (n j) * gr f z ⊤ trivial h2.unit⁻¹.val) := by
     intro Z f z j hz
-    simp only [t, u, hh, map_mul, map_add, map_one]
+    simp only [t, u, hh, map_mul, map_add (f := _), map_one]
     rw [gr_appLE, gr_res]
   have E1 : (𝟙 X ≫ i) ≫ q = 𝟙 X := by rw [Category.assoc, e, Category.id_comp]
   have E2 : ((𝟙 X ≫ i) ≫ q) ≫ i = 𝟙 X ≫ i := by rw [E1]

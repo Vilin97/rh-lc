@@ -397,7 +397,7 @@ theorem OnTie.rho_eq_of_actionPin (t : OnTie h fw hinj EX p ι wL wF nT O v i z 
   obtain ⟨u, rfl⟩ := z.symm.surjective x
   induction u using TensorProduct.induction_on with
   | zero => rw [z.symm.map_zero, LinearMap.map_zero, LinearMap.map_zero, LinearMap.map_zero]
-  | add u u' hu hu' => rw [z.symm.map_add, LinearMap.map_add, LinearMap.map_add, hu, hu', LinearMap.map_add, LinearMap.map_add]
+  | add u u' hu hu' => rw [z.symm.map_add (f := _), LinearMap.map_add (f := _), LinearMap.map_add (f := _), hu, hu', LinearMap.map_add (f := _), LinearMap.map_add (f := _)]
   | tmul c F =>
     have e : act g F = a (inc g) F := Subtype.ext ((t.act_eq g F).trans (h1 (inc g) F).symm)
     rw [t.toFormTieK.rho_tmul, toForms_tmul, toForms_tmul, e, h2, map_smul]

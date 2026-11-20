@@ -67,7 +67,7 @@ theorem faceDeriv_constantCoeff_and_isSymCoc (G : MvPowerSeries (Fin 3 × ρ) S)
       exact hB k j
     have hc' := congrArg (fun F => blin (![![1, 0, 0], ![0, 1, 0], ![0, 0, 1], ![0, 0, 0]] : Fin 4 → Fin 3 → ℤ)
       (pderiv (R := S) ((3 : Fin 4), r) F)) hc
-    simp only [map_add, blin_add] at hc'
+    simp only [map_add (f := _), blin_add] at hc'
     rw [key _ (![![1, 1, 0], ![0, 0, 1]]) (by intro k; fin_cases k <;> simp)
         (by intro k j; fin_cases k <;> fin_cases j <;> simp [Fin.sum_univ_four, Fin.sum_univ_three]),
       key _ (![![1, 0, 0], ![0, 1, 0]]) (by intro k; fin_cases k <;> simp)

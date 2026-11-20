@@ -125,7 +125,7 @@ theorem exists_form_of_mem_chartRingZ (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k
       · exact isMultiHomog_mul h₁ (isMultiHomog_chartMono c δ₂) m hm
       · rw [add_comm δ₁]
         exact isMultiHomog_mul h₂ (isMultiHomog_chartMono c δ₁) m hm
-    · rw [map_add, map_mul, map_mul, v₁, v₂, aeval_chartMono, aeval_chartMono, hpow]
+    · rw [map_add (f := _), map_mul, map_mul, v₁, v₂, aeval_chartMono, aeval_chartMono, hpow]
       ring
   | mul x w _ _ hx hw =>
     obtain ⟨δ₁, e₁, h₁, v₁⟩ := hx

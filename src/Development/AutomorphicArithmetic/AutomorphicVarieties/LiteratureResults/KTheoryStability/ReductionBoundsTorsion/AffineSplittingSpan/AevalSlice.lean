@@ -21,7 +21,7 @@ theorem aeval_slice (t : P) {a b : ℕ} (f : Polynomial ℝ) (x : Bi P Q a b) (x
     (Polynomial.aeval (TcL t a b) f x) x' = Polynomial.aeval (mapOp (fun y => t⁻¹ * y * t) b) f (x x') := by
   induction f using Polynomial.induction_on' with
   | add p r hp hr =>
-    simp only [map_add, LinearMap.add_apply, Pi.add_apply, hp, hr]
+    simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply, hp, hr]
   | monomial n c =>
     simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply,
       Pi.smul_apply, pow_slice]
@@ -61,7 +61,7 @@ theorem pinv_aeval (pr : P →* Q) (s : Q →* P) (hs : ∀ g, pr (s g) = g) (u 
       exact pinv_Tc pr s hs u hu ih
   induction f using Polynomial.induction_on' with
   | add p r hp hr =>
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact (pinvT pr a b).add_mem hp hr
   | monomial n c =>
     rw [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply]

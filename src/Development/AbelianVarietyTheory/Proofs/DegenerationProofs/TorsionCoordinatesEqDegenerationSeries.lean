@@ -224,7 +224,7 @@ theorem famV_lin {k : ℕ} {s s' : Fam D F k} {f f' : N.X → N.A → F} (h : ν
     ((congrArg (toStk y) (h α x)).trans (toStk_sF' _ _ hJ))) ((congrArg (toStk y) (h' α x)).trans (toStk_sF' _ _ hJ)))
   refine Eq.trans (congrArg (toStk y) (?_ : _ = c * (f α x * ν.rg ^ k) + f' α x * ν.rg ^ k)) ?_
   · simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
-  · rw [map_add, map_mul]; rfl
+  · rw [map_add (f := _), map_mul]; rfl
 
 theorem coef_theta {ϑ : Fam D F 1} {c₀ : F} (h : ν.FamV ϑ (c₀ • N.vth)) {g : GtPtF D F} {c : N.Gt} (hg : ν.Pt g c)
     {w : Frm D F 1 g.b} (hw : w.IsGen) (χ : N.X) :

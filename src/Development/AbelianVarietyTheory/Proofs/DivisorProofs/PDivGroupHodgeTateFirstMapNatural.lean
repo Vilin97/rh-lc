@@ -32,7 +32,7 @@ noncomputable def muPair [IsDomain O] {ε : PreTilt O p} (hε : IsPrimitiveSyste
     (χ : G.dual.Tate) : TDual G where
   toFun t := Sandwich.mu ε * ofPadic p O (epsPairing hε G t χ)
   map_add' s t := by
-    simp only [epsPairing, map_add, LinearMap.add_apply, mul_add]
+    simp only [epsPairing, map_add (f := _), LinearMap.add_apply, mul_add]
   map_smul' a t := by
     simp only [epsPairing, map_smul, LinearMap.smul_apply, smul_eq_mul, map_mul]
     ring

@@ -50,7 +50,7 @@ theorem isProjPrime_map {W : Ideal (MvPolynomial (Fin m) (𝓞 K))} (hW : IsProj
   refine ⟨isPrime_map hW.isPrime h, ?_, (isRelevant_comap_map_iff _ _).1 ((comap_map hW.isPrime h).symm ▸ hW.isRelevant)⟩
   intro f hf d
   refine Submodule.span_induction (p := fun f _ => ∀ d, homogeneousComponent d f ∈ W.map φ) ?_ (by simp)
-    (fun a b _ _ ha hb d => by rw [map_add]; exact Ideal.add_mem _ (ha d) (hb d)) ?_ hf d
+    (fun a b _ _ ha hb d => by rw [map_add (f := _)]; exact Ideal.add_mem _ (ha d) (hb d)) ?_ hf d
   · rintro _ ⟨g, hg, rfl⟩ d
     have e : homogeneousComponent d (φ g) = φ (homogeneousComponent d g) := by
       ext n

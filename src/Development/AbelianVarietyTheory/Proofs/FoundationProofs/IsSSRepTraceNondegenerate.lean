@@ -22,7 +22,7 @@ private theorem eq_zero_of_mulVec_eq_self_of_trace_mul_eq_zero {K : Type} [Field
   have hq' : aeval z q = z * R + c • 1 := by
     calc aeval z q = aeval z (X * q.divX + C (q.coeff 0)) := by rw [Polynomial.X_mul_divX_add]
       _ = z * R + c • 1 := by
-        rw [map_add, map_mul, aeval_X, aeval_C, Algebra.algebraMap_eq_smul_one]
+        rw [map_add (f := _), map_mul, aeval_X, aeval_C, Algebra.algebraMap_eq_smul_one]
   have h0 : z ^ m * (z * R + c • 1) = 0 := by
     have := Matrix.aeval_self_charpoly z
     rwa [hpq, map_mul, map_pow, aeval_X, hq'] at this

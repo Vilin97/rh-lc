@@ -126,7 +126,7 @@ theorem form_balanced (HR : AbelianDeRham) {c : 𝔠.elt} {φ : HdR X.A →ₗ[R
     (hφ : IsCorrForm (dp0 R) (𝟙 _) X.A X.A (X.P c) φ) (s : R ⊗[ℤ] 𝓞 F) (x y : HdR X.A) :
     φ (actAlg (dp0 R) (𝟙 _) X.rm s x) y = φ x (actAlg (dp0 R) (𝟙 _) X.rm s y) := by
   induction s with
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]
   | tmul r b =>
     obtain ⟨χ, hχ⟩ := exists_form_of X HR (b • c)
     rw [actAlg_tmul, actAlg_tmul, map_smul, map_smul, LinearMap.smul_apply, form_skew HR hφ,
@@ -156,7 +156,7 @@ theorem form_symm [IsTotallyReal F] (HR : AbelianDeRham) (HD : DualAbelianScheme
   have lie : ∀ (s : R ⊗[ℤ] 𝓞 F) x, hL.toLie X.rm (actAlg (dp0 R) (𝟙 _) X.rm s x) = s • hL.toLie X.rm x :=
     fun s x ↦ by
     induction s with
-    | add a b ha hb => simp only [map_add, LinearMap.add_apply, add_smul, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, add_smul, ha, hb]
     | tmul r b => rw [actAlg_tmul, map_smul, hL.toLie_act, sm]
   have mem : ∀ (s : R ⊗[ℤ] 𝓞 F) (x : Fil X.A), actAlg (dp0 R) (𝟙 _) X.rm s x ∈ Fil X.A := fun s x ↦ by
     have : hL.toLie X.rm x = 0 := LinearMap.mem_ker.1 ((hL.ker_toLie X.rm).ge x.2)
@@ -167,7 +167,7 @@ theorem form_symm [IsTotallyReal F] (HR : AbelianDeRham) (HD : DualAbelianScheme
     induction s with
     | zero => rw [zero_smul, ← map_zero κ]; exact congrArg κ (Subtype.ext (by simp [ρ]))
     | add a b ha hb =>
-      rw [add_smul, ← ha, ← hb, ← map_add]
+      rw [add_smul, ← ha, ← hb, ← map_add (f := _)]
       exact congrArg κ (Subtype.ext (by simp [ρ]))
     | tmul r b =>
       rw [sm, ← hκ b x (ρ (1 ⊗ₜ b) x) ((actAlg_tmul _ _ _ _ _ _).trans (one_smul _ _)), ← map_smul]

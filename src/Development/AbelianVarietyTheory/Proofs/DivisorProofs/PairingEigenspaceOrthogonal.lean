@@ -43,11 +43,11 @@ theorem pairing_eig_orth : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     intro u v
     induction u using TensorProduct.induction_on with
     | zero => simp
-    | add u1 u2 h1 h2 => simp only [map_add, LinearMap.add_apply, h1, h2]
+    | add u1 u2 h1 h2 => simp only [map_add (f := _), LinearMap.add_apply, h1, h2]
     | tmul r m =>
       induction v using TensorProduct.induction_on with
       | zero => simp
-      | add v1 v2 h1 h2 => simp only [map_add, h1, h2]
+      | add v1 v2 h1 h2 => simp only [map_add (f := _), h1, h2]
       | tmul r' m' =>
         simp only [LinearMap.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul]
         rw [hadj a b rfl m m']

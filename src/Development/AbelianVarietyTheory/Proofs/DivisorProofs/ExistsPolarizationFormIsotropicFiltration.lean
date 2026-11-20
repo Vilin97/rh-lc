@@ -25,7 +25,7 @@ theorem mem_of_annihilates {R V : Type*} [CommRing R] [AddCommGroup V] [Module R
   have hΦ' : ∀ v : V, ∀ g : W, Φ (e.symm v).2 g = ψ v g := by
     intro v g
     have h := congrArg (fun u ↦ ψ u g) (hdec v)
-    simp only [map_add, LinearMap.add_apply] at h
+    simp only [map_add (f := _), LinearMap.add_apply] at h
     rw [hiso _ (Submodule.coe_mem _) g g.2, zero_add] at h
     simpa [Φ] using h
   have hΦ : Function.Surjective Φ := by
@@ -91,7 +91,7 @@ theorem mem_of_annihilates_dual {R M : Type*} [CommRing R] [AddCommGroup M] [Mod
       rintro φ ⟨h1, h2⟩
       rw [Submodule.mem_bot]
       refine LinearMap.ext fun x ↦ ?_
-      rw [← hdec x, map_add, (Submodule.mem_dualAnnihilator _).1 h1 _ (Submodule.coe_mem _),
+      rw [← hdec x, map_add (f := _), (Submodule.mem_dualAnnihilator _).1 h1 _ (Submodule.coe_mem _),
         (Submodule.mem_dualAnnihilator _).1 h2 _ (Submodule.coe_mem _)]
       simp
     · rw [codisjoint_iff_le_sup]

@@ -25,7 +25,7 @@ abbrev Zs (F : Type) [Field F] [NumberField F] (n d : ℕ) : Type :=
 
 theorem infAd_add (a b : mixedEmbedding.mixedSpace F) : infAd F (a + b) = infAd F a + infAd F b := by
   unfold infAd
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
   rfl
 
 theorem infAd_smul (t : ℝ) (a : mixedEmbedding.mixedSpace F) : infAd F (t • a) = realAd F t * infAd F a := by
@@ -38,7 +38,7 @@ theorem infAd_smul (t : ℝ) (a : mixedEmbedding.mixedSpace F) : infAd F (t • 
 
 theorem liftI_add (M : Model σ X W) (ζ ζ' : Zs F n d) : liftI M (ζ + ζ') = liftI M ζ + liftI M ζ' := by
   unfold liftI
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
   refine Prod.ext ?_ ?_ <;> funext i <;> simp [infAd_add]
 
@@ -59,7 +59,7 @@ variable (τ : ∀ w : InfinitePlace F, EmbOver E w)
 
 def readC (M : Model σ X W) : Zs F n d →ₗ[ℝ] (InfinitePlace F → Fin n → Fin d → ℂ) where
   toFun ζ w i j := piInf (τ w) (liftI M ζ i j)
-  map_add' ζ ζ' := by funext w i j; simp [liftI_add, map_add]
+  map_add' ζ ζ' := by funext w i j; simp [liftI_add, map_add (f := _)]
   map_smul' t ζ := by
     funext w i j
     simp only [liftI_smul, Matrix.smul_apply, RingHom.id_apply, Pi.smul_apply]

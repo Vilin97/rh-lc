@@ -70,7 +70,7 @@ theorem local_weil_operator_second_space : GlobalTheory.FunPr.Hypotheses₂ → 
   · intro φ hφ φ' hφ' c
     have hm : c • φ + φ' ∈ SB (Fin a' × Fin (a + a') → Fv F v) := Submodule.add_mem _ (Submodule.smul_mem _ c hφ) hφ'
     apply eqR
-    rw [← hSR _ hm, tensLin, map_add, map_smul, hSR φ hφ, hSR φ' hφ', tensLin]
+    rw [← hSR _ hm, tensLin, map_add (f := _), map_smul, hSR φ hφ, hSR φ' hφ', tensLin]
   · intro γ hγ φ hφ
     have hw := GlobalTheory.SchrSB.schr_mem_SB B.ψ hT.base.std.1 v (GlobalTheory.LatVac.locCo G.M'.co v γ) φ hφ
     refine GlobalTheory.T.eq_of_componentTensorAdelicFunction_eq v φ _ _ hφ fun r hr => ?_
@@ -236,7 +236,7 @@ theorem linBar_right_mul : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     (fun φ Y => ι (S φ) (Y * ((g⁻¹ : GL (Fin (a + a')) (Fv F v)).val))) hι.bij
     (fun x hx y hy c => by
       funext Y
-      simp only [hlin x hx y hy c, map_add, map_smul, Pi.add_apply, Pi.smul_apply])
+      simp only [hlin x hx y hy c, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply])
     (fun C => schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo G.M'.co v (U 0 (Pm C))))
     (fun l => schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo G.M'.co v (U (-Lm l) 0)))
     (fun C x hx => ⟨hsb _ x hx, c1 C x hx, by

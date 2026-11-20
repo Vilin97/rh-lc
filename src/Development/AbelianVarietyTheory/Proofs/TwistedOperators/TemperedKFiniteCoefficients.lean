@@ -50,7 +50,7 @@ theorem isTemperedKFin_of_isTempered : GlobalTheory.Published.IrreducibleUnitary
   let T : U →ₗ[ℂ] U :=
     { toFun := fun u => ∫ k, φ k • π k u ∂(muK ε)
       map_add' := fun a b => by
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
         exact integral_add (hint a) (hint b)
       map_smul' := fun c a => by
         simp only [map_smul, RingHom.id_apply]

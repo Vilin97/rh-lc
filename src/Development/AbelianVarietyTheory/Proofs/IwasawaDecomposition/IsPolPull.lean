@@ -48,7 +48,7 @@ theorem isPol_pull : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
     CechPic.isLB_tens (isLB_lbPow (CechPic.isLB_dual hL') m) (CechPic.isLB_dual BD'.isLB_lb)
   have e : CechPic.pull π (CechPic.cls _ hA.isLB) = CechPic.cls _ hA' :=
     (congrArg _ (cl hL BD.isLB_lb hA.isLB)).trans (Eq.trans
-      (by rw [map_add, map_nsmul, map_neg, map_neg, e₁, e₂]) (cl hL' BD'.isLB_lb hA').symm)
+      (by rw [map_add (f := _), map_nsmul, map_neg, map_neg, e₁, e₂]) (cl hL' BD'.isLB_lb hA').symm)
   have hiso : LBIso (polOf Z' m BD') ((polOf Z m BD).pull π) :=
     (CechPic.cls_eq_iff hA' (pull_isLB hA.isLB π)).1 ((e.symm.trans (CechPic.cls_pull hA.isLB π _).symm))
   have : IsAffineHom (pullback.lift π Z'.s hπ) := inferInstance

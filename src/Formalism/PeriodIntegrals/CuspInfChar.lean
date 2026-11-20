@@ -83,7 +83,7 @@ variable {𝕜 : Type} [RCLike 𝕜]
 def jInf (w : InfinitePlace F) (e : w.Completion ≃+* 𝕜) : GL (Fin n) 𝕜 →* G F n := emb
   { toFun := fun x => (Pi.single (M := fun w : InfinitePlace F => w.Completion) w (e.symm x), 0)
     map_zero' := Prod.ext (by simp; rfl) rfl
-    map_add' := fun x y => Prod.ext (by rw [map_add]; exact Pi.single_add ..) (add_zero _).symm
+    map_add' := fun x y => Prod.ext (by rw [map_add (f := _)]; exact Pi.single_add ..) (add_zero _).symm
     map_mul' := fun x y => Prod.ext (by rw [map_mul]; exact Pi.single_mul ..) (mul_zero _).symm }
 variable {H : Type} [Group H] (j : GL (Fin n) 𝕜 →* H)
 

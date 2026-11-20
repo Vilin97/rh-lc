@@ -52,7 +52,7 @@ theorem gel_dualWeyl_field : ∀ (k : Type) [Field k] (N : ℕ) (ν : Fin N → 
     rw [← hcVal_map]
     simp
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul c x _ hx => rw [map_smul, hx, smul_comm]
 
 end GlobalTheory.Alc

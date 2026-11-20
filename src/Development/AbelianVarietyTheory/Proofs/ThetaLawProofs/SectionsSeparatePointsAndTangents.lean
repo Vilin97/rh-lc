@@ -203,7 +203,7 @@ theorem exists_cutting (f : X ⟶ Sp K) {H : LB X} {m : ℕ} {s : Fin (m + 1) �
     obtain ⟨F, rfl⟩ := hsurj x
     induction F using MvPolynomial.induction_on with
     | C c => rw [MvPolynomial.eval₂Hom_C, valH_cst_eq f w w' e]
-    | add F G hF hG => rw [map_add, map_add, map_add, hF, hG]
+    | add F G hF hG => rw [map_add (f := _), map_add (f := _), map_add (f := _), hF, hG]
     | mul_X F j hF =>
       rw [map_mul, MvPolynomial.eval₂Hom_X', map_mul, map_mul, hF, aux w hw j _ (h j), aux w' hw' j _ (h' j),
         valH_cst_eq f w w' e]

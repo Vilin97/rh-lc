@@ -130,7 +130,7 @@ theorem formallySmooth_of_isRegularLocalRing_of_surjective (R P S : Type*) [Comm
   · have : algebraMap P (ResidueField S) a = 0 := hk.ge ha
     rw [TensorProduct.mk_apply, ← TensorProduct.smul_tmul, ← Algebra.algebraMap_eq_smul_one, this,
       TensorProduct.zero_tmul]
-  · rw [map_add, ha, hb, add_zero]
+  · rw [map_add (f := _), ha, hb, add_zero]
 
 theorem formallySmooth_of_isRegularLocalRing_of_residueField (k S : Type*) [Field k]
     [CommRing S] [IsRegularLocalRing S] [Algebra k S] [Algebra.EssFiniteType k S]

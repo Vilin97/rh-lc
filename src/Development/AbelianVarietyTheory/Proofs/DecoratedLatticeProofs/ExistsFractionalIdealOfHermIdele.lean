@@ -131,7 +131,7 @@ theorem GlobalTheory.SeeSaw.exists_idealOfIdele : ∀ (D : D7) (m : (AE D)ˣ), �
         simpa using GlobalTheory.FinPl.Conductor.tmul_mem hα (1 : 𝓞 D.host.E)
       exact GlobalTheory.FinPl.Conductor.mul_mem_int h1 ((hmemA d).1 hd)
     | zero => rw [map_zero, mul_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [map_add, mul_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _), mul_add]; exact add_mem hy hz
     | neg y _ hy => rw [map_neg, mul_neg]; exact neg_mem hy
   · intro hi
     have hz : mi * finPart D a ∈ intAE D := by
@@ -173,9 +173,9 @@ theorem GlobalTheory.SeeSaw.exists_idealOfIdele : ∀ (D : D7) (m : (AE D)ˣ), �
         rw [e4]
         exact GlobalTheory.FinPl.Conductor.mul_mem_int hNm (one_tmul_mem o)
       | zero => rw [mul_zero, mul_zero, map_zero]; exact zero_mem _
-      | add y z _ _ hy hz => rw [mul_add, mul_add, map_add]; exact add_mem hy hz
+      | add y z _ _ hy hz => rw [mul_add, mul_add, map_add (f := _)]; exact add_mem hy hz
       | neg y _ hy => rw [mul_neg, mul_neg, map_neg]; exact neg_mem hy
-    rw [eq_finIn (infPart_of_idAt ha), ← hidem, e, mul_add, map_add]
+    rw [eq_finIn (infPart_of_idAt ha), ← hidem, e, mul_add, map_add (f := _)]
     refine add_mem ?_ (hrest u hu)
     rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul, finIn_tmul]
     exact AddSubgroup.subset_closure ⟨_, hε, fun w hw => GlobalTheory.FinPl.Conductor.ev_ne hw, d, hd, rfl⟩

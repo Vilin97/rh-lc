@@ -37,7 +37,7 @@ theorem spehSat_eq (q d : ℕ) (B : Multiset ℂˣ) : GlobalTheory.SphGal.spehSa
 
 theorem bcPar_eq (n : ℕ) (α : Fin (n / 2) → ℂˣ) :
     bcPar n (fun i => (α i : ℂ)) = (GlobalTheory.LGrp.bcParam n α).map (fun z : ℂˣ => (z : ℂ)) := by
-  simp [bcPar, GlobalTheory.LGrp.bcParam, Multiset.map_add, Multiset.map_map, Function.comp_def, Multiset.map_replicate]
+  simp [bcPar, GlobalTheory.LGrp.bcParam, Multiset.map_add (f := _), Multiset.map_map, Function.comp_def, Multiset.map_replicate]
 
 end GlobalTheory.HostBC
 

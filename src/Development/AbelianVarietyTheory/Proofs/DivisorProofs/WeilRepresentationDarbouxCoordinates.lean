@@ -37,7 +37,7 @@ local notation "toM" => InfiniteAdeleRing.ringEquiv_mixedSpace F
 theorem archimedean_map_add (z z' : mixedEmbedding.mixedSpace F) :
     GlobalTheory.WeilL2Words.arch1 F (z + z') = GlobalTheory.WeilL2Words.arch1 F z + GlobalTheory.WeilL2Words.arch1 F z' := by
   show (((toM).symm (z + z'), 0) : AF F) = (((toM).symm z + (toM).symm z', 0 + 0) : AF F)
-  rw [map_add, add_zero]
+  rw [map_add (f := _), add_zero]
 
 theorem arch_projection_real_smul (t : ℝ) (z : mixedEmbedding.mixedSpace F) :
     GlobalTheory.WeilL2Words.arch1 F (t • z) = rInf F t * GlobalTheory.WeilL2Words.arch1 F z := by
@@ -135,7 +135,7 @@ theorem archDir_transport : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
   refine ⟨fun p => { toFun := fun h => archParts (L p (GlobalTheory.WeilL2Words.archPair F h)), map_add' := ?_, map_smul' := ?_ },
     ?_, ?_⟩
   · intro h h'
-    rw [archPair_add, map_add, archParts_add]
+    rw [archPair_add, map_add (f := _), archParts_add]
   · intro t h
     rw [RingHom.id_apply, archPair_smul, map_smul, archParts_smul]
   · intro p h φ hφ

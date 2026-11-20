@@ -131,7 +131,7 @@ def intBy (c : WittVector p k) : Submodule (WittVector p k) (MvPowerSeries σ (F
   add_mem' {f g} hf hg α := by
     obtain ⟨v, hv⟩ := hf α
     obtain ⟨w, hw⟩ := hg α
-    exact ⟨v + w, by rw [map_add, hv, hw, mul_add, map_add]⟩
+    exact ⟨v + w, by rw [map_add (f := _), hv, hw, mul_add, map_add (f := _)]⟩
   smul_mem' r f hf α := by
     obtain ⟨w, hw⟩ := hf α
     refine ⟨r * w, ?_⟩
@@ -146,7 +146,7 @@ def quasiInt : Submodule (WittVector p k) (MvPowerSeries σ (Fr p k)) where
   add_mem' {f g} hf hg α i := by
     obtain ⟨v, hv⟩ := hf α i
     obtain ⟨w, hw⟩ := hg α i
-    exact ⟨v + w, by rw [map_add, mul_add, hv, hw, map_add]⟩
+    exact ⟨v + w, by rw [map_add (f := _), mul_add, hv, hw, map_add (f := _)]⟩
   smul_mem' r f hf α i := by
     obtain ⟨w, hw⟩ := hf α i
     refine ⟨r * w, ?_⟩

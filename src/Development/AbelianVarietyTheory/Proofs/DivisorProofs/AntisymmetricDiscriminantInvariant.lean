@@ -67,7 +67,7 @@ theorem rename_swapAt_invForm (j : ℕ) (al be : ι → ℝ) (τ : ι) (a b : Fi
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
   refine Finset.sum_congr rfl fun t _ => ?_
-  rw [map_add, map_mul, map_mul, rename_C, rename_C,
+  rw [map_add (f := _), map_mul, map_mul, rename_C, rename_C,
     rename_swapAt_sum τ t a b (fun i : Fin N => (i : ℕ) < j) (by omega),
     rename_swapAt_sum τ t a b (fun i : Fin N => j ≤ (i : ℕ)) (by omega)]
 

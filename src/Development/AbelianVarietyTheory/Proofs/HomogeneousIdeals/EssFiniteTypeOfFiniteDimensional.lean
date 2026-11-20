@@ -37,7 +37,7 @@ theorem pow_mem_forms (o : Type*) [CommRing o] {L : Type*} [Field L] [Algebra o 
     | add x _ y _ hx hy =>
       obtain ⟨q, hq, hx⟩ := hx
       obtain ⟨q', hq', hy⟩ := hy
-      exact ⟨q + q', add_mem hq hq', by rw [AddMemClass.coe_add, hx, hy, map_add, add_mul]⟩
+      exact ⟨q + q', add_mem hq hq', by rw [AddMemClass.coe_add, hx, hy, map_add (f := _), add_mul]⟩
     | mem_mul_mem x hx y hy =>
       induction hx using Submodule.span_induction with
       | mem x hx =>
@@ -51,7 +51,7 @@ theorem pow_mem_forms (o : Type*) [CommRing o] {L : Type*} [Field L] [Algebra o 
         obtain ⟨q, hq, hx⟩ := hx
         obtain ⟨q', hq', hy⟩ := hx'
         exact ⟨q + q', add_mem hq hq',
-          by rw [AddMemClass.coe_add, hx, hy, add_mul, map_add, add_mul]⟩
+          by rw [AddMemClass.coe_add, hx, hy, add_mul, map_add (f := _), add_mul]⟩
       | smul c x _ hx =>
         obtain ⟨q, hq, hx⟩ := hx
         refine ⟨algebraMap (cone o t) A (algebraMap o _ c) * q, I.radical.mul_mem_left _ hq, ?_⟩

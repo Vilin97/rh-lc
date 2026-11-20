@@ -90,7 +90,7 @@ theorem isMultiHomog_homog (p : Polynomial ℤ) (d : ℕ) :
   omega
 
 theorem homog_add (p q : Polynomial ℤ) (d : ℕ) : homog (p + q) d = homog p d + homog q d := by
-  simp [homog, Polynomial.coeff_add, map_add, Finset.sum_add_distrib]
+  simp [homog, Polynomial.coeff_add, map_add (f := _), Finset.sum_add_distrib]
 
 theorem homog_zero (d : ℕ) : homog 0 d = 0 := by simp [homog]
 

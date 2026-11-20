@@ -17,7 +17,7 @@ theorem in_add {σ : Type} {N : Ideal B} {f g : MvPowerSeries σ Q} (hf : In N f
     In N (f + g) := fun α => by
   obtain ⟨a, ha, e⟩ := hf α
   obtain ⟨b, hb, e'⟩ := hg α
-  exact ⟨a + b, N.add_mem ha hb, by rw [map_add, e, e', map_add]⟩
+  exact ⟨a + b, N.add_mem ha hb, by rw [map_add (f := _), e, e', map_add (f := _)]⟩
 
 theorem in_mono {σ : Type} {N N' : Ideal B} (h : N ≤ N') {f : MvPowerSeries σ Q} (hf : In N f) :
     In N' f := fun α => by

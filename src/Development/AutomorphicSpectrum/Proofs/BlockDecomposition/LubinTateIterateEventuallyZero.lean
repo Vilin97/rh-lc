@@ -144,7 +144,7 @@ theorem exists_ltIter_mem_one (ϖ' : B) (hϖ : ϖ * ϖ' = 1) (θ : B →+* C) (h
       (mul_le_of_le_one_right hapos.le (hS s hs)).trans_lt ha
     linarith
   obtain ⟨n, hn⟩ := exists_norm_geometric (θ ϖ) q hq ha0 ha (fun n => θ (ltIter ϖ q n Q))
-    (fun n => by simp only [ltIter_succ_eq, map_add, map_mul, map_pow]) h0
+    (fun n => by simp only [ltIter_succ_eq, map_add (f := _), map_mul, map_pow]) h0
   refine ⟨n, (hθ _).mp ?_⟩
   by_contra hne
   have hcpos : 0 < ‖θ (ltIter ϖ q n Q)‖ := norm_pos_iff.mpr hne

@@ -50,7 +50,7 @@ theorem lemGB_q_unit : IsUnit (algebraMap (LetA O n) W.EE W.q) := by
       | exact (IsAdicComplete.le_jacobson_bot (I := Ideal.span {((PD.p : ℕ) : W.EE)}))
           (Ideal.mem_span_singleton_self _)
   have h1 := Ideal.mem_jacobson_bot.mp hJ ((↑u⁻¹ : W.EE) * algebraMap (LetA O n) W.EE w)
-  rw [hw, map_add, map_mul, map_natCast, ← hu]
+  rw [hw, map_add (f := _), map_mul, map_natCast, ← hu]
   have he : (u : W.EE) + ((PD.p : ℕ) : W.EE) * algebraMap (LetA O n) W.EE w =
       u * (((PD.p : ℕ) : W.EE) * ((↑u⁻¹ : W.EE) * algebraMap (LetA O n) W.EE w) + 1) := by
     linear_combination (-(((PD.p : ℕ) : W.EE) * algebraMap (LetA O n) W.EE w)) * u.mul_inv
@@ -200,7 +200,7 @@ theorem qA_mem_AΔ (hcase : Formalism.MainNotions.LiftingTheory.CaseA W) (hP9 : 
     intro δ' hδ'
     simp only [LocWach.π₀₁]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sub, map_one, map_natCast, map_sum]
+      rw [map_add (f := _), map_sub, map_one, map_natCast, map_sum]
     congr 1
     refine Finset.sum_equiv (Equiv.mulLeft δ') (fun δ => ⟨fun h => mul_mem_delF W hδ' h, fun h => ?_⟩)
       (fun δ _ => ?_)

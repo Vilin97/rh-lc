@@ -64,7 +64,7 @@ theorem perToVal2 : PerToVal2 := by
       rw [map_zero, LinearMap.zero_apply]
       exact VGeq.zero z s
     | add x y _ _ hx hy =>
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact hx.add hy
     | smul a x _ hx =>
       rw [← algebraMap_smul D.what₂.LL a x, map_smul, LinearMap.smul_apply, smul_eq_mul]

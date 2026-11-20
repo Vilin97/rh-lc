@@ -20,7 +20,7 @@ theorem aeval_mul_of_intertwine (T Y : Module.End ℂ V) (c : ℂ)
   | C a =>
     simp only [aeval_C]
     exact (Algebra.commutes a Y)
-  | add p q hp hq => simp only [map_add, add_mul, mul_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), add_mul, mul_add, hp, hq]
   | monomial m a ih =>
     have e : ∀ S : Module.End ℂ V, aeval S (C a * X ^ (m + 1)) = aeval S (C a * X ^ m) * S := by
       intro S
@@ -39,7 +39,7 @@ theorem actM_intertwine {E : Fin n → Fin n → Module.End ℂ V} (hE : Formali
 theorem aeval_shift (T : Module.End ℂ V) (c d : ℂ) (h : c + d = 0) (f : ℂ[X]) :
     aeval (T + algebraMap ℂ _ c) (f.comp (X + C d)) = aeval T f := by
   have e : aeval (T + algebraMap ℂ _ c) (X + C d : ℂ[X]) = T := by
-    rw [map_add, aeval_X, aeval_C, add_assoc, ← map_add, h, map_zero, add_zero]
+    rw [map_add (f := _), aeval_X, aeval_C, add_assoc, ← map_add (f := _), h, map_zero, add_zero]
   rw [aeval_comp, e]
 
 theorem step_down {M : GMod n} {A : Matrix (Fin n) (Fin n) ℂ} (F : Filt M A) (p q : ℂ[X])
@@ -58,7 +58,7 @@ theorem step_down {M : GMod n} {A : Matrix (Fin n) (Fin n) ℂ} (F : Filt M A) (
   obtain ⟨Y₁, Y₂, hk, h₁, h₂⟩ := hY k
   have hadd : actM M.E (Y k) = actM M.E Y₁ + actM M.E Y₂ := by
     rw [hk]; exact (GlobalTheory.CompanionTheory.PolyNilGrad.actL M.E).map_add Y₁ Y₂
-  rw [hadd, LinearMap.add_apply, map_add]
+  rw [hadd, LinearMap.add_apply, map_add (f := _)]
   refine Submodule.add_mem _ ?_ ?_
   · have h₁' : A * Y₁ - Y₁ * A = (-1 : ℂ) • Y₁ := by rw [h₁, neg_smul, one_smul]
     have hc := aeval_mul_of_intertwine T (actM M.E Y₁) (-1) (actM_intertwine M.gl h₁') g

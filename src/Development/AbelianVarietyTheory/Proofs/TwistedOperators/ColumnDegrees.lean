@@ -99,7 +99,7 @@ private theorem coeff_apply_of_diagonal_on_monomials' {σ : Type} (g : Module.En
     split_ifs with h
     · subst h; ring
     · ring
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem coeff_euler {σ : Type} {k n : ℕ} (z : Fin k × Fin n → σ) (m : σ →₀ ℕ)
     (Q : MvPolynomial σ ℂ) :
@@ -159,9 +159,9 @@ theorem column_degrees (σ : Type) [Fintype σ] [DecidableEq σ] (k l n : ℕ)
        add_mem' := by
          rintro Q R ⟨h1, h2, h3, h4⟩ ⟨g1, g2, g3, g4⟩
          refine ⟨Submodule.add_mem _ h1 g1, fun i j => ?_, fun i j hij => ?_, fun t => ?_⟩
-         · simp only [map_add, Finset.sum_add_distrib, h2 i j, g2 i j, add_zero]
-         · rw [map_add, h3 i j hij, g3 i j hij, add_zero]
-         · rw [map_add, h4 t, g4 t, smul_add]
+         · simp only [map_add (f := _), Finset.sum_add_distrib, h2 i j, g2 i j, add_zero]
+         · rw [map_add (f := _), h3 i j hij, g3 i j hij, add_zero]
+         · rw [map_add (f := _), h4 t, g4 t, smul_add]
        zero_mem' := ⟨Submodule.zero_mem _, fun i j => by simp, fun i j _ => map_zero _,
          fun t => by simp⟩
        smul_mem' := by
@@ -213,7 +213,7 @@ theorem column_degrees (σ : Type) [Fintype σ] [DecidableEq σ] (k l n : ℕ)
       ⟨{ carrier := {R | R ∈ W ∧ E R = μ • R}
          add_mem' := by
            rintro R R' ⟨h1, h2⟩ ⟨g1, g2⟩
-           exact ⟨W.add_mem h1 g1, by rw [map_add, h2, g2, smul_add]⟩
+           exact ⟨W.add_mem h1 g1, by rw [map_add (f := _), h2, g2, smul_add]⟩
          zero_mem' := ⟨W.zero_mem, by simp⟩
          smul_mem' := by
            rintro c R ⟨h1, h2⟩

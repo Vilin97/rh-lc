@@ -35,7 +35,7 @@ def SplitPlace.ideal (s : SplitPlace L) : Ideal (𝓞 L) where
   carrier := {x | Valued.v (s.i (x : L)) < 1}
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_ofPred_eq, RingOfIntegers.coe_eq_algebraMap, map_add] at *
+    simp only [Set.mem_ofPred_eq, RingOfIntegers.coe_eq_algebraMap, map_add (f := _)] at *
     exact lt_of_le_of_lt (Valuation.map_add _ _ _) (max_lt ha hb)
   zero_mem' := by
     simp

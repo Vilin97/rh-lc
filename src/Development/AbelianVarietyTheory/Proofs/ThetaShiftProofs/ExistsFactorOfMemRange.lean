@@ -98,7 +98,7 @@ theorem eval_factors_through_cdvr : ∀ (E : Type) [Field E] [NumberField E] [Is
     | C p =>
       obtain ⟨b, hb⟩ := h0 p
       exact ⟨_, hb⟩
-    | add p q hp' hq' => rw [map_add, map_add]; exact add_mem hp' hq'
+    | add p q hp' hq' => rw [map_add (f := _), map_add (f := _)]; exact add_mem hp' hq'
     | mul_X p x hp' =>
       rw [map_mul (algebraMap _ (ArcSR Dw Tv.V ϖ)) p, map_mul ev]
       exact mul_mem hp' ⟨_, (hX x).symm⟩

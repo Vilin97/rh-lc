@@ -72,7 +72,7 @@ theorem seg_PsiP (p : ℕ) {n' r K m : ℕ} [NeZero n'] [NeZero r] (O : Type) [C
   | algebraMap c =>
     simp only [MvPolynomial.algebraMap_eq, MvPolynomial.algHom_C, map_C]
   | add x y _ _ hx hy =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [hx, hy]
   | mul x y _ _ hx hy =>
     simp only [map_mul]

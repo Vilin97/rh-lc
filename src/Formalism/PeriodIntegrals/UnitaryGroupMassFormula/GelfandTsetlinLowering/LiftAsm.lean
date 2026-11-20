@@ -290,7 +290,7 @@ theorem liftMod_asm (hZ : CapelliZ) (hV : ZScalarVanish) (hN : Numbers) (hX : Xi
     obtain ⟨m1, hm1, h1⟩ := hx
     obtain ⟨m2, hm2, h2⟩ := hy
     refine ⟨m1 + m2, Submodule.add_mem _ hm1 hm2, ?_⟩
-    rw [map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _)]
     convert Submodule.add_mem _ h1 h2 using 1
     abel
   | smul a x _ hx =>

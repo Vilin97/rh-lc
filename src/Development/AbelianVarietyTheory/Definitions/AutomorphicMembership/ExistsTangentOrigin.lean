@@ -269,7 +269,7 @@ theorem tangent_eq_zero {F : Type} [Field F] [Algebra F E] (Y : Var F) {i : Fin 
     | add p q hp hq =>
       obtain ⟨a, ha, ha'⟩ := hp
       obtain ⟨b, hb, hb'⟩ := hq
-      exact ⟨a + b, by rw [map_add, map_add, ha, hb], by rw [map_add, ha', hb', add_zero]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb], by rw [map_add (f := _), ha', hb', add_zero]⟩
     | mul_X p j hp =>
       obtain ⟨a, ha, ha'⟩ := hp
       exact ⟨a * u j, by rw [map_mul, map_mul, ha, hu, aeval_X],

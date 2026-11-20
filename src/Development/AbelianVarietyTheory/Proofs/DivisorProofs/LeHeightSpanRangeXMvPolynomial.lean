@@ -21,7 +21,7 @@ theorem span_range_X_eq_ker_constantCoeff (k : Type) [Field k] (n : ℕ) :
       | add p q hp hq =>
         have := Ideal.add_mem _ hp hq
         convert this using 1
-        simp only [map_add]; ring
+        simp only [map_add (f := _)]; ring
       | mul_X p i _ =>
         simp only [map_mul, MvPolynomial.constantCoeff_X, mul_zero, map_zero, sub_zero]
         exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨i, rfl⟩)

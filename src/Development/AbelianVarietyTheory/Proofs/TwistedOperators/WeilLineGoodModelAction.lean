@@ -113,7 +113,7 @@ theorem tendsto_line : GlobalTheory.FunPr.Hypotheses₂ → ∀ {F E : Type} [Fi
     intro a f; funext x; simp [tens, mul_assoc]
   let A : ℝ → SInf F (Fin n × Fin d) →ₗ[ℂ] SInf F (Fin n × Fin d) := fun t =>
     { toFun := fun f => c f t
-      map_add' := fun f g => hinj _ _ (by rw [← hA, tadd, map_add, hA, hA, tadd])
+      map_add' := fun f g => hinj _ _ (by rw [← hA, tadd, map_add (f := _), hA, hA, tadd])
       map_smul' := fun a f => hinj _ _ (by rw [← hA, tsmul, map_smul, hA, RingHom.id_apply, tsmul]) }
   have hAf : ∀ t f, A t f = c f t := fun _ _ => rfl
   have hmul : ∀ s t f, c f (s + t) = c (c f t) s := fun s t f => hinj _ _ (by

@@ -31,7 +31,7 @@ def dualS (P : V →ₗ[LL] V' →ₗ[LL] LL) (T : Submodule O V) : Submodule O 
     intro y z hy hz x hx
     obtain ⟨a, ha⟩ := hy x hx
     obtain ⟨b, hb⟩ := hz x hx
-    exact ⟨a + b, by rw [map_add, ha, hb, map_add]⟩
+    exact ⟨a + b, by rw [map_add (f := _), ha, hb, map_add (f := _)]⟩
   zero_mem' := fun x _ => ⟨0, by simp⟩
   smul_mem' := by
     intro c y hy x hx
@@ -49,7 +49,7 @@ def shear (Y : Submodule O V) (T : Submodule O W) (ψ : V →ₗ[LL] W) : Submod
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
     refine ⟨Y.add_mem ha hb, ?_⟩
     have : (a + b).2 - ψ (a + b).1 = (a.2 - ψ a.1) + (b.2 - ψ b.1) := by
-      simp only [Prod.snd_add, Prod.fst_add, map_add]; abel
+      simp only [Prod.snd_add, Prod.fst_add, map_add (f := _)]; abel
     rw [this]; exact T.add_mem ha' hb'
   zero_mem' := ⟨Y.zero_mem, by simp⟩
   smul_mem' := by
@@ -565,7 +565,7 @@ theorem push_mem_Z1D (hopen : IsOpen (Set.range (algebraMap O LL))) {X U : GRep 
   · have he : evT LY (g * h) y = evT LY g y + actT LY g (evT LY h y) :=
       Subtype.ext (y.2.1.2 g h)
     show φ (evT LY (g * h) y) = φ (evT LY g y) + actD LT g (φ (evT LY h y))
-    rw [he, map_add, hφ]
+    rw [he, map_add (f := _), hφ]
     rfl
 
 end Gal
@@ -587,10 +587,10 @@ variable {A A' : GRep G Qp LL O}
 def pairingModuloIntegers (LA : Lattice (O := O) A.ρ) (P : A.V →ₗ[LL] A'.V →ₗ[LL] LL)
     (L1 : Lattice (O := O) (charRep (cycLL PD LL))) : A'.V →ₗ[O] ↥LA.T →ₗ[O] (LL ⧸ L1.T) :=
   LinearMap.mk₂ O (fun v t => Submodule.Quotient.mk (P (t : A.V) v))
-    (fun v v' t => by rw [map_add, Submodule.Quotient.mk_add])
+    (fun v v' t => by rw [map_add (f := _), Submodule.Quotient.mk_add])
     (fun c v t => by rw [LinearMap.map_smul_of_tower, Submodule.Quotient.mk_smul])
     (fun v t t' => by
-      rw [Submodule.coe_add, map_add, LinearMap.add_apply, Submodule.Quotient.mk_add])
+      rw [Submodule.coe_add, map_add (f := _), LinearMap.add_apply, Submodule.Quotient.mk_add])
     (fun c v t => by
       rw [Submodule.coe_smul, ← algebraMap_smul LL c (t : A.V), map_smul, LinearMap.smul_apply,
         algebraMap_smul, Submodule.Quotient.mk_smul])
@@ -635,13 +635,13 @@ def cupModuloIntegers : ↥(divisibleCocycles LA') →ₗ[O] ↥(latticeCocycles
     (fun c d x => torsionPairing PD hd L1 hL1 (repD LA' x.1 ((c : G → A'.V ⧸ LA'.T) x.2)) (evT LA x.1 d))
     (fun c c' d => by
       funext x
-      simp only [Submodule.coe_add, Pi.add_apply, map_add, LinearMap.add_apply])
+      simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _), LinearMap.add_apply])
     (fun a c d => by
       funext x
       simp only [Submodule.coe_smul, Pi.smul_apply, map_smul, LinearMap.smul_apply])
     (fun c d d' => by
       funext x
-      simp only [Pi.add_apply, map_add])
+      simp only [Pi.add_apply, map_add (f := _)])
     (fun a c d => by
       funext x
       simp only [Pi.smul_apply, map_smul])
@@ -678,7 +678,7 @@ theorem cup_differential_zero (c : ↥(divisibleCocycles LA')) (d : ↥(latticeC
   simp only [cup_apply_alt]
   rw [← torsionPairing_equivariant PD hd L1 hL1 g, lattice_cocycle_mul, torsion_cocycle_mul, map_mul (repD LA') g h,
     Module.End.mul_apply]
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   abel
 
 end Fix
@@ -736,7 +736,7 @@ theorem cup_mem_coboundaries (c : ↥(divisibleCocycles LA')) (d : ↥(latticeCo
       torsionPairing PD hd L1 hL1 ((c : G → A'.V ⧸ LA'.T) (g * h)) ⟨t, ht⟩ +
       torsionPairing PD hd L1 hL1 ((c : G → A'.V ⧸ LA'.T) g) ⟨t, ht⟩ = cupModuloIntegers PD hd L1 hL1 c d (g, h)
   rw [cup_apply_alt, hev, ← torsionPairing_equivariant PD hd L1 hL1 g, torsion_cocycle_mul]
-  simp only [map_add, map_sub, LinearMap.add_apply]
+  simp only [map_add (f := _), map_sub, LinearMap.add_apply]
   abel
 
 end Fix2
@@ -763,7 +763,7 @@ theorem exists_pr (hopen : IsOpen (Set.range (algebraMap O LL))) {A A' : GRep G 
         rw [← Submodule.Quotient.mk_add]
         exact congrArg _ (Subtype.ext (by
           show cupModuloIntegers PD hd L1 hL1 (c + c') d = _
-          rw [map_add]; rfl)))
+          rw [map_add (f := _)]; rfl)))
       (fun a d c => by
         rw [← Submodule.Quotient.mk_smul]
         exact congrArg _ (Subtype.ext (by
@@ -862,7 +862,7 @@ theorem absorption_direct {X U : GRep G Qp LL O} (LT : Lattice (O := O) U.ρ) (e
       Submodule.Quotient.mk (yt g).2 + (actD LT g (φ ⟨t, ht⟩) - φ ⟨t, ht⟩)
     rw [hψ, ← Submodule.Quotient.mk_smul, ← LinearMap.map_smul_of_tower]
     have hg' : ((PD.p : O) ^ e) • ((evT LY g y : ↥LY.T) : X.V) = (yt g).1 + (X.ρ g t - t) := hg
-    rw [hg', map_add, map_sub, Submodule.Quotient.mk_add, Submodule.Quotient.mk_sub, e1, e2, e3]
+    rw [hg', map_add (f := _), map_sub, Submodule.Quotient.mk_add, Submodule.Quotient.mk_sub, e1, e2, e3]
   rw [key]
   exact Submodule.add_mem_sup (Submodule.mem_map_of_mem hsnd) (LinearMap.mem_range_self _ _)
 
@@ -1041,7 +1041,7 @@ def coboundaryPreimage {A : GRep G Qp LL O} (LA : Lattice (O := O) A.ρ) : Submo
   add_mem' := by
     intro a b ha hb g
     have : A.ρ g (a + b) - (a + b) = (A.ρ g a - a) + (A.ρ g b - b) := by
-      rw [map_add]; abel
+      rw [map_add (f := _)]; abel
     rw [this]; exact LA.T.add_mem (ha g) (hb g)
   zero_mem' := fun g => by simp
   smul_mem' := by

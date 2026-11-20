@@ -121,7 +121,7 @@ theorem gauss_dense_gen : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : ModuliIn
       intro q
       induction q using MvPolynomial.induction_on with
       | C a => rw [eC]; exact hO a
-      | add p q hp hq => simp only [map_add]; exact S.add_mem hp hq
+      | add p q hp hq => simp only [map_add (f := _)]; exact S.add_mem hp hq
       | mul_X p i hp => simp only [map_mul]; exact S.mul_mem hp (hT i)
     have hA : ∀ x : Op X la N, ψ (algebraMap (Op X la N) (Kp X la N) x) ∈ S := by
       intro x

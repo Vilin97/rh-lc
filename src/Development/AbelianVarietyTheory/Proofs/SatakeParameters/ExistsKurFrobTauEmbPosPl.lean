@@ -35,7 +35,7 @@ theorem exists_aut_of_algHoms {E K : Type} [Field E] [NumberField E] [IsGalois �
       map_one' := hf (by rw [hv, map_one, map_one])
       map_mul' := fun a b => hf (by rw [hv, map_mul, map_mul, hv, hv])
       map_zero' := hf (by rw [hv, map_zero, map_zero])
-      map_add' := fun a b => hf (by rw [hv, map_add, map_add, hv, hv])
+      map_add' := fun a b => hf (by rw [hv, map_add (f := _), map_add (f := _), hv, hv])
       commutes' := fun r => hf (by
         rw [hv, AlgHom.commutes, AlgHom.commutes]) }
   exact ⟨AlgEquiv.ofBijective w (AlgHom.normal_bijective ℚ E E w), fun x => (hv x).symm⟩
@@ -61,7 +61,7 @@ theorem coe_mem_Kur (p : ℕ) [Fact p.Prime] {x : PadicAlgCl p} (hx : x ∈ Form
   | algebraMap x =>
     rw [← IsScalarTower.algebraMap_apply]
     exact padic_mem_Kur p x
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | inv x _ hx => rw [map_inv₀]; exact inv_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 

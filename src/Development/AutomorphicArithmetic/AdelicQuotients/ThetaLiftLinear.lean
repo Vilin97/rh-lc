@@ -42,7 +42,7 @@ theorem UpperTheory.theta_lift_linear :
   · funext h
     have e : ∀ g, theta om (Φ + Φ') g h * star (φ g) = theta om Φ g h * star (φ g) + theta om Φ' g h * star (φ g) := fun g => by
       have : theta om (Φ + Φ') g h = theta om Φ g h + theta om Φ' g h := by
-        simp only [theta, map_add]
+        simp only [theta, map_add (f := _)]
         exact thetaSum_add F (hpres _ _ hΦ) (hpres _ _ hΦ')
       rw [this, add_mul]
     simp only [lift, Pi.add_apply, e]

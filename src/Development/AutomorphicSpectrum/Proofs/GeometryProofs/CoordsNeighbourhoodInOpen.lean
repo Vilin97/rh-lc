@@ -33,7 +33,7 @@ theorem val_aeval {κ : Type} {a : κ → Ω} {r : κ → R} (hz : genPt ξ ⤳ 
     ValAt ξ z (MvPolynomial.aeval a P) (MvPolynomial.aeval r P) := by
   induction P using MvPolynomial.induction_on with
   | C n => simpa using val_int hz n
-  | add p q hp hq => simpa only [map_add] using val_add hp hq
+  | add p q hp hq => simpa only [map_add (f := _)] using val_add hp hq
   | mul_X p i hp => simpa only [map_mul, MvPolynomial.aeval_X] using val_mul hp (h i)
 
 theorem genMap_germ {W : X.Opens} (hW : genPt ξ ∈ W) (Q : Γ(X, W)) (p : Cpt ξ) (hp : p.1 ∈ W) :
@@ -83,7 +83,7 @@ theorem continuousAt_aeval_segreRatio {K : Type} [Fintype K] {J : K → Type} {w
   induction P using MvPolynomial.induction_on with
   | C n => simpa using continuousAt_const
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p i hp =>
     simp only [map_mul, MvPolynomial.aeval_X]

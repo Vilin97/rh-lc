@@ -50,7 +50,7 @@ theorem opF_single (r : Representation K G F) (g : G) : opF r (MonoidAlgebra.sin
 private theorem opV_add_lemma (σ : K →+* ℂ) {M : Type} [AddCommGroup M] [Module ℂ M] (T : G → M →ₗ[ℂ] M)
     (a b : MonoidAlgebra K G) : opV σ T (a + b) = opV σ T a + opV σ T b := by
   first
-  | (simp only [opV, ← Finset.sum_add_distrib, ← add_smul, ← map_add]; rfl)
+  | (simp only [opV, ← Finset.sum_add_distrib, ← add_smul, ← map_add (f := _)]; rfl)
   | (simp [opV, add_smul, Finset.sum_add_distrib, MonoidAlgebra.coeff_add]; done)
   | (simp [opV, add_smul, Finset.sum_add_distrib]; done)
 
@@ -335,7 +335,7 @@ theorem dn (e : MonoidAlgebra K G) (he : opF r e ∘ₗ opF r e = opF r e) {u : 
   have hfix := H.fix_of_idem e he hu
   refine ⟨opV σ ρ e p, ⟨H.mem_R e hp, LinearMap.mem_range_self _ _⟩, ?_⟩
   have h1 : Θ (opV σ ρ e k) = 0 := H.ker e k hk0
-  calc Θ (opV σ ρ e p) = Θ (opV σ ρ e (p + k)) := by rw [map_add, map_add, h1, add_zero]
+  calc Θ (opV σ ρ e p) = Θ (opV σ ρ e (p + k)) := by rw [map_add (f := _), map_add (f := _), h1, add_zero]
     _ = Θ (p + k) := by rw [hfix]
 
 theorem type (h : G) (c : K) (S : Set F) (hS : ∀ x ∈ S, r h x = c • x) {u : V}
@@ -438,7 +438,7 @@ theorem gaMat_mulVec (a : MonoidAlgebra K G) (w : Fin B.S.dim → K) :
   refine MonoidAlgebra.induction_linear a ?_ ?_ ?_
   · simp [CSD.gaMat_eq_lift, opF_eq_lift]
   · intro a b ha hb
-    simp only [CSD.gaMat_eq_lift, opF_eq_lift, map_add, Matrix.add_mulVec, LinearMap.add_apply] at ha hb ⊢
+    simp only [CSD.gaMat_eq_lift, opF_eq_lift, map_add (f := _), Matrix.add_mulVec, LinearMap.add_apply] at ha hb ⊢
     rw [ha, hb]
   · intro g c
     first

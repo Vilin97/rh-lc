@@ -13,7 +13,7 @@ private theorem sq_le_qInf {F : Type} [Field F] [NumberField F] [IsTotallyReal F
   have hd : TR.pInf F (rt δ) w = InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal w) δ :=
     congrFun (GlobalTheory.HilbertThetaSeries.RatPts.pInf_algebraMap F δ) w
   have hneg := hδ (InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal w))
-  simp only [map_add, map_mul, map_pow, map_sub, Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.sub_apply, map_ofNat, Pi.ofNat_apply, hd]
+  simp only [map_add (f := _), map_mul, map_pow, map_sub, Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.sub_apply, map_ofNat, Pi.ofNat_apply, hd]
   have h3 : 0 ≤ -(InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal w) δ) * TR.pInf F (v 3) w ^ 2 :=
     mul_nonneg (by linarith) (sq_nonneg _)
   nlinarith [sq_nonneg (TR.pInf F (v 0) w), sq_nonneg (TR.pInf F (v 2) w)]

@@ -26,7 +26,7 @@ def secGroup : AddSubgroup (∀ p : {p : ι × X.Opens // p.2 ≤ V ∧ p.2 ≤ 
     ∀ (i j : ι) (T : X.Opens) (h : T ≤ V) (hi : T ≤ U i) (hj : T ≤ U j) (b : Fin r),
       s ⟨(i, T), h, hi⟩ b = ∑ c, resG X (le_inf hi hj) (A i j b c) * s ⟨(j, T), h, hj⟩ c}
   add_mem' := fun {s t} hs ht => ⟨fun i T T' h hi h' b => by
-      simp only [Pi.add_apply, map_add, hs.1 i T T' h hi h', ht.1 i T T' h hi h'],
+      simp only [Pi.add_apply, map_add (f := _), hs.1 i T T' h hi h', ht.1 i T T' h hi h'],
     fun i j T h hi hj b => by
       simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib, ← hs.2 i j T h hi hj, ← ht.2 i j T h hi hj]⟩
   zero_mem' := ⟨fun i T T' h hi h' b => by simp only [Pi.zero_apply, map_zero],
@@ -58,7 +58,7 @@ instance secModule : Module Γ(X, V) (secGroup A V) where
   smul_add a s t := sec_ext A fun i T h hi b => mul_add (resG X h a) _ _
   add_smul a a' s := sec_ext A fun i T h hi b => by
     change resG X h (a + a') * _ = resG X h a * _ + resG X h a' * _
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
   zero_smul s := sec_ext A fun i T h hi b => by
     change resG X h 0 * _ = 0
     rw [map_zero, zero_mul]

@@ -135,7 +135,7 @@ theorem exists_cayley {Λ : Submodule L.O (Fin n → E)} (hΛ : IsLat L Λ) (p :
     change x + (p : E) • Z x = y + (p : E) • (-Z y)
     rw [e]; module
   have hg' : ∀ u, g (u + (p : E) • (-Z u)) = u + (p : E) • Z u := fun u => hg _ _ (by
-    simp only [map_add, map_smul, map_neg]; module)
+    simp only [map_add (f := _), map_smul, map_neg]; module)
   refine ⟨g, fun v w => ?_, fun v hv => ?_, fun x y e => hg x y ?_⟩
   · obtain ⟨v, rfl⟩ := b2.2 v
     obtain ⟨w, rfl⟩ := b2.2 w
@@ -148,7 +148,7 @@ theorem exists_cayley {Λ : Submodule L.O (Fin n → E)} (hΛ : IsLat L Λ) (p :
     refine ⟨Z u + Z u, Λ.add_mem (hZ u hu) (hZ u hu), ?_⟩
     change g (u + (p : E) • (-Z u)) - (u + (p : E) • (-Z u)) = _
     rw [hg']; module
-  · rw [map_add, smul_add] at e
+  · rw [map_add (f := _), smul_add] at e
     linear_combination (exp := 1) e
 
 theorem exists_isometry_close : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E), ∀ (ϖ : 𝒪[F]), Irreducible ϖ → ∀ {n : ℕ} (Hm : Matrix (Fin n) (Fin n) E), IsHermND L Hm → ∀ Λ, IsSD L Hm Λ → ∀ (m : ℕ) (Γ : Matrix (Fin m) (Fin m) E), IsUnit Γ.det → ∀ N : ℕ, ∃ N' : ℕ, ∀ x y : Fin m → Fin n → E, (∀ a, x a ∈ Λ) → gramT L Hm x = Γ → gramT L Hm y = Γ → (∀ a, ∃ w ∈ Λ, y a - x a = algebraMap F E ((ϖ : F) ^ N') • w) → ∃ g ∈ isomG L Hm, CongId L ϖ Λ N g ∧ ∀ a, g (x a) = y a := by

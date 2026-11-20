@@ -178,7 +178,7 @@ theorem mem_ratV_k (v : Fin L.n → AE F E) : v ∈ L.ratV ↔ ∃ e, GlobalTheo
     | add x y _ _ hx hy =>
       obtain ⟨X, rfl⟩ := hx
       obtain ⟨Z, rfl⟩ := hy
-      exact ⟨X + Z, funext fun i => by simp [incV_apply, map_add]⟩
+      exact ⟨X + Z, funext fun i => by simp [incV_apply, map_add (f := _)]⟩
     | neg x _ hx =>
       obtain ⟨X, rfl⟩ := hx
       exact ⟨-X, funext fun i => by simp [incV_apply, map_neg]⟩

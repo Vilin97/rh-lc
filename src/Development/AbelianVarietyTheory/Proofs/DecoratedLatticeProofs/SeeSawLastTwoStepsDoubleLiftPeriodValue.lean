@@ -87,10 +87,10 @@ theorem autFun_multT {V : HSp D} {S : D.what₂.Tau → SPar} {θ : InfFam D} {M
     | smul_tprod r v =>
       rw [map_smul, LinearEquiv.coe_coe, PiTensorProduct.lift.tprod]
       exact autFun_smul (hT.aut v).toIsAutFun r
-    | add x y hx hy => rw [map_add]; exact autFun_add hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact autFun_add hx hy
   | zero => exact ⟨fun _ _ _ => by simp, ⟨⊤, isOpen_univ, fun _ _ _ _ => by simp⟩, by
       simp only [map_zero, LinearMap.zero_apply]; exact continuous_const⟩
-  | add T₁ T₂ _ _ h₁ h₂ => rw [map_add, LinearMap.add_apply]; exact autFun_add (h₁ x) (h₂ x)
+  | add T₁ T₂ _ _ h₁ h₂ => rw [map_add (f := _), LinearMap.add_apply]; exact autFun_add (h₁ x) (h₂ x)
   | smul c T _ h => rw [map_smul, LinearMap.smul_apply]; exact autFun_smul (h x) c
 
 theorem trc_eq_sum {V : HSp D} (e : GA D V →₀ ℂ) (f : GA D V → ℂ) : trc e f = e.sum fun g a => a • rTrans g f := rfl

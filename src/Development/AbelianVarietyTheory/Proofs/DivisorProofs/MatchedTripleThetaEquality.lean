@@ -27,7 +27,7 @@ theorem I_add (hp : IsPair B M χX χW om r s r' s') {Φ Ψ : Fn F n d} (hΦ : �
     M.I om (Φ + Ψ) h = M.I om Φ h + M.I om Ψ h := by
   have hs := hp.weil.isUSplitting.pres
   have e : ∀ g, theta om (Φ + Ψ) g h = theta om Φ g h + theta om Ψ g h := fun g => by
-    simp only [theta, map_add]
+    simp only [theta, map_add (f := _)]
     exact thetaSum_add F (hs _ _ hΦ) (hs _ _ hΨ)
   simp only [Model.I, e]
   exact integral_add (cΦ h) (cΨ h)
@@ -91,7 +91,7 @@ theorem exists_deriv_I_eq_zero (hK : KP) (hp : IsPair B M χX χW om r s r' s')
     obtain ⟨Ψ, hΨ, hd, hI⟩ := ih
     obtain ⟨Ψ', hΨ', hd', hI'⟩ := ih'
     refine ⟨Ψ + Ψ', Submodule.add_mem _ hΨ hΨ', fun x => ?_, funext fun h => ?_⟩
-    · simpa only [map_add, Pi.add_apply] using (hd x).fun_add (hd' x)
+    · simpa only [map_add (f := _), Pi.add_apply] using (hd x).fun_add (hd' x)
     · rw [I_add hp hΨ hΨ' (hconv _ hΨ).1 (hconv _ hΨ').1, hI, hI']
       simp
   | smul a Φ _ ih =>

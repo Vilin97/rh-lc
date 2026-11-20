@@ -32,7 +32,7 @@ theorem tangent_vector_extends_over_integers : ∀ (O K : Type) [CommRing O] [Is
     { carrier := {a | ∃ e, jK e = algebraMap O K a • eK}
       add_mem' := by
         rintro a b ⟨e, he⟩ ⟨e', he'⟩
-        exact ⟨e + e', by rw [map_add, he, he', map_add, add_smul]⟩
+        exact ⟨e + e', by rw [map_add (f := _), he, he', map_add (f := _), add_smul]⟩
       zero_mem' := ⟨0, by rw [map_zero, map_zero, zero_smul]⟩
       smul_mem' := by
         rintro a b ⟨e, he⟩

@@ -25,7 +25,7 @@ theorem transposedRegularRep_ringHom_trace :
   · ext i j
     simp
   · intro x y
-    rw [map_add, Matrix.transpose_add]
+    rw [map_add (f := _), Matrix.transpose_add]
     ext i j
     simp
   · intro a

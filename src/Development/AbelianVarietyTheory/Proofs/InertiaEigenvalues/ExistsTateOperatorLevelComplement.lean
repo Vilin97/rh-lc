@@ -139,7 +139,7 @@ theorem int_decomp (K : FinExt l) {j : ℕ} (hj : 1 ≤ j) (c : ℕ) : ∀ x : O
       have ha0 : (a : ℕ) ≠ 0 := fun h => (Finset.ne_of_mem_erase ha) (Fin.ext h)
       exact (Nat.coprime_of_lt_prime ha0 a.2 hp).symm
     set_option synthInstance.maxHeartbeats 100000 in
-      · rw [← Finset.add_sum_erase _ _ (Finset.mem_univ (0 : Fin l)), map_add, map_sum, ← add_assoc,
+      · rw [← Finset.add_sum_erase _ _ (Finset.mem_univ (0 : Fin l)), map_add (f := _), map_sum, ← add_assoc,
         ← hod]
       simp
 
@@ -224,7 +224,7 @@ theorem solve_alg (hact : IsActC act) (hχ : IsCyc χ) (K : FinExt l) {j : ℕ} 
       zero_mem' := ⟨0, zero_mem _, zero_mem _, by simp⟩
       add_mem' := by
         rintro a b ⟨y, hy, hy', h⟩ ⟨y', hz, hz', h'⟩
-        exact ⟨y + y', add_mem hy hz, add_mem hy' hz', by rw [map_add]; linear_combination h + h'⟩
+        exact ⟨y + y', add_mem hy hz, add_mem hy' hz', by rw [map_add (f := _)]; linear_combination h + h'⟩
       neg_mem' := by
         rintro a ⟨y, hy, hy', h⟩
         exact ⟨-y, neg_mem hy, neg_mem hy', by rw [map_neg]; linear_combination -h⟩ }
@@ -437,7 +437,7 @@ theorem exists_tate_operator_bound : ∀ (l : ℕ) [Fact l.Prime] (act : GQ l �
     rw [map_mul, act_fix hact K hg.1 hz.1]
     ring
   · refine huniq _ (add_mem hx hx') _ (add_mem (hS x hx).1 (hS x' hx').1) ?_
-    rw [map_add]
+    rw [map_add (f := _)]
     linear_combination (hS x hx).2 + (hS x' hx').2
   · refine huniq _ (T1.2.2.2.1 y hy x hx) _ (T1.2.2.2.1 y hy _ (hS x hx).1) ?_
     rw [map_mul, act_fix hact K hg.1 hy.1]

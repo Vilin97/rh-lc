@@ -76,7 +76,7 @@ theorem coeffProduct (D : D7) : CoeffProduct D := by
 theorem cA_cA {D : D7} {e : AE D} {p : Place D} (h : e + cA D e = idem D p) : cA D (cA D e) = e := by
   have hp : cA D (idem D p) = idem D p := (GlobalTheory.T.cmAdeleIdempotentOfPlace_properties D).2.2.1 p
   have h2 : cA D e + cA D (cA D e) = cA D e + e := by
-    rw [← map_add, h, hp, ← h, add_comm]
+    rw [← map_add (f := _), h, hp, ← h, add_comm]
   exact add_left_cancel h2
 
 theorem isSplitIdem_cA {D : D7} {e : AE D} {p : Place D} (he : IsSplitIdem D e) (h : e + cA D e = idem D p) :

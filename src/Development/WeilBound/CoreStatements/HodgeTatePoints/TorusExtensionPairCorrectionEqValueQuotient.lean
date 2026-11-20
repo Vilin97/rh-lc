@@ -20,7 +20,7 @@ variable {C : Type} [Field C] {O : Type} [CommRing O] [Algebra O C]
 
 theorem e_swap (x y : V) : P.e x y = -P.e y x := by
   have h := P.alt (x + y)
-  simp only [map_add, LinearMap.add_apply, P.alt, zero_add, add_zero] at h
+  simp only [map_add (f := _), LinearMap.add_apply, P.alt, zero_add, add_zero] at h
   linear_combination h
 
 theorem torusExtensionPair_correction_eq_value_quotient {σ : E →+* C} (hσ : ∀ a : 𝓞 E, σ (a : E) ∈ (algebraMap O C).range) {u : V}
@@ -44,7 +44,7 @@ theorem torusExtensionPair_correction_eq_value_quotient {σ : E →+* C} (hσ : 
   | add x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by rw [map_add, ha, hb, mul_add, map_add]⟩
+    exact ⟨a + b, by rw [map_add (f := _), ha, hb, mul_add, map_add (f := _)]⟩
   | smul a x _ hx =>
     obtain ⟨b, hb⟩ := hx
     refine ⟨a * b, ?_⟩
@@ -92,7 +92,7 @@ theorem pt_comp_zero : ∀ (C : Type) [Field C] (v : Valuation C NNReal) (O : Ty
         obtain ⟨z, hz⟩ := huT y hy
         rw [hz, map_mul, hπ, zero_mul]
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add, ha, hb, add_zero]
+      | add a b _ _ ha hb => rw [map_add (f := _), ha, hb, add_zero]
       | smul a b _ hb => rw [map_smul, hb, smul_zero]
     · refine ⟨(algebraMap O C π)⁻¹ • u, ?_, Submodule.smul_mem _ _ huE, ?_⟩
       · rw [← hdual]

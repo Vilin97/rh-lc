@@ -249,7 +249,7 @@ theorem lattice_lower {n a g : ℕ} {Λ : Type} [AddCommGroup Λ] (L : Flat.LogP
       simp [vecMul, dotProduct, Am, Finset.sum_apply]
     rw [hvs]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_zsmul, hf]
+      simp only [map_add (f := _), map_sum, map_zsmul, hf]
     ext k
     have e1 : (∑ i, av i • L.P w (bas (.inl i))) k = ∑ i, (av i : ℂ) * Am i k := by
       simp [Finset.sum_apply, Am]

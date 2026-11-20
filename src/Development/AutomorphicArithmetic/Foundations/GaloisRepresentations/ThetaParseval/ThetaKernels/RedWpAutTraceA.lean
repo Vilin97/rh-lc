@@ -156,8 +156,8 @@ theorem chiLat_mul_exp_k (C : _root_.PositivityTheory.ThKW.Ctx_k σ B JS JT ξ�
     show B.ψ (symplOHF σ JS JT ξ₀ (intAF F w • (finRatF F (b * y * a - y) : WOF F E nS nT))
       (finRatF F (b * y * a - y))) = _
     have e : (finRatF F (b * y * a - y) : WOF F E nS nT) + finRatF F y = finRatF F (b * y * a) := by
-      rw [← XFF.coe_add, ← map_add, sub_add_cancel]
-    have h1 := _root_.PositivityTheory.ThKW.Trc.phase_identity_k C (W := intAF F w) (by rw [cAF_intAF, ← map_add, hw, map_one])
+      rw [← XFF.coe_add, ← map_add (f := _), sub_add_cancel]
+    have h1 := _root_.PositivityTheory.ThKW.Trc.phase_identity_k C (W := intAF F w) (by rw [cAF_intAF, ← map_add (f := _), hw, map_one])
       (finRatF F (b * y * a - y) : WOF F E nS nT) (finRatF F y)
       (by rw [e, ← act_finRat ha hb, ← actOF_smul, _root_.PositivityTheory.ThKW.Trc.symplOHF_act_k C])
     have h2 : gamQF σ JS JT ξ₀ B.ψ (sgOF σ w • (b * y * a - y)) y =
@@ -191,7 +191,7 @@ theorem left_side_k (C : _root_.PositivityTheory.ThKW.Ctx_k σ B JS JT ξ₀ θ 
       Complex.exp (-(Real.pi * Complex.I) * (omV (HMF JS JT ξ₀ (tauB B)) (z + u) (x + v) : ℝ)) := by
     rw [← Complex.exp_add, ← Complex.exp_add, ← mul_add, ← mul_add, ← Complex.ofReal_add, ← Complex.ofReal_add]
     congr 3
-    simp only [map_add, map_sub, map_neg, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.neg_apply]
+    simp only [map_add (f := _), map_sub, map_neg, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.neg_apply]
     linarith [halt x u, halt v z, halt v x, halt v u]
   rw [e1, ← e2]
   ring
@@ -214,7 +214,7 @@ theorem right_side_k (C : _root_.PositivityTheory.ThKW.Ctx_k σ B JS JT ξ₀ θ
       Complex.exp (2 * Real.pi * Complex.I * ((-omV (HMF JS JT ξ₀ (tauB B)) (infRatF (tauB B) y)) v : ℝ)) := by
     rw [← Complex.exp_add]
     congr 1
-    simp only [map_add, map_neg, LinearMap.neg_apply, e2, halt v (infRatF (tauB B) y)]
+    simp only [map_add (f := _), map_neg, LinearMap.neg_apply, e2, halt v (infRatF (tauB B) y)]
     push_cast
     ring
   rw [coefQF, GlobalTheory.HeisLineF.symplOHF_add_right, AddChar.map_add_eq_mul, _root_.PositivityTheory.ThKW.beta_iota_right_k C, _root_.PositivityTheory.ThKW.beta_iota_left_k C,

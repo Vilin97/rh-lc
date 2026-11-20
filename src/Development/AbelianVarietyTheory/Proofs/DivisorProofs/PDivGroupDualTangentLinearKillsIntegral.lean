@@ -55,7 +55,7 @@ theorem constantCoeff_subst_of {a : σ → MvPowerSeries τ R} (ha0 : ∀ i, con
       have hC : (C (constantCoeff f) : MvPowerSeries σ R) =
           algebraMap R (MvPowerSeries σ R) (constantCoeff f) := by
         rw [MvPowerSeries.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply]
-      rw [subst_add hs, map_add, constantCoeff_subst_eq_zero hs ha0 hg, add_zero,
+      rw [subst_add hs, map_add (f := _), constantCoeff_subst_eq_zero hs ha0 hg, add_zero,
         ← coe_substAlgHom hs, hC, AlgHom.commutes, MvPowerSeries.algebraMap_apply]
       simp
 
@@ -97,7 +97,7 @@ theorem ev_subst_eq (n : ℕ) (a : Fin d → MvPowerSeries (Fin d) O)
       subst a (s - (P : MvPowerSeries (Fin d) O)) := by
     rw [← subst_add hs, add_sub_cancel]
   have hz' : (fun i => c.ev n (a i)) = 0 := funext hz
-  rw [e, map_add, subst_coe, ← AlgHom.comp_apply, MvPolynomial.comp_aeval, hy, hz',
+  rw [e, map_add (f := _), subst_coe, ← AlgHom.comp_apply, MvPolynomial.comp_aeval, hy, hz',
     MvPolynomial.aeval_zero, Algebra.smul_def, map_pow, map_natCast, MvPolynomial.constantCoeff_eq,
     hP, coeff_trunc', if_pos (by simp), coeff_zero_eq_constantCoeff_apply]
 
@@ -127,7 +127,7 @@ theorem lie_eq_zero_of_integral [IsHausdorff (Ideal.span {(p : O)}) O]
     rw [Algebra.algebraMap_eq_smul_one, map_smul, h1, smul_zero]
   have e : φ (c.ev n (((p ^ n : ℕ) : O) • s0 - subst (nmul c.μ (p ^ n)) s0)) =
       (p : O) ^ n * (φ (c.ev n s0) - φ y) := by
-    rw [map_sub, map_smul, hy, map_sub, map_smul, map_add, map_smul, hφa, smul_eq_mul, smul_eq_mul]
+    rw [map_sub, map_smul, hy, map_sub, map_smul, map_add (f := _), map_smul, hφa, smul_eq_mul, smul_eq_mul]
     push_cast
     ring
   rw [e] at h2
@@ -203,7 +203,7 @@ theorem isLie_add_smul (hinj : Function.Injective (algebraMap O E))
   refine ⟨sf + a • sg, by rw [hmap, defect_add_smul, hsf, hsg], fun w φ hφ => ?_⟩
   have h1 := hf.2 n w φ sf hφ hsf
   have h2 := hg.2 n w φ sg hφ hsg
-  rw [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_add,
+  rw [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_add (f := _),
     map_smul, smul_eq_mul]
   have h3 := dvd_add h1 (dvd_mul_of_dvd_right h2 a)
   convert h3 using 1

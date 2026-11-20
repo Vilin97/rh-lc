@@ -20,7 +20,7 @@ theorem intAt_zero' {v : Pl D} : (0 : AE D) ∈ intAt D (· = v) :=
 
 theorem intAt_add' {v : Pl D} {a b : AE D} (ha : a ∈ intAt D (· = v)) (hb : b ∈ intAt D (· = v)) :
     a + b ∈ intAt D (· = v) :=
-  ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add]; exact add_mem ha.2 hb.2⟩
+  ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add (f := _)]; exact add_mem ha.2 hb.2⟩
 
 theorem intAt_sum' {v : Pl D} {ι : Type} (s : Finset ι) (f : ι → AE D) (h : ∀ i ∈ s, f i ∈ intAt D (· = v)) :
     ∑ i ∈ s, f i ∈ intAt D (· = v) := by

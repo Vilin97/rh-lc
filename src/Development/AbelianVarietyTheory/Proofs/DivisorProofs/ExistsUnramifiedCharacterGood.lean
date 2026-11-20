@@ -67,7 +67,7 @@ theorem act_omB : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F
     have et : ∀ (ψ₁ ψ₂ : (Fin a' × Fin (a + a') → Fv F v) → ℂ), tens (evFin F v) (c • ψ₁ + ψ₂) r =
         c • tens (evFin F v) ψ₁ r + tens (evFin F v) ψ₂ r := fun ψ₁ ψ₂ => by
       funext x; simp only [tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
-    rw [← (hS g _ hsum).2 r r0, et, map_add, map_smul, (hS g φ hφ).2 r r1, (hS g φ' hφ').2 r r2, et]
+    rw [← (hS g _ hsum).2 r r0, et, map_add (f := _), map_smul, (hS g φ hφ).2 r r1, (hS g φ' hφ').2 r r2, et]
   have h2 : ∀ g g', ∀ φ ∈ SB (Fin a' × Fin (a + a') → Fv F v), S (g * g') φ = S g (S g' φ) := by
     intro g g' φ hφ
     refine GlobalTheory.T.eq_of_componentTensorAdelicFunction_eq v φ _ _ hφ fun r hr => ?_

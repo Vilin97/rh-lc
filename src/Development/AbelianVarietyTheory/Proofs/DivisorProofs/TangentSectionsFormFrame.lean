@@ -122,7 +122,7 @@ theorem form_spec : (∀ v w : TanM x t.G, form (v + w) = form v + form w) ∧
     obtain ⟨q, hq⟩ := exists_lieG h' (isTan_tv w)
     have hpq : (p.1 * q.1).left ≫ φ = (tv (v + w)).left :=
       (h'.2 _ p.1 q.1 (tv v) (tv w) hp.symm hq.symm).symm
-    rw [form_eq h' p _ hp, form_eq h' q _ hq, form_eq h' ⟨_, OmegaGlobal.fst_mul p q⟩ _ hpq, tangent_mul, map_add]
+    rw [form_eq h' p _ hp, form_eq h' q _ hq, form_eq h' ⟨_, OmegaGlobal.fst_mul p q⟩ _ hpq, tangent_mul, map_add (f := _)]
   · obtain ⟨p, hp⟩ := exists_lieG h' (isTan_tv v)
     have ha : (dualScale a).toRingHom = epsScaleR a := by
       ext y <;> simp [dualScale, epsScaleR]

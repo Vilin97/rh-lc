@@ -110,7 +110,7 @@ theorem incl_injective (q : A →ₐ[S] B) (hB : Function.Injective (algebraMap 
   intro y z hyz
   rw [incl_apply, incl_apply] at hyz
   have h2 := congrArg q hyz
-  rw [map_add, map_add, AlgHom.commutes, AlgHom.commutes, RingHom.mem_ker.1 y.snd.2, RingHom.mem_ker.1 z.snd.2,
+  rw [map_add (f := _), map_add (f := _), AlgHom.commutes, AlgHom.commutes, RingHom.mem_ker.1 y.snd.2, RingHom.mem_ker.1 z.snd.2,
     add_zero, add_zero] at h2
   have h3 : y.fst = z.fst := hB h2
   have h4 : (y.snd : A) = z.snd := by rw [h3] at hyz; exact add_left_cancel hyz
@@ -129,7 +129,7 @@ theorem succ_two [CharZero S] (q : A →ₐ[S] B) (hq : Function.Surjective q) (
   have hθ : σ.comp (incl (S := S) (RingHom.ker q) hJ) =
       (incl (S := S) (RingHom.ker q) hJ).comp (TrivSqZeroExt.map ((N : S) • LinearMap.id)) := by
     refine AlgHom.ext fun y => ?_
-    rw [AlgHom.comp_apply, AlgHom.comp_apply, incl_apply, incl_apply, map_add, AlgHom.commutes,
+    rw [AlgHom.comp_apply, AlgHom.comp_apply, incl_apply, incl_apply, map_add (f := _), AlgHom.commutes,
       hσ _ (RingHom.mem_ker.1 y.snd.2), TrivSqZeroExt.fst_map, TrivSqZeroExt.snd_map]
     rfl
   have hpow := comp_map_nsmul x0 ε hε1
@@ -175,10 +175,10 @@ theorem succ_one (q : A →ₐ[S] B) (hq : Function.Surjective q) (hJ : RingHom.
   have hmap : ∀ r, (t r).comp (incl (S := S) (RingHom.ker q) hJ) = TrivSqZeroExt.map (ℓ r) := by
     intro r
     refine AlgHom.ext fun y => TrivSqZeroExt.ext ?_ ?_
-    · rw [AlgHom.comp_apply, incl_apply, map_add, AlgHom.commutes, TrivSqZeroExt.fst_add, (ht _ y.snd.2).1 r,
+    · rw [AlgHom.comp_apply, incl_apply, map_add (f := _), AlgHom.commutes, TrivSqZeroExt.fst_add, (ht _ y.snd.2).1 r,
         add_zero, TrivSqZeroExt.fst_map]
       rfl
-    · rw [AlgHom.comp_apply, incl_apply, map_add, AlgHom.commutes, TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_map]
+    · rw [AlgHom.comp_apply, incl_apply, map_add (f := _), AlgHom.commutes, TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_map]
       simp [TrivSqZeroExt.algebraMap_eq_inl, ℓ]
   have hℓ : ∀ r, Formalism.L2.Pj.homAt x0 (TrivSqZeroExt.map (ℓ r)) ≫ ε = 1 := fun r => by
     rw [← hmap r, homAt_comp, Category.assoc, hεδ]

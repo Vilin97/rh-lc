@@ -470,7 +470,7 @@ theorem period_images_surjective (h : C.L1e) (hX : IsUnit (S.XE Bs.v0).det) (hD 
   have hfin : FiniteDimensional ℂ Sp.Rw := Module.finite_of_finrank_pos (by rw [hr]; exact hD)
   let g : (Fin S.D → ℂ) →ₗ[ℂ] Sp.HH :=
     { toFun := fun y => C.sE (star y)
-      map_add' := fun a b => by simp only [star_add, map_add]
+      map_add' := fun a b => by simp only [star_add, map_add (f := _)]
       map_smul' := fun c a => by
         first
         | simp only [star_smul, map_smulₛₗ, starRingEnd_apply, star_star, RingHom.id_apply]

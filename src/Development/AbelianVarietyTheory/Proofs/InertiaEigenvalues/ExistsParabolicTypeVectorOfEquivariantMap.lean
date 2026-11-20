@@ -17,7 +17,7 @@ theorem exists_parVec_of_map : ∀ (F : Type) [Field F] [ValuativeRel F] [Topolo
   haveI : Fact (1 < p) := ⟨(Fact.out : p.Prime).one_lt⟩
   let Λ : U →ₗ[ℂ] (⨂[ℂ] b, X b) :=
     { toFun := fun w => (φ w).1.1 1
-      map_add' := fun x y => by rw [map_add]; rfl
+      map_add' := fun x y => by rw [map_add (f := _)]; rfl
       map_smul' := fun c x => by rw [map_smul]; rfl }
   have hΛ : ∀ w, Λ w = (φ w).1.1 1 := fun _ => rfl
   have hΛ0 : Λ ≠ 0 := by

@@ -59,7 +59,7 @@ theorem nilp_coeff_eq_zero {Ω : Type} [Field Ω] [CharZero Ω] {r : ℕ} {s : F
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [ι, Algebra.TensorProduct.map_tmul]
-      | add x y hx hy => rw [map_add, map_add, hx, hy]
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     intro x y hxy
     apply hinj
     rw [← heq, ← heq, hxy]

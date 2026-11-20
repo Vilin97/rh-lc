@@ -85,8 +85,8 @@ lemma DeltaRel.add {n : ℕ} {σ σ' : Cochain Q U n} {c c' : cechH F U (n + 1)}
     DeltaRel U f g n (σ + σ') (c + c') := by
   obtain ⟨τ, ρ, hρ, hτ, hρτ, rfl⟩ := h
   obtain ⟨τ', ρ', hρ', hτ', hρτ', rfl⟩ := h'
-  exact ⟨τ + τ', ρ + ρ', by rw [map_add, hρ, hρ', add_zero], by rw [map_add, hτ, hτ'],
-    by rw [map_add, map_add, hρτ, hρτ'], (cls_add _ _ hρ hρ' _).symm⟩
+  exact ⟨τ + τ', ρ + ρ', by rw [map_add (f := _), hρ, hρ', add_zero], by rw [map_add (f := _), hτ, hτ'],
+    by rw [map_add (f := _), map_add (f := _), hρτ, hρτ'], (cls_add _ _ hρ hρ' _).symm⟩
 
 namespace IsCechShortExact
 

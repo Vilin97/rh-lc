@@ -16,9 +16,9 @@ theorem clm_decomp (L : ℂ →L[ℝ] ℂ) (v : ℂ) :
   obtain ⟨x, y, rfl⟩ : ∃ x y : ℝ, v = x + y * I := ⟨v.re, v.im, (Complex.re_add_im v).symm⟩
   have e : (x : ℂ) + y * I = x • (1 : ℂ) + y • I := by rw [Complex.real_smul, Complex.real_smul, mul_one]
   have hL : L ((x : ℂ) + y * I) = (x : ℂ) * L 1 + (y : ℂ) * L I := by
-    rw [e, map_add, map_smul, map_smul, Complex.real_smul, Complex.real_smul]
+    rw [e, map_add (f := _), map_smul, map_smul, Complex.real_smul, Complex.real_smul]
   rw [hL]
-  simp only [map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+  simp only [map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
   linear_combination ((y : ℂ) * L I) * Complex.I_sq
 
 theorem fderiv_decomp (f : ℂ → ℂ) (ζ v : ℂ) :

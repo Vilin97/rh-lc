@@ -118,7 +118,7 @@ theorem exists_tateIsoO_of_given {p : ℕ} [Fact p.Prime] (D : Datum p) {R : Typ
         exact (smul_eq_zero.1 e3).resolve_left (by exact_mod_cast hn.ne')
       have e4 : w = h (n * k) z + k • v := by rw [sub_sub, sub_eq_zero] at e2; exact e2
       obtain ⟨y'', z'', hy''⟩ := hsurj (n * k) hnk hnkp v
-      have e5 : h (n * k) (z + y'') = w + (n * k) • z'' := by rw [map_add, hy'', e4, add_assoc]
+      have e5 : h (n * k) (z + y'') = w + (n * k) • z'' := by rw [map_add (f := _), hy'', e4, add_assoc]
       refine ⟨z + y'', ?_⟩
       rw [e5, I.add, (I.ker _ hnk hnkp ((n * k) • z'')).2 ⟨z'', rfl⟩, _root_.mul_one, hw, ha]
     · rintro ⟨y, rfl⟩
@@ -162,7 +162,7 @@ theorem exists_tateIsoO_of_given {p : ℕ} [Fact p.Prime] (D : Datum p) {R : Typ
   · intro n y y'
     simp only [ev']
     split_ifs with hn
-    · rw [map_add, I.add, MonObj.mul_comp]
+    · rw [map_add (f := _), I.add, MonObj.mul_comp]
     · rw [_root_.mul_one]
   · intro n b' y
     simp only [ev']

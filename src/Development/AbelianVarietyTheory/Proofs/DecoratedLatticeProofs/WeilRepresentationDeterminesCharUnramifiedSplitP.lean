@@ -25,7 +25,7 @@ theorem alg_key (c : R →+* R) {e a b : R} (he1 : e * e = e) (hec : e * c e = 0
 
 theorem alg_conj (c : R →+* R) (hcc : ∀ z, c (c z) = z) (e a b : R) :
     c (e * a + c e * c b + (1 - e - c e)) = e * b + c e * c a + (1 - e - c e) := by
-  simp only [map_add, map_mul, map_sub, map_one, hcc]
+  simp only [map_add (f := _), map_mul, map_sub, map_one, hcc]
   ring
 
 theorem alg_supp (c : R →+* R) {e a b : R} (he1 : e * e = e) (hec : e * c e = 0) :

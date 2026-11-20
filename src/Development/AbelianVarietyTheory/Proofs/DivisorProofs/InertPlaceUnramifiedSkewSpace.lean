@@ -29,7 +29,7 @@ theorem sesq_add_left (x₁ x₂ y : Fin n → L) : sesq σL J (x₁ + x₂) y =
   simp only [sesq, Pi.add_apply, add_mul, Finset.sum_add_distrib]
 
 theorem sesq_add_right (x y₁ y₂ : Fin n → L) : sesq σL J x (y₁ + y₂) = sesq σL J x y₁ + sesq σL J x y₂ := by
-  simp only [sesq, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [sesq, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem sesq_neg_left (x y : Fin n → L) : sesq σL J (-x) y = -sesq σL J x y := by
   simp only [sesq, Pi.neg_apply, neg_mul, Finset.sum_neg_distrib]

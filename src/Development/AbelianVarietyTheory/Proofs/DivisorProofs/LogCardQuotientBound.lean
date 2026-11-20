@@ -28,7 +28,7 @@ theorem isIntB_lattice_principal_eventually : ∀ (L : Type) [Field L] [NumberFi
   have hOmul := (hS₁ v hv₁).1
   have hloc := hS₂ v hv₂
   have hOadd : ∀ y z, IsIntB v ℓ y → IsIntB v ℓ z → IsIntB v ℓ (y + z) := fun y z hy hz i => by
-    rw [map_add, Finsupp.add_apply]; exact add_mem (hy i) (hz i)
+    rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hy i) (hz i)
   have hone : (1 : ℤ) ∉ v.asIdeal := fun h => v.isPrime.ne_top ((Ideal.eq_top_iff_one _).2 h)
   have hloc1 : ∀ c : ℤ, ∃ s : ℤ, s ∉ v.asIdeal ∧ IsIntegral ℤ ((s : L) * (c : L)) := fun c =>
     ⟨1, hone, by rw [Int.cast_one, one_mul, ← eq_intCast (algebraMap ℤ L)]; exact isIntegral_algebraMap⟩

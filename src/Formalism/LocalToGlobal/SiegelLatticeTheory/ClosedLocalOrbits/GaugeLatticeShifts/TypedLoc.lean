@@ -220,7 +220,7 @@ def tlin : I.E →ₗ[I.F] I.F where
   toFun y := (star_add_self_mem I y).choose
   map_add' x y := by
     apply (algebraMap I.F I.E).injective
-    rw [map_add, (star_add_self_mem I (x + y)).choose_spec, (star_add_self_mem I x).choose_spec,
+    rw [map_add (f := _), (star_add_self_mem I (x + y)).choose_spec, (star_add_self_mem I x).choose_spec,
       (star_add_self_mem I y).choose_spec, star_add]; ring
   map_smul' c y := by
     apply (algebraMap I.F I.E).injective
@@ -266,7 +266,7 @@ theorem add_sig (z : I.E ⊗[I.F] v.adicCompletion I.F) :
     rw [sigV_tmul, trV_tmul, ← TensorProduct.add_tmul, ← tlin_spec, Algebra.algebraMap_eq_smul_one,
       TensorProduct.smul_tmul]
   | add a b ha hb =>
-    rw [map_add, map_add, TensorProduct.tmul_add, ← ha, ← hb]; abel
+    rw [map_add (f := _), map_add (f := _), TensorProduct.tmul_add, ← ha, ← hb]; abel
 
 theorem trV_mul_tmul (c : v.adicCompletion I.F) (z : I.E ⊗[I.F] v.adicCompletion I.F) :
     trV I v (((1 : I.E) ⊗ₜ[I.F] c) * z) = c * trV I v z := by
@@ -274,7 +274,7 @@ theorem trV_mul_tmul (c : v.adicCompletion I.F) (z : I.E ⊗[I.F] v.adicCompleti
   | zero => simp
   | tmul y d =>
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, trV_tmul, trV_tmul, mul_smul_comm]
-  | add a b ha hb => rw [mul_add, map_add, map_add, ha, hb, mul_add]
+  | add a b ha hb => rw [mul_add, map_add (f := _), map_add (f := _), ha, hb, mul_add]
 
 theorem trV_one_tmul (c : v.adicCompletion I.F) : trV I v ((1 : I.E) ⊗ₜ[I.F] c) = 2 * c := by
   rw [trV_tmul, tlin_one, two_smul, two_mul]
@@ -294,7 +294,7 @@ theorem prV_sigA (x : I.E ⊗[I.F] Af I.F) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul y a => rfl
-  | add a b ha hb => rw [map_add, map_add, ha, hb, ← map_add, ← map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, ← map_add (f := _), ← map_add (f := _)]
 
 end Local
 
@@ -346,7 +346,7 @@ theorem trV_intV {x : I.E ⊗[I.F] v.adicCompletion I.F}
     exact coe_mem_adicCompletionIntegers v s
   | add a b ha hb =>
     show trV I v (phiV I v (a + b)) ∈ _
-    rw [map_add, map_add]; exact add_mem ha hb
+    rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
 
 theorem wz (γ δ : WithZero (Multiplicative ℤ)) (h : γ < 1) (hδ : ∀ k : ℕ, δ ≤ γ ^ k) : δ = 0 := by
   by_contra hδ0

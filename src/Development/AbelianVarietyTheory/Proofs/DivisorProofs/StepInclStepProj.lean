@@ -192,7 +192,7 @@ def projLin (hr : IsRatSec L r) (hC : ∀ x w, w ∈ C x → ∀ c, x ∈ L.U c 
     (V : Z.Opens) : Γ(vmod C, V) →ₗ[Γ(Z, V)] Γ(LB.toMod L, V) where
   toFun s := LB.mkSec (fun c => projCoord L r φ hC s c) (projCoord_mem L r φ hr hC s)
   map_add' s t := LB.sec_ext fun c => Cartier.fn_ext fun h => by
-    simp only [LB.coord_add, LB.coord_mkSec, map_add, fnOf_projCoord, vec_add, genVec_add, add_mul]
+    simp only [LB.coord_add, LB.coord_mkSec, map_add (f := _), fnOf_projCoord, vec_add, genVec_add, add_mul]
   map_smul' a s := LB.sec_ext fun c => Cartier.fn_ext fun h => by
     simp only [LB.coord_smul, LB.coord_mkSec, RingHom.id_apply, map_mul, fnOf_resG,
       fnOf_projCoord, vec_smul, genVec_smul, map_smul, smul_eq_mul, mul_assoc]

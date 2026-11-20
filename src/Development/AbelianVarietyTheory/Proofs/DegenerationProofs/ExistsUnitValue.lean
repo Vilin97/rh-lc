@@ -75,7 +75,7 @@ def ValM (σ : SecM A.A A.L k (TFK (R := R) F)) (x : TFK (R := R) F ⟶ A.A) (e 
 theorem ValM.add {σ σ' : SecM A.A A.L k (TFK (R := R) F)} {x e} {c c' : F} (h : ValM σ x e c) (h' : ValM σ' x e c') :
     ValM (σ + σ') x e (c + c') := fun z J hJ => by
   refine (ThetaAct.sv_add σ σ' _ z hJ).trans ((congrArg₂ (· + ·) (h z J hJ) (h' z J hJ)).trans ?_)
-  simp only [id, cst_eq, map_add]
+  simp only [id, cst_eq, map_add (f := _)]
   exact (add_mul (R := (TFK (R := R) F).left.presheaf.stalk z) _ _ _).symm
 
 theorem ValM.smul {σ : SecM A.A A.L k (TFK (R := R) F)} {x e} {c : F} (h : ValM σ x e c) (b : F) :

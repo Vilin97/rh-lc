@@ -302,7 +302,7 @@ theorem moved_vacuum_reads : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ :
     intro τ z
     have h0 := hv0 τ z
     unfold annih at h0 ⊢
-    rw [e, e, ← map_smul, ← map_add, h0, map_zero]
+    rw [e, e, ← map_smul, ← map_add (f := _), h0, map_zero]
   obtain ⟨G, hG, hR⟩ := exists_reads hS hT hset (hom.om_pres (g, h) f₀ hf₀.1) hv
   have hRt : ∀ (F : VC D a d → ℂ) (f' : WO S T → ℂ), Reads ψ θ hS hT cc δ r F f' → ∀ z,
       Reads ψ θ hS hT cc δ r (Formalism.MainNotions.StandardLatticesGL3.Wd D (tor0 D cc δ) (pt D (tor0 D cc δ) δ z) F)

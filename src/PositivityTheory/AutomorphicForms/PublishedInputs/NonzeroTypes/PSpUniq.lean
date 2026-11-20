@@ -155,7 +155,7 @@ theorem sup_inf_etaSp {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Represent
   let _ := Fintype.ofFinite (KG G ⧸ U)
   have hN : (Fintype.card (KG G ⧸ U) : ℂ) ≠ 0 := Nat.cast_ne_zero.2 Fintype.card_ne_zero
   have h1 := avg_of_mem_etaSp G U ρ hvE
-  rw [map_add] at h1
+  rw [map_add (f := _)] at h1
   have hav : a + b = (Fintype.card (KG G ⧸ U) : ℂ)⁻¹ • (avg G U ρ a + avg G U ρ b) := by
     rw [h1, smul_smul, inv_mul_cancel₀ hN, one_smul]
   rw [hav]

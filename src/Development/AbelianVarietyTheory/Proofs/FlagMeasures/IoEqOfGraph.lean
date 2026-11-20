@@ -121,7 +121,7 @@ theorem bcP_X {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (f : Fin (D.R.rS + 1) �
     rw [this]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
   · rw [map_zero]; exact zero_mem _
-  · intro a b _ _ ha hb; rw [map_add]; exact add_mem ha hb
+  · intro a b _ _ ha hb; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   · intro c a _ ha; rw [Formalism.L2.SG.TermLoc.baseChange_smul₂]; exact Submodule.smul_mem _ _ ha
 
 theorem rep_of_lsub {T : D.host.E} (G : LFlag (VS D) D.R.rS T) {Λ₁ Λ₂ : LV D} (h : Lsub Λ₁ G = Lsub Λ₂ G)
@@ -259,12 +259,12 @@ theorem place_A (g : Loc.SplitG (Zd.M p).L) (hs : (Zd.M p).split = some g) {T T'
     sub_mem (baseChange_mem_localLattice Zd (add_mem (Submodule.mem_inf.1 hm').1 (xi_mem hξ')) p) (smul_mem_localLattice Zd p (g_mem_O p) hv'), ?_, ?_, ?_⟩
   · have e4 : x - (baseChange₂ D p (m - ξ) - (D.s.atP p).ιE ((gS D : ℕ) : D.host.E) • v) =
         baseChange₂ D p ((l - m) + ξ) - (D.s.atP p).ιE ((gS D : ℕ) : D.host.E) • (w - v) := by
-      rw [map_sub, map_add, map_sub]; exact (alg1 _ _ _ _ _ _ _ e).1
+      rw [map_sub, map_add (f := _), map_sub]; exact (alg1 _ _ _ _ _ _ _ e).1
     rw [e4]
     exact sub_mem (bcP_X Zd p F f hA (add_mem d hξX)) (Submodule.smul_mem _ _ c)
   · have e4 : x' - (baseChange₂ D p (m' + ξ') - (D.s.atP p).ιE ((gS D : ℕ) : D.host.E) • v') =
         baseChange₂ D p ((l' - m') - ξ') - (D.s.atP p).ιE ((gS D : ℕ) : D.host.E) • (w' - v') := by
-      rw [map_add, map_sub, map_sub]; exact (alg1 _ _ _ _ _ _ _ e').2
+      rw [map_add (f := _), map_sub, map_sub]; exact (alg1 _ _ _ _ _ _ _ e').2
     rw [e4]
     exact sub_mem (bcP_X Zd p F' f' hB (sub_mem d' hξX')) (Submodule.smul_mem _ _ c')
   · have e4 : (baseChange₂ D p (m - ξ) - (D.s.atP p).ιE ((gS D : ℕ) : D.host.E) • v) - (baseChange₂ D p (m' + ξ') - (D.s.atP p).ιE ((gS D : ℕ) : D.host.E) • v') =

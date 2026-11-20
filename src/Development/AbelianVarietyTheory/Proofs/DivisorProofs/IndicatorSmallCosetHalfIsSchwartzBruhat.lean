@@ -21,7 +21,7 @@ variable {a b : ℕ}
 theorem frAt_add (w : Pl D.host.E) (β' : GL (Fin b) (Lev.EAf D)) (β : GL (Fin a) (Lev.EAf D)) (x y : Mx D b a) :
     frAt w β' β (x + y) = frAt w β' β x + frAt w β' β y := by
   unfold frAt
-  rw [Matrix.map_add _ (toEAf D).map_add, Comparison₂.fr_add, Matrix.map_add _ (cpt (D := D) w).map_add]
+  rw [Matrix.map_add _ (toEAf D).map_add (f := _), Comparison₂.fr_add, Matrix.map_add _ (cpt (D := D) w).map_add (f := _)]
 
 theorem frAt_sub (w : Pl D.host.E) (β' : GL (Fin b) (Lev.EAf D)) (β : GL (Fin a) (Lev.EAf D)) (x y : Mx D b a) :
     frAt w β' β (x - y) = frAt w β' β x - frAt w β' β y := by

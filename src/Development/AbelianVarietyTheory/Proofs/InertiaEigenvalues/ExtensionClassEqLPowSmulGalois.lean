@@ -67,7 +67,7 @@ theorem exists_solution {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} {R :
       have h0 : ((g.f.restrictScalars O).restrict g.T_le) (((f.f.restrictScalars O).restrict f.T_le) s) = 0 :=
         Subtype.ext ((hfg.2.2.2.1 _).2 ⟨s.1, rfl⟩)
       simp only [latW, TensorProduct.map_tmul, h0, TensorProduct.tmul_zero]
-    | add p q hp hq => simp only [map_add, hp, hq, add_zero]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq, add_zero]
   have h4 : homW t ϖ G (toW t ϖ Q ⟨x₂, mem_ME_of_mem_M hx₂⟩) = k • Iu.ofT x := by
     rw [homW_toW, ← hux, ← map_nsmul]
     exact congrArg _ (Subtype.ext hGx)

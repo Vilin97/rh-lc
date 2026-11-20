@@ -28,7 +28,7 @@ variable {k σ : Type} [Field k] {r : ℕ}
 theorem harmonicProjection_add (w e : Fin r → σ) (zv sv : σ) (o n z : ℕ) (y y' : MvPolynomial σ k) :
     tieP w e zv sv o n z (y + y') = tieP w e zv sv o n z y + tieP w e zv sv o n z y' := by
   unfold tieP
-  simp only [mul_add, map_add, smul_add, Finset.sum_add_distrib]
+  simp only [mul_add, map_add (f := _), smul_add, Finset.sum_add_distrib]
 
 theorem harmonicProjection_smul (w e : Fin r → σ) (zv sv : σ) (o n z : ℕ) (c : k) (y : MvPolynomial σ k) :
     tieP w e zv sv o n z (c • y) = c • tieP w e zv sv o n z y := by
@@ -123,7 +123,7 @@ theorem Th_fock (hB : G.BlockOK) (hr : 1 ≤ r) (j : Fin G.T.t → ℕ) (jp : �
       rw [h]
       ring
     | zero => rw [Th_zero, fockK_zero_right, map_zero, fockK_zero_right, mul_zero]
-    | add a b _ _ ha hb => rw [Th_add, fockK_add_right, ha, hb, map_add, fockK_add_right, mul_add]
+    | add a b _ _ ha hb => rw [Th_add, fockK_add_right, ha, hb, map_add (f := _), fockK_add_right, mul_add]
     | smul c a _ ha =>
       rw [zsmul_eq, Th_smul, fockK_smul_right, ha, map_smul, fockK_smul_right]; ring
   | zero => rw [Th_zero, fockK_zero_left, fockK_zero_left, mul_zero]

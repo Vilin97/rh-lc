@@ -31,7 +31,7 @@ theorem hasSum_of_sumF {R : Type} [CommRing R] [IsDomain R] [IsNoetherianRing R]
     induction hy using Submodule.span_induction with
     | mem y hy => exact hc y hy
     | zero => simpa using h0
-    | add y z _ _ h1 h2 => rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le h1 h2)
+    | add y z _ _ h1 h2 => rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le h1 h2)
     | smul a y _ h1 => rw [hf, norm_mul]; exact (mul_le_of_le_one_left (norm_nonneg _) (hC.1 a)).trans h1
   obtain ⟨N, ⟨t, rfl⟩, -, -, h⟩ := h
   obtain ⟨u, rfl⟩ := IsNoetherian.noetherian I

@@ -29,7 +29,7 @@ theorem hform_incl {n : ℕ} (σ : E →ₐ[F] E) (J : Matrix (Fin n) (Fin n) E)
 private theorem hform_add_left_self_dual_local_basis {A : Type} [CommRing A] {m : ℕ} (σ : A →+* A)
     (J : Matrix (Fin m) (Fin m) A) (x x' y : Fin m → A) :
     hform σ J (x + x') y = hform σ J x y + hform σ J x' y := by
-  simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 private theorem hform_add_right_self_dual_local_basis {A : Type} [CommRing A] {m : ℕ} (σ : A →+* A)
     (J : Matrix (Fin m) (Fin m) A) (x y y' : Fin m → A) :

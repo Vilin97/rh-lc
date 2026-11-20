@@ -230,7 +230,7 @@ theorem GlobalTheory.SchrodOsc.exists_osc : ∀ (ι l : Type) [Fintype ι] [Deci
     (fun v => (hcont v).comp ((LinearMap.continuous_of_finiteDimensional φ.toLinearMap).comp
       GlobalTheory.SchrodOsc.continuous_coordOf))
     (fun z z' v => by
-      rw [rho_rho, ← map_add, ← GlobalTheory.SchrodOsc.coordOf_add, hφ, ← GlobalTheory.SchrodOsc.two_mul_sum_coordOf]
+      rw [rho_rho, ← map_add (f := _), ← GlobalTheory.SchrodOsc.coordOf_add, hφ, ← GlobalTheory.SchrodOsc.two_mul_sum_coordOf]
       congr 2
       simp [Complex.mul_im]
       ring)

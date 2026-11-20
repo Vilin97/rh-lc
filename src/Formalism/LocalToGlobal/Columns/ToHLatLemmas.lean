@@ -283,11 +283,11 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] (S : GSD K)
 
 theorem pairAt_add_left (v : InfinitePlace K) (x x' y : S.V) :
     S.pairAt v (x + x') y = S.pairAt v x y + S.pairAt v x' y := by
-  simp only [pairAt, map_add, Finsupp.add_apply, add_mul, Finset.sum_add_distrib]
+  simp only [pairAt, map_add (f := _), Finsupp.add_apply, add_mul, Finset.sum_add_distrib]
 
 theorem pairAt_add_right (v : InfinitePlace K) (x y y' : S.V) :
     S.pairAt v x (y + y') = S.pairAt v x y + S.pairAt v x y' := by
-  simp only [pairAt, map_add, Finsupp.add_apply, mul_add, Finset.sum_add_distrib]
+  simp only [pairAt, map_add (f := _), Finsupp.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem pairAt_smul_left (v : InfinitePlace K) (a : K) (x y : S.V) :
     S.pairAt v (a • x) y = starRingEnd ℂ (v.embedding a) * S.pairAt v x y := by

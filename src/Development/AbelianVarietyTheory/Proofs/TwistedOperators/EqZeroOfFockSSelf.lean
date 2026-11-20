@@ -71,7 +71,7 @@ private theorem map_conj_blockAct {ι : Type} [Fintype ι] {n : ℕ} (U : ι →
   next a =>
     simp [Formalism.GradedWeylDivisibility.blockAct, MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq]
   next p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   next p v hp =>
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_mul, hp, map_X, Formalism.L2.DIV.blockAct_X, map_sum, map_C, Matrix.map_apply]
@@ -174,7 +174,7 @@ theorem weylSub_eq (n : ℕ) (lam : ι → ℕ → ℤ) (lam' : ι → DomWeight
         simp [GlobalTheory.Branching.unitaryIncl_coe]
       · simp
       · intro x y _ _ hx hy
-        rw [map_add]
+        rw [map_add (f := _)]
         exact S.add_mem hx hy
       · intro c x _ hx
         rw [map_smul]
@@ -214,12 +214,12 @@ variable {ι : Type} [Fintype ι] [DecidableEq ι]
 
 def bilF (n : ℕ) : Formalism.L2.DIV.Pol ℂ ι n →ₗ[ℂ] Formalism.L2.DIV.Pol ℂ ι n →ₗ[ℂ] ℂ :=
   LinearMap.mk₂ ℂ (fun F F' => fockS (map (starRingEnd ℂ) F) F')
-    (fun F₁ F₂ F' => by simp only [map_add, ← fockL_apply, LinearMap.add_apply])
+    (fun F₁ F₂ F' => by simp only [map_add (f := _), ← fockL_apply, LinearMap.add_apply])
     (fun c F F' => by
       simp only [← fockL_apply, smul_eq_C_mul, map_mul, map_C, RingHom.coe_comp, Function.comp_apply]
       rw [← smul_eq_C_mul, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul]
       simp)
-    (fun F F₁ F₂ => by simp only [← fockL_apply, map_add])
+    (fun F F₁ F₂ => by simp only [← fockL_apply, map_add (f := _)])
     (fun c F F' => by simp only [← fockL_apply, map_smul, smul_eq_mul])
 
 theorem bilF_apply (n : ℕ) (F F' : Formalism.L2.DIV.Pol ℂ ι n) : bilF n F F' = fockS (map (starRingEnd ℂ) F) F' := rfl

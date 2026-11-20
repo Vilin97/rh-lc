@@ -54,7 +54,7 @@ theorem exists_integer_congr {K : Type} [Field K] [NumberField K] (w : HeightOne
       exact div_le_one_of_le₀ hx.le zero_le)
   refine ⟨x, z - h, ?_⟩
   have h2 : io₀ (x : K) = io₀ k + (d : T₀.Fr) * algebraMap T₀.V T₀.Fr z := by
-    rw [hz, ← map_natCast io₀, ← map_mul, ← map_add, mul_div_cancel₀ _ hdK]
+    rw [hz, ← map_natCast io₀, ← map_mul, ← map_add (f := _), mul_div_cancel₀ _ hdK]
     exact congrArg io₀ (by simp)
   rw [h2, hk]
   simp only [map_sub, map_mul, map_natCast]
@@ -82,7 +82,7 @@ theorem isCols_map {io₀ : c.F →+* T₀.Fr} {p n : ℕ} {cx : Lt1 Dw → ℕ}
     obtain ⟨z, hz⟩ := hx2 b j
     refine ⟨g z, ?_⟩
     rw [RingHom.comp_apply, hz, hχ]
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
 
 theorem map_polyT {n : ℕ} (cx : Lt1 Dw → ℕ) (B : ∀ f : Lt1 Dw, Fin (rk f) → Fin n → T₀.V) :
     MvPolynomial.map χ (polyT B cx) = polyT (fun f b j => g (B f b j)) cx := by

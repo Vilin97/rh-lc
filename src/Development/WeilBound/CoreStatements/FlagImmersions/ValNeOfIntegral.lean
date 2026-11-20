@@ -78,9 +78,9 @@ theorem rho_eq {y : (Σ k, ι k) → Ω} {a : K → ℤ} {ks : K} {d d' : ι ks 
     simp only [Pi.add_apply]
     omega)
   have h4 := aeval_eq_zero_of (mem_ptsOver hz) h3 (by
-    simp only [map_add, map_neg, map_mul, aeval_X, e, e']
+    simp only [map_add (f := _), map_neg, map_mul, aeval_X, e, e']
     ring)
-  simp only [map_add, map_neg, map_mul, aeval_X] at h4
+  simp only [map_add (f := _), map_neg, map_mul, aeval_X] at h4
   unfold rho
   rw [div_eq_div_iff n.2.1 n'.2.1]
   linear_combination h4
@@ -228,7 +228,7 @@ theorem exists_line {K₀ K : Type} [Fintype K₀] [Fintype K] [DecidableEq K] {
   have hren : ∀ f : MRing ι₀, aeval y (rename v f) = i (aeval y₀ f) := fun f => by
     induction f using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p n hp => simp only [map_mul, hp, rename_X, aeval_X, hy]
   have hle : mCoordIdeal y₀ ≤ imageZ v (mCoordIdeal y) := by
     intro f hf
@@ -238,7 +238,7 @@ theorem exists_line {K₀ K : Type} [Fintype K₀] [Fintype K] [DecidableEq K] {
       intro f
       induction f using MvPolynomial.induction_on with
       | C a => simp [mConeMap, Φ]
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
       | mul_X p n hp =>
         simp only [map_mul, hp, rename_X]
         congr 1
@@ -308,7 +308,7 @@ theorem exists_line {K₀ K : Type} [Fintype K₀] [Fintype K] [DecidableEq K] {
         subst hq
         exact (hW1 _ _ b' (hC _)).1
       | algebraMap r => simp
-      | add _ _ _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+      | add _ _ _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
       | mul _ _ _ _ h1 h2 => rw [map_mul]; exact mul_mem h1 h2
     have heq : y ⟨ks, e j⟩ / y ⟨ks, C ks⟩ *
         i' (s (e.symm (C ks)) * ∏ k, y₀ ⟨k, C₀ k⟩ ^ (-(((1 : ℕ) : ℤ) * a₀ k))) =

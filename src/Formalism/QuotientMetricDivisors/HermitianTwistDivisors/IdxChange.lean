@@ -385,7 +385,7 @@ theorem indexChange_uniformizer (v : HeightOneSpectrum R) (i : Fin d) {ϖ t : R}
     | add x y _ _ hx hy =>
       obtain ⟨u, hu⟩ := hx
       obtain ⟨u', hu'⟩ := hy
-      exact ⟨u + u', by rw [map_add, hu, hu', mul_add, map_add]⟩
+      exact ⟨u + u', by rw [map_add (f := _), hu, hu', mul_add, map_add (f := _)]⟩
     | smul a x _ hx =>
       obtain ⟨u, hu⟩ := hx
       exact ⟨a * u, by rw [map_smul, hu, Algebra.smul_def, ← map_mul]; ring_nf⟩

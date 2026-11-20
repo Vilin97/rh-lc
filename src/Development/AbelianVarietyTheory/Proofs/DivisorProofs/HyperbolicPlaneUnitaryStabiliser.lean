@@ -70,7 +70,7 @@ theorem fin_iwasawa (hσ : ∀ x, σ (σ x) = x) {n : ℕ} {J : Matrix (Fin n) (
     induction a using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [sigR, hσ]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hu : ∀ N : ℕ, N ≠ 0 → IsUnit (N : Af F ⊗[F] E) := fun N h => by
     simpa using (isUnit_iff_ne_zero.2 (Nat.cast_ne_zero.2 h : (N : E) ≠ 0)).map (inclR (F := F) (Af F))
   have hJ' : ∀ i j, sigR (Af F) σ (JR (F := F) (Af F) J j i) = JR (F := F) (Af F) J i j := fun i j => by

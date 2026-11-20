@@ -90,7 +90,7 @@ theorem placeModel_onto_local : ∀ (D : Formalism.BasicNotions.D7) (ψ : AddCha
     · intro x y _ _ hx hy
       have := (st _ hx).2.1 1 _ hy
       rw [one_smul] at this
-      rw [map_add]; exact this
+      rw [map_add (f := _)]; exact this
     · intro c x _ hx
       have := (st _ hx).2.1 c _ lz
       rw [add_zero] at this

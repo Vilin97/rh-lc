@@ -130,13 +130,13 @@ theorem oActTySt_holds : OActTySt := by
     refine ⟨?_, fun n => ?_⟩
     · rw [hlam'def]
       simp only
-      rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, map_add, PowerSeries.coeff_smul,
+      rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, map_add (f := _), PowerSeries.coeff_smul,
         PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_zero_eq_constantCoeff_apply, (hlam q).1]
       rw [show PowerSeries.constantCoeff (alongCv γ (un1 (Dq q))) = 0 from hDcc q]
       simp
     · rw [hlam'def]
       simp only
-      rw [map_add, PowerSeries.coeff_smul, smul_eq_mul]
+      rw [map_add (f := _), PowerSeries.coeff_smul, smul_eq_mul]
       exact ((p.em_int g _ α).mul_int ((hlam q).2 n)).add (intS_ps.1 (hDint q) n)
   refine ⟨γ', lam', hγ'cv, hlam'cv, fun i => ?_, fun q => ?_⟩
   ·

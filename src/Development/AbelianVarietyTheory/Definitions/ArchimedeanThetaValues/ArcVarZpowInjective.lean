@@ -210,7 +210,7 @@ theorem polar_arcExp (hs : ∀ y z, be y z = be z y) (he : ∀ y, (2 : ℤ) ∣ 
   congr 1
   have h1 := he y
   have h2 := he z
-  simp only [map_add, LinearMap.add_apply, hs z y]
+  simp only [map_add (f := _), LinearMap.add_apply, hs z y]
   omega
 
 theorem psiIn_arcExp_iff (y : X) (n : ℕ) :
@@ -242,7 +242,7 @@ def arcData (k : Type) [Field k] (be : LinearMap.BilinForm ℤ X) (hs : ∀ y z,
   toPre := toricPre _ X (arcExp k be)
   psi_even := psiEven _ (arcExp_neg k be)
   tau_bimult := tauBimult _ fun a a' b => by
-    rw [polar_arcExp k be hs he, polar_arcExp k be hs he, polar_arcExp k be hs he, map_add, LinearMap.add_apply,
+    rw [polar_arcExp k be hs he, polar_arcExp k be hs he, polar_arcExp k be hs he, map_add (f := _), LinearMap.add_apply,
       zpow_add]
   psi_pos := fun (y : X) hy => by
     have h1 := hp y hy

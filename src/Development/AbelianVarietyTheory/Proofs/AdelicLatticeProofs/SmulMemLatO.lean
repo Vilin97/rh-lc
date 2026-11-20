@@ -22,7 +22,7 @@ theorem mul_pair_tmul (D : D7) (w : AE D) (α : Af D.host.F) (m : D.host.E) :
     rw [Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.tmul_mul_tmul, liftFin_tmul]
     congr 1
     exact Prod.ext (mul_zero _) rfl
-  | add x y hx hy => rw [add_mul, hx, hy, RingHom.map_add, add_mul, LinearMap.map_add]
+  | add x y hx hy => rw [add_mul, hx, hy, RingHom.map_add (f := _), add_mul, LinearMap.map_add (f := _)]
 
 noncomputable def liftMul (D : D7) (c : Af D.host.F ⊗[D.host.F] D.host.E) : Af D.host.F ⊗[D.host.F] D.host.E →+ AE D :=
   (liftFin D).toAddMonoidHom.comp (AddMonoidHom.mulRight c)

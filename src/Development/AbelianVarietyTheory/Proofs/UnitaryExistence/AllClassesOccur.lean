@@ -86,5 +86,5 @@ theorem GlobalTheory.all_classes_occur :
     exact (right_eq_mul.1 this)
   obtain ⟨b, hb⟩ := (U.ex_ker i P hP _).1 k₂
   refine ⟨b, hP.2.1 ?_⟩
-  rw [map_add, map_nsmul, hb, ← Nat.cast_smul_eq_nsmul ℂ, ← smul_sub, smul_smul, mul_inv_cancel₀ hM, one_smul]
+  rw [map_add (f := _), map_nsmul, hb, ← Nat.cast_smul_eq_nsmul ℂ, ← smul_sub, smul_smul, mul_inv_cancel₀ hM, one_smul]
   abel

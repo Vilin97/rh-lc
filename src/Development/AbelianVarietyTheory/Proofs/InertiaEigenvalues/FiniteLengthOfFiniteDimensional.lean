@@ -119,7 +119,7 @@ theorem sameSS_of_charpoly_eq (hBN : GlobalTheory.ConstituentsCompare.BrauerNesb
         show e (a • v) = a • e v
         induction a using MonoidAlgebra.induction_on with
         | of g => exact he g v
-        | add a b ha hb => rw [add_smul, add_smul, map_add, ha, hb]
+        | add a b ha hb => rw [add_smul, add_smul, map_add (f := _), ha, hb]
         | smul c a ha => rw [smul_assoc, smul_assoc, map_smul, ha] }
   exact (hf.trans (SameFactors.of_equiv hf.finiteLength_right e')).trans hf'.symm
 

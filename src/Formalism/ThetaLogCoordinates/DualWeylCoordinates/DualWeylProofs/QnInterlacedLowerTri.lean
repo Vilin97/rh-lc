@@ -102,7 +102,7 @@ theorem qn_lowerTriIntegral : LowerTriIntegral := by
         ∃ Q' : MvPolynomial (Fin r × Fin n) ℤ, Q = intQ r n Q' := by
       intro Q1' h
       refine ⟨Q1' + z • b mi, ?_⟩
-      rw [map_add, map_zsmul, ← h, ← hB, hQ1, hlcQ, Int.cast_smul_eq_zsmul]
+      rw [map_add (f := _), map_zsmul, ← h, ← hB, hQ1, hlcQ, Int.cast_smul_eq_zsmul]
       abel
     by_cases hQ10 : Q1 = 0
     · exact hfinal 0 (by rw [hQ10, map_zero])

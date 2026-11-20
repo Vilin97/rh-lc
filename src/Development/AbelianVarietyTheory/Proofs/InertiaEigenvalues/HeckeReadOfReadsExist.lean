@@ -81,7 +81,7 @@ theorem evK_smul (c : NX.KB S i b) (x : NX.KB S i b ⊗[S.Ks] NX.FmK S ((j : ℕ
     evK YS v₀ hρ i j b (c • x) = ρ.e i b c • evK YS v₀ hρ i j b x := by
   induction x using TensorProduct.induction_on with
   | zero => rw [smul_zero, map_zero, smul_zero]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
   | tmul a f =>
     rw [TensorProduct.smul_tmul', evK_tmul, evK_tmul, smul_smul]
     exact congrArg (· • _) (map_mul (ρ.e i b) c a)
@@ -104,7 +104,7 @@ theorem evK_hkFR (hL : ℕ → PlE D.host → Module.End D.what₂.LL (S.WL ((j 
         NX.hkFR S i _ b hL hs k P x + NX.hkFR S i _ b hL hs k P y := LinearMap.map_add _ _ _
     rw [e0]
     erw [map_add (evK YS v₀ hρ i j b)]
-    rw [hx, hy, map_add, ← smul_add]
+    rw [hx, hy, map_add (f := _), ← smul_add]
     congr 1
     funext x
     simp [Finset.sum_add_distrib]

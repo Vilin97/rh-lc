@@ -70,11 +70,11 @@ theorem schr_fixed_small : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddCha
     funext x
     have hp1 : ∀ a : κ → FiniteAdeleRing (𝓞 F) F, (⇑p1 ∘ fe a) = 0 := fun a => funext fun i => rfl
     have harch : p1 (x ⬝ᵥ fe p.2 + ⅟(2 : AF F) * (fe p.1 ⬝ᵥ fe p.2)) = 0 := by
-      rw [map_add, map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct, hp1, hp1]
+      rw [map_add (f := _), map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct, hp1, hp1]
       simp
     have hfin : p2 (x ⬝ᵥ fe p.2 + ⅟(2 : AF F) * (fe p.1 ⬝ᵥ fe p.2)) =
         (fun i => (x i).2) ⬝ᵥ p.2 + p2 (⅟(2 : AF F) * (fe p.1 ⬝ᵥ fe p.2)) := by
-      rw [map_add, RingHom.map_dotProduct]
+      rw [map_add (f := _), RingHom.map_dotProduct]
       rfl
     have hx1 : (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F ((x + fe p.1) i).1) =
         fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F (x i).1 := by

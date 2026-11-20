@@ -41,7 +41,7 @@ theorem exists_ptVal : ∀ (D : D7) (u : D.what₂.Word) (K : ClsPTied u) (W : V
   · funext c
     apply Subtype.ext
     refine fnOf_map_injective (gramC (gramP D) (embT D)) (shiftOf (sgT u)) D.what₂.embLL ?_
-    rw [← hval, Pi.add_apply, Submodule.coe_add, map_add, map_add, map_add, map_add, ← hval, ← hval, Pi.add_apply]
+    rw [← hval, Pi.add_apply, Submodule.coe_add, map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ← hval, ← hval, Pi.add_apply]
   · funext c
     apply Subtype.ext
     refine fnOf_map_injective (gramC (gramP D) (embT D)) (shiftOf (sgT u)) D.what₂.embLL ?_

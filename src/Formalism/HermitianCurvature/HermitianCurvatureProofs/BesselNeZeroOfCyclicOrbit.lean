@@ -76,7 +76,7 @@ theorem smooth_add {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
   obtain ⟨V, G, hV, hgV, hG, hGe⟩ := (show SmoothOnH (Hpk k r) (fun g => σ g y) from hy) g₀ hg₀
   refine ⟨U ∩ V, fun g => F g + G g, hU.inter hV, ⟨hgU, hgV⟩,
     (hF.mono Set.inter_subset_left).add (hG.mono Set.inter_subset_right), fun g hg hgl => ?_⟩
-  simp only [map_add, hFe g hg.1 hgl, hGe g hg.2 hgl]
+  simp only [map_add (f := _), hFe g hg.1 hgl, hGe g hg.2 hgl]
 
 theorem smooth_smul {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     {σ : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) ℂ → (H →L[ℂ] H)} (c : ℂ) {x : H}

@@ -76,7 +76,7 @@ theorem pair_eq (h : IsCMExt F E σ) {n : ℕ} (S T : HermR R σ n) :
   rw [sum_sum_split (fun a b => (S : Matrix (Fin n) (Fin n) (R ⊗[F] E)) a b * (T : Matrix (Fin n) (Fin n) _) b a)]
   beta_reduce
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, map_sum, mul_add, Finset.mul_sum, Finset.mul_sum]
+    rw [map_add (f := _), map_sum, map_sum, mul_add, Finset.mul_sum, Finset.mul_sum]
   congr 1
   · refine Finset.sum_congr rfl fun a _ => ?_
     have := half_trace R h (algebraMap F R (1 / 2) * Algebra.trace R (R ⊗[F] E) (S.1 a a) *

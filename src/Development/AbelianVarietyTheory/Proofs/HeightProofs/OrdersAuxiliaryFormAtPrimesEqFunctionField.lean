@@ -39,7 +39,7 @@ theorem exists_quot_maps {K' Fr : Type} [Field K'] [CommRing Fr] [Algebra K' Fr]
     rw [← RingHom.mem_ker, hk]; exact Ideal.mem_map_of_mem _ hx
   have hJK : ∀ c, ∀ x ∈ J ⊔ RingHom.ker (φ c), χ c (φ c x) = 0 := fun c x hx => by
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add, map_add, hJ c a ha, (RingHom.mem_ker).1 hb, map_zero, add_zero]
+    rw [map_add (f := _), map_add (f := _), hJ c a ha, (RingHom.mem_ker).1 hb, map_zero, add_zero]
   refine ⟨fun c => Ideal.Quotient.liftₐ J ((χ c).comp (φ c)) (hJ c), fun c x => rfl, fun c s => ?_,
     fun a ha => ?_, fun c c' hne => ?_⟩
   · obtain ⟨r, rfl⟩ := hs c s
@@ -71,7 +71,7 @@ theorem exists_quot_maps {K' Fr : Type} [Field K'] [CommRing Fr] [Algebra K' Fr]
       rw [(RingHom.mem_ker).1 hb, map_zero]
     · show χ c' (φ c' b) = 1
       have := congrArg (fun z => χ c' (φ c' z)) e
-      simpa only [map_add, hJK c' a ha, zero_add, map_one] using this
+      simpa only [map_add (f := _), hJK c' a ha, zero_add, map_one] using this
 
 theorem addVal_mul_pow {S : Type} [CommRing S] (u : AddValuation S (WithTop ℤ)) (a b : S) (m : ℕ) :
     u (a * b ^ m) = u a + m • u b := by

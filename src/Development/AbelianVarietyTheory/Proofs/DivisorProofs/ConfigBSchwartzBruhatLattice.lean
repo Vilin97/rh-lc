@@ -34,7 +34,7 @@ theorem exists_locLin {V : Type} [AddCommGroup V] [Module (AF F) V] {Bf : V → 
     refine Prod.ext (funext fun k => ?_) (funext fun k => ?_) <;> simp [GlobalTheory.LatVac.locCo]
   let f : E →ₗ[F] (κ → Fv F v) × (κ → Fv F v) :=
     { toFun := fun x => GlobalTheory.LatVac.locCo co v (g ((1 : AF F) ⊗ₜ[F] x))
-      map_add' := fun x y => by rw [TensorProduct.tmul_add, map_add, map_add]
+      map_add' := fun x y => by rw [TensorProduct.tmul_add, map_add (f := _), map_add (f := _)]
       map_smul' := fun c x => by
         rw [TensorProduct.tmul_smul, ← algebraMap_smul (AF F) c, map_smul, hs, RingHom.id_apply,
           ← algebraMap_smul (Fv F v) c]
@@ -47,7 +47,7 @@ theorem exists_locLin {V : Type} [AddCommGroup V] [Module (AF F) V] {Bf : V → 
     have e' : a ⊗ₜ[F] x = a • ((1 : AF F) ⊗ₜ[F] x) := by rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     rw [e, LinearMap.liftBaseChange_tmul, e', map_smul, hs]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 omit [NumberField E] in
 
@@ -76,7 +76,7 @@ theorem exists_open_of_isotropic {V : Type} [AddCommGroup V] [Module (AF F) V] {
   haveI : IsModuleTopology (Fv F v) (Fv F v ⊗[F] E) := ⟨rfl⟩
   haveI : IsTopologicalAddGroup (Fv F v ⊗[F] E) := IsModuleTopology.topologicalAddGroup (Fv F v) _
   have hadd : ∀ z z', schr ψ (T (z + z')) φ = schr ψ (T z) (schr ψ (T z') φ) := fun z z' => by
-    rw [map_add]
+    rw [map_add (f := _)]
     refine schr_add_of_symp ψ _ _ ?_ φ
     obtain ⟨a, rfl⟩ := compFin_surjective v z
     obtain ⟨b, rfl⟩ := compFin_surjective v z'
@@ -114,7 +114,7 @@ theorem shiftB_locConst : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [
   have hψ : Continuous B.ψ := hT.base.std.1
   let g : AE F E →ₗ[AF F] Matrix (Fin (b + 2)) (Fin (a + (b + 2))) (AE F E) :=
     { toFun := fun z => cA σ z • Matrix.vecMulVec (incV F H.y) (incV F H'.x)
-      map_add' := fun x y => by rw [map_add, add_smul]
+      map_add' := fun x y => by rw [map_add (f := _), add_smul]
       map_smul' := fun c x => by rw [map_smul, smul_assoc, RingHom.id_apply] }
   have hg : ∀ z, g z = Matrix.vecMulVec (incV F H.y) (cA σ z • incV F H'.x) := fun z =>
     (Matrix.vecMulVec_smul _ _ _).symm

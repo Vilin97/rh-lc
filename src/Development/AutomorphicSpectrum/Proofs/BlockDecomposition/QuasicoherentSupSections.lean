@@ -45,7 +45,7 @@ theorem sumMap_app_add (S T : Subobject E) (V : X.Opens) (s : Γ((S : X.Modules)
       S.arrow.app V s + T.arrow.app V t := by
   have hs : biprod.inl ≫ sumMap S T = S.arrow := by simp [sumMap]
   have ht : biprod.inr ≫ sumMap S T = T.arrow := by simp [sumMap]
-  rw [map_add, GlobalTheory.QCoh.app_app, GlobalTheory.QCoh.app_app, hs, ht]
+  rw [map_add (f := _), GlobalTheory.QCoh.app_app, GlobalTheory.QCoh.app_app, hs, ht]
 
 end GlobalTheory.CompanionTheory.GE.SupSecs
 

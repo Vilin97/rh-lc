@@ -78,13 +78,13 @@ theorem cayley_one {K : Type*} [Field K] (Δ p r : K) (h : nrm Δ p r ≠ 0) :
 theorem cAq_eq {K : Type*} [Field K] (φ : F →+* K) (Δ p r : F) (a b : K) :
     a * φ ((p * p + Δ * (r * r)) / nrm Δ p r) + φ Δ * (b * -φ ((2 * p * r) / nrm Δ p r)) =
       cAq (φ Δ) a b (φ p) (φ r) := by
-  simp only [cAq, nrm, map_div₀, map_add, map_mul, map_sub, map_neg, map_ofNat]
+  simp only [cAq, nrm, map_div₀, map_add (f := _), map_mul, map_sub, map_neg, map_ofNat]
   ring
 
 theorem cBq_eq {K : Type*} [Field K] (φ : F →+* K) (Δ p r : F) (a b : K) :
     a * -φ ((2 * p * r) / nrm Δ p r) + b * φ ((p * p + Δ * (r * r)) / nrm Δ p r) =
       cBq (φ Δ) a b (φ p) (φ r) := by
-  simp only [cBq, nrm, map_div₀, map_add, map_mul, map_sub, map_neg, map_ofNat]
+  simp only [cBq, nrm, map_div₀, map_add (f := _), map_mul, map_sub, map_neg, map_ofNat]
   ring
 
 theorem compA_inf (Δ P R : F) (a b : AF F) (w : InfinitePlace F) :

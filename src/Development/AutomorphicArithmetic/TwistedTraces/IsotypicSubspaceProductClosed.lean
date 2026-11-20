@@ -44,7 +44,7 @@ theorem UpperTheory.isotypic_subspace_product_closed :
       obtain ⟨a, ha⟩ := h1
       obtain ⟨b, hb⟩ := h2
       refine ⟨X.add_mem a b, (congrArg Subtype.val (map_add (c i (B i)) ⟨u, a⟩ ⟨v, b⟩)).trans ?_⟩
-      rw [map_add, ← ha, ← hb]; rfl
+      rw [map_add (f := _), ← ha, ← hb]; rfl
     | smul k u _ h1 =>
       obtain ⟨a, ha⟩ := h1
       refine ⟨X.smul_mem k a, (congrArg Subtype.val (map_smul (c i (B i)) k ⟨u, a⟩)).trans ?_⟩

@@ -103,7 +103,7 @@ theorem gip_integrable (hP : Pos) [Fintype A] [Fintype B] (f g : PV ι A B) :
 def gipL (hP : Pos) [Fintype A] [Fintype B] (p : PV ι A B) : PV ι A B →ₗ[ℂ] ℂ where
   toFun q := gip q p
   map_add' q1 q2 := by
-    simp only [gip, map_add, add_mul]
+    simp only [gip, map_add (f := _), add_mul]
     exact integral_add (gip_integrable hP q1 p) (gip_integrable hP q2 p)
   map_smul' c q := by
     simp only [gip, MvPolynomial.smul_eq_C_mul, map_mul, eval_C, RingHom.id_apply, smul_eq_mul]

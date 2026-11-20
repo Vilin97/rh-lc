@@ -173,7 +173,7 @@ theorem IsIntwF.transport (hθ : IsInfFam θ) (hσ : IdOrConj σ) (hA : ModelTr 
     obtain ⟨φ', rfl⟩ := hj φ'
     rw [lA.lie] at hY
     apply κB.injective
-    rw [map_add, map_zero, hI, hI]
+    rw [map_add (f := _), map_zero, hI, hI]
     refine H.invg τ Y hY φ φ' _ _ (fun z => ?_) ((hA.der τ Y hY _ _).1 h')
     obtain ⟨y, rfl⟩ := hα z
     have := h y

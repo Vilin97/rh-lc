@@ -63,7 +63,7 @@ theorem span_eq_top {G Γ W W' K V₀ H : Type} [Group G] [Group Γ] [NormedAddC
       obtain ⟨w, hw, h⟩ := h
       obtain ⟨w', hw', h'⟩ := h'
       refine ⟨w + w', Submodule.add_mem _ hw hw', fun c' => ?_⟩
-      simp only [map_add, Pi.add_apply, h, h', smul_add, Finset.sum_add_distrib, Pi.single_add]
+      simp only [map_add (f := _), Pi.add_apply, h, h', smul_add, Finset.sum_add_distrib, Pi.single_add]
     | smul a u _ h =>
       obtain ⟨w, hw, h⟩ := h
       refine ⟨a • w, Submodule.smul_mem _ _ hw, fun c' => ?_⟩

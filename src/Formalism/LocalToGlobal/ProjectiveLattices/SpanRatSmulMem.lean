@@ -14,11 +14,11 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r ρ : ℕ}
 def trBE (n : ℕ) : LinearMap.BilinForm ℚ (Fin n → E) :=
   LinearMap.mk₂ ℚ (fun l x => Algebra.trace ℚ E (∑ i, l i * x i))
     (fun l₁ l₂ x => by
-      rw [← map_add]; congr 1; simp [add_mul, Finset.sum_add_distrib])
+      rw [← map_add (f := _)]; congr 1; simp [add_mul, Finset.sum_add_distrib])
     (fun c l x => by
       rw [← map_smul]; congr 1; simp [Finset.smul_sum])
     (fun l x₁ x₂ => by
-      rw [← map_add]; congr 1; simp [mul_add, Finset.sum_add_distrib])
+      rw [← map_add (f := _)]; congr 1; simp [mul_add, Finset.sum_add_distrib])
     (fun c l x => by
       rw [← map_smul]; congr 1; simp [Finset.smul_sum])
 
@@ -55,7 +55,7 @@ def dualZSubE {n : ℕ} (Xs : Submodule (𝓞 E) (Fin n → E)) : Submodule (�
     obtain ⟨v, hv⟩ := hb x hx
     have h : ∑ i, (a + b) i * x i = ∑ i, a i * x i + ∑ i, b i * x i := by
       simp [add_mul, Finset.sum_add_distrib]
-    exact ⟨u + v, by rw [h, map_add, ← hu, ← hv, Int.cast_add]⟩
+    exact ⟨u + v, by rw [h, map_add (f := _), ← hu, ← hv, Int.cast_add]⟩
   smul_mem' := by
     intro c a ha x hx
     obtain ⟨u, hu⟩ := ha (c • x) (Xs.smul_mem c hx)

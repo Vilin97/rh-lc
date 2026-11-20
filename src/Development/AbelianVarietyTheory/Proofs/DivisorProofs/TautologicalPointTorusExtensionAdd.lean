@@ -59,7 +59,7 @@ theorem tautPt_isAdd : ∀ {o W : Type} [CommRing o] [CommRing W] [IsLocalRing W
   have hkk : k'' = k * k' := by
     refine Units.ext ?_
     rw [Units.val_mul, hk'', hk, hk']
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact prod_zpow_add _ _ _ (hk ▸ k.ne_zero) (hk' ▸ k'.ne_zero)
   have hG : gm (𝟙 (TF (R := V) F).left) y ⊤ (unitOn k'') =
       gm (𝟙 (TF (R := V) F).left) y ⊤ (unitOn k) * gm (𝟙 (TF (R := V) F).left) y ⊤ (unitOn k') := by

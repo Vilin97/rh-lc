@@ -79,7 +79,7 @@ def Ldual : Submodule (𝓞 D.host.E) (VS D).V where
     refine ⟨(Wb X).add_mem ha.1 hb.1, fun y hy => ?_⟩
     obtain ⟨za, hza⟩ := ha.2 y hy
     obtain ⟨zb, hzb⟩ := hb.2 y hy
-    exact ⟨za + zb, by rw [map_add, LinearMap.add_apply, map_add, hza, hzb]; push_cast; ring⟩
+    exact ⟨za + zb, by rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), hza, hzb]; push_cast; ring⟩
   zero_mem' := ⟨(Wb X).zero_mem, fun y _ => ⟨0, by simp⟩⟩
   smul_mem' c x hx := by
     refine ⟨?_, fun y hy => ?_⟩
@@ -131,7 +131,7 @@ theorem Lsharp {z : (VS D).V} (hz : z ∈ Wb X) (hd : ∀ y ∈ X.Lb, ∃ o : �
     obtain ⟨o, ho⟩ := hd l hl
     have e : (VS D).hT (∑ c, α c • X.eX c + l + ∑ c, β c • X.fY c) z = (VS D).hT l z := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp [map_add, map_sum, LinearMap.map_smulₛₗ₂, (hzW _).1, (hzW _).2]
+        simp [map_add (f := _), map_sum, LinearMap.map_smulₛₗ₂, (hzW _).1, (hzW _).2]
     rw [Submodule.mem_one]
     exact ⟨o, by rw [e]; exact ho⟩
   obtain ⟨α, β, l, hl, hzeq⟩ := decomp X hzL
@@ -141,14 +141,14 @@ theorem Lsharp {z : (VS D).V} (hz : z ∈ Wb X) (hd : ∀ y ∈ X.Lb, ∃ o : �
     have := (hzW c).2
     rw [hzeq] at this
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [map_add, map_sum, map_smul, Formalism.L2.SG.Pf.NcReal.JX.NOf.Ex.h_fe, X.ff, (hlW c).2, Finset.sum_ite_eq] at this
+      simp [map_add (f := _), map_sum, map_smul, Formalism.L2.SG.Pf.NcReal.JX.NOf.Ex.h_fe, X.ff, (hlW c).2, Finset.sum_ite_eq] at this
     exact this
   have hβ : ∀ c, β c = 0 := by
     intro c
     have := (hzW c).1
     rw [hzeq] at this
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [map_add, map_sum, map_smul, X.ef, X.ee, (hlW c).1, Finset.sum_ite_eq] at this
+      simp [map_add (f := _), map_sum, map_smul, X.ef, X.ee, (hlW c).1, Finset.sum_ite_eq] at this
     exact this
   rw [hzeq]
   simp only [hα, hβ, zero_smul, Finset.sum_const_zero, zero_add, add_zero]

@@ -33,7 +33,7 @@ def vPr (f : Fin D.R.rS → (VS D).V) (v : (VS D).V) : (VS D).V :=
 
 theorem vPr_add (f : Fin D.R.rS → (VS D).V) (v w : (VS D).V) :
     vPr D F0 f (v + w) = vPr D F0 f v + vPr D F0 f w := by
-  simp only [vPr, map_add, add_smul, Finset.sum_add_distrib]
+  simp only [vPr, map_add (f := _), add_smul, Finset.sum_add_distrib]
   abel
 
 theorem vPr_smul (f : Fin D.R.rS → (VS D).V) (c : D.host.E) (v : (VS D).V) :
@@ -69,10 +69,10 @@ def lamC (f : Fin D.R.rS → (VS D).V) (M : Submodule (𝓞 D.host.E) (WbQ D F0)
   add_mem' := by
     rintro v v' ⟨h1, ⟨w, hw, hwM⟩, h3⟩ ⟨h1', ⟨w', hw', hwM'⟩, h3'⟩
     refine ⟨fun a => ?_, ⟨w + w', ?_, ?_⟩, fun a => ?_⟩
-    · rw [map_add, star_add]; exact fi_add D (h1 a) (h1' a)
+    · rw [map_add (f := _), star_add]; exact fi_add D (h1 a) (h1' a)
     · rw [Submodule.coe_add, hw, hw', vPr_add]
     · rw [Submodule.Quotient.mk_add]; exact M.add_mem hwM hwM'
-    · rw [vPr_add, map_add]; exact fi_add D (h3 a) (h3' a)
+    · rw [vPr_add, map_add (f := _)]; exact fi_add D (h3 a) (h3' a)
   zero_mem' := by
     refine ⟨fun a => ?_, ⟨0, ?_, ?_⟩, fun a => ?_⟩
     · simp only [map_zero, star_zero]; exact fi_zero D _

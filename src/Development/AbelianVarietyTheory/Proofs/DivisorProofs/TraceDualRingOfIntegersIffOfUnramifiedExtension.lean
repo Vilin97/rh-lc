@@ -45,7 +45,7 @@ theorem traceDual_ringOfIntegers_iff_of_unramified : ∀ (F E : Type) [Field F] 
     { carrier := {x | IsIntegral ℤ (algebraMap (𝓞 E) E x * e)}
       add_mem' := by
         intro a b ha hb
-        simp only [Set.mem_setOf_eq, map_add, add_mul] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _), add_mul] at *
         exact ha.add hb
       zero_mem' := by
         simp only [Set.mem_setOf_eq, map_zero, zero_mul]

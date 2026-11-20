@@ -54,7 +54,7 @@ private lemma entry_smul_eigenfunction_lemma_6 {k r : ℕ} {Wp Wq : Type} [Norme
     intro g hg
     have h1 := (hmul _ (hsm c)).2 a b v g hg
     have h2 := (hmul _ (hsm c)).1 ((E a b) v) g hg
-    rw [Module.End.mul_apply, LinearMap.add_apply, Module.End.mul_apply, map_add, Pi.add_apply, h1, h2, hEH]
+    rw [Module.End.mul_apply, LinearMap.add_apply, Module.End.mul_apply, map_add (f := _), Pi.add_apply, h1, h2, hEH]
     split_ifs with hbc
     · subst hbc
       have h3 := (hmul _ (hsm a)).1 v g hg

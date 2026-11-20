@@ -33,7 +33,7 @@ theorem uW_mul_k (w : InfinitePlace F) (z z' : ℂ) : d.uW w (z * z') = d.uW w z
 theorem uW_one_k (w : InfinitePlace F) : d.uW w 1 = 1 := by
   apply d.ae_ext
   · intro w'
-    rw [_root_.PositivityTheory.SiegelWeilFormula.KC.uW_eq_k, map_add, (_root_.PositivityTheory.SiegelWeilFormula.KC.sec_spec_k d).2.1, Place.piInf_finOne, map_one]
+    rw [_root_.PositivityTheory.SiegelWeilFormula.KC.uW_eq_k, map_add (f := _), (_root_.PositivityTheory.SiegelWeilFormula.KC.sec_spec_k d).2.1, Place.piInf_finOne, map_one]
     simp [Function.update_apply]
   · rw [_root_.PositivityTheory.SiegelWeilFormula.KC.uW_eq_k, smul_add, (_root_.PositivityTheory.SiegelWeilFormula.KC.sec_spec_k d).2.2.1, smul_smul, finOne_mul_self, zero_add]
 theorem uW_isUnit_k (w : InfinitePlace F) {z : ℂ} (hz : z ≠ 0) : IsUnit (d.uW w z) := by
@@ -86,7 +86,7 @@ theorem _root_.PositivityTheory.SiegelWeilFormula.SD_k.chiW_pos_pf (w : Infinite
   have hc : cA σ (d.uW w t) = d.uW w t := by
     apply d.ae_ext
     · intro w'
-      rw [Place.piInf_cA d.cm, _root_.PositivityTheory.SiegelWeilFormula.KC.uW_eq_k, map_add, (_root_.PositivityTheory.SiegelWeilFormula.KC.sec_spec_k d).2.1, Place.piInf_finOne, add_zero]
+      rw [Place.piInf_cA d.cm, _root_.PositivityTheory.SiegelWeilFormula.KC.uW_eq_k, map_add (f := _), (_root_.PositivityTheory.SiegelWeilFormula.KC.sec_spec_k d).2.1, Place.piInf_finOne, add_zero]
       by_cases h : w' = w
       · subst h; simp
       · simp [Function.update_apply, h]

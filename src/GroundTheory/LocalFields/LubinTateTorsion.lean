@@ -123,7 +123,7 @@ omit [ValuativeRel L] [ValuativeExtension K L] in
 theorem aeval_ltPoly (z : L) :
     aeval z ((ltPoly π).map (algebraMap 𝒪[K] K)) =
       algebraMap K L (π : K) * z + z ^ Nat.card 𝓀[K] := by
-  simp only [ltPoly, Polynomial.map_add, Polynomial.map_mul, map_C, Polynomial.map_X,
+  simp only [ltPoly, Polynomial.map_add (f := _), Polynomial.map_mul, map_C, Polynomial.map_X,
     Polynomial.map_pow, map_add, map_mul, aeval_C, aeval_X, map_pow]
   rfl
 
@@ -162,7 +162,7 @@ omit [ValuativeRel L] [ValuativeExtension K L] in
 theorem aeval_derivative_ltPoly (z : L) :
     aeval z (derivative ((ltPoly π).map (algebraMap 𝒪[K] K))) =
       algebraMap K L (π : K) + (Nat.card 𝓀[K] : L) * z ^ (Nat.card 𝓀[K] - 1) := by
-  simp only [ltPoly, Polynomial.map_add, Polynomial.map_mul, map_C, Polynomial.map_X,
+  simp only [ltPoly, Polynomial.map_add (f := _), Polynomial.map_mul, map_C, Polynomial.map_X,
     Polynomial.map_pow, derivative_C_mul_X, derivative_X_pow, map_add, aeval_C,
     map_mul, map_pow, aeval_X, map_natCast]
   rfl
@@ -462,7 +462,7 @@ theorem map_residue_ltEisenstein (hπ : Irreducible π) (n : ℕ) :
       X ^ ((Nat.card 𝓀[K] - 1) * Nat.card 𝓀[K] ^ n) := by
   have hres : IsLocalRing.residue 𝒪[K] π = 0 :=
     (IsLocalRing.residue_eq_zero_iff _).mpr ((IsLocalRing.mem_maximalIdeal _).mpr hπ.not_isUnit)
-  rw [ltEisenstein, Polynomial.map_add, map_C, hres, C_0, zero_add, Polynomial.map_pow,
+  rw [ltEisenstein, Polynomial.map_add (f := _), map_C, hres, C_0, zero_add, Polynomial.map_pow,
     map_residue_ltPolyIter π hπ, ← pow_mul, mul_comm]
 
 theorem isEisensteinAt_ltEisenstein (hπ : Irreducible π) (n : ℕ) :
@@ -500,7 +500,7 @@ theorem aeval_ltEisenstein_eq_zero {L : Type*} [Field L] [Algebra K L] {n : ℕ}
     rw [mul_add, ← pow_succ', Nat.sub_add_cancel hq.le, mul_comm]
     exact h1
   have h3 := (mul_eq_zero.mp h2).resolve_left h0
-  rw [ltEisenstein, Polynomial.map_add, map_C, Polynomial.map_pow, map_add, aeval_C, map_pow]
+  rw [ltEisenstein, Polynomial.map_add (f := _), map_C, Polynomial.map_pow, map_add (f := _), aeval_C, map_pow]
   exact h3
 
 end Eisenstein

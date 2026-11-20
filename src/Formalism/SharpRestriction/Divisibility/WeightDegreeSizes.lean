@@ -792,7 +792,7 @@ theorem pair_core (D : D7) (w : D.what₂.places.Pl) {V : Type} [AddCommGroup V]
   | add x y _ _ hx hy =>
     obtain ⟨a, ha, ha'⟩ := hx
     obtain ⟨b, hb, hb'⟩ := hy
-    exact ⟨a + b, by rw [map_add, map_add, ha, hb], pair_add_ge D w ha' hb'⟩
+    exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb], pair_add_ge D w ha' hb'⟩
   | smul r x _ hx =>
     obtain ⟨a, ha, ha'⟩ := hx
     refine ⟨(r : D.what₂.LL) * a, ?_, pair_smul_ge D w r.2 ha'⟩
@@ -2377,7 +2377,7 @@ def MtDualZ (μ : D.what₂.Tup) (j : ℕ) : Submodule (𝓞 D.what₂.LL) (D.wh
     refine ⟨(Idx.TjV D μ j).add_mem hx hy, fun a ha => ?_⟩
     obtain ⟨c, hc⟩ := h1 a ha
     obtain ⟨d, hd⟩ := h2 a ha
-    exact ⟨c + d, by rw [map_add, inner_add_right, hc, hd]; simp⟩
+    exact ⟨c + d, by rw [map_add (f := _), inner_add_right, hc, hd]; simp⟩
   zero_mem' := ⟨(Idx.TjV D μ j).zero_mem, fun a _ => ⟨0, by simp⟩⟩
   smul_mem' := by
     rintro s x ⟨hx, h1⟩

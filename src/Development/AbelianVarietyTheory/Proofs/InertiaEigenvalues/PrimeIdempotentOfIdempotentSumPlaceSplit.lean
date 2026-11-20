@@ -54,7 +54,7 @@ theorem branch : ∀ (D : D7) (P : Pl D.host.E) (e f ea : AE D) (S : Finset (Pl 
   have hinf : infPart D f = 0 := hf ▸ (place_comp (comp_toAd D) hε).1
   rcases h1 with ⟨h1, h2⟩ | ⟨rfl, -⟩
   · refine ⟨h1, h2, ?_, hinf, fun Q hQ => conjPrime_ne hS hP hQ⟩
-    rw [h2, RingHom.map_add, Formalism.L2.Theta.cA_cA, add_comm]
+    rw [h2, RingHom.map_add (f := _), Formalism.L2.Theta.cA_cA, add_comm]
   · exfalso
     have h2 := (place_comp (comp_toAd D) hε).2.1 (cP P) (under_cP P)
     rw [← hf, hd.2.2 _ (conjPrime_ne hS hP hP)] at h2

@@ -106,7 +106,7 @@ theorem exists_den (T : Matrix κ ι K →ₗ[ℚ] Matrix κ ι K) :
     · rw [e, Int.cast_natCast] at h; exact h
     · rw [e, Int.cast_neg, Int.cast_natCast, neg_mul] at h; simpa using h.neg
   | zero => rw [map_zero, smul_zero]; exact fun _ _ => isIntegral_zero
-  | add x y _ _ hx hy => rw [map_add, smul_add]; exact intM_add hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact intM_add hx hy
   | neg x _ hx => rw [map_neg, smul_neg]; exact fun k i => (hx k i).neg
 
 theorem map_nat_smul (T : Matrix κ ι K →ₗ[ℚ] Matrix κ ι K) (M : ℕ) (y : Matrix κ ι K) :
@@ -225,7 +225,7 @@ theorem haar_comp (T : Matrix κ ι K ≃ₗ[ℚ] Matrix κ ι K) (φ : Matrix �
       push_cast; ring
     · have := h.2 (T x) _ (hT2 y hy)
       rw [smul_smul, ← Nat.cast_mul] at this
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [← this]
       congr 2
       exact map_nat_smul T.toLinearMap _ _

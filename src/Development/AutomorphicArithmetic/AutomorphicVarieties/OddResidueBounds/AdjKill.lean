@@ -10,7 +10,7 @@ theorem UpperTheory.V.Odd.adjKill :
   have hrel : π.asAlgebraHom (rel A c ε) x = 0 := by
     simp [rel, hx, Int.cast_smul_eq_zsmul]
   have key := congrArg (fun w => π.asAlgebraHom w x) hab
-  simp only [map_add, map_mul, LinearMap.add_apply, Module.End.mul_apply, hrel, hz, map_zero,
+  simp only [map_add (f := _), map_mul, LinearMap.add_apply, Module.End.mul_apply, hrel, hz, map_zero,
     add_zero] at key
   rw [AlgHom.commutes, Module.algebraMap_end_apply] at key
   exact key.symm

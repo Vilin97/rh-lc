@@ -69,7 +69,7 @@ theorem approx (M : ℤ) (hM : M ≠ 0) (t : Fv F v ⊗[F] E) :
     obtain ⟨e1, w1, hw1, he1⟩ := h1
     obtain ⟨e2, w2, hw2, he2⟩ := h2
     refine ⟨e1 + e2, w1 + w2, Submodule.add_mem _ hw1 hw2, ?_⟩
-    rw [map_add]; linear_combination he1 + he2
+    rw [map_add (f := _)]; linear_combination he1 + he2
 
 def trV : Fv F v ⊗[F] E →ₗ[Fv F v] Fv F v :=
   (Algebra.TensorProduct.rid F (Fv F v) (Fv F v)).toLinearMap ∘ₗ LinearMap.baseChange (Fv F v) (Algebra.trace F E)
@@ -90,7 +90,7 @@ theorem trV_mem {x : Fv F v ⊗[F] E} (hx : x ∈ OEv (E := E) v) : trV v x ∈ 
       show algebraMap F (Fv F v) (r : F) = ((r : F) : Fv F v) from rfl, this, HeightOneSpectrum.valuation_of_algebraMap]
     exact v.intValuation_le_one r
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
   | smul c x _ h =>
     change trV v ((c : Fv F v) • x) ∈ _
     rw [map_smul, smul_eq_mul]; exact mul_mem c.2 h

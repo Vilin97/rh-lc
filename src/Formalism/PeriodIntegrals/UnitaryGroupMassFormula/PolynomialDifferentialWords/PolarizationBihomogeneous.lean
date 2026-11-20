@@ -42,10 +42,10 @@ theorem iwh_X_pderiv {σ : Type} {K : Type} [Field K] (w : σ → ℕ) (i j : σ
       intro v
       simp [Finsupp.weight_apply, Finsupp.sum_single_index]
     have h1 : weight w (m - Finsupp.single j 1) + w j = n := by
-      rw [← hs j, ← map_add, tsub_add_cancel_of_le hle, hwm]
+      rw [← hs j, ← map_add (f := _), tsub_add_cancel_of_le hle, hwm]
     rw [X, monomial_mul, one_mul]
     apply isWeightedHomogeneous_monomial
-    rw [map_add, hs i, hij, add_comm, h1]
+    rw [map_add (f := _), hs i, hij, add_comm, h1]
 
 theorem polarizationBihomogeneous : RBihom := by
   intro K _ _ k d a b f hf
@@ -81,7 +81,7 @@ theorem coeff_X_pderiv_self {σ : Type} {K : Type} [Field K] (i : σ) (f : MvPol
         rfl
       · simp
   next p q hp hq =>
-    simp only [map_add, mul_add, MvPolynomial.coeff_add, hp, hq, add_mul]
+    simp only [map_add (f := _), mul_add, MvPolynomial.coeff_add, hp, hq, add_mul]
 
 theorem weightOfEigenvector : WtOfEig := by
   intro K _ _ k a w f h m hm
@@ -124,7 +124,7 @@ theorem comp_mul_zero {σ : Type} {K : Type} [Field K] (w : σ → ℤ) {φ : Mv
     · have hx0 := hφ h0
       have hsum := by simpa using hx
       have hw : weight w x.2 = n := by
-        rw [← hd, ← hsum, map_add, hx0, zero_add]
+        rw [← hd, ← hsum, map_add (f := _), hx0, zero_add]
       rw [if_pos hw]
   · symm
     refine Finset.sum_eq_zero fun x hx => ?_
@@ -134,7 +134,7 @@ theorem comp_mul_zero {σ : Type} {K : Type} [Field K] (w : σ → ℤ) {φ : Mv
     · have hx0 := hφ h0
       have hsum := by simpa using hx
       have hw : weight w x.2 ≠ n := by
-        rw [← hsum, map_add, hx0, zero_add] at hd
+        rw [← hsum, map_add (f := _), hx0, zero_add] at hd
         exact hd
       rw [if_neg hw, mul_zero]
 

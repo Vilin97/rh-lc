@@ -60,7 +60,7 @@ theorem eventually_mem_intLoc_iff_repr {d : ℕ} (b : Module.Basis (Fin d) F E) 
     | zero => intro k; simp
     | add z w _ _ hz hw =>
       intro k
-      rw [map_add, Finsupp.add_apply]
+      rw [map_add (f := _), Finsupp.add_apply]
       exact add_mem (hz k) (hw k)
     | neg z _ hz =>
       intro k

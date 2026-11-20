@@ -102,7 +102,7 @@ theorem exists_model_of_N_ne_zero : ∀ (E : Type) [Field E] [NumberField E] [Is
   intro E _ _ _ w hw K e hB n Q B u x hF hn hσx _ hN
   obtain ⟨L, hlat, -, hsd⟩ := X_nonempty_of_N_ne_zero B x hN
   obtain ⟨b, hb⟩ := exists_orthonormal_of_selfDual K B.A (B.herm x)
-    (fun y y' z => by unfold GlobalTheory.UnitLemma.InvAlg.herm; rw [mul_add, add_mul, map_add])
+    (fun y y' z => by unfold GlobalTheory.UnitLemma.InvAlg.herm; rw [mul_add, add_mul, map_add (f := _)])
     (fun a y z => GlobalTheory.UnitLemma.Basic.herm_smul_left B x y z a)
     (fun y z => GlobalTheory.UnitLemma.Basic.herm_symm B x hσx y z) L hlat.1 hlat.2 hsd
   have hd : Module.finrank K.E B.A = n := hF.2.2.1.trans hn

@@ -79,7 +79,7 @@ theorem weight_mapDomain (d : (Σ k, ι₁ k) →₀ ℕ) :
   induction d using Finsupp.induction_linear with
   | zero => funext k; simp
   | add a b ha hb =>
-    rw [Finsupp.mapDomain_add, map_add, map_add, ha, hb]
+    rw [Finsupp.mapDomain_add, map_add (f := _), map_add (f := _), ha, hb]
     rfl
   | single v c =>
     rw [Finsupp.mapDomain_single, Finsupp.weight_single, Finsupp.weight_single]

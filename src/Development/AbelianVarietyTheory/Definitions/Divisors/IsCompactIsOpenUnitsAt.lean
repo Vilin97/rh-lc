@@ -137,7 +137,7 @@ theorem compFin_smul (v : Pl F) (a : AF F) (z : AE F E) : compFin F E v (a • z
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul b x => exact congrArg (· ⊗ₜ[F] x) (map_mul (evFin F v) a b)
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 omit [NumberField E] in
 
@@ -146,7 +146,7 @@ theorem compInf_smul (w : InfinitePlace F) (a : AF F) (z : AE F E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul b x => exact congrArg (· ⊗ₜ[F] x) (map_mul (evInf F w) a b)
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem at_evFin_iff {v : Pl F} {z : AE F E} : At (evFin F v) z ↔
     (∀ w, compInf F E w z = 0) ∧ ∀ w, w ≠ v → compFin F E w z = 0 := by
@@ -422,7 +422,7 @@ theorem exists_rest_inf : ∃ r : ((κ → AF F) → ℂ), r 0 ≠ 0 ∧ ∀ f :
   · have h : ∀ w i, evFin F w (z i) = 0 := fun w i => by
       rw [← partInf_of_at hz, partInf, Pi.smul_apply, smul_eq_mul, map_mul,
         show evFin F w (realAd F 1) = 0 from map_zero (evalV F w), zero_mul]
-    simp only [Pi.add_apply, map_add, h, add_zero]
+    simp only [Pi.add_apply, map_add (f := _), h, add_zero]
   · exact GlobalTheory.TensUniq.pure_mem_schA f φ (fun w => GlobalTheory.StdVacuum.indicator_mem_SB w) (Eventually.of_forall fun _ => rfl)
 
 theorem eq_of_tens_inf {r : ((κ → AF F) → ℂ)} (h0 : r 0 ≠ 0) (hr : ∀ x z, At (evI F) z → r (x + z) = r x)
@@ -454,7 +454,7 @@ theorem locOp_lin {v : Pl F} {T : ((κ → AF F) → ℂ) → ((κ → AF F) →
   have hs : a • φ + b • φ' ∈ SB (κ → Fv F v) := add_mem ((SB _).smul_mem a hφ) ((SB _).smul_mem b hφ')
   obtain ⟨r, h0, hr⟩ := GlobalTheory.RestWitness.exists_rest κ v
   have key : tens (evFin F v) (locOp v T (a • φ + b • φ')) r = tens (evFin F v) (a • locOp v T φ + b • locOp v T φ') r := by
-    rw [← acts_locOp (hex _ hs) r (hr _ hs), tens_lin, tens_lin, hT.map_add, hT.map_smul, hT.map_smul,
+    rw [← acts_locOp (hex _ hs) r (hr _ hs), tens_lin, tens_lin, hT.map_add (f := _), hT.map_smul, hT.map_smul,
       acts_locOp (hex _ hφ) r (hr _ hφ), acts_locOp (hex _ hφ') r (hr _ hφ')]
   funext t
   have hz : At (evFin F v) (fun i => GlobalTheory.LatVac.liftV v (t i)) := fun u hu => funext fun i => GlobalTheory.LatVac.at_liftV v _ u hu
@@ -470,7 +470,7 @@ theorem locOpInf_lin {T : ((κ → AF F) → ℂ) → ((κ → AF F) → ℂ)} (
   refine DFunLike.coe_injective (eq_of_tens_inf h0 (hr f).1 ?_)
   rw [← acts_locOpInf (hex _) r (hr _)]
   change T (tens (evI F) (a • ⇑f + b • ⇑f') r) = tens (evI F) (a • ⇑(locOpInf T f) + b • ⇑(locOpInf T f')) r
-  rw [tens_lin, tens_lin, hT.map_add, hT.map_smul, hT.map_smul, acts_locOpInf (hex _) r (hr _),
+  rw [tens_lin, tens_lin, hT.map_add (f := _), hT.map_smul, hT.map_smul, acts_locOpInf (hex _) r (hr _),
     acts_locOpInf (hex _) r (hr _)]
 
 theorem locOp_of_fix {v : Pl F} {T : ((κ → AF F) → ℂ) → ((κ → AF F) → ℂ)} (hT : ∀ Φ ∈ schA F κ, T Φ = Φ) {φ : (κ → Fv F v) → ℂ}
@@ -701,7 +701,7 @@ example {κ : Type} [Fintype κ] (v : Pl F) (t : κ → Fv F v) {φ : (κ → Fv
   refine locOp_eq hφ ⟨hφ.1.comp_continuous (continuous_add_const t),
     hφ.2.comp_homeomorph (Homeomorph.addRight t)⟩ fun r hr => funext fun x => ?_
   have hz : At (evFin F v) (fun i => GlobalTheory.LatVac.liftV v (t i)) := fun u hu => funext fun i => GlobalTheory.LatVac.at_liftV v _ u hu
-  simp only [tens, hr.1 x _ hz, Pi.add_apply, map_add, GlobalTheory.LatVac.evFin_liftV]
+  simp only [tens, hr.1 x _ hz, Pi.add_apply, map_add (f := _), GlobalTheory.LatVac.evFin_liftV]
   rfl
 
 example {b a' : ℕ} (B : Base F E) (G : Geo σ (b + 2) a') (H : Plane E (b + 2) b) (H' : Plane E (b + 2 + a') (b + a'))

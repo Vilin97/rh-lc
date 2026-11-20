@@ -199,7 +199,7 @@ def dNCLM : (Fin N → ℂ) →L[ℝ] ((Fin N → ℂ) →L[ℝ] ℝ) :=
         ext v
         simp only [dNormSqSum_apply, ContinuousLinearMap.add_apply, ← Finset.sum_add_distrib]
         refine Finset.sum_congr rfl fun m _ => ?_
-        simp only [Pi.add_apply, map_add, mul_add, Complex.add_re]
+        simp only [Pi.add_apply, map_add (f := _), mul_add, Complex.add_re]
       map_smul' := fun c a => by
         ext v
         simp only [dNormSqSum_apply, ContinuousLinearMap.smul_apply, RingHom.id_apply,

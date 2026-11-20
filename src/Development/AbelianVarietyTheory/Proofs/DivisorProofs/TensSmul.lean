@@ -124,8 +124,8 @@ theorem exists_pairing (hK : GlobalTheory.ThK.KP) (hcm : IsCMExt F E σ) (ψ : A
     intro u hu Φ hΦ Ψ hΨ
     simp only [hΛ, thPair, ← integral_add (intg u hu Φ hΦ) (intg u hu Ψ hΨ)]
     refine integral_congr_ae (Eventually.of_forall fun h => ?_)
-    simp only [map_add]
-    rw [thetaSum_add F (pres _ _ hΦ) (pres _ _ hΨ), map_add, mul_add]
+    simp only [map_add (f := _)]
+    rw [thetaSum_add F (pres _ _ hΦ) (pres _ _ hΨ), map_add (f := _), mul_add]
   have ΛsmulΦ : ∀ (c : ℂ) u Φ, Λ u (c • Φ) = (starRingEnd ℂ) c * Λ u Φ := by
     intro c u Φ
     simp only [hΛ, thPair, ← integral_const_mul]
@@ -173,7 +173,7 @@ theorem exists_pairing (hK : GlobalTheory.ThK.KP) (hcm : IsCMExt F E σ) (ψ : A
     fun Ψ φ hφ e => hbij.injOn (hkapSB Ψ) hφ ((hkap Ψ).trans e.symm)
   have kapAdd : ∀ Ψ₁ Ψ₂, kap (Ψ₁ + Ψ₂) = kap Ψ₁ + kap Ψ₂ := fun Ψ₁ Ψ₂ =>
     kapEq _ _ (add_mem (hkapSB Ψ₁) (hkapSB Ψ₂)) (by
-      rw [map_add, hkap, hkap]; funext X; simp)
+      rw [map_add (f := _), hkap, hkap]; funext X; simp)
   have kapSmul : ∀ (c : ℂ) Ψ, kap (c • Ψ) = (starRingEnd ℂ) c • kap Ψ := fun c Ψ =>
     kapEq _ _ (Submodule.smul_mem _ _ (hkapSB Ψ)) (by
       rw [map_smul, hkap]; funext X; simp)

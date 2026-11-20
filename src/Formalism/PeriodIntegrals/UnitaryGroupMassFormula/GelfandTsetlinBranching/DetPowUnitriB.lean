@@ -28,7 +28,7 @@ theorem FiltB_mul {σ : Type*} (ψ : σ → ℕ) {d d' : ℕ} {p q : MvPolynomia
   classical
   intro e he
   obtain ⟨a, ha, b, hb, rfl⟩ := Finset.mem_add.mp (support_mul p q he)
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Nat.add_le_add (hp a ha) (hq b hb)
 
 theorem X_mem_FiltB {σ : Type*} (ψ : σ → ℕ) (v : σ) : (X v : MvPolynomial σ ℂ) ∈ FiltB ψ (ψ v) := by

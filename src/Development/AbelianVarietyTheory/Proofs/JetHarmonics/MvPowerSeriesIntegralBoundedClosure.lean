@@ -17,7 +17,7 @@ theorem Le.nonneg {c : ℝ} {S : MvPowerSeries σ K} (h : Le c S) : 0 ≤ c :=
 
 theorem Le.add {c d : ℝ} {S T : MvPowerSeries σ K} (h : Le c S) (h' : Le d T) :
     Le (max c d) (S + T) := fun ν => by
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max (h ν) (h' ν))
 
 theorem Le.sub {c d : ℝ} {S T : MvPowerSeries σ K} (h : Le c S) (h' : Le d T) :
@@ -215,7 +215,7 @@ variable {K : Type} [NormedField K] [IsUltrametricDist K] {σ : Type} in
 private lemma le_add' {c : ℝ} {S T : MvPowerSeries σ K}
     (hS : _root_.GlobalTheory.BddAlg.Le c S) (hT : _root_.GlobalTheory.BddAlg.Le c T) :
     _root_.GlobalTheory.BddAlg.Le c (S + T) := fun ν => by
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hS ν) (hT ν))
 
 variable {K : Type} [NormedField K] [IsUltrametricDist K] {σ : Type} in

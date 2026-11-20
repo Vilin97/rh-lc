@@ -53,7 +53,7 @@ theorem frobVar_sub {ι : Type} {p : ℕ} (hp : p ≠ 0) (f g : MvPowerSeries ι
 theorem frobVar_add {ι : Type} {p : ℕ} (hp : p ≠ 0) (f g : MvPowerSeries ι K) :
     frobVar p (f + g) = frobVar p f + frobVar p g := by
   unfold frobVar
-  rw [← MvPowerSeries.coe_substAlgHom (hasSubst_frob (K := K) (ι := ι) hp), map_add]
+  rw [← MvPowerSeries.coe_substAlgHom (hasSubst_frob (K := K) (ι := ι) hp), map_add (f := _)]
 
 theorem frobVar_X {ι : Type} {p : ℕ} (hp : p ≠ 0) (i : ι) :
     frobVar p (MvPowerSeries.X i : MvPowerSeries ι K) = MvPowerSeries.X i ^ p := by

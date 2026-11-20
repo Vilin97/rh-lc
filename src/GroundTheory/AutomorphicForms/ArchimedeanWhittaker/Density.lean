@@ -287,7 +287,7 @@ theorem integrated_add [MeasurableSpace G] [BorelSpace G] {μ : Measure G}
   have := secondCountableTopology_subgroup_units G
   have hi : ∀ z : E, Integrable (fun g => f g • π g z) μ := fun z =>
     ((hf.continuous h).smul (π.continuous_orbit z)).integrable_of_hasCompactSupport hf.2.smul_right
-  simp only [BanachRep.integrated, map_add, smul_add]
+  simp only [BanachRep.integrated, map_add (f := _), smul_add]
   exact integral_add (hi x) (hi y)
 
 theorem integrated_smul [MeasurableSpace G] [BorelSpace G] {μ : Measure G}

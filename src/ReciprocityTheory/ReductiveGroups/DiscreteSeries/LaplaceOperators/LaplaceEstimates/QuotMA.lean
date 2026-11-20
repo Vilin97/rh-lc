@@ -46,7 +46,7 @@ theorem exists_lin {Y : Type*} [AddCommGroup Y] [Module ℂ Y] (ε : Fin n → B
       map_add' := fun f g => by
         apply Subtype.ext
         simp only [Submodule.coe_add]
-        rw [map_add, Submodule.coe_add, map_add]
+        rw [map_add (f := _), Submodule.coe_add, map_add (f := _)]
         exact toL2_add_smooth ε (hL2 f) (hL2 g)
       map_smul' := fun c f => by
         apply Subtype.ext
@@ -73,7 +73,7 @@ def tMapDL (σ : Mat k r → (H →L[ℂ] H)) (x₁ : Fin (2 * r + k + 1) → �
   toFun f := tMapD σ x₁ x₀ w (fun c => ((f c : D) : H))
   map_add' f g := by
     funext x
-    simp only [tMapD, coefX, Pi.add_apply, Submodule.coe_add, map_add, inner_add_right, mul_add,
+    simp only [tMapD, coefX, Pi.add_apply, Submodule.coe_add, map_add (f := _), inner_add_right, mul_add,
       Finset.sum_add_distrib]
   map_smul' c f := by
     funext x

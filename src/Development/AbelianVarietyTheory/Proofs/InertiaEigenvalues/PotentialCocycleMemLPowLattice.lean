@@ -19,7 +19,7 @@ theorem TWincl_comp_toB {l : ℕ} [Fact l.Prime] {O K : Type} [CommRing O] [Alge
     TWincl (toOB l O) T (TWincl (toOCr l O) T z) = TWincl (toB l O) T z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul r x => rfl
 
 theorem TWincl_smul' {O R R' G Qp LL : Type} [CommRing O] [CommRing R] [CommRing R'] [Algebra O R] [Algebra O R']
@@ -28,7 +28,7 @@ theorem TWincl_smul' {O R R' G Qp LL : Type} [CommRing O] [CommRing R] [CommRing
     TWincl f T (r • z) = f r • TWincl f T z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero, smul_zero]
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul a t => simp [TWincl, TensorProduct.smul_tmul']
 
 end GlobalTheory.BKGal.CocycleInt

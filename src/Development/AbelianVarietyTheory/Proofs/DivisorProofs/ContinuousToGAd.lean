@@ -35,7 +35,7 @@ theorem IsHypPlane.decompA (hσ : ∀ x, σ (σ x) = x) {n n₁ : ℕ} {H : Plan
     rw [← GlobalTheory.UnipCocptForm.incV_mulVec]
     funext i
     have := congrArg (inclR (F := F) (AF F)) (congrFun (hz j) i)
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, Pi.single_apply, apply_ite, map_one,
+    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, Pi.single_apply, apply_ite, map_one,
       map_zero] at this
     simpa only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, Pi.single_apply, incV] using this
   refine ⟨∑ j, v j * inclR (F := F) (AF F) (α j), ∑ j, v j * inclR (F := F) (AF F) (β j), ∑ j, v j • incV F (z j), ?_⟩

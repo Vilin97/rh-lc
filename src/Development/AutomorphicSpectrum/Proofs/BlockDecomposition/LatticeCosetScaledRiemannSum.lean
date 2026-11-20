@@ -55,7 +55,7 @@ theorem tile_pi (H : AddSubgroup O) (j : O →+ A) (hj : Function.Injective j) (
       refine hau i _ ?_
       have h4 := h3 i (Set.mem_univ i)
       have h5 : y i - j (rep (c i) + l i) = (y - (fun i => j (rep (c i))) - p₂) i := by
-        simp only [Pi.sub_apply, map_add, hlj]; abel
+        simp only [Pi.sub_apply, map_add (f := _), hlj]; abel
       show y i - j (rep (c i) + l i) ∈ D₀
       rw [h5]; exact h4
     have hc : ∀ i, q (a i) = c i := fun i => by
@@ -173,7 +173,7 @@ theorem GlobalTheory.CompanionTheory.Equi.lat_sum : ∀ (F : Type) [Field F] [Nu
     congr 1
     funext i
     show _ = θ ε * (algebraMap F (Ainf F) (x0 i) + algebraMap F (Ainf F) (x.1 i - x0 i))
-    rw [← map_add, add_sub_cancel]
+    rw [← map_add (f := _), add_sub_cancel]
   constructor
   · intro ε hε
     have h1 := (e.summable_iff (f := fun l : Λ => φ (T ε ((fun i => algebraMap F (Ainf F) (x0 i)) + l)))).2 (key.1 ε hε)

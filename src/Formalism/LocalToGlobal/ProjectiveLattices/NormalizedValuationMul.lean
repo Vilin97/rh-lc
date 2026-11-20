@@ -146,7 +146,7 @@ lemma SecPt.lift_Jid {r : ↥(Frac0 (xplus X E hM) la G.w)} (hr : r ∈ Jid (xpl
     obtain ⟨i, rfl⟩ := hx
     rw [coe_sfr, h.lift_frac, h.onS i, zero_mul]
   | zero => simp
-  | add x y _ _ hx hy => rw [Subalgebra.coe_add, map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [Subalgebra.coe_add, map_add (f := _), hx, hy, add_zero]
   | smul a x _ hx => rw [smul_eq_mul, Subalgebra.coe_mul, map_mul, hx, mul_zero]
 
 lemma SecPt.lift_JHK {u : WeightFamilies.Wt D j} {z : ↥(HK (xplus X E hM) la G.w u)}
@@ -159,7 +159,7 @@ lemma SecPt.lift_JHK {u : WeightFamilies.Wt D j} {z : ↥(HK (xplus X E hM) la G
     have : h.lift (algebraMap ↥(Frac0 (xplus X E hM) la G.w) (Lw (xplus X E hM) la G.w) r) = 0 := h.lift_Jid hr
     rw [this, zero_mul]
   · intro x y hx hy
-    rw [Submodule.coe_add, map_add, hx, hy, add_zero]
+    rw [Submodule.coe_add, map_add (f := _), hx, hy, add_zero]
 
 end Lift
 

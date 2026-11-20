@@ -40,7 +40,7 @@ theorem clPsi_joinCol {n' c' n c : ℕ} (κ₀ : Sp E n' ≃ₗ[E] Sp E n') (κ 
   intro v
   simp only [joinCol, LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smulRight_apply, LinearEquiv.coe_coe]
   rw [clL_ext_inX, clPsi_restr, clPsi_atNL]
-  simp only [map_add, map_smul]
+  simp only [map_add (f := _), map_smul]
 
 end Join
 

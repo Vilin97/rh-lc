@@ -205,7 +205,7 @@ lemma exists_dual {act : Mat p q →ₗ[ℂ] Module.End ℂ V} (hL : IsKLieAct a
   obtain ⟨s, rfl⟩ := Submodule.mem_span_singleton.1 hx
   have h1 : φ z = 0 := hφQ hz
   have h2 : φ (act (Eab a a) z) = 0 := hφQ (hQst a a (same_refl a) le_rfl z hz)
-  simp only [map_add, map_smul, hv.1, h1, h2, smul_eq_mul]
+  simp only [map_add (f := _), map_smul, hv.1, h1, h2, smul_eq_mul]
   ring
 
 lemma ker_bot {act : Mat p q →ₗ[ℂ] Module.End ℂ V} (hL : IsKLieAct act) {μ : Ix p q → ℚ}
@@ -299,7 +299,7 @@ lemma ctrR_act (a₁ : Mat p q →ₗ[ℂ] Module.End ℂ V₁) (a₂ : Mat p q 
   induction u using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [tens_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]; abel
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]; abel
 
 lemma ctrL_act (a₁ : Mat p q →ₗ[ℂ] Module.End ℂ V₁) (a₂ : Mat p q →ₗ[ℂ] Module.End ℂ V₂)
     (Z : Mat p q) (φ : V₁ →ₗ[ℂ] ℂ) (s : ℂ) (hφ : ∀ y, φ (a₁ Z y) = s * φ y)
@@ -308,7 +308,7 @@ lemma ctrL_act (a₁ : Mat p q →ₗ[ℂ] Module.End ℂ V₁) (a₂ : Mat p q 
   induction u using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [tens_tmul, hφ, mul_smul]
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add]; abel
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]; abel
 
 noncomputable def ctrMap (u : TensorProduct ℂ V₁ V₂) : (V₂ →ₗ[ℂ] ℂ) →ₗ[ℂ] V₁ where
   toFun ψ := ctrR ψ u

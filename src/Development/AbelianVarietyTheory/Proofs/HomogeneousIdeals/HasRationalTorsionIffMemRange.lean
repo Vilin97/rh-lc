@@ -254,7 +254,7 @@ theorem HasRationalTorsion.exists_splitCurve (h : HasRationalTorsion W L 2) :
   obtain ⟨f, hf⟩ := exists_root_quadratic (algebraMap K L ((C₁ • W).a₂ + e))
     (algebraMap K L ((C₁ • W).a₄ + (C₁ • W).a₂ * e + e ^ 2))
   obtain ⟨f, rfl⟩ := h'.mem_range_of_root h₁ h₃ (x := f) (by
-    simp only [map_add, map_mul, map_pow] at hf
+    simp only [map_add (f := _), map_mul, map_pow] at hf
     linear_combination he + (f - algebraMap K L e) * hf)
   have he' : e ^ 3 + (C₁ • W).a₂ * e ^ 2 + (C₁ • W).a₄ * e + (C₁ • W).a₆ = 0 := by
     apply (algebraMap K L).injective

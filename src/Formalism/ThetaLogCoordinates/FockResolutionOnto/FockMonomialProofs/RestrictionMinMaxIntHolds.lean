@@ -99,8 +99,8 @@ theorem eproj_comm (LL : Letters N) (j : ℕ) (ρ : Fin r) (w1 w2 : Fin r → �
   have e2 : LogBallEstimates (Q (HeightBoundSetup F)) = Q (HeightBoundSetup F) := eproj_fix LL j ρ w2 LogBallEstimates ⟨i2, r2, k2⟩ _ hQH
   have e3 : LogBallEstimates (Q (F - HeightBoundSetup F)) = 0 := (Submodule.mem_inf.mp hQK).1
   have hsplit : Q F = Q (HeightBoundSetup F) + Q (F - HeightBoundSetup F) := by
-    rw [← map_add]; simp
-  rw [hsplit, map_add, e2, e3, add_zero]
+    rw [← map_add (f := _)]; simp
+  rw [hsplit, map_add (f := _), e2, e3, add_zero]
 
 private theorem coeff_filt_lemma {σ R : Type*} [CommSemiring R] [DecidableEq σ] (P : (σ →₀ ℕ) → Prop)
     (dec : ∀ m, Decidable (P m)) (x : MvPolynomial σ R) (n : σ →₀ ℕ) :
@@ -214,7 +214,7 @@ private theorem resL_glAct_lemma_3 (LL : Letters N) (j : ℕ) (ρ c d : Fin r) (
     · rfl
   have hsplit : x = resL p (i, ρ) e x + (x - resL p (i, ρ) e x) := by abel
   conv_lhs => rw [hsplit]
-  rw [map_add, map_add, hid _ (glAct_slice_lemma_2 LL j ρ c d hc hd i _ _ hmem),
+  rw [map_add (f := _), map_add (f := _), hid _ (glAct_slice_lemma_2 LL j ρ c d hc hd i _ _ hmem),
     hzero _ (glAct_slice_lemma_2 LL j ρ c d hc hd i _ _ hrest), add_zero]
 
 theorem eproj_res (LL : Letters N) (j : ℕ) (ρ : Fin r) (w : Fin r → ℤ)
@@ -348,7 +348,7 @@ theorem eproj_pol (LL : Letters N) (j : ℕ) (ρ : Fin r) (w : Fin r → ℤ)
     intro c _ d _ x
     have hsplit : x = Pm x + (x - Pm x) := by abel
     conv_lhs => rw [hsplit]
-    rw [map_add, map_add, hid _ (glAct_md_lemma_5 LL j c d True _ (hmemT x)),
+    rw [map_add (f := _), map_add (f := _), hid _ (glAct_md_lemma_5 LL j c d True _ (hmemT x)),
       hzero _ (glAct_md_lemma_5 LL j c d False _ (hrest x)), add_zero]
   have key := eproj_comm LL j ρ w w PE PE hPE hPE Pm hQ (fun x hx => hsupp _ x hx) F hFW
   have hF : Pm F = F := hid F (by

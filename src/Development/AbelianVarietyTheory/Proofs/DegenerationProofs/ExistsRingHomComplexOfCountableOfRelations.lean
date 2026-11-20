@@ -18,7 +18,7 @@ theorem isAlgebraic_int_eval₂Hom_of_isAlgebraic {σ : Type} (y : σ → ℂ)
   | C a =>
     rw [MvPolynomial.eval₂Hom_C]
     simpa using isAlgebraic_algebraMap (R := ℚ) (A := ℂ) (a : ℚ)
-  | add p q hp hq => rw [map_add]; exact hp.add hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add hq
   | mul_X p i hp => rw [map_mul, MvPolynomial.eval₂Hom_X']; exact hp.mul (hy i)
 
 theorem exists_ringHom_complex_of_countable_of_relations :

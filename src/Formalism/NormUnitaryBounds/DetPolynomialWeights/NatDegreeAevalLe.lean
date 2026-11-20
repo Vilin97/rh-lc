@@ -45,7 +45,7 @@ lemma shear_eval {S : Type*} [CommRing S] [Algebra R S] {N n : ℕ} (i j : Fin N
   induction G using MvPolynomial.induction_on with
   | C a =>
     simp [shear, Polynomial.algebraMap_apply]
-  | add p q hp hq => simp only [map_add, Polynomial.eval₂_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), Polynomial.eval₂_add, hp, hq]
   | mul_X p q hp =>
     simp only [map_mul, Polynomial.eval₂_mul, hp]
     congr 1

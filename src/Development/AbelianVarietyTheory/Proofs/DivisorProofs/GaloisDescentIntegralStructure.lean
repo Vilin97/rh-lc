@@ -31,7 +31,7 @@ noncomputable def restrictHom (hinj : Function.Injective (algebraMap W K')) (σ 
   map_one' := hinj (by simp only [algebraMap_restrictFun, map_one])
   map_mul' x y := hinj (by simp only [algebraMap_restrictFun, map_mul])
   map_zero' := hinj (by simp only [algebraMap_restrictFun, map_zero])
-  map_add' x y := hinj (by simp only [algebraMap_restrictFun, map_add])
+  map_add' x y := hinj (by simp only [algebraMap_restrictFun, map_add (f := _)])
 
 theorem algebraMap_restrictHom (hinj : Function.Injective (algebraMap W K')) (σ : K' →+* K')
     (h : ∀ x : W, ∃ y : W, σ (algebraMap W K' x) = algebraMap W K' y) (x : W) :

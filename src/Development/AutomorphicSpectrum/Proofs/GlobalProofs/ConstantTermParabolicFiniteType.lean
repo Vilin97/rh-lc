@@ -154,7 +154,7 @@ theorem block_keeps {c N : ℕ} (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : F
         exact Submodule.subset_span ⟨p, b, hab ▸ hpq, F, hF, rfl⟩
       · exact Submodule.zero_mem _
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem monic_gelf_block {c N : ℕ} (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : Fin N → Fin N → Module.End ℂ W)
@@ -212,7 +212,7 @@ theorem monic_gelf_block {c N : ℕ} (n : Fin c → ℕ) (h : ∑ i, n i = N) (X
       exact isIntegral_algebraMap
     | add x y hx hy ihx ihy =>
       have : (⟨x + y, add_mem hx hy⟩ : Algebra.adjoin ℂ s) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-      rw [this, map_add]
+      rw [this, map_add (f := _)]
       exact ihx.add ihy
     | mul x y hx hy ihx ihy =>
       have : (⟨x * y, mul_mem hx hy⟩ : Algebra.adjoin ℂ s) = ⟨x, hx⟩ * ⟨y, hy⟩ := rfl

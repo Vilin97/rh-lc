@@ -60,7 +60,7 @@ theorem exists_rep (ι : Γ →* Gf) (ρ : Γ →* Module.End ℂ W) (l : Bridge
   let L : G → M.H →ₗ[ℂ] M.H := fun g =>
     { toFun := T (s g)
       map_add' := fun x y => hinj (funext fun h => by
-        rw [map_add, Pi.add_apply, hT, hT, hT, map_add, Pi.add_apply, smul_add])
+        rw [map_add (f := _), Pi.add_apply, hT, hT, hT, map_add (f := _), Pi.add_apply, smul_add])
       map_smul' := fun a x => hinj (funext fun h => by
         rw [map_smul, Pi.smul_apply, hT, hT, map_smul, Pi.smul_apply, smul_comm]; rfl) }
   refine ⟨{ toFun := L, map_one' := ?_, map_mul' := fun g g' => ?_ }, fun g x => hn _ x, key⟩

@@ -90,7 +90,7 @@ theorem exists_theta : ∀ (O : Type) [CommRing O] [IsLocalRing O] (G : Over (Sp
         simp only [e2, eH, Algebra.TensorProduct.lift_tmul, Algebra.TensorProduct.tmul_mul_tmul, _root_.mul_one,
           _root_.one_mul, hl' a, AlgHom.comp_apply, Algebra.ofId_apply, AlgHom.id_apply]
         rw [← Algebra.smul_def, ← Algebra.smul_def, TensorProduct.smul_tmul]
-      | add x x' hx hx' => rw [add_mul, hx, hx', map_add, TensorProduct.tmul_add, mul_add]
+      | add x x' hx hx' => rw [add_mul, hx, hx', map_add (f := _), TensorProduct.tmul_add, mul_add]
     let ψ : H ⊗[O] H →ₐ[O] H ⊗[O] H := Algebra.TensorProduct.lift d iR (fun _ _ => Commute.all _ _)
     have hψL : ψ.comp iL = d := by ext x; simp [ψ, iL]
     have hψR : ψ.comp iR = iR := by ext x; simp [ψ, iR]

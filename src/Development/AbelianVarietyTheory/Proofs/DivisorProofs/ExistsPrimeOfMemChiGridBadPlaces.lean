@@ -191,10 +191,10 @@ def logOne : oneUnits v →* Multiplicative (𝓞 L ⧸ v.asIdeal) where
   map_mul' x y := by
     obtain ⟨a, ha⟩ := ReciprocityTheory.Aut.adic_exists_approx v _ (val_div_le v x.2)
     obtain ⟨b, hb⟩ := ReciprocityTheory.Aut.adic_exists_approx v _ (val_div_le v y.2)
-    rw [resInt_eq v ha, resInt_eq v hb, ← ofAdd_add, ← map_add]
+    rw [resInt_eq v ha, resInt_eq v hb, ← ofAdd_add, ← map_add (f := _)]
     congr 1
     refine resInt_eq v ?_
-    rw [Subgroup.coe_mul, Units.val_mul, map_add]
+    rw [Subgroup.coe_mul, Units.val_mul, map_add (f := _)]
     have h0 : unifC v ≠ 0 := Units.ne_zero _
     have hx : Valued.v (((x : (v.adicCompletion L)ˣ) : v.adicCompletion L) - 1) < 1 := x.2
     have hy := val_div_le v y.2
@@ -290,7 +290,7 @@ theorem exists_wild {p : ℕ} (hp : p.Prime) (hv : (p : 𝓞 L) ∈ v.asIdeal) :
       exact zero_ne_one this
     have ek : ((atFin v (Units.mk0 _ hk0) : (v.adicCompletion L)ˣ) : v.adicCompletion L) = 1 + unifC v := by
       show algebraMap L (v.adicCompletion L) (1 + _) = _
-      rw [map_add, map_one]
+      rw [map_add (f := _), map_one]
       rfl
     have hx' : atFin v (Units.mk0 _ hk0) ∈ oneUnits v := by
       show Valued.v (((atFin v (Units.mk0 _ hk0) : (v.adicCompletion L)ˣ) : v.adicCompletion L) - 1) < 1

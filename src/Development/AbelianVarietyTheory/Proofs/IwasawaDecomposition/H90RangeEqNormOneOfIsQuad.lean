@@ -37,7 +37,7 @@ theorem exists_trace (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hc : c �
     intro g
     rcases GlobalTheory.AdLat.aut_eq_one_or_of_finrank_two c h2 hc g with rfl | rfl
     · rfl
-    · rw [map_add, conj_conj g h2 hc, add_comm]
+    · rw [map_add (f := _), conj_conj g h2 hc, add_comm]
   obtain ⟨t, ht⟩ := this
   exact ⟨t, ht.symm⟩
 
@@ -48,7 +48,7 @@ theorem sigR_sigR (hσ : ∀ x, σ (σ x) = x) (z : AfE F E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x a => rw [sigR_tmul, sigR_tmul, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem exists_half_trace (htr : ∀ x, ∃ t : F, x + σ x = algebraMap F E t) (z : AfE F E) :
     ∃ t : FiniteAdeleRing (𝓞 F) F, z + sigR σ _ z = 2 * (1 : E) ⊗ₜ[F] t := by
@@ -63,7 +63,7 @@ theorem exists_half_trace (htr : ∀ x, ∃ t : F, x + σ x = algebraMap F E t) 
     obtain ⟨t, ht⟩ := hx
     obtain ⟨t', ht'⟩ := hy
     refine ⟨t + t', ?_⟩
-    rw [map_add, TensorProduct.tmul_add, mul_add, ← ht, ← ht']; ring
+    rw [map_add (f := _), TensorProduct.tmul_add, mul_add, ← ht, ← ht']; ring
 
 theorem isUnit_two : IsUnit (2 : AfE F E) := by
   have := (IsUnit.mk0 (2 : E) two_ne_zero).map
@@ -99,7 +99,7 @@ theorem h90_range_eq_normOne_of_isQuad (hσ : ∀ x, σ (σ x) = x) (htr : ∀ x
       (by
         change sigR σ _ (1 ⊗ₜ e) = 1 ⊗ₜ e
         rw [sigR_tmul, map_one]) ht
-      (by simpa only [map_add, map_mul, map_sub, map_one] using hun.map j)
+      (by simpa only [map_add (f := _), map_mul, map_sub, map_one] using hun.map j)
     refine ⟨x, ?_⟩
     change x / conjId σ x = u
     rw [div_eq_iff_eq_mul]
@@ -244,7 +244,7 @@ theorem exists_approx_of_eq_tmul (ι : AfE F L ≃+* FiniteAdeleRing (𝓞 L) L)
   have hr' : (1 : L) ⊗ₜ[F] r ∈ RInt F L := Subring.subset_closure (Or.inr ⟨⟨r, hr⟩, rfl⟩)
   have e : (a : AdeleRing (𝓞 L) L).2 = algebraMap L _ (algebraMap F L k) +
       (N : FiniteAdeleRing (𝓞 L) L) * ι (1 ⊗ₜ[F] r) := by
-    rw [ha, TensorProduct.tmul_add, map_add, TensorProduct.tmul_smul, map_nsmul, nsmul_eq_mul, ← h1,
+    rw [ha, TensorProduct.tmul_add, map_add (f := _), TensorProduct.tmul_smul, map_nsmul, nsmul_eq_mul, ← h1,
       Algebra.algebraMap_eq_smul_one k, Algebra.algebraMap_eq_smul_one k, TensorProduct.smul_tmul]
   have e2 : compAt P a = algebraMap L (P.adicCompletion L) (algebraMap F L k) +
       (N : P.adicCompletion L) * ι (1 ⊗ₜ[F] r) P := by

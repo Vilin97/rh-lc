@@ -40,13 +40,13 @@ theorem hop_pderiv_cr (c : ℝ) (j k : Fin m × Fin n × Bool) (Q : PX m n) :
   obtain ⟨a, i, e⟩ := j
   cases e
   · rw [cr_false, cr_false]
-    simp only [map_add, map_neg, map_smul, Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_C_mul,
+    simp only [map_add (f := _), map_neg, map_smul, Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_C_mul,
       hop_pderiv_comm' k (a, i, false)]
     by_cases h : k = (a, i, true)
     · subst h; simp [Pi.single_apply]; ring
     · simp [Pi.single_apply, h, Ne.symm h]
   · rw [cr_true, cr_true]
-    simp only [map_add, map_neg, map_smul, Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_C_mul,
+    simp only [map_add (f := _), map_neg, map_smul, Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_C_mul,
       hop_pderiv_comm' k (a, i, true)]
     by_cases h : k = (a, i, false)
     · subst h; simp [Pi.single_apply]; ring
@@ -88,7 +88,7 @@ theorem hop_deriv_fock {c : ℝ} (hc : 0 < c) (k : Fin m × Fin n × Bool) (p : 
   induction p using MvPolynomial.induction_on with
   | C r => rw [hop_fock_C, pderiv_C, pderiv_C, fock_zero' hB hc, mul_zero]
   | add p q hp hq =>
-    rw [fock_add'' hB hc, map_add, hp, hq, map_add, fock_add'' hB hc, mul_add]
+    rw [fock_add'' hB hc, map_add (f := _), hp, hq, map_add (f := _), fock_add'' hB hc, mul_add]
   | mul_X p j ih =>
     have hsplit : pderiv k (X j * p) = X j * pderiv k p + (if k = j then p else 0) := by
       rw [Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_mul]

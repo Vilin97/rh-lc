@@ -189,7 +189,7 @@ theorem frob {A X B Z : CommRingCat.{0}} (x : A ⟶ X) (b : A ⟶ B) (u : X ⟶ 
   have hadd : ∀ z w, P z → P w → P (z + w) := by
     rintro z w ⟨n, y, hy⟩ ⟨m, y', hy'⟩
     refine ⟨n + m, y ^ (q ^ m) + y' ^ (q ^ n), ?_⟩
-    rw [map_pow, map_add, frobAdd q _ hq, ← map_pow, ← map_pow, lift z n m y hy, add_comm n m,
+    rw [map_pow, map_add (f := _), frobAdd q _ hq, ← map_pow, ← map_pow, lift z n m y hy, add_comm n m,
       lift w m n y' hy', map_add, map_add]
   have hmul : ∀ z w, P z → P w → P (z * w) := by
     rintro z w ⟨n, y, hy⟩ ⟨m, y', hy'⟩

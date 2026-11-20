@@ -47,7 +47,7 @@ theorem iota_starProjection_Qsp {D : D7} {EE : Type} [NormedAddCommGroup EE] [In
   have hsplit : x = (X.Qsp μ).starProjection x + y := by rw [hy]; abel
   calc X.iota μ ((X.Qsp μ).starProjection x)
       = X.iota μ ((X.Qsp μ).starProjection x) + X.iota μ y := by rw [hiy, add_zero]
-    _ = X.iota μ x := by rw [← map_add, ← hsplit]
+    _ = X.iota μ x := by rw [← map_add (f := _), ← hsplit]
 
 theorem RRset_eq_iota_image : ∀ (D : D7) (EE : Type) [NormedAddCommGroup EE] [InnerProductSpace ℂ EE]
     [FiniteDimensional ℂ EE] (X : RowSide D EE) (μ : D.what₂.Tup),

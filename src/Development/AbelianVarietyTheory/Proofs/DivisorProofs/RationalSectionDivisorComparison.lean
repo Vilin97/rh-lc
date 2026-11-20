@@ -53,9 +53,9 @@ theorem stalkMap_eq_of_congr (i : Z ⟶ X) (y : Z) (V : X.Opens) (hy : i y ∈ V
   obtain ⟨d, hd⟩ := hg
   have e : ca = cb + cb * c * d := by
     apply IsFractionRing.injective (X.presheaf.stalk (i y)) X.functionField
-    rw [map_add, map_mul, map_mul, hc, hd, h, mul_assoc _ f, mul_div_cancel₀ _ hf0]
+    rw [map_add (f := _), map_mul, map_mul, hc, hd, h, mul_assoc _ f, mul_div_cancel₀ _ hf0]
     ring
-  rw [e, map_add, map_mul, map_mul, stalkMap_eq_zero i y V hy f hV c hc, mul_zero, zero_mul,
+  rw [e, map_add (f := _), map_mul, map_mul, stalkMap_eq_zero i y V hy f hV c hc, mul_zero, zero_mul,
     add_zero]
 
 theorem exists_glue (i : Z ⟶ X) (V : Z.Opens) {J : Type} (O : J → X.Opens) (u : ∀ a, Γ(X, O a)ˣ)

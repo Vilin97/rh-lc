@@ -38,7 +38,7 @@ def cjEquivInv (U : Cj A ≃ₗᵢ[ℂ] Cj B) : A ≃ₗᵢ[ℂ] B where
     rw [U.apply_symm_apply]; rfl
   map_add' x y := by
     show Cj.un (U (Cj.mk x + Cj.mk y)) = _
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   map_smul' c x := by
     have e : Cj.mk (c • x) = (starRingEnd ℂ) c • Cj.mk x := by
       show c • x = (starRingEnd ℂ) ((starRingEnd ℂ) c) • x

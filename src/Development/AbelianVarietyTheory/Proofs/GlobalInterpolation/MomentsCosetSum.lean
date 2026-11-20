@@ -143,7 +143,7 @@ theorem lamC_sum (lam : TaylorLogMetric.Qbar →+* ℂ_[p]) {κ : Type} (s : Fin
     have h2 : ∀ i ∈ s, f i ∈ TaylorLogMetric.Qbar := fun j hj => h j (Finset.mem_insert_of_mem hj)
     have h3 := sum_mem h2
     rw [Finset.sum_insert hk, Finset.sum_insert hk, ← ih h2]
-    simp only [TaylorLogMetric.lamC, dif_pos h1, dif_pos h3, dif_pos (add_mem h1 h3), ← map_add]; rfl
+    simp only [TaylorLogMetric.lamC, dif_pos h1, dif_pos h3, dif_pos (add_mem h1 h3), ← map_add (f := _)]; rfl
 
 theorem lamC_nat (lam : TaylorLogMetric.Qbar →+* ℂ_[p]) (n : ℕ) : TaylorLogMetric.lamC lam (n : ℂ) = n := by
   simp only [TaylorLogMetric.lamC, dif_pos (natCast_mem TaylorLogMetric.Qbar n)]; exact map_natCast lam n

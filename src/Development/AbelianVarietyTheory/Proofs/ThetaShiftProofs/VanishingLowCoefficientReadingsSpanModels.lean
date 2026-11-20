@@ -22,7 +22,7 @@ theorem isLinearMap_cfOf {D : D7} {T : Core D} (h : LawsCore T) (j : ℕ) (ka : 
     cusp_le_sec (T.Q.Xo j) T.Q.c (T.U j) _ _ (cutR_le T.C j ka F.2)
   have e : ∀ F : (recB h).Cusp j ka, cfOf d.yF d.μ d.jj F.1 = φ ⟨F.1, hle F⟩ := fun F => (hφ ⟨F.1, hle F⟩).symm
   refine ⟨fun F G => ?_, fun a F => ?_⟩
-  · rw [e, e, e, ← map_add]; rfl
+  · rw [e, e, e, ← map_add (f := _)]; rfl
   · rw [e, e, ← map_smul]; rfl
 
 set_option maxHeartbeats 4000000 in

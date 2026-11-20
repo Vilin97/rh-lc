@@ -142,7 +142,7 @@ private theorem mem_St_of_comp {D : D7} (e : AE D) (he : e * e = e) (V : HSp D)
       split_ifs
       · rw [map_one]
       · rw [map_zero]
-    rw [map_mul, RingHom.map_add, h1] at h0
+    rw [map_mul, RingHom.map_add (f := _), h1] at h0
     exact h0
   have i1 : ∀ i j, (toEAf D e • (b⁻¹ * X * b : GL (Fin V.rank) (EAf D)).1) i j ∈
       Formalism.L2.Herm.intAf D.host.F D.host.E := by
@@ -190,7 +190,7 @@ private theorem exists_unitary_frame_change : ∀ {D : D7} (e : AE D) (S : Finse
     induction x using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero]
     | tmul a c => rfl
-    | add a c ha hc => rw [RingHom.map_add, RingHom.map_add, ha, hc]
+    | add a c ha hc => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hc]
   let P : Matrix (Fin V.rank) (Fin V.rank) (EAf D) := (b' * b⁻¹ : GL (Fin V.rank) (EAf D)).1
   let Q : Matrix (Fin V.rank) (Fin V.rank) (EAf D) := (b * b'⁻¹ : GL (Fin V.rank) (EAf D)).1
   have hPQ : P * Q = 1 := by
@@ -215,7 +215,7 @@ private theorem exists_unitary_frame_change : ∀ {D : D7} (e : AE D) (S : Finse
     Units.ext (hyv.trans (Formalism.IndefR.Fin.LevelGroupLemmas.detAt_val he V k).symm)
   have hint : finPart D e ∈ intAE D := GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← map_mul, he])
   refine ⟨?_, ?_, ?_⟩
-  · rw [hyv, RingHom.map_add, map_mul, RingHom.map_sub, map_one, hinf, zero_mul, zero_add, sub_zero]
+  · rw [hyv, RingHom.map_add (f := _), map_mul, RingHom.map_sub, map_one, hinf, zero_mul, zero_add, sub_zero]
   · rw [hyd]; exact Formalism.IndefR.Fin.LevelGroupLemmas.finPart_detAt_int he hint V hSt
   · rw [hyd]; exact Formalism.IndefR.Fin.LevelGroupLemmas.finPart_detAt_inv_int he hint V hSt
 

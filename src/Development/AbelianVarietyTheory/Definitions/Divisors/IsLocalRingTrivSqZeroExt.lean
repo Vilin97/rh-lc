@@ -138,7 +138,7 @@ theorem val_smul (φ : K₀ →ₐ[c.F] S) (y : FrPt Xo c S) (a : K₀) (s : Rul
     val φ y (a • s) = φ a * val φ y s := by
   induction s using TensorProduct.induction_on with
   | zero => simp
-  | add s s' h h' => rw [smul_add, map_add, map_add, h, h', mul_add]
+  | add s s' h h' => rw [smul_add, map_add (f := _), map_add (f := _), h, h', mul_add]
   | tmul b f => rw [TensorProduct.smul_tmul', val_tmul, val_tmul, smul_eq_mul, map_mul, mul_assoc]
 
 theorem tmul_mem_secK {e : Ix Dw → ℤ} {f : Rul Xo c} (hf : f ∈ secZ Xo c e) (a : K₀) : a ⊗ₜ f ∈ secK Xo c K₀ e :=
@@ -150,7 +150,7 @@ theorem secK_induction {e : Ix Dw → ℤ} {P : RulK Xo c K₀ → Prop} (h0 : P
   obtain ⟨z, rfl⟩ : ∃ z, (secZ Xo c e).subtype.baseChange K₀ z = s := hs
   induction z with
   | zero => simpa using h0
-  | add s s' h h' => rw [map_add]; exact h2 _ _ h h'
+  | add s s' h h' => rw [map_add (f := _)]; exact h2 _ _ h h'
   | tmul a f => exact h1 a f.1 f.2
 
 theorem val_frMap [IsLocalRing S] {e : Ix Dw → ℤ} {s : RulK Xo c K₀} (hs : s ∈ secK Xo c K₀ e)
@@ -159,7 +159,7 @@ theorem val_frMap [IsLocalRing S] {e : Ix Dw → ℤ} {s : RulK Xo c K₀} (hs :
   refine secK_induction (P := fun s => val χ z s = ψ (val φ y s)) (by simp) (fun a f hf => ?_)
     (fun s s' k k' => ?_) hs
   · simp only [val_tmul, map_mul, hχ, evR_frMap hf.1 h]
-  · simp only [map_add, k, k']
+  · simp only [map_add (f := _), k, k']
 
 theorem val_frBor [IsLocalRing S] {e : Ix Dw → ℤ} {s : RulK Xo c K₀} (hs : s ∈ secK Xo c K₀ e)
     (φ : K₀ →ₐ[c.F] S) {t : Ix Dw → Sˣ} {y y' : FrPt Xo c S} (h : FrBor t y y') :
@@ -167,7 +167,7 @@ theorem val_frBor [IsLocalRing S] {e : Ix Dw → ℤ} {s : RulK Xo c K₀} (hs :
   refine secK_induction (P := fun s => val φ y' s = ((∏ i, t i ^ e i : Sˣ) : S) * val φ y s) (by simp)
     (fun a f hf => ?_) (fun s s' k k' => ?_) hs
   · simp only [val_tmul, evR_frBor hf h]; ring
-  · simp only [map_add, k, k', mul_add]
+  · simp only [map_add (f := _), k, k', mul_add]
 
 end Coef
 

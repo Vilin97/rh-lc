@@ -33,7 +33,7 @@ theorem LeafColHens_of (hS : LeafStage) (hI : LeafInv) (hR : LeafRoot) : LeafCol
     obtain ⟨S, _, φ, hφ, hu⟩ := hI (Δ.D.obj j) (I.map (Δ.s j)) x hx'
     obtain ⟨π, hπ⟩ := push j S φ hφ
     have h := hu.map π
-    rw [← RingHom.comp_apply, hπ, map_add, map_one, hx, add_comm] at h
+    rw [← RingHom.comp_apply, hπ, map_add (f := _), map_one, hx, add_comm] at h
     exact h
   · intro f hf a₀ ha₀ hu
     obtain ⟨u, hu'⟩ := Ideal.Quotient.mk_surjective (↑hu.unit⁻¹ : c.pt ⧸ I.map η)

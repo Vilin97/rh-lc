@@ -46,7 +46,7 @@ theorem hJ_conj (x y : Fin n → ℂ) : hJ ε x y = conj (hJ ε y x) := by
   split_ifs <;> simp <;> ring
 
 theorem hJ_add_left (x x' y : Fin n → ℂ) : hJ ε (x + x') y = hJ ε x y + hJ ε x' y := by
-  rw [hJ_conj, hJ_add_right, map_add, ← hJ_conj, ← hJ_conj]
+  rw [hJ_conj, hJ_add_right, map_add (f := _), ← hJ_conj, ← hJ_conj]
 
 theorem hJ_smul_left (a : ℂ) (x y : Fin n → ℂ) : hJ ε (a • x) y = conj a * hJ ε x y := by
   rw [hJ_conj, hJ_smul_right, map_mul, ← hJ_conj]
@@ -173,7 +173,7 @@ theorem step_exists (x y : Fin n → ℂ) (hxy : hJ ε x x = hJ ε y y) (hx : hJ
       apply hx
       linear_combination h2 / 2
     have hH1 : hJ ε (x + y) (x + y) = hJ ε (x + y) x + conj (hJ ε (x + y) x) := by
-      simp only [hJ_add_left, hJ_add_right, map_add]
+      simp only [hJ_add_left, hJ_add_right, map_add (f := _)]
       linear_combination hxy' - hxy - hcr
     obtain ⟨hI1, hm1⟩ := gen (x + y) hu1 hH1
     have hc0 : hJ ε y y ≠ 0 := by rw [← hxy]; exact hx

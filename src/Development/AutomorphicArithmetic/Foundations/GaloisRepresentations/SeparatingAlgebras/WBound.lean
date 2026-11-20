@@ -24,7 +24,7 @@ private theorem continuous_coeff_blockAct' {Y : Type} [TopologicalSpace Y] {T : 
     exact continuous_const
   | add p q hp hq =>
     intro m
-    simp only [map_add, coeff_add]
+    simp only [map_add (f := _), coeff_add]
     exact (hp m).add (hq m)
   | mul_X p w hp =>
     intro m

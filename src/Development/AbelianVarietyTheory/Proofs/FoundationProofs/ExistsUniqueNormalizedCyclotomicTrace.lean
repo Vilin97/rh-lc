@@ -166,7 +166,7 @@ theorem trace_closure {Ω : Type} [Field Ω] [Algebra ℚ Ω] (p : ℕ) [hpf : F
   | add x y _ _ hx hy =>
     obtain ⟨z1, h1, e1⟩ := hx
     obtain ⟨z2, h2, e2⟩ := hy
-    exact ⟨z1 + z2, Subring.add_mem _ h1 h2, by simp only [map_add, Finset.sum_add_distrib, e1, e2]; ring⟩
+    exact ⟨z1 + z2, Subring.add_mem _ h1 h2, by simp only [map_add (f := _), Finset.sum_add_distrib, e1, e2]; ring⟩
   | neg x _ hx =>
     obtain ⟨z1, h1, e1⟩ := hx
     exact ⟨-z1, Subring.neg_mem _ h1, by simp only [map_neg, Finset.sum_neg_distrib, e1]; ring⟩

@@ -411,7 +411,7 @@ theorem exists_att (hκ : ∀ o : la.adicCompletionIntegers K, κ o = φ (C o))
       · rw [← hκ]; exact h'.approx hκ hϖm n hc
     | add p q hp hq =>
       have := Subring.add_mem _ hp hq
-      simpa only [map_add, Prod.mk_add_mk] using this
+      simpa only [map_add (f := _), Prod.mk_add_mk] using this
     | mul_X p s hp =>
       have := Subring.mul_mem _ hp (le_lim w w' A₀ (⟨X s, by simp⟩ : (e (φ (X s)), e' (φ (X s))) ∈ A₀))
       simpa only [map_mul, Prod.mk_mul_mk] using this

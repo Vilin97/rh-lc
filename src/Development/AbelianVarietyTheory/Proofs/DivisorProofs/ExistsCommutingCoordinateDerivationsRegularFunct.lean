@@ -27,7 +27,7 @@ theorem exists_commuting_derivations_of_values {R : Type} [CommRing R] [Algebra 
     rw [he, map_sub, ← he, ← he, h z hz, sub_self]
   have hadd : ∀ x y, ∀ z ∈ P, v (x + y) z = v x z + v y z := fun x y z hz ↦ by
     obtain ⟨e, he⟩ := he z hz
-    simp only [he, map_add]
+    simp only [he, map_add (f := _)]
   have hmul : ∀ x y, ∀ z ∈ P, v (x * y) z = v x z * v y z := fun x y z hz ↦ by
     obtain ⟨e, he⟩ := he z hz
     simp only [he, map_mul]

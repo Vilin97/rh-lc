@@ -120,7 +120,7 @@ theorem polySlash_one_linear (h : Matrix (Fin 2) (Fin 2) ℤ) (x y : ℂ) :
     calc slP 1 h (C y) = slP 1 h (y • (1 : ℂ[X])) := by rw [smul_eq_C_mul, mul_one]
       _ = y • rowB h := by rw [map_smul, e0]
       _ = C y * rowB h := smul_eq_C_mul _
-  rw [map_add, e0', ← smul_eq_C_mul, map_smul, e1, smul_eq_C_mul]
+  rw [map_add (f := _), e0', ← smul_eq_C_mul, map_smul, e1, smul_eq_C_mul]
 
 theorem polySlash_one_rowA (g h : Matrix (Fin 2) (Fin 2) ℤ) : slP 1 h (rowA g) = rowA (g * h) := by
   rw [rowA, polySlash_one_linear]

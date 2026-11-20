@@ -69,7 +69,7 @@ theorem exists_cyclic_basis {n : ℕ} (M : Matrix (Fin n) (Fin n) E) (hM : ∀ i
   obtain ⟨v', hv'⟩ := lift v hv
   have hsep : M'.charpoly.Separable := by
     refine ⟨u', v', Polynomial.map_injective ι Subtype.val_injective ?_⟩
-    rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, ← Polynomial.derivative_map,
+    rw [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, ← Polynomial.derivative_map,
       ← Matrix.charpoly_map, hM', hu', hv', Polynomial.map_one]
     exact huv
   obtain ⟨w, hw⟩ := GlobalTheory.RegSS.Semilocal.cyclicSemilocal_of_cyclicField GlobalTheory.RegSS.cyclicField _

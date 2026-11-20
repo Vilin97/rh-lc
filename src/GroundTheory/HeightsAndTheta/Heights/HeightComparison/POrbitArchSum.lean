@@ -19,7 +19,7 @@ theorem eval_smul_of_isMultiHomog (s : MvPolynomial (Coord n) ℤ) (a : ι → �
     intro f
     induction f using MvPolynomial.induction_on with
     | C r => simp [Geo.mConeMap]
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f p hf =>
       rw [map_mul, map_mul, map_mul, hf]
       simp [Geo.mConeMap, mul_comm]

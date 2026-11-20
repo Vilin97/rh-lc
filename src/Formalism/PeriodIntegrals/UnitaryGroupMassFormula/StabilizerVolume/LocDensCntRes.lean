@@ -98,10 +98,10 @@ theorem red_add {x y : Fv F v} (hx : x ∈ v.adicCompletionIntegers F)
     (hy : y ∈ v.adicCompletionIntegers F) : red v (x + y) = red v x + red v y := by
   have hxy : x + y ∈ v.adicCompletionIntegers F := add_mem hx hy
   have e1 : red v x + red v y = Ideal.Quotient.mk _ (appr v x + appr v y) := by
-    simp only [red, map_add]
+    simp only [red, map_add (f := _)]
   rw [e1, red_eq_mk_iff v hxy]
   have e : x + y - iO v (appr v x + appr v y) = (x - iO v (appr v x)) + (y - iO v (appr v y)) := by
-    simp only [iO, map_add]
+    simp only [iO, map_add (f := _)]
     ring
   rw [e]
   exact lt_of_le_of_lt (Valuation.map_add _ _ _) (max_lt (appr_spec v hx) (appr_spec v hy))

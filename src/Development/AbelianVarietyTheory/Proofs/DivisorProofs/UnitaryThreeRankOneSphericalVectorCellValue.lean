@@ -51,7 +51,7 @@ theorem map_heisM_rev (σ : L →+* L) {n : ℕ} {i j k : Fin n} (hr : i.rev = k
   have e3 : ∀ x : Fin n, j = x.rev ↔ j = x := fun x => by
     conv_lhs => rw [← hj]
     exact Fin.rev_inj
-  simp only [heisM_apply, e1, e2, e3, Fin.rev_inj, map_add, apply_ite σ, map_one, map_zero, eq_comm (a := t) (b := s),
+  simp only [heisM_apply, e1, e2, e3, Fin.rev_inj, map_add (f := _), apply_ite σ, map_one, map_zero, eq_comm (a := t) (b := s),
     and_comm (a := k = t), and_comm (a := j = t)]
   ring
 

@@ -30,7 +30,7 @@ variable {M X : HSp D} (ω : WRep M X) (ν : Measure (GA D M)) (𝓕 : Set (GA D
 
 theorem thetaKO_add (g : GA D M) (h : GA D X) (Φ Ψ : WO M X → ℂ) :
     thetaKO ω g h (Φ + Ψ) = thetaKO ω g h Φ + thetaKO ω g h Ψ := by
-  simp [thetaKO, map_add]
+  simp [thetaKO, map_add (f := _)]
 
 theorem thetaKO_smul (g : GA D M) (h : GA D X) (c : ℂ) (Φ : WO M X → ℂ) :
     thetaKO ω g h (c • Φ) = c * thetaKO ω g h Φ := by
@@ -203,7 +203,7 @@ theorem reg_of_const : GlobalTheory.FunPr.Hypotheses₂ → GlobalTheory.Indefin
     rw [← e, hsum]; abel
   have eW : wop ωB z ΦB = wop ωB z Φ₀ + ∑ i, c i • (ωB (u' i, 1) (wop ωB z (Ψ i)) - wop ωB z (Ψ i)) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [eB, map_add, map_sum]
+      rw [eB, map_add (f := _), map_sum]
     simp only [map_smul, map_sub, hcomm]
   have hJ : thetaInt ωB ν₁ 𝓕₁ (wop ωB z ΦB) = GlobalTheory.FunObj.zdeg z • thetaInt ωB ν₁ 𝓕₁ Φ₀ := by
     have hi : ∀ i ∈ (Finset.univ : Finset (Fin n)),

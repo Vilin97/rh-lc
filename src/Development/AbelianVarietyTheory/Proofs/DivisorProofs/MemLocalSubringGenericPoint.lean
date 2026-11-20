@@ -145,7 +145,7 @@ theorem polynomial_mem (V : ValuationSubring K) (hV : ∀ c : k, algebraMap k[X]
     (h : algebraMap k[X] K X ∈ V) (q : k[X]) : algebraMap k[X] K q ∈ V := by
   induction q using Polynomial.induction_on with
   | C a => exact hV a
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | monomial n a ih => rw [pow_succ, ← mul_assoc, map_mul]; exact mul_mem ih h
 
 theorem exists_polynomial [Algebra.IsAlgebraic k[X] K] {a : K} (ha : a ≠ 0) :
@@ -314,7 +314,7 @@ theorem exists_function {k : Type} [Field k] (f : C ⟶ Sp k) [LocallyOfFiniteTy
   set c := algebraMap k[X] C.functionField q with hc
   have hc0 : c ≠ 0 := (map_ne_zero_iff _ hinj).2 hq0
   have hc1 : 1 + c ^ 2 ≠ 0 := by
-    rw [hc, ← map_pow, ← map_one (algebraMap k[X] C.functionField), ← map_add, map_ne_zero_iff _ hinj]
+    rw [hc, ← map_pow, ← map_one (algebraMap k[X] C.functionField), ← map_add (f := _), map_ne_zero_iff _ hinj]
     intro h
     simpa [q] using congrArg (eval 0) h
   have ht := div_ne_zero hc0 hc1
@@ -347,7 +347,7 @@ theorem exists_function {k : Type} [Field k] (f : C ⟶ Sp k) [LocallyOfFiniteTy
           refine (IsLocalRing.isUnit_or_isUnit_of_add_one (a := 1 + r ^ 2) (b := -r ^ 2)
             (by ring)).resolve_right fun h => hu ?_
           exact (isUnit_pow_iff two_ne_zero).1 ((IsUnit.neg_iff _).1 h)
-        simpa only [map_add, map_one, map_pow, hr] using key r (1 + r ^ 2) hu'
+        simpa only [map_add (f := _), map_one, map_pow, hr] using key r (1 + r ^ 2) hu'
     · obtain ⟨r, -, e⟩ := hN' ⟨x, Set.mem_insert_of_mem _ hx⟩
       exact .inl ⟨r, e⟩
 

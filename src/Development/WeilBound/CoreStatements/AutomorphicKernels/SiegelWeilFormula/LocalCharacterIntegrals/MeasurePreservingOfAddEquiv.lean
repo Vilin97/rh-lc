@@ -209,7 +209,7 @@ theorem sigR_smul (σ : E →ₐ[F] E) (t : Fv F v) (a : Fv F v ⊗[F] E) :
   | tmul x e =>
     simp only [sigR, TensorProduct.smul_tmul', AlgHom.toRingHom_eq_coe, RingHom.coe_coe,
       Algebra.TensorProduct.map_tmul, AlgHom.coe_id, id_eq]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem exists_nA_sig (σ : E →ₐ[F] E) : ∃ C, 0 ≤ C ∧ ∀ a : Fv F v ⊗[F] E, nA v (sigR (Fv F v) σ a) ≤ C * nA v a := by
   refine ⟨∑ i, nA v (sigR (Fv F v) σ (bA E v i)), Finset.sum_nonneg fun i _ => nA_nonneg _, fun a => ?_⟩
@@ -238,7 +238,7 @@ theorem trace_one_tmul (e : E) : Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (1 ⊗
   | zero => simp
   | tmul x y =>
     simp [Algebra.coe_lmul_eq_mul, LinearMap.baseChange_tmul, Algebra.TensorProduct.tmul_mul_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem crd_basis (i : Fin (Module.finrank F E)) : crd v (bA E v i) = Pi.single i 1 := by
   funext j

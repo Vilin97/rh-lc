@@ -200,7 +200,7 @@ theorem UpperTheory.isFixP_order_pow_iff_le_and_assoc_pow :
         simp only [yy, hA1, add_mul, smul_mul_assoc, mul_smul_comm, one_mul, hc.sq, smul_smul, map_mul]
         module
       rw [mul_two_dim_algebra_stable ω y0 _ _ _ _ _ _ hω hωy, ord_mem]
-      exact ⟨p * h + q * (π ^ m * π ^ n * e), p * π ^ (n - m) + q * h, by simp only [map_add, map_mul]⟩
+      exact ⟨p * h + q * (π ^ m * π ^ n * e), p * π ^ (n - m) + q * h, by simp only [map_add (f := _), map_mul]⟩
   constructor
   · intro hF
     obtain ⟨u, hu⟩ := unit_iff.1 (dual_iff.1 hF.dual)

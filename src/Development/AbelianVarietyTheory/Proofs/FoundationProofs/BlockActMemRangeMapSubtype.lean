@@ -84,7 +84,7 @@ theorem blockAct_mem_range_map_subtype {ι : Type} [Fintype ι] {n : ℕ}
     rw [map_C, algHom_C]
     exact hC a.2
   | add p q hp hq =>
-    rw [map_add (MvPolynomial.map R.subtype), map_add]
+    rw [map_add (MvPolynomial.map R.subtype), map_add (f := _)]
     exact add_mem hp hq
   | mul_X p v hp =>
     rw [map_mul (MvPolynomial.map R.subtype), map_X, map_mul, blockAct_X]

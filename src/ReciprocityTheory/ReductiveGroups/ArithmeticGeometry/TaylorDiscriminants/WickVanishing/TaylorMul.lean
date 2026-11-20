@@ -30,7 +30,7 @@ theorem mD_add {f h : (Fin g → ℂ) → ℂ} (hf : ContDiffAt ℂ ω f 0) (hh 
 theorem tay_add {f h : (Fin g → ℂ) → ℂ} (hf : ContDiffAt ℂ ω f 0) (hh : ContDiffAt ℂ ω h 0)
     (s : Multiset (Fin g → ℂ)) : tay (f + h) s = tay f s + tay h s := by
   ext n
-  rw [map_add]
+  rw [map_add (f := _)]
   show mD (f + h) 0 (dirs n + s) / fct n = mD f 0 (dirs n + s) / fct n + mD h 0 (dirs n + s) / fct n
   rw [mD_add hf hh, add_div]
 
@@ -113,7 +113,7 @@ theorem pderiv_tay {θ : (Fin g → ℂ) → ℂ} (hθ : ContDiffAt ℂ ω θ 0)
     mD (fun y => fderiv ℂ θ y (Pi.single j 1)) 0 (dirs n + 0) / fct n
   have hd : dirs (n + Finsupp.single ((0 : Fin 1), j) 1) = (Pi.single j 1 : Fin g → ℂ) ::ₘ dirs n := by
     unfold dirs
-    rw [Finsupp.toMultiset_add, Finsupp.toMultiset_single, one_nsmul, Multiset.map_add,
+    rw [Finsupp.toMultiset_add, Finsupp.toMultiset_single, one_nsmul, Multiset.map_add (f := _),
       Multiset.map_singleton, add_comm, Multiset.singleton_add]
   have hf : fct (n + Finsupp.single ((0 : Fin 1), j) 1) = fct n * ((n ((0 : Fin 1), j) : ℂ) + 1) := by
     unfold fct
@@ -165,7 +165,7 @@ theorem taylor_mul_coeff_low_degree (N : ℕ) : ∀ (f h : (Fin g → ℂ) → �
         exact (tsub_add_cancel_of_le (Finsupp.single_le_iff.2 (Nat.one_le_iff_ne_zero.2 hx))).symm
       have hmdeg : m.degree < N := by
         have h1 : n.degree = m.degree + 1 := by
-          rw [hnm, map_add, Finsupp.degree_single]
+          rw [hnm, map_add (f := _), Finsupp.degree_single]
         omega
       have key : ∀ F : MvPowerSeries (Fin 1 × Fin g) ℂ,
           coeff m (pderiv ℂ ((0 : Fin 1), j) F) = coeff n F * ((m ((0 : Fin 1), j) : ℂ) + 1) := fun F => by

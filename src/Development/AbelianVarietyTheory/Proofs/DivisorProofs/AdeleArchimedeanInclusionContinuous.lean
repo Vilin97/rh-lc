@@ -43,7 +43,7 @@ theorem continuous_symm_inf : ∀ (F E : Type) [Field F] [NumberField F] [Field 
     apply Φ.injective
     set_option synthInstance.maxHeartbeats 100000 in
       rw [Φ.apply_symm_apply, map_sum]
-    simp only [map_add, key]
+    simp only [map_add (f := _), key]
     ext v
     · rw [Prod.fst_sum, Finset.sum_apply]
       simp only [Prod.fst_add, mul_one, Pi.add_apply, Pi.single_apply, Finset.sum_add_distrib, Finset.sum_ite_eq,

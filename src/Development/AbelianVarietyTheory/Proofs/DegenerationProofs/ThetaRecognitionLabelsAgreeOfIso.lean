@@ -59,7 +59,7 @@ theorem tr_mul {k : ℕ} {p q : N.QT k} {a b : N'.QT k} (ha : TR J p a) (hb : TR
     TR J (p * q) (a * b) := by
   refine ⟨?_, rel_mul J ha.2 hb.2⟩
   change a.1.1.toAdd + b.1.1.toAdd = J.e (p.1.1.toAdd + q.1.1.toAdd)
-  rw [map_add, ha.1, hb.1]
+  rw [map_add (f := _), ha.1, hb.1]
 
 theorem tr_wp {k : ℕ} {p q : N.QT k} {a b : N'.QT k} (ha : TR J p a) (hb : TR J q b) :
     N'.wp a b = N.wp p q :=

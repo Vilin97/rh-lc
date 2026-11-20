@@ -40,7 +40,7 @@ theorem exists_schur (H : HMod (MMap M)) (d : ℂ) (h : ∀ x y : H.H, inner ℂ
   have hf : (fun g => star (H.e x v g) * H.e y v' g) =
       fun g => star (H.e x v g) * H.e (x + y) v' g - star (H.e x v g) * H.e x v' g := by
     funext g
-    simp only [map_add, MultilinearMap.add_apply, Pi.add_apply]
+    simp only [map_add (f := _), MultilinearMap.add_apply, Pi.add_apply]
     ring
   rw [hf]
   refine ⟨(h₂ v v').1.sub (h₁ v v').1, ?_⟩

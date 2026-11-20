@@ -84,7 +84,7 @@ theorem gauss_scale (hchar : ringChar k ≠ 2) (ψ : AddChar k ℂ) (hψ : ψ �
       have e1 := QuadraticMap.associated_eq_self_apply k Q (x + y)
       have e2 := QuadraticMap.associated_eq_self_apply k Q x
       have e3 := QuadraticMap.associated_eq_self_apply k Q y
-      simp only [map_add, LinearMap.add_apply] at e1
+      simp only [map_add (f := _), LinearMap.add_apply] at e1
       rw [hQ, quadForm_add h2 hB] at e1
       rw [hQ] at e2 e3
       linear_combination e2 + e3 - e1 + hxy + hyx

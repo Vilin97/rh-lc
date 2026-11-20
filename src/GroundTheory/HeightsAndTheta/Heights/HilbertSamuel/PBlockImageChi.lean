@@ -134,7 +134,7 @@ theorem aeval_eq_zero_of_mem {y : (Σ k, ι k) → Ω} {g : MRing ι} (hg : g �
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simp [mConeMap]
-    | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p i hp => rw [map_mul, map_mul, map_mul, hp]; simp [mConeMap]
   rw [mCoordIdeal, RingHom.mem_ker] at hg
   rw [← e, hg, map_zero]
@@ -179,7 +179,7 @@ theorem eval_fwd (h : IsBlockImage y k₀ M N x) {f : MRing ι} {n : ℕ} (hf : 
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simp [back]
-    | add p q hp hq => rw [map_add, map_add, map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p j hp =>
       rw [map_mul, map_mul, map_mul, map_mul, map_mul, hp]
       simp [back, blockForms, blockMapC]

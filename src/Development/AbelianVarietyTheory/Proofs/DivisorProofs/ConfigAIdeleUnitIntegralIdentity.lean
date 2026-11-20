@@ -75,7 +75,7 @@ theorem symp_antisymm [NumberField E] (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [cA, hσ]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hA : ∀ i j, cA σ (incM F JX j i) = incM F JX i j := fun i j => by
     simp only [incM, Matrix.map_apply, cA_inclR, hX]
   have hB : ∀ i j, cA σ (incM F JW j i) = -incM F JW i j := fun i j => by
@@ -168,7 +168,7 @@ theorem coef_mem [NumberField E] (σ : E →ₐ[F] E) (B : Base F E) {n n₁ d :
     exact AddSubgroup.subset_closure ⟨_, hav, _, FractionalIdeal.mul_mem_mul (form_mem_ideal σ B hH hx).2 (hI y hy), rfl⟩
   | zero => simp
   | add x y _ _ hx hy =>
-    simp only [Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add]
+    simp only [Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)]
     exact add_mem hx hy
   | neg x _ hx =>
     simp only [Matrix.neg_apply, neg_mul, Finset.sum_neg_distrib, map_neg]

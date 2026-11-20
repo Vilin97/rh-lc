@@ -23,7 +23,7 @@ theorem so_zero (c : σ → σ → k) : secondOrder k c (0 : MvPolynomial σ k) 
 
 theorem so_add (c : σ → σ → k) (P Q : MvPolynomial σ k) :
     secondOrder k c (P + Q) = secondOrder k c P + secondOrder k c Q := by
-  simp only [so_def, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [so_def, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem so_smul (c : σ → σ → k) (r : k) (P : MvPolynomial σ k) :
     secondOrder k c (r • P) = r • secondOrder k c P := by
@@ -41,7 +41,7 @@ private theorem mvPolynomial_pderiv_comm (a b : σ) (P : MvPolynomial σ k) :
   · simp
   · simp [*]
   · rename_i p m hp
-    simp only [Derivation.leibniz, smul_eq_mul, map_add, hp, pderiv_X]
+    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), hp, pderiv_X]
     by_cases ha : a = m <;> by_cases hb : b = m <;> simp [Pi.single_apply, ha, hb] <;> ring
 
 theorem pd4 (P : MvPolynomial σ k) (a b c d : σ) :

@@ -446,7 +446,7 @@ theorem symO_pi_one : symO p q τ (Submodule.pi Set.univ fun _ : Fin n => (1 : S
     change mapAlgHom (Algebra.ofId (𝓞 K) K) Q ∈ _
     induction Q using MvPolynomial.induction_on with
     | C r => rw [← algebraMap_eq, AlgHom.commutes]; exact Subalgebra.algebraMap_mem _ r
-    | add P Q hP hQ => rw [map_add]; exact add_mem hP hQ
+    | add P Q hP hQ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hP hQ
     | mul_X P v hP =>
       rw [map_mul]
       refine mul_mem hP ?_

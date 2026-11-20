@@ -88,7 +88,7 @@ private theorem exists_projectors (b : Module.Basis Ix ℤ R) (χ : Ix → R →
         (fun r s => by
           rw [← ofMul_mul, ← Finset.prod_mul_distrib]
           congr 1
-          exact Finset.prod_congr rfl fun τ _ => by rw [map_add, sm_add _ (hP0 τ)])
+          exact Finset.prod_congr rfl fun τ _ => by rw [map_add (f := _), sm_add _ (hP0 τ)])
       have hfg : f.toIntLinearMap = g.toIntLinearMap := b.ext fun k => by
         show Additive.ofMul (ρ (b k) v) = Additive.ofMul (∏ τ, sm (χ τ (b k)) (P τ v))
         congr 1

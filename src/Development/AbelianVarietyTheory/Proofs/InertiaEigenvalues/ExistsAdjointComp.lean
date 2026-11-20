@@ -275,7 +275,7 @@ theorem eig_keep (hH : HoweUnram) (R : RealDat D A Ks) (F : Face D A) (hC : Core
     (fun k hk l hl => eig_of_match R F hC hS hX i t h' hh' hN P hG _ (partner_split R F hC hS i t P hG hP k hk) l y hl) d hd
 
 theorem eig_add {H : Type} [AddCommGroup H] [Module ℂ H] (L : Module.End ℂ H) (l : ℂ) {a b : H} (ha : L a = l • a)
-    (hb : L b = l • b) : L (a + b) = l • (a + b) := by rw [map_add, ha, hb, smul_add]
+    (hb : L b = l • b) : L (a + b) = l • (a + b) := by rw [map_add (f := _), ha, hb, smul_add]
 
 theorem eig_smul {H : Type} [AddCommGroup H] [Module ℂ H] (L : Module.End ℂ H) (l z : ℂ) {a : H} (ha : L a = l • a) :
     L (z • a) = l • (z • a) := by rw [map_smul, ha, smul_comm]
@@ -288,7 +288,7 @@ theorem fix_add {H X W : Type} [AddCommGroup H] [Module ℂ H] [AddCommGroup W] 
     (hb : T (fun x => l (E b x)) = fun x => l (E b x)) : T (fun x => l (E (a + b) x)) = fun x => l (E (a + b) x) := by
   have e : (fun x => l (E (a + b) x)) = (fun x => l (E a x)) + fun x => l (E b x) := by
     funext x; simp
-  rw [e, map_add, ha, hb]
+  rw [e, map_add (f := _), ha, hb]
 
 theorem fix_smul {H X W : Type} [AddCommGroup H] [Module ℂ H] [AddCommGroup W] [Module ℂ W] (T : (X → ℂ) →ₗ[ℂ] (X → ℂ))
     (E : H →ₗ[ℂ] (X → W)) (l : W →ₗ[ℂ] ℂ) (z : ℂ) {a : H} (ha : T (fun x => l (E a x)) = fun x => l (E a x)) :

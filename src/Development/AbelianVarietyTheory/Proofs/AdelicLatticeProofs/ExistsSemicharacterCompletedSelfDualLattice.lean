@@ -102,7 +102,7 @@ theorem latO_inf (S T : HSp D) (LS : Set (Fin S.rank → D.host.E)) (LT : Set (F
     have h1 : infPart D (x i j) = 0 := congrFun (congrFun hx i) j
     have h2 : infPart D (y i j) = 0 := congrFun (congrFun hy i) j
     show infPart D (x i j + y i j) = 0
-    rw [RingHom.map_add, h1, h2, add_zero]
+    rw [RingHom.map_add (f := _), h1, h2, add_zero]
   | neg x _ hx =>
     funext i j
     have h1 : infPart D (x i j) = 0 := congrFun (congrFun hx i) j
@@ -174,7 +174,7 @@ theorem exists_semichar : ∀ (D : D7) (S T : HSp D) (ΛS : Submodule (𝓞 D.ho
     (fun x => by
       funext i j
       show incA D (b : D.host.E) * x i j + incA D (star (b : D.host.E)) * x i j = x i j
-      rw [← add_mul, ← RingHom.map_add, hb, RingHom.map_one, one_mul])
+      rw [← add_mul, ← RingHom.map_add (f := _), hb, RingHom.map_one, one_mul])
     (f7 _) (latO_mul_int S T _ _ _ b)
   exact ⟨χ, c1, c2, c3, c4, c5, fun e he u hu hh => c6 u hu (f8 e _ u he.2.1 hh)⟩
 

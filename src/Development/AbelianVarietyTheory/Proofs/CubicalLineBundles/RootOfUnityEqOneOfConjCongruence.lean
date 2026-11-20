@@ -39,7 +39,7 @@ theorem isIntegral_eigenvalue_sub_one_div {E : Type} [Field E] [NumberField E] {
       induction hx using Submodule.span_induction with
       | mem x hx => exact h1 x hx
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
       | smul c x _ hx => rw [hsm, hx, mul_zero]
     apply hw
     funext i

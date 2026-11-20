@@ -41,7 +41,7 @@ private lemma mul_conj_eq_polarization (a b : ℂ) :
     a * conj b = 1 / 4 * ((a + b) * conj (a + b) - (a - b) * conj (a - b)
       + Complex.I * ((a + Complex.I * b) * conj (a + Complex.I * b))
       - Complex.I * ((a - Complex.I * b) * conj (a - Complex.I * b))) := by
-  simp only [map_add, map_sub, map_mul, Complex.conj_I]
+  simp only [map_add (f := _), map_sub, map_mul, Complex.conj_I]
   ring_nf
   simp only [Complex.I_sq, Complex.I_pow_three]
   ring
@@ -77,7 +77,7 @@ private lemma integral_matrixCoeff_mul_star_same_left
         - Complex.I * (⟪y, σ g (x - Complex.I • x')⟫_ℂ * star ⟪y, σ g (x - Complex.I • x')⟫_ℂ)) := by
     intro g
     rw [Complex.star_def, mul_conj_eq_polarization ⟪y, σ g x⟫_ℂ ⟪y, σ g x'⟫_ℂ]
-    simp only [map_add, map_sub, map_smul, inner_add_right, inner_sub_right, inner_smul_right,
+    simp only [map_add (f := _), map_sub, map_smul, inner_add_right, inner_sub_right, inner_smul_right,
       Complex.star_def]
   rw [integral_congr_ae (Filter.Eventually.of_forall hpt), integral_const_mul,
     integral_sub, integral_add, integral_sub, integral_const_mul, integral_const_mul,
@@ -94,7 +94,7 @@ private lemma mul_conj_eq_polarization_four (a a' b b' : ℂ) :
     a * conj b' = 1 / 4 * ((a + a') * conj (b + b') - (a - a') * conj (b - b')
       - Complex.I * ((a - Complex.I * a') * conj (b - Complex.I * b'))
       + Complex.I * ((a + Complex.I * a') * conj (b + Complex.I * b'))) := by
-  simp only [map_add, map_sub, map_mul, Complex.conj_I]
+  simp only [map_add (f := _), map_sub, map_mul, Complex.conj_I]
   ring_nf
   simp only [Complex.I_sq, Complex.I_pow_three]
   ring

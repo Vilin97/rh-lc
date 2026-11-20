@@ -308,7 +308,7 @@ theorem T_base [Fintype (Fin 2 ⥤ C)] (Λ : Cn F 1 →ₗ[R] R) (x : Cn F 1) (h
   have h : ∀ c : Fin 2 ⥤ C, S F 0 (pulln (boxL F) 1 x + pulln (boxR F) 1 x) c b =
       x c ⊗ₜ[R] (1 : F.obj (b.obj (Fin.last 0))) := fun c ↦ by
     rw [S_apply, Fin.sum_univ_one]
-    simp only [Fin.val_zero, pow_zero, one_smul, map_add, Pi.add_apply, bi_boxL, bi_boxR, e1, act_id]
+    simp only [Fin.val_zero, pow_zero, one_smul, map_add (f := _), Pi.add_apply, bi_boxL, bi_boxR, e1, act_id]
     rw [act_const F x hx (sg 0 0) (Subsingleton.elim (α := Fin 1) _ _)]
     simp
   simp only [h]
@@ -365,7 +365,7 @@ theorem tau_L (T₀ : C) (ε : F.obj T₀ →ₐ[R] R) (x : Cn F 1) (hx : dn F 1
 theorem lid_evL (T₀ T : C) (ε : F.obj T₀ →ₐ[R] R) (t : F.obj T₀ ⊗[R] F.obj T) :
     TensorProduct.lid R (F.obj T) (LinearMap.rTensor (F.obj T) ε.toLinearMap t) = evL F T₀ T ε t := by
   induction t with
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a b => simp [evL, Algebra.ofId_apply, Algebra.smul_def]
 
 theorem U_evz [Fintype (Fin 1 ⥤ C)] (T₀ : C) (ε : F.obj T₀ →ₐ[R] R) (q : ℕ) (w : Cn (box F) q) :

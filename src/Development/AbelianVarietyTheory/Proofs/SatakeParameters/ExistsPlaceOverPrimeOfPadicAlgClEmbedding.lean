@@ -32,7 +32,7 @@ def ballIdeal (l : ℕ) [Fact l.Prime] (E : Type) [Field E] [NumberField E]
     intro a b ha hb
     simp only [Set.mem_setOf_eq] at *
     have e : ((a + b : 𝓞 E) : E) = (a : E) + (b : E) := by simp
-    rw [e, map_add]
+    rw [e, map_add (f := _)]
     exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
   smul_mem' := by
     intro a b hb

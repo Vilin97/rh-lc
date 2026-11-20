@@ -29,7 +29,7 @@ theorem intAt_neg {D : D7} {v : GlobalTheory.FinPl.Pl D} {z : AE D} (h : z ∈ i
 
 theorem intAt_add {D : D7} {v : GlobalTheory.FinPl.Pl D} {z w : AE D} (h : z ∈ intAt D (· = v)) (h' : w ∈ intAt D (· = v)) :
     z + w ∈ intAt D (· = v) :=
-  ⟨add_mem h.1 h'.1, by rw [map_add]; exact add_mem h.2 h'.2⟩
+  ⟨add_mem h.1 h'.1, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h.2 h'.2⟩
 
 theorem idem_incA_mem {D : D7} (v : GlobalTheory.FinPl.Pl D) (o : 𝓞 D.host.E) :
     idem D (· = v) * incA D (o : D.host.E) ∈ intAt D (· = v) := by
@@ -179,7 +179,7 @@ theorem uni_off : OnStd fun {D} _ _ {sc} {G} W F => ∀ ρ (h : 2 * ρ + 2 ≤ D
       have : Φ 0 = 0 := by simp only [hΦ, map_zero, mul_zero, zero_mul]
       rw [this]; exact ⟨zero_mem _, by rw [map_zero]; exact zero_mem _⟩
     | add x y _ _ hx hy =>
-      have : Φ (x + y) = Φ x + Φ y := by simp only [hΦ, map_add]; ring
+      have : Φ (x + y) = Φ x + Φ y := by simp only [hΦ, map_add (f := _)]; ring
       rw [this]; exact intAt_add hx hy
     | smul o x _ hx =>
       have hI := idem_mul_self (D := D) (· = v)

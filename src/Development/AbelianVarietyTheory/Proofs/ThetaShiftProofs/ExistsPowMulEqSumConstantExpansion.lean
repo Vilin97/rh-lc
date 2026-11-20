@@ -29,7 +29,7 @@ def valLin {R Z : Type} [CommRing R] [CommRing Z] [IsLocalRing Z] {Y : Scheme.{0
     SecOver π M →ₛₗ[κ] Z where
   toFun s := valR p (M.U i) (LB.Sec.f s i)
   map_add' s t := toStkA_injective (by
-    rw [map_add, FormalValue.toStkA_valR_eq_gs _ _ _ hi, FormalValue.toStkA_valR_eq_gs _ _ _ hi,
+    rw [map_add (f := _), FormalValue.toStkA_valR_eq_gs _ _ _ hi, FormalValue.toStkA_valR_eq_gs _ _ _ hi,
       FormalValue.toStkA_valR_eq_gs _ _ _ hi]
     exact gs_add p _ _ (hi trivial) _ _)
   map_smul' r s := toStkA_injective (by

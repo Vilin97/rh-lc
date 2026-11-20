@@ -21,13 +21,13 @@ theorem subst_C' (g : K⟦X⟧) (r : K) : ((C r : K⟦X⟧).subst g : K⟦X⟧) 
 theorem taylor_dvd (U f h : K⟦X⟧) (N : ℕ) (hf : constantCoeff f = 0) (hh0 : constantCoeff h = 0)
     (hh : X ^ N ∣ h) :
     (X : K⟦X⟧) ^ (2 * N) ∣ (U.subst (f + h) : K⟦X⟧) - U.subst f - (d⁄dX K U).subst f * h := by
-  have hfh : constantCoeff (f + h) = 0 := by rw [map_add, hf, hh0, add_zero]
+  have hfh : constantCoeff (f + h) = 0 := by rw [map_add (f := _), hf, hh0, add_zero]
   set M := 2 * N with hM
   obtain ⟨V, P, hU⟩ : ∃ (V : K⟦X⟧) (P : Polynomial K), U = X ^ (M + 1) * V + (P : K⟦X⟧) :=
     ⟨_, _, eq_X_pow_mul_shift_add_trunc (M + 1) U⟩
   have hD : d⁄dX K U = X ^ M * (((M + 1 : ℕ) : K⟦X⟧) * V + X * d⁄dX K V) +
       ((Polynomial.derivative P : Polynomial K) : K⟦X⟧) := by
-    rw [hU, map_add, derivative_coe, Derivation.leibniz, Derivation.leibniz_pow, derivative_X]
+    rw [hU, map_add (f := _), derivative_coe, Derivation.leibniz, Derivation.leibniz_pow, derivative_X]
     simp only [smul_eq_mul, nsmul_eq_mul, Nat.add_sub_cancel]
     ring
   obtain ⟨k, hk⟩ := (P.map (algebraMap K K⟦X⟧)).binomExpansion f h
@@ -229,7 +229,7 @@ theorem padic_multiplications : ∀ (q : ℕ) [Fact q.Prime] (F : FormalGroup �
       rw [this]
       congr 1
       push_cast
-      rw [map_add, map_one]
+      rw [map_add (f := _), map_one]
       ring
   have hint : ∀ a : ℤ_[q], Bd 1 (U.subst (C (zc a) * ℓ)) := by
     intro a m
@@ -288,7 +288,7 @@ theorem padic_multiplications : ∀ (q : ℕ) [Fact q.Prime] (F : FormalGroup �
       rw [hW]
       linear_combination hT + ((d⁄dX ℂ_[q] U).subst ℓ : ℂ_[q]⟦X⟧) * hh'
     have := hbd (m + N)
-    rw [e, map_add, map_add, coeff_X_pow_mul, coeff_X, if_neg (by omega), coeff_X_pow_mul', if_neg (by omega)] at this
+    rw [e, map_add (f := _), map_add (f := _), coeff_X_pow_mul, coeff_X, if_neg (by omega), coeff_X_pow_mul', if_neg (by omega)] at this
     simpa using this
   have hq1 : ‖(q : ℂ_[q])‖ < 1 := by
     rw [← zc_natCast, norm_zc, PadicInt.norm_p]

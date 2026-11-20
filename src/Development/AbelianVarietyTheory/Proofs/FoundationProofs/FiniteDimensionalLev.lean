@@ -214,7 +214,7 @@ theorem hol_of_mem_adjoin (X : Tower Ω ε) (b : X.K) (hb : b ∈ Algebra.adjoin
   | add x y _ _ hx hy =>
     obtain ⟨a, ha, ha'⟩ := hx
     obtain ⟨b, hb, hb'⟩ := hy
-    exact ⟨a + b, ha.add hb, by rw [map_add, ha', hb']; rfl⟩
+    exact ⟨a + b, ha.add hb, by rw [map_add (f := _), ha', hb']; rfl⟩
   | mul x y _ _ hx hy =>
     obtain ⟨a, ha, ha'⟩ := hx
     obtain ⟨b, hb, hb'⟩ := hy

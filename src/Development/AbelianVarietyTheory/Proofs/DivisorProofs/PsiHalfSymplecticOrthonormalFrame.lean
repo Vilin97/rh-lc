@@ -28,7 +28,7 @@ def perL (idx : Fin g ≃ X.Ψ × Fin r) (x : Frame X.Ψ r) : (X.Ψ → Fin r �
     funext j
     simp only [perC, Pi.add_apply]
     split_ifs
-    · simp only [hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    · simp only [hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
     · rw [mulVec_add, Pi.add_apply]
   map_smul' c u := by
     funext j
@@ -65,9 +65,9 @@ theorem im_hx_perC (hs : IsSympl X bas) {x : Frame X.Ψ r} (hx : x ∈ X.dom) (u
       ∑ τ : X.Ψ, 2 * (τ.1 (-(X.κ0 / 2)) * hermC τ.1 X.Gm (u τ) (v τ)).re := by
   let B₁ : (X.Ψ → Fin r → ℂ) →ₗ[ℝ] (X.Ψ → Fin r → ℂ) →ₗ[ℝ] ℝ := LinearMap.mk₂ ℝ
     (fun u v => (Geo.Tor.hermForm (ThFr.Hm X bas idx x) (perL X idx x u) (perL X idx x v)).im)
-    (fun u u' v => by simp only [Geo.Tor.hermForm, map_add, add_dotProduct, add_im])
+    (fun u u' v => by simp only [Geo.Tor.hermForm, map_add (f := _), add_dotProduct, add_im])
     (fun c u v => by simp only [Geo.Tor.hermForm, map_smul, smul_dotProduct, smul_im])
-    (fun u v v' => by simp only [Geo.Tor.hermForm, map_add, star_add, mulVec_add, dotProduct_add, add_im])
+    (fun u v v' => by simp only [Geo.Tor.hermForm, map_add (f := _), star_add, mulVec_add, dotProduct_add, add_im])
     (fun c u v => by simp only [Geo.Tor.hermForm, map_smul, star_smul, star_trivial, mulVec_smul, dotProduct_smul, smul_im])
   let B₂ : (X.Ψ → Fin r → ℂ) →ₗ[ℝ] (X.Ψ → Fin r → ℂ) →ₗ[ℝ] ℝ := LinearMap.mk₂ ℝ
     (fun u v => ∑ τ : X.Ψ, 2 * (τ.1 (-(X.κ0 / 2)) * hermC τ.1 X.Gm (u τ) (v τ)).re)
@@ -79,7 +79,7 @@ theorem im_hx_perC (hs : IsSympl X bas) {x : Frame X.Ψ r} (hx : x ∈ X.dom) (u
       congr 3
       simp only [hermC, Finset.mul_sum, Pi.smul_apply, real_smul]
       exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)
-    (fun u v v' => by simp only [hermC, Pi.add_apply, map_add, mul_add, add_re, Finset.sum_add_distrib])
+    (fun u v v' => by simp only [hermC, Pi.add_apply, map_add (f := _), mul_add, add_re, Finset.sum_add_distrib])
     (fun c u v => by
       rw [smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun τ _ => ?_

@@ -37,7 +37,7 @@ theorem exists_gen_mod_nsmul_of_linearMap (E : Type) [Field E] [NumberField E] (
   refine ⟨o, y, ?_⟩
   apply mul_left_cancel₀ hd0'
   rw [Algebra.smul_def] at hb hl hy
-  rw [← hb, ← huv, Algebra.smul_def, nsmul_eq_mul, map_add, map_mul, map_mul, map_natCast, ← hl, ← hy]
+  rw [← hb, ← huv, Algebra.smul_def, nsmul_eq_mul, map_add (f := _), map_mul, map_mul, map_natCast, ← hl, ← hy]
   ring
 
 theorem exists_gens_mod_nsmul_of_injective (E : Type) [Field E] [NumberField E] (M : ℕ) (hM : 1 ≤ M)

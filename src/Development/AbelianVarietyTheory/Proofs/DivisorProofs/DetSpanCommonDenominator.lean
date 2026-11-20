@@ -20,7 +20,7 @@ theorem _root_.GlobalTheory.det_span_common_denominator : ∀ (F V : Type) [Fiel
       exact Submodule.mem_one.mpr ⟨r, hr⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add, Finsupp.add_apply, smul_add]
+      rw [map_add (f := _), Finsupp.add_apply, smul_add]
       exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       convert Submodule.smul_mem _ a hx using 1

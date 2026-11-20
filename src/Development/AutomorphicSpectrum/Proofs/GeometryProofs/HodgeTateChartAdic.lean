@@ -65,7 +65,7 @@ theorem isBaseChange_dual [Module.Finite A M] [Module.Projective A M] (hg : IsBa
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     | tmul b w =>
       have hw : ∑ i, w (e i) • f i = w := by
         refine LinearMap.ext fun m => ?_
@@ -290,7 +290,7 @@ theorem reducesTo_of_isHTChartOf : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
       rw [hl]
       congr 1
       show Units.map (algebraMap R O : R →* O) (χ (π (Multiplicative.ofAdd z'))) = _
-      rw [hχ, map_pow, hz, he, pow_val_intCast hζn, map_add, map_nsmul, zpow_add, nsmul_eq_mul,
+      rw [hχ, map_pow, hz, he, pow_val_intCast hζn, map_add (f := _), map_nsmul, zpow_add, nsmul_eq_mul,
         zpow_mul, zpow_natCast, hζn, one_zpow, _root_.mul_one]
     obtain ⟨y, hy, hyeq⟩ := hhtP n (∑ k, z k • u k) _ _ hf hder
     refine ⟨-y, P.om.neg_mem hy, ?_⟩
@@ -307,6 +307,6 @@ theorem reducesTo_of_isHTChartOf : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Fiel
       have := congrArg (Int.cast : ℤ → C) hq
       push_cast at this
       exact this
-    rw [h2, map_add, map_mul, map_pow, map_natCast, map_natCast, map_intCast]
+    rw [h2, map_add (f := _), map_mul, map_pow, map_natCast, map_natCast, map_intCast]
 
 end GlobalTheory.CompanionTheory.Ar.HT.ChartRed

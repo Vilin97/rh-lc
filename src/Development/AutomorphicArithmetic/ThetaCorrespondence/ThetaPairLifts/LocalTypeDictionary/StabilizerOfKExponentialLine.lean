@@ -72,7 +72,7 @@ theorem KExpLine_stabilizes_line : _root_.GlobalTheory.FunPr.ThetaLocalInputs â†
       exact differentiableAt_const _
     | add y z _ _ hy hz =>
       intro t
-      simp only [map_add, Pi.add_apply]
+      simp only [map_add (f := _), Pi.add_apply]
       exact (hy t).add (hz t)
     | smul a y _ hy =>
       intro t

@@ -69,10 +69,10 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
 def cx (H : Matrix (Fin n) (Fin n) ℂ) (L : Matrix (Fin n) (Fin n) ℂ →ₗ[ℝ] E) : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] E where
   toFun := fun Z => L (hpart1 H Z) + Complex.I • L (hpart2 H Z)
   map_add' := fun Z W => by
-    rw [hpart1_add, hpart2_add, map_add, map_add, smul_add]
+    rw [hpart1_add, hpart2_add, map_add (f := _), map_add (f := _), smul_add]
     abel
   map_smul' := fun c Z => by
-    rw [hpart1_smul, hpart2_smul, map_sub, map_add, map_smul, map_smul, map_smul, map_smul, RingHom.id_apply]
+    rw [hpart1_smul, hpart2_smul, map_sub, map_add (f := _), map_smul, map_smul, map_smul, map_smul, RingHom.id_apply]
     have hc : c = (c.re : ℂ) + (c.im : ℂ) * Complex.I := (Complex.re_add_im c).symm
     conv_rhs => rw [hc]
     simp only [← Complex.coe_smul, smul_add, add_smul, smul_smul]

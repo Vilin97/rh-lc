@@ -142,6 +142,6 @@ theorem stStar : StStar := by
     rw [htop]
     exact Submodule.mem_top
   obtain ⟨w, hw, x, hx, rfl⟩ := Submodule.mem_sup.mp hv
-  rw [map_add, hPW w hw, hPperp x hx, add_zero, LinearMap.zero_apply]
+  rw [map_add (f := _), hPW w hw, hPperp x hx, add_zero, LinearMap.zero_apply]
 
 end GlobalTheory.CompanionTheory.RgFl.StarPf

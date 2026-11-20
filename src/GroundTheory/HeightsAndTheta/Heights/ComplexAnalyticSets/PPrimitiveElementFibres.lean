@@ -36,7 +36,7 @@ theorem adjoin_eq_top (J : Ideal (MvPolynomial (Fin n) ℂ)) (A : Matrix (Fin d)
       (algebraMap_C_eq J A a).symm
     rw [h]
     exact Subalgebra.algebraMap_mem _ _
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | mul_X p i hp => rw [map_mul]; exact mul_mem hp (Algebra.subset_adjoin ⟨i, rfl⟩)
 
 def evalAt (J : Ideal (MvPolynomial (Fin n) ℂ)) (x : Fin n → ℂ) (hx : x ∈ zeroSet J) :
@@ -81,7 +81,7 @@ theorem proof : PrimitiveElementFibres.Statement := by
   refine ⟨c, m, D, Q, hmon, hdeg, hD, fun y hy => ⟨?_, ?_, ?_⟩⟩
   ·
     have h := congrArg (Polynomial.map (eval y)) hab
-    simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C,
+    simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C,
       ← Polynomial.derivative_map] at h
     have hu : Polynomial.C (eval y D)⁻¹ * Polynomial.C (eval y D) = (1 : Polynomial ℂ) := by
       rw [← Polynomial.C_mul, inv_mul_cancel₀ hy, Polynomial.C_1]

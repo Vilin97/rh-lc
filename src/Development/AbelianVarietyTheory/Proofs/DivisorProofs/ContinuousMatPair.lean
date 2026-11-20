@@ -28,7 +28,7 @@ theorem hAd_zero_left (w : Fin n → AE F E) : hAd σ J 0 w = 0 := by
   simp only [hAd, zero_dotProduct]
 
 theorem hAd_add_right (z w w' : Fin n → AE F E) : hAd σ J z (w + w') = hAd σ J z w + hAd σ J z w' := by
-  simp only [hAd, Pi.add_apply, map_add]
+  simp only [hAd, Pi.add_apply, map_add (f := _)]
   rw [show (fun i => cA σ (w i) + cA σ (w' i)) = (fun i => cA σ (w i)) + (fun i => cA σ (w' i)) from rfl,
     Matrix.mulVec_add, dotProduct_add]
 

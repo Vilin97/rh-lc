@@ -52,11 +52,11 @@ variable {e : Fv F v ⊗[F] E} {π₁ π₂ : Fv F v ⊗[F] E →+* Fv F v}
 
 theorem fst_proj_split_element (hπe1 : π₁ e = 1) (hsc : ∀ c : Fv F v, π₁ (sc (E := E) v c) = c ∧ π₂ (sc (E := E) v c) = c)
     (a b : Fv F v) : π₁ (mkS v e a b) = a := by
-  simp [mkS, map_add, map_mul, map_sub, (hsc _).1, hπe1]
+  simp [mkS, map_add (f := _), map_mul, map_sub, (hsc _).1, hπe1]
 
 theorem snd_proj_split_element (hπe2 : π₂ e = 0) (hsc : ∀ c : Fv F v, π₁ (sc (E := E) v c) = c ∧ π₂ (sc (E := E) v c) = c)
     (a b : Fv F v) : π₂ (mkS v e a b) = b := by
-  simp [mkS, map_add, map_mul, map_sub, (hsc _).2, hπe2]
+  simp [mkS, map_add (f := _), map_mul, map_sub, (hsc _).2, hπe2]
 
 end Coords
 

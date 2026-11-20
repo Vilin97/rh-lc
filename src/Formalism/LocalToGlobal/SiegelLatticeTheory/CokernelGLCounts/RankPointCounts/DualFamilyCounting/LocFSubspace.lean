@@ -25,7 +25,7 @@ def ldual (h : V →ₗ⋆[K] V →ₗ[K] K) (w : V) : Submodule (𝓞 K) V wher
   zero_mem' := by simp
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_setOf_eq, map_add, LinearMap.add_apply] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _), LinearMap.add_apply] at *
     exact Submodule.add_mem _ ha hb
   smul_mem' := by
     intro c z hz
@@ -95,7 +95,7 @@ theorem dualF_locF_le (h : V →ₗ⋆[K] V →ₗ[K] K) {L : Submodule (𝓞 K)
     rw [e]
     exact Submodule.smul_mem _ _ (hsgx y hy)
   | zero => rw [map_zero, LinearMap.zero_apply]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add, LinearMap.add_apply]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _), LinearMap.add_apply]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy =>
     obtain ⟨r, hr⟩ := Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range c
     rw [← algebraMap_smul K c y, map_smulₛₗ h (algebraMap (𝓞 K) K c) y, LinearMap.smul_apply,

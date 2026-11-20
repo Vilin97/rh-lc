@@ -74,7 +74,7 @@ theorem num_eq_htDetT_mul_int : GlobalTheory.CovTop.HypothesesXH → Hypotheses2
     exact GlobalTheory.IntRealPow.vanish_real_of_vanish_int Φ _ _ (GlobalTheory.T.flat_model_numerator_bound hXH hP hH hS D O hO hf A T H h B hB τ c g hg hgph ε π hd hu hc Φ hΦ) _
   rw [h0, zero_div] at hpol
   have har : (T.K B c).ar g = (T.K B c).ar f + (T.K B c).ar (fun _ _ => t : (T.M c).Fun) := by
-    rw [← map_add, hfdef, sub_add_cancel]
+    rw [← map_add (f := _), hfdef, sub_add_cancel]
   rw [har, ← add_assoc, MultilinearMap.cons_add]
   erw [hpol]
   rw [zero_add]

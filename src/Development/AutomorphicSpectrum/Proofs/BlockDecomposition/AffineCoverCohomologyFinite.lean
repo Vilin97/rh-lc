@@ -284,7 +284,7 @@ def toCochain (n : ℕ) : K.X n ≃+ Cochain (modulesAb (toMod V.g)).obj U n whe
     exact (congrArg (secRes V.g (inter_le_capO U i)) h).trans
       ((secRes_secRes V.g (capO_le_inter U i) (inter_le_capO U i) le_rfl _).trans (secRes_self V.g le_rfl _))
   map_add' a b := funext fun i => by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact map_add (secRes V.g (inter_le_capO U i)) _ _
 
 end Bridge

@@ -73,7 +73,7 @@ theorem fin_so (hKP : KP) {F E : Type} [Field F] [NumberField F] [Field E] [Numb
     exact GlobalTheory.SoPure.pure_mem_of_span G.M' B.ψ B.τ₁ hstd f ((pureSpanG G.M' (GdSo B G.M') P).comap (om' (1, h)))
       (fun φ' h1' h2' h3' => key f hf φ' h1' h2' h3') φ hSB hev hv1
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem polSo_eq_DG {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}

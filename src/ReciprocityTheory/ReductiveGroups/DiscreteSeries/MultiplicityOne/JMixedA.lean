@@ -65,7 +65,7 @@ theorem exists_inner_ne (X : SigData k r) (hG : IsClosedSubgroup (GV k r)) (v : 
     { carrier := {u | ∀ g ∈ GV k r, ⟪v, X.σ g u⟫_ℂ = 0}
       add_mem' := by
         intro a b ha hb g hg
-        rw [map_add, inner_add_right, ha g hg, hb g hg, add_zero]
+        rw [map_add (f := _), inner_add_right, ha g hg, hb g hg, add_zero]
       zero_mem' := by
         intro g hg
         rw [map_zero, inner_zero_right]

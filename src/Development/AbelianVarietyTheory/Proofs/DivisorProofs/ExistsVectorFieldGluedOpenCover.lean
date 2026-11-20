@@ -79,12 +79,12 @@ theorem GlobalTheory.LogKS.isField_glue : ∀ (Z : Scheme.{0}) (J : Type) (V : J
   refine ⟨glue V e, ⟨?_, ?_, ?_⟩, ?_⟩
   · intro W hW f f'
     refine glue_eq he hc hW _ _ fun i => ?_
-    rw [map_add, res_glue he hc hW f, res_glue he hc hW f']
-    simp only [loc, map_add]
+    rw [map_add (f := _), res_glue he hc hW f, res_glue he hc hW f']
+    simp only [loc, map_add (f := _)]
     exact ((he i).1 _ inf_le_right _ _).symm
   · intro W hW f f'
     refine glue_eq he hc hW _ _ fun i => ?_
-    rw [map_add, map_mul, map_mul, res_glue he hc hW f, res_glue he hc hW f']
+    rw [map_add (f := _), map_mul, map_mul, res_glue he hc hW f, res_glue he hc hW f']
     simp only [loc, map_mul]
     exact ((he i).2.1 _ inf_le_right _ _).symm
   · intro W W' h hW f

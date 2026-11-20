@@ -139,7 +139,7 @@ theorem qPt_add {k : ℕ} {p p' : QkPt D C k} {q q' : N.QT k} (h : ν.QPt p q) (
   have H := GlobalTheory.Ex.GtValues.points_correspond W D he hb C N ν
   refine ⟨?_, ?_⟩
   · show ν.eX (q.1.1.toAdd + q'.1.1.toAdd) = p.y + p'.y
-    rw [map_add, h.1, h'.1]
+    rw [map_add (f := _), h.1, h'.1]
   · obtain ⟨c, hc⟩ := (H.1 (qkAdd hb p p').g).exists
     have := (H.2.2.1 p.g p'.g _ _ _ _ h.2 h'.2 hc).1 ((isAdd_iff_eq _ _ _).2 rfl)
     rw [this] at hc

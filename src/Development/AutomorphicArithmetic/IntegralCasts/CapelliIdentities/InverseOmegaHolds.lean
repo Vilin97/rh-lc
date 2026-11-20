@@ -71,7 +71,7 @@ private def lowIn {R : Type*} [CommRing R] (O : Subring R) (n : ℕ) : Subring R
     · exact O.zero_mem
   add_mem' := by
     intro f g hf hg k hk
-    rw [map_add]
+    rw [map_add (f := _)]
     exact O.add_mem (hf k hk) (hg k hk)
   zero_mem' := by
     intro k _
@@ -134,7 +134,7 @@ private theorem key {R : Type*} [CommRing R] {a₁ a₂ a₃ a₄ a₆ : R} {w :
       - 3 * (C a₆ * X ^ 6 * w ^ 2)) * (-2 * w - X * dX w)
       = w * (C a₁ * X + C a₃ * X ^ 3 * w - 2) := by
   have h := congrArg (derivative R) hw
-  simp only [map_add, Derivation.leibniz, Derivation.leibniz_pow, derivative_C, derivative_X,
+  simp only [map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, derivative_C, derivative_X,
     Derivation.map_one_eq_zero, smul_eq_mul, nsmul_eq_mul] at h
   rw [dX_eq]
   push_cast at h

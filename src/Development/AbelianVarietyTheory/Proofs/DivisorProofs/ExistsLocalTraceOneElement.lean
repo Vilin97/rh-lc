@@ -14,7 +14,7 @@ theorem sigR_cj_eq_locConj (v : HeightOneSpectrum (𝓞 (maximalRealSubfield E))
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem mem_intLoc_of_mem_locOrder (v : HeightOneSpectrum (𝓞 (maximalRealSubfield E)))
     {z : Fv (maximalRealSubfield E) v ⊗[maximalRealSubfield E] E} (hz : z ∈ GlobalTheory.SelfDualGenus.locOrder v) :

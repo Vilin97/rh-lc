@@ -26,7 +26,7 @@ theorem mem_SB_of_rest : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [F
   have hs_ev : ∀ y : κ → Fv F v, (fun i => evFin F v (s y i)) = y := by
     intro y
     funext i
-    simp only [s, Pi.add_apply, map_add, GlobalTheory.LatVac.evFin_liftV]
+    simp only [s, Pi.add_apply, map_add (f := _), GlobalTheory.LatVac.evFin_liftV]
     abel
   let P : ((κ → AF F) → ℂ) →ₗ[ℂ] ((κ → Fv F v) → ℂ) := LinearMap.funLeft ℂ ℂ s
   have hP : schA F κ ≤ (SB (κ → Fv F v)).comap P := by

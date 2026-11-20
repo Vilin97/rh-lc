@@ -149,7 +149,7 @@ private theorem core (A : AbF) {M : Type} [Field M] [NumberField M] (hM : IsAbFi
   have e2 : τ β = β ↔ jacobiSym (a : ℤ) d = 1 := sqrt_iff hζ _ hτ' hd hd4 hdN hβ
   have hηa : τ η = η ^ a := act_root hζ _ hτ' ((hη.pow_eq_one_iff_dvd N).2 h2)
   have e3 : τ (η + η⁻¹) = η + η⁻¹ ↔ (a ≡ 1 [MOD 2 ^ (e + 2)] ∨ a + 1 ≡ 0 [MOD 2 ^ (e + 2)]) := by
-    rw [map_add, map_inv₀, hηa]
+    rw [map_add (f := _), map_inv₀, hηa]
     exact trace_iff (pow_ne_zero _ two_ne_zero) hη a
   have e4 : τ ∈ (IntermediateField.adjoin ℚ {α, β, η + η⁻¹}).fixingSubgroup ↔
       τ α = α ∧ τ β = β ∧ τ (η + η⁻¹) = η + η⁻¹ := by

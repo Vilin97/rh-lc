@@ -52,7 +52,7 @@ private theorem tensAct_tensAct_apply {n : ℕ} {Z : Type} [NormedAddCommGroup Z
         ∑ k, (D a b * D c d) i k • x k := by
   rw [tens_apply, tens_apply]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [tens_apply, map_add, map_sum, map_smul, smul_add, Finset.sum_add_distrib, Finset.smul_sum,
+    simp only [tens_apply, map_add (f := _), map_sum, map_smul, smul_add, Finset.sum_add_distrib, Finset.smul_sum,
     smul_smul, Matrix.mul_apply, Finset.sum_smul]
   rw [Finset.sum_comm (f := fun k j => (D a b i j * D c d j k) • x k)]
   abel
@@ -211,7 +211,7 @@ theorem assemble {n : ℕ} {ι : Type} [Fintype ι] [DecidableEq ι] (c : Fin n 
         add_mem' := by
           intro z1 z2 h1 h2 i
           simp only [Set.mem_setOf_eq] at h1 h2 ⊢
-          rw [Pi.single_add, WithLp.toLp_add, map_add, h1 i, h2 i, add_zero]
+          rw [Pi.single_add, WithLp.toLp_add, map_add (f := _), h1 i, h2 i, add_zero]
         zero_mem' := by
           intro i
           simp

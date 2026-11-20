@@ -70,7 +70,7 @@ theorem defect_line (R : Type) [CommRing R] (f : Fin 3 → PowerSeries R) (s : P
   have h3 : MvPowerSeries.subst (fun i => (PowerSeries.C (t i) * PowerSeries.X : PowerSeries R))
       (MvPowerSeries.X 0 + MvPowerSeries.X 1 + MvPowerSeries.X 2 : MvPowerSeries (Fin 3) R) =
       (PowerSeries.C (t 0 + t 1 + t 2) * PowerSeries.X : PowerSeries R) := by
-    rw [MvPowerSeries.subst_add hb, MvPowerSeries.subst_add hb, hX, hX, hX, map_add, map_add, add_mul, add_mul]
+    rw [MvPowerSeries.subst_add hb, MvPowerSeries.subst_add hb, hX, hX, hX, map_add (f := _), map_add (f := _), add_mul, add_mul]
   have hd : ∀ i j : Fin 3, MvPowerSeries.subst (fun i => (PowerSeries.C (t i) * PowerSeries.X : PowerSeries R))
       (MvPowerSeries.X i - MvPowerSeries.X j : MvPowerSeries (Fin 3) R) =
       (PowerSeries.C (t i - t j) * PowerSeries.X : PowerSeries R) := by

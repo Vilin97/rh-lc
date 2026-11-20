@@ -35,7 +35,7 @@ theorem join_exists : ∀ (o : Type) [CommRing o] (Ω : Type) [Field Ω] [Algebr
       rw [hi]
       exact Subalgebra.algebraMap_mem _ r
     | add y z _ _ hy hz =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem (hy (by assumption)) (hz (by assumption))
     | mul y z _ _ hy hz =>
       rw [map_mul]

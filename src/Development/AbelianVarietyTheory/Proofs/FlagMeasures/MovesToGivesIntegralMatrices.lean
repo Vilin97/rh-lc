@@ -33,7 +33,7 @@ theorem z_mem_orth (F : FlagG S r T) : F.z ∈ orth S (Submodule.span E (Set.ran
   induction hx using Submodule.span_induction with
   | mem y hy => obtain ⟨a, rfl⟩ := hy; exact F.z_orth a
   | zero => simp
-  | add a b _ _ ha hb => simp [map_add, ha, hb]
+  | add a b _ _ ha hb => simp [map_add (f := _), ha, hb]
   | smul c a _ ha => simp [ha]
 
 theorem exists_upUni (F : LFlag S r T) (n : S.V ≃ₗ[E] S.V)

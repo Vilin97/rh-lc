@@ -48,7 +48,7 @@ theorem tensorAction_inclC (z : ℤ_[p] ⊗[ℤ] 𝓞 E) (x : C ⊗[ℤ_[p]] T) 
     tensorAction (baseChangeAction C ρ) (inclC C z) x = (tensorAction ρ z).baseChange C x := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add y z hy hz => simp only [map_add, LinearMap.add_apply, hy, hz, LinearMap.baseChange_add]
+  | add y z hy hz => simp only [map_add (f := _), LinearMap.add_apply, hy, hz, LinearMap.baseChange_add]
   | tmul r a =>
     have e : tensorAction ρ (r ⊗ₜ a) = r • ρ a := LinearMap.ext fun y => by
       rw [tensorAction_tmul, LinearMap.smul_apply]
@@ -70,7 +70,7 @@ theorem coordC_act (hℓ : ∀ j a t, ℓ j (ρ a t) = (1 ⊗ₜ a) * ℓ j t) (
     (x : C ⊗[ℤ_[p]] T) : coordC C ℓ j (baseChangeAction C ρ a x) = (1 ⊗ₜ a) * coordC C ℓ j x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, mul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
   | tmul c t =>
     rw [baseChangeAction_apply, LinearMap.baseChange_tmul, coordC_tmul, coordC_tmul, hℓ, map_mul,
       mul_smul_comm]
@@ -83,7 +83,7 @@ theorem baseChange_eq_sum {u : Fin m → T} {e : ℤ_[p] ⊗[ℤ] 𝓞 E}
       ∑ j, tensorAction (baseChangeAction C ρ) (coordC C ℓ j x) (1 ⊗ₜ u j) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, LinearMap.add_apply, Finset.sum_add_distrib]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, LinearMap.add_apply, Finset.sum_add_distrib]
   | tmul c t =>
     rw [LinearMap.baseChange_tmul, hE, TensorProduct.tmul_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
@@ -103,7 +103,7 @@ theorem splitMap_inclC (hv : v.Integers O) (φ : E →+* C) (e : ℤ_[p] ⊗[ℤ
       algebraMap O C (ReciprocityTheory.ChartRestriction.G.Pdiv.AvDefs.tauExt (embO hv φ) e) := by
   induction e using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
   | tmul r a =>
     rw [inclC_tmul, splitMap_tmul]
     simp [ReciprocityTheory.ChartRestriction.G.Pdiv.AvDefs.tauExt, Algebra.ofId_apply, IsScalarTower.algebraMap_apply ℤ_[p] O C]
@@ -115,7 +115,7 @@ def intPart (O C E : Type) [CommRing O] [Field C] [Algebra O C] [Field E] :
 theorem inclC_mem_intPart (z : ℤ_[p] ⊗[ℤ] 𝓞 E) : inclC C z ∈ intPart O C E := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | tmul r a =>
     rw [inclC_tmul, IsScalarTower.algebraMap_apply ℤ_[p] O C, ← mul_one (algebraMap O C _),
       ← Algebra.smul_def, ← TensorProduct.smul_tmul']
@@ -155,7 +155,7 @@ theorem mem_latTQuot_of_smul_mem_latT : ∀ {p : ℕ} [Fact p.Prime] {C : Type} 
       clear hx
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
       | tmul c t =>
         rw [Point.inclT_tmul, coordC_tmul, algebraMap_smul]
         exact Submodule.smul_mem _ _ (inclC_mem_intPart _)

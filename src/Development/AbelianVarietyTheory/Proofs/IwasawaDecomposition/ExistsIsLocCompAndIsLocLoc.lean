@@ -202,7 +202,7 @@ def typePart (π : CuspSub E a) (w : HeightOneSpectrum (𝓞 E)) (L : Subgroup (
     {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (Kinf E a) W) : Submodule ℂ π.V where
   carrier := {ψ | (∀ k ∈ L, GeneralLinearGroup.map (pLoc E w) k = 1 → π.finPart k ψ = ψ) ∧
     ∀ g : GA E a, (fun k : Kinf E a => (cptRep E a k ψ.1).1 g) ∈ AutFin.coeffSpan ρ}
-  add_mem' := fun hx hy => ⟨fun k h1 h2 => by rw [map_add, hx.1 k h1 h2, hy.1 k h1 h2],
+  add_mem' := fun hx hy => ⟨fun k h1 h2 => by rw [map_add (f := _), hx.1 k h1 h2, hy.1 k h1 h2],
     fun g => add_mem (hx.2 g) (hy.2 g)⟩
   zero_mem' := ⟨fun _ _ _ => map_zero _, fun _ => zero_mem _⟩
   smul_mem' := fun c _ hx => ⟨fun k h1 h2 => by rw [map_smul, hx.1 k h1 h2],

@@ -25,7 +25,7 @@ theorem polFin {B : Base F E} {Y : Spc F E n} {W : Spc F E d} {M : Model σ Y W}
       add_mem' := by
         rintro f g ⟨N, _, h1⟩ ⟨N', _, h2⟩
         exact ⟨N ⊔ N', inferInstance, fun k hk A hA => by
-          rw [map_add]; exact Submodule.add_mem_sup (h1 k hk A hA) (h2 k hk A hA)⟩
+          rw [map_add (f := _)]; exact Submodule.add_mem_sup (h1 k hk A hA) (h2 k hk A hA)⟩
       smul_mem' := fun c f ⟨N, h0, h1⟩ => ⟨N, h0, fun k hk A hA => by rw [map_smul]; exact N.smul_mem c (h1 k hk A hA)⟩ }
   obtain ⟨U, h0, h1⟩ : f ∈ S := by
     refine (sInf_le (a := S) ⟨fun f₀ h₀ => ?_, fun u hu g ⟨N, h0, h1⟩ g₁ hg => ?_⟩ : M.Pol B.ψ B.emb ≤ S) hf

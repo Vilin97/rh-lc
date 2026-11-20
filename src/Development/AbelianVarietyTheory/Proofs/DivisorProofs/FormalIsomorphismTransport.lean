@@ -19,7 +19,7 @@ theorem exists_rep_pow_of_le : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : T
       add_mem' := by
         intro a c ha hc
         simp only [Set.mem_ofPred_eq] at ha hc ⊢
-        rw [map_add, o.act.add, comp_mul, ha, hc, _root_.mul_one]
+        rw [map_add (f := _), o.act.add, comp_mul, ha, hc, _root_.mul_one]
       zero_mem' := by
         simp only [Set.mem_ofPred_eq, map_zero]
         have h0 := o.act.add 0 0

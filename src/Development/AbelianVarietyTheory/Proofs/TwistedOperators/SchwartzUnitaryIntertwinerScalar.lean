@@ -73,7 +73,7 @@ theorem integral_conj_mul_eq (U : Sch l →ₗ[ℂ] Sch l)
     rw [(SchwartzMap.toLpCLM ℂ ℂ 2 (volume : Measure (EuclideanSpace ℝ l))).map_smul] at this
     exact this.symm
   have key : ∀ b : ℂ, ‖(U f).toLp 2 + b • (U g).toLp 2‖ = ‖f.toLp 2 + b • g.toLp 2‖ := fun b => by
-    rw [hlin, hlin, ← map_smul, ← map_add, hn]
+    rw [hlin, hlin, ← map_smul, ← map_add (f := _), hn]
   have k1 := key 1
   have k2 := key (-1)
   have k3 := key (-(RCLike.I : ℂ))

@@ -152,7 +152,7 @@ theorem annulus_polynomial_sigma (TT : ℝ) : AnnulusPolynomial TT (fun ζ => si
 theorem annulus_polynomial_add {TT : ℝ} {f g : ℂ → ℂ} (hf : AnnulusPolynomial TT f) (hg : AnnulusPolynomial TT g) : AnnulusPolynomial TT (fun ζ => f ζ + g ζ) := by
   obtain ⟨p, hp⟩ := hf
   obtain ⟨q, hq⟩ := hg
-  exact ⟨p + q, fun ζ hζ => by rw [map_add, ← hp ζ hζ, ← hq ζ hζ]⟩
+  exact ⟨p + q, fun ζ hζ => by rw [map_add (f := _), ← hp ζ hζ, ← hq ζ hζ]⟩
 
 theorem annulus_polynomial_mul {TT : ℝ} {f g : ℂ → ℂ} (hf : AnnulusPolynomial TT f) (hg : AnnulusPolynomial TT g) : AnnulusPolynomial TT (fun ζ => f ζ * g ζ) := by
   obtain ⟨p, hp⟩ := hf

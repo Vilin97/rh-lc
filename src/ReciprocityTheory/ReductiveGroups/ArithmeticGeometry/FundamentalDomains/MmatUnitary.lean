@@ -40,7 +40,7 @@ private lemma hermC_add_left' (u u' v : Fin r → ℂ) :
 private lemma hermC_add_right_fundamental_domains' (u v v' : Fin r → ℂ) :
     hermC τ G u (v + v') = hermC τ G u v + hermC τ G u v' := by
   unfold hermC
-  simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 private lemma hermC_sum_smul_left {m : ℕ} (c : Fin m → ℂ) (q : Fin m → Fin r → ℂ) (v : Fin r → ℂ) :
     hermC τ G (∑ k, c k • q k) v = ∑ k, c k * hermC τ G (q k) v := by

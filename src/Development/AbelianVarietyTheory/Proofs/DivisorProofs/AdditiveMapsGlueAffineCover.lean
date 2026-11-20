@@ -74,8 +74,8 @@ theorem glue (F H G : Action X.Modules Λ) [H.V.IsQuasicoherent] [G.V.IsQuasicoh
     intro i W hW e' χ h₁ h₂
     refine ext_span (τ (V i)) (hsp i) (fun a => X.presheaf.map (homOfLE hW).op a) _ _ (fun x y => ?_) (fun x y => ?_)
       (fun a x => ?_) (fun a x => ?_) fun x => ?_
-    · rw [map_add, map_add]
-    · rw [map_add, map_add]
+    · rw [map_add (f := _), map_add (f := _)]
+    · rw [map_add (f := _), map_add (f := _)]
     · rw [GlobalTheory.Twist.resM_smul, map_smul]
     · rw [map_smul, GlobalTheory.Twist.resM_smul]
     · rw [hτ.2.1, h₁, h₂, he]

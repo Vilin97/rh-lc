@@ -70,7 +70,7 @@ theorem mvExp_add_subst_linear : ∀ (C : Type) [Field C] [CharZero C] (σ : Typ
   intro C _ _ σ _
   refine ⟨fun a b ha hb => ?_, fun a ha => mvExp_eq_subst_exp a ha, fun τ _ φ a hφ ha => ?_, fun y P => ?_⟩
   · rw [mvExp_eq_subst_exp a ha, mvExp_eq_subst_exp b hb,
-      mvExp_eq_subst_exp (a + b) (by rw [map_add, ha, hb, add_zero])]
+      mvExp_eq_subst_exp (a + b) (by rw [map_add (f := _), ha, hb, add_zero])]
     exact ReciprocityTheory.ChartRestriction.G.TB.WickVanishing.exp_add ha hb
   · have hs := MvPowerSeries.hasSubst_of_constantCoeff_zero hφ
     rw [mvExp_eq_subst_exp a ha,

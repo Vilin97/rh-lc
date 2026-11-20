@@ -44,7 +44,7 @@ theorem liftPt₁₂_eq : ∃ (x y : gaussRing (gaussCurve W W)) (h : _),
       (algebraMap _ (liftField K W) y) h := by
   have hsum : pushPt W W (redU K W W (liftPt₁ K W + liftPt₂ K W)) =
       univPt₁ (W.map (residue 𝒪)) + univPt₂ (W.map (residue 𝒪)) := by
-    rw [map_add, map_add, pushPt_redU_liftPt₁, pushPt_redU_liftPt₂]
+    rw [map_add (f := _), map_add (f := _), pushPt_redU_liftPt₁, pushPt_redU_liftPt₂]
   have hne : redU K W W (liftPt₁ K W + liftPt₂ K W) ≠ 0 := fun h0 =>
     isGenPt_ne_zero _ (isGenPt_univPt₁₂ (W.map (residue 𝒪))) (by rw [← hsum, h0, map_zero])
   rw [redU_apply] at hne
@@ -138,7 +138,7 @@ theorem univAdd_reduceFF
     rw [← e₃]; exact isGenPt_liftPt₁₂ K W
   have hsum : pushPt W W (redU K W W (liftPt₁ K W + liftPt₂ K W)) =
       univPt₁ (W.map (residue 𝒪)) + univPt₂ (W.map (residue 𝒪)) := by
-    rw [map_add, map_add, pushPt_redU_liftPt₁, pushPt_redU_liftPt₂]
+    rw [map_add (f := _), map_add (f := _), pushPt_redU_liftPt₁, pushPt_redU_liftPt₂]
   have k₁ := pushPt_redU_genEval K W W' h₁ g₁ (isGenPt_univPt₁ _)
     (by rw [← e₁]; exact pushPt_redU_liftPt₁ K W) Q
   have k₂ := pushPt_redU_genEval K W W' h₂ g₂ (isGenPt_univPt₂ _)
@@ -150,7 +150,7 @@ theorem univAdd_reduceFF
   have hadd := (respectsAdd_iff Q).mp hQ (liftField K W) _ _ g₁ g₂ (hs ▸ g₃)
   rw [genEval_congr _ hs _ g₃] at hadd
   have := congrArg (fun P => pushPt W W' (redU K W W' P)) hadd
-  simp only [map_add] at this
+  simp only [map_add (f := _)] at this
   rw [k₁, k₂, k₃] at this
   exact this
 

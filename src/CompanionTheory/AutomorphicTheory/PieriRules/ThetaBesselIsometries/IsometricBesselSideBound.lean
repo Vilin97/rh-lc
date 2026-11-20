@@ -68,7 +68,7 @@ theorem isoBessel_polarised : PI.KFinSmooth → ∀ (k r : ℕ) (ε : Fin (2 * r
     (fun w (x : Formalism.QuantumDeterminants.Mt k r) => Bm (R.σ (Matrix.of x) w)) hm hn ?_ ?_
   · intro v hv w hw
     filter_upwards [hae] with x hx
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     exact hB.1.1 _ (hsm _ hx v hv) _ (hsm _ hx w hw)
   · intro c v hv
     filter_upwards [hae] with x hx

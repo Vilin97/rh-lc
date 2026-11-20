@@ -17,7 +17,7 @@ theorem rowGen_rename (R : Type) [CommRing R] {r n : ℕ} (a b : Fin r) (f : MvP
       (Polynomial.mapAlgHom (rename (colEmb r n))).comp (rowGen R (n := n) a b) := by
     apply MvPolynomial.algHom_ext
     intro v
-    simp only [AlgHom.comp_apply, rename_X, rowGen, aeval_X, Polynomial.coe_mapAlgHom, Polynomial.map_add,
+    simp only [AlgHom.comp_apply, rename_X, rowGen, aeval_X, Polynomial.coe_mapAlgHom, Polynomial.map_add (f := _),
       Polynomial.map_C, colEmb]
     split_ifs <;> simp [colEmb]
   have h2 := congrArg (fun φ => φ f) h

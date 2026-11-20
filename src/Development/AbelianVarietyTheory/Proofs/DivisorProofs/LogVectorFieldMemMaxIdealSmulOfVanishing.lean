@@ -163,7 +163,7 @@ theorem mem_smul_top_of_sum {K A B ι : Type} [Field K] [CommRing A] [CommRing B
     · rintro x y ⟨s, D₁, h₁, e₁⟩ ⟨t, D₂, h₂, e₂⟩
       refine ⟨s * t, (t : A) • D₁ + (s : A) • D₂,
         add_mem (Submodule.smul_mem _ _ h₁) (Submodule.smul_mem _ _ h₂), ?_⟩
-      rw [Submodule.coe_add, Submodule.coe_smul, Submodule.coe_smul, map_add, map_smul, map_smul, ← e₁, ← e₂,
+      rw [Submodule.coe_add, Submodule.coe_smul, Submodule.coe_smul, map_add (f := _), map_smul, map_smul, ← e₁, ← e₂,
         smul_smul, smul_smul, smul_add, Submonoid.coe_mul, mul_comm (t : A)]
     · intro k _
       obtain ⟨s, a, ha, e⟩ := hg k
@@ -208,7 +208,7 @@ theorem mem_smul_top_of_coords {K A B R : Type} [Field K] [CharZero K] [CommRing
     have e' : y * algebraMap A B t = algebraMap A B a := e
     have h1 := congrArg (fun y => ψ (extL (S := B) f D.1 y)) e'
     have h2 := congrArg (fun y => δ (ψ y)) e'
-    simp only [Derivation.leibniz, smul_eq_mul, map_mul, map_add, extL_algebraMap, hδ] at h1 h2
+    simp only [Derivation.leibniz, smul_eq_mul, map_mul, map_add (f := _), extL_algebraMap, hδ] at h1 h2
     exact hu.mul_left_cancel (by linear_combination h1 - h2)
   have hD : extL (S := B) f D.1 ∈ logSub (algebraMap K B) (Ideal.span {∏ i, z (e i)}) := by
     rw [← hK, ← hJ]

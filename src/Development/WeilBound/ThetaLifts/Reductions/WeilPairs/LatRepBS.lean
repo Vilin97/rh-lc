@@ -43,7 +43,7 @@ theorem fin_mul_eq (y : AEF F E) :
       show finPartF F E (a ⊗ₜ[F] t) = sndA F a ⊗ₜ[F] t from rfl, liftF_tmul]
     congr 1
     exact Prod.ext (zero_mul _) (one_mul _)
-  | add x y hx hy => rw [mul_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [mul_add, hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem liftF_smul_mem {z : Af F ⊗[F] E} (hz : z ∈ hatO (F := F) E) {u : WOF F E nS nT}
     (hu : u ∈ latOF F E nS nT Λ) : liftF F E z • u ∈ latOF F E nS nT Λ := by
@@ -68,7 +68,7 @@ theorem liftF_smul_mem {z : Af F ⊗[F] E} (hz : z ∈ hatO (F := F) E) {u : WOF
     | add x y _ _ hx hy => rw [smul_add]; exact add_mem hx hy
     | neg x _ hx => rw [smul_neg]; exact neg_mem hx
   | zero => rw [map_zero, zero_smul]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add, add_smul]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), add_smul]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg, neg_smul]; exact neg_mem hx
 
 theorem idem_smul_mem {e : AEF F E} (he : e * e = e) (hf : algebraMap (AF F) (AEF F E) (pairA F 0 1) * e = e)

@@ -20,7 +20,7 @@ theorem exists_pow_mul_of_locally_integral : ∀ (R K : Type) [CommRing R] [Fiel
     { carrier := {u | ∃ a : A, ∀ ψ : A →ₐ[R] K, ψ a = ψ u * f ψ}
       add_mem' := by
         rintro u v ⟨a, ha⟩ ⟨b, hb⟩
-        exact ⟨a + b, fun ψ => by rw [map_add, map_add, ha, hb, add_mul]⟩
+        exact ⟨a + b, fun ψ => by rw [map_add (f := _), map_add (f := _), ha, hb, add_mul]⟩
       zero_mem' := ⟨0, fun ψ => by simp⟩
       smul_mem' := by
         rintro c u ⟨a, ha⟩

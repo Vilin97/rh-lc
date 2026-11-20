@@ -74,7 +74,7 @@ theorem latAt_trivAt_of_split : ∀ (D : D7) (V W : HSp D) (B : Base V W), B.Goo
       rw [hsum, map_sum]
     exact Finset.sum_eq_zero fun PP hPP => GlobalTheory.ExportSeries.SpecGood.infPart_eq_zero_of_isIdemAt D PP _ (hes PP hPP)
   refine ⟨GlobalTheory.WeilProduct.mem_GfC_of_supp (a := idem Q + cA D (idem Q)) ?_ hsQ, ?_⟩
-  · rw [map_add, GlobalTheory.PlaceIdem.infPart_cA, hinf, map_zero, add_zero]
+  · rw [map_add (f := _), GlobalTheory.PlaceIdem.infPart_cA, hinf, map_zero, add_zero]
   intro h h' γ k hh' hk heq
   obtain ⟨ι, h1, h2, h3⟩ := GlobalTheory.HostAdeleIso.exists_finiteAdele_equiv D
   have h4 := GlobalTheory.PlaceIdem.exists_isPlIdem D ι h1 h2 h3

@@ -16,7 +16,7 @@ theorem polyOfMv_map_C (k : Type) [CommRing k] (σ : Type) (f : MvPolynomial σ 
     polyOfMv k σ (map (algebraMap k (Polynomial k)) f) = Polynomial.C f := by
   induction f using MvPolynomial.induction_on with
   | C r => simp [polyOfMv]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp => simp only [map_mul, hp, map_X]; simp [polyOfMv]
 
 theorem coeff_polyOfMv_mem (k : Type) [CommRing k] (σ : Type) (M : Submodule k (MvPolynomial σ k))
@@ -32,7 +32,7 @@ theorem coeff_polyOfMv_mem (k : Type) [CommRing k] (σ : Type) (M : Submodule k 
     · exact hf
     · exact zero_mem _
   | zero => intro j; simp
-  | add y z _ _ hy hz => intro j; rw [map_add, Polynomial.coeff_add]; exact add_mem (hy j) (hz j)
+  | add y z _ _ hy hz => intro j; rw [map_add (f := _), Polynomial.coeff_add]; exact add_mem (hy j) (hz j)
   | smul c y _ hy =>
     intro j
     rw [MvPolynomial.smul_eq_C_mul, map_mul, Polynomial.coeff_mul]
@@ -63,7 +63,7 @@ theorem polyOfMv_sqAct_transv (k : Type) [CommRing k] (N : ℕ) (lam : DomWeight
   rw [sqAct, hdet, one_smul]
   induction f using MvPolynomial.induction_on with
   | C r => simp [polyOfMv, rowGen, rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1
@@ -76,7 +76,7 @@ theorem polyOfMv_sqAct_transv (k : Type) [CommRing k] (N : ℕ) (lam : DomWeight
       simp only [Matrix.transpose_apply, Matrix.transvection, Matrix.add_apply, Matrix.one_apply, Matrix.single_apply]
       congr 1
       simp only [eq_comm]
-    simp only [hg, polyOfMv, eval₂Hom_C, eval₂Hom_X', Polynomial.coe_mapRingHom, Polynomial.map_add, add_mul,
+    simp only [hg, polyOfMv, eval₂Hom_C, eval₂Hom_X', Polynomial.coe_mapRingHom, Polynomial.map_add (f := _), add_mul,
       Finset.sum_add_distrib, apply_ite (Polynomial.map (C : k →+* MvPolynomial (Fin N × Fin N) k)), ite_mul,
       Polynomial.map_one, Polynomial.map_zero, Polynomial.map_X, one_mul, zero_mul, Finset.sum_ite_eq,
       Finset.mem_univ, if_true, ite_and, Finset.sum_ite_eq']

@@ -185,7 +185,7 @@ theorem rq_lin {ε : Fin n → Bool} {σ : Matrix (Fin n) (Fin n) ℂ → (H →
   have e1 : k * (a • S + b • T) * kᴴ = a • (k * S * kᴴ) + b • (k * T * kᴴ) := by
     simp only [mul_add, add_mul, Matrix.mul_smul, Matrix.smul_mul]
   rw [e1, rq_actM_add, rq_actM_add, rq_actM_smul, rq_actM_smul, rq_actM_smul, rq_actM_smul]
-  simp only [LinearMap.add_apply, LinearMap.smul_apply, Submodule.coe_add, Submodule.coe_smul, map_add, map_smul,
+  simp only [LinearMap.add_apply, LinearMap.smul_apply, Submodule.coe_add, Submodule.coe_smul, map_add (f := _), map_smul,
     hS, hT]
 
 end Rep

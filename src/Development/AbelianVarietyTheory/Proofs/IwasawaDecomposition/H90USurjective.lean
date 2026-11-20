@@ -174,7 +174,7 @@ theorem map_one_tmul {ι : AfE F E →+* FiniteAdeleRing (𝓞 E) E} (h1 : ∀ x
   refine ⟨ι (1 ⊗ₜ[F] a) - adMap F E a, sub_mem (h2 _ hi) (adMap_int ha), ?_⟩
   have e : (1 : E) ⊗ₜ[F] (algebraMap F (FiniteAdeleRing (𝓞 F) F) k) = algebraMap F E k ⊗ₜ[F] 1 := by
     rw [Algebra.algebraMap_eq_smul_one, ← TensorProduct.smul_tmul, Algebra.algebraMap_eq_smul_one]
-  rw [TensorProduct.tmul_add, map_add, map_add, e, h1, adMap_algebraMap, TensorProduct.tmul_smul, map_nsmul, map_nsmul,
+  rw [TensorProduct.tmul_add, map_add (f := _), map_add (f := _), e, h1, adMap_algebraMap, TensorProduct.tmul_smul, map_nsmul, map_nsmul,
     smul_sub]
   abel
 
@@ -186,7 +186,7 @@ theorem exists_eq_one_tmul {σ : E →ₐ[F] E} (hσ : ∀ x, ∃ t : F, algebra
     | add y y' hy hy' =>
       obtain ⟨b, hb⟩ := hy
       obtain ⟨b', hb'⟩ := hy'
-      exact ⟨b + b', by rw [map_add, TensorProduct.tmul_add, ← hb, ← hb']; abel⟩
+      exact ⟨b + b', by rw [map_add (f := _), TensorProduct.tmul_add, ← hb, ← hb']; abel⟩
     | tmul x a =>
       obtain ⟨t, ht⟩ := hσ x
       refine ⟨t • a, ?_⟩
@@ -294,7 +294,7 @@ theorem finIdele_mem_KDq {x : (AfE H.F H.E)ˣ} (hx : h90 σ x = 1) : finIdele ι
   have hc : ∀ x, IsCMField.complexConj H.E x = H.conj x := fun x => bridge_star_holds R H x
   have ht : ∀ y : H.E, ∃ t : H.F, algebraMap H.F H.E t = y + σ y := fun y =>
     ⟨⟨y + σ y, (IsCMField.complexConj_eq_self_iff H.E _).1 (by
-      rw [hσ, ← hc, map_add, IsCMField.complexConj_apply_apply, add_comm])⟩, rfl⟩
+      rw [hσ, ← hc, map_add (f := _), IsCMField.complexConj_apply_apply, add_comm])⟩, rfl⟩
   have hfix : conjId σ x = x := (div_eq_one.1 hx).symm
   obtain ⟨b, hb⟩ := exists_eq_one_tmul ht (z := (x : AfE H.F H.E)) (congrArg Units.val hfix)
   refine mem_KDq_of_adMap H SQ (b := b) ?_

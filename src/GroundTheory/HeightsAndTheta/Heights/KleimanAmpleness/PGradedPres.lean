@@ -118,7 +118,7 @@ def freeGraded (d : Fin r → ℤ) : GradedPMod S N (ULift.{v} (Fin r → Poly S
       · rw [map_zero]
         exact zero_mem _
       · intro a b ha hb
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem ha hb
   smul_mem n c p x hp hx j := by
     change p * x.down j ∈ (polyGraded S N).piece (c + n - d j)
@@ -195,7 +195,7 @@ theorem component_map (g : GradedHom 𝓕 𝓜) (y : DirectSum ℤ fun c => 𝓕
     · rw [𝓜.isInternal.ofBijective_coeLinearMap_of_mem_ne h (g.map_piece i x x.2)]
       simp [DirectSum.of_apply, h]
   | add a b ha hb =>
-    simp only [map_add, DirectSum.add_apply, Submodule.coe_add, ha, hb]
+    simp only [map_add (f := _), DirectSum.add_apply, Submodule.coe_add, ha, hb]
 
 def kerGraded (g : GradedHom 𝓕 𝓜) : GradedPMod S N (LinearMap.ker g.toLin) where
   piece c := (𝓕.piece c).comap ((LinearMap.ker g.toLin).subtype.restrictScalars S)

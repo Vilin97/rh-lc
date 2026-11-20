@@ -60,7 +60,7 @@ theorem exists_basis_D_cons (k V : Type) [Field k] [CharZero k] [CommRing V] [Is
     simp only [Function.comp_apply, TensorProduct.mk_apply, z, Fin.cons_zero, Fin.cons_succ] at hg
     have hφ := congrArg (mapBaseChange k V κ) hg
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, map_zero, mapBaseChange_tmul, one_smul, map_D, ht₀,
+      simp only [map_add (f := _), map_sum, map_smul, map_zero, mapBaseChange_tmul, one_smul, map_D, ht₀,
       Derivation.map_zero, smul_zero, zero_add] at hφ
     have hs : ∀ i : Fin n, g i.succ = 0 :=
       Fintype.linearIndependent_iff.mp hdli (fun i => g i.succ) hφ
@@ -176,8 +176,8 @@ theorem residue_dForm : ∀ {L K : Type} [Field L] [Field K] (cL : ℂ →+* L) 
   have hrow : ∀ j, ψ (M 0 j) = ψ (u * Finsupp.single (0 : Fin (n + 1)) (1 : S.ring) j) := by
     intro j
     simp only [M, Matrix.of_apply, Fin.cons_zero]
-    rw [← hu, Derivation.leibniz, hDt, map_add, map_smul, map_smul, b.repr_self]
-    rw [Finsupp.add_apply, Finsupp.smul_apply, Finsupp.smul_apply, smul_eq_mul, smul_eq_mul, map_add,
+    rw [← hu, Derivation.leibniz, hDt, map_add (f := _), map_smul, map_smul, b.repr_self]
+    rw [Finsupp.add_apply, Finsupp.smul_apply, Finsupp.smul_apply, smul_eq_mul, smul_eq_mul, map_add (f := _),
       map_mul, hψt, zero_mul, zero_add]
   have hsub : (ψ.mapMatrix M).submatrix Fin.succ Fin.succ = N := Matrix.ext fun _ _ => rfl
   have h0 : ∀ j : Fin n, ψ.mapMatrix M 0 j.succ = 0 := fun j => by

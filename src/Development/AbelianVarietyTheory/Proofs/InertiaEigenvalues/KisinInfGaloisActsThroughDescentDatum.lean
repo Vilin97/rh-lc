@@ -139,7 +139,7 @@ theorem TWact_smul {R : Type} [CommRing R] [Algebra O R] (f : R →ₐ[O] R) (T 
   | zero => simp only [smul_zero, map_zero]
   | tmul w y =>
     simp only [TWact, smul_tmul', TensorProduct.map_tmul, AlgHom.toLinearMap_apply, smul_eq_mul, map_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem TWact_TWincl {R R' : Type} [CommRing R] [CommRing R'] [Algebra O R] [Algebra O R'] (φ : R →ₐ[O] R')
     (f : R →ₐ[O] R) (f' : R' →ₐ[O] R') (h : ∀ r, f' (φ r) = φ (f r)) (T : LocLat G ℚ_[l] K O) (g : G)
@@ -148,7 +148,7 @@ theorem TWact_TWincl {R R' : Type} [CommRing R] [CommRing R'] [Algebra O R] [Alg
   | zero => simp only [map_zero]
   | tmul w y =>
     simp only [TWact, TWincl, TensorProduct.map_tmul, AlgHom.toLinearMap_apply, LinearMap.id_apply, h]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Tensor
 

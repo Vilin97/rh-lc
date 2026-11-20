@@ -29,7 +29,7 @@ lemma h_smul_right (a : E) (x y : V) : H.h x (a • y) = M.L.cj a * H.h x y := b
   rw [H.h_herm, H.h_smul_left, map_mul, ← H.h_herm]
 
 lemma h_add_right (x y y' : V) : H.h x (y + y') = H.h x y + H.h x y' := by
-  rw [H.h_herm, H.h_add_left, map_add, ← H.h_herm, ← H.h_herm]
+  rw [H.h_herm, H.h_add_left, map_add (f := _), ← H.h_herm, ← H.h_herm]
 
 lemma mem_perp_span (s : Set V) (v : V) :
     v ∈ H.perp (Submodule.span E s) ↔ ∀ x ∈ s, H.h v x = 0 := by

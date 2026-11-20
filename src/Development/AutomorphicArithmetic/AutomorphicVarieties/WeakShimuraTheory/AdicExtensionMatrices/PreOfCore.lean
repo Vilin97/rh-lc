@@ -54,7 +54,7 @@ theorem UpperTheory.V.Ws.sxPreOfCore :
         obtain ⟨y, rfl⟩ := hx
         exact Algebra.subset_adjoin (Or.inl ⟨y, rfl⟩)
       | algebraMap b => exact S.algebraMap_mem b
-      | add x y _ _ hx hy => rw [map_add]; exact S.add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact S.add_mem hx hy
       | mul x y _ _ hx hy => rw [map_mul]; exact S.mul_mem hx hy
     rintro x -
     have hx : x ∈ Algebra.adjoin X.A (Set.range fun x : Φ.ι × Fin 4 × Fin 4 => n x.1 x.2.1 x.2.2) := by

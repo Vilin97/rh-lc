@@ -69,7 +69,7 @@ theorem separable_model (F : Type) [Field F] [NumberField F] (p : Polynomial F) 
   obtain ⟨b', hb'⟩ := exists_lift ℓ hℓ b (hcoef b (fun x hx => by simp [hx]))
   refine ⟨q, hq, a', b', ?_⟩
   apply Polynomial.map_injective ((cenOrder ℓ F).val : cenOrder ℓ F →+* ℚ_[ℓ] ⊗[ℚ] F) Subtype.val_injective
-  rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, ← Polynomial.derivative_map,
+  rw [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, ← Polynomial.derivative_map,
     ha', hb', hq, Polynomial.derivative_map, ← Polynomial.map_mul, ← Polynomial.map_mul,
     ← Polynomial.map_add, hab, Polynomial.map_one, Polynomial.map_one]
 

@@ -146,9 +146,9 @@ theorem UpperTheory.fourier_injective_schwartz_bruhat :
   refine abs_inj m (fun t s => ψ (Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (t * s))) ?_ ?_ ?_ ?_ ?_ T hT.1 hT.2 hF
   · exact hc.comp ((IsModuleTopology.continuous_of_linearMap _).comp continuous_mul)
   · intro x x' y
-    simp only [add_mul, map_add, AddChar.map_add_eq_mul]
+    simp only [add_mul, map_add (f := _), AddChar.map_add_eq_mul]
   · intro x x' y
-    simp only [mul_add, map_add, AddChar.map_add_eq_mul]
+    simp only [mul_add, map_add (f := _), AddChar.map_add_eq_mul]
   · intro x
     simp
   · intro U hU

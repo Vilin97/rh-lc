@@ -14,7 +14,7 @@ def eqvFn {G : Type} [Group G] (Γ K : Subgroup G) (V : Type) [AddCommGroup V] [
   carrier := {φ | ∀ (γ : Γ) (x : G) (κ : K), φ (γ * x * κ) = ((ψ κ)⁻¹ : ℂˣ) • a γ (φ x)}
   add_mem' := by
     intro φ φ' h h' γ x κ
-    simp only [Pi.add_apply, map_add, smul_add, h γ x κ, h' γ x κ]
+    simp only [Pi.add_apply, map_add (f := _), smul_add, h γ x κ, h' γ x κ]
   zero_mem' := by
     intro γ x κ
     simp

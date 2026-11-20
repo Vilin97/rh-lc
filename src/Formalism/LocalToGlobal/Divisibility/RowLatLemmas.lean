@@ -220,7 +220,7 @@ theorem eigProj_mem_of_stable [FiniteDimensional K V] (hc : PairComm op) (hs : S
         exact A.zero_mem
     | zero => simp
     | add a b _ _ iha ihb =>
-      rw [Submodule.coe_add, map_add]
+      rw [Submodule.coe_add, map_add (f := _)]
       exact A.add_mem iha ihb
   exact key ⟨v, hv⟩
 
@@ -766,7 +766,7 @@ theorem sum_partPr (t : Bs.Tup) (hi : iSupIndep (Df.Qp t)) (ht : (⨆ p, Df.Qp t
     · intro hq
       exact absurd (Finset.mem_univ q) hq
   | zero => simp
-  | add a b _ _ iha ihb => rw [map_add, iha, ihb, map_add]
+  | add a b _ _ iha ihb => rw [map_add (f := _), iha, ihb, map_add (f := _)]
 
 theorem rowXE_spec (hW : Df.WF) (Y : Matrix (Fin (Df.dQ Bs.μ0)) (Fin (Df.dQ Bs.μ0)) ℂ) (hY : IsUnit Y.det)
     (κ : InfinitePlace K → ℝ) (hκ : ∀ v, 0 < κ v) (lam : Bs.J → Bs.Ix → InfinitePlace K → ℝ)

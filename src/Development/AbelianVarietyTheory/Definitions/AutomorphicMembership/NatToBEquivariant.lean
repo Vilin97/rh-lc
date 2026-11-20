@@ -65,7 +65,7 @@ theorem eigDefect_map {ρ : Λ →+* Module.End O M} {ρ' : Λ →+* Module.End 
     f.baseChange C (eigDefect h ρ i x) = eigDefect h ρ' i (f x) := by
   have e : IsEquivariant (baseChangeAction C ρ) (baseChangeAction C ρ') (f.baseChange C) := fun a z => by
     induction z with
-    | add z w hz hw => simp only [map_add, hz, hw]
+    | add z w hz hw => simp only [map_add (f := _), hz, hw]
     | tmul c m => exact congrArg (c ⊗ₜ[O] ·) (hf a m)
   rw [eigDefect, map_sub, e.proj h]
   rfl
@@ -76,7 +76,7 @@ theorem contr_comp {ρ : Λ →+* Module.End O M} {ρ' : Λ →+* Module.End O M
   rw [contr, contr, ← eigDefect_map h hf]
   induction eigDefect h ρ i x with
   | zero => simp
-  | add z w hz hw => simp only [map_add, LinearMap.add_apply, hz, hw]
+  | add z w hz hw => simp only [map_add (f := _), LinearMap.add_apply, hz, hw]
   | tmul c m => simp [LinearMap.BilinForm.baseChange_tmul]
 
 theorem contr_of_eigen {ρ : Λ →+* Module.End O M} (ψ : LinearMap.BilinForm O M) (i : J) {x : M}

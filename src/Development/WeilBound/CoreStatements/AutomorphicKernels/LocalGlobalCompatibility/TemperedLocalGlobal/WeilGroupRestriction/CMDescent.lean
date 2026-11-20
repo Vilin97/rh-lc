@@ -160,7 +160,7 @@ theorem exists_conj {F Ω : Type*} [Field F] [Field Ω] [Algebra F Ω] [IsAlgClo
       map_one' := j.injective (by simp [hg])
       map_mul' := fun x y ↦ j.injective (by rw [hg, map_mul, map_mul, map_mul, hg, hg])
       map_zero' := j.injective (by simp [hg])
-      map_add' := fun x y ↦ j.injective (by rw [hg, map_add, map_add, map_add, hg, hg])
+      map_add' := fun x y ↦ j.injective (by rw [hg, map_add (f := _), map_add (f := _), map_add (f := _), hg, hg])
       commutes' := fun r ↦ j.injective (by rw [hg, hj]) }
   have : Algebra.IsAlgebraic F Ω := IsAlgClosure.isAlgebraic
   exact ⟨AlgEquiv.ofBijective f (Algebra.IsAlgebraic.algHom_bijective f), fun x ↦ hg x⟩

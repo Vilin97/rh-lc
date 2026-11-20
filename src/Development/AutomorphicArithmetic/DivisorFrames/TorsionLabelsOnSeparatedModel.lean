@@ -68,7 +68,7 @@ private theorem lab_eq_iff (h : IsLabel Z y q lb ζ) (a a' : Dw.La) : lb a = lb 
       exact Dw.unimod.1 (LinearMap.ext fun b => by rw [hf, hq]; simp)
     have hq' : (q : ℤ) ≠ 0 := by exact_mod_cast hq
     let F : Dw.La →ₗ[ℤ] ℤ := (AddMonoidHom.mk' f fun b b' => mul_left_cancel₀ hq' (by
-      rw [mul_add, ← hf, ← hf, ← hf, map_add])).toIntLinearMap
+      rw [mul_add, ← hf, ← hf, ← hf, map_add (f := _)])).toIntLinearMap
     obtain ⟨d, hd⟩ := Dw.unimod.2 F
     refine ⟨d, ?_⟩
     rw [← sub_eq_iff_eq_add']

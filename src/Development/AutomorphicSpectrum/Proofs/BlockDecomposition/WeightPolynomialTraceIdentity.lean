@@ -67,7 +67,7 @@ theorem evL_frL (z : Fin n → ℂˣ) (f : LP n) : evL z (frL n f) = evL (fun a 
   exact congrArg (fun φ : LP n →ₐ[ℂ] ℂ => φ f) this
 
 theorem evL_pPL (z : Fin n → ℂˣ) : evL z (pPL n) = ∏ a, ∏ b, (1 + (z a : ℂ) / z b) := by
-  simp only [pPL, map_prod, map_add, map_one, evL_single, one_mul]
+  simp only [pPL, map_prod, map_add (f := _), map_one, evL_single, one_mul]
   refine Finset.prod_congr rfl fun a _ => Finset.prod_congr rfl fun b _ => ?_
   congr 1
   have key : ∀ a : Fin n, ∏ c, (z c : ℂ) ^ ((Pi.single a (1 : ℤ) : Fin n → ℤ) c) = z a := fun a => by

@@ -247,7 +247,7 @@ theorem adj_adj (X : Matrix (Fin V.rank) (Fin V.rank) (AF F ⊗[F] E)) : adj hc 
     induction X i j using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (star_star x)
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   simp only [adj_apply, cT_mul, GlobalTheory.AutFunCounterexample.cT_map_gen, cT_gram, cT_gram_inv, h, Matrix.mul_assoc]
   rw [inv_mul_gram, Matrix.mul_one, ← Matrix.mul_assoc, inv_mul_gram, Matrix.one_mul]
 
@@ -339,7 +339,7 @@ theorem unipRad_cocompact (W : Submodule E V.V) (hW : IsIsotropic V W) :
     (by
       rw [adj_map, e, ← Matrix.map_mul, Matrix.mul_assoc, ← Matrix.mul_assoc _ C, h0]
       simp)
-    (by rw [← map_add, ← map_add, add_halves, map_one, map_one])
+    (by rw [← map_add (f := _), ← map_add (f := _), add_halves, map_one, map_one])
     (fun x => (Matrix.scalar_commute _ (fun _ => Commute.all _ _) x).eq)
     (isCompact_univ_pi fun _ => isCompact_univ_pi fun _ => hK)
     (fun X => by
@@ -404,7 +404,7 @@ def sgV (v : HeightOneSpectrum (𝓞 F)) : Fv F v →ₗ[F] Af F where
   toFun := singleV F v
   map_add' a b := af_ext fun w => by
     classical
-    simp only [map_add, evalV_singleV, Pi.single_add, Pi.add_apply]
+    simp only [map_add (f := _), evalV_singleV, Pi.single_add, Pi.add_apply]
   map_smul' c a := af_ext fun w => by
     classical
     simp only [map_smul, evalV_singleV, Pi.single_smul, Pi.smul_apply, RingHom.id_apply]

@@ -19,7 +19,7 @@ theorem isotIn_detect_by_eqv_map : ∀ (D : D7) {n : ℕ} (A : Type) [AddCommGro
   have supSt : ∀ K1 K2 : Submodule ℂ A, St K1 → St K2 → St (K1 ⊔ K2) := by
     intro K1 K2 h1 h2 h x hx
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add]; exact Submodule.add_mem_sup (h1 h a ha) (h2 h b hb)
+    rw [map_add (f := _)]; exact Submodule.add_mem_sup (h1 h a ha) (h2 h b hb)
   have atom : ∀ K : Submodule ℂ A, St K → ∀ Φ : π.S →ₗ[ℂ] A, principalLevelFrame.IsEqvA ρ π Φ →
       LinearMap.range Φ ≤ K ∨ ∀ f, Φ f ∈ K → f = 0 := by
     intro K hK Φ hΦ
@@ -113,7 +113,7 @@ theorem isotIn_detect_by_eqv_map : ∀ (D : D7) {n : ℕ} (A : Type) [AddCommGro
     obtain ⟨k, f, rfl⟩ := dec z hz
     refine ⟨by simp [hq0], fun h => ?_⟩
     have : ρ h ((k : A) + Φ f) = ((⟨ρ h k, hKSt h k k.2⟩ : K) : A) + Φ ⟨NG.rt D.host.E n h f, π.stable h f f.2⟩ := by
-      rw [map_add, hΦ h f]
+      rw [map_add (f := _), hΦ h f]
     have e1 := hq0 ⟨ρ h k, hKSt h k k.2⟩ ⟨NG.rt D.host.E n h f, π.stable h f f.2⟩
     have e2 := hq0 k f
     rw [this, LinearMap.comp_apply, LinearMap.comp_apply, e1, e2]

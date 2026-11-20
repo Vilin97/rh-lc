@@ -86,7 +86,7 @@ theorem infOf_lamLdef_eq_paramV : ∀ (D : D7) (j : Fin D.R.m) (τ : D.what₂.T
   have hR : NG.paramV D.R (D.hc τ) j (1 / 2) =
       ((Multiset.range (D.R.k - 1)).map gv + (Multiset.range D.R.m).map gb
         + (Multiset.range D.R.t).map ge).map (fun x : ℚ => (x : ℂ)) := by
-    simp only [Multiset.map_add, Multiset.map_map]
+    simp only [Multiset.map_add (f := _), Multiset.map_map]
     unfold NG.paramV
     congr 1
     · congr 1
@@ -111,7 +111,7 @@ theorem infOf_lamLdef_eq_paramV : ∀ (D : D7) (j : Fin D.R.m) (τ : D.what₂.T
   have hmsplit : D.R.m = ((j : ℕ) + 1) + (D.R.m - ((j : ℕ) + 1)) := by omega
   rw [hsplit, Multiset.range_add, Multiset.range_add, Multiset.range_add]
   conv_rhs => rw [hmsplit, Multiset.range_add]
-  simp only [Multiset.map_add, Multiset.map_map]
+  simp only [Multiset.map_add (f := _), Multiset.map_map]
   have e1 : (Multiset.range (D.R.k - 1)).map g = (Multiset.range (D.R.k - 1)).map gv := by
     refine Multiset.map_congr rfl fun n hn => ?_
     rw [Multiset.mem_range] at hn

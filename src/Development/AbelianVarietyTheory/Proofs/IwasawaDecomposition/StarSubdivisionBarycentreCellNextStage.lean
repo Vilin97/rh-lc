@@ -271,7 +271,7 @@ theorem star_cell_bary_step : ∀ (O : Type) [CommRing O] (bar : O → O) (ψ la
     simp only [hu'def, Fin.cons_zero, Fin.cons_succ] at hrel
     have h1 := congrArg h hrel
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_zsmul, hvS0, huT0, smul_zero, smul_eq_mul, mul_zero, Finset.sum_const_zero, add_zero] at h1
+      simp only [map_add (f := _), map_sum, map_zsmul, hvS0, huT0, smul_zero, smul_eq_mul, mul_zero, Finset.sum_const_zero, add_zero] at h1
     have hc0 : c 0 = 0 := (mul_eq_zero.1 h1).resolve_right hpos.ne'
     rw [hc0, zero_smul, zero_add] at hrel
     obtain ⟨rc, hrc1, -, hrc⟩ := exists_extend_coeff eT (fun j => c j.succ)

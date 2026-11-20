@@ -153,7 +153,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.ordFinLen :
   have he4 : ∀ x, x - e x ∈ LinearMap.ker (U ^ N) := by
     intro x
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 (hc.sup_eq_top.ge (Submodule.mem_top (x := x)))
-    rw [map_add, he1 a ha, he2 b hb]; simpa using hb
+    rw [map_add (f := _), he1 a ha, he2 b hb]; simpa using hb
   have hre : LinearMap.range e = LinearMap.range (U ^ N) :=
     le_antisymm (by rintro _ ⟨x, rfl⟩; exact he3 x) fun x hx => ⟨x, he1 x hx⟩
   have hU1 : ∀ x ∈ LinearMap.range (U ^ N), U x ∈ LinearMap.range (U ^ N) := by

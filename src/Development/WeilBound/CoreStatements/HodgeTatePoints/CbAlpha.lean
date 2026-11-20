@@ -176,7 +176,7 @@ private theorem sum_am_mul_rho_pow_add_bil_ad_mul_hw {R : Type} [CommRing R] {d 
   have e := congrArg (coeff (Finsupp.single ((0 : Fin 1), i) p)) (ev_act_Lz_pow1_add_ev_act_prime_Lz_ad p B a j)
   simp only [hLP] at e
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, coeff_single_prime_ev_of_Z p (Z_act B.A a), hχ, ev_comp1_ptPow_eq_ev p h hh, coeff_ev_pow_one,
+    rw [map_add (f := _), coeff_single_prime_ev_of_Z p (Z_act B.A a), hχ, ev_comp1_ptPow_eq_ev p h hh, coeff_ev_pow_one,
     coeff_lin_ev hh, map_sum] at e
   simp only [coeff_mul_C, coeff_ev_pow_one, coeff_Lz, hgb, hhw] at e
   exact e

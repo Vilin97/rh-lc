@@ -127,7 +127,7 @@ theorem tens_rel {E : GLOps n K V} (hE : IsGLRep E) (a b c d : Fin n) :
   refine LinearMap.ext fun w => funext fun i => ?_
   have hc := LinearMap.congr_fun (hE.1 a b c d) (w i)
   simp only [LinearMap.sub_apply, Module.End.mul_apply] at hc
-  simp only [LinearMap.sub_apply, Module.End.mul_apply, Pi.sub_apply, tensOps_apply, map_add]
+  simp only [LinearMap.sub_apply, Module.End.mul_apply, Pi.sub_apply, tensOps_apply, map_add (f := _)]
   split_ifs at hc ⊢ <;> subst_vars <;>
     (try simp only [tensOps_apply, LinearMap.zero_apply, Pi.zero_apply, map_zero, add_zero, zero_add,
       sub_zero, LinearMap.sub_apply] at hc ⊢) <;>

@@ -50,9 +50,9 @@ theorem heisO_eq_root_smul_finRat : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ
     · have h1 : infPart D (w i j) = 0 := congrFun (congrFun hinf i) j
       have h2 : infPart D (GlobalTheory.VacUnique.finRat S T M i j) = 0 :=
         congrFun (congrFun (GlobalTheory.VacUnique.finRat_inf S T M) i) j
-      rw [Matrix.add_apply, RingHom.map_sub, RingHom.map_add, h1, h2, GlobalTheory.LatVac.infPart_of_mem hu, add_zero,
+      rw [Matrix.add_apply, RingHom.map_sub, RingHom.map_add (f := _), h1, h2, GlobalTheory.LatVac.infPart_of_mem hu, add_zero,
         sub_zero]
-    · rw [Matrix.add_apply, RingHom.map_sub, RingHom.map_add, hM, sub_eq_zero]
+    · rw [Matrix.add_apply, RingHom.map_sub, RingHom.map_add (f := _), hM, sub_eq_zero]
       rfl
   have hmem : GlobalTheory.VacUnique.finRat S T (n • M) ∈ latO S T (ΛS : Set (Fin S.rank → D.host.E))
       (ΛT : Set (Fin T.rank → D.host.E)) (fun _ => True) := by
@@ -67,7 +67,7 @@ theorem heisO_eq_root_smul_finRat : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ
     rw [← ψ.map_add_eq_mul, neg_add_cancel, ψ.map_zero_eq_one]
   have hX : ψ (symplOH S T (GlobalTheory.VacUnique.finRat S T M) u) * ψ (symplOH S T (GlobalTheory.VacUnique.finRat S T M) u) =
       ψ (symplO S T (GlobalTheory.VacUnique.finRat S T M) u) := by
-    rw [← ψ.map_add_eq_mul, symplOH, ← add_mul, ← RingHom.map_add, add_halves, RingHom.map_one, one_mul]
+    rw [← ψ.map_add_eq_mul, symplOH, ← add_mul, ← RingHom.map_add (f := _), add_halves, RingHom.map_one, one_mul]
   have hY : ψ (symplO S T (GlobalTheory.VacUnique.finRat S T M) u) ^ n = 1 := by
     rw [← AddChar.map_nsmul_eq_pow]
     have e : n • symplO S T (GlobalTheory.VacUnique.finRat S T M) u = symplO S T (GlobalTheory.VacUnique.finRat S T (n • M)) u := by

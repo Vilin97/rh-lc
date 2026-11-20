@@ -22,7 +22,7 @@ theorem exists_open_compact_annihilator : ∀ (F E : Type) [NontriviallyNormedFi
         have h1 := ha z hz
         have h2 := hb z hz
         simp only [Et.psiK] at h1 h2 ⊢
-        rw [mul_add, map_add, AddChar.map_add_eq_mul, h1, h2, one_mul]
+        rw [mul_add, map_add (f := _), AddChar.map_add_eq_mul, h1, h2, one_mul]
       neg_mem' := by
         intro a ha z hz
         have h1 := ha z hz

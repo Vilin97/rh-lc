@@ -37,7 +37,7 @@ theorem planeVec_planeVec (N n h p : ℕ) (hN : n + 2 * h ≤ N) (hp : p = n + h
   have hj := j.isLt
   have c1 : cut N (n + h) ⟨n + i, by omega⟩ = false := by simp [cut]
   have c2 : cut N (n + h) ⟨n + h + i, by omega⟩ = true := by simp [cut]
-  simp only [planeVec, map_add, LinearMap.add_apply, diag_single_single, c1, c2]
+  simp only [planeVec, map_add (f := _), LinearMap.add_apply, diag_single_single, c1, c2]
   have e1 : ¬ (n + (i : ℕ) = n + h + j) := by omega
   have e2 : ¬ (n + h + (i : ℕ) = n + j) := by omega
   rw [if_neg e1, if_neg e2]
@@ -52,7 +52,7 @@ theorem planeVec_planeVec (N n h p : ℕ) (hN : n + 2 * h ≤ N) (hp : p = n + h
 
 theorem ext_planeVec (N n h : ℕ) (hN : n + 2 * h ≤ N) (neg : Fin N → Bool) (x : Fin n → E) (a b : E)
     (i : Fin h) : diagForm N neg (extTo n N x) (planeVec N n h hN a b i) = 0 := by
-  rw [planeVec, map_add, diag_ext_single, diag_ext_single, add_zero]
+  rw [planeVec, map_add (f := _), diag_ext_single, diag_ext_single, add_zero]
   · simp only; omega
   · simp only; omega
 
@@ -60,7 +60,7 @@ theorem single_planeVec (N n h : ℕ) (hN : n + 2 * h ≤ N) (neg : Fin N → Bo
     (hl : n + 2 * h ≤ l) (c a b : E) (i : Fin h) :
     diagForm N neg (Pi.single l c) (planeVec N n h hN a b i) = 0 := by
   have hi := i.isLt
-  rw [planeVec, map_add, diag_single_single, diag_single_single, if_neg, if_neg, add_zero]
+  rw [planeVec, map_add (f := _), diag_single_single, diag_single_single, if_neg, if_neg, add_zero]
   · simp only; omega
   · simp only; omega
 

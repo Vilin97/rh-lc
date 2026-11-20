@@ -29,7 +29,7 @@ theorem exists_orthonormal_of_selfDual : ∀ (K : GlobalTheory.UnitLemma.UQ) (V 
   obtain ⟨hN, ⟨t, ht⟩, -⟩ := GlobalTheory.T.unramifiedQuadratic_norms_trace_uniformizer_facts K
   have hadd2 : ∀ y z z', h y (z + z') = h y z + h y z' := by
     intro y z z'
-    rw [hsym, hadd, map_add, ← hsym, ← hsym]
+    rw [hsym, hadd, map_add (f := _), ← hsym, ← hsym]
   have hlin2 : ∀ (a : K.E) y z, h y (a • z) = K.c a * h y z := by
     intro a y z
     rw [hsym, hlin, map_mul, ← hsym]
@@ -122,7 +122,7 @@ theorem exists_orthonormal_of_selfDual : ∀ (K : GlobalTheory.UnitLemma.UQ) (V 
   have hQu : IsUnit (Matrix.of Q) :=
     (Matrix.isUnit_iff_isUnit_det _).mpr (Matrix.isUnit_det_of_right_inverse hQR)
   obtain ⟨a, ha⟩ := GlobalTheory.Core.Rk.Exh.exists_orthonormal_of_isLocalRing K.O s hss
-    ⟨t, inj (by rw [map_add, hs, ht, map_one])⟩
+    ⟨t, inj (by rw [map_add (f := _), hs, ht, map_one])⟩
     (by
       intro u hu hsu
       obtain ⟨z, hz⟩ := hN hu.unit (by rw [IsUnit.unit_spec, ← hs, hsu])
@@ -184,7 +184,7 @@ theorem exists_unitary_pullLat_eq : ∀ (E : Type) [Field E] [NumberField E] [Is
     rw [← hc, ← hc, K.c_c]
   have hadd : ∀ y y' z, B.herm x (y + y') z = B.herm x y z + B.herm x y' z := by
     intro y y' z
-    simp only [GlobalTheory.UnitLemma.InvAlg.herm, mul_add, add_mul, map_add]
+    simp only [GlobalTheory.UnitLemma.InvAlg.herm, mul_add, add_mul, map_add (f := _)]
   have hlin : ∀ (a : K.E) y z, B.herm x (a • y) z = a * B.herm x y z := by
     intro a y z
     simp only [GlobalTheory.UnitLemma.InvAlg.herm]

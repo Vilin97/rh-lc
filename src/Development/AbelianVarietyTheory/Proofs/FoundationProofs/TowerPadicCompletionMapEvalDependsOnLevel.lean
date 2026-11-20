@@ -51,7 +51,7 @@ private lemma exists_level_bc_eq_of_agree_on_level {Ω : Type} [Field Ω] [Algeb
     obtain ⟨M1, hM1, h1⟩ := hx
     obtain ⟨M2, hM2, h2⟩ := hy
     refine ⟨M1 * M2, Nat.mul_pos hM1 hM2, fun φ ψ h => ?_⟩
-    rw [map_add, map_add,
+    rw [map_add (f := _), map_add (f := _),
       h1 φ ψ fun f hf => h f fun γ hγ => hf γ (_root_.GlobalTheory.KZ.LevelRed.gamma_le_of_dvd (dvd_mul_right M1 M2) hγ),
       h2 φ ψ fun f hf => h f fun γ hγ => hf γ (_root_.GlobalTheory.KZ.LevelRed.gamma_le_of_dvd (dvd_mul_left M2 M1) hγ)]
 

@@ -401,7 +401,7 @@ theorem arc_length_one_or_two_case_b [NeZero n] [Fintype (K →ₐ[Qp] LL)] [IsD
         -(((PD.p ^ (A.σ PD.p + rr) : ℕ) : W.EE) * (lE W (A.σ PD.p) * (g₂ * algebraMap O W.EE ((Pi.single k₀ (1 : O) : Fin d → O) j))))) =
         algebraMap (LetA O n) W.EE Z := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [hZ, map_add, map_neg, map_sum, mul_add, Finset.mul_sum, mul_neg]
+        rw [hZ, map_add (f := _), map_neg, map_sum, mul_add, Finset.mul_sum, mul_neg]
       congr 1
       · refine Finset.sum_congr rfl fun m _ => ?_
         rw [← mul_assoc, hGyE m, map_mul, ← IsScalarTower.algebraMap_apply O (LetA O n) W.EE]

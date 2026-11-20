@@ -75,7 +75,7 @@ theorem polData_stable {n d : ℕ} {Y : Spc F E n} {W : Spc F E d} {M : Model σ
     rw [e]
     exact Submodule.subset_span ⟨f, hf, _, (hF.update v hφ₁).1, (hF.update v hφ₁).2, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul t x _ hx => rw [map_smul]; exact Submodule.smul_mem _ t hx
 
 variable {a a' : ℕ} {B : Base F E} {G : Geo σ a a'} {X : Chars F E} {om : Rep σ G.V G.W} {om' : Rep σ G.V' G.W}
@@ -179,7 +179,7 @@ theorem I_lc (hK : KP) (hM : IsMatched B G X om om' R Rf) {ι : Type} (Ψ : ι �
     simp only [add_zero] at h0
     simpa using h0
   | add z₁ z₂ h₁ h₂ =>
-    rw [map_add, map_add, (hI _ (lc_mem _ _ hΨ z₁) _ (lc_mem _ _ hΨ z₂) 0).1, h₁, h₂]
+    rw [map_add (f := _), map_add (f := _), (hI _ (lc_mem _ _ hΨ z₁) _ (lc_mem _ _ hΨ z₂) 0).1, h₁, h₂]
   | single i t =>
     simp only [Finsupp.linearCombination_single]
     exact (hI _ (hΨ i) _ (hΨ i) t).2
@@ -197,7 +197,7 @@ theorem I'_lc (hK : KP) (hM : IsMatched B G X om om' R Rf) {ι : Type} (Ψ : ι 
   | add z₁ z₂ h₁ h₂ =>
     have := hI _ (lc_mem _ _ hΨ z₁) _ (lc_mem _ _ hΨ z₂) 1
     simp only [one_smul] at this
-    rw [map_add, map_add, this, h₁, h₂]
+    rw [map_add (f := _), map_add (f := _), this, h₁, h₂]
   | single i t =>
     simp only [Finsupp.linearCombination_single]
     have := hI 0 (Submodule.zero_mem _) _ (hΨ i) t

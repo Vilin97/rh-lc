@@ -71,7 +71,7 @@ theorem levelFacts : LevelFacts := by
       have e' : ((1 + a : 𝓞 E) : E) = s := by
         have : algebraMap (𝓞 E) E a = s - 1 := by first | exact e | exact e.symm
         show algebraMap (𝓞 E) E (1 + a) = s
-        rw [map_add, map_one, this]
+        rw [map_add (f := _), map_one, this]
         ring
       have h5 := hN (1 + a) (by rw [e']; exact hss) (by simpa using ha)
       refine Units.ext ?_

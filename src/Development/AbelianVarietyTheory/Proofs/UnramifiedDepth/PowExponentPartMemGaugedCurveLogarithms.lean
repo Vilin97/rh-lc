@@ -84,7 +84,7 @@ theorem sub_avg [CharZero C] {ζ : C} {p : ℕ} (hp : 0 < p) (hζ : IsPrimitiveR
   ext m
   have hp' : (p : C) ≠ 0 := by exact_mod_cast hp.ne'
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [coeff_filt, map_add, map_neg, PowerSeries.coeff_smul, map_sum]
+    rw [coeff_filt, map_add (f := _), map_neg, PowerSeries.coeff_smul, map_sum]
   simp_rw [PowerSeries.coeff_rescale]
   rw [← Finset.sum_mul, sum_pow_root hζ]
   by_cases h : p ∣ m

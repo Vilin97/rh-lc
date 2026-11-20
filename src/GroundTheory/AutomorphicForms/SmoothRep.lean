@@ -283,7 +283,7 @@ theorem exists_nhds_cosetSum_eq_zero (hρ : IsSmooth ρ) {x : V} (hx : x ∈ coi
     obtain ⟨U₁, hU₁, h₁⟩ := hx
     obtain ⟨U₂, hU₂, h₂⟩ := hy
     refine ⟨U₁ ∩ U₂, inter_mem hU₁ hU₂, fun N hNU hnorm hfin => ?_⟩
-    rw [map_add, h₁ N (hNU.trans inter_subset_left) hnorm hfin,
+    rw [map_add (f := _), h₁ N (hNU.trans inter_subset_left) hnorm hfin,
       h₂ N (hNU.trans inter_subset_right) hnorm hfin, add_zero]
   | smul c x _ hx =>
     obtain ⟨U, hU, h⟩ := hx

@@ -167,7 +167,7 @@ theorem scale_at_model : ∀ (o' Ω : Type) [CommRing o'] [Field Ω] [Algebra o'
       (∃ z, q.y = (S.r * S.N) • z) → ∃ a', ρ.n • (a' - a) = 0 ∧ v (y₀ ⟨S.th a', S.th_mem a'⟩) = v sc := by
     rintro a q hq₁ ⟨z, hz'⟩
     let q₀ : QkPt D.toPre F (S.r * S.N) := qkMk hB 0 (q.g + iota hB _ (-z)) (by
-      rw [smul_add, qk_nsmul hB, ← map_nsmul, ← map_add, smul_neg, ← hz', add_neg_cancel])
+      rw [smul_add, qk_nsmul hB, ← map_nsmul, ← map_add (f := _), smul_neg, ← hz', add_neg_cancel])
     have e₀ : f q = f q₀ := (f₃ _ _).2 ((equiv_iff hB _ _).2 ⟨-z, by
       rw [smul_neg, ← hz', add_neg_cancel]; rfl, rfl⟩)
     obtain ⟨q', x', hy', hx', hpow, hval⟩ :=

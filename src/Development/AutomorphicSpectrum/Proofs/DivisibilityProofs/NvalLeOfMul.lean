@@ -43,7 +43,7 @@ theorem adjoin_ratios {K V Ω : Type} [Field K] [AddCommGroup V] [Module K V] [F
       exact IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add, add_div]
+      rw [map_add (f := _), add_div]
       exact F.add_mem hx hy
     | smul a x _ hx =>
       rw [map_smul, Algebra.smul_def, mul_div_assoc]
@@ -192,7 +192,7 @@ theorem fin_small {r : ℕ} (U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r) (Z : Com
       rw [this]
       exact S.algebraMap_mem a
     | add P Q hP hQ =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact S.add_mem hP hQ
     | mul_X P i hP =>
       rw [map_mul, map_mul]

@@ -140,7 +140,7 @@ theorem arBase_RZ (H : Host E) {n N e : ℕ} (hn : 0 < n) (hN : N = n ^ e) : ArB
     push_cast
     ring
   have hbal : H.bar (2 + H.rt) = 2 - H.rt := by
-    rw [map_add, map_ofNat, hbar_rt]
+    rw [map_add (f := _), map_ofNat, hbar_rt]
     ring
   have hal : (2 + H.rt) ∈ Algebra.adjoin ℤ {H.w0} := by
     have h : 2 + H.rt = 1 + H.w0 + H.w0 := by linear_combination -hw0

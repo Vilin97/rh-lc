@@ -28,7 +28,7 @@ theorem isVBOn_pull :
       exact Submodule.subset_span ⟨k, rfl⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
     | smul a x _ hx =>
       rw [hj]
@@ -54,7 +54,7 @@ theorem isVBOn_pull :
         exact Submodule.subset_span ⟨k, rfl⟩
       | zero => simp
       | add x y _ _ hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem hx hy
       | smul a x _ hx =>
         have e1 : j (a • x) = (⟨i a, hreg a a.2⟩ : regAt ξ' q') • j x := hj a x

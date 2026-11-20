@@ -26,7 +26,7 @@ theorem rho {A K : Type} [CommRing A] [IsLocalRing A] [IsNoetherianRing A] [Norm
     induction hh using Submodule.span_induction with
     | mem x hx => exact NNReal.coe_le_coe.2 (Finset.le_sup (f := F) hx)
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
     | smul r x _ hx =>
       rw [smul_eq_mul, map_mul, norm_mul]; exact (mul_le_of_le_one_left (norm_nonneg _) (h1 r)).trans hx
 
@@ -91,7 +91,7 @@ theorem congMod_of_span {X : Type} [AddCommGroup X] (N : ℕ) (g : X →+ X) {m 
   | zero => exact ⟨0, by simp⟩
   | add y z _ _ hy hz =>
     obtain ⟨w, hw⟩ := hy; obtain ⟨w', hw'⟩ := hz
-    exact ⟨w + w', by rw [map_add, hw, hw', smul_add]; abel⟩
+    exact ⟨w + w', by rw [map_add (f := _), hw, hw', smul_add]; abel⟩
   | smul n y _ hy =>
     obtain ⟨w, hw⟩ := hy
     exact ⟨n • w, by rw [map_zsmul, hw, smul_add, smul_comm]⟩
@@ -106,7 +106,7 @@ theorem unimod_comp (O : Type) [CommRing O] {X₀ X : Type} [AddCommGroup X₀] 
     obtain ⟨w', hw'⟩ := hk1 c (g x)
     refine ⟨k w + w', ?_⟩
     simp only [LinearMap.comp_apply]
-    rw [hw, map_add, map_nsmul, hw', smul_add]; abel
+    rw [hw, map_add (f := _), map_nsmul, hw', smul_add]; abel
   · rw [← LinearMap.comp_assoc, LinearMap.det_comp]
     obtain ⟨u, hu⟩ := hε
     obtain ⟨v, hv⟩ := h2

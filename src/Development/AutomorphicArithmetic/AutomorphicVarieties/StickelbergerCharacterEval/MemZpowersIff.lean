@@ -99,7 +99,7 @@ theorem coefMap_eq (B : Type) [CommRing B] : coefMap B Γ = MonoidAlgebra.mapRin
   refine RingHom.ext fun z => ?_
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | single g n => simp [coefMap_single]
 
 theorem coeff_coefMap (B : Type) [CommRing B] (z : MonoidAlgebra ℤ Γ) (g : Γ) :

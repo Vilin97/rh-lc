@@ -296,7 +296,7 @@ theorem ShapeLin_proof : ShapeLin := by
   have hgram' : linSub Cm (sqSum (fun _ => (1 : K))) =
       MvPowerSeries.C 2 * ∑ a : Fin 4, inBlock a (betaPair H N0 N1 u) + MvPowerSeries.C th * quadForm q := by
     rw [GramSeries_proof]
-    simp only [one_mul, hgram, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [one_mul, hgram, map_add (f := _), add_mul, Finset.sum_add_distrib]
     rw [pair_form]
     congr 1
     unfold quadForm

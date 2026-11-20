@@ -51,7 +51,7 @@ theorem _root_.GlobalTheory.Mem.Lift.dH_add {ρ : V → B →L[ℂ] B} (v : V) {
   have hg' : DifferentiableAt ℝ (fun u => ρ u g) 0 :=
     (ContDiff.differentiable hg (by simp)).differentiableAt
   unfold _root_.GlobalTheory.Mem.Lift.dH
-  simp only [map_add]
+  simp only [map_add (f := _)]
   rw [(hf'.hasFDerivAt.fun_add hg'.hasFDerivAt).fderiv]
   rfl
 
@@ -110,7 +110,7 @@ theorem _root_.GlobalTheory.Mem.Lift.dH_comm {ρ : V → B →L[ℂ] B} (A : B �
 
 def smS (ρ : V → B →L[ℂ] B) : Submodule ℂ B where
   carrier := {f | Sm ρ f}
-  add_mem' := fun hf hg => by simpa only [Set.mem_setOf_eq, Sm, map_add] using ContDiff.add (show ContDiff ℝ ∞ _ from hf) (show ContDiff ℝ ∞ _ from hg)
+  add_mem' := fun hf hg => by simpa only [Set.mem_setOf_eq, Sm, map_add (f := _)] using ContDiff.add (show ContDiff ℝ ∞ _ from hf) (show ContDiff ℝ ∞ _ from hg)
   zero_mem' := by simpa only [Set.mem_setOf_eq, Sm, map_zero] using contDiff_const
   smul_mem' := fun a _ hf => by simpa only [Set.mem_setOf_eq, Sm, map_smul] using ContDiff.const_smul a (show ContDiff ℝ ∞ _ from hf)
 

@@ -134,7 +134,7 @@ theorem mms_zero : MMS V (0 : MvPowerSeries σ C) := by
 
 theorem MMS.add {f g : MvPowerSeries σ C} (hf : MMS V f) (hg : MMS V g) : MMS V (f + g) := by
   intro μ
-  rw [map_add]
+  rw [map_add (f := _)]
   exact mm_add (hf μ) (hg μ)
 
 theorem MMS.neg {f : MvPowerSeries σ C} (hf : MMS V f) : MMS V (-f) := by
@@ -305,9 +305,9 @@ theorem intS_frobTw {c : MvPowerSeries σ C} (hc : IntS V c) : IntS V (frobTw V.
 theorem mms_frobTw_add {f g : MvPowerSeries σ C} (hf : IntS V f) (hg : IntS V g) :
     MMS V (frobTw V.l (f + g) - (frobTw V.l f + frobTw V.l g)) := by
   intro μ
-  rw [map_sub, map_add, coeff_frobTw, coeff_frobTw, coeff_frobTw]
+  rw [map_sub, map_add (f := _), coeff_frobTw, coeff_frobTw, coeff_frobTw]
   split_ifs
-  · rw [map_add, ← sub_sub]
+  · rw [map_add (f := _), ← sub_sub]
     exact mm_add_pow (hf _) (hg _)
   · rw [add_zero, sub_zero]
     exact mm_zero
@@ -323,7 +323,7 @@ private theorem mm_neg_pow_add_lemma_6 {a : C} (ha : V.Ge 0 a) : V.MM ((-a) ^ V.
 theorem mms_frobTw_neg {f : MvPowerSeries σ C} (hf : IntS V f) :
     MMS V (frobTw V.l (-f) + frobTw V.l f) := by
   intro μ
-  rw [map_add, coeff_frobTw, coeff_frobTw]
+  rw [map_add (f := _), coeff_frobTw, coeff_frobTw]
   split_ifs
   · rw [map_neg]
     exact mm_neg_pow_add_lemma_6 (hf _)

@@ -99,7 +99,7 @@ theorem exists_param [Finite (Pts O A)] (ζ₀ : Pts O A) [IsDVRAt ζ₀] :
     have hlt : vL ζ₀ a < vL ζ₀ (i * (1 - a)) := by
       rw [hva]
       exact lt_of_lt_of_le (by norm_num) hr
-    rw [ht, vL_eq_addVal, map_add, AddValuation.map_add_of_distinct_val, ← vL_eq_addVal,
+    rw [ht, vL_eq_addVal, map_add (f := _), AddValuation.map_add_of_distinct_val, ← vL_eq_addVal,
       ← vL_eq_addVal, min_eq_left hlt.le, hva]
     rw [← vL_eq_addVal, ← vL_eq_addVal]
     exact hlt.ne

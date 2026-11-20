@@ -61,7 +61,7 @@ variable (S x)
 
 def coeffAt (c : ℤ) : ConeLaurent S x →ₗ[S] Ω where
   toFun w := (ConeLaurent.toLP S x w).coeff c
-  map_add' a b := by rw [map_add]; rfl
+  map_add' a b := by rw [map_add (f := _)]; rfl
   map_smul' s w := by
     change (ConeLaurent.toLP S x (coneLaurent S x (C s) * w)).coeff c = _
     rw [map_mul, coneLaurent_of_isHomogeneous (isHomogeneous_C _ s), ConeLaurent.toLaurent_ofLaurent,
@@ -70,7 +70,7 @@ def coeffAt (c : ℤ) : ConeLaurent S x →ₗ[S] Ω where
 
 def coneSingle (c : ℤ) : Ω →ₗ[S] ConeLaurent S x where
   toFun v := ConeLaurent.ofLP S x (AddMonoidAlgebra.single c v)
-  map_add' a b := by rw [AddMonoidAlgebra.single_add, map_add]
+  map_add' a b := by rw [AddMonoidAlgebra.single_add, map_add (f := _)]
   map_smul' s v := by
     change ConeLaurent.ofLP S x (AddMonoidAlgebra.single c (s • v)) =
       coneLaurent S x (C s) * ConeLaurent.ofLP S x (AddMonoidAlgebra.single c v)
@@ -137,7 +137,7 @@ variable {S : Type u} [CommRing S] {Ω : Type w} [Field Ω] [Algebra S Ω] {N : 
 
 def FinGradedSub.coneSub : Submodule (Poly S N) (ConeLaurent S x) where
   carrier := {w | ∀ c, coeffAt S x c w ∈ M.piece c}
-  add_mem' ha hb c := by rw [map_add]; exact add_mem (ha c) (hb c)
+  add_mem' ha hb c := by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha c) (hb c)
   zero_mem' c := by rw [map_zero]; exact zero_mem _
   smul_mem' p w hw c := by
     change coeffAt S x c (p • w) ∈ M.piece c
@@ -159,7 +159,7 @@ theorem FinGradedSub.coneSingle_mem_coneSub {c : ℤ} {v : Ω} (hv : v ∈ M.pie
 
 def FinGradedSub.conePiece (a : ℤ) : Submodule S M.coneSub where
   carrier := {m | ∀ d, d ≠ a → coeffAt S x d (m : ConeLaurent S x) = 0}
-  add_mem' ha hb d hd := by rw [Submodule.coe_add, map_add, ha d hd, hb d hd, add_zero]
+  add_mem' ha hb d hd := by rw [Submodule.coe_add, map_add (f := _), ha d hd, hb d hd, add_zero]
   zero_mem' d _ := by rw [Submodule.coe_zero, map_zero]
   smul_mem' s m hm d hd := by rw [Submodule.coe_smul_of_tower, map_smul, hm d hd, smul_zero]
 
@@ -215,7 +215,7 @@ theorem FinGradedSub.coneSub_finite : Module.Finite (Poly S N) M.coneSub := by
         rw [this]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨j, rfl⟩)
       · rw [map_zero]; exact zero_mem _
-      · intro a b _ _ ha hb; rw [map_add]; exact add_mem ha hb
+      · intro a b _ _ ha hb; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
       · intro s a _ ha; rw [map_smul]; exact Submodule.smul_of_tower_mem _ s ha
     · rintro _ ⟨j, rfl⟩
       exact M.coneSingle_mem_coneSub (hgen j)

@@ -33,7 +33,7 @@ private theorem lid_rTensor_map_id_eq {V : Type} [AddCommGroup V] [Module Qp V] 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul m n => simp [AlgebraTensorModule.map_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 open PowerSeries in
 open Module TensorProduct in
@@ -53,7 +53,7 @@ private theorem eq_sum_basis_tmul_coord {V : Type} [AddCommGroup V] [Module Qp V
     simp_rw [← TensorProduct.smul_tmul, ← TensorProduct.sum_tmul, b.sum_repr]
   | add x y hx hy =>
     conv_lhs => rw [hx, hy]
-    simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib]
 
 open PowerSeries in
 open Module TensorProduct in
@@ -99,7 +99,7 @@ theorem _root_.GlobalTheory.TrivCrys.dcris_of_trivial {V : Type} [AddCommGroup V
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul m k => simp [AlgebraTensorModule.map_tmul]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 open PowerSeries in
 open Module TensorProduct in
@@ -121,7 +121,7 @@ theorem _root_.GlobalTheory.TrivCrys.isCrys_of_trivial {V : Type} [AddCommGroup 
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul m k => simp [AlgebraTensorModule.map_tmul]
-    | add u w hu hw => simp only [map_add, hu, hw]
+    | add u w hu hw => simp only [map_add (f := _), hu, hw]
   have hinj : Function.Injective (AlgebraTensorModule.map (LinearMap.id : V →ₗ[LL] V)
       (IsScalarTower.toAlgHom Qp K₀ B).toLinearMap) := by
     rw [key]

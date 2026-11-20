@@ -434,14 +434,14 @@ theorem isKTypeOf_of_isHW (h : BlockOrd e ε) (hσ : Factors R.U e σ) (μ : Ix 
       exact Submodule.sub_mem _ ⟨v, hvW, rfl⟩ (h1 hy)
     obtain ⟨y, -, rfl⟩ := h1 hy
     obtain ⟨z, hzW, rfl⟩ := id hz'
-    have hv' : v = y + z := R.ι_inj (by rw [hyz, map_add])
+    have hv' : v = y + z := R.ι_inj (by rw [hyz, map_add (f := _)])
     have split : ∀ X, IsKC X → ∀ c : ℂ, R.HK.act X v = c • v → R.HK.act X y = c • y ∧ R.HK.act X z = c • z := by
       intro X hX c hc
       have m1 : R.HK.act X y - c • y ∈ S'.comap R.ι := Submodule.sub_mem _ (a2 X hX y hy) (Submodule.smul_mem _ _ hy)
       have m2 : R.HK.act X z - c • z ∈ (S'ᗮ ⊓ W.map R.ι).comap R.ι :=
         Submodule.sub_mem _ (b2 X hX z ⟨hz, hz'⟩) (Submodule.smul_mem _ _ ⟨hz, hz'⟩)
       have e0 : R.HK.act X y - c • y = -(R.HK.act X z - c • z) := by
-        rw [hv', map_add, smul_add] at hc
+        rw [hv', map_add (f := _), smul_add] at hc
         rw [eq_neg_iff_add_eq_zero, sub_add_sub_comm, hc, sub_self]
       have m3 : R.ι (R.HK.act X y - c • y) ∈ S' ⊓ S'ᗮ := ⟨m1, by rw [e0, map_neg]; exact Submodule.neg_mem _ m2.1⟩
       rw [Submodule.inf_orthogonal_eq_bot, Submodule.mem_bot] at m3

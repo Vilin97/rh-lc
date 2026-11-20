@@ -92,7 +92,7 @@ theorem eval_capPoly (O : Type) [CommRing O] (N : ℕ) {M : Type} [AddCommGroup 
     rw [hev, hΨ]
     simp only [Function.comp_apply, entry, Formalism.BranchingDeterminantCap.bmF, id]
     split_ifs
-    · simp only [Polynomial.map_add, Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C, Polynomial.eval₂_add,
+    · simp only [Polynomial.map_add (f := _), Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C, Polynomial.eval₂_add,
         Polynomial.eval₂_sub, Polynomial.eval₂_X, Polynomial.eval₂_C, RingHom.id_apply, map_natCast, RingHom.coe_coe, Polynomial.map_natCast,
         Polynomial.eval₂_natCast]
       push_cast

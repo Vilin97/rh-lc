@@ -37,7 +37,7 @@ theorem eval_chartSection (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → �
   | add p q hp hq =>
     have : chartSection σ i (p + q) = chartSection σ i p + chartSection σ i q := by
       simp [chartSection]
-    rw [this, map_add, map_add, hp, hq]
+    rw [this, map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p q hp =>
     have : chartSection σ i (p * X q) =
         chartSection σ i p * X (σ.symm (Function.update i q.1 q.2)) := by

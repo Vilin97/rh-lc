@@ -35,7 +35,7 @@ theorem exists_lie_end_diagonal_of_tensor : ∀ {E : Type} [Field E] [NumberFiel
     obtain ⟨S, hS⟩ := hs
     obtain ⟨T, hT⟩ := ht
     exact ⟨S + T, fun v j ↦ by
-      rw [LinearMap.add_apply, map_add, Pi.add_apply, hS, hT, map_add, add_mul]⟩
+      rw [LinearMap.add_apply, map_add (f := _), Pi.add_apply, hS, hT, map_add (f := _), add_mul]⟩
   | tmul a x =>
     have := cm.hom a
     obtain ⟨α, hα, hp, hex⟩ := hcm a

@@ -79,7 +79,7 @@ theorem per_span (hn0 : 0 < n) (hcx : ∀ m, c (x m) = Finsupp.single m (n : �
       rcases eq_or_ne j k with rfl | hj
       · simp [Complex.ext_iff]
       · simp [hj]
-    rw [hz, map_add, map_smul, map_smul]
+    rw [hz, map_add (f := _), map_smul, map_smul]
     simp [hl, Complex.mul_re, smul_eq_mul] <;> ring
   have hf : ∀ v : Fin g → ℂ, f v = (∑ k, l k * v k).re := by
     intro v

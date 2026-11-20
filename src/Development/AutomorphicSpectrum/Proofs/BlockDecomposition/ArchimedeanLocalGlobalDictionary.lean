@@ -56,7 +56,7 @@ theorem phi_eqv [IsTotallyReal F] (w : InfinitePlace E) (z : AE F E) :
     (adStd E).φ w (eqv F E z) = piInf (embOf w) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x =>
     have e : eqv F E (a ⊗ₜ x) = algebraMap E 𝔸[E] x * GroundTheory.Global.AdeleBaseChange.adeleMap F E a :=
       GroundTheory.BlockD.ThmBHecke.adeleEquiv_tmul a x
@@ -71,7 +71,7 @@ theorem piInf_cA [IsTotallyReal F] {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {w 
     (z : AE F E) : piInf τ (cA σ z) = starRingEnd ℂ (piInf τ z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x =>
     change InfinitePlace.Completion.extensionEmbedding w (a.1 w) * τ.1 (σ x) =
       starRingEnd ℂ (InfinitePlace.Completion.extensionEmbedding w (a.1 w) * τ.1 x)

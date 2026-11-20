@@ -47,7 +47,7 @@ theorem hom_span {T : Set (Poly S N)} (hT : ∀ g ∈ T, ∃ e, g.IsHomogeneous 
     · exact Ideal.subset_span hg
     · exact zero_mem _
   | zero => intro d; simp
-  | add a b _ _ ha hb => intro d; rw [map_add]; exact add_mem (ha d) (hb d)
+  | add a b _ _ ha hb => intro d; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha d) (hb d)
   | smul r a _ ha =>
     intro d
     classical
@@ -63,7 +63,7 @@ theorem hom_sup {I I' : Ideal (Poly S N)} (h : ∀ f ∈ I, ∀ d : ℕ, homogen
     ∀ f ∈ I ⊔ I', ∀ d : ℕ, homogeneousComponent d f ∈ I ⊔ I' := by
   intro f hf d
   obtain ⟨a, ha, a', ha', rfl⟩ := Submodule.mem_sup.mp hf
-  rw [map_add]
+  rw [map_add (f := _)]
   exact add_mem (Ideal.mem_sup_left (h a ha d)) (Ideal.mem_sup_right (h' a' ha' d))
 
 end Ideals
@@ -242,7 +242,7 @@ theorem SectionCount.Drop.Filt.proof (hK : SectionCount.Drop.Filt.Kernel.Stateme
     · intro hf
       obtain ⟨a, ha, y, hy, rfl⟩ := Submodule.mem_sup.mp hf
       obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp hy
-      rw [map_add, hmkQ]
+      rw [map_add (f := _), hmkQ]
       exact Submodule.add_mem_sup ha (Submodule.smul_mem _ _ (Submodule.mem_span_singleton_self _))
   have hJkp : ∀ (l : Fin Fl.n) (f : Poly k N), f ∈ Fl.prime l ↔ f * g l ∈ Jk l.castSucc := by
     intro l f

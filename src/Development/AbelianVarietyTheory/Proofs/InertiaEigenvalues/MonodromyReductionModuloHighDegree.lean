@@ -151,7 +151,7 @@ theorem conn_mem_MMHigh (hR : RingModHigh O K l e) (P : PhiMod O K l e a ι)
     rw [h1]
     exact add_mem (Submodule.smul_mem_smul hg hm) (Submodule.smul_mem_smul hs (hMM m hm))
   · intro x y hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
 
 theorem conn_mem_uL_sup (hR : RingModHigh O K l e) (P : PhiMod O K l e a ι)
@@ -162,7 +162,7 @@ theorem conn_mem_uL_sup (hR : RingModHigh O K l e) (P : PhiMod O K l e a ι)
   obtain ⟨p, hp, q, hq, hpq⟩ := Submodule.mem_sup.1 (MM_le_sup hR P (hMM y' (L_le_MM P hy')))
   have h1 : P.conn ((X : K⟦X⟧) ^ i • y' + z) =
       (X : K⟦X⟧) ^ i • (i • y' + p) + ((X : K⟦X⟧) ^ i • q + P.conn z) := by
-    rw [map_add, P.conn_smul, N_X_pow, ← hpq, mul_comm, mul_smul, Nat.cast_smul_eq_nsmul,
+    rw [map_add (f := _), P.conn_smul, N_X_pow, ← hpq, mul_comm, mul_smul, Nat.cast_smul_eq_nsmul,
       smul_add, smul_add]
     abel
   rw [h1]
@@ -206,7 +206,7 @@ theorem app_mem_MMHigh {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} (F : 
     rw [h1]
     exact Submodule.smul_mem_smul hs (F.app_mem_ext (A_le_S l e) hm)
   · intro x y hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
 
 theorem mem_imL {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} (F : Hom P Q) {y : Vec K a ι}
@@ -224,7 +224,7 @@ theorem imageStable_top (hR : RingModHigh O K l e) {P : PhiMod O K l e a ι}
   subst hyy
   obtain ⟨p, hp, q, hq, hpq⟩ := Submodule.mem_sup.1 (MM_le_sup hR P (hMM₁ y' (L_le_MM P hy')))
   have h1 : Q.conn (F.app y' + z) = F.app p + (F.app q + Q.conn z) := by
-    rw [map_add, ← F.app_conn, ← hpq, map_add, add_assoc]
+    rw [map_add (f := _), ← F.app_conn, ← hpq, map_add (f := _), add_assoc]
   rw [h1]
   exact Submodule.add_mem_sup (mem_imL F hp)
     (add_mem (app_mem_MMHigh F hq) (conn_mem_MMHigh hR Q hMM₂ hz))
@@ -238,7 +238,7 @@ theorem mem_part_sup {W : Submodule K (Vec K a ι)} (π : Vec K a ι →ₗ[K] V
     (h₁ : ∀ v ∈ V₁, π v ∈ V₁) (h₂ : ∀ v ∈ V₂, π v ∈ V₂) {x : Vec K a ι} (hx : x ∈ V₁ ⊔ V₂)
     (hxW : x ∈ W) : x ∈ part W V₁ ⊔ part W V₂ := by
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
-  rw [← hπ _ hxW, map_add]
+  rw [← hπ _ hxW, map_add (f := _)]
   exact Submodule.add_mem_sup (Submodule.mem_inf.2 ⟨h₁ y hy, hπW y⟩)
     (Submodule.mem_inf.2 ⟨h₂ z hz, hπW z⟩)
 
@@ -346,7 +346,7 @@ theorem ringAct_isoCoef (c : ZMod e) (ζ ξ : rootsOfUnity e K) :
 
 def isoProj {P : PhiMod O K l e a ι} (Δ : Descent P) (c : ZMod e) : Vec K a ι →ₗ[K] Vec K a ι where
   toFun v := ∑ ζ : rootsOfUnity e K, isoCoef l a c ζ • Δ.act (TameGal.inertia ζ) v
-  map_add' v w := by simp only [map_add, smul_add, Finset.sum_add_distrib]
+  map_add' v w := by simp only [map_add (f := _), smul_add, Finset.sum_add_distrib]
   map_smul' r v := by
     simp only [map_smul, Finset.smul_sum, RingHom.id_apply]
     refine Finset.sum_congr rfl fun ζ _ => ?_
@@ -436,7 +436,7 @@ theorem act_mem_MMHigh {P : PhiMod O K l e a ι} (Δ : Descent P) (g : TameGal K
     rw [ht, map_mul, map_pow, rescale_X, mul_pow]
     exact Dvd.dvd.mul_right (dvd_mul_left _ _) _
   · intro x y hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
 
 theorem act_mem_uL {P : PhiMod O K l e a ι} (Δ : Descent P) (g : TameGal K l e a) (i : ℕ)

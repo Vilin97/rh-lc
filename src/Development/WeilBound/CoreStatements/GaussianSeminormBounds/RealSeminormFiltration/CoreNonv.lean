@@ -150,7 +150,7 @@ private theorem fockInner_cjP_fockAct1_thetaM_adjoint {p q r s : ℕ} (Z : Mat p
   | h_zero =>
     simp [cjP, PI.FHS.fockInner_zero_left, PI.FHS.fockInner_zero_right]
   | h_add A B hA hB =>
-    rw [map_add, map_add, LinearMap.add_apply, cjP_add, PI.FHS.fockInner_add_left, hA, hB, map_add,
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, cjP_add, PI.FHS.fockInner_add_left, hA, hB, map_add (f := _),
       LinearMap.add_apply, PI.FHS.fockInner_add_right]
   | h_std_basis i j t =>
     have hE : Matrix.single i j t = t • Eab i j := by
@@ -213,7 +213,7 @@ theorem nontrivial_of_pair {p q r s : ℕ} (c : ℂ) (c0 : ℚ) (hc : c = c0) (h
     LinearMap.mk₂ ℂ (fun u v => fockInner (cjP (Ψ u)) v)
       (by
         intro u u' v
-        rw [map_add, cjP_add, PI.FHS.fockInner_add_left])
+        rw [map_add (f := _), cjP_add, PI.FHS.fockInner_add_left])
       (by
         intro t u v
         rw [map_smul, cjP_smul, PI.FHS.fockInner_smul_left, Complex.conj_conj]

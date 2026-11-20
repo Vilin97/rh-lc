@@ -73,7 +73,7 @@ def dL (k r : ℕ) : EE k r →ₗ[ℝ] lieE (GG k r) where
   map_add' v v' := by
     apply Subtype.ext
     show (umL _).symm _ = (umL _).symm _ + (umL _).symm _
-    rw [← map_add]; congr 1
+    rw [← map_add (f := _)]; congr 1
     simp only [dchart, Prod.fst_add, Prod.snd_add, um_add, torD_add, Matrix.mul_add, Matrix.add_mul]
     abel
   map_smul' c v := by

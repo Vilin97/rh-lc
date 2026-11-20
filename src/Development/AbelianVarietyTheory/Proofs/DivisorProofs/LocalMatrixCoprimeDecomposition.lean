@@ -95,7 +95,7 @@ theorem exists_finiteEtale_linTorsHom : ∀ (p : ℕ) [Fact p.Prime] (D : Datum 
   let x : Fin n → (Z₀ ⟶ o.A) := fun i => Out.powPr K i ≫ κ
   let et₀ : D.La → (Z₀ ⟶ o.A) := fun a => ∏ i, x i ^ (bb.repr a i)
   have hadd : ∀ a c, et₀ (a + c) = et₀ a * et₀ c := fun a c => by
-    simp only [et₀, map_add, Finsupp.add_apply, zpow_add, Finset.prod_mul_distrib]
+    simp only [et₀, map_add (f := _), Finsupp.add_apply, zpow_add, Finset.prod_mul_distrib]
   have hb : ∀ i, et₀ (bb i) = x i := fun i => by
     simp only [et₀, Module.Basis.repr_self]
     rw [Finset.prod_eq_single i (fun j _ hj => by simp [Finsupp.single_eq_of_ne hj]) (by simp)]

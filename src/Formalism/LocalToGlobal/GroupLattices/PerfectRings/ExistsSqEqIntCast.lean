@@ -341,7 +341,7 @@ theorem jW_finite : (jW p n).Finite := by
       rw [Function.iterate_succ_apply']
       conv_lhs => rw [ih]
       conv_lhs => rw [h]
-      simp only [Finset.sum_range_succ, map_add, add_mul, Finset.sum_add_distrib, hjW, mul_add,
+      simp only [Finset.sum_range_succ, map_add (f := _), add_mul, Finset.sum_add_distrib, hjW, mul_add,
         Finset.mul_sum]
       ring
   unfold RingHom.Finite

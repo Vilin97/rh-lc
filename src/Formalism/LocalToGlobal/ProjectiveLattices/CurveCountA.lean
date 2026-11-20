@@ -154,7 +154,7 @@ theorem countCore {K κ Ω : Type*} [Field K] [Field κ] [Field Ω] [Algebra K �
     next c =>
       simp only [MvPolynomial.aeval_C, AlgHom.commutes]
     next p q hp hq =>
-      rw [map_add, map_add, map_add, hp, hq]
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     next p i hp =>
       rw [map_mul, map_mul, map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.aeval_X]
       rfl

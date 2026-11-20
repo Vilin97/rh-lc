@@ -314,7 +314,7 @@ theorem fi_of_kRat (M : MemberForms LL embLL Pl Tau hc C A P) (i : ℕ) (h : M.K
       have e : C.Klin i (M.emb i ((M.lat i).b a)) = C.K i (M.emb i ((M.lat i).b a)) := rfl
       rw [e, ← hy]; exact emb_mem_Fi M (i + 1) y
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
   exact key
 

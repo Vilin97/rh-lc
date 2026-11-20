@@ -190,7 +190,7 @@ def natSubalgebra : Subalgebra k
   mul_mem' {f g} hf hg A B _ _ _ _ hA hB φ x := by
     simp only [Pi.mul_apply, map_mul, hf A B hA hB φ x, hg A B hA hB φ x]
   add_mem' {f g} hf hg A B _ _ _ _ hA hB φ x := by
-    simp only [Pi.add_apply, map_add, hf A B hA hB φ x, hg A B hA hB φ x]
+    simp only [Pi.add_apply, map_add (f := _), hf A B hA hB φ x, hg A B hA hB φ x]
   algebraMap_mem' c A B _ _ _ _ hA hB φ x := (φ.commutes c).symm
 
 variable (𝒯 X) in

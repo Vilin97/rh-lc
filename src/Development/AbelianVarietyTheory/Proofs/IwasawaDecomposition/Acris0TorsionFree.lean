@@ -92,7 +92,7 @@ theorem basic_of_equiv_pt (p : ℕ) (R A : Type) [CommRing R] [CommRing A] [Alge
     rw [← hpe, ← map_mul, hx, map_zero]
   · obtain ⟨s, z, hz⟩ := dense (p : R) (e x) r
     refine ⟨s, e.symm z, e.injective ?_⟩
-    rw [map_add, map_mul, map_pow, he, hpe, RingEquiv.apply_symm_apply]
+    rw [map_add (f := _), map_mul, map_pow, he, hpe, RingEquiv.apply_symm_apply]
     exact hz
   · rw [← dvd_iff (p : R) s r, ← hpe, ← he, ← map_pow, map_dvd_iff]
 

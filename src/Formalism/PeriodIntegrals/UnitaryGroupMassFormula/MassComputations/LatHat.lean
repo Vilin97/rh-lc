@@ -18,7 +18,7 @@ theorem tensMap_smul' {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Al
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [tensMap, TensorProduct.smul_tmul']
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem continuous_tensEval (v : HeightOneSpectrum (𝓞 F)) : Continuous (tensMap (E := E) (evalV F v)) := by
   let f : Af F ⊗[F] E →ₛₗ[(evalV F v : Af F →+* Fv F v)] Fv F v ⊗[F] E :=

@@ -46,7 +46,7 @@ theorem step {η : AK K} (hI : RingHom.ker (thetaK K) = Ideal.span {η}) (hη : 
     exact this
   have h1 : thetaK K ((l : AK K) ^ n * c) = 0 := by
     have := congrArg (thetaK K) h
-    rw [map_mul, hθη, zero_mul, map_add, map_mul (thetaK K) (η ^ 2), map_pow, hθη] at this
+    rw [map_mul, hθη, zero_mul, map_add (f := _), map_mul (thetaK K) (η ^ 2), map_pow, hθη] at this
     simpa using this.symm
   have hc : c ∈ Ideal.span {η} := by rw [← hI]; exact theta_eq_zero_of_pow_mul h1
   obtain ⟨c', hc'⟩ := Ideal.mem_span_singleton'.1 hc
@@ -86,7 +86,7 @@ theorem mem_sq_of_forall {a : AK K}
     obtain ⟨d, hd⟩ := (hsq _).1 hc
     obtain ⟨c', hc'⟩ := step hI hη (a := b) (c := c) (d := d) (n := n) (by linear_combination hd)
     refine ⟨thetaK K c', ?_⟩
-    rw [hc', map_add, map_mul, map_pow, map_natCast, (hmem _).2 (dvd_mul_right η d), add_zero]
+    rw [hc', map_add (f := _), map_mul, map_pow, map_natCast, (hmem _).2 (dvd_mul_right η d), add_zero]
   obtain ⟨e, rfl⟩ := (hmem b).1 h2
   exact (hsq _).2 ⟨e, by ring⟩
 

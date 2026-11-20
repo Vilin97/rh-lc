@@ -76,7 +76,7 @@ theorem chart_form {K : Type*} [Fintype K] [DecidableEq K] {ι : K → Type*} {F
       rw [hdeg] at h1 h2
       rw [add_comm n m] at h2
       exact h1.add h2
-    · rw [map_add, map_mul, map_mul, map_pow, map_pow, hσ, ← hAe, ← hBe]
+    · rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, hσ, ← hAe, ← hBe]
       ring
   | mul z z' _ _ hz hz' =>
     obtain ⟨m, A, hA, hAe⟩ := hz

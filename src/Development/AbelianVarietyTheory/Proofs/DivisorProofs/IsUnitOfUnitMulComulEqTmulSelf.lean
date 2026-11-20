@@ -32,7 +32,7 @@ theorem isUnit_of_unit_mul_comul_eq_tmul_self (K H : Type) [Field K] [CommRing H
     induction Coalgebra.comul (R := K) u using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [ψ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hψuu : ψ (u ⊗ₜ[K] u) = u * HopfAlgebra.antipode K u := by
     simp [ψ]
   have e := congrArg ψ h

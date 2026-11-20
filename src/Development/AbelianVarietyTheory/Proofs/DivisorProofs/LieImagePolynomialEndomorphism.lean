@@ -29,7 +29,7 @@ theorem exists_isLieImage_aeval (A : Over (Sp ℂ)) [GrpObj A] (Lb : LB A.left) 
     obtain ⟨v₁, h₁, d₁⟩ := hp
     obtain ⟨v₂, h₂, d₂⟩ := hq
     refine ⟨v₁ * v₂, ?_, ?_⟩
-    · rw [map_add, LinearMap.add_apply]
+    · rw [map_add (f := _), LinearMap.add_apply]
       exact h₁.add h₂
     · rw [Polynomial.eval_add, add_smul]
       exact GlobalTheory.UnifDifferential.isDiff_mul u ((ReciprocityTheory.ChartRestriction.G.Chart.isTan_iff _).2 h₁.1)

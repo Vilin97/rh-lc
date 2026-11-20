@@ -27,4 +27,4 @@ theorem UpperTheory.Gal.TranscendenceTraces.trIdQ_of :
     rw [LinearMap.baseChange_tmul, trHl_id_apply hHl hL hW l n i S d hu m]
     simp only [LinearMap.smul_apply, LinearMap.id_apply, TensorProduct.tmul_smul]
     rw [Int.cast_smul_eq_zsmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]

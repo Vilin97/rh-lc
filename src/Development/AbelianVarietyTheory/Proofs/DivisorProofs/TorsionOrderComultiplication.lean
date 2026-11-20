@@ -220,7 +220,7 @@ theorem GlobalTheory.GroupBplus.Aff.ord_hopf_closed : ∀ (R K : Type) [CommRing
       { carrier := {x | ∃ T : ord G N K ⊗[R] ord G N K, ∀ a b : Tors G N K, Algebra.TensorProduct.lift ((Pi.evalAlgHom R (fun _ : Tors G N K => K) a).comp (ord G N K).val) ((Pi.evalAlgHom R (fun _ : Tors G N K => K) b).comp (ord G N K).val) (fun _ _ => .all _ _) T = algebraMap R K x * f (a * b)}
         add_mem' := by
           rintro x y ⟨T, hT⟩ ⟨T', hT'⟩
-          exact ⟨T + T', fun a b => by rw [map_add, hT, hT', map_add, add_mul]⟩
+          exact ⟨T + T', fun a b => by rw [map_add (f := _), hT, hT', map_add (f := _), add_mul]⟩
         zero_mem' := ⟨0, fun a b => by rw [map_zero, map_zero, zero_mul]⟩
         smul_mem' := by
           rintro c x ⟨T, hT⟩

@@ -34,7 +34,7 @@ def cmul (c : ∀ i, X₁ i ≃ₛₗ[starRingEnd ℂ] X i) : MultilinearMap ℂ
     show PiTensorProduct.tprod ℂ (fun j => c j (Function.update v i (x + y) j)) =
       PiTensorProduct.tprod ℂ (fun j => c j (Function.update v i x j)) +
         PiTensorProduct.tprod ℂ (fun j => c j (Function.update v i y j))
-    rw [comp_update, comp_update, comp_update, map_add, MultilinearMap.map_update_add]
+    rw [comp_update, comp_update, comp_update, map_add (f := _), MultilinearMap.map_update_add]
   map_update_smul' v i a x := by
     classical
     show PiTensorProduct.tprod ℂ (fun j => c j (Function.update v i (a • x) j)) =
@@ -62,7 +62,7 @@ theorem kapF_symm (c : ∀ i, X₁ i ≃ₛₗ[starRingEnd ℂ] X i) (x : ⨂[�
     kapF (fun i => (c i).symm) (kapF c x) = x := by
   induction x using PiTensorProduct.induction_on with
   | smul_tprod r f => rw [kapF_smul, kapF_smul, kapF_tprod, kapF_tprod]; simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 def kap (c : ∀ i, X₁ i ≃ₛₗ[starRingEnd ℂ] X i) : (⨂[ℂ] i, X₁ i) ≃+ ⨂[ℂ] i, X i where
   toFun := kapF c
@@ -127,7 +127,7 @@ theorem incl_kap (θ : InfFam D) (M : DSModel V S) (x : SmT (conjModel M)) :
     rw [kap_smul, map_smul, map_smul, kap_smul, kap_tprod, inclT, inclT, PiTensorProduct.map_tprod,
       PiTensorProduct.map_tprod, kap_tprod]
     rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem act_kap (M : DSModel V S) (τ : D.what₂.Tau) (g : Matrix (Fin V.rank) (Fin V.rank) ℂ)
     (z : ⨂[ℂ] ρ, (conjModel M).H ρ) :
@@ -145,7 +145,7 @@ theorem act_kap (M : DSModel V S) (τ : D.what₂.Tau) (g : Matrix (Fin V.rank) 
       exact rep_conjModel M ρ g (f ρ)
     · simp only [Function.update_of_ne h]
       rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem ell_kap (M : DSModel V S) (w₁ : ∀ τ, (conjModel M).H τ) (z : ⨂[ℂ] ρ, (conjModel M).H ρ) :
     ellT (conjModel M) w₁ z = starRingEnd ℂ (ellT M (fun τ => cM M τ (w₁ τ)) (kap (chs M) z)) := by
@@ -158,7 +158,7 @@ theorem ell_kap (M : DSModel V S) (w₁ : ∀ τ, (conjModel M).H τ) (z : ⨂[�
     refine Finset.prod_congr rfl fun ρ _ => ?_
     change ⟪(cM M ρ (f ρ) : M.H ρ), cM M ρ (w₁ ρ)⟫_ℂ = starRingEnd ℂ ⟪(cM M ρ (w₁ ρ) : M.H ρ), cM M ρ (f ρ)⟫_ℂ
     exact (inner_conj_symm (𝕜 := ℂ) _ _).symm
-  | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 end Model
 
@@ -240,8 +240,8 @@ theorem mult_fw (θ : InfFam D) (M : DSModel V S) : ∀ F ∈ MultT θ M ∅ 1, 
     rw [hv f (fun i => csm θ M i (f i)) (fun τ => rfl) g]
     rfl
   | add x y hx hy =>
-    rw [map_add, map_add, map_add]
-    simp only [Pi.add_apply, LinearMap.add_apply, map_add, hx, hy]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _)]
+    simp only [Pi.add_apply, LinearMap.add_apply, map_add (f := _), hx, hy]
 
 theorem mult_bw (θ : InfFam D) (M : DSModel V S) : ∀ F₁ ∈ MultT θ (conjModel M) ∅ 1, ∃ F ∈ MultT θ M ∅ 1,
     ∀ x g, F₁ x g = starRingEnd ℂ (F (kap (csm θ M) x) g) := by
@@ -264,8 +264,8 @@ theorem mult_bw (θ : InfFam D) (M : DSModel V S) : ∀ F₁ ∈ MultT θ (conjM
     rw [hv (fun i => csm θ M i (f i)) f (fun τ => by simp [csm_val]) g]
     simp [PiTensorProduct.lift_symm]
   | add x y hx hy =>
-    rw [map_add, map_add, map_add]
-    simp only [Pi.add_apply, LinearMap.add_apply, map_add, hx, hy]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _)]
+    simp only [Pi.add_apply, LinearMap.add_apply, map_add (f := _), hx, hy]
 
 theorem modelTr_conjModel (θ : InfFam D) (M : DSModel V S) :
     ModelTr (starRingEnd ℂ) false θ (V := V) (conjModel M) M (kap (csm θ M)) where

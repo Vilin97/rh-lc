@@ -122,7 +122,7 @@ theorem short_vector_sublattice (I : AutInst) (h1 : LatticeFinitelyGenerated) (h
       rw [hgen]
       exact s.B.smul_mem _ (s.b_mem p.1)
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact s.B.add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact s.B.add_mem hy hz
     | smul c y _ hy => rw [map_zsmul]; exact s.B.toAddSubgroup.zsmul_mem hy c
   have hmapO : Op.map lin = P.toAddSubgroup := by
     ext y
@@ -135,7 +135,7 @@ theorem short_vector_sublattice (I : AutInst) (h1 : LatticeFinitelyGenerated) (h
         rw [hgen]
         exact P.smul_mem _ (Submodule.subset_span ⟨p.1, rfl⟩)
       | zero => simp
-      | add y z _ _ hy hz => rw [map_add]; exact P.add_mem hy hz
+      | add y z _ _ hy hz => rw [map_add (f := _)]; exact P.add_mem hy hz
       | smul c y _ hy => rw [map_zsmul]; exact P.toAddSubgroup.zsmul_mem hy c
     · intro hy
       obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun (𝓞 I.E)).1 (show y ∈ P from hy)

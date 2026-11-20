@@ -31,7 +31,7 @@ theorem eq_dualMapR (φ : R →+* R') (ρ : DualNumber R →+* DualNumber R') (h
     (he : ρ DualNumber.eps = DualNumber.eps) : ρ = dualMapR φ := by
   refine RingHom.ext fun a => ?_
   have e : a = inl a.fst + inl a.snd * DualNumber.eps := by ext <;> simp
-  rw [e, map_add, map_mul, h, h, he]
+  rw [e, map_add (f := _), map_mul, h, h, he]
   ext <;> simp [dualMapR]
 
 theorem dualMapR_add (φ : R →+* R') (a b : R) : dualMapR φ (inl a + inr b) = inl (φ a) + inr (φ b) := by

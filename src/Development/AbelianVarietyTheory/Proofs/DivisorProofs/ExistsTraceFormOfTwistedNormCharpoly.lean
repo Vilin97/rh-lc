@@ -129,7 +129,7 @@ theorem exists_trace_form : ∀ (K : GlobalTheory.UnitLemma.UQ) (B : GlobalTheor
   let s : B.A → B.A → K.E := fun y z => ψ y ⬝ᵥ S *ᵥ (fun j => K.c (ψ z j))
   have hadd : ∀ x y z, s (x + y) z = s x z + s y z := by
     intro x y z
-    simp only [s, map_add, add_dotProduct]
+    simp only [s, map_add (f := _), add_dotProduct]
   have hlin : ∀ (r : K.E) x z, s (r • x) z = r * s x z := by
     intro r x z
     simp only [s, map_smul, smul_dotProduct, smul_eq_mul]

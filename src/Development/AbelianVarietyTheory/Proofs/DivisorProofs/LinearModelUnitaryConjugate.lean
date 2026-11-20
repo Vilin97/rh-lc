@@ -211,7 +211,7 @@ theorem shape_right : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fie
       have e := locOp_lin (om (1, h)).isLinear hex a 1 hx hy
       rw [one_smul, one_smul] at e
       funext Y
-      simp only [e, map_add, map_smul, Pi.add_apply, Pi.smul_apply]
+      simp only [e, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply]
     have htrS : ∀ C, ∀ x ∈ SB (Fin n × Fin d → Fv F v),
         schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo M.co v (xY C)) x ∈ SB (Fin n × Fin d → Fv F v) ∧
         ι (schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo M.co v (xY C)) x) = (fun Y => ι x (Y + C)) ∧

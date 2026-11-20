@@ -38,7 +38,7 @@ private theorem det_tw {n : ℕ} {k Γ H : Type} [Field k] [Group Γ] [Group H] 
   induction y using MonoidAlgebra.induction_linear with
   | zero => simp
   | add a b ha hb =>
-    rw [map_add (W.GDet.repAlg _ B), ← ha, ← hb, ← map_add, ← map_add]
+    rw [map_add (W.GDet.repAlg _ B), ← ha, ← hb, ← map_add (f := _), ← map_add (f := _)]
     congr 2
     exact map_add (MonoidAlgebra.mapDomainRingHom B φ) a b
   | single g r =>

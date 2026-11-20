@@ -168,7 +168,7 @@ theorem GlobalTheory.CuspValueType.hasTypeAt_cusp : GlobalTheory.FunPr.Hypothese
         rw [map_smul, PiTensorProduct.lift.tprod]
         exact Submodule.smul_mem _ r (key T hT v)
       | add a b ha hb =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ ha hb
     | zero =>
       intro w
@@ -176,7 +176,7 @@ theorem GlobalTheory.CuspValueType.hasTypeAt_cusp : GlobalTheory.FunPr.Hypothese
       exact Submodule.zero_mem _
     | add a b _ _ ha hb =>
       intro w
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact Submodule.add_mem _ (ha w) (hb w)
     | smul c a _ ha =>
       intro w

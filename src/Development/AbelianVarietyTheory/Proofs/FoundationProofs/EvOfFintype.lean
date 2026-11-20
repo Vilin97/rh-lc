@@ -107,7 +107,7 @@ theorem ev_ring : ∀ (p : ℕ) [Fact p.Prime], ∀ (Ω : Type) [Field Ω] [Alge
         refine Finset.sum_congr rfl fun t _ => ?_
         rw [← Finset.sum_add_distrib]
         refine Finset.sum_congr rfl fun s _ => ?_
-        simp only [thL_mul, map_add, map_mul]
+        simp only [thL_mul, map_add (f := _), map_mul]
         ring
     · refine ev_of_fintype (ι := Fin d ⊕ Fin d') ψ _ _ _ (Sum.elim e f) (Sum.elim a b)
         (by rintro (t | t) <;> simp [he, hf]) (fun r => ?_) ?_ ?_

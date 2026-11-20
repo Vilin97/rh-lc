@@ -263,7 +263,7 @@ theorem tens_ext (z : Af F ⊗[F] E) (h : ∀ v, Algebra.TensorProduct.map (eval
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a x => rfl
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   refine GlobalTheory.LevSplit.swp_bij.1 ?_
   rw [map_zero]
   exact Formalism.UG.P.afsplit_inj _ fun v => by rw [e, h, map_zero]

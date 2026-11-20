@@ -110,5 +110,5 @@ theorem GlobalTheory.EmbTwo.exists_gal_eq : ∀ (l : ℕ) [Fact l.Prime] (K : Fi
   obtain ⟨z, w, hz, rfl⟩ := exists_approx y
   refine ⟨θ₂ w - θ₁ (Per.σO g w), ?_⟩
   have := c1 z hz
-  simp only [map_add, map_mul, map_natCast]
+  simp only [map_add (f := _), map_mul, map_natCast]
   rw [this]; ring

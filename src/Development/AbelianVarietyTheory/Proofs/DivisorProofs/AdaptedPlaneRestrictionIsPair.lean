@@ -91,7 +91,7 @@ def lagrX (M : Model σ X W) (M₁ : Model σ X₁ W) (H : Plane E n n₁) :
     Submodule F ((Fin n × Fin d → F) × (Fin n × Fin d → F)) where
   carrier := {w | IsMixedX M₁ H (M.co.e.symm (GlobalTheory.MixedLagr.hat w))}
   zero_mem' := by simpa [GlobalTheory.MixedLagr.hat_zero] using isMixedX_zero M₁ H
-  add_mem' := fun ha hb => by simpa [Set.mem_setOf_eq, GlobalTheory.MixedLagr.hat_add, map_add] using ha.add hb
+  add_mem' := fun ha hb => by simpa [Set.mem_setOf_eq, GlobalTheory.MixedLagr.hat_add, map_add (f := _)] using ha.add hb
   smul_mem' := fun c a ha => by
     show IsMixedX M₁ H (M.co.e.symm (GlobalTheory.MixedLagr.hat (c • a)))
     rw [GlobalTheory.MixedLagr.hat_smul, LinearEquiv.map_smul]
@@ -159,7 +159,7 @@ theorem symp_mixed (hH : H.IsAdapted σ B X X₁ j₀ j₁) (M : Model σ X W) (
       simp only [symp, hTens_eq, piece_ii hH]
     rw [this, M₁.co.form, hz, hz', zero_dotProduct, zero_dotProduct, sub_self]
   rw [← hQ] at h1 h2 h3 h4
-  simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   linear_combination h1 + h2 - h3 + h4
 
 end GlobalTheory.MixedLagrX
@@ -300,7 +300,7 @@ theorem mixed_lagrangian_plane_X : ∀ (F E : Type) [Field F] [NumberField F] [F
       ⟨0, z, hz, by ext i j; simp [Matrix.vecMulVec_apply]⟩
     have h0 := symp_mixed hH M M₁ hu hv
     change schr B.ψ (t • GlobalTheory.MixedLagr.hat w) φ = schr B.ψ (M.co.e _) (schr B.ψ (M.co.e _) φ)
-    rw [GlobalTheory.MixedLagr.schr_comp, h0, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add, key]
+    rw [GlobalTheory.MixedLagr.schr_comp, h0, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add (f := _), key]
 
 end GlobalTheory.MixedLagrX
 

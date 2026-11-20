@@ -36,7 +36,7 @@ theorem isBlockEmb_continuous : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a y => simp [LinearMap.baseChange_tmul, sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have h1 : Continuous fun g : GlobalTheory.CuspRep.GA E d => g.1.map Φ.symm :=
     Units.continuous_val.matrix_map hΦs
   have h2 : Continuous fun g : GlobalTheory.CuspRep.GA E d => (g⁻¹).1.map Φ.symm :=

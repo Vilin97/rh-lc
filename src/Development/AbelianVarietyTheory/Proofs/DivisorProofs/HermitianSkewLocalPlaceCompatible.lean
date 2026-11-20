@@ -102,7 +102,7 @@ theorem eq_zero_of_plane {n n₁ : ℕ} (x y : Fin n → E) (ι : Matrix (Fin n)
         ∑ q, inclR (F := F) (AF F) (U q j) * ((incM F ι)ᵀ *ᵥ δ) q +
         inclR (F := F) (AF F) (t j) * (incV F y ⬝ᵥ δ) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_mul, map_sum, add_mul, Finset.sum_add_distrib, dotProduct, Matrix.mulVec,
+      simp only [map_add (f := _), map_mul, map_sum, add_mul, Finset.sum_add_distrib, dotProduct, Matrix.mulVec,
       Finset.mul_sum, Finset.sum_mul, incV, incM, Matrix.transpose_apply, Matrix.map_apply]
     congr 1
     · congr 1
@@ -189,7 +189,7 @@ theorem iota_vanish {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n n₁ : 
   have e1 : (fun k => cA σ (c k)) = cA σ a • incV F (fun k => σ (x k)) + fun k => cA σ ((incM F ι *ᵥ β) k) := by
     funext k
     rw [hc]
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul]
+    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
     rfl
   have eT : (incM F ι)ᵀ = incM F ιᵀ := rfl
   have e2 : (incM F ι)ᵀ *ᵥ (incM F J *ᵥ incV F (fun k => σ (x k))) = 0 := by
@@ -296,6 +296,6 @@ theorem isoB_orth_at : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   refine ⟨mᵀ *ᵥ incV F sX, at_vecMulVec_right (at_mulVec (at_transpose hm) _) _,
     (incM F UX * m) *ᵥ incV F sW, at_vecMulVec (at_mulVec_right (at_mulVec hN _) _) _,
     incM F UX * m * (incM F UW)ᵀ, at_mul hN _, ?_⟩
-  rw [← map_add, ← map_add, add_assoc, ← hdec, ← hmL]
+  rw [← map_add (f := _), ← map_add (f := _), add_assoc, ← hdec, ← hmL]
 
 end GlobalTheory.IsoOrthLocB

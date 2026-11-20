@@ -61,7 +61,7 @@ theorem XV_stable {a : ℕ} (x : Fin a → D.nd.X i) (Y : Submodule (D.nd.O i) (
     rw [sumRho_apply]
     exact (loc_mulVec i w hw _ g (y j)).symm
   | zero => simp
-  | add u v _ _ hu hv => rw [map_add]; exact Submodule.add_mem _ hu hv
+  | add u v _ _ hu hv => rw [map_add (f := _)]; exact Submodule.add_mem _ hu hv
   | smul c u _ hu => rw [map_smul]; exact Submodule.smul_mem _ c hu
 
 def Xgrep {a : ℕ} (x : Fin a → D.nd.X i)

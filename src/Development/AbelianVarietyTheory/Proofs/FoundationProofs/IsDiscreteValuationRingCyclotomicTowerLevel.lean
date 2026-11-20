@@ -219,7 +219,7 @@ theorem dvr_of_generators {R S F : Type*} [CommRing R] [IsDomain R] [IsDiscreteV
         rw [this]; exact one_mem _
       · exact ⟨AdjoinRoot.root f, AdjoinRoot.lift_root hroot⟩
     | algebraMap r => exact ⟨AdjoinRoot.of f (IsLocalRing.residue R r), AdjoinRoot.lift_of hroot⟩
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   have hfield : IsField (S ⧸ J) :=
     (RingEquiv.ofBijective θ ⟨θ.injective, hsurj⟩).symm.toMulEquiv.isField (Field.toIsField _)

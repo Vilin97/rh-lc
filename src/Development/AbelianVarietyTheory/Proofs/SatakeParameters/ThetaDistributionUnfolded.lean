@@ -67,7 +67,7 @@ theorem jetLin_inl_mul (J : (DVar ι a b →₀ ℕ) → K) (f : Pol K ι b) (q 
     rw [rename_monomial, rename_monomial, monomial_mul, jetLin_mixed, smul_monomial, smul_eq_mul]
     congr 1
     ring
-  | add f g hf hg => rw [map_add, add_mul, map_add, hf, hg, smul_add]
+  | add f g hf hg => rw [map_add (f := _), add_mul, map_add (f := _), hf, hg, smul_add]
 
 theorem jetLin_liftL (J : (DVar ι a b →₀ ℕ) → K) (φ : Pol K ι b →ₐ[K] Pol K ι b)
     (R : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K) : jetLin J (liftL φ R) = φ (jetLin J R) := by
@@ -80,7 +80,7 @@ theorem jetLin_liftL (J : (DVar ι a b →₀ ℕ) → K) (φ : Pol K ι b →�
         rename Sum.inl (monomial p 1) * rename Sum.inr (monomial q c) := by
       rw [rename_monomial, rename_monomial, monomial_mul, one_mul]
     rw [h, map_mul, liftL_inl, liftL_inr, jetLin_inl_mul, jetLin_inl_mul, map_smul]
-  | add f g hf hg => rw [map_add, map_add, map_add, map_add, hf, hg]
+  | add f g hf hg => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hf, hg]
 
 def resB (h : a ≤ b) (β : ι → Matrix (Fin b) (Fin b) K) : ι → Matrix (Fin a) (Fin a) K :=
   fun τ r s => β τ (Fin.castLE h r) (Fin.castLE h s)
@@ -141,7 +141,7 @@ theorem map_jetLin (σ : K →+* L) (J : (DVar ι a b →₀ ℕ) → K) (R : Mv
     map σ (jetLin J R) = jetLin (fun m => σ (J m)) (map σ R) := by
   induction R using MvPolynomial.induction_on' with
   | monomial m c => rw [jetLin_monomial, map_monomial, map_monomial, jetLin_monomial, map_mul]
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
 
 theorem map_subD (σ : K →+* L) (P : Pol K ι a) : map σ (subD K ι a b P) = subD L ι a b (map σ P) := by
   have e : (map σ).comp (subD K ι a b).toRingHom = ((subD L ι a b).toRingHom).comp (map σ) := by
@@ -388,7 +388,7 @@ theorem colAddS_insert (t l : Fin n) (hl : l ≠ t) (S : Finset (Fin n)) (hS : l
   intro v
   simp only [colAddS, colAdd, AlgHom.comp_apply, aeval_X]
   split_ifs with h
-  · rw [map_add, map_mul, aeval_X, aeval_X, algHom_C, if_pos h, if_neg hl, Finset.sum_insert hS]
+  · rw [map_add (f := _), map_mul, aeval_X, aeval_X, algHom_C, if_pos h, if_neg hl, Finset.sum_insert hS]
     simp only [algebraMap_eq]
     ring
   · rw [aeval_X, if_neg h]
@@ -469,7 +469,7 @@ theorem colOne_eq (β : Matrix (Fin n) (Fin n) K) (hβ : ∀ w s, s < w → β w
   split_ifs with h
   · rw [sum_split t _ fun w hw => by rw [hβ w t hw, C_0, zero_mul]]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, aeval_X, if_pos h, map_sum]
+      rw [map_add (f := _), aeval_X, if_pos h, map_sum]
     congr 1
     · obtain ⟨a, s⟩ := v
       simp only at h
@@ -638,7 +638,7 @@ theorem coeff_colSc (t : Fin n) (d : K) (F : MvPolynomial (Fin r × Fin n) K) (m
     split_ifs with h
     · rw [h]
     · simp
-  | add f g hf hg => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, mul_add]
+  | add f g hf hg => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, mul_add]
 
 theorem pow_inj_of_infinite [Infinite K] {a b : ℕ} (h : ∀ x : K, x ≠ 0 → x ^ a = x ^ b) : a = b := by
   have h0 : (Polynomial.X ^ a - Polynomial.X ^ b : Polynomial K) = 0 := by
@@ -757,7 +757,7 @@ theorem psi'_psi (τ : ι) (Q : Pol K ι n) : psi' τ (psi τ Q) = Q := by
 theorem psi_blockEmb (τ : ι) (G : MvPolynomial (Fin n × Fin n) K) : psi τ (blockEmb K τ G) = C G := by
   induction G using MvPolynomial.induction_on with
   | C a => simp [blockEmb, MvPolynomial.algebraMap_apply]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p v hp =>
     rw [map_mul, map_mul, hp, map_mul]
     simp [blockEmb, psi]
@@ -859,7 +859,7 @@ theorem coeff_psi_atPos (τ : ι) (π : MvPolynomial (Fin n × Fin n) K →ₗ[K
     split_ifs
     · rw [map_smul]
     · rw [smul_zero, map_zero]
-  | add f g hf hg => simp only [map_add, MvPolynomial.coeff_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), MvPolynomial.coeff_add, hf, hg]
 
 theorem atPos_fixed (τ : ι) (π : MvPolynomial (Fin n × Fin n) K →ₗ[K] MvPolynomial (Fin n × Fin n) K) (Q : Pol K ι n)
     (h : ∀ r, π (AddMonoidAlgebra.coeff (psi τ Q) r) = AddMonoidAlgebra.coeff (psi τ Q) r) : atPos τ π Q = Q := by
@@ -879,7 +879,7 @@ theorem psi_blockEmb_ne (τ σ : ι) (h : σ ≠ τ) (F : MvPolynomial (Fin n ×
     psi τ (blockEmb K σ F) = map C (rename (fun v => (⟨(σ, v), h⟩ : Off ι n τ)) F) := by
   induction F using MvPolynomial.induction_on with
   | C a => simp [blockEmb, MvPolynomial.algebraMap_apply]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp]
     simp [blockEmb, psi, h]
@@ -1106,7 +1106,7 @@ theorem map_mem_VV {K L : Type} [Field K] [Field L] {ι : Type} [Fintype ι] {n 
     refine Finset.prod_congr rfl fun τ _ => ?_
     rw [Formalism.GradedWeylDivisibility.blockEmb, Formalism.GradedWeylDivisibility.blockEmb, MvPolynomial.map_rename]
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hx

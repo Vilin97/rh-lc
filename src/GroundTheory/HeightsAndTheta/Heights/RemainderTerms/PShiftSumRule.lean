@@ -100,7 +100,7 @@ theorem ShiftSumRule.proof (hS : ShiftTotalValues.Statement)
           flagIntegralLinear 1 (r + a) (smallPowerSum 1 r a .last (k - 1) 0 * Q k 0)) := by
     intro k hk
     rw [Finset.mem_Icc] at hk
-    rw [map_add, show flagIntegralLinear 1 (r + a) (blockPowerSum 1 (r + a) k 0 * _) = 0 from
+    rw [map_add (f := _), show flagIntegralLinear 1 (r + a) (blockPowerSum 1 (r + a) k 0 * _) = 0 from
       h1 1 (r + a) k 0 _ hk.1 hk.2, zero_add, mul_assoc, hnat, sub_mul, map_sub]
   rw [Finset.sum_congr rfl hval] at h0
   have hI : Icc 1 (r + a) = insert 1 (Icc 2 (r + a)) := by

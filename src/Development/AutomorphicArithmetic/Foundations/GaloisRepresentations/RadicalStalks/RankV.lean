@@ -60,7 +60,7 @@ theorem UpperTheory.Gal.Ord.rankV :
     | add u v _ _ hu hv =>
       obtain ⟨a, rfl⟩ := hu
       obtain ⟨b, rfl⟩ := hv
-      exact ⟨a + b, by rw [map_add, map_add]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _)]⟩
     | smul l u _ hu =>
       obtain ⟨a, rfl⟩ := hu
       obtain ⟨r, rfl⟩ := IsAlgClosed.exists_pow_nat_eq l (Fact.out : p.Prime).pos

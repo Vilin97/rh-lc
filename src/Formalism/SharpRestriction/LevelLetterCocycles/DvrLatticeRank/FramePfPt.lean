@@ -81,7 +81,7 @@ theorem framepf_lev_q_simple (c : ZMod n) (ζ : LL) (hζ : IsPrimitiveRoot ζ PD
     simp only [Pi.mul_apply, Pi.sub_apply, Pi.pow_apply, Pi.add_apply, Pi.one_apply]
     exact W.q₀_def
   have hfq : W.lev c ζ letπ * W.lev c ζ W.q = E ^ PD.p - 1 := by
-    rw [← map_mul, hq, map_sub, map_pow, map_add, map_one, hE, mul_pow, ← map_pow, hζp, map_one,
+    rw [← map_mul, hq, map_sub, map_pow, map_add (f := _), map_one, hE, mul_pow, ← map_pow, hζp, map_one,
       one_mul]
   set P := W.lev c ζ letπ with hPdef
   have hP : P = C ζ * E - 1 := eq_sub_of_add_eq' hE

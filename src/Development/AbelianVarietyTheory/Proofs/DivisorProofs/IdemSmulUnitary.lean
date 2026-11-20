@@ -43,7 +43,7 @@ theorem idem_smul_unitary {A : Type} [CommRing A] [Algebra (AF F) A] (c : A →�
   have h2 := one_sub_idem hε
   have hm : (ε • G + (1 - ε) • (1 : Matrix (Fin n) (Fin n) A)).map c = ε • G.map c + (1 - ε) • 1 := by
     ext i j
-    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply, map_add, map_smul]
+    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply, map_add (f := _), map_smul]
     split_ifs <;> simp
   rw [hm, Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_smul, Matrix.transpose_one]
   simp only [Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.mul_smul, Matrix.one_mul, Matrix.mul_one, smul_add,

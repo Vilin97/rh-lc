@@ -144,7 +144,7 @@ theorem toCompl_bijective (hw : IsInertAt F E v w) (h : w.under (𝓞 F) = v) : 
 theorem toCompl_mem (h : w.under (𝓞 F) = v) {y : Fv F v ⊗[F] E} (hy : y ∈ intLoc F E v) : toCompl h y ∈ Ov E w :=
   intLoc_induction (p := fun y => toCompl h y ∈ Ov E w)
     (fun _ ha x => mul_mem (complMap_mem h ha) (GlobalTheory.AdeleBaseChange.algebraMap_int_mem x w))
-    (by rw [map_zero]; exact zero_mem _) (fun _ _ h h' => by rw [map_add]; exact add_mem h h')
+    (by rw [map_zero]; exact zero_mem _) (fun _ _ h h' => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h')
     (fun _ h => by rw [map_neg]; exact neg_mem h) hy
 
 theorem mem_intLoc_iff (hw : IsInertAt F E v w) (h : w.under (𝓞 F) = v) (y : Fv F v ⊗[F] E) :
@@ -235,7 +235,7 @@ theorem exists_isUnramInv (hσ : IsCMExt F E σ) (hw : IsInertAt F E v w) (hc : 
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (conj_conj hσ x)
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · by_cases h0 : x = 0
     · simp [h0]
     have h0' : Valued.v x ≠ 0 := by simpa using h0

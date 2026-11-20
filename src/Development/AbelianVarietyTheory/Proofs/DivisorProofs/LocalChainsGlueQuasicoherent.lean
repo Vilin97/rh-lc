@@ -96,7 +96,7 @@ theorem exists_sheaf_j : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteVal
     · rw [IsJ.res hle (hD i) r (hφ i) hψ, ← hu]
       exact GlobalTheory.Twist.app_resM _ _ _
     · rw [map_smul, map_smul, e]
-    · rw [map_add, map_add, e, e']
+    · rw [map_add (f := _), map_add (f := _), e, e']
 
 end GlobalTheory.ChainDesc.SheafJ
 

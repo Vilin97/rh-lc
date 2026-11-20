@@ -161,7 +161,7 @@ theorem exists_endDifferential_ringHom :
   let Dp := DualNum.dualPair O
   have hadd : ∀ a b, d (a + b) = d a + d b := fun a b =>
     endDiff_unique (hd _) Dp _ fun l => by
-      rw [((hf _ _).2 a b).1, endDiff_spec (hd a), endDiff_spec (hd b), ← map_add,
+      rw [((hf _ _).2 a b).1, endDiff_spec (hd a), endDiff_spec (hd b), ← map_add (f := _),
         ← Finset.sum_add_distrib]
       simp [TensorProduct.tmul_add]
   have hone : d 1 = 1 :=

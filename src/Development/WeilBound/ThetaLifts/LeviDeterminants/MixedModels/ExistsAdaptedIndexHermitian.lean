@@ -86,8 +86,8 @@ theorem exists_adapted_index_hermitian : ∀ (F E : Type) [Field F] [NumberField
   let Φ : Matrix (Fin n) (Fin d) (AE F E) →ₗ[AF F] (Fin n × Fin d → AF F) × (Fin n × Fin d → AF F) :=
     { toFun := fun z => (glue ε (p z) (M₁.co.e (π z)).1, glue ε (q z) (M₁.co.e (π z)).2)
       map_add' := fun z z' => by
-        rw [Prod.mk_add_mk, glue_add, glue_add, hπ.map_add, map_add]
-        congr 2 <;> funext k <;> simp [p, q, hb.map_add, hD.map_add, mul_add, add_comm]
+        rw [Prod.mk_add_mk, glue_add, glue_add, hπ.map_add (f := _), map_add (f := _)]
+        congr 2 <;> funext k <;> simp [p, q, hb.map_add (f := _), hD.map_add (f := _), mul_add, add_comm]
       map_smul' := fun c z => by
         rw [Prod.smul_mk, glue_smul, glue_smul, hπ.map_smul, map_smul]
         congr 2 <;> funext k <;> simp [p, q, hb.map_smul, hD.map_smul] }
@@ -96,7 +96,7 @@ theorem exists_adapted_index_hermitian : ∀ (F E : Type) [Field F] [NumberField
     have h1 := M₁.co.form (π z) (π z')
     show Tr _ = glue ε _ _ ⬝ᵥ glue ε _ _ - glue ε _ _ ⬝ᵥ glue ε _ _
     change Tr _ = _ at h1
-    rw [glue_dot, glue_dot, hpq, hpq, hH', mul_add, map_add, h1, neg_one_mul, map_neg, map_sub, hTr]
+    rw [glue_dot, glue_dot, hpq, hpq, hH', mul_add, map_add (f := _), h1, neg_one_mul, map_neg, map_sub, hTr]
     ring
   have hbij : Function.Bijective Φ := by
     have := (bijective_of_symp (Φ ∘ₗ c₀.e.symm.toLinearMap) fun u w => by

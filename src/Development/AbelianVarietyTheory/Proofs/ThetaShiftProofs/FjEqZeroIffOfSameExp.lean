@@ -106,10 +106,10 @@ theorem exists_isometry {σ' : KA l →+* ℂ} {g : ℕ} {ty : Fin g → (E →+
     obtain ⟨e₁, he₁⟩ := hM (v • c) (Submodule.smul_mem_smul hv Submodule.mem_top)
     obtain ⟨m, hm⟩ : l.M ∣ l.M' := Nat.dvd_lcm_left _ _
     refine ⟨e₁ + m • (gam (v • e) - v • e), ?_⟩
-    rw [smul_add, ← map_smul, smul_comm v, map_add, he₁, map_nsmul, hm, smul_add, smul_smul, smul_sub]
+    rw [smul_add, ← map_smul, smul_comm v, map_add (f := _), he₁, map_nsmul, hm, smul_add, smul_smul, smul_sub]
     abel
   · rintro x y ⟨e, he⟩ ⟨e', he'⟩
-    exact ⟨e + e', by rw [map_add, he, he', smul_add]; abel⟩
+    exact ⟨e + e', by rw [map_add (f := _), he, he', smul_add]; abel⟩
 
 variable {c : Coeff l} {σ : c.F →+* ℂ} {U : Unf Xo c σ r} (Uw : UnfWit U)
 
@@ -155,7 +155,7 @@ theorem exists_move (hσ : GoodEmb c σ) (hU : IsUnf U) (hpr : GlobalTheory.Fram
     · obtain ⟨a, rfl⟩ := hs w hw
       obtain ⟨e, he⟩ := hM a
       refine ⟨_, (Uw.φ k e).2, ?_⟩
-      rw [← hg, he, map_add, map_nsmul, Nat.cast_smul_eq_nsmul]
+      rw [← hg, he, map_add (f := _), map_nsmul, Nat.cast_smul_eq_nsmul]
       simp
   have hy : lact gm x.1 ∈ (U.X k).dom := (AR.Up.PairUnfoldPf.lact_mem_dom_iff (U.X k) hΓ _).2 x.2
   obtain ⟨idx, -, -, hper⟩ := GlobalTheory.ArcFlow.exists_idx Uw hσ hU k

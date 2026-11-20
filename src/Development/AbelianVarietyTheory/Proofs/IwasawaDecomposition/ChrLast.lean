@@ -88,7 +88,7 @@ theorem lam_loc {K : Type} [Field K] (ψ₀ : AddChar (𝓞 E ⧸ P.asIdeal) K) 
   rw [map_mul]
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [redP_superdiag (by omega) hrn hh, ← hψ, map_add, map_sum, map_sum]
+    · rw [redP_superdiag (by omega) hrn hh, ← hψ, map_add (f := _), map_sum, map_sum]
     congr 1
     refine (sum_sd hk (by omega) hrn _ (fun x y => e (redP P (mat h x y))) fun x y hx hy => ?_).symm
     rw [Matrix.map_apply, hM x y hx hy]

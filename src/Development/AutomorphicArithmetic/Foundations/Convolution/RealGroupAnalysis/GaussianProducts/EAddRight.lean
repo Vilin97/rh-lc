@@ -21,7 +21,7 @@ private theorem E_norm (κ : Fin 2 → F) (u : Fin 2 → A F) : ‖E κ u‖ = 1
 private theorem E_add_left (κ κ' : Fin 2 → F) (u : Fin 2 → A F) : E (κ + κ') u = E κ u * E κ' u := by
   simp only [E, ← UpperTheory.ConvolutionTheory.R2.ψ_add]
   congr 1
-  simp only [Pi.add_apply, map_add]
+  simp only [Pi.add_apply, map_add (f := _)]
   ring
 
 private theorem E_add_right (κ : Fin 2 → F) (u v : Fin 2 → A F) : E κ (u + v) = E κ u * E κ v := by
@@ -39,7 +39,7 @@ private theorem E_per (κ : Fin 2 → F) : ∀ ξ ∈ vecLattice F (Fin 2), ∀ 
   rw [E_add_right]
   have : E κ (fun i => algebraMap F (A F) (η i)) = 1 := by
     simp only [E]
-    rw [← map_mul, ← map_mul, ← map_add]
+    rw [← map_mul, ← map_mul, ← map_add (f := _)]
     exact ψ_rt _
   rw [this, one_mul]
 

@@ -291,7 +291,7 @@ theorem trR_pb (hpl : Q.IsPlace P Bs.z Bs.z' Bs.π Bs.π') (hk : 2 ≤ P.k) (he 
   simp only [rawR, Q.crd, pbOp, if_pos hc, wirtBar]
   have key : ∀ X : Wq →L[ℂ] Wp, inner ℂ (B.hsVec (e ρ q.1.2)) (B.hsVec X) = Lin (B.hsVec (e ρ q.1.2)) X :=
     fun _ => rfl
-  simp only [key, map_smul, map_add, smul_eq_mul]
+  simp only [key, map_smul, map_add (f := _), smul_eq_mul]
   ring
 
 theorem trR_mul (hpl : Q.IsPlace P Bs.z Bs.z' Bs.π Bs.π') (hk : 2 ≤ P.k) (he : IsFrameB P Bs e)

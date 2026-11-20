@@ -74,7 +74,7 @@ theorem pow_approx (hl2 : l ≠ 2) (u : ℤ_[l]) (hu : ‖u - 1‖ = (l : ℝ)�
     ZMod.orderOf_one_add_mul_prime_pow hp 1 (by omega) a ha n
   have hub : PadicInt.toZModPow (n + 1) u = 1 + (l : ZMod (l ^ (n + 1))) ^ 1 * a := by
     have : u = 1 + (l : ℤ_[l]) ^ 1 * r := by rw [pow_one, mul_comm]; rw [pow_one] at hr; rw [hr]; ring
-    rw [this, map_add, map_one, map_mul, map_pow, map_natCast, ha_cast]
+    rw [this, map_add (f := _), map_one, map_mul, map_pow, map_natCast, ha_cast]
 
   have huu : IsUnit (PadicInt.toZModPow (n + 1) u) := by
     apply IsUnit.map

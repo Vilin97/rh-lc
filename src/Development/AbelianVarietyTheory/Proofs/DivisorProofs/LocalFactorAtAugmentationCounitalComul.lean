@@ -43,7 +43,7 @@ theorem localFactor_counital_descends :
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [φ, hε', mul_comm]
-    | add s t hs ht => simp only [map_add, hs, ht]
+    | add s t hs ht => simp only [map_add (f := _), hs, ht]
   have hφΔ : ∀ a, φ (Δ'' a) = ε a := by
     intro a
     show φ (Algebra.TensorProduct.map mk mk (Δ a)) = ε a
@@ -70,9 +70,9 @@ theorem localFactor_counital_descends :
         have h1 : x ⊗ₜ[k] y = iL x * iR y := by
           simp [iL, iR, Algebra.TensorProduct.tmul_mul_tmul]
         have h2 : iL x = iL u + algebraMap k _ (ε' x) := by
-          rw [← AlgHom.commutes iL, ← map_add]; simp [u]
+          rw [← AlgHom.commutes iL, ← map_add (f := _)]; simp [u]
         have h3 : iR y = iR v + algebraMap k _ (ε' y) := by
-          rw [← AlgHom.commutes iR, ← map_add]; simp [v]
+          rw [← AlgHom.commutes iR, ← map_add (f := _)]; simp [v]
         have h4 : φ (x ⊗ₜ[k] y) = ε' x * ε' y := by simp [φ]
         rw [h4, map_mul, h1, h2, h3]; ring
       rw [heq]
@@ -80,7 +80,7 @@ theorem localFactor_counital_descends :
     | add s t hs ht =>
       have := add_mem hs ht
       convert this using 1
-      simp only [map_add]; abel
+      simp only [map_add (f := _)]; abel
   have hkill : ∀ a ∈ J, Δ'' a = 0 := by
     have h0 : Δ'' e' = 0 := by
       apply (he'.map Δ'').eq_zero_of_isNilpotent
@@ -101,7 +101,7 @@ theorem localFactor_counital_descends :
       induction t using TensorProduct.induction_on with
       | zero => simp
       | tmul x y => simp [hε']
-      | add s t hs ht => simp only [map_add, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), hs, ht]
     rw [← hmk, hΔ', gen, hL]
   · intro a'
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mkₐ_surjective k J a'
@@ -111,7 +111,7 @@ theorem localFactor_counital_descends :
       induction t using TensorProduct.induction_on with
       | zero => simp
       | tmul x y => simp [hε']
-      | add s t hs ht => simp only [map_add, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), hs, ht]
     rw [← hmk, hΔ', gen, hR]
   · rw [Ideal.FG.isNilpotent_iff_le_nilradical (IsNoetherian.noetherian _)]
     intro y hy

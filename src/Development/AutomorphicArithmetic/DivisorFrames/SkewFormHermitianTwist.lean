@@ -102,7 +102,7 @@ theorem UpperTheory.skew_form_hermitian_twist :
   have h1 : ∀ c : E, c + form σ X.J y x * form σ W.J y' x' * σ (σ c) = 0 := fun c => hnd _ fun b => by
     have h := key (σ c • x) (b • y) x' y'
     rw [form_smul_smul, form_smul_smul, hxy, hxy', mul_one, mul_one, ← map_mul, htr] at h
-    rw [add_mul, map_add, h, neg_add_eq_zero]
+    rw [add_mul, map_add (f := _), h, neg_add_eq_zero]
     congr 1; ring
   have hk : form σ X.J y x * form σ W.J y' x' = -1 := by
     have := h1 1
@@ -117,7 +117,7 @@ theorem UpperTheory.skew_form_hermitian_twist :
       have h := key (a • x) ((1 : E) • y) w w'
       rw [form_smul_smul, form_smul_smul, hxy, map_one, mul_one, mul_one, one_mul,
         ← htr (σ a * _ * _), map_mul σ, map_mul σ, hσ] at h
-      rw [add_mul, map_add, mul_comm, h, neg_add_eq_zero]
+      rw [add_mul, map_add (f := _), mul_comm, h, neg_add_eq_zero]
       congr 1; ring
     linear_combination this
   refine ⟨hσ, fun hdet => ?_, -σ (form σ X.J y x), ?_, hl⟩

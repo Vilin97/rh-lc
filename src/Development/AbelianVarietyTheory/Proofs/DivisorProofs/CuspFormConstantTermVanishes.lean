@@ -282,7 +282,7 @@ theorem abs_root_eq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     | zero => exact ⟨continuous_const, fun _ _ => rfl, map_zero _⟩
     | add x y _ _ hx hy =>
       exact ⟨hx.1.add hy.1, fun γ z => by simp only [Pi.add_apply, hx.2.1 γ z, hy.2.1 γ z], by
-        rw [map_add, hx.2.2, hy.2.2, add_zero]⟩
+        rw [map_add (f := _), hx.2.2, hy.2.2, add_zero]⟩
     | smul c x _ hx =>
       exact ⟨hx.1.const_smul c, fun γ z => by simp only [Pi.smul_apply, hx.2.1 γ z], by rw [map_smul, hx.2.2, smul_zero]⟩
   obtain ⟨g1, g2, g3⟩ := gen f' hf'span

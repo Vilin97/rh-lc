@@ -19,7 +19,7 @@ variable {D : D7}
 
 theorem symplO_add_right' (S T : HSp D) (x u v : WO S T) :
     symplO S T x (u + v) = symplO S T x u + symplO S T x v := by
-  simp only [symplO, hO, Matrix.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [symplO, hO, Matrix.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 theorem symplO_neg_right' (S T : HSp D) (x u : WO S T) :
     symplO S T x (-u) = -symplO S T x u := by

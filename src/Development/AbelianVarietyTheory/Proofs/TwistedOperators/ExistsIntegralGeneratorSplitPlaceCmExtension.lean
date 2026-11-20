@@ -76,7 +76,7 @@ theorem exists_integral_gen_split : ∀ (F E : Type) [Field F] [NumberField F] [
     simpa using this
   have hq : (a : E) ^ 2 + algebraMap F E (b : F) * a + algebraMap F E (c : F) = 0 := by
     have := congrArg (algebraMap (𝓞 E) E) hq0
-    simp only [map_add, map_mul, map_pow, map_zero] at this
+    simp only [map_add (f := _), map_mul, map_pow, map_zero] at this
     exact this
   have hli : LinearIndependent F ![(1 : E), a] := by
     rw [LinearIndependent.pair_iff' one_ne_zero]
@@ -96,7 +96,7 @@ theorem exists_integral_gen_split : ∀ (F E : Type) [Field F] [NumberField F] [
     exact congrArg (fun f : E →ₗ[F] E => f x) this
   have hqσ : σ (a : E) ^ 2 + algebraMap F E (b : F) * σ a + algebraMap F E (c : F) = 0 := by
     have := congrArg σ hq
-    simpa only [map_add, map_mul, map_pow, AlgHom.commutes, map_zero] using this
+    simpa only [map_add (f := _), map_mul, map_pow, AlgHom.commutes, map_zero] using this
   have hconj : σ (a : E) = -algebraMap F E (b : F) - a := by
     have hm : (σ (a : E) - a) * (σ a + a + algebraMap F E (b : F)) = 0 := by
       linear_combination hqσ - hq
@@ -105,7 +105,7 @@ theorem exists_integral_gen_split : ∀ (F E : Type) [Field F] [NumberField F] [
     · linear_combination h
   have hqg : g (a : E) ^ 2 + algebraMap F E (b : F) * g a + algebraMap F E (c : F) = 0 := by
     have := congrArg g hq
-    simpa only [map_add, map_mul, map_pow, AlgEquiv.commutes, map_zero] using this
+    simpa only [map_add (f := _), map_mul, map_pow, AlgEquiv.commutes, map_zero] using this
   have hgconj : g (a : E) = -algebraMap F E (b : F) - a := by
     have hm : (g (a : E) - a) * (g a + a + algebraMap F E (b : F)) = 0 := by
       linear_combination hqg - hq

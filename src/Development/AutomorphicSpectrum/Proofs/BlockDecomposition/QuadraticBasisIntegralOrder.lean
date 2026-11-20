@@ -30,7 +30,7 @@ theorem br_mul (δ : A) (e : K) (h2 : (2 : K) ≠ 0) (he : e ≠ 0)
     ring
   unfold br
   rw [e1, e2]
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   linear_combination (algebraMap K A ((a - b) / (2 * e)) *
     algebraMap K A ((a' - b') / (2 * e))) * hδ
 
@@ -45,7 +45,7 @@ theorem br_swap (δ : A) (e : K) (τ : A →+* A) (hτa : ∀ c, τ (algebraMap 
   have e2 : (b - a) / (2 * e) = -((a - b) / (2 * e)) := by rw [← neg_div, neg_sub]
   unfold br
   rw [e1, e2]
-  simp only [map_add, map_mul, hτa, hτδ, map_neg]
+  simp only [map_add (f := _), map_mul, hτa, hτδ, map_neg]
   ring
 
 theorem br_of (δ : A) (e : K) (h2 : (2 : K) ≠ 0) (he : e ≠ 0) (p q : K) :

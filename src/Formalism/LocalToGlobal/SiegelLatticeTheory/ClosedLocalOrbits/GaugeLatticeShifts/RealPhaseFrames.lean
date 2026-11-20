@@ -244,7 +244,7 @@ theorem place_id (u u' : D.what₂.Word) {γ γw g g' : X.B.I.Ginf} (hg : g ∈ 
   rw [e1, e2] at hds
   have hψy : ψ (Formalism.L2.SG.PairVal.sgLo L) + ψ (Formalism.L2.SG.PairVal.sgUp U) =
       X.B.I.φ v (X.ιE.symm (Formalism.L2.SG.PairVal.sgLo L + Formalism.L2.SG.PairVal.sgUp U)) := by
-    rw [← map_add]; rfl
+    rw [← map_add (f := _)]; rfl
   linear_combination hds - hψy
 
 end Main
@@ -291,7 +291,7 @@ theorem realPhase (u u' : D.what₂.Word) {γ γw g g' : X.B.I.Ginf} (hg : g ∈
   rw [e1, e2]
   simp only [map_neg]
   rw [← hY]
-  simp only [map_mul, map_div₀, map_add, map_ofNat, Complex.conj_ofReal, Complex.conj_I, map_natCast,
+  simp only [map_mul, map_div₀, map_add (f := _), map_ofNat, Complex.conj_ofReal, Complex.conj_I, map_natCast,
     Complex.star_def, Complex.conj_conj, map_neg]
   rw [Complex.star_def] at hp
   simp only [div_eq_mul_inv]

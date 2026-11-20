@@ -52,10 +52,10 @@ theorem exists_coords (hcm : IsCMExt F E σ) (J : Matrix (Fin n) (Fin n) E) (K :
   set Q := (K.map t)ᵀ with hQdef
   let L := GlobalTheory.LinBarCoords.liftM σ hcm (m := Fin n) (n := Fin d) v t
   let uT : Matrix (Fin n) (Fin d) (Fv F v) →+ Matrix (Fin n) (Fin d) (AE F E) :=
-    AddMonoidHom.mk' (fun Y => L (Y, 0)) (fun Y Y' => by rw [← map_add, Prod.mk_add_mk, add_zero])
+    AddMonoidHom.mk' (fun Y => L (Y, 0)) (fun Y Y' => by rw [← map_add (f := _), Prod.mk_add_mk, add_zero])
   let uM : Matrix (Fin n) (Fin d) (Fv F v) →+ Matrix (Fin n) (Fin d) (AE F E) :=
     AddMonoidHom.mk' (fun z => L (0, -(P⁻¹ * z * Q⁻¹))) (fun z z' => by
-      rw [Matrix.mul_add, Matrix.add_mul, neg_add, ← map_add, Prod.mk_add_mk, add_zero])
+      rw [Matrix.mul_add, Matrix.add_mul, neg_add, ← map_add (f := _), Prod.mk_add_mk, add_zero])
   have hco : ∀ u, pairCo σ J K t u = -(P * u.map (piW (t.comp σ)) * Q) := fun u => rfl
   have hTc : ∀ Y, (uT Y).map (piW (t.comp σ)) = 0 := fun Y => GlobalTheory.LinBarCoords.liftM_snd σ hcm v t _
   have hTt : ∀ Y, (uT Y).map (piW t) = Y := fun Y => GlobalTheory.LinBarCoords.liftM_fst σ hcm v t _
@@ -117,7 +117,7 @@ theorem exists_isLinW (hcm : IsCMExt F E σ) (M : Model σ X W) (ψ : AddChar (A
     (fun w => by
       obtain ⟨u, hu, rfl⟩ := locCo_surj M.co v w
       obtain ⟨Y, z, rfl⟩ := hspan u hu
-      exact ⟨Y, z, by simp only [AddMonoidHom.comp_apply, map_add]⟩)
+      exact ⟨Y, z, by simp only [AddMonoidHom.comp_apply, map_add (f := _)]⟩)
   have hφ₁ : ∀ (u : Matrix (Fin n) (Fin d) (AE F E)), At (evFin F v) u →
       ∀ φ ∈ GlobalTheory.WeilM.SB _, ∀ φ₁, Acts (evFin F v) (M.co.rho ψ u) φ φ₁ →
         φ₁ = GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt ψ v) (GlobalTheory.LatVac.locCo M.co v u) φ :=
@@ -184,7 +184,7 @@ theorem shape (hcm : IsCMExt F E σ) (M : Model σ X W) (ψ : AddChar (AF F) ℂ
     intro x hx y hy c
     have hz : c • x + y ∈ SB (Fin n × Fin d → Fv F v) := add_mem (Submodule.smul_mem _ c hx) hy
     apply GlobalTheory.UnitWShape.eq_of_tens_eq v R hR0 hinv
-    rw [← (hA _ hz).2 R (hR _ hz), GlobalTheory.UnitWShape.tens_add_smul, map_add, map_smul, (hA x hx).2 R (hR x hx),
+    rw [← (hA _ hz).2 R (hR _ hz), GlobalTheory.UnitWShape.tens_add_smul, map_add (f := _), map_smul, (hA x hx).2 R (hR x hx),
       (hA y hy).2 R (hR y hy), ← GlobalTheory.UnitWShape.tens_add_smul]
   have atMul : ∀ (P : Matrix (Fin n) (Fin n) (AE F E)) (Q : Matrix (Fin d) (Fin d) (AE F E))
       (γ : Matrix (Fin n) (Fin d) (AE F E)), At (evFin F v) γ → At (evFin F v) (P * γ * Q) := by
@@ -246,7 +246,7 @@ theorem shape (hcm : IsCMExt F E σ) (M : Model σ X W) (ψ : AddChar (AF F) ℂ
     (fun φ (Y : Matrix (Fin n) (Fin d) (Fv F v)) => ι (A φ) (gt * Y * htᵀ)) hL.bij
     (fun x hx y hy c => by
       funext Y
-      simp only [hlin x hx y hy c, map_add, map_smul, Pi.add_apply, Pi.smul_apply])
+      simp only [hlin x hx y hy c, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply])
     (fun C => schr (GlobalTheory.LatVac.psiAt ψ v) (GlobalTheory.LatVac.locCo M.co v (uT C)))
     (fun l => schr (GlobalTheory.LatVac.psiAt ψ v) (GlobalTheory.LatVac.locCo M.co v (uM (Lm l))))
     (fun C x hx => by

@@ -134,11 +134,11 @@ theorem base_congr_of_tmul : ∀ (F E : Type) [Field F] [NumberField F] [Field E
         show Algebra.trace F E (x : E) = algebraMap (𝓞 F) F r from rfl, HeightOneSpectrum.valuation_of_algebraMap]
       exact HeightOneSpectrum.intValuation_le_one v r
     | zero => intro v; rw [map_zero, map_zero]; exact zero_mem _
-    | add a b _ _ ha hb => intro v; rw [map_add, map_add]; exact add_mem (ha v) (hb v)
+    | add a b _ _ ha hb => intro v; rw [map_add (f := _), map_add (f := _)]; exact add_mem (ha v) (hb v)
     | neg a _ ha => intro v; rw [map_neg, map_neg]; exact neg_mem (ha v)
   refine ⟨T s, hint s hs, ?_⟩
   have e := congrArg T he
-  rw [hT, map_add, hnat, show (1 : A ⊗[F] E) = (1 : A) ⊗ₜ[F] (1 : E) from rfl, hT, htr1, one_mul] at e
+  rw [hT, map_add (f := _), hnat, show (1 : A ⊗[F] E) = (1 : A) ⊗ₜ[F] (1 : E) from rfl, hT, htr1, one_mul] at e
   have h2A : (2 : A) * algebraMap F A (1 / 2) = 1 := by
     rw [show (2 : A) = algebraMap F A 2 from (map_ofNat _ 2).symm, ← map_mul]
     norm_num

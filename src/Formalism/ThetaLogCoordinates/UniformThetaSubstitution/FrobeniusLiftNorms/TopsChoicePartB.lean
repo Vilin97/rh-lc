@@ -152,7 +152,7 @@ theorem term_change {K ι : Type} [Field K] {pp : K} (hpp : pp ≠ 0) (hh Y : Mv
 theorem classChange_statement : ClassChange := by
   intro K ι _ _ pp hpp _ hh Y F h0 hY0 hY hF
   have h0' : MvPowerSeries.constantCoeff (hh + MvPowerSeries.C pp * Y) = 0 := by
-    rw [map_add, map_mul, h0, hY0, mul_zero, add_zero]
+    rw [map_add (f := _), map_mul, h0, hY0, mul_zero, add_zero]
   rw [inClass_iff h0] at hF
   rw [inClass_iff h0']
   obtain ⟨U, hU, h⟩ := hF
@@ -224,7 +224,7 @@ theorem exp_term {K ι : Type} [Field K] [CharZero K] (a b : MvPowerSeries ι K)
 theorem mvExp_add {K ι : Type} [NormedField K] [CharZero K] {a b : MvPowerSeries ι K}
     (ha : MvPowerSeries.constantCoeff a = 0) (hb : MvPowerSeries.constantCoeff b = 0) :
     mvExp (a + b) = mvExp a * mvExp b := by
-  have hab : MvPowerSeries.constantCoeff (a + b) = 0 := by rw [map_add, ha, hb, add_zero]
+  have hab : MvPowerSeries.constantCoeff (a + b) = 0 := by rw [map_add (f := _), ha, hb, add_zero]
   have la := (low_one_iff _).2 ha
   have lb := (low_one_iff _).2 hb
   refine eq_of_low fun M => ?_
@@ -367,7 +367,7 @@ theorem subst_g_series_eq {K τ : Type} [Field K] (p : ℕ) (c c' : K) {a : Fin 
   have h1 := subst_leadT p 0 1 hs
   have h2 := subst_leadT p 1 0 hs
   rw [← MvPowerSeries.coe_substAlgHom hs] at h1 h2 ⊢
-  rw [e, map_add, map_sub, map_mul, map_mul, hC, hC, h1, h2]
+  rw [e, map_add (f := _), map_sub, map_mul, map_mul, hC, hC, h1, h2]
   ring
 
 theorem constant_coeff_hh_zero {K E : Type} [Field K] [Fintype E] {p : ℕ} (hp : p ≠ 0) (c c' : K) :

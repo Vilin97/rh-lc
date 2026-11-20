@@ -139,7 +139,7 @@ theorem span_orbit (a : AlgWt L n) {ι : Type} [Fintype ι] [DecidableEq ι] (b 
       induction r using MonoidAlgebra.induction_linear with
       | zero => simp
       | add f g hf hg =>
-        rw [map_add, LinearMap.add_apply]
+        rw [map_add (f := _), LinearMap.add_apply]
         exact add_mem hf hg
       | single g c =>
         rw [Representation.asAlgebraHom_single, LinearMap.smul_apply]

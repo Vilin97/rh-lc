@@ -66,11 +66,11 @@ theorem diagonal_split : ∀ (C : Type) [Field C] [CharZero C] (V : VF C) (d : �
     (fun a => ⟨by simp only [(h0 a).1, map_zero], by simp only [(h0 a).2, map_zero]⟩)
     (fun a a' b ha ha' hb => by
       have := (hq _).2 (hadd a a' b ha ha' hb).1
-      rw [map_sub, map_add, sub_eq_zero] at this
+      rw [map_sub, map_add (f := _), sub_eq_zero] at this
       exact this.symm)
     (fun a a' b ha ha' hb => by
       have := (hq _).2 (hadd a a' b ha ha' hb).2
-      rw [map_sub, map_add, sub_eq_zero] at this
+      rw [map_sub, map_add (f := _), sub_eq_zero] at this
       exact this.symm)
     (fun a b ha hb => by
       have := (hq _).2 (hs a b ha hb)

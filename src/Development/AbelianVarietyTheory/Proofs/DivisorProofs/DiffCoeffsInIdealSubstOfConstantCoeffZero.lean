@@ -21,7 +21,7 @@ theorem euler_mul (j : τ) (x y : MvPowerSeries τ B) :
     euler j (x * y) = euler j x * y + x * euler j y := by
   classical
   ext γ
-  rw [coeff_euler, map_add, coeff_mul, coeff_mul, coeff_mul, Finset.mul_sum,
+  rw [coeff_euler, map_add (f := _), coeff_mul, coeff_mul, coeff_mul, Finset.mul_sum,
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun q hq => ?_
   have hq' : q.1 + q.2 = γ := Finset.HasAntidiagonal.mem_antidiagonal.1 hq
@@ -79,7 +79,7 @@ theorem smul_mem_of_mem_span {σ : Type} (N : Submodule B Q) (α : σ → ℕ) (
     · rw [Algebra.smul_def, map_natCast]; exact hc i
     · rw [zero_smul]; exact N.zero_mem
   | zero => intro e; rw [map_zero, zero_smul]; exact N.zero_mem
-  | add x y _ _ hx hy => intro e; rw [map_add, add_smul]; exact N.add_mem (hx e) (hy e)
+  | add x y _ _ hx hy => intro e; rw [map_add (f := _), add_smul]; exact N.add_mem (hx e) (hy e)
   | smul r x _ hx =>
     classical
     intro e

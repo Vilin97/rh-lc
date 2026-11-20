@@ -36,7 +36,7 @@ theorem half_elt {L : Type} [Field L] [NumberField L] (σ : Gal(L/ℚ)) (x : L) 
   apply RingOfIntegers.coe_injective
   show σ (W : L) = ((1 - W : 𝓞 L) : L)
   have e1 : ((1 - W : 𝓞 L) : L) = 1 - (W : L) := by push_cast; rfl
-  rw [e1, hWc, map_div₀, map_add, map_one, hσ, map_ofNat]
+  rw [e1, hWc, map_div₀, map_add (f := _), map_one, hσ, map_ofNat]
   ring
 
 theorem stab_fix {L : Type} [Field L] [NumberField L] (x : L) (c : ℤ)

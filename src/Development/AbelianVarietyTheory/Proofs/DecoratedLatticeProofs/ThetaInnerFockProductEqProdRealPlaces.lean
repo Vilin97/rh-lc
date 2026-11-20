@@ -94,7 +94,7 @@ theorem pure_comm {g : X → ℂ} (hg : P g) (v : ι) (Q : MvPolynomial ι ℂ) 
     rw [e, ← List.foldr_append]
     exact GlobalTheory.FockIndep.foldr_perm hA hc hg (List.perm_append_singleton _ _)
   | add p q hp hq =>
-    rw [map_add, map_add, hp, hq, Aadd _ _ _ (GlobalTheory.FockIndep.pure_mem hadd hsm hA hg _)
+    rw [map_add (f := _), map_add (f := _), hp, hq, Aadd _ _ _ (GlobalTheory.FockIndep.pure_mem hadd hsm hA hg _)
       (GlobalTheory.FockIndep.pure_mem hadd hsm hA hg _)]
 
 theorem pure_mul {f : X → ℂ} (hf : P f) (Q R : MvPolynomial ι ℂ) :
@@ -103,7 +103,7 @@ theorem pure_mul {f : X → ℂ} (hf : P f) (Q R : MvPolynomial ι ℂ) :
   | C a =>
     rw [MvPolynomial.C_mul', map_smul, ← MvPolynomial.monomial_zero', GlobalTheory.FockIndep.pure_monomial]
     simp [opPow]
-  | add p q hp hq => rw [add_mul, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [add_mul, map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p v hp =>
     have hR := GlobalTheory.FockIndep.pure_mem hadd hsm hA hf R
     rw [mul_assoc, hp, GlobalTheory.FockIndep.pure_X_mul hadd hsm hA hc Aadd Asm hf,
@@ -122,7 +122,7 @@ theorem pure_rename {κ : Type} {f : X → ℂ} (hf : P f) (e : κ → ι) (Q : 
     refine (GlobalTheory.FockIndep.foldr_perm hA hc hf ?_).symm
     rw [← Multiset.coe_eq_coe, ← Multiset.map_coe, Multiset.coe_toList, Multiset.coe_toList,
       Finsupp.toMultiset_map]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 end Poly
 

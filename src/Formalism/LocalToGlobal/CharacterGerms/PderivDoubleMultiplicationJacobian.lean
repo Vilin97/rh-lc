@@ -122,7 +122,7 @@ theorem dh_eq (Y : FBChart C V O dd) (m : Fin dd) : Dh Y m = Az Y m - Pm Y m := 
     constant_zero_point_third _ hadd
   have hE0 : constantCoeff (ev (n := 3) ![pt C dd 0, pt C dd 2] Y.h + ev (n := 3) ![pt C dd 1, pt C dd 2] Y.h -
       ev (n := 3) ![addOf Y.B.G.F (pt C dd 0) (pt C dd 1), pt C dd 2] Y.h) = 0 := by
-    rw [map_sub, map_add, const_ev hA (h_const Y), const_ev hB (h_const Y), const_ev hC (h_const Y)]
+    rw [map_sub, map_add (f := _), const_ev hA (h_const Y), const_ev hB (h_const Y), const_ev hC (h_const Y)]
     simp
   have dA : pderiv C ((1 : Fin 3), m) (ev (n := 3) ![pt C dd 0, pt C dd 2] Y.h) = 0 := by
     rw [pderiv_eval_pair hA]
@@ -204,7 +204,7 @@ theorem dh_eq (Y : FBChart C V O dd) (m : Fin dd) : Dh Y m = Az Y m - Pm Y m := 
     exact PartialDerivEval.eval_points_two f
   have hPm : Pm Y m = ev (n := 2) ![0, P1] (gk Y m) - ∑ k, gk Y k * J2 Y.B.G k m := by
     unfold Pm
-    rw [hph, pderiv_expS hE0, ← hph, ev_mul hS, Y.B.cocycleLeft_zero_snd, one_mul, map_sub, map_add, dA, dB, dC, zero_add,
+    rw [hph, pderiv_expS hE0, ← hph, ev_mul hS, Y.B.cocycleLeft_zero_snd, one_mul, map_sub, map_add (f := _), dA, dB, dC, zero_add,
       ev_sub hS, sB, ev_sum hS]
     congr 1
     refine Finset.sum_congr rfl fun k _ => ?_

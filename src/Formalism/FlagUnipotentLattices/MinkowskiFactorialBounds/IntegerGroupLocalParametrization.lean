@@ -36,7 +36,7 @@ theorem orthogonal_splitting : PerpSplit := by
       rw [s5a4_mem_perpR] at hx hw
       intro a ha
       have h1 := hx a ha
-      rw [map_add, hw a (hAU ha), add_zero] at h1
+      rw [map_add (f := _), hw a (hAU ha), add_zero] at h1
       exact h1
     · apply sup_le
       · intro x hx; rw [s5a4_mem_perpR] at hx ⊢; exact fun a ha => hx a (hAU ha)
@@ -74,7 +74,7 @@ theorem polarisation_sesquilinear : PolariseSesq := by
   have l : h (y₁ - A₁) (y₂ - A₂) = h y₁ y₂ + h A₁ A₂ := by
     simp only [map_sub, LinearMap.sub_apply, h1, h2]; ring
   have r : h (y₁' + A₁') (y₂' + A₂') = h y₁' y₂' + h A₁' A₂' := by
-    simp only [map_add, LinearMap.add_apply, h3, h4]; ring
+    simp only [map_add (f := _), LinearMap.add_apply, h3, h4]; ring
   rw [← l, ← r, e1, e2]
 
 theorem cofactor_line_formula : CofactorLine := by
@@ -776,7 +776,7 @@ theorem units_square_index : UnitsSquareIndex := by
           Int.cast_zero]; rfl
       map_mul' := by
         intro x y
-        simp only [QuotientGroup.mk_mul, ofMul_mul, map_add, Finsupp.coe_add, Pi.add_apply,
+        simp only [QuotientGroup.mk_mul, ofMul_mul, map_add (f := _), Finsupp.coe_add, Pi.add_apply,
           Int.cast_add]; rfl }, fun _ => rfl⟩
   have hθ : ∀ (x ζ : (𝓞 F)ˣ) (e : Fin (rank F) → ℤ), ζ ∈ torsion F →
       x = ζ * ∏ i, (fundSystem F i) ^ (e i) →

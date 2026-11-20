@@ -77,7 +77,7 @@ theorem exists_logRes_smul_eq_ample_add_eff :
     intro y hy
     exact hmem y (Or.inr ((GlobalTheory.T.cartierDivisorPullback_support_and_effective Y₀ Y t D₀).1 y hy))
   · have e₀' : a₀ • CechPic.pull s₀ (cls M hM) = cls A hA.isLB + toPic D₀ := e₀
-    rw [map_add, map_nsmul, toPic_pullCart, GlobalTheory.CechPic.pull_comp, mul_smul,
+    rw [map_add (f := _), map_nsmul, toPic_pullCart, GlobalTheory.CechPic.pull_comp, mul_smul,
       ← map_nsmul (CechPic.pull t) a₀, e₀', map_add, smul_add, e₁, add_assoc]
 
 end GlobalTheory.LogResBig

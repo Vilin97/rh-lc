@@ -121,7 +121,7 @@ theorem relIndex_orthProj_lattice {m : ℕ} {b : Fin k → Fin r → K} (hb : Li
     refine ⟨?_, hq⟩
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hS
     change hpvHom b (y + z) ∈ _
-    rw [map_add]
+    rw [map_add (f := _)]
     have hy0 : hpvHom b y = 0 := (projectedVector_eq_zero_iff hb y).mpr hy.2
     rw [hy0, zero_add]
     exact orthProj_mem_span b c hz

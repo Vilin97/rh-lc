@@ -242,7 +242,7 @@ variable (c) in
 def eigLie (x : Sp S ⟶ Y.X) (σ : E →+* ℂ) : Submodule S (TanM x Y.t.G) where
   carrier := {v | ∀ a : 𝓞 E, actR Y.t.act a v = algebraMap c.F S (embK c σ a) • v}
   zero_mem' := fun a => by rw [map_zero, smul_zero]
-  add_mem' := fun hu hv a => by rw [map_add, hu a, hv a, smul_add]
+  add_mem' := fun hu hv a => by rw [map_add (f := _), hu a, hv a, smul_add]
   smul_mem' := fun r v hv a => by rw [map_smul, hv a, smul_comm]
 
 theorem vec_mem_eigLie (M : MChart Y) (x : Sp S ⟶ Y.X) (h : ⊤ ≤ x ⁻¹ᵁ M.U) (σ : E →+* ℂ) (cv : Fin M.n → S) :

@@ -40,7 +40,7 @@ def hom (hlin : ∀ (c : A) (x : H) (φ : Q), κ (c • x) φ = i c * κ x φ) (
       have e := key hlin ht hinj hx (x' := x y + x y') (c := t ^ n) (y := y + y') (by simp [hx, smul_add]) φ
       have hn : i t ^ n ≠ 0 := pow_ne_zero _ ht
       simp only [AddMonoidHom.mk'_apply, AddMonoidHom.add_apply]
-      rw [map_add, AddMonoidHom.add_apply, map_pow] at e
+      rw [map_add (f := _), AddMonoidHom.add_apply, map_pow] at e
       unfold F at e ⊢
       field_simp
       field_simp at e

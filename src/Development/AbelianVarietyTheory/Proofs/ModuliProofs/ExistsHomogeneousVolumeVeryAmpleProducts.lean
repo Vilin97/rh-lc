@@ -239,7 +239,7 @@ theorem Emb.mul {p : X ⟶ Sp K} [IsSeparated p] {g g' : ∀ i j, Γ(X, U i ⊓ 
     · obtain ⟨F, rfl⟩ := sj₁ d
       induction F using MvPolynomial.induction_on with
       | C c => exact ⟨MvPolynomial.C c, by rw [MvPolynomial.eval₂Hom_C, MvPolynomial.eval₂Hom_C, rs_cst]⟩
-      | add F G hF hG => rw [map_add, map_add]; exact Subring.add_mem _ hF hG
+      | add F G hF hG => rw [map_add (f := _), map_add (f := _)]; exact Subring.add_mem _ hF hG
       | mul_X F i hF =>
         rw [map_mul, map_mul]
         refine Subring.mul_mem _ hF ⟨MvPolynomial.X (i, a.2), ?_⟩
@@ -247,7 +247,7 @@ theorem Emb.mul {p : X ⟶ Sp K} [IsSeparated p] {g g' : ∀ i j, Γ(X, U i ⊓ 
     · obtain ⟨F, rfl⟩ := sj₂ d
       induction F using MvPolynomial.induction_on with
       | C c => exact ⟨MvPolynomial.C c, by rw [MvPolynomial.eval₂Hom_C, MvPolynomial.eval₂Hom_C, rs_cst]⟩
-      | add F G hF hG => rw [map_add, map_add]; exact Subring.add_mem _ hF hG
+      | add F G hF hG => rw [map_add (f := _), map_add (f := _)]; exact Subring.add_mem _ hF hG
       | mul_X F i hF =>
         rw [map_mul, map_mul]
         refine Subring.mul_mem _ hF ⟨MvPolynomial.X (a.1, i), ?_⟩
@@ -269,7 +269,7 @@ theorem isSec_cst (p : X ⟶ Sp K) (c : K) : IsSec (U := U) 1 (cstPi p U c) := f
 
 theorem IsSec.add {g : ∀ i j, Γ(X, U i ⊓ U j)ˣ} {f f' : ∀ j, Γ(X, U j)} (h : IsSec g f) (h' : IsSec g f') :
     IsSec g (f + f') := fun i j => by
-  simp only [Pi.add_apply, map_add, h i j, h' i j, mul_add]
+  simp only [Pi.add_apply, map_add (f := _), h i j, h' i j, mul_add]
 
 theorem isSec_zero (g : ∀ i j, Γ(X, U i ⊓ U j)ˣ) : IsSec g 0 := fun i j => by simp
 
@@ -304,7 +304,7 @@ theorem isSec_eval (p : X ⟶ Sp K) (col : σ → Fin r) (v : σ → ∀ j, Γ(X
     induction d using Finsupp.induction_linear with
     | zero => simpa [gpow_zero] using isSec_cst (U := U) p 1
     | add d d' h h' =>
-      rw [map_add, gpow_add, Finsupp.prod_add_index' (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _)]
+      rw [map_add (f := _), gpow_add, Finsupp.prod_add_index' (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _)]
       exact h.mul h'
     | single a m =>
       rw [Finsupp.weight_single, gpow_smul, gpow_single, Finsupp.prod_single_index (h := fun a m => v a ^ m) (pow_zero _)]
@@ -377,7 +377,7 @@ theorem HasFormSystem.eventually_surj {p : X ⟶ Sp K} {w : σ → Fin r → ℕ
   clear hE hE'
   induction E using MvPolynomial.induction_on with
   | C c => simp only [MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq, MvPolynomial.eval₂Hom_C]; rfl
-  | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
   | mul_X a i ha =>
     simp only [map_mul, Pi.mul_apply, ha, MvPolynomial.aeval_X, MvPolynomial.eval₂Hom_X', ← hF']
 

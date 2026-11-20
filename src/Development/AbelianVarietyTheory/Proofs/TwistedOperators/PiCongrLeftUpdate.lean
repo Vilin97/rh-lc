@@ -113,7 +113,7 @@ def conjMap (c : ∀ τ, M.H τ ≃ₗᵢ⋆[ℂ] X.B.H (X.pl.symm τ)) (A : X.B
   map_update_add' u τ a b := by
     classical
     funext y
-    simp only [vecC_update, Submodule.coe_add, map_add, tens_update_add, Pi.add_apply, star_add]
+    simp only [vecC_update, Submodule.coe_add, map_add (f := _), tens_update_add, Pi.add_apply, star_add]
   map_update_smul' u τ a b := by
     classical
     funext y

@@ -63,7 +63,7 @@ theorem subst_isWq {W : WeierstrassCurve ℂ_[p]} {wq t : PowerSeries ℂ_[p]} (
   have hX : PowerSeries.substAlgHom ht (PowerSeries.X : PowerSeries ℂ_[p]) = t := by
     rw [← hφ, PowerSeries.subst_X ht]
   conv_lhs => rw [h']
-  simp only [hφ, map_add, map_mul, map_pow, map_one, AlgHom.commutes, hX]
+  simp only [hφ, map_add (f := _), map_mul, map_pow, map_one, AlgHom.commutes, hX]
 
 theorem fix_unique {a₁ a₂ a₃ a₄ a₆ : ℂ_[p]} {t V₁ V₂ : PowerSeries ℂ_[p]} (ht : PowerSeries.constantCoeff t = 0)
     (h₁ : V₁ = 1 + cP a₁ * t * V₁ + cP a₂ * t ^ 2 * V₁ + cP a₃ * t ^ 3 * V₁ ^ 2 + cP a₄ * t ^ 4 * V₁ ^ 2 +
@@ -163,7 +163,7 @@ theorem flog_iW {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h : I
     have hD0 : Dser W wq = 1 - (cP W.a₁ * PowerSeries.X + cP W.a₃ * PowerSeries.X ^ 3 * wq) := rfl
     have hom := omega_mul h
     have hom' := congrArg (PowerSeries.substAlgHom hs) hom
-    simp only [map_add, map_sub, map_mul, map_pow, map_neg, map_ofNat, AlgHom.commutes, hX] at hom'
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, map_neg, map_ofNat, AlgHom.commutes, hX] at hom'
     simp only [← hφ] at hom'
     rw [hwi] at hom'
     have hcw := derivative_subst_eq_subst_derivative_mul (iW W wq) wq hs

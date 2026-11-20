@@ -52,7 +52,7 @@ theorem isTranscendenceBasis_one_tmul {k K F W ι : Type} [Field k] [Field K] [F
           TensorProduct.smul_tmul]
       rw [this]
       exact E.algebraMap_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   let g : Algebra.adjoin k (Set.range x) →+* E :=
     (φ.comp (Algebra.adjoin k (Set.range x)).val.toRingHom).codRestrict E fun a => hm a a.2
@@ -62,7 +62,7 @@ theorem isTranscendenceBasis_one_tmul {k K F W ι : Type} [Field k] [Field K] [F
     intro a
     induction a using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | tmul l f =>
       have : l ⊗ₜ[k] f = algebraMap K _ l * ((1 : K) ⊗ₜ[k] f) := by simp
       rw [this, map_mul, ψ.commutes]

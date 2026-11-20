@@ -93,7 +93,7 @@ theorem exists_complete_of_idem {R ι A : Type} [CommRing R] [Fintype ι] [Decid
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum, Finset.sum_congr rfl fun a _ => hf a, Finset.sum_ite_eq]
       simp
-    rw [map_add, hf]
+    rw [map_add (f := _), hf]
     split_ifs <;> simp [hs]
 
 section Periods

@@ -207,7 +207,7 @@ private theorem kill (hk : (p : k) = 0) {A : Over (Sp k)} [GrpObj A] [IsReduced 
         _ = χ c := hσ _
   have hdec : x = rho i π.ε x + rho i (1 - π.ε) x := by
     rw [← LinearMap.add_apply, ← hL.add, add_sub_cancel, hL.one, Module.End.one_apply]
-  rw [hdec, map_add, h1, h2, add_zero]
+  rw [hdec, map_add (f := _), h1, h2, add_zero]
 
 private theorem vRoot [IsAlgClosed k] (hk : (p : k) = 0) {A : Over (Sp k)} [GrpObj A] [IsCommMonObj A]
     (hab : IsAbelianScheme A) {C : Type} [CommRing C] {w : Ideal C} {f : ℕ} (π : Par p w f)

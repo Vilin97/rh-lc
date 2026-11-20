@@ -269,7 +269,7 @@ theorem isSSRep_descent (ρ : Γ →* GL (Fin a) K) (hs : IsSSRep (mapRep (algeb
       rw [this]
       exact W.smul_mem _ hw
     | zero => intro c; simp
-    | add y z _ _ hy hz => intro c; rw [smul_add, map_add]; exact W.add_mem (hy c) (hz c)
+    | add y z _ _ hy hz => intro c; rw [smul_add, map_add (f := _)]; exact W.add_mem (hy c) (hz c)
     | smul d y _ hy => intro c; rw [smul_smul]; exact hy _
   let πL : (Fin a → L) →ₗ[L] (Fin a → L) := WL.subtype ∘ₗ Submodule.projectionOnto WL WL' hc
   have hπmem : ∀ y, πL y ∈ WL := fun y => (Submodule.projectionOnto WL WL' hc y).2
@@ -291,7 +291,7 @@ theorem isSSRep_descent (ρ : Γ →* GL (Fin a) K) (hs : IsSSRep (mapRep (algeb
       ((ρ g : Matrix (Fin a) (Fin a) K).map (algebraMap K L)).mulVec (πL y) := by
     intro g y
     have h1 : y = πL y + (y - πL y) := by abel
-    conv_lhs => rw [h1, Matrix.mulVec_add, map_add]
+    conv_lhs => rw [h1, Matrix.mulVec_add, map_add (f := _)]
     have e1 : πL (((ρ g : Matrix (Fin a) (Fin a) K).map (algebraMap K L)).mulVec (πL y)) =
         ((ρ g : Matrix (Fin a) (Fin a) K).map (algebraMap K L)).mulVec (πL y) := hπl _ (hWL g _ (hπmem y))
     have e2 : πL (((ρ g : Matrix (Fin a) (Fin a) K).map (algebraMap K L)).mulVec (y - πL y)) = 0 :=

@@ -36,7 +36,7 @@ theorem gs_scal_eq {R : Type} [CommRing R] {X Z : Scheme.{0}} (p : X ⟶ Sp R) (
 
 theorem cst_add' {R : Type} [CommRing R] {Z : Scheme.{0}} (q : Z ⟶ Sp R) (z : Z) (a b : R) :
     cst q z (a + b) = cst q z a + cst q z b := by
-  unfold cst; rw [map_add, gs_add q z ⊤ trivial]
+  unfold cst; rw [map_add (f := _), gs_add q z ⊤ trivial]
 
 theorem cst_sub' {R : Type} [CommRing R] {Z : Scheme.{0}} (q : Z ⟶ Sp R) (z : Z) (a b : R) :
     cst q z (a - b) = cst q z a - cst q z b := by
@@ -120,7 +120,7 @@ theorem GlobalTheory.HeatShift.shift_term : ∀ (R : Type) [CommRing R] [IsDomai
     have h5 := hn a i
     have h6 := hn (mu + b) i
     have h7 := hn b i
-    simp only [map_add, LinearMap.add_apply] at h1 h3 h4 h6
+    simp only [map_add (f := _), LinearMap.add_apply] at h1 h3 h4 h6
     linarith
   let w : Dd.toPre.X →+ R :=
     { toFun := fun a => ∑ i, ((((n (mu + a) i : ℤ) - n mu i - n a i : ℤ)) : R) * d i
@@ -222,7 +222,7 @@ theorem GlobalTheory.HeatShift.shift_term : ∀ (R : Type) [CommRing R] [IsDomai
   apply hinj
   have hv := GlobalTheory.HeatDefect.val_comp_stalk u' (𝟙 _) p w0 gJ₁
   rw [Category.comp_id] at hv
-  rw [map_add, map_mul, map_mul, ← GlobalTheory.HeatDefect.sval_comp_stalk _ _ _ _ gJ₁, ← GlobalTheory.HeatDefect.sval_comp_stalk _ _ _ _ gJ₁,
+  rw [map_add (f := _), map_mul, map_mul, ← GlobalTheory.HeatDefect.sval_comp_stalk _ _ _ _ gJ₁, ← GlobalTheory.HeatDefect.sval_comp_stalk _ _ _ _ gJ₁,
     ← GlobalTheory.HeatDefect.sval_comp_stalk _ _ _ _ gJ₁, ← hv, ← GlobalTheory.HeatDefect.gs_comp_stalk p (𝟙 _) w0 ⊤ trivial,
     Category.comp_id, gs_scal_eq]
   clear hv eJ₁ hJ hinj

@@ -37,7 +37,7 @@ theorem actAf_mem_laHat (D : Datum p) (c : D.O) {v : AfP p ⊗[ℚ] VQ D} (hv : 
     rw [actAf_tmul]
     exact AddSubgroup.subset_closure ⟨a, c • x, ha, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add u w _ _ hu hw => rw [map_add]; exact add_mem hu hw
+  | add u w _ _ hu hw => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hw
   | neg u _ hu => rw [map_neg]; exact neg_mem hu
 
 theorem actG_actAf {D : Datum p} {G : HTGroup p} (L : Link D G) (g : G.GAf) (c : D.O)
@@ -52,7 +52,7 @@ theorem actG_actAf {D : Datum p} {G : HTGroup p} (L : Link D G) (g : G.GAf) (c :
       refine Commute.mul_left ?_ ?_
       · exact Algebra.commute_algebraMap_left r _
       · exact h1.map (Module.End.baseChangeHom ℚ (AfP p) (VQ D))
-    | add a b ha hb => rw [map_add]; exact ha.add_left hb
+    | add a b ha hb => rw [map_add (f := _)]; exact ha.add_left hb
   unfold Link.actG
   simp only [MonoidHom.coe_comp, Function.comp_apply]
   exact LinearMap.congr_fun (key _).eq v

@@ -36,7 +36,7 @@ theorem invariant_posDef_form_eq_smul_inner_of_irreducible :
   let S : Submodule ℂ W :=
     { carrier := {y | ∀ x, B x y = μ * ⟪x, y⟫_ℂ}
       add_mem' := fun {a b} ha hb x => by
-        rw [map_add, inner_add_right, ha x, hb x, mul_add]
+        rw [map_add (f := _), inner_add_right, ha x, hb x, mul_add]
       zero_mem' := fun x => by simp
       smul_mem' := fun c a ha x => by
         rw [map_smul, inner_smul_right, ha x, smul_eq_mul]; ring }

@@ -21,7 +21,7 @@ theorem hform_exists_unit_value {R : Type} [CommRing R] {n : Type} [Fintype n] [
     rw [hHij]; ring
   have haddL : ∀ x y z, Formalism.UG.hform τ H (x + y) z = Formalism.UG.hform τ H x z + Formalism.UG.hform τ H y z := by
     intro x y z
-    simp only [Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
   have haddR : ∀ x y z, Formalism.UG.hform τ H z (x + y) = Formalism.UG.hform τ H z x + Formalism.UG.hform τ H z y := by
     intro x y z
     simp only [Formalism.UG.hform, Pi.add_apply, mul_add, Finset.sum_add_distrib]

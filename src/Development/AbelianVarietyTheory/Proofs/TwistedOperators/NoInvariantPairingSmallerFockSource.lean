@@ -147,7 +147,7 @@ theorem kfin_MMact (v : MM R p q) :
     · exact Submodule.add_mem_sup m₁ m₂
     · intro Z hZ w hw
       obtain ⟨a, ha, c, hc, rfl⟩ := Submodule.mem_sup.1 hw
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem_sup (k₁ Z hZ a ha) (k₂ Z hZ c hc)
   | smul c x hx ih =>
     obtain ⟨W₁, f₁, m₁, k₁⟩ := ih

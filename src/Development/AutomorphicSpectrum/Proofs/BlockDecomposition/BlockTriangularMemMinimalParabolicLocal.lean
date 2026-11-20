@@ -19,7 +19,7 @@ theorem tensNU_mul_inclR (u : R ⊗[F] E) (e : E) :
     tensNU j hj u * inclR (F := F) R' e = tensNU j hj (u * inclR (F := F) R e) := by
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [add_mul, map_add, hx, hy]
+  | add x y hx hy => simp only [add_mul, map_add (f := _), hx, hy]
   | tmul a e' => simp [inclR, Algebra.TensorProduct.tmul_mul_tmul]
 
 theorem map_tensNU_mul_inclR {a b c : Type} [Fintype b] (A : Matrix a b (R ⊗[F] E)) (X : Matrix b c E) :

@@ -75,7 +75,7 @@ theorem kum_add_zero_near : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] (ε : Ω
   · rintro x x' χ χ' ⟨f, a, b, M, hM, hx, ⟨ha, hb, hb0, hr⟩, hδ⟩ ⟨f', a', b', M', hM', hx', ⟨ha', hb', hb0', hr'⟩, hδ'⟩
     refine ⟨f * f', a * a', b * b', M * M', Nat.mul_pos hM hM', ?_,
       ⟨ha.mul ha', hb.mul hb', germ_mul_ne_zero hb hb' hb0 hb0', ?_⟩, ?_⟩
-    · rw [map_add, hx, hx', C.2.2.1]
+    · rw [map_add (f := _), hx, hx', C.2.2.1]
     · rw [Units.val_mul, map_mul, Filter.Germ.coe_mul, Filter.Germ.coe_mul, mul_pow, mul_pow, ← hr, ← hr']
       ring
     · intro δ hδM z hz

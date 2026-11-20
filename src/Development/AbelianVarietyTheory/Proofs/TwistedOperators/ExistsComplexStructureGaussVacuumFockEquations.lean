@@ -52,7 +52,7 @@ theorem eq_liftA_of_mul {a : AF F} (ha : ∀ c : AF F, evI F c = 0 → c * a = 0
   · simp [liftA, h2]
 
 theorem liftA_add (a b : mixedEmbedding.mixedSpace F) : liftA (a + b) = liftA a + liftA b := by
-  unfold liftA; rw [map_add, map_add]; rfl
+  unfold liftA; rw [map_add (f := _), map_add (f := _)]; rfl
 
 theorem liftA_mul (a b : mixedEmbedding.mixedSpace F) : liftA (a * b) = liftA a * liftA b := by
   refine Prod.ext ?_ ?_
@@ -111,7 +111,7 @@ theorem Phi_Psi (M : Model σ X W) {u : Matrix (Fin n) (Fin d) (AE F E)} (hu : A
   rw [Phi, ← e_eq_lift M hu, LinearEquiv.symm_apply_apply]
 
 theorem Phi_add (M : Model σ X W) (w w') : Phi M (w + w') = Phi M w + Phi M w' := by
-  rw [Phi, Phi, Phi, ← map_add]; congr 1
+  rw [Phi, Phi, Phi, ← map_add (f := _)]; congr 1
   ext i <;> simp [lift, liftA_add]
 
 theorem Phi_smul (M : Model σ X W) (t : ℝ) (w) : Phi M (t • w) = realAd F t • Phi M w := by
@@ -119,7 +119,7 @@ theorem Phi_smul (M : Model σ X W) (t : ℝ) (w) : Phi M (t • w) = realAd F t
   ext i <;> simp [lift, liftA_smul]
 
 theorem Psi_add (M : Model σ X W) (u v : Matrix (Fin n) (Fin d) (AE F E)) : Psi M (u + v) = Psi M u + Psi M v := by
-  ext i <;> simp [Psi, arc, ← evIHom_apply, map_add]
+  ext i <;> simp [Psi, arc, ← evIHom_apply, map_add (f := _)]
 
 theorem Psi_neg (M : Model σ X W) (u : Matrix (Fin n) (Fin d) (AE F E)) : Psi M (-u) = -Psi M u := by
   ext i <;> simp [Psi, arc, ← evIHom_apply, map_neg]
@@ -164,7 +164,7 @@ section Line
 variable {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
 
 theorem evI_add' (a b : AF F) : evI F (a + b) = evI F a + evI F b := by
-  rw [← evIHom_apply, map_add]; rfl
+  rw [← evIHom_apply, map_add (f := _)]; rfl
 
 theorem evI_realAd_mul (t : ℝ) (a : AF F) : evI F (realAd F t * a) = t • evI F a := by
   rw [← evIHom_apply, map_mul, evIHom_apply, evIHom_apply, evI_realAd, Algebra.smul_def]
@@ -204,13 +204,13 @@ theorem actsD_Phi {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (M : Model σ X W)
       rw [map_mul, evIHom_apply, evIHom_apply, evI_liftA]
     have hev : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (z ⬝ᵥ (realAd F t • lift w).2 +
         ⅟(2 : AF F) * ((realAd F t • lift w).1 ⬝ᵥ (realAd F t • lift w).2))) = t * A + t ^ 2 * B0 := by
-      rw [harg, evI_add', evI_realAd_mul, evI_realAd_mul, evI_realAd_mul, hdot, map_add, map_smul, map_smul, map_smul,
+      rw [harg, evI_add', evI_realAd_mul, evI_realAd_mul, evI_realAd_mul, hdot, map_add (f := _), map_smul, map_smul, map_smul,
         ← hA, ← hB0, smul_eq_mul, smul_eq_mul, smul_eq_mul]
       ring
     have hpt : (fun i => evI F ((z + (realAd F t • lift w).1) i)) = x + t • w.1 := by
       funext i
       simp only [Pi.add_apply, Prod.smul_fst, Pi.smul_apply, smul_eq_mul, lift]
-      rw [← evIHom_apply, map_add, map_mul, evIHom_apply, evIHom_apply, evIHom_apply, evI_realAd, evI_liftA,
+      rw [← evIHom_apply, map_add (f := _), map_mul, evIHom_apply, evIHom_apply, evIHom_apply, evI_realAd, evI_liftA,
         ← Algebra.smul_def]
     simp only [Model.heisLine, GlobalTheory.WeilM.Darboux.rho, GlobalTheory.WeilM.schr, he]
     rw [hψ.2.2 _ hAt2, hev, tens, hr', hpt]

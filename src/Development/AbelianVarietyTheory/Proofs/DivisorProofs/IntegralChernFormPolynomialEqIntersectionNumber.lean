@@ -67,7 +67,7 @@ theorem integral_evalF_c1W_eq_interPoly : GlobalTheory.Published.ChernDegree →
     rw [zero_smul, zero_mul] at this
     exact this
   | add x y _ _ hx hy =>
-    rw [map_add, hadd, hx, hy]
+    rw [map_add (f := _), hadd, hx, hy]
   | smul t x _ hx =>
     rw [map_smul, hsmul, hx, smul_eq_mul]
 

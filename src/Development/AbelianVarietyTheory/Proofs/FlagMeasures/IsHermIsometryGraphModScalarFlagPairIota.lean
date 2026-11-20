@@ -229,7 +229,7 @@ theorem iota_form {F F' : FlagD H r} {Λ : Submodule (𝓞 K) V} {g : ℕ} (hU :
   rw [map_mul, map_natCast, map_sub, map_neg]
   change _ = (g : K) * (-(a : K) - (b : K))
   rw [ha, hb]
-  simp only [map_add, LinearMap.add_apply, map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, map_natCast,
+  simp only [map_add (f := _), LinearMap.add_apply, map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, map_natCast,
     smul_eq_mul]
   ring
 
@@ -289,7 +289,7 @@ theorem iota_total [FiniteDimensional K V] {F F' : FlagD H r} {Λ : Submodule (�
       hφ ⟨_, hs', S.smul_mem _ haS⟩
     rw [eq_inv_mul_iff_mul_eq₀ hg0] at e
     apply mul_left_cancel₀ hs0
-    simp only [map_add, map_neg, map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, map_natCast,
+    simp only [map_add (f := _), map_neg, map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, map_natCast,
       smul_eq_mul] at e ⊢
     linear_combination -e
   obtain ⟨x, hx, hxw⟩ := hlift _ hw

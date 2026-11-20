@@ -132,7 +132,7 @@ theorem exists_isExp {V : Type} [AddCommGroup V] [Module ℂ V] (L : Module.End 
   refine ⟨{ toFun := U0, map_add' := fun v w => ?_, map_smul' := fun c v => ?_ }, fun v l => hU0 v l⟩
   · refine eq_of_forms fun l => (hU0 (v + w) l).unique ?_
     have := (hU0 v l).add (hU0 w l)
-    simp only [map_add, mul_add]
+    simp only [map_add (f := _), mul_add]
     exact this
   · refine eq_of_forms fun l => (hU0 (c • v) l).unique ?_
     have := (hU0 v l).mul_left c

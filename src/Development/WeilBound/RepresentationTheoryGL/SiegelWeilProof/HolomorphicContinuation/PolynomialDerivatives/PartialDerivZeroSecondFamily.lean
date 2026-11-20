@@ -52,7 +52,7 @@ theorem pderiv_mem_supported (S : Set (Fin m × Fin n × Bool)) (k) {p : PX m n}
     · subst h; simp [Subalgebra.one_mem]
     · simp [Pi.single_apply, Ne.symm h, h]
   | algebraMap r => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | mul x y hx' hy' hx hy =>
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     exact add_mem (mul_mem (Algebra.adjoin_le (fun z hz => Algebra.subset_adjoin hz) hx') hy)

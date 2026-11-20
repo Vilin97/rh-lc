@@ -231,7 +231,7 @@ open Classical in
 theorem Phi_bd (S : Lr n → Prop) (E1 E2 : Fin n → Fin n → Module.End ℂ V) {x : Finset (Lr n) → V} (hx : SuppL S x) :
     Phi (bdL S E1 E2 x) = bdq E1 E2 (Phi x) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [bdL_apply, bdq_apply, map_add, map_sum, map_sum]
+    rw [bdL_apply, bdq_apply, map_add (f := _), map_sum, map_sum]
   refine congrArg₂ (· + ·) ?_ ?_
   · rw [← Equiv.sum_comp fl (fun l => liftq n (Tl E1 E2 l) (annq l (Phi x)))]
     refine Finset.sum_congr rfl fun l _ => ?_
@@ -413,7 +413,7 @@ theorem Phi_evLc (lev : Fin n → ℕ) (E1 E2 : Fin n → Fin n → Module.End �
         cases s <;> simp [tau, evB, hl, c_add, c_sub]
       rw [e1, e2]
       refine ⟨(supS V (inUU lev)).add_mem (lift_supp hx _) (ad_supp lev s hl hx), ?_⟩
-      rw [map_add, Phi_lift, Phi_ad lev s p q hx]
+      rw [map_add (f := _), Phi_lift, Phi_ad lev s p q hx]
       have e3 : lFq E1 E2 (!s) p q (Phi x) = liftq n (Ts E1 E2 (!s) p q) (Phi x) + adLq (!s) p q (Phi x) := by
         unfold lFq
         rw [LinearMap.add_apply]
@@ -435,7 +435,7 @@ theorem Phi_evLc (lev : Fin n → ℕ) (E1 E2 : Fin n → Fin n → Module.End �
     intro x hx
     obtain ⟨h1, h2⟩ := ha x hx
     obtain ⟨h3, h4⟩ := hb x hx
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     exact ⟨(supS V (inUU lev)).add_mem h1 h3, by rw [h2, h4]⟩
 
 theorem flS_omQ (lev : Fin n → ℕ) : flS (omQ lev) = omU lev := by

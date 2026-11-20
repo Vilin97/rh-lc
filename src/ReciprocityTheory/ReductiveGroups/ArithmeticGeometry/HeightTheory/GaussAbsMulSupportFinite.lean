@@ -260,7 +260,7 @@ theorem mem_inv_of {κ : Type*} (G₀ : MvPolynomial κ (𝓞 K)) (h : G₀ ≠ 
       refine ⟨z1 + z2, ?_⟩
       first
         | (push_cast; linear_combination h1 + h2)
-        | (simp only [map_add]; linear_combination h1 + h2)
+        | (simp only [map_add (f := _)]; linear_combination h1 + h2)
         | (simp; linear_combination h1 + h2)
     | smul r a _ ha =>
       obtain ⟨z, hz⟩ := ha

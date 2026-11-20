@@ -106,7 +106,7 @@ theorem finTens_cA (z : AE D) : GlobalTheory.LFun.finTens D.host.F D.host.E (For
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.TripleAssembly.LieInv
 

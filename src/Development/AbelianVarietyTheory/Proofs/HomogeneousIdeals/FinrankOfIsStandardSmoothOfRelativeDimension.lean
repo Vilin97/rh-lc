@@ -187,7 +187,7 @@ lemma toKaehler_ofKaehler (m : Ω[A⁄R]) : toKaehler ε h (ofKaehler ε m) = 1 
   induction hm using Submodule.span_induction with
   | mem x hx => obtain ⟨a, rfl⟩ := hx; simp
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy, tmul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, tmul_add]
   | smul a x _ hx =>
     rw [map_smul, smul_eq, map_smul, hx, tmul_smul, smul_tmul', smul_tmul', Algebra.smul_def,
       Algebra.smul_def a, h]
@@ -199,7 +199,7 @@ def kaehlerEquiv : AugCot ε ≃ₗ[R] R ⊗[A] Ω[A⁄R] :=
     (by
       refine LinearMap.ext fun x => ?_
       induction x with
-      | add x y hx hy => rw [map_add, hx, hy, map_add]
+      | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _)]
       | tmul r m => simp [toKaehler_ofKaehler, smul_tmul'])
     (hom_ext fun a => by simp)
 
@@ -322,7 +322,7 @@ lemma map_ofKaehler [Algebra A B] [IsScalarTower R A B]
   induction hm using Submodule.span_induction with
   | mem x hx => obtain ⟨a, rfl⟩ := hx; simp [KaehlerDifferential.map_D]
   | zero => simp
-  | add x y _ _ hx hy => simp only [map_add, hx, hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
   | smul a x _ hx =>
     rw [map_smul, smul_eq, map_smul, hx, map_smul, ← algebraMap_smul B a, map_smul, smul_eq, ← h]
     rfl
@@ -548,7 +548,7 @@ def tensorEquiv : AugCot (tensorAug εA εB) ≃ₗ[R] AugCot εA × AugCot εB 
       refine LinearMap.prod_ext (hom_ext fun a => ?_) (hom_ext fun b => ?_) <;> simp)
     (hom_ext fun x => by
       induction x with
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a b => simp [d_mul, d_tmul a b])
 
 @[simp] lemma tensorEquiv_symm_apply (x : AugCot εA) (y : AugCot εB) :
@@ -582,13 +582,13 @@ lemma isBaseChange_mapBase (φ : A →ₐ[R] A') (h : ∀ a, ε' (φ a) = algebr
   have hmul : ∀ x y, D (x * y) = ε' x • D y + ε' y • D x := by
     intro x y
     induction x using hφ.inductionOn with
-    | add x x' hx hx' => simp only [add_mul, map_add, hx, hx', add_smul, smul_add]; abel
+    | add x x' hx hx' => simp only [add_mul, map_add (f := _), hx, hx', add_smul, smul_add]; abel
     | smul s x hx =>
       rw [smul_mul_assoc, map_smul, hx, map_smul, map_smul, smul_add, smul_assoc,
         smul_comm s (ε' y)]
     | tmul a =>
       induction y using hφ.inductionOn with
-      | add x x' hx hx' => simp only [mul_add, map_add, hx, hx', add_smul, smul_add]; abel
+      | add x x' hx hx' => simp only [mul_add, map_add (f := _), hx, hx', add_smul, smul_add]; abel
       | smul s x hx =>
         rw [mul_smul_comm, map_smul, hx, map_smul, map_smul, smul_add, smul_assoc, smul_comm s]
       | tmul b =>
@@ -598,11 +598,11 @@ lemma isBaseChange_mapBase (φ : A →ₐ[R] A') (h : ∀ a, ε' (φ a) = algebr
     (LinearEquiv.ofLinear (LinearMap.liftBaseChange R' (mapBase φ h)) (lift ε' D hmul)
       (hom_ext fun x => ?_) (LinearMap.ext fun x => ?_)) (fun x => by simp)
   · induction x using hφ.inductionOn with
-    | add x x' hx hx' => simp only [map_add, hx, hx']
+    | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
     | smul s x hx => simp only [map_smul, hx]
     | tmul a => simp [hD]
   · induction x with
-    | add x x' hx hx' => simp only [map_add, hx, hx']
+    | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
     | tmul s x =>
       obtain ⟨a, rfl⟩ := d_surjective ε x
       simp [hD, smul_tmul']

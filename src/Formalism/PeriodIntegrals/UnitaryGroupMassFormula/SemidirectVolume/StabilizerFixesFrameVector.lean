@@ -26,7 +26,7 @@ theorem stabilizer_fixes_frame_span {r : ℕ} (P : Frame E M r) {g : HA R σ J} 
     obtain ⟨a, _, rfl⟩ := hy
     exact stabilizer_fixes_frame_vector R σ J P hg a
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul c x _ hx => rw [map_smul, hx]
 
 theorem norm_gen {r : ℕ} (P : Frame E M r) (h : HA R σ J) (hh : h ∈ Hsub R σ J P)

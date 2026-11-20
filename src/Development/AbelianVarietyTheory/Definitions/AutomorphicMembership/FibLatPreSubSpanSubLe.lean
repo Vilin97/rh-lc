@@ -96,8 +96,8 @@ theorem IsLiftAt.add (h : IsLiftAt hφ u v) (h' : IsLiftAt hφ u' v') : IsLiftAt
   obtain ⟨U', e', s', hs', w', hw', h'⟩ := h'
   have k : ⊤ ≤ z ⁻¹ᵁ (U ⊓ U') := le_inf e e'
   refine ⟨U ⊓ U', k, resM _ inf_le_left s + resM _ inf_le_right s', ?_, w + w', add_mem hw hw', ?_⟩
-  · rw [map_add, app_resM, app_resM, hs, hs', resM_resM, resM_resM, map_add]
-  · rw [map_add, evPt_resM, evPt_resM, smul_add, ← h, ← h', add_sub_add_comm]
+  · rw [map_add (f := _), app_resM, app_resM, hs, hs', resM_resM, resM_resM, map_add (f := _)]
+  · rw [map_add (f := _), evPt_resM, evPt_resM, smul_add, ← h, ← h', add_sub_add_comm]
 
 variable [QuasiSeparated G.hom]
 
@@ -135,7 +135,7 @@ theorem span_range_evPt (hU : IsAffineOpen U) (e : ⊤ ≤ z ⁻¹ᵁ U) :
   induction hs using Submodule.span_induction with
   | mem s hs => obtain ⟨t, rfl⟩ := hs; exact Submodule.subset_span ⟨t, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add s t _ _ hs ht => rw [map_add]; exact add_mem hs ht
+  | add s t _ _ hs ht => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hs ht
   | smul a s _ hs => rw [omVal_smul]; exact Submodule.smul_mem _ _ hs
 
 theorem nsmul_mem_fibLat_preSub (M : Sub (modN (omega G) N)) {w : P.OmC} (hw : w ∈ P.latOm) :
@@ -176,7 +176,7 @@ theorem fibLat_preSub_spanSub_le {J : Type} [Fintype J] (u : J → Γ(modN (omeg
   obtain ⟨a, t, r, ht, hr⟩ := exists_eq_of_mem_preSub u hW ((preSub _ _).res_mem hle hs)
   have e₁ := evPt_resM hφ k hle s
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hr, map_add, map_nsmul, map_sum] at e₁
+    rw [hr, map_add (f := _), map_nsmul, map_sum] at e₁
   refine SetLike.mem_coe.2 (e₁ ▸ add_mem (h₀ _ (evPt_mem hφ k r)) (sum_mem fun i _ => ?_))
   obtain ⟨v, hv, h⟩ := h₁ i
   obtain ⟨w, hw, h⟩ := h.sub_evPt k (ht i)

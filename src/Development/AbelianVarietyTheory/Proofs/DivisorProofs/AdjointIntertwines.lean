@@ -95,7 +95,7 @@ theorem inner_eq_integral {H : Type} [NormedAddCommGroup H] [InnerProductSpace �
         Complex.I * (star (e (x + Complex.I • y) v g) * e (x + Complex.I • y) v g) +
         Complex.I * (star (e (x - Complex.I • y) v g) * e (x - Complex.I • y) v g)) := by
     funext g
-    simp only [map_add, map_sub, map_smul, _root_.add_apply, _root_.sub_apply, _root_.smul_apply,
+    simp only [map_add (f := _), map_sub, map_smul, _root_.add_apply, _root_.sub_apply, _root_.smul_apply,
       Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, star_add, star_sub, star_mul', Complex.star_def, Complex.conj_I]
     linear_combination (-(1/2 : ℂ) * ((starRingEnd ℂ) (e y v g) * e x v g - (starRingEnd ℂ) (e x v g) * e y v g)) * Complex.I_mul_I
   obtain ⟨i1, e1⟩ := diag (x + y)

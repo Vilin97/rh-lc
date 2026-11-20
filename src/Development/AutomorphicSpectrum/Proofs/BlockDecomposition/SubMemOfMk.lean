@@ -80,7 +80,7 @@ theorem mulMor_add {u v w : ∀ T, Φ.A.obj T} (hu hv hw) (h : ∀ T, w T - (u T
   refine (mulT_congr hF r (h _) (z.1 s)).trans ?_
   refine Subtype.ext ?_
   change Ideal.Quotient.mk _ (u _ + v _) * _ = Ideal.Quotient.mk _ (u _) * _ + Ideal.Quotient.mk _ (v _) * _
-  rw [map_add, add_mul]
+  rw [map_add (f := _), add_mul]
   rfl
 
 theorem mulMor_mul {u v w : ∀ T, Φ.A.obj T} (hu hv hw) (h : ∀ T, w T - u T * v T ∈ Φ.J.S T) (n : ℕ) (c : CH.H (gr Fil r) n) :
@@ -170,7 +170,7 @@ variable {O : Type} [CommRing O] {R : Type} [CommRing R] {I : Ideal R} {γ : Div
 theorem fAct_add (f g : Γ(X, W)) (c : HU (grF (nlFun γ p X q κ) r) Q r) :
     fAct hF hQ r (f + g) c = fAct hF hQ r f c + fAct hF hQ r g c := by
   refine mulMor_add hF r _ _ _ (fun T => sub_mem_of_mk (T := T.obj) ?_) r c
-  rw [mk_evLift, map_add (Ideal.Quotient.mk T.obj.J), mk_evLift, mk_evLift, map_add]
+  rw [mk_evLift, map_add (Ideal.Quotient.mk T.obj.J), mk_evLift, mk_evLift, map_add (f := _)]
 
 theorem fAct_mul (f g : Γ(X, W)) (c : HU (grF (nlFun γ p X q κ) r) Q r) :
     fAct hF hQ r (f * g) c = fAct hF hQ r f (fAct hF hQ r g c) := by

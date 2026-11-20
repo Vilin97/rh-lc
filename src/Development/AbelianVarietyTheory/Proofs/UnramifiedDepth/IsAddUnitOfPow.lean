@@ -73,7 +73,7 @@ theorem exists_extension : ∀ (M M' : Type) [AddCommMonoid M] [AddCommMonoid M'
     beta_reduce
     rw [h1, h2]
     refine Eq.trans h3 ?_
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   · have := key 0
     refine Eq.trans this ?_
     rw [map_zero]; rfl

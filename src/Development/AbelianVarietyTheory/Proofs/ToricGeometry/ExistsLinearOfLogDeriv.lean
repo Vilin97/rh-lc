@@ -41,7 +41,7 @@ theorem exists_derivation (ρ : R →ₐ[ℂ] ℂ) (hρ : ∀ r, ρ r = 0 → r 
       abel
     have e3 : lam (s i - algebraMap ℂ R (ρ (s i))) = lam (s i) - ρ (s i) * lam 1 := by
       rw [map_sub, Algebra.algebraMap_eq_smul_one, map_smul, smul_eq_mul]
-    rw [e1, map_add, h, e3, map_smul, smul_eq_mul]
+    rw [e1, map_add (f := _), h, e3, map_smul, smul_eq_mul]
   refine ⟨lam - lam 1 • ρ.toLinearMap, by simp, ⟨i₀, ?_⟩, ?_⟩
   · have e : (lam - lam 1 • ρ.toLinearMap) (s i₀) = lam (s i₀ - algebraMap ℂ R (ρ (s i₀))) := by
       simp only [LinearMap.sub_apply, LinearMap.smul_apply, AlgHom.toLinearMap_apply, smul_eq_mul,
@@ -315,7 +315,7 @@ theorem exists_linear_of_gen (hL : L.IsLB) (a : u.Λ → ℂ) (B : u.Λ → ((Fi
     rw [ez, ← add_assoc]
     have h1 := hfr l (j 1) z a1
     have h0 := hfr l (j 0) (w + z) a0
-    rw [h1, h0, map_add, Complex.exp_add]
+    rw [h1, h0, map_add (f := _), Complex.exp_add]
     have hal := ha l
     field_simp
   obtain ⟨lam, hlam⟩ := exists_linear_of_mul_period hF hne (S := (u.Λ : Set (Fin g → ℂ))) u.full

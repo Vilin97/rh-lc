@@ -122,7 +122,7 @@ theorem mem_Z1Q_of_jr (L' : Formalism.WeaklyAdmissibleFiltrations.Lattice (O := 
     b ∈ quotientCocycles L' _ (Ip_stable L' ϖ r) := by
   refine ⟨IsLocallyConstant.desc b (jr L' hϖ r) hb.1 (jr_inj L' hϖ r), fun g h => ?_⟩
   apply jr_inj L' hϖ r
-  rw [map_add, jr_act]
+  rw [map_add (f := _), jr_act]
   exact hb.2 g h
 
 theorem cup_congr1 {L : Formalism.WeaklyAdmissibleFiltrations.Lattice (O := O) ρ} {L' : Formalism.WeaklyAdmissibleFiltrations.Lattice (O := O) ρ'}
@@ -247,7 +247,7 @@ theorem XX_step {Cob : (G × G → LL) → Prop}
       (fun g => (lq L _ (d g) : V)) g = ϖ ^ r • (t : V) := fun g => lq_stp L ϖ r (d g)
   refine ⟨⟨hd.1.1.comp _, fun g h => ?_⟩, fun s hs hk => ?_, fun hc => hd.2.2 ?_⟩
   · change stp L ϖ r (d (g * h)) = _
-    rw [hd.1.2 g h, map_add, stp_act]
+    rw [hd.1.2 g h, map_add (f := _), stp_act]
   · refine (hCob _ _ (cup_congr1 hP _ _ s hk hlift)).2 (hd.2.1 s hs fun h => ?_)
     rw [pow_succ', mul_smul, hk, smul_zero]
   · exact (hCob _ _ (cup_congr1 hP _ _ c hck hlift)).1 hc

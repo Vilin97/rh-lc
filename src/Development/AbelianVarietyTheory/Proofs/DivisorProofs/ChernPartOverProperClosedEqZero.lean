@@ -36,7 +36,7 @@ theorem analyticAt_eval {D : ℕ} (P : MvPolynomial (Fin D) ℂ) (z : Fin D → 
     simp only [MvPolynomial.eval_C]
     exact analyticAt_const
   next p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   next p i hp =>
     simp only [map_mul, MvPolynomial.eval_X]

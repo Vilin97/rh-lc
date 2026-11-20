@@ -163,7 +163,7 @@ theorem exists_equiv (hp : p.Prime) (A A₀ : DatAt Y P) [IsDiscreteValuationRin
     rw [vPsiAt_eq hI U₀.D S.subtype h1 p hu, vPsiAt_eq hI U.D S.subtype h1 p hr, map_mul, norm_mul,
       norm_unit S.subtype h1, one_mul]
   refine ⟨(e.trans d).trans e₀.symm, fun a b => ?_⟩
-  rw [DatAt.beta, DatAt.beta, betaAt, betaAt, ← map_add, key, key, key]
+  rw [DatAt.beta, DatAt.beta, betaAt, betaAt, ← map_add (f := _), key, key, key]
 
 theorem coord_ne_zero_and_exists_equiv : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l), ∀ (O : Type) [CommRing O] (β : O →+* c.F) (Y : Model Xo c β) (p : ℕ) (C : SCF p) (P : PointsOfFlagModel.PtC Y C), p.Prime → ∀ (T : CDVR) (g : T.V →+* intO ↥C.S) (ιT : Sp T.V ⟶ Y.X), T.FinRes → Function.Injective g → (∀ a ∈ maximalIdeal T.V, ‖((g a : intO ↥C.S) : ↥C.S)‖ < 1) → spMap g ≫ ιT = P.yt → ∀ A A' : DatAt Y P, (∀ χ r, PsiCoord A.U.D.toPre χ r → ((A.f r : intO ↥C.S) : ↥C.S) ≠ 0) ∧ ∃ e : A.Ylat ≃ₗ[𝓞 E] A'.Ylat, ∀ a b, A'.beta (e a) (e b) = A.beta a b := by
   intro E _ _ _ H Dw l Xo c O _ β Y p C P hp T g ιT hT hg hl hfac A A'

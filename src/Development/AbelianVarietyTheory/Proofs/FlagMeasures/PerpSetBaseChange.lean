@@ -16,7 +16,7 @@ private theorem dual_span_sum_eq_zero {E A : Type} [Field E] [CommRing A] (ι : 
   | mem x hx => exact hu x hx
   | zero => simp
   | add x y _ _ hx hy =>
-    simp only [LinearMap.add_apply, map_add, add_mul, Finset.sum_add_distrib, hx, hy, add_zero]
+    simp only [LinearMap.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, hx, hy, add_zero]
   | smul c x _ hx =>
     simp only [LinearMap.smul_apply, smul_eq_mul, map_mul, mul_assoc]
     rw [← Finset.mul_sum, hx, mul_zero]
@@ -99,7 +99,7 @@ private theorem hform_smul_right_flag_measures {A : Type} [CommRing A] (s : A �
 private theorem hform_add_left_flag_measures' {A : Type} [CommRing A] (s : A →+* A) {n : ℕ}
     (J : Matrix (Fin n) (Fin n) A) (x x' y : Fin n → A) :
     Formalism.UG.hform s J (x + x') y = Formalism.UG.hform s J x y + Formalism.UG.hform s J x' y := by
-  simp only [Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 private theorem hform_smul_left_flag_measures {A : Type} [CommRing A] (s : A →+* A) {n : ℕ}
     (J : Matrix (Fin n) (Fin n) A) (c : A) (x y : Fin n → A) :

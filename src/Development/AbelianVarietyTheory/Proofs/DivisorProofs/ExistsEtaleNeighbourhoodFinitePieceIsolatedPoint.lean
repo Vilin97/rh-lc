@@ -97,7 +97,7 @@ theorem exists_etale_algebra (R L : Type) [CommRing R] [Field L] [Algebra R L] [
     induction hz using IntermediateField.adjoin_induction with
     | mem x hx => obtain rfl := hx; exact hθ'
     | algebraMap k => exact hK k
-    | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     | inv x _ hx => rw [map_inv₀, map_inv₀, hx]
     | mul x y _ _ hx hy => rw [map_mul, map_mul, hx, hy]
   exact IsPurelyInseparable.injective_comp_algebraMap Ks L Ω hKs

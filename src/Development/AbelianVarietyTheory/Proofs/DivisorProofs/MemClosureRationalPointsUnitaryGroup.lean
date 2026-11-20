@@ -142,7 +142,7 @@ theorem sigR_sigR (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (hc
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a y => simp [sigR, hc]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem continuous_sigR (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace R] [IsTopologicalRing R]
     (σ : E →ₐ[F] E) : Continuous (sigR R σ) := by
@@ -204,13 +204,13 @@ theorem mem_closure_trunc [CharZero E] [FiniteDimensional F E] (A B : Type) [Com
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a y => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hrepr : ∀ y i, bB.repr (p y) i = π (bA.repr y i) := by
     intro y i
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a y => simp [hp, bA, bB, Algebra.TensorProduct.basis_repr_tmul]
-    | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   let S : B ⊗[F] E → A ⊗[F] E := fun y => ∑ i, s (bB.repr y i) • bA i
   have hS : Continuous S := continuous_finsetSum _ fun i _ =>
     (hs.comp (IsModuleTopology.continuous_of_linearMap (bB.coord i))).smul continuous_const

@@ -106,7 +106,7 @@ theorem gnorm_smul {H : Matrix n n ℂ} (hH : H.PosSemidef) (c : ℂ) (v : n →
 theorem gnorm_add_le {H : Matrix n n ℂ} (hH : H.PosSemidef) (v w : n → ℂ) :
     gnorm H (v + w) ≤ gnorm H v + gnorm H w := by
   obtain ⟨R, -, h2⟩ := exists_root hH
-  rw [h2, h2, h2, map_add]; exact norm_add_le _ _
+  rw [h2, h2, h2, map_add (f := _)]; exact norm_add_le _ _
 
 theorem norm_form_le {H : Matrix n n ℂ} (hH : H.PosSemidef) (v w : n → ℂ) :
     ‖form H v w‖ ≤ gnorm H v * gnorm H w := by

@@ -70,7 +70,7 @@ theorem rel_add {X X' Y Y'} (h : Rel W q X Y) (h' : Rel W q X' Y') : Rel W q (X 
   obtain ⟨h2, e2⟩ := h' w
   refine ⟨W.add_mem h1 h2, ?_⟩
   show q (⟨X w, h1⟩ + ⟨X' w, h2⟩) = Y (q w) + Y' (q w)
-  rw [map_add, e1, e2]
+  rw [map_add (f := _), e1, e2]
 
 theorem rel_sub {X X' Y Y'} (h : Rel W q X Y) (h' : Rel W q X' Y') : Rel W q (X - X') (Y - Y') := by
   intro w
@@ -189,7 +189,7 @@ theorem part1 (hT : TensorGl) (hS : StepFormula) (hQ : QdetFacts) (E : Fin n →
     intro u
     have e := hS n M E hE 1 u
     rw [piJ_one, piJ_one, hl u, lift_alg] at e
-    rw [← ((comm_alg _ u).symm.add_left (hcomm u)).eq, e, map_add, map_one, add_assoc]
+    rw [← ((comm_alg _ u).symm.add_left (hcomm u)).eq, e, map_add (f := _), map_one, add_assoc]
   have hP : (∑ i ∈ Finset.range (n + 1), monomial i (c i)) * (X + C (Om E (0 : Fin 1))) -
       (∏ k, (X + C (l k))).map (algebraMap ℂ (Module.End ℂ (TV n M (Fin 1)))) * (X + C (1 + Om E 0)) = 0 := by
     apply vanish _ 0
@@ -213,7 +213,7 @@ theorem part1 (hT : TensorGl) (hS : StepFormula) (hQ : QdetFacts) (E : Fin n →
   apply prod_neg_zero
   rw [List.map_ofFn]
   refine Eq.trans (congrArg List.prod (congrArg List.ofFn (funext fun k => ?_))) e
-  simp only [Function.comp_apply, map_add, Polynomial.aeval_X, Polynomial.aeval_C, neg_sub]
+  simp only [Function.comp_apply, map_add (f := _), Polynomial.aeval_X, Polynomial.aeval_C, neg_sub]
   abel
 
 theorem part2 (hT : TensorGl) (hS : StepFormula) (hQ : QdetFacts) (E : Fin n → Fin n → Module.End ℂ M)

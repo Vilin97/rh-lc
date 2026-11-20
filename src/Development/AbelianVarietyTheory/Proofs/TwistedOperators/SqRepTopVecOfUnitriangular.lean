@@ -90,7 +90,7 @@ theorem colAdd_matRep_diag {n n' : ℕ} (t : Fin n → ℂˣ) (l j : Fin n) (c :
     rw [AlgHom.comp_apply, AlgHom.comp_apply, hX]
     by_cases hs : s = j
     · subst hs
-      simp only [colAdd, map_mul, algHom_C, aeval_X, if_true, map_add, hX, algebraMap_eq]
+      simp only [colAdd, map_mul, algHom_C, aeval_X, if_true, map_add (f := _), hX, algebraMap_eq]
       have : (C ((t l)⁻¹ : ℂ) : MvPolynomial (Fin n' × Fin n) ℂ) * C (t l : ℂ) = 1 := by
         rw [← map_mul]; simp
       simp only [Units.val_inv_eq_inv_val] at this ⊢
@@ -105,7 +105,7 @@ theorem exists_mem_dualWeyl_of_stable (n n' : ℕ) (N : Submodule ℂ (MvPolynom
   obtain ⟨v, hv, hv0, hf⟩ := GlobalTheory.GLDuality.exists_colAdd_fixed_of_stable n n' N hN hst
   let M : Submodule ℂ (MvPolynomial (Fin n' × Fin n) ℂ) :=
     { carrier := {w | w ∈ N ∧ ∀ l j : Fin n, l < j → ∀ c : ℂ, colAdd ℂ l j c w = w}
-      add_mem' := fun ha hb => ⟨N.add_mem ha.1 hb.1, fun l j h c => by rw [map_add, ha.2 l j h, hb.2 l j h]⟩
+      add_mem' := fun ha hb => ⟨N.add_mem ha.1 hb.1, fun l j h c => by rw [map_add (f := _), ha.2 l j h, hb.2 l j h]⟩
       zero_mem' := ⟨N.zero_mem, fun l j h c => map_zero _⟩
       smul_mem' := fun a _ ha => ⟨N.smul_mem a ha.1, fun l j h c => by rw [map_smul, ha.2 l j h]⟩ }
   have hM : ∀ t : Fin n → ℂˣ, ∀ w ∈ M, matRep n n' (diagGL ℂ n t, 1) w ∈ M := fun t w hw =>

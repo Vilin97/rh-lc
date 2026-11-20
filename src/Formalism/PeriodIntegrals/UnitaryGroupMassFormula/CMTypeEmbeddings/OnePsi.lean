@@ -42,7 +42,7 @@ theorem eq_of_cm_of_agree (H : Host R) (φ ψ : H.E →+* ℂ)
   ext x
   have hu : (x + c x) / 2 ∈ H.F := by
     apply (H.conjE_mem_hostF_iff _).2
-    rw [← hc, map_div₀, map_add, hcc, map_ofNat]
+    rw [← hc, map_div₀, map_add (f := _), hcc, map_ofNat]
     ring
   have hv : (x - c x) / (2 * b) ∈ H.F := by
     apply (H.conjE_mem_hostF_iff _).2
@@ -53,7 +53,7 @@ theorem eq_of_cm_of_agree (H : Host R) (φ ψ : H.E →+* ℂ)
     ring
   have hφb : φ b = Complex.I * (Real.sqrt (H.d : ℝ) : ℂ) := hφ
   have hψb : ψ b = Complex.I * (Real.sqrt (H.d : ℝ) : ℂ) := hψ
-  rw [hx, map_add, map_add, map_mul, map_mul, hF _ hu, hF _ hv, hφb, hψb]
+  rw [hx, map_add (f := _), map_add (f := _), map_mul, map_mul, hF _ hu, hF _ hv, hφb, hψb]
 
 theorem agree_of_comap (H : Host R) (φ ψ : H.E →+* ℂ)
     (h : (InfinitePlace.mk φ).comap (algebraMap H.F H.E) =

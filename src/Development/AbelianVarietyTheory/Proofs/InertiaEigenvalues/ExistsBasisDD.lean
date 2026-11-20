@@ -37,11 +37,11 @@ theorem map_mulL (m : M ⊗[O] M' →ₗ[O] M'') (f : R →ₐ[O] R) (a : M →�
       mulL R m (TensorProduct.map f.toLinearMap a x) (TensorProduct.map f.toLinearMap a' y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul r u =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul r' u' => simp [mulL_tmul, h]
 
 def pairL (β : M →ₗ[O] M' →ₗ[O] O) : R ⊗[O] M →ₗ[R] R ⊗[O] M' →ₗ[R] R :=
@@ -60,18 +60,18 @@ theorem map_pairL (β : M →ₗ[O] M' →ₗ[O] O) (f : R →ₐ[O] R) (a : M �
       pairL R β (TensorProduct.map f.toLinearMap a x) (TensorProduct.map f.toLinearMap a' y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul r u =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul r' u' => simp [pairL_tmul, h]
 
 theorem map_smul_alg (f : R →ₐ[O] R) (a : M →ₗ[O] M) (r : R) (x : R ⊗[O] M) :
     TensorProduct.map f.toLinearMap a (r • x) = f r • TensorProduct.map f.toLinearMap a x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [smul_add, map_add, hx, hx']
+  | add x x' hx hx' => simp only [smul_add, map_add (f := _), hx, hx']
   | tmul r' u => simp [TensorProduct.smul_tmul']
 
 end Ext
@@ -280,7 +280,7 @@ theorem γA_sub (W : LocWach PD LL O v n) (g : W.Gam) (a : LetA O n) :
     have hf := PowerSeries.eq_X_mul_shift_add_const f
     have hC : ∀ c : O, W.γ₀ g (PowerSeries.C c) = PowerSeries.C c := fun c => (W.γ₀ g).commutes c
     rw [map_sub, sub_eq_zero]
-    conv_lhs => rw [hf, map_add, map_mul, hC]
+    conv_lhs => rw [hf, map_add (f := _), map_mul, hC]
     simp [(W.γ₀_X g).1]
   choose b hb using h
   exact ⟨fun i => b (a i), funext fun i => hb (a i)⟩

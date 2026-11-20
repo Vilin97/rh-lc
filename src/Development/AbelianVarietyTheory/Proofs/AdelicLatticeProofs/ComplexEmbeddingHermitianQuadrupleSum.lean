@@ -24,11 +24,11 @@ variable {D : D7} {θ : InfFam D} {σ : (D.what₂.Tau → ℂ) →+ Formalism.L
 
 theorem symplOH_add_left (x x' y : WO S T) : symplOH S T (x + x') y = symplOH S T x y + symplOH S T x' y := by
   unfold symplOH symplO hO
-  simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem symplOH_add_right (x y y' : WO S T) : symplOH S T x (y + y') = symplOH S T x y + symplOH S T x y' := by
   unfold symplOH symplO hO
-  simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add]
+  simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem gramInv_star (V : HSp D) (i j) : star (V.gram⁻¹ i j) = V.gram⁻¹ j i := by
   have h : V.gram.IsHermitian := by
@@ -85,7 +85,7 @@ theorem map_trace_hO_zero {F E A B : Type} [Field F] [Field E] [Algebra F E] [Fi
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp only [RingHom.map_zero]
-    | add a b ha hb => simp only [RingHom.map_add, ha, hb]
+    | add a b ha hb => simp only [RingHom.map_add (f := _), ha, hb]
     | tmul a e => rfl
   have hh := map_hO_zero (Algebra.TensorProduct.map p (AlgHom.id F E)).toRingHom (sigR A s)
     (fun z hz => by rw [hc, hz, map_zero]) P Q x y h
@@ -159,7 +159,7 @@ def omO (S T : HSp D) : RW T S →ₗ[ℝ] RW T S →ₗ[ℝ] ℝ :=
     (fun x y y' => by
       rw [← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun τ _ => ?_
-      simp only [formAt, Pi.add_apply, mul_add, add_mul, map_add, Finset.sum_add_distrib, Complex.add_re])
+      simp only [formAt, Pi.add_apply, mul_add, add_mul, map_add (f := _), Finset.sum_add_distrib, Complex.add_re])
     (fun c x y => by rw [smul_eq_mul, Finset.mul_sum]; exact Finset.sum_congr rfl fun τ _ => formAt_smul_right τ c _ _)
 
 theorem complexEmbedding_hermitianQuadrupleSum {A : Type} [CommRing A] (φ : A →+* ℂ) (c : A →+* A) (hc : ∀ a, φ (c a) = starRingEnd ℂ (φ a))
@@ -176,7 +176,7 @@ theorem valTau_symplO (hθ : IsInfFam θ) (τ : D.what₂.Tau) (x y : WO S T) :
     (fun i k => incA D (S.gram⁻¹ i k)) (fun i k => incA D (T.gram i k))
   simp only [hi] at h
   unfold valTau symplO formAt
-  rw [SymplVal.trace_AE, RingHom.map_add, RingHom.map_add, comp_cA hθ, RingHom.map_mul, RingHom.map_mul, comp_incA hθ,
+  rw [SymplVal.trace_AE, RingHom.map_add (f := _), RingHom.map_add (f := _), comp_cA hθ, RingHom.map_mul, RingHom.map_mul, comp_incA hθ,
     Complex.add_re, Complex.conj_re, two_mul]
   erw [h]
   rfl
@@ -331,7 +331,7 @@ theorem theta_heisO_real (hθ : IsInfFam θ) (hψ : IsStdChar D ψ (-1)) {x : WO
         Complex.exp (-(Real.pi * Complex.I) * (Complex.ofRealCLM ((omO S T).flip z (piW θ T S w + y)))) *
           f ((w + iotaW σ T S z) + iotaW σ T S y) := by
       funext y
-      rw [heisO_iota h hψ, AddMonoidHom.map_add, h.pi_iota, add_right_comm]
+      rw [heisO_iota h hψ, AddMonoidHom.map_add (f := _), h.pi_iota, add_right_comm]
       rfl
     rw [e]
     refine ContDiff.mul (Complex.contDiff_exp.comp (contDiff_const.mul (Complex.ofRealCLM.contDiff.comp ?_)))
@@ -386,7 +386,7 @@ theorem heisO_line_add (hθ : IsInfFam θ) (hψ : IsStdChar D ψ (-1)) {L : ℝ 
   have h1 : ψ (symplOH S T (L s) (L t)) = 1 := by
     rw [e s, e t, psi_symplOH h hψ, h.pi_iota, LinearMap.map_smul₂, map_smul, omO_self h]
     simp
-  rw [heisO_heisO, h1, one_smul, L.map_add]
+  rw [heisO_heisO, h1, one_smul, L.map_add (f := _)]
 
 theorem hasDerivAt_heisO (hθ : IsInfFam θ) (hψ : IsStdChar D ψ (-1)) {L : ℝ →+ WO S T} (hL : IsRealDir T S L)
     {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (w : WO S T) (s : ℝ) :

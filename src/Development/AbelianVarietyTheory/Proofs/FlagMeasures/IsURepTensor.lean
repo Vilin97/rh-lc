@@ -44,7 +44,7 @@ theorem isURep_tensor {ι : Type} [Fintype ι] {H : ι → Type} [∀ i, NormedA
     { carrier := {u | Continuous fun g => σs g u}
       add_mem' := fun {a b} ha hb => by
         show Continuous fun g => σs g (a + b)
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact ha.add hb
       zero_mem' := by
         show Continuous fun g => σs g 0

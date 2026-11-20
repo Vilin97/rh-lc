@@ -40,7 +40,7 @@ theorem pderiv_subst {R : Type*} [CommRing R] {σ : Type*} {a : MvPowerSeries σ
   set g : PowerSeries R := PowerSeries.mk fun n => PowerSeries.coeff (n + m) f
   have hf : f = ((PowerSeries.trunc m f : Polynomial R) : PowerSeries R) + PowerSeries.X ^ m * g := by
     ext n
-    rw [map_add, Polynomial.coeff_coe, PowerSeries.coeff_trunc, PowerSeries.coeff_X_pow_mul']
+    rw [map_add (f := _), Polynomial.coeff_coe, PowerSeries.coeff_trunc, PowerSeries.coeff_X_pow_mul']
     by_cases hn : n < m
     · simp [hn, not_le.mpr hn]
     · simp [hn, not_lt.mp hn, g, Nat.sub_add_cancel (not_lt.mp hn)]
@@ -51,11 +51,11 @@ theorem pderiv_subst {R : Type*} [CommRing R] {σ : Type*} {a : MvPowerSeries σ
     have hc : PowerSeries.subst a ((m : PowerSeries R)) = (m : MvPowerSeries σ R) := by
       rw [← map_natCast (PowerSeries.C (R := R)), PowerSeries.subst_C, map_natCast]
     conv_lhs => rw [hf]
-    simp only [map_add, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
+    simp only [map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
       PowerSeries.derivative_X, mul_one]
     simp only [PowerSeries.subst_add ha, PowerSeries.subst_mul ha, PowerSeries.subst_pow ha,
       PowerSeries.subst_X ha, hc]
-    simp only [map_add, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
+    simp only [map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
       dv_pderiv_subst_coe ha]
     ring
   rw [key]

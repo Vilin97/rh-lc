@@ -56,7 +56,7 @@ theorem cj_E {X Y : GMod n} (e : X.V ≃ₗ[ℂ] Y.V) (he : ∀ a b x, e (X.E a 
 theorem cj_Tm {X Y : GMod n} (e : X.V ≃ₗ[ℂ] Y.V) (he : ∀ a b x, e (X.E a b x) = Y.E a b (e x)) (u : ℂ)
     (a b : Fin n) : cj e (Tm X.E u a b) = Tm Y.E u a b := by
   unfold Formalism.REAL.Tm
-  rw [map_add, cj_E e he]
+  rw [map_add (f := _), cj_E e he]
   split_ifs
   · rw [cj_algebraMap]
   · rw [map_zero]

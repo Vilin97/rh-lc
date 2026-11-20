@@ -238,7 +238,7 @@ theorem exists_isPeriod (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
   let P : D.La →+ (Fin g → ℂ) :=
     { toFun := fun x => e (1 ⊗ₜ x)
       map_zero' := by simp
-      map_add' := fun x y => by rw [TensorProduct.tmul_add, map_add] }
+      map_add' := fun x y => by rw [TensorProduct.tmul_add, map_add (f := _)] }
   have hP : ∀ x, P x = e (1 ⊗ₜ x) := fun _ => rfl
   let b := Module.Free.chooseBasis ℤ D.La
   let c := (b.baseChange ℝ).map e
@@ -264,16 +264,16 @@ theorem exists_isPeriod (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
     exact ⟨b i, (hc i).symm⟩
   · have halt0 : ∀ x y, D.EF x y = -D.EF y x := fun x y => by
       have := D.alt (x + y)
-      simp only [map_add, LinearMap.add_apply, D.alt] at this
+      simp only [map_add (f := _), LinearMap.add_apply, D.alt] at this
       linarith
     have halt : ∀ x y, D.EF.baseChange ℝ x y = -D.EF.baseChange ℝ y x := fun x y => by
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add x x' h h' => simp only [map_add, LinearMap.add_apply, h, h']; ring
+      | add x x' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']; ring
       | tmul r x =>
         induction y using TensorProduct.induction_on with
         | zero => simp
-        | add y y' h h' => simp only [map_add, LinearMap.add_apply, h, h']; ring
+        | add y y' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']; ring
         | tmul r' y => simp [halt0 x y, mul_comm]
     have hs : ∀ z, e.symm (Complex.I • z) = J (e.symm z) := fun z => by
       rw [e.symm_apply_eq, heJ, e.apply_symm_apply]

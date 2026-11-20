@@ -176,7 +176,7 @@ theorem tan_compare : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H 
       refine ⟨v₁ * v₂, u₁ * u₂, ?_, ?_, ?_⟩
       · rw [Mσ.add]
         exact (grp_mul Pσ.m.cart _ _ hb1 v₁ v₂ (Mσ.pt x) (Mσ.pt y) h₁.symm h₂.symm).symm
-      · rw [map_add, Mσ'.add]
+      · rw [map_add (f := _), Mσ'.add]
         exact (grp_mul m'.cart _ _ hb2 u₁ u₂ _ _ k₁.symm k₂.symm).symm
       · rw [abPart_mul]
         let x₀ : Over.mk ((spMap (algebraMap ℂ (DualNumber ℂ)) ≫ spMap σ) ≫ spMap e₂) ⟶ P₁.tB.G :=

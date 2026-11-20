@@ -31,7 +31,7 @@ theorem UpperTheory.Gal.G3.pTateDiff :
   constructor
   · rintro ⟨z, hz⟩
     refine ⟨inAf D z + w, add_mem (GlobalTheory.LKGeo.GammaUniq.inAf_mem z) hw, ?_⟩
-    rw [e₃, hz, ← hf, ← hf, ← hf, map_add, map_nsmul, smul_add, add_assoc]
+    rw [e₃, hz, ← hf, ← hf, ← hf, map_add (f := _), map_nsmul, smul_add, add_assoc]
   · rintro ⟨v, hv, e₄⟩
     have e₅ : inAf D (g.g n x - y) = n • (v - w) := by
       rw [← hf, map_sub, hf, hf, smul_sub]

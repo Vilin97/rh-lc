@@ -133,9 +133,9 @@ theorem weight_comb (d : (Σ k, ι k) →₀ ℕ) (a : Fin (N + 1) →₀ ℕ) :
     intro α f x
     induction x using Finsupp.induction_linear with
     | zero => simp
-    | add x y hx hy => rw [Finsupp.mapDomain_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [Finsupp.mapDomain_add, map_add (f := _), map_add (f := _), hx, hy]
     | single v n => rw [Finsupp.mapDomain_single, Finsupp.weight_single, Finsupp.weight_single]; rfl
-  rw [comb, map_add, hw, hw]
+  rw [comb, map_add (f := _), hw, hw]
   ext o
   cases o with
   | none =>

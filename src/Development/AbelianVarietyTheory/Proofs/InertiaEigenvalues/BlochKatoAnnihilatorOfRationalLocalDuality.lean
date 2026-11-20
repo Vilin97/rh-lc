@@ -43,7 +43,7 @@ theorem cobL_iff_trace {LL : Type} [Field LL] [Algebra ℚ_[l] LL] [TopologicalS
       have e1 : c * (algebraMap ℚ_[l] LL (PD.χ x.1 : ℚ_[l]) * f x.2 - f (x.1 * x.2) + f x.1) =
           (PD.χ x.1 : ℚ_[l]) • (c * f x.2) - c * f (x.1 * x.2) + c * f x.1 := by
         rw [Algebra.smul_def]; ring
-      rw [e1, map_add, map_sub, map_smul, smul_eq_mul]
+      rw [e1, map_add (f := _), map_sub, map_smul, smul_eq_mul]
       simp
   · intro h
     choose f hf using h

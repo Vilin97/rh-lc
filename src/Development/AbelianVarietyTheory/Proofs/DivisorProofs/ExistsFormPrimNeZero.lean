@@ -144,7 +144,7 @@ theorem cl_dlog_mem : Form.cl _ (dlog R) ∈ primDR (Gm (Sp R)) := by
           ← map_mul, hc', hb, ← hc', ← hb f φ, ← hb g φ, map_mul]
         ring)
     linear_combination this
-  rw [map_add] at key
+  rw [map_add (f := _)] at key
   exact key
 
 open AddMonoidAlgebra TrivSqZeroExt in

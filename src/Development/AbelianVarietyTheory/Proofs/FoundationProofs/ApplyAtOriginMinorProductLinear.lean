@@ -90,7 +90,7 @@ theorem polyDeriv_subst {σ κ W : Type} [NormedAddCommGroup W] [NormedSpace ℂ
     rw [MvPolynomial.algHom_C, MvPolynomial.algebraMap_eq, h]
     simp [I2.polyDeriv_smul, I2.polyDeriv_monomial_one, I2.pdTerm_eq_itD,
       -MvPolynomial.monomial_zero']
-  | add P Q hP hQ => simp only [map_add, I2.polyDeriv_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), I2.polyDeriv_add, hP, hQ]
   | mul_X P l hP =>
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_mul, hΦ, Finset.mul_sum, I2.jof_polyDeriv_sum, GlobalTheory.ThFr.polyDeriv_mul_X hF, map_sum]

@@ -171,7 +171,7 @@ theorem pb_dual_gen (lam : ι → DomWeight n) (T T' : Submodule (𝓞 K) (Pol K
     induction hy using Submodule.span_induction with
     | mem y hy => exact hsS y hy
     | zero => rw [map_zero, smul_zero]; exact zero_mem _
-    | add a b _ _ ha hb => rw [map_add, smul_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _), smul_add]; exact add_mem ha hb
     | smul c a _ ha =>
       show s • pairB lam (actP lam (invTrK B)⁻¹ x) (c • a) ∈ (1 : Submodule (𝓞 K) K)
       rw [pb_pairB_osmul_right, smul_comm]

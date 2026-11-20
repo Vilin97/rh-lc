@@ -93,7 +93,7 @@ private theorem sep {V : Type} [AddCommGroup V] [Module Q V] (F : ℤ → Submod
   clear hy
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, Finsupp.add_apply]; exact (F a).add_mem hx hy
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), Finsupp.add_apply]; exact (F a).add_mem hx hy
   | tmul v b =>
     rw [LinearMap.lTensor_tmul, TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply]
     exact (F a).smul_mem _ b.2
@@ -107,7 +107,7 @@ private theorem filT_anti : Antitone (FilT (l := l) A V) := antitone_int_of_succ
   rintro _ ⟨y, rfl⟩
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | tmul v b => exact ⟨v ⊗ₜ ⟨b.1, ((PP l).PD (botExt l)).Fil_anti a b.2⟩, rfl⟩
 
 private theorem filT_exh (y : V ⊗[ℚ_[l]] Bdr l) : ∃ a, y ∈ FilT A V a := by
@@ -153,7 +153,7 @@ private theorem main [Nontrivial A] [Module.Finite ℚ_[l] A] [FiniteDimensional
     haveI := Submodule.finiteDimensional_of_le (hle i)
     let Φ : (Fin (m i) → A ⊗[ℚ_[l]] ↥K.1) →ₗ[ℚ_[l]] V ⊗[ℚ_[l]] Bdr l :=
       { toFun := fun c => ∑ a, smulD V K (c a) (x a)
-        map_add' := fun c c' => by simp only [Pi.add_apply, map_add, LinearMap.add_apply, Finset.sum_add_distrib]
+        map_add' := fun c c' => by simp only [Pi.add_apply, map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib]
         map_smul' := fun r c => by
           simp only [Pi.smul_apply, map_smul, LinearMap.smul_apply, RingHom.id_apply, Finset.smul_sum] }
     have := step ((FilD (GK K).subtype ρ i).restrictScalars ℚ_[l])

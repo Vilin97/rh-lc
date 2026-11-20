@@ -59,7 +59,7 @@ theorem int_coords_ev : ∀ᶠ w in Filter.cofinite, ∀ z ∈ intAE D, ∀ i,
     rw [map_zsmul, Finsupp.smul_apply, map_zsmul]
     exact zsmul_mem (hw i j) _
   | zero => intro i; simp
-  | add x y _ _ hx hy => intro i; rw [map_add, map_add, Finsupp.add_apply]; exact add_mem (hx i) (hy i)
+  | add x y _ _ hx hy => intro i; rw [map_add (f := _), map_add (f := _), Finsupp.add_apply]; exact add_mem (hx i) (hy i)
   | neg x _ hx => intro i; rw [map_neg, map_neg, Finsupp.neg_apply]; exact neg_mem (hx i)
 
 end GlobalTheory.FinPlLoc

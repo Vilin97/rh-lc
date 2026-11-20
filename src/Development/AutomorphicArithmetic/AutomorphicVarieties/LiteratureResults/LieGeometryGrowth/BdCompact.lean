@@ -34,7 +34,7 @@ private theorem cont_ev {E : Type} [Field E] [NumberField E] [IsTotallyComplex E
     have hS : IsOpen (S : Set (GL (Fin a) (Af E))) := Subgroup.isOpen_mono (H₁ := U) (fun u hu => hφ.2.1 u hu) hU
     exact (ContAut.continuous_of_isOpen_stab E a φ hS).smul continuous_const
   | zero => rw [map_zero]; exact continuous_const
-  | add x y _ _ hx hy => rw [map_add]; exact hx.add hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact hx.add hy
   | smul c x _ hx => rw [map_smul]; exact hx.const_smul c
 
 theorem UpperTheory.V.Lit.Geo.bdCompact :

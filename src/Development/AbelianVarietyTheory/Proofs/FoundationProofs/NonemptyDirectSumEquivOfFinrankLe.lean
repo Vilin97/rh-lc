@@ -29,7 +29,7 @@ theorem directSum_eq_zero_of_toModule_eq_zero {k G ι W : Type} [Field k] [Group
       { carrier := {x | (∀ j, j ∉ insert i t → x j = 0) ∧ Φ x = 0}
         add_mem' := fun {a b} ha hb => ⟨fun j hj => by
           rw [DirectSum.add_apply, ha.1 j hj, hb.1 j hj, add_zero],
-          by rw [map_add, ha.2, hb.2, add_zero]⟩
+          by rw [map_add (f := _), ha.2, hb.2, add_zero]⟩
         zero_mem' := ⟨fun j _ => rfl, map_zero Φ⟩
         smul_mem' := fun c a ha => ⟨fun j hj => by
           rw [DirectSum.smul_apply, ha.1 j hj, smul_zero],

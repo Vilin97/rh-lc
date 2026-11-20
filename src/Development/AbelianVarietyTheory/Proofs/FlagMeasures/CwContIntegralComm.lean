@@ -92,7 +92,7 @@ theorem dsigW_add {R : Rep k r} (hD : DerFacts R) (W : List (Mx k r)) (hW : ∀ 
         (dsigW (k := k) (r := r) R.σ W v + dsigW (k := k) (r := r) R.σ W w))
         (dsig (k := k) (r := r) R.σ X (dsigW (k := k) (r := r) R.σ W v) +
           dsig (k := k) (r := r) R.σ X (dsigW (k := k) (r := r) R.σ W w)) 0 := by
-      simpa only [map_add, Pi.add_def] using hd
+      simpa only [map_add (f := _), Pi.add_def] using hd
     exact hd'.deriv
 
 theorem dsigW_integral {R : Rep k r} (hD : DerFacts R) (W : List (Mx k r)) (hW : ∀ X ∈ W, InLieHpk k r X)

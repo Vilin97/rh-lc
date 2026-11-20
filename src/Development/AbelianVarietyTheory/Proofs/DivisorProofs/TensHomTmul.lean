@@ -72,7 +72,7 @@ def tensCoef (w : pr ≫ s₀ = s₁ ≫ spMap (algebraMap R₀ R₁)) :
         rw [Algebra.TensorProduct.map_tmul, tensHom_tmul, tensHom_tmul, map_mul, AlgHom.id_apply, prSec_res]
         congr 1
         exact ((Sec.res s₁ (pr.preimage_mono (leOfHom a.unop))).commutes r).symm
-      | add x y hx hy => simp only [map_add, hx, hy])
+      | add x y hx hy => simp only [map_add (f := _), hx, hy])
     (fun U r b ↦ map_smul (tensHom w U.unop ((isAffine_aff U.unop).preimage pr)) r b)
 
 variable {Y₀ Y₁ : Scheme.{0}} {pr' : Y₁ ⟶ Y₀} [IsAffineHom pr']

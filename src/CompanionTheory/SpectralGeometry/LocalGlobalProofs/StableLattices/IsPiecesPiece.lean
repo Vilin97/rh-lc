@@ -103,7 +103,7 @@ theorem end_ext (hF : IsFrame h δ e f W) {A B : Module.End L V} (he : ∀ i, A 
   ext x
   obtain ⟨a, b, w, hwW, rfl⟩ := hF.2.2.2.2.2 x
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [map_add, map_sum, he, hf, hw w hwW]
+    simp [map_add (f := _), map_sum, he, hf, hw w hwW]
 
 theorem isPieces_piece (hh : IsHerm s h) (hδ : δ ≠ 0) (hF : IsFrame h δ e f W) :
     IsPieces (piece hh δ e f) := by
@@ -161,18 +161,18 @@ theorem piece_mem {Λ : AddSubgroup V} (hΛ : IsLat L Λ) (hA : IsAdapted h e f 
   rcases i with _ | i | i
   · have : piece hh δ e f none (∑ i, a i • e i + ∑ i, b i • f i + w) = w := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp [map_add, map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
+        simp [map_add (f := _), map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
     rw [this]
     have := (hA 0 0 w hw).2 ⟨fun i => by simp, fun i => by simp, hww⟩
     simpa using this
   · have : piece hh δ e f (some (Sum.inl i)) (∑ i, a i • e i + ∑ i, b i • f i + w) = a i • e i := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp [map_add, map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
+        simp [map_add (f := _), map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
     rw [this]
     exact lat_smul hΛ (by simpa using ha i) (e_mem hA hh i)
   · have : piece hh δ e f (some (Sum.inr i)) (∑ i, a i • e i + ∑ i, b i • f i + w) = b i • f i := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp [map_add, map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
+        simp [map_add (f := _), map_sum, piece_e hh hδ hF, piece_f hh hδ hF, piece_w hh hF _ hw]
     rw [this]
     exact lat_smul hΛ (by simpa using hb i) (f_mem hA hh i)
 
@@ -263,7 +263,7 @@ theorem h_smul_left (hh : IsHerm s h) (c : L) (x y : V) : h (c • x) y = s c * 
   rw [hh.2.2.1 y (c • x), hh.2.1, map_mul, ← hh.2.2.1 y x]
 
 theorem h_add_left (hh : IsHerm s h) (x x' y : V) : h (x + x') y = h x y + h x' y := by
-  rw [hh.2.2.1 y (x + x'), hh.1, map_add, ← hh.2.2.1 y x, ← hh.2.2.1 y x']
+  rw [hh.2.2.1 y (x + x'), hh.1, map_add (f := _), ← hh.2.2.1 y x, ← hh.2.2.1 y x']
 
 theorem h_zero_left (hh : IsHerm s h) (y : V) : h 0 y = 0 := by
   rw [hh.2.2.1 y 0, h_zero_right hh, map_zero]

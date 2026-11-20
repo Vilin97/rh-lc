@@ -211,14 +211,14 @@ theorem top_step (act : ι → Mat R S →ₗ[ℂ] Module.End ℂ V)
     intro v hv
     rw [happ, hC, Finset.sum_smul]
     refine Finset.sum_congr rfl fun w _ => ?_
-    rw [hD, map_add, LinearMap.add_apply, (hT v hv w).1, (hT v hv w).2, add_smul]
+    rw [hD, map_add (f := _), LinearMap.add_apply, (hT v hv w).1, (hT v hv w).2, add_smul]
   set E : ℕ → Submodule ℂ V := fun k => Module.End.eigenspace h (C - ((k : ℂ) + 1)) with hE
   set Elow : Submodule ℂ V := ⨆ k, E k with hElow
   have hP : N ⊔ Elow = N ⊔ Elow := rfl
   have hstab : ∀ w L, Supp (lowP r₀ s₀) L → ∀ v ∈ N ⊔ Elow, act w L v ∈ N ⊔ Elow := by
     intro w L hL v hv
     obtain ⟨n, hn, e, he, rfl⟩ := Submodule.mem_sup.1 hv
-    rw [map_add]
+    rw [map_add (f := _)]
     refine Submodule.add_mem _ (Submodule.mem_sup_right ?_) (Submodule.mem_sup_right ?_)
     · refine (le_iSup E 0) ?_
       rw [hE, Module.End.mem_eigenspace_iff, hcomm w L hL n C (hTe n (hNT hn))]
@@ -231,7 +231,7 @@ theorem top_step (act : ι → Mat R S →ₗ[ℂ] Module.End ℂ V)
         congr 1; push_cast; ring
       · simp
       · intro x y hx hy
-        rw [map_add]; exact Submodule.add_mem _ hx hy
+        rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   have hsub : Elow ≤ ⨆ μ, ⨆ (_ : μ ≠ C), Module.End.eigenspace h μ := by
     refine iSup_le fun k => ?_
     refine le_iSup₂_of_le (f := fun μ (_ : μ ≠ C) => Module.End.eigenspace h μ)

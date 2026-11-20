@@ -199,7 +199,7 @@ theorem pull_eq_smul_iop : ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ),
     have hM' : (M : D.host.E) ≠ 0 := Nat.cast_ne_zero.2 hM.ne'
     have hb : D.host.conj (b : D.host.E) = b := by
       have := congrArg D.host.conj hlb
-      rw [map_mul, conj_conj, mul_comm, hlb, map_add, map_neg, map_one, map_mul, map_natCast] at this
+      rw [map_mul, conj_conj, mul_comm, hlb, map_add (f := _), map_neg, map_one, map_mul, map_natCast] at this
       exact (mul_left_cancel₀ hM' (add_left_cancel this)).symm
     refine ⟨mulV D (Matrix.diagonal fun _ => (l : D.host.E)) 1, mulV D (Matrix.diagonal fun _ => (b : D.host.E)) 1,
       fun x hx => ⟨hint _ _ (integral_diagonal fun _ => l.2) integral_one x hx,

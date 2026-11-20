@@ -109,7 +109,7 @@ private theorem ringOn_inf {Y : Scheme.{0}} [IsIntegral Y] [Y.IsSeparated] (p' :
       rw [map_zero, map_zero]
       exact zero_mem _
     | add a b ha hb =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem ha hb
     | tmul a b =>
       rw [Algebra.TensorProduct.productMap_apply_tmul, map_mul]

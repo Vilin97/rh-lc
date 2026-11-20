@@ -82,7 +82,7 @@ theorem conjTranspose_extendMatrixByIdentityAlongIndices (σ : L →+* L) (e : F
     cT σ (ext1 e M) = ext1 e (cT σ M) := by
   ext a b
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [cT, ext1, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_add,
+    simp only [cT, ext1, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_add (f := _),
     map_sum, map_mul, incl, Matrix.of_apply, Matrix.sub_apply, map_sub, Matrix.one_apply, apply_ite σ, map_one,
     map_zero, Finset.sum_mul]
   congr 1

@@ -88,7 +88,7 @@ theorem exists_scf_isometry {p : ℕ} {C : Type} [NontriviallyNormedField C] [Is
         exact ⟨r.symm x, (hn' x).symm ▸ hx⟩ }
   haveI : IsUltrametricDist S :=
     IsUltrametricDist.isUltrametricDist_of_forall_norm_add_le_max_norm fun x y => by
-      rw [hn, hn, hn, map_add]; exact IsUltrametricDist.norm_add_le_max _ _
+      rw [hn, hn, hn, map_add (f := _)]; exact IsUltrametricDist.norm_add_le_max _ _
   haveI : IsAlgClosed S := IsAlgClosed.of_ringEquiv C S r.symm
   have hiso : Isometry r := AddMonoidHomClass.isometry_of_norm r fun x => (hn x).symm
   haveI : CompleteSpace S :=

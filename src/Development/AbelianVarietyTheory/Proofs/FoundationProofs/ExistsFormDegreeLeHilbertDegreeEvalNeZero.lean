@@ -131,7 +131,7 @@ theorem isIntegral_of_projection {σ R A : Type*} [Fintype σ] [CommRing R] [Alg
     change aeval w p ∈ B
     induction p using MvPolynomial.induction_on with
     | C x => rw [algHom_C]; exact hk x
-    | add p q hp hq => rw [map_add]; exact B.add_mem hp hq
+    | add p q hp hq => rw [map_add (f := _)]; exact B.add_mem hp hq
     | mul_X p j hp =>
       rw [map_mul, aeval_X, h]
       exact B.mul_mem hp (B.add_mem (B.mul_mem (hk _) ht) (B.algebraMap_mem _))
@@ -145,7 +145,7 @@ theorem homogeneousComponent_aeval {σ : Type*} (w : σ → MvPolynomial ι k)
     homogeneousComponent n (aeval w g) = aeval w (homogeneousComponent n g) := by
   classical
   induction g using MvPolynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | monomial d x =>
     have h1 : (monomial d x : MvPolynomial σ k).IsHomogeneous d.degree :=
       isHomogeneous_monomial x rfl
@@ -435,7 +435,7 @@ theorem exists_form_degree_le_of_isHilbertPoly [Infinite k] [Finite ι]
     · intro j
       have : algebraMap (MvPolynomial (Fin (Fintype.card ι)) k) (MvPolynomial ι k ⧸ P)
           (X (ε.symm j)) = Ideal.Quotient.mk P (w (ε.symm j)) := aeval_X _ _
-      rw [this, ← Ideal.Quotient.mk_algebraMap, ← map_mul, ← map_add]
+      rw [this, ← Ideal.Quotient.mk_algebraMap, ← map_mul, ← map_add (f := _)]
       congr 1
       simp only [w, Equiv.apply_symm_apply, div_eq_mul_inv, map_mul, algebraMap_eq]
       ring

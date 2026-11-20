@@ -31,7 +31,7 @@ theorem cvType_mem_of_stable : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl
       add_mem' := by
         rintro ψ₁ ψ₂ ⟨h₁, h₁'⟩ ⟨h₂, h₂'⟩
         refine ⟨fun u hu w' => ?_, fun w => ?_⟩
-        · simp only [LinearMap.add_apply, hadd, h₁ u hu w', h₂ u hu w', map_add]
+        · simp only [LinearMap.add_apply, hadd, h₁ u hu w', h₂ u hu w', map_add (f := _)]
         · simp only [LinearMap.add_apply]; exact U.add_mem (h₁' w) (h₂' w)
       zero_mem' := by
         refine ⟨fun u hu w' => ?_, fun w => ?_⟩

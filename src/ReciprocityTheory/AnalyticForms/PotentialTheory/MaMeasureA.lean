@@ -13,7 +13,7 @@ noncomputable section
 theorem leviC_conj_of_symm {e : ℕ} (H : (Fin e → ℂ) →L[ℝ] (Fin e → ℂ) →L[ℝ] ℝ)
     (hs : ∀ v w, H v w = H w v) (a b : Fin e → ℂ) :
     starRingEnd ℂ (leviC H a b) = leviC H b a := by
-  simp only [leviC, map_div₀, map_add, map_mul, map_sub, Complex.conj_ofReal, Complex.conj_I, map_ofNat]
+  simp only [leviC, map_div₀, map_add (f := _), map_mul, map_sub, Complex.conj_ofReal, Complex.conj_I, map_ofNat]
   rw [hs b a, hs (I • b) (I • a), hs b (I • a), hs (I • b) a]
   push_cast
   ring

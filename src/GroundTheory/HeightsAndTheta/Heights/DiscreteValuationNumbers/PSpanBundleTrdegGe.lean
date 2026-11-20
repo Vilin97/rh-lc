@@ -80,7 +80,7 @@ theorem SpanBundleTrdegGe.exists_injective_cone {Ω Φ : Type*} [Field Ω] [Fiel
     | C a =>
       have h1 : θ (C a) = Polynomial.C (algebraMap Ω Φ a) := by simp [θ]
       simp [h1, heC]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p k hp =>
       rw [C_mul, map_mul, hp, map_mul, map_mul]
       have h2 : (e.toRingEquiv.toRingHom.comp ((map θ).comp (commAlgEquiv Ω (Fin i) K).toRingEquiv.toRingHom))
@@ -138,7 +138,7 @@ theorem SpanBundleTrdegGe.proof : SpanBundleTrdegGe.Statement := by
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simp [pointConeMap, emb, MvPolynomial.algebraMap_eq, RingHom.algebraMap_toAlgebra]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p q hp =>
       simp only [map_mul, hp, rename_X]
       simp [pointConeMap, emb, σ', hzs]
@@ -161,7 +161,7 @@ theorem SpanBundleTrdegGe.proof : SpanBundleTrdegGe.Statement := by
       change qz (Ideal.Quotient.mk _ (rename σ' g)) = emb (qy (Ideal.Quotient.mk _ g))
       simp only [qz, qy]
       exact hE1 g
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p r hp =>
       simp only [map_mul, hp, map_X, hΨX]
       congr 1

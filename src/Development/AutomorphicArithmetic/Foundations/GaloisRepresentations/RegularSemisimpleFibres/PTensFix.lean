@@ -85,7 +85,7 @@ private theorem oneMap_fix [∀ a, TopologicalSpace (G a)] [∀ a, IsTopological
       rw [oneMap_tprod]
       refine mem_fixed.2 fun u hu => ?_
       rw [position_tprod, Function.update_self, mem_fixed.1 (he (f a)) u hu, Function.update_idem]
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   have h2 : ∀ f : ∀ b, V b, (twKer (σ a) H 1).map
       ((PiTensorProduct.tprod ℂ).toLinearMap f a) ≤ twKer (intersection_update_fsHerm_neg_one σ a) H 1 := fun f => by
     rw [Submodule.map_le_iff_le_comap]
@@ -101,7 +101,7 @@ private theorem oneMap_fix [∀ a, TopologicalSpace (G a)] [∀ a, IsTopological
       rw [oneMap_tprod, map_sub]
       simp [MultilinearMap.toLinearMap]
     | add x y hx hy =>
-      rw [map_add, add_sub_add_comm]; exact add_mem hx hy
+      rw [map_add (f := _), add_sub_add_comm]; exact add_mem hx hy
   have h4 := Submodule.disjoint_def.1 (isCompl_fixed_twKer (position_smooth σ hσ a) hH).disjoint
     (w - oneMap a e w) (sub_mem hw (h1 w)) (h3 w)
   exact (sub_eq_zero.1 h4).symm
@@ -148,7 +148,7 @@ theorem UpperTheory.Gal.InertialTypesAlt.tensFix :
       refine Subtype.ext ?_
       rw [redLevi_apply, levelZero_apply]
       exact idem_comm (hσ a) (hK a) (KO_le_normalizer (x.2 a trivial)) (f a)
-    | add x' y hx hy => simp only [map_add, hx, hy]
+    | add x' y hx hy => simp only [map_add (f := _), hx, hy]
   · have hk : ∀ a v, v - e a v ∈ twKer (σ a) (KOne k (Fin (d a))) 1 := fun a v => by
       rw [← idem_eq_zero_iff (hσ a) (hK a), map_sub, idem_of_mem (hσ a) (hK a) (idem_mem (hσ a) (hK a) v), sub_self]
     have h1 : ∀ a, oneMap a (e a) w = w := fun a =>

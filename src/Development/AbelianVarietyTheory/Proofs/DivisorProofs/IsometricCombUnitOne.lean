@@ -106,7 +106,7 @@ theorem isInter_calculus : GlobalTheory.Published.ArCalc → ∀ (k : Type) [Com
   refine ⟨⟨_, I₀⟩, fun a ha => ?_, fun a a' ha ha' => ?_, fun a x y z ha hx hy hz => ?_⟩
   · rw [ha.unique hX I₀, mul_comm]
     exact I₀'
-  · rw [ha.unique hX I₀, ha'.unique hX I₁, ← map_add, ← add_mul]
+  · rw [ha.unique hX I₀, ha'.unique hX I₁, ← map_add (f := _), ← add_mul]
     exact I₀₁
   · have S₀ := c₀.isSelfInter hX (hΨ.1 (e 0))
     have S₂ := c₂.isSelfInter hX (hΨ.1 (e 2))
@@ -117,7 +117,7 @@ theorem isInter_calculus : GlobalTheory.Published.ArCalc → ∀ (k : Type) [Com
     have E : (MvPolynomial.X 0 + MvPolynomial.X 2 : MvPolynomial (Fin 3) ℝ) ^ (1 + 1) =
         MvPolynomial.X 0 ^ (1 + 1) + (MvPolynomial.X 0 * MvPolynomial.X 2 + MvPolynomial.X 0 * MvPolynomial.X 2) +
           MvPolynomial.X 2 ^ (1 + 1) := by ring
-    rw [E, map_add, map_add, map_add]
+    rw [E, map_add (f := _), map_add (f := _), map_add (f := _)]
     ring
 
 end GlobalTheory

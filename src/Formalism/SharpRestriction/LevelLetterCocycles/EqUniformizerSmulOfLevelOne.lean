@@ -192,7 +192,7 @@ theorem serZ_lin (T : LocLat G Qp LL O) (i : ZMod n) (a a' : O) {ζ ζ' : W.DD T
     refine ⟨j1 + j2, a • ((PD.p : ℕ) : O) ^ j2 • x1 + a' • ((PD.p : ℕ) : O) ^ j1 • x2,
       (W.N T).add_mem ((W.N T).smul_of_tower_mem _ ((W.N T).smul_of_tower_mem _ hx1))
         ((W.N T).smul_of_tower_mem _ ((W.N T).smul_of_tower_mem _ hx2)),
-      fun δ hδ => by simp only [map_add, map_smul, hx1Δ δ hδ, hx2Δ δ hδ], ?_⟩
+      fun δ hδ => by simp only [map_add (f := _), map_smul, hx1Δ δ hδ, hx2Δ δ hδ], ?_⟩
     have hs : ∑ y ∈ Finset.range K, ((PD.p : ℕ) : O) ^ (Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p K - Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p y) •
         (W.γ T (W.π₀ ^ y • (a • c y + a' • c' y)) - W.π₀ ^ y • (a • c y + a' • c' y)) =
         a • ∑ y ∈ Finset.range K, ((PD.p : ℕ) : O) ^ (Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p K - Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p y) •
@@ -489,7 +489,7 @@ theorem zd [NeZero n] [IsDomain O] (hinj : Function.Injective (algebraMap O LL))
     · refine Finset.sum_congr rfl fun y _ => ?_
       rw [smul_smul, ← pow_add]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hsplit, hkx, map_add, map_sum]
+    rw [hsplit, hkx, map_add (f := _), map_sum]
   refine inMultiple_add W T i j _ (?_) (inMultiple_sum W T i j _ _ _ fun y hy => ?_)
   · rw [LinearMap.map_smul_of_tower]
     exact InFP_osmul W T i j _ _ (keyF' W hr9.1 h2 T i hj le_rfl hXM hx)

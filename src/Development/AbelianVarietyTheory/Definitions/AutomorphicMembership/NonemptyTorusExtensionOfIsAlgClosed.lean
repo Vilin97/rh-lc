@@ -275,7 +275,7 @@ theorem pull_bijective {h : IsGrpPullback G' G f φ} (hb : Function.Bijective (C
     smul_zero c := rfl
     smul_add c χ χ' := rfl
     add_smul c d χ := AddMonoidHom.ext fun l =>
-      (show χ (σ (c + d) • l) = χ (σ c • l) + χ (σ d • l) by rw [map_add, add_smul, map_add])
+      (show χ (σ (c + d) • l) = χ (σ c • l) + χ (σ d • l) by rw [map_add (f := _), add_smul, map_add (f := _)])
     zero_smul χ := AddMonoidHom.ext fun l =>
       (show χ (σ 0 • l) = 0 by rw [map_zero, zero_smul, map_zero]) }
 

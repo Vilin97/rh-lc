@@ -43,7 +43,7 @@ theorem fl_trace {F E : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [C
     [Algebra F E] [TopologicalSpace E] (L : Loc.LocE F E) (hinj : Function.Injective (algebraMap F E))
     {x : E} (hx : x ∈ L.O) : ∃ t : 𝒪[F], algebraMap F E t = x + L.cj x := by
   refine fl_fix_int L hinj (L.O.add_mem hx (fl_cj_mem L hx)) ?_
-  rw [map_add, L.2, add_comm]
+  rw [map_add (f := _), L.2, add_comm]
 
 theorem fl_den_F {F : Type} [Field F] [ValuativeRel F] (a : F) :
     ∃ c : 𝒪[F], c ≠ 0 ∧ (c : F) * a ∈ 𝒪[F] := by
@@ -67,7 +67,7 @@ theorem fl_den_F {F : Type} [Field F] [ValuativeRel F] (a : F) :
 theorem fl_den {F E : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [CommRing E]
     [Algebra F E] [TopologicalSpace E] (L : Loc.LocE F E) (x : E) :
     ∃ c : 𝒪[F], c ≠ 0 ∧ algebraMap F E c * x ∈ L.O := by
-  obtain ⟨t, ht⟩ := (L.3 (x + L.cj x)).1 (by rw [map_add, L.2, add_comm])
+  obtain ⟨t, ht⟩ := (L.3 (x + L.cj x)).1 (by rw [map_add (f := _), L.2, add_comm])
   obtain ⟨m, hm⟩ := (L.3 (x * L.cj x)).1 (by rw [map_mul, L.2, mul_comm])
   obtain ⟨c1, hc1, ht1⟩ := fl_den_F t
   obtain ⟨c2, hc2, hm2⟩ := fl_den_F m

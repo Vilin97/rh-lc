@@ -39,7 +39,7 @@ theorem MainStatements.Hodge.Pf.noprim : DescentSt → LowSt → SteinSt → AxO
   have e : ∀ (f : A ⊗ A ⟶ A) (a' : GlobalTheory.CatCoh.H2 (OAff (A ⊗ A).hom)), IsPullbackH2Structure (wOver f) (eZ t) a' →
       a' = eY (exteriorPower.map 2 (MainStatements.Hodge.Pf.AXO.pO f) t) := fun f a' h' ↦
     inj f (h'.symm.trans (MainStatements.Hodge.Pf.WedgeProjections.pullback_wedge_cup_square f eZ hZ eY hY t))
-  rw [e _ _ ha, e _ _ hb, e _ _ hc, ← map_add] at habc
+  rw [e _ _ ha, e _ _ hb, e _ _ hc, ← map_add (f := _)] at habc
   have ht := eY.injective habc
   rw [MainStatements.Hodge.Pf.WedgeProjections.pO_mul A hAx g hA hg] at ht
   rw [MainStatements.Hodge.Pf.WedgeProjections.eq_zero_of_exteriorPower_map_add hR _ _ _ _ (MainStatements.Hodge.Pf.WedgeProjections.r11 A) (MainStatements.Hodge.Pf.WedgeProjections.r12 A)

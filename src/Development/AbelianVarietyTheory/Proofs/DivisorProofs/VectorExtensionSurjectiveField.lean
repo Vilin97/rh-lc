@@ -142,7 +142,7 @@ theorem exists_prim_pow (hf : Function.Surjective (f.app 1)) :
       f.app 1 (TensorProduct.lid K _ (l.rTensor _ z)).1 = TensorProduct.lid K _ (l.rTensor _
         (bcMap k (f.app 1) (liftSemi (toBaseChange K k (H.A 1)).prim z).1)) := fun z => by
     induction z with
-    | add x y hx hy => simp only [map_add, Submodule.coe_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Submodule.coe_add, hx, hy]
     | tmul r x => simp [smul_tmul']
   refine ⟨_, (TensorProduct.lid K _ (l.rTensor _ z)).2, ?_⟩
   rw [key, hz, e]
@@ -154,7 +154,7 @@ theorem omegaMap_baseChangeMap_surjective (R' : Type) [CommRing R'] [Algebra K R
   obtain ⟨z, rfl⟩ := (T.omega_baseChange_bijective_of_p_eq_zero G R' h).2 w
   change _ ∈ LinearMap.range _
   induction z with
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | tmul r x =>
     obtain ⟨x, rfl⟩ := hf x
     rw [liftSemi_tmul, (G.toBase R').omega_naturality (H.toBase R') f (baseChangeMap R' f)
@@ -193,7 +193,7 @@ theorem mem_sup_span_pow (hW : Published.BarsottiTateDieudonne.WittModule)
     set S := U ⊔ Submodule.span K {a | ∃ b : G.A 1, cobOne K _ b = 0 ∧ a = b ^ p ^ (n + 1)}
     have k₁ : ∀ a : G.A 1, cobOne K _ a = 0 → a ^ p ∈ S := fun a ha => by
       obtain ⟨u, ⟨c, hc, rfl⟩, v, hv, rfl⟩ := Submodule.mem_sup.1 (ih a ha)
-      rw [← frobRing_apply h0, map_add]
+      rw [← frobRing_apply h0, map_add (f := _)]
       refine Submodule.add_mem_sup ⟨c ^ p, ?_, by simp⟩ ?_
       · have := cobOne_pow_prime_pow h 1 c
         rwa [pow_one, show cobOne K _ c = 0 from hc, zero_pow hp.out.ne_zero] at this
@@ -203,7 +203,7 @@ theorem mem_sup_span_pow (hW : Published.BarsottiTateDieudonne.WittModule)
           obtain ⟨b, hb, rfl⟩ := hx
           exact Submodule.subset_span ⟨b, hb, by rw [frobRing_apply, pow_succ, pow_mul]⟩
         | zero => rw [map_zero]; exact zero_mem _
-        | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+        | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
         | smul r x _ hx =>
           rw [frobRing_apply, smul_pow, ← frobRing_apply h0]
           exact Submodule.smul_mem _ _ hx

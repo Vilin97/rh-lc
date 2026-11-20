@@ -43,7 +43,7 @@ theorem _root_.GlobalTheory.KZ.ES.Quot.intC_add {X : _root_.GlobalTheory.KZ.Towe
     (hf : _root_.GlobalTheory.KZ.ES.IntC X V f) (hg : _root_.GlobalTheory.KZ.ES.IntC X V g) :
     _root_.GlobalTheory.KZ.ES.IntC X V (f + g) := by
   intro r
-  rw [map_add, HahnSeries.coeff_add]
+  rw [map_add (f := _), HahnSeries.coeff_add]
   exact V.add_mem _ _ (hf r) (hg r)
 
 open scoped MatrixGroups TensorProduct in
@@ -77,7 +77,7 @@ def bddRing (X : Tower Ω ε) (V : ValuationSubring Ω) (M : ℕ) : Subalgebra �
     rwa [mul_mul_mul_comm, ← map_mul] at this
   add_mem' := by
     rintro a b ⟨ha, c, hc, hca⟩ ⟨hb, d, hd, hdb⟩
-    refine ⟨fun γ hγ => by rw [map_add, ha γ hγ, hb γ hγ], ?_⟩
+    refine ⟨fun γ hγ => by rw [map_add (f := _), ha γ hγ, hb γ hγ], ?_⟩
     rcases V.mem_or_inv_mem (c / d) with h | h
     · refine ⟨c, hc, ?_⟩
       have := intC_add hca (intC_const_mul h hdb)

@@ -127,7 +127,7 @@ theorem HK_ad (x : O) {κ κ' : WVO (IS I0) → C} (h : GK Y p κ) (h' : GK Y p 
 theorem lamAct_tr : lamAct Y p Y.w0 + lamAct Y p (star Y.w0) = 1 := by
   funext w
   simp only [Pi.add_apply, Pi.one_apply, lamAct]
-  rw [← map_add, Y.halfIntegralGenerator_add_conj_eq_one, map_one]
+  rw [← map_add (f := _), Y.halfIntegralGenerator_add_conj_eq_one, map_one]
 
 theorem HK_pair {a b : WVO (IS I0) → C} (ha : GK Y p a) (hb : GK Y p b) :
     Cg V (AA Y p) (HK Y p a (lamAct Y p Y.w0 * b) + HK Y p b (lamAct Y p Y.w0 * a)) (HK Y p a b) := by

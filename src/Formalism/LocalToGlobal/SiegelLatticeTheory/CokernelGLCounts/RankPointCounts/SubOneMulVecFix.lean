@@ -88,7 +88,7 @@ abbrev rvc (v : InfinitePlace X.B.I.F) (p : (VS D).V) : Fin X.B.I.n → ℂ := r
 
 theorem crd_add (p p' : (VS D).V) : X.crd (p + p') = X.crd p + X.crd p' := by
   funext i
-  simp only [Formalism.L2.SG.HidaSetting.HidaSetting.crd, Formalism.L2.SG.HidaSetting.crdOf, map_add, Finsupp.add_apply, Pi.add_apply]
+  simp only [Formalism.L2.SG.HidaSetting.HidaSetting.crd, Formalism.L2.SG.HidaSetting.crdOf, map_add (f := _), Finsupp.add_apply, Pi.add_apply]
 
 theorem crd_smul (c : D.host.E) (p : (VS D).V) : X.crd (c • p) = X.ιE.symm c • X.crd p := by
   funext i

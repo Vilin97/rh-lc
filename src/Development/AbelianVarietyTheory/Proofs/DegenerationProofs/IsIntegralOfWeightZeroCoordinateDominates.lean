@@ -30,7 +30,7 @@ theorem Mod.integral_of_weight_zero_dominates : ∀ (p : ℕ) [Fact p.Prime] (V 
   · exact e.finrank_eq.symm.le.trans ((Nat.le_add_left _ _).trans m.dim.le)
   · intro i n
     have h := m.good.short i (m.xe.symm n)
-    rw [← map_nsmul, ← map_add, hq, hq] at h
+    rw [← map_nsmul, ← map_add (f := _), hq, hq] at h
     exact h
 
 end GlobalTheory.ZH

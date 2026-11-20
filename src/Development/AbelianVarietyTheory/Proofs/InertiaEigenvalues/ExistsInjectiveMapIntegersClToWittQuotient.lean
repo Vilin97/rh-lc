@@ -50,7 +50,7 @@ theorem exists_untilt_map : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK
     rw [← map_natCast (Ideal.Quotient.mk _), ← map_mul, Ideal.Quotient.eq, Ideal.mem_span_singleton'] at hb
     obtain ⟨c, hc⟩ := hb
     have h := congrArg WittVector.constantCoeff hc
-    rw [hE, map_mul, map_add, map_mul, map_sub, map_mul, constantCoeff_natCast_untilt, zero_mul, zero_mul,
+    rw [hE, map_mul, map_add (f := _), map_mul, map_sub, map_mul, constantCoeff_natCast_untilt, zero_mul, zero_mul,
       add_zero, sub_zero, map_pow, WittVector.constantCoeff_apply (WittVector.teichmuller _ _),
       WittVector.teichmuller_coeff_zero] at h
     exact ⟨_, h.symm.trans (mul_comm _ _)⟩

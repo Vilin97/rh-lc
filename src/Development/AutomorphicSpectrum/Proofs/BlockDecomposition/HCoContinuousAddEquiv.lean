@@ -64,7 +64,7 @@ theorem hCo_continuousAddEquiv : ∀ (F E : Type) [Field F] [NumberField F] [Fie
   rw [hH, hH, hH]
   funext q
   rcases q with i | ⟨k, p⟩
-  · simp [hCo, map_add, mul_add]
-  · simp [hCo, map_add]
+  · simp [hCo, map_add (f := _), mul_add]
+  · simp [hCo, map_add (f := _)]
 
 end GlobalTheory.CompanionTheory.SiegelND.Coef.TestN

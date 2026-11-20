@@ -141,7 +141,7 @@ theorem addCvM {τ : Type} [Finite τ] (γ γ' : Fin dd → MvPowerSeries τ C) 
   refine ⟨γ'', fun j => ⟨hγ''0 j, IntS.subst hρ0 hρI (Y.intF j)⟩, ?_, ?_⟩
   · intro i
     have h := congrArg (MvPowerSeries.subst ρ) (Y.lg_add i)
-    rw [← MvPowerSeries.coe_substAlgHom hρS, map_add, MvPowerSeries.coe_substAlgHom hρS, hev _ hca, hev _ hc0,
+    rw [← MvPowerSeries.coe_substAlgHom hρS, map_add (f := _), MvPowerSeries.coe_substAlgHom hρS, hev _ hca, hev _ hc0,
       hev _ hc1, hpa, hp0, hp1] at h
     exact h
   · intro v hv
@@ -306,7 +306,7 @@ theorem cEqSum_holds : CEqSumSt := by
         rw [h2 c q]
         ring
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [e, ← MvPowerSeries.coe_substAlgHom (hasSubst_unit (ht0 c)), map_add, map_sub, map_sum]
+        rw [e, ← MvPowerSeries.coe_substAlgHom (hasSubst_unit (ht0 c)), map_add (f := _), map_sub, map_sum]
       congr 1
       refine Finset.sum_congr rfl fun c' _ => ?_
       split_ifs
@@ -336,7 +336,7 @@ theorem cEqSum_holds : CEqSumSt := by
           ∑ c, MvPowerSeries.subst (fun _ : Unit => t c) (alongCv (γ c) ((Y.raw p).sg v)) +
           ∑ c, MvPowerSeries.subst (fun _ : Unit => t c) (lam c q) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [← hpush, ← MvPowerSeries.coe_substAlgHom htS, map_add, map_sub, map_sum, map_sum]
+        rw [← hpush, ← MvPowerSeries.coe_substAlgHom htS, map_add (f := _), map_sub, map_sum, map_sum]
       simp only [MvPowerSeries.coe_substAlgHom, key2]
     rw [hexp, hsum, hsplit, hAll]
     ring

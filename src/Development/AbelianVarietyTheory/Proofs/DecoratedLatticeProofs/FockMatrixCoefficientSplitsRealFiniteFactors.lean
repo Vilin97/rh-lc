@@ -82,7 +82,7 @@ theorem fockVac_om_fin {χS χT : (AE D)ˣ →* Circle}
   intro z
   have h := congrArg (om (x, y)) (hv z)
   unfold annih at h ⊢
-  rw [map_add, map_smul, GlobalTheory.OrientedHeis.om_dRho hom hθ x y τ z hf, GlobalTheory.OrientedHeis.om_dRho hom hθ x y τ (J z) hf,
+  rw [map_add (f := _), map_smul, GlobalTheory.OrientedHeis.om_dRho hom hθ x y τ z hf, GlobalTheory.OrientedHeis.om_dRho hom hθ x y τ (J z) hf,
     e, e, map_zero] at h
   exact h
 
@@ -131,7 +131,7 @@ theorem pair_eq_inf : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam
       (∀ τ, IsFockVacAt (heisO ψ S T) θ τ (cplxO (sS τ) (sT τ)) f) → (∀ τ, IsFockVacAt (heisO ψ S T) θ τ (cplxO (sS τ) (sT τ)) f') → (∀ τ, IsFockVacAt (heisO ψ S T) θ τ (cplxO (sS τ) (sT τ)) g) → Φ (z • f + f') g = star z * Φ f g + Φ f' g := by
     intro z f f' g hf hf' hg _ _ _
     simp only [hΦ]
-    rw [pT_lin hψ hθ sS BS sT BT z hf hf' P, map_add, map_smul, thetaIP_eq_ipO, thetaIP_eq_ipO, thetaIP_eq_ipO,
+    rw [pT_lin hψ hθ sS BS sT BT z hf hf' P, map_add (f := _), map_smul, thetaIP_eq_ipO, thetaIP_eq_ipO, thetaIP_eq_ipO,
       GlobalTheory.Size.ipO_add_right hψ hμ h𝓕 (thp g hg P') (GlobalTheory.OrientedHeis.theta_smul z (thom f hf P)) (thom f' hf' P),
       GlobalTheory.Size.ipO_smul_right]
     rfl

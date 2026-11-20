@@ -58,7 +58,7 @@ section AgreeSum
 variable {σ A : Type} [CommRing A]
 
 theorem Agree.add {D : ℕ} {F F' G G' : MvPowerSeries σ A} (hF : Agree D F F') (hG : Agree D G G') :
-    Agree D (F + G) (F' + G') := fun n hn => by rw [map_add, map_add, hF n hn, hG n hn]
+    Agree D (F + G) (F' + G') := fun n hn => by rw [map_add (f := _), map_add (f := _), hF n hn, hG n hn]
 
 end AgreeSum
 

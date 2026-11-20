@@ -280,7 +280,7 @@ theorem hasRes_add {z z' : P.adicCompletion E} {c c' : 𝓞 E ⧸ P.asIdeal} (h 
   obtain ⟨r, rfl, hr⟩ := h
   obtain ⟨r', rfl, hr'⟩ := h'
   refine ⟨r + r', map_add _ _ _, ?_⟩
-  rw [map_add, map_add, add_sub_add_comm]
+  rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
   exact Valuation.map_add_lt _ hr hr'
 
 theorem hasRes_mul {z z' : P.adicCompletion E} {c c' : 𝓞 E ⧸ P.asIdeal} (h : HasRes P z c) (h' : HasRes P z' c') :
@@ -318,7 +318,7 @@ theorem exists_hasRes {z : AfE F E} (h : Valued.v (adAt F P z) ≤ 1) : ∃ c, H
     exact Valuation.map_sub_le _ h h0.le
   obtain ⟨a, ha⟩ := HeightOneSpectrum.exists_valuation_sub_lt_of_integer P h1 1
   refine ⟨_, a, rfl, ?_⟩
-  rw [e, map_add, adAt_inclE, add_sub_right_comm, ← map_sub]
+  rw [e, map_add (f := _), adAt_inclE, add_sub_right_comm, ← map_sub]
   refine Valuation.map_add_lt _ ?_ h0
   rw [valued_algebraMap, Valuation.map_sub_swap]
   simpa using ha

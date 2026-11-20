@@ -84,10 +84,10 @@ theorem evV_trace (v : InfinitePlace I.F) (y : AF I.F ⊗[I.F] I.E) :
       simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
       rfl
     rw [hs] at h1
-    rw [trace_tmul', map_mul, evV_algebraMap, ← I.φ_over, GlobalTheory.St.G.trace_cm_eq_add_star I.cm, map_add, mul_add,
+    rw [trace_tmul', map_mul, evV_algebraMap, ← I.φ_over, GlobalTheory.St.G.trace_cm_eq_add_star I.cm, map_add (f := _), mul_add,
       ← thetaV_tmul, ← thetaV_tmul, h1]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, star_add]; ring
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), star_add]; ring
 
 theorem tmul_mem_int {x : I.E} (hx : IsIntegral ℤ x) {b : Formalism.MainNotions.S.Af I.F} (hb : b ∈ Formalism.UG.intAd I.F) :
     x ⊗ₜ[I.F] b ∈ IntAf I.F I.E := by
@@ -117,7 +117,7 @@ theorem fin_char (ψ : AddChar (AF I.F) ℂ)
     rw [map_zero, neg_zero, map_zero, hint 0 (zero_mem _)]
     exact hψi 0 (zero_mem _)
   | add x y hx hy =>
-    rw [map_add, neg_add, map_add, hadd, ← hx, ← hy, ← padd]
+    rw [map_add (f := _), neg_add, map_add (f := _), hadd, ← hx, ← hy, ← padd]
     rfl
   | tmul a x =>
     obtain ⟨N, s, hN0, hs⟩ := ((IsFractionRing.isAlgebraic_iff ℤ ℚ I.E).2

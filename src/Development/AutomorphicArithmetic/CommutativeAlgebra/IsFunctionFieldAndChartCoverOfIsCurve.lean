@@ -62,7 +62,7 @@ private theorem core (k L : Type) [Field k] [Field L] [Algebra k L] {C X : Schem
         simp [Algebra.TensorProduct.tmul_mul_tmul]
       rw [show inc L (B i) (l ⊗ₜ[k] b) = l ⊗ₜ[k] (b : C.functionField) from rfl, hθ, hsplit,
         map_mul, map_mul, he1 a b ha.symm, he2 l, hfx, ← hφgerm (U i) a, ha]
-    | add s t hs ht => simp only [map_add, hs, ht]
+    | add s t hs ht => simp only [map_add (f := _), hs, ht]
   have hcomp : θ.comp Algebra.TensorProduct.includeRight.toRingHom = φ := by
     ext a
     simp [Algebra.TensorProduct.includeRight_apply, hθ]

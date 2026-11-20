@@ -79,7 +79,7 @@ theorem stdform_psd (τ : E →+* ℂ) (M : Matrix n n ℂ) (hM : ∀ i j, ∃ e
         ((Complex.continuous_ofReal.comp continuous_snd).mul continuous_const))
       convert h0 using 1
       funext ab
-      simp [map_add, map_mul, map_ratCast]
+      simp [map_add (f := _), map_mul, map_ratCast]
     have h2 : DenseRange fun v : n → ℚ × ℚ => fun i => τ (((v i).1 : E) + ((v i).2 : E) * e0) :=
       DenseRange.piMap (fun _ => h1)
     have hsub : closure (Set.range fun v : n → ℚ × ℚ => fun i => τ (((v i).1 : E) + ((v i).2 : E) * e0)) ⊆

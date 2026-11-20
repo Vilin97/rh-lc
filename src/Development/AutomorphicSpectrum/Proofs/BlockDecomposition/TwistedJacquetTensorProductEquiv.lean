@@ -84,7 +84,7 @@ def descend [Fintype α] (K : ∀ a, Submodule ℂ (X a)) :
     obtain ⟨su, hu⟩ := Submodule.mkQ_surjective (K a) u
     obtain ⟨sv, hv⟩ := Submodule.mkQ_surjective (K a) v
     have hy := mkQ_rep K q
-    rw [descendFun_eq K _ _ (mkQ_update K hy a (w := su + sv) (by rw [map_add, hu, hv])),
+    rw [descendFun_eq K _ _ (mkQ_update K hy a (w := su + sv) (by rw [map_add (f := _), hu, hv])),
       descendFun_eq K _ _ (mkQ_update K hy a hu), descendFun_eq K _ _ (mkQ_update K hy a hv),
       MultilinearMap.map_update_add, map_add]
   map_update_smul' := by
@@ -153,7 +153,7 @@ theorem twKer_piTensor_le (π : ∀ a, Representation ℂ (Γ a) (X a)) (H : ∀
     apply Submodule.subset_span
     exact ⟨⟨(n : ∀ a, Γ a) a, n.2 a (Set.mem_univ a)⟩, x a, rfl⟩
   | add v₁ v₂ h₁ h₂ =>
-    rw [map_add, smul_add, add_sub_add_comm]
+    rw [map_add (f := _), smul_add, add_sub_add_comm]
     exact Submodule.add_mem _ h₁ h₂
 
 theorem pureSpan_le_twKer (π : ∀ a, Representation ℂ (Γ a) (X a)) (H : ∀ a, Subgroup (Γ a))

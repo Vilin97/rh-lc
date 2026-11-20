@@ -41,7 +41,7 @@ def dblCo (d : Darboux (symp c ξ JA JB) κ) : Darboux (symp c ξ JA (dbl JB)) (
       map_add' := fun w w' => by
         have h1 : (w + w').toCols₁ = w.toCols₁ + w'.toCols₁ := by ext; simp
         have h2 : (w + w').toCols₂ = w.toCols₂ + w'.toCols₂ := by ext; simp
-        rw [h1, h2, map_add, map_add]
+        rw [h1, h2, map_add (f := _), map_add (f := _)]
         ext k <;> cases k <;> simp [add_comm]
       map_smul' := fun a w => by
         have h1 : (a • w).toCols₁ = a • w.toCols₁ := by ext; simp

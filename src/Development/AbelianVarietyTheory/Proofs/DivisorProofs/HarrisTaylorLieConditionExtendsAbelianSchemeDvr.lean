@@ -53,7 +53,7 @@ theorem lie_ext : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (W L : Type) [CommR
         rw [← hAm, map_mul, act.mul, ← Category.assoc, hAm, hAm, Matrix.mulVec_mulVec] }
     (fun c d => hext _ _ fun x => by
       show T₀ ((Am (c + d)).mulVec x) = T₀ ((Am c + Am d).mulVec x)
-      rw [← hAm, map_add, act.add, MonObj.comp_mul, hAm, hAm, ← hadd₀, Matrix.add_mulVec])
+      rw [← hAm, map_add (f := _), act.add, MonObj.comp_mul, hAm, hAm, ← hadd₀, Matrix.add_mulVec])
   have hA : ∀ c, A c = M (act.act (algebraMap (𝓞 D.F) D.O c)) := fun c => rfl
 
   have tanT : ∀ (R' : Type) [CommRing R'] (β : W →+* R') (T : (Fin n → R') → (epsPtR (spMap β) ⟶ G)),

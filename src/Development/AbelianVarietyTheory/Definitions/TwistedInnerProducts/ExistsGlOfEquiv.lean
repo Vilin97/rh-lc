@@ -67,7 +67,7 @@ theorem hasVal_fn (P : Pair k n) (x : P.lat) : P.HasVal x (P.fn x) := ⟨x.2, rf
 theorem mem_lat_iff : x ∈ P.lat ↔ ∃ a, P.HasVal x a := ⟨fun h => ⟨_, h, rfl⟩, fun ⟨_, h⟩ => h.1⟩
 
 theorem HasVal.add (h : P.HasVal x a) (h' : P.HasVal y b) : P.HasVal (x + y) (a + b) :=
-  ⟨add_mem h.1 h'.1, by rw [← h.2, ← h'.2, ← map_add]; rfl⟩
+  ⟨add_mem h.1 h'.1, by rw [← h.2, ← h'.2, ← map_add (f := _)]; rfl⟩
 
 theorem HasVal.sub (h : P.HasVal x a) (h' : P.HasVal y b) : P.HasVal (x - y) (a - b) :=
   ⟨sub_mem h.1 h'.1, by rw [← h.2, ← h'.2, ← map_sub]; rfl⟩
@@ -679,7 +679,7 @@ def stdPair (i : n) : Pair k n where
   isLat := inferInstance
   fn :=
     { toFun := fun x => residue 𝒪[k] ⟨x.1 i, mem_stdLat.1 x.2 i⟩
-      map_add' := fun x y => by rw [← map_add]; rfl
+      map_add' := fun x y => by rw [← map_add (f := _)]; rfl
       map_smul' := fun s x => by
         rw [RingHom.id_apply, Algebra.smul_def, ResidueField.algebraMap_eq, ← map_mul]; rfl }
   fn_ne h := by

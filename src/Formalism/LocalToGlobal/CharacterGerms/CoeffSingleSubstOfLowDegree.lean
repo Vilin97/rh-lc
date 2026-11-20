@@ -51,7 +51,7 @@ private theorem cs_mul_lemma {τ : Type} (A B : MvPowerSeries τ C) (hA : MvPowe
   refine Finset.sum_eq_zero (fun p hp => ?_)
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
   have hdeg := congrArg Finsupp.degree hp
-  rw [map_add, deg_single_lemma_0] at hdeg
+  rw [map_add (f := _), deg_single_lemma_0] at hdeg
   rcases Nat.eq_zero_or_pos p.1.degree with h0 | h0
   · rw [deg_zero_lemma_0 p.1 h0, MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hA, zero_mul]
   · have h1 : p.2.degree = 0 := by omega
@@ -85,7 +85,7 @@ private theorem cs_prod_lemma_3 {σ τ : Type} (a : σ → MvPowerSeries τ C)
   have hsplit : e = Finsupp.single s 1 + (e - Finsupp.single s 1) := (add_tsub_cancel_of_le hle).symm
   have hdeg : 1 ≤ (e - Finsupp.single s 1).degree := by
     have h2 := congrArg Finsupp.degree hsplit
-    rw [map_add, deg_single_lemma_0] at h2
+    rw [map_add (f := _), deg_single_lemma_0] at h2
     omega
   have hne' : e - Finsupp.single s 1 ≠ 0 := by
     intro h
@@ -119,7 +119,7 @@ theorem coeff_single_subst_lin {σ τ : Type} [Finite σ] (a : σ → MvPowerSer
     intro e he
     rw [map_sub, hf e (by omega), sub_self]
   have hsplit : f = MvPowerSeries.X i + (f - MvPowerSeries.X i) := by ring
-  rw [hsplit, MvPowerSeries.subst_add ha, MvPowerSeries.subst_X ha, map_add,
+  rw [hsplit, MvPowerSeries.subst_add ha, MvPowerSeries.subst_X ha, map_add (f := _),
     coeff_single_subst_of_low_degree a ha0 _ hr c, add_zero]
 
 theorem subst_zero_of_const {σ τ : Type} [Finite σ] (f : MvPowerSeries σ C)

@@ -91,11 +91,11 @@ theorem exists_pow_mul_mem {R B L I : Type} [CommRing R] [CommRing B] [CommRing 
   | add x y _ _ hx hy =>
     obtain ⟨s, hs⟩ := hx
     obtain ⟨s', hs'⟩ := hy
-    exact ⟨s + s', by simp only [map_add, hs, hs']; ring⟩
+    exact ⟨s + s', by simp only [map_add (f := _), hs, hs']; ring⟩
   | mul x y _ _ hx hy =>
     obtain ⟨s, hs⟩ := hx
     obtain ⟨s', hs'⟩ := hy
-    exact ⟨x * s' + y * s, by simp only [map_add, map_mul, hδ, hs, hs']; ring⟩
+    exact ⟨x * s' + y * s, by simp only [map_add (f := _), map_mul, hδ, hs, hs']; ring⟩
 
 theorem exists_prime_iInf {B : Type} [CommRing B] {p : B} (hp : Prime p) (h0 : p ∈ nonZeroDivisors B) :
     ∃ J : Ideal B, J.IsPrime ∧ p ∉ J ∧ ∀ b, (∀ n : ℕ, p ^ n ∣ b) → b ∈ J := by

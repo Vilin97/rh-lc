@@ -198,7 +198,7 @@ theorem eval_aeval' {σ ρ : Type} (f : σ → MvPolynomial ρ K) (d : ρ → K)
     eval d (aeval f P) = eval (fun x => eval d (f x)) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p x hp => simp only [map_mul, hp, aeval_X, eval_X]
 
 end Poly

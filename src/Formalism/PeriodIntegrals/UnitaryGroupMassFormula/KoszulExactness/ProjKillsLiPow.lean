@@ -26,7 +26,7 @@ theorem proj_kills_Li_pow (i : Fin D) (p : ℕ) (x : ExteriorAlgebra R (Fin D �
 theorem uniq (i : Fin D) (p q : ℕ) (u v : ExteriorAlgebra R (Fin D → R))
     (hu : u ∈ Li R D i ^ p) (hv : v ∈ Li R D i ^ q) (h : u + eb R i * v = 0) : v = 0 ∧ u = 0 := by
   have h1 := congrArg (CliffordAlgebra.contractLeft (LinearMap.proj i : (Fin D → R) →ₗ[R] R)) h
-  rw [map_add, map_zero, proj_kills_Li_pow i p u hu, zero_add, eb,
+  rw [map_add (f := _), map_zero, proj_kills_Li_pow i p u hu, zero_add, eb,
     CliffordAlgebra.contractLeft_ι_mul, ← eb, proj_kills_Li_pow i q v hv, mul_zero, sub_zero] at h1
   simp only [LinearMap.coe_proj, Function.eval, Pi.single_eq_same, one_smul] at h1
   refine ⟨h1, ?_⟩

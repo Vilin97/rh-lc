@@ -98,7 +98,7 @@ private theorem genD_add {y z : Af F} (hu : IsUnit (y + z)) (hy : ∃ 𝔪, GenD
   obtain ⟨𝔪, -, hy⟩ := hy
   obtain ⟨𝔫, -, hz⟩ := hz
   refine genD_of_le hu fun w => ?_
-  rw [map_add]
+  rw [map_add (f := _)]
   refine Valuation.map_add_le _ ?_ ?_
   · rw [hy, WithZero.exp_le_exp]; omega
   · rw [hz, WithZero.exp_le_exp]; omega
@@ -236,7 +236,7 @@ private theorem cv_norm {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {a b : 
   have hf := Hm.boxfin F y ξ
   rw [cv, tsum_eq_sum (s := hf.toFinset)]
   · refine Finset.sum_induction _ (fun z => ‖ι.symm z‖ < 1) (fun x z hx hz => ?_) (by simp) fun η _ => ?_
-    · rw [map_add]
+    · rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt hx hz)
     · by_cases h : cf a y η * cf b y (ξ - η) = 0
       · simp [h]
@@ -346,7 +346,7 @@ theorem UpperTheory.V.Sd.holMul :
       ring
   · have e : A (Y 𝔪) - a 𝔪 = a 𝔪 * (d₀ (Y 𝔪) - 1) + cv a b (Y 𝔪) 1 := by
       simp only [A, cf1, coefAt_eq (hY 𝔪 hm)]; ring
-    rw [e, map_add, map_mul, map_sub, map_one]
+    rw [e, map_add (f := _), map_mul, map_sub, map_one]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ?_ (cv_norm ι ha hb _ _))
     rw [norm_mul]
     exact mul_lt_one_of_nonneg_of_lt_one_right (ha _ hm) (norm_nonneg _) (hd _)

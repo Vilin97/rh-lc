@@ -180,7 +180,7 @@ theorem _root_.GlobalTheory.DefectComp.main : ∀ (R Q : Type) [CommRing R] [Com
   have hmQ := _root_.GlobalTheory.QLog.hasSubst_up_nmul (Q := Q) hμ m
   have hkQ := _root_.GlobalTheory.QLog.hasSubst_up_nmul (Q := Q) hμ k
   apply mvPowerSeries_map_injective hinj
-  rw [map_add, map_subst hm, hs, hu, Nat.cast_smul_eq_nsmul, map_nsmul, ht]
+  rw [map_add (f := _), map_subst hm, hs, hu, Nat.cast_smul_eq_nsmul, map_nsmul, ht]
   change _ = subst (_root_.GlobalTheory.QLog.up Q (_root_.GlobalTheory.QLog.nmul μ m))
     (_root_.GlobalTheory.QLog.defect μ k f) + _
   simp only [_root_.GlobalTheory.QLog.defect]

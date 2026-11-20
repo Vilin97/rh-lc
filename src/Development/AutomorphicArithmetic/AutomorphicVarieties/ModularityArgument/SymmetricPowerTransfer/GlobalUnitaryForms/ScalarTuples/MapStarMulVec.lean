@@ -111,7 +111,7 @@ private theorem shape [CharZero K] {c₁ c₂ t₁ t₂ : K} {d m n : EL Δ τ} 
       refine Prod.ext (by simp) ?_
       simpa using yy y
     have hw := congrArg Prod.snd (hN (0, 1))
-    rw [ey, map_add, map_smul, map_smul, Prod.snd_add, Prod.smul_snd, Prod.smul_snd, hw]
+    rw [ey, map_add (f := _), map_smul, map_smul, Prod.snd_add, Prod.smul_snd, Prod.smul_snd, hw]
     change y.re • e + y.im • (W * e) = _
     calc _ = e * (y.re • (1 : EL Δ τ) + y.im • W) := by
           rw [mul_add, mul_smul_comm, mul_smul_comm, mul_one, mul_comm e W]

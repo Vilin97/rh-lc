@@ -136,7 +136,7 @@ variable {L : Type} [NontriviallyNormedField L] [IsUltrametricDist L] {V : Type}
 
 theorem herm_add_left {s : L →+* L} {h : V → V → L} (hh : IsHerm s h) (x y z : V) :
     h (x + y) z = h x z + h y z := by
-  rw [hh.2.2.1 z (x + y), hh.1, map_add, ← hh.2.2.1, ← hh.2.2.1]
+  rw [hh.2.2.1 z (x + y), hh.1, map_add (f := _), ← hh.2.2.1, ← hh.2.2.1]
 
 theorem herm_smul_left {s : L →+* L} {h : V → V → L} (hh : IsHerm s h) (a : L) (x y : V) :
     h (a • x) y = s a * h x y := by

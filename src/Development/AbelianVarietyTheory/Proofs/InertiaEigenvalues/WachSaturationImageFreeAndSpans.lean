@@ -30,7 +30,7 @@ theorem isBaseChange_between (A E : Type) [CommRing A] [CommRing E] [Algebra A E
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [Φ, IsBaseChange.equiv_tmul, i]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hΦi : Function.Injective Φ := by
     intro s t hst
     apply hiT
@@ -48,7 +48,7 @@ theorem isBaseChange_between (A E : Type) [CommRing A] [CommRing E] [Algebra A E
         rw [map_smul]
         exact (LinearMap.range Φ).smul_mem e hy
       · intro a b ha hb
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (LinearMap.range Φ).add_mem ha hb
     exact this
   refine IsBaseChange.of_equiv (LinearEquiv.ofBijective Φ ⟨hΦi, hΦs⟩) ?_

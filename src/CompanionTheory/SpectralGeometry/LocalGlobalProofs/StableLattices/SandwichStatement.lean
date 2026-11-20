@@ -53,7 +53,7 @@ theorem exists_basis_of_pid {L V : Type} [Field L] [AddCommGroup V] [Module L V]
   let N : Submodule O (Fin m → O) :=
     { carrier := {y | ψ y ∈ Λ}
       add_mem' := fun {y z} hy hz => by
-        simpa [map_add] using Λ.add_mem hy hz
+        simpa [map_add (f := _)] using Λ.add_mem hy hz
       zero_mem' := by simp [Λ.zero_mem]
       smul_mem' := fun a y hy => by
         simpa [map_smul, Subring.smul_def] using hO a a.2 _ hy }

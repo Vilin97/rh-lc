@@ -56,7 +56,7 @@ theorem trace_sigR [FiniteDimensional F E] (R : Type) [CommRing R] [Algebra F R]
     Algebra.trace R (R ⊗[F] E) (sigR R σ y) = Algebra.trace R (R ⊗[F] E) y := by
   induction y with
   | tmul r e => rw [HaarCoord.sigR_tmul, trace_tmul, trace_tmul, trace_sigma hinv]
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 def gramB (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin d) F E) : Matrix (Fin d) (Fin d) F :=
   fun k l => Algebra.trace F E (b k * σ (b l))
@@ -164,7 +164,7 @@ theorem off_diag [FiniteDimensional F E] [CharZero F] {σ : E →ₐ[F] E} (hinv
   set C := Algebra.TensorProduct.basis R b with hC
   have h1 : sigR R σ x * y = sigR R σ (x * sigR R σ y) := by
     rw [map_mul, HaarCoord.sigR_sigR R hinv]
-  rw [h1, map_add, trace_sigR R hinv, HaarCoord.half_add_self (F := F) R]
+  rw [h1, map_add (f := _), trace_sigR R hinv, HaarCoord.half_add_self (F := F) R]
   have hx : x = ∑ k, C.repr x k • ((1 : R) ⊗ₜ[F] b k) := by
     conv_lhs => rw [← C.sum_repr x]
     simp [hC, Algebra.TensorProduct.basis_apply]
@@ -199,7 +199,7 @@ theorem pair_eq [FiniteDimensional F E] [CharZero F] {σ : E →ₐ[F] E} (hinv 
       sigR R σ ((T : Matrix (Fin n) (Fin n) (R ⊗[F] E)) a c) := fun a c => (T.2 c a).symm
   unfold pairHerm
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [sum_square, map_add, mul_add, map_sum, map_sum, Finset.mul_sum, Finset.mul_sum]
+    rw [sum_square, map_add (f := _), mul_add, map_sum, map_sum, Finset.mul_sum, Finset.mul_sum]
   simp only [dotProduct, Fintype.sum_sum_type, Fintype.sum_prod_type, formB_mulVec_inl,
     formB_mulVec_inr]
   congr 1

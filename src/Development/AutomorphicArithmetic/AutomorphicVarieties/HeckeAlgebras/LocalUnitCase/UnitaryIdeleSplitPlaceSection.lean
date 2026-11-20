@@ -63,7 +63,7 @@ noncomputable def tf (i : Fin m) (ℓ : Module.Dual ℂ (⨂[ℂ] e : Emb l (fun
   toFun F := toForm ι e (F i) ℓ
   map_add' F F' := funext fun g => by
     change ℓ (infRep ι lam g⁻¹ (e (F i _ + F' i _))) = _
-    rw [map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _)]
     rfl
   map_smul' a F := funext fun g => by
     change ℓ (infRep ι lam g⁻¹ (e (a • F i _))) = _

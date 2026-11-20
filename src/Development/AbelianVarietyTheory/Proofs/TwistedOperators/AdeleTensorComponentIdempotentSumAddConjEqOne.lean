@@ -29,7 +29,7 @@ theorem compFin_tensAt_ne {u v : HeightOneSpectrum (𝓞 D.host.F)} (h : u ≠ v
         evFin D.host.F u (pairA D.host.F 0 (singleFin v a)) ⊗ₜ[D.host.F] x :=
       Algebra.TensorProduct.map_tmul ..
     rw [h1, h0, TensorProduct.zero_tmul]
-  | add y z hy hz => simp only [map_add, hy, hz, add_zero]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz, add_zero]
 
 set_option maxHeartbeats 1000000 in
 open Classical in
@@ -70,7 +70,7 @@ theorem compFin_add_cA_eq_one : ∀ {D : D7} (Z : Finset (Pl D.host.E)) (e : AE 
       sigR _ D.sp.cm.sig (compFin D.host.F D.host.E v0 (∑ Q ∈ Z, es Q)) :=
     (GlobalTheory.SplitIdemDict.compFin_cA _).symm
   have h1 : ∀ a : Fv D.host.F v0 ⊗[D.host.F] D.host.E, a + (1 - a) = 1 := fun a => by abel
-  rw [map_add, hc, hsum]
+  rw [map_add (f := _), hc, hsum]
   by_cases hP' : splitPrime (τ0.comp D.sp.cm.sig) ∈ Z
   · exfalso
     have hz := congrArg (compFin D.host.F D.host.E v0) hcc

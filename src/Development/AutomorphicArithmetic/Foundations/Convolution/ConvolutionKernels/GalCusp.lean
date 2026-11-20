@@ -48,14 +48,14 @@ theorem UpperTheory.ConvolutionTheory.K.galCusp :
     · exact Subtype.ext (s.injective (congrArg Subtype.val h))
     · exact ⟨⟨s.symm b, hL σ.symm b b.2⟩, Subtype.ext (s.apply_symm_apply _)⟩
     · change s.symm (s g + X) = g + s.symm X
-      rw [map_add, s.symm_apply_apply]
+      rw [map_add (f := _), s.symm_apply_apply]
   have hu : ∀ X, e (unipOne K n r X) = unipOne K n r (s X) := by
     intro X
     refine Subtype.ext ?_
     rw [he]
     ext i j : 2
     change Formalism.L2.Host.CT.adMap σ (AutomorphicForm.unipMatrix X i j) = AutomorphicForm.unipMatrix (s X) i j
-    simp only [AutomorphicForm.unipMatrix, Matrix.add_apply, AutomorphicForm.blockEntry_apply, Matrix.one_apply, map_add]
+    simp only [AutomorphicForm.unipMatrix, Matrix.add_apply, AutomorphicForm.blockEntry_apply, Matrix.one_apply, map_add (f := _)]
     congr 1
     · split_ifs <;> simp
     · split_ifs

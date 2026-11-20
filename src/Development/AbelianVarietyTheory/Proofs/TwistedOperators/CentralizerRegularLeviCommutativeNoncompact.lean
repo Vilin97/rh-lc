@@ -60,7 +60,7 @@ theorem mem_parab_of_mem_cent {D : D7} {V : HSp D} {γ : GF V} (hγ : IsRegSS γ
       exact Submodule.smul_mem _ a hy
     | add p q hp hq =>
       intro y hy
-      rw [map_add, Matrix.add_mulVec]
+      rw [map_add (f := _), Matrix.add_mulVec]
       exact add_mem (hp y hy) (hq y hy)
     | monomial n a ih =>
       intro y hy

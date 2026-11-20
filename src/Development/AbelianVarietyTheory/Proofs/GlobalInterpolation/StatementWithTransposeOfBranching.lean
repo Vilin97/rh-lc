@@ -231,7 +231,7 @@ theorem map_mem_delSq {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {n
     simp only
     rw [← Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, Formalism.GradedWeylDivisibility.lclosedeq_hw_map]
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | smul a y _ hy =>
     rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hy
@@ -351,7 +351,7 @@ theorem splitLast_blockEmb {K ι : Type} [Field K] {N n : ℕ} (hN : N = n + 1) 
           (splitLast K Unit hN (rename (fun v : Fin N × Fin N => (((), v) : Unit × Fin N × Fin N)) f))) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp only [Formalism.GradedWeylDivisibility.blockEmb, rename_C, splitLast_C, map_C, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     have : splitLast K ι hN (Formalism.GradedWeylDivisibility.blockEmb K τ (X v)) =
       rename (fun p : Unit × Fin n => (τ, p.2))
@@ -411,7 +411,7 @@ theorem tensor : Tensor := by
     simp only [Finset.univ_unique, Finset.prod_singleton]
     rfl
   | zero => simp only [← fockBL_apply, map_zero]
-  | add y z _ _ hy hz => simp only [← fockBL_apply, map_add] at *; rw [hy, hz]
+  | add y z _ _ hy hz => simp only [← fockBL_apply, map_add (f := _)] at *; rw [hy, hz]
   | smul a y _ hy => simp only [← fockBL_apply, map_smul] at *; rw [hy]
 
 theorem brOne_mem_del (h1 : OnePlace) {K : Type} [Field K] [NumberField K] {N n : ℕ} (hN : N = n + 1) {lam : DomWeight N}
@@ -437,7 +437,7 @@ theorem brOne_mem_del (h1 : OnePlace) {K : Type} [Field K] [NumberField K] {N n 
     simp only
     rw [hf0, hk, hk, hm K f0, hm K g, GlobalTheory.Proof.TensorMapDescent.brOne_map, e']
   | zero => rw [map_zero, map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add, map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _), map_add (f := _)]; exact add_mem hy hz
   | smul a y _ hy =>
     rw [map_smul, LinearMap.map_smul_of_tower]
     exact Submodule.smul_mem _ _ hy
@@ -460,7 +460,7 @@ theorem brStd_mem_delStd (h1 : OnePlace) {K : Type} [Field K] [NumberField K] {�
     rw [← e τ]
     exact brOne_mem_del h1 hN (hI τ) (hS τ) (hf0 τ)
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | smul a y _ hy =>
     rw [LinearMap.map_smul_of_tower]
     exact Submodule.smul_mem _ _ hy

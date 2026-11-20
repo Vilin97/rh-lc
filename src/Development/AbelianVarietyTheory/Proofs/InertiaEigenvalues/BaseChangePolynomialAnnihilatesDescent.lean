@@ -27,7 +27,7 @@ theorem baseChange_polynomial_kills_descent (Ks L0 KB WK ι : Type) [Field Ks] [
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul x w => simp [TensorProduct.smul_tmul', hRt]
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
   set B0 := LinearMap.baseChange L0 T0 with hB0
   set B := LinearMap.baseChange KB T0 with hB
@@ -36,7 +36,7 @@ theorem baseChange_polynomial_kills_descent (Ks L0 KB WK ι : Type) [Field Ks] [
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul x w => simp [hB0, hB, hRt]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hRpow : ∀ (n : ℕ) z, R ((B0 ^ n) z) = (B ^ n) (R z) := by
     intro n
     induction n with
@@ -48,7 +48,7 @@ theorem baseChange_polynomial_kills_descent (Ks L0 KB WK ι : Type) [Field Ks] [
     intro p z
     induction p using Polynomial.induction_on' with
     | add p r hp hr =>
-      simp only [Polynomial.map_add, map_add, LinearMap.add_apply, hp, hr]
+      simp only [Polynomial.map_add (f := _), map_add (f := _), LinearMap.add_apply, hp, hr]
     | monomial n c =>
       rw [Polynomial.map_monomial, Polynomial.aeval_monomial, Polynomial.aeval_monomial]
       simp only [Module.End.mul_apply, Module.algebraMap_end_apply, hRs, hRpow]
@@ -68,6 +68,6 @@ theorem baseChange_polynomial_kills_descent (Ks L0 KB WK ι : Type) [Field Ks] [
   | zero => simp
   | tmul c f =>
     rw [hE, map_smul, hRq, hq _ ⟨_, rfl⟩, map_zero, smul_zero]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 end GlobalTheory

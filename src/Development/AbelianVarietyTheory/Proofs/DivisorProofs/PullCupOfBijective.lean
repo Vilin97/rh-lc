@@ -67,7 +67,7 @@ theorem main : ∀ (R R' : Type) [inst : CommRing R] [inst_1 : CommRing R'] (X X
       intro r
       obtain ⟨z₁, h₁⟩ := hx r
       obtain ⟨z₂, h₂⟩ := hy r
-      exact ⟨z₁ + z₂, by rw [map_add, h₁, h₂, smul_add, map_add]⟩
+      exact ⟨z₁ + z₂, by rw [map_add (f := _), h₁, h₂, smul_add, map_add (f := _)]⟩
     | smul c x _ hx =>
       intro r
       obtain ⟨z, hz⟩ := hx (r * c)

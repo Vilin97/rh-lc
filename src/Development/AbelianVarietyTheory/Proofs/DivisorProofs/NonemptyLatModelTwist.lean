@@ -33,7 +33,7 @@ def tval (hM : LatModel M F) (i : L.ι) (hi : genericPoint X ∈ L.U i) (U : X.O
     (h : genericPoint X ∈ U) : Γ(twist F L, U) →+ V where
   toFun s := (r i)⁻¹ • hM.val (U ⊓ L.U i) (memInf h hi) (coord s i)
   map_zero' := by rw [coord_zero, map_zero, smul_zero]
-  map_add' s t := by rw [coord_add, map_add, smul_add]
+  map_add' s t := by rw [coord_add, map_add (f := _), smul_add]
 
 theorem tval_apply (hM : LatModel M F) (i : L.ι) (hi : genericPoint X ∈ L.U i) (U : X.Opens)
     (h : genericPoint X ∈ U) (s : Γ(twist F L, U)) :

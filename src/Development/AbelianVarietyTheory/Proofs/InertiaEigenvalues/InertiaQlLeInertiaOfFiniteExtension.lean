@@ -41,7 +41,7 @@ theorem IK_fixes_Kur {l : ℕ} [hl : Fact l.Prime] (K : FinExt l) {g : ↥(GK K)
         exact ((pow_eq_one_iff_of_nonneg (norm_nonneg x) hm.ne').1 this).le
       exact root_eq_of_near hm hlm hxm (by rw [← map_pow, hxm, map_one]) (hσ x hxn)
     | algebraMap x => exact (σ : GQ l).commutes x
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | inv x _ hx => rw [map_inv₀, hx]
     | mul x y _ _ hx hy => rw [map_mul, hx, hy]
   exact hle hg c hc

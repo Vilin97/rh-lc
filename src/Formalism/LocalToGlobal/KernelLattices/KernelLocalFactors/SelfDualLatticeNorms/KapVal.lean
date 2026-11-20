@@ -58,7 +58,7 @@ theorem norm_eq_one_of_not_mem {a : 𝓞 K} (ha : a ∉ 𝔭.asIdeal) : ‖f (a 
       have : ((b * a + i : 𝓞 K) : K) = 1 := by rw [hbi]; rfl
       push_cast at this
       linear_combination this
-    rw [e, map_add, map_neg, map_one]
+    rw [e, map_add (f := _), map_neg, map_one]
     rw [IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm] <;> simp [norm_neg] <;> linarith [hsmall]
   refine le_antisymm (normO_le f a) ?_
   calc (1 : ℝ) = ‖f (b : K)‖ * ‖f (a : K)‖ := hba.symm

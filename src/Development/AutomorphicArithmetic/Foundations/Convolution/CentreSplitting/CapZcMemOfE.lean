@@ -75,10 +75,10 @@ theorem UpperTheory.ConvolutionTheory.Dp.capZc :
       apply HarishChandra.harishChandraHom_injective
       rw [hH, capZc_prod]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_smul, map_one, map_sum, hwH]
+        simp only [map_add (f := _), map_smul, map_one, map_sum, hwH]
     have e2 := congrArg (j.comp (Subalgebra.center ℂ (HarishChandra.U n)).val) e
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_smul, map_one, map_sum] at e2
+      simp only [map_add (f := _), map_smul, map_one, map_sum] at e2
     simp only [hzc]
     refine Eq.trans ?_ e2
     change _ = j (z : HarishChandra.U n)

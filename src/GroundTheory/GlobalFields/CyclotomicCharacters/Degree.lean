@@ -28,7 +28,7 @@ noncomputable def unitsDegree : ℤ̂ˣ →* Multiplicative ℤ̂ where
     rw [show (fun q : Nat.Primes => Multiplicative.toAdd (padicUnitsLog q (unitsPadicEquiv 1 q))) =
       0 from funext fun q => by simp, map_zero, ofAdd_zero]
   map_mul' u v := by
-    rw [← ofAdd_add, ← map_add]
+    rw [← ofAdd_add, ← map_add (f := _)]
     congr 2
 
 theorem toPadicInt_unitsDegree (u : ℤ̂ˣ) (q : Nat.Primes) :

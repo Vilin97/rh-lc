@@ -23,7 +23,7 @@ theorem rho_rho_of {F : Type} [Field F] [NumberField F] {W : Type} [AddCommGroup
   have hf := d.form v u
   rw [h] at hf
   funext x
-  simp only [Darboux.rho, schr, map_add, Prod.fst_add, Prod.snd_add]
+  simp only [Darboux.rho, schr, map_add (f := _), Prod.fst_add, Prod.snd_add]
   rw [← mul_assoc, ← AddChar.map_add_eq_mul]
   congr 1
   · congr 1

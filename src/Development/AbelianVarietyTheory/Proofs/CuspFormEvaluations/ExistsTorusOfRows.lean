@@ -186,7 +186,7 @@ theorem exists_torusOf_rows : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
       eps_add := by
         intro x hx y hy
         rw [hmem] at hx hy
-        rw [map_add, T₀.eps_add _ hx _ hy, hUsymmHf]
+        rw [map_add (f := _), T₀.eps_add _ hx _ hy, hUsymmHf]
       eps_iso := by
         intro x hx h
         rw [hmem] at hx

@@ -48,7 +48,7 @@ theorem relIndex_split {R V W : Type} [CommRing R] [AddCommGroup V] [AddCommGrou
     rw [hM, hq, Submodule.mem_sup]
     constructor
     · rintro ⟨a, ha, _, ⟨w, hw, rfl⟩, rfl⟩
-      have : p (a + s w) = w := by rw [map_add, h0 a (hS₀ ha), hps, zero_add]
+      have : p (a + s w) = w := by rw [map_add (f := _), h0 a (hS₀ ha), hps, zero_add]
       rw [this]
       exact ⟨by simpa using ha, hw, add_mem (h01 (hS₀ ha)) (hs w (hS hw))⟩
     · rintro ⟨ha, hb, -⟩

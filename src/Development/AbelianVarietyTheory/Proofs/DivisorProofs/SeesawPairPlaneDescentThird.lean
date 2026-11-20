@@ -156,7 +156,7 @@ private theorem term_center {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc 
   set S := symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) a yw with hS
   have hcomp : M.co.rho B.ψ a (M.co.rho B.ψ yw Φ) = B.ψ (⅟2 * S) • M.co.rho B.ψ (a + yw) Φ := by
     simp only [Darboux.rho]
-    rw [schr_schr, hS, M.co.form a yw, map_add]
+    rw [schr_schr, hS, M.co.form a yw, map_add (f := _)]
   have hρ : M.co.rho B.ψ (a + yw) Φ = B.ψ (-(⅟2 * S)) • M.co.rho B.ψ a (M.co.rho B.ψ yw Φ) := by
     rw [hcomp, smul_smul, ← AddChar.map_add_eq_mul, neg_add_cancel, AddChar.map_zero_eq_one, one_smul]
   have e2 : (incV F H.x ⬝ᵥ incM F X.J *ᵥ fun k => cA σ (incV F H.y k)) = 1 := by

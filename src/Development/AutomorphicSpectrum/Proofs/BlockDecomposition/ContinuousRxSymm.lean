@@ -111,7 +111,7 @@ theorem sigR_sigR (z : AE D) : sigR (AF D.host.F) D.sp.cm.sig (sigR (AF D.host.F
   | tmul a e =>
     change a ⊗ₜ[D.host.F] D.sp.cm.sig (D.sp.cm.sig e) = _
     rw [sig_sig]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem sigR_inclR (x : D.host.E) :
     sigR (AF D.host.F) D.sp.cm.sig (inclR (AF D.host.F) x) = inclR (AF D.host.F) (D.sp.cm.sig x) := rfl

@@ -140,7 +140,7 @@ theorem chartPack_exists : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
     · intro s n hn
       simp only [map_smul, hn]
     · intro n₁ n₂ h₁ h₂
-      simp only [map_add, h₁, h₂]
+      simp only [map_add (f := _), h₁, h₂]
   have hact' : ∀ (a : 𝓞 E) (u : Module.Dual Ω 𝔐.Li), Dh.ρΩ a u = u ∘ₗ 𝔐.ρ (H.bar a) := by
     intro a u
     refine hjbc.inductionOn u (fun u => Dh.ρΩ a u = u ∘ₗ 𝔐.ρ (H.bar a)) (by simp) ?_ ?_ ?_
@@ -150,7 +150,7 @@ theorem chartPack_exists : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
       rw [map_smul, hn]
       rfl
     · intro n₁ n₂ h₁ h₂
-      rw [map_add, h₁, h₂]
+      rw [map_add (f := _), h₁, h₂]
       rfl
   exact ⟨{ x := x, x_gen := hx, L := L, fin := hfin, proj := hproj, M := M, ρ := ρ, act := hact, toLi := toLi, toLi_bc := hbc,
            toLi_pt := hpt, j := j, j_bc := hjbc, j_apply := hj, Γ₁ := Γ₁, i₁ := i₁, tors₁ := ht₁, pts₁ := hp₁,

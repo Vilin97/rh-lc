@@ -153,7 +153,7 @@ theorem ext_gen (ζ : B) (hζ : ζ ^ (n + 1) = 1) (g : Multiplicative (ZMod (n +
   next r =>
     rw [← algebraMap_eq_mk, AlgEquiv.commutes, one_tmul_algebraMap, algebraMap_tmul_one]
   next p p' hp hp' =>
-    rw [map_add, map_add, TensorProduct.tmul_add, TensorProduct.add_tmul, mul_add, mul_add, hp, hp']
+    rw [map_add (f := _), map_add (f := _), TensorProduct.tmul_add, TensorProduct.add_tmul, mul_add, mul_add, hp, hp']
   next p ℓ hp =>
     have : Ideal.Quotient.mk (ideal φ) (p * MvPolynomial.X ℓ) =
         Ideal.Quotient.mk (ideal φ) p * gen φ ℓ := by rw [map_mul]; rfl
@@ -271,7 +271,7 @@ theorem bijective_succ (hq : IsUnit ((n + 1 : ℕ) : B))
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rfl
-    | add x y hx hy => rw [map_add, map_add, Pi.add_apply, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), Pi.add_apply, hx, hy]
   obtain ⟨c, hc⟩ := Finsupp.mem_span_range_iff_exists_finsupp.1 (one_mem_span_pow φ hφ 1)
   simp only [pow_one] at hc
   have hsw := swap φ hφ
@@ -303,7 +303,7 @@ theorem bijective_succ (hq : IsUnit ((n + 1 : ℕ) : B))
         _ = (a ⊗ₜ[B] (1 : Alg φ)) * ((1 : Alg φ) ⊗ₜ[B] b) * ∑ h, Eh h := by
             rw [Finset.mul_sum]; refine Finset.sum_congr rfl fun h _ => ?_; ring
         _ = a ⊗ₜ b := by rw [hsum, mul_one, Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
-    | add x y hx hy => rw [map_add, hψadd, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), hψadd, hx, hy]
   · intro d
     funext g
     rw [hΦev]

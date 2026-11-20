@@ -50,9 +50,9 @@ private theorem ext_of_proj {O A B K : Type} [CommRing O] [CommRing A] [CommRing
   let ρ : B →ₗ[A] K :=
     { toFun := fun t => x (pre t)
       map_add' := fun t u => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         apply hwd
-        rw [map_add, hpre, hpre, hpre, map_add]
+        rw [map_add (f := _), hpre, hpre, hpre, map_add (f := _)]
       map_smul' := fun a t => by
         show x (pre (a • t)) = x a * x (pre t)
         rw [← map_mul]
@@ -112,7 +112,7 @@ private theorem exists_proj {O S X : Type} [CommRing O] [AddCommGroup S] [Module
   · intro a ha b hb
     obtain ⟨ya, rfl⟩ := hmem a ha
     obtain ⟨yb, rfl⟩ := hmem b hb
-    rw [← map_add, hP, hP, hP, map_add]
+    rw [← map_add (f := _), hP, hP, hP, map_add (f := _)]
   · intro j a ha
     have e : L (DFinsupp.single j ⟨a, ha⟩) = a := by
       simp [L]

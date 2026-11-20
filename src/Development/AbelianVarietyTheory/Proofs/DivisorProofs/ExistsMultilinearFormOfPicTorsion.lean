@@ -57,7 +57,7 @@ theorem exists_form : ∀ (B : Type) [CommRing B] (q : ℕ) (c : CommRing.Pic B)
     have hall : ∀ t, ψ t ∈ p := fun t => by
       induction t using PiTensorProduct.induction_on with
       | smul_tprod r x => rw [map_smul, smul_eq_mul]; exact p.mul_mem_left r (h x)
-      | add a b ha hb => rw [map_add]; exact p.add_mem ha hb
+      | add a b ha hb => rw [map_add (f := _)]; exact p.add_mem ha hb
     exact hp.ne_top ((Ideal.eq_top_iff_one p).mpr (by simpa using hall (ψ.symm 1)))
   obtain ⟨e, he⟩ := exists_local_generator (Pic.AsModule c) p
   choose w a hw hwa using fun i => he (x i)

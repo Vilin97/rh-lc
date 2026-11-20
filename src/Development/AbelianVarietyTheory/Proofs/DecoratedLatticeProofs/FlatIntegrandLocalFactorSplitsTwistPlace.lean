@@ -124,7 +124,7 @@ theorem val_type {c : Com D} {s : PiLocalization₂ D} (u : s.CC c) (v : SmT s.M
     simp only [PiLocalization₂.val, map_smul, Pi.smul_apply, smul_eq_mul] at this ⊢
     rw [this]; ring
   | add a b ha hb =>
-    simp only [PiLocalization₂.val, map_add, Pi.add_apply] at ha hb ⊢
+    simp only [PiLocalization₂.val, map_add (f := _), Pi.add_apply] at ha hb ⊢
     rw [ha, hb]; ring
 
 theorem hgt_split {A : HSp D} {L : GlobalTheory.IndefiniteRowSideFullHecke.SphericalVolumeLift.Lat A} {a : GL (Fin A.rank) (AE D)} (hL : IsSelfDualC A L)

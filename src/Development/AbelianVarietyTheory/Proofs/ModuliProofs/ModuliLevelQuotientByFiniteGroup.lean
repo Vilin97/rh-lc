@@ -94,7 +94,7 @@ theorem exists_finite_invariant {l : Level H} (Xo : Moduli D l) :
   obtain ⟨c', hc'⟩ := hq _ _ (congrFun h (q x))
   generalize Function.invFun q (q x) = y at hc hc'
   subst hc
-  simp only [map_add, map_nsmul, hc', Xo.univ.etaA_add, Xo.univ.etaA_ker, _root_.mul_one]
+  simp only [map_add (f := _), map_nsmul, hc', Xo.univ.etaA_add, Xo.univ.etaA_ker, _root_.mul_one]
 
 section
 

@@ -286,7 +286,7 @@ theorem isometric_periods_of_hypotheses (hW : (fc X.zs).Df1.WF) (hpos : X.H4pos)
   choose w hw using hex
   let W : (Fin ((lv (fc X.zs) true).dQ Bs.μ0) → ℂ) →ₗ[ℂ] (Fin ((lv (fc X.zs) true).dQ Bs.μ0) → ℂ) :=
     { toFun := w
-      map_add' := fun x y => h2.1 (by simp only [hw, map_add])
+      map_add' := fun x y => h2.1 (by simp only [hw, map_add (f := _)])
       map_smul' := fun c y => h2.1 (by simp only [hw, map_smul, RingHom.id_apply]) }
   have hWy : ∀ y, (LinearMap.toMatrix' W).mulVec y = w y := fun y => LinearMap.toMatrix'_mulVec W y
   refine ⟨fun (y : Fin ((lv (fc X.zs) true).dQ Bs.μ0) → ℂ) => ?_, fun y => ?_, ?_, LinearMap.toMatrix' W,
@@ -307,9 +307,9 @@ theorem isometric_periods_of_hypotheses (hW : (fc X.zs).Df1.WF) (hpos : X.H4pos)
     let Φ : (Fin ((fc X.zs).Dc.a u) → ℂ) →ₗ[ℂ] (Fin ((lv (fc X.zs) true).dQ Bs.μ0) → ℂ) →ₗ[ℂ] ℂ :=
       LinearMap.mk₂ ℂ
         (fun x y => d.a u * ⟪sEE (d.V (X.iC cr true Bs.μ0 y)), (fc X.zs).Sp.Pu u ((d.U u).mulVec x)⟫_ℂ)
-        (fun x x' y => by simp only [Matrix.mulVec_add, map_add, inner_add_right, mul_add])
+        (fun x x' y => by simp only [Matrix.mulVec_add, map_add (f := _), inner_add_right, mul_add])
         (fun c x y => by simp only [Matrix.mulVec_smul, map_smul, inner_smul_right, smul_eq_mul]; ring)
-        (fun x y y' => by simp only [map_add, inner_add_left, mul_add])
+        (fun x y y' => by simp only [map_add (f := _), inner_add_left, mul_add])
         (fun c x y => by
           simp only [map_smul, LinearMap.map_smulₛₗ, inner_smul_left, smul_eq_mul, starRingEnd_self_apply]; ring)
     have hΦ : d.a u * ⟪sEE (d.V (X.iC cr true Bs.μ0 y)), (fc X.zs).Sp.Pu u ((d.U u).mulVec x)⟫_ℂ = Φ x y := rfl

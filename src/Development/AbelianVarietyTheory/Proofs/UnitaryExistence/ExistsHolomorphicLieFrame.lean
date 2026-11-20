@@ -219,7 +219,7 @@ theorem isDerivAt0_mul {v w : epsR ℂ ⟶ G} (hv : IsTangent v) (hw : IsTangent
     IsDerivAt0 e (a + b) ((v * w).left ≫ ψ) := by
   have hm := isTangent_mul hv hw
   refine ⟨(tangent_base hm).trans ((tangent_base hv).symm.trans ha.1), fun U h f => ?_⟩
-  rw [map_add, ← ha.2 U (tangent_le hm hv h) f, ← hb.2 U (tangent_le hm hw h) f]
+  rw [map_add (f := _), ← ha.2 U (tangent_le hm hv h) f, ← hb.2 U (tangent_le hm hw h) f]
   exact snd_evalPt_mul hv hw U f h _ _
 
 end Fibre

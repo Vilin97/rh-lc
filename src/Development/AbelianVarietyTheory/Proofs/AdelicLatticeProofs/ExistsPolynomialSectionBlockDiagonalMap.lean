@@ -77,7 +77,7 @@ lemma map_rat (e : Matrix ι ι ℚ) :
 
 lemma map_blk (e : Matrix ι ι ℚ) (g : Matrix ι ι R) :
     φ.mapMatrix (blk e g) = blk e (φ.mapMatrix g) := by
-  simp only [blk, map_add, map_mul, map_sub, map_one, map_rat]
+  simp only [blk, map_add (f := _), map_mul, map_sub, map_one, map_rat]
 
 lemma map_linExt (c : ι × ι → ι × ι → ℚ) (g : Matrix ι ι R) :
     φ.mapMatrix (linExt c g) = linExt c (φ.mapMatrix g) := by

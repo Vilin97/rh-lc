@@ -110,7 +110,7 @@ def toLeafL {V : VF C} {J : Fin 2 → Type} [∀ g, Fintype (J g)] (G : ∀ g, C
   toFun := toLeaf G g a a'
   map_add' F F' := by
     ext μ
-    rw [coeff_toLeaf, map_add, map_add, coeff_toLeaf, coeff_toLeaf]
+    rw [coeff_toLeaf, map_add (f := _), map_add (f := _), coeff_toLeaf, coeff_toLeaf]
     split_ifs <;> simp
   map_smul' r F := by
     ext μ
@@ -229,14 +229,14 @@ theorem cEqFB_of (hS : CEqSumSt) (hD : CEqDerSt) : CEqFBSt := by
     rw [dVar_hLf X H g a a' _ hw, hpair, hder, hJ', hsg, hσ]
     have e1 : upG g ((S g).ze (t g) k + MvPowerSeries.subst (t g) Λ + sig0) =
         upG g ((S g).ze (t g) k) + MvPowerSeries.subst (tW t) (upG g Λ) + upG g sig0 := by
-      rw [upG_eq, map_add, map_add, ← upG_eq, ← upG_eq, ← upG_eq, subst_tW_upG ht0]
+      rw [upG_eq, map_add (f := _), map_add (f := _), ← upG_eq, ← upG_eq, ← upG_eq, subst_tW_upG ht0]
     have e2 : MvPowerSeries.subst (tW t) ((X.k : C) • (MvPowerSeries.subst Φ' J - upG g Λ)) =
         (X.k : C) • (MvPowerSeries.subst (tW t) (MvPowerSeries.subst Φ' J) -
           MvPowerSeries.subst (tW t) (upG g Λ)) := by
       rw [← MvPowerSeries.coe_substAlgHom hT, map_smul, map_sub]
     rw [e1, e2]
     show L _ - L _ = L _
-    simp only [map_smul, map_sub, map_add, hsig]
+    simp only [map_smul, map_sub, map_add (f := _), hsig]
     module
 
 end Formalism.L2.FormalSeriesBounds

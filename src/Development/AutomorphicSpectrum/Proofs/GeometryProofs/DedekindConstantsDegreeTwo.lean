@@ -387,7 +387,7 @@ theorem form_add (c : (k : K) → J k) {s t : Ω} {b1 b2 : K → ℕ} {h1 h2 : M
         (s + t) * ∏ k, y ⟨k, c k⟩ ^ (b1 + b2) k := by
   refine ⟨mh_add (mh_mul hh1 (isMultiHomog_coord (O := O) c b2))
     (mh_mul' (add_comm b1 b2) hh2 (isMultiHomog_coord (O := O) c b1)), ?_⟩
-  rw [map_add, map_mul, map_mul, aeval_coord, aeval_coord, hv1, hv2, Y_add]
+  rw [map_add (f := _), map_mul, map_mul, aeval_coord, aeval_coord, hv1, hv2, Y_add]
   ring
 
 theorem form_mul (c : (k : K) → J k) {s t : Ω} {b1 b2 : K → ℕ} {h1 h2 : MvPolynomial (Σ k, J k) O}

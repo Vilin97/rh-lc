@@ -24,7 +24,7 @@ theorem siegel_sublattice_line : GlobalTheory.Published.AbsoluteSiegel → ∀ (
   obtain ⟨α, hαi, hfull, hmap⟩ := GlobalTheory.T.finitely_generated_lattice_full_embedding K m W hWfg
   let hW : HermFam K (Fin (latRank K W) → K) :=
     { form := fun σ y z => h.form σ (α y) (α z)
-      add_right := fun σ x y z => by simp only [map_add]; exact h.add_right σ _ _ _
+      add_right := fun σ x y z => by simp only [map_add (f := _)]; exact h.add_right σ _ _ _
       smul_right := fun σ a x y => by simp only [map_smul]; exact h.smul_right σ a _ _
       conj_symm := fun σ x y => h.conj_symm σ _ _
       posDef := fun σ k v hv => h.posDef σ k (fun i => α (v i)) (hv.map' α (LinearMap.ker_eq_bot.mpr hαi)) }

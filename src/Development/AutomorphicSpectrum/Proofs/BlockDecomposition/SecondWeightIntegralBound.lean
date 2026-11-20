@@ -173,7 +173,7 @@ theorem measurable_Lt (v : ℂ) (a b : Fin 2) {w : M22 → ℂ} (hw : Measurable
         h a 0 • fderiv ℝ w h (rpol 0 b (fun i j => if i = 0 ∧ j = 0 then 1 else 0)) +
         h a 1 • fderiv ℝ w h (rpol 0 b (fun i j => if i = 0 ∧ j = 1 then 1 else 0)) := by
       funext h
-      rw [hr h, map_add, map_smul, map_smul]
+      rw [hr h, map_add (f := _), map_smul, map_smul]
     rw [this]
     have m0 := measurable_fderiv_apply_const ℝ w (rpol 0 b (fun i j => if i = 0 ∧ j = 0 then (1 : ℝ) else 0))
     have m1 := measurable_fderiv_apply_const ℝ w (rpol 0 b (fun i j => if i = 0 ∧ j = 1 then (1 : ℝ) else 0))

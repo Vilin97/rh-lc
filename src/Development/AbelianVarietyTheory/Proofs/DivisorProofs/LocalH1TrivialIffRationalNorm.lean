@@ -29,7 +29,7 @@ theorem linearIndependent_one_theta (c : L →ₐ[ℚ] L) (hcK : ∀ x : K, c (a
   intro s t h
   rw [Algebra.smul_def, Algebra.smul_def, mul_one] at h
   have h' := congrArg c h
-  rw [map_add, map_mul, hcK, hcK, hθ, map_zero] at h'
+  rw [map_add (f := _), map_mul, hcK, hcK, hθ, map_zero] at h'
   have h2 : algebraMap K L (2 * s) = 0 := by rw [map_mul, map_ofNat]; linear_combination h + h'
   have hs : s = 0 := by
     have := (algebraMap K L).injective (h2.trans (map_zero _).symm)

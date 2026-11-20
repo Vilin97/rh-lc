@@ -60,12 +60,12 @@ theorem ev_eq_zero_iff_pt {e : Per.Fl l} (he : GlobalTheory.MemLoc.IsEps e) (m :
       obtain ⟨z', hz'⟩ := hone (z - algebraMap (Per.AinfP l) (Per.BdRp l) b) (by
         rw [map_sub, GlobalTheory.MemLoc.CrisUnique.ev_alg, hb, sub_self])
       refine ⟨a + algebraMap (Per.Ainf l) (Per.AinfP l) (GlobalTheory.MemLoc.xi e) ^ n * b, z', ?_⟩
-      rw [map_add, map_mul, map_pow, ← hx, pow_succ, mul_assoc, ← hz', hz]
+      rw [map_add (f := _), map_mul, map_pow, ← hx, pow_succ, mul_assoc, ← hz', hz]
       ring
   refine ⟨fun hy ↦ ?_, hback m y⟩
   obtain ⟨a, z, hz⟩ := hdense m y
   have h1 := hback m _ (dvd_mul_right (GlobalTheory.MemLoc.aDp l (GlobalTheory.MemLoc.xi e) ^ m) z)
-  rw [hz, map_add, h1, add_zero, GlobalTheory.MemLoc.CrisUnique.ev_alg, Ideal.Quotient.eq_zero_iff_mem, hmem] at hy
+  rw [hz, map_add (f := _), h1, add_zero, GlobalTheory.MemLoc.CrisUnique.ev_alg, Ideal.Quotient.eq_zero_iff_mem, hmem] at hy
   rw [hz]
   refine dvd_add ?_ (dvd_mul_right _ _)
   rw [hx, ← map_pow]

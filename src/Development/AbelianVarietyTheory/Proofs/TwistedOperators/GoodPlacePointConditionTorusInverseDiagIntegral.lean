@@ -117,7 +117,7 @@ theorem inv_int_of_pt : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar
   have hadd : ∀ x y : AE D, ψ (Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * (x + y))) =
       ψ (Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * x)) *
         ψ (Algebra.trace (AF D.host.F) (AE D) (incA D D.host.xi0 * y)) := fun x y => by
-    rw [mul_add, map_add, AddChar.map_add_eq_mul]
+    rw [mul_add, map_add (f := _), AddChar.map_add_eq_mul]
   rw [hτ, pairS_jX_single, Matrix.single_apply_same, e, hadd, hadd, hadd, k1, k2, k3, k4, one_mul, one_mul, one_mul]
 
 end GlobalTheory.FinPl.PtInv

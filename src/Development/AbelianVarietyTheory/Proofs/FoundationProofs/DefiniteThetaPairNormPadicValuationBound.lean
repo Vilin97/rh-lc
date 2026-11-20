@@ -35,7 +35,7 @@ lemma Bd.add {r : ℝ} {x y : ℂ} (hx : Bd p r x) (hy : Bd p r y) : Bd p r (x +
   rw [lamC_of_mem lam hy.1] at h2
   rw [lamC_of_mem lam (add_mem hx.1 hy.1)]
   have : (⟨x + y, add_mem hx.1 hy.1⟩ : Qbar) = ⟨x, hx.1⟩ + ⟨y, hy.1⟩ := rfl
-  rw [this, map_add]
+  rw [this, map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le h1 h2)
 
 lemma Bd.mul {r s : ℝ} {x y : ℂ} (hx : Bd p r x) (hy : Bd p s y) : Bd p (r * s) (x * y) := by

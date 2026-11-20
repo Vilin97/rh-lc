@@ -55,7 +55,7 @@ theorem GlobalTheory.PDivGroup.exists_coords_of_isConn : ∀ (p : ℕ) [Fact p.P
     let l' : Fin d → (G.A (m + e) →ₗ[O] O ⧸ I) :=
       fun i => l i ∘ₗ AugCot.d (Bialgebra.counitAlgHom O (G.A (m + e)))
     obtain ⟨D, hD⟩ := GlobalTheory.T.exists_invariant_derivations_quotient_bialgebra O (G.A (m + e)) I d l' (fun i a b => by
-      simp only [l', LinearMap.comp_apply, AugCot.d_mul, map_add, map_smul, Bialgebra.counitAlgHom_apply])
+      simp only [l', LinearMap.comp_apply, AugCot.d_mul, map_add (f := _), map_smul, Bialgebra.counitAlgHom_apply])
     let φ : G.A (m + e) →ₐ[O] (O ⧸ I) ⊗[O] G.A (m + e) := Algebra.TensorProduct.includeRight
     have hy0 : ∀ j, Bialgebra.counitAlgHom (O ⧸ I) ((O ⧸ I) ⊗[O] G.A (m + e)) (φ (x (m + e) j)) = 0 := by
       intro j

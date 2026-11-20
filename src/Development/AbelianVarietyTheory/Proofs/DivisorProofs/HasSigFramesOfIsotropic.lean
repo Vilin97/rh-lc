@@ -119,7 +119,7 @@ theorem isotropic_of_types (hcok : CokernelBound P) {J : Type} [Fintype J] [Deci
     have h1 : ∀ t : C ⊗[ℤ] Λ, tensorAction P.actV t x ∈ Submodule.span C (Set.range P.bLie) := fun t => by
       induction t using TensorProduct.induction_on with
       | zero => simp
-      | add s t hs ht => rw [map_add, LinearMap.add_apply]; exact add_mem hs ht
+      | add s t hs ht => rw [map_add (f := _), LinearMap.add_apply]; exact add_mem hs ht
       | tmul c a => rw [tensorAction_tmul]; exact Submodule.smul_mem _ _ (actV_mem P a hx)
     have h2 : proj hs P.actV k x ∈ P.eigV (σ k) := proj_mem hs P.actV k x
     obtain ⟨s, hs0, z, hz⟩ := HodgeTateEigenRank.exists_smul_mem_of_mem_span (C := C) P.latLie
@@ -184,7 +184,7 @@ theorem isotropic_of_sum {A A' B : Point ℓ v O Λ} {p q : ℕ} (φ : Fin p →
   have h₆ : ∀ a b, A'.pairV (A'.actV (g' a b) (z.2 a)) (w.2 b) = 0 := fun a b =>
     iA' _ (actV_mem A' _ (z.2 a).2) _ (w.2 b).2
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [hF, map_add, map_sum, LinearMap.add_apply, LinearMap.sum_apply, h₁, h₂, h₃, h₄, h₅, h₆,
+    simp only [hF, map_add (f := _), map_sum, LinearMap.add_apply, LinearMap.sum_apply, h₁, h₂, h₃, h₄, h₅, h₆,
     Finset.sum_const_zero, add_zero]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {K : Type} [Field K] [NumberField K]

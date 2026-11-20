@@ -65,18 +65,18 @@ theorem schr_pureA_fin [Invertible (2 : AF F)] (ψ : AddChar (AF F) ℂ) (w : (�
     funext i
     congr 1
     change p1 (x i + w.1 i) = p1 (x i)
-    rw [map_add, h1, add_zero]
+    rw [map_add (f := _), h1, add_zero]
   have e2 : (fun i => ((x + w.1) i).2) = (fun i => (x i).2) + fun i => p2 (w.1 i) := rfl
   have e3 : ψ (x ⬝ᵥ w.2 + ⅟(2 : AF F) * (w.1 ⬝ᵥ w.2)) = finChar ψ ((fun i => (x i).2) ⬝ᵥ (fun i => p2 (w.2 i)) +
       p2 (⅟(2 : AF F)) * ((fun i => p2 (w.1 i)) ⬝ᵥ fun i => p2 (w.2 i))) := by
     rw [map_eq_mul ψ]
     have : p1 (x ⬝ᵥ w.2 + ⅟(2 : AF F) * (w.1 ⬝ᵥ w.2)) = 0 := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [dotProduct, map_add, map_mul, map_sum, h2, mul_zero, Finset.sum_const_zero, add_zero]
+        simp only [dotProduct, map_add (f := _), map_mul, map_sum, h2, mul_zero, Finset.sum_const_zero, add_zero]
     rw [this, show mk (F := F) 0 0 = 0 from rfl, AddChar.map_zero_eq_one, one_mul]
     congr 1
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [dotProduct, map_add, map_mul, map_sum]
+      simp only [dotProduct, map_add (f := _), map_mul, map_sum]
     rfl
   simp only [schr, pureA, finS]
   rw [e1, e2, e3]

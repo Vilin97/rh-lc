@@ -147,7 +147,7 @@ theorem order_overlap {R₁ R₂ R' : Type} [CommRing R₁] [IsDomain R₁] [Com
     obtain ⟨m₂, b₂, hb₂, e₂⟩ := h₂
     refine ⟨m₁ + m₂, (h ^ m₂) • b₁ + (h ^ m₁) • b₂, add_mem (Subalgebra.smul_mem _ hb₁ _) (Subalgebra.smul_mem _ hb₂ _),
       fun t => ?_⟩
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, map_pow, e₁, e₂]
+    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_pow, e₁, e₂]
     ring
   | mul z₁ z₂ _ _ h₁ h₂ =>
     obtain ⟨m₁, b₁, hb₁, e₁⟩ := h₁
@@ -216,7 +216,7 @@ theorem der_overlap {R₁ R₂ R' : Type} [CommRing R₁] [IsDomain R₁] [CommR
     | add a b _ _ ha hb =>
       obtain ⟨r, hr⟩ := ha
       obtain ⟨r', hr'⟩ := hb
-      exact ⟨r + r', by rw [map_add, map_add, hr, hr']; ring⟩
+      exact ⟨r + r', by rw [map_add (f := _), map_add (f := _), hr, hr']; ring⟩
     | smul c a _ ha =>
       obtain ⟨r, hr⟩ := ha
       exact ⟨c * r, by simp only [map_smul, hr, smul_eq_mul]; ring⟩
@@ -248,7 +248,7 @@ theorem der_overlap {R₁ R₂ R' : Type} [CommRing R₁] [IsDomain R₁] [CommR
     | add a b _ _ ha hb =>
       obtain ⟨c, hc⟩ := ha
       obtain ⟨c', hc'⟩ := hb
-      exact ⟨c + c', by simp only [map_add]; linear_combination hc + hc'⟩
+      exact ⟨c + c', by simp only [map_add (f := _)]; linear_combination hc + hc'⟩
     | smul a z _ hz =>
       obtain ⟨c, hc⟩ := hz
       refine ⟨a * c, ?_⟩
@@ -260,7 +260,7 @@ theorem der_overlap {R₁ R₂ R' : Type} [CommRing R₁] [IsDomain R₁] [CommR
   let cl : Module.Dual R₂ L₂ :=
     { toFun := c
       map_add' := fun a b => cinj _ _ (by
-        rw [map_add, mul_add, hc, hc, hc]; simp only [map_add, LinearMap.map_add]; ring)
+        rw [map_add (f := _), mul_add, hc, hc, hc]; simp only [map_add (f := _), LinearMap.map_add (f := _)]; ring)
       map_smul' := fun a e => cinj _ _ (by
         have hb2 : β₂ (a • e) = algebraMap R₂ R' a • β₂ e := β₂.map_smulₛₗ a e
         have e2 := hc e
@@ -271,7 +271,7 @@ theorem der_overlap {R₁ R₂ R' : Type} [CommRing R₁] [IsDomain R₁] [CommR
     isDerAtOne_add_smul Γ₂ i₂ M₂ N _ _ cl (isDerAtOne_smul Γ₂ i₂ M₂ N b w (h ^ m₁) hw), fun e => ?_⟩
   · rw [map_mul, hbv, map_pow, pow_add]; ring
   · have : algebraMap R₂ R' (cl e) = algebraMap R₂ R' (c e) := rfl
-    simp only [LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_add, map_mul, map_pow, map_natCast]
+    simp only [LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_pow, map_natCast]
     rw [this, hc e, pow_add]
     ring
 
@@ -660,7 +660,7 @@ theorem form_overlap (hp : p.Prime) (hpS : p ∈ S) (hs : mseg y s ≠ 0) (ht : 
     · intro a n hn
       simp only [map_smul, hn]
     · intro a b ha hb
-      simp only [map_add, ha, hb]
+      simp only [map_add (f := _), ha, hb]
 
 end Th2
 

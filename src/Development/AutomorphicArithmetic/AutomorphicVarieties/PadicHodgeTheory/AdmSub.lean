@@ -24,7 +24,7 @@ private theorem rT_comm {V V' : Type} [AddCommGroup V] [Module Q V] [AddCommGrou
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [hf g]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private noncomputable def invMap {V V' : Type} [AddCommGroup V] [Module Q V] [AddCommGroup V'] [Module Q V']
     {ρ : Representation Q G V} {ρ' : Representation Q G V'} {f : V →ₗ[Q] V'}

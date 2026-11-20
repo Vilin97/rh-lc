@@ -121,7 +121,7 @@ theorem idealMod_mem_form (J : Ideal (Poly S N)) (I : Chart x) {a : Ω} (ha : a 
     refine ⟨g * s' + s * g', s * s', e + e', J.add_mem (J.mul_mem_right _ hg) (J.mul_mem_left _ hg'),
       mul_mem hs hs', (hge.mul hse').add (hse.mul hge'), hse.mul hse', ?_⟩
     rw [div_add_div _ _ (eval_ne_zero_of_mem_monos I hs) (eval_ne_zero_of_mem_monos I hs')]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
   · rintro c _ - ⟨g, s, e, hg, hs, hge, hse, rfl⟩
     obtain ⟨f, t, d, ht, hf, htd, hc⟩ := c.2
     refine ⟨f * g, t * s, d + e, J.mul_mem_left _ hg, mul_mem ht hs, hf.mul hge, htd.mul hse, ?_⟩

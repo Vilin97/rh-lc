@@ -86,7 +86,7 @@ def H0ToSections {V : X.Opens} (hV : IsAffineOpen V) (M : X'.Modules) :
       (Sheaf.H.equiv₀ (modulesAb (M.restrict (ψ ⁻¹ᵁ V).ι)) isTerminalTop x :
         Γ(M, (ψ ⁻¹ᵁ V).ι ''ᵁ ⊤))
     map_add' := fun x y => by
-      rw [map_add]
+      rw [map_add (f := _)]
       exact map_add _ _ _
     map_smul' := fun b x => by
       rw [H.smul_def, ← Sheaf.H.equiv₀_naturality]

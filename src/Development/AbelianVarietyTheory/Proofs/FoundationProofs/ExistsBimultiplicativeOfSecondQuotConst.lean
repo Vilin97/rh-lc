@@ -76,7 +76,7 @@ theorem map_zsmul (h : HasConstSecondDiff f) (he : ∀ x, f (-x) = f x) (n : ℤ
     induction n with
     | zero => simp
     | succ n ih =>
-      rw [Nat.cast_succ, add_smul, one_smul, h.map_add, ih, map_smul, LinearMap.smul_apply,
+      rw [Nat.cast_succ, add_smul, one_smul, h.map_add (f := _), ih, map_smul, LinearMap.smul_apply,
         h.bilin_self he]
       module
   obtain ⟨m, rfl | rfl⟩ := n.eq_nat_or_neg

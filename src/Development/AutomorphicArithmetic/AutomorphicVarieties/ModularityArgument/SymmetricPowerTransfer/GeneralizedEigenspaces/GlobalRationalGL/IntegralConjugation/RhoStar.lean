@@ -31,5 +31,5 @@ theorem UpperTheory.V.Z.Sym.Dict.Br.rhoStar :
   rw [cjF, pLoc_conjFin, ← hx _ hu]
   change P.φ v w h (star x).re + P.φ v w h (star x).im * P.rt w =
     conjLoc (IsCMField.complexConj L).toRingEquiv w (P.φ v _ hu x.re + P.φ v _ hu x.im * P.rt _)
-  rw [map_add, map_mul, hφ, hφ, hrt]
+  rw [map_add (f := _), map_mul, hφ, hφ, hrt]
   simp

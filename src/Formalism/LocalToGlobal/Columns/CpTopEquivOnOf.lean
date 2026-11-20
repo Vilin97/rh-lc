@@ -56,7 +56,7 @@ theorem xiTop_inv (hX : X.Ok) (hPr : Pr.Ok) (hc : cst.Ok) (hQ : QE sel (mu : Chr
         ((qOf w.1 : X.E) ^ k * (((qOf w.1 : X.E) ^ cst.B)⁻¹ * ((cBof sel mu cst u : ℕ) : X.E)) *
           (frsF sel mu p' w).symm (w0 (frsF sel mu p w (Pi.single j 1))) l) := by
     intro l
-    simp only [inFr, LinearMap.comp_apply, LinearEquiv.coe_coe, LinearMap.add_apply, LinearMap.smul_apply, map_add, Pi.add_apply]
+    simp only [inFr, LinearMap.comp_apply, LinearEquiv.coe_coe, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), Pi.add_apply]
     rw [← algebraMap_smul X.E (((cBof sel mu cst u : ℕ) : 𝓞 X.E)), map_smul, Pi.smul_apply, smul_eq_mul, map_natCast, hk]
     congr 1
     field_simp

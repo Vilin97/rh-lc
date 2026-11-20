@@ -28,7 +28,7 @@ def ballIdeal (τ : E →+* C) : Ideal (𝓞 E) where
     change ‖τ (a : E)‖ < 1 at ha
     change ‖τ (b : E)‖ < 1 at hb
     change ‖τ ((a : E) + (b : E))‖ < 1
-    rw [map_add]
+    rw [map_add (f := _)]
     exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
   smul_mem' := by
     intro c x hx

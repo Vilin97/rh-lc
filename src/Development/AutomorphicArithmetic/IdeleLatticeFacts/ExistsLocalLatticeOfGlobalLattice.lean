@@ -28,7 +28,7 @@ private theorem finPart_lift (y : Af F ⊗[F] E) : finPartF F E (PositivityTheor
   induction y using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a t => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 private theorem int_mem (P : HeightOneSpectrum (𝓞 E)) (r : 𝓞 E) :
     algebraMap E (P.adicCompletion E) (r : E) ∈ P.adicCompletionIntegers E := by

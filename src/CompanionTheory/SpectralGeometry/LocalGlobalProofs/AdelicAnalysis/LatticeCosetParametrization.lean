@@ -64,7 +64,7 @@ theorem rational_coset_param : ∀ (F : Type) [Field F] [NumberField F] (ι : Ty
         (hOh _).mpr ⟨b.equivFun.symm (fun v => n (i, v)), hcoe _⟩, ?_⟩
       show algebraMap F (GlobalTheory.CompanionTheory.SW.Core.A F) (a i + (N : F) * ∑ v, (n (i, v) : F) * (b v : F)) -
           algebraMap F (GlobalTheory.CompanionTheory.SW.Core.A F) (a i) = _
-      rw [map_add, map_mul, map_natCast]
+      rw [map_add (f := _), map_mul, map_natCast]
       ring
   · intro n
     funext p

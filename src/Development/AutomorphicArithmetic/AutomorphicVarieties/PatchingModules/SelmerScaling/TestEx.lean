@@ -79,14 +79,14 @@ theorem UpperTheory.V.Pa.testEx :
       exact hd
     · funext k
       simp only [T, DD.mul_ep]
-      rw [hp1, map_add, hμ', hμ']
+      rw [hp1, map_add (f := _), hμ', hμ']
       ring
     · funext k
       simp only [T, DD.mul_ep']
       rw [hda k]
       ring
     · simp only [T, DD.mul_eta]
-      rw [hp1, map_add, hΦ, hΦ, Finset.sum_add_distrib]
+      rw [hp1, map_add (f := _), hΦ, hΦ, Finset.sum_add_distrib]
       have s1 : ∑ j, μ j (S.pr1 a) * α j (S.pr0 a') = ∑ j, α j (S.pr0 a') * μ j (S.pr1 a) :=
         Finset.sum_congr rfl (fun j _ => mul_comm _ _)
       rw [s1]

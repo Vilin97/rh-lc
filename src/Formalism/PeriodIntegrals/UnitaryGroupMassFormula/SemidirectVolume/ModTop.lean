@@ -22,7 +22,7 @@ theorem sigRLin_eq (x : R ⊗[F] E) : sigRLin R σ x = sigR R σ x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigRLin, sigR]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 variable [IsTopologicalRing (R ⊗[F] E)]
 

@@ -36,9 +36,9 @@ variable {x x' : Sp ℂ ⟶ X} (e : spMap (starRingEnd ℂ) ≫ x = x')
 def cjForm (h : TanM x' t.G →ₗ[ℂ] TanM x' t.G →ₗ⋆[ℂ] ℂ) : TanM x t.G →ₗ[ℂ] TanM x t.G →ₗ⋆[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ)
     (fun v w => starRingEnd ℂ (h (tanPull (starRingEnd ℂ) e v) (tanPull (starRingEnd ℂ) e w)))
-    (fun _ _ _ => by simp only [map_add, LinearMap.add_apply])
+    (fun _ _ _ => by simp only [map_add (f := _), LinearMap.add_apply])
     (fun _ _ _ => by simp [map_smulₛₗ])
-    (fun _ _ _ => by simp only [map_add])
+    (fun _ _ _ => by simp only [map_add (f := _)])
     (fun _ _ _ => by simp [map_smulₛₗ])
 
 theorem cjForm_apply (h : TanM x' t.G →ₗ[ℂ] TanM x' t.G →ₗ⋆[ℂ] ℂ) (v w : TanM x t.G) :
@@ -67,7 +67,7 @@ theorem isBlockMetric_cjForm {h : TanM x' t.G →ₗ[ℂ] TanM x' t.G →ₗ⋆[
 theorem isBlockMetric_add {h h' : TanM x t.G →ₗ[ℂ] TanM x t.G →ₗ⋆[ℂ] ℂ} (hh : IsBlockMetric h)
     (hh' : IsBlockMetric h') : IsBlockMetric (h + h') := by
   refine ⟨fun v w => ?_, fun v hv => ?_, fun ρ ρ' v w hρ hv hw => ?_⟩
-  · simp only [LinearMap.add_apply, map_add]
+  · simp only [LinearMap.add_apply, map_add (f := _)]
     rw [hh.1, hh'.1]
   · simp only [LinearMap.add_apply, Complex.add_re]
     exact add_pos (hh.2.1 v hv) (hh'.2.1 v hv)

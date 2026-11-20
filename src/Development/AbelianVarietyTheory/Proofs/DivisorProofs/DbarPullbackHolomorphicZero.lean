@@ -127,7 +127,7 @@ private theorem dbarAt_add_of_differentiableAt {v : _root_.ReciprocityTheory.L2D
   congr 1
   apply (_root_.GlobalTheory.CxForm.bas n).repr.injective
   ext S
-  simp only [map_add, Finsupp.add_apply, _root_.GlobalTheory.CxForm.FormMul.repr_coefwise]
+  simp only [map_add (f := _), Finsupp.add_apply, _root_.GlobalTheory.CxForm.FormMul.repr_coefwise]
   rw [_root_.GlobalTheory.dbar_add (hF S) (hG S), ContinuousLinearMap.add_apply]
 
 open Set Filter Topology in
@@ -184,7 +184,7 @@ theorem _root_.GlobalTheory.CxForm.PullClosed.diff_and_closed {φ : _root_.Recip
       simp
   have hadd : ∀ θ₁ θ₂, P θ₁ → P θ₂ → P (θ₁ + θ₂) := by
     intro θ₁ θ₂ h₁ h₂
-    simp only [P, map_add]
+    simp only [P, map_add (f := _)]
     refine ⟨fun S => ?_, ?_⟩
     · simp only [Finsupp.add_apply]
       exact (h₁.1 S).add (h₂.1 S)

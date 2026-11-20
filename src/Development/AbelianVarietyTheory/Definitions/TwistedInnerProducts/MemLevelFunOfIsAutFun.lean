@@ -41,7 +41,7 @@ def locChar (ψ : AddChar (AF F) ℂ) (hψ : ∀ x, ‖ψ x‖ = 1) {v : HeightO
   map_zero_eq_one' := Circle.ext (by simp)
   map_add_eq_mul' x y := Circle.ext (by
     change ψ _ = ψ _ * ψ _
-    rw [mul_add, map_add, AddChar.map_add_eq_mul])
+    rw [mul_add, map_add (f := _), AddChar.map_add_eq_mul])
 
 theorem coe_locChar (ψ : AddChar (AF F) ℂ) (hψ : ∀ x, ‖ψ x‖ = 1) {v : HeightOneSpectrum (𝓞 F)} (a x : Fv F v) :
     (locChar ψ hψ a x : ℂ) = psiV F ψ v (a * x) := rfl
@@ -62,12 +62,12 @@ theorem mat_emb_sub_one {E : Type} [Field E] [Algebra F E] (σ : E →ₐ[F] E) 
   have h (y) : A (B y) = tensAt E v y := by
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a x => rfl
   change (1 - A 1) * (1 : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)) i j +
     A ((1 - B 1) * (1 : Matrix (Fin n) (Fin n) (Af F ⊗[F] E)) i j + B ((GlobalTheory.AdelicU.matHom _ σ J x).val i j)) -
       (1 : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)) i j = _
-  rw [map_add, h, Matrix.sub_apply, map_sub]
+  rw [map_add (f := _), h, Matrix.sub_apply, map_sub]
   by_cases e : i = j
   · subst e
     simp only [Matrix.one_apply_eq, mul_one, map_sub, h]

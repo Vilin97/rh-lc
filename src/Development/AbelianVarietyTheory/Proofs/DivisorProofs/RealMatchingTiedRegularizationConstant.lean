@@ -75,7 +75,7 @@ theorem match_scalar (hP : GlobalTheory.FunPr.Hypotheses₂) (hL : GlobalTheory.
     { carrier := {x | ∃ Φ ∈ algF ψ θ true A B, ∃ Φ' ∈ algF ψ θ false A₁ B, p₀ Φ = p₀' Φ' ∧ x = (p Φ, p' Φ')}
       add_mem' := by
         rintro _ _ ⟨Φ, hΦ, Φ', hΦ', h, rfl⟩ ⟨Ψ, hΨ, Ψ', hΨ', k, rfl⟩
-        exact ⟨Φ + Ψ, add_mem hΦ hΨ, Φ' + Ψ', add_mem hΦ' hΨ', by rw [map_add, map_add, h, k],
+        exact ⟨Φ + Ψ, add_mem hΦ hΨ, Φ' + Ψ', add_mem hΦ' hΨ', by rw [map_add (f := _), map_add (f := _), h, k],
           Prod.ext (map_add p Φ Ψ).symm (map_add p' Φ' Ψ').symm⟩
       zero_mem' := ⟨0, zero_mem _, 0, zero_mem _, by rw [map_zero, map_zero],
         Prod.ext (map_zero p).symm (map_zero p').symm⟩

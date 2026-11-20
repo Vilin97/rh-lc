@@ -73,7 +73,7 @@ theorem gn_mul (hρ0 : 0 < ρ) (hρ1 : ρ < 1) (z w : 𝔸) :
 theorem gn_add_le (hρ0 : 0 < ρ) (hρ1 : ρ < 1) (z w : 𝔸) :
     gn K p ρ (z + w) ≤ max (gn K p ρ z) (gn K p ρ w) := by
   unfold gn
-  rw [map_add]
+  rw [map_add (f := _)]
   exact ((teichLift K p).convergesAt_coeffB_add hρ0 hρ1 (convergesAt_toB z hρ0 hρ1)
     (convergesAt_toB w hρ0 hρ1)).2
 
@@ -173,7 +173,7 @@ theorem norm_coeff_zero_le_of_mem_ker {x : AInf K p} (hx : x ∈ RingHom.ker θ)
     ‖x.coeff 0‖ ≤ ‖(p : K)‖ := by
   obtain ⟨v, hv⟩ := exists_eq_teichmuller_add_mul_p x
   have h := congrArg θ hv
-  rw [RingHom.mem_ker.1 hx, map_add, map_mul, map_natCast, fontaineTheta_teichmuller] at h
+  rw [RingHom.mem_ker.1 hx, map_add (f := _), map_mul, map_natCast, fontaineTheta_teichmuller] at h
   have h' : ((PreTilt.untilt (x.coeff 0) : 𝒪) : K) = -((θ v : 𝒪) : K) * p := by
     have := congrArg (fun y : 𝒪 => (y : K)) h
     push_cast at this
@@ -253,7 +253,7 @@ theorem norm_theta_le (x : AInf K p) :
         ((PreTilt.untilt (tcoeff x i) : 𝒪) : K) * (p : K) ^ i + (p : K) ^ (n + 1) * ((θ d : 𝒪) : K) := by
       have e := congrArg (fun y => ((θ y : 𝒪) : K)) (eq_add_of_sub_eq hd)
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_mul, map_pow, map_natCast, fontaineTheta_teichmuller] at e
+        simp only [map_add (f := _), map_sum, map_mul, map_pow, map_natCast, fontaineTheta_teichmuller] at e
       push_cast at e
       rw [e, add_comm]
     rw [hθ]

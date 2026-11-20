@@ -205,7 +205,7 @@ theorem normProper (G : HTGroup p) (v : AwayP p) (g0 : Gv G v)
     induction a using TensorProduct.induction_on with
     | zero => simp
     | tmul r y => rw [hsl, hsl, starT_tmul, starT_tmul, G.star_star]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   let stU : (Qv v ⊗[ℚ] G.C)ˣ → (Qv v ⊗[ℚ] G.C)ˣ := fun g =>
     ⟨sl g, sl ((g⁻¹ : (Qv v ⊗[ℚ] G.C)ˣ) : Qv v ⊗[ℚ] G.C), by rw [← hsl_mul, Units.inv_mul, hsl1],
       by rw [← hsl_mul, Units.mul_inv, hsl1]⟩

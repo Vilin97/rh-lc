@@ -55,7 +55,7 @@ theorem map_locSpan (F : Y.Modules) {d : ℕ} (t : Fin (d + 1) → L.Sec) [Mono 
         ((Twist.map (lbZPow L m) (cutπ F hL (t 0))).app V) :=
       exact_app_of_exact_of_mono (RegSeqKer.shortExact_twistComplex hL F (t 0) h).exact V
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← app_res, e, Fin.sum_univ_succ, map_add, hex.apply_apply_eq_zero, zero_add, map_sum]
+      rw [← app_res, e, Fin.sum_univ_succ, map_add (f := _), hex.apply_apply_eq_zero, zero_add, map_sum]
     exact Finset.sum_congr rfl fun i _ => π_mul hL F _ _ h V _
 
 theorem exists_glue (d : ℕ) : ∀ (t : Fin d → L.Sec) (F : Y.Modules) [F.IsQuasicoherent] (j₀ l m : ℤ)

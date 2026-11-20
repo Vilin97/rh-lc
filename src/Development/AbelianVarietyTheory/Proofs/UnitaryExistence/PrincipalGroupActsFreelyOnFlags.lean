@@ -64,7 +64,7 @@ theorem exists_equiv_of_stab {E : Type} [Field E] [NumberField E] {L : Type} [Ad
   choose f hf using fun a : L => (hγ (φ a)).1 (LinearMap.mem_range_self φ a)
   let g : L →ₗ[𝓞 E] L :=
     { toFun := f
-      map_add' := fun a b => hφ (by rw [map_add, hf, hf, hf, map_add, Matrix.mulVec_add])
+      map_add' := fun a b => hφ (by rw [map_add (f := _), hf, hf, hf, map_add (f := _), Matrix.mulVec_add])
       map_smul' := fun c a => hφ (by
         rw [RingHom.id_apply, map_smul, hf, hf, map_smul, Matrix.mulVec_smul]) }
   have hri : ∀ v, (γ : Matrix (Fin r) (Fin r) E) *ᵥ (((γ⁻¹ : GL (Fin r) E) : Matrix (Fin r) (Fin r) E) *ᵥ v) = v :=
@@ -89,7 +89,7 @@ theorem princ_free : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
     exact_mod_cast this
   have hfull := GlobalTheory.LevelHalf.trivial_mod_of_trivial_on_half E H Di l g hiso (fun a ha => by
     obtain ⟨e, he⟩ := hhalf a ha
-    exact ⟨e, hinj (by rw [hg, he, map_add, map_nsmul])⟩)
+    exact ⟨e, hinj (by rw [hg, he, map_add (f := _), map_nsmul])⟩)
   have hfin := Di.fin
   refine GlobalTheory.GamFree.gam_free GlobalTheory.latMinkowski E r q l.M Ψ Gm (LinearMap.range φ0) γ
     (fun τ => ?_) hG ?_ ?_ l.three_le hU ?_ x hx b hb hxb
@@ -98,6 +98,6 @@ theorem princ_free : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H :
   · rw [LinearMap.coe_range]; exact hsp
   · rintro _ ⟨a, rfl⟩
     obtain ⟨e, he⟩ := hfull a
-    exact ⟨φ0 e, LinearMap.mem_range_self φ0 e, by rw [← hg, he, map_add, map_nsmul]⟩
+    exact ⟨φ0 e, LinearMap.mem_range_self φ0 e, by rw [← hg, he, map_add (f := _), map_nsmul]⟩
 
 end GlobalTheory.PrincFree

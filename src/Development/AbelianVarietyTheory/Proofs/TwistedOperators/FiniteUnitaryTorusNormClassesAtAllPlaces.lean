@@ -159,7 +159,7 @@ def fixSub (P : PPol σ r) (k : Type) [CommRing k] [Algebra F k] : Subalgebra k 
     rw [map_mul, ha, hb]
   add_mem' {a b} ha hb := by
     simp only [Set.mem_setOf_eq] at *
-    rw [map_add, ha, hb]
+    rw [map_add (f := _), ha, hb]
   algebraMap_mem' t := by
     simp [sigR, Algebra.TensorProduct.algebraMap_apply]
 

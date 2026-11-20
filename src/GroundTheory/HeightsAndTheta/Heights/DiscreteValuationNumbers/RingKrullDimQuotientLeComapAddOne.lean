@@ -28,7 +28,7 @@ theorem ringKrullDim_quotient_le_comap_add_one {K : Type} [Fintype K] {ι : K �
     | add p q hp hq =>
       obtain ⟨a, ha⟩ := hp
       obtain ⟨b, hb⟩ := hq
-      exact ⟨a + b, by rw [map_add, ha, hb, map_add]⟩
+      exact ⟨a + b, by rw [map_add (f := _), ha, hb, map_add (f := _)]⟩
     | mul_X p v hp =>
       obtain ⟨a, ha⟩ := hp
       obtain ⟨o, i⟩ := v

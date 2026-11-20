@@ -110,7 +110,7 @@ theorem UpperTheory.V.Ws.Po.ambAbs :
     by_cases hδ : δ = 0
     · simp [hδ, g0]
     have hγδ : γ * δ ≠ 0 := mul_ne_zero hγ hδ
-    simp only [gg, dif_neg hγ, dif_neg hδ, dif_neg hγδ, ← Real.exp_add, ← map_add]
+    simp only [gg, dif_neg hγ, dif_neg hδ, dif_neg hγδ, ← Real.exp_add, ← map_add (f := _)]
     congr 2
     rw [← ofMul_mul, Units.mk0_mul]
   have g1 : gg 1 = 1 := by

@@ -55,7 +55,7 @@ theorem IsTensorMap.apply (h : IsTensorMap p₁ p₂ π₁ π₂ π J) (g : G) (
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => exact h.2 g x y
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem isUnitaryRep_of_dense [TopologicalSpace G] (h1 : ∀ g v, ‖π g v‖ = ‖v‖) {A : Set H}
     (hA : (Submodule.span ℂ A).topologicalClosure = ⊤) (h2 : ∀ v ∈ A, Continuous fun g => π g v) : IsUnitaryRep π := by
@@ -64,7 +64,7 @@ theorem isUnitaryRep_of_dense [TopologicalSpace G] (h1 : ∀ g v, ‖π g v‖ =
     induction hv using Submodule.span_induction with
     | mem v hv => exact h2 v hv
     | zero => simpa only [map_zero] using continuous_const
-    | add a b _ _ ha hb => simp only [map_add]; exact ha.add hb
+    | add a b _ _ ha hb => simp only [map_add (f := _)]; exact ha.add hb
     | smul c a _ ha => simp only [map_smul]; exact ha.const_smul c
   have hv : v ∈ closure (Submodule.span ℂ A : Set H) := hA.ge Submodule.mem_top
   refine TendstoUniformly.continuous (F := fun w g => π g w) (p := nhds v) ?_ ((mem_closure_iff_frequently.1 hv).mono h3)
@@ -80,7 +80,7 @@ theorem IsTensorMap.dense_span (h : IsTensorMap p₁ p₂ π₁ π₂ π J) :
     induction a using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
     | tmul x y => exact Submodule.subset_span ⟨x, y, rfl⟩
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb) (h.1 v)
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb) (h.1 v)
 
 theorem IsTensorMap.isUnitaryRep [TopologicalSpace G] [TopologicalSpace G₁] [TopologicalSpace G₂]
     (h : IsTensorMap p₁ p₂ π₁ π₂ π J) (hp₁ : Continuous p₁) (hp₂ : Continuous p₂) (h₁ : IsUnitaryRep π₁)

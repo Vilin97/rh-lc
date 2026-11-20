@@ -33,7 +33,7 @@ theorem mConeMap_segreSub (y : (Σ k, ι k) → Ω) (Q : MvPolynomial (Ix ((k : 
     simp only [segreSub, coneMap, mConeMap, eq_intCast, map_intCast]
     exact (map_intCast (Polynomial.eval₂RingHom (MvPolynomial.C : Ω →+* MvPolynomial K Ω)
       (∏ k, (MvPolynomial.X k : MvPolynomial K Ω))) a).symm
-  | add p q hp hq => simp only [map_add, hp, hq, Polynomial.eval₂_add]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, Polynomial.eval₂_add]
   | mul_X p i hp =>
     rw [map_mul, map_mul, hp, map_mul, Polynomial.eval₂_mul]
     congr 1
@@ -49,7 +49,7 @@ theorem eval_segreSub (z : (Σ k, ι k) → ℂ) (Q : MvPolynomial (Ix ((k : K) 
     eval z (map (Int.castRingHom ℂ) (segreSub Q)) = eval (segreCoords z) (map (Int.castRingHom ℂ) Q) := by
   induction Q using MvPolynomial.induction_on with
   | C a => simp [segreSub]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp]
     simp [segreSub, segreCoords, map_prod]
@@ -65,7 +65,7 @@ variable [CharZero Ω]
 theorem coneMap_qmap {J : Type} (x : J → Ω) (Q : MvPolynomial J ℤ) : coneMap ℚ x (qmap Q) = coneMap ℤ x Q := by
   induction Q using MvPolynomial.induction_on with
   | C a => simp [coneMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, map_X, hp]; simp [coneMap]
 
 theorem aeval_segre_eq_zero (y : (Σ k, ι k) → Ω) {R : MvPolynomial (Ix ((k : K) → ι k)) ℚ} {N : ℕ}
@@ -212,7 +212,7 @@ theorem isIntegral_coneMap {J : Type} (x : J → Ω) (S : Subalgebra ℚ (Polyno
     simp only [coneMap, aeval_C]
     rw [IsScalarTower.algebraMap_apply ℚ S (Polynomial Ω)]
     exact isIntegral_algebraMap
-  | add p q hp hq => rw [map_add]; exact hp.add hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add hq
   | mul_X p i hp =>
     rw [map_mul]
     simpa [coneMap] using hp.mul (hX i)

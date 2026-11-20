@@ -37,7 +37,7 @@ def colSpan (k : ℕ) (Z : Matrix (Fin n) (Fin n) K) : Submodule R (Fin n → R)
   add_mem' := by
     rintro x y ⟨t, ht, e⟩ ⟨s, hs, e'⟩
     exact ⟨t + s, fun j hj => by simp [ht j hj, hs j hj], by
-      rw [map_add, map_add, Matrix.mulVec_add, e, e']⟩
+      rw [map_add (f := _), map_add (f := _), Matrix.mulVec_add, e, e']⟩
   zero_mem' := ⟨0, fun _ _ => rfl, by simp⟩
   smul_mem' := by
     rintro r x ⟨t, ht, e⟩
@@ -1034,7 +1034,7 @@ theorem countId (ψ : AddChar K ℂ) (hsd : ∀ a : K, (∀ r ∈ R, ψ (a * r) 
       refine ⟨x0 + z, ?_, ?_⟩
       · rw [Submodule.Quotient.mk_add, (Submodule.Quotient.mk_eq_zero _).2 hz, add_zero, hx0']
       · show _ = D.1 *ᵥ abelian₂ R k Z₀ (x0 + z)
-        rw [map_add, hzL, Matrix.mulVec_add, Matrix.mulVec_mulVec,
+        rw [map_add (f := _), hzL, Matrix.mulVec_add, Matrix.mulVec_mulVec,
           Matrix.mul_nonsing_inv _ hDdet, Matrix.one_mulVec, add_sub_cancel]
     obtain ⟨Ψ, hΨ⟩ := lift_abs (latZ R (Z₀ * p)) (colSpan R k Z₀) (latZ R (Z₀' * p'))
       (colSpan R k Z₀') (abelian₂ R k Z₀) (abelian₂ R k Z₀') (D.1.mulVecLin.restrictScalars R) φ

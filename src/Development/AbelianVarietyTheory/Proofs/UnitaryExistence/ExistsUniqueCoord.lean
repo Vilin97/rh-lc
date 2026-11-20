@@ -187,7 +187,7 @@ theorem coord_exists {m : ℕ} {N : Ideal B} (hN : N ^ (m + 1) = ⊥) (y : sp (R
         (fun j => by rw [AlgHom.comp_apply, jetLift_zR]; exact Ideal.mem_map_of_mem _ (hb j))
         (fun j => (c j : B')) (fun j => (c j).2) (fun j => SqZero.mul_eq_zero_of_sq hJ (c j).2 (c j).2)
         (fun j => by
-          rw [AlgHom.comp_apply, AlgHom.comp_apply, jetLift_zR, jetLift_zR, map_add, hδc])
+          rw [AlgHom.comp_apply, AlgHom.comp_apply, jetLift_zR, jetLift_zR, map_add (f := _), hδc])
       change spMap π ≫ y = spMap π ≫ _
       rw [hc, ← Category.assoc, spMap_comp, ← Category.assoc, spMap_comp, h3]
   obtain ⟨b, hb, h⟩ := key m

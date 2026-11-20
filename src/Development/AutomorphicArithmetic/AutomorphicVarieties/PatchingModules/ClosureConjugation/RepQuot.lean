@@ -11,7 +11,7 @@ private theorem lift_eq' {n : ℕ} {B C G : Type} [CommRing B] [CommRing C] [Alg
     MonoidAlgebra.lift B _ G ρ z = GDet.repAlg ρ C (MonoidAlgebra.mapRingHom G (algebraMap B C) z) := by
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [map_add, hf, hg, map_add, map_add]
+  | add f g hf hg => rw [map_add (f := _), hf, hg, map_add (f := _), map_add (f := _)]
   | single g b =>
     simp [GDet.repAlg, MonoidAlgebra.lift_single, algebraMap_smul]
 

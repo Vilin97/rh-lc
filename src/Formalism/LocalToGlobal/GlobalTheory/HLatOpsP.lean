@@ -313,10 +313,10 @@ theorem Iso.maj [IsTotallyComplex K] (I : Iso A B) (v : InfinitePlace K) (x y : 
   refine sesq_ext (F := fun x y => majAt B.b B.X v (I.e x) (I.e y)) (G := majAt A.b A.X v)
     (σ := v.embedding) ⟨a, ha⟩ ⟨?_, ?_, ?_, ?_⟩ hA ?_ x y
   · intro x x' y
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hB.1 _ _ _
   · intro x y y'
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hB.2.1 _ _ _
   · intro c x y
     simp only [map_smul]
@@ -429,9 +429,9 @@ theorem isSesq_comp {V W : Type} [AddCommGroup V] [Module K V] [AddCommGroup W] 
   intro v
   obtain ⟨h1, h2, h3, h4⟩ := hH v
   refine ⟨fun x x' y => ?_, fun x y y' => ?_, fun a x y => ?_, fun a x y => ?_⟩
-  · simp only [map_add]
+  · simp only [map_add (f := _)]
     exact h1 _ _ _
-  · simp only [map_add]
+  · simp only [map_add (f := _)]
     exact h2 _ _ _
   · simp only [map_smul]
     exact h3 _ _ _

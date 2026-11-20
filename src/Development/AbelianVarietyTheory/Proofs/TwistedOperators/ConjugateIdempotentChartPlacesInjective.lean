@@ -65,7 +65,7 @@ theorem chart_places_injective : ∀ {D : D7} (e : AE D) (P : Finset (Formalism.
   have hπ'0 : π' (cA D (cA D (es Q'))) = 0 := (hπc'.2.1 _).2 hort'
   have hw1 : evalV D.host.F (v Q') α' = 1 := by
     have := hπc'.2.2.1 (pairA D.host.F 0 α')
-    rw [← hsum', map_add, hπ'1, hπ'0, add_zero] at this
+    rw [← hsum', map_add (f := _), hπ'1, hπ'0, add_zero] at this
     exact this.symm
   have hwv : v Q' = v' := by
     by_contra h
@@ -77,7 +77,7 @@ theorem chart_places_injective : ∀ {D : D7} (e : AE D) (P : Finset (Formalism.
   have hB : π (cA D (cA D (es Q'))) = 0 := (hπc.2.1 _).2 (by
     rw [cA_cA, mul_comm]; exact hcross Q Q.2 Q' Q'.2)
   have hC := hπc.2.2.1 (pairA D.host.F 0 α')
-  rw [← hsum', map_add, hA, hB, add_zero] at hC
+  rw [← hsum', map_add (f := _), hA, hB, add_zero] at hC
   have h0 : evalV D.host.F (v Q) α' = 0 := hC.symm
   rw [hvv.trans hwv, hα1] at h0
   exact one_ne_zero h0

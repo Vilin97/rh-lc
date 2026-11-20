@@ -141,7 +141,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.rigidDiag :
       have e : D.hEl r i i - algebraMap c.O (PadicAlgCl l) (D.ps i D.g0 + D.th D.g0 * D.ps i D.g0⁻¹) =
           (r D.g0 i i - algebraMap c.O (PadicAlgCl l) (D.ps i D.g0)) + algebraMap c.O (PadicAlgCl l) (D.th D.g0) *
             (r D.g0⁻¹ i i - algebraMap c.O (PadicAlgCl l) (D.ps i D.g0⁻¹)) := by
-        rw [Raw.hEl, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul]; ring
+        rw [Raw.hEl, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul]; ring
       rw [e]
       refine (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt a1 ?_)
       rw [norm_mul]

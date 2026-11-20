@@ -65,7 +65,7 @@ def Isub : Submodule O (Fin d → W.EE) where
     rintro f f' ⟨hf, g, hg, hfg⟩ ⟨hf', g', hg', hfg'⟩
     refine ⟨(Msub W A c e Rst).add_mem hf hf', g + g',
       Formalism.MainNotions.UnusedSlot80.UnivC.inNL_add W T A c e b hg hg', fun k => ?_⟩
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     rw [mul_add, ← hfg k, ← hfg' k]; ring
   zero_mem' := ⟨(Msub W A c e Rst).zero_mem, 0, Formalism.MainNotions.UnusedSlot80.UnivC.inNL_zero W T A c e b,
     fun k => by simp⟩

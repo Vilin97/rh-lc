@@ -83,7 +83,7 @@ theorem map_formalGroupLawCoboundaryTwo (φ : R →+* S) (μ : Fin d → MvPower
         op (fun i => map φ (μ i)) (fun i => map φ (u i)) (fun i => map φ (v i)) :=
     fun u v hu hv => funext fun i => mvPowerSeriesMap_evalTwoGroups φ (μ i) u v hu hv
   unfold cob2
-  rw [map_sub, map_add, map_sub, mvPowerSeriesMap_evalTwoGroups φ c _ _ h2 h3, mvPowerSeriesMap_evalTwoGroups φ c _ _ (const_op μ hμ _ _ h1 h2) h3,
+  rw [map_sub, map_add (f := _), map_sub, mvPowerSeriesMap_evalTwoGroups φ c _ _ h2 h3, mvPowerSeriesMap_evalTwoGroups φ c _ _ (const_op μ hμ _ _ h1 h2) h3,
     mvPowerSeriesMap_evalTwoGroups φ c _ _ h1 (const_op μ hμ _ _ h2 h3), mvPowerSeriesMap_evalTwoGroups φ c _ _ h1 h2, mop _ _ h1 h2, mop _ _ h2 h3,
     m1, m2, m3]
 
@@ -115,7 +115,7 @@ theorem in_add {N : Ideal B} {f g : MvPowerSeries σ Q} (hf : In N f) (hg : In N
   intro α
   obtain ⟨a, ha, ea⟩ := hf α
   obtain ⟨b, hb, eb⟩ := hg α
-  exact ⟨a + b, N.add_mem ha hb, by rw [map_add, ea, eb, map_add]⟩
+  exact ⟨a + b, N.add_mem ha hb, by rw [map_add (f := _), ea, eb, map_add (f := _)]⟩
 
 theorem in_mono {N N' : Ideal B} (h : N ≤ N') {f : MvPowerSeries σ Q} (hf : In N f) : In N' f := by
   intro α

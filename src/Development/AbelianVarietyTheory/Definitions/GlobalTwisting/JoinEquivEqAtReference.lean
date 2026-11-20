@@ -25,7 +25,7 @@ variable {ι : Type} [Fintype ι] {n : ℕ}
 
 def conjFn (G : ι → Matrix (Fin n) (Fin n) ℂ) (s : ι → ℤ) : Pol ℂ ι n →ₛₗ[starRingEnd ℂ] (Frames G → ℂ) where
   toFun P := fnOf G s G (MvPolynomial.map (starRingEnd ℂ) P)
-  map_add' P Q := by rw [map_add, map_add]
+  map_add' P Q := by rw [map_add (f := _), map_add (f := _)]
   map_smul' c P := by
     rw [← map_smul]
     congr 1

@@ -27,7 +27,7 @@ theorem logA_mul {j : Per.Acris l →+* Per.BdRp l} (hj : IsCrisP j) {e e' : Per
   have h := GlobalTheory.MemLoc.LogAdd.log_add l e e' (j y) (j y') (j z) he he'
     ((GlobalTheory.T.acris_logTeichmuller_unique_galois_frobenius_bdR l e y he hy).2.2.2 j hj) ((GlobalTheory.T.acris_logTeichmuller_unique_galois_frobenius_bdR l e' y' he' hy').2.2.2 j hj)
     ((GlobalTheory.T.acris_logTeichmuller_unique_galois_frobenius_bdR l _ z hee hz).2.2.2 j hj)
-  rw [← map_add] at h
+  rw [← map_add (f := _)] at h
   rw [← GlobalTheory.T.acrisToBdRPlus_injective l j hj h]
   exact hz
 

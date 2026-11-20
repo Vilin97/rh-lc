@@ -94,7 +94,7 @@ theorem card_le_finrank_lat {ρ ρ' : ℂ} (hne : ρ ≠ ρ') {n : ℕ} (hn : 0 
     obtain ⟨x, hx, y, hy, hxy⟩ := Submodule.mem_sup.1 (hs a)
     have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
     have hy0 : pr (Pe y) = 0 := funext fun i => hy i (by rw [i.2, hτ]; exact hne)
-    rw [← W.smul_mem_iff hn', Nat.cast_smul_eq_nsmul, ← map_nsmul, ← map_nsmul, ← hxy, map_add, map_add, hy0,
+    rw [← W.smul_mem_iff hn', Nat.cast_smul_eq_nsmul, ← map_nsmul, ← map_nsmul, ← hxy, map_add (f := _), map_add (f := _), hy0,
       add_zero]
     exact h1 ⟨x, hx⟩
   have h3 : W = ⊤ := by

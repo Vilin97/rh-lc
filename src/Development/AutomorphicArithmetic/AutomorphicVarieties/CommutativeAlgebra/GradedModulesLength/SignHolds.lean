@@ -11,7 +11,7 @@ private theorem UpperTheory.V.Alg.M.kill_pow {O B A κ : Type} [CommRing O] [Com
   rw [pow_succ] at hf
   refine Submodule.mul_induction_on hf (fun a _ b hb => ?_) (fun a b ha hb => ?_)
   · rw [map_mul, hN b hb, mul_zero]
-  · rw [map_add, ha, hb, add_zero]
+  · rw [map_add (f := _), ha, hb, add_zero]
 
 theorem UpperTheory.V.Alg.M.sign_holds :
     ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [IsAdicComplete (maximalIdeal O) O] [CharZero O]

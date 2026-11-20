@@ -106,7 +106,7 @@ private theorem infPart_liftV_smul (v : HeightOneSpectrum (𝓞 D.host.F)) (z : 
     infPart D (liftV v (1 : Fv D.host.F v) • z) = 0 := by
   induction z using TensorProduct.induction_on with
   | zero => rw [smul_zero, map_zero]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, add_zero]
   | tmul b x =>
     rw [TensorProduct.smul_tmul']
     change ((0 : Ainf D.host.F) * b.1) ⊗ₜ[D.host.F] x = 0
@@ -220,7 +220,7 @@ theorem UpperTheory.isSBHalf_thetaFun_of_halfIdempotent_places :
         rw [zero_smul, zero_smul] at this
         exact (map_zero T).trans this.symm⟩
       add_mem' := fun {p q} hp hq => ⟨add_mem hp.1 hq.1, sb_add hp.2.1 hq.2.1, by
-        rw [Prod.snd_add, ladd _ hp.1 _ hq.1, ← hp.2.2, ← hq.2.2, ← map_add]; rfl⟩
+        rw [Prod.snd_add, ladd _ hp.1 _ hq.1, ← hp.2.2, ← hq.2.2, ← map_add (f := _)]; rfl⟩
       smul_mem' := fun a p hp => ⟨Submodule.smul_mem _ a hp.1, sb_smul hp.2.1 a, by
         rw [Prod.smul_snd, lsmul, ← hp.2.2, ← map_smul]; rfl⟩ }
   have hind : ∀ χ : ∀ v : HeightOneSpectrum (𝓞 D.host.F), (Fin S.rank × Fin d → Fv D.host.F v) → ℂ, ∀ x : WO (sgn ε S) X,

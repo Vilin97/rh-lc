@@ -112,7 +112,7 @@ theorem span_props {L : Subgroup (GL (Fin a) (Af E))} {W : Submodule ℂ (Kinf E
     exact pow_nonneg (zero_le_one.trans (one_le_height y)) _
   | zero => exact ⟨fun l _ => map_zero _, fun g => ⟨0, 0, le_rfl, fun y => by simp⟩⟩
   | add x y _ _ hx hy =>
-    refine ⟨fun l hl => by rw [map_add, hx.1 l hl, hy.1 l hl], fun g => ?_⟩
+    refine ⟨fun l hl => by rw [map_add (f := _), hx.1 l hl, hy.1 l hl], fun g => ?_⟩
     obtain ⟨C1, M1, h1, e1⟩ := hx.2 g
     obtain ⟨C2, M2, h2, e2⟩ := hy.2 g
     refine ⟨C1 + C2, M1 + M2, add_nonneg h1 h2, fun z => ?_⟩

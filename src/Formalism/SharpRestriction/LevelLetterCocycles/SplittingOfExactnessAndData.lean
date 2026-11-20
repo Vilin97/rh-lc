@@ -109,7 +109,7 @@ theorem Pp_Δ (T : LocLat G Qp LL O) (c : ZMod n) (e : ℕ) {y : W.DD T}
   let S : AddSubgroup (W.DD T) :=
     { carrier := {y | W.γD T δ y = y}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_ofPred_eq] at ha hb ⊢; rw [map_add, ha, hb]
+        simp only [Set.mem_ofPred_eq] at ha hb ⊢; rw [map_add (f := _), ha, hb]
       zero_mem' := by simp only [Set.mem_ofPred_eq, map_zero]
       neg_mem' := fun {a} ha => by simp only [Set.mem_ofPred_eq] at ha ⊢; rw [map_neg, ha] }
   have hgen : {z | ∃ a ∈ W.AΔ, ∃ x, Formalism.MainNotions.LiftingTheory.InNΔi W T c x ∧ z = a • ((W.φD T) ^ e) x} ⊆
@@ -165,7 +165,7 @@ theorem clK_sum (T : LocLat G Qp LL O) {ι : Type} (s : Finset ι) (u zz : ι �
     simp only [Finset.sum_insert hb]
     refine ⟨(W.wachCocyclesDelta T).add_mem hmb hm1, ?_⟩
     show W.clK T (⟨(u b, zz b), hmb⟩ + ⟨(∑ i ∈ s, u i, ∑ i ∈ s, zz i), hm1⟩) = _
-    rw [map_add, hb', h1]
+    rw [map_add (f := _), hb', h1]
 
 theorem clK_smul (T : LocLat G Qp LL O) (r : O) (y z : W.DD T) (hm : (y, z) ∈ W.wachCocyclesDelta T)
     (hm' : (r • y, r • z) ∈ W.wachCocyclesDelta T) :
@@ -531,7 +531,7 @@ theorem Pp_φpow (T : LocLat G Qp LL O) (c : ZMod n) (e m : ℕ) {y : W.DD T}
     rw [map_zero]
     exact zero_mem _
   | add a b _ _ ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem ha hb
   | neg a _ ha =>
     rw [map_neg]

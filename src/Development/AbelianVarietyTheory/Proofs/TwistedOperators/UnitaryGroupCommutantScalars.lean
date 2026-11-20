@@ -11,7 +11,7 @@ variable {A : Type} [Field A] {n : Type} [Fintype n] [DecidableEq n]
 
 theorem hform_add_left (σ : A →+* A) (J : Matrix n n A) (x y z : n → A) :
     hform σ J (x + y) z = hform σ J x z + hform σ J y z := by
-  simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hform_add_right (σ : A →+* A) (J : Matrix n n A) (x y z : n → A) :
     hform σ J x (y + z) = hform σ J x y + hform σ J x z := by

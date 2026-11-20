@@ -84,7 +84,7 @@ theorem exists_ptN_sub_le {K W : Type} [Field K] [AddCommGroup W] [Module K W] {
     obtain ⟨f, hf, h₁⟩ := hP (ε / 2) (half_pos hε)
     obtain ⟨g, hg, h₂⟩ := hQ (ε / 2) (half_pos hε)
     refine ⟨f + g, add_mem hf hg, fun p => ?_⟩
-    rw [map_add, show P + Q - (rd f + rd g) = (P - rd f) + (Q - rd g) by abel]
+    rw [map_add (f := _), show P + Q - (rd f + rd g) = (P - rd f) + (Q - rd g) by abel]
     exact (ptN_add_le _ _ _).trans (by linarith [h₁ p, h₂ p])
   | smul a P _ hP =>
     intro ε hε

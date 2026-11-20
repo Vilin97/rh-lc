@@ -201,7 +201,7 @@ theorem main : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
         obtain ⟨w₁, rfl, Z₁, hZ₁⟩ := h₁
         obtain ⟨w₂, rfl, Z₂, hZ₂⟩ := h₂
         exact ⟨w₁ + w₂, rfl, Z₁ + Z₂, by
-          rw [act_add, hZ₁, hZ₂, ← map_add]; congr 1; simp only [V, Matrix.mul_add, Matrix.add_mul]⟩
+          rw [act_add, hZ₁, hZ₂, ← map_add (f := _)]; congr 1; simp only [V, Matrix.mul_add, Matrix.add_mul]⟩
       | smul t x₁ _ h₁ =>
         obtain ⟨w₁, rfl, Z₁, hZ₁⟩ := h₁
         exact ⟨t • w₁, rfl, t • Z₁, by

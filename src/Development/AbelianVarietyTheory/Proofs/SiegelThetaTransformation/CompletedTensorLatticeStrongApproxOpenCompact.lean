@@ -145,7 +145,7 @@ def sgl (p : Fin r × Fin n × Fin d) : Matrix (Fin n) (Fin r) E := Matrix.singl
 def co (p : Fin r × Fin n × Fin d) : Matrix (Fin r) (Fin n) (AF F ⊗[F] E) →+ Af F where
   toFun w := sndA F ((Algebra.TensorProduct.basis (AF F) b).coord p.2.2 (w p.1 p.2.1))
   map_zero' := by rw [Matrix.zero_apply, LinearMap.map_zero, map_zero]
-  map_add' x y := by rw [Matrix.add_apply, LinearMap.map_add, map_add]
+  map_add' x y := by rw [Matrix.add_apply, LinearMap.map_add (f := _), map_add (f := _)]
 
 theorem continuous_co (p : Fin r × Fin n × Fin d) : Continuous (co b p) := by
   haveI : IsModuleTopology (AF F) (AF F ⊗[F] E) := ⟨rfl⟩
@@ -193,7 +193,7 @@ theorem fst_coord (z : AF F ⊗[F] E) (j) : fstA F ((Algebra.TensorProduct.basis
     change _ = (Algebra.TensorProduct.basis (Ainf F) b).repr (fstA F a ⊗ₜ[F] x) j
     simp only [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul,
       map_mul, AlgHom.commutes]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 theorem eq_sum_of_fin {w : Matrix (Fin r) (Fin n) (AF F ⊗[F] E)} (hw : w.map (infG F E) = 0) :
     w = ∑ p, fT F (co b p w) (sgl b p) := by
@@ -279,12 +279,12 @@ theorem exists_mod (hO : ∀ c : 𝓞 F, ∀ y ∈ A, (c : F) • y ∈ A) {N : 
     obtain ⟨α, hα, y, hy, rfl⟩ := hw
     obtain ⟨x, β, hβ, rfl⟩ := (GlobalTheory.AdLat.strong_approximation_mod_nat F N hN).2 α hα
     refine ⟨_, hO x y hy, _, fT_mem (α := β) hβ hy, ?_⟩
-    rw [map_add, LinearMap.add_apply, fT_algebraMap, map_nsmul, LinearMap.smul_apply]
+    rw [map_add (f := _), LinearMap.add_apply, fT_algebraMap, map_nsmul, LinearMap.smul_apply]
   | zero => exact ⟨0, zero_mem _, 0, zero_mem _, by simp⟩
   | add x x' _ _ h h' =>
     obtain ⟨y, hy, u, hu, rfl⟩ := h
     obtain ⟨y', hy', u', hu', rfl⟩ := h'
-    exact ⟨y + y', add_mem hy hy', u + u', add_mem hu hu', by rw [map_add, smul_add]; abel⟩
+    exact ⟨y + y', add_mem hy hy', u + u', add_mem hu hu', by rw [map_add (f := _), smul_add]; abel⟩
   | neg x _ h =>
     obtain ⟨y, hy, u, hu, rfl⟩ := h
     exact ⟨-y, neg_mem hy, -u, neg_mem hu, by rw [map_neg, smul_neg]; abel⟩
@@ -299,7 +299,7 @@ theorem exists_rat (hden : ∀ y, ∃ N : ℕ, 0 < N ∧ N • y ∈ A) {u : Mat
   set_option synthInstance.maxHeartbeats 100000 in
     rw [eq_sum_of_fin b hu, map_sum, ← Finset.sum_sub_distrib]
   refine sum_mem fun p _ => ?_
-  rw [hx, map_add, LinearMap.add_apply, fT_algebraMap, add_sub_cancel_left, map_nsmul, LinearMap.smul_apply,
+  rw [hx, map_add (f := _), LinearMap.add_apply, fT_algebraMap, add_sub_cancel_left, map_nsmul, LinearMap.smul_apply,
     ← map_nsmul]
   exact fT_mem (ha p) (hA p)
 

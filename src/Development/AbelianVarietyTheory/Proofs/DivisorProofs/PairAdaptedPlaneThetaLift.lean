@@ -21,7 +21,7 @@ theorem finDiv_add {F : Type} [Field F] [NumberField F] {N : ℕ} {a b : AF F} (
   intro v
   obtain ⟨x, hx, ex⟩ := ha v
   obtain ⟨y, hy, ey⟩ := hb v
-  exact ⟨x + y, add_mem hx hy, by rw [map_add, ex, ey, mul_add]⟩
+  exact ⟨x + y, add_mem hx hy, by rw [map_add (f := _), ex, ey, mul_add]⟩
 
 theorem finDiv_zero {F : Type} [Field F] [NumberField F] (N : ℕ) : GlobalTheory.FinSupp.FinDiv F N 0 :=
   fun v => ⟨0, zero_mem _, by rw [map_zero, mul_zero]⟩
@@ -100,7 +100,7 @@ theorem moved_coord_mem {F E : Type} [Field F] [NumberField F] [Field E] [Number
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← map_smul, ← hL, map_smul, prod_eq_sum x, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_add, map_smul, map_smul, smul_add, smul_smul, smul_smul]
+    rw [map_add (f := _), map_smul, map_smul, smul_add, smul_smul, smul_smul]
   have hc : ∀ q : F, c * algebraMap F (AF F) q = GlobalTheory.FinSupp.finPart F (algebraMap F (AF F) (((m₁ * m₂ * D₀ : ℕ) : F) * q)) := by
     intro q
     refine Prod.ext (zero_mul _) ?_

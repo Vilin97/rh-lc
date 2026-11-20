@@ -69,7 +69,7 @@ theorem eval₂_blockVar_component (g : R →+* κ) (c : (Σ k, ι k) → κ) (F
           (n := Finsupp.weight (blockWeight ι) d) hd, if_neg (Ne.symm h)]
       rw [h0, if_neg (fun h' => h (Finsupp.equivFunOnFinite.symm.injective h')), eval₂_zero, map_zero]
   | add p q hp hq =>
-    rw [map_add, eval₂_add, hp, hq, eval₂_add, MvPolynomial.coeff_add, map_add]
+    rw [map_add (f := _), eval₂_add, hp, hq, eval₂_add, MvPolynomial.coeff_add, map_add (f := _)]
 
 theorem eval₂_blockVar_eq_zero_iff (g : R →+* κ) (c : (Σ k, ι k) → κ) (F : MRing ι R) :
     eval₂ ((C : κ →+* MvPolynomial K κ).comp g) (fun s => X s.1 * C (c s)) F = 0 ↔

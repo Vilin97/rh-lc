@@ -100,7 +100,7 @@ theorem genUnit_pow_eq_one (n : ℕ) : genUnit ℓ n ^ (ℓ ^ n) = 1 := by
 theorem genUnit_mem_unitsKer (n : ℕ) : genUnit ℓ n ∈ unitsKer ℓ n := by
   rw [unitsKer, MonoidHom.mem_ker]
   refine Units.ext ?_
-  simp only [ZMod.unitsMap_def, Units.coe_map, MonoidHom.coe_coe, coe_genUnit, map_add, map_one,
+  simp only [ZMod.unitsMap_def, Units.coe_map, MonoidHom.coe_coe, coe_genUnit, map_add (f := _), map_one,
     map_pow, map_natCast, Units.val_one]
   rw [← Nat.cast_pow, ZMod.natCast_self, add_zero]
 
@@ -174,7 +174,7 @@ theorem unitsMap_genUnit {m n : ℕ} (h : m ≤ n) :
     ZMod.unitsMap (pow_dvd_pow ℓ (by omega : m + unitsLevel ℓ ≤ n + unitsLevel ℓ)) (genUnit ℓ n) =
       genUnit ℓ m := by
   refine Units.ext ?_
-  simp only [ZMod.unitsMap_def, Units.coe_map, MonoidHom.coe_coe, coe_genUnit, map_add, map_one,
+  simp only [ZMod.unitsMap_def, Units.coe_map, MonoidHom.coe_coe, coe_genUnit, map_add (f := _), map_one,
     map_pow, map_natCast]
 
 theorem castHom_logMod {m n : ℕ} (h : m ≤ n) (x : (ZMod (ℓ ^ (n + unitsLevel ℓ)))ˣ) :
@@ -251,7 +251,7 @@ noncomputable def padicUnitsLog : ℤ_[ℓ]ˣ →* Multiplicative ℤ_[ℓ] wher
   map_mul' u v := by
     rw [← ofAdd_add]
     refine congrArg Multiplicative.ofAdd (PadicInt.ext_of_toZModPow.mp fun n => ?_)
-    rw [map_add, toZModPow_limFamilies, toZModPow_limFamilies, toZModPow_limFamilies]
+    rw [map_add (f := _), toZModPow_limFamilies, toZModPow_limFamilies, toZModPow_limFamilies]
     simp
 
 theorem toZModPow_padicUnitsLog (u : ℤ_[ℓ]ˣ) (n : ℕ) :

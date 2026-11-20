@@ -124,7 +124,7 @@ theorem exists_eq_add_mul (e : E.1) : ∃ s t : (fixedSubfield τ).1,
     exact one_ne_zero hi
   have h2 : (2 : E.1) ≠ 0 := two_ne_zero
   obtain ⟨s, hs⟩ := exists_algebraMap_eq_of_apply_eq τ (e := (e + τ e) / 2) (by
-    rw [map_div₀, map_add, hττ, map_ofNat, add_comm])
+    rw [map_div₀, map_add (f := _), hττ, map_ofNat, add_comm])
   obtain ⟨t, ht⟩ := exists_algebraMap_eq_of_apply_eq τ (e := (e - τ e) / (2 * i)) (by
     rw [map_div₀, map_sub, map_mul, hττ, hτi, map_ofNat]
     field_simp
@@ -141,7 +141,7 @@ theorem apply_eq_or_eq_neg (σ : E.1 ≃ₐ[(fixedSubfield τ).1] E.1) : σ i = 
 theorem galFixed_ext {σ ρ : E.1 ≃ₐ[(fixedSubfield τ).1] E.1} (h : σ i = ρ i) : σ = ρ := by
   ext e
   obtain ⟨s, t, rfl⟩ := exists_eq_add_mul hτ hi hτi e
-  simp only [map_add, map_mul, AlgEquiv.commutes, h]
+  simp only [map_add (f := _), map_mul, AlgEquiv.commutes, h]
 
 theorem natCard_galFixed_le_two : Nat.card (E.1 ≃ₐ[(fixedSubfield τ).1] E.1) ≤ 2 := by
   classical

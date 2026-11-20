@@ -196,7 +196,7 @@ theorem orth_act (h : Comparison₂ R M τ br cj e m U) (he : SignCompat (M.ε �
     rw [h4] at h3
     exact h3.unique (hasDerivAt_const _ _)
   obtain ⟨X, Y, hX, hXK, hY, hYK, rfl⟩ := exists_decomp hZ
-  rw [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul, inner_add_right,
+  rw [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul, inner_add_right,
     inner_smul_right, key X hX hXK, key Y hY hYK, mul_zero, add_zero]
 
 theorem mem_hwSub {lam : Ix p q → ℚ} {c : ℚ} (hp : IsParam lam) (ho : IsOrd (M.ε τ) (M.lam τ) lam c (sg br cj) e)

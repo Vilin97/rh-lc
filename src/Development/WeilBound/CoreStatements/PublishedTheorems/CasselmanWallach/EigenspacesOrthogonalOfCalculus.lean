@@ -60,7 +60,7 @@ lemma pt (hgl : IsGlRep E) (huni : IsInfUnitary ε E)
       + (if c = a then inner ℂ (E a b x) (A (E d b y)) else 0)
       - (if b = d then inner ℂ (E a b x) (A (E a c y)) else 0) := by
     rw [huni c d, hsgn, one_mul, ← hA d c hcd.symm, comm_apply hgl d c a b y]
-    rw [map_add, map_sub, inner_add_right, inner_sub_right]
+    rw [map_add (f := _), map_sub, inner_add_right, inner_sub_right]
     split_ifs <;> (try simp) <;> ring
   rw [comm_apply hgl a b c d x, inner_add_left, h1, inner_sub_left]
   split_ifs <;> (try simp) <;> ring

@@ -69,7 +69,7 @@ private theorem unitHk_alg_comm (hI : HeckePair I) (v : fixd (permRep A I) I) (T
       Module.End.one_apply, Submodule.coe_smul, Submodule.coe_smul, map_smul, hw]
   | add T1 T2 _ _ h1 h2 =>
     intro w w' hw
-    rw [LinearMap.add_apply, LinearMap.add_apply, Submodule.coe_add, Submodule.coe_add, map_add, h1 w w' hw, h2 w w' hw]
+    rw [LinearMap.add_apply, LinearMap.add_apply, Submodule.coe_add, Submodule.coe_add, map_add (f := _), h1 w w' hw, h2 w w' hw]
   | mul T1 T2 _ _ h1 h2 =>
     intro w w' hw
     rw [Module.End.mul_apply, Module.End.mul_apply]

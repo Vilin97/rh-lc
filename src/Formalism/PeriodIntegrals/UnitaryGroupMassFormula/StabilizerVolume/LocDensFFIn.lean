@@ -60,7 +60,7 @@ private theorem isSq_comp_linearMap {K : Type} [Field K] {σ : K →+* K} {U V :
     IsSq σ (fun x y => hV (φ x) (φ y)) := {
   add_right x y z := by
     show hV (φ x) (φ (y + z)) = hV (φ x) (φ y) + hV (φ x) (φ z)
-    rw [map_add, hsV.add_right]
+    rw [map_add (f := _), hsV.add_right]
   smul_right c x y := by
     show hV (φ x) (φ (c • y)) = c * hV (φ x) (φ y)
     rw [map_smul, hsV.smul_right]
@@ -139,7 +139,7 @@ theorem frob_of_ne (σ : K ≃ₐ[k] K) (h2 : finrank k K = 2) (hne : σ ≠ Alg
   have hdich : ∀ x : K, σ x = x ∨ σ x = x ^ Fintype.card k := by
     intro x
     have hs : σ x + σ x ^ Fintype.card k = x + x ^ Fintype.card k := by
-      rw [← map_pow, ← map_add]
+      rw [← map_pow, ← map_add (f := _)]
       exact hfix _ (by rw [add_pow_card_eq_add_pow_card, hqq, add_comm])
     have hm : σ x * σ x ^ Fintype.card k = x * x ^ Fintype.card k := by
       rw [← map_pow, ← map_mul]

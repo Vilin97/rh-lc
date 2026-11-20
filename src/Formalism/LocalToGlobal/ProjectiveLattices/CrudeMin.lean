@@ -79,7 +79,7 @@ theorem crPderiv_supported {R : Type} [CommRing R] {s : Set (Letter T r n)} (i :
     rw [Derivation.map_algebraMap]
     exact zero_mem _
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
   | mul x y hx' hy' hx hy =>
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
@@ -97,7 +97,7 @@ private theorem crPderiv_zero_lemma {R : Type} [CommRing R] {s : Set (Letter T r
     rintro rfl
     exact hi hj
   | algebraMap c => exact Derivation.map_algebraMap _ _
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | mul x y _ _ hx hy => rw [Derivation.leibniz, hx, hy, smul_zero, smul_zero, add_zero]
 
 theorem crP_mem_harmK (k : Type) [Field k] (β : (Σ σ : T, Fin (r σ)) → Fin n) (a : T → ℕ → ℕ) (cc : T → T)
@@ -418,7 +418,7 @@ theorem crRho_coeff (R : Type) [CommRing R] (β : (Σ σ : T, Fin (r σ)) → Fi
       rintro rfl
       exact h hm
   · intro p q hp hq
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
 
 theorem crRho_supported (R : Type) [CommRing R] (β : (Σ σ : T, Fin (r σ)) → Fin n)
     (p : MvPolynomial (Letter T r n) R) : crRho R β p ∈ supported R (crDiag β) := by
@@ -431,7 +431,7 @@ theorem crRho_supported (R : Type) [CommRing R] (β : (Σ σ : T, Fin (r σ)) �
         (Subalgebra.prod_mem _ fun ℓ hℓ => Subalgebra.pow_mem _ (crX_mem (h ℓ hℓ)) _)
     · exact Subalgebra.zero_mem _
   · intro p q hp hq
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Subalgebra.add_mem _ hp hq
 
 theorem crRho_minor (R : Type) [CommRing R] (β : (Σ σ : T, Fin (r σ)) → Fin n)

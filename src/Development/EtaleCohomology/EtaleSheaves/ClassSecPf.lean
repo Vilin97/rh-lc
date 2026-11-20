@@ -57,7 +57,7 @@ theorem cyc_add (z w : Cocycle (LateralTheory.E.LocSecPf.pt R X) (res R F) n) :
     cyc X F n e he (z + w) = cyc X F n e he z + cyc X F n e he w := by
   apply Subtype.ext
   change ee X F e n (fz X F n (z + w)) = ee X F e n (fz X F n z) + ee X F e n (fz X F n w)
-  rw [fz_add, map_add]
+  rw [fz_add, map_add (f := _)]
 
 def phi : Cocycle (LateralTheory.E.LocSecPf.pt R X) (res R F) n →+ (S X F n).moduleCatLeftHomologyData.H where
   toFun z := (LinearMap.range (S X F n).moduleCatToCycles).mkQ (cyc X F n e he z)
@@ -69,7 +69,7 @@ def phi : Cocycle (LateralTheory.E.LocSecPf.pt R X) (res R F) n →+ (S X F n).m
     rw [this, map_zero]
     rfl
   map_add' z w := by
-    rw [cyc_add, map_add]
+    rw [cyc_add, map_add (f := _)]
     rfl
 
 theorem phi_eq_zero_iff (z : Cocycle (LateralTheory.E.LocSecPf.pt R X) (res R F) n) :

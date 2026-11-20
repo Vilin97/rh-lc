@@ -190,7 +190,7 @@ theorem eqF (s : Side B M om pi p S) (s₁ : Side B M₁ om₁ pi₁ p₁ S₁) 
     rw [s₁.linF hψ _ (b.mapS v _ hx') hz, Pi.zero_apply]
     apply mul_left_cancel₀ hc
     rw [mul_add, k]; ring)
-  rw [map_add, map_smul, neg_smul, add_neg_eq_zero] at this
+  rw [map_add (f := _), map_smul, neg_smul, add_neg_eq_zero] at this
   rw [this, s₁.wdF v h₁ h₁v _ (s₁.le v (b.mapS v x hx)) _ hy _ (s₁.le v hz) _ hy' az a₁ e]
 
 theorem eqK (s : Side B M om pi p S) (s₁ : Side B M₁ om₁ pi₁ p₁ S₁) (b : Br B M om M₁ om₁ H' χ r S S₁ Ev L Λ)
@@ -208,10 +208,10 @@ theorem eqK (s : Side B M om pi p S) (s₁ : Side B M₁ om₁ pi₁ p₁ S₁) 
     rw [one_mul, s.arch hφ hT, h1, h1, I_smul, I_smul, ← I_right', s₁.arch hψ hT₁] at k
     obtain ⟨l, hl⟩ := s₁.clm hψ g
     rw [← hl, ← hl] at k
-    rw [← hl, map_add, map_smul, Pi.zero_apply, smul_eq_mul]
+    rw [← hl, map_add (f := _), map_smul, Pi.zero_apply, smul_eq_mul]
     apply mul_left_cancel₀ hc
     rw [mul_add, k]; ring)
-  rw [map_add, map_smul, neg_smul, add_neg_eq_zero] at this
+  rw [map_add (f := _), map_smul, neg_smul, add_neg_eq_zero] at this
   rw [this, s₁.wdK k₁ hk₁ _ (b.pol f hf) _ hf₁ _ _ (hT₁.2 _) a₁ e]
 
 theorem eqN (s : Side B M om pi p S) (s₁ : Side B M₁ om₁ pi₁ p₁ S₁) (b : Br B M om M₁ om₁ H' χ r S S₁ Ev L Λ)
@@ -262,8 +262,8 @@ theorem eqL (s : Side B M om pi p S) (s₁ : Side B M₁ om₁ pi₁ p₁ S₁) 
     rw [z, h0] at d2
     simp only [sc, map_one, Circle.coe_one, NNReal.coe_one, Real.one_rpow, Complex.ofReal_one, one_mul,
       ContinuousLinearMap.comp_apply] at d2
-    rw [← hl', map_sub, map_add, map_smul, d2, Pi.zero_apply, smul_eq_mul, sub_self])
-  rw [map_sub, sub_eq_zero, map_add, map_smul] at this
+    rw [← hl', map_sub, map_add (f := _), map_smul, d2, Pi.zero_apply, smul_eq_mul, sub_self])
+  rw [map_sub, sub_eq_zero, map_add (f := _), map_smul] at this
   rw [this, e, s₁.wdL γ₁ hγ₁ _ (b.pol f hf) _ hf₁ _ _ ag₁ a₁ e]
 
 end

@@ -27,7 +27,7 @@ theorem comm4 {R : Type} [CommRing R] (c a h H : R) : c * (a * h * H) = c * a * 
 theorem split_half {E R : Type} [Field E] [CharZero E] [CommRing R] (f : E →+* R) (x k : R) :
     x * k = x * (k * f ((2 : ℕ) : E)⁻¹) + x * (k * f ((2 : ℕ) : E)⁻¹) := by
   have h : f ((2 : ℕ) : E)⁻¹ * (1 + 1) = 1 := by
-    rw [← map_one f, ← map_add, ← map_mul]
+    rw [← map_one f, ← map_add (f := _), ← map_mul]
     congr 1
     norm_num
   linear_combination (-(x * k)) * h
@@ -35,7 +35,7 @@ theorem split_half {E R : Type} [Field E] [CharZero E] [CommRing R] (f : E →+*
 theorem half_add {F R : Type} [Field F] [CharZero F] [CommRing R] (g : F →+* R) (t : R) :
     g (1 / 2) * (t + t) = t := by
   have h : g (1 / 2) * (1 + 1) = 1 := by
-    rw [← map_one g, ← map_add, ← map_mul]
+    rw [← map_one g, ← map_add (f := _), ← map_mul]
     congr 1
     norm_num
   linear_combination t * h
@@ -87,7 +87,7 @@ theorem char_symplOH_conjHalf_rest : ∀ (D : D7) (ψ : AddChar (AF D.host.F) �
       (c : AE D) * cA D e * hO S T Y Z * incA D ((2 : ℕ) : D.host.E)⁻¹ := by
     rw [hO_nsmul_left, hO_smul_right, map_mul, hcA2]
     exact comm4 _ _ _ _
-  rw [symplOH, symplO, k1, split_half (incA D) (incA D D.host.xi0) ((c : AE D) * cA D e * hO S T Y Z), map_add,
+  rw [symplOH, symplO, k1, split_half (incA D) (incA D D.host.xi0) ((c : AE D) * cA D e * hO S T Y Z), map_add (f := _),
     half_add (algebraMap D.host.F (AF D.host.F)), ← k2]
   exact GlobalTheory.LatVac.char_sympl_eq_one hψ hS hT hY hZ'
 

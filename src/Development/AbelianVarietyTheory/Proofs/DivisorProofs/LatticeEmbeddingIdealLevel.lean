@@ -177,7 +177,7 @@ variable (W : HSp D) (β : GL (Fin W.rank) (EAf D)) (e : AE D) {La : Type} [AddC
 def rho (PP : Pl D.host.E) (a : Fin W.rank) : La →+ kP PP :=
   (resS D.host.F PP).toAddMonoidHom.comp (AddMonoidHom.mk' (fun x => ⟨_, hi x a⟩) fun x y => Subtype.ext (by
     change rowP W β e (ι (x + y)) a = rowP W β e (ι x) a + rowP W β e (ι y) a
-    rw [map_add, rowPairing_add]))
+    rw [map_add (f := _), rowPairing_add]))
 
 theorem rho_apply (PP : Pl D.host.E) (a : Fin W.rank) (x : La) :
     rho W β e ι hi PP a x = resS D.host.F PP ⟨_, hi x a⟩ := rfl

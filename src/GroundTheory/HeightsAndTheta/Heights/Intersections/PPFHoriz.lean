@@ -77,7 +77,7 @@ theorem aeval_xW (W : Ideal (MRing ι')) [W.IsPrime] (f : MRing ι') :
     rw [aeval_C, eq_intCast (algebraMap ℤ (FractionRing (MRing ι' ⧸ W))) a]
     exact (eq_intCast (((algebraMap (MRing ι' ⧸ W) (FractionRing (MRing ι' ⧸ W))).comp
       (Ideal.Quotient.mk W)).comp C) a).symm
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p n hp => rw [map_mul, map_mul, map_mul, hp, aeval_X, xW]
 
 theorem ker_aeval_xW (W : Ideal (MRing ι')) [W.IsPrime] :
@@ -128,7 +128,7 @@ theorem exists_clear (hκv : IsBlockMap κ v) (G : GenFibre v P') (g : MRingOver
     obtain ⟨b₁, F₁, h₁, e₁⟩ := hp
     obtain ⟨b₂, F₂, h₂, e₂⟩ := hq
     refine ⟨b₁ * b₂, rename v b₂ * F₁ + rename v b₁ * F₂, by rw [map_mul]; exact mul_ne_zero h₁ h₂, ?_⟩
-    simp only [map_add, map_mul, baseSubst_rename hκv, ← e₁, ← e₂]
+    simp only [map_add (f := _), map_mul, baseSubst_rename hκv, ← e₁, ← e₂]
     ring
   | mul_X p n hp =>
     obtain ⟨b, F, h, e⟩ := hp

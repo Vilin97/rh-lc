@@ -71,7 +71,7 @@ lemma exists_repr_point (ν : Measure K) [ν.IsHaarMeasure]
       add_mem' := by
         rintro T T' ⟨τ, hτ⟩ ⟨τ', hτ'⟩
         refine ⟨τ + τ', fun σ => ?_⟩
-        rw [map_add, hτ, hτ', ← integral_add]
+        rw [map_add (f := _), hτ, hτ', ← integral_add]
         · simp [add_mul]
         · exact integrable_of_cont ν ((Complex.continuous_conj.comp (hb τ)).mul (hb σ))
         · exact integrable_of_cont ν ((Complex.continuous_conj.comp (hb τ')).mul (hb σ))
@@ -216,7 +216,7 @@ theorem representing_vector : ∀ {K M H X : Type} [Group K] [TopologicalSpace K
       intro φ
       let σ : (A →ₗ[ℂ] A) →ₗ[ℂ] ℂ :=
         { toFun := fun ψ => τ (ψ ∘ₗ φ)
-          map_add' := fun ψ ψ' => by rw [LinearMap.add_comp, map_add]
+          map_add' := fun ψ ψ' => by rw [LinearMap.add_comp, map_add (f := _)]
           map_smul' := fun c ψ => by rw [LinearMap.smul_comp, map_smul]; rfl }
       exact hinv σ
     let η : (A →ₗ[ℂ] A) →ₗ[ℂ] ℂ :=

@@ -100,7 +100,7 @@ theorem quadratic_top_algebra_holds : QTopAlg := by
         congr 1
         split_ifs with hl
         · have : Y + h - ((l : ℕ) : ℂ) = Y + (h - ((l : ℕ) : ℂ)) := by ring
-          rw [this, map_add]
+          rw [this, map_add (f := _)]
           abel
         · simp
       rw [e1, ← eval_prodP]

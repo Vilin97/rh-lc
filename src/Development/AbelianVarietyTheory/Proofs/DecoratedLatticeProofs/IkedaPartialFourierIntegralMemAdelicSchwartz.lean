@@ -44,13 +44,13 @@ theorem exists_split {D : D7} {θ : InfFam D} (hθ : IsInfFam θ) (m n : ℕ) :
             continuous_invFun := ?_ }, fun x => rfl⟩
   · funext τ i j
     show θ τ (infPart D (s (p.2 i j) + σ fun τ => p.1 τ i j)) = p.1 τ i j
-    rw [RingHom.map_add, RingHom.map_add, hsi, hσ.comp, RingHom.map_zero, zero_add]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hsi, hσ.comp, RingHom.map_zero, zero_add]
   · funext i j
     show finPart D (s (p.2 i j) + σ fun τ => p.1 τ i j) = p.2 i j
-    rw [RingHom.map_add, hsf, hσ.fin, add_zero]
+    rw [RingHom.map_add (f := _), hsf, hσ.fin, add_zero]
   · funext τ i j
     show θ τ (infPart D (x i j + y i j)) = θ τ (infPart D (x i j)) + θ τ (infPart D (y i j))
-    rw [RingHom.map_add, RingHom.map_add]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _)]
   · funext i j
     exact (finPart D).map_add _ _
   · exact (continuous_pi fun τ => continuous_pi fun i => continuous_pi fun j =>
@@ -81,7 +81,7 @@ theorem map_emb (x : Mx D t n) (a : Mx D T'.rank n) :
     (fun i j => φ ((d.jX ⬝ x + d.j0 ⬝ a : Mx D T.rank n) i j)) =
       lmul n (d.jX.map φ) (fun i j => φ (x i j)) + lmul n (d.j0.map φ) (fun i j => φ (a i j)) := by
   show (d.jX ⬝ x + d.j0 ⬝ a : Mx D T.rank n).map φ = d.jX.map φ ⬝ x.map φ + d.j0.map φ ⬝ a.map φ
-  rw [Matrix.map_add _ φ.map_add, Matrix.map_mul, Matrix.map_mul]
+  rw [Matrix.map_add _ φ.map_add (f := _), Matrix.map_mul, Matrix.map_mul]
 
 theorem pX_emb (x : Fin t → Fin n → R) (a : Fin T'.rank → Fin n → R) :
     lmul n (d.pX.map φ) (lmul n (d.jX.map φ) x + lmul n (d.j0.map φ) a) = x := by

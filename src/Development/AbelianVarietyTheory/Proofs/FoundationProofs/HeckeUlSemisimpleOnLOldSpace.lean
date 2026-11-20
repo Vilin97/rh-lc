@@ -240,7 +240,7 @@ theorem good_add {u : Module.End ℂ (ℍ → ℂ)} {α : ℂ} {G H : ℍ → �
     rw [e1, map_mul, Module.End.mul_apply, hG, map_zero]
   have hH' : aeval u ((X - C α) * (g * h)) H = 0 := by
     rw [e2, map_mul, Module.End.mul_apply, hH, map_zero]
-  rw [map_add, hG', hH', add_zero]
+  rw [map_add (f := _), hG', hH', add_zero]
 
 theorem good_of_quad (u : Module.End ℂ (ℍ → ℂ)) (α μ c : ℂ) (hαc : α ^ 2 ≠ c) (G : ℍ → ℂ)
     (h : aeval u (X ^ 2 - C μ * X + C c) G = 0) : Good u α G := by
@@ -280,7 +280,7 @@ theorem eigen_of_good (u : Module.End ℂ (ℍ → ℂ)) (α : ℂ) (G : ℍ →
   have key : X - C α = s * ((X - C α) * (X - C α) ^ n) + t * ((X - C α) * g) := by
     linear_combination (-(X - C α)) * hst
   have h1 : aeval u (X - C α) G = 0 := by
-    rw [key, map_add, map_mul, map_mul, LinearMap.add_apply, Module.End.mul_apply, Module.End.mul_apply,
+    rw [key, map_add (f := _), map_mul, map_mul, LinearMap.add_apply, Module.End.mul_apply, Module.End.mul_apply,
       map_mul, Module.End.mul_apply, hit, map_zero, map_zero, hk, map_zero, add_zero]
   rw [hlin] at h1
   simpa [sub_eq_zero] using h1
@@ -417,7 +417,7 @@ theorem ul_oldSpace : ∀ (N l k : ℕ), 5 ≤ N → l.Prime → ¬ l ∣ N → 
     · simp only [ZeroMemClass.coe_zero, map_zero]
       exact ⟨good_zero u α, good_zero u α⟩
     · intro a b ha hb
-      simp only [Submodule.coe_add, map_add]
+      simp only [Submodule.coe_add, map_add (f := _)]
       exact ⟨good_add ha.1 hb.1, good_add ha.2 hb.2⟩
   refine ⟨?_, ?_⟩
   · obtain ⟨g, hg, hgeq⟩ := stab f₁ hf₁
@@ -426,7 +426,7 @@ theorem ul_oldSpace : ∀ (N l k : ℕ), 5 ≤ N → l.Prime → ¬ l ∣ N → 
     have ht := tq_eq N (k : ℤ) l hl0 s χ hs _ hf₁
     rw [← hgeq] at ht
     change u (⇑f₁ + v ⇑f₂) = ⇑g + Lc • ⇑f₂ + v ((-(χ (l : ZMod N))) • ⇑f₁)
-    rw [map_add, huv _ ⟨f₂, rfl, hf₂⟩, map_smul, ht]
+    rw [map_add (f := _), huv _ ⟨f₂, rfl, hf₂⟩, map_smul, ht]
     change u ⇑f₁ + Lc • ⇑f₂ = u ⇑f₁ + χ (l : ZMod N) • v ⇑f₁ + Lc • ⇑f₂ + -χ (l : ZMod N) • v ⇑f₁
     module
   · intro n hn

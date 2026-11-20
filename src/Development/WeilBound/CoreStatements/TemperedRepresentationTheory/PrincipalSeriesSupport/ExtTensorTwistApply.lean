@@ -39,7 +39,7 @@ theorem extTensor_twist_apply {a b : ℕ} {W W' : Type} [AddCommGroup W] [Module
     extTensor (twist σ χ₁) (twist ρ χ₂) (x, y) w = ((χ₁ x * χ₂ y : ℂˣ) : ℂ) • TensorProduct.map (σ x) (ρ y) w := by
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add u v hu hv => rw [map_add, hu, hv, map_add, smul_add]
+  | add u v hu hv => rw [map_add (f := _), hu, hv, map_add (f := _), smul_add]
   | tmul u v =>
     rw [extTensor_tmul, TensorProduct.map_tmul, twist_apply, twist_apply, TensorProduct.smul_tmul_smul,
       Units.val_mul]
@@ -128,7 +128,7 @@ theorem supp_of_mapsToProd : Ysupp.ProdSupport → ∀ (g : ℕ) [Fact g.Prime] 
           rw [map_mul, Module.End.mul_apply, hh'])⟩
       map_add' := fun v w => Subtype.ext (Subtype.ext (funext fun x => by
         show Λ (π x (v + w)) = Λ (π x v) + Λ (π x w)
-        rw [map_add, map_add]))
+        rw [map_add (f := _), map_add (f := _)]))
       map_smul' := fun c v => Subtype.ext (Subtype.ext (funext fun x => by
         show Λ (π x (c • v)) = c • Λ (π x v)
         rw [map_smul, map_smul]))

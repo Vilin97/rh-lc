@@ -75,12 +75,12 @@ theorem nonempty_tensor_equiv : ∀ (A B : Type) [CommRing A] [CommRing B] [Alge
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul b x => rw [hμ]; exact N.smul_mem b ((hL _).1 x.2)
-    | add s t hs ht => rw [map_add]; exact N.add_mem hs ht
+    | add s t hs ht => rw [map_add (f := _)]; exact N.add_mem hs ht
   have hμD : ∀ (a : L) (y : Fin h → B),
       μ (D hN hL a y) = piMap (algebraMap A B) (Fin h) a + algebraMap A B f • y := by
     intro a y
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [D, map_add, map_sum, hμ, one_smul]
+      simp only [D, map_add (f := _), map_sum, hμ, one_smul]
     congr 1
     ext k
     simp [fx, Finset.sum_apply, Pi.single_apply, mul_comm, Algebra.smul_def]
@@ -103,7 +103,7 @@ theorem nonempty_tensor_equiv : ∀ (A B : Type) [CommRing A] [CommRing B] [Alge
     fun n a y hn => D_eq hN hL hreg hinj _ _ _ _ ((hc n).symm.trans hn)
   have hψadd : ∀ m n, ψ (m + n) = ψ m + ψ n := fun m n => by
     rw [hψ (m + n) (ca m + ca n) (cy m + cy n), D_add]
-    rw [Submodule.coe_add, hc m, hc n, Submodule.coe_add, map_add, smul_add]
+    rw [Submodule.coe_add, hc m, hc n, Submodule.coe_add, map_add (f := _), smul_add]
     abel
   let μN := LinearMap.codRestrict N μ hrange
   have hleft : ∀ t, ψ (μN t) = t := fun t => by
@@ -133,7 +133,7 @@ theorem nonempty_tensor_equiv : ∀ (A B : Type) [CommRing A] [CommRing B] [Alge
         simp [Algebra.smul_def, mul_comm]
       rw [add_tmul, h1, h2]
       rfl
-    | add s t hs ht => rw [map_add, hψadd, hs, ht]
+    | add s t hs ht => rw [map_add (f := _), hψadd, hs, ht]
   refine ⟨LinearEquiv.ofBijective μN ⟨Function.LeftInverse.injective hleft, fun n => ?_⟩⟩
   exact ⟨D hN hL (ca n) (cy n), Subtype.ext ((hμD _ _).trans (hc n).symm)⟩
 

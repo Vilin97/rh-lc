@@ -40,7 +40,7 @@ theorem one_sub_mul_conj {a E : AE D} (ha : IsSplitIdem D a) (hE : a + cA D a = 
   rw [← hE]; linear_combination (-1 : AE D) * h3 - h2
 
 theorem cA_E {a E : AE D} (hE : a + cA D a = E) : cA D E = E := by
-  rw [← hE, map_add, GlobalTheory.DualPairCheck.cA_cA, add_comm]
+  rw [← hE, map_add (f := _), GlobalTheory.DualPairCheck.cA_cA, add_comm]
 
 theorem smul_half_zero {m n : ℕ} {a E : AE D} (h : (1 - E) * a = 0) {y : Mx D m n} (hy : IsHalf a y) :
     (1 - E) • y = 0 := by

@@ -59,7 +59,7 @@ theorem trace_cm (h : IsCMExt F E σ) (x : E) : algebraMap F E (Algebra.trace F 
     simpa using eq_or_eq_comp_conj h τ τ'
   rw [h2, Finset.sum_pair (comp_conj_ne h τ).symm] at h1
   apply (algebraMap E (AlgebraicClosure E)).injective
-  rw [← IsScalarTower.algebraMap_apply, h1, map_add]
+  rw [← IsScalarTower.algebraMap_apply, h1, map_add (f := _)]
   rfl
 
 theorem val_le_one_of_codiff {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) {v : Pl F} (hv : PsiUnr ψ v) (a : F)
@@ -93,7 +93,7 @@ variable (E) in
 def codE : Submodule (𝓞 E) E where
   carrier := {c | ∀ o : 𝓞 E, IsIntegral ℤ (Algebra.trace ℚ E (o * c))}
   zero_mem' o := by simpa using isIntegral_zero
-  add_mem' ha hb o := by rw [mul_add, map_add]; exact (ha o).add (hb o)
+  add_mem' ha hb o := by rw [mul_add, map_add (f := _)]; exact (ha o).add (hb o)
   smul_mem' a c hc o := by
     have := hc (o * a)
     change IsIntegral ℤ (Algebra.trace ℚ E ((o : E) * (a : E) * c)) at this
@@ -116,7 +116,7 @@ theorem val_le_one_of_intE {v : Pl F} (τ : E →ₐ[F] Fv F v) (c : E) (hc : c 
 theorem val_le_one_of_codE (h : IsCMExt F E σ) {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) {v : Pl F} (hv : PsiUnr ψ v)
     (τ : E →ₐ[F] Fv F v) (c : E) (hc : c ∈ codE E) : Valued.v (τ c) ≤ 1 := by
   have h1 : ∀ o : 𝓞 E, Valued.v (τ (o * c) + τ (σ (o * c))) ≤ 1 := fun o => by
-    rw [← map_add, ← trace_cm h, AlgHom.commutes]
+    rw [← map_add (f := _), ← trace_cm h, AlgHom.commutes]
     refine val_le_one_of_codiff hψ hv _ fun a => ?_
     have := hc (algebraMap (𝓞 F) (𝓞 E) a * o)
     rw [← Algebra.trace_trace (S := F)] at this

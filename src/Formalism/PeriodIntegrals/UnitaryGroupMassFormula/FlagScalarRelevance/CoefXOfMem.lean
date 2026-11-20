@@ -20,7 +20,7 @@ theorem coefX_add' (F : FlagG S r T) (x y : S.V) (k : Fin r) (hx : x ∈ F.X) (h
     F.coefX (x + y) k = F.coefX x k + F.coefX y k := by
   rw [coefX_of_mem F _ (F.X.add_mem hx hy), coefX_of_mem F _ hx, coefX_of_mem F _ hy]
   have : (⟨x + y, F.X.add_mem hx hy⟩ : Submodule.span E (Set.range F.e)) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-  rw [this, map_add, Finsupp.add_apply]
+  rw [this, map_add (f := _), Finsupp.add_apply]
 
 theorem coefX_smul' (F : FlagG S r T) (a : E) (x : S.V) (k : Fin r) (hx : x ∈ F.X) :
     F.coefX (a • x) k = a * F.coefX x k := by

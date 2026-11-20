@@ -13,7 +13,7 @@ theorem UpperTheory.V.X.Kato.bkMap :
     refine ⟨j, hj, ⟨?_, fun g h => ?_⟩, LinearMap.rTensor (UpperTheory.V.Loc.Bcr l) f x, fun g => ?_⟩
     · exact hfc.comp (continuous_fst.comp continuous_subtype_val)
     · have h1 := congrArg f (hcc g h)
-      simpa only [map_add, hf, MonoidHom.comp_apply] using h1
+      simpa only [map_add (f := _), hf, MonoidHom.comp_apply] using h1
     · have key : ∀ y : TensorProduct ℚ_[l] V (UpperTheory.V.Loc.Bcr l),
           LinearMap.rTensor (UpperTheory.V.Loc.Bcr l) f
             (UpperTheory.V.Loc.actC ((MonoidHom.snd _ _).comp (decJ F j).subtype)
@@ -25,5 +25,5 @@ theorem UpperTheory.V.X.Kato.bkMap :
         induction y using TensorProduct.induction_on with
         | zero => simp
         | tmul a b => simp [UpperTheory.V.Loc.actC, hf]
-        | add a b ha hb => simp only [map_add, ha, hb]
+        | add a b ha hb => simp only [map_add (f := _), ha, hb]
       rw [← key, ← map_sub, ← hx g, LinearMap.rTensor_tmul]

@@ -72,7 +72,7 @@ theorem counit_eq_zero_of_primitive [Nontrivial A] (f : A)
     (hf : Coalgebra.comul (R := k) f = f ⊗ₜ[k] (1 : A) + (1 : A) ⊗ₜ[k] f) :
     Coalgebra.counit (R := k) f = 0 := by
   have key := congrArg (fun t => TensorProduct.lid k A (LinearMap.rTensor A Coalgebra.counit t)) hf
-  simp only [Coalgebra.rTensor_counit_comul, map_add, LinearMap.rTensor_tmul,
+  simp only [Coalgebra.rTensor_counit_comul, map_add (f := _), LinearMap.rTensor_tmul,
     TensorProduct.lid_tmul, Bialgebra.counit_one, one_smul] at key
   have h2 : Coalgebra.counit (R := k) f • (1 : A) = 0 := by
     have := congrArg (· - f) key

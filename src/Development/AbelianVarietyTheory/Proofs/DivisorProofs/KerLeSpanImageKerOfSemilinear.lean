@@ -31,7 +31,7 @@ theorem ker_le_span_image_ker_of_semilinear :
     rintro _ ⟨x, rfl⟩
     have hx : x ∈ LinearMap.ker θ ⊔ C := by rw [hC.sup_eq_top]; trivial
     obtain ⟨u, hu, c, hc, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add]
+    rw [map_add (f := _)]
     refine Submodule.add_mem_sup (Submodule.subset_span ⟨u, hu, rfl⟩) ?_
     have hcs : c = ∑ k, b.repr ⟨c, hc⟩ k • (b k : X) := by
       have := congrArg (fun z : C => (z : X)) (b.sum_repr ⟨c, hc⟩)
@@ -51,7 +51,7 @@ theorem ker_le_span_image_ker_of_semilinear :
   have h0 : ∑ k, a k • jW (θ (b k : X)) = 0 := by
     have : T (u + ∑ k, a k • j (b k : X)) = 0 := hh
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, hTu, zero_add, map_sum] at this
+      rw [map_add (f := _), hTu, zero_add, map_sum] at this
     simpa [hT] using this
   have ha := Fintype.linearIndependent_iff.1 hli2 a h0
   simpa [ha] using hu

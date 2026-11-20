@@ -86,11 +86,11 @@ theorem hv_add {s s' : Ω} {w w' : 𝕜} (h : Small.HasVal y (0 : K → ℤ) s z
     isMultiHomog_mul_of_mRing hh hh', fun k => by simp, ?_, ?_, ?_⟩
   · rw [add_comm dg dg']
     exact isMultiHomog_mul_of_mRing hg' hh
-  · simp only [map_add, map_mul, ey, ey']
+  · simp only [map_add (f := _), map_mul, ey, ey']
     ring
   · rw [map_mul]
     exact mul_ne_zero hz hz'
-  · simp only [map_add, map_mul, ez, ez']
+  · simp only [map_add (f := _), map_mul, ez, ez']
     ring
 
 theorem hv_neg {s : Ω} {w : 𝕜} (h : Small.HasVal y (0 : K → ℤ) s z w) :
@@ -155,7 +155,7 @@ theorem exists_subring_val : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k
     induction f using MvPolynomial.induction_on
     · simp [mConeMap]
     · rename_i hp hq
-      simp only [map_add, hp, hq]
+      simp only [map_add (f := _), hp, hq]
     · rename_i hp
       simp only [map_mul, hp]
       simp [mConeMap]

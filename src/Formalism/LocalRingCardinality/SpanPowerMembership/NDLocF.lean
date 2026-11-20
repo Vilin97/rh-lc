@@ -16,7 +16,7 @@ theorem residue_algebraMap (c : ℤ_[l]) :
   have hc : c = (((PadicInt.toZMod c).val : ℕ) : ℤ_[l]) + (l : ℤ_[l]) * d := by
     rw [← hd, ZMod.natCast_val]; ring
   conv_lhs => rw [hc]
-  rw [map_add, map_add, map_mul, map_mul, map_natCast, map_natCast, map_natCast, map_natCast]
+  rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_natCast, map_natCast, map_natCast, map_natCast]
   have h0 : (((l : ℕ) : ResidueField ↥(OL LL))) = 0 := by
     rw [← map_natCast (residue ↥(OL LL))]
     exact (residue_eq_zero_iff _).mpr (l_mem_max LL)

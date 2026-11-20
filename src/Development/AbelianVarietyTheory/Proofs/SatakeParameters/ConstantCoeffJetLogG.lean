@@ -241,7 +241,7 @@ theorem b4 {be : MvPowerSeries (ZMod d) ℂ_[l]} (h : IsBe d be) : product_zerot
     · intro s
       by_cases hs : Even s.val
       · simp only [hs, decide_true, if_true]
-        rw [subst_add hJ, subst_X hJ, subst_X hJ, map_add, rename_laAt0, rename_laAt1]
+        rw [subst_add hJ, subst_X hJ, subst_X hJ, map_add (f := _), rename_laAt0, rename_laAt1]
       · simp only [hs, decide_false, if_false, Bool.false_eq_true]
         rw [subst_X hJ, rename_laAt0]
     · intro s
@@ -264,7 +264,7 @@ theorem b4 {be : MvPowerSeries (ZMod d) ℂ_[l]} (h : IsBe d be) : product_zerot
       · simp only [hs, decide_true, if_true, Bool.true_eq_false, if_false]
         rw [subst_X hJ, rename_laAt0]
       · simp only [hs, decide_false, if_false, if_true]
-        rw [subst_add hJ, subst_X hJ, subst_X hJ, map_add, rename_laAt0, rename_laAt1]
+        rw [subst_add hJ, subst_X hJ, subst_X hJ, map_add (f := _), rename_laAt0, rename_laAt1]
     · intro s
       rw [subst_X hJ, rename_laAt0]
     · intro s

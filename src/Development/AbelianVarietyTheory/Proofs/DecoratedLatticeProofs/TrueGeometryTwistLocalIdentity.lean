@@ -74,10 +74,10 @@ theorem idele_off {R : Type} [CommRing R] (φ : AE D →+* R) (h : φ (p.e + cA 
     have : p.e = p.e * (p.e + cA D p.e) := by rw [mul_add, e1, e2, add_zero]
     rw [this, map_mul, h, mul_zero]
   have f2 : φ (cA D p.e) = 0 := by
-    rw [map_add, f1, zero_add] at h; exact h
+    rw [map_add (f := _), f1, zero_add] at h; exact h
   have s : p.sec a = p.e * p.sec a := by rw [← p.sec_pr, p.pr_sec]
   rw [p.idele_val, s]
-  simp only [map_add, map_sub, map_mul, map_one, f1, f2]
+  simp only [map_add (f := _), map_sub, map_mul, map_one, f1, f2]
   simp
 
 theorem idele_on {R : Type} [CommRing R] (φ : AE D →+* R) (h : φ (p.e + cA D p.e) = 1) (a : kˣ) (δ : AE D)
@@ -86,7 +86,7 @@ theorem idele_on {R : Type} [CommRing R] (φ : AE D →+* R) (h : φ (p.e + cA D
   have s : p.sec a = p.e * δ := by rw [← ha, p.sec_pr]
   rw [p.idele_val, s]
   have h2 := congrArg φ hδ
-  simp only [map_add, map_sub, map_mul, map_one] at h h2 ⊢
+  simp only [map_add (f := _), map_sub, map_mul, map_one] at h h2 ⊢
   linear_combination (φ δ - 1) * h - φ (cA D p.e) * h2
 
 end Pt

@@ -17,7 +17,7 @@ theorem primitive_apply_mul {k C : Type} [Field k] [CommRing C] [HopfAlgebra k C
     φ.ofConv (a * b) = counitAlgHom k C a • φ.ofConv b + counitAlgHom k C b • φ.ofConv a := by
   rw [cobOne_apply, sub_sub, sub_eq_zero, CartierDual.comul_eq_iff] at hφ
   have h := hφ a b
-  rw [map_add, LinearMap.add_apply, CartierDual.pair_tmul_tmul, CartierDual.pair_tmul_tmul,
+  rw [map_add (f := _), LinearMap.add_apply, CartierDual.pair_tmul_tmul, CartierDual.pair_tmul_tmul,
     CartierDual.one_apply, CartierDual.one_apply] at h
   change φ (a * b) = _
   rw [← h]

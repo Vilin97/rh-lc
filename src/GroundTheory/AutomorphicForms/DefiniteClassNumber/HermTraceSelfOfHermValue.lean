@@ -32,7 +32,7 @@ theorem baseTrace_conjBase (z : R ⊗[K] E) : baseTrace K E R (conjBase K E R z)
       trace_algebraMap_quadratic]
     congr 2
     ring
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem baseTrace_algebraMap (t : R) : baseTrace K E R (algebraMap R (R ⊗[K] E) t) = 2 * t := by
   have h1 : Algebra.trace K E 1 = 2 := by
@@ -47,7 +47,7 @@ theorem baseTrace_tensorMap {S : Type*} [CommRing S] [Algebra K S] (f : R →ₐ
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => rw [tensorMap_tmul, baseTrace_tmul, baseTrace_tmul, map_mul, AlgHom.commutes]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 end Trace
 
@@ -101,15 +101,15 @@ theorem conjBase_conjBase (z : R ⊗[K] E) : conjBase K E R (conjBase K E R z) =
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => rw [conjBase_tmul, conjBase_tmul, conj_conj]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem hermTrace_add_left (x x' y : ι → R ⊗[K] E) :
     hermTrace K H R (x + x') y = hermTrace K H R x y + hermTrace K H R x' y := by
-  rw [hermTrace, hermPair_add_left, map_add]; rfl
+  rw [hermTrace, hermPair_add_left, map_add (f := _)]; rfl
 
 theorem hermTrace_add_right (x y y' : ι → R ⊗[K] E) :
     hermTrace K H R x (y + y') = hermTrace K H R x y + hermTrace K H R x y' := by
-  rw [hermTrace, hermPair_add_right, map_add]; rfl
+  rw [hermTrace, hermPair_add_right, map_add (f := _)]; rfl
 
 theorem hermTrace_smul_left (c : R) (x y : ι → R ⊗[K] E) :
     hermTrace K H R (c • x) y = c * hermTrace K H R x y := by

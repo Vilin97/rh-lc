@@ -37,7 +37,7 @@ theorem exists_primitive_dUnit_eq : ∀ (p : ℕ) [Fact p.Prime] (K H : Type) [F
     induction ha using Algebra.adjoin_induction with
     | mem x hx => exact Submodule.mem_map_of_mem (p := P) hx
     | algebraMap r => rw [dUnit, AugCot.d_algebraMap]; exact S.zero_mem
-    | add x y _ _ hx hy => rw [dUnit, map_add]; exact S.add_mem hx hy
+    | add x y _ _ hx hy => rw [dUnit, map_add (f := _)]; exact S.add_mem hx hy
     | mul x y _ _ hx hy =>
       rw [dUnit, AugCot.d_mul]
       exact S.add_mem (S.smul_mem _ hy) (S.smul_mem _ hx)

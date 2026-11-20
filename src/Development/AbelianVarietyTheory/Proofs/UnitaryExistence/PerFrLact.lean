@@ -71,7 +71,7 @@ theorem per_gam : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Re
     intro n a b h
     apply (M.φ k).injective
     apply Subtype.ext
-    rw [hg, h, map_add, map_nsmul]
+    rw [hg, h, map_add (f := _), map_nsmul]
     rfl
   refine ⟨gam, ⟨fun a b => ?_, fun a ha => ?_, fun a => ?_⟩, fun x _ a => ?_⟩
   · have h1 := hB.ef k (gam a) (gam b)

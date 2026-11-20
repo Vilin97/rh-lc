@@ -48,7 +48,7 @@ private theorem mono_fin {H K : Type} [Group H] [CommRing K] (r : H →* M4 K) (
     | nil => right; simp
     | cons a L ih =>
       obtain ⟨g, i, j⟩ := a
-      simp only [List.map_cons, List.prod_cons, List.sum_cons, map_add]
+      simp only [List.map_cons, List.prod_cons, List.sum_cons, map_add (f := _)]
       rcases ih with h | ⟨h1, h2⟩
       · left; rw [h, mul_zero]
       by_cases h0 : r g i j = 0

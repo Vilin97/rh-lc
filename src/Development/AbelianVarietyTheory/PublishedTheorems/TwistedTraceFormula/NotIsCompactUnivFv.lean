@@ -169,7 +169,7 @@ theorem not_isCompact_split (σ : E →ₐ[F] E) {M : ℕ} {J : Matrix (Fin M) (
   have hcι : ∀ t, c (ι t) = ι t := sigR_algebraMap σ
   have hcc : c (c e) = e := by
     have h := congrArg c hsum
-    rw [map_add, hcι, ← hsum, add_comm] at h
+    rw [map_add (f := _), hcι, ← hsum, add_comm] at h
     exact add_right_cancel h
   have hce : c e * c e = c e := by rw [← map_mul, he]
   obtain ⟨i, j, hij⟩ : ∃ i j : Fin M, i ≠ j := ⟨⟨0, by omega⟩, ⟨1, by omega⟩, by simp⟩

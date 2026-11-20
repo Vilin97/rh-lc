@@ -95,7 +95,7 @@ theorem UpperTheory.V.Pa.coc_pl :
       simp [ρ', hm]
     have hz' : ∀ a b, z' (a * b) = z' a + ρ' a * z' b * ρ' a⁻¹ := by
       intro a b
-      simp only [z', ρ', hz, map_add, map_mul]
+      simp only [z', ρ', hz, map_add (f := _), map_mul]
     have hlq : ((l : ℕ) : R ⧸ I ^ m) = 0 := by
       rw [← map_natCast (Ideal.Quotient.mk (I ^ m)), hl, map_zero]
     have key : ∀ g : G.G₀, ρ' g = 1 → ρ' (g ^ l) = 1 ∧ z' (g ^ l) = 0 := by

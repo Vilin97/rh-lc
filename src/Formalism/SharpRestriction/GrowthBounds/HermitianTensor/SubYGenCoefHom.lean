@@ -251,10 +251,10 @@ theorem subY_inv (A : Type) [CommRing A] (r : ℕ) (v : MvPolynomial (Fin (r + 1
     · rw [mAH_subY_mid]
       by_cases hj : j' = j
       · subst hj
-        rw [if_pos rfl, map_add, map_mul, hθn, hθs, hθs, mAH_subY_mid, mAH_subY_mid, Finset.mul_sum,
+        rw [if_pos rfl, map_add (f := _), map_mul, hθn, hθs, hθs, mAH_subY_mid, mAH_subY_mid, Finset.mul_sum,
           ← Finset.sum_add_distrib]
         refine Finset.sum_congr rfl fun i _ => ?_
-        simp only [colAddGen_X, if_true, rename_X, map_add, map_mul]
+        simp only [colAddGen_X, if_true, rename_X, map_add (f := _), map_mul]
         ring
       · rw [if_neg (fun h => hj ((midI_inj r j' j).mp h)), hθs, mAH_subY_mid]
         refine Finset.sum_congr rfl fun i _ => ?_

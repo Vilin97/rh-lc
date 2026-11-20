@@ -37,7 +37,7 @@ theorem constEquiv_piTensor_detRep {n : ℕ} (χ : Fin n → kˣ →* ℂˣ) (L 
     simp only [map_smul, piTensor_tprod, PiTensorProduct.constantBaseRingEquiv_tprod, detRep, ofChar_apply,
       detChar_apply, Finset.prod_mul_distrib, smul_eq_mul]
     ring
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, mul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), mul_add]
 
 theorem isSubquotient_multiProd_prinSeries {n : ℕ} (e : (Σ _ : Fin n, Fin 1) ≃ Fin n)
     (χ : Fin n → kˣ →* ℂˣ) :

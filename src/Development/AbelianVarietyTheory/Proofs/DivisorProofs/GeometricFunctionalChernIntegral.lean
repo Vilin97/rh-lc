@@ -204,7 +204,7 @@ theorem geoFun_eq_integral : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsInt
     rw [zero_smul, zero_mul] at this
     exact this
   | add x y _ _ hx hy =>
-    rw [map_add, hx, hy, ← finsum_add_distrib (Set.toFinite _) (Set.toFinite _)]
+    rw [map_add (f := _), hx, hy, ← finsum_add_distrib (Set.toFinite _) (Set.toFinite _)]
     exact finsum_congr fun σ => ((integral_lin hX σ L).1 x y).symm
   | smul t x _ hx =>
     rw [map_smul, hx, smul_eq_mul, mul_finsum _ _]

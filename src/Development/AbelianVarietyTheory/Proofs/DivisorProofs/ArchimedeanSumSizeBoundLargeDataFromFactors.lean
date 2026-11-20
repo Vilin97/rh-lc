@@ -115,8 +115,8 @@ theorem RatLe.sum {ι : Type} (s : Finset ι) {z : ι → ℂ} {r : ℝ} (hr : 0
   | insert a s ha ih =>
     obtain ⟨y, e, hy⟩ := h a (Finset.mem_insert_self _ _)
     obtain ⟨y', e', hy'⟩ := ih fun i hi => h i (Finset.mem_insert_of_mem hi)
-    refine ⟨y + y', by rw [Finset.sum_insert ha, map_add, e, e'], ?_⟩
-    rw [Finset.card_insert_of_notMem ha, map_add]
+    refine ⟨y + y', by rw [Finset.sum_insert ha, map_add (f := _), e, e'], ?_⟩
+    rw [Finset.card_insert_of_notMem ha, map_add (f := _)]
     push_cast
     calc _ ≤ ‖σ y‖ + ‖σ y'‖ := norm_add_le _ _
       _ ≤ r + s.card * r := add_le_add hy hy'

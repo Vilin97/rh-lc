@@ -25,7 +25,7 @@ theorem herm_conj' {x H : Mat n} (hH : H.IsHermitian) : (xᴴ * H * x).IsHermiti
 
 theorem car_f (hu : IsUnit (sqQ lam)) (hB : Car) (hP : CfPair) (H H' : Mat n) (hH : H.IsHermitian)
     (hH' : H'.IsHermitian) : lefε n lam H * lefι n lam H' + lefι n lam H' * lefε n lam H = (H * H').trace • 1 := by
-  rw [lefε_apply, lefι_apply, cj_mul hu, cj_mul hu, ← map_add, ← mul_kronecker_mul, ← mul_kronecker_mul, mul_one,
+  rw [lefε_apply, lefι_apply, cj_mul hu, cj_mul hu, ← map_add (f := _), ← mul_kronecker_mul, ← mul_kronecker_mul, mul_one,
     ← add_kronecker, add_comm (creL n (cf n H) * annL n (cf n H')), hB n (cf n H) (cf n H')]
   have e : cf n H' ⬝ᵥ cf n H = (H * H').trace := by
     rw [← hP n H H' hH hH', dotProduct]

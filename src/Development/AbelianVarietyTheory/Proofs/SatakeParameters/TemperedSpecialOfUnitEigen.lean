@@ -173,7 +173,7 @@ theorem GlobalTheory.WeilDeligne.WD.tempered_lpChar_lpSp_of_mono0 : ∀ (E Ω : 
     | tmul x y =>
       ext1 i
       simp [e, TensorProduct.piScalarRightHom_tmul, scaledDiag_apply, hφ, smul_smul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have h2 : ∀ t, e ((a.tensor (WDRep.sp h l)).N t) = vecShift l (e t) := by
     intro t
     induction t using TensorProduct.induction_on with
@@ -182,7 +182,7 @@ theorem GlobalTheory.WeilDeligne.WD.tempered_lpChar_lpSp_of_mono0 : ∀ (E Ω : 
       ext1 i
       by_cases hi : 1 ≤ (i : ℕ) <;>
         simp [e, TensorProduct.piScalarRightHom_tmul, vecShift_apply, shiftEnd_apply, hN, hi]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   refine hp.of_equiv e.symm (fun v => ?_) (fun v => ?_)
   · obtain ⟨t, rfl⟩ := e.surjective v
     rw [← h1, e.symm_apply_apply, e.symm_apply_apply]

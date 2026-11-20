@@ -60,7 +60,7 @@ theorem swapReg_exists : ArCalc → ∃ G, Homog G ∧ SwapReg G := by
   have hsub := ((hC.arIso k Y p (d + 1) hp).2 (Fin 5) L5 Φ5 hΦ5).2.2 (Fin 5) L5 T hT
   have e5 := GlobalTheory.ArInt.Model.isArFun_unique hp hΦ5 hsub
   have eline : Φ (lin ![(a : ℝ), b, 1] ^ (d + 2)) + Φ (lin ![(b : ℝ), a, 1] ^ (d + 2)) = Φ5 (onLine d a b) := by
-    rw [← map_add, e3, LinearMap.comp_apply, AlgHom.toLinearMap_apply, e5, LinearMap.comp_apply, AlgHom.toLinearMap_apply]
+    rw [← map_add (f := _), e3, LinearMap.comp_apply, AlgHom.toLinearMap_apply, e5, LinearMap.comp_apply, AlgHom.toLinearMap_apply]
     change Φ5 (aeval _ (rename _ (swapSum d a b))) = _
     rw [onLine, aeval_rename]
     congr 2
@@ -90,7 +90,7 @@ theorem swapReg_exists : ArCalc → ∃ G, Homog G ∧ SwapReg G := by
       fin_cases i <;> rfl
     rw [this, ← AlgHom.toLinearMap_apply, ← LinearMap.comp_apply, ← e3', h0, LinearMap.zero_apply]
 
-  rw [eline, show onLine d a b = onBase d a b + (onLine d a b - onBase d a b) by ring, map_add, ebase, zero_add]
+  rw [eline, show onLine d a b = onBase d a b + (onLine d a b - onBase d a b) by ring, map_add (f := _), ebase, zero_add]
   exact hcore k B Y q p d hq hp hreg π w E h H flB fl hfl A Φ5 Ψ hΦ5 hΨ a b
 
 end GlobalTheory.CovTest.SwapLine

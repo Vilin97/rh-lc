@@ -122,7 +122,7 @@ theorem orbitMap_permRep (hx : x ∈ fixed ρ K) (g : G) (φ : G ⧸ K →₀ �
     orbitMap ρ K x (permRep K g φ) = ρ g (orbitMap ρ K x φ) := by
   induction φ using Finsupp.induction_linear with
   | zero => simp only [map_zero]
-  | add φ₁ φ₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+  | add φ₁ φ₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
   | single c a =>
     obtain ⟨h, rfl⟩ := QuotientGroup.mk_surjective c
     rw [permRep_single, MulAction.Quotient.smul_mk, smul_eq_mul, orbitMap_single hx, orbitMap_single hx, map_smul,

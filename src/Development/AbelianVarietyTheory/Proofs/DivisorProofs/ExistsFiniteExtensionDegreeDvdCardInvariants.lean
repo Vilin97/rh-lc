@@ -60,7 +60,7 @@ theorem exists_smul_of_comp_eq {A B Ω : Type} [CommRing A] [CommRing B] [Algebr
       add_mem' := by
         intro a b ha hb
         simp only [Set.mem_setOf_eq] at ha hb ⊢
-        rw [map_add, smul_add, map_add, ha, hb]
+        rw [map_add (f := _), smul_add, map_add (f := _), ha, hb]
       neg_mem' := by
         intro a ha
         simp only [Set.mem_setOf_eq] at ha ⊢
@@ -123,7 +123,7 @@ theorem exists_finite_extension_finrank_dvd :
       obtain ⟨b, rfl⟩ := hx'
       simpa using hx b
     | algebraMap c => exact σ.commutes c
-    | add x y _ _ h1 h2 => rw [map_add, h1, h2]
+    | add x y _ _ h1 h2 => rw [map_add (f := _), h1, h2]
     | inv x _ h1 => rw [map_inv₀, h1]
     | mul x y _ _ h1 h2 => rw [map_mul, h1, h2]
   have hdvd : Module.finrank k K ∣ Nat.card G := by

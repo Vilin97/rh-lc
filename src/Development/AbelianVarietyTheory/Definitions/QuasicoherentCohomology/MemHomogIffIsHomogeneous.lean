@@ -58,7 +58,7 @@ instance gradedAlgebra : GradedAlgebra (homog R M) :=
     | algebraMap r =>
       rw [AlgHom.commutes, DirectSum.algebraMap_apply]; rfl
     | add x y i hx hy ihx ihy =>
-      rw [map_add, ihx, ihy, ← map_add]
+      rw [map_add (f := _), ihx, ihy, ← map_add (f := _)]
       rfl
     | mem_mul m hm i x hx ih =>
       obtain ⟨_, rfl⟩ := hm
@@ -88,7 +88,7 @@ theorem algHom_eq_pow_mul {A : Type*} [CommRing A] [Algebra R A]
     {x : SymmetricAlgebra R M} (hx : x ∈ homog R M d) : φ x = s ^ d * ψ x := by
   induction hx using Submodule.pow_induction_on_left' with
   | algebraMap r => simp
-  | add x y i hx hy ihx ihy => rw [map_add, map_add, ihx, ihy, mul_add]
+  | add x y i hx hy ihx ihy => rw [map_add (f := _), map_add (f := _), ihx, ihy, mul_add]
   | mem_mul m hm i x hx ih =>
     obtain ⟨_, rfl⟩ := hm
     rw [map_mul, map_mul, ih, h, pow_succ]; ring
@@ -106,7 +106,7 @@ theorem mem_homog_iff_isHomogeneous {ι : Type*} (b : Basis ι R M) (d : ℕ)
       obtain ⟨i, rfl⟩ := hx
       simpa using MvPolynomial.isHomogeneous_X R i
     | zero => simp
-    | add x y _ _ hx hy => simpa only [map_add] using Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => simpa only [map_add (f := _)] using Submodule.add_mem _ hx hy
     | smul r x _ hx => simpa only [map_smul] using Submodule.smul_mem _ r hx
   · intro hx
     have h1 : (MvPolynomial.homogeneousSubmodule ι R 1).map
@@ -178,7 +178,7 @@ theorem isBaseChange_dual [Module.Finite R M] [Module.Projective R M] {j : M →
     intro t m
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
     | tmul s ξ =>
       simp [Φ, e, h.toDual_comp_apply, Algebra.smul_def, mul_comm]
   refine IsBaseChange.of_equiv (LinearEquiv.ofBijective Φ ⟨?_, ?_⟩)
@@ -202,7 +202,7 @@ theorem mapOver_mem_homog (j : M →ₗ[R] W) {d : ℕ} {x : SymmetricAlgebra R 
   | algebraMap r =>
     rw [AlgHom.commutes, IsScalarTower.algebraMap_apply R S (SymmetricAlgebra S W)]
     exact SetLike.algebraMap_mem_graded (homog S W) _
-  | add x y i hx hy ihx ihy => rw [map_add]; exact Submodule.add_mem _ ihx ihy
+  | add x y i hx hy ihx ihy => rw [map_add (f := _)]; exact Submodule.add_mem _ ihx ihy
   | mem_mul m hm i x hx ih =>
     obtain ⟨m, rfl⟩ := hm
     rw [map_mul, mapOver_ι, Nat.succ_eq_one_add]

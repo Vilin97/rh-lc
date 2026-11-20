@@ -80,7 +80,7 @@ theorem exists_conj_mul_eq_of_residue_one {R : Type} [CommRing R] [HenselianLoca
     linear_combination (-a * ui ^ 2) * hroot + (a * (ui * u + 1) - a * ui) * huui
   refine ⟨1 + e * (a * ui), ?_⟩
   have hσt : σ (a * ui) = a * ui := by rw [map_mul, hfix, hσui]
-  rw [map_add, map_one, map_mul σ e, hσt, ← hf]
+  rw [map_add (f := _), map_one, map_mul σ e, hσt, ← hf]
   linear_combination (a * ui) * hef + h2 - (a * ui) ^ 2 * hn
 
 theorem exists_isUnit_conj_mul_eq {R : Type} [CommRing R] [HenselianLocalRing R]

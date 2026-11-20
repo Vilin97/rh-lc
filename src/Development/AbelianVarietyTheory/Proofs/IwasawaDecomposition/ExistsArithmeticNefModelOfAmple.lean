@@ -126,7 +126,7 @@ theorem exists_model_strictPos : ∀ (F : Type) [Field F] [NumberField F] (Y : V
   obtain ⟨r, hr⟩ := IntModel.exists_presents (((⟨e, he1⟩ : ℕ+) : ℕ) • Δ) hL (by
     change toPic (e • Δ) = _
     have e₁ : cls L.B L.isLB = cls La.B La.isLB + cls Lb.B Lb.isLB := cls_tens La.isLB Lb.isLB L.isLB
-    rw [cls_pull L.isLB Z.j hL, e₁, map_add, ea, eb,
+    rw [cls_pull L.isLB Z.j hL, e₁, map_add (f := _), ea, eb,
       cls_div (isLB_lbPow (isLB_toLB Δ) e) (LB.isLB_pull (O1_isLB F Y.N) Y.ι), cls_lbPow (isLB_toLB Δ),
       map_nsmul, toPic_apply]
     abel)

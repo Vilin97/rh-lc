@@ -71,14 +71,14 @@ theorem conj_mem_K (k : H.K) : H.conj (k : H.E) ∈ H.K := by
   refine K_induction H (p := fun x => H.conj x ∈ H.K) ?_ ?_ ?_ ?_ ?_ k
   · rw [conj_b]; exact neg_mem (b_mem_K H)
   · intro r; rw [AlgEquiv.commutes]; exact H.K.algebraMap_mem r
-  · intro x y hx hy; rw [map_add]; exact add_mem hx hy
+  · intro x y hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · intro x hx; rw [map_inv₀]; exact inv_mem hx
   · intro x y hx hy; rw [map_mul]; exact mul_mem hx hy
 
 theorem fix_K (σ : H.E ≃ₐ[ℚ] H.E) (hσ : σ (H.sqd) = H.sqd) (k : H.K) : σ (k : H.E) = k := by
   refine K_induction H (p := fun x => σ x = x) hσ ?_ ?_ ?_ ?_ k
   · intro r; rw [AlgEquiv.commutes]
-  · intro x y hx hy; rw [map_add, hx, hy]
+  · intro x y hx hy; rw [map_add (f := _), hx, hy]
   · intro x hx; rw [map_inv₀, hx]
   · intro x y hx hy; rw [map_mul, hx, hy]
 
@@ -166,7 +166,7 @@ theorem phi_thetaK : H.φ₀ (((thetaK H : 𝓞 H.K) : H.K) : H.E) = (1 + Comple
   have h : (((thetaK H : 𝓞 H.K) : H.K) : H.E) = (1 + H.sqd) / 2 := by
     simp [thetaK, bK]
     rfl
-  rw [h, map_div₀, map_add, map_one, phi_b, map_ofNat]
+  rw [h, map_div₀, map_add (f := _), map_one, phi_b, map_ofNat]
 
 theorem conj_ideal (B : Ideal (𝓞 H.E)) (x : 𝓞 H.E) :
     x ∈ H.conj • B ↔ ∃ y ∈ B, H.conj (y : H.E) = (x : H.E) := by

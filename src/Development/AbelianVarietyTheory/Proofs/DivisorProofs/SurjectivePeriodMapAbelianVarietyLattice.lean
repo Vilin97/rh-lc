@@ -35,7 +35,7 @@ theorem surj_of_isAH (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (M : LB A.left) (u
       funext z; simp only [Pi.sub_apply]; ring
     rw [this]; exact hr i j
   · intro i l z hz
-    rw [hq i l z hz, map_add, hfv l]
+    rw [hq i l z hz, map_add (f := _), hfv l]
     ring
 
 theorem main : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.left) (u : HolUnif A L g), IsAbelianScheme A → ∀ p : u.Λ →+ ℂ, ∃ x, IsPer u.ex u.Λ x p := by

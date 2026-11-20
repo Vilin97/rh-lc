@@ -71,7 +71,7 @@ private theorem spanMono_prec {R M : Type} [CommRing R] [AddCommGroup M] [Module
     induction m with
     | zero => simp [g, hg0]
     | succ m ih =>
-      simp only [g, Finset.sum_range_succ, map_add] at ih ⊢
+      simp only [g, Finset.sum_range_succ, map_add (f := _)] at ih ⊢
       rw [← add_assoc, ih, hpe]
       abel
   have hcau : ∀ {a b : ℕ}, a ≤ b → g a ≡ g b [SMOD (I ^ a • ⊤ : Submodule R (Fin n → R))] := by
@@ -117,7 +117,7 @@ private theorem exists_pow_mem_map_maxIdeal_of_monic_aeval_mem {O B : Type} [Com
     have hsplit : Polynomial.aeval x p =
         x * Polynomial.aeval x p.divX + algebraMap O B (p.coeff 0) := by
       have h0 := congrArg (Polynomial.aeval x) (Polynomial.X_mul_divX_add p)
-      simp only [map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C] at h0
+      simp only [map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C] at h0
       exact h0.symm
     by_cases hc : p.coeff 0 ∈ maximalIdeal O
     · apply ih (m + 1) p.divX hq hqd
@@ -269,7 +269,7 @@ private theorem spanMono_parts {O X R : Type} [CommRing O] [IsLocalRing O] [IsNo
       exact SetLike.one_mem_graded N
     | single_add a b f _ _ ih =>
       have hw : Finsupp.weight W.wt (Finsupp.single a b + f) = b • W.wt a + Finsupp.weight W.wt f := by
-        rw [map_add, Finsupp.weight_apply, Finsupp.sum_single_index (by simp)]
+        rw [map_add (f := _), Finsupp.weight_apply, Finsupp.sum_single_index (by simp)]
       rw [hw, ← one_mul (1 : O), ← MvPowerSeries.monomial_mul_monomial, ← MvPowerSeries.X_pow_eq,
         map_mul, map_pow]
       exact SetLike.mul_mem_graded (SetLike.pow_mem_graded b (hN a)) ih

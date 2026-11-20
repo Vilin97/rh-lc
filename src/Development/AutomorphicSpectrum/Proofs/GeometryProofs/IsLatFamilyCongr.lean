@@ -177,7 +177,7 @@ def gamLat {o : Type} [CommRing o] [Algebra o Ω] (R : Subalgebra o Ω) (w : Ω)
     refine ⟨by simpa [smul_add] using W.add_mem h1 h1', ?_⟩
     have := (stdLat R (Fin n)).add_mem h2 h2'
     convert this using 1
-    simp only [Prod.fst_add, Prod.snd_add, map_add]; abel
+    simp only [Prod.fst_add, Prod.snd_add, map_add (f := _)]; abel
   zero_mem' := ⟨by simpa using W.zero_mem, by simpa using (stdLat R (Fin n)).zero_mem⟩
   neg_mem' := by
     rintro ⟨a, b⟩ ⟨h1, h2⟩
@@ -194,7 +194,7 @@ def delLat {o : Type} [CommRing o] [Algebra o Ω] (R : Subalgebra o Ω) (w : Ω)
     refine ⟨by simpa [smul_add] using (stdLat R (Fin n)).add_mem h1 h1', ?_⟩
     have := om.add_mem h2 h2'
     convert this using 1
-    simp only [Prod.fst_add, Prod.snd_add, map_add]; abel
+    simp only [Prod.fst_add, Prod.snd_add, map_add (f := _)]; abel
   zero_mem' := ⟨by simpa using (stdLat R (Fin n)).zero_mem, by simpa using om.zero_mem⟩
   neg_mem' := by
     rintro ⟨a, b⟩ ⟨h1, h2⟩

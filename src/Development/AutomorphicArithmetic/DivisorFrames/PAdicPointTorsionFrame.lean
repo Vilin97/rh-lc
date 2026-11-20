@@ -137,7 +137,7 @@ theorem UpperTheory.p_adic_point_torsion_frame :
       exact hχ a w z hwp hz) g ee h hee.1 hd i (x i) (hx1 i)
     have e1 : L (Pi.single i 1) = P.bLie (x i) := by
       simp [hL, Pi.single_apply]
-    rw [LinearMap.comp_apply, hB1, e1, Point.pairV_bLie, sub_neg_eq_add, ← map_add]
+    rw [LinearMap.comp_apply, hB1, e1, Point.pairV_bLie, sub_neg_eq_add, ← map_add (f := _)]
     exact norm_le_of_mem hmem
   · refine hB2 _ σ ?_
     rw [hL]

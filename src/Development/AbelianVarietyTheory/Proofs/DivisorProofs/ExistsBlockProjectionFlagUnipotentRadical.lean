@@ -150,7 +150,7 @@ theorem exists_blockProj : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
         · omega
         · exact hS k' (by omega) (by omega) hk'
     change Φ (c (a * b : unip σ J X (insert k S)) _ _) = Φ _ + Φ _
-    rw [h1, Matrix.add_apply, h2, add_zero, Matrix.add_apply, map_add]
+    rw [h1, Matrix.add_apply, h2, add_zero, Matrix.add_apply, map_add (f := _)]
   · funext p
     have b1 : adMat F (cT (σ : E →+* E) (blkCols h Y) * J) * adMat F (blkCols h X) = 1 := Matrix.ext fun i j =>
       (congrFun (congrFun hKX (e i)) (e j)).trans (by simp [Matrix.one_apply, e, Fin.ext_iff])

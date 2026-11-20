@@ -24,7 +24,7 @@ theorem _root_.GlobalTheory.natCard_coker_ker_mod_pow : ∀ (l : ℕ) [Fact l.Pr
       exact ⟨x, y, by rw [hy]; abel⟩
     · rintro ⟨x, y, rfl⟩
       refine ⟨πX x, ?_⟩
-      rw [← hcomm, map_add, (hkP (c • y)).2 ⟨y, rfl⟩, add_zero]
+      rw [← hcomm, map_add (f := _), (hkP (c • y)).2 ⟨y, rfl⟩, add_zero]
   constructor
   · let φ₁ : P →+ (P ⧸ LinearMap.range f) ⧸
         LinearMap.range (LinearMap.lsmul ℤ_[l] (P ⧸ LinearMap.range f) c) :=

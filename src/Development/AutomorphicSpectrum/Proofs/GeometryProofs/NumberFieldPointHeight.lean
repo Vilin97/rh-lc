@@ -221,7 +221,7 @@ theorem mConeMap_ren {Ω : Type} [Field Ω] (e : ∀ k, ι k ≃ Fin (n k + 1)) 
     mConeMap (ι := blockIdx n) y (ren e f) = mConeMap (y ∘ sig e) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [mConeMap, ren_C]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p q hp =>
     rw [map_mul, map_mul, map_mul, hp]
     obtain ⟨k, i⟩ := q
@@ -243,7 +243,7 @@ theorem mCoordIdeal_ringHom {L Ω : Type} [Field L] [Field Ω] (j : L →+* Ω) 
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [mConeMap]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p q hp =>
       rw [map_mul, map_mul, map_mul, hp]
       simp [mConeMap]

@@ -129,7 +129,7 @@ theorem exists_nsmul_add_apply_ne_zero [∀ j, IsAddTorsionFree (W j)] (l : ∀ 
     simp only at hab
     rw [← hab] at h2
     generalize f a _ = j at h1 h2 h3
-    rw [map_add, map_nsmul] at h1 h2
+    rw [map_add (f := _), map_nsmul] at h1 h2
     have hw : l j w ≠ 0 := by
       intro hw
       rw [hw, nsmul_zero, zero_add] at h1

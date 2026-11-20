@@ -43,7 +43,7 @@ theorem dec {TA TB : E} (A : FlagG S r TA) (B : FlagG S r TB) (hdet : (Zhat A B)
   have hB : ∀ c, S.hT (A.fvec c) yB = - S.hT (A.fvec c) yA := by
     intro c
     have := h c
-    rw [map_add] at this
+    rw [map_add (f := _)] at this
     exact eq_neg_of_add_eq_zero_right this
   have hcB : ∀ i : Fin r, S.hT (A.e i) (∑ b, κ (Sum.inr b) • B.fvec b) = 0 := by
     intro i
@@ -188,7 +188,7 @@ theorem ab'_of {TA T' : E} (A : FlagG S r TA) (B₁ B₂ : FlagG S r T') (β : S
     (h2 : (x₂'' + b' • (B₂.z + T' • Ω'₂)) - β (x₁' + a' • (B₁.z + T' • Ω'₁)) ∈ B₂.X)
     (hli : LinearIndependent E (Sum.elim B₂.fvec A.fvec)) : a' = b' := by
   have e : β (x₁' + a' • (B₁.z + T' • Ω'₁)) = β x₁' + a' • (B₂.z + T' • β Ω'₁) := by
-    rw [map_add, map_smul, map_add, map_smul, hβz]
+    rw [map_add (f := _), map_smul, map_add (f := _), map_smul, hβz]
   rw [e] at h2
   have key : (b' - a') • B₂.z + ((b' - a') * T' * σ) • A.z =
       ((x₂'' + b' • (B₂.z + T' • Ω'₂)) - (β x₁' + a' • (B₂.z + T' • β Ω'₁)) - (x₂'' - β x₁') +

@@ -31,7 +31,7 @@ theorem differentiable_eval_line (Q : MvPolynomial (Fin N) ℂ) (v u : Fin N →
     simp only [eval_C]
     exact differentiable_const a
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p i hp =>
     simp only [map_mul, eval_X, Pi.add_apply, Pi.smul_apply, smul_eq_mul]

@@ -30,7 +30,7 @@ private def inflW : Submodule k (Z2 ρ × (Γ' → M)) where
   add_mem' := by
     rintro x y ⟨a1, a2, a3⟩ ⟨b1, b2, b3⟩
     refine ⟨a1.add b1, by simp [a2, b2], fun g h => ?_⟩
-    simp only [Prod.snd_add, Prod.fst_add, Pi.add_apply, map_add, Submodule.coe_add, ← a3, ← b3]
+    simp only [Prod.snd_add, Prod.fst_add, Pi.add_apply, map_add (f := _), Submodule.coe_add, ← a3, ← b3]
     abel
   smul_mem' := by
     rintro c x ⟨a1, a2, a3⟩

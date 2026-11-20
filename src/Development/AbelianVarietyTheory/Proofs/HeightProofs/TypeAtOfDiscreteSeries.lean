@@ -89,7 +89,7 @@ theorem Expn.add (hσ : IsURepOn (UJset ε) σ) (h : Expn ε σ S v ℓ C f) (h'
       ((h.2 S' hS').add (h'.2 S' hS'))
     rw [← mul_add]
     exact mul_le_mul_of_nonneg_left (sob_add hσ hS' (h.1.1 i) (h'.1.1 i)) (h.1.2.1 i)
-  · simp only [map_add]
+  · simp only [map_add (f := _)]
     exact (h.1.2.2.2.2 y hy).add (h'.1.2.2.2.2 y hy)
 
 theorem Expn.smul (hσ : IsURepOn (UJset ε) σ) (h : Expn ε σ S v ℓ C f) (hS : Words (lieSet ε) S) (c : ℂ) :
@@ -116,7 +116,7 @@ theorem Expn.summable_term (h : Expn ε σ S v ℓ C f) (c : H) {u : H} (hu : Sm
 theorem Expn.sobFun (h : Expn ε σ S v ℓ C f) (hS : Words (lieSet ε) S) (c : H) :
     SobFun ε σ fun u => ∑' i, ⟪c, v i⟫_ℂ * ℓ i u := by
   refine ⟨fun x y hx hy => ?_, fun z x _ => ?_, S, ∑' i, ‖c‖ * (C i * ‖v i‖), hS, fun w hw => ?_⟩
-  · simp only [map_add, mul_add]
+  · simp only [map_add (f := _), mul_add]
     exact (h.summable_term c hx).tsum_add (h.summable_term c hy)
   · simp only [map_smul, smul_eq_mul, mul_left_comm _ z]
     exact tsum_mul_left

@@ -51,7 +51,7 @@ theorem exists_finiteType_subalgebra_valuation_le_one (A B k : Type) [CommRing A
       obtain ⟨z, -, rfl⟩ := Finset.mem_image.mp (Finset.mem_coe.mp hx)
       exact hfV z
     | algebraMap r => exact (V.valuation_le_one_iff _).mp (hA r)
-    | add x y _ _ hx hy => rw [map_add]; exact V.add_mem _ _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact V.add_mem _ _ hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact V.mul_mem _ _ hx hy
   · have hle : Algebra.adjoin A (σ : Set B) ≤ fracs C := by
       refine Algebra.adjoin_le ?_

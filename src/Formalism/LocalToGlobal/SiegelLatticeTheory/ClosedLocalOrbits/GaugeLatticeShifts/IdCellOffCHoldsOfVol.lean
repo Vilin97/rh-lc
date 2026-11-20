@@ -269,7 +269,7 @@ theorem inv_flag (γ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (h : ∀ b : Fin D.R.
       simp only [LinearEquiv.symm_apply_apply]
       exact e_mem X c hc
     | zero => simp
-    | add p q _ _ hp hq => rw [map_add]; exact Submodule.add_mem _ hp hq
+    | add p q _ _ hp hq => rw [map_add (f := _)]; exact Submodule.add_mem _ hp hq
     | smul c p _ hp => rw [map_smul]; exact Submodule.smul_mem _ c hp
   have := hmap _ (h b)
   rw [map_sub, LinearEquiv.symm_apply_apply] at this
@@ -435,7 +435,7 @@ theorem inv_maps {D : D7} (X : HidaSetting D) (γ : (VS D).V ≃ₗ[D.host.E] (V
     simp only [LinearEquiv.symm_apply_apply]
     exact Conj.e_mem X c hc
   | zero => simp
-  | add p q _ _ hp hq => rw [map_add]; exact Submodule.add_mem _ hp hq
+  | add p q _ _ hp hq => rw [map_add (f := _)]; exact Submodule.add_mem _ hp hq
   | smul c p _ hp => rw [map_smul]; exact Submodule.smul_mem _ c hp
 
 theorem idOffLift_all {D : D7} (X : HidaSetting D) (u u' : D.what₂.Word)

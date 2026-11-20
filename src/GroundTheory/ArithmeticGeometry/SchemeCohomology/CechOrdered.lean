@@ -83,7 +83,7 @@ lemma bd_cone {q : ℕ} (c : ι) (z : Chain ι (q + 1)) :
     bd (q + 1) (cone c z) = z - cone c (bd q z) := by
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add z z' hz hz' => rw [map_add, map_add, hz, hz', map_add, map_add]; abel
+  | add z z' hz hz' => rw [map_add (f := _), map_add (f := _), hz, hz', map_add (f := _), map_add (f := _)]; abel
   | single t k =>
     set_option synthInstance.maxHeartbeats 100000 in
       rw [cone_single, bd_single, Fin.sum_univ_succ, bd_single, map_sum]
@@ -172,27 +172,27 @@ variable {q r s : ℕ}
 lemma lin_single_id (z : Chain ι q) : lin (fun t => Finsupp.single t 1) z = z := by
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add z z' hz hz' => rw [map_add, hz, hz']
+  | add z z' hz hz' => rw [map_add (f := _), hz, hz']
   | single t k => simp
 
 lemma lin_comp (L : Chain ι r →+ Chain ι s) (B : (Fin (q + 1) → ι) → Chain ι r) (z : Chain ι q) :
     lin (fun t => L (B t)) z = L (lin B z) := by
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add z z' hz hz' => rw [map_add, hz, hz', map_add, map_add]
+  | add z z' hz hz' => rw [map_add (f := _), hz, hz', map_add (f := _), map_add (f := _)]
   | single t k => simp
 
 lemma lin_sub' (B B' : (Fin (q + 1) → ι) → Chain ι r) (z : Chain ι q) :
     lin (fun t => B t - B' t) z = lin B z - lin B' z := by
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add z z' hz hz' => rw [map_add, hz, hz', map_add, map_add]; abel
+  | add z z' hz hz' => rw [map_add (f := _), hz, hz', map_add (f := _), map_add (f := _)]; abel
   | single t k => simp [smul_sub]
 
 lemma lin_zero' (z : Chain ι q) : lin (fun _ => (0 : Chain ι r)) z = 0 := by
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add z z' hz hz' => rw [map_add, hz, hz', add_zero]
+  | add z z' hz hz' => rw [map_add (f := _), hz, hz', add_zero]
   | single t k => simp
 
 lemma lin_bd_single (B : (Fin (q + 1) → ι) → Chain ι r) (z : Chain ι (q + 1)) :
@@ -481,17 +481,17 @@ lemma pair_add {q : ℕ} (σ τ : Cochain P U q) (V : Opens X) (z : Chain ι q) 
     pair (σ + τ) V z = pair σ V z + pair τ V z := by
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add z z' hz hz' => rw [map_add, map_add, map_add, hz, hz']; abel
+  | add z z' hz hz' => rw [map_add (f := _), map_add (f := _), map_add (f := _), hz, hz']; abel
   | single t k =>
     by_cases h : V ≤ inter U t
-    · rw [pair_single _ _ _ h, pair_single _ _ _ h, pair_single _ _ _ h, Pi.add_apply, map_add,
+    · rw [pair_single _ _ _ h, pair_single _ _ _ h, pair_single _ _ _ h, Pi.add_apply, map_add (f := _),
         smul_add]
     · simp [pair, h]
 
 lemma pair_zero {q : ℕ} (V : Opens X) (z : Chain ι q) : pair (0 : Cochain P U q) V z = 0 := by
   induction z using Finsupp.induction_linear with
   | zero => simp
-  | add z z' hz hz' => rw [map_add, hz, hz', add_zero]
+  | add z z' hz hz' => rw [map_add (f := _), hz, hz', add_zero]
   | single t k =>
     by_cases h : V ≤ inter U t
     · rw [pair_single _ _ _ h, Pi.zero_apply, map_zero, smul_zero]

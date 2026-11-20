@@ -66,5 +66,5 @@ theorem UpperTheory.exists_invariant_vector_of_finite_image_averaging :
     have h3 := h2 (wdMk P ι ρ ((phiD P ρ ^ n) x)) (fun s => by rw [wdRho_mk, hc', hx]) σ
     rw [wdRho_mk, hc'] at h3
     have h4 := wdMk_add P ι ρ ((phiD P ρ ^ n) (weilD Bw h P ρ σ x - x)) ((phiD P ρ ^ n) x)
-    rw [← map_add, sub_add_cancel, h3] at h4
+    rw [← map_add (f := _), sub_add_cancel, h3] at h4
     exact left_eq_add.mp (h4.trans (add_comm _ _))

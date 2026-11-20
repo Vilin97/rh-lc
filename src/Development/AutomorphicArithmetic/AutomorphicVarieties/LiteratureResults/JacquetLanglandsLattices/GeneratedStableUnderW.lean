@@ -20,7 +20,7 @@ private structure Rel (W : Module.End ℂ M) (X : ℤˣ → Module.End ℂ M) : 
 
 private def ext (V : Submodule ℂ M) (W : Module.End ℂ M) (X : ℤˣ → Module.End ℂ M) (k : ℕ) (s : ℤˣ) : Submodule ℂ M where
   carrier := {x | x ∈ V ∧ W x = (((s : ℤ) : ℂ) * Complex.I * (k + 2)) • x ∧ X (-s) x = 0}
-  add_mem' := fun hx hy => ⟨V.add_mem hx.1 hy.1, by rw [map_add, hx.2.1, hy.2.1, smul_add], by rw [map_add, hx.2.2, hy.2.2, add_zero]⟩
+  add_mem' := fun hx hy => ⟨V.add_mem hx.1 hy.1, by rw [map_add (f := _), hx.2.1, hy.2.1, smul_add], by rw [map_add (f := _), hx.2.2, hy.2.2, add_zero]⟩
   zero_mem' := ⟨V.zero_mem, by simp, by simp⟩
   smul_mem' := fun c x hx => ⟨V.smul_mem c hx.1, by rw [map_smul, hx.2.1, smul_comm], by rw [map_smul, hx.2.2, smul_zero]⟩
 
@@ -175,9 +175,9 @@ private theorem rel_of (E : Fin 2 → Fin 2 → Module.End ℂ M) (h : Formalism
   have e : ∀ x, E 0 1 (E 1 0 x) = E 1 0 (E 0 1 x) + (E 0 0 x - E 1 1 x) := fun x => by simpa using g 0 1 1 0 x
   have f : ∀ x, E 1 1 (E 0 0 x) = E 0 0 (E 1 1 x) := fun x => by simpa using g 1 1 0 0 x
   refine ⟨fun s x => ?_, fun s x => ?_⟩
-  · simp only [wOp_apply, xOp_apply, map_add, map_sub, map_smul, a, b, c, d, e, f]
+  · simp only [wOp_apply, xOp_apply, map_add (f := _), map_sub, map_smul, a, b, c, d, e, f]
     rcases Int.units_eq_one_or s with rfl | rfl <;> match_scalars <;> push_cast <;> ring_nf <;> simp
-  · simp only [wOp_apply, xOp_apply, map_add, map_sub, map_smul, a, b, c, d, e, f]
+  · simp only [wOp_apply, xOp_apply, map_add (f := _), map_sub, map_smul, a, b, c, d, e, f]
     rcases Int.units_eq_one_or s with rfl | rfl <;> match_scalars <;> push_cast <;> ring_nf <;> simp
 
 private theorem nor_of (E : Fin 2 → Fin 2 → Module.End ℂ M) (V : Submodule ℂ M) (T : Module.End ℂ M) (hV : ∀ x ∈ V, T x ∈ V)
@@ -195,7 +195,7 @@ private theorem nor_of (E : Fin 2 → Fin 2 → Module.End ℂ M) (V : Submodule
     have : (1 : ℂ) = 0 := by
       linear_combination -h1 + (P 0 0 - ((s : ℤ) : ℂ) * Complex.I * P 0 1) * e + (P 0 1 ^ 2 * Complex.I ^ 2) * hs + P 0 1 ^ 2 * Complex.I_sq
     exact one_ne_zero this
-  · simp only [xOp_apply, map_sub, map_add, map_smul, hT, Fin.sum_univ_two, h2, h3]
+  · simp only [xOp_apply, map_sub, map_add (f := _), map_smul, hT, Fin.sum_univ_two, h2, h3]
     have h4 : Complex.I ^ 3 = -Complex.I := Complex.I_pow_three
     rcases Int.units_eq_one_or s with rfl | rfl <;> rcases Int.units_eq_one_or d with rfl | rfl <;> match_scalars <;> push_cast <;> ring_nf <;>
       simp only [Complex.I_sq, h4] <;> ring
@@ -258,7 +258,7 @@ private theorem nor_cpt {V : Submodule ℂ (TR.Sm F 2)} (hV : TR.IsStable V) (k 
 
 private theorem nor_comm {V : Submodule ℂ (TR.Sm F 2)} (v : InfinitePlace F) (T : Module.End ℂ (TR.Sm F 2)) (hV : ∀ x ∈ V, T x ∈ V)
     (h : ∀ i j x, T (TR.Eop v i j x) = TR.Eop v i j (T x)) : Nor V (wOp (TR.Eop v)) (xOp (TR.Eop v)) T 1 :=
-  Nor.of_comm hV (fun x => by simp only [wOp_apply, map_sub, h]) fun s x => by simp only [xOp_apply, map_sub, map_add, map_smul, h]
+  Nor.of_comm hV (fun x => by simp only [wOp_apply, map_sub, h]) fun s x => by simp only [xOp_apply, map_sub, map_add (f := _), map_smul, h]
 
 private theorem eop_mem {V : Submodule ℂ (TR.Sm F 2)} (hV : TR.IsStable V) (v : InfinitePlace F) (i j : Fin 2) :
     ∀ x ∈ V, TR.Eop v i j x ∈ V := hV (.lie _)
@@ -353,7 +353,7 @@ theorem UpperTheory.V.Lit.JL.dsAll :
         (hY _ fun w hw => nor_comm w _ (w_mem π.stable v) fun i j x => by
           simp only [wOp_apply, map_sub, eop_comm (hne w hw)])
         (fun s => hY _ fun w hw => nor_comm w _ (x_mem π.stable v s) fun i j x => by
-          simp only [xOp_apply, map_sub, map_add, map_smul, eop_comm (hne w hw)])
+          simp only [xOp_apply, map_sub, map_add (f := _), map_smul, eop_comm (hne w hw)])
         (hgen.ge h1) (by simpa only [Submodule.mem_iInf] using h3) h2
       refine ⟨TR.cptRep F 2 (DiscreteSeriesWeights.flip v s) u, π.stable (.cpt _) u u1.1, fun e => u3 ?_, fun w hw => ?_⟩
       · have := congrArg (TR.cptRep F 2 (DiscreteSeriesWeights.flip v s)⁻¹) e

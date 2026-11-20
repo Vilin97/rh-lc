@@ -15,7 +15,7 @@ def spanDField (x : K) : IntermediateField k K where
     simp only [Set.mem_ofPred_eq, Derivation.leibniz] at *
     exact add_mem (Submodule.smul_mem _ _ hb) (Submodule.smul_mem _ _ ha)
   add_mem' {a b} ha hb := by
-    simp only [Set.mem_ofPred_eq, map_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
     exact add_mem ha hb
   algebraMap_mem' c := by
     simp only [Set.mem_ofPred_eq, Derivation.map_algebraMap]
@@ -39,7 +39,7 @@ theorem span_D_eq_top (x : K) [Algebra.IsSeparable k⟮x⟯ K] :
   obtain ⟨z, rfl⟩ := (exact_mapBaseChange_map k k⟮x⟯ K ω).mp (Subsingleton.elim _ _)
   induction z with
   | zero => simp
-  | add a b ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | tmul a b =>
     rw [mapBaseChange_tmul]
     refine Submodule.smul_mem _ _ ?_
@@ -51,7 +51,7 @@ theorem span_D_eq_top (x : K) [Algebra.IsSeparable k⟮x⟯ K] :
       rw [map_D]
       exact D_mem_span_of_mem_adjoin x e.2
     | zero => simp
-    | add _ _ _ _ h₁ h₂ => rw [map_add]; exact add_mem h₁ h₂
+    | add _ _ _ _ h₁ h₂ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
     | smul c _ _ h =>
       rw [map_smul, algebra_compatible_smul K c]
       exact Submodule.smul_mem _ _ h
@@ -148,7 +148,7 @@ theorem exists_ord_eq_one_D_ne_zero (v : Place k K) :
     rw [v.valuation_eq_exp_neg_ord hne, v.valuation_eq_exp_neg_ord hπ0, hπ] at h
     have := WithZero.exp_injective h
     omega
-  · rw [map_add, hd, zero_add, Derivation.leibniz, Derivation.leibniz_pow, hd]
+  · rw [map_add (f := _), hd, zero_add, Derivation.leibniz, Derivation.leibniz_pow, hd]
     simp only [smul_zero, add_zero]
     exact smul_ne_zero (pow_ne_zero _ hπ0) hdx
 

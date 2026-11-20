@@ -26,14 +26,14 @@ theorem baseChange_centralizer_comm (K k B A : Type) [Field K] [CommRing k] [Alg
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul t a => simp
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have had : ∀ y : k ⊗[K] B, y * ((1 : k) ⊗ₜ[K] γ) - ((1 : k) ⊗ₜ[K] γ) * y = LinearMap.lTensor k ad y := by
     intro y
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul t b =>
       simp [ad, Algebra.TensorProduct.tmul_mul_tmul, TensorProduct.tmul_sub]
-    | add x y hx hy => rw [map_add, ← hx, ← hy]; noncomm_ring
+    | add x y hx hy => rw [map_add (f := _), ← hx, ← hy]; noncomm_ring
   have hex' := Module.Flat.lTensor_exact k hex
   intro y
   rw [← sub_eq_zero, had, hex' y]

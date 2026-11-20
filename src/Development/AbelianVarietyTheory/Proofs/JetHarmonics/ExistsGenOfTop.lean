@@ -186,7 +186,7 @@ theorem exists_jet_map (hrep : JetSer.RepSt) {R : Type} [CommRing R] {G : Over (
     | add p q hp hq =>
       obtain ⟨a, ha⟩ := hp
       obtain ⟨b, hb⟩ := hq
-      exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
     | mul_X p i hp =>
       obtain ⟨a, ha⟩ := hp
       obtain ⟨i₀, i⟩ := i

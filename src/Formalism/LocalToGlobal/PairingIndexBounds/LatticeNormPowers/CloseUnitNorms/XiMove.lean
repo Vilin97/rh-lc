@@ -143,7 +143,7 @@ theorem approxO {n : ℕ} {ε : 𝓞 D.host.K} (hId : IsIdem D lam (2 * n + 2) �
   obtain ⟨-, he, -⟩ := idem_norm D lam (by omega) hId
   refine ⟨c0, ?_⟩
   have h := congrArg (Lp D lam) hw
-  rw [map_mul, map_add, map_mul, map_mul, map_intCast, map_pow, map_natCast] at h
+  rw [map_mul, map_add (f := _), map_mul, map_mul, map_intCast, map_pow, map_natCast] at h
   have h2 : tK D lam (ε : D.host.K) * (tKc D lam (μ : D.host.K) - c0) = (p : ℂ_[p]) ^ n * Lp D lam (oE D w) := by
     rw [tK_apply, tKc_apply]
     linear_combination h
@@ -1087,7 +1087,7 @@ variable {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} {p : ℕ} [hp : Fact p
 
 theorem cv_add (b : Fin r → Matrix (Fin N') (Fin N) D.host.E) (ξ ξ' : Fin r → D.host.K) :
     cv D cc δ b (ξ + ξ') = cv D cc δ b ξ + cv D cc δ b ξ' := by
-  simp only [cv, Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+  simp only [cv, Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
 
 theorem Hf_sum_left (T : Tor D) {ι : Type*} (s : Finset ι) (f : ι → VC D N N') (y : VC D N N') :
     Hf D T (∑ i ∈ s, f i) y = ∑ i ∈ s, Hf D T (f i) y := by
@@ -1129,13 +1129,13 @@ theorem Ctx.shiftPhi (X : Ctx D cc δ p lam La₁ La b₁ b c d n ε Φ Np) {a�
     refine X.phi1 _ ⟨x + x₀, fun i => ?_⟩
     have e1 := hx i
     have e2 := hx₀ i
-    simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib] at e1 e2 ⊢
+    simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib] at e1 e2 ⊢
     rw [e1, e2]
   · rw [show PhiR Φ a = 0 from X.phi0 _ h]
     refine X.phi0 _ fun ⟨x, hx⟩ => h ⟨x - x₀, fun i => ?_⟩
     have e1 := hx i
     have e2 := hx₀ i
-    simp only [Pi.sub_apply, map_sub, map_add, mul_sub, Finset.sum_sub_distrib] at e1 e2 ⊢
+    simp only [Pi.sub_apply, map_sub, map_add (f := _), mul_sub, Finset.sum_sub_distrib] at e1 e2 ⊢
     rw [← e1, ← e2]
     ring
 

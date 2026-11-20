@@ -52,7 +52,7 @@ theorem adAt_conjP_eq_one (hc : CMData F E) {n : ℕ} {J : Matrix (Fin n) (Fin n
     rw [GlobalTheory.CharValCompare.conjP_conjP, hX, Valuation.map_zero] at e
     exact (Valuation.zero_iff _).1 e
   have h2 := congrArg (adAt F (conjPrime₂ P)).mapMatrix h1
-  rw [map_mul, map_add, map_one] at h2
+  rw [map_mul, map_add (f := _), map_one] at h2
   change _ * (1 + (cT (sigR hc.sig (FiniteAdeleRing (𝓞 F) F)) ((u : Matrix (Fin n) (Fin n) (AfE F E)) - 1)).map
       (adAt F (conjPrime₂ P))) = 1 at h2
   rw [hC, add_zero, mul_one] at h2

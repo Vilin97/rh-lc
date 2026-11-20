@@ -15,7 +15,7 @@ theorem altE_swap {H : Sesq V} (hH : IsHerm H) (x y : V) : altE H y x = -altE H 
   rw [hH x y, Complex.conj_im]
 
 theorem altE_add_left (H : Sesq V) (x x' y : V) : altE H (x + x') y = altE H x y + altE H x' y := by
-  simp only [Formalism.L2.Th1.H.altE, map_add, LinearMap.add_apply, Complex.add_im]
+  simp only [Formalism.L2.Th1.H.altE, map_add (f := _), LinearMap.add_apply, Complex.add_im]
 
 theorem altE_neg_right (H : Sesq V) (x y : V) : altE H x (-y) = -altE H x y := by
   simp only [Formalism.L2.Th1.H.altE, map_neg, Complex.neg_im]

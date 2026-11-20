@@ -37,7 +37,7 @@ theorem _root_.GlobalTheory.SW.Dict.isSB_comp {K K' κ ι κ' ι' : Type} [Field
   · intro x y hy
     have h3 := _root_.GlobalTheory.SW.Dict.intM_nsmul D' (h1 y hy)
     have h4 := hper (e x) _ h3
-    simp only [map_add, map_nsmul]
+    simp only [map_add (f := _), map_nsmul]
     rw [← h4, smul_smul, smul_smul]
     congr 2
     ring_nf

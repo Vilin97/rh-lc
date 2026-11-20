@@ -186,7 +186,7 @@ theorem bar_bar (hc : ∀ y, c (c y) = y) (z : RA F E) : bar c (bar c z) = z := 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a y => rw [bar_tmul, bar_tmul, hc]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 omit [NumberField E] in
 theorem bar_mem {z : RA F E} (hz : z ∈ hatRing F E) : bar c z ∈ hatRing F E := by

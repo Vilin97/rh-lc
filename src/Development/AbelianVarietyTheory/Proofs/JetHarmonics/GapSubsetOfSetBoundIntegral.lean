@@ -116,7 +116,7 @@ theorem iterationSum_of (h : Iteration) : IterationSum := by
       have hbs : ∀ x, b x = c ν * a (x - ν) := by
         intro x; simp [hb, Finsupp.equivMapDomain_apply, neg_add_eq_sub]
       refine ⟨b + c', ?_, ?_, ?_⟩
-      · rw [sum_insert hν, map_add, map_smul, h1, ha, comb_eq j μ (b + c'), map_add, hb, map_smul,
+      · rw [sum_insert hν, map_add (f := _), map_smul, h1, ha, comb_eq j μ (b + c'), map_add (f := _), hb, map_smul,
           Finsupp.equivMapDomain_eq_mapDomain, Finsupp.linearCombination_mapDomain, comb_eq, comb_eq]
         simp [Function.comp_def, add_assoc]
       · intro x hx

@@ -55,7 +55,7 @@ theorem homPreservesCochains_holds : HomMaps := by
       refine ⟨hZ1 ⟨pr, hz, rfl⟩, a, F.f2 b, hB1 ⟨b, hb, rfl⟩, ?_⟩
       obtain ⟨⟨k, hk⟩, hxn⟩ := hint
       have e : (B.p ^ a : ℕ) • F.f2 pr + F.f2 b = F.f2 ((B.p ^ a : ℕ) • pr + b) := by
-        rw [map_add, map_nsmul]
+        rw [map_add (f := _), map_nsmul]
       rw [e]
       refine ⟨⟨k, ?_⟩, hX _ hxn⟩
       show B.Q ^ k • F.f (((B.p ^ a : ℕ) • pr + b).1) ∈ W'.N

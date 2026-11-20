@@ -366,7 +366,7 @@ theorem exists_line {η : kˣ →* ℂˣ} (hη : IsSmoothChar η) :
   · exact one_ne_zero (key 1 0 (by rw [h]; trivial)).1
   · have h2 := key (L (Submodule.Quotient.mk (E 1))) (-L (Submodule.Quotient.mk (E 0))) (by
       rw [← Submodule.Quotient.mk_eq_zero, ← L.map_eq_zero_iff]
-      rw [Submodule.Quotient.mk_add, Submodule.Quotient.mk_smul, Submodule.Quotient.mk_smul, map_add, map_smul, map_smul,
+      rw [Submodule.Quotient.mk_add, Submodule.Quotient.mk_smul, Submodule.Quotient.mk_smul, map_add (f := _), map_smul, map_smul,
         smul_eq_mul, smul_eq_mul]
       ring)
     rw [L.map_eq_zero_iff, Submodule.Quotient.mk_eq_zero] at h2
@@ -382,7 +382,7 @@ theorem exists_equiv_prodIrr {θ : Fin 2 → kˣ →* ℂˣ} (hθ : ∀ a, IsSmo
   have key : ∀ g y, piTensor (fun a => detRep (Fin 1) (θ a)) g y = (Θ g : ℂ) • y := by
     intro g y
     induction y using PiTensorProduct.induction_on with
-    | add x y hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | smul_tprod c x =>
       rw [map_smul, smul_comm, piTensor_tprod, hΘ, Units.coe_prod, ← MultilinearMap.map_smul_univ]
       simp [detRep]

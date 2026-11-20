@@ -40,7 +40,7 @@ theorem compact_mod_near_of_filtration (S₀ : Subring S) (h : S)
   have hhx : ∀ x, h * x + h * x = x := fun x => by rw [← add_mul, hh, one_mul]
   have hhN : ∀ i, ∀ x ∈ N i, h * x ∈ N i := fun i x hx => by
     have : h * x = p i (h * x) := by
-      conv_lhs => rw [← hpf i x hx, ← hhx x, map_add, mul_add, hhx]
+      conv_lhs => rw [← hpf i x hx, ← hhx x, map_add (f := _), mul_add, hhx]
     rw [this]; exact hpN _ _
   have hle0 : ∀ i, N i ≤ N 0 := fun i => by
     induction i with

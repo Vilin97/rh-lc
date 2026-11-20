@@ -109,7 +109,7 @@ theorem _root_.GlobalTheory.SplitJump.mem_filV (a : ℤ) (y : V ⊗[Qp] BdR) :
       rw [IsScalarTower.algebraMap_apply Qp K BdR, ← Algebra.smul_def]
       exact (PD.Fil a).smul_mem _ f.2
     | add z₁ z₂ h₁ h₂ =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact (PD.Fil a).add_mem h₁ h₂
   · intro h
     refine ⟨∑ i, e i ⊗ₜ[Qp]
@@ -155,7 +155,7 @@ theorem _root_.GlobalTheory.SplitJump.coord_act (g : G) (x : V ⊗[Qp] BdR) :
     change _ * PD.actdR g b = _
     ring
   | add x₁ x₂ h₁ h₂ =>
-    rw [map_add, map_add, h₁, h₂, ← Matrix.mulVec_add]
+    rw [map_add (f := _), map_add (f := _), h₁, h₂, ← Matrix.mulVec_add]
     congr 1
     ext i
     simp

@@ -101,7 +101,7 @@ theorem sqrt_fixed_of_isSquare_padic : ∀ (F Ω : Type) [Field F] [NumberField 
     push_cast at e
     rw [ha, hb, ← e, ← hδ]; ring
   have hsa : s a = -b := by rw [ha, hb, map_sub, map_intCast, h]; ring
-  have hsb : s b = -a := by rw [ha, hb, map_add, map_intCast, h]; ring
+  have hsb : s b = -a := by rw [ha, hb, map_add (f := _), map_intCast, h]; ring
   have hVab : A.valuation a = A.valuation b := by
     rcases le_total (A.valuation a) (A.valuation b) with e | e
     · refine le_antisymm e ?_

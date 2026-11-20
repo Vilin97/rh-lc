@@ -49,7 +49,7 @@ theorem exists_isDer_lowKSub : ∀ (n : ℕ) (ε : Fin n → Bool) (lam : Fin n 
       obtain ⟨a', ha', hda⟩ := ha
       obtain ⟨b', hb', hdb⟩ := hb
       refine ⟨a' + b', add_mem ha' hb', ?_⟩
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact hda.add hdb
     | smul c a _ ha =>
       obtain ⟨a', ha', hda⟩ := ha

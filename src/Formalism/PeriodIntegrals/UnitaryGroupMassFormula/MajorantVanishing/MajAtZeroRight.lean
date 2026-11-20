@@ -152,10 +152,10 @@ theorem projB : PI.Dv.ProjB := by
   have hproj : ∀ x ∈ A.L, Sᗮ.starProjection (ρ x) = ρ ((1 - e) x) := by
     intro x hx
     have hsplit : ρ x = ρ (e x) + ρ ((1 - e) x) := by
-      rw [← map_add]
+      rw [← map_add (f := _)]
       congr 1
       simp [LinearMap.sub_apply]
-    rw [hsplit, map_add, (Submodule.starProjection_apply_eq_zero_iff _).2
+    rw [hsplit, map_add (f := _), (Submodule.starProjection_apply_eq_zero_iff _).2
       (Submodule.le_orthogonal_orthogonal S (hA x hx)), zero_add,
       Submodule.starProjection_eq_self_iff.2 (hB x)]
   have hq : Formalism.F.quot (zl ρ A.L) (zl ρ L0) = zl ρ I := by

@@ -401,7 +401,7 @@ theorem exists_satU_eq (hU : IsUnramInv ϖ σ q) (l : Hecke ℂ (KU σ n) →ₗ
   let R : AddMonoidAlgebra ℂ (Fin (n / 2) → ℤ) → Hecke ℂ (KU σ n) → Prop := fun b f =>
     ∀ α : Fin (n / 2) → ℂˣ, ev α b = SatU ϖ q f.1 fun i => (α i : ℂ)
   have Radd : ∀ {a b f g}, R a f → R b g → R (a + b) (f + g) := fun {a b f g} e e' α => by
-    rw [map_add, e, e']; exact ((law α).1 _ f.2 _ g.2).symm
+    rw [map_add (f := _), e, e']; exact ((law α).1 _ f.2 _ g.2).symm
   have Rmul : ∀ {a b f g}, R a f → R b g → R (a * b) ⟨_, Final.HeckeConvMem _ _ ℂ hK _ f.2 _ g.2⟩ :=
     fun {a b f g} e e' α => by rw [map_mul, e, e']; exact (hmul α _ f.2 _ g.2).symm
   have Ralg : ∀ c : ℂ, R (algebraMap ℂ _ c) (c • ⟨_, Final.DosetIndMem _ _ ℂ 1⟩) := fun c α => by
@@ -423,7 +423,7 @@ theorem exists_satU_eq (hU : IsUnramInv ϖ σ q) (l : Hecke ℂ (KU σ n) →ₗ
       map_one' := by rw [Runiq (hφ 1) (Ralg 1), one_smul, h1]
       map_mul' := fun a b => by rw [Runiq (hφ (a * b)) (Rmul (hφ a) (hφ b)), hm]
       map_zero' := by rw [Runiq (hφ 0) (by simpa using Ralg 0 : R 0 0), map_zero]
-      map_add' := fun a b => by rw [Runiq (hφ (a + b)) (Radd (hφ a) (hφ b)), map_add]
+      map_add' := fun a b => by rw [Runiq (hφ (a + b)) (Radd (hφ a) (hφ b)), map_add (f := _)]
       commutes' := fun c => by rw [Runiq (hφ (algebraMap ℂ B c)) (Ralg c), map_smul, h1]; simp }
   have hR : ∀ (f : Hecke ℂ (KU σ n)) (s : (Fin (n / 2) → ℤ) →₀ ℂ),
       (∀ α : Fin (n / 2) → ℂ, SatU ϖ q f.1 α = s.sum fun a c => c * ∏ i, α i ^ a i) → R (.ofCoeff s) f :=

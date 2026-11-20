@@ -252,7 +252,7 @@ theorem mir_scalar (m : ℕ) {V : Type} [AddCommGroup V] [Module ℂ V] (π : Re
     intro w
     obtain ⟨a, ha⟩ := hline x₀ w hx₀
     have e : D w = a • D x₀ + D (w - a • x₀) := by
-      rw [← map_smul, ← map_add]
+      rw [← map_smul, ← map_add (f := _)]
       congr 1
       abel
     rw [e]

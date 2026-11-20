@@ -110,7 +110,7 @@ theorem transferOn_inert : GlobalTheory.Hk3.HoweUnram → ∀ D : D7, TransferOn
     have ht' : ((T.rank : ℤ) - S.rank) = (t : ℤ) := by omega
     rw [ht'] at hc
     have e := congrArg (Multiset.map (((-1 : ℂˣ) ^ S.rank) * ·)) hc
-    simp only [Multiset.map_map, Multiset.map_add, Function.comp_def, mul_inv_cancel_left] at e
+    simp only [Multiset.map_map, Multiset.map_add (f := _), Function.comp_def, mul_inv_cancel_left] at e
     rw [Multiset.map_id'] at e
     rw [e, stepPar, hvS, hvT, hsegS (Units.mk0 _ hq0) _ t rfl]
     congr 1

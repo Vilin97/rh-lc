@@ -82,7 +82,7 @@ theorem dens_pull_mul_vol : ∀ (n d : ℕ) (J : Type) [Fintype J] (ε : Fin n �
     · rw [dens_pull_bas ε hT]
       simp [dens, hT]
   | zero => simp [dens_zero]
-  | add x y _ _ hx hy => rw [map_add, add_mul, dens_add, dens_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), add_mul, dens_add, dens_add, hx, hy]
   | smul c x _ hx => rw [map_smul, smul_mul_assoc, dens_smul, dens_smul, hx]
 
 end GlobalTheory.FlagCell2.BaseVol

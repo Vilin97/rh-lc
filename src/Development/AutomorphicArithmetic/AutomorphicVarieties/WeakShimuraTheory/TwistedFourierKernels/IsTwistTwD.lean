@@ -28,7 +28,7 @@ def twD (D : GDet n A G) (γ : G →* Aˣ) : GDet n A G where
     congr 1
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp [twA_single]
   homog B _ _ b x := by
     change D.D B (twA γ B (b • x)) = b ^ n * D.D B (twA γ B x)
@@ -47,7 +47,7 @@ theorem chi_twD (D : GDet n A G) (γ : G →* Aˣ) (y : MonoidAlgebra A G) : (tw
   · simp
   · induction y using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp [twA_single]
 
 theorem lam_twD (D : GDet n A G) (γ : G →* Aˣ) (i : ℕ) (y : MonoidAlgebra A G) :

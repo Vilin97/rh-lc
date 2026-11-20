@@ -79,7 +79,7 @@ theorem der_mul_rtr (h : IsCMExt F E σ) (hJ : IsHermND σ J) {w : InfinitePlace
   generalize (1 / 2 : ℂ) • (Z - adj (J.map τ.1) Z) = Z₁ at e1 e3
   generalize (-Complex.I / 2 : ℂ) • (Z + adj (J.map τ.1) Z) = Z₂ at e2 e3
   subst e3
-  rw [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, map_add, map_smul, map_add, map_smul,
+  rw [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, map_add (f := _), map_smul, map_add (f := _), map_smul,
     add_mul, mul_add, smul_mul_assoc, mul_smul_comm, hl _ _ e1, hl _ _ e2]
 
 end GlobalTheory.LeviHC.RightTr

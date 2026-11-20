@@ -100,7 +100,7 @@ theorem exists_hom_relation {K σ : Type} [Field K] {m : ℕ} (I : Ideal (MvPoly
     fun l => homogeneousComponent_isHomogeneous _ _, ?_⟩
   have hcomp := hI _ hmem (e * w * s)
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum] at hcomp
+    rw [map_add (f := _), map_sum] at hcomp
   convert hcomp using 2
   · have h := ha.pow s
     rw [homogeneousComponent_of_mem ((mem_homogeneousSubmodule _ _).2 h)]

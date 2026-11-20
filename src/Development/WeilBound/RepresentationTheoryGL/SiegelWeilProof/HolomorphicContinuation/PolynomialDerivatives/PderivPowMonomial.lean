@@ -66,7 +66,7 @@ theorem list_pderiv (γ : σ → ℕ) (l : List σ) (hl : l.Nodup) (s : σ →�
     ring
 
 theorem opMono_add (t : σ ⊕ σ →₀ ℕ) (f g : PX m n) : opMono t (f + g) = opMono t f + opMono t g := by
-  unfold opMono; rw [map_add, mul_add]
+  unfold opMono; rw [map_add (f := _), mul_add]
 
 theorem opMono_smul (t : σ ⊕ σ →₀ ℕ) (c : ℂ) (f : PX m n) : opMono t (c • f) = c • opMono t f := by
   unfold opMono; rw [map_smul, mul_smul_comm]
@@ -360,7 +360,7 @@ theorem dens : Dens := by
     simp only [mul_ite, mul_one, mul_zero]
     rw [Finset.sum_ite_eq, if_pos hδ]
   | zero => rw [op_f_zero, map_zero]
-  | add x y _ _ hx hy => rw [op_f_add, map_add, hx, hy]
+  | add x y _ _ hx hy => rw [op_f_add, map_add (f := _), hx, hy]
   | smul a x _ hx => rw [op_f_smul, map_smul, hx]
 
 end PositivityTheory.Rg.Sw.LC

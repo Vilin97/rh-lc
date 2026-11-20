@@ -64,7 +64,7 @@ theorem algebraMap_openEmb (hA : IsAdic (IsLocalRing.maximalIdeal O)) :
     rintro _ ⟨z, hz, rfl⟩
     rw [hm] at hz
     show f (x + z) - f x ∈ PI.UnitaryGroupMassFormula.FinExtTop.fracB (unif O) i
-    rw [map_add, add_sub_cancel_left]
+    rw [map_add (f := _), add_sub_cancel_left]
     exact PI.UnitaryGroupMassFormula.FinExtTop.algebraMap_mem_fracB.2 hz
   have hopen : IsOpenMap f := by
     refine IsOpenMap.of_nhds_le fun x => ?_
@@ -76,7 +76,7 @@ theorem algebraMap_openEmb (hA : IsAdic (IsLocalRing.maximalIdeal O)) :
     refine ⟨x + c * unif O ^ n, hn ⟨c * unif O ^ n, ?_, rfl⟩, ?_⟩
     · rw [hm]
       exact Dvd.intro_left c rfl
-    · rw [map_add, ← hc, add_sub_cancel]
+    · rw [map_add (f := _), ← hc, add_sub_cancel]
   exact Topology.IsOpenEmbedding.of_continuous_injective_isOpenMap hcont
     (IsFractionRing.injective O (FractionRing O)) hopen
 

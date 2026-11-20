@@ -100,7 +100,7 @@ theorem exists_isTwG_simpLab_star : ∀ (O : Type) [CommRing O] [IsDedekindDomai
     · refine LinearIndependent.fin_cons' β₀ _ (hli.comp _ s'.injective) fun c y hy hz => ?_
       have h1 : g y = 0 := LinearMap.mem_ker.1 (hsp hy)
       have h2 := congrArg g hz
-      rw [map_add, map_smul, h1, add_zero, map_zero, smul_eq_mul] at h2
+      rw [map_add (f := _), map_smul, h1, add_zero, map_zero, smul_eq_mul] at h2
       exact (mul_eq_zero.1 h2).resolve_right hgpos.ne'
     · intro i j hij
       simp only at hij

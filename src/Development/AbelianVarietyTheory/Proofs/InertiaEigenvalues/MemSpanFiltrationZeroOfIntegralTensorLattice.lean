@@ -40,7 +40,7 @@ theorem equivFinsuppOfBasisLeft_map_id {O B B' ι : Type} [CommRing O] [Algebra 
   induction r using TensorProduct.induction_on with
   | zero => simp
   | tmul o β => simp [TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 theorem equivFinsuppOfBasisRight_map_id {O R R' M κ : Type} [CommRing O] [CommRing R] [CommRing R']
     [Algebra O R] [Algebra O R'] [AddCommGroup M] [Module O M]
@@ -50,7 +50,7 @@ theorem equivFinsuppOfBasisRight_map_id {O R R' M κ : Type} [CommRing O] [CommR
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul r x => simp [TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 theorem mem_span_filD_zero_of_iotaO_eq {O : Type} [CommRing O] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O]
     (C : GlobalTheory.MemLoc.Core l) (r : OB l O) (s : OD l O) (h : iotaO O C r = dRO l O s) :

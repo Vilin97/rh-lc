@@ -87,7 +87,7 @@ theorem gkModuleCusp_ρ_eq_cuspOp (X : (isExpLieAlgebra ℚ 2).lieSubalgebra) :
 
 theorem cuspOp_finRepCusp (B : Matrix (Fin 2) (Fin 2) ℂ) (g : FiniteAdelicGL ℚ 2) (ψ : cuspForms ℚ 2) :
     cuspOp B (finRepCusp ℚ 2 g ψ) = finRepCusp ℚ 2 g (cuspOp B ψ) := by
-  simp only [cuspOp, LinearMap.add_apply, LinearMap.smul_apply, gkModuleCusp_ρ_finRepCusp, map_add, map_smul]
+  simp only [cuspOp, LinearMap.add_apply, LinearMap.smul_apply, gkModuleCusp_ρ_finRepCusp, map_add (f := _), map_smul]
 
 variable {N : ℕ} [NeZero N] {k : ℤ}
 
@@ -109,7 +109,7 @@ theorem cuspOp_translateSpanCusp (f : CuspForm (Gamma0 N : Subgroup (GL (Fin 2) 
     obtain ⟨g, rfl⟩ := hx
     rw [cuspOp_finRepCusp, cuspOp_liftCusp f hB, map_smul]
   | zero => rw [map_zero, smul_zero]
-  | add x y _ _ hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul c x _ hx => rw [map_smul, hx, smul_comm]
 
 theorem holCoeff_lowerMat : gl2HolCoeff lowerMat = 0 := by
@@ -217,7 +217,7 @@ theorem archCompactRepCusp_cuspOp (x : archCompact ℚ 2) {B B' : Matrix (Fin 2)
   have hB' : B' = kMatC x * B * (((kMat x)⁻¹ : GL (Fin 2) ℝ) : Matrix (Fin 2) (Fin 2) ℝ).map (↑) := by
     rw [h, Matrix.mul_assoc, hKi, Matrix.mul_one]
   rw [hB']
-  simp only [cuspOp, LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul, archCompactRepCusp_rho]
+  simp only [cuspOp, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul, archCompactRepCusp_rho]
   rw [kMatC, reMat_conj, imMat_conj]
 
 abbrev kgc (w : ℂ) (hw : w ≠ 0) : Matrix (Fin 2) (Fin 2) ℂ := (kGL w hw : Matrix (Fin 2) (Fin 2) ℝ).map (↑)

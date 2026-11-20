@@ -22,7 +22,7 @@ local instance locAt (v : Pl D) : IsNonarchimedeanLocalField (Fv D.host.F v) := 
 
 def secAt {v : Pl D} (τ : D.host.E →ₐ[D.host.F] Fv D.host.F v) : Fv D.host.F v →+ AE D :=
   AddMonoidHom.mk' (fun a => singleTens D.host.E v (a ⊗ₜ[D.host.F] (1 : D.host.E)) * splitIdemAd (isCMExt_host D) τ)
-    fun a b => by rw [TensorProduct.add_tmul, map_add, add_mul]
+    fun a b => by rw [TensorProduct.add_tmul, map_add (f := _), add_mul]
 
 def prAt {v : Pl D} (τ : D.host.E →ₐ[D.host.F] Fv D.host.F v) : AE D →+* Fv D.host.F v :=
   (splitProj τ).toRingHom.comp (GlobalTheory.AdelicU.compFin D.host.F D.host.E v)
@@ -108,7 +108,7 @@ theorem single_mem_idAt (v : Pl D) (y : Fv D.host.F v ⊗[D.host.F] D.host.E) : 
   refine Submodule.mem_inf.2 ⟨?_, (Submodule.mem_iInf _).2 fun u => ?_⟩
   · induction y using TensorProduct.induction_on with
     | zero => exact (congrArg (infPart D) (singleTens D.host.E v).map_zero').trans (infPart D).map_zero
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | tmul a x => exact TensorProduct.zero_tmul _ x
   · exact (compAt_eq u.1 _).trans (compFin_singleTens_ne u.2 y)
 

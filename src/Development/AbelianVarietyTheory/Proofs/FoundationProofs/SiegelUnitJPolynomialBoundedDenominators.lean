@@ -328,7 +328,7 @@ theorem frac_bd : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ 
     rw [AlgEquiv.commutes, AlgHom.commutes]
     exact good_C r
   | add x y _ _ hx hy =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact good_add hx hy
   | mul x y _ _ hx hy =>
     rw [map_mul, map_mul]

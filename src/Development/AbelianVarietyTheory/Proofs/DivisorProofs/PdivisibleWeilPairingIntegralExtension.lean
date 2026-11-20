@@ -154,7 +154,7 @@ variable {p : ℕ} [Fact p.Prime] {R K : Type} [CommRing R] [IsDomain R] [Field 
 
 def pullRig (π : 𝒜 ⟶ Δ.baseChange K) : Δ.RigExt →ₗ[R] 𝒜.RigExt where
   toFun y := rigExtMap π ((Δ.toBase K).rig y)
-  map_add' _ _ := by rw [map_add, map_add]
+  map_add' _ _ := by rw [map_add (f := _), map_add (f := _)]
   map_smul' _ _ := by rw [map_smulₛₗ, map_smul, algebraMap_smul, RingHom.id_apply]
 
 variable (hR : (p : R) = 0) (hK : (p : K) = 0) (κ : Γ.baseChange K ⟶ 𝒜) (π : 𝒜 ⟶ Δ.baseChange K)
@@ -198,7 +198,7 @@ theorem span_image_eq :
   · rintro ⟨x, hx, rfl⟩
     obtain ⟨_, ⟨η, -, rfl, -⟩, _, ⟨y, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hx
     refine ⟨_, ⟨y, rfl⟩, ?_⟩
-    rw [map_add, absFrob_rigOfOmega, zero_add, ← absFrob_pullRig hR hK, pullRig_apply]
+    rw [map_add (f := _), absFrob_rigOfOmega, zero_add, ← absFrob_pullRig hR hK, pullRig_apply]
   · rintro ⟨_, ⟨y, rfl⟩, rfl⟩
     exact ⟨pullRig π y, Submodule.mem_sup_right (show pullRig π y ∈ latExt π from ⟨y, rfl⟩),
       absFrob_pullRig hR hK π y⟩
@@ -247,7 +247,7 @@ theorem exists_eq_pullRig [Module.Free R Γ.omega] [Module.Free R Δ.VecExt] (h 
   rw [toBase_omegaMap, hh, omegaMap_comp_apply] at hη
   refine ⟨Δ.rigOfOmega η'' + y, ?_, ?_⟩
   · rw [smul_add, ← map_smul, ← hi e₂, hη', sub_add_cancel]
-  · rw [hκ hη, map_add, pullRig_rigOfOmega]
+  · rw [hκ hη, map_add (f := _), pullRig_rigOfOmega]
 
 theorem inf_span_eq [Module.Free R Γ.omega] [Module.Free R Δ.VecExt] (h : Γ ⟶ Δ)
     (hh : PDivGroup.baseChangeMap K h = κ ≫ π) (hκ : Function.Injective (omegaMap _ _ κ))

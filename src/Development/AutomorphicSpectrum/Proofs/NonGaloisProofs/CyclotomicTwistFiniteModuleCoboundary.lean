@@ -22,7 +22,7 @@ theorem GlobalTheory.CompanionTheory.LocDual.cup_flip_cob {G W W' R : Type} [Gro
       -P (y g) (a' g (x h)) - P (a g (y h)) (x g) := by
     intro g h
     rw [hy.2, hx.2, ← hP]
-    simp only [map_add, AddMonoidHom.add_apply]
+    simp only [map_add (f := _), AddMonoidHom.add_apply]
     abel
   refine ⟨fun g => -P (y g) (x g) - f g, (hlc.neg).sub hf, fun g h => ?_⟩
   have h1 := hid g h

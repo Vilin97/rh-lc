@@ -131,7 +131,7 @@ theorem coe_chartEval (x : Cone n (AlgebraicClosure ℚ)) (c : (k : ι) → Fin 
       aeval (dehomCoords (flatCone x) c) F := by
   induction F using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => rw [map_add, Subalgebra.coe_add, IntermediateField.coe_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), Subalgebra.coe_add, IntermediateField.coe_add, hp, hq, map_add (f := _)]
   | mul_X p q hp =>
     rw [map_mul, Subalgebra.coe_mul, IntermediateField.coe_mul, hp, map_mul]
     simp [chartEval, chartRatio, dehomCoords, flatCone, div_eq_inv_mul]
@@ -202,7 +202,7 @@ theorem proof : Statement := by
     have hJ : NumbersDVR.IsMultiHomogIdeal (ι := blockIdx n) (orbitIdeal x ⊔ Ideal.span {s}) := by
       intro f hf b
       obtain ⟨p, hp, t, ht, rfl⟩ := Submodule.mem_sup.mp hf
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem_sup (OrbitCurve.weightedHomogeneousComponent_mem_orbitIdeal x hp b)
         (NumbersDVR.isMultiHomogIdeal_span_singleton (e := a) hsa' t ht b)
     exact NumbersDVR.MinimalPrimeMultiHomog.proof ℤ ι (blockIdx n) _ V hJ hVmin

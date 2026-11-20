@@ -54,7 +54,7 @@ theorem exists_det_pow_mul_eq_poly {n : ℕ} (Q : MvPolynomial ((Fin n × Fin n)
     obtain ⟨d₂, P₂, h₂⟩ := hq
     refine ⟨d₁ + d₂, P₁ * (Matrix.mvPolynomialX (Fin n) (Fin n) ℂ).det ^ d₂ +
       P₂ * (Matrix.mvPolynomialX (Fin n) (Fin n) ℂ).det ^ d₁, fun B => ?_⟩
-    simp only [map_add, map_mul, map_pow, eval_det_mvPolynomialX, ← h₁ B, ← h₂ B]
+    simp only [map_add (f := _), map_mul, map_pow, eval_det_mvPolynomialX, ← h₁ B, ← h₂ B]
     ring
   | mul_X p v hp =>
     obtain ⟨d, P, h⟩ := hp

@@ -26,7 +26,7 @@ def intertw : Subalgebra ℂ (Module.End ℂ M × Module.End ℂ M') where
     rw [ha, hb]
   add_mem' := by
     intro a b ha hb v
-    simp only [Prod.fst_add, Prod.snd_add, LinearMap.add_apply, map_add]
+    simp only [Prod.fst_add, Prod.snd_add, LinearMap.add_apply, map_add (f := _)]
     rw [ha, hb]
   algebraMap_mem' := by
     intro c v

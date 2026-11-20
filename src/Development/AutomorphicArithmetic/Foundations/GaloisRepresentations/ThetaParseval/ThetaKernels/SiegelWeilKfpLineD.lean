@@ -40,7 +40,7 @@ theorem T_vline_k (hH : _root_.PositivityTheory.SiegelWeilFormula.THeis_k) (R : 
     ← mul_assoc, ← mul_assoc, ← Complex.exp_add, ← Complex.exp_add]
   congr 2
   rw [inner_add_right, inner_smul_right, real_inner_self_eq_norm_sq, _root_.PositivityTheory.SiegelWeilFormula.KFP.norm_add_smul_sq_k]
-  simp only [map_add, map_sub, map_mul, map_ofNat, Complex.conj_I, Complex.conj_ofReal]
+  simp only [map_add (f := _), map_sub, map_mul, map_ofNat, Complex.conj_I, Complex.conj_ofReal]
   push_cast
   ring
 theorem continuous_bv_k (w : _root_.PositivityTheory.SiegelWeilFormula.KFP.Vw_k d) (z : ℂ) : Continuous (_root_.PositivityTheory.SiegelWeilFormula.KFP.bv_k w z) := by

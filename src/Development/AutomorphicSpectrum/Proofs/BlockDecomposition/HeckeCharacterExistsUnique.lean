@@ -101,7 +101,7 @@ theorem exists_avg_eq_zero (hfin : ∀ v, (stab ρ v).FiniteIndex) {x : V} (hx :
     obtain ⟨A, hA1, hA2, hA⟩ := ha
     obtain ⟨B, hB1, hB2, hB⟩ := hb
     refine ⟨A ⊓ B, inferInstance, inferInstance, fun S _ _ hS => ?_⟩
-    rw [map_add, hA S (hS.trans inf_le_left), hB S (hS.trans inf_le_right), add_zero]
+    rw [map_add (f := _), hA S (hS.trans inf_le_left), hB S (hS.trans inf_le_right), add_zero]
   | smul c a _ ha =>
     obtain ⟨A, hA1, hA2, hA⟩ := ha
     exact ⟨A, hA1, hA2, fun S _ _ hS => by rw [map_smul, hA S hS, smul_zero]⟩

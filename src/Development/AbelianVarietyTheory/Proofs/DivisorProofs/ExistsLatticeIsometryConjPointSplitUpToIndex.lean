@@ -81,7 +81,7 @@ theorem exists_isometry_of_conj_split_index : ∀ (E : Type) [Field E] [NumberFi
         exact ⟨this, by rw [form_skew, this, neg_zero]⟩
       have e : (F.Di i').EF (Φp (wE H s • a) + Φm (H.bar (wE H s) • b)) (Φp (wE H s • a') + Φm (H.bar (wE H s) • b')) =
           M * (F.Di i').EF (Φp a + Φm b) (Φp a' + Φm b') := by
-        simp only [map_add, LinearMap.add_apply]
+        simp only [map_add (f := _), LinearMap.add_apply]
         rw [(o _ (hp _) _ (hm _)).1, (o _ (hp _) _ (hm _)).2, (o _ (hp a) _ (hm b')).1, (o _ (hp a') _ (hm b)).2,
           map_smul Φp, map_smul Φp, map_smul Φm, map_smul Φm, form_smul_smul _ _ _ hb1, form_smul_smul _ _ _ hb2]
         ring
@@ -123,7 +123,7 @@ theorem exists_isometry_of_conj_split_index : ∀ (E : Type) [Field E] [NumberFi
         obtain ⟨a', b', hab'⟩ := hdec w
         refine GlobalTheory.ConjSplitIndex.nsmul_cancel hP' hN ?_
         rw [smul_add, ← hΨ v a b hab, ← hΨ w a' b' hab', ← hΨ (v + w) (a + a') (b + b')
-          (by rw [smul_add, ← hab, ← hab', Submodule.coe_add, Submodule.coe_add]; abel), map_add, map_add]
+          (by rw [smul_add, ← hab, ← hab', Submodule.coe_add, Submodule.coe_add]; abel), map_add (f := _), map_add (f := _)]
         abel
       map_smul' := fun c v => by
         obtain ⟨a, b, hab⟩ := hdec v

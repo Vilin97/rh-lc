@@ -114,7 +114,7 @@ theorem fderiv_vac (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) (F : BB ψ S T)
     fun x => (congrArg A (h2 x)).trans (map_sum A _ _)
   rw [h4 z, h4 (Complex.I • blk sT sS *ᵥ z), Finset.smul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_eq_zero fun τ _ => QB_ext fun w => ?_
-  rw [← ev_apply, map_add, map_smul, h1, h1, h3]
+  rw [← ev_apply, map_add (f := _), map_smul, h1, h1, h3]
   exact congrFun (hv τ (cpt z τ)) w
 
 theorem enorm_sq_inj {E : Type} [NormedAddCommGroup E] {a b : E} : ‖a‖ₑ ^ 2 = ‖b‖ₑ ^ 2 ↔ ‖a‖ = ‖b‖ := by

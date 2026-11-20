@@ -101,7 +101,7 @@ theorem exists_vacua (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
   have hco : ∀ z, co.e z = (glue ε (p z) (M₁.co.e (π z)).1, glue ε (q z) (M₁.co.e (π z)).2) := fun z => by
     have hye : co.e (Matrix.vecMulVec (fun i => w z i (.inr 1)) (incV F H'.y)) = (glue ε (p z) 0, 0) :=
       Prod.ext (eq_glue_of hd _ (hy _).2) (hy _).1
-    conv_lhs => rw [← hw z, mul_frame, map_add, map_add, hye, hι, insert_zero_eq_glue, insert_zero_eq_glue]
+    conv_lhs => rw [← hw z, mul_frame, map_add (f := _), map_add (f := _), hye, hι, insert_zero_eq_glue, insert_zero_eq_glue]
     rw [show co.e (Matrix.vecMulVec (fun i => w z i (.inr 0)) (incV F H'.x)) = _ from hδe z]
     simp only [Prod.mk_add_mk, zero_add, add_zero]
     rw [glue_add, glue_add]
@@ -165,13 +165,13 @@ theorem exists_vacua (F E : Type) [Field F] [NumberField F] [Field E] [NumberFie
       simp only [← AddChar.map_add_eq_mul]
       congr 1
       have h1 : inclR (F := F) (AF F) (θ : E) + cA σ (inclR (F := F) (AF F) (θ : E)) = 1 := by
-        rw [GlobalTheory.VacIndic.cA_inclR, ← map_add, hθ, map_one]
+        rw [GlobalTheory.VacIndic.cA_inclR, ← map_add (f := _), hθ, map_one]
       have h2 : Tr (inclR (F := F) (AF F) (θ : E) * cA σ (u γ γ)) =
           Tr (u γ γ) - Tr (inclR (F := F) (AF F) (θ : E) * u γ γ) := by
         rw [← hTr, map_mul, cA_cA hB, ← map_sub, eq_sub_of_add_eq' h1, sub_mul, one_mul]
       have h3 : (⅟(2 : AF F)) * 2 = 1 := invOf_mul_self _
       show _ * Tr _ = _ + (_ + _ * Tr _)
-      rw [hpq, hH2, mul_add (inclR (F := F) (AF F) (θ : E)), mul_sub, map_add, map_sub, h2]
+      rw [hpq, hH2, mul_add (inclR (F := F) (AF F) (θ : E)), mul_sub, map_add (f := _), map_sub, h2]
       generalize (⅟(2 : AF F)) = t at h3 ⊢
       linear_combination (Tr (inclR (F := F) (AF F) (θ : E) * u γ γ)) * h3
   choose φa hφa hφb using hv

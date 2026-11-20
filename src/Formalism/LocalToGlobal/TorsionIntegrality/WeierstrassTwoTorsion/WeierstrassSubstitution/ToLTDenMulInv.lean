@@ -81,16 +81,16 @@ theorem toL_nS : toL (nS W xP yP) =
     HahnSeries.C (W.a₄ - W.a₁ * yP + 2 * W.a₂ * xP + 3 * xP ^ 2) * toL X * toL (xS W)
       - HahnSeries.C (2 * yP + W.a₁ * xP + W.a₃) * toL (yS W)
       + HahnSeries.C (2 * W.a₆ + W.a₄ * xP - W.a₃ * yP - xP ^ 3) * toL X ^ 3 := by
-  simp only [nS, map_add, map_sub, map_mul, map_pow, HahnSeries.ofPowerSeries_C]
+  simp only [nS, map_add (f := _), map_sub, map_mul, map_pow, HahnSeries.ofPowerSeries_C]
 
 theorem toL_xPlus : toL (xPlus W xP yP) = HahnSeries.C xP
     + toL X * toL (nS W xP yP) * toL (invOfUnit (tDen W xP) 1) ^ 2 := by
-  simp only [xPlus, map_add, map_mul, map_pow, HahnSeries.ofPowerSeries_C]
+  simp only [xPlus, map_add (f := _), map_mul, map_pow, HahnSeries.ofPowerSeries_C]
 
 theorem toL_yPlus : toL (yPlus W xP yP) =
     -(toL (yS W - C yP * X ^ 3) * toL (nS W xP yP) * toL (invOfUnit (tDen W xP) 1) ^ 3)
       - HahnSeries.C yP - HahnSeries.C W.a₁ * toL (xPlus W xP yP) - HahnSeries.C W.a₃ := by
-  simp only [yPlus, map_add, map_sub, map_neg, map_mul, map_pow, HahnSeries.ofPowerSeries_C]
+  simp only [yPlus, map_add (f := _), map_sub, map_neg, map_mul, map_pow, HahnSeries.ofPowerSeries_C]
 
 def subHom (s : R⟦X⟧) (hs : constantCoeff s = 0) : R⟦X⟧ →ₐ[R] R⟦X⟧ :=
   substAlgHom (HasSubst.of_constantCoeff_zero' hs)
@@ -144,9 +144,9 @@ theorem nS_subst (hI : ISerSpec.{u}) : (nS W xP yP).subst (iSer W)
     rw [← PowerSeries.coe_substAlgHom hS]
     exact (PowerSeries.substAlgHom hS).commutes r
   rw [nS, nS, ← PowerSeries.coe_substAlgHom hS]
-  simp only [map_add, map_sub, map_mul, map_pow, map_neg]
+  simp only [map_add (f := _), map_sub, map_mul, map_pow, map_neg]
   simp only [PowerSeries.coe_substAlgHom, PowerSeries.subst_X hS, hCs, hx, hy]
-  simp only [iSer, WeierstrassCurve.Affine.negY, map_add, map_sub, map_mul, map_neg, map_pow, map_ofNat]
+  simp only [iSer, WeierstrassCurve.Affine.negY, map_add (f := _), map_sub, map_mul, map_neg, map_pow, map_ofNat]
   ring
 
 theorem xPlus_subst (hI : ISerSpec.{u}) :
@@ -159,7 +159,7 @@ theorem xPlus_subst (hI : ISerSpec.{u}) :
   have hCs : (C xP : R⟦X⟧).subst (iSer W) = C xP := by
     rw [← PowerSeries.coe_substAlgHom hS]
     exact (PowerSeries.substAlgHom hS).commutes xP
-  rw [xPlus, xPlus, ← PowerSeries.coe_substAlgHom hS, map_add, map_mul, map_mul, map_pow,
+  rw [xPlus, xPlus, ← PowerSeries.coe_substAlgHom hS, map_add (f := _), map_mul, map_mul, map_pow,
     PowerSeries.coe_substAlgHom, PowerSeries.subst_X hS, hCs, nS_subst W xP yP hI, inv_subst W xP hI, iSer]
   linear_combination (X * nS W xP (W.toAffine.negY xP yP) * invOfUnit (tDen W xP) 1 ^ 2 * (iDen W * invOfUnit (iDen W) (-1) + 1) * ((iDen W * invOfUnit (iDen W) (-1)) ^ 2 + 1)) * hB
 
@@ -245,16 +245,16 @@ theorem map_tS : PowerSeries.map φ (tS W xP) = tS (W.map φ) (φ xP) := by
   simp only [tS, map_mul, map_pow, PowerSeries.map_X, Plus.map_inv W xP φ]
 
 theorem map_nS : PowerSeries.map φ (nS W xP yP) = nS (W.map φ) (φ xP) (φ yP) := by
-  simp only [nS, yS, map_add, map_sub, map_mul, map_neg, map_pow, PowerSeries.map_C, PowerSeries.map_X,
+  simp only [nS, yS, map_add (f := _), map_sub, map_mul, map_neg, map_pow, PowerSeries.map_C, PowerSeries.map_X,
     CurveSer.map_xS, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃,
     WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆, map_ofNat]
 
 theorem map_xPlus : PowerSeries.map φ (xPlus W xP yP) = xPlus (W.map φ) (φ xP) (φ yP) := by
-  simp only [xPlus, map_add, map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X,
+  simp only [xPlus, map_add (f := _), map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X,
     Plus.map_nS W xP yP φ, Plus.map_inv W xP φ]
 
 theorem map_yPlus : PowerSeries.map φ (yPlus W xP yP) = yPlus (W.map φ) (φ xP) (φ yP) := by
-  simp only [yPlus, yS, map_add, map_sub, map_neg, map_mul, map_pow, PowerSeries.map_C,
+  simp only [yPlus, yS, map_add (f := _), map_sub, map_neg, map_mul, map_pow, PowerSeries.map_C,
     PowerSeries.map_X, CurveSer.map_xS, Plus.map_nS W xP yP φ, Plus.map_inv W xP φ,
     Plus.map_xPlus W xP yP φ, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₃]
 

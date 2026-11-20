@@ -102,7 +102,7 @@ theorem exists_residue_sub_mul_add_eq_zero (v w : B) :
   obtain ⟨z', rfl⟩ := residue_surjective z
   refine ⟨z', ?_⟩
   simp only [IsRoot, eval_add, eval_sub, eval_pow, eval_X, eval_C, eval_mul] at hz
-  rw [map_add, map_sub, map_mul, hσ]
+  rw [map_add (f := _), map_sub, map_mul, hσ]
   linear_combination hz
 
 variable {π : A} (hπB : Irreducible (algebraMap A B π))
@@ -121,7 +121,7 @@ theorem exists_sub_mul_eq_of_mem [IsAdicComplete (maximalIdeal B) B] (v c : B) {
       obtain ⟨t, ht⟩ := hxy
       refine ⟨σ t - v * t, ?_⟩
       have : x = y + ϖ ^ n * t := by rw [← ht]; ring
-      simp only [this, map_add, hσϖ]
+      simp only [this, map_add (f := _), hσϖ]
       ring)
     (fun n x hx => by
       rw [mem_maximalIdeal_pow_iff hπB] at hx
@@ -134,7 +134,7 @@ theorem exists_sub_mul_eq_of_mem [IsAdicComplete (maximalIdeal B) B] (v c : B) {
         exact ⟨z, by ring⟩
       · rw [mem_maximalIdeal_pow_iff hπB]
         refine ⟨t, ?_⟩
-        simp only [map_add, hσϖ]
+        simp only [map_add (f := _), hσϖ]
         have e : σ x - v * x - c = ϖ ^ n * w := hw
         linear_combination e + ϖ ^ n * ht)
     h₀

@@ -975,7 +975,7 @@ theorem tr_traceDual' (K : Type) [Field K] [NumberField K] (V : Type) [AddCommGr
   · intro f g
     apply tr_c_unique
     intro a
-    rw [hc, mul_add, map_add, hc, hc, smul_add, map_add]
+    rw [hc, mul_add, map_add (f := _), hc, hc, smul_add, map_add (f := _)]
   · intro b f
     apply tr_c_unique
     intro a
@@ -1229,7 +1229,7 @@ theorem trans_of_stages (h1 : TrDualVec) (h2 : TrTraceDual) (h3 : TrScale) [Fini
       map_add' := fun f g => by
         have : ((lf j (f + g) : ℚ) : ℝ) = ((lf j f + lf j g : ℚ) : ℝ) := by
           push_cast
-          rw [hlf, hlf, hlf, map_add, inner_add_left]
+          rw [hlf, hlf, hlf, map_add (f := _), inner_add_left]
         exact_mod_cast this }
   choose cf hcf using fun j => h2 K V (ℓ j)
   have hcf' : ∀ j g, ((Algebra.trace ℚ K (cf j g) : ℚ) : ℝ) = inner ℝ (tr_iota Hm g) (y j : TrW K dH) := by
@@ -1346,7 +1346,7 @@ theorem bound_add (h0 : ∀ w, n w 0 = 0) (hadd : ∀ w x y, n w (x + y) ≤ n w
   classical
   obtain ⟨c, c1, c2⟩ := hp
   obtain ⟨c', c1', c2'⟩ := hq
-  refine ⟨c + c', fun β => by rw [Finsupp.add_apply, map_add, c1, c1', MvPolynomial.coeff_add], ?_⟩
+  refine ⟨c + c', fun β => by rw [Finsupp.add_apply, map_add (f := _), c1, c1', MvPolynomial.coeff_add], ?_⟩
   rw [sum_support_eq_sum_of_support_subset (h0 w) (c + c') _ Finsupp.support_add]
   rw [sum_support_eq_sum_of_support_subset (h0 w) c _ (Finset.subset_union_left (s₂ := c'.support))] at c2
   rw [sum_support_eq_sum_of_support_subset (h0 w) c' _ (Finset.subset_union_right (s₁ := c.support))] at c2'
@@ -1480,7 +1480,7 @@ theorem re_inner_conjugate_embedding_eq (Hm : Herm N2 dH) (hN : ∀ σ f, N2 (Co
       (inner ℂ (Hm.e σ f) (Hm.e σ g)).re := by
   have h1 := @norm_add_sq ℂ _ _ _ _ (Hm.e σ f) (Hm.e σ g)
   have h2 := @norm_add_sq ℂ _ _ _ _ (Hm.e (ComplexEmbedding.conjugate σ) f) (Hm.e (ComplexEmbedding.conjugate σ) g)
-  rw [← map_add, Hm.norm_e, Hm.norm_e, Hm.norm_e] at h1 h2
+  rw [← map_add (f := _), Hm.norm_e, Hm.norm_e, Hm.norm_e] at h1 h2
   rw [hN, hN, hN] at h2
   simp only [RCLike.re_to_complex] at h1 h2
   linarith
@@ -1670,7 +1670,7 @@ theorem gp_Cf_add (padd : ∀ w x y, Pr w x → Pr w y → Pr w (x + y)) {w : W}
     (hp : Cf inc Pr w p) (hq : Cf inc Pr w q) : Cf inc Pr w (p + q) := by
   obtain ⟨c, c1, c2⟩ := hp
   obtain ⟨c', c1', c2'⟩ := hq
-  exact ⟨c + c', fun β => by rw [Finsupp.add_apply, map_add, c1, c1', MvPolynomial.coeff_add],
+  exact ⟨c + c', fun β => by rw [Finsupp.add_apply, map_add (f := _), c1, c1', MvPolynomial.coeff_add],
     fun β => by rw [Finsupp.add_apply]; exact padd _ _ _ (c2 β) (c2' β)⟩
 
 theorem gp_Cf_sum (p0 : ∀ w, Pr w 0) (padd : ∀ w x y, Pr w x → Pr w y → Pr w (x + y)) {w : W} {α : Type}
@@ -1957,7 +1957,7 @@ theorem br_scale {M : Submodule (𝓞 K) V} (hfgM : M.FG) (la : HeightOneSpectru
       rw [LinearMap.smul_apply, smul_eq_mul, ← Algebra.smul_def, ← hy]
       exact la.valuation_le_one y
     | zero => rw [map_zero, map_zero]; exact zero_le_one
-    | add x y _ _ hx hy => rw [map_add]; exact (Valuation.map_add_le _ hx hy)
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact (Valuation.map_add_le _ hx hy)
     | smul o x _ hx =>
       rw [← IsScalarTower.algebraMap_smul K o x, map_smul, smul_eq_mul, map_mul]
       exact mul_le_one' (la.valuation_le_one o) hx
@@ -2014,7 +2014,7 @@ theorem len_le_gaussC {M : Submodule (𝓞 K) V} (hfgM : M.FG) {ρ : ℕ} {z : F
     | add x y _ _ hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
     | smul r x _ hx =>
       obtain ⟨a, ha⟩ := hx
       exact ⟨r * a, by rw [← IsScalarTower.algebraMap_smul F r x, map_smul, smul_eq_mul, map_mul, ha]⟩
@@ -2073,7 +2073,7 @@ theorem len_le_gaussC {M : Submodule (𝓞 K) V} (hfgM : M.FG) {ρ : ℕ} {z : F
         induction hm using Submodule.span_induction with
         | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
         | zero => rw [map_zero]; exact Submodule.zero_mem _
-        | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+        | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
         | smul o x _ hx =>
           obtain ⟨r', hr'⟩ := hint (algebraMap (𝓞 K) K o) (la.valuation_le_one o)
           rw [← IsScalarTower.algebraMap_smul K o x, hu, ← hr', SetLike.mem_coe, IsScalarTower.algebraMap_smul]

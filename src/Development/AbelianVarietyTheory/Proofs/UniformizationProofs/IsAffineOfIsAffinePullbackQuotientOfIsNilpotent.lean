@@ -53,7 +53,7 @@ theorem res (ha : Lifts i U a r) (h : V ≤ U) : Lifts i V (rs h a) r := by
 
 theorem add (ha : Lifts i U a r) (hb : Lifts i U b s) : Lifts i U (a + b) (r + s) := by
   unfold Lifts at *
-  rw [map_add, map_add, ha, hb]
+  rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem sub (ha : Lifts i U a r) (hb : Lifts i U b s) : Lifts i U (a - b) (r - s) := by
   unfold Lifts at *
@@ -153,7 +153,7 @@ theorem IsCoboundary.add {r r' : Γ(Z, ⊤)} (h : IsCoboundary i σ r) (h' : IsC
   obtain ⟨ρ', t', hρ', ht', e'⟩ := h'
   refine ⟨fun j ↦ ρ j + ρ' j, fun j ↦ t j + t' j, fun j ↦ (hρ j).add (hρ' j),
     fun j ↦ by simpa using (ht j).add (ht' j), fun j k ↦ ?_⟩
-  simp only [map_add]
+  simp only [map_add (f := _)]
   linear_combination e j k + e' j k
 
 omit [IsClosedImmersion i] [Surjective i] in

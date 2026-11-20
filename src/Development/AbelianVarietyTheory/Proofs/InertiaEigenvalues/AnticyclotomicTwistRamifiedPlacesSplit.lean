@@ -134,7 +134,7 @@ theorem fixes_of_wild (s : Ω ≃+* Ω) (hm : ∀ x, A.valuation (s x) < 1 ↔ A
   have e1 : s z = z * (1 + u) := by rw [hu_def]; field_simp; ring
   have e2 : s u = u * b1 := by rw [hb1_def]; field_simp
   have e3 : s (s (s z)) = z * ((1 + u) * (1 + u * b1) * (1 + u * (s b1 * b1))) := by
-    simp only [e1, map_mul, map_add, map_one, e2]
+    simp only [e1, map_mul, map_add (f := _), map_one, e2]
     ring
   have hX : (1 + u) * (1 + u * b1) * (1 + u * (s b1 * b1)) = 1 := by
     have := (h3 z hz).symm.trans e3

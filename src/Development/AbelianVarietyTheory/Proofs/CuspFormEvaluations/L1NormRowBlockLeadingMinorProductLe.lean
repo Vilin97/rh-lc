@@ -61,7 +61,7 @@ variable {E : Type*} [CommRing E] {κ : Type*} [Fintype κ]
 noncomputable def embSeminorm (τ : E →+* ℂ) : RingSeminorm E where
   toFun x := ‖τ x‖
   map_zero' := by simp
-  add_le' x y := by rw [map_add]; exact norm_add_le _ _
+  add_le' x y := by rw [map_add (f := _)]; exact norm_add_le _ _
   neg' x := by simp
   mul_le' x y := by simp
 
@@ -84,7 +84,7 @@ theorem embVec_smul (τ : E →+* ℂ) (x : E) (v : κ → E) : embVec τ (x •
 noncomputable def embLength (τ : E →+* ℂ) : AddGroupSeminorm (κ → E) where
   toFun v := ‖embVec τ v‖
   map_zero' := by simp
-  add_le' x y := by rw [map_add]; exact norm_add_le _ _
+  add_le' x y := by rw [map_add (f := _)]; exact norm_add_le _ _
   neg' x := by simp
 
 theorem embLength_apply (τ : E →+* ℂ) (v : κ → E) : embLength τ v = ‖embVec τ v‖ := rfl

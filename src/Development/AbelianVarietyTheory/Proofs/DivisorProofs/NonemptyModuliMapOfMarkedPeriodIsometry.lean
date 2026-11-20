@@ -160,7 +160,7 @@ theorem nonempty_objMap_of_markedIsom : ∀ (p : ℕ) [Fact p.Prime] (D : Datum 
       refine (congrArg (· ≫ f) hη2).trans ((hfe2 _).symm.trans (Eq.trans ?_ hη2'.symm))
       have hz : (N : ℂ)⁻¹ • N • Q' e₀ = Q' e₀ := by
         rw [← Nat.cast_smul_eq_nsmul ℂ, smul_smul, inv_mul_cancel₀ hN, one_smul]
-      rw [map_smul, ← hu, he₀, map_add, map_nsmul, smul_add, hz, he'.1, (hk' (Q' e₀)).2 ⟨e₀, rfl⟩, _root_.mul_one]
+      rw [map_smul, ← hu, he₀, map_add (f := _), map_nsmul, smul_add, hz, he'.1, (hk' (Q' e₀)).2 ⟨e₀, rfl⟩, _root_.mul_one]
     have a2 := congrArg (fun q => q.left) a1
     simp only [Over.comp_left, hT, Category.id_comp] at a2
     rw [Category.id_comp]

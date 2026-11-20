@@ -33,7 +33,7 @@ private theorem et_unram (O K C : Type) [CommRing O] [Field K] [Algebra O K] [Co
     have hL : L ∈ PtDer ξ K := by
       intro a b
       show ι (D (a * b)) = ι (Ideal.Quotient.mk m a) • ι (D b) + ι (Ideal.Quotient.mk m b) • ι (D a)
-      rw [Derivation.leibniz, Algebra.smul_def, Algebra.smul_def, map_add, map_mul, map_mul,
+      rw [Derivation.leibniz, Algebra.smul_def, Algebra.smul_def, map_add (f := _), map_mul, map_mul,
         smul_eq_mul, smul_eq_mul]
       rfl
     rw [hD ξ, Submodule.mem_bot] at hL

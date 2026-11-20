@@ -22,7 +22,7 @@ theorem trdeg_le_of_closure_range_union_eq_top (K₀ K₁ K₂ L : Type) [Field 
         RingHom.congr_fun hφ r
       rw [h]
       exact E.algebraMap_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   have halg : ∀ f, IsAlgebraic E (φ f) := by
     intro f

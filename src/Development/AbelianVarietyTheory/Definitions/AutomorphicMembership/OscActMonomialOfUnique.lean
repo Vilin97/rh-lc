@@ -123,12 +123,12 @@ theorem isLieAct_oscAct (P Q : ℕ) : IsLieAct (oscAct P Q) := by
   induction X using Matrix.induction_on' with
   | h_zero => simp
   | h_add X X' h h' =>
-    rw [add_mul, mul_add, add_sub_add_comm, map_add, h, h', map_add]; noncomm_ring
+    rw [add_mul, mul_add, add_sub_add_comm, map_add (f := _), h, h', map_add (f := _)]; noncomm_ring
   | h_std_basis i j c =>
     induction Y using Matrix.induction_on' with
     | h_zero => simp
     | h_add Y Y' h h' =>
-      rw [add_mul, mul_add, add_sub_add_comm, map_add, h, h', map_add]; noncomm_ring
+      rw [add_mul, mul_add, add_sub_add_comm, map_add (f := _), h, h', map_add (f := _)]; noncomm_ring
     | h_std_basis k l d =>
       rw [oscAct_single, oscAct_single, smul_mul_smul_comm, smul_mul_smul_comm, mul_comm d c, ← smul_sub,
         unitOp_comm, map_sub, smul_sub]
@@ -158,10 +158,10 @@ theorem mfact_add_single (α : σ →₀ ℕ) (l : σ) :
 theorem inner_X_mul (h : IsFockIP ι) (l : σ) (f g : MvPolynomial σ ℂ) :
     inner ℂ (ι (X l * f)) (ι g) = inner ℂ (ι f) (ι (pderiv l g)) := by
   induction f using MvPolynomial.induction_on' with
-  | add f f' hf hf' => simp only [mul_add, map_add, inner_add_left, hf, hf']
+  | add f f' hf hf' => simp only [mul_add, map_add (f := _), inner_add_left, hf, hf']
   | monomial α a =>
     induction g using MvPolynomial.induction_on' with
-    | add g g' hg hg' => simp only [map_add, inner_add_right, hg, hg']
+    | add g g' hg hg' => simp only [map_add (f := _), inner_add_right, hg, hg']
     | monomial β b =>
       have e : ∀ (γ : σ →₀ ℕ) (c : ℂ), (monomial γ c : MvPolynomial σ ℂ) = c • monomial γ 1 := fun γ c => by
         simp [smul_monomial]
@@ -200,7 +200,7 @@ theorem inner_low (h : IsFockIP ι) (l : Ix P Q) (f g : OscPol P Q) :
 
 theorem inner_unitOp (h : IsFockIP ι) (a b : Ix P Q) (f g : OscPol P Q) :
     inner ℂ (ι (unitOp a b f)) (ι g) = (sgn a : ℂ) * (sgn b : ℂ) * inner ℂ (ι f) (ι (unitOp b a g)) := by
-  simp only [unitOp, LinearMap.add_apply, Module.End.mul_apply, map_add, inner_add_left, inner_add_right,
+  simp only [unitOp, LinearMap.add_apply, Module.End.mul_apply, map_add (f := _), inner_add_left, inner_add_right,
     inner_rai h, inner_low h, mul_add, mul_assoc]
   congr 1
   by_cases hab : a = b
@@ -402,7 +402,7 @@ def rankOne (T0 : GrpData P Q) : Osc P Q T0 where
     refine FockSeq.continuous_of_dense _ (fun g => FockSeq.norm_diag _ (norm_sq_zpow g)) FockSeq.dense_range_emb ?_
     rintro _ ⟨f, rfl⟩
     induction f using MvPolynomial.induction_on' with
-    | add f g hf hg => simpa only [map_add] using hf.fun_add hg
+    | add f g hf hg => simpa only [map_add (f := _)] using hf.fun_add hg
     | monomial α c =>
       simp only [rankOneRep_monomial]
       exact (RealPar.Cover.continuous_sq.zpow₀ _ fun g => .inl (T0.sq g).ne_zero).smul continuous_const
@@ -413,7 +413,7 @@ def rankOne (T0 : GrpData P Q) : Osc P Q T0 where
   der Z hZ f := by
     induction f using MvPolynomial.induction_on' with
     | add f g hf hg =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact @HasDerivAt.fun_add ℝ _ _ _ NormedSpace.complexToReal _ _ _ _ _ hf hg
     | monomial α c =>
       simp only [rankOneRep_monomial, oscAct_monomial_of_unique, map_smul]
@@ -569,7 +569,7 @@ theorem hasCoeff_coe {σ : Type} [DecidableEq σ] (F : Fock σ) (f : MvPolynomia
     HasCoeff F (F.ι f) (f : MvPowerSeries σ ℂ) := by
   intro α
   induction f using MvPolynomial.induction_on' with
-  | add f g hf hg => simp only [map_add, inner_add_right, hf, hg, MvPolynomial.coe_add, mul_add]
+  | add f g hf hg => simp only [map_add (f := _), inner_add_right, hf, hg, MvPolynomial.coe_add, mul_add]
   | monomial β c =>
     have e : (monomial β c : MvPolynomial σ ℂ) = c • monomial β 1 := by simp [smul_monomial]
     rw [MvPolynomial.coeff_coe, coeff_monomial, e, map_smul, inner_smul_right, F.fockIP]

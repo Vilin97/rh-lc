@@ -14,7 +14,7 @@ variable {D : D7}
 theorem cA_cA (x : Formalism.L2.Theta.AE D) : cA D (cA D x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a e =>
     simp only [cA, sigR]
     simp
@@ -143,12 +143,12 @@ theorem sympl_skew (V W : HSp D) (x y : WA V W) :
 theorem symplH_add_left (V W : HSp D) (x x' y : WA V W) :
     symplH V W (x + x') y = symplH V W x y + symplH V W x' y := by
   unfold symplH sympl hHom
-  split_ifs <;> simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  split_ifs <;> simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem symplH_add_right (V W : HSp D) (x y y' : WA V W) :
     symplH V W x (y + y') = symplH V W x y + symplH V W x y' := by
   unfold symplH sympl hHom
-  split_ifs <;> simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add]
+  split_ifs <;> simp only [Matrix.add_apply, mul_add, add_mul, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem heis_heis (ψ : AddChar (AF D.host.F) ℂ) (V W : HSp D) (w w' : WA V W) (f : WA V W → ℂ) :
     Heisenberg₂ ψ V W w (Heisenberg₂ ψ V W w' f) = ψ (symplH V W w w') • Heisenberg₂ ψ V W (w + w') f := by

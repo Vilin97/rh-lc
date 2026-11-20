@@ -90,7 +90,7 @@ private theorem indep {ι k L Γ : Type} [Fintype ι] [Field k] [Field L] [CharZ
         exact zero_ne_one hu
       have hx : ∀ i, τ i (1 + (n : k) * y) = 1 + τ i y * n := by
         intro i
-        simp [map_add, map_mul, map_natCast, mul_comm]
+        simp [map_add (f := _), map_mul, map_natCast, mul_comm]
       have hne : ∀ i, τ i (1 + (n : k) * y) ≠ 0 := fun i => (map_ne_zero (τ i)).2 hu0
       have h := H _ hu
       have hsplit : ∀ i, τ i (1 + (n : k) * y) ^ e i =

@@ -82,7 +82,7 @@ theorem wd_key (hP : IsPsiFor ε lam T Ψ) (hv₀ : v₀ ≠ 0) (i : Fin n) (w :
     { carrier := {x | ∀ l, MemLp (wdF ε (wdCoef ε w (wdWord ε l x))) 2 (Formalism.REAL.muG ε)}
       add_mem' := by
         intro x y hx hy l
-        simp only [Set.mem_ofPred_eq, map_add, wdF_add] at *
+        simp only [Set.mem_ofPred_eq, map_add (f := _), wdF_add] at *
         exact (hx l).add (hy l)
       zero_mem' := by
         intro l

@@ -22,7 +22,7 @@ theorem nonempty_ext (v : HeightOneSpectrum (𝓞 F)) : Nonempty (Ext v) := by
     (MulRingNorm.mulRingNormEquivAbsoluteValue N.toMulRingNorm).comp (f := j.toRingHom) j.injective
   have hw (x) : w x = spectralNorm K L (j x) := rfl
   have hn (x y) : w (x + y) ≤ max (w x) (w y) := by
-    rw [hw, hw, hw, map_add]; exact isNonarchimedean_spectralNorm _ _
+    rw [hw, hw, hw, map_add (f := _)]; exact isNonarchimedean_spectralNorm _ _
   refine ⟨⟨w, fun x => ?_, ⟨⟨⟨⟨⟨{x | w x ≤ 1}, ?_⟩, by simp⟩, ?_, by simp⟩, ?_⟩, ?_⟩, fun _ => Iff.rfl⟩⟩
   · rw [hw, j.commutes, ← FinitePlace.norm_embedding]
     exact spectralNorm_extends _

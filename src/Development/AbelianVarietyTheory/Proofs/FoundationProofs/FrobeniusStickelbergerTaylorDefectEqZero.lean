@@ -49,7 +49,7 @@ def tayHom : entireRing →+* PowerSeries ℂ where
     exact this
   map_add' F G := by
     ext n
-    rw [map_add, tay_coeff, tay_coeff, tay_coeff]
+    rw [map_add (f := _), tay_coeff, tay_coeff, tay_coeff]
     exact GlobalTheory.SerTransport.taylorCoeff_add_entire F.2 G.2 n
 
 def scaleE (β : ℂ) (F : entireRing) : entireRing :=

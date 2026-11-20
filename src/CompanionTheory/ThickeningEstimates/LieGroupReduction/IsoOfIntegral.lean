@@ -81,7 +81,7 @@ theorem intw_ph {S : Eu l →L[ℝ] Eu l} (hS : ∀ x y, ⟪x, S y⟫ = ⟪y, S 
     congr 2
     rw [← add_mul, ← add_mul, ← ofReal_add, ← ofReal_add]
     congr 2
-    simp only [inner_add_left, inner_add_right, map_add, hS p x, real_inner_comm x (S p)]
+    simp only [inner_add_left, inner_add_right, map_add (f := _), hS p x, real_inner_comm x (S p)]
     ring
 
 open Classical in
@@ -109,7 +109,7 @@ theorem isUnit_dil {B : Eu l →L[ℝ] Eu l} (h : IsUnit B) : IsUnit (dil B) := 
 theorem intw_dil {B : Eu l →L[ℝ] Eu l} (hB : IsUnit B) {p q p' q' : Eu l} (hp : B p' = p) (hq : ∀ x, ⟪q', x⟫ = ⟪q, B x⟫) :
     Intw (dil B) p q p' q' := fun f g h => by
   funext x
-  simp only [rf, dil_apply hB, h, map_add, hp, real_inner_comm q' p', hq, real_inner_comm q p]
+  simp only [rf, dil_apply hB, h, map_add (f := _), hp, real_inner_comm q' p', hq, real_inner_comm q p]
 
 theorem iso_dil {B : Eu l →L[ℝ] Eu l} (hB : IsUnit B) {c : ℝ} (hc : c ^ 2 = |B.det|) : Iso ((c : ℂ) • dil B) :=
   iso_of_integral fun f => by

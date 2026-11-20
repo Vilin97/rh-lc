@@ -156,7 +156,7 @@ theorem torsion_inj (h20 : (2 : k) ≠ 0) (h2 : (2 : k)⁻¹ ∈ V) (h30 : (3 : 
   have f2 := congrArg (residue V) e2
   rw [map_mul, e3] at f1
   rw [map_mul, e4] at f2
-  simp only [map_mul, map_add, map_sub, map_pow] at f1 f2 e3 e4
+  simp only [map_mul, map_add (f := _), map_sub, map_pow] at f1 f2 e3 e4
   rw [sub_eq_zero] at e3 e4
   rw [← e3] at f1 f2
   rw [← e4] at f1

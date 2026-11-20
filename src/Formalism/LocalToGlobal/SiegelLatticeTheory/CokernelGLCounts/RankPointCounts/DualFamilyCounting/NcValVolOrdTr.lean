@@ -113,7 +113,7 @@ theorem trace_mem {x : Fv F v ⊗[F] E} (hx : x ∈ OEv (E := E) v) :
       Algebra.isIntegral_trace (RingOfIntegers.isIntegral_coe a)
     exact int_mem (F := F) v ⟨_, hi⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x z _ _ hx hz => rw [map_add]; exact add_mem hx hz
+  | add x z _ _ hx hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hz
   | smul c x _ hx =>
     show Algebra.trace (Fv F v) (Fv F v ⊗[F] E) ((c : Fv F v) • x) ∈ _
     rw [map_smul, smul_eq_mul]
@@ -137,7 +137,7 @@ theorem trace_v (σ : E →ₐ[F] E) (hinv : ∀ y, σ (σ y) = y) (hnt : ∃ x,
     congr 1
     rw [smul_eq_mul, Algebra.smul_def, mul_comm]
   | add x y hx hy =>
-    rw [map_add, map_add, hx, hy, map_add]
+    rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
     abel
 
 theorem dual_mem (σ : E →ₐ[F] E) (hinv : ∀ y, σ (σ y) = y) (hnt : ∃ x, σ x ≠ x)

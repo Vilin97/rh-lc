@@ -79,7 +79,7 @@ theorem fixed_fd_of_isotIn {D : D7} {n : ℕ} {A : Type} [AddCommGroup A] [Modul
       exact T.zero_mem
     | add x y hx hy ihx ihy =>
       have : (⟨x + y, hFS (F.add_mem hx hy)⟩ : π.S) = ⟨x, hFS hx⟩ + ⟨y, hFS hy⟩ := rfl
-      rw [this, map_add]
+      rw [this, map_add (f := _)]
       exact T.add_mem ihx ihy
     | smul a x hx ih =>
       have : (⟨a • x, hFS (F.smul_mem a hx)⟩ : π.S) = a • ⟨x, hFS hx⟩ := rfl
@@ -162,7 +162,7 @@ theorem form_of_conjT (π : NG.FinTyp L n) (B' : (FinTyp.conjT π).S → (FinTyp
       funext g
       simp [hc, mul_comm]
     simp only
-    rw [e, hlin, map_add, map_mul, Complex.conj_conj]
+    rw [e, hlin, map_add (f := _), map_mul, Complex.conj_conj]
   · intro x y
     simp only
     rw [hherm (c x) (c y)]

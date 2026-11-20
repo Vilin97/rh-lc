@@ -151,9 +151,9 @@ theorem _root_.GlobalTheory.SW.Parab.isSB_chiH (hΨ : _root_.GlobalTheory.SW.IsT
         rw [← _root_.GlobalTheory.SW.HAct.map_ccT, hβ]
       rw [NumberField.ComplexEmbedding.conjugate_coe_eq, map_trace_mul_mul_ccT_eq_trace_conjTranspose, map_trace_mul_mul_ccT_eq_trace_conjTranspose,
         Matrix.map_add _ (map_add τ.1), matrix_map_natCast_smul, trace_quadratic_form_shift_expand _ _ _ hBh R d, ht]
-      simp only [map_add, map_mul, map_pow, map_natCast, map_ofNat, map_trace_mul_mul_ccT_eq_trace_conjTranspose,
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast, map_ofNat, map_trace_mul_mul_ccT_eq_trace_conjTranspose,
         matrix_map_natCast_smul]
-      simp only [Complex.star_def, map_add, map_mul, map_pow, map_natCast, map_ofNat]
+      simp only [Complex.star_def, map_add (f := _), map_mul, map_pow, map_natCast, map_ofNat]
     unfold _root_.GlobalTheory.SW.chiH
     rw [hsum, mul_add, Complex.exp_add]
     have hm1 : Complex.exp (2 * Real.pi * Complex.I * m) = 1 := by

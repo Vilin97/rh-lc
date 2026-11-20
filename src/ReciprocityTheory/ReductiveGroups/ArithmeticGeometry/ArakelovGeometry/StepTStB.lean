@@ -102,7 +102,7 @@ theorem isIntegralElem_coneMap (v : J → Ω) (e : Fin (D + 1) → J) (hf : IsPr
     rw [this]
     exact RingHom.isIntegralElem_map _
   | add p q hp hq =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact RingHom.IsIntegralElem.add _ hp hq
   | mul_X p i hp =>
     rw [map_mul]

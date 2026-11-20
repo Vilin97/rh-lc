@@ -53,7 +53,7 @@ theorem cc_beLT {l : ℕ} [Fact l.Prime] {g : G1 l} (hOk : g.Ok) (hLT : LTIso g)
   have hadd : MvPowerSeries.constantCoeff (g.add (g.pt (MvPowerSeries.C (eLT hLT)⁻¹ * MvPowerSeries.X 0))
       (g.pt (MvPowerSeries.C (eLT hLT)⁻¹ * MvPowerSeries.X 1)) : MvPowerSeries (Fin 2) ℂ_[l]) = 0 := by
     apply Formalism.MainNotions.J.cc_pt g hex
-    rw [map_add, Formalism.MainNotions.J.cc_lg g hp0, Formalism.MainNotions.J.cc_lg g hp1, add_zero]
+    rw [map_add (f := _), Formalism.MainNotions.J.cc_lg g hp0, Formalism.MainNotions.J.cc_lg g hp1, add_zero]
   unfold Formalism.L2.G.Pend.beC G1.be G1.phAt
   rw [map_sub, map_sub, PowerSeries.constantCoeff_subst_eq_zero hadd _ hph,
     PowerSeries.constantCoeff_subst_eq_zero hp0 _ hph, PowerSeries.constantCoeff_subst_eq_zero hp1 _ hph]
@@ -227,7 +227,7 @@ theorem beta_coefficients : BeCoef := by
   have hs0 : MvPowerSeries.constantCoeff
       (PowerSeries.subst (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) (K0 l)) L0 +
         PowerSeries.subst (MvPowerSeries.X 1 : MvPowerSeries (Fin 2) (K0 l)) L0) = 0 := by
-    rw [map_add, PowerSeries.constantCoeff_subst_eq_zero (hX 0) _ hL00,
+    rw [map_add (f := _), PowerSeries.constantCoeff_subst_eq_zero (hX 0) _ hL00,
       PowerSeries.constantCoeff_subst_eq_zero (hX 1) _ hL00, add_zero]
   have hs1 : MvPowerSeries.constantCoeff (PowerSeries.subst
       (PowerSeries.subst (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) (K0 l)) L0 +
@@ -473,7 +473,7 @@ theorem ips {f : PowerSeries K} (hf : Integral (f : MvPowerSeries Unit K)) (k : 
 theorem ips_add {f g : PowerSeries K} (hf : Integral (f : MvPowerSeries Unit K))
     (hg : Integral (g : MvPowerSeries Unit K)) : Integral ((f + g : PowerSeries K) : MvPowerSeries Unit K) := by
   apply integral_ps; intro k
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (ips hf k) (ips hg k))
 
 theorem ips_sub {f g : PowerSeries K} (hf : Integral (f : MvPowerSeries Unit K))

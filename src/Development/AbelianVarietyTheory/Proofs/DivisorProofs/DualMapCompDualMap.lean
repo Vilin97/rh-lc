@@ -105,7 +105,7 @@ theorem IsRep.add {J : Type} {W : J → X.Opens} {c c' : Z1 (O (dp0 R) s)} {F F'
   refine ⟨G + G', fun j P Q φ hP ↦ ?_, fun j j' P hj hj' ↦ ?_⟩
   · change ev c φ.triv + ev c' φ.triv = _
     rw [hG j P Q φ hP, hG' j P Q φ hP]
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     abel
   · simp only [Pi.add_apply]
     rw [← hF j j' P hj hj', ← hF' j j' P hj hj']

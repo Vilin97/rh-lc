@@ -34,7 +34,7 @@ theorem piInf_cA (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) (
     piInf τ (cA σ z) = star (piInf τ z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero, star_zero]
-  | add x y hx hy => simp only [map_add, hx, hy, star_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, star_add]
   | tmul a x =>
     change piInf τ (a ⊗ₜ[F] σ x) = _
     rw [piInf_tmul, piInf_tmul, h.2.2.2, star_mul', show star (InfinitePlace.Completion.extensionEmbedding w (a.1 w)) = _ from
@@ -45,12 +45,12 @@ theorem ext_trace (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) 
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero, add_zero]; exact map_zero _
   | add x y hx hy =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [add_add_add_comm, ← hx, ← hy]
     exact map_add _ _ _
   | tmul a x =>
     change _ = _ + piInf τ (a ⊗ₜ[F] σ x)
-    rw [trace_tmul, piInf_tmul, piInf_tmul, ← mul_add, ← map_add, ← trace_cm h,
+    rw [trace_tmul, piInf_tmul, piInf_tmul, ← mul_add, ← map_add (f := _), ← trace_cm h,
       ← piInf_tmul, Algebra.algebraMap_eq_smul_one (A := E), ← TensorProduct.smul_tmul, piInf_tmul, map_one, mul_one,
       Algebra.smul_def, mul_comm]
 
@@ -96,7 +96,7 @@ theorem eq_of_piInf (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOver 
 
 def tr (κ : Type) [Fintype κ] : (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ℝ :=
   LinearMap.mk₂ ℝ (fun y b => linForm b y) (fun y y' b => map_add _ y y') (fun t y b => map_smul _ t y)
-    (fun y b b' => by simp only [linForm_apply, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add])
+    (fun y b b' => by simp only [linForm_apply, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)])
     (fun t y b => by simp only [linForm_apply, Pi.smul_apply, mul_smul_comm, ← Finset.smul_sum, map_smul])
 
 theorem tr_apply {κ : Type} [Fintype κ] (y b : κ → mixedEmbedding.mixedSpace F) :

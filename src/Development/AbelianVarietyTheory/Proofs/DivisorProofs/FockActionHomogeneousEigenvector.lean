@@ -18,7 +18,7 @@ theorem injective_of_isFockIP {σ : Type} [DecidableEq σ] {H : Type} [NormedAdd
       AddMonoidAlgebra.coeff P α * α.prod (fun _ k => (k.factorial : ℂ)) := by
     intro α P
     induction P using MvPolynomial.induction_on' with
-    | add P P' h h' => simp only [map_add, inner_add_right, h, h', MvPolynomial.coeff_add, add_mul]
+    | add P P' h h' => simp only [map_add (f := _), inner_add_right, h, h', MvPolynomial.coeff_add, add_mul]
     | monomial β c =>
       rw [monomial_eq_smul β c, map_smul, inner_smul_right, hι, coeff_smul, coeff_monomial]
       by_cases e : α = β
@@ -35,7 +35,7 @@ variable {p q r s : ℕ}
 
 def charSub (p q r s : ℕ) (x : ℚ) : Submodule ℂ (Pol p q r s) where
   carrier := {f | ∀ Y : Mat p q, IsKC Y → fockAct1 p q r s Y f = ((x : ℂ) * Y.trace) • f}
-  add_mem' := fun ha hb Y hY => by rw [map_add, ha Y hY, hb Y hY, smul_add]
+  add_mem' := fun ha hb Y hY => by rw [map_add (f := _), ha Y hY, hb Y hY, smul_add]
   zero_mem' := fun Y _ => by simp
   smul_mem' := fun c _ ha Y hY => by rw [map_smul, ha Y hY, smul_comm]
 

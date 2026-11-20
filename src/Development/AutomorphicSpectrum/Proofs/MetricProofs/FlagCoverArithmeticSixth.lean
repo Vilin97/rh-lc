@@ -45,7 +45,7 @@ theorem mConeMap_rename_incl {Ω Φ : Type} [Field Ω] [Field Φ] [Algebra Ω Φ
       map (algebraMap Ω Φ) (rename Subtype.val (mConeMap x D)) := by
   induction D using MvPolynomial.induction_on with
   | C r => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p q hp =>
     rw [map_mul, map_mul, map_mul, map_mul, map_mul, hp]
     congr 1

@@ -86,7 +86,7 @@ theorem _root_.GlobalTheory.FitSquare.relations_mem {M : Type} [AddCommGroup M] 
   let N : Matrix (n ⊕ m) (n ⊕ m) R := fromBlocks 1 0 (-B) T
   have hker : ∀ u v, π u + q v = 0 → ∃ w, (U * D) *ᵥ w = Sum.elim u v := by
     intro u v h
-    obtain ⟨z, hz⟩ := hΦ (u + A *ᵥ v) (by rw [map_add, hA, h])
+    obtain ⟨z, hz⟩ := hΦ (u + A *ᵥ v) (by rw [map_add (f := _), hA, h])
     refine ⟨Sum.elim z v, ?_⟩
     rw [← mulVec_mulVec]
     simp [U, D, fromBlocks_mulVec, hz, neg_mulVec]

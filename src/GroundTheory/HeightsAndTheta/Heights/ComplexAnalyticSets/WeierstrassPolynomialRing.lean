@@ -79,13 +79,13 @@ theorem polyToGerm_weierstrassPoly {σ : Type} [Fintype σ] {d : ℕ} (c : Fin d
     (hc : ∀ j, AnalyticAt ℂ (c j) 0) :
     ((polyToGerm σ (weierstrassPoly c hc) : holGerms (0 : Option σ → ℂ)) : Germ (𝓝 (0 : Option σ → ℂ)) ℂ) =
       ↑(weierstrassPolynomial c) := by
-  rw [weierstrassPoly, map_add, Subring.coe_add, polyToGerm_finPoly, map_pow, Subring.coe_pow]
+  rw [weierstrassPoly, map_add (f := _), Subring.coe_add, polyToGerm_finPoly, map_pow, Subring.coe_pow]
   have hX : ((polyToGerm σ X : holGerms (0 : Option σ → ℂ)) : Germ (𝓝 (0 : Option σ → ℂ)) ℂ) =
       ↑(fun x : Option σ → ℂ => x none) := by
     simp only [polyToGerm, coe_eval₂RingHom, eval₂_X]; rfl
   rw [hX]
   change Germ.coeRingHom _ (fun x : Option σ → ℂ => x none) ^ d + Germ.coeRingHom _ _ = Germ.coeRingHom _ _
-  rw [← map_pow, ← map_add]
+  rw [← map_pow, ← map_add (f := _)]
   rfl
 
 theorem germValue_polyToGerm {σ : Type} [Fintype σ] (p : (holGerms (0 : σ → ℂ))[X]) :
@@ -124,7 +124,7 @@ theorem weierstrassPoly_dvd_of_polyToGerm_dvd {σ : Type} [Fintype σ] {d : ℕ}
   have himg : polyToGerm σ (p %ₘ weierstrassPoly c hc) =
       polyToGerm σ (weierstrassPoly c hc) * (Q - polyToGerm σ (p /ₘ weierstrassPoly c hc)) := by
     have e := congrArg (polyToGerm σ) (modByMonic_add_div p (weierstrassPoly c hc))
-    rw [map_add, map_mul] at e
+    rw [map_add (f := _), map_mul] at e
     rw [mul_sub, ← hQ, ← e]; ring
   obtain ⟨m, hmA, hmQ⟩ := (Q - polyToGerm σ (p /ₘ weierstrassPoly c hc)).2
   have hgerm := congrArg (fun φ : holGerms (0 : Option σ → ℂ) => (φ : Germ (𝓝 (0 : Option σ → ℂ)) ℂ)) himg
@@ -159,7 +159,7 @@ theorem weierstrassPoly_irreducible {σ : Type} [Fintype σ] {d : ℕ} (c : Fin 
       a * b * C ((↑u⁻¹ : holGerms (0 : σ → ℂ)) * u) by rw [C_mul]; ring, Units.inv_mul, C_1, mul_one]
   have hmap : (weierstrassPoly c hc).map (germValue 0) = X ^ d := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [weierstrassPoly, finPoly, Polynomial.map_add, Polynomial.map_pow, map_X, Polynomial.map_sum,
+      simp only [weierstrassPoly, finPoly, Polynomial.map_add (f := _), Polynomial.map_pow, map_X, Polynomial.map_sum,
       Polynomial.map_mul, map_C]
     have : ∀ j, germValue 0 (mkGerm (c j) (hc j)) = 0 := fun j => hc0 j
     simp [this]

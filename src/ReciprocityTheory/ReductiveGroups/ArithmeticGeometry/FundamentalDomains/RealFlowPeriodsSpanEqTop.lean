@@ -47,7 +47,7 @@ theorem realFlowPeriods_span_eq_top {r : ℕ} (X : Data E r) (la : Wt X.Ψ r) :
     exact h0.add (isIntegral_cc h0)
   have hre : ∀ τ : X.Ψ, (τ.1 a).re = 2 * (τ.1 (α : E)).re := by
     intro τ
-    rw [ha, map_add, emb_cc, Complex.add_re, Complex.conj_re]
+    rw [ha, map_add (f := _), emb_cc, Complex.add_re, Complex.conj_re]
     ring
   refine ⟨(1 / (2 * N * t)) • (fun τ : X.Ψ => N * (τ.1 a).re), ?_, ?_⟩
   · rw [SetLike.mem_coe]

@@ -19,7 +19,7 @@ theorem cA_cA (h : IsCMExt F E σ) (a : AE F E) : cA σ (cA σ a) = a := by
   | tmul r x =>
     change r ⊗ₜ[F] σ (σ x) = _
     rw [t.injective (show t (σ (σ x)) = t x by rw [h.2.2.2, h.2.2.2]; exact Complex.conj_conj _)]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem hTens_inc (J : Matrix (Fin n) (Fin n) E) (J' : Matrix (Fin d) (Fin d) E) (x y : Matrix (Fin n) (Fin d) E) :
     hTens (cA σ) (incM F J) (incM F J') (incM F x) (incM F y) = inclR (F := F) (AF F) (hTens σ J J' x y) := by
@@ -90,7 +90,7 @@ theorem nice (hS : Slice) (hT : TateAbs) {B : Base F E} {X : Spc F E n} {W : Spc
       fun q hq => Sum.forall.2 ⟨h4 q hq, h4' q hq⟩⟩
     rw [Fintype.sum_sum_type]
     simp only [Sum.elim_inl, Sum.elim_inr]
-    rw [← h3 a, ← h3' a, ← map_add]
+    rw [← h3 a, ← h3' a, ← map_add (f := _)]
     congr 1
     exact funext fun x => mul_add _ _ _
   | smul c x _ hx =>

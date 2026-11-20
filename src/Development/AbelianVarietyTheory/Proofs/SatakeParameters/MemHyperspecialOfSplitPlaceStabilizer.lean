@@ -87,7 +87,7 @@ theorem finPart_conj (x : Formalism.L2.Theta.AE D) :
   induction x using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero]
   | tmul a e => rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem finMat_unitary (V : HSp D) (g : GA D V) :
     Formalism.UG.cT (sigR (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F) D.sp.cm.sig) (finMat D.sp.cm.sig V.gram g) *
@@ -129,7 +129,7 @@ theorem mem_ksph_of_split : ∀ {D : D7} (V : HSp D) (e : Formalism.L2.Theta.AE 
   · refine stab_of_half (sigR (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F) D.sp.cm.sig)
       (JR (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F) V.gram) (intAE D) (LamHat V) hd (p := finPart D e)
       (hm _ hp) (hm _ hq) (finMat_unitary V g) (fun i j => ?_) h1 h2
-    rw [← finPart_conj, ← RingHom.map_add]
+    rw [← finPart_conj, ← RingHom.map_add (f := _)]
     exact supp_map (finPart D) hs i j
 
 end GlobalTheory.SplitStab

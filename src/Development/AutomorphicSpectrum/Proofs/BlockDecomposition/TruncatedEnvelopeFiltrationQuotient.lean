@@ -33,7 +33,7 @@ theorem crit_sup (δ : DividedPowers J) (r : ℕ) (z : (pq B).P) (c : B) :
     obtain ⟨f, hf, g, hg, rfl⟩ := Submodule.mem_sup.1 hz
     obtain ⟨w, rfl⟩ := Ideal.mem_span_singleton'.1 hg
     have e : w * algebraMap B (pq B).P c = c • w := by rw [Algebra.smul_def, mul_comm]
-    rw [e, map_add, map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul]
+    rw [e, map_add (f := _), map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul]
     exact Ideal.add_mem _ (Ideal.mem_sup_left ((crit f).1 hf k))
       (Ideal.mem_sup_right (Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self c)))
   · intro h

@@ -16,7 +16,7 @@ private theorem psi0_eq_one_of_conj_eq_neg {F : Type} [Field F] [ValuativeRel F]
   have hcw : L.cj w = -w := by
     rw [hw, map_mul, AlgEquiv.commutes, hz, mul_neg]
   have hzw : z = w + w := by
-    rw [hw, ← add_mul, ← map_add]
+    rw [hw, ← add_mul, ← map_add (f := _)]
     norm_num
   have h1 : L.psi0 w = L.psi0 (-w) := by rw [← hcw, _root_.Formalism.MainNotions.S.Loc.LocE.local_additive_char_conj]
   rw [hzw, AddChar.map_add_eq_mul]
@@ -150,7 +150,7 @@ theorem _root_.GlobalTheory.TraceChar.exists_trace_char : ∀ {F : Type} [Field 
       have : L.cj y = algebraMap F E c - y := by rw [← h]; ring
       rw [this]
       have : algebraMap F E c = algebraMap F E (1 / 2 * c) + algebraMap F E (1 / 2 * c) := by
-        rw [← map_add]; congr 1; ring
+        rw [← map_add (f := _)]; congr 1; ring
       rw [this]; ring
     have := psi0_eq_one_of_conj_eq_neg L hz
     rw [hψ, ← one_mul (L.psi0 (algebraMap F E _)), ← this, ← AddChar.map_add_eq_mul, sub_add_cancel]

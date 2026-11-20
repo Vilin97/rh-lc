@@ -200,7 +200,7 @@ theorem contCore_of_tied (T : LocTied l P AI) (K : FinExt l) : contCore (P.PD K)
         simpa using latCont_orbit AI T (P.ιB b) ((hLL φ v).comp (hβ i))
           (γ := fun _ => 1) continuous_const
       | add y y' ih ih' =>
-        simp only [smul_add, map_add]
+        simp only [smul_add, map_add (f := _)]
         exact ih.add AI ih'
     have h2 : ∀ y : A.V ⊗[ℚ_[l]] P.R.B, LatCont AI fun g => Φ (actVB (P.PD K) A.ρ g y) := by
       intro y
@@ -215,7 +215,7 @@ theorem contCore_of_tied (T : LocTied l P AI) (K : FinExt l) : contCore (P.PD K)
         simp only [e]
         exact latCont_orbit AI T (P.ιB b) ((hV φ).comp (A.cont v)) continuous_subtype_val
       | add y y' ih ih' =>
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact ih.add AI ih'
     apply continuous_of_latCont AI T
     have e : ∀ g, qB P (φ (f g)) =

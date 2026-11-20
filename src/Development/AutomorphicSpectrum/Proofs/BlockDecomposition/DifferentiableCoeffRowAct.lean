@@ -43,7 +43,7 @@ theorem differentiable_coeff_rowAct {r m : ℕ} (f : MvPolynomial (Fin r × Fin 
         Differentiable ℂ fun _ : Matrix (Fin r) (Fin r) ℂ => _)
   | add p q hp hq =>
     intro s
-    simp only [map_add, MvPolynomial.coeff_add]
+    simp only [map_add (f := _), MvPolynomial.coeff_add]
     exact (hp s).add (hq s)
   | mul_X p v hp =>
     intro s

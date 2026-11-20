@@ -71,7 +71,7 @@ theorem swapR_sig (x : R ⊗[F] E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def swapU : letI := tensTopL (F := F) (E := E) R; HA R σ J ≃ₜ* UPts σ J R :=
   letI := tensTopL (F := F) (E := E) R

@@ -61,7 +61,7 @@ theorem exists_secs_generic : GlobalTheory.Published.NefNumerics → ∀ (k : Ty
       rw [map_nsmul]
       congr 1
       erw [CechPic.cls_tens (pull_isLB A.isLB _) (pull_isLB (L.pow n).isLB _), CechPic.cls_tens (L.pow n).isLB A.isLB]
-      rw [map_add, CechPic.cls_pull A.isLB, CechPic.cls_pull (L.pow n).isLB, add_comm]) (Fin N) t ht
+      rw [map_add (f := _), CechPic.cls_pull A.isLB, CechPic.cls_pull (L.pow n).isLB, add_comm]) (Fin N) t ht
   choose s hs using fun i => GlobalTheory.T.exists_section_extending_rationalGenericFibre_mul_int k X p D hX _ (((L.pow n).tens A).pow m).isLB (v i)
   refine ⟨m, N, s, hm, fun x hx => ?_⟩
   obtain ⟨y, rfl⟩ := exists_fst_eq k X p x hx

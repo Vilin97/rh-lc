@@ -194,10 +194,10 @@ theorem h_smul_right (S : HermForm K r) (a : K) (x y : Fin r → K) :
 
 noncomputable def traceForm (S : HermForm K r) : LinearMap.BilinForm ℚ (Fin r → K) :=
   LinearMap.mk₂ ℚ (fun x y => Algebra.trace ℚ K (S.h x y))
-    (fun x x' y => by rw [h_add_left, map_add])
+    (fun x x' y => by rw [h_add_left, map_add (f := _)])
     (fun q x y => by
       rw [← algebraMap_smul K q x, h_smul_left, ← map_smul, Algebra.smul_def]; simp)
-    (fun x y y' => by rw [h_add_right, map_add])
+    (fun x y y' => by rw [h_add_right, map_add (f := _)])
     (fun q x y => by
       rw [← algebraMap_smul K q y, h_smul_right, ← map_smul, Algebra.smul_def])
 

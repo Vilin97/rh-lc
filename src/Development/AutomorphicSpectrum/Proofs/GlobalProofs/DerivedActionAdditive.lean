@@ -63,7 +63,7 @@ theorem dRep_linear : ∀ {n : ℕ} {G : Set (Matrix (Fin n) (Fin n) ℂ)} {H : 
       (hasDerivAt_orbit hF hFG hY).deriv]
     exact (fderiv ℝ F (Matrix.of.symm (1 : Matrix (Fin n) (Fin n) ℂ))).map_add
       (Matrix.of.symm X) (Matrix.of.symm Y)
-  · simp only [dRep, map_add]
+  · simp only [dRep, map_add (f := _)]
     exact deriv_add (differentiableAt_orbit hu hX) (differentiableAt_orbit hv hX)
   · intro c
     simp only [dRep, map_smul]

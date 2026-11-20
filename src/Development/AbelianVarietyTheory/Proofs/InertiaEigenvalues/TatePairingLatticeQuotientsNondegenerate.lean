@@ -78,7 +78,7 @@ theorem nondeg_of_perfect {q : ℕ} [NeZero q] (χ : G →* (ZMod q)ˣ) {X N : T
   · let y : Z1 ((twDual χ rho).comp (MonoidHom.id G)) := ⟨fun g => e (c g),
       (hc.comp e).continuous, fun g h => by
         beta_reduce
-        rw [hcc, map_add, hea]; rfl⟩
+        rw [hcc, map_add (f := _), hea]; rfl⟩
     have h0 : (Submodule.Quotient.mk y : H1 ((twDual χ rho).comp (MonoidHom.id G))) = 0 := by
       apply hD.2.2.1.1
       rw [map_zero]
@@ -100,7 +100,7 @@ theorem nondeg_of_perfect {q : ℕ} [NeZero q] (χ : G →* (ZMod q)ˣ) {X N : T
       have hy : ∀ g, β (e.symm (y.1 g)) = y.1 g := fun g => e.apply_symm_apply (y.1 g)
       obtain ⟨b, hb, hbe⟩ := H (fun g => e.symm (y.1 g))
         (((IsLocallyConstant.iff_continuous _).2 y.2.1).comp e.symm) fun g h => e.injective (by
-          rw [map_add, hea, e.apply_symm_apply, e.apply_symm_apply, e.apply_symm_apply]
+          rw [map_add (f := _), hea, e.apply_symm_apply, e.apply_symm_apply, e.apply_symm_apply]
           exact y.2.2 g h)
       refine ⟨b, hb, fun g h => ?_⟩
       rw [← hbe, hy]
@@ -163,10 +163,10 @@ theorem nondeg_torsion [CompactSpace G] [ContinuousMul G] {χ : G →* ℤ_[l]ˣ
     continuous_prod_of_discrete_right.2 fun y => (hlc y).continuous
   let β' : X →ₗ[ZMod (l ^ (n + m + 1))] N →ₗ[ZMod (l ^ (n + m + 1))] ZMod (l ^ (n + m + 1)) :=
     (AddMonoidHom.mk' (fun x => (AddMonoidHom.mk' (fun y => ψ ⟨β x y, hβW x y⟩) fun y y' => by
-      rw [← map_add]; exact congrArg ψ (Subtype.ext (map_add _ _ _))).toZModLinearMap _)
+      rw [← map_add (f := _)]; exact congrArg ψ (Subtype.ext (map_add _ _ _))).toZModLinearMap _)
       fun x x' => LinearMap.ext fun y => by
         change ψ ⟨β (x + x') y, _⟩ = ψ ⟨β x y, _⟩ + ψ ⟨β x' y, _⟩
-        rw [← map_add]
+        rw [← map_add (f := _)]
         exact congrArg ψ (Subtype.ext (by simp))).toZModLinearMap _
   have hβ' : ∀ x y, β' x y = ψ ⟨β x y, hβW x y⟩ := fun _ _ => rfl
   have key : ∀ (c : G → X) (c' : G → N), IsLocallyConstant c → (∀ g h, c (g * h) = c g + a g (c h)) →
@@ -185,11 +185,11 @@ theorem nondeg_torsion [CompactSpace G] [ContinuousMul G] {χ : G →* ℤ_[l]ˣ
           change (χ g : ℤ_[l]) • β (c h) (a' h (c' k)) - β (c (g * h)) (a' (g * h) (c' k)) +
             β (c g) (a' g (c' (h * k))) - β (c g) (a' g (c' h)) = 0
           rw [← he, hcc, hcc', hm]
-          simp only [map_add, AddMonoidHom.add_apply]
+          simp only [map_add (f := _), AddMonoidHom.add_apply]
           abel)⟩ hb hbe
     refine ⟨fun g => ψ (b' g), hb'.comp ψ, fun g h => ?_⟩
     have e := congrArg ψ (hbe' (g, h))
-    rw [cob, map_add, map_sub, hψs] at e
+    rw [cob, map_add (f := _), map_sub, hψs] at e
     exact e
   obtain ⟨H1, H2⟩ := nondeg_of_perfect (redChar χ (n + m + 1)) a rho hcont (hT (n + m) N rho hcont) β'
     (fun g x y => by
@@ -277,11 +277,11 @@ theorem exists_quot_pairing (T : Submodule O V) (T' : Submodule O V') (m : V →
   let B : T →ₗ[O] T' →ₗ[O] LL ⧸ S := LinearMap.mk₂ O
     (fun t t' => Submodule.Quotient.mk ((algebraMap O LL ϖ)⁻¹ ^ r * m t t'))
     (fun t u t' => by
-      rw [Submodule.coe_add, map_add, LinearMap.add_apply, mul_add, Submodule.Quotient.mk_add])
+      rw [Submodule.coe_add, map_add (f := _), LinearMap.add_apply, mul_add, Submodule.Quotient.mk_add])
     (fun c t t' => by
       rw [Submodule.coe_smul, ← algebraMap_smul LL c (t : V), map_smul, LinearMap.smul_apply,
         algebraMap_smul, mul_smul_comm, Submodule.Quotient.mk_smul])
-    (fun t t' u' => by rw [Submodule.coe_add, map_add, mul_add, Submodule.Quotient.mk_add])
+    (fun t t' u' => by rw [Submodule.coe_add, map_add (f := _), mul_add, Submodule.Quotient.mk_add])
     (fun c t t' => by
       rw [Submodule.coe_smul, ← algebraMap_smul LL c (t' : V'), map_smul,
         algebraMap_smul, mul_smul_comm, Submodule.Quotient.mk_smul])
@@ -299,7 +299,7 @@ theorem exists_quot_pairing (T : Submodule O V) (T' : Submodule O V') (m : V →
       refine (Submodule.Quotient.mk_eq_zero _).2 ?_
       rw [hS, ha]
       exact ⟨a, rfl⟩)
-  exact ⟨AddMonoidHom.mk' (fun x => (β x).toAddMonoidHom) fun x y => by rw [map_add]; rfl,
+  exact ⟨AddMonoidHom.mk' (fun x => (β x).toAddMonoidHom) fun x y => by rw [map_add (f := _)]; rfl,
     fun _ _ => rfl⟩
 
 omit [IsDomain O] [IsDiscreteValuationRing O] in

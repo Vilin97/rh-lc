@@ -60,7 +60,7 @@ theorem logDerivation_atPrime_span : ∀ (F A R : Type) [Field F] [CommRing A] [
       rw [hk, mul_comm (tg x) k, mul_assoc]
       exact Ideal.mul_mem_left _ _ (htgI x hx)
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Ideal.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Ideal.add_mem _ hx hy
     | smul a x hxs hx =>
       rw [smul_eq_mul, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
       refine Ideal.add_mem _ (Ideal.mul_mem_left _ _ hx) (Ideal.mul_mem_right _ _ ?_)

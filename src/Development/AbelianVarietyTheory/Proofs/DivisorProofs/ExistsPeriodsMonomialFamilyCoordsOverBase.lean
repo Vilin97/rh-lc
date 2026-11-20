@@ -52,7 +52,7 @@ theorem exists_divFrom : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] 
     have h1 : IsUnit ((l.M' : ℕ) : c.F) := (Nat.cast_ne_zero.2 (level_pos l).ne').isUnit
     simpa using h1.map C.b
   obtain ⟨s, hs₁, hs₂, hs⟩ := GlobalTheory.T.exists_unit_coords_balancedSymmetric_roots H L.D.X V hV.1.2.2.2 hk l.M' hM C.m N ε C.s C.s_ne_zero
-    (fun a b => q (e.symm a) (e.symm b)) (fun a b => qs _ _) (fun a a' b => by simp only [map_add, qa])
+    (fun a b => q (e.symm a) (e.symm b)) (fun a b => qs _ _) (fun a a' b => by simp only [map_add (f := _), qa])
     (fun x a b => by simp only [map_smul, qb]) (fun y => by
       obtain ⟨y, rfl⟩ := e.surjective y
       obtain ⟨u, n, hn, hco⟩ := C.mono y

@@ -61,7 +61,7 @@ private theorem pr_act {K : Type} [CommRing K] (o : 𝓞 E) (y : K ⊗[ℤ] Dw.L
     pr Dw (((LinearMap.lsmul (𝓞 E) Dw.La o).restrictScalars ℤ).baseChange K y) a = pr Dw y (H.bar o • a) := by
   induction y using TensorProduct.induction_on with
   | zero => simp [pr]
-  | add x x' hx hx' => simp only [map_add, pr_add, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), pr_add, hx, hx']
   | tmul c x =>
     rw [LinearMap.baseChange_tmul, pr_tmul, pr_tmul, ← Dw.adj]
     rfl
@@ -77,7 +77,7 @@ private theorem norm_span_le (p : ℕ) [Fact p.Prime] {T L : Type} [AddCommGroup
   | mem x hx => obtain ⟨a, rfl⟩ := hx; exact h a
   | zero => simpa using hr
   | add x y _ _ hx hy =>
-    rw [TensorProduct.tmul_add, map_add]
+    rw [TensorProduct.tmul_add, map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   | smul c x _ hx =>
     rw [TensorProduct.tmul_smul, ← algebraMap_smul ℂ_[p] c, map_smul, smul_eq_mul, norm_mul]

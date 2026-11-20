@@ -22,7 +22,7 @@ theorem tensor_eq_zero_of_forall_dual_pairing {R : Type} [CommRing R] {M N : Typ
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul m n => simp [finsuppTensorFinsupp'_apply_apply]
-    | add v w hv hw => simp only [map_add, Finsupp.add_apply, hv, hw]
+    | add v w hv hw => simp only [map_add (f := _), Finsupp.add_apply, hv, hw]
   have h0 : TensorProduct.map s s' u = 0 := by
     apply (finsuppTensorFinsupp' R M N).injective
     rw [map_zero]

@@ -182,7 +182,7 @@ theorem st5 : St5 := by
       obtain ⟨h', x, rfl⟩ := hv
       exact Submodule.subset_span ⟨h * h', x, by rw [map_mul, Module.End.mul_apply]⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
   have hS0 : S ≠ ⊥ := by
     obtain ⟨x, hx⟩ := exists_ne (0 : W)

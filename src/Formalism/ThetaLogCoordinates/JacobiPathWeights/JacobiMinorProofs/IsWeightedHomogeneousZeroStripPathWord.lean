@@ -21,7 +21,7 @@ def LeadAt (w : σ → M) (γ : M) (f t : MvPolynomial σ R) : Prop :=
 private theorem weight_eq_of_le_of_add_eq_lemma {w : σ → M} {γ δ : M} {a b : σ →₀ ℕ}
     (ha : Finsupp.weight w a ≤ γ) (hb : Finsupp.weight w b ≤ δ) (h : Finsupp.weight w (a + b) = γ + δ) :
     Finsupp.weight w a = γ ∧ Finsupp.weight w b = δ := by
-  rw [map_add] at h
+  rw [map_add (f := _)] at h
   have h1 : Finsupp.weight w a = γ := by
     by_contra hne
     have := add_lt_add_of_lt_of_le (lt_of_le_of_ne ha hne) hb
@@ -44,7 +44,7 @@ theorem LeadAt.mul {w : σ → M} {γ δ : M} {f g tf tg : MvPolynomial σ R}
       | exact Finset.HasAntidiagonal.mem_antidiagonal.mp hp
       | exact Finset.mem_antidiagonal.mp hp
       | simpa using hp
-    rw [← hp', map_add]
+    rw [← hp', map_add (f := _)]
     exact add_le_add (hf1 _ (mem_support_iff.mpr (left_ne_zero_of_mul hne)))
       (hg1 _ (mem_support_iff.mpr (right_ne_zero_of_mul hne)))
   · ext e

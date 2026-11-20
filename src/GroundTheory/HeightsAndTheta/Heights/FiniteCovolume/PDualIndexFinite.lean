@@ -37,7 +37,7 @@ theorem DualIndexFinite.proof (h : HermitianForm F E W) : DualIndexFinite.Statem
       map_add' := by
         intro a b; funext l; apply RingOfIntegers.ext
         change h.toSesq ((a : W) + b) l = h.toSesq a l + h.toSesq b l
-        rw [map_add, LinearMap.add_apply] }
+        rw [map_add (f := _), LinearMap.add_apply] }
   have hψ : Function.Injective ψ := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro y hy

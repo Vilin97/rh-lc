@@ -34,7 +34,7 @@ theorem card_box_quot_le {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace
         exact Subtype.ext (by simp)
       map_add' := fun x y => by
         funext r q
-        rw [Pi.add_apply, Pi.add_apply, ← map_add]
+        rw [Pi.add_apply, Pi.add_apply, ← map_add (f := _)]
         congr 1
         exact Subtype.ext (by simp [add_div]) }
   have hker : φ.ker ≤ (box T R a).addSubgroupOf (box T R (ϖ⁻¹ * a)) := by

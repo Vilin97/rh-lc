@@ -150,7 +150,7 @@ theorem host_g_ne_mem_A_T {D : D7} (X : ErrX D) (u : D.what₂.Word) (i : Fin 2)
   have hu : (D.host.g i : 𝓞 D.host.E) * (1 - b - b' - D.host.g i * b * b') = 1 := by
     apply Subtype.ext
     have e : ((b' : 𝓞 D.host.E) : D.host.E) = D.host.conj (b : D.host.E) := rfl
-    simp only [map_add, map_mul, map_one, map_natCast] at hn
+    simp only [map_add (f := _), map_mul, map_one, map_natCast] at hn
     change algebraMap _ D.host.E ((D.host.g i : 𝓞 D.host.E) * (1 - b - b' - D.host.g i * b * b')) = algebraMap _ D.host.E (1 : 𝓞 D.host.E)
     simp only [map_sub, map_mul, map_one, map_natCast]
     change _ * (1 - (b : D.host.E) - (b' : D.host.E) - _ * (b : D.host.E) * (b' : D.host.E)) = 1

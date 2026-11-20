@@ -45,7 +45,7 @@ theorem glue2 [IsDomain O] (hR : Ring9 W) :
   have h0 := congrFun hw 0
   have hq : (baseIdOf hR).ι (baseIdOf hR).Bs.q = W.π₀₁ + PowerSeries.C ((PD.p : ℕ) : O) := by
     change (baseIdOf hR).ι (PowerSeries.X + PowerSeries.C ((PD.p : ℕ) : O)) = _
-    rw [map_add, (baseIdOf hR).ι_X]
+    rw [map_add (f := _), (baseIdOf hR).ι_X]
     congr 1
     exact (baseIdOf hR).ι.commutes _
   have hcyc : (W.q₀ : PowerSeries O) =

@@ -78,7 +78,7 @@ theorem exists_poly_op (S : Subring ℂ) {G I : Type} [Group G] (f : I → G →
     refine ⟨F₁ + F₂, fun g => ?_, fun V _ _ ρ z v hz => ?_⟩
     · rw [Finsupp.add_apply]
       exact S.add_mem (h₁ g) (h₂ g)
-    · rw [opOf_add, e₁ V ρ z v hz, e₂ V ρ z v hz, map_add, add_smul]
+    · rw [opOf_add, e₁ V ρ z v hz, e₂ V ρ z v hz, map_add (f := _), add_smul]
   | mul_X p i hp =>
     obtain ⟨F, hF, e⟩ := hp
     refine ⟨OpPoly.conv F (f i), conv_mem S F (f i) hF (hf i), fun V _ _ ρ z v hz => ?_⟩

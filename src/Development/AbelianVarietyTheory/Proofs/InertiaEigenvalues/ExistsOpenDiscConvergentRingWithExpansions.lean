@@ -26,7 +26,7 @@ theorem norm_sub_one_lt {ζ : ↥LL.1} (h : ∃ j : ℕ, IsPrimitiveRoot ζ (l ^
     exact ⟨_, by rw [hr, mul_assoc, mul_assoc]⟩
   have h1 := congrArg (algebraMap ↥(OL LL) ↥LL.1) hr
   have hzz : algebraMap ↥(OL LL) ↥LL.1 z = ζ := rfl
-  simp only [sub_add_cancel, map_pow, map_add, map_mul, map_sub, map_one, map_natCast, hzz, hj.pow_eq_one,
+  simp only [sub_add_cancel, map_pow, map_add (f := _), map_mul, map_sub, map_one, map_natCast, hzz, hj.pow_eq_one,
     one_pow] at h1
   have h2 : (ζ - 1) ^ l ^ j = -((l : ↥LL.1) * algebraMap ↥(OL LL) ↥LL.1 r) := by linear_combination -h1
   have h3 : ‖(l : ↥LL.1)‖ < 1 := by

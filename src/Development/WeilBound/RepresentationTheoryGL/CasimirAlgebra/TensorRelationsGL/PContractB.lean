@@ -18,7 +18,7 @@ def semiS {ι Γ : Type} [Fintype ι] (m : ℕ) (τ0 : ι) (κ : ι → Γ → M
   add_mem' := by
     intro a b ha hb γ
     simp only [Set.mem_ofPred_eq] at ha hb ⊢
-    rw [map_add, ha γ, hb γ, smul_add]
+    rw [map_add (f := _), ha γ, hb γ, smul_add]
   zero_mem' := by
     intro γ
     simp
@@ -107,7 +107,7 @@ theorem core (hQ : QdetFacts) (hW : WallAlg) (hT : TensorGK) (hL : LieInv)
     simp only [hfib1, hfib2, tE, Finset.sum_empty, add_zero] at h
     have h' := congrArg Q h
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sub, LinearMap.add_apply, map_add, LinearMap.sum_apply, map_sum, hQlift _ _ (hq1 a b), hQlift _ _ (hq2 b a)] at h'
+      rw [map_sub, LinearMap.add_apply, map_add (f := _), LinearMap.sum_apply, map_sum, hQlift _ _ (hq1 a b), hQlift _ _ (hq2 b a)] at h'
     simp only [hQeAt] at h'
     have hl : ∀ (B1 B2 : Module.End ℂ M0) (v : TV n M0 (Fin m)), lift (B1 + -B2) v = lift B1 v - lift B2 v := by
       intro B1 B2 v

@@ -45,7 +45,7 @@ theorem coprime_absNorm (p : ℕ) [hp : Fact p.Prime] {I : Ideal (𝓞 K)} (hI :
     have e0 : y = i * y + t * (((p : ℕ) : 𝓞 K) * y) := by linear_combination (-(y)) * hir
     have e : Ideal.Quotient.mk I y = Ideal.Quotient.mk I i * Ideal.Quotient.mk I y +
         Ideal.Quotient.mk I t * ((p : ℕ) • Ideal.Quotient.mk I y) := by
-      rw [nsmul_eq_mul, ← map_natCast (Ideal.Quotient.mk I) p, ← map_mul, ← map_mul, ← map_mul, ← map_add, ← e0]
+      rw [nsmul_eq_mul, ← map_natCast (Ideal.Quotient.mk I) p, ← map_mul, ← map_mul, ← map_mul, ← map_add (f := _), ← e0]
     rw [e, hpx, mul_zero, add_zero, hq, zero_mul]
   rw [hx0, addOrderOf_zero] at hx
   exact hp.out.one_lt.ne hx

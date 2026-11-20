@@ -115,7 +115,7 @@ def pairI (σ : E →ₐ[F] E) {n d n₁ d₁ : ℕ} (X : Spc F E n) (W : Spc F 
 
 theorem tI_add {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) (a b : Matrix (Fin n) (Fin d) (AE F E))
     (k : Ic d₁ n₁) : tI H H' (a + b) k = tI H H' a k + tI H H' b k := by
-  simp only [tI, map_add, Matrix.add_apply]
+  simp only [tI, map_add (f := _), Matrix.add_apply]
 
 theorem tI_smul {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) (c : AF F) (a : Matrix (Fin n) (Fin d) (AE F E))
     (k : Ic d₁ n₁) : tI H H' (c • a) k = c • tI H H' a k := by
@@ -123,7 +123,7 @@ theorem tI_smul {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁)
 
 theorem sI_add {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) (a b : Matrix (Fin n) (Fin d) (AE F E))
     (k : Ic d₁ n₁) : sI H H' (a + b) k = sI H H' a k + sI H H' b k := by
-  simp only [sI, map_add, Matrix.add_apply]
+  simp only [sI, map_add (f := _), Matrix.add_apply]
 
 theorem sI_smul {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁) (c : AF F) (a : Matrix (Fin n) (Fin d) (AE F E))
     (k : Ic d₁ n₁) : sI H H' (c • a) k = c • sI H H' a k := by
@@ -132,7 +132,7 @@ theorem sI_smul {n d n₁ d₁ : ℕ} (H : Plane E n n₁) (H' : Plane E d d₁)
 theorem pairI_add (σ : E →ₐ[F] E) {n d n₁ d₁ : ℕ} (X : Spc F E n) (W : Spc F E d) (H : Plane E n n₁)
     (H' : Plane E d d₁) (a b : Matrix (Fin n) (Fin d) (AE F E)) (k : Ic d₁ n₁) :
     pairI σ X W H H' (a + b) k = pairI σ X W H H' a k + pairI σ X W H H' b k := by
-  simp only [pairI, tI_add, map_add, mul_add, Finset.sum_add_distrib, neg_add]
+  simp only [pairI, tI_add, map_add (f := _), mul_add, Finset.sum_add_distrib, neg_add]
 
 theorem pairI_smul (σ : E →ₐ[F] E) {n d n₁ d₁ : ℕ} (X : Spc F E n) (W : Spc F E d) (H : Plane E n n₁)
     (H' : Plane E d d₁) (c : AF F) (a : Matrix (Fin n) (Fin d) (AE F E)) (k : Ic d₁ n₁) :
@@ -146,9 +146,9 @@ def planeT (σ : E →ₐ[F] E) {n d n₁ d₁ : ℕ} (X : Spc F E n) (W : Spc F
     (coefLin H H' u).submatrix Sum.inl Sum.inl)
   map_add' a b := by
     refine Prod.ext (Prod.ext (funext fun k => ?_) (funext fun k => ?_)) ?_
-    · simp only [sI_add, map_add, Finsupp.add_apply, Prod.fst_add, Pi.add_apply]
-    · simp only [pairI_add, map_add, Finsupp.add_apply, Prod.snd_add, Prod.fst_add, Pi.add_apply]
-    · ext i j; simp only [map_add, Matrix.submatrix_apply, Prod.snd_add, Matrix.add_apply]
+    · simp only [sI_add, map_add (f := _), Finsupp.add_apply, Prod.fst_add, Pi.add_apply]
+    · simp only [pairI_add, map_add (f := _), Finsupp.add_apply, Prod.snd_add, Prod.fst_add, Pi.add_apply]
+    · ext i j; simp only [map_add (f := _), Matrix.submatrix_apply, Prod.snd_add, Matrix.add_apply]
   map_smul' c u := by
     refine Prod.ext (Prod.ext (funext fun k => ?_) (funext fun k => ?_)) ?_
     · simp only [sI_smul, map_smul, Finsupp.smul_apply, Prod.smul_fst, Pi.smul_apply, RingHom.id_apply, smul_eq_mul]

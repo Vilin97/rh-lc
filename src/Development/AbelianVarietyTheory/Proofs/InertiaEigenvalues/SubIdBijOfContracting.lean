@@ -125,7 +125,7 @@ theorem one_sub_frob_bij : ∀ {k : Type} [Field k] {l : ℕ} [Fact l.Prime] [Ch
         intro a b
         funext i
         apply Subtype.ext
-        simp [map_add] }
+        simp [map_add (f := _)] }
   have : ∀ i, Module.Finite k⟦X⟧ (P i) := fun i => Module.Finite.iff_fg.mpr (hP i).1
   have hXtop : Ideal.span {(PowerSeries.X : k⟦X⟧)} ≠ ⊤ := by
     intro h

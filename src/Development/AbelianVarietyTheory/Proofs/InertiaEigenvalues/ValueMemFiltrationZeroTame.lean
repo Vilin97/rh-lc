@@ -81,7 +81,7 @@ theorem TWincl_smul {R R' : Type} [CommRing R] [CommRing R'] [Algebra O R] [Alge
   | tmul s x =>
     simp only [TWincl, smul_tmul', TensorProduct.map_tmul, AlgHom.toLinearMap_apply, LinearMap.id_apply,
       smul_eq_mul, map_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem TWact_smul {R : Type} [CommRing R] [Algebra O R] (f : R →ₐ[O] R) (T : LocLat G ℚ_[l] K O) (g : G)
     (r : R) (z : TW R T) : TWact f T g (r • z) = f r • TWact f T g z := by
@@ -89,7 +89,7 @@ theorem TWact_smul {R : Type} [CommRing R] [Algebra O R] (f : R →ₐ[O] R) (T 
   | zero => simp only [smul_zero, map_zero]
   | tmul s x =>
     simp only [TWact, smul_tmul', TensorProduct.map_tmul, AlgHom.toLinearMap_apply, smul_eq_mul, map_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem TWact_TWincl (h : GQ l) (T : LocLat G ℚ_[l] K O) (g : G) (z : TW (OA l O) T) :
     TWact (galOB O h) T g (TWincl (toB l O) T z) = TWincl (toB l O) T (TWact (galOA O h) T g z) := by
@@ -99,7 +99,7 @@ theorem TWact_TWincl (h : GQ l) (T : LocLat G ℚ_[l] K O) (g : G) (z : TW (OA l
     simp only [TWact, TWincl, TensorProduct.map_tmul, AlgHom.toLinearMap_apply, LinearMap.id_apply]
     congr 1
     rw [toB, AlgHom.comp_apply, AlgHom.comp_apply, galOB_toOB, galOCr_toOCr]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem smul_TWincl_mem (C : GlobalTheory.MemLoc.Core l) (T : LocLat G ℚ_[l] K O) {d : Per.Bcris l}
     (hd : C.ι d ∈ Per.FilD l 0) (z : TW (OA l O) T) :
@@ -120,8 +120,8 @@ theorem smul_TWincl_mem (C : GlobalTheory.MemLoc.Core l) (T : LocLat G ℚ_[l] K
       refine Submodule.smul_mem _ o (Submodule.subset_span ⟨d * Per.aB l w, x, ?_, rfl⟩)
       rw [map_mul, core_ι_aB, mul_comm, ← Algebra.smul_def]
       exact Submodule.smul_mem _ _ hd
-    | add c c' hc hc' => rw [map_add, mul_add, add_tmul]; exact add_mem hc hc'
-  | add z z' hz hz' => rw [map_add, smul_add]; exact add_mem hz hz'
+    | add c c' hc hc' => rw [map_add (f := _), mul_add, add_tmul]; exact add_mem hc hc'
+  | add z z' hz hz' => rw [map_add (f := _), smul_add]; exact add_mem hz hz'
 
 end Tensor
 
@@ -164,7 +164,7 @@ theorem GlobalTheory.BKGal.value_mem_filtration_zero : ∀ (l : ℕ) [Fact l.Pri
         rw [smul_tmul', smul_eq_mul, mul_one]; rfl
       rw [e1, map_smul, smul_comm]
       exact hLA c (hK3 x)
-    | add c c' hc hc' => rw [map_add, map_add, smul_add]; exact add_mem hc hc'
+    | add c c' hc hc' => rw [map_add (f := _), map_add (f := _), smul_add]; exact add_mem hc hc'
   obtain ⟨cc, hcc⟩ := hT z
   rw [← hz, LinearEquiv.symm_apply_apply] at hcc
 

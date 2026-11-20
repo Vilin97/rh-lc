@@ -165,11 +165,11 @@ theorem core_of_split (hs : h.IsSymm) (hd : ∀ x, h x x = 0 → x = 0) (hsp : S
       constructor
       · rintro ⟨a, ha, w, hw, rfl⟩
         refine ⟨a, ha, g w, (hgiff w).1 hw, ?_⟩
-        rw [map_add, map_smul, hg0]
+        rw [map_add (f := _), map_smul, hg0]
       · rintro ⟨a, ha, u, hu2, huv⟩
         refine ⟨a, ha, g.symm u, (hgiff _).2 (by rw [LinearEquiv.apply_symm_apply]; exact hu2), ?_⟩
         apply g.injective
-        rw [huv, map_add, map_smul, hg0, LinearEquiv.apply_symm_apply]
+        rw [huv, map_add (f := _), map_smul, hg0, LinearEquiv.apply_symm_apply]
 
 end
 

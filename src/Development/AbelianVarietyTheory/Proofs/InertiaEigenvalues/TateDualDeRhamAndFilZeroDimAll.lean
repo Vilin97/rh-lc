@@ -151,11 +151,11 @@ theorem descend (L : Type) [Field L] [Algebra Qp L] [Algebra LL L] [IsScalarTowe
     intro g x y
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx', mul_add]
+    | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx', mul_add]
     | tmul a x =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add y y' hy hy' => simp only [map_add, hy, hy', mul_add]
+      | add y y' hy hy' => simp only [map_add (f := _), hy, hy', mul_add]
       | tmul b y =>
         rw [extRep_tmul, extRep_tmul, hm'', hm'', hm.1, map_mul, hχ]
         ring

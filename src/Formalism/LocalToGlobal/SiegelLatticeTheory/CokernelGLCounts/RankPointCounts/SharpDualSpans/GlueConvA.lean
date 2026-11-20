@@ -62,7 +62,7 @@ theorem linIndep_of_gram (H : HermSp M V) (g : ι → V) (hG : IsUnit (H.gram g)
   rfl
 
 private theorem hermSp_h_add_right (H : HermSp M V) (w x y : V) : H.h w (x + y) = H.h w x + H.h w y := by
-  rw [H.h_herm, H.h_add_left, map_add, ← H.h_herm, ← H.h_herm]
+  rw [H.h_herm, H.h_add_left, map_add (f := _), ← H.h_herm, ← H.h_herm]
 
 end Lin
 

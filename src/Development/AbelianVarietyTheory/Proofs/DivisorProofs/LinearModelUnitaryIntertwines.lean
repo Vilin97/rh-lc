@@ -49,10 +49,10 @@ theorem chrW_comp_conj (h : IsCMExt F E σ) {K : Subgroup (AF F)ˣ} {χ : Chr F 
   have key : ∀ a a' : Fv F v, a * a' = 1 → (1 + ε * algebraMap (AF F) (AE F E) (liftV v (a - 1))) *
       (1 + ε * algebraMap (AF F) (AE F E) (liftV v (a' - 1))) = 1 := fun a a' haa => by
     have e : liftV v (a - 1) + liftV v (a' - 1) + liftV v (a - 1) * liftV v (a' - 1) = 0 := by
-      rw [liftV_mul, evFin_liftV, ← map_add, ← map_add, show a - 1 + (a' - 1) + (a - 1) * (a' - 1) = 0 by
+      rw [liftV_mul, evFin_liftV, ← map_add (f := _), ← map_add (f := _), show a - 1 + (a' - 1) + (a - 1) * (a' - 1) = 0 by
         linear_combination haa, map_zero]
     have e' := congrArg (algebraMap (AF F) (AE F E)) e
-    rw [map_add, map_add, map_mul, map_zero] at e'
+    rw [map_add (f := _), map_add (f := _), map_mul, map_zero] at e'
     linear_combination ε * e' + algebraMap (AF F) (AE F E) (liftV v (a - 1)) *
       algebraMap (AF F) (AE F E) (liftV v (a' - 1)) * e1
   have hat : ∀ a : Fv F v, At (evFin F v) (1 + ε * algebraMap (AF F) (AE F E) (liftV v a) - 1) := fun a u hu => by
@@ -63,10 +63,10 @@ theorem chrW_comp_conj (h : IsCMExt F E σ) {K : Subgroup (AF F)ˣ} {χ : Chr F 
   have hzi : At (evFin F v) (((z⁻¹ : (AE F E)ˣ) : AE F E) - 1) := hat _
   have z1 : piW t (z : AE F E) = x := by
     change piW t (1 + _) = _
-    rw [map_add, map_mul, map_one, e5, piW_algebraMap, evFin_liftV]; ring
+    rw [map_add (f := _), map_mul, map_one, e5, piW_algebraMap, evFin_liftV]; ring
   have z2 : piW (t.comp σ) (z : AE F E) = 1 := by
     change piW _ (1 + _) = _
-    rw [map_add, map_mul, map_one, e8, zero_mul, add_zero]
+    rw [map_add (f := _), map_mul, map_one, e8, zero_mul, add_zero]
   obtain ⟨n1, n2⟩ := GlobalTheory.T.local_norm_unramified_factorization F E σ h v t z hz
   set a : (AF F)ˣ := Units.map (Algebra.norm (AF F) : AE F E →* AF F) z with ha
   have n1' : At (evFin F v) ((a : AF F) - 1) := n1

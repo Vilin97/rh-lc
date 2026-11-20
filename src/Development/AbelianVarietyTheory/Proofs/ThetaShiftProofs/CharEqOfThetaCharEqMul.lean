@@ -204,7 +204,7 @@ theorem coord_Pw_of_basis (Φ : A.V →ₗ[ℂ] (Fin g → ℂ)) {w : ℂ} {τ :
     Φ (A.Pw w (bas u)) = τ *ᵥ ofIntVec (fun k => u (.inr k)) + ofIntVec (fun k => u (.inl k)) := by
   conv_lhs => rw [pi_eq_sum_univ' u]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Fintype.sum_sum_type, map_add, map_sum, map_zsmul, fun k => (hP k).1, fun k => (hP k).2]
+    simp only [Fintype.sum_sum_type, map_add (f := _), map_sum, map_zsmul, fun k => (hP k).1, fun k => (hP k).2]
   funext i
   simp [ofIntVec, mulVec, dotProduct, Pi.single_apply, mul_comm, add_comm]
 
@@ -334,7 +334,7 @@ theorem exists_classical_law (hEF : ∀ u v, A.EF (bas u) (bas v) = -omegaStd u 
   · set u : Fin g ⊕ Fin g → ℤ := Sum.elim m n with hu
     have hN : ∀ v, B v (A.N (bas u)) = 0 := fun v => h0 v _
     have hPw : ∀ v, B v (A.Pw w (bas u)) = B v (A.P0 (bas u)) := fun v => by
-      rw [Pw_apply, map_add, map_smul, hN, smul_zero, add_zero]
+      rw [Pw_apply, map_add (f := _), map_smul, hN, smul_zero, add_zero]
     have hPP : B (A.Pw w (bas u)) (A.Pw w (bas u)) = B (A.P0 (bas u)) (A.P0 (bas u)) := by
       rw [hPw, hs, hPw]
     have hq : ofIntVec n ⬝ᵥ Φ (A.N (bas u)) = 2 * A.q (bas u).y := by
@@ -346,7 +346,7 @@ theorem exists_classical_law (hEF : ∀ u v, A.EF (bas u) (bas v) = -omegaStd u 
       have h1 : Φ (A.Pw w (bas u)) = τ w *ᵥ ofIntVec n + ofIntVec m := hΦ w u
       have h2 : Φ (A.Pw 0 (bas u)) = τ 0 *ᵥ ofIntVec n + ofIntVec m := hΦ 0 u
       rw [Pw_zero] at h2
-      rw [Pw_apply, map_add, map_smul, h2] at h1
+      rw [Pw_apply, map_add (f := _), map_smul, h2] at h1
       have h3 := congrArg (ofIntVec n ⬝ᵥ ·) h1
       simp only [dotProduct_add, dotProduct_smul, hq, smul_eq_mul] at h3
       linear_combination -h3
@@ -355,7 +355,7 @@ theorem exists_classical_law (hEF : ∀ u v, A.EF (bas u) (bas v) = -omegaStd u 
     rw [perFactor_eq_exp, L_apply, eC, hk, hτ]
     simp only [← Complex.exp_add]
     congr 1
-    simp only [map_add, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hPP, hs (A.Pw w (bas u)) v, logConst]
+    simp only [map_add (f := _), LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hPP, hs (A.Pw w (bas u)) v, logConst]
     push_cast
     ring
 
@@ -382,7 +382,7 @@ theorem eq_mul_thetaCharOff (hEF : ∀ u v, A.EF (bas u) (bas v) = -omegaStd u v
       · simp [ha k hk]
       · simp [coord_torus_eq_zero hEF hS hΦ l hk]
     rw [show p n.1 = μ from n.2] at h2
-    rw [map_add, CanTh.thTerm_add_var, add_dotProduct, h3, add_zero, ← h2, e_def]
+    rw [map_add (f := _), CanTh.thTerm_add_var, add_dotProduct, h3, add_zero, ← h2, e_def]
     change _ = c * (Complex.exp (_ * (ofIntVec n.1 ⬝ᵥ _)) * _)
     ring
   have hF : ∀ (l : A.X →+ ℂ) μ, A.term 1 0 th μ (v + (l, 0)) * eTwoPi (w * A.exponent 1 0 μ) =
@@ -457,7 +457,7 @@ theorem theta_comparison (A : AnArc O) {T₀ : ℝ} (hT : A.IsConvLine T₀) {g 
     intro w n m z
     obtain ⟨v, rfl⟩ := Φ.surjective z
     have e : Φ v + τ w *ᵥ ofIntVec n + ofIntVec m = Φ (v + A.Pw w (bas (Sum.elim m n))) := by
-      rw [map_add, hΦ, add_assoc]; rfl
+      rw [map_add (f := _), hΦ, add_assoc]; rfl
     simp only [e, F, LinearEquiv.symm_apply_apply]
     rw [A.Sum_add_period hth, pow_one, ← mul_assoc, law, mul_assoc]
   have hw₀ : T₀ < (((T₀ + 1 : ℝ) : ℂ) * Complex.I).im := by simp
@@ -485,7 +485,7 @@ theorem theta_comparison (A : AnArc O) {T₀ : ℝ} (hT : A.IsConvLine T₀) {g 
     rw [thetaCharOff_congr (fun k hk => by simp [haS k hk]) (fun k hk i => tau_col_eq hS hΦ w' w hk i)]
     refine eq_mul_thetaCharOff hEF hS hΦ (summable_term hT one_ne_zero hth hw v) (hτ w hw) haS fun l => ?_
     rw [hc w hw]
-    simp only [map_add, LinearMap.add_apply, hB0, hs (l, 0) v, add_zero]
+    simp only [map_add (f := _), LinearMap.add_apply, hB0, hs (l, 0) v, add_zero]
   obtain ⟨z₀, hz₀⟩ := Function.ne_iff.1 hne
   have hcc : ∀ w hw, c w hw = c _ hw₀ := fun w hw => by
     have h1 := hoff w hw 0 (0, z₀)

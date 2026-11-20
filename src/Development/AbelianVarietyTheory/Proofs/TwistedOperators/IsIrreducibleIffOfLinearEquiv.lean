@@ -113,8 +113,8 @@ theorem exists_sum_coord {ι : Type} (b : Module.Basis ι F V) (x : V ⊗[F] W) 
     obtain ⟨s', h1', h2'⟩ := hy
     refine ⟨s ∪ s', fun i hi => ?_, fun t ht => ?_⟩
     · rw [Finset.mem_union, not_or] at hi
-      rw [map_add, h1 i hi.1, h1' i hi.2, add_zero]
-    · simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
+      rw [map_add (f := _), h1 i hi.1, h1' i hi.2, add_zero]
+    · simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib]
       rw [← h2 t (Finset.union_subset_left ht), ← h2' t (Finset.union_subset_right ht)]
   | tmul v w =>
     refine ⟨(b.repr v).support, fun i hi => ?_, fun t ht => ?_⟩
@@ -192,7 +192,7 @@ theorem smInd_stages {P Q : Subgroup G} (hPQ : P ≤ Q) {P' : Subgroup H} (π : 
     rw [hσ q h1 ((hP q).1 h1), hτ, map_smul, map_smul]
     congr 2
     induction t with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul v f =>
       simp only [LinearMap.lTensor_tmul, TensorProduct.map_tmul]
       congr 1
@@ -204,7 +204,7 @@ theorem smInd_stages {P Q : Subgroup G} (hPQ : P ≤ Q) {P' : Subgroup H} (π : 
     rw [hτ, hπj, map_smul, map_smul]
     congr 2
     induction t with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul v f =>
       simp only [LinearMap.lTensor_tmul, TensorProduct.map_tmul, map_one, Module.End.one_apply]
       congr 1
@@ -346,7 +346,7 @@ theorem isIrreducible_ind₂Lower (H : GlobalTheory.Published.BernsteinUnitaryPr
       (isIrreducible_ind₂ H ((Equiv.sumComm b a).trans e) s₂ i₂ u₂ s₁ i₁ u₁))
   show _ = extTensor π₁ π₂ (g.2, g.1) _
   induction x with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v w => simp
 
 theorem exists_parab_mul {α : Type} {m : α → Type} [Fintype α] [LinearOrder α] [∀ i, Fintype (m i)]
@@ -452,10 +452,10 @@ theorem multiProd_succ_equiv (e : (Σ i, m i) ≃ n) {X : Fin (s + 1) → Type} 
       (extTensor (σ 0) (multiProd (Equiv.refl _) fun i : Fin s => σ i.succ))).Equiv (multiProd e σ)) := by
   refine ind₂_parInd_equiv e (σ 0) _ _ (tensorCons X) fun g x => ?_
   induction x with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v w =>
     induction w using PiTensorProduct.induction_on with
-    | add x y hx hy => simp only [TensorProduct.tmul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [TensorProduct.tmul_add, map_add (f := _), hx, hy]
     | smul_tprod c y =>
       simp only [TensorProduct.tmul_smul, map_smul, TensorProduct.map_tmul, piTensor_tprod, tensorCons_tmul]
       congr 2

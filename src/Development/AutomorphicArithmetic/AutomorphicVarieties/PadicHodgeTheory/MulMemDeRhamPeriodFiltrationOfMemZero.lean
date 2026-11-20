@@ -30,7 +30,7 @@ private def wtS (l : ℕ) [Fact l.Prime] : Subring (Bcr l) where
     rw [map_one]; exact ((PP l).PD (botExt l)).one_mem
   add_mem' := fun {a b} ha hb => by
     change (PP l).ιB (a + b) ∈ ((PP l).PD (botExt l)).Fil 0
-    rw [map_add]; exact Submodule.add_mem _ ha hb
+    rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   zero_mem' := by
     change (PP l).ιB 0 ∈ ((PP l).PD (botExt l)).Fil 0
     rw [map_zero]; exact Submodule.zero_mem _
@@ -118,7 +118,7 @@ private theorem wt_aeval (K : FinExt l) (ψ : Bcr l →ₐ[ℚ_[l]] Bcr l)
       exact hψ _
   induction Q using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [Polynomial.map_add, map_add, map_add, Matrix.map_add _ (map_add _), Matrix.mul_add, ← hp, ← hq]
+    rw [Polynomial.map_add (f := _), map_add (f := _), map_add (f := _), Matrix.map_add _ (map_add _), Matrix.mul_add, ← hp, ← hq]
     rfl
   | monomial n a =>
     rw [Polynomial.map_monomial, aeval_monomial, aeval_monomial, ← Algebra.smul_def, ← Algebra.smul_def]
@@ -239,7 +239,7 @@ private theorem sum_mem_fil_iff (a : ℤ) (c : Fin d → BdR) :
       have := ((PD.Fil a).restrictScalars Qp).smul_mem (e.coord i v) x.2
       simpa using this
     | add x y hx hy =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
   · intro h
     exact Submodule.sum_mem _ fun j _ => ⟨e j ⊗ₜ ⟨c j, h j⟩, rfl⟩
@@ -395,7 +395,7 @@ private theorem genMat {Q B G V : Type} [Field Q] [CommRing B] [IsDomain B] [Alg
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul c v => simp [TensorProduct.smul_tmul']
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   have hrep : ∀ g (x : B ⊗[Q] V) k, e.repr (TensorProduct.map (a g).toLinearMap (r g) x) k =
       ∑ j, algebraMap Q B (v.repr (r g (v j)) k) * a g (e.repr x j) := by
     intro g x k
@@ -488,7 +488,7 @@ private theorem exists_log (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAi
   · rw [T.fil, RingEquiv.apply_symm_apply]
     exact GlobalTheory.RingIface.alg_mem_FilD_zero l u
   · apply T.eD.injective
-    rw [T.actD, RingEquiv.apply_symm_apply, map_add, RingEquiv.apply_symm_apply, hct]
+    rw [T.actD, RingEquiv.apply_symm_apply, map_add (f := _), RingEquiv.apply_symm_apply, hct]
     rw [show Per.σD g (algebraMap (Per.BdRp l) (Per.BdR l) u) =
       algebraMap (Per.BdRp l) (Per.BdR l) (Per.σDp g u) from GlobalTheory.RingIface.sigD_alg l _ _, hg, map_add]
 
@@ -519,14 +519,14 @@ private theorem drMat (hF : IsField BdR) (ρ : Representation Qp G V)
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul c v => simp [TensorProduct.smul_tmul']
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   have hc : ∀ g x, TensorProduct.map (a g).toLinearMap (ρ g) (TensorProduct.comm Qp V BdR x) =
       TensorProduct.comm Qp V BdR (actVdR PD ρ g x) := by
     intro g x
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul c v => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hw : ∀ g k, TensorProduct.map (a g).toLinearMap (ρ g) (e k : BdR ⊗[Qp] V) = e k := by
     intro g k
     have h1 := hc g ((TensorProduct.comm Qp V BdR).symm (e k))
@@ -862,13 +862,13 @@ theorem UpperTheory.V.Loc.drWt0 :
     | tmul v b =>
       change ρ (e.symm (e x)) v ⊗ₜ[ℚ_[l]] ((PP l).PD K).actdR (e x) b = ρ x v ⊗ₜ[ℚ_[l]] (PP l).actQdR (φ x) b
       rw [(PP l).PD_actdR, he', e.symm_apply_apply]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hD' : ∀ x y, actD φ (resCoef ℚ_[l] ρ) x y = actD φ ρ x y := by
     intro x y
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul v b => rfl
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hDD : ∀ y, y ∈ DdR ((PP l).PD K) ρ' ↔ y ∈ Ddr φ ρ := by
     intro y
     simp only [DdR, Ddr, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply,

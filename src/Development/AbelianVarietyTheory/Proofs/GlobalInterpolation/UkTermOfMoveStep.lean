@@ -126,7 +126,7 @@ theorem idxExp_dnN {d : Deco E n ST SG} (hd : d.Ok) (P : ST) (hne : conjPrime₂
   have hgv : ∀ v, g v = v + ((π - 1) / φ e * φ v) • e := fun v => by
     rw [hg, LinearMap.transvection.apply, LinearMap.smul_apply, smul_eq_mul]
   have hφg : ∀ v, φ (g v) = π * φ v := fun v => by
-    rw [hgv, map_add, map_smul, smul_eq_mul]
+    rw [hgv, map_add (f := _), map_smul, smul_eq_mul]
     field_simp
     ring
   have hkey : ∀ t : E, P.1.valuation E (π * t) < 1 ↔ P.1.valuation E t ≤ 1 := fun t => by
@@ -305,7 +305,7 @@ theorem exists_dn_of_up {d₁ : Deco E b ST SG'} (h₁ : d'.IsUp P q d₁) (r₁
   have hok : (d.dn P f₀).Ok := by
     refine hd.dn P hP (fun y hy z hz => ?_) (fun c y hy => ?_) (fun y hy => if_neg hy) ?_
     · simp only [f₀, if_pos hy, if_pos hz, if_pos (add_mem hy hz)]
-      rw [map_add, hd'.f_add P _ (hx y hy) _ (hx z hz)]
+      rw [map_add (f := _), hd'.f_add P _ (hx y hy) _ (hx z hz)]
     · simp only [f₀, if_pos hy, if_pos (Submodule.smul_mem _ c hy)]
       rw [hom_smul, hd'.f_smul P c _ (hx y hy)]
     · obtain ⟨e, he, hfe⟩ := exists_f_one hd P

@@ -125,16 +125,16 @@ theorem real_form_trace {β : Type} [Fintype β] [DecidableEq β] (τ : Matrix �
     (hb : ∀ X Y, τ X = X → τ Y = Y → τ (X * Y - Y * X) = X * Y - Y * X ∧ ζ (X * Y - Y * X) = 0) :
     ∃ c : ℂ, ∀ Z, τ Z = Z → ζ Z = c * Z.trace := by
   let P : Matrix β β ℂ → Matrix β β ℂ := fun A => (1 / 2 : ℝ) • (A + τ A)
-  have hP : ∀ A, τ (P A) = P A := fun A => by simp only [P, map_smul, map_add, hτ, add_comm]
+  have hP : ∀ A, τ (P A) = P A := fun A => by simp only [P, map_smul, map_add (f := _), hτ, add_comm]
   let ξ0 : Matrix β β ℂ → ℂ := fun A => ζ (P A) - I * ζ (P (I • A))
   have add : ∀ A B, ξ0 (A + B) = ξ0 A + ξ0 B := fun A B => by
-    simp only [ξ0, P, smul_add, map_add, map_smul]
+    simp only [ξ0, P, smul_add, map_add (f := _), map_smul]
     ring
   have rs : ∀ (r : ℝ) A, ξ0 (r • A) = r * ξ0 A := fun r A => by
-    simp only [ξ0, P, smul_comm I r, smul_add, map_add, map_smul, real_smul]
+    simp only [ξ0, P, smul_comm I r, smul_add, map_add (f := _), map_smul, real_smul]
     ring
   have is : ∀ A, ξ0 (I • A) = I * ξ0 A := fun A => by
-    simp only [ξ0, P, smul_smul, I_mul_I, neg_smul, one_smul, smul_add, map_add, map_smul, map_neg, real_smul, smul_neg]
+    simp only [ξ0, P, smul_smul, I_mul_I, neg_smul, one_smul, smul_add, map_add (f := _), map_smul, map_neg, real_smul, smul_neg]
     linear_combination ((((1 / 2 : ℝ) : ℂ) * ζ (I • A) + ((1 / 2 : ℝ) : ℂ) * ζ (τ (I • A)))) * I_mul_I
   let ξ : Matrix β β ℂ →ₗ[ℂ] ℂ :=
     { toFun := ξ0

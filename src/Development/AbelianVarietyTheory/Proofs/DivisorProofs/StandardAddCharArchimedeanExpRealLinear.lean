@@ -50,11 +50,11 @@ theorem stdChar_mixed_linear : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ)
     · exact h
   have hzadd : ∀ x y, z (x + y) = z x + z y := by
     intro x y
-    simp only [z, TensorProduct.add_tmul, map_add, Finset.sum_add_distrib]
+    simp only [z, TensorProduct.add_tmul, map_add (f := _), Finset.sum_add_distrib]
   let g : mixedEmbedding.mixedSpace D.host.F →+ ℝ :=
     { toFun := fun a => -(z (e.symm a)).re
       map_zero' := by simp [z]
-      map_add' := by intro a b; simp only [map_add, hzadd, Complex.add_re, neg_add] }
+      map_add' := by intro a b; simp only [map_add (f := _), hzadd, Complex.add_re, neg_add] }
   have hg : Continuous g := by
     have : Continuous fun x : Ainf D.host.F => z x :=
       continuous_finset_sum _ fun ρ _ => (hθ ρ).2

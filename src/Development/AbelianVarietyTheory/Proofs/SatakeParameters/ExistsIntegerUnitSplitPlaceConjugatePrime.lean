@@ -54,9 +54,9 @@ theorem exists_sep (s : ReciprocityTheory.Aut.SplitPlace L) :
   obtain ⟨x, hx⟩ : ∃ x : L, x = algebraMap L⁺ L a + algebraMap L⁺ L b * δ := ⟨_, rfl⟩
   have hix : s.i x = algebraMap L⁺ (s.v.adicCompletion L⁺) a +
       algebraMap L⁺ (s.v.adicCompletion L⁺) b * t := by
-    rw [hx, map_add, map_mul, AlgHom.commutes, AlgHom.commutes, ht_def]
+    rw [hx, map_add (f := _), map_mul, AlgHom.commutes, AlgHom.commutes, ht_def]
   have hcx : cc x = algebraMap L⁺ L a - algebraMap L⁺ L b * δ := by
-    rw [hx, map_add, map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hcδ]; ring
+    rw [hx, map_add (f := _), map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hcδ]; ring
   have hicx : s.i (cc x) = algebraMap L⁺ (s.v.adicCompletion L⁺) a -
       algebraMap L⁺ (s.v.adicCompletion L⁺) b * t := by
     rw [hcx, map_sub, map_mul, AlgHom.commutes, AlgHom.commutes, ht_def]
@@ -74,7 +74,7 @@ theorem exists_sep (s : ReciprocityTheory.Aut.SplitPlace L) :
     rw [e]
     exact lt_of_le_of_lt (Valuation.map_sub _ _ _) (max_lt ha hb)
   have hT : cc (x + cc x) = x + cc x := by
-    rw [map_add, IsCMField.complexConj_apply_apply, add_comm]
+    rw [map_add (f := _), IsCMField.complexConj_apply_apply, add_comm]
   have hN : cc (x * cc x) = x * cc x := by
     rw [map_mul, IsCMField.complexConj_apply_apply, mul_comm]
   let T : L⁺ := ⟨x + cc x, (IsCMField.complexConj_eq_self_iff (K := L) _).mp hT⟩
@@ -82,7 +82,7 @@ theorem exists_sep (s : ReciprocityTheory.Aut.SplitPlace L) :
   have hTL : algebraMap L⁺ L T = x + cc x := rfl
   have hNL : algebraMap L⁺ L N = x * cc x := rfl
   have hvT : s.v.valuation L⁺ T ≤ 1 := by
-    rw [← ReciprocityTheory.Aut.adic_valued_algebraMap s.v, ← s.i.commutes, hTL, map_add]
+    rw [← ReciprocityTheory.Aut.adic_valued_algebraMap s.v, ← s.i.commutes, hTL, map_add (f := _)]
     exact (Valuation.map_add _ _ _).trans (max_le hx1.le hcx1.le)
   have hvN : s.v.valuation L⁺ N ≤ 1 := by
     rw [← ReciprocityTheory.Aut.adic_valued_algebraMap s.v, ← s.i.commutes, hNL, map_mul,

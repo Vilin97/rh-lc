@@ -98,7 +98,7 @@ def liftL (T : Module.End ℂ (Fin (m + 1) → X.V)) : Module.End ℂ (Fin (m + 
   map_add' H K := by
     funext a d
     show T (fun c => H c d + K c d) a = T (fun c => H c d) a + T (fun c => K c d) a
-    rw [show (fun c => H c d + K c d) = (fun c => H c d) + (fun c => K c d) from rfl, map_add]; rfl
+    rw [show (fun c => H c d + K c d) = (fun c => H c d) + (fun c => K c d) from rfl, map_add (f := _)]; rfl
   map_smul' r H := by
     funext a d
     show T (fun c => r • H c d) a = r • T (fun c => H c d) a

@@ -161,10 +161,10 @@ theorem coe_one_sub_w0 : ((1 - H.w0 : 𝓞 E) : E) = cc (H.w0 : E) := by
   apply τ.injective
   rw [cc, IsCMField.complexEmbedding_complexConj]
   have h := congrArg (τ.comp (algebraMap (𝓞 E) E)) H.two_weight_eq_one_add_root
-  rw [map_mul, map_add, map_one, map_ofNat] at h
+  rw [map_mul, map_add (f := _), map_one, map_ofNat] at h
   change 2 * τ (H.w0 : E) = 1 + τ (H.rt : E) at h
   have h' := congrArg (starRingEnd ℂ) h
-  rw [map_mul, map_add, map_one, map_ofNat, (conj_rt (H := H) τ).2] at h'
+  rw [map_mul, map_add (f := _), map_one, map_ofNat, (conj_rt (H := H) τ).2] at h'
   have : τ ((1 - H.w0 : 𝓞 E) : E) = 1 - τ (H.w0 : E) := by simp
   rw [this]
   linear_combination (-h - h') / 2

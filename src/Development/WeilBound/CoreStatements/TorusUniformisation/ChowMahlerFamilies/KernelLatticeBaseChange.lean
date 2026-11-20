@@ -31,7 +31,7 @@ theorem map_mem (T : A →ₗ[C] B) {S : Set A} {S' : Set B} (h : ∀ e ∈ S, T
     rw [map_smul]
     exact smul_mem hc (h e he)
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact AddSubgroup.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact AddSubgroup.add_mem _ hx hy
   | neg x _ hx => rw [map_neg]; exact AddSubgroup.neg_mem _ hx
 
 end Span
@@ -92,7 +92,7 @@ theorem key {o : Type} [CommRing o] [Algebra o C] (RC : Subalgebra o C) {ι κ :
       obtain ⟨u, hu, rfl⟩ := hx
       rw [hρc, h2 u hu]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | smul c x _ hx => rw [map_smul, hx]
   let T : ((ι → C) × (κ → C)) →ₗ[C] ((ι → C) × (κ → C)) :=
     LinearMap.prod (ρc ∘ₗ LinearMap.fst C _ _)
@@ -108,7 +108,7 @@ theorem key {o : Type} [CommRing o] [Algebra o C] (RC : Subalgebra o C) {ι κ :
   · have := Δ.add_mem (Δ.sub_mem hgm hg') (hσ _ (h3 g hg) (h1 g))
     simpa using this
   · rw [hT]
-    simp only [Prod.map, hρc, hσc, map_add, map_sub]
+    simp only [Prod.map, hρc, hσc, map_add (f := _), map_sub]
 
 variable {F : Type} [Zero F] {n : ℕ}
 

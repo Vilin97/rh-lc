@@ -13,7 +13,7 @@ variable {p : ℕ} [Fact p.Prime]
 
 def shL (G : HTGroup p) : G.C →ₗ[ℚ] G.C where
   toFun := sh G
-  map_add' x y := by simp only [sh, map_add, MulOpposite.unop_add]
+  map_add' x y := by simp only [sh, map_add (f := _), MulOpposite.unop_add]
   map_smul' q x := by
     show (G.star (q • x)).unop = q • (G.star x).unop
     rw [map_rat_smul]; rfl
@@ -39,8 +39,8 @@ theorem lTensor_phi (G : HTGroup p) (K : Type) [Field K] [Algebra ℚ K] (β Y �
       AlgHom.coe_toRingHom, RingHom.coe_coe, Algebra.TensorProduct.includeRight_apply,
       Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one, TensorProduct.tmul_sub, sh]
   | add x y hx hy =>
-    rw [map_add, map_add, hx, hy]
-    simp only [map_add, MulOpposite.unop_add, mul_add, add_mul, Prod.mk_add_mk]
+    rw [map_add (f := _), map_add (f := _), hx, hy]
+    simp only [map_add (f := _), MulOpposite.unop_add, mul_add, add_mul, Prod.mk_add_mk]
     refine Prod.ext ?_ ?_ <;> dsimp only <;> abel
 
 end GlobalTheory.FinClsLoc.BaseChangeCent

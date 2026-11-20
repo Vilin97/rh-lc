@@ -543,7 +543,7 @@ theorem shift_isGL (T T' : ℕ) (w : Point D.host.E (D.R.rS + 1)) (p : PlF D) (h
   have hku : IsUnit ((D.s.atP p).ιE t + (((k : Fin 3) : ℕ) : (D.s.atP p).Ep)) := hc.choose_spec
   have hnsh : nSh ((D.s.atP p).ιE t) = ((k : Fin 3) : ℕ) := by unfold nSh; rw [dif_pos hc]
   have he : (D.s.atP p).ιE t + (((k : Fin 3) : ℕ) : (D.s.atP p).Ep) =
-      (D.s.atP p).ιE (t + (((k : Fin 3) : ℕ) : D.host.E)) := by rw [map_add, map_natCast]
+      (D.s.atP p).ιE (t + (((k : Fin 3) : ℕ) : D.host.E)) := by rw [map_add (f := _), map_natCast]
   have hne : t + (((k : Fin 3) : ℕ) : D.host.E) ≠ 0 := by
     intro h0'
     rw [he, h0', map_zero] at hku

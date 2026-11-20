@@ -25,7 +25,7 @@ variable (O) in
 def wpart (j : ℤ) : Submodule O R where
   carrier := {x | ∀ (R' : Type) [CommRing R'] [Algebra O R'] [IsCO O R'] (f f' : R →ₐ[O] R') (t : R'ˣ),
     push f' u = conjBy (tor R' t) (push f u) → f' x = ((t ^ j : R'ˣ) : R') * f x}
-  add_mem' := fun hx hy R' _ _ _ f f' t h => by rw [map_add, map_add, hx R' f f' t h, hy R' f f' t h, mul_add]
+  add_mem' := fun hx hy R' _ _ _ f f' t h => by rw [map_add (f := _), map_add (f := _), hx R' f f' t h, hy R' f f' t h, mul_add]
   zero_mem' := fun R' _ _ _ f f' t _ => by simp
   smul_mem' := fun a x hx R' _ _ _ f f' t h => by rw [map_smul, map_smul, hx R' f f' t h, mul_smul_comm]
 

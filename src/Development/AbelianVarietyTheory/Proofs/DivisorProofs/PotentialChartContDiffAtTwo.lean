@@ -333,7 +333,7 @@ theorem degrees (D : D7) (Y : ShimX D.what₂.Tau) (T : Real0 Y) (A : SlopeTestR
       (T.a_pot c σ) ((T.M c).bd σ).2.2.1 ?_ ?_ Dom (fun u hu ε hε => hN c u hu ε hε σ) hap A.dir k g L sc n m Z
       hk hg hL hs hZ hl u
     · intro v w j y hy z
-      rw [← T.c1_L 2 c _ σ j y hy, map_add, (T.K 2 c).isOneCochain_add _ _ σ j y hy,
+      rw [← T.c1_L 2 c _ σ j y hy, map_add (f := _), (T.K 2 c).isOneCochain_add _ _ σ j y hy,
         leviAt_add _ ((T.K 2 c).firstChern_isPotential _ σ) ((T.K 2 c).firstChern_isPotential _ σ) j hy,
         leviAt_add _ (T.th_pot c _ σ) (T.th_pot c _ σ) j hy, T.c1_L 2 c _ σ j y hy, T.c1_L 2 c _ σ j y hy]
     · intro t v j y hy z

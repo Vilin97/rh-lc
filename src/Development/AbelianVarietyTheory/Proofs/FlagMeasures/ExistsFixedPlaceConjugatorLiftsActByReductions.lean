@@ -120,7 +120,7 @@ theorem res_eq_of_off {R k : Type} [CommRing R] [CommRing k] (S : Subring R) (re
     res ⟨a, ha⟩ = res ⟨d, hd⟩ := by
   have e1 : a = d + e * (a - d) := by linear_combination h
   have h1 : (⟨a, ha⟩ : S) = ⟨d, hd⟩ + ⟨e, he⟩ * (⟨a, ha⟩ - ⟨d, hd⟩) := Subtype.ext e1
-  rw [h1, map_add, map_mul, hres, zero_mul, add_zero]
+  rw [h1, map_add (f := _), map_mul, hres, zero_mul, add_zero]
 
 theorem smul_conj_sub_one {R : Type} [CommRing R] {m n : ℕ} (U : Matrix (Fin m) (Fin n) R) (U' : Matrix (Fin n) (Fin m) R)
     (hUU : U * U' = 1) (C : GL (Fin n) R) (X : Matrix (Fin n) (Fin n) R) (f : R) (hX : f • (X - 1) = 0) :
@@ -293,7 +293,7 @@ theorem core0 (D : D7) (t : Formalism.L2.Theta.GA D (D.sp.Y 0)) (PY : RowPsi (Yc
       by_cases hij : i = j <;> simp [Matrix.one_apply, hij]
   obtain ⟨f, hfdef⟩ : ∃ f : Formalism.IndefR.Lev.EAf D, f = θ (1 - (ε₀ kv + conjAL D.host.E (ε₀ kv))) := ⟨_, rfl⟩
   have hf : f = 1 - ε kv - σ (ε kv) := by
-    rw [hfdef, map_sub, map_add, map_one, hθσ]; ring
+    rw [hfdef, map_sub, map_add (f := _), map_one, hθσ]; ring
   have hfx : f • ((((x : GL (Fin D.R.r) (AL D.host.E)) : Matrix (Fin D.R.r) (Fin D.R.r) (AL D.host.E)).map θ) - 1) = 0 := by
     ext i j
     have h1 : f * θ (((x : GL (Fin D.R.r) (AL D.host.E)) : Matrix (Fin D.R.r) (Fin D.R.r) (AL D.host.E)) i j -
@@ -360,7 +360,7 @@ theorem core0 (D : D7) (t : Formalism.L2.Theta.GA D (D.sp.Y 0)) (PY : RowPsi (Yc
     have he : θ (ε₀ kv + conjAL D.host.E (ε₀ kv)) ∈ Formalism.L2.Herm.intAf (↥D.host.F) D.host.E := GlobalTheory.T.cmFieldFiniteAdeleTensorEquiv_mem_integralAdeles D hF _ hemem
     have hcomp : compAt D.host.E (sp kv').v (ε₀ kv + conjAL D.host.E (ε₀ kv)) = 0 := by
       have := (hε₀ kv).2.2.2.2.2 (sp kv').v (hdist kv' kv hne)
-      rw [map_add, this.1, this.2, add_zero]
+      rw [map_add (f := _), this.1, this.2, add_zero]
     have hres0 : Formalism.L2.DIV.resS (↥D.host.F) (sp kv').w ⟨_, he⟩ = 0 := by
       have h1 := GlobalTheory.T.residue_cmFieldFiniteAdeleTensorEquiv_eq_natCast D hF (sp kv') (ε₀ kv + conjAL D.host.E (ε₀ kv)) he 0 hemem
         (by rw [GlobalTheory.T.splitPlaceProjection_eq_zero_of_placeComponent_eq_zero D.host.E (sp kv') _ hcomp, Nat.cast_zero, sub_zero, map_zero]; exact zero_lt_one)

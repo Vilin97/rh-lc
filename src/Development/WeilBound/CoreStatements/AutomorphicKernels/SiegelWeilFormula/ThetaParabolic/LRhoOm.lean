@@ -22,7 +22,7 @@ theorem rho_rho (a b : Matrix (Fin m) (Fin n ⊕ Fin n) (AE F E)) (φ : (κ → 
       ψ (⅟(2 : AF F) * symp (R := AF F) (cA σ) (-1) (incM F A.J) (dbl (incM F Y.J)) a b) • dd.rho ψ (a + b) φ := by
   rw [dd.form]
   funext x
-  simp only [Darboux.rho, schr, map_add, Pi.smul_apply, smul_eq_mul, ← mul_assoc, ← AddChar.map_add_eq_mul,
+  simp only [Darboux.rho, schr, map_add (f := _), Pi.smul_apply, smul_eq_mul, ← mul_assoc, ← AddChar.map_add_eq_mul,
     Prod.fst_add, Prod.snd_add, add_assoc, add_dotProduct, dotProduct_add]
   congr 2
   linear_combination (-((dd.e a).1 ⬝ᵥ (dd.e b).2)) * invOf_mul_self (2 : AF F)

@@ -40,12 +40,12 @@ theorem UpperTheory.ConvolutionTheory.FX.subst :
           AddMonoidAlgebra.single 0 (aeval (fun j => (C (Λ₁ j) + lin (N j) : MvPolynomial ι'' ℂ)) p) := fun p => by
         induction p using MvPolynomial.induction_on with
         | C a => simp [AddMonoidAlgebra.coe_algebraMap]
-        | add p q hp hq => rw [map_add, map_add, hp, hq, AddMonoidAlgebra.single_add]
+        | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, AddMonoidAlgebra.single_add]
         | mul_X p j hp => rw [map_mul, map_mul, hp, aeval_X, aeval_X, AddMonoidAlgebra.single_mul_single, add_zero]
       simp only [aff, lift_single, RingHom.comp_apply, aeval_X, ofAdd_zero, map_one, mul_one, e]
       congr 1
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [lin, map_add, map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq, Matrix.mul_apply, Complex.ofReal_sum,
+        simp only [lin, map_add (f := _), map_sum, map_mul, aeval_C, aeval_X, algebraMap_eq, Matrix.mul_apply, Complex.ofReal_sum,
         Complex.ofReal_mul, mul_add, Finset.sum_add_distrib, Finset.mul_sum, Finset.sum_mul, mul_assoc, add_assoc]
       rw [Finset.sum_comm (s := (Finset.univ : Finset ι''))]
     · intro v

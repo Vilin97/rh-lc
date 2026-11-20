@@ -112,7 +112,7 @@ theorem adjoin_le_span {J : Matrix (Fin n) (Fin n) ℂ} (hJ : Jᴴ = J) (hdet : 
     rintro _ ⟨Y, rfl⟩
     obtain ⟨Z₁, Z₂, h₁, h₂, rfl⟩ := skew_decomp hJ hdet Y
     show ρ (Z₁ + Complex.I • Z₂) ∈ Submodule.span ℂ (words J s ρ)
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
     refine Submodule.add_mem _ (Submodule.subset_span ⟨[Z₁], by simpa using h₁, by simp⟩)
       (Submodule.smul_mem _ _ (Submodule.subset_span ⟨[Z₂], by simpa using h₂, by simp⟩))
   intro T hT

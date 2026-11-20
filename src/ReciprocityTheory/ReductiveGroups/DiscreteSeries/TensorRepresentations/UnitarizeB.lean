@@ -78,7 +78,7 @@ def cf (dual : Bool) (ε : Fin n → Bool) (σ : Matrix (Fin n) (Fin n) ℂ → 
 theorem cf_add (dual : Bool) (y : H) (ξ : Fin n) (F F' : Fin n → H) :
     cf dual ε σ y ξ (F + F') = cf dual ε σ y ξ F + cf dual ε σ y ξ F' := by
   funext g
-  simp only [cf, Pi.add_apply, map_add, inner_add_right, mul_add, Finset.sum_add_distrib]
+  simp only [cf, Pi.add_apply, map_add (f := _), inner_add_right, mul_add, Finset.sum_add_distrib]
 
 theorem cf_smul (dual : Bool) (y : H) (ξ : Fin n) (a : ℂ) (F : Fin n → H) :
     cf dual ε σ y ξ (a • F) = a • cf dual ε σ y ξ F := by

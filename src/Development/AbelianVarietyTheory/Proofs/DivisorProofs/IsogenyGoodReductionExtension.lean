@@ -140,7 +140,7 @@ theorem exists_field_of_finite (k₁ : IntermediateField ℚ ℂ) (hk : FiniteDi
     rw [show algebraMap R₁ S = a from rfl] at this
     rw [this, map_zero]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul r x _ hx =>
     rw [Algebra.smul_def, map_mul]
     refine mul_mem ?_ hx

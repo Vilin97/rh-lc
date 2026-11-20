@@ -18,7 +18,7 @@ theorem sub_dvd_sub_rename (a b : σ) (Q : MvPolynomial σ ℝ) :
   | C c => simp
   | add p q hp hq =>
     have := dvd_add hp hq
-    rw [map_add]; convert this using 1; ring
+    rw [map_add (f := _)]; convert this using 1; ring
   | mul_X p i hp =>
     rw [map_mul, rename_X]
     have h2 : (X a - X b : MvPolynomial σ ℝ) ∣ X i - X (Function.update id a b i) := by

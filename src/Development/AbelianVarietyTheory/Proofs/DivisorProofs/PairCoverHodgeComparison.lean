@@ -320,8 +320,8 @@ theorem unitAt_frameSec (D : D7) (O : Setup D) (c : O.s.Comp) {Bs : Scheme.{0}} 
           rfl⟩
       · obtain ⟨s', h1, h2⟩ := exists_ker F hk (s k)
         exact ⟨s', h1, fun b => by rw [h2]; rfl⟩
-    have := c3 (cc i) V f hf W (hW i) hWV (s i + s') (by rw [map_add, hs1, add_zero, hs]) hKW hKV
-    simp only [hev, map_add, Finsupp.add_apply, hs2] at this
+    have := c3 (cc i) V f hf W (hW i) hWV (s i + s') (by rw [map_add (f := _), hs1, add_zero, hs]) hKW hKV
+    simp only [hev, map_add (f := _), Finsupp.add_apply, hs2] at this
     rw [hu', hv] at this
     exact this)
   have h1 : UnitAt x (ψ d) := ⟨d, hd, rfl⟩

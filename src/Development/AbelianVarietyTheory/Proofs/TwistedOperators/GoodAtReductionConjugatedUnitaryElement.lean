@@ -22,7 +22,7 @@ theorem tauF_gen (I : Formalism.MainNotions.S.AutInst) (z : TensorProduct I.F (F
   | zero => simp
   | tmul a e =>
     simp [Formalism.L2.SG.AdBridge.tauF, Algebra.TensorProduct.tmul_mul_tmul]
-  | add a b ha hb => rw [map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
 theorem finE_iota_symm (D : D7) (k : (Formalism.L2.SG.InstExistsPf.instOf D).Gf) :
     (finE (D.sp.Y 0) ((Formalism.IndefR.RationalEmbedding.iota D).symm (1, k))).1 =

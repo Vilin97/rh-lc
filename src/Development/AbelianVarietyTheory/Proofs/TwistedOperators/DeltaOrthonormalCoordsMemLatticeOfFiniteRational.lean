@@ -46,7 +46,7 @@ theorem AA_le_Iid (a : D.host.E) (ha : a ∈ (D.host.AA : Submodule (𝓞 D.host
     obtain ⟨c, hc, rfl⟩ := hw
     exact Submodule.subset_span ⟨c, hc, y, hy, rfl⟩
   | zero => simp
-  | add u w _ _ hu hw => rw [map_add, add_mul]; exact add_mem hu hw
+  | add u w _ _ hu hw => rw [map_add (f := _), add_mul]; exact add_mem hu hw
   | smul o u _ hu =>
     rw [smul_eq_mul, map_mul, mul_assoc]
     exact Submodule.smul_mem _ o hu

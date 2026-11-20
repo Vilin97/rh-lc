@@ -105,7 +105,7 @@ theorem affineSubst_affineSubst {ι κ μ : Type*} [Fintype κ] [Fintype μ] (B 
       ∑ l, C ((B * B') i l) * X l + C ((B.mulVec a' + a) i) := by
     intro i
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_mul, bind₁_C_right, bind₁_X_right, mul_add,
+      simp only [map_add (f := _), map_sum, map_mul, bind₁_C_right, bind₁_X_right, mul_add,
       Finset.sum_add_distrib, Finset.mul_sum, Matrix.mul_apply, Matrix.mulVec, dotProduct,
       Pi.add_apply, Finset.sum_mul, mul_assoc]
     rw [Finset.sum_comm (s := Finset.univ (α := κ)) (t := Finset.univ (α := μ))]

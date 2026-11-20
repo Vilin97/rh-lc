@@ -60,7 +60,7 @@ theorem clauseAlg (h1 : CyclicSemilocal) (h2 : CyclicAlgebra) (h : IsRegular σ 
       apply etale_adjoinRoot_of_isUnit_derivative (Matrix.charpoly_monic _)
       obtain ⟨a, c, hac⟩ := h.sep
       have h' := congrArg (AdjoinRoot.mk (γ : Matrix n n E).charpoly) hac
-      simp only [map_add, map_mul, AdjoinRoot.mk_self, mul_zero, zero_add, map_one] at h'
+      simp only [map_add (f := _), map_mul, AdjoinRoot.mk_self, mul_zero, zero_add, map_one] at h'
       exact isUnit_iff_exists_inv.2 ⟨_, (mul_comm _ _).trans h'⟩
     exact Algebra.Etale.of_equiv e
   ·
@@ -187,7 +187,7 @@ theorem tConj_tConj (hσ : ∀ x, σ (σ x) = x) (P : Type) [CommRing P] [Algebr
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul p e => simp [tConj, Algebra.TensorProduct.map_tmul, hσ]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Clauses
 

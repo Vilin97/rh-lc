@@ -30,7 +30,7 @@ def schrLin {R : Type} [CommRing R] [Invertible (2 : R)] (ψ : AddChar R ℂ) {�
 
 def conjLin {Y Y' : Type} (ι : (Y → ℂ) →ₗ[ℂ] (Y' → ℂ)) : (Y → ℂ) →ₗ[ℂ] (Y' → ℂ) where
   toFun φ := star (ι (star φ))
-  map_add' f g := by rw [star_add, map_add, star_add]
+  map_add' f g := by rw [star_add, map_add (f := _), star_add]
   map_smul' a f := by rw [star_smul, map_smul, star_smul, star_star]; rfl
 
 theorem star_mem_SB {Y : Type} [TopologicalSpace Y] {f : Y → ℂ} (hf : f ∈ SB Y) : star f ∈ SB Y :=

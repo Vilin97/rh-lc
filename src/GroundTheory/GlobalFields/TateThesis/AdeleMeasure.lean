@@ -74,7 +74,7 @@ def addEquivMixedSpace : InfiniteAdeleRing K ≃+ mixedSpace K where
   __ := (homeomorphMixedSpace K).toEquiv
   map_add' x y := by
     change homeomorphMixedSpace K (x + y) = homeomorphMixedSpace K x + homeomorphMixedSpace K y
-    simp only [homeomorphMixedSpace_apply, map_add]
+    simp only [homeomorphMixedSpace_apply, map_add (f := _)]
 
 def infiniteAdeleMeasure : Measure (InfiniteAdeleRing K) :=
   (selfDualMeasure K).map (measurableEquivMixedSpace K).symm

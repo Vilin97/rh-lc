@@ -193,7 +193,7 @@ theorem xClasses : ∀ (K : Type) [Field K] [NumberField K] [StarRing K] (A : Id
       refine ⟨t, ?_⟩
       have ht' : φ t * φ a = φ a * (Sx x i j - Sx x' i j) := by
         rw [← map_mul, ht]
-        simp only [AddSubgroup.coe_add, AddSubgroup.coe_neg, map_add, map_neg]
+        simp only [AddSubgroup.coe_add, AddSubgroup.coe_neg, map_add (f := _), map_neg]
         rw [← hc, ← hc, ho, ho']; ring
       exact mul_left_cancel₀ haK (by rw [mul_comm]; exact ht')
     obtain ⟨c, hcc⟩ : ∃ c : Matrix (Fin r) (Fin r) (𝓞 K), ∀ i j, φ (c i j) = Sx x i j - Sx x' i j :=

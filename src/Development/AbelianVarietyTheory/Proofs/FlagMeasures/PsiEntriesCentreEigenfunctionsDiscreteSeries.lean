@@ -552,7 +552,7 @@ theorem eword_intK {ε : Fin n → Bool} {c : KG ε → ℂ} (hc : Continuous c)
         conv_lhs => rw [cm.2.2.1]
         simp [Matrix.mul_add]
       simp only [Dz]
-      rw [e, map_add, map_smul, smul_eq_mul]
+      rw [e, map_add (f := _), map_smul, smul_eq_mul]
     have hA := integrable_slice hc (analytic_Dz (analytic_Dw hG w) (Formalism.REAL.cpart1 ε (Matrix.single p.1 p.2 1))) hU
     have hB := integrable_slice hc (analytic_Dz (analytic_Dw hG w) (Formalism.REAL.cpart2 ε (Matrix.single p.1 p.2 1))) hU
     simp only [intK]

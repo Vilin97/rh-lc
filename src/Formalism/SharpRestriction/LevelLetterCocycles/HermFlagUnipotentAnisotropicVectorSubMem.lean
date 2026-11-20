@@ -497,7 +497,7 @@ theorem gamma_sub_of_frobenius_power [IsDomain O] (hR : Formalism.MainNotions.Li
     have g2 : W.γ T (((W.φD T) ^ j) (((PD.p : ℕ) : O) ^ t • E0 W T K0 w c)) =
         ((W.φD T) ^ j) (((PD.p : ℕ) : O) ^ t • W.γ T (E0 W T K0 w c)) := by
       rw [← (W.γ T).map_smul]; exact γ_φpow W T W.gam j _
-    rw [smul_sub, ← (W.γ T).map_smul, hred, ← hva, map_add, (W.γ T).map_smul, g2, smul_sub (((PD.p : ℕ) : O) ^ t),
+    rw [smul_sub, ← (W.γ T).map_smul, hred, ← hva, map_add (f := _), (W.γ T).map_smul, g2, smul_sub (((PD.p : ℕ) : O) ^ t),
       map_sub, smul_sub]
     abel
   rw [e2]
@@ -559,7 +559,7 @@ theorem uniq_alt_alt [NeZero n] [IsDomain O] (hinj : Function.Injective (algebra
 theorem term_lin (T : LocLat G Qp LL O) (a a' : O) (y : ℕ) (x x' : W.DD T) :
     W.γ T (W.π₀ ^ y • (a • x + a' • x')) - W.π₀ ^ y • (a • x + a' • x') =
       a • (W.γ T (W.π₀ ^ y • x) - W.π₀ ^ y • x) + a' • (W.γ T (W.π₀ ^ y • x') - W.π₀ ^ y • x') := by
-  rw [smul_add, smul_comm (W.π₀ ^ y) a x, smul_comm (W.π₀ ^ y) a' x', map_add, (W.γ T).map_smul,
+  rw [smul_add, smul_comm (W.π₀ ^ y) a x, smul_comm (W.π₀ ^ y) a' x', map_add (f := _), (W.γ T).map_smul,
     (W.γ T).map_smul]
   simp only [smul_sub]
   abel
@@ -575,7 +575,7 @@ theorem ser_lin (T : LocLat G Qp LL O) (i : ZMod n) (a a' : O) {w w' : W.DD T} {
     refine ⟨j1 + j2, a • ((PD.p : ℕ) : O) ^ j2 • x1 + a' • ((PD.p : ℕ) : O) ^ j1 • x2,
       (W.N T).add_mem ((W.N T).smul_of_tower_mem _ ((W.N T).smul_of_tower_mem _ hx1))
         ((W.N T).smul_of_tower_mem _ ((W.N T).smul_of_tower_mem _ hx2)),
-      fun δ hδ => by simp only [map_add, map_smul, hx1Δ δ hδ, hx2Δ δ hδ], ?_⟩
+      fun δ hδ => by simp only [map_add (f := _), map_smul, hx1Δ δ hδ, hx2Δ δ hδ], ?_⟩
     have hs : ∑ y ∈ Finset.range K, ((PD.p : ℕ) : O) ^ (Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p K - Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p y) •
         (W.γ T (W.π₀ ^ y • (a • c y + a' • c' y)) - W.π₀ ^ y • (a • c y + a' • c' y)) =
         a • ∑ y ∈ Finset.range K, ((PD.p : ℕ) : O) ^ (Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p K - Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p y) •
@@ -585,7 +585,7 @@ theorem ser_lin (T : LocLat G Qp LL O) (i : ZMod n) (a a' : O) {w w' : W.DD T} {
       rw [Finset.smul_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun y _ => ?_
       rw [term_lin, smul_add, smul_comm _ a, smul_comm _ a']
-    rw [hs, map_add, (W.γ T).map_smul, (W.γ T).map_smul]
+    rw [hs, map_add (f := _), (W.γ T).map_smul, (W.γ T).map_smul]
     have e3 : ((PD.p : ℕ) : O) ^ (j1 + j2) •
         (((PD.p : ℕ) : O) ^ Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p K • (a • W.γ T w + a' • W.γ T w' - (a • w + a' • w')) -
           (a • ∑ y ∈ Finset.range K, ((PD.p : ℕ) : O) ^ (Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p K - Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p y) •
@@ -650,7 +650,7 @@ theorem linear_of_frobenius_power [NeZero n] [IsDomain O] (hinj : Function.Injec
         a • ∑ y ∈ Finset.range K0, s y • ((W.φD T) ^ j) (c y) +
           a' • ∑ y ∈ Finset.range K0, s' y • ((W.φD T) ^ j) (c' y) -
           ∑ y ∈ Finset.range K0, s'' y • ((W.φD T) ^ j) (c'' y) := by
-      rw [hzd'', hzd, hzd', map_add, LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower,
+      rw [hzd'', hzd, hzd', map_add (f := _), LinearMap.map_smul_of_tower, LinearMap.map_smul_of_tower,
         smul_add, smul_sub, smul_sub, smul_comm _ a, smul_comm _ a']
       abel
     rw [e]
@@ -814,7 +814,7 @@ theorem Gd_res {l : ℕ} (hlm : ((l : ℕ) : O) ∈ IsLocalRing.maximalIdeal O) 
     rw [← map_natCast (PowerSeries.C (R := O ⧸ IsLocalRing.maximalIdeal O)),
       ← map_natCast (Ideal.Quotient.mk (IsLocalRing.maximalIdeal O)), Ideal.Quotient.eq_zero_iff_mem.2 hlm,
       map_zero]
-  simp only [Gd, map_mul, map_pow, map_add, PowerSeries.map_X, map_natCast, h0, add_zero, pow_add]
+  simp only [Gd, map_mul, map_pow, map_add (f := _), PowerSeries.map_X, map_natCast, h0, add_zero, pow_add]
 
 theorem Gd_ne {l : ℕ} (hlm : ((l : ℕ) : O) ∈ IsLocalRing.maximalIdeal O) (M X : ℕ) :
     PowerSeries.map (IsLocalRing.residue O) (Gd l M X) ≠ 0 := by
@@ -912,7 +912,7 @@ theorem rem_exists [IsLocalRing O] [IsAdicComplete (IsLocalRing.maximalIdeal O) 
   have h2 : ∀ i, (((PD.p : ℕ) : LetA O n) ^ σ * a) i = PowerSeries.subst (W.π₀ i)
       (((PD.p : ℕ) : PowerSeries O) ^ Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p y * Fα i + Gd PD.p M X * Fβ i) := by
     intro i
-    rw [hιi, map_add, map_mul, map_mul, map_pow, map_natCast, ← hFα' i, ← hFβ' i, ← hG i, hαβ]
+    rw [hιi, map_add (f := _), map_mul, map_mul, map_pow, map_natCast, ← hFα' i, ← hFβ' i, ← hG i, hαβ]
     rfl
   have heq : ∀ i, ((PD.p : ℕ) : PowerSeries O) ^ σ * F =
       ((PD.p : ℕ) : PowerSeries O) ^ Formalism.MainNotions.CrystallineLiftingInputs.eY PD.p y * Fα i + Gd PD.p M X * Fβ i := by

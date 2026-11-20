@@ -119,7 +119,7 @@ theorem top_poly (hD : IsOpen D) (z z' yb : Fin (2 * r + k + 1) → ℂ) (i0 s :
     simp only
     rw [hlast, hE, hDi0, hB u]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, Finset.sum_range_succ, dif_neg (lt_irrefl i0)]
+      simp only [map_add (f := _), map_sum, Finset.sum_range_succ, dif_neg (lt_irrefl i0)]
     have hm : ∀ (c : ℂ) (X : Module.End ℂ (VS k r 0 D E)),
         La hD K hK x₁ (algebraMap ℂ (Module.End ℂ (VS k r 0 D E)) c * X) = c • La hD K hK x₁ X := by
       intro c X

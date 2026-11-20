@@ -85,7 +85,7 @@ theorem tensor_ker [CommRing Ω] [Algebra K Ω] (φ : A →ₐ[K] Ω) (S : Submo
     obtain ⟨d₂, m₂, h₂⟩ := hy
     refine ⟨d₁ * d₂, S.mul_mem m₁ m₂, ?_⟩
     have e : (d₁ * d₂) ⊗ₜ[K] (1 : C) = (d₁ ⊗ₜ[K] (1 : C)) * (d₂ ⊗ₜ[K] (1 : C)) := by simp
-    rw [map_add, e]
+    rw [map_add (f := _), e]
     linear_combination (d₂ ⊗ₜ[K] (1 : C)) * h₁ + (d₁ ⊗ₜ[K] (1 : C)) * h₂
 
 theorem tensor_frac [Field Ω] [Algebra K Ω] (φ : A →ₐ[K] Ω) (H : ∀ w : Ω, ∃ a d, φ d ≠ 0 ∧ w * φ d = φ a)
@@ -101,7 +101,7 @@ theorem tensor_frac [Field Ω] [Algebra K Ω] (φ : A →ₐ[K] Ω) (H : ∀ w :
     obtain ⟨d₂, b₂, m₂, h₂⟩ := hy
     refine ⟨d₁ * d₂, (d₂ ⊗ₜ[K] (1 : C)) * b₁ + (d₁ ⊗ₜ[K] (1 : C)) * b₂, by simp [m₁, m₂], ?_⟩
     have e : (φ (d₁ * d₂)) ⊗ₜ[K] (1 : C) = (φ d₁ ⊗ₜ[K] (1 : C)) * (φ d₂ ⊗ₜ[K] (1 : C)) := by simp
-    simp only [map_add, map_mul (Algebra.TensorProduct.map φ (AlgHom.id K C)), ← h₁, ← h₂,
+    simp only [map_add (f := _), map_mul (Algebra.TensorProduct.map φ (AlgHom.id K C)), ← h₁, ← h₂,
       Algebra.TensorProduct.map_tmul, AlgHom.id_apply, e]
     ring
 

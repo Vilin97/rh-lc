@@ -27,7 +27,7 @@ theorem map_liftE_eq_zero {B : Type} [CommRing B] [Algebra F B] (f : AF F →ₐ
     Algebra.TensorProduct.map f (AlgHom.id F E) (GlobalTheory.HoweLocal.liftE v y) = 0 := by
   induction y using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
   | tmul a e =>
     simp only [GlobalTheory.HoweLocal.liftE, TensorProduct.map_tmul, LinearMap.id_coe, id_eq]
     rw [Algebra.TensorProduct.map_tmul, hf, TensorProduct.zero_tmul]
@@ -52,7 +52,7 @@ theorem norm_liftU (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
     have h2 : Algebra.TensorProduct.map (evFin F u) (AlgHom.id F E)
         (GlobalTheory.HoweLocal.liftE u ((z : Fv F u ⊗[F] E) - 1)) = (z : Fv F u ⊗[F] E) - 1 :=
       GlobalTheory.HoweLocal.LocCoords.compFin_liftE u _
-    rw [map_add, map_one, h2, add_sub_cancel] at h1
+    rw [map_add (f := _), map_one, h2, add_sub_cancel] at h1
     rw [map_add (evFin F u), map_one, GlobalTheory.LatVac.evFin_liftV, add_sub_cancel]
     exact h1.symm
   · exact comp_away _ v (evFin_liftV_ne h) _ _

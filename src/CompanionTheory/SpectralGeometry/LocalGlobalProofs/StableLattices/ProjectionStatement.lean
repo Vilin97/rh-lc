@@ -14,7 +14,7 @@ theorem stProj : StProj := by
     { carrier := {v | ∀ k ∈ K, σ k v = v}
       add_mem' := fun {a b} ha hb k hk => by
         simp only [Set.mem_ofPred_eq] at ha hb ⊢
-        rw [map_add, ha k hk, hb k hk]
+        rw [map_add (f := _), ha k hk, hb k hk]
       zero_mem' := fun k _ => map_zero _
       smul_mem' := fun c v hv k hk => by
         simp only [Set.mem_ofPred_eq] at hv ⊢
@@ -74,7 +74,7 @@ theorem stProj : StProj := by
     have hv : v = V.starProjection v + (v - V.starProjection v) := by abel
     show T (V.starProjection v) = V.starProjection (T v)
     conv_rhs => rw [hv]
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [h1, h2, add_zero]
 
 end GlobalTheory.CompanionTheory.FixedProj

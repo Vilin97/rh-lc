@@ -152,7 +152,7 @@ theorem core_sum {V : Type} [AddCommGroup V] [Module ℂ V] {T : Type} [Fintype 
       simp only [map_sum]
     exact Finset.sum_nonneg fun τ _ => core.re_inner_nonneg _
   · intro x y z
-    simp only [map_add, core.add_left, Finset.sum_add_distrib]
+    simp only [map_add (f := _), core.add_left, Finset.sum_add_distrib]
   · intro x y r
     simp only [map_smul, core.smul_left, Finset.mul_sum]
   · intro x hx

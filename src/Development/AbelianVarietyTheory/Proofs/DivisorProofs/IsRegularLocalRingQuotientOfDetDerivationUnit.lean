@@ -37,7 +37,7 @@ theorem isRegularLocalRing_quotient : ∀ (T : Type) [CommRing T] [IsRegularRing
       refine Submodule.mul_induction_on hy (fun a ha b hb => ?_) (fun y z hy hz => ?_)
       · rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
         exact Ideal.add_mem _ (Ideal.mul_mem_right _ _ ha) (Ideal.mul_mem_right _ _ hb)
-      · rw [map_add]; exact Ideal.add_mem _ hy hz
+      · rw [map_add (f := _)]; exact Ideal.add_mem _ hy hz
     have h1 := hsq _ ha
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum] at h1

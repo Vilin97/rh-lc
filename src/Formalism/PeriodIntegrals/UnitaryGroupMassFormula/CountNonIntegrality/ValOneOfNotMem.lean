@@ -21,7 +21,7 @@ def vIdeal (σ : E →+* K) : Ideal (𝓞 E) where
   carrier := {o | valuation K (σ (o : E)) < 1}
   add_mem' := by
     intro x y hx hy
-    simp only [Set.mem_ofPred_eq, AddMemClass.coe_add, map_add] at hx hy ⊢
+    simp only [Set.mem_ofPred_eq, AddMemClass.coe_add, map_add (f := _)] at hx hy ⊢
     exact Valuation.map_add_lt _ hx hy
   zero_mem' := by
     simp only [Set.mem_ofPred_eq, ZeroMemClass.coe_zero, map_zero, Valuation.map_zero]

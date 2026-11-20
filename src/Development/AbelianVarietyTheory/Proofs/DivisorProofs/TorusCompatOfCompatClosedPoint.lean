@@ -76,7 +76,7 @@ theorem compat_of_closed : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Algebra o 
     { toFun := fun χ => unitOn (Units.map a.toMonoidHom ζ ^ (c t (Multiplicative.toAdd χ)).val)
       map_one' := by simp [unitOn]
       map_mul' := fun x y => by
-        rw [toAdd_mul, map_add, ZMod.val_add, ← pow_eq_pow_mod _ hζV, pow_add]
+        rw [toAdd_mul, map_add (f := _), ZMod.val_add, ← pow_eq_pow_mod _ hζV, pow_add]
         simp [unitOn] }
   let Z1 : Over (Sp V) := Over.mk (𝟙 (Sp V))
   obtain ⟨z, hz⟩ : ∃ z : Z1 ⟶ splitTorus (Sp V) X, GlobalTheory.splitTorusPointsEquiv (Sp V) X Z1 z = F :=

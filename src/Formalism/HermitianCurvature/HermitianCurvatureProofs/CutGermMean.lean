@@ -81,7 +81,7 @@ theorem inDual_neg {ω₁ ω₂ σ : ℂ} (h : TBB.InDual ω₁ ω₂ σ) : TBB.
   have h1 := h (-a) (-b)
   have e : P5.fsv (-σ) ((a : ℂ) * ω₁ + (b : ℂ) * ω₂) =
       P5.fsv σ (((-a : ℤ) : ℂ) * ω₁ + ((-b : ℤ) : ℂ) * ω₂) := by
-    simp only [P5.fsv, map_neg, map_add, map_mul, Int.cast_neg]
+    simp only [P5.fsv, map_neg, map_add (f := _), map_mul, Int.cast_neg]
     congr 1
     ring
   rw [e, h1]

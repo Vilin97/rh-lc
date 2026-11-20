@@ -32,7 +32,7 @@ theorem filV_anti {a b : ℤ} (h : a ≤ b) :
   | tmul v c =>
     refine ⟨v ⊗ₜ ⟨(c : BdR), fil_anti PD h c.2⟩, ?_⟩
     simp
-  | add y z hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 theorem exists_mem_filV (x : V ⊗[Qp] BdR) : ∃ a, x ∈ FilV PD (LL := LL) (V := V) a := by
   induction x using TensorProduct.induction_on with

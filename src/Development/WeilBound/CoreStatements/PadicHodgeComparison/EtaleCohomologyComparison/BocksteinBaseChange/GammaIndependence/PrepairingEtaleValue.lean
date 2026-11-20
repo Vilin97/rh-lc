@@ -128,7 +128,7 @@ def preP (hE : EtSide G) : Pre G R where
       · intro z' u
         rw [smul_tmV, cP_tmV hF hL E β κ hM, cP_tmV hF hL E β κ hM, map_mul, mul_assoc]
       · intro x y hx hy
-        simp only [smul_add, map_add, AddMonoidHom.add_apply, hx, hy, mul_add]
+        simp only [smul_add, map_add (f := _), AddMonoidHom.add_apply, hx, hy, mul_add]
     · rw [cP_not hF hL E β κ hM, cP_not hF hL E β κ hM, mul_zero]
   lin' M n k v φ := by
     by_cases hM : G M
@@ -138,7 +138,7 @@ def preP (hE : EtSide G) : Pre G R where
         rw [cP_tmV hF hL E β κ hM, cP_tmV hF hL E β κ hM, gamma_lin' hF β κ hM]
         ring
       · intro x y hx hy
-        simp only [map_add, AddMonoidHom.add_apply, hx, hy, mul_add]
+        simp only [map_add (f := _), AddMonoidHom.add_apply, hx, hy, mul_add]
     · rw [cP_not hF hL E β κ hM, cP_not hF hL E β κ hM, mul_zero]
   fin := κ.fin
   top := κ.top
@@ -149,7 +149,7 @@ def preP (hE : EtSide G) : Pre G R where
     · intro z u
       rw [act_tmV, cP_tmV hF hL E β κ hM, cP_tmV hF hL E β κ hM, E.act _ hM, gamma_act hF β κ hL hM, map_mul, hF.σ_q]
     · intro x y hx hy
-      simp only [map_add, AddMonoidHom.add_apply, hx, hy]
+      simp only [map_add (f := _), AddMonoidHom.add_apply, hx, hy]
   fil M n hM r v φ hφ := by
     refine V_induction (p := fun v => R.tB ^ r * cP hF hL E β κ M n v φ ∈ R.P) v ?_ ?_ ?_
     · simp only [map_zero, AddMonoidHom.zero_apply, mul_zero]
@@ -158,7 +158,7 @@ def preP (hE : EtSide G) : Pre G R where
       rw [cP_tmV hF hL E β κ hM, mul_left_comm]
       exact R.P.mul_mem (hF.q_mem z) (gamma_fil hF β κ hM n r _ φ hφ)
     · intro x y hx hy
-      rw [map_add, AddMonoidHom.add_apply, mul_add]
+      rw [map_add (f := _), AddMonoidHom.add_apply, mul_add]
       exact R.P.add_mem hx hy
   nat M N u hu n hM hN v φ := by
     refine V_induction (p := fun v => cP hF hL E β κ M n (Model.pullV u hu n v) φ =
@@ -170,7 +170,7 @@ def preP (hE : EtSide G) : Pre G R where
       obtain ⟨a', -, ⟨m⟩⟩ := hL.refine M N u hu hM hN (a0 hL M hM) (a0 hL N hN)
       rw [gammaE_indep hF hL E β κ hM (a0 hL M hM) a', gammaE_nat hF E β κ m hM hN]
     · intro x y hx hy
-      simp only [map_add, AddMonoidHom.add_apply, hx, hy]
+      simp only [map_add (f := _), AddMonoidHom.add_apply, hx, hy]
   cup M hM := by
     intro i j x y z hxyz m m' b b' φ
     simp only [cP_toV hF hL E β κ hM (a0 hL M hM)]
@@ -239,7 +239,7 @@ theorem cP_span {M : Model l K} (hM : G M) (G' : Model l K → Prop) (S : Subrin
     exact Finset.sum_congr rfl fun i _ => by ring
   · rintro x y ⟨b, hbS, hb⟩ ⟨b', hbS', hb'⟩
     refine ⟨b + b', fun i => S.add_mem (hbS i) (hbS' i), fun φ => ?_⟩
-    rw [map_add, AddMonoidHom.add_apply, hb, hb', ← Finset.sum_add_distrib]
+    rw [map_add (f := _), AddMonoidHom.add_apply, hb, hb', ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun i _ => by rw [Pi.add_apply, add_mul]
 
 def PrepairingEtaleValue : Prop := ∀ (l : ℕ) [Fact l.Prime] (K : IntermediateField ℚ_[l] (PadicAlgCl l)) (R : Per l K)

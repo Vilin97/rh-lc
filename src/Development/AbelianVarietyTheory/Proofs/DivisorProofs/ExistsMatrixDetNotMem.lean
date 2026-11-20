@@ -57,7 +57,7 @@ theorem exists_matrix_det_notMem (I : Ideal O) [I.IsMaximal] (a b : n → Q)
     have h2 : Matrix.map (fun i j => g1 i j + c j i : Matrix n n O) (Ideal.Quotient.mk I) = g0 := by
       refine Matrix.ext fun i j => ?_
       show Ideal.Quotient.mk I (g1 i j + c j i) = g0 i j
-      rw [map_add, hg1, Ideal.Quotient.eq_zero_iff_mem.2 (hcI j i), add_zero]
+      rw [map_add (f := _), hg1, Ideal.Quotient.eq_zero_iff_mem.2 (hcI j i), add_zero]
     rw [← h2]
     exact h1.symm
   · simp only [add_smul, Finset.sum_add_distrib]
@@ -138,7 +138,7 @@ theorem exists_matrix_inv_mod (I : Ideal O) (hI : {P : Ideal O | P.IsMaximal ∧
           exact Ideal.Quotient.eq_zero_iff_mem.2 (he2 Q hQ P hP (Ne.symm hQP))
         · intro h; exact absurd hP h
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [h1, map_add, map_mul, map_sub, map_one, hsum, sub_self, zero_mul, add_zero, map_sum,
+        rw [h1, map_add (f := _), map_mul, map_sub, map_one, hsum, sub_self, zero_mul, add_zero, map_sum,
         Finset.sum_eq_single P]
       · rw [map_mul, (Ideal.Quotient.eq.2 (he1 P hP)), map_one, one_mul]
       · intro Q hQ hQP

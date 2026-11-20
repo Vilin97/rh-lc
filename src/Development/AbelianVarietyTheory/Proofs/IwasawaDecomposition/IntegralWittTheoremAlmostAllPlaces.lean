@@ -48,7 +48,7 @@ theorem exists_isUnit_sub {O : Type} [CommRing O] (s : O →+* O) (hs : ∀ z, s
     rw [← this]
     exact Finset.sum_congr rfl fun i _ => by ring
   obtain ⟨i, hi⟩ := hloc (fun i => (c i + s (c i)) * (D i * s (D i)))
-    (fun i => by simp only [map_mul, map_add, hs]; ring)
+    (fun i => by simp only [map_mul, map_add (f := _), hs]; ring)
     (by simp only [add_mul, Finset.sum_add_distrib, hc, hc']; norm_num)
   exact ⟨i, isUnit_of_mul_isUnit_left (isUnit_of_mul_isUnit_right hi)⟩
 
@@ -168,7 +168,7 @@ theorem exists_three {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
   have h1' : 1 + δ ≠ 0 := by
     intro h0
     have h2 := congrArg σ h0
-    rw [map_add, map_one, hδ, map_zero] at h2
+    rw [map_add (f := _), map_one, hδ, map_zero] at h2
     exact two_ne_zero (α := E) (by linear_combination h0 + h2)
   have a1 : (1 : E) ≠ -1 := fun h0 => two_ne_zero (α := E) (by linear_combination h0)
   have a2 : (1 : E) ≠ (1 + δ) / (1 - δ) := by
@@ -191,7 +191,7 @@ theorem exists_three {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     · simp
     · simp
     · change σ ((1 + δ) / (1 - δ)) * ((1 + δ) / (1 - δ)) = 1
-      rw [map_div₀, map_add, map_sub, map_one, hδ, sub_neg_eq_add, ← sub_eq_add_neg]
+      rw [map_div₀, map_add (f := _), map_sub, map_one, hδ, sub_neg_eq_add, ← sub_eq_add_neg]
       field_simp
 
 section Loc
@@ -251,7 +251,7 @@ theorem witt_integral : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
       mul_mem' := fun {p q} hp hq => hmul p hp q hq
       zero_mem' := fun k => by simp
       add_mem' := fun {p q} hp hq k => by
-        rw [map_add, Finsupp.add_apply]; exact add_mem (hp k) (hq k)
+        rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hp k) (hq k)
       neg_mem' := fun {p} hp k => by
         rw [map_neg, Finsupp.neg_apply]; exact neg_mem (hp k) }
   have hss := GlobalTheory.SelfDualLatticeCompare.sigR_sigR (Fv F v) h

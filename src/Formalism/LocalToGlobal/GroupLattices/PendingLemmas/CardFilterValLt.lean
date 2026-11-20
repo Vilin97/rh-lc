@@ -714,7 +714,7 @@ theorem block_good (v : X.Pl) (s : Fin (X.G.P.n' v)) (F : MvPolynomial (Fin (m�
   rw [standardMonomialSpanDomain X.G.Kf (m₀ + 1) (m₀ + 1) (nuOf (lamAt (lam v) s))] at hF
   induction hF using Submodule.span_induction with
   | zero => rw [map_zero, map_zero, zero_mul]; exact dvd_zero _
-  | add a b _ _ ha hb => rw [map_add, map_add, add_mul]; exact dvd_add ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), add_mul]; exact dvd_add ha hb
   | smul c a _ ha => rw [map_smul, map_smul, smul_mul_assoc]; exact dvd_smul' X c ha
   | mem F hF =>
     obtain ⟨K, sz, hsz, I, hshape, rfl⟩ := hF
@@ -764,7 +764,7 @@ theorem place_good (v : X.Pl) (P : MvPolynomial (Fin (X.G.P.n' v) × (Fin (m₀ 
   unfold Vsp tensorLat at hP
   induction hP using Submodule.span_induction with
   | zero => rw [map_zero, map_zero, zero_mul]; exact dvd_zero _
-  | add a b _ _ ha hb => rw [map_add, map_add, add_mul]; exact dvd_add ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), add_mul]; exact dvd_add ha hb
   | smul c a _ ha => rw [map_smul, map_smul, smul_mul_assoc]; exact dvd_smul' X c ha
   | mem P hP =>
     obtain ⟨F, hF, rfl⟩ := hP
@@ -786,7 +786,7 @@ theorem vtG_good (G : MvPolynomial (Σ v : X.Pl, Fin (X.G.P.n' v) × (Fin (m₀ 
   unfold VtG at hG
   induction hG using Submodule.span_induction with
   | zero => rw [map_zero, zero_mul]; exact dvd_zero _
-  | add a b _ _ ha hb => rw [map_add, add_mul]; exact dvd_add ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _), add_mul]; exact dvd_add ha hb
   | smul c a _ ha => rw [map_smul, smul_mul_assoc]; exact dvd_smul' X c ha
   | mem G hG =>
     obtain ⟨F, hF, rfl⟩ := hG

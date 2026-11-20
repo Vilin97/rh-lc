@@ -96,7 +96,7 @@ theorem kinj_of_form {m : ℕ} (α : Fin m → ℂˣ)
   have hc := GlobalTheory.LocGL.isCompl_fixed_twKer (π := iP (k := k) α) (isSmooth_parInd _ _) (H := KO k (Fin m)) GlobalTheory.SplitFlip.isCompact_KO
   have htw : ∀ x ∈ twKer (iP (k := k) α) (KO k (Fin m)) 1, l x = 0 := by
     intro x hx
-    refine Submodule.span_induction (p := fun x _ => l x = 0) ?_ (map_zero l) (fun a b _ _ ha hb => by rw [map_add, ha, hb, add_zero])
+    refine Submodule.span_induction (p := fun x _ => l x = 0) ?_ (map_zero l) (fun a b _ _ ha hb => by rw [map_add (f := _), ha, hb, add_zero])
       (fun c a _ ha => by rw [map_smul, ha, smul_zero]) hx
     rintro _ ⟨g, w, rfl⟩
     show l ((iP (k := k) α) (g : GL (Fin m) k) w - ((1 : KO k (Fin m) →* ℂˣ) g : ℂ) • w) = 0
@@ -108,7 +108,7 @@ theorem kinj_of_form {m : ℕ} (α : Fin m → ℂˣ)
     apply hl
     ext x
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 (hc.sup_eq_top ▸ Submodule.mem_top (x := x))
-    rw [map_add, h a ha, htw b hb, add_zero]
+    rw [map_add (f := _), h a ha, htw b hb, add_zero]
     rfl
   have hw0 : w ≠ 0 := fun h => hlw (by rw [h, map_zero])
   have e := PositivityTheory.Rg.BcB.N3.GL2Intertwining.kline α hv hw
@@ -239,7 +239,7 @@ theorem linked (a b : ℂˣ) (hL : unrChar k a = unrChar k b * absPow k 1) :
   let T0 : IndSp (points (Fin 2)) ρ →ₗ[ℂ] IndSp (points (Fin 2)) ((ofChar (torusChar fun i => unrChar k (![b, a] i))).comp
       (leviTorus k (Fin 2)).symm.toMonoidHom) :=
     { toFun := fun f => l f • g
-      map_add' := fun x y => by rw [map_add, add_smul]
+      map_add' := fun x y => by rw [map_add (f := _), add_smul]
       map_smul' := fun c x => by rw [map_smul, smul_eq_mul, mul_smul, RingHom.id_apply] }
   refine ⟨⟨T0, fun h => ?_⟩, ?_⟩
   · refine LinearMap.ext fun f => ?_

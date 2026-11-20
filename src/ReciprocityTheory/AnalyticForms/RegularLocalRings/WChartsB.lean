@@ -40,7 +40,7 @@ theorem reesChart_lift {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {
       show algebraMap S S' (c k) * _ = L _ * _
       rw [← map_mul, ← hc]; exact this.symm
     | algebraMap r => exact ⟨φ r, (hL r).symm⟩
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let F : FinalTheorems.reesChart g j →+* (algebraMap S S').range :=
     (L.comp (FinalTheorems.reesChart g j).val.toRingHom).codRestrict _ (fun x => key x.1 x.2)

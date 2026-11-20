@@ -37,7 +37,7 @@ def Ff (L : (Fin k → ℝ) →+ WO S T) (f : WO S T → ℂ) (x : WO S T) : (Fi
 
 def ellAdd (Λ : Ainf D.host.F →+ ℂ) (L : (Fin k → ℝ) →+ WO S T) (x : WO S T) : (Fin k → ℝ) →+ ℂ :=
   AddMonoidHom.mk' (fun t => Λ (symplOH S T x (L t)).1) (fun t t' => by
-    simp only [map_add, symplOH_add_right]
+    simp only [map_add (f := _), symplOH_add_right]
     exact Λ.map_add _ _)
 
 theorem continuous_ellAdd (Λ : Ainf D.host.F →+ ℂ) (hΛ : Continuous Λ) (L : (Fin k → ℝ) →+ WO S T)

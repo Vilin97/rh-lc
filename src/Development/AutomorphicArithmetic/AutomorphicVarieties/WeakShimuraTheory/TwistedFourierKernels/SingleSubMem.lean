@@ -42,7 +42,7 @@ private theorem sub_aug_mem {B Q : Type} [CommRing B] [CommGroup Q]
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
   | add x y hx hy =>
-    rw [map_add, map_add, add_sub_add_comm]
+    rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
     exact M.add_mem hx hy
   | single g b =>
     have e : MonoidAlgebra.single g b - algebraMap B (MonoidAlgebra B Q) (MonoidAlgebra.lift B B Q 1 (MonoidAlgebra.single g b)) =

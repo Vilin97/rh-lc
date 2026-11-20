@@ -137,7 +137,7 @@ private lemma list_ne (h : Slots π V m ι E A U) (hall : ∀ j, ∃ v ∈ eigIn
     let M : Submodule ℂ H :=
       { carrier := {w | w ∈ eigIn V E 1 ∧ ∀ g, A k (π (ι k g) w) = 0}
         add_mem' := fun {a b} ha hb => ⟨Submodule.add_mem _ ha.1 hb.1, fun g => by
-          rw [map_add, map_add, ha.2, hb.2, add_zero]⟩
+          rw [map_add (f := _), map_add (f := _), ha.2, hb.2, add_zero]⟩
         zero_mem' := ⟨Submodule.zero_mem _, fun g => by simp⟩
         smul_mem' := fun c a ha => ⟨Submodule.smul_mem _ c ha.1, fun g => by
           rw [map_smul, map_smul, ha.2, smul_zero]⟩ }

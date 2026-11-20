@@ -73,7 +73,7 @@ theorem inner_coVec {n : ℕ} (b : OrthonormalBasis (Fin n) ℂ (R.cV i).W) (K :
   · unfold phi
     rw [← integral_add (hI w) (hI w')]
     refine integral_congr_ae (.of_forall fun g => ?_)
-    simp only [map_add, Pi.add_apply, star_add, add_mul]
+    simp only [map_add (f := _), Pi.add_apply, star_add, add_mul]
   · unfold phi
     rw [← integral_const_mul]
     refine integral_congr_ae (.of_forall fun g => ?_)
@@ -147,7 +147,7 @@ theorem upVec_eq (hP : GlobalTheory.Published.CuspRapidDecay) (R : RealDat D A K
     rfl
   rw [e2]
   refine inner_sum_eq b (fun w => phi R i v y (kernA R i t h) ((R.cV i).ρ h w)) (fun w w' => ?_) (fun c w => ?_) w
-  · simp only [map_add, ← hin, inner_add_left]
+  · simp only [map_add (f := _), ← hin, inner_add_left]
   · simp only [map_smul, ← hin, inner_smul_left, Complex.star_def]
 
 set_option maxHeartbeats 1000000 in

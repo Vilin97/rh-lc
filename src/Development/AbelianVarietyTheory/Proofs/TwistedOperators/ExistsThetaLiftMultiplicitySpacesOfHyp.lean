@@ -110,13 +110,13 @@ theorem exists_factor_kFin_of_rapid (hdec : GlobalTheory.Published.CuspRapidDeca
       simp only [LinearMap.compr₂_apply, slice_apply, multi_apply, s1, hIs τ X hX, hL']
       exact (ha τ).skew X hX _ _
     · simp only [LinearMap.compr₂_apply, slice_apply, multi_apply, s2, s3]
-      rw [← map_add, hIt τ Y hY, map_zero]
+      rw [← map_add (f := _), hIt τ Y hY, map_zero]
   have pB : ∀ τ p y, IsLocPair M M' τ (aS τ) (aT τ) (a' τ) ((slice (multi B) τ p y).compr₂ E) := fun τ p y => by
     refine ⟨fun X hX P P' z z' => ?_, fun Y hY P z => ?_⟩
     · simp only [LinearMap.compr₂_apply, slice_apply, multi_apply, s1, hBs τ X hX]
       exact hE τ X hX _ _ (hBg _ _) (hBg _ _) (hBs τ X hX _ _ ▸ hBg _ _) (hBs τ X hX _ _ ▸ hBg _ _)
     · simp only [LinearMap.compr₂_apply, slice_apply, multi_apply, s2, s3]
-      rw [← map_add, hBt τ Y hY, map_zero]
+      rw [← map_add (f := _), hBt τ Y hY, map_zero]
   obtain ⟨⟨T, hT⟩, hs⟩ := exists_factor (fun τ (X : lieAt V τ) => sOp M M' τ (aT τ) X) _ hirr (multi I) (multi B)
     (by by_contra hn; exact h0 (span_multi I fun p y => by_contra fun h => hn ⟨p, y, h⟩))
     (fun τ X p y => by rw [multi_apply, multi_apply, ← srcOp_glue, hIs τ X X.2])
@@ -172,7 +172,7 @@ theorem exists_mult_of_rapid (hG : GlobalTheory.IndefiniteRowSideFullHecke.KType
       obtain ⟨φ, y, h0⟩ := h0
       exact h0 (by rw [← hI, e]; simp)) hIs'
     (fun τ Y hY φ y => inj (by
-      rw [map_add, hI, hI, map_zero]
+      rw [map_add (f := _), hI, hI, map_zero]
       exact hIt τ Y hY φ _ _ ((GlobalTheory.Chain.IoLift.FinTensor.kFinTensor D W S' M' τ h').2.1 _ (ha' τ) Y hY _)))
     (fun φ y => hBg _ _) (fun τ X hX φ y => hBs τ X hX _ _) fun τ Y hY φ y => by
       rw [LinearMap.compl₂_apply, LinearMap.compl₂_apply, position_tprod, inclK_update, inclK_tprod]
@@ -188,18 +188,18 @@ theorem exists_mult_of_rapid (hG : GlobalTheory.IndefiniteRowSideFullHecke.KType
     | add _ _ _ _ a b => intro c; rw [smul_add]; exact h3 _ _ (a c) (b c)
     | smul a _ _ h => intro c; rw [smul_smul]; exact h _
   have hg : ∀ x, IsCuspGrow θ V (T x) := fun x => GlobalTheory.Chain.CuspGrowSpace.isCuspGrow_of_mem_span D θ V _ (hind (fun x => T x ∈ _)
-    (fun φ y => Submodule.subset_span (hT φ y ▸ hBg _ _)) (fun x y a b => by rw [map_add]; exact add_mem a b) x)
+    (fun φ y => Submodule.subset_span (hT φ y ▸ hBg _ _)) (fun x y a b => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b) x)
   obtain ⟨μ, 𝓕, hμ, h𝓕⟩ := GlobalTheory.Ker.HypModel.exists_haar_fundDom D V
   obtain ⟨E, hE0, -⟩ := exists_embedding_skew_of_rapid hdec D θ V μ 𝓕 hθ hμ h𝓕
   obtain ⟨U, ⟨hU, hUe⟩, -⟩ := hG θ hθ V S M J χ μ 𝓕 hμ h𝓕 (T.compMultilinearMap (PiTensorProduct.tprod ℂ))
     ⟨fun u => (hg _).1, fun u => (hg _).2.1, fun u => (hg _).2.2.1, fun u => (hE0 _ (hg _)).1, fun u => (hg _).2.2.2,
       fun u => hind (fun x => ∀ k ∈ J, ∀ g, T x (g * k) = χ k * T x g) (fun φ y => hT φ y ▸ hlev _ _)
-        (fun x y a b k hk g => by simp only [map_add, Pi.add_apply, a k hk g, b k hk g, mul_add]) _,
+        (fun x y a b k hk g => by simp only [map_add (f := _), Pi.add_apply, a k hk g, b k hk g, mul_add]) _,
       fun τ k hk u w hw => by
         obtain rfl : w = kOp M τ hk (u τ) := Subtype.ext hw
         rw [LinearMap.compMultilinearMap_apply, ← position_tprod]
         refine hind (fun x => T (intersection_update_fsHerm_neg_one τ (kOp M τ hk) x) = rTr V (atTau θ V τ k) (T x)) (fun φ y => ?_)
-          (fun x y a b => by rw [map_add, map_add, map_add, a, b]; rfl) _
+          (fun x y a b => by rw [map_add (f := _), map_add (f := _), map_add (f := _), a, b]; rfl) _
         obtain ⟨φ', -, h2⟩ := hK τ φ k hk
         rw [hT, ← (h2 _).2, ← hT]
         refine congrArg T (inj ((tensorLaw D V S M).inj ?_))
@@ -209,7 +209,7 @@ theorem exists_mult_of_rapid (hG : GlobalTheory.IndefiniteRowSideFullHecke.KType
         rw [LinearMap.compMultilinearMap_apply, ← position_tprod]
         refine hind (fun x => T (intersection_update_fsHerm_neg_one τ (a τ X) x) = Rder θ V τ X (T x)) (fun φ y => ?_)
           (fun x y a b => by
-            rw [map_add, map_add, map_add, a, b, (GlobalTheory.Mem.AutSpace.linOnSm_Rder hX).add _ (hg _).2.1 _ (hg _).2.1]) _
+            rw [map_add (f := _), map_add (f := _), map_add (f := _), a, b, (GlobalTheory.Mem.AutSpace.linOnSm_Rder hX).add _ (hg _).2.1 _ (hg _).2.1]) _
         rw [← hIs' τ X hX, hT, hT, hBs τ X hX]⟩
   refine ⟨PiTensorProduct.lift U, ⟨U, Submodule.subset_span hU, rfl⟩, fun φ y => ?_⟩
   have e : PiTensorProduct.lift U ∘ₗ inclK h = T := PiTensorProduct.ext (MultilinearMap.ext fun u => by
@@ -257,7 +257,7 @@ theorem ioPair_of_rapid (D : D7) (X : ProvA) (hX : ChosenSeries X) (h3 : Formali
       beta_reduce
       rw [map_smul, Pi.smul_apply, smul_eq_mul, mul_left_comm, rTr, mul_one]
       rfl
-    | add x y hx hy => simp only [map_add, Pi.add_apply, mul_add]; exact hx.add hy
+    | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, mul_add]; exact hx.add hy
   obtain ⟨B, hB⟩ := exists_trilinear ν 𝓕 (fun g h => LinearMap.proj 0 ∘ₗ ω (g, h)) pt C hint
   replace hB : ∀ φ v F, B φ v F =
       GlobalTheory.IndefiniteRowSideFullHecke.RapidDecayLift.lift ω ν 𝓕 (pt φ) ((F : SmT M' →ₗ[ℂ] (GA D W → ℂ)) v) := hB
@@ -287,7 +287,7 @@ theorem ioPair_of_rapid (D : D7) (X : ProvA) (hX : ChosenSeries X) (h3 : Formali
       rw [hBF]
       exact ⟨L.aut _ _ (hpt φ) (hcl v), L.smooth _ _ (hpt φ) (hcl v), hcusp _ (hCle F.2) _ _ (hpt φ),
         L.growth _ _ (hpt φ) (hcl v)⟩
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   let G : PolF D W.rank V.rank →ₗ[ℂ] SmT M' →ₗ[ℂ] (SmT M × (GA D V → ℂ)) :=
     (LinearMap.prodEquiv ℂ).toLinearMap ∘ₗ It.prod BF
   have hGe : ∀ φ v, G φ v = (It φ v, BF φ v) := fun _ _ => rfl
@@ -330,7 +330,7 @@ theorem ioPair_of_rapid (D : D7) (X : ProvA) (hX : ChosenSeries X) (h3 : Formali
         congr 2
         exact funext fun z => (hS τ X hX φ z).deriv.symm
       | add x y hx hy =>
-        rw [map_add, map_add, hx, hy, (GlobalTheory.Mem.AutSpace.linOnSm_Rder hX).add _ (hBg _ _).2.1 _ (hBg _ _).2.1])
+        rw [map_add (f := _), map_add (f := _), hx, hy, (GlobalTheory.Mem.AutSpace.linOnSm_Rder hX).add _ (hBg _ _).2.1 _ (hBg _ _).2.1])
     (fun τ Y hY φ v w hw => by
       have e1 := GlobalTheory.MultGelf.rder_apply (hM F) τ v hY (v τ) w hw
       rw [Function.update_eq_self] at e1

@@ -163,7 +163,7 @@ private theorem xr_const {O S σ : Type} [CommRing O] [CommRing S] [Algebra O S]
           · exact hn t ht
         · rfl
       have hgq : g = X s * q + r := by rw [← hq, sub_add_cancel]
-      rw [hgq, map_add, map_mul]
+      rw [hgq, map_add (f := _), map_mul]
       exact I.add_mem (I.mul_mem_right _ (hF s)) hrI
   have h := key Finset.univ (f - algebraMap O (MvPowerSeries σ O) (constantCoeff f)) ?_
   · rwa [map_sub, F.commutes] at h
@@ -226,7 +226,7 @@ theorem UpperTheory.V.Ws.Po.extR :
         exact (map_zero η).symm
       · rintro y z ⟨hy1, hy2⟩ ⟨hz1, hz2⟩
         refine ⟨W.A.add_mem hy1 hz1, fun h => ?_⟩
-        rw [map_add, hy2 hy1, hz2 hz1, ← map_add]
+        rw [map_add (f := _), hy2 hy1, hz2 hz1, ← map_add (f := _)]
         rfl
     exact (key a a.2).2 a.2
   · intro x hx

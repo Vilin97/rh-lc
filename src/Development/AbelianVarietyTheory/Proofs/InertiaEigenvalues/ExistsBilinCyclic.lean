@@ -131,7 +131,7 @@ private theorem exists_nondegenerate_X_symmetric_form_quotient {k : Type} [Field
     obtain ⟨a, rfl⟩ := hsurj x
     obtain ⟨b, rfl⟩ := hsurj y
     obtain ⟨c, rfl⟩ := hsurj z
-    rw [← Submodule.Quotient.mk_add, hg, hg, hg, add_mul, map_add]
+    rw [← Submodule.Quotient.mk_add, hg, hg, hg, add_mul, map_add (f := _)]
   · intro c x y
     obtain ⟨a, rfl⟩ := hsurj x
     obtain ⟨b, rfl⟩ := hsurj y
@@ -140,7 +140,7 @@ private theorem exists_nondegenerate_X_symmetric_form_quotient {k : Type} [Field
     obtain ⟨a, rfl⟩ := hsurj x
     obtain ⟨b, rfl⟩ := hsurj y
     obtain ⟨c, rfl⟩ := hsurj z
-    rw [← Submodule.Quotient.mk_add, hg, hg, hg, mul_add, map_add]
+    rw [← Submodule.Quotient.mk_add, hg, hg, hg, mul_add, map_add (f := _)]
   · intro c x y
     obtain ⟨a, rfl⟩ := hsurj x
     obtain ⟨b, rfl⟩ := hsurj y

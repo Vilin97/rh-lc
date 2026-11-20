@@ -14,8 +14,8 @@ theorem half_tmul {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
     (a : AF F) :
     θ (fstA F (algebraMap F (AF F) (1 / 2) * a) ⊗ₜ[F] (1 : E)) = θ (fstA F a ⊗ₜ[F] (1 : E)) / 2 := by
   have h2 : algebraMap F (AF F) (1 / 2) * a + algebraMap F (AF F) (1 / 2) * a = a := by
-    rw [← add_mul, ← RingHom.map_add, add_halves, RingHom.map_one, one_mul]
-  conv_rhs => rw [← h2, map_add, TensorProduct.add_tmul, RingHom.map_add]
+    rw [← add_mul, ← RingHom.map_add (f := _), add_halves, RingHom.map_one, one_mul]
+  conv_rhs => rw [← h2, map_add (f := _), TensorProduct.add_tmul, RingHom.map_add (f := _)]
   ring
 
 theorem valTau_coe {D : D7} {θ : InfFam D} (hθ : IsInfFam θ) (τ : D.what₂.Tau) (a : AF D.host.F) :

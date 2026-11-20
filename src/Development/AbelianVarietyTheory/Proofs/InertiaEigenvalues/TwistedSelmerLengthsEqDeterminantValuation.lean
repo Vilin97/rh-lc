@@ -103,7 +103,7 @@ theorem mem_span_iff {Λ O W W' : Type} [CommRing Λ] [CommRing O] [AddCommGroup
     induction hx using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span (h1 x hx)
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a x _ hx => rw [hT]; exact Submodule.smul_mem _ _ hx
   · intro hx
     have : ∀ y ∈ Submodule.span O S', ∀ t : O, T.symm (t • y) ∈ Submodule.span Λ S := by
@@ -111,7 +111,7 @@ theorem mem_span_iff {Λ O W W' : Type} [CommRing Λ] [CommRing O] [AddCommGroup
       induction hy using Submodule.span_induction with
       | mem x hx => exact fun t => Submodule.subset_span (h2 t x hx)
       | zero => intro t; rw [smul_zero, map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => intro t; rw [smul_add, map_add]; exact add_mem (hx t) (hy t)
+      | add x y _ _ hx hy => intro t; rw [smul_add, map_add (f := _)]; exact add_mem (hx t) (hy t)
       | smul a x _ hx => intro t; rw [smul_smul]; exact hx _
     simpa using this _ hx 1
 
@@ -125,7 +125,7 @@ theorem length_eq_of_equiv {Λ O V W W' : Type} [CommRing Λ] [CommRing O] [AddC
       map_add' := fun x y => by
         apply Subtype.ext
         change T _ = T _ + T _
-        rw [← map_add, ← Submodule.coe_add, ← map_add]
+        rw [← map_add (f := _), ← Submodule.coe_add, ← map_add (f := _)]
         rfl
       map_smul' := fun t x => Subtype.ext (he t _ _ rfl) }
   refine (LinearEquiv.ofBijective f ⟨fun x y hxy => ?_, fun y => ?_⟩).length_eq.symm
@@ -250,7 +250,7 @@ theorem le_bk (hψ : ∀ σ ∈ DecV N v, ψ σ = 1) :
       beta_reduce
       rw [GlobalTheory.BKIntegralToRational.cocycle_of_crys _ _ hf g h j]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [← Submodule.mkQ_apply, map_add, map_sum, map_mul, add_div, Finset.sum_div, mul_div_assoc,
+        simp only [← Submodule.mkQ_apply, map_add (f := _), map_sum, map_mul, add_div, Finset.sum_div, mul_div_assoc,
         ← LinearMap.map_smul, Algebra.smul_def]⟩
   have hzz : z = x • z' := by
     apply Subtype.ext
@@ -304,7 +304,7 @@ theorem lamChar_toLam (F : MvPolynomial ι (X.O0 i)) :
   classical
   induction F using MvPolynomial.induction_on with
   | C a => rw [MvPolynomial.algHom_C, lamChar_algebraMap, MvPolynomial.eval₂_C]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, MvPolynomial.eval₂_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, MvPolynomial.eval₂_add]
   | mul_X p q hp =>
     rw [map_mul, map_mul, hp, MvPolynomial.eval₂_mul, MvPolynomial.eval₂_X, toLam, MvPolynomial.aeval_X, map_sub,
       map_one, lamChar_of]

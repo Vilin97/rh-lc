@@ -152,7 +152,7 @@ theorem gysin : ∀ (k : Type) [CommRing k] (B Y : Scheme.{0}) [IsIntegral B] [I
       simp only [aeval_C, MvPolynomial.algebraMap_eq, evalF_C, pullF]
       rw [(pl.2 _ 1 1).2.2.1, pl.1]
     | add P Q hP hQ =>
-      rw [map_add, evalF_add, evalF_add, hP, hQ]
+      rw [map_add (f := _), evalF_add, evalF_add, hP, hQ]
       simp only [pullF]
       rw [(pl.2 0 _ _).1]
     | mul_X P i hP =>

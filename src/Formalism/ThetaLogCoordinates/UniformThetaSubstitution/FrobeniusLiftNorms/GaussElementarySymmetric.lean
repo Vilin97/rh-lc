@@ -68,7 +68,7 @@ lemma eF_fin_succ {g : ℕ} (x : Fin (g + 1) → K) (l : ℕ) :
       (1 + PowerSeries.C (x (Fin.last g)) * PowerSeries.X) := by
     unfold genE
     rw [Fin.prod_univ_castSucc]
-  rw [← coeff_genE, hg, mul_add, mul_one, map_add,
+  rw [← coeff_genE, hg, mul_add, mul_one, map_add (f := _),
     show genE (fun i : Fin g => x i.castSucc) * (PowerSeries.C (x (Fin.last g)) * PowerSeries.X) =
       PowerSeries.C (x (Fin.last g)) * genE (fun i : Fin g => x i.castSucc) * PowerSeries.X by ring,
     PowerSeries.coeff_succ_mul_X, PowerSeries.coeff_C_mul, coeff_genE, coeff_genE]

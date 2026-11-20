@@ -204,7 +204,7 @@ theorem canTh_mem_Sec : (fun v => canTh τ a b (φ v)) ∈ (torus hs hp φ hφ a
   intro γ hγ v
   obtain ⟨m, n, h⟩ := (mem_lat_torus hs hp φ hφ a b γ).1 hγ
   beta_reduce
-  rw [map_add, h, canTh_add_period hs hp a b m n rfl, torus_ka hs hp φ hφ a b h, hφ, hφ, h]
+  rw [map_add (f := _), h, canTh_add_period hs hp a b m n rfl, torus_ka hs hp φ hφ a b h, hφ, hφ, h]
   simp only [Nat.cast_one, one_mul]
   ring_nf
 

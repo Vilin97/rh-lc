@@ -87,14 +87,14 @@ theorem val_sub_le_of_resS {F E : Type} [Field F] [NumberField F] [Field E] [Num
     rw [show P.valuation E (t : E) = P.intValuation t from HeightOneSpectrum.valuation_of_algebraMap P t]
     simpa using this
   | zero => rw [map_zero, map_zero]; exact zero_le
-  | add x y _ _ hx hy => rw [map_add]; exact Valuation.map_add_le _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Valuation.map_add_le _ hx hy
   | smul r x _ hx =>
     rw [smul_eq_mul, map_mul, map_mul]
     exact (mul_le_mul' (h1 r) hx).trans (one_mul _).le
 
 theorem map_mix {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (e a : A) :
     f (e * a + (1 - e)) = f e * f a + (1 - f e) := by
-  rw [map_add, map_mul, map_sub, map_one]
+  rw [map_add (f := _), map_mul, map_sub, map_one]
 
 theorem map_finset_sum {A B ι : Type} [CommRing A] [CommRing B] (f : A →+* B) (s : Finset ι) (g : ι → A) :
     f (∑ i ∈ s, g i) = ∑ i ∈ s, f (g i) := map_sum f g s

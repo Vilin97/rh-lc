@@ -14,7 +14,7 @@ theorem filt_mul_filt_le (σ R : Type) [CommRing R] (I : Ideal R) (j k : ℕ) :
   rw [MvPowerSeries.coeff_mul]
   refine Ideal.sum_mem _ fun p hp => ?_
   have hα : p.1 + p.2 = α := Finset.HasAntidiagonal.mem_antidiagonal.1 hp
-  have hd : α.degree = p.1.degree + p.2.degree := by rw [← hα, map_add]
+  have hd : α.degree = p.1.degree + p.2.degree := by rw [← hα, map_add (f := _)]
   have h := Ideal.mul_mem_mul (hF p.1) (hG p.2)
   rw [← pow_add] at h
   exact Ideal.pow_le_pow_right (by omega) h

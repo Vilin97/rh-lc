@@ -110,12 +110,12 @@ theorem UpperTheory.V.ZK.sCoc : UpperTheory.V.ZK.SCoc := by
   · rintro _ ⟨z, rfl⟩
     induction z using Finsupp.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb, add_zero]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, add_zero]
     | single g c =>
       have := F_coc u w (fun a b c => by simp only [hu]; exact_mod_cast congrArg (Int.cast : ℤ → ZMod q) (hc a b c))
         (fun a b => by simp [hw]) _ g
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [bd, Finsupp.linearCombination_single, map_smul, map_add, map_sum, one_smul, smul_eq_mul, one_mul]
+        simp only [bd, Finsupp.linearCombination_single, map_smul, map_add (f := _), map_sum, one_smul, smul_eq_mul, one_mul]
       exact mul_eq_zero_of_right _ this
   · have key : ∑ j : ZMod q, u (chi q ζ hζ.pow_eq_one x (Multiplicative.ofAdd j))
         (chi q ζ hζ.pow_eq_one x (Multiplicative.ofAdd 1)) = x := by

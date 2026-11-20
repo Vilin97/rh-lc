@@ -177,11 +177,11 @@ theorem s1T [CharZero K] (hfg : (⊤ : IntermediateField K Ω).FG) (htr : Algebr
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | tmul k y =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add a b ha hb => rw [TensorProduct.tmul_add, map_add]; exact add_mem ha hb
+      | add a b ha hb => rw [TensorProduct.tmul_add, map_add (f := _)]; exact add_mem ha hb
       | tmul l ω =>
         have he : k ⊗ₜ[Kl] (l ⊗ₜ[K] ω) =
             algebraMap K' (TZ K Ω Kl K') (k * algebraMap Kl K' l) * fΩ ω := by

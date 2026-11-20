@@ -45,7 +45,7 @@ private theorem coeff_killCompl_comapDomain {S : Type*} (U : Set S) (P : MvPolyn
     · rw [killCompl_monomial_eq_zero_of_not_subset _ _ hn, coeff_zero, coeff_monomial, if_neg]
       rintro rfl
       exact hn hm
-  | add P Q hP hQ => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hP, hQ]
+  | add P Q hP hQ => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hP, hQ]
 
 theorem coeff_eq_zero_of_aeval_eq_zero {S B : Type*} [CommRing B] [Algebra ℚ B] (U : Set S)
     (φ : S → B) (hind : AlgebraicIndependent ℚ (fun Δ : U => φ Δ)) (h0 : ∀ Δ ∉ U, φ Δ = 0)
@@ -100,7 +100,7 @@ theorem separates_of_shuffle_count : ∀ (I S : Type 1) (A : Type) [DecidableEq 
       simp only [eq_intCast, Int.cast_mul, Int.cast_natCast]
       congr
     | add P Q hP hQ =>
-      simp only [map_add, Finsupp.add_apply, hP, hQ, Int.cast_add]
+      simp only [map_add (f := _), Finsupp.add_apply, hP, hQ, Int.cast_add]
   have K2 : ∀ m : S →₀ ℕ, (∃ Δ ∈ m.support, Δ ∉ U) →
       ∀ x, Ψ.symm (MvPolynomial.monomial m 1) x ≠ 0 → ∀ w, M x w = 0 := by
     rintro m ⟨Δ, hΔ, hΔU⟩ x hx w

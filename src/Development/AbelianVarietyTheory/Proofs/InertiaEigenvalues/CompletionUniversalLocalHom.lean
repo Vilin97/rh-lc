@@ -93,10 +93,10 @@ theorem exists_levHom (hφ : IsCplAt q φ) (hψ : (maximalIdeal S').comap ψ = q
     refine val_unique_of_pair hψ (hf (x + y)) (a := a1 * b2 + a2 * b1) hb ?_ ?_
     · have : φ (b1 * b2) * (x + y) - φ (a1 * b2 + a2 * b1) =
           φ b2 * (φ b1 * x - φ a1) + φ b1 * (φ b2 * y - φ a2) := by
-        simp only [map_mul, map_add]; ring
+        simp only [map_mul, map_add (f := _)]; ring
       rw [this]
       exact Ideal.add_mem _ (Ideal.mul_mem_left _ _ h1) (Ideal.mul_mem_left _ _ h2)
-    · simp only [map_mul, map_add]
+    · simp only [map_mul, map_add (f := _)]
       rw [← hf x a1 b1 hb1 h1, ← hf y a2 b2 hb2 h2]; ring
 
 end GlobalTheory.Pat.CplMap

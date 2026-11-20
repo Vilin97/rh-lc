@@ -60,7 +60,7 @@ theorem torusEndOf_pow {S : Scheme.{0}} {X X' : Type} [AddCommGroup X] [AddCommG
     induction y using Pi.single_induction with
     | zero => rw [map_zero, map_zero, charUnit_zero, map_one]
     | add u v hu hv =>
-      rw [map_add, map_add, SplitTorusHom.charUnit_add, SplitTorusHom.charUnit_add, map_mul, hu, hv]
+      rw [map_add (f := _), map_add (f := _), SplitTorusHom.charUnit_add, SplitTorusHom.charUnit_add, map_mul, hu, hv]
     | single i χ =>
       have e : h' (xe.symm (Pi.single i χ)) = xe.symm (Pi.single i (h χ)) := by
         apply xe.injective

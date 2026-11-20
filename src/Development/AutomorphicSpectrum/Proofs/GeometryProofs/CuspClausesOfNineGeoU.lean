@@ -71,8 +71,8 @@ theorem ChartVal.add {s s' : Ω} {v v' : L} (h : ChartVal y z c s v) (h' : Chart
   refine ⟨e + e', G * GenOnFibres.cmon c e' + GenOnFibres.cmon c e * G',
     GenOnFibres.homog_add (GenOnFibres.homog_mul hG (GenOnFibres.homog_cmon c e'))
       (GenOnFibres.homog_mul (GenOnFibres.homog_cmon c e) hG'), ?_, ?_⟩
-  · simp only [GenOnFibres.cmon_add, map_add, map_mul, h1, h1']; ring
-  · simp only [GenOnFibres.cmon_add, map_add, map_mul, h2, h2']; ring
+  · simp only [GenOnFibres.cmon_add, map_add (f := _), map_mul, h1, h1']; ring
+  · simp only [GenOnFibres.cmon_add, map_add (f := _), map_mul, h2, h2']; ring
 
 theorem ChartVal.mul {s s' : Ω} {v v' : L} (h : ChartVal y z c s v) (h' : ChartVal y z c s' v') :
     ChartVal y z c (s * s') (v * v') := by

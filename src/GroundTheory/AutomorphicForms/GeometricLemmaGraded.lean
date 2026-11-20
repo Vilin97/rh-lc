@@ -177,10 +177,10 @@ def gradedJacquetMap :
   toFun x := cellJacquetMap γ w σ hYo hCY
     (Function.surjInv (jacquetSupported_surjective σ Y) x)
   map_add' x y := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     apply cellJacquetMap_eq_of_jacquetSupported_eq σ hYo hCY hYQ
     have hs := jacquetSupported_surjective (γ := γ) σ Y
-    rw [map_add, Function.surjInv_eq hs x, Function.surjInv_eq hs y, Function.surjInv_eq hs (x + y)]
+    rw [map_add (f := _), Function.surjInv_eq hs x, Function.surjInv_eq hs y, Function.surjInv_eq hs (x + y)]
   map_smul' c x := by
     rw [RingHom.id_apply, ← map_smul]
     apply cellJacquetMap_eq_of_jacquetSupported_eq σ hYo hCY hYQ

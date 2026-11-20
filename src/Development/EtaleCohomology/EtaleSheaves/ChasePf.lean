@@ -194,6 +194,6 @@ theorem Chase_of : DiagramChase₂ := by
       simp [Scheme.Hom.resLE_comp_ι_assoc, Cone.w]), hw5,
       pp_comp (Iso.hom_inv_id _), pp_id rfl]
   refine ⟨k6, δ _ _ m w6 + pull _ (sch.map (D.map h4)) _ _ xk, ?_⟩
-  rw [map_add, ← hn, hpb, hw, pp_comp (c.w h4), hx', sub_add_cancel]
+  rw [map_add (f := _), ← hn, hpb, hw, pp_comp (c.w h4), hx', sub_add_cancel]
 
 end LateralTheory.E.ChasePf

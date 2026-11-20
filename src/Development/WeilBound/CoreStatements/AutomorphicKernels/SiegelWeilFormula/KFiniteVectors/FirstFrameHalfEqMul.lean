@@ -15,7 +15,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 variable {d : SD σ}
 
 theorem T_add (Φ Ψ : d.Fn) (X : Mx F E d.m d.n) : d.T (Φ + Ψ) X = d.T Φ X + d.T Ψ X := by
-  simp only [SD.T, ← map_add]
+  simp only [SD.T, ← map_add (f := _)]
   congr 1
   funext z
   exact mul_add _ _ _
@@ -92,7 +92,7 @@ theorem cw_add_smul (w : InfinitePlace F) (X Z : Mx F E d.m d.n) (t : ℝ) :
     d.cw w (X + realAd F t • Z) = d.cw w X + (t : ℂ) • d.cw w Z := by
   ext i j
   show piInf (d.B.emb w) ((X + realAd F t • Z) i j) = piInf (d.B.emb w) (X i j) + (t : ℂ) * piInf (d.B.emb w) (Z i j)
-  rw [Matrix.add_apply, Matrix.smul_apply, map_add, GlobalTheory.CompanionTheory.RealAdeleComponent.piInf_realAd_smul]
+  rw [Matrix.add_apply, Matrix.smul_apply, map_add (f := _), GlobalTheory.CompanionTheory.RealAdeleComponent.piInf_realAd_smul]
 
 theorem snd_add_realAd (t : ℝ) (a b : AF F) : (a + realAd F t * b).2 = a.2 := by
   show a.2 + (realAd F t).2 * b.2 = a.2
@@ -101,7 +101,7 @@ theorem snd_add_realAd (t : ℝ) (a b : AF F) : (a + realAd F t * b).2 = a.2 := 
 theorem crd_add_smul_snd (X Z : Mx F E d.m d.n) (t : ℝ) (k : Fin d.m × Fin d.n × Fin 2) :
     (d.crd (X + realAd F t • Z) k).2 = (d.crd X k).2 := by
   have e : d.crd (X + realAd F t • Z) k = d.crd X k + realAd F t * d.crd Z k := by
-    simp only [SD.crd, Matrix.add_apply, Matrix.smul_apply, map_add, map_smul, Finsupp.add_apply, Finsupp.smul_apply,
+    simp only [SD.crd, Matrix.add_apply, Matrix.smul_apply, map_add (f := _), map_smul, Finsupp.add_apply, Finsupp.smul_apply,
       smul_eq_mul]
   rw [e, snd_add_realAd]
 
@@ -206,7 +206,7 @@ theorem T_D_vac (R : RD d) (g : (Fin d.m × Fin d.n × Fin 2 → Af F) → ℂ) 
   have hsplitD : Box.D (d.dd.e u) Φ = Box.D (d.dd.e ((W.toCols₁ * tAᵀ) * (dg d)ᵀ)) Φ +
       Box.D (d.dd.e (W.toCols₂ * (b2 d)ᵀ)) Φ := by
     conv_lhs => rw [hs]
-    rw [map_add, Box.D_add_left]
+    rw [map_add (f := _), Box.D_add_left]
   rw [hsplitD, T_add, T_D_dg hΦ h1, hT]
   have hder := theta_derivative_second_frame hΦ h2 X
   rw [hT] at hder

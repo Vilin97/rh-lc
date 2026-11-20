@@ -11,7 +11,7 @@ private theorem cas_inter {E : Type} [Field E] [NumberField E] {a n : ℕ} (e : 
     (h : ∀ X m, f (L X m) = L' X (f m)) (m : M) :
     f (cas (shift L r) e m) = cas (shift L' r) e (f m) := by
   have h' : ∀ X m, f (shift L r X m) = shift L' r X (f m) := fun X m => by
-    simp only [shift_apply, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add, h,
+    simp only [shift_apply, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add (f := _), h,
       LinearMap.map_smul_of_tower]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [cas, LinearMap.sum_apply, LinearMap.sub_apply, Module.End.mul_apply, map_sum, map_sub, h']
@@ -33,7 +33,7 @@ theorem UpperTheory.V.Lit.Bor.casTens :
     ((Module.End.lTensorAlgHom ℂ (Fin Ξ.d → ℂ) π.V).comp
       (Matrix.toLinAlgEquiv' : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ ≃ₐ[ℂ] Module.End ℂ (Fin Ξ.d → ℂ)).toAlgHom)
     fun X => by
-      rw [shift_apply, shift_apply, map_add, ← algebraMap_smul ℂ _ (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ), map_smul, map_one]
+      rw [shift_apply, shift_apply, map_add (f := _), ← algebraMap_smul ℂ _ (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ), map_smul, map_one]
       rfl
   rw [h₂, map_smul, map_one] at hB
   have hπ : ∀ φ : π.V, cas (A := Module.End ℂ π.V) (shift (lieOp π) r) e φ = c₁ • φ := fun φ =>
@@ -41,7 +41,7 @@ theorem UpperTheory.V.Lit.Bor.casTens :
   have hA : ∀ m, cas (A := Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ))) (shift (lieA π Ξ) r) e m = c₁ • m := fun m => by
     induction m using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | tmul φ v =>
       have h := cas_inter e (lieOp π) (lieA π Ξ) ((TensorProduct.mk ℂ π.V (Fin Ξ.d → ℂ)).flip v) r
         (fun _ _ => rfl) φ

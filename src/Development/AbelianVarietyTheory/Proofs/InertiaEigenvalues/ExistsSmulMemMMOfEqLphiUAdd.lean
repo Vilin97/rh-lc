@@ -20,7 +20,7 @@ private lemma coeff_eq_add_of_X_pow_succ_dvd_sub {f s g : K⟦X⟧} {c : K} {n :
     (h : (X : K⟦X⟧) ^ (n + 1) ∣ f - (s + c • g)) :
     coeff n f = coeff n s + c * coeff n g := by
   have h0 := (PowerSeries.X_pow_dvd_iff.mp h) n (Nat.lt_succ_self n)
-  rw [map_sub, map_add, PowerSeries.coeff_smul, smul_eq_mul, sub_eq_zero] at h0
+  rw [map_sub, map_add (f := _), PowerSeries.coeff_smul, smul_eq_mul, sub_eq_zero] at h0
   exact h0
 
 open PowerSeries Filter Topology Matrix in

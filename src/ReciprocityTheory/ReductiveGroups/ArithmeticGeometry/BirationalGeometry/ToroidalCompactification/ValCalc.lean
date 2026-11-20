@@ -32,7 +32,7 @@ theorem gs_mul (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) (a b : Γ(X, 
 
 theorem gs_add (f : Y ⟶ X) (y : Y) (U : X.Opens) (h : f y ∈ U) (a b : Γ(X, U)) :
     gs f y U (a + b) = gs f y U a + gs f y U b := by
-  simp only [gs_eq f y U h, map_add]
+  simp only [gs_eq f y U h, map_add (f := _)]
 
 theorem gs_res (f : Y ⟶ X) (y : Y) {U V : X.Opens} (hle : V ≤ U) (h : f y ∈ V) (a : Γ(X, U)) :
     gs f y V ((X.presheaf.map (homOfLE hle).op).hom a) = gs f y U a := by

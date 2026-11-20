@@ -48,7 +48,7 @@ theorem subring_eq_top_of_weight_units : ∀ (R : Type) [CommRing R] [IsDomain R
   obtain ⟨x, rfl⟩ := hbij.2 f
   induction x using AddMonoidAlgebra.induction_linear with
   | zero => rw [map_zero]; exact S.zero_mem
-  | add a b ha hb => rw [map_add]; exact S.add_mem ha hb
+  | add a b ha hb => rw [map_add (f := _)]; exact S.add_mem ha hb
   | single χ c =>
     change AddMonoidAlgebra.liftNC _ _ _ ∈ S
     rw [AddMonoidAlgebra.liftNC_single]

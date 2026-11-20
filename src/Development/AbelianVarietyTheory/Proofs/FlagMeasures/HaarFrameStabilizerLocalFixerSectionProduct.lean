@@ -226,7 +226,7 @@ theorem mul_inv_mem_frameFixer_of_agree_on_frame {g k : HA R σ J} (hk : k ∈ S
     induction hw using Submodule.span_induction with
     | mem y hy => obtain ⟨a, _, rfl⟩ := hy; exact h a
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     | smul c x _ hx => rw [map_smul, map_smul, hx]
   intro b
   obtain ⟨w, hw, hwk⟩ := uni_le_map (Y := F0 P) (g := k) hk Set.univ (fun _ _ _ _ => Set.mem_univ _)

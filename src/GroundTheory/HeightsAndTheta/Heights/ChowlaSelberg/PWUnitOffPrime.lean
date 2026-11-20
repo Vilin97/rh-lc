@@ -63,7 +63,7 @@ theorem le_and_relIndex (L : PeriodPair) (hL : latticeEnd L = cmRing σ) (𝔭 :
   let f : 𝓞 K →+ ℂ :=
     { toFun := fun x ↦ c * σ ((algebraMap (𝓞 K) K a)⁻¹ * algebraMap (𝓞 K) K x)
       map_zero' := by simp
-      map_add' := fun x y ↦ by simp only [map_add, mul_add] }
+      map_add' := fun x y ↦ by simp only [map_add (f := _), mul_add] }
   have hf : Function.Injective f := by
     intro x y hxy
     have hxy' : c * σ ((algebraMap (𝓞 K) K a)⁻¹ * algebraMap (𝓞 K) K x) =

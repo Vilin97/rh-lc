@@ -108,7 +108,7 @@ theorem finite_level_index : FinK := by
       rw [← hu b]
       abel
     rw [hxa, hxb] at hG
-    simp only [map_add, LinearMap.add_apply] at hG
+    simp only [map_add (f := _), LinearMap.add_apply] at hG
     have h1 : (VS D).hT (∑ c, Δ c a • D.sp.hypE c) (∑ c, Δ c b • D.sp.hypE c) = 0 := by
       rw [hT_sum_left]
       refine Finset.sum_eq_zero fun c _ => ?_

@@ -63,7 +63,7 @@ theorem pderiv_prim (ω : τ → MvPowerSeries τ k)
       Finset.sum_ite_eq', if_pos (Finset.mem_univ _), degree_eq_sum]
     push_cast; ring
   have hdeg : ((n + Finsupp.single v 1).degree : ℚ) = (n.degree : ℚ) + 1 := by
-    rw [map_add, Finsupp.degree_single]; push_cast; ring
+    rw [map_add (f := _), Finsupp.degree_single]; push_cast; ring
   rw [mul_comm, ← mul_assoc, mul_comm _ (algebraMap ℚ k _), mul_assoc, hsum, hdeg, ← mul_assoc]
   have : algebraMap ℚ k (((n.degree : ℚ) + 1)⁻¹) * ((n.degree : k) + 1) = 1 := by
     rw [show ((n.degree : k) + 1) = algebraMap ℚ k ((n.degree : ℚ) + 1) by simp, ← map_mul,

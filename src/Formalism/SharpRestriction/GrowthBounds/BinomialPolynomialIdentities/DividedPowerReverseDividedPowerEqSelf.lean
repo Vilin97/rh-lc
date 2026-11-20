@@ -165,7 +165,7 @@ theorem deltaGenerated_of_extremalVector_of_dualInjective (hExt : LowestWeightEx
   have hy0D : y0 ∈ Delta (O := O) E v := lattice_weight_components_mem E _ hst (lowWt mu) F hlF y0 f hy0 hf (he ▸ hyD)
   have hv0 : v' y0 = 1 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [he, map_add, map_sum, Finset.sum_eq_zero, add_zero] at hy1
+      rw [he, map_add (f := _), map_sum, Finset.sum_eq_zero, add_zero] at hy1
     · exact hy1
     · intro nu hnu
       exact hL2 nu (fun e => hlF (e ▸ hnu)) (f nu) (hf nu hnu)
@@ -238,7 +238,7 @@ theorem integral_lattice_bidual : LatticeBiduality := by
       | add y z _ _ hy hz =>
         obtain ⟨a, ha⟩ := hy
         obtain ⟨c, hc⟩ := hz
-        exact ⟨a + c, by rw [map_add, map_add, ha, hc]⟩
+        exact ⟨a + c, by rw [map_add (f := _), map_add (f := _), ha, hc]⟩
       | smul a y _ hy =>
         obtain ⟨c, hc⟩ := hy
         exact ⟨a * c, by rw [← algebraMap_smul (KK O) a y, map_smul, map_mul, hc, smul_eq_mul]⟩

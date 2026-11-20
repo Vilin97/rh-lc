@@ -17,7 +17,7 @@ theorem DerivSpanTrdeg.derivation_eq_zero_of_isSeparable {k K M : Type*} [Field 
     induction hx using IntermediateField.adjoin_induction with
     | mem x hx => exact hs x hx
     | algebraMap x => exact D.map_algebraMap x
-    | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | inv x _ hx => rw [Derivation.leibniz_inv, hx, smul_zero]
     | mul x y _ _ hx hy => rw [Derivation.leibniz, hx, hy, smul_zero, smul_zero, add_zero]
   ext α

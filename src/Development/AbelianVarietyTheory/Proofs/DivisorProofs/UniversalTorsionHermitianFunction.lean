@@ -124,7 +124,7 @@ theorem univTorsion_hermFun : GlobalTheory.Published.BismutKoehlerTorsion → Na
     · have him := (hT s hs).2.2.1
       simp only [hF, if_true]
       exact Complex.ext (by simp) (by simp [him])
-    · simp only [map_add, map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul]
+    · simp only [map_add (f := _), map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul]
       simp only [Finset.mul_sum, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => ?_
       ring

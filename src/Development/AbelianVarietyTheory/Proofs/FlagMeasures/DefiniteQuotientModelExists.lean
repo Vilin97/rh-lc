@@ -20,7 +20,7 @@ def frPerp (F : FlagD H r) : Submodule K V where
   add_mem' := by
     intro x y hx hy a
     simp only [Set.mem_setOf_eq] at hx hy ⊢
-    rw [map_add, hx a, hy a, add_zero]
+    rw [map_add (f := _), hx a, hy a, add_zero]
   zero_mem' := by
     intro a
     simp

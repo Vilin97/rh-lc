@@ -41,14 +41,14 @@ theorem frob_act (g : G) (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [φVB, actVB, PD.φ_comm]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem iota_act (g : G) (x : V ⊗[Qp] B) :
     ιV PD (LL := LL) (V := V) (actVB PD ρ g x) = actVdR PD ρ g (ιV PD (LL := LL) (V := V) x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [ιV, actVB, actVdR, PD.ι_comm]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem frob_tmul_one (v : V) :
     φVB PD (LL := LL) (V := V) (v ⊗ₜ[Qp] (1 : B)) = v ⊗ₜ[Qp] (1 : B) := by
@@ -74,7 +74,7 @@ theorem filV_succ_le (a : ℤ) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => exact ⟨v ⊗ₜ ⟨b.1, PD.Fil_anti a b.2⟩, by simp⟩
-  | add y z hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 theorem filV_antitone : Antitone (FilV PD (LL := LL) (V := V)) :=
   antitone_int_of_succ_le (filV_succ_le PD)

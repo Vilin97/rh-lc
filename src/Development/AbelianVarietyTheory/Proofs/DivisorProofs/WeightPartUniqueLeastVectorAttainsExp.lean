@@ -161,7 +161,7 @@ private theorem mk_eq_mk_symm_of_mk_addEquiv_eq {X Y : Type} [AddCommGroup X] [A
   obtain ⟨β, hβ⟩ := h
   refine ⟨e.symm β, ?_⟩
   simp only [nsmulAddMonoidHom_apply] at hβ ⊢
-  rw [← map_nsmul, hβ, map_add, map_neg, AddEquiv.symm_apply_apply]
+  rw [← map_nsmul, hβ, map_add (f := _), map_neg, AddEquiv.symm_apply_apply]
 
 private theorem ker_eq_of_addEquiv_compat {G X Y : Type} [AddCommGroup G] [AddCommGroup X] [AddCommGroup Y] (k : ℕ)
     (f : G →+ ModN k X) (f' : G →+ ModN k Y) (e : X ≃+ Y)
@@ -214,7 +214,7 @@ theorem main : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (
 
   have hmin' : ∀ χ : u.D.toPre.X, D.m • χ ≠ 0 → l.q ν' < l.q (ν' + D.m • χ) := by
     intro χ hχ
-    rw [hq', hq', map_add, map_nsmul, hν', AddEquiv.apply_symm_apply]
+    rw [hq', hq', map_add (f := _), map_nsmul, hν', AddEquiv.apply_symm_apply]
     have hne : ν + D.m • j χ ≠ ν := by
       intro he
       apply hχ

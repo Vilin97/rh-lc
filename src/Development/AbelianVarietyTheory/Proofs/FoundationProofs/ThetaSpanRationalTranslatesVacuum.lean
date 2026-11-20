@@ -84,7 +84,7 @@ theorem mem_span_translates (H : (∀ x y f, W x (W y f) = c x y • W (x + y) f
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [G, map_sum, Finset.smul_sum]
     refine Finset.sum_congr rfl fun q _ => ?_
-    rw [comm, H1 (s a), ← map_add, add_neg_cancel, map_zero, W0, map_smul, smul_smul, smul_smul, cs a (rep q),
+    rw [comm, H1 (s a), ← map_add (f := _), add_neg_cancel, map_zero, W0, map_smul, smul_smul, smul_smul, cs a (rep q),
       ← cs (rep q) a]
     congr 1
     have := H4 (s a) (s (-a))

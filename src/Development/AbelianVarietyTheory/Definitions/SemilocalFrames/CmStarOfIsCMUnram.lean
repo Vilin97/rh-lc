@@ -43,7 +43,7 @@ theorem orth_span (h : V →ₗ⋆[E] V →ₗ[E] E) {M : Submodule (𝓞 E) V} 
   induction hy using Submodule.span_induction with
   | mem y hy => exact hx y hy
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+  | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
   | smul c a _ ha => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, ha, smul_zero]
 
 omit [NumberField E] in

@@ -61,7 +61,7 @@ def fwd : (M →ₗ[OO] EpsDual O OO Q ε) →ₗ[O] (epsImg O (M := M) ε →�
 def bwdInner (ψ : epsImg O (M := M) ε →ₗ[O] Q) (m : M) : EpsDual O OO Q ε where
   toFun x := ψ ⟨x.1 • m, smul_mem_epsImg x m⟩
   map_add' x z := by
-    rw [← map_add]; congr 1; apply Subtype.ext
+    rw [← map_add (f := _)]; congr 1; apply Subtype.ext
     show (x.1 + z.1) • m = x.1 • m + z.1 • m
     rw [add_smul]
   map_smul' c x := by
@@ -75,7 +75,7 @@ def bwd : (epsImg O (M := M) ε →ₗ[O] Q) →ₗ[O] (M →ₗ[OO] EpsDual O O
       map_add' := fun m m' => by
         apply LinearMap.ext; intro x
         show ψ ⟨x.1 • (m + m'), _⟩ = ψ ⟨x.1 • m, _⟩ + ψ ⟨x.1 • m', _⟩
-        rw [← map_add]; congr 1; apply Subtype.ext
+        rw [← map_add (f := _)]; congr 1; apply Subtype.ext
         show x.1 • (m + m') = x.1 • m + x.1 • m'
         rw [smul_add]
       map_smul' := fun a m => by

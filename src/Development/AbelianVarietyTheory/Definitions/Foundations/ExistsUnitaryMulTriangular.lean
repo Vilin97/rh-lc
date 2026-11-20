@@ -56,14 +56,14 @@ theorem evalAt_map (φ : R →+* S) (y : Matrix (Fin N) (Fin N) R) (f : Pol N R)
     evalAt (y.map φ) (map φ f) = φ (evalAt y f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [evalAt]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp => simp only [map_mul, hp, map_X, evalAt_X, Matrix.map_apply]
 
 theorem map_colAct (φ : R →+* S) (b : Matrix (Fin N) (Fin N) R) (f : Pol N R) :
     map φ (colAct b f) = colAct (b.map φ) (map φ f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [colAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, map_mul, hp]
     simp [colAct]
@@ -124,7 +124,7 @@ theorem colAct_of_mem [IsDomain R] {la : Fin N → ℕ} {f : Pol N R} (hf : f �
     rw [Finset.prod_comm]
     simp only [Finset.prod_pow_eq_pow_sum]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul c x _ hx => rw [map_smul, hx, smul_comm]
 
 theorem colAct_map_of_mem [IsDomain S] (φ : R →+* S) {la : Fin N → ℕ} {f : Pol N R} (hf : f ∈ nabla la R)
@@ -164,7 +164,7 @@ theorem coeff_colAct_diagonal (t : Fin N → R) (f : Pol N R) (m : Fin N × Fin 
     split_ifs with h
     · subst h; simp
     · simp
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add, mul_add]
 
 theorem mem_nabla_iff [IsDomain R] [Infinite R] {la : Fin N → ℕ} {f : Pol N R} :
     f ∈ nabla la R ↔ ∀ b : Matrix (Fin N) (Fin N) R, b.BlockTriangular id → (∀ i, b i i ≠ 0) →
@@ -209,7 +209,7 @@ theorem mem_nabla_iff [IsDomain R] [Infinite R] {la : Fin N → ℕ} {f : Pol N 
     have h2 : Formalism.GradedWeylDivisibility.colAdd R l j c = colAct (1 + Matrix.single l j c) := by
       apply MvPolynomial.algHom_ext
       intro v
-      simp only [Formalism.GradedWeylDivisibility.colAdd, colAct, aeval_X, Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib,
+      simp only [Formalism.GradedWeylDivisibility.colAdd, colAct, aeval_X, Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib,
         Matrix.one_apply, Matrix.single_apply]
       by_cases hv : v.2 = j
       · subst hv
@@ -405,7 +405,7 @@ theorem continuous_evalAt (f : Pol N ℂ) : Continuous fun y : Matrix (Fin N) (F
   induction f using MvPolynomial.induction_on with
   | C a => simpa [evalAt] using continuous_const
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p v hp =>
     simp only [map_mul, evalAt_X]
@@ -434,7 +434,7 @@ theorem conj_form (f f' : Pol N ℂ) : conj (form la f f') = form la f' f := by
   simp only [form, map_mul, ← integral_conj, map_natCast, Complex.conj_conj, mul_comm]
 
 theorem form_add_left (f₁ f₂ f' : Pol N ℂ) : form la (f₁ + f₂) f' = form la f₁ f' + form la f₂ f' := by
-  simp only [form, map_add, add_mul]
+  simp only [form, map_add (f := _), add_mul]
   rw [integral_add (integrable_mul_conj _ _) (integrable_mul_conj _ _), mul_add]
 
 theorem form_smul_left (c : ℂ) (f f' : Pol N ℂ) : form la (c • f) f' = c * form la f f' := by
@@ -442,7 +442,7 @@ theorem form_smul_left (c : ℂ) (f f' : Pol N ℂ) : form la (c • f) f' = c *
   ring
 
 theorem form_add_right (f f₁ f₂ : Pol N ℂ) : form la f (f₁ + f₂) = form la f f₁ + form la f f₂ := by
-  rw [← conj_form, form_add_left, map_add, conj_form, conj_form]
+  rw [← conj_form, form_add_left, map_add (f := _), conj_form, conj_form]
 
 theorem form_smul_right (c : ℂ) (f f' : Pol N ℂ) : form la f (c • f') = conj c * form la f f' := by
   rw [← conj_form, form_smul_left, map_mul, conj_form]
@@ -527,7 +527,7 @@ def toSpace (la : Fin N → ℕ) : nabla la ℂ ≃ₗ[ℂ] Space la := LinearEq
     rw [form_self]
     exact normSq_nonneg _
   add_left f f' g := by
-    simp only [map_add, Submodule.coe_add, form_add_right]
+    simp only [map_add (f := _), Submodule.coe_add, form_add_right]
   smul_left f g c := by
     simp only [map_smul, Submodule.coe_smul, form_smul_right]
   definite f hf := by
@@ -705,10 +705,10 @@ theorem stdLat_eq_span : stdLat la K = Submodule.span (𝓞 K) (Set.range (basis
             obtain ⟨i, rfl⟩ := hx
             exact ⟨basis la K i, Submodule.subset_span ⟨i, rfl⟩, coe_basis la K i⟩
           | zero => simp
-          | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+          | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
           | smul c x _ hx => rw [map_zsmul]; exact zsmul_mem hx c
         | zero => simp
-        | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+        | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
         | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
       rintro f hf
       obtain ⟨f', hf', h⟩ := key

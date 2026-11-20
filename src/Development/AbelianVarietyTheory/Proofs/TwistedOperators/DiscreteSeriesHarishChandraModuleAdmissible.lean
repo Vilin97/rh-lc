@@ -118,10 +118,10 @@ theorem Side.trans {pt : MvPolynomial ι ℂ → (Z → ℂ)} {κ : MvPolynomial
     simp only [LinearEquiv.trans_apply]
     constructor
     · intro e
-      rw [e, map_add, map_smul, hw]
+      rw [e, map_add (f := _), map_smul, hw]
     · intro e
       apply w.injective
-      rw [e, map_add, map_smul, hw]
+      rw [e, map_add (f := _), map_smul, hw]
   wt μ P := by
     rw [← h.wt μ P]
     simp only [LinearEquiv.trans_apply, wtSub, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,
@@ -137,7 +137,7 @@ theorem L2UnitaryRepresentationData.comp {G : Mn n} {pt : MvPolynomial ι ℂ �
   exact
   { mem := fun P => by rw [hς]; exact h.mem _
     pt_lin := fun z P Q => by
-      simp only [hς, map_add, map_smul]
+      simp only [hς, map_add (f := _), map_smul]
       exact h.pt_lin z (ς P) (ς Q)
     ip_lin := h.ip_lin
     ip_symm := h.ip_symm

@@ -78,7 +78,7 @@ theorem opWord_add (l : List (Fin n' × (Fin k × Fin k))) (f g : MvPolynomial (
     opWord l (f + g) = opWord l f + opWord l g := by
   induction l with
   | nil => rfl
-  | cons y l ih => rw [opWord_cons, opWord_cons, opWord_cons, ih, map_add, mul_add]
+  | cons y l ih => rw [opWord_cons, opWord_cons, opWord_cons, ih, map_add (f := _), mul_add]
 
 theorem opWord_smul (l : List (Fin n' × (Fin k × Fin k))) (a : K) (f : MvPolynomial (Fin n' × Fin k) K) :
     opWord l (a • f) = a • opWord l f := by

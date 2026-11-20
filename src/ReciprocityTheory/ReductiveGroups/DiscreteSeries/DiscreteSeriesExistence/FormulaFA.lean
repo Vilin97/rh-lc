@@ -429,7 +429,7 @@ theorem ffa_kmap_zero (hgap : StdGap ε lam) (hP : IsPsiFor ε lam T Ψ) (hv₀ 
       | exact ffa_Kset (by simpa [Kset, Formalism.REAL.Kset] using hg)
     apply Subtype.ext
     simp only [Submodule.coe_subtype] at h1 h2
-    rw [h2, hφ, hφ, h1, ← hk, hJdk, hB, map_add]
+    rw [h2, hφ, hφ, h1, ← hk, hJdk, hB, map_add (f := _)]
   have hK := sigLam_lowK hgap hP hv₀
   have hmap : Formalism.MainNotions.S.IsKTypeOf ε (sigLam ε Ψ v₀) (Formalism.QuantumDeterminants.lowK ε lam) ((lowKSubLam ε Ψ v₀).map φ) :=
     (isKTypeOf_map_iff φ hinj hint _ _).1 hK.1

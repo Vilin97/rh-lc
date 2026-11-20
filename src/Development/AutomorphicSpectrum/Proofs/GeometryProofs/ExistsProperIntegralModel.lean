@@ -82,7 +82,7 @@ lemma coeff_coeAddMonoidHom (y : DirectSum ℕ fun i => grading o x i) (n : ℕ)
     · rw [DirectSum.of_eq_of_ne _ _ _ (Ne.symm h), a.2 n (Ne.symm h)]
       simp
   | add a b ha hb =>
-    rw [map_add, DirectSum.add_apply]
+    rw [map_add (f := _), DirectSum.add_apply]
     simp only [AddMemClass.coe_add, Subalgebra.coe_add, Polynomial.coeff_add, ha, hb]
 
 lemma bijective_coeAddMonoidHom :
@@ -327,7 +327,7 @@ lemma adjoin_coord_eq_top :
       exact hS' (coord j) (Algebra.subset_adjoin ⟨j, rfl⟩)
     | zero => simpa using zero_mem S'
     | add a b _ _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem ha hb
     | smul r a _ ha =>
       have : Polynomial.monomial 1 (r • a) =
@@ -354,7 +354,7 @@ lemma adjoin_coord_eq_top :
         rw [this]
         exact mul_mem (ih a ha) (hV b hb)
       | add a _ b _ ha hb =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem ha hb
   rw [eq_top_iff]
   intro f _
@@ -604,7 +604,7 @@ theorem tie_of_charts (o : Type) [CommRing o] [Algebra o Ω] {κ : Type} (x : κ
         { carrier := {b | θ ⟨c, hc⟩ b * a ∈ (θ ⟨c, hc⟩).range}
           add_mem' := by
             intro b b' hb hb'
-            rw [Set.mem_setOf_eq, map_add, add_mul]
+            rw [Set.mem_setOf_eq, map_add (f := _), add_mul]
             exact add_mem hb hb'
           zero_mem' := by
             rw [Set.mem_setOf_eq, map_zero, zero_mul]

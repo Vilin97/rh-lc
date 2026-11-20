@@ -155,7 +155,7 @@ lemma biLe_mul {n0 n0' : ι →₀ ℕ} {W W' : MvPolynomial κ (MvPolynomial ι
   · rw [← hr]
     exact add_le_add hA1 hB1
   · rw [← hr, ← hq]
-    simp only [map_add]
+    simp only [map_add (f := _)]
     omega
 
 private theorem eq_zero_of_mem_support_one {R σ : Type*} [CommSemiring R] {n : σ →₀ ℕ}

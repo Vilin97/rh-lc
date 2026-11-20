@@ -100,7 +100,7 @@ def trSum : triples A K →ₐ[A] C ⧸ K ^ 2 where
   map_one' := by simp
   map_zero' := by simp
   map_add' s t := by
-    rw [← map_add]; congr 1
+    rw [← map_add (f := _)]; congr 1
     simp only [Subalgebra.coe_add, Prod.fst_add, Prod.snd_add]; ring
   map_mul' := by
     rintro ⟨⟨a, b, c⟩, h1, h2⟩ ⟨⟨a', b', c'⟩, h3, h4⟩

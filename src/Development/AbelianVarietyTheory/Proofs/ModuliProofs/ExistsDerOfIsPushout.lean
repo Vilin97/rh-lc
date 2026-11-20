@@ -175,14 +175,14 @@ theorem finiteRing_sq_sub_mul_sq_eq_of_card {K : Type} [Field K] {R : Type} [Com
       change δ (constFn s W r') = δ' (constFn s W' r')
       rw [hb, hb']
     obtain ⟨d0, hadd0, hmul0, hu0, hv0⟩ := exists_der_of_isPushout hPo (m₂.app Q).hom δ δ'
-      (fun x y => by simp only [δ]; rw [hd.add W le_rfl, map_add])
+      (fun x y => by simp only [δ]; rw [hd.add W le_rfl, map_add (f := _)])
       (fun x y => by
         simp only [δ]
-        rw [hd.mul W le_rfl, map_add, map_mul, map_mul, app_appLE hp hWQ h₁ x, app_appLE hp hWQ h₁ y])
-      (fun x y => by simp only [δ']; rw [hd'.add W' le_rfl, map_add])
+        rw [hd.mul W le_rfl, map_add (f := _), map_mul, map_mul, app_appLE hp hWQ h₁ x, app_appLE hp hWQ h₁ y])
+      (fun x y => by simp only [δ']; rw [hd'.add W' le_rfl, map_add (f := _)])
       (fun x y => by
         simp only [δ']
-        rw [hd'.mul W' le_rfl, map_add, map_mul, map_mul, app_appLE hq hW'Q h₂ x, app_appLE hq hW'Q h₂ y])
+        rw [hd'.mul W' le_rfl, map_add (f := _), map_mul, map_mul, app_appLE hq hW'Q h₂ x, app_appLE hq hW'Q h₂ y])
       hR
     have hbQ : ∀ r, d0 (constFn z Q r) = constFn z₀ (m₂ ⁻¹ᵁ Q) (D r) := fun r => by
       rw [← appLE_constFn s z p hz hWQ r, hu0, hb]

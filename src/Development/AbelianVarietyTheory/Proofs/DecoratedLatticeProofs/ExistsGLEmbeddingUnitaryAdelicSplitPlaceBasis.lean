@@ -169,7 +169,7 @@ theorem phi_map (G Gi : Matrix m m k) : (phi c e sec J Ji G Gi).map pr = G := by
     conv_lhs => rw [← hYe]
     rfl
   unfold phi
-  rw [Matrix.map_apply, Matrix.add_apply, Matrix.add_apply, map_add, map_add, hij, Matrix.smul_apply, smul_eq_mul,
+  rw [Matrix.map_apply, Matrix.add_apply, Matrix.add_apply, map_add (f := _), map_add (f := _), hij, Matrix.smul_apply, smul_eq_mul,
     map_mul, map_mul, hpf, hpu, Matrix.map_apply, pr_sec]
   ring
 

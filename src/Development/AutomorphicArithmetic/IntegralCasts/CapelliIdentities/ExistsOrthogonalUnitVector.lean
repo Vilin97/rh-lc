@@ -93,7 +93,7 @@ private theorem UpperTheory.Reformulated.B.ExistsOrthogonalBasisWithUnitNorms.ex
     · simp
   obtain ⟨c, hc, d, hd, hu⟩ := hp w y hyw (hL.int _ hwL _ hwL) (hL.int _ hyL _ hyL)
   refine ⟨c • w + d • y, L.add_mem (hL.smul_mem _ hc _ hwL) (hL.smul_mem _ hd _ hyL), fun i => ?_, hu⟩
-  rw [map_add, map_smul, map_smul, hxw, hxy, smul_zero, smul_zero, add_zero]
+  rw [map_add (f := _), map_smul, map_smul, hxw, hxy, smul_zero, smul_zero, add_zero]
 
 theorem UpperTheory.Reformulated.B.ExistsOrthogonalBasisWithUnitNorms.exists_ortho_unit :
     ∀ {K V : Type} [inst : Field K] [inst_1 : StarRing K] [inst_2 : AddCommGroup V] [inst_3 : _root_.Module K V]

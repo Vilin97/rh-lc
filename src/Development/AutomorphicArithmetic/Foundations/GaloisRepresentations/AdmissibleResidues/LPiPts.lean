@@ -37,7 +37,7 @@ private theorem piPts_hecke {A M ι : Type} [CommRing A] [AddCommGroup M] [Modul
     simp [Module.algebraMap_end_apply, e]
   | add s t _ _ hs ht =>
     intro y y' e
-    simp only [LinearMap.add_apply, Submodule.coe_add, map_add, hs y y' e, ht y y' e]
+    simp only [LinearMap.add_apply, Submodule.coe_add, map_add (f := _), hs y y' e, ht y y' e]
   | mul s t _ _ hs ht => exact fun y y' e => hs _ _ (ht y y' e)
 
 private theorem piPts_chi {n : ℕ} {A G : Type} [CommRing A] [Group G] (ρ : G →* Matrix (Fin n) (Fin n) A) (g : G) :
@@ -165,7 +165,7 @@ private theorem piPts_abs {M V R G Lev X : Type} {I : Type 1} [AddCommGroup V] [
         exact (hT t y).trans (a1 t y hy).symm
       | zero => exact (map_zero _).trans (congrArg Subtype.val (map_zero (act t))).symm
       | add F F' hF hF' h h' =>
-        rw [map_add, h, h']
+        rw [map_add (f := _), h, h']
         exact (congrArg Subtype.val (map_add (act t) ⟨F, hsp hF⟩ ⟨F', hsp hF'⟩)).symm
       | smul u F hF h =>
         rw [map_smul, h]

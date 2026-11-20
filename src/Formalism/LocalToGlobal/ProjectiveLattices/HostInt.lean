@@ -72,12 +72,12 @@ theorem hT_lat_mem (D : D7) (j : ℕ) {v w : (D.sp.W j).V} (hv : v ∈ latW D j)
       obtain ⟨b, hb, y, hy, rfl⟩ := hw
       exact hT_gen_mem D j ha hb hx hy
     | zero => simp
-    | add w w' _ _ h h' => rw [map_add]; exact add_mem h h'
+    | add w w' _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
     | smul c w _ h =>
       rw [← algebraMap_smul D.host.E c w, map_smul, smul_eq_mul, ← Algebra.smul_def]
       exact Submodule.smul_mem _ c h
   | zero => simp
-  | add v v' _ _ h h' => rw [map_add, LinearMap.add_apply]; exact add_mem (h hw) (h' hw)
+  | add v v' _ _ h h' => rw [map_add (f := _), LinearMap.add_apply]; exact add_mem (h hw) (h' hw)
   | smul c v _ h =>
     rw [← algebraMap_smul D.host.E c v, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul]
     have hc : (starRingEnd D.host.E) (algebraMap (𝓞 D.host.E) D.host.E c) =
@@ -214,7 +214,7 @@ theorem riesz {E : Type} [Field E] [NumberField E] [StarRing E] (S : Formalism.B
     ∃ x, ∀ v, S.hT x v = l v := by
   let T : S.V →ₗ[E] (Fin S.rank → E) :=
     { toFun := fun x i => star (S.hT x (S.frame i))
-      map_add' := by intro x y; ext i; simp [map_add, star_add]
+      map_add' := by intro x y; ext i; simp [map_add (f := _), star_add]
       map_smul' := by
         intro e x; ext i
         simp [LinearMap.map_smulₛₗ, star_mul', starRingEnd_apply, star_star] }
@@ -283,7 +283,7 @@ def phiOf (D : D7) (j : ℕ) (f : latW D j →ₗ[ℤ] ℤ) : latW D j →ₗ[�
   toFun := zOf D j f
   map_add' y y' := by
     have := trace_sep D (w := zOf D j f (y + y') - (zOf D j f y + zOf D j f y')) (fun c => by
-      rw [sub_mul, add_mul, map_sub, map_add, zOf_spec, zOf_spec, zOf_spec, smul_add, map_add]
+      rw [sub_mul, add_mul, map_sub, map_add (f := _), zOf_spec, zOf_spec, zOf_spec, smul_add, map_add (f := _)]
       push_cast; ring)
     exact sub_eq_zero.1 this
   map_smul' c' y := by

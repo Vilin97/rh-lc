@@ -96,7 +96,7 @@ def rel (L L' : Submodule (𝓞 E) (Fin r → E)) (γ : ∀ v : HeightOneSpectru
     obtain ⟨w, hw, hp⟩ := hp v
     obtain ⟨w', hw', hq⟩ := hq v
     refine ⟨w + w', add_mem hw hw', ?_⟩
-    simp only [Prod.snd_add, Prod.fst_add, Submodule.coe_add, map_add, Matrix.mulVec_add, hp, hq, smul_add]
+    simp only [Prod.snd_add, Prod.fst_add, Submodule.coe_add, map_add (f := _), Matrix.mulVec_add, hp, hq, smul_add]
     abel
   smul_mem' := by
     intro c p hp v
@@ -144,7 +144,7 @@ theorem hermLoc_add_left (x x' y : Fin r → LocAlg v) :
 
 theorem hermLoc_add_right (x y y' : Fin r → LocAlg v) :
     hermLoc v G x (y + y') = hermLoc v G x y + hermLoc v G x y' := by
-  simp only [hermLoc, dotProduct, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hermLoc, dotProduct, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hermLoc_smul_left (c : v.adicCompletionIntegers (maximalRealSubfield E)) (x y : Fin r → LocAlg v) :
     hermLoc v G (c • x) y = c • hermLoc v G x y := by

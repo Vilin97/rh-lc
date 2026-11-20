@@ -88,7 +88,7 @@ private theorem smallAct : ∀ {F E : Type} [Field F] [NumberField F] [Field E] 
   have hB : e ((mat k - 1) * e.symm w) = Φ (k, g (fun i => (w.1 i).2, fun i => (w.2 i).2)) := by
     show _ = e ((mat k - 1) * e.symm (g (fun i => (w.1 i).2, fun i => (w.2 i).2)))
     conv_lhs => rw [hw]
-    rw [map_add, LinearEquiv.map_smul, Matrix.mul_add, Matrix.mul_smul, hkill, add_zero]
+    rw [map_add (f := _), LinearEquiv.map_smul, Matrix.mul_add, Matrix.mul_smul, hkill, add_zero]
   have hmem := hk _ ⟨_, Set.mk_mem_prod hw1 hw2, rfl⟩
   rw [← hB] at hmem
   refine ⟨fun i => ⟨?_, ?_⟩, hmem.1, hmem.2⟩

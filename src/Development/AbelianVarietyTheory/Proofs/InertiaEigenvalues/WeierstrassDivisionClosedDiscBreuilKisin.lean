@@ -29,7 +29,7 @@ theorem Div.add {t : ℝ} {y y'} (h : Div l ρ E e t y) (h' : Div l ρ E e t y')
   obtain ⟨q, hq, c, hc, rfl⟩ := h
   obtain ⟨q', hq', c', hc', rfl⟩ := h'
   refine ⟨q + q', add_mem hq hq', c + c', fun i => add_mem (hc i) (hc' i), ?_⟩
-  simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
   ring
 
 theorem Div.zero {t : ℝ} : Div l ρ E e t 0 :=
@@ -78,7 +78,7 @@ theorem div_monomial (hl : 0 < l) (he : 0 < e) (hρ0 : 0 < ρ) (hρ1 : ρ ≤ 1)
       fun i => algebraMap _ _ (c i), fun i => by simpa using alg_mem_ball (l := l) (0 : R) 1 0 (c i), ?_⟩ ?_
     · rw [h]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [preMap_alg, map_add, map_mul, map_sum]
+        simp only [preMap_alg, map_add (f := _), map_mul, map_sum]
     · rw [one_le_div (by positivity)]
       exact pow_le_pow_of_le_one h0.le h1 hb.le
   · obtain ⟨b, rfl⟩ := Nat.exists_eq_add_of_le' hb
@@ -86,7 +86,7 @@ theorem div_monomial (hl : 0 < l) (he : 0 < e) (hρ0 : 0 < ρ) (hρ1 : ρ ≤ 1)
         algebraMap R⟦X⟧ _ E * algebraMap R⟦X⟧ _ (X ^ b * a) +
         algebraMap R⟦X⟧ _ ((l : R⟦X⟧) ^ 1) * IsLocalization.Away.invSelf (l : R⟦X⟧) ^ 0 *
           algebraMap R⟦X⟧ _ (X ^ b * (-z * a)) := by
-      rw [pow_zero, mul_one, ← map_mul, ← map_mul, ← map_add, hE]
+      rw [pow_zero, mul_one, ← map_mul, ← map_mul, ← map_add (f := _), hE]
       congr 1
       ring
     rw [e1]
@@ -142,7 +142,7 @@ theorem div_disc [hl : Fact l.Prime] (hρ0 : 0 < ρ)
     { toFun := fun g => toDisc l X ρ E * g.1 + ∑ i, ι (g.2 i) * toDisc l X ρ (X ^ (i : ℕ))
       map_zero' := by simp
       map_add' := fun g g' => by
-        simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+        simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
         ring }
   have hb : ∀ g, ‖f0 g‖ ≤ (1 + e) * ‖g‖ := fun g => by
     refine (norm_add_le _ _).trans ?_
@@ -166,7 +166,7 @@ theorem div_disc [hl : Fact l.Prime] (hρ0 : 0 < ρ)
       refine ⟨(ofPre _ _ _ q, fun i => ofPre _ _ _ (c i)), ?_, ?_⟩
       · conv_rhs => rw [h2]
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [f0, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_add, map_mul, map_sum, hιp]
+          simp only [f0, AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_add (f := _), map_mul, map_sum, hιp]
         rfl
       · rw [div_mul_eq_mul_div]
         refine max_le ?_ ((pi_norm_le_iff_of_nonneg hp.le).2 fun i => ?_)

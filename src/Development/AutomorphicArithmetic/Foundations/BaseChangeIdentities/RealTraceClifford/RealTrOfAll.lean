@@ -31,7 +31,7 @@ def kfin : Submodule ℂ U where
     rintro a b ⟨S, hS, kS, ha⟩ ⟨S', hS', kS', hb⟩
     refine ⟨S ⊔ S', inferInstance, fun k v hv => ?_, Submodule.add_mem_sup ha hb⟩
     obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.1 hv
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (kS k x hx) (kS' k y hy)
   zero_mem' := ⟨⊥, inferInstance, fun k v hv => by simp_all, Submodule.zero_mem _⟩
   smul_mem' := by

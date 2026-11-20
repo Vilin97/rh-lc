@@ -28,7 +28,7 @@ theorem finrank_dual_letter [Algebra L F] (τ : U →+* F) :
     finrank F (Dual F (Letter m F τ)) = finrank F ↥(letterHom m (algebraMap L F) τ) := by
   let e : Dual F (Letter m F τ) →ₗ[F] ↥(letterHom m (algebraMap L F) τ) :=
     { toFun := fun φ => ⟨AddMonoidHom.mk' (fun x => φ (letterMk m F τ x))
-          (fun x y => by rw [letterMk_add, map_add]),
+          (fun x y => by rw [letterMk_add, map_add (f := _)]),
         fun a x => by simp [letterMk_smul], fun c x => by simp [letterMk_mul]⟩
       map_add' := fun _ _ => rfl
       map_smul' := fun _ _ => rfl }

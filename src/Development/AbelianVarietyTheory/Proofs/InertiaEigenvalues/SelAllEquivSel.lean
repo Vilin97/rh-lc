@@ -53,7 +53,7 @@ def infZ (z : Z1 ρS) : Z1 ρ :=
     (continuous_of_discreteTopology (f := e.symm)).comp (z.2.1.comp (continuous_toGS Ω S)), fun g h => by
       apply e.injective
       beta_reduce
-      rw [map_add, he, map_mul, z.2.2]
+      rw [map_add (f := _), he, map_mul, z.2.2]
       simp⟩
 
 theorem infZ_apply (z : Z1 ρS) (g : G F Ω) : (infZ e he z).1 g = e.symm (z.1 (toGS Ω S g)) := rfl
@@ -172,7 +172,7 @@ theorem exists_infZ (z : Z1 ρ) (h : ∀ σ ∈ NS Ω S, z.1 σ = 0) : ∃ z', i
     obtain ⟨g', rfl⟩ : ∃ g'', toGS Ω S g'' = g' := QuotientGroup.mk'_surjective _ g'
     rw [← map_mul]
     change e (z.1 (g * g')) = e (z.1 g) + ρS (toGS Ω S g) (e (z.1 g'))
-    rw [hz, map_add, he]
+    rw [hz, map_add (f := _), he]
   · exact Subtype.ext (funext fun g => e.symm_apply_apply (z.1 g))
 
 end

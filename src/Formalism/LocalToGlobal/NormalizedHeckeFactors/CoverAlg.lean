@@ -174,7 +174,7 @@ theorem exists_pt (hS : ∀ a ∈ S, ∀ b ∈ S, Commute a b)
   have h1 : f 1 = 1 := hinj (by rw [hf, map_one]; simpa using chi_alg hW (1 : O))
   have hm : ∀ s t, f (s * t) = f s * f t := fun s t => hinj (by rw [hf, map_mul, hf, hf, chi_mul hS hW])
   have h0 : f 0 = 0 := hinj (by rw [hf, map_zero]; simpa using chi_alg hW (0 : O))
-  have ha : ∀ s t, f (s + t) = f s + f t := fun s t => hinj (by rw [hf, map_add, hf, hf, chi_add hS hW])
+  have ha : ∀ s t, f (s + t) = f s + f t := fun s t => hinj (by rw [hf, map_add (f := _), hf, hf, chi_add hS hW])
   have hc : ∀ c, f (algebraMap O (Algebra.adjoin O S) c) = c := fun c => hinj (by rw [hf, chi_alg hW])
   exact ⟨{ toFun := f, map_one' := h1, map_mul' := hm, map_zero' := h0, map_add' := ha, commutes' := hc },
     funext fun t => hf t⟩
@@ -393,7 +393,7 @@ theorem exists_pt_of_isMaximal [FiniteDimensional K V] (hinj : Function.Injectiv
     exact ((ht ψ hψ).neg).pow _
   obtain ⟨u, hu'⟩ := hu
   have key := congrArg (aeval t) (X_mul_divX_add P)
-  rw [hPT, map_add, map_mul, aeval_X, aeval_C, ← hu'] at key
+  rw [hPT, map_add (f := _), map_mul, aeval_X, aeval_C, ← hu'] at key
   have e : t * aeval t P.divX = - algebraMap O _ (u : O) := eq_neg_of_add_eq_zero_left key
   have hunitT : IsUnit t := by
     have h : t * (aeval t P.divX * algebraMap O _ (-↑u⁻¹)) = 1 := by

@@ -135,7 +135,7 @@ theorem zE_nxt (j : Fin J) : zE J ((toData Dt).nxt j) = zE J j + 1 := by
     apply Fin.ext
     show (j.val + 1) % J = _
     rw [Fin.val_add, Fin.val_one', Nat.add_mod_mod]
-  rw [h, map_add, map_one]
+  rw [h, map_add (f := _), map_one]
 
 theorem zE_prv (j : Fin J) : zE J ((toData Dt).aux₃ j) = zE J j - 1 := by
   have h : (toData Dt).aux₃ j = j - 1 := by
@@ -739,7 +739,7 @@ theorem plane_gram_of_theorem_at {p : ℕ} {O : Type} [CommRing O] [IsDomain O] 
   have hE : (toData Dt).E p 1 2 = Dt.EE 2 := by
     unfold TwistData.E PlaneGramData.SignedChainData.EE
     rw [Dm_eq, Dl_eq, kapD_eq]
-  rw [← map_add, ph_comm] at hBB hB
+  rw [← map_add (f := _), ph_comm] at hBB hB
   refine ⟨G0, R0, ?_, ⟨?_, ?_⟩, ?_, ?_, ?_, ?_⟩
   · intro mo
     rw [geQ_iff S]

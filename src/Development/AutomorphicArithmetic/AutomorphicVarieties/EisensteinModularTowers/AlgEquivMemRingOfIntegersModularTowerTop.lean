@@ -38,7 +38,7 @@ theorem UpperTheory.algEquiv_mem_ringOfIntegers_modularTowerTop :
   intro P
   induction P using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact hp.add hq
   | monomial n c =>
     have e : algebraMap (Polynomial Ω) (topL X M) (monomial n c) =

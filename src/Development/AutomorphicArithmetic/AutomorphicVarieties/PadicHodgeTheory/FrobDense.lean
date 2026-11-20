@@ -28,7 +28,7 @@ private theorem fd_level {v : ℕ} [Fact v.Prime] {x : Om v} (hx : x ∈ Maximal
     exact ⟨1, hv.not_dvd_one, fun g h _ => by rw [AlgEquiv.commutes, AlgEquiv.commutes]⟩
   | add x y _ _ hx hy =>
     obtain ⟨m, hm, h⟩ := key hx hy
-    exact ⟨m, hm, fun g k hgk => by rw [map_add, map_add, (h g k hgk).1, (h g k hgk).2]⟩
+    exact ⟨m, hm, fun g k hgk => by rw [map_add (f := _), map_add (f := _), (h g k hgk).1, (h g k hgk).2]⟩
   | inv x _ hx =>
     obtain ⟨m, hm, h⟩ := hx
     exact ⟨m, hm, fun g k hgk => by rw [map_inv₀, map_inv₀, h g k hgk]⟩

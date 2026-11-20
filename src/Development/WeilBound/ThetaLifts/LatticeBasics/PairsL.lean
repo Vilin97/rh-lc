@@ -111,7 +111,7 @@ theorem finPart_add {κ : Type} (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (x 
     have h3 : evFin F v (z i) = 0 := by
       show Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (z i).2 = 0
       rw [← one_mul (z i).2, h, map_zero]
-    rw [Pi.add_apply, map_add, h3, add_zero]
+    rw [Pi.add_apply, map_add (f := _), h3, add_zero]
   simp only [finPart, e]
 
 theorem Dat.rest (hM : M.IsGood B.ψ) {f φ} (h : Dat B M T f φ) : Rest (evI F) f (finPart φ) := ⟨finPart_add φ, h.sch hM⟩

@@ -31,7 +31,7 @@ theorem intAA_iff_exists_map {f : MvPowerSeries σ k} :
 
 theorem intAA_add {f g : MvPowerSeries σ k} (hf : IntAA (R := R) k f) (hg : IntAA (R := R) k g) :
     IntAA (R := R) k (f + g) := fun n => by
-  rw [map_add]; exact Subring.add_mem _ (hf n) (hg n)
+  rw [map_add (f := _)]; exact Subring.add_mem _ (hf n) (hg n)
 
 theorem intAA_neg {f : MvPowerSeries σ k} (hf : IntAA (R := R) k f) :
     IntAA (R := R) k (-f) := fun n => by

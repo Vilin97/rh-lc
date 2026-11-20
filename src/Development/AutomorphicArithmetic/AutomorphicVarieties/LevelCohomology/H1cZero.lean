@@ -25,7 +25,7 @@ theorem UpperTheory.V.X.h1cZero :
       intro g h
       have := h2 (toGS Ω SP g) (toGS Ω SP h)
       simp only at this
-      rw [map_mul, this, hρ, map_add, map_smul, smul_eq_mul]
+      rw [map_mul, this, hρ, map_add (f := _), map_smul, smul_eq_mul]
     have hu := unrOf Ω k γ K hKγ SP T (fun s => f (c s)) hz (by
       intro v hv
       obtain ⟨y, hy⟩ := e.surjective ⟨v, by rw [hS] at hv; exact hv⟩

@@ -220,7 +220,7 @@ theorem span_integers_eq_top (Φ : CMType E) :
       rw [← Pi.single_smul, ← Pi.single_smul, ← Pi.single_add]
       congr 1
       simp
-    rw [this, map_add, map_smul, map_smul]
+    rw [this, map_add (f := _), map_smul, map_smul]
     simp [δ]
   have hδ : δ = 0 := Φ.eq_zero_of_sum_re_eq_zero δ fun a => by
     rw [← key (fun τ => τ.1 (a : E))]
@@ -305,7 +305,7 @@ theorem realMap_realAct (a : 𝓞 E) (x : ℝ ⊗[ℤ] D.La) :
     realMap D Φ φ (realAct D a x) = (fun τ : Φ => τ.1 (a : E)) • realMap D Φ φ x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
   | tmul t x =>
     funext τ i
     simp only [realAct, LinearMap.baseChange_tmul, DistribSMul.toLinearMap_apply, realMap_tmul,
@@ -352,13 +352,13 @@ theorem baseChange_EF (ξ : E) (Gm : Matrix (Fin r) (Fin r) E)
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add x x' hx hx' =>
-    simp only [map_add, LinearMap.add_apply, hx, hx', Pi.add_apply, add_dotProduct, mul_add,
+    simp only [map_add (f := _), LinearMap.add_apply, hx, hx', Pi.add_apply, add_dotProduct, mul_add,
       Complex.add_re, Finset.sum_add_distrib]
   | tmul t x =>
     induction y using TensorProduct.induction_on with
     | zero => simp
     | add y y' hy hy' =>
-      simp only [map_add, hy, hy', Pi.add_apply, star_add, mulVec_add, dotProduct_add, mul_add,
+      simp only [map_add (f := _), hy, hy', Pi.add_apply, star_add, mulVec_add, dotProduct_add, mul_add,
         Complex.add_re, Finset.sum_add_distrib]
     | tmul s y =>
       have h1 : ((D.EF x y : ℤ) : ℝ) = ∑ τ : Φ, 2 * (τ.1 (ξ * FD.herm Gm (φ x) (φ y))).re := by
@@ -417,7 +417,7 @@ theorem exists_complexStructure (ξ : E) (Gm : Matrix (Fin r) (Fin r) E)
       rw [hJe, he, he, ← realMap_realAct, ← realMap_realAct, ← he, ← he, hJe]
       exact congrArg e (LinearMap.congr_fun (hA a).1 x)
     · intro c c' h h' u
-      rw [add_smul, map_add, h, h', add_smul]
+      rw [add_smul, map_add (f := _), h, h', add_smul]
     · intro t c h u
       rw [smul_assoc, map_smul, h, smul_assoc]
   obtain ⟨M, hM⟩ := exists_blocks (e.conj J) hcomm

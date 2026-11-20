@@ -108,7 +108,7 @@ lemma dual_mem {ι : Type} [Fintype ι] (c : ι → Z →L[ℝ] ℂ) (hsep : ∀
     set_option synthInstance.maxHeartbeats 100000 in
       rw [h0, h1, map_sum]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
+    rw [map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul]
   have : (fun z => ((ℓ z : ℝ) : ℂ)) = ∑ k, (((φ (Pi.single k 1) : ℝ) : ℂ) • (fun z => (((c k z).re : ℝ) : ℂ)) +
       ((φ (Pi.single k Complex.I) : ℝ) : ℂ) • (fun z => (((c k z).im : ℝ) : ℂ))) := by
     funext z

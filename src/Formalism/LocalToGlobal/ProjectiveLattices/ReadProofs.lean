@@ -175,8 +175,8 @@ theorem adelAut_holSub (h : AdelAut V dict mu) (la : ∀ k, Wt (X k).Ψ r) {P : 
       exact continuous_const
   | add Q R _ _ hQ hR =>
     refine ⟨fun γ hγ g => ?_, ?_⟩
-    · simp only [map_add, Pi.add_apply, hQ.1 γ hγ g, hR.1 γ hγ g]
-    · rw [map_add]
+    · simp only [map_add (f := _), Pi.add_apply, hQ.1 γ hγ g, hR.1 γ hγ g]
+    · rw [map_add (f := _)]
       exact hQ.2.add hR.2
   | smul a Q _ hQ =>
     refine ⟨fun γ hγ g => ?_, ?_⟩

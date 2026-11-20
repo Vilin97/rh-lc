@@ -98,7 +98,7 @@ private theorem gc_mem_pow_iff {E σ : Type} [Field E] [Finite σ] (N : ℕ) (g 
         rw [hgi]
         split_ifs
         · apply hg
-          rw [map_add, Finsupp.degree_single]
+          rw [map_add (f := _), Finsupp.degree_single]
           omega
         · rfl
 
@@ -138,7 +138,7 @@ private lemma gc_exists_order (W : WPres O Y R) (h : W.HasOrigin) (n : ℕ) :
     obtain ⟨f, hf⟩ := W.surj (algebraMap R R r)
     exact ⟨f, hf, by simp⟩
   · rintro a b i - - ⟨f, hf, hfo⟩ ⟨g, hg, hgo⟩
-    exact ⟨f + g, by rw [map_add, hf, hg], le_trans (le_min hfo hgo) min_order_le_add⟩
+    exact ⟨f + g, by rw [map_add (f := _), hf, hg], le_trans (le_min hfo hgo) min_order_le_add⟩
   · rintro m hm i a - ⟨f, hf, hfo⟩
     obtain ⟨g, rfl⟩ := W.surj m
     have hg0 : constantCoeff g = 0 := by
@@ -292,7 +292,7 @@ private lemma gc_graded [IsDomain O] [IsFractionRing O E] [Finite τ] (W : WPres
         · rw [Finsupp.single_apply, if_neg (Ne.symm hk)]
           exact Nat.zero_le _
       have := congrArg Finsupp.degree (tsub_add_cancel_of_le hs)
-      rw [map_add, Finsupp.degree_single] at this
+      rw [map_add (f := _), Finsupp.degree_single] at this
       omega
     simp
     omega
@@ -381,7 +381,7 @@ private lemma gc_span [IsDomain O] [FaithfulSMul O E] {n : ℕ} (W : WPres O Y R
         ∑ k, coeff (Finsupp.single k 1) g • (X k : MvPowerSeries W.σ O)) +
         algebraMap O _ (constantCoeff g) + ∑ k, coeff (Finsupp.single k 1) g • X k := by
       abel
-    rw [hg_eq, map_add, map_add, map_add, map_add, map_add, map_add]
+    rw [hg_eq, map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _)]
     refine add_mem (add_mem ?_ ?_) ?_
     · rw [hlin2 _ (gc_low W h hφ (nat_le_order (fun d hd => gc_lin g d hd)))]
       exact zero_mem _
@@ -459,7 +459,7 @@ private lemma gc_der [IsDomain O] [IsFractionRing O E] [Fintype τ] (x : R →�
       rw [RingHom.mem_ker] at hu hv
       rw [hDm, hu, hv, map_zero, zero_mul, zero_mul, add_zero]
     · intro u v hu hv
-      rw [map_add, hu, hv, add_zero]
+      rw [map_add (f := _), hu, hv, add_zero]
   obtain ⟨y, hy0, hyP⟩ := hy
   have hDP : ∀ p ∈ P, D p = 0 := by
     intro p hp
@@ -475,7 +475,7 @@ private lemma gc_der [IsDomain O] [IsFractionRing O E] [Fintype τ] (x : R →�
   have hDs : ∀ a ∈ RingHom.ker x ^ 2 ⊔ P, D a = 0 := by
     intro a ha
     obtain ⟨u, hu, v, hv, rfl⟩ := Submodule.mem_sup.mp ha
-    rw [map_add, hDk2 u hu, hDP v hv, add_zero]
+    rw [map_add (f := _), hDk2 u hu, hDP v hv, add_zero]
   refine LinearMap.ext (fun a => ?_)
   rw [LinearMap.zero_apply]
   obtain ⟨b', hd⟩ := IsLocalization.exist_integer_multiples (nonZeroDivisors O)
@@ -542,7 +542,7 @@ private lemma gc_count [IsDomain O] [IsFractionRing O E] [Fintype τ] (x : R →
       { toFun := fun a => ∑ i0 : {i // w i = j}, v i0 * coeff (Finsupp.single i0.1 1) (φ a)
         map_add' := by
           intro a b
-          simp only [map_add, mul_add, Finset.sum_add_distrib]
+          simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
         map_smul' := by
           intro c a
           simp only [map_smul, RingHom.id_apply]

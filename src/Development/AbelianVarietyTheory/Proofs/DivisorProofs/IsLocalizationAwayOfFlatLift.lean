@@ -22,7 +22,7 @@ theorem frac_add {B B' : Type} [CommRing B] [CommRing B'] [Algebra B B'] {a : B}
   obtain ⟨n, b, hb⟩ := hy
   obtain ⟨m, c, hc⟩ := hz
   refine ⟨n + m, b * a ^ m + c * a ^ n, ?_⟩
-  rw [map_add, map_mul, map_mul, map_pow, map_pow, ← hb, ← hc]
+  rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, ← hb, ← hc]
   ring
 
 theorem isLocalization_away_of_flat_lift (R B B' B₀ B₀' : Type) [CommRing R] [CommRing B]
@@ -84,7 +84,7 @@ theorem isLocalization_away_of_flat_lift (R B B' B₀ B₀' : Type) [CommRing R]
     obtain ⟨n, b, hb⟩ := lift0 y
     obtain ⟨m, c, hc⟩ := fracMem _ hb
     refine ⟨n + m, c + b * a ^ m, ?_⟩
-    rw [map_add, map_mul, map_pow, ← hc]
+    rw [map_add (f := _), map_mul, map_pow, ← hc]
     ring
 
   have kerI : ∀ x : B, φ x = 0 → ∃ n : ℕ, a ^ n * x ∈ I.map (algebraMap R B) := by

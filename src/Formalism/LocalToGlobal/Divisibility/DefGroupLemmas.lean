@@ -593,7 +593,7 @@ theorem latS_approx (L : Submodule (𝓞 E) (Fin n → E)) (D : 𝓞 F) (hD : D 
     obtain ⟨b0, hb0, b1, hb1, rfl⟩ := hv
     refine ⟨a0 + b0, Submodule.add_mem _ ha0 hb0, a1 + b1, Submodule.add_mem _ ha1 hb1, ?_⟩
     funext i
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     ring
   | smul s v _ hv =>
     obtain ⟨a0, ha0, a1, ha1, rfl⟩ := hv
@@ -757,7 +757,7 @@ theorem resS_adS_eq_zero (PP : Pl E) (v : HeightOneSpectrum (𝓞 F))
     rw [map_mul]
     exact mul_lt_one_of_lt_of_le hDval hyv
   have ea : a = oToAd F r + oToAd F D * ⟨y, hy⟩ := Subtype.ext e
-  rw [ea, map_add, map_mul, adS_oToAd, adS_oToAd, map_add, map_mul, resS_oToS, resS_oToS]
+  rw [ea, map_add (f := _), map_mul, adS_oToAd, adS_oToAd, map_add (f := _), map_mul, resS_oToS, resS_oToS]
   have h1 : Ideal.Quotient.mk PP.asIdeal (algebraMap (𝓞 F) (𝓞 E) r) = 0 :=
     Ideal.Quotient.eq_zero_iff_mem.2 (by rw [hv] at hr; exact hr)
   have h2 : Ideal.Quotient.mk PP.asIdeal (algebraMap (𝓞 F) (𝓞 E) D) = 0 :=
@@ -876,7 +876,7 @@ theorem sigS_adS (hc : CMData F E) (a : intAd F) : sigS hc (adS F E a) = adS F E
 theorem sigR_sigR (hc : CMData F E) (x : E ⊗[F] Af F) : sigR hc.sig (Af F) (sigR hc.sig (Af F) x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul e b =>
     show (hc.sig (hc.sig e)) ⊗ₜ[F] b = e ⊗ₜ[F] b
     have : hc.sig (hc.sig e) = e := star_star e
@@ -952,7 +952,7 @@ theorem add_sigR_mem (hc : CMData F E) (x : E ⊗[F] Af F) :
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
     refine ⟨a + b, ?_⟩
-    rw [map_add, TensorProduct.tmul_add, ← ha, ← hb]; abel
+    rw [map_add (f := _), TensorProduct.tmul_add, ← ha, ← hb]; abel
   | tmul e b =>
     have h1 : sigR hc.sig (Af F) (e ⊗ₜ[F] b) = (star e) ⊗ₜ[F] b := rfl
     obtain ⟨f, hf⟩ := (hc.fixed (e + star e)).1 (by rw [star_add, star_star, add_comm])
@@ -1701,7 +1701,7 @@ theorem fr_coprime (I : Ideal (𝓞 E)) (hI : I ≠ ⊥) (D : ℕ) (h : I ⊔ Id
   obtain ⟨t, rfl⟩ := Ideal.mem_span_singleton'.1 hb
   apply hx0
   have e1 : Ideal.Quotient.mk I (t * ((p * q : ℕ) : 𝓞 E)) = 1 := by
-    rw [← map_one (Ideal.Quotient.mk I), ← hab, map_add, Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add]
+    rw [← map_one (Ideal.Quotient.mk I), ← hab, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add]
   calc x = Ideal.Quotient.mk I (t * ((p * q : ℕ) : 𝓞 E)) * x := by rw [e1, one_mul]
     _ = Ideal.Quotient.mk I t * (Ideal.Quotient.mk I (q : 𝓞 E)) * (p • x) := by
         rw [nsmul_eq_mul]; push_cast; simp only [map_mul, map_natCast]; ring
@@ -2512,7 +2512,7 @@ theorem lc_div (g : ℕ) (hg0 : g ≠ 0)
   have hb : ∀ PP : Pl E, (g : 𝓞 E) ∈ PP.asIdeal → b ∈ PP.asIdeal := by
     intro PP hP
     have h1 := hs PP hP
-    rw [es, map_add, map_nsmul, resS_oToS, nsmul_eq_mul] at h1
+    rw [es, map_add (f := _), map_nsmul, resS_oToS, nsmul_eq_mul] at h1
     have h2 : ((g : ℕ) : kP PP) = 0 := by
       have := Ideal.Quotient.eq_zero_iff_mem.2 hP
       rwa [map_natCast] at this
@@ -2591,7 +2591,7 @@ theorem lc_fwd (hc : CMData F E) (S : HSpace E) (L : Submodule (𝓞 E) (Fin S.r
       Matrix (Fin S.rank) (Fin S.rank) (E ⊗[F] v.adicCompletion F)) = 1 + g • N.map (prV (E := E) v) := by
     show (prV (E := E) v).mapMatrix ((frGL β y : GL (Fin S.rank) (E ⊗[F] Af F)) :
       Matrix (Fin S.rank) (Fin S.rank) (E ⊗[F] Af F)) = 1 + g • (prV (E := E) v).mapMatrix N
-    rw [hx, map_add, map_one, map_nsmul]
+    rw [hx, map_add (f := _), map_one, map_nsmul]
   rw [hxv, Matrix.add_mulVec, Matrix.one_mulVec, add_sub_cancel_left, Matrix.smul_mulVec, Nat.cast_smul_eq_nsmul]
 
 theorem lc_bwd (hc : CMData F E) (S : HSpace E) (L : Submodule (𝓞 E) (Fin S.rank → E))

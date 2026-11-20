@@ -84,16 +84,16 @@ theorem dualNumber_hodge_summand_eq_graph_coords_of_compl (hA : IsAbelianScheme 
     have hm0 : (TrivSqZeroExt.inr (1 : k) : TrivSqZeroExt k k) • m = 0 :=
       (Submodule.disjoint_def.1 hEM.disjoint) _ hεm (M.smul_mem _ hm)
     have hm1 : fstC A₀ m = 0 := by rw [← (hε m).2, hm0, map_zero]
-    rw [← hy1, ← hsum, map_add, hm1, add_zero]
+    rw [← hy1, ← hsum, map_add (f := _), hm1, add_zero]
     exact hfil a ha
   · rintro ⟨hx, hz⟩
     obtain ⟨e₁, he₁, h1, h1'⟩ := hc _ hx
     obtain ⟨e₂, he₂, h2a, -⟩ := hc _ hz
     have : e = e₁ + (TrivSqZeroExt.inr (1 : k) : TrivSqZeroExt k k) • e₂ := by
       refine ext_coords_self hA ?_ ?_
-      · rw [map_add, (hε e₂).1, h1, add_zero]
+      · rw [map_add (f := _), (hε e₂).1, h1, add_zero]
       · show (sndC A₀ e : HdR A₀) = (sndC A₀ (e₁ + _) : HdR A₀)
-        rw [map_add]
+        rw [map_add (f := _)]
         show _ = (sndC A₀ e₁ : HdR A₀) + (sndC A₀ (_ • e₂) : HdR A₀)
         rw [(hε e₂).2, h1', h2a, add_sub_cancel]
     rw [this]

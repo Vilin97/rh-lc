@@ -27,12 +27,12 @@ theorem quadConj_eq_complexConj (x : E) :
     intro a ha
     obtain ⟨b, rfl⟩ := conj_eq_self_iff.1 ha
     exact (IsCMField.complexConj_eq_self_iff E _).2 b.2
-  have ha : t (x + y) = x + y := fix _ (by rw [map_add, hyy, ← hy, add_comm])
+  have ha : t (x + y) = x + y := fix _ (by rw [map_add (f := _), hyy, ← hy, add_comm])
   have hb : t (x * y) = x * y := fix _ (by rw [map_mul, hyy, ← hy, mul_comm])
   have hz : (t x - x) * (t x - y) = 0 := by
     have h0 : x * x - (x + y) * x + x * y = 0 := by ring
     have h1 := congrArg t h0
-    rw [map_add, map_sub, map_mul, map_mul, ha, hb, map_zero] at h1
+    rw [map_add (f := _), map_sub, map_mul, map_mul, ha, hb, map_zero] at h1
     linear_combination h1
   rcases mul_eq_zero.1 hz with h | h
   · have hx : t x = x := sub_eq_zero.1 h
@@ -103,7 +103,7 @@ theorem exists_nat_integral {Λ : Type} [AddCommGroup Λ] [Module.Finite ℤ Λ]
       rw [map_zero]
       exact zero_mem _
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
     | smul a x _ hx =>
       rw [map_zsmul]
@@ -134,7 +134,7 @@ theorem exists_hermitian_of_trace : ∀ (E : Type) [Field E] [NumberField E] [Is
     GlobalTheory.CompanionTheory.Ar.Flat.existsUnique_sesq_of_trace E (Fin N → E) B hadj
   have hsk := sesq_skew B hadj hskew h₁ htr
   obtain ⟨m, hm0, hint⟩ := exists_nat_integral (fun x y : Λ => h₁ (e y) (e x))
-    (fun x x' y => by rw [map_add, hadd2]) (fun x y y' => by rw [map_add, hadd1])
+    (fun x x' y => by rw [map_add (f := _), hadd2]) (fun x y y' => by rw [map_add (f := _), hadd1])
   have hrt0 : (H.rt : E) ≠ 0 := by
     intro h0
     have hsq : (H.rt : E) ^ 2 = -(H.d : E) := by

@@ -189,7 +189,7 @@ theorem exists_sysTie (R : Fr l O) (j : O⟦X⟧ →ₐ[O] O⟦X⟧) (jE : (ZMod
       intro x y
       simp only [Sys.Z1, herrCocycles, LinearMap.mem_ker, LinearMap.coprod_apply, LinearMap.sub_apply,
         LinearMap.neg_apply, LinearMap.id_apply]
-      rw [← s1, ← s2, ← map_sub, ← map_sub, ← map_neg, ← map_add, map_eq_zero_iff _ t1]
+      rw [← s1, ← s2, ← map_sub, ← map_sub, ← map_neg, ← map_add (f := _), map_eq_zero_iff _ t1]
     ext ⟨y, z⟩
     simp only [LocWach.wachCocyclesDelta, herrZ1Δ, hK, Submodule.mem_inf, Submodule.mem_iInf, LinearMap.mem_ker,
       LinearMap.sub_apply, LinearMap.prodMap_apply, LinearMap.id_apply, sub_eq_zero, Prod.mk.injEq,
@@ -302,7 +302,7 @@ theorem π₀₁_spec (hl : l ≠ 2) (hc : W.DelF.card = l - 1) :
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum, ← sum_DelF_mul W (fun δ => W.γ₀ δ (1 + X)) d hd]
     exact Finset.sum_congr rfl fun δ _ => by rw [map_mul]; rfl
-  rw [e, map_add, h2, map_sub, map_one, map_natCast]
+  rw [e, map_add (f := _), h2, map_sub, map_one, map_natCast]
 
 end Generic
 
@@ -323,7 +323,7 @@ theorem eq_neg_of_root {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDomai
     rw [map_sub, map_one]; ring
   have h6 := (prime_X_sub_C _ (sub_one_mem_max hu ζ hζ.pow_eq_one)).2 (x + l) (by
     convert (h4.trans hq).sub hd using 1
-    rw [map_add, map_natCast]; ring)
+    rw [map_add (f := _), map_natCast]; ring)
   exact eq_neg_of_add_eq_zero_left h6
 
 def Attached {l : ℕ} [Fact l.Prime] {P : LocPrime l} {K LL : FinExt l} {n : ℕ}

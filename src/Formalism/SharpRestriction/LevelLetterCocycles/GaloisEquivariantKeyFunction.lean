@@ -283,7 +283,7 @@ theorem supBall_lattice {K L V Pt : Type} [NontriviallyNormedField K] [CompleteS
         refine ⟨max A B, ?_⟩
         rintro _ ⟨y, rfl⟩
         show ‖ev (f + g) y‖ ≤ _
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max (hA ⟨y, rfl⟩) (hB ⟨y, rfl⟩))
       smul_mem' := by
         rintro a f ⟨A, hA⟩
@@ -300,7 +300,7 @@ theorem supBall_lattice {K L V Pt : Type} [NontriviallyNormedField K] [CompleteS
   have hmax : ∀ f g : W, sN (f + g) ≤ max (sN f) (sN g) := by
     intro f g
     refine hub _ _ (le_max_of_le_left (hnn f)) fun y => ?_
-    rw [Submodule.coe_add, map_add]
+    rw [Submodule.coe_add, map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max (hle f y) (hle g y))
   let nrm : AddGroupNorm W :=
     { toFun := sN
@@ -359,7 +359,7 @@ def BallS (i : D.ntw.Tw) (j : ℕ) (b : Bool) : Submodule (D.ntw.O i) (D.nexp.Fm
   carrier := Ball i j b
   zero_mem' := fun y => by simp
   add_mem' := fun {f g} hf hg y => by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf y) (hg y))
   smul_mem' := fun a f hf y => by
     have : a • f = (algebraMap (D.ntw.O i) (KK i) a) • f := (algebraMap_smul _ _ _).symm
@@ -378,7 +378,7 @@ theorem Ball_fg (i : D.ntw.Tw) (j : ℕ) (b : Bool) : (BallS i j b).FG := by
   have hum : IsUltrametricDist (KK i) :=
     IsUltrametricDist.isUltrametricDist_of_forall_norm_add_le_max_norm (fun x y => by
       show ‖D.nth.iC i (x + y)‖ ≤ max ‖D.nth.iC i x‖ ‖D.nth.iC i y‖
-      rw [map_add]
+      rw [map_add (f := _)]
       exact IsUltrametricDist.norm_add_le_max _ _)
   let nnf : NontriviallyNormedField (KK i) :=
     { nf with

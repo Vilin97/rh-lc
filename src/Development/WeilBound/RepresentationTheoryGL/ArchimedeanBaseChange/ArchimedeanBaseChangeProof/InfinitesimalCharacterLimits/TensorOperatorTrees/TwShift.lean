@@ -80,7 +80,7 @@ theorem mulChi_mem_shift (z : ℂ) {N : ℕ} (t : Tr E N) :
     induction hφ using Submodule.span_induction with
     | mem φ h => exact Submodule.subset_span ⟨memInd2_mulChi z hA hB h.1, mulChi_mem_finVec _ h.2⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 theorem twShift : TwShift := by

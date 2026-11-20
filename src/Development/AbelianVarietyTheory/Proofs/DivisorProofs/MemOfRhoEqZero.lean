@@ -55,7 +55,7 @@ theorem rho_eq_zero {J : Ideal (𝓞 E)} {P : Pl E} (hJ : J ≤ P.asIdeal) (hτ 
   refine Submodule.smul_induction_on (p := fun x => ρ P a x = 0) hx (fun c hc y _ => ?_) (fun x y hx hy => ?_)
   · obtain ⟨b, hb, rfl⟩ := (Ideal.mem_map_iff_of_surjective (τ : 𝓞 E →+* 𝓞 E) τ.surjective).1 hc
     rw [hs, show τ ((τ : 𝓞 E →+* 𝓞 E) b) = b from hτ b, Ideal.Quotient.eq_zero_iff_mem.2 (hJ hb), zero_mul]
-  · rw [map_add, hx, hy, add_zero]
+  · rw [map_add (f := _), hx, hy, add_zero]
 
 include hs in
 
@@ -96,7 +96,7 @@ theorem rank_eq {n : ℕ} {P : Pl E} (N : Submodule (𝓞 E) La) (hN : ∀ x ∈
     obtain ⟨co, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun _).1 hu
     refine (Submodule.mem_span_range_iff_exists_fun _).2 ⟨fun b => Ideal.Quotient.mk P.asIdeal (τ (co b)), funext fun a => ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← hy, map_add, hN w hw, add_zero, map_sum, Finset.sum_apply]
+      rw [← hy, map_add (f := _), hN w hw, add_zero, map_sum, Finset.sum_apply]
     exact Finset.sum_congr rfl fun b _ => (hs P a _ _).symm
   rw [Matrix.rank_eq_finrank_span_row, h, finrank_top, Module.finrank_fin_fun]
 
@@ -300,7 +300,7 @@ theorem datum_eq_hat_free : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T
       obtain ⟨x, hx⟩ := hon t
       refine ⟨β • x, fun P hP a => ?_⟩
       rw [← hx P (Finset.mem_union_right _ hP) a, AddMonoidHom.nsmul_apply, ← map_nsmul, smul_comm]
-      conv_rhs => rw [hsplit x, map_add,
+      conv_rhs => rw [hsplit x, map_add (f := _),
         rho_eq_zero T.Q.H.bar ρ hs (hQI P hP) hbb (Submodule.smul_mem _ _ (hpmem x)), zero_add])
     (fun k => by
       obtain ⟨f, y, h1, h2, h3, h4⟩ := hmove k
@@ -342,11 +342,11 @@ theorem datum_eq_hat_free : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T
   · refine GlobalTheory.CoverTransform.hatC_eq_datum _ _ _ _ _ _ _ d hd ph ψ xJ hpin x₀ _ φc (fun z => ?_) fun x hx b => ?_
     · rw [hφ, ← hu z, omegaFree, if_pos, one_mul]
       · convert topDatum_congr Q ξR _ _ fun P hP => Matrix.ext fun b a => ?_
-        rw [Matrix.of_apply, Matrix.of_apply, map_add, rho_eq_zero T.Q.H.bar ρ hs (hQI P hP) hbb (hpmem _), zero_add, map_nsmul,
+        rw [Matrix.of_apply, Matrix.of_apply, map_add (f := _), rho_eq_zero T.Q.H.bar ρ hs (hQI P hP) hbb (hpmem _), zero_add, map_nsmul,
           AddMonoidHom.nsmul_apply]
       · intro P hP
         ext b a
-        rw [Matrix.of_apply, map_add, rho_eq_zero T.Q.H.bar ρ hs (hPg P hP) hbb (hMmem _), add_zero]
+        rw [Matrix.of_apply, map_add (f := _), rho_eq_zero T.Q.H.bar ρ hs (hPg P hP) hbb (hMmem _), add_zero]
         rfl
     · rw [hφ, omegaFree] at hx
       have h1 : ∀ P ∈ R.Pg, (Matrix.of fun b a => ρ P a (x b)) = y₀ P := by

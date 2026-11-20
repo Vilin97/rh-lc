@@ -140,7 +140,7 @@ theorem exists_K_curve (Z : (isExpLieAlgebra E a).lieSubalgebra) (hZ : Z ∈ arc
 def typeSub {W : Type} [AddCommGroup W] [Module ℂ W] (ρ : Representation ℂ (Kinf E a) W) :
     Submodule ℂ (Sm E a) where
   carrier := {φ | ∀ g : GA E a, evK g φ ∈ GlobalTheory.Published.AutFin.coeffSpan ρ}
-  add_mem' hx hy g := by rw [map_add]; exact Submodule.add_mem _ (hx g) (hy g)
+  add_mem' hx hy g := by rw [map_add (f := _)]; exact Submodule.add_mem _ (hx g) (hy g)
   zero_mem' g := by rw [map_zero]; exact Submodule.zero_mem _
   smul_mem' c _ hx g := by rw [map_smul]; exact Submodule.smul_mem _ c (hx g)
 

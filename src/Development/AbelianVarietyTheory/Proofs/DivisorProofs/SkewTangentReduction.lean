@@ -56,11 +56,11 @@ theorem GlobalTheory.SUCong.skewTr_eq_reduced {A : Type} [CommRing A] {n : Type}
     set Z : Matrix n n S := Formalism.UG.cT σS Xs * Hs + Hs * Xs with hZ
     have e1 : Formalism.UG.cT σ (Xs.map S.subtype) * H + H * Xs.map S.subtype = Z.map S.subtype := by
       have : Z.map S.subtype = S.subtype.mapMatrix Z := rfl
-      rw [this, hZ, map_add, map_mul, map_mul, hHs]
+      rw [this, hZ, map_add (f := _), map_mul, map_mul, hHs]
       rfl
     have e2 : Formalism.UG.cT τ (Xs.map π) * H.map (red S ϖ) + H.map (red S ϖ) * Xs.map π = Z.map π := by
       have : Z.map π = π.mapMatrix Z := rfl
-      rw [this, hZ, map_add, map_mul, map_mul, hHr]
+      rw [this, hZ, map_add (f := _), map_mul, map_mul, hHr]
       congr 2
       ext i j
       simp only [Formalism.UG.cT, RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.transpose_apply]

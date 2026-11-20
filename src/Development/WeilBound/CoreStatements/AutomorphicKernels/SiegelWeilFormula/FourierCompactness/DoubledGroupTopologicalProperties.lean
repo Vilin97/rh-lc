@@ -75,7 +75,7 @@ theorem exists_compact_AE : ∃ C : Set (AE F E), IsCompact C ∧ ∀ z : AE F E
     refine ⟨(bsE F E).equivFun.symm (-y),
       (bsA F E).equivFun (inclR (F := F) (AF F) ((bsE F E).equivFun.symm (-y)) + z), ?_, ?_⟩
     · intro k _
-      rw [(bsA F E).equivFun_apply, map_add, Finsupp.add_apply, coord_inclR, hx, map_neg, neg_add_eq_sub]
+      rw [(bsA F E).equivFun_apply, map_add (f := _), Finsupp.add_apply, coord_inclR, hx, map_neg, neg_add_eq_sub]
       exact hy k
     · exact LinearEquiv.symm_apply_apply _ _
 
@@ -87,7 +87,7 @@ def ratMx (p q : ℕ) : AddSubgroup (Mx F E p q) :=
 theorem ratM_eq {σ : E →ₐ[F] E} (d : SD σ) : d.ratM = ratMx F E d.m d.n := rfl
 
 theorem incM_add {α β : Type} (X Z : Matrix α β E) : incM F (X + Z) = incM F X + incM F Z := by
-  simp [incM, Matrix.map_add]
+  simp [incM, Matrix.map_add (f := _)]
 
 theorem incM_neg {α β : Type} (X : Matrix α β E) : incM F (-X) = -incM F X := by
   simp [incM, Matrix.map_neg]

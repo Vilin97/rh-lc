@@ -111,7 +111,7 @@ theorem exists_cochain : ∀ (R : Type) [CommRing R] (X : Scheme.{0}) (s : X ⟶
       (by simpa only [map_sub, map_mul, GlobalTheory.AbLaw.rs_rs] using rs_mem_ext s I (le₁₂ V a c d) (he a c))
       (by simpa only [map_sub, map_mul, GlobalTheory.AbLaw.rs_rs] using rs_mem_ext s I (le₂₃ V a c d) (he c d))
       (tr_cocycle hM V j hj a c d) i₁ i₂ i₃
-    simpa only [map_sub, map_mul, map_add, map_one, GlobalTheory.AbLaw.rs_rs] using this
+    simpa only [map_sub, map_mul, map_add (f := _), map_one, GlobalTheory.AbLaw.rs_rs] using this
   · intro a c
     simp only [hT]
     have hx := rs_mem_ext s (𝔪 * I) (inf_le_right : V a ⊓ V c ≤ V c) (huw c)

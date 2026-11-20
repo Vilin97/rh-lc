@@ -20,7 +20,7 @@ theorem map_mem_span {σ ι : Type} (R : Type) [CommRing R] (g : ι → MvPolyno
     obtain ⟨i, rfl⟩ := hy
     exact Submodule.subset_span ⟨i, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | smul a y _ hy => rw [map_zsmul]; exact zsmul_mem hy a
 
 theorem weyl_finite (n : ℕ) (ν : Fin n → ℕ) (hν : Antitone ν) : Module.Finite ℤ (weyl ℤ n n le_rfl ν) := by

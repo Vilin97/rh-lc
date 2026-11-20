@@ -139,7 +139,7 @@ theorem exists_sq_of_parity {u w : (𝓞 E)ˣ} (h : even_im_hermitian_sub u = ev
       Additive.ofMul (w : (𝓞 E)ˣ ⧸ Units.torsion E) +
         (2 : ℤ) • Additive.ofMul (v : (𝓞 E)ˣ ⧸ Units.torsion E) := by
     apply (Units.basisModTorsion E).equivFun.injective
-    rw [map_add, map_smul, hv', LinearEquiv.apply_symm_apply]
+    rw [map_add (f := _), map_smul, hv', LinearEquiv.apply_symm_apply]
     funext i
     simp only [Module.Basis.equivFun_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     linear_combination hk i

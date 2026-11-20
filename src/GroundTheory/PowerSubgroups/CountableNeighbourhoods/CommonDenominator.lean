@@ -23,7 +23,7 @@ theorem exists_common_denominator {K : Type} [Field K] [NumberField K] {N : ℕ}
     intro i
     obtain ⟨w₁, h₁⟩ := hx i
     obtain ⟨w₂, h₂⟩ := hy i
-    exact ⟨w₁ + w₂, by rw [map_add, h₁, h₂, Pi.add_apply, mul_add]⟩
+    exact ⟨w₁ + w₂, by rw [map_add (f := _), h₁, h₂, Pi.add_apply, mul_add]⟩
   | smul a x _ hx =>
     intro i
     obtain ⟨w, h⟩ := hx i

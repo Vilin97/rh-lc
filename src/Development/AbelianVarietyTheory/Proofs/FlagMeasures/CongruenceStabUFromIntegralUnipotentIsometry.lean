@@ -203,7 +203,7 @@ theorem exists_isom (v : ι → S.V) (Γ A : Matrix ι ι E) (hΓ : ∀ p q, Γ 
       simp only [star_mulVec, hH, dotProduct_mulVec, vecMul_vecMul]
       rw [← add_dotProduct, ← add_dotProduct, ← vecMul_add, ← vecMul_add, hBm, vecMul_zero, zero_dotProduct]
     rw [hfx, hfy]
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [hW (B *ᵥ ux) (B *ᵥ uy), hT_comb_left v (B *ᵥ ux) y, hT_comb_right v (B *ᵥ uy) x, hcx, hcy]
     linear_combination key
   have hinj : Function.Injective f := by
@@ -720,7 +720,7 @@ theorem congruence_mem : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ 
     have e2 : (hS D).hT (D.sp.iXY 0 w') y = 0 := by rw [herm', e1, star_zero]
     have e3 : (hS D).hT y y = 0 := hyO y hyP
     have e4 : (hS D).hT (D.sp.iXY 0 w') (D.sp.iXY 0 w') = (D.sp.X 0).hT w' w' := D.sp.iXY_isom 0 hm0 w' w'
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [e1, e2, e3, e4]
     simp only [map_zero, add_zero]
     exact hposW (embS D τ0) w' hw'0

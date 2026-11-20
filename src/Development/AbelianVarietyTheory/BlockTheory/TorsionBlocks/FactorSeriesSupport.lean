@@ -39,7 +39,7 @@ theorem atFactor_central {ι : Type} {G : ι → Type} [∀ i, Group (G i)] (i :
     intro δ hδ y
     induction y using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [map_add, mul_add, add_mul, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), mul_add, add_mul, ha, hb]
     | single γ c =>
       rw [atFactor_single, MonoidAlgebra.single_mul_single, MonoidAlgebra.single_mul_single,
         one_mul, mul_one]

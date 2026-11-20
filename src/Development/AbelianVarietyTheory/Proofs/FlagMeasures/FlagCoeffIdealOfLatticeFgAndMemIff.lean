@@ -14,7 +14,7 @@ private theorem coefX_add_flag_measures {E : Type} [Field E] [NumberField E] [St
   unfold Formalism.MainNotions.S.FlagG.coefX
   rw [dif_pos hx, dif_pos hy, dif_pos hxy]
   have hsum : (⟨x + y, hxy⟩ : Submodule.span E (Set.range F.e)) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-  rw [hsum, map_add, Finsupp.add_apply]
+  rw [hsum, map_add (f := _), Finsupp.add_apply]
 
 private theorem coefX_smul_flag_measures {E : Type} [Field E] [NumberField E] [StarRing E] {S : Formalism.BasicNotions.HSpace E}
     {r : ℕ} {T : E} (F : Formalism.MainNotions.S.FlagG S r T) (a : Fin r) (c : E) {x : S.V}

@@ -122,7 +122,7 @@ def ModerateGrowthIso (D : D7) : Prop :=
 def ModerateGrowth (D : D7) : Prop := ∀ A B : HSp D, InRange A B → PairGrowth A B
 
 theorem half_add_half : half D + half D = 1 := by
-  rw [half, ← map_add, add_halves, map_one]
+  rw [half, ← map_add (f := _), add_halves, map_one]
 
 theorem fstCols_cols (x y : WO A B) : fstCols A B (cols A B x y) = x := by
   ext i j; simp [fstCols, cols]

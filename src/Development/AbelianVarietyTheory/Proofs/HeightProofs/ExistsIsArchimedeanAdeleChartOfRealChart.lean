@@ -39,7 +39,7 @@ theorem tensor_prod_ext {F E R A B : Type} [Field F] [Field E] [Algebra F E] [Co
     | zero => simp
     | tmul m x => simp [← TensorProduct.add_tmul, h]
     | add a b ha hb =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [add_add_add_comm, ← ha, ← hb]
   rw [key a, h1, h2]; simp
 
@@ -135,7 +135,7 @@ theorem exists_chart : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ ρ : (D
     { toFun := fun z => emb D 1 (ρ (reP _ z)) + emb D D.host.sqrtMinusD (ρ (imaginary _ (Real.sqrt D.host.d) z))
       map_zero' := by rw [(reP _).map_zero, (imaginary _ _).map_zero, ρ.map_zero, (emb D _).map_zero, (emb D _).map_zero, add_zero]
       map_add' := fun x y => by
-        rw [(reP _).map_add, (imaginary _ _).map_add, ρ.map_add, ρ.map_add, (emb D _).map_add, (emb D _).map_add,
+        rw [(reP _).map_add (f := _), (imaginary _ _).map_add (f := _), ρ.map_add (f := _), ρ.map_add (f := _), (emb D _).map_add (f := _), (emb D _).map_add (f := _),
           add_add_add_comm] }
   have hσ : ∀ z, σ z = emb D 1 (ρ (reP _ z)) + emb D D.host.sqrtMinusD (ρ (imaginary _ (Real.sqrt D.host.d) z)) :=
     fun _ => rfl
@@ -145,8 +145,8 @@ theorem exists_chart : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ ρ : (D
     have c2 : Continuous (imaginary D.what₂.Tau (Real.sqrt D.host.d)) :=
       continuous_pi fun τ => (Complex.continuous_im.comp (continuous_apply τ)).div_const _
     exact ((continuous_emb _).comp (hρ.comp c1)).add ((continuous_emb _).comp (hρ.comp c2))
-  · rw [hσ, RingHom.map_add, finPart_emb, finPart_emb, add_zero]
-  · rw [hσ, RingHom.map_add, infPart_emb, infPart_emb, RingHom.map_add, comp_tmul hθ τ _ D.host.sqrtMinusD, h1, h1,
+  · rw [hσ, RingHom.map_add (f := _), finPart_emb, finPart_emb, add_zero]
+  · rw [hσ, RingHom.map_add (f := _), infPart_emb, infPart_emb, RingHom.map_add (f := _), comp_tmul hθ τ _ D.host.sqrtMinusD, h1, h1,
       tauE_sqrtMinusD]
     show ((z τ).re : ℂ) + (((z τ).im / Real.sqrt D.host.d : ℝ) : ℂ) * _ = _
     have h2 : ((Real.sqrt D.host.d : ℝ) : ℂ) ≠ 0 := by exact_mod_cast hd.ne'
@@ -155,7 +155,7 @@ theorem exists_chart : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ ρ : (D
     have key : ∀ τ, θ τ (b₀ ⊗ₜ[D.host.F] (1 : D.host.E)) = 0 ∧ θ τ (b₁ ⊗ₜ[D.host.F] (1 : D.host.E)) = 0 := by
       intro τ
       have e := hi τ
-      rw [hb, RingHom.map_add, comp_tmul hθ τ _ D.host.sqrtMinusD, tauE_sqrtMinusD] at e
+      rw [hb, RingHom.map_add (f := _), comp_tmul hθ τ _ D.host.sqrtMinusD, tauE_sqrtMinusD] at e
       have r0 := Complex.conj_eq_iff_im.1 (conj_tmul_one hθ τ b₀)
       have r1 := Complex.conj_eq_iff_im.1 (conj_tmul_one hθ τ b₁)
       generalize θ τ (b₀ ⊗ₜ[D.host.F] (1 : D.host.E)) = p at *

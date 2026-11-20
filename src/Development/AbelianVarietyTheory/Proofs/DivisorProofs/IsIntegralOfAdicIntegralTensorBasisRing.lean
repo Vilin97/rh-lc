@@ -17,7 +17,7 @@ theorem isIntegral_of_isIntB : ∀ (v : HeightOneSpectrum ℤ) (C : Type) [Ring 
   have hsmul : ∀ (a : v.adicCompletionIntegers ℚ) (x : v.adicCompletion ℚ ⊗[ℚ] C),
       a • x = (a : v.adicCompletion ℚ) • x := fun a x => (algebraMap_smul (v.adicCompletion ℚ) a x).symm
   have hadd : ∀ x z, IsIntB v b x → IsIntB v b z → IsIntB v b (x + z) := fun x z hx hz i => by
-    rw [map_add, Finsupp.add_apply]; exact add_mem (hx i) (hz i)
+    rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hx i) (hz i)
   let S : Subalgebra (v.adicCompletionIntegers ℚ) (v.adicCompletion ℚ ⊗[ℚ] C) :=
     { carrier := {x | IsIntB v b x}
       mul_mem' := fun {x z} hx hz => hmul x z hx hz

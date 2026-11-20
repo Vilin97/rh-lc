@@ -60,7 +60,7 @@ theorem powerSum_finite {K : Type} [Fintype K] {ι : K → Type} (y : (Σ k, ι 
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
       | zero => simp
       | add a c _ _ ha hc =>
-        rw [map_add, add_mul]
+        rw [map_add (f := _), add_mul]
         exact add_mem ha hc
       | smul a z _ hz =>
         have h1 : Polynomial.C (a • z) * Polynomial.X ^ b =

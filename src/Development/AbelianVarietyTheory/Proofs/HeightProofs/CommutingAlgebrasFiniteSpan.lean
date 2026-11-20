@@ -28,7 +28,7 @@ def finVec (A : Subalgebra ℂ (Module.End ℂ M)) : Submodule ℂ M where
     have hx' : FiniteDimensional ℂ (orb A x) := hx
     have hy' : FiniteDimensional ℂ (orb A y) := hy
     have : orb A (x + y) ≤ orb A x ⊔ orb A y := orb_le fun a ha => by
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem_sup (apply_mem_orb A x ha) (apply_mem_orb A y ha)
     exact Submodule.finiteDimensional_of_le this
   zero_mem' := by

@@ -78,9 +78,9 @@ theorem entry_eq_one_add {w : Pl E} {N N' : Set (Af E)} (h0 : (0 : Af E) ∈ N')
     intro u
     change (cLoc u z).val i j = ((pLoc E u).comp (pFin E)) ((1 : Matrix (Fin n) (Fin n) (Ad E)) i j +
       (show Ad E from ((0 : InfiniteAdeleRing E), _)))
-    rw [map_add, map_one_entry]
+    rw [map_add (f := _), map_one_entry]
     change _ = _ + pLoc E u (GlobalTheory.GLTwoHecke.singleNU w _ + _)
-    rw [map_add]
+    rw [map_add (f := _)]
     by_cases huw : u = w
     · subst huw
       rw [pLoc_singleNU_self]

@@ -113,7 +113,7 @@ theorem isLat_dl (σ : E →ₐ[F] E) (J : Matrix (Fin N) (Fin N) E) (co : (Fin 
       have := hmi (co x a) (Finset.mem_biUnion.2 ⟨x, hx, Finset.mem_image.2 ⟨a, Finset.mem_univ _, rfl⟩⟩)
       rwa [zsmul_eq_mul] at this
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, Pi.add_apply, mul_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), Pi.add_apply, mul_add]; exact add_mem hx hy
     | smul t x _ hx =>
       rw [← algebraMap_smul E t x, map_smul, Pi.smul_apply, smul_eq_mul, mul_left_comm]
       exact mul_mem ⟨t, rfl⟩ hx

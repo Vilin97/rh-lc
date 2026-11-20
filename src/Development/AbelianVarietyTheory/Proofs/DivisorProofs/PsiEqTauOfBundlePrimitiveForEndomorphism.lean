@@ -324,7 +324,7 @@ theorem psi_eq_tau_of_bundle_primitive_for_endomorphism : ∀ (R : Type) [CommRi
   obtain ⟨JA, hJA⟩ := GlobalTheory.UU.exists_good_pt A.isLB (Z := (TFK (R := R) F).left) z
   have e₁ : (f p ≫ oA.act w) ^ 2 = (f p ^ 2) ≫ oA.act w := by rw [pow_two, pow_two, MonObj.mul_comp]
   have e₂ : (f p ≫ oA.act (1 + w)) ^ 2 = (f p ^ 2) * ((f p ^ 2) ≫ oA.act w) := by
-    rw [oA.map_add, oA.map_one, ← e₁, ← mul_pow]
+    rw [oA.map_add (f := _), oA.map_one, ← e₁, ← mul_pow]
     exact congrArg (· ^ 2) ((MonObj.comp_mul _ _ _).trans (congrArg₂ (· * ·) (Category.comp_id _) rfl))
   have h2 : (f p ^ 2) ^ 2 = 1 := by rw [← pow_mul]; exact h4
   have hv := vσ (TFK (R := R) F) (f p ^ 2) h2 z JA hJA

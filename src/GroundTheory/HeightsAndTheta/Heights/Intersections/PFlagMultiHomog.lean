@@ -94,7 +94,7 @@ theorem scaleHom_component (φ : MvPolynomial (Σ b, κ b) ℤ →+* R) (b : L �
     · rw [(isWeightedHomogeneous_monomial (NumbersDVR.blockWeight κ) d c
         (m := Finsupp.weight (NumbersDVR.blockWeight κ) d) rfl).weightedHomogeneousComponent_ne b
         (Ne.symm hdm), hmon.weightedHomogeneousComponent_ne b (Ne.symm hdm), map_zero]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 end Scale
 

@@ -82,7 +82,7 @@ theorem ChOK.dg [NeZero D.r] (hV2 : V2 K) {θ : (j : Fin D.J) → Fin (D.nch j) 
     approx_of_trunc (v := v) hC (D.costA_choose p hV2) T lam hlam f hf
   refine ⟨Formalism.MainNotions.PlaneGram.dg g G0, Formalism.MainNotions.PlaneGram.dg (fun α => f α - g α) G0 + Formalism.MainNotions.PlaneGram.dg f E,
     ?_, ?_, ?_, ?_⟩
-  · rw [h1, map_add, dg_sub_fun]; abel
+  · rw [h1, map_add (f := _), dg_sub_fun]; abel
   · have := cge_dg v (fun α => (vge_zero_iff v _).mpr (hg0 α)) h2
     rwa [zero_add] at this
   · refine cge_add v ?_ ?_

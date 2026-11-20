@@ -51,26 +51,26 @@ private theorem adj_bc {Λ : Type} [AddCommGroup Λ] (B : LinearMap.BilinForm �
     B.baseChange ℚ (f.baseChange ℚ u) w = B.baseChange ℚ u (g.baseChange ℚ w) := by
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]
   | tmul q x =>
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul r y => simp [LinearMap.BilinForm.baseChange_tmul, h]
 
 private theorem anti_bc {Λ : Type} [AddCommGroup Λ] (B : LinearMap.BilinForm ℤ Λ) (h : ∀ x, B x x = 0)
     (u w : ℚ ⊗[ℤ] Λ) : B.baseChange ℚ u w = - B.baseChange ℚ w u := by
   have anti : ∀ x y, B x y = - B y x := fun x y => by
     have := h (x + y)
-    simp only [map_add, LinearMap.add_apply, h, zero_add, add_zero] at this
+    simp only [map_add (f := _), LinearMap.add_apply, h, zero_add, add_zero] at this
     linarith
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]; ring
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]; ring
   | tmul q x =>
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]; ring
+    | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]; ring
     | tmul r y =>
       simp only [LinearMap.BilinForm.baseChange_tmul]
       rw [anti x y]

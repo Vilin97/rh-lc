@@ -90,12 +90,12 @@ def descCompl (l : k' →ₗ[k] k) (W : Submodule k (Fin n → k)) (U : Submodul
     · funext i
       have a := congrFun h1 i
       have b := congrFun h1' i
-      simp only [Pi.add_apply, map_add] at a b ⊢
+      simp only [Pi.add_apply, map_add (f := _)] at a b ⊢
       rw [← a, ← b]; ring
     · funext i
       have a := congrFun h2 i
       have b := congrFun h2' i
-      simp only [Pi.add_apply, map_add, Pi.zero_apply] at a b ⊢
+      simp only [Pi.add_apply, map_add (f := _), Pi.zero_apply] at a b ⊢
       rw [a, b, add_zero]
   smul_mem' := by
     rintro c v ⟨x, hx, u, hu, h1, h2⟩

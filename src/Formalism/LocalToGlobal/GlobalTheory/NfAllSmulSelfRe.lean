@@ -19,7 +19,7 @@ theorem map_aeval_sub (s : K →+* L) (f : (ι × Fin n × Fin n) → MvPolynomi
     MvPolynomial.map s (MvPolynomial.aeval f p) = MvPolynomial.aeval (fun v => MvPolynomial.map s (f v)) (MvPolynomial.map s p) := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [MvPolynomial.algebraMap_eq]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.map_X]
 
 theorem map_actAll (s : K →+* L) (lam : ι → DomWeight n) (g : ι → Matrix (Fin n) (Fin n) K)
@@ -68,13 +68,13 @@ variable (φ : E →+* ℂ) (hφ : ∀ a, φ (star a) = starRingEnd ℂ (φ a)) 
 theorem defect_add_left (x x' y : Fin n → E) : defect φ Y G (x + x') y = defect φ Y G x y + defect φ Y G x' y := by
   unfold defect
   have e : (fun i => φ ((x + x') i)) = (fun i => φ (x i)) + fun i => φ (x' i) := by funext i; simp
-  rw [e, Matrix.mulVec_add, star_add, add_dotProduct, star_add, add_dotProduct, map_add]
+  rw [e, Matrix.mulVec_add, star_add, add_dotProduct, star_add, add_dotProduct, map_add (f := _)]
   ring
 
 theorem defect_add_right (x y y' : Fin n → E) : defect φ Y G x (y + y') = defect φ Y G x y + defect φ Y G x y' := by
   unfold defect
   have e : (fun i => φ ((y + y') i)) = (fun i => φ (y i)) + fun i => φ (y' i) := by funext i; simp
-  rw [e, Matrix.mulVec_add, dotProduct_add, Matrix.mulVec_add, dotProduct_add, map_add]
+  rw [e, Matrix.mulVec_add, dotProduct_add, Matrix.mulVec_add, dotProduct_add, map_add (f := _)]
   ring
 
 include hφ in

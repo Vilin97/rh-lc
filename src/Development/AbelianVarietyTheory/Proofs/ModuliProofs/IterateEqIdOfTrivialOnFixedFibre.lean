@@ -49,7 +49,7 @@ theorem iterate_modN {V : Type} [AddCommGroup V] (N : ℕ) (e : LinearMap.BilinF
     have e1 : e (g v - v) w = (e (g v) (g w) - e v w) - (N : ℤ) * e (g v) c := by
       have : g w = w + N • c := by rw [← hc]; abel
       rw [this]
-      simp only [map_sub, map_add, map_nsmul, LinearMap.sub_apply, nsmul_eq_mul]
+      simp only [map_sub, map_add (f := _), map_nsmul, LinearMap.sub_apply, nsmul_eq_mul]
       ring
     rw [e1]
     exact dvd_sub (hg v w) (dvd_mul_right _ _)
@@ -62,7 +62,7 @@ theorem iterate_modN {V : Type} [AddCommGroup V] (N : ℕ) (e : LinearMap.BilinF
       obtain ⟨c, hc⟩ := ih
       refine ⟨g c + n • d, ?_⟩
       have : g (g v - v) = (g v - v) + N • d := by rw [← hd]; abel
-      rw [Function.iterate_succ_apply', hc, map_add, map_add, map_nsmul, map_nsmul, this]
+      rw [Function.iterate_succ_apply', hc, map_add (f := _), map_add (f := _), map_nsmul, map_nsmul, this]
       simp only [nsmul_add, succ_nsmul, smul_comm N n d]
       abel
   obtain ⟨c, hc⟩ := key N

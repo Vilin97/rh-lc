@@ -47,7 +47,7 @@ theorem conj_chi (j : ℤ) (a : ℝ) : (starRingEnd ℂ) (chi j a) = chi j (-a) 
 
 def weightSpace (j : ℤ) : Submodule ℂ H where
   carrier := {v | ∀ θ : ℝ, σ (kMat θ) v = chi j θ • v}
-  add_mem' {v w} hv hw θ := by simp [map_add, hv θ, hw θ, smul_add]
+  add_mem' {v w} hv hw θ := by simp [map_add (f := _), hv θ, hw θ, smul_add]
   zero_mem' θ := by simp
   smul_mem' c v hv θ := by simp [hv θ, smul_comm c]
 

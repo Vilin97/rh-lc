@@ -145,7 +145,7 @@ theorem isVBOn_dual_pull : ∀ (X X' : Scheme.{0}) (Ω Ω' : Type) [Field Ω] [F
           exact Submodule.subset_span ⟨k, rfl⟩
         | zero => simp
         | add y z _ _ hy hz =>
-          rw [map_add]
+          rw [map_add (f := _)]
           exact Submodule.add_mem _ hy hz
         | smul a y _ hy =>
           have : jW (a • y) = (⟨i a, hreg _ a.2⟩ : regAt ξ' q') • jW y := hsemi (a : Ω) y

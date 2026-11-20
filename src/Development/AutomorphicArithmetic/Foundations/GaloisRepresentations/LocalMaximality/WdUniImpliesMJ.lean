@@ -100,7 +100,7 @@ theorem UpperTheory.Gal.productCup_of_system.mJ_of :
         rw [← mul_pow]; simp
       linear_combination ((-1 : ℤ) ^ I.card * (-1 : ℤ) ^ ((p + 1) * L.card)) * this
     have hPQ' : T.act P + ((-1 : ℤ) ^ I.card) • T.act Q = 0 := by
-      rw [← map_zsmul, ← map_add, hPQ, map_zero]
+      rw [← map_zsmul, ← map_add (f := _), hPQ, map_zero]
     have := congrArg (fun f : Module.End ℂ E => f (((-1 : ℤ) ^ ((p + 1) * L.card)) • b J)) hPQ'
     simp only [LinearMap.add_apply, LinearMap.smul_apply, LinearMap.zero_apply] at this
     simp only [map_zsmul, smul_smul] at this ⊢

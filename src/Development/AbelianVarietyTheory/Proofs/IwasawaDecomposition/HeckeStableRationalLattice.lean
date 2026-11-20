@@ -123,7 +123,7 @@ theorem mem_span_solutions {R O : Type} [CommRing R] [CommRing O] [Algebra R O] 
         simp only [LinearMap.lTensor_tmul, TensorProduct.piScalarRight_apply, TensorProduct.piScalarRightHom_tmul, hg,
         Algebra.smul_def, map_sum, map_mul, Finset.sum_mul]
       exact Finset.sum_congr rfl fun t _ => by ring
-    | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy, add_mul, Finset.sum_add_distrib]
+    | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy, add_mul, Finset.sum_add_distrib]
   obtain ⟨z, rfl⟩ := (TensorProduct.piScalarRight R O O ι).surjective o
   have hz : g.lTensor O z = 0 := by
     apply (TensorProduct.piScalarRight R O O κ).injective
@@ -140,7 +140,7 @@ theorem mem_span_solutions {R O : Type} [CommRing R] [CommRing O] [Algebra R O] 
       simp [Algebra.smul_def, mul_comm]
     rw [this]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨c.1, fun k => congrFun c.2 k, rfl⟩)
-  | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
 
 theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : IntermediateField ℚ LL) {Ks : Type} [Field Ks]
     [Algebra Ks LL] (kKs : Ks →+* L0) (hk : ∀ x, ((kKs x : L0) : LL) = algebraMap Ks LL x)
@@ -169,7 +169,7 @@ theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : In
       ∀ x, Φ x = ∑ k, lam (B.repr x k) • ((1 : K) ⊗ₜ[Ks] (⟨bs k, hb k⟩ : WK)) :=
     ⟨{ toFun := fun x => ∑ k, lam (B.repr x k) • ((1 : K) ⊗ₜ[Ks] (⟨bs k, hb k⟩ : WK))
        map_zero' := by simp
-       map_add' := by intro x y; simp [map_add, add_smul, Finset.sum_add_distrib] },
+       map_add' := by intro x y; simp [map_add (f := _), add_smul, Finset.sum_add_distrib] },
      fun _ => rfl⟩
   have hco : ∀ w : WK, ∃ s : Fin n → Ks, w = ∑ k, s k • (⟨bs k, hb k⟩ : WK) ∧
       ∀ (l : LL) k, B.repr (l • (w : WL)) k = l * algebraMap Ks LL (s k) := by
@@ -210,7 +210,7 @@ theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : In
     obtain ⟨o, ho⟩ := hlint a
     exact ⟨o, by rw [key, ho]⟩
   refine ⟨{ carrier := {x | ∀ k, B.repr x k ∈ L0}
-            add_mem' := fun hx hy k => by rw [map_add, Finsupp.add_apply]; exact add_mem (hx k) (hy k)
+            add_mem' := fun hx hy k => by rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hx k) (hy k)
             zero_mem' := fun k => by rw [map_zero, Finsupp.zero_apply]; exact zero_mem _
             neg_mem' := fun hx k => by rw [map_neg, Finsupp.neg_apply]; exact neg_mem (hx k) }, ?_, ?_, ?_⟩
   · intro w k
@@ -247,7 +247,7 @@ theorem exists_integral_descent {LL : Type} [Field LL] [NumberField LL] (L0 : In
       map_one' := hinj (by rw [hs0]; simp)
       map_mul' := fun x y => hinj (by rw [map_mul, hs0, hs0, hs0]; simp)
       map_zero' := hinj (by rw [hs0]; simp)
-      map_add' := fun x y => hinj (by rw [map_add, hs0, hs0, hs0]; simp) }
+      map_add' := fun x y => hinj (by rw [map_add (f := _), hs0, hs0, hs0]; simp) }
   letI : Algebra (𝓞 L0) O := s.toAlgebra
   have hs : ∀ c : 𝓞 L0, algebraMap O K (algebraMap (𝓞 L0) O c) = rd c := hs0
   have hsinj : Function.Injective (algebraMap (𝓞 L0) O) := by
@@ -421,7 +421,7 @@ theorem GlobalTheory.HeightCounting.FormsStep.hkStab_all : ∀ (D : D7) (cf : Ch
         refine ho ▸ Submodule.smul_mem _ o ?_
         exact Submodule.subset_span ⟨⟨y, hMW y hy⟩, hy, hw _⟩
       | zero => intro a; rw [smul_zero, map_zero]; exact zero_mem _
-      | add y z _ _ hy hz => intro a; rw [smul_add, map_add]; exact add_mem (hy a) (hz a)
+      | add y z _ _ hy hz => intro a; rw [smul_add, map_add (f := _)]; exact add_mem (hy a) (hz a)
       | smul a' y _ hy => intro a; rw [smul_smul]; exact hy _
     intro y hy
     simpa using key y hy 1
@@ -490,7 +490,7 @@ theorem GlobalTheory.HeightCounting.FormsStep.hkStab_all : ∀ (D : D7) (cf : Ch
       simpa only [map_smul] using hc0 a
   | zero => simp
   | add o o' _ _ ho ho' =>
-    simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add]
+    simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add (f := _)]
     exact add_mem ho ho'
   | smul r o _ ho =>
     simp only [Pi.smul_apply, smul_eq_mul, mul_smul, ← Finset.smul_sum, LinearMap.map_smul_of_tower]

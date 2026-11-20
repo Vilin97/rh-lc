@@ -116,7 +116,7 @@ theorem coeff_l_frob {P : PS C 1 dd} (hP : IntS V P) (hPz : MvPowerSeries.consta
     conv_lhs => rw [hsplit]
     rw [MvPowerSeries.subst_add hG, MvPowerSeries.subst_add hG]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [eP, map_add, map_add, hA2', add_zero, hD3, map_sum]
+    rw [eP, map_add (f := _), map_add (f := _), hA2', add_zero, hD3, map_sum]
   have e : ∀ (a : C) (s t : Fin dd → C),
       a + ∑ i, s i - ∑ i, t i = a + ∑ i, (s i - t i) := fun a s t => by
     rw [Finset.sum_sub_distrib]
@@ -174,7 +174,7 @@ theorem coeff_lt_frob {P : PS C 1 dd} (hPz : MvPowerSeries.constantCoeff P = 0) 
         MvPowerSeries.subst (fun q : Fin 1 × Fin dd => γ q.2) (P - D1) := by
     conv_lhs => rw [show P = D1 + (P - D1) by ring]
     rw [MvPowerSeries.subst_add hG]
-  rw [eP, map_add, hA2', add_zero]
+  rw [eP, map_add (f := _), hA2', add_zero]
   exact hB1
 
 def LowMM (V : VF C) (f : PowerSeries C) : Prop := ∀ n ≤ V.l, V.MM (PowerSeries.coeff n f)

@@ -55,7 +55,7 @@ theorem piScalarRight_baseChange_funPermRep (X : Type*) [MulAction Γ X] [Fintyp
   | tmul r f =>
     funext y
     simp [LinearMap.baseChange_tmul, TensorProduct.piScalarRightHom_tmul]
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
 theorem exists_injective_intertwiner_funPermRep_of_card_fixedBy_eq [Finite Γ] {X X' : Type*}
     [MulAction Γ X] [MulAction Γ X'] [Finite X] [Finite X']

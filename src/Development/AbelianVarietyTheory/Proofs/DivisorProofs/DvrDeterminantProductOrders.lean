@@ -108,7 +108,7 @@ theorem shift_basis : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
     simp only [vec, Fin.append_left, Fin.append_right] at hg
     have h1 := congrArg (alC C D) hg
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, (hwQ _).2, smul_zero, Finset.sum_const_zero, zero_add,
+      simp only [map_add (f := _), map_sum, map_smul, (hwQ _).2, smul_zero, Finset.sum_const_zero, zero_add,
       htn, map_zero] at h1
     have hb : ∀ j, g (Fin.natAdd a j) = 0 :=
       (Fintype.linearIndependent_iff.1 hn.1) (fun j => g (Fin.natAdd a j)) h1

@@ -271,7 +271,7 @@ theorem besC_add (G : FormGaps D) (P : PerGaps ψ) (petF : HSp D → ℝ) (d : B
   by_cases h : EmbCond B A ι ∧ ∃ p, NPair d p
   · simp only [dif_pos h]
     rw [← mul_add, ← integral_add (bes_int G P d h φ F) (bes_int G P d h φ' F)]
-    simp only [map_add, Submodule.coe_add, Pi.add_apply, star_add, add_mul]
+    simp only [map_add (f := _), Submodule.coe_add, Pi.add_apply, star_add, add_mul]
   · simp only [dif_neg h, add_zero]
 
 theorem besC_smul (petF : HSp D → ℝ) (d : BesDat A B ι) (c : ℂ) (φ : afC D A) (F : cuspC D B) :

@@ -64,7 +64,7 @@ theorem segSum_single (rc : IrrGL (w.adicCompletion E) → WD h) (ρ : IrrGL (w.
     induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [WDRep.spEig, coe_qPow]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · obtain ⟨v, u⟩ := v
     show (TensorProduct.rid ℂ _) (TensorProduct.congr (.refl ℂ _) (LinearEquiv.funUnique (Fin 1) ℂ ℂ)
       (((a.tw ((((1 : ℕ) : ℝ) - 1) / 2)).tensor (WDRep.sp h 1)).N v)) = a.N ((TensorProduct.rid ℂ _)
@@ -72,7 +72,7 @@ theorem segSum_single (rc : IrrGL (w.adicCompletion E) → WD h) (ρ : IrrGL (w.
     induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [shiftEnd_apply]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem frobEig_unr {rc : IrrGL (w.adicCompletion E) → WD h} (H : IsRecLit h rc) (c : ℂˣ)
     (hc : IsSmoothChar (SmGL.unrChar (w.adicCompletion E) c)) :

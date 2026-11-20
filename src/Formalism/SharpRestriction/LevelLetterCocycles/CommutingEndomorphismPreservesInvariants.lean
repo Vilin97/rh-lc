@@ -176,7 +176,7 @@ theorem ext_sup (M N : Submodule R W) : ext R' ι (M ⊔ N) = ext R' ι M ⊔ ex
     rw [Submodule.span_le]
     rintro _ ⟨x, hx, rfl⟩
     obtain ⟨m, hm, n, hn, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ (Submodule.mem_sup_left (Submodule.subset_span ⟨m, hm, rfl⟩))
       (Submodule.mem_sup_right (Submodule.subset_span ⟨n, hn, rfl⟩))
   · exact sup_le (Submodule.span_mono (Set.image_mono (le_sup_left (a := M) (b := N))))
@@ -198,7 +198,7 @@ theorem range_th (P : Submodule R W) : LinearMap.range (th hι P) = ext R' ι P 
     | tmul a p =>
       rw [th_tmul]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨p, p.2, rfl⟩)
-    | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   · unfold ext
     rw [Submodule.span_le]
     rintro _ ⟨p, hp, rfl⟩
@@ -256,7 +256,7 @@ theorem relLen_ext_of_le [Module.Flat R R'] {N P : Submodule R W} (h : N ≤ P) 
       | tmul a n =>
         rw [LinearMap.baseChange_tmul, th_tmul]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, n.2, rfl⟩)
-      | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
   have hk : LinearMap.ker φ = LinearMap.ker ψ := by
     ext t
     rw [LinearMap.mem_ker, LinearMap.mem_ker, kφ, kψ]
@@ -344,7 +344,7 @@ theorem ext_span {R R' W W' : Type} [CommRing R] [CommRing R'] [Algebra R R'] [A
     induction hx using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       rw [map_smul, ← algebraMap_smul R' a (ι x)]
       exact Submodule.smul_mem _ _ hx
@@ -400,7 +400,7 @@ theorem gk_apply (t : Ok ⊗[O] Fm) :
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul a f => simp [gk]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem gk_comp : (gk O Ok O' Fm).restrictScalars O ∘ₗ TensorProduct.mk O Ok Fm 1 =
     TensorProduct.mk O O' Fm 1 := by
@@ -1058,7 +1058,7 @@ theorem rho_smul (a : Ok) (x : Ok ⊗[O] W) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul b w => simp [TensorProduct.smul_tmul', Algebra.smul_def]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 variable (O') in
 
@@ -1075,7 +1075,7 @@ theorem up_span (t : Set (Ok ⊗[O] W)) :
     induction hx using Submodule.span_induction with
     | mem x h => exact Submodule.subset_span ⟨x, h, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx => rw [rho_smul]; exact Submodule.smul_mem _ _ hx
   · exact Submodule.span_mono (Set.image_mono Submodule.subset_span)
 

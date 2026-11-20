@@ -161,7 +161,7 @@ theorem exists_restrictData_isVeryAmpleBy (hsp : primeOf (S := k) x ≤ primeOf 
     have haeval : ∀ p : Poly k N, aeval (fun l => y l / y i₀) p ∈ funField (k := k) y := fun p =>
       MvPolynomial.induction_on (motive := fun p => aeval (fun l => y l / y i₀) p ∈ funField (k := k) y) p
         (fun c => by rw [aeval_C]; exact IntermediateField.algebraMap_mem _ c)
-        (fun p q hp hq => by rw [map_add]; exact add_mem hp hq)
+        (fun p q hp hq => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq)
         (fun p l hp => by
           rw [map_mul, aeval_X]
           exact mul_mem hp (IntermediateField.subset_adjoin _ _ ⟨i₀, l, hy₀, rfl⟩))

@@ -93,25 +93,25 @@ theorem iB_tmul (P : PlaceMap F K) (a : K) (e : E) :
 theorem iB_mul (P : PlaceMap F K) (x y : K ⊗[F] E) : iB P (x * y) = iB P x * iB P y := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [add_mul, map_add, ha, hb]
+  | add a b ha hb => simp only [add_mul, map_add (f := _), ha, hb]
   | tmul a e =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add p q hp hq => simp only [mul_add, map_add, hp, hq]
+    | add p q hp hq => simp only [mul_add, map_add (f := _), hp, hq]
     | tmul b f => simp only [Algebra.TensorProduct.tmul_mul_tmul, iB_tmul, map_mul]
 
 theorem iB_sig (P : PlaceMap F K) (σ : E →ₐ[F] E) (x : K ⊗[F] E) :
     sigR (AF F) σ (iB P x) = iB P (sigR K σ x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a e => rfl
 
 theorem incl_mul_iB (P : PlaceMap F K) (t : E) (y : K ⊗[F] E) :
     inclR (AF F) t * iB P y = iB P (inclR K t * y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [mul_add, map_add, ha, hb]
+  | add a b ha hb => simp only [mul_add, map_add (f := _), ha, hb]
   | tmul a e =>
     change ((1 : AF F) ⊗ₜ[F] t) * (P.inj a ⊗ₜ[F] e) = iB P (((1 : K) ⊗ₜ[F] t) * (a ⊗ₜ[F] e))
     simp only [Algebra.TensorProduct.tmul_mul_tmul, iB_tmul, one_mul]
@@ -124,7 +124,7 @@ theorem iB_eq_coord [Module.Finite F E] (P : PlaceMap F K) {d : ℕ} (b : Module
   funext k
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add p q hp hq => simp only [map_add, Pi.add_apply, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), Pi.add_apply, hp, hq]
   | tmul a e =>
     rw [iB_tmul]
     simp only [Module.Basis.equivFun_apply, Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply,

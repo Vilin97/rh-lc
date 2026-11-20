@@ -121,7 +121,7 @@ theorem isIntegral_halfB' : IsIntegral ℤ ((1 - H.sqd) / 2) := by
   rwa [← sub_eq_add_neg] at h
 
 theorem conj_half (x : H.E) : H.conj ((1 + x) / 2) = (1 + H.conj x) / 2 := by
-  rw [map_div₀, map_add, map_one, map_ofNat]
+  rw [map_div₀, map_add (f := _), map_one, map_ofNat]
 
 theorem unram_at (P : Ideal (𝓞 H.E)) (hP : P.IsMaximal) :
     ∃ θ t : 𝓞 H.E, algebraMap (𝓞 H.E) H.E t = H.conj (algebraMap (𝓞 H.E) H.E θ) ∧ θ - t ∉ P := by
@@ -299,7 +299,7 @@ theorem π0_mem_K : π0 ∈ H0.K := by
 
 theorem π0_norm : π0 * H0.conj π0 = (T0 : H0.E) := by
   unfold π0
-  rw [map_add, map_one, map_mul, map_natCast, conj_bE]
+  rw [map_add (f := _), map_one, map_mul, map_natCast, conj_bE]
   have h := exampleSqrt_sq
   unfold T0 e0
   push_cast

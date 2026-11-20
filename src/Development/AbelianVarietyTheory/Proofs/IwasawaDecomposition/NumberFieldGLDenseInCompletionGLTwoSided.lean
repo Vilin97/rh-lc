@@ -70,9 +70,9 @@ theorem one_add_small {n : ℕ} (X : Matrix (Fin n) (Fin n) (P.adicCompletion E)
     (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).2 (hX r s).le
   let X' : Matrix (Fin n) (Fin n) O := fun r s => ⟨X r s, hmem r s⟩
   have hmap : O.subtype.mapMatrix (1 + X') = 1 + X := by
-    rw [map_add, map_one]; rfl
+    rw [map_add (f := _), map_one]; rfl
   have hq : (Ideal.Quotient.mk (smallIdeal P)).mapMatrix (1 + X') = 1 := by
-    rw [map_add, map_one, add_eq_left]
+    rw [map_add (f := _), map_one, add_eq_left]
     ext r s
     exact Ideal.Quotient.eq_zero_iff_mem.2 (hX r s)
   have hd : (1 + X').det - 1 ∈ smallIdeal P := by

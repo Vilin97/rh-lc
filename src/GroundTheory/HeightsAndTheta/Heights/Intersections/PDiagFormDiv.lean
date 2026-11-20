@@ -52,9 +52,9 @@ def fracPairs (c c' : (Σ k, ι k) → Φ) : Subring (Φ × Φ) where
     rintro w₁ w₂ ⟨γ₁, r₁, q₁, hr₁, hq₁, h₁, h₁', e₁, e₁'⟩ ⟨γ₂, r₂, q₂, hr₂, hq₂, h₂, h₂', e₂, e₂'⟩
     refine ⟨γ₁ + γ₂, r₁ * q₂ + q₁ * r₂, q₁ * q₂, homog_add (exHomog_mul hr₁ hq₂) (exHomog_mul hq₁ hr₂),
       exHomog_mul hq₁ hq₂, by simp [h₁, h₂], by simp [h₁', h₂'], ?_, ?_⟩
-    · simp only [map_add, map_mul, e₁, e₂, Prod.fst_add]
+    · simp only [map_add (f := _), map_mul, e₁, e₂, Prod.fst_add]
       ring
-    · simp only [map_add, map_mul, e₁', e₂', Prod.snd_add]
+    · simp only [map_add (f := _), map_mul, e₁', e₂', Prod.snd_add]
       ring
   mul_mem' := by
     rintro w₁ w₂ ⟨γ₁, r₁, q₁, hr₁, hq₁, h₁, h₁', e₁, e₁'⟩ ⟨γ₂, r₂, q₂, hr₂, hq₂, h₂, h₂', e₂, e₂'⟩
@@ -112,7 +112,7 @@ theorem X_sub_X_dvd {R : Type} [CommRing R] (P : MvPolynomial (Fin 2) R) :
   induction P using MvPolynomial.induction_on with
   | C a => simp
   | add p q hp hq =>
-    rw [map_add, add_sub_add_comm]
+    rw [map_add (f := _), add_sub_add_comm]
     exact dvd_add hp hq
   | mul_X p n hp =>
     rw [map_mul, aeval_X]
@@ -151,7 +151,7 @@ def blockScale {M : Type} (u₁ u₂ u₃ u₄ : M) : T.WBlk → M
 theorem lineVal_comb (e : Module.Basis (Fin 2) Ω E) (φ₀ φ₁ : E →ₗ[Ω] Ω) (c₀ c₁ : Ω) (b : Φ) :
     T.lineVal e (c₀ • φ₀ + c₁ • φ₁) b =
       algebraMap Ω Φ c₀ * T.lineVal e φ₀ b + algebraMap Ω Φ c₁ * T.lineVal e φ₁ b := by
-  simp only [T.lineVal, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_add, map_mul]
+  simp only [T.lineVal, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
   ring
 
 theorem wwCoord_eq (x : ι → Ω) (δ : ν → Ω) (e : Module.Basis (Fin 2) Ω E) (φ : κ → E →ₗ[Ω] Ω) (F : Subfield Ω)

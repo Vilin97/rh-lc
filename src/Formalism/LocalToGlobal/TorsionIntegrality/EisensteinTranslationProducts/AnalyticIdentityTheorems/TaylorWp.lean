@@ -119,7 +119,7 @@ theorem weierstrass_series_unique : IsWpUnique := by
           + X ^ 2 * (4 * ((1 + X ^ 2 * P) ^ 2 + (1 + X ^ 2 * P) * (1 + X ^ 2 * Q)
               + (1 + X ^ 2 * Q) ^ 2) - C g2 * X ^ 4) * hE
       have h0 := congrArg constantCoeff hc
-      simp only [map_mul, map_add, map_sub, map_neg, map_pow, map_natCast, map_ofNat, map_one,
+      simp only [map_mul, map_add (f := _), map_sub, map_neg, map_pow, map_natCast, map_ofNat, map_one,
         constantCoeff_X, constantCoeff_C] at h0
       have h1 : (4 * (n : K) + 12) * constantCoeff E = 0 := by
         linear_combination -h0

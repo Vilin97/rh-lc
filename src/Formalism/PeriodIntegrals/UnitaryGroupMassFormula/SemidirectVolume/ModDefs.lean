@@ -41,7 +41,7 @@ def Sk (r : ℕ) : AddSubgroup (Fin r → Fin r → R ⊗[F] E) where
   zero_mem' := by intro a b; simp
   add_mem' := by
     intro x y hx hy a b
-    simp only [Set.mem_ofPred_eq, Pi.add_apply, map_add] at *
+    simp only [Set.mem_ofPred_eq, Pi.add_apply, map_add (f := _)] at *
     rw [add_add_add_comm, hx a b, hy a b, add_zero]
   neg_mem' := by
     intro x hx a b

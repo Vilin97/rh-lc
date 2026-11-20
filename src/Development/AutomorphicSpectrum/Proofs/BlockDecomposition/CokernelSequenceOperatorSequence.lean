@@ -58,7 +58,7 @@ theorem cokOpSeq {X : Scheme.{0}} {k : ℕ} {M : ℕ → X.Modules}
       rw [map_zero]
       exact Submodule.zero_mem _
     | add a b _ _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ ha hb
     | smul r a _ ha =>
       rw [Scheme.Modules.Hom.app_smul]

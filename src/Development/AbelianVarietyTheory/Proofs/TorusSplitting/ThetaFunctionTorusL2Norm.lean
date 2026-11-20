@@ -44,7 +44,7 @@ open MeasureTheory in
 theorem _root_.GlobalTheory.EtaAn.ThetaTorus.Hf_add_re {κ : Type} [Fintype κ] (v w : EuclideanSpace ℂ κ) :
     (_root_.ReciprocityTheory.ChartRestriction.G.I2.Hf (v + w) (v + w)).re = (_root_.ReciprocityTheory.ChartRestriction.G.I2.Hf v v).re + 2 * (_root_.ReciprocityTheory.ChartRestriction.G.I2.Hf v w).re + (_root_.ReciprocityTheory.ChartRestriction.G.I2.Hf w w).re := by
   unfold _root_.ReciprocityTheory.ChartRestriction.G.I2.Hf
-  simp only [PiLp.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib, Complex.add_re,
+  simp only [PiLp.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib, Complex.add_re,
     Complex.re_sum]
   have hsym : ∀ i, (w.ofLp i * (starRingEnd ℂ) (v.ofLp i)).re
       = (v.ofLp i * (starRingEnd ℂ) (w.ofLp i)).re := by
@@ -84,7 +84,7 @@ theorem _root_.GlobalTheory.EtaAn.ThetaTorus.theta_section_l2_torus :
     · intro p hp v
       obtain ⟨a, ha⟩ := (hL (p 0)).1 (hp 0)
       have h1 : ψ.symm ((v + p) 0) = ψ.symm (v 0) + Pm a := by
-        rw [Pi.add_apply, map_add, ← ha, ψ.symm_apply_apply]
+        rw [Pi.add_apply, map_add (f := _), ← ha, ψ.symm_apply_apply]
       simp only [h1, hper, hIJ, Fin.prod_univ_one, ← ha, heps, ψ.symm_apply_apply, Nat.cast_one,
         _root_.one_mul, pow_one]
       ring_nf
@@ -128,7 +128,7 @@ theorem _root_.GlobalTheory.EtaAn.ThetaTorus.theta_section_l2_torus :
       show ‖θ (Pm a + z)‖ ^ 2 * Real.exp (-Real.pi * (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm Hm (Pm a + z) (Pm a + z)).re)
         = ‖θ z‖ ^ 2 * Real.exp (-Real.pi * (_root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.hermForm Hm z z).re)
       have hexp := _root_.GlobalTheory.EtaAn.ThetaTorus.Hf_add_re (ψ z) (ψ (Pm a))
-      rw [← map_add] at hexp
+      rw [← map_add (f := _)] at hexp
       simp only [hψ] at hexp
       have hs : ‖((((Int.negOnePow (D.EF a (H.w0 • a)) : ℤˣ) : ℤ) : ℂ))‖ = 1 := by
         rcases Int.units_eq_one_or (Int.negOnePow (D.EF a (H.w0 • a))) with h | h <;> simp [h]

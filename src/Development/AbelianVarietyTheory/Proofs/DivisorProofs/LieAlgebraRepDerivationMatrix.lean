@@ -103,7 +103,7 @@ theorem exists_complexLinear_bracket_ext : ∀ (n : ℕ) (A : Matrix (Fin n) (Fi
       D ((p + Complex.I • q) * (p' + Complex.I • q') - (p' + Complex.I • q') * (p + Complex.I • q)) =
         D (p + Complex.I • q) * D (p' + Complex.I • q') - D (p' + Complex.I • q') * D (p + Complex.I • q) := by
     intro p q p' q' hp hq hp' hq'
-    rw [commutator_add_I_smul, map_sub, map_add, map_add, map_smul, map_smul, hDs _ (sbr _ _ hp hp'),
+    rw [commutator_add_I_smul, map_sub, map_add (f := _), map_add (f := _), map_smul, map_smul, hDs _ (sbr _ _ hp hp'),
       hDs _ (sbr _ _ hp hq'), hDs _ (sbr _ _ hq hp'), hDs _ (sbr _ _ hq hq'), hbr _ _ hp hp', hbr _ _ hp hq',
       hbr _ _ hq hp', hbr _ _ hq hq', map_add, map_add, map_smul, map_smul, hDs _ hp, hDs _ hq, hDs _ hp', hDs _ hq',
       commutator_add_I_smul]

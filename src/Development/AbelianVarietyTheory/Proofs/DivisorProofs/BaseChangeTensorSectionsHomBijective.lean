@@ -43,7 +43,7 @@ theorem tensHom_bijective : ∀ (R₀ R₁ : Type) [CommRing R₀] [CommRing R�
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul r b => rw [tensHom_tmul, Algebra.IsPushout.equiv_tmul]; rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have : ⇑(tensHom hp.w U hU) = ⇑(Algebra.IsPushout.equiv R₀ R₁ (Sec s₀ U.1) (Sec s₁ (pr ⁻¹ᵁ U.1))) := funext e
   rw [this]
   exact (Algebra.IsPushout.equiv R₀ R₁ (Sec s₀ U.1) (Sec s₁ (pr ⁻¹ᵁ U.1))).bijective

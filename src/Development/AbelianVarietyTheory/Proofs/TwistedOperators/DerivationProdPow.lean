@@ -55,7 +55,7 @@ private theorem derivation_pow_of_eigen {A : Type*} [CommRing A] [Algebra ℂ A]
   | succ k ih =>
     rw [pow_succ, D.leibniz, ih, h]
     simp only [smul_eq_mul]
-    simp only [Algebra.smul_def, map_mul, map_natCast, Nat.cast_succ, map_add, map_one]
+    simp only [Algebra.smul_def, map_mul, map_natCast, Nat.cast_succ, map_add (f := _), map_one]
     ring
 
 private theorem derivation_prod_of_eigen {A ι : Type*} [CommRing A] [Algebra ℂ A] (D : Derivation ℂ A A)
@@ -67,7 +67,7 @@ private theorem derivation_prod_of_eigen {A ι : Type*} [CommRing A] [Algebra �
   · intro a s ha ih
     rw [Finset.prod_insert ha, D.leibniz, ih, h, Finset.sum_insert ha]
     simp only [smul_eq_mul]
-    simp only [Algebra.smul_def, map_add]
+    simp only [Algebra.smul_def, map_add (f := _)]
     ring
 
 theorem derivation_prod_pow {A ι : Type*} [CommRing A] [Algebra ℂ A]

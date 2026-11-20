@@ -84,7 +84,7 @@ theorem infOf_ratA_add [Fintype κ] (ξ : κ → F) (a : κ → AF F) :
   funext i
   show InfiniteAdeleRing.ringEquiv_mixedSpace F (algebraMap F (InfiniteAdeleRing F) (ξ i) + (a i).1) =
     mixedEmbedding F (ξ i) + InfiniteAdeleRing.ringEquiv_mixedSpace F (a i).1
-  rw [map_add, InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp F]
+  rw [map_add (f := _), InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp F]
 
 theorem finOf_ratA_add (ξ : κ → F) (a : κ → AF F) :
     finOf (ratA ξ + a) = (fun i => algebraMap F (FiniteAdeleRing (𝓞 F) F) (ξ i)) + finOf a := rfl

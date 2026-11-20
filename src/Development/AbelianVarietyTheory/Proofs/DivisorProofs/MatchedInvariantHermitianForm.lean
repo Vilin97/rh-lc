@@ -57,7 +57,7 @@ theorem exists_invariant_form : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
       rw [← Lsmul, ← Ladd, ← Lsmul, ← Ladd, Lnorm, Lnorm]
       congr 1
       have e : ((x' + c • y' : D) : GlobalTheory.ThK.Fn F a' (a + a')) = om' (1, k) ((x + c • y : D) : GlobalTheory.ThK.Fn F a' (a + a')) := by
-        simp only [Submodule.coe_add, Submodule.coe_smul, map_add, map_smul, hx, hy]
+        simp only [Submodule.coe_add, Submodule.coe_smul, map_add (f := _), map_smul, hx, hy]
       rw [e]
       have u := U μ hH (1, k) _ (memS (x + c • y))
       rw [eLpNorm_eq_lintegral_rpow_enorm two_ne_zero ENNReal.ofNat_ne_top,

@@ -223,7 +223,7 @@ theorem norm_all {l : ℕ} [hl : Fact l.Prime] {m : ℕ} (U : Matrix (Fin m) (Fi
     rfl
   have e2 : ∀ t : ℕ, Polynomial.aeval U (F + (t : ℤ[X])) =
       Polynomial.aeval U F + (t : ℤ_[l]) • (1 : Matrix (Fin m) (Fin m) ℤ_[l]) := fun t => by
-    rw [map_add, map_natCast, Nat.cast_smul_eq_nsmul, nsmul_one]
+    rw [map_add (f := _), map_natCast, Nat.cast_smul_eq_nsmul, nsmul_one]
   have h := tendsto_nhds_unique_of_eventuallyEq ((c1.tendsto 0).comp t0) ((c2.tendsto 0).comp t0)
     (((tendsto_pow_atTop_atTop_of_one_lt hl.out.one_lt).eventually (hG F)).mono fun k hk => by
       have := hn _ hk

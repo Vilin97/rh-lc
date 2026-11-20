@@ -72,7 +72,7 @@ lemma ext_decomp (f g : V →ₗ[E] E) (he : ∀ a : Fin r, f (Fr.f a.castSucc) 
     (hs : ∀ a, f (Fr.es a) = g (Fr.es a)) (hw : ∀ w, InW Fr w → f w = g w) (u : V) : f u = g u := by
   rw [decomp Fr u]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_smul, he, hs, hw _ (prF_inW Fr u)]
+    simp only [map_add (f := _), map_sum, map_smul, he, hs, hw _ (prF_inW Fr u)]
 
 end Frame
 

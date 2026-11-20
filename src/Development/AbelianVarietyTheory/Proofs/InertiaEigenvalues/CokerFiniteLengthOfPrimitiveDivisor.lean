@@ -49,7 +49,7 @@ theorem exists_finset_reps {O K : Type} [CommRing O] [NormedField K] [IsUltramet
   set d := f - q * g - r' with hd
   have hdn : ∀ n, ‖coeff n d‖ ≤ ‖c‖ := fun n => by
     have : d = (f - q * g - r) + (r - r') := by rw [hd]; ring
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hrem n) ?_)
     rw [map_sub, hcoeff]
     split_ifs with h

@@ -106,7 +106,7 @@ theorem lagrange_resolvent_kills_class : StatLagrangeKill := by
   intro ℓ _ O _ _ S₁ S₂ c sg P _ _ g hdisj hassoc h1 h2 x
   obtain ⟨p₁, p₂, hp⟩ := Ideal.mem_span_pair.1 (lagrange_annihilation ℓ O S₁ S₂ c sg hdisj hassoc)
   have h3 : aeval g (C ((ℓ : O) ^ lagE ℓ sg S₁ S₂)) = 0 := by
-    rw [← hp, map_add, map_mul, map_mul, h1, h2, mul_zero, mul_zero, add_zero]
+    rw [← hp, map_add (f := _), map_mul, map_mul, h1, h2, mul_zero, mul_zero, add_zero]
   rw [aeval_C, Algebra.algebraMap_eq_smul_one] at h3
   have h4 : (((ℓ : O) ^ lagE ℓ sg S₁ S₂) • (1 : Module.End O P)) x = (0 : Module.End O P) x := by
     rw [h3]

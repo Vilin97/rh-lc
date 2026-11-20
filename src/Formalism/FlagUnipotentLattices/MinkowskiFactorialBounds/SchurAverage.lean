@@ -428,7 +428,7 @@ theorem absolute_value_bound : AbsA := by
     (by intro x x' y; simp only [inner_add_right, add_mul, Finset.sum_add_distrib])
     (by intro c x y; simp only [inner_smul_right, RingHom.id_apply, smul_eq_mul, Finset.mul_sum]
         refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)
-    (by intro x y y'; simp only [inner_add_right, map_add, mul_add, add_mul, Finset.sum_add_distrib])
+    (by intro x y y'; simp only [inner_add_right, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib])
     (by intro c x y; simp only [inner_smul_right, map_mul, smul_eq_mul, Finset.mul_sum]
         refine Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring)
   have hBapp : ∀ w₁ w₂, B w₁ w₂ =

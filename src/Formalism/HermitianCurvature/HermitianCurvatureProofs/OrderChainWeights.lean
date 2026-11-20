@@ -108,7 +108,7 @@ theorem rOrderSelfDual_statement : Formalism.FourierDecayAlt.S3.ROrderSelfDual :
       rw [map_one, mul_one, mul_one]
     have hd : y1 + y2 = ϖ * y3 := by
       apply hinj
-      rw [map_add, map_mul, e1, e2, e3]
+      rw [map_add (f := _), map_mul, e1, e2, e3]
       field_simp
       try ring
     refine ⟨⟨(y1, -y2), (mem_ROrd _).mpr ?_⟩, e1, ?_⟩

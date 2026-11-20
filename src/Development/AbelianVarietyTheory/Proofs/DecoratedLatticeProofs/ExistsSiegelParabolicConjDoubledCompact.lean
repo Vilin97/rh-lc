@@ -24,7 +24,7 @@ theorem compInf_sigR_comm {F E : Type} [Field F] [NumberField F] [Field E] [Alge
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r y => simp [compInf, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem compInf_inclR_eq {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E]
     (w : NumberField.InfinitePlace F) (y : E) :

@@ -290,7 +290,7 @@ theorem prH_mem_KAt {B : Base F E} {K : Subgroup (UA σ X.J)} (hK : IsStab B K) 
     rw [realAd_one_fst]; rfl
   have e : (mat (prH σ X.J (idem_realAd F) k)).map (piInf (B.emb w)) = (mat k).map (piInf (B.emb w)) := by
     ext i j
-    simp only [mat_prH, pr, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, piInf, RingHom.comp_apply, map_add,
+    simp only [mat_prH, pr, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, piInf, RingHom.comp_apply, map_add (f := _),
       compInf_smul, map_sub, map_one, h1, sub_self, zero_smul, one_smul, map_zero, add_zero]
   rw [e]
   exact ((hK k).1 hk).1 w

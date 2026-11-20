@@ -137,7 +137,7 @@ theorem galMap_eq_neg_one_one_one_iff_eq_zeta_inversion (hqd : HypOdd q d) (h : 
 
 theorem apply_theta {N : ℕ} [NeZero N] (hζ : IsPrimitiveRoot ζ N) (τ : Gal(L/ℚ)) :
     τ (ζ + ζ⁻¹) = ζ ^ (hζ.autToPow ℚ τ : ZMod N).val + ζ⁻¹ ^ (hζ.autToPow ℚ τ : ZMod N).val := by
-  rw [map_add, map_inv₀, ← hζ.autToPow_spec ℚ τ, inv_pow]
+  rw [map_add (f := _), map_inv₀, ← hζ.autToPow_spec ℚ τ, inv_pow]
 
 theorem two_lt (e : ℕ) : 2 < 2 ^ (e + 2) := by
   have h4 : 2 ^ 2 ≤ 2 ^ (e + 2) := Nat.pow_le_pow_right (by norm_num) (by omega)

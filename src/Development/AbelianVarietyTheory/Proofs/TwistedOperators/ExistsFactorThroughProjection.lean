@@ -30,7 +30,7 @@ theorem exists_factor_through_projection {J : Type} [Fintype J] [DecidableEq J] 
       map_one' := hone
       map_mul' := fun a b => by rw [hmul, map_mul]
       map_zero' := by simp
-      map_add' := fun a b => by rw [Pi.single_add, map_add] }
+      map_add' := fun a b => by rw [Pi.single_add, map_add (f := _)] }
   refine ⟨i, ψ, fun x => ?_⟩
   change χ x = χ (Pi.single i (x i))
   have hx : (Pi.single i (x i) : (j : J) → A j) = x * Pi.single i (1 : A i) := by

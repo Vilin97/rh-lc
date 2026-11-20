@@ -83,7 +83,7 @@ theorem mem_projB_iff {P D : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (hP : IsMult
       rw [hsec, away_eq_mk_of_val hP p _ hhom _ (val_polyToAway_mul_pow hP p ha)]
       exact (evaluation_awayToSection_eq_zero_iff _ _ x hx _).mpr (hx' ⟨_, hrn, rfl⟩)
     | zero => simp
-    | add f g _ _ h1 h2 => simp only [map_add, h1, h2, add_zero]
+    | add f g _ _ h1 h2 => simp only [map_add (f := _), h1, h2, add_zero]
     | smul a f _ h1 => simp only [smul_eq_mul, map_mul, h1, mul_zero]
   · intro h g hg
     obtain ⟨g, hg, rfl⟩ := hg

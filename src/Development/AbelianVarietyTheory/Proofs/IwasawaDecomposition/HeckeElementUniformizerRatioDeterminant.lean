@@ -47,7 +47,7 @@ theorem pow_mem_int {D : D7} {x : Formalism.MainNotions.GlobalTheoryTheory.Genus
 theorem unit_mem {D : D7} {e a : Formalism.L2.Theta.AE D} (hee : e * e = e) (ha : finPart D (e * a) ∈ intAE D) (d : ℕ) :
     finPart D (e * a ^ d + (1 - e)) ∈ intAE D := by
   have he : finPart D e ∈ intAE D := GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← RingHom.map_mul, hee])
-  rw [← idem_mul_pow hee a d, RingHom.map_add, RingHom.map_sub, RingHom.map_one, RingHom.map_mul, RingHom.map_pow]
+  rw [← idem_mul_pow hee a d, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_one, RingHom.map_mul, RingHom.map_pow]
   exact add_mem (GlobalTheory.HeckeConj.mul_mem_intAE D he (pow_mem_int ha d)) (sub_mem (GlobalTheory.HeckeConj.one_mem_intAE D) he)
 
 theorem det_castGL {R : Type} [CommRing R] {m n : ℕ} (h : m = n) (g : GL (Fin m) R) :

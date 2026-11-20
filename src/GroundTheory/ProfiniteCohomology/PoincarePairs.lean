@@ -104,7 +104,7 @@ theorem tensorHom_coindDualHom_dualEvalPairing (U : OpenSubgroup G) :
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul μ f => rfl
-  | add z z' hz hz' => simp only [map_add, hz, hz']
+  | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
 
 omit [NeZero n] in
 
@@ -120,7 +120,7 @@ theorem tensorHom_zmodDualIso_zmodMulPairingRight {K : Type u} [Group K]
     change zmodMulAddHom n hE a (ν (ULift.up 1)) = ν (ULift.up a)
     rw [zmodMulAddHom_apply]
     exact (dualRep_zmodRep_apply n E ν a).symm
-  | add z z' hz hz' => simp only [map_add, hz, hz']
+  | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
 
 variable {D}
 

@@ -89,7 +89,7 @@ theorem GlobalTheory.K5.span_fixed_ggeo_stab : ∀ (p : ℕ) [Fact p.Prime] (Ω 
   have hRd : R.natDegree < p ^ N := hQd ▸ natDegree_modByMonic_lt P hQm hQ1
   have hR : aeval (T.qq N) R = y := by
     have e := congrArg (aeval (T.qq N)) (modByMonic_add_div P Q)
-    rw [map_add, map_mul, hQq, zero_mul, add_zero] at e
+    rw [map_add (f := _), map_mul, hQq, zero_mul, add_zero] at e
     rw [e]; exact hP
   refine ⟨fun j => ((R.coeff j : L) : Ω), fun j g hg => ggeo_fix_baseField hg (R.coeff j).2, ?_⟩
   rw [← hR, aeval_eq_sum_range' hRd]

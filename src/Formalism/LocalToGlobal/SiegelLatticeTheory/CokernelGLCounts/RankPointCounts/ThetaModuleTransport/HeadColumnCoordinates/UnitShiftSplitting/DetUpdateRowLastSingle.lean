@@ -107,8 +107,8 @@ theorem card_isoMbe_shift (Z₁ Z₂ : Matrix (Fin (r + 1)) (Fin (r + 1)) R) (c 
   · have k : (mbeShift Z₁ c).symm (eCl Z₁) = eCl (Z₁ + cornerM r c) := by
       rw [LinearEquiv.symm_apply_eq, he₁]
     simp only [LinearEquiv.trans_apply, k, γ.2.2, he₂]
-  · simp only [LinearEquiv.trans_apply, hb₁, map_add, map_smul, δ.2.1, δ.2.2]
-    rw [← map_smul, ← map_add, LinearEquiv.symm_apply_eq, hb₂]
+  · simp only [LinearEquiv.trans_apply, hb₁, map_add (f := _), map_smul, δ.2.1, δ.2.2]
+    rw [← map_smul, ← map_add (f := _), LinearEquiv.symm_apply_eq, hb₂]
   · simp only [LinearEquiv.trans_apply, he₁, δ.2.2]
     rw [LinearEquiv.symm_apply_eq, he₂]
   · intro γ

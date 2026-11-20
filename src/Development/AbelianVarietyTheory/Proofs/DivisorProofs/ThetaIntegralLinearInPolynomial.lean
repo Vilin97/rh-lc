@@ -35,7 +35,7 @@ theorem exists_linearMap : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     have hΨS := hPol hΨ
     funext h
     have e : ∀ g, theta om (Φ + Ψ) g h = theta om Φ g h + theta om Ψ g h := fun g => by
-      simp only [theta, map_add]
+      simp only [theta, map_add (f := _)]
       exact GlobalTheory.WeilM.thetaSum_add F (pres _ Φ hΦS) (pres _ Ψ hΨS)
     show G.M.I om (Φ + Ψ) h = G.M.I om Φ h + G.M.I om Ψ h
     simp only [Model.I, e]

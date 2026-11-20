@@ -10,7 +10,7 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E] {δ : F} {θ : E} {σ : 
 
 theorem IsQuad.conj_coord (h : IsQuad δ θ σ) (a b : F) :
     σ (algebraMap F E a + algebraMap F E b * θ) = algebraMap F E a - algebraMap F E b * θ := by
-  rw [map_add, map_mul, AlgEquiv.commutes, AlgEquiv.commutes, h.conj]; ring
+  rw [map_add (f := _), map_mul, AlgEquiv.commutes, AlgEquiv.commutes, h.conj]; ring
 
 open NumberField IsDedekindDomain in
 open scoped WithZero in
@@ -88,14 +88,14 @@ theorem _root_.GlobalTheory.QNorm.isQuad_basic : ∀ (F E : Type) [Field F] [Cha
     simp [AlgEquiv.commutes, hc]
   · intro x hx
     obtain ⟨a, b, rfl⟩ := h.span x
-    simp only [map_add, map_mul, AlgEquiv.commutes, hc] at hx
+    simp only [map_add (f := _), map_mul, AlgEquiv.commutes, hc] at hx
     have := t1 0 (2 * b) (by simp only [map_zero, map_mul, map_ofNat]; linear_combination -hx)
     have hb : b = 0 := by simpa using this.2
     exact ⟨a, by simp [hb]⟩
   · intro x
     obtain ⟨a, b, rfl⟩ := h.span x
     refine ⟨a, b, ?_⟩
-    simp only [map_add, map_mul, AlgEquiv.commutes, hc, map_sub, map_pow]
+    simp only [map_add (f := _), map_mul, AlgEquiv.commutes, hc, map_sub, map_pow]
     linear_combination (-(algebraMap F E b) ^ 2) * hs
   · intro x hx
     by_cases h1 : x = -1
@@ -105,7 +105,7 @@ theorem _root_.GlobalTheory.QNorm.isQuad_basic : ∀ (F E : Type) [Field F] [Cha
       have hσy : σ (1 + x) ≠ 0 := by
         rwa [ne_eq, map_eq_zero_iff _ σ.injective]
       refine ⟨1 + x, hy, ?_⟩
-      rw [eq_div_iff hσy, map_add, map_one]
+      rw [eq_div_iff hσy, map_add (f := _), map_one]
       linear_combination hx
   · rintro u ⟨y, hy⟩
     obtain ⟨a, b, rfl⟩ := h.span y

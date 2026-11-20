@@ -190,7 +190,7 @@ theorem proof : ProjSecDomain.Statement := by
     obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective s
     induction f using MvPolynomial.induction_on with
     | C c => exact isIntegral_algebraMap
-    | add p q hp hq => rw [map_add]; exact hp.add hq
+    | add p q hp hq => rw [map_add (f := _)]; exact hp.add hq
     | mul_X p j hp => rw [map_mul]; exact hp.mul (hint j)⟩
   have : Algebra.FiniteType (Kf e) (S W A) :=
     Algebra.FiniteType.of_surjective (Ideal.Quotient.mkₐ (Kf e) _)

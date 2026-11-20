@@ -243,7 +243,7 @@ theorem herm_frame (a b : Fin n) (x y : Jd n ν → ℂ) :
   have h1 := skew_frame e he _ s1 x y
   have h2 := skew_frame e he _ s2 x y
   unfold Xu
-  simp only [XA_add, XA_smul, Matrix.add_mulVec, Matrix.smul_mulVec, map_add, map_smul,
+  simp only [XA_add, XA_smul, Matrix.add_mulVec, Matrix.smul_mulVec, map_add (f := _), map_smul,
     inner_add_left, inner_add_right, inner_smul_left, inner_smul_right] at h1 h2
   simp only [map_neg, map_one, Complex.conj_I] at h1 h2
   generalize ⟪e (XA ν (Matrix.single a b 1) *ᵥ x), e y⟫_ℂ = p at h1 h2 ⊢

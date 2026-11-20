@@ -17,7 +17,7 @@ private theorem cpt_finAd {D : D7} (Q : Pl D.host.E) (z : AE D) :
     have h2 := congrArg (fun s : FiniteAdeleRing (𝓞 D.host.E) D.host.E => s Q)
       ((GlobalTheory.LFun.toFinAd_tmul (F := D.host.F) a.2 x).trans (mul_comm _ _))
     exact h1.trans h2.symm
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingEquiv.map_add, ha, hb]; rfl
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingEquiv.map_add (f := _), ha, hb]; rfl
 
 private theorem cpt_loc {D : D7} (w Q : Pl D.host.E) (y : (Kw w)ˣ) :
     cpt (D := D) Q (toEAf D (GlobalTheory.LFun.locIdele D.host.F w y : AE D)) =
@@ -71,7 +71,7 @@ theorem UpperTheory.unitChar_idempotentSum_eq_prod_unitInd :
   classical
   have hc : ∀ Q, cpt (D := D) Q (1 - toEAf D ε + toEAf D ε * N.det) = if Q ∈ Pw then cpt (D := D) Q N.det else 1 := by
     intro Q
-    rw [RingHom.map_add, RingHom.map_sub, RingHom.map_mul, RingHom.map_one, cpt_sum hε]
+    rw [RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_mul, RingHom.map_one, cpt_sum hε]
     split_ifs <;> simp
   by_cases h : ∀ i, GlobalTheory.BotMatch.evW (τ i) N.det ≠ 0 ∧ valuation (Fv D.host.F (pl i)) (GlobalTheory.BotMatch.evW (τ i) N.det) = 1
   · let y : ∀ i, (Kw (D := D) (splitPrime (τ i)))ˣ := fun i =>

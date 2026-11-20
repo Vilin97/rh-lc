@@ -36,7 +36,7 @@ theorem tauTop : LeafTauTop := by
   have hl : e (Fin.last d) = x.cast (by simp) (by simp) := by simp [e]
   unfold poly
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, Fin.sum_univ_castSucc]
+    rw [map_add (f := _), map_sum, Fin.sum_univ_castSucc]
   refine (add_comm _ _).trans ?_
   congr 1
   · refine Finset.sum_congr rfl fun j _ => ?_

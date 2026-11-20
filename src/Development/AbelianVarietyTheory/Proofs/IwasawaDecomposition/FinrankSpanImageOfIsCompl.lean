@@ -30,14 +30,14 @@ theorem finrank_span_image_of_isCompl {R S M M' : Type*} [CommRing R] [Nontrivia
         rw [LinearEquiv.symm_apply_eq, IsBaseChange.equiv_tmul, one_smul]
       simp [φ, h1, π, TensorProduct.smul_tmul']
       exact congrArg (s ⊗ₜ[R] ·) (Submodule.linearProjOfIsCompl_apply_left hPQ y)
-    | add x y hx hy => simp only [map_add, LinearMap.comp_apply] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), LinearMap.comp_apply] at hx hy ⊢; rw [hx, hy]
   have hr : LinearMap.range φ = Submodule.span S (g '' P) := by
     refine le_antisymm ?_ (Submodule.span_le.2 ?_)
     · rintro _ ⟨x, rfl⟩
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul s y => simpa [φ] using Submodule.smul_mem _ s (Submodule.subset_span (Set.mem_image_of_mem g y.2))
-      | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+      | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     · rintro _ ⟨y, hy, rfl⟩
       exact LinearMap.mem_range.2 ⟨(1 : S) ⊗ₜ[R] (⟨y, hy⟩ : P), by simp [φ]⟩
   rw [← hr, LinearMap.finrank_range_of_inj hφ, Module.finrank_baseChange]
@@ -62,7 +62,7 @@ theorem GlobalTheory.LocM.At.finrank_eigBar : ∀ (D : D7) (A : Amb D) (N j : �
     induction x using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact (map_zero _).symm
     | tmul r a => rfl
-    | add x y hx hy => rw [map_add, hx, hy]; exact (map_add _ x y).symm
+    | add x y hx hy => rw [map_add (f := _), hx, hy]; exact (map_add _ x y).symm
   have h0 : Module.finrank ct.kbar (ct.eigBar τ) =
       Module.finrank ct.V₀ (eigenSub (baseChangeAction ct.V₀ ρZ) (embV κ.c ct.W (embOf D τ))) := by
     rw [At.eigBar, show (ct.redLa : _ → _) = extendTensor ℤ ct.V₀ ct.kbar S.Dw.La from funext hg]

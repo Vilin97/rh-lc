@@ -26,7 +26,7 @@ private theorem bdd_of_small {R K : Type} [CommRing R] [NormedField K] (I : Idea
   refine ⟨C + 1, fun b => ?_⟩
   have h1 : b - s (Ideal.Quotient.mk I b) ∈ I := Ideal.Quotient.eq.1 (hs _).symm
   have h2 : φ b = φ (s (Ideal.Quotient.mk I b)) + φ (b - s (Ideal.Quotient.mk I b)) := by
-    rw [← map_add, add_sub_cancel]
+    rw [← map_add (f := _), add_sub_cancel]
   rw [h2]
   exact (norm_add_le _ _).trans (add_le_add (hC _) (h _ h1))
 
@@ -63,7 +63,7 @@ private theorem small_smul {B A K : Type} [CommRing B] [CommRing A] [Algebra B A
     | mem t ht => exact (hC₁ t ht).trans h1
     | zero => simpa using h2
     | add a b _ _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
     | smul b e _ he =>
       rw [hsm]
@@ -86,9 +86,9 @@ private theorem small_smul {B A K : Type} [CommRing B] [CommRing A] [Algebra B A
     · exact (by simpa using hmul _ _ 1 _ (hx e) (hk b hbk).1 zero_le_one : _ ≤ _).trans hδ1
   · rw [Algebra.smul_def, map_mul]
     exact (by simpa using hmul _ _ _ 1 (hk b hbk).2 (hx e) hδ.le : _ ≤ _).trans hδ1
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le h.1 h'.1)
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le h.2 h'.2)
 
 private theorem entry_cont {X B A K : Type} [TopologicalSpace X] [CommRing B] [CommRing A] [Algebra B A] [NormedField K]

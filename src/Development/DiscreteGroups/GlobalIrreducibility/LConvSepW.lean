@@ -60,7 +60,7 @@ theorem Wf_left (hI : PosInt I) (hB : IsInvForm (rhoW ψ) B) (y : WT (m := m) ψ
 theorem Wf_add (hI : PosInt I) (hB : IsInvForm (rhoW ψ) B) (y z : WT (m := m) ψ) :
     Wf ψ hψ I B (y + z) = Wf ψ hψ I B y + Wf ψ hψ I B z := by
   funext g
-  simp only [Wf, map_add, Pi.add_apply]
+  simp only [Wf, map_add (f := _), Pi.add_apply]
   exact lam_add hψ hI hB _ _
 
 theorem Wf_smul (hI : PosInt I) (hB : IsInvForm (rhoW ψ) B) (a : ℂ) (y : WT (m := m) ψ) :

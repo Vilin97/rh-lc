@@ -61,9 +61,9 @@ theorem Tame.smul (a : ℂ) (h : Tame ψ θ j r S) : Tame ψ θ j r fun x => a �
 theorem Tame.add (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (h : Tame ψ θ j r S) (h' : Tame ψ θ j r S') :
     Tame ψ θ j r fun x => S x + S' x := by
   refine ⟨fun U x hx => ?_, h.2.choose + h'.2.choose, fun μ 𝓕 d x hx => ?_⟩
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact Submodule.add_mem _ (h.1 U x hx) (h'.1 U x hx)
-  · rw [map_add, ENNReal.coe_add, add_mul]
+  · rw [map_add (f := _), ENNReal.coe_add, add_mul]
     exact (sobO_add_le hψ hθ (h.theta hx) (h'.theta hx) d).trans
       (add_le_add (h.2.choose_spec μ 𝓕 d x hx) (h'.2.choose_spec μ 𝓕 d x hx))
 
@@ -121,7 +121,7 @@ private theorem dH_eq_sum_re_im_single {ι B : Type} [Fintype ι] [DecidableEq �
   conv_lhs => rw [hv]
   unfold dH
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_add, map_smul, Complex.coe_smul]
+    simp only [map_sum, map_add (f := _), map_smul, Complex.coe_smul]
 
 private theorem single_eq_vecL_single (i : Fin W.rank) (j : Fin V.rank) (τ : D.what₂.Tau) (c : ℂ) :
     (Pi.single ((i, j), τ) c : Ix V W → ℂ) =

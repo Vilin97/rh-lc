@@ -631,7 +631,7 @@ theorem unrCorr_inert : GlobalTheory.Hk3.HoweUnram → ∀ (D : D7) (G : Type) [
       (GlobalTheory.LFun.val (Formalism.IndefR.Lift.chrTh (R.toLevCh.mu t) R.eta ((i : ℕ) + 1)).2 w : ℂ) D.R.t
   rw [hvS, hvT, hstr]
   have E2 := congrArg (fun M : Multiset ℂˣ => (M.map (((-1 : ℂˣ) ^ (Wc D i).rank) * ·)).map (fun a : ℂˣ => (a : ℂ))) E1
-  simp only [Multiset.map_add, Multiset.map_map, Function.comp_def] at E2
+  simp only [Multiset.map_add (f := _), Multiset.map_map, Function.comp_def] at E2
   rw [Multiset.map_map]
   refine (Multiset.map_congr rfl fun a _ => ?_).trans (E2.trans (congrArg₂ _ (Multiset.map_congr rfl fun a _ => ?_) rfl))
   · simp only [mul_inv_cancel_left]

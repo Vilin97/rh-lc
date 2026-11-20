@@ -17,7 +17,7 @@ theorem analyticAt_eval_of_pi {E : Type*} [NormedAddCommGroup E] [NormedSpace â„
     simp only [eval_C]
     exact analyticAt_const
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p l hp =>
     simp only [map_mul, eval_X]

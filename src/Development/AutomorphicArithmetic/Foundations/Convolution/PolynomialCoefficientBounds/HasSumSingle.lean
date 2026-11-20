@@ -39,7 +39,7 @@ theorem UpperTheory.ConvolutionTheory.FX.piece_sum :
     simp only [fun k => (UpperTheory.ConvolutionTheory.FX.piece_add ι k).2.1, map_zero]
     exact hasSum_zero
   | add f g hf hg =>
-    simp only [fun k => (UpperTheory.ConvolutionTheory.FX.piece_add ι k).1 f g, map_add]
+    simp only [fun k => (UpperTheory.ConvolutionTheory.FX.piece_add ι k).1 f g, map_add (f := _)]
     exact hf.add hg
   | single v p =>
     have hv : ev Λ (AddMonoidAlgebra.single v p : EP ι) = Complex.exp (eval Λ (lin v)) * eval Λ p := by

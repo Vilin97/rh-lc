@@ -202,7 +202,7 @@ theorem exists_comb {n : ℕ} (v : Module.Basis (Fin n) R (TanM (𝟙 (Sp R)) Y.
   have a₃ : ∀ s, valR (A := DualNumber S) (Chart.spMap (SqZero.inlS R S) ≫ z).left W s = inl (valR g W s) := a₂
   have k' := congrArg TrivSqZeroExt.snd ((b₂ f).symm.trans k)
   have hu' : ((Units.map ψ.toRingHom.toMonoidHom (epsUnit (ℓ α)) : (DualNumber S)ˣ) : DualNumber S) = 1 + inr (φ (ℓ α)) := by
-    rw [← hψ, ← map_one ψ, ← map_add]; rfl
+    rw [← hψ, ← map_one ψ, ← map_add (f := _)]; rfl
   simp only [a₃, hψ, hu'] at k'
   set_option synthInstance.maxHeartbeats 100000 in
     rw [WtAlg.valR_sub' _ _ hg, WtAlg.valR_mul'' _ _ hg, Adjust.valR_const _ φ g hφ W hg, combF,

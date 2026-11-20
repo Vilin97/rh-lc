@@ -65,7 +65,7 @@ theorem UpperTheory.exists_cocycle_extension_of_conjugation_invariant_restrictio
         rw [← zm_sum H g' (fun q => ρ (g • q).out (c (zm_h H g q))), map_sum,
         ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun q _ => ?_
-      rw [zm_h_mul, hc2, map_add, hmul, hmul, mul_smul, zm_out]
+      rw [zm_h_mul, hc2, map_add (f := _), hmul, hmul, mul_smul, zm_out]
   let c' : G ⧸ H → H → V := fun q h => ρ q.out (c (zm_h H h q))
   have hc' : ∀ q, c' q - c ∈ N := fun q => hs q.out (c' q) fun g g' hg => by
     have : zm_h H g q = g' := by

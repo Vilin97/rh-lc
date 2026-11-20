@@ -465,14 +465,14 @@ theorem Rep.of_cob {m n : ℕ} {z z' : Co Φ.A n} {c : CH.H (gr Fil (m : ℤ)) n
     obtain ⟨β, hβ, he⟩ := hc
     rw [hcast] at he
     refine ⟨f + CH.d (gr Fil (m : ℤ)) n (pj _ _ β hβ), ?_, ?_, fun s => ?_⟩
-    · rw [map_add, hf, zero_add]
+    · rw [map_add (f := _), hf, zero_add]
       exact CH.d_d _ n _
     · refine (Submodule.Quotient.eq _).2 ?_
       refine ⟨-pj _ _ β hβ, ?_⟩
       change CH.d (gr Fil (m : ℤ)) n (-pj _ _ β hβ) = f - (f + CH.d (gr Fil (m : ℤ)) n (pj _ _ β hβ))
       rw [map_neg]; abel
     · change (show sqM _ _ _ from f s).1 + (show sqM _ _ _ from CH.d (gr Fil (m : ℤ)) n (pj _ _ β hβ) s).1 = _
-      rw [hv s, d_pj, ← map_add]
+      rw [hv s, d_pj, ← map_add (f := _)]
       refine Ideal.Quotient.eq.2 ?_
       have := he s
       have e : z s + dd n β s - z' s = -((z' - z - dd n β) s) := by

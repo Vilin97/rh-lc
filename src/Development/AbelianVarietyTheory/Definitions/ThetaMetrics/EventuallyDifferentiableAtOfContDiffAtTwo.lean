@@ -18,7 +18,7 @@ theorem realCLM_map_complex_smul (L : E →L[ℝ] F) (c : ℂ) (v : E) :
   have h : c • v = c.re • v + c.im • (I • v) := by
     conv_lhs => rw [← re_add_im c]
     rw [add_smul, mul_smul, ← Complex.coe_algebraMap, algebraMap_smul, algebraMap_smul]
-  rw [h, map_add, map_smul, map_smul, ← Complex.coe_algebraMap, algebraMap_smul, algebraMap_smul]
+  rw [h, map_add (f := _), map_smul, map_smul, ← Complex.coe_algebraMap, algebraMap_smul, algebraMap_smul]
 
 omit [NormedSpace ℝ E] [IsScalarTower ℝ ℂ E] in
 
@@ -27,7 +27,7 @@ theorem I_smul_I_smul (v : E) : I • I • v = -v := by
 
 def linPart (L : E →L[ℝ] F) : E →L[ℂ] F where
   toFun v := (1 / 2 : ℂ) • (L v - I • L (I • v))
-  map_add' v w := by simp only [smul_add, map_add]; module
+  map_add' v w := by simp only [smul_add, map_add (f := _)]; module
   map_smul' c v := by
     rw [smul_comm I c v, realCLM_map_complex_smul L c, realCLM_map_complex_smul L c,
       I_smul_I_smul, map_neg, RingHom.id_apply]
@@ -42,7 +42,7 @@ def linPart (L : E →L[ℝ] F) : E →L[ℂ] F where
 
 def antilinPart (L : E →L[ℝ] F) : E →L⋆[ℂ] F where
   toFun v := (1 / 2 : ℂ) • (L v + I • L (I • v))
-  map_add' v w := by simp only [smul_add, map_add]; module
+  map_add' v w := by simp only [smul_add, map_add (f := _)]; module
   map_smul' c v := by
     rw [smul_comm I c v, realCLM_map_complex_smul L c, realCLM_map_complex_smul L c,
       I_smul_I_smul, map_neg]
@@ -264,7 +264,7 @@ theorem del_comp {u : F → G} {φ : E → F} (hu : DifferentiableAt ℝ u (φ z
     del (fun x => u (φ x)) z v = del u (φ z) (del φ z v) + dbar u (φ z) (dbar φ z v) := by
   have h : HasFDerivAt (fun x => u (φ x)) _ z := hu.hasFDerivAt.comp z hφ.hasFDerivAt
   rw [del_apply, h.fderiv, del_apply φ, dbar_apply φ]
-  simp only [ContinuousLinearMap.comp_apply, ← del_add_dbar u, map_smul, map_sub, map_add,
+  simp only [ContinuousLinearMap.comp_apply, ← del_add_dbar u, map_smul, map_sub, map_add (f := _),
     map_smulₛₗ, conj_I, map_div₀, map_one, map_ofNat]
   module
 

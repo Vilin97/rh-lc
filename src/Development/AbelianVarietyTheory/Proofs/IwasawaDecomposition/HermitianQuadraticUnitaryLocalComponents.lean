@@ -29,13 +29,13 @@ theorem qloc_trace [FiniteDimensional F E] (z : R ⊗[F] E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => rw [hπ, qloc_trace_tmul, qloc_trace_tmul, map_mul, AlgHom.commutes]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem qloc_sig (σ : E →ₐ[F] E) (z : R ⊗[F] E) : sigR R' σ (π z) = π (sigR R σ z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [sigR, hπ]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem qloc_incl (e : E) : π (inclR R e) = inclR R' e := by
   simp [inclR, hπ]

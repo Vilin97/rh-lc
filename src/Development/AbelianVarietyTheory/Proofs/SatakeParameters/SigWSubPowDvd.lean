@@ -69,7 +69,7 @@ theorem map_sigRes (G : Formalism.MainNotions.G.GAtP p) (v : Fin G.P.nV) (r : G.
       obtain ⟨c, hc⟩ := sigW_sub_pow_dvd (r y)
       refine ⟨r z - c, ?_⟩
       simp only [RingHom.comp_apply]
-      rw [hz, map_add, map_mul, map_pow, map_natCast]
+      rw [hz, map_add (f := _), map_mul, map_pow, map_natCast]
       rw [sub_eq_iff_eq_add] at hc
       rw [hc]
       ring)

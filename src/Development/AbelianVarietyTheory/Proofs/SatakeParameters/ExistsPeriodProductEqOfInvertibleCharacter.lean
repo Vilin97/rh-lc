@@ -37,9 +37,9 @@ theorem mulB_assoc (y y' : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) (w : V ⊗[ℚ
       | zero => simp
       | tmul v c =>
         rw [mulB_tmul, mulB_tmul, mulB_tmul, mulB_tmul, Pi.smul_apply, smul_eq_mul, mul_smul, mul_assoc]
-      | add w w' hw hw' => simp only [map_add, hw, hw']
-    | add y y' hy hy' => simp only [map_add, LinearMap.add_apply, hy, hy']
-  | add y y' hy hy' => simp only [map_add, LinearMap.add_apply, hy, hy']
+      | add w w' hw hw' => simp only [map_add (f := _), hw, hw']
+    | add y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply, hy, hy']
+  | add y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply, hy, hy']
 
 theorem mulB_comm (y y' : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) :
     mulB P (Fin 1 → ↥L.1) y y' = mulB P (Fin 1 → ↥L.1) y' y := by
@@ -54,15 +54,15 @@ theorem mulB_comm (y y' : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) :
       funext i
       rw [Subsingleton.elim i 0]
       simp [mul_comm]
-    | add y y' hy hy' => simp only [map_add, LinearMap.add_apply, hy, hy']
-  | add y y' hy hy' => simp only [map_add, LinearMap.add_apply, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply, hy, hy']
+  | add y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply, hy, hy']
 
 theorem one_mulB (w : V ⊗[ℚ_[l]] Bst P) :
     mulB P V ((fun _ => (1 : ↥L.1)) ⊗ₜ (1 : Bst P)) w = w := by
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => rw [mulB_tmul, one_smul, one_mul]
-  | add w w' hw hw' => simp only [map_add, hw, hw']
+  | add w w' hw hw' => simp only [map_add (f := _), hw, hw']
 
 variable {K : FinExt l}
 
@@ -72,7 +72,7 @@ theorem stRep_twist (ρs ρt : Representation ↥L.1 ↥(GK K) V) (χ : ↥(GK K
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => rw [stRep_tmul, stRep_tmul, ht, TensorProduct.smul_tmul']
-  | add w w' hw hw' => simp only [map_add, smul_add, hw, hw']
+  | add w w' hw hw' => simp only [map_add (f := _), smul_add, hw, hw']
 
 theorem stRep_trivial_one (g : ↥(GK K)) :
     stRep P (Representation.trivial ↥L.1 ↥(GK K) (Fin 1 → ↥L.1)) g ((fun _ => (1 : ↥L.1)) ⊗ₜ (1 : Bst P)) =

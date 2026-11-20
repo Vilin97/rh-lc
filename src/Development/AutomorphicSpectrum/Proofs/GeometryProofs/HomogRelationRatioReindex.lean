@@ -25,7 +25,7 @@ theorem aeval_comp_ringHom {σ A B : Type} [CommRing A] [CommRing B] [Algebra �
     (g : MvPolynomial σ ℤ) : aeval (fun p => φ (u p)) g = φ (aeval u g) := by
   induction g using MvPolynomial.induction_on with
   | C m => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp => simp only [map_mul, hp, aeval_X]
 
 theorem pow_mul_pow_sub_eq {F : Type} [Field F] (x b : F) (hb : b ≠ 0) {j n : ℕ} (hj : j ≤ n) :

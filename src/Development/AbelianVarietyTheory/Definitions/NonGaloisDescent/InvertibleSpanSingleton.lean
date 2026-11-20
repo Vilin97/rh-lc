@@ -168,7 +168,7 @@ theorem Delta.map_δ_of_map_φ {A B : Type} [CommRing A] [CommRing B] (D : Delta
     f (D.δ a) = D'.δ (f a) := by
   rw [← sub_eq_zero]; apply htf
   have := h a
-  simp only [D.φ_eq, D'.φ_eq, map_add, map_mul, map_pow, map_natCast] at this
+  simp only [D.φ_eq, D'.φ_eq, map_add (f := _), map_mul, map_pow, map_natCast] at this
   linear_combination this
 
 theorem Hom.f_φ {P P' : Obj l R} (f : Hom P P') (a : P.A) : f.f (P.D.φ a) = P'.D.φ (f.f a) :=

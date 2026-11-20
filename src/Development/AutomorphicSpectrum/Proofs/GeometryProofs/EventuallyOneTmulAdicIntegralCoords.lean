@@ -22,7 +22,7 @@ def lieModelOfEquiv {S : Scheme.{0}} {R : Type} [CommRing R] {G : Over S} [GrpOb
   onto v hv := by
     obtain ⟨w, h⟩ := M.onto v hv
     exact ⟨e.symm w, by simpa using h⟩
-  add v w := by rw [map_add, M.add]
+  add v w := by rw [map_add (f := _), M.add]
   smul c v := by rw [map_smul, M.smul]
 
 theorem exists_bdryChart_point : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (D : Datum H)

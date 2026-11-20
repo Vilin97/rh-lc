@@ -63,7 +63,7 @@ theorem UpperTheory.V.Alg.ker_coef :
     have hxy : x + y = ∑ v, (a + b) v • ε v := by
       rw [ha, hb, ← Finset.sum_add_distrib]
       simp only [Pi.add_apply, add_smul]
-    rw [hco _ _ hxy u, hco _ _ ha u, hco _ _ hb u, Pi.add_apply, map_add]
+    rw [hco _ _ hxy u, hco _ _ ha u, hco _ _ hb u, Pi.add_apply, map_add (f := _)]
   · intro u a x hx
     obtain ⟨b, hb⟩ := hrep x hx
     obtain ⟨c, hc⟩ := IsCO.res_surj (O := O) a

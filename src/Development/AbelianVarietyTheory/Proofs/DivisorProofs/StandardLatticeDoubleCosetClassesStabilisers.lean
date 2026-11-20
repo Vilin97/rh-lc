@@ -76,7 +76,7 @@ theorem finT_sigR (y : AF D.host.F ⊗[D.host.F] D.host.E) :
     finT D (sigR (AF D.host.F) D.sp.cm.sig y) = sigR (Af D.host.F) D.sp.cm.sig (finT D y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul x a => rfl
 
 theorem finQ_sigR (y : AF D.host.F ⊗[D.host.F] D.host.E) :

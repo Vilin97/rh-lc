@@ -46,7 +46,7 @@ theorem fixes_iff (D' : Datum H) (l : Level H) (ψ : D'.La ≃ₗ[𝓞 E] D'.La)
       refine Submodule.smul_induction_on ha (fun c hc x _ => ?_) fun x y hx hy => ?_
       · rw [map_smul, ← smul_sub]
         exact Submodule.smul_mem_smul hc (h x)
-      · rw [map_add, add_sub_add_comm]
+      · rw [map_add (f := _), add_sub_add_comm]
         exact add_mem hx hy
     rw [l.prod, Submodule.ideal_span_singleton_smul, Submodule.mem_smul_pointwise_iff_exists] at key
     obtain ⟨e, -, he⟩ := key
@@ -199,7 +199,7 @@ theorem isDerivAt0_mul {G : Over S} [GrpObj G] {y : Sp ℂ ⟶ S} {F : (Fin g �
   have hF : ⊤ ≤ F 0 ⁻¹ᵁ U := t'' ▸ (TangentOrigin.top_le_preimage_iff _ U).1 h
   have h1 := (TangentOrigin.top_le_preimage_iff v.left U).2 (hv.1.symm ▸ hF)
   have h2 := (TangentOrigin.top_le_preimage_iff v'.left U).2 (hv'.1.symm ▸ hF)
-  rw [map_add, ← hv.2 U h1 f, ← hv'.2 U h2 f]
+  rw [map_add (f := _), ← hv.2 U h1 f, ← hv'.2 U h2 f]
   exact TanDeriv.snd_evAt_mul v v' t t' U h1 h2 h f
 
 theorem isExpDeriv_iff {D : Datum H} {l : Level H} (Xo : Moduli D l) {y : Sp ℂ ⟶ Xo.X}

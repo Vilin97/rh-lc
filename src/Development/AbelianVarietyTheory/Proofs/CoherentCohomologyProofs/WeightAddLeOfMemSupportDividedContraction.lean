@@ -28,7 +28,7 @@ theorem commute_commEval {a : σ → A} (ha : ∀ i j, Commute (a i) (a j)) {b :
     (hb : ∀ i, Commute b (a i)) (P : MvPolynomial σ k) : Commute b (commEval k a ha P) := by
   induction P using MvPolynomial.induction_on with
   | C c => rw [commEval_C]; exact (Algebra.commutes c b).symm
-  | add P Q hP hQ => rw [map_add]; exact hP.add_right hQ
+  | add P Q hP hQ => rw [map_add (f := _)]; exact hP.add_right hQ
   | mul_X P i hP => rw [map_mul, commEval_X]; exact hP.mul_right (hb i)
 
 theorem commute_mulLeft_mulRight {a : ι → A} {a' : κ → A} (ha : ∀ i j, Commute (a i) (a j))
@@ -132,7 +132,7 @@ theorem coeff_dividedDeriv (β m : σ →₀ ℕ) (P : MvPolynomial σ R) :
       · rw [if_neg, smul_zero]
         rintro rfl
         exact h (tsub_add_cancel_of_le (le_of_multiChoose_ne_zero h0)).symm
-  | add P Q hP hQ => simp only [map_add, MvPolynomial.coeff_add, hP, hQ, smul_add]
+  | add P Q hP hQ => simp only [map_add (f := _), MvPolynomial.coeff_add, hP, hQ, smul_add]
 
 @[simp] theorem dividedDeriv_zero : dividedDeriv R (0 : σ →₀ ℕ) = 1 := by
   refine LinearMap.ext fun P => MvPolynomial.ext _ _ fun m => ?_
@@ -145,7 +145,7 @@ theorem pderiv_dividedDeriv (β : σ →₀ ℕ) (i : σ) (P : MvPolynomial σ R
     rw [dividedDeriv_monomial, dividedDeriv_monomial, map_nsmul, pderiv_monomial, smul_smul,
       ← multiChoose_mul_sub, tsub_tsub, mul_smul, smul_monomial (n i - β i)]
     simp [mul_comm]
-  | add P Q hP hQ => simp only [map_add, hP, hQ, smul_add]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ, smul_add]
 
 theorem dividedDeriv_single_one (i : σ) (P : MvPolynomial σ R) :
     dividedDeriv R (Finsupp.single i 1) P = pderiv i P := by
@@ -186,7 +186,7 @@ theorem dividedDeriv_add_single_X_mul (β : σ →₀ ℕ) (i : σ) (P : MvPolyn
     · simp [h0]
     · obtain ⟨m, rfl⟩ := exists_add_of_le (le_of_multiChoose_ne_zero h0)
       rw [add_tsub_cancel_left, add_assoc β, add_tsub_cancel_left, add_comm m]
-  | add P Q hP hQ => simp only [mul_add, map_add, hP, hQ]; abel
+  | add P Q hP hQ => simp only [mul_add, map_add (f := _), hP, hQ]; abel
 
 theorem dividedDeriv_X_mul_of_eq_zero {β : σ →₀ ℕ} {i : σ} (h : β i = 0) (P : MvPolynomial σ R) :
     dividedDeriv R β (X i * P) = X i * dividedDeriv R β P := by
@@ -199,7 +199,7 @@ theorem dividedDeriv_X_mul_of_eq_zero {β : σ →₀ ℕ} {i : σ} (h : β i = 
     by_cases h0 : multiChoose n β = 0
     · simp [h0]
     · rw [tsub_add_eq_add_tsub (le_of_multiChoose_ne_zero h0)]
-  | add P Q hP hQ => simp only [mul_add, map_add, hP, hQ]
+  | add P Q hP hQ => simp only [mul_add, map_add (f := _), hP, hQ]
 
 end Divided
 
@@ -301,7 +301,7 @@ theorem contraction_pow_X_inl_mul (γ : ι → κ → R) (n : ℕ) (i : ι) (P :
   | succ n ih =>
     have hc (Q) : contraction γ (rowContraction γ i Q) = rowContraction γ i (contraction γ Q) :=
       LinearMap.congr_fun (commute_contraction_rowContraction γ i).eq Q
-    rw [pow_succ' _ (n + 1), Module.End.mul_apply, ih, map_add, contraction_X_inl_mul, map_nsmul,
+    rw [pow_succ' _ (n + 1), Module.End.mul_apply, ih, map_add (f := _), contraction_X_inl_mul, map_nsmul,
       hc, Module.End.mul_apply, ← Module.End.mul_apply (contraction γ) (contraction γ ^ n),
       ← pow_succ', succ_nsmul' _ (n + 1), add_assoc]
 
@@ -335,7 +335,7 @@ theorem dividedContraction_succ_rename_inr (γ : ι → κ → R) (n : ℕ) (q :
         at this
       exact hi (Nat.le_zero.mp this)
     rw [this, zero_smul]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, add_zero]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, add_zero]
 
 theorem dividedContraction_succ_X_inl_mul (γ : ι → κ → R) (n : ℕ) (i : ι)
     (P : MvPolynomial (ι ⊕ κ) R) :
@@ -404,7 +404,7 @@ theorem factorial_smul_dividedContraction (γ : ι → κ → R) (n : ℕ) :
     · simp
     · rw [dividedContraction_succ_rename_inr, pow_succ, Module.End.mul_apply,
         contraction_rename_inr, map_zero, smul_zero]
-  | hadd P Q hP hQ => rw [map_add, map_add, smul_add, hP, hQ]
+  | hadd P Q hP hQ => rw [map_add (f := _), map_add (f := _), smul_add, hP, hQ]
   | h P i hP =>
     rcases n with _ | n
     · simp

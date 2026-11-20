@@ -109,7 +109,7 @@ theorem matCoord_map {d : ℕ} (b : Module.Basis (Fin d) F E) {R R' : Type} [Com
   induction x k.1 k.2.1 using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [Algebra.TensorProduct.basis_repr_tmul]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 theorem eventually_mem_intMat_iff {d : ℕ} (b : Module.Basis (Fin d) F E) :
     ∀ᶠ v : HeightOneSpectrum (𝓞 F) in Filter.cofinite, ∀ x, x ∈ intMat F E m n v ↔

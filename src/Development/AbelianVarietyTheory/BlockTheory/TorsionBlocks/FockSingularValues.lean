@@ -43,7 +43,7 @@ theorem fockAct1_lower {p q n : ℕ} (a : Fin p) (b : Fin q) (Φ : Pol p q n 0) 
     | C a => simp
     | add P Q hP hQ => simp [hP, hQ]
     | mul_X P k hP =>
-      simp only [Derivation.leibniz, map_add, smul_eq_mul, hP, MvPolynomial.pderiv_X]
+      simp only [Derivation.leibniz, map_add (f := _), smul_eq_mul, hP, MvPolynomial.pderiv_X]
       by_cases h1 : k = i <;> by_cases h2 : k = j <;> simp [Pi.single_apply, h1, h2] <;>
         (try split_ifs) <;> (try simp) <;> (try ring)
   simp [omE, raiB, lowB, linePos, hne, hc (Sum.inr b, Sum.inl c) (Sum.inl a, Sum.inl c)]

@@ -43,4 +43,4 @@ theorem UpperTheory.Gal.Int.Geo.degCont_of :
     rw [e, map_smul, smul_eq_mul]
     rfl
   | add a b ha hb =>
-    exact (ha.add hb).congr fun σ => by simp only [map_add, Pi.add_apply]
+    exact (ha.add hb).congr fun σ => by simp only [map_add (f := _), Pi.add_apply]

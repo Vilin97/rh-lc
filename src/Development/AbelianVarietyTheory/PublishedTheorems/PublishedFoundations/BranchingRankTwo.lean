@@ -23,7 +23,7 @@ theorem coeff_diag {σ : Type} [Fintype σ] (d : σ → ℂ) (f : MvPolynomial �
     split_ifs with h
     · rw [h]
     · simp
-  | add p q hp hq => simp only [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem h12 : 1 + 1 = 2 := rfl
 

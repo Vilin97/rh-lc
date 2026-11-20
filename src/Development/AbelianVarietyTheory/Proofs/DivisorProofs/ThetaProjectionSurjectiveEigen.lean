@@ -56,7 +56,7 @@ theorem projEigenspaceEquiv (p : ℕ) [Fact p.Prime] (O : Type) [CommRing O] [Fa
     intro v
     obtain ⟨z, rfl⟩ := hπsurj v
     obtain ⟨x, hx, z', hz', rfl⟩ := hdec z
-    exact ⟨⟨x, hx⟩, by simp [π₀, map_add, hkill z' hz']⟩
+    exact ⟨⟨x, hx⟩, by simp [π₀, map_add (f := _), hkill z' hz']⟩
   have hinj0 : Function.Injective π₀ :=
     (LinearMap.injective_iff_surjective_of_finrank_eq_finrank
       (by rw [hrank, Module.finrank_fin_fun])).mpr hsurj
@@ -85,7 +85,7 @@ theorem projEigenspaceEquiv (p : ℕ) [Fact p.Prime] (O : Type) [CommRing O] [Fa
     have h1 := hpr w
     have hqq : q ⟨x', hx'⟩ = q x := by
       rw [hq, hq]
-      have : π (x' + z') = π x' := by rw [map_add, hkill z' hz', add_zero]
+      have : π (x' + z') = π x' := by rw [map_add (f := _), hkill z' hz', add_zero]
       rw [← this, hsum, h1]
       funext i
       simp [hw, ← hc i]

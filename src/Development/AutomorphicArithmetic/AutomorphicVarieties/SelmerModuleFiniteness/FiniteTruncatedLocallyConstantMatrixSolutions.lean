@@ -76,7 +76,7 @@ variable (K n) in
 private def fcC : Submodule K⟦X⟧ (Y → Matrix (Fin n) (Fin n) K⟦X⟧) where
   carrier := {f | ∀ i j k, IsLocallyConstant fun g => coeff k (f (φ g) i j)}
   add_mem' ha hb i j k := by
-    simp only [Pi.add_apply, Matrix.add_apply, map_add]
+    simp only [Pi.add_apply, Matrix.add_apply, map_add (f := _)]
     exact (ha i j k).add (hb i j k)
   zero_mem' i j k := by
     simp only [Pi.zero_apply, Matrix.zero_apply, map_zero]
@@ -188,7 +188,7 @@ private theorem fc_sol {J : Type} (Φ : (Y → Matrix (Fin n) (Fin n) K⟦X⟧) 
         funext y i j
         exact sub_eq_iff_eq_add'.1 (hc y i j)
       change Φ f' ∈ (Ideal.span {(X : K⟦X⟧) ^ m} • ⊤ : Submodule K⟦X⟧ (J → K⟦X⟧))
-      rw [e2, map_add, map_smul]
+      rw [e2, map_add (f := _), map_smul]
       exact add_mem ((fc_memJ _ _).2 h3) ((fc_mem _ _).2 ⟨_, rfl⟩)
     · ext y i j
       exact (fc_mk m _ _).2 (e y i j)

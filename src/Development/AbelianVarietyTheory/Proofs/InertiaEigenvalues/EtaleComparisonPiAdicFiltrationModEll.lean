@@ -24,7 +24,7 @@ theorem letA_dvd_of_forall_pow (p : ℕ) (a : LetA O n)
     refine ⟨PowerSeries.coeff k (a2 i), ?_⟩
     have h3 : a i = PowerSeries.X ^ (k + 1) * a1 i + PowerSeries.C (p : O) * a2 i := by
       rw [h2, map_natCast]; rfl
-    rw [h3, map_add, PowerSeries.coeff_X_pow_mul', if_neg (by omega), zero_add,
+    rw [h3, map_add (f := _), PowerSeries.coeff_X_pow_mul', if_neg (by omega), zero_add,
       PowerSeries.coeff_C_mul]
   choose c hc using h1
   refine ⟨fun i => PowerSeries.mk (c i), funext fun i => PowerSeries.ext fun k => ?_⟩
@@ -59,7 +59,7 @@ theorem near_abstract (p : ℕ) (f : LetA O n →+* EE) (io : EE →+* R) (ι : 
     obtain ⟨u, hu'⟩ := hu.exists_right_inv
     have h5 : f letπ ^ N * u ^ N = 1 := by rw [← mul_pow, hu', one_pow]
     refine ⟨a1, u ^ N * (e1 + f a2), ?_⟩
-    rw [h4, map_add, map_mul, map_mul, map_pow, map_natCast, pow_add] at h2
+    rw [h4, map_add (f := _), map_mul, map_mul, map_pow, map_natCast, pow_add] at h2
     rw [map_mul, map_pow]
     linear_combination (-u ^ N) * h2 - (e - f letπ ^ m * f a1) * h5
   refine ⟨H1, fun e r he => ?_⟩

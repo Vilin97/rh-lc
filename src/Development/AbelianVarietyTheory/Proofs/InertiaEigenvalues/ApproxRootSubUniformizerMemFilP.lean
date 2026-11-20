@@ -67,7 +67,7 @@ theorem GlobalTheory.BSP.approxRoot_sub_mem_fil : ∀ (l : ℕ) [Fact l.Prime] (
   have hd : IsUnit ((Polynomial.derivative (bk.Ep.map f)).eval (g X)) := by
     obtain ⟨c, a, b, hab⟩ := GlobalTheory.T.bezout_eisenstein_derivative_prime_pow l K bk
     have h := congrArg (fun t => (Polynomial.map f t).eval (g X)) hab
-    simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.eval_add, Polynomial.eval_mul, hr, mul_zero,
+    simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.eval_add, Polynomial.eval_mul, hr, mul_zero,
       zero_add, Polynomial.map_C, Polynomial.eval_C, map_pow f, map_natCast f] at h
     rw [Polynomial.derivative_map]
     exact isUnit_of_mul_isUnit_right (h ▸ (isUnit_l_BdRp l).pow c)

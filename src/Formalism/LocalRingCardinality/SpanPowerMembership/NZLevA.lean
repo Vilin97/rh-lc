@@ -40,7 +40,7 @@ theorem exists_gen_pow (I : Submodule W Q) (h0 : ∃ x ∈ I, x ≠ 0) (N : ℕ)
     { carrier := {a | ∃ x ∈ I, algebraMap W Q a = π ^ N * x}
       add_mem' := by
         rintro a b ⟨x, hx, h1⟩ ⟨y, hy, h2⟩
-        exact ⟨x + y, I.add_mem hx hy, by rw [map_add, h1, h2, mul_add]⟩
+        exact ⟨x + y, I.add_mem hx hy, by rw [map_add (f := _), h1, h2, mul_add]⟩
       zero_mem' := ⟨0, I.zero_mem, by simp⟩
       smul_mem' := by
         rintro c a ⟨x, hx, h1⟩

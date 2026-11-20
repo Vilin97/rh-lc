@@ -192,7 +192,7 @@ theorem bcParam_eq_ubc_of_satU_eq : ∀ (L : Type) [Field L] [Valued L (WithZero
   have e : bcParam n α = bcParam n β :=
     bcParam_of_weylConj (GlobalTheory.LFun.weylConj_of_dosetInd hU (by rw [hβ]; exact h))
   rw [e, bcParam, ubc]
-  simp only [Multiset.map_add, Multiset.map_map, Function.comp_def, Units.val_inv_eq_inv_val, Multiset.map_replicate,
+  simp only [Multiset.map_add (f := _), Multiset.map_map, Function.comp_def, Units.val_inv_eq_inv_val, Multiset.map_replicate,
     Units.val_one]
   rw [← hβ]
   congr 1

@@ -55,7 +55,7 @@ theorem isPlaceIso_complEquiv : IsPlaceIso τ (splitPrime τ) (complEquiv τ (sp
     congr 1
     exact complMap_apply_under (splitPrime_under τ) b.2
   | add x y hx hy =>
-    rw [RingHom.map_add (piW τ), RingEquiv.map_add, RingHom.map_add (toEAf D), RingHom.map_add (cpt _), hx, hy]
+    rw [RingHom.map_add (piW τ), RingEquiv.map_add (f := _), RingHom.map_add (toEAf D), RingHom.map_add (cpt _), hx, hy]
 
 theorem isEquiv_Fv {F : Type} [Field F] [NumberField F] (v : Pl F) :
     (ValuativeRel.valuation (Fv F v)).IsEquiv (Valued.v : Valuation (Fv F v) (WithZero (Multiplicative ℤ))) :=

@@ -215,7 +215,7 @@ theorem tame_pairing_hom : TameLocal → ∀ (F Ω : Type) [Field F] [NumberFiel
     MonoidHom.mk' (fun g => Multiplicative.ofAdd (y g)) (fun a b => by rw [hyadd, ofAdd_add])
   let kH : Dec (F := F) A →* Multiplicative W' :=
     MonoidHom.mk' (fun g => Multiplicative.ofAdd (ψ (k g))) (fun a b => by
-      rw [hkadd, map_add, ofAdd_add])
+      rw [hkadd, map_add (f := _), ofAdd_add])
   have hE := hall (yH.eqLocus kH) (by
       have : ((yH.eqLocus kH : Subgroup (Dec (F := F) A)) : Set (Dec (F := F) A)) =
           {g | Multiplicative.ofAdd (y g) = Multiplicative.ofAdd (ψ (k g))} := rfl
@@ -236,7 +236,7 @@ theorem tame_pairing_hom : TameLocal → ∀ (F Ω : Type) [Field F] [NumberFiel
   have hzc : Continuous z :=
     (continuous_of_discreteTopology (f := fun m : W => P m (y φ))).comp hxc
   have hzadd : ∀ g h, z (g * h) = z g + z h := fun g h => by
-    simp only [hz, hxadd, map_add, AddMonoidHom.add_apply]
+    simp only [hz, hxadd, map_add (f := _), AddMonoidHom.add_apply]
   have hw' : ∀ g h, w.1 (g, h) = z g * k h := fun g h => by
     rw [hw, hyk h, hψ, map_zsmul, zsmul_eq_mul, ZMod.intCast_zmod_cast, mul_comm]
   let zZ : Z1 (trivDec F A l n) := ⟨z, (mem_Z1_iff_cocycle _ _).2 ⟨hzc, fun g h => by

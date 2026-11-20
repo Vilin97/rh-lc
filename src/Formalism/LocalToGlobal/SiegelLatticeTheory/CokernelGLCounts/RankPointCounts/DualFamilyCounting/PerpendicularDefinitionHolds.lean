@@ -137,7 +137,7 @@ theorem isCompl (hG : GZ T T' (ZhatL (lf D F0) F') ≠ 0) :
         simp only [Φ, LinearMap.coe_mk, AddHom.coe_mk] at h1
         rw [map_sub, h1, sub_self]
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply, hx, hy, add_zero]
       | smul s x _ hx => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hx, smul_zero]
     have hv : v = ∑ i, c i • fam F0 F' i + (v - ∑ i, c i • fam F0 F' i) := by abel
     rw [hv]

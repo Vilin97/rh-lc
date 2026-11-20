@@ -58,7 +58,7 @@ theorem proj_cartan (hcm : IsCMExt F E σ) {B : Base F E} {d d₁ r s : ℕ} {W 
   have hId := congrArg f.mapMatrix (one_eq_decomp hcm hW hA p1 p4 p5)
   have mv : ∀ a b : Fin d → E, f.mapMatrix (vecMulVec a b) = vecMulVec (fun i => f (a i)) (fun i => f (b i)) :=
     fun a b => by ext i j; simp [vecMulVec_apply]
-  rw [map_one, map_sub, map_add, mv, mv, RingHom.mapMatrix_apply, Matrix.map_mul] at hId
+  rw [map_one, map_sub, map_add (f := _), mv, mv, RingHom.mapMatrix_apply, Matrix.map_mul] at hId
   have mvec : ∀ {k : ℕ} (M : Matrix (Fin k) (Fin d) E) (v : Fin d → E), M.map f *ᵥ (fun i => f (v i)) = fun i => f ((M *ᵥ v) i) :=
     fun M v => by funext i; rw [RingHom.map_mulVec]; rfl
   have hπx : π.map f *ᵥ (fun i => f (H'.x i)) = 0 := by rw [mvec, p4]; funext i; simp
@@ -111,7 +111,7 @@ theorem exists_kInf_isLevi_one : ∀ (F E : Type) [Field F] [NumberField F] [Fie
         fun A => rfl
       have e1 : ∀ A : Matrix (Fin d₁) (Fin d₁) (AE F E), A.map (piInf (B.emb w)) = (piInf (B.emb w)).mapMatrix A :=
         fun A => rfl
-      rw [e, map_add, map_one, RingHom.mapMatrix_apply, Matrix.map_mul, Matrix.map_mul, e1 (mat h₁ - 1), map_sub, map_one,
+      rw [e, map_add (f := _), map_one, RingHom.mapMatrix_apply, Matrix.map_mul, Matrix.map_mul, e1 (mat h₁ - 1), map_sub, map_one,
         RingHom.mapMatrix_apply, hinc, hinc]
     show Commute ((1 + incM F H'.ι * (mat h₁ - 1) * incM F π).map (piInf (B.emb w))) (W.θ w)
     rw [hm]

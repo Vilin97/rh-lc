@@ -18,7 +18,7 @@ theorem cA_cA_eq (σ : E →ₐ[F] E) (hσ : ∀ e, σ (σ e) = e) (z : AE F E) 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, hσ]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem conj_mulVec_eq {n : ℕ} {P M : Matrix (Fin n) (Fin n) (AE F E)} (hP : IsUnit P.det)
     {v v' : Fin n → AE F E} (h : M *ᵥ (P *ᵥ v) = P *ᵥ v') : (P⁻¹ * M * P) *ᵥ v = v' := by

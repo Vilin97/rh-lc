@@ -19,7 +19,7 @@ theorem sum_isOrth {k : ℕ} {𝔞 : Submodule ℝ (A0 k)} {X Y W : Finset (SV k
   intro P hP Q e
   have hQ : Q ∈ parF 𝔞 ∅ := mem_parF.2 ⟨(mem_parF.1 hP).1.mono e, (vecSpan_mono e).trans (mem_parF.1 hP).2.1,
     Finset.empty_subset _⟩
-  rw [hW P hP, hW Q hQ, map_add, ← hX P hP Q e, ← hY P hP Q e]
+  rw [hW P hP, hW Q hQ, map_add (f := _), ← hX P hP Q e, ← hY P hP Q e]
 
 theorem cP_empty_empty {k : ℕ} (c : Finset (SV k) → A0 k → ℂ) (hc : Continuous (c ∅)) (l : A0 k) :
     cP ∅ ∅ c l = c ∅ l := by

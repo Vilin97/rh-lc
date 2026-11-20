@@ -270,11 +270,11 @@ theorem exists_isPos (ψ : AddChar k Circle) (p : ℕ) :
   · intro φ u hu v
     induction φ using Finsupp.induction_linear with
     | zero => simp
-    | add a a' h1 h2 => simp only [map_add, LinearMap.add_apply, h1, h2]; ring
+    | add a a' h1 h2 => simp only [map_add (f := _), LinearMap.add_apply, h1, h2]; ring
     | single g x =>
       induction v using Finsupp.induction_linear with
       | zero => simp
-      | add a a' h1 h2 => simp only [map_add, h1, h2]; ring
+      | add a a' h1 h2 => simp only [map_add (f := _), h1, h2]; ring
       | single h y =>
         rw [reg_single, hb, hb,
           show (embX c g)⁻¹ * (u * h) = ((embX c g)⁻¹ * u * embX c g) * ((embX c g)⁻¹ * h) by group,
@@ -283,11 +283,11 @@ theorem exists_isPos (ψ : AddChar k Circle) (p : ℕ) :
   · intro g' φ v
     induction φ using Finsupp.induction_linear with
     | zero => simp
-    | add a a' h1 h2 => simp only [map_add, LinearMap.add_apply, h1, h2]; ring
+    | add a a' h1 h2 => simp only [map_add (f := _), LinearMap.add_apply, h1, h2]; ring
     | single g x =>
       induction v using Finsupp.induction_linear with
       | zero => simp
-      | add a a' h1 h2 => simp only [map_add, h1, h2]; ring
+      | add a a' h1 h2 => simp only [map_add (f := _), h1, h2]; ring
       | single h y =>
         rw [reg_single, reg_single, hb, hb,
           hw, show (embX c (g' * g))⁻¹ * (embX c g' * h) = (embX c g)⁻¹ * h by rw [map_mul]; group]

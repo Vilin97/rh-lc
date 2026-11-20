@@ -45,7 +45,7 @@ lemma klower_mem {a b : Fin n} (hab : b < a) (he : ε a = ε b) {x : U}
     have h := kword_mem (F := F) (w := w) hl'
     simpa [word_cons] using h
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 lemma kcomm_apply (hF : KRel ε F) {i j a b : Fin n} (hij : ε i = ε j) (hab : ε a = ε b) (u : U) :
@@ -86,7 +86,7 @@ theorem kstab_kLowSpan (hF : KRel ε F) (hw : KHighest ε F μ w) : KStab ε F (
     obtain ⟨l, hl, rfl⟩ := hy
     exact kgen_mem hF hw l hl i j he
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem kLowSpan_le {S : Submodule ℂ U} (hS : KStab ε F S) (hw : w ∈ S) : kLowSpan ε F w ≤ S := by
@@ -253,7 +253,7 @@ theorem lowSpan_holds : CompanionTheory.D.DSIC.LowSpan := by
     intro a
     refine sub_eq_zero.1 (hdis _ (L.sub_mem (hst a a rfl y hy) (L.smul_mem _ hy)) ?_)
     have h := hv.1 a
-    rw [hyz, map_add, smul_add] at h
+    rw [hyz, map_add (f := _), smul_add] at h
     have : E a a y - (μ a : ℂ) • y = (μ a : ℂ) • z - E a a z := by
       rw [sub_eq_sub_iff_add_eq_add, h, add_comm]
     rw [this]

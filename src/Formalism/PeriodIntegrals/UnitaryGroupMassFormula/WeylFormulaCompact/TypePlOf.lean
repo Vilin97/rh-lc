@@ -62,7 +62,7 @@ theorem typePl_of (hB : Blocks) (hD : BlockDiag) (hT : TorusWt) (hW : WtUniq) (h
     { carrier := {u | u ∈ S ∧ ∀ θ : Fin (nPl ε) → ℝ, diagonal (fun a => Complex.exp ((θ a : ℂ) * Complex.I)) ∈ Kset (allPos (nPl ε)) →
           sPl ε σ (diagonal (fun a => Complex.exp ((θ a : ℂ) * Complex.I))) u = Complex.exp (((∑ a, μ a * θ a : ℝ) : ℂ) * Complex.I) • u}
       add_mem' := fun hx hy => ⟨S.add_mem hx.1 hy.1, fun θ hθ => by
-        rw [map_add, hx.2 θ hθ, hy.2 θ hθ, smul_add]⟩
+        rw [map_add (f := _), hx.2 θ hθ, hy.2 θ hθ, smul_add]⟩
       zero_mem' := ⟨S.zero_mem, fun θ _ => by rw [map_zero, smul_zero]⟩
       smul_mem' := fun c x hx => ⟨S.smul_mem c hx.1, fun θ hθ => by
         rw [map_smul, hx.2 θ hθ, smul_comm]⟩ }
@@ -117,7 +117,7 @@ theorem typeMi_of (hB : Blocks) (hD : BlockDiag) (hT : TorusWt) (hW : WtUniq) (h
     { carrier := {u | u ∈ S ∧ ∀ θ : Fin (nMi ε) → ℝ, diagonal (fun a => Complex.exp ((θ a : ℂ) * Complex.I)) ∈ Kset (allPos (nMi ε)) →
           sMi ε σ (diagonal (fun a => Complex.exp ((θ a : ℂ) * Complex.I))) u = Complex.exp (((∑ a, μ a * θ a : ℝ) : ℂ) * Complex.I) • u}
       add_mem' := fun hx hy => ⟨S.add_mem hx.1 hy.1, fun θ hθ => by
-        rw [map_add, hx.2 θ hθ, hy.2 θ hθ, smul_add]⟩
+        rw [map_add (f := _), hx.2 θ hθ, hy.2 θ hθ, smul_add]⟩
       zero_mem' := ⟨S.zero_mem, fun θ _ => by rw [map_zero, smul_zero]⟩
       smul_mem' := fun c x hx => ⟨S.smul_mem c hx.1, fun θ hθ => by
         rw [map_smul, hx.2 θ hθ, smul_comm]⟩ }

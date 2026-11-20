@@ -114,7 +114,7 @@ theorem thImg_fg {D : D7} (X : DivX D) (μ : D.what₂.Tup) (j : ℕ)
     { carrier := {p | p.1 ∈ A ∧ X.jM j p.2 = D.what₂.thetaP μ j (D.what₂.jMt μ j p.1)}
       add_mem' := by
         rintro a b ⟨hx, h1⟩ ⟨hy, h2⟩
-        exact ⟨A.add_mem hx hy, by rw [Prod.fst_add, Prod.snd_add, map_add, map_add, map_add, h1, h2]⟩
+        exact ⟨A.add_mem hx hy, by rw [Prod.fst_add, Prod.snd_add, map_add (f := _), map_add (f := _), map_add (f := _), h1, h2]⟩
       zero_mem' := ⟨A.zero_mem, by simp⟩
       smul_mem' := by
         rintro s a ⟨hx, h1⟩
@@ -145,7 +145,7 @@ theorem jw_finite {D : D7} (j : ℕ) (hfg : (Idx.TjL D D.what₂.mu0 j).FG) :
     let φ : Idx.TjDual D D.what₂.mu0 j →ₗ[𝓞 D.what₂.LL] (S → 𝓞 D.what₂.LL) :=
       { toFun := g
         map_add' := fun x y => funext fun a => inj _ _ (by
-          rw [← hg, Submodule.coe_add, map_add, inner_add_right, hg, hg]; simp)
+          rw [← hg, Submodule.coe_add, map_add (f := _), inner_add_right, hg, hg]; simp)
         map_smul' := fun s x => funext fun a => inj _ _ (by
           rw [← hg, Submodule.coe_smul, Idx.smul_def, LinearMap.map_smulₛₗ, inner_smul_right, hg]; simp) }
     have hφ : Function.Injective φ := by
@@ -162,7 +162,7 @@ theorem jw_finite {D : D7} (j : ℕ) (hfg : (Idx.TjL D D.what₂.mu0 j).FG) :
         induction ha using Submodule.span_induction with
         | mem a ha => exact h0 a ha
         | zero => simp
-        | add a b _ _ ha hb => rw [map_add, inner_add_left, ha, hb, add_zero]
+        | add a b _ _ ha hb => rw [map_add (f := _), inner_add_left, ha, hb, add_zero]
         | smul s a _ ha => rw [Idx.smul_def, LinearMap.map_smulₛₗ, inner_smul_left, ha, mul_zero]
       have hV : ∀ a ∈ Idx.TjV D D.what₂.mu0 j,
           inner ℂ (D.what₂.jMt D.what₂.mu0 j a) (D.what₂.jMt D.what₂.mu0 j x) = 0 := by
@@ -170,7 +170,7 @@ theorem jw_finite {D : D7} (j : ℕ) (hfg : (Idx.TjL D D.what₂.mu0 j).FG) :
         induction ha using Submodule.span_induction with
         | mem a ha => exact hL a ha
         | zero => simp
-        | add a b _ _ ha hb => rw [map_add, inner_add_left, ha, hb, add_zero]
+        | add a b _ _ ha hb => rw [map_add (f := _), inner_add_left, ha, hb, add_zero]
         | smul s a _ ha => rw [LinearMap.map_smulₛₗ, inner_smul_left, ha, mul_zero]
       have hz := inner_self_eq_zero.1 (hV x x.2.1)
       let b := Module.Free.chooseBasis D.what₂.LL (D.what₂.MtL D.what₂.mu0 j)

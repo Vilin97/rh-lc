@@ -147,7 +147,7 @@ theorem finite_fourier_half : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsS
       add_mem' := fun {X Y} hX hY i j => by
         obtain ⟨o₁, h₁⟩ := hX i j
         obtain ⟨o₂, h₂⟩ := hY i j
-        exact ⟨o₁ + o₂, by rw [Matrix.add_apply, h₁, h₂, ← map_add, mul_add]⟩
+        exact ⟨o₁ + o₂, by rw [Matrix.add_apply, h₁, h₂, ← map_add (f := _), mul_add]⟩
       zero_mem' := fun i j => ⟨0, by simp⟩
       neg_mem' := fun {X} hX i j => by
         obtain ⟨o, h⟩ := hX i j

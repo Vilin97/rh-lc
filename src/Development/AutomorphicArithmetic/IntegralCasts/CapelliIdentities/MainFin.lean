@@ -80,7 +80,7 @@ private theorem gen_alg {A B K : Type} [CommRing A] [IsDomain A] [CommRing B] [I
       rw [← hφ]
       exact RingHom.isIntegralElem_map φ
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact RingHom.IsIntegralElem.add φ hx hy
     | mul x y _ _ hx hy =>
       rw [map_mul]

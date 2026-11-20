@@ -32,7 +32,7 @@ theorem scal_add' {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (a b : S) (i : (PP
     scal x (a + b) i = scal x a i + scal x b i := by
   show ((Gx x).presheaf.map (homOfLE le_top).op).hom
       ((fst (Over.mk x) Xo.univ.t.G).left.appTop.hom (toΓ S (a + b))) = _
-  rw [map_add, map_add, map_add]
+  rw [map_add (f := _), map_add (f := _), map_add (f := _)]
   rfl
 
 theorem scal_one' {S : Type} [CommRing S] (x : Sp S ⟶ Xo.X) (i : (PPx x).ι) :

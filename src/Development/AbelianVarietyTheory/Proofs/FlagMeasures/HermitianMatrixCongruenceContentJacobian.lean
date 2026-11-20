@@ -119,7 +119,7 @@ theorem mem_hermLat_iff (L : LocE F E) (m : ℕ) (X : Matrix (Fin m) (Fin m) E) 
   | zero => exact ⟨(isHerm_iff L _).2 (by simp), fun i j => L.O.zero_mem⟩
   | add x y _ _ hx hy =>
     refine ⟨(isHerm_iff L _).2 fun i j => ?_, fun i j => L.O.add_mem (hx.2 i j) (hy.2 i j)⟩
-    rw [Matrix.add_apply, Matrix.add_apply, map_add, (isHerm_iff L _).1 hx.1,
+    rw [Matrix.add_apply, Matrix.add_apply, map_add (f := _), (isHerm_iff L _).1 hx.1,
       (isHerm_iff L _).1 hy.1]
   | neg x _ hx =>
     refine ⟨(isHerm_iff L _).2 fun i j => ?_, fun i j => L.O.neg_mem (hx.2 i j)⟩

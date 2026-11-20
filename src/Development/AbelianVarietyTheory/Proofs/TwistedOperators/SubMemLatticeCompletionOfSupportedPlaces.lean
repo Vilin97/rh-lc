@@ -41,7 +41,7 @@ theorem cut_mem_latV {D : D7} (S : HSp D) (L : GlobalTheory.FinPl.Lat S) (P : Gl
       exact GlobalTheory.HatLatV.cut_tmul P a (x i)
   · rw [map_zero]
     exact (latV S L P).zero_mem
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact (latV S L P).add_mem hy hz
   · rw [map_neg]
     exact (latV S L P).neg_mem hy
@@ -73,7 +73,7 @@ theorem sub_mem_hatL : ∀ (D : D7) (S : HSp D) (P : GlobalTheory.FinPl.Pl D →
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a b => simp
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   have hu : u ∈ latHat D.host.F D.host.E (L : Set (Fin S.rank → D.host.E)) := by
     rw [GlobalTheory.LevSplit.latHat_iff]
     convert hx using 1

@@ -104,7 +104,7 @@ theorem bijective_ihom_map_rootsOfUnityToUnits (M : Rep.{u} (ULift.{u} ℤ) Gal(
           apply Subtype.ext
           change Additive.toMul (α := Lˣ) (f (a + b)) =
             Additive.toMul (α := Lˣ) (f a) * Additive.toMul (α := Lˣ) (f b)
-          rw [map_add]
+          rw [map_add (f := _)]
           rfl }
     refine ⟨(uliftIntLinearEquivAddHom M (galRootsOfUnity.{u} K L n)).symm g, ?_⟩
     refine LinearMap.ext fun m => ?_

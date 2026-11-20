@@ -47,7 +47,7 @@ theorem hom_eq_evenness_defect_of_cube (X : Type) [AddCommGroup X] [Module.Free 
     rfl
   refine ⟨fun x => ∏ i, h (e i) ^ evenDefectTriangle (e.repr x i), ?_, ?_⟩
   · intro a a' c
-    simp only [map_add, Finsupp.add_apply, ← Finset.prod_mul_distrib, ← zpow_add]
+    simp only [map_add (f := _), Finsupp.add_apply, ← Finset.prod_mul_distrib, ← zpow_add]
     refine Finset.prod_congr rfl fun i _ => ?_
     rw [evenDefectTriangle_cube]
   · intro a

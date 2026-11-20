@@ -36,7 +36,7 @@ theorem tensorEval_tmap {A B R : Type} [CommRing A] [CommRing B] [CommRing R] [A
   induction h using TensorProduct.induction_on with
   | zero => simp
   | tmul r a => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem tensorEval_comp {A R R' : Type} [CommRing A] [CommRing R] [CommRing R'] [Algebra R₀ R] [Algebra R₀ R']
     (ψ : A →+* R) (σ : R →ₐ[R₀] R') (h : R₀ ⊗[ℤ] A) :
@@ -44,14 +44,14 @@ theorem tensorEval_comp {A R R' : Type} [CommRing A] [CommRing R] [CommRing R'] 
   induction h using TensorProduct.induction_on with
   | zero => simp
   | tmul r a => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem tensorEval_one_tmul_mul {A R : Type} [CommRing A] [CommRing R] [Algebra R₀ R] (ψ : A →+* R) (a : A)
     (h : R₀ ⊗[ℤ] A) : tensorEval ψ (((1 : R₀) ⊗ₜ[ℤ] a) * h) = ψ a * tensorEval ψ h := by
   induction h using TensorProduct.induction_on with
   | zero => simp
   | tmul r b => rw [Algebra.TensorProduct.tmul_mul_tmul, tensorEval_tmul, tensorEval_tmul, _root_.one_mul, map_mul]; ring
-  | add x y hx hy => simp only [mul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]
 
 theorem isChartFun_pull {r₀ : Rule (rapObj 𝔠) R₀ k} {A B : Type} [CommRing A] [CommRing B] {ρ : A →+* B}
     {Y : Obj F 𝔠 (Sp A)} {Y' : Obj F 𝔠 (Sp B)} {κ : Y'.A.left ⟶ Y.A.left} (hκ : Y'.IsPullBy Y (spMap ρ) κ)

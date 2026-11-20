@@ -40,7 +40,7 @@ theorem idAt_mul_idOff {D : D7} (P : Pl D → Prop) (a b : AE D) (ha : a ∈ idA
       exact this
 
 theorem psiE_add {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (a b : AE D) : psiE ψ (a + b) = psiE ψ a * psiE ψ b := by
-  unfold psiE; rw [map_add, AddChar.map_add_eq_mul]
+  unfold psiE; rw [map_add (f := _), AddChar.map_add_eq_mul]
 
 end GlobalTheory.FinPl.FlatUnitPf
 

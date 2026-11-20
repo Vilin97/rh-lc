@@ -18,7 +18,7 @@ theorem cA_eq_cAF' (σ : E →ₐ[F] E) (z : AF F ⊗[F] E) : cA σ z = cAF σ z
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rfl
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem sum_three_fintype_reverse_order {ι κ μ M : Type} [Fintype ι] [Fintype κ] [Fintype μ] [AddCommMonoid M] (f : ι → κ → μ → M) :
     ∑ i, ∑ k, ∑ l, f i k l = ∑ l, ∑ k, ∑ i, f i k l := by
@@ -68,7 +68,7 @@ theorem thetaTr_ratWF_add : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
   have hform := co.form (incM F γ) w
   rw [symp_eq_symplOF' σ JS JT ξ₀ JA JB ξ hA hB, hyz] at hform
   unfold GlobalTheory.WeilSchrodinger.thetaTr GlobalTheory.WeilM.Darboux.rho
-  rw [map_add, hγ, hyz]
+  rw [map_add (f := _), hγ, hyz]
   set u : (κ → AF F) × (κ → AF F) :=
     (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i)) with hu
   set v := co.e w

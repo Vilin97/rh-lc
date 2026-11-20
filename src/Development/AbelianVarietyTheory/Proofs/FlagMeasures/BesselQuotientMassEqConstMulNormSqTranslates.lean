@@ -113,7 +113,7 @@ theorem closable (hσ : IsURepOn (UJset ε) σ) (D : Submodule ℂ H) (a : H →
   have h1 : ∀ g : Formalism.REAL.UJ ε, ∀ v ∈ D, ∀ w ∈ D, ⟪A (σ (umat g) v), A (σ (umat g) w)⟫_ℂ = ⟪A v, A w⟫_ℂ := by
     intro g v hv w hw
     rw [inner_eq_sum_norm_sq_div_four, inner_eq_sum_norm_sq_div_four]
-    simp only [← map_smul, ← map_add, ← map_sub]
+    simp only [← map_smul, ← map_add (f := _), ← map_sub]
     rw [hn g _ (D.add_mem hv hw), hn g _ (D.sub_mem hv hw), hn g _ (D.sub_mem hv (D.smul_mem _ hw)),
       hn g _ (D.add_mem hv (D.smul_mem _ hw))]
   have key : ∀ v ∈ D, ⟪A v, f⟫_ℂ = 0 := by
@@ -403,7 +403,7 @@ theorem besselQuotientMass_eq_const_mul_norm_sq_translates : ∀ (k r : ℕ) (ε
       rw [hl2 w hw] at hfin
       exact lt_top_iff_ne_top.2 fun h => hfin (by rw [h]; simp)
     | zero => rw [map_zero]; exact MemLp.zero
-    | add x y _ _ hx hy => rw [map_add]; exact hx.add hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact hx.add hy
     | smul c x _ hx => rw [map_smul]; exact hx.const_smul c
   let A₀ : D →ₗ[ℂ] Lp Wp 2 νq :=
     { toFun := fun v => (hmem v v.2).toLp _

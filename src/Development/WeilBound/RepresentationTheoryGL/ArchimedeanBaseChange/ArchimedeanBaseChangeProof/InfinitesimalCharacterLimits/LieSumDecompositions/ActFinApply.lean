@@ -143,7 +143,7 @@ theorem LS_stable : IsStable (LS U T) := by
     obtain ⟨ψ', hψ', e⟩ := base_one hU hT hψ k g
     exact act_left hU hT hψ' x m₂ (fun m₁ => by rw [hx, ← e]) o
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 theorem RS_stable : IsStable (RS U T) := by
@@ -154,7 +154,7 @@ theorem RS_stable : IsStable (RS U T) := by
     obtain ⟨ψ', hψ', e⟩ := base_one hU hT hψ k g
     exact act_right hU hT hψ' x m₁ (fun m₂ => by rw [hx, ← e]) o
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 omit hU in

@@ -417,7 +417,7 @@ theorem dualStackedExcLeadForm : GroundTheory.Heights₂.Heights.DualStackedExcL
     obtain ⟨y, hy⟩ := hcoordp v
     refine ⟨fun j => y j + if j = j₀ then ∑ l, y l * cc l else 0, ?_⟩
     rw [hy]
-    simp only [map_add, add_smul, Finset.sum_add_distrib, apply_ite am, map_zero, ite_smul, zero_smul,
+    simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, apply_ite am, map_zero, ite_smul, zero_smul,
       Finset.sum_ite_eq', Finset.mem_univ, if_true, he₀]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [e, smul_sub, Finset.sum_sub_distrib, smul_smul, map_sum, map_mul, Finset.sum_smul]

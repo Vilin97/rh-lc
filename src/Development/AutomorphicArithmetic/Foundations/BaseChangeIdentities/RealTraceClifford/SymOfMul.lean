@@ -94,7 +94,7 @@ private theorem cf_tw {n : ℕ} (w : Equiv.Perm (Fin n)) (f : FR n) (x : Wt n) :
     cf (tw w f) (x ∘ w) = cf f x := by
   induction f using AddMonoidAlgebra.induction_linear with
   | zero => simp [cf_zero']
-  | add f g hf hg => rw [map_add, cf_add', cf_add', hf, hg]
+  | add f g hf hg => rw [map_add (f := _), cf_add', cf_add', hf, hg]
   | single a b =>
     have h : AddMonoidAlgebra.single a b = b • (ex a : FR n) := by simp [ex]
     rw [h, map_smul, cf_smul', cf_smul', tw_ex, cf_ex, cf_ex]

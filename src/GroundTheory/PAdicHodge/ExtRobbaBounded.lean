@@ -607,7 +607,7 @@ theorem convergesAt_coeffB_add (hρ0 : 0 < ρ) (hρ1 : ρ < 1) (hb : ConvergesAt
       gaussNorm (T.coeffB (b + c)) ρ ≤ max (gaussNorm (T.coeffB b) ρ) (gaussNorm (T.coeffB c) ρ) := by
   obtain ⟨x, y, N, hx, hy⟩ := T.exists_common b c
   have hxy : (b + c) * algebraMap Γ T.B T.π ^ N = algebraMap Γ T.B (x + y) := by
-    rw [add_mul, hx, hy, map_add]
+    rw [add_mul, hx, hy, map_add (f := _)]
   rw [T.coeffB_eq hx, convergesAt_shift_iff hρ0] at hb
   rw [T.coeffB_eq hy, convergesAt_shift_iff hρ0] at hc
   rw [T.coeffB_eq hxy, T.coeffB_eq hx, T.coeffB_eq hy, convergesAt_shift_iff hρ0,

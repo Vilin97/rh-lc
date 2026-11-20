@@ -30,9 +30,9 @@ lemma sigS_add_const (Q : PowerSeries ℂ) (s : ℂ) :
     rw [Derivation.leibniz, derivative_C, derivative_X]
     simp
   refine derivative.ext (derivative.ext ?_ ?_) ?_
-  · rw [B.sigS, map_neg, map_neg, derivative_prim, derivative_prim, map_add, map_add, map_neg,
+  · rw [B.sigS, map_neg, map_neg, derivative_prim, derivative_prim, map_add (f := _), map_add (f := _), map_neg,
       map_neg, map_neg, map_neg, derivative_prim, derivative_prim, h1, h2, neg_add]
-  · rw [B.sigS, map_neg, map_neg, derivative_prim, map_add, map_neg, map_neg, derivative_prim, h1]
+  · rw [B.sigS, map_neg, map_neg, derivative_prim, map_add (f := _), map_neg, map_neg, derivative_prim, h1]
     simp [B.constantCoeff_prim]
   · simp [B.sigS, B.constantCoeff_prim]
 

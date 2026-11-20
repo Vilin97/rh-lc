@@ -41,7 +41,7 @@ theorem add_cA (h : IsCMExt F E σ) (z : AE F E) : ∃ a : AF F, z + cA σ z = a
   | add x y hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by rw [map_add, map_add, ← ha, ← hb]; ring⟩
+    exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ← ha, ← hb]; ring⟩
   | tmul a e =>
     refine ⟨Algebra.trace F E e • a, ?_⟩
     change a ⊗ₜ[F] e + a ⊗ₜ[F] σ e = (Algebra.trace F E e • a) ⊗ₜ[F] (1 : E)

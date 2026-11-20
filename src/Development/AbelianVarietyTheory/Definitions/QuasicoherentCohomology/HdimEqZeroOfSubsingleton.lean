@@ -132,7 +132,7 @@ variable (U n) in
 lemma map_add_hom (φ ψ : F ⟶ G) : map R (φ + ψ) U n = map R φ U n + map R ψ U n := by
   ext x
   apply (toH' G U n).injective
-  rw [LinearMap.add_apply, map_add, toH'_map, toH'_map, toH'_map, Functor.map_add,
+  rw [LinearMap.add_apply, map_add (f := _), toH'_map, toH'_map, toH'_map, Functor.map_add (f := _),
     SiteCoh.map_add_apply]
 
 variable (F G U n) in

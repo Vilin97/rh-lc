@@ -25,8 +25,8 @@ theorem exists_equiv_fst_prod (D : E × E →L[ℝ] E)
     have hv : v = (v.1, 0) + (0, v.2) := by simp
     have hw : w = (w.1, 0) + (0, w.2) := by simp
     have h3 : D (0, v.2) = D (0, w.2) := by
-      have e1 : D v = D (v.1, 0) + D (0, v.2) := by rw [← map_add]; simp
-      have e2 : D w = D (w.1, 0) + D (0, w.2) := by rw [← map_add]; simp
+      have e1 : D v = D (v.1, 0) + D (0, v.2) := by rw [← map_add (f := _)]; simp
+      have e2 : D w = D (w.1, 0) + D (0, w.2) := by rw [← map_add (f := _)]; simp
       rw [e1, e2, h1] at h2
       exact add_left_cancel h2
     have h4 : v.2 = w.2 := hinj2 (by simpa using h3)

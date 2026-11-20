@@ -170,7 +170,7 @@ theorem fockB_projVV (sg : ι → DomWeight n) (F : Pol K ι n) {y : Pol K ι n}
   induction hy using Submodule.span_induction with
   | mem y hy => obtain ⟨k, rfl⟩ := hy; exact key k
   | zero => simp only [← fockBL_apply, map_zero]
-  | add y z _ _ hy hz => simp only [← fockBL_apply, map_add] at *; rw [hy, hz]
+  | add y z _ _ hy hz => simp only [← fockBL_apply, map_add (f := _)] at *; rw [hy, hz]
   | smul a y _ hy => simp only [← fockBL_apply, map_smul] at *; rw [hy]
 
 theorem projVV_coe (sg : ι → DomWeight n) (x : VV K sg) : projVV sg (x : Pol K ι n) = x :=
@@ -201,7 +201,7 @@ theorem coeff_scale {A : Type} [CommRing A] [Fintype ι] (t : ι → A) (e : ι 
       (∏ p : ι × Fin n, t p.1 ^ e p) * AddMonoidAlgebra.coeff P e := by
   classical
   induction P using MvPolynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq, mul_add]
   | monomial m a =>
     have : (aeval (fun p : ι × Fin n => C (t p.1) * X p) (monomial m a) : MvPolynomial (ι × Fin n) A) =
         C (∏ p : ι × Fin n, t p.1 ^ m p) * monomial m a := by
@@ -253,7 +253,7 @@ theorem coefLast_blockAct [Fintype ι] (b : ι → Fin n → ℕ) (A' : ι → M
     | C a =>
       have e : ∀ {m : ℕ} (U : ι → Matrix (Fin m) (Fin m) K), Formalism.GradedWeylDivisibility.blockAct K (n := m) U (C a) = C a := fun U => algHom_C _ _
       rw [e, splitLast_C, map_C, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, e, algHom_C, algebraMap_eq]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p v hp =>
       rw [map_mul, map_mul, hp, splitLast_blockAct_X K ι hN A' A t h, map_mul, map_mul, map_mul]
   rw [coefLast_eq_coeff, coefLast_eq_coeff, key, coeff_scale ι (fun τ => C (t τ)), coeff_map, smul_eq_C_mul,

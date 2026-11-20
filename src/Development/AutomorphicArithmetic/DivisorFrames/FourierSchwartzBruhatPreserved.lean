@@ -75,5 +75,5 @@ theorem UpperTheory.fourier_schwartz_bruhat_preserved :
   obtain ⟨hTl, hTc⟩ := hT
   exact UpperTheory.locally_constant_fourier m (fun a => ψ (Algebra.trace (Fv F v) (Fv F v ⊗[F] E) a))
     (hψl.comp_continuous (IsModuleTopology.continuous_of_linearMap (Algebra.trace (Fv F v) (Fv F v ⊗[F] E))))
-    (by simp) (fun a b => by simp only [map_add, AddChar.map_add_eq_mul])
+    (by simp) (fun a b => by simp only [map_add (f := _), AddChar.map_add_eq_mul])
     (GlobalTheory.TraceAnnCompact.isCompact_trace_ann v ψ hc hψ) T hTl hTc

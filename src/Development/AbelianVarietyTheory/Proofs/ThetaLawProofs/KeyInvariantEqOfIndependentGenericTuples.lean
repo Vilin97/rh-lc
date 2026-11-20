@@ -236,7 +236,7 @@ theorem kaVal_eq_of_generic : Out.Laws → ∀ (k K : Type) [Field k] [CharZero 
       refine GlobalTheory.KeyLine.kaVal_eq_of_line hL K x' n l l' al s s κ ρ hA' (fun t σ hσ => ?_) hκ hρ
       refine finZ_of_generic hL rfl hn h hb hb' (T := T) (hT.comp Sum.inl Sum.inl_injective) fun i c => ?_
       refine (hσ i c).trans (Eq.trans ?_ (hs i c))
-      rw [← add_mul, ← map_add, sub_add_cancel, map_one, _root_.one_mul]
+      rw [← add_mul, ← map_add (f := _), sub_add_cancel, map_one, _root_.one_mul]
     | insert i₀ S hi ih =>
       intro ρ hρ
       have hinj : Function.Injective (sl S) := Function.LeftInverse.injective (hsl S)
@@ -254,7 +254,7 @@ theorem kaVal_eq_of_generic : Out.Laws → ∀ (k K : Type) [Field k] [CharZero 
         rwa [Sum.comp_elim] at this
       refine finZ_line hL hn h hb hb' hT' (hco S) (hs' i₀) i₀ t (fun i hi' => funext fun c => (hσ i c).trans ?_)
         fun c => ?_
-      · rw [Finset.piecewise_insert_of_ne _ _ _ hi', ← add_mul, ← map_add, sub_add_cancel, map_one, _root_.one_mul]
+      · rw [Finset.piecewise_insert_of_ne _ _ _ hi', ← add_mul, ← map_add (f := _), sub_add_cancel, map_one, _root_.one_mul]
       · have := hσ i₀ c
         rwa [Finset.piecewise_insert_self] at this
   exact main Finset.univ κ' (by rwa [Finset.piecewise_univ])

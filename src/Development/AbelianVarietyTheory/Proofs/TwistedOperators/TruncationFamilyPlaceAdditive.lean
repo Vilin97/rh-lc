@@ -119,7 +119,7 @@ theorem yfam_continuous_add : ∀ (D : D7) (V : HSp D) (Φ : WittFrame V) (L : _
     refine (pr Q).continuous.comp ((PiLp.continuous_toLp 2 _).comp (continuous_pi fun i => ?_))
     exact continuous_const.mul ((PiLp.continuous_apply 2 _ (π i)).comp
       (continuous_const.sub ((continuous_H0 hg).comp (continuous_const.mul continuous_id))))
-  · rw [hY, hY, hY, hY, ← map_sub, ← map_add]
+  · rw [hY, hY, hY, hY, ← map_sub, ← map_add (f := _)]
     congr 1
     ext i
     have := H0_mul_mul_add_eq_add hg S (rat V w) hy hz (π i)

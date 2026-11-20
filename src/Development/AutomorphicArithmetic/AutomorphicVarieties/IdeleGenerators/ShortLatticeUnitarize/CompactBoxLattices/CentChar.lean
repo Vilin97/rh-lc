@@ -23,14 +23,14 @@ private theorem orb_act (κ : Representation ℂ K V) (x : V) (k : K) (c : K →
     orb κ x (c.mapDomain (k * ·)) = κ k (orb κ x c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add c c' h h' => rw [Finsupp.mapDomain_add, map_add, map_add, map_add, h, h']
+  | add c c' h h' => rw [Finsupp.mapDomain_add, map_add (f := _), map_add (f := _), map_add (f := _), h, h']
   | single a b => simp [orb]
 
 private def annPart (κ : Representation ℂ K V) (φ : V) : Submodule ℂ V where
   carrier := {x | ∀ c, orb κ φ c = 0 → orb κ x c = 0}
   add_mem' := fun {x y} hx hy c hc => by
     have : orb κ (x + y) c = orb κ x c + orb κ y c := by
-      simp only [orb, Finsupp.linearCombination_apply, Finsupp.sum, map_add, smul_add, Finset.sum_add_distrib]
+      simp only [orb, Finsupp.linearCombination_apply, Finsupp.sum, map_add (f := _), smul_add, Finset.sum_add_distrib]
     rw [this, hx c hc, hy c hc, add_zero]
   zero_mem' := fun c _ => by simp [orb, Finsupp.linearCombination_apply, Finsupp.sum]
   smul_mem' := fun a x hx c hc => by

@@ -71,7 +71,7 @@ lemma fockInner_add_left (P P' Q : MvPolynomial σ ℂ) :
     fockInner_eq_sum_right P' Q Q.support (Finset.Subset.refl _),
     ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl (fun α _ => ?_)
-  rw [MvPolynomial.coeff_add, map_add]
+  rw [MvPolynomial.coeff_add, map_add (f := _)]
   ring
 
 lemma fockInner_add_right (P Q Q' : MvPolynomial σ ℂ) :
@@ -224,7 +224,7 @@ lemma fockInner_X_mul [Fintype σ] (l : σ) (P Q : MvPolynomial σ ℂ) :
             · simp [Ne.symm hi]
           have hne : b - Finsupp.single l 1 ≠ a := fun he => h (hb.symm.trans (by rw [he]))
           rw [fockInner_monomial_monomial_of_ne _ _ _ _ hne]
-    · rw [fockInner_add_right, map_add, fockInner_add_right, hQ, hQ']
+    · rw [fockInner_add_right, map_add (f := _), fockInner_add_right, hQ, hQ']
   · rw [mul_add, fockInner_add_left, fockInner_add_left, hP, hP']
 
 lemma fockInner_pderiv [Fintype σ] (l : σ) (P Q : MvPolynomial σ ℂ) :

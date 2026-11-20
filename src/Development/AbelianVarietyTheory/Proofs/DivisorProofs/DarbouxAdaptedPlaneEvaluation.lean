@@ -124,7 +124,7 @@ theorem exists_plane_pair : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     adelic_plane_decomp hone u
   have hsum : co.e (z * (incM F H'.ι)ᵀ) + co.e (Matrix.vecMulVec a (incV F H'.x)) +
       co.e (Matrix.vecMulVec b (incV F H'.y)) = (L, 0) := by
-    rw [← map_add, ← map_add, ← hdec, hu]
+    rw [← map_add (f := _), ← map_add (f := _), ← hdec, hu]
   obtain ⟨ha1, ha2⟩ := h2 a
   obtain ⟨hb2, hb1⟩ := h3 b
   have hz : M₁.co.e z = 0 := by

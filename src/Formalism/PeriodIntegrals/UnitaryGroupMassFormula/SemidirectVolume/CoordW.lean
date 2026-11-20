@@ -68,9 +68,9 @@ theorem map_eq_of_sum (D : PG.Dat A n r) (H : D.Hyp) (W : AddSubgroup (n → A))
         rintro ⟨⟨u, hu⟩, ⟨w, hw⟩⟩
         refine Prod.ext (Subtype.ext ?_) (Subtype.ext ?_)
         · show D.pU (u + w) = u
-          rw [map_add, hUmem u hu, hWmem w hw, add_zero]
+          rw [map_add (f := _), hUmem u hu, hWmem w hw, add_zero]
         · show D.pW (u + w) = w
-          rw [PG.Dat.pW_apply, map_add, hUmem u hu, hWmem w hw, add_zero, add_sub_cancel_left]
+          rw [PG.Dat.pW_apply, map_add (f := _), hUmem u hu, hWmem w hw, add_zero, add_sub_cancel_left]
       right_inv := fun v => by
         show D.pU v + D.pW v = v
         rw [PG.Dat.pW_apply, add_sub_cancel]
@@ -104,7 +104,7 @@ theorem map_eq_of_sum (D : PG.Dat A n r) (H : D.Hyp) (W : AddSubgroup (n → A))
     show g (u + (w : n → A)) = u + (f w : n → A)
     have := hgU u
     rw [hUmem u hu] at this
-    rw [map_add, this, hf]
+    rw [map_add (f := _), this, hf]
   have h1 : (ρ.map (Prod.map id f)).map Ψ = ρ.map Ψ := by
     rw [Measure.map_map hΨm (measurable_id.prodMap hfm), ← hcomm, ← Measure.map_map hgm hΨm]
     exact hV _ inferInstance
@@ -151,6 +151,6 @@ theorem wMod_of (hV : Cj.VMod) : WMod := by
   intro v
   rw [PG.Dat.pU_apply, PG.Dat.pX_apply, PG.Dat.pXv_apply, PG.Dat.pz_apply]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_smul, he, hf, hz]
+    simp only [map_add (f := _), map_sum, map_smul, he, hf, hz]
 
 end PI.VolSemiDirect.W.Md

@@ -126,6 +126,6 @@ theorem trace_Vg {u : Λ → End ℂ M} (hc : ∀ a b, Commute (u a) (u b)) (χ 
       Submodule.coe_add, Submodule.coe_smul, key, LinearMap.sub_apply,
       Module.algebraMap_end_apply]
     abel
-  rw [hsplit, map_add, map_smul, trace_nil N T σ hNc hNn hTN a, zero_add, smul_eq_mul, mul_comm]
+  rw [hsplit, map_add (f := _), map_smul, trace_nil N T σ hNc hNn hTN a, zero_add, smul_eq_mul, mul_comm]
 
 end UpperTheory.V.Z.Sym.Tf

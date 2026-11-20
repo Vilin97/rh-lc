@@ -53,7 +53,7 @@ def reduceTwoCocyclesModPrimePow (ρ : Representation ℤ_[l] Γ ℤ_[l]) (r : �
     Z2 ρ →ₛₗ[(PadicInt.toZModPow r : ℤ_[l] →+* ZMod (l ^ r))] Z2 ρr where
   toFun z := ⟨fun p => PadicInt.toZModPow r (z.1 p),
     GlobalTheory.Published.PoitouTate.continuous_toZModPow.comp z.2.1, fun g h' k => by
-      simp only [← h, ← map_sub, ← map_add, z.2.2 g h' k, map_zero]⟩
+      simp only [← h, ← map_sub, ← map_add (f := _), z.2.2 g h' k, map_zero]⟩
   map_add' z z' := Subtype.ext (funext fun p => map_add _ _ _)
   map_smul' c z := Subtype.ext (funext fun p => map_mul _ _ _)
 

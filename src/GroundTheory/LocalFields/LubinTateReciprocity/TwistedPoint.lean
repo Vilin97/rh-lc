@@ -30,9 +30,9 @@ theorem constantCoeff_subst_of_constantCoeff_eq_zero {G : R⟦X⟧} (hG : consta
     (F : R⟦X⟧) : constantCoeff (subst G F : R⟦X⟧) = constantCoeff F := by
   have hs := HasSubst.of_constantCoeff_zero' hG
   conv_lhs => rw [F.eq_X_mul_shift_add_const]
-  rw [← coe_substAlgHom hs, map_add, map_mul, coe_substAlgHom hs, subst_X hs, subst_C]
+  rw [← coe_substAlgHom hs, map_add (f := _), map_mul, coe_substAlgHom hs, subst_X hs, subst_C]
   change constantCoeff (G * _ + PowerSeries.C _) = _
-  rw [map_add, map_mul, hG, zero_mul, zero_add, constantCoeff_C]
+  rw [map_add (f := _), map_mul, hG, zero_mul, zero_add, constantCoeff_C]
 
 theorem exists_subst_eq_mul {G W : R⟦X⟧} (hG : constantCoeff G = 0) (hW : constantCoeff W = 0) :
     ∃ V : R⟦X⟧, (subst G W : R⟦X⟧) = G * V ∧ constantCoeff V = coeff 1 W := by
@@ -126,7 +126,7 @@ omit [IsDomain B] [IsDiscreteValuationRing B] in
 theorem ltEisB_eq (m : ℕ) :
     ltEisB π B m = Polynomial.C (algebraMap 𝒪[K] B π) +
       ((ltPolyIter π m).map (algebraMap 𝒪[K] B)) ^ (Nat.card 𝓀[K] - 1) := by
-  rw [ltEisB, ltEisenstein, Polynomial.map_add, Polynomial.map_C, Polynomial.map_pow]
+  rw [ltEisB, ltEisenstein, Polynomial.map_add (f := _), Polynomial.map_C, Polynomial.map_pow]
 
 include hπ hunr in
 
@@ -194,7 +194,7 @@ theorem aeval_root_ltPolyIter_pow :
       (Polynomial.C (algebraMap 𝒪[K] B π) +
         ((ltPolyIter π m).map (algebraMap 𝒪[K] B)) ^ (Nat.card 𝓀[K] - 1)) = 0 := by
     rw [← ltEisB_eq, AdjoinRoot.aeval_eq, AdjoinRoot.mk_self]
-  rw [map_add, Polynomial.aeval_C, map_pow] at h
+  rw [map_add (f := _), Polynomial.aeval_C, map_pow] at h
   rw [map_neg, eq_neg_of_add_eq_zero_right h]
   rfl
 

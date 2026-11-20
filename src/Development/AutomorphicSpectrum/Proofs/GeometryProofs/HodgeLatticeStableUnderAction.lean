@@ -36,7 +36,7 @@ theorem hodgeAt_stable : ∀ (E : Type) [Field E] [NumberField E] (Ω Vs : Type)
       exact key _ _
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
     | smul r x _ hx =>
       have e : ρH a (r • x) = r • ρH a x := map_smul (ρH a) (r : Ω) x

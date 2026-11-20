@@ -111,7 +111,7 @@ theorem frame_gen {T : E} (G : Formalism.MainNotions.S.Lat.LFlag S r T) (hT : T 
     · intro ht
       obtain ⟨y, hy, x, hx, hxy⟩ := Submodule.mem_sup.1 ht
       have h1 : S.hT (f a) (t • G.fl.e a) = t := by rw [map_smul, hfe, if_pos rfl, smul_eq_mul, mul_one]
-      rw [← hxy, map_add, hXa0 a x hx, add_zero] at h1
+      rw [← hxy, map_add (f := _), hXa0 a x hx, add_zero] at h1
       rw [← h1]; exact hval a y hy
     · intro ht
       exact Submodule.mem_sup_left (hmem a t ht)

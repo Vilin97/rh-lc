@@ -120,7 +120,7 @@ theorem op_theta_conj {a : ℕ} (ξ : HChar L) (o : Op L a) :
     refine ⟨by simp [thetaOp, conjOp, opMul], ?_⟩
     change dchi ξ (-(GlobalTheory.Tw.Phi a (Cinf L) * (Matrix.of X)ᴴ * (GlobalTheory.Tw.Phi a (Cinf L))ᵀ)).trace +
       dchi ξ (Matrix.of fun i j => star (X i j)).trace = 0
-    rw [CG.trace_theta, ← map_add]
+    rw [CG.trace_theta, ← map_add (f := _)]
     simp [Matrix.trace, star_sum]
 
 theorem dualIsConjBy_line_iff (ξ ψ : HChar L) :

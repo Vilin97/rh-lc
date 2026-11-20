@@ -28,12 +28,12 @@ theorem map_neg (h : IsDer D) (a : A) : D (-a) = -D a := by
   linear_combination -h1
 
 theorem map_sub (h : IsDer D) (a b : A) : D (a - b) = D a - D b := by
-  rw [sub_eq_add_neg, h.map_add, h.map_neg, ← sub_eq_add_neg]
+  rw [sub_eq_add_neg, h.map_add (f := _), h.map_neg, ← sub_eq_add_neg]
 
 theorem map_natCast (h : IsDer D) (n : ℕ) : D (n : A) = 0 := by
   induction n with
   | zero => rw [Nat.cast_zero]; exact h.map_zero
-  | succ n ih => rw [Nat.cast_succ, h.map_add, ih, h.map_one, add_zero]
+  | succ n ih => rw [Nat.cast_succ, h.map_add (f := _), ih, h.map_one, add_zero]
 
 theorem map_intCast (h : IsDer D) (n : ℤ) : D (n : A) = 0 := by
   rcases n with n | n
@@ -73,7 +73,7 @@ theorem map_of_mul_eq_one (h : IsDer D) {v w : A} (hvw : v * w = 1) : D v = -v ^
 theorem neg (h : IsDer D) : IsDer (fun a => -D a) :=
   ⟨fun a b => by
     show -D (a + b) = -D a + -D b
-    rw [h.map_add]
+    rw [h.map_add (f := _)]
     ring,
    fun a b => by
     show -D (a * b) = a * -D b + b * -D a
@@ -112,7 +112,7 @@ theorem flowDifferentialEquation : FlowSq.{u} := by
   · rw [hDx, WeierstrassCurve.b₂, WeierstrassCurve.b₄, WeierstrassCurve.b₆]
     linear_combination 4 * hE
   · rw [hDx]
-    simp only [h.map_add, h.map_mul, h.map_ofNat, c1, c3, hDx, hDy]
+    simp only [h.map_add (f := _), h.map_mul, h.map_ofNat, c1, c3, hDx, hDy]
     rw [WeierstrassCurve.b₂, WeierstrassCurve.b₄]
     ring
 
@@ -123,10 +123,10 @@ theorem flowWeierstrassForm : FlowWp.{u} := by
   obtain ⟨hE, hDx, hDy⟩ := hF
   obtain ⟨s, hs⟩ := hu6.exists_right_inv
   have hb := congrArg D h12c
-  simp only [WeierstrassCurve.b₂, h.map_add, h.map_mul, h.map_sq, h.map_ofNat, c1, c2] at hb
+  simp only [WeierstrassCurve.b₂, h.map_add (f := _), h.map_mul, h.map_sq, h.map_ofNat, c1, c2] at hb
   have h12 : 12 * D c = 0 := by linear_combination hb
   have hDc : D c = 0 := by linear_combination (-(6 * s + 1) * D c) * hs + 3 * s ^ 2 * h12
-  have hDxc : D (x + c) = D x := by rw [h.map_add, hDc, add_zero]
+  have hDxc : D (x + c) = D x := by rw [h.map_add (f := _), hDc, add_zero]
   rw [WeierstrassCurve.c₄] at h12g2
   rw [WeierstrassCurve.c₆] at h216g3
   have hb4 : 2 * W.b₄ = 12 * c ^ 2 - g2 := by
@@ -149,7 +149,7 @@ theorem chartFlowNegation : FlowNegUW.{u} := by
   obtain ⟨hW, hDu, hDw⟩ := hF
   unfold WEq at hW
   have hDq : D (-1 + W.a₁ * u + W.a₃ * w) = W.a₁ * fwAt W u w + W.a₃ * fuAt W u w := by
-    simp only [h.map_add, h.map_neg, h.map_one, h.map_mul, c1, c3, hDu, hDw]
+    simp only [h.map_add (f := _), h.map_neg, h.map_one, h.map_mul, c1, c3, hDu, hDw]
     ring
   have hDr : D r = -r ^ 2 * (W.a₁ * fwAt W u w + W.a₃ * fuAt W u w) := by
     rw [h.map_of_mul_eq_one hr, hDq]

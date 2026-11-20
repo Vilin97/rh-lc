@@ -48,7 +48,7 @@ theorem cuspW_of_conj (R R' : RiemLat E g Λ) (σ σ' : Ψ → (𝓞 E →+* ℂ
 
 def conjL (f : Module.End ℂ (Fin g → ℂ)) : Module.End ℂ (Fin g → ℂ) where
   toFun x := star (f (star x))
-  map_add' x y := by rw [star_add, map_add, star_add]
+  map_add' x y := by rw [star_add, map_add (f := _), star_add]
   map_smul' c x := by rw [star_smul, map_smul, star_smul, star_star, RingHom.id_apply]
 
 theorem conjL_apply (f : Module.End ℂ (Fin g → ℂ)) (x : Fin g → ℂ) : conjL f x = star (f (star x)) := rfl

@@ -305,7 +305,7 @@ theorem exists_dpow_p_mul (m : ℕ) (y : AInf K p) :
 
 theorem dpow_add (n : ℕ) (x y : AInf K p) :
     dpow n (x + y) = ∑ k ∈ Finset.range (n + 1), dpow k x * dpow (n - k) y := by
-  rw [dpow_eq_iff, Finset.mul_sum, map_add, add_pow]
+  rw [dpow_eq_iff, Finset.mul_sum, map_add (f := _), add_pow]
   refine Finset.sum_congr rfl fun k hk => ?_
   have hk' : k ≤ n := Nat.lt_succ_iff.mp (Finset.mem_range.mp hk)
   rw [← Nat.choose_mul_factorial_mul_factorial hk']
@@ -366,7 +366,7 @@ theorem phiAway_mem {y : 𝔸} (hy : y ∈ ACrisZero K p) : phiAway K p y ∈ AC
   | algebraMap r =>
     rw [phiAway_algebraMap]
     exact Subalgebra.algebraMap_mem _ _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | mul y z _ _ hy hz => rw [map_mul]; exact mul_mem hy hz
 
 variable (K p) in

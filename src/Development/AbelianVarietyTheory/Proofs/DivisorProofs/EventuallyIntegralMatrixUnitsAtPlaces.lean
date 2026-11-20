@@ -88,7 +88,7 @@ theorem isIntV_theta_locOrder (p : ℕ) [Fact p.Prime] (G : HTGroup p) (v : Away
     have h1k := h1 k
     rw [Algebra.TensorProduct.one_def, basV_repr_tmul, one_mul] at h1k
     exact mul_mem (padicEquiv_symm_coe_mem p G v r) h1k
-  | add x y _ _ hx hy => rw [map_add]; exact isIntV_add' G v hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact isIntV_add' G v hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact hmul _ _ hx hy
 
 theorem finite_dvd (p : ℕ) (N : ℕ) (hN : 0 < N) :

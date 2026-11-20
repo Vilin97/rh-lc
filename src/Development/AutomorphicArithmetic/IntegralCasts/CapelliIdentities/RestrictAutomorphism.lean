@@ -18,7 +18,7 @@ private theorem hom_unique {p : ℕ} [Fact p.Prime] {R : Type} [CommRing R] [Cha
     rw [hy]; ring
   have h : φ x - ψ x = (φ y - ψ y) * (p : WittVector p R) ^ (i + 1) := by
     conv_lhs => rw [hx]
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
     ring
   rw [h, WittVector.mul_pow_charP_coeff_zero _ (Nat.lt_succ_self i), WittVector.zero_coeff]
 

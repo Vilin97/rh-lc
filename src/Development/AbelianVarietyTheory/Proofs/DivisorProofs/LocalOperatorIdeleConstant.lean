@@ -62,7 +62,7 @@ theorem exists_linear_locCo_shift (F E : Type) [Field F] [NumberField F] [Field 
   set m := Matrix.vecMulVec (incV F H.y) (incV F H'.x)
   let g₀ : E →ₗ[F] (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v) :=
     { toFun := fun e => GlobalTheory.LatVac.locCo M.co v (((1 : AF F) ⊗ₜ[F] σ e : AE F E) • m)
-      map_add' := fun e e' => by rw [map_add, TensorProduct.tmul_add, add_smul, map_add]
+      map_add' := fun e e' => by rw [map_add (f := _), TensorProduct.tmul_add, add_smul, map_add (f := _)]
       map_smul' := fun c e => by
         have h1 : (((1 : AF F) ⊗ₜ[F] σ (c • e) : AE F E) • m) =
             algebraMap F (AF F) c • ((((1 : AF F) ⊗ₜ[F] σ e : AE F E)) • m) := by
@@ -72,7 +72,7 @@ theorem exists_linear_locCo_shift (F E : Type) [Field F] [NumberField F] [Field 
   refine ⟨L, fun z => ?_⟩
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, add_smul, map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), add_smul, map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   | tmul a e =>
     have e1 : cA σ (a ⊗ₜ[F] e) = a • ((1 : AF F) ⊗ₜ[F] σ e : AE F E) := by
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]; rfl

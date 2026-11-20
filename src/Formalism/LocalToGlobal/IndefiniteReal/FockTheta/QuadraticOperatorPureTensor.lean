@@ -152,7 +152,7 @@ theorem pt_X_mul (h : IsCCR Sm aP aM) (hv : v ∈ Sm) (l : ι) (P : MvPolynomial
     rw [MvPolynomial.X, MvPolynomial.monomial_mul, one_mul, pt_monomial, pt_monomial,
       add_comm (Finsupp.single l 1) k, opPow_add_single h hv, creation_smul h l c (opPow_mem h hv k)]
   | add p q hp hq =>
-    rw [mul_add, map_add, map_add, hp, hq,
+    rw [mul_add, map_add (f := _), map_add (f := _), hp, hq,
       creation_add h l (ccrMemAbs Sm aP aM v h hv p) (ccrMemAbs Sm aP aM v h hv q)]
 
 end Help
@@ -170,7 +170,7 @@ theorem quadOp_add (τ : D.what₂.Tau) (sS BS XS : Matrix (Fin n) (Fin n) ℂ) 
     (pS pT : ℕ) (P P' : MvPolynomial (FVar D m n) ℂ) :
     quadOp τ sS BS XS sT BT XT pS pT (P + P') =
       quadOp τ sS BS XS sT BT XT pS pT P + quadOp τ sS BS XS sT BT XT pS pT P' := by
-  simp only [quadOp, map_add, ← Finset.sum_add_distrib]
+  simp only [quadOp, map_add (f := _), ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   ring
 
@@ -349,7 +349,7 @@ theorem int_sesq_adj (hT : ThetaDRho D) (hL : DRhoLin D) (hC : DRhoComm D) (hLin
     simp only [ipF, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     have e : (fun w => H w * starRingEnd ℂ (a * F w + b * G w)) =
         fun w => starRingEnd ℂ a * (H w * starRingEnd ℂ (F w)) + starRingEnd ℂ b * (H w * starRingEnd ℂ (G w)) := by
-      funext w; simp only [map_add, map_mul]; ring
+      funext w; simp only [map_add (f := _), map_mul]; ring
     rw [e, integral_add ((hI H F hH hF).const_mul _) ((hI H G hH hG).const_mul _), integral_const_mul,
       integral_const_mul]
   have skew : ∀ τ z F G, IsThetaFunO ψ S T F → IsThetaFunO ψ S T G →
@@ -404,7 +404,7 @@ theorem fockDerO_of (hT : ThetaDRho D) (hL : DRhoLin D) (hC : DRhoComm D) (hA : 
       δ (a • F + b • G) = a • δ F + b • δ G := by
     intro F G a b hF hG
     funext x
-    simp only [hδ, dOm, map_add, map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [hδ, dOm, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     exact (((hdiff F hF x).hasDerivAt.const_mul a).add ((hdiff G hG x).hasDerivAt.const_mul b)).deriv
   have hδ0 : δ 0 = 0 := by
     funext x
@@ -498,7 +498,7 @@ theorem fockDerO_of (hT : ThetaDRho D) (hL : DRhoLin D) (hC : DRhoComm D) (hA : 
         -(dRho (heisO ψ S T) θ τ (A z) f + Complex.I • dRho (heisO ψ S T) θ τ (A (Jt z)) f) := by
       rw [← hq1pt f hft, hb f hft hf.2, hb f hft hf.2]
       have e := congrArg (pt f) hpol
-      rw [map_add, map_neg, map_add, hpt, pt_C_mul, pt_C_mul] at e
+      rw [map_add (f := _), map_neg, map_add (f := _), hpt, pt_C_mul, pt_C_mul] at e
       have eA : dRho (heisO ψ S T) θ τ (A z) f = pt f (Dz (A z) 1) := by
         have := hb f hft hf.2 (A z) 1; rwa [hpt, pt_one] at this
       have eAJ : dRho (heisO ψ S T) θ τ (A (Jt z)) f = pt f (Dz (A (Jt z)) 1) := by
@@ -587,7 +587,7 @@ theorem fockDerO_of (hT : ThetaDRho D) (hL : DRhoLin D) (hC : DRhoComm D) (hA : 
             MvPolynomial.C (-((fockScale D τ : ℂ)⁻¹) * Complex.I) * Dz (A (Jt (unitMap (BS τ) (BT τ) i c))) P := by
         rw [hcr P, hcr (Q P), hQlin, ← ha, ← ha]
         ring
-      rw [hpol, map_add, hpt, pt_C_mul, pt_C_mul]
+      rw [hpol, map_add (f := _), hpt, pt_C_mul, pt_C_mul]
       rw [← hb f hf.1 hf.2, ← hb f hf.1 hf.2, ← h1, ← h2]
       funext x
       simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
@@ -625,7 +625,7 @@ theorem fockDerO_of (hT : ThetaDRho D) (hL : DRhoLin D) (hC : DRhoComm D) (hA : 
       have eQ : Q (p + q) = Q p + Q q := by rw [hQ]; exact quadOp_add _ _ _ _ _ _ _ _ _ p q
       have eδ := hδlin _ _ 1 1 (hpt_mem f hft p) (hpt_mem f hft q)
       simp only [one_smul] at eδ
-      rw [eQ, map_add, map_add, eδ, hp, hq, smul_add]
+      rw [eQ, map_add (f := _), map_add (f := _), eδ, hp, hq, smul_add]
       abel
     next p l hp =>
       rw [mul_comm p, hptX f hft]
@@ -635,7 +635,7 @@ theorem fockDerO_of (hT : ThetaDRho D) (hL : DRhoLin D) (hC : DRhoComm D) (hA : 
       abel
   have hd0 := (hdiff _ (hpt_mem f hft P) x).hasDerivAt
   have e : pt f (Q P + κ • P) x = δ (pt f P) x := by
-    rw [map_add, map_smul, hind P]
+    rw [map_add (f := _), map_smul, hind P]
   rw [e]
   exact hd0
 
@@ -792,7 +792,7 @@ theorem coord_adX {pS pT : ℕ} {GS sS BS XS : Matrix (Fin n) (Fin n) ℂ} {GT s
   have hζ : ζ = (ζ.re : ℂ) + (ζ.im : ℂ) * Complex.I := (Complex.re_add_im ζ).symm
   have hcζ : starRingEnd ℂ ζ = (ζ.re : ℂ) - (ζ.im : ℂ) * Complex.I := by
     conv_lhs => rw [hζ]
-    simp only [map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+    simp only [map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
     ring
   rw [hcζ]
   linear_combination (-(1 / 2) * (fCoord BS BT pS pT (adX XS XT (unitMap BS BT l.1 l.2)) k -
@@ -834,7 +834,7 @@ theorem pderiv_comm' (i j : σ) (P : MvPolynomial σ ℂ) :
       congr 1
       simp only [Finsupp.tsub_apply, Finsupp.single_apply, if_neg hij, if_neg (Ne.symm hij), tsub_zero]
       ring
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem pderiv_X_mul' (a b : σ) (P : MvPolynomial σ ℂ) :
     MvPolynomial.pderiv a (MvPolynomial.X b * P) =
@@ -868,7 +868,7 @@ def dGen (ι : K → σ) (c d : K → ℂ) (P : MvPolynomial σ ℂ) : MvPolynom
 
 theorem qGen_add (ι : K → σ) (M N : K → K → ℂ) (P P' : MvPolynomial σ ℂ) :
     qGen ι M N (P + P') = qGen ι M N P + qGen ι M N P' := by
-  simp only [qGen, map_add, ← Finset.sum_add_distrib]
+  simp only [qGen, map_add (f := _), ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
   ring
 
@@ -908,7 +908,7 @@ theorem qGen_X (ι : K → σ) (hι : Function.Injective ι) (M N : K → K → 
       (if k = j then MvPolynomial.C (starRingEnd ℂ (N j l) / 2) * MvPolynomial.pderiv (ι l) P else 0) -
       (if l = j then MvPolynomial.C (starRingEnd ℂ (N k j) / 2) * MvPolynomial.pderiv (ι k) P else 0) := by
     intro k l
-    rw [pderiv_X_mul' (ι l) (ι j) P, map_add, pderiv_X_mul' (ι k) (ι j)]
+    rw [pderiv_X_mul' (ι l) (ι j) P, map_add (f := _), pderiv_X_mul' (ι k) (ι j)]
     simp only [hι.eq_iff]
     by_cases hl : j = l <;> by_cases hk : j = k
     · subst hl; subst hk; simp; ring
@@ -938,7 +938,7 @@ theorem qGen_D (ι : K → σ) (hι : Function.Injective ι) (M N : K → K → 
       (if k = j then MvPolynomial.C (N j l / 2) * MvPolynomial.X (ι l) * P else 0) -
       (if l = j then MvPolynomial.C (N k j / 2) * MvPolynomial.X (ι k) * P else 0) := by
     intro k l
-    rw [map_sub, map_add, pderiv_CX_mul, pderiv_CXX_mul, MvPolynomial.pderiv_C_mul, pderiv_comm' (ι j) (ι k),
+    rw [map_sub, map_add (f := _), pderiv_CX_mul, pderiv_CXX_mul, MvPolynomial.pderiv_C_mul, pderiv_comm' (ι j) (ι k),
       pderiv_comm' (ι j) (ι l)]
     simp only [hι.eq_iff]
     split_ifs <;> subst_vars <;> ring
@@ -977,7 +977,7 @@ theorem qGen_dGen (ι : K → σ) (hι : Function.Injective ι) (M N : K → K �
     rw [hc k, hd k, map_sum, map_sum]
   simp only [Finset.sum_mul, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
-  simp only [add_div, map_add, map_sub, map_mul, map_neg]
+  simp only [add_div, map_add (f := _), map_sub, map_mul, map_neg]
   ring
 
 end QuadGen
@@ -1092,7 +1092,7 @@ theorem quadCommPol : QuadCommPol D := by
       rw [coord_adX hS hT z k, map_sum]
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [(mn_skew_sym hS hT hXS hXT k j).2, (mn_skew_sym hS hT hXS hXT j k).1]
-    simp only [map_add, map_mul, map_neg, Complex.conj_conj]
+    simp only [map_add (f := _), map_mul, map_neg, Complex.conj_conj]
     ring
 
 end QuadPf
@@ -1182,7 +1182,7 @@ theorem dRhoPoly_of (hT : ThetaDRho D) (hL : DRhoLin D) (hC : DRhoComm D) : DRho
   have hζ : ζ = (ζ.re : ℂ) + (ζ.im : ℂ) * Complex.I := (Complex.re_add_im ζ).symm
   have hcζ : starRingEnd ℂ ζ = (ζ.re : ℂ) - (ζ.im : ℂ) * Complex.I := by
     conv_lhs => rw [hζ]
-    simp only [map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+    simp only [map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
     ring
   rw [hcζ]
   funext x

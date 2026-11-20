@@ -194,7 +194,7 @@ theorem ip_cosets {T : Type} [TopologicalSpace T] [MeasurableSpace T] [OpensMeas
       simp only [Pi.smul_apply, smul_eq_mul]
       unfold cind
       split_ifs with hY
-      · rw [mul_one, mul_one, show l Y = l (Y - z) + l z by rw [← map_add, sub_add_cancel],
+      · rw [mul_one, mul_one, show l Y = l (Y - z) + l z by rw [← map_add (f := _), sub_add_cancel],
           AddChar.map_add_eq_mul, hl1 _ hY, one_mul]
       · simp
     have e := hMuI l (Tr (-y) x0) (Tr (-y') x0)
@@ -206,7 +206,7 @@ theorem ip_cosets {T : Type} [TopologicalSpace T] [MeasurableSpace T] [OpensMeas
       have h2 : ψ0 w * ψ0 (-w) = 1 := by
         rw [← AddChar.map_add_eq_mul, add_neg_cancel, AddChar.map_zero_eq_one]
       exact mul_left_cancel₀ (addChar_ne_zero ψ0 w) (h1.trans h2.symm)
-    rw [hconj, ← AddChar.map_add_eq_mul, ← map_neg, ← map_add, ← sub_eq_add_neg] at e
+    rw [hconj, ← AddChar.map_add_eq_mul, ← map_neg, ← map_add (f := _), ← sub_eq_add_neg] at e
     have e2 : (ψ0 (l (y - y')) - 1) * ip μ (Tr (-y) x0) (Tr (-y') x0) = 0 := by linear_combination e
     rcases mul_eq_zero.mp e2 with h3 | h3
     · exact absurd (sub_eq_zero.mp h3) hl2

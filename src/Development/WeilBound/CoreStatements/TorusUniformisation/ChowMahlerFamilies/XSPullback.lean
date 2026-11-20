@@ -165,7 +165,7 @@ theorem trdeg_fnField [∀ k, Fintype (ι k)] {y : (Σ k, ι k) → Ω} {d : ℕ
   have h1 := DvrConeDimTrdeg.proof O K ι _ h.multiProj h.noTorsion
   have h2 : Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) = _ :=
     ConeTrdegFnField.proof O Ω (algebraMap_inj h) K ι y (exists_coord_ne h)
-  rw [h.dim, h2, map_add, map_natCast] at h1
+  rw [h.dim, h2, map_add (f := _), map_natCast] at h1
   generalize Cardinal.toENat (Algebra.trdeg O (Algebra.adjoin O (fnField O y : Set Ω))) = t at h1
   have h3 : ((d + 1 + Fintype.card K : ℕ) : ℕ∞) = t + Fintype.card K + 1 := by exact_mod_cast h1
   induction t using ENat.recTopCoe with

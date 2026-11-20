@@ -296,7 +296,7 @@ theorem exists_norm_lamv_eq_one (hl2 : l ≠ 2) (hA : A.valuation (l : Ω) < 1) 
   have hm : cycMod ℚ Ω l m s = 1 := by
     ext
     show PadicInt.toZModPow m ((cycZ ℚ Ω l s : ℤ_[l]ˣ) : ℤ_[l]) = 1
-    rw [h3, map_add, map_one, map_mul, map_pow, map_natCast, ← Nat.cast_pow, ZMod.natCast_self, zero_mul, add_zero]
+    rw [h3, map_add (f := _), map_one, map_mul, map_pow, map_natCast, ← Nat.cast_pow, ZMod.natCast_self, zero_mul, add_zero]
   refine ⟨s, hs, hm, ?_⟩
   obtain ⟨a, ha, ha'⟩ := exists_lamv_eq hm
   have h4 : a = 1 + l * b :=

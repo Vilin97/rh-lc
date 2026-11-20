@@ -28,7 +28,7 @@ theorem aeval_eq_zero_of_mem (b : Module.Basis T ℤ (dualLattice (HermLattice.s
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simp [mConeMap]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p n hp =>
       simp only [map_mul, hp]
       simp [mConeMap]
@@ -55,7 +55,7 @@ theorem evalQ_graphMap (b : Module.Basis T ℤ (dualLattice (HermLattice.standar
       (rename (inrV (ι := dualBlocks T) (ι₂ := PBlk i)) f)) = aeval (genPt K i) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [graphMap, evalQ]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p q hp =>
     rw [map_mul, map_mul, map_mul, hp, map_mul, aeval_X, rename_X, ← aeval_linForm b q]
     simp [graphMap, inrV, evalQ]

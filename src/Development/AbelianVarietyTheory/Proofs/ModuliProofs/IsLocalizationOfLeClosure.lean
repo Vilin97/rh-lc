@@ -58,7 +58,7 @@ theorem isLocalization_of_le_closure {p : ℕ} (hp : p.Prime) (A : Type) [CommRi
       obtain ⟨m, hm, a, ha⟩ := hx
       obtain ⟨k, hk, b, hb⟩ := hy
       refine ⟨m * k, Nat.Coprime.mul_left hm hk, a * k + b * m, ?_⟩
-      simp only [map_add, map_mul, map_natCast]
+      simp only [map_add (f := _), map_mul, map_natCast]
       push_cast
       rw [← ha, ← hb]; ring
     | neg x _ hx =>

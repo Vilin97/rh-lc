@@ -58,7 +58,7 @@ def sub (hL : L.IsLB) (s : ∀ k : L.ι, Fin r → Γ(F, L.U k))
         obtain ⟨k, W, h, hk, hpW, hxW⟩ := hx p hp
         obtain ⟨k', W', h', hk', hpW', hyW'⟩ := hy p hp
         refine ⟨k, W ⊓ W', inf_le_left.trans h, inf_le_left.trans hk, ⟨hpW, hpW'⟩, ?_⟩
-        rw [map_add]
+        rw [map_add (f := _)]
         refine add_mem ?_ (hmono k k' _ (inf_le_left.trans hk) (inf_le_right.trans hk') ?_)
         · have := resM_mem_spanRes s (inf_le_left : W ⊓ W' ≤ W) hk hxW
           rw [resM_resM] at this

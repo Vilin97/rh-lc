@@ -21,7 +21,7 @@ theorem galOD_crisToOD (g : GQ l) (x : OCr l O) :
   | tmul o w =>
     exact congrArg (fun y : Per.BdRp l => o ⊗ₜ[ℤ_[l]] y)
       ((GlobalTheory.MemLoc.crisP_unique_equivariant l (crisP l) (isCrisP_crisP l)).2.1 g w).symm
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem isUnit_natCast_OD {n : ℕ} (hn : n ≠ 0) : IsUnit (n : OD l O) := by
   have h0 : ((n : ℕ) : ℤ_[l]) ≠ 0 := by exact_mod_cast hn

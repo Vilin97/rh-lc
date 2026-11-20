@@ -55,7 +55,7 @@ theorem kummer_twist_relation_and_fixed_field :
       obtain ⟨b, hb⟩ := hφF a
       rw [AlgEquiv.commutes, ← hb]
       exact ((σ ^ q).commutes b).symm
-    | add y z _ _ hy hz => simp only [map_add, hy, hz]
+    | add y z _ _ hy hz => simp only [map_add (f := _), hy, hz]
     | inv y _ hy => simp only [map_inv₀, hy]
     | mul y z _ _ hy hz => simp only [map_mul, hy, hz]
   ·

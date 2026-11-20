@@ -80,7 +80,7 @@ private theorem eq_top_of_span {K V Ω ι : Type} [Field K] [AddCommGroup V] [Mo
     induction hv using Submodule.span_induction with
     | mem x hx => obtain ⟨k, rfl⟩ := hx; exact hr k l hl
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, add_div]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), add_div]; exact add_mem hx hy
     | smul a x _ hx => rw [map_smul, Algebra.smul_def, mul_div_assoc]; exact mul_mem (hc a) hx
   have h : GlobalTheory.DegVal.ratioField ev ≤ L.toIntermediateField hc := by
     refine IntermediateField.adjoin_le_iff.2 ?_

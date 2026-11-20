@@ -31,7 +31,7 @@ private theorem poly_ind {H σ ι : Type*} [NormedAddCommGroup H] [NormedSpace �
     (P : MvPolynomial σ (MvPolynomial ι ℂ)) (hP : ∀ y ∈ P.vars, y ∈ s) : ev P v = f P • v := by
   have hadd : ∀ P Q, ev P v = f P • v → ev Q v = f Q • v → ev (P + Q) v = f (P + Q) • v := by
     intro P Q hP hQ
-    rw [map_add, map_add, ContinuousLinearMap.add_apply, hP, hQ, add_smul]
+    rw [map_add (f := _), map_add (f := _), ContinuousLinearMap.add_apply, hP, hQ, add_smul]
   have hmul : ∀ P Q, ev P v = f P • v → ev Q v = f Q • v → ev (P * Q) v = f (P * Q) • v := by
     intro P Q hP hQ
     rw [map_mul, map_mul, ContinuousLinearMap.mul_apply, hQ, map_smul, hP, smul_smul, mul_comm]

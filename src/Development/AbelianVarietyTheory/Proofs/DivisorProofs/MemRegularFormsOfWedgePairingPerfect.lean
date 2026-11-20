@@ -50,7 +50,7 @@ theorem topCoefBasis_mem (B : Subalgebra k K) {n : ℕ} (b : Module.Basis (Fin n
   | add x y _ _ hx hy =>
     obtain ⟨e1, h1⟩ := hx
     obtain ⟨e2, h2⟩ := hy
-    exact ⟨e1 + e2, by rw [map_add, mul_add, h1, h2]; simp⟩
+    exact ⟨e1 + e2, by rw [map_add (f := _), mul_add, h1, h2]; simp⟩
   | smul r x _ hx =>
     obtain ⟨e, he⟩ := hx
     exact ⟨r • e, by rw [LinearMap.map_smul_of_tower, mul_smul_comm, he]; simp⟩

@@ -30,7 +30,7 @@ theorem applyAt0_add_left (T T' : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l]
   unfold OJ.applyAt0
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun μ _ => ?_
-  rw [map_add, mul_add, map_add]
+  rw [map_add (f := _), mul_add, map_add (f := _)]
 
 theorem applyAt0_smul_left (c : ℂ_[l]) (T : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l])
     (P : MvPolynomial (XZ Lt N0 N1) ℤ) :
@@ -129,7 +129,7 @@ theorem orbAddUp_main : ∀ (D : Formalism.BasicNotions.D7) (E : PI.OrbJet.Ent D
       refine Finset.sum_eq_zero fun ab hab => ?_
       rw [Finset.HasAntidiagonal.mem_antidiagonal] at hab
       have hdeg : ab.1.degree < n := by
-        have : κ.degree = ab.1.degree + ab.2.degree := by rw [← hab, map_add]
+        have : κ.degree = ab.1.degree + ab.2.degree := by rw [← hab, map_add (f := _)]
         omega
       have hmem : ab.1 ∈ S := by
         rw [hS, Set.Finite.mem_toFinset]

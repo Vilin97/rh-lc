@@ -132,12 +132,12 @@ theorem approx (hψ : IsStdChar D ψ (-1)) (hcc : D.host.ccK = ⊤) (gS : S.gram
       have h2 : infPart D (v i j) = 0 := congrFun (congrFun hv' i) j
       have h3 : infPart D (GlobalTheory.VacUnique.finRat S T M i j) = 0 := congrFun (congrFun (GlobalTheory.VacUnique.finRat_inf S T M) i) j
       change infPart D (incA D (k : D.host.E)⁻¹ * u i j) = infPart D (GlobalTheory.VacUnique.finRat S T M i j + v i j)
-      rw [RingHom.map_mul, RingHom.map_add, h1, h2, h3, mul_zero, add_zero]
+      rw [RingHom.map_mul, RingHom.map_add (f := _), h1, h2, h3, mul_zero, add_zero]
     · have h1 : finPart D (incA D (k : D.host.E)⁻¹ * u i j - incA D (M i j) - v i j) = 0 := congrFun (congrFun h i) j
       have h3 : finPart D (GlobalTheory.VacUnique.finRat S T M i j) = finPart D (incA D (M i j)) := rfl
       change finPart D (incA D (k : D.host.E)⁻¹ * u i j) = finPart D (GlobalTheory.VacUnique.finRat S T M i j + v i j)
       rw [RingHom.map_sub, RingHom.map_sub, sub_sub, sub_eq_zero] at h1
-      rw [RingHom.map_add, h3, h1]
+      rw [RingHom.map_add (f := _), h3, h1]
   have e2 : u = GlobalTheory.VacUnique.finRat S T (k • M) + k • v := by
     rw [map_nsmul, ← smul_add, ← e1, smul_comm, GlobalTheory.PlaceModel.inv_smul_nsmul S T hk]
   refine ⟨k • M, (finRat_mem_iff hψ hcc gS hLS hLT hS hT _).1 ?_, v, hv, e2⟩

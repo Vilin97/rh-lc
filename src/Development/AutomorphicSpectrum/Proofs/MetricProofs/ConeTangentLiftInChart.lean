@@ -24,7 +24,7 @@ def tanIdeal (w v : σ → ℂ) : Ideal (MvPolynomial σ ℂ) where
   add_mem' := by
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
     refine ⟨by simp [ha, hb], ?_⟩
-    simp only [map_add, add_mul, Finset.sum_add_distrib, ha', hb', add_zero]
+    simp only [map_add (f := _), add_mul, Finset.sum_add_distrib, ha', hb', add_zero]
   zero_mem' := by simp
   smul_mem' := by
     rintro c f ⟨h, h'⟩
@@ -66,7 +66,7 @@ theorem pderiv_bind_scale (l : σ → ℂ) (q : σ) (F : MvPolynomial σ ℂ) :
   | C a => simp
   | add p r hp hr => simp [hp, hr, mul_add]
   | mul_X p r hp =>
-    rw [map_mul, bind₁_X_right, Derivation.leibniz, hp, Derivation.leibniz (pderiv q) p (X r), map_add,
+    rw [map_mul, bind₁_X_right, Derivation.leibniz, hp, Derivation.leibniz (pderiv q) p (X r), map_add (f := _),
       pderiv_C_mul]
     simp only [smul_eq_mul, map_mul, bind₁_X_right]
     by_cases h : r = q

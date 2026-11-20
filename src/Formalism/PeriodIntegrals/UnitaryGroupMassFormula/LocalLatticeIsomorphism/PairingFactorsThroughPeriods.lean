@@ -105,7 +105,7 @@ theorem lset_unimod (hI : PI.KerIso.SelfDualI K cj I) (hg : PI.KerIso.IsIsom cj 
       | mem z hz => exact hsT z hz
       | zero => simp
       | add z z' _ _ h h' =>
-        rw [add_mul, map_add, mul_add]; exact Subring.add_mem _ h h'
+        rw [add_mul, map_add (f := _), mul_add]; exact Subring.add_mem _ h h'
       | smul k z _ h =>
         have e : (s : K) * Algebra.trace K E ((k • z) * cj (x a)) =
             k • ((s : K) * Algebra.trace K E (z * cj (x a))) := by

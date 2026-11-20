@@ -34,7 +34,7 @@ theorem partialProd_mul_compl {p : Polynomial (MvPolynomial (Fin d) ℂ)} (hp : 
     partialProd p u x * partialProd p uᶜ x = p.map (MvPolynomial.eval x) := by
   classical
   unfold partialProd
-  rw [← Multiset.prod_add, ← Multiset.map_add]
+  rw [← Multiset.prod_add, ← Multiset.map_add (f := _)]
   convert Polynomial.prod_multiset_X_sub_C_of_monic_of_roots_card_eq (hp.map (MvPolynomial.eval x))
     (by rw [card_roots_map hp x, hp.natDegree_map]) using 3
   convert Multiset.filter_add_not (fun y => (x, y) ∈ u) (p.map (MvPolynomial.eval x)).roots using 2

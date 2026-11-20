@@ -212,7 +212,7 @@ theorem proj_span (hι : IsAdeleIso X ιA) {Fr : FrQ D wt} (hL : FrLink X u wt �
       zero_mem' := ⟨0, inModL_zero, by simp [embA_zero']⟩
       add_mem' := by
         rintro a b ⟨x, hx, ex⟩ ⟨y, hy, ey⟩
-        exact ⟨x + y, inModL_add hx hy, by rw [embA_add', ex, ey, Matrix.mulVec_add, map_add, smul_add]⟩
+        exact ⟨x + y, inModL_add hx hy, by rw [embA_add', ex, ey, Matrix.mulVec_add, map_add (f := _), smul_add]⟩
       smul_mem' := by
         rintro r a ⟨x, hx, ex⟩
         refine ⟨ιA r • x, inModL_smul (⟨ιA r, (hι.2 r).1 r.2⟩ : OAd D.host.F D.host.E) hx, ?_⟩

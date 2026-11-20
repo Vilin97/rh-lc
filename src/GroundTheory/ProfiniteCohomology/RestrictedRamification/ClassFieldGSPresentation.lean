@@ -81,7 +81,7 @@ theorem finiteProj_divisorIdele (D : sDivisor S) (v : HeightOneSpectrum (𝓞 K)
   classical
   induction D using Finsupp.induction_linear with
   | zero => simp [divisorExponent]
-  | add D₁ D₂ h₁ h₂ => rw [map_add, toMul_add, map_mul, h₁, h₂, divisorExponent_add, zpow_add]
+  | add D₁ D₂ h₁ h₂ => rw [map_add (f := _), toMul_add, map_mul, h₁, h₂, divisorExponent_add, zpow_add]
   | single w k =>
     rw [divisorIdele_single, map_zpow]
     by_cases h : v = w.1

@@ -17,16 +17,16 @@ private theorem smul_abstract {Z O A B D M N : Type} [CommRing Z] [CommRing O] [
     (c : O ⊗[Z] A) (y : (O ⊗[Z] B) ⊗[O] M) : X (fB c • y) = act (fD c) (X y) := by
   induction c using TensorProduct.induction_on with
   | zero => simp
-  | add c c' hc hc' => rw [map_add, add_smul, map_add, hc, hc', map_add, map_add, AddMonoidHom.add_apply]
+  | add c c' hc hc' => rw [map_add (f := _), add_smul, map_add (f := _), hc, hc', map_add (f := _), map_add (f := _), AddMonoidHom.add_apply]
   | tmul o w =>
     rw [hB, hD]
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => rw [smul_add, map_add, hy, hy', map_add, map_add]
+    | add y y' hy hy' => rw [smul_add, map_add (f := _), hy, hy', map_add (f := _), map_add (f := _)]
     | tmul r x =>
       induction r using TensorProduct.induction_on with
       | zero => simp
-      | add r r' hr hr' => rw [TensorProduct.add_tmul, smul_add, map_add, hr, hr', map_add, map_add]
+      | add r r' hr hr' => rw [TensorProduct.add_tmul, smul_add, map_add (f := _), hr, hr', map_add (f := _), map_add (f := _)]
       | tmul o' b =>
         rw [TensorProduct.smul_tmul', smul_eq_mul, Algebra.TensorProduct.tmul_mul_tmul, h]
 

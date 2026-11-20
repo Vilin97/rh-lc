@@ -17,7 +17,7 @@ theorem analyticAt_aevalTower {σ ι : Type*} [Fintype σ] [Fintype ι]
     exact AnalyticAt.aeval_mvPolynomial (A := 𝕜) (f := fun w : (σ → 𝕜) × (ι → 𝕜) => w.1)
       (fun i => ((ContinuousLinearMap.proj (R := 𝕜) (φ := fun _ : σ => 𝕜) i).comp
         (ContinuousLinearMap.fst 𝕜 (σ → 𝕜) (ι → 𝕜))).analyticAt w) a
-  | add P Q hP hQ => simp only [map_add]; exact hP.add hQ
+  | add P Q hP hQ => simp only [map_add (f := _)]; exact hP.add hQ
   | mul_X P i hP =>
     simp only [map_mul, aevalTower_X]
     exact hP.mul (((ContinuousLinearMap.proj (R := 𝕜) (φ := fun _ : ι => 𝕜) i).comp
@@ -31,7 +31,7 @@ theorem hasDerivAt_aevalTower_line {R ι : Type*} [CommRing R] [Algebra 𝕜 R] 
   induction q using MvPolynomial.induction_on with
   | C a => simpa using hasDerivAt_const (0 : 𝕜) (φ a)
   | add P Q hP hQ =>
-    simp only [map_add, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_mul, Finset.sum_add_distrib]
     exact hP.add hQ
   | mul_X P i hP =>
     have hX : HasDerivAt (fun t : 𝕜 => y i + t * v i) (v i) 0 := by

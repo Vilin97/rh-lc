@@ -77,7 +77,7 @@ theorem hasVal_of_int_vectors : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel 
   · change (s : k) + p.pr (incA D (c₀ : D.host.E)) * (u r0 - p.pr (incA D (z r0 : D.host.E))) = _
     rw [hs, map_mul, map_mul]
     ring
-  · rw [hsum, map_add, (IsLocalRing.residue_eq_zero_iff _).2 (Ideal.mul_mem_left _ c (hd r0))]
+  · rw [hsum, map_add (f := _), (IsLocalRing.residue_eq_zero_iff _).2 (Ideal.mul_mem_left _ c (hd r0))]
     exact hv.add (Pair.mem_ker.1 hker)
 
 end GlobalTheory.FinPl.SplitPt

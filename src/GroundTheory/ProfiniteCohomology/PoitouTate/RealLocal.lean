@@ -88,7 +88,7 @@ theorem tensorHom_dualToCartier_cartierPairing :
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a f => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem cupPairing_dualToCartier [Finite M] [IsDiscreteRep (galUnits.{0} K L)]
     [IsDiscreteRep (cartierDual K L (Rep.res ψ.toMonoidHom M))] {r s : ℕ} (h : r + s = 2)

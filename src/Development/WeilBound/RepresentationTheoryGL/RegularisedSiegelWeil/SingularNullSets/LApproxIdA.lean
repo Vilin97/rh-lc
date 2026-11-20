@@ -26,7 +26,7 @@ def fixS {X : Type} [AddCommGroup X] (p : X →+ X) : AddSubgroup X where
   add_mem' := by
     intro a b ha hb
     simp only [Set.mem_ofPred_eq] at *
-    rw [map_add, ha, hb]
+    rw [map_add (f := _), ha, hb]
   zero_mem' := by simp
   neg_mem' := by
     intro a ha

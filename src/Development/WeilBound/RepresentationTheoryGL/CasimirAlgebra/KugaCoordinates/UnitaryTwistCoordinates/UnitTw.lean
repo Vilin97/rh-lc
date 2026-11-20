@@ -45,9 +45,9 @@ theorem unitTw_holds : PositivityTheory.Rg.Cz.UnitTw := by
   have hF : Function.Injective F := hi.comp U.injective
   let H : π.V →ₗ⋆[ℂ] π.V →ₗ[ℂ] ℂ :=
     LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (fun φ ψ => inner ℂ (F φ) (F ψ))
-      (fun φ φ' ψ => by simp only [map_add, inner_add_left])
+      (fun φ φ' ψ => by simp only [map_add (f := _), inner_add_left])
       (fun c φ ψ => by simp only [map_smul, inner_smul_left, smul_eq_mul])
-      (fun φ ψ ψ' => by simp only [map_add, inner_add_right])
+      (fun φ ψ ψ' => by simp only [map_add (f := _), inner_add_right])
       (fun c φ ψ => by simp only [map_smul, inner_smul_right, smul_eq_mul, RingHom.id_apply])
   have hH : ∀ φ ψ, H φ ψ = inner ℂ (F φ) (F ψ) := fun φ ψ => rfl
 
@@ -59,7 +59,7 @@ theorem unitTw_holds : PositivityTheory.Rg.Cz.UnitTw := by
     rw [e3, e2, Units.val_one, one_smul] at e
     change toL2ₗ μ π'.V hm (U (π.op (.lie X) φ)) = _
     rw [e]
-    simp only [map_add, map_smul, F, LinearMap.comp_apply, LinearEquiv.coe_coe, U]
+    simp only [map_add (f := _), map_smul, F, LinearMap.comp_apply, LinearEquiv.coe_coe, U]
     abel
   have htr : ∀ X : Lie E a, dchi χ (Matrix.of X).trace = s * ∑ τ : E →+* ℂ, ∑ i, coord τ (X i i) := fun X => by
     rw [GlobalTheory.CompanionTheory.HeckeAlg.dchi_eq_sum, hχ]

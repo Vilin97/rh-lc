@@ -18,7 +18,7 @@ theorem UpperTheory.V.Th.Sp.trans :
         simp
     | add p r hp hr =>
         intro m
-        simp [map_add, hp, hr]
+        simp [map_add (f := _), hp, hr]
     | mul_X p s hp =>
         intro m
         rcases s with ⟨j, i⟩ | ⟨j, i⟩

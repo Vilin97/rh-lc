@@ -22,7 +22,7 @@ theorem io_mul' (x y : A) : (io (x * y) : SlopeTestRemainingChoices S A) = io x 
   simp only [io, map_mul]
 
 theorem io_add' (x y : A) : (io (x + y) : SlopeTestRemainingChoices S A) = io x + io y := by
-  simp only [io, map_add]
+  simp only [io, map_add (f := _)]
 
 theorem io_sub' (x y : A) : (io (x - y) : SlopeTestRemainingChoices S A) = io x - io y := by
   simp only [io, map_sub]

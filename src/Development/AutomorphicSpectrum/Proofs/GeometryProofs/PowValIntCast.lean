@@ -126,7 +126,7 @@ theorem exists_chart (h876 : type_of% @GlobalTheory.T.section_eq_zero_of_values)
         rw [hρ, hj₀, hρ₀, Over.comp_left, Over.comp_left, hj₀, Category.assoc]))
       rw [LinearMap.comp_apply, this, hjj, hjj]; rfl
     | smul s w ih => rw [map_smul, ih, LinearMap.smul_comp]
-    | add w w' ih ih' => rw [map_add, ih, ih', LinearMap.add_comp]
+    | add w w' ih ih' => rw [map_add (f := _), ih, ih', LinearMap.add_comp]
   · rw [hDc.1]
     rintro ⟨w₀, rfl⟩ q hq
     exact (hom q hq _).2 fun b => by rw [hjj]; exact hsub q hq _

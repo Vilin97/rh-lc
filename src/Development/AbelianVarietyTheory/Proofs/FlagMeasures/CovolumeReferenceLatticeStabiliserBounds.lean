@@ -242,7 +242,7 @@ theorem covol_ref : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [Add
         intro a b ha hb
         rw [h b hb]
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [map_add, map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
+          simp only [map_add (f := _), map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
           N.ist_iso b a hb ha, N.ist_e _ a ha]
         simp [ha]
       have h3 := fun v => hskew v s _ (hp v) (h10 p h1 v) (h20 p h2 v)

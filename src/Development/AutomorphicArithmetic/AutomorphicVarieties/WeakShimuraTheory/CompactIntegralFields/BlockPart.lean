@@ -165,7 +165,7 @@ private theorem ee_up [IsLocalRing R] {u v X : M4 R} (h1 : v * u = 1) (hX : IsUp
     IsUp (v * ee * u) := by
   refine ee_mem (stab h1) X hX hb ?_
   rw [← residue_ne_zero_iff_isUnit]
-  simp only [map_sub, map_mul, map_add, ho 0 2 (by decide), ho 2 0 (by decide), ho 1 3 (by decide)]
+  simp only [map_sub, map_mul, map_add (f := _), ho 0 2 (by decide), ho 2 0 (by decide), ho 1 3 (by decide)]
   have k := mul_ne_zero (mul_ne_zero (sub_ne_zero.2 (hd 0 1 (by decide))) (sub_ne_zero.2 (hd 0 3 (by decide))))
     (mul_ne_zero (sub_ne_zero.2 (hd 2 1 (by decide))) (sub_ne_zero.2 (hd 2 3 (by decide))))
   convert k using 1

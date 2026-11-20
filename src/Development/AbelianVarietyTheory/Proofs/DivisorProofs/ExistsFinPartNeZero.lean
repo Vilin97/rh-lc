@@ -36,7 +36,7 @@ theorem finPart_add (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (x z : κ → A
   have h : evFin F v (z i) = 0 := by
     show Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (z i).2 = 0
     rw [snd_eq_zero_of_at z hz i, map_zero]
-  rw [Pi.add_apply, map_add, h, add_zero]
+  rw [Pi.add_apply, map_add (f := _), h, add_zero]
 
 theorem exists_finPart_ne_zero (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (h0 : ∀ v, φ v ≠ 0)
     (hstd : ∀ᶠ v in cofinite, φ v = Set.indicator {x | ∀ i, x i ∈ v.adicCompletionIntegers F} 1) :

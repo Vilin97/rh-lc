@@ -128,7 +128,7 @@ theorem algLimSt : AlgLimSt := by
     exact huniq _ _ fun n => by simp only [hL, map_mul]
   · exact huniq _ _ fun n => by simp only [hL, map_zero]
   · intro x y
-    exact huniq _ _ fun n => by simp only [hL, map_add]
+    exact huniq _ _ fun n => by simp only [hL, map_add (f := _)]
   · intro t
     refine huniq _ _ fun n => ?_
     rw [hL, AlgHom.commutes]

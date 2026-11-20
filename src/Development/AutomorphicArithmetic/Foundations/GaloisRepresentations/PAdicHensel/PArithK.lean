@@ -21,7 +21,7 @@ private lemma omega_at {E : Type} [Field E] [NumberField E] [IsCMField E] (bar :
   obtain ⟨w, hw⟩ : ∃ w : E, w = ((tr : E) + (f : E) * x) / 2 := ⟨_, rfl⟩
   obtain ⟨v, hv⟩ : ∃ v : E, v = ((tr : E) - (f : E) * x) / 2 := ⟨_, rfl⟩
   have hcw : IsCMField.complexConj E w = v := by
-    simp only [hw, hv, map_div₀, map_add, map_mul, map_intCast, map_ratCast, hcx, map_ofNat]
+    simp only [hw, hv, map_div₀, map_add (f := _), map_mul, map_intCast, map_ratCast, hcx, map_ofNat]
     ring
   have hsum : w + v = (tr : E) := by
     rw [hw, hv]; ring
@@ -45,7 +45,7 @@ private lemma omega_at {E : Type} [Field E] [NumberField E] [IsCMField E] (bar :
   have hbω : ((bar ω : 𝓞 E) : E) = v := by rw [hbar, hω', hcw]
   refine ⟨ω, ?_, ?_, ?_⟩
   · apply RingOfIntegers.ext
-    simp only [map_add, map_intCast, hω', hbω, hsum]
+    simp only [map_add (f := _), map_intCast, hω', hbω, hsum]
   · apply RingOfIntegers.ext
     simp only [map_mul, map_intCast, hω', hbω, hprod]
   · rw [hω', hw]; ring

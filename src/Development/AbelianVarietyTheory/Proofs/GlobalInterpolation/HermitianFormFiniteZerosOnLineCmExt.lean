@@ -21,7 +21,7 @@ theorem _root_.GlobalTheory.HermLineZeros.hform_expand (s : A →+* A) (J : Matr
   unfold _root_.Formalism.UG.hform
   simp only [Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul]
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
   ring
 
 open scoped TensorProduct in
@@ -191,7 +191,7 @@ theorem _root_.GlobalTheory.HermLineZeros.finite_zeros_on_line : ∀ (F E : Type
   have htc : ∀ z, Algebra.trace K (K ⊗[F] E) (algebraMap K (K ⊗[F] E) t * z)
       = t * Algebra.trace K (K ⊗[F] E) z := fun z => by
     rw [← Algebra.smul_def, map_smul, smul_eq_mul]
-  rw [hq, hexp, mul_assoc (algebraMap K (K ⊗[F] E) t), map_add, map_add, map_add, htc, htc, htc, htc]
+  rw [hq, hexp, mul_assoc (algebraMap K (K ⊗[F] E) t), map_add (f := _), map_add (f := _), map_add (f := _), htc, htc, htc, htc]
   simp only [p, Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_C, Polynomial.eval_pow,
     Polynomial.eval_X, α, β, γ, map_add]
   ring

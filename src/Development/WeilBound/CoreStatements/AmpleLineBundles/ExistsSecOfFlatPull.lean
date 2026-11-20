@@ -30,7 +30,7 @@ theorem exists_sec_of_flat_pull [Module.Flat R S] [CompactSpace X]
     { toFun := fun f kl => dfun L V c hVc f kl.1 kl.2
       map_add' := fun f g => by
         funext kl
-        simp only [dfun, Pi.add_apply, map_add, mul_add]
+        simp only [dfun, Pi.add_apply, map_add (f := _), mul_add]
         abel
       map_smul' := fun r f => by
         funext kl
@@ -103,7 +103,7 @@ theorem exists_sec_of_flat_pull [Module.Flat R S] [CompactSpace X]
       exact h2.2
     | add x₁ x₂ h₁ h₂ =>
       intro h
-      rw [map_add, map_add, Pi.add_apply, map_add] at h
+      rw [map_add (f := _), map_add (f := _), Pi.add_apply, map_add (f := _)] at h
       rcases Scheme.basicOpen_add_le _ _ _ h with h | h
       exacts [h₁ h, h₂ h]
   apply key x

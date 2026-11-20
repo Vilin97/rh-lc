@@ -109,7 +109,7 @@ theorem coeff_p1_pow_top_isUnit {O : Type*} [CommRing O] [IsDomain O] [IsDiscret
   rw [hdiff] at hS
   have hexp : P.p 1 ^ y = P.u ^ y * PowerSeries.X ^ (l * y) + PowerSeries.C (l : O) * (P.eps * S) := by
     rw [← mul_assoc, ← hS, mul_pow, ← pow_mul]; ring
-  rw [hexp, map_add, PowerSeries.coeff_C_mul]
+  rw [hexp, map_add (f := _), PowerSeries.coeff_C_mul]
   have h0 : PowerSeries.coeff (l * y) (P.u ^ y * PowerSeries.X ^ (l * y)) =
       PowerSeries.constantCoeff (P.u ^ y) := by
     have := PowerSeries.coeff_mul_X_pow (P.u ^ y) (l * y) 0

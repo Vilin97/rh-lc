@@ -22,7 +22,7 @@ theorem weight_blockWeight (d : (Σ o, E o) →₀ ℕ) :
     Finsupp.weight (blockWeight E) d = ⇑(d.mapDomain Sigma.fst) := by
   induction d using Finsupp.induction_linear with
   | zero => funext o; simp
-  | add x y hx hy => rw [map_add, hx, hy, Finsupp.mapDomain_add, Finsupp.coe_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, Finsupp.mapDomain_add, Finsupp.coe_add]
   | single v n =>
     rw [Finsupp.weight_single, Finsupp.mapDomain_single]
     funext o
@@ -54,7 +54,7 @@ theorem coeff_eval₂_C_mul_X_fst {B : Type*} [CommRing B] (f : R →+* B) (a : 
     · subst hd
       simp
     · rw [if_neg hd, if_neg (fun h => hd (DFunLike.coe_injective h)), mul_zero, eval₂_zero]
-  | add p q hp hq => simp only [eval₂_add, map_add, MvPolynomial.coeff_add, hp, hq]
+  | add p q hp hq => simp only [eval₂_add, map_add (f := _), MvPolynomial.coeff_add, hp, hq]
 
 theorem eval₂_C_mul_X_fst_of_homog [Fintype κ] {B : Type*} [CommRing B] (f : R →+* B)
     (a : (Σ o, E o) → B) {p : MvPolynomial (Σ o, E o) R} {b : κ → ℕ}
@@ -106,7 +106,7 @@ theorem component_liftForm (g : MRing ι R) (c : K → ℕ) :
     induction a using Finsupp.induction_linear with
     | zero => funext o; cases o <;> simp [liftMDeg]
     | add x y hx hy =>
-      rw [Finsupp.mapDomain_add, map_add, map_add, hx, hy]
+      rw [Finsupp.mapDomain_add, map_add (f := _), map_add (f := _), hx, hy]
       funext o; cases o <;> simp [liftMDeg]
     | single v n =>
       rw [Finsupp.mapDomain_single, Finsupp.weight_single, Finsupp.weight_single]
@@ -120,7 +120,7 @@ theorem component_liftForm (g : MRing ι R) (c : K → ℕ) :
     split_ifs
     · simp [rename_monomial]
     · simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 end Lift
 

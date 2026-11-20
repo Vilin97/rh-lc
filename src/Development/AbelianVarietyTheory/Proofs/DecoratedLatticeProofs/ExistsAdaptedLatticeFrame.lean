@@ -196,7 +196,7 @@ theorem exists_arch_frame_hyp (h : IsCMExt F E σ) (hn : m + 2 * r = n) {G : Mat
   have o : (1 : Matrix (Fin r) (Fin r) E).map (inclR (F := F) w.Completion) = 1 :=
     Matrix.map_one _ (map_zero _) (map_one _)
   refine exists_frame_hyp' _ _ hn (I := I.map (inclR (F := F) w.Completion)) ε
-    (by rw [← map_add, ← map_one (inclR (F := F) w.Completion)]; norm_num) ?_
+    (by rw [← map_add (f := _), ← map_one (inclR (F := F) w.Completion)]; norm_num) ?_
     ((up XX).trans z) ((up YY).trans z) ((up YX).trans o) ((up XY).trans o) ((up IX).trans z) ((up IY).trans z)
     ((up XI).trans z) ((up YI).trans z) (up II) hc
   change inclR (F := F) w.Completion (σ (2⁻¹ : E)) = _

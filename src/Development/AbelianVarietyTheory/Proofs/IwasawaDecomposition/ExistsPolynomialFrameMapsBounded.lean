@@ -49,7 +49,7 @@ theorem isPolyFn_ellT (a b : M.Vec) (x : ⨂[ℂ] τ, M.H τ) :
       inner_add_left, inner_smul_left, Complex.conj_ofReal]
     exact (IsPolyFn.const _).mul (IsPolyFn.prod _ fun τ => (IsPolyFn.const _).add (IsPolyFn.coe.mul (IsPolyFn.const _)))
   | add x y hx hy =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hx.add hy
 
 theorem ellT_smul (c : D.what₂.Tau → ℝ) (a : M.Vec) (x : ⨂[ℂ] τ, M.H τ) :
@@ -60,7 +60,7 @@ theorem ellT_smul (c : D.what₂.Tau → ℝ) (a : M.Vec) (x : ⨂[ℂ] τ, M.H 
       Finset.prod_mul_distrib]
     ring
   | add x y hx hy =>
-    simp only [map_add, hx, hy, mul_add]
+    simp only [map_add (f := _), hx, hy, mul_add]
 
 noncomputable def pairing (L : SmT M' →ₗ[ℂ] SmT M) (w : M.Vec) (v : M'.Vec) : ℂ :=
   ellT M (fun τ => (w τ : M.H τ)) (inclT M (L (PiTensorProduct.tprod ℂ v)))

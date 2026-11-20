@@ -44,7 +44,7 @@ theorem diff_pt (a : Γ(Sp (MvPolynomial (Fin D) k), ⊤)) :
   induction P using MvPolynomial.induction_on with
   | C a => simp
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p n hp =>
     simp only [map_mul, MvPolynomial.eval₂Hom_X']

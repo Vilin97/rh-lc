@@ -174,7 +174,7 @@ theorem ModPG.span_φ (D : ModPG R n V) (i : ZMod n) {ι : Type} (b : Module.Bas
   induction hx using Submodule.span_induction with
   | mem y hy => obtain ⟨j, rfl⟩ := hy; exact Submodule.subset_span ⟨j, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul a y _ hy => rw [D.φ_semi i a y]; exact Submodule.smul_mem _ _ hy
 
 theorem ModPG.linearIndependent_φ (D : ModPG R n V) (i : ZMod n) {ι : Type} (b : Module.Basis ι k⸨X⸩ V) :
@@ -255,7 +255,7 @@ theorem mob_X_ne (c : k) : mob c PowerSeries.X ≠ 0 := by
 theorem mob_mob (c : k) (f : k⟦X⟧) : mob c (mob (-c) f) = f := by
   have key : mob c (PowerSeries.X * inv1 (-c)) = PowerSeries.X := by
     have h1 := congrArg (mob c) (powerSeries_oneAddConstMulX_mul_inv (-c))
-    rw [map_mul, map_add, map_one, map_mul, mob_C, mob_X, map_neg] at h1
+    rw [map_mul, map_add (f := _), map_one, map_mul, mob_C, mob_X, map_neg] at h1
     have h2 := powerSeries_oneAddConstMulX_mul_inv c
     rw [map_mul, mob_X]
     linear_combination PowerSeries.X * h1 + PowerSeries.X * mob c (inv1 (-c)) * h2
@@ -293,7 +293,7 @@ theorem frob_mob (l : ℕ) [Fact l.Prime] [CharP k l] (f : k⟦X⟧) :
     have h0 := powerSeries_oneAddConstMulX_mul_inv (1 : k)
     rw [map_one, one_mul] at h0
     have h1 := congrArg (frob k l) h0
-    rw [map_mul, map_add, map_one, frob_X] at h1
+    rw [map_mul, map_add (f := _), map_one, frob_X] at h1
     have h2 := congrArg (· ^ l) h0
     simp only [mul_pow, add_pow_char, one_pow] at h2
     rw [map_mul, frob_X, map_pow, mob_X, mul_pow]
@@ -395,7 +395,7 @@ theorem condC_stdLat {l : ℕ} (R : RingPG k l) : CondC (lin R.γ) (stdLat k) :=
   set s : k⟦X⟧ := PowerSeries.mk fun n => PowerSeries.coeff (n + 1) a
   obtain ⟨t, ht⟩ := R.γ_int s
   have ha : (a : k⸨X⸩) = vv k * (s : k⸨X⸩) + algebraMap k k⸨X⸩ (PowerSeries.constantCoeff a) := by
-    conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const a, map_add, map_mul, ← vv_eq_coe_X]
+    conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const a, map_add (f := _), map_mul, ← vv_eq_coe_X]
     rfl
   refine mem_sh_iff_exists.2 ⟨_, mem_stdLat.2 ⟨(1 - κ * PowerSeries.X) * t - s, rfl⟩, ?_⟩
   rw [lin_apply, ha, map_add R.γ, map_mul R.γ, AlgHom.commutes, hκ, ht, zpow_one, smul_eq_mul, map_sub, map_mul,
@@ -419,7 +419,7 @@ theorem nab_mem_stdLat {l : ℕ} (R : RingPG k l) {x : k⸨X⸩} (hx : x ∈ std
   obtain ⟨t, ht⟩ := R.γ_int s
   obtain ⟨y, hy, hy'⟩ := mem_sh_iff_exists.1 (condC_stdLat R _ (mem_stdLat.2 ⟨s, rfl⟩))
   have ha : (a : k⸨X⸩) = vv k * (s : k⸨X⸩) + algebraMap k k⸨X⸩ (PowerSeries.constantCoeff a) := by
-    conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const a, map_add, map_mul, ← vv_eq_coe_X]
+    conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const a, map_add (f := _), map_mul, ← vv_eq_coe_X]
     rfl
   refine mem_sh_iff_exists.2 ⟨_, Submodule.sub_mem _ hy (mem_stdLat.2 ⟨κ * t, rfl⟩), ?_⟩
   have hv := vv_ne_zero k

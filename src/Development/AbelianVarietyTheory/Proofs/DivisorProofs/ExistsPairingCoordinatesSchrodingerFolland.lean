@@ -88,7 +88,7 @@ theorem exists_pairing_coords : ∀ (V : Type) [NormedAddCommGroup V] [NormedSpa
     ring
   · intro v f
     funext y
-    simp only [schrF, rhoFun, phase, Function.comp_apply, map_add, hp, hq', hCq]
+    simp only [schrF, rhoFun, phase, Function.comp_apply, map_add (f := _), hp, hq', hCq]
     congr 1
     congr 1
     push_cast

@@ -53,7 +53,7 @@ theorem rank_prim_HH1 : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A]
   have hrf : ∀ p, r (f p) = p := by
     rintro ⟨a, b⟩
     show (deRhamH1Pullback i₁ (deRhamH1Pullback (fst A A) a + deRhamH1Pullback (snd A A) b), deRhamH1Pullback i₂ (deRhamH1Pullback (fst A A) a + deRhamH1Pullback (snd A A) b)) = (a, b)
-    rw [map_add, map_add, (ax a).1, (ax b).2.1, (ax a).2.2.2.1, (ax b).2.2.2.2.1, add_zero, zero_add]
+    rw [map_add (f := _), map_add (f := _), (ax a).1, (ax b).2.1, (ax a).2.2.2.1, (ax b).2.2.2.2.1, add_zero, zero_add]
   have hM : FP R (HH1 A.hom × HH1 A.hom) (2 * (g + g)) := by
     have := (GlobalTheory.T.fgProjectiveConstantRank_extension_and_prod).2 R _ _ _ _ (fp_HH1 R A g hA hs) (fp_HH1 R A g hA hs)
     rwa [← mul_add] at this

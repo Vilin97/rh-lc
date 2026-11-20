@@ -161,7 +161,7 @@ theorem avg_cob (hM : Cpl l M) (amul : ∀ g h β, a (g * h) β = a g (a h β))
     obtain ⟨d, hd, h1, h2⟩ := avg_step l 𝓕 a ρ amul ρmul semi htr (fun g => c g - (ρ g b - b))
       (fun g h => by simp only [hc, ρmul, map_sub]; abel) hb.1 k hb.2
     have e : ∀ g, c g - (ρ g (b + d) - (b + d)) = c g - (ρ g b - b) - (ρ g d - d) := fun g => by
-      rw [map_add]; abel
+      rw [map_add (f := _)]; abel
     refine ⟨b + d, ⟨?_, ?_⟩, by simpa using hd⟩
     · simpa only [e] using h1
     · simpa only [e] using h2

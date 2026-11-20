@@ -58,7 +58,7 @@ theorem pr_apply (u u' : Fin a → Fin n → LL) : pr LL a n u u' = ∑ b, u b �
 
 def ann (C : Submodule LL (Fin a → Fin n → LL)) : Submodule LL (Fin a → Fin n → LL) where
   carrier := {u' | ∀ u ∈ C, pr LL a n u u' = 0}
-  add_mem' := fun h1 h2 u hu => by rw [map_add, h1 u hu, h2 u hu, add_zero]
+  add_mem' := fun h1 h2 u hu => by rw [map_add (f := _), h1 u hu, h2 u hu, add_zero]
   zero_mem' := fun u _ => by rw [map_zero]
   smul_mem' := fun c u' h u hu => by rw [map_smul, h u hu, smul_zero]
 
@@ -116,7 +116,7 @@ theorem right_nondeg (R C : Submodule LL (Fin a → Fin n → LL)) (hRC : IsComp
   intro u
   have hu : u ∈ R ⊔ C := by rw [hRC.sup_eq_top]; exact Submodule.mem_top
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hu
-  rw [map_add, LinearMap.add_apply, h y hy, hu' z hz, add_zero]
+  rw [map_add (f := _), LinearMap.add_apply, h y hy, hu' z hz, add_zero]
 
 variable {G : Type} [Group G] (T U : Fin a → (G →* Matrix (Fin n) (Fin n) LL)) (χ : G → LL)
 

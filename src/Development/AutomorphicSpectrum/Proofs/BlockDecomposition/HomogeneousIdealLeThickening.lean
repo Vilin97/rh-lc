@@ -65,7 +65,7 @@ theorem ker_le_sup_chart {Y : Scheme.{0}} (I : Ideal R) (e : ℕ)
   have hcv := homogeneousComponent_isHomogeneous (m' + (m + n)) v
   have hsum : homogeneousComponent (m' + (m + n)) u + homogeneousComponent (m' + (m + n)) v =
       X k ^ m' * (X k ^ m * a) := by
-    rw [← map_add, huv, homogeneousComponent_of_mem hb, if_pos rfl]
+    rw [← map_add (f := _), huv, homogeneousComponent_of_mem hb, if_pos rfl]
   have e1 : GlobalTheory.ProjSpace.formOn (GlobalTheory.ProjSpace.chart R N k) k le_rfl n a ha =
       GlobalTheory.ProjSpace.formOn (GlobalTheory.ProjSpace.chart R N k) k le_rfl (m' + (m + n)) _ (hcu.add hcv) :=
     GlobalTheory.ProjFrac.frac_eq (by rw [hsum]; ring)

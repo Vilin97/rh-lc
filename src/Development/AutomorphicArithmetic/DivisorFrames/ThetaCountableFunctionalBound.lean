@@ -101,7 +101,7 @@ theorem UpperTheory.theta_countable_functional_bound :
           rw [← (hs _ Φ.2).tsum_add (hs _ Φ'.2)]
           congr 1
           funext ξ
-          rw [Submodule.coe_add, map_add]
+          rw [Submodule.coe_add, map_add (f := _)]
           ring
         map_smul' := fun a Φ => by
           simp only [RingHom.id_apply, SetLike.val_smul, smul_eq_mul]

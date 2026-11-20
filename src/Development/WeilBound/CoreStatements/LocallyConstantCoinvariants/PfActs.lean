@@ -112,7 +112,7 @@ theorem action_uniqueness : ActsUniq := by
           simp [hψ]
         · congr 1
           funext i
-          rw [Pi.add_apply, map_add, hz_fin w hw i, add_zero]
+          rw [Pi.add_apply, map_add (f := _), hz_fin w hw i, add_zero]
       show f (fun i => evI F ((x + z) i)) * ∏ᶠ w, ψ w (fun i => evFin F w ((x + z) i)) =
         f (fun i => evI F (x i)) * ∏ᶠ w, ψ w (fun i => evFin F w (x i))
       rw [finprod_congr hP]

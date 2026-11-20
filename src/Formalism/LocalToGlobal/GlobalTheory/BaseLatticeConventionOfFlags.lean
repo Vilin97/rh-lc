@@ -17,7 +17,7 @@ theorem sigma_fix_K {R : Ranks} (H : Host R) (g : R.Psi) {x : H.E} (hx : x ∈ H
   induction hx using IntermediateField.adjoin_induction with
   | mem y hy => rw [Set.mem_singleton_iff.1 hy]; exact hb
   | algebraMap r => exact AlgEquiv.commutes _ r
-  | add y z _ _ hy hz => rw [map_add, hy, hz]
+  | add y z _ _ hy hz => rw [map_add (f := _), hy, hz]
   | inv y _ hy => rw [map_inv₀, hy]
   | mul y z _ _ hy hz => rw [map_mul, hy, hz]
 

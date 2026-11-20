@@ -92,7 +92,7 @@ private theorem eq_zero_of_coeff (Φ : A ℚ → ℂ) (hc : Continuous Φ) (hp :
   · intro a x y
     rw [mul_add, Pp.ψ_add]
   · intro a b x
-    simp only [map_add, add_mul, Pp.ψ_add]
+    simp only [map_add (f := _), add_mul, Pp.ψ_add]
   · intro x
     simp [ψ]
   · rintro _ ⟨k, rfl⟩ x

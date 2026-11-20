@@ -43,7 +43,7 @@ private theorem exists_decomp {O σ : Type} [CommRing O] [Finite σ] (w : σ →
     apply hm
     have e1 := hS _ h1
     have e2 := hS _ (hBS _ hb)
-    rw [map_add] at e1
+    rw [map_add (f := _)] at e1
     omega
   · ext n
     set_option synthInstance.maxHeartbeats 100000 in
@@ -86,7 +86,7 @@ private theorem inv_mem_wtPart {O σ : Type} [CommRing O] (w : σ → ℤ) {f g 
     by_cases h1 : Finsupp.weight w p.1 = 0
     · have h2 : Finsupp.weight w p.2 = 0 := by
         have := congrArg (Finsupp.weight w) hp
-        rw [map_add] at this
+        rw [map_add (f := _)] at this
         omega
       rw [h0 _ h2, mul_zero]
     · rw [hf _ h1, zero_mul]
@@ -209,8 +209,8 @@ private theorem part_zero_le {O R : Type} [CommRing O] [IsLocalRing O] [CommRing
     | add x y _ _ hx hy =>
       obtain ⟨h1, m1, c1, e1⟩ := hx
       obtain ⟨h2, m2, c2, e2⟩ := hy
-      refine ⟨h1 + h2, Submodule.add_mem _ m1 m2, by rw [map_add, c1, c2, add_zero], ?_⟩
-      rw [map_add, e1, e2]
+      refine ⟨h1 + h2, Submodule.add_mem _ m1 m2, by rw [map_add (f := _), c1, c2, add_zero], ?_⟩
+      rw [map_add (f := _), e1, e2]
       rfl
     | smul a x _ hx =>
       obtain ⟨h1, m1, c1, e1⟩ := hx
@@ -227,14 +227,14 @@ private theorem part_zero_le {O R : Type} [CommRing O] [IsLocalRing O] [CommRing
     have hxy : x * y ∈ I := I.mul_mem_right y hx
     obtain ⟨h, hh, hc, he⟩ := hJ _ hxy
     have hunit : IsUnit (h + 1) := by
-      rw [MvPowerSeries.isUnit_iff_constantCoeff, map_add, hc, map_one, zero_add]
+      rw [MvPowerSeries.isUnit_iff_constantCoeff, map_add (f := _), hc, map_one, zero_add]
       exact isUnit_one
     obtain ⟨g, hg⟩ : ∃ g, (h + 1) * g = 1 := ⟨_, hunit.mul_val_inv⟩
     have hgm : g ∈ wtPart O W.wt 0 :=
       inv_mem_wtPart W.wt (Submodule.add_mem _ hh (one_mem_wtPart O W.wt)) hg
     have hu : ((x * y + 1 : A) : R) * W.π g = 1 := by
       have h3 := congrArg W.π hg
-      simp only [map_mul, map_add, map_one, he] at h3
+      simp only [map_mul, map_add (f := _), map_one, he] at h3
       simpa using h3
     have hvA : W.π g ∈ A := by
       have hv := mem_adjoin_of_mul_eq_one_of_isIntegral' hu (hint _ ⟨g, hgm, rfl⟩)
@@ -274,7 +274,7 @@ private theorem part_zero_le {O R : Type} [CommRing O] [IsLocalRing O] [CommRing
     have hval : W.π.toLinearMap f = algebraMap O R c + ∑ b ∈ B, zz b * W.π (g b) := by
       show W.π f = _
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [hf2, map_add, map_sum, MvPowerSeries.c_eq_algebraMap, W.π.commutes]
+        rw [hf2, map_add (f := _), map_sum, MvPowerSeries.c_eq_algebraMap, W.π.commutes]
       simp only [map_mul, zz]
     show _ ∈ N ⊔ I • N'
     rw [hval]

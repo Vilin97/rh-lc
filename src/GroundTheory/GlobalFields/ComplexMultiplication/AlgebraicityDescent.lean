@@ -30,7 +30,7 @@ theorem _root_.GroundTheory.Arith.Abelian.Isogeny.exists_map_eq_of_forall_conj_e
   have hab_fix : ∀ g : ℂ ≃ₐ[L] ℂ, galFF W g a = a ∧ galFF W g b = b := by
     intro g
     have e := hyfix g
-    rw [hab, map_add, map_mul, galFF_genY] at e
+    rw [hab, map_add (f := _), map_mul, galFF_genY] at e
     exact eq_of_add_mul_genY_eq (galFF_mem_adjoin_genX W _ ha) (galFF_mem_adjoin_genX W _ hb)
       ha hb e
   have hlift : ∀ s : RatFunc ℂ, (∀ g : ℂ ≃ₐ[L] ℂ,
@@ -80,7 +80,7 @@ theorem _root_.GroundTheory.Arith.Abelian.Isogeny.exists_map_eq_of_forall_conj_e
     rw [← hr]
     exact hrat r n₁ d₁ hn₁ hd₁
   have hy₁ : ffMap (algebraMap L ℂ) W y₁ = ψ.y := by
-    rw [hab, map_add, map_mul, ← hr₂, ← hr₃, hrat r₂ n₂ d₂ hn₂ hd₂, hrat r₃ n₃ d₃ hn₃ hd₃,
+    rw [hab, map_add (f := _), map_mul, ← hr₂, ← hr₃, hrat r₂ n₂ d₂ hn₂ hd₂, hrat r₃ n₃ d₃ hn₃ hd₃,
       ffMap_genY]
     rfl
   exact ⟨Isogeny.ofMap (algebraMap L ℂ) ψ x₁ y₁ hx₁ hy₁,

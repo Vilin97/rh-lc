@@ -23,7 +23,7 @@ theorem map_smul_tens {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Al
       (f u ⊗ₜ[F] (1 : E)) * Algebra.TensorProduct.map f (AlgHom.id F E) x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, mul_add]
   | tmul a e => simp [TensorProduct.smul_tmul', Algebra.TensorProduct.tmul_mul_tmul, map_mul]
 
 theorem tens_eq_zero (x : AF F ⊗[F] E)
@@ -40,14 +40,14 @@ theorem tens_eq_zero (x : AF F ⊗[F] E)
     intro y
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, Prod.fst_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Prod.fst_add, ha, hb]
     | tmul a e => obtain ⟨a1, a2⟩ := a; simp [P]
   have e2 : ∀ y : (Ainf F × Af F) ⊗[F] E,
       (P y).2 = Algebra.TensorProduct.map (AlgHom.snd F (Ainf F) (Af F)) (AlgHom.id F E) y := by
     intro y
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, Prod.snd_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Prod.snd_add, ha, hb]
     | tmul a e => obtain ⟨a1, a2⟩ := a; simp [P]
   have : P x = P 0 := by
     rw [map_zero]

@@ -187,7 +187,7 @@ theorem block_action_integral (R0 : Subring K) {ι : Type} [Fintype ι] {n : ℕ
     rw [map_C, algHom_C]
     exact ⟨C a, by simp⟩
   | add p q hp hq =>
-    rw [map_add (map R0.subtype), map_add]
+    rw [map_add (map R0.subtype), map_add (f := _)]
     exact add_mem hp hq
   | mul_X p v hp =>
     rw [map_mul (map R0.subtype), map_X, map_mul, blockAct_X]

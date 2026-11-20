@@ -165,7 +165,7 @@ theorem step (S : Matrix p p (WittVector l R)) (S' : Matrix q q (WittVector l R)
       ext a b
       have h1 := congrArg WittVector.constantCoeff (congrFun (congrFun h a) b)
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_add, map_sum,
+        simp only [Matrix.map_apply, Matrix.add_apply, Matrix.mul_apply, map_add (f := _), map_sum,
         map_mul] at h1 ⊢
       simpa [hι, hφ, WittVector.map_coeff, frobenius_def] using h1)
   choose r hr using h0
@@ -233,7 +233,7 @@ theorem approx (S : Matrix p p (WittVector l R)) (S' : Matrix q q (WittVector l 
     obtain ⟨A, w, hA⟩ := ih Z' Y' h2 a b
     refine ⟨Z₀ a b + l * A, w, ?_⟩
     rw [h1]
-    simp only [Matrix.add_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, hA, map_add,
+    simp only [Matrix.add_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, hA, map_add (f := _),
       map_mul, map_natCast]
     ring
 

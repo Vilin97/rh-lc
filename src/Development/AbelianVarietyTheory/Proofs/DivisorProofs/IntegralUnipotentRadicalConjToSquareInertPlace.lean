@@ -63,10 +63,10 @@ theorem scalar_ids (σ : E →ₐ[F] E) (X Y e h bq cq : AF F) (A : AE F E)
   intro ι Z α β
   have cι : ∀ r, cA σ (ι r) = ι r := fun r => (cA σ).commutes r
   have hZ' : cA σ Z = ι X + ι Y * (-ι bq - A) := by
-    simp only [Z, map_add, map_mul, cι, hcA]; rfl
+    simp only [Z, map_add (f := _), map_mul, cι, hcA]; rfl
   set Z' := cA σ Z with hZ'def
   have hα : cA σ α = 1 - ι e + 3 * ι h * Z' := by
-    simp only [α, map_add, map_sub, map_mul, map_one, map_ofNat, cι, Z']
+    simp only [α, map_add (f := _), map_sub, map_mul, map_one, map_ofNat, cι, Z']
   have hβ : cA σ β = -(ι h * Z') := by
     simp only [β, map_neg, map_mul, cι, Z']
   have hE : ι e * ι e = ι e := by rw [← map_mul, he]
@@ -77,7 +77,7 @@ theorem scalar_ids (σ : E →ₐ[F] E) (X Y e h bq cq : AF F) (A : AE F E)
   have hN' : Z * Z' = ι h * ι e := by
     rw [hZ']
     have := congrArg ι hN
-    simp only [map_add, map_sub, map_mul] at this
+    simp only [map_add (f := _), map_sub, map_mul] at this
     simp only [Z]
     linear_combination this - ι Y * ι Y * hA
   have h2' : 2 * ι h = 1 := by
@@ -173,7 +173,7 @@ theorem cols_ext (d : ℕ) (X Y : Matrix (Fin d ⊕ Fin d) (Fin d ⊕ Fin d) (AE
     (h2 : X * (antiCols (F := F) (E := E) d : Matrix (Fin d ⊕ Fin d) (Fin d) (AE F E)) = Y * antiCols (F := F) (E := E) d) : X = Y := by
   set c : AE F E := algebraMap (AF F) (AE F E) (⅟(2 : AF F))
   have hc : c + c = 1 := by
-    simp only [c]; rw [← map_add, invOf_two_add_invOf_two, map_one]
+    simp only [c]; rw [← map_add (f := _), invOf_two_add_invOf_two, map_one]
   have hP : fromCols (diagCols (Fin d) : Matrix (Fin d ⊕ Fin d) (Fin d) (AE F E)) (antiCols (F := F) (E := E) d) *
       (c • fromBlocks 1 1 1 (-1)) = 1 := by
     rw [diagCols, antiCols, fromCols_fromRows_eq_fromBlocks, Matrix.mul_smul, fromBlocks_multiply, fromBlocks_smul,
@@ -238,7 +238,7 @@ theorem at_b {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} {v : Pl F} (n : UD �
     rw [e, ← Matrix.mul_smul, ← Matrix.smul_mul, h0, Matrix.zero_mul, Matrix.mul_zero]
   set c : AE F E := algebraMap (AF F) (AE F E) (⅟(2 : AF F))
   have hc : c + c = 1 := by
-    simp only [c]; rw [← map_add, invOf_two_add_invOf_two, map_one]
+    simp only [c]; rw [← map_add (f := _), invOf_two_add_invOf_two, map_one]
   calc u • b = (c + c) • (u • b) := by rw [hc, one_smul]
     _ = c • (u • (b + b)) := by rw [add_smul, ← smul_add, ← smul_add]
     _ = 0 := by rw [e2, smul_zero]
@@ -441,7 +441,7 @@ theorem conj_sq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
       algebraMap (AF F) (AE F E) (algebraMap F (AF F) (b : F)) * inclR (F := F) (AF F) (a : E) +
       algebraMap (AF F) (AE F E) (algebraMap F (AF F) (c : F)) = 0 := by
     have := congrArg (inclR (F := F) (AF F)) hq
-    simp only [map_add, map_mul, map_pow, map_zero, hιF] at this
+    simp only [map_add (f := _), map_mul, map_pow, map_zero, hιF] at this
     linear_combination this
   have hcA : cA σ (inclR (F := F) (AF F) (a : E)) =
       -algebraMap (AF F) (AE F E) (algebraMap F (AF F) (b : F)) - inclR (F := F) (AF F) (a : E) := by
@@ -480,31 +480,31 @@ theorem conj_sq : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
     simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hr
     rcases hr with rfl | rfl | rfl | rfl
     · refine key (1 - atV v 1 + 3 * ⅟2 * atV v (x : Fv F v)) (3 * ⅟2 * atV v (y : Fv F v)) ?_ ?_ _ ?_
-      · simp only [map_add, map_sub, map_mul, map_one, map_ofNat, evFin_atV]
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_ofNat, evFin_atV]
         repeat (first | exact one_mem _ | assumption | apply add_mem | apply sub_mem | apply mul_mem | apply neg_mem)
-      · simp only [map_add, map_sub, map_mul, map_one, map_ofNat, evFin_atV]
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_ofNat, evFin_atV]
         repeat (first | exact one_mem _ | assumption | apply add_mem | apply sub_mem | apply mul_mem | apply neg_mem)
-      · simp only [map_add, map_sub, map_mul, map_one, map_ofNat]; ring
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_ofNat]; ring
     · refine key (-(⅟2 * atV v (x : Fv F v))) (-(⅟2 * atV v (y : Fv F v))) ?_ ?_ _ ?_
-      · simp only [map_add, map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV]
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV]
         repeat (first | exact one_mem _ | assumption | apply add_mem | apply sub_mem | apply mul_mem | apply neg_mem)
-      · simp only [map_add, map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV]
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV]
         repeat (first | exact one_mem _ | assumption | apply add_mem | apply sub_mem | apply mul_mem | apply neg_mem)
-      · simp only [map_add, map_sub, map_mul, map_one, map_neg, map_ofNat]; ring
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_neg, map_ofNat]; ring
     · refine key (1 - atV v 1 + 3 * ⅟2 * (atV v (x : Fv F v) - atV v (y : Fv F v) * algebraMap F (AF F) (b : F)))
         (-(3 * ⅟2 * atV v (y : Fv F v))) ?_ ?_ _ ?_
-      · simp only [map_add, map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV, hev]
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV, hev]
         repeat (first | exact one_mem _ | assumption | apply add_mem | apply sub_mem | apply mul_mem | apply neg_mem)
-      · simp only [map_add, map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV, hev]
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV, hev]
         repeat (first | exact one_mem _ | assumption | apply add_mem | apply sub_mem | apply mul_mem | apply neg_mem)
-      · simp only [map_add, map_sub, map_mul, map_one, map_neg, map_ofNat, AlgHom.commutes, hcA]; ring
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_neg, map_ofNat, AlgHom.commutes, hcA]; ring
     · refine key (⅟2 * (atV v (x : Fv F v) - atV v (y : Fv F v) * algebraMap F (AF F) (b : F)))
         (-(⅟2 * atV v (y : Fv F v))) ?_ ?_ _ ?_
-      · simp only [map_add, map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV, hev]
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV, hev]
         repeat (first | exact one_mem _ | assumption | apply add_mem | apply sub_mem | apply mul_mem | apply neg_mem)
-      · simp only [map_add, map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV, hev]
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_neg, map_ofNat, evFin_atV, hev]
         repeat (first | exact one_mem _ | assumption | apply add_mem | apply sub_mem | apply mul_mem | apply neg_mem)
-      · simp only [map_add, map_sub, map_mul, map_one, map_neg, map_ofNat, AlgHom.commutes, hcA]; ring
+      · simp only [map_add (f := _), map_sub, map_mul, map_one, map_neg, map_ofNat, AlgHom.commutes, hcA]; ring
   · intro b' hb'
     rw [sub_eq_iff_eq_add.mp R3, add_smul]
     have : (algebraMap (AF F) (AE F E) (atV v 1) - 1) • b' = 0 := by

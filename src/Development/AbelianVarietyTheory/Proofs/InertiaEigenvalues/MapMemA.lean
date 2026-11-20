@@ -21,7 +21,7 @@ def colon {ι κ : Type} [Fintype ι] (G : Matrix κ ι K⟦X⟧) : Ideal O⟦X�
   add_mem' {α β} hα hβ w hw := by
     obtain ⟨m, hm, h⟩ := hα w hw
     obtain ⟨m', hm', h'⟩ := hβ w hw
-    exact ⟨m + m', fun j => add_mem (hm j) (hm' j), by rw [map_add, add_smul, h, h', Matrix.mulVec_add]⟩
+    exact ⟨m + m', fun j => add_mem (hm j) (hm' j), by rw [map_add (f := _), add_smul, h, h', Matrix.mulVec_add]⟩
   zero_mem' w _ := ⟨0, fun _ => zero_mem _, by simp⟩
   smul_mem' c α hα w hw := by
     obtain ⟨m, hm, h⟩ := hα w hw

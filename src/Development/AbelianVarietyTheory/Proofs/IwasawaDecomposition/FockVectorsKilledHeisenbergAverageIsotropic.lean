@@ -61,7 +61,7 @@ theorem psiV_add (ψ : AddChar (AF D.host.F) ℂ) (he : SplitAt D v e) (x y : Fv
     psiV D.host.F ψ v (x + y) = psiV D.host.F ψ v x * psiV D.host.F ψ v y := by
   obtain ⟨a, rfl⟩ := (GlobalTheory.SplitChart.chart_comp he).1 x
   obtain ⟨b, rfl⟩ := (GlobalTheory.SplitChart.chart_comp he).1 y
-  rw [← RingHom.map_add, ← char_trace, ← char_trace, ← char_trace, mul_add, map_add, AddChar.map_add_eq_mul]
+  rw [← RingHom.map_add (f := _), ← char_trace, ← char_trace, ← char_trace, mul_add, map_add (f := _), AddChar.map_add_eq_mul]
 
 theorem psiV_natCast (ψ : AddChar (AF D.host.F) ℂ) (he : SplitAt D v e) (n : ℕ) (x : Fv D.host.F v) :
     psiV D.host.F ψ v (n * x) = psiV D.host.F ψ v x ^ n := by
@@ -114,7 +114,7 @@ theorem exists_chart_levels (he : Formalism.L2.NTheta.IsIdemAt e PP) (hπ : Char
     exact val_lt_one_of_mem he hπ hx
   · simp
   · intro x y _ _ hx hy
-    rw [Subring.coe_add, RingHom.map_add]
+    rw [Subring.coe_add, RingHom.map_add (f := _)]
     exact Valuation.map_add_lt _ hx hy
   · intro c x _ hx
     rw [smul_eq_mul, Subring.coe_mul, RingHom.map_mul, Valuation.map_mul]

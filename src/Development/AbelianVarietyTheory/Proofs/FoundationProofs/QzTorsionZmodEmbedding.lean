@@ -74,7 +74,7 @@ theorem qz_torsion_zmod_embedding (l : ℕ) [Fact l.Prime] :
       intro y y'
       rw [← add_smul]
       apply hwd
-      rw [map_add, hinv, hinv, hinv])
+      rw [map_add (f := _), hinv, hinv, hinv])
     have hι : ∀ x : ℤ_[l], ι (PadicInt.toZModPow r x) = x • e := fun x =>
       hwd _ _ (hinv _)
     refine ⟨ι, ?_, fun a => ⟨fun ha => ?_, ?_⟩, fun x y => ?_⟩

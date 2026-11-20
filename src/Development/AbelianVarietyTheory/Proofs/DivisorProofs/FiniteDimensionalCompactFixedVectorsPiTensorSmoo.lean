@@ -59,7 +59,7 @@ theorem fixed_le_range (ρ : ∀ a, Representation ℂ (Γ a) (X a)) (hρ : ∀ 
   have hR : R ≤ fixed (piTensor ρ) (Subgroup.pi Set.univ K) := by
     rintro _ ⟨x, rfl⟩
     induction x using PiTensorProduct.induction_on with
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul_tprod c x =>
       rw [map_smul]
       refine Submodule.smul_mem _ c (ContraRefl.mem_fix.2 fun h hh => ?_)
@@ -73,7 +73,7 @@ theorem fixed_le_range (ρ : ∀ a, Representation ℂ (Γ a) (X a)) (hρ : ∀ 
     | add x y hx hy =>
       obtain ⟨r, hr, e⟩ := hx
       obtain ⟨s, hs, e'⟩ := hy
-      exact ⟨r + s, add_mem hr hs, by rw [map_add, map_add, e, e']⟩
+      exact ⟨r + s, add_mem hr hs, by rw [map_add (f := _), map_add (f := _), e, e']⟩
     | smul_tprod c x =>
       obtain ⟨u, hu, e⟩ := exists_fixed_tprod ρ hρ K hK x
       refine ⟨c • PiTensorProduct.tprod ℂ u, Submodule.smul_mem _ c

@@ -158,7 +158,7 @@ private theorem etaEx_of (hS : FinalTheorems) (hA : Alg) (hI : Integ) (hL : LcFi
       refine Polynomial.induction_on p (fun c => ?_) (fun p q hp hq => ?_) (fun n c _ => ?_)
       · rw [Polynomial.aeval_C]
         exact hY.1 c
-      · rw [map_add]
+      · rw [map_add (f := _)]
         exact add_mem hp hq
       · rw [map_mul, map_pow, Polynomial.aeval_C, Polynomial.aeval_X]
         exact mul_mem (hY.1 c) (pow_mem hY.2 _)

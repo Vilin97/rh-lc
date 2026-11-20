@@ -30,7 +30,7 @@ theorem UpperTheory.V.Alg.part_span :
       apply hk
       have hm : Finsupp.weight W.wt m = j := hS m (by rw [← h2]; exact (hcM _ h1).1)
       have hkm := hS _ h1
-      rw [map_add, hm] at hkm
+      rw [map_add (f := _), hm] at hkm
       simpa using hkm
     · ext n
       set_option synthInstance.maxHeartbeats 100000 in

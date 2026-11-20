@@ -16,5 +16,5 @@ theorem UpperTheory.Reformulated.B.DYlb6.main :
     rw [h, map_smul]
     exact Submodule.smul_mem _ r (Submodule.subset_span ⟨w, rfl⟩)
   | add x y hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy

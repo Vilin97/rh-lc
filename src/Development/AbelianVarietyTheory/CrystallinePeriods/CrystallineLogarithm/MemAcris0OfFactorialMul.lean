@@ -1006,11 +1006,11 @@ theorem p_dvd_of_eq_zero {x : Acris p R} (hx : Acris.toBdRPlus p R x = 0) :
       obtain ⟨w, hw⟩ := (Acris.toRange p R n y).2
       refine ⟨-(w : AinfInv p R), neg_mem ((mem_acrisZero_iff ϖ _).1 w.2), ?_⟩
       have h1 := congrArg (BdRPlus.eval p R n) hx
-      rw [map_add, map_mul, map_natCast, map_add, map_mul, map_natCast, map_zero,
+      rw [map_add (f := _), map_mul, map_natCast, map_add (f := _), map_mul, map_natCast, map_zero,
         Acris.toBdRPlus_algebraMap_zero, BdRPlus.eval_algebraMap, Acris.eval_toBdRPlus, ← hw] at h1
       have h2 : Ideal.Quotient.mk (AinfInv.kerTheta p R ^ n)
           ((a : AinfInv p R) - p * -(w : AinfInv p R)) = 0 := by
-        rw [mul_neg, sub_neg_eq_add, map_add, map_mul, map_natCast]
+        rw [mul_neg, sub_neg_eq_add, map_add (f := _), map_mul, map_natCast]
         exact h1
       rw [Ideal.Quotient.eq_zero_iff_mem, AinfInv.kerTheta_eq ϖ, Ideal.span_singleton_pow,
         mem_span_singleton] at h2
@@ -1159,10 +1159,10 @@ theorem Bridge.padicInt_hom_ext : ∀ (l : ℕ) [Fact l.Prime] (A : Type) [CommR
   refine ⟨f y - g y, ?_⟩
   have h1 : f x = ((PadicInt.appr x n : ℕ) : A) + (l : A) ^ n * f y := by
     conv_lhs => rw [hx]
-    rw [map_add, map_mul, map_pow, map_natCast, map_natCast]
+    rw [map_add (f := _), map_mul, map_pow, map_natCast, map_natCast]
   have h2 : g x = ((PadicInt.appr x n : ℕ) : A) + (l : A) ^ n * g y := by
     conv_lhs => rw [hx]
-    rw [map_add, map_mul, map_pow, map_natCast, map_natCast]
+    rw [map_add (f := _), map_mul, map_pow, map_natCast, map_natCast]
   rw [h1, h2]; ring
 
 end

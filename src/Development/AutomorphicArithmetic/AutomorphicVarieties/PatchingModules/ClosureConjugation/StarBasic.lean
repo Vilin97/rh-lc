@@ -22,7 +22,7 @@ theorem UpperTheory.V.Pa.star_basic :
   intro l _ F n O _ _ R _ _
   have hadd : ∀ y z, F.star O R n (y + z) = F.star O R n y + F.star O R n z := by
     intro y z
-    simp [GFrame.star, map_add]
+    simp [GFrame.star, map_add (f := _)]
   refine ⟨?_, ?_, hadd, ?_, ?_, ?_, star_single_eq_single_conj_inv_mul_eps_zpow' F O R n⟩
   · intro y
     induction y using MonoidAlgebra.induction_linear with

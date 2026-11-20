@@ -139,7 +139,7 @@ theorem rdRel_move (hsup) (ρ : Setup D.ntw) (ρ' : Setup D'.ntw) (hs : SameSetu
       refine (congrArg (fun z => evK (tie h m YS hsup) X'.geo.v₀ hρ' i' (h.cm j) b z g')
         ((fmOf (S' := dat h m YS) (h.scal hi b) (ks h m YS j)).map_add x y)).trans ?_
       refine (congrFun ((evK (tie h m YS hsup) X'.geo.v₀ hρ' i' (h.cm j) b).map_add _ _) g').trans ?_
-      rw [map_add, Pi.add_apply, Pi.add_apply, hx, hy]
+      rw [map_add (f := _), Pi.add_apply, Pi.add_apply, hx, hy]
     | tmul a y =>
       exact congrArg₂ (· * ·)
         ((record_heq h.gal h.set h.frm h.Bsup h.delta hi).2.1 _ _ hs.e b _ _ (h.frac_heq hi a).symm).symm

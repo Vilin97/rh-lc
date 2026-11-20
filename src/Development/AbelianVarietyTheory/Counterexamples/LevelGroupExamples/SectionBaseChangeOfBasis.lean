@@ -51,7 +51,7 @@ theorem sum_coord {d : ℕ} (B : Module.Basis (Fin d) K K') {R : Type} [CommRing
     simp only [coord_tmul, Module.Basis.coord_apply, ← TensorProduct.smul_tmul]
     rw [← TensorProduct.sum_tmul, B.sum_repr]
   | add x y hx hy =>
-    simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib]
     rw [← hx, ← hy]
 
 def Ext (K K' R : Type) [Field K] [Field K'] [Algebra K K'] [CommRing R] [Algebra K R] : Type := K' ⊗[K] R

@@ -54,7 +54,7 @@ def coord (v : HeightOneSpectrum (𝓞 D.host.F)) {K : Type} [CommRing K]
       ψ (((h⁻¹).1 *ᵥ fun j => evF D.host.E v (a j)) i) + ψ (((h⁻¹).1 *ᵥ fun j => evF D.host.E v (b j)) i)
     have : (fun j => evF D.host.E v ((a + b) j)) = (fun j => evF D.host.E v (a j)) + fun j => evF D.host.E v (b j) :=
       funext fun j => map_add _ _ _
-    rw [this, Matrix.mulVec_add, Pi.add_apply, map_add]
+    rw [this, Matrix.mulVec_add, Pi.add_apply, map_add (f := _)]
 
 section Coord
 

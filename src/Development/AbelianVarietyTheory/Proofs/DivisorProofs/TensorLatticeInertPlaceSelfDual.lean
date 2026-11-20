@@ -142,7 +142,7 @@ theorem trace_expand {k : ℕ} (s c : Fin k → 𝓞 E)
     rw [inclR_smul, smul_smul]
   | add x y hx hy =>
     conv_lhs => rw [hx, hy]
-    simp only [mul_add, map_add, add_smul, Finset.sum_add_distrib]
+    simp only [mul_add, map_add (f := _), add_smul, Finset.sum_add_distrib]
 
 theorem incM_mul {m n p : ℕ} (A : Matrix (Fin m) (Fin n) E) (B : Matrix (Fin n) (Fin p) E) :
     incM F (A * B) = incM F A * incM F B := Matrix.map_mul

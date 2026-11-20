@@ -34,7 +34,7 @@ theorem exists_end_reads {K M A ι : Type} [Field K] [AddCommGroup M] [Module K 
       zero_mem' := ⟨0, fun a => by rw [map_zero, map_zero]⟩
       add_mem' := by
         rintro _ _ ⟨x, hx⟩ ⟨y, hy⟩
-        exact ⟨x + y, fun a => by rw [map_add, map_add, map_add, hx a, hy a]⟩
+        exact ⟨x + y, fun a => by rw [map_add (f := _), map_add (f := _), map_add (f := _), hx a, hy a]⟩
       smul_mem' := by
         rintro c v ⟨x, hx⟩
         exact ⟨c • x, fun a => by rw [map_smulₛₗ, map_smulₛₗ, map_smul, hx a]⟩ }
@@ -42,7 +42,7 @@ theorem exists_end_reads {K M A ι : Type} [Field K] [AddCommGroup M] [Module K 
   choose s hs using fun u : U => u.2
   let ψ : U →ₗ[K] M :=
     { toFun := s
-      map_add' := fun u u' => hr (by rw [map_add, hs _ a₀, hs _ a₀, hs _ a₀, Submodule.coe_add, map_add, map_add])
+      map_add' := fun u u' => hr (by rw [map_add (f := _), hs _ a₀, hs _ a₀, hs _ a₀, Submodule.coe_add, map_add (f := _), map_add (f := _)])
       map_smul' := fun c u => hr (by
         rw [RingHom.id_apply, map_smulₛₗ, hs _ a₀, hs _ a₀, Submodule.coe_smul, map_smulₛₗ, map_smul]) }
   refine ⟨ψ ∘ₗ p, fun v hv a => ?_⟩
@@ -122,7 +122,7 @@ theorem CellTie.injective_rdK {hρ : ρ.Good} (T : CellTie hρ Y rd) (k : ℕ) :
   refine (injective_iff_map_eq_zero _).2 fun x hx => ?_
   obtain ⟨d⟩ := T.nonempty_dat
   have h := (T.thPsi_iff k ∅ 1 (twOK_one i k) d ((1 : X.Ok i k) ⊗ₜ[X.O i] Y.th i _ b d + x)).2 (by
-    rw [map_add, hx, add_zero, rdK_tmul, map_one, one_smul, T.th_eq, Setup.gens_one]
+    rw [map_add (f := _), hx, add_zero, rdK_tmul, map_one, one_smul, T.th_eq, Setup.gens_one]
     rfl)
   rw [Y.thPsi_one] at h
   exact add_eq_left.1 h

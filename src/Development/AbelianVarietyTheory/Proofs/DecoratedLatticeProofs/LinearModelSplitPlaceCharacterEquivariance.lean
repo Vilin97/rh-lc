@@ -73,7 +73,7 @@ theorem norm_idele_mul {D : D7} {k : Type} [Field k] [ValuativeRel k] [Topologic
   have hs : p.e * p.sec a = p.sec a := by rw [← p.sec_pr, p.pr_sec]
   have hcs : cA D p.e * cA D (p.sec a) = cA D (p.sec a) := by rw [← map_mul, hs]
   have hx : cA D (1 - p.e + p.sec a) = 1 - cA D p.e + cA D (p.sec a) := by
-    rw [map_add, map_sub, map_one]
+    rw [map_add (f := _), map_sub, map_one]
   rw [hx]
   exact idem_calc _ _ _ _ he hcc hc hs hcs
 
@@ -100,7 +100,7 @@ theorem norm_idele_chart {D : D7} {k : Type} [Field k] [ValuativeRel k] [Topolog
   have key : evalV D.host.F p.v (sndA D.host.F (Algebra.norm (AF D.host.F) (p.idele a : AE D))) = π (p.sec a) := by
     rw [← halg, GlobalTheory.SplitDetCharacter.algebraMap_norm, map_mul, p.idele_val]
     have hcs : cA D (p.sec a) = cA D p.e * cA D (p.sec a) := by rw [← map_mul, hs]
-    rw [map_add, map_sub, map_one, map_add, map_sub, map_one, map_add, map_sub, map_one, πe, hcs, map_mul, πce, zero_mul]
+    rw [map_add (f := _), map_sub, map_one, map_add (f := _), map_sub, map_one, map_add (f := _), map_sub, map_one, πe, hcs, map_mul, πce, zero_mul]
     ring
   exact key
 
@@ -124,7 +124,7 @@ theorem chartAt : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topologica
     obtain ⟨ε, ⟨α, rfl, h1, hα⟩, hsum⟩ := p.above
     by_contra hne
     have h2 := halg (pairA D.host.F 0 α)
-    rw [← hsum, map_add, πe, πce, add_zero] at h2
+    rw [← hsum, map_add (f := _), πe, πce, add_zero] at h2
     have h3 : evalV D.host.F v' (sndA D.host.F (pairA D.host.F 0 α)) = 0 := hα v' hne
     rw [h3] at h2
     exact one_ne_zero h2
@@ -134,7 +134,7 @@ theorem chartAt : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topologica
       map_one' := by rw [SplitPt.sec_one, πe]
       map_mul' := fun a b => by rw [SplitPt.sec_mul, map_mul]
       map_zero' := by rw [map_zero, map_zero]
-      map_add' := fun a b => by rw [map_add, map_add] }
+      map_add' := fun a b => by rw [map_add (f := _), map_add (f := _)] }
   have hsurjf : Function.Surjective f := fun b => by
     obtain ⟨c, rfl⟩ := hsurj b
     refine ⟨p.pr c, ?_⟩

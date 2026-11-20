@@ -107,13 +107,13 @@ theorem eval_swapPow {S : Type*} [CommRing S] [Algebra ℝ S] (a b : ℤ) (x : F
         (algebraMap ℝ S b * x 0 + algebraMap ℝ S a * x 1 + x 2) ^ n := by
   have hs : (aeval ![x 0 + x 1, x 2]).toRingHom (linearSum a b) =
       (algebraMap ℝ S a * x 0 + algebraMap ℝ S b * x 1 + x 2) + (algebraMap ℝ S b * x 0 + algebraMap ℝ S a * x 1 + x 2) := by
-    simp only [linearSum, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add, map_mul, aeval_C, aeval_X, map_ofNat,
+    simp only [linearSum, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add (f := _), map_mul, aeval_C, aeval_X, map_ofNat,
       Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
     ring
   have hp : (aeval ![x 0 + x 1, x 2]).toRingHom (quadraticPart a b) +
       (aeval ![x 0 + x 1, x 2]).toRingHom (C (((a : ℝ) - b) ^ 2)) * (x 0 * x 1) =
       (algebraMap ℝ S a * x 0 + algebraMap ℝ S b * x 1 + x 2) * (algebraMap ℝ S b * x 0 + algebraMap ℝ S a * x 1 + x 2) := by
-    simp only [quadraticPart, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add, map_mul, map_pow, map_sub, aeval_C, aeval_X,
+    simp only [quadraticPart, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add (f := _), map_mul, map_pow, map_sub, aeval_C, aeval_X,
       Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
     ring
   have key : ∀ n, Polynomial.eval₂ (aeval ![x 0 + x 1, x 2]).toRingHom (x 0 * x 1) (swapPow a b n) =
@@ -148,7 +148,7 @@ theorem aeval_swapSum {S : Type*} [CommRing S] [Algebra ℝ S] (d : ℕ) (a b : 
   have h2 : aeval x (swapSum d a b) = (algebraMap ℝ S a * x 0 + algebraMap ℝ S b * x 1 + x 2) ^ (d + 2) +
       (algebraMap ℝ S b * x 0 + algebraMap ℝ S a * x 1 + x 2) ^ (d + 2) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [swapSum, lin, map_add, map_pow, map_sum, map_mul, aeval_C, aeval_X, Fin.sum_univ_three,
+      simp only [swapSum, lin, map_add (f := _), map_pow, map_sum, map_mul, aeval_C, aeval_X, Fin.sum_univ_three,
       Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, map_one, one_mul]
   rw [h2, ← h1]
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
@@ -280,7 +280,7 @@ theorem sum_monomial_coeffs_swap (d : ℕ) (a b : ℤ) : upperParabolic (idx d) 
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_mul]
   refine Finset.sum_congr rfl fun k _ => ?_
-  simp only [coefW, expo, map_mul, map_pow, aeval_aeval_two, map_add, aeval_X, Matrix.cons_val_zero, Matrix.cons_val_one,
+  simp only [coefW, expo, map_mul, map_pow, aeval_aeval_two, map_add (f := _), aeval_X, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
   ring
 
@@ -290,7 +290,7 @@ theorem dvd_downP_sub_baseT (d : ℕ) (R : ℕ → MvPolynomial (Fin 2) ℝ) :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [downP, baseT, map_sum, ← Finset.sum_sub_distrib]
   refine Finset.dvd_sum fun x _ => ?_
-  simp only [coefW, map_mul, map_pow, aeval_aeval_two, map_add, aeval_X, Matrix.cons_val_zero, Matrix.cons_val_one,
+  simp only [coefW, map_mul, map_pow, aeval_aeval_two, map_add (f := _), aeval_X, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
   obtain ⟨c, hc⟩ := sub_dvd_pow_sub_pow (X 3 : MvPolynomial (Fin 4) ℝ) (X 1 * X 2) x.2
   refine ⟨-(c * aeval ![X 1 + X 2, X 3] (pm (expo x)) * aeval ![X 1 + X 2, X 0] (R x.1)), ?_⟩

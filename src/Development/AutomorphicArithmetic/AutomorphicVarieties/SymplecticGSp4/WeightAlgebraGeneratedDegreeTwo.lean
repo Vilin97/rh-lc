@@ -90,7 +90,7 @@ private theorem aW_gen {O R : Type} [CommRing O] [CommRing R] [Algebra O R] (W :
   have hfst : ∀ m : W.σ →₀ ℕ, Finsupp.weight (fun s => (W.wt s).1) m = (Finsupp.weight W.wt m).1 := fun m => by
     induction m using Finsupp.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add, ha, hb, Prod.fst_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, Prod.fst_add]
     | single s k => simp [Finsupp.weight_single]
   obtain ⟨μ, hμ, hdec⟩ := part_span O R (ℤ × ℤ) W {m | Finsupp.weight W.wt m = (0, n)} (0, n) (fun _ h => h)
   rintro _ ⟨f, hf, rfl⟩

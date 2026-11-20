@@ -85,7 +85,7 @@ theorem pd_pd (a b : σ) :
   | C c => simp
   | add P Q hP hQ => simp [hP, hQ]
   | mul_X P n hP =>
-    simp only [Derivation.leibniz, smul_eq_mul, map_add, hP, pderiv_X, Pi.single_apply]
+    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), hP, pderiv_X, Pi.single_apply]
     split_ifs <;> simp <;> ring
 
 theorem mx_mx (a b : σ) :

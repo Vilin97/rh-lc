@@ -38,7 +38,7 @@ theorem refl_norm {K : Type} [Field K] (c : K →+* K) (hc : ∀ x, c (c x) = x)
   have hcη : c (d / (1 - hf c v₀ e' - d)) = d / (1 - c (hf c v₀ e') - d) := by
     rw [map_div₀, hd, hcβ]
   have hca : c (1 + d / (1 - hf c v₀ e' - d)) = 1 + d / (1 - c (hf c v₀ e') - d) := by
-    rw [map_add, map_one, hcη]
+    rw [map_add (f := _), map_one, hcη]
   rw [hf_comb, hca, hcη, hu, hv, hf_symm c hc v₀ e', mul_one]
   exact key_id _ _ d hβ0 hβ'
 

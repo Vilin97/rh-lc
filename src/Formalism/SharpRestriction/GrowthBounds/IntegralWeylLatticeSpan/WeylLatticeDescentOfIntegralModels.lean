@@ -216,7 +216,7 @@ theorem span_to_int (hodd : ∀ (m : ℕ) (lam : Fin (m + 1) → ℤ), Antitone 
     obtain ⟨A, hA, e1⟩ := ha
     obtain ⟨B, hB, e2⟩ := hb
     exact ⟨A + B, add_mem hA hB, fun z => by
-      rw [map_add, map_add, map_add, Pi.add_apply, Pi.add_apply, e1 z, e2 z]⟩
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), Pi.add_apply, Pi.add_apply, e1 z, e2 z]⟩
   | smul r a _ ha =>
     obtain ⟨A, hA, e1⟩ := ha
     refine ⟨embLL r.1 • A, core_intSpanG_smul embLL R0 lam r.1 r.2 hA, fun z => ?_⟩
@@ -243,7 +243,7 @@ theorem int_to_span (hodd : ∀ (m : ℕ) (lam : Fin (m + 1) → ℤ), Antitone 
     obtain ⟨A, hA, e1⟩ := ha
     obtain ⟨B, hB, e2⟩ := hb
     exact ⟨A + B, add_mem hA hB, fun z => by
-      rw [map_add, map_add, map_add, Pi.add_apply, Pi.add_apply, e1 z, e2 z]⟩
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), Pi.add_apply, Pi.add_apply, e1 z, e2 z]⟩
   | neg a _ ha =>
     obtain ⟨A, hA, e1⟩ := ha
     exact ⟨-A, neg_mem hA, fun z => by

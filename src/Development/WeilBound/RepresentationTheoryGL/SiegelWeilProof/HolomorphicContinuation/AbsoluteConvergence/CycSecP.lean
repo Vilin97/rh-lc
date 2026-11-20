@@ -129,7 +129,7 @@ theorem eulH_mon (ε : Fin m → Bool) (H : Matrix (Fin n) (Fin n) ℂ) (d : ℕ
         rw [mul_comm ((l.map (gen ε)).prod)]
         exact mon_mono ε (by omega) (mon_mul ε h1 h2)
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [(eulD H).map_smul]; exact Submodule.smul_mem _ _ hx
 
 end PositivityTheory.Rg.Sw.AbsSt.CycP

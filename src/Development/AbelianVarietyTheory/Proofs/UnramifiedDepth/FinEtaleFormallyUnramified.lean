@@ -58,7 +58,7 @@ private theorem exists_algHom_apply_ne_zero_of_pointDerivation_eq_zero {C B : Ty
             (a - algebraMap C B (φ a)) * (b - algebraMap C B (φ b)) := by
         rw [map_mul, map_mul, Algebra.smul_def, Algebra.smul_def]
         ring
-      rw [hDapp, hDapp, hDapp, key, map_add, map_add, map_smul, map_smul,
+      rw [hDapp, hDapp, hDapp, key, map_add (f := _), map_add (f := _), map_smul, map_smul,
         hℓ0 _ (Ideal.mul_mem_mul (hφa a) (hφa b)), smul_eq_mul, smul_eq_mul, add_zero]
     have hD0 := hder φ D hD
     apply hℓx
@@ -158,7 +158,7 @@ theorem _root_.GlobalTheory.finEtale_main :
       have hca : c ⊗ₜ[O] a = c • ((1 : C) ⊗ₜ[O] a) := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
       rw [hca, map_smul, hDA, smul_zero, LinearMap.zero_apply]
-    | add x y hx hy => simp only [map_add, hx, hy, LinearMap.zero_apply, add_zero]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, LinearMap.zero_apply, add_zero]
   obtain ⟨_, hrankB⟩ := finrank_eq_card_algHom_of_pointDerivation_eq_zero hder
   let Ψ : (A →ₐ[O] O) → (C ⊗[O] A →ₐ[C] C) := fun ψ =>
     Algebra.TensorProduct.lift (Algebra.ofId C C) ((Algebra.ofId O C).comp ψ)

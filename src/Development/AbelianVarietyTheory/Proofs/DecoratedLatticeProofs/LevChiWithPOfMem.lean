@@ -71,7 +71,7 @@ theorem GlobalTheory.ChainOnto.LevelWithP.mem_multT_withP_iff : ∀ (D : D7) (θ
       simp only [map_smul, Pi.smul_apply, smul_eq_mul]
       linear_combination r * key
     | add x y hx hy =>
-      simp only [map_add, Pi.add_apply]
+      simp only [map_add (f := _), Pi.add_apply]
       linear_combination hx + hy
   · rintro ⟨h, hP⟩
     refine ⟨h.aut, h.cusp, fun v κ hκ g => ?_, h.equiv, h.cont⟩

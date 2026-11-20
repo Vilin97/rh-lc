@@ -23,7 +23,7 @@ def word (π : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) (l : List (Matrix
 
 def smSub (G : Matrix (Fin n) (Fin n) ℂ) (π : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) : Submodule ℂ H where
   carrier := {w | SmoothVec (lieG G) π w}
-  add_mem' := fun h h' k Xs hX => by simpa only [map_add] using (h k Xs hX).add (h' k Xs hX)
+  add_mem' := fun h h' k Xs hX => by simpa only [map_add (f := _)] using (h k Xs hX).add (h' k Xs hX)
   zero_mem' := fun k Xs _ => by simpa only [map_zero] using contDiff_const
   smul_mem' := fun c _ h k Xs hX => by simpa only [map_smul] using (h k Xs hX).const_smul c
 

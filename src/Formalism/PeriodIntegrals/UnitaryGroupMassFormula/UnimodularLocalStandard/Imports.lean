@@ -30,7 +30,7 @@ theorem stepC : StepC := by
     ⟨_, fun _ => rfl⟩
   have hconj : ∀ u, (starRingEnd ℂ) (β u) = βb u := by
     intro u
-    rw [hβ, hβb, map_add, map_one, map_mul, map_natCast, hθdef, theta_conj]
+    rw [hβ, hβb, map_add (f := _), map_one, map_mul, map_natCast, hθdef, theta_conj]
   have hK : ∀ u, β u * βb u = ((K u : ℤ) : ℂ) := by
     intro u
     rw [hβ, hβb, hKdef]

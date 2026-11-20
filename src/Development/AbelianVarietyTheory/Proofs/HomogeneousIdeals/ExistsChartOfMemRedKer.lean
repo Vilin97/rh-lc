@@ -274,7 +274,7 @@ theorem epsTo_add_comp {w : sp (R₀ := R) (DualNumber R) ⟶ G} (hw : IsTan w) 
   have hψ₀ : ψ (e 0) = t₁ := vecTo_single _ _ _ _
   have hψ₁ : ψ (e 1) = t₂ := vecTo_single _ _ _ _
   have := congrArg (spMap ψ ≫ ·) univ
-  simp only [MonObj.comp_mul, ← Category.assoc, spMap_comp, comp_epsTo, map_add, hψ₀, hψ₁] at this
+  simp only [MonObj.comp_mul, ← Category.assoc, spMap_comp, comp_epsTo, map_add (f := _), hψ₀, hψ₁] at this
   exact this
 
 variable [IsCommMonObj G] {n : ℕ}

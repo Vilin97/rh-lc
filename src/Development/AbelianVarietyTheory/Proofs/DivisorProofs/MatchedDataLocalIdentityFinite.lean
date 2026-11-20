@@ -92,7 +92,7 @@ theorem exists_lineDer_polData' (hK : KP) {a a' : ℕ} {B : Base F E} {G : Geo �
     obtain ⟨x₁, hdx, hhx⟩ := hx
     obtain ⟨y₁, hdy, hhy⟩ := hy
     refine ⟨x₁ + y₁, isLineDer_add om' γ hdx hdy, fun h hh => ?_⟩
-    rw [map_add, map_add]; exact isLineDer_add om' γ (hhx h hh) (hhy h hh)
+    rw [map_add (f := _), map_add (f := _)]; exact isLineDer_add om' γ (hhx h hh) (hhy h hh)
   | smul c x _ hx =>
     obtain ⟨x₁, hdx, hhx⟩ := hx
     refine ⟨c • x₁, isLineDer_smul om' γ c hdx, fun h hh => ?_⟩
@@ -153,7 +153,7 @@ theorem socleOver_lineDer' : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] 
     have hS'st : ∀ h ∈ UAt σ G.W (evFin F v), ∀ z ∈ N ⊔ Img, om' (1, h) z ∈ N ⊔ Img := by
       intro h hh z hz
       obtain ⟨n₀, hn₀, z₀, hz₀, rfl⟩ := Submodule.mem_sup.1 hz
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem (Submodule.mem_sup_left (hN.stab.fin v h hh n₀ hn₀)) (Submodule.mem_sup_right (hImgst h hh z₀ hz₀))
     by_cases hEq : N ⊔ Img = N
     · exact le_socleOver _ _ _ (hEq ▸ hyS')

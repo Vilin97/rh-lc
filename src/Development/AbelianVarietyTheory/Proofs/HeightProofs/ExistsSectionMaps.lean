@@ -18,7 +18,7 @@ theorem exists_quot_maps {K L C : Type*} [CommRing K] [CommRing L] [CommRing C] 
       have : Λ (algebraMap A L r) = 0 := hJ r hr
       rw [this, zero_mul]
     · intro x y hx hy
-      rw [Submodule.coe_add, map_add, hx, hy, add_zero]
+      rw [Submodule.coe_add, map_add (f := _), hx, hy, add_zero]
   let l : H →ₗ[K] C := Λ.toLinearMap ∘ₗ (H.subtype.restrictScalars K)
   refine ⟨Ideal.Quotient.liftₐ J (Λ.comp A.val) hJ,
     (((J • (⊤ : Submodule A H)).restrictScalars K).liftQ l (fun z hz => hH z hz)) ∘ₗ
@@ -85,7 +85,7 @@ theorem exists_section_maps : ∀ (D : D7) (B : WeightFamilies.Prov D) (P : Modu
       obtain ⟨i, rfl⟩ := hx
       rw [coe_sfr, frac_apply, map_mul, hΛ, hsec, h0 i, zero_mul]
     | zero => simp
-    | add x y _ _ hx hy => rw [Subalgebra.coe_add, map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [Subalgebra.coe_add, map_add (f := _), hx, hy, add_zero]
     | smul a x _ hx => rw [smul_eq_mul, Subalgebra.coe_mul, map_mul, hx, mul_zero]
   obtain ⟨ψ₀, Ψ₀, hψ₀, hΨ₀⟩ := exists_quot_maps (Frac0 X la w) (Jid X la w) (HK X la w u) Λ hJ
   let ψ : OsK X la w →ₐ[Kp X la N] C := ψ₀

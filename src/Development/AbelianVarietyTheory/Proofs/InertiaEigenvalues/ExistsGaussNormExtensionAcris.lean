@@ -43,7 +43,7 @@ theorem exists_ext_loc {R S : Type} [CommRing R] [CommRing S] [Algebra R S] (M :
     rw [key x (a * d) (b * d) (by simp only [Submonoid.coe_mul, map_mul, ← hx]; ring),
       key y (c * b) (b * d) (by simp only [Submonoid.coe_mul, map_mul, ← hy]; ring),
       key (x + y) (a * d + c * b) (b * d)
-        (by simp only [Submonoid.coe_mul, map_mul, map_add, ← hx, ← hy]; ring),
+        (by simp only [Submonoid.coe_mul, map_mul, map_add (f := _), ← hx, ← hy]; ring),
       max_div_div_right (h0 _)]
     exact div_le_div_of_nonneg_right (hadd _ _) (h0 _)
   · obtain ⟨⟨a, b⟩, hx⟩ := IsLocalization.surj M x
@@ -121,7 +121,7 @@ theorem exists_ext_compl {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) 
     refine le_of_tendsto_of_tendsto' (hN' (x + y) (fun k => s k + t k) fun k => ?_)
       ((hN' x s hx).max (hN' y t hy)) fun k => hadd _ _
     have := (hx k).add (hy k)
-    convert this using 1; rw [map_add]; ring
+    convert this using 1; rw [map_add (f := _)]; ring
   · obtain ⟨s, hx⟩ := hs x
     refine tendsto_nhds_unique (hN' (-x) (fun k => -s k) fun k => ?_) (by simpa only [hneg] using hN' x s hx)
     have := (hx k).neg_right

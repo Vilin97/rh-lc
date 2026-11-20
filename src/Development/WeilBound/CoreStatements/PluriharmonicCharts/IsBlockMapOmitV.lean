@@ -90,7 +90,7 @@ private theorem imageZ_mCoordIdeal' {K : Type} {ι : K → Type} {K' : Type} {ι
   have h : (mConeMap y) (rename v g) = rename κ (mConeMap (y ∘ v) g) := by
     induction g using MvPolynomial.induction_on with
     | C a => simp [mConeMap]
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f p hf =>
       simp only [map_mul, rename_X, hf]
       simp [mConeMap, hv]

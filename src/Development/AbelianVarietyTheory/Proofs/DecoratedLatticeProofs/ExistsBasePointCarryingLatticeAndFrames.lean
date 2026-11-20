@@ -81,7 +81,7 @@ theorem map_mt_eq_one (q : SplitPt D k) (q' : SplitPt D k') (hne : q.v ≠ q'.v)
   rw [he'] at hij
   have h1 : q.pr ((mt V h - 1) i j) = 0 := by rw [← hij, map_mul, h0, zero_mul]
   have e2 : (mt V h) i j = (mt V h - 1) i j + (1 : Matrix (Fin V.rank) (Fin V.rank) (AE D)) i j := by simp
-  rw [Matrix.map_apply, e2, map_add, h1, zero_add]
+  rw [Matrix.map_apply, e2, map_add (f := _), h1, zero_add]
   by_cases hij' : i = j <;> simp [Matrix.one_apply, hij']
 
 theorem xi_ne (q : SplitPt D k) : (GlobalTheory.LocMod.ofSplit q).xi ≠ 0 := by

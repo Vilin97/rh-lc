@@ -49,7 +49,7 @@ def mulSet (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) : Subring (I.E ⊗[I
     rw [map_one, one_smul]
     exact hz
   add_mem' := fun {a b} ha hb z hz => by
-    rw [map_add, add_smul]
+    rw [map_add (f := _), add_smul]
     exact add_mem (ha z hz) (hb z hz)
   zero_mem' := fun z _ => by
     rw [map_zero, zero_smul]

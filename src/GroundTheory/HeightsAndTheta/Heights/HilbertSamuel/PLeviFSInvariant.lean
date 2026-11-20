@@ -136,7 +136,7 @@ theorem herm_add_right (a b b' : J → ℂ) : herm a (b + b') = herm a b + herm 
   simp only [herm, Pi.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem herm_add_left (a a' b : J → ℂ) : herm (a + a') b = herm a b + herm a' b := by
-  simp only [herm, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [herm, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem herm_smul_right (c : ℂ) (a b : J → ℂ) : herm a (c • b) = c * herm a b := by
   simp only [herm, Finset.mul_sum, Pi.smul_apply, smul_eq_mul]

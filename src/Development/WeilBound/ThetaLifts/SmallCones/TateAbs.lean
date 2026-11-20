@@ -82,7 +82,7 @@ theorem ext_Φ (W : InfinitePlace E) {w : InfinitePlace F} (h : W.embedding.comp
     InfinitePlace.Completion.extensionEmbedding W ((Φ F E l).1 W) = piInf (⟨W.embedding, h⟩ : EmbOver E w) l := by
   induction l using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]; exact map_zero _
-  | add x y hx hy => rw [map_add, map_add, ← hx, ← hy]; exact map_add _ _ _
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), ← hx, ← hy]; exact map_add _ _ _
   | tmul a x =>
     rw [adeleTensorAlgEquivLeft_tmul]
     change InfinitePlace.Completion.extensionEmbedding W ((algebraMap E (AdeleRing (𝓞 E) E) x).1 W *

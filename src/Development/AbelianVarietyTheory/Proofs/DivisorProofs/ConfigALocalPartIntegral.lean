@@ -31,9 +31,9 @@ theorem ei_levi : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F
   let r₀ : (Fin (b + 2) × Fin (b + 2 + a') → AF F) → ℂ := fun x => ∏ᶠ w, G.M.vac w fun i => evFin F w (x i)
   let r₁ : (Fin b × Fin (b + a') → AF F) → ℂ := fun x => ∏ᶠ w, G₁.M.vac w fun i => evFin F w (x i)
   have hr₀ : ∀ x z, At (evI F) z → r₀ (x + z) = r₀ x := fun x z hz => by
-    simp only [r₀, Pi.add_apply, map_add, hfin z hz, add_zero]
+    simp only [r₀, Pi.add_apply, map_add (f := _), hfin z hz, add_zero]
   have hr₁ : ∀ x z, At (evI F) z → r₁ (x + z) = r₁ x := fun x z hz => by
-    simp only [r₁, Pi.add_apply, map_add, hfin z hz, add_zero]
+    simp only [r₁, Pi.add_apply, map_add (f := _), hfin z hz, add_zero]
   have ht₀ : ∀ h : SInf F (Fin (b + 2) × Fin (b + 2 + a')), tens (evI F) ⇑h r₀ = pure h G.M.vac := fun h => rfl
   have ht₁ : ∀ h : SInf F (Fin b × Fin (b + a')), tens (evI F) ⇑h r₁ = pure h G₁.M.vac := fun h => rfl
   have hS₀ : ∀ h : SInf F (Fin (b + 2) × Fin (b + 2 + a')), pure h G.M.vac ∈ schA F _ := fun h =>

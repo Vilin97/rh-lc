@@ -17,7 +17,7 @@ private theorem chart_add_weight {τ τ' X : Type} [AddCommGroup X] (g : τ' →
     Finsupp.weight wt (Finsupp.mapDomain g n) = Finsupp.weight (fun s => wt (g s)) n := by
   induction n using Finsupp.induction_linear with
   | zero => simp
-  | add a b ha hb => rw [Finsupp.mapDomain_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [Finsupp.mapDomain_add, map_add (f := _), map_add (f := _), ha, hb]
   | single a b => simp [Finsupp.weight_single]
 
 private theorem chart_add_rename {O A X τ τ' : Type} [CommRing O] [IsDomain O] [CommRing A] [Algebra O A]

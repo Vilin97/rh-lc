@@ -24,7 +24,7 @@ theorem cA_cA (hcm : IsCMExt F E σ) (x : AE F E) : cA σ (cA σ x) = x := by
   | tmul a e =>
     show a ⊗ₜ[F] σ (σ e) = a ⊗ₜ[F] e
     rw [GlobalTheory.XTermSupp.invol hcm]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem symp_shiftB (hcm : IsCMExt F E σ) {n d n₁ d₁ : ℕ} {JX : Matrix (Fin n) (Fin n) E} {JW : Matrix (Fin d) (Fin d) E}
     (hJ : ∀ i j, σ (JW j i) = -JW i j) (H : Plane E n n₁) (H' : Plane E d d₁) (hH : form σ JX H.x H.y = 1)

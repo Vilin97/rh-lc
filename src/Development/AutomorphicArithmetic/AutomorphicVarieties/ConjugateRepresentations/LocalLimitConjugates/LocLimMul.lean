@@ -25,7 +25,7 @@ private theorem isOp_cj {r : ℝ} {χ : HChar E} (hχ : IsTw (a := a) r χ) {N :
     have h1 := hT.lie X _ hφ
     have h2 := hχ.2 X (cj χ T φ)
     change lie E a X (T (mulChi a χ φ)) = T (lie E a X (mulChi a χ φ)) at h1
-    rw [mul_cj, h1, hχ.2, map_add, map_add, map_add, map_smul, map_smul, map_smul, mul_cj] at h2
+    rw [mul_cj, h1, hχ.2, map_add (f := _), map_add (f := _), map_add (f := _), map_smul, map_smul, map_smul, mul_cj] at h2
     rw [mul_cj]
     exact (add_right_cancel h2).symm
   rt g φ hφ := by

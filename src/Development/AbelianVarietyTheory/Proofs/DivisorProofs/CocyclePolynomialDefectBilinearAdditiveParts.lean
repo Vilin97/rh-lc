@@ -21,7 +21,7 @@ theorem cocycle_polynomial_defect : ∀ (R X : Type) [CommRing R] [IsDomain R] [
         + 2 * (k : R) * (π' (mu + mu') - π' mu - π' mu') = 0 := by
     intro k hk mu mu' α
     have e := h k hk mu mu' α
-    simp only [map_add, map_nsmul, nsmul_eq_mul] at e
+    simp only [map_add (f := _), map_nsmul, nsmul_eq_mul] at e
     linear_combination e
   have hAB : ∀ mu mu' : X, π (mu + mu') - π mu - π mu' - w mu' mu = 0 ∧
       π' (mu + mu') - π' mu - π' mu' = 0 := by

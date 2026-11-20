@@ -144,7 +144,7 @@ theorem intertwiningMap_blockEmb_eq_zero {a : Set.range δ} {V₀ : Type*} [AddC
       { toFun := fun v => (φ v).1 m'
         map_add' := fun x y => by
           show (φ (x + y)).1 m' = (φ x).1 m' + (φ y).1 m'
-          rw [map_add]
+          rw [map_add (f := _)]
           rfl
         map_smul' := fun c x => by
           show (φ (c • x)).1 m' = c • (φ x).1 m'

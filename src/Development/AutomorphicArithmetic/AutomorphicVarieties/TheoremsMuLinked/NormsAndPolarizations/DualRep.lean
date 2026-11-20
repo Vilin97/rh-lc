@@ -12,7 +12,7 @@ variable {G R : Type} [TopologicalSpace G] [CommRing R] {I : Ideal R} {n : ℕ}
 private theorem ac_const (a : R) : AdicCont I fun _ : G => a := fun _ => IsLocallyConstant.const _
 
 private theorem ac_add {f g : G → R} (hf : AdicCont I f) (hg : AdicCont I g) : AdicCont I fun x => f x + g x := fun N => by
-  simp only [map_add]; exact (hf N).add (hg N)
+  simp only [map_add (f := _)]; exact (hf N).add (hg N)
 
 private theorem ac_sub {f g : G → R} (hf : AdicCont I f) (hg : AdicCont I g) : AdicCont I fun x => f x - g x := fun N => by
   simp only [map_sub]; exact (hf N).sub (hg N)

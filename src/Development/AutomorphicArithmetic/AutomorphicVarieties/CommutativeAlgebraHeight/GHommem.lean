@@ -96,7 +96,7 @@ theorem UpperTheory.V.CA.g_hommem :
       obtain ⟨gy, hgy⟩ := htr y d
       have hgeq : g = gx + gy := by
         ext m
-        rw [hg, MvPolynomial.coeff_add, hgx, hgy, map_add]
+        rw [hg, MvPolynomial.coeff_add, hgx, hgy, map_add (f := _)]
         split_ifs <;> simp
       rw [hgeq]
       exact P.add_mem (hx d gx hgx) (hy d gy hgy)
@@ -111,7 +111,7 @@ theorem UpperTheory.V.CA.g_hommem :
         · rw [if_pos hm, if_pos hm, MvPowerSeries.coeff_mul, MvPolynomial.coeff_mul]
           refine Finset.sum_congr rfl fun p hp => ?_
           have hpm : p.1 + p.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.mp hp
-          have hdeg : p.1.degree + p.2.degree = m.degree := by rw [← map_add, hpm]
+          have hdeg : p.1.degree + p.2.degree = m.degree := by rw [← map_add (f := _), hpm]
           rw [hTa, hTx, if_pos (by omega), if_pos (by omega)]
         · rw [if_neg hm, if_neg hm]
       rw [hgeq]
@@ -163,7 +163,7 @@ theorem UpperTheory.V.CA.g_hommem :
       refine Finset.sum_congr rfl fun p hp => ?_
       rw [MvPolynomial.coeToMvPowerSeries.ringHom_apply, MvPolynomial.coeff_coe]
       have hpm : p.1 + p.2 = m := Finset.HasAntidiagonal.mem_antidiagonal.mp hp
-      have hdeg : p.1.degree + p.2.degree = m.degree := by rw [← map_add, hpm]
+      have hdeg : p.1.degree + p.2.degree = m.degree := by rw [← map_add (f := _), hpm]
       show AddMonoidAlgebra.coeff (c m.degree i) p.1 * AddMonoidAlgebra.coeff (h i) p.2 =
         AddMonoidAlgebra.coeff (c (p.1.degree + i.2.val) i) p.1 * AddMonoidAlgebra.coeff (h i) p.2
       by_cases h2 : p.2.degree = i.2.val

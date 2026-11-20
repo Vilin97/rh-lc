@@ -82,13 +82,13 @@ theorem sb_evderiv {σ : Type} (D : Derivation ℂ (MvPolynomial σ ℂ) (MvPoly
     simp only [this, eval_C, map_zero]
     exact hasDerivAt_const _ _
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p v hp =>
     have h := hp.fun_mul (hγ v)
     simp only [map_mul, eval_X]
     refine h.congr_deriv ?_
-    rw [Derivation.leibniz, map_add, smul_eq_mul, smul_eq_mul, map_mul, map_mul, eval_X]
+    rw [Derivation.leibniz, map_add (f := _), smul_eq_mul, smul_eq_mul, map_mul, map_mul, eval_X]
     ring
 
 theorem sb_curve {n : ℕ} (Z g : Matrix (Fin n) (Fin n) ℂ) (s : ℝ) (a b : Fin n) :

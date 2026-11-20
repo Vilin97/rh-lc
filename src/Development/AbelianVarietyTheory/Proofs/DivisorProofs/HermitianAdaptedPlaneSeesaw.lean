@@ -110,7 +110,7 @@ theorem exists_ratCoord {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model �
   let f : Matrix (Fin n) (Fin d) E →ₗ[F] (Fin n × Fin d → F) × (Fin n × Fin d → F) :=
     { toFun := fun x => (y x, z x)
       map_add' := fun a b => emb_inj (by
-        rw [← h, incM_add, map_add, h, h]
+        rw [← h, incM_add, map_add (f := _), h, h]
         exact Prod.ext (funext fun i => (map_add _ _ _).symm) (funext fun i => (map_add _ _ _).symm))
       map_smul' := fun a b => emb_inj (by
         rw [← h, incM_smul, map_smul, h]
@@ -193,7 +193,7 @@ theorem iso_lagr (B : Base F E) (M : Model σ X W) (M₁ : Model σ X₁ W) (H :
   have h3 := (M.co.form _ _).symm.trans (sp_ix (W := W) (fun u => (hH.orth u).1) m' z)
   have h4 := (M.co.form _ _).symm.trans ((sp_ii (W := W) hH.gram m m').trans (M₁.co.form m m'))
   rw [hm, hm', zero_dotProduct, zero_dotProduct, sub_self] at h4
-  simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   linear_combination h1 + h2 - h3 + h4
 
 theorem direct (B : Base F E) (M : Model σ X W) (M₁ : Model σ X₁ W) (H : Plane E n n₁) {j₀ j₁ : ℕ}
@@ -240,7 +240,7 @@ theorem exists_lagr (B : Base F E) (hB : B.IsGood σ) (M : Model σ X W) (M₁ :
     { toFun := fun p => Matrix.vecMulVec H.x p.1 + H.ι * φ₁.symm (0, p.2)
       map_add' := fun p q => by
         have : ((0 : Fin n₁ × Fin d → F), (p + q).2) = (0, p.2) + (0, q.2) := by simp
-        rw [this, map_add, Matrix.mul_add, Prod.fst_add, Matrix.vecMulVec_add]
+        rw [this, map_add (f := _), Matrix.mul_add, Prod.fst_add, Matrix.vecMulVec_add]
         abel
       map_smul' := fun a p => by
         have : ((0 : Fin n₁ × Fin d → F), (a • p).2) = a • (0, p.2) := by simp
@@ -272,7 +272,7 @@ theorem exists_lagr (B : Base F E) (hB : B.IsGood σ) (M : Model σ X W) (M₁ :
   · rintro t _ ⟨p, rfl⟩
     refine ⟨t • incV F p.1, t • incM F (φ₁.symm (0, p.2)), by rw [map_smul, Prod.smul_fst, hfst, smul_zero], fun ψ => ?_⟩
     simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, hemb]
-    rw [← map_smul, smul_add, ← Matrix.vecMulVec_smul, ← Matrix.mul_smul, map_add]
+    rw [← map_smul, smul_add, ← Matrix.vecMulVec_smul, ← Matrix.mul_smul, map_add (f := _)]
     refine schr_add _ _ _ ?_ _
     have h := (M.co.form _ _).symm.trans (sp_ix (W := W) (fun u => (hH.orth u).1) (t • incM F (φ₁.symm (0, p.2)))
       (t • incV F p.1))

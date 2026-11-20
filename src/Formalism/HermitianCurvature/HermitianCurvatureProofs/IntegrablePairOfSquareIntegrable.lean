@@ -117,7 +117,7 @@ def TopCls (X : ActualOps k r z z' π π') (μ : Measure (Mt k r)) : Submodule �
     refine ⟨⟨min ε1 ε2, lt_min h1 h2, fun g hg hG => ?_⟩, fun w => ?_⟩
     · show (Φ : Fn k r (Wq →L[ℂ] Wp)) c g + (Ψ : Fn k r (Wq →L[ℂ] Wp)) c g = 0
       rw [h10 g hg (lt_of_lt_of_le hG (min_le_left _ _)), h20 g hg (lt_of_lt_of_le hG (min_le_right _ _)), add_zero]
-    · rw [map_add]; exact slice_square_integrable_add μ (hΦw w) (hΨw w)
+    · rw [map_add (f := _)]; exact slice_square_integrable_add μ (hΦw w) (hΨw w)
   smul_mem' := by
     intro a Φ hΦ c hc
     obtain ⟨⟨ε, h1, h10⟩, hΦw⟩ := hΦ c hc

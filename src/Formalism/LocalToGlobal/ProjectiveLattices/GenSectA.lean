@@ -196,7 +196,7 @@ theorem sub_incl_psi_mem (x : Fin m → Ω) (j₀ : Fin m) (hx₀ : x j₀ ≠ 0
   next f g hf hg =>
     have e : f + g - incl j₀ (psi x j₀ (f + g)) =
         (f - incl j₀ (psi x j₀ f)) + (g - incl j₀ (psi x j₀ g)) := by
-      simp only [map_add]
+      simp only [map_add (f := _)]
       ring
     rw [e]
     exact Ideal.add_mem _ hf hg
@@ -269,7 +269,7 @@ theorem pderiv_aeval {ι : Type*} [Fintype ι] [DecidableEq ι] (j₀ : Fin m) (
        simp only [pderiv_C, map_zero, zero_mul, Finset.sum_const_zero])
     | simp
   next G₁ G₂ h₁ h₂ =>
-    simp only [map_add, h₁, h₂, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), h₁, h₂, add_mul, Finset.sum_add_distrib]
   next G i h =>
     have e1 : ∀ p, pderiv p (G * X i) = G * pderiv p (X i) + X i * pderiv p G := fun p => by
       rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
@@ -286,7 +286,7 @@ theorem pderiv_aeval {ι : Type*} [Fintype ι] [DecidableEq ι] (j₀ : Fin m) (
       · intro hi
         exact absurd (Finset.mem_univ i) hi
     rw [map_mul, aeval_X, Derivation.leibniz, smul_eq_mul, smul_eq_mul, h]
-    simp only [e1, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [e1, map_add (f := _), add_mul, Finset.sum_add_distrib]
     rw [hs]
     simp only [map_mul, aeval_X, Finset.mul_sum, mul_assoc]
 

@@ -290,7 +290,7 @@ theorem eventually_descendsTo : ∀ (l : ℕ) [Fact l.Prime] (lam : algebraicClo
       map_one' := i.injective (by rw [hρ₀', map_one]; rfl)
       map_mul' := fun a b ↦ i.injective (by rw [map_mul, hρ₀', hρ₀', hρ₀']; rfl)
       map_zero' := i.injective (by rw [hρ₀', map_zero]; rfl)
-      map_add' := fun a b ↦ i.injective (by rw [map_add, hρ₀', hρ₀', hρ₀']; rfl) }
+      map_add' := fun a b ↦ i.injective (by rw [map_add (f := _), hρ₀', hρ₀', hρ₀']; rfl) }
   have s₁ : spMap i ≫ spMap (algebraMap R K) = spMap j := by
     rw [HomDescent.spMap_comp]
     congr 1

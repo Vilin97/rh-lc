@@ -107,7 +107,7 @@ theorem exists_int_gS {K : Type} [Field K] [NumberField K] (σ : K →+* ℂ) {�
       map_add_eq_mul' := fun x y => by
         rw [← hadd, ← add_div]
         exact hdiv _ _ (val_rep_sub hϖ (x + y) (Quotient.out x + Quotient.out y)
-          (by rw [map_add, Ideal.Quotient.mk_out, Ideal.Quotient.mk_out])) }
+          (by rw [map_add (f := _), Ideal.Quotient.mk_out, Ideal.Quotient.mk_out])) }
   let χ : (Res k c)ˣ →* ℂ :=
     { toFun := fun u => ν (uRep hϖ hc1 u)
       map_one' := by
@@ -194,7 +194,7 @@ theorem GlobalTheory.GaussDiv.gauss_dvd_pow : ∀ {F : Type} [Field F] [NumberFi
   intro F _ _ K _ _ σ ψ v ν hψ hcont hun hc1 hr hζ
   have hϖ : IsUnif (unifAt v) := (GlobalTheory.SplitFlip.exists_isUnif (k := Fv F v)).choose_spec
   have hadd : ∀ x y, psiLoc ψ v (x + y) = psiLoc ψ v x * psiLoc ψ v y := fun x y => by
-    simp only [psiLoc, map_add]
+    simp only [psiLoc, map_add (f := _)]
     exact AddChar.map_add_eq_mul ψ _ _
   have hO : ∀ x : Fv F v, valuation (Fv F v) x ≤ 1 → psiLoc ψ v x = 1 := fun x hx => by
     have := ((hψ 1).2 ((val_le_one_iff v 1).1 (by simp))) x ((val_le_one_iff v x).1 hx)

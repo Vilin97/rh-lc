@@ -21,9 +21,9 @@ theorem coeff_Dof_congr (F : Fin d → PS k 2 d) (v : Fin d → k) (n : ℕ) (f 
   rw [coeff_mul, coeff_mul]
   refine Finset.sum_congr rfl fun p hp => ?_
   have hp' : p.1 + p.2 = mo := Finset.HasAntidiagonal.mem_antidiagonal.1 hp
-  have hd : p.1.degree + p.2.degree = mo.degree := by rw [← hp', map_add]
+  have hd : p.1.degree + p.2.degree = mo.degree := by rw [← hp', map_add (f := _)]
   rw [coeff_pderiv, coeff_pderiv, h]
-  rw [map_add, Finsupp.degree_single]
+  rw [map_add (f := _), Finsupp.degree_single]
   omega
 
 theorem coeff_iterate_Dof_congr (F : Fin d → PS k 2 d) (v : Fin d → k) (r : ℕ) :

@@ -31,7 +31,7 @@ private theorem coef_comb {N : ℕ} {k : ℤ} {I : Type} (s : Finset I) (c : I �
   | insert a s ha ih =>
     rw [Finset.sum_insert ha, Finset.sum_insert ha, ← ih, ← coef_smul]
     unfold coef
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     exact ModularForm.qExpansion_add one_pos (one_mem_per N) (c a • f a) (∑ a ∈ s, c a • f a)
 

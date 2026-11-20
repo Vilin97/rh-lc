@@ -65,7 +65,7 @@ theorem sub_rename_mem_span_degree {K σ : Type*} [Field K] (t : σ → σ)
         (hk _ (hl'.sub hl'.rename_isHomogeneous) (hI l) n hn _ hG'.rename_isHomogeneous)
     · intro x y hx hy
       have : x + y - rename t (x + y) = (x - rename t x) + (y - rename t y) := by
-        rw [map_add]; ring
+        rw [map_add (f := _)]; ring
       rw [this]
       exact add_mem hx hy
 

@@ -17,7 +17,7 @@ theorem UpperTheory.V.Th.Coc.trRep :
     exact h2.trans h1
   · induction y using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [smul_add, map_add, map_add, ha, hb, smul_add]
+    | add a b ha hb => rw [smul_add, map_add (f := _), map_add (f := _), ha, hb, smul_add]
     | single g a =>
       rw [MonoidAlgebra.smul_single, repR_single, repR_single, smul_eq_mul, map_mul, mul_smul]
   · obtain ⟨t, ht⟩ := (CA.d_tr D.toDet).1 hn

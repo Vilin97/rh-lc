@@ -23,7 +23,7 @@ theorem isOpen_stab (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
     (RestrictedProduct.isOpen_forall_mem fun v : HeightOneSpectrum (𝓞 F) =>
       Valued.isOpen_valuationSubring (v.adicCompletion F)).preimage continuous_snd
   have hOadd : ∀ a b, a ∈ O → b ∈ O → a + b ∈ O := fun a b ha hb v => by
-    rw [map_add]; exact add_mem (ha v) (hb v)
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
   have hOmul : ∀ a b, a ∈ O → b ∈ O → a * b ∈ O := fun a b ha hb v => by
     rw [map_mul]; exact mul_mem (ha v) (hb v)
   have hO0 : (0 : AF F) ∈ O := fun v => by rw [map_zero]; exact zero_mem _
@@ -32,7 +32,7 @@ theorem isOpen_stab (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
     intro x z hx hz
     rw [hlat] at hx hz ⊢
     intro i
-    rw [map_add, Pi.add_apply]
+    rw [map_add (f := _), Pi.add_apply]
     exact hOadd _ _ (hx i) (hz i)
   let V : Set (AE F E) := {y | ∀ j k, B.equivFun (y * B j) k ∈ O}
   have hcont : ∀ j k, Continuous fun y : AE F E => B.equivFun (y * B j) k := fun j k =>

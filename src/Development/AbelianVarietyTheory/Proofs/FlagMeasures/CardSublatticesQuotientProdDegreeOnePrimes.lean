@@ -65,10 +65,10 @@ theorem encard_mul (I J : Ideal O) (h : IsCoprime I J) :
       obtain ⟨v, rfl⟩ := hg y
       refine ⟨b • u + a • v, Prod.ext ?_ ?_⟩
       · change f (b • u + a • v) = f u
-        rw [map_add, map_smul, map_smul, smul_quot ha, ← smul_quot ha (f u), ← add_smul,
+        rw [map_add (f := _), map_smul, map_smul, smul_quot ha, ← smul_quot ha (f u), ← add_smul,
           add_comm, hab, one_smul]
       · change g (b • u + a • v) = g v
-        rw [map_add, map_smul, map_smul, smul_quot hb, ← smul_quot hb (g v), ← add_smul,
+        rw [map_add (f := _), map_smul, map_smul, smul_quot hb, ← smul_quot hb (g v), ← add_smul,
           add_comm, hab, one_smul]
     · rw [LinearEquiv.ker_comp, LinearMap.ker_prod]
   · rintro ⟨L₁, L₂⟩ ⟨h1, h2⟩ ⟨L₁', L₂'⟩ ⟨h1', h2'⟩ he

@@ -97,7 +97,7 @@ theorem epsBC_tmul {B : Type} [CommRing B] [Algebra R B] (ψ : B →ₐ[R] DualN
 theorem fst_epsBC {B : Type} [CommRing B] [Bialgebra R B] {ψ : B →ₐ[R] DualNumber R}
     (h : ∀ a, (ψ a).fst = Coalgebra.counit a) (b : K ⊗[R] B) : (epsBC K ψ b).fst = Coalgebra.counit (R := K) b := by
   induction b with
-  | add x y hx hy => simp only [map_add, TrivSqZeroExt.fst_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), TrivSqZeroExt.fst_add, hx, hy]
   | tmul k a => simp [epsBC_tmul, h, Algebra.smul_def, mul_comm, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem snd_epsBC {B : Type} [CommRing B] [Bialgebra R B] {ψ : B →ₐ[R] DualNumber R}
@@ -108,7 +108,7 @@ theorem snd_epsBC {B : Type} [CommRing B] [Bialgebra R B] {ψ : B →ₐ[R] Dual
   rw [← hD, hb]
   clear hb
   induction y with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul k m =>
     obtain ⟨a, rfl⟩ := AugCot.d_surjective _ m
     rw [PDiv.liftSemi_tmul, map_smul, SemiBialgHom.cot_d, hD, toBaseChange_apply, epsBC_tmul, one_smul, snd_epsTo, ← hδ]

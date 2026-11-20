@@ -186,7 +186,7 @@ theorem pfCoeff_good_add {x x' y y' : W.EE} (h : pfCoeff_Good W f x y) (h' : pfC
             (x * algebraMap (LetA O n) W.EE (letπ ^ m₁) - algebraMap (LetA O n) W.EE a₁) +
           algebraMap (LetA O n) W.EE (letπ ^ m₁) *
             (x' * algebraMap (LetA O n) W.EE (letπ ^ m₂) - algebraMap (LetA O n) W.EE a₂) := by
-      rw [pow_add, map_add, map_mul, map_mul, map_mul]; ring
+      rw [pow_add, map_add (f := _), map_mul, map_mul, map_mul]; ring
     rw [e]
     exact (pfCoeff_J W k).add_mem ((pfCoeff_J W k).mul_mem_left _ hx₁) ((pfCoeff_J W k).mul_mem_left _ hx₂)
   · have e : (y + y') * algebraMap (LetA O n) W.EE (f (letπ ^ (m₁ + m₂))) -
@@ -195,7 +195,7 @@ theorem pfCoeff_good_add {x x' y y' : W.EE} (h : pfCoeff_Good W f x y) (h' : pfC
             (y * algebraMap (LetA O n) W.EE (f (letπ ^ m₁)) - algebraMap (LetA O n) W.EE (f a₁)) +
           algebraMap (LetA O n) W.EE (f (letπ ^ m₁)) *
             (y' * algebraMap (LetA O n) W.EE (f (letπ ^ m₂)) - algebraMap (LetA O n) W.EE (f a₂)) := by
-      rw [pow_add, map_add f, map_mul f, map_mul f, map_mul f, map_add, map_mul, map_mul, map_mul]; ring
+      rw [pow_add, map_add f, map_mul f, map_mul f, map_mul f, map_add (f := _), map_mul, map_mul, map_mul]; ring
     rw [e]
     exact (pfCoeff_J W k).add_mem ((pfCoeff_J W k).mul_mem_left _ hy₁) ((pfCoeff_J W k).mul_mem_left _ hy₂)
 

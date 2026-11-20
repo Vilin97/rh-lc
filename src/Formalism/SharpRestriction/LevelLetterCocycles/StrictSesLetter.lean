@@ -30,14 +30,14 @@ theorem ιV_crisMap (z : V ⊗[Qp] B) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [crisMap, ιV]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem crisMap_mulVB (c : K₀) (z : V ⊗[Qp] B) :
     crisMap B f (mulVB (LL := LL) (V := V) (B := B) c z) = mulVB (LL := LL) (V := V') (B := B) c (crisMap B f z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [crisMap, mulVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mem_DcrisL_iff (τ₀ : K₀ →ₐ[Qp] LL) (z : V ⊗[Qp] B) :
     z ∈ DcrisL PD ρ τ₀ ↔ z ∈ Dcris PD ρ ∧ ∀ c : K₀, mulVB (LL := LL) (V := V) (B := B) c z = τ₀ c • z := by

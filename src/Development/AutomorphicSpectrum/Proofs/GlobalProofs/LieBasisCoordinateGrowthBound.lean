@@ -16,7 +16,7 @@ theorem isSmoothVec_add {u v : H} (hu : IsSmoothVec G π u) (hv : IsSmoothVec G 
     IsSmoothVec G π (u + v) := by
   obtain ⟨F, hF, hF'⟩ := hu
   obtain ⟨K, hK, hK'⟩ := hv
-  exact ⟨fun z => F z + K z, hF.add hK, fun z hz => by rw [map_add, hF' z hz, hK' z hz]⟩
+  exact ⟨fun z => F z + K z, hF.add hK, fun z hz => by rw [map_add (f := _), hF' z hz, hK' z hz]⟩
 
 theorem isSmoothVec_smul (c : ℂ) {v : H} (hv : IsSmoothVec G π v) :
     IsSmoothVec G π (c • v) := by

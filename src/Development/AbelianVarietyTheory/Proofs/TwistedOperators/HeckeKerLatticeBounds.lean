@@ -89,7 +89,7 @@ theorem GlobalTheory.heckeKer_lattice_bounds : ∀ (E : Type) [Field E] [NumberF
           apply Additive.toMul.injective
           apply Subtype.ext
           show F.ex i P (((p : ℂ) ^ 2)⁻¹ • P (x.1 + y.1)) = F.ex i P (((p : ℂ) ^ 2)⁻¹ • P x.1) * F.ex i P (((p : ℂ) ^ 2)⁻¹ • P y.1)
-          rw [map_add, smul_add, F.ex_add i P hP] }
+          rw [map_add (f := _), smul_add, F.ex_add i P hP] }
     let h0 : (F.Di i).La →+ ↥N :=
       { toFun := fun a => ⟨(p : 𝓞 E) • a, (mem_span_smul_top p _).2 ⟨a, rfl⟩⟩
         map_zero' := by ext; simp

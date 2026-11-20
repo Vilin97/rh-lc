@@ -494,7 +494,7 @@ theorem isThB_heckeT : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosed 
     ?_, ?_, ?_, ?_⟩
   · rw [hF]; exact hn_inv X hqP hτM hf₀I
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [coset_decomp X N l w d q hqP hqNl hd b hb, Pi.add_apply, Finset.sum_apply, map_add, map_sum, cls_mul, cls_prod,
+    · rw [coset_decomp X N l w d q hqP hqNl hd b hb, Pi.add_apply, Finset.sum_apply, map_add (f := _), map_sum, cls_mul, cls_prod,
       eval_act X N l w n b hb _ _ q rfl (by simp) f' hf'c]
     congr 1
     · refine Finset.sum_congr rfl fun k _ => ?_

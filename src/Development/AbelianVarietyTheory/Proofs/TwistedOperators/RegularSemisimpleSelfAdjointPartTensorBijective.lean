@@ -38,7 +38,7 @@ theorem productMap_bijective_of_involution {F E L : Type} [Field F] [CharZero F]
     obtain ⟨a, c, rfl⟩ := hrep x
     rw [hval] at hx
     have hx' := congrArg τ hx
-    rw [map_add, map_mul, map_zero, (hP _).1 a.2, (hP _).1 c.2, h1] at hx'
+    rw [map_add (f := _), map_mul, map_zero, (hP _).1 a.2, (hP _).1 c.2, h1] at hx'
     have ha : (a : L) = 0 := by
       linear_combination (algebraMap F L 2⁻¹) * (hx + hx') - (a : L) * h2
     have hc : (c : L) = 0 := by
@@ -49,7 +49,7 @@ theorem productMap_bijective_of_involution {F E L : Type} [Field F] [CharZero F]
     refine ⟨(⟨algebraMap F L 2⁻¹ * (l + τ l), (hP _).2 ?_⟩ : P) ⊗ₜ[F] 1 +
       (⟨algebraMap F L 2⁻¹ * algebraMap F L d⁻¹ * f (b 1) * (l - τ l), (hP _).2 ?_⟩ : P) ⊗ₜ[F] b 1,
       ?_⟩
-    · rw [map_mul, map_add, hτ, AlgEquiv.commutes, add_comm]
+    · rw [map_mul, map_add (f := _), hτ, AlgEquiv.commutes, add_comm]
     · rw [map_mul, map_mul, map_mul, map_sub, hτ, AlgEquiv.commutes, AlgEquiv.commutes, h1]
       ring
     · rw [hval]

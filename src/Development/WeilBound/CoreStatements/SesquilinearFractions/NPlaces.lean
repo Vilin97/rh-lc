@@ -26,7 +26,7 @@ def vj {p : Nat.Primes} (j : k →+* ℂ_[p]) : HeightOneSpectrum (𝓞 k) where
     { carrier := {a | ‖(j.comp (algebraMap (𝓞 k) k)) a‖ < 1}
       add_mem' := fun {a b} ha hb => by
         simp only [Set.mem_setOf_eq] at *
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
       zero_mem' := by simp
       smul_mem' := fun c {a} ha => by

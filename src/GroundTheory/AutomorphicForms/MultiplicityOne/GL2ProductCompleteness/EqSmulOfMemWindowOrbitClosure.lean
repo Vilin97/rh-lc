@@ -164,7 +164,7 @@ theorem comb_apply (x : V) (f : G₁ →₀ ℂ) : comb τ ι₁ x f = f.sum fun
   Finsupp.linearCombination_apply ℂ f
 
 theorem comb_add (x y : V) (f : G₁ →₀ ℂ) : comb τ ι₁ (x + y) f = comb τ ι₁ x f + comb τ ι₁ y f := by
-  simp only [comb_apply, map_add, smul_add, Finsupp.sum_add]
+  simp only [comb_apply, map_add (f := _), smul_add, Finsupp.sum_add]
 
 theorem comb_smul (c : ℂ) (x : V) (f : G₁ →₀ ℂ) : comb τ ι₁ (c • x) f = c • comb τ ι₁ x f := by
   simp only [comb_apply, map_smul, Finsupp.smul_sum]

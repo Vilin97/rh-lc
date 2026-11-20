@@ -66,7 +66,7 @@ theorem root_mul_rinv (h0 : P.coeff 0 ≠ 0) : AdjoinRoot.root P * rinv P = 1 :=
   have h := divX_mul_X_add P
   have key : X * (C (-(P.coeff 0)⁻¹) * divX P) = C (-(P.coeff 0)⁻¹) * P + 1 := by
     linear_combination (C (-(P.coeff 0)⁻¹)) * h - hC
-  rw [rinv, ← AdjoinRoot.mk_X, ← map_mul, key, map_add, map_mul, AdjoinRoot.mk_self, mul_zero, zero_add, map_one]
+  rw [rinv, ← AdjoinRoot.mk_X, ← map_mul, key, map_add (f := _), map_mul, AdjoinRoot.mk_self, mul_zero, zero_add, map_one]
 
 def sig (h0 : P.coeff 0 ≠ 0) (hr : C (c (P.coeff 0)) * P = (P.map c).reverse) : AdjoinRoot P →+* AdjoinRoot P :=
   AdjoinRoot.lift ((algebraMap E (AdjoinRoot P)).comp c) (rinv P) (by

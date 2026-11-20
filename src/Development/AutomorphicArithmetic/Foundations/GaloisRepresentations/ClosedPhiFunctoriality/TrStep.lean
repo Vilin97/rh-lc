@@ -42,7 +42,7 @@ private theorem core {Z R B : Type} [CommRing Z] [CommRing R] [CommRing B] (f : 
   refine ⟨∑ i, ((Matrix.of W *ᵥ fun j => zc (e' j)) i - (V *ᵥ fun i => zc (r i)) i) * ai i +
     ∑ j, a * (V' *ᵥ fun i => zc (e' i)) j * bj j - a * s * g, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [h1, h2, hv, hw, map_mul, map_add, map_sub, map_sum, ha, Finset.mul_sum, mul_add, mul_sub]
+    simp only [h1, h2, hv, hw, map_mul, map_add (f := _), map_sub, map_sum, ha, Finset.mul_sum, mul_add, mul_sub]
   congr 1
   · congr 1
     · exact Finset.sum_congr rfl fun i _ => by ring

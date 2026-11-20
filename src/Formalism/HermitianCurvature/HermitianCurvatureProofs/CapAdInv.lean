@@ -115,7 +115,7 @@ theorem EH_HGl : HGl (Q.EH (E := E) k r) := by
   rw [hR, hbr, hP, EHH hφ hU hgU hg hF2 hff a b c d, EHH hφ hU hgU hg hF2 hff c d a b]
   rw [← hA1, ← hA2, ← hC1, ← hC2, ← hD1, ← hD2]
   rw [hsym (g * C1) (g * A1), hsym (g * C2) (g * A1), hsym (g * C1) (g * A2), hsym (g * C2) (g * A2)]
-  simp only [Matrix.mul_sub, Matrix.mul_add, map_sub, map_add, ← Matrix.mul_assoc]
+  simp only [Matrix.mul_sub, Matrix.mul_add, map_sub, map_add (f := _), ← Matrix.mul_assoc]
   have hI : Complex.I * Complex.I = -1 := Complex.I_mul_I
   linear_combination (norm := module) hI • (D1 (g * A2 * C2) - D1 (g * C2 * A2))
 

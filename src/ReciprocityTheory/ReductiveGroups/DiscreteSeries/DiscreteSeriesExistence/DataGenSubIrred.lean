@@ -143,7 +143,7 @@ theorem data_form_scalar (hgap : StdGap ε lam) (hσ : IsURepOn (UJset ε) σ) (
   let X : Submodule ℂ D :=
     { carrier := {x | x ∈ genSub E V ∧ ∀ y ∈ genSub E V, b x y = cc * inner ℂ x y}
       add_mem' := fun {x x'} hx hx' => ⟨(genSub E V).add_mem hx.1 hx'.1, fun y hy => by
-        rw [map_add, LinearMap.add_apply, hx.2 y hy, hx'.2 y hy, inner_add_left, mul_add]⟩
+        rw [map_add (f := _), LinearMap.add_apply, hx.2 y hy, hx'.2 y hy, inner_add_left, mul_add]⟩
       zero_mem' := ⟨(genSub E V).zero_mem, fun y _ => by simp⟩
       smul_mem' := fun r x hx => ⟨(genSub E V).smul_mem r hx.1, fun y hy => by
         rw [map_smulₛₗ, LinearMap.smul_apply, hx.2 y hy, inner_smul_left, smul_eq_mul]; ring⟩ }
@@ -196,14 +196,14 @@ theorem data_form_zero (hgap₁ : StdGap ε lam₁)
   let X₁ : Submodule ℂ D₁ :=
     { carrier := {x | x ∈ genSub E₁ V₁ ∧ ∀ y ∈ genSub E₂ V₂, b x y = 0}
       add_mem' := fun {x x'} hx hx' => ⟨(genSub E₁ V₁).add_mem hx.1 hx'.1, fun y hy => by
-        rw [map_add, LinearMap.add_apply, hx.2 y hy, hx'.2 y hy, add_zero]⟩
+        rw [map_add (f := _), LinearMap.add_apply, hx.2 y hy, hx'.2 y hy, add_zero]⟩
       zero_mem' := ⟨(genSub E₁ V₁).zero_mem, fun y _ => by simp⟩
       smul_mem' := fun r x hx => ⟨(genSub E₁ V₁).smul_mem r hx.1, fun y hy => by
         rw [map_smulₛₗ, LinearMap.smul_apply, hx.2 y hy, smul_zero]⟩ }
   let X₂ : Submodule ℂ D₂ :=
     { carrier := {y | y ∈ genSub E₂ V₂ ∧ ∀ x ∈ genSub E₁ V₁, b x y = 0}
       add_mem' := fun {y y'} hy hy' => ⟨(genSub E₂ V₂).add_mem hy.1 hy'.1, fun x hx => by
-        rw [map_add, hy.2 x hx, hy'.2 x hx, add_zero]⟩
+        rw [map_add (f := _), hy.2 x hx, hy'.2 x hx, add_zero]⟩
       zero_mem' := ⟨(genSub E₂ V₂).zero_mem, fun x _ => by simp⟩
       smul_mem' := fun r y hy => ⟨(genSub E₂ V₂).smul_mem r hy.1, fun x hx => by
         rw [map_smul, hy.2 x hx, smul_zero]⟩ }

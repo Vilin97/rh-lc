@@ -290,7 +290,7 @@ theorem exists_gen_one (n : ℕ) (hn : n ≠ 0) (A : Submodule (𝓞 K) K) (hA :
   have e1 : f ((n : 𝓞 K) * z) = n • f z := by
     rw [← smul_eq_mul, map_smul, Nat.cast_smul_eq_nsmul]
   have e2 : f (a * y) = a • f y := by rw [← smul_eq_mul, map_smul]
-  rw [map_add, e1, e2, add_comm]
+  rw [map_add (f := _), e1, e2, add_comm]
 
 theorem exists_gen [FiniteDimensional K V] (n : ℕ) (hn : n ≠ 0) (k : ℕ) :
     ∀ W : Submodule K V, Module.finrank K W ≤ k → ∀ M : Submodule (𝓞 K) V, M.FG → (∀ x ∈ M, x ∈ W) →
@@ -1053,7 +1053,7 @@ theorem invVol_mid_layer_le : ∀ (K V : Type) [Field K] [NumberField K] [StarRi
       add_mem' := by
         rintro x y ⟨i, hi, rfl, hi0⟩ ⟨i', hi', rfl, hi0'⟩
         refine ⟨i + i', add_mem hi hi', map_add _ _ _, fun b hb hab => ?_⟩
-        rw [map_add, hi0 b hb hab, hi0' b hb hab, add_zero]
+        rw [map_add (f := _), hi0 b hb hab, hi0' b hb hab, add_zero]
       zero_mem' := ⟨0, zero_mem _, map_zero _, fun b _ _ => map_zero _⟩
       neg_mem' := by
         rintro x ⟨i, hi, rfl, hi0⟩
@@ -1092,7 +1092,7 @@ theorem invVol_mid_layer_le : ∀ (K V : Type) [Field K] [NumberField K] [StarRi
         ist_orth_Xa N ((hmemS c).1 hc) ((hmemS c).1 hc) (Submodule.mem_inf.1 hy').2
       refine ⟨z, hz, ?_, fun b hb hab => ?_⟩
       · show H.B (N.ist a) z = H.B (N.ist a) (y + z)
-        rw [map_add, hy0 a ha, zero_add]
+        rw [map_add (f := _), hy0 a ha, zero_add]
       · have h10 := hxb b hb hab
         change H.B (N.ist b) (y + z) = 0 at h10
         rwa [map_add, hy0 b hb, zero_add] at h10)

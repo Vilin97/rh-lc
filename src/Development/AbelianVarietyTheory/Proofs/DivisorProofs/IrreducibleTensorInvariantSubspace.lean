@@ -25,7 +25,7 @@ theorem atPl_local_sub (H : ι → Submodule ℂ V) (w : ι) (y : ⨂[ℂ] _ : �
     obtain ⟨s, hs⟩ := hx
     obtain ⟨t, ht⟩ := hy
     refine ⟨s ∪ t, fun f g h => ?_⟩
-    rw [map_add, map_add, hs f g (fun m hm => h m (Finset.mem_union_left _ hm)),
+    rw [map_add (f := _), map_add (f := _), hs f g (fun m hm => h m (Finset.mem_union_left _ hm)),
       ht f g (fun m hm => h m (Finset.mem_union_right _ hm))]
   | smul a x _ hx =>
     obtain ⟨s, hs⟩ := hx

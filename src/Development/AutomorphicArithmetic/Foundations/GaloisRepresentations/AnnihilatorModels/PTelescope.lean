@@ -24,7 +24,7 @@ private theorem telescope_core {P : Type} (q n : ℕ) (F : P → P) (T A : ℕ �
     obtain ⟨ihE, ihO⟩ := ih (by omega)
     have key : (T (m + 1)).map F^[n - (m + 1)] =
         (A m).map F^[n - m] + q ^ (m + 1) • (A (m + 1)).map F^[n - (m + 1)] := by
-      rw [hs m hmn, Multiset.map_add, Multiset.map_nsmul, Multiset.map_map]
+      rw [hs m hmn, Multiset.map_add (f := _), Multiset.map_nsmul, Multiset.map_map]
       congr 2
       have e : n - m = (n - (m + 1)) + 1 := by omega
       rw [e, Function.iterate_succ]

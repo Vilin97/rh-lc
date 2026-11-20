@@ -74,7 +74,7 @@ theorem step [Module.Finite E B] (hπ : ∀ a, π a = 0 → IsNilpotent a) (J : 
   let J' : Ideal B :=
     { carrier := {j | j ∈ J ∧ f j = 0}
       zero_mem' := ⟨J.zero_mem, map_zero f⟩
-      add_mem' := fun ha hb => ⟨J.add_mem ha.1 hb.1, by rw [map_add, ha.2, hb.2, add_zero]⟩
+      add_mem' := fun ha hb => ⟨J.add_mem ha.1 hb.1, by rw [map_add (f := _), ha.2, hb.2, add_zero]⟩
       smul_mem' := fun c j hj => ⟨J.smul_mem c hj.1, by rw [smul_eq_mul, hm j hj.1, hj.2, mul_zero]⟩ }
   refine ⟨J', t, (f t)⁻¹ • f, lt_of_le_of_ne (fun j hj => hj.1) fun h => hf1 (show t ∈ J' from h ▸ ht).2, ht,
     by simp [hf1], fun j hj a => by simp [hm j hj a, mul_left_comm], fun j hj h => ⟨hj, by simpa [hf1] using h⟩⟩
@@ -105,7 +105,7 @@ theorem Red.desc (h : Red π p Λ) {J J' : Ideal B} {t : B} {f : B →ₗ[E] E} 
       refine Submodule.smul_mem_smul (hJ _ (J.sub_mem hj (J.mul_mem_right _ ht)) ?_) trivial
       rw [map_sub, mul_comm, hf t ht, hft]; simp
     · rintro a b ⟨z, h1, h2⟩ ⟨w, h3, h4⟩
-      refine ⟨z + w, by rw [map_add, map_add, h1, h3], ?_⟩
+      refine ⟨z + w, by rw [map_add (f := _), map_add (f := _), h1, h3], ?_⟩
       convert Submodule.add_mem _ h2 h4 using 1
       rw [smul_add]; abel
   obtain ⟨z, h1, h2⟩ := h1
@@ -146,10 +146,10 @@ theorem lift_param [Module.Finite E B] (hπ : ∀ a, π a = 0 → IsNilpotent a)
     obtain ⟨c, rfl⟩ := hC.surj c'
     obtain ⟨d, hd⟩ := ih J' hlt (y - t • (φ c + z))
       (S.sub_mem hy (S.smul_mem _ (S.add_mem (hφS c) (hTS hz))))
-      (hX.desc ht hft hf hJ' hyJ (by rw [map_add, hφ, e]; abel))
+      (hX.desc ht hft hf hJ' hyJ (by rw [map_add (f := _), hφ, e]; abel))
     refine ⟨d + t • c, ?_⟩
     convert T.add_mem hd (T.smul_mem t hz) using 1
-    rw [map_add, map_smul, smul_add]; abel
+    rw [map_add (f := _), map_smul, smul_add]; abel
   have hi : ∀ J : Ideal B, ∀ c ∈ (J • ⊤ : Submodule B C), φ c ∈ T → c = 0 := by
     intro J
     induction J using WellFoundedLT.induction with
@@ -164,8 +164,8 @@ theorem lift_param [Module.Finite E B] (hπ : ∀ a, π a = 0 → IsNilpotent a)
         (fun j hj w _ => ⟨?_, ?_⟩) fun a b ha hb => ⟨?_, ?_⟩
       · rw [map_smul, hX.form f j (hf j hj), hC.form f j (hf j hj), map_smul, hφ]
       · rw [map_smul]; exact Submodule.smul_mem_smul hj trivial
-      · simp only [map_add, ha.1, hb.1]
-      · rw [map_add]; exact Submodule.add_mem _ ha.2 hb.2
+      · simp only [map_add (f := _), ha.1, hb.1]
+      · rw [map_add (f := _)]; exact Submodule.add_mem _ ha.2 hb.2
     have e2 : Γ f c = 0 := (h 0 S'.zero_mem).unique
       (by rw [← e.1, zero_sub]; exact T'.neg_mem ((hΛ f J hf _ e.2).2 hcT)) (by simp)
     refine ih J' hlt c ?_ hcT
@@ -203,7 +203,7 @@ theorem Red.tensor (h : Red π p Λ) (P : Type) [AddCommGroup P] [Module Q P] :
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp only [smul_tmul', LinearMap.rTensor_tmul, h.smul]
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   ker x hx := by
     obtain ⟨y, rfl⟩ := (rTensor_exact P (LinearMap.exact_subtype_ker_map p) h.surj x).1 hx
     clear hx
@@ -216,12 +216,12 @@ theorem Red.tensor (h : Red π p Λ) (P : Type) [AddCommGroup P] [Module Q P] :
         (h.ker v v.2) (fun j hj w _ => ?_) fun a b ha hb => ?_
       · rw [← smul_tmul']; exact Submodule.smul_mem_smul hj trivial
       · rw [add_tmul]; exact Submodule.add_mem _ ha hb
-    | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   form f j hf x := by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp only [smul_tmul', LinearMap.rTensor_tmul, h.form f j hf]
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 omit [Algebra Q E] [Algebra Q B] [IsScalarTower Q E B] [IsScalarTower Q B X] [IsScalarTower Q E X'] in
 theorem Red.comm (h : Red π p Λ) (g : X →ₗ[B] X) (g' : X' →ₗ[E] X') (hg : ∀ x, p (g x) = g' (p x))
@@ -230,7 +230,7 @@ theorem Red.comm (h : Red π p Λ) (g : X →ₗ[B] X) (g' : X' →ₗ[E] X') (h
   refine Submodule.smul_induction_on (p := fun y => Λ f (g y) = g' (Λ f y)) hy (fun j hj w _ => ?_)
     fun a b ha hb => ?_
   · rw [map_smul, h.form f j (hf j hj), h.form f j (hf j hj), map_smul, hg]
-  · simp only [map_add, ha, hb]
+  · simp only [map_add (f := _), ha, hb]
 
 end
 
@@ -263,21 +263,21 @@ theorem sm_tmul (a : A) (k : F) (v : V) (b : P) : sm V P (a ⊗ₜ[Q] k) (v ⊗�
 theorem sm_mul (c d : A ⊗[Q] F) (y : V ⊗[Q] P) : sm V P (c * d) y = sm V P c (sm V P d y) := by
   induction c using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [add_mul, map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [add_mul, map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul a k =>
   induction d using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [mul_add, map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [mul_add, map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul a' k' =>
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b => simp only [Algebra.TensorProduct.tmul_mul_tmul, sm_tmul, mul_smul]
 
 theorem sm_left (a : A) (y : V ⊗[Q] P) : sm V P (a ⊗ₜ[Q] (1 : F)) y = a • y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul v b => simp only [sm_tmul, one_smul, smul_tmul']
 
 theorem sm_one (y : V ⊗[Q] P) : sm V P (1 : A ⊗[Q] F) y = y := by
@@ -292,11 +292,11 @@ theorem act_sm (g : V →ₗ[A] V) (u : P →ₗ[Q] P) (hu : ∀ (k : F) b, u (k
     AlgebraTensorModule.map g u (sm V P c y) = sm V P c (AlgebraTensorModule.map g u y) := by
   induction c using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul a k =>
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b => simp only [sm_tmul, AlgebraTensorModule.map_tmul, map_smul, hu]
 
 theorem sm_mem_range (Φ : Submodule Q P) (hΦ : ∀ (k : F), ∀ b ∈ Φ, k • b ∈ Φ) (c : A ⊗[Q] F) {y : V ⊗[Q] P}
@@ -305,17 +305,17 @@ theorem sm_mem_range (Φ : Submodule Q P) (hΦ : ∀ (k : F), ∀ b ∈ Φ, k �
   obtain ⟨y, rfl⟩ := hy
   induction c using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, LinearMap.add_apply]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [map_add (f := _), LinearMap.add_apply]; exact Submodule.add_mem _ hx hy
   | tmul a k =>
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
   | tmul v b => exact ⟨(a • v) ⊗ₜ ⟨k • b.1, hΦ k _ b.2⟩, by simp [sm_tmul]⟩
 
 noncomputable def par (F : Type) [Field F] [Algebra Q F] [Algebra F P] [IsScalarTower Q F P] {ι : Type} [Fintype ι]
     (x : ι → V ⊗[Q] P) : (ι → A ⊗[Q] F) →ₗ[A] V ⊗[Q] P where
   toFun c := ∑ a, sm V P (c a) (x a)
-  map_add' c d := by simp only [Pi.add_apply, map_add, LinearMap.add_apply, Finset.sum_add_distrib]
+  map_add' c d := by simp only [Pi.add_apply, map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib]
   map_smul' a c := by simp only [Pi.smul_apply, sm_smul, Finset.smul_sum, RingHom.id_apply]
 
 variable {A' V' : Type} [CommRing A'] [Algebra Q A'] [AddCommGroup V'] [Module A' V'] [Module Q V']
@@ -325,11 +325,11 @@ theorem rTensor_sm (q : A →ₗ[Q] A') (p : V →ₗ[Q] V') (hp : ∀ a v, p (a
     (y : V ⊗[Q] P) : p.rTensor P (sm V P c y) = sm V' P (q.rTensor F c) (p.rTensor P y) := by
   induction c using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul a k =>
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b => simp only [sm_tmul, LinearMap.rTensor_tmul, hp]
 
 omit [Algebra Q P] in
@@ -338,7 +338,7 @@ theorem rTensor_act [Module Q P] (p : V →ₗ[Q] V') (g : V →ₗ[A] V) (g' : 
     p.rTensor P (AlgebraTensorModule.map g u y) = AlgebraTensorModule.map g' u (p.rTensor P y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b => simp only [AlgebraTensorModule.map_tmul, LinearMap.rTensor_tmul, hp]
 
 theorem rTensor_mem_range (p : V →ₗ[Q] V') (Φ : Submodule Q P) {y : V ⊗[Q] P}
@@ -348,7 +348,7 @@ theorem rTensor_mem_range (p : V →ₗ[Q] V') (Φ : Submodule Q P) {y : V ⊗[Q
   refine ⟨p.rTensor _ y, ?_⟩
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b => simp
 
 end Sm

@@ -208,7 +208,7 @@ theorem revCochain_one_sub (f : (Fin 1 → G) → A) :
   rw [revCochain_one_apply, revD_zero_apply]
   simp only [revHtpyOne, revHtpyTwo, Matrix.cons_val_zero]
   rw [revD_one_apply, revD_one_apply, mul_inv_cancel, one_mul]
-  simp only [map_add, map_sub, map_one, Module.End.one_apply]
+  simp only [map_add (f := _), map_sub, map_one, Module.End.one_apply]
   abel
 
 theorem revCochain_two_sub (x : (Fin 2 → G) → A) (hx : (inhomogeneousCochains.d A 2).hom x = 0) :
@@ -243,7 +243,7 @@ theorem revCochain_two_sub (x : (Fin 2 → G) → A) (hx : (inhomogeneousCochain
       _ = x ![1, a⁻¹] - (x ![1, a⁻¹] - x ![1, a⁻¹] + x ![1, a⁻¹] - x ![1, 1]) := by rw [h]
       _ = _ := by abel
   rw [mul_inv_rev, C1, C2, C3]
-  simp only [map_add, map_sub, map_neg, map_mul, Module.End.mul_apply]
+  simp only [map_add (f := _), map_sub, map_neg, map_mul, Module.End.mul_apply]
   abel
 
 end Homotopy

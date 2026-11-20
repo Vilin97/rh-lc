@@ -80,7 +80,7 @@ theorem latBC_lineLat (K K' : Type) [Field K] [NumberField K] [Field K'] [Number
       { carrier := {w | ∀ (c : 𝓞 K') j, T j (c • w) ∈ L}
         add_mem' := fun {u w} hu hw c j => by
           have : T j (c • (u + w)) = T j (c • u) + T j (c • w) := funext fun i => by
-            simp [T, smul_add, map_add]
+            simp [T, smul_add, map_add (f := _)]
           rw [this]; exact L.add_mem (hu c j) (hw c j)
         zero_mem' := fun c j => by
           have : T j (c • (0 : Fin m → K')) = 0 := funext fun i => by simp [T]

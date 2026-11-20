@@ -48,7 +48,7 @@ theorem fixed_tensor (φ : Rk →ₐ[k] Rk) (hφ : ∀ x, φ x = x → ∃ c : k
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a t => simp
-    | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
   have h1 := fun j => hφ _ (by rw [← key y j, hy])
   choose c hc using h1
   refine ⟨c, (TensorProduct.piScalarRight k Rk Rk (Fin m)).injective (funext fun j => ?_)⟩
@@ -418,7 +418,7 @@ theorem exists_pres [IsDomain O] [IsPrincipalIdealRing O] [NeZero n] (hO : Funct
     by_cases hq : Onto T A q
     · choose j hj using fun x : ↥(DΔ W T) => ((hβ₀ A (τ i) T q hq).2 _).2 ⟨x, rfl⟩
       refine ⟨AddMonoidHom.mk' j fun x y => (hβ₀ A (τ i) T q hq).1.1 ?_, fun _ => hj⟩
-      rw [map_add, hj, hj, hj, AddSubgroup.coe_add, map_add, smul_add]
+      rw [map_add (f := _), hj, hj, hj, AddSubgroup.coe_add, map_add (f := _), smul_add]
     · exact ⟨0, fun h => absurd h hq⟩
   choose j hj using hj
   have hinj : ∀ (T : LocLat G Qp LL O) (A : Ob k G) q, Onto T A q → ∀ i, Function.Injective (β₀ A i) := fun T A q hq i => (hβ₀ A i T q hq).1.1

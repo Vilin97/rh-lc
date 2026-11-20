@@ -54,10 +54,10 @@ theorem hc_prod (a b : ℚ) (s : Finset σ) :
       rw [← map_pow, ← map_ofNat C 2, ← map_mul]; congr 1; ring
     rw [e]
     refine ⟨?_, ?_, ?_⟩
-    · simp only [map_add, homogeneousComponent_C_mul, hc_mul_X_zero, i0]; ring
-    · simp only [map_add, homogeneousComponent_C_mul]
+    · simp only [map_add (f := _), homogeneousComponent_C_mul, hc_mul_X_zero, i0]; ring
+    · simp only [map_add (f := _), homogeneousComponent_C_mul]
       rw [hc_mul_X_succ _ _ 0, hc_mul_X_succ _ _ 0, hc_mul_X_zero, i0, i1]; ring
-    · simp only [map_add, homogeneousComponent_C_mul]
+    · simp only [map_add (f := _), homogeneousComponent_C_mul]
       rw [hc_mul_X_succ _ _ 1, hc_mul_X_succ _ _ 1, hc_mul_X_succ _ _ 0, i0, i1, i2, map_sub]
       linear_combination (-(MvPolynomial.X j * ∑ i ∈ s, MvPolynomial.X i)) * ea
 

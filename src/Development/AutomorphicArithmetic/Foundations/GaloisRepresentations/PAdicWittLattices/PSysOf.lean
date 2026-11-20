@@ -120,7 +120,7 @@ theorem UpperTheory.Gal.G3.pSysOf :
       (hAint _ (inAf_mem D x))
     obtain ⟨w', hw', e'⟩ := hfe n hn hnp y
     have e2 : h₀ (inAf D y) = k • inAf D x - n • h₀ w := by
-      rw [← hh₀A, e, map_add, map_nsmul]; abel
+      rw [← hh₀A, e, map_add (f := _), map_nsmul]; abel
     obtain ⟨z, hz⟩ := LatDiv.eq_nsmul_of_inAf_eq_nsmul p D (f n y - k • x) n hn hnp
       (-(w' + h₀ w)) (neg_mem (add_mem hw' (hh₀int w hw))) (by
         rw [inAf_sub, e', e2, inAf_nsmul, smul_neg, smul_add]; abel)

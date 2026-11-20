@@ -256,7 +256,7 @@ theorem cyc_smooth (hc : CongConj L n) {f : Formalism.AUTREP.GAf L n → ℂ} (h
       add_mem' := by
         rintro a b ⟨N1, hN1, h1⟩ ⟨N2, hN2, h2⟩
         refine ⟨N1 * N2, Nat.mul_pos hN1 hN2, fun κ hκ => ?_⟩
-        rw [map_add, h1 κ (cong_dvd N1 N2 κ hκ),
+        rw [map_add (f := _), h1 κ (cong_dvd N1 N2 κ hκ),
           h2 κ (cong_dvd N2 N1 κ (by rw [mul_comm]; exact hκ))]
       smul_mem' := by
         rintro c a ⟨N1, hN1, h1⟩

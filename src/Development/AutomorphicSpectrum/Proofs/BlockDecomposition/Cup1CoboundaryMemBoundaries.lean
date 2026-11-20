@@ -108,7 +108,7 @@ theorem coboundary_cup1 (n : ℕ) {x : Cn F 1} (hx : dn F 1 x = 0) (z : Cn F n) 
       + pr F (fr (n + 1)) x = 0 := by
     have h0 := congrArg (pr F E) hx
     rw [dn_eq, Fin.sum_univ_three, map_zero] at h0
-    simp only [map_add, map_smul, pr_pr] at h0
+    simp only [map_add (f := _), map_smul, pr_pr] at h0
     have e0 : pr F (E.comp (dl 0)) x = pr F ((dl (0 : Fin (n + 3))).comp (fr n)) x := pr_congr (fun i ↦ by
       fin_cases i <;> rfl) x
     have e1 : pr F (E.comp (dl 1)) x = pr F ((dl (1 : Fin (n + 3))).comp (fr n)) x := pr_congr (fun i ↦ by
@@ -141,7 +141,7 @@ theorem coboundary_cup0 (n : ℕ) (β : Cn F 0) (z : Cn F n) :
     dn F n (cup0 F n β z) = cup1 F n (dn F 0 β) z + cup0 F (n + 1) β (dn F n z) := by
   have e1 : pr F (fr n) (dn F 0 β) = pr F ((dl (0 : Fin (n + 2))).comp (cst 0 0)) β - pr F (cst 0 0) β := by
     rw [dn_eq, Fin.sum_univ_two]
-    simp only [map_add, map_smul, pr_pr, Fin.val_zero, pow_zero, one_smul, Fin.val_one, pow_one, neg_smul, map_neg]
+    simp only [map_add (f := _), map_smul, pr_pr, Fin.val_zero, pow_zero, one_smul, Fin.val_one, pow_one, neg_smul, map_neg]
     rw [sub_eq_add_neg]
     congr 1
     · exact pr_congr (fun i ↦ by fin_order) β
@@ -334,7 +334,7 @@ theorem tmap_tmap {A A' A'' B B' B'' : Type} [CommRing A] [CommRing A'] [CommRin
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mp_push {l : ℕ} (c : Fin (l + 1) ⥤ C) {i j k : Fin (l + 1)} (h₁ : i ≤ j) (h₂ : j ≤ k) :
     (mp F (c.map (homOfLE h₂))).comp (mp F (c.map (homOfLE h₁))) = mp F (c.map (homOfLE (h₁.trans h₂))) :=
@@ -420,7 +420,7 @@ theorem pure_induction {I : Type} [Finite I] (V : I → Type) [∀ i, AddCommGro
   induction t using TensorProduct.induction_on with
   | zero => simpa using h0
   | tmul f m => rw [piLeft_pure]; exact hp f m
-  | add x y hx hy => rw [map_add]; exact ha _ _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact ha _ _ hx hy
 
 def Con {p : ℕ} [Finite (Fin (p + 1) ⥤ C)] (Ξ : Cn F p →ₗ[R] R) (q : ℕ) : Bi F p q →ₗ[R] Cn F q :=
   LinearMap.pi fun b ↦ con (fun a : Fin (p + 1) ⥤ C ↦ F.obj (a.obj (Fin.last p))) (F.obj (b.obj (Fin.last q))) Ξ ∘ₗ

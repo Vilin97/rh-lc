@@ -30,14 +30,14 @@ theorem fockTraceCharacterRelations_le_comap_secondAction (x t : ℚ) (Y : Mat R
   have hc : fockAct2 P Q R S Y (fockAct1 P Q R S X f) = fockAct1 P Q R S X (fockAct2 P Q R S Y f) :=
     (LinearMap.congr_fun ((GlobalTheory.FockAlg.fock_lie_and_commute P Q R S).2.2.2 X Y) f).symm
   refine Submodule.subset_span ⟨X, act2 P Q R S t Y f, ?_⟩
-  simp only [fockSecondActionTraceShift_apply, map_sub, map_add, map_smul, hc]
+  simp only [fockSecondActionTraceShift_apply, map_sub, map_add (f := _), map_smul, hc]
 
 theorem isLieAct_fockSecondActionTraceShift (t : ℚ) : IsLieAct (act2 P Q R S t) := by
   intro X Y
   refine LinearMap.ext fun f => ?_
   have h := LinearMap.congr_fun ((GlobalTheory.FockAlg.fock_lie_and_commute P Q R S).2.2.1 X Y) f
   simp only [LinearMap.sub_apply, Module.End.mul_apply] at h
-  simp only [LinearMap.sub_apply, Module.End.mul_apply, fockSecondActionTraceShift_apply, map_add, map_smul, h, Matrix.trace_sub,
+  simp only [LinearMap.sub_apply, Module.End.mul_apply, fockSecondActionTraceShift_apply, map_add (f := _), map_smul, h, Matrix.trace_sub,
     Matrix.trace_mul_comm X Y, sub_self, mul_zero, zero_smul, add_zero]
   module
 

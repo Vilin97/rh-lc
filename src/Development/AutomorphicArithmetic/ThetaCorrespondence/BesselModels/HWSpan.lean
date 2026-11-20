@@ -562,7 +562,7 @@ theorem mem_of_skew {k : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W]
     rw [smul_smul, show -Complex.I / 2 * Complex.I = 1 / 2 by
       rw [div_mul_eq_mul_div, neg_mul, Complex.I_mul_I, neg_neg]]
     module
-  rw [e, map_add, map_smul, map_smul]
+  rw [e, map_add (f := _), map_smul, map_smul]
   exact S.add_mem (S.smul_mem _ h1) (S.smul_mem _ h2)
 
 def actL {k : ℕ} {W : Type} [AddCommGroup W] [Module ℂ W] (E : Fin k → Fin k → Module.End ℂ W) (v : W) :

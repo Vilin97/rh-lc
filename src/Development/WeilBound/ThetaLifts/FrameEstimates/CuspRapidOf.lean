@@ -184,7 +184,7 @@ theorem idempotent_smul_eq_zero_of_map (x : AE F E) (h : Algebra.TensorProduct.m
       (Algebra.TensorProduct.map (sndA F) (AlgHom.id F E) x) := fun x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
     | tmul a y =>
       rw [TensorProduct.smul_tmul', Algebra.TensorProduct.map_tmul, LinearMap.rTensor_tmul]
       exact congrArg (· ⊗ₜ[F] y) (Prod.ext (zero_mul _) (one_mul _))

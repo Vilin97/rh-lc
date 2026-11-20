@@ -86,7 +86,7 @@ theorem prod_update_mul {M τ : Type} [CommMonoid M] {k : ℕ} (φ : τ → M) (
     rw [Multiset.map_map]
     rfl
   have := congrArg (fun s => (s.map φ).prod) (wordSet_update_add f l a)
-  simpa [Multiset.map_add, Multiset.prod_add, key] using this
+  simpa [Multiset.map_add (f := _), Multiset.prod_add, key] using this
 
 section Root
 

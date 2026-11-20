@@ -39,7 +39,7 @@ theorem exists_isPlaceOver_le : ∀ (l : ℕ) [Fact l.Prime] (lam : algebraicClo
   let P : Ideal (𝓞 k) :=
     { carrier := {a | ‖f a‖ < 1}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at *
         exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
       zero_mem' := by simp
       smul_mem' := fun c a ha => by
@@ -251,7 +251,7 @@ theorem exists_curve : ∀ (l : ℕ) [Fact l.Prime] (lam : algebraicClosure ℚ 
       ring
     refine descend l lam j V (by simp [V]) ?_ (by simp [V]) hn.1 (by simp [V]) ?_ (by rw [eΔ, ec, hα'])
     · change ‖lam (-(1 + α))‖ ≤ 1
-      rw [map_neg, norm_neg, map_add, map_one]
+      rw [map_neg, norm_neg, map_add (f := _), map_one]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (by simp) hn.1)
     · rw [eΔ]; simpa only [map_mul, map_pow, map_sub, map_one, map_ofNat] using hn.2
   · have hd : ((X * (X ^ 3 - C 24)) ^ 3 - C j * (X ^ 3 - C 27) : (algebraicClosure ℚ ℂ)[X]).degree = 12 := by

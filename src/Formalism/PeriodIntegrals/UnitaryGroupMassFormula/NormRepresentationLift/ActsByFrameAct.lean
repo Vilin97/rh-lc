@@ -30,7 +30,7 @@ theorem tvMap_isom (e v : S.V) (l : E) (hee : S.hT e e = 0) (hev : S.hT e v = 0)
   have hxe : S.hT x e = star (S.hT e x) := herm_eq e x
   have hxv : S.hT x v = star (S.hT v x) := herm_eq v x
   rw [tvMap_apply, tvMap_apply]
-  simp only [map_add, map_sub, map_smul, map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply,
+  simp only [map_add (f := _), map_sub, map_smul, map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply,
     LinearMap.smul_apply, hee, hev, hve, hxe, hxv, smul_eq_mul, starRingEnd_apply, star_mul',
     mul_zero, zero_mul, add_zero, sub_zero, zero_add]
   linear_combination (star (S.hT e x) * S.hT e y) * hl

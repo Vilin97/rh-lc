@@ -103,7 +103,7 @@ noncomputable def coconeLeftHtpyμ {r s n : ℕ} (h : r + s = n) :
       rw [smul_add]))
     (fun p z z' => Prod.ext (map_add _ _ _) (by
       change μL.shiftLeft r s n h p.2 ((ρ.f s).hom (z + z')) + η h p.1 (z + z') = _
-      rw [map_add, map_add, map_add]
+      rw [map_add (f := _), map_add (f := _), map_add (f := _)]
       change _ = (μL.shiftLeft r s n h p.2 ((ρ.f s).hom z) + η h p.1 z) +
         (μL.shiftLeft r s n h p.2 ((ρ.f s).hom z') + η h p.1 z')
       abel))
@@ -142,7 +142,7 @@ noncomputable def coconeLeftHtpy
         (-1 : k) ^ r • (μL.shiftLeft r (s + 1) (n + 1) (by omega) y
           ((ρ.f (s + 1)).hom ((N.d s (s + 1)).hom z)) + η (by omega) x ((N.d s (s + 1)).hom z))
     have key := eq_sub_of_add_eq' (hη h x z)
-    rw [← hom_apply_hom_apply_eq_of_comp_eq (ρ.comm s (s + 1)) z, map_add, key,
+    rw [← hom_apply_hom_apply_eq_of_comp_eq (ρ.comm s (s + 1)) z, map_add (f := _), key,
       shiftLeft_leibniz, LinearMap.map_add₂, shiftLeft_succ, smul_add]
     abel
 

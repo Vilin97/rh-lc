@@ -367,7 +367,7 @@ theorem lam {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] (z : Fin (2 *
     hE, hE2, smul_smul, ← add_smul]
   congr 1
   rw [Complex.star_def]
-  simp only [map_add, map_mul, map_neg, Complex.conj_I]
+  simp only [map_add (f := _), map_mul, map_neg, Complex.conj_I]
   ring
 
 end Formalism.FourierDecayAlt.Q.QRR

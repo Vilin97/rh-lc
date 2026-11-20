@@ -79,7 +79,7 @@ theorem telescope (g : GQ l) (U : ℤ_[l]) (s : ℕ) (B H : ℕ → P.R.BdR)
     obtain ⟨z, hz⟩ := ih
     obtain ⟨w, hw⟩ := h R
     refine ⟨z + (l : ℤ_[l]) ^ (s * R) * w, ?_⟩
-    rw [Finset.sum_range_succ, map_add, map_mul, map_pow, map_natCast]
+    rw [Finset.sum_range_succ, map_add (f := _), map_mul, map_pow, map_natCast]
     rw [PadicInt.coe_add, PadicInt.coe_mul, PadicInt.coe_pow, PadicInt.coe_natCast,
       map_add, map_mul, map_pow, map_natCast, mul_add s R 1, pow_add, mul_one]
     linear_combination hz + (l : P.R.BdR) ^ (s * R) * hw
@@ -137,7 +137,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P),
         ring)
       refine ⟨z, ?_⟩
       rw [step_dR AI T hu hz]
-      simp only [map_add, map_sub, map_mul, map_pow, map_natCast, io_zl AI T]
+      simp only [map_add (f := _), map_sub, map_mul, map_pow, map_natCast, io_zl AI T]
       linear_combination (io AI (η k) * u ^ k) * hu + qB P (z : ℚ_[l]) * h1 (k + 1)
     refine limit AI T hM g U b _ _ (fun R => (l : P.R.BdR) ^ (s * R) * (io AI (η R) * u ^ R)) hb
       (fun n => ?_) (fun R => ?_)

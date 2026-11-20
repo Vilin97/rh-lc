@@ -78,7 +78,7 @@ theorem locInj_of_finiteType : ∀ (N M : CommRingCat.{0} ⥤ AbCx) (ε : N ⟶ 
       rfl
     have hdie : F0.map (ιD.app j) x0 = 0 := by
       apply (hι A).1
-      rw [hιnat, hx0, ← nat_apply, hwc, map_add, hy, comm_apply,
+      rw [hιnat, hx0, ← nat_apply, hwc, map_add (f := _), hy, comm_apply,
         eq_zero_of_isZero (hMneg _ (by norm_num) _) ((ε.app A).f (0 - 1) y'), map_zero, add_zero]
       exact (map_zero _).symm
     obtain ⟨-, hF0inj⟩ := (GlobalTheory.T.preservesFilteredColimits_addCommGrp_iff_elements CommRingCat.{0} F0).1 hF0 J D (Cocone.mk A ιD) hcol

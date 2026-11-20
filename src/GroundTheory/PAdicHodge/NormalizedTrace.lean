@@ -50,7 +50,7 @@ theorem normTraceF_add (y z : Ω) : normTraceF F (y + z) = normTraceF F y + norm
   have h1 := e ⟨y, hy⟩
   have h2 := e ⟨z, hz⟩
   have h3 := e (⟨y, hy⟩ + ⟨z, hz⟩)
-  rw [LinearMap.map_add, add_div, ← h1, ← h2] at h3
+  rw [LinearMap.map_add (f := _), add_div, ← h1, ← h2] at h3
   exact h3
 
 theorem normTraceF_smul (a : F) (y : Ω) : normTraceF F (a • y) = a * normTraceF F y := by

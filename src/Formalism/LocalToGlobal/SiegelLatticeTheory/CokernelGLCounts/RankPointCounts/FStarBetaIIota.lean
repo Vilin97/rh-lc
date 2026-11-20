@@ -111,8 +111,8 @@ theorem fwd_typed (p : PlF D) (g : Loc.SplitG (Zd.M p).L) (hsp : (Zd.M p).split 
     (hβΛ _ (add_mem hx'Λ (xi_mem hξ'))) hp₂ hq₂ hG2 hA2 hB2
   have hβξ : β ξ' ∈ NgX Λ₂ (gS D) (lf D F0) (liftF F'₂) :=
     Submodule.mem_sup_right (Submodule.mem_inf.2 ⟨hβΛ _ (xi_mem hξ'), hβX _ hξ'X⟩)
-  have e : l₂ - β x' = (l₂ - β (x' + ξ')) + β ξ' := by rw [map_add]; abel
-  rw [e, map_add]
+  have e : l₂ - β x' = (l₂ - β (x' + ξ')) + β ξ' := by rw [map_add (f := _)]; abel
+  rw [e, map_add (f := _)]
   exact add_mem hfin (Submodule.subset_span ⟨_, hβξ, rfl⟩)
 
 set_option maxHeartbeats 1000000 in

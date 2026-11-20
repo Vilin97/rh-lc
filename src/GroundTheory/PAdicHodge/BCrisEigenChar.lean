@@ -104,7 +104,7 @@ theorem mem_inertia_of_degree {L : IntermediateField ℚ_[p] (PadicAlgCl p)} [Fi
   | mem x hx => exact hroot x hx
   | algebraMap q =>
     exact σ.commutes (algebraMap ℚ_[p] L q)
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | inv x _ hx => rw [map_inv₀, hx]
   | mul x y _ _ hx hy => rw [map_mul, hx, hy]
 

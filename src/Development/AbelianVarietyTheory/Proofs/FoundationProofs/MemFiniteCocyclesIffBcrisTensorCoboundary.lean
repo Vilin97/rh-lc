@@ -112,7 +112,7 @@ theorem tensCoord_map {C D : Type} [AddCommGroup C] [Module Qp C] [AddCommGroup 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp [h]
-  | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
 
 end Tensor
 
@@ -331,7 +331,7 @@ theorem mem_continuous_cocycles_iff_coords (hE : ∀ g x i, E (ρ' g x) i = ρ g
   constructor
   · rintro ⟨hcont, hcoc⟩ i
     refine ⟨(continuous_apply i).comp (hc.comp hcont), fun g h => ?_⟩
-    rw [hcoc, map_add, Pi.add_apply, hE]
+    rw [hcoc, map_add (f := _), Pi.add_apply, hE]
   · intro H
     refine ⟨?_, fun g h => ?_⟩
     · have hcont : Continuous fun g => E.symm (fun i => E (c g) i) :=
@@ -339,7 +339,7 @@ theorem mem_continuous_cocycles_iff_coords (hE : ∀ g x i, E (ρ' g x) i = ρ g
       simpa using hcont
     · apply E.injective
       funext i
-      rw [map_add, Pi.add_apply, (H i).2 g h, hE]
+      rw [map_add (f := _), Pi.add_apply, (H i).2 g h, hE]
 
 theorem mem_finiteCocycles_iff_bcrisTensor_coboundary (hE : ∀ g x i, E (ρ' g x) i = ρ g (E x i)) (hc : Continuous E)
     (hs : Continuous E.symm) (c : G → V') :
@@ -441,7 +441,7 @@ theorem mem_ImF_iff (hE₁ : ∀ g x i, E₁ (ρ₁' g x) i = ρ₁ g (E₁ x i)
     refine Submodule.mem_sup.2 ⟨F.post (funCoord O G E₁ x i),
       Submodule.mem_map_of_mem ((mem_Z1fT_iff PD hE₁ hc₁ hs₁ hL₁ x).1 hx i),
       funCoord O G E₂ z i, (mem_B1T_iff hE₂ hL₂ z).1 hz i, ?_⟩
-    rw [map_add, Pi.add_apply, post_coord]
+    rw [map_add (f := _), Pi.add_apply, post_coord]
   · intro H
     choose y hy z hz hyz using fun i => Submodule.mem_sup.1 (H i)
     choose x hx hxy using fun i => Submodule.mem_map.1 (hy i)
@@ -450,7 +450,7 @@ theorem mem_ImF_iff (hE₁ : ∀ g x i, E₁ (ρ₁' g x) i = ρ₁ g (E₁ x i)
       (funCoord O G E₂).symm z, (mem_B1T_iff hE₂ hL₂ _).2 (by simpa using hz), ?_⟩
     apply (funCoord O G E₂).injective
     funext i
-    rw [map_add, Pi.add_apply, post_coord, LinearEquiv.apply_symm_apply,
+    rw [map_add (f := _), Pi.add_apply, post_coord, LinearEquiv.apply_symm_apply,
       LinearEquiv.apply_symm_apply, hxy i, hyz i]
 
 omit [TopologicalSpace G] [Fintype ι] [DecidableEq ι] [ContinuousAdd V₁] [ContinuousConstSMul LL V₁]

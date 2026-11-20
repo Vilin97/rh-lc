@@ -85,7 +85,7 @@ theorem GlobalTheory.BSP.exists_delta_completion : ∀ (l : ℕ) [Fact l.Prime] 
         obtain ⟨a, ha⟩ := hc.surj x (n + 1)
         obtain ⟨b, hb⟩ := hc.surj y (n + 1)
         have hab : x + y - i (a + b) ∈ (J ^ (n + 1)).map i := by
-          rw [map_add]; convert add_mem ha hb using 1; ring
+          rw [map_add (f := _)]; convert add_mem ha hb using 1; ring
         show W2.map _ (⟨x + y, d (x + y)⟩ : W2 l Q) = W2.map _ ((⟨x, d x⟩ : W2 l Q) + ⟨y, d y⟩)
         rw [ap _ n _ hab, map_add (W2.map (Ideal.Quotient.mk _)), ap x n a ha, ap y n b hb, map_add (deltaSectionToWittLengthTwo D),
           map_add]

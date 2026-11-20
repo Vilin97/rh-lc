@@ -60,7 +60,7 @@ theorem mulVec_eq_of_basis {G : Grid p CF} {W : G.Weil} {n : ℕ} (a : SlopeTest
     have := vK_smul a.ch t 0 (eV0 p t 0) i
     rw [zero_smul, map_zero, zero_mul] at this
     rw [Matrix.mulVec_zero, map_zero, this]; simp
-  | add x y hx hy => rw [Matrix.mulVec_add, Pi.add_apply, map_add, map_add, hx, hy]; exact (vK_add a.ch t (hS i) _ _).symm
+  | add x y hx hy => rw [Matrix.mulVec_add, Pi.add_apply, map_add (f := _), map_add (f := _), hx, hy]; exact (vK_add a.ch t (hS i) _ _).symm
   | single k c =>
     have e : (Pi.single k c : _ → D.what₂.LL) = c • Pi.single k 1 := by ext j; by_cases hj : j = k <;> simp [hj]
     rw [e, map_smul, Matrix.mulVec_smul, Pi.smul_apply, smul_eq_mul, map_mul]

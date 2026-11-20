@@ -614,7 +614,7 @@ theorem ringHom_ext {C : Type*} [Semiring C] {f g : StarTensor F E A →+* C}
     (hA : ∀ a, f (algebraMap A _ a) = g (algebraMap A _ a)) : f = g :=
   RingHom.ext fun x => x.induction_on (by simp)
     (fun e a => by rw [tmul_eq_mul, map_mul, map_mul, hE, hA])
-    (fun x y hx hy => by rw [map_add, map_add, hx, hy])
+    (fun x y hx hy => by rw [map_add (f := _), map_add (f := _), hx, hy])
 
 instance isPushout : Algebra.IsPushout F E A (StarTensor F E A) :=
   TensorProduct.isPushout (R := F) (S := E) (T := A)
@@ -678,7 +678,7 @@ noncomputable def map (f : A →ₐ[F] B) : StarTensor F E A →ₐ[E] StarTenso
 theorem map_comp (g : B →ₐ[F] C) (f : A →ₐ[F] B) :
     map E (g.comp f) = (map E g).comp (map E f) :=
   AlgHom.ext fun x => x.induction_on (by simp) (fun _ _ => rfl)
-    (fun x y hx hy => by rw [map_add, map_add, hx, hy])
+    (fun x y hx hy => by rw [map_add (f := _), map_add (f := _), hx, hy])
 
 noncomputable def lift {D : Type*} [CommRing D] (f : E →+* D) (g : A →+* D)
     (hfg : ∀ c : F, f (algebraMap F E c) = g (algebraMap F A c)) : StarTensor F E A →+* D :=
@@ -721,7 +721,7 @@ noncomputable def conjHom : StarTensor F E A →ₐ[F] StarTensor F E A :=
 noncomputable instance : StarRing (StarTensor F E A) where
   star := conjHom F E A
   star_involutive x := x.induction_on (by simp) (by simp)
-    (fun x y hx hy => by rw [map_add, map_add, hx, hy])
+    (fun x y hx hy => by rw [map_add (f := _), map_add (f := _), hx, hy])
   star_mul x y := by rw [map_mul, mul_comm]
   star_add x y := map_add _ x y
 

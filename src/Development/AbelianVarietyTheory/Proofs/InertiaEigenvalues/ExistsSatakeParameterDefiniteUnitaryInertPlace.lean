@@ -153,7 +153,7 @@ def typeU (π : Submodule ℂ (UA E n → ℂ)) (w : HeightOneSpectrum (𝓞 E))
   carrier := {ψ | (∀ k ∈ L, cLoc w (k : UA E n) = 1 → RU E n k ψ.1 = ψ.1) ∧
     ∀ g, (fun y : infU E n => ψ.1 (g * (y : UA E n))) ∈ C}
   add_mem' := fun {a b} hx hy => ⟨fun k h1 h2 => by
-    rw [Submodule.coe_add, map_add, hx.1 k h1 h2, hy.1 k h1 h2], fun g => add_mem (hx.2 g) (hy.2 g)⟩
+    rw [Submodule.coe_add, map_add (f := _), hx.1 k h1 h2, hy.1 k h1 h2], fun g => add_mem (hx.2 g) (hy.2 g)⟩
   zero_mem' := ⟨fun _ _ _ => map_zero _, fun _ => zero_mem _⟩
   smul_mem' := fun c a hx => ⟨fun k h1 h2 => by
     rw [Submodule.coe_smul, map_smul, hx.1 k h1 h2], fun g => Submodule.smul_mem _ c (hx.2 g)⟩

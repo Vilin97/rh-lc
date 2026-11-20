@@ -64,7 +64,7 @@ def infiniteTranslateSubgroup {m n : ℕ} (Λ : AddSubgroup (Mx D m n)) : AddSub
     have h2 := (mapFin_zero_iff _).1 hb i j
     have : (a + b - (u + u')) i j = (a - u) i j + (b - u') i j := by
       simp only [Matrix.sub_apply, Matrix.add_apply]; abel
-    rw [this, map_add, h1, h2, add_zero]
+    rw [this, map_add (f := _), h1, h2, add_zero]
   zero_mem' := ⟨0, Λ.zero_mem, by simp⟩
   neg_mem' := by
     rintro a ⟨u, hu, ha⟩

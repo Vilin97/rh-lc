@@ -93,7 +93,7 @@ theorem intSer_of_funEq (f h A B : K⟦X⟧) (N : ℕ) (hf : constantCoeff f = 1
     rw [hQ] at this
     linear_combination (-B) * this
   have key := congrArg (coeff n) e
-  rw [hL, hR, map_add, map_add, hX, hX] at key
+  rw [hL, hR, map_add (f := _), map_add (f := _), hX, hX] at key
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [map_mul, map_pow, map_sum, hA0, hB0, hf, hP0, hsQ, hQ0, h'0, one_pow, mul_one,
     Finset.sum_const, Finset.card_range, nsmul_eq_mul] at key

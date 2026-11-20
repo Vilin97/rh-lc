@@ -25,7 +25,7 @@ theorem b_tr_sig (hcm : IsCMExt F E σ) (w : Fv F v ⊗[F] E) :
 def hm {a : ℕ} (hinv : ∀ y, σ (σ y) = y) (i j : Fin a) (c : Fv F v ⊗[F] E) : HermR (Fv F v) σ a :=
   ⟨Matrix.single i j c + Matrix.single j i (sigR (Fv F v) σ c), fun p q => by
     simp only [Matrix.add_apply, Matrix.single_apply]
-    rw [map_add, apply_ite (sigR (Fv F v) σ), apply_ite (sigR (Fv F v) σ), map_zero, sigR_sigR v σ hinv, add_comm]
+    rw [map_add (f := _), apply_ite (sigR (Fv F v) σ), apply_ite (sigR (Fv F v) σ), map_zero, sigR_sigR v σ hinv, add_comm]
     congr 1 <;> exact if_congr and_comm rfl rfl⟩
 
 theorem coe_hm {a : ℕ} (hinv : ∀ y, σ (σ y) = y) (i j : Fin a) (c : Fv F v ⊗[F] E) :

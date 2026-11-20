@@ -81,7 +81,7 @@ theorem eventually_schr_pureA {κ : Type} [Fintype κ] {ψ : AddChar (AF F) ℂ}
         α * α * GlobalTheory.HeisSchA.p2 (⅟(2 : AF F) * (w.1 ⬝ᵥ w.2))) := by
     refine Prod.ext (zero_mul _) ?_
     change GlobalTheory.HeisSchA.p2 (_ * _) = _ + _
-    rw [map_mul, map_add, map_mul, RingHom.map_dotProduct]
+    rw [map_mul, map_add (f := _), map_mul, RingHom.map_dotProduct]
     change α * (_ + α * _) = _
     rw [mul_add, mul_assoc]
     rfl

@@ -50,7 +50,7 @@ theorem mem_intAE_iff_swap (z : Af D.host.F ⊗[D.host.F] D.host.E) :
       exact mul_mem (Subring.subset_closure (Or.inl ⟨⟨_, x, rfl⟩, rfl⟩))
         (Subring.subset_closure (Or.inr ⟨⟨a, fun v => ha v⟩, rfl⟩))
     | zero => rw [RingHom.map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (f := _)]; exact add_mem hy hz
     | neg y _ hy => rw [RingHom.map_neg]; exact neg_mem hy
   · intro hz
     let c := (Algebra.TensorProduct.comm D.host.F D.host.E (Af D.host.F)).toRingEquiv.toRingHom
@@ -64,7 +64,7 @@ theorem mem_intAE_iff_swap (z : Af D.host.F ⊗[D.host.F] D.host.E) :
       induction w using TensorProduct.induction_on with
       | zero => rw [RingHom.map_zero, RingHom.map_zero]
       | tmul a b => rfl
-      | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, ha, hb]
+      | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
     have h : c (Lev.swapAE D z) ∈ intSub D := key hz
     rw [e] at h
     exact h

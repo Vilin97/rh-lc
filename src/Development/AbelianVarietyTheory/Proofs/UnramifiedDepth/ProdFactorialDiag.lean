@@ -52,7 +52,7 @@ theorem Low.mul {α β : σ →₀ ℕ} {g h : MvPowerSeries σ C} (hg : Low α 
       rw [Finset.HasAntidiagonal.mem_antidiagonal] at hq
       apply hg.term hh
       · have h := congrArg Finsupp.degree hq
-        rw [map_add, map_add] at h
+        rw [map_add (f := _), map_add (f := _)] at h
         omega
       · exact hne
     · intro h
@@ -64,7 +64,7 @@ theorem Low.mul {α β : σ →₀ ℕ} {g h : MvPowerSeries σ C} (hg : Low α 
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hq
     apply hg.term hh
     · have h := congrArg Finsupp.degree hq
-      rw [map_add] at h hm
+      rw [map_add (f := _)] at h hm
       omega
     · intro h
       apply hne
@@ -128,7 +128,7 @@ theorem coeff_kill (p : σ → Prop) [DecidablePred p] (m : σ →₀ ℕ) (hm :
       rw [hz, mul_zero, MvPolynomial.coeff_zero, MvPolynomial.coeff_monomial, if_neg]
       rintro rfl
       exact hpx (hm x hx)
-  · rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hP, hQ]
+  · rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hP, hQ]
 
 def Lead (p : σ → Prop) [DecidablePred p] (α : σ →₀ ℕ) (P : MvPolynomial σ C) : Prop :=
   kill p P = MvPolynomial.monomial α 1 ∧ P.IsHomogeneous α.degree ∧ ∀ x ∈ α.support, p x
@@ -146,7 +146,7 @@ theorem Lead.mul {α β : σ →₀ ℕ} {P Q : MvPolynomial σ C} (hP : Lead p 
   obtain ⟨hkQ, hhQ, hsQ⟩ := hQ
   refine ⟨?_, ?_, ?_⟩
   · rw [map_mul, hkP, hkQ, MvPolynomial.monomial_mul, mul_one]
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact hhP.mul hhQ
   · intro x hx
     rcases Finset.mem_union.1 (Finsupp.support_add hx) with h | h

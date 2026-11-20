@@ -57,7 +57,7 @@ private theorem map_eDir (L : Lie K n →L[ℝ] ℂ) (τ : K →+* ℂ) (a b : F
     change (Matrix.single a b (atEmb τ z) : Matrix (Fin n) (Fin n) (Cinf K)) =
       z.re • Matrix.single a b (atEmb τ 1) + z.im • Matrix.single a b (atEmb τ Complex.I)
     rw [atEmb_eq τ z, Matrix.single_add, ← Matrix.smul_single, ← Matrix.smul_single]
-  rw [h, map_add, map_smul, map_smul, Complex.real_smul, Complex.real_smul]
+  rw [h, map_add (f := _), map_smul, map_smul, Complex.real_smul, Complex.real_smul]
 
 private theorem pd_eq (τ : K →+* ℂ) (i j : Fin n) (F : Lie K n → ℂ) (x : Lie K n) :
     pd τ i j F x = (1 / 2 : ℂ) * (fderiv ℝ F x (eDir τ i j 1) - Complex.I * fderiv ℝ F x (eDir τ i j Complex.I)) := rfl

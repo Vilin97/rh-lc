@@ -68,7 +68,7 @@ theorem _root_.GlobalTheory.colon_one_span_image_eq_map {E K : Type} [Field E] [
         ring
       · rintro x y ⟨t, ht, hte⟩ ⟨t', ht', hte'⟩
         refine ⟨t + t', add_mem ht ht', ?_⟩
-        rw [map_add, mul_add, ← hte, ← hte']
+        rw [map_add (f := _), mul_add, ← hte, ← hte']
         rfl
     obtain ⟨t, ht, hte⟩ := hP 1 key
     rw [map_one, mul_one] at hte

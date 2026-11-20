@@ -77,7 +77,7 @@ def toCLin {m n : ℕ} (L : (D.what₂.Tau → Fin m → Fin n → ℂ) →L[ℝ
           simp only [Pi.smul_apply, Pi.add_apply, smul_eq_mul, Complex.real_smul]
           conv_lhs => rw [← Complex.re_add_im c]
           ring
-        rw [e, L.map_add, L.map_smul, L.map_smul, hL, RingHom.id_apply, Complex.real_smul, Complex.real_smul]
+        rw [e, L.map_add (f := _), L.map_smul, L.map_smul, hL, RingHom.id_apply, Complex.real_smul, Complex.real_smul]
         conv_rhs => rw [← Complex.re_add_im c]
         ring }
   ⟨l, LinearMap.continuous_of_finiteDimensional l⟩

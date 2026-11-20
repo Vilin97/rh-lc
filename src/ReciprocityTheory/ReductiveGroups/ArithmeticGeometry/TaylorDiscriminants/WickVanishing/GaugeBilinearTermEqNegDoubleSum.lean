@@ -204,7 +204,7 @@ private theorem coeff_mul_eq_zero_of_order_two_of_degree_le_two {n : ℕ} (f g :
   apply Finset.sum_eq_zero
   intro p hp
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-  have hdeg : p.1.degree + p.2.degree = m.degree := by rw [← hp, map_add]
+  have hdeg : p.1.degree + p.2.degree = m.degree := by rw [← hp, map_add (f := _)]
   by_cases h1 : p.1.degree < 2
   · rw [hf _ h1, zero_mul]
   · rw [hg _ (by omega), mul_zero]
@@ -217,7 +217,7 @@ private theorem coeff_mul_eq_zero_of_left_vanishes_degree_le_two {n : ℕ} (F g 
   apply Finset.sum_eq_zero
   intro p hp
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-  have hdeg : p.1.degree + p.2.degree = m.degree := by rw [← hp, map_add]
+  have hdeg : p.1.degree + p.2.degree = m.degree := by rw [← hp, map_add (f := _)]
   rw [hF _ (by omega), zero_mul]
 
 theorem coeff_expS_two {n : ℕ} (f : PS k n d) (hf : ∀ m : Fin n × Fin d →₀ ℕ, m.degree < 2 → coeff m f = 0)

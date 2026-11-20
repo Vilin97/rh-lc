@@ -102,7 +102,7 @@ theorem weyl_homogeneous_component_mem (hn : n ≤ r) (ν : Fin n → ℕ) (hν 
     rw [map_zero]
     exact Submodule.zero_mem _
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   | smul c x _ hx =>
     rw [map_smul]
@@ -216,9 +216,9 @@ theorem weyl_lattice_internal_sum (hν : Antitone ν) :
           rw [weightedHomogeneousComponent_of_mem hy', if_neg]
           intro h; exact hj (Subtype.ext h.symm)
         | zero => simp
-        | add y z _ _ hy hz => rw [Submodule.coe_add, map_add, hy, hz, add_zero]
+        | add y z _ _ hy hz => rw [Submodule.coe_add, map_add (f := _), hy, hz, add_zero]
       | zero => simp
-      | add y z _ _ hy hz => rw [Submodule.coe_add, map_add, hy, hz, add_zero]
+      | add y z _ _ hy hz => rw [Submodule.coe_add, map_add (f := _), hy, hz, add_zero]
     have h1 := key x hx'
     have hx2 : (x : MvPolynomial (Fin r × Fin n) ℤ) ∈
         weightedHomogeneousSubmodule ℤ (Formalism.GradedWeylDivisibility.rowW r n) (i : Fin r → ℕ) := hx
@@ -321,7 +321,7 @@ theorem row_weight_rename_perm (σ : Equiv.Perm (Fin r)) (d : Fin r × Fin n →
   · funext a
     simp
   · intro f g hf hg
-    rw [Finsupp.mapDomain_add, map_add, map_add, hf, hg]
+    rw [Finsupp.mapDomain_add, map_add (f := _), map_add (f := _), hf, hg]
     rfl
   · intro v k
     funext a

@@ -25,7 +25,7 @@ theorem sdE_eq (ι : Type) [Fintype ι] :
 
 theorem chi_add_left (ι : Type) [Fintype ι] (x t y : ι → Fv F v ⊗[F] E) :
     chi (E := E) v ψ ι (t + x) y = chi (E := E) v ψ ι t y * chi (E := E) v ψ ι x y := by
-  simp only [chi, Pi.add_apply, add_mul, map_add, Finset.sum_add_distrib, psiV_add']
+  simp only [chi, Pi.add_apply, add_mul, map_add (f := _), Finset.sum_add_distrib, psiV_add']
 
 theorem chi_symm (ι : Type) [Fintype ι] (x y : ι → Fv F v ⊗[F] E) :
     chi (E := E) v ψ ι x y = chi (E := E) v ψ ι y x := by

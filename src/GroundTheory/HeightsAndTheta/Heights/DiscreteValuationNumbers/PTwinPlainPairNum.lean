@@ -49,7 +49,7 @@ omit [DecidableEq K] in
 theorem classList_add_perm {σ : Type*} (cls : σ → K → ℤ) (μ ν : σ →₀ ℕ) :
     (classList cls (μ + ν)).Perm (classList cls μ ++ classList cls ν) := by
   rw [← Multiset.coe_eq_coe, ← Multiset.coe_add]
-  simp only [classList, Multiset.coe_toList, map_add, Multiset.map_add]
+  simp only [classList, Multiset.coe_toList, map_add (f := _), Multiset.map_add (f := _)]
 
 omit [DecidableEq K] in
 

@@ -36,7 +36,7 @@ theorem exists_half {E : Type} [Field E] [NumberField E] {x : E} {n m : ℕ} (hm
     rw [map_pow, map_neg, map_natCast, hy]
     exact hs
   · apply IsFractionRing.injective (𝓞 E) E
-    rw [map_mul, map_add, map_one, map_ofNat, hy, hw0]
+    rw [map_mul, map_add (f := _), map_one, map_ofNat, hy, hw0]
     field_simp
 
 theorem exists_field : ∃ (E : Type) (_ : Field E) (_ : NumberField E) (_ : IsCMField E),

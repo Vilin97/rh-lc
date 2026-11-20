@@ -50,7 +50,7 @@ private theorem partialFun_map_add (i : ι) :
   show (basisKaehler k ι S).repr (KaehlerDifferential.D k S (x + y)) i
       = (basisKaehler k ι S).repr (KaehlerDifferential.D k S x) i
         + (basisKaehler k ι S).repr (KaehlerDifferential.D k S y) i
-  rw [map_add, map_add, Finsupp.add_apply]
+  rw [map_add (f := _), map_add (f := _), Finsupp.add_apply]
 
 private theorem partialFun_map_smul (i : ι) :
     ∀ (c : k) (x : S),
@@ -79,7 +79,7 @@ private theorem partialLinear_leibniz (i : ι) :
   have h2 : (basisKaehler k ι S).repr (KaehlerDifferential.D k S (a * b)) i
       = a * (basisKaehler k ι S).repr (KaehlerDifferential.D k S b) i
         + b * (basisKaehler k ι S).repr (KaehlerDifferential.D k S a) i := by
-    rw [h, map_add, Finsupp.add_apply, LinearEquiv.map_smul, LinearEquiv.map_smul,
+    rw [h, map_add (f := _), Finsupp.add_apply, LinearEquiv.map_smul, LinearEquiv.map_smul,
       Finsupp.smul_apply, Finsupp.smul_apply, smul_eq_mul, smul_eq_mul]
   exact h2
 

@@ -23,7 +23,7 @@ theorem cA_alg (a : AF D.host.F) : cA D (algebraMap (AF D.host.F) (AE D) a) = al
 theorem compFin_cA (z : AE D) : compFin D.host.F D.host.E v (cA D z) = sigR _ D.sp.cm.sig (compFin D.host.F D.host.E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 variable (τ : D.host.E →ₐ[D.host.F] Fv D.host.F v)
@@ -52,7 +52,7 @@ theorem piW_cA_plcC (y) : piW τ (cA D (plcC τ y)) = y := by
   rw [plcC, map_mul, cA_cA', cA_alg, map_mul, piW_idem, piW_alg, one_mul]
 
 theorem plcC_add (y y') : plcC τ (y + y') = plcC τ y + plcC τ y' := by
-  rw [plcC, plcC, plcC, map_add, map_add, mul_add]
+  rw [plcC, plcC, plcC, map_add (f := _), map_add (f := _), mul_add]
 
 theorem continuous_piW : Continuous (piW τ) := by
   have hev : Continuous (GlobalTheory.AdelicU.evFin D.host.F v) :=

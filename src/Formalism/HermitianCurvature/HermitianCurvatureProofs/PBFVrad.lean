@@ -275,7 +275,7 @@ theorem uInv_map {X Y : Type} [AddCommGroup X] [Module ℂ X] [AddCommGroup Y] [
     unfold KB.uInv
     split_ifs
     · exact uInv_map T s w _ _
-    · rw [map_add, map_smul, uInv_map T s w, uInv_map T s w]
-    · rw [map_add, map_smul, uInv_map T s w, uInv_map T s w]
+    · rw [map_add (f := _), map_smul, uInv_map T s w, uInv_map T s w]
+    · rw [map_add (f := _), map_smul, uInv_map T s w, uInv_map T s w]
 
 end Formalism.FourierDecayAlt.P.PBFV

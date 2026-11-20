@@ -83,7 +83,7 @@ section Torsion
 variable {O : Type} [CommRing O] [StarRing O] {D₀ : DegPre ℂ} [Module O D₀.X] {oa : D₀.OAct O} (d : GtDict D₀ oa)
 
 theorem qkAdd_qk (k : ℕ) [NeZero k] (a b : d.A.La) : QkAdd (d.qk k a) (d.qk k b) (d.qk k (a + b)) :=
-  ⟨_, map_add d.eX _ _, by rw [d.qk_g, d.qk_g, d.qk_g, map_add, smul_add]; exact d.add _ _,
+  ⟨_, map_add d.eX _ _, by rw [d.qk_g, d.qk_g, d.qk_g, map_add (f := _), smul_add]; exact d.add _ _,
     qk_equiv_refl (AnPairing.tauBimult d) _⟩
 
 theorem qkAct_qk (k : ℕ) [NeZero k] (x : O) (a : d.A.La) : QkAct oa x (d.qk k a) (d.qk k (x • a)) :=
@@ -157,7 +157,7 @@ theorem exists_tateIsoQ : letI := H.starRing
   obtain ⟨x, y, hxy⟩ := exists_EF_eq_one d.A
   have cong : ∀ (n : ℕ) (a b e e' : d.A.La), (n : ℤ) ∣ d.A.EF (a + n • e) (b + n • e') - d.A.EF a b := fun n a b e e' =>
     ⟨d.A.EF e b + d.A.EF a e' + n * d.A.EF e e', by
-      simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]; ring⟩
+      simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]; ring⟩
   have unit : ∀ n : ℕ, 0 < n → ∃ a b, (n : ℤ) ∣ 1 - d.A.EF (f n a) (f n b) := fun n hn => by
     obtain ⟨a, e, ha⟩ := sur n hn x
     obtain ⟨b, e', hb⟩ := sur n hn y
@@ -180,7 +180,7 @@ theorem exists_tateIsoQ : letI := H.starRing
     obtain ⟨x₂, h₂⟩ := ((hd.trans h).add h₃).add (mul n hn a b)
     exact root_congr hn ⟨ν (n * m) * x₂ - ν n * x₁, by linear_combination ν (n * m) * h₂ - ν n * h₁⟩
   all_goals have : NeZero n := ⟨hn.ne'⟩
-  · simp only [evPt_eq, map_add]
+  · simp only [evPt_eq, map_add (f := _)]
     exact qkAdd_qk d n _ _
   · simp only [evPt_eq, map_smul]
     exact qkAct_qk d n _ _
@@ -256,17 +256,17 @@ theorem exists_arcIn (hL : Laws) (hL₂ : Laws2) {E : Type} [Field E] [NumberFie
   have he : D₀.PsiEven := psiEven (D := D₀) (ε := LinearEquiv.refl _ A.X) lam ah (fun _ => rfl) hψ
   obtain ⟨I, hIζ, hI⟩ := exists_tateIsoQ (D := D) d hX (fun n => gam.toLinearMap ∘ₗ f n) ν
     (fun n m hn hm v => (tow n m hn hm v).elim fun e h =>
-      ⟨gam e, (congrArg gam h).trans (by rw [map_add, map_nsmul]; rfl)⟩)
+      ⟨gam e, (congrArg gam h).trans (by rw [map_add (f := _), map_nsmul]; rfl)⟩)
     (fun n hn v ⟨e, h⟩ => inj n hn v ⟨gam.symm e, gam.injective (h.trans
       ((map_nsmul gam _ _).trans (congrArg (n • ·) (gam.apply_symm_apply e))).symm)⟩)
     (fun n hn v' => by
       obtain ⟨v, e, h⟩ := sur n hn (gam.symm v')
-      exact ⟨v, gam e, (gam.apply_symm_apply v').symm.trans ((congrArg gam h).trans (by rw [map_add, map_nsmul]; rfl))⟩)
+      exact ⟨v, gam e, (gam.apply_symm_apply v').symm.trans ((congrArg gam h).trans (by rw [map_add (f := _), map_nsmul]; rfl))⟩)
     (fun n hn v v' => hgam _ _ ▸ mul n hn v v')
   have lev : ∀ (k : ℕ) [NeZero k] (v : D.La), (∃ e, f k v = t v + k • e) →
       QkPt.Equiv D₀ ℂ (d.qk k (gam (t v))) (I.ev k v) := fun k _ v ⟨e, h⟩ => by
     rw [hI, evPt_eq]
-    exact (d.qk_equiv_iff _ _ _).2 ⟨gam e, (congrArg gam h).trans (by rw [map_add, map_nsmul]; rfl)⟩
+    exact (d.qk_equiv_iff _ _ _).2 ⟨gam e, (congrArg gam h).trans (by rw [map_add (f := _), map_nsmul]; rfl)⟩
   let a : ArcIn D l β ℂ b :=
     { D₀ := D₀
       oa := oAct A P rig rig_gen cub sym sym_gen sym_rig u lam ah hrig oa hact

@@ -61,7 +61,7 @@ theorem handBF_right {φ : GA D B.A → ℂ} {Ξ Ξ' : WO B.V₀ J.W₀ → ℂ}
     (hΞ : IsThetaFunO ψ B.V₀ J.W₀ Ξ) (hΞ' : IsThetaFunO ψ B.V₀ J.W₀ Ξ') (c : ℂ) :
     handBF s l φ (c • Ξ + Ξ') = star c • handBF s l φ Ξ + handBF s l φ Ξ' := by
   funext h w
-  simp only [handBF, map_add, map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, mul_add, mul_left_comm _ c]
+  simp only [handBF, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, mul_add, mul_left_comm _ c]
   rw [integral_add ((IsContAut.integrableOn B.cpt B.vA (contAut_kerBF s hφ hΞ h _)).const_mul c)
     (IsContAut.integrableOn B.cpt B.vA (contAut_kerBF s hφ hΞ' h _)), integral_const_mul, star_add, star_mul']
 
@@ -93,7 +93,7 @@ theorem integrableOn_pair {Y : GA D J.W₀ → WO J.W₀ B.L → ℂ} {F : WO J.
       (B.o.mem_ratL_resT _ _).2 (by rw [AddEquiv.apply_symm_apply]; exact ⟨zero_mem _, γ, rfl⟩)
     replace hδ : ratW B.V₀ J.W₀ δ = (B.o.resT J.W₀).symm (0, ratW B.L J.W₀ γ) := hδ
     have e1 := hF.quasi δ ((B.o.resT J.W₀).symm (0, v))
-    rw [hδ, ← map_add, Prod.mk_add_mk, add_zero, B.o.symplOH_resT, AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply,
+    rw [hδ, ← map_add (f := _), Prod.mk_add_mk, add_zero, B.o.symplOH_resT, AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply,
       symplOH_zero_left, zero_add] at e1
     have e2 := hY.quasi h γ v
     change F ((B.o.resT J.W₀).symm (0, ratW B.L J.W₀ γ + v)) * star (Y h (ratW B.L J.W₀ γ + v)) = _
@@ -127,7 +127,7 @@ theorem handFB_right {Y : GA D J.W₀ → WO J.W₀ B.L → ℂ} {Ξ Ξ' : WO J.
   funext h₁
   have e : ∀ h₀, pairKer s vL Y (c • Ξ + Ξ') h₀ h₁ = c * pairKer s vL Y Ξ h₀ h₁ + pairKer s vL Y Ξ' h₀ h₁ := by
     intro h₀
-    simp only [pairKer, contractT, thPair, map_add, map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, add_mul,
+    simp only [pairKer, contractT, thPair, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, add_mul,
       mul_assoc]
     rw [integral_add ((integrableOn_pair s vL hY (s.weil₀.om_pres _ _ hΞ) h₀).const_mul c)
       (integrableOn_pair s vL hY (s.weil₀.om_pres _ _ hΞ') h₀), integral_const_mul]

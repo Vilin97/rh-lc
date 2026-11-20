@@ -33,7 +33,7 @@ theorem exists_real_structure' (σ : E →ₐ[F] E) (h : IsCMExt F E σ) (emb : 
   have es : ∀ p, e (s p) = (fun i => lift (p.1 i), fun i => lift (p.2 i)) := fun p => e.apply_symm_apply _
   have sAdd : ∀ p q, s (p + q) = s p + s q := fun p q => by
     show e.symm _ = e.symm _ + e.symm _
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     refine Prod.ext (funext fun i => lift_add _ _) (funext fun i => lift_add _ _)
   have sSmul : ∀ (t : ℝ) p, s (t • p) = realAd F t • s p := fun t p => by
@@ -132,7 +132,7 @@ theorem Gs.gau (h : IsCMExt F E σ) (hf : Gs e τ ε θ θ' f) (h0 : f ≠ 0) : 
   obtain ⟨S, J, sAt, sev, sJ⟩ := exists_real_structure' σ h τ e C
   let T : (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ℝ :=
     LinearMap.mk₂ ℝ (fun y b => linForm b y) (fun y y' b => map_add _ y y') (fun t y b => map_smul _ t y)
-      (fun y b b' => by simp only [linForm_apply, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add])
+      (fun y b b' => by simp only [linForm_apply, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)])
       (fun t y b => by simp only [linForm_apply, Pi.smul_apply, mul_smul_comm, ← Finset.smul_sum, map_smul])
   obtain ⟨k, hk⟩ := GlobalTheory.CompanionTheory.Twist.FockLogDeriv.main T (fun b hb => funext fun i => trace_mul_eq_zero _ fun y => by
       have : linForm b (Pi.single i y) = 0 := hb _
@@ -172,7 +172,7 @@ theorem Gs.same (h : IsCMExt F E σ) (hf : Gs e τ ε θ θ' f) (hf' : Gs e τ �
       simp only [linForm_apply, Pi.neg_apply, mul_neg, Finset.sum_neg_distrib, map_neg, ContinuousLinearMap.neg_apply]
   rw [map_neg, dd0, Prod.fst_neg, Prod.snd_neg, en, en, el] at h2
   obtain ⟨a0, l0⟩ := opp g g' (hf _ _ hv hv' hs) h2
-  rw [← hf' u u'' hu hu'' hr', ← sub_add_cancel u' u'', map_add, dd0, Prod.fst_add, Prod.snd_add, nf_add, nf_add,
+  rw [← hf' u u'' hu hu'' hr', ← sub_add_cancel u' u'', map_add (f := _), dd0, Prod.fst_add, Prod.snd_add, nf_add, nf_add,
     linForm_add, a0, l0, zero_add, zero_add, dd0]
 
 end GlobalTheory.ThK.Dbl.Box

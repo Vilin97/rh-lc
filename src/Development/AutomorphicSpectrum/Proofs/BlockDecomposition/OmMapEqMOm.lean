@@ -53,7 +53,7 @@ theorem omMap_eq_mOm (φ : A →ₐ[K] B) (h : SemiHom (RingHom.id K) (φ : A �
     obtain ⟨g, rfl⟩ := hx
     exact hι g
   | zero => rw [map_zero, map_zero]
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | smul c x _ hx => rw [hs, SemiHom.mOm_smul, hx]; rfl
 
 end Alg

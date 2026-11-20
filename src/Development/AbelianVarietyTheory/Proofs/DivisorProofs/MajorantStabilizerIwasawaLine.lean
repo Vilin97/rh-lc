@@ -33,7 +33,7 @@ theorem decomp (z : AF F ⊗[F] E) : z = ofInfT F E (infT F E z) + ofFinT F E (f
   induction z using TensorProduct.induction_on with
   | zero => simp
   | add x y hx hy =>
-    rw [map_add, map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _)]
     conv_lhs => rw [hx, hy]
     abel
   | tmul a e =>
@@ -68,7 +68,7 @@ theorem mem_latHat_iff {n : ℕ} (X : Spc F E n) (z : Fin n → AE F E) :
       rw [e]; exact zero_mem _
     | add y z _ _ hy hz =>
       refine ⟨fun i => ?_, ?_⟩
-      · rw [Pi.add_apply, map_add, hy.1 i, hz.1 i, add_zero]
+      · rw [Pi.add_apply, map_add (f := _), hy.1 i, hz.1 i, add_zero]
       · have e : (fun i => finT F E ((y + z) i)) = (fun i => finT F E (y i)) + fun i => finT F E (z i) :=
           funext fun i => map_add _ _ _
         rw [e]; exact add_mem hy.2 hz.2

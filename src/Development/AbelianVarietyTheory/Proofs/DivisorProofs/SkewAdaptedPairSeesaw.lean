@@ -55,7 +55,7 @@ theorem main : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
     have : pureA F f (g₁ + g₂) = pureA F f g₁ + pureA F f g₂ := by
       funext x
       simp [pureA, mul_add]
-    rw [this, map_add, h₁, h₂, ContinuousLinearMap.add_apply]
+    rw [this, map_add (f := _), h₁, h₂, ContinuousLinearMap.add_apply]
   · rintro a g₁ - ⟨T₁, h₁⟩
     refine ⟨a • T₁, fun f => ?_⟩
     have : pureA F f (a • g₁) = a • pureA F f g₁ := by

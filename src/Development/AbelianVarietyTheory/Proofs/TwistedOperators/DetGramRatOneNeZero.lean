@@ -35,7 +35,7 @@ theorem exists_add_mul (y : Fld P) : ∃ a b : plus P, y = a + b * algebraMap E 
   have h1 : algebraMap E (Fld P) θ ≠ 0 := (map_ne_zero _).2 h0
   refine ⟨⟨(y + invol P y) / 2, ?_⟩, ⟨(y - invol P y) / (2 * algebraMap E (Fld P) θ), ?_⟩, ?_⟩
   · change invol P _ = _
-    simp only [map_div₀, map_add, invol_invol, map_ofNat, AlgHom.id_apply, add_comm]
+    simp only [map_div₀, map_add (f := _), invol_invol, map_ofNat, AlgHom.id_apply, add_comm]
   · change invol P _ = _
     simp only [map_div₀, map_sub, map_mul, invol_invol, map_ofNat, AlgHom.id_apply, invol_theta P hθ]
     field_simp
@@ -54,7 +54,7 @@ theorem exists_basis_theta :
       rw [Algebra.smul_def, Algebra.smul_def, mul_one] at hst
       exact hst
     have e2 := congrArg (invol P) e1
-    rw [map_add, map_mul, invol_coe, invol_coe, invol_theta P hθ, map_zero] at e2
+    rw [map_add (f := _), map_mul, invol_coe, invol_coe, invol_theta P hθ, map_zero] at e2
     have hs : (s : Fld P) = 0 := by linear_combination (e1 + e2) / 2
     have ht : (t : Fld P) * algebraMap E (Fld P) θ = 0 := by linear_combination e1 - hs
     exact ⟨Subtype.ext hs, Subtype.ext ((mul_eq_zero.1 ht).resolve_right h1)⟩
@@ -95,7 +95,7 @@ theorem involBase_inclPlus (a : k ⊗[(maximalRealSubfield E)] plus P) :
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [involBase, inclPlus, invol_coe]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem mem_norms_iff {d : plus P} (hd : (d : Fld P) = algebraMap E _ θ * algebraMap E _ θ)
     (x : (k ⊗[(maximalRealSubfield E)] plus P)ˣ) :
@@ -106,7 +106,7 @@ theorem mem_norms_iff {d : plus P} (hd : (d : Fld P) = algebraMap E _ θ * algeb
     intro a b
     have e1 : involBase P k t = -t := by simp [t, involBase, invol_theta P hθ, TensorProduct.tmul_neg]
     have e2 : inclPlus P k (1 ⊗ₜ d) = t * t := by simp [t, inclPlus, hd]
-    simp only [map_add, map_mul, map_sub, map_pow, involBase_inclPlus, e1, e2]
+    simp only [map_add (f := _), map_mul, map_sub, map_pow, involBase_inclPlus, e1, e2]
     ring
   constructor
   · rintro ⟨c, hc⟩
@@ -121,7 +121,7 @@ theorem mem_norms_iff {d : plus P} (hd : (d : Fld P) = algebraMap E _ θ * algeb
       | add y z hy hz =>
         obtain ⟨a, b, rfl⟩ := hy
         obtain ⟨a', b', rfl⟩ := hz
-        exact ⟨a + a', b + b', by simp only [map_add]; ring⟩
+        exact ⟨a + a', b + b', by simp only [map_add (f := _)]; ring⟩
     have hi : Function.Injective (inclPlus P k) :=
       Module.Flat.lTensor_preserves_injective_linearMap (M := k) (plus P).val.toLinearMap
         Subtype.val_injective
@@ -166,18 +166,18 @@ theorem traceBase_inclBase_mul (e : k ⊗[(maximalRealSubfield E)] E) (y : k ⊗
     traceBase P k (inclBase P k e * y) = e * traceBase P k y := by
   induction e using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, add_mul, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), add_mul, ha, hb]
   | tmul a e =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, mul_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), mul_add, ha, hb]
     | tmul b y => simp [traceBase, inclBase, ← Algebra.smul_def]
 
 theorem involBase_inclBase (e : k ⊗[(maximalRealSubfield E)] E) :
     involBase P k (inclBase P k e) = inclBase P k (ccBase E k e) := by
   induction e using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a e => simp [involBase, inclBase, invol_algebraMap]
 
 theorem exists_coord : ∃ ψ : (k ⊗[(maximalRealSubfield E)] Fld P) ≃+ (Fin r → k ⊗[(maximalRealSubfield E)] E),
@@ -189,18 +189,18 @@ theorem exists_coord : ∃ ψ : (k ⊗[(maximalRealSubfield E)] Fld P) ≃+ (Fin
   refine ⟨ψ, fun e y => ?_, fun y => ?_⟩
   · induction e using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, add_mul, ha, hb, add_smul]
+    | add a b ha hb => simp only [map_add (f := _), add_mul, ha, hb, add_smul]
     | tmul a e =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add a b ha hb => simp only [map_add, mul_add, ha, hb, smul_add]
+      | add a b ha hb => simp only [map_add (f := _), mul_add, ha, hb, smul_add]
       | tmul b y =>
         funext i
         simp [inclBase, ← Algebra.smul_def, h]
   · induction y using TensorProduct.induction_on with
     | zero => simp
     | add a b ha hb =>
-      simp only [map_add, Pi.add_apply, add_mul, Finset.sum_add_distrib, ← ha, ← hb]
+      simp only [map_add (f := _), Pi.add_apply, add_mul, Finset.sum_add_distrib, ← ha, ← hb]
     | tmul b y =>
       conv_lhs => rw [← B.sum_repr y, TensorProduct.tmul_sum]
       simp [inclBase, ← Algebra.smul_def, h]
@@ -328,7 +328,7 @@ theorem congr_of_self (h : CongrOver (maximalRealSubfield E) G G') :
       | zero => simp [ReciprocityTheory.ChartRestriction.G.FD.cc]
       | tmul a e => exact ((IsCMField.complexConj E).toLinearEquiv.map_smul a e).symm
       | add a b ha hb =>
-        simp only [ReciprocityTheory.ChartRestriction.G.FD.cc, map_add] at ha hb ⊢
+        simp only [ReciprocityTheory.ChartRestriction.G.FD.cc, map_add (f := _)] at ha hb ⊢
         rw [ha, hb]) h
 
 theorem congr_complex (h : ∀ w : InfinitePlace (maximalRealSubfield E), CongrOver w.Completion G G') (τ : E →+* ℂ) :
@@ -353,7 +353,7 @@ theorem congr_complex (h : ∀ w : InfinitePlace (maximalRealSubfield E), CongrO
   | tmul a e =>
     rw [Algebra.TensorProduct.map_tmul, hf, hf, map_mul, hg]
     exact congrArg _ (IsCMField.complexEmbedding_complexConj E τ e)
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end Congr
 

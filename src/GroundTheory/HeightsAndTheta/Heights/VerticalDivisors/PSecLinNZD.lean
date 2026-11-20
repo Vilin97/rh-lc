@@ -16,7 +16,7 @@ theorem eval_specRest {k E : Type*} [CommRing k] [CommRing E] (φ : k →+* E) {
   induction g using MvPolynomial.induction_on with
   | C a => simp [specRest, specFirst]
   | add p q hp hq =>
-    simp only [specRest, specFirst, eval₂_add, map_add] at hp hq ⊢
+    simp only [specRest, specFirst, eval₂_add, map_add (f := _)] at hp hq ⊢
     rw [hp, hq]
   | mul_X p ij hp =>
     simp only [specRest, specFirst, eval₂_mul, eval₂_X, map_mul, bind₁_X_right] at hp ⊢

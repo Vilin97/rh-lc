@@ -44,7 +44,7 @@ theorem Bd.add {S T : Module.End ℂ (Mc θ V)} (hS : Bd μ hθ E S) (hT : Bd μ
   obtain ⟨a, ha, h⟩ := hS
   obtain ⟨b, hb, k⟩ := hT
   refine ⟨a + b, add_nonneg ha hb, fun φ hφ => ?_⟩
-  rw [LinearMap.add_apply, map_add, add_mul]
+  rw [LinearMap.add_apply, map_add (f := _), add_mul]
   exact (norm_add_le _ _).trans (add_le_add (h φ hφ) (k φ hφ))
 
 theorem Bd.smul {T : Module.End ℂ (Mc θ V)} (c : ℂ) (hT : Bd μ hθ E T) : Bd μ hθ E (c • T) := by

@@ -75,7 +75,7 @@ theorem bc_laur : ∀ (p : ℕ) [Fact p.Prime] (A : Type) [CommRing A](B : Type)
     intro s
     refine LaurentPolynomial.induction_on' s ?_ ?_
     · intro a b ha hb
-      rw [map_add, map_add, ha, hb, map_add, TensorProduct.add_tmul]
+      rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), TensorProduct.add_tmul]
     · intro n a
       rw [map_mul, map_mul, hjC, hjT, map_mul, hC, hT, hiC, Algebra.TensorProduct.tmul_mul_tmul,
         one_mul, mul_one, ← Algebra.smul_def, TensorProduct.smul_tmul,

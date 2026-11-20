@@ -213,7 +213,7 @@ theorem main : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
   have hsec : ∀ u, φ (sec u) = u := by
     intro u
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [sec, map_add, map_sum, map_smul, hf1, hf2]
+      simp only [sec, map_add (f := _), map_sum, map_smul, hf1, hf2]
     ext k <;> simp [Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Pi.single_apply]
   have hsc : Continuous sec :=
     (continuous_finset_sum _ fun k _ => ((continuous_apply k).comp continuous_fst).smul continuous_const).add

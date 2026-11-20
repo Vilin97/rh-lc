@@ -106,7 +106,7 @@ theorem map_mem_FilV (K : FinExt l) (j k : ℤ) (g : Pl.R.BdR →ₗ[ℚ_[l]] Pl
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]; exact Submodule.zero_mem _
   | tmul v b => exact ⟨v ⊗ₜ ⟨g b.1, hg _ b.2⟩, rfl⟩
-  | add y z hy hz => simp only [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => simp only [map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 theorem map_mulLeft_comp (r s : Pl.R.BdR) (x : V ⊗[ℚ_[l]] Pl.R.BdR) :
     AlgebraTensorModule.map (LinearMap.id : V →ₗ[LL] V) (LinearMap.mulLeft ℚ_[l] r)
@@ -115,14 +115,14 @@ theorem map_mulLeft_comp (r s : Pl.R.BdR) (x : V ⊗[ℚ_[l]] Pl.R.BdR) :
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul v b => simp [mul_assoc]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem map_mulLeft_one (x : V ⊗[ℚ_[l]] Pl.R.BdR) :
     AlgebraTensorModule.map (LinearMap.id : V →ₗ[LL] V) (LinearMap.mulLeft ℚ_[l] (1 : Pl.R.BdR)) x = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul v b => simp
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 end Abstract
 
@@ -144,7 +144,7 @@ theorem bijective_and_mem_FilV_iff_of_mul (K : FinExt l) (ξ : Pl.R.BdR) (hu : I
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul v c => rw [hf, AlgebraTensorModule.map_tmul, LinearMap.id_apply, LinearMap.mulLeft_apply]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   have hl : ∀ y, AlgebraTensorModule.map (LinearMap.id : V →ₗ[LL] V)
       (LinearMap.mulLeft ℚ_[l] ((hu.unit⁻¹ : (Pl.R.BdR)ˣ) : Pl.R.BdR)) (f y) = y := fun y => by
     rw [hAM, map_mulLeft_comp, IsUnit.val_inv_mul, map_mulLeft_one]

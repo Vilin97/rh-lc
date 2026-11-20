@@ -34,7 +34,7 @@ theorem φVB_inj {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScal
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x b => simp [φVB]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hi : Function.Injective (PD.φ.toLinearMap.restrictScalars Qp) := PD.φ_inj
   intro a b hab
   rw [h, h] at hab
@@ -46,7 +46,7 @@ theorem crisMap_φ {V V' : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [I
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => simp [Formalism.MainNotions.TruncatedSeriesCountingBounds.crisMap, φVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem dv_succ (T : LocLat G Qp LL O) (e : ℕ) {d : ℕ} (b : Fin d → W.DD T) (c₀ : Fin d → LL) :
     dv W T (e + 1) b c₀ = φVB PD (LL := LL) (V := T.V) (dv W T e b c₀) := by

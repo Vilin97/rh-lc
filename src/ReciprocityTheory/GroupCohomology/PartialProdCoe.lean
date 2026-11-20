@@ -205,7 +205,7 @@ theorem normF_add (n : ℕ) (F F' : (Fin (n + 1) → G) → M.V) :
   classical
   haveI : Fintype (Quotient (QuotientGroup.rightRel U)) := Fintype.ofFinite _
   funext x
-  simp only [Pi.add_apply, normF_eq, map_add, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, normF_eq, map_add (f := _), Finset.sum_add_distrib]
 
 theorem normF_smul (n : ℕ) (r : R) (F : (Fin (n + 1) → G) → M.V) :
     normF M U n (r • F) = r • normF M U n F := by

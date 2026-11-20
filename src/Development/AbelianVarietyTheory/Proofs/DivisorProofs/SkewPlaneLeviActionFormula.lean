@@ -435,7 +435,7 @@ theorem finite_of_isInd {F E : Type} [Field F] [NumberField F] [Field E] [Number
     simp only [lineDer, mul_assoc, hf u hu]
   have hM' : ∀ Z, ∀ f ∈ M', D w Z f ∈ M' := fun Z f hf => by
     obtain ⟨γ₁, γ₂, h1, h2, e2⟩ := exists_lines h hJ (τ w) Z
-    rw [e2, map_add, map_smul (D w) Complex.I, LinearMap.add_apply, LinearMap.smul_apply]
+    rw [e2, map_add (f := _), map_smul (D w) Complex.I, LinearMap.add_apply, LinearMap.smul_apply]
     exact M'.add_mem (hMl _ _ h1 f hf) (M'.smul_mem _ (hMl _ _ h2 f hf))
 
   have hupl : ∀ Z γ, IsLineOf σ (c • Y.J.map σ) (τ w) Z γ → (∀ i j, blk n₁ j < blk n₁ i + 1 → (R' * Z * Q) i j = 0) →
@@ -467,7 +467,7 @@ theorem finite_of_isInd {F E : Type} [Field F] [NumberField F] [Field E] [Number
       rw [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_add, Matrix.add_mul, Matrix.smul_apply, Matrix.add_apply,
         h0 i j hij, h0' i j hij, add_zero, smul_zero]) f hf))
     change (D w _ f, _) ∈ Γ
-    rw [e2, map_add, map_smul (D w) Complex.I, LinearMap.add_apply, LinearMap.smul_apply]
+    rw [e2, map_add (f := _), map_smul (D w) Complex.I, LinearMap.add_apply, LinearMap.smul_apply]
     rw [Prod.smul_mk, Prod.mk_add_mk, smul_zero, add_zero] at h3
     exact h3
 
@@ -514,7 +514,7 @@ theorem finite_of_isInd {F E : Type} [Field F] [NumberField F] [Field E] [Number
     refine ⟨α * μ + β * ν, fun f φ hf => ?_⟩
     have h3 := Γ.add_mem (Γ.smul_mem α (hμ f φ hf)) (Γ.smul_mem β (hν f φ hf))
     change (D w _ f, _) ∈ Γ
-    rw [hi, Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.mul_smul, Matrix.smul_mul, Matrix.smul_mul, map_add,
+    rw [hi, Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.mul_smul, Matrix.smul_mul, Matrix.smul_mul, map_add (f := _),
       map_smul, map_smul, add_smul, mul_smul, mul_smul]
     exact h3
   obtain ⟨lx, hx⟩ := hcorner _ _ _ (matrix_single_zero_eq_half_diagonal_torDiag n₁)

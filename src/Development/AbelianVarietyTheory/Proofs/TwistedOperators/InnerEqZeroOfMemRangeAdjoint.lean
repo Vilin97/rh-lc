@@ -27,7 +27,7 @@ theorem ker_le_span_of_rel {K X Y H W : Type} [Field K] [AddCommGroup X] [Module
   have e : ∀ x, jW (f x) = T (j x) := fun x => hT x _ (hf x)
   let θ : X →ₗ[K] Y :=
     { toFun := f
-      map_add' := fun x y => hinj (by rw [map_add, e, e, e, map_add, map_add])
+      map_add' := fun x y => hinj (by rw [map_add (f := _), e, e, e, map_add (f := _), map_add (f := _)])
       map_smul' := fun a x => hinj (by rw [RingHom.id_apply, map_smulₛₗ, e, e, map_smulₛₗ, map_smul]) }
   refine (GlobalTheory.ker_le_span_image_ker_of_semilinear K X Y H W σ θ j jW T hsp hind fun x => (e x).symm).trans
     (Submodule.span_mono (Set.image_mono fun u hu => ?_))

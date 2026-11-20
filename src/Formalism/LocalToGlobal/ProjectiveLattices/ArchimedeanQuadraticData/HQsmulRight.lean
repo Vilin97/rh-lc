@@ -65,7 +65,7 @@ section Herm
 variable (S : HermForm K r)
 
 theorem h_add_left (x x' y : Fin r → K) : S.h (x + x') y = S.h x y + S.h x' y := by
-  simp only [HermForm.h, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [HermForm.h, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem h_add_right (x y y' : Fin r → K) : S.h x (y + y') = S.h x y + S.h x y' := by
   simp only [HermForm.h, Pi.add_apply, mul_add, Finset.sum_add_distrib]

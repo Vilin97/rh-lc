@@ -58,7 +58,7 @@ private theorem mem_of_translates (π : UnitaryRep G H) {τ Q : Submodule ℂ H}
       exact Submodule.subset_span ⟨g * γ, by simp [UnitaryRep.map_mul_apply]⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact S.add_mem hx hy
     | smul a x _ hx =>
       rw [map_smul]
@@ -83,7 +83,7 @@ private theorem mem_of_translates (π : UnitaryRep G H) {τ Q : Submodule ℂ H}
       exact key γ
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Q.add_mem hx hy
     | smul a x _ hx =>
       rw [map_smul]
@@ -119,7 +119,7 @@ private theorem exists_clm {κ : Measure (archCompact K n)} {e : archCompact K n
       map_add' := fun x y => by
         unfold pOp
         rw [← integral_add (integrable_orbit μ hI x) (integrable_orbit μ hI y)]
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
       map_smul' := fun c x => by
         unfold pOp
         rw [RingHom.id_apply, ← integral_smul]

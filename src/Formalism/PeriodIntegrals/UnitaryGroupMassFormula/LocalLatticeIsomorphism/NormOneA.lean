@@ -190,7 +190,7 @@ theorem one_add_p_unit (c : K →+* K) (hc : ∀ x, c (c x) = x) (hK : Module.fi
   have hp0 : (p : K) ≠ 0 := by exact_mod_cast hp.ne_zero
   have e : (p : K)⁻¹ = (1 + (p : K) * r) * c (1 + (p : K) * r) / p
       - (r + c r + (p : K) * r * c r) := by
-    simp only [map_add, map_one, map_mul, map_natCast]
+    simp only [map_add (f := _), map_one, map_mul, map_natCast]
     field_simp
     ring
   rw [e]
@@ -266,16 +266,16 @@ theorem eps {K : Type} [Field K] [NumberField K] (c : K →+* K) (hc : ∀ x, c 
   obtain ⟨P, hP, hpP, a, b, hab, ha, hb⟩ := hs
   have hBA : c (b : K) = (a : K) := by rw [← hab, hc]
   have hfix : c ((a : K) ^ (k + 1) + (b : K) ^ (k + 1)) = (a : K) ^ (k + 1) + (b : K) ^ (k + 1) := by
-    rw [map_add, map_pow, map_pow, hab, hBA, add_comm]
+    rw [map_add (f := _), map_pow, map_pow, hab, hBA, add_comm]
   have hO : (a : K) ^ (k + 1) + (b : K) ^ (k + 1) ∈ (algebraMap (𝓞 K) K).range :=
-    ⟨a ^ (k + 1) + b ^ (k + 1), by rw [map_add, map_pow, map_pow]⟩
+    ⟨a ^ (k + 1) + b ^ (k + 1), by rw [map_add (f := _), map_pow, map_pow]⟩
   obtain ⟨m, hm⟩ := fixed_int c hK hne hfix hO
   have hdvd : ¬ (p : ℤ) ∣ m := by
     rintro ⟨m', hm'⟩
     apply hb
     have e : a ^ (k + 1) + b ^ (k + 1) = (p : 𝓞 K) * (m' : 𝓞 K) := by
       apply RingOfIntegers.coe_injective
-      rw [map_add, map_pow, map_pow, map_mul, map_natCast, map_intCast]
+      rw [map_add (f := _), map_pow, map_pow, map_mul, map_natCast, map_intCast]
       have : (m : K) = (p : K) * m' := by rw [hm']; push_cast; ring
       exact hm.trans this
     have h1 : a ^ (k + 1) + b ^ (k + 1) ∈ P := by rw [e]; exact P.mul_mem_right _ hpP
@@ -300,7 +300,7 @@ theorem eps {K : Type} [Field K] [NumberField K] (c : K →+* K) (hc : ∀ x, c 
     rw [Ideal.eq_top_iff_one]
     have e : (1 : 𝓞 K) = (u : 𝓞 K) * (p : 𝓞 K) + (v : 𝓞 K) * (a * b) := by
       apply RingOfIntegers.coe_injective
-      rw [map_one, map_add, map_mul, map_mul, map_mul, map_intCast, map_intCast, map_natCast]
+      rw [map_one, map_add (f := _), map_mul, map_mul, map_mul, map_intCast, map_intCast, map_natCast]
       have : ((u * p + v * n : ℤ) : K) = 1 := by rw [huv]; simp
       rw [← this]; push_cast
       have hn' : algebraMap (𝓞 K) K a * algebraMap (𝓞 K) K b = (n : K) := hn

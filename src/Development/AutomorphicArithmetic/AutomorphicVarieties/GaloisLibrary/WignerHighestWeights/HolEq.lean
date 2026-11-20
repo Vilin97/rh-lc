@@ -16,7 +16,7 @@ theorem UpperTheory.V.AlgRepEndIrreducible.holEq :
   have hL : ∀ (i j : Fin a) (w : ℂ), L' (Matrix.single i j (atEmb τ w)) =
       (w.re : ℂ) • L' (Matrix.single i j (atEmb τ 1)) +
         (w.im : ℂ) • L' (Matrix.single i j (atEmb τ Complex.I)) := fun i j w => by
-    rw [atEmb_eq τ w, Matrix.single_add, ← Matrix.smul_single, ← Matrix.smul_single, map_add, map_smul, map_smul,
+    rw [atEmb_eq τ w, Matrix.single_add, ← Matrix.smul_single, ← Matrix.smul_single, map_add (f := _), map_smul, map_smul,
       ← algebraMap_smul ℂ w.re, ← algebraMap_smul ℂ w.im]
     rfl
   change ∑ i, ∑ j, x i j • ((1 / 2 : ℂ) • (L' (Matrix.single i j (atEmb τ 1)) -

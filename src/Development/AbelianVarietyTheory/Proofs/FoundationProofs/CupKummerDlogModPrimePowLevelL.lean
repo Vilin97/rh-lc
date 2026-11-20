@@ -25,13 +25,13 @@ theorem mem_adjoin (L : ℕ) (x : On p L) : x ∈ Algebra.adjoin (O0 p) {xn p L,
     intro a
     induction a using Polynomial.induction_on with
     | C b => exact hb b
-    | add f g hf hg => rw [C_add, map_add]; exact S.add_mem hf hg
+    | add f g hf hg => rw [C_add, map_add (f := _)]; exact S.add_mem hf hg
     | monomial k b _ =>
       rw [C_mul, C_pow, map_mul, map_pow]
       exact S.mul_mem (hb b) (S.pow_mem hx _)
   induction f using Polynomial.induction_on with
   | C a => exact hC a
-  | add f g hf hg => rw [map_add]; exact S.add_mem hf hg
+  | add f g hf hg => rw [map_add (f := _)]; exact S.add_mem hf hg
   | monomial k a _ => rw [map_mul, map_pow]; exact S.mul_mem (hC a) (S.pow_mem hy _)
 
 theorem zeta_pow_sub (T : GlobalTheory.K5.Tower p Ω) (m k : ℕ) : T.ζ (m + k) ^ p ^ k = T.ζ m := by

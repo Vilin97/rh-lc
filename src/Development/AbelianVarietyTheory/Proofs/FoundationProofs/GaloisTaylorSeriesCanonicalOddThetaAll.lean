@@ -93,7 +93,7 @@ lemma ode_unique {a b : ℂ} {P Q : ℂ⟦X⟧} (hP0 : constantCoeff P = 1) (hQ0
     | zero => simp
     | succ n => simp [Derivation.leibniz_pow]; ring
   have hd : X * d⁄dX ℂ P = X * d⁄dX ℂ Q + X ^ n * ((n : ℂ⟦X⟧) * E + X * d⁄dX ℂ E) := by
-    rw [hE, map_add, Derivation.leibniz]
+    rw [hE, map_add (f := _), Derivation.leibniz]
     simp only [smul_eq_mul]
     linear_combination E * hx
   have key : X ^ n * ((((n : ℂ⟦X⟧) * E + X * d⁄dX ℂ E) - 2 * E) *
@@ -149,7 +149,7 @@ lemma theta_unique {s a b : ℂ} {A B : ℂ⟦X⟧} (hA0 : coeff 0 A = 0) (hA1 :
   have h1 : d⁄dX ℂ U * V = d⁄dX ℂ T * Y := by
     refine derivative.ext ?_ ?_
     · apply mul_left_cancel₀ (pow_ne_zero 2 (X_ne_zero (R := ℂ)))
-      simp only [wSer, Derivation.leibniz, smul_eq_mul, derivative_X, map_add, mul_one] at hPQ ⊢
+      simp only [wSer, Derivation.leibniz, smul_eq_mul, derivative_X, map_add (f := _), mul_one] at hPQ ⊢
       rw [dV, dY]
       linear_combination -hPQ + ((U * V + 1) * (1 - C s * X ^ 2) - X ^ 2 * V * d⁄dX ℂ (d⁄dX ℂ U)) * hUV
         - ((T * Y + 1) * (1 - C s * X ^ 2) - X ^ 2 * Y * d⁄dX ℂ (d⁄dX ℂ T)) * hTV
@@ -234,7 +234,7 @@ def tay : Ent →+* ℂ⟦X⟧ where
       simp [coeff_one]
   map_add' f g := by
     ext n
-    simp only [coeff_mk, map_add, coef1, Subring.coe_add]
+    simp only [coeff_mk, map_add (f := _), coef1, Subring.coe_add]
     rw [iteratedDeriv_add (Ent.contDiff f n).contDiffAt (Ent.contDiff g n).contDiffAt, add_div]
   map_mul' f g := by
     ext n

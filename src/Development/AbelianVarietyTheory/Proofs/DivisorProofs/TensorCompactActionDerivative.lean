@@ -24,7 +24,7 @@ theorem piScalarRight_eval (π : CuspSub E a) (Ξ : AlgRep E a) (m : π.V ⊗[�
     ((TensorProduct.piScalarRight ℂ ℂ π.V (Fin Ξ.d) m) i).1.1 g = ell π Ξ g i m := by
   induction m using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Pi.add_apply, Submodule.coe_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, Submodule.coe_add, hx, hy]
   | tmul φ v =>
     rw [ell_tmul]
     simp [TensorProduct.piScalarRight_apply, mul_comm]
@@ -45,7 +45,7 @@ theorem ell_deriv (π : CuspSub E a) (Ξ : AlgRep E a) (c : ℝ → Kinf E a) (Z
   have hc' : HasDerivAt (fun t => toL (Unitary.toUnits (c t)).val) (toL Z) 0 := hc
   induction m using TensorProduct.induction_on with
   | zero => simpa using hasDerivAt_const (0 : ℝ) (0 : ℂ)
-  | add x y hx hy => simp only [map_add]; exact hx.add hy
+  | add x y hx hy => simp only [map_add (f := _)]; exact hx.add hy
   | tmul φ v =>
     have h1 := GlobalTheory.CuspRep.hasDerivAt_curve φ.1 g (fun t => Unitary.toUnits (c t)) (toL Z) h0' hc'
     have h2 : HasDerivAt (fun t => (Ξ.mat (Unitary.toUnits (c t)) *ᵥ v) i) ((Ξ.dmat (toL Z) *ᵥ v) i) 0 := by
@@ -59,7 +59,7 @@ theorem ell_deriv (π : CuspSub E a) (Ξ : AlgRep E a) (c : ℝ → Kinf E a) (Z
     have e2 : ell π Ξ g i (tensorLie π Ξ (toL Z) (φ ⊗ₜ v)) =
         lieD (toL Z) φ.1.1 g * (Ξ.mat (Unitary.toUnits (c 0)) *ᵥ v) i +
           φ.1.1 (g * infGL E a (Unitary.toUnits (c 0))) * (Ξ.dmat (toL Z) *ᵥ v) i := by
-      rw [h0', map_one, map_one, mul_one, Matrix.one_mulVec, tensorLie_tmul, map_add, ell_tmul, ell_tmul]
+      rw [h0', map_one, map_one, mul_one, Matrix.one_mulVec, tensorLie_tmul, map_add (f := _), ell_tmul, ell_tmul]
       rfl
     rw [funext e1, e2]
     exact h1.mul h2

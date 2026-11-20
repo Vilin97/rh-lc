@@ -12,10 +12,10 @@ open GlobalTheory.DefLift.BilFischer
 theorem pair_comm {σ : Type} [Fintype σ] (A B : MvPolynomial σ ℂ) : pair A B = pair B A := by
   classical
   induction A using MvPolynomial.induction_on' with
-  | add A A' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+  | add A A' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
   | monomial α c =>
     induction B using MvPolynomial.induction_on' with
-    | add B B' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+    | add B B' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
     | monomial β d =>
       rw [pair_monomial, pair_monomial, coeff_monomial, coeff_monomial]
       by_cases e : α = β
@@ -48,9 +48,9 @@ theorem pderiv_aeval {σ τ : Type} [Fintype σ] (m : σ → MvPolynomial τ ℂ
   classical
   induction G using MvPolynomial.induction_on with
   | C c => simp
-  | add A B h h' => simp only [map_add, h, h', add_mul, Finset.sum_add_distrib]
+  | add A B h h' => simp only [map_add (f := _), h, h', add_mul, Finset.sum_add_distrib]
   | mul_X A u h =>
-    simp only [map_mul, aeval_X, Derivation.leibniz, h, smul_eq_mul, map_add, add_mul,
+    simp only [map_mul, aeval_X, Derivation.leibniz, h, smul_eq_mul, map_add (f := _), add_mul,
       Finset.sum_add_distrib, Finset.mul_sum, mul_assoc]
     congr 1
     rw [Finset.sum_eq_single u]

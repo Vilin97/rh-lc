@@ -148,7 +148,7 @@ theorem sg_move (h : DC Λ F y y' n m) (a b : S.V) (al al' : E) :
       simpa using (mem_XLam.mp (mz_sub h)).2
     · have e2 : a - b = n (n.symm a - n.symm b) := by simp
       rw [e2, e, h.hzt]
-      simp only [map_add, map_sub, map_smul, smul_sub]
+      simp only [map_add (f := _), map_sub, map_smul, smul_sub]
       abel
   · rintro ⟨U, hU, U', hU', e⟩
     refine ⟨n.symm U + al • (n.symm F.zt - F.zt), ?_, n.symm U' + al' • (m y.zt - y.zt), ?_, ?_⟩
@@ -156,7 +156,7 @@ theorem sg_move (h : DC Λ F y y' n m) (a b : S.V) (al al' : E) :
     · exact add_mem ((mem_X' h).mp hU') (Submodule.smul_mem _ _ (mem_XLam.mp (mz_sub h)).2)
     · have e2 : n.symm a - n.symm b = n.symm (a - b) := by simp
       rw [e2, e, h.hzt]
-      simp only [map_add, map_sub, map_smul, LinearEquiv.symm_apply_apply, smul_sub]
+      simp only [map_add (f := _), map_sub, map_smul, LinearEquiv.symm_apply_apply, smul_sub]
       abel
 
 end Move

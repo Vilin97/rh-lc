@@ -91,7 +91,7 @@ theorem twist_rhoD (α β : kˣ →* ℂˣ) (g : Levi k (Two (Fin a) (Fin a'))) 
     show extTensor _ _ ((leviTwo k (Fin a) (Fin a')).symm (leviTwo k (Fin a) (Fin a') g)) x = _
     rw [MulEquiv.symm_apply_apply]
     induction x with
-    | add x y hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | tmul v w =>
       rw [extTensor_tmul]
       simp only [detRep, ofChar_apply, detChar_apply, ← smul_eq_mul, TensorProduct.smul_tmul_smul]

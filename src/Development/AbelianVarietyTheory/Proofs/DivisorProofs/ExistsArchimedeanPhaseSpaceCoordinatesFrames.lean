@@ -47,7 +47,7 @@ theorem exists_coords : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     { toFun := fun c i => evI F ((d.e (U c)).1 i)
       map_add' := fun c c' => by
         funext i
-        rw [hadd, map_add]
+        rw [hadd, map_add (f := _)]
         exact map_add (evR F) _ _
       map_smul' := fun r c => by
         funext i
@@ -57,7 +57,7 @@ theorem exists_coords : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     { toFun := fun c i => evI F ((d.e (U c)).2 i)
       map_add' := fun c c' => by
         funext i
-        rw [hadd, map_add]
+        rw [hadd, map_add (f := _)]
         exact map_add (evR F) _ _
       map_smul' := fun r c => by
         funext i

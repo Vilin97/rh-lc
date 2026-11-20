@@ -79,4 +79,4 @@ theorem GlobalTheory.mixExp_interNumRed : GlobalTheory.Published.NefNumerics →
   refine pow_mul_le_of_cls_eq h.1 hpZ ((topologicalKrullDim_red Z).trans hZ)
     (hnef.pull_of_isClosedImmersion (redι Z) hi) (hnef'.pull_of_isClosedImmersion (redι Z) hi)
     (LB.isLB_pull h₀ (redι Z)) a b ?_
-  rw [cls_pull h₀, cls_pull hN, cls_pull hN', hc, map_add, map_nsmul, map_nsmul]
+  rw [cls_pull h₀, cls_pull hN, cls_pull hN', hc, map_add (f := _), map_nsmul, map_nsmul]

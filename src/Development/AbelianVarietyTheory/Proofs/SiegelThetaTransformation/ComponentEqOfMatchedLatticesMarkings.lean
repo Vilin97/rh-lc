@@ -95,7 +95,7 @@ theorem comp_eq_of_matched : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
     exact_mod_cast h
   · obtain ⟨w, hw, h⟩ := hm a ha
     refine ⟨(W.φ k').symm ⟨w, hw⟩, (W.φ k').injective (Subtype.ext ?_)⟩
-    rw [hgam, map_add, map_nsmul, LinearEquiv.apply_symm_apply]
+    rw [hgam, map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply]
     exact h
   · exact ⟨gam (W.F.t _ a) - W.F.t _ a, by rw [hA, one_smul, add_sub_cancel]⟩
 

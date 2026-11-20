@@ -41,6 +41,6 @@ theorem UpperTheory.V.Fr.maximal_ideal_image_kills :
       rw [Algebra.smul_def, map_mul]
       exact Ideal.mul_mem_right _ _ (hle hb)
     · intro a b ha hb
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem ha hb
   rwa [map_sub, map_sub, hz0, sub_zero] at key

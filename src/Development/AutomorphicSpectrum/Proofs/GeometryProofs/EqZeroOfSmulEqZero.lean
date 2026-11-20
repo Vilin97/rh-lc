@@ -33,7 +33,7 @@ theorem res_constFn {U V : Y.Opens} (h : V ≤ U) (a : R) :
 
 instance : Add (SecMod p M) where
   add s t := ⟨fun i => LB.Sec.f s i + LB.Sec.f t i, fun i j => by
-    rw [map_add, map_add, LB.Sec.compat s, LB.Sec.compat t, mul_add]⟩
+    rw [map_add (f := _), map_add (f := _), LB.Sec.compat s, LB.Sec.compat t, mul_add]⟩
 
 instance : Zero (SecMod p M) where
   zero := ⟨fun _ => 0, fun _ _ => by rw [map_zero, map_zero, MulZeroClass.mul_zero]⟩
@@ -67,7 +67,7 @@ instance : Module R (SecMod p M) where
   smul_add a s t := SecMod.ext fun i => mul_add _ _ _
   add_smul a b s := SecMod.ext fun i => by
     show constFn p _ (a + b) * _ = constFn p _ a * _ + constFn p _ b * _
-    rw [← constHom_apply, ← constHom_apply, ← constHom_apply, map_add, add_mul]
+    rw [← constHom_apply, ← constHom_apply, ← constHom_apply, map_add (f := _), add_mul]
   zero_smul s := SecMod.ext fun i => by
     show constFn p _ 0 * _ = 0
     rw [← constHom_apply, map_zero, MulZeroClass.zero_mul]

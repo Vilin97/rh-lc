@@ -36,7 +36,7 @@ theorem locM_eq_one {v : HeightOneSpectrum (𝓞 (maximalRealSubfield D.host.E))
   have hπ : ∀ z, s.proj z = π (compAt D.host.E s.v z) := fun z => by
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
     | tmul a b => rfl
   refine Matrix.ext fun a b => ?_
   have h2 := congrFun (congrFun h1 a) b
@@ -280,7 +280,7 @@ theorem rdV_law {ρ : GlobalTheory.SeriesTie.Setup D.ntw} {hρ : ρ.Good} {i : D
   induction h1 using Submodule.span_induction with
   | mem x hx => exact ((T.rdV_mem h).1 hx).1
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 section Rows

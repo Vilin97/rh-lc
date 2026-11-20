@@ -33,7 +33,7 @@ theorem isLocalizedModule_subtype {A K : Type} [CommRing A] [IsDomain A] [Field 
       refine ⟨((s₂ : A) • m₁ + (s₁ : A) • m₂, s₁ * s₂), ?_⟩
       have e₁' : (s₁ : A) • y₁ = (m₁ : Ω) := e₁
       have e₂' : (s₂ : A) • y₂ = (m₂ : Ω) := e₂
-      simp only [map_add, map_smul, Submodule.subtype_apply, ← e₁', ← e₂', Submonoid.smul_def,
+      simp only [map_add (f := _), map_smul, Submodule.subtype_apply, ← e₁', ← e₂', Submonoid.smul_def,
         Submonoid.coe_mul]
       rw [smul_add, mul_smul, mul_comm, mul_smul, smul_comm (s₂ : A) (s₁ : A) y₁,
         smul_comm (s₂ : A) (s₁ : A) y₂]
@@ -100,7 +100,7 @@ theorem bc_iso : ∀ (A K : Type) [CommRing A] [IsDomain A] [Field K] [Algebra A
       | tmul o x =>
         show o • ι x ∈ L
         exact L.smul_mem o (hspan ▸ Submodule.subset_span ⟨x, rfl⟩)
-      | add t₁ t₂ h₁ h₂ => rw [map_add]; exact L.add_mem h₁ h₂
+      | add t₁ t₂ h₁ h₂ => rw [map_add (f := _)]; exact L.add_mem h₁ h₂
     · rw [← hspan, Submodule.span_le]
       rintro _ ⟨x, rfl⟩
       exact ⟨1 ⊗ₜ x, hj x⟩

@@ -285,7 +285,7 @@ theorem linModelAt : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolog
     refine ⟨hsS, hsT, hV, add_mem (Submodule.smul_mem _ c hΨ) hΨ', hth.1, fun Tm hTm => ?_⟩
     rw [hth.2 Tm hTm, hth'.2 Tm hTm, extFun_lin]
     beta_reduce
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
 
 end GlobalTheory.SplitLinAt
 end

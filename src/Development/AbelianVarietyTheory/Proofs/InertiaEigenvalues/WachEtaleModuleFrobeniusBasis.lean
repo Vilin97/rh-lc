@@ -35,7 +35,7 @@ theorem twmap_smul {G : Type} [Group G] [TopologicalSpace G] {Qp LL O : Type} [F
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x t => simp [TWmap, TensorProduct.smul_tmul', map_mul]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 theorem twmap_surjective {G : Type} [Group G] [TopologicalSpace G] {Qp LL O : Type} [Field Qp] [Field LL]
     [Algebra Qp LL] [CommRing O] [Algebra O LL] [TopologicalSpace LL] {R : Type} [CommRing R] [Algebra O R]

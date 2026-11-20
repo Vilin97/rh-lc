@@ -60,7 +60,7 @@ theorem owedS_ringHom_eq {A B : Type} [CommRing A] [IsDedekindDomain A] [CommRin
         rw [sq] at hz
         refine Submodule.mul_induction_on hz (fun r hr s hs => hprod r hr s hs) (fun a b ha hb => ?_)
         have e : φ (a + b) - φ' (a + b) = (φ a - φ' a) + (φ b - φ' b) := by
-          rw [map_add, map_add]; ring
+          rw [map_add (f := _), map_add (f := _)]; ring
         rw [e]
         exact Ideal.add_mem _ ha hb
       have hP : ∀ y ∈ P, φ y - φ' y ∈ w ^ (n + 1) := by
@@ -69,7 +69,7 @@ theorem owedS_ringHom_eq {A B : Type} [CommRing A] [IsDedekindDomain A] [CommRin
         obtain ⟨y1, hy1, z, hz, rfl⟩ := Submodule.mem_sup.1 hy
         obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.1 hy1
         have e : φ (c * (p : A) + z) - φ' (c * (p : A) + z) = (φ c - φ' c) * φ (p : A) + (φ z - φ' z) := by
-          rw [map_add, map_add, map_mul, map_mul, map_natCast, map_natCast]; ring
+          rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_natCast, map_natCast]; ring
         rw [e]
         refine Ideal.add_mem _ ?_ (hsq z hz)
         rw [pow_succ]

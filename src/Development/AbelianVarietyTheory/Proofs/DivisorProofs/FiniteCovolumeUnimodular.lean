@@ -34,14 +34,14 @@ theorem rat_mem_integers_eventually (x : ℚ) :
 
 def starLin (G : HTGroup p) (R : Type) [CommRing R] [Algebra ℚ R] : (R ⊗[ℚ] G.C) →ₗ[R] (R ⊗[ℚ] G.C) where
   toFun a := (starT G.star R a).unop
-  map_add' x y := by rw [map_add, MulOpposite.unop_add]
+  map_add' x y := by rw [map_add (f := _), MulOpposite.unop_add]
   map_smul' r x := by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul s y =>
       rw [TensorProduct.smul_tmul', starT_tmul, starT_tmul, TensorProduct.smul_tmul', RingHom.id_apply]
     | add x y hx hy =>
-      rw [smul_add, map_add, MulOpposite.unop_add, hx, hy, map_add, MulOpposite.unop_add, smul_add]
+      rw [smul_add, map_add (f := _), MulOpposite.unop_add, hx, hy, map_add (f := _), MulOpposite.unop_add, smul_add]
 
 theorem starLin_apply (G : HTGroup p) (R : Type) [CommRing R] [Algebra ℚ R] (a : R ⊗[ℚ] G.C) :
     starLin G R a = (starT G.star R a).unop := rfl

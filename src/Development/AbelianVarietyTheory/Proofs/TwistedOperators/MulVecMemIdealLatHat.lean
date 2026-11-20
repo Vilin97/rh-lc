@@ -289,7 +289,7 @@ theorem agrees_of_isLift {Dw : Datum H} {l : Level H} {ι : Dw.La →ₗ[𝓞 D.
   · obtain ⟨w, hw, e⟩ := hx
     obtain ⟨w', hw', e'⟩ := hy
     refine ⟨w + w', add_mem hw hw', ?_⟩
-    rw [map_add, map_add, map_add, finVec_add, finVec_add, Matrix.mulVec_add, nsmul_add, ← e, ← e',
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), finVec_add, finVec_add, Matrix.mulVec_add, nsmul_add, ← e, ← e',
       add_sub_add_comm]
 
 end Lifts

@@ -36,7 +36,7 @@ private theorem mem_of_norm {R : Type} [CommRing R] {l : ℕ} [Fact l.Prime] (f 
   by_contra hxw
   obtain ⟨a, b, hb, e⟩ := hI.exists_inv hxw
   have h3 := congrArg (fun y => ‖f y‖) e
-  simp only [map_add, map_mul, map_one, norm_one] at h3
+  simp only [map_add (f := _), map_mul, map_one, norm_one] at h3
   have h4 := IsUltrametricDist.norm_add_le_max (f a * f x) (f b)
   have h5 : ‖f a * f x‖ < 1 := by
     rw [norm_mul]

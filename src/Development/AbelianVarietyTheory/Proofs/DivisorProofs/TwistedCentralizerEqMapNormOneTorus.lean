@@ -140,7 +140,7 @@ theorem isometry_eq_mul (hP : B.P.Separable) (β : B.Aˣ) (ε : B.A) (hε : ε =
       rw [aeval_C, ← Algebra.smul_def, ← Algebra.smul_def, hsm]
     | add p q hp hq =>
       intro y
-      rw [map_add, add_mul, map_add, hp, hq, add_mul]
+      rw [map_add (f := _), add_mul, map_add (f := _), hp, hq, add_mul]
     | monomial n e ih =>
       intro y
       rw [pow_succ, ← mul_assoc, map_mul (aeval B.g), aeval_X, mul_assoc (aeval B.g (C e * X ^ n)) B.g y, ih, hg,

@@ -315,7 +315,7 @@ theorem UpperTheory.V.Hi.formU :
   have hcont : ∀ u (ℓ : Module.Dual ℂ _), Continuous fun g => ℓ (infRep (V := V) ι lam g u) := fun u ℓ => by
     induction u using PiTensorProduct.induction_on with
     | add x y hx hy =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact hx.add hy
     | smul_tprod r f =>
       simp only [map_smul]

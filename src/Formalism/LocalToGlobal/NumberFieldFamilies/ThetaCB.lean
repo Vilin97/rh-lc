@@ -77,7 +77,7 @@ theorem pairE_eta (z : AF F ⊗[F] E) :
       LinearMap.id_apply, AlgHom.id_apply, ← TensorProduct.add_tmul]
     congr 1
     exact Prod.ext (add_zero (fstA F a)) (zero_add (sndA F a))
-  | add a b ha hb => rw [map_add, map_add, map_add, map_add, add_add_add_comm, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), add_add_add_comm, ha, hb]
 
 theorem fst_pairE (a : Ainf F ⊗[F] E) (b : Af F ⊗[F] E) :
     Algebra.TensorProduct.map (fstA F) (AlgHom.id F E) (pairE a b) = a := by
@@ -86,15 +86,15 @@ theorem fst_pairE (a : Ainf F ⊗[F] E) (b : Af F ⊗[F] E) :
     induction a using TensorProduct.induction_on with
     | zero => simp
     | tmul x e => rw [TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul]; rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have h2 : Algebra.TensorProduct.map (fstA F) (AlgHom.id F E) (TensorProduct.map (inrA (F := F)) LinearMap.id b) = 0 := by
     induction b using TensorProduct.induction_on with
     | zero => simp
     | tmul x e =>
       rw [TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul]
       exact TensorProduct.zero_tmul _ _
-    | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
-  rw [map_add, h1, h2, add_zero]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
+  rw [map_add (f := _), h1, h2, add_zero]
 
 theorem snd_pairE (a : Ainf F ⊗[F] E) (b : Af F ⊗[F] E) :
     Algebra.TensorProduct.map (sndA F) (AlgHom.id F E) (pairE a b) = b := by
@@ -105,13 +105,13 @@ theorem snd_pairE (a : Ainf F ⊗[F] E) (b : Af F ⊗[F] E) :
     | tmul x e =>
       rw [TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul]
       exact TensorProduct.zero_tmul _ _
-    | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
   have h2 : Algebra.TensorProduct.map (sndA F) (AlgHom.id F E) (TensorProduct.map (inrA (F := F)) LinearMap.id b) = b := by
     induction b using TensorProduct.induction_on with
     | zero => simp
     | tmul x e => rw [TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul]; rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
-  rw [map_add, h1, h2, zero_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
+  rw [map_add (f := _), h1, h2, zero_add]
 
 end Emb
 

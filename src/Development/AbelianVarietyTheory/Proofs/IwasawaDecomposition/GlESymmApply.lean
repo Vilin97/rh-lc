@@ -149,7 +149,7 @@ theorem pairOf_ok (res : R →+* k) (M : Submodule R V) (pr : M →+ W) (φ : Mo
     (pairOf res M pr φ).Ok res := by
   refine ⟨loc_sat res M, fun x hx y hy => ?_, fun a x hx => ?_, fun x hx => ?_, ?_⟩
   · show φ _ = φ _ + φ _
-    rw [locExt_add res M pr hs x hx y hy, map_add]
+    rw [locExt_add res M pr hs x hx y hy, map_add (f := _)]
   · show φ _ = _ * φ _
     rw [locExt_smul res M pr hs a x hx, map_smul, smul_eq_mul]
   · show φ _ = 0
@@ -199,7 +199,7 @@ theorem Pr.Ok.act {res : R →+* k} {p : Pr R V k} (h : p.Ok res) (g : V ≃ₗ[
     rw [map_smul] at hx; exact h.sat s _ hs hx
   · rw [Pr.mem_act] at hx hy
     show p.f _ = p.f _ + p.f _
-    rw [map_add, h.add _ hx _ hy]
+    rw [map_add (f := _), h.add _ hx _ hy]
   · rw [Pr.mem_act] at hx
     show p.f _ = _ * p.f _
     rw [map_smul, h.smul _ _ hx]

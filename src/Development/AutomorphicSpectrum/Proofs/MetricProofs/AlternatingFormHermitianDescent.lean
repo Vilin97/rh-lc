@@ -52,11 +52,11 @@ theorem exists_bilin_ext {Λ V : Type*} [AddCommGroup Λ] [AddCommGroup V] [Modu
       intro u u' v
       have := key (u + u') v (k u * k u') (k v) ((k u') • x u + (k u) • x u') (x v)
         (mul_ne_zero (hk u) (hk u')) (hk v)
-        (by rw [map_add, map_nsmul, map_nsmul, hx, hx, smul_add, smul_smul, smul_smul,
+        (by rw [map_add (f := _), map_nsmul, map_nsmul, hx, hx, smul_add, smul_smul, smul_smul,
               mul_comm (k u') (k u)])
         (hx v)
       rw [this]
-      simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, B0, nsmul_eq_mul]
+      simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, B0, nsmul_eq_mul]
       have hu := hkq u
       have hu' := hkq u'
       have hv := hkq v
@@ -79,10 +79,10 @@ theorem exists_bilin_ext {Λ V : Type*} [AddCommGroup Λ] [AddCommGroup V] [Modu
       intro u v v'
       have := key u (v + v') (k u) (k v * k v') (x u) ((k v') • x v + (k v) • x v')
         (hk u) (mul_ne_zero (hk v) (hk v')) (hx u)
-        (by rw [map_add, map_nsmul, map_nsmul, hx, hx, smul_add, smul_smul, smul_smul,
+        (by rw [map_add (f := _), map_nsmul, map_nsmul, hx, hx, smul_add, smul_smul, smul_smul,
               mul_comm (k v') (k v)])
       rw [this]
-      simp only [map_add, map_nsmul, B0, nsmul_eq_mul]
+      simp only [map_add (f := _), map_nsmul, B0, nsmul_eq_mul]
       have hu := hkq u
       have hv := hkq v
       have hv' := hkq v'
@@ -111,7 +111,7 @@ theorem exists_rat_bilin : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
   have hskew : ∀ x y, form x y = - form y x := by
     intro x y
     have := alt (x + y)
-    simp only [map_add, LinearMap.add_apply, alt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, alt] at this
     linarith
   have halt : ∀ u, B u u = 0 := by
     intro u

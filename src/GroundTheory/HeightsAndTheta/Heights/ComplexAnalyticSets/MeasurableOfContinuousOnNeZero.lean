@@ -215,7 +215,7 @@ theorem isProjPrime_of_isAffVariety {n e : ℕ} {J : Ideal (MvPolynomial (Fin n)
     | add p q hp hq =>
       obtain ⟨a, ha⟩ := hp
       obtain ⟨b, hb⟩ := hq
-      exact ⟨a + b, by rw [map_add, ha, hb, map_add]⟩
+      exact ⟨a + b, by rw [map_add (f := _), ha, hb, map_add (f := _)]⟩
     | mul_X p i _ =>
       exact ⟨0, by rw [map_zero, map_mul, Ideal.Quotient.eq_zero_iff_mem.mpr (hrel i), mul_zero]⟩
   have h1 := ringKrullDim_le_of_surjective _ hsurj

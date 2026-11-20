@@ -303,7 +303,7 @@ theorem datumFn_smul (Q : Finset (Pl D.host.E)) (c : ℂ) (ω : Reds D T.rank S.
 
 def vecL (Q : Finset (Pl D.host.E)) : (Reds D T.rank S.rank → ℂ) →ₗ[ℂ] (WO S T → ℂ) where
   toFun := F.vec G Q
-  map_add' ω ω' := by rw [vec, datumFn_add, LinearMap.map_add]; rfl
+  map_add' ω ω' := by rw [vec, datumFn_add, LinearMap.map_add (f := _)]; rfl
   map_smul' c ω := by rw [vec, datumFn_smul, LinearMap.map_smul]; rfl
 
 end Frame
@@ -332,7 +332,7 @@ theorem PlacesOK.isOrthSum {Pg Q : Finset (Pl D.host.E)} (h : PlacesOK Pg Q) :
       rw [idem, idem, Finset.sum_mul_sum]
       exact Finset.sum_eq_zero fun i hi => Finset.sum_eq_zero fun j hj => hP.mul_eq_zero (h1 hi) (h2 hj) (hne i hi j hj)
     have a4 : cA D (idem Pg) * cA D (idem Q) = 0 := by rw [← RingHom.map_mul, a3, RingHom.map_zero]
-    rw [halfIdem, RingHom.map_add, cc]
+    rw [halfIdem, RingHom.map_add (f := _), cc]
     linear_combination a1 + a2 + a3 + a4
 
 theorem isSBHalf_mul {m n : ℕ} {e : AE D} {Λ : AddSubgroup (Mx D m n)} {Φ Φ' : Mx D m n → ℂ} (h : IsSBHalf e Λ Φ)

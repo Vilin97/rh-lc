@@ -51,7 +51,7 @@ theorem free3 : StatFree3 := by
     rw [map_zero, zero_add] at this
     exact this
   have h2 : b (T.infX y) = 0 := htf _ (by rw [← map_smul, ← map_smul, h1, map_zero])
-  have h3 : (ℓ : ℤ_[ℓ]) • b x = b (T.infm a) := by rw [← map_smul, hay, map_add, h2, add_zero]
+  have h3 : (ℓ : ℤ_[ℓ]) • b x = b (T.infm a) := by rw [← map_smul, hay, map_add (f := _), h2, add_zero]
   rw [add_comm, pow_succ, mul_smul, h3]
   exact hlog a
 

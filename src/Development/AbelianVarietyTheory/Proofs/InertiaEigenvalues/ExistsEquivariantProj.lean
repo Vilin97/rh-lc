@@ -31,7 +31,7 @@ abbrev ip (φ ψ : Sm E a) : ℂ := pet (latticeGL E a) μ φ.1 ψ.1
 theorem ip_add_right (hω : ω.IsUnitary) {φ ψ ψ' : Sm E a} (h : φ ∈ bddSm ω) (h1 : ψ ∈ bddSm ω) (h2 : ψ' ∈ bddSm ω) :
     ip μ φ (ψ + ψ') = ip μ φ ψ + ip μ φ ψ' := by
   unfold ip
-  rw [← conj_pet μ (ψ + ψ').1, ← conj_pet μ ψ.1, ← conj_pet μ ψ'.1, ← map_add]
+  rw [← conj_pet μ (ψ + ψ').1, ← conj_pet μ ψ.1, ← conj_pet μ ψ'.1, ← map_add (f := _)]
   exact congrArg conj (pet_add_left μ hω h1 h2 h)
 
 theorem ip_smul_right (c : ℂ) (φ ψ : Sm E a) : ip μ φ (c • ψ) = conj c * ip μ φ ψ := by

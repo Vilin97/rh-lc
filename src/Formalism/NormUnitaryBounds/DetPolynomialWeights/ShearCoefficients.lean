@@ -32,7 +32,7 @@ lemma isWeightedHomogeneous_rename {σ τ M : Type*} [AddCommMonoid M] {w : τ �
     (motive := fun p _ => (rename f p).IsWeightedHomogeneous w m) ?_ ?_ ?_ hF
   · simpa using isWeightedHomogeneous_zero R w m
   · intro p q _ _ hp hq
-    rw [map_add]; exact hp.add hq
+    rw [map_add (f := _)]; exact hp.add hq
   · intro d r hr
     rw [rename_monomial]
     exact isWeightedHomogeneous_monomial _ _ _ (by rw [weight_mapDomain, hr])
@@ -148,7 +148,7 @@ lemma comp_coeff_shear {N n : ℕ} (i j : Fin N) (w : Fin n → ℕ)
         (isWeightedHomogeneous_monomial (coordWt N n) d r rfl)]
     split_ifs <;> simp
   | add p q hp hq =>
-    rw [map_add, map_add, Polynomial.coeff_add, map_add, hp, hq, map_add, Polynomial.coeff_add]
+    rw [map_add (f := _), map_add (f := _), Polynomial.coeff_add, map_add (f := _), hp, hq, map_add (f := _), Polynomial.coeff_add]
 
 theorem weight : NormUnitaryWeight := by
   classical

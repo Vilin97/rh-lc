@@ -26,7 +26,7 @@ theorem exists_component_subst {σ : Type} (s : σ → MvPolynomial σ ℚ) (l :
     obtain ⟨p', hp'⟩ := hp
     obtain ⟨q', hq'⟩ := hq
     refine ⟨p' + q', fun m => ?_⟩
-    rw [map_add, map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, map_add, hp', hq']
+    rw [map_add (f := _), map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, map_add (f := _), hp', hq']
 
 theorem exists_poly_blk {ι : Type} [Fintype ι] [DecidableEq ι] (e : Matrix ι ι ℚ) :
     ∃ s : ι × ι → MvPolynomial (ι × ι) ℚ, ∀ (x : Matrix ι ι ℂ) (ij : ι × ι),
@@ -43,7 +43,7 @@ theorem exists_poly_blk {ι : Type} [Fintype ι] [DecidableEq ι] (e : Matrix ι
   have h3 : φ.mapMatrix (blk e (Matrix.of fun i j => (MvPolynomial.X (i, j) : MvPolynomial (ι × ι) ℚ)))
       = blk e x := by
     unfold blk
-    simp only [map_add, map_mul, map_sub, map_one, h1, h2]
+    simp only [map_add (f := _), map_mul, map_sub, map_one, h1, h2]
   rw [← h3]
   rfl
 

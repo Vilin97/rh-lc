@@ -16,13 +16,13 @@ theorem fld_induction (P : PPol σ n) (p : Fld P → Prop) (h0 : ∀ e, p (algeb
   obtain ⟨q, rfl⟩ := AdjoinRoot.mk_surjective (g := P.1) l
   induction q using Polynomial.induction_on with
   | C a => exact h0 a
-  | add a b ha hb => rw [map_add]; exact hadd _ _ ha hb
+  | add a b ha hb => rw [map_add (f := _)]; exact hadd _ _ ha hb
   | monomial k a ha => rw [pow_succ, ← mul_assoc, map_mul]; exact hmul _ ha
 
 theorem star_star (hσ : ∀ e, σ (σ e) = e) (P : PPol σ n) (l : Fld P) : star' P (star' P l) = l := by
   induction l using fld_induction with
   | h0 e => rw [star'_algebraMap, star'_algebraMap, hσ]
-  | hadd a b ha hb => rw [map_add, map_add, ha, hb]
+  | hadd a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   | hmul a ha => rw [map_mul, map_mul, ha, star'_alpha, map_inv₀, star'_alpha, inv_inv]
 
 theorem trace_star (hσ : ∀ e, σ (σ e) = e) (P : PPol σ n) (l : Fld P) :
@@ -92,7 +92,7 @@ theorem exists_trace_form : ∀ (F E : Type) [Field F] [Field E] [CharZero E] [A
       rfl
     | hadd a b ha hb =>
       intro y y'
-      rw [add_mul, map_add, hform_add_left, ha, hb, map_add, add_mul, map_add, hform_add_right]
+      rw [add_mul, map_add (f := _), hform_add_left, ha, hb, map_add (f := _), add_mul, map_add (f := _), hform_add_right]
     | hmul a ha =>
       intro y y'
       rw [mul_assoc, ha, map_mul (star' P), star'_alpha, ← h1 (star' P a * (alpha P)⁻¹ * y) y']
@@ -100,7 +100,7 @@ theorem exists_trace_form : ∀ (F E : Type) [Field F] [Field E] [CharZero E] [A
       field_simp [alpha_ne_zero P]
   let f : Module.Dual E (Fld P) :=
     { toFun := fun y => Formalism.UG.hform s J (φ 1) (φ y)
-      map_add' := fun a b => by rw [map_add, hform_add_right]
+      map_add' := fun a b => by rw [map_add (f := _), hform_add_right]
       map_smul' := fun c a => by rw [map_smul, hform_smul_right]; rfl }
   have hnd := traceForm_nondegenerate E (Fld P)
   let x : Fld P := ((Algebra.traceForm E (Fld P)).toDual hnd).symm f

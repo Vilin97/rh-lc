@@ -52,7 +52,7 @@ theorem flat_ker_rank_one_r (δ : M →ₗ[R] N) (θ : M) (hker : ∀ m, δ m = 
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul m s => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have ht' : δ.lTensor S (TensorProduct.comm R M S t) = 0 := by rw [hcomm, ht, map_zero]
   obtain ⟨a, ha, hu⟩ := flat_ker_rank_one δ θ hker hfree _ ht'
   refine ⟨a, ?_, fun b hb => hu b ?_⟩
@@ -67,7 +67,7 @@ lemma piLeft_apply_eq {ι : Type*} [Fintype ι] [DecidableEq ι] (Mi : ι → Ty
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul m s => simp
-  | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
 
 section Cover
 
@@ -297,7 +297,7 @@ lemma eTens_rs (U U' : X.Opens) (hU : IsAffineOpen U) (hU' : IsAffineOpen U') (h
     show (φ.appLE U' _ _).hom (ReciprocityTheory.ChartRestriction.G.DVR.rs h a) = ReciprocityTheory.ChartRestriction.G.DVR.rs _ ((φ.appLE U _ _).hom a)
     simp only [ReciprocityTheory.ChartRestriction.G.DVR.rs]
     rw [← CommRingCat.comp_apply, ← CommRingCat.comp_apply, Scheme.Hom.map_appLE, Scheme.Hom.appLE_map]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 lemma eTens_mul (U : X.Opens) (hU : IsAffineOpen U) (u : Γ(X, U))
     (x : letI := (algX p U).toAlgebra; Γ(X, U) ⊗[R] S) :
@@ -310,7 +310,7 @@ lemma eTens_mul (U : X.Opens) (hU : IsAffineOpen U) (u : Γ(X, U))
     rw [LinearMap.rTensor_tmul, eTens_tmul, eTens_tmul]
     show (φ.appLE U _ _).hom (u * a) * _ = _
     rw [map_mul]; ring
-  | add x y hx hy => simp only [map_add, hx, hy, mul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
 
 end Pushout
 
@@ -356,7 +356,7 @@ theorem flatBC_gen [Module.Flat R S] [CompactSpace X]
     { toFun := fun f kl => dfun L V c hVc f kl.1 kl.2
       map_add' := fun f g => by
         funext kl
-        simp only [dfun, Pi.add_apply, map_add, mul_add]
+        simp only [dfun, Pi.add_apply, map_add (f := _), mul_add]
         abel
       map_smul' := fun r f => by
         funext kl

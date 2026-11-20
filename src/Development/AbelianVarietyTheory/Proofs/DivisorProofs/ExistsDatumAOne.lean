@@ -31,7 +31,7 @@ theorem bO_one : bO 1 = ζO := by simp [bO]
 
 theorem repr_coord (a b : ℤ) : bO.repr ((a : 𝓞 Qi) + b * ζO) = Finsupp.equivFunOnFinite.symm ![a, b] := by
   have : ((a : 𝓞 Qi) + b * ζO) = a • bO 0 + b • bO 1 := by simp [bO_zero, bO_one, zsmul_eq_mul]
-  rw [this, map_add, map_zsmul, map_zsmul, bO.repr_self, bO.repr_self]
+  rw [this, map_add (f := _), map_zsmul, map_zsmul, bO.repr_self, bO.repr_self]
   ext i; fin_cases i <;> simp
 
 theorem repr0 (a b : ℤ) : bO.repr ((a : 𝓞 Qi) + b * ζO) 0 = a := by simp [repr_coord]
@@ -55,9 +55,9 @@ namespace GlobalTheory.UPel.HT.GaussOne
 
 def EF : LinearMap.BilinForm ℤ (𝓞 Qi) :=
   LinearMap.mk₂ ℤ (fun x y => bO.repr x 1 * bO.repr y 0 - bO.repr x 0 * bO.repr y 1)
-    (fun x x' y => by simp only [map_add, Finsupp.add_apply]; ring)
+    (fun x x' y => by simp only [map_add (f := _), Finsupp.add_apply]; ring)
     (fun r x y => by simp only [map_smul, Finsupp.smul_apply, smul_eq_mul]; ring)
-    (fun x y y' => by simp only [map_add, Finsupp.add_apply]; ring)
+    (fun x y y' => by simp only [map_add (f := _), Finsupp.add_apply]; ring)
     (fun r x y => by simp only [map_smul, Finsupp.smul_apply, smul_eq_mul]; ring)
 
 theorem EF_coord (a b c d : ℤ) : EF ((a : 𝓞 Qi) + b * ζO) ((c : 𝓞 Qi) + d * ζO) = b * c - a * d := by
@@ -125,7 +125,7 @@ theorem J_J (x : ℝ ⊗[ℤ] 𝓞 Qi) : J (J x) = -x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r y => simp [J, ← mul_assoc, ζO_sq, TensorProduct.tmul_neg]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, neg_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, neg_add]
 
 theorem J_EF (x y : ℝ ⊗[ℤ] 𝓞 Qi) : EF.baseChange ℝ (J x) (J y) = EF.baseChange ℝ x y := by
   have key : (EF.baseChange ℝ).compl₁₂ J J = EF.baseChange ℝ :=
@@ -148,7 +148,7 @@ theorem J_pos (x : ℝ ⊗[ℤ] 𝓞 Qi) (hx : x ≠ 0) : 0 < EF.baseChange ℝ 
     apply hx
     rw [← hx', h0, h1, zero_smul, zero_smul, add_zero]
   rw [← hx']
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hG]
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hG]
   simp only [Fin.isValue, ite_true, show ((0 : Fin 2) = 1) = False by decide, show ((1 : Fin 2) = 0) = False by decide,
     ite_false, mul_one, mul_zero, add_zero, zero_add]
   by_cases h0 : bR.repr x 0 = 0
@@ -163,7 +163,7 @@ namespace GlobalTheory.UPel.HT.GaussOne
 theorem emb_ext (τ σ : Qi →+* ℂ) (h : τ ii = σ ii) : τ = σ :=
   RingHom.ext fun x => by
     obtain ⟨a, b, rfl⟩ := exists_coord x
-    simp only [map_add, map_mul, map_ratCast, h]
+    simp only [map_add (f := _), map_mul, map_ratCast, h]
 
 theorem filt : Finset.univ.filter (fun τ : Qi →+* ℂ => τ ((ζO : 𝓞 Qi) : Qi) = (starRingEnd ℂ) Complex.I) =
     {(starRingEnd ℂ).comp τ₀} := by

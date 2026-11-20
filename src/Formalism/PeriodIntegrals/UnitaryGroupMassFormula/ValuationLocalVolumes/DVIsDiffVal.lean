@@ -34,7 +34,7 @@ theorem val_pow_le (k : ℕ) (x : 𝓞 F) (hx : x ∈ differentIdeal ℤ (𝓞 F
       have h2 := ih b hb
       rw [show ((a * b : 𝓞 F) : F) = (a : F) * (b : F) from rfl, map_mul, map_mul, pow_succ']
       exact mul_le_mul' h1 h2
-    · rw [show ((a + b : 𝓞 F) : F) = (a : F) + (b : F) from rfl, map_add]
+    · rw [show ((a + b : 𝓞 F) : F) = (a : F) + (b : F) from rfl, map_add (f := _)]
       exact Valuation.map_add_le _ ha hb
 
 end Formalism.L2.SG.Pf.NcVal.OmVSt.OmX

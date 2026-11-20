@@ -16,7 +16,7 @@ private theorem truncSub {R : Type} [CommRing R] (H : PowerSeries R) (g N : ℕ)
     rw [hQ]
     generalize P = S
     induction S using Polynomial.induction_on' with
-    | add f h hf hh => simp only [Polynomial.coe_add, map_add, hf, hh, Polynomial.add_comp]
+    | add f h hf hh => simp only [Polynomial.coe_add, map_add (f := _), hf, hh, Polynomial.add_comp]
     | monomial n a =>
       have hC : sb g (PowerSeries.C a : PowerSeries R) = PowerSeries.C a := (sb (R := R) g).commutes a
       rw [← Polynomial.C_mul_X_pow_eq_monomial]

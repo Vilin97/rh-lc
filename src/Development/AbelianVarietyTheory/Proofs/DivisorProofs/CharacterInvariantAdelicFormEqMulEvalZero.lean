@@ -136,7 +136,7 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ
   let a : ((κ → Af F) → ℂ) →ₗ[ℂ] ℂ :=
     { toFun := fun g => l (pureA F f₀ g)
       map_add' := fun g g' => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         ring
       map_smul' := fun s g => by
@@ -172,7 +172,7 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ
     rw [hα f, hαc, pureA_zero]
     ring
   | zero => simp
-  | add φ φ' _ _ h h' => rw [map_add, h, h', Pi.add_apply, mul_add]
+  | add φ φ' _ _ h h' => rw [map_add (f := _), h, h', Pi.add_apply, mul_add]
   | smul s φ _ h => rw [map_smul, h, Pi.smul_apply, smul_eq_mul, smul_eq_mul]; ring
 
 end GlobalTheory.CharInvForm

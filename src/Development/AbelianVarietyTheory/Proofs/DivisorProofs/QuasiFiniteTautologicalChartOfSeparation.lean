@@ -372,7 +372,7 @@ theorem psi_mem_closure (C : TChart.Taut ζ g n φ) (a : MvPolynomial (Fin C.m �
     C.ψ a ∈ Subring.closure (Set.range C.iw ∪ Set.range C.s) := by
   induction a using MvPolynomial.induction_on with
   | C w => exact Subring.subset_closure (Or.inl ⟨w, rfl⟩)
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | mul_X p k hp => rw [map_mul]; exact mul_mem hp (Subring.subset_closure (Or.inr ⟨k, rfl⟩))
 
 theorem lowBase_smul_single (B : LowBase ζ n) (k : ℕ) (i : Fin B.T.r) :

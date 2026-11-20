@@ -73,7 +73,7 @@ theorem finite_centre_not_mem (k K E : Type) [Field k] [IsAlgClosed k] [CharZero
     induction hg using Algebra.adjoin_induction with
     | mem a ha => exact hp a ha
     | algebraMap c => exact hconst p c
-    | add a b _ _ ha hb => rw [map_add]; exact (p.1.map_add _ _).trans (max_le ha hb)
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact (p.1.map_add _ _).trans (max_le ha hb)
     | mul a b _ _ ha hb => rw [map_mul, map_mul]; exact mul_le_one' ha hb
   have hE : IsFF k E := (GlobalTheory.T.functionFieldOneVariable_transcendental_finite_and_ext k K (GlobalTheory.T.isFunctionFieldOfOneVariable_of_genericPointOfCurve k K C x hx)).2 E
   refine ((s.finite_toSet.biUnion fun a _ => (?_ : {p : Place k E | ¬ p.1 (f a) ≤ 1}.Finite))).subset ?_

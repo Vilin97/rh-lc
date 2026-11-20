@@ -160,7 +160,7 @@ theorem loc_borel (X : Data E r) (τ : E →+* ℂ) (M M' : Matrix (Fin r) (Fin 
     refine eq_zero_of_lattice X τ (fun u => locPer τ X.Gm q M' u a - (K *ᵥ locPer τ X.Gm q M u) a)
       (fun c => if (a : ℕ) < q then conj c else c) (fun u w => ?_) (fun c u => ?_)
       (fun v hv => sub_eq_zero.2 (hlat v hv a)) u
-    · simp only [map_add, Matrix.mulVec_add, Pi.add_apply]; ring
+    · simp only [map_add (f := _), Matrix.mulVec_add, Pi.add_apply]; ring
     · have hs : ∀ (N : Matrix (Fin r) (Fin r) ℂ) (e : Fin r), locPer τ X.Gm q N (c • u) e =
           (if (e : ℕ) < q then conj c else c) * locPer τ X.Gm q N u e := by
         intro N e

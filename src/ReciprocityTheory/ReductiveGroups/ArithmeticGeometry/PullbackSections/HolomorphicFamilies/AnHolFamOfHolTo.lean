@@ -134,7 +134,7 @@ theorem anJetMap_comp {K : Type} [Field K] {Ia Ib Ic : Type} {m : ℕ} (φ : Ia 
   congr 1
   induction p using MvPolynomial.induction_on with
   | C r => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, hp, MvPolynomial.aeval_X, h i]
 
 section Two
@@ -173,7 +173,7 @@ theorem anRen_sum (m : ℕ) (a : Jet ℂ (Fin 1 × Fin g) m) :
       (MvPolynomial.X (anKap.symm q.2) : MvPolynomial (Fin 2 × Fin g) ℂ)) (anLin anSum p) =
       MvPolynomial.X ((0 : Fin 2), p.2) + MvPolynomial.X ((1 : Fin 2), p.2) := by
     intro p
-    simp only [anSum, anLin_add, anLin_anPr, map_add, MvPolynomial.aeval_X, Equiv.symm_apply_apply]
+    simp only [anSum, anLin_add, anLin_anPr, map_add (f := _), MvPolynomial.aeval_X, Equiv.symm_apply_apply]
   unfold anRen jetSubstP
   rw [anJetMap_comp _ _ _ _ _ (fun p => Ideal.add_mem _ (X_mem_orig _) (X_mem_orig _)) hs a]
   refine jetMap_congr _ _ _ _ (fun p => ?_) a

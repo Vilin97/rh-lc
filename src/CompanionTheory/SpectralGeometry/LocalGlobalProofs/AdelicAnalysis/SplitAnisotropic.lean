@@ -70,7 +70,7 @@ theorem split_anisotropic : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
     have hv00 : v 0 = 0 := by
       have h1 := congrArg φ hsum
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_smul, map_sum, map_zero, hφ, hx, smul_eq_mul] at h1
+        rw [map_add (f := _), map_smul, map_sum, map_zero, hφ, hx, smul_eq_mul] at h1
       have h2 : ∀ k : Fin M, φ (v k.succ • (b k : Fin (M + 1) → E)) = 0 := by
         intro k
         rw [map_smul, hφ, hb, smul_zero]

@@ -24,7 +24,7 @@ def rowP (W : HSp D) (β : GL (Fin W.rank) (EAf D)) (e : AE D) (x : Fin W.rank �
 
 theorem rowPairing_add (W : HSp D) (β : GL (Fin W.rank) (EAf D)) (e : AE D) (x y : Fin W.rank → D.host.E) (a : Fin W.rank) :
     rowP W β e (x + y) a = rowP W β e x a + rowP W β e y a := by
-  simp only [rowP, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+  simp only [rowP, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, mul_add]
 
 theorem rowPairing_zero (W : HSp D) (β : GL (Fin W.rank) (EAf D)) (e : AE D) (a : Fin W.rank) :
     rowP W β e 0 a = 0 := by
@@ -79,8 +79,8 @@ theorem residue_rowPairing_eq_zero (W : HSp D) (β : GL (Fin W.rank) (EAf D)) (e
   · have : (⟨_, hi (x + y)⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) = ⟨_, hi x⟩ + ⟨_, hi y⟩ := by
       refine Subtype.ext ?_
       change rowP W β e (ι (x + y)) a = rowP W β e (ι x) a + rowP W β e (ι y) a
-      rw [map_add, rowPairing_add]
-    rw [this, map_add, hx, hy, add_zero]
+      rw [map_add (f := _), rowPairing_add]
+    rw [this, map_add (f := _), hx, hy, add_zero]
 
 theorem redM_uMat (V W : HSp D) (hV : V.gram = 1) (βV : GL (Fin V.rank) (EAf D)) (hβ : IsIntM (βV⁻¹).val)
     (β : GL (Fin W.rank) (EAf D)) (e : AE D) (X : Fin V.rank → Fin W.rank → D.host.E)
@@ -152,8 +152,8 @@ theorem exists_datum (V W : HSp D) (hV : V.gram = 1) (βV : GL (Fin V.rank) (EAf
     have : (⟨_, hi (z b') a⟩ : Formalism.L2.Herm.intAf D.host.F D.host.E) = ⟨_, hi (z b' - x b') a⟩ + ⟨_, hi (x b') a⟩ := by
       refine Subtype.ext ?_
       change rowP W β e (ι (z b')) a = rowP W β e (ι (z b' - x b')) a + rowP W β e (ι (x b')) a
-      rw [← rowPairing_add, ← LinearMap.map_add, sub_add_cancel]
-    rw [this, RingHom.map_add, h2, zero_add]
+      rw [← rowPairing_add, ← LinearMap.map_add (f := _), sub_add_cancel]
+    rw [this, RingHom.map_add (f := _), h2, zero_add]
   funext b a
   exact ((redM_uMat V W hV βV hβ β e (fun b => ι (z b)) fun b a => hi (z b) a).2 PP b a).trans
     ((Finset.sum_congr rfl fun b' _ => congrArg _ (key b' a)).trans

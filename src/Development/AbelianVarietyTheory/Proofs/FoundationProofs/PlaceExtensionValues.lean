@@ -31,7 +31,7 @@ theorem ext_induction (hE : IsCoefExt ι lam c₀ c') {p : W → Prop} (h0 : ∀
     rw [hE ⟨F, hF⟩ (bVV K' lam j) ((bVV_coe _ _ _).trans hj)]
     exact h0 _
   | zero => have := h0 0; rw [map_zero] at this ⊢; exact this
-  | add x y _ _ hx hy => rw [map_add]; exact hadd _ _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact hadd _ _ hx hy
   | smul a x _ hx => rw [map_smulₛₗ]; exact hsmul _ _ hx
 
 theorem ext_stable (hE : IsCoefExt ι lam c₀ c') (T : W →ₗ[ℂ] W) (hT : ∀ v, ∃ u, c₀ u = T (c₀ v)) (v' : VV K' lam) :
@@ -41,7 +41,7 @@ theorem ext_stable (hE : IsCoefExt ι lam c₀ c') (T : W →ₗ[ℂ] W) (hT : �
     obtain ⟨u', hu'⟩ := exists_ext_val hE u
     exact ⟨u', hu'.trans hu⟩
   · rintro x y ⟨u, hu⟩ ⟨u', hu'⟩
-    exact ⟨u + u', by rw [map_add, map_add, hu, hu']⟩
+    exact ⟨u + u', by rw [map_add (f := _), map_add (f := _), hu, hu']⟩
   · rintro a x ⟨u, hu⟩
     exact ⟨a • u, by rw [map_smulₛₗ, map_smul, hu]⟩
 

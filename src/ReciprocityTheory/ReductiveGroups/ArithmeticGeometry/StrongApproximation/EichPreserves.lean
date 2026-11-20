@@ -42,7 +42,7 @@ theorem hf_zero_left (y : ι → R) : hf σ J 0 y = 0 := by
   simp [hf]
 
 theorem hf_add_right (x y y' : ι → R) : hf σ J x (y + y') = hf σ J x y + hf σ J x y' := by
-  simp only [hf, Pi.add_apply, map_add, ← Finset.sum_add_distrib]
+  simp only [hf, Pi.add_apply, map_add (f := _), ← Finset.sum_add_distrib]
   apply Finset.sum_congr rfl; intro i _
   apply Finset.sum_congr rfl; intro j _
   ring

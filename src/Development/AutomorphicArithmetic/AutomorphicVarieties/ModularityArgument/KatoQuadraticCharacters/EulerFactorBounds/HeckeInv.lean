@@ -141,7 +141,7 @@ private theorem hi_rep_sum (n : ℕ) {ι : Type} (S : Finset ι) (c : ι → X.K
         rw [Units.val_mul, Units.val_mul, mul_pow, div_mul_div_comm]
       rw [this, map_mul, hg, hg', one_mul]
     · unfold UpperTheory.Kd.K4.Rep at *
-      rw [Finset.sum_insert hi, map_add, hr, hr']
+      rw [Finset.sum_insert hi, map_add (f := _), hr, hr']
       simp only [GlobalTheory.KZ.Tower.cls, ofMul_mul, TensorProduct.tmul_add, Submodule.Quotient.mk_add]
 
 private theorem hi_polMod_sum (w n : ℕ) {ι : Type} (S : Finset ι) (t : ι → X.Fn l) (h : ∀ i, PolMod X l w n (t i)) :

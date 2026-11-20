@@ -16,7 +16,7 @@ theorem UpperTheory.Reformulated.B.Qn15.eval_fg :
     obtain ⟨M, hM, hp⟩ := hp
     obtain ⟨N, hN, hq⟩ := hq
     refine ⟨M ⊔ N, hM.sup hN, fun v hv => ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (hp v hv) (hq v hv)
   | mul_X p i hp =>
     obtain ⟨M, hM, hp⟩ := hp

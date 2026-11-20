@@ -41,7 +41,7 @@ theorem inR_mul (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (α : Av I v)
   obtain ⟨c, d, hc, hd, rfl⟩ := hy
   refine ⟨a * c - b * d, a * d + b * c + b * d * t, sub_mem (mul_mem ha hc) (mul_mem hb hd),
     add_mem (add_mem (mul_mem ha hd) (mul_mem hb hc)) (mul_mem (mul_mem hb hd) htO), ?_⟩
-  simp only [map_sub, map_add, map_mul]
+  simp only [map_sub, map_add (f := _), map_mul]
   linear_combination (incL I v b * incL I v d) * ht
 
 theorem inR_pow (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (α : Av I v)

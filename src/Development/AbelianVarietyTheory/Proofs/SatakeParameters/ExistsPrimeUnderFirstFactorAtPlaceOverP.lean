@@ -166,7 +166,7 @@ theorem exists_primeOf_place : ∀ (F E : Type) [Field F] [NumberField F] [Field
     have e1 : algebraMap F K (algebraMap (𝓞 F) F r) = a - (((p : ℕ) : K) ^ k) * (d * (((p : ℕ) : K) ^ k)⁻¹) := by
       rw [mul_comm d, ← mul_assoc, mul_inv_cancel₀ hc0, one_mul]; simp [d]
     rw [e1, map_sub, map_mul, map_pow, map_natCast, ← hz', RingEquiv.symm_apply_apply]
-    simp only [map_add, map_mul, map_pow, map_natCast, map_neg]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast, map_neg]
     ring
   · rw [mem_primeAt, map_natCast]
   · intro h

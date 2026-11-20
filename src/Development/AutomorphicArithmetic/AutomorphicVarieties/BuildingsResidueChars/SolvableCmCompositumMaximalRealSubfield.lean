@@ -23,7 +23,7 @@ private theorem rcsup_cm_of_pair {K : Type} [Field K] [NumberField K] [IsTotally
     have h0 : (s : K) + (t : K) * d = 0 := by
       simpa [Subfield.smul_def] using hst
     have h1 : φ s + φ t * φ d = 0 := by
-      rw [← map_mul, ← map_add, h0, map_zero]
+      rw [← map_mul, ← map_add (f := _), h0, map_zero]
     have h2 : φ s - φ t * φ d = 0 := by
       have := congrArg star h1
       rw [star_add, star_mul', s.2 φ, t.2 φ, hd φ, star_zero] at this
@@ -91,11 +91,11 @@ theorem UpperTheory.solvable_cm_compositum_maximalRealSubfield :
     | algebraMap r =>
       refine ⟨algebraMap M M' ((r + IsCMField.complexConj M r) / 2), rcsup_map_real _ ?_,
         algebraMap M M' ((r - IsCMField.complexConj M r) / (2 * δ)), rcsup_map_real _ ?_, ?_⟩
-      · rw [← IsCMField.complexConj_eq_self_iff, map_div₀, map_add, IsCMField.complexConj_apply_apply, map_ofNat, add_comm]
+      · rw [← IsCMField.complexConj_eq_self_iff, map_div₀, map_add (f := _), IsCMField.complexConj_apply_apply, map_ofNat, add_comm]
       · rw [← IsCMField.complexConj_eq_self_iff, map_div₀, map_sub, map_mul, IsCMField.complexConj_apply_apply, map_ofNat, hcδ]
         field_simp
         ring
-      · rw [← map_mul, ← map_add]
+      · rw [← map_mul, ← map_add (f := _)]
         congr 1
         field_simp
         ring

@@ -21,7 +21,7 @@ theorem basicOpen_sum_le {X : Scheme.{0}} {U : X.Opens} {ι : Type} (t : Finset 
     rw [Finset.sum_insert ha]
     intro x hx
     have hxU : x ∈ U := X.basicOpen_le _ hx
-    rw [Scheme.mem_basicOpen _ _ _ hxU, map_add] at hx
+    rw [Scheme.mem_basicOpen _ _ _ hxU, map_add (f := _)] at hx
     rcases IsLocalRing.isUnit_or_isUnit_of_isUnit_add hx with h | h
     · have : x ∈ X.basicOpen (f a) := (Scheme.mem_basicOpen _ _ _ hxU).2 h
       exact TopologicalSpace.Opens.mem_iSup.2 ⟨a, TopologicalSpace.Opens.mem_iSup.2 ⟨Finset.mem_insert_self a t, this⟩⟩

@@ -54,7 +54,7 @@ theorem isFinComb_comp (ψ : AddChar (AF D.host.F) ℂ) {S T : HSp D} {b b' : WO
   have e1 := congrFun (congrFun (hb x hx) i) j
   have e2 := congrFun (congrFun (hb' y hy) i) j
   simp only [Matrix.map_apply, Matrix.zero_apply] at e1 e2 ⊢
-  rw [Matrix.add_apply, RingHom.map_add, e1, e2, add_zero]
+  rw [Matrix.add_apply, RingHom.map_add (f := _), e1, e2, add_zero]
 
 end GlobalTheory.TopConv
 

@@ -62,7 +62,7 @@ theorem hatO_integral {c : Ideal (OF E)} {y : Af E} (hy : y ∈ hatO c) (v : Hei
     rintro _ ⟨x, hx, rfl⟩
     obtain ⟨a, b, -, rfl⟩ := mem_orderC.1 hx
     have : algebraMap (OF E) E a + algebraMap (𝓞 E) E b = algebraMap (𝓞 E) E (algebraMap (OF E) (𝓞 E) a + b) := by
-      rw [map_add]; rfl
+      rw [map_add (f := _)]; rfl
     rw [this]
     refine (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).2 ?_
     exact (HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v _).trans_le (v.valuation_le_one _)

@@ -75,12 +75,12 @@ theorem exists_represent_of_five (h2 : (2 : K) ≠ 0)
   have hw1 := congrArg (algebraMap K L) hw0
   have hw2 : algebraMap K L (w none) ≠ 0 := (map_ne_zero _).2 hw
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [a, Option.elim, Sum.elim_inl, Sum.elim_inr, map_add, map_mul, map_neg, map_pow, map_sum,
+    simp only [a, Option.elim, Sum.elim_inl, Sum.elim_inr, map_add (f := _), map_mul, map_neg, map_pow, map_sum,
     hγ', hκ', hd, map_zero] at hw1
   have hs : ∀ s : K, c (algebraMap K L s) = algebraMap K L s := fun s => (hF _).2 ⟨s, rfl⟩
   refine ⟨fun i => (algebraMap K L (w (some (Sum.inl i))) +
     algebraMap K L (w (some (Sum.inr i))) * θ) / algebraMap K L (w none), ?_⟩
-  simp only [dotProduct, Matrix.mulVec_diagonal, Function.comp_apply, map_div₀, map_add, map_mul,
+  simp only [dotProduct, Matrix.mulVec_diagonal, Function.comp_apply, map_div₀, map_add (f := _), map_mul,
     hs, hθ]
   have : ∀ i, (algebraMap K L (w (some (Sum.inl i))) + algebraMap K L (w (some (Sum.inr i))) * θ) /
       algebraMap K L (w none) * (g i * ((algebraMap K L (w (some (Sum.inl i))) +
@@ -370,7 +370,7 @@ theorem congr_of_local (hG : ∀ a b, cc (G a b) = G b a) (hG' : ∀ a b, cc (G'
   have h1 := congrArg (Subtype.val : maximalRealSubfield E → E) hxy
   have h2 : IsCMField.complexConj E θ = -θ := hθ
   simp [a, hdθ] at h1
-  simp only [cc, map_add, map_mul, IsCMField.complexConj_apply_eq_self, h2, h1]
+  simp only [cc, map_add (f := _), map_mul, IsCMField.complexConj_apply_eq_self, h2, h1]
   ring
 
 end Global

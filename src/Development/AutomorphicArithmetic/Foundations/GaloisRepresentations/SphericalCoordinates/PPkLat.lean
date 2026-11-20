@@ -147,8 +147,8 @@ private theorem core (hPL : PLatOf) {D : Datum p} (T T' : VQ D →+ Loc G)
     { carrier := {x | IntL (mv P (T x)) ∧ IntL (mv Q (T' x))}
       add_mem' := fun {a b} ha hb => by
         refine ⟨?_, ?_⟩
-        · rw [map_add, mv_add]; exact intL_add ha.1 hb.1
-        · rw [map_add, mv_add]; exact intL_add ha.2 hb.2
+        · rw [map_add (f := _), mv_add]; exact intL_add ha.1 hb.1
+        · rw [map_add (f := _), mv_add]; exact intL_add ha.2 hb.2
       zero_mem' := by
         refine ⟨?_, ?_⟩
         · rw [map_zero, mv_zero]; exact intL_zero

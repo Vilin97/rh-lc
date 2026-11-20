@@ -83,7 +83,7 @@ theorem cA_mem {z : AE D} (hz : z ∈ finInt D) : cA D z ∈ finInt D := by
     rw [cA_tmul]
     exact gen_mem hα (star_int hx)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem mul_mem' {z w : AE D} (hz : z ∈ finInt D) (hw : w ∈ finInt D) : z * w ∈ finInt D := by
@@ -111,7 +111,7 @@ theorem psi_trace {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {
     rw [trace_tmul, pairFiniteAdele_zero_mul_algebraMap_base]
     exact char_int hψ (intAf_mul' hα (coe_mem_intAf ⟨_, hint⟩))
   | zero => rw [map_zero]; exact AddChar.map_zero_eq_one ψ
-  | add x y _ _ hx hy => rw [map_add, AddChar.map_add_eq_mul, hx, hy, one_mul]
+  | add x y _ _ hx hy => rw [map_add (f := _), AddChar.map_add_eq_mul, hx, hy, one_mul]
   | neg x _ hx => rw [map_neg, AddChar.map_neg_eq_inv, hx, inv_one]
 
 theorem exists_den {ι : Type} [Fintype ι] (f : ι → D.host.E) :

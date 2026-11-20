@@ -60,7 +60,7 @@ theorem eval_lineRestr {K : Type*} [DecidableEq K] (p : MvPolynomial K ℚ) (k�
     (lineRestr p k₀ m).eval t = MvPolynomial.eval (fun k => if k = k₀ then t else m k) p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [lineRestr]
-  | add p q hp hq => simp only [lineRestr, map_add, Polynomial.eval_add] at *; rw [hp, hq]
+  | add p q hp hq => simp only [lineRestr, map_add (f := _), Polynomial.eval_add] at *; rw [hp, hq]
   | mul_X p k hp =>
     simp only [lineRestr, map_mul, Polynomial.eval_mul] at *
     rw [hp]

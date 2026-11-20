@@ -31,7 +31,7 @@ private theorem harm_comb {q : ℕ} (c : ℂ)
     (hη : IsHarm U Ξ r e η) : IsHarm U Ξ r e (c • ω + η) := by
   have ap : ∀ X, (c • ω + η) X = c • ω X + η X := fun X => rfl
   refine ⟨⟨fun k X => ?_, fun X i hi => ?_, fun X => ?_⟩, ?_, ?_⟩
-  · rw [ap, ap, hω.rel.equiv k X, hη.rel.equiv k X, map_add, map_smul]
+  · rw [ap, ap, hω.rel.equiv k X, hη.rel.equiv k X, map_add (f := _), map_smul]
   · rw [ap, hω.rel.basic X i hi, hη.rel.basic X i hi, smul_zero, add_zero]
   · rw [ap]
     exact Submodule.add_mem _ (Submodule.smul_mem _ _ (hω.rel.val X)) (hη.rel.val X)
@@ -39,7 +39,7 @@ private theorem harm_comb {q : ℕ} (c : ℂ)
     have h1 := DFunLike.congr_fun hω.closed X
     have h2 := DFunLike.congr_fun hη.closed X
     rw [dCo_apply, AlternatingMap.zero_apply] at h1 h2 ⊢
-    simp only [ap, map_add, map_smul, smul_add, Finset.sum_add_distrib, h2, add_zero]
+    simp only [ap, map_add (f := _), map_smul, smul_add, Finset.sum_add_distrib, h2, add_zero]
     rw [← smul_zero c, ← h1, Finset.smul_sum]
     exact Finset.sum_congr rfl fun i _ => smul_comm _ _ _
   · cases q with
@@ -49,7 +49,7 @@ private theorem harm_comb {q : ℕ} (c : ℂ)
       have h1 := DFunLike.congr_fun (show del _ e ω = 0 from hω.coclosed) X
       have h2 := DFunLike.congr_fun (show del _ e η = 0 from hη.coclosed) X
       rw [del_apply, AlternatingMap.zero_apply] at h1 h2 ⊢
-      simp only [ap, map_add, map_smul, Finset.sum_add_distrib, h2, add_zero, ← Finset.smul_sum, h1, smul_zero]
+      simp only [ap, map_add (f := _), map_smul, Finset.sum_add_distrib, h2, add_zero, ← Finset.smul_sum, h1, smul_zero]
 
 end SlopeTestRemainingChoices
 

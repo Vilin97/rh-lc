@@ -106,7 +106,7 @@ theorem hasDerivAt_thetaIntegral : ∀ (F E : Type) [Field F] [NumberField F] [F
       obtain ⟨x₁, hx₁, ex⟩ := ihx
       obtain ⟨y₁, hy₁, ey⟩ := ihy
       refine ⟨x₁ + y₁, add_mem hx₁ hy₁, fun z => ?_⟩
-      simp only [map_add, Pi.add_apply]
+      simp only [map_add (f := _), Pi.add_apply]
       exact (ex z).add (ey z)
     | smul r x hx ihx =>
       obtain ⟨x₁, hx₁, ex⟩ := ihx
@@ -122,7 +122,7 @@ theorem hasDerivAt_thetaIntegral : ∀ (F E : Type) [Field F] [NumberField F] [F
       map_add' := fun Ψ₁ Ψ₂ => by
         funext y
         have e := ((hderv i _ Ψ₁.2 y).add (hderv i _ Ψ₂.2 y)).deriv
-        simp only [Submodule.coe_add, map_add, Pi.add_apply]
+        simp only [Submodule.coe_add, map_add (f := _), Pi.add_apply]
         exact e
       map_smul' := fun r Ψ => by
         funext y
@@ -172,7 +172,7 @@ theorem hasDerivAt_thetaIntegral : ∀ (F E : Type) [Field F] [NumberField F] [F
     | add x y hx hy ihx ihy =>
       intro f hf φ hSB hvac
       have e : (⟨x + y, add_mem hx hy⟩ : U) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-      rw [e, map_add, LinearMap.add_apply, ihx f hf φ hSB hvac, ihy f hf φ hSB hvac, map_add, LinearMap.add_apply,
+      rw [e, map_add (f := _), LinearMap.add_apply, ihx f hf φ hSB hvac, ihy f hf φ hSB hvac, map_add (f := _), LinearMap.add_apply,
         pure_add]
     | smul r x hx ihx =>
       intro f hf φ hSB hvac
@@ -204,7 +204,7 @@ theorem hasDerivAt_thetaIntegral : ∀ (F E : Type) [Field F] [NumberField F] [F
       simpa [GlobalTheory.ThKDer.theta_zero] using hasDerivAt_const (0 : ℝ) (0 : ℂ)
     | add x y hx hy ihx ihy =>
       intro g h
-      rw [map_add, GlobalTheory.ThKDer.theta_add hT (hle (hD₀_mem _ _)) (hle (hD₀_mem _ _))]
+      rw [map_add (f := _), GlobalTheory.ThKDer.theta_add hT (hle (hD₀_mem _ _)) (hle (hD₀_mem _ _))]
       simp only [GlobalTheory.ThKDer.theta_add hT (hle hx) (hle hy)]
       exact (ihx g h).add (ihy g h)
     | smul r x hx ihx =>

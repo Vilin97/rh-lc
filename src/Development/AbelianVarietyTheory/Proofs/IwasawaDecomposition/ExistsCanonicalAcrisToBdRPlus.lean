@@ -75,7 +75,7 @@ theorem extend_unique (p : ℕ) {D R : Type} [CommRing D] [CommRing R]
   rw [smodEq_iff, sub_zero]
   obtain ⟨s, z, rfl⟩ := GlobalTheory.PrincipalCompletion.dense (p : D) x k
   refine ⟨F z - G z, ?_⟩
-  simp only [map_add, map_mul, map_pow, map_natCast, h]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast, h]
   ring
 
 theorem exists_lift (p : ℕ) {D P : Type} [CommRing D] [CommRing P] (I : Ideal P) (f : D →+* P)
@@ -157,7 +157,7 @@ theorem bound (n : ℕ) (s : Per.AinfP l) (hs : s ∈ Per.Acris0 l) : ∃ a : Pe
     obtain ⟨b, hb⟩ := hy
     refine ⟨a + b, ?_⟩
     convert add_mem ha hb using 1
-    rw [map_add]
+    rw [map_add (f := _)]
     ring
   | smul c x _ hx =>
     obtain ⟨a, ha⟩ := hx

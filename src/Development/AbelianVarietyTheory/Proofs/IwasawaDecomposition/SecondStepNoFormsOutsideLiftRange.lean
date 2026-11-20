@@ -91,7 +91,7 @@ theorem cut_span (h : p) {K : Type} [CommRing K] [Algebra R K] (T : Set (K ⊗[R
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a m => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [eq_top_iff, ← e.range, ← Submodule.map_top, ← hT, Submodule.map_span]
   refine Submodule.span_mono ?_
   rintro _ ⟨x, hx, rfl⟩
@@ -105,7 +105,7 @@ theorem cut_lift {G : Type} [Group G] (ρ : G →* (M ≃ₗ[R] M)) (a : MonoidA
     MonoidAlgebra.lift R (Module.End R M) G (LinearEquiv.automorphismGroup.toLinearMapMonoidHom.comp ρ) a x := by
   induction a using MonoidAlgebra.induction_on with
   | of g => rw [MonoidAlgebra.lift_of, MonoidAlgebra.lift_of]; rfl
-  | add f g hf hg => simp only [map_add, LinearMap.add_apply, Submodule.coe_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), LinearMap.add_apply, Submodule.coe_add, hf, hg]
   | smul r f hf => simp only [map_smul, LinearMap.smul_apply, Submodule.coe_smul, hf]
 
 variable {K : Type} [CommRing K] [Algebra R K] {V : Type} [AddCommGroup V] [Module K V] [Module R V] [IsScalarTower R K V]

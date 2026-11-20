@@ -27,7 +27,7 @@ theorem dualBC_natural (f : V →ₗ[K] V) (x : K' ⊗[K] Module.Dual K V) :
     dualBC (f.dualMap.baseChange K' x) = (f.baseChange K').dualMap (dualBC x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a g =>
     apply (TensorProduct.isBaseChange K V K').algHom_ext
     intro v
@@ -61,7 +61,7 @@ theorem map_colAddGen {r m : ℕ} (l j : Fin m) (f : MvPolynomial (Fin r × Fin 
       Formalism.GradedWeylDivisibility.colAddGen K' l j (MvPolynomial.map (algebraMap K K') f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, MvPolynomial.map_X]
     congr 1
@@ -89,7 +89,7 @@ theorem map_mem_VV (lam : ι → DomWeight n) {F : Pol K ι n} (hF : F ∈ VV K 
     refine ⟨fun s => MvPolynomial.map (algebraMap K K') (G s), fun s => map_mem_dualWeyl _ (hG s), ?_⟩
     simp only [map_prod, Formalism.GradedWeylDivisibility.blockEmb, MvPolynomial.map_rename]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hx
@@ -108,7 +108,7 @@ theorem map_trAct (g : ι → GL (Fin n) K) (F : Pol K ι n) :
       trAct (fun τ => Matrix.GeneralLinearGroup.map (algebraMap K K') (g τ)) (MvPolynomial.map (algebraMap K K') F) := by
   induction F using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, MvPolynomial.map_X]
     congr 1
@@ -138,7 +138,7 @@ theorem bcPol_injective (lam : ι → DomWeight n) : Function.Injective (bcPol (
 theorem bcPol_mem (lam : ι → DomWeight n) (x : K' ⊗[K] VV K lam) : bcPol lam x ∈ VV K' lam := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | tmul a F => rw [bcPol_tmul]; exact (VV K' lam).smul_mem a (map_mem_VV lam F.2)
 
 theorem finrank_bc_VV (lam : ι → DomWeight n) :
@@ -179,7 +179,7 @@ theorem isIrreducible_bcRep_tenRepF (emb : ι → L →+* K) (lam : ι → DomWe
   rw [bcVV_val]
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Submodule.coe_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Submodule.coe_add, hx, hy]
   | tmul a F =>
     show bcPol lam (a ⊗ₜ[K] (GlobalTheory.AlgWtF.tenRepF emb lam γ F)) =
       actP lam (GlobalTheory.AlgWtF.embGLF _ (GlobalTheory.AlgWtF.ratHom γ)) (bcVV lam (a ⊗ₜ[K] F) : Pol K' ι n)

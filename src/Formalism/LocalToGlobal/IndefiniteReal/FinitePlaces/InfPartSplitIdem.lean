@@ -29,7 +29,7 @@ theorem infPart_splitIdem {e : AE D} (he : IsSplitIdem D e) : infPart D e = 0 :=
   obtain ⟨h1, -, v, ε, hε, h3⟩ := he
   obtain ⟨α, hα, -, -⟩ := hε
   have hsum : infPart D e + infPart D (cA D e) = 0 := by
-    rw [← map_add, h3, hα]
+    rw [← map_add (f := _), h3, hα]
     show infPart D (pairA D.host.F 0 α ⊗ₜ[D.host.F] (1 : D.host.E)) = 0
     rw [Formalism.IndefR.Fock.DRho.infPart_tmul, show fstA D.host.F (pairA D.host.F 0 α) = 0 from rfl,
       TensorProduct.zero_tmul]

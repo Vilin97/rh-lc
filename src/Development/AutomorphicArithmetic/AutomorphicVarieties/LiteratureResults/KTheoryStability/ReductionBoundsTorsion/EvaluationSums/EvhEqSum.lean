@@ -31,7 +31,7 @@ theorem evh_bd {m : ℕ} (Φ : (Fin (m + 1) → G) → ℝ) (hΦ : ∀ (a : G) p
     (w : Chn G (m + 1)) : evh Φ (bd G m w) = evh (dC Φ) w := by
   induction w using Finsupp.induction_linear with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | single g r =>
     have h0 : (fun j => Fin.partialProd g ((0 : Fin (m + 2)).succAbove j)) =
         fun j => g 0 * Fin.partialProd (Fin.tail g) j := by
@@ -42,7 +42,7 @@ theorem evh_bd {m : ℕ} (Φ : (Fin (m + 1) → G) → ℝ) (hΦ : ∀ (a : G) p
       rw [Fin.partialProd_contractNth]; rfl
     rw [evh_single, dC, Fin.sum_univ_succ, h0, hΦ]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [h1, bd, Finsupp.linearCombination_single, map_smul, map_add, map_sum, evh_single,
+      simp only [h1, bd, Finsupp.linearCombination_single, map_smul, map_add (f := _), map_sum, evh_single,
       smul_eq_mul, one_mul, Fin.val_zero, pow_zero, Fin.val_succ]
     rfl
 

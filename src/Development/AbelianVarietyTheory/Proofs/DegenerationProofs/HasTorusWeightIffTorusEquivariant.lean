@@ -23,7 +23,7 @@ theorem cf_diag {A R X : Type} [CommRing A] [CommRing R] [AddCommGroup X]
   obtain ⟨a, rfl⟩ := hb.2 s
   induction a using AddMonoidAlgebra.induction_linear with
   | zero => simp only [map_zero, WtPart.cf_zero, mul_zero]
-  | add x y hx hy => simp only [map_add, WtPart.cf_add, mul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), WtPart.cf_add, mul_add, hx, hy]
   | single ψ b =>
     rw [AddMonoidAlgebra.liftNCRingHom_single, hσ, ← _root_.mul_assoc, ← map_mul, WtPart.cf_mono,
       WtPart.cf_mono]

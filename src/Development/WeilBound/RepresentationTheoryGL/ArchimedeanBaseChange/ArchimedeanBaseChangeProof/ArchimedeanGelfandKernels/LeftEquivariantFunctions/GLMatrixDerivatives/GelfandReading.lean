@@ -72,7 +72,7 @@ theorem frameDer_of (hHb : HbFacts) : FrameDer := by
   have hw : ∀ t : ℝ, coords ((x + t • (x * X)) * (x + t • (x * X))ᴴ) =
       v + t • coords ((2 : ℕ) • (x * X * xᴴ)) + t ^ 2 • coords ((x * X) * (x * X)ᴴ) := by
     intro t
-    rw [hexp t, ← coordsL_apply, map_add, map_add, map_smul (coordsL n) t, map_smul (coordsL n) (t ^ 2),
+    rw [hexp t, ← coordsL_apply, map_add (f := _), map_add (f := _), map_smul (coordsL n) t, map_smul (coordsL n) (t ^ 2),
       coordsL_apply, coordsL_apply, coordsL_apply, hxv, hcoords']
   have hhOf : ∀ t : ℝ, hOf (v + t • coords ((2 : ℕ) • (x * X * xᴴ)) + t ^ 2 • coords ((x * X) * (x * X)ᴴ)) =
       (x + t • (x * X)) * (x + t • (x * X))ᴴ := by

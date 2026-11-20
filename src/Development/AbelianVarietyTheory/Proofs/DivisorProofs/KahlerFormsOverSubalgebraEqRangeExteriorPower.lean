@@ -87,7 +87,7 @@ theorem omB_eq_range_exteriorPower : ∀ (k K : Type) [Field k] [Field K] [Algeb
       rw [hιD]
       exact ιMulti_D_mem_omB_regForms B q w
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add _ _ _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+    | add _ _ _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
     | smul b z _ h => rw [map_smul, hB]; exact smul_mem_omB_regForms B q b.2 h
 
 end GlobalTheory.PD

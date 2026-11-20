@@ -155,13 +155,13 @@ theorem lift_of_killing_polynomial [NeZero n] (hR : Formalism.MainNotions.Liftin
   have hms : liftingSection W T R a ν zc = Polynomial.aeval d R m₀ + Polynomial.aeval d R1 dz := rfl
   have key : Polynomial.aeval d R μ = pp ^ s₁ • μ + Polynomial.aeval d R1 (d μ) := by
     conv_lhs => rw [hsplit]
-    rw [map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C, LinearMap.add_apply,
+    rw [map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C, LinearMap.add_apply,
       Module.End.mul_apply, Module.algebraMap_end_apply, add_comm]
   set u := pp ^ N • liftingSection W T R a ν zc - pp ^ s₁ • μ with hudef
   have e1 : Polynomial.aeval d R u₀ = pp ^ N • Polynomial.aeval d R m₀ - Polynomial.aeval d R μ := by
     rw [hu₀def, (Polynomial.aeval d R).map_sub, (Polynomial.aeval d R).map_smul]
   have e2 : Polynomial.aeval d R1 y = pp ^ N • Polynomial.aeval d R1 dz + Polynomial.aeval d R1 (d μ) := by
-    rw [hy_eq, (Polynomial.aeval d R1).map_add, (Polynomial.aeval d R1).map_smul]
+    rw [hy_eq, (Polynomial.aeval d R1).map_add (f := _), (Polynomial.aeval d R1).map_smul]
   have hu_eq : u = Polynomial.aeval d R u₀ + Polynomial.aeval d R1 y := by
     rw [hudef, hms, e1, e2, key, smul_add]
     abel
@@ -177,7 +177,7 @@ theorem lift_of_killing_polynomial [NeZero n] (hR : Formalism.MainNotions.Liftin
     exact qLattice_add W T (qLattice_polynomial_derivation W T hDS hA hT c a R hu₀)
       (qLattice_mono W T (Nat.zero_le a) (qLattice_polynomial_derivation W T hDS hA hT c 0 R1 hyQ))
   have hdu : d u = Polynomial.aeval d (X * R) u₀ + Polynomial.aeval d (X * R1) y := by
-    rw [hu_eq, map_add, hXP, hXP]
+    rw [hu_eq, map_add (f := _), hXP, hXP]
   have hduN : d u ∈ W.N T := by
     rw [hdu]
     refine (W.N T).add_mem (hkill u₀ hu₀) ?_

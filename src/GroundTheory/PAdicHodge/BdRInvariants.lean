@@ -257,7 +257,7 @@ theorem mem_filTensor_iff {ι : Type*} [Fintype ι] (v : Basis ι ℚ_[p] V) {i 
     | zero => simp
     | add x y _ _ hx hy =>
       intro j
-      rw [map_add, Finsupp.add_apply]
+      rw [map_add (f := _), Finsupp.add_apply]
       exact add_mem (hx j) (hy j)
     | smul k x _ hx =>
       intro j

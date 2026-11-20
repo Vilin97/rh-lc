@@ -1425,7 +1425,7 @@ theorem hs_sg_map {B : Type} [CommRing B] (f : A →+* B) {n : ℕ} (M : Matrix 
     cases n with
     | zero => simp [sg]
     | succ k =>
-      rw [hs_sg_succ, hs_sg_succ, map_add, map_mul, map_mul, map_prod, ih]
+      rw [hs_sg_succ, hs_sg_succ, map_add (f := _), map_mul, map_mul, map_prod, ih]
       rfl
 
 theorem hs_sg_smul (c : A) {n : ℕ} (M : Matrix (Fin n) (Fin n) A) :

@@ -180,7 +180,7 @@ theorem exists_form_of_mem_chartRingZ (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k
       homog_add (homog_mul h₁ (homog_chartMon c δ₂)) ?_, ?_⟩
     · rw [add_comm δ₁]
       exact homog_mul h₂ (homog_chartMon c δ₁)
-    · rw [map_add, map_mul, map_mul, v₁, v₂, aeval_chartMon, aeval_chartMon, hpow]
+    · rw [map_add (f := _), map_mul, map_mul, v₁, v₂, aeval_chartMon, aeval_chartMon, hpow]
       ring
   | mul x z _ _ hx hz =>
     obtain ⟨δ₁, e₁, h₁, v₁⟩ := hx
@@ -297,7 +297,7 @@ theorem rep_add {y : (Σ k, ι k) → Ω} {a : K → ℤ} {n : ℕ} {s t : Ω} {
   · simp only [Pi.add_apply]
     push_cast
     linear_combination hd₁ k
-  · rw [map_add, map_mul, map_mul, map_mul, hy₁, hy₂]
+  · rw [map_add (f := _), map_mul, map_mul, map_mul, hy₁, hy₂]
     ring
 
 def w (y : (Σ k, ι k) → Ω) (A : HermLine ι) (n : ℕ) : chartLat y A.a n →+ (((Σ k, ι k) → ℂ) → ℂ) :=
@@ -310,7 +310,7 @@ def w (y : (Σ k, ι k) → Ω) (A : HermLine ι) (n : ℕ) : chartLat y A.a n �
       have hT := metric_ne (A := A) hz n
       rw [AddSubgroup.coe_add, val_eq (add_mem s.2 t.2) hz (rep_add r₁ r₂) (by simpa using mul_ne_zero n₁ n₂),
         val_eq s.2 hz r₁ n₁, val_eq t.2 hz r₂ n₂]
-      simp only [map_add, map_mul]
+      simp only [map_add (f := _), map_mul]
       field_simp
     · simp [val, hz]
 

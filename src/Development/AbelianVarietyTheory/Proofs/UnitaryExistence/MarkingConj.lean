@@ -24,7 +24,7 @@ theorem marking_conj : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
   set w := Φ (wE H s • a + H.bar (wE H s) • b) with hw
   have e : F.ex i' P' ((l.M : ℂ)⁻¹ • P' (F.t i' v)) = F.ex i' P' ((l.M : ℂ)⁻¹ • P' w) := Over.OverMorphism.ext key
   have e' := F.ex_add i' P' hP' ((l.M : ℂ)⁻¹ • P' (F.t i' v - w)) ((l.M : ℂ)⁻¹ • P' w)
-  rw [← smul_add, ← map_add, sub_add_cancel, e] at e'
+  rw [← smul_add, ← map_add (f := _), sub_add_cancel, e] at e'
   obtain ⟨x, hx⟩ := (F.ex_ker i' P' hP' _).1 (mul_eq_right.1 e'.symm)
   refine ⟨x, ?_⟩
   rw [← sub_eq_iff_eq_add']

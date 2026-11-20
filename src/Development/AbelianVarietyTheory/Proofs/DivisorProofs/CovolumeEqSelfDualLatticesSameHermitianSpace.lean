@@ -212,7 +212,7 @@ theorem embGL_mem_cong {M : ℕ} (hM : 0 < M) (γ : GL (Fin n) E) :
   set A : Matrix (Fin n) (Fin n) E := (M : E)⁻¹ • (γ.1 - 1) with hA
   have eA : γ.1 = 1 + (M : E) • A := by rw [hA, smul_inv_smul₀ hME, add_sub_cancel]
   have eA' : (emb F).mapMatrix γ.1 = 1 + (M : RA F E) • (emb F).mapMatrix A := by
-    rw [eA, map_add, map_one, emb_smul, map_natCast]
+    rw [eA, map_add (f := _), map_one, emb_smul, map_natCast]
   have eAx : ∀ x, γ.1 *ᵥ x - x = M • (A *ᵥ x) := fun x => by
     rw [eA, add_mulVec, one_mulVec, add_sub_cancel_left, smul_mulVec, Nat.cast_smul_eq_nsmul]
   have h3 : (∃ B ∈ stab (hat F (L : Set (Fin n → E))), (emb F).mapMatrix γ.1 = 1 + (M : RA F E) • B) ↔

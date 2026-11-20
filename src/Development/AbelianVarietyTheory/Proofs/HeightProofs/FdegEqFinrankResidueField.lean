@@ -150,7 +150,7 @@ theorem fdeg_eq_finrank_residueField : ∀ (R R' F : Type) [CommRing R] [IsDomai
       add_mem' := by
         intro z z' hz hz'
         change 0 < u (Ψ ((z.1 : A) + z'.1) - ι ((z.2 : L) + z'.2))
-        rw [map_add, map_add, add_sub_add_comm]
+        rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
         exact u.map_lt_add hz hz'
       zero_mem' := by
         change 0 < u (Ψ 0 - ι 0)

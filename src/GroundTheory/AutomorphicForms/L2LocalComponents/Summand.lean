@@ -65,7 +65,7 @@ theorem aeval_uAction_cuspVecL {φ : cuspForms K n} (hφ : φ ∈ centralCuspFor
       CuspL2 μ) = cuspVecL μ (aeval (uActionCusp K n u) P φ) := by
   induction P using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, Submodule.coe_add, hp, hq, map_add]
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, Submodule.coe_add, hp, hq, map_add (f := _)]
   | monomial k c =>
     rw [aeval_monomial, aeval_monomial, Module.End.mul_apply, Module.End.mul_apply,
       Module.algebraMap_end_apply, Module.algebraMap_end_apply, ← map_pow, ← map_pow,
@@ -198,7 +198,7 @@ theorem sup_orthRel_of_finite {H : Type*} [NormedAddCommGroup H] [InnerProductSp
     { carrier := {x | x ∈ centralCuspForms K n ∧ ∀ h ∈ U₀, finRepCusp K n h x = x}
       zero_mem' := ⟨Submodule.zero_mem _, fun h _ => map_zero _⟩
       add_mem' := fun {x y} hx hy => ⟨Submodule.add_mem _ hx.1 hy.1, fun h hh => by
-        rw [map_add, hx.2 h hh, hy.2 h hh]⟩
+        rw [map_add (f := _), hx.2 h hh, hy.2 h hh]⟩
       smul_mem' := fun c x hx => ⟨Submodule.smul_mem _ c hx.1, fun h hh => by
         rw [map_smul, hx.2 h hh]⟩ }
   refine ⟨V₀, fun x hx => hx.1, ⟨hv, fun h hh => Subtype.ext (funext fun g => hU₀ g h hh)⟩,

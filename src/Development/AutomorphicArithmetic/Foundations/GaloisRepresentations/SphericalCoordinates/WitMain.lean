@@ -121,7 +121,7 @@ theorem main (N : ℕ) (hN : 0 < N) (hNp : N.Coprime p) :
       obtain ⟨e₂, he₂, r₂⟩ := hf n hn hnp a
       refine eq_add X hn hnp (f n (c • a)) (c • f n a)
         (e := e₁ - (actQ D c).baseChange (AfP p) e₂) (sub_mem he₁ (GlobalTheory.AdelicSim.bc_mem D c he₂)) ?_
-      rw [r₁, coe_smul, r_act, r₂, map_add, map_nsmul, GlobalTheory.AdelicSim.bc_inAf, smul_sub]
+      rw [r₁, coe_smul, r_act, r₂, map_add (f := _), map_nsmul, GlobalTheory.AdelicSim.bc_inAf, smul_sub]
       abel
     · rintro ⟨e, he⟩
       obtain ⟨e₁, he₁, r₁⟩ := hf n hn hnp a

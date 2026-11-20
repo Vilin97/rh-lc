@@ -63,7 +63,7 @@ def fixSub (p : PlF D) (g : Vp D p ≃ₗ[(D.s.atP p).Ep] Vp D p) : Submodule D.
   carrier := {u | g (baseChange₂ D p u) = baseChange₂ D p u}
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     rw [ha, hb]
   zero_mem' := by simp
   smul_mem' := by
@@ -98,7 +98,7 @@ theorem le_of_loc (Z : LocDat D) (Λ₂ : LV D) (h2 : Submodule.IsLattice D.host
       rintro _ ⟨w, hw, rfl⟩
       obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hw
       obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hz
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem (Submodule.subset_span ⟨y, hy, rfl⟩) (hN _ (N.smul_mem c hx) p)
     · exact Submodule.span_mono (Set.image_mono (by intro y hy; exact Submodule.mem_sup_left hy))
   have := ((GlobalTheory.Unfold.LatLoc.lattices_local_global D Z).1 _ Λ₂ hlat h2).2 heq

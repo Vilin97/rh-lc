@@ -14,7 +14,7 @@ theorem hf_add_left (x y v : Fin n → R) : hf σ G (x + y) v = hf σ G x v + hf
   simp only [hf, Pi.add_apply, add_mul, Finset.sum_add_distrib]
 
 theorem hf_add_right (x y v : Fin n → R) : hf σ G v (x + y) = hf σ G v x + hf σ G v y := by
-  simp only [hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hf_smul_left (a : R) (x v : Fin n → R) : hf σ G (a • x) v = a * hf σ G x v := by
   simp only [hf, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc]
@@ -75,23 +75,23 @@ private lemma quasiReflection_eq_transvectionGen_mul_shifted {E : Type} [Field E
   have hN0 : N ≠ 0 := by rw [hN]; exact mul_ne_zero hxz hsβ
   have hσD : σ D = D / u := by
     rw [hDdef]
-    simp only [map_add, map_mul, hinv, hsu]
+    simp only [map_add (f := _), map_mul, hinv, hsu]
     field_simp
     ring
   have hσN : σ N = N := by rw [hN]; simp only [map_mul, hinv]; ring
   have trA : A + σ A = 0 := by
     rw [hA]
-    simp only [map_div₀, map_mul, map_neg, map_sub, map_one, map_add, map_pow, hinv, hsu, hαr, hσD, hσN]
+    simp only [map_div₀, map_mul, map_neg, map_sub, map_one, map_add (f := _), map_pow, hinv, hsu, hαr, hσD, hσN]
     field_simp
     ring
   have trB : B + σ B = 0 := by
     rw [hB]
-    simp only [map_div₀, map_mul, map_neg, map_sub, map_one, map_add, map_pow, hinv, hsu, hαr, hσD, hσN]
+    simp only [map_div₀, map_mul, map_neg, map_sub, map_one, map_add (f := _), map_pow, hinv, hsu, hαr, hσD, hσN]
     field_simp
     ring
   have trR : R + σ R = 0 := by
     rw [hR]
-    simp only [map_div₀, map_mul, map_neg, map_sub, map_one, map_add, map_pow, hinv, hsu, hαr, hσD, hσN]
+    simp only [map_div₀, map_mul, map_neg, map_sub, map_one, map_add (f := _), map_pow, hinv, hsu, hαr, hσD, hσN]
     field_simp
     ring
   obtain ⟨w, hw⟩ : ∃ w, w = z + (c * σ β) • x := ⟨_, rfl⟩
@@ -205,7 +205,7 @@ theorem _root_.GlobalTheory.UTrans.PlaneRefl.quasiRefl_eq_mul_of_plane : ∀ (E 
       _root_.GlobalTheory.UTrans.hf σ G y y := by rw [← hy1, hEiso]
   have hD1 : u * σ (a + ω * β) * β + (a + ω * β) * σ β ≠ 0 := by
     have e1 : u * σ (a + ω * β) * β + (a + ω * β) * σ β = ω * β * σ β * (1 - u) := by
-      rw [map_add, map_mul, hσω]
+      rw [map_add (f := _), map_mul, hσω]
       linear_combination hD
     rw [e1]
     refine mul_ne_zero (mul_ne_zero (mul_ne_zero hω0 hxz) ?_) (sub_ne_zero.2 (Ne.symm hu1))

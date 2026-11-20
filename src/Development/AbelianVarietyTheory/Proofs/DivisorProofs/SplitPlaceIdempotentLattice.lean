@@ -57,7 +57,7 @@ theorem exists_trace_norm {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {v : Pl F} (
   set η : 𝓞 E := ⟨σ (ξ : E), hi⟩ with hη
   obtain ⟨t, ht⟩ := exists_int_of_fixed h (x := ξ + η) (by
     show σ ((ξ : E) + σ (ξ : E)) = (ξ : E) + σ (ξ : E)
-    rw [map_add, conj_conj h, add_comm])
+    rw [map_add (f := _), conj_conj h, add_comm])
   obtain ⟨n, hn⟩ := exists_int_of_fixed h (x := ξ * η) (by
     show σ ((ξ : E) * σ (ξ : E)) = (ξ : E) * σ (ξ : E)
     rw [map_mul, conj_conj h, mul_comm])
@@ -161,7 +161,7 @@ theorem exists_split_idem : ∀ {F E : Type} [Field F] [NumberField F] [Field E]
   have h2 : C * (A * A - algebraMap F (AF F) t * A + algebraMap F (AF F) n) = 0 := by
     rw [mul_comm]
     refine hC _ ?_
-    rw [map_add, map_sub, map_mul, map_mul, AlgHom.commutes, AlgHom.commutes, hAv, hroot]
+    rw [map_add (f := _), map_sub, map_mul, map_mul, AlgHom.commutes, AlgHom.commutes, hAv, hroot]
   set φ := algebraMap (AF F) (AE F E) with hφ
   set x : AE F E := (1 : AF F) ⊗ₜ[F] (ξ : E) with hx
   set y : AE F E := (1 : AF F) ⊗ₜ[F] (σ (ξ : E)) with hy
@@ -178,7 +178,7 @@ theorem exists_split_idem : ∀ {F E : Type} [Field F] [NumberField F] [Field E]
   have g1 := congrArg φ h1
   have g2 := congrArg φ h2
   have g3 := congrArg φ hCe
-  simp only [map_mul, map_sub, map_add, map_ofNat, map_zero, ← hxy1, ← hxy2] at g1 g2 g3
+  simp only [map_mul, map_sub, map_add (f := _), map_ofNat, map_zero, ← hxy1, ← hxy2] at g1 g2 g3
   have s1 : φ C * (x - φ A) + φ C * (y - φ A) = φ e := by linear_combination g1
   have s2 : φ C * (x - φ A) * (φ C * (y - φ A)) = 0 := by linear_combination φ C * g2
   have hθ : ∀ {d : ℕ} (W : Spc F E d), ∀ z ∈ GlobalTheory.InertSph.latAt W v,

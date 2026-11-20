@@ -28,7 +28,7 @@ theorem linIndep_one_imag (δ : L) (hδ : IsCMField.complexConj L δ = -δ) (hδ
   intro a t h
   rw [Algebra.smul_def, Algebra.smul_def, mul_one] at h
   have h2 := congrArg (IsCMField.complexConj L) h
-  rw [map_add, map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hδ, map_zero] at h2
+  rw [map_add (f := _), map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hδ, map_zero] at h2
   have ht : algebraMap L⁺ L t * δ = 0 := by linear_combination (h - h2) / 2
   have ht' : algebraMap L⁺ L t = 0 := (mul_eq_zero.mp ht).resolve_right hδ0
   have hs : algebraMap L⁺ L a = 0 := by linear_combination (h + h2) / 2
@@ -46,8 +46,8 @@ theorem compAt_eq_zero_of_proj (s : SplitPlace L) (a : AL L) (h1 : s.proj a = 0)
   obtain ⟨A, B, hAB⟩ := tensor_decomp b a
   rw [hb0, hb1] at hAB
   subst hAB
-  rw [map_add, proj_tmul, proj_tmul, map_one, one_mul] at h1
-  rw [map_add, conjAL_tmul, conjAL_tmul, map_one, hδ, map_add, proj_tmul, proj_tmul, map_one, one_mul,
+  rw [map_add (f := _), proj_tmul, proj_tmul, map_one, one_mul] at h1
+  rw [map_add (f := _), conjAL_tmul, conjAL_tmul, map_one, hδ, map_add (f := _), proj_tmul, proj_tmul, map_one, one_mul,
     map_neg] at h2
   have hr : s.i δ ≠ 0 := (_root_.map_ne_zero _).2 hδ0
   have hA2 : 2 * A s.v = 0 := by linear_combination h1 + h2
@@ -55,7 +55,7 @@ theorem compAt_eq_zero_of_proj (s : SplitPlace L) (a : AL L) (h1 : s.proj a = 0)
   have hB2 : 2 * (s.i δ * B s.v) = 0 := by linear_combination h1 - h2
   have hB : s.i δ * B s.v = 0 := (mul_eq_zero.mp hB2).resolve_left (two_ne s)
   have hB' : B s.v = 0 := (mul_eq_zero.mp hB).resolve_left hr
-  rw [map_add, compAt_tmul, compAt_tmul, hA, hB', tmul_zero, tmul_zero, add_zero]
+  rw [map_add (f := _), compAt_tmul, compAt_tmul, hA, hB', tmul_zero, tmul_zero, add_zero]
 
 theorem loc_apply (s : SplitPlace L) {n : ℕ} (x : GAf L n) (i j : Fin n) :
     ((s.loc n x : GL (Fin n) (s.v.adicCompletion L⁺)) : Matrix (Fin n) (Fin n) _) i j =

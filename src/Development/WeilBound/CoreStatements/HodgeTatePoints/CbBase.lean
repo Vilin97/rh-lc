@@ -202,7 +202,7 @@ theorem lin_add (G : FGLaw R d) {φ ψ : Pt R 1 d} (hφ : Z φ) (hψ : Z ψ) :
     rwa [LogPf.Jac, ccev (by zz)] at this
   change coeff _ (ev ![φ, ψ] (G.F i)) = _
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [← cc_pderiv, d2 hφ hψ, map_add, map_sum, map_sum]
+    rw [← cc_pderiv, d2 hφ hψ, map_add (f := _), map_sum, map_sum]
   simp only [map_mul, ccev (show ZZ ![φ, ψ] by zz), h0, h1]
   simp [cc_pderiv, lin]
 

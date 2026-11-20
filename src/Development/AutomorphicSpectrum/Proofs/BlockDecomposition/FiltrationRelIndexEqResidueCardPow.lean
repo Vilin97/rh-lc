@@ -113,7 +113,7 @@ theorem trv_apply (c : 𝒪[k]) (i j : Fin n) (hij : i ≠ j) (a b : Fin n) :
     (trv c i j hij : Matrix (Fin n) (Fin n) k) a b =
       (1 : Matrix (Fin n) (Fin n) k) a b + if a = i ∧ b = j then (c : k) else 0 := by
   show algebraMap 𝒪[k] k ((transvection i j c : Matrix (Fin n) (Fin n) 𝒪[k]) a b) = _
-  simp only [transvection, Matrix.add_apply, Matrix.single_apply, map_add, Matrix.one_apply]
+  simp only [transvection, Matrix.add_apply, Matrix.single_apply, map_add (f := _), Matrix.one_apply]
   congr 1
   · split_ifs <;> simp
   · by_cases h : a = i ∧ b = j
@@ -179,7 +179,7 @@ def phi {ϖ : kˣ} (h : ord k ϖ = 1) {x : Fin n → ℤ} (hx : StrictAnti x) (d
     rw [← ofAdd_add]
     congr 1
     funext p
-    rw [Pi.add_apply, ← map_add, Ideal.Quotient.eq, mem_span_iff h _ (pair_nonneg hx p)]
+    rw [Pi.add_apply, ← map_add (f := _), Ideal.Quotient.eq, mem_span_iff h _ (pair_nonneg hx p)]
     have e := mul_entry g.2 g'.2 (pair_eq p)
     have hO : g.1 * g'.1 ∈ nO k n := mul_mem g.2.1 g'.2.1
     have e2 : ((ent (g.1 * g'.1) p.1.1 p.1.2 - (ent g.1 p.1.1 p.1.2 + ent g'.1 p.1.1 p.1.2) : 𝒪[k]) : k) =

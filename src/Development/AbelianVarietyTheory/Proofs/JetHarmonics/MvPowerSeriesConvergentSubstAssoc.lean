@@ -50,7 +50,7 @@ theorem small_csub_of_small (K : Type) [NormedField K] [IsUltrametricDist K] [Co
   have h3 : csub t u = csub t (u - MvPowerSeries.C c) + MvPowerSeries.C c := by
     rw [(hR _ _ hbu (hC c).1).2.1, hRC]; ring
   refine ⟨(GlobalTheory.ConvSer.csub_hasSum_and_bounds K σ τ t _ ht hbu).2.2.1 hu.1, ?_⟩
-  rw [h3, map_add, MvPowerSeries.constantCoeff_C]
+  rw [h3, map_add (f := _), MvPowerSeries.constantCoeff_C]
   exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt h2.2 hu.2)
 
 theorem csub_assoc : ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [CompleteSpace K]

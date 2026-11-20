@@ -105,7 +105,7 @@ theorem symplO_rat (M N : Matrix (Fin T.rank) (Fin S.rank) D.host.E) :
   have h2 : symplOH S T (ratW T S M) (ratW T S N) = algebraMap D.host.F (AF D.host.F)
       (1 / 2 * Algebra.trace D.host.F D.host.E (D.host.xi0 * GlobalTheory.LatVac.hRat S T M N)) :=
     GlobalTheory.OrientedFormLaws.symplOH_rat M N
-  rw [h2, ← map_add]
+  rw [h2, ← map_add (f := _)]
   congr 1
   ring
 
@@ -168,7 +168,7 @@ theorem symplOH_finW (y y' : Matrix (Fin S.rank) (Fin T.rank) D.host.E) :
     unfold pairA
     exact Prod.ext (add_zero _) rfl
   apply key
-  rw [h, hp, ← map_add]
+  rw [h, hp, ← map_add (f := _)]
   congr 2
   ring
 

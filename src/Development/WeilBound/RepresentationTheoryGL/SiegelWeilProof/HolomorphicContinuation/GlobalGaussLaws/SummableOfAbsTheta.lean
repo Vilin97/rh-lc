@@ -42,7 +42,7 @@ theorem thLin_of (hP : GlobalTheory.Published.WeilThetaConvergence) : ThLin := b
     rw [← s1.tsum_add s2]
     congr 1
     funext ξ
-    simp [map_add]
+    simp [map_add (f := _)]
   unfold thetaInt
   rw [MeasureTheory.average_eq, MeasureTheory.average_eq, MeasureTheory.average_eq, integral_congr_ae heq,
     integral_add hI hI', smul_add]

@@ -51,7 +51,7 @@ private theorem rho_add_twisted_operators {R : Type} [CommRing R] [Invertible (2
     (Φ : (κ → R) → ℂ) (z : κ → R) :
     co.rho ψ (p + q) Φ z = ψ (-(⅟(2 : R) * B p q)) * co.rho ψ p (co.rho ψ q Φ) z := by
   simp only [GlobalTheory.WeilM.Darboux.rho]
-  rw [schr_comp_apply, ← co.form, map_add, ← mul_assoc, ← AddChar.map_add_eq_mul, neg_add_cancel,
+  rw [schr_comp_apply, ← co.form, map_add (f := _), ← mul_assoc, ← AddChar.map_add_eq_mul, neg_add_cancel,
     AddChar.map_zero_eq_one, one_mul]
 
 set_option maxHeartbeats 6400000 in
@@ -171,7 +171,7 @@ theorem thO_pure_deriv {D : D7} (S X : HSp D) {d : ℕ} (e : Fin d ≃ Fin X.ran
           (M.co.rho Bs.ψ (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.realAd D.host.F t • u₀) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure g φ))) := by
       funext t
       show heisO Bs.ψ S X (T (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.realAd D.host.F t • u₀)) _ x = _
-      simp only [heisO, GlobalTheory.TripleRead.thO, hpt, map_add, T.symm_apply_apply]
+      simp only [heisO, GlobalTheory.TripleRead.thO, hpt, map_add (f := _), T.symm_apply_apply]
       rw [show M.co.rho Bs.ψ (T.symm x + GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.realAd D.host.F t • u₀) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure g φ) =
         fun z => Bs.ψ (-(⅟(2 : AF D.host.F) * GlobalTheory.WeilM.symp (R := AF D.host.F) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA D.sp.cm.sig) (-1)
           (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Vs.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM D.host.F Ws.J) (T.symm x)

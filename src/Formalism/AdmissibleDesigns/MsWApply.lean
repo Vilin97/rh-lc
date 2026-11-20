@@ -69,8 +69,8 @@ theorem embRW_of {T : Subalgebra (D.nd.O i) (D.nd.X i → D.nd.O i)} {π : D.nd.
     { toFun := fun v a => e ((Λ (untr e v)) q.1 a q.2)
       map_add' := fun v v₂ => funext fun a => by
         show e ((Λ (untr e v + untr e v₂)) q.1 a q.2) = _
-        rw [map_add]
-        simp [map_add]
+        rw [map_add (f := _)]
+        simp [map_add (f := _)]
       map_smul' := fun c v => funext fun a => by
         show e ((Λ (e.symm c • untr e v)) q.1 a q.2) = c * e ((Λ (untr e v)) q.1 a q.2)
         rw [smulK]

@@ -166,11 +166,11 @@ def hermE (φ : I → E →+* ℂ) (h : I → ℝ) (x x' : E) : ℂ := ∑ i, (h
 
 theorem hermE_add_left (φ : I → E →+* ℂ) (h : I → ℝ) (a b x' : E) :
     hermE φ h (a + b) x' = hermE φ h a x' + hermE φ h b x' := by
-  simp only [hermE, map_add, add_mul, mul_add, Finset.sum_add_distrib]
+  simp only [hermE, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib]
 
 theorem hermE_add_right (φ : I → E →+* ℂ) (h : I → ℝ) (x a b : E) :
     hermE φ h x (a + b) = hermE φ h x a + hermE φ h x b := by
-  simp only [hermE, map_add, add_mul, mul_add, Finset.sum_add_distrib]
+  simp only [hermE, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib]
 
 theorem hermE_swap (φ : I → E →+* ℂ) (h : I → ℝ) (x x' : E) :
     hermE φ h x' x = starRingEnd ℂ (hermE φ h x x') := by

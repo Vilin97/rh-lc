@@ -114,7 +114,7 @@ theorem bessel_map_transport_sigma (σ : CayleySignature.Mat k r → (H →L[ℂ
     rw [derivative_word_intertwiner_symm σ σ' U hU w (hWs w hw), U.symm.norm_map]
   refine ⟨⟨fun v hv w hw => ?_, fun c v hv => ?_, fun h hh m hm v hv => ?_, C, Ws, hWs, fun v hv => ?_⟩, ?_, ?_⟩
   · show B (U.symm (v + w)) = _
-    rw [map_add]; exact b1 _ (hs hv) _ (hs hw)
+    rw [map_add (f := _)]; exact b1 _ (hs hv) _ (hs hw)
   · show B (U.symm (c • v)) = _
     rw [map_smul]; exact b2 c _ (hs hv)
   · show B (U.symm (σ' (h * m) v)) = _
@@ -139,7 +139,7 @@ theorem bessel_map_transport_pi (σ : CayleySignature.Mat k r → (H →L[ℂ] H
   obtain ⟨b1, b2, b3, C, Ws, hWs, hbd⟩ := hB
   refine ⟨⟨fun v hv w hw => ?_, fun c v hv => ?_, fun h hh m hm v hv => ?_, C, Ws, hWs, fun v hv => ?_⟩, ?_, ?_⟩
   · show A (B (v + w)) = _
-    rw [b1 v hv w hw, map_add]
+    rw [b1 v hv w hw, map_add (f := _)]
   · show A (B (c • v)) = _
     rw [b2 c v hv, map_smul]
   · show A (B (σ (h * m) v)) = _

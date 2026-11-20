@@ -46,7 +46,7 @@ theorem Low.mul {m k : ℕ} {x y : MvPowerSeries σ K} (hx : Low m x) (hy : Low 
 theorem Low.add {m : ℕ} {x y : MvPowerSeries σ K} (hx : Low m x) (hy : Low m y) :
     Low m (x + y) := by
   intro d hd
-  rw [map_add, hx d hd, hy d hd, add_zero]
+  rw [map_add (f := _), hx d hd, hy d hd, add_zero]
 
 theorem Low.sum {α : Type*} {m : ℕ} (s : Finset α) (x : α → MvPowerSeries σ K)
     (h : ∀ a ∈ s, Low m (x a)) : Low m (∑ a ∈ s, x a) := by
@@ -213,7 +213,7 @@ private theorem subst_diff_lemma {σ τ : Type*} [Fintype σ] [Finite τ] (N : �
       abel
     have hab' : ∀ i, Agree N (a i) (b i) := fun i e he => hab i e (by omega)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hz, hφa, hφb, map_add, map_add, AlgHom.commutes, AlgHom.commutes, map_sum, map_sum,
+      rw [hz, hφa, hφb, map_add (f := _), map_add (f := _), AlgHom.commutes, AlgHom.commutes, map_sum, map_sum,
       add_sub_add_left_eq_sub, ← Finset.sum_sub_distrib]
     apply Low.sum
     intro i _
@@ -398,7 +398,7 @@ theorem main (ι : Type v) [Fintype ι] [DecidableEq ι]
             (h j - P j) + (MvPowerSeries.subst h (f j - MvPowerSeries.X j) -
               MvPowerSeries.subst P (f j - MvPowerSeries.X j)) := by abel
         have he1 : e.degree < N + 1 := by omega
-        rw [hrw, map_add, hL e he1, add_zero, map_sub, hPc]
+        rw [hrw, map_add (f := _), hL e he1, add_zero, map_sub, hPc]
         split_ifs with h1
         · exact sub_self _
         · exact sub_zero _

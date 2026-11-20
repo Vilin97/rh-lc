@@ -583,7 +583,7 @@ theorem isSmallH_coord (j : Fin 2) : IsSmallH (mCoordIdeal (ι := GlobalTheory (
     simp [add_comm]
   have hf : IsMultiHomog (g + -(X ⟨(), j⟩ * h)) dg := mhAdd hg (mhNeg hX)
   have h0 : aeval y (g + -(X ⟨(), j⟩ * h)) = 0 := by
-    rw [map_add, map_neg, map_mul, aeval_X, he]
+    rw [map_add (f := _), map_neg, map_mul, aeval_X, he]
     ring
   have heq : g = X ⟨(), j⟩ * h := by
     have := eq_zero_of_aeval_y hf h0
@@ -665,7 +665,7 @@ theorem ptBoundOn_id (n : ℕ) (U : Set (Ix (Fin 2) → ℂ)) {c : ℝ} (hc : 1 
     rw [hd]
     exact mhMul hg' hh
   have h0 : aeval y (g * h' + -(g' * h)) = 0 := by
-    rw [map_add, map_neg, map_mul, map_mul, he, he']
+    rw [map_add (f := _), map_neg, map_mul, map_mul, he, he']
     ring
   have hpoly : g * h' = g' * h := by
     have := eq_zero_of_aeval_y hf h0
@@ -698,7 +698,7 @@ theorem liesOver_rat (sg : ℚ →+* ℂ) (z : Ix (Fin 2) → ℂ) : LiesOver (�
   have hf : IsMultiHomog ((θ.den : ℤ) • g + -(θ.num • h)) d :=
     mhAdd (mhZsmul _ hg) (mhNeg (mhZsmul _ hh))
   have h0 : aeval y ((θ.den : ℤ) • g + -(θ.num • h)) = 0 := by
-    rw [map_add, map_neg, map_zsmul, map_zsmul, he, zsmul_eq_mul, zsmul_eq_mul, ← mul_assoc]
+    rw [map_add (f := _), map_neg, map_zsmul, map_zsmul, he, zsmul_eq_mul, zsmul_eq_mul, ← mul_assoc]
     have : ((θ.den : ℤ) : FnField) * algebraMap ℚ FnField θ = (θ.num : FnField) := by
       rw [← map_intCast (algebraMap ℚ FnField), ← map_mul, ← map_intCast (algebraMap ℚ FnField) θ.num]
       congr 1
@@ -708,7 +708,7 @@ theorem liesOver_rat (sg : ℚ →+* ℂ) (z : Ix (Fin 2) → ℂ) : LiesOver (�
     ring
   have hp := eq_zero_of_aeval_y hf h0
   have hz := congrArg (fun f => eval z (MvPolynomial.map (Int.castRingHom ℂ) f)) hp
-  simp only [map_add, map_neg, map_zero, zsmul_eq_mul, map_mul, map_intCast] at hz
+  simp only [map_add (f := _), map_neg, map_zero, zsmul_eq_mul, map_mul, map_intCast] at hz
   rw [eq_ratCast sg θ, Rat.cast_def]
   have hden : ((θ.den : ℤ) : ℂ) ≠ 0 := by exact_mod_cast θ.den_nz
   field_simp

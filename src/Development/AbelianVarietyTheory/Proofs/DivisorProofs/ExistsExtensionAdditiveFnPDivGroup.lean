@@ -20,7 +20,7 @@ theorem exists_res_eq_of_transl_eq_add {b : G.A 1} (hb : cobOne R (G.A 1) b = 0)
   obtain ⟨h1, h2, h3⟩ := GlobalTheory.T.transl_coaction_free_coassoc_counital G (n + 1)
   obtain ⟨x', hx'⟩ := GlobalTheory.T.exists_coaction_eq_add_of_primitive (G.transl (n + 1)) h1 h2 h3 b hb
   have hr : G.transl n (G.res (n + 1) x') = G.res (n + 1) x' ⊗ₜ[R] 1 + 1 ⊗ₜ[R] b := by
-    rw [transl_res, hx', map_add, LinearMap.rTensor_tmul, LinearMap.rTensor_tmul]
+    rw [transl_res, hx', map_add (f := _), LinearMap.rTensor_tmul, LinearMap.rTensor_tmul]
     simp
   obtain ⟨e, he⟩ := GlobalTheory.T.exists_mulP_eq_of_transl_invariant G n (G.res (n + 1) x' - x) (by
     rw [map_sub, hr, hx, sub_tmul]

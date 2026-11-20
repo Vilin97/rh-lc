@@ -81,7 +81,7 @@ theorem CutPieces.proof : CutPieces.Statement := by
       ⟨weightedHomogeneousComponent_mem _ _ _, hI i hi m⟩, y, ?_⟩
     classical
     have h1 := weightedHomogeneousComponent_of_mem (m := m) hf
-    rw [if_pos rfl, map_add] at h1
+    rw [if_pos rfl, map_add (f := _)] at h1
     exact h1.symm
   by_cases hem : e ≤ m
   · rw [if_pos hem]

@@ -41,7 +41,7 @@ def buildMor : B.obj ⟶ cotPre R q N I n where
   app U := ModuleCat.ofHom
     { toFun := cochainOfSection q N I n χ hχ U.unop
       map_add' := fun b b' => ev_ext _ _ (fun p s h W y => by
-        rw [ev_add, buildC_ev, buildC_ev, buildC_ev, Sec.res, Sec.res, Sec.res, map_add, map_add])
+        rw [ev_add, buildC_ev, buildC_ev, buildC_ev, Sec.res, Sec.res, Sec.res, map_add (f := _), map_add (f := _)])
       map_smul' := fun r b => ev_ext _ _ (fun p s h W y => by
         rw [RingHom.id_apply, ev_smulU, buildC_ev, buildC_ev, Sec.res, Sec.res, map_smul, map_smul]) }
   naturality U U' g := by

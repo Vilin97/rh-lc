@@ -93,7 +93,7 @@ theorem block_algebra (n : ℕ) (φ ψ : MvPolynomial (Fin n) ℝ →ₗ[ℝ] �
       ((Equiv.Perm.sign σ : ℤ) : ℝ) * (2 / ((n : ℝ) + 1)) * (((σ 0 : ℕ) : ℝ) - ((Equiv.swap i i' (σ 0) : ℕ) : ℝ)) * c := by
     have hne : i ≠ i' := fun e => by rw [e] at hi; omega
     obtain ⟨J, h₁, h₂, h₃⟩ := GlobalTheory.T.swap_polynomial_homogeneous _ i i' hne φ ψ _ (hφ i i' hi) _ ((hm σ).add (hm (Equiv.swap i i' * σ))) (by
-      simp only [m, map_add, map_prod, map_pow, map_neg, rename_X, Equiv.Perm.coe_mul, Function.comp_apply,
+      simp only [m, map_add (f := _), map_prod, map_pow, map_neg, rename_X, Equiv.Perm.coe_mul, Function.comp_apply,
         Equiv.swap_apply_self]
       exact add_comm _ _)
     rw [h₃]
@@ -102,7 +102,7 @@ theorem block_algebra (n : ℕ) (φ ψ : MvPolynomial (Fin n) ℝ →ₗ[ℝ] �
     (fun σ i i' hi => by
       have hne : i ≠ i' := fun e => by rw [e] at hi; omega
       have e := hstep σ i i' hi
-      rw [map_add] at e
+      rw [map_add (f := _)] at e
       have s2 : ((Equiv.Perm.sign σ : ℤ) : ℝ) * ((Equiv.Perm.sign σ : ℤ) : ℝ) = 1 := by
         rw [← Int.cast_mul, ← Units.val_mul, Int.units_mul_self]; simp
       rw [Equiv.Perm.sign_mul, Equiv.Perm.sign_swap hne, Equiv.Perm.mul_apply]
@@ -196,10 +196,10 @@ theorem powerSum_step {κ : Type} [Fintype κ] {x y : κ} (hxy : x ≠ y) (Φ Ψ
       oddHarm k * (1 / 2 * Ψ (Q * (u ^ (2 * k + 1) * N)) + Ψ (u ^ (2 * k - 1) * (p' * Q * N))) := by
     rcases Nat.eq_zero_or_pos k with rfl | hk
     · simp
-    rw [← smul_eq_mul (1 / 2 : ℝ), ← map_smul, ← map_add, smul_eq_C_mul, show 2 * k + 1 = 2 * k - 1 + 2 by omega]
+    rw [← smul_eq_mul (1 / 2 : ℝ), ← map_smul, ← map_add (f := _), smul_eq_C_mul, show 2 * k + 1 = 2 * k - 1 + 2 by omega]
     congr 2
     linear_combination (Q * (u ^ (2 * k - 1) * N)) * ep
-  rw [e₃, map_add, map_smul, e₁, e₂, oddHarm_succ, show 2 * (k + 1) - 1 = 2 * k + 1 by omega,
+  rw [e₃, map_add (f := _), map_smul, e₁, e₂, oddHarm_succ, show 2 * (k + 1) - 1 = 2 * k + 1 by omega,
     show u ^ (2 * k + 1) * (Q * N) = Q * (u ^ (2 * k + 1) * N) by ring, smul_eq_mul]
   rw [hlow] at e₄
   rw [one_div (2 * _), mul_inv, ← one_div, ← one_div]

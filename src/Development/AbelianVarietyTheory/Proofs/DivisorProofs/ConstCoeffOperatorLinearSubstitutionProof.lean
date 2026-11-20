@@ -129,7 +129,7 @@ theorem linSt_holds : LinSt := by
       constantCoeff_subst_of_constantCoeff_zero' _ hA0]
   · rename_i p q hp hq
     intro Ψ
-    rw [map_add, derivAt0_add', derivAt0_add', hp, hq]
+    rw [map_add (f := _), derivAt0_add', derivAt0_add', hp, hq]
   · rename_i p lam hp
     intro Ψ
     have hterm : ∀ l : ι, MvPolynomial.aeval

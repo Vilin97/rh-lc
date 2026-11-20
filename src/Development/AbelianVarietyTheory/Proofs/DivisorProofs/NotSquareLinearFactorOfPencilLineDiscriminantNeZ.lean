@@ -24,7 +24,7 @@ theorem line_eq_lineSubst {F K : Type} [Field F] [Field K] [Algebra F K] {D N : 
     simp only [aeval_C, lineSubst]
     rw [IsScalarTower.algebraMap_apply F K (MvPolynomial (Fin 1 × Fin N) K),
       IsScalarTower.algebraMap_apply F K (Polynomial K), AlgHom.commutes]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n ih =>
     simp only [map_mul, ih, aeval_X]
     congr 1
@@ -40,7 +40,7 @@ theorem eval_spec {F K : Type} [Field F] [Field K] [Algebra F K] {D N : ℕ}
     simp only [aeval_C]
     rw [IsScalarTower.algebraMap_apply F K (MvPolynomial (Fin 1 × Fin N) K)]
     simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n ih =>
     simp only [map_mul, ih, aeval_X]
     congr 1

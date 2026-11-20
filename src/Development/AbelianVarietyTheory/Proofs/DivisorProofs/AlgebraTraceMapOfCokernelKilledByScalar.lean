@@ -15,7 +15,7 @@ theorem algebraTrace_map_of_cokernel_killed (S A B : Type) [CommRing S] [IsDomai
       map_add' := by
         intro b c
         apply hφ
-        rw [map_add, hg, hg, hg, smul_add]
+        rw [map_add (f := _), hg, hg, hg, smul_add]
       map_smul' := by
         intro r b
         apply hφ

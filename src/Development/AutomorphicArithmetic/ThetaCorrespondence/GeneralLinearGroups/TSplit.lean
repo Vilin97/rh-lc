@@ -80,7 +80,7 @@ private theorem piTensor_apply_of_smul {h : ℕ} (x : Fin h → IrrGL k) (g : �
     (w : PiTensorProduct ℂ (fun a => (x a).2.rep.V)) :
     piTensor (fun a => (x a).rep) g w = (∏ a, c a) • w := by
   induction w using PiTensorProduct.induction_on with
-  | add y z hy hz => rw [map_add, hy, hz, smul_add]
+  | add y z hy hz => rw [map_add (f := _), hy, hz, smul_add]
   | smul_tprod r y =>
     rw [map_smul, piTensor_tprod, smul_comm]
     congr 1

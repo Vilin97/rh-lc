@@ -220,7 +220,7 @@ theorem exists_omega {R : Type} [CommRing R] {x : Sp R ⟶ X} {G' : Over (Sp R)}
     (h' : IsGrpPullback G' t.G x φ) (l : TanM x t.G →ₗ[R] R) :
     ∃ f : ReciprocityTheory.ChartRestriction.G.Pdiv.omega G', ∀ y : LieG G', f.1 y = l (tanOf (isTanAtG_lieG h' y)) := by
   refine ⟨⟨fun y => l (tanOf (isTanAtG_lieG h' y)), fun y y' h => ?_, fun a y h => ?_⟩, fun _ => rfl⟩
-  · rw [← map_add]
+  · rw [← map_add (f := _)]
     exact congrArg l (tan_ext (h'.2 _ y.1 y'.1 (tv (tanOf (isTanAtG_lieG h' y))) (tv (tanOf (isTanAtG_lieG h' y')))
       rfl rfl).symm)
   · rw [← smul_eq_mul, ← map_smul]
@@ -338,7 +338,7 @@ theorem exists_approx {p : ℕ} [Fact p.Prime] {v : Valuation ℂ_[p] ℝ≥0} [
       induction y using TensorProduct.induction_on with
       | zero => simp
       | add y y' hy hy' =>
-        rw [map_add, Submodule.coe_add, Pi.add_apply, Subring.coe_add]
+        rw [map_add (f := _), Submodule.coe_add, Pi.add_apply, Subring.coe_add]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hy hy')
       | tmul q y =>
         rw [Point.al_tmul, Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, Subring.coe_mul, norm_mul]

@@ -74,7 +74,7 @@ theorem left_eq {S : Scheme.{0}} {G : Over S} [GrpObj G] {y y' : Sp ℂ ⟶ S} (
     (e z).left = (e' (ρ z)).left := by
   subst hy
   have E : e = fun z => e' (ρ z) :=
-    GlobalTheory.CuspFamilyCompare.exp_unique he (fun z w => by rw [map_add, he']) hol
+    GlobalTheory.CuspFamilyCompare.exp_unique he (fun z w => by rw [map_add (f := _), he']) hol
       (HolHom.isHolTo_of_holAt isOpen_univ fun z _ =>
         (HolHom.holAt_of_isHolTo hol' (Set.mem_univ (ρ z))).precomp ρ.differentiableAt)
       u hd (fun m => GlobalTheory.CuspFamilyCompare.isDerivAt0_comp hol' ρ (hd' m))
@@ -130,7 +130,7 @@ theorem hasWitness_of_is : ∀ (D : D7) (H : Geo.Tor.Host D.host.E) (Dw : Datum 
   · rw [hE, map_zero] at hz
     simp only [map_zero]
     exact c7 _ hz
-  · simp only [hermForm_reindex, map_add, ← hP, hE]
+  · simp only [hermForm_reindex, map_add (f := _), ← hP, hE]
     exact c8 _ _ _
   · rw [hE] at hz p1
     exact c9 _ _ _ p1 p2 hz

@@ -64,7 +64,7 @@ theorem resL_pderiv (v u : σ) (huv : u ≠ v) (e : ℕ) (g : MvPolynomial σ �
     rw [hmv]
     split_ifs <;> simp [MvPolynomial.pderiv_monomial]
   | add f g hf hg =>
-    simp only [map_add, hf, hg]
+    simp only [map_add (f := _), hf, hg]
 
 theorem resL_glAct {N r : ℕ} (LL : Letters N) (j : ℕ) (c d : Fin r) (v : Fin N × Fin r) (e : ℕ)
     (h : ∀ i : Fin N, (i : ℕ) < j → (i, c) ≠ v ∧ (i, d) ≠ v) (x : MvPolynomial (Fin N × Fin r) ℚ_[p]) :
@@ -193,7 +193,7 @@ theorem pderiv_glAct (LL : Letters (K + 1)) (hv : LL.vec (Fin.last K) = true) (a
     pderiv (Fin.last K, c) (glAct p LL (K + 1) a b x) =
       glAct p LL (K + 1) a b (pderiv (Fin.last K, c) x) + (if a = c then pderiv (Fin.last K, b) x else 0) := by
   classical
-  rw [glAct_succ LL hv, glAct_succ LL hv, map_add, pderiv_last_glAct_comm, Derivation.leibniz,
+  rw [glAct_succ LL hv, glAct_succ LL hv, map_add (f := _), pderiv_last_glAct_comm, Derivation.leibniz,
     MvPolynomial.pderiv_X, smul_eq_mul, smul_eq_mul,
     Formalism.GM.ProjS.pderiv_comm (Fin.last K, c) (Fin.last K, b) x]
   by_cases hac : a = c
@@ -239,7 +239,7 @@ theorem ycond_pderiv [NeZero r] (LL : Letters (K + 1)) (hv : LL.vec (Fin.last K)
       rw [map_zero]
       exact Submodule.zero_mem _
     | add y1 y2 _ _ h1 h2 =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ h1 h2
     | smul t y _ h =>
       rw [map_smul]

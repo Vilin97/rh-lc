@@ -30,7 +30,7 @@ theorem eval₂Hom_partialEval {F A B σ τ : Type} [CommRing F] [CommRing A] [C
     eval₂Hom (ψ : A →+* B) y (partialEval u g) = aeval (Sum.elim (fun s => ψ (u s)) y) g := by
   induction g using MvPolynomial.induction_on with
   | C a => simp [partialEval, MvPolynomial.algebraMap_apply]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp]
     cases i <;> simp [partialEval]
@@ -40,7 +40,7 @@ theorem map_partialEval {F A B σ τ : Type} [CommRing F] [CommRing A] [CommRing
     MvPolynomial.map (ψ : A →+* B) (partialEval u g) = partialEval (fun s => ψ (u s)) g := by
   induction g using MvPolynomial.induction_on with
   | C a => simp [partialEval, MvPolynomial.algebraMap_apply]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp]
     cases i <;> simp [partialEval]

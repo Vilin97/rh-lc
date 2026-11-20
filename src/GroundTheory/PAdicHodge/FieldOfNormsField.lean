@@ -421,7 +421,7 @@ theorem one_val (n : ℕ) : (1 : t.Fam).1 n = 1 := by
 
 theorem toFam_add (a b : t.Plus) : (a + b).toFam = a.toFam + b.toFam := by
   apply (equivFrac t).injective
-  rw [equivFrac_add, equivFrac_toFam, equivFrac_toFam, equivFrac_toFam, map_add]
+  rw [equivFrac_add, equivFrac_toFam, equivFrac_toFam, equivFrac_toFam, map_add (f := _)]
 
 theorem toFam_mul (a b : t.Plus) : (a * b).toFam = a.toFam * b.toFam :=
   Subtype.ext (funext fun n ↦ by rw [mul_val]; rfl)

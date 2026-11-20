@@ -147,7 +147,7 @@ theorem hasFDerivAt_mvPolynomial_eval {n : ℕ} (Q : MvPolynomial (Fin n) ℂ) (
     simp only [MvPolynomial.eval_C, MvPolynomial.pderiv_C, map_zero, zero_smul, Finset.sum_const_zero]
     exact hasFDerivAt_const a x
   | add p q hp hq =>
-    simp only [map_add, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
     exact hp.add hq
   | mul_X p i hp =>
     have hXi : HasFDerivAt (fun y : Fin n → ℂ => y i)

@@ -55,7 +55,7 @@ theorem finite_le_of_posDef {V : Type*} [AddCommGroup V] [Module ℚ V] [FiniteD
       obtain ⟨z1, h1⟩ := hx i
       obtain ⟨z2, h2⟩ := hy i
       refine ⟨z1 + z2, ?_⟩
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       push_cast
       rw [h1, h2]
       ring

@@ -65,7 +65,7 @@ theorem cuspForm_local_sum_generates : _root_.GlobalTheory.FunPr.ThetaLocalInput
         have h := (Classical.choose_spec (hder X.1 X.2 a)).add (Classical.choose_spec (hder X.1 X.2 b))
         have e : (fun t : ℝ => M.rep τ (NormedSpace.exp (t • X.1)) ((a + b : P) : M.H τ)) =
             fun t => M.rep τ (NormedSpace.exp (t • X.1)) (a : M.H τ) + M.rep τ (NormedSpace.exp (t • X.1)) (b : M.H τ) :=
-          funext fun t => by rw [Submodule.coe_add, map_add]
+          funext fun t => by rw [Submodule.coe_add, map_add (f := _)]
         rw [e, Submodule.coe_add]
         exact h
       map_smul' := fun c a => by

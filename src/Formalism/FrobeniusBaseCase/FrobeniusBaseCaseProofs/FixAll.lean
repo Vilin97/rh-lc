@@ -104,12 +104,12 @@ theorem LogIffFix_statement : D.LogIffFix := by
     ext A
     rw [D.opIsLimit t ht b A A.degree le_rfl, coeff_PsiPartial]
     have := h b A A.degree le_rfl
-    rw [map_add, coeff_logSum] at this
+    rw [map_add (f := _), coeff_logSum] at this
     linear_combination -this
   · intro h b A N hN
     have := D.opIsLimit t ht b A N hN
     rw [h, coeff_PsiPartial] at this
-    rw [map_add, coeff_logSum]
+    rw [map_add (f := _), coeff_logSum]
     linear_combination this
 
 theorem log_unique_bis : D.LogUnique := by

@@ -169,10 +169,10 @@ lemma cong_img {r : ℕ} {f₁ f₁' f₂ f₂' : Fin (r + 1) → V} (k : V ≃�
       rw [LinearEquiv.coe_coe] at hyk
       rwa [← k.injective hyk]
     · apply k.injective
-      rw [he, map_add, map_add]
+      rw [he, map_add (f := _), map_add (f := _)]
   · rintro ⟨a, ha, b, hb, c, hc, hbX, hcX, rfl⟩
     refine ⟨k a, (TermOver.mem_img k _ _).2 ⟨a, ha, rfl⟩, k b, (TermOver.mem_img k _ _).2 ⟨b, hb, rfl⟩,
-      k c, (TermOver.mem_img k _ _).2 ⟨c, hc, rfl⟩, ?_, ?_, by rw [map_add, map_add]⟩
+      k c, (TermOver.mem_img k _ _).2 ⟨c, hc, rfl⟩, ?_, ?_, by rw [map_add (f := _), map_add (f := _)]⟩
     · rw [hX]; exact Submodule.mem_map_of_mem hbX
     · rw [hX']; exact Submodule.mem_map_of_mem hcX
 

@@ -82,12 +82,12 @@ theorem span_glueLat {L₀ : Lat X} (hL : Submodule.IsLattice D.host.E L₀) (x�
     | mem y hy =>
       exact Submodule.subset_span ((mem_glueLat _).2 ⟨_, by rwa [LinearEquiv.apply_symm_apply], 0, by simp⟩)
     | zero => rw [map_zero, map_zero]; exact zero_mem _
-    | add a b _ _ ha hb => rw [map_add, map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
     | smul c a _ ha => rw [map_smul, map_smul]; exact Submodule.smul_mem _ c ha
   refine le_antisymm (Submodule.span_le.2 fun y hy => ?_) fun y hy => ?_
   · obtain ⟨x, -, a, rfl⟩ := (mem_glueLat y).1 hy
     refine (mem_flatSp _).2 ⟨x + (a : D.host.E) • x₀, a * (Tu D u)⁻¹, ?_⟩
-    rw [map_add, map_smul, smul_add, smul_smul]
+    rw [map_add (f := _), map_smul, smul_add, smul_smul]
     abel
   · obtain ⟨x, t, rfl⟩ := (mem_flatSp y).1 hy
     refine add_mem (h1 x) (Submodule.smul_mem _ t ?_)

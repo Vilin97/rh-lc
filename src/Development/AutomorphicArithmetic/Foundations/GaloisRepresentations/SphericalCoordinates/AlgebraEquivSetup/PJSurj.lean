@@ -59,7 +59,7 @@ private theorem star_part (Φ : R →+* R') (σ : R →+* R) (σ' : R' →+* R')
   have hGs : ((((1 - ε) • (a' * Y * a) + ε • (1 : Matrix (Fin n) (Fin n) R))).map σ)ᵀ =
       (1 - ε) • ((a' * Y * a).map σ)ᵀ + ε • (1 : Matrix (Fin n) (Fin n) R) := by
     ext i k
-    simp only [Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul,
+    simp only [Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul,
       map_sub, map_one, hσe]
     rcases eq_or_ne i k with rfl | h
     · simp
@@ -226,7 +226,7 @@ theorem UpperTheory.Gal.W2.Seed.pJSurj :
     refine UpperTheory.Gal.CertificateRingHomMap.mem_Sim.2 ?_
     refine hStar.trans ?_
     congr 1
-    simp only [map_add, map_mul, map_sub, map_one, ← hε]
+    simp only [map_add (f := _), map_mul, map_sub, map_one, ← hε]
   refine ⟨⟨_, hmem⟩, ?_, ?_⟩
   · rw [← hXd, ← hY]
     exact hConj.symm
@@ -234,7 +234,7 @@ theorem UpperTheory.Gal.W2.Seed.pJSurj :
     apply Units.ext
     refine Matrix.ext fun i k => ?_
     show pLoc E w (((1 - ε) • ((a⁻¹).val * Y * a.val) + ε • (1 : Matrix (Fin n) (Fin n) (Af E))) i k) = (1 : Matrix (Fin n) (Fin n) _) i k
-    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_sub, map_one, (heE w).1 hw, sub_self, zero_mul,
+    simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_sub, map_one, (heE w).1 hw, sub_self, zero_mul,
       zero_add, one_mul]
     rcases eq_or_ne i k with rfl | hik
     · simp

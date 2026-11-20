@@ -46,7 +46,7 @@ theorem exists_linearEquiv_comp_eq_and_apply_eq [FiniteDimensional K V] {E E' : 
   let f : V →ₗ[K] V := s' ∘ₗ E + (LinearMap.ker E').subtype ∘ₗ e.toLinearMap ∘ₗ π
   have hf (x) : f x = s' (E x) + e (π x) := rfl
   have hEf (x) : E' (f x) = E x := by
-    rw [hf, map_add, hs1', LinearMap.mem_ker.mp (e (π x)).2, add_zero]
+    rw [hf, map_add (f := _), hs1', LinearMap.mem_ker.mp (e (π x)).2, add_zero]
   have hinj : Function.Injective f := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx

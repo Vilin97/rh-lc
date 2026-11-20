@@ -49,7 +49,7 @@ theorem redM_eq_one {n : ℕ} (v : HeightOneSpectrum (𝓞 F)) (g : v.adicComple
       ⟨(1 : Matrix (Fin n) (Fin n) (v.adicCompletion F)) a b, h1 a b⟩ + ⟨g, hgi⟩ * ⟨W a b, hW a b⟩ := by
     exact Subtype.ext ((hX a b).trans rfl)
   simp only [redM]
-  rw [dif_pos hm, e, map_add, map_mul, hz, zero_mul, add_zero]
+  rw [dif_pos hm, e, map_add (f := _), map_mul, hz, zero_mul, add_zero]
   by_cases ab : a = b
   · subst ab
     simp only [Matrix.one_apply_eq]
@@ -107,7 +107,7 @@ theorem mem_Uloc_of_princ {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin n) (Fi
       (fun a b => G.phi i v h (Z b a)) (fun a b => hint _ (hZ b) a) fun a b => ?_
     have e2 : G.mat i v h 1 x a b = G.phi i v h ((x : Matrix (Fin n) (Fin n) (E ⊗[F] v.adicCompletion F)) a b) := by
       simp [GLoc.mat, bc]
-    rw [e2, hZe b a, map_add, map_mul, map_natCast]
+    rw [e2, hZe b a, map_add (f := _), map_mul, map_natCast]
     congr 1
     by_cases ab : a = b
     · subst ab

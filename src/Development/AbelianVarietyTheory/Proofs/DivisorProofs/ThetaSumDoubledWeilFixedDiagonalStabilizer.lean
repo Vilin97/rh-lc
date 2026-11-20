@@ -248,7 +248,7 @@ theorem GlobalTheory.ThetaSiegelRat.thetaSum_omd_of_fix_diag : ∀ (F E : Type) 
           (dd.rho ψ (Matrix.fromCols (incM F (x * (P - R)ᵀ)) (0 : Matrix (Fin a) (Fin b) (AE F E))) φ') := by
       intro φ'
       simp only [Darboux.rho]
-      rw [schr_schr', map_add, add_comm (dd.e (Matrix.fromCols (incM F (x * (P - R)ᵀ)) _)), hdd (incM F (x * Rᵀ)),
+      rw [schr_schr', map_add (f := _), add_comm (dd.e (Matrix.fromCols (incM F (x * (P - R)ᵀ)) _)), hdd (incM F (x * Rᵀ)),
         hr (x * Rᵀ), hU (x * (P - R)ᵀ)]
       rw [cocycle_one ψ hψ, one_smul]
     calc GlobalTheory.DiagForm.lDiag F κ (dd.rho ψ (Matrix.fromCols (incM F x) (0 : Matrix (Fin a) (Fin b) (AE F E))) φ)

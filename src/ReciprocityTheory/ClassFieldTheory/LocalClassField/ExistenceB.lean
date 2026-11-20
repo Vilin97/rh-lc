@@ -18,7 +18,7 @@ theorem exists_maximal_exponent_abelian_extension (hK : FiniteDimensional ℚ_[p
       one_mem' := fun χ _ => map_zero χ.1
       mul_mem' := fun {a b} ha hb χ h => by
         show χ.1 (Additive.ofMul a + Additive.ofMul b) = 0
-        rw [map_add, ha χ h, hb χ h, add_zero]
+        rw [map_add (f := _), ha χ h, hb χ h, add_zero]
       inv_mem' := fun {a} ha χ h => by
         show χ.1 (- Additive.ofMul a) = 0
         rw [map_neg, ha χ h, neg_zero] }
@@ -35,7 +35,7 @@ theorem exists_maximal_exponent_abelian_extension (hK : FiniteDimensional ℚ_[p
   · rw [hLU, commutator_def, Subgroup.commutator_le]
     intro a _ b _ χ _
     show χ.1 (Additive.ofMul a + Additive.ofMul b + - Additive.ofMul a + - Additive.ofMul b) = 0
-    rw [map_add, map_add, map_add, map_neg, map_neg]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_neg, map_neg]
     abel
   · refine Subtype.ext (AddMonoidHom.ext fun x => ?_)
     show n • χ.1 x = 0
@@ -91,7 +91,7 @@ theorem mem_subG_adjoin (S : Set (PadicAlgCl p)) (g : GK p K) (h : ∀ x ∈ S, 
   induction hx using IntermediateField.adjoin_induction with
   | mem x hx => exact h x hx
   | algebraMap x => exact (g.restrictScalars ℚ_[p]).commutes x
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | inv x _ hx => rw [map_inv₀, hx]
   | mul x y _ _ hx hy => rw [map_mul, hx, hy]
 

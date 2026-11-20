@@ -15,7 +15,7 @@ theorem red_mem {S : Subring A} {ϖ a : A} (h : a ∈ S) :
 
 theorem red_add' {S : Subring A} {ϖ a b : A} (ha : a ∈ S) (hb : b ∈ S) :
     red S ϖ (a + b) = red S ϖ a + red S ϖ b := by
-  rw [red_mem ha, red_mem hb, red_mem (add_mem ha hb), ← map_add]; rfl
+  rw [red_mem ha, red_mem hb, red_mem (add_mem ha hb), ← map_add (f := _)]; rfl
 
 theorem red_mul' {S : Subring A} {ϖ a b : A} (ha : a ∈ S) (hb : b ∈ S) :
     red S ϖ (a * b) = red S ϖ a * red S ϖ b := by
@@ -51,7 +51,7 @@ def fixRes (S : Subring A) (σ : A →+* A) (ϖ : A) : Subring (Res S ϖ) where
   one_mem' := ⟨1, one_mem _, map_one σ, (red_one' S ϖ).symm⟩
   add_mem' := by
     rintro _ _ ⟨a, ha, hσa, rfl⟩ ⟨b, hb, hσb, rfl⟩
-    exact ⟨a + b, add_mem ha hb, by rw [map_add, hσa, hσb], (red_add' ha hb).symm⟩
+    exact ⟨a + b, add_mem ha hb, by rw [map_add (f := _), hσa, hσb], (red_add' ha hb).symm⟩
   mul_mem' := by
     rintro _ _ ⟨a, ha, hσa, rfl⟩ ⟨b, hb, hσb, rfl⟩
     exact ⟨a * b, mul_mem ha hb, by rw [map_mul, hσa, hσb], (red_mul' ha hb).symm⟩

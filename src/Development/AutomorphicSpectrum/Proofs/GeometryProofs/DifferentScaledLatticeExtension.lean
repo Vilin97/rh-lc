@@ -48,7 +48,7 @@ theorem scale_pull_ext : ∀ (Ω Ω' : Type) [Field Ω] [Field Ω'] (i : Ω →+
       rw [RingHom.comp_apply, ← hj]
       exact Submodule.subset_span ⟨_, hv.2 d hd, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       show j ((a : Ω) • x) ∈ _
       rw [hj]

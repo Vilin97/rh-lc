@@ -61,7 +61,7 @@ theorem exists_fixed_of_mem_isot {L : Type} [Field L] [NumberField L] [IsCMField
           have hmem : v' - v ∈ (Y t).comap j.1 := by
             rw [Submodule.mem_comap, map_sub, j.2.1 κ v]
             have h1 := hxfix κ hκ
-            rw [map_add] at h1
+            rw [map_add (f := _)] at h1
             have h3 : ρ κ (j.1 v) - j.1 v = z - ρ κ z := by
               rw [sub_eq_sub_iff_add_eq_add, h1, add_comm]
             rw [h3]

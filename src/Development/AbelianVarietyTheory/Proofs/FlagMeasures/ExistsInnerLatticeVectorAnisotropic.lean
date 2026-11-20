@@ -66,7 +66,7 @@ theorem exists_inner_lattice_vector_anisotropic' : ∀ {F : Type} [Field F] [Val
           H.h (Fr.f (Fin.last r)) (y : V) = (c : E)}
        add_mem' := by
          rintro a b ⟨y, hy, hya⟩ ⟨y', hy', hyb⟩
-         refine ⟨y + y', by rw [map_add]; exact L.add_mem hy hy', ?_⟩
+         refine ⟨y + y', by rw [map_add (f := _)]; exact L.add_mem hy hy', ?_⟩
          show H.h _ ((y : V) + (y' : V)) = (a : E) + (b : E)
          rw [h_add_right, hya, hyb]
        zero_mem' := by

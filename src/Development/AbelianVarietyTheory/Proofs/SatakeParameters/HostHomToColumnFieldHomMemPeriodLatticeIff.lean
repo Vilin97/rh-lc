@@ -69,7 +69,7 @@ theorem map_mem_of_span {S : Set E} {A' : Submodule (𝓞 E') E'} (h : ∀ r ∈
   induction hr using Submodule.span_induction with
   | mem z hz => exact h z hz
   | zero => rw [map_zero]; exact A'.zero_mem
-  | add y z _ _ hy hz => rw [map_add]; exact A'.add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact A'.add_mem hy hz
   | smul c y _ hy =>
     have h1 : e (c • y) = RingOfIntegers.mapRingEquiv e c • e y := map_mul e (c : E) y
     rw [h1]

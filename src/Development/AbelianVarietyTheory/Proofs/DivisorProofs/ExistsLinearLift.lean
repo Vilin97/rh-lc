@@ -85,8 +85,8 @@ theorem exists_linear_lift {X X' Y B W Z κ₁ κ₂ : Type} [AddCommGroup X] [M
   obtain ⟨th, h⟩ := exists_linear_section (fun x y => ∀ a b, val a b (e y) = ∫ h in 𝓕, k a b h (E₂ (E₁ x) h) ∂ν)
     (fun a b => by simpa [k0] using hsm a b 0 0)
     (fun x x' y y' h h' a b => by
-      rw [map_add, hadd, h, h', ← integral_add (hint x a b) (hint x' a b)]
-      simp only [map_add, Pi.add_apply, kadd])
+      rw [map_add (f := _), hadd, h, h', ← integral_add (hint x a b) (hint x' a b)]
+      simp only [map_add (f := _), Pi.add_apply, kadd])
     (fun t x y h a b => by
       rw [map_smul, hsm, h, ← integral_const_mul]
       simp only [map_smul, Pi.smul_apply, ksm]) hex
@@ -127,7 +127,7 @@ def ptL (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) (BW : D.what₂.Tau → Ma
     (f : Datum.WO (Vc D i) (Wc D i) → ℂ) {X : Type} [AddCommGroup X] [Module ℂ X]
     (u : X →ₗ[ℂ] PolF D (Wc D i).rank (Vc D i).rank) : X →ₗ[ℂ] (Datum.WO (Vc D i) (Wc D i) → ℂ) where
   toFun w := ptAt R i σ BW f (u w)
-  map_add' w w' := by rw [map_add]; exact map_add _ _ _
+  map_add' w w' := by rw [map_add (f := _)]; exact map_add _ _ _
   map_smul' a w := by rw [map_smul]; exact map_smul _ _ _
 
 theorem ptL_apply (i : Fin D.R.m) (σ : D.what₂.LL →+* ℂ) (BW : D.what₂.Tau → Matrix (Fin (Wc D i).rank) (Fin (Wc D i).rank) ℂ)

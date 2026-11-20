@@ -43,7 +43,7 @@ theorem int_sub {a b : Af F} (ha : a ∈ intAf F) (hb : b ∈ intAf F) : a - b �
   rw [map_sub]; exact sub_mem (ha v) (hb v)
 
 theorem int_add {a b : Af F} (ha : a ∈ intAf F) (hb : b ∈ intAf F) : a + b ∈ intAf F := fun v => by
-  rw [map_add]; exact add_mem (ha v) (hb v)
+  rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
 
 theorem int_zero : (0 : Af F) ∈ intAf F := fun v => by
   rw [map_zero]; exact zero_mem _
@@ -81,12 +81,12 @@ theorem exists_char (t : Ainf F →+ ℂ) (hc : Continuous t) (hre : ∀ x, (t x
   have fadd : ∀ x y, f (x + y) = f x * f y := fun x y => by
     rw [key (x + y) (ap x.2 + ap y.2) (by
       have := int_add (hap x.2) (hap y.2)
-      rw [map_add]
+      rw [map_add (f := _)]
       convert this using 1
       show x.2 + y.2 - _ = _
       ring), ← Complex.exp_add]
     congr 1
-    rw [map_add, show (x + y).1 = x.1 + y.1 from rfl, map_add]
+    rw [map_add (f := _), show (x + y).1 = x.1 + y.1 from rfl, map_add (f := _)]
     push_cast
     ring
   let ψ : AddChar (AF F) ℂ :=
@@ -137,7 +137,7 @@ end Char
 theorem exists_stdChar (D : D7) : ∃ ψ, IsStdChar D ψ (-1) := by
   obtain ⟨θ, hθ⟩ := GlobalTheory.DualPairCompare.exists_infFam D
   let t : Ainf D.host.F →+ ℂ := AddMonoidHom.mk' (fun x => ∑ ρ, θ ρ (x ⊗ₜ[D.host.F] (1 : D.host.E)))
-    fun x y => by simp only [TensorProduct.add_tmul, map_add, Finset.sum_add_distrib]
+    fun x y => by simp only [TensorProduct.add_tmul, map_add (f := _), Finset.sum_add_distrib]
   have hts : ∀ x, t x = (GlobalTheory.IndefiniteRowSideFullHecke.HeisenbergWeilMatrices.trInf D x : ℂ) := GlobalTheory.DualPairCompare.sum_infFam θ hθ
   obtain ⟨ψ, h1, h2⟩ := exists_char t (continuous_finset_sum _ fun ρ _ => (hθ ρ).2)
     (fun x => by rw [hts, Complex.ofReal_im]) (fun a => by

@@ -161,7 +161,7 @@ theorem UpperTheory.ConvolutionTheory.R2.I.thetaIntegral_exists_bilinear :
       simp only [w1]
       rw [← mul_add, ← hat_add (W.Om g (W.L h φ.1)).2 (W.Om g (W.L h φ'.1)).2]
       congr 2
-      simp [map_add]
+      simp [map_add (f := _)]
     simp only [W1]
     rw [e]
     exact normOneIntegral_add M (hint f φ) (hint f φ')

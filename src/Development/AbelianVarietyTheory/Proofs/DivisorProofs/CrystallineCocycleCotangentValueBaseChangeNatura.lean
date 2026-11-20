@@ -62,7 +62,7 @@ theorem val_sub_pull {R R' : Type} [CommRing R] [CommRing R'] {σ : R →+* R'} 
   have key : ∀ (A B C : E.C) (x y u v w k l : E'.C) (N : E.C), x + y = ρ A + w → l + k = ρ N + w → N = C + B →
       k = v + u → y - u - v = ρ (A - B - C) + l - x := fun A B C x y u v w k l N h1 h2 h3 h4 ↦ by
     subst h3 h4
-    rw [map_add] at h2
+    rw [map_add (f := _)] at h2
     rw [map_sub, map_sub]
     linear_combination h1 - h2
   exact ⟨ev f b, key _ _ _ _ _ _ _ _ _ _ _ k1 k2 k3 k4⟩
@@ -97,7 +97,7 @@ theorem cotVal_pull : ∀ (R R' : Type) [CommRing R] [CommRing R'] (σ : R →+*
       · rw [hf, pf, pf', s.counit_map]
       · rw [hs, ps, ps', s.cot_d]) f
   refine (congrArg (cotSnd R' D') hb).trans ?_
-  rw [map_sub, map_add]
+  rw [map_sub, map_add (f := _)]
   refine (sub_zero _).trans ?_
   exact congrArg₂ (· + ·) (hs _) (ps' _)
 

@@ -41,7 +41,7 @@ theorem OrdGe.mul {a b : ℕ} {f g : PS k n d} (hf : OrdGe a f) (hg : OrdGe b g)
     rw [← hp]
     first
       | exact (map_add _ _ _).symm
-      | (simp only [Finsupp.degree_eq_weight_one, map_add])
+      | (simp only [Finsupp.degree_eq_weight_one, map_add (f := _)])
       | (rw [Finsupp.degree_eq_sum, Finsupp.degree_eq_sum, Finsupp.degree_eq_sum, ← Finset.sum_add_distrib]; rfl)
       | (simp only [Finsupp.degree_eq_sum, Finsupp.coe_add, Pi.add_apply, Finset.sum_add_distrib])
       | (unfold Finsupp.degree
@@ -56,7 +56,7 @@ theorem cro_ordGe_zero (f : PS k n d) : OrdGe 0 f := by
 
 theorem cro_ordGe_add {t : ℕ} {f g : PS k n d} (hf : OrdGe t f) (hg : OrdGe t g) : OrdGe t (f + g) := by
   intro m hm
-  rw [map_add, hf m hm, hg m hm, add_zero]
+  rw [map_add (f := _), hf m hm, hg m hm, add_zero]
 
 theorem cro_ordGe_zero' (t : ℕ) : OrdGe t (0 : PS k n d) := by
   intro m _
@@ -82,7 +82,7 @@ theorem cro_ordGe_pderiv {t : ℕ} {f : PS k n d} (hf : OrdGe (t + 1) f) (i : Fi
   have hz : coeff (m + Finsupp.single i 1) f = 0 := hf _ (by
     have e : (m + Finsupp.single i 1).degree = m.degree + 1 := by
       first
-        | (rw [map_add, Finsupp.degree_single])
+        | (rw [map_add (f := _), Finsupp.degree_single])
         | simp [Finsupp.degree_single]
         | (rw [Finsupp.degree_eq_sum, Finsupp.degree_eq_sum]
            simp [Finset.sum_add_distrib, Finsupp.single_apply])

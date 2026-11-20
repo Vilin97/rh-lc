@@ -69,7 +69,7 @@ theorem ratio {Ω : Type} [Field Ω] (r : (Σ k, ι k) → Ω) (c : ∀ k, ι k)
     obtain ⟨d', g', h', b1, b2, b3, b4⟩ := hy
     refine ⟨d + d', g * h' + h * g', h * h', hom_add (hom_mul a1 b2) (hom_mul a2 b1), hom_mul a2 b2, ?_, ?_⟩
     · rw [map_mul]; exact mul_ne_zero a3 b3
-    · rw [map_add, map_mul, map_mul, map_mul, a4, b4]; ring
+    · rw [map_add (f := _), map_mul, map_mul, map_mul, a4, b4]; ring
   | neg x _ hx =>
     obtain ⟨d, g, h, a1, a2, a3, a4⟩ := hx
     exact ⟨d, -g, h, hom_neg a1, a2, a3, by rw [map_neg, a4]; ring⟩

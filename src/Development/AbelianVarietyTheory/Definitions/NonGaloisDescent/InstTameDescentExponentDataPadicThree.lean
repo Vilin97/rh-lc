@@ -185,7 +185,7 @@ theorem ringAct_E (g : TameGal K l e a) : ringAct g (fun _ => E K l e) = fun _ =
   ext1 τ
   have := congrFun (ringAct_X_pow g) τ
   rw [ringAct_apply] at this ⊢
-  rw [E, map_add, this, map_natCast]
+  rw [E, map_add (f := _), this, map_natCast]
 
 end Group
 
@@ -419,7 +419,7 @@ abbrev inv : Submodule K (Vec K a ι) := Δ.act.invariants
 def isotypic (c : ZMod e) : Submodule K (Vec K a ι) where
   carrier := {v | ∀ ζ τ, Δ.act (TameGal.inertia ζ) v τ =
     (TameGal.inertia ζ : TameGal K l e a).root τ ^ c.val • v τ}
-  add_mem' hv hw ζ τ := by rw [map_add, Pi.add_apply, hv, hw, Pi.add_apply, smul_add]
+  add_mem' hv hw ζ τ := by rw [map_add (f := _), Pi.add_apply, hv, hw, Pi.add_apply, smul_add]
   zero_mem' ζ τ := by simp
   smul_mem' r v hv ζ τ := by rw [map_smul, Pi.smul_apply, hv, Pi.smul_apply, smul_comm]
 
@@ -430,7 +430,7 @@ def chars (τ : ZMod a) : Set (ZMod e) :=
 def plusAct : Module.End K (Vec K a (ι ⊕ Unit)) where
   toFun w := join (Δ.act g fun τ i => w τ (.inl i)) (ringAct g fun τ => w τ (.inr ()))
   map_add' v w := by
-    rw [← join_add, ← map_add, ← map_add]
+    rw [← join_add, ← map_add (f := _), ← map_add (f := _)]
     rfl
   map_smul' c v := by
     rw [RingHom.id_apply, ← join_smul, ← map_smul, ← map_smul]
@@ -461,7 +461,7 @@ def plus [NeZero e] {y : Vec K a ι} (hy : y ∈ P.Mext (invE l e (A O K))) (hin
       rot_A.ringAct_mem g fun τ => mem_tot.1 hw τ (.inr ())⟩
   act_phi g w := by
     change Δ.plusAct g _ = (P.plus hy).phi (Δ.plusAct g _)
-    rw [← join_eta w, P.plus_phi_join, plusAct_join, plusAct_join, P.plus_phi_join, map_add, act_phi,
+    rw [← join_eta w, P.plus_phi_join, plusAct_join, plusAct_join, P.plus_phi_join, map_add (f := _), act_phi,
       act_smul_tot, hinv g, ringAct_frobTot]
 
 theorem plus_act_join [NeZero e] {y : Vec K a ι} (hy : y ∈ P.Mext (invE l e (A O K)))

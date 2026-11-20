@@ -59,7 +59,7 @@ theorem finPart_lift (y : Af D.host.F ⊗[D.host.F] D.host.E) : finPart D (lift 
     rw [lift_tmul]
     erw [Algebra.TensorProduct.map_tmul]
     rfl
-  | add x y hx hy => rw [lift_add, map_add, hx, hy]
+  | add x y hx hy => rw [lift_add, map_add (f := _), hx, hy]
 
 theorem infPart_lift (y : Af D.host.F ⊗[D.host.F] D.host.E) : infPart D (lift y) = 0 := by
   induction y using TensorProduct.induction_on with
@@ -68,7 +68,7 @@ theorem infPart_lift (y : Af D.host.F ⊗[D.host.F] D.host.E) : infPart D (lift 
     rw [lift_tmul]
     erw [Algebra.TensorProduct.map_tmul]
     exact TensorProduct.zero_tmul _ _
-  | add x y hx hy => rw [lift_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [lift_add, map_add (f := _), hx, hy, add_zero]
 
 theorem liftI_tmul (a : Ainf D.host.F) (w : D.host.E) : liftI (D := D) (a ⊗ₜ[D.host.F] w) = pairA D.host.F a 0 ⊗ₜ w := rfl
 
@@ -80,7 +80,7 @@ theorem eq_liftI_add_lift (x : AE D) : x = liftI (infPart D x) + lift (finPart D
   induction x using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, liftI_zero, lift_zero, add_zero]
   | add x y hx hy =>
-    rw [map_add, map_add, liftI_add, lift_add]
+    rw [map_add (f := _), map_add (f := _), liftI_add, lift_add]
     conv_lhs => rw [hx, hy]
     abel
   | tmul p w =>
@@ -101,7 +101,7 @@ theorem lift_mul (y : Af D.host.F ⊗[D.host.F] D.host.E) (z : AE D) : lift y * 
   | tmul a w =>
     induction z using TensorProduct.induction_on with
     | zero => rw [mul_zero, map_zero, mul_zero, lift_zero]
-    | add z z' hz hz' => rw [mul_add, hz, hz', map_add, mul_add, lift_add]
+    | add z z' hz hz' => rw [mul_add, hz, hz', map_add (f := _), mul_add, lift_add]
     | tmul p w' =>
       rw [lift_tmul, Algebra.TensorProduct.tmul_mul_tmul]
       erw [Algebra.TensorProduct.map_tmul]
@@ -124,7 +124,7 @@ theorem toEAf_liftE (y : EAf D) : toEAf D (liftE y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem finE_coe (V : HSp D) (g : GA D V) :
     ((Lev.finE V g : GL (Fin V.rank) (Lev.EAf D)) : Matrix (Fin V.rank) (Fin V.rank) (EAf D)) =
@@ -388,7 +388,7 @@ theorem latAll_infPart {u : WO S T} (hu : u ∈ latAll S T ΛS ΛT) (i : Fin T.r
     show (fstA D.host.F (pairA D.host.F 0 α)) ⊗ₜ[D.host.F] _ = 0
     exact TensorProduct.zero_tmul _ _
   | zero => exact map_zero _
-  | add x y _ _ hx hy => rw [Matrix.add_apply, map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [Matrix.add_apply, map_add (f := _), hx, hy, add_zero]
   | neg x _ hx => rw [Matrix.neg_apply, map_neg, hx, neg_zero]
 
 theorem lift_tmul_smul_mem {b : Af D.host.F} (hb : b ∈ intAf D.host.F) (o : 𝓞 D.host.E) {u : WO S T}
@@ -427,7 +427,7 @@ theorem comm_comm (y : EAf D) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem liftE_mul (y : EAf D) (z : AE D) : liftE y * z = liftE (y * toEAf D z) := by
   have hc : ∀ x : Af D.host.F ⊗[D.host.F] D.host.E, Algebra.TensorProduct.comm D.host.F D.host.E (Af D.host.F)
@@ -436,7 +436,7 @@ theorem liftE_mul (y : EAf D) (z : AE D) : liftE y * z = liftE (y * toEAf D z) :
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [liftE, liftE, lift_mul, map_mul]
   congr 2
   exact (hc (finPart D z)).symm
@@ -448,7 +448,7 @@ theorem liftE_mul_liftE (y y' : EAf D) : liftE y * liftE y' = liftE (y * y') := 
   rw [liftE_mul, toEAf_liftE]
 
 theorem liftE_add (y y' : EAf D) : liftE (D := D) (y + y') = liftE y + liftE y' := by
-  simp only [liftE, map_add, lift_add]
+  simp only [liftE, map_add (f := _), lift_add]
 
 theorem liftE_zero : liftE (D := D) 0 = 0 := by
   simp only [liftE, map_zero, lift_zero]
@@ -496,7 +496,7 @@ theorem toEAf_cA (x : AE D) : toEAf D (cA D x) = sR D (toEAf D x) := by
   induction x using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero]
   | tmul a w => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem toEAf_incA (w : D.host.E) : toEAf D (incA D w) = eToEAf D w := by
   show (Algebra.TensorProduct.comm D.host.F (Af D.host.F) D.host.E)
@@ -521,7 +521,7 @@ theorem sR_mem_intAf {z : EAf D} (hz : z ∈ Formalism.L2.Herm.intAf D.host.F D.
       exact ⟨⟨y, hy⟩, by show _ = (star (1 : D.host.E)) ⊗ₜ[D.host.F] y; rw [star_one]⟩
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact one_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
@@ -832,7 +832,7 @@ theorem frMapO_mapLiftE {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (
 
 theorem frMapO_add {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (EAf D)} (t t' : WO S T) :
     frMapO S T βS βT (t + t') = frMapO S T βS βT t + frMapO S T βS βT t' := by
-  simp [frMapO, Matrix.mul_add, Matrix.add_mul, Matrix.map_add]
+  simp [frMapO, Matrix.mul_add, Matrix.add_mul, Matrix.map_add (f := _)]
 
 theorem frMapO_zero {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (EAf D)} :
     frMapO S T βS βT 0 = 0 := by
@@ -918,7 +918,7 @@ theorem comm_comm' (y : Af D.host.F ⊗[D.host.F] D.host.E) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem liftE_toEAf (x : AE D) (hx : infPart D x = 0) : liftE (toEAf D x) = x := by
   unfold liftE
@@ -1014,7 +1014,7 @@ theorem isSBHalf_frameFn (hPL : PlaceLatDual D) {ψ : AddChar (AF D.host.F) ℂ}
       have e1 : (⟨(frMapO S T βS βT t + (nP * k') • (nA • frMapO S T βS βT u)) i j, isIntM_add hN hK i j⟩ :
           ↥(Formalism.L2.Herm.intAf D.host.F D.host.E)) = ⟨frMapO S T βS βT t i j, hN i j⟩ +
           ⟨(nP * k') • (nA • frMapO S T βS βT u) i j, hK i j⟩ := Subtype.ext rfl
-      rw [e1, map_add]
+      rw [e1, map_add (f := _)]
       have e2 : Formalism.L2.DIV.resS D.host.F PP ⟨(nP * k') • (nA • frMapO S T βS βT u) i j, hK i j⟩ = 0 :=
         int_of_rf PP (hint u hu i j) (nP * k') (hnP PP hPP)
       rw [e2, add_zero]
@@ -1072,15 +1072,15 @@ theorem hO_add_left (x x' y : WO S T) : hO S T (x + x') y = hO S T x y + hO S T 
   unfold hO; simp only [Matrix.add_apply, mul_add, ← Finset.sum_add_distrib]
 
 theorem hO_add_right (x y y' : WO S T) : hO S T x (y + y') = hO S T x y + hO S T x y' := by
-  unfold hO; simp only [Matrix.add_apply, map_add, mul_add, add_mul, ← Finset.sum_add_distrib]
+  unfold hO; simp only [Matrix.add_apply, map_add (f := _), mul_add, add_mul, ← Finset.sum_add_distrib]
 
 theorem symplOH_add_left (x x' y : WO S T) :
     symplOH S T (x + x') y = symplOH S T x y + symplOH S T x' y := by
-  unfold symplOH symplO; rw [hO_add_left, mul_add, map_add, mul_add]
+  unfold symplOH symplO; rw [hO_add_left, mul_add, map_add (f := _), mul_add]
 
 theorem symplOH_add_right (x y y' : WO S T) :
     symplOH S T x (y + y') = symplOH S T x y + symplOH S T x y' := by
-  unfold symplOH symplO; rw [hO_add_right, mul_add, map_add, mul_add]
+  unfold symplOH symplO; rw [hO_add_right, mul_add, map_add (f := _), mul_add]
 
 theorem hO_half_zero {e : AE D} (hec : e * cA D e = 0) {x y : WO S T} (hx : IsHalf e x) (hy : IsHalf e y) :
     hO S T x y = 0 := by
@@ -1152,14 +1152,14 @@ theorem cA_mem_intAE {y : Af D.host.F ⊗[D.host.F] D.host.E} (hy : y ∈ intAE 
     obtain ⟨b, hb, o, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨b, hb, ⟨_, isIntegral_star' o⟩, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem finPart_cA (x : AE D) : finPart D (cA D x) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (Af D.host.F) D.sp.cm.sig (finPart D x) := by
   induction x using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero]
   | tmul a w => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem isSplitIdem_cA {e : AE D} (he : IsSplitIdem D e) : IsSplitIdem D (cA D e) := by
   obtain ⟨h1, h2, v, ε, hv, hε⟩ := he
@@ -1207,7 +1207,7 @@ theorem sR_sR (z : EAf D) : sR D (sR D z) = z := by
   | tmul a b =>
     rw [show sR D (a ⊗ₜ[D.host.F] b) = (star a) ⊗ₜ b from rfl,
       show sR D ((star a) ⊗ₜ[D.host.F] b) = (star (star a)) ⊗ₜ b from rfl, star_star]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 abbrev GE (V : HSp D) : Matrix (Fin V.rank) (Fin V.rank) (EAf D) := V.gram.map (eToEAf D)
 
@@ -1280,7 +1280,7 @@ theorem frMapAdj_genE {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (EA
   rw [e1, Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, Matrix.mul_assoc, GIE_GE, Matrix.mul_one]
 
 theorem adjO_add (x y : WO S T) : adjO S T (x + y) = adjO S T x + adjO S T y := by
-  simp [adjO, Matrix.mul_add, Matrix.add_mul, Matrix.map_add, Matrix.transpose_add]
+  simp [adjO, Matrix.mul_add, Matrix.add_mul, Matrix.map_add (f := _), Matrix.transpose_add]
 
 theorem adjO_zero : adjO S T 0 = 0 := by
   simp [adjO]
@@ -1290,7 +1290,7 @@ theorem adjO_neg (x : WO S T) : adjO S T (-x) = -adjO S T x := by
 
 theorem frMapAdj_add {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (EAf D)} (x y : WO S T) :
     frMapAdj S T βS βT (x + y) = frMapAdj S T βS βT x + frMapAdj S T βS βT y := by
-  simp [frMapAdj, Matrix.mul_add, Matrix.add_mul, Matrix.map_add, Matrix.transpose_add]
+  simp [frMapAdj, Matrix.mul_add, Matrix.add_mul, Matrix.map_add (f := _), Matrix.transpose_add]
 
 theorem frMapAdj_zero {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (EAf D)} :
     frMapAdj S T βS βT 0 = 0 := by
@@ -1453,7 +1453,7 @@ theorem isSBHalf_frameFnAdj (hPL : PlaceLatDual D) {ψ : AddChar (AF D.host.F) �
       have e1 : (⟨(frMapAdj S T βS βT t + (nP * k') • (nA • frMapAdj S T βS βT u)) i j, isIntM_add hN hK i j⟩ :
           ↥(Formalism.L2.Herm.intAf D.host.F D.host.E)) = ⟨frMapAdj S T βS βT t i j, hN i j⟩ +
           ⟨(nP * k') • (nA • frMapAdj S T βS βT u) i j, hK i j⟩ := Subtype.ext rfl
-      rw [e1, map_add]
+      rw [e1, map_add (f := _)]
       have e2 : Formalism.L2.DIV.resS D.host.F PP ⟨(nP * k') • (nA • frMapAdj S T βS βT u) i j, hK i j⟩ = 0 :=
         int_of_rf PP (hint u hu i j) (nP * k') (hnP PP hPP)
       rw [e2, add_zero]

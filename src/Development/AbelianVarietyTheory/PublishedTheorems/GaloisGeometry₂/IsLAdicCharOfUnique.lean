@@ -41,10 +41,10 @@ theorem expo_nonpos {K : Type} [Field K] [NumberField K] (m : (K →+* ℂ) → 
     have h1 := h (Units.mk0 _ h0) fun φ => by
       have := hb (Complex.ofRealHom.comp φ)
       simp only [RingHom.comp_apply, Complex.ofRealHom_eq_coe, Complex.norm_real, Real.norm_eq_abs] at this
-      simp only [Units.val_mk0, map_add, map_natCast]
+      simp only [Units.val_mk0, map_add (f := _), map_natCast]
       push_cast
       linarith [Nat.cast_nonneg (α := ℝ) t, neg_abs_le (φ x)]
-    simp only [Units.val_mk0, map_add, map_natCast] at h1
+    simp only [Units.val_mk0, map_add (f := _), map_natCast] at h1
     simp only [Set.mem_setOf_eq, P, Q, Polynomial.eval_prod, Polynomial.eval_pow, Polynomial.eval_add,
       Polynomial.eval_X, Polynomial.eval_C]
     rw [← one_mul (∏ φ : K →+* ℂ, _ ^ (-m φ).toNat), ← h1, ← Finset.prod_mul_distrib]

@@ -101,7 +101,7 @@ def primeE (p : E ⊗[F] v.adicCompletion F →+* v.adicCompletion F)
       zero_mem' := by simp
       add_mem' := fun {a b} ha hb => by
         show Valued.v (p (((a + b : 𝓞 E) : E) ⊗ₜ[F] (1 : v.adicCompletion F))) < 1
-        rw [show ((a + b : 𝓞 E) : E) = (a : E) + (b : E) from rfl, TensorProduct.add_tmul, map_add]
+        rw [show ((a + b : 𝓞 E) : E) = (a : E) + (b : E) from rfl, TensorProduct.add_tmul, map_add (f := _)]
         exact lt_of_le_of_lt (Valuation.map_add _ _ _) (max_lt ha hb)
       smul_mem' := fun c a ha => by
         show Valued.v (p (((c * a : 𝓞 E) : E) ⊗ₜ[F] (1 : v.adicCompletion F))) < 1
@@ -221,7 +221,7 @@ theorem exists_primes (hdeg : Module.finrank F E = 2) {σ : E →ₐ[F] E}
       | zero => simp
       | one => simp
       | add x y _ _ hx hy =>
-        rw [map_add, Prod.fst_add, Prod.snd_add, add_sub_add_comm]
+        rw [map_add (f := _), Prod.fst_add, Prod.snd_add, add_sub_add_comm]
         exact lt_of_le_of_lt (Valuation.map_add _ _ _) (max_lt hx hy)
       | neg x _ hx =>
         rw [map_neg, Prod.fst_neg, Prod.snd_neg, neg_sub_neg, Valuation.map_sub_swap]; exact hx
@@ -283,9 +283,9 @@ theorem map_eq_primeOf (p : E ⊗[F] v.adicCompletion F →+* v.adicCompletion F
         ⟨z, hz⟩ * GlobalTheory.IndefiniteRowSideFullHecke.OverPlaceIntegralForm.toIntV E v a := by
       apply Subtype.ext
       apply hinj
-      · simp only [Subring.coe_add, Subring.coe_mul, map_add, map_mul, coe_toIntV, hy1, hz1,
+      · simp only [Subring.coe_add, Subring.coe_mul, map_add (f := _), map_mul, coe_toIntV, hy1, hz1,
           tmul_algebraMap, h1, ← hπ', zero_mul, add_zero, div_mul_cancel₀ _ hπ0]
-      · simp only [Subring.coe_add, Subring.coe_mul, map_add, map_mul, coe_toIntV, hy2, hz2,
+      · simp only [Subring.coe_add, Subring.coe_mul, map_add (f := _), map_mul, coe_toIntV, hy2, hz2,
           zero_mul, zero_add, div_mul_cancel₀ _ hu0]
     rw [this]
     exact add_mem (Ideal.mul_mem_left _ _ (Ideal.mem_map_of_mem _ hπP))
@@ -415,7 +415,7 @@ theorem IsFrame.exists_fun {Λ : Submodule O (n → K)} {b : GL n K} (h : IsFram
   let f0 : Λ → O ⧸ IsLocalRing.maximalIdeal O := fun x => ∑ i, φ i * Ideal.Quotient.mk _ (c x i)
   refine ⟨⟨⟨f0, fun x y => ?_⟩, fun a x => ?_⟩, fun y z hy => ?_⟩
   · show f0 (x + y) = f0 x + f0 y
-    simp only [f0, cadd, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [f0, cadd, map_add (f := _), mul_add, Finset.sum_add_distrib]
   · show f0 (a • x) = Ideal.Quotient.mk _ a * f0 x
     simp only [f0, csmul, map_mul, Finset.mul_sum]
     exact Finset.sum_congr rfl fun i _ => by ring

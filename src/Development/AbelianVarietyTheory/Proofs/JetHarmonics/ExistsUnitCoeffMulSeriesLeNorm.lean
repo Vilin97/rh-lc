@@ -194,7 +194,7 @@ theorem BdT.mul_one {n : ℕ} {f g : ℂ_[q]⟦X⟧} (hf : BdT n 1 f) (hg : BdT 
   simpa using BdT.mul zero_le_one zero_le_one hf hg
 
 theorem BdT.add {n : ℕ} {B : ℝ} {f g : ℂ_[q]⟦X⟧} (hf : BdT n B f) (hg : BdT n B g) : BdT n B (f + g) :=
-  fun m hm => by rw [map_add]; exact norm_add_le_of (hf m hm) (hg m hm)
+  fun m hm => by rw [map_add (f := _)]; exact norm_add_le_of (hf m hm) (hg m hm)
 
 theorem BdT.const {n : ℕ} {a : ℂ_[q]} (ha : ‖a‖ ≤ 1) : BdT n 1 (C a) := fun m _ => by
   rw [coeff_C]; split_ifs <;> simp [ha]
@@ -264,7 +264,7 @@ theorem norm_le_of_bdT (xs : ℂ_[q]⟦X⟧) (k : ℕ) (c : ℕ → ℂ_[q]) (B 
     intro j hj hn
     have h1 := hB (2 * n) (by omega)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← Finset.add_sum_erase _ _ (Finset.mem_range.mpr (Nat.lt_succ_of_le hj)), map_add, map_sum, mul_assoc,
+      rw [← Finset.add_sum_erase _ _ (Finset.mem_range.mpr (Nat.lt_succ_of_le hj)), map_add (f := _), map_sum, mul_assoc,
       coeff_C_mul, coeff_X_pow_mul', if_pos (by omega), hn, Nat.sub_self, coeff_zero_eq_constantCoeff] at h1
     have h2 : ‖∑ l ∈ (Finset.range (k + 1)).erase j, coeff (2 * n) (C (c l) * X ^ (2 * (k - l)) * xs ^ l)‖ ≤ B := by
       refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg hB0 ?_

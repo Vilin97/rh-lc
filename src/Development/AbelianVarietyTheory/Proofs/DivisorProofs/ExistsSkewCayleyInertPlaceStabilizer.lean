@@ -61,7 +61,7 @@ def keepT : Subring S where
     exact hx _ (hy z hz)
   one_mem' z hz := by simpa using hz
   add_mem' {x y} hx hy z hz := by
-    simp only [Set.mem_setOf_eq, map_add, Matrix.add_mulVec] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _), Matrix.add_mulVec] at *
     exact add_mem (hx z hz) (hy z hz)
   zero_mem' z hz := by simp
   neg_mem' {x} hx z hz := by
@@ -74,7 +74,7 @@ def congI : Ideal (keepT φ Λ) where
     obtain ⟨a, ha, e1⟩ := hx z hz
     obtain ⟨c, hc, e2⟩ := hy z hz
     refine ⟨a + c, add_mem ha hc, ?_⟩
-    rw [AddMemClass.coe_add, map_add, Matrix.add_mulVec, e1, e2, smul_add]
+    rw [AddMemClass.coe_add, map_add (f := _), Matrix.add_mulVec, e1, e2, smul_add]
   zero_mem' z hz := ⟨0, zero_mem _, by simp⟩
   smul_mem' c {x} hx z hz := by
     obtain ⟨a, ha, e⟩ := hx z hz
@@ -118,7 +118,7 @@ theorem selfAdj_one (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) (
 theorem selfAdj_add {σ : E →ₐ[F] E} {d : ℕ} {J P Q : Matrix (Fin d) (Fin d) (AE F E)} (hP : SelfAdj σ J P)
     (hQ : SelfAdj σ J Q) : SelfAdj σ J (P + Q) := by
   unfold SelfAdj at *
-  rw [Matrix.transpose_add, Matrix.add_mul, hP, hQ, map_add, Matrix.mul_add]
+  rw [Matrix.transpose_add, Matrix.add_mul, hP, hQ, map_add (f := _), Matrix.mul_add]
 
 theorem selfAdj_sub {σ : E →ₐ[F] E} {d : ℕ} {J P Q : Matrix (Fin d) (Fin d) (AE F E)} (hP : SelfAdj σ J P)
     (hQ : SelfAdj σ J Q) : SelfAdj σ J (P - Q) := by
@@ -146,7 +146,7 @@ theorem sa_gen {σ : E →ₐ[F] E} {d : ℕ}
       _ = J * (cA σ).mapMatrix K := by rw [← Matrix.mul_assoc, AlgHom.mapMatrix_apply, hKi]
   have h3 : SelfAdj σ J (K + Ki) := by
     unfold SelfAdj
-    rw [Matrix.transpose_add, Matrix.add_mul, h1, h2, map_add, Matrix.mul_add, add_comm]
+    rw [Matrix.transpose_add, Matrix.add_mul, h1, h2, map_add (f := _), Matrix.mul_add, add_comm]
   exact selfAdj_add (selfAdj_add h3 (selfAdj_one σ J)) (selfAdj_one σ J)
 
 end GlobalTheory.TwoFacCore
@@ -218,14 +218,14 @@ theorem units_mod {d : ℕ} (Λ : AddSubgroup (Fin d → AE F E)) (p : ℕ) (K K
   have hh' : mk hT + mk hT = 1 := by
     have : mk (hT + hT) = mk 1 := mk_eq_of φ Λ p fun z hz => by
       show φ (cS h + cS h) *ᵥ z = (1 : Matrix (Fin d) (Fin d) (AE F E)) *ᵥ z
-      rw [map_add, Matrix.add_mulVec, hφc, ← add_smul, hh z hz, Matrix.one_mulVec]
-    simpa only [map_add, map_one] using this
+      rw [map_add (f := _), Matrix.add_mulVec, hφc, ← add_smul, hh z hz, Matrix.one_mulVec]
+    simpa only [map_add (f := _), map_one] using this
   have hp' : (1 + mk βT) * mk upT = 1 := by
     have : mk ((1 + βT) * upT) = mk 1 := mk_eq_of φ Λ p fun z hz => by
       show φ ((1 + cS β) * cS up) *ᵥ z = (1 : Matrix (Fin d) (Fin d) (AE F E)) *ᵥ z
-      have e : (1 + cS β) * cS up = cS ((1 + β) * up) := by simp only [cS, map_add, map_mul, map_one]
+      have e : (1 + cS β) * cS up = cS ((1 + β) * up) := by simp only [cS, map_add (f := _), map_mul, map_one]
       rw [e, hφc, hp z hz, Matrix.one_mulVec]
-    simpa only [map_mul, map_add, map_one] using this
+    simpa only [map_mul, map_add (f := _), map_one] using this
   have hm' : (1 - mk βT) * mk umT = 1 := by
     have : mk ((1 - βT) * umT) = mk 1 := mk_eq_of φ Λ p fun z hz => by
       show φ ((1 - cS β) * cS um) *ᵥ z = (1 : Matrix (Fin d) (Fin d) (AE F E)) *ᵥ z
@@ -235,9 +235,9 @@ theorem units_mod {d : ℕ} (Λ : AddSubgroup (Fin d → AE F E)) (p : ℕ) (K K
   let fT : keepT φ Λ := kT + kiT + 1 + 1
   have hφf : φ ((fT : _)) = K + Ki + 1 + 1 := by
     show φ (kS + kiS + 1 + 1) = K + Ki + 1 + 1
-    rw [map_add, map_add, map_add, map_one, hφk, hφki]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_one, hφk, hφki]
   have hD' : (mk kT + mk kiT + 1 + 1) ^ (2 * (N₀ + 1)) = (mk kT + mk kiT + 1 + 1) ^ (N₀ + 1) := by
-    have e : mk kT + mk kiT + 1 + 1 = mk fT := by simp only [fT, map_add, map_one]
+    have e : mk kT + mk kiT + 1 + 1 = mk fT := by simp only [fT, map_add (f := _), map_one]
     rw [e, ← map_pow, ← map_pow]
     refine Ideal.Quotient.eq.mpr fun z hz => ?_
     obtain ⟨y, hy, ey⟩ := hD z hz
@@ -249,20 +249,20 @@ theorem units_mod {d : ℕ} (Λ : AddSubgroup (Fin d → AE F E)) (p : ℕ) (K K
   let YT : keepT φ Λ := βT * (1 - fT ^ (N₀ + 1))
   have hφY : φ (YT : _) = Y := by
     show φ (cS β * (1 - (kS + kiS + 1 + 1) ^ (N₀ + 1))) = Y
-    rw [map_mul, map_sub, map_one, map_pow, map_add, map_add, map_add, map_one, hφk, hφki, hY, Algebra.smul_def]
+    rw [map_mul, map_sub, map_one, map_pow, map_add (f := _), map_add (f := _), map_add (f := _), map_one, hφk, hφki, hY, Algebra.smul_def]
     rfl
   have eY : mk βT * (1 - (mk kT + mk kiT + 1 + 1) ^ (N₀ + 1)) = mk YT := by
-    simp only [YT, fT, map_mul, map_sub, map_one, map_pow, map_add]
+    simp only [YT, fT, map_mul, map_sub, map_one, map_pow, map_add (f := _)]
   rw [eY] at u1 u2 u3
-  have u1' : IsUnit (mk (1 + YT)) := by rw [map_add, map_one]; exact u1
+  have u1' : IsUnit (mk (1 + YT)) := by rw [map_add (f := _), map_one]; exact u1
   have u2' : IsUnit (mk (1 - YT)) := by rw [map_sub, map_one]; exact u2
   have u3' : IsUnit (mk (1 + YT + kT * (1 - YT))) := by
-    rw [map_add, map_add, map_mul, map_sub, map_one]; exact u3
+    rw [map_add (f := _), map_add (f := _), map_mul, map_sub, map_one]; exact u3
   refine ⟨fun z hz => hφY ▸ YT.2 z hz, ?_, ?_, ?_⟩
   · have s1 := surj_of_isUnit φ Λ p u1'
     have : φ ((1 + YT : keepT φ Λ) : Algebra.adjoin (AE F E) ({K, Ki} : Set (Matrix (Fin d) (Fin d) (AE F E)))) = 1 + Y := by
       show φ (1 + (YT : Algebra.adjoin (AE F E) ({K, Ki} : Set (Matrix (Fin d) (Fin d) (AE F E))))) = 1 + Y
-      rw [map_add, map_one, hφY]
+      rw [map_add (f := _), map_one, hφY]
     rwa [this] at s1
   · have s2 := surj_of_isUnit φ Λ p u2'
     have : φ ((1 - YT : keepT φ Λ) : Algebra.adjoin (AE F E) ({K, Ki} : Set (Matrix (Fin d) (Fin d) (AE F E)))) = 1 - Y := by
@@ -274,7 +274,7 @@ theorem units_mod {d : ℕ} (Λ : AddSubgroup (Fin d → AE F E)) (p : ℕ) (K K
         = 1 + Y + K * (1 - Y) := by
       show φ (1 + (YT : Algebra.adjoin (AE F E) ({K, Ki} : Set (Matrix (Fin d) (Fin d) (AE F E)))) +
         kS * (1 - (YT : Algebra.adjoin (AE F E) ({K, Ki} : Set (Matrix (Fin d) (Fin d) (AE F E)))))) = 1 + Y + K * (1 - Y)
-      rw [map_add, map_add, map_mul, map_sub, map_one, hφY, hφk]
+      rw [map_add (f := _), map_add (f := _), map_mul, map_sub, map_one, hφY, hφk]
     rwa [this] at s3
 
 end GlobalTheory.TwoFacCore
@@ -326,7 +326,7 @@ theorem exists_skew_cayley : ∀ (F E : Type) [Field F] [NumberField F] [Field E
   have hh2 : ∀ z ∈ GlobalTheory.InertSph.latAt G.W v,
       (algebraMap (AF F) (AE F E) ⅟(2 : AF F) + algebraMap (AF F) (AE F E) ⅟(2 : AF F)) • z = z := by
     intro z _
-    rw [← map_add, ← two_mul, mul_invOf_self', map_one, one_smul]
+    rw [← map_add (f := _), ← two_mul, mul_invOf_self', map_one, one_smul]
   obtain ⟨hYk, s1, s2, s3⟩ := units_mod (GlobalTheory.InertSph.latAt G.W v) (Ideal.absNorm v.asIdeal) (mat k) (mat k⁻¹) β b up um
     (algebraMap (AF F) (AE F E) ⅟(2 : AF F)) N₀ hKK hKiK hKk hKik
     (fun z hz => ⟨(hsc z hz).1, (hsc z hz).2.1, (hsc z hz).2.2.1, (hsc z hz).2.2.2.1, hh z hz⟩)

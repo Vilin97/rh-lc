@@ -88,7 +88,7 @@ theorem delta_twoSp (K : Type) [Field K] (m a b : ℕ) (hm : 1 ≤ m) :
     exact Formalism.GradedWeylDivisibility.dualWeyl_mul h1 h2
   | zero => simp
   | add y z _ _ hy hz =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hy hz
   | smul c y _ hy =>
     rw [map_smul]

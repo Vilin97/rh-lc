@@ -67,7 +67,7 @@ theorem UpperTheory.exists_open_complex_points_algebra :
       rw [← ha r]
       exact regAt_fnOf ((hmem _).1 (mem_ptsIn.1 hy) r hr) _ _
     | algebraMap c => exact (const_reg p ψ hψ σ y c).1
-    | add r t _ _ h1 h2 => rw [map_add]; exact h1.add h2
+    | add r t _ _ h1 h2 => rw [map_add (f := _)]; exact h1.add h2
     | mul r t _ _ h1 h2 => rw [map_mul]; exact h1.mul h2
   have hc := fun c => (const_reg p ψ hψ σ y c).2
   refine ⟨{ toFun := fun r => ratVal (ψ r) y
@@ -78,4 +78,4 @@ theorem UpperTheory.exists_open_complex_points_algebra :
   · simpa using hc 1
   · rw [Subalgebra.coe_mul, map_mul, ratVal_mul (hreg r r.2) (hreg t t.2)]
   · simpa using hc 0
-  · rw [Subalgebra.coe_add, map_add, ratVal_add' (hreg r r.2) (hreg t t.2)]
+  · rw [Subalgebra.coe_add, map_add (f := _), ratVal_add' (hreg r r.2) (hreg t t.2)]

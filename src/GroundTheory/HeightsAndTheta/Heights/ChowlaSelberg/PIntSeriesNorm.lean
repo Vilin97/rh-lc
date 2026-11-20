@@ -80,7 +80,7 @@ def evalHom (S : Subring (PowerSeries ℤ)) (z : ℂ)
   map_zero' := by simp [intSeriesEval]
   map_add' F G := by
     have h := hhas (F + G)
-    simp only [Subring.coe_add, map_add, Int.cast_add, add_mul] at h
+    simp only [Subring.coe_add, map_add (f := _), Int.cast_add, add_mul] at h
     exact h.unique ((hhas F).add (hhas G))
 
 def normMatrix (F : PowerSeries ℤ) (p : ℕ) [NeZero p] : Matrix (Fin p) (Fin p) (PowerSeries ℤ) :=

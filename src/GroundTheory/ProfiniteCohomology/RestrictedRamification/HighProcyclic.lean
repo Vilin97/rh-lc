@@ -122,13 +122,13 @@ theorem IsTopologicalGenerator.exists_cocycle_of_hom (hσ : IsTopologicalGenerat
     induction y using Int.induction_on with
     | zero => simp [hc0]
     | succ y ih =>
-      rw [← add_assoc, hrec, ih, hrec, map_add, hρ, add_assoc]
+      rw [← add_assoc, hrec, ih, hrec, map_add (f := _), hρ, add_assoc]
     | pred y ih =>
       have e1 := hrec (x + (-(y : ℤ) - 1))
       have e2 := hrec (-(y : ℤ) - 1)
       rw [show x + (-(y : ℤ) - 1) + 1 = x + -(y : ℤ) by ring, ih] at e1
       rw [show -(y : ℤ) - 1 + 1 = -(y : ℤ) by ring] at e2
-      rw [e2, map_add, hρ] at e1
+      rw [e2, map_add (f := _), hρ] at e1
       have e3 := e1.symm
       rw [← add_assoc] at e3
       exact add_right_cancel e3

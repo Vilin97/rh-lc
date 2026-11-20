@@ -24,7 +24,7 @@ theorem span_image_le_of (N : Submodule R M) (N' : Submodule R' M') (S : Set M) 
   induction hm' using Submodule.span_induction with
   | mem x hx => exact hN x hx
   | zero => rw [map_zero]; exact N'.zero_mem
-  | add x y _ _ hx hy => rw [map_add]; exact N'.add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact N'.add_mem hx hy
   | smul r x _ hx => rw [h]; exact N'.smul_mem _ hx
 
 theorem span_image_span (S : Set M) :
@@ -46,7 +46,7 @@ theorem mem_span_image (N : Submodule R M) (x : M') :
       obtain ⟨m, hm, rfl⟩ := hy
       simpa using hm
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact N.add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact N.add_mem hy hz
     | smul r y _ hy => rw [hsm]; exact N.smul_mem _ hy
   · intro hx
     exact Submodule.subset_span ⟨f.symm x, hx, by simp⟩

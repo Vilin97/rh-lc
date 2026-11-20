@@ -83,7 +83,7 @@ theorem piInf_tv {w : InfinitePlace F} (τ : EmbOver E w) (w₀ : InfinitePlace 
     simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Algebra.TensorProduct.map_tmul, AlgHom.coe_id, id_eq]
     rw [infEmb_tmul]
     rfl
-  rw [tv, map_add, he, he]
+  rw [tv, map_add (f := _), he, he]
   have h1 : (1 - idem w₀ : AF F).1 w = 1 - (idem w₀).1 w := rfl
   rw [h1, idem_fst_apply]
   by_cases h : w = w₀

@@ -47,7 +47,7 @@ theorem sumI_smul {V E : Type} [CommRing V] [IsLocalRing V] [IsNoetherianRing V]
         (v - ∑ i ∈ insert i₀ S, x i) + ∑ i ∈ (insert i₀ S).erase i₀, x i := by
       rw [← Finset.add_sum_erase _ x (Finset.mem_insert_self i₀ S), hx i₀]
       abel
-    rw [h5, map_add, h4, add_zero]
+    rw [h5, map_add (f := _), h4, add_zero]
     exact h2
   obtain ⟨a, ha, hak⟩ := (Submodule.Quotient.mk_eq_zero P).mp key
   refine ⟨y i₀ + a, ?_, by simpa using ha⟩

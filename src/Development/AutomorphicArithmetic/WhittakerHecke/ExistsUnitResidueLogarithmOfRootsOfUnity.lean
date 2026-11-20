@@ -59,7 +59,7 @@ theorem UpperTheory.exists_unit_residue_logarithm_of_roots_of_unity :
     have hb0 : ρ ⟨_, hbm⟩ = 0 := (hker _).2 (hlt _ hb)
     rw [key a ⟨_, hint _ ha⟩ rfl, key b ⟨_, hint _ hb⟩ rfl,
       key (a * b) (⟨_, hint _ ha⟩ + ⟨_, hint _ hb⟩ + ⟨_, hint _ ha⟩ * ⟨_, hbm⟩) ?_]
-    · rw [map_add, map_add, map_mul, hb0, mul_zero, add_zero]
+    · rw [map_add (f := _), map_add (f := _), map_mul, hb0, mul_zero, add_zero]
     · push_cast
       field_simp
       ring
@@ -80,7 +80,7 @@ theorem UpperTheory.exists_unit_residue_logarithm_of_roots_of_unity :
       simpa using this
     refine ⟨Units.mk0 _ hne, ha, ?_⟩
     rw [key _ ((N : v.valuationSubring) * x + ⟨ϖ, hϖm⟩ * (x ^ 2 * r)) ?_]
-    · rw [map_add, map_mul, map_mul, hρϖ, map_natCast, hNK, hx]; ring
+    · rw [map_add (f := _), map_mul, map_mul, hρϖ, map_natCast, hNK, hx]; ring
     · rw [Units.val_mk0, hr']
       push_cast
       field_simp

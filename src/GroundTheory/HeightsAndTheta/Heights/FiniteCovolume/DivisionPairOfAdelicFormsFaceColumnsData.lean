@@ -261,7 +261,7 @@ theorem exists_latOf {La : AddSubgroup W} (hLa : ∀ (a : 𝓞 E) (x : W), x ∈
     ∃ L : Submodule (𝓞 E) (Fin N → E), latOf v L = La := by
   refine ⟨{ carrier := {y | v.equivFun.symm y ∈ La}
             add_mem' := fun {a b} ha hb => by
-              simp only [Set.mem_ofPred_eq, map_add] at *
+              simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
               exact La.add_mem ha hb
             zero_mem' := by simp
             smul_mem' := fun c y hy => by

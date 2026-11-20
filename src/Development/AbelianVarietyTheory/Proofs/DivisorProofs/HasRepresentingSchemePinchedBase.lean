@@ -75,7 +75,7 @@ theorem exists_standardSmooth : ∀ (R : Type) [CommRing R] [IsNoetherianRing R]
   letI : Fintype (κ ⊕ σ₀) := Fintype.ofFinite _
   let Δ : MvPolynomial (κ ⊕ ν₀) R := (Matrix.of fun s t ↦ pderiv (P.map s) (F t)).det
   have hΔ : aeval P.val (map (Ideal.Quotient.mk c) (Δ * (H + 1))) = P.jacobian := by
-    rw [map_mul, map_add, hH0, map_one, zero_add, _root_.mul_one, P.jacobian_eq_jacobiMatrix_det, P.algebraMap_apply,
+    rw [map_mul, map_add (f := _), hH0, map_one, zero_add, _root_.mul_one, P.jacobian_eq_jacobiMatrix_det, P.algebraMap_apply,
       RingHom.map_det]
     congr 2
     ext1 s t
@@ -84,7 +84,7 @@ theorem exists_standardSmooth : ∀ (R : Type) [CommRing R] [IsNoetherianRing R]
   have hu : IsUnit (aeval P.val (map (Ideal.Quotient.mk c) (Δ * (H + 1)))) := hΔ ▸ P.jacobian_isUnit
   obtain ⟨α, hα, hα'⟩ := GlobalTheory.T.isPushout_localized_presentation_baseChange R R' C' (Localization.Away (aeval ξ (map (algebraMap R R') (Δ * (H + 1))))) _ _
     (algebraMap R R') F (Δ * (H + 1)) ξ hsurj hF0 (fun G hG ↦ by
-      rw [map_mul, map_add, hH, map_one, sub_add_cancel, _root_.mul_assoc]
+      rw [map_mul, map_add (f := _), hH, map_one, sub_add_cancel, _root_.mul_assoc]
       exact Ideal.mul_mem_left _ _ (hs2 G hG)) inferInstance
   obtain ⟨β, hβ, hβ'⟩ := GlobalTheory.T.isPushout_localized_presentation_baseChange R (R ⧸ c) D D _ _ (Ideal.Quotient.mk c) F (Δ * (H + 1)) P.val
     P.aeval_val_surjective (fun s ↦ by rw [hF]; exact P.aeval_val_relation s)

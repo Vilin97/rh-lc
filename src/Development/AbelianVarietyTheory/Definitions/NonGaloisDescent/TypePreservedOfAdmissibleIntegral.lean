@@ -153,14 +153,14 @@ theorem coeffs_of_range {O V Δ : Type} [CommRing O] [AddCommGroup V] [Module O 
   | add x y hx hy =>
     obtain ⟨A, hA, hA'⟩ := hx
     obtain ⟨B, hB, hB'⟩ := hy
-    exact ⟨A + B, by rw [map_add, hA, hB, hadd], fun δ => add_mem (hA' δ) (hB' δ)⟩
+    exact ⟨A + B, by rw [map_add (f := _), hA, hB, hadd], fun δ => add_mem (hA' δ) (hB' δ)⟩
   | tmul m p =>
     induction p using AddMonoidAlgebra.induction_linear with
     | zero => exact ⟨0, by simp, by simp⟩
     | add x y hx hy =>
       obtain ⟨A, hA, hA'⟩ := hx
       obtain ⟨B, hB, hB'⟩ := hy
-      exact ⟨A + B, by rw [TensorProduct.tmul_add, map_add, hA, hB, hadd], fun δ => add_mem (hA' δ) (hB' δ)⟩
+      exact ⟨A + B, by rw [TensorProduct.tmul_add, map_add (f := _), hA, hB, hadd], fun δ => add_mem (hA' δ) (hB' δ)⟩
     | single δ r =>
       refine ⟨Finsupp.single δ (r • (m : V)), ?_, fun δ' => ?_⟩
       · rw [Finsupp.sum_single_index (by simp), TensorProduct.smul_tmul]

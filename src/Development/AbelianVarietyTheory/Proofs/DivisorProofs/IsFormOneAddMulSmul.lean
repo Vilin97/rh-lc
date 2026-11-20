@@ -36,9 +36,9 @@ theorem isForm_algebra : ∀ (M : Type) [TopologicalSpace M] (n : ℕ) (A : HolA
       rw [loc_one A hv]
   · exact (map_one _).symm
   · exact ((hα.smooth i S).add (hβ.smooth i S)).congr fun v _ => by
-      rw [loc_add, map_add, Finsupp.add_apply]
+      rw [loc_add, map_add (f := _), Finsupp.add_apply]
   · change α x + β x = pull _ (α x' + β x')
-    rw [map_add, ← hα.compat x x' h, ← hβ.compat x x' h]
+    rw [map_add (f := _), ← hα.compat x x' h, ← hβ.compat x x' h]
   · exact ((GlobalTheory.T.contDiffOn_coefficients_complexForm_mul n n (A.loc α i) (A.loc β i)).1 _ (hα.smooth i) (hβ.smooth i) S).congr fun v _ => by
       rw [loc_mul]
   · change α x * β x = pull _ (α x' * β x')

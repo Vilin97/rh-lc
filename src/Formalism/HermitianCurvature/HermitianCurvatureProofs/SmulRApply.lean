@@ -90,7 +90,7 @@ theorem jetR_iter (p : X →L[ℝ] ℂ) {U : Set ℂ} {V : Set X} (hU : IsOpen U
     intro E _ _ _ _ φ _
     let L0 : ℂ →ₗ[ℝ] ContinuousMultilinearMap ℝ (fun _ : Fin 0 => X) E :=
       { toFun := fun c => (continuousMultilinearCurryFin0 ℝ X E).symm (c • φ q)
-        map_add' := fun a b => by rw [add_smul, map_add]
+        map_add' := fun a b => by rw [add_smul, map_add (f := _)]
         map_smul' := fun s a => by
           rw [RingHom.id_apply, smul_assoc, LinearIsometryEquiv.map_smul] }
     refine ⟨Unit, inferInstance, fun _ => [], fun _ => L0, fun f _ => ?_⟩
@@ -142,7 +142,7 @@ theorem jetR_iter (p : X →L[ℝ] ℂ) {U : Set ℂ} {V : Set X} (hU : IsOpen U
       fun_iteratedFDeriv_add_apply (hsm hf hφ') (hsm (contDiffOn_dZ hU hf) hM1),
       e1 f hf, e2 _ (contDiffOn_dZ hU hf), e3 _ (contDiffOn_dZb hU hf)]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, LinearMap.comp_apply, wd_append]
+      simp only [map_add (f := _), map_sum, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, LinearMap.comp_apply, wd_append]
     simp only [wd, Bool.false_eq_true, ↓reduceIte, add_assoc]
     rfl
 

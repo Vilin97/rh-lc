@@ -83,7 +83,7 @@ private theorem q_cv {D : Dat ℚ E} {P : CuspSub E 2} {L N : ℕ} {f : Sm E 2} 
 
 private theorem lieDerivative_linear (f : Sm E 2) (a b c : ℝ) (X Y Z : Lie E 2) :
     (lie E 2 (a • X + b • Y + c • Z) f).1 = (a : ℂ) • (lie E 2 X f).1 + (b : ℂ) • (lie E 2 Y f).1 + (c : ℂ) • (lie E 2 Z f).1 := by
-  rw [map_add, map_add, map_smul, map_smul, map_smul]
+  rw [map_add (f := _), map_add (f := _), map_smul, map_smul, map_smul]
   funext g
   simp
 

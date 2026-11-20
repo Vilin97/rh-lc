@@ -39,7 +39,7 @@ theorem UpperTheory.V.Fr.pr_dof :
   let Dd : R →ₗ[O] ResidueField O :=
     { toFun := fun x => (g x).snd
       map_add' := fun x y => by
-        simp only [map_add, TrivSqZeroExt.snd_add]
+        simp only [map_add (f := _), TrivSqZeroExt.snd_add]
       map_smul' := fun a x => by
         simp only [map_smul, TrivSqZeroExt.snd_smul, RingHom.id_apply] }
   have hDd : ∀ x, Dd x = (g x).snd := fun _ => rfl

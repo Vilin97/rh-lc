@@ -64,7 +64,7 @@ theorem exists_aeval_mul_mem {s n : ℕ} (y : Fin s → B) (b : Fin n → B)
     obtain ⟨D1, h1⟩ := h2
     obtain ⟨D2, h2⟩ := h1'
     refine ⟨max D1 D2, ?_⟩
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
     exact add_mem (boxSpan_mono y b (le_max_left _ _) h1) (boxSpan_mono y b (le_max_right _ _) h2)
   | mul_X p i h =>
     obtain ⟨D, hD⟩ := h

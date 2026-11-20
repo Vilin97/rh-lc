@@ -73,7 +73,7 @@ theorem detAt_exists {v : FinPl D} (φ : SplitProj D v) {e : AE D} (he : IsIdemO
   · show (1 - e) * (e * (u : AE D) + (1 - e)) = 1 - e
     linear_combination (1 - (u : AE D)) * hee
   · show rdA φ (e * (u : AE D) + (1 - e)) = _
-    rw [map_add, map_mul, map_sub, map_one, he.2.2, one_mul, sub_self, add_zero, hu]
+    rw [map_add (f := _), map_mul, map_sub, map_one, he.2.2, one_mul, sub_self, add_zero, hu]
     simp only [grpCo, Matrix.GeneralLinearGroup.val_det_apply, Matrix.GeneralLinearGroup.coe_mul,
       Matrix.det_mul, Matrix.GeneralLinearGroup.map]
     have h : ((B⁻¹ : GL (Fin V.rank) (Fv D.host.F v)) : Matrix (Fin V.rank) (Fin V.rank) (Fv D.host.F v)).det *
@@ -200,7 +200,7 @@ theorem GlobalTheory.TwistLinModel.linearModel_at_twist : ∀ D : D7, ForStepQ D
     { toFun := fun u => pureTensorO c.ψ c.θ s.V s'.V (cart s.M) (cart s'.M) (onb s.M) (onb s'.M) (T₀ (R u)) P
       map_add' := fun u u' => ?_
       map_smul' := fun a u => ?_ }, ?_, fun u => ?_, fun g h u => ?_, ?_⟩
-  · simp only [map_add]
+  · simp only [map_add (f := _)]
     have := GlobalTheory.FockFiniteHeis.pureTensorO_lin c.ψ c.θ s.V s'.V hψ hθ (cart s.M) (onb s.M) (cart s'.M) (onb s'.M) 1
       (hT₀θ (R u)) (hT₀θ (R u')) P
     simpa using this

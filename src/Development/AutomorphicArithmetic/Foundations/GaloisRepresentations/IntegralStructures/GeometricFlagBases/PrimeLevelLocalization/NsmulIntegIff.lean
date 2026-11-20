@@ -55,7 +55,7 @@ theorem mem_idHat_iff (𝔟 : Ideal (𝓞 E)) (v) :
       rw [F.vec_mul w hw x u]
       exact (InId.of_mem w hx).mul ((F.vec_hat u).1 hu w hw i)
     | zero => rw [map_zero]; exact InId.zero w 𝔟
-    | add a b _ _ ha hb => rw [map_add]; exact ha.add hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact ha.add hb
     | neg a _ ha =>
       rw [map_neg]
       simpa using ha.mul (neg_mem (one_mem _))

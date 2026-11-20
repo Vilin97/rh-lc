@@ -53,7 +53,7 @@ theorem evU_prod_lin (l : List ℂ) (c v : ℂ) :
   | cons x l ih =>
     simp only [List.map_cons, List.prod_cons, map_mul, ih]
     congr 1
-    simp only [evU_apply, eval₂_add, eval₂_X, eval₂_C, RingHom.id_apply, ← map_add]
+    simp only [evU_apply, eval₂_add, eval₂_X, eval₂_C, RingHom.id_apply, ← map_add (f := _)]
     congr 1
     ring
 
@@ -63,7 +63,7 @@ theorem sum_map_lin (l : List ℂ) (c : ℂ) :
   induction l with
   | nil => simp
   | cons x l ih =>
-    simp only [List.map_cons, List.sum_cons, ih, List.length_cons, ← map_add]
+    simp only [List.map_cons, List.sum_cons, ih, List.length_cons, ← map_add (f := _)]
     congr 1
     push_cast
     ring
@@ -96,7 +96,7 @@ theorem trace_of_qdet {n : ℕ} (Eo : Fin (n + 1) → Fin (n + 1) → Module.End
   simp only [hD, coeff_sub, hq, hr] at h0
   have hs : (∑ k, Eo k k) - algebraMap ℂ (Module.End ℂ V) (((n + 1 : ℕ) : ℂ) * (((n + 1 : ℕ) : ℂ) - 1) / 2) -
       algebraMap ℂ _ (l.sum - l.length * c) = (∑ k, Eo k k) - algebraMap ℂ _ l.sum := by
-    rw [sub_sub, ← map_add]
+    rw [sub_sub, ← map_add (f := _)]
     congr 2
     rw [hl, hc]
     push_cast

@@ -10,7 +10,7 @@ def wmPerp (B : V →ₗ⋆[K] V →ₗ[K] K) (A : Submodule K V) : Submodule K 
   carrier := {x | ∀ a ∈ A, B a x = 0}
   add_mem' := by
     intro x y hx hy a ha
-    rw [map_add, hx a ha, hy a ha, add_zero]
+    rw [map_add (f := _), hx a ha, hy a ha, add_zero]
   zero_mem' := by
     intro a _
     rw [map_zero]

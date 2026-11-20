@@ -26,7 +26,7 @@ theorem ev_eq_alg {m n : ℕ} {a : Fin m → Pt R n d} (ha : Z0 a) (f : PS R m d
 variable {m n : ℕ} {a : Fin m → Pt R n d}
 
 theorem ev_add (ha : Z0 a) (f g : PS R m d) : ev a (f + g) = ev a f + ev a g := by
-  simp only [ev_eq_alg ha, map_add]
+  simp only [ev_eq_alg ha, map_add (f := _)]
 
 theorem ev_sub (ha : Z0 a) (f g : PS R m d) : ev a (f - g) = ev a f - ev a g := by
   simp only [ev_eq_alg ha, map_sub]
@@ -61,7 +61,7 @@ theorem const_ev (ha : Z0 a) {f : PS R m d} (hf : constantCoeff f = 0) : constan
 theorem constantCoeff_ev (ha : Z0 a) (f : PS R m d) : constantCoeff (ev a f) = constantCoeff f := by
   have h1 : f = C (constantCoeff f) + (f - C (constantCoeff f)) := by ring
   conv_lhs => rw [h1]
-  rw [ev_add ha, ev_C, map_add, constantCoeff_C, const_ev ha (by simp), add_zero]
+  rw [ev_add ha, ev_C, map_add (f := _), constantCoeff_C, const_ev ha (by simp), add_zero]
 
 theorem pderiv_eval_pair {a : Fin 2 → Pt R n d} (ha : Z0 a) (f : PS R 2 d) (q : Fin n × Fin d) :
     pderiv R q (ev a f) = ∑ j, ev a (pderiv R ((0 : Fin 2), j) f) * pderiv R q (a 0 j) +
@@ -86,7 +86,7 @@ section IntSec
 variable {C : Type} [Field C] {V : VF C} {τ : Type}
 
 theorem intS_add {f g : MvPowerSeries τ C} (hf : IntS V f) (hg : IntS V g) : IntS V (f + g) := fun μ => by
-  rw [map_add]; exact (hf μ).add (hg μ)
+  rw [map_add (f := _)]; exact (hf μ).add (hg μ)
 
 theorem intS_neg {f : MvPowerSeries τ C} (hf : IntS V f) : IntS V (-f) := fun μ => by
   rw [map_neg]; exact (hf μ).neg
@@ -323,14 +323,14 @@ theorem germI_holds (Y : FBChart C V O dd) : GermISt Y := by
     have := Y.gauge.ph1; rwa [toK_self, FK_self] at this
   have hg : constantCoeff (ev (n := 3) ![pt C dd 0, pt C dd 2] Y.h + ev (n := 3) ![pt C dd 1, pt C dd 2] Y.h -
       ev (n := 3) ![addOf Y.B.G.F (pt C dd 0) (pt C dd 1), pt C dd 2] Y.h) = 0 := by
-    rw [map_sub, map_add, const_ev (killE.constant_zero_point_third _ (z0_pt 0)) (h_const Y),
+    rw [map_sub, map_add (f := _), const_ev (killE.constant_zero_point_third _ (z0_pt 0)) (h_const Y),
       const_ev (killE.constant_zero_point_third _ (z0_pt 1)) (h_const Y), const_ev (killE.constant_zero_point_third _ (const_addOf Y 0 1)) (h_const Y)]
     simp
   have hi : ∀ i, ev (n := 2) (![pt C dd 0, pt C dd 1, 0] : Fin 3 → Pt C 2 dd) (pderiv C ((2 : Fin 3), i) Y.B.ph1) =
       ev (n := 2) ![pt C dd 0, 0] (pderiv C ((1 : Fin 2), i) Y.h) + ev (n := 2) ![pt C dd 1, 0] (pderiv C ((1 : Fin 2), i) Y.h) -
         ev (n := 2) ![addOf Y.B.G.F (pt C dd 0) (pt C dd 1), 0] (pderiv C ((1 : Fin 2), i) Y.h) := by
     intro i
-    rw [hph, pderiv_expS hg, ← hph, ev_mul hE, Y.B.cocycleLeft_zero_thd, one_mul, map_sub, map_add, ev_sub hE, ev_add hE,
+    rw [hph, pderiv_expS hg, ← hph, ev_mul hE, Y.B.cocycleLeft_zero_thd, one_mul, map_sub, map_add (f := _), ev_sub hE, ev_add hE,
       pderiv_last_eval_of_independent _ (z0_pt 0) i (hd0 i), pderiv_last_eval_of_independent _ (z0_pt 1) i (hd1 i), pderiv_last_eval_of_independent _ (const_addOf Y 0 1) i (hd3 i),
       killE _ _ (z0_pt 0) eval_first_two_points_first, killE _ _ (z0_pt 1) eval_first_two_points_middle, killE _ _ (const_addOf Y 0 1) hF3]
   have key : ev (n := 2) ![addOf Y.B.G.F (pt C dd 0) (pt C dd 1)] (Y.sgP v) - ev (n := 2) ![pt C dd 0] (Y.sgP v) -
@@ -357,7 +357,7 @@ theorem germII_holds (Y : FBChart C V O dd) : GermIISt Y := by
     have := Y.gauge.ph2; rwa [toK_self, FK_self] at this
   have hg : constantCoeff (ev (n := 3) ![pt C dd 0, pt C dd 1] Y.h + ev (n := 3) ![pt C dd 0, pt C dd 2] Y.h -
       ev (n := 3) ![pt C dd 0, addOf Y.B.G.F (pt C dd 1) (pt C dd 2)] Y.h) = 0 := by
-    rw [map_sub, map_add, const_ev (z0_pp 0 1) (h_const Y), const_ev (z0_pp 0 2) (h_const Y), const_ev hZQ (h_const Y)]
+    rw [map_sub, map_add (f := _), const_ev (z0_pp 0 1) (h_const Y), const_ev (z0_pp 0 2) (h_const Y), const_ev hZQ (h_const Y)]
     simp
 
   have hdQ : ∀ i, pderiv C ((2 : Fin 3), i) (ev (n := 3) ![pt C dd 0, addOf Y.B.G.F (pt C dd 1) (pt C dd 2)] Y.h) =
@@ -390,7 +390,7 @@ theorem germII_holds (Y : FBChart C V O dd) : GermIISt Y := by
       ev (n := 2) ![pt C dd 0, 0] (pderiv C ((1 : Fin 2), i) Y.h) -
         ∑ j, pderiv C ((1 : Fin 2), j) Y.h * ev (n := 2) ![pt C dd 1, 0] (pderiv C ((1 : Fin 2), i) (Y.B.G.F j)) := by
     intro i
-    rw [hph, pderiv_expS hg, ← hph, ev_mul hE, Y.B.cocycleRight_zero_thd, one_mul, map_sub, map_add, ev_sub hE, ev_add hE,
+    rw [hph, pderiv_expS hg, ← hph, ev_mul hE, Y.B.cocycleRight_zero_thd, one_mul, map_sub, map_add (f := _), ev_sub hE, ev_add hE,
       pderiv_last_eval_first_two i Y.h, ev_zero hE, zero_add, pderiv_last_eval_of_independent _ (z0_pt 0) i (hd0 i), killE _ _ (z0_pt 0) eval_first_two_points_first, hdQ i, ev_sum hE]
     congr 1
     refine Finset.sum_congr rfl fun j _ => ?_

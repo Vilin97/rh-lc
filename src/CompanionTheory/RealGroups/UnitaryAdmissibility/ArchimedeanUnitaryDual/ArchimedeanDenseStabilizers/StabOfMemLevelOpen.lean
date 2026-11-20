@@ -162,7 +162,7 @@ theorem mem_range_of_sigma_eq (h : IsCMExt F E σ) {y : E} (hy : σ y = y) : y �
       · simp
       · simpa using hy
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, ha, hb]
+    | add a b _ _ ha hb => rw [map_add (f := _), ha, hb]
     | smul c a _ ha =>
       have e : σ (c • a) = c • σ a := σ.toLinearMap.map_smul c a
       rw [e, ha]

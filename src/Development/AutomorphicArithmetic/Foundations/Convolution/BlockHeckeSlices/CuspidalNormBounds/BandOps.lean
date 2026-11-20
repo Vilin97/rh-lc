@@ -35,7 +35,7 @@ private def itw (g : GA E n) : Subalgebra ℂ (UC E n) where
     exact ⟨a' * b', by rw [map_mul, mul_assoc, hb, ← mul_assoc, ha, map_mul, mul_assoc]⟩
   add_mem' := by
     rintro a b ⟨a', ha⟩ ⟨b', hb⟩
-    exact ⟨a' + b', by rw [map_add, add_mul, ha, hb, map_add, mul_add]⟩
+    exact ⟨a' + b', by rw [map_add (f := _), add_mul, ha, hb, map_add (f := _), mul_add]⟩
   algebraMap_mem' r := ⟨algebraMap _ _ r, by rw [AlgHom.commutes]; exact Algebra.commutes _ _⟩
 
 private theorem ιC_mem (g : GA E n) (X : Lie E n) : ιC E n X ∈ itw g := by
@@ -84,7 +84,7 @@ private theorem band_add {C : ℝ} (hC : 0 ≤ C) {φ ψ : Sm E n} (h₁ : Band 
   obtain ⟨B, hB⟩ := hN u
   obtain ⟨D, hD⟩ := hM u
   refine ⟨|B| + |D|, fun α g => ?_⟩
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
   refine (norm_add_le _ _).trans ?_
   have := (hB α g).trans (bnd_mono hC B α.degree g (le_max_left N M))
   have := (hD α g).trans (bnd_mono hC D α.degree g (le_max_right N M))

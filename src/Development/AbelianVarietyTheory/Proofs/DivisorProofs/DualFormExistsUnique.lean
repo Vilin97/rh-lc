@@ -10,12 +10,12 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 def riemannBil (ξ : E) : LinearMap.BilinForm ℚ E :=
   LinearMap.mk₂ ℚ (riemann ξ)
-    (fun x x' y => by simp [riemann, mul_add, add_mul, map_add])
+    (fun x x' y => by simp [riemann, mul_add, add_mul, map_add (f := _)])
     (fun q x y => by
       simp only [riemann, smul_eq_mul]
       rw [show ξ * (q • x) * IsCMField.complexConj E y = q • (ξ * x * IsCMField.complexConj E y) by
         rw [mul_smul_comm, smul_mul_assoc], map_smul, smul_eq_mul])
-    (fun x y y' => by simp [riemann, mul_add, map_add])
+    (fun x y y' => by simp [riemann, mul_add, map_add (f := _)])
     (fun q x y => by
       have h : IsCMField.complexConj E (q • y) = q • IsCMField.complexConj E y := map_rat_smul _ q y
       simp only [riemann, smul_eq_mul, h]
@@ -36,7 +36,7 @@ theorem riemann_left_nondeg (ξ : E) (hξ : ξ ≠ 0) (x : E) (hx : ∀ y, riema
 def riemannClL (ξ : E) : E →ₗ[ℚ] Coh E where
   toFun := riemannCl ξ
   map_add' x x' := by
-    ext y; simp [riemannCl, riemann, mul_add, add_mul, map_add]
+    ext y; simp [riemannCl, riemann, mul_add, add_mul, map_add (f := _)]
   map_smul' q x := by
     ext y
     show ((riemann ξ (q • x) y : ℚ) : ℂ) = q • ((riemann ξ x y : ℚ) : ℂ)

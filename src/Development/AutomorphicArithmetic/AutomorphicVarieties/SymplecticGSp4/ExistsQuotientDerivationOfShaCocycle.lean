@@ -86,7 +86,7 @@ private theorem ac_lc {Γ R : Type} [TopologicalSpace Γ] [CommRing R] (I : Idea
 
 private theorem ac_add {Γ R : Type} [TopologicalSpace Γ] [CommRing R] {I : Ideal R} {f g : Γ → R} (h : AdicCont I f)
     (h' : AdicCont I g) : AdicCont I fun x => f x + g x := fun N => by
-  simp only [map_add]; exact (h N).add (h' N)
+  simp only [map_add (f := _)]; exact (h N).add (h' N)
 
 private theorem ac_mul {Γ R : Type} [TopologicalSpace Γ] [CommRing R] {I : Ideal R} {f g : Γ → R} (h : AdicCont I f)
     (h' : AdicCont I g) : AdicCont I fun x => f x * g x := fun N => by

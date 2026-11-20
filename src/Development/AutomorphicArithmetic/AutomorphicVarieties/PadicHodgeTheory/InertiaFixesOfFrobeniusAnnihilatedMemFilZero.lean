@@ -12,7 +12,7 @@ private theorem companion {R : Type} [CommRing R] (P : R[X]) (hP : P.Monic) (h0 
   have hr : IsUnit (AdjoinRoot.root P) := by
     have h1 : AdjoinRoot.mk P (X * divX P + C (P.coeff 0)) = 0 := by
       rw [X_mul_divX_add]; exact AdjoinRoot.mk_self
-    rw [map_add, map_mul, AdjoinRoot.mk_X, AdjoinRoot.mk_C] at h1
+    rw [map_add (f := _), map_mul, AdjoinRoot.mk_X, AdjoinRoot.mk_C] at h1
     have h2 : IsUnit (AdjoinRoot.root P * AdjoinRoot.mk P (divX P)) := by
       rw [eq_neg_of_add_eq_zero_left h1]
       exact (h0.map (AdjoinRoot.of P)).neg

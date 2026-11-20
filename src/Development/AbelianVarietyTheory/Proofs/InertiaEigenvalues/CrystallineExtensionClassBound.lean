@@ -38,7 +38,7 @@ theorem padicInt_hom_witt_ext_pt {R : Type} [CommRing R] [CharP R l]
   have h : f z - g z = (f c - g c) * (l : WittVector l R) ^ (n + 1) := by
     generalize PadicInt.appr z (n + 1) = m at hz
     rw [hz]
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
     ring
   rw [h, WittVector.mul_pow_charP_coeff_zero _ (Nat.lt_succ_self n), WittVector.zero_coeff]
 
@@ -125,7 +125,7 @@ theorem mem_HfD_of_coords (P : LocPrime l) (K LL : FinExt l) (s : ℕ) (hK : K.1
   · refine hwc.comp_continuousOn (continuousOn_pi.2 fun i => ?_)
     exact (hz i).1.comp continuous_subtype_val.continuousOn fun g hg => hg
   · intro g hg h hh
-    rw [hV, ← map_smul, ← map_add]
+    rw [hV, ← map_smul, ← map_add (f := _)]
     congr 1
     funext i
     exact (hz i).2.2 g hg h hh
@@ -185,7 +185,7 @@ theorem scalar_step (D : Formalism.BasicNotions.D7) (h2 : adm2 D) (h4 : Archimed
         (l : Ainf l) ^ N * algebraMap ℤ_[l] (Ainf l) u, ?_⟩
       have := hsm (s + padicValNat l (e + 1)) _ _ ha
       convert this using 1
-      simp only [hu, map_add, map_mul, map_pow, map_natCast, hι]
+      simp only [hu, map_add (f := _), map_mul, map_pow, map_natCast, hι]
       ring⟩
   obtain ⟨x, hx⟩ := GlobalTheory.T.coboundary_bcris_of_dualExponential_zero D h2 h4 l K s hs e z' hz'
   refine ⟨z', x, hz'.1, hx, fun σ hσ => ?_⟩
@@ -226,7 +226,7 @@ theorem scalar_of_isCob (D : Formalism.BasicNotions.D7) (h2 : adm2 D) (h4 : Arch
   have H2 : ∀ σ ∈ Gj K s, ∀ τ ∈ Gj K s, ‖c (σ * τ) - c σ -
       (((D.loc l).χQ σ ^ (-(e : ℤ)) : ℚ_[l]ˣ) : ℚ_[l]) * c τ‖ ≤ 1 := fun σ hσ τ hτ => by
     have h1 : f ⟨σ * τ, hle (mul_mem hσ hτ)⟩ = _ := hf ⟨σ, hle hσ⟩ ⟨τ, hle hτ⟩
-    rw [hc σ (hle hσ), hc τ (hle hτ), hc _ (hle (mul_mem hσ hτ)), h1, ψ.map_add,
+    rw [hc σ (hle hσ), hc τ (hle hτ), hc _ (hle (mul_mem hσ hτ)), h1, ψ.map_add (f := _),
       add_sub_cancel_left]
     exact hψe ⟨σ, hle hσ⟩ _
   have H3 : ∀ σ ∈ Gj K s, ∀ᶠ τ in nhdsWithin σ (Gj K s), ‖c τ - c σ‖ ≤ 1 := fun σ hσ => by
@@ -289,7 +289,7 @@ theorem mem_HfD_of_isCob (D : Formalism.BasicNotions.D7) (h2 : adm2 D) (h4 : Arc
     (s + padicValNat l (e + 1)) = k at hzc ⊢
   have A1 : ∀ g h, (l ^ k : ℕ) • Φ (f (g * h)) -
       ((l ^ k : ℕ) • Φ (f g) + V.ρ g ((l ^ k : ℕ) • Φ (f h))) ∈ V.L.T := fun g h => by
-    rw [hf g h, Φ.map_add, map_nsmul (V.ρ g), ← smul_add, ← smul_sub, add_sub_add_left_eq_sub]
+    rw [hf g h, Φ.map_add (f := _), map_nsmul (V.ρ g), ← smul_add, ← smul_sub, add_sub_add_left_eq_sub]
     exact nsmul_mem (hΦ _ _) _
   have A2 : ∀ i (g : ↥(GK K)), (g : GQ l) ∈ Gj K s →
       ‖z i g - w.repr ((l ^ k : ℕ) • Φ (f g)) i‖ ≤ 1 := fun i g hg => by

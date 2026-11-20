@@ -201,7 +201,7 @@ theorem exists_tateModule_of_card :
         rw [← add_smul]
         apply zsmul_congr (hkill n i)
         push_cast
-        simp only [hc, Pi.add_apply, map_add] }
+        simp only [hc, Pi.add_apply, map_add (f := _)] }
   have hπ : ∀ n (x : Fin r → ℤ_[l]) (a : Fin r → ℤ),
       (∀ i, PadicInt.toZModPow n (x i) = (a i : ZMod (l ^ n))) → π n x = ∑ i, a i • e n i := by
     intro n x a ha

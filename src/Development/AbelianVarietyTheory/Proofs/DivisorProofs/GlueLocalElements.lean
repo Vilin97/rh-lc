@@ -17,7 +17,7 @@ theorem map_piInf_compArch {F E : Type} [Field F] [NumberField F] [Field E] [Num
     (mat (compArch σ J g)).map (piInf τ) = (mat g).map (piInf τ) := by
   rw [mat_compArch]
   ext i j
-  simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add]
+  simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _)]
   rw [eInf, GlobalTheory.RealScalar.piInf_realAd_smul, sub_smul, one_smul, map_sub, GlobalTheory.RealScalar.piInf_realAd_smul]
   simp
 

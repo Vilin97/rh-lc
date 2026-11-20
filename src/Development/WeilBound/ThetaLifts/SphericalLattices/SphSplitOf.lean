@@ -89,7 +89,7 @@ theorem sphAt_of (hL : LatSt) {M : Model σ X W} {ψ : AddChar (AF F) ℂ} {om :
     | add x y _ _ hx hy =>
       obtain ⟨z, hz, hzS, e⟩ := hx
       obtain ⟨z', hz', hzS', e'⟩ := hy
-      exact ⟨z + z', add_mem hz hz', add_mem hzS hzS', by rw [map_add, e, e']⟩
+      exact ⟨z + z', add_mem hz hz', add_mem hzS hzS', by rw [map_add (f := _), e, e']⟩
     | smul a x _ hx =>
       obtain ⟨z, hz, hzS, e⟩ := hx
       exact ⟨a • z, Submodule.smul_mem _ a hz, Submodule.smul_mem _ a hzS, by rw [map_smul, e]⟩
@@ -114,7 +114,7 @@ theorem sphAt_of (hL : LatSt) {M : Model σ X W} {ψ : AddChar (AF F) ℂ} {om :
     | add x y _ _ hx hy =>
       obtain ⟨z, hz, hzS, e⟩ := hx
       obtain ⟨z', hz', hzS', e'⟩ := hy
-      exact ⟨z + z', add_mem hz hz', add_mem hzS hzS', by rw [map_add, e, e']⟩
+      exact ⟨z + z', add_mem hz hz', add_mem hzS hzS', by rw [map_add (f := _), e, e']⟩
     | smul a x _ hx =>
       obtain ⟨z, hz, hzS, e⟩ := hx
       exact ⟨a • z, Submodule.smul_mem _ a hz, Submodule.smul_mem _ a hzS, by rw [map_smul, e]⟩

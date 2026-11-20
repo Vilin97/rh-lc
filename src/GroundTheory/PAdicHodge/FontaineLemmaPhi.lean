@@ -40,7 +40,7 @@ theorem exists_p_mul_eq_frobenius_sub {ξ : AInf K p} (hξ : ξ ∈ RingHom.ker 
   have h1 := factorial_mul_dpow (K := K) p ξ
   have h2 : algebraMap (AInf K p) 𝔸 (φ ξ) =
       algebraMap (AInf K p) 𝔸 ξ ^ p + (p : 𝔸) * algebraMap (AInf K p) 𝔸 c := by
-    rw [hc, map_add, map_pow, map_mul, map_natCast]
+    rw [hc, map_add (f := _), map_pow, map_mul, map_natCast]
   have h3 : (p : 𝔸) * ((p - 1).factorial : 𝔸) = (p.factorial : 𝔸) := by
     rw [← Nat.cast_mul, Nat.mul_factorial_pred hp.out.ne_zero]
   show (p : 𝔸) * (algebraMap (AInf K p) 𝔸 c + ((p - 1).factorial : 𝔸) * dpow p ξ - 1) = _
@@ -79,7 +79,7 @@ theorem exists_phiAway_eq_add_mul {ξ : AInf K p} (hξ : RingHom.ker θ = Ideal.
   | add y₁ y₂ _ _ h₁ h₂ =>
     obtain ⟨w₁, z₁, hz₁, e₁⟩ := h₁
     obtain ⟨w₂, z₂, hz₂, e₂⟩ := h₂
-    exact ⟨w₁ + w₂, z₁ + z₂, add_mem hz₁ hz₂, by rw [map_add, e₁, e₂, map_add]; ring⟩
+    exact ⟨w₁ + w₂, z₁ + z₂, add_mem hz₁ hz₂, by rw [map_add (f := _), e₁, e₂, map_add (f := _)]; ring⟩
   | mul y₁ y₂ _ _ h₁ h₂ =>
     obtain ⟨w₁, z₁, hz₁, e₁⟩ := h₁
     obtain ⟨w₂, z₂, hz₂, e₂⟩ := h₂
@@ -108,7 +108,7 @@ theorem exists_phi_eq_add_mul [CharZero K] {ξ : AInf K p} (hξ : RingHom.ker θ
   have hb : algebraMap (AInf K p) (ACris K p) b =
       algebraMap (ACrisZero K p) (ACris K p) (algebraMap (AInf K p) (ACrisZero K p) b) :=
     AdicCompletion.algebraMap_apply _ b
-  rw [map_add, map_mul, pow_one, map_natCast, hof, e', map_add, map_mul, hb]
+  rw [RingHom.map_add (phi K p), map_mul, pow_one, map_natCast, hof, e', RingHom.map_add (algebraMap (ACrisZero K p) (ACris K p)), map_mul, hb]
 
 theorem frobenius_xi_sub_mem_span_mu {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
     (hζ : PreTilt.untilt ((_root_.frobeniusEquiv 𝒪♭ p).symm ε) ≠ 1) :
@@ -169,7 +169,7 @@ theorem p_mul_phi_mem_span_mu {ε : 𝒪♭} (hε : PreTilt.untilt ε = 1)
       rw [map_mul, map_natCast, map_mul, map_natCast, h, mul_zero]
     have hr : theta K p (Φ (algebraMap (AInf K p) (ACris K p) ((p : AInf K p) * b) +
         algebraMap (AInf K p) (ACris K p) (AInf.mu ε * d) * s)) = (p : 𝒪) * θ ((φ ^ n) b) := by
-      rw [map_add, map_mul Φ, map_add, map_mul (theta K p), hΦa, hΦa,
+      rw [RingHom.map_add Φ, map_mul Φ, RingHom.map_add (theta K p), map_mul (theta K p), hΦa, hΦa,
         AInf.fontaineTheta_frobenius_pow_mul_mu hε, zero_mul, add_zero, map_mul, map_natCast,
         map_mul, map_natCast]
     rw [e2, hr] at hl

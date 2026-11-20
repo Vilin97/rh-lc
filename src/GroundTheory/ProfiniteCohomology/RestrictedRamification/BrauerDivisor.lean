@@ -72,7 +72,7 @@ def unitsDivHom : Additive (maxUnramifiedOutside K.1 ℚ̄ S)ˣ →+ divFun (gsD
     change ordEmb S (ιs.fin v.1) v.2 (Additive.ofMul (galUnitsHom K.1 _ x (y.toMul * z.toMul))) =
       ordEmb S (ιs.fin v.1) v.2 (Additive.ofMul (galUnitsHom K.1 _ x y.toMul)) +
         ordEmb S (ιs.fin v.1) v.2 (Additive.ofMul (galUnitsHom K.1 _ x z.toMul))
-    rw [map_mul, ofMul_mul, map_add])
+    rw [map_mul, ofMul_mul, map_add (f := _)])
 
 def unitsDiv : galUnits K.1 (maxUnramifiedOutside K.1 ℚ̄ S) ⟶ gsDiv K S ιs ℤ :=
   Rep.ofHom ⟨uliftIntLinearMap (unitsDivHom K S ιs), fun σ => LinearMap.ext fun y =>
@@ -187,7 +187,7 @@ theorem Good.add {ℓ : ℕ}
   obtain ⟨N₁, h₁, y₁, hy₁⟩ := hf
   obtain ⟨N₂, h₂, y₂, hy₂⟩ := hg
   refine ⟨N₁ * N₂, Nat.Coprime.mul_left h₁ h₂, y₁ ^ N₂ * y₂ ^ N₁, fun v x => ?_⟩
-  rw [map_mul, map_pow, map_pow, ofMul_mul, ofMul_pow, ofMul_pow, map_add, map_nsmul, map_nsmul,
+  rw [map_mul, map_pow, map_pow, ofMul_mul, ofMul_pow, ofMul_pow, map_add (f := _), map_nsmul, map_nsmul,
     hy₁, hy₂, Pi.add_apply, Pi.add_apply, nsmul_eq_mul, nsmul_eq_mul]
   push_cast
   ring

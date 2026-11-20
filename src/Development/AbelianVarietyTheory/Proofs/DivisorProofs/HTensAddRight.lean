@@ -28,7 +28,7 @@ theorem hTens_add_left' {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (c 
 theorem hTens_add_right' {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (c : A →ₐ[R] A)
     {α β : Type} [Fintype α] [Fintype β] (JA : Matrix α α A) (JB : Matrix β β A) (x y y' : Matrix α β A) :
     hTens c JA JB x (y + y') = hTens c JA JB x y + hTens c JA JB x y' := by
-  simp only [hTens, Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hTens, Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hTens_pure {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (c : A →ₐ[R] A)
     {α β : Type} [Fintype α] [Fintype β] (JA : Matrix α α A) (JB : Matrix β β A) (a a' : α → A) (x x' : β → A) :

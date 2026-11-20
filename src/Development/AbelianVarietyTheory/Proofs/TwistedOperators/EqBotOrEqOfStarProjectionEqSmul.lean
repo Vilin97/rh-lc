@@ -118,8 +118,8 @@ theorem isIrredSubrep_of_isCopyFinDS : ∀ (D : D7) (V : HSp D) (S : D.what₂.T
     have h2 : ρ g (v - U'.starProjection v) ∈ U'ᗮ :=
       (hU'.orthogonal hρ).2 g _ (Submodule.sub_starProjection_mem_orthogonal (K := U') v)
     have e : ρ g v = ρ g (U'.starProjection v) + ρ g (v - U'.starProjection v) := by
-      rw [← map_add, add_sub_cancel]
-    rw [e, map_add, (Submodule.starProjection_eq_self_iff (K := U')).2 h1,
+      rw [← map_add (f := _), add_sub_cancel]
+    rw [e, map_add (f := _), (Submodule.starProjection_eq_self_iff (K := U')).2 h1,
       (Submodule.starProjection_apply_eq_zero_iff U').2 h2, add_zero]
 
   obtain ⟨T', hT'a⟩ : ∃ T' : W →ₗ[ℂ] ContinuousMultilinearMap ℂ M.H H, ∀ w y, T' w y = U'.starProjection (T w y) :=

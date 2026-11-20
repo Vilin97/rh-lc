@@ -67,7 +67,7 @@ theorem finTyp_fixed_finiteDimensional : ∀ (D : D7) (rep : D.what₂.FT → NG
       exact T.zero_mem
     | add x y hx hy ihx ihy =>
       have : (⟨x + y, hFS (F.add_mem hx hy)⟩ : (rep σ).S) = ⟨x, hFS hx⟩ + ⟨y, hFS hy⟩ := rfl
-      rw [this, map_add]
+      rw [this, map_add (f := _)]
       exact T.add_mem ihx ihy
     | smul a x hx ih =>
       have : (⟨a • x, hFS (F.smul_mem a hx)⟩ : (rep σ).S) = a • ⟨x, hFS hx⟩ := rfl

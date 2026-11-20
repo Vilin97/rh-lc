@@ -48,7 +48,7 @@ theorem theta_add (hT : IsTriple B G X om om') {Φ Ψ} (hΦ : Φ ∈ GlobalTheor
     (hΨ : Ψ ∈ GlobalTheory.WeilM.schA F (Fin a × Fin (a + a'))) (g h) :
     theta om (Φ + Ψ) g h = theta om Φ g h + theta om Ψ g h := by
   have hs := GlobalTheory.WeilM.IsUWeilPair.isUSplitting hT.weil
-  simp only [theta, map_add]
+  simp only [theta, map_add (f := _)]
   exact GlobalTheory.WeilM.thetaSum_add F (hs.pres _ _ hΦ) (hs.pres _ _ hΨ)
 
 theorem theta_smul (c : ℂ) (Φ) (g h) : theta om (c • Φ) g h = c * theta om Φ g h := by

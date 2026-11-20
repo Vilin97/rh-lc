@@ -88,14 +88,14 @@ theorem det_modulus_chi : ∀ (D : D7) (V : HSp D) (P : Pl D.host.E) (e : AE D),
     rw [hx]
     exact one_sub_mul_idem he.1 _
   have hx2 : π x = algebraMap (Ov D v) (Fv D.host.F v) p := by
-    rw [hx, π.map_add, π.map_mul, π.map_sub, π.map_one, hπ.map_e he.1, one_mul, sub_self, add_zero, hpϖ]
+    rw [hx, π.map_add (f := _), π.map_mul, π.map_sub, π.map_one, hπ.map_e he.1, one_mul, sub_self, add_zero, hpϖ]
   have hz1 : (1 - e) * (z : AE D) = 1 - e := by
     rw [hz]
     exact one_sub_mul_idem he.1 _
   have hz2 : π (z : AE D) = algebraMap (Ov D v) (Fv D.host.F v) (p ^ k * u) := by
     rw [rho_val, Matrix.det_mul_comm, ← Matrix.mul_assoc, ← Units.val_mul, mul_inv_cancel, Units.val_one,
       Matrix.one_mul] at hu
-    rw [hz, π.map_add, π.map_mul, π.map_sub, π.map_one, hπ.map_e he.1, one_mul, sub_self, add_zero]
+    rw [hz, π.map_add (f := _), π.map_mul, π.map_sub, π.map_one, hπ.map_e he.1, one_mul, sub_self, add_zero]
     rw [RingHom.map_det, RingHom.mapMatrix_apply]
     exact hu
   refine ⟨?_, fun A _ χ hχ => ?_⟩

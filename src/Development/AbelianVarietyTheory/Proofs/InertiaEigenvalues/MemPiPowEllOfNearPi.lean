@@ -100,7 +100,7 @@ theorem near_split [NeZero n] {ι : A →+* R} {p : ℕ} {t : R} (j : LetA O n �
     obtain ⟨τ, hτ⟩ := hj letπ
     obtain ⟨a1, a2, h⟩ := ih (ha.mono hτ.symm (Nat.le_succ m))
     have h1 : j letπ ^ m * j a1 = j a - (p : R) * j a2 := by
-      rw [h, map_add, map_mul, map_mul, map_pow, map_natCast, add_sub_cancel_right]
+      rw [h, map_add (f := _), map_mul, map_mul, map_pow, map_natCast, add_sub_cancel_right]
     have h2 : Near ι p (j letπ) (m + 1) (j letπ ^ m * j a1) := by
       rw [h1]
       exact ha.sub (Near.of_mul _ _)

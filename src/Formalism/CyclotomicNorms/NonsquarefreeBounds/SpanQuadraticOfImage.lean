@@ -126,7 +126,7 @@ theorem off_diag (hspan : ∀ i, Submodule.span k (Set.range (ρ i)) = ⊤)
     { toFun := fun w => φ (Pi.single i w) j
       map_add' := fun x y => by
         show φ (Pi.single i (x + y)) j = φ (Pi.single i x) j + φ (Pi.single i y) j
-        rw [Pi.single_add, map_add]; rfl
+        rw [Pi.single_add, map_add (f := _)]; rfl
       map_smul' := fun c x => by
         show φ (Pi.single i (c • x)) j = c • φ (Pi.single i x) j
         rw [Pi.single_smul, ← alg_smul_eq ρ c, φ.map_smul, alg_smul_eq]; rfl }

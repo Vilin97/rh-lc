@@ -126,7 +126,7 @@ theorem exists_supp_lift_adj : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank)
       (p : Formalism.IndefR.Lev.EAf D) • (βS.1 * Y.map (Formalism.L2.Herm.intAf D.host.F D.host.E).subtype * (βS⁻¹).1) := by
     rw [hp]; exact hκ
   have hf : finSw D (e + cA D e) = p + Formalism.UG.sigR D.sp.cm.sig (Formalism.L2.Herm.Af D.host.F) p := by
-    rw [RingHom.map_add, finSw_cA, hp]
+    rw [RingHom.map_add (f := _), finSw_cA, hp]
   have hSt : finE S κ ∈ St βS :=
     mem_St_of_part_inv D.sp.cm.sig S.gram Λ βS hB.1 (hatL_selfDual hB) p (sigR_int p.2) Y Y' hmm (finE S κ)
       (finE_mem_UA S κ) _ hf hsf hκ'

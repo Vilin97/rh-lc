@@ -66,7 +66,7 @@ theorem asm_add_right (rho : TL J nL r × Fin (r + K) → ℕ) (A : MvPolynomial
     (N N' : MvPolynomial (TL J nL r × Fin K) (KK O)) :
     asm Fr p O hk nL rho A (N + N') = asm Fr p O hk nL rho A N + asm Fr p O hk nL rho A N' := by
   unfold asm
-  rw [map_add]; ring
+  rw [map_add (f := _)]; ring
 
 end Id
 

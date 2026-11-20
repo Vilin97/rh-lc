@@ -315,7 +315,7 @@ theorem exists_flat_rule : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E
         show _ ∈ RingHom.ker (algebraMap p.R m.ResidueField)
         rwa [Ideal.ker_algebraMap_residueField]
       exact this
-    rw [map_sub, map_add, map_one] at h0
+    rw [map_sub, map_add (f := _), map_one] at h0
     by_cases hr : Set.range (fpt z ψ) ⊆ U
     · rw [((C p z _ ψ).2 hr).1] at h0
       exact FS p z _ ψ hr (by simpa using h0)

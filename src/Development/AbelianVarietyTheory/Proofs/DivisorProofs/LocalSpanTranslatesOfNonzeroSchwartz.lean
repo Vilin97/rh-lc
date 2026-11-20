@@ -15,7 +15,7 @@ variable {F : Type} [Field F] [NumberField F]
 
 theorem psiLoc_add (ψ : AddChar (AF F) ℂ) (v : Pl F) (a b : Fv F v) :
     psiLoc ψ v (a + b) = psiLoc ψ v a * psiLoc ψ v b := by
-  rw [psiLoc, psiLoc, psiLoc, map_add, map_add]; exact AddChar.map_add_eq_mul ψ _ _
+  rw [psiLoc, psiLoc, psiLoc, map_add (f := _), map_add (f := _)]; exact AddChar.map_add_eq_mul ψ _ _
 
 theorem psiLoc_zero (ψ : AddChar (AF F) ℂ) (v : Pl F) : psiLoc ψ v 0 = 1 := by
   rw [psiLoc, map_zero, map_zero]; exact AddChar.map_zero_eq_one ψ

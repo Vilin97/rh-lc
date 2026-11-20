@@ -19,7 +19,7 @@ private theorem pp_chi {n : ℕ} {A B G H : Type} [CommRing A] [CommRing B] [Gro
     · simp
     · induction y using MonoidAlgebra.induction_linear with
       | zero => simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | single g r => simp
   rw [← h, ← (UpperTheory.V.AlgebraTools.Det.mapApi (D.comap π) f).1, hD, (UpperTheory.V.AlgebraTools.Det.repApi ρ).1]
 

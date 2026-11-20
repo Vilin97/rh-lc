@@ -11,7 +11,7 @@ variable {V : Type} [AddCommGroup V] [Module ℂ V]
 
 theorem commute_aeval_left {x y : Module.End ℂ V} (h : Commute x y) (p : ℂ[X]) : Commute (aeval x p) y := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add]; exact hp.add_left hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add_left hq
   | monomial n a => rw [aeval_monomial]; exact (Algebra.commute_algebraMap_left a y).mul_left (h.pow_left n)
 
 theorem coeff_mem_span_fin {M : Type} [AddCommGroup M] [Module ℂ M] {n : ℕ} {a : ℕ → M} {p : ℂ → M}
@@ -68,7 +68,7 @@ theorem aeval_mem_ext (T : Module.End ℂ V) {Q : ℂ[X]} (hQ : Q ≠ 0) {N : Su
     rw [hQ', mul_comm, map_mul, Module.End.mul_apply, hN v hv, map_zero]
   have hsplit : p = p %ₘ Q' + (p /ₘ Q') * Q' := by
     rw [mul_comm]; exact (modByMonic_add_div p Q').symm
-  rw [hsplit, map_add, LinearMap.add_apply, map_mul, Module.End.mul_apply, hQ'v, map_zero, add_zero]
+  rw [hsplit, map_add (f := _), LinearMap.add_apply, map_mul, Module.End.mul_apply, hQ'v, map_zero, add_zero]
   have hlt : (p %ₘ Q').natDegree < Q.natDegree + 1 := by
     have := natDegree_modByMonic_le p hm
     omega

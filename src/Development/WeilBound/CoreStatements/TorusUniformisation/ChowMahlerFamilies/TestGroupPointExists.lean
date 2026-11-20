@@ -33,7 +33,7 @@ theorem mem_spanOver {o Ω C : Type} [CommRing o] [Field Ω] [Field C] [Algebra 
 def smallSub {C : Type} [Field C] (v : Valuation C NNReal) (t : NNReal) {r : ℕ} {I : Type}
     (f : I → ((Fin r → C) →ₗ[C] C)) : AddSubgroup (Fin r → C) where
   carrier := {a | ∀ m, v (f m a) ≤ t}
-  add_mem' ha hb m := by rw [map_add]; exact v.map_add_le (ha m) (hb m)
+  add_mem' ha hb m := by rw [map_add (f := _)]; exact v.map_add_le (ha m) (hb m)
   zero_mem' m := by simp
   neg_mem' ha m := by rw [map_neg, Valuation.map_neg]; exact ha m
 

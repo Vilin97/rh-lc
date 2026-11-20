@@ -130,7 +130,7 @@ theorem lemmaBT_of_characters : Laws → Laws2 → Laws4 → TwistBaseChangeStat
       rw [k3, k3] at k1
       have k4 : IsUnit (σ τ π) ↔ ¬ IsUnit (σ τ (star π)) :=
         isUnit_iff_not_isUnit_of_coprime (u := σ τ u₁) (u' := σ τ u₂) (by rw [← map_mul, hπ, map_natCast]; exact hgu)
-          (by rw [← map_mul, ← map_mul, ← map_add, hu12, map_one])
+          (by rw [← map_mul, ← map_mul, ← map_add (f := _), hu12, map_one])
       tauto
   · rw [card_filter_val_lt] at hle
     have h1 : (0 : ℝ) ≤ (degOf Dw m : ℝ) ^ 2 * Φ / g' := by positivity

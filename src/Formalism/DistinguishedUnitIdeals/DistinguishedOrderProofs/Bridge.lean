@@ -130,7 +130,7 @@ lemma cf_Fy_neg (x : Fin r → PowerSeries Ks) {i : ℤ} (hi : i < 0) : cf (Fy L
 lemma Fy_add (x x' : Fin r → PowerSeries Ks) : Fy LL lam (x + x') = Fy LL lam x + Fy LL lam x' := by
   unfold Fy
   rw [← Finset.sum_add_distrib]
-  exact Finset.sum_congr rfl fun k _ => by rw [Pi.add_apply, map_add, add_smul]
+  exact Finset.sum_congr rfl fun k _ => by rw [Pi.add_apply, map_add (f := _), add_smul]
 
 lemma Fy_smul (a : PowerSeries Ks) (x : Fin r → PowerSeries Ks) :
     Fy LL lam (a • x) = HahnSeries.ofPowerSeries ℤ Ks a • Fy LL lam x := by
@@ -235,7 +235,7 @@ lemma ex_split (π : (Fin r → O) →ₗ[O] (Fin r → O)) (z : Fin r → Power
       z k * PowerSeries.C (((LinearMap.id : (Fin r → O) →ₗ[O] (Fin r → O)) - π) (sv O k) l) =
         z k * PowerSeries.C (sv O k l) := by
     intro k
-    rw [← mul_add, ← map_add, LinearMap.sub_apply, LinearMap.id_apply, Pi.sub_apply,
+    rw [← mul_add, ← map_add (f := _), LinearMap.sub_apply, LinearMap.id_apply, Pi.sub_apply,
       add_sub_cancel]
   simp only [this, sv]
   simp

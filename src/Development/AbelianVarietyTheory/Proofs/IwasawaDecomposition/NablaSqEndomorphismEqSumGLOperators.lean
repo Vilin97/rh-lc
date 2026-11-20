@@ -37,7 +37,7 @@ theorem coeff_aeval_scale {k σ : Type} [Field k] (e : σ → k) (f : MvPolynomi
     split_ifs with hu
     · subst hu; rfl
     · simp
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem rowAct_diagonal {k : Type} [Field k] {r c : ℕ} (d : Fin r → k) :
     Formalism.GradedWeylDivisibility.rowAct k (n := c) (Matrix.diagonal d) =
@@ -236,7 +236,7 @@ theorem schur [CharZero k] (hS : ∀ M : Submodule k (MvPolynomial (Fin N × Fin
       add_mem' := by
         intro a b ha hb
         simp only [Set.mem_setOf_eq] at *
-        rw [map_add, ha, hb, smul_add]
+        rw [map_add (f := _), ha, hb, smul_add]
       zero_mem' := by simp
       smul_mem' := by
         intro a x hx

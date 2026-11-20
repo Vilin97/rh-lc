@@ -22,7 +22,7 @@ theorem inFace_transport (β x : LinearMap.BilinForm ℤ X) :
     InFace bar ψ lab (e β) (e x) ↔ InFace bar ψ lab β x := by
   unfold InFace
   simp only [he]
-  rw [hbal, ← map_add, hψ, hψ, hψ, hlab, hlab]
+  rw [hbal, ← map_add (f := _), hψ, hψ, hψ, hlab, hlab]
   refine and_congr Iff.rfl (and_congr ?_ (and_congr ?_ Iff.rfl))
   · exact ⟨fun h y => by simpa using h (T.symm y), fun h y => h (T y)⟩
   · exact ⟨fun h y => by simpa using h (T.symm y), fun h y => h (T y)⟩
@@ -34,13 +34,13 @@ theorem isIndec_transport (β x : LinearMap.BilinForm ℤ X) :
   refine and_congr Iff.rfl (and_congr Iff.rfl ⟨fun h y z hy hz hy0 hz0 hs => ?_, fun h y z hy hz hy0 hz0 hs => ?_⟩)
   · refine h (e y) (e z) ((inFace_transport he hbal hψ hlab β y).2 hy) ((inFace_transport he hbal hψ hlab β z).2 hz)
       (e.map_ne_zero_iff.2 hy0) (e.map_ne_zero_iff.2 hz0) ?_
-    rw [← map_add, hs]
+    rw [← map_add (f := _), hs]
   · refine h (e.symm y) (e.symm z) ?_ ?_ ?_ ?_ ?_
     · rw [← inFace_transport he hbal hψ hlab, e.apply_symm_apply]; exact hy
     · rw [← inFace_transport he hbal hψ hlab, e.apply_symm_apply]; exact hz
     · exact fun h0 => hy0 (by rw [← e.apply_symm_apply y, h0, map_zero])
     · exact fun h0 => hz0 (by rw [← e.apply_symm_apply z, h0, map_zero])
-    · apply e.injective; rw [map_add, e.apply_symm_apply, e.apply_symm_apply, hs]
+    · apply e.injective; rw [map_add (f := _), e.apply_symm_apply, e.apply_symm_apply, hs]
 
 theorem isMarked_transport_of (β : LinearMap.BilinForm ℤ X) (h : IsMarked bar ψ lab i X β) :
     IsMarked bar ψ lab i X (e β) := by

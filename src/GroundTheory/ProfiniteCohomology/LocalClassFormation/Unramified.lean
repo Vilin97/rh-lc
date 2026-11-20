@@ -133,7 +133,7 @@ theorem h2IntAddEquiv_map_intMulRes (m : ℤ) (z : groupCohomology (Rep.trivial 
       have e2 := hy h
       have e3 := hy (g * h)
       change (QuotientAddGroup.mk (y g + y h - y (g * h)) : AddCircle (1 : ℚ)) = 0
-      rw [QuotientAddGroup.mk_sub, QuotientAddGroup.mk_add, e1, e2, e3, ofMul_mul, map_add, sub_self]
+      rw [QuotientAddGroup.mk_sub, QuotientAddGroup.mk_add, e1, e2, e3, ofMul_mul, map_add (f := _), sub_self]
     obtain ⟨n, hn⟩ := (AddCircle.coe_eq_zero_iff (p := (1 : ℚ))).1 h0
     exact ⟨n, by simpa using hn⟩
   choose x hxeq using hx

@@ -38,7 +38,7 @@ theorem cpt_add_cA_idemSum : ∀ {D : D7} {e : AE D} {P : Finset (Pl D.host.E)},
   intro D e P he w
   have hsplit : GlobalTheory.StdFrames.cpt (D := D) w (toEAf D (e + cA D e)) =
       cpt (D := D) w (toEAf D e) + cpt (D := D) w (sg D (toEAf D e)) := by
-    rw [map_add, toEAf_cA, map_add]
+    rw [map_add (f := _), toEAf_cA, map_add (f := _)]
   refine ⟨fun h => ?_, fun h1 h2 => ?_⟩
   · rw [hsplit]
     by_cases hw : w ∈ P

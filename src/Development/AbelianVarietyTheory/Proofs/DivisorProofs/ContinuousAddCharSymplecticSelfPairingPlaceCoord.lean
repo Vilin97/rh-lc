@@ -32,10 +32,10 @@ theorem continuous_psi_symp_atPlace : ∀ {F E : Type} [Field F] [NumberField F]
         (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F JB) with hB
   have hadd1 : ∀ x x' y, B (x + x') y = B x y + B x' y := by
     intro x x' y
-    simp only [hB, GlobalTheory.WeilM.symp, GlobalTheory.WeilM.hTens, ← map_add, ← mul_add, ← Finset.sum_add_distrib, Matrix.add_apply, add_mul]
+    simp only [hB, GlobalTheory.WeilM.symp, GlobalTheory.WeilM.hTens, ← map_add (f := _), ← mul_add, ← Finset.sum_add_distrib, Matrix.add_apply, add_mul]
   have hadd2 : ∀ x y y', B x (y + y') = B x y + B x y' := by
     intro x y y'
-    simp only [hB, GlobalTheory.WeilM.symp, GlobalTheory.WeilM.hTens, Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [hB, GlobalTheory.WeilM.symp, GlobalTheory.WeilM.hTens, Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   have hsm1 : ∀ (r : AF F) x y, B (r • x) y = r * B x y := by
     intro r x y
     simp only [hB, GlobalTheory.WeilM.symp, GlobalTheory.WeilM.hTens, Matrix.smul_apply, smul_mul_assoc, ← Finset.smul_sum, mul_smul_comm,

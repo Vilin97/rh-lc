@@ -74,7 +74,7 @@ theorem latticeDual_ne_bot {K : Type*} [Field K] [NumberField K] {r : ℕ} (F : 
   | add x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨c, hc⟩ := hy
-    exact ⟨a + c, by rw [map_add, ha, hc, dotProduct_add]⟩
+    exact ⟨a + c, by rw [map_add (f := _), ha, hc, dotProduct_add]⟩
   | smul c x _ hx =>
     obtain ⟨a, ha⟩ := hx
     exact ⟨c * a, by rw [map_mul, ha, dotProduct_smul, Algebra.smul_def]⟩

@@ -99,7 +99,7 @@ theorem fixesCurve_mul : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     omega
   have haff : ∀ z z', T z z' → z' ∉ L.lattice →
       τ (x z') = τ α * c / α * x z + (τ β - τ α * c / α * β) := fun z z' a b => by
-    rw [hx, hx, map_add, map_mul, (hc z z' a b).2]
+    rw [hx, hx, map_add (f := _), map_mul, (hc z z' a b).2]
     field_simp
     ring
   generalize τ α * c / α = a at haff

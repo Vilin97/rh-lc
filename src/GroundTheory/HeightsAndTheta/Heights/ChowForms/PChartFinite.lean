@@ -220,7 +220,7 @@ theorem ChartFinite.proof : ChartFinite.Statement := by
       rw [h3]
       exact hS (C a)
     | add g h hg hh =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hg hh
     | mul_X g v hg =>
       rw [map_mul]

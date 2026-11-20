@@ -306,7 +306,7 @@ theorem exists_sub_awayToExt_mem_pow (hρ : (p : ℝ)⁻¹ < ρ) (m : ℕ) (x : 
     refine ⟨a + b * algebraMap _ 𝔸 (xiA p) ^ m, ?_⟩
     rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton']
     refine ⟨z, ?_⟩
-    rw [map_add, map_mul, map_pow, awayToExt_xiA, pow_succ]
+    rw [map_add (f := _), map_mul, map_pow, awayToExt_xiA, pow_succ]
     linear_combination ξ ^ m * hz + hy
 
 theorem exists_awayToExt_sub_mem_pow (hρ : (p : ℝ)⁻¹ < ρ) (m : ℕ) (x : (𝓣).RobbaExt ρ) :
@@ -688,7 +688,7 @@ theorem exists_pow_mul_sub_mem (hρ : (p : ℝ)⁻¹ < ρ) (m : ℕ) :
           ((p : AInf ℂ_[p] p) ^ (m + 1) * l + xiA p * y')) =
         ξ * ((p : (𝓣).RobbaExt ρ) ^ m * ((p : (𝓣).RobbaExt ρ) * w') -
           awayToExt p ρ (algebraMap _ 𝔸 y')) := by
-      simp only [map_add, map_mul, map_pow, map_natCast]
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast]
       rw [awayToExt_xiA ρ]
       ring
     rw [e, pow_succ' _ (m + 1)]
@@ -861,7 +861,7 @@ theorem iotaTildeFun_mul {x y : (𝓣).RobbaTilde} (hx : x ∈ tildeDom p) (hy :
 theorem iotaTildeFun_add {x y : (𝓣).RobbaTilde} (hx : x ∈ tildeDom p) (hy : y ∈ tildeDom p) :
     iotaTildeFun p (x + y) = iotaTildeFun p x + iotaTildeFun p y := by
   obtain ⟨ρ, hρ, x', y', rfl, rfl⟩ := exists_common hx hy
-  rw [← map_add, iotaTildeFun_ofRad hρ, iotaTildeFun_ofRad hρ, iotaTildeFun_ofRad hρ, map_add]
+  rw [← map_add (f := _), iotaTildeFun_ofRad hρ, iotaTildeFun_ofRad hρ, iotaTildeFun_ofRad hρ, map_add (f := _)]
 
 variable (p) in
 
@@ -987,7 +987,7 @@ theorem thetaN_of_eq_ofRad {n : ℕ} {x : (𝓣).RobbaTilde} (hρ : (p : ℝ)⁻
 
 theorem iotaN_add {n : ℕ} {x y : (𝓣).RobbaTilde} (hx : phiNeg p n x ∈ tildeDom p)
     (hy : phiNeg p n y ∈ tildeDom p) : iotaN p n (x + y) = iotaN p n x + iotaN p n y := by
-  rw [iotaN, iotaN, iotaN, map_add, iotaTildeFun_add hx hy]
+  rw [iotaN, iotaN, iotaN, map_add (f := _), iotaTildeFun_add hx hy]
 
 theorem iotaN_mul {n : ℕ} {x y : (𝓣).RobbaTilde} (hx : phiNeg p n x ∈ tildeDom p)
     (hy : phiNeg p n y ∈ tildeDom p) : iotaN p n (x * y) = iotaN p n x * iotaN p n y := by
@@ -995,7 +995,7 @@ theorem iotaN_mul {n : ℕ} {x y : (𝓣).RobbaTilde} (hx : phiNeg p n x ∈ til
 
 theorem thetaN_add {n : ℕ} {x y : (𝓣).RobbaTilde} (hx : phiNeg p n x ∈ tildeDom p)
     (hy : phiNeg p n y ∈ tildeDom p) : thetaN p n (x + y) = thetaN p n x + thetaN p n y := by
-  rw [thetaN, iotaN_add hx hy, map_add]; rfl
+  rw [thetaN, iotaN_add hx hy, map_add (f := _)]; rfl
 
 theorem thetaN_mul {n : ℕ} {x y : (𝓣).RobbaTilde} (hx : phiNeg p n x ∈ tildeDom p)
     (hy : phiNeg p n y ∈ tildeDom p) : thetaN p n (x * y) = thetaN p n x * thetaN p n y := by

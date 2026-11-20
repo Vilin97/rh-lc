@@ -146,7 +146,7 @@ theorem cx_cx (ε : InfinitePlace F → ℤˣ) (hX : ∀ v, X.θ v * X.θ v = 1)
 
 theorem liftA_add (a b : mixedEmbedding.mixedSpace F) : liftA (F := F) (a + b) = liftA a + liftA b := by
   simp only [liftA]
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
   rfl
 
 theorem evI_add (a b : AF F) : evI F (a + b) = evI F a + evI F b :=
@@ -172,7 +172,7 @@ theorem evI_realAd_mul (t : ℝ) (c : AF F) : evI F (realAd F t * c) = t • evI
 
 theorem pt_add (M : Model σ X W) (x y) : pt M (x + y) = pt M x + pt M y := by
   simp only [pt]
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
   refine Prod.ext (funext fun i => ?_) (funext fun i => ?_) <;> simp [liftA_add]
 
@@ -183,7 +183,7 @@ theorem pt_smul (M : Model σ X W) (t : ℝ) (x) : pt M (t • x) = realAd F t �
   refine Prod.ext (funext fun i => ?_) (funext fun i => ?_) <;> simp [realAd_mul_liftA]
 
 theorem crd_add (M : Model σ X W) (u u' : Matrix (Fin n) (Fin d) (AE F E)) : crd M (u + u') = crd M u + crd M u' := by
-  simp only [crd, map_add]
+  simp only [crd, map_add (f := _)]
   refine Prod.ext (funext fun i => ?_) (funext fun i => ?_) <;>
   · exact evI_add _ _
 

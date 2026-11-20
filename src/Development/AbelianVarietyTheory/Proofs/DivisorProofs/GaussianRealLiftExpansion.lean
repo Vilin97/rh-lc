@@ -13,7 +13,7 @@ namespace GlobalTheory.VacGauss
 def trL {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ] (b : κ → mixedEmbedding.mixedSpace F) :
     (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ℝ where
   toFun x := Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (∑ i, x i * b i)
-  map_add' x y := by simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add]
+  map_add' x y := by simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)]
   map_smul' c x := by simp [smul_mul_assoc, ← Finset.smul_sum]
 
 open scoped Classical in

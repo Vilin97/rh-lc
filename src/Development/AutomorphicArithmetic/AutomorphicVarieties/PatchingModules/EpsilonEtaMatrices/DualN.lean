@@ -41,7 +41,7 @@ theorem UpperTheory.V.Pa.dualN :
         refine ⟨add_mem ha hb, fun j => ?_⟩
         obtain ⟨Y1, h1, h2⟩ := ha' j
         obtain ⟨Y2, h3, h4⟩ := hb' j
-        refine ⟨Y1 + Y2, ?_, ?_⟩ <;> simp only [Pi.add_apply, h1, h2, h3, h4, map_add] <;> abel
+        refine ⟨Y1 + Y2, ?_, ?_⟩ <;> simp only [Pi.add_apply, h1, h2, h3, h4, map_add (f := _)] <;> abel
       zero_mem' := ⟨zero_mem _, fun j => ⟨0, by simp, by simp⟩⟩
       neg_mem' := by
         rintro a ⟨ha, ha'⟩

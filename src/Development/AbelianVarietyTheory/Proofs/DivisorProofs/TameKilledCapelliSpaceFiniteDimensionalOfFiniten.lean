@@ -16,7 +16,7 @@ theorem aeval_restrict_val {M : Type} [AddCommGroup M] [Module ℂ M] (f : Modul
     (h : ∀ x ∈ p, f x ∈ p) (P : ℂ[X]) (v : p) :
     ((aeval (f.restrict h) P) v : M) = aeval f P (v : M) := by
   induction P using Polynomial.induction_on' with
-  | add P Q hP hQ => simp [map_add, hP, hQ]
+  | add P Q hP hQ => simp [map_add (f := _), hP, hQ]
   | monomial n a =>
     simp only [aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply, Submodule.coe_smul]
     congr 1

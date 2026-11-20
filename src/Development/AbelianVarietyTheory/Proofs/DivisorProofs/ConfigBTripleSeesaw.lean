@@ -44,7 +44,7 @@ theorem twist_heis_inv (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
         add_assoc, add_dotProduct, dotProduct_add]
       congr 2
       linear_combination (-(v.1 ⬝ᵥ v'.2)) * invOf_mul_self (2 : AF F)
-    rw [hlaw, ← G.M.co.form, h0, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add]
+    rw [hlaw, ← G.M.co.form, h0, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add (f := _)]
   have hcol : ∀ m, ∑ i, ∑ j, H₀.ι i m * (G.V.J i j * σ (H₀.x j)) = 0 := by
     intro m
     have h := (hH₀.orth (Pi.single m 1)).1

@@ -27,7 +27,7 @@ def latN {d : ℕ} (b : Module.Basis (Fin d) F E) (n M N : ℕ) :
     obtain ⟨x, hx, ex⟩ := hX a i k
     obtain ⟨y, hy, ey⟩ := hY a i k
     refine ⟨x + y, fun v => add_mem (hx v) (hy v), ?_⟩
-    simp only [Pi.add_apply, map_add, Finsupp.add_apply, ex, ey, mul_add]
+    simp only [Pi.add_apply, map_add (f := _), Finsupp.add_apply, ex, ey, mul_add]
   neg_mem' := by
     intro X hX a i k
     obtain ⟨x, hx, ex⟩ := hX a i k

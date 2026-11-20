@@ -420,11 +420,11 @@ theorem lam_mul (G H : MvPolynomial (LVar ι ζ n) k) :
 
 theorem val_add (G H : MvPolynomial (LVar ι ζ n) k) :
     min (valS isVec S G) (valS isVec S H) ≤ valS isVec S (G + H) := by
-  simp only [valS, map_add]; exact lp_min_add _ _
+  simp only [valS, map_add (f := _)]; exact lp_min_add _ _
 
 theorem lam_add (G H : MvPolynomial (LVar ι ζ n) k) :
     lam1S isVec S (G + H) ≤ max (lam1S isVec S G) (lam1S isVec S H) := by
-  simp only [lam1S, map_add]; exact lp_max_add _ _
+  simp only [lam1S, map_add (f := _)]; exact lp_max_add _ _
 
 theorem val_zero : valS isVec S (0 : MvPolynomial (LVar ι ζ n) k) = ⊤ := by
   simp [valS]

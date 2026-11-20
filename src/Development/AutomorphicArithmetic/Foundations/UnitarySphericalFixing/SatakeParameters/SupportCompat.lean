@@ -26,7 +26,7 @@ theorem mapsToProd_tw {g : ℕ} [Fact g.Prime] {n a b : ℕ} {V W W' W'' : Type}
       induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul s t => simp [he, TensorProduct.tmul_smul]
-      | add s t hs ht => simp only [map_add, hs, ht, smul_add]
+      | add s t hs ht => simp only [map_add (f := _), hs, ht, smul_add]
     simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
     rw [H p x y hp hx hy v, key, map_smul, smul_smul]
     congr 1

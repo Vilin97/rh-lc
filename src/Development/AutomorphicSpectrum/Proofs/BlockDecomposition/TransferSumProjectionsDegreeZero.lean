@@ -146,7 +146,7 @@ theorem UU_one (Θ : Cn F 0 →ₗ[R] R) : UU F Θ 0 1 = Θ 1 • 1 := by
 
 theorem transfer_sum_projections_degree_zero {x : Cn F 1} (hx : dn F 1 x = 0) (Ξ : Cn F 1 →ₗ[R] R) :
     TT F Ξ 0 (pulln (boxL F) 1 x + pulln (boxR F) 1 x) = Ξ x • 1 := by
-  rw [map_add, ← GlobalTheory.CompanionTheory.HopfC.cup1_one (MainStatements.Hodge.pulln (MainStatements.Hodge.boxL F) 1 x),
+  rw [map_add (f := _), ← GlobalTheory.CompanionTheory.HopfC.cup1_one (MainStatements.Hodge.pulln (MainStatements.Hodge.boxL F) 1 x),
     ← GlobalTheory.CompanionTheory.HopfC.cup1_one (MainStatements.Hodge.pulln (MainStatements.Hodge.boxR F) 1 x),
     GlobalTheory.CompanionTheory.HopfC.TT_p hx, GlobalTheory.CompanionTheory.HopfC.transfer_cup_product_degree_zero hx, add_zero, GlobalTheory.CompanionTheory.HopfC.UU_one]
   congr 1
@@ -326,7 +326,7 @@ theorem package (hR : IsField R) [∀ p, Finite (Fin (p + 1) ⥤ C)] (F : C ⥤ 
     congr 1
     apply Subtype.ext
     show MainStatements.Hodge.pulln (MainStatements.Hodge.boxE F T₀ ε) 1 (MainStatements.Hodge.pulln (MainStatements.Hodge.boxL F) 1 x.1 + MainStatements.Hodge.pulln (MainStatements.Hodge.boxR F) 1 x.1) = x.1
-    rw [map_add, hl0, hr0, zero_add]
+    rw [map_add (f := _), hl0, hr0, zero_add]
   have hτ2 : ∀ y : GlobalTheory.CompanionTheory.HopfC.HH F 2,
       GlobalTheory.CompanionTheory.HopfC.pullH (MainStatements.Hodge.boxE F T₀ ε) 2 ((eπ 2).symm (GlobalTheory.CompanionTheory.HopfC.pullH m 2 y)) = y :=
     fun y => hc y _ (by rw [← heπ, LinearEquiv.apply_symm_apply])
@@ -363,7 +363,7 @@ theorem package (hR : IsField R) [∀ p, Finite (Fin (p + 1) ⥤ C)] (F : C ⥤ 
     change GlobalTheory.CompanionTheory.HopfC.TT F (l' l) (n + 1) (GlobalTheory.CompanionTheory.HopfC.cup1 (MainStatements.Hodge.box F) (n + 1)
         (MainStatements.Hodge.pulln (MainStatements.Hodge.boxL F) 1 x.1 + MainStatements.Hodge.pulln (MainStatements.Hodge.boxR F) 1 x.1) w.1) -
       (l' l x.1 • MainStatements.Hodge.pulln (MainStatements.Hodge.boxE F T₀ ε) (n + 1) w.1 - GlobalTheory.CompanionTheory.HopfC.cup1 F n x.1 (GlobalTheory.CompanionTheory.HopfC.TT F (l' l) n w.1)) = _
-    rw [map_add, LinearMap.add_apply, map_add, GlobalTheory.CompanionTheory.HopfC.TT_p hx, GlobalTheory.CompanionTheory.HopfC.TT_q hx]
+    rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), GlobalTheory.CompanionTheory.HopfC.TT_p hx, GlobalTheory.CompanionTheory.HopfC.TT_q hx]
     abel
   · intro n x z
     change GlobalTheory.CompanionTheory.HopfC.pullH (MainStatements.Hodge.boxE F T₀ ε) (n + 1 + 1) ((eπ (n + 1 + 1)).symm (GlobalTheory.CompanionTheory.HopfC.pullH m (n + 1 + 1) (GlobalTheory.CompanionTheory.HopfC.Lc F (n + 1) x z))) =
@@ -401,7 +401,7 @@ theorem hopfFieldSt : CxSt → DictSt → LowSt → HopfFieldSt := by
     obtain ⟨c, rfl⟩ := u₁.surjective x
     rw [← nm.1 c, hprimc c, nπ.1]
     congr 1
-    rw [map_add, nl.1, nr.1]
+    rw [map_add (f := _), nl.1, nr.1]
   have hcHH : ∀ (y : GlobalTheory.CompanionTheory.HopfC.HH F 2) (w : GlobalTheory.CompanionTheory.HopfC.HH (MainStatements.Hodge.box F) 2),
       GlobalTheory.CompanionTheory.HopfC.pullH π 2 w = GlobalTheory.CompanionTheory.HopfC.pullH m 2 y → GlobalTheory.CompanionTheory.HopfC.pullH (MainStatements.Hodge.boxE F T₀ ε) 2 w = y := by
     intro y w h

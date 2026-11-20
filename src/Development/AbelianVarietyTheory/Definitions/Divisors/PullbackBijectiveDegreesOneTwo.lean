@@ -126,11 +126,11 @@ def Z2 : AddSubgroup K.T2 where
   add_mem' {a b} ha hb := ⟨fun T T' T'' T''' φ ψ χ ↦ by
       have h1 := ha.1 T T' T'' T''' φ ψ χ
       have h2 := hb.1 T T' T'' T''' φ ψ χ
-      simp only [Prod.fst_add, Pi.add_apply, map_add]
+      simp only [Prod.fst_add, Pi.add_apply, map_add (f := _)]
       linear_combination (norm := abel1) h1 + h2,
-    fun T T' T'' φ ψ ↦ by simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add, ha.2.1 T T' T'', hb.2.1 T T' T'']; abel,
-    fun T T' φ ↦ by simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add, ha.2.2.1 T T' φ, hb.2.2.1 T T' φ]; abel,
-    fun T ↦ by simp only [Prod.snd_add, Pi.add_apply, map_add, ha.2.2.2 T, hb.2.2.2 T, add_zero]⟩
+    fun T T' T'' φ ψ ↦ by simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add (f := _), ha.2.1 T T' T'', hb.2.1 T T' T'']; abel,
+    fun T T' φ ↦ by simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add (f := _), ha.2.2.1 T T' φ, hb.2.2.1 T T' φ]; abel,
+    fun T ↦ by simp only [Prod.snd_add, Pi.add_apply, map_add (f := _), ha.2.2.2 T, hb.2.2.2 T, add_zero]⟩
   neg_mem' {a} ha := ⟨fun T T' T'' T''' φ ψ χ ↦ by
       have h1 := ha.1 T T' T'' T''' φ ψ χ
       simp only [Prod.fst_neg, Pi.neg_apply, map_neg]

@@ -34,7 +34,7 @@ theorem bijective_sumElim_iff {ι κ : Type} [Fintype ι] [Fintype κ] (hf : Fun
       simp [Fintype.linearCombination_apply, map_sum]
   have h3 (b : κ → R) (m m' : M₁) (h : f m + Fintype.linearCombination R t b = f m') : b = 0 := by
     have := congrArg g h
-    rw [map_add, hfg.apply_apply_eq_zero, hfg.apply_apply_eq_zero, zero_add, h2] at this
+    rw [map_add (f := _), hfg.apply_apply_eq_zero, hfg.apply_apply_eq_zero, zero_add, h2] at this
     exact ht.1 (this.trans (map_zero _).symm)
   constructor
   · refine fun H => ⟨(injective_iff_map_eq_zero _).2 fun a ha => ?_, fun m => ?_⟩

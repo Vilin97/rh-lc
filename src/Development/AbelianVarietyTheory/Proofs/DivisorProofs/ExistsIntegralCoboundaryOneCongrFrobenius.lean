@@ -35,7 +35,7 @@ theorem coeff_pow_char_sum {σ k : Type} [DecidableEq σ] [Field k] (p : ℕ) [F
   have hgp : coeff α (g ^ p) = 0 := by
     obtain ⟨n, hn⟩ := Nat.exists_eq_succ_of_ne_zero hp0
     rw [hn, pow_succ]; exact hmul _
-  rw [show f ^ p = (P + g) ^ p from congrArg (· ^ p) hf, add_pow_char, map_add, hgp, add_zero]
+  rw [show f ^ p = (P + g) ^ p from congrArg (· ^ p) hf, add_pow_char, map_add (f := _), hgp, add_zero]
   simp only [P]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [sum_pow_char, map_sum]

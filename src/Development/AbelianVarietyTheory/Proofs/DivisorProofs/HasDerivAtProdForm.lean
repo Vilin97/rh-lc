@@ -34,7 +34,7 @@ theorem hasDerivAt_prodForm (L : ι → Module.End ℂ V) (e : ι → ℂ → V 
     congr 1
     exact Finset.prod_congr rfl fun w' hw' => by rw [Function.update_of_ne (Finset.ne_of_mem_erase hw')]
   | add x y hx hy =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hx.add hy
 
 theorem isExp_taylor {L U : Module.End ℂ V} (hU : IsExp L U) (e : ℂ → V →ₗ[ℂ] ℂ)
@@ -123,14 +123,14 @@ theorem hasDerivAt_evZ (z : ℂ → Matrix (Ix P Q) (Ix R S) ℂ) (z' : Matrix (
   induction f using MvPolynomial.induction_on with
   | C c => simpa [evZ_apply] using hasDerivAt_const t c
   | add p q hp hq =>
-    simp only [map_add, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
     exact hp.add hq
   | mul_X p l hp =>
     have := hp.mul (hz l.1 l.2)
     simp only [evZ_apply, map_mul, aeval_X] at this ⊢
     refine this.congr_deriv ?_
     symm
-    simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul, aeval_X, mul_add, Finset.sum_add_distrib, pderiv_X,
+    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, aeval_X, mul_add, Finset.sum_add_distrib, pderiv_X,
       Finset.sum_mul]
     rw [add_comm]
     congr 1
@@ -181,7 +181,7 @@ theorem hasDerivAt_flow {Z : Matrix (Ix P Q) (Ix R S) ℂ} (hZ : OnPos Z) {Y : M
   have h1 := hasDerivAt_evZ (fun s => Z * NormedSpace.exp (s • Y)) _ t (hasDerivAt_mul_exp Z Y t) f
   have h2 := ((hasDerivAt_id t).mul_const (∑ a, Y a a * shift P Q a + c * Y.trace)).cexp
   have h3 := h2.mul h1
-  simp only [flow, LinearMap.smul_apply, smul_eq_mul, LinearMap.add_apply, map_add, map_smul, Module.End.one_apply,
+  simp only [flow, LinearMap.smul_apply, smul_eq_mul, LinearMap.add_apply, map_add (f := _), map_smul, Module.End.one_apply,
     evZ_fock hp hY]
   refine h3.congr_deriv ?_
   simp only [id]

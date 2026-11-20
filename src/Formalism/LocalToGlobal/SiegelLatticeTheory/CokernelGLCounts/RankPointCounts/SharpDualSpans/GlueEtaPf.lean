@@ -14,7 +14,7 @@ variable {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] [MeasurableS
 variable {M : Model F E} {V : Type} [AddCommGroup V] [Module E V]
 
 theorem h_add_right' (H : HermSp M V) (x y y' : V) : H.h x (y + y') = H.h x y + H.h x y' := by
-  rw [H.h_herm (y + y') x, H.h_add_left, map_add, ← H.h_herm, ← H.h_herm]
+  rw [H.h_herm (y + y') x, H.h_add_left, map_add (f := _), ← H.h_herm, ← H.h_herm]
 
 theorem h_expand (H : HermSp M V) (x a y b : V) :
     H.h (x + a) (y + b) = H.h x y + H.h x b + H.h a y + H.h a b := by

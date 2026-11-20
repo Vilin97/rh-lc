@@ -23,7 +23,7 @@ theorem compAt_conjAL (L : Type) [Field L] [NumberField L] [IsCMField L]
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [compAt, conjAL, Formalism.UG.sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem cT_mul {A : Type} [CommRing A] (σ : A →+* A) {m : Type} [Fintype m]
     (M N : Matrix m m A) : Formalism.UG.cT σ (M * N) = Formalism.UG.cT σ N * Formalism.UG.cT σ M := by

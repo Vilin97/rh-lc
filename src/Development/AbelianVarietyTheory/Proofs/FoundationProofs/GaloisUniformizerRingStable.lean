@@ -48,7 +48,7 @@ theorem stable_closure (S : Set R) (π : R) (A : Subring R)
     | add x y _ _ hx hy =>
       obtain ⟨b, hb, h⟩ := hx
       obtain ⟨c, hc, h'⟩ := hy
-      exact ⟨b + c, A.add_mem hb hc, by rw [map_add]; linear_combination h + h'⟩
+      exact ⟨b + c, A.add_mem hb hc, by rw [map_add (f := _)]; linear_combination h + h'⟩
     | neg x _ hx =>
       obtain ⟨b, hb, h⟩ := hx
       exact ⟨-b, A.neg_mem hb, by rw [map_neg]; linear_combination -h⟩

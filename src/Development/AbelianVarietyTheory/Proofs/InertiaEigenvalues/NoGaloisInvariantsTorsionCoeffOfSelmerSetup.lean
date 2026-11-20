@@ -57,7 +57,7 @@ theorem eq_zero_of_span {Γ O Λ B : Type} [CommRing O] [IsLocalRing O] [CommRin
       obtain ⟨A, rfl, c, hc⟩ := h
       obtain ⟨A', rfl, c', hc'⟩ := h'
       refine ⟨A + A', by ext; simp, c + c', fun p => ?_⟩
-      simp only [Matrix.add_apply, map_add, add_smul, Finset.sum_add_distrib, hc, hc']
+      simp only [Matrix.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib, hc, hc']
     | smul t M _ h =>
       obtain ⟨A, rfl, c, hc⟩ := h
       obtain ⟨t, rfl⟩ := IsLocalRing.residue_surjective t

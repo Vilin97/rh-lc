@@ -47,7 +47,7 @@ theorem IsEtLev.twist (h : IsEtLev o w0 r lv) (g : LevGrp D w0 r) :
     IsEtLev o w0 r (fun x => lv (liftAct g x)) := by
   refine ⟨fun x y => ?_, fun c x => ?_, fun x hx => ?_, fun k _ _ pt => ⟨fun y hy => ?_, fun q hq => ?_⟩⟩
   · rw [← h.1]; apply h.congr_mk
-    simp only [mk_liftAct, Submodule.Quotient.mk_add, map_add]
+    simp only [mk_liftAct, Submodule.Quotient.mk_add, map_add (f := _)]
   · rw [← h.2.1]; apply h.congr_mk
     simp only [mk_liftAct, Submodule.Quotient.mk_smul, map_smul]
   · have : Submodule.Quotient.mk (p := wSub D w0 r) (liftAct g x) = 0 := by

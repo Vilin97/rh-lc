@@ -125,7 +125,7 @@ theorem denseSurj : DenseSurj := by
   let P : Ideal (𝓞 E) :=
     { carrier := {x | ‖φ (algebraMap (𝓞 E) E x)‖ < 1}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add] at ha hb ⊢
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at ha hb ⊢
         exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
       zero_mem' := by simp
       smul_mem' := fun c {x} hx => by
@@ -164,7 +164,7 @@ theorem denseSurj : DenseSurj := by
   let I : Ideal (𝓞 E) :=
     { carrier := {x | ‖φ (algebraMap (𝓞 E) E x)‖ ≤ ‖((l : ℕ) : Om l)‖}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add] at ha hb ⊢
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at ha hb ⊢
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
       zero_mem' := by simp
       smul_mem' := fun c {x} hx => by

@@ -291,7 +291,7 @@ theorem apply_eq_sum [Fintype ι] (h : IsSymplecticBasisOfType B b d) (hB : B.Is
       b.repr x (Sum.inr i) * b.repr y (Sum.inl i)) := by
   conv_lhs => rw [← b.sum_repr x]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Fintype.sum_sum_type, map_add, map_sum, map_smul, LinearMap.add_apply,
+    simp only [Fintype.sum_sum_type, map_add (f := _), map_sum, map_smul, LinearMap.add_apply,
     LinearMap.sum_apply, LinearMap.smul_apply, smul_eq_mul, h.apply_left,
     ← hB.neg_eq y (b (Sum.inr _)), h.apply_right]
   rw [← Finset.sum_add_distrib]

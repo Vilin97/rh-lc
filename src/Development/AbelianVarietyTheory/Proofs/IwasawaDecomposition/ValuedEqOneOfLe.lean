@@ -202,7 +202,7 @@ theorem eq_self_of_fix (φ : FiniteAdeleRing (𝓞 L) L →+* FiniteAdeleRing (�
   refine (GlobalTheory.AdLat.integral_finiteAdele_complete_separated L).1 _ fun N hN => ?_
   obtain ⟨x, a, ha, rfl⟩ := (GlobalTheory.AdLat.strong_approximation_mod_nat L N hN).1 z
   refine ⟨φ a - a, fun v => sub_mem (h2 a ha v) (ha v), ?_⟩
-  rw [map_add, h1, map_nsmul, smul_sub]
+  rw [map_add (f := _), h1, map_nsmul, smul_sub]
   abel
 
 end General

@@ -117,7 +117,7 @@ private theorem map_lin (φ : MvPowerSeries σ O →ₐ[O] A)
     obtain ⟨s, hs⟩ := h0 r
     conv_lhs => rw [hs]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_mul, map_add, map_sum, AlgHom.commutes, mul_add, Finset.mul_sum, ← mul_assoc, hφ, zero_mul,
+      simp only [map_mul, map_add (f := _), map_sum, AlgHom.commutes, mul_add, Finset.mul_sum, ← mul_assoc, hφ, zero_mul,
       Finset.sum_const_zero, add_zero, Algebra.smul_def]
     exact mul_comm _ _
   obtain ⟨r, hr⟩ := h0 p
@@ -126,7 +126,7 @@ private theorem map_lin (φ : MvPowerSeries σ O →ₐ[O] A)
     simp [coeff_X_mul, MvPowerSeries.algebraMap_apply, MvPowerSeries.coeff_C]
   conv_lhs => rw [hr]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, AlgHom.commutes, h1, h2]
+    simp only [map_add (f := _), map_sum, AlgHom.commutes, h1, h2]
 
 end PS
 
@@ -362,7 +362,7 @@ private theorem exists_rep {O : Type} [CommRing O] [IsLocalRing O] {G Γ ι : Ty
     · rw [Submodule.coe_add, Pi.add_apply, h1 v hv s hs, h1' v hv s hs, add_zero]
     · obtain ⟨m, hm⟩ := h2 v hv
       obtain ⟨m', hm'⟩ := h2' v hv
-      exact ⟨m + m', fun g => by rw [Submodule.coe_add, Pi.add_apply, hm, hm', map_add]; abel⟩
+      exact ⟨m + m', fun g => by rw [Submodule.coe_add, Pi.add_apply, hm, hm', map_add (f := _)]; abel⟩
   | smul c x _ hx =>
     obtain ⟨z, rfl, h1, h2⟩ := hx
     refine ⟨c • z, rfl, fun v hv s hs => ?_, fun v hv => ?_⟩

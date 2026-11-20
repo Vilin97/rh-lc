@@ -22,7 +22,7 @@ def homGroup :
   carrier := {φ | ∀ (W W' : X.Opens) (h : W ≤ V) (h' : W' ≤ W) (s : Γ(F, W)),
     φ ⟨W', h'.trans h⟩ (resM F h' s) = resM G h' (φ ⟨W, h⟩ s)}
   add_mem' := fun {φ ψ} hφ hψ W W' h h' s => by
-    simp only [Pi.add_apply, LinearMap.add_apply, map_add, hφ W W' h h', hψ W W' h h']
+    simp only [Pi.add_apply, LinearMap.add_apply, map_add (f := _), hφ W W' h h', hψ W W' h h']
   zero_mem' := fun W W' h h' s => by simp only [Pi.zero_apply, LinearMap.zero_apply, map_zero]
   neg_mem' := fun {φ} hφ W W' h h' s => by
     simp only [Pi.neg_apply, LinearMap.neg_apply, map_neg, hφ W W' h h']
@@ -40,7 +40,7 @@ instance homGroupModule : Module Γ(X, V) (homGroup F G V) where
   smul_add a φ ψ := Subtype.ext <| funext fun ⟨W, h⟩ => smul_add (resG X h a) _ _
   add_smul a b φ := Subtype.ext <| funext fun ⟨W, h⟩ => by
     change resG X h (a + b) • φ.1 ⟨W, h⟩ = resG X h a • φ.1 ⟨W, h⟩ + resG X h b • φ.1 ⟨W, h⟩
-    rw [map_add, add_smul]
+    rw [map_add (f := _), add_smul]
   zero_smul φ := Subtype.ext <| funext fun ⟨W, h⟩ => by
     change resG X h 0 • φ.1 ⟨W, h⟩ = 0
     rw [map_zero, zero_smul]
@@ -111,7 +111,7 @@ theorem isSheaf_homPresheaf : (homPresheaf F G).IsSheaf := by
       g W hW (s + s') = g W hW s + g W hW s' := by
     intro W hW s s'
     refine sec_ext_of_cover (fun i => W ⊓ U i) (fun i => inf_le_left) (hcov W hW) fun i => ?_
-    rw [map_add, key W hW (s + s') i (W ⊓ U i) inf_le_left inf_le_right,
+    rw [map_add (f := _), key W hW (s + s') i (W ⊓ U i) inf_le_left inf_le_right,
       key W hW s i (W ⊓ U i) inf_le_left inf_le_right, key W hW s' i (W ⊓ U i) inf_le_left inf_le_right,
       map_add, map_add]
   have gsmul : ∀ (W : X.Opens) (hW : W ≤ iSup U) (a : Γ(X, W)) (s : Γ(F, W)),
@@ -333,7 +333,7 @@ def cartierDualToBidual : F ⟶ dual (dual F) :=
           rw [← dualApp_resM, resM_resM]
       map_add' := fun s t => dual_ext fun W h l => by
         change dualApp l le_rfl (resM F h (s + t)) = _
-        rw [map_add, map_add]; rfl
+        rw [map_add (f := _), map_add (f := _)]; rfl
       map_smul' := fun a s => dual_ext fun W h l => by
         change dualApp l le_rfl (resM F h (a • s)) = _
         rw [resM_smul, map_smul]; rfl })

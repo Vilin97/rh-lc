@@ -458,11 +458,11 @@ theorem primitive
     (hs : Function.Surjective (resSys A.hom S).pull1) (c : H1 (OSys A.hom S)) :
     (mMap A S).pull1 c = (pj A S).coef.pull1 ((boxL (OSys A.hom S)).pull1 c + (boxR (OSys A.hom S)).pull1 c) := by
   obtain ⟨c, rfl⟩ := hs c
-  rw [map_add, ← pMap_pull1, ← qMap_pull1]
+  rw [map_add (f := _), ← pMap_pull1, ← qMap_pull1]
   have hm : (mMap A S).pull1 ((resSys A.hom S).pull1 c) = _ := liftAlong_pull1 (wOver μ[A]) S.fn _ (wFn A S) _ c
   have hp : (pMap A S).pull1 ((resSys A.hom S).pull1 c) = _ := liftAlong_pull1 (wOver (fst A A)) S.fn _ (wFn A S) _ c
   have hq : (qMap A S).pull1 ((resSys A.hom S).pull1 c) = _ := liftAlong_pull1 (wOver (snd A A)) S.fn _ (wFn A S) _ c
-  rw [hm, hp, hq, ← map_add, primitive_structure_sheaf_cohomology_class A hAx]
+  rw [hm, hp, hq, ← map_add (f := _), primitive_structure_sheaf_cohomology_class A hAx]
 
 theorem exists_unit_mem (hR : IsField R) : ∃ a₀, η[A].left ⁻¹ᵁ (S.u a₀).1 = ⊤ := by
   letI := hR.toField

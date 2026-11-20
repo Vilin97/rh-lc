@@ -83,7 +83,7 @@ theorem adapt_flag {T : D.host.E} (F : LFlag (VS D) D.R.rS T) {a : GV D} (ha : A
     have e : a (F.fl.e i) = F.fl.e i + (a (F.fl.e i) - F.fl.e i) := by abel
     rw [e]; exact Submodule.add_mem _ hmem (hle h)
   · simp
-  · intro x y _ _ hx hy; rw [map_add]; exact Submodule.add_mem _ hx hy
+  · intro x y _ _ hx hy; rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   · intro c x _ hx; rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 open Formalism.L2.SG.NGCut.NormalVectorPairings in

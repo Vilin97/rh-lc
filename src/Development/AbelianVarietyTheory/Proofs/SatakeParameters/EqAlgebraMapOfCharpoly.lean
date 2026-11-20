@@ -39,7 +39,7 @@ theorem exp_apply_of_eq_zero (ι : Qbar l ≃+* ℂ) {n : Type} [Fintype n] [Dec
     toEndC ι (exp M) v = v := by
   obtain ⟨k, hk⟩ := hM
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [exp_eq_sum (k := k + 1) (pow_eq_zero_of_le (Nat.le_succ k) hk), Finset.sum_range_succ', map_add,
+    rw [exp_eq_sum (k := k + 1) (pow_eq_zero_of_le (Nat.le_succ k) hk), Finset.sum_range_succ', map_add (f := _),
     map_sum, LinearMap.add_apply, LinearMap.sum_apply, Finset.sum_eq_zero]
   · simp
   · intro i _
@@ -62,7 +62,7 @@ def pull (ι : Qbar l ≃+* ℂ) {a n m : ℕ} (f : (Fin a → ℂ) ≃ₗ[ℂ] 
   map_add' v v' := by
     have e : (fun k => ι ((v + v') k)) = (fun k => ι (v k)) + fun k => ι (v' k) := by
       funext k; simp
-    simp only [e, map_add]
+    simp only [e, map_add (f := _)]
     ext j <;> simp
   map_smul' c v := by
     have e : (fun k => ι ((c • v) k)) = ι c • fun k => ι (v k) := by funext k; simp

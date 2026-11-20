@@ -423,7 +423,7 @@ theorem norm_ptEval_of_mult_eq_zero {u : T.RobbaExt ρ0} (hu : u ≠ 0) {ξ : T.
   have h2 : ‖T.ptEval hξ hr.le (u - c)‖ < T.extNorm ρ0 (T.ptRadIoc hξ hr.le) u :=
     (T.norm_ptEval_le hξ hr.le _).trans_lt hc
   have e : u = (c : T.RobbaExt ρ0) + (u - c) := by ring
-  rw [e, map_add, IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm (by rw [h1]; exact h2.ne'), h1,
+  rw [e, map_add (f := _), IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm (by rw [h1]; exact h2.ne'), h1,
     max_eq_left h2.le, ← e]
 
 def annLogNorm (q : T.Ann ρ0 σ0) (t : ℝ) : ℝ := Real.log (T.annNormR q (Real.exp t))

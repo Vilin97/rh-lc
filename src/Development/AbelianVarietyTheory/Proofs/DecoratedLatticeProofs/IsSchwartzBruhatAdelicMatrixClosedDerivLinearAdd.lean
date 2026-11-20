@@ -127,7 +127,7 @@ theorem exists_schwartz_deriv (F : Type) [DivisionRing F] [CharZero F] [Module F
     have hd := hasDerivAt_line G v s
     have heq : (fun t : ℝ => G (s + t • v)) = fun t => φ (x + L s + M t) := by
       funext t
-      rw [hG, hMv, map_add, add_assoc]
+      rw [hG, hMv, map_add (f := _), add_assoc]
     rw [heq] at hd
     exact hd
 
@@ -165,7 +165,7 @@ theorem isSchwartzBruhat_linear_mul {φ : Mx D m n → ℂ} (h : IsSchwartzBruha
     obtain ⟨U, hU, hφU⟩ := h.level
     refine ⟨U, hU, fun u hu hu0 x => ?_⟩
     show ℓ (x + u) * φ (x + u) = ℓ x * φ x
-    rw [map_add, h0 u hu0, add_zero, hφU u hu hu0 x]
+    rw [map_add (f := _), h0 u hu0, add_zero, hφU u hu hu0 x]
   supp := by
     obtain ⟨K, hK, hφK⟩ := h.supp
     exact ⟨K, hK, fun x hx => hφK x (right_ne_zero_of_mul hx)⟩

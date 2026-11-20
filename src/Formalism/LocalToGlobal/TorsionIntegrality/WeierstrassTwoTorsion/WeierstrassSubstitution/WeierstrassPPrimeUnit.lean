@@ -25,7 +25,7 @@ theorem wpPrimeInZ : expSer W ^ 3 * (-2 + X ^ 3 * derivative K (wpReg W))
     rw [yS, ← coe_substAlgHom (Two.he W), map_neg]
   rw [h2, xZ, yZ, hy, Plus.uPow_neg_three] at h1
   apply toL_injective
-  simp only [map_mul, map_add, map_neg, map_pow, map_ofNat, toL_C] at h1 ⊢
+  simp only [map_mul, map_add (f := _), map_neg, map_pow, map_ofNat, toL_C] at h1 ⊢
   generalize toL ((xS W).subst (expSer W)) = xs at h1 ⊢
   generalize toL (derivative K (wpReg W)) = P at h1 ⊢
   generalize (toL (expSer W))⁻¹ = q at h1 hq ⊢
@@ -45,7 +45,7 @@ theorem weierstrass_p_prime_unit : WpPrimeInU.{u} := by
   have h := congrArg (ISer.subHom (logSer W) l0) (Rr.wpPrimeInZ W)
   have k := subst_comp_subst_apply (Two.he W) hl (xS W)
   rw [hel, X_subst] at k
-  simp only [map_mul, map_add, map_neg, map_pow, map_ofNat, ISer.subHom_C, ISer.subHom_X] at h
+  simp only [map_mul, map_add (f := _), map_neg, map_pow, map_ofNat, ISer.subHom_C, ISer.subHom_X] at h
   simp only [ISer.subHom_apply, hel, k] at h
   exact h
 

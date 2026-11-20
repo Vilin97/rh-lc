@@ -53,16 +53,16 @@ theorem casimirScalar_stableSumSpace : BuildY := by
   · intro y hy
     obtain ⟨y0, hy0, y1, ⟨x, hx, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hy
     show Dop (y0 + Dop x) ∈ _
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ (Submodule.mem_sup_right ⟨y0, hy0, rfl⟩) (Submodule.mem_sup_left (hD2 x hx))
   · intro y hy
     obtain ⟨y0, hy0, y1, ⟨x, hx, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hy
-    rw [map_add, hDop, gradT_D]
+    rw [map_add (f := _), hDop, gradT_D]
     exact Submodule.add_mem _ (Submodule.mem_sup_left (hG0 y0 hy0))
       (Submodule.mem_sup_right ⟨-gradT x, Submodule.neg_mem _ (hG0 x hx), by rw [map_neg]⟩)
   · intro k hk y hy
     obtain ⟨y0, hy0, y1, ⟨x, hx, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hy
-    rw [map_add, hDop, wK_D hσ hD hk]
+    rw [map_add (f := _), hDop, wK_D hσ hD hk]
     exact Submodule.add_mem _ (Submodule.mem_sup_left (hW0 k hk y0 hy0))
       (Submodule.mem_sup_right ⟨_, hW0 k hk x hx, rfl⟩)
 

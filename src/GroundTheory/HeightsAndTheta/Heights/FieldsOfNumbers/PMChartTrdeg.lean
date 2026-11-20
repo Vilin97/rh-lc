@@ -168,7 +168,7 @@ theorem isAlgebraic_adjoin (u : ∀ k, ι k) (hu : ∀ k, (X ⟨k, u k⟩ : MRin
       rw [show (Ideal.Quotient.mk P (C c) : R) = algebraMap F R c from rfl,
         ← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply F A₀ L]
       exact S'.algebraMap_mem _
-    | add f g hf hg => rw [map_add, map_add]; exact S'.add_mem hf hg
+    | add f g hf hg => rw [map_add (f := _), map_add (f := _)]; exact S'.add_mem hf hg
     | mul_X f i hf => rw [map_mul, map_mul]; exact S'.mul_mem hf (hξS i)
   let _ : CommRing S' := Subalgebra.toCommRing S'
   refine ⟨fun x => ?_⟩

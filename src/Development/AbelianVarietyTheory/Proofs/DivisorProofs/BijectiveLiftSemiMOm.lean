@@ -23,7 +23,7 @@ theorem bijective_liftSemi_iff {R R' B B' M N : Type} [CommRing R] [CommRing R']
       φ.liftBaseChange B' ∘ (Algebra.IsPushout.cancelBaseChange R R' B B' M).symm := by
     funext z
     induction z with
-    | add x y hx hy => simp only [Function.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [Function.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
     | tmul s m => simp [e]
   rw [hc, Function.Bijective.of_comp_iff _ (LinearEquiv.bijective _)]
   constructor
@@ -33,7 +33,7 @@ theorem bijective_liftSemi_iff {R R' B B' M N : Type} [CommRing R] [CommRing R']
     have : (φ.liftBaseChange B' : B' ⊗[B] M → N) = H.equiv := by
       funext z
       induction z with
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul s m => simp
     rw [this]
     exact H.equiv.bijective

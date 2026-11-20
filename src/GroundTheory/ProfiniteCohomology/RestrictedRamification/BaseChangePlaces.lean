@@ -78,7 +78,7 @@ def completionEmbeddingOfAlgHom :
   map_one' := tensorLiftOfAlgHom_single_placeOfAlgHom j
   map_mul' x y := by rw [Pi.single_mul, map_mul]
   map_zero' := by rw [Pi.single_zero, map_zero]
-  map_add' x y := by rw [Pi.single_add, map_add]
+  map_add' x y := by rw [Pi.single_add, map_add (f := _)]
   commutes' a := by
     rw [pi_single_algebraMap_completionsOver, map_mul, AlgHom.commutes,
       tensorLiftOfAlgHom_single_placeOfAlgHom,

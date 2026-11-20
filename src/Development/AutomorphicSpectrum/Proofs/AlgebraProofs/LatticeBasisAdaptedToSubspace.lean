@@ -95,7 +95,7 @@ private theorem H_affine_combination_eq_of_quadratic_relation : ∀ (n : ℕ) {V
     have hli' : ∀ (c : K), ∀ x ∈ N, c • u + x = 0 → c = 0 := by
       intro c x hx h
       have h2 := congrArg (fun z => b.repr z q) h
-      simp only [map_add, map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul, huq,
+      simp only [map_add (f := _), map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul, huq,
         mul_one, (memN x).1 hx, add_zero, map_zero, Finsupp.coe_zero, Pi.zero_apply] at h2
       exact h2
     have hsp' : ∀ z : V, ∃ c : K, z + c • u ∈ N := by
@@ -296,7 +296,7 @@ private theorem exists_lat_basis_compatible_quotient {V U : Type} [AddCommGroup 
     intro x
     conv_lhs => rw [hsplit x]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, map_sum]
+      rw [map_add (f := _), map_sum, map_sum]
     simp [famQ, hg0]
   have happ : ∀ c : Fin (finrank K U) → K, ∑ l, c l • b' (Fin.natAdd _ l) =
       ∑ p, (Fin.append (0 : Fin (finrank K W) → K) c p) • b' p := by

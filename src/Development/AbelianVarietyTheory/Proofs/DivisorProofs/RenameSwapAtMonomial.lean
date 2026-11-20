@@ -176,7 +176,7 @@ theorem formDeg_eq_zero {ω : FormPol ι N} {k : ℕ} (hω : ω.IsHomogeneous k)
 noncomputable def defect (hh : Pol ι N →ₗ[ℝ] ℝ) (τ : ι) : Pol ι N →ₗ[ℝ] ℝ where
   toFun Q := hh (pSum τ 2 * Q) - formDeg (bcForm τ * toForm Q)
   map_add' P Q := by
-    simp only [mul_add, map_add, toForm, formDeg, MvPolynomial.coeff_add, add_div]
+    simp only [mul_add, map_add (f := _), toForm, formDeg, MvPolynomial.coeff_add, add_div]
     ring
   map_smul' c Q := by
     simp only [mul_smul_comm, map_smul, toForm, formDeg, coeff_smul, smul_eq_mul, RingHom.id_apply]

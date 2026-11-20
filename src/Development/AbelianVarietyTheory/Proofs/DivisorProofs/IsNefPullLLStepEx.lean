@@ -30,7 +30,7 @@ def spanSub : Sub F where
     { carrier := {s | ∀ j (W : X.Opens) (h₁ : W ≤ V) (h₂ : W ≤ T j),
         resM F h₁ s = ∑ a, dualApp (l j a) h₂ (resM F h₁ s) • resM F h₂ (w j a)}
       add_mem' := fun hs ht j W h₁ h₂ => by
-        simp only [map_add, add_smul, Finset.sum_add_distrib]
+        simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
         rw [← hs j W h₁ h₂, ← ht j W h₁ h₂]
       zero_mem' := fun j W h₁ h₂ => by simp
       smul_mem' := fun a s hs j W h₁ h₂ => by

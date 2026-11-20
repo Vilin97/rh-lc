@@ -18,7 +18,7 @@ theorem mvPolynomial_map_pderiv_lift {κ R R₀ : Type} [CommRing R] [CommRing R
   | C a => simp
   | add p q hp hq => simp [hp, hq]
   | mul_X p j hp =>
-    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add, hp, map_X, pderiv_X]
+    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add (f := _), hp, map_X, pderiv_X]
     congr 1
     by_cases h : i = j
     · subst h; simp

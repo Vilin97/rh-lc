@@ -20,7 +20,7 @@ theorem smVec_add {x y : V} (hx : SmVec ρ x) (hy : SmVec ρ y) : SmVec ρ (x + 
   obtain ⟨U, hU, hxU⟩ := hx
   obtain ⟨U', hU', hyU⟩ := hy
   refine ⟨U ⊓ U', hU.inter hU', mem_fixed_iff'.2 fun g hg => ?_⟩
-  rw [map_add, mem_fixed_iff'.1 hxU g (Subgroup.mem_inf.1 hg).1, mem_fixed_iff'.1 hyU g (Subgroup.mem_inf.1 hg).2]
+  rw [map_add (f := _), mem_fixed_iff'.1 hxU g (Subgroup.mem_inf.1 hg).1, mem_fixed_iff'.1 hyU g (Subgroup.mem_inf.1 hg).2]
 
 theorem smVec_smul (c : ℂ) {x : V} (hx : SmVec ρ x) : SmVec ρ (c • x) := by
   obtain ⟨U, hU, hxU⟩ := hx

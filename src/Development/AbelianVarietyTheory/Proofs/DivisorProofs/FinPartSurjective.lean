@@ -176,7 +176,7 @@ theorem reads_opF (hset : Setup ψ θ S T cc δ r) {w w' : 𝓞 D.host.E} (hw : 
   obtain ⟨l, rfl⟩ := back_surjective (S := S) (T := T) hr a
   have hl := (back_mem_iff hset.gS hset.crv.1.1 hset.scale l).1 ha
   have e : ratX S T r z = x + m • n • l := back_injective hr (by
-    rw [back_ratX hr, hz, map_add, map_nsmul, map_nsmul, mul_smul])
+    rw [back_ratX hr, hz, map_add (f := _), map_nsmul, map_nsmul, mul_smul])
   have e1 : WA (back S T r x) F = WA (z.map (Formalism.MainNotions.StandardLatticesGL3.inc D)) F := by
     rw [hz, mul_comm, mul_smul, hnx _ (nsmul_mem ha m)]
   rw [e1, ← hmx _ (nsmul_mem hl n), ← e, hM.2.2.2.1, coe_opF, hph]
@@ -255,7 +255,7 @@ theorem cA_cA' (a : AE D) : cA D (cA D a) = a := by
   | tmul x e =>
     show TensorProduct.tmul D.host.F x (star (star e)) = _
     rw [star_star]
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, ha, hb]
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
 
 theorem zeroAt_half {ε : AE D} (hε : GlobalTheory.RatAut.IsHalfIdem D ε) {q : ℕ} (hq : q.Prime) (hi : Formalism.MainNotions.StandardLatticesGL3.InertQ D q)
     (b : AE D) : Formalism.MainNotions.StandardLatticesGL3.ZeroAt D q (finQ D (ε * b)) :=
@@ -332,7 +332,7 @@ theorem exists_half_det {ε : AE D} (hε : GlobalTheory.RatAut.IsHalfIdem D ε) 
     rw [RingHom.map_det, ← hfin]
     rfl
   refine ⟨hs, u, Units.map (finQ D).toMonoidHom u, hu, ⟨?_, ?_⟩, fun q hq hi => ?_, Units.ext ?_⟩
-  · rw [hu, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, hε.2.2.1, RingHom.map_one, zero_mul, sub_zero, zero_add]
+  · rw [hu, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, hε.2.2.1, RingHom.map_one, zero_mul, sub_zero, zero_add]
   · show _ = GlobalTheory.BotFormula.toFinE D (finQ D u)
     rw [← finAdEquiv_toAfE, toAfE_finQ]
     rfl
@@ -340,7 +340,7 @@ theorem exists_half_det {ε : AE D} (hε : GlobalTheory.RatAut.IsHalfIdem D ε) 
     rw [show ε * ((Formalism.L2.Theta.mt V g).det - 1) = u - 1 from cut_sub_one hu, RingHom.map_sub, RingHom.map_one] at this
     exact this
   · have e1 : (u : AE D) = (Formalism.L2.Theta.mt V g).det * cA D (u : AE D) := by
-      rw [hu, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
+      rw [hu, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
       exact cut_conj hout hun
     have e2 := congrArg (finQ D) e1
     have e5 : finQ D (cA D (u : AE D)) = Formalism.MainNotions.StandardLatticesGL3.sgA D (finQ D u) := finQ_sigR (u : AE D)

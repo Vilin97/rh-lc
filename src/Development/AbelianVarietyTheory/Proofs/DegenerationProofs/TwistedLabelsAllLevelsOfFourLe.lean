@@ -52,7 +52,7 @@ theorem qEq_twist {j k m : ℕ} (β : N.Form j) {u r r' : Oˣ} (h₁ : r' ^ m = 
       have A5 := ts' χ
       have A6 := N.twist_τ β u z χ
       have hy' : β.be q.1.1.toAdd χ = β.be q'.1.1.toAdd χ + k * β.be z χ := by
-        rw [show q.1.1.toAdd = q'.1.1.toAdd + k • z from hy, map_add, map_nsmul, LinearMap.add_apply,
+        rw [show q.1.1.toAdd = q'.1.1.toAdd + k • z from hy, map_add (f := _), map_nsmul, LinearMap.add_apply,
           LinearMap.smul_apply, nsmul_eq_mul]
       rw [hy'] at A1
       rw [NumD.Gt.mul_s (p'.1.2 ^ m) ((N.twist β u).io z) χ, NumD.io_s (N.twist β u) z χ,
@@ -93,7 +93,7 @@ theorem qEq_image (J : NumD.Iso N N') {k m : ℕ} {p' : N.QT (k * m)} {p : N.QT 
   refine ⟨J.e z, ?_, ?_⟩
   · show q.1.1.toAdd = q'.1.1.toAdd + k • J.e z
     have hy' : p.1.1.toAdd = p'.1.1.toAdd + k • z := hy
-    rw [a, a', hy', map_add, map_nsmul]
+    rw [a, a', hy', map_add (f := _), map_nsmul]
   · show q.1.2 = q'.1.2 ^ m * N'.io (J.e z)
     have hg' : p.1.2 = p'.1.2 ^ m * N.io z := hg
     have r1 : I.Rel p.1.2 q.1.2 := (NumD.Hom.ofIso_rel J _ _).2 b

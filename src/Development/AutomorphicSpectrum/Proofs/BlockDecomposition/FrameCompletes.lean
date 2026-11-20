@@ -169,7 +169,7 @@ theorem frame_completes : ∀ (D : D7) (r t : ℕ) (V : HSp D) (b₀ : HermE D r
     rw [Matrix.mul_nonsing_inv _ (isUnit_iff_ne_zero.2 hb)] at this
     exact this.symm.trans (by simp [rat])
   have hh : incA D 2⁻¹ + incA D 2⁻¹ = 1 := by
-    rw [← map_add, ← two_mul, mul_inv_cancel₀ two_ne_zero, map_one]
+    rw [← map_add (f := _), ← two_mul, mul_inv_cancel₀ two_ne_zero, map_one]
   have hsh : cA D (incA D 2⁻¹) = incA D 2⁻¹ := by
     rw [GlobalTheory.DualPairCheck.cA_incA, star_inv₀, star_ofNat]
   obtain ⟨N, h1, h2, h3, h4⟩ := complete_frame (cA D) cA_cA (G := gA V) (Gi := giA V) (adj_gA V) hGi

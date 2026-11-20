@@ -58,7 +58,7 @@ theorem idem_smul_eq_zero (v : Pl F) (a : AE F E) (ha : compFin F E v a = 0) :
     | tmul x e =>
       rw [TensorProduct.smul_tmul', smul_eq_mul, idem_mul]
       simp [compFin]
-    | add x y hx hy => rw [smul_add, hx, hy, map_add, map_add]
+    | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
   rw [key, ha, map_zero]
 
 theorem compFin_lift (v : Pl F) (q : Fv F v ⊗[F] E) :
@@ -66,7 +66,7 @@ theorem compFin_lift (v : Pl F) (q : Fv F v ⊗[F] E) :
   induction q using TensorProduct.induction_on with
   | zero => simp
   | tmul x e => simp [compFin, evFin_liftV]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem exists_inv_at (v : Pl F) {n : ℕ} (M : Matrix (Fin n) (Fin n) (AE F E))
     (h : IsUnit (M.map (compFin F E v)).det) :
@@ -140,7 +140,7 @@ theorem exists_scalar_inv_at : ∀ (F E : Type) [Field F] [NumberField F] [Field
   have hnum : ∀ m : ℕ, (m : E) + ξ ≠ 0 := by
     intro m h
     have h2 := congrArg σ h
-    rw [map_add, map_natCast, hξ, map_zero, ← sub_eq_add_neg] at h2
+    rw [map_add (f := _), map_natCast, hξ, map_zero, ← sub_eq_add_neg] at h2
     exact hden m h2
   let lam : ℕ → E := fun m => ((m : E) + ξ) / ((m : E) - ξ)
   have hlam : Function.Injective lam := by
@@ -161,7 +161,7 @@ theorem exists_scalar_inv_at : ∀ (F E : Type) [Field F] [NumberField F] [Field
     rw [hl, div_eq_one_iff_eq (hden m)] at h
     exact hξ0 (by linear_combination h / 2)
   have hσl : σ l = ((m : E) - ξ) / ((m : E) + ξ) := by
-    simp only [hl, lam, map_div₀, map_add, map_sub, map_natCast, hξ]
+    simp only [hl, lam, map_div₀, map_add (f := _), map_sub, map_natCast, hξ]
     ring
   have hlσl : l * σ l = 1 := by
     rw [hσl, hl]

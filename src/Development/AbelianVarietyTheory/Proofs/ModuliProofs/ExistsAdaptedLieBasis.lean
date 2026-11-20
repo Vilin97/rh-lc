@@ -47,7 +47,7 @@ private theorem exists_ringHom_eq_eigenvalue {R K V : Type} [CommRing R] [Field 
   · show χ 0 • v = (0 : K) • v
     rw [← h, map_zero, LinearMap.zero_apply, zero_smul]
   · show χ (a + b) • v = (χ a + χ b) • v
-    rw [← h, map_add, LinearMap.add_apply, h a, h b, add_smul]
+    rw [← h, map_add (f := _), LinearMap.add_apply, h a, h b, add_smul]
 
 theorem exists_eigenbasis {E K V : Type} [Field E] [NumberField E] [Field K] [IsAlgClosed K] [CharZero K]
     [AddCommGroup V] [Module K V] [Module.Finite K V] (r : 𝓞 E →+* Module.End K V) :

@@ -90,7 +90,7 @@ theorem isCompact_latLoc (L : Submodule (𝓞 E) (Fin n → E)) (hfg : L.FG) :
         simp
       | add x y _ _ hx hy =>
         show ratAdd v ((x + y : L) : Fin n → E) ∈ _
-        rw [Submodule.coe_add, map_add]
+        rw [Submodule.coe_add, map_add (f := _)]
         exact Submodule.add_mem _ hx hy
       | smul k x _ hx =>
         show ratAdd v ((k • x : L) : Fin n → E) ∈ _

@@ -111,7 +111,7 @@ example {T T' T'' : LocLat G Qp LL O} (μ : W.DD T →ₗ[W.EE] W.DD T' →ₗ[W
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => rw [hν]; exact Submodule.subset_span ⟨x, x.2, y, y.2, rfl⟩
-    | add a b ha hb => rw [map_add, Submodule.coe_add]; exact Submodule.add_mem _ ha hb
+    | add a b ha hb => rw [map_add (f := _), Submodule.coe_add]; exact Submodule.add_mem _ ha hb
   · rw [Submodule.span_le]
     rintro z ⟨x, hx, y, hy, rfl⟩
     have := hν ⟨x, hx⟩ ⟨y, hy⟩

@@ -83,7 +83,7 @@ private theorem isVal_add {x y : V} {i : G.comp} {L : G.P.Tup} {Q Q' : XR G.P LL
     IsVal S emb embLL G A pos embV yc (x + y) i L (Q + Q') := by
   unfold IsVal at *
   refine ⟨Submodule.add_mem _ h.1 h'.1, fun g hg c γ hγ κ hpt z z' hz => ?_⟩
-  simp only [map_add, Pi.add_apply, mul_add]
+  simp only [map_add (f := _), Pi.add_apply, mul_add]
   rw [h.2 g hg c γ hγ κ hpt z z' hz, h'.2 g hg c γ hγ κ hpt z z' hz]
 
 private theorem isVal_smul {x : V} {i : G.comp} {L : G.P.Tup} {Q : XR G.P LL} (a : LL)

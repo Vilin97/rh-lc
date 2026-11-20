@@ -262,7 +262,7 @@ theorem IsAdapted.symm_apply_eq_zero {v : X.Λ} (hv : (v : Fin r → E) ∈ Subm
     obtain ⟨k, hk, rfl⟩ := hv
     rw [LinearEquiv.symm_apply_apply, Pi.single_eq_of_ne (ht k hk)]
   | zero => simp
-  | add u v _ _ hu hv => rw [map_add, Pi.add_apply, hu, hv, add_zero]
+  | add u v _ _ hu hv => rw [map_add (f := _), Pi.add_apply, hu, hv, add_zero]
   | smul c u _ hu => rw [map_smul, Pi.smul_apply, hu, smul_zero]
 
 omit hs in
@@ -668,7 +668,7 @@ theorem exists_isAdapted (hs : IsSympl X bas) {ξ : Fin r → E} (hξ : herm X.G
   let J : Submodule ℤ (Fin g ⊕ Fin g → ℤ) :=
     { carrier := {m | (bas m : Fin r → E) ∈ Submodule.span E {ξ}}
       add_mem' := fun {u v} hu hv => by
-        rw [Set.mem_setOf_eq, map_add]; exact add_mem hu hv
+        rw [Set.mem_setOf_eq, map_add (f := _)]; exact add_mem hu hv
       zero_mem' := by simp
       smul_mem' := fun k u hu => by
         rw [Set.mem_setOf_eq, map_zsmul, AddSubgroupClass.coe_zsmul]; exact zsmul_mem hu k }

@@ -44,7 +44,7 @@ theorem cell_immersion (hc : Cells ρ ξ ℓ) (j : J) (hv) :
       have := ProjPoint.awayLift_mk_mul (grading R N) _ hu hm 0 (C a) (isHomogeneous_C _ a)
       rw [pow_zero, mul_one] at this
       exact ⟨_, this⟩
-    | add F G hF hG => rw [map_add]; exact add_mem hF hG
+    | add F G hF hG => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hF hG
     | mul_X F k hF =>
       rw [map_mul]
       refine mul_mem hF ?_

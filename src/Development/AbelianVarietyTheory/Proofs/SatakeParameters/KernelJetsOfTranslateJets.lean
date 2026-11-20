@@ -41,7 +41,7 @@ theorem intAt_add {x y : ℂ} (hx : IntAt lam x) (hy : IntAt lam y) : IntAt lam 
   obtain ⟨h', h2⟩ := intAt_iff.1 hy
   refine intAt_iff.2 ⟨add_mem h h', ?_⟩
   change ‖lam (⟨x, h⟩ + ⟨y, h'⟩)‖ ≤ 1
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le h1 h2)
 
 theorem intAt_of_isIntegral {x : ℂ} (hx : IsIntegral ℤ x) : IntAt lam x := by

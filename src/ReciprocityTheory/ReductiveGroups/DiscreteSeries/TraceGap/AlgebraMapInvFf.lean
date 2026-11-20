@@ -120,7 +120,7 @@ theorem nH_mul {k : Matrix (Fin n) (Fin n) ℂ} (hk : k ∈ Kset ε) (x : Fock n
     simp [Algebra.algebraMap_eq_smul_one]
   | add x x' hx hx' =>
     intro y
-    rw [add_mul, map_add, hx, hx', map_add, add_mul]
+    rw [add_mul, map_add (f := _), hx, hx', map_add (f := _), add_mul]
   | ι_mul x m hx =>
     intro y
     have h := nH_cpV hk m (x * y)

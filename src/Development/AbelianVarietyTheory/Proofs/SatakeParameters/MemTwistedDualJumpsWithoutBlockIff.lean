@@ -77,7 +77,7 @@ theorem jumps_rat {R : Ranks} (P : HCParam R) (j : Fin R.m) (s : Bool) (u : ℤ)
   refine ⟨?_, ?_⟩
   · rw [mem_twistedDualJumpsWithoutBlock_iff, Multiset.mem_add, hcast, mem_cloud_iff, mem_lows_iff]
   · unfold jT1 jR
-    rw [Multiset.map_add, Multiset.mem_add]
+    rw [Multiset.map_add (f := _), Multiset.mem_add]
     show u ∈ jT2 P j s ∨ _ ↔ _
     apply or_congr Iff.rfl
     unfold block

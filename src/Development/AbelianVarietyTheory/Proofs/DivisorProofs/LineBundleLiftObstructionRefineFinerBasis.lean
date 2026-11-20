@@ -57,7 +57,7 @@ theorem obAt_refine : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Idea
       induction b using TensorProduct.induction_on with
       | zero => simp
       | tmul x y => rfl
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [← hc]
     exact key
 

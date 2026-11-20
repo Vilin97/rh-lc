@@ -27,7 +27,7 @@ theorem heis_left (ψ : AddChar (AF D.host.F) ℂ) {V₀ A L S X T L'' : HSp D} 
   simp only [heisO, lastBi_apply]
   have e : (o.resS S).symm (u + a, kap τ S (o''.resT S v).2) =
       (o.resS S).symm (u, kap τ S (o''.resT S v).2) + (o.resS S).symm (a, 0) := by
-    rw [← map_add, Prod.mk_add_mk, add_zero]
+    rw [← map_add (f := _), Prod.mk_add_mk, add_zero]
   rw [e, GlobalTheory.LastBiTheta.sOH_resS_symm, GlobalTheory.LastBiTheta.sOH_zero_right, add_zero]
   ring
 
@@ -48,7 +48,7 @@ theorem heis_right (ψ : AddChar (AF D.host.F) ℂ) {V₀ A L S X T L'' : HSp D}
   congr 1
   have e : (o.resS S).symm (u, kap τ S (w + (o''.resT S b).2)) =
       (o.resS S).symm (u, kap τ S w) + (o.resS S).symm (0, kap τ S (o''.resT S b).2) := by
-    rw [kadd, ← map_add, Prod.mk_add_mk, add_zero]
+    rw [kadd, ← map_add (f := _), Prod.mk_add_mk, add_zero]
   rw [e, GlobalTheory.LastBiTheta.sOH_resS_symm, GlobalTheory.LastBiTheta.sOH_zero_right, zero_add, kH]
 
 theorem slice_left {ψ : AddChar (AF D.host.F) ℂ} {A S A' : HSp D} {C : WO A S → WO S A' → ℂ} (h : IsBiTheta ψ A S A' C)
@@ -107,7 +107,7 @@ theorem isHalf_kap {e : AE D} {L L'' : HSp D} (τ : Matrix (Fin L.rank) (Fin L''
 theorem cA_cA (x : AE D) : cA D (cA D x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a e =>
     simp only [cA, sigR]
     simp
@@ -211,7 +211,7 @@ theorem lastVac : ∀ D : D7, GlobalTheory.FinPl.LastVac D := by
     · have hm := mono M LS x hx _ (extLat D V₀ A L S o M LA LL LS x hM hLA hLL hLS hOM a 0 ha (zero_mem _))
       have e2 : (o.resS S).symm (2 • a, 0) = 2 • (o.resS S).symm (a, 0) := by
         simp only [two_nsmul]
-        rw [← map_add, Prod.mk_add_mk, add_zero]
+        rw [← map_add (f := _), Prod.mk_add_mk, add_zero]
       rw [heis_left, e2, hΞ.2.1 _ hm]
       rfl
     · have hm := mono M LS x hx _ (extLat D V₀ A L S o M LA LL LS x hM hLA hLL hLS hOM a 0 ha (zero_mem _))
@@ -223,10 +223,10 @@ theorem lastVac : ∀ D : D7, GlobalTheory.FinPl.LastVac D := by
       have hm1 := mono LS LT x hx _ h1
       have hm2 := mono M LS x hx _ (extLat D V₀ A L S o M LA LL LS x hM hLA hLL hLS hOM 0 _ (zero_mem _) (hk _ h2))
       have e1 : (o''.resT S (2 • b)).1 = 2 • (o''.resT S b).1 := by
-        simp only [two_nsmul, map_add, Prod.fst_add]
+        simp only [two_nsmul, map_add (f := _), Prod.fst_add]
       have e2 : (o.resS S).symm (0, kap τ S (o''.resT S (2 • b)).2) = 2 • (o.resS S).symm (0, kap τ S (o''.resT S b).2) := by
         simp only [two_nsmul]
-        rw [map_add, Prod.snd_add, kadd, ← map_add, Prod.mk_add_mk, add_zero]
+        rw [map_add (f := _), Prod.snd_add, kadd, ← map_add (f := _), Prod.mk_add_mk, add_zero]
       rw [heis_right ψ o o'' τ hτ, e1, e2, hΦ.2.1 _ hm1, hΞ.2.1 _ hm2]
       rfl
     · obtain ⟨h1, h2⟩ := resLat D X T L'' S o'' LX LT LZ LS x hLX hLT hLZ hLS hOX b hb

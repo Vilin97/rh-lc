@@ -46,7 +46,7 @@ theorem quot_eq_of {Q C : Type} [CommRing Q] [CommRing C] (h : Q →+* C) (I : I
 
 theorem eval_lin {Q C : Type} [CommRing Q] [CommRing C] (h : Q →+* C) (x P D w : Q) (p d v : C)
     (hx : x = P + D * w) (hP : h P = p) (hD : h D = d) (hw : h w = v) : h x = p + d * v := by
-  subst hx hP hD hw; rw [map_add, map_mul]
+  subst hx hP hD hw; rw [map_add (f := _), map_mul]
 
 theorem cancel_of {C : Type} [CommRing C] {p d a v : C} (hd : d ∈ nonZeroDivisors C)
     (h : p + d * a = p + d * v) : a = v := by

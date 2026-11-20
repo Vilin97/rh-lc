@@ -446,7 +446,7 @@ theorem coeff_pderiv' (v : σ) (m : σ →₀ ℕ) (Q : MvPolynomial σ ℂ) :
     (pderiv v Q).coeff m = Q.coeff (m + Finsupp.single v 1) * (m v + 1) := by
   classical
   induction Q using MvPolynomial.induction_on' with
-  | add P₁ P₂ h₁ h₂ => simp only [map_add, MvPolynomial.coeff_add, h₁, h₂, add_mul]
+  | add P₁ P₂ h₁ h₂ => simp only [map_add (f := _), MvPolynomial.coeff_add, h₁, h₂, add_mul]
   | monomial b c =>
     rw [pderiv_monomial, coeff_monomial, coeff_monomial]
     by_cases h : b = m + Finsupp.single v 1

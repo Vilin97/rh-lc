@@ -32,7 +32,7 @@ theorem baseChange_mem {K K' M : Type} [Field K] [Field K'] [Algebra K K'] [AddC
     obtain ⟨v, hv, rfl⟩ := hx
     exact Submodule.subset_span ⟨φ v, h v hv, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem span_mem {K' M : Type} [Field K'] [AddCommGroup M] [Module K' M] (O : ValuationSubring K')
@@ -41,7 +41,7 @@ theorem span_mem {K' M : Type} [Field K'] [AddCommGroup M] [Module K' M] (O : Va
   induction hx using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span (h x hx)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     have : φ (a • x) = a • φ x := φ.map_smul (a : K') x
     rw [this]; exact Submodule.smul_mem _ _ hx

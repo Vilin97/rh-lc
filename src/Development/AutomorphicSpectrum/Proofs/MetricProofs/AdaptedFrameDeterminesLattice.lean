@@ -28,7 +28,7 @@ omit [IsCMField E] in
 theorem form_antisymm {M : Type} [AddCommGroup M] (f : M →ₗ[ℤ] M →ₗ[ℤ] ℤ) (hf : ∀ x, f x x = 0) (x y : M) :
     f x y = - f y x := by
   have h := hf (x + y)
-  simp only [map_add, LinearMap.add_apply, hf] at h
+  simp only [map_add (f := _), LinearMap.add_apply, hf] at h
   linarith
 
 theorem exists_dual (R : RiemLat E g Λ) (i : Fin (2 * g)) :
@@ -134,9 +134,9 @@ theorem perExt_single_cxStr {R : RiemLat E g Λ} {A : Ψ → Matrix (Fin (j + j'
   have hb := C.perExt_single_I_of_pBar R τ (C.bPart A y τ) (hA.kerBar τ _)
   have hy : C.perExt R (Pi.single τ (y τ)) =
       C.perExt R (Pi.single τ (C.aPart A y τ)) + C.perExt R (Pi.single τ (C.bPart A y τ)) := by
-    rw [← map_add, ← Pi.single_add, C.aPart_add_bPart hA.unit]
+    rw [← map_add (f := _), ← Pi.single_add, C.aPart_add_bPart hA.unit]
   unfold cxStr
-  rw [neg_smul, Pi.single_add, map_add, Pi.single_neg, map_neg, ha, hb, hy, smul_add]
+  rw [neg_smul, Pi.single_add, map_add (f := _), Pi.single_neg, map_neg, ha, hb, hy, smul_add]
   simp
 
 open Classical in
@@ -175,7 +175,7 @@ theorem eqvBy_of_adapted (R R' : RiemLat E g Λ) {A : Ψ → Matrix (Fin (j + j'
     ring
   have hs : ∀ (c : ℂ) z, φ (c • z) = c • φ z := by
     intro c z
-    rw [hz c z, map_add, map_smul, map_smul, hI, ← hz]
+    rw [hz c z, map_add (f := _), map_smul, map_smul, hI, ← hz]
   refine ⟨{ toFun := φ, invFun := φ.symm, left_inv := φ.left_inv, right_inv := φ.right_inv,
             map_add' := φ.map_add, map_smul' := hs }, fun x => ?_⟩
   show R'.P x = φ (R.P x)

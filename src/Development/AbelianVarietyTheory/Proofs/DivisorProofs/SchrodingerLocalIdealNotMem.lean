@@ -134,7 +134,7 @@ theorem coefR [NumberField E] (σ : E →ₐ[F] E) {n d : ℕ} (X : Spc F E n) (
     exact AddSubgroup.subset_closure ⟨_, hav, _, FractionalIdeal.mul_mem_mul (hI₁ x hx) (hI₂ y hy), rfl⟩
   | zero => simp
   | add x y _ _ hx hy =>
-    simp only [Matrix.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [Matrix.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
     exact add_mem hx hy
   | neg x _ hx =>
     simp only [Matrix.neg_apply, map_neg, neg_mul, Finset.sum_neg_distrib]
@@ -185,7 +185,7 @@ theorem exists_lat_pair_ne_one : ∀ {F E : Type} [Field F] [NumberField F] [Fie
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [cA, hσ]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hsq : shiftB σ H H' l = Matrix.vecMulVec (incV F H.y) (cA σ l.1 • incV F H'.x) := by
     ext i j
     simp only [shiftB, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.smul_apply, smul_eq_mul]

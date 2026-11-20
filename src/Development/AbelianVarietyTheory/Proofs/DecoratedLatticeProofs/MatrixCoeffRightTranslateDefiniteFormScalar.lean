@@ -62,7 +62,7 @@ theorem rcoef_of_fun {D : D7} {V : HSp D} (c : CoefA V) (hc : c.Is) (m : Measure
     (fun x x' y => by rw [hadd]; exact GlobalTheory.Cusp.petersson_add_left (hφ2 x) (hφ2 x') (hφ2 y))
     (fun a x y => by rw [hsmul]; exact GlobalTheory.Cusp.petersson_smul_left _ _ _)
     (fun x y y' => by
-      rw [petersson_conj m (φ x) (φ (y + y')), hadd, GlobalTheory.Cusp.petersson_add_left (hφ2 y) (hφ2 y') (hφ2 x), map_add,
+      rw [petersson_conj m (φ x) (φ (y + y')), hadd, GlobalTheory.Cusp.petersson_add_left (hφ2 y) (hφ2 y') (hφ2 x), map_add (f := _),
         ← petersson_conj m (φ x) (φ y), ← petersson_conj m (φ x) (φ y')])
     (fun a x y => by
       rw [petersson_conj m (φ x) (φ (a • y)), hsmul, GlobalTheory.Cusp.petersson_smul_left, map_mul,

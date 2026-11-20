@@ -203,7 +203,7 @@ theorem isUnimodMod_quot (H : HermSpace K V) {L : Submodule (𝓞 K) V} (hU : Is
     have h1 : H.B a d = 0 := (mem_perp_iff H I a).1 hap d hd
     have h2 : H.B b c = 0 := by rw [← H.herm, (mem_perp_iff H I c).1 hcp b hb, star_zero]
     have h3 : H.B b d = 0 := hI b hb d hd
-    simp only [map_add, LinearMap.add_apply, h1, h2, h3, add_zero]
+    simp only [map_add (f := _), LinearMap.add_apply, h1, h2, h3, add_zero]
     exact hint a haL c hcL
 
 end GlobalTheory.UnimodQuot

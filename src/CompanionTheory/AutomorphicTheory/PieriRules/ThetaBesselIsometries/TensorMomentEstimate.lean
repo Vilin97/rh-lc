@@ -45,7 +45,7 @@ theorem bessel_add {k r : ℕ} {R : Rep k r} {Wp : Type} [NormedAddCommGroup Wp]
   refine ⟨fun v hv w hw => ?_, fun a v hv => ?_, fun g hg m hm v hv => ?_, max |C| |C'|, Ws ++ Ws', ?_, fun v hv => ?_⟩
   · simp only [h1 v hv w hw, h1' v hv w hw]; abel
   · simp only [h2 a v hv, h2' a v hv, smul_add]
-  · simp only [h3 g hg m hm v hv, h3' g hg m hm v hv, map_add, smul_add]
+  · simp only [h3 g hg m hm v hv, h3' g hg m hm v hv, map_add (f := _), smul_add]
   · intro w hw
     rcases List.mem_append.1 hw with e | e
     exacts [hW w e, hW' w e]

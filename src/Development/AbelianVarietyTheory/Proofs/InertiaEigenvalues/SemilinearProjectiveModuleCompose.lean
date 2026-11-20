@@ -20,8 +20,8 @@ theorem cancel_comm (f : X →ₗ[R] Y) (z : T ⊗[S] (S ⊗[R] X)) :
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul s x => simp [LinearMap.baseChange_tmul]
-    | add a b ha hb => simp only [TensorProduct.tmul_add, map_add, ha, hb]
-  | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [TensorProduct.tmul_add, map_add (f := _), ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem bij_up (f : X →ₗ[R] Y) (hf : Function.Bijective (f.baseChange S)) :
     Function.Bijective (f.baseChange T) := by
@@ -71,7 +71,7 @@ theorem bij_lin {A B C N N' N'' : Type} [CommRing A] [CommRing B] [CommRing C] [
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul c p => simp [IsBaseChange.equiv_tmul, LinearMap.baseChange_tmul]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   rw [hfun]
   exact hv.equiv.symm.bijective.comp h1.equiv.bijective
 

@@ -155,7 +155,7 @@ theorem GlobalTheory.PlaneProj.exists_levi_proj : ∀ (F E : Type) [Field F] [Nu
     rw [cA_incV, cA_incV, incM_mulVec', incM_mulVec', incM_vmv, incM_vmv, incM_mul]
     have e1 : incM F (vecMulVec H'.x (W.J *ᵥ (⇑σ ∘ H'.y))) + incM F (H'.ι * π) - incM F (vecMulVec H'.y (W.J *ᵥ (⇑σ ∘ H'.x))) =
         incM F (vecMulVec H'.x (W.J *ᵥ (⇑σ ∘ H'.y)) + H'.ι * π - vecMulVec H'.y (W.J *ᵥ (⇑σ ∘ H'.x))) := by
-      ext i j; simp only [incM, Matrix.map_apply, Matrix.add_apply, Matrix.sub_apply, map_add, map_sub]
+      ext i j; simp only [incM, Matrix.map_apply, Matrix.add_apply, Matrix.sub_apply, map_add (f := _), map_sub]
     rw [e1]
     have e2 : vecMulVec H'.x (W.J *ᵥ (⇑σ ∘ H'.y)) + H'.ι * π - vecMulVec H'.y (W.J *ᵥ (⇑σ ∘ H'.x)) = 1 := hfr
     rw [e2]; ext i j; simp [incM, Matrix.one_apply]

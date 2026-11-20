@@ -28,7 +28,7 @@ theorem lie_iff (χ : HChar L) :
     apply Units.ext
     have h1 := h z
     rw [map_neg] at h1
-    rw [chiInf_expU, map_add, ← h1, neg_add_cancel, Complex.exp_zero, Units.val_one]
+    rw [chiInf_expU, map_add (f := _), ← h1, neg_add_cancel, Complex.exp_zero, Units.val_one]
   · intro h z
     have h1 : ∀ t : ℝ, Complex.exp (t * dchi χ (z + star z)) = 1 := fun t => by
       have h2 := h (expU (t • z))
@@ -38,7 +38,7 @@ theorem lie_iff (χ : HChar L) :
       simpa using ((Complex.ofRealCLM.hasDerivAt (x := 0)).mul_const (dchi χ (z + star z))).cexp
     rw [funext h1] at h2
     have h3 := h2.unique (hasDerivAt_const _ _)
-    rw [map_add] at h3
+    rw [map_add (f := _)] at h3
     rw [map_neg]
     exact (eq_neg_of_add_eq_zero_left h3).symm
 

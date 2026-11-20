@@ -24,7 +24,7 @@ theorem mem_center_of_forall_ι_commute {z : UniversalEnvelopingAlgebra ℝ L}
   | algebraMap r => rw [AlgHom.commutes]; exact Algebra.commutes r z
   | ι x => exact hz x
   | mul a b ha hb => rw [map_mul, mul_assoc, hb, ← mul_assoc, ha, mul_assoc]
-  | add a b ha hb => rw [map_add, add_mul, mul_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), add_mul, mul_add, ha, hb]
 
 variable (B : LinearMap.BilinForm ℝ L)
 variable {ι : Type*} [Fintype ι] (b : Module.Basis ι ℝ L) (ε : ι → ℝ)

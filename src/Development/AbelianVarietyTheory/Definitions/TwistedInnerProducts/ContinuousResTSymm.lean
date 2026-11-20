@@ -225,11 +225,11 @@ theorem hO_resS (T : HSp D) (x y : WO S T) :
 
 theorem symplOH_resS (T : HSp D) (x y : WO S T) :
     symplOH S T x y = symplOH A T (d.resS T x).1 (d.resS T y).1 + symplOH B T (d.resS T x).2 (d.resS T y).2 := by
-  rw [symplOH_eq, hO_resS d, map_add]; rfl
+  rw [symplOH_eq, hO_resS d, map_add (f := _)]; rfl
 
 theorem symplO_resS (T : HSp D) (x y : WO S T) :
     symplO S T x y = symplO A T (d.resS T x).1 (d.resS T y).1 + symplO B T (d.resS T x).2 (d.resS T y).2 := by
-  rw [symplO_eq, hO_resS d, mul_add, map_add]; rfl
+  rw [symplO_eq, hO_resS d, mul_add, map_add (f := _)]; rfl
 
 theorem resS_actO (T : HSp D) (a : GA D A) (b : GA D B) (h : GA D T) (x : WO S T) :
     d.resS T (actO S T (d.emb (a, b)) h x) = (actO A T a h (d.resS T x).1, actO B T b h (d.resS T x).2) := by
@@ -257,7 +257,7 @@ theorem heisO_boxS (ψ : AddChar (AF D.host.F) ℂ) (T : HSp D) (fA : WO A T →
     heisO ψ S T u (d.boxS T fA fB) = d.boxS T (heisO ψ A T (d.resS T u).1 fA) (heisO ψ B T (d.resS T u).2 fB) := by
   funext w
   simp only [heisO, boxS]
-  rw [d.symplOH_resS, AddChar.map_add_eq_mul, map_add, Prod.fst_add, Prod.snd_add]
+  rw [d.symplOH_resS, AddChar.map_add_eq_mul, map_add (f := _), Prod.fst_add, Prod.snd_add]
   ring
 
 theorem isThetaFunO_boxS {ψ : AddChar (AF D.host.F) ℂ} {T : HSp D} {fA : WO A T → ℂ} {fB : WO B T → ℂ}
@@ -298,11 +298,11 @@ theorem hO_resT (S : HSp D) (x y : WO S T) :
 
 theorem symplOH_resT (S : HSp D) (x y : WO S T) :
     symplOH S T x y = symplOH S A (d.resT S x).1 (d.resT S y).1 + symplOH S B (d.resT S x).2 (d.resT S y).2 := by
-  rw [symplOH_eq, hO_resT d, map_add]; rfl
+  rw [symplOH_eq, hO_resT d, map_add (f := _)]; rfl
 
 theorem symplO_resT (S : HSp D) (x y : WO S T) :
     symplO S T x y = symplO S A (d.resT S x).1 (d.resT S y).1 + symplO S B (d.resT S x).2 (d.resT S y).2 := by
-  rw [symplO_eq, hO_resT d, mul_add, map_add]; rfl
+  rw [symplO_eq, hO_resT d, mul_add, map_add (f := _)]; rfl
 
 theorem resT_actO (S : HSp D) (g : GA D S) (a : GA D A) (b : GA D B) (x : WO S T) :
     d.resT S (actO S T g (d.emb (a, b)) x) = (actO S A g a (d.resT S x).1, actO S B g b (d.resT S x).2) := by
@@ -330,7 +330,7 @@ theorem heisO_boxT (ψ : AddChar (AF D.host.F) ℂ) (S : HSp D) (fA : WO S A →
     heisO ψ S T u (d.boxT S fA fB) = d.boxT S (heisO ψ S A (d.resT S u).1 fA) (heisO ψ S B (d.resT S u).2 fB) := by
   funext w
   simp only [heisO, boxT]
-  rw [d.symplOH_resT, AddChar.map_add_eq_mul, map_add, Prod.fst_add, Prod.snd_add]
+  rw [d.symplOH_resT, AddChar.map_add_eq_mul, map_add (f := _), Prod.fst_add, Prod.snd_add]
   ring
 
 theorem isThetaFunO_boxT {ψ : AddChar (AF D.host.F) ℂ} {S : HSp D} {fA : WO S A → ℂ} {fB : WO S B → ℂ}

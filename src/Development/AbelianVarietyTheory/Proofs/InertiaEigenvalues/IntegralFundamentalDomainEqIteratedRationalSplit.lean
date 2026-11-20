@@ -43,7 +43,7 @@ theorem integral_fundamentalDomain_eq_iterated_split : ∀ (D : D7) (r m s t : �
   have hMJ' : rM * rJ = 0 := by rw [hrM, hrJ, ← Matrix.map_mul, hMJ]; exact GlobalTheory.MixModel.rat_zero
   have hMK' : rM * rK = 1 := by rw [hrM, hrK, ← Matrix.map_mul, hMK]; exact GlobalTheory.MixModel.rat_one
   have hJLKM' : rJ * rL + rK * rM = 1 := by
-    rw [hrJ, hrL, hrK, hrM, ← Matrix.map_mul, ← Matrix.map_mul, ← Matrix.map_add, hJLKM]
+    rw [hrJ, hrL, hrK, hrM, ← Matrix.map_mul, ← Matrix.map_mul, ← Matrix.map_add (f := _), hJLKM]
     · exact GlobalTheory.MixModel.rat_one
     · exact fun a b => map_add (incA D) a b
   let Ec : (Mx D t m × Mx D s m) ≃ₜ+ Mx D r m :=
@@ -107,7 +107,7 @@ theorem integral_fundamentalDomain_eq_iterated_split : ∀ (D : D7) (r m s t : �
   have hFDE : IsAddFundamentalDomain Γ (Me ⁻¹' 𝓕) lam :=
     hμ.2.1.preimage_of_equiv hqmp heΓ (fun g p => by
       show Me ((Ec.symm g : _) + p) = (g : Mx D r m) + Me p
-      rw [hMe, hMe, map_add, Ec.apply_symm_apply])
+      rw [hMe, hMe, map_add (f := _), Ec.apply_symm_apply])
   refine ⟨(c : ℝ), fun T hT hper => ?_⟩
   obtain ⟨C, hC⟩ := hKK.exists_bound_of_continuousOn hT.continuousOn
   have hbd : ∀ x, ‖T x‖ ≤ C := fun x => by
@@ -121,7 +121,7 @@ theorem integral_fundamentalDomain_eq_iterated_split : ∀ (D : D7) (r m s t : �
   have e3 : ∫ p in Me ⁻¹' 𝓕, T (Me p) ∂lam = ∫ p in 𝓥 ×ˢ 𝓨, T (Me p) ∂lam :=
     hFDE.setIntegral_eq hFDP (fun g p => by
       show T (Me ((g : _) + p)) = T (Me p)
-      rw [hMe, hMe, map_add]
+      rw [hMe, hMe, map_add (f := _)]
       exact hper _ ((hmemΓ _).1 g.2) _)
   have e4 : lam.restrict (𝓥 ×ˢ 𝓨) = (η.restrict 𝓥).prod (ν.restrict 𝓨) := by
     rw [Measure.prod_restrict]

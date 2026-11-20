@@ -90,7 +90,7 @@ theorem conj_smul (r : 𝓞 D.host.E) (x : D.host.E) :
 def cS (𝔞 : IdE D) : IdE D where
   carrier := {x | D.host.conj x ∈ 𝔞}
   add_mem' := fun ha hb => by
-    simp only [Set.mem_ofPred_eq, map_add]; exact 𝔞.add_mem ha hb
+    simp only [Set.mem_ofPred_eq, map_add (f := _)]; exact 𝔞.add_mem ha hb
   zero_mem' := by simp
   smul_mem' := fun r x hx => by
     show D.host.conj (r • x) ∈ 𝔞
@@ -108,7 +108,7 @@ theorem cS_mul (𝔞 𝔟 : IdE D) : cS D (𝔞 * 𝔟) = cS D 𝔞 * cS D 𝔟 
         rw [map_mul]
         exact Submodule.mul_mem_mul (by rw [mem_cS, conj_conj]; exact ha)
           (by rw [mem_cS, conj_conj]; exact hb)
-      · intro u v hu hv; rw [map_add]; exact add_mem hu hv
+      · intro u v hu hv; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
     have := key _ hx
     rwa [conj_conj] at this
   · intro x hx

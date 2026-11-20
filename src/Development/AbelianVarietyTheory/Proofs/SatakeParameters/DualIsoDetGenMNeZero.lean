@@ -34,7 +34,7 @@ theorem dualIso_cofRel_add {R : Type} [CommRing R] {m : ℕ} {ν : Fin (m + 1) �
     {f g f' g' : MP R (m + 1)} (h : CofRel R m ν f g) (h' : CofRel R m ν f' g') :
     CofRel R m ν (f + f') (g + g') := by
   unfold CofRel at *
-  rw [mul_add, map_add, h, h']
+  rw [mul_add, map_add (f := _), h, h']
 
 theorem dualIso_cofRel_smul {R : Type} [CommRing R] {m : ℕ} {ν : Fin (m + 1) → ℕ}
     {f g : MP R (m + 1)} (c : R) (h : CofRel R m ν f g) : CofRel R m ν (c • f) (c • g) := by
@@ -55,7 +55,7 @@ theorem dualIso_map_cofAct {R S : Type} [CommRing R] [CommRing S] (φ : R →+* 
     MvPolynomial.map φ (cofAct R n f) = cofAct S n (MvPolynomial.map φ f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [cofAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1

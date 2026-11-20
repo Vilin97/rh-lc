@@ -59,7 +59,7 @@ theorem keepsRad_of_affCover (F Ω Ω' : Type) [Field F] [Field Ω] [Algebra F �
   have hO : ∀ P, ψ P ∈ M'.O z' := fun P => by
     induction P using MvPolynomial.induction_on with
     | C a => rw [MvPolynomial.eval₂Hom_C]; exact hf.map_mem_O a.2
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul, MvPolynomial.eval₂Hom_X']
       exact mul_mem hp (RatModel.ringOn_le_O hz (hR ▸ Algebra.subset_adjoin (Or.inr ⟨i, rfl⟩)))

@@ -61,7 +61,7 @@ theorem one_le_norm (l : ℕ) [Fact l.Prime] (d : ℕ) (hj : jacobiSym (-(d : �
     have hmem : (1 : ℤ_[l]) + (d : ℤ_[l]) * W ^ 2 ∈ RingHom.ker (PadicInt.toZMod (p := l)) := by
       rw [PadicInt.ker_toZMod, IsLocalRing.mem_maximalIdeal, PadicInt.mem_nonunits]
       exact hZ
-    rw [RingHom.mem_ker, map_add, map_one, map_mul, map_pow, map_natCast] at hmem
+    rw [RingHom.mem_ker, map_add (f := _), map_one, map_mul, map_pow, map_natCast] at hmem
     set z := PadicInt.toZMod W with hzdef
     have hz : z ≠ 0 := by
       intro h0

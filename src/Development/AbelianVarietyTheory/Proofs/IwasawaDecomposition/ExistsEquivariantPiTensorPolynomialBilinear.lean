@@ -135,7 +135,7 @@ theorem exists_tensor : ∀ (ι : Type) [Fintype ι] (N n : ℕ) (A B : ι → T
       rw [e, map_smul (substF h g), smul_comm, map_smul (tens I), LinearMap.smul_apply, this, map_smul (tens I),
         LinearMap.smul_apply, map_smul]
     | add p q hp hq =>
-      rw [map_add, smul_add, map_add, LinearMap.add_apply, hp, hq, map_add (tens I),
+      rw [map_add (f := _), smul_add, map_add (f := _), LinearMap.add_apply, hp, hq, map_add (tens I),
         LinearMap.add_apply, map_add]
 
 end GlobalTheory.CompactHowe.PolyTensor

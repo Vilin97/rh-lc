@@ -93,7 +93,7 @@ theorem exists_tateIsoO_transl : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.
       obtain ⟨w, hw⟩ := (ev_eq_iff I (n * k) (Nat.mul_pos hn kpos) (Nat.Coprime.mul_left hnp hkp) _ _).1 hz
       obtain ⟨w', hw'⟩ := hg w
       refine ⟨z + w', ginj ?_⟩
-      rw [map_nsmul, map_add, hw', smul_add, smul_smul, ← sub_eq_iff_eq_add', hw]
+      rw [map_nsmul, map_add (f := _), hw', smul_add, smul_smul, ← sub_eq_iff_eq_add', hw]
     · rintro ⟨z, rfl⟩
       exact ⟨z, by rw [map_nsmul, hlev n hn hnp, hlev N Npos hNp]⟩
 
@@ -130,7 +130,7 @@ theorem exists_tateIsoO_transl : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.
       have e4 : w = g z + k • v := by rw [sub_sub, sub_eq_zero] at e2; exact e2
       obtain ⟨v', hv'⟩ := hg v
       refine ⟨z + v', ?_⟩
-      rw [map_add, hv', ← e4, hw, ha]
+      rw [map_add (f := _), hv', ← e4, hw, ha]
     · rintro ⟨y, rfl⟩
       exact htor n hn hnp y
 
@@ -153,7 +153,7 @@ theorem exists_tateIsoO_transl : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.
     simp only [sq2, ← Over.comp_left, comp_lift, Category.id_comp, lift_fst_assoc, lift_snd_assoc, Category.comp_id]
   refine ⟨⟨I.ζ, I.ζ_prim, I.ζ_pow, fun n y => I.ev (n * k) (g y) ≫ ψ, ?_, ?_, ?_, ?_, ?_, ?_⟩, fun y => ?_⟩
   · intro n y y'
-    rw [map_add, I.add, MonObj.mul_comp]
+    rw [map_add (f := _), I.add, MonObj.mul_comp]
   · intro n b' y
     rw [map_smul, I.lin, Category.assoc, hact, ← Category.assoc]
   · exact fun n hn hnp y => ker' n hn hnp y

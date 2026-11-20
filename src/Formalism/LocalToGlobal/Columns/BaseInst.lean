@@ -286,7 +286,7 @@ def gz (a b : ℤ) : 𝓞 (gaussFields ι LL hE).E := (a : 𝓞 (gaussFields ι 
 
 theorem conjO_gz (a b : ℤ) : (gaussFields ι LL hE).conjO (gz ι LL hE a b) = gz ι LL hE a (-b) := by
   unfold gz
-  rw [map_add, map_mul, map_intCast, map_intCast, conjO_iO]
+  rw [map_add (f := _), map_mul, map_intCast, map_intCast, conjO_iO]
   push_cast
   ring
 

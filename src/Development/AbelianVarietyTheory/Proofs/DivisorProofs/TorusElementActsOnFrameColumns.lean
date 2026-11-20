@@ -28,7 +28,7 @@ theorem prod_tens_ext {A B : Type} [CommRing A] [CommRing B] [Algebra F A] [Alge
     induction z with
     | tmul x y => simp [← TensorProduct.add_tmul]
     | add x y hx hy =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [add_add_add_comm, ← hx, ← hy]
   rw [hz x, hz y, h1, h2]
 

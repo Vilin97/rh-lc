@@ -21,7 +21,7 @@ theorem Sa_decomp (ϖ : Per.Fl l) (x : Per.AinfP l) (hx : x ∈ Sa ϖ) :
   | add x y _ _ hx hy =>
     obtain ⟨a, u, hu, rfl⟩ := hx
     obtain ⟨b, v, hv, rfl⟩ := hy
-    exact ⟨a + b, u + v, add_mem hu hv, by rw [map_add]; ring⟩
+    exact ⟨a + b, u + v, add_mem hu hv, by rw [map_add (f := _)]; ring⟩
   | mul x y _ _ hx hy =>
     obtain ⟨a, u, hu, rfl⟩ := hx
     obtain ⟨b, v, hv, rfl⟩ := hy

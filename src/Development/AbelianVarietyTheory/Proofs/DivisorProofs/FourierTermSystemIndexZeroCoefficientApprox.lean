@@ -46,7 +46,7 @@ theorem mem_of_forall_mem_pow_sup {V : Type} [CommRing V] [IsLocalRing V] [IsNoe
     intro j
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 (h j)
     have : Ideal.Quotient.mk I (a + b) = a • Ideal.Quotient.mk I 1 := by
-      rw [map_add, Ideal.Quotient.eq_zero_iff_mem.2 hb, add_zero, Algebra.smul_def, Ideal.Quotient.algebraMap_eq, map_one,
+      rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hb, add_zero, Algebra.smul_def, Ideal.Quotient.algebraMap_eq, map_one,
         _root_.mul_one]
     rw [this]
     exact Submodule.smul_mem_smul ha Submodule.mem_top

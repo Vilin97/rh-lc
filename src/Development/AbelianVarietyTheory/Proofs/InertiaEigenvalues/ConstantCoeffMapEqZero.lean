@@ -165,7 +165,7 @@ theorem log_subst_formalGroup :
     have e1 := e 1
     rw [powerSeries_subst_C_mul_X (PowerSeries.HasSubst.of_constantCoeff_zero (hX _).1)] at e0 e1
     rw [subst_add (hasSubst_substEach hf0), ← e0, ← e1, powerSeries_subst_C_mul_X
-      (PowerSeries.HasSubst.of_constantCoeff_zero (by rw [map_add, (hX 0).1, (hX 1).1, add_zero])),
+      (PowerSeries.HasSubst.of_constantCoeff_zero (by rw [map_add (f := _), (hX 0).1, (hX 1).1, add_zero])),
       mul_add]
 
 include hf in

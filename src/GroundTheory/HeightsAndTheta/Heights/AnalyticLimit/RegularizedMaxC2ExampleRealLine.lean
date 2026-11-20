@@ -48,7 +48,7 @@ theorem norm_le_of_symm_diag {H : E →L[ℝ] E →L[ℝ] ℝ} (hs : ∀ v w, H 
     simp only [x', y', map_smul, ContinuousLinearMap.smul_apply, smul_eq_mul]
     field_simp
   have key : 4 * H x' y' = H (x' + y') (x' + y') - H (x' - y') (x' - y') := by
-    simp only [map_add, map_sub, ContinuousLinearMap.add_apply, ContinuousLinearMap.sub_apply]
+    simp only [map_add (f := _), map_sub, ContinuousLinearMap.add_apply, ContinuousLinearMap.sub_apply]
     rw [hs y' x']
     ring
   have h1 : ‖x' + y'‖ ^ 2 ≤ 4 := by

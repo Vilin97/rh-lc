@@ -19,7 +19,7 @@ namespace GlobalTheory.InvDerBridge
 
 theorem valR_add_of {B : Type} [CommRing B] {Z : Scheme.{0}} (a : Sp B ⟶ Z) {O : Z.Opens} (ha : ⊤ ≤ a ⁻¹ᵁ O)
     (f g : Γ(Z, O)) : valR a O (f + g) = valR a O f + valR a O g := by
-  simp only [valR, dif_pos ha, map_add]
+  simp only [valR, dif_pos ha, map_add (f := _)]
 
 theorem valR_mul_of {B : Type} [CommRing B] {Z : Scheme.{0}} (a : Sp B ⟶ Z) {O : Z.Opens} (ha : ⊤ ≤ a ⁻¹ᵁ O)
     (f g : Γ(Z, O)) : valR a O (f * g) = valR a O f * valR a O g := by

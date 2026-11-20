@@ -144,7 +144,7 @@ theorem boost_herm (y : Fin k → ℂ) (n : ℝ) (hn : 0 < n) : (boost y (n : �
     induction j using Fin.lastCases with
     | last => simp [boost, hnn, hn0, abs_of_pos hn, div_self hn0]
     | cast j =>
-      simp only [boost, Fin.lastCases_castSucc, hnn, map_add, map_div₀, map_mul, Complex.conj_conj,
+      simp only [boost, Fin.lastCases_castSucc, hnn, map_add (f := _), map_div₀, map_mul, Complex.conj_conj,
         Complex.conj_ofReal, map_one]
       by_cases h : i = j
       · subst h; simp; ring

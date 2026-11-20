@@ -203,7 +203,7 @@ def bracketB {n : ℕ} (ε : Fin n → Bool) (d : Fin n → ℝ) :
       simp only [Matrix.smul_mul, Matrix.mul_smul, Matrix.mul_sub, Matrix.trace_sub, Matrix.trace_smul,
         Complex.real_smul]; ring)
     (fun X Y Y' => by
-      simp only [map_add, Matrix.add_mul, Matrix.mul_add, Matrix.mul_sub, Matrix.trace_add,
+      simp only [map_add (f := _), Matrix.add_mul, Matrix.mul_add, Matrix.mul_sub, Matrix.trace_add,
         Matrix.trace_sub]; ring)
     (fun c X Y => by
       simp only [map_smul, Matrix.smul_mul, Matrix.mul_smul, Matrix.mul_sub, Matrix.trace_sub,

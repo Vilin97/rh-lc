@@ -145,7 +145,7 @@ theorem galAway_mem (σ : Gal(PadicAlgCl p/K)) {y : 𝔸} (hy : y ∈ ACrisZero 
   | algebraMap r =>
     rw [galAway_algebraMap]
     exact Subalgebra.algebraMap_mem _ _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | mul y z _ _ hy hz => rw [map_mul]; exact mul_mem hy hz
 
 def galZero (σ : Gal(PadicAlgCl p/K)) : ACrisZero ℂ_[p] p →+* ACrisZero ℂ_[p] p :=

@@ -77,7 +77,7 @@ theorem lattice_classes_of_lift_transitivity (hL : LiftsConjugateUnderStabilizer
         exact hσ.2.2.symm
       have e3 : σ.symm (D.sp.iXY 0 w + c • F0.z) - (D.sp.iXY 0 (γ.symm w) + c • F0.z) =
           -(σ.symm (σ (D.sp.iXY 0 (γ.symm w)) - D.sp.iXY 0 w)) := by
-        rw [map_add, map_smul, hzs, map_sub, LinearEquiv.symm_apply_apply]
+        rw [map_add (f := _), map_smul, hzs, map_sub, LinearEquiv.symm_apply_apply]
         abel
       rw [e3]
       exact F0.X.neg_mem h2

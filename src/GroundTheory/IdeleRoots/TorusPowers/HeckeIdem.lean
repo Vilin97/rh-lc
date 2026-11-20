@@ -239,7 +239,7 @@ theorem cA_cA (h : IsCMExt F E σ) (z : AE F E) : cA σ (cA σ z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a x => rw [cA_tmul, cA_tmul, IsCMExt.sigma_sigma h]
-  | add y z hy hz => rw [map_add, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
 
 theorem IsCMExt.exists_ne (h : IsCMExt F E σ) : ∃ x : E, σ x ≠ x := by
   by_contra hc
@@ -266,7 +266,7 @@ theorem IsCMExt.exists_decomp (h : IsCMExt F E σ) :
     intro s t hst
     rw [Algebra.smul_def, Algebra.smul_def, mul_one] at hst
     have h2 := congrArg σ hst
-    rw [map_add, map_mul, AlgHom.commutes, AlgHom.commutes, hσθ, map_zero] at h2
+    rw [map_add (f := _), map_mul, AlgHom.commutes, AlgHom.commutes, hσθ, map_zero] at h2
     have hs2 : algebraMap F E (2 * s) = 0 := by
       rw [map_mul, map_ofNat]
       linear_combination hst + h2
@@ -301,13 +301,13 @@ theorem exists_eq_algebraMap_of_cA_eq (h : IsCMExt F E σ) {z : AE F E} (hz : cA
     | add y z hy hz =>
       obtain ⟨a, b, rfl⟩ := hy
       obtain ⟨a', b', rfl⟩ := hz
-      exact ⟨a + a', b + b', by rw [map_add, map_add]; ring⟩
+      exact ⟨a + a', b + b', by rw [map_add (f := _), map_add (f := _)]; ring⟩
   obtain ⟨a, b, rfl⟩ := hrep z
   refine ⟨a, ?_⟩
   set X := algebraMap (AF F) (AE F E) b * incA F E θ with hX
   have hcX : cA σ X = -X := by
     rw [hX, map_mul, cA_algebraMap, cA_incA, hσθ, map_neg, mul_neg]
-  rw [map_add, cA_algebraMap, hcX] at hz
+  rw [map_add (f := _), cA_algebraMap, hcX] at hz
   have h2 : (2 : F) • X = 0 := by
     rw [two_smul]
     linear_combination -hz
@@ -380,7 +380,7 @@ theorem exists_isPrimeIdem {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) (P : Heig
 
     have hsum : e + g = algebraMap (AF F) (AE F E) ε := by
       obtain ⟨a, ha⟩ := exists_eq_algebraMap_of_cA_eq hσ (z := e + g)
-        (by rw [map_add, hg, cA_cA hσ, add_comm])
+        (by rw [map_add (f := _), hg, cA_cA hσ, add_comm])
       have himg : adeleEquiv F E (e + g) = adeleMap F E a := by rw [ha, adeleEquiv_algebraMap]
       have hgP : (adeleEquiv F E g).2 P = 0 := by
         have h := congrArg (fun c : 𝔸[E] ↦ c.2 P) (congrArg (adeleEquiv F E) hprod)
@@ -388,7 +388,7 @@ theorem exists_isPrimeIdem {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) (P : Heig
         exact h
       have hav : a.2 v = 1 := by
         have h := congrArg (fun c : 𝔸[E] ↦ c.2 P) himg
-        rw [map_add, adele_snd_add, heP, idemAt_snd_self, hgP, add_zero, adeleMap_snd_apply] at h
+        rw [map_add (f := _), adele_snd_add, heP, idemAt_snd_self, hgP, add_zero, adeleMap_snd_apply] at h
         have h' : completionMap (below F P) P (a.2 (below F P)) = completionMap (below F P) P 1 := by
           rw [← h, map_one]
         exact (completionMap _ _).injective h'
@@ -397,7 +397,7 @@ theorem exists_isPrimeIdem {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) (P : Heig
       apply adeleMap_injective (K := F) (L := E)
       refine Prod.ext ?_ (FiniteAdeleRing.ext (K := E) fun w ↦ ?_)
       · rw [← himg, adeleMap_fst_of_isPlaceIdem hε]
-        rw [map_add, adele_fst_add, heP, hgfst, idemAt_fst, add_zero]
+        rw [map_add (f := _), adele_fst_add, heP, hgfst, idemAt_fst, add_zero]
       · change (adeleMap F E a).2 w = (adeleMap F E ε).2 w
         rw [adeleMap_snd_of_isPlaceIdem hε]
         split_ifs with hw
@@ -405,7 +405,7 @@ theorem exists_isPrimeIdem {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) (P : Heig
           have : a.2 (below F w) = 1 := by rw [hw]; exact hav
           rw [this, map_one]
         · rw [← himg]
-          rw [map_add, adele_snd_add]
+          rw [map_add (f := _), adele_snd_add]
           have hwP : w ≠ P := fun h ↦ hw (h ▸ hv.symm)
           rw [heP, idemAt_snd_of_ne hwP, hgsnd w hw, add_zero]
     exact ⟨e + g, Or.inl ⟨⟨⟨he2, hprod, v, ε, hε, hsum⟩, hchar⟩, rfl⟩⟩

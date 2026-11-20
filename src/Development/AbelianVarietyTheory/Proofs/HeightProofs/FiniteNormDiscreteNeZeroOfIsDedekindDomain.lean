@@ -27,7 +27,7 @@ theorem finite_normDiscrete_ne_zero_of_isDedekindDomain {S L : Type*} [CommRing 
   let Q : Ideal S :=
     { carrier := {b | 0 < w (algebraMap S L b)}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_ofPred_eq, map_add] at ha hb ⊢
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at ha hb ⊢
         exact lt_of_lt_of_le (lt_min ha hb) (w.map_add _ _)
       zero_mem' := by simp
       smul_mem' := fun c b hb => by

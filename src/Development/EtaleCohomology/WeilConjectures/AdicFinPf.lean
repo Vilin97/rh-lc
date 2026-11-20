@@ -84,7 +84,7 @@ theorem AdicFin_of : LateralTheory.KummerTheory.AdicFin := by
     refine ⟨⟨fun t => PadicInt.toZModPow j.unop (c t), ?_⟩⟩
     change levHom l E n i _ (_ + _) = _
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, show levHom l E n i j.unop (((l : ℤ_[l]) ^ j.unop) • y) = 0 from lev_pow_smul l E n i _ y, add_zero]
+      rw [map_add (f := _), map_sum, show levHom l E n i j.unop (((l : ℤ_[l]) ^ j.unop) • y) = 0 from lev_pow_smul l E n i _ y, add_zero]
     rfl
   obtain ⟨sec, hsec⟩ := nonempty_sections_of_finite_inverse_system F
   let A : ∀ k, T k := fun k => sec (Opposite.op k)

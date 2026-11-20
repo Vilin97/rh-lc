@@ -162,7 +162,7 @@ theorem keyStartRam_of_unit (hU : UnitVecRam) : KeyStartRam := by
     · intro j hj; simp [hy1T j hj, hy2T j hj]
     · have e : stdH L m ((s : ℂ) • y1 + (t : ℂ) • y2) ((s : ℂ) • y1 + (t : ℂ) • y2) =
           (s : ℂ) ^ 2 * stdH L m y1 y1 + (t : ℂ) ^ 2 * stdH L m y2 y2 := by
-        simp only [map_add, LinearMap.add_apply, hHs, hy12, hy21, map_intCast]
+        simp only [map_add (f := _), LinearMap.add_apply, hHs, hy12, hy21, map_intCast]
         ring
       rw [e, hy1H, hy2H, hHf]
       have hk' : (s : ℂ) ^ 2 * (p1 * q2) + (t : ℂ) ^ 2 * (p2 * q1) = Q * q1 * q2 + d * k := by

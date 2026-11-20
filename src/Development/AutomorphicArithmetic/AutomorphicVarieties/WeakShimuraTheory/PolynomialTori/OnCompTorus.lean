@@ -59,15 +59,15 @@ theorem UpperTheory.V.Ws.Po.onCompTorus :
   have ht1 : (t.1 : MvPowerSeries (Fin 2) B) = 1 + MvPowerSeries.X 0 := rfl
   have ht2 : (t.2 : MvPowerSeries (Fin 2) B) = 1 + MvPowerSeries.X 1 := rfl
   obtain ⟨x', ⟨xC, xX⟩, -⟩ := co_ev O B O (Fin 2) x (fun _ => 0) fun _ => zero_mem _
-  have x1 : x' t.1 = 1 := by rw [ht1, map_add, map_one, xX, add_zero]
-  have x2 : x' t.2 = 1 := by rw [ht2, map_add, map_one, xX, add_zero]
+  have x1 : x' t.1 = 1 := by rw [ht1, map_add (f := _), map_one, xX, add_zero]
+  have x2 : x' t.2 = 1 := by rw [ht2, map_add (f := _), map_one, xX, add_zero]
   obtain ⟨y', ⟨yC, yX⟩, -⟩ := co_ev O B R (Fin 2) y ![(s.1 : R) - 1, (s.2 : R) - 1] fun i => by
     rw [← res_eq_zero_iff O]
     fin_cases i
     · simp [h1]
     · simp [h2]
-  have y1 : y' t.1 = s.1 := by rw [ht1, map_add, map_one, yX]; simp
-  have y2 : y' t.2 = s.2 := by rw [ht2, map_add, map_one, yX]; simp
+  have y1 : y' t.1 = s.1 := by rw [ht1, map_add (f := _), map_one, yX]; simp
+  have y2 : y' t.2 = s.2 := by rw [ht2, map_add (f := _), map_one, yX]; simp
   obtain ⟨ρ', hρ'⟩ := conj_lift (ρ.map c) t (by rw [← res_map x', x1, map_one]) (by rw [← res_map x', x2, map_one])
   have he : ∀ g a b, ρ'.hom g a b = (wv t (wt a b)).val * MvPowerSeries.C (ρ.hom g a b) :=
     fun g a b => by rw [hρ']; rfl

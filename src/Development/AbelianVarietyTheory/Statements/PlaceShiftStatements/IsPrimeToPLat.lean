@@ -26,7 +26,7 @@ def oactOf {k : Type} [Field k] {C : Type} [CommRing C] (A : AbVar k) (φ : C �
   hom c := inferInstance
   one := by rw [map_one]; rfl
   mul a b := by rw [mul_comm, map_mul]; rfl
-  add a b := by rw [map_add]; rfl
+  add a b := by rw [map_add (f := _)]; rfl
 
 structure Pt (p : ℕ) {k : Type} [Field k] {O : Type} [Ring O] (star : O ≃+* Oᵐᵒᵖ) (A₀ : AbVar k)
     (ι₀ : O →+* End A₀) (c₀ : Pic A₀.X.left) where

@@ -296,7 +296,7 @@ theorem main : Known → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
         (AddMonoidHom.mk' (fun y => labK c K₁ τ (cc (pairE s.ξ y))) fun y y' => ?_)
         ((algebraMap c.F K₁).comp (embK c τ)) (e τ k) v (fun x y => ?_) (s.tan τ k) (s.xi τ k hk).1 (s.xi τ k hk).2 hv x
       · refine (congrArg (fun q => labK c K₁ τ (cc q)) (pa y y')).trans ?_
-        rw [cc, map_add, map_add]; rfl
+        rw [cc, map_add (f := _), map_add (f := _)]; rfl
       · refine (congrArg (fun q => labK c K₁ τ (cc q)) (pl (H.bar x) y)).trans ?_
         rw [H.bar_eq, cc, map_mul, map_mul, IsCMField.complexConj_apply_apply]; rfl
     | some m =>

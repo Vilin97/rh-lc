@@ -62,10 +62,10 @@ theorem univAdd_of_pair (Q : (E'.baseChange E.toAffine.FunctionField).toAffine.P
     rw [univPt₂, GroundTheory.Arith.Abelian.genericPoint, pointCongr_some, Point.map_some, Point.some.injEq]
     exact ⟨hu', hv'⟩
   apply Point.map_injective τ
-  rw [map_add, ← map_genEval_map Q τ _ (isGenPt_map E τ (isGenPt_univPt₁₂ E)),
+  rw [map_add (f := _), ← map_genEval_map Q τ _ (isGenPt_map E τ (isGenPt_univPt₁₂ E)),
     ← map_genEval_map Q τ _ (isGenPt_map E τ (isGenPt_univPt₁ E)),
     ← map_genEval_map Q τ _ (isGenPt_map E τ (isGenPt_univPt₂ E)),
-    genEval_congr E (by rw [map_add, c₁, c₂]) _ hAB, genEval_congr E c₁ _ hA,
+    genEval_congr E (by rw [map_add (f := _), c₁, c₂]) _ hAB, genEval_congr E c₁ _ hA,
     genEval_congr E c₂ _ hB]
   exact hQ
 

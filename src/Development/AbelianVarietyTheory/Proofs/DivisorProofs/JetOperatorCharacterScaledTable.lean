@@ -59,7 +59,7 @@ theorem jetLin_left (J : (DVar ι a b →₀ ℕ) → K) (w : ι → K)
     (Q : MvPolynomial ((ι × Fin b × Fin b) ⊕ DVar ι a b) K) :
     jetLin J (scaleVar (Sum.elim (fun v => w v.1) fun _ => 1) Q) = scaleVar (fun v => w v.1) (jetLin J Q) := by
   induction Q using MvPolynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | monomial m c =>
     have e : (monomial m c : MvPolynomial _ K) = c • monomial m 1 := by rw [smul_monomial, smul_eq_mul, mul_one]
     rw [e, map_smul, map_smul, map_smul, map_smul, scaleVar_monomial, map_smul, jetLin_monomial, scaleVar_monomial,

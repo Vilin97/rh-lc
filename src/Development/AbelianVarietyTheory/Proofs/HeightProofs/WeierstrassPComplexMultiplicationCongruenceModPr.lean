@@ -48,7 +48,7 @@ lemma coeff_of_dvd {k : Type} [Field k] (p : ℕ) [Fact p.Prime] [CharP k p] (g�
     intro e he
     obtain ⟨q, hq⟩ := hdvd
     have e1 := congrArg (Polynomial.eval₂RingHom ι e) hq
-    simp only [map_mul, map_sub, map_add, map_pow, map_ofNat, coe_eval₂RingHom, eval₂_C,
+    simp only [map_mul, map_sub, map_add (f := _), map_pow, map_ofNat, coe_eval₂RingHom, eval₂_C,
       eval₂_X] at e1
     rw [he, zero_mul] at e1
     have e2 := congrArg (frobenius K p) he

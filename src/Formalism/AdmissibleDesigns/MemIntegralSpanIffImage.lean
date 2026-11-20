@@ -434,7 +434,7 @@ theorem Tst_stable (g : G) (x : A.V) (hx : x ∈ Tst A b) : A.ρ g x ∈ Tst A b
     rw [map_mul]
     rfl
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul o x _ hx => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ _ hx
 
 theorem Tst_bound [CompactSpace G] (hopen : IsOpen ((T0 A b : Submodule OL A.V) : Set A.V))
@@ -647,7 +647,7 @@ def bA : Basis n LL (grepV e OL (Qp := Qp) ρ ι hc).V :=
       map_add' := fun u v => funext fun j => by
         have h : bV.equivFun ((show V from u) + (show V from v)) j =
             bV.equivFun (show V from u) j + bV.equivFun (show V from v) j := by
-          rw [map_add]
+          rw [map_add (f := _)]
           rfl
         exact (congrArg e h).trans (map_add e _ _)
       map_smul' := fun c v => funext fun j => by
@@ -793,7 +793,7 @@ theorem thet_loc (hι : Function.Bijective ι) (hO : IsOpen (Set.range (algebraM
       have h1 := c.2.1.2 g h
       rw [← map_mul]
       exact h1
-    have hpz : p ∈ coZ1s ρL := fun γ δ => hinj (by rw [map_add, hiL, hp, hp, hp, hcoc, smul_add, map_smul])
+    have hpz : p ∈ coZ1s ρL := fun γ δ => hinj (by rw [map_add (f := _), hiL, hp, hp, hp, hcoc, smul_add, map_smul])
     have hpf : p ∈ KFin.finPreG iL (finZ e PD ρ ι) := by
       show (fun γ => iL (p γ)) ∈ finZ e PD ρ ι
       have h1 : (fun γ => iL (p γ)) = s • (c : Γ → V) := funext hp

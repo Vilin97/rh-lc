@@ -25,16 +25,16 @@ theorem ql_add {μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) O} (hμ : ∀ i, 
     QL μ N (f + g) := by
   obtain ⟨f0, f1, f2⟩ := hf
   obtain ⟨g0, g1, g2⟩ := hg
-  refine ⟨by rw [map_add, f0, g0, add_zero], fun i => ?_, fun α => ?_⟩
+  refine ⟨by rw [map_add (f := _), f0, g0, add_zero], fun i => ?_, fun α => ?_⟩
   · obtain ⟨a, ha, ha'⟩ := f1 i
     obtain ⟨b, hb, hb'⟩ := g1 i
     refine ⟨a + b, N.add_mem ha hb, ?_⟩
-    simp only [lin, map_add] at ha' hb' ⊢
+    simp only [lin, map_add (f := _)] at ha' hb' ⊢
     rw [ha', hb']
   · obtain ⟨a, ha, ha'⟩ := f2 α
     obtain ⟨b, hb, hb'⟩ := g2 α
     refine ⟨a + b, N.add_mem ha hb, ?_⟩
-    rw [formalCoboundary_add (constantCoeff_up_eq_zero hμ), map_add, ha', hb', map_add]
+    rw [formalCoboundary_add (constantCoeff_up_eq_zero hμ), map_add (f := _), ha', hb', map_add (f := _)]
 
 theorem ql_smul {μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) O} (hμ : ∀ i, constantCoeff (μ i) = 0)
     {N : Ideal O} (a : O) {f : MvPowerSeries (Fin d) E} (hf : QL μ N f) :
@@ -60,7 +60,7 @@ theorem ql_zero {μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) O} (hμ : ∀ i,
 
 theorem comb_add {ι : Type} [Fintype ι] (b b' : ι → O) (e : ι → MvPowerSeries (Fin d) E) :
     comb (b + b') e = comb b e + comb b' e := by
-  simp only [comb, Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+  simp only [comb, Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
 
 theorem ql_comb {μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) O} (hμ : ∀ i, constantCoeff (μ i) = 0)
     {ι : Type} [Fintype ι] (b : ι → O) (e : ι → MvPowerSeries (Fin d) E)

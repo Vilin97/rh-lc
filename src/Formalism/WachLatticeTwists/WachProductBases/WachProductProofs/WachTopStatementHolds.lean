@@ -20,7 +20,7 @@ def NHom.killIdeal {S : HidaSetting O A} {ι : Type} {pr : Equiv.Perm ι} {D₁ 
     intro a b ha hb n hn
     obtain ⟨x, hx, hfx⟩ := ha n hn
     obtain ⟨y, hy, hfy⟩ := hb n hn
-    exact ⟨x + y, (W₁.N i).add_mem hx hy, by rw [map_add, hfx, hfy, add_smul]⟩
+    exact ⟨x + y, (W₁.N i).add_mem hx hy, by rw [map_add (f := _), hfx, hfy, add_smul]⟩
   zero_mem' := fun n _ => ⟨0, (W₁.N i).zero_mem, by simp⟩
   smul_mem' := by
     intro r a ha n hn

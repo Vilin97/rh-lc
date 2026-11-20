@@ -292,7 +292,7 @@ theorem isUnit_adjoinRoot_mk_of_aeval_ne_zero {θ : K} (hθ : IsIntegral (Residu
   obtain ⟨a, rfl⟩ := map_surjective (residue B) residue_surjective a
   obtain ⟨b, rfl⟩ := map_surjective (residue B) residue_surjective b
   have h₀ : (a * μ + b * g - 1).map (residue B) = 0 := by
-    rw [Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, hμ, hab,
+    rw [Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, hμ, hab,
       Polynomial.map_one, sub_self]
   have h₁ : AdjoinRoot.mk μ (a * μ + b * g - 1) ∈ M := by
     set_option synthInstance.maxHeartbeats 100000 in
@@ -302,7 +302,7 @@ theorem isUnit_adjoinRoot_mk_of_aeval_ne_zero {θ : K} (hθ : IsIntegral (Residu
     refine Ideal.mul_mem_right _ _ ?_
     change algebraMap B (AdjoinRoot μ) _ ∈ M
     rw [← Ideal.mem_comap, hM', ← residue_eq_zero_iff, ← coeff_map, h₀, coeff_zero]
-  rw [map_sub, map_add, map_mul, map_mul, AdjoinRoot.mk_self, mul_zero, zero_add, map_one] at h₁
+  rw [map_sub, map_add (f := _), map_mul, map_mul, AdjoinRoot.mk_self, mul_zero, zero_add, map_one] at h₁
   have h₂ := sub_mem (M.mul_mem_left (AdjoinRoot.mk μ b) hgM) h₁
   rw [sub_sub_cancel] at h₂
   exact hM.ne_top ((Ideal.eq_top_iff_one _).mpr h₂)

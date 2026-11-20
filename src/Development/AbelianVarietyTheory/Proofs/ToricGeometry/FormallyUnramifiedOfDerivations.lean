@@ -55,7 +55,7 @@ theorem formallyUnramified_of_derivations {A B : Type} [CommRing A] [CommRing B]
   have hD : ∀ f, D f = ε.symm (χ (KaehlerDifferential.D A B f)) := fun _ => rfl
   have h0 := H (ε.symm.toRingHom.comp (Ideal.Quotient.mk I)) (fun a => ε.symm_apply_apply a) D
     (fun f f' => by
-      rw [hD, hD, hD, Derivation.leibniz, map_add, map_smul, map_smul, Algebra.smul_def, Algebra.smul_def, map_add,
+      rw [hD, hD, hD, Derivation.leibniz, map_add (f := _), map_smul, map_smul, Algebra.smul_def, Algebra.smul_def, map_add (f := _),
         map_mul, map_mul]
       rfl)
     (fun a => by

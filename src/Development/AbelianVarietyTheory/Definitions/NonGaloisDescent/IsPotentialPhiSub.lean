@@ -286,7 +286,7 @@ theorem isGood_of_trivial (Pl : LocPrime l) {LL : FinExt l} (T : QLat LL) (hT : 
         (IsScalarTower.toAlgHom ℚ_[l] ↥(K0 (ϖ.field a)) Pl.R.B).toLinearMap y := fun y => by
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul v c =>
       have h1 : (Pl.PD (Formalism.MainNotions.ElementDenominator.qlExt l)).actB g (algebraMap _ Pl.R.B c) = algebraMap _ Pl.R.B c :=
         (Pl.PD_actB _ g _).trans (Pl.actQ_Kur _ ⟨c, c.2.2⟩ ⟨c, c.2.2⟩

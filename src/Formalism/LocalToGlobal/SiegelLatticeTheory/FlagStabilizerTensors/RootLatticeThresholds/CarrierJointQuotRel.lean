@@ -271,7 +271,7 @@ theorem hJ_cj' (x y : Fin n → ℂ) : hJ ε x y = conj (hJ ε y x) := by
 theorem hJ_sum_l' {ι : Type*} [Fintype ι] (x : Fin n → ℂ) (a : ι → ℂ) (y : ι → Fin n → ℂ) (w : Fin n → ℂ) :
     hJ ε (x + ∑ c, a c • y c) w = hJ ε x w + ∑ c, conj (a c) * hJ ε (y c) w := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hJ_cj' ε (x + ∑ c, a c • y c) w, hJ_add_r', hJ_sum_r', map_add, map_sum, ← hJ_cj' ε x w]
+    rw [hJ_cj' ε (x + ∑ c, a c • y c) w, hJ_add_r', hJ_sum_r', map_add (f := _), map_sum, ← hJ_cj' ε x w]
   congr 1
   refine Finset.sum_congr rfl fun c _ => ?_
   rw [map_mul, ← hJ_cj' ε (y c) w]

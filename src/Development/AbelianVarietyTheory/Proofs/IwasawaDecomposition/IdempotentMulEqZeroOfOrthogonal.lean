@@ -143,7 +143,7 @@ theorem infPart_cA {e : AE D} (h : infPart D e = 0) : infPart D (cA D e) = 0 := 
     induction z using TensorProduct.induction_on with
     | zero => rw [RingHom.map_zero, RingHom.map_zero, RingHom.map_zero]
     | tmul a x => rfl
-    | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingHom.map_add, hx, hy]
+    | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy]
   rw [key, h, RingHom.map_zero]
 
 theorem mem_waveSpan {G : Type} [AddCommGroup G] {χ : G → G → ℂ} {X Y L L' : AddSubgroup G} (h : IsBichar χ)
@@ -219,7 +219,7 @@ theorem placeModel_unique_of_dual (ψ : AddChar (AF D.host.F) ℂ) {e : AE D} (�
     rw [e1, h₁.trans _ s1 x ((isHalf_iff S T).2 hx), h₂.trans _ s1 x ((isHalf_iff S T).2 hx),
       h₁.modul _ s0 y ((isHalf_iff S T).2 hy), h₂.modul _ s0 y ((isHalf_iff S T).2 hy), v1, v2]
   | zero => rw [LinearMap.map_zero, LinearMap.map_zero]
-  | add f g _ _ hf hg => rw [LinearMap.map_add, LinearMap.map_add, hf, hg]
+  | add f g _ _ hf hg => rw [LinearMap.map_add (f := _), LinearMap.map_add (f := _), hf, hg]
   | smul c f _ hf => rw [LinearMap.map_smul, LinearMap.map_smul, hf]
 
 theorem exists_common_den {A ι : Type} [CommRing A] [Finite ι] (R : Subring A) {p : ι → A → Prop}
@@ -295,7 +295,7 @@ theorem comm_symm_mem {r : E ⊗[F] Af F} (hr : r ∈ Formalism.L2.Herm.intAf F 
     · exact GlobalTheory.AdLat.tmul_mem_adelicCompletion_of_integral F hβ ⟨1, map_one _⟩
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact GlobalTheory.AdLat.one_tmul_mem_adelicCompletionOfElementSet F ⟨1, map_one _⟩
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | neg a _ ha => rw [map_neg]; exact neg_mem ha
   | mul a b _ _ ha hb => rw [map_mul]; exact GlobalTheory.AdIdem.mul_mem_hat F E ha hb
 
@@ -310,7 +310,7 @@ theorem exists_den_fg {M : Type} [AddCommGroup M] [Module (𝓞 E) M] {Λ : Subm
   induction hx using Submodule.span_induction with
   | mem x hx => exact h ⟨x, hx⟩ _ rfl
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, mul_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), mul_add]; exact add_mem hx hy
   | smul c x _ hx =>
     rw [map_smul, Algebra.smul_def, mul_left_comm]
     exact mul_mem ⟨c, rfl⟩ hx
@@ -334,7 +334,7 @@ theorem resS_add (PP : Formalism.L2.DIV.Pl E) {x y z : E ⊗[F] Af F} (hx : x �
     (h : y = x + (Ideal.absNorm PP.asIdeal : ℕ) * z) :
     Formalism.L2.DIV.resS F PP ⟨y, hy⟩ = Formalism.L2.DIV.resS F PP ⟨x, hx⟩ := by
   have e : (⟨y, hy⟩ : Formalism.L2.Herm.intAf F E) = ⟨x, hx⟩ + (Ideal.absNorm PP.asIdeal : ℕ) * ⟨z, hz⟩ := Subtype.ext h
-  rw [e, map_add, map_mul, map_natCast, resS_natCast_absNorm, zero_mul, add_zero]
+  rw [e, map_add (f := _), map_mul, map_natCast, resS_natCast_absNorm, zero_mul, add_zero]
 
 end General
 
@@ -388,7 +388,7 @@ theorem exists_den_latO (hS : ΛS.FG) (hT : ΛT.FG) : ∃ M : ℕ, 0 < M ∧
     rw [natCast_mul_tmul]
     exact tmul_mem_int (h X hX i j) hα
   · rw [Matrix.zero_apply, RingHom.map_zero, mul_zero]; exact zero_mem _
-  · intro x y hx hy; rw [Matrix.add_apply, RingHom.map_add, mul_add]; exact add_mem hx hy
+  · intro x y hx hy; rw [Matrix.add_apply, RingHom.map_add (f := _), mul_add]; exact add_mem hx hy
   · intro x hx; rw [Matrix.neg_apply, RingHom.map_neg, mul_neg]; exact neg_mem hx
 
 theorem mul_pair_one {w : AE D} (hw : infPart D w = 0) :
@@ -562,7 +562,7 @@ theorem frMapO_add (βS : GL (Fin S.rank) (EAf D)) (βT : GL (Fin T.rank) (EAf D
     frMapO S T βS βT (x + k • u) i j = frMapO S T βS βT x i j + k * frMapO S T βS βT u i j := by
   have : ∀ a b, toEAf D ((x + k • u) a b) = toEAf D (x a b) + k * toEAf D (u a b) := fun a b => by
     change toEAf D (x a b + k • u a b) = _
-    rw [nsmul_eq_mul, RingHom.map_add, RingHom.map_mul, map_natCast]
+    rw [nsmul_eq_mul, RingHom.map_add (f := _), RingHom.map_mul, map_natCast]
   simp only [frMapO, Matrix.mul_apply, Matrix.map_apply, this, Finset.mul_sum, Finset.sum_mul,
     ← Finset.sum_add_distrib]
   exact Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => by ring

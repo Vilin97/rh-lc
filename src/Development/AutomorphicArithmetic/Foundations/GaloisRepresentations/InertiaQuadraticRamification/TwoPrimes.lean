@@ -32,7 +32,7 @@ private theorem sq_fix {E Y Ω : Type} [Field E] [Field Y] [Field Ω] [Algebra E
   have ha := hE (j.comp (algebraMap E Y)) a
   have hb := hE (j.comp (algebraMap E Y)) b
   simp only [RingHom.comp_apply] at ha hb
-  simp only [map_add, map_mul, ha, hb, hfix]
+  simp only [map_add (f := _), map_mul, ha, hb, hfix]
 
 theorem UpperTheory.Gal.UnramifiedFromSplittingCriterion.twoPrimes :
     PrimeWith → TwoPrimes := by

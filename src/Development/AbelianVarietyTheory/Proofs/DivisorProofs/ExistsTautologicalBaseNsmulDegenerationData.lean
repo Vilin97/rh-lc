@@ -135,7 +135,7 @@ theorem main : ∀ {o W : Type} [CommRing o] [CommRing W] [IsDomain W] [IsLocalR
       ktriv := D.P.ktriv
       r := Module.finrank ℤ D.X
       c₀ := fun a => D.c (ib.symm a)
-      c₀_add := fun a a' => by rw [map_add]; exact D.c_add _ _
+      c₀_add := fun a a' => by rw [map_add (f := _)]; exact D.c_add _ _
       τ₀ := fun a a' => τ (ib.symm a) (ib.symm a')
       τ₀_gen := fun a a' => hg _ _
       τ₀_symm := fun a a' => hs _ _

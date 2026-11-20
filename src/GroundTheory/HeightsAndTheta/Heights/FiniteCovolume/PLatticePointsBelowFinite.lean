@@ -73,7 +73,7 @@ theorem LatticePointsBelowFinite.proof (h : HermitianForm F E W) (v : Basis ι E
   let T : AddSubgroup W :=
     { carrier := {y | ∀ i, IsIntegral ℤ (d • v.repr y i)}
       add_mem' := fun {a b} ha hb i => by
-        simpa only [map_add, Finsupp.add_apply, smul_add] using (ha i).add (hb i)
+        simpa only [map_add (f := _), Finsupp.add_apply, smul_add] using (ha i).add (hb i)
       zero_mem' := fun i => by
         simpa only [map_zero, Finsupp.zero_apply, smul_zero] using isIntegral_zero
       neg_mem' := fun {a} ha i => by

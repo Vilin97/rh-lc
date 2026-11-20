@@ -87,7 +87,7 @@ def cohOn.pull (φ : F ⟶ (Scheme.Modules.pushforward g).obj G) {V : X.Opens} {
     (h : W ≤ g ⁻¹ᵁ V) (n : ℕ) : cohOn F V n →ₛₗ[σ] cohOn G W n where
   toFun x := (cohOn.toH' G W n).symm (SheafPull.pull.{u, u} g.base
     (toAbSheafPush φ) n (homOfLE h) (cohOn.toH' F V n x))
-  map_add' x y := by rw [map_add, map_add, map_add]
+  map_add' x y := by rw [map_add (f := _), map_add (f := _), map_add (f := _)]
   map_smul' r x := by
     have e : smulHom F (algebraMap R Γ(X, ⊤) r) ≫ φ = φ ≫ (Scheme.Modules.pushforward g).map
         (smulHom G (algebraMap S Γ(Y, ⊤) (σ r))) := by

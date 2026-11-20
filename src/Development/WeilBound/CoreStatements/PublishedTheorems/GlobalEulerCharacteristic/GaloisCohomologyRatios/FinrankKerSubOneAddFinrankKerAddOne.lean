@@ -14,7 +14,7 @@ theorem finrank_ker_sub_one_add_finrank_ker_add_one {k V : Type*} [Field k] [Add
   have hr : LinearMap.range (σ + 1) = LinearMap.ker (σ - 1) := by
     apply le_antisymm
     · rintro _ ⟨y, rfl⟩
-      simp only [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.add_apply, Module.End.one_apply, map_add, hσ]
+      simp only [LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.add_apply, Module.End.one_apply, map_add (f := _), hσ]
       abel
     · intro x hx
       rw [LinearMap.mem_ker, LinearMap.sub_apply, Module.End.one_apply, sub_eq_zero] at hx

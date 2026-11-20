@@ -23,7 +23,7 @@ theorem ext_scalar {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [I
     extTensor (detRep (Fin 1) ξ) π' (GeneralLinearGroup.scalar (Fin 1) ϖ, 1) y = (ξ ϖ : ℂ) • y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | tmul c v =>
     rw [extTensor_tmul]
     simp [detRep, detChar, TensorProduct.smul_tmul']
@@ -75,7 +75,7 @@ theorem aeval_jac₂_eq_zero_of_surjective : ∀ {k : Type} [Field k] [Valuative
   have hcomm : ∀ (r : Polynomial ℂ) x, J (Polynomial.aeval (jac₂ e' π' g) r x) = Polynomial.aeval (jac₂ e' τ g) r (J x) := by
     intro r x
     induction r using Polynomial.induction_on' with
-    | add p r hp hr => simp only [map_add, LinearMap.add_apply, hp, hr]
+    | add p r hp hr => simp only [map_add (f := _), LinearMap.add_apply, hp, hr]
     | monomial i c =>
       simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply, map_smul, hpow]
   refine LinearMap.ext fun y => ?_
@@ -97,7 +97,7 @@ theorem exists_injective_of_extTensor : ∀ {H K V W : Type} [Group H] [Group K]
     intro g y
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
     | tmul c w => simp [extTensor_tmul, L2]
   have key1 : ∀ (g : K) (v : V), extTensor ψ π₁ (1, g) (L1.symm v) = L1.symm (π₁ g v) := by
     intro g v
@@ -129,8 +129,8 @@ theorem exists_injective_of_eigen : ∀ {G V V₂ X X₂ : Type} [Group G] [AddC
     exact sub_eq_zero.1 h
   let sL : X →ₗ[ℂ] V :=
     { toFun := s
-      map_add' := fun x y => (uniq (x + y) (s x + s y) (by rw [map_add, hs1, hs1, smul_add])
-        (by rw [map_add, hs2, hs2])).trans rfl
+      map_add' := fun x y => (uniq (x + y) (s x + s y) (by rw [map_add (f := _), hs1, hs1, smul_add])
+        (by rw [map_add (f := _), hs2, hs2])).trans rfl
       map_smul' := fun c x => uniq (c • x) (c • s x) (by rw [map_smul, hs1, smul_comm])
         (by rw [map_smul, hs2]) }
   have sint : ∀ g y, s (σ g y) = ρ g (s y) := by

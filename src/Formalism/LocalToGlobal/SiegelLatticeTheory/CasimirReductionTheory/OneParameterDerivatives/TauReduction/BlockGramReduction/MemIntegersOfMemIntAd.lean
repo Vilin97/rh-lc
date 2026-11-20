@@ -183,7 +183,7 @@ theorem trT_mem (z : E ⊗[F] Formalism.MainNotions.S.Af F) (hz : z ∈ Formalis
     rw [← hc]
     exact mul_mem (algebraMap_int_mem_intAd c) y.2
   | add x y hx hy =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact add_mem hx hy
 
 theorem mem_OE_of_inclE_mem (e : E) (he : Formalism.UG.inclE (F := F) (Formalism.MainNotions.S.Af F) e ∈ Formalism.MainNotions.S.IntAf F E) :

@@ -211,7 +211,7 @@ theorem exists_inertia (hk : IsAlgClosed (ResidueField O)) {l : ℕ} (hl : l ≠
       map_one' := J.injective (by simp only [hσ, map_one])
       map_mul' := fun a b => J.injective (by simp only [hσ, map_mul])
       map_zero' := J.injective (by simp only [hσ, map_zero])
-      map_add' := fun a b => J.injective (by simp only [hσ, map_add])
+      map_add' := fun a b => J.injective (by simp only [hσ, map_add (f := _)])
       commutes' := fun c => J.injective (by
         rw [hσ]
         obtain ⟨w, hw⟩ := hJ c

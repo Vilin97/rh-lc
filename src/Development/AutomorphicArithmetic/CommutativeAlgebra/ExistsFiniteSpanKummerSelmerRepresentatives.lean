@@ -49,7 +49,7 @@ theorem UpperTheory.exists_finite_span_kummerSelmer_representatives :
     · exact absurd h hq
     · exact h
   have hri := Divisor.riemann_inequality hcl (D + E)
-  rw [map_add, hdegD, zero_add] at hri
+  rw [map_add (f := _), hdegD, zero_add] at hri
   have hpos : 0 < Module.finrank k (D + E).L := by omega
   obtain ⟨⟨h, hmem⟩, hne⟩ := Module.finrank_pos_iff_exists_ne_zero.mp hpos
   have hh : h ≠ 0 := fun h0 => hne (Subtype.ext h0)

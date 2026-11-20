@@ -27,7 +27,7 @@ theorem ModelLocalizationMaximalPoint.proof : ModelLocalizationMaximalPoint.Stat
     | C c =>
       have h : algebraMap A R' (C c) = Ideal.Quotient.mk M.ideal (C c) := by rw [hφ, rename_C]
       exact h ▸ isIntegral_algebraMap
-    | add p r hp hr => rw [map_add]; exact hp.add hr
+    | add p r hp hr => rw [map_add (f := _)]; exact hp.add hr
     | mul_X p s hp =>
       rw [map_mul]
       refine hp.mul ?_

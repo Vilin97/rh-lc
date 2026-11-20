@@ -39,7 +39,7 @@ theorem cplx_eq {ι : Type} {P Q R S : ℕ} (c : ι → Matrix (Ix P Q) (Ix R S)
 
 def cplxS {ι : Type} (ε : ι → ℤˣ) (P Q R S : ℕ) : (ι → Matrix (Ix P Q) (Ix R S) ℂ) →ₗ[ℝ] (ι → Matrix (Ix P Q) (Ix R S) ℂ) where
   toFun c w := ((ε w : ℤ) : ℂ) • cplx ι P Q R S c w
-  map_add' c c' := by funext w; simp only [map_add, Pi.add_apply, smul_add]
+  map_add' c c' := by funext w; simp only [map_add (f := _), Pi.add_apply, smul_add]
   map_smul' r c := by funext w; simp only [map_smul, Pi.smul_apply, RingHom.id_apply]; exact smul_comm _ _ _
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
@@ -98,7 +98,7 @@ theorem transv_frames (σ : E →ₐ[F] E) {α β κ : Type}
     { toFun := fun c i => evI F ((d.e (U c)).1 i)
       map_add' := fun c c' => by
         funext i
-        rw [hadd, map_add]
+        rw [hadd, map_add (f := _)]
         exact map_add (evR F) _ _
       map_smul' := fun r c => by
         funext i
@@ -108,7 +108,7 @@ theorem transv_frames (σ : E →ₐ[F] E) {α β κ : Type}
     { toFun := fun c i => evI F ((d.e (U c)).2 i)
       map_add' := fun c c' => by
         funext i
-        rw [hadd, map_add]
+        rw [hadd, map_add (f := _)]
         exact map_add (evR F) _ _
       map_smul' := fun r c => by
         funext i

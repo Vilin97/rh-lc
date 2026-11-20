@@ -118,7 +118,7 @@ theorem isVacO_conj_negSp {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam
     rw [cplxO_neg, dRho_neg hθ] at h
     rw [dRho_conj ψ hn, dRho_conj ψ hn]
     have h' := congrArg (starRingEnd ℂ) h
-    simp only [map_add, map_mul, map_neg, Complex.conj_I, map_zero] at h'
+    simp only [map_add (f := _), map_mul, map_neg, Complex.conj_I, map_zero] at h'
     linear_combination h'
   · obtain ⟨h1, h2⟩ := hv.norm
     refine ⟨h1, fun p hp => ?_⟩

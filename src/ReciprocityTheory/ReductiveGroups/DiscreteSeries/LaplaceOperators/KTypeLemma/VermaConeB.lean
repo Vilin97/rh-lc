@@ -54,7 +54,7 @@ theorem vc_cone_core (T : Fin n → Fin n → Module.End ℂ U) (hT : IsGlRep T)
       rw [show j + 1 + (m - j - 1) = m by omega, hm] at this
       exact (Submodule.mem_bot ℂ).mp this
     have hpx : post x = c' • x := vcIter_eig A θ (j + 1) hx _
-    rw [← hpx, ← hyz, map_add, hpz, add_zero]
+    rw [← hpx, ← hyz, map_add (f := _), hpz, add_zero]
   have hpostGood : ∀ (P : (Fin n → ℝ) → Prop) (w : U), w ∈ vcGood T P → post w ∈ vcGood T P := by
     intro P w ⟨ν, hP, hν⟩
     refine ⟨ν, hP, fun a => ?_⟩
@@ -105,7 +105,7 @@ theorem vc_cone_core (T : Fin n → Fin n → Module.End ℂ U) (hT : IsGlRep T)
       obtain ⟨α, rfl⟩ := Submodule.mem_span_singleton.mp hy1
       have hpr := hspanGood (fun ν => ν ≠ base) _ (Set.Subset.refl _) r hr
       have hd : c' • x - α • post v = post r := by
-        rw [← hyx, ← hyr, map_add, map_smul]
+        rw [← hyx, ← hyr, map_add (f := _), map_smul]
         abel
       have hdw : ∀ a, T a a (c' • x - α • post v) = ((base a : ℝ) : ℂ) • (c' • x - α • post v) := by
         intro a
@@ -204,7 +204,7 @@ theorem vcFlag_top_le {j : ℕ} {s : Fin n} (hr : Function.Injective r) (hj : r 
     · exact Submodule.mem_sup_right (vcFlag_gen T g r h)
   · intro a b x hx
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hx
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (vc_genSub_stable T _ a b hy) (vcFlag_stable T g r _ a b z hz)
 
 end Core2

@@ -196,7 +196,7 @@ theorem map_aeval_fixed {n : ℕ} (σ : E ≃ₐ[k] E) (Γ : Matrix (Fin n) (Fin
     (aeval Γ p).map σ = aeval Γ (p.map (σ : E →+* E)) := by
   induction p using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, Polynomial.map_add, map_add, ← hp, ← hq]
+    rw [map_add (f := _), Polynomial.map_add (f := _), map_add (f := _), ← hp, ← hq]
     ext i j
     simp
   | monomial m a =>

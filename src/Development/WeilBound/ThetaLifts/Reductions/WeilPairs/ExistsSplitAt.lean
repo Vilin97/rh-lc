@@ -91,7 +91,7 @@ theorem exists_of_fixed {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {x : E} (hx : 
   obtain ⟨θ, d, hd, h1, h2, h3⟩ := GlobalTheory.SplitDetCharF.exists_int_basis h
   obtain ⟨u, w, rfl⟩ := h3 x
   have hθ : θ ≠ 0 := fun h0 => hd ((algebraMap F E).injective (by rw [← h2, h0, mul_zero, map_zero]))
-  simp only [Algebra.smul_def, map_add, map_mul, AlgHom.commutes, map_one, h1, add_right_inj] at hx
+  simp only [Algebra.smul_def, map_add (f := _), map_mul, AlgHom.commutes, map_one, h1, add_right_inj] at hx
   rw [← Algebra.smul_def, ← Algebra.smul_def, smul_neg] at hx
   have hw : w • θ = 0 := by
     have : (2 : E) * (w • θ) = 0 := by linear_combination -hx
@@ -110,7 +110,7 @@ theorem exists_splitAt {c : E ≃ₐ[F] E} (h : IsCMExt F E (c : E →ₐ[F] E))
   have hcc : ∀ x, c (c x) = x := GlobalTheory.SplitDetCharF.sig_invol h
   obtain ⟨t, ht, ht'⟩ := exists_int h (a + b) (by
     show c ((a : E) + b) = (a : E) + b
-    rw [hb, map_add, hcc, add_comm])
+    rw [hb, map_add (f := _), hcc, add_comm])
   obtain ⟨n, hn, hn'⟩ := exists_int h (a * b) (by
     show c ((a : E) * b) = (a : E) * b
     rw [hb, map_mul, hcc, mul_comm])

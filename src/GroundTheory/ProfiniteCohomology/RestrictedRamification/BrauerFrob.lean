@@ -322,7 +322,7 @@ theorem eq_zero_of_decompHomS_of_unramifiedDegree
   have h2 := hχ _ (decompHomS_eq_one_of_unramifiedDegree_eq_one S ι hv _ h1)
   have hx : x = Additive.ofMul k + Additive.ofMul (k⁻¹ * Additive.toMul x) := by
     rw [← ofMul_mul, mul_inv_cancel_left, ofMul_toMul]
-  rw [hx, map_add, h2, add_zero]
+  rw [hx, map_add (f := _), h2, add_zero]
   exact hk
 
 theorem gvChar_decompHomS_eq_zero {A : Rep.{0} (ULift.{0} ℤ) (galUnramifiedOutside K.1 ℚ̄ S)} [IsDiscreteRep A]

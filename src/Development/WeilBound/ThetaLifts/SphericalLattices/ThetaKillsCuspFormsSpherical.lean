@@ -34,7 +34,7 @@ theorem killFin3 (hU : Unimod) (hT : ThetaBasic) (hP : PureAct) (hL : LocCpt) (h
   have jc : ∀ x : Q, j x ∈ 𝓒 := fun x => hj x ▸ h𝓒 x x.2
   let u : Q →ₗ[ℂ] (UA σ W.J → ℂ) :=
     { toFun := fun x => M.I om (j x)
-      map_add' := fun x y => by rw [Submodule.coe_add, map_add, I_add' hp hc (jc x) (jc y)]
+      map_add' := fun x y => by rw [Submodule.coe_add, map_add (f := _), I_add' hp hc (jc x) (jc y)]
       map_smul' := fun c x => funext fun h => by
         rw [Submodule.coe_smul, map_smul]; exact PositivityTheory.ThKG.I_smul M om c _ h }
   have hu' : ∀ x, u x = M.I om (j x) := fun _ => rfl
@@ -47,12 +47,12 @@ theorem killFin3 (hU : Unimod) (hT : ThetaBasic) (hP : PureAct) (hL : LocCpt) (h
     induction hz using Submodule.span_induction with
     | mem z h =>
       obtain ⟨g, hg, x, hx, y, hy, hxy, rfl⟩ := h
-      have e : j y = j (y - x) + j x := by rw [← map_add, sub_add_cancel]
+      have e : j y = j (y - x) + j x := by rw [← map_add (f := _), sub_add_cancel]
       have e2 := I_add' hp hc (jc ⟨y - x, sub_mem hy hx⟩) (jc ⟨x, hx⟩)
       rw [← e, ← hjS _ x hx y hxy, I_left hU hT hp (hc.sch (jc ⟨x, hx⟩))] at e2
       exact (left_eq_add.1 (e2.trans (add_comm _ _)))
     | zero => rw [map_zero]; exact PositivityTheory.ThKG.I_zero M om
-    | add a b ha hb iha ihb => rw [map_add, I_add' hp hc (jc ⟨a, augle ha⟩) (jc ⟨b, augle hb⟩), iha, ihb, add_zero]
+    | add a b ha hb iha ihb => rw [map_add (f := _), I_add' hp hc (jc ⟨a, augle ha⟩) (jc ⟨b, augle hb⟩), iha, ihb, add_zero]
     | smul c a _ iha => funext h; rw [map_smul, PositivityTheory.ThKG.I_smul, iha]; simp
   rcases hsa with hsa | hsa
   swap
@@ -189,10 +189,10 @@ theorem theta_kills_cusp_forms_spherical (hT : ThetaBasic) (hW : WeilConv) (hc :
             have a2 : j y ∈ G.M'.So B.ψ B.τ₁ := hjS _ x hx.1 y hxy ▸ (hK F E σ B a a' G X om om' R Rf m).2 _ _ a1
             have a3 : j (y - x) ∈ G.M'.So B.ψ B.τ₁ := by rw [map_sub]; exact sub_mem a2 a1
             have e2 := I_add' p2 c2 a3 a1
-            rw [← map_add, sub_add_cancel, ← hjS _ x hx.1 y hxy, I_left unimodularity_holds hT p2 (c2.sch a1)] at e2
+            rw [← map_add (f := _), sub_add_cancel, ← hjS _ x hx.1 y hxy, I_left unimodularity_holds hT p2 (c2.sch a1)] at e2
             exact ⟨a3, left_eq_add.1 (e2.trans (add_comm _ _))⟩
           | zero => rw [map_zero]; exact ⟨zero_mem _, PositivityTheory.ThKG.I_zero _ _⟩
-          | add a b _ _ iha ihb => rw [map_add, I_add' p2 c2 iha.1 ihb.1, iha.2, ihb.2, add_zero]; exact ⟨add_mem iha.1 ihb.1, rfl⟩
+          | add a b _ _ iha ihb => rw [map_add (f := _), I_add' p2 c2 iha.1 ihb.1, iha.2, ihb.2, add_zero]; exact ⟨add_mem iha.1 ihb.1, rfl⟩
           | smul c a _ iha =>
             rw [map_smul]
             exact ⟨Submodule.smul_mem _ _ iha.1, funext fun h => by rw [PositivityTheory.ThKG.I_smul, iha.2]; simp⟩

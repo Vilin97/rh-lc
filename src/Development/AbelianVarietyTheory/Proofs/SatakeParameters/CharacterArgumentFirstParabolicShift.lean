@@ -288,7 +288,7 @@ def movedHom {a b : ℕ} (L' : Submodule (𝓞 E) (Fin a → E)) (L : Submodule 
   carrier := {z | ∀ v ∈ L', h.symm (z (h' v)) ∈ L}
   zero_mem' := fun v _ => by simp
   add_mem' := fun hx hy v hv => by
-    rw [LinearMap.add_apply, map_add]
+    rw [LinearMap.add_apply, map_add (f := _)]
     exact add_mem (hx v hv) (hy v hv)
   neg_mem' := fun hx v hv => by
     rw [LinearMap.neg_apply, map_neg]

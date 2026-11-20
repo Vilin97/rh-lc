@@ -56,7 +56,7 @@ theorem tMul_of_box : ∀ (R : Type) [CommRing R] [IsDomain R] (D D₁ D₂ : De
   have B0 := B (χ + χ')
   have Ba := B χ
   have Bb := B χ'
-  rw [map_add, map_add, cPoint_add,
+  rw [map_add (f := _), map_add (f := _), cPoint_add,
     show P * (cP D T χ * cP D T χ') = cP D T χ * cP D T χ' * P from mul_comm _ _] at B0
   rw [show P * cP D T χ = cP D T χ * P from mul_comm _ _] at Ba
   rw [show P * cP D T χ' = cP D T χ' * P from mul_comm _ _] at Bb

@@ -214,7 +214,7 @@ theorem transp : ∀ (B0 : Base) (px0 : PreX B0.toPre) (I0 : Col2.ColIn B0 px0),
         map_one' := B.embLL.injective (by rw [hf, map_one, map_one])
         map_mul' := fun x y => B.embLL.injective (by rw [hf, map_mul, map_mul, hf, hf])
         map_zero' := B.embLL.injective (by rw [hf, map_zero, map_zero])
-        map_add' := fun x y => B.embLL.injective (by rw [hf, map_add, map_add, hf, hf]) }
+        map_add' := fun x y => B.embLL.injective (by rw [hf, map_add (f := _), map_add (f := _), hf, hf]) }
     have hι : B.embLL.comp ι = B0.embLL := RingHom.ext hf
     have hsp : ∀ p : B0.LL[X], (∀ z ∈ rts p, z ∈ s) → (p.map ι).Splits := fun p hp =>
       splits_of_roots_mem B0.embLL B.embLL ι hι p fun z hz => hs z (hp z (Multiset.mem_toFinset.2 hz))

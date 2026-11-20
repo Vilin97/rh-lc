@@ -49,7 +49,7 @@ theorem ddiv_monomial {σ : Type} (M α : σ →₀ ℕ) (c : K) :
   · rw [smul_zero]
 
 theorem ddiv_add {σ : Type} (M : σ →₀ ℕ) (F G : MvPolynomial σ K) :
-    ddiv M (F + G) = ddiv M F + ddiv M G := by simp only [ddiv_eq, map_add]
+    ddiv M (F + G) = ddiv M F + ddiv M G := by simp only [ddiv_eq, map_add (f := _)]
 
 theorem ddiv_smul {σ : Type} (M : σ →₀ ℕ) (a : K) (F : MvPolynomial σ K) :
     ddiv M (a • F) = a • ddiv M F := by simp only [ddiv_eq, map_smul]
@@ -101,7 +101,7 @@ theorem digitPart_monomial (p : ℕ) (ρ : D.Tau → Fin D.r → ℕ) (α : D.EA
 
 theorem digitPart_add (p : ℕ) (ρ : D.Tau → Fin D.r → ℕ) (F G : MvPolynomial (D.OL × Fin D.r) K) :
     D.digitPart p ρ (F + G) = D.digitPart p ρ F + D.digitPart p ρ G := by
-  simp only [digitPart_eq, map_add]
+  simp only [digitPart_eq, map_add (f := _)]
 
 theorem digitPart_smul (p : ℕ) (ρ : D.Tau → Fin D.r → ℕ) (a : K) (F : MvPolynomial (D.OL × Fin D.r) K) :
     D.digitPart p ρ (a • F) = a • D.digitPart p ρ F := by

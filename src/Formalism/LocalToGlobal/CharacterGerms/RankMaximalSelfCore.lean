@@ -180,7 +180,7 @@ theorem rank_maximal_self_core (hV1 : FirstVanishingCore) (hFE : FunEqCoreSt) (h
     intro q
     have hq := congrArg (PowerSeries.coeff V.l) (hfil q)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [tyS_coeff_l hl, map_add, map_sub, map_sum] at hq
+      rw [tyS_coeff_l hl, map_add (f := _), map_sub, map_sum] at hq
     have hz : ∑ c : I0, PowerSeries.coeff V.l (if (Y.rawSelf p).ty g c = (Y.rawSelf p).ty (1 - g) q then
         (Y.rawSelf p).sg1 ((Y.rawSelf p).u g c) ((Y.rawSelf p).u (1 - g) q) • tyS V.l (fun s => x s (Sum.inl c))
         else 0) = 0 := by

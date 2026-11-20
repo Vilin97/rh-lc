@@ -17,7 +17,7 @@ theorem cobOne_toConv_eq_zero {δ : H →ₗ[K] K} (hδ : ReciprocityTheory.PGsh
     cobOne K (CartierDual K H) (WithConv.toConv δ) = 0 := by
   rw [cobOne_apply, sub_sub, sub_eq_zero, CartierDual.comul_eq_iff]
   intro a b
-  rw [map_add, LinearMap.add_apply, CartierDual.pair_tmul_tmul, CartierDual.pair_tmul_tmul,
+  rw [map_add (f := _), LinearMap.add_apply, CartierDual.pair_tmul_tmul, CartierDual.pair_tmul_tmul,
     CartierDual.one_apply, CartierDual.one_apply]
   change _ = δ (a * b)
   rw [hδ a b]
@@ -30,7 +30,7 @@ theorem apply_convD (φ : CartierDual K H) (δ : H →ₗ[K] K) (y : H) :
   simp only [ReciprocityTheory.PGsh.convD, LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply]
   generalize comul (R := K) y = t
   induction t with
-  | add u v hu hv => simp only [map_add, hu, hv]
+  | add u v hu hv => simp only [map_add (f := _), hu, hv]
   | tmul a b => simp [mul_comm]
 
 theorem adjoin_primitive_eq_top : ∀ (p : ℕ) [Fact p.Prime] (K H : Type) [Field K] [CharP K p]

@@ -98,7 +98,7 @@ theorem dT_dT (U : Scheme.{0}) (w : ℤ) : dT I J U (w + 1) ∘ₗ dT I J U w = 
   apply DirectSum.linearMap_ext; rintro ⟨⟨s, t⟩, h⟩
   apply TensorProduct.ext'; intro a b
   simp only [LinearMap.comp_apply, LinearMap.zero_apply]
-  rw [dT_tmul, map_add, map_zsmul]
+  rw [dT_tmul, map_add (f := _), map_zsmul]
   rw [dT_tmul (s := s + 1) (t := t) (w := w + 1)]
   rw [dT_tmul (s := s) (t := t + 1) (w := w + 1)]
   rw [dd0 (K := I), dd0 (K := J)]
@@ -151,7 +151,7 @@ def tau : Pair I J (TC I J) where
     exact tres_tmul I J g w ⟨(s, t), h⟩ a b
   leibniz U s t w h a b := by
     simp only [LinearMap.compr₂_apply, TensorProduct.mk_apply, LinearMap.comp_apply]
-    rw [un_d, dT_tmul, map_add, map_zsmul, Units.smul_def]
+    rw [un_d, dT_tmul, map_add (f := _), map_zsmul, Units.smul_def]
 
 theorem tau_lift (U : Scheme.{0}) (w : ℤ) : (tau I J).lift U w = un I J U w := by
   apply DirectSum.linearMap_ext; rintro ⟨⟨s, t⟩, h⟩

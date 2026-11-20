@@ -86,10 +86,10 @@ theorem cube_dilate_bound_at (hψ : IsStdChar D ψ (-1)) (hc : Chart θ σ) {N :
       ext i j
       exact ThetaCont.infPart_eq_zero hc _ fun τ => congrFun (congrFun (congrFun hp τ) i) j
     have := GlobalTheory.HeisOrtho.norm_heisO hψ.1 φ (n • (w - ι (π w))) (y + e (ι (π w)))
-    rw [hl _ hw hinf, ← he, add_assoc, ← map_add, add_sub_cancel] at this
+    rw [hl _ hw hinf, ← he, add_assoc, ← map_add (f := _), add_sub_cancel] at this
     rw [← en, ← en, this]
   have a2 := hM _ hmeas fun γ hγ w => by
-    rw [← en, ← en, map_add, add_left_comm, theta_norm_periodic hψ hφ _ ((heL γ).2 hγ)]
+    rw [← en, ← en, map_add (f := _), add_left_comm, theta_norm_periodic hψ hφ _ ((heL γ).2 hγ)]
   have a3 : ∫⁻ w in 𝓕₀, ‖φ (y + e w)‖ₑ ^ 2 ∂μ₀ = ∫⁻ w in 𝓕, ‖φ (y + w)‖ₑ ^ 2 ∂μ :=
     lintegral_comp_aut (G := WA T S) (ratL T S) hK hcov e heL hμ h𝓕 h1 hm.1 hm.2.1 hm.2.2
       (f := fun x => φ (y + x)) (hφ.cont.comp (continuous_const.add continuous_id)) fun γ hγ w => by

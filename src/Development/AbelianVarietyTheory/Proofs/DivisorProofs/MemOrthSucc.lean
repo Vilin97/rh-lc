@@ -140,10 +140,10 @@ theorem eig_bound {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] (�
     have k := key z hy'
     have ht := heig t v hv hv0 hCv
     have e1 : ‖Φ y‖ ^ 2 = ‖Φ w‖ ^ 2 + ‖Φ z‖ ^ 2 := by
-      rw [hyz, map_add, @norm_add_sq ℂ, h1]; simp
+      rw [hyz, map_add (f := _), @norm_add_sq ℂ, h1]; simp
     have e2 : (⟪Φ y, Φ (C y)⟫_ℂ).re = t.re * ‖Φ w‖ ^ 2 + (⟪Φ z, Φ (C z)⟫_ℂ).re := by
       rw [hyz]
-      simp only [map_add, hCw, map_smul, inner_add_left, inner_add_right, inner_smul_right, h2, h3,
+      simp only [map_add (f := _), hCw, map_smul, inner_add_left, inner_add_right, inner_smul_right, h2, h3,
         inner_self_eq_norm_sq_to_K]
       simp [← Complex.ofReal_pow]
     rw [e1, e2]
@@ -219,8 +219,8 @@ theorem IsPr.zero_iff {π : Module.End ℂ V} {S : Submodule ℂ V} (h : IsPr π
 
 theorem IsPr.comm (h : Rep E) {π : Module.End ℂ V} {S : Submodule ℂ V} (hπ : IsPr π S) (hS : KSt E S)
     {a b : Ix p q} (hab : sameBlock a b) (x : V) : π (E a b x) = E a b (π x) := by
-  have e : E a b x = E a b (π x) + E a b (x - π x) := by rw [← map_add]; simp
-  rw [e, map_add, hπ.of_mem (hS a b hab _ (hπ.1 x)),
+  have e : E a b x = E a b (π x) + E a b (x - π x) := by rw [← map_add (f := _)]; simp
+  rw [e, map_add (f := _), hπ.of_mem (hS a b hab _ (hπ.1 x)),
     hπ.zero_iff.mpr (hS.orth h a b hab _ (hπ.2 x)), add_zero]
 
 theorem IsPr.hw (h : Rep E) {π : Module.End ℂ V} {S : Submodule ℂ V} (hπ : IsPr π S) (hS : KSt E S)

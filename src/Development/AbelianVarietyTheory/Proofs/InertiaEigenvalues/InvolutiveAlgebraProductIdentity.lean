@@ -116,7 +116,7 @@ theorem eq_zero_of_trace [CharZero E] (g : C) (hs : (LinearMap.mulLeft E g).char
     { carrier := {x | ∀ y, Algebra.trace E C (x * y) = 0}
       add_mem' := fun {a b} ha hb y => by
         show Algebra.trace E C ((a + b) * y) = 0
-        rw [add_mul, map_add, ha y, hb y, add_zero]
+        rw [add_mul, map_add (f := _), ha y, hb y, add_zero]
       zero_mem' := fun y => by
         show Algebra.trace E C (0 * y) = 0
         rw [zero_mul, map_zero]
@@ -260,7 +260,7 @@ theorem stable_adjoin (φ : A →ₐ[O] A') (g : A) (M : Submodule O A') (hM : �
     exact M.smul_mem r hy
   | add x z _ _ hx hz =>
     intro y hy
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
     exact M.add_mem (hx y hy) (hz y hy)
   | mul x z _ _ hx hz =>
     intro y hy
@@ -316,7 +316,7 @@ theorem exists_norm (B : InvAlg K) {e : B.A} (hi : e * e = e) (hs : e + B.σ e =
   have hu : (e * v + (1 - e)) * (e * ((v⁻¹ : B.Aˣ) : B.A) + (1 - e)) = 1 := by
     linear_combination ((v : B.A) * ((v⁻¹ : B.Aˣ) : B.A) - v - ((v⁻¹ : B.Aˣ) : B.A) + 1) * hi + e * hvw
   refine ⟨Units.mkOfMulEqOne _ _ hu, ?_⟩
-  rw [Units.val_mkOfMulEqOne, map_add, map_mul, map_sub, map_one, hf, hse]
+  rw [Units.val_mkOfMulEqOne, map_add (f := _), map_mul, map_sub, map_one, hf, hse]
   linear_combination ((v : B.A) ^ 2 - 2 * v + 1) * hi
 
 section Half
@@ -371,7 +371,7 @@ theorem herm (h : Half B e π) (y z : B.A) : B.herm 1 y z =
       have : B.σ e * w = B.σ (e * B.σ w) := by rw [map_mul, B.σ_σ]
       rw [this, GlobalTheory.UnitLemma.Basic.trace_sigma B]
     calc Algebra.trace K.E B.A w = Algebra.trace K.E B.A (e * w) + Algebra.trace K.E B.A (B.σ e * w) := by
-          rw [← map_add, ← add_mul, h.swap, one_mul]
+          rw [← map_add (f := _), ← add_mul, h.swap, one_mul]
     _ = _ := by rw [h.tr, h3, h.tr]
   show Algebra.trace K.E B.A (1 * y * B.σ z) = _
   rw [one_mul, key, Algebra.traceForm_apply, Algebra.traceForm_apply]
@@ -439,8 +439,8 @@ def dual (M : Submodule K.O C) : Submodule K.O C := (Algebra.traceForm K.E C).du
 
 def lift {B : InvAlg K} (π : B.A →ₐ[K.E] C) (M : Submodule K.O C) : Submodule K.O B.A where
   carrier := {y | π y ∈ M ∧ π (B.σ y) ∈ dual M}
-  add_mem' := fun ha hb => ⟨by rw [map_add]; exact M.add_mem ha.1 hb.1,
-    by rw [map_add, map_add]; exact (dual M).add_mem ha.2 hb.2⟩
+  add_mem' := fun ha hb => ⟨by rw [map_add (f := _)]; exact M.add_mem ha.1 hb.1,
+    by rw [map_add (f := _), map_add (f := _)]; exact (dual M).add_mem ha.2 hb.2⟩
   zero_mem' := ⟨by simp, by simp⟩
   smul_mem' := fun a y hy => by
     obtain ⟨b, hb⟩ := sigma_smul B a
@@ -544,7 +544,7 @@ private theorem mem_adjoin_of_mul_eq_one_of_isIntegral {R S : Type} [CommRing R]
   have h3 := divX_mul_X_add (reflect p.natDegree p)
   rw [h0, map_one] at h3
   have h4 : aeval w (divX (reflect p.natDegree p)) * w + 1 = 0 := by
-    rw [← h3, map_add, map_mul, aeval_X, map_one] at h2; exact h2
+    rw [← h3, map_add (f := _), map_mul, aeval_X, map_one] at h2; exact h2
   have h5 : v = -aeval w (divX (reflect p.natDegree p)) := by
     calc v = v * 1 := (mul_one v).symm
       _ = v * (-(aeval w (divX (reflect p.natDegree p)) * w)) := by
@@ -563,7 +563,7 @@ theorem lift_mem (h : Half B e π) (hs : B.P.Separable) (hu : B.g * B.σ B.g = 1
     mem_lift_iff'.2 ⟨by rw [hs2]; exact M.zero_mem, by rw [B.σ_σ, hs1]; exact hb⟩
 
   have hdec : ∀ y, y = s (π y) + B.σ (s (π (B.σ y))) := fun y =>
-    h.ext (by rw [map_add, hs1, hs2, add_zero]) (by rw [map_add, map_add, hs2, B.σ_σ, hs1, zero_add])
+    h.ext (by rw [map_add (f := _), hs1, hs2, add_zero]) (by rw [map_add (f := _), map_add (f := _), hs2, B.σ_σ, hs1, zero_add])
   show IsLat K.O K.E (lift π M) ∧ (∀ y ∈ lift π M, B.g * y ∈ lift π M) ∧
     ∀ y, y ∈ lift π M ↔ ∀ z ∈ lift π M, B.herm 1 y z ∈ (algebraMap K.O K.E).range
   refine ⟨⟨?_, ?_⟩, ?_, ?_⟩
@@ -575,7 +575,7 @@ theorem lift_mem (h : Half B e π) (hs : B.P.Separable) (hu : B.g * B.σ B.g = 1
         (p := fun x _ => B.σ (s x) ∈ Submodule.span K.O ((fun x => B.σ (s x)) '' (S : Set C))) ?_ ?_ ?_ ?_ hx
       · intro x hx'; exact Submodule.subset_span ⟨x, hx', rfl⟩
       · simp
-      · intro x x' _ _ h1 h2; rw [map_add, map_add]; exact add_mem h1 h2
+      · intro x x' _ _ h1 h2; rw [map_add (f := _), map_add (f := _)]; exact add_mem h1 h2
       · intro a x _ h1
         obtain ⟨b, hb⟩ := sigma_smul B a
         rw [LinearMap.map_smul_of_tower, hb]; exact Submodule.smul_mem _ _ h1
@@ -598,7 +598,7 @@ theorem lift_mem (h : Half B e π) (hs : B.P.Separable) (hu : B.g * B.σ B.g = 1
         (p := fun x _ => B.σ (s x) ∈ Submodule.span K.E (lift π M : Set B.A)) ?_ ?_ ?_ ?_ hx
       · intro x hx'; exact Submodule.subset_span (hσsD x hx')
       · simp
-      · intro x x' _ _ h1 h2; rw [map_add, map_add]; exact add_mem h1 h2
+      · intro x x' _ _ h1 h2; rw [map_add (f := _), map_add (f := _)]; exact add_mem h1 h2
       · intro a x _ h1; rw [map_smul, sigma_smul']; exact Submodule.smul_mem _ _ h1
   ·
     have hσg : B.σ B.g * B.g = 1 := by rw [mul_comm]; exact hu
@@ -696,7 +696,7 @@ theorem N_one (h : Half B e π) (he : e ∈ Algebra.adjoin K.O ({B.g} : Set B.A)
       · rw [map_mul, map_mul, h.map_sigma, zero_mul]
     set t₀ : B.A := e * w + B.σ (e * w') with ht₀
     have hσt : B.σ t₀ = B.σ e * B.σ w + e * w' := by
-      rw [ht₀, map_add, B.σ_σ, map_mul]
+      rw [ht₀, map_add (f := _), B.σ_σ, map_mul]
     have h1 : t₀ * B.σ t₀ = 1 := by
       have hww' : B.σ e * (B.σ w' * B.σ w) = B.σ e := by
         rw [← map_mul, ← map_mul, mul_comm w' w, hww]
@@ -708,7 +708,7 @@ theorem N_one (h : Half B e π) (he : e ∈ Algebra.adjoin K.O ({B.g} : Set B.A)
     refine ⟨⟨Units.mkOfMulEqOne t₀ (B.σ t₀) h1, h1⟩, ?_⟩
     apply Units.ext
     show π t₀ = (u : C)
-    rw [ht₀, map_add, map_mul, map_mul, map_mul, h.map_e, hw, h.map_sigma, one_mul, zero_mul, add_zero]
+    rw [ht₀, map_add (f := _), map_mul, map_mul, map_mul, h.map_e, hw, h.map_sigma, one_mul, zero_mul, add_zero]
   show orbSum K.O B.T (B.X 1) (fun _ => 1) =
     orbSum K.O ⊤ {L : Submodule K.O C | IsLat K.O K.E L ∧ ∀ y ∈ L, π B.g * y ∈ L} (fun _ => 1)
   refine orbSum_hom B.T ((Units.map (π : B.A →* C)).comp B.T.subtype) hsurj (B.X 1) _
@@ -815,7 +815,7 @@ theorem half_quot (B : InvAlg K) {e f : B.A} (hi : e * e = e) (hef : e + f = 1) 
       obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective v
       refine ⟨a * e + b * f, ?_⟩
       show (Ideal.Quotient.mk I (a * e + b * f), Ideal.Quotient.mk J (a * e + b * f)) = _
-      simp only [map_add, map_mul, hIe, hIf, hJe, hJf, mul_one, mul_zero, add_zero, zero_add]
+      simp only [map_add (f := _), map_mul, hIe, hIf, hJe, hJf, mul_one, mul_zero, add_zero, zero_add]
   let Ψ : B.A ≃ₐ[K.E] (B.A ⧸ I) × (B.A ⧸ J) := AlgEquiv.ofBijective Φ hΦ
   have hΨ : ∀ y, Ψ y = (Ideal.Quotient.mk I y, Ideal.Quotient.mk J y) := fun y => rfl
   refine ⟨⟨hi, by rw [hs]; exact hef, Ideal.Quotient.mkₐ_surjective K.E I, ?_, ?_⟩, ?_⟩

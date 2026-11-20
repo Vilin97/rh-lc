@@ -52,7 +52,7 @@ theorem ckOn_smul {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] {m : �
 theorem sv_add {σ : Mx k r → (Vs →L[ℂ] Vs)} {w w' : Vs} (h : SV σ w) (h' : SV σ w') : SV σ (w + w') := by
   unfold SV at *
   have := ckOn_add h h'
-  simpa only [map_add] using this
+  simpa only [map_add (f := _)] using this
 
 theorem sv_smul {σ : Mx k r → (Vs →L[ℂ] Vs)} {w : Vs} (s : ℂ) (h : SV σ w) : SV σ (s • w) := by
   unfold SV at *
@@ -122,7 +122,7 @@ theorem top_coeff (hrep : IsCRepOn (UH (Hpk k r)) σ) {w : Vs} (hw : SV σ w) (�
   unfold QuantumDeterminants.Top stepV EcRep
   simp only [EH, EabH]
   rw [rdV_coeff hrep hw (lie1 _) ℓ hg, rdV_coeff hrep hw (lie2 _) ℓ hg]
-  split_ifs <;> simp [map_add, map_smul]
+  split_ifs <;> simp [map_add (f := _), map_smul]
 
 theorem rdV_local {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E] {f f' : Mx k r → E}
     (he : ∀ g ∈ GV k r, f g = f' g) {X : Mx k r} (hX : inLie k r X) {g : Mx k r} (hg : g ∈ GV k r) :

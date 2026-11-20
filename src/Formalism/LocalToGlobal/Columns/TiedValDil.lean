@@ -129,7 +129,7 @@ theorem vdil_row {g : GL (Fin n) Rv} (hint : ∀ i j, (g : Matrix (Fin n) (Fin n
   intro j
   obtain ⟨a, b, hab⟩ := h.cop
   have hab' : ιv (algebraMap (𝓞 E) E a) * ιv pE + ιv (algebraMap (𝓞 E) E b) * ιv (star pE) = 1 := by
-    rw [← algebraMap_cO, ← map_mul, ← map_mul, ← map_mul, ← map_mul, ← map_add, ← map_add, hab, map_one, map_one]
+    rw [← algebraMap_cO, ← map_mul, ← map_mul, ← map_mul, ← map_mul, ← map_add (f := _), ← map_add (f := _), hab, map_one, map_one]
   have h1 := H3 _ (rll_single_mem_Sh n v h j)
   rw [rll_mem_loc_dLat n v _ (div_ne_zero h.star_ne_zero h.coe_ne_zero)] at h1
   have h2 := h1.2
@@ -191,7 +191,7 @@ theorem vdil_put {g : GL (Fin n) Rv} (hi : ∀ i j, (g : Matrix (Fin n) (Fin n) 
     push_cast
     ring
   have h1m : (1 : Matrix (Fin n) (Fin n) Rv) (lastIdx n) j ∈ 𝒪v := afsplit_one_mem _ _ _
-  rw [e2, map_add, rll_IE_incl_mul, rll_IE_incl_mul, hy] at e1
+  rw [e2, map_add (f := _), rll_IE_incl_mul, rll_IE_incl_mul, hy] at e1
   have e3 : y (lastIdx n) j - (1 : Matrix (Fin n) (Fin n) (Formalism.L2.Herm.intAf F E)) (lastIdx n) j =
       Formalism.L2.DIV.oToS F E ((k - 1 : ℤ) : 𝓞 E) *
         (⟨afsplitIE v ((1 : Matrix (Fin n) (Fin n) Rv) (lastIdx n) j), afsplit_IE_int v _ h1m⟩ : Formalism.L2.Herm.intAf F E) +
@@ -200,7 +200,7 @@ theorem vdil_put {g : GL (Fin n) Rv} (hi : ∀ i j, (g : Matrix (Fin n) (Fin n) 
     rw [AddSubgroupClass.coe_sub, Formalism.L2.DIV.lc_one_coe]
     exact e1
   have e4 := congrArg (resS F P) e3
-  rw [map_sub, map_add, map_mul, map_mul, Formalism.L2.DIV.resS_oToS, Formalism.L2.DIV.resS_oToS,
+  rw [map_sub, map_add (f := _), map_mul, map_mul, Formalism.L2.DIV.resS_oToS, Formalism.L2.DIV.resS_oToS,
     Ideal.Quotient.eq_zero_iff_mem.2 (h.mem hP), zero_mul, add_zero, rll_resS_one, vdil_res_one n v hov, map_intCast] at e4
   by_cases hj : j = lastIdx n
   · rw [if_pos hj] at e4 ⊢

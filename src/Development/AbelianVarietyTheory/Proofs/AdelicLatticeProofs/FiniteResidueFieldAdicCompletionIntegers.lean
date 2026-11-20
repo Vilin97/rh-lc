@@ -90,7 +90,7 @@ theorem locConj_locConj (z : LocAlg v) : locConj v (locConj v z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [locConj_tmul, cc]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem locEmb_coe (a : (maximalRealSubfield E)) :
     locEmb v (a : E) = algebraMap (v.adicCompletion (maximalRealSubfield E)) (LocAlg v) (algebraMap (maximalRealSubfield E) _ a) := by
@@ -121,7 +121,7 @@ theorem exists_of_locConj_eq {z : LocAlg v} (hz : locConj v z = z) :
     ∃ a : v.adicCompletion (maximalRealSubfield E), algebraMap _ (LocAlg v) a = z := by
   obtain ⟨θ, h0, hθ⟩ := Published.exists_cc_eq_neg E
   obtain ⟨p, q, rfl⟩ := exists_coord v h0 hθ z
-  rw [map_add, map_mul, locConj_algebraMap, locConj_algebraMap, locConj_locEmb, hθ, map_neg] at hz
+  rw [map_add (f := _), map_mul, locConj_algebraMap, locConj_algebraMap, locConj_locEmb, hθ, map_neg] at hz
   have hu : IsUnit (locEmb v (2 * θ)) := (IsUnit.mk0 _ (mul_ne_zero two_ne_zero h0)).map _
   have : algebraMap _ (LocAlg v) q = 0 := by
     rw [← hu.mul_left_eq_zero, map_mul, map_ofNat]
@@ -144,7 +144,7 @@ theorem locConj_mem {z : LocAlg v} (hz : z ∈ locOrder v) : locConj v z ∈ loc
     obtain ⟨a, rfl⟩ := hx
     exact locEmb_mem_locOrder v (IsCMField.ringOfIntegersComplexConj E a)
   | algebraMap a => rw [locConj_algebraMap']; exact Subalgebra.algebraMap_mem _ a
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 theorem isIntegral_of_mem_locOrder {z : LocAlg v} (hz : z ∈ locOrder v) :
@@ -278,7 +278,7 @@ theorem locEmb_mem_locOrder_iff (z : E) : locEmb v z ∈ locOrder v ↔ z ∈ se
         (algebraMap (maximalRealSubfield E) E) (RingHom.ext_int _ _)⟩
     have hc : locEmb v (cc z) ∈ locOrder v := locConj_mem v hz
     have h1 := (mem_semiLoc_iff v _).2 (real (z + cc z) (by simp [cc, add_comm])
-      (by rw [map_add]; exact add_mem hz hc))
+      (by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hz hc))
     have h2 := (mem_semiLoc_iff v _).2 (real (z * cc z) (by simp [cc, mul_comm])
       (by rw [map_mul]; exact mul_mem hz hc))
     have hi : IsIntegral (semiLoc v) z := by
@@ -626,7 +626,7 @@ theorem exists_unit_locConj_mul_eq {𝔟 : FractionalIdeal (𝓞 E)⁰ E} (hc : 
     rw [← map_mul]; congr 1; field_simp
   have e2 : locEmb v (cc (b⁻¹ * cc b)) * locEmb v (cc b) = locEmb v b := by
     rw [← map_mul, hcu]; congr 1; field_simp
-  rw [e0, map_mul, map_add, map_mul, locConj_locConj, locConj_locEmb, locConj_locEmb]
+  rw [e0, map_mul, map_add (f := _), map_mul, locConj_locConj, locConj_locEmb, locConj_locEmb]
   linear_combination (a : LocAlg v) * e2 - locConj v a * e1
 
 omit [Algebra.Unramified (𝓞 (maximalRealSubfield E)) (𝓞 E)] in
@@ -767,7 +767,7 @@ theorem congr_of_local_norm (H : Published.Landherr) (H' : Published.HasseNormSt
       obtain ⟨p, q, rfl⟩ := exists_coord v h0 hθ z
       refine ⟨p, q, algebraMap_locAlg_injective v ?_⟩
       rw [← locEmb_coe, map_sub, map_mul, ← locEmb_coe, hdθ, map_pow, map_pow, map_mul]
-      rw [map_add, map_mul, locConj_algebraMap, locConj_algebraMap, locConj_locEmb, hθ,
+      rw [map_add (f := _), map_mul, locConj_algebraMap, locConj_algebraMap, locConj_locEmb, hθ,
         map_neg] at hz
       exact hz.trans (by ring))
   refine H E r G G' hG hG' hd hd' hs ⟨(p : E) + q * θ, ?_⟩
@@ -775,7 +775,7 @@ theorem congr_of_local_norm (H : Published.Landherr) (H' : Published.HasseNormSt
     simpa using congrArg Subtype.val hpq
   have h2 : cc ((p : E) + q * θ) = p - q * θ := by
     change IsCMField.complexConj E _ = _
-    rw [map_add, map_mul, IsCMField.complexConj_apply_eq_self, IsCMField.complexConj_apply_eq_self,
+    rw [map_add (f := _), map_mul, IsCMField.complexConj_apply_eq_self, IsCMField.complexConj_apply_eq_self,
       show IsCMField.complexConj E θ = -θ from hθ]
     ring
   rw [h1, h2, hdθ]

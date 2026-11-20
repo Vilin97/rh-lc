@@ -125,7 +125,7 @@ theorem miStar2_at_realisation_alt : GlobalTheory.Published.DiscreteSeriesClassi
         ← mul_assoc, inv_mul_cancel₀ (hr u).ne', one_mul]
     let f' : (Fin (W.P.Dc.a (W.P.I.wU u)) → ℂ) →ₗ[ℂ] (Fin (W.P.Dc.a (W.P.I.wU u)) → ℂ) :=
       { toFun := fun y => Formalism.L2.SG.JoinSI.cjv s (eC.symm (A (eC (Formalism.L2.SG.JoinSI.cjv s y))))
-        map_add' := fun x y => by simp only [Formalism.L2.SG.JoinSI.cjv_add, map_add]
+        map_add' := fun x y => by simp only [Formalism.L2.SG.JoinSI.cjv_add, map_add (f := _)]
         map_smul' := fun a x => by
           simp only [Formalism.L2.SG.JoinSI.cjv_smul, map_smul, Formalism.IndefR.Links.cj_cj, RingHom.id_apply] }
     obtain ⟨M, hM⟩ := heq_mat ha (LinearMap.toMatrix' f')

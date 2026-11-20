@@ -343,7 +343,7 @@ theorem separate_numberField (hK : GlobalTheory.Published.NadelVanishingAndNonKl
   have hUC : Etale (fC ∣_ (πW ⁻¹ᵁ U)) := etale_restrict_of_isPullback Hf U hU
   have hcB : cls (B.pull πM) (LB.isLB_pull hB πM) =
       m • CechPic.pull fC (cls (N.pull πW) hNC) + cls (N'.pull πM) (LB.isLB_pull hN' πM) := by
-    rw [cls_pull hB, cls_pull hN, cls_pull hN', hBc, map_add, map_nsmul, ← pull_comp, ← pull_comp, hf₁]
+    rw [cls_pull hB, cls_pull hN, cls_pull hN', hBc, map_add (f := _), map_nsmul, ← pull_comp, ← pull_comp, hf₁]
   have hpt : ∀ (Y : Scheme.{0}) (y : Sp ℂ ⟶ Y) (O : Y.Opens), y s₀ ∈ O → ⊤ ≤ y ⁻¹ᵁ O := by
     intro Y y O hs t _
     rw [Subsingleton.elim t s₀]
@@ -450,7 +450,7 @@ theorem sections_separate_quotient_fibre : GlobalTheory.Published.NadelVanishing
       m • CechPic.pull f (cls NW hNW) + cls (N'.pull M.σ) (LB.isLB_pull hN' M.σ) := by
     rw [hcls]
     change CechPic.pull M.σ (cls B hB) = m • CechPic.pull M.σ (cls δ hδ) + CechPic.pull M.σ (cls N' hN')
-    rw [hBc, map_add, map_nsmul]
+    rw [hBc, map_add (f := _), map_nsmul]
   have hsep := separate_numberField' hK hNN F σ M.X W' M.str pW f n hfp M.proj hWp' hMgc hWgc hfs hn UW het K' NW hNW
     (N'.pull M.σ) (B.pull M.σ) (LB.isLB_pull hN' M.σ) (LB.isLB_pull hB M.σ) m hNWn hN'σn hm hBM
     J z hzinj hzp hzf (fun j s => by rw [hzgen j s]; exact ⟨hgUW, hamp⟩) k' hk' (fun j => a j * (lam j : ℂ)) (fun g => by

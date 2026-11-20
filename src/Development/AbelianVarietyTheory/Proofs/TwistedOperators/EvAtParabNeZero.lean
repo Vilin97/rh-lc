@@ -91,7 +91,7 @@ private theorem rid_extTensor_twist_detRep_eq_smul (g : GL (Fin r) k × GL (Fin 
     simp only [smul_smul]
     congr 1
     ring
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
 
 theorem evAt_parab (p : parab k (part r t)) (g : GL (Fin (r + t)) k) (f : LiftSp t σ χW χV) :
     evAt t σ χW χV (p * g) f =

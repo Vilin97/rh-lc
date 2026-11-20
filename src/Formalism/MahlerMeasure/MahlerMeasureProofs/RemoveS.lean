@@ -156,7 +156,7 @@ theorem pderiv_comm (i j : σ) (p : MvPolynomial σ k) :
       congr 1
       ring
   · intro p q hp hq
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
 
 end Formalism.GM.ProjS
 
@@ -338,14 +338,14 @@ theorem F_S_mul_k (hw : Function.Injective w) (he : Function.Injective e) (hwe :
       g + X (w c) * pderiv (w c) g + X (e c) * pderiv (e c) g +
         (∑ d, X (w d) * X (e d)) * pderiv (w c) (pderiv (e c) g) := by
     intro c
-    rw [MvPolynomial.pderiv_mul, Formalism.GM.pderiv_e_S he hwe c, map_add, MvPolynomial.pderiv_mul,
+    rw [MvPolynomial.pderiv_mul, Formalism.GM.pderiv_e_S he hwe c, map_add (f := _), MvPolynomial.pderiv_mul,
       MvPolynomial.pderiv_mul, MvPolynomial.pderiv_X_self, Formalism.GM.pderiv_w_S hw hwe c]
     ring
   rw [Formalism.GM.tieF_apply', Formalism.GM.tieF_apply', Finset.sum_congr rfl (fun c _ => hc c)]
   simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
     ← Finset.mul_sum]
   rw [← eulL_apply w g, ← eulL_apply e g, hW, hE]
-  simp only [MvPolynomial.smul_eq_C_mul, map_add, map_natCast, nsmul_eq_mul]
+  simp only [MvPolynomial.smul_eq_C_mul, map_add (f := _), map_natCast, nsmul_eq_mul]
   ring
 
 theorem F_E_pow_comm (hw : Function.Injective w) (he : Function.Injective e) (hwe : ∀ c d, w c ≠ e d)

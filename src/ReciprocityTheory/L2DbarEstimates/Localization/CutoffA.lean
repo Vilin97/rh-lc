@@ -155,7 +155,7 @@ private lemma norm_wd_ofReal_eq_norm_wdb_ofReal (n : ℕ) (j : Fin n) (h : V n �
   unfold wd wdb
   rw [← Complex.norm_conj]
   congr 1
-  simp only [map_div₀, map_sub, map_add, map_mul, key, Complex.conj_I, map_ofNat]
+  simp only [map_div₀, map_sub, map_add (f := _), map_mul, key, Complex.conj_I, map_ofNat]
   ring
 
 theorem cut_norm_d_eq {M : Type*} [TopologicalSpace M] (n : ℕ) (z : M → V n) (j : Fin n)

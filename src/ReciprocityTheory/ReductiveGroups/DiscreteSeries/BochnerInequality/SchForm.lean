@@ -315,7 +315,7 @@ theorem no_of_casimir (hE : IsGlRep E) (hU : IsInfUnitary ε E)
       · rw [hkhw.2 d c hcd hs, map_zero, inner_zero_left, map_zero, if_neg (ne_of_gt hcd),
           if_neg (fun h => lt_asymm hcd h.1), if_neg (fun h => h.2 hs)]
         simp
-      · rw [hcomm c d, inner_add_left, map_add, hneg d c hs, hsm, if_neg (ne_of_gt hcd),
+      · rw [hcomm c d, inner_add_left, map_add (f := _), hneg d c hs, hsm, if_neg (ne_of_gt hcd),
           if_neg (fun h => lt_asymm hcd h.1), if_pos ⟨hcd, hs⟩]
         have := sq_nonneg ‖E c d w‖
         simp only [zero_add]

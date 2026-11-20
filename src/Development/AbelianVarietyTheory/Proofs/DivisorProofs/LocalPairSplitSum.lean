@@ -18,7 +18,7 @@ theorem etale_of_isZTorsor (B D : Type) [CommRing B] [CommRing D] [Algebra B D] 
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [hΦ, Algebra.TensorProduct.productMap_apply_tmul]
-    | add x y hx hy => simp [map_add, hx, hy]
+    | add x y hx hy => simp [map_add (f := _), hx, hy]
   have hidem : IsIdempotentElem (KaehlerDifferential.ideal B D) := by
     obtain ⟨e, he⟩ := hbij.2 (1 - Pi.single (1 : Multiplicative (ZMod q)) (1 : D))
     have heI : e ∈ KaehlerDifferential.ideal B D := by

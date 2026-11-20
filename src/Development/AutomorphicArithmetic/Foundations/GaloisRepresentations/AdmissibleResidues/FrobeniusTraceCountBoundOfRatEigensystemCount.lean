@@ -174,7 +174,7 @@ theorem traces_from_eigenvalues_rank2 :
   · intro σ
     obtain ⟨u, hu⟩ := D.conj σ
     refine ⟨u, fun s => ?_⟩
-    rw [hu, map_add, map_one, map_multiset_sum, Multiset.map_map, Multiset.map_map]
+    rw [hu, map_add (f := _), map_one, map_multiset_sum, Multiset.map_map, Multiset.map_map]
     congr 2
     apply Multiset.map_congr rfl
     intro b _
@@ -341,7 +341,7 @@ theorem frobenius_trace_norm_nonzero_log_bound :
   have Heisenberg₂ : ∀ (σ : ℂ ≃+* ℂ) (w : ℂ), σ (eis3 q e w) = eis3 q e (σ w) := by
     intro σ w
     simp only [eis3]
-    simp [map_add, map_mul, map_inv₀, map_pow, map_natCast]
+    simp [map_add (f := _), map_mul, map_inv₀, map_pow, map_natCast]
   obtain ⟨NN, hNN⟩ := UpperTheory.exists_int_eq_prod_of_galois_permuted_integral (Orb × D.S) (fun x => F x.1 x.2) (fun x => (hF x.1 x.2).2.1) (by
     intro σ
     obtain ⟨uO, huO⟩ := hσ σ

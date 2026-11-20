@@ -131,7 +131,7 @@ theorem halvesRec_of_facts (hG : GenHalves) (hLa : LaEqMap) (hMM : MMeq) (hPhi :
       intro z hz
       obtain ⟨y, hy, rfl⟩ := AddSubgroup.mem_map.1 hz
       obtain ⟨a, ha, b, hb, rfl⟩ := c1 y hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact AddSubgroup.add_mem_sup
         ⟨AddSubgroup.mem_map_of_mem _ (Submodule.mem_inf.1 ha).1, AddSubgroup.mem_map_of_mem _ (Submodule.mem_inf.1 ha).2⟩
         ⟨AddSubgroup.mem_map_of_mem _ (Submodule.mem_inf.1 hb).1, AddSubgroup.mem_map_of_mem _ (Submodule.mem_inf.1 hb).2⟩
@@ -145,7 +145,7 @@ theorem halvesRec_of_facts (hG : GenHalves) (hLa : LaEqMap) (hMM : MMeq) (hPhi :
     obtain ⟨a', ha', rfl⟩ := AddSubgroup.mem_map.1 ha
     obtain ⟨b', hb', rfl⟩ := AddSubgroup.mem_map.1 hb
     rw [hΛ] at hab ⊢
-    rw [← map_add, AddSubgroup.mem_map_iff_mem hinj] at hab
+    rw [← map_add (f := _), AddSubgroup.mem_map_iff_mem hinj] at hab
     exact AddSubgroup.mem_map_of_mem _ (c2 a' ha' b' hb' hab)
   have einf : ∀ X Y : Submodule (𝓞 D.host.E) (Matrix (Fin N') (Fin N) D.host.E),
       (X ⊓ Y).toAddSubgroup = X.toAddSubgroup ⊓ Y.toAddSubgroup := fun X Y => rfl

@@ -27,7 +27,7 @@ theorem main : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
     intro k; unfold incM; exact Matrix.map_one _ (map_zero _) (map_one _)
   obtain ⟨c, hc⟩ := GlobalTheory.T.schwartz_functional_archimedean_factor F B.ψ hstd (Fin n × Fin d) (fun Φ => thetaSum F (e Φ))
     (fun Φ hΦ Ψ hΨ => by
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact GlobalTheory.WeilM.thetaSum_add F (hE.maps Φ hΦ) (hE.maps Ψ hΨ))
     (fun c Φ _ => by simp only [map_smul]; exact GlobalTheory.WeilM.thetaSum_smul F c (e Φ))
     (fun g hg => by

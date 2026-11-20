@@ -37,7 +37,7 @@ theorem localTransfer : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup p) (K K' : Typ
         simp [T, e', Algebra.TensorProduct.congr_apply, Algebra.TensorProduct.map_tmul]
       rw [this, starT_tmul, starT_tmul]
       simp [T, e', Algebra.TensorProduct.congr_apply, Algebra.TensorProduct.map_tmul]
-    | add x y hx hy => simp only [map_add, MulOpposite.unop_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), MulOpposite.unop_add, hx, hy]
   refine ⟨Units.map (e : K →* K') u, Units.map (T : K ⊗[ℚ] G.C →* K' ⊗[ℚ] G.C) z, ?_, ?_⟩
   · have := hc.map T
     rw [hT1] at this

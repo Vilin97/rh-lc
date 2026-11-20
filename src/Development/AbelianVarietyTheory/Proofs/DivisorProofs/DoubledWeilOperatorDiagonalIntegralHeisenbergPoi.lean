@@ -111,7 +111,7 @@ theorem diagW_omd_point : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
   have hsum : ∀ Y, dd.rho ψ γ Y = dd.rho ψ δ (dd.rho ψ (Matrix.fromCols u'ᵀ 0) Y) := fun Y => by
     rw [hdec]
     unfold Darboux.rho
-    rw [map_add]
+    rw [map_add (f := _)]
     apply GlobalTheory.MixXEvUniq.schr_add
     rw [hδc, hdd xm xm, hdd u'ᵀ 0, hd' u', map_zero, hxm, hd' (P.toBlocks₂₁ * u)]
     simp only [Prod.fst_zero, Prod.snd_zero, neg_zero, sumElim_dotProduct_sumElim, dotProduct_zero,

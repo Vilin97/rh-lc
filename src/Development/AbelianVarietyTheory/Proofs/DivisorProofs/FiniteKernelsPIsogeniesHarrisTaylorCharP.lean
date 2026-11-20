@@ -452,7 +452,7 @@ def transp {o o' : Obj b N s} (ψ : o.A ⟶ o'.A) (hψ : IsMonHom ψ)
   add_mem' := by
     intro z z' hz hz'
     simp only [Set.mem_setOf_eq] at hz hz' ⊢
-    rw [map_add, o.act.add, MonObj.comp_mul, MonObj.mul_comp, hz, hz', _root_.mul_one]
+    rw [map_add (f := _), o.act.add, MonObj.comp_mul, MonObj.mul_comp, hz, hz', _root_.mul_one]
   zero_mem' := by
     simp only [Set.mem_setOf_eq]
     rw [map_zero, act_zero, MonObj.comp_one, MonObj.one_comp]

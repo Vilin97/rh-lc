@@ -68,11 +68,11 @@ theorem UpperTheory.V.Z.Win.Dn.rigid_end_two_w_of_printed_adjoint_lifting :
       rw [← hW g hg]
       exact this
     · show _ = (W g).val.trace
-      rw [hW g g.2, Matrix.trace_fin_two, map_add]
+      rw [hW g g.2, Matrix.trace_fin_two, map_add (f := _)]
       rfl
     · have e2 : ∀ i, residue A ((r g).mat i i) = residue A (algebraMap c.O A ((U3.r0 η Ψ g).mat i i)) := fun i =>
         Ideal.Quotient.eq.2 (hr.red.red g i i)
-      rw [map_add, e2, e2, ← map_inv]
+      rw [map_add (f := _), e2, e2, ← map_inv]
       show _ = residue A (algebraMap c.O A (Ψ g : c.Oˣ)) + residue A (algebraMap c.O A (Ψ (g : G ℚ Ω)⁻¹ : c.Oˣ))
       simp [U3.GG.mat, U3.tor_val, U3.wt1]
     · rw [Subgroup.mem_subgroupOf, k.gal]

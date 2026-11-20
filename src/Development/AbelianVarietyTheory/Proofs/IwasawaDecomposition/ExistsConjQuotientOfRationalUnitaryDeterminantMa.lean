@@ -19,7 +19,7 @@ theorem exists_mul_apply_eq_of_mul_apply_eq_one_of_involution {L : Type} [Field 
     rw [Units.val_mk0, map_sub, hc, hz1]
     ring
   · refine ⟨Units.mk0 (1 + z) h, ?_⟩
-    rw [Units.val_mk0, map_add, map_one]
+    rw [Units.val_mk0, map_add (f := _), map_one]
     linear_combination hz
 
 theorem fixed_of_two {L : Type} [Field L] (c : L →+* L) (z : L) (k k' : Lˣ)

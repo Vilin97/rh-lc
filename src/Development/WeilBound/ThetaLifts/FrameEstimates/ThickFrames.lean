@@ -30,7 +30,7 @@ theorem theta_add (hp : IsPair B M χX χW om r s r' s') {Φ Ψ : Fn F n d} (hΦ
     rw [e, map_mul]
     exact h2
   unfold theta
-  rw [map_add]
+  rw [map_add (f := _)]
   exact GlobalTheory.WeilM.thetaSum_add F (hpres Φ hΦ) (hpres Ψ hΨ)
 
 theorem theta_smul (hp : IsPair B M χX χW om r s r' s') (c : ℂ) {Φ : Fn F n d} (hΦ : Φ ∈ schA F _) (g h) :

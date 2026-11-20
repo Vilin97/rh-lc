@@ -99,7 +99,7 @@ theorem hT_comb (g : ι → S.V) (hG : IsUnit (gramOf g).det) (x y : S.V) (α β
     rw [gram_cOf g hG]
     have := S.herm.eq (g n) x
     simpa [starRingEnd_apply] using this.symm
-  rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply]
+  rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply]
   have hxB : S.hT x (∑ n, β n • g n) = star (cOf g x) ⬝ᵥ ((gramOf g) *ᵥ β) := by
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, LinearMap.map_smul, smul_eq_mul, h2]

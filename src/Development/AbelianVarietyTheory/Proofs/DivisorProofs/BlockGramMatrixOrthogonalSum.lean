@@ -21,7 +21,7 @@ theorem symp_plane_block : ∀ {R S : Type} [CommRing R] [CommRing S] [Algebra R
       Algebra.trace R S (ξ * ∑ i, ∑ k, Y i (Fin.natAdd d₁ 1) * JA i k * c (Y' k (Fin.natAdd d₁ 0))) := by
   intro R S _ _ _ c ξ α _ _ d₁ JA J₁ G h11 h12 h21 h00 h11' h01 h10 Y Y'
   unfold symp
-  rw [← map_add, ← map_sub, ← mul_add, ← mul_sub]
+  rw [← map_add (f := _), ← map_sub, ← mul_add, ← mul_sub]
   congr 2
   unfold hTens
   simp only [Fin.sum_univ_add, Fin.sum_univ_two, h11, h12, h21, h00, h11', h01, h10, Matrix.of_apply,

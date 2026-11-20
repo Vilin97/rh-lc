@@ -43,5 +43,5 @@ theorem UpperTheory.eventually_separable_of_integral_model :
       (derivative P).map (algebraMap E (w.adicCompletion E)) := by
     rw [← Polynomial.derivative_map, hQ, Polynomial.derivative_map]
   have := congrArg (Polynomial.map (algebraMap E (w.adicCompletion E))) hab
-  simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_one] at this ⊢
+  simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_one] at this ⊢
   rw [ha₀, hb₀, hQ, hd, this]

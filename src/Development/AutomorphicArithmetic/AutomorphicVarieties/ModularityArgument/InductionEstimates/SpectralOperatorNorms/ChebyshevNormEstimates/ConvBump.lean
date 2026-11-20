@@ -244,7 +244,7 @@ private theorem Loc.kill {ψ : Sm E (2 + 2)} {a : ℂ} {g : GA E (2 + 2)} (h : L
   have l₂ := h.z y
   rw [lam_eq, hm] at l₂
   have l₃ := (h.lin l₂ (-m.esymm (y.2 + 1))).2 0 (by simp)
-  rw [map_add, map_smul, rt_zop, l₃]
+  rw [map_add (f := _), map_smul, rt_zop, l₃]
   ring
 
 private theorem comb {V : Type} [NormedAddCommGroup V] [InnerProductSpace ℂ V] (c : ℂ) {u v : ℝ → V} {U W : L V}
@@ -285,7 +285,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.genZ :
   set φ := Lm (𝔵.A'.J U)
   set s := (𝔵.Λ y.1).esymm (y.2 + 1) with hs
   have r₃ := (BW.repOps E (2 + 2) μ (by norm_num) _ _ r₁).2.1 _ _ (-s) r₂
-  rw [← map_smul, ← map_add] at r₃
+  rw [← map_smul, ← map_add (f := _)] at r₃
   have key : (-s) • 𝔵.a₀ e + symb β 0 e = 0 := by
     refine bloEx 𝔵 _ fun b b' hb hb' k hk => ?_
     obtain ⟨c, hc0, hcl⟩ := compLine 𝔵 b b' hb hb'

@@ -142,7 +142,7 @@ theorem mem_sSup_irrRep : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L]
   let F : Submodule ℂ C :=
     { carrier := {v | ∀ k ∈ GlobalTheory.IsotOrth.congSub L n N, ρC k v = v}
       zero_mem' := fun k _ => map_zero _
-      add_mem' := fun ha hb k hk => by rw [map_add, ha k hk, hb k hk]
+      add_mem' := fun ha hb k hk => by rw [map_add (f := _), ha k hk, hb k hk]
       smul_mem' := fun c v hv k hk => by rw [map_smul, hv k hk] }
   haveI := hfin N hN
   let ι : F →ₗ[ℂ] ↥(Submodule.span ℂ {f | f ∈ NG.AFall L n a.ρ ∧ ∀ κ, NG.Cong L n N κ → ∀ g, f (g * κ) = f g}) :=

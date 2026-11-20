@@ -171,7 +171,7 @@ theorem LiftGraphPoints.proof : LiftGraphPoints.Statement := by
             show w ⟨k, i⟩ = w ⟨k, c k⟩ * (w ⟨k, i⟩ / w ⟨k, c k⟩)
             field_simp [hwc k]), h2, mul_zero]
     | zero => simp
-    | add x₁ x₂ _ _ h₁ h₂ => simp [map_add, h₁, h₂]
+    | add x₁ x₂ _ _ h₁ h₂ => simp [map_add (f := _), h₁, h₂]
     | smul a x _ hx => simp [smul_eq_mul, map_mul, hx]
 
 end

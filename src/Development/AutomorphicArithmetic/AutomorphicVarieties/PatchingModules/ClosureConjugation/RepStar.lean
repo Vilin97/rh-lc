@@ -19,7 +19,7 @@ theorem UpperTheory.V.Pa.rep_star :
   | zero =>
     have h0 : G.frame.star O B n 0 = 0 := by simpa using sb.2.2.2.2.2.1 0 0
     rw [h0, map_zero, Matrix.transpose_zero]
-  | add p q hp hq => rw [sb.2.2.1, map_add, map_add, hp, hq, Matrix.transpose_add]
+  | add p q hp hq => rw [sb.2.2.1, map_add (f := _), map_add (f := _), hp, hq, Matrix.transpose_add]
   | single g b =>
     rw [sb.2.2.2.2.2.2 g b]
     obtain ⟨he, hc⟩ := eps_eq P g

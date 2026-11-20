@@ -125,7 +125,7 @@ theorem coeff_aeval_CX {σ R : Type} [CommRing R] (c : σ → R) (Q : MvPolynomi
     split_ifs with h
     · subst h; ring
     · rw [mul_zero]
-  | add P Q hP hQ => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hP, hQ, mul_add]
+  | add P Q hP hQ => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hP, hQ, mul_add]
 
 theorem colSub_diag {N : ℕ} (d : D.what₂.Tau → ℂ) :
     colSub (fun τ' => Matrix.diagonal fun _ : Fin N => d τ') =

@@ -85,7 +85,7 @@ theorem blow_mulVec_pt {n : ℕ} (A : Matrix (Fin n) (Fin n) (w.adicCompletion E
     ext i; simp only [Matrix.mulVec, dotProduct, Matrix.map_apply, map_sum, map_mul]
   rw [blow, Matrix.add_mulVec, Matrix.one_mulVec, e1]
   ext i
-  rw [Pi.add_apply, ← map_add, Matrix.sub_mulVec, Matrix.one_mulVec, Pi.sub_apply, add_sub_cancel]
+  rw [Pi.add_apply, ← map_add (f := _), Matrix.sub_mulVec, Matrix.one_mulVec, Pi.sub_apply, add_sub_cancel]
 
 theorem pt_mem_latAt {n : ℕ} (X : Spc F E n) {x : Fin n → w.adicCompletion E} (hx : x ∈ GlobalTheory.LFun.latAt w X.L) :
     (fun i => ptAt hw h (x i)) ∈ GlobalTheory.InertSph.latAt X v := by

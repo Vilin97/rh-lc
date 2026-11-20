@@ -205,7 +205,7 @@ theorem related_gen (hH : HeisOp) (hSk : SkewSolve) {T T' : E} (Λ : Submodule (
     have h := hgram a0 b
     rw [hk a0, hk b, ← hiso1 (frame y1 a0) (frame y1 b)] at h
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+      simp only [map_add (f := _), LinearMap.add_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
       LinearMap.smul_apply, smul_eq_mul, hee, mul_zero, Finset.sum_const_zero, add_zero, hrow, hcol,
       starRingEnd_apply] at h
     rw [Finset.sum_add_distrib]

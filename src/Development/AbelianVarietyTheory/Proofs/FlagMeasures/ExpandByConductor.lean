@@ -134,7 +134,7 @@ private theorem sum_addChar_rep_mul_eq_ite {ϖ : 𝒪[F]} {ψ : AddChar F ℂ}
     rw [← AddChar.map_add_eq_mul, ← add_mul]
     have := addChar_mul_eq_of_quotient_eq hψ hc (y := _root_.GlobalTheory.HL.CharCond.rep ϖ a (r + s))
       (y' := _root_.GlobalTheory.HL.CharCond.rep ϖ a r + _root_.GlobalTheory.HL.CharCond.rep ϖ a s)
-      (by rw [map_add, mk_rep_eq,
+      (by rw [map_add (f := _), mk_rep_eq,
         mk_rep_eq, mk_rep_eq])
     rw [this]
     push_cast

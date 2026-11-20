@@ -38,7 +38,7 @@ theorem mem_of_sum_mem {Ω : Type} [Field Ω] (R : Subring Ω) {Li : Type} [AddC
       have h2 : ρ a (x u + ∑ t ∈ T, x t) - σ u a • (x u + ∑ t ∈ T, x t) =
           ∑ t ∈ T, (σ t a - σ u a) • x t := by
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [map_add, map_sum, hact u a _ (hx u), smul_add, Finset.smul_sum]
+          rw [map_add (f := _), map_sum, hact u a _ (hx u), smul_add, Finset.smul_sum]
         rw [add_sub_add_left_eq_sub, ← Finset.sum_sub_distrib]
         refine Finset.sum_congr rfl fun t _ => ?_
         rw [hact t a _ (hx t), sub_smul]

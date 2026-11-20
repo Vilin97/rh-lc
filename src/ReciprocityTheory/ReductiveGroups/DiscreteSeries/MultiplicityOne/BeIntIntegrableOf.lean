@@ -18,7 +18,7 @@ def MinorsOn (D : RealPlaceData k r Wp Wp) (X : SigData k r) : Prop :=
 
 lemma beInt_add_left (D : RealPlaceData k r Wp Wp) (X : SigData k r) (u v u' : X.Hs) (p : Mt k r × Mt k r) :
     beInt D X (u + v) u' p = beInt D X u u' p + beInt D X v u' p := by
-  simp only [beInt, mc, map_add, inner_add_right, add_mul, add_smul]
+  simp only [beInt, mc, map_add (f := _), inner_add_right, add_mul, add_smul]
 
 lemma beInt_smul_left (D : RealPlaceData k r Wp Wp) (X : SigData k r) (c : ℂ) (u u' : X.Hs)
     (p : Mt k r × Mt k r) : beInt D X (c • u) u' p = c • beInt D X u u' p := by

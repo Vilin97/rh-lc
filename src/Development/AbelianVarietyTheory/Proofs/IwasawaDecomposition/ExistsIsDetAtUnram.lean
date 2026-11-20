@@ -33,7 +33,7 @@ theorem part_mem_intAE {e d : AE D} (he : e * e = e) (hd : finPart D d ∈ intAE
   have h1 : finPart D e ∈ intAE D := GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← RingHom.map_mul, he])
   have h2 : finPart D (1 - e) ∈ intAE D :=
     GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← RingHom.map_mul]; congr 1; linear_combination he)
-  rw [RingHom.map_add, RingHom.map_mul]
+  rw [RingHom.map_add (f := _), RingHom.map_mul]
   exact add_mem (GlobalTheory.SplitHeckeLabel.mul_mem_intA h1 hd) h2
 
 theorem exists_isDetAt_unram : ∀ (D : D7) (V : HSp D) (ε : AF D.host.F) (e : AE D), IsSplitIdem D e → e + cA D e = algebraMap (AF D.host.F) (AE D) ε → ∀ g ∈ KsphC V ∅, ∃ x, IsDetAt e V g x ∧ ∀ χ : (AE D)ˣ →* Circle, UnramAt ε χ → χ x = 1 := by

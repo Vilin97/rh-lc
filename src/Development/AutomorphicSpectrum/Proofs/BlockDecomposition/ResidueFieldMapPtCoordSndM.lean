@@ -41,7 +41,7 @@ theorem closure_eval_ratio {N : ℕ} (p : PSpace ℤ N) (i : Fin (N + 1)) (hp : 
       rw [aeval_C]
       simpa using K.intCast_mem a
     | add a b ha hb =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact K.add_mem ha hb
     | mul_X a j ha =>
       rw [map_mul, map_mul, aeval_X]

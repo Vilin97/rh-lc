@@ -22,7 +22,7 @@ theorem inWj_add {P Q : MvPolynomial σ (KK O)} {j : ℕ} (hP : InWj w P j) (hQ 
     InWj w (P + Q) j := fun m => by
   obtain ⟨a, ha⟩ := hP m
   obtain ⟨b, hb⟩ := hQ m
-  exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add]; ring_nf⟩
+  exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add (f := _)]; ring_nf⟩
 
 theorem inWj_neg {P : MvPolynomial σ (KK O)} {j : ℕ} (hP : InWj w P j) : InWj w (-P) j := fun m => by
   obtain ⟨a, ha⟩ := hP m
@@ -1161,7 +1161,7 @@ theorem order_mem_add {w : O} {P Q : MvPolynomial σ (KK O)} {j : ℕ} (hP : InW
     InWj w (P + Q) j := fun m => by
   obtain ⟨a, ha⟩ := hP m
   obtain ⟨b, hb⟩ := hQ m
-  exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add, mul_add]⟩
+  exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add (f := _), mul_add]⟩
 
 theorem inWPow_neg {w : O} {P : MvPolynomial σ (KK O)} {j : ℕ} (hP : InWj w P j) : InWj w (-P) j := fun m => by
   obtain ⟨a, ha⟩ := hP m
@@ -1410,7 +1410,7 @@ theorem weighted_component_substitute_comm (w : O) (r : ℕ) (g : Matrix (Fin k)
     · rw [h, h1.weightedHomogeneousComponent_same, h2.weightedHomogeneousComponent_same]
     · rw [h1.weightedHomogeneousComponent_ne d h, h2.weightedHomogeneousComponent_ne d h, map_zero]
   · intro P Q hP hQ
-    simp only [map_add, hP, hQ]
+    simp only [map_add (f := _), hP, hQ]
 
 end B4c
 
@@ -3332,7 +3332,7 @@ theorem minor_tail_mem_order_two (hp : 2 ≤ p) (w : O) (Fr : Frames n' r) (hrk 
     InWj w (subst p n' O w n' r g (firstKeyMinor p O Fr hrk g s c) - firstKeyLeading p w Fr hrk s c) 2 := by
   obtain ⟨cc, hcc⟩ := Formalism.CountingSumsFrames.Top.borderedDetLinear (MvPolynomial (TV n' k) O) r
     (fun i => X (posOf n' s, Fin.castLE hrk i)) (topPairingMatrix p O Fr hrk s)
-  rw [subst_first_key_eq w Fr hrk hg hn s hs hA c hc, hcc, map_add]
+  rw [subst_first_key_eq w Fr hrk hg hn s hs hA c hc, hcc, map_add (f := _)]
   have e1 : MvPolynomial.map (algebraMap O (KK O))
       ((-1) ^ r * (C w * X (posOf n' s, c)) * (topPairingMatrix p O Fr hrk s).det) = firstKeyLeading p w Fr hrk s c := by
     unfold firstKeyLeading
@@ -3361,7 +3361,7 @@ theorem substitute_pairing_key_leading_part (hp : 2 ≤ p) (w : O) (Fr : Frames 
       X (posOf n' s, c))), ← Finset.mul_sum, map_mul, MvPolynomial.map_C]
     rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [e0, ← map_add, Finset.mul_sum, ← Finset.sum_add_distrib, map_sum]
+    rw [e0, ← map_add (f := _), Finset.mul_sum, ← Finset.sum_add_distrib, map_sum]
   unfold pairingKey
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
@@ -3968,7 +3968,7 @@ def bx_Gr (w : O) (r : ℕ) (P : MvPolynomial (TV n' k) (KK O)) : Prop :=
   ∀ m, ∃ c : O, P.coeff m = algebraMap O (KK O) (w ^ normDeg r m * c)
 
 theorem bx_normDeg_add (r : ℕ) (m m' : TV n' k →₀ ℕ) : normDeg r (m + m') = normDeg r m + normDeg r m' := by
-  rw [← weight_eq_normal_degree, ← weight_eq_normal_degree, ← weight_eq_normal_degree, map_add]
+  rw [← weight_eq_normal_degree, ← weight_eq_normal_degree, ← weight_eq_normal_degree, map_add (f := _)]
 
 theorem bx_normDeg_single (r : ℕ) (v : TV n' k) : normDeg r (Finsupp.single v 1) = if IsNormal r v then 1 else 0 := by
   rw [← weight_eq_normal_degree, Finsupp.weight_single]
@@ -3983,7 +3983,7 @@ theorem bx_Gr_add {P Q : MvPolynomial (TV n' k) (KK O)} (hP : bx_Gr w r P) (hQ :
   fun m => by
     obtain ⟨a, ha⟩ := hP m
     obtain ⟨b, hb⟩ := hQ m
-    exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add]; ring_nf⟩
+    exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, ← map_add (f := _)]; ring_nf⟩
 
 theorem bx_Gr_zero : bx_Gr w r (0 : MvPolynomial (TV n' k) (KK O)) := fun m => ⟨0, by simp⟩
 
@@ -4056,7 +4056,7 @@ theorem bx_coeff_normDeg (w : O) (r : ℕ) {g : Matrix (Fin k) (Fin k) (WF p n')
     have : subst p n' O w n' r g (C (algebraMap O (KK O) a)) = C (algebraMap O (KK O) a) := by
       unfold subst; exact (liftSubst p n' O w r (LLT n') g).commutes _
     rw [this]; exact bx_Gr_C a
-  | add a b ha hb => rw [map_add, map_add]; exact bx_Gr_add ha hb
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact bx_Gr_add ha hb
   | mul_X a v ha => rw [map_mul, map_X, map_mul]; exact bx_Gr_mul ha (bx_Gr_subst_X w r hg v)
 
 theorem bx_onTops_subst (w : O) {r : ℕ} (Fr : Frames n' r) (g : Matrix (Fin k) (Fin k) (WF p n'))
@@ -5017,7 +5017,7 @@ theorem components_preserve_valuation : ComponentsPreserveValuation := by
   have key : (twistSub LL S (lastIdx n) (multidegreeComponent d G)).coeff m' = (twistSub LL S (lastIdx n) G).coeff m' := by
     conv_rhs => rw [hsplit]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, MvPolynomial.coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
+      rw [map_add (f := _), MvPolynomial.coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
     intro m hm
     apply (twist_substitution_weighted_homog LL S (lastIdx n) m (G.coeff m)).coeff_eq_zero
     intro h

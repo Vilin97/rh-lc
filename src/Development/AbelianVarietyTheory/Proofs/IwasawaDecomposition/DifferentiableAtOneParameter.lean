@@ -140,7 +140,7 @@ theorem hasDerivAt_move (ℓ : S →ₗ[ℂ] ℂ) (d : U →ₗ[ℝ] Module.End 
       Module.Basis.coord_apply]
   have e1 := e 1 c'
   rw [Module.End.one_apply] at e1
-  rw [map_add, e1, e A, add_comm, ← Finset.sum_add_distrib]
+  rw [map_add (f := _), e1, e A, add_comm, ← Finset.sum_add_distrib]
   simp only [e (P _) (c _)]
   refine HasDerivAt.fun_sum fun i _ => ?_
   have := ((LinearMap.toContinuousLinearMap (b.coord i)).hasFDerivAt.comp_hasDerivAt (0 : ℝ) hc).smul (hA (b i))
@@ -228,7 +228,7 @@ theorem DualBases.quad_lie (h : DualBases β b b') {N : Submodule ℂ S} (hN : �
   have h2 := LinearMap.congr_fun this Φ
   simp only [LinearMap.sum_apply, LinearMap.neg_apply, Module.End.mul_apply] at h2
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [quad, LinearMap.sum_apply, Module.End.mul_apply, map_sum, hA _ _ (hN _ _ hΦ), hA _ _ hΦ, map_add, hc,
+    simp only [quad, LinearMap.sum_apply, Module.End.mul_apply, map_sum, hA _ _ (hN _ _ hΦ), hA _ _ hΦ, map_add (f := _), hc,
     Finset.sum_add_distrib, h2]
   abel
 
@@ -267,7 +267,7 @@ theorem scalar_of_comm {B : Module.End ℂ S} (hB : B ∈ Algebra.adjoin ℂ (Se
       obtain ⟨u, rfl⟩ := hx
       exact hc u
     | algebraMap r => exact fun Φ _ => map_smul B r Φ
-    | add x y _ _ hx hy => exact fun Φ hΦ => by rw [LinearMap.add_apply, map_add, hx Φ hΦ, hy Φ hΦ, LinearMap.add_apply]
+    | add x y _ _ hx hy => exact fun Φ hΦ => by rw [LinearMap.add_apply, map_add (f := _), hx Φ hΦ, hy Φ hΦ, LinearMap.add_apply]
     | mul x y _ hy' hx hy =>
       exact fun Φ hΦ => by rw [Module.End.mul_apply, hx _ (apply_mem hN hy' Φ hΦ), hy Φ hΦ, Module.End.mul_apply]
   refine ⟨c, fun Φ hΦ => ?_⟩
@@ -347,12 +347,12 @@ theorem der_comm (p : ℝ → Γ) (h0 : p 0 = 1) (hm : ∀ s t, p (s + t) = p s 
         change (G k * G k⁻¹) x = x
         rw [← map_mul, mul_inv_cancel, map_one]
         rfl) fun x => ContinuousLinearMap.ext_iff.1 h1 x
-    rw [hc _ (hkN Φ hΦ), hc Φ hΦ, map_add, map_smul, map_smul, ← Module.End.mul_apply, ← h2, Module.End.mul_apply]
+    rw [hc _ (hkN Φ hΦ), hc Φ hΦ, map_add (f := _), map_smul, map_smul, ← Module.End.mul_apply, ← h2, Module.End.mul_apply]
   · obtain ⟨Z, hZ, h1, h2, -⟩ := exists_generator ω G ev hs hκ hd hω hG hN hvac hev hline hb p' h0' hm' hc' hA' hder'
     have h3 := commute_deriv hY fun s => (commute_deriv hZ fun t => (hcc s t).map G).symm
     have h4 := hb.quad_lie (Y := Y.toLinearMap) (fun u => apply_mem hN (Algebra.subset_adjoin ⟨u, rfl⟩)) A'
       Z.toLinearMap h2 h1 (fun x => ContinuousLinearMap.ext_iff.1 h3 x) Φ hΦ
-    rw [hc _ (apply_mem hN hA' Φ hΦ), hc Φ hΦ, map_add, map_smul, map_smul, h4]
+    rw [hc _ (apply_mem hN hA' Φ hΦ), hc Φ hΦ, map_add (f := _), map_smul, map_smul, h4]
 
 end Main
 

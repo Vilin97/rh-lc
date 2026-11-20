@@ -17,7 +17,7 @@ def hat {κ : Type} (w : (κ → F) × (κ → F)) : (κ → AF F) × (κ → AF
   (fun i => algebraMap F (AF F) (w.1 i), fun i => algebraMap F (AF F) (w.2 i))
 
 theorem hat_add {κ : Type} (a b : (κ → F) × (κ → F)) : hat (a + b) = hat a + hat b := by
-  simp only [hat, Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add]; rfl
+  simp only [hat, Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add (f := _)]; rfl
 
 theorem hat_smul {κ : Type} (c : F) (a : (κ → F) × (κ → F)) : hat (c • a) = algebraMap F (AF F) c • hat a := by
   simp only [hat, Prod.smul_fst, Prod.smul_snd, Pi.smul_apply, smul_eq_mul, map_mul]; rfl
@@ -61,7 +61,7 @@ def lagr (M : Model σ X W) (M₁ : Model σ X W₁) (H' : Plane E d d₁) :
     Submodule F ((Fin n × Fin d → F) × (Fin n × Fin d → F)) where
   carrier := {w | IsMixed M₁ H' (M.co.e.symm (hat w))}
   zero_mem' := by simpa [hat_zero] using isMixed_zero M₁ H'
-  add_mem' := fun ha hb => by simpa [Set.mem_setOf_eq, hat_add, map_add] using ha.add hb
+  add_mem' := fun ha hb => by simpa [Set.mem_setOf_eq, hat_add, map_add (f := _)] using ha.add hb
   smul_mem' := fun c a ha => by
     show IsMixed M₁ H' (M.co.e.symm (hat (c • a)))
     rw [hat_smul, LinearEquiv.map_smul]

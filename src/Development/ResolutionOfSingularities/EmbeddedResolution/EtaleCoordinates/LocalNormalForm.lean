@@ -170,7 +170,7 @@ private theorem mem_maximalIdeal_mul_of_tmul_D_eq_zero (k : Type*) [CommRing k] 
         = (Ideal.Quotient.mk Jm a - σ (Ideal.Quotient.mk J a))
           + (Ideal.Quotient.mk Jm b - σ (Ideal.Quotient.mk J b)) := by
     intro a b
-    simp only [map_add]
+    simp only [map_add (f := _)]
     ring
   have hsmulk : ∀ (c : k) (a : A),
       Ideal.Quotient.mk Jm (c • a) - σ (Ideal.Quotient.mk J (c • a))

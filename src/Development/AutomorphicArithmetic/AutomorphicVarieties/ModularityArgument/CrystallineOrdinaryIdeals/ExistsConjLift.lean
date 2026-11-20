@@ -76,7 +76,7 @@ private theorem exists_univMat (R : Type) [CommRing R] :
   have hM : IsUnit M := by
     rw [Matrix.isUnit_iff_isUnit_det, MvPowerSeries.isUnit_iff_constantCoeff, RingHom.map_det]
     have : (MvPowerSeries.constantCoeff (σ := Fin 3 × Fin 3) (R := R)).mapMatrix M = 1 := by
-      rw [map_add, map_one]
+      rw [map_add (f := _), map_one]
       ext a b
       simp
     rw [this, Matrix.det_one]
@@ -89,7 +89,7 @@ private theorem gl_ext {S C : Type} [CommRing S] [CommRing C] (F : S →+* C) (u
     Matrix.GeneralLinearGroup.map F u = h := by
   refine Units.ext (Matrix.ext fun a b => ?_)
   show F ((u : Matrix (Fin 3) (Fin 3) S) a b) = _
-  rw [hu, map_add, hx, Matrix.sub_apply]
+  rw [hu, map_add (f := _), hx, Matrix.sub_apply]
   simp only [Matrix.one_apply]
   split_ifs <;> simp
 

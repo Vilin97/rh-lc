@@ -39,7 +39,7 @@ theorem cmCurve_of_uniformisation : ThetaUnifAV → Out.PolBaseChangeSt → (∀
   have hv : IsTangent v := hP.2.1.1 0
   have hwc : ((κ (w : K) : M) : ℂ) = (1 + Complex.I * √d) / 2 := by
     have e := congrArg σ₀ hw
-    rw [map_mul, map_add, map_one, map_ofNat, hσ₀] at e
+    rw [map_mul, map_add (f := _), map_one, map_ofNat, hσ₀] at e
     rw [hκ]
     linear_combination e / 2
   refine ⟨M, hM, κ (w : K), P, v, hwc, hP.1, hP.2.1, ?_, ?_, fun s => ?_,

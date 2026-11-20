@@ -47,7 +47,7 @@ def pairDiff (aug : A →ₐ[R] R) {J : Ideal A} (hJ : J * RingHom.ker aug = ⊥
     linear_combination h₁ + h₂
   map_zero' := by simp
   map_add' b c := by
-    simp only [AddMemClass.coe_add, Prod.fst_add, Prod.snd_add, map_add]
+    simp only [AddMemClass.coe_add, Prod.fst_add, Prod.snd_add, map_add (f := _)]
     ring
   commutes' r := by simp
 

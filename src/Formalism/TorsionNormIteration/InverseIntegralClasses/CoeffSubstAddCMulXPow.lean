@@ -54,7 +54,7 @@ lemma coeff_subst_add_C_mul_X_pow (f b : PowerSeries R) (hb : constantCoeff b = 
     coeff N (f.subst (b + C c * X ^ N)) = coeff N (f.subst b) + coeff 1 f * c := by
   have he : constantCoeff (C c * X ^ N : PowerSeries R) = 0 := by
     rw [map_mul, map_pow, constantCoeff_X, zero_pow (by omega), mul_zero]
-  have hbe : constantCoeff (b + C c * X ^ N) = 0 := by rw [map_add, hb, he, add_zero]
+  have hbe : constantCoeff (b + C c * X ^ N) = 0 := by rw [map_add (f := _), hb, he, add_zero]
   have key : ∀ n : ℕ, coeff N ((b + C c * X ^ N) ^ n) = coeff N (b ^ n) + if n = 1 then c else 0 := by
     intro n
     have hg := geom_sum₂_mul (b + C c * X ^ N) b n
@@ -63,7 +63,7 @@ lemma coeff_subst_add_C_mul_X_pow (f b : PowerSeries R) (hb : constantCoeff b = 
       rw [← sub_eq_iff_eq_add', ← hg]
       ring
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hx, map_add, coeff_X_pow_mul', if_pos le_rfl, Nat.sub_self,
+      rw [hx, map_add (f := _), coeff_X_pow_mul', if_pos le_rfl, Nat.sub_self,
       coeff_zero_eq_constantCoeff_apply, map_mul, constantCoeff_C, map_sum]
     simp only [map_mul, map_pow, hbe, hb]
     rw [sum_zero_pow_mul]
@@ -160,7 +160,7 @@ theorem bwd (h5 : Formalism.LT.CoeffBound.{u}) (h6 : Formalism.LT.PowCongr.{u, 0
   set β₁ : PowerSeries K := β + C c * X ^ N with hβ₁
   have hcoeffβ₁ : ∀ n, coeff n β₁ = coeff n β + if n = N then c else 0 := by
     intro n
-    rw [hβ₁, map_add, coeff_C_mul, coeff_X_pow]
+    rw [hβ₁, map_add (f := _), coeff_C_mul, coeff_X_pow]
     split_ifs <;> simp
   have hβ₁0 : constantCoeff β₁ = 0 := by
     rw [← coeff_zero_eq_constantCoeff_apply, hcoeffβ₁, if_neg (by omega), add_zero,

@@ -27,20 +27,20 @@ theorem h_sum_right (a : Fin D.R.rS → D.host.E) (x : Fin D.R.rS → (VS D).V) 
 
 theorem h_e_nF (hxs : ∀ b, InW X (xs b)) (c b : Fin D.R.rS) : (VS D).hT (X.eX c) (nF X X0 xs M b) = Ym X0 c b := by
   unfold nF om
-  rw [map_add, map_add, map_neg, h_sum_right, h_sum_right, h_sum_right]
+  rw [map_add (f := _), map_add (f := _), map_neg, h_sum_right, h_sum_right, h_sum_right]
   have hx1 : ∀ c d, (VS D).hT (X.eX c) (xs d) = 0 := fun c d => (hxs d c).1
   simp [X.ef, X.ee, hx1, Finset.sum_ite_eq]
 
 theorem h_f_nF (hxs : ∀ b, InW X (xs b)) (c b : Fin D.R.rS) : (VS D).hT (X.fY c) (nF X X0 xs M b) = (X0 * M) c b := by
   unfold nF om
-  rw [map_add, map_add, map_neg, h_sum_right, h_sum_right, h_sum_right]
+  rw [map_add (f := _), map_add (f := _), map_neg, h_sum_right, h_sum_right, h_sum_right]
   have hx2 : ∀ c d, (VS D).hT (X.fY c) (xs d) = 0 := fun c d => (hxs d c).2
   simp [X.ff, h_fe, hx2, Finset.sum_ite_eq]
 
 theorem h_xs_nF (hxs : ∀ b, InW X (xs b)) (c b : Fin D.R.rS) :
     (VS D).hT (xs c) (nF X X0 xs M b) = -∑ d, Ym X0 d b * (VS D).hT (xs c) (xs d) := by
   unfold nF om
-  rw [map_add, map_add, map_neg, h_sum_right, h_sum_right, h_sum_right]
+  rw [map_add (f := _), map_add (f := _), map_neg, h_sum_right, h_sum_right, h_sum_right]
   simp [(inW_left X (hxs c) _).1, (inW_left X (hxs c) _).2]
 
 theorem h_nF_left (a : Fin D.R.rS) (y : (VS D).V) :

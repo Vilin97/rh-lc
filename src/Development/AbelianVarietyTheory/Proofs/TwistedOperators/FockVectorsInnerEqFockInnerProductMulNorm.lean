@@ -237,7 +237,7 @@ theorem ipO_pureTensorO : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : In
         simp [hu]
     rw [hF]
     ring
-  · rw [map_add, GlobalTheory.Size.ipO_add_right hψ hHaar hFD (mem P) (mem p) (mem q), hp, hq]
-    simp only [fockIp, MvPolynomial.coeff_add, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+  · rw [map_add (f := _), GlobalTheory.Size.ipO_add_right hψ hHaar hFD (mem P) (mem p) (mem q), hp, hq]
+    simp only [fockIp, MvPolynomial.coeff_add, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 end GlobalTheory.FockIsometry

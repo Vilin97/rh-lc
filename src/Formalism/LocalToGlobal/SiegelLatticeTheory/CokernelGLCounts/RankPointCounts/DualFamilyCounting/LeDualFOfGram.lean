@@ -26,7 +26,7 @@ def ldualF (h : V →ₗ⋆[K] V →ₗ[K] K) (𝔭 : Ideal (𝓞 F)) (x : V) : 
   zero_mem' := by simp
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_ofPred_eq, map_add, LinearMap.add_apply] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _), LinearMap.add_apply] at *
     exact Submodule.add_mem _ ha hb
   smul_mem' := by
     intro c z hz

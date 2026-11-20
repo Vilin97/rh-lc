@@ -193,7 +193,7 @@ theorem exists_fixed_of_level (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 I0 
         funext g
         rw [actM_apply, hT.lev v _ hJ g, hχ, one_mul]
       | zero => exact map_zero _
-      | add a c _ _ ha hc => rw [map_add, ha, hc]
+      | add a c _ _ ha hc => rw [map_add (f := _), ha, hc]
       | smul a c _ hc => rw [map_smul, hc]
     exact hgen y hy.1.1
   have key := GlobalTheory.IsotConjFix.isotIn_conjT_fix_sum D D.R.r _ (actM Y.PY (R.MY 0)) (Minf R.θ Y.PY (R.MY 0)) π U Empty

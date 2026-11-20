@@ -52,7 +52,7 @@ theorem realRd_faithful : ∀ (D : D7) (Γ : Type) [Group Γ] [Fintype Γ] (Pl0 
   classical
   let L : (Rl.HW j (sg0 D A3.A)).H →ₗ[ℂ] (GA D (Wc D j) → ℂ) :=
     { toFun := fun x => (Rl.HW j (sg0 D A3.A)).e x (v₀ j _)
-      map_add' := fun x y => by rw [map_add]; rfl
+      map_add' := fun x y => by rw [map_add (f := _)]; rfl
       map_smul' := fun c x => by rw [map_smul]; rfl }
   have hL : LinearMap.ker L = ⊥ :=
     LinearMap.ker_eq_bot.2 fun x y h => GlobalTheory.LiftScalarCompare.eval_inj hW hv h

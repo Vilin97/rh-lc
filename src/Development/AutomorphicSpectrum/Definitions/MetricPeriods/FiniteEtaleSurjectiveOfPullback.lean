@@ -52,8 +52,8 @@ theorem valAt_aeval {σ : Type} {a : σ → Ω} {r : σ → R} (hz : genPt ξ �
   | add p q hp hq =>
     obtain ⟨_, x, hx, hx'⟩ := hp
     obtain ⟨_, y, hy, hy'⟩ := hq
-    exact ⟨hz, x + y, by rw [map_add, map_add, hx, hy],
-      (map_add (Scheme.stalkClosedPointTo z).hom x y).trans (by rw [map_add, ← hx', ← hy']; rfl)⟩
+    exact ⟨hz, x + y, by rw [map_add (f := _), map_add (f := _), hx, hy],
+      (map_add (Scheme.stalkClosedPointTo z).hom x y).trans (by rw [map_add (f := _), ← hx', ← hy']; rfl)⟩
   | mul_X p i hp => simpa using CoordModel.valAt_mul hp (h i)
 
 omit [Fintype K] [∀ k, Fintype (J k)] in

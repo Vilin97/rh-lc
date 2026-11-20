@@ -132,7 +132,7 @@ theorem Uop_shift (c n : ℤ) (q : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p])
   rw [Uop_eq, Uop_eq, DDop_mul, hq]
   simp only [MvPolynomial.smul_eq_C_mul]
   push_cast
-  simp only [map_add]
+  simp only [map_add (f := _)]
   ring
 
 theorem Uop_shift_pow (c n : ℤ) (q : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p])
@@ -176,9 +176,9 @@ theorem Uop_step_pow (c : ℤ) (x w : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p
       rw [pow_succ, Module.End.mul_apply]
     have e2 : ((Uop p LL c Cs a) ^ (k + 1)) G = ((Uop p LL c Cs a) ^ k) (Uop p LL c Cs a G) := by
       rw [pow_succ, Module.End.mul_apply]
-    rw [e0, h1, map_add, ih, Uop_comm_pow LL Cs a c w hw (k + 1), ← e1, ← e2]
+    rw [e0, h1, map_add (f := _), ih, Uop_comm_pow LL Cs a c w hw (k + 1), ← e1, ← e2]
     push_cast
-    simp only [MvPolynomial.smul_eq_C_mul, map_add, map_one, map_natCast]
+    simp only [MvPolynomial.smul_eq_C_mul, map_add (f := _), map_one, map_natCast]
     ring
 
 theorem eulL_X (i : Fin (K + 1)) (d : Fin r) :
@@ -296,9 +296,9 @@ private theorem Uop_pow_succ_apply_eq (c : ℤ) (H : MvPolynomial (Fin (K + 1) �
     have e2 : Uop p LL (c - 1) Cs a (((Uop p LL (c - 1) Cs a) ^ k) H) =
         ((Uop p LL (c - 1) Cs a) ^ (k + 1)) H := by
       rw [pow_succ' _ k, Module.End.mul_apply]
-    rw [pow_succ' (Uop p LL c Cs a) (k + 1), Module.End.mul_apply, ih, map_add, map_smul, hUV, hsh, e1, e2]
+    rw [pow_succ' (Uop p LL c Cs a) (k + 1), Module.End.mul_apply, ih, map_add (f := _), map_smul, hUV, hsh, e1, e2]
     push_cast
-    simp only [MvPolynomial.smul_eq_C_mul, map_add, map_one, map_natCast]
+    simp only [MvPolynomial.smul_eq_C_mul, map_add (f := _), map_one, map_natCast]
     ring
 
 private theorem Uop_pow_succ_mul_apply (c : ℤ) (x w : MvPolynomial (Fin (K + 1) × Fin r) ℚ_[p])
@@ -336,7 +336,7 @@ private theorem Uop_pow_succ_mul_apply (c : ℤ) (x w : MvPolynomial (Fin (K + 1
       rw [pow_succ' _ k, Module.End.mul_apply]
     rw [e0, ih, map_sub, map_smul, h1, hw', hV, e1, e2, Uop_pow_succ_apply_eq LL Cs a c G k]
     push_cast
-    simp only [MvPolynomial.smul_eq_C_mul, map_add, map_one, map_natCast]
+    simp only [MvPolynomial.smul_eq_C_mul, map_add (f := _), map_one, map_natCast]
     ring
 
 private theorem inv_factorial_succ_mul_succ_eq (k : ℕ) :
@@ -372,7 +372,7 @@ theorem udiv_map (ha : a ∈ Cs) (P : MvPolynomial (Fin (K + 1) × Fin r) ℤ_[p
     exact Submodule.smul_mem _ z (zsmul_mem (FrozenVariableLemmas.intPol_pow p (hX _) k) _)
   · intro P Q hP hQ c k
     beta_reduce
-    rw [map_add, map_add, smul_add]
+    rw [map_add (f := _), map_add (f := _), smul_add]
     exact add_mem (hP c k) (hQ c k)
   · intro P n hP c k
     beta_reduce

@@ -222,7 +222,7 @@ theorem expPhi_hom (G : FGLaw S d) (uvec : Lt1 Dw → Fin d → S) (ℓ ε : Pt 
     fin_cases k
     show _ = subst (fun p : Fin 2 × Fin d => linPt uvec p.1 p.2)
       (X ((0 : Fin 2), i) + X ((1 : Fin 2), i) : MvPowerSeries (Fin 2 × Fin d) S)
-    rw [subst_linPt uvec 0 _ hasSubst_XX, ← coe_substAlgHom (hasSubst_Λ uvec), map_add, coe_substAlgHom,
+    rw [subst_linPt uvec 0 _ hasSubst_XX, ← coe_substAlgHom (hasSubst_Λ uvec), map_add (f := _), coe_substAlgHom,
       subst_X (hasSubst_Λ uvec), subst_X (hasSubst_Λ uvec), linPt, linPt, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun ℓ' _ => ?_
     rw [mul_add]

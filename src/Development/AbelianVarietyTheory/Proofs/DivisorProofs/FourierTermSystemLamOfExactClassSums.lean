@@ -21,7 +21,7 @@ theorem mem_of_forall_mem_sup_pow {V : Type} [CommRing V] [IsNoetherianRing V] [
   have hz : Ideal.Quotient.mk I z ∈ ⨅ j : ℕ, maximalIdeal (V ⧸ I) ^ j := by
     refine Ideal.mem_iInf.mpr fun j => ?_
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp (h j)
-    rw [map_add, Ideal.Quotient.eq_zero_iff_mem.mpr ha, zero_add]
+    rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.mpr ha, zero_add]
     refine pow_le_pow_left' hmax j ?_
     rw [← Ideal.map_pow]
     exact Ideal.mem_map_of_mem _ hb

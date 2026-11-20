@@ -375,7 +375,7 @@ theorem exists_line [Nontrivial R] (h : IsCMExt F E σ) (hM : 1 ≤ M) (hJ : IsH
   unfold qR hR
   generalize algebraMap F R (1 / 2) = u
   rw [e, GlobalTheory.HermLineZeros.hform_expand, hst, mul_assoc (algebraMap R (R ⊗[F] E) t)]
-  simp only [← Algebra.smul_def, map_add, map_smul, smul_eq_mul]
+  simp only [← Algebra.smul_def, map_add (f := _), map_smul, smul_eq_mul]
   ring
 
 end Herm

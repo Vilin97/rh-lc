@@ -41,7 +41,7 @@ theorem exists_nsmul_map_mem {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) (h
       obtain ⟨k, hk⟩ := Finset.dvd_prod_of_mem D hg
       rw [hk, mul_comm, mul_smul]; exact nsmul_mem (hDm g) k
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, smul_add]; exact L.add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact L.add_mem hx hy
   | smul r x _ hx =>
       have : N (r • x) = r • N x := N.map_smul_of_tower r x
       rw [this, smul_comm]; exact L.smul_mem r hx

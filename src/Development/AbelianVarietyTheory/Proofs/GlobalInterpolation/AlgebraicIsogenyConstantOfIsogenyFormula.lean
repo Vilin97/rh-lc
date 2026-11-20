@@ -22,7 +22,7 @@ open PowerSeries
 def InQ (f : PowerSeries ℂ) : Prop := ∀ k, coeff k f ∈ Formalism.MainNotions.TaylorLogMetric.Qbar
 
 theorem inQ_add {f g : PowerSeries ℂ} (hf : InQ f) (hg : InQ g) : InQ (f + g) := fun k => by
-  rw [map_add]; exact add_mem (hf k) (hg k)
+  rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hf k) (hg k)
 
 theorem inQ_neg {f : PowerSeries ℂ} (hf : InQ f) : InQ (-f) := fun k => by
   rw [map_neg]; exact neg_mem (hf k)
@@ -224,7 +224,7 @@ theorem algebraic_isogenyConstant_of_isogenyFormula (e : PowerSeries ℂ) (he : 
     rw [coeff_mk]; simp
   have hlmD : lm = D + C (s / 2) * X ^ 2 := by rw [hlm, hD]; rfl
   have hlm0 : constantCoeff lm = 0 := by
-    rw [hlmD, map_add, hD0, map_mul, map_pow, constantCoeff_X]; simp
+    rw [hlmD, map_add (f := _), hD0, map_mul, map_pow, constantCoeff_X]; simp
   have hnl0 : constantCoeff (-lm) = 0 := by rw [map_neg, hlm0, neg_zero]
 
   have h1 : (rescale α Φ) ^ 2 = Φ ^ (2 * (n + 1)) * Pi := by
@@ -258,7 +258,7 @@ theorem algebraic_isogenyConstant_of_isogenyFormula (e : PowerSeries ℂ) (he : 
   set F0 : PowerSeries ℂ := (2 * (n + 1)) • D - 2 • rescale α D with hF0
   have h3 : -((2 * (n + 1)) • (-lm)) + 2 • rescale α (-lm) = F0 + C t * X ^ 2 := by
     rw [hF0, ht, hlmD]
-    simp only [map_neg, map_add, map_mul, map_pow, rescale_X, rescale_C', nsmul_eq_mul, map_sub, map_natCast]
+    simp only [map_neg, map_add (f := _), map_mul, map_pow, rescale_X, rescale_C', nsmul_eq_mul, map_sub, map_natCast]
     push_cast
     rw [show (C (2 : ℂ) : PowerSeries ℂ) = 2 from map_ofNat C 2]
     ring
@@ -290,7 +290,7 @@ theorem algebraic_isogenyConstant_of_isogenyFormula (e : PowerSeries ℂ) (he : 
   have hB0 : ∀ i, coeff (2 * 0) (B i) = 1 := by
     intro i
     rw [mul_zero, coeff_zero_eq_constantCoeff_apply, hB]
-    simp only [map_mul, map_pow, map_add, map_one, constantCoeff_X]
+    simp only [map_mul, map_pow, map_add (f := _), map_one, constantCoeff_X]
     have : constantCoeff (mvExp (-F0) : PowerSeries ℂ) = 1 := constantCoeff_mvExp hnF0
     rw [this]; simp
   have htri : t ∈ Formalism.MainNotions.TaylorLogMetric.Qbar := by

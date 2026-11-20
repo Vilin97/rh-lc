@@ -325,7 +325,7 @@ def perCl (h : S.Ok) {ι : Type} [Fintype ι] (ℓ : S.Cl → ι → (S.V →ₛ
   letI := h.fintypeCl
   LinearMap.mk₂ ℂ (fun F z => ∑ c : S.Cl,
       ((Nat.card (MulAction.stabilizer S.G (S.outSec.rep c)) : ℕ) : ℂ)⁻¹ * ∑ a, z a * E.extend (ℓ c a) (F c))
-    (fun F F' z => by simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib])
+    (fun F F' z => by simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib])
     (fun a F z => by
       simp only [Pi.smul_apply, map_smul, smul_eq_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun c _ => Finset.sum_congr rfl fun b _ => ?_
@@ -618,7 +618,7 @@ theorem modP.ext_funAt (P : HeightOneSpectrum (𝓞 E)) (M : Submodule (𝓞 E) 
     have h2 : (s * t) • y ∈ M := by rw [mul_smul]; exact M.smul_mem s hty
     have h3 : (s * t) • (x + y) ∈ M := by rw [smul_add]; exact M.add_mem h1 h2
     apply mul_left_cancel₀ (mk_ne_zero hst)
-    rw [mul_add, modP.ext_spec P M g _ hst h3, modP.ext_spec P M g _ hst h1, modP.ext_spec P M g _ hst h2, ← map_add, ← map_add]
+    rw [mul_add, modP.ext_spec P M g _ hst h3, modP.ext_spec P M g _ hst h1, modP.ext_spec P M g _ hst h2, ← map_add (f := _), ← map_add (f := _)]
     congr 2
     exact Subtype.ext (smul_add _ _ _)
   smul := by
@@ -1558,7 +1558,7 @@ theorem stabMapR_injective (hPr : Pr.Ok) (u : Pr.Word) (hpi : ∀ w : SG', Pr.pi
 
 def pairSemi (σ₀ : X.K →+* ℂ) {n : ℕ} (lam : X.Tau → DomWeight n) (y : VV X.K lam) : VV X.K lam →ₛₗ[σ₀] ℂ where
   toFun x := σ₀ (pairBK lam x y)
-  map_add' x x' := by rw [map_add, LinearMap.add_apply, map_add]
+  map_add' x x' := by rw [map_add (f := _), LinearMap.add_apply, map_add (f := _)]
   map_smul' a x := by rw [map_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, smul_eq_mul]
 
 variable (W Λ ΛM) in
@@ -1604,7 +1604,7 @@ def jMCL (σ₀ : X.K →+* ℂ) (hσ : ∀ x : X.K, σ₀ (star x) = starRingEn
   toFun := jMC W ΛM σ₀ hσ hM
   map_add' z z' := by
     funext c
-    simp only [jMC, Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+    simp only [jMC, Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
   map_smul' t z := by
     funext c
     simp only [jMC, Pi.smul_apply, smul_eq_mul, map_mul, mul_smul, Finset.smul_sum]

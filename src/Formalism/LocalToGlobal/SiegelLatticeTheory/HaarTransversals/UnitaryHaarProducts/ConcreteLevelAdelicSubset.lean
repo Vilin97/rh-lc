@@ -422,7 +422,7 @@ theorem trC_phi (x : 𝓞 I.E) (t : 𝓞 I.E ⊗[ℤ] Formalism.UG.intAd I.F) : 
     have : ((x : I.E) * (o : I.E)) = ((x * o : 𝓞 I.E) : I.E) := by simp
     rw [this, ← hs, Algebra.smul_def]
     exact mul_mem (nt_intAd_of_int I s) r.2
-  | add a b ha hb => rw [map_add, map_add]; exact add_mem ha hb
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
 
 theorem nt_trace_of_intAf (a : I.E) (ha : Formalism.UG.inclE (F := I.F) (Af I.F) a ∈ IntAf I.F I.E) (x : 𝓞 I.E) :
     Algebra.trace I.F I.E ((x : I.E) * a) ∈ (algebraMap (𝓞 I.F) I.F).range := by

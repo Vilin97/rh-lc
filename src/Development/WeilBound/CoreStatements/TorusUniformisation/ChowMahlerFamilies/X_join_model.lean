@@ -82,7 +82,7 @@ theorem dim_eq (hinj : Function.Injective (algebraMap O Ω)) (y : (Σ k, ι k) �
     (GenericProjClosureDim.isMultiProjPrime_pointIdeal (R := O) _ hy)
     (by rw [comap_eq_ker]; exact (RingHom.injective_iff_ker_eq_bot _).1 hinj)
   have h2 : Algebra.trdeg O (MRing ι O ⧸ pointIdeal O y) = _ := ConeTrdegFnField.proof O Ω hinj K ι y hy
-  rw [h1, h2, map_add, map_natCast]
+  rw [h1, h2, map_add (f := _), map_natCast]
   congr 1
   push_cast
   ring

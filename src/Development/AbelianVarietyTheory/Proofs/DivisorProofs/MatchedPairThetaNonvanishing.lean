@@ -34,7 +34,7 @@ theorem rest_pure {κ : Type} [Fintype κ] (f : SInf F κ) (φ : ∀ v : Pl F, (
     rw [evFin, AlgHom.comp_apply]
     convert map_zero (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v)
     exact h2
-  simp only [Pi.add_apply, map_add, hz0, add_zero]
+  simp only [Pi.add_apply, map_add (f := _), hz0, add_zero]
 
 theorem hasDerivAt_pure' {κ : Type} [Fintype κ] {T : ℝ → ((κ → AF F) → ℂ) → (κ → AF F) → ℂ} {f f₁ : SInf F κ}
     (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (hSB : ∀ v, φ v ∈ SB (κ → Fv F v))
@@ -78,7 +78,7 @@ theorem pureSpan_deriv (M : Model σ Y W) (P : Submodule ℂ (SInf F (Fin n × F
     refine ⟨y₁ + z₁, add_mem hy₁ hz₁, fun x => ?_⟩
     have h2 := (hyd x).add (hzd x)
     have e : ((fun t => T t y x) + fun t => T t z x) = fun t => T t (y + z) x := by
-      funext t; simp [map_add]
+      funext t; simp [map_add (f := _)]
     rw [e] at h2
     simpa using h2
   | smul c y _ hy =>
@@ -102,7 +102,7 @@ theorem pureSpan_acts (M : Model σ Y W) (P : Submodule ℂ (SInf F (Fin n × Fi
     rw [acts_pure' φ h1 (good_std hstd ⟨h1, h2⟩) hact]
     exact Submodule.subset_span ⟨f₁, hf₁, φ, h1, h2, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ c hy
 
 theorem pureSpan_fin (hA : ActsEx) (B : Base F E) (M : Model σ Y W) {χX χW : Chr F E} {om : Rep σ Y W} {r s r' s' : ℕ}
@@ -135,7 +135,7 @@ theorem pureSpan_fin (hA : ActsEx) (B : Base F E) (M : Model σ Y W) {χX χW : 
     · filter_upwards [hev, Filter.eventually_cofinite_ne v] with w hw hne
       rw [Function.update_of_ne hne]; exact hw
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem exists_minimal_of_chain {α : Type} [PartialOrder α] (Θ : α → Prop) (L : ℕ)
@@ -353,7 +353,7 @@ theorem sup_wstable
   refine ⟨?_, ?_, ?_⟩
   · intro v h hh Φ hΦ
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hΦ
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (hNm.stab.fin v h hh a ha) (hfin v h hh b hb)
   · intro γ hγ Φ hΦ Φ₁ _ hder
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hΦ
@@ -369,14 +369,14 @@ theorem sup_wstable
       have h2 := (ha₁ x).add (hb₁d x)
       have e2 : ((fun t => om (1, γ (Multiplicative.ofAdd t)) a x) + fun t => om (1, γ (Multiplicative.ofAdd t)) b x) =
           fun t => om (1, γ (Multiplicative.ofAdd t)) (a + b) x := by
-        funext t; simp [map_add]
+        funext t; simp [map_add (f := _)]
       rw [e2] at h2
       exact (hder x).unique h2
     rw [e]
     exact Submodule.add_mem_sup ha₁N hb₁
   · intro k hk Φ hΦ
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hΦ
-    rw [map_add]
+    rw [map_add (f := _)]
     refine Submodule.add_mem_sup (hNm.stab.cpt k hk a ha) (pureSpan_acts M P (om (1, k)) hstd (fun f hf => ?_) b hb)
     obtain ⟨f₁, -, hact, -⟩ := hP4 k hk f (hPl hf)
     exact ⟨f₁, hP.2.2.2.2 k hk f hf f₁ hact, hact⟩

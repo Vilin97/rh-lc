@@ -28,7 +28,7 @@ variable {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Type} [Field Qp]
 
 theorem trC_add (z₁ z₂ : Dw → M) : trC Cd (z₁ + z₂) = trC Cd z₁ + trC Cd z₂ := by
   funext g
-  simp only [trC, Pi.add_apply, map_add]
+  simp only [trC, Pi.add_apply, map_add (f := _)]
 
 theorem trC_sub (z₁ z₂ : Dw → M) : trC Cd (z₁ - z₂) = trC Cd z₁ - trC Cd z₂ := by
   funext g
@@ -56,7 +56,7 @@ theorem trC_Z1D' (z : coZ1s (resRep (uRep O' (M := M) r χ) Dw)) (hz : IsLocally
     hc0 _ _
   show Cd.u ((z : Dw → M) (eG.symm (g * h))) =
     Cd.u ((z : Dw → M) (eG.symm g)) + actD Cd.Ce.L g (Cd.u ((z : Dw → M) (eG.symm h)))
-  rw [map_mul eG.symm g h, hc, map_add, Cd.u_act, MulEquiv.apply_symm_apply]
+  rw [map_mul eG.symm g h, hc, map_add (f := _), Cd.u_act, MulEquiv.apply_symm_apply]
 
 variable (F : Submodule O' (H1z (resRep (uRep O' (M := M) r χ) Dw))) (ℓ cB : ℕ)
 
@@ -119,7 +119,7 @@ def lenPre : ↥(Formalism.RepresentationBoundsCohomology.LocallyConstantCohomol
     rw [← trC_add]
     refine diff_mem Cd heG hW (rep F ℓ cB (y₁ + y₂)) (rep F ℓ cB y₁ + rep F ℓ cB y₂) (rep_lc F ℓ cB _)
       ((rep_lc F ℓ cB y₁).add (rep_lc F ℓ cB y₂)) ?_
-    rw [map_add, rep_mk, rep_mk, rep_mk, Submodule.coe_add, sub_self]
+    rw [map_add (f := _), rep_mk, rep_mk, rep_mk, Submodule.coe_add, sub_self]
     exact F.zero_mem
   map_smul' a y := by
     rw [← Submodule.Quotient.mk_smul, Submodule.Quotient.eq]
@@ -284,7 +284,7 @@ theorem hB_zero (hzero : divisibleCocycles Cd.Ce.L ⊓ HfD PD Cd.Ce.L = divisibl
   rw [← hg, map_sub, Cd.u_act, AddEquiv.apply_symm_apply]
   show actD Cd.Ce.L (eG (g : Dw)) (x + v) - (x + v) =
     (actD Cd.Ce.L (eG (g : Dw)) x - x) + (actD Cd.Ce.L (eG (g : Dw)) v - v)
-  rw [map_add]
+  rw [map_add (f := _)]
   abel
 
 end Conds

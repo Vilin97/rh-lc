@@ -31,7 +31,7 @@ private theorem fix_of_cert {F B W J : Type*} [Field F] [CommRing B] [Algebra F 
       add_mem' := by
         intro a b ha hb
         simp only [Set.mem_setOf_eq] at *
-        rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+        rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
       zero_mem' := by simp
       smul_mem' := by
         intro c b hb

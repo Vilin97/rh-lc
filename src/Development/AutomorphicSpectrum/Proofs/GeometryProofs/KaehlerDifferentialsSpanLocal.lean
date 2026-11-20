@@ -31,7 +31,7 @@ theorem derivation_mem_span {S B M : Type} [CommRing S] [Algebra ℚ S] [CommRin
       rw [hL]
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add y w _ _ hy hw => rw [map_add]; exact add_mem hy hw
+    | add y w _ _ hy hw => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hw
     | smul a y _ hy =>
       rw [map_smul, hsm]
       exact Submodule.smul_mem _ _ hy
@@ -59,7 +59,7 @@ theorem maximalIdeal_eq_span_of_span_D :
         have : (⟨f 0, hmem 0⟩ : m) = 0 := by ext; simp [hf]
         rw [this, map_zero]
       map_add' := fun a b => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         ext
         simp [hf]
@@ -67,7 +67,7 @@ theorem maximalIdeal_eq_span_of_span_D :
   have hD₀ : ∀ s, D₀ s = m.toCotangent ⟨f s, hmem s⟩ := fun _ => rfl
   have leib : ∀ a b, D₀ (a * b) = ψ a • D₀ b + ψ b • D₀ a := by
     intro a b
-    rw [hD₀, hD₀, hD₀, ← map_smul, ← map_smul, ← map_add, Ideal.toCotangent_eq]
+    rw [hD₀, hD₀, hD₀, ← map_smul, ← map_smul, ← map_add (f := _), Ideal.toCotangent_eq]
     have h2 : f a * f b ∈ m ^ 2 := by
       rw [pow_two]; exact Ideal.mul_mem_mul (hmem a) (hmem b)
     have : ((⟨f (a * b), hmem (a * b)⟩ : m) : B)

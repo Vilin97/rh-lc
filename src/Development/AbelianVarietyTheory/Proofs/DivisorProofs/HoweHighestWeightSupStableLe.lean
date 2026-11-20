@@ -47,7 +47,7 @@ theorem hw_sup_le (p q : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (act : 
     refine Submodule.mem_inf.2 ⟨N.sub_mem (hN _ (isKC_Eab_diag c) n hn) (N.smul_mem _ hn), ?_⟩
     have e : act (Eab c c) n - ((μ c : ℚ) : ℂ) • n = -(act (Eab c c) n' - ((μ c : ℚ) : ℂ) • n') := by
       have := hw c
-      rw [map_add, smul_add] at this
+      rw [map_add (f := _), smul_add] at this
       rw [neg_sub, sub_eq_sub_iff_add_eq_add, this, add_comm]
     rw [e]
     exact N'.neg_mem (N'.sub_mem (hN' _ (isKC_Eab_diag c) n' hn') (N'.smul_mem _ hn'))
@@ -56,7 +56,7 @@ theorem hw_sup_le (p q : ℕ) (V : Type) [AddCommGroup V] [Module ℂ V] (act : 
     refine Submodule.mem_inf.2 ⟨hN _ (isKC_Eab_of_posC hcd) n hn, ?_⟩
     have e : act (Eab c d) n = -(act (Eab c d) n') := by
       have := hpos c d hcd
-      rw [map_add] at this
+      rw [map_add (f := _)] at this
       exact eq_neg_of_add_eq_zero_left this
     rw [e]
     exact N'.neg_mem (hN' _ (isKC_Eab_of_posC hcd) n' hn')

@@ -94,7 +94,7 @@ theorem vr_onto {d : ℕ} {O : Set (Fin d → ℝ)} {U : Set (B.Mat k r)} {κ : 
 def ellL {d : ℕ} (κ : (Fin d → ℝ) → B.Mat k r) (Φ : B.Mat k r → (Fin d → ℝ)) (x ξ : Fin d → ℝ) :
     B.Mat k r →ₗ[ℝ] ℝ where
   toFun X := ξ ⬝ᵥ VR κ Φ X x
-  map_add' X Y := by simp only [VR, Matrix.mul_add, map_add, dotProduct_add]
+  map_add' X Y := by simp only [VR, Matrix.mul_add, map_add (f := _), dotProduct_add]
   map_smul' c X := by simp only [VR, Matrix.mul_smul, map_smul, dotProduct_smul, RingHom.id_apply, smul_eq_mul]
 
 theorem ellL_apply {d : ℕ} (κ : (Fin d → ℝ) → B.Mat k r) (Φ : B.Mat k r → (Fin d → ℝ)) (x ξ : Fin d → ℝ)
@@ -110,7 +110,7 @@ theorem ell_single (ℓ : B.Mat k r →ₗ[ℝ] ℝ) (i j : Fin (2 * r + k + 1))
     ext p q
     simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.single_apply]
     split_ifs <;> simp
-  rw [this, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
+  rw [this, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul]
 
 theorem re_trace_cMat (ℓ : B.Mat k r →ₗ[ℝ] ℝ) (X : B.Mat k r) : (Matrix.trace (cMat ℓ * X)).re = ℓ X := by
   conv_rhs => rw [Matrix.matrix_eq_sum_single X]

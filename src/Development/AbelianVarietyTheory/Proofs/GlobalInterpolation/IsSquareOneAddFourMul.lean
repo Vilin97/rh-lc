@@ -78,7 +78,7 @@ theorem isSquare_one_add_four_mul : ∀ (F : Type) [Field F] [NumberField F] (u 
       push_cast
       ring
     rw [e1]
-    simp only [map_add, map_one, map_mul, map_ofNat]
+    simp only [map_add (f := _), map_one, map_mul, map_ofNat]
   refine ⟨1 + 2 * (s : u.adicCompletion F), ?_⟩
   rw [hL]
   linear_combination (-4 : u.adicCompletion F) * hsK

@@ -61,7 +61,7 @@ theorem cancel (v : Pl F) (g : SInf F κ) (hg : g ≠ 0) (r : (κ → AF F) → 
   have hrz : r (archPt a + z) = g a := by rw [hr _ z hz, hx0]
   have hev : (fun i => evFin F v ((archPt a + z) i)) = y := by
     funext i
-    rw [Pi.add_apply, map_add, evFin_archPt, zero_add]
+    rw [Pi.add_apply, map_add (f := _), evFin_archPt, zero_add]
     exact GlobalTheory.LatVac.evFin_liftV v (y i)
   have e := congrFun h (archPt a + z)
   simp only [tens, hev, hrz] at e

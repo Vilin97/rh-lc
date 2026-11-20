@@ -196,7 +196,7 @@ theorem alg_main {E : Type} [Field E] [NumberField E] {Ω C R A A' : Type} [Fiel
     | add x y _ _ hx hy =>
       obtain ⟨o, ho⟩ := hx
       obtain ⟨o', ho'⟩ := hy
-      exact ⟨o + o', by rw [map_add, map_add, ho, ho']⟩
+      exact ⟨o + o', by rw [map_add (f := _), map_add (f := _), ho, ho']⟩
     | smul c x _ hx =>
       obtain ⟨o, ho⟩ := hx
       exact ⟨c * o, by rw [map_mul, ho, ← algebraMap_smul C c x, map_smul, smul_eq_mul]⟩

@@ -114,7 +114,7 @@ theorem exists_dual (hB : B.IsGood σ) (I : Set (Matrix (Fin n) (Fin d) (AE F E)
   have hY : ∀ a, ∑ j, Y j a • inclR (F := F) (AF F) (b j) = a := fun a => by
     induction a using TensorProduct.induction_on with
     | zero => simp
-    | add p q hp hq => simp only [map_add, add_smul, Finset.sum_add_distrib, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, hp, hq]
     | tmul r x =>
       have e : (r ⊗ₜ[F] x : AE F E) = r • inclR (F := F) (AF F) x := by
         change _ = r • ((1 : AF F) ⊗ₜ[F] x); rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]

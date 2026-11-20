@@ -144,7 +144,7 @@ theorem hilbFn_sub_le_of_regular {P : Ideal (MRing ι F)} (hP : IsMultiProjPrime
     have hxf : IsMultiHomog (x * f) (M + bg) := by
       rw [← hdeg]; exact hxh.mul hf
     have hcomp := congrArg (weightedHomogeneousComponent (blockWeight ι) (M + bg)) hpq
-    rw [map_add, ← component_mul_multiHomog a g M bg hg,
+    rw [map_add (f := _), ← component_mul_multiHomog a g M bg hg,
       hxf.weightedHomogeneousComponent_same] at hcomp
     have hpc : weightedHomogeneousComponent (blockWeight ι) (M + bg) p ∈ P :=
       hP.multiHomog p hp _

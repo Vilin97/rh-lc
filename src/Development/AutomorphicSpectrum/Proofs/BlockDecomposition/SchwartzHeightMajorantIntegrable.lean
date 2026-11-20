@@ -301,7 +301,7 @@ theorem exists_shear_bound (D : D7) (n ρ p : ℕ) (hn : ρ + p = n) (M : Maps D
   set y₂ := e0.symm (0, f) with hy₂
   have hsum : y = y₁ + y₂ := by
     apply e0.injective
-    rw [map_add, hy₁, hy₂, e0.apply_symm_apply, e0.apply_symm_apply, hey]
+    rw [map_add (f := _), hy₁, hy₂, e0.apply_symm_apply, e0.apply_symm_apply, hey]
     simp
   have hc₀ : ∀ τ i j, compAt θ τ y₀ i j = r⁻¹ • z τ i j := fun τ i j => by
     have := congrArg Prod.fst (he0 y₀)

@@ -64,7 +64,7 @@ theorem map_mulN {R : Type} [CommRing R] (φ : R →+* k) (F : FormalGroup R) {U
     have h := law_two hU H (a := (C (n : k) * ℓ : k⟦X⟧)) (b := ℓ)
       (show constantCoeff (C (n : k) * ℓ) = 0 by rw [map_mul, hℓ, mul_zero]) hℓ
     have e : (C ((n + 1 : ℕ) : k) * ℓ : k⟦X⟧) = C (n : k) * ℓ + ℓ := by
-      rw [Nat.cast_succ, map_add, map_one]; ring
+      rw [Nat.cast_succ, map_add (f := _), map_one]; ring
     rw [e]
     refine Eq.trans ?_ h
     rw [← ih, hUℓ]
@@ -87,7 +87,7 @@ theorem deriv_of_mul {g : k⟦X⟧}
   have HS : PowerSeries.HasSubst (MvPowerSeries.X 0 + MvPowerSeries.X 1 : MvPowerSeries (Fin 2) k) :=
     PowerSeries.HasSubst.of_constantCoeff_zero (by simp)
   have h := congrArg (MvPowerSeries.pderiv (R := k) 1) H
-  simp only [map_add, Derivation.leibniz, smul_eq_mul, GlobalTheory.FormalCalc.pderiv_powerSeries_subst (HX _),
+  simp only [map_add (f := _), Derivation.leibniz, smul_eq_mul, GlobalTheory.FormalCalc.pderiv_powerSeries_subst (HX _),
     GlobalTheory.FormalCalc.pderiv_powerSeries_subst HS] at h
   have p0 : MvPowerSeries.pderiv (R := k) 1 (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) k) = 0 := by
     simp [MvPowerSeries.pderiv_X_of_ne]
@@ -125,12 +125,12 @@ theorem subst_log_eq_X [IsAddTorsionFree k] {g L : k⟦X⟧} {γ ω : k} (hγ : 
   have hC : (C γ : k⟦X⟧) * C ω = 1 := by rw [← map_mul, hγ, map_one]
   set r := derivative k L with hr
   have hr' := congrArg (derivative k) hL
-  rw [Derivation.leibniz, map_add, derivative_X, Derivation.map_one_eq_zero] at hr'
+  rw [Derivation.leibniz, map_add (f := _), derivative_X, Derivation.map_one_eq_zero] at hr'
   simp only [smul_eq_mul] at hr'
   have hr0 : constantCoeff r = 1 := by simpa using congrArg constantCoeff hL
   have key : (1 + h) * r = 1 := by
     apply derivative.ext
-    · rw [Derivation.leibniz, map_add, Derivation.map_one_eq_zero, hD]
+    · rw [Derivation.leibniz, map_add (f := _), Derivation.map_one_eq_zero, hD]
       simp only [smul_eq_mul]
       linear_combination (1 + h) * r * hr' - (1 + h) * derivative k r * hL + (1 + h) * r ^ 2 * hC
     · simp [hh0, hr0]
@@ -158,7 +158,7 @@ theorem exists_scale {R K : Type} [CommRing R] [Field K] [CharZero K] (φ : R �
     MvPowerSeries.subst_mul ha, MvPowerSeries.subst_X ha, MvPowerSeries.subst_X ha] at hf
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one] at hf
   have h1 := congrArg (MvPowerSeries.map φ) hf
-  rw [map_add, map_add, map_mul,
+  rw [map_add (f := _), map_add (f := _), map_mul,
     PowerSeries.map_subst (PowerSeries.HasSubst.of_constantCoeff_zero F.zero_constantCoeff),
     PowerSeries.map_subst (HX 0), PowerSeries.map_subst (HX 1), MvPowerSeries.map_X, MvPowerSeries.map_X] at h1
   set f' := PowerSeries.map φ f with hf'

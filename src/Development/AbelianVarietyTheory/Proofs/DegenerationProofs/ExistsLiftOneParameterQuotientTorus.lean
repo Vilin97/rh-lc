@@ -58,7 +58,7 @@ theorem exists_unit [Subsingleton (CommRing.Pic A)] (hα : α.FaithfullyFlat)
     { carrier := {c | ρ c = AddMonoidAlgebra.single x c}
       add_mem' := fun {a b} ha hb => by
         simp only [Set.mem_setOf_eq] at ha hb ⊢
-        rw [map_add, ha, hb, AddMonoidAlgebra.single_add]
+        rw [map_add (f := _), ha, hb, AddMonoidAlgebra.single_add]
       zero_mem' := by simp
       smul_mem' := fun a c hc => by
         simp only [Set.mem_setOf_eq] at hc ⊢
@@ -143,7 +143,7 @@ theorem exists_retraction [Subsingleton (CommRing.Pic A)] [Module.Free ℤ X]
   · rw [hσ, map_one, map_one]
   · simp only [hσ, map_mul]
   · simp only [hσ, map_zero]
-  · simp only [hσ, map_add]
+  · simp only [hσ, map_add (f := _)]
   · exact (hσ _).trans (RingHom.congr_fun hτα a)
 
 end Algebra

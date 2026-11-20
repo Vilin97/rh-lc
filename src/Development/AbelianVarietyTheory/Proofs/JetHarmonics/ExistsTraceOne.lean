@@ -68,10 +68,10 @@ theorem exists_trace_one (D : D7) (p : ℕ) [Fact p.Prime] (h : Formalism.L2.Ker
     have hm' : (D.host.d : D.host.K) + 1 = 8 * (m : D.host.K) := by exact_mod_cast hm
     refine ⟨⟨(1 + θ) / 2, hint⟩, 0, m, ?_, ?_⟩
     · change (1 + θ) / 2 + conjK D ((1 + θ) / 2) = _
-      rw [map_div₀, map_add, map_one, map_ofNat, e]
+      rw [map_div₀, map_add (f := _), map_one, map_ofNat, e]
       push_cast; ring
     · change (1 + θ) / 2 * conjK D ((1 + θ) / 2) = _
-      rw [map_div₀, map_add, map_one, map_ofNat, e]
+      rw [map_div₀, map_add (f := _), map_one, map_ofNat, e]
       push_cast
       linear_combination (-1 / 4 : D.host.K) * hθ + (1 / 4 : D.host.K) * hm'
   · have hj : jacobiSym (-(D.host.d : ℤ)) p = 1 := h.resolve_left h2
@@ -106,10 +106,10 @@ theorem exists_trace_one (D : D7) (p : ℕ) [Fact p.Prime] (h : Formalism.L2.Ker
       (isIntegral_algebraMap (R := ℤ) (x := T)).mul ((isIntegral_algebraMap (R := ℤ) (x := A)).add hθi)
     refine ⟨⟨(T : D.host.K) * (A + θ), hI⟩, k, T ^ 2 * n, ?_, ?_⟩
     · change (T : D.host.K) * (A + θ) + conjK D ((T : D.host.K) * (A + θ)) = _
-      rw [map_mul, map_add, map_intCast, map_intCast, e]
+      rw [map_mul, map_add (f := _), map_intCast, map_intCast, e]
       linear_combination hk'
     · change (T : D.host.K) * (A + θ) * conjK D ((T : D.host.K) * (A + θ)) = _
-      rw [map_mul, map_add, map_intCast, map_intCast, e]
+      rw [map_mul, map_add (f := _), map_intCast, map_intCast, e]
       push_cast
       linear_combination (T : D.host.K) ^ 2 * hn' - (T : D.host.K) ^ 2 * hθ
 
@@ -119,7 +119,7 @@ theorem exists_isIdem : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (lam : Qbar →+* 
   obtain ⟨e, k, n, hs, hp⟩ := exists_trace_one D p h
   have hs' := congrArg (homP D lam) hs
   have hp' := congrArg (homP D lam) hp
-  simp only [map_add, map_mul, map_one, map_natCast, map_intCast, homP_conjK] at hs' hp'
+  simp only [map_add (f := _), map_mul, map_one, map_natCast, map_intCast, homP_conjK] at hs' hp'
   have hex : ∃ e : 𝓞 D.host.K, ‖homP D lam e - 1‖ ≤ (p : ℝ)⁻¹ ∧ ‖homPbar D lam e‖ ≤ (p : ℝ)⁻¹ := by
     rcases dichotomy _ _ k n (norm_int_le D _ e) (norm_int_le D _ e) hs' hp' with h | h
     · exact ⟨e, h⟩

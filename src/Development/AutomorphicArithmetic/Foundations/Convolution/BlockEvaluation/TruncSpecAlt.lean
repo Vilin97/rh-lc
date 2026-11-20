@@ -22,7 +22,7 @@ private theorem deg_le {ι : Type} {d : ℕ} {p : MvPolynomial ι ℂ} (h : p.to
 
 private theorem deg_exp {ι : Type} {d : ℕ} {α : ι →₀ ℕ} (h : α.degree ≤ d) :
     (Finsupp.single none (d - α.degree) + α.mapDomain some : Option ι →₀ ℕ).degree = d := by
-  rw [map_add, Finsupp.degree_single, Finsupp.degree_mapDomain]
+  rw [map_add (f := _), Finsupp.degree_single, Finsupp.degree_mapDomain]
   omega
 
 private theorem homog_deg {ι : Type} {d : ℕ} {p : MvPolynomial ι ℂ} (h : p.totalDegree ≤ d) :
@@ -63,7 +63,7 @@ private theorem mon_norm {σ : Type} [Fintype σ] {H : Type} [NormedAddCommGroup
   | add a b ha hb =>
     have : (monomial (a + b) 1 : MvPolynomial σ ℂ) = monomial a 1 * monomial b 1 := by
       rw [monomial_mul, one_mul]
-    rw [this, map_mul, map_add, pow_add]
+    rw [this, map_mul, map_add (f := _), pow_add]
     exact (norm_mul_le _ _).trans (mul_le_mul ha hb (norm_nonneg _) (by positivity))
   | single i e =>
     rw [← X_pow_eq_monomial, map_pow, Finsupp.degree_single]
@@ -109,7 +109,7 @@ private theorem eval_blockE {K : Type} [Field K] [NumberField K] {n : ℕ} (L : 
     exact aeval_esymm_eq_multiset_esymm (Fin n) ℂ _ _
   induction p using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, hp, aeval_X, eval_X, e]
 
 theorem UpperTheory.ConvolutionTheory.Ci.truncSpec :

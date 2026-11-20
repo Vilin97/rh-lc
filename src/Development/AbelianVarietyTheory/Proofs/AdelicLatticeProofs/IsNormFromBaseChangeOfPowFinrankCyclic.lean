@@ -89,14 +89,14 @@ theorem map_pow_iter {F E K : Type} [Field F] [Field E] [Algebra F E] [CommRing 
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul k e => simp
-    | add u v hu hv => rw [map_add, hu, hv]; rfl
+    | add u v hu hv => rw [map_add (f := _), hu, hv]; rfl
   | succ i ih =>
     rw [Function.iterate_succ_apply', ← ih]
     clear ih
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul k e => simp [pow_succ']
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
 
 theorem exists_pow_of_pow_eq_one {G : Type} [Group G] [Finite G] (σ : G) (d m : ℕ) (hm : m ≠ 0)
     (h : ∀ g, g ∈ Subgroup.zpowers σ) (ho : orderOf σ = d * m) (g : G) (hg : g ^ m = 1) :
@@ -177,7 +177,7 @@ theorem tnorm_of_tnorm_pow : ∀ (F M E K : Type) [Field F] [CharZero F] [Field 
       have : algebraMap M E (σ' e) = σ (algebraMap M E e) :=
         AlgEquiv.restrictNormal_commutes σ M e
       simp [hι, hS, this]
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
   refine ⟨z, ?_⟩
   apply (algebraMap K (K ⊗[F] M)).injective
   apply hinj

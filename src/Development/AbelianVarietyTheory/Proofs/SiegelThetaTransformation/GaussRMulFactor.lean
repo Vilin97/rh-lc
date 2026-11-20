@@ -80,7 +80,7 @@ theorem thR_laws : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : �
     exact h2
   · have h1 := ((heisG_laws E r X g bas idx n hs hn).2.2.2 y φ hφ).2.2.2.2 x hxd (zR X idx x v)
     have h2 : zR X idx x (v + embR X y) = zR X idx x v + zR X idx x (embR X y) := by
-      rw [hLf, map_add]
+      rw [hLf, map_add (f := _)]
     have h3 := RealHeis.gaussR_mul_factor X bas idx x hsym (zR X idx x v) (zR X idx x (embR X y))
     rw [him] at h3
     rw [thR, thR, h1, h2, ← _root_.mul_assoc, ← _root_.mul_assoc, ← h3]

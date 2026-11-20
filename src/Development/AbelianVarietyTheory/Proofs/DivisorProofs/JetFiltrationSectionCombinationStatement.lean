@@ -36,7 +36,7 @@ private theorem fst_aeval {k : ℕ} (c : Fin k → R) (p : MvPolynomial (Fin k) 
     (aeval (fun b => (TrivSqZeroExt.inr (c b) : DualNumber R)) p).fst = AddMonoidAlgebra.coeff p 0 := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [TrivSqZeroExt.algebraMap_eq_inl]
-  | add p q hp hq => rw [map_add, TrivSqZeroExt.fst_add, hp, hq, MvPolynomial.coeff_add]
+  | add p q hp hq => rw [map_add (f := _), TrivSqZeroExt.fst_add, hp, hq, MvPolynomial.coeff_add]
   | mul_X p n hp => simp [← constantCoeff_eq]
 
 private theorem snd_aeval {k : ℕ} (a : Fin k) (p : MvPolynomial (Fin k) R) :
@@ -46,7 +46,7 @@ private theorem snd_aeval {k : ℕ} (a : Fin k) (p : MvPolynomial (Fin k) R) :
   | C r =>
     have : (0 : Fin k →₀ ℕ) ≠ Finsupp.single a 1 := (Finsupp.single_ne_zero.2 one_ne_zero).symm
     simp [TrivSqZeroExt.algebraMap_eq_inl, coeff_C, this]
-  | add p q hp hq => rw [map_add, TrivSqZeroExt.snd_add, hp, hq, MvPolynomial.coeff_add]
+  | add p q hp hq => rw [map_add (f := _), TrivSqZeroExt.snd_add, hp, hq, MvPolynomial.coeff_add]
   | mul_X p n hp =>
     rw [map_mul, TrivSqZeroExt.snd_mul, fst_aeval, aeval_X, coeff_mul_X']
     by_cases h : n = a
@@ -465,7 +465,7 @@ private theorem exists_sep {H : LB G.left} {J : Type} (s : J → H.Sec) (hs : Gl
     have h3 := congrArg (vh _ _ hW) (hr j l)
     rw [map_mul, vh_res _ _ (top_le_tangent hy hl) hW, vh_res _ _ (top_le_tangent hy hl) hW,
       vh_res _ _ (top_le_tangent hy hV) hW] at h3
-    simp only [secComb, Fin.sum_univ_two, map_add, map_mul, Matrix.cons_val_zero, Matrix.cons_val_one]
+    simp only [secComb, Fin.sum_univ_two, map_add (f := _), map_mul, Matrix.cons_val_zero, Matrix.cons_val_one]
     rw [vh_const (algebraMap K (DualNumber K)) G.hom _ (Over.w y),
       vh_const (algebraMap K (DualNumber K)) G.hom _ (Over.w y)]
     erw [h3]

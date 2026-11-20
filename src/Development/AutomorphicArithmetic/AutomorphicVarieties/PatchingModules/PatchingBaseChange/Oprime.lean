@@ -62,7 +62,7 @@ private theorem op_isPrecomplete_finite {R M : Type} [CommRing R] [AddCommGroup 
     induction n with
     | zero => simp [F, hx0]
     | succ n ih =>
-      simp only [F, Finset.sum_range_succ, ← add_assoc, map_add] at ih ⊢
+      simp only [F, Finset.sum_range_succ, ← add_assoc, map_add (f := _)] at ih ⊢
       rw [ih, hde]
       abel
   have hFc : ∀ {m n}, m ≤ n → F m ≡ F n [SMOD (I ^ m • ⊤ : Submodule R (Fin r → R))] := by

@@ -69,7 +69,7 @@ theorem exists_at_inf_values : ∀ {F E : Type} [Field F] [NumberField F] [Field
     rw [smul_add, smul_adAt_tmul u hu, smul_adAt_tmul u hu, add_zero]
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [map_sum, Finset.sum_eq_single v]
-    · rw [map_add, piInf_adAt_same, piInf_adAt_same]
+    · rw [map_add (f := _), piInf_adAt_same, piInf_adAt_same]
       simp only [cR, ext_symm_real, map_one, mul_one]
       have h0 := hξ v
       apply Complex.ext
@@ -79,7 +79,7 @@ theorem exists_at_inf_values : ∀ {F E : Type} [Field F] [NumberField F] [Field
           add_zero, s]
         field_simp
     · intro w _ hw
-      rw [map_add, piInf_adAt_ne (Ne.symm hw), piInf_adAt_ne (Ne.symm hw), add_zero]
+      rw [map_add (f := _), piInf_adAt_ne (Ne.symm hw), piInf_adAt_ne (Ne.symm hw), add_zero]
     · intro hv; exact absurd (Finset.mem_univ v) hv
 
 end GlobalTheory.PolRangeInf

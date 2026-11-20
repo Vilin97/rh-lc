@@ -119,7 +119,7 @@ theorem exists_linop (hO : ArchOp) (hL : ArchLie) (hQ : ArchUniq) (hp : IsPair B
               map_smul' := fun c x => sinf_ext fun L => ?_ }, fun x => ⟨h3 x x.2, fun y =>
       ⟨fun h => ((hQ F _ x.1 (D x x.2) y).2 _ (h4 x x.2) h).symm, fun h => by rw [h]; exact h4 x x.2⟩⟩⟩
     · refine (h5 _ (x + y).2 L).unique ?_
-      simp only [Submodule.coe_add, map_add]
+      simp only [Submodule.coe_add, map_add (f := _)]
       exact (h5 x x.2 L).add (h5 y y.2 L)
     · refine (h5 _ (c • x).2 L).unique ?_
       simp only [Submodule.coe_smul, map_smul, RingHom.id_apply]

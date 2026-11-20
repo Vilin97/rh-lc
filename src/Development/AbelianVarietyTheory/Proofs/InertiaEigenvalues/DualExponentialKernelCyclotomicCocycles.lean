@@ -102,7 +102,7 @@ theorem expStar_add {z z' : GQ l → ℚ_[l]} {α α' : Om l} (h : ExpStar LT G 
   · simp only [h1.2.2 σ hσ τ hτ, h1'.2.2 σ hσ τ hτ]
     ring
   · convert add_mem (h2 σ hσ) (h2' σ hσ) using 1
-    simp only [map_add]
+    simp only [map_add (f := _)]
     ring
 
 theorem expStar_smul {z : GQ l → ℚ_[l]} {α : Om l} (c : ℚ_[l]) (h : ExpStar LT G e z α) :

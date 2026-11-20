@@ -60,7 +60,7 @@ def conjLin (c : (Fin n → E) →+ (Fin n → E)) (hs : ∀ t v, c (t • v) = 
     (Fin n → E) ≃ₗ[E] (Fin n → E) where
   toFun v := c (h (c v))
   invFun v := c (h.symm (c v))
-  map_add' u v := by simp only [map_add]
+  map_add' u v := by simp only [map_add (f := _)]
   map_smul' t v := by simp only [hs, map_smul, L.cj_cj, RingHom.id_apply]
   left_inv v := by simp only [hc, LinearEquiv.symm_apply_apply]
   right_inv v := by simp only [hc, LinearEquiv.apply_symm_apply]
@@ -148,7 +148,7 @@ theorem of_involution (hH : IsHerm L Hm) (c : (Fin n → E) →+ (Fin n → E))
     ext1 v
     show c (g (c (g v))) = v
     have e3 : ∀ w, c (g (c w)) = w + (L.cj s * hf L Hm w a) • a := fun w => by
-      rw [hsv, map_add, hc, hs, ha, map_mul]
+      rw [hsv, map_add (f := _), hc, hs, ha, map_mul]
       congr 3
       rw [← hf', hc, ha]
     rw [e3, hsv v, hf_add_left, hf_smul_left, add_assoc, ← add_smul]
@@ -178,7 +178,7 @@ theorem exists_involution (hH : IsHerm L Hm) {ι : Type} [Fintype ι] (b : ι �
   · induction hmem v using Submodule.span_induction with
     | mem _ h => obtain ⟨i, rfl⟩ := h; rw [hbi, hbi]
     | zero => simp
-    | add x y _ _ h1 h2 => rw [map_add, map_add, h1, h2]
+    | add x y _ _ h1 h2 => rw [map_add (f := _), map_add (f := _), h1, h2]
     | smul t x _ h => rw [hs, hs, L.cj_cj, h]
   · induction hmem v using Submodule.span_induction with
     | mem _ h =>
@@ -191,10 +191,10 @@ theorem exists_involution (hH : IsHerm L Hm) {ι : Type} [Fintype ι] (b : ι �
         · rw [hij]
         · rw [ho i j hij, ho j i (Ne.symm hij)]
       | zero => simp [hf_zero_right]
-      | add x y _ _ h1 h2 => rw [map_add, hf_add_right, hf_add_right, h1, h2, map_add]
+      | add x y _ _ h1 h2 => rw [map_add (f := _), hf_add_right, hf_add_right, h1, h2, map_add (f := _)]
       | smul t x _ h => rw [hs, hf_smul_right, hf_smul_right, h, map_mul]
     | zero => simp [hf_zero_left]
-    | add x y _ _ h1 h2 => rw [map_add, hf_add_left, hf_add_left, h1, h2, map_add]
+    | add x y _ _ h1 h2 => rw [map_add (f := _), hf_add_left, hf_add_left, h1, h2, map_add (f := _)]
     | smul t x _ h => rw [hs, hf_smul_left, hf_smul_left, h, map_mul]
 
 end
@@ -278,7 +278,7 @@ theorem qrefl_inverted : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalS
       have : c (u i) = u i := hbi (Sum.inl i.succ)
       rw [this]; exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add x y _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+    | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
     | smul t x _ h => rw [hs]; exact Submodule.smul_mem _ _ h
   · intro v hv
     induction hv using Submodule.span_induction with
@@ -286,7 +286,7 @@ theorem qrefl_inverted : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalS
       obtain ⟨i, rfl⟩ := h
       rw [hbi]; exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add x y _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+    | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
     | smul t x _ h =>
       have : c (t • x) = (⟨L.cj t, cj_mem_O L t.2⟩ : L.O) • c x := hs t x
       rw [this]; exact Submodule.smul_mem _ _ h

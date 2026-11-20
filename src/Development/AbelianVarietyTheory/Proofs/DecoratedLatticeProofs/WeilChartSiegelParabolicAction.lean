@@ -39,7 +39,7 @@ theorem kfin_of_conj : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFa
       map_add' := fun v w => by
         have hv := hP.weil.om_pres q _ (hSth v.1 v.2)
         have hw := hP.weil.om_pres q _ (hSth w.1 w.2)
-        simp only [Submodule.coe_add, map_add]
+        simp only [Submodule.coe_add, map_add (f := _)]
         exact (lin _ _ hv hw 1).2.2.1
       map_smul' := fun c v => by
         have hv := hP.weil.om_pres q _ (hSth v.1 v.2)

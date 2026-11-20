@@ -73,7 +73,7 @@ theorem coboundary_of_restrict {E : C → Type w} (act : ∀ {S S'}, E S → (S 
           have k1 := hz _ _ _ _ e φ u ψ hq
           have k2 := hg T e hq S S' (φ ≫ u) ψ (by rwa [hact])
           have k3 := hg T' _ (hQ _ _ e φ hq) S S' u ψ hp
-          simp only [map_sub, map_add, hact, Category.assoc] at k2 ⊢
+          simp only [map_sub, map_add (f := _), hact, Category.assoc] at k2 ⊢
           linear_combination k2 - k1 - k3
       exact ⟨x, fun _ ↦ hx⟩
     · exact ⟨0, fun h ↦ absurd h hq⟩
@@ -84,7 +84,7 @@ theorem coboundary_of_restrict {E : C → Type w} (act : ∀ {S S'}, E S → (S 
   have k2 := hh T T' e φ hq S (ψ ≫ u) (by rwa [hact])
   have k3 := hh T T'' e (φ ≫ ψ) hq S u (by rwa [hact])
   have k4 := hh T' T'' _ ψ (hQ _ _ e φ hq) S u hp
-  simp only [map_sub, map_add, hact, Category.assoc, mp_comp] at k2 k3 ⊢
+  simp only [map_sub, map_add (f := _), hact, Category.assoc, mp_comp] at k2 k3 ⊢
   linear_combination k2 - k3 + k4 - k1
 
 open Classical in
@@ -164,7 +164,7 @@ theorem descent_H2_surjective (P : ObjectProperty C) (hP : ∀ S S', (S ⟶ S') 
     have k1 := hb T T' φ _ _ (ψ ≫ u) χ hp
     have k2 := hb T' T'' ψ _ _ u χ hp
     have k3 := hb T T'' (φ ≫ ψ) _ _ u χ hp
-    simp only [map_sub, map_add, Category.assoc] at k1 k3 ⊢
+    simp only [map_sub, map_add (f := _), Category.assoc] at k1 k3 ⊢
     linear_combination k1 + k2 - k3
   choose c hc using h3
   refine ⟨H2.mk F ⟨c, fun T T' T'' T''' φ ψ χ ↦ sub_eq_zero.1 (sep T''' _ fun S u hp ↦ ?_)⟩, ?_⟩
@@ -172,7 +172,7 @@ theorem descent_H2_surjective (P : ObjectProperty C) (hP : ∀ S S', (S ⟶ S') 
     have k2 := hc _ _ _ (φ ≫ ψ) χ S u hp
     have k3 := hc _ _ _ φ (ψ ≫ χ) S u hp
     have k4 := hc _ _ _ ψ χ S u hp
-    simp only [map_sub, map_add, Category.assoc, mp_comp] at k1 k2 k3 ⊢
+    simp only [map_sub, map_add (f := _), Category.assoc, mp_comp] at k1 k2 k3 ⊢
     linear_combination k1 + k2 - k3 - k4
   · rw [CoefMap.pullCohomologyTwo_class]
     congr 1
@@ -500,7 +500,7 @@ theorem vanishing_H2_standard_cover : Van2 F fun S (u : T ⟶ S) ↦ ∃ i, IsUn
       linear_combination ha i S S' S'' u ψ χ h.1 - ha j S S' S'' u ψ χ h.2
   obtain ⟨e, he, he'⟩ := cech2 H hb (fun i j k S u ↦ β j k S u - β i k S u + β i j S u)
     (fun i j k S S' u ψ h ↦ by
-      rw [map_add, map_sub]
+      rw [map_add (f := _), map_sub]
       linear_combination hβ j k S S' u ψ ⟨h.1.2, h.2⟩ - hβ i k S S' u ψ ⟨h.1.1, h.2⟩ +
         hβ i j S S' u ψ h.1)
     (fun _ _ _ _ _ _ _ _ _ _ ↦ by ring)

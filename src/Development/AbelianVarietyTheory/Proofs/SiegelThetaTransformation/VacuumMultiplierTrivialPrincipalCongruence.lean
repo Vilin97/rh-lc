@@ -125,7 +125,7 @@ theorem hostHalfRoot_add_conj_eq_one {E : Type} [Field E] [NumberField E] [IsCMF
     rw [this] at a
     nlinarith [mul_self_nonneg (τ H.rt).re]
   apply τ.injective
-  rw [map_add, cc, IsCMField.complexEmbedding_complexConj, map_one, Complex.add_conj]
+  rw [map_add (f := _), cc, IsCMField.complexEmbedding_complexConj, map_one, Complex.add_conj]
   have h6 := congrArg Complex.re h4
   simp only [add_re, one_re, h5, add_zero, mul_re, re_ofNat, im_ofNat, zero_mul, sub_zero] at h6
   exact_mod_cast h6
@@ -163,7 +163,7 @@ theorem wG_vac_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : 
     choose f' hf' using fun a => (hmem _).1 (hgaL _ ((hmem _).2 ⟨a, rfl⟩))
     exact ⟨{ toFun := f
              invFun := f'
-             map_add' := fun a b => hψi (by rw [map_add, hf, hf, hf, map_add, mulVec_add])
+             map_add' := fun a b => hψi (by rw [map_add (f := _), hf, hf, hf, map_add (f := _), mulVec_add])
              map_smul' := fun c a => hψi (by
                rw [map_smul, hf, hf, map_smul, RingHom.id_apply, mulVec_smul])
              left_inv := fun a => hψi (by rw [hf', hf, hgi])
@@ -176,7 +176,7 @@ theorem wG_vac_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : 
     obtain ⟨e, rfl⟩ := (hmem _).1 hu
     refine ⟨-e, hψi ?_⟩
     rw [hgam, hgi, ← hgam] at he
-    rw [map_add, map_nsmul, map_neg, he, smul_neg, add_neg_cancel_right]
+    rw [map_add (f := _), map_nsmul, map_neg, he, smul_neg, add_neg_cancel_right]
   let N : Matrix (Fin g ⊕ Fin g) (Fin g ⊕ Fin g) ℤ :=
     Matrix.of fun u v => bs.symm (gam (bs (Pi.single v 1))) u
   obtain ⟨h8, hdet⟩ := AdaptedDet.blocks_det_mod_eight E H D g M bs gam N hb8 hM hiso hfull
@@ -201,7 +201,7 @@ theorem wG_vac_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (r : 
   let P : Frame X.Ψ r → D.La →+ (Fin g → ℂ) := fun y =>
     { toFun := fun a => pv X idx y (ψ a)
       map_zero' := by rw [map_zero, pv, per_zero]; rfl
-      map_add' := fun a b => by rw [map_add, pv, per_add]; rfl }
+      map_add' := fun a b => by rw [map_add (f := _), pv, per_add]; rfl }
   have hnorm : ∀ y : Frame X.Ψ r,
       IsUnit (Matrix.of fun i k => pv X idx y (ψ (bs (Pi.single (Sum.inl k) 1))) i)⁻¹.det → ∀ k,
       (Matrix.of fun i k => pv X idx y (ψ (bs (Pi.single (Sum.inl k) 1))) i)⁻¹ *ᵥ

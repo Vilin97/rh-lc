@@ -122,7 +122,7 @@ theorem exists_eval : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAin
     exact h5.unique (hasSum_map hc' (hμ s) ha' ψ h1 h2)
   refine ⟨fun a => κ (∑ i, f (letE i) * ev c (μ s) (a i)), ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro a a' ha ha'
-    rw [← map_add, ← Finset.sum_add_distrib]
+    rw [← map_add (f := _), ← Finset.sum_add_distrib]
     refine congrArg κ (Finset.sum_congr rfl fun i _ => ?_)
     rw [Pi.add_apply, ev_add hc' (hμ s) ((conv_iff_sc _).1 (ha i)) ((conv_iff_sc _).1 (ha' i)), mul_add]
   · intro a a' ha ha'

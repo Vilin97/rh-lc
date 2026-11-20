@@ -53,7 +53,7 @@ theorem Sep.pair {S S' : Type} [Finite S'] [Module.Flat R M] {ev : S → (M →�
     intro z
     induction z with
     | tmul u v => simp [i, mul_comm]
-    | add u v hu hv => simp only [map_add, Pi.add_apply, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), Pi.add_apply, hu, hv]
   rw [key, key]
   exact hab (s, t)
 
@@ -87,7 +87,7 @@ def liftTo {B : Type} [CommRing B] [Algebra R B] {S : Type} (e : S → (B →ₐ
     rw [map_mul, (H a).choose_spec, (H b).choose_spec, (H _).choose_spec, map_mul]
   map_zero' := he _ _ fun s => by rw [(H _).choose_spec, map_zero, map_zero]
   map_add' a b := he _ _ fun s => by
-    rw [map_add, (H a).choose_spec, (H b).choose_spec, (H _).choose_spec, map_add]
+    rw [map_add (f := _), (H a).choose_spec, (H b).choose_spec, (H _).choose_spec, map_add (f := _)]
   commutes' _ := he _ _ fun s => by rw [(H _).choose_spec, AlgHom.commutes, AlgHom.commutes]
 
 theorem ev_liftTo {B : Type} [CommRing B] [Algebra R B] {S : Type} (e : S → (B →ₐ[R] R)) (he : Sep e)

@@ -24,7 +24,7 @@ theorem zalg_comm {N : ℕ} {I : Submodule ℂ (Sm E N)} (hI : ∀ X, ∀ φ ∈
       add_mem' := fun {x y} hx hy φ hφ => by
         obtain ⟨h1, e1⟩ := hx φ hφ
         obtain ⟨h2, e2⟩ := hy φ hφ
-        exact ⟨add_mem h1 h2, by simp only [LinearMap.add_apply, map_add, e1, e2]⟩
+        exact ⟨add_mem h1 h2, by simp only [LinearMap.add_apply, map_add (f := _), e1, e2]⟩
       algebraMap_mem' := fun c φ hφ => ⟨by simpa only [Module.algebraMap_end_apply] using I.smul_mem c hφ,
         by simp only [Module.algebraMap_end_apply, map_smul]⟩ }
   have hcap : ∀ (τ : E →+* ℂ) (u : ℂ), cap τ u ∈ S := fun τ u φ hφ =>

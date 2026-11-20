@@ -60,6 +60,6 @@ theorem primCris_isBC_of_nilThick : ∀ (A₀ : Over (Sp ℂ)) [GrpObj A₀] (g 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x c => rw [liftSemi_tmul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨c, rfl⟩)
-  | add x y hx hy => rw [map_add]; exact add_mem (hx trivial) (hy trivial)
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx trivial) (hy trivial)
 
 end GlobalTheory

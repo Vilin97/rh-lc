@@ -25,7 +25,7 @@ theorem exists_cell_quot_orad_of_inRCone : ∀ (O : Type) [CommRing O] [IsDedeki
     have expand : ∀ n : ℤ, f (n • x + y) (n • x + y) =
         n * n * f x x + n * f x y + n * f y x + f y y := by
       intro n
-      simp only [map_add, map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
+      simp only [map_add (f := _), map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
       ring
     have key := hfp ((-(f y y + 1) * f x y) • x + y)
     rw [expand, hx, hsym] at key

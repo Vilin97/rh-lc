@@ -318,7 +318,7 @@ theorem derivation_prod {F : Type*} [CommRing F] [Algebra R F] {n : ℕ} (D : De
   refine Finset.induction_on s (by simp) ?_
   intro i s hi ih
   rw [Finset.prod_insert hi, Finset.sum_insert hi, Derivation.leibniz, ih, hD]
-  simp only [Algebra.smul_def, smul_eq_mul, map_add, Algebra.algebraMap_self, RingHom.id_apply]
+  simp only [Algebra.smul_def, smul_eq_mul, map_add (f := _), Algebra.algebraMap_self, RingHom.id_apply]
   ring
 
 end Derivatives

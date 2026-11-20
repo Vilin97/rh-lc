@@ -159,7 +159,7 @@ theorem idem_off {z : AE F E} (h : compFin F E v z = 0) : idem F v • z = 0 := 
   have : ∀ z, idem F v • z = j (compFin F E v z) := fun z => by
     induction z using TensorProduct.induction_on with
     | zero => rw [smul_zero, map_zero, map_zero]
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy]
     | tmul a x =>
       refine congrArg (· ⊗ₜ[F] x) (af_ext' ((evI_mul _ _).trans (by rw [evI_idem, zero_mul]; exact evI_zero.symm)) fun u => ?_)
       rcases eq_or_ne u v with rfl | h

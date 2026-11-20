@@ -188,7 +188,7 @@ theorem inv_rel (γ : GL (Fin 2) K) (i j : Fin 2) :
     𝔞 ((γ⁻¹).val i 0) * 𝔞 (γ.val 0 j) + 𝔞 ((γ⁻¹).val i 1) * 𝔞 (γ.val 1 j) =
       if i = j then 1 else 0 := by
   have := congrArg (fun X : Matrix (Fin 2) (Fin 2) K => 𝔞 (X i j)) (Units.inv_mul γ)
-  simp only [Matrix.mul_apply, Fin.sum_univ_two, map_add, map_mul, Matrix.one_apply] at this
+  simp only [Matrix.mul_apply, Fin.sum_univ_two, map_add (f := _), map_mul, Matrix.one_apply] at this
   rw [this]
   split_ifs <;> simp
 

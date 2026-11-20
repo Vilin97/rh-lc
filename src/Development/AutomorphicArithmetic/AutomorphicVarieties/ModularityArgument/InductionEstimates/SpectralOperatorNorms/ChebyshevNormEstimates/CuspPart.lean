@@ -90,7 +90,7 @@ private theorem cheb_ev {σ : Type} (ψ : MvPolynomial (Option σ) ℂ →+* (H 
   have h1 : ∀ (y : MvPolynomial (Option σ) ℂ) (p : Polynomial ℂ), ψ (Polynomial.aeval y p) = Polynomial.aeval (ψ y) p := by
     intro y p
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | monomial k c =>
       simp only [Polynomial.aeval_monomial, map_mul, map_pow, MvPolynomial.algebraMap_eq, hc, Algebra.algebraMap_eq_smul_one]
   have hs : IsSelfAdjoint A := isSelfAdjoint_of_nonneg hA

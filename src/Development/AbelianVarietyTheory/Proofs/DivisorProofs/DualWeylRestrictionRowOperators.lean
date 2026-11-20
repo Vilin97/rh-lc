@@ -21,8 +21,8 @@ theorem rTensor_der_mul {A B : Type} [CommRing A] [Algebra ℚ A] [CommRing B] [
       simp only [Algebra.TensorProduct.tmul_mul_tmul, LinearMap.rTensor_tmul, Derivation.coeFn_coe,
         Derivation.leibniz, smul_eq_mul, add_tmul]
       rw [mul_comm b' b]
-    | add y y' hy hy' => simp only [mul_add, map_add, hy, hy', add_mul]; abel
-  | add x x' hx hx' => simp only [add_mul, mul_add, map_add, hx, hx']; abel
+    | add y y' hy hy' => simp only [mul_add, map_add (f := _), hy, hy', add_mul]; abel
+  | add x x' hx hx' => simp only [add_mul, mul_add, map_add (f := _), hx, hx']; abel
 
 theorem lTensor_der_mul {A B : Type} [CommRing A] [Algebra ℚ A] [CommRing B] [Algebra ℚ B]
     (D : Derivation ℚ B B) (x y : A ⊗[ℚ] B) :
@@ -37,8 +37,8 @@ theorem lTensor_der_mul {A B : Type} [CommRing A] [Algebra ℚ A] [CommRing B] [
       simp only [Algebra.TensorProduct.tmul_mul_tmul, LinearMap.lTensor_tmul, Derivation.coeFn_coe,
         Derivation.leibniz, smul_eq_mul, tmul_add]
       rw [mul_comm a' a]
-    | add y y' hy hy' => simp only [mul_add, map_add, hy, hy', add_mul]; abel
-  | add x x' hx hx' => simp only [add_mul, mul_add, map_add, hx, hx']; abel
+    | add y y' hy hy' => simp only [mul_add, map_add (f := _), hy, hy', add_mul]; abel
+  | add x x' hx hx' => simp only [add_mul, mul_add, map_add (f := _), hx, hx']; abel
 
 theorem natAdd_ne_castAdd' {p q : ℕ} (b : Fin q) (d : Fin p) : Fin.natAdd p b ≠ Fin.castAdd q d := by
   rw [Ne, Fin.ext_iff]; simp only [Fin.coe_natAdd, Fin.coe_castAdd]; omega
@@ -154,16 +154,16 @@ theorem dualWeyl_resDer : ResDer := by
       rw [← MvPolynomial.algebraMap_eq, Derivation.map_algebraMap, map_zero, AlgHom.commutes,
         Algebra.TensorProduct.algebraMap_apply, LinearMap.rTensor_tmul]
       simp
-    | add g h hg hh => rw [map_add, map_add, map_add, hg, hh, map_add]
+    | add g h hg hh => rw [map_add (f := _), map_add (f := _), map_add (f := _), hg, hh, map_add (f := _)]
     | mul_X g v hg =>
-      rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, map_mul, rTensor_der_mul, resT_der_left_X, hg]
+      rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, map_mul, rTensor_der_mul, resT_der_left_X, hg]
   · induction f using MvPolynomial.induction_on with
     | C a =>
       rw [← MvPolynomial.algebraMap_eq, Derivation.map_algebraMap, map_zero, AlgHom.commutes,
         Algebra.TensorProduct.algebraMap_apply, LinearMap.lTensor_tmul]
       simp
-    | add g h hg hh => rw [map_add, map_add, map_add, hg, hh, map_add]
+    | add g h hg hh => rw [map_add (f := _), map_add (f := _), map_add (f := _), hg, hh, map_add (f := _)]
     | mul_X g v hg =>
-      rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, map_mul, lTensor_der_mul, resT_der_right_X, hg]
+      rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, map_mul, lTensor_der_mul, resT_der_right_X, hg]
 
 end GlobalTheory.LeviCut

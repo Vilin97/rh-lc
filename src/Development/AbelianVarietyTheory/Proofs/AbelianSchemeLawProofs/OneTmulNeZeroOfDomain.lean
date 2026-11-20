@@ -70,7 +70,7 @@ theorem one_tmul_eq_zero {R₀ M C₀ C₁ k : Type} [CommRing R₀] [AddCommGro
       have := LinearMap.congr_fun hg ((1 : k) ⊗ₜ[R₀] c)
       simp only [LinearMap.comp_apply, LinearMap.baseChange_tmul, LinearMap.id_apply] at this
       simp [this]
-    | add a b ha hb => simp only [map_add, ha, hb, tmul_add]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, tmul_add]
   rw [← key, hy]
   simp
 
@@ -94,7 +94,7 @@ theorem exists_of_torsion {R₀ N C : Type} [CommRing R₀] [AddCommGroup N] [Mo
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul n c => simp [g, smul_tmul']
-    | add u v hu hv => simp only [map_add, Pi.add_apply, hu, hv, smul_add]
+    | add u v hu hv => simp only [map_add (f := _), Pi.add_apply, hu, hv, smul_add]
   funext a
   rw [key, hx _ (Ideal.subset_span a.2)]
   simp

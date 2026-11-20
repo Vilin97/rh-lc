@@ -121,7 +121,7 @@ theorem gen (b : BR ε) : ∃ x y, b = a ε x + τ ε * a ε y := by
   have hX : Ideal.Quotient.mk (rel ε) (X ^ 2) = 0 := by
     rw [Ideal.Quotient.eq_zero_iff_mem]; exact Ideal.subset_span (Set.mem_insert_of_mem _ rfl)
   conv_lhs => rw [← h1, ← h2]
-  simp only [map_add, map_mul, a, τ, RingHom.comp_apply]
+  simp only [map_add (f := _), map_mul, a, τ, RingHom.comp_apply]
   have : Ideal.Quotient.mk (rel ε) f.divX.divX * Ideal.Quotient.mk (rel ε) X *
       Ideal.Quotient.mk (rel ε) X = 0 := by
     rw [mul_assoc, ← map_mul, ← sq, hX, mul_zero]
@@ -157,7 +157,7 @@ theorem mu_sq_dvd (hv : v.Integers O) (hε : IsPrimitiveSystem ε) (w : Ainf p O
 theorem dvd_of_eq_zero (x y : Ainf p O) (h : a ε x + τ ε * a ε y = 0) :
     mu ε ^ 2 ∣ (p : Ainf p O) * x + mu ε * y := by
   have hm : C x + C y * X ∈ rel ε := by
-    rw [← Ideal.Quotient.eq_zero_iff_mem, ← h, map_add, map_mul, mul_comm]; rfl
+    rw [← Ideal.Quotient.eq_zero_iff_mem, ← h, map_add (f := _), map_mul, mul_comm]; rfl
   obtain ⟨h1, h2, he⟩ := Ideal.mem_span_pair.1 hm
   have he' : C x + C y * X = h1 * C (p : Ainf p O) * X - h1 * C (mu ε) + h2 * X ^ 2 := by
     rw [← he]; ring

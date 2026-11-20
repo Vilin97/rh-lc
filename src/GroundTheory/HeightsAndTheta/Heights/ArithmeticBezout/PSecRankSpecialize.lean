@@ -96,7 +96,7 @@ theorem SecRankSpecialize.proof : SecRankSpecialize.Statement := by
     induction hx using Submodule.span_induction with
     | mem z hz => obtain ⟨i, rfl⟩ := hz; exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add u w _ _ hu hw => rw [map_add]; exact Submodule.add_mem _ hu hw
+    | add u w _ _ hu hw => rw [map_add (f := _)]; exact Submodule.add_mem _ hu hw
     | smul c u _ hu => rw [map_smul, ← algebraMap_smul K]; exact Submodule.smul_mem _ _ hu
   have hspan : Submodule.span K (Set.range fun i => ι (b i)) = ⊤ := by
     refine eq_top_iff.mpr fun z hz => ?_
@@ -111,7 +111,7 @@ theorem SecRankSpecialize.proof : SecRankSpecialize.Statement := by
           ← map_smul, smul_monomial, smul_eq_mul, mul_one]
       rw [hmon]
       exact Submodule.smul_mem _ _ (hB _)
-    | add p q hp hq => rw [map_add]; exact Submodule.add_mem _ hp hq
+    | add p q hp hq => rw [map_add (f := _)]; exact Submodule.add_mem _ hp hq
   calc Module.finrank K
           (Vertical.SecAlg (Q.map (MvPolynomial.map (algebraMap R K))) (algebraMap R K ∘ y))
         = Module.finrank K (Submodule.span K (Set.range fun i => ι (b i))) := by

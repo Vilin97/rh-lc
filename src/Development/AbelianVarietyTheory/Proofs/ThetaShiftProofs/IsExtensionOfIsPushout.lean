@@ -36,7 +36,7 @@ theorem addHom_ext {a : V →ₛₗ[algebraMap K F] W} (h : Submodule.span F (Se
     {M : Type} [AddCommGroup M] {f g : W →+ M} (e : ∀ (c : F) v, f (c • a v) = g (c • a v)) (x : W) :
     f x = g x := by
   exact semilinear_range_span_induction h (fun x => f x = g x) (by simp)
-    (fun x y hx hy => by simp only [map_add, hx, hy]) e x
+    (fun x y hx hy => by simp only [map_add (f := _), hx, hy]) e x
 
 theorem IsCoord.natural {V' W' : Type} [AddCommGroup V'] [Module K V'] [AddCommGroup W'] [Module F W']
     {a : V →ₛₗ[algebraMap K F] W} {a' : V' →ₛₗ[algebraMap K F] W'}
@@ -61,8 +61,8 @@ theorem exists_expansion {ι : Type} (b : Module.Basis ι K F) {a : V →ₛₗ[
   · rintro x y ⟨S₁, h₁, h₁'⟩ ⟨S₂, h₂, h₂'⟩
     refine ⟨S₁ ∪ S₂, fun i hi => ?_, fun S' hS' => ?_⟩
     · rw [Finset.mem_union, not_or] at hi
-      rw [map_add, h₁ i hi.1, h₂ i hi.2, add_zero]
-    · simp only [map_add, smul_add, Finset.sum_add_distrib]
+      rw [map_add (f := _), h₁ i hi.1, h₂ i hi.2, add_zero]
+    · simp only [map_add (f := _), smul_add, Finset.sum_add_distrib]
       rw [← h₁' S' (Finset.union_subset_left hS'), ← h₂' S' (Finset.union_subset_right hS')]
   · intro c v
     refine ⟨(b.repr c).support, fun i hi => ?_, fun S' hS' => ?_⟩
@@ -157,7 +157,7 @@ theorem isExtension_of_isPushout {A B : Type} [CommRing A] [CommRing B] [Algebra
     induction t using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact Submodule.zero_mem _
     | tmul c v => rw [hb]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨v, rfl⟩)
-    | add s t hs ht => rw [map_add]; exact Submodule.add_mem _ hs ht
+    | add s t hs ht => rw [map_add (f := _)]; exact Submodule.add_mem _ hs ht
   · refine ⟨(TensorProduct.lid K A).toLinearMap.toAddMonoidHom.comp
       ((TensorProduct.map ℓ LinearMap.id).toAddMonoidHom.comp
         H.out.equiv.symm.toLinearMap.toAddMonoidHom), fun c v => ?_⟩

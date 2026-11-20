@@ -22,7 +22,7 @@ variable {σ τ : Type}
 
 def ordGe (C : Type) [Field C] (w : τ → ℕ) (n : ℕ) : Submodule C (MvPowerSeries τ C) where
   carrier := {F | ∀ e : τ →₀ ℕ, Finsupp.weight w e < n → coeff e F = 0}
-  add_mem' := fun {a b} ha hb e he => by rw [map_add, ha e he, hb e he, add_zero]
+  add_mem' := fun {a b} ha hb e he => by rw [map_add (f := _), ha e he, hb e he, add_zero]
   zero_mem' := fun e _ => map_zero _
   smul_mem' := fun c a ha e he => by rw [coeff_smul, ha e he, mul_zero]
 
@@ -449,8 +449,8 @@ theorem end_mem_Cv : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [NeZero d] (I
       (subst (endP X M (MvPowerSeries.X : κ → MvPowerSeries κ C)) (X.sg (X.u (1 - g) q)) -
         X.sg (M'.mulVec (X.u (1 - g) q))), isCv_along hγ (matrixEnd_const H M hX) hE.1, fun q => ⟨?_, fun n => ?_⟩,
     fun i => ?_, fun q => ?_⟩
-  · rw [map_add, (hK q).1, PowerSeries.constantCoeff_smul, (hlam q).1, smul_zero, add_zero]
-  · rw [map_add, PowerSeries.coeff_smul]
+  · rw [map_add (f := _), (hK q).1, PowerSeries.constantCoeff_smul, (hlam q).1, smul_zero, add_zero]
+  · rw [map_add (f := _), PowerSeries.coeff_smul]
     exact ((hs q).mul_int ((hlam q).2 n)).add ((hK q).2 n)
   · show _ = ∑ j, M i j • a.1 j
     simp only [← h1]

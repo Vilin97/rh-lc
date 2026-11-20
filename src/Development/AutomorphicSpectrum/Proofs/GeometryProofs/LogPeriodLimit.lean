@@ -92,7 +92,7 @@ theorem form_coords (E : LinearMap.BilinForm ℤ Λ)
   have hskew : ∀ x y, E x y = - E y x := by
     intro x y
     have h := halt (x + y)
-    simp only [map_add, LinearMap.add_apply, halt] at h
+    simp only [map_add (f := _), LinearMap.add_apply, halt] at h
     linarith
   have hba : ∀ i j, E (bas (.inr i)) (bas (.inl j)) = if i = j then 1 else 0 := by
     intro i j
@@ -102,7 +102,7 @@ theorem form_coords (E : LinearMap.BilinForm ℤ Λ)
     · simp [h, Ne.symm h]
   conv_lhs => rw [← sum_coords bas x, ← sum_coords bas y]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [mk, map_add, map_sum, map_zsmul, LinearMap.add_apply, LinearMap.sum_apply,
+    simp only [mk, map_add (f := _), map_sum, map_zsmul, LinearMap.add_apply, LinearMap.sum_apply,
     LinearMap.smul_apply, smul_eq_mul, (hE _ _).1, (hE _ _).2.1, (hE _ _).2.2, hba,
     mul_zero, Finset.sum_const_zero, add_zero, zero_add, mul_ite, mul_one, mul_neg,
     Finset.sum_ite_eq, Finset.mem_univ, if_true, Finset.sum_neg_distrib, dotProduct]
@@ -408,7 +408,7 @@ theorem at_point {n a g : ℕ} {Λ : Type} [AddCommGroup Λ] (L : Flat.LogPeriod
   set perF : Λ → Fin g → ℂ := fun x => (A z)ᵀ *ᵥ (cst (uCo bas x) + σf z *ᵥ cst (vCo bas x)) with hperF
   have hperF_add : ∀ x y, perF (x + y) = perF x + perF y := by
     intro x y
-    simp only [hperF, map_add, cst_add, mulVec_add]
+    simp only [hperF, map_add (f := _), cst_add, mulVec_add]
     abel_nf
   set per : W →+ (Fin g → ℂ) := AddMonoidHom.mk' (fun x => perF x) (fun x y => hperF_add x y) with hper
   have hper_apply : ∀ x : W, per x = perF x := fun x => rfl
@@ -500,7 +500,7 @@ theorem at_point {n a g : ℕ} {Λ : Type} [AddCommGroup Λ] (L : Flat.LogPeriod
     have e2 := h2 ⟨vCo bas x, by simpa using (hWmem _).1 x.2⟩
     simp only [AddMonoidHom.comp_apply] at e1 e2
     conv_lhs => rw [hxs]
-    rw [map_add, e1, e2, hform, vCo_mk, uCo_mk, dotProduct_comm (uCo bas x) p]
+    rw [map_add (f := _), e1, e2, hform, vCo_mk, uCo_mk, dotProduct_comm (uCo bas x) p]
     simp
   ·
     intro Hb hHb hIm hKill v

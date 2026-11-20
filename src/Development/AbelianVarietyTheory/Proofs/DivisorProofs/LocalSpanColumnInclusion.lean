@@ -23,7 +23,7 @@ theorem locInc_mul_inclR {F E : Type} [Field F] [NumberField F] [Field E] [Algeb
     GlobalTheory.UnipEmb.locInc F E v (a * inclR (Fv F v) e) = GlobalTheory.UnipEmb.locInc F E v a * inclR (AF F) e := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [add_mul, map_add, map_add, hx, hy, add_mul]
+  | add x y hx hy => rw [add_mul, map_add (f := _), map_add (f := _), hx, hy, add_mul]
   | tmul b e' =>
     simp [GlobalTheory.UnipEmb.locInc, inclR, Algebra.TensorProduct.tmul_mul_tmul]
 

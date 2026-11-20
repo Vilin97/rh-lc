@@ -113,12 +113,12 @@ theorem IsValueAt.add {a b : Ω} {v w : ℂ} (ha : IsValueAt y a z v) (hb : IsVa
     ProjLine.mhMul hh hh', ?_, ?_, ?_, ?_⟩
   · rw [map_mul]
     exact mul_ne_zero hy hy'
-  · simp only [map_add, map_mul]
+  · simp only [map_add (f := _), map_mul]
     rw [hyg, hyg']
     ring
   · rw [map_mul, eval_mul]
     exact mul_ne_zero hz hz'
-  · simp only [map_add, map_mul, eval_add, eval_mul]
+  · simp only [map_add (f := _), map_mul, eval_add, eval_mul]
     rw [hzg, hzg']
     ring
 

@@ -29,7 +29,7 @@ lemma X_dvd_of_substZeroZeroZero_eq_zero (q : MvPolynomial (Fin 2 × Fin 2) F) (
     | C a => simp [substZeroZeroZero]
     | add p q hp hq =>
       have e : p + q - substZeroZeroZero (p+q) = (p - substZeroZeroZero p) + (q - substZeroZeroZero q) := by
-        simp only [map_add]; ring
+        simp only [map_add (f := _)]; ring
       rw [e]; exact dvd_add hp hq
     | mul_X p i hp =>
       have e : p * X i - substZeroZeroZero (p * X i) =
@@ -61,7 +61,7 @@ lemma pseudo (g : MvPolynomial (Fin 2 × Fin 2) F) :
     · have : X (0,0) ^ (N + M) * (p + q) = X (0,0) ^ M * (X (0,0) ^ N * p) + X (0,0) ^ N * (X (0,0) ^ M * q) := by
         ring
       rw [this, h1, h3]; ring
-    · simp only [map_add, map_mul, map_pow, substZeroOneOne_X_zero_zero, h2, h4]
+    · simp only [map_add (f := _), map_mul, map_pow, substZeroOneOne_X_zero_zero, h2, h4]
   | mul_X p i hp =>
     obtain ⟨N, a, r, h1, h2⟩ := hp
     by_cases hi : i = (1,1)
@@ -149,7 +149,7 @@ theorem isChowForm_line :
               field_simp
               ring
             have h3 := congrArg (aeval u) h1
-            simp only [map_mul, map_add, map_pow, hg', hD, mul_zero, zero_add] at h3
+            simp only [map_mul, map_add (f := _), map_pow, hg', hD, mul_zero, zero_add] at h3
             have hw' : aeval w r = aeval u r := by
               rw [← h2, aeval_substZeroOneOne, aeval_substZeroOneOne]
               congr 1

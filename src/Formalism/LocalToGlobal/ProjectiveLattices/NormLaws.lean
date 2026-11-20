@@ -84,7 +84,7 @@ theorem aesm_of_holSub (hm : AdelMeas U σ V dict mu) (la : ∀ k, Wt ((U σ).X 
   induction hP using Submodule.span_induction with
   | mem P hP => exact hm la P hP
   | zero => rw [map_zero, map_zero]; exact aestronglyMeasurable_const
-  | add P Q _ _ h1 h2 => rw [map_add, map_add]; exact h1.add h2
+  | add P Q _ _ h1 h2 => rw [map_add (f := _), map_add (f := _)]; exact h1.add h2
   | smul a P _ h1 => rw [map_smul, map_smul]; exact h1.const_smul a
 
 theorem cusp_L2_of_measurable (hσ : GoodEmb c σ) (hd : ∀ g, (dict g).2 ∈ ((U σ).X (dict g).1).dom)

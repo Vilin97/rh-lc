@@ -50,7 +50,7 @@ theorem relIndex_span_append_le : ∀ (K : Type) [Field K] [NumberField K] (m m'
       have hz0 : q z = 0 := hz.2
       refine AddSubgroup.mem_map.mpr ⟨y, hy, ?_⟩
       show q y = q (y + z)
-      rw [map_add, hz0, add_zero]
+      rw [map_add (f := _), hz0, add_zero]
     · rintro ⟨hx1, hx2⟩
       obtain ⟨y, hy, hyx⟩ := AddSubgroup.mem_map.mp (AddSubgroup.mem_comap.mp hx1)
       have hyx' : q y = q x := hyx

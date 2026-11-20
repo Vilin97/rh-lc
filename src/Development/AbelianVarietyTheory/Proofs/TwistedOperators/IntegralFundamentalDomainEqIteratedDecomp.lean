@@ -140,7 +140,7 @@ theorem integral_fundamentalDomain_eq_iterated : ∀ (D : D7) (V W : HSp D) (a b
   have hFDE : IsAddFundamentalDomain Γ (Me ⁻¹' 𝓕) lam :=
     h𝓕.preimage_of_equiv hqmp heΓ (fun g p => by
       show Me ((Ec.symm g : _) + p) = (g : WO V W) + Me p
-      rw [hMe, hMe, map_add, Ec.apply_symm_apply])
+      rw [hMe, hMe, map_add (f := _), Ec.apply_symm_apply])
   refine ⟨(c : ℝ), by exact_mod_cast hc, fun T hT hper => ?_⟩
   obtain ⟨C, hC⟩ := hK.exists_bound_of_continuousOn hT.continuousOn
   have hbd : ∀ x, ‖T x‖ ≤ C := fun x => by
@@ -154,7 +154,7 @@ theorem integral_fundamentalDomain_eq_iterated : ∀ (D : D7) (V W : HSp D) (a b
   have e3 : ∫ p in Me ⁻¹' 𝓕, T (Me p) ∂lam = ∫ p in 𝓨 ×ˢ (𝓩 ×ˢ 𝓨), T (Me p) ∂lam :=
     hFDE.setIntegral_eq hFDP (fun g p => by
       show T (Me ((g : _) + p)) = T (Me p)
-      rw [hMe, hMe, map_add]
+      rw [hMe, hMe, map_add (f := _)]
       exact hper _ ((hmemΓ _).1 g.2) _)
   have e4 : lam.restrict (𝓨 ×ˢ (𝓩 ×ˢ 𝓨)) = (μ.restrict 𝓨).prod ((η.restrict 𝓩).prod (μ.restrict 𝓨)) := by
     rw [Measure.prod_restrict, Measure.prod_restrict]

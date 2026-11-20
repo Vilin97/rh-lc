@@ -50,7 +50,7 @@ theorem glcong_entries (c : R) (h : GL (Fin n) R)
       ext i j
       change ((c * c * X i j : R) : B) = (c : B) * c * (X i j : B)
       push_cast; ring
-    rw [map_add, map_one, map_mul, map_mul, hP', hQ', hh', map_add, map_one, hs]
+    rw [map_add (f := _), map_one, map_mul, map_mul, hP', hQ', hh', map_add (f := _), map_one, hs]
     simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_one, hPQ, Matrix.smul_mul, Matrix.mul_smul, smul_smul, Matrix.mul_assoc]
   intro i j
   rw [key]

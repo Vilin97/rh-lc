@@ -99,7 +99,7 @@ private theorem unit_of_coprime {R : Type} [CommRing R] {M : ℕ} (φ : R →+* 
   rw [← Ideal.span_insert, Ideal.mem_span_pair] at h1
   obtain ⟨x, z, hxz⟩ := h1
   have h2 := congrArg φ hxz
-  simp only [map_add, map_mul, map_natCast, ZMod.natCast_self, mul_zero, add_zero, map_one] at h2
+  simp only [map_add (f := _), map_mul, map_natCast, ZMod.natCast_self, mul_zero, add_zero, map_one] at h2
   exact isUnit_iff_exists_inv'.mpr ⟨_, h2⟩
 
 private theorem coprime_of_not_mem {R : Type} [CommRing R] [IsDedekindDomain R] (w : HeightOneSpectrum R) {a : R}

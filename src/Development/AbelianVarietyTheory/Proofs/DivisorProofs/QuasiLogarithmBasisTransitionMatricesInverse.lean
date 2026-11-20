@@ -15,7 +15,7 @@ theorem in_add {g h : MvPowerSeries σ Q} (hg : In (⊤ : Ideal B) g) (hh : In (
     In (⊤ : Ideal B) (g + h) := fun α => by
   obtain ⟨a, -, ha⟩ := hg α
   obtain ⟨b, -, hb⟩ := hh α
-  exact ⟨a + b, trivial, by rw [map_add, ha, hb, map_add]⟩
+  exact ⟨a + b, trivial, by rw [map_add (f := _), ha, hb, map_add (f := _)]⟩
 
 theorem in_smul (c : B) {g : MvPowerSeries σ Q} (hg : In (⊤ : Ideal B) g) :
     In (⊤ : Ideal B) (algebraMap B Q c • g) := fun α => by

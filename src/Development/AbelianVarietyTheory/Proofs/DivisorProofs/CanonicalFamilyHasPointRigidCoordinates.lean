@@ -33,7 +33,7 @@ theorem GlobalTheory.UCanon.canon_hasRigidCoords : ∀ {E : Type} [Field E] [Num
       intro a
       induction a using MvPolynomial.induction_on with
       | C a => exact hbase a
-      | add p q hp hq => rw [map_add, map_add]; exact k₀.add_mem hp hq
+      | add p q hp hq => rw [map_add (f := _), map_add (f := _)]; exact k₀.add_mem hp hq
       | mul_X p k hp => rw [map_mul, map_mul]; exact k₀.mul_mem hp (hX k)
     have hft : ((MvPolynomial.C : Cn.L.W →+* MvPolynomial (Fin C.m ⊕ Fin Cn.N) Cn.L.W).comp Cn.L.b).EssFiniteType := by
       refine RingHom.EssFiniteType.comp Cn.L.ft ?_

@@ -21,7 +21,7 @@ theorem blockAct_univ {K : Type} [Field K] {ι : Type} {n : ℕ} (F : MvPolynomi
   | add p q hp hq =>
     obtain ⟨U, hU⟩ := hp
     obtain ⟨W, hW⟩ := hq
-    exact ⟨U + W, fun g => by rw [map_add, map_add, hU, hW]⟩
+    exact ⟨U + W, fun g => by rw [map_add (f := _), map_add (f := _), hU, hW]⟩
   | mul_X p v hp =>
     obtain ⟨U, hU⟩ := hp
     refine ⟨U * ∑ b : Fin n, MvPolynomial.C (MvPolynomial.X (v.1, v.2.1, b)) * MvPolynomial.X (v.1, (b, v.2.2)),

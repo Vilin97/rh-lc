@@ -34,7 +34,7 @@ theorem contract_tensorRep_single [DecidableEq ι] (π : ∀ v, Representation �
       show restrictedIndicator ξ _ • _ = π v g (restrictedIndicator ξ x • _)
       rw [restrictedIndicator_of_not hx, restrictedIndicator_of_not hx', zero_smul, zero_smul,
         map_zero]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 variable {V' : ι → Type*} [∀ v, AddCommGroup (V' v)] [∀ v, Module ℂ (V' v)]
 

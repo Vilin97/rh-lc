@@ -99,7 +99,7 @@ theorem fix_adjoin {K L : Type} [Field K] [Field L] [Algebra K L] (Q : (L →+* 
     obtain ⟨T, hT⟩ := hx
     obtain ⟨T', hT'⟩ := hy
     exact ⟨T ∪ T', fun φ hq h => by
-      rw [map_add, hT φ hq fun t ht => h t (Finset.mem_union_left _ ht),
+      rw [map_add (f := _), hT φ hq fun t ht => h t (Finset.mem_union_left _ ht),
         hT' φ hq fun t ht => h t (Finset.mem_union_right _ ht)]⟩
   | inv x _ hx =>
     obtain ⟨T, hT⟩ := hx
@@ -186,7 +186,7 @@ theorem mem_Un_of_root_mem_adjoin : ∀ {Ω : Type} [Field Ω] [Algebra ℚ Ω] 
       have : algebraMap (Polynomial Ω) X.K (C a) = algebraMap Ω X.K a := by
         rw [← ψ.commutes a]; rfl
       rw [this]; exact hW.1 a
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | monomial n a h =>
       have : algebraMap (Polynomial Ω) X.K Polynomial.X = X.jK := by
         show ((e (algebraMap (Polynomial Ω) (RatFunc Ω) Polynomial.X) : _) : X.K) = _

@@ -49,7 +49,7 @@ theorem nonempty_baseChange_grCube_iso : ∀ (ι : Type) [LinearOrder ι] [Finty
     intro s t h x
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul r z =>
       rw [LinearMap.baseChange_tmul, IsBaseChange.equiv_tmul, IsBaseChange.equiv_tmul, map_smul,
         hres]

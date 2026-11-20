@@ -93,7 +93,7 @@ theorem lat_gen (h : IsCptGen ξ) (G : Over X) [GrpObj G] [IsCommMonObj G] [Smoo
   · rintro _ ⟨w, rfl⟩
     refine hb.inductionOn w (fun w => jq w ∈ Submodule.span (regAt ξ q) (Set.range jp)) (by simp) (fun m => ?_)
       (fun s n hn => by rw [map_smul]; exact Submodule.smul_mem _ s hn)
-      (fun a b ha hb => by rw [map_add]; exact add_mem ha hb)
+      (fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb)
     exact Submodule.subset_span ⟨m, rfl⟩
   · refine Submodule.span_le.2 ?_
     rintro _ ⟨e, rfl⟩

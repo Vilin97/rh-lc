@@ -35,7 +35,7 @@ private theorem cE_bar (D : Dat F E) (τ : E →+* ℂ) (z : A E) :
   generalize D.co z 0 = u at hz
   generalize D.co z 1 = t at hz
   subst hz
-  rw [hbar, cE_mk, cE_mk, map_add, map_mul, hθ, conj_cw, conj_cw, cw_eq _ (-t), map_neg, ← cw_eq]
+  rw [hbar, cE_mk, cE_mk, map_add (f := _), map_mul, hθ, conj_cw, conj_cw, cw_eq _ (-t), map_neg, ← cw_eq]
   ring
 
 private theorem trace_herm (D : Dat F E) (τ : E →+* ℂ) (v : V4 F) :
@@ -47,7 +47,7 @@ private theorem trace_herm (D : Dat F E) (τ : E →+* ℂ) (v : V4 F) :
   have hR : cw (pl F τ) (v 0 ^ 2 + v 1 ^ 2 + 2 * (v 2 ^ 2 - rt D.δ * v 3 ^ 2)) =
       cw (pl F τ) (v 0) ^ 2 + cw (pl F τ) (v 1) ^ 2 +
         2 * (cw (pl F τ) (v 2) ^ 2 - cw (pl F τ) (rt D.δ) * cw (pl F τ) (v 3) ^ 2) := by
-    simp only [cw_eq, map_add, map_mul, map_pow, map_sub, map_ofNat]
+    simp only [cw_eq, map_add (f := _), map_mul, map_pow, map_sub, map_ofNat]
   rw [hR, ← hθ]
   simp only [Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two, Matrix.map_apply, Dat.herm,
     Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one,

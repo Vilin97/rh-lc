@@ -38,7 +38,7 @@ private theorem FXRep.add {p q c d e} (h : FXRep φ m p e c) (h' : FXRep φ m q 
   obtain ⟨G', h1', h2', h3'⟩ := h'
   refine ⟨fun β => G β + G' β, ?_, ?_, fun β => (totalDegree_add _ _).trans (max_le (h3 β) (h3' β))⟩
   · rw [h1, h1', ← Finset.sum_add_distrib]
-    simp only [map_add, add_mul]
+    simp only [map_add (f := _), add_mul]
   · refine (Finset.sum_le_sum fun β _ => nrm_add _ _).trans ?_
     rw [Finset.sum_add_distrib]
     linarith
@@ -166,7 +166,7 @@ theorem UpperTheory.ConvolutionTheory.FX.reduce :
       (fun u => ⟨0, u.2.pos⟩)
     simpa using this
   | single_add a b f _ _ ih =>
-    rw [monomial_single_add, map_add, Finsupp.degree_single, pow_add]
+    rw [monomial_single_add, map_add (f := _), Finsupp.degree_single, pow_add]
     clear * - ih hK
     induction b with
     | zero => simpa using ih

@@ -43,7 +43,7 @@ def reesΦ : cechH (reesPre I F) 𝔘 p →ₗ[reesAlgebra I]
   map_add' x y := by
     apply PolynomialModule.ext
     ext n
-    simp only [reesCoefPoly_coeff, PolynomialModule.coeff_add, Finsupp.add_apply, map_add]
+    simp only [reesCoefPoly_coeff, PolynomialModule.coeff_add, Finsupp.add_apply, map_add (f := _)]
   map_smul' r x := by
     apply PolynomialModule.ext
     ext N

@@ -47,7 +47,7 @@ theorem exists_card_subgroups_containing_nsmul_le (A : Type) [AddCommGroup A] [M
     have key : ∀ i, π (s i) = π (fun j => ((((s i j : ℤ) : ZMod M)).val : ℤ))
         + M • π (fun j => s i j / M) := by
       intro i
-      rw [← map_nsmul, ← map_add]
+      rw [← map_nsmul, ← map_add (f := _)]
       congr 1
       exact (Int.emod_add_mul_ediv _ _).symm
     have hsH : ∀ i, π (s i) ∈ H := by
@@ -74,7 +74,7 @@ theorem exists_card_subgroups_containing_nsmul_le (A : Type) [AddCommGroup A] [M
         exact AddSubgroup.add_mem _ (AddSubgroup.subset_closure (Or.inl ⟨i, rfl⟩))
           (AddSubgroup.subset_closure (Or.inr ⟨_, rfl⟩))
       | zero => rw [map_zero]; exact AddSubgroup.zero_mem _
-      | add a b _ _ ha hb => rw [map_add]; exact AddSubgroup.add_mem _ ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _)]; exact AddSubgroup.add_mem _ ha hb
       | smul a b _ hb => rw [map_smul]; exact AddSubgroup.zsmul_mem _ hb a
 
 end GlobalTheory

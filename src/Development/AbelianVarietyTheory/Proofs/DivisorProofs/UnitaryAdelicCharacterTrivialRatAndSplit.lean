@@ -88,7 +88,7 @@ theorem tendsto_rf [TopologicalSpace A] [IsTopologicalRing A] (hσ : Continuous 
 
 theorem norm_cut (ε : A) (hε : ε * ε = ε) (hσ : σ ε = ε) (a : A) (ha : a * σ a = 1) :
     (1 + ε * (a - 1)) * σ (1 + ε * (a - 1)) = 1 := by
-  simp only [map_add, map_mul, map_sub, map_one, hσ]
+  simp only [map_add (f := _), map_mul, map_sub, map_one, hσ]
   linear_combination (a - 1) * (σ a - 1) * hε + ε * ha
 
 theorem cut_rf (P : Matrix (Fin n) (Fin n) A) (hP : P * P = P) (hJ : cT σ P * J = J * P) (ε : A) (hε : ε * ε = ε)
@@ -160,7 +160,7 @@ theorem tendsto_ratio_inf {N : ℕ → ℕ} (hN : Tendsto N atTop atTop) (hN0 : 
   have hk : (N k : E) ≠ 0 := Nat.cast_ne_zero.2 (hN0 k)
   have e : (N k : E)⁻¹ + β = (N k : E)⁻¹ * (1 + N k * β) := by field_simp
   have hk' := hw k
-  rw [Function.comp_apply, ← map_add, ← map_add, hi _ (by rw [e]; exact mul_ne_zero (inv_ne_zero hk) hk'), ← map_mul, e]
+  rw [Function.comp_apply, ← map_add (f := _), ← map_add (f := _), hi _ (by rw [e]; exact mul_ne_zero (inv_ne_zero hk) hk'), ← map_mul, e]
   congr 1
   field_simp
 
@@ -241,7 +241,7 @@ theorem exists_seq (c : E ≃ₐ[F] E) (hc : ∀ x, c (c x) = x) (hc1 : c ≠ 1)
   have hw : ∀ k, w k * c (w k) = 1 := fun k => by
     have a1 := h1 k α
     have a2 := h1 k β
-    simp only [w, map_div₀, map_add, map_mul, map_one, map_natCast, ← hβc, show c β = α by rw [hβc, hc]]
+    simp only [w, map_div₀, map_add (f := _), map_mul, map_one, map_natCast, ← hβc, show c β = α by rw [hβc, hc]]
     field_simp
   choose e he1 he2 he3 a ha b hab using fun k => exists_cut c hc (N k) (Nat.factorial_pos _) α β
     (one_add_ne_zero (N k) (hN1 k) β) (w k) rfl (hw k)

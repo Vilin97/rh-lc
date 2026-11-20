@@ -30,7 +30,7 @@ theorem coeff_mvExp_of_van {τ : Type} {T : Set τ} {H : MvPowerSeries τ C} [Ch
   · exact absurd h (Nat.cast_add_one_ne_zero _)
 
 theorem van_add {τ : Type} {T : Set τ} {f g : MvPowerSeries τ C} (hf : Van T f) (hg : Van T g) : Van T (f + g) :=
-  fun ν hν => by rw [map_add, hf ν hν, hg ν hν, add_zero]
+  fun ν hν => by rw [map_add (f := _), hf ν hν, hg ν hν, add_zero]
 
 theorem van_sub {τ : Type} {T : Set τ} {f g : MvPowerSeries τ C} (hf : Van T f) (hg : Van T g) : Van T (f - g) :=
   fun ν hν => by rw [map_sub, hf ν hν, hg ν hν, sub_zero]

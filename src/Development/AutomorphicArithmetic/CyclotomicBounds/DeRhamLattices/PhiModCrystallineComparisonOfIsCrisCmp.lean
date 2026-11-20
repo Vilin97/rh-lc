@@ -20,7 +20,7 @@ private theorem twSmul {O R R' G Qp LL : Type} [CommRing O] [CommRing R] [CommRi
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [TWincl, TensorProduct.smul_tmul']
-  | add x y hx hy => rw [smul_add, map_add, map_add, smul_add, hx, hy]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), smul_add, hx, hy]
 
 private theorem mxMem {l : ℕ} [Fact l.Prime] {a e : ℕ} [NeZero a] [NeZero e]
     {O K : Type} [CommRing O] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]

@@ -28,7 +28,7 @@ theorem span_image_span {R R' : Type} [CommRing R] [CommRing R'] {σ : R →+* R
   induction hm using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 set_option maxHeartbeats 1000000 in

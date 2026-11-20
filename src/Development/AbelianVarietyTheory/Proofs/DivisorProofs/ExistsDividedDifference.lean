@@ -52,7 +52,7 @@ theorem ck_add (hc : ∀ (E E' : Z.VDiv) (a : Z.Ch), Z.capDeg E (Z.cD E' * a) = 
   have hP := P.hx i
   have hP' := P'.hx i
   rw [h1] at hP'
-  rw [h4, h2, h3, h1, map_add, LinearMap.add_apply]
+  rw [h4, h2, h3, h1, map_add (f := _), LinearMap.add_apply]
   obtain ⟨H, e1, e2, -⟩ := exists_divided_difference k (Z.c1 (P.x i)) (Z.c1 (P.x' i)) (Z.c1 (P'.x' i))
   have f1 : Gk Z k (Z.c1 (P.x i)) (Z.c1 (P'.x' i)) * Q =
       Gk Z k (Z.c1 (P.x i)) (Z.c1 (P.x' i)) * Q - Z.cD (P'.Dv i) * (H * Q) := by
@@ -65,7 +65,7 @@ theorem ck_add (hc : ∀ (E E' : Z.VDiv) (a : Z.Ch), Z.capDeg E (Z.cD E' * a) = 
   have g1 := congrArg (Z.capDeg (P.Dv i)) f1
   have g2 := congrArg (Z.capDeg (P'.Dv i)) f2
   rw [map_sub] at g1
-  rw [map_add] at g2
+  rw [map_add (f := _)] at g2
   rw [g1, g2, hc (P.Dv i) (P'.Dv i)]
   ring
 

@@ -42,7 +42,7 @@ theorem rowAct_smooth (f : MvPolynomial (Fin n × Fin n) ℂ) :
     exact contDiff_const
   | add p q hp hq =>
     intro ℓ
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (hp ℓ).add (hq ℓ)
   | mul_X p v hp =>
     intro ℓ

@@ -23,10 +23,10 @@ variable {O : Type} [CommRing O] [StarRing O] (A : AnArc O)
 def normT (w : O) : A.X →+ A.X →+ ℂ :=
   AddMonoidHom.mk' (fun y => AddMonoidHom.mk'
     (fun y' => -(A.H (A.ct y) (A.ct y') / (2 * Complex.I)) + ((A.H (A.F w (A.ct y)) (A.ct y')).im : ℂ))
-    (fun _ _ => by simp only [map_add, A.H_add_right, Complex.add_im]; push_cast; ring))
+    (fun _ _ => by simp only [map_add (f := _), A.H_add_right, Complex.add_im]; push_cast; ring))
     (fun _ _ => by
       ext
-      simp only [map_add, A.H_add_left, Complex.add_im, AddMonoidHom.mk'_apply, AddMonoidHom.add_apply]
+      simp only [map_add (f := _), A.H_add_left, Complex.add_im, AddMonoidHom.mk'_apply, AddMonoidHom.add_apply]
       push_cast; ring)
 
 lemma normT_apply (w : O) (y y' : A.X) : normT A w y y' =
@@ -40,7 +40,7 @@ lemma normT_adj (w a : O) (y x : A.X) : normT A w (a • y) x = normT A w y (sta
 lemma normT_symm {w : O} (hw : w + star w = 1) (x y : A.X) : normT A w x y = normT A w y x := by
   have h1 : A.H (A.ct x) (A.ct y) = A.H (A.F w (A.ct x)) (A.ct y) + A.H (A.ct x) (A.F w (A.ct y)) := by
     have : A.H (A.ct x) (A.F w (A.ct y)) = A.H (A.F (star w) (A.ct x)) (A.ct y) := by rw [A.H_F, star_star]
-    rw [this, ← A.H_add_left, ← LinearMap.add_apply, ← map_add, hw, map_one, Module.End.one_apply]
+    rw [this, ← A.H_add_left, ← LinearMap.add_apply, ← map_add (f := _), hw, map_one, Module.End.one_apply]
   have h2 := congrArg Complex.im h1
   rw [Complex.add_im] at h2
   rw [normT_apply, normT_apply, ← A.H_conj (A.ct x) (A.ct y), ← A.H_conj (A.ct x) (A.F w (A.ct y)), Complex.conj_im]
@@ -60,10 +60,10 @@ def normArc {w : O} (hw : w + star w = 1) : AnArc O :=
     psi_neg := fun x => Units.ext (by simp)
     psi_add := fun x y => by
       have h : normT A w y (w • x) + normT A w x (w • y) = normT A w x y := by
-        rw [normT_symm A hw y, normT_adj, ← map_add, ← add_smul, add_comm, hw, one_smul]
+        rw [normT_symm A hw y, normT_adj, ← map_add (f := _), ← add_smul, add_comm, hw, one_smul]
       simp only [Units.val_mk0, ← AnArc.e_add]
       congr 1
-      simp only [smul_add, map_add, AddMonoidHom.add_apply]
+      simp only [smul_add, map_add (f := _), AddMonoidHom.add_apply]
       rw [← h]; ring }
 
 lemma normT_norm (w : O) (n : ℕ) (hn : ∀ y, n • A.ct y ∈ A.abelian₂) (y y' : A.X) :
@@ -338,7 +338,7 @@ lemma shift_periods [Algebra (FractionRing ℂ) ℂ] (hσ : GoodEmb c σ) (hU : 
     ring
   rw [e0, e1]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_smul, map_sum, hP, hh]
+    simp only [map_add (f := _), map_smul, map_sum, hP, hh]
   refine Prod.ext (AddMonoidHom.ext fun z => ?_) ?_
   · simp only [Prod.fst_add, Prod.smul_fst, Prod.fst_sum, AddMonoidHom.add_apply, AddMonoidHom.smul_apply,
       AddMonoidHom.finset_sum_apply, (Pw_nnB A _ _ _ _).1, smul_eq_mul, hSB]

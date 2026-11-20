@@ -89,7 +89,7 @@ theorem cjCoef_pull (L : V n →L[ℂ] V m) (α : Alt m) : cjCoef n (pull L α) 
     rcases i with i | i <;>
       simp [Matrix.toLin'_apply, mulVec, dotProduct, Fintype.sum_sum_type]
   | mul a b ha hb => simp only [map_mul, cjCoef_mul, ha, hb]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem isReal_pull (n m : ℕ) (L : V n →L[ℂ] V m) (α : Alt m) (h : IsReal α) : IsReal (pull L α) := by
   rw [isReal_iff] at h ⊢

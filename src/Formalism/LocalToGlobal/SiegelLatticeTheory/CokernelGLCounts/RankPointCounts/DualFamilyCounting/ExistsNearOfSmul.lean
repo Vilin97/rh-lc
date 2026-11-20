@@ -80,7 +80,7 @@ theorem isIntegral_span {J : Type} {h : V →ₗ⋆[K] V →ₗ[K] K} (c : J →
       obtain ⟨j, rfl⟩ := hy
       exact hc i j
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul r y _ hy =>
       rw [hsm, LinearMap.map_smul, smul_eq_mul, ← Algebra.smul_def]
       exact Submodule.smul_mem _ r hy
@@ -90,7 +90,7 @@ theorem isIntegral_span {J : Type} {h : V →ₗ⋆[K] V →ₗ[K] K} (c : J →
     obtain ⟨i, rfl⟩ := hx
     exact key i y hy
   | zero => rw [map_zero, LinearMap.zero_apply]; exact Submodule.zero_mem _
-  | add x z _ _ hx hz => rw [map_add, LinearMap.add_apply]; exact Submodule.add_mem _ hx hz
+  | add x z _ _ hx hz => rw [map_add (f := _), LinearMap.add_apply]; exact Submodule.add_mem _ hx hz
   | smul r x _ hx =>
     rw [hsm, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply,
       ← WA.algebraMap_conjO, ← Algebra.smul_def]

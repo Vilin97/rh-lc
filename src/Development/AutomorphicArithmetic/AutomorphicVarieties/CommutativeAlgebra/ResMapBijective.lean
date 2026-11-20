@@ -80,7 +80,7 @@ variable (O : Type) [CommRing O] {σ X : Type} [AddCommGroup X] (wt : σ → X)
 
 def wtPart (j : X) : Submodule O (MvPowerSeries σ O) where
   carrier := {f | ∀ n, Finsupp.weight wt n ≠ j → coeff n f = 0}
-  add_mem' ha hb n hn := by rw [map_add, ha n hn, hb n hn, add_zero]
+  add_mem' ha hb n hn := by rw [map_add (f := _), ha n hn, hb n hn, add_zero]
   zero_mem' n _ := map_zero _
   smul_mem' c f hf n hn := by rw [map_smul, hf n hn, smul_zero]
 
@@ -109,7 +109,7 @@ theorem mul_mem_wtPart {i j : X} {f g : MvPowerSeries σ O} (hf : f ∈ wtPart O
   refine Finset.sum_eq_zero fun p hp => ?_
   by_cases h1 : Finsupp.weight wt p.1 = i
   · have h2 : Finsupp.weight wt p.2 ≠ j := fun h2 => hn (by
-      rw [← Finset.HasAntidiagonal.mem_antidiagonal.1 hp, map_add, h1, h2])
+      rw [← Finset.HasAntidiagonal.mem_antidiagonal.1 hp, map_add (f := _), h1, h2])
     rw [hg _ h2, mul_zero]
   · rw [hf _ h1, zero_mul]
 

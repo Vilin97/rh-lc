@@ -33,7 +33,7 @@ theorem exists_fg_span_stable_of_unipotent {E : Type} [CommRing E] (O : Subring 
       have := hall (k + p.1) p.2
       rwa [pow_add, Module.End.mul_apply] at this
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul c a _ ha =>
       have : (x ^ k) (c • a) = c • (x ^ k) a := (x ^ k).map_smul (c : E) a
       rw [this]

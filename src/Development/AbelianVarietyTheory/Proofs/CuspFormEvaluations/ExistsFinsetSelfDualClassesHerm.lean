@@ -292,7 +292,7 @@ theorem exists_finset_submodule {R : Type} [CommRing R] [IsDedekindDomain R] {r 
         exact ⟨m' ᵥ* N.adjugate, by
           rw [vecMulLinear_apply, vecMul_vecMul, adjugate_mul, vecMul_smul, vecMul_one]⟩
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [mem_comap, h', map_add, h0, add_zero, map_sum]
+        rw [mem_comap, h', map_add (f := _), h0, add_zero, map_sum]
       refine sum_mem fun j _ => ?_
       rw [map_smul]
       exact smul_mem _ _ (subset_span ⟨j, rfl⟩)

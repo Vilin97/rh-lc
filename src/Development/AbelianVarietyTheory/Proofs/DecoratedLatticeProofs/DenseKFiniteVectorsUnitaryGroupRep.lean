@@ -21,7 +21,7 @@ theorem dense_finite_vectors (K : Type) [Group K] [TopologicalSpace K] [IsTopolo
         refine ⟨S ⊔ T, inferInstance, Submodule.add_mem_sup ha hb, ?_⟩
         intro k x hx
         obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem_sup (hSs k y hy) (hTs k z hz)
       zero_mem' := ⟨⊥, inferInstance, Submodule.zero_mem _, by
         intro k x hx

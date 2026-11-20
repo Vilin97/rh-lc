@@ -40,7 +40,7 @@ theorem exists_equiv {K V W : Type} [Field K] [AddCommGroup V] [Module K V]
     (splitEquiv f s h).symm), fun v => ?_⟩
   have hz : ∀ x : LinearMap.ker f, f x.1 = 0 := fun x => x.2
   show f ((k _).1 + s (f' v)) = f' v
-  rw [map_add, hz, h, zero_add]
+  rw [map_add (f := _), hz, h, zero_add]
 
 theorem exists_mul_eq_inclusion : ∀ (K : Type) [Field K] (N n : ℕ) (g : Matrix (Fin N) (Fin n) K) (c : Matrix (Fin n) (Fin N) K), g * c = 1 →
     N ≤ n ∧ ∃ M P : Matrix (Fin n) (Fin n) K, M * P = 1 ∧ P * M = 1 ∧ g * M = (Matrix.of fun (j : Fin N) (k : Fin n) => if (j : ℕ) = (k : ℕ) then (1 : K) else 0) := by

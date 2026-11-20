@@ -64,7 +64,7 @@ theorem kills0_of (hT : ThetaBasic) (hW : WeilConv) (hK : KCoinv) (h : Kills) : 
     rw [hj, e]
     exact PositivityTheory.ThKG.pureA_mem f hg
   have add : ∀ y ∈ SB _, ∀ z ∈ SB _, G.M'.I om' (j (y + z)) = G.M'.I om' (j y) + G.M'.I om' (j z) := fun y hy z hz =>
-    funext fun g => by rw [map_add]; exact PositivityTheory.ThKG.I_add p2.weil cv (js y hy) (js z hz) g
+    funext fun g => by rw [map_add (f := _)]; exact PositivityTheory.ThKG.I_add p2.weil cv (js y hy) (js z hz) g
   have key : ∀ z ∈ augAt om' B.v₁, G.M'.I om' (j z) = 0 := fun z hz => by
     induction hz using Submodule.span_induction with
     | mem z h =>

@@ -117,7 +117,7 @@ theorem GlobalTheory.TriStep.valK_bilin : ∀ (D : D7) (ψ : AddChar (AF D.host.
       ![biComb ψ S.B.A S.J.W₀ S.B'.A c₁ c₂ (Λ Ξ), biComb ψ S.B.A S.J.W₀ S.B'.A c₁ c₂ (Λ Ξ')]
       (fun i => by fin_cases i <;> simp [hC]) h₂
     simp only [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one] at e
-    rw [map_add, biComb_add, e, Pi.add_apply]
+    rw [map_add (f := _), biComb_add, e, Pi.add_apply]
   have hf : ∀ f : GlobalTheory.TriStep.space Q, f.1 ∈ contLeft S.B'.V := by
     intro f
     have := f.2.1 1

@@ -31,7 +31,7 @@ theorem coeff_scaleEquiv {σ : Type*} [Fintype σ] (P : σ → Prop) [DecidableP
     · subst h
       rfl
     · simp
-  · rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  · rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem sum_filter_block (b : Fin (D + 1)) (s : TVar D N →₀ ℕ) :
     (∑ v ∈ Finset.univ.filter (fun v : TVar D N => v.1 = b), s v) = ∑ j, s (b, j) := by

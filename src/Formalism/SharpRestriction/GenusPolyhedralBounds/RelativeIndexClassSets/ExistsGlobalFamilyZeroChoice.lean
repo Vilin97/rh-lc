@@ -195,7 +195,7 @@ theorem exists_zChoice (X : PJ D B P j) (ka wL wF : WeightFamilies.Wt D j) (T : 
     rw [hsum]
     exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
   | zero => simp only [map_zero, mul_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => simp only [map_add, mul_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => simp only [map_add (f := _), mul_add]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     simp only [map_smul, emb_smul_jF, mul_smul_comm]
     exact Submodule.smul_mem _ _ hx

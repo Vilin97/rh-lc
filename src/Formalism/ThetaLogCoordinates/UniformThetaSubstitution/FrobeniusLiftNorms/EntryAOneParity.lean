@@ -24,7 +24,7 @@ lemma val_mod_two {ν : ℕ} [NeZero ν] (x : ZMod (2 * ν)) : x.val % 2 = (par 
   rw [par_eq, ZMod.val_natCast]
 
 lemma par_odd {ν : ℕ} (y : ZMod (2 * ν)) : par ν (1 + 2 * y) = 1 := by
-  rw [map_add, map_one, map_mul]
+  rw [map_add (f := _), map_one, map_mul]
   have h2 : par ν 2 = 0 := by
     rw [map_ofNat]
     rfl
@@ -38,7 +38,7 @@ lemma parity_ne {ν : ℕ} [NeZero ν] {s s' y : ZMod (2 * ν)} (h : s' - s = 1 
     s'.val % 2 ≠ s.val % 2 := by
   rw [val_mod_two, val_mod_two]
   have hs : par ν s' = par ν s + 1 := by
-    rw [show s' = s + (1 + 2 * y) by rw [← h]; ring, map_add, par_odd]
+    rw [show s' = s + (1 + 2 * y) by rw [← h]; ring, map_add (f := _), par_odd]
   rw [hs]
   generalize par ν s = a
   revert a

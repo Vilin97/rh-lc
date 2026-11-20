@@ -58,7 +58,7 @@ theorem GlobalTheory.LimVec.invertible_basis : ∀ (l : ℕ) [Fact l.Prime] (K :
       simp only [σ, map_mul, map_pow]
       rw [hp, mul_assoc, hk']
       ring
-    rw [e, map_add, (hdvd _).1 (dvd_mul_right _ _), add_zero]
+    rw [e, map_add (f := _), (hdvd _).1 (dvd_mul_right _ _), add_zero]
   choose v hv1 hvlim using fun j => hm (fun a => σ a j)
   let V : Matrix (Fin d) (Fin d) (WCb l) := Matrix.of fun i j => v j i
   have hVmem : ∀ i j, V i j ∈ bk.OE := by

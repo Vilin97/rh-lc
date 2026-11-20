@@ -941,8 +941,8 @@ theorem iso_ex (D : iso_Dat R M₂ C₂ γ Φ₂ π₂ g₂ lam₂) (y : C₂) (
   rw [hx0, h, Submodule.Quotient.eq, LinearMap.mem_range] at h1
   obtain ⟨s, hs⟩ := h1
   have hs' : (s : K) = ((γ⁻¹ : Kˣ) : K) * k - ((γ⁻¹ : Kˣ) : K) * Φ₂ x0 := hs
-  refine ⟨x0 + s • g₂, by rw [map_add, map_smul, D.pg, smul_zero, add_zero, hx0], ?_⟩
-  rw [map_add, map_smul, D.Pg]
+  refine ⟨x0 + s • g₂, by rw [map_add (f := _), map_smul, D.pg, smul_zero, add_zero, hx0], ?_⟩
+  rw [map_add (f := _), map_smul, D.Pg]
   show Φ₂ x0 + (s : K) * (γ : K) = k
   rw [hs']
   have hγ : ((γ⁻¹ : Kˣ) : K) * (γ : K) = 1 := by simp
@@ -964,9 +964,9 @@ def iso_lift (D₂ : iso_Dat R M₂ C₂ γ Φ₂ π₂ g₂ lam₂) (D₁ : iso
   toFun := iso_liftFun D₂ D₁ φ hφ
   map_add' x y := by
     apply iso_uniq D₂
-    · rw [map_add, (iso_liftFun_spec D₂ D₁ φ hφ _).1, (iso_liftFun_spec D₂ D₁ φ hφ _).1,
+    · rw [map_add (f := _), (iso_liftFun_spec D₂ D₁ φ hφ _).1, (iso_liftFun_spec D₂ D₁ φ hφ _).1,
         (iso_liftFun_spec D₂ D₁ φ hφ _).1, map_add, map_add]
-    · rw [map_add, (iso_liftFun_spec D₂ D₁ φ hφ _).2, (iso_liftFun_spec D₂ D₁ φ hφ _).2,
+    · rw [map_add (f := _), (iso_liftFun_spec D₂ D₁ φ hφ _).2, (iso_liftFun_spec D₂ D₁ φ hφ _).2,
         (iso_liftFun_spec D₂ D₁ φ hφ _).2, map_add]
   map_smul' r x := by
     apply iso_uniq D₂
@@ -1211,7 +1211,7 @@ theorem iso_bot_vec (a : Fin m → R) (r : R) : iso_bot R hN (iso_vec hN a r) = 
 
 def iso_dot (ξ : Fin m → K) : (Fin m → R) →ₗ[R] K where
   toFun v := ξ ⬝ᵥ coeLin R v
-  map_add' v w := by rw [map_add, dotProduct_add]
+  map_add' v w := by rw [map_add (f := _), dotProduct_add]
   map_smul' r v := by
     rw [map_smul, RingHom.id_apply]
     have : r • coeLin R v = (r : K) • coeLin R v := rfl
@@ -1505,7 +1505,7 @@ theorem iC_spec (Z : Matrix (Fin m) (Fin m) K) (hZ : IsInt R Z) (hd : IsUnit Z.d
   have h3 : Z *ᵥ coeLin R r = coeLin R (P.liftR R Z hZ *ᵥ r) := by
     rw [P.coeLin_mulVec, P.liftR_map]
   refine ⟨Quotient.out β + P.liftR R Z hZ *ᵥ r, ?_, ?_⟩
-  · rw [map_add, h2, h3]
+  · rw [map_add (f := _), h2, h3]
   · rw [Submodule.Quotient.mk_add]
     have h4 : (Submodule.Quotient.mk (P.liftR R Z hZ *ᵥ r) : coker R Z) = 0 := by
       rw [Submodule.Quotient.mk_eq_zero, P.mem_latZ]

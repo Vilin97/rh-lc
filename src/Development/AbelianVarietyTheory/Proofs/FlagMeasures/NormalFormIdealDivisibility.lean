@@ -336,7 +336,7 @@ theorem Ia_step (N : NF H r) (b : Fin r) (hb : N.j â‰¤ b.val) {y : V} (hy : y âˆ
   | zero => simp
   | add y y' _ _ h h' =>
     convert add_mem h h' using 1
-    simp only [map_add, LinearMap.add_apply]; module
+    simp only [map_add (f := _), LinearMap.add_apply]; module
   | smul a y _ h =>
     convert Submodule.smul_mem _ a h using 1
     simp only [map_smul, LinearMap.smul_apply, smul_eq_mul]; module

@@ -48,7 +48,7 @@ theorem comul_ev_sub_ev₂_subst_mem :
   rw [pow_one] at ha hb
   refine ⟨Coalgebra.comul (R := O) a - b, ?_⟩
   have hF : F = (P : MvPowerSeries (Fin d) O) + T := by simp [T]
-  rw [← h1, ← h2, hF, map_add, map_add, hPe, add_sub_add_left_eq_sub, h1, h2, ha, hb,
+  rw [← h1, ← h2, hF, map_add (f := _), map_add (f := _), hPe, add_sub_add_left_eq_sub, h1, h2, ha, hb,
     ← Bialgebra.comulAlgHom_apply, map_mul, map_natCast, Bialgebra.comulAlgHom_apply,
     ← mul_sub, Nat.cast_smul_eq_nsmul, nsmul_eq_mul]
 

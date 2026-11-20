@@ -52,7 +52,7 @@ theorem finrank_le [Module.Free O H] [Module.Finite O H] (ρ : orderC c →+* Mo
       have : k ⊗ₜ[O] (N.subtype n) = k • inK K H (n : H) := by
         simp [inK, TensorProduct.smul_tmul']
       rw [this]; exact (eigK ρ σ).smul_mem k hn
-    | add x y hx hy => rw [map_add]; exact (eigK ρ σ).add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact (eigK ρ σ).add_mem hx hy
   have hle := LinearMap.finrank_le_finrank_of_injective
     (f := (N.subtype.baseChange K).codRestrict (eigK ρ σ) hmem)
     (fun a b hab => hinj (by simpa using congrArg Subtype.val hab))

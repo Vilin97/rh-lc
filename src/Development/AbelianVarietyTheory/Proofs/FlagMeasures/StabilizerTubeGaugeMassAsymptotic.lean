@@ -280,7 +280,7 @@ theorem measurePreserving_of_norm {A B D : Type} [NormedAddCommGroup A] [InnerPr
     Function.Injective f ∧ MeasurePreserving f (volume.prod volume) volume := by
   let J : WithLp 2 (A × B) →ₗᵢ[ℝ] D :=
     { toFun := fun p => f (p.fst, p.snd)
-      map_add' := fun p q => by rw [← map_add]; rfl
+      map_add' := fun p q => by rw [← map_add (f := _)]; rfl
       map_smul' := fun c p => by rw [← map_smul]; rfl
       norm_map' := fun p => by
         rw [← sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _), WithLp.prod_norm_sq_eq_of_L2]

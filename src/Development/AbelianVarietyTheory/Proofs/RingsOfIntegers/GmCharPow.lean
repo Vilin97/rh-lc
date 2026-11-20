@@ -126,7 +126,7 @@ theorem mul_box (hG : GlobalFnsSt) (t : ∀ χ : D.X, LB.Gen (LB.LinComb D.P.L (
       val (t (pD.xe χ i)) (ρ i).left y J * val (t (pD.xe χ' i)) (ρ i).left y J := fun i => by
     have vc := val_cub D.cub (ρ i) hJ (cP D T (pD.xe χ i)) (cP D T (pD.xe χ' i)) p
     rw [comp_cP, comp_cP] at vc
-    rw [cPoint_proj, cPoint_proj, hp, map_add, Pi.add_apply]
+    rw [cPoint_proj, cPoint_proj, hp, map_add (f := _), Pi.add_apply]
     exact ((val_mul hJ _ _ _).trans (congrArg₂ (· * ·) rfl vc)).symm.trans
       ((val_corr hJ (hm (pD.xe χ i) (pD.xe χ' i)) (ρ i).left).trans (val_mul hJ _ _ _))
   have m' := Finset.prod_congr (s₁ := Finset.univ) rfl fun i _ => m i

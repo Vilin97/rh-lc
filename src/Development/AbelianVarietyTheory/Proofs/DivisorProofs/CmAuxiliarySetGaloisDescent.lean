@@ -50,7 +50,7 @@ theorem eigK_finrank_eq_one : GlobalTheory.Published.PeriodComparison → Global
     { carrier := lattice (condQ 𝔣 Q) y
       add_mem' := fun {a b} ha hb ↦ by
         show a + b ∈ lattice (condQ 𝔣 Q) y
-        rw [hmem, map_add, add_mul]; exact Subring.add_mem _ ((hmem a).1 ha) ((hmem b).1 hb)
+        rw [hmem, map_add (f := _), add_mul]; exact Subring.add_mem _ ((hmem a).1 ha) ((hmem b).1 hb)
       zero_mem' := by
         show (0 : E) ∈ lattice (condQ 𝔣 Q) y
         rw [hmem, map_zero, zero_mul]; exact Subring.zero_mem _
@@ -72,7 +72,7 @@ theorem eigK_finrank_eq_one : GlobalTheory.Published.PeriodComparison → Global
       map_add' := fun x x' ↦ by
         have : (⟨Φ ((x + x' : L) : E), hΦ _ (x + x').2⟩ : U.u.Λ) = ⟨Φ x, hΦ x x.2⟩ + ⟨Φ x', hΦ x' x'.2⟩ :=
           Subtype.ext (by funext j; simp [Φ])
-        rw [this, map_add] }
+        rw [this, map_add (f := _)] }
   have hspan' : Submodule.span ℂ (Set.range P') = ⊤ := by
     rw [← hspan]; congr 1
     ext v; constructor

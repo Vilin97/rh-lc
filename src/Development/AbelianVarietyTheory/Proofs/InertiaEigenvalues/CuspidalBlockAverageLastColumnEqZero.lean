@@ -88,7 +88,7 @@ theorem avg_blk_last_eq_zero : ∀ (E : Type) [Field E] [NumberField E] [IsTotal
   have h2 := hF r hr0 hra (μ.map m) (m '' 𝓕) (β.isAddHaarMeasure_map μ)
     (h𝓕.image_of_equiv m.toEquiv (MeasurePreserving.symm m ⟨m.measurable, rfl⟩).quasiMeasurePreserving q fun y x => by
       change β (β.symm y + x) = y + β x
-      rw [map_add, β.apply_symm_apply]) g
+      rw [map_add (f := _), β.apply_symm_apply]) g
   rw [m.measurableEmbedding.setIntegral_map, m.injective.preimage_image] at h2
   rw [← h2]
   congr 1

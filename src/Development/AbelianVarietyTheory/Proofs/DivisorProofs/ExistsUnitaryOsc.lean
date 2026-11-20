@@ -164,7 +164,7 @@ theorem _root_.GlobalTheory.FockRep.exists_unitary_osc : ∀ (p q : ℕ) (H : Ty
     refine ⟨fun f => ?_, fun u v f => ?_, fun u f => (ρ _).norm_map f,
       fun f => (hρc f).comp (_root_.GlobalTheory.RealWeil.UnitaryOsc.crd (Fin p ⊕ Fin q)).continuous⟩
     · rw [hρE_apply, map_zero]; exact h0 f
-    · rw [hρE_apply, hρE_apply, hρE_apply, _root_.GlobalTheory.RealWeil.UnitaryOsc.omJ_cplx, hform, map_add]
+    · rw [hρE_apply, hρE_apply, hρE_apply, _root_.GlobalTheory.RealWeil.UnitaryOsc.omJ_cplx, hform, map_add (f := _)]
       exact hρm _ _ f
   let k : ↥G →* (EuclideanSpace ℂ (Fin p ⊕ Fin q) →L[ℝ] EuclideanSpace ℂ (Fin p ⊕ Fin q)) :=
     { toFun := fun g => _root_.GlobalTheory.RealWeil.UnitaryOsc.kL (m g)

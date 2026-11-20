@@ -103,7 +103,7 @@ private theorem local_trace_compatible (P : _root_.UpperTheory.V.Z.Sym.W.PureWei
   have hp : (-((((3 : ℕ) : ℂ) - 1) / 2)) = -1 := by norm_num
   rw [hp, absPow_neg] at t3
   apply ι.injective
-  simp only [Ga.uf, Ga.tr, map_mul, map_add, map_sub, map_div₀, map_pow, map_one, map_ofNat]
+  simp only [Ga.uf, Ga.tr, map_mul, map_add (f := _), map_sub, map_div₀, map_pow, map_one, map_ofNat]
   rw [t2, d2, t3, he]
   simp only [MonoidHom.mul_apply, MonoidHom.div_apply, MonoidHom.inv_apply, MonoidHom.one_apply, Units.val_mul, Units.val_div_eq_div_val,
     Units.val_inv_eq_inv_val, Units.val_one, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val]

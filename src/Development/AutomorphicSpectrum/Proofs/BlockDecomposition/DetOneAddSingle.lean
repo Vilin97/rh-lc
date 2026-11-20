@@ -115,7 +115,7 @@ theorem fderiv_evalMatrix (p : MvPolynomial (Fin n × Fin n) ℂ) (g v : Mat n) 
       rw [e]
       exact (differentiable_evalMatrix p g).hasFDerivAt.add (differentiable_evalMatrix q g).hasFDerivAt
     rw [h.fderiv]
-    simp only [ContinuousLinearMap.add_apply, hp, hq, map_add, evalPoints_add, add_mul, Finset.sum_add_distrib]
+    simp only [ContinuousLinearMap.add_apply, hp, hq, map_add (f := _), evalPoints_add, add_mul, Finset.sum_add_distrib]
   | mul_X p i hp =>
     have e : (evP (p * MvPolynomial.X i) : Mat n → ℂ) = evP p * ⇑(entryL i.1 i.2) := by
       funext g

@@ -106,7 +106,7 @@ theorem not_klt_at_points : GlobalTheory.Published.Principalisation →
     apply Subtype.ext
     rw [hs]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [σ, map_add, map_sum, map_mul, hT.retr]
+      simp only [σ, map_add (f := _), map_sum, map_mul, hT.retr]
     push_cast
     simp_rw [hψβ, mul_comm]
 
@@ -256,7 +256,7 @@ theorem not_klt_at_points : GlobalTheory.Published.Principalisation →
     rw [e1, e2, e3]
     exact h
   have hlt := hKT'.lt_disc hVT
-  rw [Place.disc, map_add, Place.ordQ_single] at hlt
+  rw [Place.disc, map_add (f := _), Place.ordQ_single] at hlt
   have hσL : ((σ : T) : FractionRing (K ⊗[ℂ] κ')) = ∑ q : Fin (l + 1),
       algebraMap (K ⊗[ℂ] κ') (FractionRing (K ⊗[ℂ] κ'))
         ((((Fin.cons u (w i) : Fin (l + 1) → R i) q : R i) : K) ⊗ₜ

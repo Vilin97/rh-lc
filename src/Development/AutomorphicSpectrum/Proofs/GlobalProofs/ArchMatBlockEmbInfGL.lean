@@ -112,7 +112,7 @@ theorem infEmb_compInf_sInf' : ∀ (F E : Type) [Field F] [NumberField F] [Field
       induction y using TensorProduct.induction_on with
       | zero => simp only [map_zero]
       | tmul a b => rfl
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
     rw [h1, hci]
     erw [key]
     change infEmb τ ((Algebra.TensorProduct.map (GlobalTheory.AutFunCompare.evW w) (AlgHom.id F E)).toRingHom

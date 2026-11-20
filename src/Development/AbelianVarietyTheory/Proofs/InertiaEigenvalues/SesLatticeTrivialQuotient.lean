@@ -54,13 +54,13 @@ theorem cob_core {ι : Type} [Fintype ι] (bT : Basis ι R T) (bV : Basis ι F V
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul t m => simp only [hΦ, map_tmul, Phi_tmul, hiρ, hβρ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hsm : ∀ (c : R) x, Φ (c • x) = algebraMap R F c • Φ x := by
     intro c x
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul t m => rw [smul_tmul', hΦ, Phi_tmul, Phi_tmul, hi, smul_tmul']
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   have hq : ∀ g x,
       TensorProduct.map (ρT g) (qb g) (LinearMap.lTensor T Nb.mkQ x) =
         LinearMap.lTensor T Nb.mkQ (TensorProduct.map (ρT g) (ρM g) x) := by
@@ -68,7 +68,7 @@ theorem cob_core {ι : Type} [Fintype ι] (bT : Basis ι R T) (bV : Basis ι F V
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul t m => simp [hqb]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [mem_range_iff bV] at hy
   choose n m hm using fun k => hden _ (hy k)
   set N := ∑ k, n k with hN
@@ -90,7 +90,7 @@ theorem cob_core {ι : Type} [Fintype ι] (bT : Basis ι R T) (bV : Basis ι F V
     induction u using TensorProduct.induction_on with
     | zero => simp
     | tmul t m => exact ⟨ρV g t ⊗ₜ[F] ⟨_, hSb g _ m.2⟩, rfl⟩
-    | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
   have h2 : Φ (r ^ N • (c g ⊗ₜ[R] one)) = algebraMap R F r ^ N • (i (c g) ⊗ₜ[F] β one) := by
     rw [hsm, hΦ, Phi_tmul, map_pow]
   have h3 : LinearMap.lTensor T Nb.mkQ (r ^ N • (c g ⊗ₜ[R] one)) =
@@ -209,7 +209,7 @@ theorem map_mem_filV (φ : V →ₗ[LL] V') (a : ℤ) (x : V ⊗[Qp] BdR)
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mem_range_of_filV (a : ℤ) (x : V ⊗[Qp] BdR) (hx : x ∈ FilV PD (LL := LL) (V := V) a) :
     x ∈ LinearMap.range (LinearMap.lTensor V ((PD.Fil a).restrictScalars Qp).subtype) := by
@@ -218,7 +218,7 @@ theorem mem_range_of_filV (a : ℤ) (x : V ⊗[Qp] BdR) (hx : x ∈ FilV PD (LL 
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_eq_actVdR (ρ : Representation LL G V) (g : G) (x : V ⊗[Qp] BdR) :
     TensorProduct.map ((ρ g).restrictScalars Qp) ((PD.actdR g).toLinearMap.restrictScalars Qp) x =
@@ -226,7 +226,7 @@ theorem map_eq_actVdR (ρ : Representation LL G V) (g : G) (x : V ⊗[Qp] BdR) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Fil
 
@@ -279,7 +279,7 @@ theorem exists_rational (AI : LocAinf l P) (LT : LocTied l P AI) (K LL : FinExt 
     | tmul v b =>
       have : r (ι.f v) = v := LinearMap.congr_fun hr v
       simp [this]
-    | add x y hx hy => simp only [map_add, ← hx, ← hy]
+    | add x y hx hy => simp only [map_add (f := _), ← hx, ← hy]
   refine ⟨w, ?_, fun g => ?_⟩
   · rw [hwr]
     exact map_mem_filV (P.PD K) r 0 u (Submodule.sub_mem _ (hone' _ _) hx1F)

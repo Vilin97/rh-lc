@@ -49,7 +49,7 @@ private lemma theta_pow_succ {Ω : Type} [Field Ω] [Algebra ℚ Ω] (s : ℚ)
   | succ k ih =>
     rw [pow_succ, (_root_.GlobalTheory.Glue.theta_leibniz_add_const s _ _).1, ih]
     push_cast
-    simp only [map_add, map_natCast, map_one]
+    simp only [map_add (f := _), map_natCast, map_one]
     ring
 
 open scoped MatrixGroups in

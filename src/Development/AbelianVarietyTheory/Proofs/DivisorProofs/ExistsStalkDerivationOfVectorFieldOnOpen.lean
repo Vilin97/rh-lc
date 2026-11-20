@@ -67,7 +67,7 @@ theorem GlobalTheory.StalkDerField.exists_stalk_derivation : ∀ (X : Scheme.{0}
   let g : X.presheaf.stalk x →+ X.presheaf.stalk x := AddMonoidHom.mk' (germMap (d := d) hxW) (by
     intro t t'
     obtain ⟨O, hO, hOW, f, f', rfl, rfl⟩ := exists_rep₂ hxW t t'
-    rw [← map_add, germMap_germ hd hxW hO hOW, germMap_germ hd hxW hO hOW,
+    rw [← map_add (f := _), germMap_germ hd hxW hO hOW, germMap_germ hd hxW hO hOW,
       germMap_germ hd hxW hO hOW, hd.1 O hOW f f', map_add])
   refine ⟨Derivation.mk' g.toIntLinearMap ?_, fun O hO hOW f => germMap_germ hd hxW hO hOW f⟩
   intro t t'

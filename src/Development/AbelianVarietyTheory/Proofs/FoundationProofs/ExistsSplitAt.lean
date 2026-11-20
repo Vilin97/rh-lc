@@ -44,16 +44,16 @@ theorem idem_tensor {F A E K : Type} [Field F] [CommRing A] [Algebra F A] [CommR
   have h1 : e = j (φ u) * k a - j (φ u) * j (φ r) := by
     rw [he, hjk, hjk, map_neg, map_mul, map_neg, map_mul, map_one]; ring
   have h2 : c e = j (φ u) * k b - j (φ u) * j (φ r) := by
-    rw [he, map_add, hc1, hca, hjk, hjk, map_neg, map_mul, map_neg, map_mul, map_one]; ring
+    rw [he, map_add (f := _), hc1, hca, hjk, hjk, map_neg, map_mul, map_neg, map_mul, map_one]; ring
   rw [h2, h1]
   refine idem_alg (j (φ 1)) _ _ _ _ ?_ ?_ ?_
   · rw [← map_mul, ← map_mul, one_mul]
   · have : φ r * φ r - algebraMap F A t * φ r + algebraMap F A n * φ 1 = 0 := by
-      rw [← hφ, ← hφ, ← map_mul, ← map_sub, ← map_add, mul_one, hr, map_zero]
+      rw [← hφ, ← hφ, ← map_mul, ← map_sub, ← map_add (f := _), mul_one, hr, map_zero]
     have h := congrArg j this
     rwa [map_add, map_sub, map_mul, map_mul, map_mul, hF, hF, ht, hn, map_add, map_mul, map_zero] at h
   · have : algebraMap F A t * φ u - 2 * (φ u * φ r) = φ 1 := by
-      rw [two_mul, ← hφ, ← map_mul, ← map_add, ← map_sub, ← hu]; congr 1; ring
+      rw [two_mul, ← hφ, ← map_mul, ← map_add (f := _), ← map_sub, ← hu]; congr 1; ring
     have h := congrArg j this
     rwa [map_sub, map_mul, map_mul, map_mul, map_ofNat, hF, ht, map_add] at h
 

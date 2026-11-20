@@ -19,7 +19,7 @@ def eqMaps (ρ : Representation ℂ (G × Γ) U) (π : Representation ℂ Γ W) 
   carrier := {f | ∀ (h : Γ) (u : U), f (ρ (1, h) u) = π h (f u)}
   add_mem' := by
     intro f f' hf hf' h u
-    simp only [LinearMap.add_apply, map_add, hf h u, hf' h u]
+    simp only [LinearMap.add_apply, map_add (f := _), hf h u, hf' h u]
   zero_mem' := by intro h u; simp
   smul_mem' := by
     intro c f hf h u

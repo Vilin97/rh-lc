@@ -117,7 +117,7 @@ theorem finrank_comap_realLie_le (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r)
     rintro _ ⟨p, rfl⟩
     rw [LinearMap.mem_ker]
     have e : L p = (p.1 : EuclideanSpace ℂ (Ψ × Fin r × Fin r)) + Complex.I • (p.2 : EuclideanSpace ℂ (Ψ × Fin r × Fin r)) := rfl
-    rw [e, map_add]
+    rw [e, map_add (f := _)]
     have h2 : tr (Complex.I • (p.2 : EuclideanSpace ℂ (Ψ × Fin r × Fin r))) = Complex.I • tr p.2 := by
       funext τ; simp [tr, Finset.mul_sum]
     rw [h2, htrW _ p.1.2, htrW _ p.2.2, smul_zero, add_zero]

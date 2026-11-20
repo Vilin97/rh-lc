@@ -227,7 +227,7 @@ theorem Th0Analytic_of (hS : AnalyticSys) (hA : PtOfAdd) (hZ : PtOfZero) (hI : P
   · change constantCoeff (phL l L ι - phPrime l L ι (ω₀ / 2)) = 0
     have h1 : constantCoeff (fLog (inU l L ι (th0 L (ω₀ / 2)))) = 0 :=
       Formalism.L2.Th1.B.constantCoeff_fLog hcc
-    rw [phPrime, sub_neg_eq_add, map_add, cc_phL, h1, add_zero]
+    rw [phPrime, sub_neg_eq_add, map_add (f := _), cc_phL, h1, add_zero]
   · change Formalism.DworkPowerSeriesWeights.Integral (ι := Unit) (fExp (phL l L ι - phPrime l L ι (ω₀ / 2)))
     rw [key]
     exact (Ser.intS_iff_integral _).1 hOne.2

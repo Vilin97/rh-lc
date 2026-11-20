@@ -41,7 +41,7 @@ theorem splitEquiv_fst (w : InfinitePlace F) (z : AF F ⊗[F] E) :
     (splitEquiv F E z).1 w = compInf F E w z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, Prod.fst_add, Pi.add_apply, hx, hy, map_add]
+  | add x y hx hy => rw [map_add (f := _), Prod.fst_add, Pi.add_apply, hx, hy, map_add (f := _)]
   | tmul a e =>
     simp only [splitEquiv, AlgEquiv.trans_apply, Algebra.TensorProduct.comm_tmul,
       Algebra.TensorProduct.congr_apply, Algebra.TensorProduct.map_tmul, AlgEquiv.refl_toAlgHom,

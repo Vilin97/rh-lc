@@ -39,7 +39,7 @@ theorem isotropic_of_ringHom {a b c : F} (q : DA F a b) (hq0 : q.re = 0)
   have h1 := congrArg QuaternionAlgebra.re hqq
   simp only [QuaternionAlgebra.algebraMap_eq, QuaternionAlgebra.re_coe] at h1
   have h2 := congrArg φ h1
-  simp only [map_add, map_sub, map_mul, map_pow, hφ] at h2
+  simp only [map_add (f := _), map_sub, map_mul, map_pow, hφ] at h2
   refine ⟨![φ q.imI, φ q.imJ, φ q.imK, 1], fun h => by simpa using congrFun h 3, ?_⟩
   simp [Fin.sum_univ_four]
   linear_combination h2

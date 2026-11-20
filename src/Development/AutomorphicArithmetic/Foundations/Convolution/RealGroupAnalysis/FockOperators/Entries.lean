@@ -21,7 +21,7 @@ private theorem entries {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (
     rw [Matrix.det_fin_two] at h
     have := congrArg pw h
     simpa using this
-  simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.transpose_apply, map_add, map_mul] at h00 h01
+  simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.transpose_apply, map_add (f := _), map_mul] at h00 h01
   simp only [Matrix.one_apply_eq, map_one] at h00
   simp only [Matrix.one_apply_ne (zero_ne_one : (0 : Fin 2) ≠ 1), map_zero] at h01
   change pw (k 0 0) * pw (k 0 0) + pw (k 0 1) * pw (k 0 1) = 1 at h00
@@ -43,7 +43,7 @@ private theorem step {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     O.d w i (W.Om k φ) = s • O.p D.δ w j (W.Om k φ) := by
   have e1 := congrArg (fun T : Module.End ℂ (S4 F) => T φ) (Heisenberg₂ F E D W O k w i).1
   have e2 := congrArg (fun T : Module.End ℂ (S4 F) => T φ) (Heisenberg₂ F E D W O k w j).2
-  simp only [Module.End.mul_apply, LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul] at e1 e2
+  simp only [Module.End.mul_apply, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul] at e1 e2
   rw [e1, e2, hc, he, h1, h2]
   simp only [map_smul, smul_add, smul_smul]
   have : s * (-cw w (k 0 1) * s) = cw w (k 0 1) := by linear_combination (-cw w (k 0 1)) * hs

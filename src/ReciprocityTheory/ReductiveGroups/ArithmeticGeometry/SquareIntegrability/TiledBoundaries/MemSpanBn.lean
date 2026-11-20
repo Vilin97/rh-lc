@@ -143,7 +143,7 @@ theorem stepDual : StepDual := by
   choose! m hm using hx
   have hHadd : ∀ z y y' : Vsp X.dim, Hf z (y + y') = Hf z y + Hf z y' := by
     intro z y y'
-    simp only [Hf, PiLp.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [Hf, PiLp.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   have hHsub : ∀ z z' y : Vsp X.dim, Hf (z - z') y = Hf z y - Hf z' y := by
     intro z z' y
     simp only [Hf, PiLp.sub_apply, sub_mul, Finset.sum_sub_distrib]

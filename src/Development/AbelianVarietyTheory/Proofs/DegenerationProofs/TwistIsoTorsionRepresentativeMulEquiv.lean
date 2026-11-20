@@ -19,7 +19,7 @@ theorem twistMap_add_mul (r : Oˣ) (y y' : N.X) (g g' : N.Gt) :
   NumD.Gt.ext rfl (funext fun (z : N.X) => by
     show g.s z * g'.s z / N.θ (N.c z) g.b g'.b * r ^ β.be (y + y') z =
       g.s z * r ^ β.be y z * (g'.s z * r ^ β.be y' z) / N.θ (N.c z) g.b g'.b
-    rw [map_add, LinearMap.add_apply, zpow_add]
+    rw [map_add (f := _), LinearMap.add_apply, zpow_add]
     apply Additive.ofMul.injective; simp only [ofMul_mul, ofMul_div]; abel)
 
 theorem twistMap_mul_mul (r r' : Oˣ) (y : N.X) (g g' : N.Gt) :

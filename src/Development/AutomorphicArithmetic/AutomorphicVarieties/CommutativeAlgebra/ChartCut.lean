@@ -15,7 +15,7 @@ private theorem cc_P_mem {w : σ → Y} {w' : τ → Y} {k : σ → MvPowerSerie
   induction e using Finsupp.induction with
   | zero => simpa [P_zero] using one_mem_wtPart E w'
   | single_add i n f _ hn ih =>
-    rw [P_add, P_single, map_add, Finsupp.weight_single]
+    rw [P_add, P_single, map_add (f := _), Finsupp.weight_single]
     refine mul_mem_wtPart E w' ?_ ih
     clear hn
     induction n with
@@ -98,7 +98,7 @@ private theorem coeff_low_degree_algHom_apply_eq [Fintype σ] (ψ : MvPowerSerie
   simp only [map_sub, sub_eq_zero] at hr
   rw [hr]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_smul, map_one, coeff_smul, smul_eq_mul]
+    simp only [map_add (f := _), map_sum, map_smul, map_one, coeff_smul, smul_eq_mul]
 
 private theorem cc_fix [Fintype σ] {w : σ → Y} {w' : τ → Y} {G : σ → MvPowerSeries τ E}
     {g : σ → MvPowerSeries σ E} (hG : ∀ j, Low 1 (G j)) (hg : ∀ j, Low 2 (g j))
@@ -224,7 +224,7 @@ private theorem cc_ift {κ τ' : Type} [Fintype σ] [Fintype κ] [Fintype τ'] [
       rw [hh]
       abel
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hzk, map_add, map_add, map_sum]
+      rw [hzk, map_add (f := _), map_add (f := _), map_sum]
     simp only [map_smul, hψr, hψl]
     abel
   · intro f i

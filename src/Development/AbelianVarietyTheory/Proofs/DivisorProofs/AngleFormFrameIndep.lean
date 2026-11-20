@@ -132,7 +132,7 @@ theorem GlobalTheory.CurveDens.angleForm_frame_indep (E : Type) [NormedAddCommGr
   have h2 : conj (g z) ≠ 0 := (map_ne_zero _).2 hg0
   have h3 : (a z : ℂ) ≠ 0 := by exact_mod_cast ha0.ne'
   have h4 : (a' z : ℂ) ≠ 0 := by exact_mod_cast ha0'.ne'
-  simp only [map_mul, map_sub, map_add, map_div₀, map_inv₀, Complex.conj_conj]
+  simp only [map_mul, map_sub, map_add (f := _), map_div₀, map_inv₀, Complex.conj_conj]
   generalize del (fun x => (Real.log (a' x) : ℂ)) z ξ = A
   generalize dbar (fun x => (Real.log (a x) : ℂ)) z ξ = B
   generalize del q z ξ = Q1

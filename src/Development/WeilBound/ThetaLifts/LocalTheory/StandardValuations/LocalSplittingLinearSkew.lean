@@ -47,7 +47,7 @@ theorem pure_cancel {κ : Type} [Fintype κ] {w : ∀ v : Pl F, (κ → Fv F v) 
     rw [Fintype.prod_eq_single (⟨v, Finset.mem_singleton_self v⟩ : ({v} : Finset (Pl F)))
       fun u hu => absurd (Subtype.ext (Finset.mem_singleton.1 u.2)) hu]
     simp [y']
-  simp only [Fin.sum_univ_two, map_add, map_smul, TensorProduct.lift.tmul, LinearMap.compl₁₂_apply, PiTensorProduct.lift.tprod,
+  simp only [Fin.sum_univ_two, map_add (f := _), map_smul, TensorProduct.lift.tmul, LinearMap.compl₁₂_apply, PiTensorProduct.lift.tprod,
     Matrix.cons_val_zero, Matrix.cons_val_one, map_zero, LinearMap.mul_apply', hm] at h2
   have h3 : g z * (a y - b y) = 0 := by
     change (1 : ℂ) • (g z * a y) + (-1 : ℂ) • (g z * b y) = 0 at h2
@@ -92,7 +92,7 @@ theorem lin_of (hψ : IsStd ψ) {π₁ π₀ : AE F E →+* Fv F v} {c₁ c₂ �
   have e : Hv M ψ v (u₁ + u₀) φ = Hv M ψ v u₁ (Hv M ψ v u₀ φ) := by
     have f := congrArg (evFin F v) ((M.co.form u₁ u₀).symm.trans (hs u₁ u₀ a1 b1))
     rw [ev_sgl, e1, e0, h0, map_sub, ev_dot, ev_dot] at f
-    rw [Hv, Hv, Hv, KCo.schr_schr, map_add, locW_add]
+    rw [Hv, Hv, Hv, KCo.schr_schr, map_add (f := _), locW_add]
     erw [f]
     simp
   obtain ⟨x, hx, x1, -⟩ := sur (Y + c₁ u₁) 0

@@ -63,7 +63,7 @@ theorem smooth_of_span {n : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProduct
   induction hv using Submodule.span_induction with
   | mem x hx => exact hx
   | zero => intro k Xs _; simp only [map_zero]; exact contDiff_const
-  | add x y _ _ hx hy => intro k Xs h; simp only [map_add]; exact (hx k Xs h).add (hy k Xs h)
+  | add x y _ _ hx hy => intro k Xs h; simp only [map_add (f := _)]; exact (hx k Xs h).add (hy k Xs h)
   | smul c x _ hx => intro k Xs h; simp only [map_smul]; exact (hx k Xs h).const_smul c
 
 theorem hasDerivAt_of_smooth {n : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]

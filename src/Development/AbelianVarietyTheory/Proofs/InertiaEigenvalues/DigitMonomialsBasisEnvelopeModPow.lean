@@ -31,7 +31,7 @@ theorem tri_map {A R : Type} [CommRing A] [CommRing R] (f : A →+* R) (l i : �
     exact (Finset.coe_subset.mpr (MvPolynomial.vars_map a f)).trans ha
   · rw [MvPolynomial.mem_supported] at hb ⊢
     exact (Finset.coe_subset.mpr (MvPolynomial.vars_map b f)).trans hb
-  · simp [map_add, map_mul, map_pow, MvPolynomial.map_C, MvPolynomial.map_X]
+  · simp [map_add (f := _), map_mul, map_pow, MvPolynomial.map_C, MvPolynomial.map_X]
 
 end GlobalTheory.EnvLevel
 

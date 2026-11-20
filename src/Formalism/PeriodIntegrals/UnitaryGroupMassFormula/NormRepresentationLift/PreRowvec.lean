@@ -45,7 +45,7 @@ theorem pre_rowvec (Λ : Submodule (𝓞 E) S.V) (hint : IntLat Λ) (Tn : ℕ) (
   have hze : ∀ i, S.hT F.fl.z (F.fl.e i) = 0 := by
     intro i; rw [herm_eq, F.fl.z_orth i, star_zero]
   have hve : ∀ i, S.hT v (F.fl.e i) = S.hT v₀ (F.fl.e i) := by
-    intro i; simp only [v, map_add, LinearMap.add_apply, hT_cj_left, hze, mul_zero, add_zero]
+    intro i; simp only [v, map_add (f := _), LinearMap.add_apply, hT_cj_left, hze, mul_zero, add_zero]
   refine ⟨v, Λ.add_mem hv₀ (Λ.smul_mem _ hz), fun i hi => ?_, fun c hc => ?_⟩
   · rw [hve, hv0e, if_neg (not_lt.mpr hi)]
   · induction c using Fin.lastCases with
@@ -53,7 +53,7 @@ theorem pre_rowvec (Λ : Submodule (𝓞 E) S.V) (hint : IntLat Λ) (Tn : ℕ) (
       refine ⟨y' * (ζ - t (Fin.last r)), ?_⟩
       have hfz : frame F (Fin.last r) = F.fl.z := by simp [frame, FlagG.fvec]
       rw [hfz]
-      simp only [v, map_add, LinearMap.add_apply, hT_cj_left, F.fl.z_norm, hζ, m]
+      simp only [v, map_add (f := _), LinearMap.add_apply, hT_cj_left, F.fl.z_norm, hζ, m]
       push_cast
       linear_combination (-((ζ : E) - (t (Fin.last r) : E))) * hxyE
     | cast i =>
@@ -87,7 +87,7 @@ theorem trace_fix (Λ : Submodule (𝓞 E) S.V) (hint : IntLat Λ) {n : ℕ} (f 
     · obtain ⟨q, hq⟩ := hc c hcZ
       refine ⟨t c + (M : 𝓞 E) * q, ?_⟩
       rw [hT_cj_left, hq]
-      simp only [coe_nat, map_add, map_mul, map_natCast]
+      simp only [coe_nat, map_add (f := _), map_mul, map_natCast]
       linear_combination ((t c : E) + (g : E) * (q : E) - (g : E) * (q : E)) * hmg
   · refine ⟨v, hv, -(ω * o), ?_, hZ, hc⟩
     rw [ho]

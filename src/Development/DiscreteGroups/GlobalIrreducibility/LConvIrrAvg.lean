@@ -12,7 +12,7 @@ variable {G : Type} [Group G] (ρ : Representation ℂ G M) (hinv : ∀ g x y, B
 
 def fixSub (K : Subgroup G) : Submodule ℂ M where
   carrier := {a | ∀ κ ∈ K, ρ κ a = a}
-  add_mem' {a b} ha hb κ hκ := by rw [map_add, ha κ hκ, hb κ hκ]
+  add_mem' {a b} ha hb κ hκ := by rw [map_add (f := _), ha κ hκ, hb κ hκ]
   zero_mem' κ _ := map_zero _
   smul_mem' c a ha κ hκ := by rw [map_smul, ha κ hκ]
 

@@ -195,7 +195,7 @@ private theorem p2_gal [IsGalois F E] (e : E ⊗[F] A ≃ₐ[E] B) (σ : E ≃�
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rw [hφ, p2_gal_tmul, ← hφ]; rfl
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have h2 : ∀ j z, (galOf e σ ^ j) (φ z) = φ ((τ ^ j) z) := fun j z => by
     induction j with
     | zero => rfl

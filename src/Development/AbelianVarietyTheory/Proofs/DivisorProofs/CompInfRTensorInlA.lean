@@ -135,14 +135,14 @@ theorem map_evW_sum_sgW (c : ∀ w : InfinitePlace F, w.Completion ⊗[F] E) (w 
       show (evW w (sgW w a)) ⊗ₜ[F] x = a ⊗ₜ[F] x
       congr 1
       exact Pi.single_eq_same w a
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   · intro w' _ hw'
     induction c w' using TensorProduct.induction_on with
     | zero => simp
     | tmul a x =>
       show (evW w (sgW w' a)) ⊗ₜ[F] x = 0
       rw [show evW w (sgW w' a) = 0 from Pi.single_eq_of_ne (Ne.symm hw') a, TensorProduct.zero_tmul]
-    | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
   · simp
 
 theorem compInf_rTensor_inlA (z : Ainf F ⊗[F] E) (w : InfinitePlace F) :
@@ -150,7 +150,7 @@ theorem compInf_rTensor_inlA (z : Ainf F ⊗[F] E) (w : InfinitePlace F) :
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero]
   | tmul a x => rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem compInf_glueInf (c : ∀ w : InfinitePlace F, w.Completion ⊗[F] E) (w : InfinitePlace F) :
     compInf F E w (glueInf F E c) = c w := by
@@ -163,7 +163,7 @@ theorem sndA_rTensor_inlA (z : Ainf F ⊗[F] E) :
   | tmul a x =>
     show (sndA F (inlA F a)) ⊗ₜ[F] x = 0
     rw [show sndA F (inlA F a) = 0 from rfl, TensorProduct.zero_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 theorem sndA_glueInf (c : ∀ w : InfinitePlace F, w.Completion ⊗[F] E) :
     Algebra.TensorProduct.map (sndA F) (AlgHom.id F E) (glueInf F E c) = 0 :=
@@ -186,7 +186,7 @@ theorem tens_ext {z z' : AF F ⊗[F] E} (h1 : ∀ w, compInf F E w z = compInf F
       congr 1
       exact Prod.ext (add_zero _).symm (zero_add _).symm
     | add x y hx hy =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [add_add_add_comm, ← hx, ← hy]
   have hc : ∀ (w : InfinitePlace F) (z : AF F ⊗[F] E), compInf F E w z =
       Algebra.TensorProduct.map (evW w) (AlgHom.id F E) (Algebra.TensorProduct.map (fstA F) (AlgHom.id F E) z) := by
@@ -194,7 +194,7 @@ theorem tens_ext {z z' : AF F ⊗[F] E} (h1 : ∀ w, compInf F E w z = compInf F
     induction z using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero, map_zero]
     | tmul x y => rfl
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   rw [hz z, hz z', h2, GlobalTheory.AutFunCompare.infTens_ext (fun w => (hc w z).symm.trans ((h1 w).trans (hc w z')))]
 
 end Glue

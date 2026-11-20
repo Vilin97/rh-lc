@@ -549,7 +549,7 @@ theorem span_unif_pow_eq_top :
             rw [← hDY (rem n)]
         _ = ∑ j, cohenMap K p (A (n + 1) j) * ϖ ^ (j : ℕ) + (p : normInteger K) ^ (n + 1) * rem (n + 1) := by
             rw [hr]
-            simp only [hA1, map_add, map_mul, map_pow, map_natCast, add_mul, Finset.sum_add_distrib,
+            simp only [hA1, map_add (f := _), map_mul, map_pow, map_natCast, add_mul, Finset.sum_add_distrib,
               mul_add, Finset.mul_sum, mul_assoc]
             ring
   have hlim : ∀ j, ∃ W : WittVector p (ResidueField (normInteger K)),

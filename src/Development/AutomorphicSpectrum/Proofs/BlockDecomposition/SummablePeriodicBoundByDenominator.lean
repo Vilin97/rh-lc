@@ -64,7 +64,7 @@ def toInt (σ : E →ₐ[F] E) (n : ℕ) : hermO σ n →+ Matrix (Fin n) (Fin n
     have h3 := Classical.choose_spec ((mem_hermO_iff σ n d.1).1 d.2 a b)
     refine Eq.trans h1 ?_
     change _ = algebraMap (𝓞 E) E (_ + _)
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Eq.trans rfl (Eq.symm (Eq.trans (congrArg₂ (· + ·) h2 h3) rfl))
 
 theorem algebraMap_toInt (σ : E →ₐ[F] E) (n : ℕ) (c : hermO σ n) (a b : Fin n) :
@@ -87,7 +87,7 @@ theorem Kc_le_add {n : ℕ} (c l : Matrix (Fin n) (Fin n) E)
   obtain ⟨o, ho⟩ := hy i
   choose m hm using hl
   refine ⟨o + ∑ j, m i j * y j, ?_⟩
-  rw [Matrix.add_mulVec, Pi.add_apply, map_add, ho]
+  rw [Matrix.add_mulVec, Pi.add_apply, map_add (f := _), ho]
   congr 1
   simp [Matrix.mulVec, dotProduct, hm]
 

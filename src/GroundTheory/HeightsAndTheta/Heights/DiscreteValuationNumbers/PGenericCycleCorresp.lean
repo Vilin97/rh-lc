@@ -60,7 +60,7 @@ theorem length_eq (J W : Ideal S) [W.IsPrime] (hW : Disjoint (M : Set S) W)
   let g : (S ⧸ J) →ₗ[S] N :=
     { toFun := fun x => LocalizedModule.mk (q x) 1
       map_add' := fun x y => by
-        rw [map_add, LocalizedModule.mk_add_mk, one_smul, one_smul, mul_one]
+        rw [map_add (f := _), LocalizedModule.mk_add_mk, one_smul, one_smul, mul_one]
       map_smul' := fun s x => by
         simp only [RingHom.id_apply]
         rw [LocalizedModule.smul'_mk, map_smul] }

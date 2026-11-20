@@ -19,10 +19,10 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 theorem baseChange_neg_apply (D : Datum H) (x y : ℝ ⊗[ℤ] D.La) :
     (-D.EF).baseChange ℝ x y = -D.EF.baseChange ℝ x y := by
   induction x with
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]; ring
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]; ring
   | tmul r a =>
     induction y with
-    | add a b ha hb => simp only [map_add, ha, hb]; ring
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]; ring
     | tmul s b => simp
 
 def negDatum (D : Datum H) : Datum H where
@@ -233,7 +233,7 @@ theorem conj_bt : IsCMField.ringOfIntegersComplexConj CyclotomicFieldTwentyEight
   have h28 : z ^ 28 = 1 := z_prim.pow_eq_one
   have e1 : (-z ^ 13) ^ 7 = -z ^ 7 := by linear_combination -(z ^ 63 + z ^ 35 + z ^ 7) * h28
   have e2 : (-z ^ 13) ^ 4 = -z ^ 10 := by linear_combination z ^ 24 * h28 + z ^ 10 * z_pow_14
-  rw [bt, map_mul, map_add, map_sub, map_one, map_pow, map_pow, conj_cyclotomicTwentyEight_eq_neg_pow_thirteen, e1, e2]
+  rw [bt, map_mul, map_add (f := _), map_sub, map_one, map_pow, map_pow, conj_cyclotomicTwentyEight_eq_neg_pow_thirteen, e1, e2]
   ring
 
 theorem norm_bt : bt * IsCMField.ringOfIntegersComplexConj CyclotomicFieldTwentyEight bt * host.rt = (-z + z ^ 3 - z ^ 9) * dd := by
@@ -336,7 +336,7 @@ theorem bar_hh {D : Datum H} {g : ℕ} {ty : Fin g → (E →+* ℂ)} {Pe : D.La
     {p q : ℕ} (Z : CMLat hP p q) (j : Fin p ⊕ Fin q) : H.bar (Z.hh j) = Z.hh j := by
   have skew : ∀ (D : Datum H) x y, D.EF x y = -D.EF y x := fun D x y => by
     have := D.alt (x + y)
-    simp only [map_add, LinearMap.add_apply, D.alt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, D.alt] at this
     linarith
   have := (Z.D₁ j.isLeft).proj
   have : Nontrivial (Z.D₁ j.isLeft).La :=
@@ -476,7 +476,7 @@ theorem exists_sum (D₁ D₂ : Datum H) {g₁ g₂ : ℕ} {t₁ : Fin g₁ → 
       obtain ⟨b, hb⟩ := D₂.unimod.2 (φ ∘ₗ LinearMap.inr ℤ _ _)
       refine ⟨(a, b), LinearMap.ext fun y => ?_⟩
       rw [hEF, ha, hb]
-      simp [← map_add]
+      simp [← map_add (f := _)]
   obtain ⟨D, e, hp', hq', hD⟩ := PeriodDatum.exists_datum E H _ EF _ _ _ _ Q M hty hb
     (fun a x y => by simp [hEF, D₁.adj, D₂.adj]) hl hi hd hs hH hp he
   have hr : Set.range (Q.comp e.toLinearMap.toAddMonoidHom) = Set.range Q := e.surjective.range_comp Q
@@ -505,7 +505,7 @@ theorem exists_cmLat_mixed (D₀ : Datum H) (hp : D₀.p = 1) (hq : D₀.q = 0) 
       rw [hv, k₂]; simpa using this) i
   have v₁ : ∀ x y, D.EF (f₁ x) (f₁ y) = D₀.EF ((1 : 𝓞 E) • x) y := fun x y => by rw [hE, k₁, k₁]; simp
   have v₂ : ∀ x y, D.EF (f₂ x) (f₂ y) = (oppDatum D₀).EF ((1 : 𝓞 E) • x) y := fun x y => by rw [hE, k₂, k₂]; simp
-  have w : ∀ x, x = f₁ (e x).1 + f₂ (e x).2 := fun x => e.injective (by rw [map_add, k₁, k₂]; simp)
+  have w : ∀ x, x = f₁ (e x).1 + f₂ (e x).2 := fun x => e.injective (by rw [map_add (f := _), k₁, k₂]; simp)
   let Z : CMLat hP 1 1 :=
     { D₁ := fun b => match b with
         | true => D₀

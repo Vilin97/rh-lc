@@ -57,7 +57,7 @@ theorem adj_Eab (D : DSRep T) {a b : Ix p q} (h : sameBlock a b) (v w : D.HK.V) 
       rw [Matrix.conjTranspose_smul, Matrix.conjTranspose_add]
       simp only [Eab, Matrix.conjTranspose_single, star_one, Complex.star_def, Complex.conj_I, neg_smul]
       rw [add_comm])) v w
-  simp only [map_sub, map_add, map_smul, LinearMap.sub_apply, LinearMap.add_apply, LinearMap.smul_apply,
+  simp only [map_sub, map_add (f := _), map_smul, LinearMap.sub_apply, LinearMap.add_apply, LinearMap.smul_apply,
     inner_sub_left, inner_sub_right, inner_add_left, inner_add_right, inner_smul_left, inner_smul_right,
     Complex.conj_I] at h1 h2
   have hI : Complex.I * Complex.I = -1 := Complex.I_mul_I

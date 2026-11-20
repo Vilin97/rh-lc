@@ -33,7 +33,7 @@ theorem exists_torsPt_of_ord : ∀ (R K : Type) [CommRing R] [IsDomain R] [IsInt
   have natMul : ∀ a b : A, IsNatFn G N (fun B _ _ x => σ a B x * σ b B x) := fun a b B C _ _ _ _ φ z => by
     simp only [map_mul, hσ a B C φ z, hσ b B C φ z]
   have natAdd : ∀ a b : A, IsNatFn G N (fun B _ _ x => σ a B x + σ b B x) := fun a b B C _ _ _ _ φ z => by
-    simp only [map_add, hσ a B C φ z, hσ b B C φ z]
+    simp only [map_add (f := _), hσ a B C φ z, hσ b B C φ z]
   have natC : ∀ c : R, IsNatFn G N (fun B _ _ _ => algebraMap R B c) := fun c B C _ _ _ _ φ z =>
     (φ.commutes c).symm
   let pt : ∀ (B : Type) [CommRing B] [Algebra R B], Tors G N B → (A →ₐ[R] B) := fun B _ _ x =>

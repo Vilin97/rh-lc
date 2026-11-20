@@ -198,7 +198,7 @@ theorem bc_comm {R A : Type} [CommRing R] [CommRing A] [Algebra R A] {M N P P' :
   rw [← Nat.cast_pow, Nat.cast_smul_eq_nsmul]
   induction x with
   | tmul a y => simp only [LinearMap.baseChange_tmul, h, TensorProduct.tmul_smul]
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
 
 theorem goal_of (h1 : FinPart) (h2 : GysinTw) (h3 : LimExact) : GysinSeq := by
   intro hB l _ k _ _ hl e r X Z _ p ι U hι hp hZ hU

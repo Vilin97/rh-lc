@@ -52,7 +52,7 @@ theorem card_isom {K : Type} [Field K] {σ : K →+* K} {U V : Type} [AddCommGro
     · intro H i j; exact H _ _
     · intro H x y
       have hs2 : IsSq σ (fun x y => hV (φ x) (φ y)) :=
-        ⟨fun x y z => by simp only [map_add, hsV.add_right],
+        ⟨fun x y z => by simp only [map_add (f := _), hsV.add_right],
           fun c x y => by simp only [map_smul, hsV.smul_right],
           fun x y => hsV.herm _ _⟩
       exact (hs2.ext_basis hsU b H x y)))

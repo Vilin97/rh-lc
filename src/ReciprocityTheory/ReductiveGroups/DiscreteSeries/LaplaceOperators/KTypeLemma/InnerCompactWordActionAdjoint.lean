@@ -71,7 +71,7 @@ theorem klw_symm (a b : Fin n) (w w' : List (Fin n × Fin n)) :
     cases w' with
     | nil => rw [klw_cons_nil]; simp [adLW]
     | cons q w' =>
-      rw [klw_cons_cons, klw_cons_cons, map_add, apply_ite (starRingEnd ℂ), apply_ite (starRingEnd ℂ)]
+      rw [klw_cons_cons, klw_cons_cons, map_add (f := _), apply_ite (starRingEnd ℂ), apply_ite (starRingEnd ℂ)]
       simp only [map_zero, kl_adL_symm, ih]
       by_cases h1 : w' = w
       · subst h1
@@ -88,7 +88,7 @@ variable {M : Type*} [NormedAddCommGroup M] [InnerProductSpace ℂ M] {ε : Fin 
 def ipK (V : Submodule ℂ M) : KS (n := n) V →ₗ⋆[ℂ] KS (n := n) V →ₗ[ℂ] ℂ where
   toFun x := x.sum fun p v => (innerₛₗ ℂ v) ∘ₗ Finsupp.lapply p
   map_add' x y := Finsupp.sum_add_index' (fun p => by simp) (fun p v v' => by
-    rw [map_add, LinearMap.add_comp])
+    rw [map_add (f := _), LinearMap.add_comp])
   map_smul' c x := by
     rw [Finsupp.sum_smul_index' (fun p => by simp), Finsupp.smul_sum]
     exact Finsupp.sum_congr fun p _ => by rw [map_smulₛₗ, LinearMap.smul_comp]
@@ -107,11 +107,11 @@ theorem ipK_symm (x y : KS (n := n) V) : conj (ipK V y x) = ipK V x y := by
   classical
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x x' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+  | add x x' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
   | single p v =>
     induction y using Finsupp.induction_linear with
     | zero => simp
-    | add y y' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+    | add y y' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
     | single q u =>
       rw [ipK_single, ipK_single, Finsupp.single_apply, Finsupp.single_apply]
       by_cases h : p = q
@@ -138,11 +138,11 @@ theorem inner_compactWordAction_adjoint (hV : IsKStableSub ε E V) (hU : IsKUnit
   classical
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x x' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+  | add x x' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
   | single p v =>
     induction y using Finsupp.induction_linear with
     | zero => simp
-    | add y y' h h' => simp only [map_add, h, h']
+    | add y y' h h' => simp only [map_add (f := _), h, h']
     | single q u =>
       rw [← ipK_symm, ipK_single, ipK_single, compactWordAction_single_apply hV hab, compactWordAction_single_apply hV hab.symm,
         inner_conj_symm, inner_add_left, inner_add_right]
@@ -184,7 +184,7 @@ theorem lift0 (hV : IsKStableSub ε E V) [FiniteDimensional ℂ V] (hE : IsGlRep
       re_inner_nonneg := fun x => by
         set_option synthInstance.maxHeartbeats 100000 in
           rw [ipK_apply, map_sum]; exact sum_nonneg fun p _ => inner_self_nonneg
-      add_left := fun x y z => by rw [map_add, LinearMap.add_apply]
+      add_left := fun x y z => by rw [map_add (f := _), LinearMap.add_apply]
       smul_left := fun x y r => by rw [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul]
       definite := fun x hx => by
         have h1 := congrArg RCLike.re hx

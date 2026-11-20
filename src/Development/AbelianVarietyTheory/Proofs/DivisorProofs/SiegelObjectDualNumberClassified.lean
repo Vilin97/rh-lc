@@ -27,7 +27,7 @@ theorem cycAway_dualNumber_factor {n : ℕ} (hn : n ≠ 0) (K : Type) [Field K] 
         simp [ha, hb]
       one_mem' := by simp
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add, TrivSqZeroExt.snd_add] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _), TrivSqZeroExt.snd_add] at *
         simp [ha, hb]
       zero_mem' := by simp
       neg_mem' := fun {a} ha => by

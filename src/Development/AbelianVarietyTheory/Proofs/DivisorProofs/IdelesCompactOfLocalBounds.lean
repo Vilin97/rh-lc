@@ -20,13 +20,13 @@ theorem evInf_eInf (w : InfinitePlace F) : evInf F w (eInf F) = 1 := by
 theorem compInf_unitArch (w : InfinitePlace F) (l : (AE F E)ˣ) :
     compInf F E w (unitArch F E l : AE F E) = compInf F E w l := by
   change compInf F E w (eInf F • (l : AE F E) + (1 - eInf F) • 1) = _
-  rw [map_add, compInf_smul, compInf_smul, evInf_eInf, map_sub, map_one, evInf_eInf, sub_self, zero_smul, one_smul,
+  rw [map_add (f := _), compInf_smul, compInf_smul, evInf_eInf, map_sub, map_one, evInf_eInf, sub_self, zero_smul, one_smul,
     add_zero]
 
 theorem compFin_unitAt (v : Pl F) (l : (AE F E)ˣ) :
     compFin F E v (unitAt E v l : AE F E) = compFin F E v l := by
   change compFin F E v (eFin v • (l : AE F E) + (1 - eFin v) • 1) = _
-  rw [map_add, compFin_smul, compFin_smul, eFin, GlobalTheory.LatVac.evFin_liftV, map_sub, map_one, GlobalTheory.LatVac.evFin_liftV,
+  rw [map_add (f := _), compFin_smul, compFin_smul, eFin, GlobalTheory.LatVac.evFin_liftV, map_sub, map_one, GlobalTheory.LatVac.evFin_liftV,
     sub_self, zero_smul, one_smul, add_zero]
 
 end GlobalTheory.IdeleCyl
@@ -78,7 +78,7 @@ theorem eventually_repr_mem_of_mem_intLoc (F E : Type) [Field F] [NumberField F]
     (fun a ha x => ?_) (by simp) (fun y z hy hz => ?_) (fun y hy => ?_) hy
   · rw [repr_tmul_basis]
     exact mul_mem ha (hx x)
-  · rw [map_add, Finsupp.add_apply]; exact add_mem hy hz
+  · rw [map_add (f := _), Finsupp.add_apply]; exact add_mem hy hz
   · rw [map_neg, Finsupp.neg_apply]; exact neg_mem hy
 
 end GlobalTheory.IdeleCyl
@@ -92,7 +92,7 @@ theorem repr_map_tens {n : ℕ} {F E R R' : Type} [Field F] [Field E] [Algebra F
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [Algebra.TensorProduct.basis_repr_tmul, Algebra.smul_def]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 end GlobalTheory.IdeleCyl
 

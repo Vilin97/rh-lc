@@ -213,7 +213,7 @@ theorem pair_idSpan {e f : Fin r → S.V} (h : IsHyp e f) {B : Fin r → FI E} (
       exact (mem_inv (h0 a) c).1 hc β hβ
     · simpa using isIntegral_zero
   | zero => simpa using isIntegral_zero
-  | add x y _ _ hx hy => rw [map_add, mul_add]; exact hx.add hy
+  | add x y _ _ hx hy => rw [map_add (f := _), mul_add]; exact hx.add hy
   | smul c x _ hx =>
     rw [osmul, map_smul, smul_eq_mul, mul_left_comm]
     exact c.isIntegral_coe.mul hx
@@ -255,7 +255,7 @@ theorem exists_dual_frame (hE : Formalism.HermitianLatticesTheory.IsCMUnram E) {
     have hxL : x ∈ Λ := by
       have := Λ.sub_mem hm (Λ.smul_mem o hz)
       rwa [osmul, add_sub_cancel_right] at this
-    rw [← hxw, map_add, map_smul, hfz, smul_zero, add_zero]
+    rw [← hxw, map_add (f := _), map_smul, hfz, smul_zero, add_zero]
     exact pair_idSpan h h0 (hX ▸ ⟨hxL, hx⟩) a (hB a β hβ)
   refine ⟨fun b => g b - ∑ a, ((t : E) * S.hT (g a) (g b)) • e a, ⟨h.1, fun a b => ?_, fun a b => ?_⟩,
     fun a => ?_, fun b β hβ => ?_⟩
@@ -487,7 +487,7 @@ theorem starStable_ddS (D : D7) : StarStable (ddS D) := by
     rw [this]
     exact FractionalIdeal.mem_coeIdeal_of_mem _ (Ideal.mem_map_of_mem _ hw)
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, star_add]; exact Submodule.add_mem (FractionalIdeal.coeToSubmodule _) ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _), star_add]; exact Submodule.add_mem (FractionalIdeal.coeToSubmodule _) ha hb
   | smul c a _ ha =>
     rw [smul_eq_mul, map_mul, star_mul, mul_comm]
     exact Submodule.smul_mem (FractionalIdeal.coeToSubmodule _)

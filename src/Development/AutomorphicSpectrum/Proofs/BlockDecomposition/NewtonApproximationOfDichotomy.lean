@@ -17,7 +17,7 @@ theorem isUnit_or_of_add_quot {S : Type} [CommRing S] (ϖ : S)
   obtain ⟨w, rfl⟩ := Ideal.Quotient.mk_surjective w'
   have h1 : (a + b) * w - 1 ∈ Ideal.span {ϖ ^ 2} := by
     rw [← Ideal.Quotient.eq_zero_iff_mem]
-    simp only [map_sub, map_mul, map_add, map_one]
+    simp only [map_sub, map_mul, map_add (f := _), map_one]
     rw [hw', sub_self]
   obtain ⟨v, hv⟩ := Ideal.mem_span_singleton.mp h1
   have hu : IsUnit ((a + b) * w) := by

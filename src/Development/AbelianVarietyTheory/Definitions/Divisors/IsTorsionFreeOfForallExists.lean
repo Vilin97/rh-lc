@@ -104,7 +104,7 @@ theorem genRank_cokernel (i : G ⟶ F) [Mono i] [h : IsFiniteQC F] :
 def Sub.ofGeneric (N : Submodule X.functionField (genStalk F)) : Sub F where
   sec V :=
     { carrier := {s | ∀ h : genericPoint X ∈ V, F.presheaf.germ V _ h s ∈ N}
-      add_mem' := fun hs ht h => by rw [map_add]; exact add_mem (hs h) (ht h)
+      add_mem' := fun hs ht h => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hs h) (ht h)
       zero_mem' := fun h => by rw [map_zero]; exact zero_mem _
       smul_mem' := fun a s hs h => by rw [QCoh.germ_smul]; exact N.smul_mem _ (hs h) }
   res_mem h s hs hx := by rw [germ_resM]; exact hs (h hx)

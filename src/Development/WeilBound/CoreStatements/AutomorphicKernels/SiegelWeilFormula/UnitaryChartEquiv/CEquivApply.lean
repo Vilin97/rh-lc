@@ -36,7 +36,7 @@ theorem cmap_cinv (d : SD σ) {κ : Type} (τ : κ ≃ Ix d) (c : κ → AF F) :
 theorem cmap_add (d : SD σ) {κ : Type} (τ : κ ≃ Ix d) (X Y : Mx F E d.m d.n) :
     cmap d τ (X + Y) = cmap d τ X + cmap d τ Y := by
   funext k
-  simp [cmap, SD.crd, map_add]
+  simp [cmap, SD.crd, map_add (f := _)]
 
 theorem cont_cmap (d : SD σ) {κ : Type} (τ : κ ≃ Ix d) : Continuous (cmap d τ) := by
   haveI := GlobalTheory.AdelicUnitaryTop.secondCountable_adele F

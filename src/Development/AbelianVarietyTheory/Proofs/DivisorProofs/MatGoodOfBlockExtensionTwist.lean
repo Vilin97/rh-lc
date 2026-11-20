@@ -60,7 +60,7 @@ theorem matGood_sum : ∀ {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAin
     refine d.congr fun g => ?_
     have : repOf r₂ g (Pi.single b 1) = e.symm (repOf r g (e (Pi.single b 1)).1, 0) +
         e.symm (0, repOf ρ g (e (Pi.single b 1)).2) := by
-      rw [← map_add, Prod.mk_add_mk, add_zero, zero_add, ← hq, e.symm_apply_apply]
+      rw [← map_add (f := _), Prod.mk_add_mk, add_zero, zero_add, ← hq, e.symm_apply_apply]
     have h2 := congrFun this a
     rw [repOf_apply, Matrix.mulVec_single_one] at h2
     exact h2.symm

@@ -95,7 +95,7 @@ theorem eval_injective (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) (N 
     | C a =>
       rw [MvPolynomial.aeval_C, ← MvPolynomial.algebraMap_eq,
         ← IsScalarTower.algebraMap_apply (X.Ol la) (Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N) (Op X la N)] <;> rfl
-    | add Q₁ Q₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+    | add Q₁ Q₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
     | mul_X Q p h => simp only [map_mul, h, MvPolynomial.aeval_X] <;> rfl
   have hinj : Function.Injective fun Q : Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N =>
       algebraMap (Op X la N) (Kp X la N) (algebraMap (Formalism.MainNotions.Gaps.EtaleWeightGaps.Pol X la N) (Op X la N) Q) :=

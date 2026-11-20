@@ -94,7 +94,7 @@ theorem inner_mem_one_of_mem_dual_orthLattice {m : (hS D).V} (hmΛ : m ∈ Λ) (
     have : D.sp.iXY 0 x = m + (-ξ) := by rw [e]; abel
     rw [this]
     exact Submodule.add_mem_sup hmΛ ((toO (hS D) (Xsp (lf D F0))).neg_mem hξ)
-  rw [e, map_add, LinearMap.add_apply, orth_embedding_isometry, c_mem_orth.1 (orth_embedding_mem_orth_isotropic F0 he hz w) ξ hξ, add_zero]
+  rw [e, map_add (f := _), LinearMap.add_apply, orth_embedding_isometry, c_mem_orth.1 (orth_embedding_mem_orth_isotropic F0 he hz w) ξ hξ, add_zero]
   exact (i_mem_dual _ _).1 hw x hx
 
 include he hz hΛ hu hzΛ hprim hT in
@@ -111,7 +111,7 @@ theorem dual_orthLattice_quotient_cyclic : ∃ w₁ ∈ Formalism.HermitianLatti
   have hv1 : m₁ + t⁻¹ • F0.z ∈ orth (hS D) (Xsp (lf D F0)) :=
     (orth (hS D) (Xsp (lf D F0))).add_mem hm₁.2 ((orth (hS D) (Xsp (lf D F0))).smul_mem _ hzo)
   have hv2 : (hS D).hT F0.z (m₁ + t⁻¹ • F0.z) = 0 := by
-    rw [map_add, map_smul, hzm, F0.z_norm, smul_eq_mul]
+    rw [map_add (f := _), map_smul, hzm, F0.z_norm, smul_eq_mul]
     field_simp
     ring
   obtain ⟨w₁, ξ₁, hξ₁, e₁⟩ := exists_decomp_orth_plus F0 he hz hT hv1 hv2
@@ -125,10 +125,10 @@ theorem dual_orthLattice_quotient_cyclic : ∃ w₁ ∈ Formalism.HermitianLatti
   have hw₁ : w₁ ∈ Formalism.HermitianLatticesTheory.dual (D.sp.X 0).hT (L0X D Λ (lf D F0)) := by
     refine (i_mem_dual _ _).2 fun x hx => ?_
     have e2 : D.sp.iXY 0 w₁ = m₁ + t⁻¹ • F0.z - ξ₁ := by rw [e₁]; abel
-    rw [← orth_embedding_isometry, e2, map_sub, map_add, map_smul, c_symm0 (inner_z_orth_embedding_eq_zero F0 he hz x), smul_zero, add_zero,
+    rw [← orth_embedding_isometry, e2, map_sub, map_add (f := _), map_smul, c_symm0 (inner_z_orth_embedding_eq_zero F0 he hz x), smul_zero, add_zero,
       c_symm0 (c_mem_orth.1 (orth_embedding_mem_orth_isotropic F0 he hz x) ξ₁ hξ₁), sub_zero]
     obtain ⟨l, hl, ξ, hξ, e⟩ := Submodule.mem_sup.1 ((mem_orthLattice_iff_image_mem_sup F0 he hz Λ).1 hx)
-    rw [← e, map_add, LinearMap.add_apply, c_mem_orth.1 hm₁.2 ξ hξ, add_zero]
+    rw [← e, map_add (f := _), LinearMap.add_apply, c_mem_orth.1 hm₁.2 ξ hξ, add_zero]
     exact i_int Λ hu hl hm₁.1
   refine ⟨w₁, hw₁, ?_, ?_⟩
   · intro w hw
@@ -139,10 +139,10 @@ theorem dual_orthLattice_quotient_cyclic : ∃ w₁ ∈ Formalism.HermitianLatti
         (toO (hS D) (orth (hS D) (Xsp (lf D F0)))).add_mem
           ((toO (hS D) (orth (hS D) (Xsp (lf D F0)))).smul_mem _ hm₁.2) hzo
       have h3 : (hS D).hT F0.z (((Tu D u : ℕ) : 𝓞 D.host.E) • m₁ + F0.z) = 0 := by
-        rw [map_add, ← algebraMap_smul D.host.E, map_smul, hzm, F0.z_norm]
+        rw [map_add (f := _), ← algebraMap_smul D.host.E, map_smul, hzm, F0.z_norm]
         simp
       have h4 := inner_mem_one_of_mem_dual_orthLattice F0 he hz Λ hT h1 h2 h3 hw
-      rw [map_add, LinearMap.add_apply, inner_z_orth_embedding_eq_zero F0 he hz w, add_zero, ← algebraMap_smul D.host.E,
+      rw [map_add (f := _), LinearMap.add_apply, inner_z_orth_embedding_eq_zero F0 he hz w, add_zero, ← algebraMap_smul D.host.E,
         map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply] at h4
       have h5 : star (algebraMap (𝓞 D.host.E) D.host.E ((Tu D u : ℕ) : 𝓞 D.host.E)) = t := by
         rw [map_natCast]; exact hstar
@@ -162,7 +162,7 @@ theorem dual_orthLattice_quotient_cyclic : ∃ w₁ ∈ Formalism.HermitianLatti
       have h4 := inner_mem_one_of_mem_dual_orthLattice F0 he hz Λ hT h1 h2 h3 hw
       have h5 : (hS D).hT m (D.sp.iXY 0 w + (algebraMap (𝓞 D.host.E) D.host.E (-α₀) * t⁻¹) • F0.z) =
           (hS D).hT (m - γ • m₁) (D.sp.iXY 0 w) := by
-        rw [map_add, map_smul, map_sub, LinearMap.sub_apply, ← algebraMap_smul D.host.E γ, map_smulₛₗ,
+        rw [map_add (f := _), map_smul, map_sub, LinearMap.sub_apply, ← algebraMap_smul D.host.E γ, map_smulₛₗ,
           LinearMap.smul_apply, smul_eq_mul, smul_eq_mul, starRingEnd_apply, hγ, c_herm, map_neg, hα₀]
         field_simp
         ring
@@ -171,7 +171,7 @@ theorem dual_orthLattice_quotient_cyclic : ∃ w₁ ∈ Formalism.HermitianLatti
     have e3 : D.sp.iXY 0 (w + (-α₀) • w₁) =
         (D.sp.iXY 0 w + (algebraMap (𝓞 D.host.E) D.host.E (-α₀) * t⁻¹) • F0.z) +
           (-α₀) • (D.sp.iXY 0 w₁ - t⁻¹ • F0.z) := by
-      rw [map_add, LinearMap.map_smul_of_tower, smul_sub, ← algebraMap_smul D.host.E (-α₀) (t⁻¹ • F0.z), smul_smul]
+      rw [map_add (f := _), LinearMap.map_smul_of_tower, smul_sub, ← algebraMap_smul D.host.E (-α₀) (t⁻¹ • F0.z), smul_smul]
       abel
     rw [e3]
     exact B.add_mem hy (B.smul_mem _ hK1)

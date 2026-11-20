@@ -75,7 +75,7 @@ theorem character_eq_add {V : Type} [AddCommGroup V] [Module L V] [FiniteDimensi
     rw [e.symm_apply_eq]
     show σ g ((x.1 : V) + (x.2 : V)) =
       ((W.toRepresentation g x.1 : W.toSubmodule) : V) + ((C.toRepresentation g x.2 : C.toSubmodule) : V)
-    rw [map_add]
+    rw [map_add (f := _)]
     rfl
   have h1 : σ.character g = LinearMap.trace L _ (e.symm.conj (σ g)) := by
     show LinearMap.trace L V (σ g) = _

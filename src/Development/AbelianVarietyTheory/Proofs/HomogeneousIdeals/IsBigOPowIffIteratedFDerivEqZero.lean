@@ -69,7 +69,7 @@ def altHerm (l : V →ₗ[ℝ] V →ₗ[ℂ] ℂ) (hE : ∀ u v, (l u v - l v u)
         rfl
       have hII : ∀ w : V, I • I • w = -w := fun w => by simp [smul_smul]
       rw [smul_comm I a x, ha x, ha (I • x), hII]
-      simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, map_neg,
+      simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, map_neg,
         LinearMap.neg_apply, LinearMap.map_smul_of_tower, real_smul, smul_eq_mul]
       conv_rhs => rw [← re_add_im a]
       linear_combination (-(a.im : ℂ) * (l x y - l y x)) * I_sq)

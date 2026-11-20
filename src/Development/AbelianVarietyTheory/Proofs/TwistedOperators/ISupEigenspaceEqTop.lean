@@ -148,7 +148,7 @@ theorem exists_highest_pair {V : Type*} [AddCommGroup V] [Module ℂ V] {k l : �
       e i j ((∑ a : Fin k, (-((a : ℕ) : ℂ)) • e a a +
         ∑ b : Fin l, (-((b : ℕ) : ℂ)) • f b b) x) + (((j : ℕ) : ℂ) - ((i : ℕ) : ℂ)) • e i j x := by
     intro i j x
-    rw [LinearMap.add_apply, LinearMap.add_apply, map_add, sum_neg_index_smul_diag_apply_comm e he,
+    rw [LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), sum_neg_index_smul_diag_apply_comm e he,
       sum_smul_apply_comm_of_commute (e i j) (fun b => f b b) _ (fun b => hef i j b b)]
     abel
   have hHf : ∀ i j (x : V), (∑ a : Fin k, (-((a : ℕ) : ℂ)) • e a a +
@@ -156,7 +156,7 @@ theorem exists_highest_pair {V : Type*} [AddCommGroup V] [Module ℂ V] {k l : �
       f i j ((∑ a : Fin k, (-((a : ℕ) : ℂ)) • e a a +
         ∑ b : Fin l, (-((b : ℕ) : ℂ)) • f b b) x) + (((j : ℕ) : ℂ) - ((i : ℕ) : ℂ)) • f i j x := by
     intro i j x
-    rw [LinearMap.add_apply, LinearMap.add_apply, map_add, sum_neg_index_smul_diag_apply_comm f hf,
+    rw [LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), sum_neg_index_smul_diag_apply_comm f hf,
       sum_smul_apply_comm_of_commute (f i j) (fun a => e a a) _ (fun a => (hef a a i j).symm)]
     abel
   set H : Module.End ℂ V := ∑ a : Fin k, (-((a : ℕ) : ℂ)) • e a a +

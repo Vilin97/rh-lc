@@ -121,7 +121,7 @@ theorem tw_mul_locSurj : ∀ (q : ℕ) [NeZero q] (i j k : ℤ), i + j = k → �
       obtain ⟨⟨s, t'⟩, hst⟩ := p
       induction t using TensorProduct.induction_on with
       | zero => rw [map_zero, map_zero]; exact good_zero φ V
-      | add u u' hu hu' => rw [map_add, map_add]; exact good_add φ hu hu'
+      | add u u' hu hu' => rw [map_add (f := _), map_add (f := _)]; exact good_add φ hu hu'
       | tmul a b =>
         have hlift : τ.lift V 0 (DirectSum.of _ ⟨(s, t'), hst⟩ (a ⊗ₜ b)) = τ.mul V s t' 0 hst a b := by
           unfold Pair.lift
@@ -144,7 +144,7 @@ theorem tw_mul_locSurj : ∀ (q : ℕ) [NeZero q] (i j k : ℤ), i + j = k → �
             simp
           rw [h0]
           exact good_zero φ V
-    | add x x' hx hx' => rw [map_add]; exact good_add φ hx hx'
+    | add x x' hx hx' => rw [map_add (f := _)]; exact good_add φ hx hx'
   intro U y
   exact good_bind φ y (hτ.1 U 0 y) fun V g ⟨x, hx⟩ => hx ▸ key V x
 

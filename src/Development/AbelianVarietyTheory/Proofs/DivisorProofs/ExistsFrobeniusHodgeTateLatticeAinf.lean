@@ -32,13 +32,13 @@ theorem frob_ofPadic (c : ℤ_[p]) :
 
 def frobT (G : PDivGroup p O) (y : TDual G) : TDual G where
   toFun t := WittVector.frobenius (y t)
-  map_add' s t := by rw [map_add, map_add]
+  map_add' s t := by rw [map_add (f := _), map_add (f := _)]
   map_smul' c t := by
     rw [LinearMap.map_smulₛₗ, smul_eq_mul, map_mul, frob_ofPadic, smul_eq_mul]
 
 def xiPhiInvT (ε : PreTilt O p) (G : PDivGroup p O) (m : TDual G) : TDual G where
   toFun t := xi ε * phiInv p O (m t)
-  map_add' s t := by rw [map_add, map_add, mul_add]
+  map_add' s t := by rw [map_add (f := _), map_add (f := _), mul_add]
   map_smul' c t := by
     rw [LinearMap.map_smulₛₗ, smul_eq_mul, map_mul, phiInv_ofPadic', smul_eq_mul, mul_left_comm]
 
@@ -50,7 +50,7 @@ def frobLatt (G : PDivGroup p O) :
   map_add' y z := by
     apply Subtype.ext; apply LinearMap.ext; intro t
     show WittVector.frobenius ((y.1 + z.1) t) = _
-    rw [LinearMap.add_apply, map_add]; rfl
+    rw [LinearMap.add_apply, map_add (f := _)]; rfl
   map_smul' a y := by
     apply Subtype.ext; apply LinearMap.ext; intro t
     show WittVector.frobenius ((a • y.1) t) = _

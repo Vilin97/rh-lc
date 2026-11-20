@@ -52,7 +52,7 @@ theorem form_sumMap {Y X : HSp D} {ι : X.V →ₗ[D.host.E] Y.V} {a ρ : ℕ} {
   have xx : ∀ x y, Y.hT (ι x) (ι y) = X.hT x y := h.isom
   rw [sumMap_apply, sumMap_apply]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sum_apply,
+    simp only [map_add (f := _), map_sum, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sum_apply,
     LinearMap.smul_apply, zz, zx, xz, ex, xe, fx, xf, ez, ze, fz, zf, ee, ff, fe, ef, xx, smul_eq_mul, mul_zero,
     Finset.sum_const_zero, add_zero, zero_add, mul_ite, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ,
     if_true, mul_one, RingHom.id_apply, starRingEnd_apply]

@@ -50,7 +50,7 @@ lemma qd_eval_rowGen (a b : Fin n) (t : ℚ) (f : MvPolynomial (Fin n × Fin n) 
     apply MvPolynomial.algHom_ext
     intro v
     rw [AlgHom.comp_apply, rowGen_X, rowAct, aeval_X]
-    simp only [AlgHom.restrictScalars_apply, map_add, Polynomial.aeval_C, Algebra.algebraMap_self, RingHom.id_apply,
+    simp only [AlgHom.restrictScalars_apply, map_add (f := _), Polynomial.aeval_C, Algebra.algebraMap_self, RingHom.id_apply,
       Matrix.add_apply, add_mul, Finset.sum_add_distrib, Matrix.one_apply, Matrix.single_apply]
     congr 1
     · simp

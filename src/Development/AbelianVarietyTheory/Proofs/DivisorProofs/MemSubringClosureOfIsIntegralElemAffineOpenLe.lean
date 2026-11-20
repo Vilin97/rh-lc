@@ -59,7 +59,7 @@ theorem mem_closure_of_isIntegralElem_affine_le : ∀ {S : Scheme.{0}} {K : Type
       add_mem' := by
         rintro c d ⟨s, hs, hc⟩ ⟨t, ht, hd⟩
         refine ⟨s ∪ t, fun y hy => (Finset.mem_union.mp hy).elim (hs y) (ht y), ?_⟩
-        rw [map_add, add_mul]
+        rw [map_add (f := _), add_mul]
         exact add_mem (Cmono _ _ Finset.subset_union_left hc) (Cmono _ _ Finset.subset_union_right hd)
       smul_mem' := by
         rintro c d ⟨s, hs, hd⟩

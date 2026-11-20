@@ -42,7 +42,7 @@ theorem top_cell (ξ : kˣ →* ℂˣ) (l : (Matrix (Fin d) (Fin d) k → ℂ) �
   have hU : IsOpen {X : Matrix (Fin d) (Fin d) k | X.det ≠ 0} := isOpen_ne_fun (by fun_prop) continuous_const
   let m : (GL (Fin d) k → ℂ) →ₗ[ℂ] ℂ :=
     { toFun := fun ψ => l fun X => if X.det ≠ 0 then ψ (toGL X) else 0
-      map_add' := fun F F' => by rw [← map_add]; congr 1; ext z; by_cases h : z.det = 0 <;> simp [h]
+      map_add' := fun F F' => by rw [← map_add (f := _)]; congr 1; ext z; by_cases h : z.det = 0 <;> simp [h]
       map_smul' := fun a F => by rw [← map_smul]; congr 1; ext z; by_cases h : z.det = 0 <;> simp [h] }
   have hm : ∀ ψ, m ψ = l fun X => if X.det ≠ 0 then ψ (toGL X) else 0 := fun _ => rfl
   have a := left_of_right ((Units.coeHom ℂ).comp (ξ.comp GeneralLinearGroup.det)) invT cont_invT

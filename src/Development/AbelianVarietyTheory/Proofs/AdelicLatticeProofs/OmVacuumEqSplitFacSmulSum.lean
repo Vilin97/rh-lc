@@ -48,7 +48,7 @@ theorem compAt_mt {e : AE D} (he : IsSplitIdem D e) {V : HSp D} {g : GA D V} (hg
     (τ : D.what₂.Tau) : compAt θ τ (mt V g) = 1 := by
   refine Matrix.ext fun i j => ?_
   have h : infPart D ((mt V g - 1) i j) = 0 := by
-    rw [← hg i j, RingHom.map_mul, RingHom.map_add, infPart_splitIdem he,
+    rw [← hg i j, RingHom.map_mul, RingHom.map_add (f := _), infPart_splitIdem he,
       infPart_splitIdem (isSplitIdem_conj he), add_zero, zero_mul]
   rw [Matrix.sub_apply, RingHom.map_sub, sub_eq_zero] at h
   show θ τ (infPart D (mt V g i j)) = _

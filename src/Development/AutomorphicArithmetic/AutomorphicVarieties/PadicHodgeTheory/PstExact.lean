@@ -74,7 +74,7 @@ variable {l : ℕ} [Fact l.Prime] (P : LocPrime l) {K LL : FinExt l}
 
 def dUr {f : V₀ →ₗ[↥LL.1] V₁} (hf : ∀ g v, f (ρ₀ g v) = ρ₁ g (f v)) : DpstUr P ρ₀ →ₗ[↥(MaximalUnramifiedExtension l)] DpstUr P ρ₁ where
   toFun x := toUr P ρ₁ (dmap P hf ((toUr P ρ₀).symm x))
-  map_add' x y := by simp only [map_add]
+  map_add' x y := by simp only [map_add (f := _)]
   map_smul' c x := dmap_mulD P hf c ((toUr P ρ₀).symm x)
 
 variable {i : V₀ →ₗ[↥LL.1] V₁} {p : V₁ →ₗ[↥LL.1] V₂} (hi : ∀ g v, i (ρ₀ g v) = ρ₁ g (i v))

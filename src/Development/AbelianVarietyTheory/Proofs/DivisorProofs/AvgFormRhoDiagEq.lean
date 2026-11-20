@@ -56,7 +56,7 @@ theorem rho_diag_add (σ : E →ₐ[F] E) {m n : ℕ} {JA : Matrix (Fin m) (Fin 
         (dd.rho ψ (A' * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ) φ) =
       dd.rho ψ ((A + A') * (diagCols (Fin n) : Matrix (Fin n ⊕ Fin n) (Fin n) (AE F E))ᵀ) φ := by
   simp only [Darboux.rho]
-  rw [schr_schr_of_orth ψ _ _ ?_ φ, ← map_add, ← Matrix.add_mul]
+  rw [schr_schr_of_orth ψ _ _ ?_ φ, ← map_add (f := _), ← Matrix.add_mul]
   rw [← dd.form, mul_diagCols_transpose, mul_diagCols_transpose, symp_diag]
 
 theorem avgForm_rho_diag_eq : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (B : Base F E) (n d : ℕ) (X : Spc F E n) (W : Spc F E d)

@@ -7,12 +7,12 @@ open Formalism.HermitianLatticeCounting.S4 Formalism.SL.IwahoriBlocks Finset
 
 theorem projection_weight_formula : ProjW := by
   intro E _ _ V _ _ h z y T hz
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hz]; ring
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hz]; ring
 
 theorem pair_second_constant : PairingOrthogonalComplement := by
   intro E _ _ V _ _ h O abelian₂ th w1 la1 la2 la2' hth hI h1 h2 h3
   have key : h la1 la2' = h (w1 + la1) (la2' - la2) := by
-    simp only [map_add, map_sub, LinearMap.add_apply, h1, h2, h3]; ring
+    simp only [map_add (f := _), map_sub, LinearMap.add_apply, h1, h2, h3]; ring
   refine ⟨key, ?_⟩
   rintro hw ⟨w, hw', he⟩
   refine ⟨h (w1 + la1) w, hI _ hw _ hw', ?_⟩
@@ -34,7 +34,7 @@ theorem leakage_algebraic_identity : LeakAlg := by
 theorem move_second_coordinate : MoveY := by
   intro E _ _ V _ _ h O abelian₂ th x u y y' s hL hu hs h1 h2 h3
   have key : eich h x u s (y + y') = y + y' - h y' x • (u + s • x) := by
-    simp only [eich, map_add, LinearMap.add_apply, h1, h2, h3]; module
+    simp only [eich, map_add (f := _), LinearMap.add_apply, h1, h2, h3]; module
   refine ⟨key, ?_, ?_⟩
   · rintro ⟨w, hw, he⟩ ⟨d, hd, hk⟩
     refine ⟨w - d • (u + s • x), abelian₂.sub_mem hw (hL d hd _ (abelian₂.add_mem hu hs)), ?_⟩
@@ -63,7 +63,7 @@ theorem move_preserves_weight : MoveWeight := by
     intro k; simp [map_sum, hco]
   have : ∀ j : Fin r, co j.castSucc (eich h (∑ i, al i • f i) u s (f j.succ)) = h (f j.succ) u * al j.castSucc := by
     intro j
-    simp only [eich, hx, zero_smul, sub_zero, map_add, map_smul, hcx, hco, smul_eq_mul]
+    simp only [eich, hx, zero_smul, sub_zero, map_add (f := _), map_smul, hcx, hco, smul_eq_mul]
     have : j.succ ≠ j.castSucc := by
       intro hh; have := congrArg Fin.val hh; simp at this
     simp [this]
@@ -96,7 +96,7 @@ theorem move_involutive : MoveInvol := by
   have hx'u : h x' u = 0 := by rw [hH u x', hux', star_zero]
   have nx : eich h x u s x = x := by simp [eich, hxu, hxx]
   have nb : eich h x u s (x + x') = th • (w - d • (u + s • x)) := by
-    simp only [eich, map_add, LinearMap.add_apply, hxu, hxx, hx'u, hk]
+    simp only [eich, map_add (f := _), LinearMap.add_apply, hxu, hxx, hx'u, hk]
     rw [he]; module
   have mem : ∀ v, v ∈ moved h x u s abelian₂ ↔ eich h x u s v ∈ abelian₂ := fun v => Iff.rfl
   have lin : ∀ (c : E) v, eich h x u s (c • v) = c • eich h x u s v := fun c v => (eichLin h x u s).map_smul c v
@@ -1297,7 +1297,7 @@ lemma unram_trace (hU : Unram o O) : ∃ T : O →ₗ[o] o, ∀ a, algebraMap o 
     rw [hl, map_one, one_mul, star_star] at this
     exact this.symm
   refine ⟨l + l ∘ₗ sl, fun a => ?_⟩
-  rw [LinearMap.add_apply, LinearMap.comp_apply, map_add, hb0, hb0]
+  rw [LinearMap.add_apply, LinearMap.comp_apply, map_add (f := _), hb0, hb0]
   change a * star b0 + star (a * star b0) + (star a * star b0 + star (star a * star b0)) = _
   simp only [star_mul', star_star]
   linear_combination (a + star a) * h1
@@ -1344,7 +1344,7 @@ theorem dual_capacity_formula : DualCap := by
       map_add' := fun v w => by
         have : (⟨ρ (v + w), hρmem (v + w)⟩ : S) = ⟨ρ v, hρmem v⟩ + ⟨ρ w, hρmem w⟩ :=
           Subtype.ext (map_add ρ v w)
-        rw [this, map_add, map_add]
+        rw [this, map_add (f := _), map_add (f := _)]
       map_smul' := fun c v => by
         have : (⟨ρ (c • v), hρmem (c • v)⟩ : S) = algebraMap o O c • ⟨ρ v, hρmem v⟩ :=
           Subtype.ext (map_smul ρ c v)
@@ -1362,7 +1362,7 @@ theorem dual_capacity_formula : DualCap := by
         apply hUq
         intro a
         have h1 := hΦ (v + w) a
-        rw [smul_add, map_add, map_add, hΦ v a, hΦ w a] at h1
+        rw [smul_add, map_add (f := _), map_add (f := _), hΦ v a, hΦ w a] at h1
         simp only [mul_sub, mul_add, star_sub, star_add]
         linear_combination -h1
       map_smul' := fun r v => by
@@ -1409,7 +1409,7 @@ variable {E : Type} [CommRing E] [StarRing E] {V : Type} [AddCommGroup V] [Modul
 def shear (t : Fin r → V) : V →ₗ[E] V where
   toFun v := v + ∑ j, h v (e j) • t j
   map_add' v w := by
-    simp only [map_add, LinearMap.add_apply, add_smul, Finset.sum_add_distrib]; abel
+    simp only [map_add (f := _), LinearMap.add_apply, add_smul, Finset.sum_add_distrib]; abel
   map_smul' c v := by
     simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, mul_smul, RingHom.id_apply, smul_add,
       Finset.smul_sum]
@@ -1501,7 +1501,7 @@ theorem same_trace_count : SameTrace := by
   refine ⟨n, fun v w => ?_, fun v hv => ?_, fun v => ⟨fun hv => ?_, fun hv => ?_⟩⟩
   · rw [hn, hn]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, map_smul,
+      simp only [map_add (f := _), LinearMap.add_apply, map_sum, LinearMap.sum_apply, map_smul,
       LinearMap.smul_apply, LinearMap.map_smulₛₗ, smul_eq_mul, starRingEnd_apply]
     have h3 : ∀ j k, h (t j) (t k) = 0 := fun j k => by
       simp only [ht]; exact tt _ _
@@ -1744,7 +1744,7 @@ theorem dualCapV (H : DualCap) : DualCapV := by
     { carrier := {v | j v ∈ Z}
       add_mem' := fun {a b} ha hb => by
         show j (a + b) ∈ Z
-        rw [map_add]; exact Z.add_mem ha hb
+        rw [map_add (f := _)]; exact Z.add_mem ha hb
       zero_mem' := by
         show j 0 ∈ Z
         rw [map_zero]; exact Z.zero_mem
@@ -1765,7 +1765,7 @@ theorem dualCapV (H : DualCap) : DualCapV := by
   let φ : S' →ₗ[O'] O' :=
     { toFun := F
       map_add' := fun a b => hM.io_inj (by
-        rw [map_add, hF, hF, hF]; simp)
+        rw [map_add (f := _), hF, hF, hF]; simp)
       map_smul' := fun c a => hM.io_inj (by
         rw [hF, RingHom.id_apply, smul_eq_mul, map_mul, hF]; simp [hM.j_smul]) }
   obtain ⟨w, hw⟩ := H o O' Lam' h' hU hSD S' hsat φ
@@ -2124,7 +2124,7 @@ theorem sameTraceHyp (H : DualCap) (HV : DualCapV) : SameTraceHyp := by
       { carrier := {v | j v ∈ Z₁}
         add_mem' := fun {a b} ha hb => by
           show j (a + b) ∈ Z₁
-          rw [map_add]; exact Z₁.add_mem ha hb
+          rw [map_add (f := _)]; exact Z₁.add_mem ha hb
         zero_mem' := by
           show j 0 ∈ Z₁
           rw [map_zero]; exact Z₁.zero_mem
@@ -2153,8 +2153,8 @@ theorem sameTraceHyp (H : DualCap) (HV : DualCapV) : SameTraceHyp := by
       { toFun := fun v => A v k
         map_add' := fun a b => Auniq (a + b) (fun i => A a i + A b i) (by
           show j (a.1 + b.1) = _
-          rw [map_add, hA a, hA b, ← Finset.sum_add_distrib]
-          exact Finset.sum_congr rfl fun i _ => by rw [map_add, add_smul]) k
+          rw [map_add (f := _), hA a, hA b, ← Finset.sum_add_distrib]
+          exact Finset.sum_congr rfl fun i _ => by rw [map_add (f := _), add_smul]) k
         map_smul' := fun c a => Auniq (c • a) (fun i => c * A a i) (by
           show j (c • a.1) = _
           rw [hM.j_smul, hA a, Finset.smul_sum]
@@ -2181,7 +2181,7 @@ theorem sameTraceHyp (H : DualCap) (HV : DualCapV) : SameTraceHyp := by
     { carrier := {v | ∀ i, h v (e i) = 0}
       add_mem' := fun {a b} ha hb i => by
         show h (a + b) (e i) = 0
-        rw [map_add, LinearMap.add_apply, ha i, hb i, add_zero]
+        rw [map_add (f := _), LinearMap.add_apply, ha i, hb i, add_zero]
       zero_mem' := fun i => by
         show h 0 (e i) = 0
         simp
@@ -2213,7 +2213,7 @@ theorem sameTraceHyp (H : DualCap) (HV : DualCapV) : SameTraceHyp := by
         rw [map_sub, map_sum]
       simp [hye, hc, starRingEnd_apply]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [e1, map_add, LinearMap.add_apply, a1, map_sum, LinearMap.sum_apply]
+      rw [e1, map_add (f := _), LinearMap.add_apply, a1, map_sum, LinearMap.sum_apply]
     simp [a2]
   have hdl : d = l + ∑ i, c i • e i := by
     have : v = ∑ i, c i • e i := sub_eq_zero.mp hzero
@@ -2764,7 +2764,7 @@ lemma sumA_bound (h2 : Module.finrank K L = 2) (hPh : IsUnit Ph.det)
   have hbqadd : ∀ u d, bq (u + d) = bq u + bq d + Algebra.trace K L (hB K Ph u d) := by
     intro u d
     apply (algebraMap K L).injective
-    rw [map_add, map_add, hbq, hbq, hbq, trace_eq h2, hB_conj Ph h2 hherm, hB_add_left,
+    rw [map_add (f := _), map_add (f := _), hbq, hbq, hbq, trace_eq h2, hB_conj Ph h2 hherm, hB_add_left,
       hB_add_right, hB_add_right]
     ring
   have hfil : (univ.filter (fun x : Fin n → L => ∀ b, hB K Ph x (X b) = g b))
@@ -3199,7 +3199,7 @@ lemma mO_ne_top (hU : Unram o O) : (1 : O) ∉ mO o O := by
   let J' : Ideal O :=
     { carrier := {x | ∀ y, l (y * x) ∈ IsLocalRing.maximalIdeal o}
       add_mem' := fun {a b} ha hb y => by
-        rw [mul_add, map_add]; exact Ideal.add_mem _ (ha y) (hb y)
+        rw [mul_add, map_add (f := _)]; exact Ideal.add_mem _ (ha y) (hb y)
       zero_mem' := fun y => by rw [mul_zero, map_zero]; exact Ideal.zero_mem _
       smul_mem' := fun c x hx y => by
         rw [smul_eq_mul, ← mul_assoc]; exact hx (y * c) }
@@ -3255,7 +3255,7 @@ lemma polar_mO (hU : Unram o O) {abelian₂ : Type} [AddCommGroup abelian₂] [M
     rw [hT, map_sub, map_sub, e1, e2, e3]
     have e4 : h c' (s • c) = star (s * h c c') := by
       rw [hH (s • c) c', map_smul, LinearMap.smul_apply, smul_eq_mul]
-    simp only [map_add, LinearMap.add_apply, e4]
+    simp only [map_add (f := _), LinearMap.add_apply, e4]
     simp only [map_smul, LinearMap.smul_apply, smul_eq_mul]
     ring
   rw [this]
@@ -3382,7 +3382,7 @@ lemma exists_unit_vec_gen [Nontrivial O] (J : Ideal O) (hJ : ∀ x ∈ J, ¬ IsU
   have hH := hSD.1
   let C : Submodule O abelian₂ :=
     { carrier := {c | ∀ i, h c (v i) = 0}
-      add_mem' := fun {a b} ha hb i => by rw [map_add, LinearMap.add_apply, ha i, hb i, add_zero]
+      add_mem' := fun {a b} ha hb i => by rw [map_add (f := _), LinearMap.add_apply, ha i, hb i, add_zero]
       zero_mem' := fun i => by simp
       smul_mem' := fun r c hc i => by rw [map_smul, LinearMap.smul_apply, hc i, smul_zero] }
   have hCJ := hpol C (fun c hc => hcon c hc)
@@ -3418,7 +3418,7 @@ lemma exists_unit_vec_gen [Nontrivial O] (J : Ideal O) (hJ : ∀ x ∈ J, ¬ IsU
     rw [← Matrix.map_mul]
     ext i l
     simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, Matrix.mul_apply, A, B]
-    rw [hG i l, map_add, (Ideal.Quotient.eq_zero_iff_mem).2 (hCJ _ (hcc i) _ (hcc l)), add_zero]
+    rw [hG i l, map_add (f := _), (Ideal.Quotient.eq_zero_iff_mem).2 (hCJ _ (hcc i) _ (hcc l)), add_zero]
   rw [hmap]
   apply det_mul_eq_zero_of_card_lt
   rw [hcard]
@@ -3588,8 +3588,8 @@ theorem unimodular_hull : UnimodHull := by
   let N' : Submodule O abelian₂ :=
     { carrier := {c | (∀ s ∈ S, h c s = 0) ∧ ∀ i, h c (u i) = 0}
       add_mem' := fun {a b} ha hb => ⟨fun s hs => by
-          rw [map_add, LinearMap.add_apply, ha.1 s hs, hb.1 s hs, add_zero], fun i => by
-          rw [map_add, LinearMap.add_apply, ha.2 i, hb.2 i, add_zero]⟩
+          rw [map_add (f := _), LinearMap.add_apply, ha.1 s hs, hb.1 s hs, add_zero], fun i => by
+          rw [map_add (f := _), LinearMap.add_apply, ha.2 i, hb.2 i, add_zero]⟩
       zero_mem' := ⟨fun s _ => by simp, fun i => by simp⟩
       smul_mem' := fun r c hc => ⟨fun s hs => by
           rw [map_smul, LinearMap.smul_apply, hc.1 s hs, smul_zero], fun i => by
@@ -3694,10 +3694,10 @@ theorem unimodular_hull : UnimodHull := by
       intro i l
       have e1 : h (t i) (t l) = h (∑ j, c i j • w j) (t l) + h (nn i) (t l) := by
         conv_lhs => rw [hti i]
-        rw [map_add, LinearMap.add_apply]
+        rw [map_add (f := _), LinearMap.add_apply]
       have e2 : h (nn i) (t l) = h (nn i) (∑ j, c l j • w j) + h (nn i) (nn l) := by
         conv_lhs => rw [hti l]
-        rw [map_add]
+        rw [map_add (f := _)]
       rw [e1, e2, orth_pair_left, orth_pair_gen, ← add_assoc]
       congr 2
       exact Finset.sum_congr rfl fun j _ => mul_comm _ _
@@ -3735,7 +3735,7 @@ theorem unimodular_hull : UnimodHull := by
     have ha : ∀ i, a i = 0 := by
       intro i
       have h1 := hsu s hs i
-      rw [hab, map_add, LinearMap.add_apply, orth_pair_left, orth_pair_left,
+      rw [hab, map_add (f := _), LinearMap.add_apply, orth_pair_left, orth_pair_left,
         Finset.sum_eq_zero (fun j _ => by rw [htu, mul_zero] : ∀ j ∈ univ, b j * h (t j) (u i) = 0),
         add_zero, Finset.sum_eq_single i (fun i' _ hi => by rw [huo i' i hi, mul_zero])
           (fun hi => absurd (Finset.mem_univ _) hi)] at h1
@@ -4082,7 +4082,7 @@ lemma hj_norm (β : Module.Basis (Fin 2) F E) (ω : E) (h0 : β 0 = 1) (h1 : β 
   simp only [Algebra.leftMulMatrix_eq_repr_mul, h0, h1, mul_one]
   have e1 : (algebraMap F E a + algebraMap F E b * ω) * ω
       = algebraMap F E (-(b * nn)) + algebraMap F E (a + b * t) * ω := by
-    simp only [map_neg, map_mul, map_add]
+    simp only [map_neg, map_mul, map_add (f := _)]
     linear_combination (algebraMap F E b) * hω2
   rw [e1, (hj_repr β ω h0 h1 _ _).1, (hj_repr β ω h0 h1 _ _).2, (hj_repr β ω h0 h1 _ _).1,
     (hj_repr β ω h0 h1 _ _).2]
@@ -4099,7 +4099,7 @@ lemma hj_norm_star (hs : ∀ c : F, star (algebraMap F E c) = algebraMap F E c)
   have hω2 : ω * ω = algebraMap F E t * ω - algebraMap F E nn := by
     rw [hnn, hst]; ring
   rw [hj_decomp β ω h0 h1 x, hj_norm β ω h0 h1 t nn hω2]
-  simp only [star_add, star_mul', hs, hst, map_add, map_mul, map_pow]
+  simp only [star_add, star_mul', hs, hst, map_add (f := _), map_mul, map_pow]
   linear_combination ((algebraMap F E (β.repr x 1)) ^ 2) * hω2
 
 end hermjac
@@ -4272,7 +4272,7 @@ noncomputable def dualNumberReal (β : Module.Basis (Fin 2) F E) (ε : E) (h0 : 
     have e1 : x * y = algebraMap F E (β.repr x 0 * β.repr y 0)
         + algebraMap F E (β.repr x 0 * β.repr y 1 + β.repr x 1 * β.repr y 0) * ε := by
       conv_lhs => rw [hj_decomp β ε h0 h1 x, hj_decomp β ε h0 h1 y]
-      simp only [map_mul, map_add]
+      simp only [map_mul, map_add (f := _)]
       linear_combination (algebraMap F E (β.repr x 1) * algebraMap F E (β.repr y 1)) * hε
     conv_lhs => rw [e1]
     exact (hj_repr β ε h0 h1 _ _).1
@@ -4311,10 +4311,10 @@ lemma hj_caseB (hs : ∀ c : F, star (algebraMap F E c) = algebraMap F E c)
         algebraMap F E (Y i j + Y j i) + algebraMap F E (Y i j - Y j i) * ε
       map_add' := fun Y Z => by
         ext i j
-        simp only [Matrix.of_apply, Matrix.add_apply, map_add, map_sub]; ring
+        simp only [Matrix.of_apply, Matrix.add_apply, map_add (f := _), map_sub]; ring
       map_smul' := fun c Y => by
         ext i j
-        simp only [Matrix.of_apply, Matrix.smul_apply, smul_eq_mul, RingHom.id_apply, map_add,
+        simp only [Matrix.of_apply, Matrix.smul_apply, smul_eq_mul, RingHom.id_apply, map_add (f := _),
           map_sub, map_mul, Algebra.smul_def]
         ring }
   have hΦ0 : ∀ Y i j, Φ0 Y i j
@@ -4324,7 +4324,7 @@ lemma hj_caseB (hs : ∀ c : F, star (algebraMap F E c) = algebraMap F E c)
     change (Φ0 Y).conjTranspose = Φ0 Y
     ext i j
     rw [Matrix.conjTranspose_apply, hΦ0, hΦ0, star_add, star_mul', hs, hs, hstar]
-    simp only [map_add, map_sub]; ring
+    simp only [map_add (f := _), map_sub]; ring
   let Φl : Matrix (Fin m) (Fin m) F →ₗ[F] hermSub F E hs m := LinearMap.codRestrict _ Φ0 hΦH
   have hinj : Function.Injective Φl := by
     rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']

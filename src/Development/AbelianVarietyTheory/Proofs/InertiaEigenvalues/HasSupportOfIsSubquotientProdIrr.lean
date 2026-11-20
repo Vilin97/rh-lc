@@ -96,10 +96,10 @@ theorem nonempty_prod₂_equiv_multiProd_succ (d : Fin (s + 1) → ℕ)
   · rw [stdSum_inr, stdBlocks_val, stdBlocks_val]
     simp [Fin.sum_univ_succ, add_assoc]
   · induction x with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul v w =>
       induction w using PiTensorProduct.induction_on with
-      | add x y hx hy => simp only [TensorProduct.tmul_add, map_add, hx, hy]
+      | add x y hx hy => simp only [TensorProduct.tmul_add, map_add (f := _), hx, hy]
       | smul_tprod c y =>
         simp only [TensorProduct.tmul_smul, map_smul, TensorProduct.map_tmul, piTensor_tprod, tensorCons_tmul]
         congr 2
@@ -164,7 +164,7 @@ variable {Ψ : GrothGL k ≃+ A}
 theorem pos_zero : Pos Ψ 0 := fun x => by simp
 
 theorem Pos.add {a b : A} (ha : Pos Ψ a) (hb : Pos Ψ b) : Pos Ψ (a + b) := fun x => by
-  rw [map_add, Finsupp.add_apply]
+  rw [map_add (f := _), Finsupp.add_apply]
   exact add_nonneg (ha x) (hb x)
 
 theorem Pos.zsmul {a : A} (ha : Pos Ψ a) {c : ℤ} (hc : 0 ≤ c) : Pos Ψ (c • a) := fun x => by

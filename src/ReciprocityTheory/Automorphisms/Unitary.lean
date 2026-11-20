@@ -63,7 +63,7 @@ theorem conjAL_conjAL (x : AL L) : conjAL L (conjAL L x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [conjAL, hc]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem complexConj_invol (x : L) :
     (IsCMField.complexConj L : L →+* L) ((IsCMField.complexConj L : L →+* L) x) = x := by

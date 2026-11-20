@@ -127,8 +127,8 @@ theorem relIndex_ne_zero (Λ : Submodule O V) (hΛ : Λ.FG) {c : E} (hc : c ∈ 
     have e4 : h.1 (q.out : Λ) = g.1 (q.out : Λ) + c • w' := by rw [← e2]; simp
     have e5 : ∀ x, g.1⁻¹ (g.1 x) = x := fun x => g.1.symm_apply_apply x
     show g.1⁻¹ (h.1 v) - v = _
-    rw [e3, map_add, e4]
-    simp only [map_add, map_smul, e5, smul_add, smul_sub]
+    rw [e3, map_add (f := _), e4]
+    simp only [map_add (f := _), map_smul, e5, smul_add, smul_sub]
     abel
   have : Finite (S ⧸ (congSub Λ c).subgroupOf S) := by
     refine Finite.of_injective (fun q => f q.out) fun q q' h => ?_
@@ -159,7 +159,7 @@ theorem mem_stab_of_cong {p : E} (hp : p ∈ O) (hdiv : ∀ e : E, ∃ a : ℕ, 
       obtain ⟨w', hw', e'⟩ := hg1 w hw
       refine ⟨u + p ^ k • w, Λ.add_mem hu (smul_mem_of Λ (O.pow_mem hp k) hw), -w',
         Λ.neg_mem hw', ?_⟩
-      rw [e, map_add, map_smul, eq_add_of_sub_eq e', pow_succ, mul_smul]
+      rw [e, map_add (f := _), map_smul, eq_add_of_sub_eq e', pow_succ, mul_smul]
       simp only [smul_add, smul_neg]
       abel
   let Λ1 : Submodule O V := Λ.map (g.symm.toLinearMap.restrictScalars O)

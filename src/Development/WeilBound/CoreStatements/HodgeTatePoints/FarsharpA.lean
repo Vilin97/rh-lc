@@ -21,7 +21,7 @@ theorem norm_le_of_mem_span (f : M →ₗ[O] C) {s : Set M} {r : ℝ} (hr : 0 �
   | mem x hx => exact h x hx
   | zero => simpa using hr
   | add x y _ _ hx hy =>
-    rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
+    rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   | smul o x _ hx =>
     rw [map_smul, Algebra.smul_def, norm_mul]
     exact (mul_le_of_le_one_left (norm_nonneg _) (hO o)).trans hx
@@ -90,7 +90,7 @@ theorem supN_le_of_tmul {f : WithConv (M ⊗[O] M →ₗ[O] C)} {r : ℝ}
   | zero => simpa using hr
   | tmul a b => exact h a b
   | add x y hx hy =>
-    rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
+    rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
 
 include hO in
 

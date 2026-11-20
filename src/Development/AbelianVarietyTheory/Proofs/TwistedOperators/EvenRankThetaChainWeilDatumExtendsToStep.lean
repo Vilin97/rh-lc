@@ -80,7 +80,7 @@ theorem stepEx : GlobalTheory.Published.DiscreteSeriesCover → GlobalTheory.Pub
     induction hx using Submodule.span_induction with
     | mem x hx => obtain ⟨P, v, _, rfl⟩ := hx; exact hlaw P v κ hκ g
     | zero => simp
-    | add x y _ _ hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
     | smul a x _ hx => simp only [map_smul, Pi.smul_apply, smul_eq_mul, hx]
 
   let pt : PolF D s'.V.rank s.V.rank →ₗ[ℂ] (WO s.V s'.V → ℂ) :=

@@ -105,7 +105,7 @@ theorem h1fZero_equiv {l : ℕ} [Fact l.Prime] {F Ω : Type} [Field F] [NumberFi
   intro c hz hbk
   obtain ⟨hcc, hcoc⟩ := (mem_Z1_iff_cocycle _ _).1 hz
   have hcont : Continuous (fun g => f (c g)) := hc.comp hcc
-  have hz' : (fun g => f (c g)) ∈ Z1 ρ' := (mem_Z1_iff_cocycle _ _).2 ⟨hcont, fun g g' => by rw [hcoc, map_add, hf]⟩
+  have hz' : (fun g => f (c g)) ∈ Z1 ρ' := (mem_Z1_iff_cocycle _ _).2 ⟨hcont, fun g g' => by rw [hcoc, map_add (f := _), hf]⟩
   obtain ⟨m, hm⟩ := (mem_coboundaries1 _ _).1 (h _ hz'
     (X.Kato.bkMap l F Ω _ _ _ _ ρ ρ' (f.toLinearMap.restrictScalars ℚ_[l]) hf c hcont hbk))
   obtain ⟨m', rfl⟩ := f.surjective m

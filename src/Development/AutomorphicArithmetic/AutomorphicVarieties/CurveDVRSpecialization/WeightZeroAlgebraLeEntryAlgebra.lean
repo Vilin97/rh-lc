@@ -55,7 +55,7 @@ private theorem exists_dvr {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [Alg
       exact hB _ (Or.inr ⟨x, hx, rfl⟩)
         ((Algebra.IsIntegral.isIntegral x).map (IsScalarTower.toAlgHom ℤ_[l] O (PadicAlgCl l)))
     | zero => simpa using B.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact B.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact B.add_mem hx hy
     | smul c x _ hx => rw [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply]; exact B.mul_mem (B.algebraMap_mem c) hx
   let A : Subalgebra O (PadicAlgCl l) := { B.toSubsemiring with algebraMap_mem' := hO }
   have d1 : IsDiscreteValuationRing B := IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing e
@@ -82,7 +82,7 @@ private theorem mem_range_of_approx {l : ℕ} [Fact l.Prime] {R : Type} [CommRin
       rw [Pi.add_apply, Pi.smul_apply, nsmul_eq_mul, Nat.cast_pow]
       linear_combination -this
     have h3 : y - φ v = (y - φ w) + (l : R) ^ n * φ u := by
-      rw [h2, map_add, map_nsmul, nsmul_eq_mul, Nat.cast_pow]
+      rw [h2, map_add (f := _), map_nsmul, nsmul_eq_mul, Nat.cast_pow]
       ring
     show y - φ v ∈ J ^ n
     rw [h3]

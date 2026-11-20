@@ -46,10 +46,10 @@ theorem exists_c (hk : (PD.p : k) = 0) (u : Oˣ) (hu : (u : O) = 1 + (PD.p : O))
     | pred m ih =>
       obtain ⟨x, hx, hx'⟩ := ih
       refine ⟨(x + 1) * ((u⁻¹ : Oˣ) : O), ?_, ?_⟩
-      · rw [zpow_sub_one₀ hne, map_mul, hinv, map_add, map_one]
+      · rw [zpow_sub_one₀ hne, map_mul, hinv, map_add (f := _), map_one]
         have h1 : (1 + (PD.p : LL)) * (1 + (PD.p : LL))⁻¹ = 1 := mul_inv_cancel₀ hne
         linear_combination (1 + (PD.p : LL))⁻¹ * hx + h1
-      · rw [map_mul, map_add, hk2, hx', map_one]; push_cast; ring
+      · rw [map_mul, map_add (f := _), hk2, hx', map_one]; push_cast; ring
   choose c hc hc' using key
   exact ⟨c, hc, hc'⟩
 
@@ -70,12 +70,12 @@ theorem sum_Del {M : Type} [AddCommMonoid M] (f : W.Gam → M) {δ : W.Gam} (hδ
 
 theorem γA_q {δ : W.Gam} (hδ : δ ∈ W.DelF) :
     W.γA δ (W.π₀ + (PD.p : LetA O n₀)) = W.π₀ + (PD.p : LetA O n₀) := by
-  rw [map_add, map_natCast]
+  rw [map_add (f := _), map_natCast]
   congr 1
   funext i
   change W.γ₀ δ W.π₀₁ = W.π₀₁
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum,
+    rw [LocWach.π₀₁, map_add (f := _), map_sub, map_one, map_natCast, map_sum,
     ← sum_Del W (fun ε => W.γ₀ ε (1 + PowerSeries.X)) hδ]
   simp only [map_mul, AlgHom.mul_apply]
 
@@ -99,12 +99,12 @@ theorem card_Del {l : ℕ} (hl : 2 ≤ l) (hk : (PD.p : k) = 0) (ι : k⸨X⸩ �
   have h4 := congrArg (PowerSeries.constantCoeff (R := k)) h3
   have h5 : PowerSeries.constantCoeff W.π₀₁ = 1 - (PD.p : O) + W.DelF.card := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum]
+      rw [LocWach.π₀₁, map_add (f := _), map_sub, map_one, map_natCast, map_sum]
     congr 1
     rw [Finset.sum_congr rfl (g := fun _ => (1 : O))]
     · simp
     · intro δ _
-      rw [map_add, map_one, map_add, (W.γ₀_X δ).1]; simp
+      rw [map_add (f := _), map_one, map_add (f := _), (W.γ₀_X δ).1]; simp
   have h6 : l - 1 ≠ 0 := by omega
   rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_map,
     PowerSeries.coeff_zero_eq_constantCoeff_apply, h5] at h4
@@ -193,7 +193,7 @@ theorem red_div (hq : Onto T A q) (hk : (PD.p : k) = 0) (hc : (W.DelF.card : k) 
         PowerSeries.map (algebraMap O k) W.π₀₁ ^ s := by
       have h5 : ((PD.p : ℕ) : k⟦X⟧) = 0 := by
         rw [← map_natCast (algebraMap k k⟦X⟧), hk, map_zero]
-      rw [Pi.pow_apply, Pi.add_apply, Pi.natCast_apply, map_pow, map_add, map_natCast, h5, add_zero]
+      rw [Pi.pow_apply, Pi.add_apply, Pi.natCast_apply, map_pow, map_add (f := _), map_natCast, h5, add_zero]
       rfl
     rw [h4, map_pow, map_pow, map_pow, ← p.ι_v, vv_eq_coe_X]
 

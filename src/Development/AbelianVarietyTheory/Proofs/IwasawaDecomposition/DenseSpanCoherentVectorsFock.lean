@@ -71,7 +71,7 @@ theorem eq_zero_of_inner_monomial {σ : Type} [DecidableEq σ] (F : Fock σ) (u 
   refine F.dense.eq_zero_of_inner_left ℂ ?_
   rintro _ ⟨f, rfl⟩
   induction f using MvPolynomial.induction_on' with
-  | add f g hf hg => rw [map_add, inner_add_right, hf, hg, add_zero]
+  | add f g hf hg => rw [map_add (f := _), inner_add_right, hf, hg, add_zero]
   | monomial β c =>
     have e : (monomial β c : MvPolynomial σ ℂ) = c • monomial β 1 := by simp [smul_monomial]
     rw [e, map_smul, inner_smul_right, h, mul_zero]

@@ -28,7 +28,7 @@ theorem exists_pairB_of_range_eq {ι : Type} [Fintype ι] {n : ℕ} (G G' : ι �
     exact ⟨P, hP, hPv.symm⟩
   let φ : V →ₗ[ℂ] Formalism.L2.DIV.Pol ℂ ι n :=
     { toFun := fun v => Formalism.L2.Col.polOf G' (shiftOf lam) o (j v)
-      map_add' := fun x y => by rw [map_add]; exact (Formalism.L2.Col.polOf G' (shiftOf lam) o).map_add (j x) (j y)
+      map_add' := fun x y => by rw [map_add (f := _)]; exact (Formalism.L2.Col.polOf G' (shiftOf lam) o).map_add (j x) (j y)
       map_smul' := fun c x => by rw [map_smul]; exact (Formalism.L2.Col.polOf G' (shiftOf lam) o).map_smul c (j x) }
   have hφ : ∀ v, φ v = Formalism.L2.Col.polOf G' (shiftOf lam) o (j v) := fun _ => rfl
   have hmem : ∀ v, φ v ∈ Formalism.L2.DIV.VV ℂ lam := by

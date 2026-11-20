@@ -26,7 +26,7 @@ theorem Bd_add_left (a : Fin N → F) (u u' w : Fin N → AF F) :
 
 theorem Bd_rat_add (a : Fin N → F) (u : Fin N → AF F) (ξ η : Fin N → F) :
     Bd (AF F) a u (rat (ξ + η)) = Bd (AF F) a u (rat ξ) + Bd (AF F) a u (rat η) := by
-  simp only [Bd, rat, Pi.add_apply, map_add, ← Finset.sum_add_distrib]; congr 1; funext l; ring
+  simp only [Bd, rat, Pi.add_apply, map_add (f := _), ← Finset.sum_add_distrib]; congr 1; funext l; ring
 
 theorem Bd_rat_zero (a : Fin N → F) (u : Fin N → AF F) : Bd (AF F) a u (rat 0) = 0 := by
   simp [Bd, rat]

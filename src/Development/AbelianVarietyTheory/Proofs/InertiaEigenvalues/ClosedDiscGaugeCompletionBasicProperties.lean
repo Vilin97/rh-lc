@@ -12,7 +12,7 @@ variable (l : ℕ) [hl : Fact l.Prime] {A : Type} [CommRing A] (u : A) (ρ : ℝ
 theorem norm_add_le_max_disc (x y : Disc l u ρ) : ‖x + y‖ ≤ max ‖x‖ ‖y‖ := by
   refine (denseRange_ofPre l u ρ).induction_on₂ (p := fun x y => ‖x + y‖ ≤ max ‖x‖ ‖y‖)
     (isClosed_le (by fun_prop) (by fun_prop)) (fun a b => ?_) x y
-  rw [← map_add, norm_ofPre, norm_ofPre, norm_ofPre]
+  rw [← map_add (f := _), norm_ofPre, norm_ofPre, norm_ofPre]
   exact gauge_add_le_max l u ρ a b
 
 theorem isUltrametricDist_disc : IsUltrametricDist (Disc l u ρ) :=

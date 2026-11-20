@@ -67,7 +67,7 @@ theorem exists_factor_integralClosure_of_finiteType {A : Type*} [CommRing A]
     | mem x hx =>
       exact hK (IntermediateField.subset_adjoin _ _ (by simpa using ⟨x, hx, rfl⟩))
     | algebraMap r => simp
-    | add x y _ _ hx hy => rw [map_add]; exact K.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact K.add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact K.mul_mem hx hy
   let ψ₁ : A →+* K := φ'.codRestrict K hmem
   refine ⟨ψ₁.codRestrict (integralClosure ℤ_[p] K) fun a =>

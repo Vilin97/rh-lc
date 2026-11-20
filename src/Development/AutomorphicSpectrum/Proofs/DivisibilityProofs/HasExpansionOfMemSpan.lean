@@ -77,7 +77,7 @@ theorem hasExpansion_of_mem_span {N k : ℕ} (hk : 1 ≤ k) {G : MvPolynomial (F
     obtain ⟨R, hR, e⟩ := hx
     obtain ⟨S, hS, f⟩ := hy
     refine ⟨R + S, fun a => (hR a).add (hS a), ?_⟩
-    simp only [map_add, e, f, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), e, f, Pi.add_apply, mul_add, Finset.sum_add_distrib]
   | smul c x _ hx =>
     obtain ⟨R, hR, e⟩ := hx
     refine ⟨fun a => C (c : ℝ) * R a, fun a => ?_, ?_⟩

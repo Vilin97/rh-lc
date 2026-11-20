@@ -77,7 +77,7 @@ theorem mu_sub_log {e : Per.Fl l} (he : IsEps e) {y : Per.BdRp l} (hy : Per.IsLo
   rw [h2]
   change _ = Ideal.Quotient.mk _ (∑ k ∈ Finset.range 2, (-1) ^ k * ((2 / (k + 1) : ℕ) : Per.AinfP l) *
       (algebraMap (Per.Ainf l) (Per.AinfP l) (mu e)) ^ (k + 1))
-  rw [Finset.sum_range_succ, Finset.sum_range_one, map_add, map_mul _ _ (_ ^ (1 + 1)), map_pow _ _ (1 + 1),
+  rw [Finset.sum_range_succ, Finset.sum_range_one, map_add (f := _), map_mul _ _ (_ ^ (1 + 1)), map_pow _ _ (1 + 1),
     show (1 + 1 : ℕ) = 2 from rfl, hsq]
   simp [map_ofNat]
 

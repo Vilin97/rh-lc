@@ -42,7 +42,7 @@ theorem chi_e (hl : ((l : ℕ) : R) ∈ maximalIdeal R) {ε : OE} (hε2 : ∀ a,
   have h2 : residue R (em a ε) = 1 := by
     rw [← sub_eq_zero, ← map_one (residue R), ← map_sub, IsLocalRing.residue_eq_zero_iff]
     exact hε2 a
-  rw [he', map_add, map_mul, map_natCast, ht, map_add, map_mul, h1, h2, zero_mul, add_zero]
+  rw [he', map_add (f := _), map_mul, map_natCast, ht, map_add (f := _), map_mul, h1, h2, zero_mul, add_zero]
 
 theorem tau_e (hl : ((l : ℕ) : R) ∈ maximalIdeal R) {ε : OE} (hε2 : ∀ a, em a ε - 1 ∈ maximalIdeal R)
     {e z : ℤ_[l] ⊗[ℤ] OE} (hee : e * e = e) (he : e - 1 ⊗ₜ ε = ((l : ℕ) : ℤ_[l] ⊗[ℤ] OE) * z) (a : ZMod d) :
@@ -164,7 +164,7 @@ theorem chi_pow (hl : ((l : ℕ) : R) ∈ maximalIdeal R)
       rw [hy]
       ring
     have hr : residue R (algebraMap ℤ_[l] R c) = (a : IsLocalRing.ResidueField R) := by
-      rw [hc', map_add, map_mul, map_natCast, map_natCast, map_add, map_mul, hl0, mul_zero, add_zero,
+      rw [hc', map_add (f := _), map_mul, map_natCast, map_natCast, map_add (f := _), map_mul, hl0, mul_zero, add_zero,
         map_natCast]
     rw [hr, hnat]
   induction s using TensorProduct.induction_on with
@@ -173,7 +173,7 @@ theorem chi_pow (hl : ((l : ℕ) : R) ∈ maximalIdeal R)
     have hsplit : c ⊗ₜ[ℤ] x = (c ⊗ₜ[ℤ] (1 : OE)) * ((1 : ℤ_[l]) ⊗ₜ[ℤ] x) := by
       rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
     rw [hsplit, map_mul, mul_pow, hc c, hx x]
-  | add s t hs ht => rw [map_add, add_pow_char_pow, hs, ht]
+  | add s t hs ht => rw [map_add (f := _), add_pow_char_pow, hs, ht]
 
 theorem rank_le (hl : ((l : ℕ) : R) ∈ maximalIdeal R)
     (hfrob : ∀ a x, em (a + 1) x - em a x ^ l ∈ maximalIdeal R) {ε : OE}
@@ -353,7 +353,7 @@ theorem placeX_of [Module.Free ℤ OE] [Module.Finite ℤ OE] (hl : ((l : ℕ) :
   have hjj : ∀ a, jj (a + 1) = jj a + 1 := by
     intro a
     show jjr (a + 1) = jjr a + 1
-    rw [map_add, map_one]
+    rw [map_add (f := _), map_one]
   let t : Fin n ≃ EmbX (R := R) e := jj.symm.trans (Equiv.ofBijective _ ⟨hinj, hsurj⟩)
   have ht : ∀ a, ((t (jj a) : EmbX (R := R) e) : OE →+* R) = em a := by
     intro a

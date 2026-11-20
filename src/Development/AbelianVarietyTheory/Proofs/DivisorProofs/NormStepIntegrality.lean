@@ -16,7 +16,7 @@ variable {p : ℕ} [Fact p.Prime]
 
 theorem normStep_isIntV_add {G : HTGroup p} {v : AwayP p} {y z : Qv v ⊗[ℚ] G.C} (hy : IsIntV G v y)
     (hz : IsIntV G v z) : IsIntV G v (y + z) := by
-  intro i; rw [map_add, Finsupp.add_apply]; exact add_mem (hy i) (hz i)
+  intro i; rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hy i) (hz i)
 
 theorem normStep_isIntV_neg {G : HTGroup p} {v : AwayP p} {y : Qv v ⊗[ℚ] G.C} (hy : IsIntV G v y) :
     IsIntV G v (-y) := by
@@ -34,7 +34,7 @@ theorem normStep_star_star (G : HTGroup p) (R : Type) [CommRing R] [Algebra ℚ 
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul r x => rw [starT_tmul, starT_tmul, G.star_star]
-  | add x y hx hy => simp only [map_add, MulOpposite.unop_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), MulOpposite.unop_add, hx, hy]
 
 theorem normStep_star_mul (G : HTGroup p) (R : Type) [CommRing R] [Algebra ℚ R] (y z : R ⊗[ℚ] G.C) :
     (starT G.star R (y * z)).unop = (starT G.star R z).unop * (starT G.star R y).unop := by
@@ -102,7 +102,7 @@ theorem normStep_exists (p : ℕ) [Fact p.Prime] (G : HTGroup p) (v : AwayP p) (
       map_add' := fun a b => Subtype.ext (by
         show (starT G.star (Qv v) ((a : Qv v ⊗[ℚ] G.C) + b)).unop =
           (starT G.star (Qv v) a).unop + (starT G.star (Qv v) b).unop
-        rw [map_add, MulOpposite.unop_add]) }
+        rw [map_add (f := _), MulOpposite.unop_add]) }
   have hτinv : ∀ a, τ (τ a) = a := fun a => Subtype.ext (normStep_star_star G (Qv v) a)
   let O := v.1.adicCompletionIntegers ℚ
   let φ : O →+* A := ((algebraMap (Qv v) (Qv v ⊗[ℚ] G.C)).comp (algebraMap O (Qv v))).codRestrict A
@@ -116,7 +116,7 @@ theorem normStep_exists (p : ℕ) [Fact p.Prime] (G : HTGroup p) (v : AwayP p) (
       map_add' := fun a b => by
         funext i; apply Subtype.ext
         show (basV G v).repr ((a : Qv v ⊗[ℚ] G.C) + b) i = (basV G v).repr a i + (basV G v).repr b i
-        rw [map_add, Finsupp.add_apply]
+        rw [map_add (f := _), Finsupp.add_apply]
       map_smul' := fun r a => by
         funext i; apply Subtype.ext
         show (basV G v).repr (algebraMap (Qv v) (Qv v ⊗[ℚ] G.C) (algebraMap O (Qv v) r) * a) i =

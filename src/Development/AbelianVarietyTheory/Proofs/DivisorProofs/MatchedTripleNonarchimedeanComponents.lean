@@ -60,7 +60,7 @@ theorem mem_so_of_fin : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numb
         rwa [Matrix.rank_mul_eq_left_of_isUnit_det _ _ hQd, Matrix.rank_mul_eq_right_of_isUnit_det _ _ hPd]
       · rw [Function.update_of_ne (Ne.symm hv)]; exact hloc
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 end GlobalTheory.ThK.SoFinite

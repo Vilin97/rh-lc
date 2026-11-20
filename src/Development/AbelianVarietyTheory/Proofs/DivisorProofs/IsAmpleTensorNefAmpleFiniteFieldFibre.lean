@@ -37,6 +37,6 @@ theorem isAmpleLB_fibre : ∀ (k : Type) [CommRing k] (X : Scheme.{0}) [IsIntegr
     (CechPic.isLB_tens (LB.isLB_pull A.isLB f) (LB.isLB_pull L.isLB f))).1 ?_
   show CechPic.pull f (CechPic.cls L.B L.isLB + CechPic.cls A.B A.isLB) =
     CechPic.pull f (CechPic.cls A.B A.isLB) + CechPic.pull f (CechPic.cls L.B L.isLB)
-  rw [map_add, add_comm]
+  rw [map_add (f := _), add_comm]
 
 end GlobalTheory.AmpleFibre

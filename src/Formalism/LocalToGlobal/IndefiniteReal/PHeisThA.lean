@@ -25,7 +25,7 @@ theorem repr_snd (z : AF F ⊗[F] E) (k : Fin (Module.finrank F E)) :
       Algebra.TensorProduct.basis_repr_tmul]
     simp [sndA]
     rfl
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy, Pi.add_apply]; rfl
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy, Pi.add_apply]; rfl
 
 theorem repr_fst (z : AF F ⊗[F] E) (k : Fin (Module.finrank F E)) :
     (Algebra.TensorProduct.basis (Ainf F) (Module.finBasis F E)).repr
@@ -38,7 +38,7 @@ theorem repr_fst (z : AF F ⊗[F] E) (k : Fin (Module.finrank F E)) :
       Algebra.TensorProduct.basis_repr_tmul]
     simp [fstA]
     rfl
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy, Pi.add_apply]; rfl
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy, Pi.add_apply]; rfl
 
 theorem trace_tmul (e : E) :
     Algebra.trace (AF F) (AF F ⊗[F] E) ((1 : AF F) ⊗ₜ[F] e) = algebraMap F (AF F) (Algebra.trace F E e) := by
@@ -49,7 +49,7 @@ theorem trace_tmul (e : E) :
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a m => simp [LinearMap.baseChange_tmul, Algebra.TensorProduct.tmul_mul_tmul]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   rw [Algebra.trace_apply, h, LinearMap.trace_baseChange]
   rfl
 
@@ -88,7 +88,7 @@ theorem hHom_smul_right (V W : HSp D) (c : AF D.host.F) (x y : WA V W) :
 theorem hHom_add_left (V W : HSp D) (x x' y : WA V W) :
     hHom V W (x + x') y = hHom V W x y + hHom V W x' y := by
   unfold hHom
-  split_ifs <;> simp only [Matrix.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  split_ifs <;> simp only [Matrix.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hHom_smul_left (V W : HSp D) (c : AF D.host.F) (x y : WA V W) :
     hHom V W (c • x) y = c • hHom V W x y := by
@@ -97,7 +97,7 @@ theorem hHom_smul_left (V W : HSp D) (c : AF D.host.F) (x y : WA V W) :
 
 theorem symplH_add_left (V W : HSp D) (x x' y : WA V W) :
     symplH V W (x + x') y = symplH V W x y + symplH V W x' y := by
-  simp only [symplH, Formalism.L2.Theta.sympl, hHom_add_right, mul_add, map_add]
+  simp only [symplH, Formalism.L2.Theta.sympl, hHom_add_right, mul_add, map_add (f := _)]
 
 theorem symplH_smul_left (V W : HSp D) (c : AF D.host.F) (x y : WA V W) :
     symplH V W (c • x) y = c * symplH V W x y := by
@@ -106,7 +106,7 @@ theorem symplH_smul_left (V W : HSp D) (c : AF D.host.F) (x y : WA V W) :
 
 theorem symplH_add_right (V W : HSp D) (x y y' : WA V W) :
     symplH V W x (y + y') = symplH V W x y + symplH V W x y' := by
-  simp only [symplH, Formalism.L2.Theta.sympl, hHom_add_left, mul_add, map_add]
+  simp only [symplH, Formalism.L2.Theta.sympl, hHom_add_left, mul_add, map_add (f := _)]
 
 theorem symplH_smul_right (V W : HSp D) (c : AF D.host.F) (x y : WA V W) :
     symplH V W x (c • y) = c * symplH V W x y := by

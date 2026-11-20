@@ -49,13 +49,13 @@ theorem GlobalTheory.BK.pow_smul_Mon_add_phi_mem_Z : ∀ (O K : Type) [CommRing 
   have hL : ∀ p ∈ D.L, D.cls (E K l e • p) ∈ W := fun p hp => ⟨_, E_smul_mem_EM D hp, rfl⟩
   have hMM : ∀ μ ∈ D.MM, D.cls (E K l e • μ) ∈ W := fun μ hμ => by
     obtain ⟨p, hp, f, hf, rfl⟩ := hsplit μ hμ
-    rw [smul_add, map_add, cls_E_smul_eq_zero D (hfil f hf), add_zero]
+    rw [smul_add, map_add (f := _), cls_E_smul_eq_zero D (hfil f hf), add_zero]
     exact hL p hp
   have h1 : D.Mon y ∈ W := by
     rw [D.Mon_eq]
     refine sub_mem (hint _ (D.desc.cls_mem_Z hyY)).1 ?_
     obtain ⟨p, hp, f, hf, h⟩ := GlobalTheory.T.breuilKisin_zeta_fine_bound_second_basis O K l e a ι η H D hη hH h14 y hy
-    rw [h, smul_add, map_add, smul_comm (E K l e) _ p, smul_comm (E K l e) _ f,
+    rw [h, smul_add, map_add (f := _), smul_comm (E K l e) _ p, smul_comm (E K l e) _ f,
       D.cls.map_smul ((l : K) ^ _), D.cls.map_smul (_⁻¹ : K), cls_E_smul_eq_zero D (hfil f hf), smul_zero, add_zero]
     exact pow_smul_mem D W _ (hL p hp)
   have h2 : (l : K) ^ (η * (r + 1)) • D.Mon (D.phi m) ∈ W := by
@@ -65,7 +65,7 @@ theorem GlobalTheory.BK.pow_smul_Mon_add_phi_mem_Z : ∀ (O K : Type) [CommRing 
     rw [← map_smul, ← smul_comm (E K l e)]
     exact hMM _ (GlobalTheory.T.prime_pow_smul_descent_phi_mem_lattice_of_orbit_bound O K l e a ι η H D r hr hc hrl hl m hm)
   refine ⟨?_, ?_⟩
-  · rw [map_add, smul_add]
+  · rw [map_add (f := _), smul_add]
     exact add_mem (pow_smul_mem D W _ h1) h2
   · refine D.desc.actPol.invariants.smul_mem _ (D.desc.Mon_mem_invariants (add_mem hyY.2 fun g => ?_))
     rw [D.desc.act_phi, hm.2 g]

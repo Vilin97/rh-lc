@@ -220,7 +220,7 @@ theorem capDeg_vp_eq_zero : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscrete
   | tmul q D =>
     obtain ⟨I, J, rfl⟩ := Vert.Model.exists_eq_ofEff_sub D
     simp [Vert.Model.capDeg_vp, Vert.Model.vDegQ, heff]
-  | add D D' h h' => rw [map_add, LinearMap.add_apply, h, h', add_zero]
+  | add D D' h h' => rw [map_add (f := _), LinearMap.add_apply, h, h', add_zero]
 
 end GlobalTheory.RankTwoChern
 

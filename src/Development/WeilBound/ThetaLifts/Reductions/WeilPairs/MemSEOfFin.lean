@@ -66,7 +66,7 @@ theorem small (T : Set (AF F ⊗[F] E)) (hT : T ∈ 𝓝 0) : ∃ N : ℕ, 0 < N
   have hP : Continuous P := continuous_const.prodMk continuous_id
   let Φ : (Module.Free.ChooseBasisIndex ℤ (𝓞 E) → Af F) →+ AF F ⊗[F] E :=
     AddMonoidHom.mk' (fun c => ∑ i, P (c i) • incAF F E (b i)) fun c c' => by
-      simp only [Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+      simp only [Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
   have hΦ : ∀ c, Φ c = ∑ i, P (c i) • incAF F E (b i) := fun _ => rfl
   have hc : Continuous Φ := continuous_finset_sum _ fun i _ => by
     have h1 : Continuous fun a : AF F => a • incAF F E (b i) := by
@@ -97,7 +97,7 @@ theorem small (T : Set (AF F ⊗[F] E)) (hT : T ∈ 𝓝 0) : ∃ N : ℕ, 0 < N
     | add x y _ _ hx hy =>
       obtain ⟨c, h1, e1⟩ := hx
       obtain ⟨c', h2, e2⟩ := hy
-      exact ⟨c + c', fun i v => add_mem (h1 i v) (h2 i v), by rw [mul_add, map_add, e1, e2]⟩
+      exact ⟨c + c', fun i v => add_mem (h1 i v) (h2 i v), by rw [mul_add, map_add (f := _), e1, e2]⟩
     | neg x _ hx =>
       obtain ⟨c, h1, e1⟩ := hx
       exact ⟨-c, fun i v => neg_mem (h1 i v), by rw [mul_neg, map_neg, e1]⟩
@@ -255,7 +255,7 @@ theorem phi_mem {v : HeightOneSpectrum (𝓞 F)} (τ : E →ₐ[F] Fv F v) {z : 
     rw [← hy]
     exact y.2
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem exists_idem {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) {v : HeightOneSpectrum (𝓞 F)} (τ : E →ₐ[F] Fv F v) :
@@ -314,7 +314,7 @@ theorem exists_idem {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) {v : HeightOneSp
   rw [← hI] at hII hIS hSS p1 c1
   obtain ⟨e, he⟩ : ∃ e, e = H * (I * D + S * δ) := ⟨_, rfl⟩
   have hce : cAF σ e = H * (I * D - S * δ) := by
-    rw [he, map_mul, map_add, map_mul, map_mul, c1, c2, c3, c4, hcδ]; ring
+    rw [he, map_mul, map_add (f := _), map_mul, map_mul, c1, c2, c3, c4, hcδ]; ring
   have hcc : cAF σ (cAF σ e) = e := by
     rw [hce, he, map_mul, map_sub, map_mul, map_mul, c1, c2, c3, c4, hcδ]; ring
   have h2 : e * cAF σ e = 0 := by
@@ -330,7 +330,7 @@ theorem exists_idem {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) {v : HeightOneSp
     linear_combination e * h3 - h2 + h4
   refine ⟨e, ⟨h1, h2, v, _, hpl, h3.trans hI⟩,
     ⟨by rw [← map_mul, h1], by rw [hcc, mul_comm, h2], v, _, hpl, by rw [hcc, add_comm]; exact h3.trans hI⟩, hcc, ?_⟩
-  rw [he, map_mul, map_add, map_mul, map_mul, p1, p2, p5]
+  rw [he, map_mul, map_add (f := _), map_mul, map_mul, p1, p2, p5]
   linear_combination p3 + phi τ H * p4
 
 theorem exists_sep (v : HeightOneSpectrum (𝓞 F)) : ∃ N : ℕ, 0 < N ∧ ∀ y : F, IsIntegral ℤ y → (∀ φ : F →+* ℂ, ‖φ y‖ ≤ 8) →
@@ -398,7 +398,7 @@ theorem local_norm {σ : E →ₐ[F] E} {B : Base F E} (hB : B.IsGood σ) (v : H
         algebraMap (Fv F v) (Fv F v ⊗[F] E) (algebraMap F (Fv F v) δ) := by
       rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, hbb', ← IsScalarTower.algebraMap_apply,
         Algebra.TensorProduct.algebraMap_apply']
-    rw [hz, map_add, map_mul, AlgHom.commutes, AlgHom.commutes, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, hb1,
+    rw [hz, map_add (f := _), map_mul, AlgHom.commutes, AlgHom.commutes, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, hb1,
       TensorProduct.tmul_neg, map_sub, map_mul, map_pow, map_pow, ← e1]
     ring
 

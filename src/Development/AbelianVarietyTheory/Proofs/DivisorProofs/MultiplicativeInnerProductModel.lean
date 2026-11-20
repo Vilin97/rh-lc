@@ -65,7 +65,7 @@ theorem isMultiplicityInner_inner : ∀ {D : D7} {V : HSp D} {S : D.what₂.Tau 
   obtain ⟨b, hb⟩ := hd y
   obtain ⟨s, hs⟩ := hd (x + y)
   obtain ⟨t, ht⟩ := hd (x + Complex.I • y)
-  rw [map_add] at hs ht
+  rw [map_add (f := _)] at hs ht
   rw [map_smul] at ht
   exact ⟨_, exists_of_diag M μ 𝓕 _ _ ha hb hs ht⟩
 

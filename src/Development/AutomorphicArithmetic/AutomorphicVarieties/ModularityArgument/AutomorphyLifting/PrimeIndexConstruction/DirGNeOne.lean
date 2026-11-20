@@ -78,7 +78,7 @@ private theorem resSum_of {Γ : Type} [Group Γ] (ρ : Γ →* GL (Fin 2) (Qbar 
       C (-((ρ s : Matrix (Fin 2) (Fin 2) (Qbar l)).trace - (1 + Φ s))) * X +
         C ((ρ s : Matrix (Fin 2) (Fin 2) (Qbar l)).det - Φ s) := by
     rw [Matrix.charpoly_fin_two, Fin.prod_univ_two]
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, MonoidHom.one_apply, Units.val_one, map_one, map_neg, map_sub, map_add]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, MonoidHom.one_apply, Units.val_one, map_one, map_neg, map_sub, map_add (f := _)]
     ring
   rw [← coeff_sub, e, coeff_add, coeff_C_mul_X, coeff_C]
   refine small_add ?_ ?_

@@ -94,7 +94,7 @@ theorem dualPointCoord_ne_zero {K : Type} [Field K] [NumberField K] {i : ℕ} (F
   let Λ : dualLattice F →ₗ[ℤ] K' :=
     { toFun := fun ψ ↦ ∑ k, algebraMap K K' ((ψ : Fin i → K) k) * v k
       map_add' := fun ψ χ ↦ by
-        simp only [Submodule.coe_add, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+        simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
       map_smul' := fun c ψ ↦ by
         simp only [Submodule.coe_smul, Pi.smul_apply, zsmul_eq_mul, map_mul, map_intCast,
           RingHom.id_apply, Finset.mul_sum, mul_assoc] }

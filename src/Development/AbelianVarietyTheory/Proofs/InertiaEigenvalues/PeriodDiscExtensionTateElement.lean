@@ -62,8 +62,8 @@ theorem _root_.GlobalTheory.HWL.Cmp.map_actS {V' : Type} [AddCommGroup V'] [Modu
     induction m using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [_root_.GlobalTheory.HWL.Cmp.actS_tmul]
-    | add m₁ m₂ h₁ h₂ => simp only [map_add, h₁, h₂]
-  | add a₁ a₂ h₁ h₂ => simp only [map_add, LinearMap.add_apply, h₁, h₂]
+    | add m₁ m₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
+  | add a₁ a₂ h₁ h₂ => simp only [map_add (f := _), LinearMap.add_apply, h₁, h₂]
 
 end Act
 
@@ -164,7 +164,7 @@ theorem _root_.GlobalTheory.HWL.Cmp.ringHom_ext_of_X {O L : Type} [CommRing O] [
     intro q
     induction q using Polynomial.induction_on with
     | C c => simpa using hC c
-    | add q r hq hr => simp only [Polynomial.coe_add, map_add, hq, hr]
+    | add q r hq hr => simp only [Polynomial.coe_add, map_add (f := _), hq, hr]
     | monomial k c _ =>
       simp only [Polynomial.coe_mul, Polynomial.coe_C, Polynomial.coe_pow, Polynomial.coe_X, map_mul,
         map_pow, hC, hX]
@@ -177,7 +177,7 @@ theorem _root_.GlobalTheory.HWL.Cmp.ringHom_ext_of_X {O L : Type} [CommRing O] [
   have ha : a = (PowerSeries.trunc (N + 1) a : PowerSeries O) + PowerSeries.X ^ (N + 1) * b := by
     rw [← hb]; ring
   have hdiff : f a - g a = PowerSeries.X ^ (N + 1) * (u ^ (N + 1) * (f b - g b)) := by
-    rw [ha, map_add, map_add, hpoly, map_mul, map_mul, map_pow, map_pow, hu, hg]
+    rw [ha, map_add (f := _), map_add (f := _), hpoly, map_mul, map_mul, map_pow, map_pow, hu, hg]
     ring
   rw [← sub_eq_zero, ← map_sub, hdiff, PowerSeries.coeff_X_pow_mul']
   simp

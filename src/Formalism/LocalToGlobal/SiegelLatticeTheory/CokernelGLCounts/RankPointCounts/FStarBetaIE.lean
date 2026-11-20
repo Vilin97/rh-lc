@@ -48,7 +48,7 @@ theorem sendsB_add {m₁ m₂ : (VS D).V}
     sub_add_eq h₁ h₂ hm ((baseChange₂ D p).map_add m₁ m₂)
   have e2 : (⟨baseChange₂ D p (β₀ (m₁ + m₂)), hm₂⟩ : ↥((locH Zd p).perp ((locH Zd p).X (locF' Zd p F'₂)))) =
       ⟨baseChange₂ D p (β₀ m₁), k₁⟩ + ⟨baseChange₂ D p (β₀ m₂), k₂⟩ :=
-    sub_add_eq k₁ k₂ hm₂ (by rw [LinearEquiv.map_add, (baseChange₂ D p).map_add])
+    sub_add_eq k₁ k₂ hm₂ (by rw [LinearEquiv.map_add (f := _), (baseChange₂ D p).map_add (f := _)])
   have f1 : (locH Zd p).mkW (tLoc Zd p γ).f' ⟨baseChange₂ D p (m₁ + m₂), hm⟩ =
       (locH Zd p).mkW (tLoc Zd p γ).f' ⟨baseChange₂ D p m₁, h₁⟩ + (locH Zd p).mkW (tLoc Zd p γ).f' ⟨baseChange₂ D p m₂, h₂⟩ :=
     (congrArg _ e1).trans (LinearMap.map_add _ _ _)
@@ -122,7 +122,7 @@ theorem bcP_X_f' {x : (VS D).V} (hx : x ∈ Xsp (repF γ)) : baseChange₂ D p x
     rw [e]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul c x _ hx => rw [Formalism.L2.SG.Pf.LocalDenominators.baseChange_smul₂]; exact Submodule.smul_mem _ _ hx
 
 end Place

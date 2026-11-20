@@ -61,7 +61,7 @@ private theorem isPrecomplete_finite {R M : Type} [CommRing R] [AddCommGroup M] 
     | succ n ih =>
       have : g (n + 1) = g n + d n := by
         simp only [hg, Finset.sum_range_succ]; abel
-      rw [this, map_add, ih, hdφ]; abel
+      rw [this, map_add (f := _), ih, hdφ]; abel
   have hgc : ∀ {m n : ℕ}, m ≤ n → g m ≡ g n [SMOD (I ^ m • ⊤ : Submodule R (Fin r → R))] := by
     intro m n hmn
     rw [SModEq.sub_mem]

@@ -78,7 +78,7 @@ theorem IsFormQuot.add {s t : Φ} (hs : IsFormQuot y s) (ht : IsFormQuot y t) : 
   refine ⟨d₁ + d₂, g₁ * h₂ + g₂ * h₁, h₁ * h₂,
     isMultiHomog_add_alt (isMultiHomog_mul_alt hg₁ hh₂) (by rw [add_comm d₁]; exact isMultiHomog_mul_alt hg₂ hh₁),
     isMultiHomog_mul_alt hh₁ hh₂, by rw [map_mul]; exact mul_ne_zero hy₁ hy₂, ?_⟩
-  rw [map_add, map_mul, map_mul, map_mul, e₁, e₂]
+  rw [map_add (f := _), map_mul, map_mul, map_mul, e₁, e₂]
   ring
 
 theorem IsFormQuot.mul {s t : Φ} (hs : IsFormQuot y s) (ht : IsFormQuot y t) : IsFormQuot y (s * t) := by

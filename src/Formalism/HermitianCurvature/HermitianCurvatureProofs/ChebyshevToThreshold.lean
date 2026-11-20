@@ -46,7 +46,7 @@ theorem inter_of_module (E : Type) [Field E] [NumberField E] [IsCMField E] (L : 
   let I : Ideal (𝓞 (maximalRealSubfield E)) :=
     { carrier := {a | algebraMap (𝓞 (maximalRealSubfield E)) E a * t ∈ L}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add, add_mul] at ha hb ⊢
+        simp only [Set.mem_setOf_eq, map_add (f := _), add_mul] at ha hb ⊢
         exact L.add_mem ha hb
       zero_mem' := by simp
       smul_mem' := fun c {a} ha => by

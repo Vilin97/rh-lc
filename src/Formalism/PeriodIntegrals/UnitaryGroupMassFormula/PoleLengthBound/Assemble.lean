@@ -121,7 +121,7 @@ def psiL (a : Fin G.N → OsK X la G.w) (T k : ℕ) (hk : k < a0 D j T) :
   map_add' z1 z2 := by
     rw [← psiRaw_add]
     apply psiRaw_congr G la a hk
-    rw [map_add, pre_eq, pre_eq, pre_eq]
+    rw [map_add (f := _), pre_eq, pre_eq, pre_eq]
     rfl
   map_smul' r z := by
     rw [RingHom.id_apply, ← psiRaw_smul G la a k r _ (pre_mem G la z.2)]

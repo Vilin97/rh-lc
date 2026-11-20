@@ -29,7 +29,7 @@ theorem vb_basis : ∀ {O : Type} [CommRing O] {X : Scheme.{0}} (str : ∀ V : X
   have actadd : ∀ {n : ℕ} (i : Fin (n + 1) → ι) (f f' : Γ(X, capO U i)) (h : HU F (capT U' i) m),
       act i (f + f') h = act i f h + act i f' h := by
     intro n i f f' h
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   have actmul : ∀ {n : ℕ} (i : Fin (n + 1) → ι) (f f' : Γ(X, capO U i)) (h : HU F (capT U' i) m),
       act i (f * f') h = act i f (act i f' h) := by
     intro n i f f' h

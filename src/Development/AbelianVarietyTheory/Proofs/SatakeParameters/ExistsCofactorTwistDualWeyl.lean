@@ -155,7 +155,7 @@ theorem exists_cofRel_dualWeyl : ∀ (R : Type) [CommRing R] [IsDomain R] (m : �
     obtain ⟨g₂, h₂, e₂⟩ := hy
     refine ⟨g₁ + g₂, add_mem h₁ h₂, ?_⟩
     unfold CofRel at e₁ e₂ ⊢
-    rw [mul_add, e₁, e₂, map_add]
+    rw [mul_add, e₁, e₂, map_add (f := _)]
   | smul a x _ hx =>
     obtain ⟨g, h, e⟩ := hx
     refine ⟨a • g, Submodule.smul_mem _ a h, ?_⟩

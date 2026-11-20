@@ -78,7 +78,7 @@ theorem re_herm_eq {g : ℕ} {Λ : Type} (P : Λ → (Fin g → ℂ)) (hP : Subm
     | mem x hx => obtain ⟨a, rfl⟩ := hx; exact h a b
     | zero => simp [hermForm]
     | add x y _ _ hx hy =>
-      simp only [hermForm, map_add, add_dotProduct, Complex.add_im] at *
+      simp only [hermForm, map_add (f := _), add_dotProduct, Complex.add_im] at *
       rw [hx, hy]
     | smul r x _ hx =>
       simp only [hermForm, hs, map_smul, smul_dotProduct, smul_eq_mul, Complex.im_ofReal_mul] at *
@@ -90,7 +90,7 @@ theorem re_herm_eq {g : ℕ} {Λ : Type} (P : Λ → (Fin g → ℂ)) (hP : Subm
     | mem x hx => obtain ⟨a, rfl⟩ := hx; exact h1 a u
     | zero => simp [hermForm]
     | add x y _ _ hx hy =>
-      simp only [hermForm, map_add, star_add, Matrix.mulVec_add, dotProduct_add, Complex.add_im] at *
+      simp only [hermForm, map_add (f := _), star_add, Matrix.mulVec_add, dotProduct_add, Complex.add_im] at *
       rw [hx, hy]
     | smul r x _ hx =>
       simp only [hermForm, hs, map_smul, star_smul, Matrix.mulVec_smul, dotProduct_smul, smul_eq_mul,

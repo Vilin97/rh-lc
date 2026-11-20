@@ -354,12 +354,12 @@ theorem tup_mul {j : ℕ} {w w' : WeightFamilies.Wt D j} (F : P.Cusp j w) (F' : 
 theorem mulC_add_left {j : ℕ} {w w' : WeightFamilies.Wt D j} (F F' : P.Cusp j w) (G' : P.Cusp j w') :
     P.mulC j w w' (F + F') G' = P.mulC j w w' F G' + P.mulC j w w' F' G' := by
   apply P.tup_inj j (w + w')
-  simp only [map_add, ← P.tup_mul, add_mul]
+  simp only [map_add (f := _), ← P.tup_mul, add_mul]
 
 theorem mulC_add_right {j : ℕ} {w w' : WeightFamilies.Wt D j} (F : P.Cusp j w) (G' G'' : P.Cusp j w') :
     P.mulC j w w' F (G' + G'') = P.mulC j w w' F G' + P.mulC j w w' F G'' := by
   apply P.tup_inj j (w + w')
-  simp only [map_add, ← P.tup_mul, mul_add]
+  simp only [map_add (f := _), ← P.tup_mul, mul_add]
 
 theorem mulC_smul_left {j : ℕ} {w w' : WeightFamilies.Wt D j} (a : P.KO) (F : P.Cusp j w) (G' : P.Cusp j w') :
     P.mulC j w w' (a • F) G' = a • P.mulC j w w' F G' := by
@@ -477,7 +477,7 @@ theorem Fof_eq_iff {j : ℕ} (w : WeightFamilies.Wt D j) (x : P.FormsS j) (F : P
   ⟨fun h => h ▸ P.tup_Fof w x, fun h => P.tup_inj j w ((P.tup_Fof w x).trans h.symm)⟩
 
 theorem Fof_add {j : ℕ} (w : WeightFamilies.Wt D j) (x y : P.FormsS j) : P.Fof w (x + y) = P.Fof w x + P.Fof w y := by
-  rw [Fof_eq_iff, map_add, tup_Fof, tup_Fof]; simp
+  rw [Fof_eq_iff, map_add (f := _), tup_Fof, tup_Fof]; simp
 
 theorem Fof_smul {j : ℕ} (w : WeightFamilies.Wt D j) (a : P.KO) (x : P.FormsS j) : P.Fof w (a • x) = a • P.Fof w x := by
   rw [Fof_eq_iff, map_smul, tup_Fof]; simp
@@ -598,7 +598,7 @@ def inc (j : ℕ) (w : WeightFamilies.Wt D j) : P.Cusp j w →ₗ[P.KO] P.Forms 
   toFun F := (P.incS j w F : P.FormsS j)
   map_add' F F' := P.amb_injective (by
     change ((P.incS j w (F + F') : P.FormsS j) : P.Amb j) = (P.incS j w F : P.Amb j) + (P.incS j w F' : P.Amb j)
-    rw [map_add]; rfl)
+    rw [map_add (f := _)]; rfl)
   map_smul' a F := P.amb_injective (by
     change ((P.incS j w (a • F) : P.FormsS j) : P.Amb j) = a • (P.incS j w F : P.Amb j)
     rw [map_smul]; rfl)

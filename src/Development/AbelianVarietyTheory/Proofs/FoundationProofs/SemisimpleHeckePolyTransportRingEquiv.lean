@@ -23,7 +23,7 @@ theorem map_slP (φ : R →+* S) (m : Matrix (Fin 2) (Fin 2) ℤ) (p : MvPolynom
   | C a => simp [slP]
   | add p q hp hq => simp [hp, hq]
   | mul_X p i hp =>
-    simp only [map_mul, hp, Betti.slP_X, MvPolynomial.map_X, map_add, map_smul', map_intCast]
+    simp only [map_mul, hp, Betti.slP_X, MvPolynomial.map_X, map_add (f := _), map_smul', map_intCast]
 
 theorem mapF_add (φ : R →+* S) (F G : ℂ → MvPolynomial (Fin 2) R) : mapF φ (F + G) = mapF φ F + mapF φ G := by
   funext z; simp [mapF]
@@ -62,7 +62,7 @@ theorem mapF_mem_triv (φ : R →+* S) {w : ℕ} {Γ : Subgroup SL(2, ℤ)} {F :
   obtain ⟨ψ, p, h1, h2⟩ := hF
   refine ⟨mapF φ ψ, MvPolynomial.map φ p, fun γ hγ z hz => ?_, fun z hz => ?_⟩
   · simp only [mapF]; rw [← map_slP, h1 γ hγ z hz]
-  · simp only [mapF]; rw [h2 z hz, map_add]
+  · simp only [mapF]; rw [h2 z hz, map_add (f := _)]
 
 theorem exists_preimage (ι : R ≃+* S) (N l : ℕ) (lam : Letter → R) {P : FreeAlgebra S Letter} (hP : P ∈ admissibleLettersSubalgebra S N l) :
     ∃ Q ∈ admissibleLettersSubalgebra R N l, ι (FreeAlgebra.lift R lam Q) = FreeAlgebra.lift S (fun T => ι (lam T)) P ∧

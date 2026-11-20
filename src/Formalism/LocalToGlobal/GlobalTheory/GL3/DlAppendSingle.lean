@@ -49,7 +49,7 @@ theorem der_eq (y : Matrix (Fin N') (Fin N) D.host.E) (F : Ser) :
 
 theorem der_add (y : Matrix (Fin N') (Fin N) D.host.E) (F G : Ser) :
     der D lam y (F + G) = der D lam y F + der D lam y G := by
-  simp only [der_eq, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [der_eq, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem der_zero (y : Matrix (Fin N') (Fin N) D.host.E) : der D lam y (0 : Ser) = 0 := by
   simp only [der_eq, map_zero, mul_zero, Finset.sum_const_zero]
@@ -140,7 +140,7 @@ theorem jetsInt_add {Y : Submodule (𝓞 D.host.E) (Matrix (Fin N') (Fin N) D.ho
     (hF : JetsInt D lam Y F) (hG : JetsInt D lam Y G) : JetsInt D lam Y (F + G) := by
   rw [jetsInt_iff] at hF hG ⊢
   intro l hl
-  rw [Dl_add, map_add]
+  rw [Dl_add, map_add (f := _)]
   exact isPadicIntegral_add (hF l hl) (hG l hl)
 
 theorem jetsInt_mul {Y : Submodule (𝓞 D.host.E) (Matrix (Fin N') (Fin N) D.host.E)} {F G : Ser}
@@ -158,7 +158,7 @@ theorem jetsInt_mul {Y : Submodule (𝓞 D.host.E) (Matrix (Fin N') (Fin N) D.ho
   | cons a l ih =>
     have ha : a ∈ Y := hl a (by simp)
     have hl' : ∀ y ∈ l, y ∈ Y := fun y hy => hl y (by simp [hy])
-    rw [Dl_cons, der_Dl, der_mul, Dl_add, map_add]
+    rw [Dl_cons, der_Dl, der_mul, Dl_add, map_add (f := _)]
     exact isPadicIntegral_add (ih hF (jetsInt_der hG ha) hl') (ih hG (jetsInt_der hF ha) hl')
 
 theorem jetsInt_C {Y : Submodule (𝓞 D.host.E) (Matrix (Fin N') (Fin N) D.host.E)} {c : ℂ_[p]} (hc : IsIntP c) :

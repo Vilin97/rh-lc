@@ -91,7 +91,7 @@ theorem UpperTheory.V.Fr.ep_ee :
         rw [hc]
       | add a b ha hb iha ihb =>
         show Ideal.Quotient.mk _ (σ (L.ι (⟨a, ha⟩ + ⟨b, hb⟩))) = Ideal.Quotient.mk _ (L.ι (⟨a, ha⟩ + ⟨b, hb⟩))
-        simp only [map_add, iha, ihb]
+        simp only [map_add (f := _), iha, ihb]
       | mul a b ha hb iha ihb =>
         show Ideal.Quotient.mk _ (σ (L.ι (⟨a, ha⟩ * ⟨b, hb⟩))) = Ideal.Quotient.mk _ (L.ι (⟨a, ha⟩ * ⟨b, hb⟩))
         simp only [map_mul, iha, ihb]

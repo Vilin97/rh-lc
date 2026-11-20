@@ -55,7 +55,7 @@ theorem substitution_preserves_of_generators (h h' : Matrix (Fin n) (Fin n) L)
     rw [e]
     exact hw w hwW
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul]
     have e : matrixSubst LL S (RingHom.id L) h h' (MvPolynomial.C c) = MvPolynomial.C c := by

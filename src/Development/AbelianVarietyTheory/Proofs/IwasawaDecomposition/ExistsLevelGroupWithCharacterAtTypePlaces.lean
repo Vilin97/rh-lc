@@ -46,7 +46,7 @@ theorem proj_eq_lift (s : SplitPlace L) (x : AL L) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rfl
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 theorem locM_triv (s : SplitPlace L) {B : Set (HeightOneSpectrum (𝓞 (maximalRealSubfield L)))} {κ : GAf L n}
     (h : TrivOutside Bᶜ κ) (hv : s.v ∈ B) : NX.locM s κ = 1 := by

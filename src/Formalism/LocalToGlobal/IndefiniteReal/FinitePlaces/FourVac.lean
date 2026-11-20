@@ -67,7 +67,7 @@ theorem piK_add {k : ℕ} [Finite (Qt k (L ⊓ X))] [Finite (Ik L Y k)] (G H : V
     piK ρ L X Y k (G + H) = piK ρ L X Y k G + piK ρ L X Y k H := by
   haveI := Fintype.ofFinite (Qt k (L ⊓ X))
   haveI := Fintype.ofFinite (Ik L Y k)
-  simp only [piK, finsum_eq_sum_of_fintype, map_add, Finset.sum_add_distrib]
+  simp only [piK, finsum_eq_sum_of_fintype, map_add (f := _), Finset.sum_add_distrib]
 
 theorem piK_smul {k : ℕ} [Finite (Qt k (L ⊓ X))] [Finite (Ik L Y k)] (c : ℂ) (G : V) :
     piK ρ L X Y k (c • G) = c • piK ρ L X Y k G := by

@@ -156,8 +156,8 @@ theorem key {Ω : Type} [Field Ω] [Algebra ℚ Ω] (p : ℕ) [hpf : Fact p.Prim
   | add x y _ _ hx hy =>
     obtain ⟨H1, h1, z1, e1, f1⟩ := hx
     obtain ⟨H2, h2, z2, e2, f2⟩ := hy
-    exact ⟨H1 + H2, Subring.add_mem _ h1 h2, z1 + z2, by rw [map_add]; linear_combination e1 + e2,
-      by simp only [map_add, Finset.sum_add_distrib, f1, f2]; ring⟩
+    exact ⟨H1 + H2, Subring.add_mem _ h1 h2, z1 + z2, by rw [map_add (f := _)]; linear_combination e1 + e2,
+      by simp only [map_add (f := _), Finset.sum_add_distrib, f1, f2]; ring⟩
   | neg x _ hx =>
     obtain ⟨H1, h1, z1, e1, f1⟩ := hx
     exact ⟨-H1, Subring.neg_mem _ h1, -z1, by rw [map_neg]; linear_combination -e1,

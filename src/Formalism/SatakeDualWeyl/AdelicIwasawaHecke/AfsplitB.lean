@@ -18,11 +18,11 @@ def afsplitIE (v : HeightOneSpectrum (𝓞 F)) : E ⊗[F] v.adicCompletion F →
   map_mul' x y := by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x x' hx hx' => simp only [add_mul, map_add, hx, hx']
+    | add x x' hx hx' => simp only [add_mul, map_add (f := _), hx, hx']
     | tmul a b =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add y y' hy hy' => simp only [mul_add, map_add, hy, hy']
+      | add y y' hy hy' => simp only [mul_add, map_add (f := _), hy, hy']
       | tmul c d =>
         simp only [Algebra.TensorProduct.tmul_mul_tmul, LinearMap.lTensor_tmul, afsplitI_mul]
 
@@ -37,21 +37,21 @@ theorem afsplit_prV_IE (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] v.adicComp
   induction x using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a b => rw [afsplitIE_tmul, afsplit_prV_tmul, afsplitI_self]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem afsplit_prV_IE_ne (v w : HeightOneSpectrum (𝓞 F)) (h : w ≠ v)
     (x : E ⊗[F] v.adicCompletion F) : prV (E := E) w (afsplitIE v x) = 0 := by
   induction x using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a b => rw [afsplitIE_tmul, afsplit_prV_tmul, afsplitI_ne v w h, TensorProduct.tmul_zero]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 theorem afsplit_sigR_IE (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] v.adicCompletion F) :
     sigR σ 𝔸 (afsplitIE v x) = afsplitIE v (sigR σ (v.adicCompletion F) x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a b => simp [sigR, afsplitIE_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def afsplitEps (E : Type) [CommRing E] [Algebra F E] (v : HeightOneSpectrum (𝓞 F)) : E ⊗[F] 𝔸 :=
   afsplitIE v 1
@@ -65,7 +65,7 @@ theorem afsplit_decomp (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] 𝔸) :
   | tmul a b =>
     rw [afsplit_prV_tmul, afsplitIE_tmul, afsplitI_eval, he, Algebra.TensorProduct.tmul_mul_tmul,
       one_mul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, mul_add]
 
 theorem afsplit_eps_mul_IE (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] v.adicCompletion F) :
     afsplitEps E v * afsplitIE v x = afsplitIE v x := by
@@ -75,7 +75,7 @@ theorem afsplit_eps_mul_IE (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] v.adic
   | zero => simp only [map_zero, mul_zero]
   | tmul a b =>
     rw [he, afsplitIE_tmul, Algebra.TensorProduct.tmul_mul_tmul, one_mul, ← afsplitI_mul, one_mul]
-  | add x y hx hy => rw [map_add, mul_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), mul_add, hx, hy]
 
 theorem afsplit_eps_idem (v : HeightOneSpectrum (𝓞 F)) :
     afsplitEps E v * afsplitEps E v = afsplitEps E v := by
@@ -102,7 +102,7 @@ theorem afsplit_prV_comp_sigR (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a b => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Tens
 
@@ -120,7 +120,7 @@ theorem afsplit_coord_prV (b : Module.Basis (Module.Free.ChooseBasisIndex F E) F
   | tmul a b =>
     rw [afsplit_prV_tmul]
     simp only [LinearMap.rTensor_tmul, TensorProduct.lid_tmul, afsplit_smul_apply]
-  | add x y hx hy => simp only [map_add, hx, hy, afsplit_add_apply]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, afsplit_add_apply]
 
 theorem afsplit_inj (y : E ⊗[F] 𝔸) (hy : ∀ w : HeightOneSpectrum (𝓞 F), prV (E := E) w y = 0) :
     y = 0 := by

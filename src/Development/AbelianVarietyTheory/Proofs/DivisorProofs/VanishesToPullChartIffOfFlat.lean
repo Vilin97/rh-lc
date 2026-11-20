@@ -162,7 +162,7 @@ theorem sum_mem_of_isPushout [Algebra k k'] {A A' : Type} [CommRing A] [CommRing
       exact hy
     exact Submodule.smul_induction_on hy' (fun r hr y _ => by
       rw [map_smul]; exact J.mul_mem_right _ hr) fun y y' h h' => by
-        rw [map_add]; exact add_mem h h'
+        rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
   set_option synthInstance.maxHeartbeats 100000 in
     simpa only [map_sum, hl] using hJ _ h
 

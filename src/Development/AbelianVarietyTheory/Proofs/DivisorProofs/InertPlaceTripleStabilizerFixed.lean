@@ -44,14 +44,14 @@ theorem tmap_smul (a : AF F) (x : AE F E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul b y => simp [TensorProduct.smul_tmul', Algebra.TensorProduct.tmul_mul_tmul]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, mul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), mul_add]
 
 theorem awayU_mem_finU {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v : Pl F) {k : UA σ J}
     (hk : k ∈ GlobalTheory.ThetaCplV.finU σ J) : awayU J v k ∈ GlobalTheory.ThetaCplV.finU σ J := by
   rw [GlobalTheory.ThetaCplV.mem_finU] at hk ⊢
   rw [← hk, mat_awayU]
   ext i j
-  simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add, tmap_smul, map_sub, map_one, fstA_eFin,
+  simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _), tmap_smul, map_sub, map_one, fstA_eFin,
     sub_zero, sub_self, Algebra.TensorProduct.one_def.symm, one_mul, TensorProduct.zero_tmul, zero_mul, add_zero]
 
 theorem awayU_commute {n : ℕ} {X : Spc F E n} (v : Pl F) (k : UA σ X.J) {g : UA σ X.J}
@@ -104,7 +104,7 @@ theorem exists_level (hK : KP) {n d : ℕ} {Y : Spc F E n} {W : Spc F E d} {B : 
   | add x y _ _ hx hy =>
     obtain ⟨U, hU, h⟩ := hx
     obtain ⟨V, hV, h'⟩ := hy
-    exact ⟨U ⊓ V, hU.inter hV, fun k hk hf => by rw [map_add, h k hk.1 hf, h' k hk.2 hf]⟩
+    exact ⟨U ⊓ V, hU.inter hV, fun k hk hf => by rw [map_add (f := _), h k hk.1 hf, h' k hk.2 hf]⟩
   | smul t x _ hx =>
     obtain ⟨U, hU, h⟩ := hx
     exact ⟨U, hU, fun k hk hf => by rw [map_smul, h k hk hf]⟩
@@ -138,7 +138,7 @@ theorem level_of_span_at : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [N
       obtain ⟨g, rfl⟩ := hx
       rw [← om_mul, awayU_commute v k g.2, om_mul, hfix _ hk.2 (awayU_mem_finU _ v hkf)]
     | zero => exact map_zero _
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | smul t x _ hx => rw [map_smul, hx]
   conv_lhs => rw [← compAt_mul_awayU G.W.J v k]
   rw [om_mul, hw]

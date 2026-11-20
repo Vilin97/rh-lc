@@ -71,7 +71,7 @@ theorem exists_mul_mem {M' V : Type} [AddCommGroup M'] [Module (𝓞 E) M'] [Add
     obtain ⟨N, hN, b, hb⟩ := hx
     obtain ⟨K, hK, c, hc⟩ := hy
     refine ⟨N * K, Nat.mul_pos hN hK, K • b + N • c, ?_⟩
-    rw [map_add, map_nsmul, map_nsmul, hb, hc, smul_add, smul_smul, smul_smul, mul_comm K N]
+    rw [map_add (f := _), map_nsmul, map_nsmul, hb, hc, smul_add, smul_smul, smul_smul, mul_comm K N]
   | smul e x _ hx =>
     obtain ⟨N, hN, b, hb⟩ := hx
     have halg : IsAlgebraic ℤ e :=
@@ -96,7 +96,7 @@ theorem exists_mul_le {M M' V : Type} [AddCommGroup M] [Module (𝓞 E) M] [Modu
   | add x y _ _ hx hy =>
     obtain ⟨b, hb⟩ := hx
     obtain ⟨d, hd⟩ := hy
-    exact ⟨b + d, by rw [map_add, map_add, hb, hd, smul_add]⟩
+    exact ⟨b + d, by rw [map_add (f := _), map_add (f := _), hb, hd, smul_add]⟩
   | smul e x _ hx =>
     obtain ⟨b, hb⟩ := hx
     exact ⟨e • b, by rw [map_smul, map_smul, hb, smul_comm]⟩
@@ -107,7 +107,7 @@ theorem exists_lift {R M M' V : Type} [CommRing R] [AddCommGroup M] [Module R M]
     ∃ j : M →ₗ[R] M', ∀ a, φ' (j a) = N • φ a := by
   choose f hf using h
   refine ⟨⟨⟨f, fun x y => hi ?_⟩, fun c x => hi ?_⟩, hf⟩
-  · rw [map_add, hf, hf, hf, map_add, smul_add]
+  · rw [map_add (f := _), hf, hf, hf, map_add (f := _), smul_add]
   · simp only [RingHom.id_apply]
     rw [map_smul, hf, hf, map_smul, smul_comm]
 
@@ -186,7 +186,7 @@ theorem GlobalTheory.datum_commensurable_period :
   let P' : D'.La →+ (Fin g → ℂ) :=
     { toFun := fun a => (N : ℂ)⁻¹ • P (j' a)
       map_zero' := by simp
-      map_add' := fun a b => by simp only [map_add, smul_add] }
+      map_add' := fun a b => by simp only [map_add (f := _), smul_add] }
   have hP' : ∀ a, P' a = (N : ℂ)⁻¹ • P (j' a) := fun _ => rfl
   have p₂ : ∀ a, P (j' a) = (N : ℂ) • P' a := fun a => by
     rw [hP', smul_smul, mul_inv_cancel₀ hNC, one_smul]

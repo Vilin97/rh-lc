@@ -247,7 +247,7 @@ theorem col_change : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ h : GA D S, �
         rw [MvPolynomial.smul_eq_C_mul, mul_one]
       rw [hCa, map_smul, map_smul, (hL (fun τ => compAt C.θ τ (Formalism.L2.Theta.mt S h)) f hf 1).2.2.1, map_one (sub C h),
         map_smul, (hL (fun _ => 1) f hf 1).2.2.1]
-    | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p v hp =>
       have hg := (hL (fun _ => 1) f hf (sub C h p)).1
       have hH : (compAt C.θ v.1 (Formalism.L2.Theta.mt S h))⁻¹ = (compAt C.θ v.1 (Formalism.L2.Theta.mt S h))ᴴ :=

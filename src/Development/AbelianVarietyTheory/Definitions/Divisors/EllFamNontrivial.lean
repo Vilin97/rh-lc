@@ -66,7 +66,7 @@ theorem Fam.shift_zero (F : Fam I g Λ) (p : Tot I g) : F.shift 0 p = p := by
   simp [Fam.shift]
 
 theorem Fam.shift_add (F : Fam I g Λ) (l m : Λ) (p : Tot I g) : F.shift (l + m) p = F.shift l (F.shift m p) := by
-  simp only [Fam.shift, map_add, Pi.add_apply, Prod.mk.injEq, true_and]
+  simp only [Fam.shift, map_add (f := _), Pi.add_apply, Prod.mk.injEq, true_and]
   abel
 
 theorem Fam.shift_analytic (F : Fam I g Λ) (l : Λ) {W : Set (Tot I g)} (h : ∀ p ∈ W, p.1 ∈ F.V) :
@@ -91,7 +91,7 @@ theorem Close.map {W : Opens (Tot I g)} {C C' : Type} [CommRing C] [CommRing C']
     obtain ⟨n, hn, hnn, hρ⟩ := hs
     refine ih.tail ⟨fun a ↦ φ (n a), fun a ↦ hφ _ (hn a), fun a b ↦ by rw [← map_mul, hnn, map_zero], fun f ↦ ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [RingHom.comp_apply, hρ, map_add, map_sum, map_mul]
+      simp only [RingHom.comp_apply, hρ, map_add (f := _), map_sum, map_mul]
 
 theorem Close.comap {W W' : Opens (Tot I g)} {C : Type} [CommRing C] {J : Ideal C}
     {ρ₁ ρ₂ : Hol W' →+* C} (h : Close J ρ₁ ρ₂) (ψ : Hol W →+* Hol W') (hψ : ∀ a f, dw a (ψ f) = ψ (dw a f)) :
@@ -282,7 +282,7 @@ variable (K) in
 def perZ (per : Λ →+ Hol F.V) : Z1 K.Oc :=
   ⟨fun _ T' f ↦ algebraMap (Hol F.V) T'.C (per f.deg), fun T T' T'' f f' ↦ by
     change algebraMap _ T''.C (per (f.deg + f'.deg)) = f'.φ (algebraMap _ _ _) + algebraMap _ T''.C _
-    rw [AlgHom.commutes, map_add, map_add]⟩
+    rw [AlgHom.commutes, map_add (f := _), map_add (f := _)]⟩
 
 variable (K) in
 

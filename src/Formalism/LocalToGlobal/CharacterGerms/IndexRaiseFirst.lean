@@ -126,7 +126,7 @@ theorem frobD_mul {f g : PS C 3 dd} (hf : IntS V f) (hg : IntS V g) (hf' : FrobD
   intro j
   rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
   intro μ
-  rw [map_add]
+  rw [map_add (f := _)]
   apply mm_add_of_mm_of_mm
   · exact mms_mul_of_intS_of_mms hf (hg' j) μ
   · exact mms_mul_of_intS_of_mms hg (hf' j) μ

@@ -37,7 +37,7 @@ theorem extForm_gram (h : HermFam K (Fin m → K)) (σ : K' →+* ℂ) {n : ℕ}
 def extFam (h : HermFam K (Fin m → K)) : HermFam K' (Fin m → K') where
   form := extForm h
   add_right σ x y z := by
-    simp only [extForm, Pi.add_apply, map_add]
+    simp only [extForm, Pi.add_apply, map_add (f := _)]
     rw [show (fun i => σ (y i) + σ (z i)) = (fun i => σ (y i)) + fun i => σ (z i) from rfl,
       Matrix.mulVec_add, dotProduct_add]
   smul_right σ a x y := by

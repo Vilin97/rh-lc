@@ -31,7 +31,7 @@ theorem multT_left (θ : InfFam D) (M : DSModel V S) (J : Set (GA D V)) (χ : GA
     have h2 := (GlobalTheory.mult_value_left_cont_level θ M J χ _ h1 f).1 γ hγ g
     have h3 : u (PiTensorProduct.tprod ℂ f) (γ * g) = u (PiTensorProduct.tprod ℂ f) g := h2
     rw [map_smul, Pi.smul_apply, Pi.smul_apply, h3]
-  | add x y hx hy => rw [map_add, Pi.add_apply, Pi.add_apply, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), Pi.add_apply, Pi.add_apply, hx, hy]
 
 theorem exists_translate (θ : InfFam D) (hθ : IsInfFam θ) (M : DSModel V S) (β : GL (Fin V.rank) (Lev.EAf D))
     (L : LevDat D.host.E ℂ V.rank) (g0 : G0 L.Pg L.r) (κ : GA D V) (hκ : IsLevelLift V β L g0 κ)

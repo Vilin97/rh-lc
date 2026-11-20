@@ -106,7 +106,7 @@ theorem GlobalTheory.LatVacBdd.locCo_bounded : ∀ (F E : Type) [Field F] [Numbe
   | zero => intro k; simp
   | add x y _ _ hx hy =>
     intro k
-    rw [map_add]
+    rw [map_add (f := _)]
     exact ⟨by rw [Prod.fst_add, Pi.add_apply, mul_add]; exact add_mem (hx k).1 (hy k).1,
       by rw [Prod.snd_add, Pi.add_apply, mul_add]; exact add_mem (hx k).2 (hy k).2⟩
   | neg x _ hx =>

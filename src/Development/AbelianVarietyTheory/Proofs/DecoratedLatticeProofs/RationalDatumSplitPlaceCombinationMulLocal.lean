@@ -65,7 +65,7 @@ theorem ratDatum_comb_place : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k]
       unfold Place.down
       congr 2
       ext i j
-      simp only [Matrix.map_apply, map_mul, map_add, hπe, hpi1, zero_add, one_mul, Place.pr]
+      simp only [Matrix.map_apply, map_mul, map_add (f := _), hπe, hpi1, zero_add, one_mul, Place.pr]
     have hs : ((γ.map fun a => (e + p.e) * incA D a : WO S T) - p.up FS FT (p.down FS FT (γ.map fun a => (e + p.e) * incA D a)) : WO S T) =
         (γ.map fun a => e * incA D a : WO S T) := by
       rw [hud]

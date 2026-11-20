@@ -377,7 +377,7 @@ private theorem affineSpaceFin_globalSections_hom_ext (k : Type u) [Field k] (m 
       w (fun a => ?_) (fun q r hq hr => ?_) (fun q i hq => ?_)
     · rw [mvPolynomialIsoGlobalSectionsAffineSpace_hom_C]
       exact hτ _
-    · simp only [map_add]
+    · simp only [map_add (f := _)]
       rw [hq, hr]
     · obtain ⟨j⟩ := i
       simp only [map_mul]

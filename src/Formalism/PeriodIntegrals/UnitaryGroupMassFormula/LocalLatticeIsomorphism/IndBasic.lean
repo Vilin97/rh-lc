@@ -46,7 +46,7 @@ theorem hf_add_left {K : Type} [Field K] (c : K →+* K) {ι : Type} [Fintype ι
 
 theorem hf_add_right {K : Type} [Field K] (c : K →+* K) {ι : Type} [Fintype ι] (v w w' : ι → K) :
     hf c v (w + w') = hf c v w + hf c v w' := by
-  simp only [hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hf_sub_left {K : Type} [Field K] (c : K →+* K) {ι : Type} [Fintype ι] (v v' w : ι → K) :
     hf c (v - v') w = hf c v w - hf c v' w := by

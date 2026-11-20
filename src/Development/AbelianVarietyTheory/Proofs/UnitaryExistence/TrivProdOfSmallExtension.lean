@@ -74,7 +74,7 @@ theorem triv_prod_of_small_extension : ∀ (R : Type) [CommRing R] [IsLocalRing 
     (fun a => i ⁻¹ᵁ V a) (by rw [← Scheme.Hom.preimage_iSup, hV]; rfl)
     (fun a b => (i.appLE (V a ⊓ V b) (i ⁻¹ᵁ V a ⊓ i ⁻¹ᵁ V b) (fun _ h => h)).hom (α a b))
     (fun a b d => gr_ext fun y hy => by
-      rw [map_add, gr_res, gr_res, gr_res, gr_appLE, gr_appLE, gr_appLE]
+      rw [map_add (f := _), gr_res, gr_res, gr_res, gr_appLE, gr_appLE, gr_appLE]
       exact H.cocycle_fibre hεε h0 hM haff hu Pk.w a b d y hy.1.1 hy.1.2 hy.2)
     (@slice A _ (hA _ _ _ _ _ (IsPullback.of_hasPullback A.hom q)) _ (fst A B)
       (by change IsSeparated (pullback.fst A.hom B.hom); infer_instance)

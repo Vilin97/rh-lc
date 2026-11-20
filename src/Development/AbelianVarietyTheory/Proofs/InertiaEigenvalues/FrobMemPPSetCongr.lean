@@ -82,12 +82,12 @@ theorem good_add {x y : ZMod a → K⟦X⟧⟦X⟧} (hx : x ∈ GoodSet t e φ�
     x + y ∈ GoodSet t e φ₂ := by
   obtain ⟨hxQ, hfxQ, A, hA, hxA⟩ := hx
   obtain ⟨hyQ, hfyQ, B, hB, hyB⟩ := hy
-  refine ⟨Q_add t hxQ hyQ, by rw [map_add]; exact Q_add t hfxQ hfyQ,
+  refine ⟨Q_add t hxQ hyQ, by rw [map_add (f := _)]; exact Q_add t hfxQ hfyQ,
     A + B - x * y * ∑ k ∈ Finset.Ioo 0 l, x ^ (k - 1) * y ^ (l - k - 1) * ((l.choose k / l : ℕ) : ZMod a → K⟦X⟧⟦X⟧),
     ?_, ?_⟩
   · exact Q_sub t (Q_add t hA hB) (Q_mul t (Q_mul t hxQ hyQ) (Q_sum t _ _ fun k _ =>
       Q_mul t (Q_mul t (Q_pow t hxQ _) (Q_pow t hyQ _)) (Q_natCast t _)))
-  · rw [map_add, hxA, hyB, add_pow_prime_eq hl.out]; ring
+  · rw [map_add (f := _), hxA, hyB, add_pow_prime_eq hl.out]; ring
 
 theorem good_mul {x y : ZMod a → K⟦X⟧⟦X⟧} (hx : x ∈ GoodSet t e φ₂) (hy : y ∈ GoodSet t e φ₂) :
     x * y ∈ GoodSet t e φ₂ := by

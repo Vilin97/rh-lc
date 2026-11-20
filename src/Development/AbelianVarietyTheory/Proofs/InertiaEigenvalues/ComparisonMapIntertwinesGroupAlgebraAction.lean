@@ -30,7 +30,7 @@ theorem phi_mem (D : D7) (i : D.nd.Loc) (S : Sec D i)
         (show P ∈ {P | D.naut.ptV i P ≠ none} from by simp [hP'])
     exact hle (S.eig x u hu)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
 
 theorem phi_onMt : ∀ (D : D7) (i : D.nd.Loc) (S : Sec D i), OnMtPreservesTypeV D →
     ∀ (c : MonoidAlgebra ℂ (G0g D.nd)) (x y : D.what₂.MtL (D.nd.mu i) (D.nd.j i)),

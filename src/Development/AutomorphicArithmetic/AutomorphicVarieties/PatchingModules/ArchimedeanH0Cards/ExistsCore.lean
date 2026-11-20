@@ -273,7 +273,7 @@ private theorem descend {Γ0 : Type} [Group Γ0] [TopologicalSpace Γ0] [IsTopol
   · obtain ⟨a, rfl⟩ := hs a
     obtain ⟨b, rfl⟩ := hs b
     apply θ.injective
-    rw [← map_mul, h, map_add, h, hθ, h, hz.2]
+    rw [← map_mul, h, map_add (f := _), h, hθ, h, hz.2]
 
 end Coc
 

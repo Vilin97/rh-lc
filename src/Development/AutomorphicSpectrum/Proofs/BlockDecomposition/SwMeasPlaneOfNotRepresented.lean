@@ -232,7 +232,7 @@ theorem exists_hom {σ : E →ₐ[F] E} (hCM : IsCMExt F E σ) (τ : E →+* ℂ
     | zero => simp
     | tmul a e =>
       simp [sigR, f, g, hCM.2.2.2 τ]
-    | add x y hx hy => simp only [map_add, star_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), star_add, hx, hy]
 
 end GlobalTheory.CompanionTheory.SW.Plane
 

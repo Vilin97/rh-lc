@@ -51,7 +51,7 @@ theorem GlobalTheory.FullRankCoinv.form_vanish_of_smallF_vanish : ∀ (k : Type)
     | add x y hx hy ihx ihy =>
       have e : (⟨x + y, hle (Submodule.add_mem _ hx hy)⟩ : GlobalTheory.FullRankCoinv.fullRk k n d) =
           ⟨x, hle hx⟩ + ⟨y, hle hy⟩ := rfl
-      rw [e, map_add, LinearMap.add_apply, ihx, ihy, add_zero]
+      rw [e, map_add (f := _), LinearMap.add_apply, ihx, ihy, add_zero]
     | smul c x hx ihx =>
       have e : (⟨c • x, hle (Submodule.smul_mem _ c hx)⟩ : GlobalTheory.FullRankCoinv.fullRk k n d) = c • ⟨x, hle hx⟩ := rfl
       rw [e, map_smul, LinearMap.smul_apply, ihx, smul_zero]
@@ -62,7 +62,7 @@ theorem GlobalTheory.FullRankCoinv.form_vanish_of_smallF_vanish : ∀ (k : Type)
   obtain ⟨Φ, hΦ, hΦS, hdiff, hFΦ⟩ := GlobalTheory.T.clopen_integrability_full_rank_orbit k n d ν S hSc
     (fun Φ hΦ Y => GlobalTheory.T.integrable_full_rank_zeta k n d ν hν Φ hΦ Y) s Ψ₁.1 Ψ₁.2 hs
   have e1 : Ψ₁ = ⟨Ψ₁.1 - Φ, hle hdiff⟩ + ⟨Φ, hΦ⟩ := Subtype.ext (by simp)
-  rw [e1, map_add, LinearMap.add_apply, hkill _ hdiff, zero_add]
+  rw [e1, map_add (f := _), LinearMap.add_apply, hkill _ hdiff, zero_add]
 
   obtain ⟨⟨hlc₂, hcs₂⟩, _⟩ := Ψ₂.2
   set V := Function.support Ψ₂.1 with hVdef
@@ -115,7 +115,7 @@ theorem GlobalTheory.FullRankCoinv.form_vanish_of_smallF_vanish : ∀ (k : Type)
   have h2 := GlobalTheory.FullRankCoinv.Reduce.indicator_mem hC.compl hΦ
   have e2 : (⟨Φ, hΦ⟩ : GlobalTheory.FullRankCoinv.fullRk k n d) = ⟨C.indicator Φ, h1⟩ + ⟨Cᶜ.indicator Φ, h2⟩ :=
     Subtype.ext (Set.indicator_self_add_compl C Φ).symm
-  rw [e2, map_add, LinearMap.add_apply]
+  rw [e2, map_add (f := _), LinearMap.add_apply]
 
   have hCorb : ∀ (g : GL (Fin n) k) (Y : Matrix (Fin n) (Fin d) k), Y ∈ C → g.val * Y ∈ S → g.val * Y ∈ C := by
     rintro g Y ⟨_, a, ha⟩ hgY

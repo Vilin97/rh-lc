@@ -23,7 +23,7 @@ theorem levSurj_unitOne : ∀ {R : Type} [CommRing R] (τ : R →+* R) (p : R), 
     (∀ a, τ a = a → (¬ ∃ s, a = p * s) → IsUnit a) → (¬ ∃ s, p * s = 1) → ∀ s, IsUnit (1 + p * s) := by
   intro R _ τ p hτ hp hloc hnt s
   have hN : τ ((1 + p * s) * (1 + p * τ s)) = (1 + p * s) * (1 + p * τ s) := by
-    simp only [map_mul, map_add, map_one, hp, hτ]; ring
+    simp only [map_mul, map_add (f := _), map_one, hp, hτ]; ring
   have hu := hloc _ hN (by
     rintro ⟨t, ht⟩
     exact hnt ⟨t - (s + τ s + p * s * τ s), by linear_combination (-1 : R) * ht⟩)
@@ -91,7 +91,7 @@ theorem levSurj_core {R : Type} [CommRing R] {n : Type} [Fintype n] [DecidableEq
     apply hdH.mul_left_cancel
     linear_combination h
   obtain ⟨g₂, M, hg₂, hdet₂, hg₂e⟩ := GlobalTheory.T.unitary_congruence_prescribed_det τ H e p (τ g₁.det) (τ s) k hτ hH he
-    (by rw [hτ]; exact hdd) (by rw [hs, map_add, map_one, map_mul, map_pow, hp])
+    (by rw [hτ]; exact hdd) (by rw [hs, map_add (f := _), map_one, map_mul, map_pow, hp])
   refine ⟨g₁ * g₂, X₁ + p • (g₁ * M), D₁ + D₂ + g₁ * M, ?_, ?_, ?_, ?_⟩
   · rw [Formalism.UG.cT_mul, show Formalism.UG.cT τ g₂ * Formalism.UG.cT τ g₁ * H * (g₁ * g₂) =
       Formalism.UG.cT τ g₂ * (Formalism.UG.cT τ g₁ * H * g₁) * g₂ by simp only [Matrix.mul_assoc], hg₁, hg₂]

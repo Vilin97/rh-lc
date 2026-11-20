@@ -101,7 +101,7 @@ theorem ker_D_eq_kLowSpan {H : Type} [NormedAddCommGroup H] [InnerProductSpace �
     have h2 := LinearMap.congr_fun
       (dOp'_comm_diagE (eT_isGlRep hE) cpT_cmT_isCAR (eT_commutesCAR E) ε a b hab) y
     simp only [Module.End.mul_apply] at h1 h2
-    rw [LinearMap.add_apply, h1, h2, ← map_add, ← LinearMap.add_apply, hyD, map_zero]
+    rw [LinearMap.add_apply, h1, h2, ← map_add (f := _), ← LinearMap.add_apply, hyD, map_zero]
   have hzKK : z ∈ KK := ⟨⟨hzD, tensorFock_mono hVG hzT⟩, hzP⟩
   have hZs : IsKStableSub ε A (kLowSpan ε A z) := loweringSpan_kStable hK hzK
   have hZKK : kLowSpan ε A z ≤ KK := kLowSpan_le hKKs hzKK

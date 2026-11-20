@@ -69,7 +69,7 @@ theorem exists_baseSubst_mul (hv : IsBlockMap κ v) (G : GenFibre v P') (g : MRi
     obtain ⟨t₁, f₁, ht₁, e₁⟩ := h₁
     obtain ⟨t₂, f₂, ht₂, e₂⟩ := h₂
     refine ⟨t₁ * t₂, f₁ * rename v t₂ + rename v t₁ * f₂, by rw [map_mul]; exact mul_ne_zero ht₁ ht₂, ?_⟩
-    rw [map_mul, map_mul, map_add, map_mul, map_mul, ← e₁, ← e₂]
+    rw [map_mul, map_mul, map_add (f := _), map_mul, map_mul, ← e₁, ← e₂]
     ring
   | mul_X g q h =>
     obtain ⟨t, f, ht, e⟩ := h
@@ -124,7 +124,7 @@ theorem exists_of_mem_map (hv : IsBlockMap κ v) (G : GenFibre v P') (W : Ideal 
     obtain ⟨t₂, w₂, ht₂, hw₂, e₂⟩ := h₂
     refine ⟨t₁ * t₂, w₁ * rename v t₂ + rename v t₁ * w₂, by rw [map_mul]; exact mul_ne_zero ht₁ ht₂,
       W.add_mem (W.mul_mem_right _ hw₁) (W.mul_mem_left _ hw₂), ?_⟩
-    rw [map_mul, map_mul, map_add, map_mul, map_mul, ← e₁, ← e₂]
+    rw [map_mul, map_mul, map_add (f := _), map_mul, map_mul, ← e₁, ← e₂]
     ring
   | smul c g _ h =>
     obtain ⟨t, w, ht, hw, e⟩ := h

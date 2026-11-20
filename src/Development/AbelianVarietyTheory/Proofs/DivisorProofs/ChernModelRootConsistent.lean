@@ -154,7 +154,7 @@ theorem _root_.GlobalTheory.T.chern_model_root_consistent : GlobalTheory.CovTop.
       intro a
       rw [mul_comm, hcomm, (mdlOf z jc).Z.cD_divP, zero_mul, map_zero]
     | zero => intro a; simp
-    | add x y _ _ hx hy => intro a; rw [mul_add, map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => intro a; rw [mul_add, map_add (f := _), hx, hy, add_zero]
     | smul b x _ hx => intro a; rw [smul_eq_mul, ← mul_assoc]; exact hx _
   have e1 : (mdlOf z jc).Z.capDeg (mdlOf z jc).Z.divP (evC (mdlOf z jc) (rootOf z jc) G) =
       (mdlOf z jc).Z.capDeg (mdlOf z jc).Z.divP

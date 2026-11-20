@@ -63,7 +63,7 @@ theorem extTensor_detRep_apply {a b : Type} [Fintype a] [DecidableEq a] [Fintype
     rw [← smul_eq_mul, ← smul_eq_mul, TensorProduct.smul_tmul', TensorProduct.tmul_smul, ← TensorProduct.smul_tmul',
       smul_smul, mul_comm]
     exact TensorProduct.smul_tmul' _ _ _
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
 
 variable (χ₁ χ₂ : kˣ →* ℂˣ) (u v : ℕ)
 
@@ -300,7 +300,7 @@ def cellEquiv (hχ₁ : IsSmoothChar χ₁) : CellSp χ₁ χ₂ u v ≃ₗ[ℂ]
   toFun F := ⟨toIndFun χ₁ χ₂ u v F, toIndFun_smooth χ₁ χ₂ u v F⟩
   invFun φ := ⟨ofIndFun χ₁ χ₂ u v φ, ofIndFun_smooth χ₁ χ₂ u v hχ₁ φ⟩
   map_add' F G := Subtype.ext (Subtype.ext (funext fun y => by
-    simp only [Submodule.coe_add, Pi.add_apply, toIndFun_apply, map_add]))
+    simp only [Submodule.coe_add, Pi.add_apply, toIndFun_apply, map_add (f := _)]))
   map_smul' c F := Subtype.ext (Subtype.ext (funext fun y => by
     simp only [Submodule.coe_smul, Pi.smul_apply, toIndFun_apply, map_smul, RingHom.id_apply]))
   left_inv F := Subtype.ext (Subtype.ext (funext fun x => by

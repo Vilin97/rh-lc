@@ -21,7 +21,7 @@ theorem tmul_one_mem_nonZeroDivisors_of_field {K L R : Type} [Field K] [Field L]
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul l r => simp [Algebra.TensorProduct.tmul_mul_tmul]
-    | add a b ha hb => simp [map_add, add_mul, ha, hb]
+    | add a b ha hb => simp [map_add (f := _), add_mul, ha, hb]
   apply hinj
   rw [heq, hx, map_zero]
 
@@ -36,13 +36,13 @@ theorem finrank_le_card_mul_finrank_eig_baseChange : ∀ (K L Γ R W : Type) [Fi
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul l r => simp only [actL_tmul, map_mul, AlgHom.mul_apply]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have actL_one : ∀ x, actL 1 x = x := by
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul l r => simp only [actL_tmul, map_one, AlgHom.one_apply]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have inj_of : ∀ {M : Type} [AddCommGroup M] [Module K M] (g : M →ₗ[K] R), Function.Injective g →
       Function.Injective (g.baseChange L) := by
     intro M _ _ g hg
@@ -59,7 +59,7 @@ theorem finrank_le_card_mul_finrank_eig_baseChange : ∀ (K L Γ R W : Type) [Fi
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul l x => simp [ιV, ιm, A, Algebra.TensorProduct.tmul_mul_tmul]
-    | add x y hx hy => simp only [map_add, add_mul, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), add_mul, hx, hy]
   let e := hf.equiv
   let j : W →ₗ[L] L ⊗[K] R := ιV ∘ₗ e.symm.toLinearMap
   have hj : ∀ (g : Γ) w, j (ρ' g w) = actL g (j w) := by
@@ -73,7 +73,7 @@ theorem finrank_le_card_mul_finrank_eig_baseChange : ∀ (K L Γ R W : Type) [Fi
       simp only [j, LinearMap.comp_apply, LinearEquiv.coe_coe]
       rw [h1, map_smul, hρ', ← h2, ← h1, e.symm_apply_apply, e.symm_apply_apply]
       simp [ιV, actL_tmul, hρ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hje : ∀ z, j (e z) = ιV z := fun z => by simp [j]
   let T : W →ₗ[L] W := ∑ g : H, (((lam g)⁻¹ : Lˣ) : L) • ρ' g
   have hT : ∀ w, T w ∈ eig ρ' H lam := by

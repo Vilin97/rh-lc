@@ -76,7 +76,7 @@ theorem rep_good (hA : IsAbelianScheme A) (P : u.Λ →+ HdR A)
     Good u (lcH u P f) (lcW u f) := by
   refine Finsupp.induction_linear f ?_ (fun f f' hf hf' ↦ ?_) (fun x r ↦ ?_)
   · simpa using good_zero (u := u) hA
-  · simpa [map_add] using good_add hA hf hf'
+  · simpa [map_add (f := _)] using good_add hA hf hf'
   · simpa [lcH, lcW] using good_smul hA (hP x) r
 
 theorem rep_push (P : u.Λ →+ HdR A) (α : A ⟶ A) [IsMonHom α] (M : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ))

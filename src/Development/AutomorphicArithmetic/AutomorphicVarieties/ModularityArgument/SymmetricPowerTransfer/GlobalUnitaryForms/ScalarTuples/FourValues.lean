@@ -23,7 +23,7 @@ private theorem four_values (F : Type) [Field F] [NumberField F] [IsTotallyReal 
     intro h
     apply hy0
     have h1 := congrArg σ hy'
-    simp only [h, map_add, map_sub, map_mul, map_pow, map_zero] at h1
+    simp only [h, map_add (f := _), map_sub, map_mul, map_pow, map_zero] at h1
     have hn := hΔ σ
     have p1 : 0 ≤ -σ Δ * σ (y 1) ^ 2 := mul_nonneg (by linarith) (sq_nonneg _)
     have p3 : 0 ≤ -σ Δ * σ (y 3) ^ 2 := mul_nonneg (by linarith) (sq_nonneg _)

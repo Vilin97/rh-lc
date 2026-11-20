@@ -41,7 +41,7 @@ theorem exists_nsmul_finRat_mem : ∀ (D : D7) (S T : HSp D) (ΛS : Submodule (�
   refine Finset.sum_induction _ (fun γ => ∃ N : ℕ, 0 < N ∧ N • finRat S T γ ∈ (latO S T (ΛS : Set (Fin S.rank → D.host.E)) (ΛT : Set (Fin T.rank → D.host.E)) fun _ => True)) ?_ ?_ ?_
   · rintro x y ⟨N, hN, hx⟩ ⟨M, hM, hy⟩
     refine ⟨N * M, mul_pos hN hM, ?_⟩
-    rw [AddMonoidHom.map_add, nsmul_add]
+    rw [AddMonoidHom.map_add (f := _), nsmul_add]
     refine add_mem ?_ ?_
     · rw [mul_nsmul]; exact nsmul_mem hx M
     · rw [mul_nsmul']; exact nsmul_mem hy N

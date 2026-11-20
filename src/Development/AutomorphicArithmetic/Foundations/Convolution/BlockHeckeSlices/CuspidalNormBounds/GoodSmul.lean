@@ -32,7 +32,7 @@ private theorem good_add {φ ψ : Sm E n} (h₁ : Good φ) (h₂ : Good ψ) : Go
   · change φ.1 _ + ψ.1 _ = φ.1 _ + ψ.1 _
     rw [h₁.1 γ g, h₂.1 γ g]
   · change GlobalTheory.CuspRep.finRep E n k _ = _
-    rw [map_add, hk.1, hk.2]
+    rw [map_add (f := _), hk.1, hk.2]
 
 private theorem good_smul {φ : Sm E n} (h : Good φ) (c : ℂ) : Good (c • φ) := by
   refine ⟨fun γ g => ?_, isOpen_stab_of_mem_nhds _ _ (Filter.mem_of_superset

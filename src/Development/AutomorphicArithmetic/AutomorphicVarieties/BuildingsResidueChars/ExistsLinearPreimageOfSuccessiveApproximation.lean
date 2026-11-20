@@ -26,7 +26,7 @@ theorem UpperTheory.exists_linear_preimage_of_successive_approximation :
     | zero => simp [r]
     | succ N ih =>
       show r N - σ (b N) = f - σ (∑ n ∈ Finset.range (N + 1), b n)
-      rw [ih, Finset.sum_range_succ, map_add]
+      rw [ih, Finset.sum_range_succ, map_add (f := _)]
       abel
   have hlim : ∀ i, ∃ L : A, ∀ n,
       (∑ k ∈ Finset.range n, b k i) ≡ L [SMOD (I ^ n • ⊤ : Submodule A A)] := by

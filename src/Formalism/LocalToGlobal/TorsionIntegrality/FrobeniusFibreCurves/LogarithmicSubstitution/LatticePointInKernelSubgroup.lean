@@ -149,7 +149,7 @@ theorem kernel_stable_of_integral_kernel (hK : KernelIntegral) : KernelStableUnd
     exact not_lt.1 (mt (mem_kernel_subgroup_iff_norm hU _ hl).2 hn)
   have h := congrArg ι hiso
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_mul, map_pow, map_add, map_sum, map_sub] at h
+    simp only [map_mul, map_pow, map_add (f := _), map_sum, map_sub] at h
   rw [hb] at h
   rw [mem_kernel_subgroup_iff_norm hU _ hαt]
   rw [mem_kernel_subgroup_iff_norm hU _ htL] at ht

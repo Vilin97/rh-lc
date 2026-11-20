@@ -65,7 +65,7 @@ theorem exists_lift : ∀ {D : D7} (e : AE D) (SS : Finset (Formalism.L2.DIV.Pl 
   have hdet : (N.map (toE D)).det = toE D N.det := (RingHom.map_det (toE D) _).symm
   have h1 := CharVal.eps_idem he
   have hxe : finQ D (x : AE D) = 1 - finQ D e + finQ D e * N.det := toE_injective D (by
-    rw [CharVal.toE_finQ, hx1, hdet, RingHom.map_add, RingHom.map_sub, RingHom.map_mul, RingHom.map_one, CharVal.toE_finQ])
+    rw [CharVal.toE_finQ, hx1, hdet, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_mul, RingHom.map_one, CharVal.toE_finQ])
   have hxx : finQ D (x : AE D) * finQ D ((x⁻¹ : (AE D)ˣ) : AE D) = 1 := by
     rw [← RingHom.map_mul, Units.mul_inv, RingHom.map_one]
   have hd : finQ D e * (finQ D ((x⁻¹ : (AE D)ˣ) : AE D) * N.det) = finQ D e := by

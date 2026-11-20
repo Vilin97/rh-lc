@@ -86,7 +86,7 @@ theorem exists_units {d : ℕ} {i : splitTorus S (Fin d → ℤ) ⟶ H} {V : H.l
         rw [map_zero]; exact GlobalTheory.UU.isWt_one
       add_mem' := fun {a c} ha hc => by
         show GlobalTheory.UU.IsWt i _ (Additive.toMul (l (a + c))).val (a + c)
-        rw [map_add]; exact GlobalTheory.UU.IsWt.mul ha hc
+        rw [map_add (f := _)]; exact GlobalTheory.UU.IsWt.mul ha hc
       neg_mem' := fun {a} ha => by
         show GlobalTheory.UU.IsWt i _ (Additive.toMul (l (-a))).val (-a)
         rw [map_neg]; exact GlobalTheory.UU.IsWt.inv ha }

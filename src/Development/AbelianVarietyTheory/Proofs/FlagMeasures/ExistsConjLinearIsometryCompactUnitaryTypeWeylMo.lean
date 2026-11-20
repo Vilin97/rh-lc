@@ -268,9 +268,9 @@ theorem exists_conj_weyl : ∀ (k n : ℕ) (h : k = n) (lam : DomWeight n) (u : 
 
   obtain ⟨B, hB⟩ : ∃ B : W →ₗ⋆[ℂ] W →ₗ[ℂ] ℂ, ∀ x y, B x y = normFock lam (j0 y) (j0 x) :=
     ⟨LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (fun x y => normFock lam (j0 y) (j0 x))
-      (fun x x' y => by simp only [map_add, normFock_add_right])
+      (fun x x' y => by simp only [map_add (f := _), normFock_add_right])
       (fun c x y => by simp only [map_smul, normFock_smul_right, starRingEnd_apply, smul_eq_mul])
-      (fun x y y' => by simp only [map_add, normFock_add_left'])
+      (fun x y y' => by simp only [map_add (f := _), normFock_add_left'])
       (fun c x y => by simp only [map_smul, normFock_smul_left', RingHom.id_apply, smul_eq_mul]),
       fun _ _ => rfl⟩
   haveI : FiniteDimensional ℂ W := hfd

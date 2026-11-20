@@ -103,7 +103,7 @@ theorem dp_split' : ∀ (B : Type) [CommRing B] (J : Ideal B) (δ : DividedPower
   have hS : ∀ n, ∀ b ∈ J, ∀ a ∈ 𝔞, γ n (algebraMap B P b + a) =
       ∑ k ∈ Finset.HasAntidiagonal.antidiagonal n, algebraMap B P (δ.dpow k.1 b) * η.dpow k.2 a := by
     intro n b hb a ha
-    have h1 : ε (algebraMap B P b + a) = b := by rw [map_add, hεf, hεa a ha, add_zero]
+    have h1 : ε (algebraMap B P b + a) = b := by rw [map_add (f := _), hεf, hεa a ha, add_zero]
     rw [hγ, h1, if_pos hb, add_sub_cancel_left]
   have hB : ∀ n, ∀ b ∈ J, γ n (algebraMap B P b) = algebraMap B P (δ.dpow n b) := by
     intro n b hb
@@ -167,7 +167,7 @@ theorem dp_split' : ∀ (B : Type) [CommRing B] (J : Ideal B) (δ : DividedPower
     obtain ⟨b', hb', a', ha', rfl⟩ := hdec q hq
     have e : algebraMap B P b + a + (algebraMap B P b' + a') =
         algebraMap B P (b + b') + (a + a') := by
-      rw [map_add]
+      rw [map_add (f := _)]
       ring
     have ser : ∀ (c : B) (d : P) (k : ℕ),
         ∑ i ∈ Finset.HasAntidiagonal.antidiagonal k, algebraMap B P (δ.dpow i.1 c) * η.dpow i.2 d =

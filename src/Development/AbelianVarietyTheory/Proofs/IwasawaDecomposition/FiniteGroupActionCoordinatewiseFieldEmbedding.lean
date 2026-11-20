@@ -44,7 +44,7 @@ theorem rel_of_span {LL LL' : Type} [Field LL] [Field LL'] (φ : LL →+* LL') {
       funext k
       exact h s hs (cw φ s) (fun k k' hk => by rw [Fin.ext hk]; rfl) k k rfl
     | zero => rw [cw_zero, map_zero, map_zero, cw_zero]
-    | add a b _ _ ha hb => rw [cw_add, map_add, ha, hb, map_add, cw_add]
+    | add a b _ _ ha hb => rw [cw_add, map_add (f := _), ha, hb, map_add (f := _), cw_add]
     | smul c a _ ha => rw [cw_smul, LinearMap.map_smul, ha, LinearMap.map_smul, cw_smul]
   intro k k' hk
   rw [← Fin.ext hk]

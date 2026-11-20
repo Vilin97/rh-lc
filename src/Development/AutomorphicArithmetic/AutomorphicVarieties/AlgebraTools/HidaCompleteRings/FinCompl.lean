@@ -51,7 +51,7 @@ private theorem isPrecomplete_finite {R M : Type} [CommRing R] [AddCommGroup M] 
     induction n with
     | zero => simp [hg0]
     | succ n ih =>
-      rw [Finset.sum_range_succ, ← add_assoc, map_add, ih, hdπ]
+      rw [Finset.sum_range_succ, ← add_assoc, map_add (f := _), ih, hdπ]
       abel
   have hcau : ∀ {m n : ℕ}, m ≤ n → (g0 + ∑ k ∈ Finset.range m, d k) ≡
       (g0 + ∑ k ∈ Finset.range n, d k) [SMOD (I ^ m • ⊤ : Submodule R (Fin r → R))] := by

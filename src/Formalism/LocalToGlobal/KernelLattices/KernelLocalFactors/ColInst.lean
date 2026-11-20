@@ -173,7 +173,7 @@ theorem homAt_clear (S : Finset (HeightOneSpectrum (𝓞 E))) (N : Submodule (�
       rw [hc, mul_comm, mul_smul]
       exact N'.smul_mem _ (hsx g hg)
     | zero => rw [map_zero]; exact N'.zero_mem
-    | add y y' _ _ h h' => rw [map_add]; exact N'.add_mem h h'
+    | add y y' _ _ h h' => rw [map_add (f := _)]; exact N'.add_mem h h'
     | smul r y _ h => rw [LinearMap.map_smul_of_tower]; exact N'.smul_mem _ h
 
 theorem homAt_div (S : Finset (HeightOneSpectrum (𝓞 E))) (N : Submodule (𝓞 E) (Sp E a)) (N' : Submodule (𝓞 E) (Sp E b)) (k : ℕ) (hk : 0 < k)

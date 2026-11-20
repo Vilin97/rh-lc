@@ -41,7 +41,7 @@ theorem eval_colSub {ι : Type} [Fintype ι] {a : ℕ} (β x : ι → Matrix (Fi
       MvPolynomial.eval (fun k : ι × Fin a × Fin a => (x k.1 * β k.1) k.2.1 k.2.2) p := by
   induction p using MvPolynomial.induction_on with
   | C c => simp [colSub]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, colSub, MvPolynomial.aeval_X, MvPolynomial.eval_X, Matrix.mul_apply]
     congr 1
@@ -74,7 +74,7 @@ theorem isVLam_of_wtPol {ι : Type} [Fintype ι] {a : ℕ} {Y : Type} (fr g : Y 
       intro y p
       induction p using MvPolynomial.induction_on with
       | C c => simp [sub]
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
       | mul_X p v hp =>
         set_option synthInstance.maxHeartbeats 100000 in
           simp only [map_mul, hp, sub, MvPolynomial.aeval_X, MvPolynomial.eval_X, hg', Matrix.mul_apply, map_sum]

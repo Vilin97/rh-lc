@@ -52,7 +52,7 @@ theorem exists_mul_eq_mulLeftRight_of_corner (e : Λ)
   | add s t hs ht =>
     obtain ⟨l, hl⟩ := hs
     obtain ⟨m, hm⟩ := ht
-    exact ⟨l + m, fun y => by rw [map_add, LinearMap.add_apply, add_mul, hl, hm, add_mul]⟩
+    exact ⟨l + m, fun y => by rw [map_add (f := _), LinearMap.add_apply, add_mul, hl, hm, add_mul]⟩
 
 theorem leftIdealMulAlgHom_surjective [IsAzumaya A Λ] (e : Λ) (he : IsIdempotentElem e)
     (hc : ∀ y : Λ, ∃ c : A, e * y * e = c • e) :

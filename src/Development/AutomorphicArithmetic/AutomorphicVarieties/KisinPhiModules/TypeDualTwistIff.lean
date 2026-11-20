@@ -89,7 +89,7 @@ theorem UpperTheory.type_dual_twist_iff :
   · change Φ _ = (actBst (g : GQ l)).comp ((Φ x).comp _)
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy, LinearMap.add_comp, LinearMap.comp_add]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, LinearMap.add_comp, LinearMap.comp_add]
     | tmul v b =>
       refine LinearMap.ext fun w => ?_
       have e : colRep (dualTw χ ρ) g⁻¹ w = (χ g⁻¹ : B) • ((ρ g : Matrix (Fin n) (Fin n) B)ᵀ *ᵥ w) := by
@@ -103,13 +103,13 @@ theorem UpperTheory.type_dual_twist_iff :
     induction c using TensorProduct.induction_on with
     | zero => simp
     | add x y hx hy =>
-      rw [map_add, LinearMap.add_apply, map_add, hx, hy, map_add]
+      rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), hx, hy, map_add (f := _)]
       refine LinearMap.ext fun w => ?_
       simp only [LinearMap.add_apply, LinearMap.comp_apply, LinearMap.mulLeft_apply, add_mul]
     | tmul p k =>
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy, LinearMap.comp_add]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, LinearMap.comp_add]
     | tmul v b =>
       refine LinearMap.ext fun w => ?_
       rw [Thick.sm_tmul, hΦ, LinearMap.comp_apply, hΦ, LinearMap.mulLeft_apply, toSt,

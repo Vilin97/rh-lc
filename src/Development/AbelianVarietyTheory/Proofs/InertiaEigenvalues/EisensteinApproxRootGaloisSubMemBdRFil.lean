@@ -95,7 +95,7 @@ theorem GlobalTheory.BSP.approxRoot_gal_sub_mem_fil : ∀ (l : ℕ) [Fact l.Prim
   have hθq : Per.θD l (h q) = Per.θD l s * Per.θD l (h X) := by
     obtain ⟨c, hc⟩ := hq
     have h1 : q = (l : bk.S) ^ M * X + bk.E * c := by rw [← hc]; ring
-    rw [h1, map_add, map_mul, map_mul, map_add, map_mul, map_mul, hθh bk.E, hE, hs', map_pow, map_pow,
+    rw [h1, map_add (f := _), map_mul, map_mul, map_add (f := _), map_mul, map_mul, hθh bk.E, hE, hs', map_pow, map_pow,
       map_natCast, map_natCast]
     simp
   have hθy : Per.θD l (r * h q) = Per.θD l (h X) := by
@@ -111,7 +111,7 @@ theorem GlobalTheory.BSP.approxRoot_gal_sub_mem_fil : ∀ (l : ℕ) [Fact l.Prim
     exact Subtype.ext h0
   have key := sub_mem_of_eval_mem (Per.FilP l n) (bk.Ep.map f) (r * h q) (r * h' q) (hroot' _ hY) (hroot' _ hY')
     (fun k => hP.2.2.1 _ (by
-      rw [map_add, map_mul, ← mul_sub, map_mul, hθdiff, mul_zero, mul_zero, add_zero]; exact hder))
+      rw [map_add (f := _), map_mul, ← mul_sub, map_mul, hθdiff, mul_zero, mul_zero, add_zero]; exact hder))
   rw [map_sub, show aDp l (Per.σA (g : GQ l) (bk.ev q)) = h' q from rfl, show aDp l (bk.ev q) = h q from rfl,
     hsy (h' q), hsy (h q), ← mul_sub]
   exact (Per.FilP l n).mul_mem_left s key

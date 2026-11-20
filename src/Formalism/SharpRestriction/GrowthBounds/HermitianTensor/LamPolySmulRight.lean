@@ -61,11 +61,11 @@ variable (T : MvPolynomial (S × (Bool × (Fin k × Fin n))) K →ₗ[K] MvPolyn
 
 theorem lamPoly_add_left (V V' W) : lamPoly T (V + V') W = lamPoly T V W + lamPoly T V' W := by
   unfold lamPoly
-  rw [map_add, add_mul, map_add]
+  rw [map_add (f := _), add_mul, map_add (f := _)]
 
 theorem lamPoly_add_right (V W W') : lamPoly T V (W + W') = lamPoly T V W + lamPoly T V W' := by
   unfold lamPoly
-  rw [map_add, mul_add, map_add]
+  rw [map_add (f := _), mul_add, map_add (f := _)]
 
 theorem lamPoly_smul_left (c : K) (V W) : lamPoly T (c • V) W = c • lamPoly T V W := by
   unfold lamPoly

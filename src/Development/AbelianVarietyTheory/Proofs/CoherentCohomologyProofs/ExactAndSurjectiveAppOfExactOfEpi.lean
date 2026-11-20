@@ -609,10 +609,10 @@ def biprodSectionsEquiv (M N : X.Modules) (U : X.Opens) :
   right_inv s := by
     ext
     · change (biprod.fst : M ⊞ N ⟶ M).app U _ = _
-      rw [map_add, app_app, app_app, biprod.inl_fst, biprod.inr_fst]
+      rw [map_add (f := _), app_app, app_app, biprod.inl_fst, biprod.inr_fst]
       exact add_zero _
     · change (biprod.snd : M ⊞ N ⟶ N).app U _ = _
-      rw [map_add, app_app, app_app, biprod.inl_snd, biprod.inr_snd]
+      rw [map_add (f := _), app_app, app_app, biprod.inl_snd, biprod.inr_snd]
       exact zero_add _
 
 @[simp]

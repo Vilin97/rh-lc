@@ -102,7 +102,7 @@ theorem adjoint_descends : ∀ (p q : ℕ) (T : GrpData p q) (D : DSRep T) (H : 
   have hinj := D.ι_inj
   let φ : V →ₗ[ℂ] D.HK.V :=
     { toFun := f
-      map_add' := fun P Q => hinj (by simp only [map_add, hf])
+      map_add' := fun P Q => hinj (by simp only [map_add (f := _), hf])
       map_smul' := fun c P => hinj (by simp only [RingHom.id_apply, map_smul, hf]) }
   have hφ : ∀ P, D.ι (φ P) = ContinuousLinearMap.adjoint S (ι P) := hf
 
@@ -126,6 +126,6 @@ theorem adjoint_descends : ∀ (p q : ℕ) (T : GrpData p q) (D : DSRep T) (H : 
     rw [decomp Z]
     generalize Z + conjR Z = A at hre ⊢
     generalize Complex.I • (Z - conjR Z) = B at him ⊢
-    simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, hY A hre, hY B him]
+    simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, hY A hre, hY B him]
 
 end GlobalTheory.AdjDescent

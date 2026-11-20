@@ -16,7 +16,7 @@ def colLex (r n : ℕ) : MonomialOrder (Fin r × Fin n) where
       map_add' := fun a b => by
         show toLex (Finsupp.domCongr (cmIdx r n) (a + b)) =
           toLex (Finsupp.domCongr (cmIdx r n) a) + toLex (Finsupp.domCongr (cmIdx r n) b)
-        rw [map_add]; rfl }
+        rw [map_add (f := _)]; rfl }
   toSyn_monotone := fun a b h => Finsupp.toLex_monotone (α := Fin (n * r)) (N := ℕ)
     (show Finsupp.domCongr (cmIdx r n) a ≤ Finsupp.domCongr (cmIdx r n) b from fun i => h _)
 

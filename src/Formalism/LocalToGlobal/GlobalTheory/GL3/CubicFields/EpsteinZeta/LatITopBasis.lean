@@ -121,7 +121,7 @@ lemma covA_span (K : Type) [Field K] [NumberField K] (d : ℕ) [Fact d.Prime] (h
         compute_degree!
       have hqy : Polynomial.aeval (y : K) q = 0 := by
         rw [hq]
-        simp only [map_add, map_sub, map_mul, map_pow, Polynomial.aeval_X, Polynomial.aeval_C,
+        simp only [map_add (f := _), map_sub, map_mul, map_pow, Polynomial.aeval_X, Polynomial.aeval_C,
           eq_ratCast]
         rw [hab]
         push_cast
@@ -205,7 +205,7 @@ lemma covA_span (K : Type) [Field K] [NumberField K] (d : ℕ) [Fact d.Prime] (h
     · exact ⟨u - v, by rw [hu, hv]; ring⟩
   refine ⟨m, B, ?_⟩
   apply FaithfulSMul.algebraMap_injective (𝓞 K) K
-  simp only [map_add, map_mul, map_intCast]
+  simp only [map_add (f := _), map_mul, map_intCast]
   change (y : K) = (m : K) + (B : K) * ((1 + x) / 2)
   rw [hab]
   have ha2 : (2 : K) * a = A := by exact_mod_cast hA.symm
@@ -244,7 +244,7 @@ theorem latI_top_basis (K : Type) [Field K] [NumberField K] (d : ℕ) [Fact d.Pr
       rintro w (rfl | rfl)
       · exact AddSubgroup.subset_closure ⟨1, Submodule.mem_top, by simp⟩
       · exact AddSubgroup.subset_closure ⟨ω', Submodule.mem_top, by simp⟩
-  have hωc : φ (ω : K) = (1 + φ x) / 2 := by rw [hω, map_div₀, map_add, map_one, map_ofNat]
+  have hωc : φ (ω : K) = (1 + φ x) / 2 := by rw [hω, map_div₀, map_add (f := _), map_one, map_ofNat]
   rcases lt_or_ge 0 (φ x).im with hpos | hneg
   · refine ⟨1, φ (ω : K), ?_, key ω hspan, ?_⟩
     · simp [hωc]

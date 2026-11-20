@@ -78,4 +78,4 @@ theorem UpperTheory.V.AlgebraTools.topNil_map :
       have := congrArg Prod.snd h0
       simpa [φ] using this
     refine ⟨n.1, hn1, ?_⟩
-    rw [hx, map_add, hfc0, add_zero]
+    rw [hx, map_add (f := _), hfc0, add_zero]

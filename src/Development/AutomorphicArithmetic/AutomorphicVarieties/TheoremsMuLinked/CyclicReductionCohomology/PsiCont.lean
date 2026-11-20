@@ -74,7 +74,7 @@ private theorem adic_sum {D R ι : Type} [TopologicalSpace D] [CommRing R] {I : 
   induction s using Finset.induction_on with
   | empty => exact IsLocallyConstant.of_constant _ fun _ _ => rfl
   | insert i s hi ih =>
-    simp only [Finset.sum_insert hi, map_add]
+    simp only [Finset.sum_insert hi, map_add (f := _)]
     exact (h i N).add ih
 
 section

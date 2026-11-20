@@ -13,7 +13,7 @@ theorem piTensor_detRep_apply {k : Type} [Field k] [ValuativeRel k] [Topological
     (y : PiTensorProduct ℂ fun _ : Fin n => ℂ) :
     piTensor (fun a => detRep (Fin 1) (ξ a)) t y = PositivityTheory.Lbc.torusChar ξ t • y := by
   induction y using PiTensorProduct.induction_on with
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul_tprod c x =>
     rw [map_smul, smul_comm, piTensor_tprod, PositivityTheory.Lbc.torusChar, ← MultilinearMap.map_smul_univ]
     simp [detRep]

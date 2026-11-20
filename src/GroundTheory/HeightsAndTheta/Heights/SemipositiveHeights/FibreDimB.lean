@@ -107,7 +107,7 @@ theorem FibreDimB.full : FibreDimStatement := by
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp
-    | add f g hf hg => simp only [map_add, IntermediateField.coe_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), IntermediateField.coe_add, hf, hg]
     | mul_X f i hf => simp only [map_mul, IntermediateField.coe_mul, hf, aeval_X, y']
   have hkerE : RingHom.ker (aeval y' : MRing ι' →ₐ[ℤ] E) = P' := by
     ext f
@@ -121,7 +121,7 @@ theorem FibreDimB.full : FibreDimStatement := by
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f i hf => simp only [map_mul, hf, aeval_X, rename_X, G.compat]
   have hle : E.toSubfield ≤ Subfield.closure (Set.range G.x') := by
     rw [hEdef, IntermediateField.adjoin_toSubfield]

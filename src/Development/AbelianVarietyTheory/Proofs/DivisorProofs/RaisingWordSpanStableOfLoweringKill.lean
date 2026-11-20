@@ -27,7 +27,7 @@ theorem GlobalTheory.HolDS.raisingSpan_stable : ∀ (n : ℕ) (ε : Fin n → Bo
         · exact hl p hp) x hx
       simpa only [List.map_cons, List.prod_cons, Module.End.mul_apply] using h1
     | zero => rw [map_zero]; exact S.zero_mem
-    | add u v _ _ hu hv => rw [map_add]; exact S.add_mem hu hv
+    | add u v _ _ hu hv => rw [map_add (f := _)]; exact S.add_mem hu hv
     | smul r u _ hu => rw [map_smul]; exact S.smul_mem r hu
   have main : ∀ l : List (Fin n × Fin n), (∀ p ∈ l, ε p.1 = true ∧ ε p.2 = false) → ∀ x ∈ L,
       ∀ a b, E a b ((l.map fun p : Fin n × Fin n => E p.1 p.2).prod x) ∈ S := by
@@ -69,5 +69,5 @@ theorem GlobalTheory.HolDS.raisingSpan_stable : ∀ (n : ℕ) (ε : Fin n → Bo
     obtain ⟨l, hl, x, hx, rfl⟩ := hz
     exact main l hl x hx a b
   | zero => rw [map_zero]; exact S.zero_mem
-  | add u v _ _ hu hv => rw [map_add]; exact S.add_mem hu hv
+  | add u v _ _ hu hv => rw [map_add (f := _)]; exact S.add_mem hu hv
   | smul r u _ hu => rw [map_smul]; exact S.smul_mem r hu

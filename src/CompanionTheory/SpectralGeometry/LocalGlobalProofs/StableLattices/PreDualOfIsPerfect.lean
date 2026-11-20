@@ -40,7 +40,7 @@ theorem pull_lam_of_left {S : Scheme.{0}} {G T T' : Over S} [GrpObj G] (c : Pic 
     simpa using Over.w (toUnit X)
   have h1 : u ≫ (1 : T ⟶ G).left = (1 : T' ⟶ G).left := by
     rw [Hom.one_def, Hom.one_def, Over.comp_left, Over.comp_left, ← Category.assoc, hu, hu, hT]
-  simp only [GlobalTheory.CechPic.lam, map_add, map_sub, ← GlobalTheory.CechPic.pull_comp, hab, h1, ha, hb]
+  simp only [GlobalTheory.CechPic.lam, map_add (f := _), map_sub, ← GlobalTheory.CechPic.pull_comp, hab, h1, ha, hb]
 
 theorem pull_lam_sq {S S' : Scheme.{0}} {b : S' ⟶ S} {G : Over S} {G' : Over S'} [GrpObj G] [GrpObj G']
     {φ : G'.left ⟶ G.left} (hp : IsGrpPullback G' G b φ) (c : Pic G.left) {l : (G' ⊗ G').left ⟶ (G ⊗ G).left}

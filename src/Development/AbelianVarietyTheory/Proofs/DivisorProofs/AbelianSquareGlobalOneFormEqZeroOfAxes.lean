@@ -31,9 +31,9 @@ theorem eq_zero_of_axes : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj 
   have hNP : N ∘ₗ P = LinearMap.id := by
     refine LinearMap.ext fun x ↦ Prod.ext ?_ ?_
     · show pF (lift (𝟙 A) (toUnit A ≫ η[A])) (pF (fst A A) x.1 + pF (snd A A) x.2) = x.1
-      rw [map_add, pF_comp, pF_comp, lift_fst, lift_snd, pF_id, pF_unit, add_zero]
+      rw [map_add (f := _), pF_comp, pF_comp, lift_fst, lift_snd, pF_id, pF_unit, add_zero]
     · show pF (lift (toUnit A ≫ η[A]) (𝟙 A)) (pF (fst A A) x.1 + pF (snd A A) x.2) = x.2
-      rw [map_add, pF_comp, pF_comp, lift_fst, lift_snd, pF_id, pF_unit, zero_add]
+      rw [map_add (f := _), pF_comp, pF_comp, lift_fst, lift_snd, pF_id, pF_unit, zero_add]
   have hinj := GlobalTheory.Obs.Axes.injective_of_section N P hNP (fun p ↦ by
     rw [Module.rankAtStalk_prod, Pi.add_apply, r1, r2])
   refine hinj (?_ : N y = N 0)

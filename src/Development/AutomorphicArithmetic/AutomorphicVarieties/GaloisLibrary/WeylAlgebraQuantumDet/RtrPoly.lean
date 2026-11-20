@@ -17,7 +17,7 @@ theorem UpperTheory.V.Weyl.rtrPoly :
     intro φ
     obtain ⟨p1, h1⟩ := hp φ
     obtain ⟨p2, h2⟩ := hq φ
-    exact ⟨p1 + p2, fun g => by rw [map_add, map_add, h1, h2, map_add]⟩
+    exact ⟨p1 + p2, fun g => by rw [map_add (f := _), map_add (f := _), h1, h2, map_add (f := _)]⟩
   | mul_X p ij hp =>
     intro φ
     choose P hP using fun k : Fin n =>

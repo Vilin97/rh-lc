@@ -49,7 +49,7 @@ theorem smLin : CompanionTheory.D.DSIC.SmLin := by
       have hd : HasDerivAt (fun t => ex Z t) Z 0 := by simpa using hasDerivAt_mul_ex 1 Z
       exact (hasDerivAt_local (f := fun g => σ g v) (ex_mem_UJset hZ) (ex_zero Z) hd hU h1U hF hfF).deriv
     refine ⟨?_, fun s => ?_⟩
-    · rw [key _ (inG_add hX hY), key _ hX, key _ hY, map_add]
+    · rw [key _ (inG_add hX hY), key _ hX, key _ hY, map_add (f := _)]
     · rw [key _ (inG_smul hX s), key _ hX, Complex.coe_smul, Complex.coe_smul, map_smul]
 
 end GlobalTheory.CompanionTheory.DSSmLin

@@ -60,7 +60,7 @@ theorem deriv_Xi (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D E) (hV
   induction y using Finsupp.induction_linear with
   | zero => simpa using hasDerivAt_const s (0 : ℂ)
   | add y y' h h' =>
-    simp only [map_add, neg_add]
+    simp only [map_add (f := _), neg_add]
     exact h.add h'
   | single p v =>
     simp only [Xi_single]
@@ -92,7 +92,7 @@ theorem deriv_Xi (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn ε σ D E) (hV
       · rw [Xi_single]
       · exact map_zero _
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, sA_single, map_add,
+      simp only [LinearMap.sum_apply, LinearMap.smul_apply, map_sum, map_smul, sA_single, map_add (f := _),
       smul_eq_mul, mul_add, sum_add_distrib, t1, t2, t3, mul_ite, mul_zero, sum_ite_eq, mem_univ,
       if_true, adX, actM, Submodule.coe_sum, Submodule.coe_smul, inner_sum, inner_smul_right,
       Matrix.mul_apply, Pi.mul_apply, ← mul_sum, ← hB]

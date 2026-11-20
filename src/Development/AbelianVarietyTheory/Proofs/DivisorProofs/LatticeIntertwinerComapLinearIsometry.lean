@@ -16,11 +16,11 @@ theorem inter_comap_isom : ∀ (V W : Type) [AddCommGroup V] [Module ℂ V] [Add
   have hα' : IsSemiChar H (Λ₂.comap f) (fun v => α (Φ v)) := by
     refine ⟨fun x hx => hα.1 (Φ x) hx, fun x hx y hy => ?_⟩
     have := hα.2 (Φ x) hx (Φ y) hy
-    simp only [map_add, altE] at this ⊢
+    simp only [map_add (f := _), altE] at this ⊢
     rw [this, hΦ]
   have hopU : ∀ x (G : W → ℂ) v, opU H x (fun w => G (Φ w)) v = opU H' (Φ x) G (Φ v) := by
     intro x G v
-    simp only [opU, map_add, hΦ]
+    simp only [opU, map_add (f := _), hΦ]
   have hF' : (fun v => F (Φ v)) ∈ fixedBy H (fun v => α (Φ v)) (Λ₁.comap f) := by
     intro x hx v
     rw [hopU]

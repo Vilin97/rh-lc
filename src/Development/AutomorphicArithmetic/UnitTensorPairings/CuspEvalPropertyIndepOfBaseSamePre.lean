@@ -33,7 +33,7 @@ private theorem exists_restrict {L L' : Type} [Field L] [Field L'] (ι : L →+*
     ∃ j : (Fin n → L) →ₛₗ[σ'.comp ι] A, ∀ x x', CrdOver ι x x' → j' x' = j x := by
   refine ⟨{ toFun := fun x => j' (fun k => ι (x k)), map_add' := ?_, map_smul' := ?_ }, ?_⟩
   · intro x y
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
   · intro a x
     have : (fun k => ι ((a • x) k)) = ι a • (fun k => ι (x k)) := by

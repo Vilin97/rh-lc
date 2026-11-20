@@ -16,7 +16,7 @@ theorem coeff_taylor0 (f : ℂ → ℂ) (n : ℕ) :
 theorem taylor0_add {f g : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
     taylor0 (fun z => f z + g z) = taylor0 f + taylor0 g := by
   ext n
-  rw [map_add, coeff_taylor0, coeff_taylor0, coeff_taylor0,
+  rw [map_add (f := _), coeff_taylor0, coeff_taylor0, coeff_taylor0,
     iteratedDeriv_fun_add hf.contDiffAt hg.contDiffAt, add_div]
 
 theorem taylor0_mul {f g : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
@@ -159,7 +159,7 @@ theorem taylor0_exp {f : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (h0 : f 0 = 0) :
       rw [← coe_substAlgHom hS, map_one]
     have h7 : constantCoeff ((exp ℂ - 1).subst (taylor0 f) : PowerSeries ℂ) = 0 :=
       constantCoeff_subst_eq_zero hc _ (by simp)
-    rw [h5, subst_add hS, h6, map_add, map_one, h7, add_zero]
+    rw [h5, subst_add hS, h6, map_add (f := _), map_one, h7, add_zero]
   refine sub_eq_zero.mp (ode_zero (a := derivative ℂ (taylor0 f)) ?_ ?_)
   · rw [map_sub, h1, h2, mul_sub]
   · rw [map_sub, h3, h4, sub_self]

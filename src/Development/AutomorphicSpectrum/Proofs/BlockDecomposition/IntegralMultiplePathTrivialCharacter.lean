@@ -74,7 +74,7 @@ theorem halfTr_nsmul (n : ℕ) (x : AE D) : halfTr (n • x) = n • halfTr x :=
   ring
 
 theorem halfTr_add (x x' : AE D) : halfTr (x + x') = halfTr x + halfTr x' := by
-  simp only [GlobalTheory.StdUnn.halfTr, GlobalTheory.StdUnn.trA, map_add]
+  simp only [GlobalTheory.StdUnn.halfTr, GlobalTheory.StdUnn.trA, map_add (f := _)]
   ring
 
 theorem halfTr_zero : halfTr (0 : AE D) = 0 := by
@@ -131,7 +131,7 @@ private theorem continuous_sigRf_lemma_7 : Continuous (Formalism.MainNotions.Glo
         induction z using TensorProduct.induction_on with
         | zero => simp
         | tmul a e => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, TensorProduct.smul_tmul', Algebra.TensorProduct.map_tmul]
-        | add x y hx hy => simp only [smul_add, map_add, hx, hy] }
+        | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy] }
   exact IsModuleTopology.continuous_of_linearMap f
 
 private theorem trace_bc_lemma_8 (z : AE D) :
@@ -147,7 +147,7 @@ private theorem trace_bc_lemma_8 (z : AE D) :
       simp [Formalism.L2.Theta.finPart]
     rw [h2, h1]
     simp only [map_smul, GlobalTheory.CompanionTheory.HermPoisson.trace_one_tmul', smul_eq_mul, map_mul, AlgHom.commutes]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem level_pow {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.F ψ) (V : HSp D) (A : Mx D r r)
     {θ : InfFam D} {φ : Mx D V.rank r → ℂ} (hφ : φ ∈ schwartzA θ V.rank r) :

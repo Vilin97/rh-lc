@@ -16,7 +16,7 @@ theorem small_filtration : ∀ (F : Type) [Field F] [NumberField F] [IsTotallyRe
   obtain ⟨h1, h2, -, h4⟩ := GlobalTheory.T.qExpansion_linear_combination F f g a b c ha hb
   refine ⟨⟨a + b, h1, fun ξ => ?_⟩, ?_, ⟨c • a, h2, fun ξ => ?_⟩, fun hrs => ⟨a, ha, fun ξ => (har ξ).trans hrs⟩, hr,
     ⟨_, h4, fun ξ => ?_⟩⟩
-  · rw [Pi.add_apply, map_add]
+  · rw [Pi.add_apply, map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max (har ξ) (hbs ξ))
   · obtain ⟨d, hd, hds⟩ := GlobalTheory.T.qExpansion_mul_finite_convolution F f g a b ha hb
     refine ⟨d, hd, fun ξ => ?_⟩

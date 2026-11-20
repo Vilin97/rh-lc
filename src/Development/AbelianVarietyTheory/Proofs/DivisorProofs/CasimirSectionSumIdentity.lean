@@ -164,7 +164,7 @@ lemma diff_eq (k : ℕ) {actW : Mat R S →ₗ[ℂ] Module.End ℂ W} {B : W →
   rw [Complex.re_sum, Complex.re_sum, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun b _ => ?_
   by_cases h : sameBlock a b
-  · simp only [if_pos h, tAct_split, map_add, LinearMap.add_apply, Complex.add_re]
+  · simp only [if_pos h, tAct_split, map_add (f := _), LinearMap.add_apply, Complex.add_re]
     rw [formT_herm k hU ((∑ i, factorOp k i (Eab b a)) Ψ) (fun g => actW (Eab b a) (Ψ g))]
     ring
   · simp [h]

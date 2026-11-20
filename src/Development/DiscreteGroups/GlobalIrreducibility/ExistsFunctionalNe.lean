@@ -29,7 +29,7 @@ theorem exists_functional_ne (hψ : ∀ x : ℤ_[g], ψ (i (x : ℚ_[g])) = ψ�
         intro g0 v hv
         refine Submodule.span_induction (p := fun v _ => π g0 v ∈
             Submodule.span ℂ (Set.range fun p : GL (Fin n) (w.adicCompletion E) × τ => π p.1 (φ p.2)))
-          (fun y hy => ?_) (by simp) (fun a b _ _ ha hb => by rw [map_add]; exact Submodule.add_mem _ ha hb)
+          (fun y hy => ?_) (by simp) (fun a b _ _ ha hb => by rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb)
           (fun c a _ ha => by rw [map_smul]; exact Submodule.smul_mem _ c ha) hv
         obtain ⟨⟨h1, x1⟩, rfl⟩ := hy
         exact Submodule.subset_span ⟨(g0 * h1, x1), by simp only [rep_mul_apply]⟩⟩

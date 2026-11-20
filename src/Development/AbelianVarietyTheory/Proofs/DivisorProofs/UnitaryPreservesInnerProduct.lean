@@ -46,7 +46,7 @@ theorem pairing_eq : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Finty
     intro c
     have hw : g + c • f ∈ schA F κ := (schA F κ).add_mem hg ((schA F κ).smul_mem c hf)
     have h := eLpNorm_two_eq (hiso μ hμ _ hw)
-    rw [map_add, map_smul] at h
+    rw [map_add (f := _), map_smul] at h
     rw [← MemLp.toLp_const_smul, ← MemLp.toLp_add, ← MemLp.toLp_const_smul, ← MemLp.toLp_add,
       Lp.norm_toLp, Lp.norm_toLp, h]
   have e1 : ‖hTg2.toLp + hTf2.toLp‖ = ‖hg2.toLp + hf2.toLp‖ := by simpa using hN 1

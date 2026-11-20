@@ -57,7 +57,7 @@ theorem bdd_C (c : ℂ_[q]) : Bdd (C c : ℂ_[q]⟦X⟧) := by
 theorem bdd_add {f g : ℂ_[q]⟦X⟧} (hf : Bdd f) (hg : Bdd g) : Bdd (f + g) := by
   obtain ⟨A, hA⟩ := hf
   obtain ⟨B, hB⟩ := hg
-  exact ⟨A + B, fun n => by rw [map_add]; exact (norm_add_le _ _).trans (add_le_add (hA n) (hB n))⟩
+  exact ⟨A + B, fun n => by rw [map_add (f := _)]; exact (norm_add_le _ _).trans (add_le_add (hA n) (hB n))⟩
 
 theorem bdd_mul {f g : ℂ_[q]⟦X⟧} (hf : Bdd f) (hg : Bdd g) : Bdd (f * g) := by
   obtain ⟨A, hA⟩ := hf
@@ -264,7 +264,7 @@ theorem shift_mulS {ζ : ℂ_[q]} {n k : ℕ} {a : ℤ_[q]} (h : ζ ^ (q ^ n) = 
   have hc : Continuous fun b : ℤ_[q] => (k : ℤ_[q]) + b * (q : ℤ_[q]) ^ n := by fun_prop
   refine PadicInt.denseRange_natCast.induction_on b (isClosed_eq ?_ ?_) fun m => ?_
   · exact (continuous_coeff_shift_mulS hζ j).comp hc
-  · simp only [map_sub, coeff_C_mul, map_add]
+  · simp only [map_sub, coeff_C_mul, map_add (f := _)]
     exact (continuous_const.mul (continuous_const.add ((continuous_coeff_mulS j).comp hc))).sub continuous_const
   · have e : (k : ℤ_[q]) + (m : ℤ_[q]) * (q : ℤ_[q]) ^ n = ((k + q ^ n * m : ℕ) : ℤ_[q]) := by
       push_cast; ring

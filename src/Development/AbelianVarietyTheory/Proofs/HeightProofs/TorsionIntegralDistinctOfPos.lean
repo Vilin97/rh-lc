@@ -55,7 +55,7 @@ theorem torsion_integral_distinct_of_pos : ∀ (L : PeriodPair) (W : ValuationSu
   have f2 := congrArg (residue W) e2
   have f3 := congrArg (residue W) e3
   have f4 := congrArg (residue W) e4
-  simp only [map_mul, map_add, map_sub, map_pow, map_ofNat, map_one] at f1 f2 f3 f4 e5
+  simp only [map_mul, map_add (f := _), map_sub, map_pow, map_ofNat, map_one] at f1 f2 f3 f4 e5
   rw [sub_eq_zero] at e5
   rw [← e5] at f1 f2
   generalize residue W x1 = x at *

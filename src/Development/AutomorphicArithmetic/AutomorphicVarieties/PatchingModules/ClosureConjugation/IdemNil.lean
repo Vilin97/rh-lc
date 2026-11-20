@@ -43,5 +43,5 @@ theorem UpperTheory.V.Pa.idem_nil :
     have h4 := congrArg natDegree h3
     have h5 : natDegree (1 + X : F[X]) = 1 := by rw [add_comm]; exact natDegree_X_add_C 1
     have h6 : Monic (1 + X : F[X]) := by rw [add_comm]; exact monic_X_add_C 1
-    rw [Polynomial.map_pow, Polynomial.map_add, Polynomial.map_one, map_X, h6.natDegree_pow, h5, mul_one] at h4
+    rw [Polynomial.map_pow, Polynomial.map_add (f := _), Polynomial.map_one, map_X, h6.natDegree_pow, h5, mul_one] at h4
     rw [h4, pow_one]

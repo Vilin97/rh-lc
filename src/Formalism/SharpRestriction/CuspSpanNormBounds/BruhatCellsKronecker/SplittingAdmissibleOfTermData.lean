@@ -122,10 +122,10 @@ private theorem Zhat_castSucc_eq_zero {E : Type} [Field E] [NumberField E] [Star
   induction b using Fin.lastCases with
   | last =>
     simp only [Formalism.MainNotions.S.Zhat, Formalism.MainNotions.S.brS, Formalism.MainNotions.S.FlagG.fvec, Fin.snoc_castSucc, Fin.snoc_last]
-    rw [show F'.z = F.z + (F'.z - F.z) by abel, map_add, F.z_orth a, hker _ hz, add_zero]
+    rw [show F'.z = F.z + (F'.z - F.z) by abel, map_add (f := _), F.z_orth a, hker _ hz, add_zero]
   | cast b =>
     simp only [Formalism.MainNotions.S.Zhat, Formalism.MainNotions.S.brS, Formalism.MainNotions.S.FlagG.fvec, Fin.snoc_castSucc]
-    rw [show F'.e b = F.e b + (F'.e b - F.e b) by abel, map_add, F.e_iso a b,
+    rw [show F'.e b = F.e b + (F'.e b - F.e b) by abel, map_add (f := _), F.e_iso a b,
       hker _ (tie_Xa_le_X F _ (he b)), add_zero]
 
 private theorem Gflag_eq_zero_of_sub_mem {E : Type} [Field E] [NumberField E] [StarRing E] {S : HSpace E} {r : ℕ}

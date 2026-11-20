@@ -71,7 +71,7 @@ theorem exists_denominator_all (f : M ⟶ W) [IsDominant f] {V : W.Opens} (hV : 
   | add x x' _ _ hx hx' =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨a', ha'⟩ := hx'
-    exact ⟨a + a', by rw [map_add, map_add, map_add, ha, ha', mul_add]⟩
+    exact ⟨a + a', by rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, ha', mul_add]⟩
   | smul t x _ hx =>
     obtain ⟨a, ha⟩ := hx
     refine ⟨t * a, ?_⟩

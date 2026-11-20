@@ -81,7 +81,7 @@ private theorem span_form_lemma_5 {R : Type} [CommRing R] {n : ℕ} (τ : R →+
   | mem x hx => exact h x hx
   | zero => simp
   | add x y _ _ hx hy =>
-    simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib, hx, hy, add_zero]
+    simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, hx, hy, add_zero]
   | smul c x _ hx =>
     simp only [Pi.smul_apply, smul_eq_mul, map_mul, mul_assoc]
     rw [← Finset.mul_sum, hx, mul_zero]

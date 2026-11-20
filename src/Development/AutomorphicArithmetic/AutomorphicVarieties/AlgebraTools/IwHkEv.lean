@@ -32,7 +32,7 @@ private theorem hkEv_phi_equiv (ρ : Representation A G M) (I : Subgroup G) (m :
     (a : MonoidAlgebra A (G ⧸ I)) : hkEv_phi ρ I m (permRep A I h a) = ρ h (hkEv_phi ρ I m a) := by
   induction a using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single q c =>
     obtain ⟨g, rfl⟩ := QuotientGroup.mk_surjective q
     rw [Representation.ofMulAction_single]
@@ -83,7 +83,7 @@ private theorem hkEv_alg (ρ : Representation A G M) (I : Subgroup G) (c : A) :
 private theorem hkEv_add {ρ : Representation A G M} {I : Subgroup G}
     {T T' : Module.End A (fixd (permRep A I) I)} {E E' : Module.End A (fixd ρ I)}
     (h : hkEv_R ρ I T E) (h' : hkEv_R ρ I T' E') : hkEv_R ρ I (T + T') (E + E') := fun m a => by
-  rw [LinearMap.add_apply, LinearMap.add_apply, map_add, h, h']
+  rw [LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), h, h']
 
 private theorem hkEv_mul {ρ : Representation A G M} {I : Subgroup G}
     {T T' : Module.End A (fixd (permRep A I) I)} {E E' : Module.End A (fixd ρ I)}

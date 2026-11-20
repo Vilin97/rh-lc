@@ -113,9 +113,9 @@ theorem add_mem_ratForms (C : Cover T j σ) (a : (D.host.E →+* ℂ) × ℕ →
     (hφ : φ ∈ C.ratForms a n) (hψ : ψ ∈ C.ratForms a n) : φ + ψ ∈ C.ratForms a n := by
   obtain ⟨f, hf, rfl⟩ := hφ
   obtain ⟨f', hf', rfl⟩ := hψ
-  refine ⟨f + f', ⟨Submodule.add_mem _ hf.1 hf'.1, by rw [map_add]; exact Submodule.add_mem _ hf.2 hf'.2⟩, ?_⟩
+  refine ⟨f + f', ⟨Submodule.add_mem _ hf.1 hf'.1, by rw [map_add (f := _)]; exact Submodule.add_mem _ hf.2 hf'.2⟩, ?_⟩
   funext g
-  simp only [Pi.add_apply, rd_apply, map_add]
+  simp only [Pi.add_apply, rd_apply, map_add (f := _)]
   ring
 
 theorem smul_mem_ratForms (C : Cover T j σ) (a : (D.host.E →+* ℂ) × ℕ → ℕ) (n : ℕ) (x : C.d.c₂.F)

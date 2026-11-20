@@ -59,7 +59,7 @@ theorem lie_mem_Zalg (x : Cinf E) : lie E a (scL a x) ∈ Zalg E a := by
       rw [atEmb_eq]; simp
     have e2 : ∀ i, lieS E a i i (atEmb τ z) =
         z • Eop τ i i + starRingEnd ℂ z • Eop (ComplexEmbedding.conjugate τ) i i := fun i => by
-      rw [atEmb_eq, map_add, map_smul, map_smul]
+      rw [atEmb_eq, map_add (f := _), map_smul, map_smul]
       simp only [Eop, atEmb_conj, map_one, Complex.conj_I, e, map_neg, ← Complex.coe_smul]
       match_scalars
       · rw [Complex.re_eq_add_conj]; ring

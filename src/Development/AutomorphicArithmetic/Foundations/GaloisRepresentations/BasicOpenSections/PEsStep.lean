@@ -37,7 +37,7 @@ private theorem aeval_matrix_eq_zero_of_aeval_zero_on_submodule {L M : Type*} [F
       ((Polynomial.aeval (g.restrict hP) Q' y : P) : M) = Polynomial.aeval g Q' y := by
     intro Q' y
     induction Q' using Polynomial.induction_on' with
-    | add p q hp hq => simp [map_add, LinearMap.add_apply, hp, hq]
+    | add p q hp hq => simp [map_add (f := _), LinearMap.add_apply, hp, hq]
     | monomial k a =>
       simp only [Polynomial.aeval_monomial, Module.End.pow_restrict k hP, Module.End.mul_apply,
         Module.algebraMap_end_apply, LinearMap.restrict_apply, SetLike.val_smul]

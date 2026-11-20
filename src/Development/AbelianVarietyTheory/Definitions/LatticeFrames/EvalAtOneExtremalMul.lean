@@ -59,7 +59,7 @@ theorem evalAt_lft (g y : ι → Matrix (Fin a) (Fin a) ℂ) (F : PY ι a) :
   induction F using MvPolynomial.induction_on
   · simp [lft]
   · rename_i p q hp hq
-    rw [map_add, map_add, hp, hq, map_add]
+    rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   · rename_i p v hp
     rw [map_mul, map_mul, hp, map_mul]
     congr 1

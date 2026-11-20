@@ -685,7 +685,7 @@ theorem basisVal_smul (a : R) (x : M) : basisVal v b (a • x) = v a * basisVal 
 theorem basisVal_add_le (x y : M) :
     basisVal v b (x + y) ≤ max (basisVal v b x) (basisVal v b y) :=
   (basisVal_le_iff v b).mpr fun i => by
-    rw [map_add, Finsupp.add_apply]
+    rw [map_add (f := _), Finsupp.add_apply]
     exact (v.map_add _ _).trans (max_le_max (le_basisVal v b x i) (le_basisVal v b y i))
 
 theorem basisVal_sum_le {α : Type*} {s : Finset α} {x : α → M} {γ : Γ₀}
@@ -831,7 +831,7 @@ theorem basisVal_baseChange_rTensor (w : Valuation S Γ₀) (φ : R →ₐ[O] S)
       φ ((b.baseChange R).repr x i) := fun i => by
     induction x with
     | tmul a y => simp
-    | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), Finsupp.add_apply, hy, hz]
   exact eq_of_forall_ge_iff fun γ => by simp only [basisVal_le_iff, key, h]
 
 def tensorContent (x : MvPolynomial σ R ⊗[O] M) : Γ₀ :=
@@ -851,7 +851,7 @@ theorem repr_tensorCoeffs (x : MvPolynomial σ R ⊗[O] M) (m : σ →₀ ℕ) (
       AddMonoidAlgebra.coeff ((b.baseChange (MvPolynomial σ R)).repr x i) m := by
   induction x with
   | tmul f y => simp
-  | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz, MvPolynomial.coeff_add]
+  | add y z hy hz => simp only [map_add (f := _), Finsupp.add_apply, hy, hz, MvPolynomial.coeff_add]
 
 theorem tensorContent_eq_polyContent (x : MvPolynomial σ R ⊗[O] M) :
     tensorContent v b x = polyContent v (b.baseChange R) (tensorCoeffs x) :=
@@ -904,7 +904,7 @@ theorem tensorContent_eq_polyContent_scalarCoeffs {N : Type*} [AddCommGroup N] [
       AddMonoidAlgebra.coeff ((c.baseChange (MvPolynomial σ R)).repr x i) m := fun m i => by
     induction x with
     | tmul f y => simp [mul_comm]
-    | add y z hy hz => simp only [map_add, Finsupp.add_apply, hy, hz, MvPolynomial.coeff_add]
+    | add y z hy hz => simp only [map_add (f := _), Finsupp.add_apply, hy, hz, MvPolynomial.coeff_add]
   refine eq_of_forall_ge_iff fun γ => ?_
   simp only [tensorContent, basisVal_le_iff, gaussVal_le_iff, polyContent_le_iff_coord, key]
   exact forall_comm

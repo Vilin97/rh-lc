@@ -17,7 +17,7 @@ theorem piW_smul' {v : Pl F} (τ : E →ₐ[F] Fv F v) (a : AF F) (z : AE F E) :
     piW τ (a • z) = evFin F v a * piW τ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, mul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), mul_add]
   | tmul b x =>
     rw [TensorProduct.smul_tmul']
     change splitProj τ (compFin F E v ((a • b) ⊗ₜ[F] x)) = evFin F v a * splitProj τ (compFin F E v (b ⊗ₜ[F] x))
@@ -32,7 +32,7 @@ theorem piW_cA'' {σ : E →ₐ[F] E} {v : Pl F} (τ : E →ₐ[F] Fv F v) (w : 
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.ShiftCoords
 

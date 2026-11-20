@@ -33,7 +33,7 @@ theorem bcSub_eq : bcSub f P = liftSemi f ∘ₗ P.subtype.baseChange R' := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => rw [LinearMap.comp_apply, LinearMap.baseChange_tmul, bcSub_tmul, liftSemi_tmul]; rfl
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 variable {f P}
 
@@ -57,7 +57,7 @@ theorem range_bcSub : LinearMap.range (bcSub f P) = Submodule.span R' (f '' P) :
     | tmul x y =>
       rw [bcSub_tmul]
       exact (Submodule.span R' _).smul_mem x (Submodule.subset_span ⟨y, y.2, rfl⟩)
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   · rw [Submodule.span_le]
     rintro _ ⟨y, hy, rfl⟩
     exact ⟨1 ⊗ₜ ⟨y, hy⟩, by rw [bcSub_tmul, one_smul]⟩
@@ -101,7 +101,7 @@ theorem conjDR_bc {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R'] (hR : 
     | tmul x y =>
       rw [liftSemi_tmul, LinearMap.map_smulₛₗ, ← pull_frobDR p hR hR' h]
       exact (Submodule.span R' _).smul_mem _ (Submodule.subset_span ⟨_, Submodule.subset_span ⟨y, rfl⟩, rfl⟩)
-    | add a b ha hb => rw [map_add, map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb
   · rw [Submodule.span_le]
     rintro _ ⟨c, hc, rfl⟩
     induction hc using Submodule.span_induction with
@@ -110,7 +110,7 @@ theorem conjDR_bc {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R'] (hR : 
       rw [pull_frobDR p hR hR' h]
       exact Submodule.subset_span ⟨_, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a x _ hx => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 theorem conjDR_summand (hCF : GlobalTheory.Published.ConjugateFiltration) {R : Type} [CommRing R]

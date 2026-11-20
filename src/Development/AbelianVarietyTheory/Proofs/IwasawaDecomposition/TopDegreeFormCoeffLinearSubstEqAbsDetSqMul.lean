@@ -206,7 +206,7 @@ theorem topCoeff_subst_conj (J : Matrix (Fin n) (Fin n) ℂ) (P : MvPolynomial (
     rw [e, map_mul, aeval_C, algebraMap_eq, topCoeff_C_mul, topCoeff_C_mul, topCoeff_subst_prod]
     ring
   | add p q hp hq =>
-    rw [map_add, topCoeff_add, topCoeff_add, hp, hq, mul_add]
+    rw [map_add (f := _), topCoeff_add, topCoeff_add, hp, hq, mul_add]
 
 end Subst
 

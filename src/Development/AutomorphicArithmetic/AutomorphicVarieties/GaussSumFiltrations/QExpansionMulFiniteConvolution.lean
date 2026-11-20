@@ -8,7 +8,7 @@ namespace GlobalTheory.HilbertThetaSeries
 
 theorem reAt_add_qm {F : Type} [Field F] [NumberField F] (v : InfinitePlace F) (x y : F) :
     reAt v (x + y) = reAt v x + reAt v y := by
-  simp [reAt, map_add]
+  simp [reAt, map_add (f := _)]
 
 theorem ez_add_qm {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (x y : F) (z : Hn F) :
     ez (x + y) z = ez x z * ez y z := by

@@ -263,7 +263,7 @@ theorem triv_span {n : PVec r →₀ ℤ} (hn : n ∈ Submodule.span ℤ (rels r
     rw [map_zero]
     exact triv_congr (triv_zero Q D' pr) fun z J _ y y' => (tv_zero Q xe z J y y').symm
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact triv_congr (triv_add hx hy) fun z J _ a b => (tv_add Q xe x y z J a b).symm
   | smul k x _ hx =>
     have hneg : ∀ m, Triv Q D' pr (flat m) (tv Q xe m) → Triv Q D' pr (flat (-m)) (tv Q xe (-m)) := fun m hm => by
@@ -271,7 +271,7 @@ theorem triv_span {n : PVec r →₀ ℤ} (hn : n ∈ Submodule.span ℤ (rels r
       exact triv_congr (triv_neg hm) fun z J _ a b => (tv_neg Q xe m z J a b).symm
     have hadd : ∀ m m', Triv Q D' pr (flat m) (tv Q xe m) → Triv Q D' pr (flat m') (tv Q xe m') →
         Triv Q D' pr (flat (m + m')) (tv Q xe (m + m')) := fun m m' hm hm' => by
-      rw [map_add]
+      rw [map_add (f := _)]
       exact triv_congr (triv_add hm hm') fun z J _ a b => (tv_add Q xe m m' z J a b).symm
     have h0 : Triv Q D' pr (flat 0) (tv Q xe 0) := by
       rw [map_zero]
@@ -379,7 +379,7 @@ theorem formEq_sig (hpr : ∀ i, IsMonHom (pr i)) (W A A' : Matrix (Fin r) (Fin 
   have hF1 : ∀ x, F (Finsupp.single x 1) = H x := fun x => by
     simp only [F, Finsupp.liftAddHom_apply_single, zmultiplesHom_apply, one_zsmul]
   have hlam : ∀ u v, F (lam u v) = ∑ s : Fin 4, Oε s • H (lamV u v s) := fun u v => by
-    simp only [lam, map_add, map_sub, hF1, Fin.sum_univ_four]
+    simp only [lam, map_add (f := _), map_sub, hF1, Fin.sum_univ_four]
     simp [Oε, lamV]
     abel
   have hR : Additive.ofMul (∏ v : (sig W A A').support, h (vecHom pr v.1).left ^ sig W A A' v.1) =

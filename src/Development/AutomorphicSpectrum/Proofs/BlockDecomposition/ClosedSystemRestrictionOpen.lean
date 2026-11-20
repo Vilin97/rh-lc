@@ -179,7 +179,7 @@ lemma exists_powSub_lift {A : Type} [CommRing A] [IsNoetherianRing A] (I : Ideal
     { carrier := {y | ∃ t ∈ JP, f.app W ((P.restrictAppIso O.ι W).inv t) = y}
       add_mem' := by
         rintro _ _ ⟨t, ht, rfl⟩ ⟨t', ht', rfl⟩
-        exact ⟨t + t', JP.add_mem ht ht', by rw [map_add, map_add]⟩
+        exact ⟨t + t', JP.add_mem ht ht', by rw [map_add (f := _), map_add (f := _)]⟩
       zero_mem' := ⟨0, JP.zero_mem, by rw [map_zero, map_zero]⟩
       smul_mem' := by
         rintro r _ ⟨t, ht, rfl⟩

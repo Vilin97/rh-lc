@@ -19,7 +19,7 @@ theorem algHom_mem_supported {σ τ R : Type*} [CommSemiring R] (φ : MvPolynomi
     rw [← algebraMap_eq, AlgHom.commutes]
     exact Subalgebra.algebraMap_mem _ a
   | add p q hp hq =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Subalgebra.add_mem _ hp hq
   | mul_X p v hp =>
     rw [map_mul]

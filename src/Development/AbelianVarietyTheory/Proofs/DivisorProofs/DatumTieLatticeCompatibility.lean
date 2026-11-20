@@ -148,7 +148,7 @@ theorem exists_pairV_eq (F : P.V →ₗ[C] C) : ∃ x, ∀ w, P.pairV w x = F w 
   refine ⟨-x, fun w => ?_⟩
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, LinearMap.add_apply, ha, hb, map_add]
+  | add a b ha hb => rw [map_add (f := _), LinearMap.add_apply, ha, hb, map_add (f := _)]
   | tmul c t =>
     have e : (c ⊗ₜ t : P.V) = c • (1 ⊗ₜ t) := by
       rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
@@ -171,7 +171,7 @@ theorem mem_latT_iff_pair (t : P.V) :
   · rintro ht _ ⟨w, rfl⟩
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add, LinearMap.add_apply]; exact add_mem ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), LinearMap.add_apply]; exact add_mem ha hb
     | tmul c s =>
       obtain ⟨d, hd⟩ := (P.mem_latT_iff t).1 ht s
       have e : (algebraMap O C c ⊗ₜ s : P.V) = algebraMap O C c • (1 ⊗ₜ s) := by
@@ -285,7 +285,7 @@ theorem fil_al_dual : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgCl
     rw [← P.iSup_eigW (σ := fun i : E →+* C => embO hv i) sp] at hW
     refine Submodule.iSup_induction _ (motive := fun w => P.pairV w x = 0) hW
       (fun i w hw => ?_) (by simp) (fun a b ha hb => by
-        rw [map_add, LinearMap.add_apply, ha, hb, add_zero])
+        rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero])
     by_cases hi : embO hv i = τ
     · exact H w (hi ▸ hw)
     · obtain ⟨a, ha⟩ := not_forall.1 fun H => hi (RingHom.ext H)

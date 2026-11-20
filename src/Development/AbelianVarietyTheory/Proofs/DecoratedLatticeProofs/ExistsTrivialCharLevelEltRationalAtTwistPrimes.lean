@@ -39,7 +39,7 @@ theorem conj_bound (hc : CMData F E) {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (h
       (1 + cT (sigR hc.sig (FiniteAdeleRing (𝓞 F) F)) ((u : Matrix (Fin n) (Fin n) (AfE F E)) - 1)) = 1 := by
     rw [← hinv, add_sub_cancel, Units.mul_inv]
   have h2 := congrArg (adAt F (conjPrime₂ P)).mapMatrix h1
-  rw [map_mul, map_add, map_add, map_one] at h2
+  rw [map_mul, map_add (f := _), map_add (f := _), map_one] at h2
   have key := GlobalTheory.Mem.Col2.AdT.Opn.val_inv_le Valued.v _ _ h2 ε hε (fun a b => ?_) r s
   · have e : ((adAt F (conjPrime₂ P)).mapMatrix ((u : Matrix (Fin n) (Fin n) (AfE F E)) - 1)) r s =
         adAt F (conjPrime₂ P) (u.1 r s) - (1 : Matrix (Fin n) (Fin n) ((conjPrime₂ P).adicCompletion E)) r s := by

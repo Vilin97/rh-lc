@@ -100,7 +100,7 @@ def twoChar {Z A : Type} [Ring Z] [Algebra ℂ Z] [Ring A] [Algebra ℂ A] (ω�
       smul_zero, add_zero, zero_add, sub_zero]
   map_zero' := by simp
   map_add' x y := by
-    simp only [map_add, add_smul]
+    simp only [map_add (f := _), add_smul]
     abel
   commutes' c := by
     rw [AlgHom.commutes, AlgHom.commutes, Algebra.algebraMap_self, RingHom.id_apply, ← smul_add, add_sub_cancel,

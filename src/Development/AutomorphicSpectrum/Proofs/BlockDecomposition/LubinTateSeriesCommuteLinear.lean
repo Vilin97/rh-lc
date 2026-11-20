@@ -81,7 +81,7 @@ theorem tev_comm (g : R →+* A) (π : R) {q : ℕ} (hq : 2 ≤ q) (φ : PowerSe
       rw [hf, PowerSeries.subst_add hφS, PowerSeries.subst_mul hφS, PowerSeries.subst_pow hφS,
         PowerSeries.subst_X hφS, PowerSeries.subst_C]
       rfl
-    rw [this, map_add, map_mul, map_pow, tevHom_C]
+    rw [this, map_add (f := _), map_mul, map_pow, tevHom_C]
   let Θ : PowerSeries R →+* A :=
     (tevHom g y D hy).comp
       (PowerSeries.substAlgHom (R := R) (S := R) (τ := Unit) hfS).toRingHom
@@ -90,7 +90,7 @@ theorem tev_comm (g : R →+* A) (π : R) {q : ℕ} (hq : 2 ≤ q) (φ : PowerSe
     simp only [Θ, RingHom.comp_apply]
     exact congrArg _ (congrFun (PowerSeries.coe_substAlgHom hfS) ψ)
   have hΘX : Θ PowerSeries.X = g π * y + y ^ q := by
-    rw [hΘ, PowerSeries.subst_X hfS, hf, map_add, map_mul, map_pow, tevHom_C, tevHom_X]
+    rw [hΘ, PowerSeries.subst_X hfS, hf, map_add (f := _), map_mul, map_pow, tevHom_C, tevHom_X]
   have hpoly : ∀ p : Polynomial R, Θ (p : PowerSeries R) =
       tevHom g (g π * y + y ^ q) D hy' (p : PowerSeries R) := by
     intro p
@@ -112,7 +112,7 @@ theorem tev_comm (g : R →+* A) (π : R) {q : ℕ} (hq : 2 ≤ q) (φ : PowerSe
   have hφ : φ = (PowerSeries.trunc D φ : PowerSeries R) + PowerSeries.X ^ D * ρ := by
     rw [← hρ]; ring
   have h2 : Θ φ = tevHom g (g π * y + y ^ q) D hy' φ := by
-    rw [hφ, map_add, map_add, hpoly, map_mul, map_mul, map_pow, map_pow, hΘX, tevHom_X, hy', zero_mul,
+    rw [hφ, map_add (f := _), map_add (f := _), hpoly, map_mul, map_mul, map_pow, map_pow, hΘX, tevHom_X, hy', zero_mul,
       zero_mul]
   rw [← tevHom_apply g _ D hy', ← tevHom_apply g y D hy, ← h2, hΘ, ← hc, h1]
 
@@ -213,7 +213,7 @@ theorem nilp_of_near (E : PerEnv S F ϖ) (Q : S) {M : ℕ} (hN : Near S ϖ (F 1)
     exact pow_mem_F E hxS k
   have hQ : Ideal.Quotient.mk I Q ^ M =
       Ideal.Quotient.mk I wS * Ideal.Quotient.mk I sS + Ideal.Quotient.mk I xS := by
-    rw [← map_pow, ← map_mul, ← map_add]
+    rw [← map_pow, ← map_mul, ← map_add (f := _)]
     congr 1
     simp [xS]
   have : IsNilpotent (Ideal.Quotient.mk I Q ^ M) := by
@@ -280,13 +280,13 @@ theorem iter_val (E : PerEnv S F ϖ) (h : R →+* B) (hh : ∀ c, h c ∈ S) (π
     refine ⟨wS * y + y ^ q, wS * r + r ^ q, ?_, ?_, D, ?_, ?_⟩
     · rw [ltIter_succ, ← hy]
       simp [wS]
-    · rw [ltIter_succ, map_add, map_mul, map_pow, hσϖ, ← hr]
+    · rw [ltIter_succ, map_add (f := _), map_mul, map_pow, hσϖ, ← hr]
       simp [wS]
-    · rw [map_add, map_mul, map_pow]
+    · rw [map_add (f := _), map_mul, map_pow]
       exact lt_pow_zero hq hD
     · have := tev_comm (gq E h hh k m) π hq φ h0 hc hD
       rw [hv, hg] at this
-      rw [map_add, map_mul, map_pow, this]
+      rw [map_add (f := _), map_mul, map_pow, this]
       simp
 
 theorem tev_second {A : Type} [CommRing A] (g : R →+* A) {y : A} {D : ℕ} (hy : y ^ D = 0)
@@ -304,7 +304,7 @@ theorem tev_second {A : Type} [CommRing A] (g : R →+* A) {y : A} {D : ℕ} (hy
   refine ⟨tevHom g y D hy ρ, ?_⟩
   rw [← tevHom_apply g y D hy]
   conv_lhs => rw [hφ]
-  rw [map_add, map_mul, map_mul, map_pow, tevHom_C, tevHom_X]
+  rw [map_add (f := _), map_mul, map_mul, map_pow, tevHom_C, tevHom_X]
 
 theorem est (E : PerEnv S F ϖ) {ϖ' : B} (hϖ' : ϖ * ϖ' = 1) {y : ℕ → B} (hy : ∀ n, y n ∈ S) {t : B}
     {c N₀ k : ℕ} (h0 : ∀ n ≥ N₀, Near S ϖ (F k) 0 (ϖ ^ c * (ϖ' ^ n * y n - t))) (e : ℕ) :
@@ -390,7 +390,7 @@ theorem galois_log : ∀ {B : Type} [CommRing B] {S : Subring B} {F : ℕ → Id
       obtain ⟨w, rfl⟩ := Ideal.Quotient.mk_surjective W
       rw [hv] at hW
       have hmem : r - ((⟨a, ha⟩ : S) * yS + yS ^ 2 * w) ∈ nearI S F E.mem k (m + n) := by
-        rw [← Ideal.Quotient.eq, hW, map_add, map_mul, map_mul, map_pow]
+        rw [← Ideal.Quotient.eq, hW, map_add (f := _), map_mul, map_mul, map_pow]
         rfl
       rw [mem_nearI] at hmem
       obtain ⟨s, hs, hx⟩ := hmem

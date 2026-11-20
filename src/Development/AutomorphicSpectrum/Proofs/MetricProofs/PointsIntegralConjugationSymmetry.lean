@@ -47,7 +47,7 @@ theorem cxHessian_comp_star (φ : (Fin D → ℂ) → ℝ) (z : Fin D → ℂ) :
     rw [star_smul, hs]; simp
   simp only [cxHessian, Matrix.map_apply, hess_comp_star, hs, hI, map_neg,
     ContinuousLinearMap.neg_apply, neg_neg]
-  simp only [map_div₀, map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+  simp only [map_div₀, map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
   have h4 : starRingEnd ℂ (4 : ℂ) = 4 := map_ofNat _ 4
   simp [h4]
   ring

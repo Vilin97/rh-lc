@@ -173,7 +173,7 @@ theorem _root_.GlobalTheory.evCot_of_univDer :
             simp only [map_zero, sub_zero, ZeroMemClass.coe_zero]
           map_add' := fun x y => by
             rw [← Submodule.Quotient.mk_add]; congr 1; apply Subtype.ext
-            simp only [map_add, Submodule.coe_add]; abel }
+            simp only [map_add (f := _), Submodule.coe_add]; abel }
       obtain ⟨u, hu, -⟩ := hδuniv (I ⧸ J) d
         (fun o x => by
           show Submodule.Quotient.mk _ = o • Submodule.Quotient.mk _
@@ -212,7 +212,7 @@ theorem _root_.GlobalTheory.evCot_of_univDer :
             f (Pi.single _ b), (hmemA _).2 (by rw [Pi.single_eq_same]; exact hb),
             by rw [Pi.single_mul, hfmul]⟩
         | zero => rw [Pi.single_zero, map_zero]; exact zero_mem _
-        | add x y _ _ hx hy => rw [Pi.single_add, map_add]; exact add_mem hx hy
+        | add x y _ _ hx hy => rw [Pi.single_add, map_add (f := _)]; exact add_mem hx hy
         | smul c x _ hx =>
           have hs : (Pi.single (D.ptIdx 0) (c • x) : ∀ i, (D.fin.AAx i).carrier) =
               c • (Pi.single (D.ptIdx 0) x : ∀ i, (D.fin.AAx i).carrier) := by
@@ -231,7 +231,7 @@ theorem _root_.GlobalTheory.evCot_of_univDer :
       have hEmem : f E ∈ _root_.ReciprocityTheory.PGsh.L2.augIdeal (D.evImg C) := (hmemA E).2 (by simp [E])
       have hGmem : f G ∈ _root_.ReciprocityTheory.PGsh.L2.augIdeal (D.evImg C) := (hmemA G).2 (by simp [G])
       have hF : f F = f (Pi.single (D.ptIdx 0) (F (D.ptIdx 0))) + f G := by
-        rw [← map_add]; congr 1; simp [G]
+        rw [← map_add (f := _)]; congr 1; simp [G]
       show f F ∈ _root_.ReciprocityTheory.PGsh.Up.sqIdeal (_root_.ReciprocityTheory.PGsh.L2.augIdeal (D.evImg C))
       rw [hF]
       refine add_mem (hlift _ hx) ?_
@@ -253,7 +253,7 @@ theorem _root_.GlobalTheory.evCot_of_univDer :
         | add x y _ _ hx hy =>
           obtain ⟨F1, rfl, h1⟩ := hx
           obtain ⟨F2, rfl, h2⟩ := hy
-          exact ⟨F1 + F2, map_add f _ _, by rw [Pi.add_apply, map_add, h1, h2, add_zero]⟩
+          exact ⟨F1 + F2, map_add f _ _, by rw [Pi.add_apply, map_add (f := _), h1, h2, add_zero]⟩
         | smul c x _ hx =>
           obtain ⟨F1, rfl, h1⟩ := hx
           refine ⟨c • F1, map_smul f _ _, ?_⟩

@@ -19,11 +19,11 @@ theorem fourB_indicator_intLattice : ∀ (F E : Type) [NontriviallyNormedField F
       rw [e1]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (h i) (by rw [norm_neg]; exact ha i))
     · intro h i
-      rw [map_add, Pi.add_apply]
+      rw [map_add (f := _), Pi.add_apply]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (ha i) (h i))
   have hBadd : ∀ a x, B (a + x) y = B a y * B x y := by
     intro a x
-    rw [hB, hB, hB, map_add, star_add, add_dotProduct, map_add, AddChar.map_add_eq_mul]
+    rw [hB, hB, hB, map_add (f := _), star_add, add_dotProduct, map_add (f := _), AddChar.map_add_eq_mul]
   haveI : ContinuousAdd A.L := IsModuleTopology.toContinuousAdd F A.L
   unfold fourB
   by_cases hy : y ∈ Λ

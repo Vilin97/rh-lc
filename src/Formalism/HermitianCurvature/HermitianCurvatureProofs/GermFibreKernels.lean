@@ -175,7 +175,7 @@ theorem GermBlockL2.propG [IsFiniteMeasureOnCompacts μ] [NullSingletonClass μ]
       show (starRingEnd ℂ) (∫ D, ⟪U (h', x + σ) D - A (h', x + σ) D, A (h, x) D⟫_ℂ ∂μ)
           + ∫ D, ⟪A (h, x) D, A (h', x + σ) D⟫_ℂ ∂μ = (starRingEnd ℂ) (gramL μ U A (h', x + σ) (h, x))
       unfold gramL
-      rw [hsplit, map_add, hswap]
+      rw [hsplit, map_add (f := _), hswap]
 
 end propG
 

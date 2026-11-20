@@ -179,7 +179,7 @@ theorem exists_frame {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : HermitianOrtho
       have e : (fun i => p.sec ((β.b *ᵥ x) i)) = (fun i => p.sec ((F' *ᵥ (g.val *ᵥ fun l => x (σ (Sum.inl l)))) i)) +
           ∑ q, fun i => p.sec (s q * x (σ (Sum.inr q))) * incA D (d.a i q) := by
         funext i
-        rw [hbv, Pi.add_apply, map_add, Pi.add_apply, Finset.sum_apply]
+        rw [hbv, Pi.add_apply, map_add (f := _), Pi.add_apply, Finset.sum_apply]
         congr 1
         set_option synthInstance.maxHeartbeats 100000 in
           simp only [mulVec, dotProduct, map_sum, a', map_apply]
@@ -219,7 +219,7 @@ theorem exists_frame {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : HermitianOrtho
           rw [e1]
           funext i
           set_option synthInstance.maxHeartbeats 100000 in
-            simp only [Pi.add_apply, mulVec, dotProduct, map_add, map_sum, map_mul, F', a', map_apply]
+            simp only [Pi.add_apply, mulVec, dotProduct, map_add (f := _), map_sum, map_mul, F', a', map_apply]
         rw [e, mulVec_mulVec, β.b'b, one_mulVec]
         obtain ⟨t, rfl⟩ := σ.surjective j
         simp only [x', Function.comp_apply, Equiv.symm_apply_apply]

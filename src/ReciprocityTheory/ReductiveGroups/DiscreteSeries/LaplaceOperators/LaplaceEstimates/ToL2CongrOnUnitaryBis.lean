@@ -203,7 +203,7 @@ theorem exists_phi {Y : Type*} [AddCommGroup Y] [Module ℂ Y] (T : Y →ₗ[ℂ
     { toFun := fun f => ⟨toL2 ε (T f), toL2_mem_smD_of_isSmoothL2 (hsm f f.2)⟩
       map_add' := fun f f' => by
         apply Subtype.ext
-        simp only [Submodule.coe_add, map_add]
+        simp only [Submodule.coe_add, map_add (f := _)]
         exact toL2_add_smooth (hsm f f.2) (hsm f' f'.2)
       map_smul' := fun a f => by
         apply Subtype.ext

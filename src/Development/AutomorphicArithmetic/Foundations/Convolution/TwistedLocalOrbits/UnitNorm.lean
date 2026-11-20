@@ -203,7 +203,7 @@ theorem UpperTheory.ConvolutionTheory.Loc.unitNorm :
   have hle : valuation E (N - u) ≤ valuation E (∏ i ∈ Finset.range q, σ^[i] (w * (1 + d * b)) - u) := hmin hw'
   have e1 : ∀ i : ℕ, σ^[i] (w * (1 + d * b)) = σ^[i] w * (1 + d * σ^[i] b) := by
     intro i
-    rw [hit, map_mul, map_add, map_one, map_mul, ← hit, ← hit, ← hit, hfix i d hdσ]
+    rw [hit, map_mul, map_add (f := _), map_one, map_mul, ← hit, ← hit, ← hit, hfix i d hdσ]
   simp only [e1] at hle
   rw [Finset.prod_mul_distrib, he, hTb, ← hN, ← hdv] at hle
   have e2 : N * (1 + d * 1 + d ^ 2 * c) - u = N * (d * (d * c)) := by

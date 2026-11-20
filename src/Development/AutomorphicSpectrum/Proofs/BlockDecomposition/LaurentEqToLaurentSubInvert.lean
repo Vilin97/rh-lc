@@ -15,7 +15,7 @@ theorem laurent_eq_toLaurent_sub_invert {K : Type} [CommRing K] (h : K[T;T⁻¹]
     obtain ⟨α₁, β₁, rfl⟩ := hf
     obtain ⟨α₂, β₂, rfl⟩ := hg
     refine ⟨α₁ + α₂, β₁ + β₂, ?_⟩
-    simp only [map_add]
+    simp only [map_add (f := _)]
     ring
   | C_mul_T n a =>
     rcases le_total 0 n with hn | hn

@@ -101,7 +101,7 @@ theorem base_pair_char : ∀ (D : D7) (V W : HSp D) (B : Base V W), B.Good → �
     have h1 := hc.2 Q e p1 _ y (locU_val p1.1 _)
     have h2 := hc.2 _ (cA D e) p2 (Formalism.L2.Host.upF D.host.F k) (Units.map (cA D).toMonoidHom y) (by
       change cA D (y : AE D) = _
-      rw [locU_val, locE, locE, map_add, map_one, map_mul, map_sub, map_one, GlobalTheory.IdemSupport.cA_incA, hs])
+      rw [locU_val, locE, locE, map_add (f := _), map_one, map_mul, map_sub, map_one, GlobalTheory.IdemSupport.cA_incA, hs])
     have r2 : ResEta D B.eta 1 := hB.eta.2.2.1
     have r0 : ResEta D B.mu0 0 := GlobalTheory.SplitChange.resEta_zero_of_triv r2 hB.real
     have r1 : ResEta D B.de.chi 0 := GlobalTheory.SplitChange.resEta_zero_of_triv r2 hB.de.real

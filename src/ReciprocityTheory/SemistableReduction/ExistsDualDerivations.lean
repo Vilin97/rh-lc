@@ -46,7 +46,7 @@ theorem coeffMap_monomial (δ : Derivation K Ω Ω) (n : σ →₀ ℕ) (a : Ω)
 theorem coeffMap_add (δ : Derivation K Ω Ω) (P Q : MvPolynomial σ Ω) :
     coeffMap δ (P + Q) = coeffMap δ P + coeffMap δ Q := by
   ext m
-  simp only [MvPolynomial.coeff_add, coeff_coeffMap, map_add]
+  simp only [MvPolynomial.coeff_add, coeff_coeffMap, map_add (f := _)]
 
 theorem coeffMap_smul (δ : Derivation K Ω Ω) (k : K) (P : MvPolynomial σ Ω) :
     coeffMap δ (k • P) = k • coeffMap δ P := by

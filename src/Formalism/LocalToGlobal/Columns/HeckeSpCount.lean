@@ -182,7 +182,7 @@ theorem exists_redLat {N : Submodule (𝓞 E) (Sp E n)} (hlat : Submodule.IsLatt
   let ρ : N →ₗ[𝓞 E] (Fin n → 𝓞 E ⧸ Q.asIdeal) :=
     { toFun := fun x j => e.symm (Ideal.Quotient.mk _ (b.equivFun (inc x) j))
       map_add' := fun x y => funext fun j => by
-        simp only [hinc_add, map_add, Pi.add_apply]
+        simp only [hinc_add, map_add (f := _), Pi.add_apply]
       map_smul' := fun a x => funext fun j => by
         simp only [hinc_smul, map_smul, Pi.smul_apply, smul_eq_mul, map_mul, he, RingHom.id_apply]
         rw [Algebra.smul_def, Ideal.Quotient.algebraMap_eq] }
@@ -200,7 +200,7 @@ theorem exists_redLat {N : Submodule (𝓞 E) (Sp E n)} (hlat : Submodule.IsLatt
       exact Subtype.ext (algebraMap_smul (Ow Q) s _).symm
     rw [hρ, h1, map_smul, LinearEquiv.apply_symm_apply, Pi.smul_apply, smul_eq_mul, ← map_mul, he, map_mul, ha]
     have h2 : Ideal.Quotient.mk Q.asIdeal (t * s) = 1 := by
-      rw [← map_one (Ideal.Quotient.mk Q.asIdeal), ← hts, map_add, Ideal.Quotient.eq_zero_iff_mem.2 hp, add_zero]
+      rw [← map_one (Ideal.Quotient.mk Q.asIdeal), ← hts, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hp, add_zero]
     rw [h2, one_mul]
   · apply le_antisymm
     · intro x hx

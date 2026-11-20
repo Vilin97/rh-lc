@@ -46,7 +46,7 @@ theorem exists_comb [CommGroup Q] (bas : (Fin n → ℤ) ≃ₗ[ℤ] L) (p : Fin
     ∃ f : L → Q, (∀ x y, f (x + y) = f x * f y) ∧ (∀ x, f (k • x) = 1) ∧ ∀ i, f (bas (Pi.single i 1)) = p i := by
   have hf : ∀ x y : L, ∏ i, p i ^ bas.symm (x + y) i = (∏ i, p i ^ bas.symm x i) * ∏ i, p i ^ bas.symm y i := by
     intro x y
-    simp only [map_add, Pi.add_apply, zpow_add, Finset.prod_mul_distrib]
+    simp only [map_add (f := _), Pi.add_apply, zpow_add, Finset.prod_mul_distrib]
   refine ⟨fun x => ∏ i, p i ^ bas.symm x i, hf, fun x => ?_, fun i => ?_⟩
   · refine Finset.prod_eq_one fun i _ => ?_
     rw [map_nsmul, Pi.smul_apply, nsmul_eq_mul, zpow_mul, zpow_natCast, hp, one_zpow]

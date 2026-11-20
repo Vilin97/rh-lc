@@ -108,7 +108,7 @@ theorem val_aeval (hz : genPt ξ ⤳ centre z) {κ : Type} (a : κ → Ω) (r : 
     ValAt ξ z (MvPolynomial.aeval a P) (MvPolynomial.aeval r P) := by
   induction P using MvPolynomial.induction_on with
   | C n => simpa using val_int hz n
-  | add p q hp hq => simpa [map_add] using val_add hp hq
+  | add p q hp hq => simpa [map_add (f := _)] using val_add hp hq
   | mul_X p i hp => simpa using val_mul hp (h i)
 
 end Values

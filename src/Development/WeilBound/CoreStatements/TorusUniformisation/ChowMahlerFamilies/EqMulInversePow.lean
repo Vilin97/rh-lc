@@ -232,7 +232,7 @@ def lieM (g : GermAt t x d) : GlobalTheory.CompanionTheory.Ar.LieModel t.G x (Fi
     obtain ⟨e, he⟩ := (tanModel t x).onto v hv
     obtain ⟨w, rfl⟩ := (gd_bij g).2 e
     exact ⟨w, he⟩
-  add v w := by rw [map_add, (tanModel t x).add]
+  add v w := by rw [map_add (f := _), (tanModel t x).add]
   smul c v := by rw [map_smul, (tanModel t x).smul]
 
 theorem germ_aff (hs : ∀ a : 𝓞 E, star a = H.bar a) (hp : PowFns t) (z : X0) :

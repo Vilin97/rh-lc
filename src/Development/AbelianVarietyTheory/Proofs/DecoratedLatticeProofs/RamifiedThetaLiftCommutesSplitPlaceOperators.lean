@@ -181,7 +181,7 @@ theorem lift_sOp_comm : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topo
         exact integral_const_mul a _)
       (fun v Ψ₁ Ψ₂ => by
         funext h
-        simp only [liftT_apply, Pi.add_apply, hFadd, map_add, add_mul]
+        simp only [liftT_apply, Pi.add_apply, hFadd, map_add (f := _), add_mul]
         exact integral_add (hint v Ψ₁ h) (hint v Ψ₂ h))
       (fun a v Ψ => by
         funext h

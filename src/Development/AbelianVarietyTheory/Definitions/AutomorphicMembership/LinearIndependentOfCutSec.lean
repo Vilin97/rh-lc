@@ -29,7 +29,7 @@ variable {y}
 theorem valAt_add (hf : RegAt (below y) f) (hg : RegAt (below y) g) : valAt y (f + g) = valAt y f + valAt y g := by
   obtain ⟨a, rfl⟩ := hf
   obtain ⟨b, rfl⟩ := hg
-  rw [← map_add, valAt_algebraMap, valAt_algebraMap, valAt_algebraMap, map_add]
+  rw [← map_add (f := _), valAt_algebraMap, valAt_algebraMap, valAt_algebraMap, map_add (f := _)]
 
 theorem valAt_mul (hf : RegAt (below y) f) (hg : RegAt (below y) g) : valAt y (f * g) = valAt y f * valAt y g := by
   obtain ⟨a, rfl⟩ := hf
@@ -163,7 +163,7 @@ instance galActionCut : MulAction (AlgebraicClosure E ≃ₐ[E] AlgebraicClosure
 def cutSec : Submodule E (cutSet Y E w c → AlgebraicClosure E) where
   carrier := {g | ∀ (σ : AlgebraicClosure E ≃ₐ[E] AlgebraicClosure E) y, g (σ • y) = σ (g y)}
   zero_mem' _ _ := (map_zero _).symm
-  add_mem' hf hg σ y := by rw [Pi.add_apply, Pi.add_apply, hf, hg, map_add]
+  add_mem' hf hg σ y := by rw [Pi.add_apply, Pi.add_apply, hf, hg, map_add (f := _)]
   smul_mem' a g hg σ y := by rw [Pi.smul_apply, Pi.smul_apply, hg, Algebra.smul_def, Algebra.smul_def, map_mul, σ.commutes]
 
 def dsVal (y : GeomPt Y E) (k : Fin n) (g : Y.Fn) : AlgebraicClosure E :=

@@ -26,7 +26,7 @@ private theorem letter_lift {L U D M : Type} [Field L] [Field U] [AddCommGroup D
   | tmul a x =>
     rw [LinearMap.sub_apply, LinearMap.baseChange_tmul, LinearMap.smul_apply, LinearMap.id_apply, map_sub,
       map_smul, e, e, h2, smul_comm, sub_self]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 private theorem line_smul {W : Type} [AddCommGroup W] [Module ℂ W] [FiniteDimensional ℂ W] (hd : finrank ℂ W = 1)
     (f : End ℂ W) (c : ℂ) (hc : c ∈ f.charpoly.roots) (v : W) : f v = c • v := by
@@ -51,7 +51,7 @@ private theorem dQ_inv {ρ₁ : Representation ↥L₁.1 ↥(GK K) V₁} {ρ₂ 
   induction (y : V₂ ⊗[ℚ_[l]] Bst P) using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => rw [tensQ_tmul, tensQ_tmul, e]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 open EnlargeCoeff in
 

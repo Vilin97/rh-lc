@@ -32,7 +32,7 @@ theorem exists_emb_of_freq (la : Wt X.Ψ r) (ν : X.Ψ → ℝ)
       2 * ((X.m * X.chiOrd la : ℕ) : ℝ) * ∑ τ : X.Ψ, ν τ * (τ.1 (γ : E)).re := by
     rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun τ _ => ?_
-    simp only [per, map_add, emb_cc', Complex.add_re, Complex.conj_re]
+    simp only [per, map_add (f := _), emb_cc', Complex.add_re, Complex.conj_re]
     ring
   rw [h1] at hk
   simp only [Complex.re_sum, Complex.re_ofReal_mul]

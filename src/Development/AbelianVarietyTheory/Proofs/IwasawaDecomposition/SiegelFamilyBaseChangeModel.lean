@@ -46,7 +46,7 @@ theorem ptCond_explicit (I : TateIso D k Q act pr) {M : ℕ} (hM : 0 < M) {w : k
       module
     rw [hf, hf, e1]
     refine ⟨D.EF (t • (a - v • b)) (rep j), ?_⟩
-    simp only [map_add, map_nsmul, map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul, smul_eq_mul]
+    simp only [map_add (f := _), map_nsmul, map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul, smul_eq_mul]
     ring
 
 theorem dvd_similitude (l : Level H) {e : 𝓞 E} (he : e ∈ Mc l) (he' : 1 - e ∈ l.Mb) (v : ℤ) (a c : D.La) :
@@ -74,7 +74,7 @@ theorem dvd_similitude (l : Level H) {e : 𝓞 E} (he : e ∈ Mc l) (he' : 1 - e
   have e2 : c = e • c + (1 - e) • c := by module
   have e3 : D.EF a c = D.EF (e • a + (1 - e) • a) (e • c + (1 - e) • c) := by rw [← e1, ← e2]
   rw [e3, smul_comm (1 - e) v, smul_comm (1 - e) v]
-  simp only [map_add, map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
+  simp only [map_add (f := _), map_zsmul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
   obtain ⟨p, hp⟩ := h1
   obtain ⟨q, hq⟩ := h2
   rw [hp, hq]
@@ -94,7 +94,7 @@ theorem secCond_mul (hL : Out.Laws) [IsLocallyNoetherian S] {o : Obj D l b s} {s
   have := o.t.act.hom e
   refine ⟨by rw [mul_pow, h.1, h'.1, _root_.mul_one], ?_, fun j => ?_⟩
   · rw [MonObj.mul_comp, h.2.1, h'.2.1, smul_add, o.eta_add, MonObj.comp_mul]
-  · rw [map_add, LinearMap.add_apply, zpow_add, map_mul]
+  · rw [map_add (f := _), LinearMap.add_apply, zpow_add, map_mul]
     exact (hL.weil S (Obj.toPolAV o) l.M T).2.1 _ _ _ _ _ (h.2.2 j) (h'.2.2 j)
 
 theorem exists_level (hL : Out.Laws) [IsLocallyNoetherian S] (o : Obj D l b s) (sF : S ⟶ Sp F) {z : Fˣ}
@@ -185,7 +185,7 @@ theorem exists_point (hL : Out.Laws) [IsLocallyNoetherian S] [IsReduced S] (o : 
       rig₂ := (cls_eq_zero_iff (pull_isLB (isLB_lam hLB) _)).1 ((cls_lam_pull hLB _ _).trans (lam_one_right _ _))
       symm := lam_symm hLB
       lev := fun a => lev (bas a)
-      lev_add := fun a c => by rw [map_add, hadd]
+      lev_add := fun a c => by rw [map_add (f := _), hadd]
       lev_tors := fun a => htors _
       geom := by
         intro k _ _ x β v hx hv

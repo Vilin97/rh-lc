@@ -20,7 +20,7 @@ def sf (b : Module.Basis (Fin m) K.E B.A) (G : Matrix (Fin m) (Fin m) K.E) (a z 
 variable (b : Module.Basis (Fin m) K.E B.A) (G : Matrix (Fin m) (Fin m) K.E)
 
 theorem sf_add_left (a a' z : B.A) : sf b G (a + a') z = sf b G a z + sf b G a' z := by
-  simp [sf, sv, map_add, add_dotProduct]
+  simp [sf, sv, map_add (f := _), add_dotProduct]
 
 theorem sf_smul_left (l : K.E) (a z : B.A) : sf b G (l • a) z = l * sf b G a z := by
   simp [sf, sv, map_smul, smul_dotProduct]
@@ -78,7 +78,7 @@ theorem sf_adj (u : B.A) (hu : Algebra.adjoin K.E {u} = ⊤) (hu1 : u * B.σ u =
     rw [← Algebra.smul_def, sf_smul_left, B.σ_alg, ← Algebra.smul_def, sf_smul_right, K.c_c]
   | add x y _ _ hx hy =>
     intro a z
-    rw [add_mul, sf_add_left, hx, hy, map_add, add_mul, sf_add_right]
+    rw [add_mul, sf_add_left, hx, hy, map_add (f := _), add_mul, sf_add_right]
   | mul x y _ _ hx hy =>
     intro a z
     rw [mul_comm x y, mul_assoc, hy, hx, map_mul]; congr 1; ring

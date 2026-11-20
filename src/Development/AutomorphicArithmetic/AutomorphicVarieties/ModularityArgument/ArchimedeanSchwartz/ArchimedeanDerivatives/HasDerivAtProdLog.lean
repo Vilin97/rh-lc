@@ -85,7 +85,7 @@ private theorem detAt_line (σ : K →+* ℂ) (a b : Fin n) (c : Cinf K) (x : Li
     rw [Matrix.mul_add, Matrix.mul_one, ← Matrix.smul_single, Matrix.mul_smul]
     rfl
   unfold detAt
-  rw [hm, Matrix.det_mul, map_mul, det_one_add_single, map_add, map_one]
+  rw [hm, Matrix.det_mul, map_mul, det_one_add_single, map_add (f := _), map_one]
   split_ifs
   · rw [GlobalTheory.IsoPull.coord_smul, Complex.real_smul]
   · simp
@@ -203,7 +203,7 @@ private theorem foldr_chart_wt (u : ℂ) (e : (K →+* ℂ) → ℕ) (τ : K →
     simp only [List.foldr_cons, List.map_cons, List.prod_cons]
     rw [rd_congr τ (p j) j (Filter.eventually_of_mem (isOpen_invSet.mem_nhds hx) ih), rd_chart_wt u e τ _ _ _ g hx,
       ih x hx, Module.End.mul_apply]
-    simp only [← chartL_apply, Formalism.REAL.Tm, LinearMap.add_apply, map_add]
+    simp only [← chartL_apply, Formalism.REAL.Tm, LinearMap.add_apply, map_add (f := _)]
     have hj : ((n - 1 - j.val : ℕ) : ℂ) = (n : ℂ) - 1 - (j.val : ℂ) := by
       have := j.isLt
       rw [Nat.cast_sub (by omega), Nat.cast_sub (by omega)]

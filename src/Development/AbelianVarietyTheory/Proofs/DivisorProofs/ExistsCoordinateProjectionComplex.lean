@@ -24,7 +24,7 @@ theorem realDiag_conj_coordProj : ∀ (g : ℕ) (K : Type) (ρ : K → Fin g →
     have h : (fun m ↦ (((c + d) m : ℝ) : ℂ) * v m)
         = (fun m ↦ (c m : ℂ) * v m) + (fun m ↦ (d m : ℂ) * v m) := by
       funext m; simp [add_mul]
-    rw [h, map_add, h1, h2, LinearMap.add_apply]
+    rw [h, map_add (f := _), h1, h2, LinearMap.add_apply]
   have hmul : ∀ c d, P c → P d → P (c * d) := by
     rintro c d ⟨q1, h1⟩ ⟨q2, h2⟩
     refine ⟨q1 ∘ₗ q2, fun v => ?_⟩

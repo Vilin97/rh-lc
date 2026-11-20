@@ -150,14 +150,14 @@ theorem addEquiv_smul (T : QLat LL) (eB : Pl.R.B ≃+* Per.Bcris l)
   induction w using TensorProduct.induction_on with
   | zero => simp only [smul_zero, map_zero]
   | add x y hx hy =>
-    rw [smul_add, map_add, map_add]
+    rw [smul_add, map_add (f := _), map_add (f := _)]
     exact (congrArg₂ (· + ·) hx hy).trans (smul_add c _ _).symm
   | tmul y x =>
     rw [TensorProduct.smul_tmul']
     induction y using TensorProduct.induction_on with
     | zero => simp only [smul_zero, zero_tmul, map_zero]
     | add y₁ y₂ h₁ h₂ =>
-      rw [smul_add, add_tmul, add_tmul, map_add, map_add]
+      rw [smul_add, add_tmul, add_tmul, map_add (f := _), map_add (f := _)]
       exact (congrArg₂ (· + ·) h₁ h₂).trans (smul_add c _ _).symm
     | tmul o b =>
       have e : (((c • o) • x : ↥T.L.T) : T.V) = (c : ↥LL.1) • ((o • x : ↥T.L.T) : T.V) := by
@@ -190,13 +190,13 @@ theorem linEquiv_act (T : QLat LL) (eB : Pl.R.B ≃+* Per.Bcris l)
   induction w using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | add x y hx hy =>
-    rw [map_add, map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _)]
     exact congrArg₂ (· + ·) hx hy
   | tmul y x =>
     induction y using TensorProduct.induction_on with
     | zero => simp only [zero_tmul, map_zero]
     | add y₁ y₂ h₁ h₂ =>
-      rw [add_tmul, map_add, map_add, map_add, map_add]
+      rw [add_tmul, map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _)]
       exact congrArg₂ (· + ·) h₁ h₂
     | tmul o b =>
       have h1 : actB (sQ l) T g ((o ⊗ₜ[ℤ_[l]] b) ⊗ₜ[↥(OL LL)] x) =
@@ -220,13 +220,13 @@ theorem linEquiv_frob (T : QLat LL) (eB : Pl.R.B ≃+* Per.Bcris l)
   induction w using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | add x y hx hy =>
-    rw [map_add, map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _)]
     exact congrArg₂ (· + ·) hx hy
   | tmul y x =>
     induction y using TensorProduct.induction_on with
     | zero => simp only [zero_tmul, map_zero]
     | add y₁ y₂ h₁ h₂ =>
-      rw [add_tmul, map_add, map_add, map_add, map_add]
+      rw [add_tmul, map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _)]
       exact congrArg₂ (· + ·) h₁ h₂
     | tmul o b =>
       have h1 : TWmap (frobOB l ↥(OL LL)) T ((o ⊗ₜ[ℤ_[l]] b) ⊗ₜ[↥(OL LL)] x) =

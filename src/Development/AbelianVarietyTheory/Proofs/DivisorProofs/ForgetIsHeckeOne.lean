@@ -48,7 +48,7 @@ theorem acts_one_iff {G : HTGroup p} (L : Link D G) (n : ℕ) (hn : 0 < n) (hp :
     · have h1 : x = y + n • u := by rw [← hu]; abel
       rw [h1]
       change inAfHom D (y + n • u) = inAfHom D y + n • inAfHom D u
-      rw [map_add, map_nsmul]
+      rw [map_add (f := _), map_nsmul]
 
 end GlobalTheory.LKGeo.ForgetHecke
 

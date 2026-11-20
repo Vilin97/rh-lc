@@ -23,7 +23,7 @@ theorem modEq_of_normOneMod (D : D7) {M g : ℕ} (h : NormOneMod D M g) : g ≡ 
   have ht : ((g : D.host.E) - 1) = (M : D.host.E) * ((ρ : D.host.E) + D.host.conj (ρ : D.host.E) +
       (M : D.host.E) * (ρ : D.host.E) * D.host.conj (ρ : D.host.E)) := by
     have hπ : (π : D.host.E) = 1 + M * ρ := by linear_combination h1
-    rw [← h2, hπ, map_add, map_one, map_mul, map_natCast]
+    rw [← h2, hπ, map_add (f := _), map_one, map_mul, map_natCast]
     ring
   rcases Nat.eq_zero_or_pos M with hM | hM
   · subst hM

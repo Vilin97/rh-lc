@@ -30,7 +30,7 @@ theorem mCoordIdeal_comp_ringHom {L Ω : Type} [Field L] [Field Ω] (j : L →+*
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [Geo.mConeMap]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p q hp =>
       rw [map_mul, map_mul, map_mul, hp]
       simp [Geo.mConeMap]

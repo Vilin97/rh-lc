@@ -101,7 +101,7 @@ theorem GlobalTheory.SliceOp.exists_tensor_clm : ∀ (V : Type) [NormedAddCommGr
   intro V _ _ _ κ κ' κ₁' _ _ _ P
   refine ⟨SchwartzMap.mkCLM (σ := RingHom.id ℂ) (fun f => qOp P f) ?_ ?_ ?_ ?_, fun f s => rfl⟩
   · intro f g s
-    simp only [qOp, ← sliceRL_apply, map_add, SchwartzMap.add_apply]
+    simp only [qOp, ← sliceRL_apply, map_add (f := _), SchwartzMap.add_apply]
   · intro a f s
     simp only [qOp, ← sliceRL_apply, map_smul, SchwartzMap.smul_apply, RingHom.id_apply]
   · intro f; exact contDiff_qOp P f

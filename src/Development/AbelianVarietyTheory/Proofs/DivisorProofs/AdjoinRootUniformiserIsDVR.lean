@@ -29,7 +29,7 @@ theorem adjoinRoot_uniformiser_isDVR : ∀ (R : Type) [CommRing R] [IsDomain R] 
     obtain ⟨p, rfl⟩ := AdjoinRoot.mk_surjective a
     refine ⟨p.coeff 0, AdjoinRoot.mk f p.divX, ?_⟩
     conv_lhs => rw [← X_mul_divX_add p]
-    rw [map_add, map_mul, AdjoinRoot.mk_X, AdjoinRoot.mk_C, add_comm]
+    rw [map_add (f := _), map_mul, AdjoinRoot.mk_X, AdjoinRoot.mk_C, add_comm]
     rfl
   have hπm : π ∈ maximalIdeal R := (mem_maximalIdeal _).2 hπ.not_isUnit
 

@@ -36,7 +36,7 @@ theorem hasRes_of_mul {P : HeightOneSpectrum (𝓞 E)} {s : 𝓞 E} (hs : s ∉ 
   have e2 : algebraMap E (P.adicCompletion E) (algebraMap (𝓞 E) E t) *
       algebraMap E (P.adicCompletion E) (algebraMap (𝓞 E) E s) +
       algebraMap E (P.adicCompletion E) (algebraMap (𝓞 E) E a) = 1 := by
-    simp only [← map_mul, ← map_add, e, map_one]
+    simp only [← map_mul, ← map_add (f := _), e, map_one]
   have e3 : z - algebraMap E (P.adicCompletion E) (algebraMap (𝓞 E) E (t * r)) =
       algebraMap E (P.adicCompletion E) (algebraMap (𝓞 E) E t) *
         (algebraMap E _ (algebraMap (𝓞 E) E s) * z - algebraMap E (P.adicCompletion E) (algebraMap (𝓞 E) E r)) +
@@ -100,7 +100,7 @@ theorem valued_inv_mul_le {n : ℕ} {w : HeightOneSpectrum (𝓞 E)} {a b : GL (
       simp
     | add x y _ _ hx hy =>
       intro i
-      rw [Matrix.mulVec_add, Pi.add_apply, map_add]
+      rw [Matrix.mulVec_add, Pi.add_apply, map_add (f := _)]
       exact Valuation.map_add_le _ (hx i) (hy i)
     | smul c x _ hx =>
       intro i
@@ -135,7 +135,7 @@ theorem map_splice {n : ℕ} {P : HeightOneSpectrum (𝓞 E)} (hP : conjPrime₂
     (splice hc P A B).map (adAt F w) = if w = P ∨ conjPrime₂ w = P then B.map (adAt F w) else A.map (adAt F w) := by
   ext i j
   rw [Matrix.map_apply]
-  simp only [splice, Matrix.of_apply, map_add, map_mul, map_sub, map_one, PtExist.adAt_idem, PtExist.adAt_sig_idem]
+  simp only [splice, Matrix.of_apply, map_add (f := _), map_mul, map_sub, map_one, PtExist.adAt_idem, PtExist.adAt_sig_idem]
   by_cases h1 : w = P
   · subst h1
     simp [hP]
@@ -170,7 +170,7 @@ theorem exists_splice : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
     congr 1
     ext i j
     show Formalism.UG.sigR (CMData.sig hc) (FiniteAdeleRing (𝓞 F) F) (G j i) = G' i j
-    simp only [G, G', splice, Matrix.of_apply, map_add, map_mul, map_sub, map_one, PtExist.sig_sig,
+    simp only [G, G', splice, Matrix.of_apply, map_add (f := _), map_mul, map_sub, map_one, PtExist.sig_sig,
       PtExist.inv_apply hh.uni, PtExist.inv_apply hh0.uni]
     ring
   have hGw : ∀ w, (g : Matrix (Fin n) (Fin n) (AfE F E)).map (adAt F w) = if w = P.1 ∨ conjPrime₂ w = P.1 then

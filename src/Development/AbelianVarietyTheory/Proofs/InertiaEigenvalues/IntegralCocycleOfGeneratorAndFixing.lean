@@ -91,7 +91,7 @@ theorem coc_mul (e : ℕ) (x b : (LT l).R.BdR) (σ τ : GQ l)
     (h : qB (LT l) (tw LT e σ) * (LT l).actQdR σ x = x) :
     coc LT e x b (σ * τ) =
       coc LT e x b σ + qB (LT l) (tw LT e σ) * (LT l).actQdR σ (coc LT e x b τ) := by
-  simp only [coc, logChi_mul, tw_mul, map_add, map_mul, map_sub, act_qB, AlgEquiv.mul_apply]
+  simp only [coc, logChi_mul, tw_mul, map_add (f := _), map_mul, map_sub, act_qB, AlgEquiv.mul_apply]
   linear_combination (-qB (LT l) ((logChi LT τ : ℤ_[l]) : ℚ_[l])) * h
 
 theorem small_mul {P : LocPrime l} {AI : LocAinf l P} (T : LocTied l P AI) {M n k : ℕ} {c : ℚ_[l]}
@@ -148,7 +148,7 @@ theorem fil_mul (e : ℕ) {M : ℤ} {x b : (LT l).R.BdR} {σ τ : GQ l}
     qB (LT l) (y + tw LT e σ * z) - coc LT e x b (σ * τ) ∈ FilB (LT l) M := by
   have := add_mem hy (qB_mul_mem (tw LT e σ) (act_mem σ hz))
   convert this using 1
-  rw [coc_mul LT e x b σ τ h, map_add, map_mul, map_sub, act_qB]
+  rw [coc_mul LT e x b σ τ h, map_add (f := _), map_mul, map_sub, act_qB]
   ring
 
 theorem nearZ_mul (e M : ℕ) {x b : (LT l).R.BdR} {σ τ : GQ l}

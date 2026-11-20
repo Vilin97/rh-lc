@@ -12,7 +12,7 @@ theorem stable_eval_sub {ι A B : Type} [Fintype ι] (g h : Matrix ι ι ℂ) (z
       (fun y : ι × B => ∑ j, h y.1 j * z (Sum.inr (j, y.2)))) p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [sub]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, sub, aeval_X, eval_X]
     congr 1
@@ -89,7 +89,7 @@ theorem stable : Stable := by
   clear hs hp'
   induction s using MvPolynomial.induction_on with
   | C a => simp only [aeval_C]; exact Subalgebra.algebraMap_mem _ a
-  | add x y hx hy => rw [map_add]; exact Subalgebra.add_mem _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hx hy
   | mul_X x v hx => rw [map_mul, aeval_X]; exact Subalgebra.mul_mem _ hx (hgen v)
 
 end PositivityTheory.Rg.Sw.FFTSteps

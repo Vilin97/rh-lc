@@ -19,7 +19,7 @@ theorem hf_add_right (x y z : n → A) : hform s J x (y + z) = hform s J x y + h
   simp only [hform, Pi.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem hf_add_left (x y z : n → A) : hform s J (x + y) z = hform s J x z + hform s J y z := by
-  simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hf_smul_right (c : A) (x y : n → A) : hform s J x (c • y) = c * hform s J x y := by
   simp only [hform, Finset.mul_sum, Pi.smul_apply, smul_eq_mul]

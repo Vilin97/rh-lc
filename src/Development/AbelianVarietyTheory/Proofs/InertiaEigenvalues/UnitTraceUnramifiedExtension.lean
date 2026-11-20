@@ -26,7 +26,7 @@ def intMap (hU : IsUnrExt K K' d φ) : K.O →+* K'.O where
     have h1 := Classical.choose_spec (exists_int_image hU (a + b))
     have h2 := Classical.choose_spec (exists_int_image hU a)
     have h3 := Classical.choose_spec (exists_int_image hU b)
-    rw [h1]; simp only [map_add, h2, h3])
+    rw [h1]; simp only [map_add (f := _), h2, h3])
 
 theorem intMap_spec (hU : IsUnrExt K K' d φ) (a : K.O) :
     algebraMap K'.O K'.E (intMap hU a) = φ (algebraMap K.O K.E a) :=

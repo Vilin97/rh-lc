@@ -21,8 +21,8 @@ def singleLin (v : HeightOneSpectrum (𝓞 F)) : Fv F v →ₗ[F] Af F where
   toFun := singleV F v
   map_add' x y := af_ext fun w => by
     by_cases hw : w = v
-    · subst hw; simp only [map_add, StrongApprox.evalV_single_same]
-    · simp only [map_add, StrongApprox.evalV_single_ne hw, add_zero]
+    · subst hw; simp only [map_add (f := _), StrongApprox.evalV_single_same]
+    · simp only [map_add (f := _), StrongApprox.evalV_single_ne hw, add_zero]
   map_smul' c y := af_ext fun w => by
     by_cases hw : w = v
     · subst hw; simp only [map_smul, StrongApprox.evalV_single_same, RingHom.id_apply]
@@ -39,7 +39,7 @@ theorem piV_sTen (v : HeightOneSpectrum (𝓞 F)) (x : Fv F v ⊗[F] E) : piV v 
   | zero => simp
   | tmul a b =>
     simp [sTen, singleLin, Algebra.TensorProduct.map_tmul, StrongApprox.evalV_single_same]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem singleV_mem_intAf (v : HeightOneSpectrum (𝓞 F)) {a : Fv F v} (ha : a ∈ v.adicCompletionIntegers F) :
     singleV F v a ∈ intAf F := fun w => by
@@ -110,7 +110,7 @@ theorem compV_sigR (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (x : AF
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [compV, sigR, Algebra.TensorProduct.map_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem compV_inclR (v : HeightOneSpectrum (𝓞 F)) (x : E) :
     compV v (inclR (AF F) x) = inclR (F := F) (Fv F v) x := by

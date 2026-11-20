@@ -65,7 +65,7 @@ theorem eigSum_le_span {K V H I : Type} [Field K] [AddCommGroup V] [Module K V] 
     rintro _ ⟨v, rfl⟩
     obtain ⟨a, ha, c, hc', rfl⟩ := Submodule.mem_sup.1
       ((Col.isCompl_eigSum hc hs C).sup_eq_top ▸ (Submodule.mem_top : v ∈ (⊤ : Submodule K V)))
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨a, ha, rfl⟩) (Submodule.subset_span ⟨c, hc', rfl⟩)
   have h4 : Disjoint (Col.eigSum U fun y => CC y ∨ ∃ x, C x ∧ y = fun i => σ (x i))
       (Col.eigSum U fun y => ∃ x, ¬ C x ∧ y = fun i => σ (x i)) := by

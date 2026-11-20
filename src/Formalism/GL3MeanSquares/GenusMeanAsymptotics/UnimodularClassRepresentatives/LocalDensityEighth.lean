@@ -96,7 +96,7 @@ theorem card_rep_succ (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {𝔭
     choose Y0 hY0 hY0' using hY'
     have hsum : X0.map (mkk K 𝔭 (k + 1)) + Y = (X0 + Matrix.of Y0).map (mkk K 𝔭 (k + 1)) := by
       ext a b
-      simp only [Matrix.add_apply, Matrix.map_apply, Matrix.of_apply, map_add, hY0']
+      simp only [Matrix.add_apply, Matrix.map_apply, Matrix.of_apply, map_add (f := _), hY0']
     rw [hsum, map_map_piQ, map_map_piQ]
     exact hinv X0 (Matrix.of Y0) hY0
   have RC' : ∀ X : Matrix m r (𝓞 K ⧸ extP K 𝔭 ^ (k + 1)), p' (X.map (piQ K 𝔭 k)) →
@@ -135,7 +135,7 @@ theorem card_rep_succ (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {𝔭
     rw [hSmap, map_form, map_form]
     ext a b
     simp only [Matrix.add_apply, Matrix.map_apply]
-    rw [← map_add, Ideal.Quotient.eq]
+    rw [← map_add (f := _), Ideal.Quotient.eq]
     have h4 := hY0' a b
     simpa only [Matrix.sub_apply, Matrix.add_apply] using h4
   have h := card_lift_matrix (piQ K 𝔭 k) (piQ_surjective 𝔭 k) (piQ_star 𝔭 k)

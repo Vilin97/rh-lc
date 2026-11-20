@@ -131,7 +131,7 @@ theorem sum_eq_map_mem {Q : Type} [CommRing Q] [Algebra B Q] {ι : Type} (s : Fi
   | insert i s hi ih =>
     obtain ⟨y, hy, e⟩ := h i (Finset.mem_insert_self i s)
     obtain ⟨y', hy', e'⟩ := ih (fun k hk => h k (Finset.mem_insert_of_mem hk))
-    exact ⟨y + y', J.add_mem hy hy', by rw [Finset.sum_insert hi, e, e', map_add]⟩
+    exact ⟨y + y', J.add_mem hy hy', by rw [Finset.sum_insert hi, e, e', map_add (f := _)]⟩
 
 variable [Fintype σ] {Q : Type} [CommRing Q] [Algebra B Q]
 
@@ -193,7 +193,7 @@ theorem hasVal_sub_mem : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [CommRing B
     · exact ⟨0, by simp⟩
   obtain ⟨b, hb, e⟩ := eval_sub_eval p hp hF.unit_coprime J hJ z z' hzz _ hP
   refine ⟨b, hb, b1 - b2, ?_⟩
-  simp only [map_add, map_mul, map_sub, map_pow, map_natCast] at e1 e2 ⊢
+  simp only [map_add (f := _), map_mul, map_sub, map_pow, map_natCast] at e1 e2 ⊢
   linear_combination e1 - e2 + e
 
 end GlobalTheory.HasValCong

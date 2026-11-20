@@ -129,7 +129,7 @@ theorem span_comp_eq (hρ : ∀ a u, ρ' a (f ∘ u) = f ∘ ρ a u) {n : ℕ} (
     have e1 : ρ' a w' - f (τ a) • w' = 0 := sub_eq_zero.2 ((mem_eigSp w').1 hw' a)
     rw [← hz] at e1
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, hρ, hbρ, comp_smul] at e1
+      simp only [map_add (f := _), map_sum, map_smul, hρ, hbρ, comp_smul] at e1
     have hs : ∀ x y : Fin N → F, f ∘ (x - y) = f ∘ x - f ∘ y := fun x y => by funext i; simp
     simp only [hs, comp_smul]
     rw [← e1]

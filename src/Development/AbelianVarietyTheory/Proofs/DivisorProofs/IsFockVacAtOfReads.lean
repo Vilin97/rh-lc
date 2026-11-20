@@ -44,7 +44,7 @@ theorem hasDerivAt_translate {n g : ℕ} (c : Fin g → ℝ) (H : (Fin g → ℂ
       ring
     have h3 : ∀ b, H ((Z + (t : ℂ) • A) b) ((Z + (t : ℂ) • A) b) =
         H (Z b) (Z b) + t * H (Z b) (A b) + t * H (A b) (Z b) + t ^ 2 * H (A b) (A b) := fun b => by
-      simp only [hH, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_mul, map_add, conj_ofReal, Finset.mul_sum,
+      simp only [hH, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_mul, map_add (f := _), conj_ofReal, Finset.mul_sum,
         ← Finset.sum_add_distrib]
       exact Finset.sum_congr rfl fun _ _ => by ring
     rw [Complex.ofReal_sum, mul_assoc, Finset.mul_sum]
@@ -86,7 +86,7 @@ theorem isFockVacAt_of_reads : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ
     congr 1
     funext t
     have h0 : (w + lineAt θ τ u t).map (finPart D) = 0 := by
-      rw [Matrix.map_add _ (finPart D).map_add, hw', (WeilVacMove.isLineAt_lineAt hθ τ u).2.1 t, add_zero]
+      rw [Matrix.map_add _ (finPart D).map_add (f := _), hw', (WeilVacMove.isLineAt_lineAt hθ τ u).2.1 t, add_zero]
     rw [heisO, GlobalTheory.AdThSympl.psi_symplOH_eq_of_isONFr D ψ θ V W r g hr X bas idx hψ hθ hV hev hm hs x hx0 w _ hw', hR.2 _ h0, hadd, hline]
   have hI : ∀ a b : Fin g → ℂ, hx X bas idx x (I • a) b = I * hx X bas idx x a b := fun a b => by
     simp only [hH, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]

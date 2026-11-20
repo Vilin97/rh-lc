@@ -78,6 +78,6 @@ theorem UpperTheory.ideleEmbedding_uniformizer_of_split_place_pair :
     exact hϖ
   · obtain ⟨h1, h2⟩ := map_sg v w w' hne (fun u hu => hall u (HeightOneSpectrum.ext hu.over.symm)) ((ϖ : Kv v) - 1)
     change adeleMap ℚ E ((idl v ϖ : (A ℚ)ˣ) : A ℚ) = _
-    rw [Units.val_mul, hi, hi₁, hi₂, map_add, map_one, h1, map_sub, map_sub, map_one, map_one, add_mul, mul_add, mul_add, h2]
+    rw [Units.val_mul, hi, hi₁, hi₂, map_add (f := _), map_one, h1, map_sub, map_sub, map_one, map_one, add_mul, mul_add, mul_add, h2]
     simp only [one_mul, mul_one, add_zero, Units.coe_map, MonoidHom.coe_coe]
     abel

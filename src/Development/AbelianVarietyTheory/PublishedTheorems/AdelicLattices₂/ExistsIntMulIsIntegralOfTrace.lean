@@ -154,7 +154,7 @@ theorem exists_bound_short (n : ℕ) (hn : n ≠ 0) {N : ℤ} (hN : N ≠ 0) :
     have h1 := Algebra.trace_trace (R := ℚ) (S := F) (T := E) (algebraMap F E (q x y))
     rw [Algebra.trace_algebraMap, Algebra.IsQuadraticExtension.finrank_eq_two, map_nsmul] at h1
     have h2 : algebraMap F E (q x y) = h x y + star (h x y) := by rw [← hs]; rfl
-    rw [h2, map_add, trace_star, two_nsmul] at h1
+    rw [h2, map_add (f := _), trace_star, two_nsmul] at h1
     linarith
   set T : Matrix κ κ ℚ := Matrix.of fun i j => Algebra.trace ℚ F (q (b i) (b j)) with hT
   obtain ⟨hT0, hT1⟩ := det_ne_zero_and_abs_le T hM0 (by

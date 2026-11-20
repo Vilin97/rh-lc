@@ -357,7 +357,7 @@ theorem tj_mk {U : Type} [AddCommGroup U] [Module K U] (Wt X : Submodule K V) (�
     show f (w + w') = f w + f w'
     symm
     refine hu _ _ ⟨Wt.add_mem (hf w).1 (hf w').1, ?_⟩
-    have e : κ (w + w') - (f w + f w') = (κ w - f w) + (κ w' - f w') := by rw [map_add]; abel
+    have e : κ (w + w') - (f w + f w') = (κ w - f w) + (κ w' - f w') := by rw [map_add (f := _)]; abel
     rw [e]
     exact X.add_mem (hf w).2 (hf w').2
   · intro c w
@@ -417,7 +417,7 @@ theorem tj_lift [FiniteDimensional K V] (F F' : FlagD H r) (hI : ∀ i ∈ II F 
     refine Submodule.add_mem _ (Submodule.mem_sup_right hi) (Submodule.mem_sup_left ⟨hc, (hP c).2 ?_⟩)
     intro y hy
     have h1 := hw y hy
-    rw [map_add, hI i hi y hy, zero_add] at h1
+    rw [map_add (f := _), hI i hi y hy, zero_add] at h1
     exact h1
 
 theorem tj_cov [FiniteDimensional K V] (F F' : FlagD H r) (j : ℕ) (hj : j ≤ r) (c : K) (hN : NFFull F F' j hj c)
@@ -459,7 +459,7 @@ theorem tj_cov [FiniteDimensional K V] (F F' : FlagD H r) (j : ℕ) (hj : j ≤ 
       have e0 : κ w = (κ w - b w) + b w := by abel
       have e1 : g (κ w) = (κ w - b w) + b (h w) := by
         conv_lhs => rw [e0]
-        rw [map_add, hfix _ (tj_X_le F F' (hb1 w)), hg3 (b w), hta, LinearEquiv.symm_apply_apply]
+        rw [map_add (f := _), hfix _ (tj_X_le F F' (hb1 w)), hg3 (b w), hta, LinearEquiv.symm_apply_apply]
       have e2 : g (κ w) - κ (h w) = (κ w - b w) - (κ (h w) - b (h w)) := by rw [e1]; abel
       rw [e2]
       exact F.X.sub_mem (hb1 w) (hb1 (h w))
@@ -472,7 +472,7 @@ theorem tj_cov [FiniteDimensional K V] (F F' : FlagD H r) (j : ℕ) (hj : j ≤ 
       have e0 : κ' w = (κ' w - b' w) + b' w := by abel
       have e1 : g (κ' w) = (κ' w - b' w) + b' v := by
         conv_lhs => rw [e0]
-        rw [map_add, hfix _ (tj_X_le' F F' (hb1' w)), hg3 (b' w), hta, hbv]
+        rw [map_add (f := _), hfix _ (tj_X_le' F F' (hb1' w)), hg3 (b' w), hta, hbv]
       have e2 : g (κ' w) - κ' v = (κ' w - b' w) - (κ' v - b' v) := by rw [e1]; abel
       rw [e2]
       exact F'.X.sub_mem (hb1' w) (hb1' v)
@@ -559,11 +559,11 @@ theorem tj_Q (D : D7) (hind : LinearIndependent D.host.E D.sp.hypE) (y : (hS D).
     · funext b
       have hz : (hS D).hT (D.sp.hypE b) D.sp.zm = 0 := p_symm_zero _ (D.sp.hyp_orthz b).1
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_smul, smul_eq_mul, D.sp.hyp_ef, hz, mul_zero, add_zero, mul_ite, mul_one,
+        simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, D.sp.hyp_ef, hz, mul_zero, add_zero, mul_ite, mul_one,
         Finset.sum_ite_eq, Finset.mem_univ, if_true]
     · have hz : ∀ a, (hS D).hT D.sp.zm (D.sp.hypF a) = 0 := fun a => (D.sp.hyp_orthz a).2
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_smul, smul_eq_mul, hz, mul_zero, Finset.sum_const_zero, zero_add, D.sp.zm_norm]
+        simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, hz, mul_zero, Finset.sum_const_zero, zero_add, D.sp.zm_norm]
       field_simp
   have hker : Module.finrank D.host.E (LinearMap.ker L) = D.R.k + D.R.rS := by
     have h := LinearMap.finrank_range_add_finrank_ker L
@@ -1587,7 +1587,7 @@ theorem chk_mem_Hp (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.IsLattice E Λ
     exact ⟨fun w hw => h w (Submodule.mem_sup_left hw), fun w hw => h w (Submodule.mem_sup_right hw)⟩
   · rintro ⟨h1, h2⟩ w hw
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hw
-    rw [map_add, LinearMap.add_apply, h1 a ha, h2 b hb, add_zero]
+    rw [map_add (f := _), LinearMap.add_apply, h1 a ha, h2 b hb, add_zero]
 
 theorem chk_orth_parts (F : LFlag S r T) {x : S.V} (h : x ∈ orth S (Xplus F)) :
     x ∈ orth S (Xsp F) ∧ S.hT F.fl.z x = 0 := by
@@ -1720,7 +1720,7 @@ theorem Hp_le_Q : Hp Λ F F' ≤ t3Q F F' := by
   rw [t3Q, a_mem_orth]
   intro w hw
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hw
-  rw [map_add, LinearMap.add_apply, (a_mem_orth _ _).1 (chk_orth_parts F h1).1 a ha,
+  rw [map_add (f := _), LinearMap.add_apply, (a_mem_orth _ _).1 (chk_orth_parts F h1).1 a ha,
     (a_mem_orth _ _).1 (chk_orth_parts F' h2).1 b hb, add_zero]
 
 theorem I_le_Hp : Isp F.fl F'.fl ≤ Hp Λ F F' := by
@@ -1825,7 +1825,7 @@ theorem intersection_index_le_card_B (Λ : Submodule (𝓞 E) S.V) (F : LFlag S 
     rw [t3Q, a_mem_orth]
     intro w hw
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hw
-    rw [map_add, LinearMap.add_apply, b_X_X F ha hx.1, b_X_X F' hb hx.2, add_zero]
+    rw [map_add (f := _), LinearMap.add_apply, b_X_X F ha hx.1, b_X_X F' hb hx.2, add_zero]
   refine lattice_index_le_of_map (fun y b => ∃ l ∈ Λ, ∃ l' ∈ Λ, y - l ∈ Xsp F ∧ y - l' ∈ Xsp F' ∧ b = l - l') hfin ?_ ?_
   · rintro y ⟨⟨⟨h1, -⟩, -⟩, ⟨⟨h2, -⟩, -⟩⟩
     obtain ⟨l, hl, x, hx, rfl⟩ := Submodule.mem_sup.1 h1
@@ -1882,7 +1882,7 @@ theorem I_le_Q (F : LFlag S r T) (F' : LFlag S r T') : Isp F.fl F'.fl ≤ t3Q F 
   rw [t3Q, a_mem_orth]
   intro w hw
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hw
-  rw [map_add, LinearMap.add_apply, b_X_X F ha hx.1, b_X_X F' hb hx.2, add_zero]
+  rw [map_add (f := _), LinearMap.add_apply, b_X_X F ha hx.1, b_X_X F' hb hx.2, add_zero]
 
 theorem Q_le_orth_X (F : LFlag S r T) (F' : LFlag S r T') : t3Q F F' ≤ orth S (Xsp F) := by
   intro x hx
@@ -1898,7 +1898,7 @@ theorem Q_inf_X_le_I (F : LFlag S r T) (F' : LFlag S r T') (c : E) (hzc : F'.fl.
   have hzx : S.hT F.fl.z x = 0 := LinearMap.mem_ker.1 (a_z_X F hX)
   have hz'x : S.hT F'.fl.z x = 0 := by
     have e : F'.fl.z = c • F.fl.z + (F'.fl.z - c • F.fl.z) := by abel
-    rw [e, map_add, LinearMap.add_apply, map_smulₛₗ, LinearMap.smul_apply, hzx, smul_zero, zero_add]
+    rw [e, map_add (f := _), LinearMap.add_apply, map_smulₛₗ, LinearMap.smul_apply, hzx, smul_zero, zero_add]
     exact hQ' _ hzc
   have hle : F.fl.X ⊔ Submodule.span E {F.fl.z} ⊔ (F'.fl.X ⊔ Submodule.span E {F'.fl.z}) ≤ LinearMap.ker (S.hT.flip x) := by
     refine sup_le (sup_le ?_ (Submodule.span_le.2 ?_)) (sup_le ?_ (Submodule.span_le.2 ?_))
@@ -1922,7 +1922,7 @@ theorem orth_X_le_Q_sup_X (F : LFlag S r T) (F' : LFlag S r T') (hT : T ≠ 0) (
     intro w hw
     obtain ⟨v, hv, v', hv', rfl⟩ := Submodule.mem_sup.1 hw
     have h1 : S.hT v (F.fl.z + c⁻¹ • a) = 0 := by
-      rw [map_add, map_smul, (flag_span_orth_normal F hv).1, b_X_X F hv ha, smul_zero, add_zero]
+      rw [map_add (f := _), map_smul, (flag_span_orth_normal F hv).1, b_X_X F hv ha, smul_zero, add_zero]
     have h2 : S.hT v' (F.fl.z + c⁻¹ • a) = 0 := by
       rw [e1, map_smul, map_sub, (flag_span_orth_normal F' hv').1, b_X_X F' hv' ha', sub_zero, smul_zero]
     rw [LinearMap.map_add₂, h1, h2, add_zero]
@@ -2001,7 +2001,7 @@ theorem lattice_index_L_finite (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.Is
     intro l hl
     obtain ⟨q, hq, x, hx, rfl⟩ := Submodule.mem_sup.1 (hXQ hl)
     obtain ⟨c, hc, i, hi, rfl⟩ := Submodule.mem_sup.1 (hCQ hq)
-    have e : p (c + i + x) = c := by rw [map_add, map_add, hp1 c hc, hp2 i hi.1, hp2 x hx, add_zero, add_zero]
+    have e : p (c + i + x) = c := by rw [map_add (f := _), map_add (f := _), hp1 c hc, hp2 i hi.1, hp2 x hx, add_zero, add_zero]
     rw [e]
     refine ⟨hc, ?_⟩
     have e2 : c + i + x - c = i + x := by abel
@@ -2229,9 +2229,9 @@ theorem frame_determinant_bound (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.I
     have h1 : S.hT (l + q) x0 = 0 := b_X_X F hx2' hx0'
     have h2 : S.hT q (m + x0) = 0 := p_symm_zero S (hq' _ (Submodule.mem_sup_right hy2'))
     have h3 : S.hT q x0 = 0 := p_symm_zero S (hq' _ (Submodule.mem_sup_left hx0'))
-    have h4 : S.hT q m = 0 := by rw [map_add, h3, add_zero] at h2; exact h2
+    have h4 : S.hT q m = 0 := by rw [map_add (f := _), h3, add_zero] at h2; exact h2
     have e : S.hT (l + q) (m + x0) = S.hT l m := by
-      rw [map_add, h1, add_zero, LinearMap.map_add₂, h4, add_zero]
+      rw [map_add (f := _), h1, add_zero, LinearMap.map_add₂, h4, add_zero]
     rw [e]
     obtain ⟨o, ho⟩ := Submodule.mem_one.1 (i_int Λ hu hl.1 hm)
     exact ⟨o, ho⟩
@@ -2254,7 +2254,7 @@ theorem frame_determinant_bound (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.I
       have k2 : S.hT i a = 0 := b_X_X F hi.1 (hXjX ha)
       have k3 : S.hT y a = 0 := by
         have k4 := h2' y (Submodule.mem_sup_right hy)
-        rw [map_add, b_X_X F' (hXjX' hy) (hXjX' ha'), add_zero] at k4
+        rw [map_add (f := _), b_X_X F' (hXjX' hy) (hXjX' ha'), add_zero] at k4
         exact k4
       rw [LinearMap.map_add₂, LinearMap.map_add₂, k1, k2, k3]; simp
     have haQ' : a' ∈ t3Q F F' := by
@@ -2266,7 +2266,7 @@ theorem frame_determinant_bound (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.I
       have k2 : S.hT i a' = 0 := b_X_X F' hi.2 (hXjX' ha')
       have k3 : S.hT y a' = 0 := by
         have k4 := h2' y (Submodule.mem_sup_left hy)
-        rw [map_add, b_X_X F (hXjX hy) (hXjX ha), zero_add] at k4
+        rw [map_add (f := _), b_X_X F (hXjX hy) (hXjX ha), zero_add] at k4
         exact k4
       rw [LinearMap.map_add₂, LinearMap.map_add₂, k1, k2, k3]; simp
     have ha0 : a ∈ Xflag F j ⊓ Isp F.fl F'.fl := ⟨ha, hQX ⟨haQ, hXjX ha⟩⟩
@@ -2296,7 +2296,7 @@ theorem frame_determinant_bound (Λ : Submodule (𝓞 E) S.V) (hΛ : Submodule.I
     refine ⟨o1 + o2, ?_⟩
     have z1 : S.hT p p' = 0 := b_X_X F hp.1.2 hp'.1.2
     have z2 : S.hT b b' = 0 := b_X_X F' hb.1.2 hb'.1.2
-    rw [LinearMap.map_add₂, map_add, map_add, z1, z2, ← ho1, ← ho2]
+    rw [LinearMap.map_add₂, map_add (f := _), map_add (f := _), z1, z2, ← ho1, ← ho2]
     push_cast
     ring
   have fN0 : N0.FG := (g_fg_of_le Λ hΛ inf_le_left).sup (g_fg_of_le Λ hΛ inf_le_left)
@@ -3881,7 +3881,7 @@ theorem ng_modK_nonunit (hOK : M.OK) (a : 𝒪[F]) (ha0 : (a : F) ≠ 0) (hau : 
       map_zero' := by simp
       map_add' := by
         intro p p'
-        simp only [Prod.fst_add, Prod.snd_add, Subring.coe_add, map_add]
+        simp only [Prod.fst_add, Prod.snd_add, Subring.coe_add, map_add (f := _)]
         ring }
   have hψ : ∀ p, ψ p = algebraMap F E (p.1 : F) + algebraMap F E (p.2 : F) * θ := fun _ => rfl
   have hψinj : Function.Injective ψ := by
@@ -3891,7 +3891,7 @@ theorem ng_modK_nonunit (hOK : M.OK) (a : 𝒪[F]) (ha0 : (a : F) ≠ 0) (hau : 
     simp only at h0
     have h1 : algebraMap F E (x : F) - algebraMap F E (y : F) * θ = 0 := by
       have := congrArg M.L.cj h0
-      rw [map_add, map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hθc, map_zero] at this
+      rw [map_add (f := _), map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hθc, map_zero] at this
       rw [← this]; ring
     have h2 : algebraMap F E (2 * (x : F)) = 0 := by
       rw [map_mul, map_ofNat]
@@ -4670,7 +4670,7 @@ theorem ng_K_eq (hP : P.PrimeTo) {d : Datum P} {t₁ t₂ : Term V M r} (h₁ : 
     induction hx using Submodule.span_induction with
     | mem x hx => obtain ⟨a, rfl⟩ := hx; exact ho.1 _
     | zero => rw [H.h_herm 0 _, H.h_zero_left, map_zero]
-    | add x y _ _ hx hy => rw [H.h_herm (x + y) _, H.h_add_left, map_add, ← H.h_herm, ← H.h_herm, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [H.h_herm (x + y) _, H.h_add_left, map_add (f := _), ← H.h_herm, ← H.h_herm, hx, hy, add_zero]
     | smul c x _ hx => rw [H.h_herm (c • x) _, H.h_smul_left, map_mul, ← H.h_herm, hx, mul_zero]
   have hx1 : w0 - n₁ w0 ∈ H.X P.A.f := by
     have := (NSet_inv P.A hN₁).2.2 _ hperp
@@ -4715,7 +4715,7 @@ theorem ng_orth_perp (Fr : FrameD H r) {k : V} (h : ∀ b, H.h k (Fr.f b) = 0) :
   induction hx using Submodule.span_induction with
   | mem x hx => obtain ⟨a, rfl⟩ := hx; exact h _
   | zero => rw [H.h_herm 0 _, H.h_zero_left, map_zero]
-  | add x y _ _ hx hy => rw [H.h_herm (x + y) _, H.h_add_left, map_add, ← H.h_herm, ← H.h_herm, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [H.h_herm (x + y) _, H.h_add_left, map_add (f := _), ← H.h_herm, ← H.h_herm, hx, hy, add_zero]
   | smul c x _ hx => rw [H.h_herm (c • x) _, H.h_smul_left, map_mul, ← H.h_herm, hx, mul_zero]
 
 theorem ng_X_le_Xp (f : Fin (r + 1) → V) : H.X f ≤ H.Xp f := by
@@ -4780,14 +4780,14 @@ theorem ng_unique (hP : P.PrimeTo) (hX : H.Xp P.A.f ⊓ H.Xp P.B.f = ⊥) (hC : 
     rw [← hM] at hm0
     obtain ⟨m0', hm0', rfl⟩ := hm0
     refine ⟨m0' + (v - sO m0'), t₁.abelian₂.add_mem (hM1 hm0') (ng_K_eq hP h₂ h₁ hk hko), ?_⟩
-    rw [map_add, hsv (v - sO m0'), ng_St_fix hX hsS hko]
+    rw [map_add (f := _), hsv (v - sO m0'), ng_St_fix hX hsS hko]
     abel
   · rintro _ ⟨v, hv, rfl⟩
     obtain ⟨m0, hm0, hk, hko⟩ := ng_term_split hP h₁ hv
     have e : sO v = sO m0 + (v - m0) := by
       have : v = m0 + (v - m0) := by abel
       conv_lhs => rw [this]
-      rw [map_add, hsv (v - m0), ng_St_fix hX hsS hko]
+      rw [map_add (f := _), hsv (v - m0), ng_St_fix hX hsS hko]
     rw [e]
     refine t₂.abelian₂.add_mem (hM2 ?_) (ng_K_eq hP h₁ h₂ hk hko)
     rw [← hM]
@@ -4870,7 +4870,7 @@ theorem ng_img_of_M (hP : P.PrimeTo) (hX : H.Xp P.A.f ⊓ H.Xp P.B.f = ⊥) {d :
     have e : s v = s m0 + (v - m0) := by
       have : v = m0 + (v - m0) := by abel
       conv_lhs => rw [this]
-      rw [map_add, ng_St_fix hX hsS hko]
+      rw [map_add (f := _), ng_St_fix hX hsS hko]
     rw [e]
     refine t₂.abelian₂.add_mem (hM2 ?_) (ng_K_eq hP h₁ h₂ hk hko)
     rw [← hM]
@@ -4883,7 +4883,7 @@ theorem ng_img_of_M (hP : P.PrimeTo) (hX : H.Xp P.A.f ⊓ H.Xp P.B.f = ⊥) {d :
     have hm' : s m0' = m0 := hm
     refine ⟨m0' + (v - m0), t₁.abelian₂.add_mem (hM1 hm0') (ng_K_eq hP h₂ h₁ hk hko), ?_⟩
     show s (m0' + (v - m0)) = v
-    rw [map_add, ng_St_fix hX hsS hko, hm']
+    rw [map_add (f := _), ng_St_fix hX hsS hko, hm']
     abel
 
 def ngME (P : FPair H r) : Submodule E V := Submodule.span E (Set.range (Sum.elim P.A.f P.B.f))
@@ -4901,7 +4901,7 @@ theorem ng_St_ME {s : V ≃ₗ[E] V} (hs : s ∈ P.St) {x : V} (hx : x ∈ ngME 
       rw [Sum.elim_inr, h]
       exact Submodule.sum_mem _ (fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨Sum.inr i, rfl⟩))
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem ng_ME_le {d : Datum P} {t : Term V M r} (ht : IsTermOver P d t) :
@@ -5994,7 +5994,7 @@ variable {M : Model F E} {V : Type} [AddCommGroup V] [Module E V]
 variable {H : HermSp M V} {r : ℕ}
 
 theorem ngs_add_right (x y y' : V) : H.h x (y + y') = H.h x y + H.h x y' := by
-  rw [H.h_herm (y + y') x, H.h_add_left, map_add, ← H.h_herm, ← H.h_herm]
+  rw [H.h_herm (y + y') x, H.h_add_left, map_add (f := _), ← H.h_herm, ← H.h_herm]
 
 theorem ngs_perp_span {ι : Type} (m : ι → V) {x y : V} (hx : ∀ j, H.h x (m j) = 0)
     (hy : y ∈ Submodule.span E (Set.range m)) : H.h x y = 0 := by
@@ -6273,7 +6273,7 @@ theorem ngs_mem_NSet (Fr : FrameD H r) (f' : Fin (r + 1) → V) (s : V ≃ₗ[E]
         rw [H.h_herm (Fr.f a) μ, ngs_perp_span Fr.f (fun j => Fr.h_iso a j (Or.inl hne)) hμ, map_zero]
       rwa [h1, zero_add] at h0
     have hfix : s μ' = μ' := ngs_fix Fr f' s hs C hC hsf hsf' hinj hμ' hμ'e
-    have e : s (μ + μ' + k) - (μ + μ' + k) = s μ - μ := by rw [map_add, map_add, hfix, hsk]; abel
+    have e : s (μ + μ' + k) - (μ + μ' + k) = s μ - μ := by rw [map_add (f := _), map_add (f := _), hfix, hsk]; abel
     rw [e]
     exact hμX
 
@@ -6638,7 +6638,7 @@ theorem ngu_congr_index {ι : Type} [Fintype ι] (m : ι → V) (c : E) (hfin : 
     | add x y _ _ hx hy =>
       obtain ⟨w1, h1, e1⟩ := hx
       obtain ⟨w2, h2, e2⟩ := hy
-      exact ⟨w1 + w2, Λ.add_mem h1 h2, by rw [map_add, map_add, smul_add, ← e1, ← e2]; abel⟩
+      exact ⟨w1 + w2, Λ.add_mem h1 h2, by rw [map_add (f := _), map_add (f := _), smul_add, ← e1, ← e2]; abel⟩
     | smul o x _ hx =>
       obtain ⟨w1, h1, e1⟩ := hx
       refine ⟨(o : E) • w1, ngu_smulO Λ o.2 h1, ?_⟩
@@ -6650,7 +6650,7 @@ theorem ngu_congr_index {ι : Type} [Fintype ι] (m : ι → V) (c : E) (hfin : 
   refine ⟨(a : V ≃ₗ[E] V).symm w1, hinv.le ⟨w1, h1, rfl⟩, ?_⟩
   show (a : V ≃ₗ[E] V).symm ((b : V ≃ₗ[E] V) x) - x = c • (a : V ≃ₗ[E] V).symm w1
   have e2 : (b : V ≃ₗ[E] V) x = (a : V ≃ₗ[E] V) x + c • w1 := by rw [← e1]; abel
-  rw [e2, map_add, LinearEquiv.symm_apply_apply, map_smul]; abel
+  rw [e2, map_add (f := _), LinearEquiv.symm_apply_apply, map_smul]; abel
 
 theorem ngu_stab {Λ Λ' : Submodule M.L.O V} {d d' : E} (hdd : d' * d = 1) (h2 : ∀ x ∈ Λ', d • x ∈ Λ)
     (h1 : ∀ x ∈ Λ, d • x ∈ Λ') {κ : V ≃ₗ[E] V} (hκ : img κ Λ = Λ)
@@ -6698,7 +6698,7 @@ theorem ngu_img_le {ι : Type} (m : ι → V) (g : V ≃ₗ[E] V) (Λ' : Submodu
   induction hx using Submodule.span_induction with
   | mem x hx => obtain ⟨j, rfl⟩ := hx; exact h j
   | zero => rw [map_zero]; exact Λ'.zero_mem
-  | add x y _ _ hx hy => rw [map_add]; exact Λ'.add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Λ'.add_mem hx hy
   | smul o x _ hx =>
     have e : g (o • x) = (o : E) • g x := by
       show g ((o : E) • x) = _

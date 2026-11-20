@@ -22,7 +22,7 @@ theorem unitaryEq_baseChange {F E R K : Type} [Field F] [Field E] [Algebra F E] 
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => simp [hφ', sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hJ : (JR R J).map φ' = JR K J := by
     ext i j
     simp [JR, inclR, hφ']

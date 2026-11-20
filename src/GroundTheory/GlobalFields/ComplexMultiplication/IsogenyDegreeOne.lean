@@ -37,7 +37,7 @@ theorem eq_of_equation_genX_genY {W' : WeierstrassCurve F}
   set Q : F[X] := C (W.a₁ - W'.a₁) * X + C (W.a₃ - W'.a₃) with hQ
   have key : algebraMap F[X] W.toAffine.FunctionField P +
       algebraMap F[X] W.toAffine.FunctionField Q * genY W = 0 := by
-    simp only [hP, hQ, map_add, map_mul, map_neg, map_pow, algebraMap_C_functionField, ← genX_eq,
+    simp only [hP, hQ, map_add (f := _), map_mul, map_neg, map_pow, algebraMap_C_functionField, ← genX_eq,
       map_sub]
     linear_combination eW - eW'
   obtain ⟨hP0, hQ0⟩ := eq_zero_of_algebraMap_add_mul_genY W key
@@ -101,7 +101,7 @@ theorem exists_eq_linear_of_valuation {f : W.toAffine.FunctionField}
     · rintro rfl
       simp at hp1
     · rw [algebraMap_smul_basis, map_zero, zero_mul, add_zero]
-      simp only [map_add, map_mul, algebraMap_C_functionField, ← genX_eq]
+      simp only [map_add (f := _), map_mul, algebraMap_C_functionField, ← genX_eq]
   · exfalso
     by_cases hp : p = 0
     · subst hp
@@ -142,7 +142,7 @@ theorem exists_eq_genY_form_of_valuation {g : W.toAffine.FunctionField}
   · rintro rfl
     exact hq (map_zero C)
   · rw [algebraMap_smul_basis]
-    simp only [map_add, map_mul, algebraMap_C_functionField, ← genX_eq]
+    simp only [map_add (f := _), map_mul, algebraMap_C_functionField, ← genX_eq]
     ring
 
 end Poles
@@ -199,7 +199,7 @@ theorem exists_variableChange_of_degree_eq_one_of_isAlgClosed (ψ : Isogeny A B)
       C (2 * γ * ε + B.a₁ * γ * β + B.a₃ * γ - γ ^ 2 * A.a₃) with hQ
     have key : algebraMap F[X] A.toAffine.FunctionField P +
         algebraMap F[X] A.toAffine.FunctionField Q * genY A = 0 := by
-      simp only [hP, hQ, map_add, map_mul, map_pow, algebraMap_C_functionField, ← genX_eq, map_sub,
+      simp only [hP, hQ, map_add (f := _), map_mul, map_pow, algebraMap_C_functionField, ← genX_eq, map_sub,
         map_ofNat]
       linear_combination eB - ι γ ^ 2 * eA
     have c3 := congrArg (Polynomial.coeff · 3) (eq_zero_of_algebraMap_add_mul_genY A key).1

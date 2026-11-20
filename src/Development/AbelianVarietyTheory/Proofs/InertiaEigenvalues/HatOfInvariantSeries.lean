@@ -65,7 +65,7 @@ theorem iSD_eq_iHat_of_hat : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a]
     set D : S O K e → OD l O := fun s => crisToOD l O (ϖ.iS O K s) -
       ϖ.iHat O K (toHatS O K l e (algebraMap (S O K e) (invL l (S O K e)) s)) with hD
     have hDadd : ∀ p q : S O K e, D (p + q) = D p + D q := fun p q => by
-      simp only [hD, map_add]; ring
+      simp only [hD, map_add (f := _)]; ring
     have hDmul : ∀ (k : ℕ) (q : S O K e), D ((l : S O K e) ^ k * q) = (l : OD l O) ^ k * D q := fun k q => by
       simp only [hD, map_mul, map_pow, map_natCast]; ring
     have hdiv : ∀ m : ℕ, ξ ^ m ∣ D s := by

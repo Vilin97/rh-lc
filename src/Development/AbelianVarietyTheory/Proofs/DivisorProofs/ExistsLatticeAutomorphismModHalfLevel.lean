@@ -34,7 +34,7 @@ theorem exists_induced (N : Submodule R L) (φ : L →+ A) (s : R → A →+ A) 
   let g0 : L →ₗ[R] (L ⧸ N) :=
     { toFun := fun a => N.mkQ (g a)
       map_add' := fun a b => by
-        rw [← map_add, key, map_add, map_add, map_add, add_sub_add_comm]
+        rw [← map_add (f := _), key, map_add (f := _), map_add (f := _), map_add (f := _), add_sub_add_comm]
         exact add_mem (hg a) (hg b)
       map_smul' := fun r a => by
         rw [RingHom.id_apply, ← map_smul, key, hφs, hφs, hks, ← map_sub]
@@ -97,7 +97,7 @@ theorem map_closure_mem (I : Ideal (𝓞 D.host.E))
     obtain ⟨b, hb, z, hz, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨b, hb, k z, hk z hz, hks b z⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 end Space
@@ -127,7 +127,7 @@ theorem exists_levGrp_induced : ∀ (D : D7) (V : HSp D) (H : ReciprocityTheory.
       ⟨_, sub_mem (GlobalTheory.RecDict.finHom_inv_mulVec_mem V κ hκ0 z hz) hz, (one_smul _ _).symm⟩
   let φ : Dw.La →+ (Fin V.rank → Af D.host.F ⊗[D.host.F] D.host.E) :=
     AddMonoidHom.mk' (fun a => finVec V (ι a)) fun a b => by
-      rw [map_add]
+      rw [map_add (f := _)]
       exact GlobalTheory.Member.AALev.fv_add _ _
   have hmem : ∀ a, ι a ∈ latG V 1 := fun a => hι.2 ▸ LinearMap.mem_range_self ι a
   have hsH : ∀ r, ∀ z ∈ latGHat V 1, halfHom V r z ∈ latGHat V 1 := by

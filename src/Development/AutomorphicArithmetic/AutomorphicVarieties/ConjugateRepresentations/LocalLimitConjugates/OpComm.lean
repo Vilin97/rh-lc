@@ -24,7 +24,7 @@ theorem UpperTheory.V.Cj.H.opComm :
       have h4 := liftCv E a ha μ T hT T' hL _ _ F (((testOps E a ψ).2 hψ).1 X) h3
       exact Subtype.ext (h2.trans h4.symm)
     | zero => simp only [map_zero]
-    | add x y _ _ hx hy => simp only [map_add, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
     | smul s x _ hx => simp only [map_smul, hx]
   · have m1 : rt E a g (T' φ) ∈ gard μ := (gf _ (hL φ hφ).1).2.2.2.2 g
     have m0 : rt E a g φ ∈ gard μ := (gf _ hφ).2.2.2.2 g

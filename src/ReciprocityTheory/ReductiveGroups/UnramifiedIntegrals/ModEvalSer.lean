@@ -44,7 +44,7 @@ theorem conv_of_hasSum {f : PowerSeries ℂ}
 theorem Conv.add {f g : PowerSeries ℂ} (hf : Conv f) (hg : Conv g) : Conv (f + g) := by
   intro x hx
   refine Summable.of_nonneg_of_le (fun n => by positivity) (fun n => ?_) ((hf x hx).add (hg x hx))
-  rw [map_add, ← add_mul]
+  rw [map_add (f := _), ← add_mul]
   exact mul_le_mul_of_nonneg_right (norm_add_le _ _) (by positivity)
 
 theorem Conv.sub {f g : PowerSeries ℂ} (hf : Conv f) (hg : Conv g) : Conv (f - g) := by
@@ -153,7 +153,7 @@ theorem ev_add {f g : PowerSeries ℂ} (hf : Conv f) (hg : Conv g) {x : ℂ} (hx
   have e : (fun n => PowerSeries.coeff n (f + g) * x ^ n) =
       fun n => PowerSeries.coeff n f * x ^ n + PowerSeries.coeff n g * x ^ n := by
     funext n
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
   rw [← e] at h
   exact h.tsum_eq
 

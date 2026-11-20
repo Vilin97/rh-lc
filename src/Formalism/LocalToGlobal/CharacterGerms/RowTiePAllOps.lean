@@ -31,9 +31,9 @@ theorem allSet_add (V : VF C) (g : Fin 2) (hA : X.AddCvSt V) (hu : ∀ g c i, V.
   · intro q
     obtain ⟨c0, cI⟩ := hS (X.u (1 - g) q) (hu (1 - g) q)
     refine ⟨?_, fun n => ?_⟩
-    · rw [map_add, map_add, (hlam q).1, (hlam' q).1, c0]
+    · rw [map_add (f := _), map_add (f := _), (hlam q).1, (hlam' q).1, c0]
       simp
-    · rw [map_add, map_add]
+    · rw [map_add (f := _), map_add (f := _)]
       exact (((hlam q).2 n).add ((hlam' q).2 n)).add (cI n)
   · intro i
     rw [hL i, h1 i, h1' i, ← Finset.sum_add_distrib]
@@ -75,7 +75,7 @@ theorem allSet_repar {V : VF C} {g : Fin 2} (τ : PowerSeries C) (hτ : PowerSer
     rw [map_smul, PowerSeries.coe_substAlgHom hS, hxx]
   · intro q
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [alongCv_repar (fun i => (hγ i).1) hτ, hxx, h2 q, ← PowerSeries.coe_substAlgHom hS, map_add, map_sub,
+      rw [alongCv_repar (fun i => (hγ i).1) hτ, hxx, h2 q, ← PowerSeries.coe_substAlgHom hS, map_add (f := _), map_sub,
       map_sum]
     congr 1
     refine Finset.sum_congr rfl fun c _ => ?_

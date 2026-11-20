@@ -36,7 +36,7 @@ theorem exists_hom_of_range {K K' : Type} [Field K] [Field K'] (σ : K →+* ℂ
            map_one' := σ'.injective (by rw [hg, map_one, map_one])
            map_mul' := fun a b => σ'.injective (by rw [map_mul σ', hg, hg, hg, map_mul])
            map_zero' := σ'.injective (by rw [hg, map_zero, map_zero])
-           map_add' := fun a b => σ'.injective (by rw [map_add σ', hg, hg, hg, map_add]) }, hg⟩
+           map_add' := fun a b => σ'.injective (by rw [map_add σ', hg, hg, hg, map_add (f := _)]) }, hg⟩
 
 set_option maxHeartbeats 4000000 in
 

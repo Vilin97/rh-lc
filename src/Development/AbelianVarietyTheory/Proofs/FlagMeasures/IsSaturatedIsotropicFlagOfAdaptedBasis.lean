@@ -40,8 +40,8 @@ theorem isSatFlag_of_isAdapted (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (xf : I
       exact ⟨trivial, hu⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      refine ⟨?_, fun i hi => by rw [map_add, hx.2 i hi, hy.2 i hi, add_zero]⟩
-      simp only [map_add, mulVec_add, Finset.sum_add_distrib]
+      refine ⟨?_, fun i hi => by rw [map_add (f := _), hx.2 i hi, hy.2 i hi, add_zero]⟩
+      simp only [map_add (f := _), mulVec_add, Finset.sum_add_distrib]
       rw [← hx.1, ← hy.1]
     | smul c x _ hx =>
       refine ⟨?_, fun i hi => by rw [map_smul, hx.2 i hi, smul_zero]⟩
@@ -118,7 +118,7 @@ theorem isSatFlag_of_isAdapted (I I₀ : AutInst) (e : I₀.E ≃+* I.E) (xf : I
         simp only [p, mulVecLin_apply, mulVec_mulVec]
         rw [(h2 i).2.2]; simp
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [hz, map_add, map_add, pS, a2, map_sum]
+        rw [hz, map_add (f := _), map_add (f := _), pS, a2, map_sum]
       simp [a1]
     obtain ⟨b1, b2⟩ := hsp k y hy'
     exact (hS k y).2 ⟨fun i => p i y, fun i => by simpa only [hp] using hu i, b2, b1⟩

@@ -22,7 +22,7 @@ theorem chain_aeval {σ τ : Type} [Fintype σ] (S : MvPolynomial σ C →ₐ[C]
   | C a =>
     simp [MvPolynomial.algHom_C, MvPolynomial.pderiv_C]
   | add p q hp hq =>
-    simp only [map_add, hp, hq, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hp, hq, add_mul, Finset.sum_add_distrib]
   | mul_X p i hp =>
     have key : ∀ y, S (pderiv y (p * X i)) = (if i = y then S p else 0) + S (X i) * S (pderiv y p) := by
       intro y

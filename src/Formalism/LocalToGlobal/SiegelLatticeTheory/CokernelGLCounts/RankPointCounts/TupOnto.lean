@@ -363,12 +363,12 @@ theorem levi_keeps (hUn : Formalism.HermitianLatticesTheory.IsUnimodular S.hT Λ
     have h0 : S.hT (ν.symm b') b = 0 :=
       hT_span_span f hff (hfspan _ (latSpan_le_spanE _ f hb')) (latSpan_le_spanE _ f hb)
     have hw' : ν.symm (a' + l' + b') = (ν.symm a' + l') + ν.symm b' := by
-      rw [map_add, map_add, hfixLs l' hl']
+      rw [map_add (f := _), map_add (f := _), hfixLs l' hl']
     calc S.hT (ν.symm a' + l') b = S.hT (ν.symm (a' + l' + b')) b := by
           rw [hw', map_add S.hT (ν.symm a' + l') (ν.symm b'), LinearMap.add_apply, h0, add_zero]
       _ = S.hT (ν (ν.symm (a' + l' + b'))) (ν b) := (hiso _ _).symm
       _ = S.hT (a' + l' + b') (ν b) := by rw [LinearEquiv.apply_symm_apply]
-  rw [map_add, map_add, hfixL l hl]
+  rw [map_add (f := _), map_add (f := _), hfixL l hl]
   exact Λ.add_mem (Λ.add_mem (hA' a ha) (L_le aa e f L hΛeq hl)) hbΛ
 
 end Split
@@ -487,7 +487,7 @@ theorem exists_eigenvalueGLOne_eq_cuspidalLabel_gen (hUn : Formalism.HermitianLa
       simp [map_sum, hg]
   have ha0 := hzero e he_z a (latSpan_le_spanE aa e ha)
   have hb0 := hzero f (fun i => (hL z hzL i).2) b (latSpan_le_spanE _ f hb)
-  rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, ha0, hb0] at hσz
+  rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, ha0, hb0] at hσz
   simpa using hσz
 
 end Eich2
@@ -559,7 +559,7 @@ theorem nLamOnto_holds : TupLift.NLamOnto := by
           rw [h0, zero_smul]
           exact Submodule.zero_mem _
       | zero => simp
-      | add x y _ _ h h' => rw [map_add, add_sub_add_comm]; exact Submodule.add_mem _ h h'
+      | add x y _ _ h h' => rw [map_add (f := _), add_sub_add_comm]; exact Submodule.add_mem _ h h'
       | smul c x _ h => rw [map_smul, ← smul_sub]; exact Submodule.smul_mem _ _ h
     · intro x hx
       have hφ : ∀ a, (VS D).hT (G.e a) x = 0 := fun a =>

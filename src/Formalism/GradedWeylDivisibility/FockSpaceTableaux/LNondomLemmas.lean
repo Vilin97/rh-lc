@@ -38,7 +38,7 @@ lemma ndEul_coeff (s : Fin n) (g : MvPolynomial (Fin r × Fin n) R) (m : Fin r �
     split_ifs with h
     · subst h; simp
     · simp
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
   | mul_X p v hp =>
     have hX : ndEul R r n s (X v) = colW r n v s • X v := mkDerivation_X _ _ _
     rw [Derivation.leibniz, hX, MvPolynomial.coeff_add, smul_eq_mul, smul_eq_mul,
@@ -51,7 +51,7 @@ lemma ndEul_coeff (s : Fin n) (g : MvPolynomial (Fin r × Fin n) R) (m : Fin r �
       have hw : Finsupp.weight (fun v => colW r n v s) m =
           Finsupp.weight (fun v => colW r n v s) (m - Finsupp.single v 1) + colW r n v s := by
         conv_lhs => rw [hm]
-        rw [map_add, Finsupp.weight_single, one_smul]
+        rw [map_add (f := _), Finsupp.weight_single, one_smul]
       rw [hw, nsmul_eq_mul]; push_cast; ring
     · simp
 

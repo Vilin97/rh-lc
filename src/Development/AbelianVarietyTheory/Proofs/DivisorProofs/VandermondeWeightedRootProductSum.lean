@@ -34,7 +34,7 @@ theorem apolar_lin_pow {U E : Type} [Fintype U] (n : U → ℝ) (c : E → U →
       simp only [Finset.univ_unique, Finset.sum_singleton] at this
       rw [← this, MvPolynomial.pderiv_pow, hd]
       congr 2
-      simp only [map_mul, map_add, map_natCast, map_one, Nat.add_sub_cancel]
+      simp only [map_mul, map_add (f := _), map_natCast, map_one, Nat.add_sub_cancel]
       push_cast
       ring
     rw [Finset.card_insert_of_notMem he, Finset.prod_insert he, Finset.prod_insert he]

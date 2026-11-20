@@ -68,7 +68,7 @@ theorem exists_lin {K : Type} [Field K] [IsAlgClosed K] (hG : Out.GlobalFnsSt) {
     ⟨(map_one (uv M A.left) ▸ rep_uv 1).form (by rw [map_one, tr_one, Over.id_left]; abel),
       by simp⟩
     (fun q q' f f' hf hf' => ⟨(hf.1.mul (hf'.1.pull (tr (i q)).left)).form (by
-        simp only [map_add, map_sub, map_of_apply, Category.comp_id]
+        simp only [map_add (f := _), map_sub, map_of_apply, Category.comp_id]
         rw [← Over.comp_left, tr_tr, mul_comm q, map_mul]; abel), by
       have e : pl (GrpObj.inv : A ⟶ A).left (ρ q f') = ρ q (pl (GrpObj.inv : A ⟶ A).left f') := by
         rw [ρe, ρe, pl_pl, pl_pl, ← Over.comp_left, ← Over.comp_left, tr_inv (ii q)]
@@ -218,12 +218,12 @@ theorem exists_sym_lam : ∀ (K : Type) [Field K] [IsAlgClosed K] [CharZero K] (
   set p := cls P hP with hp
   have sy : ∀ (T : Over (Sp K)) (x y : T ⟶ A), ev p x y = ev p y x := fun T x y => by
     have e := congrArg (pull (lift y x).left) hs
-    rw [map_add, map_neg, map_zero, pull_id, ← pull_comp, ← Over.comp_left, comp_lift, lift_fst, lift_snd,
+    rw [map_add (f := _), map_neg, map_zero, pull_id, ← pull_comp, ← Over.comp_left, comp_lift, lift_fst, lift_snd,
       add_neg_eq_zero] at e
     exact e
   have b₁ : ∀ (T : Over (Sp K)) (x x' y : T ⟶ A), ev p (x * x') y = ev p x y + ev p x' y := fun T x x' y => by
     have e := congrArg (pull (lift x (lift x' y)).left) hb
-    simp only [map_add, map_neg, map_zero, ← pull_comp, ← Over.comp_left, comp_lift, MonObj.comp_mul, lift_fst,
+    simp only [map_add (f := _), map_neg, map_zero, ← pull_comp, ← Over.comp_left, comp_lift, MonObj.comp_mul, lift_fst,
       lift_snd, lift_snd_assoc] at e
     unfold ev
     rw [← sub_eq_zero, ← e]

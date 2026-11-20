@@ -201,7 +201,7 @@ theorem casimir_eq_neg_sum_sq : ∀ (n : ℕ) (J B : Matrix (Fin n) (Fin n) ℂ)
     have e1 : ρ (X (a, b, true)) = (1 / 2 : ℂ) • (R (F a b) - R (F b a)) := by
       rw [← hX]
       change R ((1 / 2 : ℂ) • (F a b + cj J (F a b))) = _
-      rw [cj_conj_single B hB h, map_smul, map_add, map_neg, ← sub_eq_add_neg]
+      rw [cj_conj_single B hB h, map_smul, map_add (f := _), map_neg, ← sub_eq_add_neg]
     have e2 : ρ (X (a, b, false)) = (1 / (2 * Complex.I) : ℂ) • (R (F a b) + R (F b a)) := by
       rw [← hX]
       change R ((1 / (2 * Complex.I) : ℂ) • (F a b - cj J (F a b))) = _

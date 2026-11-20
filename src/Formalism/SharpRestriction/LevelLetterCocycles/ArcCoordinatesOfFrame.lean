@@ -270,7 +270,7 @@ theorem φpow_span (T : LocLat G Qp LL O) (S : Set (W.DD T)) (k : ℕ) (z : W.DD
   let U : Submodule (LetA O n) (W.DD T) :=
     { carrier := {z | ((W.φD T) ^ k) z ∈ Submodule.span (LetA O n) (((W.φD T) ^ (k + 1)) '' S)}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_ofPred_eq, map_add] at ha hb ⊢; exact Submodule.add_mem _ ha hb
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at ha hb ⊢; exact Submodule.add_mem _ ha hb
       zero_mem' := by simp only [Set.mem_ofPred_eq, map_zero]; exact Submodule.zero_mem _
       smul_mem' := fun c z hz => by
         simp only [Set.mem_ofPred_eq] at hz ⊢
@@ -432,7 +432,7 @@ theorem crisMap_φVB {T₁ T₂ : LocLat G Qp LL O} (f : T₁.V →ₗ[LL] T₂.
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [Formalism.MainNotions.TruncatedSeriesCountingBounds.crisMap, φVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem crisMap_φVB_pow {T₁ T₂ : LocLat G Qp LL O} (f : T₁.V →ₗ[LL] T₂.V) (e : ℕ) (z : T₁.V ⊗[Qp] B) :
     Formalism.MainNotions.TruncatedSeriesCountingBounds.crisMap B f (((φVB PD (LL := LL) (V := T₁.V)) ^ e) z) =

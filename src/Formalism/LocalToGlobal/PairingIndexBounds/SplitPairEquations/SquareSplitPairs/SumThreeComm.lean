@@ -46,17 +46,17 @@ variable {D cc δ N N'}
 
 theorem qq_add (x y : TaylorLogMetric.VC D N N') :
     qq D cc δ N N' (x + y) = qq D cc δ N N' x + qq D cc δ N N' y + cp D cc δ N N' x y := by
-  simp only [qq, cp, map_add, LinearMap.add_apply, Complex.add_re]
+  simp only [qq, cp, map_add (f := _), LinearMap.add_apply, Complex.add_re]
   ring
 
 theorem bet_add_left (x x' y : TaylorLogMetric.VC D N N') :
     bet D cc δ N N' (x + x') y = bet D cc δ N N' x y + bet D cc δ N N' x' y := by
-  simp only [bet, cp, map_add, LinearMap.add_apply, Complex.add_re, Complex.add_im]
+  simp only [bet, cp, map_add (f := _), LinearMap.add_apply, Complex.add_re, Complex.add_im]
   ring
 
 theorem bet_add_right (x y y' : TaylorLogMetric.VC D N N') :
     bet D cc δ N N' x (y + y') = bet D cc δ N N' x y + bet D cc δ N N' x y' := by
-  simp only [bet, cp, map_add, LinearMap.add_apply, Complex.add_re, Complex.add_im]
+  simp only [bet, cp, map_add (f := _), LinearMap.add_apply, Complex.add_re, Complex.add_im]
   ring
 
 theorem good_add {a b : ℝ} (ha : ∃ k : ℤ, a = 2 * k) (hb : ∃ k : ℤ, b = 2 * k) : ∃ k : ℤ, a + b = 2 * k := by

@@ -99,7 +99,7 @@ theorem _root_.GlobalTheory.unramExt : _root_.ReciprocityTheory.ChartRestriction
     exact hw (_root_.GlobalTheory.isUnit_adjoinRoot_mk_of_aeval_ne_zero hint hμ hμmap hne)
   haveI : IsLocalRing (AdjoinRoot μ) := IsLocalRing.of_nonunits_add fun a b ha hb => by
     rw [hnon] at ha hb ⊢
-    rw [map_add, ha, hb, add_zero]
+    rw [map_add (f := _), ha, hb, add_zero]
   have hmax : maximalIdeal (AdjoinRoot μ) = RingHom.ker φ := by
     ext w
     rw [mem_maximalIdeal, hnon, RingHom.mem_ker]

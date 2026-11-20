@@ -223,7 +223,7 @@ theorem exists_toSesq_self_eq [FiniteDimensional E V] (h : HermitianForm F E V)
     (Units.mk0 b hb0) c
   refine ⟨e (x, y • w), ?_⟩
   rw [he, prod_apply, ofUnit_apply, h₀.toSesq_smul_left, h₀.toSesq_smul_right, ← hb, ← hxy]
-  simp only [Units.val_mk0, map_add, map_mul]
+  simp only [Units.val_mk0, map_add (f := _), map_mul]
   rw [← mul_conj (F := F) x, ← mul_conj (F := F) y]
   ring
 

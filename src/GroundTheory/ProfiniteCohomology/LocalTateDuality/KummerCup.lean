@@ -43,7 +43,7 @@ theorem bockSeq_kummerSeqOpen_compat₁₂ (W : Subgroup Gal(Ksep/K)) :
       simp
     rw [hnm, kummerSeqOpen_g_hom_apply, intMulPairing_tmul, intMulPairing_tmul, mul_zsmul',
       natCast_zsmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem bockSeq_kummerSeqOpen_compat₂₃ (hn : (n : K) ≠ 0) (W : Subgroup Gal(Ksep/K)) :
     (𝟙 (bockSeq W n).X₂ ⊗ₘ (kummerSeqOpen (K := K) (Ksep := Ksep) n W).f) ≫
@@ -65,7 +65,7 @@ theorem bockSeq_kummerSeqOpen_compat₂₃ (hn : (n : K) ≠ 0) (W : Subgroup Ga
     rw [zmodReduction_hom_apply, zmodMulPairing_tmul, intMulPairing_tmul,
       zsmul_eq_zsmul_of_intCast_eq (nsmul_res_galRootsOfUnity_eq_zero hn W)
         (ZMod.intCast_zmod_cast (m : ZMod n)) d, map_zsmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Pairings
 
@@ -200,7 +200,7 @@ def openChar (U : OpenSubgroup Gal(Ksep/K)) (z : cocycles (zmodRep.{0} (U : Subg
       simpa using h
     simp only [toMul_zero, map_one, h0, map_zero]
   map_add' σ τ := by
-    simp only [toMul_add, map_mul, zmodCocycleHom_mul, map_add]
+    simp only [toMul_add, map_mul, zmodCocycleHom_mul, map_add (f := _)]
   continuous_toFun :=
     (((isLocallyConstant_zmodCocycleHom z).comp_continuous
       ((continuous_galFixedFieldEquivOpen U).comp continuous_toMul)).comp (zmodToQZ n)).continuous

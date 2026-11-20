@@ -34,7 +34,7 @@ theorem size_add_le (b : Module.Basis (Fin d) F E) (x y : Ainf F ⊗[F] E) :
   refine Finset.sum_le_sum fun k _ => ?_
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_le_sum fun v _ => ?_
-  rw [map_add]
+  rw [map_add (f := _)]
   exact norm_add_le _ _
 
 theorem size_zero (b : Module.Basis (Fin d) F E) : sizeInf b (0 : Ainf F ⊗[F] E) = 0 := by

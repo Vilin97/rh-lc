@@ -32,7 +32,7 @@ theorem piW_cA {v : Pl F} (τ : E →ₐ[F] Fv F v) (σ : E →ₐ[F] E) (z : AE
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [NumberField E] in
 theorem piW_algebraMap {v : Pl F} (τ : E →ₐ[F] Fv F v) (a : AF F) :

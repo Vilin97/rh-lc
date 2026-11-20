@@ -89,7 +89,7 @@ theorem step_inj (r : ℕ) (a : Ainf p S.R) (x y w : S.R)
   refine ⟨fontaineTheta S.R p (phiInv p S.R w') + v0 * fontaineTheta S.R p (phiInv p S.R b),
     isSMulRegular_zeta_sub_one S (r + 1) ?_⟩
   simp only [smul_eq_mul]
-  rw [← hx, h3, map_add, map_mul, map_mul, theta_muN, hv0]
+  rw [← hx, h3, map_add (f := _), map_mul, map_mul, theta_muN, hv0]
   ring
 
 end GlobalTheory.PerfdLat.FrobQuot
@@ -110,7 +110,7 @@ theorem Rel.sub {r n : ℕ} {k k' : Fin n → Ainf p S.R} {x x' y y' : Fin n →
 
 theorem Rel.add {r n : ℕ} {k k' : Fin n → Ainf p S.R} {x x' y y' : Fin n → S.R} (h : Rel r k x y)
     (h' : Rel r k' x' y') : Rel r (k + k') (x + x') (y + y') :=
-  ⟨by rw [map_add, smul_add, smul_add, h.1, h'.1], by rw [map_add, map_add, smul_add, smul_add, h.2, h'.2]⟩
+  ⟨by rw [map_add (f := _), smul_add, smul_add, h.1, h'.1], by rw [map_add (f := _), map_add (f := _), smul_add, smul_add, h.2, h'.2]⟩
 
 theorem Rel.zero (r n : ℕ) : Rel (S := S) r (0 : Fin n → Ainf p S.R) 0 0 :=
   ⟨by simp, by simp⟩
@@ -265,7 +265,7 @@ theorem quotientAction_mk (r : ℕ) (a : S.R) (q : QQ D c r) : actP D c r (Ideal
 def bil (r : ℕ) : S.R ⧸ Ideal.span {(p : S.R)} →+ QQ D c (r + 1) →+ QQ D c r where
   toFun s := AddMonoidHom.comp (actP D c r s) (psi D c r)
   map_zero' := by rw [map_zero]; exact AddMonoidHom.zero_comp _
-  map_add' s t := by rw [map_add]; exact AddMonoidHom.add_comp _ _ _
+  map_add' s t := by rw [map_add (f := _)]; exact AddMonoidHom.add_comp _ _ _
 
 theorem bil_mk (r : ℕ) (a : S.R) (q : QQ D c (r + 1)) : bil D c r (Ideal.Quotient.mk _ a) q = a • psi D c r q :=
   quotientAction_mk D c r a _

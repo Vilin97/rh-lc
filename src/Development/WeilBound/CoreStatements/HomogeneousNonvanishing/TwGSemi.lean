@@ -24,7 +24,7 @@ theorem semi_complete {A : Type} [CommRing A] [IsNoetherianRing A] [IsLocalRing 
     | add x y hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
 
 theorem semi_unit_or_nil {Q : Type} [CommRing Q] [Finite Q] (h : ∀ e : Q, e * e = e → e = 0 ∨ e = 1) (x : Q) :
     IsUnit x ∨ IsNilpotent x := by
@@ -153,7 +153,7 @@ theorem semi_main (p : ℕ) [Fact p.Prime] (R : Type) [CommRing R] [Algebra ℤ_
       intro u hu x hx
       obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
       obtain ⟨r, rfl⟩ := Ideal.mem_span_singleton'.1 hb
-      have : σ (a + r * u) = (σ a + σ r * (σ u - u)) + σ r * u := by rw [map_add, map_mul]; ring
+      have : σ (a + r * u) = (σ a + σ r * (σ u - u)) + σ r * u := by rw [map_add (f := _), map_mul]; ring
       rw [this]
       exact Submodule.add_mem_sup (add_mem (hI a ha) (Ideal.mul_mem_left I _ hu)) (Ideal.mem_span_singleton'.2 ⟨_, rfl⟩)
     have hgt : ∀ u : R, u ∉ I → I < I ⊔ Ideal.span {u} := fun u hu =>

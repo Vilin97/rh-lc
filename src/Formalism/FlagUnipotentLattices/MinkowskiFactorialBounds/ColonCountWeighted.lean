@@ -247,7 +247,7 @@ lemma exists_max_above (E : Type) [Field E] [NumberField E] (I : Ideal (𝓞 E))
     obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp hb
     have hpx : p • x = 0 := hx ▸ addOrderOf_nsmul_eq_zero x
     have h2 : (Ideal.Quotient.mk I (c * (p : 𝓞 E))) = 1 := by
-      rw [← map_one (Ideal.Quotient.mk I), ← hab, map_add, Ideal.Quotient.eq_zero_iff_mem.mpr ha, zero_add]
+      rw [← map_one (Ideal.Quotient.mk I), ← hab, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.mpr ha, zero_add]
     have h3 : x = 0 := by
       calc x = 1 * x := (one_mul x).symm
         _ = Ideal.Quotient.mk I c * (p • x) := by
@@ -717,7 +717,7 @@ lemma int_on_span {V ι : Type*} [AddCommGroup V] [Module ℚ V] (φ : V →ₗ[
     | add x y _ _ hx hy =>
       obtain ⟨n, hn⟩ := hx
       obtain ⟨m, hm⟩ := hy
-      exact ⟨n + m, by rw [map_add, hn, hm]; push_cast; rfl⟩
+      exact ⟨n + m, by rw [map_add (f := _), hn, hm]; push_cast; rfl⟩
     | smul a x _ hx =>
       obtain ⟨n, hn⟩ := hx
       exact ⟨a * n, by rw [← Int.cast_smul_eq_zsmul ℚ a x, map_smul, hn]; push_cast; rfl⟩
@@ -932,10 +932,10 @@ variable {E U : Type} [Field E] [NumberField E] [StarRing E] [AddCommGroup U] [M
 
 noncomputable def trForm (h : U →ₗ[E] U →ₗ⋆[E] E) : U →ₗ[ℚ] U →ₗ[ℚ] ℚ :=
   LinearMap.mk₂ ℚ (fun x y => Algebra.trace ℚ E (h x y))
-    (fun x x' y => by simp only [map_add, LinearMap.add_apply])
+    (fun x x' y => by simp only [map_add (f := _), LinearMap.add_apply])
     (fun q x y => by
       rw [← algebraMap_smul E q x, map_smul, LinearMap.smul_apply, smul_eq_mul, ← Algebra.smul_def, map_smul])
-    (fun x y y' => by simp only [map_add])
+    (fun x y y' => by simp only [map_add (f := _)])
     (fun q x y => by
       rw [← algebraMap_smul E q y, LinearMap.map_smulₛₗ, RingHom.map_rat_algebraMap, smul_eq_mul,
         ← Algebra.smul_def, map_smul])
@@ -975,7 +975,7 @@ lemma dual_key (h : U →ₗ[E] U →ₗ⋆[E] E) (δ : 𝓞 E) (K : Ideal (𝓞
       rw [trForm_apply, hsm, LinearMap.map_smulₛₗ, starRingEnd_apply, smul_eq_mul]
       exact hn
     · rintro y y' ⟨n, hn⟩ ⟨m, hm⟩
-      exact ⟨n + m, by rw [map_add, hn, hm]; push_cast; rfl⟩
+      exact ⟨n + m, by rw [map_add (f := _), hn, hm]; push_cast; rfl⟩
   · intro H y hy
     have h1 : ∃ o : 𝓞 E, (o : E) = (δ : E) * h x y := by
       rw [hcod]

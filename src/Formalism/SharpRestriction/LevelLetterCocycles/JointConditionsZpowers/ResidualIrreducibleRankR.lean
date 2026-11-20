@@ -50,7 +50,7 @@ theorem heckePol_res (D : D7) (a : D.nd.Loc) (x x' : D.nd.X a) (w : PlE D.host) 
       (heckePol D.nd a x' w).map (IsLocalRing.residue (D.nd.O a)) := by
   unfold heckePol
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
+    simp only [Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
     Polynomial.map_mul, Polynomial.map_C, map_mul]
   congr 1
   refine Finset.sum_congr rfl fun k _ => ?_

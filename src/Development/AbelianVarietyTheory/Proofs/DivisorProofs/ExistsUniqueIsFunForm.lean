@@ -211,7 +211,7 @@ theorem funRel_ten {a : ι → ℕ} {f g : ι → MP K n} (h : ∀ τ, (genM K n
 theorem FunRel.add {a : ι → ℕ} {F F' G G' : Pol K ι n} (h : FunRel a F G) (h' : FunRel a F' G') :
     FunRel a (F + F') (G + G') := by
   unfold FunRel at *
-  rw [mul_add, map_add, h, h']
+  rw [mul_add, map_add (f := _), h, h']
 
 theorem FunRel.smul {a : ι → ℕ} {F G : Pol K ι n} (c : K) (h : FunRel a F G) : FunRel a (c • F) (c • G) := by
   unfold FunRel at *

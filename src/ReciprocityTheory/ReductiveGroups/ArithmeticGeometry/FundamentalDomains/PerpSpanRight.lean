@@ -32,7 +32,7 @@ theorem perp_span_right (hG : ∀ a b, cc (G a b) = G b a) {s : Set (Fin r → �
   | zero => simp [hermC]
   | add x y _ _ hx hy =>
     have e : hermC τ G v (x + y) = hermC τ G v x + hermC τ G v y := by
-      simp only [hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+      simp only [hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
     rw [e, hx, hy, add_zero]
   | smul c x _ hx =>
     have e : hermC τ G v (c • x) = conj c * hermC τ G v x := by

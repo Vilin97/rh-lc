@@ -47,7 +47,7 @@ def piW (θ : InfFam D) (V W : HSp D) : WA V W →+ RW V W where
   map_add' x y := by
     funext τ i j
     show θ τ (infPart D (x i j + y i j)) = θ τ (infPart D (x i j)) + θ τ (infPart D (y i j))
-    rw [RingHom.map_add, RingHom.map_add]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _)]
 
 def iotaW (σ : (D.what₂.Tau → ℂ) →+ AE D) (V W : HSp D) : RW V W →+ WA V W where
   toFun z := Matrix.of fun i j => σ fun τ => z τ i j
@@ -64,7 +64,7 @@ theorem symplC_add_left (V W : HSp D) (τ : D.what₂.Tau) (x x' y : WC V W) :
 theorem symplC_add_right (V W : HSp D) (τ : D.what₂.Tau) (x y y' : WC V W) :
     symplC V W τ x (y + y') = symplC V W τ x y + symplC V W τ x y' := by
   unfold symplC hC
-  split_ifs <;> simp only [Matrix.add_apply, mul_add, add_mul, map_add, Finset.sum_add_distrib, Complex.add_re]
+  split_ifs <;> simp only [Matrix.add_apply, mul_add, add_mul, map_add (f := _), Finset.sum_add_distrib, Complex.add_re]
 
 theorem hC_smul_right (V W : HSp D) (τ : D.what₂.Tau) (c : ℂ) (x y : WC V W) :
     hC V W τ x (c • y) = c * hC V W τ x y := by
@@ -195,7 +195,7 @@ theorem comp_cA (hθ : IsInfFam θ) (τ : D.what₂.Tau) (z : AE D) :
     θ τ (infPart D (cA D z)) = starRingEnd ℂ (θ τ (infPart D z)) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [RingHom.map_zero]
-  | add a b ha hb => simp only [RingHom.map_add, ha, hb]
+  | add a b ha hb => simp only [RingHom.map_add (f := _), ha, hb]
   | tmul a x =>
     have e : ∀ y : D.host.E, fstA D.host.F a ⊗ₜ[D.host.F] y =
         (fstA D.host.F a ⊗ₜ[D.host.F] (1 : D.host.E)) * ((1 : Ainf D.host.F) ⊗ₜ[D.host.F] y) := by

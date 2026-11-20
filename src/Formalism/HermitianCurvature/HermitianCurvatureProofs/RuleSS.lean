@@ -35,7 +35,7 @@ theorem ofFn_shift (x : A) :
   | 0, _, _, _ => by simp
   | n + 1, f, k, h => by
       have ih := ofFn_shift x n (fun i => f i.succ) (fun i => k i.succ) (fun i => h i.succ)
-      rw [List.ofFn_succ, List.prod_cons, Fin.sum_univ_succ, map_add]
+      rw [List.ofFn_succ, List.prod_cons, Fin.sum_univ_succ, map_add (f := _)]
       set P := (List.ofFn fun i => f i.succ).prod
       calc x * (f 0 * P) = (x * f 0) * P := by noncomm_ring
         _ = f 0 * (x * P + algebraMap ℂ A (k 0) * P) := by rw [h 0]; noncomm_ring
@@ -45,7 +45,7 @@ theorem ofFn_shift (x : A) :
 
 theorem add_shift {x h : A} {s : ℂ} (hx : x * h = h * (x + algebraMap ℂ A s)) (Y Y' : ℂ)
     (hY : Y' = Y + s) : (algebraMap ℂ A Y + x) * h = h * (algebraMap ℂ A Y' + x) := by
-  rw [add_mul, hx, Algebra.commutes Y h, hY, map_add]; noncomm_ring
+  rw [add_mul, hx, Algebra.commutes Y h, hY, map_add (f := _)]; noncomm_ring
 
 theorem sub_shift {x h : A} {s : ℂ} (hx : x * h = h * (x + algebraMap ℂ A s)) (Y Y' : ℂ)
     (hY : Y' = Y - s) : (algebraMap ℂ A Y - x) * h = h * (algebraMap ℂ A Y' - x) := by
@@ -160,7 +160,7 @@ theorem lin_shift (n z S : A) (c c' e : ℂ) (hn : n * S = S * n + algebraMap �
     _ = -(S * n) - (algebraMap ℂ A e * S) * z - (algebraMap ℂ A c * S) * z := by noncomm_ring
     _ = -(S * n) - (S * algebraMap ℂ A e) * z - (S * algebraMap ℂ A c) * z := by
         rw [Algebra.commutes e S, Algebra.commutes c S]
-    _ = S * (-n - algebraMap ℂ A (c + e) * z) := by rw [map_add]; noncomm_ring
+    _ = S * (-n - algebraMap ℂ A (c + e) * z) := by rw [map_add (f := _)]; noncomm_ring
     _ = _ := by rw [hc]
 
 theorem four_inter (h : A) (Ya Y1 Yl Yl' Yv Yv' Ym Ym' : ℂ)

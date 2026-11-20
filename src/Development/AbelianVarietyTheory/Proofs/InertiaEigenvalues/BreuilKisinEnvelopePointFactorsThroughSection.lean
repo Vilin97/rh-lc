@@ -50,7 +50,7 @@ theorem mapE_facts {l : ℕ} [Fact l.Prime] {K : FinExt l} (bk : BK K) (O : Type
   obtain ⟨w, -, hwE⟩ := GlobalTheory.T.breuilKisin_eisenstein_image_teichmuller_pow l K bk O ψ hxu
   have hE0 : WittVector.map ψ (bk.ev bk.E) ≠ 0 := fun h => by
     have h1 := congrArg (WittVector.constantCoeff (p := l) (R := O)) h
-    rw [hwE, map_add, map_mul, map_pow, map_natCast, CharP.cast_eq_zero, zero_mul, add_zero,
+    rw [hwE, map_add (f := _), map_mul, map_pow, map_natCast, CharP.cast_eq_zero, zero_mul, add_zero,
       WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero, map_zero] at h1
     exact hx0 ((pow_eq_zero_iff bk.deg_pos.ne').1 h1)
   refine ⟨mem_nonZeroDivisors_of_ne_zero hE0, isHausdorff_of_le_ideal ?_

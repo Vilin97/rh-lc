@@ -109,7 +109,7 @@ theorem Γ_sub (W : WachCohomologyFacts.WachDatum E n V) :
 
 theorem γq (B : WachCohomologyFacts.Base O A) : B.γ B.q = (1 + B.X * B.c) * B.q := by
   show B.γ (B.X + (B.ℓ : A)) = (1 + B.X * B.c) * (B.X + (B.ℓ : A))
-  rw [map_add, map_natCast]
+  rw [map_add (f := _), map_natCast]
   linear_combination B.hγX
 
 def toWach (W : WachCohomologyFacts.WachDatum E n V) (M : ℕ) (hc : IsUnit (1 + B.X * B.c))

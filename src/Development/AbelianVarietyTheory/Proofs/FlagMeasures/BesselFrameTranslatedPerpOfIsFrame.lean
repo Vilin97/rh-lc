@@ -461,7 +461,7 @@ theorem besselMapUniq_of_besselUniqueness :
     intro a b hab v hv
     have hv' := (smoothOnH_iff_mem Hpk_conjTranspose Hpk_mul_self hU v).1 hv
     refine (Module.forall_dual_apply_eq_zero_iff ℂ _).1 fun l => ?_
-    rw [map_add, map_smul, map_smul, ← e₁ l ⟨v, hv'⟩, ← e₂ l ⟨v, hv'⟩, ← r₁, ← r₂]
+    rw [map_add (f := _), map_smul, map_smul, ← e₁ l ⟨v, hv'⟩, ← e₂ l ⟨v, hv'⟩, ← r₁, ← r₂]
     simp only [LinearMap.smul_apply, smul_eq_mul]
     rw [← mul_assoc, ← mul_assoc, ← add_mul, hab, zero_mul]
   by_cases h : s₁ = 0

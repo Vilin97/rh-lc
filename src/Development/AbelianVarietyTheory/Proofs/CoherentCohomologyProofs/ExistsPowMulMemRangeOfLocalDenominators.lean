@@ -133,7 +133,7 @@ theorem exists_eq_basicOpen_of_isAffineOpen_of_uniqueFactorization :
         obtain ⟨m, y, hy, e'⟩ := hw
         refine ⟨n + m, a ^ m * x + a ^ n * y,
           p.asIdeal.add_mem (p.asIdeal.mul_mem_left _ hx) (p.asIdeal.mul_mem_left _ hy), ?_⟩
-        rw [map_add, map_mul, map_mul, map_pow, map_pow, e, e']
+        rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, e, e']
         ring
       | smul c v _ hv =>
         obtain ⟨n, x, hx, e⟩ := hv

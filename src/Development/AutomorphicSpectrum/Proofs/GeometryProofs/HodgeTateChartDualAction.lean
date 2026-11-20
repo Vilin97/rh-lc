@@ -61,7 +61,7 @@ theorem exists_lift_retract : ∀ (A K : Type) [CommRing A] [IsDomain A] [IsNoet
   let vecL : Module.Dual A (D.omHT (σ.comp c.toRingHom)) →ₗ[A] Li :=
     { toFun := vec
       map_add' := fun g g' => hun _ (hvecS _) _ (Submodule.add_mem _ (hvecS g) (hvecS g')) fun z => by
-        rw [hvec, map_add, mul_add, hvec, hvec, LinearMap.add_apply, map_add]
+        rw [hvec, map_add (f := _), mul_add, hvec, hvec, LinearMap.add_apply, map_add (f := _)]
       map_smul' := fun a g => hun _ (hvecS _) _ (by
           rw [RingHom.id_apply, hsmul]
           exact Submodule.smul_mem _ _ (hvecS g)) fun z => by
@@ -75,7 +75,7 @@ theorem exists_lift_retract : ∀ (A K : Type) [CommRing A] [IsDomain A] [IsNoet
   let Wsub : Submodule A Li :=
     { carrier := latOn D (eigSp ρ σ) (algebraMap A K d) (algebraMap A K).range
       add_mem' := fun {a b} ha hb => ⟨Submodule.add_mem _ ha.1 hb.1, fun w hw => by
-        rw [map_add, mul_add]
+        rw [map_add (f := _), mul_add]
         exact add_mem (ha.2 w hw) (hb.2 w hw)⟩
       zero_mem' := ⟨Submodule.zero_mem _, fun w _ => by
         rw [map_zero, mul_zero]
@@ -99,7 +99,7 @@ theorem exists_lift_retract : ∀ (A K : Type) [CommRing A] [IsDomain A] [IsNoet
       exact he.2 w hw
     choose F hF using h0
     refine ⟨{ toFun := F, map_add' := fun x y => hinj ?_, map_smul' := fun a x => hinj ?_ }, hF⟩
-    · rw [map_add, hF, hF, hF, Submodule.coe_add, LinearMap.add_apply, mul_add]
+    · rw [map_add (f := _), hF, hF, hF, Submodule.coe_add, LinearMap.add_apply, mul_add]
     · rw [RingHom.id_apply, smul_eq_mul, map_mul, hF, hF, Submodule.coe_smul, LinearMap.smul_apply,
         Algebra.smul_def, mul_left_comm]
   let Lv : Module.Dual A (D.omHT (σ.comp c.toRingHom)) →ₗ[A] Wsub := vecL.codRestrict Wsub hvW
@@ -148,7 +148,7 @@ theorem exists_lift_retract : ∀ (A K : Type) [CommRing A] [IsDomain A] [IsNoet
     have h1 : G e = fun l => algebraMap A K (i (Leq.symm ⟨e, he⟩) l) := hG ⟨e, he⟩
     have h2 : vec (r (i (Leq.symm ⟨e, he⟩))) = vecL (Leq.symm ⟨e, he⟩) + (((p : A) ^ m) • vecL w') := by
       change vecL _ = _
-      rw [hw', map_add, map_smul]
+      rw [hw', map_add (f := _), map_smul]
     rw [h1, hRr, h2]
     change vec (Leq.symm ⟨e, he⟩) + _ = _
     rw [hLeq e he, hsmul, map_pow, map_natCast]

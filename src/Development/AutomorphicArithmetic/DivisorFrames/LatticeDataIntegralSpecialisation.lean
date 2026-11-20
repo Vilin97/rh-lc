@@ -161,7 +161,7 @@ private theorem latData_map (Dw : Datum H) {V V' J : Type} [CommRing V] [IsDomai
       obtain ⟨i, rfl⟩ := hz
       exact Submodule.subset_span ⟨i, by simp only [map_sum, EigenSplit.extendTensor_tmul, hφa]⟩
     | zero => simp
-    | add u v _ _ hu hv => rw [map_add]; exact Submodule.add_mem _ hu hv
+    | add u v _ _ hu hv => rw [map_add (f := _)]; exact Submodule.add_mem _ hu hv
     | smul c u _ hu =>
       rw [map_smul, ← algebraMap_smul V' c]
       exact Submodule.smul_mem _ _ hu

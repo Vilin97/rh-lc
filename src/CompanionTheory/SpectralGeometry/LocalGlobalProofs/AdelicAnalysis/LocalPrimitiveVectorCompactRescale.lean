@@ -98,7 +98,7 @@ def gg (d : K) (p : L × L) : K := p.1 • (1 : K) + p.2 • d
 
 theorem gg_mul {d : K} {D : L} (hd : d * d = algebraMap L K D) (p q : L × L) :
     gg d p * gg d q = gg d (p.1 * q.1 + D * (p.2 * q.2), p.1 * q.2 + p.2 * q.1) := by
-  simp only [gg, Algebra.smul_def, map_add, map_mul, mul_one]
+  simp only [gg, Algebra.smul_def, map_add (f := _), map_mul, mul_one]
   linear_combination (algebraMap L K p.2 * algebraMap L K q.2) * hd
 
 variable (bs : Module.Basis (Fin 2) L K)
@@ -343,7 +343,7 @@ theorem exists_delta [CharZero F] (h2 : Module.finrank F E = 2) :
     rintro ⟨c, hc⟩
     apply hx
     refine ⟨c + p / 2, ?_⟩
-    rw [map_add, hc]
+    rw [map_add (f := _), hc]
     ring
   obtain ⟨b, hb0, hb1⟩ := basis_of_not_mem h2 hδ
   have h2F : algebraMap F E 2 = 2 := map_ofNat _ 2
@@ -352,7 +352,7 @@ theorem exists_delta [CharZero F] (h2 : Module.finrank F E = 2) :
       rw [← h2F, ← map_mul]
       congr 1
       ring
-    rw [hb1, map_add, map_mul]
+    rw [hb1, map_add (f := _), map_mul]
     linear_combination hxx + x * hp2
   refine ⟨b, q + p / 2 * (p / 2), hb0, hsq, fun h0 => ?_⟩
   rw [h0, map_zero, hb1] at hsq

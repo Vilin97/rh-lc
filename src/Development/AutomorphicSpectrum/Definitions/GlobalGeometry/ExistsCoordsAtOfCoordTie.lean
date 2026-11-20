@@ -109,7 +109,7 @@ theorem inv_mem {κ : Type} {x : κ → A} (hx : Ideal.span (Set.range x) = ⊤)
     induction ha using Submodule.span_induction with
     | mem a h => obtain ⟨j, rfl⟩ := h; exact hS j
     | zero => simpa using S.zero_mem
-    | add a b _ _ ha hb => rw [map_add, add_div]; exact S.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _), add_div]; exact S.add_mem ha hb
     | smul r a _ ha => rw [smul_eq_mul, map_mul, mul_div_assoc]; exact S.mul_mem (hA r) ha
   simpa using key 1 (hx ▸ Submodule.mem_top)
 
@@ -164,7 +164,7 @@ theorem coordTie (o : Type) [CommRing o] [Algebra o A] [Algebra o Ω] [IsScalarT
         { carrier := {s | ∃ r, a * algebraMap A Ω s = algebraMap A Ω r}
           add_mem' := by
             rintro s t ⟨r, hr⟩ ⟨r', hr'⟩
-            exact ⟨r + r', by rw [map_add, map_add, mul_add, hr, hr']⟩
+            exact ⟨r + r', by rw [map_add (f := _), map_add (f := _), mul_add, hr, hr']⟩
           zero_mem' := ⟨0, by simp⟩
           smul_mem' := by
             rintro t s ⟨r, hr⟩

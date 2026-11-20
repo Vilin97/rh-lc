@@ -35,7 +35,7 @@ theorem exists_linear {K X X' Y M : Type} [Field K] [AddCommGroup X] [Module K X
     (s : X' →ₗ[K] X) : ∃ θ : X' →ₗ[K] Y, ∀ x, j (θ x) = c • L (s x) := by
   choose θ hθ using fun x => h (s x)
   refine ⟨{ toFun := θ, map_add' := fun x y => hj ?_, map_smul' := fun a x => hj ?_ }, hθ⟩
-  · rw [j1, hθ, hθ, hθ, map_add, L1, smul_add]
+  · rw [j1, hθ, hθ, hθ, map_add (f := _), L1, smul_add]
   · rw [RingHom.id_apply, j2, hθ, hθ, map_smul, L2, smul_comm]
 
 section Linear
@@ -47,7 +47,7 @@ theorem base_embedding_apply (R : RealDat D A Ks) (a : D.what₂.LL) : sg0 D A a
 
 theorem adForm_add (x y : Fin (R.nW i) → D.what₂.LL) : adForm R i (x + y) = adForm R i x + adForm R i y := by
   unfold adForm
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
 
 theorem adForm_smul (a : D.what₂.LL) (x : Fin (R.nW i) → D.what₂.LL) :
     adForm R i (a • x) = D.what₂.embLL a • adForm R i x := by

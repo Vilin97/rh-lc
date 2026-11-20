@@ -22,7 +22,7 @@ variable {R G M M' : Type} [CommRing R] [Group G] [AddCommGroup M] [Module R M] 
 def continuousCocycleMap : coZ1s ρ →ₗ[R] coZ1s ρ' where
   toFun c := ⟨fun g => φ ((c : G → M) g), fun g h => by
     show φ ((c : G → M) (g * h)) = φ ((c : G → M) g) + ρ' g (φ ((c : G → M) h))
-    rw [c.2 g h, map_add, hφ]⟩
+    rw [c.2 g h, map_add (f := _), hφ]⟩
   map_add' a b := Subtype.ext <| funext fun g => map_add φ ((a : G → M) g) ((b : G → M) g)
   map_smul' r a := Subtype.ext <| funext fun g => map_smul φ r ((a : G → M) g)
 

@@ -22,7 +22,7 @@ def unitBall : ValuationSubring K where
     exact mul_le_one₀ ha (norm_nonneg _) hb
   one_mem' := by simp
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
   zero_mem' := by simp
   neg_mem' := fun {a} ha => by
@@ -48,7 +48,7 @@ theorem norm_integer_le_one (a : 𝓞 K) : ‖j (a : K)‖ ≤ 1 := integer_mem_
 def primeBelow : Ideal (𝓞 K) where
   carrier := {a | ‖j (a : K)‖ < 1}
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
   zero_mem' := by simp
   smul_mem' := fun c a ha => by

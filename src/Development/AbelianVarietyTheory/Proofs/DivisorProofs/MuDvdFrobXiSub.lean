@@ -22,7 +22,7 @@ theorem isNil_of_theta_eq {B R ι : Type} [CommRing B] [CommRing R] [IsLocalRing
     intro z hz
     obtain ⟨c, hc⟩ := hσ z
     have e : σ z = z ^ p + p * c := by rw [← hc]; ring
-    rw [e, map_add, map_pow, map_mul, map_natCast]
+    rw [e, map_add (f := _), map_pow, map_mul, map_natCast]
     exact Ideal.add_mem _ (Ideal.pow_mem_of_mem _ hz _ (Fact.out : p.Prime).pos)
       (Ideal.mul_mem_right _ _ ((IsLocalRing.mem_maximalIdeal _).2 hp))
   have key : ∀ (n : ℕ) (w : ι → B) (i : ι),

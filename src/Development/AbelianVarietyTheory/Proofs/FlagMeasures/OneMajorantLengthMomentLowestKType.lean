@@ -114,7 +114,7 @@ theorem oneLength_moment_lowestType_largeGap (hH : GlobalTheory.GapIn.Hyp) (k r 
   · intro v hv v' hv'
     filter_upwards [hG] with x hx
     simp only [Pi.add_apply]
-    rw [map_add, hBeL.1.1 _ (hsm _ hx v hv) _ (hsm _ hx v' hv'), smul_add]
+    rw [map_add (f := _), hBeL.1.1 _ (hsm _ hx v hv) _ (hsm _ hx v' hv'), smul_add]
   · intro c v hv
     filter_upwards [hG] with x hx
     simp only [Pi.smul_apply]

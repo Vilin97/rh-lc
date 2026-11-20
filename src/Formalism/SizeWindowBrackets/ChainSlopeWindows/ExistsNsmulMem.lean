@@ -840,7 +840,7 @@ theorem halfUnit_mul (w : Ideal (𝓞 K)) [hw : w.IsPrime] {I J : FI} (hI : Half
     obtain ⟨y2, hy2⟩ := h2 j hj
     exact ⟨y1 * y2, by rw [map_mul, map_mul, hy1, hy2]; ring⟩
   · rintro x y ⟨a, ha⟩ ⟨c, hc⟩
-    exact ⟨a + c, by rw [map_add, ha, hc]; ring⟩
+    exact ⟨a + c, by rw [map_add (f := _), ha, hc]; ring⟩
 
 theorem wUnit_one (w : Ideal (𝓞 K)) [w.IsPrime] : WUnit w (1 : FI) :=
   ⟨one_ne_zero, halfUnit_of_le_one w le_rfl, by rw [inv_one]; exact halfUnit_of_le_one w le_rfl⟩

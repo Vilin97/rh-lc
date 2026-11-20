@@ -27,7 +27,7 @@ theorem sigR_conj (R : Type) [CommRing R] [Algebra F R] :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem hermValue_eq_hR (R : Type) [CommRing R] [Algebra F R] (H : Matrix (Fin n) (Fin n) E)
     (x : Fin n → R ⊗[F] E) : hermValue F H R x = hR R (conj F E).toAlgHom H x x := by

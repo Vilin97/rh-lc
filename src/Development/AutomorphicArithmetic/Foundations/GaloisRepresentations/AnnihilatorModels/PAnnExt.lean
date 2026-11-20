@@ -29,8 +29,8 @@ theorem UpperTheory.Gal.crystallineComparison.annExt_of :
         induction u using TensorProduct.induction_on with
         | zero => simp
         | tmul a v => simp
-        | add u₁ u₂ h₁ h₂ => simp only [TensorProduct.add_tmul, map_add, h₁, h₂]
-      | add y₁ y₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+        | add u₁ u₂ h₁ h₂ => simp only [TensorProduct.add_tmul, map_add (f := _), h₁, h₂]
+      | add y₁ y₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
     have hmem : AlgebraTensorModule.assoc F F L L V B x ∈ (Dinv σ ρ).baseChange L := by
       rw [← hD]
       exact Submodule.mem_map_of_mem hx
@@ -50,4 +50,4 @@ theorem UpperTheory.Gal.crystallineComparison.annExt_of :
             set_option synthInstance.maxHeartbeats 100000 in
               simp only [map_sum, map_zsmul, TensorProduct.mk_apply]
         _ = 0 := by rw [this, map_zero]
-    | add z₁ z₂ h₁ h₂ => simp only [map_add, Submodule.coe_add, Finset.sum_add_distrib, smul_add, h₁, h₂, add_zero]
+    | add z₁ z₂ h₁ h₂ => simp only [map_add (f := _), Submodule.coe_add, Finset.sum_add_distrib, smul_add, h₁, h₂, add_zero]

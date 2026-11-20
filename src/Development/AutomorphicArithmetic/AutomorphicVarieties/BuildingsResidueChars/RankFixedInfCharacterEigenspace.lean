@@ -144,7 +144,7 @@ private theorem rank_isotypic_character_projection {Q I W : Type} [Group Q] [Fin
       map_add' := fun v w => by
         funext t
         apply Subtype.ext
-        simp [map_add]
+        simp [map_add (f := _)]
       map_smul' := fun a v => by
         funext t
         apply Subtype.ext

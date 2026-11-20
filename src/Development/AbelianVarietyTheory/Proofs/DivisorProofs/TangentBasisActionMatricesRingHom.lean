@@ -41,7 +41,7 @@ theorem actMat_ringHom : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] 
   · intro a b
     ext i j
     have e : ∑ k, A (a + b) i k • T k = ∑ k, (A a + A b) i k • T k := by
-      rw [← hact, map_add, LinearMap.add_apply, hact, hact]
+      rw [← hact, map_add (f := _), LinearMap.add_apply, hact, hact]
       simp [Matrix.add_apply, add_smul, Finset.sum_add_distrib]
     exact congrFun (uniq _ _ e) j
   · intro a b

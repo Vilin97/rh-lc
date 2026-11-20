@@ -48,7 +48,7 @@ def extMap (n : CoefMap (RingHom.id R₀) F F') : CoefMap (RingHom.id R₁) (ext
     induction b using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp only [Algebra.TensorProduct.map_tmul]; exact congrArg _ (n.naturality a y)
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   smul T r b := map_smul (extHom R₁ (coefHom n T)) r b
 
 variable {X X' : Scheme.{0}} {s : X ⟶ Sp R₀} {s' : X' ⟶ Sp R₀} {φ : X' ⟶ X}

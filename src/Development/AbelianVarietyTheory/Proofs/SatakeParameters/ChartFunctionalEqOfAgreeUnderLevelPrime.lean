@@ -60,7 +60,7 @@ theorem exists_unit_one_add_generator {D : D7} (i : ℕ) (hi : i ≤ D.R.m) {T f
   have hadd : ∀ l₁ l₂, φ (l₁ + l₂) = φ l₁ + φ l₂ := by
     intro l₁ l₂
     funext k
-    simp only [φ, pullV, Matrix.mulVec, dotProduct, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [φ, pullV, Matrix.mulVec, dotProduct, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   have hzero : φ 0 = 0 := by
     funext k
     simp [φ, pullV, Matrix.mulVec, dotProduct]

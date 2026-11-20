@@ -18,7 +18,7 @@ def InSub (K0 : Subfield K) (f : MvPowerSeries ι K) : Prop :=
   ∀ n, MvPowerSeries.coeff n f ∈ K0
 
 theorem inSub_add {f g : MvPowerSeries ι K} (hf : InSub K0 f) (hg : InSub K0 g) :
-    InSub K0 (f + g) := fun n => by rw [map_add]; exact K0.add_mem (hf n) (hg n)
+    InSub K0 (f + g) := fun n => by rw [map_add (f := _)]; exact K0.add_mem (hf n) (hg n)
 
 theorem inSub_sub {f g : MvPowerSeries ι K} (hf : InSub K0 f) (hg : InSub K0 g) :
     InSub K0 (f - g) := fun n => by rw [map_sub]; exact K0.sub_mem (hf n) (hg n)
@@ -147,7 +147,7 @@ theorem homW_one : HomW w 0 (1 : MvPowerSeries ι K) := by
 theorem homW_add {c : ℤ} {f g : MvPowerSeries ι K} (hf : HomW w c f) (hg : HomW w c g) :
     HomW w c (f + g) := by
   intro n hn
-  rw [map_add] at hn
+  rw [map_add (f := _)] at hn
   by_cases h : MvPowerSeries.coeff n f = 0
   · rw [h, zero_add] at hn; exact hg n hn
   · exact hf n h

@@ -28,7 +28,7 @@ theorem piW_cA {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [piW, cA, compFin, splitProj]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 theorem incM_map_piW {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {v : Pl F} (t : E →ₐ[F] Fv F v) {m k : Type} (J : Matrix m k E) :

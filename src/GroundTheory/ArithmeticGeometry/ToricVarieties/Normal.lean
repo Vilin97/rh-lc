@@ -54,7 +54,7 @@ theorem LowerBound.mul {f g : AddMonoidAlgebra k G} {a b : ℤ} (hf : LowerBound
   classical
   intro m hm
   obtain ⟨x, hx, y, hy, rfl⟩ := Finset.mem_add.1 (support_coeff_mul_subset f g hm)
-  rw [map_add]
+  rw [map_add (f := _)]
   exact add_le_add (hf x hx) (hg y hy)
 
 theorem lowerBound_one : LowerBound φ (1 : AddMonoidAlgebra k G) 0 := by
@@ -90,7 +90,7 @@ noncomputable def natCombination : (ι →₀ ℕ) →+ G where
   toFun c := Finsupp.linearCombination ℤ b (c.mapRange (Nat.cast : ℕ → ℤ) Nat.cast_zero)
   map_zero' := by simp
   map_add' c d := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     exact Finsupp.mapRange_add (fun _ _ => Nat.cast_add _ _) c d
 
@@ -117,7 +117,7 @@ noncomputable def mvPolynomialEquiv :
       · rintro _ ⟨f, rfl⟩
         induction f using AddMonoidAlgebra.induction_linear with
         | zero => simp
-        | add f g hf hg => rw [map_add]; exact Subalgebra.add_mem _ hf hg
+        | add f g hf hg => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hf hg
         | single c a =>
           have e : mapDomainAlgHom k k (natCombination b) (single c a) =
               single (natCombination b c) a := by simp

@@ -316,7 +316,7 @@ theorem resG_orth (hε : IsIdempotentElem ε) (hε' : IsIdempotentElem ε') (h :
   apply gaExt
   have hst : algebraMap (AF D.host.F) (AE D) ε * algebraMap (AF D.host.F) (AE D) ε' = 0 := by
     rw [← map_mul, h, map_zero]
-  rw [mtG_mul, mt_resG V hε, mt_resG V hε', mt_resG V (isIdem_add_orth hε hε' h), map_add, resM_add hst]
+  rw [mtG_mul, mt_resG V hε, mt_resG V hε', mt_resG V (isIdem_add_orth hε hε' h), map_add (f := _), resM_add hst]
 
 theorem resG_comm (hε : IsIdempotentElem ε) (hε' : IsIdempotentElem ε') (h : ε * ε' = 0) (g g' : GA D V) :
     resG V ε g * resG V ε' g' = resG V ε' g' * resG V ε g := by
@@ -482,7 +482,7 @@ theorem comm_mem_intAf {z : Af D.host.F ⊗[D.host.F] D.host.E} (hz : z ∈ intA
     exact mul_mem (Subring.subset_closure (Or.inl ⟨⟨(x : D.host.E), ⟨x, rfl⟩⟩, rfl⟩))
       (Subring.subset_closure (Or.inr ⟨⟨a, fun v => ha v⟩, rfl⟩))
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem toEAf_mem_intAf {z : AE D} (hz : finPart D z ∈ intAE D) : toEAf D z ∈ Formalism.L2.Herm.intAf D.host.F D.host.E :=
@@ -505,7 +505,7 @@ theorem comm_mem_intAE {s : D.host.E ⊗[D.host.F] Af D.host.F} (hs : s ∈ Form
   | one =>
     rw [map_one, Algebra.TensorProduct.one_def]
     exact AddSubgroup.subset_closure ⟨1, hone, 1, by simp⟩
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact intAE_mul hx hy
 
@@ -539,7 +539,7 @@ theorem comm_comm (z : Af D.host.F ⊗[D.host.F] D.host.E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 set_option maxHeartbeats 1000000 in
 
@@ -637,7 +637,7 @@ theorem tame_detAt {e : AE D} {PP : Formalism.L2.DIV.Pl D.host.E} (hPP : Formali
     exact (RingHom.map_det (Formalism.L2.Herm.intAf D.host.F D.host.E).subtype _).symm
   have hxu : toEAf D ((detAt e V g : (AE D)ˣ) : AE D) =
       (((u : Formalism.L2.Herm.intAf D.host.F D.host.E)) : Lev.EAf D) := by
-    rw [detAt_val he, map_add, map_mul, map_sub, map_one, hdet, ← he', hu]
+    rw [detAt_val he, map_add (f := _), map_mul, map_sub, map_one, hdet, ← he', hu]
     rfl
   have hU : Units.map (Formalism.L2.DIV.resS D.host.F PP).toMonoidHom u =
       Matrix.GeneralLinearGroup.det (Formalism.L2.DIV.redFn β PP (Lev.finE V g)) := by
@@ -645,7 +645,7 @@ theorem tame_detAt {e : AE D} {PP : Formalism.L2.DIV.Pl D.host.E} (hPP : Formali
     show Formalism.L2.DIV.resS D.host.F PP (u : Formalism.L2.Herm.intAf D.host.F D.host.E) = _
     rw [hu]
     show Formalism.L2.DIV.resS D.host.F PP (e' * d + (1 - e')) = (Formalism.L2.DIV.redFn β PP (Lev.finE V g) : Matrix (Fin V.rank) (Fin V.rank) (Formalism.L2.DIV.kP PP)).det
-    rw [map_add, map_mul, map_sub, map_one, resS_idemAt' hPP e' he', one_mul,
+    rw [map_add (f := _), map_mul, map_sub, map_one, resS_idemAt' hPP e' he', one_mul,
       sub_self, add_zero, ← hy,
       Formalism.L2.DIV.redFn_frGL, hd]
     exact RingHom.map_det (Formalism.L2.DIV.resS D.host.F PP) _
@@ -693,7 +693,7 @@ theorem infPart_idemAt {e : AE D} {PP : Formalism.L2.DIV.Pl D.host.E} (hPP : For
   obtain ⟨⟨h1, h2, v, ε, ⟨α, hεα, -, -⟩, h3⟩, -⟩ := hPP
   have hx : infPart D e * infPart D (cA D e) = 0 := by rw [← map_mul, h2, map_zero]
   have hy : infPart D e + infPart D (cA D e) = 0 := by
-    rw [← map_add, h3, hεα, Algebra.TensorProduct.algebraMap_apply]
+    rw [← map_add (f := _), h3, hεα, Algebra.TensorProduct.algebraMap_apply]
     simp only [infPart, pairA, fstA]
     first
       | (erw [Algebra.TensorProduct.map_tmul]; exact TensorProduct.zero_tmul _ _)
@@ -719,10 +719,10 @@ theorem unrOff_detAt {e e₁ : AE D} {PP₁ : Formalism.L2.DIV.Pl D.host.E} (hPP
     rw [hx]
     linear_combination (e₁ * e₁) * hd + (2 - (mt V g).det - (mt V g⁻¹).det) * he₁
   refine hU _ ?_ ?_ ?_ ?_
-  · rw [hx, map_add, map_mul, map_sub, map_one, hinf, zero_mul, zero_add, sub_zero]
-  · rw [hx, map_add, map_mul, map_sub, map_one]
+  · rw [hx, map_add (f := _), map_mul, map_sub, map_one, hinf, zero_mul, zero_add, sub_zero]
+  · rw [hx, map_add (f := _), map_mul, map_sub, map_one]
     exact add_mem (intAE_mul hint (finPart_det_int hg)) (sub_mem one_mem_intAE hint)
-  · rw [hxi, map_add, map_mul, map_sub, map_one]
+  · rw [hxi, map_add (f := _), map_mul, map_sub, map_one]
     exact add_mem (intAE_mul hint (finPart_det_int hginv)) (sub_mem one_mem_intAE hint)
   · rw [hx]
     linear_combination ((mt V g).det - 1) * horth
@@ -736,7 +736,7 @@ variable {D : D7}
 theorem finPart_detAt_int {e : AE D} (he : e * e = e) (hint : finPart D e ∈ intAE D) (V : HSp D) {g : GA D V}
     {β : GL (Fin V.rank) (Lev.EAf D)} (hg : Lev.finE V g ∈ Formalism.L2.DIV.St β) :
     finPart D ((detAt e V g : (AE D)ˣ) : AE D) ∈ intAE D := by
-  rw [detAt_val he, map_add, map_mul, map_sub, map_one]
+  rw [detAt_val he, map_add (f := _), map_mul, map_sub, map_one]
   exact add_mem (intAE_mul hint (finPart_det_int hg)) (sub_mem one_mem_intAE hint)
 
 theorem finPart_detAt_inv_int {e : AE D} (he : e * e = e) (hint : finPart D e ∈ intAE D) (V : HSp D) {g : GA D V}
@@ -749,7 +749,7 @@ theorem finPart_detAt_inv_int {e : AE D} (he : e * e = e) (hint : finPart D e �
     have hd : (mt V g).det * (mt V g⁻¹).det = 1 := by rw [← Matrix.det_mul, mtG_inv, Matrix.det_one]
     rw [hx]
     linear_combination (e * e) * hd + (2 - (mt V g).det - (mt V g⁻¹).det) * he
-  rw [hxi, map_add, map_mul, map_sub, map_one]
+  rw [hxi, map_add (f := _), map_mul, map_sub, map_one]
   exact add_mem (intAE_mul hint (finPart_det_int hginv)) (sub_mem one_mem_intAE hint)
 
 end DetInt
@@ -871,7 +871,7 @@ theorem norm_eq_mul_cA (y : AE D) :
     intro α β
     have h3 : algebraMap (AF D.host.F) (AE D) α + algebraMap (AF D.host.F) (AE D) β * incA D ω = α • b 0 + β • b 1 := by
       rw [hb0, hb1, Algebra.smul_def, Algebra.smul_def, mul_one]
-    rw [h3, map_add, map_smul, map_smul, b.repr_self, b.repr_self, Finsupp.smul_single_one, Finsupp.smul_single_one]
+    rw [h3, map_add (f := _), map_smul, map_smul, b.repr_self, b.repr_self, Finsupp.smul_single_one, Finsupp.smul_single_one]
   have hy1 : y * b 1 = algebraMap (AF D.host.F) (AE D) (algebraMap D.host.F (AF D.host.F) d * b.repr y 1) +
       algebraMap (AF D.host.F) (AE D) (b.repr y 0) * incA D ω := by
     rw [hb1, map_mul]
@@ -885,7 +885,7 @@ theorem norm_eq_mul_cA (y : AE D) :
     rw [Algebra.leftMulMatrix_eq_repr_mul, hy1, hrepr]; simp
   rw [Algebra.norm_eq_matrix_det b, Matrix.det_fin_two, e00, e11, e01, e10]
   conv_rhs => rw [hy]
-  rw [map_add, map_mul, cA_alg, cA_alg, hcW, map_sub, map_mul, map_mul, map_mul]
+  rw [map_add (f := _), map_mul, cA_alg, cA_alg, hcW, map_sub, map_mul, map_mul, map_mul]
   linear_combination (algebraMap (AF D.host.F) (AE D) (b.repr y 1) * algebraMap (AF D.host.F) (AE D) (b.repr y 1)) * hWW
 
 theorem chi_cA {χ : (AE D)ˣ →* Circle} {n : ℕ} (hR : ResEta D χ n) (y : (AE D)ˣ) :
@@ -905,7 +905,7 @@ theorem detAt_cA {e : AE D} (he : e * e = e) (V : HSp D) (g : GA D V) :
   apply Units.ext
   rw [detAt_val (isIdem_cA he)]
   show _ = cA D ((detAt e V g⁻¹ : (AE D)ˣ) : AE D)
-  rw [detAt_val he, map_add, map_mul, map_sub, map_one]
+  rw [detAt_val he, map_add (f := _), map_mul, map_sub, map_one]
   have h1 := det_conj_mul V g⁻¹
   have h2 : (mt V g).det * (mt V g⁻¹).det = 1 := by rw [← Matrix.det_mul, mtG_inv, Matrix.det_one]
   have h3 : cA D (mt V g⁻¹).det = (mt V g).det := by

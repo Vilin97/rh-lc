@@ -55,7 +55,7 @@ theorem norm_one_add_pow_mul {B A : Type} [CommRing B] [CommRing A] [Algebra B A
     ∃ t : B, Algebra.norm B (1 + (p : A) ^ k * s) = 1 + (p : B) ^ (k + 1) * t := by
   have e : (p : A) ^ k * s = ((p : B) ^ k) • s := by
     rw [Algebra.smul_def, map_pow, map_natCast]
-  rw [e, Algebra.norm_eq_matrix_det b, map_add, map_one, map_smul, Matrix.det_one_add_smul,
+  rw [e, Algebra.norm_eq_matrix_det b, map_add (f := _), map_one, map_smul, Matrix.det_one_add_smul,
     ← Algebra.trace_eq_matrix_trace b, trace_eq_p_mul p hp b x y hb hx]
   obtain ⟨m, rfl⟩ : ∃ m, k = m + 1 := ⟨k - 1, by omega⟩
   refine ⟨b.repr s ⟨0, hp⟩ + (Matrix.det (1 + (Polynomial.X : Polynomial B) •

@@ -166,7 +166,7 @@ theorem kernel_tame : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D
     simpa only [hzero] using hintH f hf 0
   refine ⟨hintK, ?_, ?_, ?_, ?_, ?_⟩
   · intro f f' hf hf'
-    simp only [map_add, Pi.add_apply, mul_add]
+    simp only [map_add (f := _), Pi.add_apply, mul_add]
     exact integral_add (hintK f hf) (hintK f' hf')
   · intro a f hf
     simp only [map_smul, Pi.smul_apply, smul_eq_mul]

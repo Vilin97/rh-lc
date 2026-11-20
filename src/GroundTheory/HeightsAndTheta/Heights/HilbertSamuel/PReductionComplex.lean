@@ -146,7 +146,7 @@ theorem redRing_mem_quotPart (c : K → ℤ) {m : MRingOver ℤ ι ⧸ GenOnFibr
     rw [redRing_mk]
     exact Submodule.subset_span ⟨_, ⟨hc, GenOnFibres.homog_map _ hF⟩, rfl⟩
   · rw [map_zero]; exact zero_mem _
-  · intro x x' hx hx'; rw [map_add]; exact add_mem hx hx'
+  · intro x x' hx hx'; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hx'
   · intro x hx; rw [map_neg]; exact neg_mem hx
 
 theorem redLoc_mem_locPart (I : ∀ k, Finset (ι k)) (a : K → ℤ)
@@ -160,7 +160,7 @@ theorem redLoc_mem_locPart (I : ∀ k, Finset (ι k)) (a : K → ℤ)
     rw [redLoc_mk]
     exact Submodule.subset_span ⟨_, _, e, GenOnFibres.homog_map _ ht, redRing_mem_quotPart y p _ hm, rfl⟩
   · rw [map_zero]; exact zero_mem _
-  · intro x x' hx hx'; rw [map_add]; exact add_mem hx hx'
+  · intro x x' hx hx'; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hx'
   · intro x hx; rw [map_neg]; exact neg_mem hx
 
 theorem exists_lift_quotPart [Fact p.Prime] (c : K → ℤ)
@@ -319,7 +319,7 @@ theorem ker_locPart [Fact p.Prime] (hP : IsMultiHomogIdeal (mCoordIdeal y)) (I :
   have hUF := GenOnFibres.homog_mul hU hF
   set D : K → ℕ := (fun k => ∑ i, d ⟨k, i⟩) + fun k => ((a + fun k => (e k : ℤ)) k).toNat with hDdef
   have hcomp := congrArg (weightedHomogeneousComponent blockWt D) hsum
-  rw [map_add, mul_comm g, weightedHomogeneousComponent_C_mul,
+  rw [map_add (f := _), mul_comm g, weightedHomogeneousComponent_C_mul,
     weightedHomogeneousComponent_eq_self ((isMultiHomog_iff _ _).mp hUF)] at hcomp
   have hq' := comp_mem hP hq D
   set g' := weightedHomogeneousComponent blockWt D g

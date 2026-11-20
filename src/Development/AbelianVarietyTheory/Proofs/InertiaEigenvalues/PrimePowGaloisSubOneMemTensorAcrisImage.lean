@@ -26,7 +26,7 @@ theorem actB_smul {G : Type} [Group G] [TopologicalSpace G] (s : G →* GQ l)
   | tmul x y =>
     simp only [actB, TWact, TensorProduct.smul_tmul', TensorProduct.map_tmul, AlgHom.toLinearMap_apply,
       smul_eq_mul, map_mul]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 theorem taylor_iC (t : Wq l a →ₐ[ℤ_[l]] O) (ϖ : PiSys l e) (g : ↥(GK (ϖ.field a))) (f : ZMod a → S O K e)
     (r : ℕ) : ∃ M₀, ∀ M ≥ M₀, (l : OCr l O) ^ r ∣ galOCr O g (ϖ.iC t K f) -
@@ -249,7 +249,7 @@ theorem lpow_galDiff_eq_jB_toOB : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZe
         ∑ i ∈ Finset.range M, toOB l O (ϖ.muDiv a O g' (i + 1)) * Y i k +
           (l : OB l O) ^ (n₁ + n₂) * ∑ j, toOB l O (ε j) * X j k := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [hε, map_add, map_sum, map_mul, map_pow, map_natCast, add_mul, Finset.sum_add_distrib,
+        simp only [hε, map_add (f := _), map_sum, map_mul, map_pow, map_natCast, add_mul, Finset.sum_add_distrib,
         Finset.sum_mul]
       congr 1
       · rw [Finset.sum_comm]
@@ -273,7 +273,7 @@ theorem lpow_galDiff_eq_jB_toOB : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZe
     have hz : toOB l O (z k) = ∑ i ∈ Finset.range M, toOB l O (ϖ.muDiv a O g' (i + 1)) * toOB l O (y i k) +
         (l : OB l O) ^ c * ∑ j, toOB l O (ε j) * toOB l O (u j k) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [z, map_add, map_sum, map_mul, map_pow, map_natCast]
+        simp only [z, map_add (f := _), map_sum, map_mul, map_pow, map_natCast]
     rw [hstar, hz]
     linear_combination (l : OB l O) ^ n₂ * hF' + (l : OB l O) ^ (n₁ + n₂) * (l : OB l O) ^ c * hG'
   apply cancel (n₁ + n₂)

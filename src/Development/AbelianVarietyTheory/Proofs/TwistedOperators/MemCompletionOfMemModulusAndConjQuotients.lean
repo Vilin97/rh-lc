@@ -76,7 +76,7 @@ theorem mem_idV_of_inter : ∀ {D : D7} {T : Type} {L : LevCh D T} (P : Places L
   have a1 := incA_mul_mem v 𝔞 _ (P.modul_ne_bot sc) hm h1
   have a2 := incA_mul_mem v 𝔞 _ (GlobalTheory.AscFin.PrimStd.modulBar_ne_bot P sc) hm' h2
   have e : s = incA D (algebraMap (𝓞 D.host.E) D.host.E m) * s + incA D (algebraMap (𝓞 D.host.E) D.host.E m') * s := by
-    rw [← add_mul, ← map_add, ← map_add, hmm, map_one, map_one, one_mul]
+    rw [← add_mul, ← map_add (f := _), ← map_add (f := _), hmm, map_one, map_one, one_mul]
   rw [e]
   exact add_mem a1 a2
 

@@ -50,7 +50,7 @@ theorem exists_coords {x : D.host.E} (hx : x ∈ D.host.K) :
 theorem conj_coords (a b : ℚ) :
     D.host.conj ((a : D.host.E) + (b : D.host.E) * D.host.sqrtMinusD) =
       (a : D.host.E) - (b : D.host.E) * D.host.sqrtMinusD := by
-  rw [map_add, map_mul, map_ratCast, map_ratCast, D.host.conj_sqrtMinusD]
+  rw [map_add (f := _), map_mul, map_ratCast, map_ratCast, D.host.conj_sqrtMinusD]
   ring
 
 theorem conj_mem {x : D.host.E} (hx : x ∈ D.host.K) : D.host.conj x ∈ D.host.K := by

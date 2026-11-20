@@ -39,7 +39,7 @@ theorem prV_comm (v : GlobalTheory.FinPl.Pl D) (z : Af ↥D.host.F ⊗[↥D.host
       Algebra.TensorProduct.map_tmul, AlgHom.id_apply, Algebra.TensorProduct.comm_tmul]
     rfl
   | add a b ha hb =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact congrArg₂ (· + ·) ha hb
 
 theorem prV_toEAf_congr (v : GlobalTheory.FinPl.Pl D) {y y' : AE D} (h : GlobalTheory.FinPl.compAt D v y = GlobalTheory.FinPl.compAt D v y') :

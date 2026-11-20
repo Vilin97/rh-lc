@@ -179,7 +179,7 @@ theorem pGen_of_kStab : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numb
     refine ⟨⟨γu, hu⟩, ⟨γl, hl⟩, ⟨γk, hk⟩, Or.inl hu', Or.inr hl', hk', LinearMap.ext fun x => ?_⟩
     obtain ⟨f, hf, rfl⟩ := onto x
     simp only [LinearMap.add_apply, hρ _ f hf]
-    rw [key f hf _ _ _ _ (dL _ _ f hf) (dL _ _ f hf) (dL _ _ f hf) (dL _ _ f hf), map_add, map_add]
+    rw [key f hf _ _ _ _ (dL _ _ f hf) (dL _ _ f hf) (dL _ _ f hf) (dL _ _ f hf), map_add (f := _), map_add (f := _)]
   have br : ∀ i j, IsK i → ∃ e, ρ i * ρ j - ρ j * ρ i = ρ e := by
     rintro ⟨κ, hκ⟩ ⟨δ, hδ⟩ -
     obtain ⟨ε, hε, key⟩ := GlobalTheory.T.weil_line_commutator_action hKP.base F E σ B _ _ _ _ _ _ _ _ _ _ _ _ hPV κ hκ δ hδ

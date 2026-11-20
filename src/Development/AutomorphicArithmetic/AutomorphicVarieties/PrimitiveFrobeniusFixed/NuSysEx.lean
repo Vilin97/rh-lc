@@ -117,7 +117,7 @@ theorem UpperTheory.V.ML.nuSysEx :
     obtain ⟨e, he⟩ := exists_cycZ_eq_add_pow_mul_of_pows Ω l m k g hg
     refine ⟨algebraMap ℤ_[l] O e, ?_⟩
     show algebraMap ℤ_[l] O (cycZ ℚ Ω l g : ℤ_[l]) = _
-    rw [he, map_add, map_mul, map_pow, map_natCast, map_natCast]
+    rw [he, map_add (f := _), map_mul, map_pow, map_natCast, map_natCast]
   have hβ : ∀ g ∈ fixMu ℚ Ω F, ((l ^ m : ℕ) : O) ∣ ((dualChar l α g : Oˣ) : O) - 1 := by
     intro g hg
     have hP : Pows (l ^ m) 1 g := by

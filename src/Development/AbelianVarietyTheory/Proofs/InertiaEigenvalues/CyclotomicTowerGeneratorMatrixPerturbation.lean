@@ -112,8 +112,8 @@ theorem surj_of_lattice [CompleteSpace C] {r : ℕ} (X : AddSubgroup C) (hX : Is
           = ∑ b, π * B a b * g (P n b) + π * (-π) ^ n * u (n + 1) a := by
         rw [h2, Finset.mul_sum, ← Finset.sum_add_distrib]
         refine Finset.sum_congr rfl fun b _ => ?_
-        rw [e, map_add, map_mul, map_pow, map_neg, hgπ]; ring
-      rw [h3, e, map_add, map_mul, map_pow, map_neg, hgπ]
+        rw [e, map_add (f := _), map_mul, map_pow, map_neg, hgπ]; ring
+      rw [h3, e, map_add (f := _), map_mul, map_pow, map_neg, hgπ]
       linear_combination ih a + (-π) ^ n * h1
   refine ⟨y, fun a => hX.mem_of_tendsto (hP a) (Filter.Eventually.of_forall fun n =>
     X.sum_mem fun k _ => hpow k _ (hS _ (huX k a)).1), fun a => ?_⟩

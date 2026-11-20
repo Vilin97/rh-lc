@@ -70,7 +70,7 @@ theorem kills_frob {F : Type} [Field F] (φ : Module.End L D) (hφ : Function.Bi
 theorem commute_aeval_right {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M] {A B : Module.End R M}
     (h : Commute A B) (p : R[X]) : Commute A (Polynomial.aeval B p) := by
   induction p using Polynomial.induction_on' with
-  | add p r hp hr => rw [map_add]; exact hp.add_right hr
+  | add p r hp hr => rw [map_add (f := _)]; exact hp.add_right hr
   | monomial k c =>
     rw [Polynomial.aeval_monomial]
     exact (show Commute (algebraMap R (Module.End R M) c) A from Algebra.commutes c A).symm.mul_right (h.pow_right k)
@@ -86,7 +86,7 @@ theorem coe_aeval_of_coe {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M
     | zero => intro x; rfl
     | succ n ih => intro x; rw [pow_succ, pow_succ, Module.End.mul_apply, Module.End.mul_apply, ih, hA]
   induction q using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, LinearMap.add_apply, Submodule.coe_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, Submodule.coe_add, hp, hq]
   | monomial n a =>
     simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply,
       Submodule.coe_smul, hpow]
@@ -107,7 +107,7 @@ theorem mk_aeval {K F D W : Type} [Field K] [Field F] [AddCommGroup D] [Module K
     | zero => intro x; rfl
     | succ n ih => intro x; rw [pow_succ, pow_succ, Module.End.mul_apply, Module.End.mul_apply, hR, ih]
   induction q using Polynomial.induction_on' with
-  | add p q hp hq => rw [Polynomial.map_add, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hp, hq,
+  | add p q hp hq => rw [Polynomial.map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hp, hq,
       map_add]
   | monomial n a =>
     rw [Polynomial.map_monomial, Polynomial.aeval_monomial, Polynomial.aeval_monomial, Module.End.mul_apply,
@@ -130,7 +130,7 @@ theorem letterHom_eq_zero (f : ↥(Dpst P ρ) →+ Om l)
   obtain ⟨f2, hf2⟩ : ∃ f2 : ℂ ⊗[↥LL.1] ↥(Dpst P ρ) →ₗ[ℂ] ℂ, ∀ (a : ℂ) (x : ↥(Dpst P ρ)),
       f2 (a ⊗ₜ x) = a * ι (f x) := by
     let f1 : ↥(Dpst P ρ) →ₗ[↥LL.1] ℂ :=
-      { toFun := fun x => ι (f x), map_add' := fun x y => by rw [map_add, map_add]
+      { toFun := fun x => ι (f x), map_add' := fun x y => by rw [map_add (f := _), map_add (f := _)]
         map_smul' := fun a x => by
           rw [hf.1, map_mul, RingHom.id_apply, Algebra.smul_def]; rfl }
     exact ⟨LinearMap.liftBaseChange ℂ f1, fun a x => by simp [f1, LinearMap.liftBaseChange_tmul]⟩

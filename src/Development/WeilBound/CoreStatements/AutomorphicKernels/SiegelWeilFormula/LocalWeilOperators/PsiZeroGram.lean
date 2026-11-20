@@ -112,7 +112,7 @@ theorem psi_add_right (ε : ℤˣ) (X Z Z' : Mx F E d.m d.n) :
   have e : d.gram X (Z + Z') = d.gram X Z + d.gram X Z' := by
     unfold SD.gram
     rw [Matrix.map_add _ (map_add _), Matrix.mul_add]
-  rw [e, SD.tt, SD.tt, SD.tt, Matrix.trace_add, map_add, mul_add, AddChar.map_add_eq_mul]
+  rw [e, SD.tt, SD.tt, SD.tt, Matrix.trace_add, map_add (f := _), mul_add, AddChar.map_add_eq_mul]
 
 theorem psi_add_left (ε : ℤˣ) (X X' Z : Mx F E d.m d.n) :
     d.B.ψ (((ε : ℤ) : AF F) * d.tt (d.gram (X + X') Z)) =
@@ -120,7 +120,7 @@ theorem psi_add_left (ε : ℤˣ) (X X' Z : Mx F E d.m d.n) :
   have e : d.gram (X + X') Z = d.gram X Z + d.gram X' Z := by
     unfold SD.gram
     rw [Matrix.transpose_add, Matrix.add_mul, Matrix.add_mul]
-  rw [e, SD.tt, SD.tt, SD.tt, Matrix.trace_add, map_add, mul_add, AddChar.map_add_eq_mul]
+  rw [e, SD.tt, SD.tt, SD.tt, Matrix.trace_add, map_add (f := _), mul_add, AddChar.map_add_eq_mul]
 
 theorem cw_gram (w : InfinitePlace F) (X Z : Mx F E d.m d.n) :
     d.cw w (d.gram X Z) = (d.cw w X)ᵀ * d.A.J.map (d.B.emb w).1 * (d.cw w Z).map star := by

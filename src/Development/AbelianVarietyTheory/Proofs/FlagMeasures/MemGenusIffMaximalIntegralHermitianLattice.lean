@@ -115,15 +115,15 @@ theorem norm_onto {k : Type} [Field k] [Finite k] (σ : k →+* k) (hσ : ∀ a,
     {θ : k} (hθ : θ - σ θ ≠ 0) {u : k} (hu : σ u = u) : ∃ c, σ c * c = u := by
   let F := RingHom.eqLocusField σ (RingHom.id k)
   have mF : ∀ a, a ∈ F ↔ σ a = a := fun a => Iff.rfl
-  obtain ⟨a, b, e⟩ := unimodUnramUnique_ff (k := F) ⟨θ + σ θ, (mF _).2 (by rw [map_add, hσ, add_comm])⟩
+  obtain ⟨a, b, e⟩ := unimodUnramUnique_ff (k := F) ⟨θ + σ θ, (mF _).2 (by rw [map_add (f := _), hσ, add_comm])⟩
     ⟨θ * σ θ, (mF _).2 (by rw [map_mul, hσ, mul_comm])⟩ ⟨u, hu⟩ (fun e => by
       have := congrArg F.subtype e
       simp only [map_sub, map_pow, map_mul, map_ofNat, map_zero, Subfield.coe_subtype] at this
       exact pow_ne_zero 2 hθ (by linear_combination this))
   have := congrArg F.subtype e
-  simp only [map_add, map_pow, map_mul, Subfield.coe_subtype] at this
+  simp only [map_add (f := _), map_pow, map_mul, Subfield.coe_subtype] at this
   refine ⟨a + b * θ, ?_⟩
-  rw [map_add, map_mul, (mF a).1 a.2, (mF b).1 b.2]
+  rw [map_add (f := _), map_mul, (mF a).1 a.2, (mF b).1 b.2]
   linear_combination this
 
 end Abstract

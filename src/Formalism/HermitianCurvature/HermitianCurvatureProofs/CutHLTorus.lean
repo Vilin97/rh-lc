@@ -171,7 +171,7 @@ theorem lin_decomp (D : ℂ →L[ℝ] E) (w : ℂ) : D w = (w.re : ℂ) • D 1 
   have hw : w = (w.re : ℝ) • (1 : ℂ) + (w.im : ℝ) • Complex.I := by
     apply Complex.ext <;> simp <;> norm_num
   conv_lhs => rw [hw]
-  rw [map_add, map_smul, map_smul, Complex.coe_smul, Complex.coe_smul]
+  rw [map_add (f := _), map_smul, map_smul, Complex.coe_smul, Complex.coe_smul]
 
 theorem half_I : (1 / (2 * Complex.I) : ℂ) = -Complex.I / 2 := by
   rw [one_div, mul_inv, Complex.inv_I]; ring

@@ -58,7 +58,7 @@ theorem hat_intVec_iff (D : D7) (n : ℕ) (z : Fin n → GlobalTheory.AdLat.RA D
         · subst hk; simp [cm]
         · simp [Pi.single_eq_of_ne hk]
     | zero => simp
-    | add s t _ _ hs ht => rw [map_add, Pi.single_add]; exact add_mem hs ht
+    | add s t _ _ hs ht => rw [map_add (f := _), Pi.single_add]; exact add_mem hs ht
     | neg s _ hs => rw [map_neg, Pi.single_neg]; exact neg_mem hs
   constructor
   · intro hz
@@ -72,7 +72,7 @@ theorem hat_intVec_iff (D : D7) (n : ℕ) (z : Fin n → GlobalTheory.AdLat.RA D
       refine mul_mem (Subring.subset_closure (Or.inl ⟨⟨x i, ⟨⟨x i, hx i⟩, rfl⟩⟩, rfl⟩))
         (Subring.subset_closure (Or.inr ⟨⟨a, ha⟩, rfl⟩))
     | zero => intro i; simp
-    | add s t _ _ hs ht => intro i; rw [Pi.add_apply, map_add]; exact add_mem (hs i) (ht i)
+    | add s t _ _ hs ht => intro i; rw [Pi.add_apply, map_add (f := _)]; exact add_mem (hs i) (ht i)
     | neg s _ hs => intro i; rw [Pi.neg_apply, map_neg]; exact neg_mem (hs i)
   · intro hz
     rw [← Finset.univ_sum_single z]

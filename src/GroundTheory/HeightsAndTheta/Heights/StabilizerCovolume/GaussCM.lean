@@ -47,12 +47,12 @@ theorem exists_of_mem_adjoin {R : Type} [CommRing R] [Algebra R Em] {x : Em}
   | add y z _ _ hy hz =>
     obtain ⟨a, b, rfl⟩ := hy
     obtain ⟨c, d, rfl⟩ := hz
-    exact ⟨a + c, b + d, by simp only [map_add]; ring⟩
+    exact ⟨a + c, b + d, by simp only [map_add (f := _)]; ring⟩
   | mul y z _ _ hy hz =>
     obtain ⟨a, b, rfl⟩ := hy
     obtain ⟨c, d, rfl⟩ := hz
     refine ⟨a * c - b * d, a * d + b * c, ?_⟩
-    simp only [map_sub, map_add, map_mul]
+    simp only [map_sub, map_add (f := _), map_mul]
     linear_combination (algebraMap R Em b * algebraMap R Em d) * ζ_sq
 
 theorem exists_rat (x : Em) : ∃ a b : ℚ, x = (a : Em) + (b : Em) * ζ := by
@@ -140,7 +140,7 @@ theorem trace_rep (a b : ℚ) : Algebra.trace ℚ Em ((a : Em) + (b : Em) * ζ) 
     norm_num
   have h2 : Algebra.trace ℚ Em ((b : Em) * ζ) = 0 := by
     rw [← eq_ratCast (algebraMap ℚ Em) b, ← Algebra.smul_def, map_smul, trace_ζ, smul_zero]
-  rw [map_add, h1, h2, add_zero]
+  rw [map_add (f := _), h1, h2, add_zero]
 
 theorem qsmul_eq (q : ℚ) (v : Em) : q • v = (q : Em) * v := by
   rw [← eq_ratCast (algebraMap ℚ Em) q]

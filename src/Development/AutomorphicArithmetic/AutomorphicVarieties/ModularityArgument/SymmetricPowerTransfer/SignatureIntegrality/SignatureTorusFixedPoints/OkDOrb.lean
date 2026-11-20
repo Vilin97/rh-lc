@@ -72,7 +72,7 @@ private theorem jz_facts {K : Type} [Field K] {Δ τ : K} {γ : DX Δ} {j : (Eta
   obtain ⟨hd, ht⟩ := hT
   rw [Matrix.det_fin_two] at hd
   rw [Matrix.trace_fin_two] at ht
-  rw [e, map_add, map_ofNat]
+  rw [e, map_add (f := _), map_ofNat]
   constructor
   · rw [Matrix.trace_fin_two]
     simp only [Matrix.add_apply, Matrix.one_apply_eq]

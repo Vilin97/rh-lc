@@ -464,7 +464,7 @@ theorem strPar_split {q : ℕ} (hq : q ≠ 0) (t : ℕ) : ∃ H : Multiset ℂ, 
     refine ⟨H + {(q : ℂ) ^ ((t : ℤ) + 1)}, by simp [h1], ?_, ?_⟩
     · rw [Multiset.mem_add, Multiset.mem_singleton]
       exact fun h => h.elim h2 (zpow_ne_zero _ (Nat.cast_ne_zero.2 hq)).symm
-    · rw [strPar_add_two, h3, Multiset.map_add, Multiset.map_singleton]
+    · rw [strPar_add_two, h3, Multiset.map_add (f := _), Multiset.map_singleton]
       simp only [Nat.odd_add, Nat.not_odd_iff_even.2 even_two, even_two, iff_true]
       abel
 

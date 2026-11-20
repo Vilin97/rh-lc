@@ -32,7 +32,7 @@ theorem intA_inFr {a : ZMod n} {Λ : LetA O n} (hΛ : Λ ∈ W.AΔ) {g : W.EE} (
 theorem intA_add {a : ZMod n} {g g' : W.EE} (h : IntA W a g) (h' : IntA W a g') : IntA W a (g + g') := by
   obtain ⟨u, hu, rfl⟩ := h
   obtain ⟨u', hu', rfl⟩ := h'
-  exact ⟨u + u', W.AΔ.add_mem hu hu', by rw [← map_add, mul_add]⟩
+  exact ⟨u + u', W.AΔ.add_mem hu hu', by rw [← map_add (f := _), mul_add]⟩
 
 theorem intA_neg {a : ZMod n} {g : W.EE} (h : IntA W a g) : IntA W a (-g) := by
   obtain ⟨u, hu, rfl⟩ := h

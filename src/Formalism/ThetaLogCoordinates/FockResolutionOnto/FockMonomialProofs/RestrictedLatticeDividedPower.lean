@@ -333,7 +333,7 @@ theorem restrictedLattice_exists_lift (LL : Letters (K + 1)) {q : ℕ} (J : Fin 
       rw [map_zero]
       exact (resL p (Fin.last K, ρ) 0).map_zero
     · rintro x y ⟨h1, hY1, hI1, e1⟩ ⟨h2, hY2, hI2, e2⟩
-      exact ⟨h1 + h2, add_mem hY1 hY2, add_mem hI1 hI2, by rw [initPart_add, e1, e2, map_add]⟩
+      exact ⟨h1 + h2, add_mem hY1 hY2, add_mem hI1 hI2, by rw [initPart_add, e1, e2, map_add (f := _)]⟩
   obtain ⟨h, hY, hI, he⟩ := hP z hz
   refine ⟨h, hY, hI, ?_⟩
   rw [he, compL_deg LL o o z hzP, if_pos rfl]

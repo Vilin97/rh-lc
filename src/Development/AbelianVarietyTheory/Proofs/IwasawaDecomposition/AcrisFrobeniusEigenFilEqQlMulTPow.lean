@@ -64,7 +64,7 @@ theorem step_abs {R A K : Type} [CommRing R] [CommRing A] [IsDomain A] [Field K]
     apply hI
     intro n
     have := congrArg (fun y => Θ ((φ ^ n) y)) (hx.symm.trans haz)
-    simpa only [map_mul, map_add, hxn, hwn, hit', mul_zero, zero_mul, add_zero, eq_comm] using this
+    simpa only [map_mul, map_add (f := _), hxn, hwn, hit', mul_zero, zero_mul, add_zero, eq_comm] using this
   obtain ⟨v, hv⟩ := hu.exists_right_inv
   have hp0 : p ≠ 0 := fun h => hp (by rw [h, map_zero])
   have h1 : p ^ (r + 2) * x = t * (v * (p * i b + i μ ^ m * z)) := by

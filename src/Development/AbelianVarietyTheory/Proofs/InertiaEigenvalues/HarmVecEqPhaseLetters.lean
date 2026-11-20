@@ -130,7 +130,7 @@ theorem io_eq_phase_smul_letters : ∀ (D : D7) (G : Type) [Group G] [Fintype G]
   let c0' : VsV D i T.Q.c.F →ₛₗ[inC T.Q.c] (R.cV i).W :=
     { toFun := fun v => c0 (GlobalTheory.AdTh.CoefExt.up (inC T.Q.c) (lamV D i) v)
       map_add' := fun v w => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         exact Subtype.ext (map_add (MvPolynomial.map (inC T.Q.c)) _ _)
       map_smul' := fun a v => by
@@ -148,7 +148,7 @@ theorem io_eq_phase_smul_letters : ∀ (D : D7) (G : Type) [Group G] [Fintype G]
     rw [MvPolynomial.smul_eq_C_mul, map_mul, toF_C, MvPolynomial.smul_eq_C_mul]
   obtain ⟨B₀, hB₀⟩ := exists_ext c0' n4
     { toFun := fun v => toF T.Q.c lt (io v)
-      map_add' := fun v w => by rw [map_add, map_add]
+      map_add' := fun v w => by rw [map_add (f := _), map_add (f := _)]
       map_smul' := fun a v => by rw [map_smul, hsm]; rfl }
   replace hB₀ : ∀ v, B₀ (c0' v) = toF T.Q.c lt (io v) := hB₀
   have hpG : toF T.Q.c lt (io hw) = RealDat.Delta i := by

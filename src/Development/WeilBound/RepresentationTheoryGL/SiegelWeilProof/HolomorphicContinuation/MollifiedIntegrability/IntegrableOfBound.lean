@@ -95,13 +95,13 @@ theorem dkl_chr (t : ℝ) (β : E n) (k l : Fin n) (y : E n) :
   linear_combination (chr t β y) * h
 
 theorem conj_half_add : starRingEnd ℂ ((1 + Complex.I) / 2) = (1 - Complex.I) / 2 := by
-  rw [map_div₀, map_add, map_one, Complex.conj_I, map_ofNat]; ring
+  rw [map_div₀, map_add (f := _), map_one, Complex.conj_I, map_ofNat]; ring
 
 theorem conj_half_sub : starRingEnd ℂ ((1 - Complex.I) / 2) = (1 + Complex.I) / 2 := by
   rw [map_div₀, map_sub, map_one, Complex.conj_I, map_ofNat]; ring
 
 theorem vkl_swap (k l a b : Fin n) : vkl l k a b = starRingEnd ℂ (vkl k l a b) := by
-  simp only [vkl, map_add, apply_ite (starRingEnd ℂ), map_zero, conj_half_add, conj_half_sub]
+  simp only [vkl, map_add (f := _), apply_ite (starRingEnd ℂ), map_zero, conj_half_add, conj_half_sub]
   rw [add_comm]
 
 theorem dkl_swap (g : E n → ℂ) (k l : Fin n) (y : E n) :

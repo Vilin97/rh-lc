@@ -43,7 +43,7 @@ theorem LV_sum {ι : Type} (K : ℕ) (s : Finset ι) (f : ι → W.DD T)
     rw [Finset.sum_empty, Finset.sum_empty, LV_zero]
   | insert a s ha ih =>
     rw [Finset.sum_insert ha, Finset.sum_insert ha]
-    refine ⟨by rw [map_add, smul_add]; exact Submodule.add_mem _ (hf a) ih.1, ?_⟩
+    refine ⟨by rw [map_add (f := _), smul_add]; exact Submodule.add_mem _ (hf a) ih.1, ?_⟩
     rw [LV_add W T c ζ K _ _ (hf a) ih.1, ih.2]
 
 theorem letE_idem (d : ZMod n) : (letE d : LetA O n) * letE d = letE d := by

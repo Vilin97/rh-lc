@@ -58,7 +58,7 @@ theorem finPart_inF (z : Af D.host.F ⊗[D.host.F] D.host.E) : finPart D (inF D 
   induction z using TensorProduct.induction_on with
   | zero => rw [AddMonoidHom.map_zero, RingHom.map_zero]
   | tmul a x => rfl
-  | add x y hx hy => rw [AddMonoidHom.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [AddMonoidHom.map_add (f := _), RingHom.map_add (f := _), hx, hy]
 
 theorem exists_factor {e : AE D} {v : HeightOneSpectrum (𝓞 D.host.F)} {π : AE D →+* Fv D.host.F v}
     (h : Chart e v π) : ∃ φ : Af D.host.F ⊗[D.host.F] D.host.E →+* Fv D.host.F v, ∀ z, φ (finPart D z) = π z := by

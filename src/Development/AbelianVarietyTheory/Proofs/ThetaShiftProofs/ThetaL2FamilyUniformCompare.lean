@@ -139,7 +139,7 @@ theorem mean_pos_and_scale (Λ Λ' : AddSubgroup (Fin g → ℂ)) (dP : Discrete
   have hf' : ∀ a ∈ Λ', ∀ x, f' (x + a) = f' x := fun a ha x => by
     obtain ⟨a, rfl⟩ := h.surjective a
     obtain ⟨x, rfl⟩ := h.surjective x
-    rw [← map_add, hff, hff, hf a ((hh a).1 ha)]
+    rw [← map_add (f := _), hff, hff, hf a ((hh a).1 ha)]
   rw [mean_eq Λ hF hf, mean_eq Λ' hF' hf']
   refine ⟨lt_of_le_of_ne (latticeMean_nonneg _ h0) fun e => ?_, ?_⟩
   · obtain ⟨x, hx⟩ := hne

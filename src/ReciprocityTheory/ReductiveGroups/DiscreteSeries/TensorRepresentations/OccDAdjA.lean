@@ -113,7 +113,7 @@ theorem adjA_rep (dual : Bool) (hσ : IsURepOn (UJset ε) σ) (hD : IsDerivedOn 
     intro y hy hPy a b hab v hv c
     obtain ⟨c', r, hcr⟩ := adjA_tensF_single dual E a b c y
     have h1 : ps (Pi.single c (E a b y)) = E a b (ps (Pi.single c y)) - r • ps (Pi.single c' y) := by
-      rw [← hps a b _ (adjA_single_mem c hy), hcr, map_add, map_smul]
+      rw [← hps a b _ (adjA_single_mem c hy), hcr, map_add (f := _), map_smul]
       abel
     rw [h1, inner_sub_right, inner_smul_right, hPy v hv c', mul_zero, sub_zero, ← hUk b a hab.symm]
     exact hPy _ (hL'k b a hab.symm v hv) c

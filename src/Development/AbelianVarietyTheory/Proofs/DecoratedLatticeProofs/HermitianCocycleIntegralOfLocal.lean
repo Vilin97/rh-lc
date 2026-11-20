@@ -92,9 +92,9 @@ theorem integral_of_local : ∀ (E : Type) [Field E] [NumberField E] [StarRing E
     int_of_local M (fun x y => (Real.sqrt d * (HV sc (embH emb δ x) (embH emb δ y)).re +
       altE (HV sc) (embH emb δ x) (embH emb δ y)) / 2) ?_ ?_ ?_ x y h⟩
   · intro x x' y
-    simp only [altE, map_add, LinearMap.add_apply, Complex.add_im]
+    simp only [altE, map_add (f := _), LinearMap.add_apply, Complex.add_im]
   · intro x x' y
-    simp only [altE, map_add, LinearMap.add_apply, Complex.add_im, Complex.add_re]
+    simp only [altE, map_add (f := _), LinearMap.add_apply, Complex.add_im, Complex.add_re]
     ring
   · intro r x y
     simp only [altE, hv_smul emb δ sc hs]
@@ -109,7 +109,7 @@ theorem integral_of_local : ∀ (E : Type) [Field E] [NumberField E] [StarRing E
     have h3 : (HV sc (embH emb δ y) (embH emb δ x)).re = (HV sc (embH emb δ x) (embH emb δ y)).re := by
       rw [hv_swap]; simp
     simp only [altE] at hm
-    simp only [map_add, LinearMap.add_apply, Complex.add_re, h3, altE, hm] at h2
+    simp only [map_add (f := _), LinearMap.add_apply, Complex.add_re, h3, altE, hm] at h2
     simp at h2
     simp only [altE, hm]
     push_cast

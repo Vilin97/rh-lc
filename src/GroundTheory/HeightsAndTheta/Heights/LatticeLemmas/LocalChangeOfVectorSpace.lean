@@ -60,7 +60,7 @@ theorem coordMap_conjMap (r : ℕ) (σ : K →+* ℂ) (t : Fibre σ (Fin r → K
     change coordMap r (conjugate σ) (conj σ z ⊗ₜ l) i = starRingEnd ℂ (coordMap r σ (z ⊗ₜ l) i)
     rw [coordMap_tmul, coordMap_tmul, map_mul]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, star_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), star_add]
 
 variable {V : Type*} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 variable {r : ℕ} (φ : V ≃ₗ[K] (Fin r → K))

@@ -21,7 +21,7 @@ theorem compAt_eq_zero_of_proj_eq_zero {L : Type} [Field L] [NumberField L] [IsC
     rw [LinearIndependent.pair_iff]
     intro a t h
     have h' := congrArg (IsCMField.complexConj L) h
-    simp only [Algebra.smul_def, map_add, map_mul, AlgEquiv.commutes, map_one, map_zero] at h h'
+    simp only [Algebra.smul_def, map_add (f := _), map_mul, AlgEquiv.commutes, map_one, map_zero] at h h'
     have hd : algebraMap (maximalRealSubfield L) L t * (e - IsCMField.complexConj L e) = 0 := by
       linear_combination h - h'
     have ht : t = 0 := by

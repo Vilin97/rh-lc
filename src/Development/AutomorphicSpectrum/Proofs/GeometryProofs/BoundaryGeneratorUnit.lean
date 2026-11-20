@@ -72,7 +72,7 @@ theorem exists_form [Algebra ℚ Ω] (x : Fin (N + 1) → Ω) {c : Fin (N + 1)} 
     · refine MvPolynomial.IsHomogeneous.add ?_ ?_
       · simpa using ((MvPolynomial.isHomogeneous_C _ (m₂ : ℤ)).mul hH₁).mul (hX.pow d₂)
       · simpa [add_comm] using ((MvPolynomial.isHomogeneous_C _ (m₁ : ℤ)).mul hH₂).mul (hX.pow d₁)
-    · simp only [map_add, map_mul, map_pow, MvPolynomial.aeval_X, ratEval_C, hv₁, hv₂, div_self hc]
+    · simp only [map_add (f := _), map_mul, map_pow, MvPolynomial.aeval_X, ratEval_C, hv₁, hv₂, div_self hc]
       push_cast
       ring
   | mul a b _ _ ha hb =>

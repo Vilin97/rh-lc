@@ -135,7 +135,7 @@ theorem coneAff_oneBlockMap (om : Module.Basis (Fin (e + 1)) ℤ (𝓞 K))
     rw [show (C a : MvPolynomial (Coord (oneBlockSizes e r)) ℤ) = (a : MvPolynomial _ ℤ) from
       eq_intCast C a]
     simp only [map_intCast]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul]
     rw [hp]

@@ -29,7 +29,7 @@ theorem exists_finiteDimensional_intermediateField_eq_range_fractionRing
       | mem x hx => exact IntermediateField.subset_adjoin _ _ ⟨x, hx, rfl⟩
       | zero => simp [f]
       | add x y _ _ hx hy =>
-        simp only [f, map_add]
+        simp only [f, map_add (f := _)]
         exact add_mem hx hy
       | smul z x _ hx =>
         simp only [f, Algebra.smul_def, map_mul, hι]

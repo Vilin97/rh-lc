@@ -51,7 +51,7 @@ theorem exists_local_basis {F : Type} [Field F] [NumberField F] (p : HeightOneSp
   have hvle : ∀ s : 𝓞 F, p.valuation F (algebraMap (𝓞 F) F s) ≤ 1 := fun s => by
     rw [HeightOneSpectrum.valuation_of_algebraMap]; exact p.intValuation_le_one s
   obtain ⟨m, b, hbM, hbsp, hbli⟩ := GlobalTheory.T.exists_basis_bounded_module_valuationRing_pi p _ S (by show Int (e 0); rw [map_zero]; exact h0)
-    (fun x hx y hy => by show Int (e (x + y)); rw [map_add]; exact hadd _ _ hx hy)
+    (fun x hx y hy => by show Int (e (x + y)); rw [map_add (f := _)]; exact hadd _ _ hx hy)
     (fun a ha x hx => by show Int (e (a • x)); rw [map_smul]; exact hsmul _ _ ha hx)
     (fun i => by show Int (e _); rw [hsingle]; exact hκ i)
     ⟨algebraMap (𝓞 F) F d, (map_ne_zero_iff _ (IsFractionRing.injective _ _)).2 (nonZeroDivisors.coe_ne_zero d),

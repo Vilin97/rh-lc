@@ -264,7 +264,7 @@ section Kernel
 
 theorem fontaineTheta_teichmuller_add_mul_p (c : 𝒪♭) (v : 𝕎𝒪♭) :
     θ (teichmuller p c + v * p) = PreTilt.untilt c + θ v * p := by
-  rw [map_add, map_mul, fontaineTheta_teichmuller, map_natCast]
+  rw [map_add (f := _), map_mul, fontaineTheta_teichmuller, map_natCast]
 
 theorem coeff_zero_pow (x : 𝕎𝒪♭) (n : ℕ) : (x ^ n).coeff 0 = x.coeff 0 ^ n := by
   rw [← constantCoeff_apply, map_pow, constantCoeff_apply]
@@ -375,7 +375,7 @@ theorem isUnit_coeff_one_mul_p_sub_teichmuller {ϖ : 𝒪♭} {w : 𝕎𝒪♭} 
   have hmk : Ideal.Quotient.mk (Ideal.span {(p : 𝒪)}) (PreTilt.untilt ϖ) = 0 := by
     rw [h, Ideal.Quotient.eq_zero_iff_mem]
     exact Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _)
-  rw [mk_untilt, add_coeff_zero, mul_coeff_zero, teichmuller_coeff_zero, map_add, map_mul,
+  rw [mk_untilt, add_coeff_zero, mul_coeff_zero, teichmuller_coeff_zero, map_add (f := _), map_mul,
     ← mk_untilt p ϖ, hmk, zero_mul, add_zero, mk_fontaineTheta]
 
 theorem exists_mem_ker_isUnit_coeff_one_of_untilt_eq {ϖ : 𝒪♭} {u : 𝒪} (hu : IsUnit u)

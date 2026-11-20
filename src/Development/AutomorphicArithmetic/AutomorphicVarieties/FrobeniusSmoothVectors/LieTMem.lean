@@ -59,7 +59,7 @@ theorem UpperTheory.V.Fr.ep_tan :
     obtain ⟨D', hD', hD'e⟩ := ep_dproj O h2 R σ hσ B π hGr j D hD
     refine ⟨⟨D', hD'⟩, prp _ j X, fun s => ?_⟩
     show prp _ j (Box.tanCo O B D' s) = _
-    rw [hD'e s, prp_coe, hX s, map_add, map_sub, hP, prp_coe]
+    rw [hD'e s, prp_coe, hX s, map_add (f := _), map_sub, hP, prp_coe]
   haveI := hfin 0
   refine ⟨fun j => ?_, ?_⟩
   · haveI := hfin j

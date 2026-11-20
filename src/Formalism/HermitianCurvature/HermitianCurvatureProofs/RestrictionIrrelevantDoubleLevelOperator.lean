@@ -2555,7 +2555,7 @@ theorem qmF_intertwine {W W' : Type*} [AddCommGroup W] [Module ℂ W] [AddCommGr
     | nil => rfl
     | cons j L ih =>
       simp only [List.map_cons, List.foldr_cons]
-      rw [_root_.map_add, h, ih]
+      rw [_root_.map_add (f := _), h, ih]
       congr 1
       split_ifs
       · rw [_root_.map_smul, ih]
@@ -2737,7 +2737,7 @@ theorem capRep_intertwine {Wp Wq : Type*} [NormedAddCommGroup Wp] [NormedSpace �
   have hky := hpart_kill Bs a b (frame_orth h (v := y) (by simp))
   have hc := hpart_conj Bs a b hg
   show A (dRep π' _ v + Complex.I • dRep π' _ v) = dRep π _ (A v) + Complex.I • dRep π _ (A v)
-  rw [map_add, map_smul, hc.1, hc.2]
+  rw [map_add (f := _), map_smul, hc.1, hc.2]
   congr 1
   · refine dRep_intertwine A (rep_hasDeriv hrep' hcont' hU.1 v) fun t => ?_
     rw [exp_conj_uh hg]
@@ -3157,7 +3157,7 @@ theorem kill_lemma {W ι : Type*} [AddCommGroup W] [Module ℂ W] [Fintype ι] (
         exact ⟨τ', by simp [hl], by simp [hc]⟩
       rw [this, zero_smul]
     | zero => exact hlin.map_zero
-    | add a b _ _ ha hb => rw [hlin.map_add, ha, hb, add_zero]
+    | add a b _ _ ha hb => rw [hlin.map_add (f := _), ha, hb, add_zero]
   have h1 := piL_eig L hL c μ hu l
   rw [hzero] at h1
   have hp : (l.map fun τ => μ τ - c τ).prod ≠ 0 := by
@@ -3431,7 +3431,7 @@ theorem t22_entry_from_descent_identities : Formalism.FourierDecayAlt.Q.RadialDe
       · rw [hS3 g hg J hJ σ' hex v hv]
         simp
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, map_add, ha, hb]
+    | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   · intro ρ Y g hg
     ext v
     have hv : v ∈ ⨆ σ, S g hg σ := by rw [hS1]; trivial
@@ -3443,6 +3443,6 @@ theorem t22_entry_from_descent_identities : Formalism.FourierDecayAlt.Q.RadialDe
       · rw [h, hι]
       · rw [hKv _ g hg σ' v hv, if_neg h, zero_smul, smul_zero, smul_zero]
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, map_add, ha, hb]
+    | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 end Formalism.FourierDecayAlt.P

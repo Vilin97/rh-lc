@@ -100,7 +100,7 @@ theorem hP_smul_right (u : (D.s.atP p).Ep) (v w : Vp D p) :
 
 theorem hP_add_right (v w w' : Vp D p) :
     (locH Z p).h v (w + w') = (locH Z p).h v w + (locH Z p).h v w' := by
-  rw [(locH Z p).h_herm (w + w') v, (locH Z p).h_add_left, map_add, ← (locH Z p).h_herm w v,
+  rw [(locH Z p).h_herm (w + w') v, (locH Z p).h_add_left, map_add (f := _), ← (locH Z p).h_herm w v,
     ← (locH Z p).h_herm w' v]
 
 theorem hP_zero_right (v : Vp D p) : (locH Z p).h v 0 = 0 := by
@@ -191,7 +191,7 @@ theorem bcP_mem_X {T : D.host.E} (G : LFlag (VS D) D.R.rS T) (Fr : LocNG.FrameD 
     rw [e, Units.smul_def]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [baseChange_smul₂]; exact Submodule.smul_mem _ _ hx
 
 theorem X_le_perp (Fr : LocNG.FrameD (locH Z p) D.R.rS) :

@@ -55,7 +55,7 @@ theorem exists_mul_eq_baseSubst (hv : IsBlockMap κ v) (G : GenFibre v P') (c : 
     obtain ⟨F₁, g₁, h₁, e₁⟩ := ih₁
     obtain ⟨F₂, g₂, h₂, e₂⟩ := ih₂
     refine ⟨F₁ * rename v g₂ + F₂ * rename v g₁, g₁ * g₂, by rw [map_mul]; exact mul_ne_zero h₁ h₂, ?_⟩
-    simp only [map_add, map_mul, baseSubst_rename hv]
+    simp only [map_add (f := _), map_mul, baseSubst_rename hv]
     rw [← e₁, ← e₂]
     ring
   | mul_X c q ih =>
@@ -97,7 +97,7 @@ theorem comap_fibreOf (hv : IsBlockMap κ v) (G : GenFibre v P') {W : Ideal (MRi
       obtain ⟨w₂, hw₂, g₂, h₂, e₂⟩ := ih₂
       refine ⟨w₁ * rename v g₂ + w₂ * rename v g₁, W.add_mem (W.mul_mem_right _ hw₁) (W.mul_mem_right _ hw₂),
         g₁ * g₂, by rw [map_mul]; exact mul_ne_zero h₁ h₂, ?_⟩
-      simp only [map_add, map_mul, baseSubst_rename hv]
+      simp only [map_add (f := _), map_mul, baseSubst_rename hv]
       rw [← e₁, ← e₂]
       ring
     | smul a c _ ih =>

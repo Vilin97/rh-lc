@@ -423,7 +423,7 @@ theorem transport (hIC : IntCoefStatement) {k r : ℕ} (hk : 1 ≤ k) {ε : Fin 
     intro b w w' w₂ ξ Y₀ Y h₀ h₁
     have e : F (b • w + w') w₂ ξ Y₀ Y = fun p => b • F w w₂ ξ Y₀ Y p + F w' w₂ ξ Y₀ Y p := by
       funext p
-      simp only [F, psiCoef, map_add, map_smul, inner_add_right, inner_smul_right, add_smul, mul_smul]
+      simp only [F, psiCoef, map_add (f := _), map_smul, inner_add_right, inner_smul_right, add_smul, mul_smul]
     have i1 : Integrable (fun p => b • F w w₂ ξ Y₀ Y p) (μW.prod μN) := (hint w w₂ ξ h₀ h₁).smul b
     rw [hA, hA, hA, e, integral_add i1 (hint w' w₂ ξ h₀ h₁), integral_smul]
   have hlin₂ : ∀ (b : ℂ) (w₁ w w' : T.V) ξ {Y₀ Y : Mat k r}, Y₀ ∈ UH (Hpk k r) → Y ∈ UH (Hpk k r) →

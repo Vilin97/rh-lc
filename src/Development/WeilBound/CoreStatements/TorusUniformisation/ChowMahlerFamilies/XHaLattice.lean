@@ -91,7 +91,7 @@ theorem PositivityTheory.Xgn.t_ha_lattice : ∀ {o Ω : Type} [CommRing o] [Fiel
         rw [map_smul, smul_eq_mul, hΦ]
         exact RC.mul_mem hc (hT.2.2.2 _ (hψ e he))
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add]; exact RC.add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact RC.add_mem hx hy
       | neg x _ hx => rw [map_neg]; exact RC.neg_mem hx
     rw [← hΦ]
     exact key _ (h C RC hT)

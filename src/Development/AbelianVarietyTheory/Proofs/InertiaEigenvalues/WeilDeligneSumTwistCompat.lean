@@ -70,13 +70,13 @@ theorem lpChar_lpSum (x a b : WD h) : x.lpChar (a.lpSum b) = (x.lpChar a).lpSum 
     | tmul p q =>
       obtain ⟨q₁, q₂⟩ := q
       simp
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
   · induction v using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul p q =>
       obtain ⟨q₁, q₂⟩ := q
       simp [TensorProduct.tmul_add]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem charPol_lpZero (σ : Weil h) : (WD.lpZero h).charPol σ = 1 :=
   Polynomial.eq_one_of_monic_natDegree_zero (WD.charPol_monic _ σ)

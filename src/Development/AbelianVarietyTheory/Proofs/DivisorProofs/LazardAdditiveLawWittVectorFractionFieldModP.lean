@@ -73,7 +73,7 @@ theorem lift_addLaw (d : ℕ) :
   funext i
   ext γ
   rw [coeff_lift]
-  simp only [addLaw, map_add, coeff_X]
+  simp only [addLaw, map_add (f := _), coeff_X]
   by_cases h1 : γ = Finsupp.single (Sum.inl i) 1
   · have h2 : γ ≠ Finsupp.single (Sum.inr i) 1 := by
       rw [h1]; intro h; exact Sum.inl_ne_inr ((Finsupp.single_left_inj one_ne_zero).1 h)
@@ -165,7 +165,7 @@ theorem step (d N : ℕ) (hN : 2 ≤ N) (m : ℕ) : ∀ e : MvPowerSeries (Fin d
         abel)
       (by rw [smul_sub, hcobh1]; exact hdiff)
     refine ⟨(algebraMap (WittVector p k) (Fr p k) ((p : WittVector p k) ^ m))⁻¹ • h' + h2,
-      fun α hα => by rw [map_add, hh1 α hα, hh2 α hα, add_zero], ?_⟩
+      fun α hα => by rw [map_add (f := _), hh1 α hα, hh2 α hα, add_zero], ?_⟩
     rw [formalCoboundary_add hconst]
     convert hfin using 1
     abel

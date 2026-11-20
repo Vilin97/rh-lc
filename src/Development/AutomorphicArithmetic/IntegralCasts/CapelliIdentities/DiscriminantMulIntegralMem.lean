@@ -44,7 +44,7 @@ theorem UpperTheory.discriminant_mul_integral_mem :
     hz.add (hz.map σ.toIntAlgHom)
   have hσw : σ w = (t : K) - w := by linear_combination ht
   have hσy : σ y = (p : K) + (q : K) * ((t : K) - w) := by
-    rw [hpq, map_add, map_mul, map_ratCast, map_ratCast, hσw]
+    rw [hpq, map_add (f := _), map_mul, map_ratCast, map_ratCast, hσw]
   have hA : y + σ y = ((2 * p + q * t : ℚ) : K) := by
     rw [hσy, hpq]; push_cast; ring
   have hB : w * y + σ (w * y) = ((p * t + q * (t ^ 2 - 2 * n) : ℚ) : K) := by

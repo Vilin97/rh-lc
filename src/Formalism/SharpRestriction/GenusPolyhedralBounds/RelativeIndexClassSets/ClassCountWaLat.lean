@@ -166,7 +166,7 @@ theorem wal_sig_mem (σ : E →ₐ[F] E) {s : Av} (hs : s ∈ Sv) :
       exact Subring.subset_closure (Or.inr ⟨⟨y, hy⟩, rfl⟩)
   · rw [map_zero]; exact zero_mem _
   · rw [map_one]; exact one_mem _
-  · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
+  · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · intro x _ hx; rw [map_neg]; exact neg_mem hx
   · intro x y _ _ hx hy; rw [map_mul]; exact mul_mem hx hy
 

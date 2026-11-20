@@ -90,10 +90,10 @@ theorem red_iO (a : 𝓞 F) : red v (iO v a) = Ideal.Quotient.mk _ a := by
 theorem red_add {x y : Fv F v} (hx : x ∈ v.adicCompletionIntegers F)
     (hy : y ∈ v.adicCompletionIntegers F) : red v (x + y) = red v x + red v y := by
   have e : red v x + red v y = Ideal.Quotient.mk _ (appr v x + appr v y) := by
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   rw [e, red_eq_mk_iff v (add_mem hx hy)]
   have : x + y - iO v (appr v x + appr v y) = (x - iO v (appr v x)) + (y - iO v (appr v y)) := by
-    simp only [iO, map_add]; ring
+    simp only [iO, map_add (f := _)]; ring
   rw [this]
   exact Valuation.map_add_lt _ (appr_spec v hx) (appr_spec v hy)
 

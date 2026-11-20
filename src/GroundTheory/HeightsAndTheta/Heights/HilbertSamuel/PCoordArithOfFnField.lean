@@ -48,7 +48,7 @@ theorem dim_eq (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y ⟨k, 
   have hA := IntDomainDim.proof (MRing ι ⧸ mCoordIdeal y)
     (CoordinateConeArithVar.algebraMap_injective _ hhor)
   rw [hA, htr]
-  simp only [map_add, map_natCast]
+  simp only [map_add (f := _), map_natCast]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] [CharZero Ω] in
 

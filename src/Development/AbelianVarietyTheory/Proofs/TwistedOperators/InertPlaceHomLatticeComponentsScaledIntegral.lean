@@ -28,7 +28,7 @@ theorem compAt_sigR {v : HeightOneSpectrum (𝓞 D.host.F)} {w : HeightOneSpectr
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a m => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem exists_gen (w : HeightOneSpectrum (𝓞 D.host.E)) :
     ∃ a₀ ∈ D.host.AA, algebraMap D.host.E (w.adicCompletion D.host.E) a₀ ≠ 0 ∧
@@ -50,7 +50,7 @@ theorem exists_gen (w : HeightOneSpectrum (𝓞 D.host.E)) :
     induction ha using Submodule.span_induction with
     | mem a ha => exact hmax a ha
     | zero => simp only [map_zero, zero_le]
-    | add x y _ _ hx hy => rw [RingHom.map_add]; exact (Valuation.map_add_le _ hx hy)
+    | add x y _ _ hx hy => rw [RingHom.map_add (f := _)]; exact (Valuation.map_add_le _ hx hy)
     | smul o x _ hx =>
       have ho : Valued.v (π (o : D.host.E)) ≤ 1 := by
         rw [Formalism.UG.P.levelaf_valued_algebraMap, show w.valuation D.host.E (o : D.host.E) = w.intValuation o from

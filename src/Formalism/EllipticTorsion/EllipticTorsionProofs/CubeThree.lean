@@ -314,13 +314,13 @@ lemma pair [Finite σ] (hw : WFixed W w) (a b : MvPowerSeries σ K) (ha : cc a =
   · simp [Formalism.ELL.WeierstrassChordSeries.nu, hW, hX0]
   · have h := congrArg φ hAi
     rw [map_mul, map_one] at h
-    simpa only [chordCoeffCubicAt, Formalism.ELL.WeierstrassChordSeries.C3, Formalism.ELL.WeierstrassChordSeries.c3, Formalism.ELL.WeierstrassChordSeries.ca, map_add, map_mul, map_pow,
+    simpa only [chordCoeffCubicAt, Formalism.ELL.WeierstrassChordSeries.C3, Formalism.ELL.WeierstrassChordSeries.c3, Formalism.ELL.WeierstrassChordSeries.ca, map_add (f := _), map_mul, map_pow,
       map_one, hC] using h
   · simp only [Formalism.ELL.WeierstrassChordSeries.z3, chordCoeffQuadraticAt, Formalism.ELL.WeierstrassChordSeries.C2, Formalism.ELL.WeierstrassChordSeries.c2, Formalism.ELL.WeierstrassChordSeries.ca, map_sub,
       map_neg, map_add, map_mul, map_pow, map_ofNat, hC, hX0, hX1]
   · have h := congrArg φ hDi
     rw [map_mul, map_one] at h
-    simpa only [DDs, Formalism.ELL.WeierstrassChordSeries.dd, Formalism.ELL.WeierstrassChordSeries.w3, Formalism.ELL.WeierstrassChordSeries.ca, map_add, map_mul, map_neg, map_one,
+    simpa only [DDs, Formalism.ELL.WeierstrassChordSeries.dd, Formalism.ELL.WeierstrassChordSeries.w3, Formalism.ELL.WeierstrassChordSeries.ca, map_add (f := _), map_mul, map_neg, map_one,
       hC] using h
   · rw [← hφ, Formalism.ELL.WeierstrassChordSeries.F2, map_mul]
   · rw [hφ, constantCoeff_subst_of_zero_lemma_2 hab0, Formalism.ELL.WeierstrassChordSeries.lam_cc hw]

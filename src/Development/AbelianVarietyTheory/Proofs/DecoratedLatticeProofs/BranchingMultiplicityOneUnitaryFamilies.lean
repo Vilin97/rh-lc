@@ -34,7 +34,7 @@ theorem eval_rowAct {n : ℕ} (g y : Matrix (Fin n) (Fin n) ℂ) (f : MvPolynomi
       eval (fun p : Fin n × Fin n => (g * y) p.1 p.2) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [Formalism.GradedWeylDivisibility.rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp]
     congr 1
@@ -200,7 +200,7 @@ theorem emb_update {N : ℕ} (G : ι → Matrix (Fin N) (Fin N) ℂ) (lam : ι �
     simp only [Submodule.subtype_apply, hfun]
     exact fnOf_ten_update G (shiftOf lam) (fun σ => (f σ : MvPolynomial (Fin N × Fin N) ℂ)) τ g y y' hy
   | add a b ha hb =>
-    simp only [map_add, Pi.add_apply, ha, hb]
+    simp only [map_add (f := _), Pi.add_apply, ha, hb]
 
 theorem range_emb {N : ℕ} (G : ι → Matrix (Fin N) (Fin N) ℂ) (lam : ι → DomWeight N)
     (e : PiTensorProduct ℂ (fun _ : ι => MvPolynomial (Fin N × Fin N) ℂ) ≃ₗ[ℂ] MvPolynomial (ι × Fin N × Fin N) ℂ)

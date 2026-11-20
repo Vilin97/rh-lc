@@ -25,14 +25,14 @@ def sumPM (P : I → PM.{1} K ι) : PM.{1} K ι where
     | of i x =>
       change DirectSum.lmap _ _ = _
       simp [← DirectSum.lof_eq_of K, DirectSum.lmap_lof, (P i).res_id]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   res_comp h h' x := by
     induction x using DirectSum.induction_on with
     | zero => simp
     | of i x =>
       change DirectSum.lmap _ (DirectSum.lmap _ _) = DirectSum.lmap _ _
       simp [← DirectSum.lof_eq_of K, DirectSum.lmap_lof, (P i).res_comp]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable (P : I → PM.{1} K ι)
 
@@ -54,7 +54,7 @@ theorem component_res {S T : Finset ι} (h : S ⊆ T) (i : I) (x : (sumPM P).M S
     · subst e
       simp
     · simp [DirectSum.component.of, e]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem res_lof {S T : Finset ι} (h : S ⊆ T) (i : I) (x : (P i).M S) :
     (sumPM P).res h (DirectSum.lof K I (fun j => (P j).M S) i x) =

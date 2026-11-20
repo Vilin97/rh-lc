@@ -32,7 +32,7 @@ theorem ker_le_range_of_residueField {R A B C A' B' C' : Type} [CommRing R] [IsD
     | add s t hs ht =>
       obtain ⟨x, hx⟩ := hs
       obtain ⟨y, hy⟩ := ht
-      exact ⟨x + y, by rw [map_add, map_add, hx, hy]⟩
+      exact ⟨x + y, by rw [map_add (f := _), map_add (f := _), hx, hy]⟩
     | tmul r z =>
       obtain ⟨r, rfl⟩ := residue_surjective r
       exact ⟨r • z, by rw [map_smulₛₗ, liftSemi_tmul]; rfl⟩

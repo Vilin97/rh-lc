@@ -143,10 +143,10 @@ theorem exists_sameOrbit {y : (Σ k, ι k) → Ω} (hP : IsArithVar (mCoordIdeal
       map_add' := fun s t => by
         have := rep (s + t) (d s + d t) (g s * h t + h s * g t) (h s * h t) (isMultiHomog_add (isMultiHomog_mul (hg s) (hh t)) (isMultiHomog_mul (hh s) (hg t)))
           (isMultiHomog_mul (hh s) (hh t)) (hsub s t)
-          (by rw [map_add, map_mul, map_mul, map_mul, hgh s, hgh t]; ring)
+          (by rw [map_add (f := _), map_mul, map_mul, map_mul, hgh s, hgh t]; ring)
         have hs := rep s _ _ _ (hg s) (hh s) (hh0 s) (hgh s)
         have ht := rep t _ _ _ (hg t) (hh t) (hh0 t) (hgh t)
-        rw [map_add, map_mul, map_mul, map_mul, ← hs, ← ht] at this
+        rw [map_add (f := _), map_mul, map_mul, map_mul, ← hs, ← ht] at this
         exact mul_right_cancel₀ (mul_ne_zero (hhz s) (hhz t)) (by linear_combination this) }
   obtain ⟨j, -, hj⟩ := exists_chart hP
   have hzj : ∀ k, z ⟨k, j k⟩ ≠ 0 := fun k => by

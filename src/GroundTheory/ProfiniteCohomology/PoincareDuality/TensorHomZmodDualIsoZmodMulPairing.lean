@@ -96,7 +96,7 @@ theorem tensorHom_dualEvalAt (D X : Rep.{u} k G) (x : X) (hx : ∀ g : G, X.ρ g
   | tmul a ν =>
     change μ.hom (a ⊗ₜ[k] (ν : X →ₗ[k] D) x : (X ⊗ D : Rep k G)) = (ν : X →ₗ[k] D) a
     exact h a ν
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 end EvalAt
 

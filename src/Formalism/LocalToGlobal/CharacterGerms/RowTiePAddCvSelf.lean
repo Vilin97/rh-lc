@@ -100,7 +100,7 @@ theorem FBChart.addCvCol (hG : GermISt Y) : Y.rawCol.AddCvSt V := by
   refine ⟨γ'', hγ''I, ?_, ?_⟩
   · intro i
     have h := congrArg (MvPowerSeries.subst ρ) (Y.lg_add i)
-    rw [← MvPowerSeries.coe_substAlgHom hρS, map_add, MvPowerSeries.coe_substAlgHom hρS, hev _ hca, hev _ hc0,
+    rw [← MvPowerSeries.coe_substAlgHom hρS, map_add (f := _), MvPowerSeries.coe_substAlgHom hρS, hev _ hca, hev _ hc0,
       hev _ hc1, hpa, hp0, hp1] at h
     exact h
   · intro v hv

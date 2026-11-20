@@ -90,7 +90,7 @@ theorem polyAction_scaled_mem_locP_nabStd {ι : Type} [Fintype ι] (lam : ι →
       simp only [map_smul, smul_smul]
       rw [Finset.prod_smul]
     | zero => rw [map_zero, smul_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add, smul_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact Submodule.add_mem _ hx hy
     | smul r x _ hx =>
       rw [LinearMap.map_smul_of_tower, smul_comm]
       exact Submodule.smul_mem _ _ hx

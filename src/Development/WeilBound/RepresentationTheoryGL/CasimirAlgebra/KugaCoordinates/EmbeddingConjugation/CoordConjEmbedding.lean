@@ -82,11 +82,11 @@ theorem cxExpand_holds : CxExpand := by
       rw [← atEmb_embedding, atEmb_eq, atEmb_embedding, atEmb_embedding]
     rw [coord_embedding, coord_conj_embedding, hcx, hcx]
     simp only [atEmb_conj, map_one, Complex.conj_I, atEmb_embedding, Pi.single_neg, map_neg]
-    rw [hz, map_add, map_smul, map_smul, ← algebraMap_smul ℂ (c w).re, ← algebraMap_smul ℂ (c w).im]
+    rw [hz, map_add (f := _), map_smul, map_smul, ← algebraMap_smul ℂ (c w).re, ← algebraMap_smul ℂ (c w).im]
     generalize ψ i j (Pi.single w 1) = P
     generalize ψ i j (Pi.single w Complex.I) = Q
     conv_lhs => rw [← Complex.re_add_im (c w)]
-    simp only [map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+    simp only [map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
     match_scalars <;> apply Complex.ext <;> simp <;> ring
   have hX : φ X = ∑ i, ∑ j, ψ i j (X i j) := by
     set_option synthInstance.maxHeartbeats 100000 in

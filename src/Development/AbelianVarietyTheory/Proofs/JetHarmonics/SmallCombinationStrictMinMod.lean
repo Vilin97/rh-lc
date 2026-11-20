@@ -23,7 +23,7 @@ variable {X : Type} [AddCommGroup X] {Bf : X →+ X →+ ℤ} {Q : X → ℤ} in
 private lemma quad_add_eq_add_add_bilin (hsym : ∀ x y, Bf x y = Bf y x) (hQ : ∀ x, 2 * Q x = Bf x x)
     (x y : X) : Q (x + y) = Q x + Q y + Bf x y := by
   have h := hQ (x + y)
-  simp only [map_add, AddMonoidHom.add_apply] at h
+  simp only [map_add (f := _), AddMonoidHom.add_apply] at h
   linarith [hQ x, hQ y, hsym y x]
 
 variable {X : Type} [AddCommGroup X] {Bf : X →+ X →+ ℤ} {Q : X → ℤ} in

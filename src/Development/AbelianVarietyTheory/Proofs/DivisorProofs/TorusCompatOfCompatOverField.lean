@@ -44,7 +44,7 @@ theorem compat_of_compat_field : ∀ (o Ω : Type) [CommRing o] [Field Ω] [Alge
       { toFun := fun χ => unitOn (Units.map a.toMonoidHom ζ ^ (c t (Multiplicative.toAdd χ)).val)
         map_one' := by simp [unitOn]
         map_mul' := fun x y => by
-          simp only [toAdd_mul, map_add, unitOn]
+          simp only [toAdd_mul, map_add (f := _), unitOn]
           rw [ZMod.val_add, ← pow_eq_pow_mod _ huL, pow_add, map_mul] }
     let z : Over.mk (𝟙 (Sp V)) ⟶ splitTorus (Sp V) X := (GlobalTheory.splitTorusPointsEquiv (Sp V) X _).symm φh
     have hz : ∀ χ, GlobalTheory.UU.chV z χ = unitOn (Units.map a.toMonoidHom ζ ^ (c t χ).val) := fun χ => by

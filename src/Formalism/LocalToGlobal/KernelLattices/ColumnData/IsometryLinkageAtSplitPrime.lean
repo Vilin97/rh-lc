@@ -44,7 +44,7 @@ theorem hK_rat (x : D.host.E) : ∃ p : ℚ, 0 ≤ p ∧ G0.hK D x x = ((p : ℚ
     Finset.sum_nonneg fun τ _ => Complex.normSq_nonneg _
   obtain ⟨p, q, e⟩ := CS.K_repr D _ (G0.hK D x x).2
   have hs := IO.sqrt_d_pos D
-  rw [e, map_add, map_mul, map_ratCast, map_ratCast, CS.embedding_sqrt_neg_d] at hφ
+  rw [e, map_add (f := _), map_mul, map_ratCast, map_ratCast, CS.embedding_sqrt_neg_d] at hφ
   have him := congrArg Complex.im hφ
   have hre := congrArg Complex.re hφ
   simp only [Complex.add_im, Complex.mul_im, Complex.ratCast_im, Complex.ratCast_re, Complex.I_re, Complex.I_im,
@@ -91,13 +91,13 @@ theorem crit (p : ℕ) (hp : p.Prime) (hpd : ¬ p ∣ D.host.d) (t : D.host.K) (
   have hbc := AR.conj_be D
   have e1 : (x : ℂ) = (p : ℂ) * k := by
     have := congrArg (AR.psi D) hk
-    rw [map_add, psi_cK, hψ] at this
-    simp only [map_mul, map_div₀, map_add, hbc, map_intCast, map_natCast, map_ofNat] at this
+    rw [map_add (f := _), psi_cK, hψ] at this
+    simp only [map_mul, map_div₀, map_add (f := _), hbc, map_intCast, map_natCast, map_ofNat] at this
     linear_combination this
   have e2 : (x : ℂ) - (D.host.d : ℂ) * y = 2 * (p : ℂ) * k' := by
     have := congrArg (AR.psi D) hk'
-    rw [map_add, psi_cK, map_mul, hψ, hω] at this
-    simp only [map_mul, map_div₀, map_add, hbc, map_intCast, map_natCast, map_ofNat, map_one] at this
+    rw [map_add (f := _), psi_cK, map_mul, hψ, hω] at this
+    simp only [map_mul, map_div₀, map_add (f := _), hbc, map_intCast, map_natCast, map_ofNat, map_one] at this
     linear_combination 2 * this - (y : ℂ) * hb2
   have e1' : x = (p : ℤ) * k := by exact_mod_cast e1
   have e2' : x - (D.host.d : ℤ) * y = 2 * (p : ℤ) * k' := by exact_mod_cast e2
@@ -116,7 +116,7 @@ theorem crit (p : ℕ) (hp : p.Prime) (hpd : ¬ p ∣ D.host.d) (t : D.host.K) (
   refine ⟨((k' + e * y' : ℤ) : D.host.K) + ((y' : ℤ) : D.host.K) * ((AR.om D : 𝓞 D.host.K) : D.host.K),
     (OO D).add_mem (intCast_mem _ _) ((OO D).mul_mem (intCast_mem _ _) ⟨AR.om D, rfl⟩), ?_⟩
   apply (AR.psi D).injective
-  rw [hψ, map_mul, map_add, map_mul, hω, map_natCast, map_intCast, map_intCast]
+  rw [hψ, map_mul, map_add (f := _), map_mul, hω, map_natCast, map_intCast, map_intCast]
   have hkC : (k : ℂ) = (y' : ℂ) + 2 * ((k' + e * y' : ℤ) : ℂ) := by
     have : k = y' + 2 * (k' + e * y') := by rw [he] at e3; linarith
     exact_mod_cast this

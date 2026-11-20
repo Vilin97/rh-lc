@@ -85,7 +85,7 @@ theorem locJ_cj (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w)
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => simp [GlobalTheory.LFun.toCompl_tmul, hF, hσ]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   obtain ⟨y, rfl⟩ := (locJ hU w hw v hv).symm.surjective x
   rw [RingEquiv.apply_symm_apply, locJ_symm_apply, hcomp, ← locJ_symm_apply hU w hw v hv,
     RingEquiv.apply_symm_apply]

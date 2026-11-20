@@ -34,7 +34,7 @@ theorem ev_mem_span (ev : L →+ ER) (hev : ∀ a : A, ∃ r : F, ∀ e : L, ev 
   induction h using Submodule.span_induction with
   | mem e he => exact Submodule.subset_span ⟨e, he, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | smul a e _ he =>
     obtain ⟨r, hr⟩ := hev a
     rw [hr]

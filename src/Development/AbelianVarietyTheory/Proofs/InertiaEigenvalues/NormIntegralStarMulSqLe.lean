@@ -265,7 +265,7 @@ theorem transLaws_of {F : Face D A} (hL : Laws R F) (hLP : LevProd R i) : TransL
     intro x1 x2 y
     have hf : ∀ g : GA D (Wc D i), star (e (x1 + x2) v0 g) * e y v0 (g * γ) =
         star (e x1 v0 g) * e y v0 (g * γ) + star (e x2 v0 g) * e y v0 (g * γ) := fun g => by
-      simp only [map_add, MultilinearMap.add_apply, Pi.add_apply, Complex.star_def, add_mul]
+      simp only [map_add (f := _), MultilinearMap.add_apply, Pi.add_apply, Complex.star_def, add_mul]
     rw [htp γ hγ, htp γ hγ, htp γ hγ]
     simp only [hf]
     rw [integral_add (hI x1 y γ) (hI x2 y γ)]
@@ -284,7 +284,7 @@ theorem transLaws_of {F : Face D A} (hL : Laws R F) (hLP : LevProd R i) : TransL
     intro x y1 y2
     have hf : ∀ g : GA D (Wc D i), star (e x v0 g) * e (y1 + y2) v0 (g * γ) =
         star (e x v0 g) * e y1 v0 (g * γ) + star (e x v0 g) * e y2 v0 (g * γ) := fun g => by
-      simp only [map_add, MultilinearMap.add_apply, Pi.add_apply, mul_add]
+      simp only [map_add (f := _), MultilinearMap.add_apply, Pi.add_apply, mul_add]
     rw [htp γ hγ, htp γ hγ, htp γ hγ]
     simp only [hf]
     rw [integral_add (hI x y1 γ) (hI x y2 γ)]

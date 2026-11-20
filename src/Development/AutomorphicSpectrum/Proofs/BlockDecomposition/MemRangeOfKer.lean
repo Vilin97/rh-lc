@@ -147,7 +147,7 @@ theorem tens_equiv (σ₁ : Representation ℂ G₁ A₁) (σ₂ : Representatio
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [h₁ _ _ (m₁ a.1 a.2), h₂ _ _ (m₂ b.1 b.2)]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem tens_joint {J₁ J₂ : Type} (f : J₁ → A₁ →ₗ[ℂ] X₁) (g : J₂ → A₂ →ₗ[ℂ] X₂)
     (bf : (⨅ j, LinearMap.ker (f j)) = ⊥) (bg : (⨅ j, LinearMap.ker (g j)) = ⊥) (z : A₁ ⊗[ℂ] A₂)
@@ -212,7 +212,7 @@ theorem lid_map_evAt (S₁ : Submodule ℂ (Sm E r)) (S₂ : Submodule ℂ (Sm E
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul u v => simp [prodFn_tmul, evAt]
-  | add u v hu hv => simp only [map_add, hu, hv, Pi.add_apply]
+  | add u v hu hv => simp only [map_add (f := _), hu, hv, Pi.add_apply]
 
 theorem prodFn_injective (S₁ : Submodule ℂ (Sm E r)) (S₂ : Submodule ℂ (Sm E s)) :
     Function.Injective (prodFn S₁ S₂) := by
@@ -272,7 +272,7 @@ theorem prodFn_rt (w : HeightOneSpectrum (𝓞 E)) {S₁ : Submodule ℂ (Sm E r
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rfl
-  | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
 
 end Fn
 

@@ -100,10 +100,10 @@ theorem centre_preserves_forms : ∀ (E : Type) [Field E] [NumberField E] [IsTot
   | zero => exact ⟨GlobalTheory.HCF.FormsSub.isAutForm_zero, fun k _ => map_zero _, fun g => by
       convert W'.zero_mem using 1; funext k; simp⟩
   | add x y _ _ hx hy =>
-    refine ⟨GlobalTheory.HCF.FormsSub.isAutForm_add hx.1 hy.1, fun k hk => by rw [map_add, hx.2.1 k hk, hy.2.1 k hk],
+    refine ⟨GlobalTheory.HCF.FormsSub.isAutForm_add hx.1 hy.1, fun k hk => by rw [map_add (f := _), hx.2.1 k hk, hy.2.1 k hk],
       fun g => ?_⟩
     convert W'.add_mem (hx.2.2 g) (hy.2.2 g) using 1
-    funext k; simp [map_add]
+    funext k; simp [map_add (f := _)]
   | smul c x _ hx =>
     refine ⟨GlobalTheory.HCF.FormsSub.isAutForm_smul c hx.1, fun k hk => by rw [map_smul, hx.2.1 k hk], fun g => ?_⟩
     convert W'.smul_mem c (hx.2.2 g) using 1

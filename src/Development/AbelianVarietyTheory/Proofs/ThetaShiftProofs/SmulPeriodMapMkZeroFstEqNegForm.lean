@@ -55,7 +55,7 @@ def toDual (hy : Function.Surjective y) : kerPerp hadj y →ₗ[ℤ] Module.Dual
   LinearMap.mk₂ ℤ (fun t x => -EF t (Function.surjInv hy x))
     (fun _ _ _ => by simp [add_comm]) (fun _ _ _ => by simp)
     (fun t x x' => by
-      rw [← neg_add, ← map_add]
+      rw [← neg_add, ← map_add (f := _)]
       exact congrArg _ (apply_eq_of_eq t.2 (by simp [Function.surjInv_eq])))
     (fun k t x => by
       rw [smul_neg, ← map_zsmul]

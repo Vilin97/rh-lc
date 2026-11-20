@@ -188,7 +188,7 @@ theorem eigComp_P_mem_span (s : 𝓞 E →+* ℂ) {r : ℕ} (y : Fin r → Λ) {
     rw [map_zero, ← hL, map_zero]
     exact Submodule.zero_mem _
   | add x x' _ _ hx hx' =>
-    rw [map_add, ← hL, map_add, hL, hL]
+    rw [map_add (f := _), ← hL, map_add (f := _), hL, hL]
     exact Submodule.add_mem _ hx hx'
   | smul a x _ hx =>
     rw [R.act, (h1 s).2.2.2 a]

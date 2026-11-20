@@ -55,7 +55,7 @@ private theorem aux {R : Type} [CommRing R] [Algebra ℝ R] {ι : Type} [Fintype
     funext a b
     exact gen_inter D l' (ρ.toLinearMap ∘ₗ l) τ a b a b ψ.toLinearMap LinearMap.id fun x =>
       (hψ 1 _).trans (one_smul _ _)
-  rw [← h2, e, map_add, hψ, hψ]
+  rw [← h2, e, map_add (f := _), hψ, hψ]
   exact add_mem (Submodule.smul_mem _ _ (Submodule.subset_span ⟨p, hp, rfl⟩))
     (Submodule.smul_mem _ _ (Submodule.subset_span ⟨q, hq, rfl⟩))
 

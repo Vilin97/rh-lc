@@ -115,13 +115,13 @@ def form (a : Ht q (sch.obj Z) b i) :
 
 theorem form_add (a a' : Ht q (sch.obj Z) b i) : form f dZ dX tZ b i (a + a') = form f dZ dX tZ b i a + form f dZ dX tZ b i a' := by
   ext y
-  simp only [form, AddMonoidHom.comp_apply, map_add, AddMonoidHom.add_apply]
+  simp only [form, AddMonoidHom.comp_apply, map_add (f := _), AddMonoidHom.add_apply]
 
 variable {f dZ dX tZ tX b i}
 
 theorem pairing_add {d : ℕ} (t : Ht q (sch.obj X) (2 * d) d →+ ZMod q) {n j : ℤ} (c c' : Ht q (sch.obj X) n j)
     (y : Ht q (sch.obj X) (2 * d - n) (d - j)) : pairing q d t (c + c') y = pairing q d t c y + pairing q d t c' y := by
-  simp only [pairing, map_add, AddMonoidHom.add_apply, Ht.cast_add]
+  simp only [pairing, map_add (f := _), AddMonoidHom.add_apply, Ht.cast_add]
 
 theorem pairing_zero {d : ℕ} (t : Ht q (sch.obj X) (2 * d) d →+ ZMod q) {n j : ℤ}
     (y : Ht q (sch.obj X) (2 * d - n) (d - j)) : pairing q d t (0 : Ht q (sch.obj X) n j) y = 0 := by

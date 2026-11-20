@@ -87,7 +87,7 @@ theorem exists_glue {G F K₀ K B D E Ω : Type} [Group G] [Field F] [CharZero F
     | tmul a b =>
       rw [Algebra.TensorProduct.tmul_mul_tmul, hΨ, hΨ, ← hsm, ← hact, ← hρ]
       rfl
-    | add a b ha hb => simp only [map_add, mul_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), mul_add, ha, hb]
   have hM : ∀ (c : K) t, mulVdR (Qp := F) (K := K) (BdR := D) (V := Fin 1 → E) (LL := E) c (Ψ t) =
       Ψ (((1 : E) ⊗ₜ[F] τ c) * t) := fun c t => by
     induction t using TensorProduct.induction_on with
@@ -95,12 +95,12 @@ theorem exists_glue {G F K₀ K B D E Ω : Type} [Group G] [Field F] [CharZero F
     | tmul a b =>
       rw [Algebra.TensorProduct.tmul_mul_tmul, hΨ, hΨ, ← hmul, one_mul]
       rfl
-    | add a b ha hb => simp only [map_add, mul_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), mul_add, ha, hb]
   have hS : ∀ (c : E) t, c • Ψ t = Ψ ((c ⊗ₜ[F] (1 : E)) * t) := fun c t => by
     induction t using TensorProduct.induction_on with
     | zero => simp only [map_zero, mul_zero, smul_zero]
     | tmul a b => rw [Algebra.TensorProduct.tmul_mul_tmul, hΨ, hΨ, ← hsm, one_mul, TensorProduct.smul_tmul']
-    | add a b ha hb => simp only [map_add, mul_add, smul_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), mul_add, smul_add, ha, hb]
   refine ⟨Ψ e, ⟨?_, ?_⟩, ?_, fun ν f hf => ?_⟩
   · simp only [DdR, SetLike.mem_coe, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,
       LinearMap.id_apply, sub_eq_zero]
@@ -122,7 +122,7 @@ theorem exists_glue {G F K₀ K B D E Ω : Type} [Group G] [Field F] [CharZero F
         rw [hL₂]
         exact Submodule.sum_mem _ fun ν _ => by simpa using PD.Fil_mul 0 0 _ _ (hΩ (ν b)) (hy ν)
       exact ⟨L₁ a ⊗ₜ ⟨L₂ b, hb⟩, rfl⟩
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   · have h4 : ∀ t, f (Ψ t) = ∑ ν' : E →ₐ[F] Ω, j (Algebra.TensorProduct.productMap ν ν' t) * y ν' := fun t => by
       induction t using TensorProduct.induction_on with
       | zero => simp
@@ -130,7 +130,7 @@ theorem exists_glue {G F K₀ K B D E Ω : Type} [Group G] [Field F] [CharZero F
         rw [hΨ, hf, hL₁, hL₂, Finset.mul_sum]
         refine Finset.sum_congr rfl fun ν' _ => ?_
         rw [Algebra.TensorProduct.productMap_apply_tmul, map_mul, mul_assoc]
-      | add a b ha hb => simp only [map_add, ha, hb, add_mul, Finset.sum_add_distrib]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb, add_mul, Finset.sum_add_distrib]
     rw [h4, Finset.sum_eq_single ν]
     · rw [pair_sep e h1 h2, if_pos rfl, map_one, one_mul]
     · intro ν' _ hne

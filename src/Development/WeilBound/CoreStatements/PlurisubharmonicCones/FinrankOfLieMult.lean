@@ -46,7 +46,7 @@ theorem eigSp_baseChange {E : Type} [Field E] [NumberField E] {O R M W : Type} [
           ← j.map_smul, ← j.map_sub]
         rfl
       | add x y hx hy =>
-        rw [map_add, map_add, hx, hy, map_add, map_add, smul_add]
+        rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _), smul_add]
         abel
     have h3 : ∀ i, (Φ i).lTensor R u = 0 := fun i => by
       apply hj.equiv.injective
@@ -68,7 +68,7 @@ theorem eigSp_baseChange {E : Type} [Field E] [NumberField E] {O R M W : Type} [
       rw [LinearMap.lTensor_tmul, hj.equiv_tmul]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨z, hker z.2, rfl⟩)
     | add x y hx hy =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact Submodule.add_mem _ hx hy
   · rintro _ ⟨z, hz, rfl⟩
     rw [SetLike.mem_coe, mem_eigSp] at hz ⊢

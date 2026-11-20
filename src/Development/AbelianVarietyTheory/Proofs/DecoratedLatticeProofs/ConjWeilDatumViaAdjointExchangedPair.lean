@@ -65,7 +65,7 @@ theorem isDetAt_conj {e : AE D} (he : e * e = e) {V : HSp D} {g : GA D V} {x : (
     rw [hx]
     linear_combination e * hd + ((mt V g⁻¹).det * (mt V g).det - (mt V g⁻¹).det - (mt V g).det + 1) * he
   show cA D ((x⁻¹ : (AE D)ˣ) : AE D) = cA D e * (mt V g).det + (1 - cA D e)
-  rw [hz, map_add, map_mul, map_sub, map_one, det_inv_eq, cA_cA]
+  rw [hz, map_add (f := _), map_mul, map_sub, map_one, det_inv_eq, cA_cA]
 
 end GlobalTheory.ConjAdjWeil
 
@@ -171,7 +171,7 @@ theorem isWeilDatumO_conjAdjoint : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ)
       funext z; simp [dag]
     let ℓ' : (WO S T → ℂ) →ₗ[ℂ] ℂ :=
       { toFun := fun F => starRingEnd ℂ (ℓ (dag S T F))
-        map_add' := fun a b => by simp only [dadd, map_add]
+        map_add' := fun a b => by simp only [dadd, map_add (f := _)]
         map_smul' := fun c a => by
           simp only [dsmul, map_smul, smul_eq_mul, map_mul, RingHom.id_apply, Complex.conj_conj] }
     have hinv' : ∀ u : WO S T, (∀ i j, cA D (cA D e) * u i j = u i j) → ∀ F, IsThetaFunO ψ S T F →

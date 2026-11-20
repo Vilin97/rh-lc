@@ -32,7 +32,7 @@ theorem HasWtG.mul {ω : (S →₀ ℕ) →+ ℝ} {w1 w2 : ℝ} {f g : MvPowerSe
   have hE : E = p.1 + p.2 := (Finset.HasAntidiagonal.mem_antidiagonal.1 hp).symm
   have : ((w1 + w2 - ω E : ℝ) : WithTop ℝ)
       = ((w1 - ω p.1 : ℝ) : WithTop ℝ) + ((w2 - ω p.2 : ℝ) : WithTop ℝ) := by
-    rw [← WithTop.coe_add, hE, map_add]; congr 1; ring
+    rw [← WithTop.coe_add, hE, map_add (f := _)]; congr 1; ring
   rw [this]
   exact add_le_add ((le_add_coe_iff _ _ _).1 (hf p.1)) ((le_add_coe_iff _ _ _).1 (hg p.2))
 
@@ -64,7 +64,7 @@ def om2 (Z Z' : Type*) (r r' : ℝ) : ((Z ⊕ Z') →₀ ℕ) →+ ℝ where
     (((Finsupp.sumFinsuppAddEquivProdFinsupp E).2.degree : ℕ) : ℝ) * r'
   map_zero' := by simp
   map_add' E F := by
-    simp only [map_add, Prod.fst_add, Prod.snd_add]
+    simp only [map_add (f := _), Prod.fst_add, Prod.snd_add]
     push_cast
     ring
 

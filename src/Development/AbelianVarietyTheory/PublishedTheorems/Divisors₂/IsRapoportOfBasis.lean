@@ -53,7 +53,7 @@ def ratAct : OAct (𝓞 ℚ) A where
   hom a := (Serre.intAct A).hom _
   one := by rw [map_one]; exact (Serre.intAct A).one
   mul a b := by rw [map_mul]; exact (Serre.intAct A).mul _ _
-  add a b := by rw [map_add]; exact (Serre.intAct A).add _ _
+  add a b := by rw [map_add (f := _)]; exact (Serre.intAct A).add _ _
 
 variable {A}
 

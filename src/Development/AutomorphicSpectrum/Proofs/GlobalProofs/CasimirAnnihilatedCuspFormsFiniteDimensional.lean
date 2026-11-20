@@ -176,7 +176,7 @@ theorem finite_of_polyGelf : ∀ (D : D7) (θ : D.what₂.Tau → (Ainf D.host.F
         refine ⟨fun u hu hu' x => ?_, fun τ x => ?_, fun τ => ?_⟩
         · simp only [Submodule.coe_add, Pi.add_apply, hf.1 u hu hu' x, hg.1 u hu hu' x]
         · exact (coeffSpan (ρ τ)).add_mem (hf.2.1 τ x) (hg.2.1 τ x)
-        · rw [map_add, hf.2.2, hg.2.2, add_zero]
+        · rw [map_add (f := _), hf.2.2, hg.2.2, add_zero]
       zero_mem' := ⟨fun _ _ _ _ => rfl, fun τ x => (coeffSpan (ρ τ)).zero_mem, fun τ => map_zero _⟩
       smul_mem' := by
         intro a f hf

@@ -29,7 +29,7 @@ theorem exists_isLocalHom_extension {A B O C : Type} [CommRing A] [IsDomain A] [
       map_one' := inj (by rw [hg, map_one, map_one])
       map_mul' := fun x y => inj (by rw [hg, map_mul, map_mul, hg, hg])
       map_zero' := inj (by rw [hg, map_zero, map_zero])
-      map_add' := fun x y => inj (by rw [hg, map_add, map_add, hg, hg]) }
+      map_add' := fun x y => inj (by rw [hg, map_add (f := _), map_add (f := _), hg, hg]) }
   have hcomp : ι'.comp φ = ι := by
     ext a
     apply inj

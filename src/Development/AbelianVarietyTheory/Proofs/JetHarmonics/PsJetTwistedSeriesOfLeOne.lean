@@ -57,7 +57,7 @@ theorem quad_bil (hP : ∀ i, constantCoeff (P i) = 0) (hQ : ∀ i, constantCoef
     quad v w (bil c P Q) =
       ∑ i, ∑ l, c i l * (lin v (P i) * lin w (Q l) + lin w (P i) * lin v (Q l)) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [bil, lin, quad, map_sum, Derivation.map_smul, Derivation.leibniz, smul_eq_mul, map_add, map_mul,
+    simp only [bil, lin, quad, map_sum, Derivation.map_smul, Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul,
     constantCoeff_smul, hP, hQ]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun l _ => ?_
   ring

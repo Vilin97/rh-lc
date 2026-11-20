@@ -160,7 +160,7 @@ theorem E_Cas (c d : Fin r) (x : V) : G.E c d (G.Cas x) = G.Cas (G.E c d x) := b
       (((if d = b then G.E a d (G.E c a x) else 0) - (if b = c then G.E a d (G.E c a x) else 0)) -
         ((if a = c then G.E c b (G.E b d x) else 0) - (if d = a then G.E c b (G.E b d x) else 0))) := by
     intro a b
-    rw [G.comm' c d a b, G.comm' c d b a x, map_add, map_sub]
+    rw [G.comm' c d a b, G.comm' c d b a x, map_add (f := _), map_sub]
     split_ifs <;> subst_vars <;> (try simp only [map_zero]) <;> abel
   have h1 : ∀ a, ∑ b, ((if d = b then G.E a d (G.E c a x) else 0) - (if b = c then G.E a d (G.E c a x) else 0)) = 0 := by
     intro a
@@ -508,7 +508,7 @@ theorem sl2 {a b : Fin r} (hab : a ≠ b) {ν : Fin r → ℤ} {x : V} (hx : G.I
     push_cast
     ring
   | succ k ih =>
-    rw [← hp (k + 1) x, ← hp (k + 1) (G.E a b x), hcomm, ih, hdiag (k + 1), map_add, map_smul, hp k x,
+    rw [← hp (k + 1) x, ← hp (k + 1) (G.E a b x), hcomm, ih, hdiag (k + 1), map_add (f := _), map_smul, hp k x,
       add_assoc, ← add_smul]
     congr 2
     push_cast
@@ -564,7 +564,7 @@ def Low (la : Fin r → ℤ) : Submodule K V where
   add_mem' := by
     intro x y hx hy ν hν
     simp only [Set.mem_ofPred_eq] at hx hy
-    rw [map_add, hx ν hν, hy ν hν, add_zero]
+    rw [map_add (f := _), hx ν hν, hy ν hν, add_zero]
   zero_mem' := by intro ν _; simp
   smul_mem' := by
     intro c x hx ν hν
@@ -588,7 +588,7 @@ theorem Lw_stable {la : Fin r → ℤ} {v : V} (hv : G.IsHW la v) : G.Stable (G.
   let U' : Submodule K V :=
     { carrier := {x | x ∈ G.Lw v ∧ ∀ a b, G.E a b x ∈ G.Lw v}
       add_mem' := fun {x y} hx hy => ⟨(G.Lw v).add_mem hx.1 hy.1, fun a b => by
-        rw [map_add]; exact (G.Lw v).add_mem (hx.2 a b) (hy.2 a b)⟩
+        rw [map_add (f := _)]; exact (G.Lw v).add_mem (hx.2 a b) (hy.2 a b)⟩
       zero_mem' := ⟨(G.Lw v).zero_mem, fun a b => by rw [map_zero]; exact (G.Lw v).zero_mem⟩
       smul_mem' := fun c x hx => ⟨(G.Lw v).smul_mem c hx.1, fun a b => by
         rw [map_smul]; exact (G.Lw v).smul_mem c (hx.2 a b)⟩ }
@@ -624,7 +624,7 @@ theorem Lw_le_low {la : Fin r → ℤ} {v : V} (hv : G.IsWt la v) :
   · intro a b hab x hx
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hx
     obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.mp hy
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
     apply Submodule.mem_sup_right
     refine (G.Low la).add_mem ((G.Low la).smul_mem c ?_) ?_
     · show ∀ ν, ¬ (Dle ν la ∧ ν ≠ la) → G.comp ν (G.E a b v) = 0
@@ -656,7 +656,7 @@ theorem wt_le_of_mem {la : Fin r → ℤ} {v : V} (hv : G.IsHW la v) {x : V} (hx
   apply h
   have hz' : ∀ ν, ¬ (Dle ν la ∧ ν ≠ la) → G.comp ν z = 0 := hz
   have hne : ν ≠ la := fun e => hle (by rw [e]; exact Dle_refl la)
-  rw [map_add, map_smul, G.comp_of_isWt hv.1, if_neg hne, smul_zero, zero_add]
+  rw [map_add (f := _), map_smul, G.comp_of_isWt hv.1, if_neg hne, smul_zero, zero_add]
   exact hz' ν (fun h' => hle h'.1)
 
 theorem comp_top_of_mem {la : Fin r → ℤ} {v : V} (hv : G.IsHW la v) {x : V} (hx : x ∈ G.gS {v}) :
@@ -666,7 +666,7 @@ theorem comp_top_of_mem {la : Fin r → ℤ} {v : V} (hv : G.IsHW la v) {x : V} 
   obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.mp hy
   have hz' : ∀ ν, ¬ (Dle ν la ∧ ν ≠ la) → G.comp ν z = 0 := hz
   refine ⟨c, ?_⟩
-  rw [map_add, map_smul, show G.comp la v = v from hv.1, hz' la (fun h => h.2 rfl), add_zero]
+  rw [map_add (f := _), map_smul, show G.comp la v = v from hv.1, hz' la (fun h => h.2 rfl), add_zero]
 
 theorem Cas_gS {la : Fin r → ℤ} {v : V} (hv : G.IsHW la v) {x : V} (hx : x ∈ G.gS {v}) :
     G.Cas x = ((casI la : ℤ) : K) • x := by
@@ -815,7 +815,7 @@ lemma comp_cprod (μ : Fin r → ℤ) (cs : List ℤ) (x : V) :
 lemma sup_stable {U U' : Submodule K V} (hU : G.Stable U) (hU' : G.Stable U') : G.Stable (U ⊔ U') := by
   intro a b x hx
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hx
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem_sup (hU a b y hy) (hU' a b z hz)
 
 theorem chain {W V0 : Submodule K V} [FiniteDimensional K W] (hW : G.Stable W) (hWf : G.FinW W)
@@ -858,7 +858,7 @@ theorem chain {W V0 : Submodule K V} [FiniteDimensional K W] (hW : G.Stable W) (
       · exact hcs c h
     · rw [cprod_cons]
       obtain ⟨y, hy, z, hz, hyz⟩ := Submodule.mem_sup.mp (hx x hxW)
-      rw [← hyz, map_add, smul_add, add_sub_add_comm]
+      rw [← hyz, map_add (f := _), smul_add, add_sub_add_comm]
       refine U.add_mem (U.sub_mem (G.Cas_mem hU hy) (U.smul_mem _ hy)) ?_
       let Q : Submodule K V := Submodule.comap (G.Cas - ((casI μ : ℤ) : K) • LinearMap.id) U
       have hQ : G.gS {v} ≤ Q := by
@@ -880,7 +880,7 @@ theorem inj_of {la : Fin r → ℤ} {v : V} (hv : G.IsHW la v) {W : Submodule K 
   have hgr : G.Graded (G.gS {v}) := G.graded_of (G.gS_stable {v})
   let K0 : Submodule K V :=
     { carrier := {y | y ∈ G.gS {v} ∧ Φ y = 0}
-      add_mem' := fun {y z} hy hz => ⟨(G.gS {v}).add_mem hy.1 hz.1, by rw [map_add, hy.2, hz.2, add_zero]⟩
+      add_mem' := fun {y z} hy hz => ⟨(G.gS {v}).add_mem hy.1 hz.1, by rw [map_add (f := _), hy.2, hz.2, add_zero]⟩
       zero_mem' := ⟨(G.gS {v}).zero_mem, map_zero Φ⟩
       smul_mem' := fun c y hy => ⟨(G.gS {v}).smul_mem c hy.1, by rw [map_smul, hy.2, smul_zero]⟩ }
   have hmemK : ∀ y, y ∈ K0 ↔ y ∈ G.gS {v} ∧ Φ y = 0 := fun y => Iff.rfl
@@ -934,7 +934,7 @@ private theorem pderiv_comm_lemma (y y' : σ) (F : MvPolynomial σ K) :
       simp only [Finsupp.tsub_apply, Finsupp.single_apply, if_neg h, if_neg (Ne.symm h), tsub_zero]
       ring
   · intro p q hp hq
-    rw [map_add, map_add, hp, hq, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
 
 theorem XD_comm (x y x' y' : σ) (F : MvPolynomial σ K) :
     X x * pderiv y (X x' * pderiv y' F) - X x' * pderiv y' (X x * pderiv y F) =
@@ -1036,8 +1036,8 @@ theorem wh_XD (w : σ → M) (x y : σ) (d : σ →₀ ℕ) (a : K) :
       rw [Finsupp.weight_apply, Finsupp.sum_single_index (by simp), one_smul]
     have h2 : Finsupp.weight w (d - Finsupp.single x 1) = Finsupp.weight w d - w x := by
       conv_rhs => rw [← e]
-      rw [map_add, hs, add_sub_cancel_right]
-    rw [map_add, h2, hs]
+      rw [map_add (f := _), hs, add_sub_cancel_right]
+    rw [map_add (f := _), h2, hs]
 
 theorem XD_diag (x : σ) (d : σ →₀ ℕ) (a : K) :
     X x * pderiv x (monomial d a) = (d x : K) • monomial d a := by
@@ -1194,7 +1194,7 @@ theorem deriv_transfer {K σ τ : Type} [CommRing K] (φ : MvPolynomial σ K →
     rw [C_eq_smul_one, map_smul φ, map_one φ, map_smul D1, map_smul D0, hD1one, hD0one, smul_zero, smul_zero,
       map_zero]
   · rename_i p q hp hq
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   · rename_i p v hp
     rw [map_mul φ, h1, hg v, hp, h0, map_add φ, map_mul φ, map_mul φ]
 
@@ -1620,7 +1620,7 @@ variable {p : ℕ} [Fact p.Prime] {N r : ℕ}
 
 theorem Cas_comm_glAct (LL : Letters N) {j0 J : ℕ} (hJ : j0 ≤ J) (c d : Fin r) (F : MvPolynomial (Fin N × Fin r) ℚ_[p]) :
     (GA p LL j0).Cas (glAct p LL J c d F) = glAct p LL J c d ((GA p LL j0).Cas F) := by
-  rw [glAct_split LL hJ c d, LinearMap.add_apply, LinearMap.add_apply, map_add]
+  rw [glAct_split LL hJ c d, LinearMap.add_apply, LinearMap.add_apply, map_add (f := _)]
   congr 1
   · exact ((GA p LL j0).E_Cas c d F).symm
   set_option synthInstance.maxHeartbeats 100000 in
@@ -1746,7 +1746,7 @@ theorem ycond_mul_cov [NeZero r] (LL : Letters N) (J : ℕ) (M : WithTop ℤ) (i
       rw [mul_comm]
       exact Submodule.subset_span ⟨_, hH c d e he, y, hy, rfl⟩
     | zero => rw [map_zero]; exact S.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact S.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact S.add_mem hx hy
     | smul a x _ hx => rw [map_smul]; exact S.smul_mem a hx
   have hS : S ≤ YCond p LL J M := le_sSup ⟨hS1, hS2⟩
   intro F hF
@@ -2286,7 +2286,7 @@ theorem comp_mul_hom {σ M K : Type} [AddCommGroup M] [CommRing K] (w : σ → M
     · have h1 : Finsupp.weight w ab.1 = κ := hφ h0
       have hab' : ab.1 + ab.2 = d := by simpa using hab
       have h2 : Finsupp.weight w ab.1 + Finsupp.weight w ab.2 = Finsupp.weight w d := by
-        rw [← map_add, hab']
+        rw [← map_add (f := _), hab']
       have h3 : Finsupp.weight w ab.2 = ν := by
         rw [h1, hd, add_comm] at h2
         exact add_right_cancel h2
@@ -2299,7 +2299,7 @@ theorem comp_mul_hom {σ M K : Type} [AddCommGroup M] [CommRing K] (w : σ → M
     · have h1 : Finsupp.weight w ab.1 = κ := hφ h0
       have hab' : ab.1 + ab.2 = d := by simpa using hab
       have h2 : Finsupp.weight w ab.1 + Finsupp.weight w ab.2 = Finsupp.weight w d := by
-        rw [← map_add, hab']
+        rw [← map_add (f := _), hab']
       rw [if_neg, mul_zero]
       intro h3
       apply hd
@@ -2451,7 +2451,7 @@ theorem weight_zero_span_highest [NeZero r] (LL : Letters N) (j0 : ℕ) (iK : Fi
     { carrier := {x | (∀ μ, ¬ Dle μ la' → G.comp μ x = 0) ∧ G.comp la' x ∈ Submodule.span ℚ_[p] {X (iK, ρ) ^ u * F}}
       add_mem' := by
         intro x y hx hy
-        exact ⟨fun μ hμ => by rw [map_add, hx.1 μ hμ, hy.1 μ hμ, add_zero], by rw [map_add]; exact Submodule.add_mem _ hx.2 hy.2⟩
+        exact ⟨fun μ hμ => by rw [map_add (f := _), hx.1 μ hμ, hy.1 μ hμ, add_zero], by rw [map_add (f := _)]; exact Submodule.add_mem _ hx.2 hy.2⟩
       zero_mem' := ⟨fun μ _ => map_zero _, by rw [map_zero]; exact Submodule.zero_mem _⟩
       smul_mem' := by
         intro c x hx
@@ -2694,7 +2694,7 @@ theorem highest_weight_dim_monotone : WeightSpaceDimMonotone := by
       rw [mul_comm]
       exact Submodule.subset_span ⟨_, G.gS_stable _ a b g hg, s, hs, rfl⟩
     | zero => rw [map_zero]; exact W0.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact W0.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact W0.add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact W0.smul_mem c hx
   have hW0pol : W0 ≤ Pol p r L1 := by
     rw [hW0, Submodule.span_le]
@@ -2794,7 +2794,7 @@ theorem highest_weight_dim_monotone : WeightSpaceDimMonotone := by
       refine Submodule.subset_span ⟨Φ g, ?_, q, hq, rfl⟩
       rw [gSpan_eq]; rw [gSpan_eq] at hg; exact hΦg g hg
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   have hmaps : ∀ z ∈ T.YYsp p LL i ρ n f, Φ z ∈ T.YYsp p LL i ρ nU f := by
     intro z hz

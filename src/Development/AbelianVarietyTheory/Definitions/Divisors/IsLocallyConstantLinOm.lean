@@ -33,7 +33,7 @@ theorem algebraMap_trace (h : IsQuad c δ) (z : A) : algebraMap k A (Algebra.tra
     rw [map_zero]
     linear_combination hn + hn'
   obtain ⟨x, y, rfl⟩ := h.exists_eq z
-  rw [map_add, h2, ← Algebra.smul_def, map_smul, h3, map_add c, map_smul, h.anti, c.commutes]
+  rw [map_add (f := _), h2, ← Algebra.smul_def, map_smul, h3, map_add c, map_smul, h.anti, c.commutes]
   simp [two_mul]
   ring
 
@@ -55,10 +55,10 @@ variable (c JB) in
 
 def trB : LinearMap.BilinForm k (β → A) :=
   LinearMap.mk₂ k (fun u v => -Algebra.trace k A (u ⬝ᵥ JB *ᵥ fun i => c (v i)))
-    (fun u u' v => by rw [add_dotProduct, map_add, neg_add])
+    (fun u u' v => by rw [add_dotProduct, map_add (f := _), neg_add])
     (fun a u v => by rw [smul_dotProduct, map_smul, smul_neg])
     (fun u v v' => by
-      rw [← neg_add, ← map_add, ← dotProduct_add, ← mulVec_add]; congr 4; funext i; simp)
+      rw [← neg_add, ← map_add (f := _), ← dotProduct_add, ← mulVec_add]; congr 4; funext i; simp)
     (fun a u v => by
       rw [smul_neg, ← map_smul, ← dotProduct_smul, ← mulVec_smul]; congr 4; funext i; simp)
 
@@ -223,7 +223,7 @@ theorem exists_lagr {α : Type} [Fintype α] [DecidableEq α] {ξ : A} {JA : Mat
   have hu : u = u * M.toRows₁ᵀ * Cᵀ + u * M.toRows₂ᵀ * Cxᵀ := by
     rw [Matrix.mul_assoc, Matrix.mul_assoc, ← Matrix.mul_add, ← Matrix.transpose_mul, ← Matrix.transpose_mul,
       ← Matrix.transpose_add, h1, Matrix.transpose_one, Matrix.mul_one]
-  rw [hu, map_add]
+  rw [hu, map_add (f := _)]
   exact Submodule.add_mem_sup ⟨_, rfl⟩ ⟨_, rfl⟩
 
 theorem siegelRule_linOm (hq : IsQuad c δ) (hψ : Continuous ψ) (hψ1 : ψ ≠ 1) (e : (β → A) ≃ₗ[k] (κ → k))

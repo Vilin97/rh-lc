@@ -60,7 +60,7 @@ theorem _root_.GlobalTheory.IndefiniteRowSideFullHecke.GradedDifferentComparison
       exact hmax y hy
     | zero => simp
     | add a b _ _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact dvd_add ha hb
     | smul a b _ hb =>
       rw [smul_eq_mul, map_mul]

@@ -214,7 +214,7 @@ theorem exists_solve_quot (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {
         (Z'.map (reductionMapsOfForms.mkk K 𝔭 k))ᴴ * P'.map (reductionMapsOfForms.mkk K 𝔭 k) +
         (Z'.map (reductionMapsOfForms.mkk K 𝔭 k))ᴴ * H'.map (reductionMapsOfForms.mkk K 𝔭 k) * Z'.map (reductionMapsOfForms.mkk K 𝔭 k) := by
     simp only [reductionMapsOfForms.map_conjTranspose]
-    simp only [← RingHom.mapMatrix_apply, map_add, map_mul]
+    simp only [← RingHom.mapMatrix_apply, map_add (f := _), map_mul]
   rw [← e]
   ext i j
   show Ideal.Quotient.mk (extP K 𝔭 ^ k) _ = 0

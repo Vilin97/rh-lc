@@ -134,7 +134,7 @@ theorem limit_of_data : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
       obtain ⟨x, hx, rfl⟩ := hx
       refine AddSubgroup.subset_closure ⟨c • x, I.smul_mem c hx, (hact c x).symm⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
   have hQpos : ∀ τ, 0 < (Qd τ 0).re := by
     intro τ
@@ -281,7 +281,7 @@ theorem limit_at_centre : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
   let I : Submodule (𝓞 E) Λ :=
     { carrier := {x | x ∈ chartW bas B ∧ ∀ y ∈ chartW bas B, L.toLogPeriods.E x y = 0}
       add_mem' := fun {x y} hx hy => ⟨(chartW bas B).add_mem hx.1 hy.1, fun u hu => by
-        rw [map_add, LinearMap.add_apply, hx.2 u hu, hy.2 u hu, add_zero]⟩
+        rw [map_add (f := _), LinearMap.add_apply, hx.2 u hu, hy.2 u hu, add_zero]⟩
       zero_mem' := ⟨(chartW bas B).zero_mem, fun u _ => by simp⟩
       smul_mem' := fun c' x hx => ⟨hstab c' x hx.1, fun u hu => by
         obtain ⟨c'', hc⟩ := hconj c'

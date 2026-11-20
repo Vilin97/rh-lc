@@ -11,7 +11,7 @@ private theorem dualDistrib_eq_mul'_map {O M N : Type} [CommRing O] [AddCommGrou
     [AddCommGroup N] [Module O N] (φ : Module.Dual O M) (ψ : Module.Dual O N) (t : M ⊗[O] N) :
     dualDistrib O M N (φ ⊗ₜ ψ) t = LinearMap.mul' O O (TensorProduct.map φ ψ t) := by
   induction t with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul m n => simp [dualDistrib_apply]
 
 theorem cartierDual_tangent_mod :
@@ -23,7 +23,7 @@ theorem cartierDual_tangent_mod :
   have hb' : ∀ φ : CartierDual O A, u (dUnit O φ) = Ideal.Quotient.mk _ (φ b) := fun φ => hb φ.ofConv
   obtain ⟨y, hy⟩ := GlobalTheory.T.exists_eq_smul_of_dvd_dualDistrib O A A a (cobOne O A b) (fun φ ψ => by
     have hm := hb' (WithConv.toConv φ * WithConv.toConv ψ)
-    rw [dUnit, AugCot.d_mul, map_add, map_smul, map_smul, ← dUnit, ← dUnit, hb', hb'] at hm
+    rw [dUnit, AugCot.d_mul, map_add (f := _), map_smul, map_smul, ← dUnit, ← dUnit, hb', hb'] at hm
     simp only [Bialgebra.counitAlgHom_apply, CartierDual.counit_apply] at hm
     have hc : (WithConv.toConv φ * WithConv.toConv ψ).ofConv b =
         LinearMap.mul' O O (TensorProduct.map φ ψ (CoalgebraStruct.comul b)) := rfl

@@ -40,7 +40,7 @@ theorem exists_injective_add_comp {κ V : Type} [Field κ] [AddCommGroup V] [Mod
   have hgl : π (g (l p)) = e p := LinearMap.congr_fun hl p
   have h1 : e p = 0 := by
     have := congrArg π hv
-    rw [LinearMap.add_apply, map_add, LinearMap.comp_apply, LinearMap.comp_apply, ← hpdef, hfv, hgl,
+    rw [LinearMap.add_apply, map_add (f := _), LinearMap.comp_apply, LinearMap.comp_apply, ← hpdef, hfv, hgl,
       zero_add, map_zero] at this
     exact this
   have hp : p = 0 := by simpa using h1
@@ -77,12 +77,12 @@ theorem local_exists_isUnit_det {R n : Type} [CommRing R] [IsLocalRing R] [Finty
     (A S C D : Matrix n n R) (h : C * A + D * S = 1) : ∃ T : Matrix n n R, IsUnit (A + T * S).det := by
   set φ := IsLocalRing.residue R
   obtain ⟨τ, hτ⟩ := field_exists_isUnit_det (φ.mapMatrix A) (φ.mapMatrix S) (φ.mapMatrix C) (φ.mapMatrix D)
-    (by rw [← map_mul, ← map_mul, ← map_add, h, map_one])
+    (by rw [← map_mul, ← map_mul, ← map_add (f := _), h, map_one])
   obtain ⟨T, hT⟩ : ∃ T : Matrix n n R, φ.mapMatrix T = τ :=
     ⟨τ.map (Function.surjInv IsLocalRing.residue_surjective), by
       ext i j; exact Function.surjInv_eq _ _⟩
   refine ⟨T, IsUnit.of_map φ _ ?_⟩
-  rw [RingHom.map_det, map_add, map_mul, hT]
+  rw [RingHom.map_det, map_add (f := _), map_mul, hT]
   exact hτ
 
 end GlobalTheory.StableRange
@@ -103,11 +103,11 @@ theorem GlobalTheory.StableRange.exists_mem_KO : ∀ (k : Type) [Field k] [Valua
   obtain ⟨D', rfl⟩ := lift D hD
   have hinj : Function.Injective (ι.mapMatrix : Matrix (Fin n) (Fin n) 𝒪[k] → _) := fun X Y hXY => by
     ext i j; exact congrFun (congrFun hXY i) j
-  have h' : C' * A' + D' * S' = 1 := hinj (by rw [map_add, map_mul, map_mul, map_one]; exact h)
+  have h' : C' * A' + D' * S' = 1 := hinj (by rw [map_add (f := _), map_mul, map_mul, map_one]; exact h)
   obtain ⟨T', hT'⟩ := local_exists_isUnit_det A' S' C' D' h'
   refine ⟨ι.mapMatrix T', fun i j => (T' i j).2,
     Matrix.GeneralLinearGroup.map ι ((Matrix.isUnit_iff_isUnit_det _).2 hT').unit, ⟨_, rfl⟩, ?_⟩
-  rw [← map_mul, ← map_add]
+  rw [← map_mul, ← map_add (f := _)]
   rfl
 
 end

@@ -71,7 +71,7 @@ variable (m : Match P D) (c : Coord P S)
 def lat (Λ : Submodule (MaxOrd o E) V) : Submodule M.L.O S.V where
   carrier := {y | c.e.symm y ∈ Λ}
   add_mem' := fun {a b} ha hb => by
-    simpa only [Set.mem_setOf_eq, map_add] using Λ.add_mem ha hb
+    simpa only [Set.mem_setOf_eq, map_add (f := _)] using Λ.add_mem ha hb
   zero_mem' := by simp
   smul_mem' := fun s a ha => by
     have := Λ.smul_mem ⟨s, (m.place.mem_O _).2 s.2⟩ ha
@@ -81,7 +81,7 @@ def lat (Λ : Submodule (MaxOrd o E) V) : Submodule M.L.O S.V where
 def unlat (Λ : Submodule M.L.O S.V) : Submodule (MaxOrd o E) V where
   carrier := {y | c.e y ∈ Λ}
   add_mem' := fun {a b} ha hb => by
-    simpa only [Set.mem_setOf_eq, map_add] using Λ.add_mem ha hb
+    simpa only [Set.mem_setOf_eq, map_add (f := _)] using Λ.add_mem ha hb
   zero_mem' := by simp
   smul_mem' := fun s a ha => by
     have := Λ.smul_mem ⟨s, (m.place.mem_O _).1 s.2⟩ ha

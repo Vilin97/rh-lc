@@ -62,7 +62,7 @@ theorem xs_den (v : HeightOneSpectrum (𝓞 F)) (a : E)
     { carrier := {t | ∃ r : 𝓞 E, algebraMap (𝓞 E) E t * a = algebraMap (𝓞 E) E r}
       add_mem' := by
         rintro x y ⟨r, hr⟩ ⟨r', hr'⟩
-        exact ⟨r + r', by rw [map_add, add_mul, hr, hr', map_add]⟩
+        exact ⟨r + r', by rw [map_add (f := _), add_mul, hr, hr', map_add (f := _)]⟩
       zero_mem' := ⟨0, by rw [map_zero, zero_mul]⟩
       smul_mem' := by
         rintro c x ⟨r, hr⟩
@@ -118,7 +118,7 @@ theorem xs_supp (v : HeightOneSpectrum (𝓞 F)) (a : Eˣ) : locId E v a ∈ sup
   rw [b_mem_suppAt]
   intro v' hv'
   show (Algebra.TensorProduct.map (AlgHom.id F E) (evalV F v')) ((a : E) ⊗ₜ[F] Formalism.L2.G.sgl F v 1 + (1 : E) ⊗ₜ[F] (1 - Formalism.L2.G.sgl F v 1)) = 1
-  rw [map_add, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, map_sub, Formalism.L2.G.sgl_apply_ne F v 1 hv', TensorProduct.tmul_zero,
+  rw [map_add (f := _), Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, map_sub, Formalism.L2.G.sgl_apply_ne F v 1 hv', TensorProduct.tmul_zero,
     zero_add, sub_zero, map_one (evalV F v')]
   rfl
 

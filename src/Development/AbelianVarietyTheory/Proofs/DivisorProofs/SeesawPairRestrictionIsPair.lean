@@ -74,7 +74,7 @@ open Matrix
 
 theorem incV_add {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {k : ℕ} (a b : Fin k → E) :
     incV F (a + b) = incV F a + incV F b := by
-  funext i; simp [incV, map_add]
+  funext i; simp [incV, map_add (f := _)]
 
 theorem incV_smul {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {k : ℕ} (e : E) (a : Fin k → E) :
     incV F (e • a) = inclR (F := F) (AF F) e • incV F a := by

@@ -107,7 +107,7 @@ theorem unit_fixed_is_norm : ∀ (L : Type) [Field L] [NumberField L] (c : L →
     induction a using TensorProduct.induction_on with
     | zero => simp
     | tmul r l => simp [σ, hc]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hσinv : ∀ g : (v.adicCompletion ℚ ⊗[ℚ] L)ˣ, σ ↑g = ↑g → σ ↑g⁻¹ = ↑g⁻¹ := by
     intro g hg
     calc σ ↑g⁻¹ = σ ↑g⁻¹ * (↑g * ↑g⁻¹) := by simp

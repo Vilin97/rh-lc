@@ -33,7 +33,7 @@ theorem sq4 (m₁ : CH.Mor F₁ F₂ σ₁) (m₂ : CH.Mor F₂ F₄ σ₂) (m�
 def smulMor (c : R₂) (m : CH.Mor F₁ F₂ σ₁) : CH.Mor F₁ F₂ σ₁ where
   G := m.G
   τ T := { toFun := fun x => c • m.τ T x
-           map_add' := fun x y => by rw [map_add, smul_add]
+           map_add' := fun x y => by rw [map_add (f := _), smul_add]
            map_smul' := fun r x => by rw [LinearMap.map_smulₛₗ, smul_comm] }
   nat φ x := by
     change c • m.τ _ _ = (F₂.map φ).hom (c • m.τ _ x)

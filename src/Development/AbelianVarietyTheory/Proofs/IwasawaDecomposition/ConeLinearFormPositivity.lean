@@ -88,7 +88,7 @@ theorem trait_num_den {ι : Type} [Fintype ι] (r : Dg.X → R) (hr : ∀ y, Psi
     have h2 := hN (b i)
     have h3 := hN (b j)
     have h4 := hsymm (b j) (b i)
-    simp only [map_add, LinearMap.add_apply] at h1
+    simp only [map_add (f := _), LinearMap.add_apply] at h1
     have he : (n (b i + b j) : ℤ) - n (b i) - n (b j) = be (b i) (b j) := by linarith
     have hc : ((c i j).toNat : ℤ) - ((-c i j).toNat : ℤ) = c i j := by omega
     calc _ = (((c i j).toNat : ℤ) - ((-c i j).toNat : ℤ)) * ((n (b i + b j) : ℤ) - n (b i) - n (b j)) := by ring

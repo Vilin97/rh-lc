@@ -102,7 +102,7 @@ def psiL (R K : Type) [CommRing R] [Field K] [Algebra R K] (m : ℕ) (lam : Fin 
     (g : Matrix (Fin (m + 1)) (Fin (m + 1)) K) :
     MvPolynomial (Fin (m + 1) × Fin (m + 1)) R →ₗ[R] MvPolynomial (Fin (m + 1) × Fin (m + 1)) K where
   toFun := fun f => g.det ^ (-(lam (Fin.last m))) • rowAct K g⁻¹ (MvPolynomial.map (algebraMap R K) f)
-  map_add' := by intro x y; rw [map_add, map_add, smul_add]
+  map_add' := by intro x y; rw [map_add (f := _), map_add (f := _), smul_add]
   map_smul' := by
     intro c x
     have h1 : MvPolynomial.map (algebraMap R K) (c • x) =

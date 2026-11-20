@@ -22,7 +22,7 @@ variable {d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ}
 def Tl_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) : d.Fn →ₗ[ℂ] (Mx F E d.m d.n → ℂ) where
   toFun := d.T
   map_add' Φ Ψ := funext fun X => by
-    simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.T, Pi.add_apply, ← map_add]
+    simp only [_root_.PositivityTheory.SiegelWeilFormula.SD_k.T, Pi.add_apply, ← map_add (f := _)]
     congr 1
     funext z
     exact mul_add _ _ _

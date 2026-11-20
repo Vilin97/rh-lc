@@ -54,7 +54,7 @@ theorem pureTensorO_injective_of_on (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFa
     (fun _ hg => hg) fun u g hg => (hD_formula_smooth _ _ _ _ _ (h.pi_iota W V) g hg u).2
   have sk : ∀ u v, omO V W v u = -omO V W u v := fun u v => by
     have h1 := omO_self h (S := V) (T := W) (u + v)
-    simp only [LinearMap.map_add, LinearMap.add_apply, omO_self h] at h1
+    simp only [LinearMap.map_add (f := _), LinearMap.add_apply, omO_self h] at h1
     linarith
   have hcomm : ∀ u v g, Dop u (Dop v g) = Dop v (Dop u g) + (-(2 * Real.pi * I) * (omO V W u v : ℝ)) • g :=
     fun u v g => by

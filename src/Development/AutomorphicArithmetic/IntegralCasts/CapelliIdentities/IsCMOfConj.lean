@@ -30,7 +30,7 @@ theorem UpperTheory.Reformulated.B.Qh8.isCM_of_conj :
     have h3 := congrArg (starRingEnd ℂ) h2
     have hs' : starRingEnd ℂ (φ₀ s) = φ₀ s := hs φ₀
     have ht' : starRingEnd ℂ (φ₀ t) = φ₀ t := ht φ₀
-    simp only [map_add, map_mul, map_one, map_zero, hs', ht', hd] at h2 h3
+    simp only [map_add (f := _), map_mul, map_one, map_zero, hs', ht', hd] at h2 h3
     have hs0 : s = 0 := by
       apply φ₀.injective
       rw [map_zero]

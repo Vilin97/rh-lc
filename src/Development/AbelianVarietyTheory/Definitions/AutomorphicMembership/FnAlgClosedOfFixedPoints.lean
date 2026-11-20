@@ -63,7 +63,7 @@ theorem congr_of_section (F : FamilyUnif Xo σ ty) (τ : ℂ ≃+* ℂ) {i i' : 
   rw [← h1, tu, ← Category.assoc, hu, ← tu, h2] at key
   have e : F.ex i' P' ((n : ℂ)⁻¹ • P' x') = F.ex i' P' ((n : ℂ)⁻¹ • P' w) := Over.OverMorphism.ext key
   have e' := F.ex_add i' P' hP' ((n : ℂ)⁻¹ • P' (w - x')) ((n : ℂ)⁻¹ • P' x')
-  rw [← smul_add, ← map_add, sub_add_cancel, e] at e'
+  rw [← smul_add, ← map_add (f := _), sub_add_cancel, e] at e'
   obtain ⟨y, hy⟩ := (F.ex_ker i' P' hP' _).1 (mul_eq_right.1 e'.symm)
   refine ⟨y, ?_⟩
   rw [← sub_eq_iff_eq_add']

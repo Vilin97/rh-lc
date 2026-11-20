@@ -237,7 +237,7 @@ private theorem hermFlagUnipotent_sub_lowers_graded_lemma_6 {g : V →ₗ[K] V} 
     exact _root_.GlobalTheory.UnipStab.Xa_mono F (by omega) (he b)
   | zero => simp
   | add x z _ _ hx hz =>
-    rw [map_add, add_sub_add_comm]
+    rw [map_add (f := _), add_sub_add_comm]
     exact add_mem hx hz
   | smul c x _ hx =>
     rw [map_smul, ← smul_sub]

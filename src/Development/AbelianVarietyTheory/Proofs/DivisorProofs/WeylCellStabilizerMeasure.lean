@@ -26,7 +26,7 @@ def antiBall (σ : L →+* L) (j : ℤ) : AddSubgroup L where
   zero_mem' := ⟨by simp, by simp⟩
   add_mem' := by
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
-    refine ⟨by rw [map_add, ha, hb, neg_add], (Valuation.map_add _ a b).trans (max_le ha' hb')⟩
+    refine ⟨by rw [map_add (f := _), ha, hb, neg_add], (Valuation.map_add _ a b).trans (max_le ha' hb')⟩
   neg_mem' := by
     rintro a ⟨ha, ha'⟩
     exact ⟨by rw [map_neg, ha], by rwa [Valuation.map_neg]⟩
@@ -36,7 +36,7 @@ def fixBall (σ : L →+* L) (j : ℤ) : AddSubgroup L where
   zero_mem' := ⟨by simp, by simp⟩
   add_mem' := by
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
-    refine ⟨by rw [map_add, ha, hb], (Valuation.map_add _ a b).trans (max_le ha' hb')⟩
+    refine ⟨by rw [map_add (f := _), ha, hb], (Valuation.map_add _ a b).trans (max_le ha' hb')⟩
   neg_mem' := by
     rintro a ⟨ha, ha'⟩
     exact ⟨by rw [map_neg, ha], by rwa [Valuation.map_neg]⟩
@@ -288,7 +288,7 @@ theorem shell_measure : ∀ (L : Type) [Field L] [CharZero L] [Valued L (WithZer
       intro i l
       show (1 + Matrix.single a a.rev (-b) : Matrix (Fin n) (Fin n) L) i l =
         σ ((1 + Matrix.single a a.rev b : Matrix (Fin n) (Fin n) L) l.rev i.rev)
-      rw [Matrix.add_apply, Matrix.add_apply, map_add, Matrix.one_apply, Matrix.one_apply, Matrix.single_apply,
+      rw [Matrix.add_apply, Matrix.add_apply, map_add (f := _), Matrix.one_apply, Matrix.one_apply, Matrix.single_apply,
         Matrix.single_apply, apply_ite σ, apply_ite σ, map_one, map_zero, hb]
       congr 1
       · exact if_congr (by rw [Fin.rev_inj, eq_comm]) rfl rfl

@@ -34,7 +34,7 @@ theorem UpperTheory.V.Lit.Bor.absHarm :
       simp only [ip]
       rw [← Finset.sum_add_distrib]
       refine Finset.sum_eq_zero fun I _ => ?_
-      rw [← LinearMap.add_apply, ← map_add, h1, hc0, LinearMap.zero_apply, map_zero, LinearMap.zero_apply]
+      rw [← LinearMap.add_apply, ← map_add (f := _), h1, hc0, LinearMap.zero_apply, map_zero, LinearMap.zero_apply]
     have h3 := congrArg Complex.re (hadj' (q + 1) (dCo (A + B) ω) ω)
     have h4 := congrArg Complex.re (hadj' q ω (del (B - A) e ω))
     have h5 := congrArg Complex.re ((hdef (q + 1)).1 ω (dCo (A + B) (del (B - A) e ω)))

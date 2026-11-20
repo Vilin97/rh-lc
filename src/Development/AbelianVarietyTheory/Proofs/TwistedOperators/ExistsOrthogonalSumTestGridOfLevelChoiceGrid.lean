@@ -78,7 +78,7 @@ theorem exists_orthogonalSum_testGrid_of_levelChoiceGrid {D : D7} (A B : GlobalT
           frameMat B.V A.V d.ι *ᵥ A.V.frame.equivFun x + d.a *ᵥ t := by
       intro x t
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum]
+        rw [map_add (f := _), map_sum]
       congr 1
       · simp only [Module.Basis.equivFun_apply, frameMat]
         exact (LinearMap.toMatrix_mulVec_repr _ _ _ _).symm

@@ -60,7 +60,7 @@ variable {L : Type} [NontriviallyNormedField L] {V : Type} [AddCommGroup V] [Mod
   {s : L →+* L} {h : V → V → L}
 
 theorem herm_add_left (hh : IsHerm s h) (x y z : V) : h (x + y) z = h x z + h y z := by
-  rw [hh.2.2.1 z (x + y), hh.1, map_add, ← hh.2.2.1, ← hh.2.2.1]
+  rw [hh.2.2.1 z (x + y), hh.1, map_add (f := _), ← hh.2.2.1, ← hh.2.2.1]
 
 theorem herm_smul_left (hh : IsHerm s h) (a : L) (x y : V) : h (a • x) y = s a * h x y := by
   rw [hh.2.2.1 y (a • x), hh.2.1, map_mul, ← hh.2.2.1]

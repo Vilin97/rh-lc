@@ -90,7 +90,7 @@ theorem generated_subrep_operator_stable (E : GLOps n K V) (h : V) : ∀ a b, �
       ⟨E a b * u, Submonoid.mul_mem _ (Submonoid.subset_closure ⟨(a, b), rfl⟩) hu, rfl⟩
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   | smul c x _ hx =>
     rw [map_smul]
@@ -116,7 +116,7 @@ theorem weight_projection_generated_scalar (E : GLOps n K V) (lam : Fin n → �
     intro z hz
     exact hπ.2 mu hmu z (Submodule.mem_inf.mp hz).1
   refine ⟨a, ?_⟩
-  rw [map_add, LinearMap.mem_ker.mp (hker ht), add_zero, map_smul, hπ.1 h (highestWeight_mem_weightSpace E lam h hh)]
+  rw [map_add (f := _), LinearMap.mem_ker.mp (hker ht), add_zero, map_smul, hπ.1 h (highestWeight_mem_weightSpace E lam h hh)]
 
 theorem isotypic_sum_generated_subreps (E : GLOps n K V) (lam : Fin n → ℤ) {k : ℕ} (h : Fin k → V)
     (hspan : highestWeightVectors E lam ≤ Submodule.span K (Set.range h)) (Y : V) (hY : Y ∈ isoSub E lam) :

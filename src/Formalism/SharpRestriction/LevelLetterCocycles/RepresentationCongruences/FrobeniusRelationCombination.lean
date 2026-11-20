@@ -255,7 +255,7 @@ theorem arc_length_three_final_bound [NeZero n] [Fintype (K →ₐ[Qp] LL)] [IsD
   have hFw : W.map F (De₁ + algebraMap O (LetA O n) tt • y₁) =
       algebraMap O (LetA O n) (((PD.p : ℕ) : O) ^ rr * t₃) • V := by
     have hlA : lA W = algebraMap O (LetA O n) ((PD.p : ℕ) : O) := by simp [lA]
-    rw [map_add, map_smulA W F, hFDe₁, hDedef, htt, map_mul, map_mul, map_pow, ← hlA]
+    rw [map_add (f := _), map_smulA W F, hFDe₁, hDedef, htt, map_mul, map_mul, map_pow, ← hlA]
     simp only [smul_sub, mul_smul]
     abel
   refine ⟨rr + σ, t₃, ?_, ⟨r₃, hr₃, hr₃b⟩, ?_⟩

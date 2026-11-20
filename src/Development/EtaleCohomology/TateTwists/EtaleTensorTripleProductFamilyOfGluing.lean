@@ -56,8 +56,8 @@ lemma lift_res (τ : Pair I J T) {V U : Scheme.{0}} (g : V ⟶ U) (w : ℤ) (x :
       simp only [Pair.lift, Tens.res, DirectSum.lmap_lof, DirectSum.toModule_lof, TensorProduct.map_tmul,
         TensorProduct.lift.tmul]
       exact (τ.nat g _ _ _ _ a b).symm
-    | add y y' hy hy' => simp only [map_add, hy, hy']
-  | add x x' hx hx' => simp only [map_add, hx, hx']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
+  | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
 
 lemma lift_single (τ : Pair I J T) (U : Scheme.{0}) (s t st : ℤ) (h1 : s + t = st) (a : Sec (I.X s) U)
     (b : Sec (J.X t) U) :
@@ -100,8 +100,8 @@ lemma B_res (μ' : Pair J K M) (ν' : Pair I M L) {W V : Scheme.{0}} (k : W ⟶ 
       simp only [B, Bp, Tens.res, DirectSum.lmap_lof, DirectSum.toModule_lof, TensorProduct.map_tmul,
         TensorProduct.lift.tmul, LinearMap.mk₂_apply, LinearMap.comp_apply]
       rw [ν'.nat, μ'.nat]
-    | add y y' hy hy' => simp only [map_add, LinearMap.add_apply, hy, hy']
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+    | add y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply, hy, hy']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
 
 end
 
@@ -150,7 +150,7 @@ lemma mraw_add_a {U : Scheme.{0}} {st u w : ℤ} {h2 : st + u = w} (a a' : Sec (
   apply (hg R (L.X w) U).1
   refine loc_mono (loc_inter (hτ.1 U st a) (hτ.1 U st a')) fun V g hV => ?_
   obtain ⟨⟨x, hx⟩, ⟨x', hx'⟩⟩ := hV
-  rw [res_add, res_mraw_eq_of_lift hg τ hτ μ' ν' (a + a') c g (x + x') (by rw [map_add, hx, hx', res_add]),
+  rw [res_add, res_mraw_eq_of_lift hg τ hτ μ' ν' (a + a') c g (x + x') (by rw [map_add (f := _), hx, hx', res_add]),
     res_mraw_eq_of_lift hg τ hτ μ' ν' a c g x hx, res_mraw_eq_of_lift hg τ hτ μ' ν' a' c g x' hx', map_add, LinearMap.add_apply]
 
 lemma mraw_smul_a {U : Scheme.{0}} {st u w : ℤ} {h2 : st + u = w} (r : ULift.{1} R) (a : Sec (T.X st) U) (c : Sec (K.X u) U) :

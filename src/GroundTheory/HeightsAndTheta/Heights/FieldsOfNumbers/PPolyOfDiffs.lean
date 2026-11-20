@@ -49,7 +49,7 @@ theorem eval_aeval_X (y : K → ℚ) (k : K) (F : Polynomial ℚ) :
     eval y (Polynomial.aeval (X k) F) = F.eval (y k) := by
   induction F using Polynomial.induction_on with
   | C a => simp
-  | add p r hp hr => rw [map_add, map_add, hp, hr, Polynomial.eval_add]
+  | add p r hp hr => rw [map_add (f := _), map_add (f := _), hp, hr, Polynomial.eval_add]
   | monomial n a _ => simp
 
 theorem exists_antideriv (k : K) (q : MvPolynomial K ℚ) : ∃ P : MvPolynomial K ℚ,
@@ -113,7 +113,7 @@ theorem eval_aeval_freeze (s : Finset K) (N x : K → ℚ) (P : MvPolynomial K �
     eval x (aeval (freeze s N) P) = eval (fun j => if j ∈ s then x j else N j) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p r hp hr => rw [map_add, map_add, hp, hr, map_add]
+  | add p r hp hr => rw [map_add (f := _), map_add (f := _), hp, hr, map_add (f := _)]
   | mul_X p j hp =>
     simp only [map_mul, hp, aeval_X, eval_X, freeze]
     split_ifs <;> simp
@@ -202,7 +202,7 @@ theorem proof : PolyOfDiffs.Statement := by
         have c1 : ∀ t : Finset K, (fun j => ((pathPt N t m j : ℤ) : ℚ)) =
             fun j => if j ∈ t then (m j : ℚ) else (N j : ℚ) := by
           intro t; funext j; simp only [pathPt]; split_ifs <;> rfl
-        rw [map_sub, map_add, eval_aeval_freeze, eval_aeval_freeze, ← hQ m hm, ← c1, ← c1]
+        rw [map_sub, map_add (f := _), eval_aeval_freeze, eval_aeval_freeze, ← hQ m hm, ← c1, ← c1]
         linarith
   obtain ⟨Q, hQd, hQ⟩ := key Finset.univ
   refine ⟨Q, hQd, ?_⟩

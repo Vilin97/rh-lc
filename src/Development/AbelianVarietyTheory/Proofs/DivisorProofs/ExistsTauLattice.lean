@@ -95,7 +95,7 @@ theorem exists_firstLaw (θ : X → X → U) (h0 : ∀ a, θ 0 a = 1) (hs : ∀ 
   refine ⟨fun a => ((s a : ExtCar U X) : U × X).1, fun a a' => ?_, fun i => ?_⟩
   · have e : ((s (a + a') : ExtCar U X) : U × X).1 = ((s a : ExtCar U X) : U × X).1 * ((s a' : ExtCar U X) : U × X).1 *
         (θ ((s a : ExtCar U X) : U × X).2 ((s a' : ExtCar U X) : U × X).2)⁻¹ := by
-      rw [s.map_add]; rfl
+      rw [s.map_add (f := _)]; rfl
     show ((s (a + a') : ExtCar U X) : U × X).1 * θ a a' = _
     rw [e, h2, h2, inv_mul_cancel_right]
   · show ((s (b i) : ExtCar U X) : U × X).1 = m i

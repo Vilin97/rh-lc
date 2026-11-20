@@ -56,7 +56,7 @@ theorem nz_translate (hKD : Pv.AmpDD.KDense) (hlam : IsHCParam lam) (hσ : PI.Up
     exact DDSmoothness.smooth_add hxs (DDSmoothness.smooth_smul (-1) hus)
   have hsplit : Bm v = Bm (σ t (x - u)) := by
     have := hadd _ (TranslationBesselVanishing.smooth_translate hσ hds ht) _ (TranslationBesselVanishing.smooth_translate hσ hus ht)
-    rw [← map_add, sub_add_cancel, htx, h0, add_zero] at this
+    rw [← map_add (f := _), sub_add_cancel, htx, h0, add_zero] at this
     exact this
   have hb := hbd _ (TranslationBesselVanishing.smooth_translate hσ hds ht)
   have hmap : (Ws.map fun w => ‖PI.UpqRep.dsigW (k := k) (r := r) σ w (σ t (x - u))‖) =

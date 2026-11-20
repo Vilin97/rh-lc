@@ -60,7 +60,7 @@ theorem card_isom {K : Type} [Field K] {σ : K →+* K} {U V : Type} [AddCommGro
       right_inv := fun Y => ?_ }
   · have hs1 : IsSq σ (fun x y => hV (b.constr K Y.1 x) (b.constr K Y.1 y)) :=
       { add_right := fun x y z => by
-          simp only [map_add]
+          simp only [map_add (f := _)]
           exact hsV.add_right _ _ _
         smul_right := fun c x y => by
           simp only [map_smul]

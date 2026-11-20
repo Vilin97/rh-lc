@@ -46,7 +46,7 @@ theorem evalSub_range {Ω K : Type} [Field Ω] [Field K] [Algebra Ω K] {ι : Ty
       refine Subring.subset_closure (Or.inl ⟨a, a.2, ?_⟩)
       simp [evalSub]
     | add p q hp hq =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul]

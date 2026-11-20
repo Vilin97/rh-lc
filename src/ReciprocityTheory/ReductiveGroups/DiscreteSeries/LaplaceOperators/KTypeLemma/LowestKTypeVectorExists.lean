@@ -77,7 +77,7 @@ theorem lowestKType_vector_exists (ε : Fin n → Bool) (lam : Fin n → ℝ)
       simp only [cpart2, Matrix.smul_mul, Matrix.mul_smul, Matrix.add_mul, Matrix.mul_add, hZ, hZ']⟩
     rw [← TRA.actM_single E a b, TRA.act_cpart (ε := ε), Submodule.coe_add, Submodule.coe_smul,
       hK _ k1, hK _ k2]
-    conv_rhs => rw [← ta_cpart_sum ε (Matrix.single a b 1), map_add, map_smul, _root_.add_apply,
+    conv_rhs => rw [← ta_cpart_sum ε (Matrix.single a b 1), map_add (f := _), map_smul, _root_.add_apply,
       _root_.smul_apply, map_add, map_smul]
   refine ⟨fun a => Subtype.ext ?_, fun a b hab he => Subtype.ext ?_⟩
   · rw [hC a a rfl, T.w_wt a, map_smul]; rfl
@@ -152,7 +152,7 @@ theorem lowestKType_trace_integral (ε : Fin n → Bool) (lam : Fin n → ℝ)
         intro y
         induction y using Finsupp.induction_linear with
         | zero => simp
-        | add y y' h h' => simp only [map_add, Pi.add_apply, h, h']
+        | add y y' h h' => simp only [map_add (f := _), Pi.add_apply, h, h']
         | single p v =>
           have e0 : TRA.ei X 0 = 1 := by simp [TRA.ei]
           have e1 : TRA.wB (eMM μ) (phiMM μ) X 0 p.1 = wordE (eMM μ) p.1 (phiMM μ) := by

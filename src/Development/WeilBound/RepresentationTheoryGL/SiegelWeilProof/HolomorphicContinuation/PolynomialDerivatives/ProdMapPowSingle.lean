@@ -153,7 +153,7 @@ theorem op_mul_rename_inl (s : Sym m n) (g f : PX m n) :
     op (s * rename Sum.inl g) f = g * op s f := by
   induction g using MvPolynomial.induction_on generalizing s with
   | C a => rw [rename_C, mul_comm, C_mul', op_smul, smul_eq_C_mul]
-  | add p q hp hq => rw [map_add, mul_add, op_add, hp, hq, add_mul]
+  | add p q hp hq => rw [map_add (f := _), mul_add, op_add, hp, hq, add_mul]
   | mul_X p k hp => rw [map_mul, rename_X, ← mul_assoc, op_mul_X_inl, hp]; ring
 
 theorem KopL_apply (ε : Fin m → Bool) (i j : Fin n) (p : PX m n) :
@@ -249,7 +249,7 @@ theorem symK_op (ε : Fin m → Bool) (i j : Fin n) (s : Sym m n) :
     rw [MvPolynomial.derivation_C, op_zero, op_C, op_C, map_smul, sub_self]
   | add p q hp hq =>
     intro f
-    rw [map_add, op_add, hp, hq, op_add, op_add, map_add]
+    rw [map_add (f := _), op_add, hp, hq, op_add, op_add, map_add (f := _)]
     abel
   | mul_X p k hp =>
     intro f

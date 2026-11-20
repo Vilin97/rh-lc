@@ -351,7 +351,7 @@ theorem GlobalTheory.MBLow.thJet_of_keyAtMap : ∀ (R K : Type) [CommRing R] [Fi
     have hjy : φ ((y' j ≫ (snd (baseOver (Sp K)) x'.P.A).left) (IsLocalRing.closedPoint (DualNumber K))) ∈ x.P.L.U i₀ := by
       rw [ys]; exact (congrArg (fun p => φ p ∈ x.P.L.U i₀) (tanU j' _)).mpr hj₁
     rw [valR_secRel hp τ hτ x.P.isLB x'.P.isLB (ht a) (y' j) i₀ i₁ hjy hiy] at qF
-    rw [map_mul, map_add, hFl, hFl, hFr, map_pow, map_add, map_mul] at qF
+    rw [map_mul, map_add (f := _), hFl, hFl, hFr, map_pow, map_add (f := _), map_mul] at qF
 
     have topρ : ⊤ ≤ (𝟙 (Sp R)) ⁻¹ᵁ ((x.P.L.pull (eSec x.P.A)).U fun _ => i₀) :=
       fun p _ => mem_pull.2 (hR p)

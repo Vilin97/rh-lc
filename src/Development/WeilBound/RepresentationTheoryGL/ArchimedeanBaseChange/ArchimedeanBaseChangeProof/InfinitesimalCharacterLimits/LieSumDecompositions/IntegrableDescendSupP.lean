@@ -202,7 +202,7 @@ theorem pairLin_of (hI : IntBnd) : PairLin := by
   · unfold pr pet
     rw [← integral_add (integrable_pet hI hf h₁) (integrable_pet hI hf h₂)]
     refine integral_congr_ae (Eventually.of_forall fun q => ?_)
-    simp only [descend, Pi.add_apply, map_add, mul_add]
+    simp only [descend, Pi.add_apply, map_add (f := _), mul_add]
   · unfold pr pet
     rw [← integral_const_mul]
     refine integral_congr_ae (Eventually.of_forall fun q => ?_)

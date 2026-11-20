@@ -78,7 +78,7 @@ theorem GlobalTheory.DisjOrth.disj_orth : ∀ (F E : Type) [Field F] [NumberFiel
   have hjadd : ∀ f ∈ SB (Matrix (Fin n) (Fin d) (Fv F v)), ∀ f' ∈ SB (Matrix (Fin n) (Fin d) (Fv F v)),
       j (f + f') = j f + j f' := by
     intro f hf f' hf'
-    have e : f + f' = ι (j f + j f') := by rw [map_add, (hj f hf).2, (hj f' hf').2]
+    have e : f + f' = ι (j f + j f') := by rw [map_add (f := _), (hj f hf).2, (hj f' hf').2]
     rw [e, hjι _ (add_mem (hj f hf).1 (hj f' hf').1)]
   have hjsmul : ∀ (a : ℂ), ∀ f ∈ SB (Matrix (Fin n) (Fin d) (Fv F v)), j (a • f) = a • j f := by
     intro a f hf
@@ -116,7 +116,7 @@ theorem GlobalTheory.DisjOrth.disj_orth : ∀ (F E : Type) [Field F] [NumberFiel
     intro f hf g hg g' hg'
     simp only [β]
     rw [hjadd g hg g' hg', hTadd, ← integral_add (hint _ (hj f hf).1 _ (hj g hg).1) (hint _ (hj f hf).1 _ (hj g' hg').1)]
-    congr 1; ext x; simp only [map_add]; ring
+    congr 1; ext x; simp only [map_add (f := _)]; ring
   have hsm : ∀ (a : ℂ), ∀ f ∈ SB (Matrix (Fin n) (Fin d) (Fv F v)), ∀ g ∈ SB (Matrix (Fin n) (Fin d) (Fv F v)),
       β (a • f) g = a * β f g ∧ β f (a • g) = starRingEnd ℂ a * β f g := by
     intro a f hf g hg

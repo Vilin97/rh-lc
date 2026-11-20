@@ -218,7 +218,7 @@ theorem Inv1.mul {a b : PowerSeries O} (ha : Inv1 W a) (hb : Inv1 W b) : Inv1 W 
 
 theorem Inv1.add {a b : PowerSeries O} (ha : Inv1 W a) (hb : Inv1 W b) : Inv1 W (a + b) := by
   intro δ hδ
-  rw [map_add, ha δ hδ, hb δ hδ]
+  rw [map_add (f := _), ha δ hδ, hb δ hδ]
 
 theorem Inv1.sub {a b : PowerSeries O} (ha : Inv1 W a) (hb : Inv1 W b) : Inv1 W (a - b) := by
   intro δ hδ
@@ -242,7 +242,7 @@ theorem qP₁_inv (hR : Ring9 W) : Inv1 W (qP₁ W) := by
 
 theorem ι_q (hR : Ring9 W) : ιOf hR (baseIdOf hR).Bs.q = qP₁ W := by
   show ιOf hR (PowerSeries.X + PowerSeries.C ((PD.p : ℕ) : O)) = W.π₀₁ + ((PD.p : ℕ) : PowerSeries O)
-  rw [map_add, ιOf_X, map_natCast, map_natCast]
+  rw [map_add (f := _), ιOf_X, map_natCast, map_natCast]
 
 section Dom
 
@@ -256,7 +256,7 @@ theorem π₀₁_ne (hR : Ring9 W) : W.π₀₁ ≠ 0 := by
 theorem qP₁_ne (hR : Ring9 W) : qP₁ W ≠ 0 := by
   intro h
   have h1 := congrArg PowerSeries.constantCoeff h
-  rw [qP₁, map_add, π₀₁_const hR, zero_add, map_natCast, map_zero] at h1
+  rw [qP₁, map_add (f := _), π₀₁_const hR, zero_add, map_natCast, map_zero] at h1
   have h2 := W.v_l
   have h3 : ((PD.p : ℕ) : LL) = 0 := by
     rw [← map_natCast (algebraMap O LL), h1, map_zero]
@@ -295,7 +295,7 @@ theorem frobenius_uniformizer_identity (hR : Ring9 W) : (baseIdOf hR).Bs.E3 := b
   have hw0 : IsUnit ((w : LetA O n) 0) :=
     w.isUnit.map (Pi.evalRingHom (fun _ : ZMod n => PowerSeries O) 0)
   have e : Polynomial.aeval W.π₀₁ (Polynomial.X + Polynomial.C ((PD.p : ℕ) : O)) = qP₁ W := by
-    rw [qP₁, map_add, Polynomial.aeval_X, Polynomial.aeval_C, map_natCast]
+    rw [qP₁, map_add (f := _), Polynomial.aeval_X, Polynomial.aeval_C, map_natCast]
   have key : W.φ₀ W.π₀₁ = (w : LetA O n) 0 * (W.π₀₁ * qP₁ W ^ (PD.p - 1)) := by
     have h0 : W.φ₀ W.π₀₁ = (w : LetA O n) 0 * W.π₀₁ *
         Polynomial.aeval W.π₀₁ (Polynomial.X + Polynomial.C ((PD.p : ℕ) : O)) ^ (PD.p - 1) := by
@@ -328,7 +328,7 @@ theorem fourth_lefschetz_of_first (hR : Ring9 W) (hγ : W.gamK = W.gam) : (baseI
   have hw0 : IsUnit ((w : LetA O n) 0) :=
     w.isUnit.map (Pi.evalRingHom (fun _ : ZMod n => PowerSeries O) 0)
   have e : Polynomial.aeval W.π₀₁ (Polynomial.X + Polynomial.C ((PD.p : ℕ) : O)) = qP₁ W := by
-    rw [qP₁, map_add, Polynomial.aeval_X, Polynomial.aeval_C, map_natCast]
+    rw [qP₁, map_add (f := _), Polynomial.aeval_X, Polynomial.aeval_C, map_natCast]
   have key : W.γ₀ W.gamK W.π₀₁ - W.π₀₁ = (w : LetA O n) 0 * (W.π₀₁ * qP₁ W) := by
     have h0 : W.γ₀ W.gam W.π₀₁ - W.π₀₁ = (w : LetA O n) 0 * W.π₀₁ *
         Polynomial.aeval W.π₀₁ (Polynomial.X + Polynomial.C ((PD.p : ℕ) : O)) := by
@@ -352,7 +352,7 @@ theorem fourth_lefschetz_of_first (hR : Ring9 W) (hγ : W.gamK = W.gam) : (baseI
   refine ⟨u, ιOf_inj hR ?_⟩
   have hr : ιOf hR (PowerSeries.X * (1 + (u : PowerSeries O) * (baseIdOf hR).Bs.q)) =
       W.π₀₁ * (1 + (w : LetA O n) 0 * qP₁ W) := by
-    rw [map_mul, map_add, map_one, map_mul, hu, ιOf_X, ι_q]
+    rw [map_mul, map_add (f := _), map_one, map_mul, hu, ιOf_X, ι_q]
   rw [hγX, hr]
   linear_combination key
 
@@ -465,7 +465,7 @@ theorem u_eq_of (W : LocWach PD LL O v n) (hV : ValRing O v) (hs : W.s = 1) :
   obtain ⟨x, hx⟩ := hsurj _ hz.ge
   have hxu : IsUnit x := isUnit_of_v_zero hV x (by rw [hx, hz])
   refine ⟨hxu.unit, hinj ?_⟩
-  rw [IsUnit.unit_spec, map_add, map_one, map_mul, map_natCast, hx, e, map_sub, map_one]
+  rw [IsUnit.unit_spec, map_add (f := _), map_one, map_mul, map_natCast, hx, e, map_sub, map_one]
   ring
 
 theorem ground_of [IsDomain O] [IsDiscreteValuationRing O] (hR : Ring9 W) (hs : W.s = 1)
@@ -554,7 +554,7 @@ theorem precomplete_of_surj {M N : Type} [AddCommGroup M] [Module R M] [AddCommG
     induction n with
     | zero => rw [hh, Finset.sum_range_zero, add_zero, hx0]
     | succ n ih =>
-      rw [hh, Finset.sum_range_succ, ← add_assoc, map_add, ← hh, ih, hdf]
+      rw [hh, Finset.sum_range_succ, ← add_assoc, map_add (f := _), ← hh, ih, hdf]
       abel
   have hcauchy : ∀ {m n : ℕ}, m ≤ n → h m ≡ h n [SMOD (J ^ m • ⊤ : Submodule R M)] := by
     intro m n hmn

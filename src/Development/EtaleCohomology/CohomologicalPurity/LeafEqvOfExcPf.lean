@@ -174,7 +174,7 @@ theorem LeafEqvOfExc_of (hR : LeafRel) : LeafEqvOfExc := by
       · rw [map_sub, ← pull_comp, j_gM, hy0, sub_zero]; exact x.2
       · rw [map_sub, ← pull_comp, h_gM, sub_eq_zero]; exact congrArg Subtype.val hx
     refine ⟨x.1 + pull _ (dbl.fold P) (tw q i) n (pull _ (jj φ) (tw q i) n y), ?_⟩
-    rw [map_add, ← pull_comp, gM_fold, sub_eq_zero.mp hd]
+    rw [map_add (f := _), ← pull_comp, gM_fold, sub_eq_zero.mp hd]
     simp [y0]
 
 end LateralTheory.CohomologicalPurity.TubeCut

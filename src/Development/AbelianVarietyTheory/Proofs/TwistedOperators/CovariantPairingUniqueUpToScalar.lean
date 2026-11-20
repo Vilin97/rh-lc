@@ -54,7 +54,7 @@ theorem exists_tensor {V A B H₁ H₂ : Type} [AddCommGroup V] [Module ℂ V] [
     rw [contrR_tmul, map_smul, hm, ← hψ, ha]
   choose g hg using ex
   exact ⟨{ toFun := g
-           map_add' := fun P Q => sepR _ _ fun y => by rw [map_add, hg, hg, hg, map_add]
+           map_add' := fun P Q => sepR _ _ fun y => by rw [map_add (f := _), hg, hg, hg, map_add (f := _)]
            map_smul' := fun s P => sepR _ _ fun y => by
              rw [map_smul, hg, hg, map_smul, RingHom.id_apply] }, hg, sepR⟩
 
@@ -64,14 +64,14 @@ theorem contrR_map_right {A B : Type} [AddCommGroup A] [Module ℂ A] [AddCommGr
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem contrR_neg {A B : Type} [AddCommGroup A] [Module ℂ A] [AddCommGroup B] [Module ℂ B]
     (m : B →ₗ[ℂ] ℂ) (z : A ⊗[ℂ] B) : contrR (-m) z = -contrR m z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp
-  | add x y hx hy => simp only [map_add, hx, hy, neg_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, neg_add]
 
 theorem linear_eq_of_upq {p q : ℕ} {N : Type} [AddCommGroup N] [Module ℂ N] (F G : Mat p q →ₗ[ℂ] N)
     (h : ∀ Z ∈ upq p q, F Z = G Z) (Z : Mat p q) : F Z = G Z := by
@@ -81,7 +81,7 @@ theorem linear_eq_of_upq {p q : ℕ} {N : Type} [AddCommGroup N] [Module ℂ N] 
   generalize Z + conjR Z = X at e1 hd
   generalize Complex.I • (Z - conjR Z) = Y at e2 hd
   subst hd
-  simp only [map_add, map_smul, e1, e2]
+  simp only [map_add (f := _), map_smul, e1, e2]
 
 theorem skew {p q : ℕ} {T : GrpData p q} (R : DSRep T) {Y : Mat p q} (hY : Y ∈ upq p q) (x y : R.HK.V) :
     ⟪R.ι (R.HK.act Y x), R.ι y⟫_ℂ = -⟪R.ι x, R.ι (R.HK.act Y y)⟫_ℂ := by

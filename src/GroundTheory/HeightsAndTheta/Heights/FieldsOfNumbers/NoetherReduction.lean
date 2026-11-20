@@ -60,7 +60,7 @@ theorem finite_integralClosure_of_forall_mvPolynomial
         induction ha using Submodule.span_induction with
         | mem y hy => exact IntermediateField.subset_adjoin (FractionRing B) T ⟨y, hy, rfl⟩
         | zero => simp
-        | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+        | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
         | smul b y _ hy =>
           rw [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply,
             IsScalarTower.algebraMap_apply B (FractionRing B) K]

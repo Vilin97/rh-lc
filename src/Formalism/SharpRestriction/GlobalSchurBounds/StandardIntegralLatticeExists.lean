@@ -788,7 +788,7 @@ theorem mkQ_fg (Lc : Submodule (𝓞 E) S.V) (h : Lc.FG) :
     induction hy using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a x _ hx => rw [bcFun_smulO]; exact Submodule.smul_mem _ _ hx
 
 theorem mkQ_span (Lc : Submodule (𝓞 E) S.V) (h : Submodule.span E (Lc : Set S.V) = ⊤) :
@@ -800,7 +800,7 @@ theorem mkQ_span (Lc : Submodule (𝓞 E) S.V) (h : Submodule.span E (Lc : Set S
     induction hy using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a x _ hx => rw [bcFun_smul]; exact Submodule.smul_mem _ _ hx
   rw [eq_top_iff]
   intro w _
@@ -1214,7 +1214,7 @@ theorem blk_IntSpan (D : D7) {n n' : ℕ} (w : D.what₂.places.Pl) (lam : D.wha
     rw [map_smul, product_first_zeroth_parts.blk_ten]
     exact AddSubgroup.subset_closure ⟨r, g, hr, hg, by simp only [hbg]⟩
   | zero => rw [map_zero]; exact AddSubgroup.zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact AddSubgroup.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact AddSubgroup.add_mem _ ha hb
   | neg a _ ha => rw [map_neg]; exact AddSubgroup.neg_mem _ ha
 
 theorem Pend_integral {D : D7} {u : D.what₂.Word} (P : product_first_zeroth_parts.Pend D u) (h4 : product_first_zeroth_parts.ArchimedeanSignatureMatching P)

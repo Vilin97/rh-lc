@@ -136,7 +136,7 @@ theorem exists_chartForm (y : (Σ k, ι k) → Ω) (w : Module.Basis (Fin N) Ω 
     have h₂' := h₂.pad n₁
     rw [Nat.add_comm n₂ n₁] at h₂'
     refine ⟨n₁ + n₂, _, h₁'.1.add h₂'.1, ?_⟩
-    rw [map_add, h₁'.2, h₂'.2, add_mul, map_add, C_add, add_mul]
+    rw [map_add (f := _), h₁'.2, h₂'.2, add_mul, map_add (f := _), C_add, add_mul]
   | mul x z _ _ hx hz =>
     obtain ⟨n₁, A₁, h₁⟩ := hx
     obtain ⟨n₂, A₂, h₂⟩ := hz

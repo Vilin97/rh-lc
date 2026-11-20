@@ -131,7 +131,7 @@ theorem map_ker_baseChange {σ R Hh : Type} (K : Type) [CommRing R] [CommRing K]
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a F =>
       have : a ⊗ₜ[R] F = a • (1 : K) ⊗ₜ[R] F := by simp [TensorProduct.smul_tmul']
       rw [this, map_smul, map_smul, map_smul, map_smul]

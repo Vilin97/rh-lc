@@ -184,7 +184,7 @@ theorem isExpoFD_iff (X : Data E r) (cu : CuspFD X ρ) (hbas : ∃ bs, IsZBasis 
   | add a b _ _ ha hb =>
     obtain ⟨m, hm⟩ := ha
     obtain ⟨n, hn⟩ := hb
-    exact ⟨m + n, by rw [map_add, hm, hn]; push_cast; rfl⟩
+    exact ⟨m + n, by rw [map_add (f := _), hm, hn]; push_cast; rfl⟩
   | smul c a _ ha =>
     obtain ⟨m, hm⟩ := ha
     exact ⟨c * m, by rw [map_zsmul, hm]; simp⟩

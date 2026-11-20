@@ -43,7 +43,7 @@ theorem dAt_add (f g : MP C N) (x Y : Mat C N) : dAt (f + g) x Y = dAt f x Y + d
 
 theorem dAt_mul (f g : MP C N) (x Y : Mat C N) :
     dAt (f * g) x Y = ev x f * dAt g x Y + ev x g * dAt f x Y := by
-  simp only [dAt, Derivation.leibniz, smul_eq_mul, ev, map_add, map_mul, add_mul, Finset.sum_add_distrib,
+  simp only [dAt, Derivation.leibniz, smul_eq_mul, ev, map_add (f := _), map_mul, add_mul, Finset.sum_add_distrib,
     Finset.mul_sum, mul_assoc]
 
 theorem dAt_C (a : C) (x Y : Mat C N) : dAt (MvPolynomial.C a : MP C N) x Y = 0 := by
@@ -55,7 +55,7 @@ theorem chain_of : Chain := by
   · exact ev_bind φ x f
   · induction f using MvPolynomial.induction_on with
     | C a => intro x Y; simp [dAt_C]
-    | add f g hf hg => intro x Y; rw [map_add, dAt_add, dAt_add, hf, hg]
+    | add f g hf hg => intro x Y; rw [map_add (f := _), dAt_add, dAt_add, hf, hg]
     | mul_X f q hf =>
       intro x Y
       rw [map_mul, bind₁_X_right, dAt_mul, dAt_mul, hf, dAt_lin, ev_lin]

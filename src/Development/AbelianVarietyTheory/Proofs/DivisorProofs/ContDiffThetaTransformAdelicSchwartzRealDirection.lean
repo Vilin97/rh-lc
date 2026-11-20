@@ -101,9 +101,9 @@ theorem contDiff_thetaTr_real : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), I
     let c2 : mixedEmbedding.mixedSpace D.host.F := eM (⅟(2 : AF D.host.F)).1
     let B0 : (κ → mixedEmbedding.mixedSpace D.host.F) →ₗ[ℝ] (Fin k → ℝ) →ₗ[ℝ] ℂ :=
       LinearMap.mk₂ ℝ (fun y t => Λ (∑ i, y i * Q t i))
-        (fun y₁ y₂ t => by simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add])
+        (fun y₁ y₂ t => by simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)])
         (fun r y t => by simp only [Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum, map_smul])
-        (fun y t₁ t₂ => by simp only [map_add, Pi.add_apply, mul_add, Finset.sum_add_distrib])
+        (fun y t₁ t₂ => by simp only [map_add (f := _), Pi.add_apply, mul_add, Finset.sum_add_distrib])
         (fun r y t => by simp only [map_smul, Pi.smul_apply, mul_smul_comm, ← Finset.smul_sum])
     let B : (κ → mixedEmbedding.mixedSpace D.host.F) →L[ℝ] (Fin k → ℝ) →L[ℝ] ℂ :=
       LinearMap.toContinuousLinearMap
@@ -118,7 +118,7 @@ theorem contDiff_thetaTr_real : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), I
       Λ.contDiff.comp (contDiff_const.mul (ContDiff.sum fun i _ =>
         ((contDiff_const.mul (hQi i)).add ((hPi i).mul contDiff_const)).add ((hPi i).mul (hQi i))))
     have hre : ∀ y t, (B y t + hfun t).re = 0 := by
-      intro y t; rw [hB, ← map_add]; exact hΛre _
+      intro y t; rw [hB, ← map_add (f := _)]; exact hΛre _
     let K : (κ → D.host.F) → ℂ := fun x =>
       ψ ((fun i => algebraMap D.host.F (AF D.host.F) (x i)) ⬝ᵥ (co.e w).2 + ⅟2 * ((co.e w).1 ⬝ᵥ (co.e w).2)) *
         g (fun i => algebraMap D.host.F (FiniteAdeleRing (𝓞 D.host.F) D.host.F) (x i) + ((co.e w).1 i).2)
@@ -130,7 +130,7 @@ theorem contDiff_thetaTr_real : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), I
       intro x t
       have he : co.e (w + L t) = ((co.e w).1 + fun i => pairA D.host.F (eM.symm (P t i)) 0,
           (co.e w).2 + fun i => pairA D.host.F (eM.symm (Q t i)) 0) := by
-        rw [map_add, hPQ t]; rfl
+        rw [map_add (f := _), hPQ t]; rfl
       have hy : ∀ i, eM (algebraMap D.host.F (AF D.host.F) (x i)).1 = yv x i := by
         intro i; simp only [yv, eM]; rw [InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp]; rfl
       have h1 : (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F
@@ -138,7 +138,7 @@ theorem contDiff_thetaTr_real : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), I
             ((co.e w).1 + fun i => pairA D.host.F (eM.symm (P t i)) 0)) i).1) = yv x + ah + P t := by
         funext i
         change eM ((algebraMap D.host.F (AF D.host.F) (x i)).1 + (((co.e w).1 i).1 + eM.symm (P t i))) = _
-        rw [map_add, map_add, RingEquiv.apply_symm_apply, hy i, ← add_assoc]
+        rw [map_add (f := _), map_add (f := _), RingEquiv.apply_symm_apply, hy i, ← add_assoc]
         rfl
       have h2 : (fun i => (((fun i => algebraMap D.host.F (AF D.host.F) (x i)) +
             ((co.e w).1 + fun i => pairA D.host.F (eM.symm (P t i)) 0)) i).2) =
@@ -188,10 +188,10 @@ theorem contDiff_thetaTr_real : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), I
           · apply eM.injective
             rw [hφdef, hφdef, hφpair, hm]
             set_option synthInstance.maxHeartbeats 100000 in
-              simp only [dotProduct, map_add, map_mul, map_sum, hφx, hφP, hφQ, hφa, hφb, hφ2, Finset.sum_add_distrib]
+              simp only [dotProduct, map_add (f := _), map_mul, map_sum, hφx, hφP, hφQ, hφa, hφb, hφ2, Finset.sum_add_distrib]
           · rw [hφfdef, hφfdef, hφfpair]
             set_option synthInstance.maxHeartbeats 100000 in
-              simp only [dotProduct, map_add, map_mul, map_sum, hφfP, hφfQ, mul_zero, zero_mul, Finset.sum_const_zero,
+              simp only [dotProduct, map_add (f := _), map_mul, map_sum, hφfP, hφfQ, mul_zero, zero_mul, Finset.sum_const_zero,
               add_zero]
         rw [← hY, hX]
         simp only [dotProduct_add, add_dotProduct]

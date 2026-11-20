@@ -55,7 +55,7 @@ theorem pow_dim_mulVec [Nontrivial R] (Y : Matrix (Fin n) (Fin n) R) (v : Fin n 
   rw [charpoly_natDegree_eq_dim, Fintype.card_fin] at hm
   rw [hm] at h0
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_pow, aeval_X, map_sum, map_mul, aeval_C] at h0
+    simp only [map_add (f := _), map_pow, aeval_X, map_sum, map_mul, aeval_C] at h0
   have := congrArg (fun M => (M *ᵥ v) i) h0
   simp only [add_mulVec, sum_mulVec, Pi.add_apply, Finset.sum_apply, zero_mulVec, Pi.zero_apply] at this
   rw [eq_neg_iff_add_eq_zero, ← this, ← Fin.sum_univ_eq_sum_range]

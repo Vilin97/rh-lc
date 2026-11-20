@@ -273,7 +273,7 @@ theorem character_eq_sum_irrChars_of_finrank (n : ℕ) :
   conv_lhs => rw [h1, h2]
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun ψ _ ↦ ?_
-  rw [map_add, LinearMap.add_apply, add_smul]
+  rw [map_add (f := _), LinearMap.add_apply, add_smul]
 
 theorem character_eq_sum_irrChars {V : Type u} [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
     (ρ : Representation ℂ G V) :

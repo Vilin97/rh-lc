@@ -53,7 +53,7 @@ theorem UpperTheory.ConvolutionTheory.Dp.infZc :
       u ^ n • φ + ∑ i : Fin n, u ^ (n - (i + 1)) • Cm.uC E n (UpperTheory.ConvolutionTheory.zc τ i) φ := fun u φ => by
     rw [← Cm.uC_capC, hc]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_smul, map_one, map_sum, LinearMap.add_apply, LinearMap.smul_apply,
+      simp only [map_add (f := _), map_smul, map_one, map_sum, LinearMap.add_apply, LinearMap.smul_apply,
       LinearMap.sum_apply, Module.End.one_apply]
   change (m.card = n ∧ ∀ u : ℂ, ∀ φ ∈ π.V, GlobalTheory.CuspRep.cap τ u φ = (m.map fun x => u + x).prod • φ) ↔ _
   refine and_congr_right fun hm => ⟨fun h i φ hφ => ?_, fun h u φ hφ => ?_⟩

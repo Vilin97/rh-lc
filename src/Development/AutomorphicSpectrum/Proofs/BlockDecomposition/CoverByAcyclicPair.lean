@@ -293,7 +293,7 @@ theorem acycR {Z : Type} [AddCommGroup Z] [Module ℂ Z] (E1 E2 : Fin n → Fin 
               rw [hw]
               obtain ⟨u, hu, g, hg, e⟩ := Submodule.mem_sup.1 (hy2 A)
               refine Submodule.add_mem _ ?_ (Submodule.mem_sup_right (hL A))
-              rw [← e, map_add, smul_add, add_sub_add_comm]
+              rw [← e, map_add (f := _), smul_add, add_sub_add_comm]
               exact Submodule.add_mem_sup (euler_filt a d hF.d_comm hF.da m u hu)
                 (Submodule.sub_mem _ (hNG _ _ hg) (Submodule.smul_mem _ _ hg)))
             (fun A hA => by
@@ -469,12 +469,12 @@ theorem freeR (n : ℕ) : ∃ (W : Type) (_ : AddCommGroup W) (_ : Module ℂ W)
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul z w => simp [R, hχ, h0]
-    | add p q hp hq => simp only [map_add, hp, hq, add_zero]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq, add_zero]
   · intro c e t
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul z w => simp [L, hχ, h0]
-    | add p q hp hq => simp only [map_add, hp, hq, add_zero]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq, add_zero]
   · rintro ⟨s, p⟩ ⟨t, q⟩
     have c1 := hF.a_comm p q
     cases s <;> cases t <;> simp only [aR, Bool.false_eq_true, if_false, if_true]
@@ -600,11 +600,11 @@ theorem coverR_of (hS : BdSqR) : CoverR := by
   · induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul v f => simp [F1, h01]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
   · induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul v f => simp [F2, h02]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem cover_by_acyclic_pair : CoverR := coverR_of GlobalTheory.CompanionTheory.RealMult.BdSqProof.bdSqR
 

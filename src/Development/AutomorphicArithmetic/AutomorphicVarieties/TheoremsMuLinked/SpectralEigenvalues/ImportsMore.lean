@@ -17,7 +17,7 @@ theorem UpperTheory.V.Th.Sp.phi :
             map_zero' := by simp,
             map_add' := ?_ }, ?_⟩
   · intro m n
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact Finsupp.sum_add_index' (fun i => by simp) (fun i a b => by simp [smul_add])
   · intro σ m
     simp only [AddMonoidHom.coe_mk, ZeroHom.coe_mk, map_smul]

@@ -44,7 +44,7 @@ theorem exists_corr : ∀ (Z M S₁ : Scheme.{0}) [IsIntegral M] [IsIntegral S�
     Ideal.map_le_iff_le_comap.2 fun x hx => (IsLocalRing.mem_maximalIdeal _).2 fun hu => hx (isUnit_of_map_unit ev x hu)
   have : ev r ∈ maximalIdeal R ^ e :=
     Ideal.pow_right_mono hmR e (by rw [← Ideal.map_pow]; exact Ideal.mem_map_of_mem ev hr)
-  rw [map_add, ← hψ, map_mul, map_pow]
+  rw [map_add (f := _), ← hψ, map_mul, map_pow]
   convert this using 1
   exact add_sub_cancel_left _ _
 

@@ -104,8 +104,8 @@ theorem pairForm_invariant (ρ : ∀ a, Representation ℂ (Γ a) (X a)) (g : �
       refine Finset.prod_congr rfl fun a _ => ?_
       show (l a : Module.Dual ℂ (X a)) (ρ a (g a)⁻¹ (ρ a (g a) (v a))) = (l a : Module.Dual ℂ (X a)) (v a)
       rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one, Module.End.one_apply]
-    · simp only [map_add, hx, hy]
-  · simp only [map_add, LinearMap.add_apply, hx, hy]
+    · simp only [map_add (f := _), hx, hy]
+  · simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
 
 theorem nonempty_equiv_piTensor_contra [∀ a, T2Space (Γ a)]
     (hG : ∀ a, ∀ U ∈ nhds (1 : Γ a), ∃ K : Subgroup (Γ a), IsOpen (K : Set (Γ a)) ∧

@@ -128,7 +128,7 @@ def killed (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ) (M : DSMod
     funext g
     have a' := congrFun a g
     have b' := congrFun b g
-    simp only [thetaKO, map_add, Pi.add_apply, Pi.zero_apply] at a' b' ⊢
+    simp only [thetaKO, map_add (f := _), Pi.add_apply, Pi.zero_apply] at a' b' ⊢
     rw [a', b', add_zero]
   zero_mem' := by
     intro τ Z _ h

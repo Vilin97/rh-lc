@@ -93,7 +93,7 @@ private theorem dec_map {K : Type} [CommRing K] (f : K →+* R) {x y : Fin n →
     rw [Finset.sum_eq_single i] <;> simp +contextual [Pi.single_apply, eq_comm]
   rw [h1]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [h, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, map_add, map_mul, map_sum,
+    simp only [h, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Matrix.mulVec, dotProduct, map_add (f := _), map_mul, map_sum,
     Matrix.map_apply, Finset.mul_sum, Finset.sum_mul, mul_add, Finset.sum_add_distrib]
   rw [Finset.sum_comm (s := (Finset.univ : Finset (Fin m)))]
   congr 1
@@ -186,7 +186,7 @@ private theorem cocompact [TopologicalSpace R] [IsTopologicalRing R] (hcc : Cont
     rw [← hB]
     simp only [A]
     generalize N (fun j => v j - f (w j)) = Z at h5 ⊢
-    simp only [hfa₀, map_mul, map_sub, map_add, map_neg, hce, hc, hcf] at h5 ⊢
+    simp only [hfa₀, map_mul, map_sub, map_add (f := _), map_neg, hce, hc, hcf] at h5 ⊢
     linear_combination (-e) * h5 + (e * (c (f k) - f k - f N₀) + a - B) * he2 + (e * (f k - c (f k))) * he2
 
 end GlobalTheory.HermEichler
@@ -235,7 +235,7 @@ theorem _root_.GlobalTheory.T.seesaw_pair_hyperbolic_plane : GlobalTheory.ThK.KP
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (hσ x)
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   obtain ⟨C, hC, hCs⟩ := tens_cocompact F E
   obtain ⟨S, hS, h1, h2⟩ := GlobalTheory.HermEichler.cocompact (c := (cA (F := F) σ : AE F E →+* AE F E)) hcA hc
     (inclR (F := F) (AF F)) (σ : E →+* E) hσ (fun _ => rfl) (J₀ := X.J) hP.herm.herm (x := H.x) (y := H.y) (ι := H.ι)

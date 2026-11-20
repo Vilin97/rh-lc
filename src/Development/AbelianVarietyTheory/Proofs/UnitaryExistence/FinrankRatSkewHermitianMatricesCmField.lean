@@ -76,7 +76,7 @@ theorem finrank_skewHermitian_eq :
       intro a b
       have e1 := h0 a b
       have e2 := congrArg (IsCMField.complexConj E) (h0 b a)
-      rw [map_add, map_mul, hδ, hA, hB, map_zero] at e2
+      rw [map_add (f := _), map_mul, hδ, hA, hB, map_zero] at e2
       have e3 : (A : Matrix (Fin ρ) (Fin ρ) E) a b = 0 := by linear_combination (e1 - e2) / 2
       refine ⟨e3, ?_⟩
       rw [e3, zero_add] at e1
@@ -92,7 +92,7 @@ theorem finrank_skewHermitian_eq :
       simp only [Matrix.of_apply, map_div₀, map_sub, IsCMField.complexConj_apply_apply, map_ofNat]
       ring
     · intro a b
-      simp only [Matrix.of_apply, map_div₀, map_add, map_mul, hδ,
+      simp only [Matrix.of_apply, map_div₀, map_add (f := _), map_mul, hδ,
         IsCMField.complexConj_apply_apply, map_ofNat]
       field_simp
       ring

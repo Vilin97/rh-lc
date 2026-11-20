@@ -24,9 +24,9 @@ theorem taylor_alg {K A B : Type} [CommRing K] [CommRing A] [Algebra K A] [CommR
   let S : A → B := fun x => ∑ k, e k * b (D k x)
   have hS : ∀ x, S x ∈ N := fun x => Ideal.sum_mem _ fun k _ => N.mul_mem_right _ (he k)
   have hSadd : ∀ x y, S (x + y) = S x + S y := fun x y => by
-    simp only [S, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [S, map_add (f := _), mul_add, Finset.sum_add_distrib]
   have hSmul : ∀ x y, S (x * y) = b x * S y + b y * S x := fun x y => by
-    simp only [S, Derivation.leibniz, smul_eq_mul, map_add, map_mul, mul_add, Finset.sum_add_distrib,
+    simp only [S, Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, mul_add, Finset.sum_add_distrib,
       Finset.mul_sum]
     congr 1 <;> exact Finset.sum_congr rfl fun k _ => by ring
   have hSone : S 1 = 0 := by simp [S]

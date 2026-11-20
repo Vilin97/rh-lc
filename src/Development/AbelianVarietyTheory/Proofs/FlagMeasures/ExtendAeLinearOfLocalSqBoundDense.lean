@@ -125,7 +125,7 @@ theorem extend_ae_linear_of_local_sq : ∀ {X : Type} [MeasurableSpace X] (μ : 
   · refine hμν.ae_le ?_
     filter_upwards [hTae (u + u'), hTae u, hTae u', Lp.coeFn_add (Ext u) (Ext u')]
       with x h1 h2 h3 h4
-    rw [h1, map_add, h4, Pi.add_apply, ← h2, ← h3]
+    rw [h1, map_add (f := _), h4, Pi.add_apply, ← h2, ← h3]
   · refine hμν.ae_le ?_
     filter_upwards [hTae (b • u), hTae u, Lp.coeFn_smul b (Ext u)] with x h1 h2 h4
     rw [h1, map_smul, h4, Pi.smul_apply, ← h2]

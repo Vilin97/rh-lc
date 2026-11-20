@@ -136,7 +136,7 @@ theorem exists_comb_of_flat : ∀ (R R' : Type) [CommRing R] [CommRing R'] (g : 
     { toFun := fun v p => rs X inf_le_left (v p.1) -
         rs X (inf_le_inf (hW p.1) (hW p.2)) (M.g (j p.1) (j p.2)).val * rs X inf_le_right (v p.2)
       map_add' := fun v w => funext fun p => by
-        simp only [Pi.add_apply, map_add]; ring
+        simp only [Pi.add_apply, map_add (f := _)]; ring
       map_smul' := fun r v => funext fun p => by
         simp only [Pi.smul_apply, Algebra.smul_def, map_mul, RingHom.algebraMap_toAlgebra, rs_cst,
           RingHom.id_apply]; ring }

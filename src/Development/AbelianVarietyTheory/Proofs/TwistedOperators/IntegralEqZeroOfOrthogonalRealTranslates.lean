@@ -33,7 +33,7 @@ theorem integral_eq_zero_of_translates : GlobalTheory.Published.CuspRapidDecay �
   let ℓ : SmT M →ₗ[ℂ] ℂ :=
     { toFun := fun x => ∫ g in v.𝓕, F g * t x g ∂v.μ
       map_add' := fun x y => by
-        simp only [map_add, Pi.add_apply, mul_add]
+        simp only [map_add (f := _), Pi.add_apply, mul_add]
         exact integral_add (hint x) (hint y)
       map_smul' := fun r x => by
         simp only [map_smul, Pi.smul_apply, smul_eq_mul, RingHom.id_apply]
@@ -90,7 +90,7 @@ theorem integral_eq_zero_of_translates : GlobalTheory.Published.CuspRapidDecay �
   have hℓ0 : ℓ w' = 0 := by
     induction w' using PiTensorProduct.induction_on with
     | smul_tprod r u => rw [map_smul, ← hL, hL0, smul_zero]
-    | add x y hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, add_zero]
   rw [← hℓ]; exact hℓ0
 
 end GlobalTheory.TransOrth

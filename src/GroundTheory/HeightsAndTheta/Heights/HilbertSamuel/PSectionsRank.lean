@@ -35,7 +35,7 @@ theorem exists_int_multiple {ι : Type*} (f : MvPolynomial ι ℚ) :
     obtain ⟨a, ha, p, hp⟩ := hf
     obtain ⟨b, hb, r, hr⟩ := hg
     refine ⟨a * b, Nat.mul_pos ha hb, (b : ℤ) • p + (a : ℤ) • r, ?_⟩
-    rw [map_add, smul_eq_C_mul, smul_eq_C_mul, map_mul, map_mul, hp, hr, map_C, map_C]
+    rw [map_add (f := _), smul_eq_C_mul, smul_eq_C_mul, map_mul, map_mul, hp, hr, map_C, map_C]
     simp only [smul_eq_C_mul, eq_intCast, Int.cast_natCast, Nat.cast_mul, map_mul]
     ring
   | mul_X f i hf =>

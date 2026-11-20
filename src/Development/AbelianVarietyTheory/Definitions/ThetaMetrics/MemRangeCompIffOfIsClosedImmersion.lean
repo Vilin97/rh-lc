@@ -61,7 +61,7 @@ theorem valR_res (x : Sp C ⟶ X) {U V : X.Opens} (e : V ≤ U) (h : ⊤ ≤ x �
 
 theorem valR_add (x : Sp C ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (f g : Γ(X, U)) :
     valR x U (f + g) = valR x U f + valR x U g := by
-  simp only [valR_eq x U h, map_add]
+  simp only [valR_eq x U h, map_add (f := _)]
 
 theorem valR_mul (x : Sp C ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U) (f g : Γ(X, U)) :
     valR x U (f * g) = valR x U f * valR x U g := by
@@ -1034,7 +1034,7 @@ example : valAt' (spMap (MvPolynomial.eval fun _ : Unit => 2 + Complex.I)) ⊤
     ((Scheme.ΓSpecIso (CommRingCat.of (MvPolynomial Unit ℂ))).inv.hom (MvPolynomial.X () ^ 2 + 1)) =
       4 + 4 * Complex.I := by
   rw [valAt'_eq_valR, valR_specMap (A := CommRingCat.of (MvPolynomial Unit ℂ))]
-  simp only [CommRingCat.hom_ofHom, map_add, map_pow, MvPolynomial.eval_X, map_one]
+  simp only [CommRingCat.hom_ofHom, map_add (f := _), map_pow, MvPolynomial.eval_X, map_one]
   linear_combination Complex.I_mul_I
 
 example : CompactSpace (Pts (spMap (algebraMap ℝ (MvPolynomial (Fin 2) ℝ ⧸
@@ -1046,7 +1046,7 @@ example : CompactSpace (Pts (spMap (algebraMap ℝ (MvPolynomial (Fin 2) ℝ ⧸
       exact isClosed_iInter fun q => isClosed_iInter fun _ =>
         isClosed_eq (MvPolynomial.continuous_eval q) continuous_const
     · have h := hz _ (Ideal.subset_span rfl)
-      simp only [map_sub, map_add, map_pow, MvPolynomial.aeval_X, map_one] at h
+      simp only [map_sub, map_add (f := _), map_pow, MvPolynomial.aeval_X, map_one] at h
       rw [mem_closedBall_zero_iff, pi_norm_le_iff_of_nonneg zero_le_one]
       intro i
       rw [Real.norm_eq_abs, abs_le]

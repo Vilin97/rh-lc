@@ -81,7 +81,7 @@ theorem isBiTheta_of_prod {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {A S A' : HS
         rw [map_smul, LinearMap.smul_apply]
       rw [e]; exact h _ _
     | zero => intro c; rw [smul_zero, map_zero]; exact isBiTheta_zero'
-    | add x y _ _ hx hy => intro c; rw [smul_add, map_add]; exact isBiTheta_add' (hx c) (hy c)
+    | add x y _ _ hx hy => intro c; rw [smul_add, map_add (f := _)]; exact isBiTheta_add' (hx c) (hy c)
     | smul a x _ hx => intro c; rw [smul_smul]; exact hx _
   simpa using key 1
 

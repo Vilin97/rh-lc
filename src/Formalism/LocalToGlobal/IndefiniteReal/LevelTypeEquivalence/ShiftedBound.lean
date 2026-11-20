@@ -29,7 +29,7 @@ theorem shifted_bound {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1
   refine ⟨∑ i ∈ Finset.range (n + 1), (n.choose i : ℝ) * (Bb * R) ^ i * Bd, fun y t ht => ?_⟩
 
   let c : (Fin k → ℝ) →+ ℂ := AddMonoidHom.mk' (fun u => -Λ (symplOH S T (M t) (M u)).1) (fun a a' => by
-    simp only [map_add, symplOH_add_right]; rw [show ∀ p q : AF D.host.F, (p + q).1 = p.1 + q.1 from fun _ _ => rfl,
+    simp only [map_add (f := _), symplOH_add_right]; rw [show ∀ p q : AF D.host.F, (p + q).1 = p.1 + q.1 from fun _ _ => rfl,
       map_add]; ring)
   have hc : Continuous c := by
     have h1 : Continuous fun u => symplOH S T (M t) (M u) := (continuous_symplOH_right _).comp hM.1
@@ -59,7 +59,7 @@ theorem shifted_bound {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1
       rw [hψΛ _ (by show -(symplOH S T (M t) (M u)).2 = 0; rw [symplOH_snd _ _ hru, neg_zero])]
       rw [show (-(symplOH S T (M t) (M u))).1 = -(symplOH S T (M t) (M u)).1 from rfl, map_neg]
       rfl
-    simp only [Gf, heisO, smul_eq_mul, map_add]
+    simp only [Gf, heisO, smul_eq_mul, map_add (f := _)]
     rw [← hneg, symplOH_add_right, symplOH_add_left, show y + (M u + M t) = y + M t + M u by abel]
     rw [← mul_assoc, ← mul_assoc, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul]
     congr 2

@@ -15,7 +15,7 @@ theorem TopBasis.coeff_mem_of_mem_map {S A : Type} [CommRing S] [CommRing A] {s 
       rw [mul_comm, TB.c_mul]
       exact J.mul_mem_right _ hw
     | zero => intro a; rw [mul_zero, map_zero]; exact J.zero_mem
-    | add y z _ _ hy hz => intro a; rw [mul_add, map_add]; exact J.add_mem (hy a) (hz a)
+    | add y z _ _ hy hz => intro a; rw [mul_add, map_add (f := _)]; exact J.add_mem (hy a) (hz a)
     | smul b y _ hy => intro a; rw [smul_eq_mul, ← mul_assoc]; exact hy (a * b)
   simpa using key 1
 

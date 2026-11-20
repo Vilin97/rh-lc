@@ -42,7 +42,7 @@ theorem UpperTheory.V.Z.Sym.Wt.twineC :
     rw [h, Fin.prod_univ_three]
     have e1 := congrArg (C : ℂ →+* ℂ[X]) h1
     have e2 := congrArg (C : ℂ →+* ℂ[X]) h2
-    rw [map_add] at e1
+    rw [map_add (f := _)] at e1
     rw [map_mul, map_one] at e2
     simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val, map_one]
     linear_combination (X - 1) * X * e1 - (X - 1) * e2

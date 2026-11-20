@@ -23,7 +23,7 @@ theorem infPart_eq_zero_of_isIdemAt : ∀ (D : D7) (P : Pl D.host.E) (e : AE D),
   have k1 := congrArg (infPart D) h1
   have k2 := congrArg (infPart D) h2
   have k3 := congrArg (infPart D) h3
-  simp only [RingHom.map_mul, RingHom.map_add, RingHom.map_zero] at k1 k2 k3
+  simp only [RingHom.map_mul, RingHom.map_add (f := _), RingHom.map_zero] at k1 k2 k3
   have k4 : infPart D (algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 α)) = 0 := by
     simp [infPart, Algebra.TensorProduct.algebraMap_apply]
     show (0 : Ainf D.host.F) ⊗ₜ[D.host.F] (1 : D.host.E) = 0

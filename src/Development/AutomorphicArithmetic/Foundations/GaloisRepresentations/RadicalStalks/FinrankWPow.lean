@@ -88,7 +88,7 @@ private def cohHom (o : Obj b N t) : 𝓞 D.F →+* Module.End k (primDR o.A) :=
     fun x y => by
       haveI := o.act.hom
       refine LinearMap.ext fun c => ?_
-      exact GlobalTheory.AbDatum.DRAct.primPull_of_eq_mul _ _ _ _ _ (by rw [map_add, o.act.add]) c
+      exact GlobalTheory.AbDatum.DRAct.primPull_of_eq_mul _ _ _ _ _ (by rw [map_add (f := _), o.act.add]) c
 
 end UpperTheory.Gal.Ord.DimsCoh
 

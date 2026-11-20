@@ -38,7 +38,7 @@ theorem exists_factor_fractionRing {V A F : Type} [CommRing V] [CommRing A] [Fie
       rw [map_div₀, hj, hj, div_eq_iff hv0, e]
     | algebraMap r =>
       exact ⟨algebraMap W _ (algebraMap V W r), by rw [hj, AlgHom.commutes]; rfl⟩
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   let e : FractionRing W ≃+* j.range :=
     RingEquiv.ofBijective j.rangeRestrict

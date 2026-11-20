@@ -115,7 +115,7 @@ theorem SpecialPieceRank.proof (h1 : GradedPieceFree.Statement.{u}) : SpecialPie
     let z : gradedPieceR P m := ⟨Ideal.Quotient.mk P g0, Submodule.mem_map.2 ⟨g0, hg0, rfl⟩⟩
     have hyz : y = ϖ • z := by
       apply Subtype.ext
-      rw [← hfy', hfp, map_add, Ideal.Quotient.eq_zero_iff_mem.2 hp, zero_add, map_mul,
+      rw [← hfy', hfp, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hp, zero_add, map_mul,
         Submodule.coe_smul]
       show _ = ϖ • Ideal.Quotient.mk P g0
       rw [← map_mul, C_mul']

@@ -66,8 +66,8 @@ theorem coef {N M : ℕ} (m : ℕ) (a : Fin N → Fin M → O0 p) (w α β : On 
     rw [← hsum] at hDw
     simp only [mul_zero, zero_add, mul_one] at hDw
     have e2 := congrArg D.liftKaehlerDifferential h
-    simp only [map_add, map_smul, Derivation.liftKaehlerDifferential_comp_D] at e2
-    rw [hDw, hx', hy', smul_mk, smul_mk, smul_mk, ← map_add, Ideal.Quotient.eq] at e2
+    simp only [map_add (f := _), map_smul, Derivation.liftKaehlerDifferential_comp_D] at e2
+    rw [hDw, hx', hy', smul_mk, smul_mk, smul_mk, ← map_add (f := _), Ideal.Quotient.eq] at e2
     refine (Ideal.unit_mul_mem_iff_mem _ hxy).1 ?_
     convert (Ideal.neg_mem_iff _).2 e2 using 1
     ring
@@ -87,8 +87,8 @@ theorem coef {N M : ℕ} (m : ℕ) (a : Fin N → Fin M → O0 p) (w α β : On 
     rw [← hsum] at hDw
     simp only [mul_zero, mul_one, add_zero] at hDw
     have e2 := congrArg D.liftKaehlerDifferential h
-    simp only [map_add, map_smul, Derivation.liftKaehlerDifferential_comp_D] at e2
-    rw [hDw, hx', hy', smul_mk, smul_mk, smul_mk, ← map_add, Ideal.Quotient.eq] at e2
+    simp only [map_add (f := _), map_smul, Derivation.liftKaehlerDifferential_comp_D] at e2
+    rw [hDw, hx', hy', smul_mk, smul_mk, smul_mk, ← map_add (f := _), Ideal.Quotient.eq] at e2
     have e3 : (xn p (m + 1) * yn p (m + 1)) * (w * β - ∑ i : Fin N,
         ∑ j : Fin M, ((i : ℕ) : On p (m + 1)) * algebraMap (O0 p) (On p (m + 1)) (a i j) *
           xn p (m + 1) ^ (i : ℕ) * yn p (m + 1) ^ (j : ℕ)) ∈

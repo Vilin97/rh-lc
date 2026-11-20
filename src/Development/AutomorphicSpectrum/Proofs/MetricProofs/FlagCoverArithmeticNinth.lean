@@ -22,7 +22,7 @@ theorem mConeMap_pair_inl (a : (Σ k, ι k) → Ω) (b : (Σ k, ι' k) → Ω) (
     mConeMap (pairV a b) (rename inlV g) = rename Sum.inl (mConeMap a g) := by
   induction g using MvPolynomial.induction_on with
   | C c => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp =>
     simp only [map_mul, hp, rename_X]
     congr 1
@@ -32,7 +32,7 @@ theorem mConeMap_pair_inr (a : (Σ k, ι k) → Ω) (b : (Σ k, ι' k) → Ω) (
     mConeMap (pairV a b) (rename inrV g) = rename Sum.inr (mConeMap b g) := by
   induction g using MvPolynomial.induction_on with
   | C c => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp =>
     simp only [map_mul, hp, rename_X]
     congr 1

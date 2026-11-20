@@ -14,8 +14,8 @@ theorem inW_add (D : Formalism.BasicNotions.D7) {x y : (VS D).V} (hx : InW D x) 
   unfold InW at *
   obtain ⟨h1, h2, h3⟩ := hx
   obtain ⟨k1, k2, k3⟩ := hy
-  exact ⟨fun a => by rw [map_add, h1 a, k1 a, add_zero], fun a => by rw [map_add, h2 a, k2 a, add_zero],
-    by rw [map_add, h3, k3, add_zero]⟩
+  exact ⟨fun a => by rw [map_add (f := _), h1 a, k1 a, add_zero], fun a => by rw [map_add (f := _), h2 a, k2 a, add_zero],
+    by rw [map_add (f := _), h3, k3, add_zero]⟩
 
 theorem inW_smul (D : Formalism.BasicNotions.D7) (k : D.host.E) {x : (VS D).V} (hx : InW D x) : InW D (k • x) := by
   unfold InW at *
@@ -138,7 +138,7 @@ private theorem hT_swap_eq_star' (D : Formalism.BasicNotions.D7) (p q : (VS D).V
 
 private theorem pW_add' (D : Formalism.BasicNotions.D7) (u v : (VS D).V) : pW D (u + v) = pW D u + pW D v := by
   unfold pW
-  simp only [map_add, add_smul, Finset.sum_add_distrib, add_div]
+  simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, add_div]
   abel
 
 private theorem pW_smul' (D : Formalism.BasicNotions.D7) (c : D.host.E) (v : (VS D).V) :
@@ -183,7 +183,7 @@ private theorem hT_pW_self_of_hT_hypE_eq_zero (D : Formalism.BasicNotions.D7) (w
   have h5 : (VS D).hT D.sp.zm s = 0 := by rw [hys]; simp [hze]
   have h6 : (VS D).hT D.sp.zm w = (D.sp.T : D.host.E) * g := by
     rw [hg, mul_div_assoc', mul_comm, mul_div_assoc, div_self hT0, mul_one]
-  simp only [map_add, map_sub, map_smul, map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply,
+  simp only [map_add (f := _), map_sub, map_smul, map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply,
     LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply, h1, h2, h3, h4, h5, hzz, hwz, h6,
     starRingEnd_apply, star_mul', star_natCast]
   ring

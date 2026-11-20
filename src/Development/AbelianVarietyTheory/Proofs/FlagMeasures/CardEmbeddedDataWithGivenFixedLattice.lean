@@ -123,13 +123,13 @@ theorem genBy_dual (h : V →ₗ⋆[K] V →ₗ[K] K) {X Y : Submodule (𝓞 K) 
       intro y hy
       rw [hY] at hy
       obtain ⟨a, ha, s, hs, rfl⟩ := Submodule.mem_sup.1 hy
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       refine add_mem ((Formalism.HermitianLatticesTheory.dualBasic_mem_dual h X v).1 hv a ha) ?_
       clear hy
       induction hs using Submodule.span_induction with
       | mem s hs => exact hv' ⟨s, hs⟩ trivial
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply]; exact add_mem ha hb
       | smul c a _ ha =>
         rw [Formalism.HermitianLatticesTheory.genusBasic_hsmul_left Formalism.HermitianLatticesTheory.genusCovol_hinj Formalism.HermitianLatticesTheory.star_algebraMap_ringOfIntegers_mem_range]
         rw [← Algebra.smul_def]

@@ -29,7 +29,7 @@ theorem prV_comm {D : D7} (v : Pl D) (z : Af ↥D.host.F ⊗[↥D.host.F] D.host
   | zero => rw [map_zero, map_zero, map_zero, map_zero]
   | tmul a e => exact prV_comm_tmul v a e
   | add a b ha hb =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact congrArg₂ (· + ·) ha hb
 
 theorem prV_toEAf_eq_zero {D : D7} (v : Pl D) (y : AE D) (h : FinPl.compAt D v y = 0) :

@@ -205,7 +205,7 @@ example (P : LocPrime l) {K LL : FinExt l} (T : Lat K LL) :
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVdR, actVB, ιV, (P.PD K).ι_comm]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   simp only [Dcris, DdR, SetLike.mem_coe, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,
     LinearMap.id_apply, sub_eq_zero] at hx ⊢
   intro g

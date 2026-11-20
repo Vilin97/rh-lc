@@ -53,7 +53,7 @@ theorem isAdmissible_reduce : AbelianDeRham → ∀ (R R₁ R₀ : Type) [CommRi
     | add x y hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
   have hex : ∀ x : HdR A, ∃ y : HdR A₁, (redMor h₂).Corr x y := fun x ↦ hbc.exists x
   have huniq : ∀ {x : HdR A} {y y' : HdR A₁}, (redMor h₂).Corr x y → (redMor h₂).Corr x y' → y = y' := by
     intro x y y' e e'
@@ -103,7 +103,7 @@ theorem isAdmissible_reduce : AbelianDeRham → ∀ (R R₁ R₀ : Type) [CommRi
     obtain ⟨yf, ef⟩ := hex f
     obtain ⟨yn, en⟩ := hex n
     refine Submodule.mem_sup.2 ⟨yf, ⟨f, hf, ef⟩, yn, ⟨n, hn, en⟩, huniq (fun c ↦ ?_) ex⟩
-    rw [LinearMap.add_apply, LinearMap.add_apply, ef c, en c, map_add]
+    rw [LinearMap.add_apply, LinearMap.add_apply, ef c, en c, map_add (f := _)]
   · rw [hFil y]
     constructor
     · rintro ⟨x, hx, e⟩

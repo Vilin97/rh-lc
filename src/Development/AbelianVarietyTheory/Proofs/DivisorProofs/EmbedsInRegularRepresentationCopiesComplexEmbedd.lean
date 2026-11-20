@@ -90,7 +90,7 @@ theorem embReg_of_baseChange : ∀ (K V V' G : Type) [Field K] [NumberField K] [
       obtain ⟨x, rfl⟩ := hx
       rw [he', hTf, hTf, he]
     | zero => simp
-    | add x y _ _ hx hy => simp only [map_add, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
     | smul c x _ hx => rw [map_smul, hs, hs, map_smul, hx]
 
 end GlobalTheory.BadCount

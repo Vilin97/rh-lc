@@ -31,7 +31,7 @@ theorem flag_coord {Ω E : Type} [Field Ω] [AddCommGroup E] [Module Ω E] {r : 
   | zero => simp
   | add x y _ _ hx hy =>
     refine ⟨?_, fun l hl => by simp [hx.2 l hl, hy.2 l hl]⟩
-    simp only [map_add, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
     rw [← hx.1, ← hy.1]
   | smul c x _ hx =>
     refine ⟨?_, fun l hl => by simp [hx.2 l hl]⟩
@@ -96,7 +96,7 @@ theorem clear_span (j : B →ₗ[𝓞 L] T) {A : Type} (v : A → T) (S : Set B)
     obtain ⟨d', a', hd', ha', hja'⟩ := hy
     refine ⟨d * d', d' • a + d • a', mul_ne_zero hd hd',
       add_mem (Submodule.smul_mem _ _ ha) (Submodule.smul_mem _ _ ha'), ?_⟩
-    rw [map_add, map_smul, map_smul, hja, hja', smul_add, smul_smul, smul_smul, mul_comm d' d]
+    rw [map_add (f := _), map_smul, map_smul, hja, hja', smul_add, smul_smul, smul_smul, mul_comm d' d]
   | smul s x _ hx =>
     obtain ⟨d, a, hd, ha, hja⟩ := hx
     obtain ⟨p, q, hq, rfl⟩ := IsFractionRing.div_surjective (A := 𝓞 L) s
@@ -287,7 +287,7 @@ theorem exists_phi : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Sp Ω ⟶
       | add t t' _ _ h1 h2 =>
         have := add_mem h1 h2
         convert this using 1
-        simp only [map_add, add_smul]
+        simp only [map_add (f := _), add_smul]
         abel
       | smul c t _ h1 =>
         have := Submodule.smul_mem _ (algebraMap (𝓞 L) L c) h1

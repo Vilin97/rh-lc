@@ -146,11 +146,11 @@ private theorem hasLen_AFQuot_map_pbE_of_addEquiv {X Y : Type} [AddCommGroup X] 
       (∀ a b : X, y (φ (a + b)) - y (φ a) - y (φ b) ∈ pInt R p)
     constructor
     · intro hy a b
-      rw [map_add]
+      rw [map_add (f := _)]
       exact hy _ _
     · intro hy a b
       have hab := hy (φ.symm a) (φ.symm b)
-      simp only [map_add, AddEquiv.apply_symm_apply] at hab
+      simp only [map_add (f := _), AddEquiv.apply_symm_apply] at hab
       exact hab
   have hpf : ∀ y : Y → C, y ∈ pFun R p Y ↔ P y ∈ pFun R p X := by
     intro y
@@ -250,7 +250,7 @@ theorem core_pull {p : ℕ} [Fact p.Prime] [IsAlgClosed C] [CharZero C] (hv : v.
     have ha' : algebraMap R C a = (T.symm f).1 0 := by rw [hT, map_zero, ha]
     have hb' : algebraMap R C b = (T.symm f2).1 0 := by rw [hT, map_zero, hb]
     show qq p R g (Dv (T.symm h)) = a • qq p R g (Dv (T.symm f2)) + b • qq p R g (Dv (T.symm f))
-    rw [hD _ _ _ a b hh' ha' hb', map_add, map_smul, map_smul]
+    rw [hD _ _ _ a b hh' ha' hb', map_add (f := _), map_smul, map_smul]
   have hsurj : Function.Surjective Dv' := by
     intro w
     obtain ⟨a, ha⟩ := surj_aug Dv S hS hs w

@@ -19,21 +19,21 @@ theorem cmp_semilinear_pair : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a
     intro r z
     induction z using TensorProduct.induction_on with
     | zero => simp only [smul_zero, map_zero]
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
     | tmul b x => simp [TensorProduct.smul_tmul', TensorProduct.map_tmul]
   have hmapW : ∀ z : TW (OA l O) T, TensorProduct.map σW.toLinearMap h (TWincl (inclO l O) T z) =
       TWincl (inclO l O) T (TensorProduct.map σA.toLinearMap h z) := by
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul b x => simp [TWincl, TensorProduct.map_tmul, h1]
   have hmapBA : ∀ z : TW (OA l O) T, TensorProduct.map σB.toLinearMap h (TWincl (toB l O) T z) =
       TWincl (toB l O) T (TensorProduct.map σA.toLinearMap h z) := by
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul b x => simp [TWincl, TensorProduct.map_tmul, h2]
   have hsmulL : ∀ (m : OA l O) (c : ι → OA l O), inclO l O m • inclL t ϖ P c = inclL t ϖ P (m • c) := by
     intro m c
@@ -81,7 +81,7 @@ theorem cmp_semilinear_pair : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a
     simp only [Pr] at hv hw ⊢
     have : (fun i => σB ((v + w) i)) = (fun i => σB (v i)) + fun i => σB (w i) := by
       funext i; simp
-    rw [this, Matrix.mulVec_add, map_add, hv, hw, map_add, map_add, smul_add]
+    rw [this, Matrix.mulVec_add, map_add (f := _), hv, hw, map_add (f := _), map_add (f := _), smul_add]
   have hsm : ∀ (r : OB l O) v, Pr v → Pr (r • v) := by
     intro r v hv
     simp only [Pr] at hv ⊢

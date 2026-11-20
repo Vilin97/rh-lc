@@ -134,7 +134,7 @@ theorem cj_comm (ψv : AddChar (Fv F v) ℂ) (hc : Continuous ψv)
   have hfull : ∀ φ ∈ GlobalTheory.WeilM.SB (Fin n × Fin d → Fv F v), ∀ Y₀ Z Y, I (schr ψv (e (Y₀, Z)) φ) Y =
       ψv (-(⅟2 * trace (Y₀ * Zᵀ))) * (ψv (trace ((Y + Y₀) * Zᵀ)) * I φ (Y + Y₀)) := fun φ hφ Y₀ Z Y => by
     have := congrArg (fun f => I f Y) (GlobalTheory.WeilM.schr_schr ψv (e (Y₀, 0)) (e (0, Z)) φ)
-    simp only [he, ← map_add, Prod.mk_add_mk, add_zero, zero_add, map_smul, Pi.smul_apply, smul_eq_mul, Matrix.zero_mul,
+    simp only [he, ← map_add (f := _), Prod.mk_add_mk, add_zero, zero_add, map_smul, Pi.smul_apply, smul_eq_mul, Matrix.zero_mul,
       trace_zero, sub_zero] at this
     rw [htr _ (schr_mem_SB hc _ hφ), hmod _ hφ] at this
     rw [this, ← mul_assoc, ← AddChar.map_add_eq_mul, neg_add_cancel, AddChar.map_zero_eq_one, one_mul]

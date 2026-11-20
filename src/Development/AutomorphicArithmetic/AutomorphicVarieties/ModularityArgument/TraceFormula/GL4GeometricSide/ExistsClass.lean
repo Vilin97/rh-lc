@@ -51,7 +51,7 @@ theorem UpperTheory.V.Z.GSp4Splitting.petEx :
   have ev : ∀ φ ψ, (B + (B.comp T).compl₂ T) φ ψ = B φ ψ + B (T φ) (T ψ) := fun _ _ => rfl
   refine ⟨B + (B.comp T).compl₂ T, fun φ ψ => ?_, fun φ hφ => ?_, fun X φ ψ => ?_, fun g φ ψ φ' ψ' h h' => ?_,
     fun φ ψ φ' ψ' h h' => ?_⟩
-  · rw [ev, ev, map_add, hc, hc]
+  · rw [ev, ev, map_add (f := _), hc, hc]
   · rw [ev, Complex.add_re]
     exact add_pos_of_pos_of_nonneg (hp φ hφ) (h0 _)
   · have e1 := hL X φ ψ

@@ -116,7 +116,7 @@ def D (I J : Cx R) (w : ℤ) : pre I J w ⟶ pre I J (w + 1) where
     refine ModuleCat.hom_ext (DirectSum.linearMap_ext _ fun ⟨⟨s, t⟩, h⟩ => TensorProduct.ext' fun a b => ?_)
     simp only [pre, ModuleCat.hom_comp, ModuleCat.hom_ofHom]
     erw [LinearMap.comp_apply, LinearMap.comp_apply, LinearMap.comp_apply, LinearMap.comp_apply]
-    rw [res_lof, dT_lof, dT_lof, map_add, map_zsmul, res_lof, res_lof, smap_res, smap_res]
+    rw [res_lof, dT_lof, dT_lof, map_add (f := _), map_zsmul, res_lof, res_lof, smap_res, smap_res]
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex in
 open scoped DirectSum TensorProduct in
@@ -140,7 +140,7 @@ theorem _root_.GlobalTheory.EtC.TensEx.D_comp (I J : _root_.GlobalTheory.EtC.Cx 
     (DirectSum.lof (ULift.{1} R) _ (fun p : {p : ℤ × ℤ // p.1 + p.2 = w} =>
       _root_.GlobalTheory.EtC.Sec (I.X p.1.1) U.unop ⊗[ULift.{1} R] _root_.GlobalTheory.EtC.Sec (J.X p.1.2) U.unop)
       ⟨(s, t), h⟩ (a ⊗ₜ b))) = 0
-  rw [_root_.GlobalTheory.EtC.TensEx.dT_lof, map_add, map_zsmul, _root_.GlobalTheory.EtC.TensEx.dT_lof,
+  rw [_root_.GlobalTheory.EtC.TensEx.dT_lof, map_add (f := _), map_zsmul, _root_.GlobalTheory.EtC.TensEx.dT_lof,
     _root_.GlobalTheory.EtC.TensEx.dT_lof, sec_map_d_map_d_eq_zero, sec_map_d_map_d_eq_zero,
     TensorProduct.zero_tmul, TensorProduct.tmul_zero, map_zero, map_zero]
   simp [Int.negOnePow_succ, smul_add]
@@ -202,7 +202,7 @@ def pair (I J : Cx R) : Pair I J (cx I J) where
     rw [toS_res, res_lof]
   leibniz U s t w h a b := by
     simp only [LinearMap.compr₂_apply, TensorProduct.mk_apply, LinearMap.coe_comp, Function.comp_apply]
-    rw [d_toS, dT_lof, map_add, map_zsmul, Units.smul_def]
+    rw [d_toS, dT_lof, map_add (f := _), map_zsmul, Units.smul_def]
 
 end GlobalTheory.EtC.TensEx
 

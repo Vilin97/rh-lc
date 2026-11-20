@@ -135,7 +135,7 @@ theorem splits_sq {K : Type*} [Field K] [Algebra ℚ K] (c : ℕ) (g : K) (hg : 
   have hC : (C g : K[X]) ^ 2 = -(c : K[X]) := by
     rw [← C_pow, hg, C_neg, map_natCast]
   have hm : (X ^ 2 + C (c : ℚ) : ℚ[X]).map (algebraMap ℚ K) = (X - C g) * (X - C (-g)) := by
-    simp only [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_C,
+    simp only [Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_X, Polynomial.map_C,
       map_natCast, C_neg, Polynomial.map_natCast]
     linear_combination hC
   rw [hm]
@@ -443,7 +443,7 @@ theorem two_dvd {e q d : ℕ} (hH : HostHyp q d) (he : e ≠ 0) {L : Type} [Fiel
   obtain ⟨t, ht, ht0⟩ := hS e le_rfl
   rw [Nat.sub_self, pow_zero, pow_one] at ht0
   have hfix0 := hψ (C 0)
-  rw [ht0, map_add, map_inv₀, map_pow, hσω, ht.neg_pow, inv_neg] at hfix0
+  rw [ht0, map_add (f := _), map_inv₀, map_pow, hσω, ht.neg_pow, inv_neg] at hfix0
   have hz : ψ (C 0) = 0 := by
     rw [ht0]
     apply eq_zero_of_neg_eq

@@ -352,11 +352,11 @@ theorem germ_mulFun (σ : H0 p P O) (f : H0 p B O) (t : C.τ) (y : Y) (hy : y �
 def mul : H0 p P O →ₗ[k] H0 p B O →ₗ[k] H0 p N O :=
   LinearMap.mk₂ k C.mulFun
     (fun σ σ' f => C.sec_ext fun t y hy ha hb hc => by
-      simp only [map_add, C.germ_mulFun _ _ t y hy ha hb hc, add_mul])
+      simp only [map_add (f := _), C.germ_mulFun _ _ t y hy ha hb hc, add_mul])
     (fun c σ f => C.sec_ext fun t y hy ha hb hc => by
       simp only [germ_smul, C.germ_mulFun _ _ t y hy ha hb hc, mul_assoc])
     (fun σ f f' => C.sec_ext fun t y hy ha hb hc => by
-      simp only [map_add, C.germ_mulFun _ _ t y hy ha hb hc, mul_add])
+      simp only [map_add (f := _), C.germ_mulFun _ _ t y hy ha hb hc, mul_add])
     (fun c σ f => C.sec_ext fun t y hy ha hb hc => by
       simp only [germ_smul, C.germ_mulFun _ _ t y hy ha hb hc, mul_left_comm])
 

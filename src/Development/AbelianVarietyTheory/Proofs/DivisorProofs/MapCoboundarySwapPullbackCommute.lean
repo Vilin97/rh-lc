@@ -101,7 +101,7 @@ theorem map_cob_swap_pull : ∀ (R : Type) [CommRing R] (d : ℕ) (μ : Fin d �
     rw [map_sub, map_sub, map_subst' r μ hμ, map_inL, map_inR]
   · intro c
     unfold cob2
-    rw [map_sub, map_add, map_sub, mvPowerSeriesMap_evalTwoGroups r c _ _ h2 h3, mvPowerSeriesMap_evalTwoGroups r c _ _ (hop _ _ h1 h2) h3,
+    rw [map_sub, map_add (f := _), map_sub, mvPowerSeriesMap_evalTwoGroups r c _ _ h2 h3, mvPowerSeriesMap_evalTwoGroups r c _ _ (hop _ _ h1 h2) h3,
       mvPowerSeriesMap_evalTwoGroups r c _ _ h1 (hop _ _ h2 h3), mvPowerSeriesMap_evalTwoGroups r c _ _ h1 h2, mapop _ _ h1 h2,
       mapop _ _ h2 h3, mx1, mx2, mx3]
   · intro c

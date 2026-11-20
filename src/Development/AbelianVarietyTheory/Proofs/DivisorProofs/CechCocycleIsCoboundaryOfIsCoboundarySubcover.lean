@@ -44,7 +44,7 @@ theorem isCob_of_isCob_subcover (Z : Scheme.{0}) (J : Type) (W : J → Z.Opens) 
         have c := congrArg (resG Z hT) (hd i a.1 b.1)
         have e := congrArg (resG Z (hT.trans (le_inf (inf_le_left.trans inf_le_right) inf_le_right)))
           (hh₀ a.1 a.2 b.1 b.2)
-        simp only [map_add, map_sub, resG_resG_ext] at c e ⊢
+        simp only [map_add (f := _), map_sub, resG_resG_ext] at c e ⊢
         linear_combination c - e)
     exact ⟨g, fun a => hg a⟩
   choose g hg using glue
@@ -57,7 +57,7 @@ theorem isCob_of_isCob_subcover (Z : Scheme.{0}) (J : Type) (W : J → Z.Opens) 
   have k₂ := congrArg (resG Z (le_inf (inf_le_left.trans inf_le_right) inf_le_right :
     W i ⊓ W i' ⊓ W a.1 ≤ W i' ⊓ W a.1)) (hg i' a)
   have c := hd i i' a.1
-  simp only [map_add, map_sub, resG_resG_ext] at k₁ k₂ c ⊢
+  simp only [map_add (f := _), map_sub, resG_resG_ext] at k₁ k₂ c ⊢
   linear_combination c - k₁ + k₂
 
 end GlobalTheory.CechFin

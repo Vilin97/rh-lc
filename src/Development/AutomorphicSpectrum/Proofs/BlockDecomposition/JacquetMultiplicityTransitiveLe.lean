@@ -133,7 +133,7 @@ theorem piTensor_cons_equiv {s : ℕ} {Γ X : Fin (s + 1) → Type} [∀ a, Grou
   refine ⟨Representation.Equiv.mk (tensorCons X) fun g => ?_⟩
   refine TensorProduct.ext' fun v w => ?_
   induction w using PiTensorProduct.induction_on with
-  | add x y hx hy => simp only [TensorProduct.tmul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [TensorProduct.tmul_add, map_add (f := _), hx, hy]
   | smul_tprod c y =>
     simp only [TensorProduct.tmul_smul, map_smul]
     congr 1

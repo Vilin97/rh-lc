@@ -92,11 +92,11 @@ theorem value_cp (hg : IsCptGen ξ) {F : Type} [Field F] [CharZero F] {z : Spec 
     have hp0 : NeZero (p : F) := ⟨Nat.cast_ne_zero.2 hp.ne_zero⟩
     have h3 := value_aeval hg hv ((Polynomial.cyclotomic p ℤ).comp (Polynomial.X + 1)) (by
       rw [Polynomial.aeval_comp]
-      simp only [map_add, Polynomial.aeval_X, map_one, sub_add_cancel]
+      simp only [map_add (f := _), Polynomial.aeval_X, map_one, sub_add_cancel]
       rw [aeval_cyclotomic]
       exact hζ.isRoot_cyclotomic hp.pos)
     rw [Polynomial.aeval_comp] at h3
-    simp only [map_add, Polynomial.aeval_X, map_one] at h3
+    simp only [map_add (f := _), Polynomial.aeval_X, map_one] at h3
     rw [aeval_cyclotomic] at h3
     exact Polynomial.isRoot_cyclotomic_iff.1 h3
 

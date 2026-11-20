@@ -97,13 +97,13 @@ theorem span_Lb : Submodule.span D.host.E (X.Lb : Set (VS D).V) = Wb X := by
     intro c
     have := (hy' c).2
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [map_add, map_sum, map_smul, Ex.h_fe, X.ff, (hlW c).2, Finset.sum_ite_eq] at this
+      simp [map_add (f := _), map_sum, map_smul, Ex.h_fe, X.ff, (hlW c).2, Finset.sum_ite_eq] at this
     exact this
   have hβ : ∀ c, β c = 0 := by
     intro c
     have := (hy' c).1
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [map_add, map_sum, map_smul, X.ef, X.ee, (hlW c).1, Finset.sum_ite_eq] at this
+      simp [map_add (f := _), map_sum, map_smul, X.ef, X.ee, (hlW c).1, Finset.sum_ite_eq] at this
     exact this
   simp only [hα, hβ, zero_smul, Finset.sum_const_zero, zero_add, add_zero]
   exact hl

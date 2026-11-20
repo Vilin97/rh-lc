@@ -234,13 +234,13 @@ theorem fin_cA (x : Formalism.L2.Theta.AE D) : finPart D (cA D x) = cf D (finPar
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem cf_cf (x : RF D) : cf D (cf D x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [sigR, CMData.sig]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem cA_incA (x : D.host.E) : cA D (incA D x) = incA D (star x) := rfl
 
@@ -251,7 +251,7 @@ theorem cf_mem {x : RF D} (hx : x ∈ intAE D) : cf D x ∈ intAE D := by
     refine AddSubgroup.subset_closure ⟨a, ha, ⟨star (x : D.host.E), ?_⟩, rfl⟩
     exact (RingOfIntegers.isIntegral_coe x).map (D.sp.cm.sig.toRingHom.toIntAlgHom)
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 theorem hh_eq (V : HSp D) (x y : Fin V.rank → RF D) :
@@ -332,7 +332,7 @@ theorem stab_of_parts {e : Formalism.L2.Theta.AE D} (he : IsSplitIdem D e) {V : 
   rw [inv_inv] at h3
   have hi := idem_mem he.1
   have h6 := mulVec_parts (finPart D) ((suppAt_iff e V g).1 hg) y
-  rw [RingHom.map_add, fin_cA, ← fm_eq, add_smul] at h6
+  rw [RingHom.map_add (f := _), fin_cA, ← fm_eq, add_smul] at h6
   rw [h6]
   exact sub_mem (add_mem (add_mem (h1 y hy) h3) hy) (smul_mem V (add_mem hi (cf_mem hi)) hy)
 

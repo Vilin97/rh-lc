@@ -229,7 +229,7 @@ theorem core (H : HermSpace K V) {J : Type} [Fintype J] [DecidableEq J] (e f : J
     intro y hy
     refine of_dual H hk1 (hPi ▸ Pi.sub_mem (hwPi y hy) (hePi (pr_mem H _ _ _))) fun x hx => ?_
     obtain ⟨a, ha, m, hm, rfl⟩ := hdec x hx
-    rw [map_sub, LinearMap.sub_apply, hqB, map_add p, hpA a ha, hpM m hm, zero_add, map_add, add_sub_cancel_right]
+    rw [map_sub, LinearMap.sub_apply, hqB, map_add p, hpA a ha, hpM m hm, zero_add, map_add (f := _), add_sub_cancel_right]
     exact hwA y hy a ha
   have hww : ∀ y ∈ M, ∀ x ∈ M, H.B (Φ y - y) (Φ x - x) ∈ Bd (c ^ (2 * n + 11)) (1 : Submodule R K) := by
     intro y hy x hx
@@ -249,7 +249,7 @@ theorem core (H : HermSpace K V) {J : Type} [Fintype J] [DecidableEq J] (e f : J
     rw [hz0]
     refine of_dual H hk1 (hPi ▸ Pi.sub_mem (hwPi y hy) (hePi (hs2 _))) fun x hx => ?_
     obtain ⟨a, ha, m, hm, rfl⟩ := hdec x hx
-    rw [map_sub, LinearMap.sub_apply, hs4, map_add p, hpA a ha, hpM m hm, zero_add, map_add, hpy]
+    rw [map_sub, LinearMap.sub_apply, hs4, map_add p, hpA a ha, hpM m hm, zero_add, map_add (f := _), hpy]
     have e1 : H.B (Φ y - y) a + H.B (Φ y - y) m -
         (star (algebraMap R K t) * H.B (Φ y) m - algebraMap R K t * H.B y (Φ m)) =
         H.B (Φ y - y) a + t • (H.B (Φ y) (Φ m) - H.B (Φ y - y) (Φ m - m)) := by
@@ -278,7 +278,7 @@ theorem core (H : HermSpace K V) {J : Type} [Fintype J] [DecidableEq J] (e f : J
       have hz0 : s (Φ y) - y = (Φ y - y) - (Φ y - s (Φ y)) := by abel
       have h2 : p (x + m) = 0 := by
         rw [← h, ← algebraMap_smul K a, map_smul, hz0, map_sub p, hpw y hy, hpe _ (hs2 _)]; simp
-      rw [map_add, hpA x hx, hpM m hm, zero_add] at h2
+      rw [map_add (f := _), hpA x hx, hpM m hm, zero_add] at h2
       rw [h, h2, add_zero]; exact hx
   have hP : ∀ x ∈ P, x ∈ Bd (c ^ (3 * n + 12)) (s • Λ) := by
     intro x hx
@@ -418,7 +418,7 @@ theorem lift_bd {H : HermSpace K V} {r : ℕ} (N : NF H r) {Λ : Submodule (𝓞
       obtain ⟨a, ⟨ha, haW⟩, i, hi, rfl⟩ := Submodule.mem_sup.1 hx
       have e1 : H.B (l - v) i = 0 := by rw [← H.herm, hL.1 _ hw i (hII hi), star_zero]
       have e2 : H.B v a = 0 := (mem_perp_iff H _ v).1 hv a haW
-      rw [map_add, e1, add_zero, map_sub, LinearMap.sub_apply, e2, sub_zero]
+      rw [map_add (f := _), e1, add_zero, map_sub, LinearMap.sub_apply, e2, sub_zero]
       rw [← hU.2] at hl
       exact ((mem_dual_iff H Λ l).1 hl).2 a ha
   intro a ha

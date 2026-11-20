@@ -67,7 +67,7 @@ theorem GlobalTheory.PtDeg.FrameExact.comb_comp_eq_of_isDiffOf : ∀ (K : Type) 
       add_mem' := by
         intro a b ha hb
         simp only [Set.mem_ofPred_eq] at *
-        rw [comb_add' hv.1, map_add, comb_add' hv.1, ← ha, ← hb, MonObj.mul_comp]
+        rw [comb_add' hv.1, map_add (f := _), comb_add' hv.1, ← ha, ← hb, MonObj.mul_comp]
       zero_mem' := by
         simp only [Set.mem_ofPred_eq, map_zero, comb_zero' hv.1, MonObj.one_comp]
       smul_mem' := by

@@ -159,7 +159,7 @@ private theorem exists_lift_sub_mem_pow_of_mem_wtPart_zero
       {m : W.σ →₀ ℕ | Finsupp.weight W.wt m = 0 ∧ m ≠ 0} 0 (fun m hm => hm.1)
       (fun m hm => mono_lemma g J hJ m hm.2) ih _ hF x' hx'
     refine ⟨algebraMap O B b0 + c', ?_, ?_⟩
-    · rw [map_add, AlgHom.commutes, hc', ofAdd_zero, map_one, Units.val_one, one_mul,
+    · rw [map_add (f := _), AlgHom.commutes, hc', ofAdd_zero, map_one, Units.val_one, one_mul,
         ← AlgHom.commutes ξ b0, ← map_add, hxe]
       congr 1
       abel
@@ -247,5 +247,5 @@ theorem UpperTheory.weightedPres_exists_algHom_extension_of_adicComplete :
       exact ⟨W.part_le_A hz, fun h => by simpa using hf j ⟨z, h⟩ hz⟩
     · exact ⟨W.A.zero_mem, fun h => by rw [map_zero]; exact (map_zero τ).symm⟩
     · intro z w hz hw
-      exact ⟨W.A.add_mem hz.1 hw.1, fun h => by rw [map_add, hz.2 hz.1, hw.2 hw.1, ← map_add]; rfl⟩
+      exact ⟨W.A.add_mem hz.1 hw.1, fun h => by rw [map_add (f := _), hz.2 hz.1, hw.2 hw.1, ← map_add (f := _)]; rfl⟩
   exact (key a a.2).2 a.2

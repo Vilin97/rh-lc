@@ -31,7 +31,7 @@ theorem exists_denom_of_isPushout {R : Type} [CommRing R] [IsDomain R] {R₀ A K
     obtain ⟨d, hd, a, ha⟩ := hx
     obtain ⟨e, he, b, hb⟩ := hy
     refine ⟨d * e, mul_ne_zero hd he, α.hom (c e) * a + α.hom (c d) * b, ?_⟩
-    simp only [map_mul, map_add]
+    simp only [map_mul, map_add (f := _)]
     rw [← ha, ← hb]; ring
   | neg x _ hx =>
     obtain ⟨d, hd, a, ha⟩ := hx

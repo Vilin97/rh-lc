@@ -52,7 +52,7 @@ theorem exists_denom_span_frac {Γ A : Type} [CommRing A] [IsDomain A] {n : ℕ}
     ext i j
     have h1 := congrFun (congrFun e i) j
     have h2 := congrFun (congrFun e' i) j
-    simp only [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, Matrix.add_apply, map_add,
+    simp only [Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, Matrix.add_apply, map_add (f := _),
       map_mul] at h1 h2 ⊢
     rw [h1, h2]; ring
   | smul c y _ hy =>

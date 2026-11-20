@@ -210,7 +210,7 @@ def actSt : GQ l →* (Bst P →ₐ[ℚ_[l]] Bst P) where
   map_one' := stHom_ext P (fun b => by simp) (by simp)
   map_mul' g h := stHom_ext P (fun b => by simp [AlgHom.mul_apply]) (by
     have e : (P.actQ g : P.R.B →ₐ[ℚ_[l]] P.R.B) P.tB = (P.χQ g : ℚ_[l]) • P.tB := localPrime_galoisAction_periodT P g
-    simp only [AlgHom.mul_apply, stHom_X, map_add, stHom_C, map_smul, e,
+    simp only [AlgHom.mul_apply, stHom_X, map_add (f := _), stHom_C, map_smul, e,
       kummer_mul, add_smul, smul_smul, add_assoc, mul_comm])
 
 @[simp] theorem actSt_C (g : GQ l) (b : P.R.B) : actSt P g (C b) = C (P.actQ g b) := stHom_C _ _ _ _
@@ -231,7 +231,7 @@ def monSt : Bst P →ₗ[ℚ_[l]] Bst P := -(derivative.restrictScalars ℚ_[l])
 theorem phiSt_actSt (g : GQ l) (p : Bst P) : phiSt P (actSt P g p) = actSt P g (phiSt P p) := by
   have : (phiSt P).comp (actSt P g) = (actSt P g).comp (phiSt P) :=
     stHom_ext P (fun b => by simp [phiB_actQ]) (by
-      simp only [AlgHom.comp_apply, actSt_X, phiSt_X, map_add, phiSt_C, map_smul, localPrime_frobenius_periodT, map_mul,
+      simp only [AlgHom.comp_apply, actSt_X, phiSt_X, map_add (f := _), phiSt_C, map_smul, localPrime_frobenius_periodT, map_mul,
         map_natCast, mul_add]
       rw [smul_comm, Nat.cast_smul_eq_nsmul, nsmul_eq_mul, map_mul, map_natCast])
   exact AlgHom.congr_fun this p

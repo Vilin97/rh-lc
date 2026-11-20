@@ -28,7 +28,7 @@ theorem low_coeff_dvd {O : Type*} [CommRing O] (a : O) (M : ℕ) (f : PowerSerie
     (hf : f ∈ Ideal.span {PowerSeries.C a, (PowerSeries.X : PowerSeries O) ^ (M + 1)})
     (k : ℕ) (hk : k ≤ M) : a ∣ coeff k f := by
   obtain ⟨u, v, rfl⟩ := Ideal.mem_span_pair.mp hf
-  rw [map_add, mul_comm u, coeff_C_mul, mul_comm v, coeff_X_pow_mul', if_neg (by omega), add_zero]
+  rw [map_add (f := _), mul_comm u, coeff_C_mul, mul_comm v, coeff_X_pow_mul', if_neg (by omega), add_zero]
   exact dvd_mul_right a _
 
 theorem low_divide {O : Type*} [CommRing O] (a : O) (f : PowerSeries O)
@@ -77,7 +77,7 @@ theorem low_degree_power_series : LowPowerSeries := by
   have h0 : (q X ^ m * ↑((hUunit.map q).unit) + q (C ϖ) * q D') * q g = 0 := by
     have h := Ideal.Quotient.eq_zero_iff_mem.mpr hmem
     rw [hDeq] at h
-    simpa [map_mul, map_add, map_pow] using h
+    simpa [map_mul, map_add (f := _), map_pow] using h
   have h3 := low_key _ _ _ _ _ m n hp h0
   rw [← map_pow, ← map_mul, Ideal.Quotient.eq_zero_iff_mem] at h3
   have hmn : m * n ≤ n * m₀ := by

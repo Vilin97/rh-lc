@@ -42,7 +42,7 @@ theorem etale_of_separable_charpoly_mulLeft (E A : Type) [Field E] [CommRing A] 
   have hu : IsUnit (AdjoinRoot.mk (minpoly E g) (minpoly E g).derivative) := by
     obtain ⟨a, c, hac⟩ := hsep
     have := congrArg (AdjoinRoot.mk (minpoly E g)) hac
-    rw [map_add, map_mul, map_mul, AdjoinRoot.mk_self, mul_zero, zero_add, map_one] at this
+    rw [map_add (f := _), map_mul, map_mul, AdjoinRoot.mk_self, mul_zero, zero_add, map_one] at this
     exact isUnit_iff_exists_inv.2 ⟨_, by rw [mul_comm]; exact this⟩
   have := GlobalTheory.etale_adjoinRoot_of_isUnit_derivative hm hu
   exact Algebra.Etale.of_equiv e

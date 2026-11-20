@@ -78,7 +78,7 @@ theorem topologicalClosure_inf_kFinVec [CompleteSpace H] (hπ : IsAdmRep ε π) 
     obtain ⟨a, ha0, ha, hz⟩ := GlobalTheory.exists_kFin_orthogonal_of_ne_kFinVec n ε H π hπ _ (sup_le hle inf_le_right)
       (fun k hk x hx => by
         obtain ⟨y, hy, u, hu, rfl⟩ := Submodule.mem_sup.1 hx
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem_sup (hY k hk y hy)
           ⟨isKStableOn_orthogonal hπ hY k hk u hu.1, isKStableOn_kFinVec ε π k hk u hu.2⟩) hne
     have haY : a ∈ Yᗮ := (Submodule.mem_orthogonal' _ _).2 fun y hy => hz y (Submodule.mem_sup_left hy)

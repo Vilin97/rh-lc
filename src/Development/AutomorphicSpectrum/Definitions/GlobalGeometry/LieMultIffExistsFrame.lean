@@ -262,7 +262,7 @@ theorem sesq_swap (D : Datum H) (x y : D.La) : sesq D y x = -IsCMField.complexCo
   eq_of_trace fun a => by
     have hs : D.EF (a • y) x = -D.EF x (a • y) := by
       have := D.alt (a • y + x)
-      simp only [map_add, LinearMap.add_apply, D.alt] at this
+      simp only [map_add (f := _), LinearMap.add_apply, D.alt] at this
       linarith
     have h1 : D.EF x (a • y) = D.EF (H.bar.symm a • x) y := by rw [D.adj]; simp
     have h2 : (a : E) = IsCMField.complexConj E (H.bar.symm a : 𝓞 E) := by rw [← H.bar_eq]; simp

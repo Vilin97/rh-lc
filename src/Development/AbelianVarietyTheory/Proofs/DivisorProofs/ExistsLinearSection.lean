@@ -171,7 +171,7 @@ theorem exists_upVec (μ : Measure (GA D W)) (𝓖 : Set (GA D W)) (F : GA D W �
         map_add' := fun w w' => by
           unfold l2 Lift.pet
           rw [← integral_add (hint w h) (hint w' h)]
-          simp only [Datum.thetaKO, map_add, Pi.add_apply, add_mul]
+          simp only [Datum.thetaKO, map_add (f := _), Pi.add_apply, add_mul]
         map_smul' := fun a w => by
           unfold l2 Lift.pet
           simp only [Datum.thetaKO, map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc, RingHom.id_apply]

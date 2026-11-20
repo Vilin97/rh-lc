@@ -290,7 +290,7 @@ theorem contr_cohom : ∀ (R : Type) [CommRing R] (A B : Over (Sp R)) [GrpObj A]
     TrivSqZeroExt.snd (R := D') (M := D') (w.1 _ _ _ aM.hom (sM hx').hom) -
     TrivSqZeroExt.snd (R := D') (M := D') (w.1 _ _ _ (iM hx).hom tM.hom) +
     TrivSqZeroExt.snd (R := D') (M := D') (w.1 _ _ _ bM.hom (iM hx').hom) at hk
-  simp only [k, map_neg, map_add, map_sub]
+  simp only [k, map_neg, map_add (f := _), map_sub]
   linear_combination hk + k1 - k2 - k3 + k4 + a1 - a2 - a3 + a4 + b1 - b2 - b3 + b4
 
 end GlobalTheory.PtExt.ChernContr

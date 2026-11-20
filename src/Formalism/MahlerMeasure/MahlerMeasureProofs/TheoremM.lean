@@ -861,7 +861,7 @@ noncomputable def fockBil {N r : ℕ} (LL : Letters N)
     (φ : MvPolynomial (Fin N × Fin r) ℚ_[p] →ₗ[ℚ_[p]] MvPolynomial (Fin N × Fin r) ℚ_[p]) :
     MvPolynomial (Fin N × Fin r) ℚ_[p] →ₗ[ℚ_[p]] MvPolynomial (Fin N × Fin r) ℚ_[p] →ₗ[ℚ_[p]] ℚ_[p] :=
   LinearMap.mk₂ ℚ_[p] (fun x y => fockN p LL (φ x) y)
-    (fun x x' y => by simp only [fockN, map_add, fock_add_left, add_div])
+    (fun x x' y => by simp only [fockN, map_add (f := _), fock_add_left, add_div])
     (fun c x y => by simp only [fockN, map_smul, fock_smul_left, smul_eq_mul, mul_div_assoc])
     (fun x y y' => by simp only [fockN, fock_add_right, add_div])
     (fun c x y => by simp only [fockN, fock_smul_right, smul_eq_mul, mul_div_assoc])

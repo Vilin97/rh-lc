@@ -111,6 +111,6 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (lam : algebraicClosure ℚ ℂ →+
         ((1 + ⟨w, hwK⟩) ^ 2 - (1 + (l : algebraicClosure ℚ ℂ))) * ⟨σ, hσK⟩ - ((1 + ⟨w, hwK⟩) ^ 2 - 1) * ⟨p, hpK⟩ :=
       Subtype.ext (by simp)
     rw [e] at hs'
-    simpa only [map_sub, map_mul, map_pow, map_add, map_one, map_natCast] using hs'
+    simpa only [map_sub, map_mul, map_pow, map_add (f := _), map_one, map_natCast] using hs'
 
 end GlobalTheory.SzRamified

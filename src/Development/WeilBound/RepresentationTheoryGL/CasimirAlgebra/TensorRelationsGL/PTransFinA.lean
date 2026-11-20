@@ -73,7 +73,7 @@ theorem inv_aux {A : Type*} [Ring A] [Algebra ℂ A] (B : Subalgebra ℂ A) (x :
       hcm, -((u + c) * β), neg_ne_zero.mpr (mul_ne_zero hs hβ), ?_⟩
     rw [List.map_cons, List.prod_cons, heq]
     have hq : x - algebraMap ℂ A c = (algebraMap ℂ A u + x) - algebraMap ℂ A (u + c) := by
-      rw [map_add]; abel
+      rw [map_add (f := _)]; abel
     rw [hq, map_neg, map_mul]
     have ht := Algebra.commutes (u + c) (algebraMap ℂ A u + x)
     generalize algebraMap ℂ A u + x = v at ht ⊢

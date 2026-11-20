@@ -24,7 +24,7 @@ theorem exists_scalar_of_forall_eigen {V : Type*} [AddCommGroup V] [Module ℂ V
       rw [LinearMap.map_smul, ec, smul_comm]
     · obtain ⟨e, -, ee⟩ := h f hf
       obtain ⟨d, -, ed⟩ := h (f + f₀) (hP _ _ hf hf₀)
-      rw [LinearMap.map_add, ec, ee, smul_add] at ed
+      rw [LinearMap.map_add (f := _), ec, ee, smul_add] at ed
       have k : (e - d) • f = (d - c) • f₀ := by
         rw [sub_smul, sub_smul, sub_eq_sub_iff_add_eq_add, ed, add_comm]
       have hed : e - d = 0 := by

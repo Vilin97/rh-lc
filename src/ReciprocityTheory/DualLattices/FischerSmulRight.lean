@@ -104,7 +104,7 @@ theorem fischer_add_right (P Q Q' : MvPolynomial (Fin ν × ι) ℂ) :
     fischer_eq_sum P Q P.support (Finset.Subset.refl _),
     fischer_eq_sum P Q' P.support (Finset.Subset.refl _), ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun A _ => ?_
-  rw [MvPolynomial.coeff_add, map_add]
+  rw [MvPolynomial.coeff_add, map_add (f := _)]
   ring
 
 theorem fischer_smul_right (c : ℂ) (P Q : MvPolynomial (Fin ν × ι) ℂ) :
@@ -196,6 +196,6 @@ theorem fischer_mul_X (P Q : MvPolynomial (Fin ν × ι) ℂ) (v : Fin ν × ι)
       rw [hv]
       simp
   next Q₁ Q₂ h₁ h₂ =>
-    rw [fischer_add_right, map_add, fischer_add_right, h₁, h₂]
+    rw [fischer_add_right, map_add (f := _), fischer_add_right, h₁, h₂]
 
 end ReciprocityTheory.PGsh

@@ -209,7 +209,7 @@ theorem _root_.GlobalTheory.flat_coker_of_injective_mod_maximalIdeal : ∀ (V A 
       hy (fun r hr y _ => ?_) (fun x y hx hy => ?_)
     · rw [map_smul]
       exact Submodule.smul_mem_smul hr (LinearMap.mem_range_self u y)
-    · rw [map_add]; exact Submodule.add_mem _ hx hy
+    · rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   have h0 : ∀ z ∈ LinearMap.range u, z ∈ IsLocalRing.maximalIdeal V • (⊤ : Submodule V N) →
       z ∈ (IsLocalRing.maximalIdeal V).map (algebraMap V A) • LinearMap.range u := by
     rintro _ ⟨x, rfl⟩ hx

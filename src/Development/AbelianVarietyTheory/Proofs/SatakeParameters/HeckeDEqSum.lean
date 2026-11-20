@@ -149,7 +149,7 @@ theorem recon : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ)
         have h1 := hw M' hM' (dvd_trans (dvd_mul_right M M₁) hd)
         have h2 := hw' M' hM' (dvd_trans (dvd_mul_left M₁ M) hd)
         simp only [Prod.fst_add, Prod.snd_add]
-        rw [heckeD_add _ _ (hfinE M' hM'), heckeD_add _ _ (hfinE M' hM'), h1, h2, map_add]
+        rw [heckeD_add _ _ (hfinE M' hM'), heckeD_add _ _ (hfinE M' hM'), h1, h2, map_add (f := _)]
       smul_mem' := by
         rintro c w ⟨M, hM, hw⟩
         refine ⟨M, hM, fun M' hM' hd => ?_⟩

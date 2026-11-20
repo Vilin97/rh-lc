@@ -15,7 +15,7 @@ theorem herm_one_two (x y : Fin 2 → E) :
 
 theorem emb_herm_one (φ : E →+* ℂ) (x : Fin 2 → E) :
     φ (herm (1 : Matrix (Fin 2) (Fin 2) E) x x) = ((‖φ (x 0)‖ ^ 2 + ‖φ (x 1)‖ ^ 2 : ℝ) : ℂ) := by
-  rw [herm_one_two, map_add, map_mul, map_mul, emb_cc, emb_cc, Complex.mul_conj, Complex.mul_conj,
+  rw [herm_one_two, map_add (f := _), map_mul, map_mul, emb_cc, emb_cc, Complex.mul_conj, Complex.mul_conj,
     Complex.normSq_eq_norm_sq, Complex.normSq_eq_norm_sq]
   push_cast
   ring

@@ -7,7 +7,7 @@ private lemma cayley_hamilton_rank_three_factored {K : Type} [Field K] (τ : K) 
     (M - 1) * (M * M - τ • M + 1) = 0 := by
   have h := Matrix.aeval_self_charpoly M
   rw [hM] at h
-  simp only [map_mul, map_sub, map_add, map_one, map_pow, Polynomial.aeval_X,
+  simp only [map_mul, map_sub, map_add (f := _), map_one, map_pow, Polynomial.aeval_X,
     Polynomial.aeval_C] at h
   rw [Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul, sq] at h
   exact h

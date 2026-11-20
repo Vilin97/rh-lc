@@ -95,7 +95,7 @@ theorem coef_add (ρ : Setup X) (Y : NExp D.R D.host D.what₂ D.LL0 N X) (i : X
     ρ.eOk i b k (χ (Multiplicative.ofAdd (spread Y i Q M (ρ.ch i) (a + a'))) : X.Ok i k) =
       ρ.eOk i b k (χ (Multiplicative.ofAdd (spread Y i Q M (ρ.ch i) a)) : X.Ok i k) *
         ρ.eOk i b k (χ (Multiplicative.ofAdd (spread Y i Q M (ρ.ch i) a')) : X.Ok i k) := by
-  rw [map_add, ofAdd_add, map_mul, Units.val_mul, map_mul]
+  rw [map_add (f := _), ofAdd_add, map_mul, Units.val_mul, map_mul]
 
 open Classical in
 

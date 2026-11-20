@@ -33,7 +33,7 @@ theorem ext_of_isBC (hm : m.IsBC) {h₁ h₂ : Crys κ' t' A'} (e : ∀ c, h₁ 
   obtain ⟨z, rfl⟩ := hm.2 c
   induction z with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x c => rw [liftSemi_tmul, map_smul, map_smul, e c]
 
 omit [Algebra R R'] in
@@ -79,11 +79,11 @@ theorem glue_pairing_eq_zero {k : Type} [Field k] {d : ℕ} {H M : Type*} [AddCo
       (TrivSqZeroExt.inr (Pi.single j 1) : TrivSqZeroExt k (Fin d → k)) * (TrivSqZeroExt.inr (Pi.single l 1) * r) = 0 :=
     fun j l r ↦ by rw [← _root_.mul_assoc, TrivSqZeroExt.inr_mul_inr, MulZeroClass.zero_mul]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply, key,
+    simp only [map_add (f := _), map_sum, map_smul, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply, key,
     smul_eq_mul, Finset.mul_sum, mul_add, hee, Finset.sum_const_zero, add_zero, hxy, map_zero, zero_add]
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_eq_zero fun j _ ↦ ?_
-  rw [← mul_add, ← map_add, huv j, map_zero, mul_zero]
+  rw [← mul_add, ← map_add (f := _), huv j, map_zero, mul_zero]
 
 set_option maxHeartbeats 4000000 in
 
@@ -126,7 +126,7 @@ theorem glueFil_isotropic : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.
   refine hx'.2.elim fun z hz' ↦ hy'.2.elim fun w hw' ↦ ?_
   refine (congrArg₂ (fun a b ↦ Φ a b) hz'.2 hw'.2).trans ?_
   refine glue_pairing_eq_zero hBC.bcMap Φ φ key (iso x hx'.1 y hy'.1) fun j ↦ ?_
-  simp only [map_add, LinearMap.add_apply, iso _ (hz'.1 j) _ hy'.1, iso _ hx'.1 _ (hw'.1 j), add_zero]
+  simp only [map_add (f := _), LinearMap.add_apply, iso _ (hz'.1 j) _ hy'.1, iso _ hx'.1 _ (hw'.1 j), add_zero]
   exact (hf j).2.2 x hx'.1 y hy'.1
 
 end GlobalTheory.HTGlueIsoPol

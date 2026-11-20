@@ -79,10 +79,10 @@ theorem scal_dir (F : LFlag (VS D) D.R.rS T) (F₁ F₂ : LFlag (VS D) D.R.rS T'
     refine ⟨fun a => ?_, ?_⟩
     · have h1 := p2 a.castSucc
       rw [if_neg (Fin.castSucc_ne_last a), hfc] at h1
-      rw [hu2, map_add, map_smul, h1, F.fl.z_orth a, smul_zero, add_zero]
+      rw [hu2, map_add (f := _), map_smul, h1, F.fl.z_orth a, smul_zero, add_zero]
     · have h1 := p2 (Fin.last _)
       rw [if_pos rfl, hfl] at h1
-      rw [hu2, map_add, map_smul, h1, hzz, smul_eq_mul]
+      rw [hu2, map_add (f := _), map_smul, h1, hzz, smul_eq_mul]
       field_simp
       ring
   have hu2U1 := htr u2 hu2U hu2o

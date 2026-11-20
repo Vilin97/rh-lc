@@ -123,7 +123,7 @@ theorem hom_ext' {C : Type} [CommRing C] {φ ψ : R[T;T⁻¹] →+* C}
     | pred k ih => rw [sub_eq_add_neg, T_add, map_mul, map_mul, ih, hinv]
   refine RingHom.ext fun p => ?_
   induction p using LaurentPolynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
   | C_mul_T n a => rw [map_mul, map_mul, hC, hT]
 
 theorem lifts_iff {B M : Type} [CommRing B] [Algebra R B] [AddCommGroup M] [Module B M]
@@ -190,7 +190,7 @@ def tanRep : TanRep (G R) R where
       rfl
     ext
     simp only [this, LinearMap.toSpanSingleton_apply, one_smul, LinearMap.comp_apply, RingHom.comp_apply]
-    rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq (pre z (T 1)), map_add, hβ.1, hβ.2]
+    rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq (pre z (T 1)), map_add (f := _), hβ.1, hβ.2]
     simp
 
 example {B M : Type} [CommRing B] [Algebra R B] [AddCommGroup M] [Module B M] [Module Bᵐᵒᵖ M] [IsCentralScalar B M]

@@ -44,7 +44,7 @@ theorem exists_hom_of_basis : ∃ u : F ⟶ G, ∀ (W : X.Opens) (hW : P W) (s :
   let l : ∀ U : X.Opens, Γ(F, U) →ₗ[Γ(X, U)] Γ(G, U) := fun U =>
     { toFun := g U
       map_add' := fun s s' => ext_basis hP fun W hW hWU => by
-        rw [map_add, hg _ _ W hW, hg _ _ W hW, hg _ _ W hW, map_add, map_add]
+        rw [map_add (f := _), hg _ _ W hW, hg _ _ W hW, hg _ _ W hW, map_add (f := _), map_add (f := _)]
       map_smul' := fun a s => ext_basis hP fun W hW hWU => by
         rw [RingHom.id_apply, resM_smul, hg _ _ W hW, hg _ _ W hW, resM_smul, map_smul] }
   have hl : ∀ {U V : X.Opens} (h : V ≤ U) (s : Γ(F, U)), l V (resM F h s) = resM G h (l U s) :=
@@ -90,7 +90,7 @@ theorem lift_res (hU : IsAffineOpen U) (hW : IsAffineOpen W) (h : W ≤ U) (h' :
     (fun s t e e' => ?_) s
   · rw [resM_resM, hl, hl', resM_resM]
   · rw [resM_smul, map_smul, map_smul, resM_smul, e]
-  · rw [map_add, map_add, map_add, map_add, e, e']
+  · rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), e, e']
 
 end Lift
 

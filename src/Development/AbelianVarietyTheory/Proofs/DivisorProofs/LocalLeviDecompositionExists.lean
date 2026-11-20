@@ -23,7 +23,7 @@ lemma cA_cA (σ : E →ₐ[F] E) (hσ : ∀ z, σ (σ z) = z) (z : AE F E) : cA 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, hσ]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def dg (a b : AE F E) (g : Matrix (Fin d₁) (Fin d₁) (AE F E)) :
     Matrix (Fin d₁ ⊕ Fin 2) (Fin d₁ ⊕ Fin 2) (AE F E) :=

@@ -126,7 +126,7 @@ theorem heis_trS (ψ : AddChar (AF D.host.F) ℂ) (u : WO A T) (G : WO A T → �
     heisO ψ A' T (rS J T u) (trS J T G) = trS J T (heisO ψ A T u G) := by
   funext w
   obtain ⟨w, rfl⟩ := (rS J T).surjective w
-  simp only [heisO, trS, ← map_add, AddEquiv.symm_apply_apply, sympl_rS]
+  simp only [heisO, trS, ← map_add (f := _), AddEquiv.symm_apply_apply, sympl_rS]
 
 theorem actO_rS (g : GA D A) (h : GA D T) (x : WO A T) :
     rS J T (actO A T g h x) = actO A' T (J.kap g) h (rS J T x) := by

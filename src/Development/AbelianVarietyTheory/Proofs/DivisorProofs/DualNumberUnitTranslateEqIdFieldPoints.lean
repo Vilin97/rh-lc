@@ -29,7 +29,7 @@ theorem factor_fst {S K : Type} [CommRing S] [Field K] (w : Sp K ⟶ Sp (DualNum
   have hx : x = algebraMap S (DualNumber S) x.fst + algebraMap S (DualNumber S) x.snd * DualNumber.eps := by
     ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
   conv_lhs => rw [hx]
-  rw [map_add, map_mul, hε, mul_zero, add_zero]
+  rw [map_add (f := _), map_mul, hε, mul_zero, add_zero]
 
 theorem transl_field_point {X : Scheme.{0}} (G : Over X) [GrpObj G] {S : Type} [CommRing S] (x0 : Sp S ⟶ X)
     (P : tEpsG x0 ⟶ G)

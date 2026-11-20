@@ -90,7 +90,7 @@ theorem mem_filV_iff (a : ℤ) (z : (Fin 1 → ↥LL.1) ⊗[ℚ_[l]] P.R.BdR) :
       simp only [LinearMap.id_apply, ev_tmul]
       exact om_mul_mem P K a _ b.2
     | add x y hx hy =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact (P.PD K).Fil a |>.add_mem hx hy
   · intro h
     rw [← coordInv_ev (Om := Om l) z]
@@ -108,7 +108,7 @@ theorem ev_mulVdR (c : ↥K.1) (σ : ↥LL.1 →ₐ[ℚ_[l]] Om l) (z : (Fin 1 �
     simp only [ev_tmul]
     change _ * (algebraMap (Om l) P.R.BdR (c : Om l) * b) = _
     ring
-  | add x y hx hy => simp only [map_add, hx, hy, mul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
 
 variable {K LL}
 
@@ -139,7 +139,7 @@ theorem ev_act (ψ : ↥(GK K) →* (↥LL.1)ˣ) (g : ↥(GK K)) (σ : ↥LL.1 �
       simp [actVdR]
     rw [h1, ev_tmul, ev_tmul, lineRep_apply, P.PD_actdR, map_mul, P.actQdR_Om]
     simp only [Pi.smul_apply, smul_eq_mul, map_mul, gc_apply, mul_assoc]
-  | add x y hx hy => simp only [map_add, hx, hy, mul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
 
 end Coord
 

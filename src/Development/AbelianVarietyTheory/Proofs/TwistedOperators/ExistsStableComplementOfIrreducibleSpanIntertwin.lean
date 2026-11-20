@@ -53,7 +53,7 @@ theorem exists_stab_compl_of_iSup {ι κ M : Type} [AddCommGroup M] [Module ℂ 
         exact ha _ (hb x hx)
       | add a b ha hb =>
         intro x hx
-        rw [map_add, LinearMap.add_apply]
+        rw [map_add (f := _), LinearMap.add_apply]
         exact N.add_mem (ha x hx) (hb x hx)
     refine ⟨{ carrier := N
               add_mem' := N.add_mem

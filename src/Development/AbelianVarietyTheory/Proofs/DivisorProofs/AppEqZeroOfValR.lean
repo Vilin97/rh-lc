@@ -56,10 +56,10 @@ theorem glue_along {K : Type} [Field K] {R : Type} [CommRing R] {Y X : Scheme.{0
   refine ⟨d₁, ⟨?_, ?_, ?_, ?_⟩, fun O f s hs => ext O _ _ fun i => (hd O f i).trans (hs i).symm⟩
   · intro O _ f f'
     refine ext O _ _ fun i => ?_
-    rw [map_add, hd, hd, hd, map_add, (he i).add _ inf_le_right]
+    rw [map_add (f := _), hd, hd, hd, map_add (f := _), (he i).add _ inf_le_right]
   · intro O _ f f'
     refine ext O _ _ fun i => ?_
-    rw [map_add, map_mul, map_mul, hd, hd, hd, map_mul, (he i).mul _ inf_le_right,
+    rw [map_add (f := _), map_mul, map_mul, hd, hd, hd, map_mul, (he i).mul _ inf_le_right,
       res_app m inf_le_left, res_app m inf_le_left]
   · intro O O' h _ f
     refine ext O' _ _ fun i => ?_
@@ -180,8 +180,8 @@ theorem exists_global_lift (hv : ∀ a, IsTanAtG t (chart U) (v a)) (hKS : IsKS 
     exact TopologicalSpace.Opens.mem_iSup.1 h2
   · intro i
     refine ⟨fun O hO f f' => ?_, fun O hO f f' => ?_, fun O O' h hO f => ?_, fun O hO r => ?_⟩
-    · rw [(hfield i).1 O hO, map_add]
-    · rw [(hfield i).2.1 O hO, map_add, map_mul, map_mul]
+    · rw [(hfield i).1 O hO, map_add (f := _)]
+    · rw [(hfield i).2.1 O hO, map_add (f := _), map_mul, map_mul]
     · rw [(hfield i).2.2 O O' h hO, rsT_eq (pre_mono m h), res_app m h]
     · rw [constFn_int, isField_intCast (hfield i) hO, map_zero, constFn, map_zero, map_zero]
   · intro i i' O hO f
@@ -244,7 +244,7 @@ theorem exists_isConstK (hv : ∀ a, IsTanAtG t (chart U) (v a)) (hKS : IsKS t V
     rw [hdD, pbT, dif_pos hΦU, pbT, dif_pos (by exact le_rfl), pbT, dif_pos le_rfl, ← Scheme.Hom.app_eq_appLE ρ,
       app_const _ A.hom π ρ P.w] at h3
     have h4 := congrArg (resG C hT) h3
-    rw [map_add, map_mul, res_const, res_const] at h4
+    rw [map_add (f := _), map_mul, res_const, res_const] at h4
     have a1 : ((Φ ≫ t.G.hom).appLE U.1 ⊤ (hT.trans hΦU)).hom r =
         resG C hT ((Φ.appLE _ _ hΦU).hom ((t.G.hom.app U.1).hom r)) := by
       rw [Scheme.Hom.comp_appLE]
@@ -259,7 +259,7 @@ theorem exists_isConstK (hv : ∀ a, IsTanAtG t (chart U) (v a)) (hKS : IsKS t V
     refine (a1.trans (h4.trans ?_)).trans (appLE_eq_constFn U φ π _ rfl ⊤ hb r).symm
     refine (congrArg (· + _) a2).trans ?_
     unfold constFn
-    rw [← map_mul, ← map_add, ← map_mul, ← map_add]
+    rw [← map_mul, ← map_add (f := _), ← map_mul, ← map_add (f := _)]
     congr 2
     ext
     · simp [φ₀, TrivSqZeroExt.algebraMap_eq_inl]

@@ -39,7 +39,7 @@ theorem aB_add (δ : E) (a a' : AF F) : aB L δ (a + a') = aB L δ a + aB L δ a
   simp only [aB, add_smul, Matrix.single_add]
 
 theorem sB_add (b b' : Fin L.n → AE F E) : sB R L (b + b') = sB R L b + sB R L b' := by
-  simp only [sB, Pi.add_apply, map_add, mul_add, neg_add, Matrix.single_add, ← Finset.sum_add_distrib]
+  simp only [sB, Pi.add_apply, map_add (f := _), mul_add, neg_add, Matrix.single_add, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun j _ => by abel
 
 theorem idx2 (r : Fin d.n ⊕ Fin d.n) : r = Sum.inl L.i₀ ∨ r = Sum.inr L.i₀ ∨ ∃ a, r = Sum.map L.em L.em a := by

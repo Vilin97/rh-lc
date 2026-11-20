@@ -56,7 +56,7 @@ theorem exists_basis_bounds {X X' : Type} [AddCommGroup X] [AddCommGroup X'] {n 
   · obtain ⟨i, j, h⟩ := hb k
     have e2 : sumQ xe Q (b' k + w) = sumQ xe Q w + (Q (b j + xe w i) - Q (xe w i)) := by
       unfold sumQ
-      rw [map_add, h]
+      rw [map_add (f := _), h]
       exact sum_single_add Q i (b j) (xe w)
     have e3 : sumQ xe Q (b' k + w) - sumQ xe Q (b' k) - sumQ xe Q w = Q (b j + xe w i) - Q (b j) - Q (xe w i) := by
       rw [e1 k i j h, e2]; ring

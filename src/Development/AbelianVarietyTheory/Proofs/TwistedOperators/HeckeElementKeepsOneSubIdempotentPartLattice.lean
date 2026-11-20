@@ -34,7 +34,7 @@ theorem inv_part_mem {D : D7} {e : AE D} (he : IsSplitIdem D e) {V : HSp D} {ϖ 
   have h3' : ∀ y ∈ Formalism.L2.NTheta.LamHat V, finPart D e • fm V a₀ *ᵥ y ∈ Formalism.L2.NTheta.LamHat V := h3
   have hadj := adj_mem V (finPart D e) a₀ h3' z hz
   have h6 := mulVec_parts (finPart D) ((suppAt_iff e V a₀⁻¹).1 (suppAt_inv hs)) z
-  rw [RingHom.map_add, fin_cA, ← fm_eq] at h6
+  rw [RingHom.map_add (f := _), fin_cA, ← fm_eq] at h6
   have e1 : finPart D e * finPart D e = finPart D e := by rw [← map_mul, he.1]
   have e2 : finPart D e * cf D (finPart D e) = 0 := by rw [← fin_cA, ← map_mul, he.2.1, map_zero]
   rw [mulVec_one_sub_idempotent_of_split_sum_identity _ _ e1 e2 _ z h6]

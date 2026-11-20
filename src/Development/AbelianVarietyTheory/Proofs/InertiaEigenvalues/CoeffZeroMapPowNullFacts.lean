@@ -21,7 +21,7 @@ theorem c_mem_of_mem (tb : TopBasis s I ι) (n : ℕ) {x : A} (hx : x ∈ (I ^ n
       rw [mul_comm, tb.c_mul]
       exact Ideal.mul_mem_right _ _ hz
     | zero => intro a; simp
-    | add y z _ _ hy hz => intro a; rw [mul_add, map_add]; exact add_mem (hy a) (hz a)
+    | add y z _ _ hy hz => intro a; rw [mul_add, map_add (f := _)]; exact add_mem (hy a) (hz a)
     | smul b y _ hy => intro a; rw [smul_eq_mul, ← mul_assoc]; exact hy (a * b)
   simpa using key 1
 

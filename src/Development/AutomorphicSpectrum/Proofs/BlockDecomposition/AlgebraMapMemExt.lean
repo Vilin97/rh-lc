@@ -94,7 +94,7 @@ theorem main : ∀ {B : Type} [CommRing B] {J : Ideal B} (δ : DividedPowers J) 
   obtain ⟨hfm, hfa, -, hfr⟩ := GlobalTheory.T.divided_power_polynomial_filtration δ Q η hS
   have h1 : g (Q.e 1) = algebraMap B Q.P (x ^ p - 1) + algebraMap B Q.P (x ^ p) * Q.e 1 := by
     have := hg1
-    rw [map_add, map_one, mul_add, mul_one, add_comm (1 : Q.P)] at this
+    rw [map_add (f := _), map_one, mul_add, mul_one, add_comm (1 : Q.P)] at this
     rw [_root_.map_sub, map_one (algebraMap B Q.P)]
     linear_combination this
   have hg := map_sub_self hS hμ hνd g hgB hgd h1

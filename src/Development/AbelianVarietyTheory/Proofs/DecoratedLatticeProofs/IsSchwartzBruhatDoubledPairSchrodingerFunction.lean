@@ -90,7 +90,7 @@ theorem sch_schwartz (k : ℕ) (L : (Fin k → ℝ) →+ Mx D B.rank A.rank) (hL
     let M : ℝ →+ Mx D B.rank A.rank :=
       { toFun := fun s => L (s • (Pi.single i (1 : ℝ) : Fin k → ℝ))
         map_zero' := by rw [zero_smul, map_zero]
-        map_add' := fun a b => by rw [add_smul, map_add] }
+        map_add' := fun a b => by rw [add_smul, map_add (f := _)] }
     have hMc : Continuous M := hL.1.comp (continuous_id.smul continuous_const)
     have hMf : ∀ s, (M s).map (finPart D) = 0 := fun s => hL.2 _
     obtain ⟨f'', hf'', hd⟩ := GlobalTheory.T.schroedingerFunction_hasDerivAt_real_line_doubledPair D ψ hψ A B ν 𝓨 hν f' hf' M hMc hMf
@@ -99,7 +99,7 @@ theorem sch_schwartz (k : ℕ) (L : (Fin k → ℝ) →+ Mx D B.rank A.rank) (hL
     have he : (fun s : ℝ => sch ψ A B ν 𝓨 f' (x + L (t + s • (Pi.single i (1 : ℝ) : Fin k → ℝ)))) =
         fun s : ℝ => sch ψ A B ν 𝓨 f' (x + L t + M s) := by
       funext s
-      simp only [map_add, add_assoc]
+      simp only [map_add (f := _), add_assoc]
       rfl
     simp only at h ⊢
     rw [he]

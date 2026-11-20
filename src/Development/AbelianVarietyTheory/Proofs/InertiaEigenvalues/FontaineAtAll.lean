@@ -46,7 +46,7 @@ theorem split_equiv {G L V₀ V₁ V₂ : Type} [Group G] [Field L] [AddCommGrou
   apply (LinearEquiv.ofBijective f hbij).injective
   change f (e (ρ₁ g v)) = f (ρ₀ g (e v).1, ρ₂ g (e v).2)
   have h1 : ∀ w, f (e w) = w := fun w => (LinearEquiv.ofBijective f hbij).apply_symm_apply w
-  rw [h1, hf, hι, hs, ← map_add, ← hf]
+  rw [h1, hf, hι, hs, ← map_add (f := _), ← hf]
   have : ((e v).1, (e v).2) = e v := rfl
   rw [this, h1]
 

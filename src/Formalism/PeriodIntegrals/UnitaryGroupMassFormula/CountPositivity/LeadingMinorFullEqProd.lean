@@ -175,7 +175,7 @@ theorem gflag_pos (F : FlagG S r (T : E)) (F' : FlagG S r (T' : E)) (τ : E →+
           rw [h_zt_zt]
           simp
         · simp only [w, d, Sum.elim_inr, ↓reduceIte]
-          rw [hermForm_second_anisotropic F F' hTE, map_add, map_div₀, map_mul, hns, map_neg, map_natCast, map_natCast, hnb]
+          rw [hermForm_second_anisotropic F F' hTE, map_add (f := _), map_div₀, map_mul, hns, map_neg, map_natCast, map_natCast, hnb]
           push_cast
           ring
     have hneg : ∀ i, d i < 0 := by

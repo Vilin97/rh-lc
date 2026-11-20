@@ -160,7 +160,7 @@ theorem add_mem {B B' : Matrix (Fin n) (Fin n) C} (hB : B ∈ Acl K) (hB' : B' �
   obtain ⟨s, hs⟩ := hB
   obtain ⟨s', hs'⟩ := hB'
   refine ⟨fun k => s k + s' k, ?_⟩
-  simpa only [map_add, Matrix.mul_add] using hs.add hs'
+  simpa only [map_add (f := _), Matrix.mul_add] using hs.add hs'
 
 theorem neg_mem {B : Matrix (Fin n) (Fin n) C} (hB : B ∈ Acl K) : -B ∈ Acl K := by
   obtain ⟨s, hs⟩ := hB

@@ -179,15 +179,15 @@ theorem sigmaOneSquare : Sigma1Sq := by
   have hs10 := constantCoeff_sig1S e1 (3 * e1 ^ 2 - q) w
   have hkey : sigmaOneSeries e1 (3 * e1 ^ 2 - q) w + sigmaOneSeries e1 (3 * e1 ^ 2 - q) w = sigS P + sigS P + L := by
     apply eq_of_constantCoeff_eq_of_dz_eq
-    · rw [map_add, map_add, map_add, hs0, hs10, hL0]; ring
+    · rw [map_add (f := _), map_add (f := _), map_add (f := _), hs0, hs10, hL0]; ring
     · apply eq_of_constantCoeff_eq_of_dz_eq
-      · simp only [map_add, sigmaOneSeries, sigS, map_neg, dz_prim_eq_self, hp0, hL1]
+      · simp only [map_add (f := _), sigmaOneSeries, sigS, map_neg, dz_prim_eq_self, hp0, hL1]
         ring
-      · simp only [map_add, sigmaOneSeries, sigS, map_neg, dz_prim_eq_self, hLdd]
+      · simp only [map_add (f := _), sigmaOneSeries, sigS, map_neg, dz_prim_eq_self, hLdd]
         ring
   have hsq : fExp (sigmaOneSeries e1 (3 * e1 ^ 2 - q) w) ^ 2 = fExp (sigS P + sigS P) * u := by
     have hss : MvPowerSeries.constantCoeff (sigS P + sigS P) = 0 := by
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (show PowerSeries.constantCoeff (sigS P) + PowerSeries.constantCoeff (sigS P) = 0 by
         rw [hs0, add_zero])
     rw [sq, ← fExp_add hs10 hs10, hkey, fExp_add hss hL0, hLdef, fExp_fLog hu0]

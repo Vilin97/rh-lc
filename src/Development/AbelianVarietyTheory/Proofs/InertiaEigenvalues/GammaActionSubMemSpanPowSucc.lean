@@ -28,7 +28,7 @@ theorem sub_mem_pow_succ {A : Type*} [CommRing A] (f : A →+* A) (I : Ideal A)
         exact Ideal.mul_mem_mul hx (h1 y hy)
     · intro x y hx hy
       have e : f (x + y) - (x + y) = (f x - x) + (f y - y) := by
-        rw [map_add]; ring
+        rw [map_add (f := _)]; ring
       rw [e]
       exact Ideal.add_mem _ hx hy
 
@@ -41,7 +41,7 @@ theorem sub_mem_pow_succ_pair {A : Type*} [CommRing A] (f : A →+* A) (p t : A)
   obtain ⟨a, b, rfl⟩ := Ideal.mem_span_pair.1 hy
   have e : f (a * p + b * t) - (a * p + b * t) =
       (f a - a) * p + (f b - b) * t + f b * (f t - t) := by
-    rw [map_add, map_mul, map_mul, hp]; ring
+    rw [map_add (f := _), map_mul, map_mul, hp]; ring
   rw [e]
   have hpm : p ∈ Ideal.span {p, t} := Ideal.subset_span (by simp)
   have htm : t ∈ Ideal.span {p, t} := Ideal.subset_span (by simp)
@@ -57,7 +57,7 @@ theorem X_dvd_sub {O : Type*} [CommRing O] (g : PowerSeries O →ₐ[O] PowerSer
   obtain ⟨b, hb⟩ := h1
   have ha : a = algebraMap O (PowerSeries O) (PowerSeries.constantCoeff a) + PowerSeries.X * b := by
     rw [← hb, PowerSeries.algebraMap_apply]; simp
-  rw [PowerSeries.X_dvd_iff, ha, map_add, AlgHom.commutes, map_mul]
+  rw [PowerSeries.X_dvd_iff, ha, map_add (f := _), AlgHom.commutes, map_mul]
   simp [hg]
 
 theorem exists_X_sub {O : Type*} [CommRing O] (F : PowerSeries O) (p : ℕ) (c : O)

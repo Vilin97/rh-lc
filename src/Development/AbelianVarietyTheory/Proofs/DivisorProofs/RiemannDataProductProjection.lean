@@ -197,7 +197,7 @@ theorem exists_lin_add : ∀ (S : Scheme.{0}) (P P₁ P₂ : PPAS S) (π₁ : P.
     ψ₂ hψ₂
   have hlam : lam (cls d.L d.isLB) (𝟙 d.B) (𝟙 d.B) =
       lam (cls d₁.L d₁.isLB) ψ₁ ψ₁ + lam (cls d₂.L d₂.isLB) ψ₂ ψ₂ := by
-    rw [lam_eq_pull d d (𝟙 d.B), hc, map_add, pull_diag_eq d d₁ π₁ ψ₁ e₁, pull_diag_eq d d₂ π₂ ψ₂ e₂]
+    rw [lam_eq_pull d d (𝟙 d.B), hc, map_add (f := _), pull_diag_eq d d₁ π₁ ψ₁ e₁, pull_diag_eq d d₂ π₂ ψ₂ e₂]
   refine ⟨Q₁, Q₂, fun z => ?_, fun z => ?_, fun z w => ?_⟩
   · rw [hQ₁, Over.comp_left, Category.assoc, e₁]
   · rw [hQ₂, Over.comp_left, Category.assoc, e₂]

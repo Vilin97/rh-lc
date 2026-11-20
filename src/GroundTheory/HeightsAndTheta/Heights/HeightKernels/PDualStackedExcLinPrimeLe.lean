@@ -170,7 +170,7 @@ def thetaHom {b : Module.Basis T ℤ (dualLattice F)} {b' : Module.Basis T ℤ (
   map_add' μ ν := by
     apply mul_right_cancel₀ (toFrac_graphFirst_ne hc)
     rw [theta_mul hab hP hc (μ + ν) (coef b' c μ + coef b' c ν)
-        (by simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, coef_spec, map_add]),
+        (by simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, coef_spec, map_add (f := _)]),
       add_mul, theta_mul hab hP hc μ _ (coef_spec b' c μ), theta_mul hab hP hc ν _ (coef_spec b' c ν),
       linD_add, map_add, map_add]
 
@@ -195,7 +195,7 @@ def secVal (b : Module.Basis T ℤ (dualLattice F)) : dualLattice F →+ FracP P
   AddMonoidHom.mk' (fun ψ => toFrac P (linS fun t => b.repr ψ t)) (by
     intro ψ χ
     show toFrac P (linS _) = toFrac P (linS _) + toFrac P (linS _)
-    rw [← map_add, ← linS_add]
+    rw [← map_add (f := _), ← linS_add]
     congr 2
     funext t
     simp)

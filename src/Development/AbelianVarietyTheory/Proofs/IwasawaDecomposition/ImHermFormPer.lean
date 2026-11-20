@@ -58,7 +58,7 @@ theorem im_hermForm_per {g : ℕ} {τ : Matrix (Fin g) (Fin g) ℂ} (hτ : τ �
       map_smul' := fun s v => by simp only [dotProduct_smul, smul_eq_mul, RingHom.id_apply]; ring }
   let lin₂ : (Fin g ⊕ Fin g → ℤ) → (Fin g → ℂ) →ₗ[ℂ] ℂ := fun r =>
     { toFun := fun v => (Real.pi : ℂ) * hermForm Hm (F v) (F (per τ r))
-      map_add' := fun v w => by simp only [map_add, hermForm, add_dotProduct]; ring
+      map_add' := fun v w => by simp only [map_add (f := _), hermForm, add_dotProduct]; ring
       map_smul' := fun s v => by simp only [map_smul, hermForm, smul_dotProduct, smul_eq_mul, RingHom.id_apply]; ring }
   let c₂ : (Fin g ⊕ Fin g → ℤ) → ℂ := fun r =>
     Complex.log (χ r) + Real.pi / 2 * hermForm Hm (F (per τ r)) (F (per τ r))
@@ -150,7 +150,7 @@ theorem weilIs_per : ∀ (x : KeyIn ℂ) (g : ℕ) (u : HolUnif x.P.A x.P.L g) (
       have eB := hT.2 ⟨_, hmem r⟩ (F z)
       have eC := hrel z
       rw [pow_one] at eB
-      rw [map_add] at eA
+      rw [map_add (f := _)] at eA
       apply mul_left_cancel₀ hc
       linear_combination (ρ (z + per τ r) * (χ ⟨_, hmem r⟩ * Complex.exp (Real.pi * hermForm Hm (F z) (F (per τ r)) +
         Real.pi / 2 * hermForm Hm (F (per τ r)) (F (per τ r))))) * eC - ρ z * eA - ρ z * ρ (z + per τ r) * eB) p q

@@ -31,7 +31,7 @@ theorem char_of_red {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [
   have hI : ∀ p ∈ I, valuation k (π p) < 1 := by
     intro p hp
     have h2 := hx (.inr 0) (.inr 0) _ _ (he _) (he _) (l (.inr 0) (.inr 0) + p)
-      (by rw [map_add, hl, Ideal.Quotient.eq_zero_iff_mem.2 hp, add_zero])
+      (by rw [map_add (f := _), hl, Ideal.Quotient.eq_zero_iff_mem.2 hp, add_zero])
     have h3 := (valuation k).map_sub_lt (h1 (.inr 0) (.inr 0)) h2
     rwa [map_add, sub_sub_sub_cancel_left, add_sub_cancel_left] at h3
   let w : O := ∑ a, ∑ b, if GlobalTheory.chainEdge κ (e a) (e b) then l a b else 0
@@ -86,7 +86,7 @@ theorem lam_eq_of_red : ∀ (D : D7) (u : D.what₂.Word) (d : GlobalTheory.SeeS
   have hadd : ∀ a b : D.host.E, (GlobalTheory.LocMod.ofSplit G.q).pr (a + b) =
       (GlobalTheory.LocMod.ofSplit G.q).pr a + (GlobalTheory.LocMod.ofSplit G.q).pr b := by
     intro a b
-    simp only [GlobalTheory.LocMod.Place.pr, map_add]
+    simp only [GlobalTheory.LocMod.Place.pr, map_add (f := _)]
   have hr : D.R.r = D.R.k + (G.s + 1) := by
     have := G.hs
     unfold Ranks.r

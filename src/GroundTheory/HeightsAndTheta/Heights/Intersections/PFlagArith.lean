@@ -109,7 +109,7 @@ theorem FlagArith.proof (hMH : FlagMultiHomog.Statement) (hTr : FlagConeTrdeg.St
     have hK : 0 < Fintype.card K := Fintype.card_pos_iff.2 hP.1
     have h1 : ((d + Fintype.card K : ℕ) : ℕ∞) = (Algebra.trdeg ℤ (MRing ι ⧸ P)).toENat + 1 := by
       exact_mod_cast dimP
-    simp only [map_add, map_natCast, Fintype.card_sum, Fintype.card_fin]
+    simp only [map_add (f := _), map_natCast, Fintype.card_sum, Fintype.card_fin]
     generalize (Algebra.trdeg ℤ (MRing ι ⧸ P)).toENat = s at h1 ⊢
     induction s using ENat.recTopCoe with
     | top => simp at h1

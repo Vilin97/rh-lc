@@ -50,7 +50,7 @@ private theorem map_cutM_neg {P : HeightOneSpectrum (𝓞 E) → Prop} (A : Matr
   refine Matrix.ext fun i j => ?_
   change pLoc E u (idem P * A i j + (1 - idem P) * (1 : Matrix (Fin n) (Fin n) (Af E)) i j) =
     (1 : Matrix (Fin n) (Fin n) (u.adicCompletion E)) i j
-  rw [map_add, map_mul, map_mul, map_sub, map_one, h0, Matrix.one_apply, Matrix.one_apply]
+  rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, h0, Matrix.one_apply, Matrix.one_apply]
   split_ifs <;> simp
 
 private theorem cutM_mul (P : HeightOneSpectrum (𝓞 E) → Prop) {A B : Matrix (Fin n) (Fin n) (Af E)}

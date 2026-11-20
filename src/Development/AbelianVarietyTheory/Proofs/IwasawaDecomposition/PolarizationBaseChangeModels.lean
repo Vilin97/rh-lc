@@ -187,7 +187,7 @@ theorem isFinite_lift : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
       CechPic.cls_lbPow (CechPic.isLB_dual hL), CechPic.cls_dual hL, CechPic.cls_dual hB]
   have e : CechPic.pull π (CechPic.cls _ hA.isLB) = CechPic.cls _ hA'.isLB :=
     (congrArg _ (cl hL BD.isLB_lb hA.isLB)).trans (Eq.trans
-      (by rw [map_add, map_nsmul, map_neg, map_neg, e₁, e₂]) (cl hL' BD'.isLB_lb hA'.isLB).symm)
+      (by rw [map_add (f := _), map_nsmul, map_neg, map_neg, e₁, e₂]) (cl hL' BD'.isLB_lb hA'.isLB).symm)
   have := GlobalTheory.ThetaDescent.isProper_of_isProjOver Z.proj
   have := GlobalTheory.ThetaDescent.isProper_of_isProjOver Z'.proj
   let f := pullback.lift π Z'.s hπ

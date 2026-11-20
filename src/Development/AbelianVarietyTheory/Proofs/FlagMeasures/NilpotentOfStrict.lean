@@ -64,7 +64,7 @@ theorem map_add_nilpotent {k G : Type*} [NormedField k] [IsUltrametricDist k] [P
       invFun := (∑ j ∈ Finset.range m, (-N) ^ j : Module.End k G)
       left_inv := fun x => LinearMap.congr_fun h1 x
       right_inv := fun x => LinearMap.congr_fun h2 x
-      map_add' := fun x y => by rw [map_add]; abel
+      map_add' := fun x y => by rw [map_add (f := _)]; abel
       continuous_toFun := continuous_id.add (hc N)
       continuous_invFun := hc _ }
   have hLB : L ⁻¹' (B : Set G) = B := by
@@ -152,7 +152,7 @@ theorem exists_nilpotent {R : Type*} [CommRing R] {n : ℕ} (u : Matrix (Fin n) 
     change above R n (u * (1 + strictOf R n x)) = _
     have h2 : u * (1 + strictOf R n x) = u + (strictOf R n x + (u - 1) * strictOf R n x) := by
       noncomm_ring
-    rw [h2, map_add, map_add, has]
+    rw [h2, map_add (f := _), map_add (f := _), has]
     rfl
 
 open GlobalTheory.GaugeEx in

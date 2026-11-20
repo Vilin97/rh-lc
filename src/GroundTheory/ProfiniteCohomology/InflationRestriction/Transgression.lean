@@ -54,7 +54,7 @@ theorem tgClass_eq (z z' : cocycles (Rep.res N.subtype A) 1)
     intro g n
     simp only [V, hy.mul_right, hy'.mul_right, map_mul, Module.End.mul_apply]
     rw [show cocycleOneApply A N z' n = cocycleOneApply A N z n + (A.ρ n a - a) by
-      rw [← ha]; abel, map_add, map_sub]
+      rw [← ha]; abel, map_add (f := _), map_sub]
     abel
   have hVi : ∀ (h : G) (n : N), A.ρ n (V h) = V h := by
     intro h n
@@ -118,7 +118,7 @@ theorem tgClass_eq (z z' : cocycles (Rep.res N.subtype A) 1)
 theorem cocycleOneApply_add (z z' : cocycles (Rep.res N.subtype A) 1) :
     cocycleOneApply A N (z + z') = cocycleOneApply A N z + cocycleOneApply A N z' := by
   funext n
-  simp only [cocycleOneApply, map_add]
+  simp only [cocycleOneApply, map_add (f := _)]
   rfl
 
 theorem cocycleOneApply_smul (r : k) (z : cocycles (Rep.res N.subtype A) 1) :
@@ -132,10 +132,10 @@ theorem IsTgLift.add {x x' : N → A} {y y' : G → A} (hy : IsTgLift A N x y)
     (hy' : IsTgLift A N x' y') : IsTgLift A N (x + x') (y + y') where
   map_one := by simp [hy.map_one, hy'.map_one]
   mul_right g n := by
-    simp only [Pi.add_apply, hy.mul_right, hy'.mul_right, map_add]
+    simp only [Pi.add_apply, hy.mul_right, hy'.mul_right, map_add (f := _)]
     abel
   conj h n := by
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     rw [show A.ρ h (x _) + A.ρ h (x' _) - (x n + x' n) =
       (A.ρ h (x (GroundTheory.GroupCoh.conjHom N h n)) - x n) +
         (A.ρ h (x' (GroundTheory.GroupCoh.conjHom N h n)) - x' n) by abel, hy.conj, hy'.conj]
@@ -157,14 +157,14 @@ theorem tgClass_add (z z' : cocycles (Rep.res N.subtype A) 1) {y y' : G → A}
     (hs : IsTgLift A N (cocycleOneApply A N (z + z')) (y + y')) :
     tgClass (z + z') hs (hyc.add hyc') = tgClass z hy hyc + tgClass z' hy' hyc' := by
   simp only [tgClass]
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
-  rw [cocycleOf_eq_iff, map_add, iCycles_cocycleOf, iCycles_cocycleOf]
+  rw [cocycleOf_eq_iff, map_add (f := _), iCycles_cocycleOf, iCycles_cocycleOf]
   apply Subtype.ext
   funext c
   apply Subtype.ext
   change tgDiff A y _ _ + tgDiff A y' _ _ = tgDiff A (y + y') _ _
-  simp only [tgDiff, Pi.add_apply, map_add]
+  simp only [tgDiff, Pi.add_apply, map_add (f := _)]
   abel
 
 theorem tgClass_smul (r : k) (z : cocycles (Rep.res N.subtype A) 1) {y : G → A}
@@ -204,7 +204,7 @@ theorem IsTransgression.add {h h' : cohomology (Rep.res N.subtype A) 1}
   have hs : IsTgLift A N (cocycleOneApply A N (z + z')) (y + y') := by
     rw [cocycleOneApply_add]
     exact hy.add hy'
-  exact ⟨z + z', y + y', hs, hyc.add hyc', by rw [map_add, hz, hz'],
+  exact ⟨z + z', y + y', hs, hyc.add hyc', by rw [map_add (f := _), hz, hz'],
     tgClass_add z z' hy hyc hy' hyc' hs⟩
 
 theorem IsTransgression.smul (r : k) {h : cohomology (Rep.res N.subtype A) 1}
@@ -289,7 +289,7 @@ theorem exists_isTgLift (hN : IsClosed (N : Set G)) (z : cocycles (Rep.res N.sub
   · simp [b, hs1, hr1, hX1]
   · intro g n
     beta_reduce
-    rw [mk_mul_mem N g n, sectionRetraction_mul N hsec, hXc, map_add, ← Module.End.mul_apply,
+    rw [mk_mul_mem N g n, sectionRetraction_mul N hsec, hXc, map_add (f := _), ← Module.End.mul_apply,
       ← map_mul, section_mul_sectionRetraction N hsec]
     abel
   · intro h n
@@ -310,11 +310,11 @@ theorem exists_isTgLift (hN : IsClosed (N : Set G)) (z : cocycles (Rep.res N.sub
       simp only [hn'def, GroundTheory.GroupCoh.coe_conjHom_apply]; group
     show A.ρ h (X (GroundTheory.GroupCoh.conjHom N h n)) - X n =
       A.ρ n (b c + A.ρ (s c) (X m)) - (b c + A.ρ (s c) (X m))
-    rw [F1, ← hh, map_mul, Module.End.mul_apply, F2', map_sub, map_add,
+    rw [F1, ← hh, map_mul, Module.End.mul_apply, F2', map_sub, map_add (f := _),
       ← Module.End.mul_apply (A.ρ (s c)) (A.ρ n'), ← map_mul, F4, map_mul, Module.End.mul_apply]
     have F3' : A.ρ (s c) (X n') = X n + (A.ρ n (b c) - b c) := by
       rw [← F3]; simp only [φ, hn'def]; abel
-    rw [F3', map_add]
+    rw [F3', map_add (f := _)]
     abel
   · exact ((hb₀lc.sub (IsLocallyConstant.const _)).comp_continuous
       QuotientGroup.continuous_mk).add

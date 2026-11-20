@@ -61,7 +61,7 @@ theorem hTens_add_right {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (c 
     (JA : Matrix (Fin n) (Fin n) A) (JB : Matrix (Fin d) (Fin d) A) (x y y' : Matrix (Fin n) (Fin d) A) :
     hTens c JA JB x (y + y') = hTens c JA JB x y + hTens c JA JB x y' := by
   unfold hTens
-  simp only [Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hTens_pure_mul {R A : Type} [CommRing R] [CommRing A] [Algebra R A] (c : A →ₐ[R] A) {n d e : ℕ}
     (JA : Matrix (Fin n) (Fin n) A) (JB : Matrix (Fin d) (Fin d) A) (a : Fin n → A) (b : Fin d → A)
@@ -165,7 +165,7 @@ theorem isoA_orth_at : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
       fun g hg => ?_
     have h := hw (Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ g)) (Or.inr ⟨g, rfl⟩)
       (at_vecMulVec_right _ (at_mulVec_vec _ hg))
-    rw [← map_add, GlobalTheory.IsoOrthLoc.locCo_form M.co v] at h
+    rw [← map_add (f := _), GlobalTheory.IsoOrthLoc.locCo_form M.co v] at h
     refine Eq.trans ?_ h
     unfold GlobalTheory.WeilM.symp
     rw [hTens_add_right, GlobalTheory.MixedLagr.hTens_vecMulVec,
@@ -210,6 +210,6 @@ theorem isoA_orth_at : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   have hz0 : Matrix.vecMulVec (incV F H.y) (0 : Fin d₁ → AE F E) = 0 := by
     ext i j
     simp [Matrix.vecMulVec_apply]
-  rw [hb, hz0, add_zero, Matrix.add_mul, hvm, map_add, add_assoc]
+  rw [hb, hz0, add_zero, Matrix.add_mul, hvm, map_add (f := _), add_assoc]
 
 end GlobalTheory.IsoAOrthLoc

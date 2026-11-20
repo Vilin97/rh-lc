@@ -209,11 +209,11 @@ theorem char_sum (a b c : WD h) : (a.lpSum b).lpChar c = (a.lpChar c).lpSum (b.l
   · induction v using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul x y => obtain ⟨x, x'⟩ := x; simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · induction v using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul x y => obtain ⟨x, x'⟩ := x; simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem char_tw_left (a c : WD h) (s : ℝ) : (a.lpTw s).lpChar c = (a.lpChar c).lpTw s := by
   induction a using WD.ind with | hP _ a =>
@@ -256,11 +256,11 @@ theorem char_one (a : WD h) : a.lpChar (WD.lpUnr h {1}) = a := by
   · induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Laws
 

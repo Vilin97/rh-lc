@@ -101,7 +101,7 @@ theorem reads_datum_eq_thC : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ :
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [GlobalTheory.LatVac.heisO_heisO, smul_smul]
   have hGi : ∀ p ∈ SX ×ˢ SB, (G p).map (infPart D) = 0 := fun p _ => by
-    simp only [hG, ← map_add]
+    simp only [hG, ← map_add (f := _)]
     exact GlobalTheory.VacUnique.finRat_inf S T _
   refine ⟨⟨?_, fun τ => ?_⟩, ?_⟩
   · rw [hf3]

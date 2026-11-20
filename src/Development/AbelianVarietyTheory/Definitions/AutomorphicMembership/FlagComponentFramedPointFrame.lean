@@ -141,7 +141,7 @@ theorem Lw_zero : C.Lw 0 = 0 := by
 theorem Lw_add (la la' : GlobalTheory.AllWt.Weight Dw) : C.Lw (la + la') = C.Lw la + C.Lw la' := by
   have h := GlobalTheory.AllWt.exOf_add la la' 0 0
   rw [add_zero] at h
-  rw [Lw, h, map_add, Lw, Lw]
+  rw [Lw, h, map_add (f := _), Lw, Lw]
 
 theorem LEx_congr {a b : Ix Dw → ℤ} (h : ∀ x, a (some x) = b (some x)) : C.LEx a = C.LEx b := by
   simp only [LEx, AddMonoidHom.coe_mk, ZeroHom.coe_mk, h]

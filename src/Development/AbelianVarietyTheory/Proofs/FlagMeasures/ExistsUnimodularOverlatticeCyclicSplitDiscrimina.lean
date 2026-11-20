@@ -93,7 +93,7 @@ theorem exists_unique_over (P : Ideal (𝓞 K)) (hc : IsCoprime P (conjIdeal (K 
     exact L.add_mem (L.smul_mem a ((mem y).1 hy).2) (kill a ha q hq y (hMD hy))
   have hMu : IsUnimodular h M := by
     refine (huni M).2 ⟨fun y hy y' hy' => ?_, fun y hy => (mem y).2 ⟨an _ _ hLM hy, ?_⟩⟩
-    · rw [← split y', map_add]
+    · rw [← split y', map_add (f := _)]
       refine Submodule.add_mem _ ?_ ?_
       · have := ((mem y').1 hy').2
         rw [← hDD, dualBasic_mem_dual] at this
@@ -193,7 +193,7 @@ theorem disc_of_over (P : Ideal (𝓞 K)) (hP0 : P ≠ ⊥) (hc : IsCoprime P (c
     have e2 : φ d = algebraMap (𝓞 K) K c := hc.symm
     have e3 : φ d₀ = algebraMap (𝓞 K) K c₀ := e₀
     rw [← hφ, map_sub, map_smul, e2, e3, ← e1, Algebra.smul_def]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     ring
   have gen' : ∀ r, r • d₀ ∈ M ↔ r ∈ conjIdeal (K := K) P := by
     refine fun r => ⟨fun hr => hQ' r fun d hd => ?_, fun hr => hQ r hr d₀ hd₀⟩

@@ -32,7 +32,7 @@ theorem mem_of_equivariant : ∀ (D : D7) (n m : ℕ) (w : GlobalTheory.ExportSe
       add_mem' := by
         rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
         refine ⟨M.add_mem ha hb, fun w' τ' i l h1 h2 => ?_⟩
-        simp [LinearMap.add_apply, map_add, ha' w' τ' i l h1 h2, hb' w' τ' i l h1 h2]
+        simp [LinearMap.add_apply, map_add (f := _), ha' w' τ' i l h1 h2, hb' w' τ' i l h1 h2]
       zero_mem' := ⟨M.zero_mem, fun w' τ' i l _ _ => by simp⟩
       smul_mem' := by
         rintro c a ⟨ha, ha'⟩

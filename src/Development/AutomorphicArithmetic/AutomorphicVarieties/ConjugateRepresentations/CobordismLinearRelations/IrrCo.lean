@@ -19,7 +19,7 @@ theorem UpperTheory.V.Cj.irrCo :
     { toFun := fun w => ⟨Bor.cmp j.2 (w.1 fun k => b (j.1 k)), mem_tens.1 (hV w.1 w.2 _) j.2⟩
       map_add' := fun x y => Subtype.ext (by
         change Bor.cmp j.2 ((x.1 + y.1) _) = Bor.cmp j.2 _ + Bor.cmp j.2 _
-        rw [AlternatingMap.add_apply, map_add])
+        rw [AlternatingMap.add_apply, map_add (f := _)])
       map_smul' := fun c x => Subtype.ext (by
         change Bor.cmp j.2 ((c • x.1) _) = c • Bor.cmp j.2 _
         rw [AlternatingMap.smul_apply, map_smul]) }

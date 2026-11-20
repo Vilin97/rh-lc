@@ -94,8 +94,8 @@ theorem exists_sum_zero {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsCharAF D.host.
   have hbadd : ∀ κ κ', Valued.v (b (κ + κ') - b κ - b κ') < 1 := by
     intro κ κ'
     have := hbres (oToS D.host.F D.host.E (rep κ) + oToS D.host.F D.host.E (rep κ')) (κ + κ') (by
-      rw [map_add, Formalism.L2.DIV.resS_oToS, Formalism.L2.DIV.resS_oToS, hrep, hrep])
-    rw [AddMemClass.coe_add, RingHom.map_add] at this
+      rw [map_add (f := _), Formalism.L2.DIV.resS_oToS, Formalism.L2.DIV.resS_oToS, hrep, hrep])
+    rw [AddMemClass.coe_add, RingHom.map_add (f := _)] at this
     rw [← Valuation.map_neg, show -(b (κ + κ') - b κ - b κ') = b κ + b κ' - b (κ + κ') by ring]
     exact this
   have he1 : π e = 1 := by

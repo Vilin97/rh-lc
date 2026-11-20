@@ -46,7 +46,7 @@ theorem eval_eq_zero_of_smul {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (hP : I
     obtain ⟨a, ha⟩ := hS g hg
     rw [eval_smul_of_isMultiHomog ha, hy g (Ideal.subset_span hg), mul_zero]
   | zero => simp
-  | add g h _ _ hg hh => rw [map_add, hg, hh, add_zero]
+  | add g h _ _ hg hh => rw [map_add (f := _), hg, hh, add_zero]
   | smul a g _ hg => rw [smul_eq_mul, map_mul, hg, mul_zero]
 
 theorem mem_conePts_iff_chartIdeal {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (hP : IsMultiHomogIdeal P)

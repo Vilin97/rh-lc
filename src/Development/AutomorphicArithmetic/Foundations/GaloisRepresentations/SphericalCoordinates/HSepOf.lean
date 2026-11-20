@@ -58,7 +58,7 @@ private theorem exists_integral_bezout_of_separable {F : Type} [Field F] [Number
   refine ⟨q, u, v, y, hy0, ?_, ?_⟩
   · rw [hq]; exact dvd_mul_left _ _
   · apply Polynomial.map_injective (algebraMap (𝓞 F) F) RingOfIntegers.coe_injective
-    rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, ← Polynomial.derivative_map,
+    rw [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, ← Polynomial.derivative_map,
       hq, hu, hv, Polynomial.map_C, Polynomial.derivative_C_mul, map_pow, map_intCast, C_pow]
     simp only [map_intCast, C_eq_intCast]
     linear_combination ((y : F[X])) ^ 2 * hab
@@ -92,7 +92,7 @@ private theorem isSemisimple_of_commute_of_integral_bezout {R : Type} [CommRing 
   have hx0 : aeval x q = 0 := Subtype.ext (by rw [hev]; exact hq)
   have hunit : IsUnit (aeval x (derivative q)) := by
     have e := congrArg (aeval x) huv
-    rw [map_add, map_mul, map_mul, hx0, mul_zero, zero_add, aeval_C] at e
+    rw [map_add (f := _), map_mul, map_mul, hx0, mul_zero, zero_add, aeval_C] at e
     have hu : IsUnit (algebraMap R A ((y : R) ^ 2)) := by
       rw [map_pow, map_intCast, ← map_intCast (algebraMap ℂ A)]
       exact (IsUnit.map _ (isUnit_iff_ne_zero.2 (by exact_mod_cast hy))).pow 2

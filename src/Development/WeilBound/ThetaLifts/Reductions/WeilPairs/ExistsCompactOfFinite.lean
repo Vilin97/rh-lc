@@ -80,7 +80,7 @@ theorem exists_detect {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
       rw [Finset.sum_eq_single d (fun d' _ hd => by simp [Matrix.single_apply, Ne.symm hd])
         (fun h => absurd (Finset.mem_univ d) h), Matrix.single_apply_same]
     have h2 : algebraMap F (AF F) (1 / 2) + algebraMap F (AF F) (1 / 2) = 1 := by
-      rw [← map_add, show (1 / 2 : F) + 1 / 2 = 1 by norm_num, map_one]
+      rw [← map_add (f := _), show (1 / 2 : F) + 1 / 2 = 1 by norm_num, map_one]
     unfold symplOHF
     rw [GlobalTheory.SymplSkew.symplOF_swap F E σ hσ nS nT JS JT hS hT ξ₀ hσξ (Matrix.single d a (e * z)) y, mul_neg,
       sub_neg_eq_add, ← add_mul, h2, one_mul, symplOF, hh, ← mul_assoc]

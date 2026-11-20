@@ -62,7 +62,7 @@ theorem map_wts {a : Mat p q →ₗ[ℂ] Module.End ℂ V} {b : Mat p q →ₗ[�
     intro c
     rw [← hg, ← map_smul, ← map_sub, hy c, map_zero]
   · intro x y hx hy
-    rw [map_add]; exact add_mem hx hy
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 theorem eq_zero_of_add {A B : Submodule ℂ V} (h : A ⊓ B = ⊥) {x y : V} (hx : x ∈ A) (hy : y ∈ B)
     (hxy : x + y = 0) : x = 0 ∧ y = 0 := by
@@ -86,12 +86,12 @@ theorem split_hw {a : Mat p q →ₗ[ℂ] Module.End ℂ V} {A B : Submodule ℂ
     refine eq_zero_of_add hAB (A.sub_mem (hA _ (isKC_diag' c) y hy) (A.smul_mem _ hy))
       (B.sub_mem (hB _ (isKC_diag' c) z hz) (B.smul_mem _ hz)) ?_
     have := h1 c
-    rw [map_add, smul_add] at this
+    rw [map_add (f := _), smul_add] at this
     rw [← this]; abel
   have e2 : ∀ c d, posC c d → a (Eab c d) y = 0 ∧ a (Eab c d) z = 0 := by
     intro c d hcd
     refine eq_zero_of_add hAB (hA _ (isKC_pos' hcd) y hy) (hB _ (isKC_pos' hcd) z hz) ?_
-    rw [← map_add]; exact h2 c d hcd
+    rw [← map_add (f := _)]; exact h2 c d hcd
   exact ⟨⟨fun c => (e1 c).1, fun c d hcd => (e2 c d hcd).1⟩,
     ⟨fun c => (e1 c).2, fun c d hcd => (e2 c d hcd).2⟩⟩
 
@@ -125,7 +125,7 @@ theorem hw_lift {a : Mat p q →ₗ[ℂ] Module.End ℂ V} {b : Mat p q →ₗ[�
     (W ⊓ LinearMap.ker g) inf_le_left sK
   have hw' : w ∈ (W ⊓ LinearMap.ker g) ⊔ C := by rw [hKCW]; exact hw
   obtain ⟨k, hk, c, hc, rfl⟩ := Submodule.mem_sup.1 hw'
-  have hgc : g c = g (k + c) := by rw [map_add, LinearMap.mem_ker.1 hk.2, zero_add]
+  have hgc : g c = g (k + c) := by rw [map_add (f := _), LinearMap.mem_ker.1 hk.2, zero_add]
   have hCW : C ≤ W := by rw [← hKCW]; exact le_sup_right
   have inj : ∀ x ∈ C, g x = 0 → x = 0 := by
     intro x hx hgx
@@ -282,7 +282,7 @@ theorem stab_sup {X : GKMod p q} {A B : Submodule ℂ X.V} (hA : ∀ Z, ∀ y �
     (hB : ∀ Z, ∀ y ∈ B, X.act Z y ∈ B) : ∀ Z, ∀ y ∈ A ⊔ B, X.act Z y ∈ A ⊔ B := by
   intro Z y hy
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hy
-  rw [map_add]; exact Submodule.add_mem_sup (hA Z a ha) (hB Z b hb)
+  rw [map_add (f := _)]; exact Submodule.add_mem_sup (hA Z a ha) (hB Z b hb)
 
 theorem notMem_sup {X : GKMod p q} {x0 : X.V} {Λ : Ix p q → ℚ} (hx0 : IsHW X.act Λ x0)
     (hone : ∀ w ∈ hwSub X.act Λ, ∃ c : ℂ, w = c • x0) {A B : Submodule ℂ X.V}

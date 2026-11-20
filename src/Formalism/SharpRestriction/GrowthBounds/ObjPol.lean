@@ -273,7 +273,7 @@ def NablaSub [Module O V] [Algebra O K] [IsScalarTower O K V] (E : GLOps n K V) 
     obtain ⟨d, hd⟩ := hy u hu
     refine ⟨c + d, ?_⟩
     have : u (x + y) - (algebraMap O K (c + d)) • v = (u x - (algebraMap O K c) • v) + (u y - (algebraMap O K d) • v) := by
-      rw [map_add, map_add, add_smul]; abel
+      rw [map_add (f := _), map_add (f := _), add_smul]; abel
     rw [this]; exact Submodule.add_mem _ hc hd
   smul_mem' := by
     intro a x hx u hu

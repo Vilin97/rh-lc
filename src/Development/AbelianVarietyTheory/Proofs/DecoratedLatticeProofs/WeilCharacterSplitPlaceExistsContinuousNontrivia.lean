@@ -60,7 +60,7 @@ def wchar (ψ : AddChar (AF D.host.F) ℂ) (h : ∀ x, ‖ψ x‖ = 1) : AddChar
   map_add_eq_mul' x y := by
     apply Circle.ext
     show psiE ψ (incA D D.host.xi0 * p.ι (x + y)) = psiE ψ (incA D D.host.xi0 * p.ι x) * psiE ψ (incA D D.host.xi0 * p.ι y)
-    simp only [psiE, map_add, mul_add, AddChar.map_add_eq_mul]
+    simp only [psiE, map_add (f := _), mul_add, AddChar.map_add_eq_mul]
 
 end GlobalTheory.LocChar
 

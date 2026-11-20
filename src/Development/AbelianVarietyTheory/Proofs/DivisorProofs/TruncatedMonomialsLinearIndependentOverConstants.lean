@@ -14,11 +14,11 @@ theorem truncMono_deriv_aeval {k A : Type} [Field k] [CommRing A] [Algebra k A] 
   | C b =>
     rw [aeval_C, pderiv_C, map_zero]
     exact hB i _ b.2
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
   | mul_X p j hp =>
     have h1 : E i (aeval x p * x j) = aeval x p * E i (x j) + x j * E i (aeval x p) := by
       rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
-    rw [map_mul, aeval_X, h1, hp, pderiv_mul, pderiv_X, map_add, map_mul, map_mul, aeval_X, hE]
+    rw [map_mul, aeval_X, h1, hp, pderiv_mul, pderiv_X, map_add (f := _), map_mul, map_mul, aeval_X, hE]
     by_cases h : i = j
     · subst h; simp; ring
     · simp [h, Pi.single_apply, Ne.symm h]; ring

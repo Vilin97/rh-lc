@@ -66,7 +66,7 @@ theorem exists_sub_one_mem_mul_ker_le :
     have hfx : f x = 0 := by
       have h1 : f (i + x) = 0 := hG
       have h2 : f i = 0 := hI hi
-      rw [map_add, h2, zero_add] at h1
+      rw [map_add (f := _), h2, zero_add] at h1
       exact h1
     exact Submodule.add_mem_sup hi (mem_map_mul_ker_of_flat f hf J hx hfx)
   obtain ⟨r, hr1, hr⟩ := Submodule.exists_sub_one_mem_and_smul_le_of_fg_of_le_sup

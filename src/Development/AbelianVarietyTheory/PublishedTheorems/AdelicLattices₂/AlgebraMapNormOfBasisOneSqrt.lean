@@ -225,7 +225,7 @@ theorem norm_of_basis_one_sqrt (b : Module.Basis (Fin 2) A S) (h0 : b 0 = 1) (d 
     rw [add_mul, smul_mul_assoc, smul_mul_assoc, h1, h0, one_mul, Algebra.algebraMap_eq_smul_one,
       smul_smul, add_comm]
   rw [Algebra.norm_eq_matrix_det b, Matrix.det_fin_two]
-  simp only [Algebra.leftMulMatrix_eq_repr_mul, e0, e1, map_add, map_smul, Module.Basis.repr_self,
+  simp only [Algebra.leftMulMatrix_eq_repr_mul, e0, e1, map_add (f := _), map_smul, Module.Basis.repr_self,
     Finsupp.add_apply, Finsupp.smul_apply, Finsupp.single_apply]
   simp
   ring
@@ -237,7 +237,7 @@ theorem algebraMap_norm_of_basis_one_sqrt (b : Module.Basis (Fin 2) A S) (h0 : b
     conv_lhs => rw [← b.sum_repr z, Fin.sum_univ_two]
   generalize b.repr z 0 = x, b.repr z 1 = y at hz
   subst hz
-  rw [norm_of_basis_one_sqrt b h0 d h1, map_add, map_smul, map_smul, hσ, h0, map_one σ]
+  rw [norm_of_basis_one_sqrt b h0 d h1, map_add (f := _), map_smul, map_smul, hσ, h0, map_one σ]
   simp only [Algebra.smul_def, map_sub, map_mul, map_pow, ← h1]
   ring
 
@@ -266,7 +266,7 @@ theorem exists_basis_one_imaginary {θ : E} (h0 : θ ≠ 0) (hθ : cc θ = -θ) 
       exact hst
     have h2 : (s : E) - (t : E) * θ = 0 := by
       have := congrArg (IsCMField.complexConj E) h1
-      rw [map_add, map_mul, IsCMField.complexConj_apply_eq_self,
+      rw [map_add (f := _), map_mul, IsCMField.complexConj_apply_eq_self,
         IsCMField.complexConj_apply_eq_self, map_zero,
         show IsCMField.complexConj E θ = -θ from hθ] at this
       linear_combination this

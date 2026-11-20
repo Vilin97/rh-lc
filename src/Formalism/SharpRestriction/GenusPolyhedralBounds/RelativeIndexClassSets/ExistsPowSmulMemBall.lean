@@ -100,7 +100,7 @@ theorem vL_pow (a : ↥(As O A)) (n : ℕ) : vL ζ (a ^ n) = n • vL ζ a := by
   simp [vL_eq_addVal, map_pow]
 
 theorem vL_add (a b : ↥(As O A)) : min (vL ζ a) (vL ζ b) ≤ vL ζ (a + b) := by
-  simp only [vL_eq_addVal, map_add]
+  simp only [vL_eq_addVal, map_add (f := _)]
   exact IsDiscreteValuationRing.addVal_add
 
 theorem vL_eq_top_iff (a : ↥(As O A)) : vL ζ a = ⊤ ↔ algebraMap ↥(As O A) (Loc ζ) a = 0 := by

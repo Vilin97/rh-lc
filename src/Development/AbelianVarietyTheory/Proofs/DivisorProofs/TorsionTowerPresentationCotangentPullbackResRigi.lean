@@ -78,7 +78,7 @@ theorem cotVal_map {X : Over (Sp R)} (f : Z1 (O (dp0 R) (X.hom ≫ 𝟙 _))) (φ
   have h0 : cotSnd R D' ((cotExt R D').i b) = 0 := rfl
   change cotSnd R D' ((cotExt R D').val z'.left z'.w f - _) =
     cotMap φ (cotSnd R D ((cotExt R D).val z.left z.w f - _)) + _
-  rw [← cotSnd_rho, ← cotSnd_cotPt, ← map_add, ← sub_zero (cotSnd R D' (_ + _)), ← h0, ← map_sub, hb, map_sub (rho φ)]
+  rw [← cotSnd_rho, ← cotSnd_cotPt, ← map_add (f := _), ← sub_zero (cotSnd R D' (_ + _)), ← h0, ← map_sub, hb, map_sub (rho φ)]
   congr 1
   linear_combination k
 

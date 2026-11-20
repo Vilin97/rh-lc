@@ -23,6 +23,6 @@ theorem diagSum_pullTwo : ∀ (R : Type) [CommRing R] (D D' : Type) [CommRing D]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [map_mulBy]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 end GlobalTheory.PtExt

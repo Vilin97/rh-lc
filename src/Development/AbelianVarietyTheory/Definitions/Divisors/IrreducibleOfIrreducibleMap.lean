@@ -310,7 +310,7 @@ theorem irreducible_sq_add_sq :
   have h1 : finSuccEquiv ℚ 1 (X 0 ^ 2 + X 1 ^ 2 : MvPolynomial (Fin 2) ℚ) =
       Polynomial.X ^ 2 + Polynomial.C (X 0 ^ 2) := by
     have := finSuccEquiv_X_succ (R := ℚ) (n := 1) (j := 0)
-    rw [map_add, map_pow, map_pow, finSuccEquiv_X_zero, map_pow, ← this]
+    rw [map_add (f := _), map_pow, map_pow, finSuccEquiv_X_zero, map_pow, ← this]
     rfl
   have hm : (Polynomial.X ^ 2 + Polynomial.C (X 0 ^ 2 : MvPolynomial (Fin 1) ℚ)).Monic :=
     Polynomial.monic_X_pow_add_C _ two_ne_zero
@@ -350,7 +350,7 @@ theorem isChowFormInt_sq_add_sq :
   · have := (MulEquiv.irreducible_iff
       (renameEquiv ℚ (Equiv.uniqueProd (Fin 2) (Fin 1)).symm)).2 irreducible_sq_add_sq
     simpa using this
-  · simp only [map_add, map_pow, aeval_X]
+  · simp only [map_add (f := _), map_pow, aeval_X]
     constructor
     · intro h
       by_cases hu : u (0, 0) = 0
@@ -389,7 +389,7 @@ theorem not_isChowForm_sq_add_sq (δ : ℕ) (f : MvPolynomial (Fin (0 + 1) × Fi
       (C c * (X (0, 0) ^ 2 + X (0, 1) ^ 2) : MvPolynomial (Fin (0 + 1) × Fin 2) ℚ)) := ⟨_, h.irred⟩
   have := hi.isUnit_or_isUnit
     (a := C (φ c) * (X (0, 0) + C z * X (0, 1))) (b := X (0, 0) - C z * X (0, 1)) (by
-      simp only [map_mul, map_C, map_add, map_pow, map_X]
+      simp only [map_mul, map_C, map_add (f := _), map_pow, map_X]
       linear_combination (C (φ c) * X (0, 1) ^ 2) * hz')
   rcases this with h1 | h1 <;> simpa using h1.map constantCoeff
 

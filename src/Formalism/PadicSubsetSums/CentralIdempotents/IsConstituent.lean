@@ -241,7 +241,7 @@ def ggSub {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V] (ψ₀ : AddChar 
   carrier := {v | ∀ u ∈ unitri K n, ρ u v = psiU ψ₀ u • v}
   add_mem' := by
     intro v w hv hw u hu
-    rw [map_add, hv u hu, hw u hu, smul_add]
+    rw [map_add (f := _), hv u hu, hw u hu, smul_add]
   zero_mem' := by
     intro u _
     simp

@@ -37,7 +37,7 @@ private theorem coef_comb {N : ℕ} {k : ℤ} {I : Type} (s : Finset I) (c : I �
   | insert a s ha ih =>
     rw [Finset.sum_insert ha, Finset.sum_insert ha, ← ih, ← coef_smul]
     unfold coef
-    rw [ModularForm.coe_add, ModularFormClass.qExpansion_add one_pos (one_mem_per N), map_add,
+    rw [ModularForm.coe_add, ModularFormClass.qExpansion_add one_pos (one_mem_per N), map_add (f := _),
       ModularForm.coe_smul]
 
 private theorem slash_neg_one (k : ℕ) (f : ℍ → ℂ) : f ∣[(k : ℤ)] (-1 : SL(2, ℤ)) = ((-1 : ℂ) ^ k) • f := by

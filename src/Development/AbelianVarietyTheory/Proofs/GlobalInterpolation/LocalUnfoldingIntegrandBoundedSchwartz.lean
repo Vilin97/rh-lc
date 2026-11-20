@@ -38,7 +38,7 @@ theorem _root_.GlobalTheory.Proof.localUnfoldingIntegrand_boundedSchwartz.period
     (t u : _root_.Formalism.L2.Col.Loc.FC n' c' n c → E) (a : E) :
     _root_.Formalism.L2.Col.Loc.xx1 xj (t + a • u) = _root_.Formalism.L2.Col.Loc.xx1 xj t + a • _root_.GlobalTheory.Proof.localUnfoldingIntegrand_boundedSchwartz.freeMap u := by
   unfold _root_.Formalism.L2.Col.Loc.xx1 _root_.GlobalTheory.Proof.localUnfoldingIntegrand_boundedSchwartz.freeMap
-  rw [← map_smul, ← map_add]
+  rw [← map_smul, ← map_add (f := _)]
   congr 1
   ext l s
   simp only [Matrix.of_apply, Matrix.add_apply, Matrix.smul_apply, Pi.add_apply, Pi.smul_apply,

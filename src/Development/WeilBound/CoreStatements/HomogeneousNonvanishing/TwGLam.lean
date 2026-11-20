@@ -41,7 +41,7 @@ theorem tw_g_lam : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (bar :
   let l : 𝓞 E →ₗ[ℤ] ℤ := (AddMonoidHom.mk' l0 fun a b => by
     apply Int.cast_injective (α := ℚ)
     push_cast
-    rw [← hl0, ← hl0, ← hl0, ← map_add, ← mul_add]
+    rw [← hl0, ← hl0, ← hl0, ← map_add (f := _), ← mul_add]
     rfl).toIntLinearMap
   have hl : ∀ a, (l a : ℚ) = Algebra.trace ℚ E (ξ * a) := fun a => (hl0 a).symm
   let L : ℤ_[p] ⊗[ℤ] 𝓞 E →ₗ[ℤ_[p]] ℤ_[p] :=
@@ -65,7 +65,7 @@ theorem tw_g_lam : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (bar :
       rw [hlb]
       push_cast
       ring
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy, neg_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy, neg_add]
   · obtain ⟨m, b, hm, hb⟩ := h3 f
     refine ⟨m, b, ?_, fun a => ?_⟩
     · rw [PadicInt.isUnit_iff]

@@ -124,7 +124,7 @@ theorem primAt_of_lines (hU : q.UnitAA) {ψ : AddChar (AF D.host.F) ℂ} (hψ : 
   · intro H
     have hε : q.e + cA D q.e ∈ intAt D (· = q.v) :=
       ⟨sum_mem_idAt q, by
-        rw [RingHom.map_add]
+        rw [RingHom.map_add (f := _)]
         exact add_mem (e_mem_intAt q).2 (GlobalTheory.JacMono.conj_intAt q (e_mem_intAt q)).2⟩
     have h1 := (h i _ (Ideal.mul_mem_right _ _ hs)).1 (H _ ((h j _ hε.1).2 hε))
     rwa [mul_comm, (idem_iff q s).1 hs] at h1

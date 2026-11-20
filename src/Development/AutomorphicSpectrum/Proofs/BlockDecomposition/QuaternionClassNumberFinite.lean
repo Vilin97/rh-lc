@@ -79,7 +79,7 @@ def psi (x : Q d β R) : R ⊗[F] Q d β F :=
     x.imJ ⊗ₜ[F] (⟨0, 0, 1, 0⟩ : Q d β F) + x.imK ⊗ₜ[F] (⟨0, 0, 0, 1⟩ : Q d β F)
 
 theorem phi_psi (x : Q d β R) : phi (d := d) (β := β) (R := R) (psi x) = x := by
-  simp only [psi, map_add, phi_tmul]
+  simp only [psi, map_add (f := _), phi_tmul]
   ext <;> simp [rat, qmap, QuaternionAlgebra.algebraMap_eq]
 
 theorem psi_add (x y : Q d β R) : psi (x + y) = psi x + psi y := by
@@ -94,7 +94,7 @@ theorem mul_algebraMap_tmul (a : R) (c : F) (y : Q d β F) :
 theorem psi_phi (t : R ⊗[F] Q d β F) : psi (phi (d := d) (β := β) (R := R) t) = t := by
   induction t using TensorProduct.induction_on with
   | zero => simp [psi]
-  | add x y hx hy => rw [map_add, psi_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), psi_add, hx, hy]
   | tmul a x =>
     rw [phi_tmul]
     have e : x = x.re • (⟨1, 0, 0, 0⟩ : Q d β F) + x.imI • (⟨0, 1, 0, 0⟩ : Q d β F) +

@@ -82,12 +82,12 @@ def levelGrp {E : Type} [Field E] [NumberField E] {Λ : Type} [AddCommGroup Λ] 
       obtain ⟨e', he'⟩ := h2 a ha
       refine ⟨e' + γ e, ?_⟩
       show γ (δ a) = _
-      rw [he, map_add, he', map_nsmul, smul_add, add_assoc]
+      rw [he, map_add (f := _), he', map_nsmul, smul_add, add_assoc]
     · obtain ⟨e, he⟩ := k3 a
       obtain ⟨e', he'⟩ := h3 a
       refine ⟨e' + γ e, ?_⟩
       show γ (δ a) = _
-      rw [he, map_add, he', map_nsmul, smul_add, add_assoc]
+      rw [he, map_add (f := _), he', map_nsmul, smul_add, add_assoc]
   inv_mem' := by
     rintro γ ⟨h1, h2, h3⟩
     have hinv : ∀ a, γ (γ⁻¹ a) = a := fun a => γ.apply_symm_apply a
@@ -101,7 +101,7 @@ def levelGrp {E : Type} [Field E] [NumberField E] {Λ : Type} [AddCommGroup Λ] 
           rw [map_smul]
           exact Submodule.smul_mem_smul hr trivial
         · intro x y hx hy
-          rw [map_add]
+          rw [map_add (f := _)]
           exact add_mem hx hy
       obtain ⟨e, he⟩ := h2 _ hmem
       rw [hinv] at he

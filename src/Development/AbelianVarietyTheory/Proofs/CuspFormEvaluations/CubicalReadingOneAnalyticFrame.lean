@@ -182,7 +182,7 @@ theorem genRd_cubical (cub : CubicalStr A L) (x : Fin 3 → Fin g → ℂ) :
       have hcol : ∀ k, colsEquiv 3 g gm k ∈ Φ.lat := fun k =>
         ((AddSubgroup.mem_pi _).1 (AddSubgroup.mem_comap.1 hgm)) k (Set.mem_univ _)
       refine ⟨fun z => ?_, fun I => ?_⟩
-      · simp only [map_add, tri, Pi.add_apply, e_add_period Φ _ (hcol _)]
+      · simp only [map_add (f := _), tri, Pi.add_apply, e_add_period Φ _ (hcol _)]
       · simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, hp]
         exact sum_mem fun a _ => hcol a)
     (fun z w => third_difference Φ.Hm (colsEquiv 3 g z) (colsEquiv 3 g w))

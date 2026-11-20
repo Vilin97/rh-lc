@@ -18,7 +18,7 @@ def boundSub (he : ∀ x, x ∈ (algebraMap K.O K.E).range ↔ Valued.v (e x) �
   carrier := {X | ∀ i j, Valued.v (e (X i j)) ≤ WithZero.exp m}
   add_mem' := by
     intro X Y hX hY i j
-    simp only [Matrix.add_apply, map_add]
+    simp only [Matrix.add_apply, map_add (f := _)]
     exact Valuation.map_add_le _ (hX i j) (hY i j)
   zero_mem' := by
     intro i j

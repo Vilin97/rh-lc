@@ -45,7 +45,7 @@ theorem cspC_range (y : S ⊗[P] integralClosure P (FractionRing P)) :
   | add a b ha hb =>
     obtain ⟨s, hs⟩ := ha
     obtain ⟨s', hs'⟩ := hb
-    exact ⟨s + s', by rw [map_add, map_add, hs, hs']⟩
+    exact ⟨s + s', by rw [map_add (f := _), map_add (f := _), hs, hs']⟩
 
 theorem cspC_idem_of {r : S ⊗[P] FractionRing P} (hr : IsIdempotentElem r) :
     ∃ s : S, algebraMap S (S ⊗[P] FractionRing P) s = r := by

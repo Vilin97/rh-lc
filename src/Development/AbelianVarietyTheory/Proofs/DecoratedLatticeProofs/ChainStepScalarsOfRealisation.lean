@@ -38,12 +38,12 @@ theorem sesq_eq_of_tprod {ι : Type} {s : ι → Type} [∀ i, AddCommGroup (s i
     intro v y
     induction y using PiTensorProduct.induction_on with
     | smul_tprod r v' => rw [LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, h]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have h2 : ∀ x y, f x y = g x y := by
     intro x
     induction x using PiTensorProduct.induction_on with
     | smul_tprod r v => intro y; rw [map_smul, map_smul, LinearMap.smul_apply, LinearMap.smul_apply, h1]
-    | add x x' hx hx' => intro y; rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hx, hx']
+    | add x x' hx hx' => intro y; rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hx, hx']
   exact LinearMap.ext fun x => LinearMap.ext fun y => h2 x y
 
 theorem adjVec_unique {c : Com D} {s s' : PiLocalization₂ D} {p : Step c s s'}

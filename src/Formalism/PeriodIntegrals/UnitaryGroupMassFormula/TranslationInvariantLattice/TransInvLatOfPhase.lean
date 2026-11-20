@@ -37,7 +37,7 @@ theorem transInvLat_of_phase (h : PhaseOne) : PI.TransInvLat := by
   simp only [if_pos hy2, one_mul] at hG'
   funext z
   unfold U1
-  rw [map_add]
+  rw [map_add (f := _)]
   exact shift_core _ _ G x _ _ _ (fun z => hG' z) (h w₁ w₂ hD x ω m hm hx hω) z
 
 end PI.TransInvLatW

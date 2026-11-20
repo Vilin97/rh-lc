@@ -93,12 +93,12 @@ theorem exists_gen {d : ℕ} (hp : d.Prime) (hd : d % 4 = 3) {r : K} (hr : r ^ 2
   rw [← Algebra.coe_norm_int] at h1
   have h3 : σ (w : K) = (1 + Complex.I * √d) / 2 := by
     have := congrArg σ hw
-    rw [map_mul, map_add, map_one, map_ofNat, hσr] at this
+    rw [map_mul, map_add (f := _), map_one, map_ofNat, hσr] at this
     linear_combination this / 2
   have h4 : σ (((a : 𝓞 K) + b * w : 𝓞 K) : K)
       = ((a + b / 2 : ℝ) : ℂ) + ((b * √d / 2 : ℝ) : ℂ) * Complex.I := by
     have h7 : (((a : 𝓞 K) + b * w : 𝓞 K) : K) = a + b * (w : K) := by simp
-    rw [h7, map_add, map_mul, map_intCast, map_intCast, h3]
+    rw [h7, map_add (f := _), map_mul, map_intCast, map_intCast, h3]
     push_cast
     ring
   rw [h4, Complex.sq_norm, Complex.normSq_add_mul_I] at h1

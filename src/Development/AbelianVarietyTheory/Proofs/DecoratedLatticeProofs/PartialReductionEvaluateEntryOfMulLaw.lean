@@ -153,7 +153,7 @@ theorem kills_insert_of_evalLaw : ∀ (k : Type) [Field k] [ValuativeRel k] [Top
     funext y
     have h1 : w (Matrix.single e.1 e.2 u) = u * w (Matrix.single e.1 e.2 1) := by
       rw [← smul_eq_mul, ← map_smul, Matrix.smul_single, smul_eq_mul, mul_one]
-    rw [fillAt_add_single β hE hI, hs₁ u (hs hu).1, map_add, neg_add, AddChar.map_add_eq_mul, h1,
+    rw [fillAt_add_single β hE hI, hs₁ u (hs hu).1, map_add (f := _), neg_add, AddChar.map_add_eq_mul, h1,
       hc.eq_one (neg_mem_cball (hs hu).2), mul_one]
   let p : Matrix R Q k → k ⧸ ballGrp s := fun x => QuotientAddGroup.mk (x e.1 e.2)
   have hp : IsLocallyConstant p := (isLocallyConstant_mk s).comp_continuous (continuous_id.matrix_elem _ _)

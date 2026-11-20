@@ -62,7 +62,7 @@ theorem cA_tmul (D : D7) (α : AF D.host.F) (a : D.host.E) :
 theorem cA_cA (D : D7) (z : AE D) : cA D (cA D z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul a x => rw [cA_tmul, cA_tmul, conj_conj_host]
 
 theorem cA_mem_idV {D : D7} {𝔞 : FI D} {v : Pl D} {s : AE D} (hs : s ∈ idV 𝔞 v) :

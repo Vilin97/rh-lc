@@ -143,7 +143,7 @@ theorem local_pairing_perfect : LocalPairing := by
     have h1 : ∑ j, g (Fin.natAdd r1 j) • nb j = 0 := by
       have := congrArg Φ hg
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, map_sum, map_zero] at this
+        rw [map_add (f := _), map_sum, map_sum, map_zero] at this
       simp only [map_smul, hΦU _ (haU _), smul_zero, Finset.sum_const_zero, zero_add, hmΦ] at this
       exact this
     have h2 := (Fintype.linearIndependent_iff.1 hnb) _ h1
@@ -342,7 +342,7 @@ theorem local_pairing_perfect : LocalPairing := by
     | zero => rw [map_zero]; exact ⟨0, map_zero _⟩
     | add v1 v2 _ _ h1 h2 =>
       obtain ⟨o1, ho1⟩ := h1; obtain ⟨o2, ho2⟩ := h2
-      exact ⟨o1 + o2, by rw [map_add, map_add, ho1, ho2]⟩
+      exact ⟨o1 + o2, by rw [map_add (f := _), map_add (f := _), ho1, ho2]⟩
     | smul c v _ h1 =>
       obtain ⟨o1, ho1⟩ := h1
       exact ⟨c * o1, by rw [h_smul_right, map_mul, ho1]⟩

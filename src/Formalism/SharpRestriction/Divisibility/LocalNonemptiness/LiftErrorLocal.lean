@@ -54,7 +54,7 @@ def laKIdeal {D : D7} (B : WeightFamilies.Prov D) (w : D.what₂.places.Pl) : Id
   carrier := {x | 0 < D.what₂.places.val w (D.what₂.OtoLL (B.eO x))}
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_ofPred_eq, map_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
     exact lt_of_lt_of_le (lt_min ha hb) ((D.what₂.places.val w).map_add _ _)
   zero_mem' := by simp
   smul_mem' := by

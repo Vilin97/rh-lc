@@ -158,7 +158,7 @@ theorem eval_sectionPoly (g : MvPolynomial (Fin (e + 1) × Fin n) ℂ) (v : Fin 
   unfold sectionPoly
   induction g using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p ij hp =>
     rw [map_mul, map_mul, hp, map_mul, aeval_X, eval_X]
     congr 1

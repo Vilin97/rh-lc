@@ -56,7 +56,7 @@ theorem completion_ringEquiv_of_dense : ∀ {E : Type} [Field E] [NumberField E]
     refine Valued.v.zero_iff.1 (eq_zero_of_forall_le_exp fun n => ?_)
     have e : ψ t - algebraMap Qq (v.adicCompletion Qq) (algebraMap W Qq y) =
         ψ (t - u n) + algebraMap Qq (v.adicCompletion Qq) (algebraMap W Qq ((p : W) ^ n * z n)) := by
-      rw [map_sub, hψ, RingHom.comp_apply, hxz, map_add, map_add]
+      rw [map_sub, hψ, RingHom.comp_apply, hxz, map_add (f := _), map_add (f := _)]
       ring
     rw [e]
     refine (Valuation.map_add _ _ _).trans (max_le ?_ ?_)

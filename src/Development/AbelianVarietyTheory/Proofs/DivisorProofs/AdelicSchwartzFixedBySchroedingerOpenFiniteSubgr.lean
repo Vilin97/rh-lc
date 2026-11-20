@@ -49,7 +49,7 @@ def levelSub (L : AddSubgroup (Af F)) : AddSubgroup (VA F N) where
   carrier := {u | ∀ l, sndA F (u.1 l) ∈ L ∧ sndA F (u.2 l) ∈ L}
   zero_mem' := fun l => by simp
   add_mem' := fun ha hb l => by
-    simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add]
+    simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add (f := _)]
     exact ⟨L.add_mem (ha l).1 (hb l).1, L.add_mem (ha l).2 (hb l).2⟩
   neg_mem' := fun ha l => by
     simp only [Prod.fst_neg, Prod.snd_neg, Pi.neg_apply, map_neg]
@@ -120,13 +120,13 @@ theorem pure_level [Invertible (2 : AF F)] (ψ : AddChar (AF F) ℂ) (hF : IsTot
   have hxK : xf ∈ tsupport g := subset_tsupport g hg0
   have e : x ⬝ᵥ u.2 + ⅟(2 : AF F) * (u.1 ⬝ᵥ u.2) = pairA F 0 (xf ⬝ᵥ b) + pairA F 0 ((c • a) ⬝ᵥ b) := by
     apply adele_ext
-    · simp only [map_add, map_mul]
+    · simp only [map_add (f := _), map_mul]
       rw [show fstA F (x ⬝ᵥ u.2) = (fstA F).toRingHom (x ⬝ᵥ u.2) from rfl,
         show fstA F (u.1 ⬝ᵥ u.2) = (fstA F).toRingHom (u.1 ⬝ᵥ u.2) from rfl, RingHom.map_dotProduct, RingHom.map_dotProduct]
       have : (fstA F).toRingHom ∘ u.2 = 0 := funext i2
       rw [this, dotProduct_zero, dotProduct_zero, mul_zero, add_zero]
       rw [show ∀ p, fstA F (pairA F 0 p) = 0 from fun _ => rfl, show ∀ p, fstA F (pairA F 0 p) = 0 from fun _ => rfl, add_zero]
-    · simp only [map_add, map_mul]
+    · simp only [map_add (f := _), map_mul]
       rw [show sndA F (x ⬝ᵥ u.2) = (sndA F).toRingHom (x ⬝ᵥ u.2) from rfl,
         show sndA F (u.1 ⬝ᵥ u.2) = (sndA F).toRingHom (u.1 ⬝ᵥ u.2) from rfl, RingHom.map_dotProduct, RingHom.map_dotProduct,
         invOf_two_eq, AlgHom.commutes, smul_dotProduct, smul_eq_mul]

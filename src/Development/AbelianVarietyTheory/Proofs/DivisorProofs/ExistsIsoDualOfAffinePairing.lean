@@ -70,12 +70,12 @@ theorem glued_res {V W : T.Opens} (h : W ≤ V) (s t : Γ(H, V)) :
 def gluedBilin (V : T.Opens) : Γ(H, V) →ₗ[Γ(T, V)] Γ(H, V) →ₗ[Γ(T, V)] Γ(T, V) :=
   LinearMap.mk₂ Γ(T, V) (glued b hb V)
     (fun s s' t => fun_ext_affine fun U hU h => by
-      simp only [map_add, resG_glued b hb hU, LinearMap.add_apply])
+      simp only [map_add (f := _), resG_glued b hb hU, LinearMap.add_apply])
     (fun a s t => fun_ext_affine fun U hU h => by
       simp only [smul_eq_mul, map_mul, resG_glued b hb hU, resM_smul, map_smul,
         LinearMap.smul_apply])
     (fun s t t' => fun_ext_affine fun U hU h => by
-      simp only [map_add, resG_glued b hb hU])
+      simp only [map_add (f := _), resG_glued b hb hU])
     (fun a s t => fun_ext_affine fun U hU h => by
       simp only [smul_eq_mul, map_mul, resG_glued b hb hU, resM_smul, map_smul])
 
@@ -87,7 +87,7 @@ def toDual : H ⟶ dual H :=
           rw [← glued_res, resM_resM]
       map_add' := fun s t => dual_ext fun W h u => by
         change gluedBilin b hb W (resM H h (s + t)) u = _
-        rw [map_add, map_add]; rfl
+        rw [map_add (f := _), map_add (f := _)]; rfl
       map_smul' := fun a s => dual_ext fun W h u => by
         change gluedBilin b hb W (resM H h (a • s)) u = _
         rw [resM_smul, map_smul]; rfl })

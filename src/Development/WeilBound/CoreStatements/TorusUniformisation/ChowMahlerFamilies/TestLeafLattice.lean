@@ -35,7 +35,7 @@ theorem leaf_of_afLat (p : ℕ) [Fact p.Prime] (cp : R) {I : Type} [Fintype I] [
   refine ⟨g, hg, fun x => ?_⟩
   let fb : (I → ZMod p) →+ R ⧸ Ideal.span {(p : R)} := AddMonoidHom.mk' (fun x => Ideal.Quotient.mk _ (f x))
     fun x y => by
-      rw [← map_add, Ideal.Quotient.eq, ← sub_sub]
+      rw [← map_add (f := _), Ideal.Quotient.eq, ← sub_sub]
       exact hf x y
   have hx : x = ∑ i, (x i).val • Pi.single i (1 : ZMod p) := by
     ext j
@@ -65,7 +65,7 @@ theorem Leaf.retract {p : ℕ} {cp : R} {N N' : Type} [AddCommGroup N] [AddCommG
     (hj : ∀ g ∈ M', (fun x => g (j x)) ∈ M) (h : Leaf p cp M') : Leaf p cp M := by
   intro f hf
   obtain ⟨g, hg, h1⟩ := h (fun x => f (r x)) fun x y => by
-    rw [map_add]; exact hf _ _
+    rw [map_add (f := _)]; exact hf _ _
   refine ⟨_, hj g hg, fun x => ?_⟩
   have := h1 (j x)
   rwa [hr] at this
@@ -201,7 +201,7 @@ theorem chi_add (p : ℕ) [Fact p.Prime] {O : Type} [CommRing O] [IsLocalRing O]
   change v (1 - (χ (a + b) - χ a - χ b) ^ (m + 1)) = 1
   obtain ⟨o, ho⟩ := IsLocalRing.residue_surjective (σ a)
   obtain ⟨o', ho'⟩ := IsLocalRing.residue_surjective (σ b)
-  have h3 := v.map_sub_lt (v.map_sub_lt (hlt (a + b) (o + o') (by rw [map_add, map_add, ho, ho'])) (hlt a o ho))
+  have h3 := v.map_sub_lt (v.map_sub_lt (hlt (a + b) (o + o') (by rw [map_add (f := _), map_add (f := _), ho, ho'])) (hlt a o ho))
     (hlt b o' ho')
   have h4 : χ (a + b) - algebraMap O C (o + o') - (χ a - algebraMap O C o) - (χ b - algebraMap O C o') =
       χ (a + b) - χ a - χ b := by rw [map_add (algebraMap O C)]; ring
@@ -249,7 +249,7 @@ theorem PositivityTheory.Xgn.test_leaf_lattice : GlobalTheory.CompanionTheory.Ar
   obtain ⟨g, hg, hgf⟩ := hleaf (fun x => t * ∑ k, ⟨z k, hz' k⟩ * χ' (TestPt.fromNAdd pq x k)) fun x x' => by
     rw [← mul_sub, ← mul_sub, ← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib]
     refine Ideal.mul_mem_left _ _ (Ideal.sum_mem _ fun k _ => ?_)
-    rw [← mul_sub, ← mul_sub, map_add, Pi.add_apply]
+    rw [← mul_sub, ← mul_sub, map_add (f := _), Pi.add_apply]
     exact Ideal.mul_mem_left _ _ (hf _ _)
   have hgM : (fun a => g (TestPt.toNAdd sc a)) ∈ ((chartD e b pq sc w P i).bc RC).M := by
     refine Submodule.span_induction (p := fun g _ => (fun a => g (TestPt.toNAdd sc a)) ∈ ((chartD e b pq sc w P i).bc RC).M)

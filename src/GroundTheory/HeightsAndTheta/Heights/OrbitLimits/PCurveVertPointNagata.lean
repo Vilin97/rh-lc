@@ -83,7 +83,7 @@ theorem coeff_aeval_C_mul_X {S : Type*} [CommRing S] [Algebra ℤ S] [Algebra �
     · rw [if_pos h, comp, ← h, Finsupp.coe_equivFunOnFinite_symm, hw.weightedHomogeneousComponent_same]
     · rw [if_neg h, comp, hw.weightedHomogeneousComponent_ne _ (fun e => h (by
         rw [← e, Finsupp.equivFunOnFinite_symm_coe])), map_zero]
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, hp, hq, comp, comp, comp, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, comp, comp, comp, map_add (f := _), map_add (f := _)]
 
 end CurveVerticalPointNagata
 
@@ -277,7 +277,7 @@ theorem CurveVertPointNagata.proof (hCh : CurveVertPointChart.Statement) : Curve
       | add p q hp hq =>
         obtain ⟨x, hx⟩ := hp
         obtain ⟨x', hx'⟩ := hq
-        exact ⟨x + x', by rw [map_add, hx, hx', map_add, map_add, map_add]⟩
+        exact ⟨x + x', by rw [map_add (f := _), hx, hx', map_add (f := _), map_add (f := _), map_add (f := _)]⟩
 
     have hC : ∀ q : Bm, ∃ x, Φ x = algebraMap (MvPolynomial K Bm) N (MvPolynomial.C q) := by
       intro q
@@ -308,7 +308,7 @@ theorem CurveVertPointNagata.proof (hCh : CurveVertPointChart.Statement) : Curve
         (fun p q hp hq => ?_) (fun p k hp => ?_)
       · obtain ⟨x, hx⟩ := hp
         obtain ⟨x', hx'⟩ := hq
-        exact ⟨x + x', by rw [map_add, hx, hx', map_add]⟩
+        exact ⟨x + x', by rw [map_add (f := _), hx, hx', map_add (f := _)]⟩
       · obtain ⟨x, hx⟩ := hp
         refine ⟨x * algebraMap (MRing ι) (Localization.AtPrime W) (X ⟨k, c k⟩ : MRing ι), ?_⟩
         rw [map_mul, hx, hΦ, hψX, map_mul]

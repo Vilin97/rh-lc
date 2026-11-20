@@ -90,7 +90,7 @@ private theorem rank_kummer_dual_le_clRk {F Ω : Type} [Field F] [NumberField F]
         exact h0.comp (β.coord j)
       · intro a c
         show β.coord j ⟨φ (a * c), _⟩ = β.coord j ⟨φ a, _⟩ + β.coord j ⟨φ c, _⟩
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         exact Subtype.ext (hadd a c)
       · intro A u hu

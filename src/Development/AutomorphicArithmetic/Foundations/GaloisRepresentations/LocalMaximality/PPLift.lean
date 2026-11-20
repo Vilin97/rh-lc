@@ -68,7 +68,7 @@ private theorem exteriorAlgebra_iota_mul_mem_omB_succ {K : Type} [Field K] [Alge
       exact Submodule.smul_mem _ r hz
   | zero => simp
   | add q q' _ _ hq hq' =>
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
     exact Submodule.add_mem _ hq hq'
   | smul r q _ hq =>
     rw [LinearMap.map_smul_of_tower, smul_mul_assoc]

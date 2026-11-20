@@ -71,7 +71,7 @@ lemma pair_comb_self (F : FlagG S r T) (c : Fin (r + 1) → E) :
 lemma cramer_last (F : FlagG S r T) (F' : FlagG S r T') (c c' : Fin (r + 1) → E)
     (h : pair F (comb F c + comb F' c') = 0) :
     (Zhat F F').det • c' = fun b => (Zhat F F').adjugate b (Fin.last r) * (c (Fin.last r) * T) := by
-  rw [map_add, pair_comb_self, pair_comb] at h
+  rw [map_add (f := _), pair_comb_self, pair_comb] at h
   have h2 : (Zhat F F').mulVec c' = Pi.single (Fin.last r) (c (Fin.last r) * T) := by
     rw [eq_neg_of_add_eq_zero_right h, ← Pi.single_neg, neg_neg]
   have h3 := congrArg ((Zhat F F').adjugate.mulVec) h2
@@ -194,7 +194,7 @@ lemma map_M {s : S.V ≃ₗ[E] S.V} {F : FlagG S r T} {F' : FlagG S r T'} (hs : 
   have h2 := hs'.sub_comb _ ⟨c', rfl⟩
   have e : s (((comb F).coprod (comb F')) (c, c')) = (s (comb F c) - comb F c) + (s (comb F' c') - comb F' c')
       + ((comb F).coprod (comb F')) (c, c') := by
-    simp only [LinearMap.coprod_apply, map_add]; abel
+    simp only [LinearMap.coprod_apply, map_add (f := _)]; abel
   rw [e]
   exact add_mem (add_mem (range_le_M F F' (X_le_range F h1)) (range_le_M' F F' (X_le_range F' h2))) ⟨_, rfl⟩
 
@@ -212,7 +212,7 @@ lemma mem_W (F : FlagG S r T) (F' : FlagG S r T') (w : S.V) :
   · rintro hw _ ⟨⟨c, c'⟩, rfl⟩
     have h1 : pair F w = 0 := congrArg Prod.fst hw
     have h2 : pair F' w = 0 := congrArg Prod.snd hw
-    rw [LinearMap.coprod_apply, map_add, LinearMap.add_apply, orth_comb F w h1, orth_comb F' w h2, add_zero]
+    rw [LinearMap.coprod_apply, map_add (f := _), LinearMap.add_apply, orth_comb F w h1, orth_comb F' w h2, add_zero]
   · intro h
     refine Prod.ext (funext fun a => ?_) (funext fun a => ?_)
     · exact h _ (range_le_M F F' (fvec_mem F a))
@@ -257,7 +257,7 @@ lemma half {s : S.V ≃ₗ[E] S.V} (hi : s ∈ Formalism.HermitianLatticesTheory
   rw [h5, map_zero] at hd
   have e : s (comb F c + comb F' c') - (comb F c + comb F' c') =
       (s (comb F c) - comb F c) + (s (comb F' c') - comb F' c') := by
-    rw [map_add]; abel
+    rw [map_add (f := _)]; abel
   rw [e, ← hd, add_zero]
   exact hs.sub_comb _ ⟨c, rfl⟩
 
@@ -298,7 +298,7 @@ lemma unip_of {s h : S.V ≃ₗ[E] S.V} (hi : s ∈ Formalism.HermitianLatticesT
       rwa [sub_add_cancel] at this
     have h5 : h⁻¹ (s w) = w := by
       rw [LinearEquiv.coe_inv, LinearEquiv.symm_apply_eq, hW w hw]
-    rw [LinearEquiv.mul_apply, map_add, map_add, hM' _ h4, h5, add_sub_add_right_eq_sub]
+    rw [LinearEquiv.mul_apply, map_add (f := _), map_add (f := _), hM' _ h4, h5, add_sub_add_right_eq_sub]
     exact h3
 
 theorem inter_gen (F : FlagG S r T) (F' : FlagG S r T') (hD : (Zhat F F').det ≠ 0) (hG : Gflag F F' ≠ 0)
@@ -323,7 +323,7 @@ theorem inter_gen (F : FlagG S r T) (F' : FlagG S r T') (hD : (Zhat F F').det �
     intro x y
     obtain ⟨m, hm, w, hw, rfl⟩ := hdec x
     obtain ⟨m', hm', w', hw', rfl⟩ := hdec y
-    simp only [map_add, LinearMap.add_apply, h0M _ hm, h0M _ hm', h0W _ hw, h0W _ hw', hi w w',
+    simp only [map_add (f := _), LinearMap.add_apply, h0M _ hm, h0M _ hm', h0W _ hw, h0W _ hw', hi w w',
       hMW _ hw' _ hm, hMW _ (hsW _ hw') _ hm, hWM _ hw _ hm', hWM _ (hsW _ hw) _ hm']
   have hinj : Function.Injective h0 := by
     rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']
@@ -352,7 +352,7 @@ theorem inter_gen (F : FlagG S r T) (F' : FlagG S r T') (hD : (Zhat F F').det �
     have h3 : g⁻¹ (s w) - w = 0 := Submodule.disjoint_def.mp hc.disjoint _ (hXM h2) (sub_mem h1 hw)
     rw [sub_eq_zero, LinearEquiv.coe_inv, LinearEquiv.symm_apply_eq] at h3
     show g (m + w) = h0 (m + w)
-    rw [map_add, map_add, h0M m hm, h0W w hw, hg.onM m hm, h3]
+    rw [map_add (f := _), map_add (f := _), h0M m hm, h0W w hw, hg.onM m hm, h3]
 
 lemma det_ne_of_om {Z : Matrix (Fin (r + 1)) (Fin (r + 1)) E} (h : (ZhatOM Z).det ≠ 0) : Z.det ≠ 0 := by
   intro h0

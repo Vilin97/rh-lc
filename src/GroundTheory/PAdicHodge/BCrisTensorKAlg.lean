@@ -157,7 +157,7 @@ theorem injective_lift_of_forall_mem [FiniteDimensional K₀ L] [Algebra.IsSepar
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [g']
-    | add a b ha hb => rw [map_add, map_add, ha, hb, map_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _)]
   intro z₁ z₂ h
   apply hflat
   apply injective_lift_of_linearDisjoint j F M N L hM hN hdisj

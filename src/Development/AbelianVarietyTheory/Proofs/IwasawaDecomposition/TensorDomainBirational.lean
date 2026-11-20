@@ -33,7 +33,7 @@ theorem flat_baseChange_birational_isDomain_and_includeRight_injective
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul b r => simp [Algebra.TensorProduct.tmul_mul_tmul]
-      | add y z hy hz => rw [mul_add, map_add, hy, hz]
+      | add y z hy hz => rw [mul_add, map_add (f := _), hy, hz]
     have hinjc : Function.Injective (LinearMap.mulLeft A c) := by
       intro u v huv
       exact mul_left_cancel₀ hc huv

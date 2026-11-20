@@ -36,7 +36,7 @@ theorem exists_der (ρ : B →ₐ[R] TrivSqZeroExt R V) (h : ∀ f, (ρ f).fst =
       rw [map_mul, TrivSqZeroExt.snd_mul, h1, h2]
       simp
     · intro a b ha hb
-      rw [map_add, TrivSqZeroExt.snd_add, ha, hb, add_zero]
+      rw [map_add (f := _), TrivSqZeroExt.snd_add, ha, hb, add_zero]
   let d : RingHom.ker ε →ₗ[R] V :=
     { toFun := fun f => (ρ f.1).snd
       map_add' := fun a b => by simp

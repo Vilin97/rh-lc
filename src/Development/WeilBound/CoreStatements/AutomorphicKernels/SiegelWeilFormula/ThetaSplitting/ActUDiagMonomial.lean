@@ -112,7 +112,7 @@ theorem actU_dY_actU (V : Matrix (Fin m) (Fin m) ℂ) (hV : V ∈ unitaryGroup (
   | C a =>
     have : actU (n := n) (star V) (C a) = C a := by simp [actU]
     rw [this, derivation_C, map_zero, derivation_C]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p k hp =>
     have key : actU V (dY Y (actU (star V) (X k))) = dY (star V * Y * V) (X k) := by
       obtain ⟨a, i, b⟩ := k
@@ -123,7 +123,7 @@ theorem actU_dY_actU (V : Matrix (Fin m) (Fin m) ℂ) (hV : V ∈ unitaryGroup (
       · have h1 : (star V).map star = Vᵀ := by ext c e; simp [star_eq_conjTranspose]
         have h2 : V.map star = (star V)ᵀ := by ext c e; simp [star_eq_conjTranspose]
         simp only [am, dm, if_true, h1, h2, transpose_mul, Matrix.mul_neg, Matrix.neg_mul, Matrix.mul_assoc]
-    rw [map_mul, Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, hid, hid, hp, key,
+    rw [map_mul, Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, hid, hid, hp, key,
       Derivation.leibniz, smul_eq_mul, smul_eq_mul]
 
 theorem der_monomial (D : Derivation ℂ (PX m n) (PX m n)) (w : Fin m × Fin n × Bool → ℂ)
@@ -136,7 +136,7 @@ theorem der_monomial (D : Derivation ℂ (PX m n) (PX m n)) (w : Fin m × Fin n 
       rw [X_pow_eq_monomial (R := ℂ), monomial_mul, one_mul]
     rw [e1, Derivation.leibniz, Derivation.leibniz_pow, hD, ih, Finsupp.sum_add_index' (fun _ => by simp)
       (fun _ _ _ => by push_cast; ring), Finsupp.sum_single_index (by simp)]
-    simp only [smul_eq_mul, nsmul_eq_mul, map_add, map_mul, map_natCast]
+    simp only [smul_eq_mul, nsmul_eq_mul, map_add (f := _), map_mul, map_natCast]
     rcases Nat.eq_zero_or_pos e with h0 | hpos
     · subst h0; simp
     · have : (X k : PX m n) ^ e = X k ^ (e - 1) * X k := by
@@ -277,7 +277,7 @@ theorem kill_dY (Λ : PX m n →ₗ[ℂ] ℂ) (hΛ : ∀ u ∈ unitaryGroup (Fin
       simp only [Matrix.add_apply, Matrix.smul_apply, Matrix.sub_apply, smul_eq_mul]
       field_simp
       ring
-  rw [eY, dY_add, dY_smul, Derivation.add_apply, Derivation.smul_apply, map_add, map_smul, kill_herm Λ hΛ _ h1,
+  rw [eY, dY_add, dY_smul, Derivation.add_apply, Derivation.smul_apply, map_add (f := _), map_smul, kill_herm Λ hΛ _ h1,
     kill_herm Λ hΛ _ h2, smul_zero, add_zero]
 
 theorem dsum_apply {ι : Type} (s : Finset ι) (D : ι → Derivation ℂ (PX m n) (PX m n)) (P : PX m n) :

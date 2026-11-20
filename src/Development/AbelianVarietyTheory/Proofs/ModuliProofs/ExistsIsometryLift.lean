@@ -21,7 +21,7 @@ theorem step_coprime_one {n r : ℕ} (hnr : IsCoprime (n : ℤ) (r : ℤ)) {f : 
   refine ⟨(y * r) • f + (x * n) • LinearMap.id, ⟨isCoprime_one_left, fun a b => ?_⟩,
     fun a => ⟨x • (a - f a), ?_⟩⟩
   · obtain ⟨B, hB⟩ := hB a b
-    simp only [LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply, map_add, map_zsmul,
+    simp only [LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply, map_add (f := _), map_zsmul,
       smul_eq_mul]
     refine ⟨y * B + x * y * (D.EF (f a) b + D.EF a (f b) - D.EF (f a) (f b) - D.EF a b), ?_⟩
     push_cast

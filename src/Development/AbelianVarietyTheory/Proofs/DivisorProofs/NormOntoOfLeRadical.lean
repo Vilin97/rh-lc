@@ -54,7 +54,7 @@ theorem normOnto_pow (σ : R →+* R) (w : R) (hσ : ∀ a, σ (σ a) = a) (hw :
     refine ⟨x + x * (w * v * c), ?_⟩
     have key : (x + x * (w * v * c)) * σ (x + x * (w * v * c)) - u =
         c * (w * (x * σ x * v - 1) + σ w * (σ x * x * σ v - 1)) + c * (c * (x * σ x * w * v * σ w * σ v)) := by
-      rw [map_add, map_mul, map_mul, map_mul, hσc]
+      rw [map_add (f := _), map_mul, map_mul, map_mul, hσc]
       linear_combination c * hw + hc
     rw [key, pow_succ]
     exact Ideal.add_mem _ (Ideal.mul_mem_mul hcm (I.add_mem (I.mul_mem_left _ h1) (I.mul_mem_left _ h2)))
@@ -88,16 +88,16 @@ theorem normOnto_split (σ : R →+* R) (hσ : ∀ a, σ (σ a) = a) (P : Ideal 
     rw [this]
     refine P.add_mem (P.mul_mem_left _ ?_) (P.mul_mem_right _ he)
     have : σ (f * u + e) - 1 = σ f * u - σ f := by
-      rw [map_add, map_mul, hu]
+      rw [map_add (f := _), map_mul, hu]
       have h' := congrArg σ hef
-      rw [map_add, map_one] at h'
+      rw [map_add (f := _), map_one] at h'
       linear_combination h'
     rw [this]; exact P.sub_mem (P.mul_mem_right _ hf) hf
   · rw [Ideal.mem_comap]
     have h' := congrArg σ hef
-    rw [map_add, map_one] at h'
+    rw [map_add (f := _), map_one] at h'
     have : σ ((f * u + e) * σ (f * u + e) - u) = (σ f * u - σ f) * (f * u + e) + e * (1 - u) := by
-      rw [map_sub, map_mul, hσ, hu, map_add, map_mul, hu]
+      rw [map_sub, map_mul, hσ, hu, map_add (f := _), map_mul, hu]
       linear_combination (f * u + e) * h' + u * hef
     rw [this]
     exact P.add_mem (P.mul_mem_right _ (P.sub_mem (P.mul_mem_right _ hf) hf)) (P.mul_mem_right _ he)

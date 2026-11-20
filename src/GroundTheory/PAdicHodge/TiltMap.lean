@@ -137,10 +137,10 @@ theorem ringHom_ext_wittVector_preTilt {f g : WittVector p 𝒪K♭ →+* normIn
         simp only [map_sum, map_mul, map_pow, map_natCast, h]
     have hfw : f w = f (∑ i ∈ Finset.Iic n, WittVector.teichmuller p (a i) * (p : WittVector p 𝒪K♭) ^ i)
         + (p : normInteger L) ^ (n + 1) * f c := by
-      rw [← map_natCast f p, ← map_pow, ← map_mul, ← hc, ← map_add, add_sub_cancel]
+      rw [← map_natCast f p, ← map_pow, ← map_mul, ← hc, ← map_add (f := _), add_sub_cancel]
     have hgw : g w = g (∑ i ∈ Finset.Iic n, WittVector.teichmuller p (a i) * (p : WittVector p 𝒪K♭) ^ i)
         + (p : normInteger L) ^ (n + 1) * g c := by
-      rw [← map_natCast g p, ← map_pow, ← map_mul, ← hc, ← map_add, add_sub_cancel]
+      rw [← map_natCast g p, ← map_pow, ← map_mul, ← hc, ← map_add (f := _), add_sub_cancel]
     rw [hfw, hgw, hS]
     have hc1 := mem_normInteger.1 (f c).2
     have hc2 := mem_normInteger.1 (g c).2

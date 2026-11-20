@@ -55,7 +55,7 @@ theorem range_le (T : Fin n → Fin n → Module.End ℂ V) (q : V) (M : Submodu
   rintro _ ⟨c, rfl⟩
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [map_add]; exact M.add_mem hf hg
+  | add f g hf hg => rw [map_add (f := _)]; exact M.add_mem hf hg
   | single l b => rw [lowL_single]; exact M.smul_mem _ (h l)
 
 theorem low_stable (T : Fin n → Fin n → Module.End ℂ V) (q : V) {x y : Fin n} (hxy : y < x) {r : V}
@@ -193,7 +193,7 @@ theorem isCompl_perp (R : Submodule ℂ (ι → ℂ)) : IsCompl R (perp R) := by
     let e := WithLp.linearEquiv 2 ℂ (ι → ℂ)
     let K : Submodule ℂ (EuclideanSpace ℂ ι) := R.comap e.toLinearMap
     obtain ⟨y, hy, w, hw, h⟩ := Submodule.exists_add_mem_mem_orthogonal (K := K) (e.symm f)
-    have hf : f = e y + e w := by rw [← map_add, ← h]; simp
+    have hf : f = e y + e w := by rw [← map_add (f := _), ← h]; simp
     rw [hf]
     refine Submodule.add_mem_sup hy ?_
     intro r hr
@@ -297,7 +297,7 @@ theorem exists_spin_map : ∀ {n : ℕ} {ι : Type} [Fintype ι] [DecidableEq ι
       simp only [LinearMap.comp_apply, lowL_single, map_smul, h1]
     have := LinearMap.congr_fun hlin d
     simp only [LinearMap.comp_apply] at this
-    rw [map_add, map_add, map_add, hφ2 _ (h2 k hk), hφ2 k hk, hφ1, this]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hφ2 _ (h2 k hk), hφ2 k hk, hφ1, this]
     simp
   refine ⟨φ, ?_, ?_, ?_⟩
   · simpa using hword ⟨[], by simp⟩

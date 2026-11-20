@@ -97,7 +97,7 @@ theorem key (hU : IsURepOn (UJset ε) σ) (hD : Dens ε σ) {E : Fin n → Fin n
   have stW : ∀ g ∈ Kset ε, ∀ x ∈ W, σ g x ∈ W := by
     intro g hg x hx
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hx
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (stv g hg a ha) (sty g hg b hb)
   have hWk : W ≤ kfin ε σ := fun x hx => ⟨W, inferInstance, hx, stW⟩
   have hclosed : IsClosed (W : Set H) := Submodule.closed_of_finiteDimensional W
@@ -121,7 +121,7 @@ theorem key (hU : IsURepOn (UJset ε) σ) (hD : Dens ε σ) {E : Fin n → Fin n
   let ι : W →ₗ[ℂ] kfin ε σ := Submodule.inclusion hWk
   let ℓ1 : W →ₗ[ℝ] ℂ :=
     { toFun := fun w => B (ι w) y
-      map_add' := fun a b => by simp only [map_add, LinearMap.add_apply]
+      map_add' := fun a b => by simp only [map_add (f := _), LinearMap.add_apply]
       map_smul' := fun c a => by
         simp only [RingHom.id_apply]
         rw [← Complex.coe_smul, map_smul, LinearMap.map_smulₛₗ, LinearMap.smul_apply]

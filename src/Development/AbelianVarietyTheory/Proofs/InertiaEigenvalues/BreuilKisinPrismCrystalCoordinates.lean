@@ -57,7 +57,7 @@ theorem kappa_smul (w : WCb l) :
   | tmul v x =>
     rw [smul_tmul', kappa_tmul, kappa_tmul, smul_tmul', smul_eq_mul, smul_eq_mul,
       Algebra.TensorProduct.tmul_mul_tmul, one_mul]
-  | add x y hx hy => rw [smul_add, map_add, map_add, smul_add, hx, hy]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), smul_add, hx, hy]
 
 theorem kappa_frob :
     letI := zlLat T
@@ -68,7 +68,7 @@ theorem kappa_frob :
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul v x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def mulZ (o : O) :
     letI := zlLat T
@@ -86,7 +86,7 @@ theorem kappa_mulZ (o : O) :
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero, smul_zero]
   | tmul v x => exact tmul_smul o ((1 : O) ⊗ₜ[ℤ_[l]] v : OW l O) x
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
 
 end Kappa
 
@@ -103,7 +103,7 @@ theorem exists_coord (I : Ident t ϖ P T) {N : Type} [AddCommGroup N] (J : N →
   choose c hc hJ using fun x => (h (J x)).1 ⟨x, rfl⟩
   refine ⟨AddMonoidHom.mk' c fun x y => ?_, hc, hJ, fun m hm => ?_⟩
   · have h1 := map_add J x y
-    rw [hJ, hJ, hJ, ← map_add, ← map_add] at h1
+    rw [hJ, hJ, hJ, ← map_add (f := _), ← map_add (f := _)] at h1
     exact congrArg Subtype.val (toW_injective t ϖ P (I.j.injective h1))
   · obtain ⟨x, hx⟩ := (h _).2 ⟨m, hm, rfl⟩
     rw [hJ] at hx

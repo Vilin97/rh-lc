@@ -110,7 +110,7 @@ theorem logDerivIdeal_iSup_le {ι : Sort*} (P : Ideal S) (J : ι → Ideal S) :
       (derivation_apply_mem_logDerivIdeal k P (J i) D hD hy)
   · simpa only [map_zero] using Submodule.zero_mem (⨆ i, logDerivIdeal k P (J i))
   · intro a b ha hb
-    simpa only [map_add] using Submodule.add_mem (⨆ i, logDerivIdeal k P (J i)) ha hb
+    simpa only [map_add (f := _)] using Submodule.add_mem (⨆ i, logDerivIdeal k P (J i)) ha hb
 
 def logDerivIdealIterate (P : Ideal S) : ℕ → Ideal S → Ideal S
   | 0, J => J

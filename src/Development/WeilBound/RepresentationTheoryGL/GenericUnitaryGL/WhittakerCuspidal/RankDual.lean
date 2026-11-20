@@ -35,7 +35,7 @@ theorem rank_twJacquet_le_one_iff {G V : Type} [Group G] [AddCommGroup V] [Modul
         obtain ⟨n, v, rfl⟩ := hx
         rw [map_sub, map_smul, h n v, smul_eq_mul, sub_self]
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
       | smul a x _ hx => rw [map_smul, hx, smul_zero]
     · intro h n v
       have := h _ (Submodule.subset_span ⟨n, v, rfl⟩)

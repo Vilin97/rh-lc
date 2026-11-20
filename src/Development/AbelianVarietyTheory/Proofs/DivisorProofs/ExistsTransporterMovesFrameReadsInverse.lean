@@ -62,7 +62,7 @@ theorem bijMod_of_nat {I : Ideal R} (f : M →ₗ[R] N) {n : ℕ} (hn : (n : R) 
         exact ⟨c • a, Submodule.smul_mem_smul hc Submodule.mem_top, c • e, by
           rw [smul_add, map_smul, smul_comm c n e]⟩
       · rintro _ _ ⟨a, ha, e, rfl⟩ ⟨a', ha', e', rfl⟩
-        exact ⟨a + a', Submodule.add_mem _ ha ha', e + e', by rw [map_add, smul_add]; abel⟩
+        exact ⟨a + a', Submodule.add_mem _ ha ha', e + e', by rw [map_add (f := _), smul_add]; abel⟩
     obtain ⟨a', ha', e, he⟩ := key _ ha
     obtain ⟨b, hb⟩ := h₁ (a - a') ⟨e, by rw [map_sub, he, add_sub_cancel_left]⟩
     rw [sub_eq_iff_eq_add.1 hb]
@@ -142,7 +142,7 @@ theorem marking_of_levMove {g : ℕ} {σ : KA l →+* ℂ} {ty : Fin g → (E �
       congr 1
     have e4 : F.ex j P' ((l.M : ℂ)⁻¹ • P' (gam (F.t i (gM a)) - F.t j a)) = 1 := by
       have := F.ex_add j P' hP' ((l.M : ℂ)⁻¹ • P' (gam (F.t i (gM a)) - F.t j a)) ((l.M : ℂ)⁻¹ • P' (F.t j a))
-      rw [← smul_add, ← map_add, sub_add_cancel, e3] at this
+      rw [← smul_add, ← map_add (f := _), sub_add_cancel, e3] at this
       exact (mul_eq_right.1 this.symm)
     obtain ⟨e, he⟩ := (F.ex_ker j P' hP' _).1 e4
     have e5 : gam (F.t i (gM a)) - F.t j a = l.M • e := by

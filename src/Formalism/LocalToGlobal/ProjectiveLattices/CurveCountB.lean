@@ -18,7 +18,7 @@ theorem homog_isHomogeneous (a : Fin N) (Q : MvPolynomial (Fin N) K) :
   classical
   refine IsHomogeneous.sum _ _ _ fun m hm => isHomogeneous_monomial _ ?_
   have hle : m.degree ≤ Q.totalDegree := le_totalDegree hm
-  rw [map_add, Finsupp.degree_single]
+  rw [map_add (f := _), Finsupp.degree_single]
   omega
 
 theorem aeval_homog {L : Type*} [Field L] [Algebra K L] (a : Fin N) (Q : MvPolynomial (Fin N) K) (y : Fin N → L)

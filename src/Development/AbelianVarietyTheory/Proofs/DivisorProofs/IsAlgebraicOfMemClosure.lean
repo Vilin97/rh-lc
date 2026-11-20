@@ -25,7 +25,7 @@ theorem isAlgebraic_of_mem_closure {K : Type} [Field K] [Algebra (ResidueField A
     · exact hG x hx
   | zero => rw [map_zero]; exact D.zero_mem
   | one => rw [map_one]; exact D.one_mem
-  | add x y _ _ hx hy => rw [map_add]; exact D.add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact D.add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact D.neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact D.mul_mem hx hy
 

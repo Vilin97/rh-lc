@@ -83,7 +83,7 @@ theorem mem_hatO_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (c
     obtain ⟨a, b, hb, rfl⟩ := mem_orderC.1 hx
     refine ⟨iota a, Subring.le_topologicalClosure _ ⟨_, (a : maximalRealSubfield E).2, rfl⟩,
       fun w => val_iota_le_one w a, fun w => ?_⟩
-    rw [← sub_coord, map_add, add_assoc]
+    rw [← sub_coord, map_add (f := _), add_assoc]
     erw [add_sub_cancel_left]
     rw [add_coord]
     exact Valuation.map_add_le _ ((mem_iff_val (Ideal.map_ne_bot_of_ne_bot hc) _).1 hb w) (val_mul_le hc hn hy w)

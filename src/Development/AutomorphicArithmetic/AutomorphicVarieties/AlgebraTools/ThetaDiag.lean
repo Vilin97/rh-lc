@@ -15,7 +15,7 @@ private def theta : E →ₗ[B] (U.oddForm p q).Ext where
   map_add' z w := by
     apply OddForm.Ext.ext
     · simp
-    · simp only [map_add, OddForm.od_el, OddForm.od_add]; abel
+    · simp only [map_add (f := _), OddForm.od_el, OddForm.od_add]; abel
   map_smul' c z := by
     apply OddForm.Ext.ext
     · simp
@@ -188,7 +188,7 @@ theorem UpperTheory.V.AlgebraTools.vr_hom :
   have hadd : ∀ y z, U.vr p q (y + z) = U.vr p q y + U.vr p q z := by
     intro y z
     refine Matrix.ext fun i j => ?_
-    simp only [hvr, Matrix.add_apply, mul_add, add_mul, map_add]
+    simp only [hvr, Matrix.add_apply, mul_add, add_mul, map_add (f := _)]
   have hzero : U.vr p q 0 = 0 := by
     refine Matrix.ext fun i j => ?_
     simp only [hvr, mul_zero, zero_mul, map_zero, Matrix.zero_apply]

@@ -96,7 +96,7 @@ theorem classSums_core : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
     obtain ⟨w, hw⟩ := hcc 0
     refine GlobalTheory.UPoinc.DeepSame.deep_eq_of_congMod E H Dw hpq l Xo cf C X₁ D p z₁ z₂ hz₂ f t hfO hfapp w₁ w₂ htie hproj (ct₂ y₀) (yy y₀) (hyy₂ y₀) _ _ _ _
       (hA _) (hA _) ⟨e y₀ w, ?_⟩ κ
-    rw [hw, map_add, map_nsmul]
+    rw [hw, map_add (f := _), map_nsmul]
   ·
     intro y c κ μ hμ hmin
     rw [hval y, qW_one]
@@ -106,7 +106,7 @@ theorem classSums_core : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
       (Φ.sc_pos y) (he y) D.m (fun μ' => t (ct y) (yy₁ y) μ' κ) (fun μ' => hle_t μ' κ) _ _
       (hfapp (ct y) (yy₁ y) (hyy₁ y).uIsLab (y₂ y) (hq y) (hcen y) (yy y) (hyy y).uIsLab (hcomp y) _ _ κ hyyA) (μ 0) ?_ ?_
     · obtain ⟨w, hw⟩ := hμ 0
-      exact ⟨e y w, by simp [hw, map_add, map_nsmul]⟩
+      exact ⟨e y w, by simp [hw, map_add (f := _), map_nsmul]⟩
     · intro x' hx'
       have := hmin (fun _ => x') (fun u => by rw [Subsingleton.elim u 0]; exact hx')
       simpa [qW_one] using this
@@ -178,7 +178,7 @@ theorem classSums_core : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
       have hw' : g (e y₀ x) = e y₀ x + (X₁.S.r * X₁.S.N) • w := hw
       refine ⟨(e y₀).symm w, ?_⟩
       simp only [γ, LinearEquiv.trans_apply]
-      rw [hw', map_add, map_nsmul, LinearEquiv.symm_apply_apply]
+      rw [hw', map_add (f := _), map_nsmul, LinearEquiv.symm_apply_apply]
     refine ⟨γ, GlobalTheory.UPoinc.dvd_det_sub_one_of_congMod_three_le (Φ.X y₀) (X₁.S.r * X₁.S.N) D.m hL (γ.restrictScalars ℤ) hcong, hcong, ?_⟩
     · intro c κ
       apply Subtype.ext

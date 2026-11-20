@@ -54,7 +54,7 @@ theorem comb_evalZ (ψ φ : InvFun (𝓞 E)) (d : ℕ) {X : Type} [AddCommGroup 
 theorem eq_of_diag {X : Type} [AddCommGroup X] (B₁ B₂ : LinearMap.BilinForm ℤ X) (h₁ : ∀ y z, B₁ y z = B₁ z y)
     (h₂ : ∀ y z, B₂ y z = B₂ z y) (h : ∀ y, B₁ y y = B₂ y y) (y z : X) : B₁ y z = B₂ y z := by
   have e1 := h (y + z)
-  simp only [map_add, LinearMap.add_apply] at e1
+  simp only [map_add (f := _), LinearMap.add_apply] at e1
   rw [h y, h z, h₁ z y, h₂ z y] at e1
   omega
 

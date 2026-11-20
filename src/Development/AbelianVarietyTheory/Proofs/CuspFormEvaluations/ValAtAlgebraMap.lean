@@ -225,7 +225,7 @@ theorem wt_ext {u v : WeightFamilies.Wt D j} (h1 : u.aP = v.aP) (h2 : u.aM = v.a
 def valAt (k : (T.U j T.σ₀).Comp) (x : ((T.U j T.σ₀).X k).dom) : T.R j →+* ℂ where
   toFun f := rdU (T.U j T.σ₀) f k x.1
   map_zero' := by rw [map_zero]; rfl
-  map_add' f g := by rw [map_add]; rfl
+  map_add' f g := by rw [map_add (f := _)]; rfl
   map_mul' f g := by rw [rdU_mul]; rfl
   map_one' := by
     rw [ReciprocityTheory.ChartRestriction.G.PullbackSections.rdU_apply_dom]

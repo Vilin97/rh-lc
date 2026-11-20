@@ -98,7 +98,7 @@ theorem Kint_add {φ : U2 → ℂ} (hφ : Continuous φ) (x y : H) :
     Kint σ φ (x + y) = Kint σ φ x + Kint σ φ y := by
   unfold Kint
   rw [← integral_add (integrable_Kint σ hφ x) (integrable_Kint σ hφ y)]
-  congr 1; funext k; rw [map_add, smul_add]
+  congr 1; funext k; rw [map_add (f := _), smul_add]
 
 theorem Kint_smul (φ : U2 → ℂ) (c : ℂ) (x : H) : Kint σ φ (c • x) = c • Kint σ φ x := by
   unfold Kint
@@ -160,7 +160,7 @@ theorem map_tC_Q (n : ℕ) (q : ℤ) {i : ℕ} (hi : i ≤ n) (a b : ℝ) (x : H
     ext r s; fin_cases r <;> fin_cases s <;> simp [← Complex.exp_add]
   rw [hinv, psi_tC_mul n q hi, smul_smul, map_mul, ← Complex.exp_conj]
   congr 2
-  simp only [map_mul, conj_I, map_add, map_sub, map_neg, Complex.conj_ofReal, map_intCast,
+  simp only [map_mul, conj_I, map_add (f := _), map_sub, map_neg, Complex.conj_ofReal, map_intCast,
     map_natCast]
   push_cast
   ring

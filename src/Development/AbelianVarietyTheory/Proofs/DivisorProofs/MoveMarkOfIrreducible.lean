@@ -42,7 +42,7 @@ theorem gen_ind (pb : PowerBasis F M) (q : M → Prop) (h0 : q pb.gen) (h1 : ∀
 
 theorem emb_ext (pb : PowerBasis F M) (e e' : M →+* ℂ) (h1 : ∀ x, e (algebraMap F M x) = e' (algebraMap F M x))
     (h0 : e pb.gen = e' pb.gen) : e = e' :=
-  RingHom.ext (gen_ind pb (fun y => e y = e' y) h0 h1 (fun x y hx hy => by simp only [map_add, hx, hy])
+  RingHom.ext (gen_ind pb (fun y => e y = e' y) h0 h1 (fun x y hx hy => by simp only [map_add (f := _), hx, hy])
     (fun x y hx hy => by simp only [map_mul, hx, hy]))
 
 theorem emb_root (pb : PowerBasis F M) (e : M →+* ℂ) :
@@ -84,7 +84,7 @@ theorem sh_mul (x y : G.C) : sh G (x * y) = sh G y * sh G x := by
   simp only [sh, map_mul, MulOpposite.unop_mul]
 
 theorem sh_add (x y : G.C) : sh G (x + y) = sh G x + sh G y := by
-  simp only [sh, map_add, MulOpposite.unop_add]
+  simp only [sh, map_add (f := _), MulOpposite.unop_add]
 
 variable {M : Type} [Field M] [NumberField M] [Algebra G.F M]
 
@@ -104,7 +104,7 @@ theorem conj_law (P : Pair G) (pb : PowerBasis G.F M) (j : M →ₐ[G.F] G.C) (h
     rw [hσ, j.commutes, j.commutes, sh, G.star_F, Algebra.commutes]
   · intro x y hx hy
     show (P.β : G.C) * sh G (j (x + y)) = j (σ (x + y)) * P.β
-    rw [map_add, sh_add, mul_add, hx, hy, map_add, map_add, add_mul]
+    rw [map_add (f := _), sh_add, mul_add, hx, hy, map_add (f := _), map_add (f := _), add_mul]
   · intro x y hx hy
     show (P.β : G.C) * sh G (j (x * y)) = j (σ (x * y)) * P.β
     rw [map_mul, sh_mul, ← mul_assoc, hy, mul_assoc, hx, ← mul_assoc, ← map_mul, ← map_mul, mul_comm y x]
@@ -120,7 +120,7 @@ theorem comm_law (γ : G.C) (pb : PowerBasis G.F M) (j : M →ₐ[G.F] G.C) (hj 
     rw [j.commutes, Algebra.commutes]
   · intro a b ha hb
     show y * j (a + b) = j (a + b) * y
-    rw [map_add, mul_add, add_mul, ha, hb]
+    rw [map_add (f := _), mul_add, add_mul, ha, hb]
   · intro a b ha hb
     show y * j (a * b) = j (a * b) * y
     rw [map_mul, ← mul_assoc, ha, mul_assoc, hb, mul_assoc]
@@ -170,7 +170,7 @@ theorem exists_basis (ha : G.a = 1) (P : Pair G) (μ : ℂ) (hm : P.Mark μ) (pb
       exact (Matrix.scalar_commute _ (fun _ => Commute.all _ _) _).eq
     · intro a b h h'
       show G.psi w (j (a + b)) * _ = _
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [Matrix.add_mul, h, h', ← Matrix.mul_add, Matrix.diagonal_add]
     · intro a b h h'
       show G.psi w (j (a * b)) * _ = _

@@ -41,7 +41,7 @@ theorem shifted_lt_add_zsmul {c : ℝ} (hc : 0 ≤ c) (hN : 1 + 2 * c < N) {ν :
   have hN0 : (0 : ℝ) < N := by linarith
   have e1 : Q (e + N • μ) / N + ν (e + N • μ) = Q e / N + ν e +
       (polar Q e μ + (N - 1) * Q μ + N * (Q μ / N + ν μ)) := by
-    rw [map_add_zsmul, map_add, map_zsmul, zsmul_eq_mul]
+    rw [map_add_zsmul, map_add (f := _), map_zsmul, zsmul_eq_mul]
     field_simp
     ring
   rw [polar_self, two_smul, abs_le] at h

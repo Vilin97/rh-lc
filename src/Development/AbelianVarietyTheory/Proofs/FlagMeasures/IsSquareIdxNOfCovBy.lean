@@ -204,7 +204,7 @@ theorem isSquare_disc (h : V →ₗ⋆[K] V →ₗ[K] K) (hs : h.IsSymm) (hn : h
       rw [Formalism.HermitianLatticesTheory.locDual_h_smul_left, Formalism.HermitianLatticesTheory.locDual_h_smul_right]
       exact Formalism.HermitianLatticesTheory.locDual_one_mul (hstar1 _ (Formalism.HermitianLatticesTheory.locDual_alg_mem a))
         (Formalism.HermitianLatticesTheory.locDual_one_mul (Formalism.HermitianLatticesTheory.locDual_alg_mem b) hyy)
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     exact add_mem (add_mem e1 e3) (add_mem e2 e4)
 
   have hDM'le : dual h M' ≤ dual h M := hanti M M' hMM'

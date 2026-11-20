@@ -61,7 +61,7 @@ theorem adjDat_union {Sa St : Finset (Pl D.host.E)} {ea et : AE D} (hg : IsIdemS
   funext x
   rw [GlobalTheory.TwoStepModel.tensorHalf_apply]
   unfold adjDat
-  have hc : cA D (ea + et) = cA D et + cA D ea := by rw [map_add, add_comm]
+  have hc : cA D (ea + et) = cA D et + cA D ea := by rw [map_add (f := _), add_comm]
   by_cases hx : IsHalf (cA D (ea + et)) x
   · have hx' : IsHalf (cA D et + cA D ea) x := hc ▸ hx
     rw [if_pos hx', mul_one]
@@ -123,7 +123,7 @@ theorem thetaVector_three_step_decomposition : ∀ (D : D7) (G : Type) [Group G]
       (GlobalTheory.PlaceVec.frMapAdj_add _ _ _ _) (GlobalTheory.PlaceVec.frMapAdj_up _ _ _ _) (GlobalTheory.PlaceVec.frMapAdj_down _ _ _ _)
       Q (fun y => omegaQ Q (Wc D i).rank (R.xiR t) (-1) y) fun y y' h => GlobalTheory.PlaceVec.omegaQ_congr _ _ _ _ h
   obtain ⟨⟨Te, hTe1⟩, hTe2⟩ := h2
-  have hc : cA D (ea + et) = cA D et + cA D ea := by rw [map_add, add_comm]
+  have hc : cA D (ea + et) = cA D et + cA D ea := by rw [map_add (f := _), add_comm]
   have hc' : cA D (ea + et) = cA D ea + cA D et := map_add _ _ _
   have hm1 := GlobalTheory.TwoStepModel.isPlaceModel_comp_tensorHalf hct hca hta hΛ (hSB Sa _ hinfa) (hc ▸ hTe1)
   have hm2 := GlobalTheory.ExportSeries.isPlaceModel_comp_restrictHalf hca hct hat' hΛ (hc' ▸ hTe1)

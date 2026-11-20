@@ -227,7 +227,7 @@ theorem swapTens_sig (x : R ⊗[F] E) :
     swapTens F E R (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR R σ x) = Formalism.UG.sigR σ R (swapTens F E R x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a x => rfl
 
 theorem exists_swapPts : ∃ e : HA R σ J ≃* UPts σ J R,
@@ -374,7 +374,7 @@ theorem intTens_open_compact (F E : Type) [Field F] [NumberField F] [Field E] [N
           rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul]
       | zero => intro y _; rw [map_zero, zero_smul]; exact zero_mem _
       | one => intro y hy; rwa [map_one, one_smul]
-      | add a b _ _ ha hb => intro y hy; rw [map_add, add_smul]; exact add_mem (ha y hy) (hb y hy)
+      | add a b _ _ ha hb => intro y hy; rw [map_add (f := _), add_smul]; exact add_mem (ha y hy) (hb y hy)
       | neg a _ ha => intro y hy; rw [map_neg, neg_smul]; exact neg_mem (ha y hy)
       | mul a b _ _ ha hb => intro y hy; rw [map_mul, mul_smul]; exact ha _ (hb y hy)
     have h0 := key _ hw _ (AddSubgroup.subset_closure

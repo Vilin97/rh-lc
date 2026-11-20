@@ -10,7 +10,7 @@ private theorem ac_const (c : R) : AdicCont I fun _ : Γ => c := fun _ => IsLoca
 private theorem ac_add {f g : Γ → R} (hf : AdicCont I f) (hg : AdicCont I g) : AdicCont I fun s => f s + g s := by
   intro N
   have := (hf N).comp₂ (hg N) (· + ·)
-  simpa [Function.comp_def, map_add] using this
+  simpa [Function.comp_def, map_add (f := _)] using this
 
 private theorem ac_mul {f g : Γ → R} (hf : AdicCont I f) (hg : AdicCont I g) : AdicCont I fun s => f s * g s := by
   intro N

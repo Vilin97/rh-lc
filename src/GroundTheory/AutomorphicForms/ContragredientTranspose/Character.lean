@@ -388,7 +388,7 @@ theorem nonempty_equiv_of_distChar_eq {W : Type*} [AddCommGroup W] [Module ℂ W
         have hm : m = (m.1, 0) + (0, m.2) := by simp
         refine Prod.ext ?_ hC.symm
         conv_lhs => rw [hm]
-        rw [map_add, Prod.fst_add, hB, add_zero] }
+        rw [map_add (f := _), Prod.fst_add, hB, add_zero] }
   let b := Module.finBasis ℂ (fixedVectors ρ K × fixedVectors σ K)
   obtain ⟨r, hr⟩ := jacobson_density fE (Finset.univ.image b)
 

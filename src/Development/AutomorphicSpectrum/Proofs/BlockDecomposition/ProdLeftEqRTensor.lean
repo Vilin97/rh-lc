@@ -16,7 +16,7 @@ theorem prodLeft_eq_rTensor {A B₁ B₂ K : Type} [CommRing A] [AddCommGroup B�
   | tmul b k =>
     obtain ⟨b₁, b₂⟩ := b
     simp
-  | add x y hx hy => simp only [map_add, hx, hy, Prod.mk_add_mk]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, Prod.mk_add_mk]
 
 theorem tensor_prod_ext {A B₁ B₂ K : Type} [CommRing A] [AddCommGroup B₁] [Module A B₁]
     [AddCommGroup B₂] [Module A B₂] [AddCommGroup K] [Module A K] {w w' : (B₁ × B₂) ⊗[A] K}
@@ -52,7 +52,7 @@ theorem mv_prod : ∀ (p : ℕ) [Fact p.Prime] (A : Type) [CommRing A](B₁ : Ty
       induction t with
       | tmul b k => simp [ρ, TensorProduct.sub_tmul]
       | add x y hx hy =>
-        simp only [map_add, hx, hy]
+        simp only [map_add (f := _), hx, hy]
         abel
     have heq := hcomm w
     rw [hw, eq_comm, sub_eq_zero] at heq

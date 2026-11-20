@@ -40,7 +40,7 @@ theorem limit_strong : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n
   let I : Submodule (𝓞 E) Λ :=
     { carrier := {x | x ∈ chartW bas B ∧ ∀ y ∈ chartW bas B, L.toLogPeriods.E x y = 0}
       add_mem' := fun {x y} hx hy => ⟨(chartW bas B).add_mem hx.1 hy.1, fun u hu => by
-        rw [map_add, LinearMap.add_apply, hx.2 u hu, hy.2 u hu, add_zero]⟩
+        rw [map_add (f := _), LinearMap.add_apply, hx.2 u hu, hy.2 u hu, add_zero]⟩
       zero_mem' := ⟨(chartW bas B).zero_mem, fun u _ => by simp⟩
       smul_mem' := fun c' x hx => ⟨hstab c' x hx.1, fun u hu => by
         obtain ⟨c'', hc⟩ := hconj c'

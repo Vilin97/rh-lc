@@ -129,7 +129,7 @@ theorem rc_finrank (v : HeightOneSpectrum (𝓞 F)) :
              rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, smul_eq_mul])
           | (simp [Algebra.smul_def, Algebra.TensorProduct.tmul_mul_tmul, mul_comm]; done)
         | add x y hx hy =>
-          rw [smul_add, map_add, map_add, hx, hy, smul_add] }
+          rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add] }
   rw [← e.finrank_eq, Module.finrank_baseChange]
 
 end

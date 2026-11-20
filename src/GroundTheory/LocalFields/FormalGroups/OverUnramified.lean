@@ -131,7 +131,7 @@ theorem bijective_twistOp [IsAdicComplete (maximalIdeal B) B] {π : A}
         obtain ⟨t, ht⟩ := hxy
         refine ⟨v * t - ϖ ^ (d - 1) * σ t, ?_⟩
         have : x = y + ϖ ^ n * t := by rw [← ht]; ring
-        simp only [twistOp, hσc, this, map_add, hσϖ]
+        simp only [twistOp, hσc, this, map_add (f := _), hσϖ]
         ring)
       (fun n x hx => by
         rw [mem_maximalIdeal_pow_iff hπB] at hx
@@ -161,7 +161,7 @@ theorem map_residue_map_eq_X_pow {π : A} (hmem : algebraMap A B π ∈ maximalI
     rw [← hc]
     ring
   have h0 : residue B (algebraMap A B π) = 0 := (residue_eq_zero_iff _).2 hmem
-  rw [PowerSeries.coeff_map, PowerSeries.coeff_map, h1, map_add, map_add, map_mul, map_mul, h0,
+  rw [PowerSeries.coeff_map, PowerSeries.coeff_map, h1, map_add (f := _), map_add (f := _), map_mul, map_mul, h0,
     zero_mul, add_zero, PowerSeries.coeff_X_pow, PowerSeries.coeff_X_pow]
   split_ifs <;> simp
 

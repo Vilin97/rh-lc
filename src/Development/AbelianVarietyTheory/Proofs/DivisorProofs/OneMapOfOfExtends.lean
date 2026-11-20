@@ -47,7 +47,7 @@ variable {Tp : Type} {tup : Tp → T0}
 
 theorem geo_add (O : OMDat C R i Tp tup) (cc z f g q) : geo O cc z (f + g) q = geo O cc z f q + geo O cc z g q := by
   unfold geo
-  rw [map_add, map_add, Pi.add_apply, mul_add]
+  rw [map_add (f := _), map_add (f := _), Pi.add_apply, mul_add]
 
 theorem geo_smul (O : OMDat C R i Tp tup) (cc z) (a : O.c'.F) (f q) : geo O cc z (a • f) q = (a : ℂ) * geo O cc z f q := by
   unfold geo

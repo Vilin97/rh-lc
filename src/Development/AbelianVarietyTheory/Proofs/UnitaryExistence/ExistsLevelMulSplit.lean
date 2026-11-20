@@ -108,7 +108,7 @@ open NumberField Pointwise in
 private theorem host_bar_w0_of_isCMField {E : Type} [Field E] [NumberField E] [IsCMField E] (H : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) :
     H.bar H.w0 = 1 - H.w0 := by
   have h := congrArg H.bar H.two_weight_eq_one_add_root
-  simp only [map_mul, map_add, map_one, map_ofNat, host_bar_rt_of_isCMField] at h
+  simp only [map_mul, map_add (f := _), map_one, map_ofNat, host_bar_rt_of_isCMField] at h
   have h2 : (2 : 𝓞 E) * H.bar H.w0 = 2 * (1 - H.w0) := by
     linear_combination h + H.two_weight_eq_one_add_root
   exact mul_left_cancel₀ two_ne_zero h2

@@ -30,7 +30,7 @@ private theorem sep_of_sum {Γ X V : Type} [Group Γ] [AddCommGroup X] [Module �
   have hsup : ∀ f : X →ₗ[ℂ] V, (∀ g v, f (σ g v) = τ g (f v)) →
       ∀ g, ∀ v ∈ M ⊔ LinearMap.range f, τ g v ∈ M ⊔ LinearMap.range f := fun f hf g v hv => by
     obtain ⟨a, ha, _, ⟨y, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hv
-    rw [map_add, ← hf]
+    rw [map_add (f := _), ← hf]
     exact Submodule.add_mem_sup (hst g a ha) ⟨_, rfl⟩
   have hmem : ∀ f : X →ₗ[ℂ] V, (∀ g v, f (σ g v) = τ g (f v)) → ¬ LinearMap.range f ≤ M →
       x ∈ M ⊔ LinearMap.range f := fun f hf hn => by
@@ -57,11 +57,11 @@ private theorem sep_of_sum {Γ X V : Type} [Group Γ] [AddCommGroup X] [Module �
     obtain ⟨v, rfl⟩ := M.mkQ_surjective q
     obtain ⟨a, ha, _, ⟨y, rfl⟩, rfl⟩ := Submodule.mem_sup.1 (htop (Submodule.mem_top (x := v)))
     refine ⟨y, ?_⟩
-    rw [map_add, show M.mkQ a = 0 from (Submodule.Quotient.mk_eq_zero M).2 ha, zero_add]
+    rw [map_add (f := _), show M.mkQ a = 0 from (Submodule.Quotient.mk_eq_zero M).2 ha, zero_add]
     rfl
   let e := LinearEquiv.ofBijective _ hbij
   have hp : ∀ a ∈ M, ∀ y, e.symm (M.mkQ (a + f y)) = y := fun a ha y => by
-    rw [map_add, show M.mkQ a = 0 from (Submodule.Quotient.mk_eq_zero M).2 ha, zero_add, LinearEquiv.symm_apply_eq]
+    rw [map_add (f := _), show M.mkQ a = 0 from (Submodule.Quotient.mk_eq_zero M).2 ha, zero_add, LinearEquiv.symm_apply_eq]
     rfl
   refine ⟨e.symm.toLinearMap ∘ₗ M.mkQ, fun h0 => hxM ?_, fun g v => ?_⟩
   · exact (Submodule.Quotient.mk_eq_zero M).1 ((map_eq_zero_iff e.symm e.symm.injective).1 h0)

@@ -19,7 +19,7 @@ theorem map_rowAct_eq {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) {r
     MvPolynomial.map φ (rowAct R M f) = rowAct S (M.map φ) (MvPolynomial.map φ f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp, map_X]
     congr 1
@@ -108,7 +108,7 @@ theorem phi_equivariant : ∀ (K C : Type) [Field K] [Field C] (e0 : K →+* C) 
     simp only [map_zero]
   | add a b ha hb iha ihb =>
     show Φ (rhoK lam (invTrK g) (⟨a, ha⟩ + ⟨b, hb⟩)) = lamG C n lamW c _ (Φ (⟨a, ha⟩ + ⟨b, hb⟩))
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [iha, ihb]
   | smul r a ha iha =>
     show Φ (rhoK lam (invTrK g) (r • ⟨a, ha⟩)) = lamG C n lamW c _ (Φ (r • ⟨a, ha⟩))

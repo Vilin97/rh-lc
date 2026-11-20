@@ -49,7 +49,7 @@ theorem UpperTheory.V.Th.Coc.locAt :
     intro a
     induction a using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add, ha, hb, mul_add, add_mul]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, mul_add, add_mul]
     | single g a =>
       rw [repR_single, repR_single, inv_inv, mul_smul_comm, smul_mul_assoc]
       rfl

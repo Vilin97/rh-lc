@@ -34,8 +34,8 @@ theorem IsExt.cocycle_mul {ρ : Representation LL G V} {ρ' : Representation LL 
   obtain ⟨e, -, he⟩ := hc
   apply h.1
   have h1 := he (g * k)
-  rw [map_mul, Module.End.mul_apply, he k, map_add, he g, ← h.2.2.2.1, add_assoc] at h1
-  rw [map_add]
+  rw [map_mul, Module.End.mul_apply, he k, map_add (f := _), he g, ← h.2.2.2.1, add_assoc] at h1
+  rw [map_add (f := _)]
   exact (add_left_cancel h1).symm
 
 theorem IsExt.cocycle_sub_mem_coboundaries {ρ : Representation LL G V} {ρ' : Representation LL G W} {i : V →ₗ[LL] W}

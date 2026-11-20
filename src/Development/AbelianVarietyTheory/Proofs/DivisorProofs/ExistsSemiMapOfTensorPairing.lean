@@ -73,8 +73,8 @@ theorem bmap_nat (ν : Pair I' J' K') (ρ₁ : SemiMap I I') (ρ₂ : SemiMap J 
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rw [bmap_of, tensRes_of, bmap_of, ν.nat, ρ₁.nat, ρ₂.nat]
-    | add y₁ y₂ h₁ h₂ => have e := congrArg₂ (· + ·) h₁ h₂; simpa only [map_add] using e
-  | add x y hx hy => have e := congrArg₂ (· + ·) hx hy; simpa only [map_add] using e
+    | add y₁ y₂ h₁ h₂ => have e := congrArg₂ (· + ·) h₁ h₂; simpa only [map_add (f := _)] using e
+  | add x y hx hy => have e := congrArg₂ (· + ·) hx hy; simpa only [map_add (f := _)] using e
 
 end GlobalTheory.EtC.SemiTens
 
@@ -106,10 +106,10 @@ theorem semiMap_of_tensorPair : ∀ (Q : ℕ) (R : Type) [CommRing R] {I J T : C
       | zero => simp
       | tmul a b =>
         obtain ⟨⟨s₁, t₁⟩, hp⟩ := p
-        rw [bmap_of, lift_of, ν.leibniz, τ.leibniz, map_add, Units.smul_def, Units.smul_def, map_zsmul, hmul, hmul,
+        rw [bmap_of, lift_of, ν.leibniz, τ.leibniz, map_add (f := _), Units.smul_def, Units.smul_def, map_zsmul, hmul, hmul,
           ρ₁.comm, ρ₂.comm]
-      | add y₁ y₂ h₁ h₂ => have e := congrArg₂ (· + ·) h₁ h₂; simpa only [map_add] using e
-    | add x y hx hy => have e := congrArg₂ (· + ·) hx hy; simpa only [map_add] using e
+      | add y₁ y₂ h₁ h₂ => have e := congrArg₂ (· + ·) h₁ h₂; simpa only [map_add (f := _)] using e
+    | add x y hx hy => have e := congrArg₂ (· + ·) hx hy; simpa only [map_add (f := _)] using e
   refine ⟨⟨fun U w => φ w U, fun g w a => hnat w _ _ g a, ?_⟩, hmul⟩
   intro U s t y
   by_cases hst : (ComplexShape.up ℤ).Rel s t

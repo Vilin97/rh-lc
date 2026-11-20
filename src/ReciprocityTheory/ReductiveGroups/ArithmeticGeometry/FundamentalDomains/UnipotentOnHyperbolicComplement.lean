@@ -19,7 +19,7 @@ private lemma hermC_sub_left_section (u u' v : Fin r → ℂ) :
 
 private lemma hermC_add_right_section (u v v' : Fin r → ℂ) :
     hermC τ G u (v + v') = hermC τ G u v + hermC τ G u v' := by
-  simp only [hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 private lemma hermC_smul_right_section (c : ℂ) (u v : Fin r → ℂ) :
     hermC τ G u (c • v) = conj c * hermC τ G u v := by

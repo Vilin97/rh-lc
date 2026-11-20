@@ -399,7 +399,7 @@ theorem TypeVec.factor {α : Type} [Fintype α] [DecidableEq α] {m : α → Typ
             rw [Function.update_of_ne (Finset.ne_of_mem_erase hb)]
           have hxa : ∀ u' : X i, Function.update x i u' a = x a := fun u' => Function.update_of_ne (Ne.symm hi) _ _
           have key : (∏ b ∈ Finset.univ.erase a, (B b).coord (q b) (Function.update x i (u + v) b)) • Function.update x i (u + v) a = (∏ b ∈ Finset.univ.erase a, (B b).coord (q b) (Function.update x i (u) b)) • Function.update x i (u) a + (∏ b ∈ Finset.univ.erase a, (B b).coord (q b) (Function.update x i (v) b)) • Function.update x i (v) a := by
-            rw [hR, hR, hR, hxa, hxa, hxa, map_add, add_mul, add_smul]
+            rw [hR, hR, hR, hxa, hxa, hxa, map_add (f := _), add_mul, add_smul]
           convert key
       map_update_smul' := by
         intro _ x i c u
@@ -445,7 +445,7 @@ theorem TypeVec.factor {α : Type} [Fintype α] [DecidableEq α] {m : α → Typ
       apply Finset.prod_congr rfl
       intro b hb
       rw [Pi.mulSingle_eq_of_ne (Finset.ne_of_mem_erase hb), map_one, Module.End.one_apply]
-    | add t₁ t₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+    | add t₁ t₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
   have hcoord : ∀ t : PiTensorProduct ℂ X, (B a).coord (q a) (Φ t) = (Basis.piTensorProduct B).repr t q := by
     intro t
     induction t using PiTensorProduct.induction_on with
@@ -453,7 +453,7 @@ theorem TypeVec.factor {α : Type} [Fintype α] [DecidableEq α] {m : α → Typ
       rw [map_smul, map_smul, hΦt, map_smul, map_smul, Finsupp.smul_apply, Basis.piTensorProduct_repr_tprod_apply]
       simp only [Finsupp.smul_apply, smul_eq_mul, Module.Basis.coord_apply]
       rw [← Finset.prod_erase_mul _ _ (Finset.mem_univ a)]
-    | add t₁ t₂ h₁ h₂ => rw [map_add, map_add, h₁, h₂, map_add, Finsupp.add_apply]
+    | add t₁ t₂ h₁ h₂ => rw [map_add (f := _), map_add (f := _), h₁, h₂, map_add (f := _), Finsupp.add_apply]
   refine ⟨Φ y, fun k hk => ?_, ℓ, hℓ, ?_⟩
   · rw [← hequiv, hfix k hk]
   · intro h0

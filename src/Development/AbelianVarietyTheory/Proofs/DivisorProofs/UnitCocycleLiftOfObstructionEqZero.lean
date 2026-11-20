@@ -39,7 +39,7 @@ theorem lift_of_isObU_zero : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I
       (L.nat b) (σ T') (σ T'') (hσ T') (hσ T'')).1 (f T T' a)
     have e := congrFun (congrFun (congrFun (congrFun (congrFun hf T) T') T'') a) b
     have hs : σ T'' (z.1 T T' T'' a b) = L.ρ b (σ T' (f T T' a)) - σ T'' (f T T'' (a ≫ b)) + σ T'' (f T' T'' b) := by
-      rw [← e, d1_apply, map_add, map_sub, hnat]
+      rw [← e, d1_apply, map_add (f := _), map_sub, hnat]
       rfl
     have hx := hw T T' a
     have hρx : L.ρ b (σ T' (f T T' a)) ∈ I.map (algebraMap R (L.B T'')) := by

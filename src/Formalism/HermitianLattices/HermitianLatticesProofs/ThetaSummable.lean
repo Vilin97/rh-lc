@@ -56,7 +56,7 @@ variable {K V : Type} [Field K] [NumberField K] [StarRing K] [AddCommGroup V] [M
 
 lemma thetaSummable_parallelogram (h : V →ₗ⋆[K] V →ₗ[K] K) (u v : V) :
     h (u + v) (u + v) + h (u - v) (u - v) = h u u + h u u + (h v v + h v v) := by
-  simp only [map_add, map_sub, LinearMap.add_apply, LinearMap.sub_apply]
+  simp only [map_add (f := _), map_sub, LinearMap.add_apply, LinearMap.sub_apply]
   ring
 
 lemma thetaSummable_trpara (h : V →ₗ⋆[K] V →ₗ[K] K) (u v : V) :

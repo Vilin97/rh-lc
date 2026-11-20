@@ -26,7 +26,7 @@ theorem exists_poly_blockAct_coef {k : ℕ} (f : MvPolynomial (ι × Fin k × Fi
     intro g p
     induction p using MvPolynomial.induction_on with
     | C a => simp [T, aeval_C, MvPolynomial.algebraMap_eq, map_C, eval_C]
-    | add p q hp hq => simp only [map_add, hp, hq, T]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq, T]
     | mul_X p v hp =>
       simp only [T] at hp ⊢
       simp only [map_mul, hp]

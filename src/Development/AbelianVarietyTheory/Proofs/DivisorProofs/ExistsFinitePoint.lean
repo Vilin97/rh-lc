@@ -29,7 +29,7 @@ theorem map_cycAway_mem {n : ℕ} {L : Type} [Field L] (φ : cycAway n →+* L) 
   | zero => rw [show (⟨0, _⟩ : cycAway n) = 0 from rfl, map_zero]; exact K.zero_mem
   | one => rw [show (⟨1, _⟩ : cycAway n) = 1 from rfl, map_one]; exact K.one_mem
   | add x y hx hy ihx ihy =>
-    rw [show (⟨x + y, _⟩ : cycAway n) = ⟨x, hx⟩ + ⟨y, hy⟩ from rfl, map_add]; exact K.add_mem ihx ihy
+    rw [show (⟨x + y, _⟩ : cycAway n) = ⟨x, hx⟩ + ⟨y, hy⟩ from rfl, map_add (f := _)]; exact K.add_mem ihx ihy
   | neg x hx ih =>
     rw [show (⟨-x, _⟩ : cycAway n) = -⟨x, hx⟩ from rfl, map_neg]; exact K.neg_mem ih
   | mul x y hx hy ihx ihy =>
@@ -68,7 +68,7 @@ theorem exists_finite_point (n : ℕ) {X : Scheme.{0}} (s : X ⟶ Sp (cycAway n)
     induction hb using Algebra.adjoin_induction with
     | mem x hx => exact hS (Or.inl ⟨x, hx, rfl⟩)
     | algebraMap c => exact hc c
-    | add a b _ _ ha hb => rw [map_add]; exact K.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact K.add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact K.mul_mem ha hb
   let φK : Γ(X, U) →+* K := φ.hom.codRestrict K hmem
   refine ⟨K, hK, spMap φK ≫ hU.fromSpec, ?_⟩

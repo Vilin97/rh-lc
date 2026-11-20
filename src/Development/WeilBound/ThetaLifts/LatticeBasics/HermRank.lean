@@ -32,7 +32,7 @@ theorem exists_stable {M ι : Type} [AddCommGroup M] [Module ℂ M] [Countable �
   induction hx using Submodule.span_induction with
   | mem _ h => obtain ⟨⟨l, x⟩, rfl⟩ := h; exact Submodule.subset_span ⟨(i :: l, x), by simp⟩
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
 
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ}
@@ -40,7 +40,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 
 def dL (p : (κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixedSpace F)) : Module.End ℂ (SInf F κ) where
   toFun := dOp p.1 p.2
-  map_add' f g := by simp only [dOp, LineDeriv.lineDerivOp_add, map_add, smul_add]; abel
+  map_add' f g := by simp only [dOp, LineDeriv.lineDerivOp_add, map_add (f := _), smul_add]; abel
   map_smul' c f := by
     rw [dOp, dOp, LineDeriv.lineDerivOp_smul, smul_add, RingHom.id_apply]
     congr 1

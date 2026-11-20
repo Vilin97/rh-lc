@@ -56,7 +56,7 @@ theorem smooth_solve {P F V : Type*} [NormedAddCommGroup P] [NormedSpace ℝ P]
       rw [hv, ← mul_apply_eq_comp, Ring.mul_inverse_cancel _ ht']; rfl
     have h2 : M t (r v) + (v - π v) = y t := h1
     have h3 := congrArg π h2
-    rw [map_add, map_sub, hπ (M t (r v)), hp' _ (hL _ _), hπ (π v), hp' (π v) (p v).2, hπ (y t),
+    rw [map_add (f := _), map_sub, hπ (M t (r v)), hp' _ (hL _ _), hπ (π v), hp' (π v) (p v).2, hπ (y t),
       hp' _ (hyL t), sub_self, add_zero] at h3
     exact h3
 

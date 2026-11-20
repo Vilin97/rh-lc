@@ -30,7 +30,7 @@ theorem galOCr_sub_smul_eventually {l : ℕ} [Fact l.Prime] {O : Type} [CommRing
   | add x y hx hy =>
     filter_upwards [hx, hy] with h ⟨u, hu⟩ ⟨v, hv⟩
     refine ⟨u + v, ?_⟩
-    rw [map_add, smul_add, ← hu, ← hv]; abel
+    rw [map_add (f := _), smul_add, ← hu, ← hv]; abel
 
 theorem twact_sub_smul_eventually : ∀ {l : ℕ} [Fact l.Prime] {O K : Type} [CommRing O] [Algebra ℤ_[l] O] [Field K]
     [Algebra ℚ_[l] K] [Algebra O K] [TopologicalSpace K] {G : Type} [Group G] [TopologicalSpace G]
@@ -56,6 +56,6 @@ theorem twact_sub_smul_eventually : ∀ {l : ℕ} [Fact l.Prime] {O K : Type} [C
   | add x y hx hy =>
     filter_upwards [hx, hy] with g ⟨u, hu⟩ ⟨v, hv⟩
     refine ⟨u + v, ?_⟩
-    rw [map_add, smul_add, ← hu, ← hv]; abel
+    rw [map_add (f := _), smul_add, ← hu, ← hv]; abel
 
 end GlobalTheory.OCrCont

@@ -157,7 +157,7 @@ theorem ne_conjP_eleven (E : Type) [Field E] [NumberField E] [StarRing E] (s : E
   have hct : cO E t = -t := RingOfIntegers.ext hc
   have h3 : cO E 3 = 3 := map_ofNat _ 3
   have hiff : 3 + t ∈ Q.asIdeal ↔ 3 - t ∈ Q.asIdeal := by
-    conv_lhs => rw [h, mem_conjP, map_add, h3, hct, ← sub_eq_add_neg]
+    conv_lhs => rw [h, mem_conjP, map_add (f := _), h3, hct, ← sub_eq_add_neg]
   have hprod : (3 + t) * (3 - t) ∈ Q.asIdeal := by
     have : (3 + t) * (3 - t) = ((11 : ℕ) : 𝓞 E) := by push_cast; linear_combination -ht
     rwa [this]
@@ -223,7 +223,7 @@ theorem exists_fields_ok_eleven :
     linear_combination hz4
   · refine @ne_conjP_eleven E _ _ (IsCMField.starRing E) (ζ + ζ ^ 3) (by linear_combination (ζ ^ 2 + 2) * hz4) ?_
     change conj E (ζ + ζ ^ 3) = -(ζ + ζ ^ 3)
-    rw [map_add, map_pow, hcζ]
+    rw [map_add (f := _), map_pow, hcζ]
     linear_combination (-ζ ^ 5 + ζ) * hz4
 
 theorem exists_fields_prime :

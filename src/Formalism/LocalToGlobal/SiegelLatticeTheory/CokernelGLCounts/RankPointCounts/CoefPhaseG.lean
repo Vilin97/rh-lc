@@ -277,13 +277,13 @@ theorem local_phase_typed_places (hA : ∀ p, Agree δ M p) : PhaseLocG M δ u u
       (Matrix.diagonal (cf Zd p) * (Sg (D.s.atP p).Fp D.R.rS * (U.map φ2).transpose * Sg (D.s.atP p).Fp D.R.rS) *
         Matrix.diagonal (cfi Zd p))) + Formalism.DoubleCosetMeasures.sUp (glue sg.e r1' r2')) =
       Formalism.DoubleCosetMeasures.sLow (Matrix.diagonal (cf Zd p) * L.map φ1 * Matrix.diagonal (cfi Zd p)) + Formalism.DoubleCosetMeasures.sUp r1' := by
-    rw [map_add, ← sLow_map, ← sUp_map, glue_map_fst, glue_map_fst]
+    rw [map_add (f := _), ← sLow_map, ← sUp_map, glue_map_fst, glue_map_fst]
   have hx2 : p2 sg.e (Formalism.DoubleCosetMeasures.sLow (glue sg.e (Matrix.diagonal (cf Zd p) * L.map φ1 * Matrix.diagonal (cfi Zd p))
       (Matrix.diagonal (cf Zd p) * (Sg (D.s.atP p).Fp D.R.rS * (U.map φ2).transpose * Sg (D.s.atP p).Fp D.R.rS) *
         Matrix.diagonal (cfi Zd p))) + Formalism.DoubleCosetMeasures.sUp (glue sg.e r1' r2')) =
       Formalism.DoubleCosetMeasures.sLow (Matrix.diagonal (cf Zd p) * (Sg (D.s.atP p).Fp D.R.rS * (U.map φ2).transpose * Sg (D.s.atP p).Fp D.R.rS) *
         Matrix.diagonal (cfi Zd p)) + Formalism.DoubleCosetMeasures.sUp r2' := by
-    rw [map_add, ← sLow_map, ← sUp_map, glue_map_snd, glue_map_snd]
+    rw [map_add (f := _), ← sLow_map, ← sUp_map, glue_map_snd, glue_map_snd]
 
   have hyc : ∀ (j : Fin (D.R.rS + 1)) (h : j.val + 1 < D.R.rS + 1), cf Zd p ⟨j.val + 1, h⟩ * cfi Zd p j = yP Zd p :=
     fun j h => cf_mul_cfi Zd p ⟨j.val + 1, h⟩ j rfl
@@ -422,7 +422,7 @@ theorem local_phase_typed_places (hA : ∀ p, Agree δ M p) : PhaseLocG M δ u u
     have ht2 : p2 sg.e (tau0 p (D.mem u).A.T (D.mem u').A.T) =
         (((D.mem u').A.T : ℕ) : (D.s.atP p).Fp) * (sg.q : (D.s.atP p).Fp)⁻¹ := by
       simp only [tau0, hR, map_mul, snd_proj_symm, hqi, snd_proj_algebraMap]
-    rw [hX1, hX2, map_mul, map_mul, ht1, ht2, hinv1, hinv2, hsdef, map_add, map_add, hyP]
+    rw [hX1, hX2, map_mul, map_mul, ht1, ht2, hinv1, hinv2, hsdef, map_add (f := _), map_add (f := _), hyP]
     field_simp
     ring
   · have hc : ¬ (sgF w (Fin.last D.R.rS) ≠ Fin.last D.R.rS ∧ (sgF w (Fin.last D.R.rS)).val + 1 = D.R.rS) := by
@@ -432,7 +432,7 @@ theorem local_phase_typed_places (hA : ∀ p, Agree δ M p) : PhaseLocG M δ u u
       omega
     rw [hdf, if_neg h2, if_neg hc, if_neg hc, one_mul]
     congr 1
-    rw [hsdef, map_add, map_add, hyP]
+    rw [hsdef, map_add (f := _), map_add (f := _), hyP]
     field_simp
     ring
 

@@ -67,7 +67,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.indTens 
     | tmul a b =>
       rw [hact]
       simp only [EV, TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply, map_smul]
-    | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   refine ⟨LinearEquiv.ofBijective Φ ⟨?_, ?_⟩, hΦ⟩
   · refine (injective_iff_map_eq_zero Φ).2 fun x hx => ?_
     apply ES.injective

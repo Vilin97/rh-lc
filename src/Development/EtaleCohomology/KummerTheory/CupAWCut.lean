@@ -121,7 +121,7 @@ theorem wd_aw : LateralTheory.EtaleFoundations.cupflip_wd_aw := by
     fun α β β' γ γ' h h' N w hw U x => ?_⟩ <;>
   · rw [ev_add, h, h', ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun p _ => ?_
-    simp only [ev_add, map_add, LinearMap.add_apply, smul_add]
+    simp only [ev_add, map_add (f := _), LinearMap.add_apply, smul_add]
 
 theorem wd_cobdry : LateralTheory.EtaleFoundations.cupflip_wd_cobdry := by
   rintro R _ I J K μ E n m k hk α β γ h (⟨n', hn, η, hη⟩ | ⟨m', hm, η, hη⟩)

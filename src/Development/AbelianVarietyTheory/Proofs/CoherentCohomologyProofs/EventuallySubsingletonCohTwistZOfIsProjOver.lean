@@ -144,7 +144,7 @@ theorem exists_fg_submodulePowSat_gammaStar_locus [QCoh.IsFiniteQC F] (hL : L.Is
       exact P.smul_of_tower_mem r hb
     | add p q hp hq =>
       intro b hb
-      rw [map_add, add_smul, map_add]
+      rw [map_add (f := _), add_smul, map_add (f := _)]
       exact P.add_mem (hp b hb) (hq b hb)
     | mul_X p j hp =>
       intro b hb
@@ -156,7 +156,7 @@ theorem exists_fg_submodulePowSat_gammaStar_locus [QCoh.IsFiniteQC F] (hL : L.Is
     induction hb using Submodule.span_induction with
     | mem t ht => exact le_submodulePowSat _ _ (Submodule.subset_span ⟨t, ht, rfl⟩)
     | zero => rw [map_zero]; exact P.zero_mem
-    | add a b _ _ ha hb => rw [map_add]; exact P.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact P.add_mem ha hb
     | smul p b _ hb => exact hsmul p b hb
   have step : ∀ n : ℤ, (∀ b, gammaOf R x F _ n b ∈ P) ↔ ∀ b, gammaOf R x F _ (n + 1) b ∈ P :=
     fun n => ⟨fun h b => by

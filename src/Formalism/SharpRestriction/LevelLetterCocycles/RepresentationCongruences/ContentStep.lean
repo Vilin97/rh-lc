@@ -210,7 +210,7 @@ theorem content_step (W : LocWach PD LL O v n) (hcase : Formalism.MainNotions.Li
     rw [hπ]; ring
   have hcc0 : constantCoeff (W.π₀ c) = 0 := GS.π₀₁_cc (GS.ringData_of_caseA_of_p9 W hcase hP9)
   have hccq : constantCoeff (qA W c) = ((PD.p : ℕ) : O) := by
-    rw [hq, map_add, hcc0, constantCoeff_C, zero_add]
+    rw [hq, map_add (f := _), hcc0, constantCoeff_C, zero_add]
   have hε : IsUnit (1 - (w : LetA O n) c * qA W c ^ (PD.p - 1)) := by
     rw [PowerSeries.isUnit_iff_constantCoeff, map_sub, map_one, map_mul, map_pow, hccq]
     apply IsLocalRing.isUnit_one_sub_self_of_mem_nonunits

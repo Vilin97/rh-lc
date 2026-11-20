@@ -193,7 +193,7 @@ theorem galE_of_lift (h : IsLayer (e + 2) q d ζ a b) {σ : hostE ζ a b ≃ₐ[
         ζ⁻¹ ^ ((h.1.autToPow ℚ τ : (ZMod (2 ^ (e + 2)))ˣ) : ZMod (2 ^ (e + 2))).val := by
     rw [hστ]
     show τ (ζ + ζ⁻¹) = _
-    rw [map_add, map_inv₀, ← h.1.autToPow_spec ℚ τ, inv_pow]
+    rw [map_add (f := _), map_inv₀, ← h.1.autToPow_spec ℚ τ, inv_pow]
   unfold galE galMap
   dsimp only
   rw [hs (aE ζ a b) a rfl, hs (bE ζ a b) b rfl]
@@ -259,7 +259,7 @@ theorem galE_snd_eq_hcl_iff (hqd : HypOdd q d) (h : IsLayer (e + 2) q d ζ a b)
         ζ⁻¹ ^ ((h.1.autToPow ℚ τ : (ZMod (2 ^ (e + 2)))ˣ) : ZMod (2 ^ (e + 2))).val := by
     rw [hτ]
     show τ (ζ + ζ⁻¹) = _
-    rw [map_add, map_inv₀, ← h.1.autToPow_spec ℚ τ, inv_pow]
+    rw [map_add (f := _), map_inv₀, ← h.1.autToPow_spec ℚ τ, inv_pow]
   rw [galE_of_lift h hτ]
   unfold galMap
   dsimp only

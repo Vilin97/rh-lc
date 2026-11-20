@@ -81,7 +81,7 @@ def compAt (ι : AfE F E ≃+* FiniteAdeleRing (𝓞 E) E) (P : HeightOneSpectru
   map_one' := by rw [map_one]; rfl
   map_mul' a b := by rw [map_mul]; rfl
   map_zero' := by rw [map_zero]; rfl
-  map_add' a b := by rw [map_add]; rfl
+  map_add' a b := by rw [map_add (f := _)]; rfl
 
 theorem exists_nearAt (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (N n : ℕ)
     (P : HeightOneSpectrum (𝓞 E)) (y : GL (Fin N) (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) : ∃ g : GL (Fin N) E, NearAt P n y g := by

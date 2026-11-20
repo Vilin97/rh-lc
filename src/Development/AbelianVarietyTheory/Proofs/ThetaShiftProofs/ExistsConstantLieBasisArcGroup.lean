@@ -155,7 +155,7 @@ theorem exists_tr_up (hG : GlobalFnsSt) (gp : IsGrpPullback D.P.A D₀.P.A (spMa
       rw [hcP, hcP] at c
       refine (congrArg₂ (fun a b : (T.left.presheaf.stalk z)ˣ => a * b) (vt' _ z J J' hJ hJ') c).trans
         (Eq.trans ?_ (congrArg₂ (· * ·) (vt' _ z J J' hJ hJ') (vt' _ z J J' hJ hJ')).symm)
-      rw [map_add, cPoint_add]
+      rw [map_add (f := _), cPoint_add]
       apply Additive.ofMul.injective
       simp only [ofMul_mul, ofMul_inv] at e₁ ⊢
       linear_combination (norm := abel) e₁)

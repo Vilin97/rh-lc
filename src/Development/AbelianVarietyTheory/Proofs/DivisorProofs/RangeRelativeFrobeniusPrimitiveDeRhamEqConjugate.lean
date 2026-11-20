@@ -29,7 +29,7 @@ theorem span_pull_baseChange (H : GlobalTheory.Published.AbelianDeRham.BaseChang
   obtain ⟨z, rfl⟩ := hbc.2 x
   induction z with
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add a b ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | tmul r c => rw [liftSemi_tmul]; exact Submodule.smul_mem _ r (Submodule.subset_span ⟨c, rfl⟩)
 
 theorem range_primPull_relFrob : GlobalTheory.Published.AbelianDeRham.BaseChange → ∀ (p : ℕ) [Fact p.Prime] (R : Type) [CommRing R] (hR : (p : R) = 0) (A A₁ : Over (Sp R)) [GrpObj A] [GrpObj A₁] (π : A₁.left ⟶ A.left) (hπ : IsGrpPullback A₁ A (spMap (frobR p R hR)) π) (F : A ⟶ A₁) [IsMonHom F] (hF : F.left ≫ π = GlobalTheory.VB.frob A.left p (cast_left p R hR A)) (g : ℕ), IsAbelianScheme A → SmoothOfRelativeDimension g A.hom → LinearMap.range (primPull (dp0 R) (𝟙 _) F) = conjDR p R hR A ∧ PrimitiveSubmodule A₁ ≤ LinearMap.ker (primPull (dp0 R) (𝟙 _) F) := by

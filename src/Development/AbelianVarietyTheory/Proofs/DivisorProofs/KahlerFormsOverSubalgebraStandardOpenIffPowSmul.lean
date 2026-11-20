@@ -25,7 +25,7 @@ theorem pow_smul_d_mem (B : Subalgebra k K) {f v : K} (hf : f ∈ B) (M : ℕ) (
     ((GlobalTheory.T.kahlerFormsOverSubalgebra_closure_properties k K B 1 1).2.1 a ha).2.2.2 c hc
   have key : (f ^ (M + M)) • ι1 (D k K v) =
       f ^ M • ι1 (D k K (v * f ^ M)) - (v * f ^ M) • ι1 (D k K (f ^ M)) := by
-    rw [Derivation.leibniz, map_add, map_smul, map_smul, smul_add, smul_smul, smul_smul, pow_add,
+    rw [Derivation.leibniz, map_add (f := _), map_smul, map_smul, smul_add, smul_smul, smul_smul, pow_add,
       mul_comm (f ^ M) v]
     abel
   rw [key]

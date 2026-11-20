@@ -54,7 +54,7 @@ theorem cocycle_extends : ∀ (R : Type) [CommRing R] (X : Over (Sp R)) (K : Typ
     have h2 : Sm W (spOver (ρ.comp ψ) ≫ spOver φ ≫ x) := by
       rw [← spOver_comp, Category.assoc, e]; exact hρ
     have h3 : Sm W (spOver ρ ≫ spOver ψ ≫ spOver φ ≫ x) := by rw [e]; exact hρ
-    rw [map_add, ← AlgHom.comp_apply, ← hu' D D'' (ψ.comp φ) x E ρ hρ, ← hu' D D' φ x E (ρ.comp ψ) h2,
+    rw [map_add (f := _), ← AlgHom.comp_apply, ← hu' D D'' (ψ.comp φ) x E ρ hρ, ← hu' D D' φ x E (ρ.comp ψ) h2,
       ← hu' D' D'' ψ (spOver φ ≫ x) E ρ h3, e]
     rw [show (ρ.comp ψ).comp φ = ρ.comp (ψ.comp φ) from rfl]
     ring

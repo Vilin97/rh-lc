@@ -83,7 +83,7 @@ theorem goodL_stable {s : ℕ} (hok : A3.fam3.Ok3 s) (hH : ∀ j t, (A3.A.fam.L 
     rw [lift_operators_embedding hK]
     exact Submodule.subset_span ⟨_, opAll_goodR hok hH j _ rfl i hf, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 end Lemmas

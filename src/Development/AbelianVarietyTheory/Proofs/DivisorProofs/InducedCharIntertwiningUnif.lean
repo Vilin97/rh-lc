@@ -162,7 +162,7 @@ theorem factor_through_detInd : GlobalTheory.Published.BernsteinUnitaryProductIr
       obtain ⟨g, Ψ, hΨ, rfl⟩ := hx
       rw [map_sub, hL1 g Ψ hΨ, sub_self]
     | zero => exact map_zero L
-    | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | smul c x _ hx => rw [map_smul, hx, smul_zero]
   have hR0 : ∀ h, R h 0 = 0 := by
     intro h

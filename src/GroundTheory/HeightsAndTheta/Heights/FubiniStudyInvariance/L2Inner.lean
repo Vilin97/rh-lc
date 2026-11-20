@@ -37,7 +37,7 @@ theorem Sesq.proof (hP : PairMk.Statement) : Sesq.Statement := by
   · have e : fsPair (N := N) n (P + c • Q) R =
         fun x => fsPair n P R x + conj c * fsPair n Q R x := by
       funext x
-      simp only [fsPair, map_add, smul_eval, map_mul]
+      simp only [fsPair, map_add (f := _), smul_eval, map_mul]
       ring
     rw [l2Inner, e, integral_add (hint P R hPn hRn) ((hint Q R hQn hRn).const_mul _),
       integral_const_mul]
@@ -45,7 +45,7 @@ theorem Sesq.proof (hP : PairMk.Statement) : Sesq.Statement := by
   · have e : fsPair (N := N) n R (P + c • Q) =
         fun x => fsPair n R P x + c * fsPair n R Q x := by
       funext x
-      simp only [fsPair, map_add, smul_eval]
+      simp only [fsPair, map_add (f := _), smul_eval]
       ring
     rw [l2Inner, e, integral_add (hint R P hRn hPn) ((hint R Q hRn hQn).const_mul _),
       integral_const_mul]

@@ -107,7 +107,7 @@ theorem exists_rat_shift (z : MO S T) : ∃ a : Matrix (Fin T.rank) (Fin S.rank)
   intro i j k
   show Formalism.IndefR.PHeisFC.cE D.host.F D.host.E
     (incA D (∑ k', q i j k' • Module.finBasis D.host.F D.host.E k') + z i j) k ∈ _
-  rw [map_add, Pi.add_apply, hc, Module.Basis.repr_sum_self]
+  rw [map_add (f := _), Pi.add_apply, hc, Module.Basis.repr_sum_self]
   exact hq i j k
 
 theorem bdd_of_periodic {E' : Type*} [NormedAddCommGroup E'] (g : MO S T → E') (hg : Continuous g)
@@ -269,7 +269,7 @@ theorem polar_pt (u v : ℂ) : u * conj v = (1 / 4) * ((((‖u + v‖ ^ 2 : ℝ)
   have key : ∀ z : ℂ, ((‖z‖ ^ 2 : ℝ) : ℂ) = z * conj z := fun z => by
     rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
   rw [key, key, key, key]
-  simp only [map_add, map_sub, map_mul, Complex.conj_I]
+  simp only [map_add (f := _), map_sub, map_mul, Complex.conj_I]
   linear_combination (1 / 2 : ℂ) * (u * conj v - v * conj u) * Complex.I_sq
 
 section Svn

@@ -56,9 +56,9 @@ noncomputable def liftMap (hinj : Function.Injective (algebraMap RR K)) (T : A�
     (hT : ∀ a, P₂.ℓ (T a) = P₁.ℓ a) : M₁ →ₗ[RR] M₂ where
   toFun := liftFun P₁ P₂ T hT
   map_add' x y := P₂.uniq hinj
-    (by rw [map_add, (liftFun_spec P₁ P₂ T hT _).1, (liftFun_spec P₁ P₂ T hT _).1,
+    (by rw [map_add (f := _), (liftFun_spec P₁ P₂ T hT _).1, (liftFun_spec P₁ P₂ T hT _).1,
       (liftFun_spec P₁ P₂ T hT _).1, map_add, map_add])
-    (by rw [map_add, (liftFun_spec P₁ P₂ T hT _).2, (liftFun_spec P₁ P₂ T hT _).2,
+    (by rw [map_add (f := _), (liftFun_spec P₁ P₂ T hT _).2, (liftFun_spec P₁ P₂ T hT _).2,
       (liftFun_spec P₁ P₂ T hT _).2, map_add])
   map_smul' r x := P₂.uniq hinj
     (by rw [RingHom.id_apply, map_smul, (liftFun_spec P₁ P₂ T hT _).1,
@@ -84,7 +84,7 @@ noncomputable def descMap (S : M₁ →ₗ[RR] M₂) (hS : S P₁.p = P₂.p) : 
   map_add' a b := by
     rw [← map_add P₂.π, ← map_add S]
     exact descend_wd P₁ P₂ S hS (by
-      rw [map_add, Function.surjInv_eq P₁.surj, Function.surjInv_eq P₁.surj,
+      rw [map_add (f := _), Function.surjInv_eq P₁.surj, Function.surjInv_eq P₁.surj,
         Function.surjInv_eq P₁.surj])
   map_smul' r a := by
     rw [RingHom.id_apply, ← map_smul P₂.π, ← map_smul S]

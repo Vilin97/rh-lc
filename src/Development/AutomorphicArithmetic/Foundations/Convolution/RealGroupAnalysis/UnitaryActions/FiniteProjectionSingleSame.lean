@@ -104,7 +104,7 @@ theorem IntAt.one (v : HeightOneSpectrum (𝓞 F)) : IntAt v (1 : G1 F) := fun i
   by_cases h : i = j <;> simp [Matrix.one_apply, h]
 theorem IntAt.mul {v : HeightOneSpectrum (𝓞 F)} {g h : G1 F} (hg : IntAt v g) (hh : IntAt v h) : IntAt v (g * h) := fun i j => by
   change pv v ((g * h) i j) ∈ _
-  rw [specialLinear_mul_entry, map_add, map_mul, map_mul]
+  rw [specialLinear_mul_entry, map_add (f := _), map_mul, map_mul]
   exact add_mem (mul_mem (hg i 0) (hh 0 j)) (mul_mem (hg i 1) (hh 1 j))
 theorem IntAt.inv {v : HeightOneSpectrum (𝓞 F)} {g : G1 F} (hg : IntAt v g) : IntAt v g⁻¹ := fun i j => by
   change pv v ((g⁻¹).1 i j) ∈ _
@@ -201,8 +201,8 @@ theorem cut_nL (e : A F) (he : e * e = e) (b : A F) : cut e he (nL b) = nL (e * 
 def Lev (r : HeightOneSpectrum (𝓞 F) → WithZero (Multiplicative ℤ)) : AddSubgroup (A F) where
   carrier := {x | x.1 = 0 ∧ ∀ v, Valued.v (x.2 v) ≤ r v}
   zero_mem' := ⟨rfl, fun v => by change Valued.v (pv v 0) ≤ _; simp⟩
-  add_mem' {x y} hx hy := ⟨by change p1 F (x + y) = 0; rw [map_add, adeleInfiniteComponent_apply, adeleInfiniteComponent_apply, hx.1, hy.1, add_zero],
-    fun v => by change Valued.v (pv v (x + y)) ≤ _; rw [map_add]; exact Valuation.map_add_le _ (hx.2 v) (hy.2 v)⟩
+  add_mem' {x y} hx hy := ⟨by change p1 F (x + y) = 0; rw [map_add (f := _), adeleInfiniteComponent_apply, adeleInfiniteComponent_apply, hx.1, hy.1, add_zero],
+    fun v => by change Valued.v (pv v (x + y)) ≤ _; rw [map_add (f := _)]; exact Valuation.map_add_le _ (hx.2 v) (hy.2 v)⟩
   neg_mem' {x} hx := ⟨by change p1 F (-x) = 0; rw [map_neg, adeleInfiniteComponent_apply, hx.1, neg_zero],
     fun v => by change Valued.v (pv v (-x)) ≤ _; rw [map_neg, Valuation.map_neg]; exact hx.2 v⟩
 theorem mem_Lev {r : HeightOneSpectrum (𝓞 F) → WithZero (Multiplicative ℤ)} {x : A F} :

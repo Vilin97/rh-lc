@@ -12,7 +12,7 @@ theorem coeff_allOnes_prod_one_add_mul {σ : Type} {L : ℕ} (m : Fin L → MvPo
     intro q
     induction q using MvPolynomial.induction_on with
     | C r => simp [sumAlgEquiv_C_inl]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p c hp => rw [map_mul, map_mul, hp, rename_X, sumAlgEquiv_X_inr, map_mul]
   have hx : ∀ i : Fin L, sumAlgEquiv ℂ (Fin L) σ (X (Sum.inl i)) = X i := fun i =>
     sumAlgEquiv_X_inl ℂ (Fin L) σ i
@@ -42,7 +42,7 @@ theorem coeff_allOnes_prod_one_add_mul {σ : Type} {L : ℕ} (m : Fin L → MvPo
         simp [he, Finsupp.finsetSum_apply, Finsupp.single_apply, hj] at this
       simp [this, ht]
   rw [map_mul, hr, cmC, map_prod]
-  simp_rw [map_add, map_one, map_mul, hr, hx]
+  simp_rw [map_add (f := _), map_one, map_mul, hr, hx]
   rw [Finset.prod_one_add, coeff_sum, Finset.sum_eq_single Finset.univ]
   · rw [hmono]; simp
   · intro t _ ht; rw [hmono, if_neg ht]

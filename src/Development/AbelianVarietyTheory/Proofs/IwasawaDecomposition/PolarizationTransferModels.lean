@@ -54,7 +54,7 @@ def twistOAct (σ : 𝓞 E ≃+* 𝓞 E) {S : Scheme.{0}} {A : PolAV S} (o : let
     hom := fun a => o.hom _
     map_one := by rw [_root_.map_one, o.map_one]
     map_mul := fun a b => by rw [_root_.map_mul, o.map_mul]
-    map_add := fun a b => by rw [_root_.map_add, o.map_add]
+    map_add := fun a b => by rw [_root_.map_add (f := _), o.map_add (f := _)]
     rosati := fun a => by
       have := o.rosati (σ a)
       change RosatiAdj _ _ _ (o.act (H.bar _)) at this

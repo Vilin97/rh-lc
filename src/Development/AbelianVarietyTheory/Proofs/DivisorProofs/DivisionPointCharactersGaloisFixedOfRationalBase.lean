@@ -54,7 +54,7 @@ theorem charFixed : ∀ {o W : Type} [CommRing o] [CommRing W] [IsLocalRing W] (
   have hfixt : gtExt D'.toPre f hf t = t := ((eq_gtExt_iff f hf t t).2 ⟨htb'.symm, hts⟩).symm
   have hfixg : gtExt D'.toPre f hf p.g = p.g := by
     have : p.g = t + h := (sub_add_cancel p.g h).symm
-    rw [this, map_add, hfixt, hfixh]
+    rw [this, map_add (f := _), hfixt, hfixh]
   exact ((eq_gtExt_iff f hf p.g p.g).1 hfixg.symm).2 χ
 
 end GlobalTheory.Mum.RatChar

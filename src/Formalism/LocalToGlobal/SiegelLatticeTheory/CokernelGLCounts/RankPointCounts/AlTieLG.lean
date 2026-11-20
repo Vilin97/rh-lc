@@ -89,7 +89,7 @@ theorem QuadAlg.indep' (hQ : QuadAlg T t n) (x y : K) (h : algebraMap K A x + al
 private theorem linear_mul_linear_of_quadAlg (hQ : QuadAlg T t n) (p q p' q' : K) :
     (algebraMap K A p * T + algebraMap K A q) * (algebraMap K A p' * T + algebraMap K A q') =
       algebraMap K A (p * q' + q * p' + p * p' * t) * T + algebraMap K A (q * q' - p * p' * n) := by
-  simp only [map_add, map_sub, map_mul]
+  simp only [map_add (f := _), map_sub, map_mul]
   linear_combination (algebraMap K A p * algebraMap K A p') * hQ.rel
 
 theorem root_of_idem (hQ : QuadAlg T t n) (h : IdemNT A) : ∃ β : K, β ^ 2 - t * β + n = 0 := by
@@ -102,7 +102,7 @@ theorem root_of_idem (hQ : QuadAlg T t n) (h : IdemNT A) : ∃ β : K, β ^ 2 - 
   rw [linear_mul_linear_of_quadAlg hQ] at he'
   have key : algebraMap K A (x * x - y * y * n - x) +
       algebraMap K A (y * x + x * y + y * y * t - y) * T = 0 := by
-    simp only [map_sub, map_add, map_mul] at he' ⊢
+    simp only [map_sub, map_add (f := _), map_mul] at he' ⊢
     linear_combination he'
   obtain ⟨h1, h2⟩ := hQ.indep' _ _ key
   by_cases hy : y = 0
@@ -426,7 +426,7 @@ theorem not_prime_of_root (h : ThetaAt p θ c tr nm) (β : p.adicCompletion D.ho
   have hfb : b ^ 2 - tr * b + nm ∈ p.asIdeal := by
     rw [← norm_int_lt_one p]
     have e : iotaR p (b ^ 2 - tr * b + nm) = (iotaR p b - β) * (iotaR p b + β - iotaR p tr) := by
-      simp only [map_add, map_sub, map_mul, map_pow]
+      simp only [map_add (f := _), map_sub, map_mul, map_pow]
       linear_combination hβ
     rw [e, norm_mul]
     have h1 : ‖iotaR p b - β‖ < 1 := by rw [norm_sub_rev]; exact hb
@@ -517,7 +517,7 @@ theorem root_of_twoOver (h : ThetaAt p θ c tr nm) (h2 : TwoOver p.asIdeal) :
     rw [← disc_O h]; simp only [map_sub, map_mul, map_pow, map_ofNat]
   have ha0 : ‖iotaR p a ^ 2 - iotaR p tr * iotaR p a + iotaR p nm‖ < 1 := by
     have e : iotaR p a ^ 2 - iotaR p tr * iotaR p a + iotaR p nm = iotaR p (a ^ 2 - tr * a + nm) := by
-      simp only [map_add, map_sub, map_mul, map_pow]
+      simp only [map_add (f := _), map_sub, map_mul, map_pow]
     rw [e, norm_int_lt_one]
     exact hfa
   exact newton_quad _ _ _ hdisc (norm_int_eq_one p c h.hcp) (norm_four_le p) _ ha0

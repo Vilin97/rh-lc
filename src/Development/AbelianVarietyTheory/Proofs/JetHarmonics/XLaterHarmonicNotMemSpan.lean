@@ -34,7 +34,7 @@ theorem pderiv_swap {σ R : Type} [CommRing R] (i j : σ) (P : MvPolynomial σ R
   | C a => simp
   | add p q hp hq => simp [hp, hq]
   | mul_X p s hp =>
-    simp only [Derivation.leibniz, smul_eq_mul, map_add, hp, MvPolynomial.pderiv_X, Pi.single_apply]
+    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), hp, MvPolynomial.pderiv_X, Pi.single_apply]
     split_ifs <;> simp <;> ring
 
 theorem isHarmonic_iff_cmType {n : ℕ} (P : MvPolynomial (LtN Dw n) c.F) :
@@ -224,7 +224,7 @@ theorem colSum_nabVal_rowAct [StarRing (𝓞 E)] {S : Type} [CommRing S] [Algebr
   congr 1
   induction P using MvPolynomial.induction_on with
   | C a => simp [rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p ℓ hp =>
     rw [map_mul, map_mul, map_mul, hp, rowAct_X]
     congr 1

@@ -170,7 +170,7 @@ theorem waveJc_wave (P : M.Par) (z z' : Fin (2 * P.r + P.k + 1) → ℂ) (π : M
     refine Submodule.subset_span ⟨mul_lc hW x hlc, s + s', ε, G, hε, hN, hG, fun y hy => ?_⟩
     rw [hW x y.1 y.2, hv y hy, smul_smul, fsv_add]
   | zero => rw [map_zero]; exact (waveJc P z z' π π' D l).zero_mem
-  | add x y _ _ hx hy => rw [map_add]; exact (waveJc P z z' π π' D l).add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact (waveJc P z z' π π' D l).add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact (waveJc P z z' π π' D l).smul_mem a hx
 
 theorem isWaveJc_jf (P : M.Par) (z z' : Fin (2 * P.r + P.k + 1) → ℂ) (π : Mx P.k P.r → (Wp →L[ℂ] Wp))
@@ -345,7 +345,7 @@ theorem rr_waveJc (P : M.Par) (z z' : Fin (2 * P.r + P.k + 1) → ℂ) (π : Mx 
     rw [hΨΦ, e]
     exact waveJc_wave P z z' π π' D l hWv _ hM
   | zero => rw [map_zero]; exact (waveJc P z z' π π' D l).zero_mem
-  | add x y _ _ hx hy => rw [map_add]; exact (waveJc P z z' π π' D l).add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact (waveJc P z z' π π' D l).add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact (waveJc P z z' π π' D l).smul_mem c hx
 
 theorem base0_le_waveJc (P : M.Par) (z z' : Fin (2 * P.r + P.k + 1) → ℂ) (π : Mx P.k P.r → (Wp →L[ℂ] Wp))

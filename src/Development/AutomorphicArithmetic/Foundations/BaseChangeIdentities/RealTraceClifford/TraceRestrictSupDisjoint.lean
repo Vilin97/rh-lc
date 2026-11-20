@@ -43,7 +43,7 @@ private theorem trace_restrict_sup_disjoint {V : Type} [AddCommGroup V] [Module 
       simp [LinearEquiv.conj_apply]
     rw [hc]
     apply Subtype.ext
-    rw [LinearMap.restrict_coe_apply, he, he, map_add]
+    rw [LinearMap.restrict_coe_apply, he, he, map_add (f := _)]
     rfl
   rw [hconj, LinearMap.trace_conj', LinearMap.trace_prodMap']
 
@@ -62,7 +62,7 @@ theorem UpperTheory.RealTr.trAdd :
     have hT : ∀ x ∈ S ⊔ S', f x ∈ S ⊔ S' := by
       intro x hx
       obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem_sup (hS a ha) (hS' b hb)
     unfold PositivityTheory.RgBcC.RealD.trOn
     rw [dif_pos hT, dif_pos hS, dif_pos hS']
@@ -72,7 +72,7 @@ theorem UpperTheory.RealTr.trAdd :
     have hcf : ∀ x ∈ S, (c • f) x ∈ S := fun x hx => S.smul_mem c (hf x hx)
     refine ⟨?_, ?_, ?_⟩
     · unfold PositivityTheory.RgBcC.RealD.trOn
-      rw [dif_pos hfg, dif_pos hf, dif_pos hg, ← map_add]
+      rw [dif_pos hfg, dif_pos hf, dif_pos hg, ← map_add (f := _)]
       congr 1
     · unfold PositivityTheory.RgBcC.RealD.trOn
       rw [dif_pos hcf, dif_pos hf]

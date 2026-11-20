@@ -47,7 +47,7 @@ theorem exists_teich_pow_eq : ∃ w ∈ ACrisZero ℂ_[p] p,
     have h2 := factorial_mul_dpow (K := ℂ_[p]) (p := p) p (xiA p)
     have h3 : (p.factorial : 𝔸) = (p : 𝔸) * ((p - 1).factorial : 𝔸) := by
       rw [← Nat.cast_mul, Nat.mul_factorial_pred hp.out.ne_zero]
-    rw [e, ← map_pow, h1, map_add, map_mul, map_pow, map_pow, map_neg, neg_pow, ← h2, h3,
+    rw [e, ← map_pow, h1, map_add (f := _), map_mul, map_pow, map_pow, map_neg, neg_pow, ← h2, h3,
       map_natCast]
     ring
 
@@ -99,7 +99,7 @@ theorem exists_eq_pow_mul_of_gn_le (k : ℕ) : ∀ x : AInf ℂ_[p] p,
       rfl
     have hdec : x = t + (p : AInf ℂ_[p] p) * x' := by
       apply incl_injective
-      rw [map_add, map_mul, hteich, hx', map_natCast]
+      rw [map_add (f := _), map_mul, hteich, hx', map_natCast]
       exact (𝓣).eq_teich_add_π_mul_tail (incl ℂ_[p] p x)
     have hgt : gn ℂ_[p] p (radA p) (algebraMap _ 𝔸 t) ≤ radA p ^ (k + 1) := by
       rw [gn_of_incl_eq_teich hteich (radA_pos (p := p))]
@@ -107,7 +107,7 @@ theorem exists_eq_pow_mul_of_gn_le (k : ℕ) : ∀ x : AInf ℂ_[p] p,
     have hgx' : gn ℂ_[p] p (radA p) (algebraMap _ 𝔸 x') ≤ radA p ^ k := by
       have e : algebraMap (AInf ℂ_[p] p) 𝔸 ((p : AInf ℂ_[p] p) * x') =
           algebraMap _ 𝔸 x - algebraMap _ 𝔸 t := by
-        rw [hdec, map_add]; ring
+        rw [hdec, map_add (f := _)]; ring
       have h1 := gn_sub_le (K := ℂ_[p]) (p := p) (radA_pos (p := p)) (radA_lt_one (p := p)) (algebraMap _ 𝔸 x) (algebraMap _ 𝔸 t)
       rw [← e, map_mul, map_natCast, gn_mul (K := ℂ_[p]) (p := p) (radA_pos (p := p)) (radA_lt_one (p := p)), gn_radA_natCast_p]
         at h1
@@ -117,7 +117,7 @@ theorem exists_eq_pow_mul_of_gn_le (k : ℕ) : ∀ x : AInf ℂ_[p] p,
     obtain ⟨c', hc', hc'e⟩ := ih x' hgx'
     refine ⟨w ^ (k + 1) * algebraMap _ 𝔸 u + c', Subalgebra.add_mem _
       (Subalgebra.mul_mem _ (Subalgebra.pow_mem _ hw _) (Subalgebra.algebraMap_mem _ u)) hc', ?_⟩
-    rw [hdec, map_add, map_mul, hc'e, ht, map_mul, map_pow, pow_mul, hwe, map_natCast]
+    rw [hdec, map_add (f := _), map_mul, hc'e, ht, map_mul, map_pow, pow_mul, hwe, map_natCast]
     ring
 
 theorem isUnit_p_away : IsUnit (p : 𝔸) := by
@@ -284,7 +284,7 @@ theorem pow_mul_iota_eq (hρ : (p : ℝ)⁻¹ < ρ) {w : (𝓣).RobbaExt ρ} {c 
     · have h3 : evalB ℂ_[p] p (m + 1) (ACris.iota ℂ_[p] p c) =
           (p : Q) ^ j * Ideal.Quotient.mk _ (s (N + m)) +
             (p : Q) ^ (N + m) * ACris.iotaQ ℂ_[p] p (m + 1) d := by
-        rw [evalB_iota_acris, hc', map_add, map_mul, map_pow, map_natCast,
+        rw [evalB_iota_acris, hc', map_add (f := _), map_mul, map_pow, map_natCast,
           iotaQ_algebraMap_acrisZero]
         simp only [map_mul, map_pow, map_natCast]
       rw [hDdef, map_mul, map_pow, map_natCast, h1, h3]

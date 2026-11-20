@@ -42,7 +42,7 @@ theorem mean_transport {V : Type} [NormedAddCommGroup V] [SecondCountableTopolog
     have h1 : ∀ y, P (e.symm y) = y := fun y => by rw [← he]; simp
     simp only [MeasurableEquiv.apply_symm_apply]
     change P g + z = e (g + e.symm z)
-    rw [he, map_add, h1]
+    rw [he, map_add (f := _), h1]
   have h' := Classical.epsilon_spec hex'
   have h := Classical.epsilon_spec (⟨F0, hF0 μ⟩ : ∃ Fd, IsAddFundamentalDomain A Fd μ)
   set S' := Classical.epsilon (fun Fd => IsAddFundamentalDomain A' Fd μ)
@@ -51,7 +51,7 @@ theorem mean_transport {V : Type} [NormedAddCommGroup V] [SecondCountableTopolog
     refine h'.preimage_of_equiv hP.quasiMeasurePreserving φ.symm.bijective ?_
     intro g z
     change e (P.symm g + z) = g + e z
-    rw [he, he, map_add]; simp
+    rw [he, he, map_add (f := _)]; simp
   have hi : ∫ z in S', f z ∂μ = ∫ z in S, f (P z) ∂μ := by
     rw [← hP.setIntegral_preimage_emb e.measurableEmbedding]
     simp only [he]
@@ -112,7 +112,7 @@ theorem Hf_perm (hL : T'.abelian₂ = T.abelian₂) (z w : VC D N N') :
 
 theorem U_perm (hL : T'.abelian₂ = T.abelian₂) (x z : VC D N N') (G : VC D N N' → ℂ) :
     U D T' (perm D N N' π x) G (perm D N N' π z) = U D T x (fun w => G (perm D N N' π w)) z := by
-  simp only [U, Hf_perm hL, map_add]
+  simp only [U, Hf_perm hL, map_add (f := _)]
 
 theorem La_perm (hL : T'.abelian₂ = T.abelian₂) (hE : ∀ τ x, T'.emb τ x = T.emb (π τ) x) (L L')
     (x : VC D N N') : perm D N N' π x ∈ La D T' L L' ↔ x ∈ La D T L L' := by

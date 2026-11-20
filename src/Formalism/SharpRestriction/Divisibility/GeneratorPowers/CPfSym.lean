@@ -20,7 +20,7 @@ theorem ordGE_zero (r : ℕ) : OrdGE r (0 : MvPowerSeries σ k) := by
 
 theorem ordGE_add {r : ℕ} {f g : MvPowerSeries σ k} (hf : OrdGE r f) (hg : OrdGE r g) : OrdGE r (f + g) := by
   intro e he
-  rw [map_add, hf e he, hg e he, add_zero]
+  rw [map_add (f := _), hf e he, hg e he, add_zero]
 
 def op {d : ℕ} (a : Fin d → MvPowerSeries σ k) (cd : Fin d → σ) (g : MvPowerSeries σ k) : MvPowerSeries σ k :=
   ∑ j, a j * pderiv k (cd j) g

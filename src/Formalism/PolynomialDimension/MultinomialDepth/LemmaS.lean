@@ -145,7 +145,7 @@ theorem split {B : Type} [AddCommGroup B] [Module O B] {π : O} (hπ : Irreducib
     { carrier := {x | ∃ z, g x = π ^ (E + 1) • z}
       add_mem' := by
         rintro a b ⟨z1, h1⟩ ⟨z2, h2⟩
-        exact ⟨z1 + z2, by rw [map_add, h1, h2, smul_add]⟩
+        exact ⟨z1 + z2, by rw [map_add (f := _), h1, h2, smul_add]⟩
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := by
         rintro r a ⟨z, hz⟩
@@ -235,7 +235,7 @@ theorem wach_cohomology_top_S : LemmaS := by
     intro w z hwz
     have hw : ph (io (u2 (j0 (fun k => w (Sum.inl k))))) + ph (u1 (fun k => w (Sum.inr k))) =
         π ^ (2 * D + 1) • z := by
-      rw [← map_add]
+      rw [← map_add (f := _)]
       exact hwz
     suffices H : ∀ (x : {k // p k} → O) (y : Fin ρp → O),
         ph (io (u2 (j0 x))) + ph (u1 y) = π ^ (2 * D + 1) • z →
@@ -249,7 +249,7 @@ theorem wach_cohomology_top_S : LemmaS := by
     have hz0' : ps (ph (io (u2 (j0 x)))) = π ^ (2 * D + 1) • z0 := hz0
     have hy1 : ps (ph (u1 y)) = π ^ (2 * D + 1) • (ps z - z0) := by
       have := congrArg ps hw
-      rw [map_add, map_smul] at this
+      rw [map_add (f := _), map_smul] at this
       rw [smul_sub, ← this, ← hz0']
       abel
     have hy2 : π ^ D • y = π ^ D • (π ^ (D + 1) • v1 (ps z - z0)) := by

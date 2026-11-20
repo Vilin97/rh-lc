@@ -117,7 +117,7 @@ theorem dRho_laws : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ f, C.IsTh f �
       simp only [Pi.single_apply]
       split_ifs <;> simp
     funext w
-    rw [hD', hD', hD', Pi.add_apply, hform f hf, hform f hf, hform f hf, hadd, map_add,
+    rw [hD', hD', hD', Pi.add_apply, hform f hf, hform f hf, hform f hf, hadd, map_add (f := _),
       ContinuousLinearMap.map_add]
     push_cast
     ring
@@ -140,7 +140,7 @@ theorem dRho_laws : ∀ (D : D7) (S T : HSp D) (C : Ctx S T), ∀ f, C.IsTh f �
     have hskew : ∀ u v : RW T S, omO S T v u = -omO S T u v := by
       intro u v
       have h := omO_self hσ (u + v)
-      simp only [map_add, LinearMap.add_apply, omO_self hσ, zero_add, add_zero] at h
+      simp only [map_add (f := _), LinearMap.add_apply, omO_self hσ, zero_add, add_zero] at h
       linarith
     simp only [hD']
     rw [heisenberg_derivative_commutator (WO S T) (RW T S) (iotaW σ T S) (piW C.θ T S) (omO S T)

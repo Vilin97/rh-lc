@@ -88,7 +88,7 @@ theorem exists_poly_approx_PPSet : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZ
     · simp [w₁, hx]
   · funext τ
     refine PowerSeries.ext fun i => PowerSeries.ext fun n => ?_
-    rw [← Nat.cast_pow, Pi.add_apply, Pi.mul_apply, Pi.natCast_apply, map_add, map_add, coeff_coeff_natCast_mul,
+    rw [← Nat.cast_pow, Pi.add_apply, Pi.mul_apply, Pi.natCast_apply, map_add (f := _), map_add (f := _), coeff_coeff_natCast_mul,
       coeff_F, coeff_ser, coeff_ser, hsplit (i, n), map_add, map_mul, map_pow, map_natCast]
     push_cast
     ring

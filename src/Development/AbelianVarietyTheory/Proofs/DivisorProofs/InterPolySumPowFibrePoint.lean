@@ -63,12 +63,12 @@ theorem coeff_aeval_line {σ R : Type} [Fintype σ] [CommRing R] (a b : σ → R
   | C r =>
     rw [aeval_C, aeval_C, Polynomial.algebraMap_apply]
     simp [Polynomial.coeff_C, -eq_intCast, -map_intCast, -algebraMap_int_eq]
-  | add p q hp hq => simp only [map_add, Polynomial.coeff_add, hp.1, hp.2, hq.1, hq.2, add_mul, Finset.sum_add_distrib, and_self]
+  | add p q hp hq => simp only [map_add (f := _), Polynomial.coeff_add, hp.1, hp.2, hq.1, hq.2, add_mul, Finset.sum_add_distrib, and_self]
   | mul_X p s hp =>
     refine ⟨by rw [map_mul, Polynomial.mul_coeff_zero, hp.1]; simp, ?_⟩
     rw [map_mul, aeval_X, mul_add, Polynomial.coeff_add, Polynomial.coeff_mul_C, hp.2, ← mul_assoc,
       Polynomial.coeff_mul_C, Polynomial.coeff_mul_X, hp.1]
-    simp only [pderiv_mul, map_add, map_mul, aeval_X, add_mul, Finset.sum_add_distrib, Finset.sum_mul, pderiv_X]
+    simp only [pderiv_mul, map_add (f := _), map_mul, aeval_X, add_mul, Finset.sum_add_distrib, Finset.sum_mul, pderiv_X]
     congr 1
     · exact Finset.sum_congr rfl fun v _ => by ring
     · rw [Finset.sum_eq_single s (fun v _ hv => by simp [Pi.single_eq_of_ne' hv]) (by simp)]
@@ -86,7 +86,7 @@ theorem lie_detRep {R : Type} [CommRing R] (A : Mat m R) (i j : Fin 1) :
     simp [Matrix.one_apply, apply_ite]
   refine (congrArg (Polynomial.coeff · 1) (Finset.prod_congr rfl fun τ _ => congrArg Matrix.det (e τ))).trans ?_
   have h0 (τ : ι) : (1 + (Polynomial.X : Polynomial R) • (A τ).map Polynomial.C).det.coeff 0 = 1 := by
-    rw [Polynomial.coeff_zero_eq_eval_zero, ← Polynomial.coe_evalRingHom, RingHom.map_det, map_add, map_one]
+    rw [Polynomial.coeff_zero_eq_eval_zero, ← Polynomial.coe_evalRingHom, RingHom.map_det, map_add (f := _), map_one]
     refine (congrArg Matrix.det ?_).trans Matrix.det_one
     ext i j
     simp

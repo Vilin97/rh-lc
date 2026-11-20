@@ -140,7 +140,7 @@ theorem polySlash_polySlash (m m' : Matrix (Fin 2) (Fin 2) ℤ) (p : MvPolynomia
   have h1 : (slP m').comp (slP m) = slP (R := R) (m * m') := by
     apply MvPolynomial.algHom_ext
     intro i
-    simp only [AlgHom.comp_apply, slP_X, map_add, map_smul, Matrix.mul_apply, Fin.sum_univ_two,
+    simp only [AlgHom.comp_apply, slP_X, map_add (f := _), map_smul, Matrix.mul_apply, Fin.sum_univ_two,
       Int.cast_add, Int.cast_mul]
     module
   exact DFunLike.congr_fun h1 p
@@ -160,7 +160,7 @@ theorem eval_slP (m : Matrix (Fin 2) (Fin 2) ℤ) (u : Fin 2 → R) (p : MvPolyn
   | C a => simp [slP]
   | add p q hp hq => simp [hp, hq]
   | mul_X p i hp =>
-    simp only [map_mul, hp, slP_X, MvPolynomial.eval_X, map_add, MvPolynomial.smul_eval]
+    simp only [map_mul, hp, slP_X, MvPolynomial.eval_X, map_add (f := _), MvPolynomial.smul_eval]
     congr 1
     fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two]
 
@@ -185,7 +185,7 @@ def potSub (R : Type) [CommRing R] (w : ℕ) (Γ : Subgroup SL(2, ℤ)) : Submod
     obtain ⟨p, hp⟩ := hF' γ hγ
     obtain ⟨q, hq⟩ := hG' γ hγ
     refine ⟨p + q, fun z hz => ?_⟩
-    rw [← hp z hz, ← hq z hz]; simp only [Pi.add_apply, map_add]; ring
+    rw [← hp z hz, ← hq z hz]; simp only [Pi.add_apply, map_add (f := _)]; ring
   smul_mem' := by
     rintro c F ⟨hF, hF'⟩
     refine ⟨fun z => (MvPolynomial.homogeneousSubmodule (Fin 2) R w).smul_mem c (hF z), fun γ hγ => ?_⟩

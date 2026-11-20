@@ -102,7 +102,7 @@ theorem exists_approx (N : ℕ) (hN : 0 < N) {x : AL L} (hx : x ∈ ALint L) :
   | add x x' _ _ h h' =>
     obtain ⟨t, y, hy, rfl⟩ := h
     obtain ⟨t', y', hy', rfl⟩ := h'
-    exact ⟨t + t', y + y', add_mem hy hy', by rw [map_add]; ring⟩
+    exact ⟨t + t', y + y', add_mem hy hy', by rw [map_add (f := _)]; ring⟩
   | neg x _ h =>
     obtain ⟨t, y, hy, rfl⟩ := h
     exact ⟨-t, -y, neg_mem hy, by rw [map_neg]; ring⟩
@@ -236,7 +236,7 @@ theorem hecke_eq_smul_of_isot : ∀ {D : D7} {V : HSp D} {n : ℕ} (hF : D.host.
       obtain ⟨Φ, hE, x, hx, rfl⟩ := hT
       exact hΦ Φ hE x hx
     | zero => simp
-    | add T T' _ _ h h' => rw [map_add, h, h', smul_add]
+    | add T T' _ _ h h' => rw [map_add (f := _), h, h', smul_add]
     | smul c T _ h => rw [map_smul, h, smul_comm]
   let H : Subgroup (Formalism.AUTREP.GAf D.host.E n) := Subgroup.closure {κ | Q.ψ κ ∈ hyp V Pr}
   have hH : H ≤ ReciprocityTheory.Aut.Umax D.host.E n := (Subgroup.closure_le _).2 fun κ hκ => (hQ.2 κ).2 hκ.1
@@ -290,7 +290,7 @@ theorem hecke_eq_smul_of_isot : ∀ {D : D7} {V : HSp D} {n : ℕ} (hF : D.host.
       have hf := avg_fixed (stabN π H N) ρ1 (x := x) (fun s hs => hs x hx) ⟨κ, Subgroup.subset_closure hκ⟩
       exact congrArg Subtype.val hf
     | zero => simp
-    | add T T' _ _ h h' => rw [map_add]; exact add_mem h h'
+    | add T T' _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
     | smul c T _ h => rw [map_smul]; exact Submodule.smul_mem _ c h
   have := hWe _ (hAW U hUN)
   rwa [hAU] at this

@@ -44,7 +44,7 @@ theorem rankMat_unitary (c : R →+* R) (hc : ∀ r, c (c r) = r) (D : Matrix N 
   have hDm : D.map c = Dᵀ := by ext i j; simp [hD]
   have hPP : (P.map c).map c = P := by ext i j; simp [hc]
   have hmap : (rankMat c D P C).map c = 1 + P.map c * C.map c * (Pᵀ * D) := by
-    rw [rankMat, Matrix.map_add, Matrix.map_one _ (map_zero c) (map_one c), Matrix.map_mul, Matrix.map_mul,
+    rw [rankMat, Matrix.map_add (f := _), Matrix.map_one _ (map_zero c) (map_one c), Matrix.map_mul, Matrix.map_mul,
       Matrix.transpose_map, Matrix.map_mul, hDm, hPP]
     all_goals first | simp [Matrix.transpose_mul] | exact fun a b => map_add c a b
   have htr : (rankMat c D P C)ᵀ = 1 + D * P.map c * Cᵀ * Pᵀ := by

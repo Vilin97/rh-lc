@@ -85,7 +85,7 @@ theorem valuation_le_one_of_intLoc {v : HeightOneSpectrum (𝓞 F)} (φ : E →�
       rw [hP0, ← hr]
       exact mul_mem (v.coe_mem_adicCompletionIntegers r) ha
     · rw [map_zero]; exact zero_mem _
-    · rw [map_add]; exact add_mem hy hz
+    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     · rw [map_neg]; exact neg_mem hy
   have h1 : P ((1 : Fv F v) ⊗ₜ e) ∈ v.adicCompletionIntegers F := hP _ h
   rw [hP0, mul_one, HeightOneSpectrum.mem_adicCompletionIntegers] at h1

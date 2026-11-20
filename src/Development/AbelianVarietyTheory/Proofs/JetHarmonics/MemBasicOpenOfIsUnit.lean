@@ -442,7 +442,7 @@ theorem jets (hL : Laws) (hTW : TwistBCSpanStatement) (V : Type) [CommRing V] [I
       obtain ⟨p, rfl⟩ := hsurj b
       induction p using MvPolynomial.induction_on with
       | C c => rw [MvPolynomial.eval₂Hom_C]; exact hc c
-      | add p p' hp hp' => rw [map_add, map_add]; exact add_mem hp hp'
+      | add p p' hp hp' => rw [map_add (f := _), map_add (f := _)]; exact add_mem hp hp'
       | mul_X p i hp =>
         rw [map_mul, map_mul, MvPolynomial.eval₂Hom_X']
         exact mul_mem hp (Algebra.subset_adjoin ⟨i, rfl⟩)
@@ -491,7 +491,7 @@ theorem jets (hL : Laws) (hTW : TwistBCSpanStatement) (V : Type) [CommRing V] [I
       add_mem' := by
         rintro v v' ⟨β, hβ⟩ ⟨β', hβ'⟩
         refine ⟨SectionArithmetic.secAdd β β', fun z J hJ => ?_⟩
-        rw [add_mul, map_add, add_mul, ← hβ z J hJ, ← hβ' z J hJ]
+        rw [add_mul, map_add (f := _), add_mul, ← hβ z J hJ, ← hβ' z J hJ]
         exact gs_add xn z _ (hJ.mem _ xn) _ _
       zero_mem' := ⟨SectionArithmetic.secZero _, fun z J hJ => by
         rw [zero_mul, map_zero, zero_mul]

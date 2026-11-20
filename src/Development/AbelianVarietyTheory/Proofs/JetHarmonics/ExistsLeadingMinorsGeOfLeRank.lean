@@ -17,7 +17,7 @@ theorem exists_mem_valuation_le_of_mem_span {C : Type} [Field C] (v : Valuation 
     | mem a ha => exact hne a ha
     | zero => simpa using pos_iff_ne_zero.mpr h0
     | add a b _ _ ha hb =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact v.map_add_lt ha hb
     | smul o a _ ha =>
       rw [map_smul, smul_eq_mul, map_mul, map_mul]

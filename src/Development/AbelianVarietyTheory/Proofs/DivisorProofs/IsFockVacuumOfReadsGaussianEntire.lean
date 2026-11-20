@@ -108,7 +108,7 @@ theorem reads_isFockVacAt : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : 
     have a1 := congrFun (congrFun hw i) j
     have a2 := congrFun (congrFun h2 i) j
     simp only [Matrix.map_apply, Matrix.zero_apply] at a1 a2 ⊢
-    rw [Matrix.add_apply, (finPart D).map_add, a1, a2, add_zero]
+    rw [Matrix.add_apply, (finPart D).map_add (f := _), a1, a2, add_zero]
   have hval : ∀ w : WO S T, w.map (finPart D) = 0 → f w = E (piW θ T S w) * Φ (piW θ T S w) := by
     intro w hw
     rw [hR' w hw]
@@ -134,7 +134,7 @@ theorem reads_isFockVacAt : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : 
         Complex.exp ((t : ℂ) * (-(Real.pi * Complex.I) * ((GlobalTheory.OrientedHeis.omO S T (piW θ T S w) x : ℝ) : ℂ))) *
           (E (piW θ T S w + t • x) * Φ (piW θ T S w + t • x)) := by
       funext t
-      rw [hx t, heisO_iota h hψ, hval _ (hreal w hw _), AddMonoidHom.map_add, h.pi_iota T S, LinearMap.map_smul]
+      rw [hx t, heisO_iota h hψ, hval _ (hreal w hw _), AddMonoidHom.map_add (f := _), h.pi_iota T S, LinearMap.map_smul]
       congr 2
       rw [smul_eq_mul, Complex.ofReal_mul]
       ring

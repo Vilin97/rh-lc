@@ -13,7 +13,7 @@ theorem UpperTheory.V.Th.Coc.liftOfS :
             map_zero' := by ext i j; simp [bar]
             map_add' := fun a a' => by
               ext i j
-              rw [Matrix.add_apply, en, en, en, map_add s, map_add ρ, Matrix.add_apply, Matrix.add_apply, map_add, map_add]
+              rw [Matrix.add_apply, en, en, en, map_add s, map_add ρ, Matrix.add_apply, Matrix.add_apply, map_add (f := _), map_add (f := _)]
               ring }, fun a a' => ?_, fun r a => ?_, fun a => ?_⟩
   · ext i k
     have h1 := congrArg δ (congrFun (congrFun (hs a a') i) k)

@@ -21,12 +21,12 @@ section lin
 variable {r : ℕ} (T' : ℝ)
 
 theorem hco_add_left (c c' d : Co r) : hco T' (c + c') d = hco T' c d + hco T' c' d := by
-  simp only [hco, Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add, add_mul, mul_add,
+  simp only [hco, Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add (f := _), add_mul, mul_add,
     Finset.sum_add_distrib]
   ring
 
 theorem hco_add_right (c d d' : Co r) : hco T' c (d + d') = hco T' c d + hco T' c d' := by
-  simp only [hco, Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add, add_mul, mul_add,
+  simp only [hco, Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add (f := _), add_mul, mul_add,
     Finset.sum_add_distrib]
   ring
 
@@ -74,7 +74,7 @@ theorem hco_sum_right {ι : Type*} (s : Finset ι) (c : Co r) (f : ι → Co r) 
 
 theorem hco_symm (c d : Co r) : hco T' d c = conj (hco T' c d) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [hco, map_add, map_sub, map_mul, map_sum, Complex.conj_conj, Complex.conj_ofReal]
+    simp only [hco, map_add (f := _), map_sub, map_mul, map_sum, Complex.conj_conj, Complex.conj_ofReal]
   have e1 : ∑ a, d.1 a * conj (c.2.1 a) = ∑ a, conj (c.2.1 a) * d.1 a :=
     Finset.sum_congr rfl fun _ _ => mul_comm _ _
   have e2 : ∑ a, d.2.1 a * conj (c.1 a) = ∑ a, conj (c.1 a) * d.2.1 a :=
@@ -132,7 +132,7 @@ theorem herm_cvec (hz' : inWb k r z') (hν : inWb k r ν') (hνz : herm (Hpk k r
     intro x v w; simp only [herm, Matrix.mulVec_smul, dotProduct_smul, smul_eq_mul]
   have a2 : ∀ v w w' : Fin (2 * r + k + 1) → ℂ,
       herm (Hpk k r) v (w + w') = herm (Hpk k r) v w + herm (Hpk k r) v w' := by
-    intro v w w'; rw [hsym, a1, map_add, ← hsym, ← hsym]
+    intro v w w'; rw [hsym, a1, map_add (f := _), ← hsym, ← hsym]
   have s2 : ∀ (x : ℂ) (v w : Fin (2 * r + k + 1) → ℂ),
       herm (Hpk k r) v (x • w) = conj x * herm (Hpk k r) v w := by
     intro x v w; rw [hsym, s1, map_mul, ← hsym]

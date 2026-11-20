@@ -39,14 +39,14 @@ theorem core_span {R V F : Type} [CommRing R] [AddCommGroup V] [Module R V] [Add
     | mem b hb => exact h a ha b hb
     | zero => rw [map_zero]; exact InnerProductSpace.Core.inner_zero_right _
     | add u v _ _ hu hv =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (InnerProductSpace.Core.inner_add_right _ _ _).trans (by rw [show _ = _ from hu, show _ = _ from hv, add_zero])
     | smul r u _ hu =>
       rw [hs]
       exact (InnerProductSpace.Core.inner_smul_right _ _).trans (by rw [show _ = _ from hu, mul_zero])
   | zero => rw [map_zero]; exact InnerProductSpace.Core.inner_zero_left _
   | add u v _ _ hu hv =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (InnerProductSpace.Core.inner_add_left _ _ _).trans (by rw [show _ = _ from hu, show _ = _ from hv, add_zero])
   | smul r u _ hu =>
     rw [hs]

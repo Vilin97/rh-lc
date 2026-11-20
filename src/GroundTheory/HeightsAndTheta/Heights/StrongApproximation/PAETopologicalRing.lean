@@ -48,7 +48,7 @@ theorem AETopologicalRing.linearIndependent_one_anti (c : E ≃ₐ[F] E) {δ : E
   intro s t hst
   rw [Algebra.smul_def, Algebra.smul_def, mul_one] at hst
   have h' := congrArg c hst
-  simp only [map_add, map_mul, AlgEquiv.commutes, hδ, map_zero] at h'
+  simp only [map_add (f := _), map_mul, AlgEquiv.commutes, hδ, map_zero] at h'
   have ht : algebraMap F E t = 0 := by
     have : (2 * δ) * algebraMap F E t = 0 := by linear_combination hst - h'
     exact (mul_eq_zero.1 this).resolve_left (mul_ne_zero two_ne_zero h0)
@@ -67,7 +67,7 @@ theorem AETopologicalRing.sigALinear_apply (c : E ≃ₐ[F] E) (a : AE F E) :
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 end
 

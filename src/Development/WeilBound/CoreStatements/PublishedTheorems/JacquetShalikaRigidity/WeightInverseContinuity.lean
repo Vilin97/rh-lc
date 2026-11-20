@@ -280,7 +280,7 @@ theorem koszulThree_of_det : jumpWindows.S1 → H0 → CuspDecayShortRowColumn �
     { carrier := {x | ∃ θ ∈ π.V, (J x : GA E k → ℂ) = θ.1}
       add_mem' := by
         rintro x y ⟨θ, hθ, hx⟩ ⟨θ', hθ', hy⟩
-        exact ⟨θ + θ', π.V.add_mem hθ hθ', by rw [map_add, BoundedContinuousFunction.coe_add, hx, hy, Submodule.coe_add]⟩
+        exact ⟨θ + θ', π.V.add_mem hθ hθ', by rw [map_add (f := _), BoundedContinuousFunction.coe_add, hx, hy, Submodule.coe_add]⟩
       zero_mem' := ⟨0, π.V.zero_mem, by rw [map_zero, BoundedContinuousFunction.coe_zero, Submodule.coe_zero]⟩
       smul_mem' := by
         rintro c x ⟨θ, hθ, hx⟩
@@ -292,16 +292,16 @@ theorem koszulThree_of_det : jumpWindows.S1 → H0 → CuspDecayShortRowColumn �
     let Dl : LieI (InfinitePlace E) k →ₗ[ℝ] XB E k :=
       { toFun := fun Z => T (lie E k Z θ) (hm Z θ hθ)
         map_add' := fun Y Y' => hTadd _ _ _ (hm _ θ hθ) (hm _ θ hθ) (hm _ θ hθ)
-          (by rw [map_add, LinearMap.add_apply])
+          (by rw [map_add (f := _), LinearMap.add_apply])
         map_smul' := fun c Y => by
           rw [RingHom.id_apply]
           exact hTsmul c _ _ (hm _ θ hθ) (hm _ θ hθ) (by rw [map_smul, LinearMap.smul_apply]) }
     let D := LinearMap.toContinuousLinearMap Dl
     let Bl : LieI (InfinitePlace E) k →ₗ[ℝ] LieI (InfinitePlace E) k →ₗ[ℝ] XB E k :=
       LinearMap.mk₂ ℝ (fun Y Z => T (lie E k Z (lie E k Y θ)) (hm Z _ (hm Y θ hθ)))
-        (fun Y Y' Z => hTadd _ _ _ (hm _ _ (hm _ θ hθ)) (hm _ _ (hm _ θ hθ)) (hm _ _ (hm _ θ hθ)) (by rw [map_add, LinearMap.add_apply, map_add]))
+        (fun Y Y' Z => hTadd _ _ _ (hm _ _ (hm _ θ hθ)) (hm _ _ (hm _ θ hθ)) (hm _ _ (hm _ θ hθ)) (by rw [map_add (f := _), LinearMap.add_apply, map_add (f := _)]))
         (fun c Y Z => hTsmul c _ _ (hm _ _ (hm _ θ hθ)) (hm _ _ (hm _ θ hθ)) (by rw [map_smul, LinearMap.smul_apply, LinearMap.map_smul_of_tower]))
-        (fun Y Z Z' => hTadd _ _ _ (hm _ _ (hm _ θ hθ)) (hm _ _ (hm _ θ hθ)) (hm _ _ (hm _ θ hθ)) (by rw [map_add, LinearMap.add_apply]))
+        (fun Y Z Z' => hTadd _ _ _ (hm _ _ (hm _ θ hθ)) (hm _ _ (hm _ θ hθ)) (hm _ _ (hm _ θ hθ)) (by rw [map_add (f := _), LinearMap.add_apply]))
         (fun c Y Z => hTsmul c _ _ (hm _ _ (hm _ θ hθ)) (hm _ _ (hm _ θ hθ)) (by rw [map_smul, LinearMap.smul_apply]))
     obtain ⟨K2, hK2, hB2⟩ := WeightInverseContinuity.bil_bound Bl
     have hb1 : ∀ Z h, ‖lieD Z θ.1 h‖ ≤ ‖D‖ * ‖Z‖ * wt M h := fun Z h =>

@@ -471,7 +471,7 @@ theorem map_inc_mem {l : Level H} (h : l.A = N) (σ : KA l →+* KA l) (hσ : σ
   | mem y hy =>
     rcases hy with rfl | rfl | rfl
     · show ((σ ((1 + (baseKA l).ρ) / 2) : KA l) : ℂ) ∈ _
-      rw [map_div₀, map_add, map_one, hσ, map_ofNat]
+      rw [map_div₀, map_add (f := _), map_one, hσ, map_ofNat]
       exact Subring.subset_closure (Or.inl rfl)
     · show ((σ ((n : KA l)⁻¹) : KA l) : ℂ) ∈ _
       rw [map_inv₀, map_natCast]

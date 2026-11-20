@@ -81,7 +81,7 @@ def phi0 (hS : ScalChar X χ) : X.V →ₗ[ℂ] (Fin (m + 1) → (step X (χ s))
       ofS X χ s ⟨Pr X χ s (Pi.single c v), _⟩ + ofS X χ s ⟨Pr X χ s (Pi.single c w), _⟩
     apply Subtype.ext
     show Pr X χ s (Pi.single c (v + w)) = Pr X χ s (Pi.single c v) + Pr X χ s (Pi.single c w)
-    rw [Pi.single_add, map_add]
+    rw [Pi.single_add, map_add (f := _)]
   map_smul' r v := by
     funext c
     show ofS X χ s ⟨Pr X χ s (Pi.single c (r • v)), _⟩ = r • ofS X χ s ⟨Pr X χ s (Pi.single c v), _⟩
@@ -100,7 +100,7 @@ theorem omega_projection_scalar_character (hS : ScalChar X χ) (v : X.V) :
   rw [right_casimir_apply]
   simp only [← Pr_tensE]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [← map_sum, sum_tensE_single, map_add, map_smul, Pr_om, om_Pr hS, ← add_smul, ← neg_smul, Pi.smul_apply]
+    rw [← map_sum, sum_tensE_single, map_add (f := _), map_smul, Pr_om, om_Pr hS, ← add_smul, ← neg_smul, Pi.smul_apply]
   congr 1
   unfold cn; push_cast; ring
 

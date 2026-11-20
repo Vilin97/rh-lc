@@ -43,6 +43,6 @@ theorem schwartz_L2_isometry_preserves_inner {V : Type} [NormedAddCommGroup V] [
   rw [schwartz_integral_mul_conj_eq_polarization, schwartz_integral_mul_conj_eq_polarization]
   congr 1
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [← map_smul, ← map_add, hT]
+  rw [← map_smul, ← map_add (f := _), hT]
 
 end GlobalTheory

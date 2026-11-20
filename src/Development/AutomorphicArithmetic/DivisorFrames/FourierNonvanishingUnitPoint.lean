@@ -15,7 +15,7 @@ private theorem exists_rep {ι : Type} [Fintype ι] (l : (ι → ℂ) →ₗ[ℝ
     rw [← Pi.single_smul, ← Pi.single_smul, ← Pi.single_add]
     congr 1
     simp
-  rw [h, map_add, map_smul, map_smul]
+  rw [h, map_add (f := _), map_smul, map_smul]
   simp
 
 private theorem continuous_FT {ι : Type} [Fintype ι] (φ : (ι → ℂ) → ℂ) (hc : Continuous φ)

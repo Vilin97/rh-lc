@@ -61,9 +61,9 @@ private theorem split_bij {K₁ K₂ L : Cx R} (c₁ : K₁ ⟶ L) (c₂ : K₂ 
     rw [hx x, hx y, h1, h2]
   · rintro ⟨a, b⟩
     refine ⟨HK.pull R r₁ F n a + HK.pull R r₂ F n b, Prod.ext ?_ ?_⟩
-    · simp only [map_add]
+    · simp only [map_add (f := _)]
       rw [← pl_comp, ← pl_comp, h11, h12, pl_id, pl_zero, add_zero]
-    · simp only [map_add]
+    · simp only [map_add (f := _)]
       rw [← pl_comp, ← pl_comp, h21, h22, pl_id, pl_zero, zero_add]
 
 private theorem sec_nat {F G : Shv R} (φ : F ⟶ G) {V U : Scheme.{0}} (g : V ⟶ U) (x : Sec F U) :

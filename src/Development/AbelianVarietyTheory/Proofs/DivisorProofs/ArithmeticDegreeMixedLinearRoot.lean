@@ -110,7 +110,7 @@ theorem arDeg_lin_mul_pow (D : D7) (Y : DV.ShimX D.what₂.Tau) (T : Real0 Y) (h
     refine Finset.sum_congr rfl fun c _ => ?_
     have h2 : T.L B c (u + t • w) + (0 : ℝ) • T.a B c + (T.K B c).ar ((T.F c).phR R (u + t • w)) =
         (T.L B c u + (T.K B c).ar ((T.F c).phR R u)) + t • (T.L B c w + (T.K B c).ar ((T.F c).phR R w)) := by
-      simp only [map_add, map_smul, zero_smul, add_zero, smul_add]
+      simp only [map_add (f := _), map_smul, zero_smul, add_zero, smul_add]
       abel
     rw [Real0.fR, Calc.top, h2]
     exact num_expand (T.K B c).num (T.K B c).symm _ _ t

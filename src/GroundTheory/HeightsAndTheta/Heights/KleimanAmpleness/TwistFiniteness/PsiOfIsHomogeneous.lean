@@ -71,7 +71,7 @@ theorem psi_mem_tgr (s : Sy S r) : psi η S s ∈ tgr 0 := by
   | C a =>
     rw [psi, aeval_C, algebraMap_LA]
     exact single_mem_tgr 0 0 _
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | mul_X p j hp =>
     rw [map_mul, psi_X]
     simpa using SetLike.mul_mem_graded hp (single_mem_tgr 0 1 (η j))

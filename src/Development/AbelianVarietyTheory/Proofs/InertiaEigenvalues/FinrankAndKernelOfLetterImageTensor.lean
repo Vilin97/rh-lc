@@ -234,6 +234,6 @@ theorem dim_ker : ∀ {G : Type} [Group G] [TopologicalSpace G] {Qp K₀ K : Typ
     conv_lhs => rw [← b.sum_repr (x - W.map f y)]
     simp only [Finset.smul_sum, smul_smul, he]
   refine ⟨W.map h (∑ j, e j • b j) + algebraMap (LetA O n) W.EE (letE i) • y, ?_⟩
-  rw [map_add, h3, ← h4, map_smul, ← smul_add, sub_add_cancel, algebraMap_smul]
+  rw [map_add (f := _), h3, ← h4, map_smul, ← smul_add, sub_add_cancel, algebraMap_smul]
 
 end GlobalTheory.RedDim

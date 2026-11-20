@@ -58,7 +58,7 @@ theorem HL_refl {p n' : ℕ} {W Qq O Kf : Type} [CommRing W] [IsDomain W] [IsDis
     | add a b _ _ ha hb =>
       obtain ⟨a', ha'⟩ := ha
       obtain ⟨b', hb'⟩ := hb
-      exact ⟨a' + b', by rw [map_add, map_add, ha', hb']⟩
+      exact ⟨a' + b', by rw [map_add (f := _), map_add (f := _), ha', hb']⟩
     | smul t a _ ha =>
       obtain ⟨a', ha'⟩ := ha
       exact ⟨t * a', by rw [LinearMap.map_smul_of_tower, ← ha', map_mul, Algebra.smul_def]⟩
@@ -212,7 +212,7 @@ theorem rhoAtG_of_pair (D : Formalism.BasicNotions.D7) {p n' : ℕ} {W Qq O Kf :
       | add a b _ _ ha hb =>
         obtain ⟨a', ha'⟩ := ha
         obtain ⟨b', hb'⟩ := hb
-        exact ⟨a' + b', by rw [map_add, map_add, be_add_right, ha', hb']⟩
+        exact ⟨a' + b', by rw [map_add (f := _), map_add (f := _), be_add_right, ha', hb']⟩
       | smul t a _ ha =>
         obtain ⟨a', ha'⟩ := ha
         exact ⟨t * a', by rw [← algebraMap_smul Kf t a, map_smul, be_smulK_right, ← ha', map_mul]⟩

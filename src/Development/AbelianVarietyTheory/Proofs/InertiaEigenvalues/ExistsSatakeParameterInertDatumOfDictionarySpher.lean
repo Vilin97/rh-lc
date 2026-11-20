@@ -43,7 +43,7 @@ theorem exists_satAt : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n
   let V : Submodule ℂ (GAf L n → π.W) :=
     { carrier := {f | f ∈ π.S ∧ ∀ κ ∈ U, NG.rt L n κ f = f}
       add_mem' := fun {f f'} hf hf' => ⟨π.S.add_mem hf.1 hf'.1, fun κ hκ => by
-        rw [map_add, hf.2 κ hκ, hf'.2 κ hκ]⟩
+        rw [map_add (f := _), hf.2 κ hκ, hf'.2 κ hκ]⟩
       zero_mem' := ⟨π.S.zero_mem, fun κ _ => map_zero _⟩
       smul_mem' := fun c f hf => ⟨π.S.smul_mem c hf.1, fun κ hκ => by rw [map_smul, hf.2 κ hκ]⟩ }
   haveI : FiniteDimensional ℂ π.W := π.alg.1
@@ -65,7 +65,7 @@ theorem exists_satAt : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n
       { toFun := fun f => ⟨heckeFunI L n U Dv h f, hmemV h hh f f.2⟩
         map_add' := fun f f' => Subtype.ext (by
           obtain ⟨C, a, x, hC⟩ := GlobalTheory.SatIso.heckeFunI_eq_sum Dv U h (hfin h hh)
-          simp only [Submodule.coe_add, hC, map_add, smul_add, Finset.sum_add_distrib])
+          simp only [Submodule.coe_add, hC, map_add (f := _), smul_add, Finset.sum_add_distrib])
         map_smul' := fun c f => Subtype.ext (by
           obtain ⟨C, a, x, hC⟩ := GlobalTheory.SatIso.heckeFunI_eq_sum Dv U h (hfin h hh)
           simp only [Submodule.coe_smul, hC, map_smul, RingHom.id_apply, Finset.smul_sum]

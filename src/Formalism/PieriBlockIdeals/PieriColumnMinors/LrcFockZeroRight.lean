@@ -187,7 +187,7 @@ theorem fock_int (r : ℕ) (ν : Fin r → ℕ) (hν : Antitone ν) (x : MvPolyn
     obtain ⟨z, hz⟩ := ih
     obtain ⟨z', hz'⟩ := ih'
     refine ⟨z + z', ?_⟩
-    rw [map_add, lrc_fock_add_right, hz, hz']
+    rw [map_add (f := _), lrc_fock_add_right, hz, hz']
     push_cast
     ring
   | smul c y _ ih =>

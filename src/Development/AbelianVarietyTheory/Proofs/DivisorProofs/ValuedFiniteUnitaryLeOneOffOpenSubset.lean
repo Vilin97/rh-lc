@@ -37,7 +37,7 @@ theorem valued_toCompl_le_one {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpe
   (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 <|
     intLoc_induction (p := fun y => toCompl h y ∈ w.adicCompletionIntegers E)
       (fun _ ha x => mul_mem (complMap_mem h ha) (GlobalTheory.AdeleBaseChange.algebraMap_int_mem x w))
-      (by rw [map_zero]; exact zero_mem _) (fun _ _ h h' => by rw [map_add]; exact add_mem h h')
+      (by rw [map_zero]; exact zero_mem _) (fun _ _ h h' => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h')
       (fun _ h => by rw [map_neg]; exact neg_mem h) hy
 
 theorem map_evalV_map_sndA (v : HeightOneSpectrum (𝓞 F)) (z : AF F ⊗[F] E) :
@@ -47,7 +47,7 @@ theorem map_evalV_map_sndA (v : HeightOneSpectrum (𝓞 F)) (z : AF F ⊗[F] E) 
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a e => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end Local
 

@@ -47,7 +47,7 @@ def wedgeVal (k m : S.κ) : S.Ω :=
 theorem apply_eq (ψ : S.E →ₗ[S.Ω] S.Ω) (u : S.E) :
     ψ u = S.e.repr u 0 * ψ (S.e 0) + S.e.repr u 1 * ψ (S.e 1) := by
   have h := congrArg ψ (S.e.sum_repr u)
-  rw [Fin.sum_univ_two, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul] at h
+  rw [Fin.sum_univ_two, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul] at h
   exact h.symm
 
 theorem wedge_mul_detE (k m : S.κ) (u w : S.E) :
@@ -121,15 +121,15 @@ theorem chart_form (i : S.ι) (hi : S.x i ≠ 0) {a : S.Ω} (ha : a ∈ chartRin
         funext b; cases b <;> simp
       · convert exHomog_mul h₂ (exHomog_pow (exHomog_X (ι := S.YIdx) T.YBlk.base i) d₁) using 1
         funext b; cases b <;> simp [add_comm]
-    · rw [map_add, map_mul, map_mul, map_pow, map_pow, rename_X_base]
+    · rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, rename_X_base]
       refine homog_add ?_ ?_
       · convert exHomog_mul h₁' (exHomog_pow (exHomog_X (ι := S.WIdx) T.WBlk.base i) d₂) using 1
         funext b; cases b <;> simp
       · convert exHomog_mul h₂' (exHomog_pow (exHomog_X (ι := S.WIdx) T.WBlk.base i) d₁) using 1
         funext b; cases b <;> simp [add_comm]
-    · rw [map_add, map_mul, map_mul, map_pow, map_pow, rename_X_base, map_add, map_mul, map_mul, map_pow, map_pow,
+    · rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, rename_X_base, map_add (f := _), map_mul, map_mul, map_pow, map_pow,
         aeval_X, e₁, e₂, coord_base]
-      simp only [map_add, map_mul, map_pow]
+      simp only [map_add (f := _), map_mul, map_pow]
       ring
   | mul y z _ _ hy hz =>
     obtain ⟨d₁, Q₁, h₁, h₁', e₁⟩ := hy

@@ -72,8 +72,8 @@ theorem rowE_monomial_weight {R : Type} [CommRing R] {r n : ℕ} (a b : Fin r) (
   · refine isWeightedHomogeneous_monomial _ _ _ ?_
     have hle : Finsupp.single (b, s) 1 ≤ d := Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr h)
     have hsplit : Finsupp.weight (rowW r n) (d - Finsupp.single (b, s) 1) + Pi.single b 1 = μ := by
-      rw [← weight_rowW_single (b, s), ← map_add, tsub_add_cancel_of_le hle, hd]
-    rw [map_add, weight_rowW_single]
+      rw [← weight_rowW_single (b, s), ← map_add (f := _), tsub_add_cancel_of_le hle, hd]
+    rw [map_add (f := _), weight_rowW_single]
     apply add_right_cancel (b := Pi.single b 1)
     rw [hμ, ← hsplit]
     simp only

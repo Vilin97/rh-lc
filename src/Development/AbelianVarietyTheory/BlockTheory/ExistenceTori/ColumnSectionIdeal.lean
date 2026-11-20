@@ -42,7 +42,7 @@ def HLat (Dw : Datum H) {l : Level H} (c : Coeff l) (a : (E →+* ℂ) × ℕ �
     classical
     rintro P Q ⟨⟨hP1, hP2, hP3⟩, hP4⟩ ⟨⟨hQ1, hQ2, hQ3⟩, hQ4⟩
     refine ⟨⟨Submodule.add_mem _ hP1 hQ1, fun σ i i' h t => ?_, fun m hm => ?_⟩, fun m => ?_⟩
-    · rw [map_add, hP2 σ i i' h t, hQ2 σ i i' h t]
+    · rw [map_add (f := _), hP2 σ i i' h t, hQ2 σ i i' h t]
     · rcases Finset.mem_union.1 (MvPolynomial.support_add hm) with h | h
       · exact hP3 m h
       · exact hQ3 m h

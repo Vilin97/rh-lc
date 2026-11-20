@@ -67,7 +67,7 @@ theorem eq_of_embeds {e : (Σ _ : Fin 2, Fin 1) ≃ Fin 2} {χ : Fin 2 → kˣ �
       ((∏ a, χ a (GeneralLinearGroup.det (g a)) : ℂˣ) : ℂ) • y := by
     intro g y
     induction y using PiTensorProduct.induction_on with
-    | add x y hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | smul_tprod c x =>
       rw [map_smul, smul_comm, piTensor_tprod, Units.coe_prod, ← MultilinearMap.map_smul_univ]
       congr 2

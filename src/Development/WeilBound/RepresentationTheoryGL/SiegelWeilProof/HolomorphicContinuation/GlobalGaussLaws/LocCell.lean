@@ -78,7 +78,7 @@ theorem exists_sec (θ : InfFam D) (hθ : IsInfFam θ) (τ : D.what₂.Tau) (m n
     rw [e]
     simp only [S]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp_rw [map_sum, map_add]
+      simp_rw [map_sum, map_add (f := _)]
     simp_rw [← e, (hL _).2.2]
     split_ifs with h
     · ext a' i'
@@ -92,16 +92,16 @@ theorem exists_sec (θ : InfFam D) (hθ : IsInfFam θ) (τ : D.what₂.Tau) (m n
     rw [ef]
     simp only [S]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp_rw [map_sum, map_add]
+      simp_rw [map_sum, map_add (f := _)]
     simp_rw [← ef, (hL _).2.1]
     simp
   refine ⟨S, fun x u => ?_, fun x u τ' h => ?_, fun x u => ?_⟩
   · funext a i
     simp only [piT, Pi.add_apply]
-    rw [e, map_add, ← e, ← e, hc, if_pos rfl]
+    rw [e, map_add (f := _), ← e, ← e, hc, if_pos rfl]
     rfl
-  · rw [e, map_add, ← e, ← e, hc, if_neg h, add_zero]
-  · rw [ef, map_add, ← ef, ← ef, hf, add_zero]
+  · rw [e, map_add (f := _), ← e, ← e, hc, if_neg h, add_zero]
+  · rw [ef, map_add (f := _), ← ef, ← ef, hf, add_zero]
 
 theorem cov {m n : ℕ} (fr : Matrix (Fin m) (Fin m) ℂ) (hfr : IsUnit fr.det) :
     ∃ c' : ℝ, 0 < c' ∧ ∀ f : (Fin m → Fin n → ℂ) → ℂ,

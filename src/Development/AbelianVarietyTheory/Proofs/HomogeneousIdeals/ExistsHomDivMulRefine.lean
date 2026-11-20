@@ -79,7 +79,7 @@ variable {τ : Y →+ Y →+ Additive A} {w : O} in
 private theorem apply_smul_add_apply_smul_eq_of_add_star_eq_one (hsymm : ∀ y y', τ y y' = τ y' y)
     (hadj : ∀ (a : O) y y', τ (a • y) y' = τ y (star a • y')) (hw : w + star w = 1) (y y' : Y) :
     τ y (w • y') + τ y' (w • y) = τ y y' := by
-  rw [hsymm y' (w • y), hadj, ← (τ y).map_add, ← add_smul, hw, one_smul]
+  rw [hsymm y' (w • y), hadj, ← (τ y).map_add (f := _), ← add_smul, hw, one_smul]
 
 variable {O Y A : Type*} [CommRing O] [StarRing O] [AddCommGroup Y] [Module O Y] [CommGroup A] in
 variable {τ : Y →+ Y →+ Additive A} {w : O} in
@@ -87,7 +87,7 @@ private theorem apply_add_smul_add_eq_add_add (hsymm : ∀ y y', τ y y' = τ y'
     (hadj : ∀ (a : O) y y', τ (a • y) y' = τ y (star a • y')) (hw : w + star w = 1) (y y' : Y) :
     τ (y + y') (w • (y + y')) = τ y (w • y) + τ y' (w • y') + τ y y' := by
   rw [← apply_smul_add_apply_smul_eq_of_add_star_eq_one hsymm hadj hw y y']
-  simp only [smul_add, map_add, AddMonoidHom.add_apply]
+  simp only [smul_add, map_add (f := _), AddMonoidHom.add_apply]
   abel
 
 variable {O Y A : Type*} [CommRing O] [StarRing O] [AddCommGroup Y] [Module O Y] [CommGroup A] in

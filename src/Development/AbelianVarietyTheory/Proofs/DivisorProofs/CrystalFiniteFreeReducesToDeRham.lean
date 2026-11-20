@@ -78,7 +78,7 @@ theorem crys_free_and_red : ∀ (F : Type) [Field F] [NumberField F] (Λ : Type)
         congr 1
         exact GrpMor.pull_pull (liftMor (divided₂ hI) h) m (GlobalTheory.Published.AbelianDeRham.bcMor (R' := k) h)
           (fun _ ↦ rfl) (by simp) c
-      | add x y hx hy => rw [map_add, hx, hy, map_add]
+      | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _)]
     have : liftSemi m.pull = liftSemi (GlobalTheory.Published.AbelianDeRham.bcMor (R' := k) h).pull ∘ₗ
         E.symm.toLinearMap := by
       rw [← key, LinearMap.comp_assoc, ← LinearEquiv.coe_trans, LinearEquiv.symm_trans_self]; rfl
@@ -105,11 +105,11 @@ theorem crys_free_and_red : ∀ (F : Type) [Field F] [NumberField F] (Λ : Type)
       rw [e1, e2, hm.bcMap.map_smulₛₗ, hact]
       rfl
     | add r s hr hs =>
-      rw [add_smul, hm.bcMap.map_add, hr, hs, map_add, add_smul]
+      rw [add_smul, hm.bcMap.map_add (f := _), hr, hs, map_add (f := _), add_smul]
   · intro h'
     let l : prim (divided₂ hI) (spMap π) A₀ →ₗ[Λ] k :=
       { toFun c := h' (m.pull c)
-        map_add' c d := by rw [map_add, map_add]
+        map_add' c d := by rw [map_add (f := _), map_add (f := _)]
         map_smul' r c := by
           rw [map_smulₛₗ, map_smul, smul_eq_mul, RingHom.id_apply, Algebra.smul_def] }
     obtain ⟨hh, hhl⟩ := Module.projective_lifting_property (Algebra.linearMap Λ k) l hπ

@@ -153,7 +153,7 @@ lemma SFree.rename {τ : Type} (e : τ → σ) (he : ∀ x k, e x ≠ sv k) (y :
     SFree sv (rename e y) := by
   induction y using MvPolynomial.induction_on with
   | C a => rw [rename_C]; exact SFree.C sv a
-  | add f g hf hg => rw [map_add]; exact hf.add sv hg
+  | add f g hf hg => rw [map_add (f := _)]; exact hf.add sv hg
   | mul_X f x hf => rw [map_mul, rename_X]; exact hf.mul sv (SFree.X sv (he x))
 
 lemma Good.mul_sfree {f Q : MvPolynomial σ K} {a : ι → ℕ} {s : σ →₀ ℕ} (hf : Good sv f a s)
@@ -388,7 +388,7 @@ theorem tensorSat (he : Function.Injective e) (Yq : Submodule ℚ_[p] (MvPolynom
       ring
     | zero => simp [kap_zero]
     | add x y _ _ hx hy =>
-      simp only [kap_add, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+      simp only [kap_add, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
       exact congrArg₂ (· + ·) hx hy
     | smul c x _ hx =>
       simp only [kap_smul, map_smul, mul_smul_comm, smul_mul_assoc, ← Finset.smul_sum]

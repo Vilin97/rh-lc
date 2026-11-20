@@ -93,7 +93,7 @@ theorem arFun_shift (hC : ArCalc) [IsIntegral X] {D : ℕ} (hX : IsArithVar p D)
         have : pderiv a (lin (fun i => (n i : ℝ))) = C (n a : ℝ) := by
           simp [lin, pderiv_X, Pi.single_apply]
         rw [pderiv_pow, this, smul_eq_C_mul]
-        simp only [Nat.add_sub_cancel, map_mul, map_add, map_natCast, map_one]
+        simp only [Nat.add_sub_cancel, map_mul, map_add (f := _), map_natCast, map_one]
         push_cast
         ring
       simp only [LinearMap.sub_apply, LinearMap.comp_apply, Derivation.coeFn_coe]

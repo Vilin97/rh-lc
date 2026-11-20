@@ -77,11 +77,11 @@ theorem perFactor_of_isPrim {w₀ : O} (hp : IsPrim B w₀) (w : ℂ) (a : B.La)
   have hy : w₀ • a.y + star w₀ • a.y = a.y := by rw [← add_smul, h1, one_smul]
   have hT : B.T a.y a.y = 2 * B.T a.y (w₀ • a.y) := by
     have := congrArg (B.T a.y) hy
-    rw [map_add, ← B.T_adj, B.T_symm (w₀ • a.y)] at this
+    rw [map_add (f := _), ← B.T_adj, B.T_symm (w₀ • a.y)] at this
     rw [← this]; ring
   have hE : B.EF a (w₀ • a) = B.Ef a.l (B.FLam w₀ a.l) + (a.n a.y + 2 * (-a.n (w₀ • a.y))) := by
     have := congrArg a.n hy
-    rw [map_add] at this
+    rw [map_add (f := _)] at this
     rw [AnArc.EF_apply, AnArc.La.smul_n_apply, AnArc.La.smul_y, AnArc.La.smul_l]
     omega
   have hq : (B.be a.y a.y : ℂ) = 2 * B.q a.y := by rw [← B.two_mul_q]; push_cast; ring
@@ -99,14 +99,14 @@ theorem theta_sum_appellHumbert : ThetaSt := by
   let b : B.La →+ (B.V →ₗ[ℂ] ℂ) := AddMonoidHom.mk' (fun a =>
     { toFun := fun v => lin B a v - Real.pi * hermForm Hm (h v) (h (B.Pw w a))
       map_add' := fun v v' => by
-        simp only [lin, hermForm, map_add, add_dotProduct, Prod.fst_add, Prod.snd_add, AddMonoidHom.add_apply,
+        simp only [lin, hermForm, map_add (f := _), add_dotProduct, Prod.fst_add, Prod.snd_add, AddMonoidHom.add_apply,
           AnArc.H_add_left]
         ring
       map_smul' := fun c v => by
         simp only [lin, hermForm, map_smul, smul_dotProduct, Prod.smul_fst, Prod.smul_snd, AddMonoidHom.smul_apply,
           AnArc.H_smul_left, smul_eq_mul, RingHom.id_apply]
         ring }) fun a a' => LinearMap.ext fun v => by
-      simp only [lin, hermForm, map_add, star_add, Matrix.mulVec_add, dotProduct_add, AnArc.La.add_y, AnArc.La.add_l,
+      simp only [lin, hermForm, map_add (f := _), star_add, Matrix.mulVec_add, dotProduct_add, AnArc.La.add_y, AnArc.La.add_l,
         Submodule.coe_add, AnArc.H_add_right, LinearMap.add_apply, LinearMap.coe_mk, AddHom.coe_mk]
       ring
   have hb : ∀ a v, b a v = lin B a v - Real.pi * hermForm Hm (h v) (h (B.Pw w a)) := fun _ _ => rfl
@@ -129,9 +129,9 @@ theorem theta_sum_appellHumbert : ThetaSt := by
     exact hq''.cexp.mul (hS.comp hd)
   · simp only [h.symm_apply_apply, mul_eq_zero, Complex.exp_ne_zero, false_or]
   · obtain ⟨v, rfl⟩ := h.surjective z
-    simp only [← map_add, h.symm_apply_apply]
+    simp only [← map_add (f := _), h.symm_apply_apply]
     rw [B.Sum_add_period hth, pow_one, perFactor_of_isPrim B hp]
-    simp only [map_add, LinearMap.add_apply, hs v (B.Pw w a), hB, hb]
+    simp only [map_add (f := _), LinearMap.add_apply, hs v (B.Pw w a), hB, hb]
     have e : ∀ s x y x' y' S : ℂ, x + y = x' + y' →
         Complex.exp x * (s * Complex.exp y * S) = s * Complex.exp x' * (Complex.exp y' * S) := fun s x y x' y' S e => by
       have := congrArg Complex.exp e

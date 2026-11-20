@@ -79,7 +79,7 @@ theorem polMat_comp_star {d : ℕ} (q : (Fin d → ℂ) → ℝ) :
     ext i; simp only [Pi.star_apply, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, star_add, star_sub, star_mul', Pi.single_apply]; split_ifs <;> simp [sub_eq_add_neg]
   have e4 : star (Pi.single k 1 - Complex.I • Pi.single l 1 : Fin d → ℂ) = Pi.single k 1 + Complex.I • Pi.single l 1 := by
     ext i; simp only [Pi.star_apply, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, star_add, star_sub, star_mul', Pi.single_apply]; split_ifs <;> simp [sub_eq_add_neg]
-  simp only [polMat, Matrix.map_apply, e1, e2, e3, e4, map_div₀, map_sub, map_add, map_mul, Complex.conj_ofReal,
+  simp only [polMat, Matrix.map_apply, e1, e2, e3, e4, map_div₀, map_sub, map_add (f := _), map_mul, Complex.conj_ofReal,
     Complex.conj_I, map_ofNat]
   ring
 

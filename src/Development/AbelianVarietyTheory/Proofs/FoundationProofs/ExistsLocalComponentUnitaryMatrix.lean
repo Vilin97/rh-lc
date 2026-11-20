@@ -88,7 +88,7 @@ theorem exists_local_component : ∀ (D : D7) (n q : ℕ), q.Prime → ∀ s : M
       ext i j
       change sgA D ((1 - f) * inc D (s j i) + f * (1 : Matrix (Fin n) (Fin n) (AE D)) j i) =
         (1 - f) * inc D (D.host.conj (s j i)) + f * (1 : Matrix (Fin n) (Fin n) (AE D)) i j
-      rw [map_add, map_mul, map_mul, map_sub, map_one, hsg, PtsMem.sgA_inc]
+      rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, hsg, PtsMem.sgA_inc]
       by_cases hij : i = j
       · subst hij; simp
       · simp [Matrix.one_apply_ne hij, Matrix.one_apply_ne (Ne.symm hij)]

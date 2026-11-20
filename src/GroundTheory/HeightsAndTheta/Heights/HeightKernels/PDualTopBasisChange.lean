@@ -29,7 +29,7 @@ theorem subst_subst {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B
   | C a =>
     show intCoordSubst A (intCoordSubst B (algebraMap ℤ _ a)) = algebraMap ℤ _ a
     rw [AlgHom.commutes, AlgHom.commutes]
-  | add f g hf hg => rw [map_add, map_add, hf, hg]
+  | add f g hf hg => rw [map_add (f := _), map_add (f := _), hf, hg]
   | mul_X f p hf =>
     rw [map_mul, map_mul, hf]
     congr 1
@@ -86,7 +86,7 @@ theorem coneMap_subst {A : Matrix T T₂ ℤ} {b : Module.Basis T ℤ (dualLatti
   | C a =>
     have hC₂ : ∀ a : ℤ, (C a : MRing (dualBlocks T₂)) = (a : MRing (dualBlocks T₂)) := fun a => map_intCast C a
     rw [hC₂, map_intCast, map_intCast, map_intCast]
-  | add f g hf hg => rw [map_add, map_add, map_add, hf, hg]
+  | add f g hf hg => rw [map_add (f := _), map_add (f := _), map_add (f := _), hf, hg]
   | mul_X f p hf =>
     rw [map_mul, map_mul, map_mul, hf]
     congr 1

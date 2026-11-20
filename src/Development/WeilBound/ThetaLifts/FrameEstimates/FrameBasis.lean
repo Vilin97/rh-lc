@@ -91,12 +91,12 @@ theorem frameBasis_of : FrameBasis := by
       constructor
       · rw [← formL_apply]
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [a, map_sub, map_add, map_sum, map_smul, formL_apply, hfr.xx, yx, smul_eq_mul, mul_zero,
+          simp only [a, map_sub, map_add (f := _), map_sum, map_smul, formL_apply, hfr.xx, yx, smul_eq_mul, mul_zero,
           Finset.sum_const_zero, mul_ite, Finset.sum_ite_eq', Finset.mem_univ, if_true]
         linear_combination (-form σ J u (fr.x j)) * hε
       · rw [← formL_apply]
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [a, map_sub, map_add, map_sum, map_smul]
+          simp only [a, map_sub, map_add (f := _), map_sum, map_smul]
         simp [formL_apply, hfr.xy, hfr.yy]
     have hb : u - a ∈ Submodule.span E (Set.range v) := by
       have : u - a = ∑ k, bK.repr ⟨_, hu⟩ k • (bK k : Fin n → E) := by

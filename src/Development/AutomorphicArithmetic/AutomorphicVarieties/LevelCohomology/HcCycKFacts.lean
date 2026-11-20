@@ -10,7 +10,7 @@ private theorem hom_eq {l : ℕ} [Fact l.Prime] {k : Type} [Field k] [CharP k l]
     rw [RingHom.mem_ker, map_sub, map_intCast, hn, sub_self]
   rw [PadicInt.ker_toZModPow, Ideal.mem_span_singleton] at h
   obtain ⟨y, hy⟩ := h
-  rw [← hn, map_intCast, sub_eq_iff_eq_add.1 hy, map_add, map_mul, map_pow, map_natCast, CharP.cast_eq_zero, map_intCast]
+  rw [← hn, map_intCast, sub_eq_iff_eq_add.1 hy, map_add (f := _), map_mul, map_pow, map_natCast, CharP.cast_eq_zero, map_intCast]
   simp
 
 theorem UpperTheory.V.X.cycKFacts :

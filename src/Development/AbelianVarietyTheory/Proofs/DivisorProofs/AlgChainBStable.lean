@@ -68,7 +68,7 @@ theorem weyl_comp_mem (R : Type) [CommRing R] {r n : ℕ} (hn : n ≤ r) (ν : F
     · exact Submodule.subset_span ⟨w, rfl⟩
     · exact Submodule.zero_mem _
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem tprod_mem_tensSub {O : Type} [CommRing O] {ι : Type} {A : ι → Type} [∀ i, AddCommGroup (A i)]
@@ -125,7 +125,7 @@ theorem proj_stab (s : Finset ι) (τ : ι) (w : Fin N → ℕ) (a : Module.End 
     · rw [Function.update_of_ne hi]
       exact (f i).2
   | add y₁ y₂ h₁ h₂ =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact Submodule.add_mem _ (h₁ (LinearMap.mem_range_self _ _)) (h₂ (LinearMap.mem_range_self _ _))
 
 end GlobalTheory.ChainStab

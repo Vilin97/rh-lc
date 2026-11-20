@@ -156,7 +156,7 @@ def orthRel (ι : M →ₗ[ℂ] H) (Vc U : Submodule ℂ M) : Submodule ℂ M wh
   carrier := {v | v ∈ Vc ∧ ∀ u ∈ U, inner ℂ (ι u) (ι v) = 0}
   zero_mem' := ⟨Vc.zero_mem, fun u _ => by rw [map_zero, inner_zero_right]⟩
   add_mem' {v w} hv hw := ⟨Vc.add_mem hv.1 hw.1, fun u hu => by
-    rw [map_add, inner_add_right, hv.2 u hu, hw.2 u hu, add_zero]⟩
+    rw [map_add (f := _), inner_add_right, hv.2 u hu, hw.2 u hu, add_zero]⟩
   smul_mem' c v hv := ⟨Vc.smul_mem c hv.1, fun u hu => by
     rw [map_smul, inner_smul_right, hv.2 u hu, mul_zero]⟩
 
@@ -202,7 +202,7 @@ theorem inner_aeval_map_rel {ι : M →ₗ[ℂ] H} {Vc : Submodule ℂ M} {T : M
       inner_smul_right, Complex.coe_algebraMap, Complex.conj_ofReal]
   | add p q hp hq =>
     intro x hx y hy
-    simp only [Polynomial.map_add, map_add, LinearMap.add_apply, inner_add_left, inner_add_right,
+    simp only [Polynomial.map_add (f := _), map_add (f := _), LinearMap.add_apply, inner_add_left, inner_add_right,
       hp x hx y hy, hq x hx y hy]
   | monomial k a ih =>
     intro x hx y hy
@@ -240,7 +240,7 @@ theorem exists_apply_eq_zero_inner_eq_rel {ι : M →ₗ[ℂ] H} {Vc : Submodule
     Submodule.mem_sup.1 (hcompl.sup_eq_top ▸ Submodule.mem_top : (⟨x, hx⟩ : Z) ∈ _)
   refine ⟨m, m.2, congrArg Subtype.val (LinearMap.mem_ker.1 hm), fun w hw hwk => ?_⟩
   have hxe : x = (m : M) + S z := congrArg Subtype.val hmr.symm
-  rw [hxe, map_add, inner_add_left, hSym _ (hZV z.2) _ hw, hwk, map_zero, inner_zero_right, add_zero]
+  rw [hxe, map_add (f := _), inner_add_left, hSym _ (hZV z.2) _ hw, hwk, map_zero, inner_zero_right, add_zero]
 
 theorem sup_orthRel_eq_of_symmetric {ι : M →ₗ[ℂ] H} {Vc U : Submodule ℂ M} (hU : U ≤ Vc)
     (hinj : ∀ a ∈ Vc, ι a = 0 → a = 0) {T : Module.End ℂ M} (hTV : ∀ x ∈ Vc, T x ∈ Vc)
@@ -336,7 +336,7 @@ theorem exists_isCompl_of_finite {H : Type*} [NormedAddCommGroup H] [InnerProduc
       { carrier := {x | x ∈ centralCuspForms K n ∧ ∀ h ∈ U₀, finRepCusp K n h x = x}
         zero_mem' := ⟨Submodule.zero_mem _, fun h _ => map_zero _⟩
         add_mem' := fun {x y} hx hy => ⟨Submodule.add_mem _ hx.1 hy.1, fun h hh => by
-          rw [map_add, hx.2 h hh, hy.2 h hh]⟩
+          rw [map_add (f := _), hx.2 h hh, hy.2 h hh]⟩
         smul_mem' := fun c x hx => ⟨Submodule.smul_mem _ c hx.1, fun h hh => by
           rw [map_smul, hx.2 h hh]⟩ }
     refine ⟨V₀, fun x hx => hx.1, ⟨hv, fun h hh => Subtype.ext (funext fun g => hU₀ g h hh)⟩,

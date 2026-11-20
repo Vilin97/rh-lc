@@ -99,7 +99,7 @@ theorem mem_pow_ker_of_isBigO {k : ℕ} {q : MvPolynomial σ ℂ}
     rw [hq'def, show (eval y : MvPolynomial σ ℂ →+* ℂ) = eval₂Hom (RingHom.id ℂ) y from rfl, eval₂Hom_bind₁]
     have hfun : (fun i => eval₂Hom (RingHom.id ℂ) y (X i + C (w i))) = y + w := by
       ext i
-      simp only [map_add, eval₂Hom_X', eval₂Hom_C, RingHom.id_apply, Pi.add_apply]
+      simp only [map_add (f := _), eval₂Hom_X', eval₂Hom_C, RingHom.id_apply, Pi.add_apply]
     rw [hfun]
     rfl
 

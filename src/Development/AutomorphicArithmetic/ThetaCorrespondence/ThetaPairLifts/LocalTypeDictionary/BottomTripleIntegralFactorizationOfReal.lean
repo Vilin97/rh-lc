@@ -122,7 +122,7 @@ theorem bottom_triple_integral_factorization_real : _root_.GlobalTheory.FunPr.Th
     { toFun := fun P' => X.I' W.ψ W.θ t P'
       map_add' := fun P Q => by
         show X.I' W.ψ W.θ t (P + Q) = X.I' W.ψ W.θ t P + X.I' W.ψ W.θ t Q
-        rw [← eI', ← eI', ← eI', map_add]; funext h
+        rw [← eI', ← eI', ← eI', map_add (f := _)]; funext h
         simp only [thetaInt, thetaKO_add, Pi.add_apply]
         exact integral_add (iI' t P h) (iI' t Q h)
       map_smul' := fun c P => by

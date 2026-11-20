@@ -271,7 +271,7 @@ theorem Mmat_map (u : Fin d → Fin r → E) (β : Matrix (Fin d) (Fin d) E) (τ
     (Mmat X u β).map τ.1 = zmat X u (embH X β) τ := by
   ext a j
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Mmat, zmat, embH, Matrix.map_apply, Matrix.of_apply, map_add, map_mul, map_sum,
+    simp only [Mmat, zmat, embH, Matrix.map_apply, Matrix.of_apply, map_add (f := _), map_mul, map_sum,
     Data.emb, emb_cc, X.tau_kappa0, apply_ite, map_one, map_zero]
   ring
 

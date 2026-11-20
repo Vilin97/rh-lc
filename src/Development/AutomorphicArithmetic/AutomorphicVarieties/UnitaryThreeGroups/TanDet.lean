@@ -128,7 +128,7 @@ private theorem fin_gen {O R : Type} [CommRing O] [IsLocalRing O] [CommRing R] [
     obtain ⟨u, hu, v, hv, rfl⟩ := Submodule.mem_sup.1 (hn hy)
     obtain ⟨w, rfl⟩ := Ideal.mem_span_singleton'.1 hu
     show Submodule.Quotient.mk (Ideal.Quotient.mk _ _) = 0
-    rw [Submodule.Quotient.mk_eq_zero, map_add, Ideal.Quotient.eq_zero_iff_mem.2 hv, add_zero]
+    rw [Submodule.Quotient.mk_eq_zero, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hv, add_zero]
     have e : Ideal.Quotient.mk J (w * algebraMap O R a) = a • Ideal.Quotient.mk J w := by
       rw [Algebra.smul_def, map_mul, mul_comm]
       rfl
@@ -232,7 +232,7 @@ private theorem exists_max {f : R →ₐ[c.O] PadicAlgCl l} (hf : IsLocPt f) (D 
     | mem x hx => exact hz x (Finset.mem_insert_of_mem hx)
     | zero => rw [map_zero, norm_zero]; exact norm_nonneg _
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
     | smul a x _ hx =>
       rw [map_smul]
@@ -258,7 +258,7 @@ private theorem small {f : R →ₐ[c.O] PadicAlgCl l} (hf : IsLocPt f) (D : R �
   obtain ⟨w, rfl⟩ := Ideal.mem_span_singleton'.1 hu
   have e : w * (l : R) ^ k = ((l : c.O) ^ k) • w := by
     rw [Algebra.smul_def, map_pow, map_natCast, mul_comm]
-  rw [map_add, hD v hv, add_zero, e, map_smul, Algebra.smul_def, map_pow, map_natCast, norm_mul, norm_pow]
+  rw [map_add (f := _), hD v hv, add_zero, e, map_smul, Algebra.smul_def, map_pow, map_natCast, norm_mul, norm_pow]
   rw [lt_div_iff₀ hpos] at hk
   exact lt_of_le_of_lt (mul_le_mul_of_nonneg_left ((h₀ w).trans (by linarith)) (by positivity)) hk
 
@@ -311,7 +311,7 @@ private theorem span_top {O Γ : Type} [CommRing O] [IsLocalRing O] [Group Γ] [
     have e : x * y = (x - algebraMap O U.R a) * (y - algebraMap O U.R b) + a • y + b • x -
         algebraMap O U.R (a * b) := by
       rw [Algebra.smul_def, Algebra.smul_def, map_mul]; ring
-    rw [e, map_sub, map_add, map_add, hδ _ (h2 _ ha _ hb), hδ _ (hO _), map_smul, map_smul, ra, rb,
+    rw [e, map_sub, map_add (f := _), map_add (f := _), hδ _ (h2 _ ha _ hb), hδ _ (hO _), map_smul, map_smul, ra, rb,
       Algebra.smul_def, Algebra.smul_def]
     ring
   haveI := (co_res O).2
@@ -346,7 +346,7 @@ private theorem der_sq {f : R →ₐ[c.O] PadicAlgCl l} (D : R →ₗ[c.O] Padic
   rw [pow_two] at hy
   refine Submodule.mul_induction_on hy (fun a ha b hb => ?_) (fun a b ha hb => ?_)
   · rw [hD, (RingHom.mem_ker).1 ha, (RingHom.mem_ker).1 hb, zero_mul, zero_mul, add_zero]
-  · rw [map_add, ha, hb, add_zero]
+  · rw [map_add (f := _), ha, hb, add_zero]
 
 private theorem tan_cont {Γ : Type} [Group Γ] [TopologicalSpace Γ] [IsCO c.O R] (r : Γ →* GG 3 R)
     (hr : ∀ a b, AdicCont (maximalIdeal R) fun g => (r g).mat a b) (F : R →ₐ[c.O] DualNumber (PadicAlgCl l))
@@ -378,7 +378,7 @@ private theorem der_zero {Γ : Type} [Group Γ] [TopologicalSpace Γ] {η : Γ �
     { carrier := {x | ‖D x‖ < ‖D y₀‖}
       add_mem' := fun {a b} ha hb => by
         show ‖D (a + b)‖ < _
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
       zero_mem' := by
         show ‖D 0‖ < _

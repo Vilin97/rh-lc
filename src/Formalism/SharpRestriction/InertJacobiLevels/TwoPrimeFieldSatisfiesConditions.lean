@@ -57,7 +57,7 @@ theorem norm_mod {R : Ranks} (H : Host R) {M T : ℕ} (hM : 0 < M) (π : 𝓞 H.
     rw [hw, ← hρc]; push_cast; rfl
   have key : (T : H.E) - 1 = (M : H.E) * (w : H.E) := by
     rw [← h2, hπ, hwc]
-    simp only [map_add, map_mul, map_one, map_natCast]
+    simp only [map_add (f := _), map_mul, map_one, map_natCast]
     ring
   have hM0 : (M : H.E) ≠ 0 := by exact_mod_cast hM.ne'
   have hr : algebraMap ℚ H.E (((T : ℚ) - 1) / M) = (w : H.E) := by

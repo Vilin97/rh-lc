@@ -54,7 +54,7 @@ theorem roots_two_adic_holds : RootsTwoAdic := by
   refine ⟨b, b', hb, hb', ?_⟩
   simp only [← hφ]
   have hs' : φ b + φ b' = ι α + ι (conj α) := by
-    rw [← map_add, ← map_add, hs, hT]
+    rw [← map_add (f := _), ← map_add (f := _), hs, hT]
     simp
   have hp' : φ b * φ b' = ι α * ι (conj α) := by
     rw [← map_mul, ← map_mul, hp, hN]
@@ -95,7 +95,7 @@ theorem theta_zero_two_adic_trace : ThetaZeroTwoTrace := by
 
 theorem conj_omegaK (d : ℕ) :
     conj (Formalism.L2.Th1.CM.omegaK d) = (1 - Complex.I * ((Real.sqrt d : ℝ) : ℂ)) / 2 := by
-  simp only [Formalism.L2.Th1.CM.omegaK, map_div₀, map_add, map_one, map_mul, Complex.conj_I,
+  simp only [Formalism.L2.Th1.CM.omegaK, map_div₀, map_add (f := _), map_one, map_mul, Complex.conj_I,
     Complex.conj_ofReal, map_ofNat]
   ring
 

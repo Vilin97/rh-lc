@@ -100,7 +100,7 @@ theorem coordV_actV (a : Λ) (X : Matrix (Fin h) (Fin h) ℤ_[p])
     coordV P ψ (P.actV a x) = X.map (algebraMap ℤ_[p] C) *ᵥ coordV P ψ x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, Matrix.mulVec_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, Matrix.mulVec_add]
   | tmul c t =>
     funext i
     change coordV P ψ (c ⊗ₜ P.actT a t) i = _
@@ -116,7 +116,7 @@ theorem mem_latT_iff_coordV (x : P.V) :
   · rintro ⟨y, rfl⟩ i
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simpa only [map_add, Pi.add_apply] using Subring.add_mem _ hx hy
+    | add x y hx hy => simpa only [map_add (f := _), Pi.add_apply] using Subring.add_mem _ hx hy
     | tmul c t =>
       rw [Point.inclT_tmul, coordV_tmul, IsScalarTower.algebraMap_apply ℤ_[p] O C, ← map_mul]
       exact ⟨_, rfl⟩

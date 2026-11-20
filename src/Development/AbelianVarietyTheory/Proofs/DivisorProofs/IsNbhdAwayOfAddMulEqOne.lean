@@ -31,7 +31,7 @@ theorem isNbhd_away_of_add_mul_eq_one (B A' : Type) [CommRing B] [CommRing A'] [
     have hu1 : algebraMap A' (Localization.Away h) F ∣ u - 1 := by
       refine ⟨algebraMap A' (Localization.Away h) c * u, ?_⟩
       have := congrArg (algebraMap A' (Localization.Away h)) hh
-      simp only [map_add, map_mul, map_one] at this
+      simp only [map_add (f := _), map_mul, map_one] at this
       linear_combination hu - u * this
     have hun : algebraMap A' (Localization.Away h) F ∣ u ^ n - 1 := by
       have := sub_dvd_pow_sub_pow u 1 n
@@ -45,7 +45,7 @@ theorem isNbhd_away_of_add_mul_eq_one (B A' : Type) [CommRing B] [CommRing A'] [
     have hx : algebraMap A' (Localization.Away h) x =
         algebraMap A' (Localization.Away h) (algebraMap B A' b) + algebraMap A' (Localization.Away h) F *
           algebraMap A' (Localization.Away h) d := by
-      rw [← map_mul, ← map_add, ← hd]; ring_nf
+      rw [← map_mul, ← map_add (f := _), ← hd]; ring_nf
     rw [ha']
     linear_combination (algebraMap A' (Localization.Away h) x) * he + hx
   · intro a ha

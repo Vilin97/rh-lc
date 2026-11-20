@@ -103,7 +103,7 @@ theorem lvlMat_laws {σ : K →+* ℂ} (hσ : ∀ a, σ (star a) = starRingEnd �
     hform_sa ?_⟩
   · show S.lvlOp r P ψ (a + b) = S.lvlOp r P ψ a + S.lvlOp r P ψ b
     unfold CSD.lvlOp
-    rw [CSD.gaMat_eq_lift, CSD.gaMat_eq_lift, CSD.gaMat_eq_lift, map_add, Matrix.mul_add, Matrix.add_mul]
+    rw [CSD.gaMat_eq_lift, CSD.gaMat_eq_lift, CSD.gaMat_eq_lift, map_add (f := _), Matrix.mul_add, Matrix.add_mul]
   · show S.lvlOp r P ψ (c • a) = c • S.lvlOp r P ψ a
     unfold CSD.lvlOp
     rw [CSD.gaMat_eq_lift, CSD.gaMat_eq_lift, map_smul, Matrix.mul_smul, Matrix.smul_mul]

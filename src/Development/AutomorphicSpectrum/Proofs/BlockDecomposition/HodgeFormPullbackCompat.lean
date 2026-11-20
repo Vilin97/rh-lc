@@ -205,7 +205,7 @@ theorem pull_nat : ∀ {K : Type} [CommRing K] {X Y : Scheme.{0}} (q : X ⟶ Spe
       change e (pullH u hu a a (e'.symm (gForm p g₀ g))) = _
       rw [h4, LinearEquiv.apply_symm_apply]
     | zero => simp
-    | add x y _ _ hx hy => simp only [map_add, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
     | smul r x _ hx =>
       simp only [map_smul, hx]
   simpa using key (e' x)

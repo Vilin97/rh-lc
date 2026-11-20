@@ -121,7 +121,7 @@ theorem lowestKType_irreducible : ∀ (D : D7) (n m : ℕ) (w : GlobalTheory.Exp
       add_mem' := by
         rintro ψ χ ⟨h1, h2, h3⟩ ⟨g1, g2, g3⟩
         refine ⟨fun k x => by simp [h1, g1], fun x τ i l hi hl => ?_, fun x => add_mem (h3 x) (g3 x)⟩
-        simp only [LinearMap.add_apply, map_add, h2 x τ i l hi hl, g2 x τ i l hi hl, add_zero]
+        simp only [LinearMap.add_apply, map_add (f := _), h2 x τ i l hi hl, g2 x τ i l hi hl, add_zero]
       zero_mem' := ⟨fun k x => by simp, fun x τ i l _ _ => by simp, fun x => zero_mem _⟩
       smul_mem' := by
         rintro c ψ ⟨h1, h2, h3⟩

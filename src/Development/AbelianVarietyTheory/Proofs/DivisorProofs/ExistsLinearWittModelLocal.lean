@@ -79,7 +79,7 @@ theorem piW_cA {σ : E →ₐ[F] E} {v : GlobalTheory.IndefiniteRowSideFullHecke
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem piW_incl {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (τ : E →ₐ[F] Fv F v) (e : E) :
     piW τ (inclR (F := F) (AF F) e) = τ e := by
@@ -244,14 +244,14 @@ theorem exists_isLinW_at : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type)
   have hadd0 : ∀ P P', GlobalTheory.LatVac.locCo M.co v (U (P + P') 0) =
       GlobalTheory.LatVac.locCo M.co v (U P 0) + GlobalTheory.LatVac.locCo M.co v (U P' 0) := by
     intro P P'
-    rw [← map_add]
+    rw [← map_add (f := _)]
     apply heq _ _ (hUat _ _) (hat_add _ _ (hUat _ _) (hUat _ _))
     · rw [Matrix.map_add _ (map_add _), hU0, hU0, hU0]
     · rw [Matrix.map_add _ (map_add _), hU1, hU1, hU1, add_zero]
   have hadd1 : ∀ P P', GlobalTheory.LatVac.locCo M.co v (U 0 (P + P')) =
       GlobalTheory.LatVac.locCo M.co v (U 0 P) + GlobalTheory.LatVac.locCo M.co v (U 0 P') := by
     intro P P'
-    rw [← map_add]
+    rw [← map_add (f := _)]
     apply heq _ _ (hUat _ _) (hat_add _ _ (hUat _ _) (hUat _ _))
     · rw [Matrix.map_add _ (map_add _), hU0, hU0, hU0, add_zero]
     · rw [Matrix.map_add _ (map_add _), hU1, hU1, hU1]
@@ -293,7 +293,7 @@ theorem exists_isLinW_at : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type)
     (fun w => by
       obtain ⟨u, hu, rfl⟩ := locCo_surj M.co v w
       refine ⟨GlobalTheory.FlipMatch.coX t b c u, GlobalTheory.FlipMatch.coY σ X W t b c u, ?_⟩
-      rw [hwT, hwM, ← map_add]
+      rw [hwT, hwM, ← map_add (f := _)]
       apply heq _ _ (hat_add _ _ (hUat _ _) (hUat _ _)) hu
       · rw [Matrix.map_add _ (map_add _), hU0, hU0, add_zero]
         exact hP0 _

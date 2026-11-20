@@ -20,7 +20,7 @@ theorem root_eq {K R C : Type} [Field K] [CommRing R] [Field C] (θ : R →+* C)
   have hθ : θ (y - o x) = 0 := by rw [map_sub, hy, sub_self]
   have hun : IsUnit (o (f.derivative.eval x) + k * (y - o x)) := by
     apply hu
-    rw [map_add, map_mul, hθ, mul_zero, add_zero]
+    rw [map_add (f := _), map_mul, hθ, mul_zero, add_zero]
     exact (map_ne_zero (θ.comp o)).2 h1
   have : (o (f.derivative.eval x) + k * (y - o x)) * (y - o x) = 0 := by
     rw [hk]; ring
@@ -37,7 +37,7 @@ theorem padicInt_hom_ext_pt {R : Type} [CommRing R] [IsHausdorff (Ideal.span {((
   refine ⟨f w - g w, ?_⟩
   have h1 := congrArg f hz
   have h2 := congrArg g hz
-  rw [map_add, map_mul, map_pow, map_natCast, map_natCast] at h1 h2
+  rw [map_add (f := _), map_mul, map_pow, map_natCast, map_natCast] at h1 h2
   rw [h1, h2]
   ring
 

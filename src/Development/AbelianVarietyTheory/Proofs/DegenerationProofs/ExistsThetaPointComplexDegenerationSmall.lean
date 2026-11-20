@@ -93,14 +93,14 @@ theorem exists_tateIso (D : Datum H) {La : Type} [AddCommGroup La] [Module (𝓞
   have sm' : ∀ n : ℕ, 0 < n → ∀ z : Fin g → ℂ, n • (n : ℂ)⁻¹ • z = z := fun n h z => by
     rw [← Nat.cast_smul_eq_nsmul ℂ, smul_inv_smul₀ (hn n h)]
   have md : ∀ n : ℕ, 0 < n → ∀ a b, e ((n : ℂ)⁻¹ • P (a + n • b)) = e ((n : ℂ)⁻¹ • P a) := fun n h a b => by
-    rw [map_add, smul_add, eadd, sm n h, (eker _).2 ⟨b, rfl⟩, _root_.mul_one]
+    rw [map_add (f := _), smul_add, eadd, sm n h, (eker _).2 ⟨b, rfl⟩, _root_.mul_one]
   refine ⟨{ ζ := ζ, ζ_prim := hp, ζ_pow := hc, ev := fun n a => e ((n : ℂ)⁻¹ • P (f n a)), add := fun n a b => ?_,
             lin := fun n c a => ?_, ker := fun n h a => ?_, onto := fun n h x => ⟨fun hx => ?_, ?_⟩,
             tower := fun n m h h' a => ?_, isom := fun n h a b => ?_ }, rfl, fun _ _ => rfl⟩
   · rcases n.eq_zero_or_pos with rfl | h
     · simp only [Nat.cast_zero, inv_zero, zero_smul, e0, _root_.mul_one]
     · obtain ⟨c, hc⟩ := (hf n h).1 a b
-      rw [hc, md n h, map_add, smul_add, eadd]
+      rw [hc, md n h, map_add (f := _), smul_add, eadd]
   · rcases n.eq_zero_or_pos with rfl | h
     · haveI := hact c
       simp only [Nat.cast_zero, inv_zero, zero_smul, e0, MonObj.one_comp]

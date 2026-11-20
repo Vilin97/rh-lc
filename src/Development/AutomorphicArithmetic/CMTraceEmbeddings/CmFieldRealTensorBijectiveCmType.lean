@@ -23,7 +23,7 @@ private theorem func_repr {ι : Type} [Fintype ι] [DecidableEq ι] (f : (ι →
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  rw [map_add, map_smul, map_smul]
+  rw [map_add (f := _), map_smul, map_smul]
   simp [Complex.mul_re, Complex.sub_re, Complex.sub_im]
   ring
 

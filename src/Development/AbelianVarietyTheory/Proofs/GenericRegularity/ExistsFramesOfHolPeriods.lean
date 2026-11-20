@@ -34,7 +34,7 @@ theorem differentiableOn_coord_of_pairing_of_span_eq_top {E : Type} [Field E] {r
     | mem v hv => exact hu v hv
     | zero => simpa using differentiableOn_const (0 : ℂ)
     | add v w _ _ h1 h2 =>
-      simpa only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib] using h1.fun_add h2
+      simpa only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib] using h1.fun_add h2
     | smul s v _ h1 =>
       refine (h1.const_mul (τ s)).congr fun b _ => ?_
       simp only [Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum]

@@ -54,12 +54,12 @@ theorem mem_latHat (hL : Y.L.FG) (z : Fin n → AE F E) :
     have e1 : ∀ y, ι (π y) = eF F • y := fun y => by
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
       | tmul a x => exact congrArg (· ⊗ₜ[F] x) (Prod.ext (zero_mul _).symm (one_mul _).symm)
     have e2 : ∀ v y, Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v) (AlgHom.id F E) (π y) = compFin F E v y := fun v y => by
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a x => rfl
     have e3 : ∀ y ∈ Formalism.MainNotions.StandardLattice.latHat F E (Y.L : Set (Fin n → E)), ι ∘ y ∈ latHat Y := fun y hy => by
       induction hy using AddSubgroup.closure_induction with
@@ -85,7 +85,7 @@ omit [NumberField E] in
 theorem cA_eq : ⇑(cA (F := F) σ) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AF F) σ := funext fun z => by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 omit [NumberField E] in

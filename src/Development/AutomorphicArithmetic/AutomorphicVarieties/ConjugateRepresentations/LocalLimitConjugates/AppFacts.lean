@@ -22,7 +22,7 @@ private theorem rT_smLie {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
   change TensorProduct.map (lie E a X) LinearMap.id (T.rTensor _ m) +
       TensorProduct.map LinearMap.id (Matrix.toLin' (Ξ.dmat X)) (T.rTensor _ m) =
     T.rTensor _ (TensorProduct.map (lie E a X) LinearMap.id m + TensorProduct.map LinearMap.id (Matrix.toLin' (Ξ.dmat X)) m)
-  rw [map_add, h1, h2]
+  rw [map_add (f := _), h1, h2]
 
 theorem UpperTheory.V.Cj.H.appFacts :
     UpperTheory.V.Cj.H.AppFacts := by

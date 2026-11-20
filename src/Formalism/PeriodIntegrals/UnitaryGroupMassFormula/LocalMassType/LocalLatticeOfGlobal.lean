@@ -13,7 +13,7 @@ section Rat
 variable {F E : Type} [Field F] [Field E] [Algebra F E] (R : Type) [CommRing R] [Algebra F R] {n : ℕ}
 
 theorem ratV_add (x y : Fin n → E) : ratV (F := F) R (x + y) = ratV (F := F) R x + ratV (F := F) R y := by
-  funext i; simp [ratV, map_add]
+  funext i; simp [ratV, map_add (f := _)]
 
 theorem ratV_zero : ratV (F := F) R (0 : Fin n → E) = 0 := by
   funext i; simp [ratV]

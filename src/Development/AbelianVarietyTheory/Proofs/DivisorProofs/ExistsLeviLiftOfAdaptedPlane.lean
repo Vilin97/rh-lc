@@ -139,7 +139,7 @@ theorem frame_facts (σ : E →ₐ[F] E) (B : Base F E) {d : ℕ} (W : Spc F E d
     have hFσ : Matrix.vecMulVec (fun i => σ (H'.x i)) (fun i => σ (a i)) + H'.ι.map σR * π.map σR +
         Matrix.vecMulVec (fun i => σ (H'.y i)) (fun i => σ (b i)) = 1 := by
       have := congrArg (RingHom.mapMatrix σR) hF
-      rw [map_add, map_add, map_one, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply,
+      rw [map_add (f := _), map_add (f := _), map_one, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply,
         Matrix.map_mul] at this
       rw [← this]
       congr 1 <;> [congr 1; skip] <;> ext i j <;> simp [Matrix.vecMulVec, σR]

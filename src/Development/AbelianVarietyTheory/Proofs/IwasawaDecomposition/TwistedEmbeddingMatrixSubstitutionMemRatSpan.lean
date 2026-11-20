@@ -65,7 +65,7 @@ theorem twSub_mem_ratSpan : ∀ (D : D7) {n : ℕ} (lam : D.what₂.Tau → DomW
     · intro τ hτ
       exact absurd (Finset.mem_univ τ) hτ
   | zero => rw [map_zero, smul_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add, smul_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg, smul_neg]; exact neg_mem hx
 
 end GlobalTheory.IntegralityCompare

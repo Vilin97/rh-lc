@@ -23,7 +23,7 @@ def diagonalPowFourEquiv (φ : (n → ℂ) ≃ₗ[ℂ] (n → ℂ)) : (Fin 4 × 
   map_add' x y := by
     funext w
     have e : slice w.1 (x + y) = slice w.1 x + slice w.1 y := rfl
-    simp only [e, map_add, Pi.add_apply]
+    simp only [e, map_add (f := _), Pi.add_apply]
   map_smul' c x := by
     funext w
     have e : slice w.1 (c • x) = c • slice w.1 x := rfl

@@ -82,7 +82,7 @@ theorem cen_isom (e : Fin r → S.V) (he : ∀ a b, S.hT (e a) (e b) = 0) (c : M
   show ∀ x y, S.hT (cen e he c x) (cen e he c y) = S.hT x y
   intro x y
   rw [cen_apply, cen_apply]
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   rw [hnn, add_zero]
   linear_combination hcross x y
 

@@ -160,7 +160,7 @@ private theorem fin_desc (σ : F₁ ≃ₐ[F₀] F₁) (d : ℕ) (hG : UpperTheo
   let S : (Fin n → F₁) →ₗ[F₀] (Fin n → F₁) :=
     { toFun := fun v => c *ᵥ (fun i => σ (v i))
       map_add' := fun v w => by
-        simp only [Pi.add_apply, map_add]
+        simp only [Pi.add_apply, map_add (f := _)]
         exact Matrix.mulVec_add c _ _
       map_smul' := fun a v => by
         simp only [Pi.smul_apply, map_smul, RingHom.id_apply]
@@ -198,7 +198,7 @@ private theorem fin_desc (σ : F₁ ≃ₐ[F₀] F₁) (d : ℕ) (hG : UpperTheo
     obtain ⟨z, rfl⟩ := hsurj m
     induction z with
     | add a b ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem (ha (Submodule.mem_top)) (hb (Submodule.mem_top))
     | tmul r w =>
       simp only [TensorProduct.lift.tmul]

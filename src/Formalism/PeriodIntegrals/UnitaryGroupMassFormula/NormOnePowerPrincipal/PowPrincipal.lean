@@ -21,7 +21,7 @@ theorem map_mem_mul (c : E →+* E) {P P' Q Q' : Submodule (𝓞 E) E}
     rw [map_mul]
     exact Submodule.mul_mem_mul (h p hp) (h' q hq)
   · intro u v hu hv
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hu hv
 
 theorem conj_mul (c : E →+* E) (hc : ∀ x, c (c x) = x) {A A' B B' : Submodule (𝓞 E) E}

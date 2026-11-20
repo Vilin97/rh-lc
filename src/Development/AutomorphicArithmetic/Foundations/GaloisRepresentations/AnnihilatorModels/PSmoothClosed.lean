@@ -57,7 +57,7 @@ theorem UpperTheory.Gal.crystallineComparison.smoothClosed_of :
     | add x y hx hy =>
       obtain ⟨r1, h1⟩ := hx
       obtain ⟨r2, h2⟩ := hy
-      exact ⟨r1 + r2, by simp only [map_add, h1, h2]; rfl⟩
+      exact ⟨r1 + r2, by simp only [map_add (f := _), h1, h2]; rfl⟩
   obtain ⟨r, hr⟩ := key s
   refine ⟨r, ?_⟩
   rw [← e.commutes r, hr, hs]

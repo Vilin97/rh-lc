@@ -95,7 +95,7 @@ theorem coef_mem_dual [IsFractionRing B Ω] (W : Submodule B V) (hW : W.FG) {j :
     induction hz using Submodule.span_induction with
     | mem x hx => exact hn x hx
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, mul_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), mul_add]; exact add_mem hx hy
     | smul c x _ hx =>
       rw [Subalgebra.smul_def, map_smul, smul_eq_mul, mul_left_comm]; exact mul_mem c.2 hx
   let x : Dual B W :=

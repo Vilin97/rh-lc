@@ -134,12 +134,12 @@ theorem isAddFundamentalDomain_image_of_map_vecLattice (T : (ι → 𝔸[K]) ≃
     refine ⟨⟨T g, (hL g).1 g.2⟩, ?_, ?_⟩
     · rw [himg]
       change T.symm (T g + x) ∈ vecDomain K ι
-      rw [map_add, AddEquiv.symm_apply_apply]
+      rw [map_add (f := _), AddEquiv.symm_apply_apply]
       exact hg
     · intro g' hg'
       rw [himg] at hg'
       change T.symm (g' + x) ∈ vecDomain K ι at hg'
-      rw [map_add] at hg'
+      rw [map_add (f := _)] at hg'
       have := huniq ⟨T.symm g', (hL' g').1 g'.2⟩ hg'
       refine Subtype.ext ?_
       rw [← this]

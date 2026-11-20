@@ -51,7 +51,7 @@ theorem omMap_mem_relOm (φ : A →ₐ[K] B) {I : Ideal A} {J : Ideal B} (h : �
     · exact Or.inl (h _ hg)
     · exact Or.inr ⟨k, h _ hk⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [omMap_smul]; exact Submodule.smul_mem _ _ hx
 
 def relMap (φ : A →ₐ[K] B) {I : Ideal A} {J : Ideal B} (h : ∀ x ∈ I, φ x ∈ J) (a : ℕ) :
@@ -82,7 +82,7 @@ theorem map_map_apply (φ : A →ₐ[K] B) (χ : B →ₐ[K] C) (v : Ω[A⁄K]) 
     simp only [KaehlerDifferential.map_D]
     rfl
   | zero => rw [map_zero, map_zero, map_zero]
-  | add x y _ _ hx hy => simp only [map_add, hx, hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
   | smul c x _ hx =>
     have h1 : KaehlerDifferential.map K K A B (c • x) = algebraMap A B c • KaehlerDifferential.map K K A B x := by
       rw [map_smul]; exact (algebraMap_smul B c _).symm
@@ -101,7 +101,7 @@ theorem omMap_comp (φ : A →ₐ[K] B) (χ : B →ₐ[K] C) (a : ℕ) (ω : Om 
     funext k
     exact map_map_apply φ χ (v k)
   | zero => rw [map_zero, map_zero, map_zero]
-  | add x y _ _ hx hy => simp only [map_add, hx, hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
   | smul c x _ hx => rw [omMap_smul, omMap_smul, omMap_smul, hx]; rfl
 end Forms
 
@@ -182,7 +182,7 @@ theorem incl_comp {M M' M'' : AddSubmonoid (Gam n d)} (h : M ≤ M') (h' : M' �
   refine AlgHom.ext fun x => ?_
   induction x using AddMonoidAlgebra.induction_linear with
   | zero => rw [map_zero, map_zero]
-  | add f g hf hg => rw [map_add, map_add, hf, hg]
+  | add f g hf hg => rw [map_add (f := _), map_add (f := _), hf, hg]
   | single m c =>
     simp only [incl, AlgHom.comp_apply, AddMonoidAlgebra.mapDomainAlgHom_apply]
     simp

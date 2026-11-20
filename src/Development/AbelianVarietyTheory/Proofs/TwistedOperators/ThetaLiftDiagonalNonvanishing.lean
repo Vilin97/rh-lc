@@ -27,7 +27,7 @@ theorem val_aut_cusp {D : D7} {θ : InfFam D} {N : GlobalTheory.Grid.Node D} {F 
     rw [map_smul, PiTensorProduct.lift.tprod]
     exact ⟨GlobalTheory.MultMem.isAutFunSm_smul c (hT.aut x), GlobalTheory.MultMem.isCuspFun_smul c (hT.cusp x)⟩
   | add a b ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact ⟨GlobalTheory.MultMem.isAutFunSm_add ha.1 hb.1, GlobalTheory.MultMem.isCuspFun_add ha.1.toIsAutFun hb.1.toIsAutFun ha.2 hb.2⟩
 
 end GlobalTheory.UpCuspApprox

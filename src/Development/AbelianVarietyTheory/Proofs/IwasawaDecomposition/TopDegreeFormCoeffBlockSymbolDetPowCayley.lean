@@ -44,9 +44,9 @@ theorem pderiv_sumMap {p q : ℕ} (v : Fin q × Fin p × Fin p) (P : MvPolynomia
     pderiv v (sumMap p q P) = sumMap p q (pderiv v.2 P) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [sumMap]
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | mul_X f w hf =>
-    simp only [map_mul, Derivation.leibniz, hf, smul_eq_mul, map_add]
+    simp only [map_mul, Derivation.leibniz, hf, smul_eq_mul, map_add (f := _)]
     congr 1
     simp [sumMap, pderiv_X, Pi.single_apply, Prod.ext_iff]
     by_cases h : w.1 = v.2.1 ∧ w.2 = v.2.2 <;> simp [h, Finset.filter_eq']
@@ -67,7 +67,7 @@ theorem constantCoeff_sumMap (p q : ℕ) (P : MvPolynomial (Fin p × Fin p) ℂ)
     constantCoeff (sumMap p q P) = constantCoeff P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [sumMap]
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | mul_X f w hf => simp [sumMap, constantCoeff_X]
 
 end GlobalTheory.CayleyBlock

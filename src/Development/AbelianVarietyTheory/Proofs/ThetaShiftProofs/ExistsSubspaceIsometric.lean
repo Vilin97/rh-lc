@@ -59,8 +59,8 @@ theorem re_hermForm_eq {g g' : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (Hm' : Mat
     | mem_mem p q hp hq => exact hs p hp q hq
     | zero_left y _ => simp [hermForm]
     | zero_right y _ => simp [hermForm]
-    | add_left x y z _ _ _ h₁ h₂ => simp only [map_add, hermForm_add_left, Complex.add_im, h₁, h₂]
-    | add_right x y z _ _ _ h₁ h₂ => simp only [map_add, hermForm_add_right, Complex.add_im, h₁, h₂]
+    | add_left x y z _ _ _ h₁ h₂ => simp only [map_add (f := _), hermForm_add_left, Complex.add_im, h₁, h₂]
+    | add_right x y z _ _ _ h₁ h₂ => simp only [map_add (f := _), hermForm_add_right, Complex.add_im, h₁, h₂]
     | smul_left r x y _ _ h =>
       rw [← Complex.coe_smul, map_smul, hermForm_smul_left, hermForm_smul_left, Complex.im_ofReal_mul,
         Complex.im_ofReal_mul, h]
@@ -74,7 +74,7 @@ theorem re_hermForm_eq {g g' : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (Hm' : Mat
 noncomputable def piHerm {g g' : ℕ} (Hm : Matrix (Fin g') (Fin g') ℂ) (F : (Fin g → ℂ) →ₗ[ℂ] (Fin g' → ℂ)) (l : Fin g' → ℂ) :
     (Fin g → ℂ) →ₗ[ℂ] ℂ where
   toFun z := Real.pi * hermForm Hm (F z) l
-  map_add' x y := by rw [map_add, hermForm_add_left, mul_add]
+  map_add' x y := by rw [map_add (f := _), hermForm_add_left, mul_add]
   map_smul' t x := by rw [map_smul, hermForm_smul_left, RingHom.id_apply, smul_eq_mul]; ring
 
 noncomputable def dotForm {g : ℕ} (h : Matrix (Fin g) (Fin g) ℂ) (n : Fin g → ℂ) : (Fin g → ℂ) →ₗ[ℂ] ℂ where

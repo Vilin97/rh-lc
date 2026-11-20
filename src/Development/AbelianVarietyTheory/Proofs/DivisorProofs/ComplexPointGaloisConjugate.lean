@@ -69,7 +69,7 @@ theorem exists_corr_symm {R R' : Type} [CommRing R] [CommRing R'] (g : R ≃+* R
     ∃ h : HdR A, m.Corr h h' := by
   refine ⟨{ toFun := fun c => g.symm (h' (m.pull c)), map_add' := fun c d => ?_, map_smul' := fun r c => ?_ },
     fun c => ?_⟩
-  · simp only [map_add]
+  · simp only [map_add (f := _)]
   · simp only [LinearMap.map_smulₛₗ, map_smul, smul_eq_mul, map_mul, RingEquiv.coe_toRingHom,
       RingEquiv.symm_apply_apply, RingHom.id_apply]
   · simp

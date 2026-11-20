@@ -109,7 +109,7 @@ lemma complex_linear {H x : Mt n} {q : ℕ} (h : OrthFr H q x) (L : Mt n →ₗ[
   have hadd : ∀ Z Z', M (Z + Z') = M Z + M Z' := by
     intro Z Z'
     simp only [hM, conjH_add]
-    rw [add_add_add_comm Z, add_sub_add_comm Z, smul_add, smul_add (1 / (2 * Complex.I)), map_add, map_add]
+    rw [add_add_add_comm Z, add_sub_add_comm Z, smul_add, smul_add (1 / (2 * Complex.I)), map_add (f := _), map_add (f := _)]
     ring
   have hr : ∀ (r : ℝ) Z, M ((r : ℂ) • Z) = r * M Z := by
     intro r Z
@@ -163,7 +163,7 @@ lemma complex_linear {H x : Mt n} {q : ℕ} (h : OrthFr H q x) (L : Mt n →ₗ[
   have h3 : ∀ Z, M Z = L Z := by
     intro Z
     obtain ⟨X, hX, B, hB', rfl⟩ := decomp h Z
-    rw [hadd, map_add, h1 X hX, h2 B hB']
+    rw [hadd, map_add (f := _), h1 X hX, h2 B hB']
   rw [← h3, ← h3, hsm]
 
 lemma uh_mul {H g g' : Mt n} (hg : g ∈ Formalism.QuantumDeterminants.UH H) (hg' : g' ∈ Formalism.QuantumDeterminants.UH H) : g * g' ∈ Formalism.QuantumDeterminants.UH H := by
@@ -308,7 +308,7 @@ lemma core (h : ∀ τ, OrthFr (Hm τ) (q τ) (x₀ τ)) {f : (ι → Mt n) → 
     let L : Mt n →ₗ[ℝ] ℂ :=
       { toFun := fun Z => D (co (Pi.single τ (u τ * Z * (x₀ * b) τ)))
         map_add' := fun Z Z' => by
-          rw [← map_add, Matrix.mul_add, Matrix.add_mul, Pi.single_add]; rfl
+          rw [← map_add (f := _), Matrix.mul_add, Matrix.add_mul, Pi.single_add]; rfl
         map_smul' := fun r Z => by
           rw [← map_smul, Matrix.mul_smul, Matrix.smul_mul, Pi.single_smul]; rfl }
     have hL : ∀ X ∈ lieH (Hm τ), L X = chi w b * der τ X f u := by
@@ -382,7 +382,7 @@ lemma core (h : ∀ τ, OrthFr (Hm τ) (q τ) (x₀ τ)) {f : (ι → Mt n) → 
     intro z v
     induction v using Pi.single_induction with
     | zero => simp
-    | add v v' h1 h2 => rw [smul_add, map_add, map_add, h1, h2, smul_add]
+    | add v v' h1 h2 => rw [smul_add, map_add (f := _), map_add (f := _), h1, h2, smul_add]
     | single τ v =>
       rw [← Pi.single_smul]
       exact hsingle τ z v

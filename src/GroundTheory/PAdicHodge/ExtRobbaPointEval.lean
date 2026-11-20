@@ -450,7 +450,7 @@ theorem ptE_add_of_bdd {U V : Γ} (hU : T.IsBddElt U) (hV : T.IsBddElt V) :
   rw [T.ptE_int hξ h2] at h1
   have e : (⟨T.teich d * (U + V), h2⟩ : T.int) = ⟨T.teich d * U, hdU⟩ + ⟨T.teich d * V, hdV⟩ :=
     Subtype.ext (by push_cast; ring)
-  rw [e, map_add, map_add, ← T.ptE_int hξ hdU, ← T.ptE_int hξ hdV, T.ptE_teich_mul hξ d U hUc,
+  rw [e, map_add (f := _), map_add (f := _), ← T.ptE_int hξ hdU, ← T.ptE_int hξ hdV, T.ptE_teich_mul hξ d U hUc,
     T.ptE_teich_mul hξ d V hVc, ← mul_add] at h1
   exact (mul_left_cancel₀ (T.sharp_ne_zero hξ hd0) h1).symm
 
@@ -623,7 +623,7 @@ theorem ptEvalB_add {b c : T.B} (hb : ConvergesAt (T.coeffB b) (T.ptRad ξ))
     T.ptEvalB hξ (b + c) = T.ptEvalB hξ b + T.ptEvalB hξ c := by
   obtain ⟨x, y, N, hx, hy⟩ := T.exists_common b c
   have hxy : (b + c) * algebraMap Γ T.B T.π ^ N = algebraMap Γ T.B (x + y) := by
-    rw [add_mul, hx, hy, map_add]
+    rw [add_mul, hx, hy, map_add (f := _)]
   have hr0 := T.ptRad_pos' hξ
   rw [T.ptEvalB_eq hξ hx, T.ptEvalB_eq hξ hy, T.ptEvalB_eq hξ hxy,
     T.ptE_add hξ ((T.convergesAt_of_eq hx hr0).1 hb) ((T.convergesAt_of_eq hy hr0).1 hc), mul_add]

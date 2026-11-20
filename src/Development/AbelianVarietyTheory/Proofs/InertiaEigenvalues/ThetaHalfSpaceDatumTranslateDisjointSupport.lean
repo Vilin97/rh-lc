@@ -64,11 +64,11 @@ theorem disj_supp : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T : Type)
   have he1 := GlobalTheory.StdFrames.cpt_of_isIdemAt heP
   have hcPP : GlobalTheory.IdemSupport.cP P ≠ P := hcP P hPS
   have hfP : GlobalTheory.StdFrames.cpt P (toEAf D f) = 1 := by
-    rw [hfe, RingHom.map_add, GlobalTheory.StdFrames.toEAf_cA, RingHom.map_add, he1.1,
+    rw [hfe, RingHom.map_add (f := _), GlobalTheory.StdFrames.toEAf_cA, RingHom.map_add (f := _), he1.1,
       GlobalTheory.StdFrames.cpt_sg_eq_zero (he1.2 _ hcPP), add_zero]
   have hfoff : ∀ PP ∈ R.Pg, PP ≠ P → GlobalTheory.StdFrames.cpt PP (toEAf D f) = 0 := by
     intro PP hPP hne
-    rw [hfe, RingHom.map_add, GlobalTheory.StdFrames.toEAf_cA, RingHom.map_add, he1.2 _ hne,
+    rw [hfe, RingHom.map_add (f := _), GlobalTheory.StdFrames.toEAf_cA, RingHom.map_add (f := _), he1.2 _ hne,
       GlobalTheory.StdFrames.cpt_sg_eq_zero (he1.2 _ (hcP PP (Finset.mem_union_left _ hPP))), add_zero]
   have hu : ∀ (y : WO (Vc D i) (Wc D i)), (∀ PP ∈ R.Pg, topL (Wc D i).rank (redM PP (frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i) y)) = 1) →
       (∀ PP ∈ R.Q t, IsUnit (topL (Wc D i).rank (redM PP (frMapAdj (Vc D i) (Wc D i) (R.βV i) (R.βW i) y))).det) →

@@ -36,7 +36,7 @@ theorem main : ∀ (R R' : Type) [CommRing R] [CommRing R'] [Algebra R R'] (C : 
         LinearEquiv.coe_coe, hE₁]
       funext T T' T'' φ ψ
       dsimp only
-      rw [d1_apply, d1_apply, map_add, map_sub, m.naturality])
+      rw [d1_apply, d1_apply, map_add (f := _), map_sub, m.naturality])
     exact LinearMap.congr_fun h x
 
 end GlobalTheory.CompanionTheory.CochainBC

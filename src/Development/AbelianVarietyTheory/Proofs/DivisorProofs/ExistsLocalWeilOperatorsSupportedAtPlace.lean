@@ -162,7 +162,7 @@ theorem local_ops : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
     have t1 : ∀ ψ₁ ψ₂ : (Fin a × Fin (a + a') → Fv F v) → ℂ,
         tens (evFin F v) (ψ₁ + ψ₂) R = tens (evFin F v) ψ₁ R + tens (evFin F v) ψ₂ R := by
       intro ψ₁ ψ₂; funext x; simp [tens, add_mul]
-    rw [← e1, Submodule.coe_add, t1, map_add, e2, e3, ← t1]
+    rw [← e1, Submodule.coe_add, t1, map_add (f := _), e2, e3, ← t1]
   have hsmul : ∀ g (c : ℂ) (φ : SB (Fin a × Fin (a + a') → Fv F v)), S g (c • φ) = c • S g φ := by
     intro g c φ
     apply read_off v R hR0 hRi

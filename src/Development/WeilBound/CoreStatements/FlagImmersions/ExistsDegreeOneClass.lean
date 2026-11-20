@@ -54,7 +54,7 @@ theorem RootFieldNumerics.exists_degree_one_class : ∀ (Ψ : Type) [Fintype Ψ]
     simp only [Pi.one_apply, Equiv.Perm.one_apply, i0]
     omega
   have hdeg : m.degree = dimFl Ψ N - 1 := by
-    rw [← RootFieldNumerics.L3.degree_permExp_one, ← hm, map_add, Finsupp.degree_single]
+    rw [← RootFieldNumerics.L3.degree_permExp_one, ← hm, map_add (f := _), Finsupp.degree_single]
     omega
   have h01 : i0 ≠ i1 := by
     intro h

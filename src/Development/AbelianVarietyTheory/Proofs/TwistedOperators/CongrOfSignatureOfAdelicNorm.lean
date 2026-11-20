@@ -81,7 +81,7 @@ theorem exists_sq_sub (cm : CMData F E) {θ : E} (h0 : θ ≠ 0) (hθ : star θ 
     (algebraMap F E).injective ?_⟩
   have h1 : Formalism.UG.sigR cm.sig R ((1 : E) ⊗ₜ[F] u + θ ⊗ₜ[F] w) =
       (1 : E) ⊗ₜ[F] u - θ ⊗ₜ[F] w := by
-    rw [map_add]
+    rw [map_add (f := _)]
     change (star (1 : E)) ⊗ₜ[F] u + (star θ) ⊗ₜ[F] w = _
     rw [star_one, hθ, TensorProduct.neg_tmul, sub_eq_add_neg]
   have h2 : ∀ s : F, ∀ r : R, (algebraMap F E s) ⊗ₜ[F] r = (1 : E) ⊗ₜ[F] (algebraMap F R s * r) := by

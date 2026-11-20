@@ -26,7 +26,7 @@ theorem inclE_int_mem (c : 𝓞 E) :
 
 theorem vecIncl_add (x y : Fin n → E) :
     vecIncl (F := F) (x + y) = vecIncl (F := F) x + vecIncl (F := F) y := by
-  funext i; simp [vecIncl, map_add]
+  funext i; simp [vecIncl, map_add (f := _)]
 
 theorem vecIncl_zero : vecIncl (F := F) (0 : Fin n → E) = 0 := by
   funext i; simp [vecIncl]

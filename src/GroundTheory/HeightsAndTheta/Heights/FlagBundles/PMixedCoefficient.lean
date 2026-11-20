@@ -11,7 +11,7 @@ theorem MixedCoefficient.proof : MixedCoefficient.Statement := by
   induction G using MvPolynomial.induction_on with
   | C a => simp
   | add p q hp hq =>
-    simp only [map_add] at hp hq ⊢
+    simp only [map_add (f := _)] at hp hq ⊢
     rw [hp, hq]; ring
   | mul_X p i hp =>
     fin_cases i

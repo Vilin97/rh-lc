@@ -13,7 +13,7 @@ private theorem infPartPi_add' {F : Type} [Field F] [NumberField F] (x y : V4 F)
 
 private theorem placeEmbedReal_add {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (w : InfinitePlace F) (s t : ℝ) :
     at1 w (s + t) = at1 w s + at1 w t := by
-  simp only [at1, Pi.single_add, map_add]
+  simp only [at1, Pi.single_add, map_add (f := _)]
 
 private theorem continuous_placeEmbedReal {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (w : InfinitePlace F) :
     Continuous (at1 w : ℝ → A F) := by

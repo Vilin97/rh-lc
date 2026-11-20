@@ -75,7 +75,7 @@ theorem fixesDatum_of_congAt (c : Coeff l) {n b : ℕ} (hb : l.M ∣ b) {g : Mat
     have h1 := hu i j
     have h2 := hG i j
     simp only [RingOfIntegers.coe_eq_algebraMap] at h1 h2
-    simp only [map_mul, map_add, map_natCast, h2, apply_ite (algebraMap (𝓞 E) E), map_zero]
+    simp only [map_mul, map_add (f := _), map_natCast, h2, apply_ite (algebraMap (𝓞 E) E), map_zero]
     push_cast at h1
     split_ifs at h1 ⊢ <;> linear_combination (k : E) * h1
   have key : ((t : 𝓞 E) * k) • (q' i - q i) = 0 := by
@@ -116,7 +116,7 @@ theorem map_pushLet (g : Matrix (Fin n) (Fin n) E) (P : MvPolynomial (LtN Dw n) 
   generalize (d.eF : c.F →+* d.c₂.F) = f at he ⊢
   induction P using MvPolynomial.induction_on with
   | C a => simp [pushLet]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp, MvPolynomial.map_X]
     congr 1

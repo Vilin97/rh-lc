@@ -106,8 +106,8 @@ theorem map_smul_of_isHausdorff {T O : Type} [AddCommGroup T] [Module ℤ_[p] T]
   have e1 : ∀ (m : ℕ) (x : T), f ((m : ℤ_[p]) • x) = (m : O) * f x := fun m x => by
     rw [Nat.cast_smul_eq_nsmul, map_nsmul, nsmul_eq_mul]
   have key : f (a • t) - a • f t = (p : O) ^ n * (f (b • t) - algebraMap ℤ_[p] O b * f t) := by
-    rw [ha, add_smul, map_add, mul_smul, e1, e1, Algebra.smul_def]
-    simp only [map_add, map_mul, map_pow, map_natCast, Nat.cast_pow]
+    rw [ha, add_smul, map_add (f := _), mul_smul, e1, e1, Algebra.smul_def]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast, Nat.cast_pow]
     ring
   rw [SModEq.sub_mem, sub_zero, key, smul_eq_mul, Ideal.mul_top]
   exact Ideal.mul_mem_right _ _ (Ideal.pow_mem_pow (Ideal.mem_span_singleton_self _) n)
@@ -344,7 +344,7 @@ def actPts (T : Over S) (a : Λ) : (T ⟶ G) →* (T ⟶ G) :=
   MonoidHom.mk' (fun x => x ≫ α.act a) fun x y => MonObj.mul_comp x y _
 
 theorem actPts_add (T : Over S) (a b : Λ) (x : T ⟶ G) :
-    x ≫ α.act (a + b) = (x ≫ α.act a) * (x ≫ α.act b) := by rw [α.map_add]; exact MonObj.comp_mul _ _ _
+    x ≫ α.act (a + b) = (x ≫ α.act a) * (x ≫ α.act b) := by rw [α.map_add (f := _)]; exact MonObj.comp_mul _ _ _
 
 def actTate (p : ℕ) [Fact p.Prime] (T : Over S) : Λ →+* Module.End ℤ_[p] (Tate p (T ⟶ G)) :=
   RingHom.mk' (MonoidHom.mk (OneHom.mk (fun a => Tate.map p (actPts α T a))

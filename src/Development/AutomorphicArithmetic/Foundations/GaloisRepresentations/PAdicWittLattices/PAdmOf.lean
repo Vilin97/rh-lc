@@ -11,7 +11,7 @@ private theorem conj_core {V : Type*} [AddCommGroup V] [Module ℚ V] (H U Hi : 
     (hv : H (Hi v) = v) (e : U (k • Hi v) = k • Hi v + (N * k) • w) : H (U (Hi v)) = v + N • H w := by
   have hk' : (k : ℚ) ≠ 0 := by exact_mod_cast hk.ne'
   have h1 := congrArg H e
-  simp only [map_nsmul, map_add, hv] at h1
+  simp only [map_nsmul, map_add (f := _), hv] at h1
   have h2 : k • H (U (Hi v)) = k • (v + N • H w) := by
     rw [h1, smul_add, mul_comm N k, mul_smul]
   rw [← Nat.cast_smul_eq_nsmul ℚ k, ← Nat.cast_smul_eq_nsmul ℚ k] at h2

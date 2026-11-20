@@ -149,7 +149,7 @@ theorem crit_nat (hu : IsUnit Hm.det) (hσ : Formalism.MainNotions.S.IsURepOn (F
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum]
       refine Finset.sum_congr rfl fun c _ => ?_
-      rw [map_add, map_smul, map_smul, Complex.coe_smul, Complex.coe_smul]
+      rw [map_add (f := _), map_smul, map_smul, Complex.coe_smul, Complex.coe_smul]
     rw [Nat.cast_succ, contDiff_succ_iff_hasFDerivAt]
     refine ⟨fun y => ∑ m, (ContinuousLinearMap.proj m : (Fin k → ℝ) →L[ℝ] ℝ).smulRight (D m y), ?_, fun y => ?_⟩
     · exact ContDiff.sum fun m _ => contDiff_const.smulRight (hD m)

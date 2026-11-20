@@ -91,7 +91,7 @@ theorem NL_add [Unram F E] (A : Et F E) (a b : A.L) :
     A.NL (a + b) = A.NL a + A.NL b + Algebra.trace A.K A.L (star a * b) := by
   obtain ⟨-, hinj, hN, htr, -⟩ := Et.quadratic_structure F E A
   apply hinj
-  rw [map_add, map_add, hN, hN, hN, htr, star_add, star_mul', star_star]
+  rw [map_add (f := _), map_add (f := _), hN, hN, hN, htr, star_add, star_mul', star_star]
   ring
 
 theorem NL_smul [Unram F E] (A : Et F E) (c : A.K) (a : A.L) : A.NL (c • a) = c ^ 2 * A.NL a := by
@@ -114,11 +114,11 @@ theorem tr_smul_right (A : Et F E) (c : A.K) (a b : A.L) :
 theorem tr_add_right (A : Et F E) (a b b' : A.L) :
     Algebra.trace A.K A.L (star a * (b + b')) =
       Algebra.trace A.K A.L (star a * b) + Algebra.trace A.K A.L (star a * b') := by
-  rw [mul_add, map_add]
+  rw [mul_add, map_add (f := _)]
 
 theorem psiK_add (A : Et F E) (ψ : AddChar F ℂ) (a b : A.K) :
     A.psiK ψ (a + b) = A.psiK ψ a * A.psiK ψ b := by
-  simp only [Et.psiK, map_add, AddChar.map_add_eq_mul]
+  simp only [Et.psiK, map_add (f := _), AddChar.map_add_eq_mul]
 
 end GlobalTheory.JR.WeilQuad.Fnf
 

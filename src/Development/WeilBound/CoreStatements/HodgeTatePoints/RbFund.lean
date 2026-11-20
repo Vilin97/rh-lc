@@ -227,7 +227,7 @@ theorem moore : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C
     intro β h a
     let ψ : F →+ R ⧸ Ideal.span {(p : R)} := AddMonoidHom.mk'
       (fun a => Ideal.Quotient.mk _ (l a - ∑ n, β n * (σ ^ p ^ (n : ℕ)) a)) (fun a b => by
-        rw [← map_add, Ideal.Quotient.eq]
+        rw [← map_add (f := _), Ideal.Quotient.eq]
         have h2 : ∑ n, β n * ((σ ^ p ^ (n : ℕ)) (a + b) - (σ ^ p ^ (n : ℕ)) a -
             (σ ^ p ^ (n : ℕ)) b) ∈ Ideal.span {(p : R)} :=
           Ideal.sum_mem _ fun n _ => Ideal.mul_mem_left _ _ (hadd n a b)

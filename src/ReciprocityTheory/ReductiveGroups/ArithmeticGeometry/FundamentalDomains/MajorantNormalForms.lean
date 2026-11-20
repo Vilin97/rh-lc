@@ -52,7 +52,7 @@ private lemma hermC_sum_right_lemma_2 {ι : Type} [Fintype ι] (τ : E →+* ℂ
   let g : (Fin r → ℂ) →ₗ⋆[ℂ] ℂ :=
     { toFun := fun y => hermC τ G x y
       map_add' := fun y y' => by
-        simp only [hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+        simp only [hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
       map_smul' := fun c y => by
         simp only [hermC, Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum]
         exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by ring }

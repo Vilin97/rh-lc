@@ -27,7 +27,7 @@ theorem hform_smul_right (s : A) (x y : n → A) : Formalism.UG.hform σ J x (s 
 
 theorem hform_add_left (x x' y : n → A) :
     Formalism.UG.hform σ J (x + x') y = Formalism.UG.hform σ J x y + Formalism.UG.hform σ J x' y := by
-  simp only [Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hform_add_right (x y y' : n → A) :
     Formalism.UG.hform σ J x (y + y') = Formalism.UG.hform σ J x y + Formalism.UG.hform σ J x y' := by
@@ -122,7 +122,7 @@ theorem stepA {w : HeightOneSpectrum (𝓞 I.E)} {p : ℕ} (hp : p.Prime) (hcard
       have e : (fun i => Formalism.UG.inclE (F := I.F) (Af I.F) ((u + v) i)) =
           (fun i => Formalism.UG.inclE (F := I.F) (Af I.F) (u i)) + fun i => Formalism.UG.inclE (F := I.F) (Af I.F) (v i) := by
         funext i
-        simp [map_add]
+        simp [map_add (f := _)]
       rw [e, Matrix.mulVec_add]
       exact add_mem hu hv
     | smul o u _ hu =>
@@ -301,7 +301,7 @@ theorem hhat_Lq {w : HeightOneSpectrum (𝓞 I.E)} {t β : 𝓞 I.E}
   have hzl : ∀ z : Fin I.n → I.E ⊗[I.F] Af I.F, hhat I 0 z = 0 := fun z => by simp [hhat, Formalism.UG.hform]
   have hzr : ∀ y : Fin I.n → I.E ⊗[I.F] Af I.F, hhat I y 0 = 0 := fun y => by simp [hhat, Formalism.UG.hform]
   have hal : ∀ y y' z : Fin I.n → I.E ⊗[I.F] Af I.F, hhat I (y + y') z = hhat I y z + hhat I y' z :=
-    fun y y' z => by simp only [hhat, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    fun y y' z => by simp only [hhat, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
   have har : ∀ y z z' : Fin I.n → I.E ⊗[I.F] Af I.F, hhat I y (z + z') = hhat I y z + hhat I y z' :=
     fun y z z' => by simp only [hhat, Formalism.UG.hform, Pi.add_apply, mul_add, Finset.sum_add_distrib]
   have hsl : ∀ (r : IntAf I.F I.E) (y z : Fin I.n → I.E ⊗[I.F] Af I.F),
@@ -403,7 +403,7 @@ theorem stepB {w : HeightOneSpectrum (𝓞 I.E)} {x : I.Gf} (hx : x ∈ I.Kset)
   obtain ⟨γ, i, hi, hγ⟩ := Ideal.IsMaximal.exists_inv (inferInstance : (wc I w).asIdeal.IsMaximal) hβw
   have hγ' : iE I γ * iE I β + iE I i = 1 := by
     have := congrArg (fun a : 𝓞 I.E => Formalism.UG.inclE (F := I.F) (Af I.F) (a : I.E)) hγ
-    simpa [iE, map_add, map_mul] using this
+    simpa [iE, map_add (f := _), map_mul] using this
   have e2 : z = iE I γ • (iE I β • z) + iE I i • z := by
     rw [smul_smul, ← add_smul, hγ', one_smul]
   rw [e2]

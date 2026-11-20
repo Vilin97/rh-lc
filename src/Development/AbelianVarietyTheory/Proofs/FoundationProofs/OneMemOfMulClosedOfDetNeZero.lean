@@ -30,7 +30,7 @@ theorem one_mem_of_mulClosed_of_det_ne_zero : ∀ {F K : Type} [Field F] [Field 
     have h0 : aeval T p = 0 := minpoly.aeval F T
     have e : aeval T p = T * aeval T p.divX + algebraMap F _ (p.coeff 0) := by
       conv_lhs => rw [← divX_mul_X_add p, mul_comm p.divX X]
-      simp only [map_add, map_mul, aeval_X, aeval_C]
+      simp only [map_add (f := _), map_mul, aeval_X, aeval_C]
     rw [← e, h0]
   have hc : p.coeff 0 ≠ 0 := by
     intro hc

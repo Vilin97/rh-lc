@@ -345,7 +345,7 @@ def revIx (h : r + s = a) (p : BlockIx a s) : BlockIx a r :=
 def blockMap (h : r + s = a) (c : R →+* R) : (BlockIx a r → R) →+ (BlockIx a s → R) where
   toFun x p := (-1) ^ ((p.1.1 : ℕ) + p.1.2) * c (-x (revIx h p))
   map_zero' := funext fun p => by simp
-  map_add' x y := funext fun p => by simp only [Pi.add_apply, neg_add, map_add, mul_add]
+  map_add' x y := funext fun p => by simp only [Pi.add_apply, neg_add, map_add (f := _), mul_add]
 
 theorem thetaGL_unip (h : r + s = a) (c : R →+* R) (x : BlockIx a r → R) :
     thetaGL a c (unip x) = unip (blockMap h c x) := by
@@ -410,7 +410,7 @@ theorem isCuspidal_pull {φ : GA E a → ℂ} (hφ : IsCuspidal φ) : IsCuspidal
   have h2 := hφ s (by omega) (by omega) (μ.map m) (m '' 𝓕) (β.isAddHaarMeasure_map μ)
     (hF.image_of_equiv m.toEquiv (MeasurePreserving.symm m ⟨m.measurable, rfl⟩).quasiMeasurePreserving e fun y x => by
       change β (β.symm y + x) = y + β x
-      rw [map_add, β.apply_symm_apply]) (thetaA E a g)
+      rw [map_add (f := _), β.apply_symm_apply]) (thetaA E a g)
   rw [m.measurableEmbedding.setIntegral_map, m.injective.preimage_image] at h2
   rw [← h2]
   congr 1

@@ -20,7 +20,7 @@ theorem intAt_add {P : HeightOneSpectrum (𝓞 E)} {a b : E} (ha : IntAt P a) (h
   obtain ⟨r, s, hs, h⟩ := ha
   obtain ⟨r', s', hs', h'⟩ := hb
   refine ⟨s' * r + s * r', s * s', fun hm => (P.isPrime.mem_or_mem hm).elim hs hs', ?_⟩
-  rw [map_add, map_mul, map_mul, map_mul, ← h, ← h']
+  rw [map_add (f := _), map_mul, map_mul, map_mul, ← h, ← h']
   ring
 
 theorem intAt_mul {P : HeightOneSpectrum (𝓞 E)} {a b : E} (ha : IntAt P a) (hb : IntAt P b) : IntAt P (a * b) := by
@@ -59,7 +59,7 @@ def srcLat (P : HeightOneSpectrum (𝓞 E)) {n' : ℕ} (c' : ℕ) (L' : Submodul
   add_mem' := by
     rintro _ _ ⟨l, hl, u, hu, rfl⟩ ⟨l', hl', u', hu', rfl⟩
     refine ⟨l + l', L'.add_mem hl hl', fun i => u i + u' i, fun i => intAt_add (hu i) (hu' i), ?_⟩
-    simp only [map_add, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
     abel
   zero_mem' := ⟨0, L'.zero_mem, fun _ => 0, fun _ => intAt_zero P, by simp⟩
   smul_mem' := by

@@ -40,7 +40,7 @@ private theorem cpt_tensor_comm_eq_finAdEquiv (Q : Pl D.host.E) (y : TensorProdu
     rw [GlobalTheory.LFun.toFinAd_tmul, mul_comm]
     rfl
   | add y z hy hz =>
-    simp only [map_add] at *
+    simp only [map_add (f := _)] at *
     rw [hy, hz]
     rfl
 
@@ -51,7 +51,7 @@ private theorem eq_locIdele_of_idemAt {e : AE D} {w : Pl D.host.E} (he : Formali
   obtain ⟨hinf, hin, hout⟩ := GlobalTheory.FunObj.Comparison₂.cpt_idemSum hs
   apply GlobalTheory.LFun.eq_locIdele
   · show infPart D (x : AE D) = 1
-    rw [hx, map_add, map_mul, map_sub, map_one, hinf]
+    rw [hx, map_add (f := _), map_mul, map_sub, map_one, hinf]
     ring
   · refine Subtype.ext (funext fun Q => ?_)
     have hb := cpt_tensor_comm_eq_finAdEquiv Q (finPart D (x : AE D))
@@ -59,7 +59,7 @@ private theorem eq_locIdele_of_idemAt {e : AE D} {w : Pl D.host.E} (he : Formali
     change (GlobalTheory.LFun.finAdEquiv D.host.F D.host.E (finPart D (x : AE D))) Q =
       Neutral.B1.finiteSingle D.host.E w (y : Kw w) Q
     rw [← hb, hx]
-    simp only [map_add, map_mul, map_sub, map_one]
+    simp only [map_add (f := _), map_mul, map_sub, map_one]
     by_cases hQ : Q = w
     · subst hQ
       rw [GlobalTheory.LFun.finSingle_self, hin Q (by simp), ← hy]

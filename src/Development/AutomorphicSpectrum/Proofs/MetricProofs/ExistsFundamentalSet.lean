@@ -76,7 +76,7 @@ theorem RiemLat.normSq_nonneg (R : RiemLat E g Λ) (x : Λ) : 0 ≤ R.normSq x :
 
 theorem RiemLat.form_antisymm (R : RiemLat E g Λ) (x y : Λ) : R.form y x = - R.form x y := by
   have h := R.alt (x + y)
-  simp only [map_add, LinearMap.add_apply, R.alt] at h
+  simp only [map_add (f := _), LinearMap.add_apply, R.alt] at h
   linarith
 
 theorem RiemLat.form_sq_le (R : RiemLat E g Λ) (x y : Λ) :

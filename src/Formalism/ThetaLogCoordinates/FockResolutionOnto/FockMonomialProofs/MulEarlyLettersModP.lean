@@ -25,7 +25,7 @@ theorem pow_mul_of_sq (c : Fin r) (x g : MvPolynomial (Fin N × Fin r) ℚ_[p])
     have e1 : ∀ n y, glAct p LL j 0 c (((glAct p LL j 0 c) ^ n) y) = ((glAct p LL j 0 c) ^ (n + 1)) y := by
       intro n y
       rw [pow_succ', Module.End.mul_apply]
-    rw [← e1 (k + 1), ih, map_add, map_smul, glAct_mul, glAct_mul, hx, zero_mul, zero_add, e1, e1]
+    rw [← e1 (k + 1), ih, map_add (f := _), map_smul, glAct_mul, glAct_mul, hx, zero_mul, zero_add, e1, e1]
     push_cast
     simp only [add_smul, one_smul]
     abel
@@ -98,7 +98,7 @@ theorem dpow_int_map (c : Fin r) (hc : c ≠ 0) (P : MvPolynomial (Fin N × Fin 
     | succ k => rw [dpow_succ_C]; exact Submodule.zero_mem _
   | add f g hf hg =>
     intro k
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact Submodule.add_mem _ (hf k) (hg k)
   | mul_X f v hf =>
     intro k
@@ -169,7 +169,7 @@ theorem modCond_zero : ModCond p LL j M (0 : MvPolynomial (Fin N × Fin r) ℚ_[
 theorem modCond_add (f g : MvPolynomial (Fin N × Fin r) ℚ_[p]) (hf : ModCond p LL j M f)
     (hg : ModCond p LL j M g) : ModCond p LL j M (f + g) := by
   intro l hl m hm
-  rw [map_add, MvPolynomial.coeff_add]
+  rw [map_add (f := _), MvPolynomial.coeff_add]
   exact lt_of_le_of_lt (Padic.nonarchimedean _ _) (max_lt (hf l hl m hm) (hg l hl m hm))
 
 theorem modCond_neg (f : MvPolynomial (Fin N × Fin r) ℚ_[p]) (hf : ModCond p LL j M f) :
@@ -281,7 +281,7 @@ theorem modCond_last_fwd (hj : K + 1 ≤ j) (hv : LL.vec (Fin.last K) = true) (c
       · split_ifs
         · exact modCond_dpow p LL j _ _ hg a ha _
         · exact modCond_zero p LL j _
-      · rw [map_add, dpow_succ_mul p LL j a _ _ (glAct_sq_X p LL j a ha _),
+      · rw [map_add (f := _), dpow_succ_mul p LL j a _ _ (glAct_sq_X p LL j a ha _),
           dpow_succ_mul p LL j a _ _ (glAct_sq_X p LL j a ha _), last_X p LL j hj hv, last_X p LL j hj hv, if_neg ha]
         split_ifs <;> ring
   · rintro x ⟨g, g', hg, hg', rfl⟩ m hm

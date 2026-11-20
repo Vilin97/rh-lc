@@ -359,7 +359,7 @@ theorem filVB_anti : Antitone (FilV PD (LL := LL) (V := V)) := by
   | tmul x y =>
     rw [AlgebraTensorModule.map_tmul]
     exact tmul_mem_FilV_of_mem_Fil PD a _ (filB_anti PD hab y.2)
-  | add u v hu hv => rw [map_add]; exact Submodule.add_mem _ hu hv
+  | add u v hu hv => rw [map_add (f := _)]; exact Submodule.add_mem _ hu hv
 
 theorem filV_exh (z : V ⊗[Qp] BdR) : ∃ a : ℤ, z ∈ FilV PD (LL := LL) (V := V) a := by
   induction z using TensorProduct.induction_on with
@@ -384,7 +384,7 @@ theorem coord_mem {ι : Type} (b : Basis ι Qp V) (a : ℤ) (z : V ⊗[Qp] BdR)
     rw [AlgebraTensorModule.map_tmul, TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply]
     exact Submodule.smul_of_tower_mem _ _ y.2
   | add u v hu hv =>
-    rw [map_add, map_add, Finsupp.add_apply]
+    rw [map_add (f := _), map_add (f := _), Finsupp.add_apply]
     exact Submodule.add_mem _ hu hv
 
 theorem filV_sep (z : V ⊗[Qp] BdR) (hz : ∀ a : ℤ, z ∈ FilV PD (LL := LL) (V := V) a) : z = 0 := by

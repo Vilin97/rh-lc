@@ -103,7 +103,7 @@ theorem exists_eq_glue (hs : h.IsSymm) (hι : ∀ x y, h (ι x) (ι y) = h0 x y)
   obtain ⟨y, c, rfl⟩ := (hB v).1 (hsp.le (Submodule.subset_span hv))
   have hιz : ∀ w, h (ι w) z = 0 := fun w => swap_zero hs (hzι w)
   have hc : c = -(T : K)⁻¹ := by
-    rw [map_add, map_smul, hzι, hz, smul_eq_mul] at hv2
+    rw [map_add (f := _), map_smul, hzι, hz, smul_eq_mul] at hv2
     field_simp
     linear_combination -hv2
   subst hc
@@ -115,7 +115,7 @@ theorem exists_eq_glue (hs : h.IsSymm) (hι : ∀ x y, h (ι x) (ι y) = h0 x y)
   · obtain ⟨w, t, rfl⟩ := (hB x).1 (hsp.le (Submodule.subset_span hx))
     obtain ⟨s, hs'⟩ := Submodule.mem_one.1 (hint _ hzM _ hx)
     have ht : t = -((s : K) * (T : K)⁻¹) := by
-      rw [map_add, map_smul, hzι, hz, smul_eq_mul] at hs'
+      rw [map_add (f := _), map_smul, hzι, hz, smul_eq_mul] at hs'
       change (s : K) = _ at hs'
       rw [hs']
       field_simp
@@ -133,7 +133,7 @@ theorem glue_eq_of_sub_mem {y y' : W} (hy : y - y' ∈ L) : glue ι z T L y = gl
   have key : ∀ y y' : W, y - y' ∈ L → glue ι z T L y ≤ glue ι z T L y' := fun y y' hy x hx => by
     obtain ⟨l, hl, s, rfl⟩ := mem_glue.1 hx
     refine mem_glue.2 ⟨l + (s : K) • (y - y'), L.add_mem hl (smul_mem_int s hy), s, ?_⟩
-    rw [map_add, map_smul, map_sub]; module
+    rw [map_add (f := _), map_smul, map_sub]; module
   exact le_antisymm (key _ _ hy) (key _ _ (by simpa using L.neg_mem hy))
 
 theorem sub_mem_of_glue_eq (hinj : Function.Injective ι) (hT : T ≠ 0)
@@ -143,7 +143,7 @@ theorem sub_mem_of_glue_eq (hinj : Function.Injective ι) (hT : T ≠ 0)
   obtain ⟨l, hl, s, e1⟩ := mem_glue.1 (e.le (mem_glue.2 ⟨0, L.zero_mem, 1, rfl⟩))
   have e2 : (s : K) = 1 := by
     have := congrArg (h z) e1
-    simp only [map_add, map_sub, map_smul, hzι, hz, smul_eq_mul, map_one] at this
+    simp only [map_add (f := _), map_sub, map_smul, hzι, hz, smul_eq_mul, map_one] at this
     field_simp at this
     linear_combination -this
   rw [e2] at e1
@@ -171,7 +171,7 @@ theorem glue_mem (hs : h.IsSymm) (hι : ∀ x y, h (ι x) (ι y) = h0 x y) (hinj
   have hsp : Submodule.span K (glue ι z T L y : Set V) = B := by
     refine le_antisymm (Submodule.span_le.2 fun x hx => ?_) fun x hx => ?_
     · obtain ⟨l, hl, s, rfl⟩ := mem_glue.1 hx
-      exact (hB _).2 ⟨l + (s : K) • y, -((s : K) * (T : K)⁻¹), by rw [map_add, map_smul]; module⟩
+      exact (hB _).2 ⟨l + (s : K) • y, -((s : K) * (T : K)⁻¹), by rw [map_add (f := _), map_smul]; module⟩
     · obtain ⟨w, c, rfl⟩ := (hB _).1 hx
       refine Submodule.add_mem _ ?_ (Submodule.smul_mem _ _ (Submodule.subset_span hzG))
       have : Submodule.span K (L : Set W) ≤ (Submodule.span K (glue ι z T L y : Set V)).comap ι :=
@@ -183,7 +183,7 @@ theorem glue_mem (hs : h.IsSymm) (hι : ∀ x y, h (ι x) (ι y) = h0 x y) (hinj
     obtain ⟨l', hl', s', rfl⟩ := mem_glue.1 hx'
     convert Submodule.add_mem _ (Submodule.add_mem _ (hI l hl l' hl') (int_mul s' (hy1 l hl)))
       (Submodule.add_mem _ (star_int_mul s (hy2 l' hl')) (star_int_mul s (int_mul s' hn))) using 1
-    simp only [map_add, map_sub, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply,
+    simp only [map_add (f := _), map_sub, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.sub_apply,
       LinearMap.smul_apply, hι, hιz, hzι, hz, smul_eq_mul, starRingEnd_apply, RingHom.id_apply, star_inv₀,
       star_natCast]
     field_simp
@@ -198,7 +198,7 @@ theorem glue_mem (hs : h.IsSymm) (hι : ∀ x y, h (ι x) (ι y) = h0 x y) (hinj
     obtain ⟨w, t, rfl⟩ := (hB x).1 (hsp.le hxB)
     obtain ⟨s, hs'⟩ := Submodule.mem_one.1 ((dualBasic_mem_dual _ _ _).1 hx _ hzG)
     have ht : t = -((s : K) * (T : K)⁻¹) := by
-      rw [map_add, map_smul, hzι, hz, smul_eq_mul] at hs'
+      rw [map_add (f := _), map_smul, hzι, hz, smul_eq_mul] at hs'
       change (s : K) = _ at hs'
       rw [hs']
       field_simp
@@ -225,7 +225,7 @@ theorem glue_mem (hs : h.IsSymm) (hι : ∀ x y, h (ι x) (ι y) = h0 x y) (hinj
   · obtain ⟨l, hl, s, e⟩ := mem_glue.1 hc
     have e1 : c = -((s : K) * (T : K)⁻¹) := by
       have := congrArg (h z) e
-      simp only [map_add, map_sub, map_smul, hzι, hz, smul_eq_mul] at this
+      simp only [map_add (f := _), map_sub, map_smul, hzι, hz, smul_eq_mul] at this
       field_simp at this ⊢
       linear_combination -this
     have e2 : (s : K) • y = -l := hinj (by
@@ -239,7 +239,7 @@ theorem glue_mem (hs : h.IsSymm) (hι : ∀ x y, h (ι x) (ι y) = h0 x y) (hinj
     change ι w = _ at e
     have e1 : (s : K) = 0 := by
       have := congrArg (h z) e
-      simp only [map_add, map_sub, map_smul, hzι, hz, smul_eq_mul] at this
+      simp only [map_add (f := _), map_sub, map_smul, hzι, hz, smul_eq_mul] at this
       field_simp at this
       linear_combination -this
     rw [e1, zero_smul, add_zero] at e

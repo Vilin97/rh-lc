@@ -94,14 +94,14 @@ theorem cm_local_neg_one (cm : CMData F E) (θ : 𝓞 E) (t n : 𝓞 F)
       rw [hpq, star_add, star_mul, hs, hs, mul_comm]
     have e1 : (t' : F) = 2 * p + q * t := by
       apply (algebraMap F E).injective
-      simp only [map_add, map_mul, map_ofNat]
+      simp only [map_add (f := _), map_mul, map_ofNat]
       rw [← ht', ← ht, hst, hpq]; ring
     have e2 : (n' : F) = p ^ 2 + p * q * t + q ^ 2 * n := by
       apply (algebraMap F E).injective
-      simp only [map_add, map_mul, map_pow]
+      simp only [map_add (f := _), map_mul, map_pow]
       rw [← hn', ← ht, ← hn, hst, hpq]; ring
     rw [e1, e2] at h
-    simp only [map_add, map_mul, map_pow, map_ofNat] at h
+    simp only [map_add (f := _), map_mul, map_pow, map_ofNat] at h
     refine ⟨a + b * algebraMap F _ p, b * algebraMap F _ q, ?_, fun h => (h hd).elim⟩
     linear_combination h
   · obtain ⟨a, b, t', n', ht', hn', h⟩ := GlobalTheory.LocalNormNegOne.main F E cm v θ ⟨t, n, ht, hn, hd⟩
@@ -154,8 +154,8 @@ theorem neg_one_norm_finiteAdele : ∀ (F E : Type) [Field F] [NumberField F] [F
   have h1 := congrArg L ht
   have h2 := congrArg L hn
   have h3 := congrArg Rr hab
-  simp only [map_add, map_mul, map_pow, map_neg, map_one, AlgHom.commutes] at h1 h2 h3
-  rw [map_add, map_mul, hL, hR, hR]
+  simp only [map_add (f := _), map_mul, map_pow, map_neg, map_one, AlgHom.commutes] at h1 h2 h3
+  rw [map_add (f := _), map_mul, hL, hR, hR]
   rw [← h1, ← h2] at h3
   linear_combination h3
 

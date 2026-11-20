@@ -127,7 +127,7 @@ theorem intertwining_symplectic_and_group_law : ∀ (l : Type) [Fintype l]
       have k2 := hI t v f₁ f₂ hf₂
       have k3 := hI t (v + v') (T (-t) g0) f₃ hf₃
       rw [hsurj] at k1 k3
-      rw [k1, rhoFun_rhoFun, e2, map_smul, coe_smul_sch, k3, map_add] at k2
+      rw [k1, rhoFun_rhoFun, e2, map_smul, coe_smul_sch, k3, map_add (f := _)] at k2
       exact (eq_of_smul_eq_smul (rhoFun_gaussian_ne_zero (A t v + A t v')) k2).symm
     apply sub_eq_zero.mp
     refine eq_zero_of_exp_eq_one _ fun r => ?_

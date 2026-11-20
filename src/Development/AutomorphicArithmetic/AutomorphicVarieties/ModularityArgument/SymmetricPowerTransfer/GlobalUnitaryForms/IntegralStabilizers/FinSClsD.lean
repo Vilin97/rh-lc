@@ -38,7 +38,7 @@ theorem Dm_unit [IsTotallyReal F] (hneg : ∀ σ : F →+* ℝ, σ Δ < 0) (x : 
   obtain ⟨φ⟩ : Nonempty (F →+* ℂ) := inferInstance
   set σ := (IsTotallyReal.complexEmbedding_isReal φ).embedding
   have hs := congrArg σ h
-  simp only [map_sub, map_add, map_mul, map_pow, map_zero] at hs
+  simp only [map_sub, map_add (f := _), map_mul, map_pow, map_zero] at hs
   have hn := neg_pos.2 (hneg σ)
   have p1 := mul_nonneg hn.le (sq_nonneg (σ (x.1 0 0).im))
   have p2 := mul_nonneg hn.le (sq_nonneg (σ (x.1 0 1).im))

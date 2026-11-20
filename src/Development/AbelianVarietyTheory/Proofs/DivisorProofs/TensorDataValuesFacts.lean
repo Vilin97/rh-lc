@@ -42,7 +42,7 @@ theorem cmp_bijective (T : Tens D D' W) (ν : NumOf D F N) (ν' : NumOf D' F N')
 
 theorem chi_add (T : Tens D D' W) (ν : NumOf D F N) (ν' : NumOf D' F N') (χ χ' : N'.X) (i : Fin r) :
     chi T ν ν' (χ + χ') i = chi T ν ν' χ i + chi T ν ν' χ' i := by
-  simp [TensTor.chi, map_add]
+  simp [TensTor.chi, map_add (f := _)]
 
 theorem chi_bijective (T : Tens D D' W) (ν : NumOf D F N) (ν' : NumOf D' F N') : Function.Bijective (chi T ν ν') := by
   have : chi T ν ν' = ν'.eX.trans (T.xe.trans (AddEquiv.piCongrRight fun _ => ν.eX.symm)) := by

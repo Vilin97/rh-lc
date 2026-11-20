@@ -43,7 +43,7 @@ theorem exists_inv_rows {R ι : Type} [CommRing R] [Fintype ι] {n : ℕ} (e : F
   let q := Ideal.Quotient.mk I
   have hq : ∀ σ k, q (M (φ σ) k) = q (M σ k) ^ p := fun σ k => by
     obtain ⟨v, hv⟩ := hc σ k
-    rw [hv, map_add, map_mul, map_natCast, CharP.cast_eq_zero, zero_mul, add_zero, map_pow]
+    rw [hv, map_add (f := _), map_mul, map_natCast, CharP.cast_eq_zero, zero_mul, add_zero, map_pow]
   have h3 : ∀ σ, ∑ i, (q (cf (φ τ) i) - q (cf τ i) ^ p) * q (M σ i) = 0 := fun σ => by
     obtain ⟨σ, rfl⟩ := Finite.injective_iff_surjective.1 hφ σ
     have a := congrArg q (h1 (φ τ) (φ σ))
@@ -155,7 +155,7 @@ theorem exists_coef_of_coeff {D : D7} {H : ReciprocityTheory.ChartRestriction.G.
     obtain ⟨w, hw⟩ := sgF_emb p σ x
     have hp0 : (p : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hp.out.ne_zero
     have h1 : ι (ev (phiPow D 1 σ) x) = ι (ev σ x) ^ p + p * jc (algebraMap _ (KW p) w) := by
-      rw [hev, hev, ← map_pow, ← map_natCast jc, ← map_mul, ← map_add, ← hw, phiPow, pow_one]
+      rw [hev, hev, ← map_pow, ← map_natCast jc, ← map_mul, ← map_add (f := _), ← hw, phiPow, pow_one]
       rfl
     have h2 : jc (algebraMap _ (KW p) w) = (ι (ev (phiPow D 1 σ) x) - ι (ev σ x) ^ p) / p := by
       rw [h1]; field_simp; ring
@@ -163,7 +163,7 @@ theorem exists_coef_of_coeff {D : D7} {H : ReciprocityTheory.ChartRestriction.G.
       rw [h2]
       exact div_mem (sub_mem (ev (phiPow D 1 σ) x).1.2 (pow_mem (ev σ x).1.2 p)) (natCast_mem _ p)
     refine ⟨⟨⟨_, h3⟩, (hjc _).2 ⟨w, rfl⟩⟩, hι ?_⟩
-    rw [h1, map_add, map_mul, map_pow, map_natCast]
+    rw [h1, map_add (f := _), map_mul, map_pow, map_natCast]
     rfl
   obtain ⟨cf, h1, h2⟩ := exists_inv_rows e p hpV (fun σ k => ev σ (b k)) hdet _ hφ (fun σ k => hc σ (b k))
   exact ⟨_, b, ev, cf, hfin, hcard, fun _ _ => rfl, hsurj, h1, h2⟩

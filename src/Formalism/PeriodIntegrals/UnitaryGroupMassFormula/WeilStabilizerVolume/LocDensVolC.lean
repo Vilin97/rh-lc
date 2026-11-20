@@ -81,7 +81,7 @@ theorem ev_dualH [Algebra.IsSeparable F E] (σ : E →ₐ[F] E) (hσ : ∀ x, σ
       rw [this]
       exact mul_mem hh (hS q p k)
     have hcc : c + c = 1 := by
-      rw [hc, ← map_add]
+      rw [hc, ← map_add (f := _)]
       norm_num
     have hSX : S = ⟨iota v σ X, iota_mem v σ hσ X⟩ := by
       apply Subtype.ext

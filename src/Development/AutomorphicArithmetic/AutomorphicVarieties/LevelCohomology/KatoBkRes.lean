@@ -50,7 +50,7 @@ theorem UpperTheory.V.X.Kato.bkRes :
     | tmul a b =>
       simp only [TensorProduct.AlgebraTensorModule.map_tmul, LinearMap.id_apply]
       rw [← Module.End.mul_apply, ← map_mul, e1, map_mul, Module.End.mul_apply]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have h2 := congrArg (TensorProduct.AlgebraTensorModule.map (ρ g⁻¹)
     (LinearMap.id : UpperTheory.V.Loc.Bcr l →ₗ[ℚ_[l]] UpperTheory.V.Loc.Bcr l)) h1
   rw [map_sub, key, TensorProduct.AlgebraTensorModule.map_tmul, LinearMap.id_apply] at h2

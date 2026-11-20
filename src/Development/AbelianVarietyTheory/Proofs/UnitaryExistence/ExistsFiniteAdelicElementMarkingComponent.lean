@@ -74,7 +74,7 @@ theorem onto_adelic_of_tower (F E : Type) [Field F] [NumberField F] [Field E] [N
     (fun N m hN hm a => by
       obtain ⟨a, rfl⟩ := ι.surjective a
       obtain ⟨e, he⟩ := h1 N m hN hm a
-      exact ⟨φ e, by rw [hf', hf', he, map_add, map_nsmul]⟩)
+      exact ⟨φ e, by rw [hf', hf', he, map_add (f := _), map_nsmul]⟩)
     (fun N hN => ⟨fun a => by
       obtain ⟨a, rfl⟩ := ι.surjective a
       rw [hf']
@@ -87,7 +87,7 @@ theorem onto_adelic_of_tower (F E : Type) [Field F] [NumberField F] [Field E] [N
         exact ⟨φ e, by rw [he, map_nsmul]⟩, fun a' => by
       obtain ⟨a', rfl⟩ := φ.surjective a'
       obtain ⟨a, e, he⟩ := (h2 N hN).2 a'
-      exact ⟨ι a, φ e, by rw [hf', he, map_add, map_nsmul]⟩⟩)
+      exact ⟨ι a, φ e, by rw [hf', he, map_add (f := _), map_nsmul]⟩⟩)
   refine ⟨g, hg1, fun N hN a => by rw [← hf']; exact hg2 N hN (ι a), hg3 c G J ?_ ?_⟩
   · intro x hx y hy
     obtain ⟨x', hx'⟩ := φ.surjective ⟨x, hx⟩
@@ -154,7 +154,7 @@ theorem exists_finite_mark : ∀ (D : D7) (H : ReciprocityTheory.ChartRestrictio
     (fun x y => by
       have halt : Dw.EF y x = -Dw.EF x y := by
         have := Dw.alt (x + y)
-        simp only [map_add, LinearMap.add_apply, Dw.alt] at this
+        simp only [map_add (f := _), LinearMap.add_apply, Dw.alt] at this
         linear_combination this
       rw [hherm, hι, hι, ← hT, ← hC.iota.isom, halt, Int.cast_neg])
     (fun x y => by
@@ -186,7 +186,7 @@ theorem exists_finite_mark : ∀ (D : D7) (H : ReciprocityTheory.ChartRestrictio
       change GlobalTheory.AdLat.fv D.host.F (C.M.φ k (C.F.t k a) : Fin V.rank → D.host.E) - _ = _
       have he' : (C.M.φ k (f l.M a) : Fin V.rank → D.host.E) =
           (C.M.φ k (C.F.t k a) : Fin V.rank → D.host.E) + l.M • (C.M.φ k e : Fin V.rank → D.host.E) := by
-        rw [he, (C.M.φ k).map_add, map_nsmul (C.M.φ k)]
+        rw [he, (C.M.φ k).map_add (f := _), map_nsmul (C.M.φ k)]
         rfl
       exact onto_marking_sub D.host.F he' hw'
 

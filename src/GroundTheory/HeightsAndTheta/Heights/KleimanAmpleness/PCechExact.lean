@@ -198,8 +198,8 @@ theorem longExact (hφ : ∀ I J h m, φ J (ρA I J h m) = ρB I J h (φ I m))
       map_add' := fun a b => by
         rw [← Hdeg_mk_add]
         exact key (a + b) (lift a + lift b) (Submodule.add_mem _ (hlift_mem a) (hlift_mem b))
-          (by rw [map_add, hlift, hlift]; rfl) (⟨w a, hw_cocy a⟩ + ⟨w b, hw_cocy b⟩)
-          (by change mapC φ (i + 1) (w a + w b) = _; rw [map_add, map_add, hw, hw])
+          (by rw [map_add (f := _), hlift, hlift]; rfl) (⟨w a, hw_cocy a⟩ + ⟨w b, hw_cocy b⟩)
+          (by change mapC φ (i + 1) (w a + w b) = _; rw [map_add (f := _), map_add (f := _), hw, hw])
       map_smul' := fun r a => by
         rw [RingHom.id_apply, ← Hdeg_mk_smul]
         exact key (r • a) (r • lift a) (Submodule.smul_mem _ r (hlift_mem a))

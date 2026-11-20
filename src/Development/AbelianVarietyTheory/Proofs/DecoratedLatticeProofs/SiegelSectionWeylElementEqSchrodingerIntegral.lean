@@ -78,7 +78,7 @@ theorem swSec_weyl : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (A B : HSp D)
     have h := hf.quasi δ ((dblDec A).extX B a)
     rw [show ratW B (dblSp A) δ = (dblDec A).extX B γ from hδ, HypDec.symplOH_extX_extX, neg_zero,
       AddChar.map_zero_eq_one, one_mul] at h
-    rw [map_add, h]
+    rw [map_add (f := _), h]
   unfold swSec GlobalTheory.IndefiniteRowSideFullHecke.SphericalZero.evZero
   simp only [h1]
   refine (GlobalTheory.LeviGLRes.covolOne_integral_mul_right hν (lowC A w) n (mul_eq_one_comm.1 hmn) hmn hm hn

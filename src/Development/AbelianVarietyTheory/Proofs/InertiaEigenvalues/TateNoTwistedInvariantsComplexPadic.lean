@@ -106,7 +106,7 @@ theorem estimate (ζ : ℕ → Om l) (χ : GQ l →* ℤ_[l]ˣ) (cZ0 : ζ 0 = 1)
       (mul_mem (hc _) hb) (sub_mem ((Vz _ _).smul_mem ⟨_, hc c⟩ (Vz_stable n m _ hz g hg w hw)) hw)
     rw [norm_mul, norm_algebraMap'] at this
     convert this using 2
-    rw [map_add, (IntermediateField.mem_fixingSubgroup_iff _ _).1 hg b hb, map_sub, map_one]
+    rw [map_add (f := _), (IntermediateField.mem_fixingSubgroup_iff _ _).1 hg b hb, map_sub, map_one]
     ring
 
 theorem full (ζ : ℕ → Om l) (χ : GQ l →* ℤ_[l]ˣ) (cZ0 : ζ 0 = 1) (cZs : ∀ m, ζ (m + 1) ^ l = ζ m) (cZ1 : ζ 1 ≠ 1)

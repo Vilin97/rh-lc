@@ -18,7 +18,7 @@ theorem iter_cong : ∀ (R : Type) [CommRing R] (p : ℕ) [Fact p.Prime] (σ : R
     obtain ⟨r, hr⟩ := ih
     obtain ⟨r', hr'⟩ := GlobalTheory.T.colemanNormOperator_iterate_succ_congr_frobenius R p σ hF h hh (j + i)
     refine ⟨smap σ r + (p : PowerSeries R) ^ i * r', ?_⟩
-    rw [show j + (i + 1) = (j + i) + 1 by omega, hr', hr, Function.iterate_succ_apply' (smap σ), map_add, map_mul, map_pow, map_natCast]
+    rw [show j + (i + 1) = (j + i) + 1 by omega, hr', hr, Function.iterate_succ_apply' (smap σ), map_add (f := _), map_mul, map_pow, map_natCast]
     ring
 
 theorem norm_tower : ∀ (R : Type) [CommRing R] (p : ℕ) [Fact p.Prime], IsAdicComplete (Ideal.span {(p : R)}) R → ∀ u : ∀ m : ℕ, (lev R p (m + 1))ˣ, (∀ m : ℕ, nrm p (m + 1) (by omega) ((u (m + 1) : lev R p (m + 2))) = (u m : lev R p (m + 1))) → ∀ (m i : ℕ) (h : PowerSeries R), ev R p (m + i + 1) h = (u (m + i) : lev R p (m + i + 1)) → ev R p (m + 1) ((normOp p)^[i] h) = u m := by
@@ -39,7 +39,7 @@ theorem ev_map_congr : ∀ (R : Type) [CommRing R] (p m : ℕ) (τ : R →+* R) 
     rw [Polynomial.hom_eval₂]
     have h1 : (PowerSeries.map τ).comp (PowerSeries.C (R := R)) = (PowerSeries.C (R := R)).comp τ := by
       ext a : 1; simp
-    rw [h1, map_add, map_one, PowerSeries.map_X, ← Polynomial.eval₂_map, Polynomial.map_cyclotomic]
+    rw [h1, map_add (f := _), map_one, PowerSeries.map_X, ← Polynomial.eval₂_map, Polynomial.map_cyclotomic]
   rw [Ideal.Quotient.eq] at hg ⊢
   rw [← map_sub]
   obtain ⟨c, hc'⟩ := Ideal.mem_span_singleton'.1 hg
@@ -62,7 +62,7 @@ theorem unit_of_ev : ∀ (R : Type) [CommRing R] (p n : ℕ) [Fact p.Prime], IsA
       unfold cyc
       rw [Polynomial.hom_eval₂]
       have h1 : (constantCoeff (R := R)).comp (PowerSeries.C (R := R)) = RingHom.id R := by ext a; simp
-      rw [h1, map_add, map_one, constantCoeff_X, add_zero]
+      rw [h1, map_add (f := _), map_one, constantCoeff_X, add_zero]
       rfl
     rw [e]
     rcases n with _ | n
@@ -108,7 +108,7 @@ theorem ev_of_mem_pow : ∀ (R : Type) [CommRing R] (p m N : ℕ) [Fact p.Prime]
     have h0 : ev R p m ((1 + X : PowerSeries R) ^ (p ^ m) - 1) = 0 := by
       rw [hs, map_mul, ev_cyc_self, zero_mul]
     rw [add_comm (1 : PowerSeries R) X, hr] at h0
-    simp only [map_sub, map_add, map_mul, map_pow, map_one, one_pow, map_natCast] at h0
+    simp only [map_sub, map_add (f := _), map_mul, map_pow, map_one, one_pow, map_natCast] at h0
     rw [Ideal.mem_span_singleton']
     exact ⟨-(ev R p m X * ev R p m r), by linear_combination -h0⟩
   have hJP : ((Ideal.span {(p : R)}).comap (constantCoeff (R := R))) ^ (p ^ m)
@@ -226,7 +226,7 @@ theorem exists_coleman_series : ∀ (R : Type) [CommRing R] (p : ℕ) [hp : Fact
     obtain ⟨r, hr⟩ := GlobalTheory.ColEx.iter_cong R p σ hF (H (2 * k + 1)) (hHu _) (k + 1) (k - m)
     have h3 := GlobalTheory.ColEx.norm_tower R p hR u hu m (k + 1 + (k - m)) (H (m + (k + 1 + (k - m)))) (hH _)
     have e : m + (k + 1 + (k - m)) = 2 * k + 1 := by omega
-    rw [e, hr, map_add] at h3
+    rw [e, hr, map_add (f := _)] at h3
     refine ⟨-r, ?_⟩
     rw [hFdef]
     dsimp only
@@ -292,7 +292,7 @@ theorem exists_coleman_series : ∀ (R : Type) [CommRing R] (p : ℕ) [hp : Fact
       rw [← pow_add]; congr 1; omega
     refine ⟨y2 + (p : PowerSeries R) ^ (2 * n + 1 + 1 - N) * y1, ?_⟩
     rw [map_sub, map_sub] at hy2
-    rw [mul_add, map_add, ← hy2, ← mul_assoc, ← e]
+    rw [mul_add, map_add (f := _), ← hy2, ← mul_assoc, ← e]
     linear_combination hy1
   have hu0 : IsUnit (PowerSeries.map (((σ.symm : R ≃+* R) : R →+* R) ^ (0 + 1)) f0) :=
     GlobalTheory.ColEx.unit_of_ev R p (0 + 1) hR _ (by rw [C5 0]; exact (u 0).isUnit)

@@ -179,8 +179,8 @@ theorem edge_class_cup : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∀ c₁ : �
       (IsIntegral.mul (IsIntegral.mul (isInt_pow_p c₁) (isInt_pow_p c')) hu0)
       (IsIntegral.mul (isInt_pow_p c') hw1)) (IsIntegral.mul (isInt_pow_p c') hw2)) hw4) (isInt_gal σ hw3)
   · have KS := congrArg (⇑(σ⁻¹ : Gal p Ω)) K
-    simp only [map_sub, map_mul, map_pow, map_natCast, map_add, hs2, hsi, hfs] at KS
-    simp only [map_sub, map_mul, map_pow, map_natCast, map_add, hsi, pow_add]
+    simp only [map_sub, map_mul, map_pow, map_natCast, map_add (f := _), hs2, hsi, hfs] at KS
+    simp only [map_sub, map_mul, map_pow, map_natCast, map_add (f := _), hsi, pow_add]
     linear_combination KS
 
 end GlobalTheory.EdgeAlg

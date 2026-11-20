@@ -38,7 +38,7 @@ private theorem gauss_deriv {F : Type} [Field F] [NumberField F] [IsTotallyReal 
     have h2 : p (2 : A F) w' = 2 := by
       rw [map_ofNat]
       rfl
-    fin_cases i <;> simp [Q, Kf, bf, rf, hp, h2, map_add, map_mul, map_pow, map_sub, Pi.single_apply] <;> ring
+    fin_cases i <;> simp [Q, Kf, bf, rf, hp, h2, map_add (f := _), map_mul, map_pow, map_sub, Pi.single_apply] <;> ring
   have hK : kap δ w i = ((Kf w : ℝ) : ℂ) := by
     fin_cases i <;> simp [kap, Kf, cw, hpdef]
   have hfun : (fun t : ℝ => gauss δ (v + Pi.single i (at1 w t))) = fun t : ℝ => Complex.exp (-(Real.pi : ℂ) *

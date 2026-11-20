@@ -95,7 +95,7 @@ theorem linBar_unique : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
   obtain ⟨c1, c2⟩ := c12 ι hι
   obtain ⟨l, hl⟩ := GlobalTheory.T.eq_smul_of_commute_heisenberg_linearModel_schwartzBruhat (GlobalTheory.WeilM.SB (Fin a' × Fin (a + a') → Fv F B.v₁)) (GlobalTheory.LatVac.psiAt B.ψ B.v₁)
     (GlobalTheory.SchrSB.continuous_psiAt B.ψ hstd.1 B.v₁) (GlobalTheory.PsiNontriv.psiAt_ne_one B.ψ hstd B.v₁) ι₀ ι hι₀.bij
-    (fun x _ y _ c => by rw [map_add, map_smul])
+    (fun x _ y _ c => by rw [map_add (f := _), map_smul])
     (fun C => schr (GlobalTheory.LatVac.psiAt B.ψ B.v₁) (GlobalTheory.LatVac.locCo G.M'.co B.v₁ (U 0 (Pm C))))
     (fun l => schr (GlobalTheory.LatVac.psiAt B.ψ B.v₁) (GlobalTheory.LatVac.locCo G.M'.co B.v₁ (U (-Lm l) 0)))
     (fun C x hx => ⟨hsb _ x hx, c1₀ C x hx, c1 C x hx⟩)

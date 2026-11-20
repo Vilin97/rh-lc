@@ -90,7 +90,7 @@ theorem exists_lift_c (R₁ R : Type) [CommRing R₁] [IsDomain R₁] [IsLocalRi
   let f : D.X →ₗ[ℤ] Additive (𝟙_ (Over (Sp R₁)) ⟶ P.A) := bs.constr ℤ fun j => Additive.ofMul (sec (bs j))
   refine ⟨fun x => (f x).toMul, fun a b => ?_, ?_⟩
   · show Additive.toMul (f (a + b)) = _
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   let T := 𝟙_ (Over (Sp R))
   let q : Over.mk (T.hom ≫ spMap π) ⟶ 𝟙_ (Over (Sp R₁)) := Over.homMk (spMap π) (by
     show spMap π ≫ 𝟙 _ = 𝟙 _ ≫ spMap π
@@ -108,7 +108,7 @@ theorem exists_lift_c (R₁ R : Type) [CommRing R₁] [IsDomain R₁] [IsLocalRi
   let F₂ : D.X →+ Additive (Over.mk (T.hom ≫ spMap π) ⟶ P.A) :=
     AddMonoidHom.mk' (fun x => Additive.ofMul (q ≫ (f x).toMul)) fun a b => by
       show q ≫ Additive.toMul (f (a + b)) = (q ≫ Additive.toMul (f a)) * (q ≫ Additive.toMul (f b))
-      rw [map_add, toMul_add, MonObj.comp_mul]
+      rw [map_add (f := _), toMul_add, MonObj.comp_mul]
   have hF : F₁ = F₂ := by
     refine AddMonoidHom.toIntLinearMap_injective (bs.ext fun j => ?_)
     show Additive.ofMul (h₁ (bs j)) = Additive.ofMul (q ≫ Additive.toMul (f (bs j)))

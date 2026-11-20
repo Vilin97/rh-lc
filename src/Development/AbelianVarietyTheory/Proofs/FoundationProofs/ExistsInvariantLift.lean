@@ -269,7 +269,7 @@ theorem cls_eq_of_mem_Gam : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] (ε : Ω
         rw [this]
       · rw [zero_pow h.ne', mul_zero, mul_zero]
     | zero => simp
-    | add x y _ _ hx hy => exact ⟨by rw [map_add, hx.1, hy.1], by simp only [Pi.add_apply, map_add, hx.2, hy.2, smul_add]⟩
+    | add x y _ _ hx hy => exact ⟨by rw [map_add (f := _), hx.1, hy.1], by simp only [Pi.add_apply, map_add (f := _), hx.2, hy.2, smul_add]⟩
     | smul a x _ hx => exact ⟨by rw [map_smul, hx.1], by simp only [Pi.smul_apply, map_smul, hx.2, smul_comm a]⟩
   have e1 : X.kmap l (X.sl (ofSL γ)).toRingEquiv (b u) = b ![1, 0] := by
     have := congrFun key.1 ![1, 0]

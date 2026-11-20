@@ -73,7 +73,7 @@ theorem chiI_smul {Tc : CDVR} {io : T.Q.c.F →+* Tc.Fr} (y : IntFr (T.Q.Xo j) T
   refine AddMonoidAlgebra.induction_linear f ?_ ?_ ?_
   · rw [smul_zero, map_zero, mul_zero]
   · intro f g hf hg
-    rw [smul_add, map_add, map_add, hf, hg, mul_add]
+    rw [smul_add, map_add (f := _), map_add (f := _), hf, hg, mul_add]
   · intro d r
     rw [show a • AddMonoidAlgebra.single d r = AddMonoidAlgebra.single d (a • r) from AddMonoidAlgebra.smul_single a d r,
       chiI_single, chiI_single, evI_smul]

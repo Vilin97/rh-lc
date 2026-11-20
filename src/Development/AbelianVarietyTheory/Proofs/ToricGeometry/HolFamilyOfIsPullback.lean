@@ -116,7 +116,7 @@ theorem holFamily_of_isPullback
         simp only [he, map_one]
       add_mem' := fun {a b} ha' hb' => (ha'.fun_add hb').congr fun w hw => by
         obtain ⟨e, he⟩ := (hv Z (c w)).2.1 _ hw.2
-        simp only [he, map_add]
+        simp only [he, map_add (f := _)]
       zero_mem' := (differentiableOn_const (0 : ℂ)).congr fun w hw => by
         obtain ⟨e, he⟩ := (hv Z (c w)).2.1 _ hw.2
         simp only [he, map_zero]

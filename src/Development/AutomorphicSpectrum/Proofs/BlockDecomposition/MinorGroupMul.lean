@@ -61,7 +61,7 @@ theorem column_clear {A B Af Bw : Type} [CommRing A] [CommRing B] [CommRing Af] 
     rwa [map_mul, map_pow, e1, e1] at h1
   have hp1 := hmul k (lam (ρ f) ^ N) (μ a)
   rw [hF, hD, leibniz_pow (p k) (hmul k) (lam (ρ f)) N, hD] at hp1
-  simp only [map_add, map_mul, map_neg, map_pow, map_natCast]
+  simp only [map_add (f := _), map_mul, map_neg, map_pow, map_natCast]
   rw [hp1, ← hF]
   ring
 

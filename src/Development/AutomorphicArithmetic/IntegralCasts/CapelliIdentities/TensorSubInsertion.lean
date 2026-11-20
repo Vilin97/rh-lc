@@ -392,7 +392,7 @@ private theorem sup_homog {A B : Ideal (Poly k N)}
     ∀ p ∈ A ⊔ B, ∀ d : ℕ, homogeneousComponent d p ∈ A ⊔ B := by
   intro p hp d
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hp
-  rw [map_add]
+  rw [map_add (f := _)]
   exact add_mem (Ideal.mem_sup_left (hA a ha d)) (Ideal.mem_sup_right (hB b hb d))
 
 open Classical in

@@ -76,7 +76,7 @@ theorem ae_simple_col {n N : ℕ} (U : Set (EuclideanSpace ℂ (Fin n))) (hU : I
         Finset.sum_ite_eq', Finset.mem_univ, if_true, PiLp.add_apply]
       field_simp
     simp only [hG, hπA, this]
-    simp only [hA, map_add]
+    simp only [hA, map_add (f := _)]
     abel
   have hSz : S t z = 0 := by
     ext k

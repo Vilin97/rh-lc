@@ -276,7 +276,7 @@ theorem dconj_law (P : DPair G) (pb : PowerBasis G.F M) (j : M →ₐ[G.F] G.C) 
     rw [hσ, j.commutes, j.commutes, sh, G.star_F, Algebra.commutes]
   · intro x y hx hy
     show (P.β : G.C) * sh G (j (x + y)) = j (σ (x + y)) * P.β
-    rw [map_add, sh_add, mul_add, hx, hy, map_add, map_add, add_mul]
+    rw [map_add (f := _), sh_add, mul_add, hx, hy, map_add (f := _), map_add (f := _), add_mul]
   · intro x y hx hy
     show (P.β : G.C) * sh G (j (x * y)) = j (σ (x * y)) * P.β
     rw [map_mul, sh_mul, ← mul_assoc, hy, mul_assoc, hx, ← mul_assoc, ← map_mul, ← map_mul, mul_comm y x]
@@ -370,7 +370,7 @@ theorem dexists_basis (Q : DPair G) (pb : PowerBasis G.F M) (hpol : Q.pol = minp
       exact (Matrix.scalar_commute _ (fun _ => Commute.all _ _) _).eq
     · intro a b h h'
       show G.psi w (j (a + b)) * _ = _
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [Matrix.add_mul, h, h', ← Matrix.mul_add, Matrix.diagonal_add]
     · intro a b h h'
       show G.psi w (j (a * b)) * _ = _

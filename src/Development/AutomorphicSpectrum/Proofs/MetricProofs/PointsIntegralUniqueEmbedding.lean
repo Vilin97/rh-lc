@@ -29,7 +29,7 @@ variable {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)]
 noncomputable def conjugateProjection {e : ℕ} (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ)) :
     (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (e + 1) → ℂ) where
   toFun w := star (Ψ (star w))
-  map_add' a b := by simp only [star_add, map_add]
+  map_add' a b := by simp only [star_add, map_add (f := _)]
   map_smul' c w := by
     simp only [star_smul, map_smul, RingHom.id_apply, star_star]
 

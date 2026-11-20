@@ -86,7 +86,7 @@ theorem mem_sup_of_dual_inf {V : Type} [AddCommGroup V] [Module ℚ V] [FiniteDi
       obtain ⟨z₁, hz₁, z₂, hz₂, rfl⟩ := Submodule.mem_sup.mp hz
       rw [← sd₁] at hy₁
       rw [← sd₂] at hy₂
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem (hy₁ z₁ hz₁) (hy₂ z₂ hz₂)
   have hx' : x ∈ B.flip.dualSubmodule (B.dualSubmodule (N₁ ⊔ N₂)) := by
     rw [hdual]
@@ -187,7 +187,7 @@ theorem ip_add_right (h : IsSB φ) (k : IsSB ψ) (k' : IsSB ψ') :
     ip φ (ψ + ψ') = ip φ ψ + ip φ ψ' := by
   have e : (fun x => φ x * conj ((ψ + ψ') x)) =
       (fun x => φ x * conj (ψ x)) + fun x => φ x * conj (ψ' x) := by
-    funext x; simp only [Pi.add_apply, map_add, mul_add]
+    funext x; simp only [Pi.add_apply, map_add (f := _), mul_add]
   unfold GlobalTheory.SW.ip
   rw [e]
   exact (GlobalTheory.T.rationalSchwartzBruhat_algebra_integral_linear K κ ι _ _ (sb_mul_conj h k) (sb_mul_conj h k')).2.2.2.2.1
@@ -437,7 +437,7 @@ theorem eq_of_law (w : E) {L₁ L₂ : Lt E r} {β : Matrix (Fin r) (Fin r) E} (
           simp only [pair, Matrix.mul_apply, Matrix.vecMul, dotProduct, Matrix.zero_apply,
             ReciprocityTheory.ChartRestriction.G.FD.cc, map_zero, sub_zero, ← Finset.sum_add_distrib]
           exact Finset.sum_congr rfl fun a _ => by ring
-        rw [hin, map_add, EF_eq_trace]
+        rw [hin, map_add (f := _), EF_eq_trace]
         ring
       rw [hq] at key
       have hone : cexp (↑π * I * (((-2 * rowForm X n y x : ℚ)) : ℂ)) = 1 := by

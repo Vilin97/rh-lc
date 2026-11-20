@@ -162,14 +162,14 @@ theorem char_eq_one {l l₂ : Level H} {pd : ℕ} {I : Ideal (𝓞 E)} (hp : pd.
       Submodule.smul_mono (hMb ▸ Ideal.mul_le_left) le_rfl (h a)
     have h4 := add_mem (sub_mem h3 h2) (nsmul_mem_smul_top hMl' (γ e - e))
     convert h4 using 1
-    simp only [map_add, map_sub, map_nsmul, LinearEquiv.coe_coe, smul_sub]
+    simp only [map_add (f := _), map_sub, map_nsmul, LinearEquiv.coe_coe, smul_sub]
     abel
   have hdet := HalfLevelDet.det_eq_one_of_trivial_on_half E H D' l γ hγ (fun a ha => by
     have : γ a - a ∈ (Ideal.span {(l.M : 𝓞 E)} • ⊤ : Submodule (𝓞 E) D'.La) := by
       refine Submodule.smul_induction_on ha (fun c hc b _ => ?_) (fun u v hu hv => ?_)
       · rw [map_smul, ← smul_sub, ← l.prod, mul_comm, Submodule.mul_smul]
         exact Submodule.smul_mem_smul hc (hlow b)
-      · rw [map_add, add_sub_add_comm]; exact add_mem hu hv
+      · rw [map_add (f := _), add_sub_add_comm]; exact add_mem hu hv
     rw [Submodule.ideal_span_singleton_smul, Submodule.mem_smul_pointwise_iff_exists] at this
     obtain ⟨e, -, he⟩ := this
     exact ⟨e, by rw [← Nat.cast_smul_eq_nsmul (𝓞 E), he]; abel⟩)
@@ -191,7 +191,7 @@ theorem char_eq_one {l l₂ : Level H} {pd : ℕ} {I : Ideal (𝓞 E)} (hp : pd.
     · obtain ⟨a, e, rfl⟩ := tsurj b
       exact ⟨c • a, Submodule.smul_mem_smul hc trivial, c • e, by rw [smul_add, map_smul, smul_comm c l₂.M']⟩
     · rintro _ _ ⟨u, hu, e, rfl⟩ ⟨v, hv, e', rfl⟩
-      exact ⟨u + v, add_mem hu hv, e + e', by rw [map_add, smul_add]; abel⟩
+      exact ⟨u + v, add_mem hu hv, e + e', by rw [map_add (f := _), smul_add]; abel⟩
   obtain ⟨a', ha', e, he⟩ := key _ ha
   obtain ⟨b, hb⟩ := tinj (a - a') ⟨e, by rw [map_sub, he, add_sub_cancel_left]⟩
   have := add_mem (hb ▸ nsmul_mem_smul_top hMI b) ha'

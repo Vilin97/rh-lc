@@ -20,7 +20,7 @@ theorem skew_of_diag {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
   have hpol : ∀ u v, 4 * R u v = R (u + v) (u + v) - R (u - v) (u - v) := by
     intro u v
     have := hsym u v
-    simp only [hR, map_add, map_sub, inner_add_left, inner_add_right, inner_sub_left,
+    simp only [hR, map_add (f := _), map_sub, inner_add_left, inner_add_right, inner_sub_left,
       inner_sub_right, Complex.add_re, Complex.sub_re] at this ⊢
     linarith
   have hhalf : ∀ u v, |R u v| ≤ A * (‖u‖ ^ 2 + ‖v‖ ^ 2) / 2 := by

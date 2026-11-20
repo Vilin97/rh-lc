@@ -54,7 +54,7 @@ theorem pull_span {f : X' ⟶ X} (hd : GlobalTheory.CompanionTheory.Ar.Dominates
     induction he using Submodule.span_induction with
     | mem x hx => obtain ⟨k, rfl⟩ := hx; exact Submodule.subset_span ⟨k, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul c x _ hx =>
       have : J (c • x) = (⟨(c : Ω), LatModel.dominates_regAt hd q hs c.2⟩ : regAt ξ' q) • J x :=
         J.map_smul (c : Ω) x

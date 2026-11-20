@@ -85,7 +85,7 @@ theorem exists_presentation_descends (B : Type) [CommRing B] [IsDomain B] (h : �
       obtain ⟨j, rfl⟩ := finSumFinEquiv.surjective j
       rw [Function.comp_apply, Equiv.symm_apply_apply]
       cases j <;> rfl
-    rw [this, hR, map_add, map_sub, e1, e1, sub_self, zero_add]
+    rw [this, hR, map_add (f := _), map_sub, e1, e1, sub_self, zero_add]
     exact (f' _).2
   obtain ⟨e, he⟩ := exists_presentation_equiv P Q u R (fun p => ⟨s p, by rw [hu, e1]⟩) fun x => by
     rw [hu]

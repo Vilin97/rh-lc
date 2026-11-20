@@ -16,14 +16,14 @@ theorem map_Ehat (D : BlockData N) (i : Fin (gmB D).T.t) :
     map ι ((gmB D).Ehat p (r := r) i) = D.Ehat O (r := r) i := by
   unfold Formalism.GM.M.BlockData.Ehat Formalism.MainNotions.G.BlockData.Ehat
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_mul, map_X, map_sum]
+    simp only [map_add (f := _), map_mul, map_X, map_sum]
   rfl
 
 theorem map_Eplus (D : BlockData N) :
     map ι ((gmB D).Eplus p (r := r)) = D.Eplus O (r := r) := by
   unfold Formalism.GM.M.BlockData.Eplus Formalism.MainNotions.G.BlockData.Eplus
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_mul, map_X, map_sum]
+    simp only [map_add (f := _), map_mul, map_X, map_sum]
   rfl
 
 theorem map_gens (hint : ∀ x : ℤ_[p], ∃ y : O, ι (x : ℚ_[p]) = algebraMap O (KK O) y) (D : BlockData N)
@@ -52,7 +52,7 @@ theorem map_SSZ (hint : ∀ x : ℤ_[p], ∃ y : O, ι (x : ℚ_[p]) = algebraMa
     rw [map_zero]
     exact zero_mem _
   | add a b _ _ ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem ha hb
   | smul a x _ hx =>
     rw [← algebraMap_smul ℚ_[p] a x, map_smul_Q]

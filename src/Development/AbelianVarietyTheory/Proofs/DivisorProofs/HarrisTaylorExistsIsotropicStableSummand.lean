@@ -47,7 +47,7 @@ theorem exists_summand : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.
     intro x hx
     refine Submodule.smul_induction_on hx (fun r hr n _ ↦ ?_) (fun x y hx hy ↦ ?_)
     · rw [LinearMap.map_smulₛₗ, RingHom.mem_ker.1 hr, zero_smul]
-    · rw [map_add, hx, hy, add_zero]
+    · rw [map_add (f := _), hx, hy, add_zero]
   have hIF : RingHom.ker π • (⊤ : Submodule C (Crys (divided₂ hsq) (spMap π) o₀.A)) ≤ F := fun x hx ↦ by
     show red x ∈ Fil o₀.A
     rw [hredI x hx]; exact zero_mem _
@@ -102,7 +102,7 @@ theorem exists_summand : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPel.HT.
     have hx : x ∈ F := hy
     rw [← hEF] at hx
     obtain ⟨d, hd, j, hj, rfl⟩ := Submodule.mem_sup.1 hx
-    exact ⟨d, hd, (hcorr _ _).2 (by rw [map_add, hredI j hj, add_zero])⟩
+    exact ⟨d, hd, (hcorr _ _).2 (by rw [map_add (f := _), hredI j hj, add_zero])⟩
   · rw [← (hcorr d y).1 hc]
     have : d ∈ F := hEF ▸ Submodule.mem_sup_left hd
     exact this

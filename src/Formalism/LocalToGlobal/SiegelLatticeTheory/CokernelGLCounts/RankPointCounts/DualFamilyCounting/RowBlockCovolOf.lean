@@ -33,7 +33,7 @@ theorem perp_aaLbS {D : D7} (X : HidaSetting D) (b : Fin D.R.rS) {x : (VS D).V} 
     obtain ⟨h1, h2⟩ := X.Lb_perp l hl a
     exact ⟨by rw [map_smul, h1, smul_zero], by rw [map_smul, h2, smul_zero]⟩
   | zero => exact ⟨map_zero _, map_zero _⟩
-  | add y z _ _ hy hz => exact ⟨by rw [map_add, hy.1, hz.1, add_zero], by rw [map_add, hy.2, hz.2, add_zero]⟩
+  | add y z _ _ hy hz => exact ⟨by rw [map_add (f := _), hy.1, hz.1, add_zero], by rw [map_add (f := _), hy.2, hz.2, add_zero]⟩
   | smul c y _ hy =>
     refine ⟨?_, ?_⟩
     · rw [← algebraMap_smul D.host.E c y, map_smul, hy.1, smul_zero]

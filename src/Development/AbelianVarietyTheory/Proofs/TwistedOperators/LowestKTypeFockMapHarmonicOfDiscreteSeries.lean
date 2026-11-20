@@ -238,9 +238,9 @@ theorem polDer_add {τ : D.what₂.Tau} {X : Matrix (Fin W.rank) (Fin W.rank) �
   have e : (fun t : ℝ => actTgt θ ω τ (NormedSpace.exp (t • X)) (pt (P + Q)) z) = fun t =>
       actTgt θ ω τ (NormedSpace.exp (t • X)) (pt P) z + actTgt θ ω τ (NormedSpace.exp (t • X)) (pt Q) z := by
     funext t
-    rw [actTgt_eq, actTgt_eq, actTgt_eq, map_add, map_add]
+    rw [actTgt_eq, actTgt_eq, actTgt_eq, map_add (f := _), map_add (f := _)]
     rfl
-  rw [e, map_add]
+  rw [e, map_add (f := _)]
   exact (hP z).add (hQ z)
 
 theorem polDer_smul {τ : D.what₂.Tau} {X : Matrix (Fin W.rank) (Fin W.rank) ℂ} {P P₁ : PolF D W.rank V.rank}
@@ -479,7 +479,7 @@ theorem ioHarm_holds (D : D7) : IoHarm D := by
       rw [map_smul, LinearMap.smul_apply]
       exact N.smul_mem r (hall w v)
     | add x y hx hy =>
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact N.add_mem hx hy
   exact ⟨d, fun x w τ => hmem x w τ⟩
 

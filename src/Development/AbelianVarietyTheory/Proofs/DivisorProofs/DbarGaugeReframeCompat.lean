@@ -81,7 +81,7 @@ theorem dbarV_gauge : ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] 
     intro a
     have h0 : (vert E a).1 = 0 := rfl
     have h1 : (Complex.I • vert E a).1 = 0 := by simp [vert]
-    simp only [d01, key _ h0, key _ h1, hRI, map_add, map_smul]
+    simp only [d01, key _ h0, key _ h1, hRI, map_add (f := _), map_smul]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [dbarV, map_sum, hvert, hRv, d01_sum_direction_eq_sum, d01_csmul, wedge_sum', map_smul, Pullback.wedge_smul]
   have hfw := fun c w => ((GlobalTheory.T.frameMap_wedge_compat n (den γ (τ P.1)) w).1 c)

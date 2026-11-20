@@ -222,7 +222,7 @@ theorem emb_of_conrad (H : ConradLocalTied) : LTCrysEmb := by
       omega
     have := hmem ⟨σ, Weil_le_Dec h σ.2⟩
     rw [hψ, hd, hσ] at this
-    simp only [zpow_zero, mul_one, Units.val_mk0, map_add, map_one] at this
+    simp only [zpow_zero, mul_one, Units.val_mk0, map_add (f := _), map_one] at this
     simpa using LL.1.sub_mem this LL.1.one_mem
   have hall : ∀ x : (w.adicCompletion E)ˣ, j₀.1 (x : w.adicCompletion E) ∈ LL.1 := fun x => by
     obtain ⟨σ, rfl⟩ := ha.surj x

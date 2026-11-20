@@ -31,7 +31,7 @@ private theorem ofRep_comap {n : ℕ} {A G H : Type} [CommRing A] [Group G] [Gro
   congr 1
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single g r => simp [GDet.repAlg, mat]
 
 private theorem tr_cj {n : ℕ} {K : Type} [Field K] (Q A : GL (Fin n) K) (Z : Matrix (Fin n) (Fin n) K) (a : K) (ha : a ≠ 0)

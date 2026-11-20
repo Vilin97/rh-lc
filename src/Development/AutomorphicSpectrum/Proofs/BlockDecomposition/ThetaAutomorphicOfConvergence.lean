@@ -145,7 +145,7 @@ theorem l2_word_tendsto (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam �
       have hor := hom.om_pres (x, 1) _ (hr x)
       have e1 : heisDer ψ θ a (om (x, 1) f) =
           om (x, 1) (heisDer ψ θ a f) + om (x, 1) (Formalism.IndefR.Datum.dRho (heisO ψ S T) θ a.1 (zx x - z) f) := by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         have := GlobalTheory.ThetaDens.WeilCompact.dRho_om hom hθ x 1 a.1 z hf
         refine this.trans (congrArg _ ?_)
         exact dRho_dir_split hψ hθ hf a.1 _ z

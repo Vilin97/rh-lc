@@ -19,7 +19,7 @@ theorem compFin_cA (σ : E →ₐ[F] E) (v : Pl F) (x : AE F E) :
     compFin F E v (cA σ x) = sigR (Fv F v) σ (compFin F E v x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 theorem compFin_inclR (v : Pl F) (x : E) :

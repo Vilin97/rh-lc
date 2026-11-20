@@ -57,7 +57,7 @@ theorem Chart.pi_eq_of_finPart (h : Chart e σ π) {a b : AE D} (hab : finPart D
 
 def Chart.sec (h : Chart e σ π) : LP D P →+ AE D :=
   AddMonoidHom.mk' (fun z => e * Function.surjInv h.2.1 z) fun z z' => by
-    rw [← mul_add, h.mul_eq_iff, RingHom.map_add]
+    rw [← mul_add, h.mul_eq_iff, RingHom.map_add (f := _)]
     simp only [Function.surjInv_eq]
 
 theorem Chart.mul_sec (h : Chart e σ π) (z : LP D P) : e * h.sec z = h.sec z := by
@@ -88,7 +88,7 @@ theorem exists_isGen (D : D7) (P : HeightOneSpectrum (𝓞 D.host.E)) : ∃ c, I
     induction ha using Submodule.span_induction with
     | mem a ha => exact hmax a ha
     | zero => simp only [map_zero, zero_le]
-    | add x y _ _ hx hy => rw [RingHom.map_add]; exact Valuation.map_add_le _ hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (f := _)]; exact Valuation.map_add_le _ hx hy
     | smul o x _ hx =>
       have ho : Valued.v (algebraMap D.host.E (LP D P) (o : D.host.E)) ≤ 1 := by
         rw [GlobalTheory.Idele.valued_algebraMap]
@@ -207,7 +207,7 @@ theorem mem_latO_iff (h : Chart e σ π) (hσ : ∀ x, Valued.v (σ x) = Valued.
       rw [Matrix.map_zero _ π.map_zero, Matrix.mul_zero, Matrix.zero_mul, smul_zero]
       exact fun i j => zero_mem _
     | add x y _ _ hx hy =>
-      rw [Matrix.map_add _ π.map_add, Matrix.mul_add, Matrix.add_mul, smul_add]
+      rw [Matrix.map_add _ π.map_add (f := _), Matrix.mul_add, Matrix.add_mul, smul_add]
       exact fun i j => add_mem (hx i j) (hy i j)
     | neg x _ hx =>
       rw [Matrix.map_neg _ π.map_neg, Matrix.mul_neg, Matrix.neg_mul, smul_neg]
@@ -257,7 +257,7 @@ theorem kap_pi (h : Chart e σ π) (x : Matrix (Fin T.rank) (Fin S.rank) (LP D P
 
 theorem kap_add (h : Chart e σ π) (x y : Matrix (Fin T.rank) (Fin S.rank) (LP D P)) :
     kap h βS βT c (x + y) = kap h βS βT c x + kap h βS βT c y := by
-  rw [kap, Matrix.mul_add, Matrix.add_mul, smul_add, Matrix.map_add _ h.sec.map_add]
+  rw [kap, Matrix.mul_add, Matrix.add_mul, smul_add, Matrix.map_add _ h.sec.map_add (f := _)]
   rfl
 
 theorem kap_zero (h : Chart e σ π) : kap h βS βT c 0 = 0 := by

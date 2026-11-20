@@ -35,7 +35,7 @@ theorem kaehler_map_bijective (p : ℕ) (L : Type) [CommRing L] [Algebra (ZMod p
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [Subsingleton.elim b 0]
-  | add y z hy hz => rw [map_add, hy, hz, add_zero]
+  | add y z hy hz => rw [map_add (f := _), hy, hz, add_zero]
 
 theorem etale_coords_basis : ∀ (p : ℕ) [Fact p.Prime] (A : Type) [CommRing A] [IsDomain A] [Algebra (ZMod p) A] {n : ℕ} (t : Fin n → A), (MvPolynomial.aeval (R := ZMod p) t).toRingHom.Etale → ∀ (L : Type) [Field L] [Algebra A L] [IsFractionRing A L] (ht : ∀ j, algebraMap A L (t j) ≠ 0), IsCoord (fun j => Units.mk0 (algebraMap A L (t j)) (ht j)) ∧ ∀ f : A, ∃ c : Fin n → A, KaehlerDifferential.D ℤ L (algebraMap A L f) = ∑ j, algebraMap A L (c j) • KaehlerDifferential.D ℤ L (algebraMap A L (t j)) := by
   intro p _ A _ _ _ n t het L _ _ _ ht

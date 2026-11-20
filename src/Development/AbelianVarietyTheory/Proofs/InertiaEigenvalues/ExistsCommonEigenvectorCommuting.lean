@@ -60,7 +60,7 @@ theorem lift_eigen : ∀ (k ι V : Type) [Field k] [AddCommGroup V] [Module k V]
   have htd : t * (μ i₀ - χ i₀) = r i₀ := div_mul_cancel₀ _ hd
   have hfx : ∀ j, f j (u + t • v) = μ j • (u + t • v) + (r j + t * χ j - t * μ j) • v := by
     intro j
-    rw [map_add, map_smul, hu, hv]
+    rw [map_add (f := _), map_smul, hu, hv]
     module
   have h0 : f i₀ (u + t • v) = μ i₀ • (u + t • v) := by
     rw [hfx]
@@ -71,7 +71,7 @@ theorem lift_eigen : ∀ (k ι V : Type) [Field k] [AddCommGroup V] [Module k V]
   refine ⟨x, hx ▸ hu0 t, fun j => ?_⟩
   have e1 : f i₀ (f j x) = f j (f i₀ x) := by
     rw [← Module.End.mul_apply, hc, Module.End.mul_apply]
-  rw [h0, map_smul, hfx j, map_add, map_smul, map_smul, h0, hv] at e1
+  rw [h0, map_smul, hfx j, map_add (f := _), map_smul, map_smul, h0, hv] at e1
   have e2 : ((r j + t * χ j - t * μ j) * (χ i₀ - μ i₀)) • v = 0 := by
     linear_combination (norm := module) e1
   rcases smul_eq_zero.mp e2 with h | h

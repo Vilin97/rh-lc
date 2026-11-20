@@ -129,7 +129,7 @@ theorem exists_retraction [CharZero C] {d d' : ℕ} (G : LogFGL v d) {I : Matrix
     rw [hΘ, lg_add G x0 y0, hx, hy, lg_hom hφ.1 (hφ.2.2 a) (lin_hs M), lg_hom hψ.1 (hψ.2.2 a) (lin_hs N)]
   have Θ1 : ∀ a b, coeff (Finsupp.single b 1) (Θ a) = if a = b then 1 else 0 := fun a b => by
     have h := congrArg (coeff (Finsupp.single b 1)) (hlg a)
-    rw [map_add, coeff_comb_lg, coeff_comb_lg, ← Matrix.add_apply, hsq, Matrix.one_apply,
+    rw [map_add (f := _), coeff_comb_lg, coeff_comb_lg, ← Matrix.add_apply, hsq, Matrix.one_apply,
       pt_coeff_single_subst Θs Θ0 (G.lg_const a)] at h
     simpa [G.lg_lin] using h
   obtain ⟨Ψ, Ψi, Ψ0, hΨ, -⟩ := GlobalTheory.IntInv.exists_int_inv C v d Θ (add_int G x0 y0 xi yi) Θ0 Θ1

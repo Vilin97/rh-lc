@@ -14,7 +14,7 @@ theorem evC_aeval_invariants {κ : Type} (Φ : κ → MvPolynomial (ι × ι) �
     (y : Matrix ι ι ℂ) : evC (aeval Φ P) y = eval (fun k => evC (Φ k) y) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [evC]
-  | add p q hp hq => simp only [evC, map_add] at *; rw [hp, hq]
+  | add p q hp hq => simp only [evC, map_add (f := _)] at *; rw [hp, hq]
   | mul_X p n hp => simp only [evC, map_mul, aeval_X, eval_X] at *; rw [hp]
 
 theorem evC_det_generic [Fintype ι] [DecidableEq ι] (y : Matrix ι ι ℂ) :

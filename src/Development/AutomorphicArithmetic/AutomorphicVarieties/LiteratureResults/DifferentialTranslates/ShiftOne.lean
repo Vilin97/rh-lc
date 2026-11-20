@@ -21,7 +21,7 @@ theorem shiftOne : ShiftOne := by
     apply hinj
     rw [Rep.of_ρ]
     change ι (φ i (g * h)) = ι ((ρM g) (φ i h) + φ i g)
-    rw [map_add, hι, hφ, hφ, hφ, map_mul, Module.End.mul_apply, map_sub]
+    rw [map_add (f := _), hι, hφ, hφ, hφ, map_mul, Module.End.mul_apply, map_sub]
     abel
   let v : Fin n → groupCohomology (Rep.of ρM) 1 :=
     fun i => (groupCohomology.H1π (Rep.of ρM)).hom ⟨φ i, hcoc i⟩

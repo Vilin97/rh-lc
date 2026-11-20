@@ -58,7 +58,7 @@ theorem exists_sum_shift : ∀ (l : ℕ) [Fact l.Prime] (A : Type) [CommRing A]
     induction N with
     | zero => simp [hT, hsh']; ring
     | succ N ih =>
-      rw [hstep N, map_add, map_add, hsh', hsh']
+      rw [hstep N, map_add (f := _), map_add (f := _), hsh', hsh']
       have e1 : (-((N + 1 : ℕ) : ℤ) + 1) = -(N : ℤ) := by push_cast; ring
       have e2 : (((N + 1 : ℕ) : ℤ) + 1) = ((N + 1 : ℕ) : ℤ) + 1 := rfl
       rw [e1]

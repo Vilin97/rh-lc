@@ -308,7 +308,7 @@ theorem tenMap_bijective [Module.Free ℤ Ch] [Module.Finite ℤ Ch] : Function.
   have : (tenMap (Ch := Ch) k : _ → _) = e := by
     funext z
     induction z with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul c l =>
       rw [tenMap_tmul]
       refine AddMonoidHom.ext fun χ => ?_
@@ -339,7 +339,7 @@ def lamEnd {O : Type} [CommRing O] (h : O →+* AddMonoid.End Ch) : O →+* Modu
       change (show Ch →+ ℤ from l) ((h (a + b) : Ch →+ Ch) χ) =
         (show Ch →+ ℤ from l) ((h a : Ch →+ Ch) χ) + (show Ch →+ ℤ from l) ((h b : Ch →+ Ch) χ)
       have e : (h (a + b) : Ch →+ Ch) χ = (h a : Ch →+ Ch) χ + (h b : Ch →+ Ch) χ := by
-        rw [map_add]; rfl
+        rw [map_add (f := _)]; rfl
       rw [e]
       exact map_add (show Ch →+ ℤ from l) _ _)
 
@@ -411,7 +411,7 @@ theorem tenMap_end {k : Type} [Field k] {Ch : Type} [AddCommGroup Ch] {O : Type}
     simp only [map_zero]
     rfl
   | add x y hx hy =>
-    rw [map_add, map_add, hx, hy, map_add]
+    rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
     rfl
   | tmul c l =>
     rw [LinearMap.baseChange_tmul, tenMap_tmul, tenMap_tmul]

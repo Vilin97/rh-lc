@@ -115,7 +115,7 @@ theorem dRho_ptF_uniform : ∀ {D : D7} {V W : HSp D} (A : GlobalTheory.ChainFr.
       (1 / 2 : ℂ) • (GlobalTheory.ChainFr.ptF ψ θ A B f (Δ₁ P) + GlobalTheory.ChainFr.ptF ψ θ A B f (Δ₂ P)) := by
     rw [LinearMap.smul_apply, LinearMap.add_apply]
     unfold GlobalTheory.ChainFr.ptF
-    rw [map_smul, map_add]
+    rw [map_smul, map_add (f := _)]
   rw [hsplit, ← hcr, ← han, crea, annih]
   module
 

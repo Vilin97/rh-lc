@@ -96,7 +96,7 @@ theorem θ_zA (z : ℤ_[l]) :
     have hz : z = (z.appr n : ℤ_[l]) + (l : ℤ_[l]) ^ n * w := by rw [mul_comm, hw]; ring
     have : F z - G z = (l : ℂ_[l]) ^ n * (F w - G w) := by
       rw [hz]
-      simp only [map_add, map_mul, map_pow, map_natCast]
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast]
       ring
     rw [this, norm_mul, norm_pow]
     refine mul_le_mul_of_nonneg_left ((norm_sub_le _ _).trans ?_) (by positivity)

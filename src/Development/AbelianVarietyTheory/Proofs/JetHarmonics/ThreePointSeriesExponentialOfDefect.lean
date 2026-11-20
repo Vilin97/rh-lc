@@ -198,7 +198,7 @@ theorem isExpOf_canonical_gauge (hh : B.IsCanonGauge k h) (b c c' : O) :
     rw [← constantCoeff_ev_eq (cz2 (x := (0 : Pt k 1 d)) (fun _ => by simp) (constantCoeff_point 0)),
       hh.ax0, map_zero]
   have key := isExpOf_ev (cz3 (B.A.const b) (B.A.const c) (B.A.const c')) (by
-    rw [map_sub, map_add, constantCoeff_ev_eq (cz2 (p0 0) (p0 1)), constantCoeff_ev_eq (cz2 (p0 0) (p0 2)),
+    rw [map_sub, map_add (f := _), constantCoeff_ev_eq (cz2 (p0 0) (p0 1)), constantCoeff_ev_eq (cz2 (p0 0) (p0 2)),
       constantCoeff_ev_eq (cz2 (p0 0) c0), h0]
     simp) hh.ph2
   have e : (fun j i => FB.toK k ((![B.A.act b, B.A.act c, B.A.act c'] : Fin 3 → Pt R 1 d) j i)) =

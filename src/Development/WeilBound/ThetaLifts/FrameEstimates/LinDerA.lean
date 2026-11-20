@@ -238,7 +238,7 @@ theorem gr_exp [CompleteSpace A] (ha : ∀ x y, a (x * y) = a y * a x) (h1 : a 1
       map_one' := by rw [h1]; rfl
       map_mul' := fun x y => by rw [ha]; rfl
       map_zero' := by rw [map_zero]; rfl
-      map_add' := fun x y => by rw [map_add]; rfl }
+      map_add' := fun x y => by rw [map_add (f := _)]; rfl }
   have h2 := NormedSpace.map_exp φ (MulOpposite.continuous_op.comp a.continuous) Y
   have h3 : a (NormedSpace.exp Y) = NormedSpace.exp (-Y) := by
     apply MulOpposite.op_injective

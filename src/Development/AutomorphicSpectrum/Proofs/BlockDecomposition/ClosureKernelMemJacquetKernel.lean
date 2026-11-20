@@ -49,7 +49,7 @@ theorem mem_twKer_topRep_of_clT_eq_zero : ∀ (k : Type) [Field k] [ValuativeRel
   | zero => simp
   | tmul w b => exact tmul_mem_twKer_topRep k i τ w.2 b
   | add a b ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem ha hb
 
 end GlobalTheory.CompanionTheory.BZPsiPG.FibKer

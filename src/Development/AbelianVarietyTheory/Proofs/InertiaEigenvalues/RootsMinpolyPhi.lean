@@ -155,7 +155,7 @@ def Rel (L : LabelDatum g) (τ : ℂ ≃+* ℂ) (f f' : (ZMod g)[X]) : Prop :=
 theorem Rel.mul {L : LabelDatum g} {τ : ℂ ≃+* ℂ} {f f' h h' : (ZMod g)[X]} (hf : f ≠ 0) (hh : h ≠ 0)
     (h1 : Rel L τ f f') (h2 : Rel L τ h h') : Rel L τ (f * h) (f' * h') :=
   ⟨h1.1.mul h2.1, by
-    rw [rootsBar_mul h1.1.ne_zero h2.1.ne_zero, rootsBar_mul hf hh, h1.2, h2.2, Multiset.map_add]⟩
+    rw [rootsBar_mul h1.1.ne_zero h2.1.ne_zero, rootsBar_mul hf hh, h1.2, h2.2, Multiset.map_add (f := _)]⟩
 
 theorem Rel.unique {L : LabelDatum g} {τ : ℂ ≃+* ℂ} {f f' f'' : (ZMod g)[X]}
     (h1 : Rel L τ f f') (h2 : Rel L τ f f'') : f' = f'' :=

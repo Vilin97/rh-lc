@@ -19,7 +19,7 @@ def FixI (G : Subgroup (Gal p Ω)) : Subalgebra (O0 p) Ω where
   mul_mem' := fun {a b} ha hb =>
     ⟨IsIntegral.mul ha.1 hb.1, fun g hg => by rw [map_mul, ha.2 g hg, hb.2 g hg]⟩
   add_mem' := fun {a b} ha hb =>
-    ⟨IsIntegral.add ha.1 hb.1, fun g hg => by rw [map_add, ha.2 g hg, hb.2 g hg]⟩
+    ⟨IsIntegral.add ha.1 hb.1, fun g hg => by rw [map_add (f := _), ha.2 g hg, hb.2 g hg]⟩
   algebraMap_mem' := fun c => ⟨isIntegral_algebraMap, fun g _ => g.commutes c⟩
 
 def Hinf (T : Tower p Ω) : Subgroup (Gal p Ω) := ⨅ n, Gn T n

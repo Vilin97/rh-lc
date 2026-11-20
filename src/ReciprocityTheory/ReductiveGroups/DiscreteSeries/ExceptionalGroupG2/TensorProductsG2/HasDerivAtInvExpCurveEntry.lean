@@ -183,7 +183,7 @@ theorem tensor_coef_Eab_action (dual : Bool) (hσ : IsURepOn (UJset ε) σ) (hD 
         oa1Phi dual g c d * inner ℂ (η c) (σ g ((E a b (f d) : D) : H)) := by
     intro c d
     rw [← tensor_dphi_complex_comb dual g a b c d, key]
-    simp only [LinearMap.add_apply, LinearMap.smul_apply, Submodule.coe_add, Submodule.coe_smul, map_add,
+    simp only [LinearMap.add_apply, LinearMap.smul_apply, Submodule.coe_add, Submodule.coe_smul, map_add (f := _),
       map_smul, inner_add_right, inner_smul_right]
     ring
   rw [Finset.mul_sum, ← Finset.sum_add_distrib]
@@ -191,7 +191,7 @@ theorem tensor_coef_Eab_action (dual : Bool) (hσ : IsURepOn (UJset ε) σ) (hD 
   rw [tensor_coef_expand]
   refine Finset.sum_congr rfl fun c _ => ?_
   cases dual
-  · simp only [cond_false, tensF, tensV_coord, oa1Phi, Submodule.coe_add, map_add, inner_add_right, mul_add,
+  · simp only [cond_false, tensF, tensV_coord, oa1Phi, Submodule.coe_add, map_add (f := _), inner_add_right, mul_add,
       Finset.sum_add_distrib, ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
     rw [add_comm]
     congr 1

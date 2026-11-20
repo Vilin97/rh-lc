@@ -24,13 +24,13 @@ theorem exists_unit_at_evI_piInf_eq : ∀ {F E : Type} [Field F] [NumberField F]
   have h1 : (1 + z) * (1 + z') = 1 := by
     have h0 : z + z' + z * z' = 0 := by
       refine GlobalTheory.ArchInj.eq_zero_of_at_of_piInf F E σ hCM τ _ hs fun w => ?_
-      rw [map_add, map_add, map_mul, hzw, hzw']
+      rw [map_add (f := _), map_add (f := _), map_mul, hzw, hzw']
       have := hβ w
       field_simp
       ring
     linear_combination h0
   refine ⟨Units.mkOfMulEqOne (1 + z) (1 + z') h1, ?_, fun w => ?_⟩
   · simpa using hz
-  · simp [Units.val_mkOfMulEqOne, map_add, hzw]
+  · simp [Units.val_mkOfMulEqOne, map_add (f := _), hzw]
 
 end GlobalTheory.ThK

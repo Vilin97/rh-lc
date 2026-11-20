@@ -142,11 +142,11 @@ theorem TopsCoset.card_mul {R : Ranks} {H : Host R} {J : ℕ} (h : TopsCoset H J
     rw [hc, hK, AddSubgroup.mem_comap, AddMonoidHom.mem_range]
     constructor
     · rintro ⟨s, hs⟩
-      exact ⟨R.h s, by rw [map_sub, hs, map_add, map_nsmul, add_sub_cancel_left]; rfl⟩
+      exact ⟨R.h s, by rw [map_sub, hs, map_add (f := _), map_nsmul, add_sub_cancel_left]; rfl⟩
     · rintro ⟨y, hy⟩
       obtain ⟨s, rfl⟩ := R.h_surj y
       refine ⟨s, ?_⟩
-      rw [map_add, map_nsmul, ← sub_eq_iff_eq_add', ← map_sub, ← hy]; rfl
+      rw [map_add (f := _), map_nsmul, ← sub_eq_iff_eq_add', ← map_sub, ← hy]; rfl
   have e : Nat.card K = H.TT.card := by
     rw [← Nat.card_eq_finsetCard]
     exact Nat.card_congr ((Equiv.addRight c).subtypeEquiv fun t => by simp [hm])

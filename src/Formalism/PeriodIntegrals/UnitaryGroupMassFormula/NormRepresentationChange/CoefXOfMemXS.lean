@@ -22,7 +22,7 @@ theorem coefX_add (F : FlagG S r T) {v w : S.V} (hv : v ∈ F.X) (hw : w ∈ F.X
   have hw' : w ∈ Submodule.span E (Set.range F.e) := hw
   have hvw' : v + w ∈ Submodule.span E (Set.range F.e) := Submodule.add_mem _ hv' hw'
   simp only [Formalism.MainNotions.S.FlagG.coefX, dif_pos hv', dif_pos hw', dif_pos hvw']
-  rw [show (⟨v + w, hvw'⟩ : Submodule.span E (Set.range F.e)) = ⟨v, hv'⟩ + ⟨w, hw'⟩ from rfl, map_add,
+  rw [show (⟨v + w, hvw'⟩ : Submodule.span E (Set.range F.e)) = ⟨v, hv'⟩ + ⟨w, hw'⟩ from rfl, map_add (f := _),
     Finsupp.add_apply]
 
 theorem coefX_smul (F : FlagG S r T) {v : S.V} (hv : v ∈ F.X) (c : E) (a : Fin r) :

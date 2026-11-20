@@ -60,7 +60,7 @@ theorem exists_semilinear {L V O K U : Type} [Field L] [AddCommGroup V] [Module 
       induction hx using Submodule.span_induction with
       | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
       | zero => rw [map_zero]; exact Submodule.zero_mem _
-      | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+      | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
       | smul c y _ hy => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
     intro s hs hli
     exact (LinearIndependent.iff_fractionRing _ _).mp hli

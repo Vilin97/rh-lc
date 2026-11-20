@@ -23,7 +23,7 @@ theorem eq_of_theta_eq {s s' : ι → A} (h : ∀ i, θ (s i) = θ (s' i)) : R s
 def descend : (ι → O) →ₗ[O] M where
   toFun ρ := R (fun i => Function.surjInv hs (ρ i))
   map_add' ρ ρ' := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     exact eq_of_theta_eq θ R hR fun i => by
       simp [Function.surjInv_eq hs]
   map_smul' c ρ := by

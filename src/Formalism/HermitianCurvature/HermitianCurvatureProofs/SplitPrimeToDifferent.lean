@@ -195,7 +195,7 @@ theorem traceDualGe : Formalism.FourierDecayAlt.S6.DualSupset := by
     ((FractionalIdeal.mem_one_iff _).2 ⟨θ, rfl⟩)
   rw [Algebra.traceForm_apply] at hz
   have e : Algebra.trace ℚ E ((x + complexConj E x) * (θ : E)) = Algebra.trace ℚ E x := by
-    rw [add_mul, map_add, ← trace_conj E (complexConj E x * (θ : E)), map_mul (complexConj E),
+    rw [add_mul, map_add (f := _), ← trace_conj E (complexConj E x * (θ : E)), map_mul (complexConj E),
       complexConj_apply_apply, ← map_add, ← mul_add, hθ, mul_one]
   rw [e] at hz
   exact hz

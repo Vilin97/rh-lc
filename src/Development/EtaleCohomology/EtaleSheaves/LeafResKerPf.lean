@@ -48,6 +48,6 @@ theorem LeafResKer_of : LeafResKer := by
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]; rfl
     rw [this]
     exact S.smul_mem k (h2 n n.2)
-  | add a b ha hb => rw [map_add]; exact S.add_mem ha hb
+  | add a b ha hb => rw [map_add (f := _)]; exact S.add_mem ha hb
 
 end LateralTheory.E.LeafCoordsPointResPf

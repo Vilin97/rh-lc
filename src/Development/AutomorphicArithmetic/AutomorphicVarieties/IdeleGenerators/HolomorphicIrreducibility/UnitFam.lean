@@ -79,7 +79,7 @@ private lemma Good.comb {k : ℤ} {f g : (ZMod N)ˣ → ℍ → ℂ} (hf : Good 
   fam a b γ hγ h := by
     rw [SlashAction.add_slash, ModularForm.SL_smul_slash, hf.fam a b γ hγ h, hg.fam a b γ hγ h]
   int a n := by
-    rw [hf.coef_comb hg, map_add, map_mul]
+    rw [hf.coef_comb hg, map_add (f := _), map_mul]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf.int a n) ?_)
     rw [norm_mul]
     exact mul_le_one₀ hc (norm_nonneg _) (hg.int a n)

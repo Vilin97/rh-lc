@@ -31,7 +31,7 @@ theorem dvd_pair (h : ℕ → D.La →+ D.La) (u : ℕ → ℤ) (c k n : ℕ) (h
   obtain ⟨y, z, hyz⟩ := hon v
   have hmZ : ((k ^ 2 / c : ℕ) : ℤ) * c = (k : ℤ) ^ 2 := by exact_mod_cast Nat.div_mul_cancel hck
   have h1 : D.EF (h n x) (h n y) = (k : ℤ) * D.EF (h n x) v + n * D.EF (h n x) z := by
-    rw [hyz, map_add, map_nsmul, map_nsmul, nsmul_eq_mul, nsmul_eq_mul]
+    rw [hyz, map_add (f := _), map_nsmul, map_nsmul, nsmul_eq_mul, nsmul_eq_mul]
   have h2 := hsim x y
   rw [h1] at h2
 

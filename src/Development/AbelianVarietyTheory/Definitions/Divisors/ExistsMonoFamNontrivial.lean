@@ -198,7 +198,7 @@ theorem MonoFam.s_ne_zero (C : MonoFam Xo c φ R) (i : Fin C.m) : C.s i ≠ 0 :=
     push Not at hn
     refine C.cone.linearIndependent.ne_zero i (LinearMap.ext₂ fun a b => ?_)
     have := hn (a + b)
-    simp only [map_add, LinearMap.add_apply, hn, (C.cone.mem i).1 b a] at this
+    simp only [map_add (f := _), LinearMap.add_apply, hn, (C.cone.mem i).1 b a] at this
     simp only [LinearMap.zero_apply]
     omega
   obtain ⟨y, hy⟩ := hy

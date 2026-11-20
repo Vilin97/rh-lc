@@ -162,7 +162,7 @@ theorem LinearNoetherNormalization.proof : LinearNoetherNormalization.Statement 
           rfl
         rw [this]
         exact (projHom J A).toRingHom.isIntegralElem_map
-      | add p q hp hq => rw [map_add]; exact RingHom.IsIntegralElem.add _ hp hq
+      | add p q hp hq => rw [map_add (f := _)]; exact RingHom.IsIntegralElem.add _ hp hq
       | mul_X p i hp => rw [map_mul]; exact RingHom.IsIntegralElem.mul _ hp (hint i)
     refine hI.to_finite ?_
     apply RingHom.FiniteType.of_comp_finiteType (f := algebraMap ℂ (MvPolynomial (Fin d) ℂ))

@@ -52,7 +52,7 @@ def bdd {S : Scheme.{0}} {β : Type} (F : Filter β) (p : β → (Sp ℂ ⟶ S))
     rintro a b ⟨A, hA⟩ ⟨B, hB⟩
     refine ⟨A + B, ?_⟩
     filter_upwards [hA, hB] with i h1 h2 h
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (norm_add_le _ _).trans (add_le_add (h1 h) (h2 h))
   zero_mem' := ⟨0, Eventually.of_forall fun i h => by simp⟩
   neg_mem' := by
@@ -153,7 +153,7 @@ theorem limit {S : Scheme.{0}} {W : S.Opens} (hW : IsAffineOpen W) (F : Ultrafil
         rw [hval _ z h, hval _ z h, hval _ z h, map_mul]))
       map_add' := fun s t => tendsto_nhds_unique (ha (s + t)) (((ha s).add (ha t)).congr' (by
         filter_upwards [hF] with z h
-        rw [hval _ z h, hval _ z h, hval _ z h, map_add])) }
+        rw [hval _ z h, hval _ z h, hval _ z h, map_add (f := _)])) }
   obtain ⟨hc, hg⟩ := ArchC.point_of_ringHom hW g
   set z₀ : Sp ℂ ⟶ S := Spec.map (CommRingCat.ofHom g) ≫ hW.fromSpec with hz₀
   have hg' : ∀ t, ev W z₀ hc t = a t := hg

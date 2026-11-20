@@ -31,7 +31,7 @@ theorem exists_nsmul_of_dvd (D : Datum H) {n : ℕ} (hn : 0 < n) {b : D.La} (h :
   have hn' : (n : ℤ) ≠ 0 := Int.natCast_ne_zero.2 hn.ne'
   let g : D.La →ₗ[ℤ] ℤ :=
     { toFun := f
-      map_add' := fun a a' => mul_left_cancel₀ hn' (by rw [mul_add, ← hf, ← hf, ← hf, map_add])
+      map_add' := fun a a' => mul_left_cancel₀ hn' (by rw [mul_add, ← hf, ← hf, ← hf, map_add (f := _)])
       map_smul' := fun c a => mul_left_cancel₀ hn' (by
         rw [← hf, map_smul, hf, smul_eq_mul, RingHom.id_apply, smul_eq_mul, mul_left_comm]) }
   obtain ⟨e, he⟩ := D.unimod.2 g
@@ -49,10 +49,10 @@ theorem exists_linear_lift {R M X : Type} [CommRing R] [AddCommGroup M] [Module 
     { toFun := fun a => S.mkQ (Y a)
       map_add' := fun a b => by
         obtain ⟨e, he⟩ := hadd a b
-        rw [he, map_add, h0, add_zero, map_add]
+        rw [he, map_add (f := _), h0, add_zero, map_add (f := _)]
       map_smul' := fun c a => by
         obtain ⟨e, he⟩ := hsmul c a
-        rw [he, map_add, h0, add_zero, map_smul, RingHom.id_apply] }
+        rw [he, map_add (f := _), h0, add_zero, map_smul, RingHom.id_apply] }
   obtain ⟨h, hh⟩ := Module.projective_lifting_property S.mkQ g (Submodule.mkQ_surjective S)
   refine ⟨h, fun a => ?_⟩
   have := congrArg (fun φ : M →ₗ[R] X ⧸ S => φ a) hh
@@ -95,7 +95,7 @@ theorem torus_pair (D : Datum H) {R : Type} [CommRing R] [IsDomain R] [IsLocalRi
   refine ⟨b, b', ?_, hb, hb', fun hbb => ?_⟩
   · obtain ⟨z, hz, -⟩ := hq
     refine ⟨ν.eX (-z), ?_⟩
-    rw [← (hQ b).1, map_neg, smul_neg, ← map_nsmul, eq_neg_iff_add_eq_zero, ← map_add, ← hz]
+    rw [← (hQ b).1, map_neg, smul_neg, ← map_nsmul, eq_neg_iff_add_eq_zero, ← map_add (f := _), ← hz]
     exact map_zero _
   · have h₁ := (G.2.2 _ _ _ _ (hQ b) (hQ b')).1 ((I.ker n hn b b').2 hbb)
     have h₂ := (N.qEq_equivalence n).trans ((N.qEq_equivalence n).trans ((N.qEq_equivalence n).symm hq) h₁) hq'

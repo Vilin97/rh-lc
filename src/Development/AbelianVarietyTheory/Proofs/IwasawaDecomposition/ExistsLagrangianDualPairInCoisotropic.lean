@@ -42,7 +42,7 @@ theorem exists_lagrangian_dual_in_coisotropic : ∀ (r : ℕ) (M : Matrix (Fin r
       have h2 := hvL a' ha'
       have h3 : B a v = 0 := by rw [hskewB, hvL a ha, neg_zero]
       have h4 := hBalt v
-      simp [map_add, map_smul, h1, h2, h3, h4]
+      simp [map_add (f := _), map_smul, h1, h2, h3, h4]
     have hle : L ⊔ Submodule.span ℝ {v} ≤ W :=
       sup_le hLW (by rw [Submodule.span_le]; simpa using hvW)
     have hP : P (finrank ℝ ↥(L ⊔ Submodule.span ℝ {v})) := ⟨_, hle, hiso, rfl⟩

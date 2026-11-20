@@ -51,7 +51,7 @@ theorem levi_map_eq_one {F E : Type} [Field F] [NumberField F] [Field E] [Number
   rw [Matrix.map_apply, e1, e2, e]
   simp only [Matrix.mulVec_add, Matrix.mulVec_smul, ax, ay, Matrix.mulVec_mulVec, aι]
   rw [← Matrix.mulVec_mulVec]
-  simp only [Pi.add_apply, map_add, e4]
+  simp only [Pi.add_apply, map_add (f := _), e4]
 
 theorem exists_compact_emb : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E), IsCMExt F E σ →
     ∀ (hσ : ∀ x, σ (σ x) = x) (n n₁ : ℕ) (W : Spc F E n) (W₁ : Spc F E n₁) (H : Plane E n n₁), (∀ i j, σ (W.J j i) = -W.J i j) → n = n₁ + 2 →

@@ -83,7 +83,7 @@ theorem eval₂_oneBlockPt [NumberField K] (g : MvPolynomial (Σ _ : Unit, Fin d
     eval₂ (Int.castRingHom _) (oneBlockPt om i) g = affEval i (oneBlockLin om i g) := by
   induction g using MvPolynomial.induction_on with
   | C a => simp only [eval₂_C, oneBlockLin, eval₂Hom_C, Int.coe_castRingHom, map_intCast]
-  | add p q hp hq => simp only [eval₂_add, map_add, hp, hq]
+  | add p q hp hq => simp only [eval₂_add, map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [eval₂_mul, map_mul, hp, eval₂_X]
     congr 1
@@ -142,7 +142,7 @@ theorem exists_oneBlockLin_monomial (α : Fin (i + 1) →₀ ℕ) (hα : α ≠ 
   · have h := (linForm_isHomogeneous om i c j).mul (powForm_isHomogeneous om i (α - Finsupp.single j 1))
     convert h using 1
     conv_lhs => rw [hsplit]
-    rw [map_add, Finsupp.degree_single]
+    rw [map_add (f := _), Finsupp.degree_single]
   · rw [map_mul, oneBlockLin_linForm, oneBlockLin_powForm, C_mul_X_eq_monomial, monomial_mul, mul_one,
       ← hsplit]
 

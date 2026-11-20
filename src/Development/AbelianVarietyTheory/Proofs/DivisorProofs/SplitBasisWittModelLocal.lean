@@ -43,7 +43,7 @@ theorem symp_eq_zero_of_comp (hcm : IsCMExt F E σ) {v : Pl F} (s : E →ₐ[F] 
 theorem symp_add_right (ξ : AE F E) (JA : Matrix (Fin n) (Fin n) (AE F E)) (JB : Matrix (Fin d) (Fin d) (AE F E))
     (x y y' : Matrix (Fin n) (Fin d) (AE F E)) :
     symp (cA σ) ξ JA JB x (y + y') = symp (cA σ) ξ JA JB x y + symp (cA σ) ξ JA JB x y' := by
-  simp only [symp, hTens, Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [symp, hTens, Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem isLin_smul {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) (ψ : AddChar (AF F) ℂ) {v : Pl F}
     {π₁ π₀ : AE F E →+* Fv F v} {co : Matrix (Fin n) (Fin d) (AE F E) → Matrix (Fin n) (Fin d) (Fv F v)}

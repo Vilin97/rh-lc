@@ -97,7 +97,7 @@ theorem hf_smul_right (t : E) (x y : Fin M → E) : hf σ J x (t • y) = t * hf
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 theorem hf_add_left (x y z : Fin M → E) : hf σ J (x + y) z = hf σ J x z + hf σ J y z := by
-  simp only [hf, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hf, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hf_smul_left (t : E) (x y : Fin M → E) : hf σ J (t • x) y = σ t * hf σ J x y := by
   simp only [hf, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, map_mul]

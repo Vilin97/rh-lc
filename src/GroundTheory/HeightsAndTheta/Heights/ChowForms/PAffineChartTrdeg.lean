@@ -50,7 +50,7 @@ theorem exists_isHomogeneous (j : Fin n) (hj : genPt P j ≠ 0)
     refine ⟨max D₁ D₂, fun D' hD' => ?_⟩
     obtain ⟨f, hf, ef⟩ := h₁ D' (le_of_max_le_left hD')
     obtain ⟨g, hg, eg⟩ := h₂ D' (le_of_max_le_right hD')
-    exact ⟨f + g, hf.add hg, by rw [map_add, ef, eg, add_mul]⟩
+    exact ⟨f + g, hf.add hg, by rw [map_add (f := _), ef, eg, add_mul]⟩
   | mul x y _ _ hx hy =>
     obtain ⟨D₁, h₁⟩ := hx
     obtain ⟨D₂, h₂⟩ := hy
@@ -150,7 +150,7 @@ theorem proof : AffineChartTrdeg.Statement := by
     | C c =>
       rw [aeval_C, IsScalarTower.algebraMap_apply F A' K]
       exact S.algebraMap_mem _
-    | add f g hf hg => rw [map_add]; exact S.add_mem hf hg
+    | add f g hf hg => rw [map_add (f := _)]; exact S.add_mem hf hg
     | mul_X f i hf => rw [map_mul, aeval_X]; exact S.mul_mem hf (hξS i)
 
   have halg : Algebra.IsAlgebraic S K := by

@@ -179,7 +179,7 @@ theorem finsum_char_ideleLocalSymbolAt_eq_of_artinMap (χ : Additive K.1.fixingS
     obtain ⟨g₂, rfl⟩ := restrictHom_surjective (E := E) τ₂
     rw [← map_mul, ← map_mul, ← mul_inv_eq_one, ← map_inv, ← map_mul, ← MonoidHom.mem_ker, FiniteSubfield.ker_restrictHom,
       Subgroup.mem_subgroupOf, hmem]
-    simp only [mul_inv_rev, ofMul_mul, ofMul_inv, map_add, map_neg]
+    simp only [mul_inv_rev, ofMul_mul, ofMul_inv, map_add (f := _), map_neg]
     abel⟩⟩
   exact finsum_char_ideleLocalSymbolAt_eq ι E χ (fun h hh ↦ (hmem h).1 hh) x g
     (restrictHom_eq_ideleSymbol_of_artinMap E x g hg)

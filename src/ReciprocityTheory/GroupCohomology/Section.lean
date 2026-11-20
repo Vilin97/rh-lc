@@ -28,7 +28,7 @@ theorem section_holds : SectionStatement.{u} := by
     let U : Subgroup (Multiplicative B) :=
       { carrier := {x | p x.toAdd = 0}
         mul_mem' := fun {a b} ha hb => by
-          simp only [Set.mem_ofPred_eq, toAdd_mul, map_add] at ha hb ⊢; rw [ha, hb, add_zero]
+          simp only [Set.mem_ofPred_eq, toAdd_mul, map_add (f := _)] at ha hb ⊢; rw [ha, hb, add_zero]
         one_mem' := by simp
         inv_mem' := fun {a} ha => by
           simp only [Set.mem_ofPred_eq, toAdd_inv, map_neg] at ha ⊢; rw [ha, neg_zero] }
@@ -41,13 +41,13 @@ theorem section_holds : SectionStatement.{u} := by
       intro b
       have h := htU (Multiplicative.ofAdd b)
       change p (Multiplicative.toAdd (t (Multiplicative.ofAdd b) * (Multiplicative.ofAdd b)⁻¹)) = 0 at h
-      rw [toAdd_mul, toAdd_inv, toAdd_ofAdd, map_add, map_neg, add_neg_eq_zero] at h
+      rw [toAdd_mul, toAdd_inv, toAdd_ofAdd, map_add (f := _), map_neg, add_neg_eq_zero] at h
       exact h
     have hfc : ∀ b b', p b = p b' → f b = f b' := by
       intro b b' hbb
       refine congrArg Multiplicative.toAdd (hc _ _ ?_)
       change p (Multiplicative.toAdd (Multiplicative.ofAdd b * (Multiplicative.ofAdd b')⁻¹)) = 0
-      rw [toAdd_mul, toAdd_inv, toAdd_ofAdd, toAdd_ofAdd, map_add, map_neg, hbb, add_neg_cancel]
+      rw [toAdd_mul, toAdd_inv, toAdd_ofAdd, toAdd_ofAdd, map_add (f := _), map_neg, hbb, add_neg_cancel]
     refine ⟨fun c => f (surjInv hsurj c), continuous_iff_isClosed.2 fun F hF => ?_,
       fun c => by rw [hpf, surjInv_eq hsurj]⟩
     have e : (fun c => f (surjInv hsurj c)) ⁻¹' F = p '' (f ⁻¹' F) := by

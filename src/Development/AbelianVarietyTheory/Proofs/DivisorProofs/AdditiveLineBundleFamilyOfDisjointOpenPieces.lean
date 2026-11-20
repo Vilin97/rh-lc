@@ -45,7 +45,7 @@ theorem fam_of_pieces {S : Scheme.{0}} (A : Over S) [GrpObj A] {κ : Type} [Fini
     ext
     simp [u, v, pullback.condition]
   change GlobalTheory.CechPic.pull u.left _ = 0
-  rw [map_sub, map_add, GlobalTheory.AbDual.pull_evc, GlobalTheory.AbDual.pull_evc, GlobalTheory.AbDual.pull_evc, huv,
+  rw [map_sub, map_add (f := _), GlobalTheory.AbDual.pull_evc, GlobalTheory.AbDual.pull_evc, GlobalTheory.AbDual.pull_evc, huv,
     evc_comp_of_iso (j i) hPt (hP i).isLB (hiso i), evc_comp_of_iso (j i) hPt (hP i).isLB (hiso i),
     evc_comp_of_iso (j i) hPt (hP i).isLB (hiso i), MonObj.comp_mul,
     (GlobalTheory.AbDual.isAdditive_iff (hP i).isLB).mp (hP i).add]

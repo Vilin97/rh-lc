@@ -45,8 +45,8 @@ private theorem prj_comm {V : Submodule ℂ H} (hV : IsClosed (V : Set H)) {A : 
     rw [← ContinuousLinearMap.adjoint_inner_left, hadj]
     exact hu _ (hinv w hw)
   have h : A v = A (prj V v) + A (v - prj V v) := by
-    rw [← map_add]; congr 1; abel
-  rw [h, map_add, prj_eq_zero hAu, add_zero, prj_self (hinv _ (prj_mem hV v))]
+    rw [← map_add (f := _)]; congr 1; abel
+  rw [h, map_add (f := _), prj_eq_zero hAu, add_zero, prj_self (hinv _ (prj_mem hV v))]
 
 end SlopeTestRemainingChoices
 

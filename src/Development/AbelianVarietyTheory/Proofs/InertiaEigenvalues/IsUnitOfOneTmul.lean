@@ -96,7 +96,7 @@ theorem build (E : WEt I) [Nontrivial R.EE] {Zl S W : Type} [CommRing Zl] [CommR
     obtain ⟨t, rfl⟩ := (hD T hT y).1 hy
     obtain ⟨t', rfl⟩ := (hD T hT y').1 hy'
     refine (hD T hT _).2 ⟨t + t', ?_⟩
-    simp only [Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
   have hzero : ∀ T, IsCrys PD T.ρ → E.jD T 0 ∈ L T := fun T hT => (hD T hT _).2 ⟨0, by simp⟩
   have hS : ∀ T, IsCrys PD T.ρ → ∀ (t : S) (y : E.DD T), E.jD T y ∈ L T → E.jD T (a t • y) ∈ L T :=
     fun T hT t y hy => by
@@ -260,7 +260,7 @@ theorem range_trivial (BS : GlobalTheory.Published.BhattScholzeCrystallineLattic
         simp only [LinearMap.lTensor_tmul, LinearMap.toSpanSingleton_apply, Module.Basis.coord_apply]
         rw [← TensorProduct.tmul_sum, b.sum_repr]
       | add y y' h h' =>
-        simp only [map_add, Finset.sum_add_distrib]
+        simp only [map_add (f := _), Finset.sum_add_distrib]
         rw [← h, ← h']
     rw [key (j (E.tr ioH x))]
     refine Finset.sum_congr rfl fun i _ => ?_
@@ -286,7 +286,7 @@ theorem kappa_smul (κ : W ⊗[Z] T ≃+ RW ⊗[O] T) (hκ : ∀ w t, κ (w ⊗�
     κ (w • y) = c w • κ y := by
   induction y with
   | tmul w' t => rw [TensorProduct.smul_tmul', hκ, hκ, TensorProduct.smul_tmul', smul_eq_mul, smul_eq_mul, map_mul]
-  | add y y' h h' => rw [smul_add, map_add, map_add, smul_add, h, h']
+  | add y y' h h' => rw [smul_add, map_add (f := _), map_add (f := _), smul_add, h, h']
 
 theorem kappa_map (κ : W ⊗[Z] T ≃+ RW ⊗[O] T) (hκ : ∀ w t, κ (w ⊗ₜ t) = c w ⊗ₜ t)
     (κ' : W ⊗[Z] T' ≃+ RW ⊗[O] T') (hκ' : ∀ w t, κ' (w ⊗ₜ t) = c w ⊗ₜ t)
@@ -295,7 +295,7 @@ theorem kappa_map (κ : W ⊗[Z] T ≃+ RW ⊗[O] T) (hκ : ∀ w t, κ (w ⊗�
     κ' (TensorProduct.map σ f y) = TensorProduct.map σ' f' (κ y) := by
   induction y with
   | tmul w' t => rw [TensorProduct.map_tmul, hκ, hκ', TensorProduct.map_tmul, hσ, hf]
-  | add y y' h h' => simp only [map_add, h, h']
+  | add y y' h h' => simp only [map_add (f := _), h, h']
 
 theorem kappa_basis (κ : W ⊗[Z] T ≃+ RW ⊗[O] T) (hκ : ∀ w t, κ (w ⊗ₜ t) = c w ⊗ₜ t) {q : ℕ}
     (b : Module.Basis (Fin q) W (W ⊗[Z] T)) (y : RW ⊗[O] T) :
@@ -313,7 +313,7 @@ theorem map_mulLeft (r : RW) (y : RW ⊗[O] T) :
     TensorProduct.map (LinearMap.mulLeft O r) (LinearMap.id : T →ₗ[O] T) y = r • y := by
   induction y with
   | tmul w' t => rw [TensorProduct.map_tmul, TensorProduct.smul_tmul']; rfl
-  | add y y' h h' => rw [map_add, smul_add, h, h']
+  | add y y' h h' => rw [map_add (f := _), smul_add, h, h']
 
 end Kappa
 

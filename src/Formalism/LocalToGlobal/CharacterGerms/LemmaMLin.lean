@@ -98,7 +98,7 @@ theorem dVar_eq_pderiv {C : Type} [Field C] {σ : Type} (w : σ) (F : MvPowerSer
 theorem ordGE_pderiv {F : MvPowerSeries σ C} {n : ℕ} (hF : OrdGE (n + 1) F) (w : σ) :
     OrdGE n (pderiv (R := C) w F) := by
   intro e he
-  rw [coeff_pderiv, hF _ (by rw [map_add, Finsupp.degree_single]; omega), zero_mul]
+  rw [coeff_pderiv, hF _ (by rw [map_add (f := _), Finsupp.degree_single]; omega), zero_mul]
 
 theorem pderiv_subst_coe [Fintype σ] {a : σ → MvPowerSeries τ C} (ha : HasSubst a) (b : τ)
     (p : MvPolynomial σ C) :
@@ -117,9 +117,9 @@ theorem pderiv_subst_coe [Fintype σ] {a : σ → MvPowerSeries τ C} (ha : HasS
       rw [← substAlgHom_apply ha, map_zero]
     rw [pderiv_C, h0, mul_zero]
   | add p q hp hq =>
-    rw [MvPolynomial.coe_add, subst_add ha, map_add, hp, hq, ← Finset.sum_add_distrib]
+    rw [MvPolynomial.coe_add, subst_add ha, map_add (f := _), hp, hq, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun w _ => ?_
-    rw [map_add, subst_add ha, mul_add]
+    rw [map_add (f := _), subst_add ha, mul_add]
   | mul_X p w0 hp =>
     rw [MvPolynomial.coe_mul, MvPolynomial.coe_X, subst_mul ha, subst_X ha, Derivation.leibniz, hp]
     have h1 : ∀ w, pderiv (R := C) b (a w) * subst a (pderiv (R := C) w ((p : MvPowerSeries σ C) * X w0)) =
@@ -170,8 +170,8 @@ theorem pderiv_subst [Fintype σ] {a : σ → MvPowerSeries τ C} (ha : ∀ s, O
         ∑ w, pderiv (R := C) b (a w) * subst a (pderiv (R := C) w R) := by
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun w _ => ?_
-    rw [hH, map_add, subst_add hs, mul_add]
-  rw [hsum, map_add, hRr, add_zero, ← pderiv_subst_coe hs, hH, subst_add hs, map_add, map_add, hL,
+    rw [hH, map_add (f := _), subst_add hs, mul_add]
+  rw [hsum, map_add (f := _), hRr, add_zero, ← pderiv_subst_coe hs, hH, subst_add hs, map_add (f := _), map_add (f := _), hL,
     add_zero]
 
 end General

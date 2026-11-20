@@ -156,11 +156,11 @@ theorem map_endo {R S : Type} [CommRing R] [CommRing S] (ρ : R →+* S) {q : �
       PowerSeries.HasSubst.of_constantCoeff_zero' (by simp [hq])
     have h := congrArg (PowerSeries.map ρ) h2
     have h4 := PowerSeries.map_subst hs (h := ρ) φ
-    rw [map_add, map_mul, map_pow, PowerSeries.map_C] at h
+    rw [map_add (f := _), map_mul, map_pow, PowerSeries.map_C] at h
     refine h.trans (h4.trans ?_)
     congr 1
     change PowerSeries.map ρ _ = _
-    rw [map_add, map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X]
+    rw [map_add (f := _), map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X]
 
 section Padic
 

@@ -15,7 +15,7 @@ theorem intertw_alg {V W : Type} [AddCommGroup V] [Module K V] [AddCommGroup W] 
     f (ρ.asAlgebraHom a x) = σ.asAlgebraHom a (f x) := by
   induction a using MonoidAlgebra.induction_on with
   | of g => simp [Representation.asAlgebraHom_of, hf]
-  | add a b ha hb => simp [map_add, ha, hb]
+  | add a b ha hb => simp [map_add (f := _), ha, hb]
   | smul r a ha => simp [map_smul, ha]
 
 theorem exists_end_map {W : Type} [AddCommGroup W] [Module K W] [FiniteDimensional K W]

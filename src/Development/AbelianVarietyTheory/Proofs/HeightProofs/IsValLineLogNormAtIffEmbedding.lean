@@ -682,7 +682,7 @@ theorem cj_isAH {Hm : Matrix (Fin g) (Fin g) ℂ} {χ : u.Λ → ℂ} (hA : u.Is
   rw [star_mul', star_mul', ← star_form, ← star_form, ← star_add z]
   congr 2
   rw [Complex.star_def, ← Complex.exp_conj]
-  simp only [map_add, map_mul, map_div₀, Complex.conj_ofReal, map_ofNat]
+  simp only [map_add (f := _), map_mul, map_div₀, Complex.conj_ofReal, map_ofNat]
 
 theorem measurePreserving_star : MeasurePreserving (star : (Fin g → ℂ) → Fin g → ℂ) volume volume :=
   volume_preserving_pi fun _ => Complex.conjLIE.measurePreserving

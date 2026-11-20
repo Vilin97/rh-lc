@@ -60,7 +60,7 @@ theorem exists_seminorm_weylAlg {l : Type} [Fintype l] (M : ℝ) {B : Sch l →L
   · exact ⟨0, continuous_zero, fun A' _ f => by simp⟩
   · rintro A B ⟨q, hq, h⟩ ⟨q', hq', h'⟩
     refine ⟨q + q', hq.add hq', fun A' hA f => ?_⟩
-    rw [ContinuousLinearMap.add_apply, map_add]
+    rw [ContinuousLinearMap.add_apply, map_add (f := _)]
     exact (norm_add_le _ _).trans (add_le_add (h A' hA f) (h' A' hA f))
   · rintro c A ⟨q, hq, h⟩
     refine ⟨‖c‖₊ • q, ?_, fun A' hA f => ?_⟩

@@ -18,11 +18,11 @@ variable {σ : E →ₐ[F] E} {nS nT : ℕ} {JS : Matrix (Fin nS) (Fin nS) E} {J
 
 theorem symplOHF_add_left (x x' y : WOF F E nS nT) :
     symplOHF σ JS JT xi0 (x + x') y = symplOHF σ JS JT xi0 x y + symplOHF σ JS JT xi0 x' y := by
-  simp only [symplOHF, symplOF, hOF, Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  simp only [symplOHF, symplOF, hOF, Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem symplOHF_add_right (x y y' : WOF F E nS nT) :
     symplOHF σ JS JT xi0 x (y + y') = symplOHF σ JS JT xi0 x y + symplOHF σ JS JT xi0 x y' := by
-  simp only [symplOHF, symplOF, hOF, Matrix.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [symplOHF, symplOF, hOF, Matrix.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 theorem cAF_algebraMap (c : AF F) :
     cAF σ (algebraMap (AF F) (AEF F E) c) = algebraMap (AF F) (AEF F E) c := by
@@ -75,7 +75,7 @@ theorem smul_eq_zero_of_infPartF {z : AEF F E} (hz : infPartF F E z = 0) : (pair
         rw [one_mul]
       · show 0 * a.2 = 0
         rw [zero_mul]
-    | add x y hx hy => rw [smul_add, hx, hy, map_add, map_add]; rfl
+    | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]; rfl
   rw [key, hz, map_zero]; rfl
 
 theorem smul_eq_zero_of_finPartF {z : AEF F E} (hz : finPartF F E z = 0) : (pairA F 0 1) • z = 0 := by
@@ -93,7 +93,7 @@ theorem smul_eq_zero_of_finPartF {z : AEF F E} (hz : finPartF F E z = 0) : (pair
         rw [zero_mul]
       · show 1 * a.2 = a.2
         rw [one_mul]
-    | add x y hx hy => rw [smul_add, hx, hy, map_add, map_add]; rfl
+    | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]; rfl
   rw [key, hz, map_zero]; rfl
 
 end Parts

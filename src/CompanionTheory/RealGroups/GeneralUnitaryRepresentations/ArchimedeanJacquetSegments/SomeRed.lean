@@ -173,7 +173,7 @@ theorem someRed_of (h1 : Complementary) (h2 : Compact k) (h3 : Bound k) (h4 : He
           exact hω t (f 0)
         · simp [g]
       rw [map_smul, piTensor_tprod, hfun, MultilinearMap.map_update_smul, Function.update_eq_self, smul_comm]
-    | add a b ha hb => rw [map_add, ha, hb, smul_add]
+    | add a b ha hb => rw [map_add (f := _), ha, hb, smul_add]
   have hc : ∀ w, twist τ (chi k d s) g w = c • w := fun w => by
     show (chi k d s g : ℂ) • τ g w = c • w
     rw [hτ, smul_smul]

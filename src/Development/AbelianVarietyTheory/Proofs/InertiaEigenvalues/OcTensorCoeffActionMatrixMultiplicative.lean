@@ -22,7 +22,7 @@ theorem actMat_props {Z O N C : Type} [CommRing Z] [CommRing O] [Algebra Z O] [A
     rw [hs, hs, smul_smul, smul_smul, mul_comm]
   refine ⟨fun a a' => ?_, fun x a => ?_, ?_, fun a a' => ?_⟩
   · ext i j
-    simp only [hA, Matrix.add_apply, add_smul, map_add, Finsupp.add_apply]
+    simp only [hA, Matrix.add_apply, add_smul, map_add (f := _), Finsupp.add_apply]
   · ext i j
     have hx : (x • a) • b j = x • (a • b j) := by
       rw [Algebra.smul_def, mul_smul, ← hs]

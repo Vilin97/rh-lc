@@ -82,7 +82,7 @@ theorem phi_conj (hU : UnitaryData H Λ α δ Ae) (hM : Multipliers H Λ δ ℓ 
     phiC H α Ae (ℓ x) = conj (phiC H α Ae x) := by
   obtain ⟨hskew, hre, -, -⟩ := phiBasic V H Λ α δ Ae hU
   have h1 : H (cayC Ae (ℓ x)) (ℓ x) = -H (cayC Ae x) x + (4 * e : ℂ) * H (cayC Ae x) (σ x) := by
-    rw [cayC_comm hU.cay ℓ hM.lδ, hM.adj, hM.rel, map_add, map_neg, map_nsmul, nsmul_eq_mul]
+    rw [cayC_comm hU.cay ℓ hM.lδ, hM.adj, hM.rel, map_add (f := _), map_neg, map_nsmul, nsmul_eq_mul]
     push_cast
     rfl
   have hXre : (H (cayC Ae x) (σ x)).re = 0 := by

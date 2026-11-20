@@ -257,7 +257,7 @@ theorem invStepU : PositivityTheory.SphericalProduct.InvStepU := by
   let lam : V →ₗ[ℂ] ℂ :=
     { toFun := fun v => ∫ u : cellU y, (f v).1 (y⁻¹ * u) ∂μ
       map_add' := fun a b => by
-        simp only [map_add, Submodule.coe_add, Pi.add_apply]
+        simp only [map_add (f := _), Submodule.coe_add, Pi.add_apply]
         exact integral_add (hint a) (hint b)
       map_smul' := fun c a => by
         simp only [map_smul, Submodule.coe_smul, Pi.smul_apply, RingHom.id_apply]

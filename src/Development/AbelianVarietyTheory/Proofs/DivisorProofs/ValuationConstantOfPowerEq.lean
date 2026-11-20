@@ -71,7 +71,7 @@ theorem isLocalRing_of_integers {C Γ₀ R : Type} [Field C] [LinearOrderedCommG
   have h2 : v (algebraMap R C (1 - a)) < 1 :=
     lt_of_le_of_ne (hv.map_le_one _) (fun e => h.2 (hv.isUnit_of_one' e))
   have h3 := v.map_add (algebraMap R C a) (algebraMap R C (1 - a))
-  have h4 : algebraMap R C a + algebraMap R C (1 - a) = 1 := by rw [← map_add]; simp
+  have h4 : algebraMap R C a + algebraMap R C (1 - a) = 1 := by rw [← map_add (f := _)]; simp
   rw [h4, v.map_one] at h3
   exact lt_irrefl _ (lt_of_le_of_lt h3 (max_lt h1 h2))
 

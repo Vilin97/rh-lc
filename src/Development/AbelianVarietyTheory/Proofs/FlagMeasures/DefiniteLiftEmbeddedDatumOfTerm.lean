@@ -47,7 +47,7 @@ theorem exists_proj (hS : S = C ⊔ I) (hd : C ⊓ I = ⊥) : ∃ p : V →ₗ[K
   intro x hx
   rw [hS] at hx
   obtain ⟨c, hc', i, hi, rfl⟩ := Submodule.mem_sup.1 hx
-  rw [map_add, hC1 c hc', hI0 i hi, add_zero]
+  rw [map_add (f := _), hC1 c hc', hI0 i hi, add_zero]
   exact hc'
 
 theorem genBy_latIn (hS : S = C ⊔ I) (hd : C ⊓ I = ⊥) {A B : Submodule (𝓞 K) V} {e : ℕ}
@@ -88,7 +88,7 @@ theorem genBy_latIn (hS : S = C ⊔ I) (hd : C ⊓ I = ⊥) {A B : Submodule (�
       apply Subtype.ext
       rw [Submodule.coe_add]
       show (y : V) = p b + (C.subtype.restrictScalars (𝓞 K)) z
-      rw [hzs, ← map_add, hbs, hpC1 y y.2]
+      rw [hzs, ← map_add (f := _), hbs, hpC1 y y.2]
     rw [hy']
     exact Submodule.add_mem_sup hpb hz
   · rw [sup_le_iff]
@@ -216,7 +216,7 @@ theorem dual_latIn (hS : S = C ⊔ I) (H : HermSpace K V) (H' : HermSpace K C)
       have hcM : c ∈ M := by simpa using M.sub_mem hx (hIM hi)
       have h1 := hy ⟨c, hc⟩ hcM
       rw [hH] at h1
-      rw [map_add, ho _ (hCS y.2) i hi, add_zero]
+      rw [map_add (f := _), ho _ (hCS y.2) i hi, add_zero]
       exact h1
 
 theorem intLat_latIn (hS : S = C ⊔ I) (hd : C ⊓ I = ⊥) (H : HermSpace K V) (H' : HermSpace K C)

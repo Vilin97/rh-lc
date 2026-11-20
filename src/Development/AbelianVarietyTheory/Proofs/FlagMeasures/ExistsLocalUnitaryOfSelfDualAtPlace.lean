@@ -192,7 +192,7 @@ theorem sigR_sigR (hσ : ∀ x, σ (σ x) = x) (z : E ⊗[F] v.adicCompletion F)
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x a => rw [sigR_tmul, sigR_tmul, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem intV_induction {p : E ⊗[F] v.adicCompletion F → Prop} (h0 : p 0)
     (h1 : ∀ (x : 𝓞 E) (a : v.adicCompletionIntegers F), p ((x : E) ⊗ₜ[F] (a : v.adicCompletion F)))
@@ -215,12 +215,12 @@ theorem intV_induction {p : E ⊗[F] v.adicCompletion F → Prop} (h0 : p 0)
   induction y using TensorProduct.induction_on with
   | zero => rwa [map_zero]
   | tmul x a => exact (hφ x a).symm ▸ h1 x a
-  | add x y hx hy => rw [map_add]; exact h2 _ _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact h2 _ _ hx hy
 
 theorem sigR_mem (z : E ⊗[F] v.adicCompletion F) (hz : z ∈ intV E v) :
     sigR σ (v.adicCompletion F) z ∈ intV E v := by
   refine intV_induction v (p := fun z => sigR σ (v.adicCompletion F) z ∈ intV E v) (by simp)
-    (fun x a => ?_) (fun x y hx hy => by rw [map_add]; exact add_mem hx hy) hz
+    (fun x a => ?_) (fun x y hx hy => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy) hz
   have := mul_mem (inclE_mem v ⟨σ x, map_isIntegral_int σ x.isIntegral_coe⟩) (one_tmul_mem v a)
   convert this using 1
   change _ = (σ x ⊗ₜ[F] (1 : v.adicCompletion F)) * ((1 : E) ⊗ₜ[F] (a : v.adicCompletion F))
@@ -239,14 +239,14 @@ theorem exists_trace (hσ : ∀ x, σ (σ x) = x) (hfix : ∀ x, σ x = x → x 
   refine intV_induction v (p := fun z => ∃ a, (baseMap E v a : E ⊗[F] v.adicCompletion F) =
     z + sigR σ (v.adicCompletion F) z) ⟨0, by simp⟩ (fun x a => ?_) ?_ hz
   · obtain ⟨s, hs⟩ := exists_int_of_fixed σ hfix (x := (x : E) + σ x)
-      (x.isIntegral_coe.add (map_isIntegral_int σ x.isIntegral_coe)) (by rw [map_add, hσ, add_comm])
+      (x.isIntegral_coe.add (map_isIntegral_int σ x.isIntegral_coe)) (by rw [map_add (f := _), hσ, add_comm])
     refine ⟨algebraMap (𝓞 F) _ s * a, ?_⟩
     rw [map_mul, Subring.coe_mul, coe_baseMap_algebraMap, hs, sigR_tmul, ← TensorProduct.add_tmul]
     change (((x : E) + σ x) ⊗ₜ[F] (1 : v.adicCompletion F)) *
       ((1 : E) ⊗ₜ[F] (a : v.adicCompletion F)) = _
     rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
   · rintro x y ⟨a, ha⟩ ⟨b, hb⟩
-    exact ⟨a + b, by rw [map_add, Subring.coe_add, ha, hb, map_add]; ring⟩
+    exact ⟨a + b, by rw [map_add (f := _), Subring.coe_add, ha, hb, map_add (f := _)]; ring⟩
 
 theorem exists_isUnit_sub (hσ : ∀ x, σ (σ x) = x)
     (hfix : ∀ x, σ x = x → x ∈ (algebraMap F E).range)

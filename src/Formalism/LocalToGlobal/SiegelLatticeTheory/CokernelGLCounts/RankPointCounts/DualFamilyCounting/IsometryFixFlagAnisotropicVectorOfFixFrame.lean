@@ -472,7 +472,7 @@ theorem eq_one_of_fix (g : G0 F0) {Λ : Submodule (𝓞 D.host.E) (VS D).V}
     trivial
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hv
   show (g : (VS D).V ≃ₗ[D.host.E] (VS D).V) (a + b) = a + b
-  rw [map_add, hU a ha, hW b hb]
+  rw [map_add (f := _), hU a ha, hW b hb]
 
 end Formalism.L2.SG.Pf.Cnt.StabilizerQuotient
 
@@ -887,7 +887,7 @@ theorem class_red (u : D.what₂.Word) (F0 : FlagG (VS D) D.R.rS (Tn u)) {Λ Λ'
       obtain ⟨a, rfl⟩ := hy
       exact hP0e a
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add, hy, hz]
+    | add y z _ _ hy hz => rw [map_add (f := _), hy, hz]
     | smul c y _ hy => rw [map_smul, hy]
   have hran : ∀ y, P0 y ∈ F0.X := fun y => by
     rw [retr_apply]

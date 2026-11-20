@@ -246,7 +246,7 @@ private theorem eq_zero_or_exists_eq_single_of_degree_lt_two {τ : Type} (d : τ
     omega
   obtain ⟨e, rfl⟩ := exists_add_of_le hle
   have he : Finsupp.degree e = 0 := by
-    rw [map_add, Finsupp.degree_single] at h
+    rw [map_add (f := _), Finsupp.degree_single] at h
     omega
   rw [Finsupp.degree_eq_zero_iff] at he
   exact ⟨j, by simp [he]⟩
@@ -282,7 +282,7 @@ theorem max_le_erase {σ : Type} [Fintype σ] (π : MvPowerSeries σ O →ₐ[O]
     conv_lhs => rw [hf]
     rw [← Finset.add_sum_erase _ _ (Finset.mem_univ i)]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_mul, hCa, hs]
+      simp only [map_add (f := _), map_sum, map_mul, hCa, hs]
     ring
   have hsI : s ∈ Ideal.span ((fun k => π (X k)) '' {k | k ≠ i}) := by
     refine Ideal.sum_mem _ (fun k hk => Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨k, ?_, rfl⟩))

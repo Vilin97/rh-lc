@@ -35,7 +35,7 @@ theorem exists_conj (L : Type) [LieRing L] [LieAlgebra ℝ L] :
   obtain ⟨π, hπ⟩ := GlobalTheory.EnvelopingExtension.exists_algHom_of_real L
     (ConjAlg (UniversalEnvelopingAlgebra ℂ (ℂ ⊗[ℝ] L)))
     (fun X => (UniversalEnvelopingAlgebra.ι ℂ ((1 : ℂ) ⊗ₜ[ℝ] X) : UniversalEnvelopingAlgebra ℂ (ℂ ⊗[ℝ] L)))
-    (fun X Y => by rw [TensorProduct.tmul_add, map_add]; rfl)
+    (fun X Y => by rw [TensorProduct.tmul_add, map_add (f := _)]; rfl)
     (fun c X => by
       refine Eq.trans ?_ (hs _ _).symm
       change UniversalEnvelopingAlgebra.ι ℂ ((1 : ℂ) ⊗ₜ[ℝ] (c • X)) =

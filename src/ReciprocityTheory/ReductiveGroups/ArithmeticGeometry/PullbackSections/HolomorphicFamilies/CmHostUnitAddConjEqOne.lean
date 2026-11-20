@@ -80,7 +80,7 @@ theorem bar_rt : H.bar H.rt = -H.rt := by
 
 theorem cmHostUnit_add_conj_eq_one : H.w0 + H.bar H.w0 = 1 := by
   have hb := congrArg H.bar H.two_weight_eq_one_add_root
-  rw [map_mul, map_add, map_one, bar_rt, map_ofNat] at hb
+  rw [map_mul, map_add (f := _), map_one, bar_rt, map_ofNat] at hb
   have h2 : (2 : 𝓞 E) * (H.w0 + H.bar H.w0) = 2 * 1 := by
     linear_combination H.two_weight_eq_one_add_root + hb
   exact mul_left_cancel₀ two_ne_zero h2

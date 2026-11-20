@@ -29,7 +29,7 @@ theorem finrank_fixedField {E : Type} [Field E] [CharZero E] (c : E ≃+* E) (hc
     rintro ⟨a, b⟩ h
     have h1 : (a : E) + (b : E) * d = 0 := h
     have h2 := congrArg c h1
-    rw [map_add, map_mul, (mem_fixedField c _).1 a.2, (mem_fixedField c _).1 b.2, hcd, map_zero] at h2
+    rw [map_add (f := _), map_mul, (mem_fixedField c _).1 a.2, (mem_fixedField c _).1 b.2, hcd, map_zero] at h2
     have ha : (a : E) = 0 := by linear_combination (h1 + h2) / 2
     have hb : (b : E) * d = 0 := by linear_combination (h1 - h2) / 2
     have hb' : (b : E) = 0 := (mul_eq_zero.1 hb).resolve_right hd0
@@ -37,7 +37,7 @@ theorem finrank_fixedField {E : Type} [Field E] [CharZero E] (c : E ≃+* E) (hc
   have hsurj : Function.Surjective f := by
     intro z
     refine ⟨(⟨(z + c z) / 2, ?_⟩, ⟨(z - c z) / (2 * d), ?_⟩), ?_⟩
-    · rw [mem_fixedField, map_div₀, map_add, hc, map_ofNat, add_comm]
+    · rw [mem_fixedField, map_div₀, map_add (f := _), hc, map_ofNat, add_comm]
     · rw [mem_fixedField, map_div₀, map_sub, hc, map_mul, map_ofNat, hcd]
       field_simp
       ring
@@ -194,10 +194,10 @@ theorem exists_fixed_val {E : Type} [Field E] (v : Valuation E (WithZero (Multip
     by_contra h
     push Not at h
     have h1 : v (π + c π) < v π :=
-      lt_of_le_of_ne (v.map_add_le le_rfl (hv π).le) (h _ (by rw [map_add, hc, add_comm]))
+      lt_of_le_of_ne (v.map_add_le le_rfl (hv π).le) (h _ (by rw [map_add (f := _), hc, add_comm]))
     have h0 : v (a * π) ≤ v π := by rw [map_mul]; exact mul_le_of_le_one_left' ha
     have h2 : v (a * π + c (a * π)) < v π :=
-      lt_of_le_of_ne (v.map_add_le h0 ((hv _).le.trans h0)) (h _ (by rw [map_add, hc, add_comm]))
+      lt_of_le_of_ne (v.map_add_le h0 ((hv _).le.trans h0)) (h _ (by rw [map_add (f := _), hc, add_comm]))
     have h3 : v (c a * (π + c π)) < v π := by
       rw [map_mul, hv]; exact lt_of_le_of_lt (mul_le_of_le_one_left' ha) h1
     have h4 := v.map_sub_lt h2 h3

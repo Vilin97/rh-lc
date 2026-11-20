@@ -173,7 +173,7 @@ theorem contDiff_phase (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) {k : ℕ} {
   have e : (fun t => -deriv (fun s : ℝ => ψ (symplOH S T (u + L t) (M s))) 0) = fun t =>
       (Real.pi * Complex.I) * Complex.ofRealCLM (omO S T (piW θ T S u) (piW θ T S (M 1)) + B (A t)) := by
     funext t
-    rw [deriv_phase h hψ hM hMf, hB, AddMonoidHom.map_add, LinearMap.map_add₂, Complex.ofRealCLM_apply]
+    rw [deriv_phase h hψ hM hMf, hB, AddMonoidHom.map_add (f := _), LinearMap.map_add₂, Complex.ofRealCLM_apply]
     ring
   rw [e]
   have hc : ContDiff ℝ ∞ fun t => omO S T (piW θ T S u) (piW θ T S (M 1)) + B (A t) :=
@@ -218,7 +218,7 @@ theorem matCoef_smooth : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdCha
           fun s => ℓ (heisO ψ S T ((u + L t) + M s) f) := by
         funext s
         have : E s = s • Pi.single i 1 := rfl
-        rw [map_add, add_assoc, ← this]
+        rw [map_add (f := _), add_assoc, ← this]
         rfl
       rw [e]
       convert GlobalTheory.T.hasDerivAt_sobolevThetaForm_heisenberg_along_real_line D ψ hψ θ hθ S T ℓ hℓ f hf M hM hMf (u + L t) using 1

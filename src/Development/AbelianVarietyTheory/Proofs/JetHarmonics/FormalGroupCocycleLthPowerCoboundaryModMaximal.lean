@@ -189,13 +189,13 @@ theorem jet_subst {ρ κ β τ : Type} [Finite ρ] [Finite κ] [Finite β] [Fini
     refine (WithPiTopology.continuous_coeff C (Finsupp.single () n)).comp ((continuous_subst Hγ).comp ?_)
     exact continuous_pi fun ν => WithPiTopology.continuous_coeff C _
   · intro f g
-    simp only [subst_add Hs, map_add]
+    simp only [subst_add Hs, map_add (f := _)]
   · intro f g
     have : slice j0 j1 γ n (f + g) = slice j0 j1 γ n f + slice j0 j1 γ n g := by
       ext μ
-      rw [map_add, coeff_slice, coeff_slice, coeff_slice, ← map_add, ← subst_add Hγ]
+      rw [map_add (f := _), coeff_slice, coeff_slice, coeff_slice, ← map_add (f := _), ← subst_add Hγ]
       rfl
-    simp only [this, subst_add Ha, map_add]
+    simp only [this, subst_add Ha, map_add (f := _)]
   · intro e c
     obtain ⟨⟨ν0, μ0⟩, rfl⟩ := (split_bij hj).2 e
     have hsl : slice j0 j1 γ n (monomial (ν0.mapDomain j0 + μ0.mapDomain j1) c) =
@@ -349,7 +349,7 @@ theorem exists_series [CharZero C] (H : RLaw X V) {γ : κ → PowerSeries C} (h
   have hadd := formalAdd_constantCoeff H (gp_cc (C := C) (κ := κ) (1 : Fin 3)) (gp_cc 2)
   have hΦ : constantCoeff (hAt X (gp C κ (0 : Fin 3)) (gp C κ 1) + hAt X (gp C κ 0) (gp C κ 2) -
       hAt X (gp C κ 0) (addP X (gp C κ 1) (gp C κ 2))) = 0 := by
-    rw [map_sub, map_add, hAt_cc H (gp_cc 0) (gp_cc 1), hAt_cc H (gp_cc 0) (gp_cc 2), hAt_cc H (gp_cc 0) hadd]
+    rw [map_sub, map_add (f := _), hAt_cc H (gp_cc 0) (gp_cc 1), hAt_cc H (gp_cc 0) (gp_cc 2), hAt_cc H (gp_cc 0) hadd]
     simp
   have h := logInt_subst hb (fun p => hI p.1 p.2) (mem_logInt.2 ⟨hΦ, H.ph2⟩)
   refine ⟨_, h.1, h.2, fun n => ?_, ?_⟩

@@ -20,7 +20,7 @@ theorem u2ringPfE_mem_max (p : ℕ) [hp : Fact p.Prime] (hpm : (p : O) ∈ IsLoc
     (CharP.charP_iff_prime_eq_zero hp.out).mpr (by
       rw [← map_natCast (IsLocalRing.residue O), IsLocalRing.residue_eq_zero_iff]; exact hpm)
   have h := congrArg (IsLocalRing.residue O) hroot
-  rw [map_pow, map_add, map_one, add_pow_char, one_pow] at h
+  rw [map_pow, map_add (f := _), map_one, add_pow_char, one_pow] at h
   have h2 : (IsLocalRing.residue O x) ^ p = 0 := by linear_combination h
   have h3 := (pow_eq_zero_iff hp.out.ne_zero).mp h2
   rwa [IsLocalRing.residue_eq_zero_iff] at h3

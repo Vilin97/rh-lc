@@ -21,7 +21,7 @@ theorem hkF_mem_V0 : ∀ (D : D7), CommG D → ∀ i, D.ntw.NonzeroIndexPlace i 
     | of g =>
       rw [MonoidAlgebra.lift_of]
       exact LinearMap.ext fun z => hc g z
-    | add a a' ha ha' => rw [map_add]; exact ha.add_left ha'
+    | add a a' ha ha' => rw [map_add (f := _)]; exact ha.add_left ha'
     | smul c a ha => rw [map_smul]; exact ha.smul_left c
   obtain ⟨y, hy, rfl⟩ := Submodule.mem_map.mp hx
   refine Submodule.mem_map.mpr ⟨D.nexp.hkF i j b k P y, ?_, ?_⟩

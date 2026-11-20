@@ -79,7 +79,7 @@ theorem period_bas {g : ℕ} {L : Type} [AddCommGroup L] (bas : (Fin g ⊕ Fin g
   rw [hs fun i => v (Sum.inl i), hs fun i => v (Sum.inr i)]
   conv_lhs => rw [hv]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_zsmul, map_add, Matrix.mulVec_add, Matrix.mulVec_sum, Matrix.mulVec_smul,
+    simp only [map_sum, map_zsmul, map_add (f := _), Matrix.mulVec_add, Matrix.mulVec_sum, Matrix.mulVec_smul,
     Fintype.sum_sum_type, (hn _).1, (hn _).2]
 
 open MonoidalCategory CartesianMonoidalCategory MonObj in

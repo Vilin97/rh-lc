@@ -26,7 +26,7 @@ private theorem eval_eq_zero_of_mem (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (
     obtain ⟨x, hx⟩ := Submodule.Quotient.mk_surjective _ (AdicCompletion.eval (idl l) (X.Kl l) n z)
     rw [← hx, ← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero]
     exact Submodule.smul_mem_smul hr Submodule.mem_top
-  · rw [map_add, hx, hy, add_zero]
+  · rw [map_add (f := _), hx, hy, add_zero]
 
 private theorem lnFn_le_evF (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n : ℕ) : lnFn X l n ≤ evF X l n := by
   intro b hb

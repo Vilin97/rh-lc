@@ -64,7 +64,7 @@ theorem continuous_sch {G : Type} [Group G] [TopologicalSpace G] {pr : G →* Ma
       simp only [ContinuousLinearMap.zero_apply]
       exact continuous_const
     · intro A B hA hB f
-      simp only [ContinuousLinearMap.add_apply, map_add]
+      simp only [ContinuousLinearMap.add_apply, map_add (f := _)]
       exact (hA f).add (hB f)
     · intro c A hA f
       simp only [ContinuousLinearMap.smul_apply, map_smul]

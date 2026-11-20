@@ -46,7 +46,7 @@ theorem exists_irr {Γ : Type} [Group Γ] [Fintype Γ] {W : Type} [AddCommGroup 
       · rintro ⟨I, hI⟩ x hx
         exact hno I hI x hx
       · intro x y hx hy
-        rw [map_add, hx, hy, add_zero]
+        rw [map_add (f := _), hx, hy, add_zero]
     exact hT (hz 1 (by rw [htop]; trivial))
   obtain ⟨I, hI, n, hn, hTn⟩ := hex
   have hstab : ∀ g : Γ, ∀ a ∈ I.restrictScalars ℂ,

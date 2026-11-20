@@ -196,7 +196,7 @@ theorem exists_maps (j0 : Fin (N + 1)) (v : Fin (N + 1) → Ω) (x : Fin N → �
     intro q
     induction q using MvPolynomial.induction_on with
     | C c => rw [aeval_C, aeval_C, MvPolynomial.algebraMap_apply, hC, hc]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X q n hq => simp only [map_mul, aeval_X, hq, hp]
   have hunit : ∀ y : nonZeroDivisors (MvPolynomial (SVar D N) Ω), IsUnit (β₀ y) := by
     intro y

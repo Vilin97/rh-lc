@@ -116,7 +116,7 @@ theorem psi_add {f : ℕ} (a b : crystallineComparison.V f) : crystallineCompari
   rw [← Complex.exp_add, ← mul_add, ← Finset.sum_add_distrib]
   congr 2
   refine Finset.sum_congr rfl (fun v _ => ?_)
-  simp only [Pi.add_apply, map_add]
+  simp only [Pi.add_apply, map_add (f := _)]
   ring
 
 theorem psi_zero {f : ℕ} : crystallineComparison.psi (0 : crystallineComparison.V f) = 1 := by simp [crystallineComparison.psi]

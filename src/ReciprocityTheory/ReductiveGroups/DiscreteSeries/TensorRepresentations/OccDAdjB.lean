@@ -105,7 +105,7 @@ theorem adjB_E (dual : Bool) (hU : IsInfUnitary ε E) {M : Submodule ℂ D} (hME
       funext d
       simp only [tensF, cond_false, tensV_coord, Pi.add_apply, Pi.single_apply]
       split_ifs <;> simp_all
-    rw [hT, map_add, inner_add_right, adjR_inv h c (hME b a y hy), adjR_inv h b (hsc a)]
+    rw [hT, map_add (f := _), inner_add_right, adjR_inv h c (hME b a y hy), adjR_inv h b (hsc a)]
     simp only [tensF, cond_false, tensV_coord, inner_add_left, hU a b (u c) y, adjSign_eq_adjSg]
     by_cases hca : c = a
     · subst hca

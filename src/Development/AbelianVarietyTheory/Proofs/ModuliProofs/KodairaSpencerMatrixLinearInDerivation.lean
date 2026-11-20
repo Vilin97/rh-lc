@@ -33,7 +33,7 @@ theorem ksRel_add {D D' : R → ℂ} {Θ Θ' : Matrix (Fin g) (Fin g) ℂ}
   base z r := by simp only [h.base, h'.base]
   hol W f := (h.hol W f).add (h'.hol W f)
   per l W f z hz := by
-    simp only [h.per l W f z hz, h'.per l W f z hz, Matrix.add_mulVec, map_add]
+    simp only [h.per l W f z hz, h'.per l W f z hz, Matrix.add_mulVec, map_add (f := _)]
     ring
 
 theorem ksRel_smul (c : ℂ) {D : R → ℂ} {Θ : Matrix (Fin g) (Fin g) ℂ}

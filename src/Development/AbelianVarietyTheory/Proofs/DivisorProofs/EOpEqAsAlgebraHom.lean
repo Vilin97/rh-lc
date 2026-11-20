@@ -40,7 +40,7 @@ theorem eOp_eq_asAlgebraHom (e : MonoidAlgebra LL G) :
   induction e using MonoidAlgebra.induction_linear with
   | zero => ext x; simp [eOp_eq_sum]
   | add a b ha hb =>
-    rw [map_add, ← ha, ← hb]; ext x
+    rw [map_add (f := _), ← ha, ← hb]; ext x
     simp [eOp_eq_sum, add_smul, Finset.sum_add_distrib]
   | single g a =>
     classical
@@ -118,8 +118,8 @@ theorem mem_span_good_iff (σ : LL →+* ℂ) {M : Type} [AddCommGroup M] [Modul
     | zero => simp
     | add x y _ _ hx hy =>
       refine ⟨fun p => ?_, ?_⟩
-      · rw [map_add, map_add, hx.1, hy.1, smul_add]
-      · simp only [map_add, smul_add, Finset.sum_add_distrib, hx.2, hy.2]
+      · rw [map_add (f := _), map_add (f := _), hx.1, hy.1, smul_add]
+      · simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, hx.2, hy.2]
     | smul r x _ hx =>
       refine ⟨fun p => ?_, ?_⟩
       · rw [map_smul, map_smul, hx.1, smul_comm]
@@ -148,7 +148,7 @@ theorem mem_span_good_iff (σ : LL →+* ℂ) {M : Type} [AddCommGroup M] [Modul
       | add x y _ _ hx hy =>
         obtain ⟨x', hx', ex⟩ := hx
         obtain ⟨y', hy', ey⟩ := hy
-        exact ⟨x' + y', Submodule.add_mem _ hx' hy', by simp only [map_add, ex, ey]⟩
+        exact ⟨x' + y', Submodule.add_mem _ hx' hy', by simp only [map_add (f := _), ex, ey]⟩
       | smul r x _ hx =>
         obtain ⟨x', hx', ex⟩ := hx
         exact ⟨r • x', Submodule.smul_mem _ r hx', by simp only [map_smul, ex]⟩

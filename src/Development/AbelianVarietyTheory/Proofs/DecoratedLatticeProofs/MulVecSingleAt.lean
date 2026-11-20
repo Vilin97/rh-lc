@@ -104,7 +104,7 @@ theorem eq_of_psiE (hψ : ∃ s, psiE ψ s ≠ 1) {x y : AE D} (hx : x ∈ (incA
   have ht0 : t ≠ 0 := fun e => hne (by rw [← sub_eq_zero, ← ht, e, map_zero])
   obtain ⟨s, hs⟩ := hψ
   have hadd : ∀ a b, psiE ψ (a + b) = psiE ψ a * psiE ψ b := fun a b => by
-    unfold psiE; rw [map_add, AddChar.map_add_eq_mul]
+    unfold psiE; rw [map_add (f := _), AddChar.map_add_eq_mul]
   have h0 : psiE ψ (0 : AE D) = 1 := by unfold psiE; rw [map_zero, AddChar.map_zero_eq_one]
   apply hs
   have e1 : s * incA D t⁻¹ * x = s + s * incA D t⁻¹ * y := by

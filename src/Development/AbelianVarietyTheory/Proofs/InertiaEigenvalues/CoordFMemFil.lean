@@ -53,11 +53,11 @@ theorem coordF_sm (r : ↥LL.1 ⊗[ℚ_[l]] P.R.BdR) (x : (Fin m → ↥LL.1) �
     coordF P LL m (GlobalTheory.DRFil.sm ℚ_[l] P.R.BdR ↥LL.1 (Fin m → ↥LL.1) r x) = mulF P LL r • coordF P LL m x := by
   induction r using TensorProduct.induction_on with
   | zero => simp
-  | add r s hr hs => simp only [map_add, LinearMap.add_apply, hr, hs, add_smul]
+  | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, hr, hs, add_smul]
   | tmul c b =>
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
     | tmul v b' =>
       funext j
       simp only [GlobalTheory.DRFil.sm_tmul, coordF_tmul, mulF_tmul, Pi.smul_apply, Pi.smul_apply, smul_eq_mul, map_mul]
@@ -72,7 +72,7 @@ theorem coordF_mem_fil (K : FinExt l) {n : ℤ} {x : (Fin m → ↥LL.1) ⊗[ℚ
   obtain ⟨z, rfl⟩ := hx
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, Pi.add_apply]; exact add_mem ha hb
+  | add a b ha hb => simp only [map_add (f := _), Pi.add_apply]; exact add_mem ha hb
   | tmul v b =>
     have := (P.PD K).Fil_mul 0 n _ _ (embF_mem_fil P LL K (v j)) b.2
     rw [zero_add] at this
@@ -83,7 +83,7 @@ theorem mulF_mem_fil (K : FinExt l) {n : ℤ} {r : ↥LL.1 ⊗[ℚ_[l]] P.R.BdR}
   obtain ⟨z, rfl⟩ := hr
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add]; exact add_mem ha hb
+  | add a b ha hb => simp only [map_add (f := _)]; exact add_mem ha hb
   | tmul v b =>
     have := (P.PD K).Fil_mul 0 n _ _ (embF_mem_fil P LL K v) b.2
     rw [zero_add] at this
@@ -117,7 +117,7 @@ theorem coordF_act (K : FinExt l) (r : ↥(GK K) →* Matrix.GeneralLinearGroup 
     simp only [map_zero, Pi.zero_apply]
     exact (Matrix.mulVec_zero _).symm
   | add a b ha hb =>
-    rw [map_add, map_add, ha, hb, ← Matrix.mulVec_add]
+    rw [map_add (f := _), map_add (f := _), ha, hb, ← Matrix.mulVec_add]
     congr 1
   | tmul v b =>
     have hfix : ∀ c : ↥LL.1, P.actQdR (g : GQ l) (embF P LL c) = embF P LL c := fun c => by

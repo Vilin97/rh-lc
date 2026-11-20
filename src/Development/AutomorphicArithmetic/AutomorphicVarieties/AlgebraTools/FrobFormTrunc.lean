@@ -34,7 +34,7 @@ theorem UpperTheory.V.AlgebraTools.frob_form_trunc :
         intro x y
         obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
         obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective y
-        rw [← map_add, hL, hL, hL, map_add, map_add] }
+        rw [← map_add (f := _), hL, hL, hL, map_add (f := _), map_add (f := _)] }
   refine ⟨lam, hL, ?_, ?_⟩
   · intro x hx
     obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective x

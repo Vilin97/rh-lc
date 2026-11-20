@@ -123,7 +123,7 @@ theorem lead_of_coords {b : Module.Basis T ℤ (dualLattice F)} {b' : Module.Bas
       rw [RingHom.comp_apply, DualStackedExcLeadExample.stackedFormEval_first, blockEval_first]
       refine (arc_form p y₀ g _).trans ?_
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [A, ι, map_add, map_mul, map_C, map_X, map_sum, one_mul]
+        simp only [A, ι, map_add (f := _), map_mul, map_C, map_X, map_sum, one_mul]
       rw [hcα, dotProduct_smul, smul_eq_mul, C_mul, mul_add, Finset.mul_sum, mul_assoc]
       congr 1
       refine Finset.sum_congr rfl fun l _ => ?_
@@ -133,7 +133,7 @@ theorem lead_of_coords {b : Module.Basis T ℤ (dualLattice F)} {b' : Module.Bas
       rw [RingHom.comp_apply, DualStackedExcLeadExample.stackedFormEval_second, blockEval_second]
       refine (arc_form p y₀ g _).trans ?_
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [L, ι, map_add, map_mul, map_C, map_X, map_sum, hc0, hc1]
+        simp only [L, ι, map_add (f := _), map_mul, map_C, map_X, map_sum, hc0, hc1]
   have hι2 : blockEval (fun t => ι (A t)) (fun t => ι (L t)) = ι.comp (blockEval A L) := by
     apply ringHom_block_ext
     · intro t
@@ -160,13 +160,13 @@ theorem lead_of_coords {b : Module.Basis T ℤ (dualLattice F)} {b' : Module.Bas
     · intro t
       rw [RingHom.comp_apply, blockEval_first, blockEval_first]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [A, ψ, map_add, map_mul, eval₂Hom_C, eval₂Hom_X', map_sum, RingHom.comp_apply, hcαρ,
+        simp only [A, ψ, map_add (f := _), map_mul, eval₂Hom_C, eval₂Hom_X', map_sum, RingHom.comp_apply, hcαρ,
         hπ, map_zero, zero_mul, Finset.sum_const_zero, add_zero]
       ring
     · intro t
       rw [RingHom.comp_apply, blockEval_second, blockEval_second]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [L, ψ, ℓ, map_add, map_mul, eval₂Hom_C, eval₂Hom_X', map_sum, RingHom.comp_apply, hc0ρ,
+        simp only [L, ψ, ℓ, map_add (f := _), map_mul, eval₂Hom_C, eval₂Hom_X', map_sum, RingHom.comp_apply, hc0ρ,
         hc1ρ, one_mul, Fin.sum_univ_succ]
   have hlin : (linPointMap α M : MRing (stackedBlocks T) →+* _) =
       blockEval (fun t => X none * C (α t)) (fun t => 1 * ℓ t) := by

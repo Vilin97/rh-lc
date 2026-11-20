@@ -54,7 +54,7 @@ theorem exists_gen_quot {H H' L L' : Type*} [AddCommGroup H] [Module R H] [AddCo
   let nn : H →ₛₗ[algebraMap R B] H' :=
     { toFun x := bc x + ∑ i, t i • bc (N i x)
       map_add' x y := by
-        simp only [map_add, smul_add, Finset.sum_add_distrib]; abel
+        simp only [map_add (f := _), smul_add, Finset.sum_add_distrib]; abel
       map_smul' r x := by
         simp only [map_smul, LinearMap.map_smulₛₗ, smul_add, Finset.smul_sum, smul_smul, mul_comm] }
   have nn_def : ∀ x, nn x = bc x + ∑ i, t i • bc (N i x) := fun _ ↦ rfl

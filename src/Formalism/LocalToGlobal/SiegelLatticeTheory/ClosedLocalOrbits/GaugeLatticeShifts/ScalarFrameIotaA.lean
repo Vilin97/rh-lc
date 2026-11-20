@@ -23,7 +23,7 @@ theorem hT_span_zero (e : Fin r → S.V) (v : S.V) (h : ∀ b, S.hT (e b) v = 0)
     obtain ⟨b, rfl⟩ := hx
     exact h b
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply, hx, hy, add_zero]
   | smul c x _ hx => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hx, smul_zero]
 
 theorem proj_exists (Λ : Submodule (𝓞 E) S.V) (hL : Submodule.IsFullLattice E Λ)
@@ -38,8 +38,8 @@ theorem proj_exists (Λ : Submodule (𝓞 E) S.V) (hL : Submodule.IsFullLattice 
       map_add' := fun y y' => by
         have e : (⟨((ρ (y + y') : Λ) : S.V), hmem (y + y')⟩ : Submodule.span E (Set.range F'.fl.e)) =
             ⟨((ρ y : Λ) : S.V), hmem y⟩ + ⟨((ρ y' : Λ) : S.V), hmem y'⟩ :=
-          Subtype.ext (by simp only [map_add, Submodule.coe_add])
-        rw [e, map_add, Finsupp.add_apply]
+          Subtype.ext (by simp only [map_add (f := _), Submodule.coe_add])
+        rw [e, map_add (f := _), Finsupp.add_apply]
       map_smul' := fun c y => by
         have e : (⟨((ρ (c • y) : Λ) : S.V), hmem (c • y)⟩ : Submodule.span E (Set.range F'.fl.e)) =
             (algebraMap (𝓞 E) E c) • ⟨((ρ y : Λ) : S.V), hmem y⟩ :=

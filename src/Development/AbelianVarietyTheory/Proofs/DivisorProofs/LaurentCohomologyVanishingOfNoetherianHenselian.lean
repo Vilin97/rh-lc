@@ -31,7 +31,7 @@ theorem lmap_apply {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (p : L
     (lmap f p).coeff n = f (p.coeff n) := by
   induction p using LaurentPolynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, AddMonoidAlgebra.coeff_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, Finsupp.add_apply, hp, hq,
+    rw [map_add (f := _), AddMonoidAlgebra.coeff_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, Finsupp.add_apply, hp, hq,
       map_add]
   | C_mul_T k a =>
     rw [laurentMap_C_mul_T, ← LaurentPolynomial.single_eq_C_mul_T, ← LaurentPolynomial.single_eq_C_mul_T,
@@ -94,7 +94,7 @@ theorem exists_preimage (u : A) (x : LaurentPolynomial A) : ∃ s y, lmap (sub u
     obtain ⟨t, z, rfl⟩ := hq
     refine ⟨s ∪ t, lmap (Subalgebra.inclusion (sub_mono u Finset.subset_union_left)).toRingHom y +
       lmap (Subalgebra.inclusion (sub_mono u Finset.subset_union_right)).toRingHom z, ?_⟩
-    rw [map_add, ← RingHom.comp_apply, ← RingHom.comp_apply, ← lmap_comp, ← lmap_comp]
+    rw [map_add (f := _), ← RingHom.comp_apply, ← RingHom.comp_apply, ← lmap_comp, ← lmap_comp]
     rfl
   | C_mul_T k a =>
     refine ⟨{a}, LaurentPolynomial.C ⟨a, mem_sub u _ (by simp)⟩ * LaurentPolynomial.T k, ?_⟩

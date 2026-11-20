@@ -166,7 +166,7 @@ theorem mm_of_mul_matrix {V : VF C} {κ : Type} [Fintype κ] {D : κ → MvPower
         · exact intS_one _
         · rw [map_zero]; exact VF.Ge.zero 0
       · have h3 : p.2.degree ≠ 0 := by rwa [Ne, Finsupp.degree_eq_zero_iff]
-        rw [← hμ, ← hp', map_add]
+        rw [← hμ, ← hp', map_add (f := _)]
         omega
 
 variable {d : ℕ} {I : Fin 2 → Type} [∀ g, Fintype (I g)] {κ : Type} [Fintype κ]
@@ -284,7 +284,7 @@ theorem intS_defect {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {τ : Type
   have hAc := formalAdd_const h (gp_const (C := C) (κ := κ) (0 : Fin 3)) (gp_const 1)
   have h1 := intS_subst hc hci h.ph1
   rw [GlobalTheory.RowVal.subst_mvExp hc (by
-    rw [map_sub, map_add, hAt_const h (gp_const 0) (gp_const 2), hAt_const h (gp_const 1) (gp_const 2),
+    rw [map_sub, map_add (f := _), hAt_const h (gp_const 0) (gp_const 2), hAt_const h (gp_const 1) (gp_const 2),
       hAt_const h hAc (gp_const 2)]; simp), subst_sub hS, subst_add hS, subst_hAt X (gp_const 0) (gp_const 2) hc,
     subst_hAt X (gp_const 1) (gp_const 2) hc, subst_hAt X hAc (gp_const 2) hc] at h1
   simpa only [s0, s1, s2, sA] using h1
@@ -322,7 +322,7 @@ theorem exists_multiple {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {γ : 
       change IntS V (mvExp (hCv X δ + hCv X γ - hCv X (addP X (τ := Unit) δ γ))) at h3
       have h4 := intS_mul h2 h3
       rw [← GlobalTheory.RowVal.mvExp_add (by rw [map_sub, constantCoeff_smul, hCv_const h hb, hCv_const h ha]; simp)
-        (by rw [map_sub, map_add, hCv_const h hb, hCv_const h ha, hCv_const h hc]; simp)] at h4
+        (by rw [map_sub, map_add (f := _), hCv_const h hb, hCv_const h ha, hCv_const h hc]; simp)] at h4
       convert h4 using 2
       rw [Nat.cast_succ (k + 1), add_smul, one_smul]
       ring
@@ -459,14 +459,14 @@ theorem van_defect {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) :
     rw [← addP_zero h (gp_const (1 : Fin 3)) x]
     refine subst_congr hL (sum_const h (gp_const 1) (gp_const 2))
       (fun y => constantCoeff_subst_zero (gp_const 1) (lg_const h y)) (fun y ν hν => ?_) _
-    rw [map_add, Van.subst Set.univ (gp_const 2) (fun s _ => van_gp_two s) (van_univ (lg_const h y)) ν hν, add_zero]
+    rw [map_add (f := _), Van.subst Set.univ (gp_const 2) (fun s _ => van_gp_two s) (van_univ (lg_const h y)) ν hν, add_zero]
   intro ν hν
   have h3 := subst_congr hL (pair_const (gp_const (0 : Fin 3)) (formalAdd_const h (gp_const 1) (gp_const 2)))
     (pair_const (gp_const (0 : Fin 3)) (gp_const 1)) (fun p ν hν => by
       split_ifs
       · rfl
       · exact h2 _ ν hν) X.h ν hν
-  rw [map_sub, map_add, h1 ν hν, add_zero, sub_eq_zero]
+  rw [map_sub, map_add (f := _), h1 ν hν, add_zero, sub_eq_zero]
   exact h3.symm
 
 def invM (X : RawChart C d I κ) (j i : κ) : MvPowerSeries κ C :=
@@ -495,7 +495,7 @@ theorem const_invM {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) (j i : κ) 
   have e := congrArg (fun F => constantCoeff (pderiv C ((1 : Fin 2), i) F))
     (lg_addP h (gp_const (C := C) (κ := κ) (0 : Fin 2)) (gp_const 1) j)
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, pderiv_subst_eq_zero (gp_const 0) (fun x => pderiv_X_of_ne (by simp)), zero_add,
+    rw [map_add (f := _), pderiv_subst_eq_zero (gp_const 0) (fun x => pderiv_X_of_ne (by simp)), zero_add,
     FormalCalc.pderiv_subst (hasSubst_of_constantCoeff_zero hA),
     FormalCalc.pderiv_subst (hasSubst_of_constantCoeff_zero (gp_const 1)), map_sum, map_sum] at e
   simp only [map_mul, GlobalTheory.RowVal.cc_subst hA, GlobalTheory.RowVal.cc_subst (gp_const (C := C) (κ := κ) (1 : Fin 2)),
@@ -603,7 +603,7 @@ theorem intS_invDeriv {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {γ : κ
     funext p
     split_ifs
     exacts [s0 _, sA _]
-  rw [h2, map_sub, map_add, t1, zero_add, subst_sub hS, subst_pderiv_hAt X (gp_const 0) i d0 hc hc2, t3] at h1
+  rw [h2, map_sub, map_add (f := _), t1, zero_add, subst_sub hS, subst_pderiv_hAt X (gp_const 0) i d0 hc hc2, t3] at h1
   rw [inT_alongCv κ hγ0, subst_sg X _ hΓ, neg_neg, Finset.sum_eq_single i]
   · simpa only [s0, Pi.single_eq_same, one_smul] using h1
   · intro x _ hx

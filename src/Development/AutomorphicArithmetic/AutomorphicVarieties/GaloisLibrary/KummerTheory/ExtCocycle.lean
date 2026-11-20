@@ -69,7 +69,7 @@ private theorem ext_of_prod {Γ R M : Type} [Group Γ] [TopologicalSpace Γ] [Is
     change ρ (c * d) (φ (⟨d⁻¹ * u * d, hu0⟩ * ⟨v, hv'⟩)) = ρ c (φ ⟨u, hu⟩) + ρ (c * u) (ρ d (φ ⟨v, hv'⟩))
     have hconj : φ ⟨u, hu⟩ = ρ d (φ ⟨d⁻¹ * u * d, hu0⟩) :=
       heq d ⟨d⁻¹ * u * d, hu0⟩ ⟨u, hu⟩ (by show u * d = d * (d⁻¹ * u * d); group)
-    rw [hadd, map_add, hconj]
+    rw [hadd, map_add (f := _), hconj]
     simp only [map_mul, Module.End.mul_apply]
     rw [htr u hu]
   exact ⟨z, ⟨hzc, hcoc⟩, hzU⟩

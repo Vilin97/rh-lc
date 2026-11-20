@@ -94,4 +94,4 @@ theorem UpperTheory.Kd.L.thcocd :
   clear H hg hB hB' hφ hφ' _hrow key gen hsg hStab hval hzt hP hG1 hAdm hlA hjA hj hOver
   convert this using 2
   · simp [GlobalTheory.KummerEisensteinGalois.seqN]
-  · simp only [map_add, map_mul, map_sub, map_pow, map_natCast, map_ratCast]
+  · simp only [map_add (f := _), map_mul, map_sub, map_pow, map_natCast, map_ratCast]

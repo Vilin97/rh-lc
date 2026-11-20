@@ -23,7 +23,7 @@ variable {A B M : Type} [CommRing A] [CommRing B] [AddCommGroup M] [Module A M] 
 def low (b : Module.Basis (Fin N) A M) (g : GL (Fin N) A) (l : ℕ) : Submodule A M where
   carrier := {v | ∀ i : Fin N, l ≤ i → ((g⁻¹).1 *ᵥ b.repr v) i = 0}
   add_mem' hv hw i hi := by
-    rw [map_add, Finsupp.coe_add, mulVec_add, Pi.add_apply, hv i hi, hw i hi, add_zero]
+    rw [map_add (f := _), Finsupp.coe_add, mulVec_add, Pi.add_apply, hv i hi, hw i hi, add_zero]
   zero_mem' i _ := by simp
   smul_mem' a v hv i hi := by
     rw [map_smul, Finsupp.coe_smul, mulVec_smul, Pi.smul_apply, hv i hi, smul_zero]

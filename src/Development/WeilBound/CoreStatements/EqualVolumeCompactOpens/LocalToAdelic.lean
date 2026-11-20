@@ -27,7 +27,7 @@ theorem mem_hat_iff {E : Type} [Field E] [NumberField E] [IsCMField E] {r : ℕ}
       show b v ⊗ₜ x i = b v • ((1 : v.adicCompletion (maximalRealSubfield E)) ⊗ₜ[maximalRealSubfield E] x i)
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     | zero => simp only [Pi.zero_apply, map_zero]; exact (GlobalTheory.SelfDualGenus.locLattice v Λ).zero_mem
-    | add x y _ _ hx hy => simp only [Pi.add_apply, map_add]; exact (GlobalTheory.SelfDualGenus.locLattice v Λ).add_mem hx hy
+    | add x y _ _ hx hy => simp only [Pi.add_apply, map_add (f := _)]; exact (GlobalTheory.SelfDualGenus.locLattice v Λ).add_mem hx hy
     | neg x _ hx => simp only [Pi.neg_apply, map_neg]; exact (GlobalTheory.SelfDualGenus.locLattice v Λ).neg_mem hx
   · intro h
     obtain ⟨k, z, l, hz, hl, e⟩ := exists_dualBasis (F := maximalRealSubfield E) hΛ
@@ -78,7 +78,7 @@ theorem localToAdelic : LocalToAdelic := by
     intro M hM
     refine ⟨1 + ∑ w ∈ hfin.toFinset, (M w - 1).map (singleV E w), fun v => Matrix.ext fun i j => ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.sum_apply, map_add, map_sum]
+      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.sum_apply, map_add (f := _), map_sum]
     rw [Finset.sum_eq_single v (fun w _ hw => (hv w).2.1 v hw.symm _) (fun h => by
       rw [hM v (by simpa using h)]; simp), (hv v).1, Matrix.one_apply, apply_ite (compAt E v), map_one, map_zero,
       Matrix.sub_apply, Matrix.one_apply]

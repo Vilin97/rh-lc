@@ -70,7 +70,7 @@ theorem cycle_formsKill_bound_splitSeq : ∀ (R : Type) [CommRing R] (s : ℕ), 
     refine Finsupp.supported_mono ?_ hb1
     intro l hl
     exact ⟨hl.1.1, hl.2⟩
-  · rw [map_add, hbd2]
+  · rw [map_add (f := _), hbd2]
     abel
 
 end GlobalTheory.SeqCx

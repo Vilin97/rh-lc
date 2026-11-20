@@ -147,7 +147,7 @@ theorem cth_pow (v : σ) {E m : MvPolynomial σ K} (h1 : cth v 1 E = m) (h2 : �
         have e2 : j - l' = (j - (l' + 1)) + 1 := by omega
         rw [e1, e2]
         push_cast
-        simp only [smul_eq_C_mul, pow_succ, map_add]
+        simp only [smul_eq_C_mul, pow_succ, map_add (f := _)]
         ring
       · have e0 : j.choose (l' + 1) = 0 := Nat.choose_eq_zero_of_lt (by omega)
         have e1 : j + 1 - (l' + 1) = j - l' := by omega

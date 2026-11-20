@@ -41,7 +41,7 @@ theorem volume_fund {g : ℕ} (Λ Λ' : Submodule ℤ (Fin g → ℂ)) [Discrete
   have h1 : IsAddFundamentalDomain Λ' (F.toEquiv '' s) volume :=
     hs.image_of_equiv F.toEquiv hq φ fun b z => by
       change F (F.symm b + z) = b + F z
-      rw [map_add, F.apply_symm_apply]
+      rw [map_add (f := _), F.apply_symm_apply]
   have : Countable Λ' := countable_of_Lindelof_of_discrete
   have : MeasurableConstVAdd Λ' (Fin g → ℂ) := ⟨fun c => measurable_const_add (c : Fin g → ℂ)⟩
   have : VAddInvariantMeasure Λ' (Fin g → ℂ) volume :=

@@ -193,7 +193,7 @@ theorem linDer_locFin (T : Matrix σ σ ℂ) :
     obtain ⟨N₂, f₂, m₂, s₂⟩ := hq
     refine ⟨N₁ ⊔ N₂, Submodule.finiteDimensional_sup _ _, Submodule.add_mem_sup m₁ m₂, fun y hy => ?_⟩
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (s₁ a ha) (s₂ b hb)
   | mul_X p i hp =>
     obtain ⟨N, f, m, s⟩ := hp
@@ -208,7 +208,7 @@ theorem linDer_locFin (T : Matrix σ σ ℂ) :
       rw [mul_comm b]
       exact Submodule.add_mem _ (Submodule.mul_mem_mul ha (hst0 b hb)) (Submodule.mul_mem_mul (s a ha) hb)
     | add a _ b _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ ha hb
 
 def evL (z : σ → ℂ) : MvPolynomial σ ℂ →ₗ[ℂ] ℂ where
@@ -238,7 +238,7 @@ theorem linDer_eval_series (T G : Matrix σ σ ℂ)
       obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hn
       simp [pow_succ, Module.End.mul_apply, h0]
   | add p q hp hq =>
-    simpa [mul_add, map_add] using hp.add hq
+    simpa [mul_add, map_add (f := _)] using hp.add hq
   | mul_X p i hp =>
     refine eval_series_mul _ _ z hp ?_
     have hv : eval z (linSub G (X i)) = ∑ l, G l i * z l := by

@@ -132,7 +132,7 @@ theorem linW_change (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew �
   have p0 : ∀ Y : Matrix (Fin n) (Fin d) (Fv F v), pairM Y 0 = 0 := fun Y => by simp [pairM]
   have p0' : ∀ Y : Matrix (Fin n) (Fin d) (Fv F v), pairM 0 Y = 0 := fun Y => by simp [pairM]
   refine GlobalTheory.T.eq_smul_of_commute_heisenberg_linearModel_schwartzBruhat (SB (Fin n × Fin d → Fv F v)) (GlobalTheory.LatVac.psiAt B.ψ v) hψc hψ1 ι₂
-    (fun φ Y => ι φ (g.val * Y * k.valᵀ)) (Model.IsLin.bij hι₂) (fun x _ y _ a => by rw [map_add, map_smul]; rfl)
+    (fun φ Y => ι φ (g.val * Y * k.valᵀ)) (Model.IsLin.bij hι₂) (fun x _ y _ a => by rw [map_add (f := _), map_smul]; rfl)
     (fun C φ => schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo M.co v (zX C)) φ)
     (fun l φ => schr (GlobalTheory.LatVac.psiAt B.ψ v)
       (GlobalTheory.LatVac.locCo M.co v (zY (Matrix.of fun i j => l (Matrix.single i j 1)))) φ)
@@ -173,7 +173,7 @@ theorem linBar_change (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew
     rwa [mul_inv_cancel_right, mul_inv_cancel_right] at this
   refine GlobalTheory.T.eq_smul_of_commute_heisenberg_linearModel_schwartzBruhat (SB (Fin n × Fin d → Fv F v)) (GlobalTheory.LatVac.psiAt B.ψ v) hψc hψ1 ι₂
     (fun φ Y => ι φ ((GlobalTheory.SplitFlip.invT g).val * Y * (k⁻¹).val)) (Model.IsLin.bij hι₂)
-    (fun x _ y _ a => by rw [map_add, map_smul]; rfl)
+    (fun x _ y _ a => by rw [map_add (f := _), map_smul]; rfl)
     (fun C φ => schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo M.co v (zY C)) φ)
     (fun l φ => schr (GlobalTheory.LatVac.psiAt B.ψ v)
       (GlobalTheory.LatVac.locCo M.co v (zX (-Matrix.of fun i j => l (Matrix.single i j 1)))) φ)

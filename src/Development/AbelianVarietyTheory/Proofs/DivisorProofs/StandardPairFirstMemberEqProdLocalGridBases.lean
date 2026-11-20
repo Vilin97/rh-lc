@@ -61,11 +61,11 @@ theorem int_iff (w : Pl D.host.E) (y : Kw w) :
 
 theorem cpt_twist_mem {e : AE D} {S : Finset (Pl D.host.E)} (he : IsIdemSum e S) (z : EAf D) {w : Pl D.host.E} (hw : w ∈ S) :
     cpt (D := D) w (1 - toEAf D e + toEAf D e * z) = cpt (D := D) w z := by
-  rw [RingHom.map_add, RingHom.map_sub, RingHom.map_mul, RingHom.map_one, (cpt_idemSum he).2.1 w hw, sub_self, zero_add, one_mul]
+  rw [RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_mul, RingHom.map_one, (cpt_idemSum he).2.1 w hw, sub_self, zero_add, one_mul]
 
 theorem cpt_twist_notMem {e : AE D} {S : Finset (Pl D.host.E)} (he : IsIdemSum e S) (z : EAf D) {w : Pl D.host.E} (hw : w ∉ S) :
     cpt (D := D) w (1 - toEAf D e + toEAf D e * z) = 1 := by
-  rw [RingHom.map_add, RingHom.map_sub, RingHom.map_mul, RingHom.map_one, (cpt_idemSum he).2.2 w hw, sub_zero, zero_mul, add_zero]
+  rw [RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_mul, RingHom.map_one, (cpt_idemSum he).2.2 w hw, sub_zero, zero_mul, add_zero]
 
 theorem cpt_mul_inv (w : Pl D.host.E) (x : (AE D)ˣ) :
     cpt (D := D) w (toEAf D (x : AE D)) * cpt (D := D) w (toEAf D ((x⁻¹ : (AE D)ˣ) : AE D)) = 1 := by

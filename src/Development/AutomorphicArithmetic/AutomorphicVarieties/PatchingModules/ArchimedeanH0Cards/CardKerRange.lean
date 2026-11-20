@@ -112,7 +112,7 @@ private theorem ker_cMap (z : D.H2LocalConditions) (hz : z ∈ LinearMap.ker (cM
       rw [hdx]
       exact (p.2.2 w).2 g h
     rw [d1_apply, d1_apply, ← (P.φ w).map_mul g h] at e'
-    simp only [map_sub, map_add, D.equiv] at e'
+    simp only [map_sub, map_add (f := _), D.equiv] at e'
     simp only [Pi.sub_apply, map_sub]
     rw [← sub_eq_zero] at e' ⊢
     rw [← e']

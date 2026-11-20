@@ -13,7 +13,7 @@ open CechPic
 
 theorem lam_add_class {S : Scheme.{0}} {G T : Over S} [GrpObj G] (a b : Pic G.left) (x y : T ⟶ G) :
     lam (a + b) x y = lam a x y + lam b x y := by
-  simp only [lam, map_add]; abel
+  simp only [lam, map_add (f := _)]; abel
 
 theorem pull_inv_pull {S : Scheme.{0}} {G Q : Over S} [GrpObj G] [GrpObj Q] (π : G ⟶ Q) [IsMonHom π]
     (c : Pic Q.left) :
@@ -32,7 +32,7 @@ theorem hasTheta_of_isProd {S : Scheme.{0}} {P P₁ P₂ : PPAS S} (h : P.IsProd
       ((PolCompare.sym_iff (A := P₁.A) P₁.isAb hL₁).1 s₁)
     have k₂ := (PolCompare.isSymmetric_iff_cls (A := P₂.A) hL₂).1
       ((PolCompare.sym_iff (A := P₂.A) P₂.isAb hL₂).1 s₂)
-    rw [hcls, map_add, pull_inv_pull π₁, pull_inv_pull π₂, sub_eq_zero.1 k₁, sub_eq_zero.1 k₂, sub_self]
+    rw [hcls, map_add (f := _), pull_inv_pull π₁, pull_inv_pull π₂, sub_eq_zero.1 k₁, sub_eq_zero.1 k₂, sub_self]
   · rw [hc, e₁, e₂, hcls, pull_lam, pull_lam, tensorHom_fst, tensorHom_snd, tensorHom_fst, tensorHom_snd,
       ← lam_pull, ← lam_pull, lam_add_class]
 

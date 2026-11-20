@@ -16,7 +16,7 @@ private theorem dvd_sub_sb {R : Type} [CommRing R] {n : ℕ} (i j : Fin n) (y : 
   | C a => simp
   | add p q hp hq =>
     have := dvd_add hp hq
-    rw [map_add]
+    rw [map_add (f := _)]
     convert this using 1
     ring
   | mul_X p k hp =>

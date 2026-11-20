@@ -73,7 +73,7 @@ theorem hdim_congr {Δ Δ' : Y.Dv} (e : toPic Δ = toPic Δ') (i : ℕ) : Y.hdim
 
 theorem hdim_add_principal (i : ℕ) (Δ : Y.Dv) (g : Y.Fnˣ) :
     Y.hdim i (Δ + principal g) = Y.hdim i Δ :=
-  hdim_congr (by rw [map_add, toPic_principal, add_zero]) i
+  hdim_congr (by rw [map_add (f := _), toPic_principal, add_zero]) i
 
 theorem chi_eq_chiPic (Δ : Y.Dv) : Y.chi Δ = chiPic F (structureModule Y.X) (toPic Δ) := rfl
 
@@ -439,7 +439,7 @@ theorem ample.eventually_hdim_eq_zero (h : Y.ample A) (Δ : Y.Dv) :
   (IsAmpleLB.eventually_subsingleton_coh_twist Y.algebraMap_Γ (Y.sheaf Δ) h).mono fun n hn i hi => by
     obtain ⟨e⟩ := nonempty_twist_twist_iso_of_cls_eq (structureModule Y.X) (isLB_toLB Δ)
       (isLB_lbPow (isLB_toLB A) n) (isLB_toLB (Δ + n • A))
-      (by rw [cls_lbPow (isLB_toLB A), ← toPic_apply, ← toPic_apply, ← toPic_apply, map_add,
+      (by rw [cls_lbPow (isLB_toLB A), ← toPic_apply, ← toPic_apply, ← toPic_apply, map_add (f := _),
         map_nsmul])
     exact (Y.hdim_eq_zero_iff i _).2 ((cohOn.mapIso F ⊤ i e).toEquiv.subsingleton_congr.1 (hn i hi))
 

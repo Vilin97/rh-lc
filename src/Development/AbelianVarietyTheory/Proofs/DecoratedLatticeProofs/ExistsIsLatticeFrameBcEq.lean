@@ -33,7 +33,7 @@ theorem bc_idemGlue_of_zero {R S : Type} [CommRing R] [CommRing S] {m : Type} [F
   apply Units.ext
   ext i j
   show φ ((1 - e) * (x : Matrix m m R) i j + e * (y : Matrix m m R) i j) = φ ((x : Matrix m m R) i j)
-  rw [map_add, map_mul, map_mul, map_sub, map_one, h, sub_zero, one_mul, zero_mul, add_zero]
+  rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, h, sub_zero, one_mul, zero_mul, add_zero]
 
 theorem bc_idemGlue_of_one {R S : Type} [CommRing R] [CommRing S] {m : Type} [Fintype m] [DecidableEq m] {e : R}
     (hee : e * e = e) (x y : GL m R) (φ : R →+* S) (h : φ e = 1) :
@@ -41,7 +41,7 @@ theorem bc_idemGlue_of_one {R S : Type} [CommRing R] [CommRing S] {m : Type} [Fi
   apply Units.ext
   ext i j
   show φ ((1 - e) * (x : Matrix m m R) i j + e * (y : Matrix m m R) i j) = φ ((y : Matrix m m R) i j)
-  rw [map_add, map_mul, map_mul, map_sub, map_one, h, sub_self, zero_mul, one_mul, zero_add]
+  rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, h, sub_self, zero_mul, one_mul, zero_add]
 
 theorem isLatticeFrame_idemGlue {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {n : ℕ}
     {L : Submodule (𝓞 E) (Fin n → E)} {e : AF F ⊗[F] E} (hee : e * e = e) {x : GL (Fin n) (AF F ⊗[F] E)}

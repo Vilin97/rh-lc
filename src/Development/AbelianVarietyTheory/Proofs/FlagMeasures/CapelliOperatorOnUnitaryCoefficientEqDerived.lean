@@ -16,7 +16,7 @@ lemma eabV_pair {E E' : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [Normed
     L (EabV ε a b f g) = EabV ε a b (fun x => L (f x)) g := by
   obtain ⟨h1, h2, -, -⟩ := complex_parts_mem_lie_algebra_holds n ε (Matrix.single a b 1)
   unfold EabV EcV
-  rw [map_add, map_smul, (rdVPair_of vector_right_derivative_extends n ε E E' L f _ g hf h1 hg).2,
+  rw [map_add (f := _), map_smul, (rdVPair_of vector_right_derivative_extends n ε E E' L f _ g hf h1 hg).2,
     (rdVPair_of vector_right_derivative_extends n ε E E' L f _ g hf h2 hg).2]
 
 variable {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]

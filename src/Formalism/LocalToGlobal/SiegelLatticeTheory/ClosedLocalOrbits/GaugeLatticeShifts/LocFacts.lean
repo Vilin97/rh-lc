@@ -159,7 +159,7 @@ theorem lf_tr_eq (y : (D.s.atP p).Ep) :
   have ht : Algebra.trace (D.s.atP p).Fp (D.s.atP p).Ep
       (algebraMap (D.s.atP p).Fp (D.s.atP p).Ep b * LocCP.th p) = 0 := by
     rw [← Algebra.smul_def, map_smul, lf_tr_th, smul_zero]
-  rw [map_add, ht, add_zero, Algebra.trace_algebraMap, (D.s.atP p).rank, map_add, map_mul,
+  rw [map_add (f := _), ht, add_zero, Algebra.trace_algebraMap, (D.s.atP p).rank, map_add (f := _), map_mul,
     AlgEquiv.commutes, AlgEquiv.commutes, LocCP.cj_th]
   simp only [nsmul_eq_mul, map_mul, map_natCast]
   push_cast
@@ -310,7 +310,7 @@ theorem lf_mem_inv (hDL : DualLoc) (Z : LocDat D) (y : D.host.E) (hy : y ∈ (dd
     rw [e]
     exact mul_mem (algMap_mem_O D p _ hm) (unitPart_mem₂ p)
   | zero => rw [map_zero, zero_mul]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add, add_mul]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), add_mul]; exact add_mem hx hy
   | smul a x _ hx =>
     rw [Algebra.smul_def, map_mul, mul_assoc]
     exact mul_mem (iE_mem_O D p a) hx
@@ -330,7 +330,7 @@ theorem lf_mem_pow (hDL : DualLoc) (Z : LocDat D) :
         convert this using 1
         ring
       · intro a b ha hb
-        rw [map_add, add_mul]
+        rw [map_add (f := _), add_mul]
         exact add_mem ha hb
 
 end Diff2
@@ -381,7 +381,7 @@ theorem localForm_smul_left₂ (a : (D.s.atP p).Ep) (x y : Vp D p) : LocFacts₂
   simp only [LocFacts₂, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc]
 
 theorem localForm_add_right (x y y' : Vp D p) : LocFacts₂ Z.M p x (y + y') = LocFacts₂ Z.M p x y + LocFacts₂ Z.M p x y' := by
-  simp only [LocFacts₂, Pi.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [LocFacts₂, Pi.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 theorem localForm_smul_right (a : (D.s.atP p).Ep) (x y : Vp D p) :
     LocFacts₂ Z.M p x (a • y) = (Z.M p).L.cj a * LocFacts₂ Z.M p x y := by

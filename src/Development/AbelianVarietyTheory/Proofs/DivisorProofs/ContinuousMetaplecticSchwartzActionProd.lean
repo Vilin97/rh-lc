@@ -50,7 +50,7 @@ theorem continuous_omS_prod (l : Type) [Fintype l] [DecidableEq l] (G : Type) [G
     · simp only [ContinuousLinearMap.zero_apply, map_zero]
       exact continuous_const
     · intro A B hA hB
-      simp only [ContinuousLinearMap.add_apply, map_add]
+      simp only [ContinuousLinearMap.add_apply, map_add (f := _)]
       exact hA.add hB
     · intro c A hA
       simp only [ContinuousLinearMap.smul_apply, map_smul]

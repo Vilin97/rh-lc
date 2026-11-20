@@ -226,7 +226,7 @@ theorem satEig_twist_add_seg : ∀ {E : Type} [Field E] [NumberField E] (w : Hei
       (B.map fun b : ℂˣ => (b : ℂ)).map (((x : ℂ) * (y : ℂ)⁻¹) * ·) := by
     simp [Multiset.map_map, Function.comp_def]
   have key := GaussEsym.conv_identity hs hq2 a t k (B.map fun b : ℂˣ => (b : ℂ)) (by simpa using hB) (x : ℂ) (y : ℂ)
-  simp only [GlobalTheory.LFun.satEig, hc, Multiset.map_add, hseg, htw]
+  simp only [GlobalTheory.LFun.satEig, hc, Multiset.map_add (f := _), hseg, htw]
   exact key
 
 end GlobalTheory.CompanionTheory.Ipf.Aut

@@ -17,7 +17,7 @@ variable {l : ℕ} [Fact l.Prime] {P : LocPrime l} (AI : LocAinf l P)
 theorem io_mem_Lat_of_mem_span {M n : ℕ} {x : Ainf l}
     (hx : x ∈ Ideal.span {((l : ℕ) : Ainf l) ^ n, AI.ξ ^ M}) : io AI x ∈ Lat AI M n := by
   obtain ⟨p, q, rfl⟩ := Ideal.mem_span_pair.1 hx
-  rw [map_add, mul_comm p]
+  rw [map_add (f := _), mul_comm p]
   refine add_mem (io_mem_Lat AI M n p) (FilB_le_Lat AI ?_)
   rw [map_mul, map_pow]
   exact FilB_zero_mul (io_mem AI q) (by simpa using FilB_pow (io_ξ_mem AI) M)

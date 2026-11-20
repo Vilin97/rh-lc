@@ -14,7 +14,7 @@ theorem Hom.d_f_eq_zero (φ : Hom A B) {n : ℕ} {x : A.X n} (hx : A.d n x = 0) 
 
 theorem d_add_eq_zero {n : ℕ} {x y : A.X n} (hx : A.d n x = 0) (hy : A.d n y = 0) :
     A.d n (x + y) = 0 := by
-  rw [map_add, hx, hy, add_zero]
+  rw [map_add (f := _), hx, hy, add_zero]
 
 theorem d_sub_eq_zero {n : ℕ} {x y : A.X n} (hx : A.d n x = 0) (hy : A.d n y = 0) :
     A.d n (x - y) = 0 := by

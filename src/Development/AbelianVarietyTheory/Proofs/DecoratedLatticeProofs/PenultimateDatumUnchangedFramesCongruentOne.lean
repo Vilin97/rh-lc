@@ -21,7 +21,7 @@ variable {E : Type} [Field E]
 
 theorem resX_extE {n : ℕ} (c : ℕ) (κ : (Fin n → E) ≃ₗ[E] (Fin n → E)) (v : Fin (n + c) → E) :
     resX c (extE c κ v) = κ (resX c v) := by
-  rw [extE_apply, map_add, resX_inX]
+  rw [extE_apply, map_add (f := _), resX_inX]
   abel
 
 theorem atNL_inX {n : ℕ} (c : ℕ) (w : Fin n → E) : atNL E (n + c) n (Loc.inX E n c w) = 0 := by
@@ -32,7 +32,7 @@ theorem atNL_inX {n : ℕ} (c : ℕ) (w : Fin n → E) : atNL E (n + c) n (Loc.i
 
 theorem atNL_extE {n : ℕ} (c : ℕ) (κ : (Fin n → E) ≃ₗ[E] (Fin n → E)) (v : Fin (n + c) → E) :
     atNL E (n + c) n (extE c κ v) = atNL E (n + c) n v := by
-  rw [extE_apply, map_add, atNL_inX, add_zero]
+  rw [extE_apply, map_add (f := _), atNL_inX, add_zero]
 
 theorem joinCol_inFr {n' c' n c : ℕ} (f : Sp E n' ≃ₗ[E] Sp E n') (f' : Sp E n ≃ₗ[E] Sp E n) (x : HomE E n' n)
     (y : Sp E n) :
@@ -45,7 +45,7 @@ theorem joinCol_inFr {n' c' n c : ℕ} (f : Sp E n' ≃ₗ[E] Sp E n') (f' : Sp 
   congr 1
   have h1 : LinearMap.funLeft E E (Fin.castAdd c') (extE c' f v) = f (LinearMap.funLeft E E (Fin.castAdd c') v) :=
     resX_extE c' f v
-  rw [h1, atNL_extE, map_add, map_smul]
+  rw [h1, atNL_extE, map_add (f := _), map_smul]
   rfl
 
 end Ext

@@ -29,7 +29,7 @@ theorem bessel_twist (σ : Matrix (Fin (2 * r + k + 1)) (Fin (2 * r + k + 1)) �
     fun v hv => smooth_vectors_translate σ hmul twT_mem_UH hv
   refine ⟨fun v hv w hw => ?_, fun a v hv => ?_, fun h hh m hm v hv => ?_, ?_⟩
   · show B (σ (twT k r) (v + w)) = B (σ (twT k r) v) + B (σ (twT k r) w)
-    rw [map_add]; exact hB.1 _ (hsm v hv) _ (hsm w hw)
+    rw [map_add (f := _)]; exact hB.1 _ (hsm v hv) _ (hsm w hw)
   · show B (σ (twT k r) (a • v)) = a • B (σ (twT k r) v)
     rw [map_smul]; exact hB.2.1 a _ (hsm v hv)
   · show B (σ (twT k r) (σ (h * m) v)) = psi k r z (c * -Complex.I) m • π h (B (σ (twT k r) v))

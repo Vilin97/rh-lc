@@ -23,7 +23,7 @@ theorem exists_prod_dvd_monomial (t : I → D) (k : ℕ) :
     have hle : Finsupp.single i 1 ≤ m := by
       rw [Finsupp.single_le_iff]; omega
     obtain ⟨m', rfl⟩ := exists_add_of_le hle
-    obtain ⟨s, hs⟩ := ih m' (by rw [map_add, Finsupp.degree_single] at hm; omega)
+    obtain ⟨s, hs⟩ := ih m' (by rw [map_add (f := _), Finsupp.degree_single] at hm; omega)
     refine ⟨Fin.cons i s, ?_⟩
     have h1 : ∏ j, t j ^ (Finsupp.single i 1 : I →₀ ℕ) j = t i := by
       rw [Finset.prod_eq_single i] <;> simp +contextual [Finsupp.single_apply, eq_comm]
@@ -84,7 +84,7 @@ theorem taylor_mul_of_prod_eq_zero : ∀ {I : Type} [Fintype I] [DecidableEq I] 
     MvPowerSeries.coeff_mul, sub_eq_zero]
   refine Finset.sum_congr rfl fun p hp => ?_
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-  rw [← hp, map_add] at hm
+  rw [← hp, map_add (f := _)] at hm
   rw [coeff_sum_monomial_finsuppAntidiag _ _ _ (by omega),
     coeff_sum_monomial_finsuppAntidiag _ _ _ (by omega)]
 

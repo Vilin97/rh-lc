@@ -127,13 +127,13 @@ include hex0 hl0
 theorem cc_add {σ : Type} {x y : MvPowerSeries σ K} (hx : MvPowerSeries.constantCoeff x = 0)
     (hy : MvPowerSeries.constantCoeff y = 0) : MvPowerSeries.constantCoeff (g.add x y) = 0 := by
   unfold Dat.add Dat.pt Dat.lg
-  exact cc_psubst _ hex0 (by rw [map_add, cc_psubst _ hl0 hx, cc_psubst _ hl0 hy, add_zero])
+  exact cc_psubst _ hex0 (by rw [map_add (f := _), cc_psubst _ hl0 hx, cc_psubst _ hl0 hy, add_zero])
 
 theorem rho_add {x y : MvPowerSeries (ι ⊕ ι) K} (hx : MvPowerSeries.constantCoeff x = 0)
     (hy : MvPowerSeries.constantCoeff y = 0) :
     rho (ι' := ι') (g.add x y) = g.add (rho x) (rho y) := by
   unfold Dat.add Dat.pt Dat.lg
-  rw [rho_psubst _ (by rw [map_add, cc_psubst _ hl0 hx, cc_psubst _ hl0 hy, add_zero]), map_add,
+  rw [rho_psubst _ (by rw [map_add (f := _), cc_psubst _ hl0 hx, cc_psubst _ hl0 hy, add_zero]), map_add (f := _),
     rho_psubst _ hx, rho_psubst _ hy]
 
 theorem rho_be {x y : MvPowerSeries (ι ⊕ ι) K} (hx : MvPowerSeries.constantCoeff x = 0)

@@ -59,7 +59,7 @@ theorem rs_smul_e_mem (hf : PartnerOK D F0 f) {a : Fin D.R.rS} {x : D.host.E} (h
       obtain ⟨c, rfl⟩ := hz
       exact F0.e_iso c b
     | zero => rw [map_zero, LinearMap.zero_apply]
-    | add y z _ _ hy hz => rw [map_add, LinearMap.add_apply, hy, hz, add_zero]
+    | add y z _ _ hy hz => rw [map_add (f := _), LinearMap.add_apply, hy, hz, add_zero]
     | smul c y _ hy => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hy, smul_zero]
   have hperp : x • F0.e a ∈ perpS (VS D) F0.X := by
     intro y hy
@@ -132,7 +132,7 @@ theorem rs_lift_perp (w : perpS (VS D) F0.X) : rsLift (f := f) w ∈ perpS (VS D
       obtain ⟨a, rfl⟩ := hy
       exact F0.e_iso a b
     | zero => rw [map_zero, LinearMap.zero_apply]
-    | add y z _ _ hy hz => rw [map_add, LinearMap.add_apply, hy, hz, add_zero]
+    | add y z _ _ hy hz => rw [map_add (f := _), LinearMap.add_apply, hy, hz, add_zero]
     | smul c y _ hy => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hy, smul_zero]
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [rsLift, map_sub, map_sum, map_smul, hxe, smul_zero, Finset.sum_const_zero, sub_zero]

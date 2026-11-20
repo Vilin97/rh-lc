@@ -55,7 +55,7 @@ variable {E : Type} [AddCommGroup E] [Module F E] {W : X → Type} [∀ α, AddC
 
 def classSub (S : ∀ α, E →ₗ[F] W α) (N : ℕ) (α : X) : Submodule F E where
   carrier := {v | ∀ β, (¬ ∃ mu, β = α + N • mu) → S β v = 0}
-  add_mem' := fun {v v'} h h' β hβ => by rw [map_add, h β hβ, h' β hβ, add_zero]
+  add_mem' := fun {v v'} h h' β hβ => by rw [map_add (f := _), h β hβ, h' β hβ, add_zero]
   zero_mem' := fun β _ => map_zero _
   smul_mem' := fun c v h β hβ => by rw [map_smul, h β hβ, smul_zero]
 
@@ -120,7 +120,7 @@ theorem classSub_structure [Module.Finite ℤ X] [IsAlgClosed F] [FiniteDimensio
     rw [i.symm_apply_apply]; rfl
   let Wt : (a.range →* Fˣ) → Submodule F E := fun χ =>
     { carrier := {v | ∀ t, lam t v = (χ t : F) • v}
-      add_mem' := fun {v v'} h h' t => by rw [map_add, h t, h' t, smul_add]
+      add_mem' := fun {v v'} h h' t => by rw [map_add (f := _), h t, h' t, smul_add]
       zero_mem' := fun t => by rw [map_zero, smul_zero]
       smul_mem' := fun r v h t => by rw [map_smul, h t, smul_comm] }
   have hWt : ∀ χ v, v ∈ Wt χ ↔ ∀ t, lam t v = (χ t : F) • v := fun _ _ => Iff.rfl

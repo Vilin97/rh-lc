@@ -110,7 +110,7 @@ theorem coeff_of_diag {σ : Type*} (T : Module.End ℂ (MvPolynomial σ ℂ)) (f
       ring
     · simp only [h, if_false, smul_eq_mul, mul_zero]
   | add p₁ p₂ h₁ h₂ =>
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, h₁, h₂, mul_add]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, h₁, h₂, mul_add]
 
 theorem wt_of_isHW {p q : ℕ} {V : Type*} [AddCommGroup V] [Module ℂ V]
     (act : Mat p q →ₗ[ℂ] Module.End ℂ V) (μ : Ix p q → ℚ) (v : V) (h : IsHW act μ v) :

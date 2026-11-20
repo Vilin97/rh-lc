@@ -71,7 +71,7 @@ theorem cocycleTwo_vanishing_of_natural_additive_retract : Van2 F P := by
       z _ _ _ (θ T (hQ T (𝟙 T))) (p S u) (m S S' _ (hQ S' (u ≫ ψ)) ψ)),
     fun S S' S'' u ψ χ hu ↦ ?_⟩
   refine (bij S'' (hQ S'' (u ≫ ψ ≫ χ))).1 ?_
-  rw [map_add, map_sub, e, e, ← mp_comp,
+  rw [map_add (f := _), map_sub, e, e, ← mp_comp,
     ← hθ S' S'' (hQ S' (u ≫ ψ)) (hQ S'' (u ≫ ψ ≫ χ)) χ, mp_comp, e]
   have c1 := hz _ _ _ _ _ (p S u) (m S S' _ (hQ S' (u ≫ ψ)) ψ)
     (m S' S'' _ (hQ S'' (u ≫ ψ ≫ χ)) χ) h0
@@ -82,7 +82,7 @@ theorem cocycleTwo_vanishing_of_natural_additive_retract : Van2 F P := by
   rw [hpm, hmm, hp] at c1
   rw [hθ, hmm] at c2
   rw [hθ] at c3
-  simp only [map_add, map_sub]
+  simp only [map_add (f := _), map_sub]
   linear_combination c3 - c4 - c2 + c1
 
 end Retract

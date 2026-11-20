@@ -67,7 +67,7 @@ theorem chart_zero {R : Type} [CommRing R] {x : MvPolynomial (Fin (N + 1)) K} (h
         (DirectSum.decompose (grK K N) q n : MvPolynomial (Fin (N + 1)) K) := by
       rw [h, DirectSum.decompose_add, DirectSum.add_apply, AddMemClass.coe_add]
     subst h'
-    rw [away_mk_add hx n (hmem p n) (hmem q n), map_add, ihp n _ _ rfl, ihq n _ _ rfl, add_zero]
+    rw [away_mk_add hx n (hmem p n) (hmem q n), map_add (f := _), ihp n _ _ rfl, ihq n _ _ rfl, add_zero]
   induction hp using Submodule.span_induction with
   | mem p hp =>
     obtain ⟨d, hd, h0⟩ := hS p hp

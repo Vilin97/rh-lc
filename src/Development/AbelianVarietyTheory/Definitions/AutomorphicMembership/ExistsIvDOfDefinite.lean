@@ -42,7 +42,7 @@ theorem toFun_pull_eq {n m : ℕ} {r : (Fin n → O) →ₗ[O] X} {s : (Fin m �
     simp [e, e']⟩
   rw [← φ.inv _ _ _ h1, ← φ.inv _ _ _ h2]
   have e : ∀ a, r ((P + h ∘ₗ Q) a) = s ((k ∘ₗ P + Q) a) := fun a => by
-    simp only [LinearMap.add_apply, LinearMap.comp_apply, map_add]
+    simp only [LinearMap.add_apply, LinearMap.comp_apply, map_add (f := _)]
     rw [← LinearMap.comp_apply r h, hh, ← LinearMap.comp_apply s k, hk]
   simp only [e]
 

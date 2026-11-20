@@ -122,7 +122,7 @@ theorem fix_torsion_of_fix_conj (bar : O ≃+* O) (I : Ideal O) (hsup : I ⊔ I.
     exact this.symm
   have split : ∀ w y, w ^ M = 1 → y ^ M = 1 → e w y = e w (act i y) * e w (act j y) := fun w y hw hy => by
     have h1 : w = act (bar.symm i) w * act (bar.symm j) w := by
-      rw [← act_add, ← map_add, hij, map_one, act_one]
+      rw [← act_add, ← map_add (f := _), hij, map_one, act_one]
     conv_lhs => rw [h1]
     rw [e_mul _ _ _ (tors _ _ hw) (tors _ _ hw) hy, e_adj _ _ _ hw hy, e_adj _ _ _ hw hy,
       bar.apply_symm_apply, bar.apply_symm_apply]

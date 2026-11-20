@@ -117,7 +117,7 @@ theorem exists_annihilator (N : ℕ) (hN : ∀ n, N ≤ n → hankel c n = 0) :
       exact (natDegree_sub_le _ _).trans (max_le hrd hr0s.le)
     have key := hrk (q * X ^ (s - d - r1.natDegree))
       (by rw [natDegree_mul_X_pow _ hqm.ne_zero, hqd]; omega)
-    rw [add_mul, map_add] at key
+    rw [add_mul, map_add (f := _)] at key
     have h0 : ev c (r0 * (q * X ^ (s - d - r1.natDegree))) = 0 := by
       rw [show r0 * (q * X ^ (s - d - r1.natDegree)) = q * (r0 * X ^ (s - d - r1.natDegree)) by ring]
       apply ev_zero_of_lt c q _ s hlt

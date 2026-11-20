@@ -290,7 +290,7 @@ theorem cone_isFiniteProjection : IsFiniteProjection coneIdeal coneProj := by
         rw [this]
         exact RingHom.isIntegralElem_map φ
       | add p q hp hq =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact RingHom.IsIntegralElem.add φ hp hq
       | mul_X p i hp =>
         rw [map_mul]

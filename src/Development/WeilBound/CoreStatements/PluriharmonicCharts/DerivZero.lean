@@ -192,7 +192,7 @@ theorem deriv_zero {D : Datum H} {l : Level H} {Xo : Moduli D l} {σ : KA l →+
     (fun a => (anti_comm_iff ty a _).2 ((e.symm b).2.1 a)) ((anti_symm_iff _ _).2 (e.symm b).2.2) hb, fun x => by
       let f : (Fin (Module.finrank ℂ 𝒵) → ℂ) →ₗ[ℂ] (Fin g → ℂ) :=
         { toFun := fun b => L b *ᵥ star (P 0 x)
-          map_add' := fun b c => by rw [map_add, add_mulVec]
+          map_add' := fun b c => by rw [map_add (f := _), add_mulVec]
           map_smul' := fun c b => by rw [map_smul, smul_mulVec]; rfl }
       exact ((differentiable_const (P 0 x)).add f.toContinuousLinearMap.differentiable).differentiableOn⟩
   let w : (Fin n → ℂ) → Fin (Module.finrank ℂ 𝒵) → ℂ := fun u => R fun j k => Z u j k

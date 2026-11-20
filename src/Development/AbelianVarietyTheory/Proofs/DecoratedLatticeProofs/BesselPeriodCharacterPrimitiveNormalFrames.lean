@@ -105,7 +105,7 @@ theorem prim_of_normal : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ), IsStdCha
   obtain ⟨ψk, hχ, hcond⟩ := GlobalTheory.QTw.GeoInhab.exists_char l.q l.unit hψ
   have hε : l.q.e + cA D l.q.e ∈ GlobalTheory.FinPl.intAt D (· = l.q.v) :=
     ⟨GlobalTheory.FinPl.FrameLat.sum_mem_idAt l.q, by
-      rw [RingHom.map_add]
+      rw [RingHom.map_add (f := _)]
       exact add_mem (GlobalTheory.FinPl.FrameLat.e_mem_intAt l.q).2
         ((GlobalTheory.FinPl.FrameLat.cA_int_iff _).2 (GlobalTheory.FinPl.FrameLat.e_mem_intAt l.q).2)⟩
   intro i i' hii' t ht

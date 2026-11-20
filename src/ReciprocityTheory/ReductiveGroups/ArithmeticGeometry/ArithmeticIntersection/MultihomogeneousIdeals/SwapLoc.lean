@@ -33,7 +33,7 @@ theorem length_localizedModule_quot_eq {R T : Type*} [CommRing R] [CommRing T] [
     rw [Algebra.ofId_apply, IsScalarTower.algebraMap_apply R T (T ⧸ J), Ideal.Quotient.algebraMap_eq,
       Ideal.Quotient.eq_zero_iff_mem]
     refine Submodule.mem_sup.mp ha |>.elim fun v ⟨hv, y, hy, e⟩ => ?_
-    rw [← e, map_add, hV v hv, zero_add]
+    rw [← e, map_add (f := _), hV v hv, zero_add]
     obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp hy
     rw [map_mul]
     exact Ideal.mul_mem_left _ _ (Ideal.subset_span rfl)

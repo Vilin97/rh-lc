@@ -264,7 +264,7 @@ theorem Cube.exists_contraction (A : Cube.{v} ι K) : ∃ e h : Module.End K (�
   have hDε : D * degSign A = -(degSign A * D) := totalD_mul_degSign A
   have hP : ∀ q, degProj A q * (D * h + h * D) = (D * h + h * D) * degProj A q := fun q =>
     LinearMap.ext fun x => ext_restrictDeg fun p => by
-      simp only [Module.End.mul_apply, LinearMap.add_apply, map_add, restrictDeg_degProj, hD, hr,
+      simp only [Module.End.mul_apply, LinearMap.add_apply, map_add (f := _), restrictDeg_degProj, hD, hr,
         restrictDeg_totalD_succ]
       cases p with
       | zero => split_ifs <;> simp [restrictDeg_totalD_zero]
@@ -396,12 +396,12 @@ noncomputable def extTensor (A : Cube.{v} ι K) (B : Cube.{v} κ K) : Cube.{v} (
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp
-      | add x y hx hy => rw [map_add, hx, hy])
+      | add x y hx hy => rw [map_add (f := _), hx, hy])
     (fun _ _ x => by
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp
-      | add x y hx hy => rw [map_add, map_add, hx, hy, map_add])
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)])
 
 theorem extTensor_obj (A : Cube.{v} ι K) (B : Cube.{v} κ K) (w : Finset (ι ⊕ₗ κ)) :
     (extTensor A B).obj w =
@@ -471,10 +471,10 @@ theorem totalD_totalTensorEquiv (z : (∀ s, A.obj s) ⊗[K] (∀ t, B.obj t)) :
         Module.End K _) z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x y =>
     funext w
-    rw [LinearMap.add_apply, map_add, Pi.add_apply, TensorProduct.map_tmul, TensorProduct.map_tmul,
+    rw [LinearMap.add_apply, map_add (f := _), Pi.add_apply, TensorProduct.map_tmul, TensorProduct.map_tmul,
       totalTensorEquiv_tmul, totalTensorEquiv_tmul, totalD_apply, totalD_apply, totalD_apply,
       sum_parts, sum_tmul, tmul_sum]
     refine congrArg₂ (· + ·) (Finset.sum_congr rfl fun i _ => ?_)
@@ -509,7 +509,7 @@ theorem degProj_totalTensorEquiv (n : ℕ) (z : (∀ s, A.obj s) ⊗[K] (∀ t, 
         Module.End K _) z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x y =>
     funext w
     set_option synthInstance.maxHeartbeats 100000 in

@@ -204,7 +204,7 @@ theorem ext_props (D : PPData H L) (D' : PPData H L') (m : D.Ext D') :
       rw [hb.equiv_tmul]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨x, rfl⟩)
     | add a b ha hb' =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ ha hb'
 
 end GlobalTheory.CompanionTheory.Ar.Sl.BaseExt

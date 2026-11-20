@@ -29,7 +29,7 @@ theorem heckeSub_finite_free : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UP
       simp only [LinearMap.smul_apply, LinearMap.id_apply, natCast_zsmul] at hz
       rw [hz]; abel
     show o.eta (N • g (σ (Submodule.Quotient.mk x))) = o.eta (N • g x)
-    rw [hz', map_add, map_nsmul, smul_add, smul_smul, o.eta_add, o.eta_ker, _root_.mul_one]
+    rw [hz', map_add (f := _), map_nsmul, smul_add, smul_smul, o.eta_add, o.eta_ker, _root_.mul_one]
   · intro κ _ _ x h hh h1
     obtain ⟨x0, rfl⟩ := hh
     have hβ : x ≫ s = spMap (Spec.preimage (x ≫ s)).hom := (Spec.map_preimage _).symm

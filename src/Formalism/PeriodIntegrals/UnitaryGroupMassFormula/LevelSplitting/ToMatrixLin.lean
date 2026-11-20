@@ -265,18 +265,18 @@ theorem Pi_lin_one : (datR R σ J P T).Pi (lin R σ J 1) = LinearMap.id := by
       intro b
       rw [hpU v]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_smul, smul_eq_mul, hfe b, hff b, hfz b]
+        simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, hfe b, hff b, hfz b]
       simp
     have c2 : ∀ b, (datR R σ J P T).hL ((datR R σ J P T).e b) ((datR R σ J P T).pU v) = (datR R σ J P T).hL ((datR R σ J P T).e b) v := by
       intro b
       rw [hpU v]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_smul, smul_eq_mul, hee b, hef b, hez b]
+        simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, hee b, hef b, hez b]
       simp
     have c3 : (datR R σ J P T).tz * (datR R σ J P T).hL (datR R σ J P T).z ((datR R σ J P T).pU v) = (datR R σ J P T).tz * (datR R σ J P T).hL (datR R σ J P T).z v := by
       rw [hpU v]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_smul, smul_eq_mul, hze, hzf, mul_zero,
+        simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, hze, hzf, mul_zero,
         Finset.sum_const_zero, zero_add]
       linear_combination ((datR R σ J P T).tz * (datR R σ J P T).hL (datR R σ J P T).z v) * hzz
     rw [hpU ((datR R σ J P T).pU v), c3]

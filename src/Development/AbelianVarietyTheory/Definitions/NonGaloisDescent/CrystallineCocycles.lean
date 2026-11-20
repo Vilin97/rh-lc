@@ -24,7 +24,7 @@ def geometricCocycles : Submodule LL (G → V) where
   add_mem' := by
     rintro a b ⟨ha, x, hx⟩ ⟨hb, y, hy⟩
     refine ⟨(continuousCocycles ρ).add_mem ha hb, x + y, fun g => ?_⟩
-    simp only [Pi.add_apply, add_tmul, hx, hy, map_add]
+    simp only [Pi.add_apply, add_tmul, hx, hy, map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, x, hx⟩
@@ -38,8 +38,8 @@ def crystallineCocycles : Submodule LL (G → V) where
   zero_mem' := ⟨(continuousCocycles ρ).zero_mem, 0, map_zero _, fun g => by simp⟩
   add_mem' := by
     rintro a b ⟨ha, x, hxφ, hx⟩ ⟨hb, y, hyφ, hy⟩
-    refine ⟨(continuousCocycles ρ).add_mem ha hb, x + y, by rw [map_add, hxφ, hyφ], fun g => ?_⟩
-    simp only [Pi.add_apply, add_tmul, hx, hy, map_add]
+    refine ⟨(continuousCocycles ρ).add_mem ha hb, x + y, by rw [map_add (f := _), hxφ, hyφ], fun g => ?_⟩
+    simp only [Pi.add_apply, add_tmul, hx, hy, map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, x, hxφ, hx⟩

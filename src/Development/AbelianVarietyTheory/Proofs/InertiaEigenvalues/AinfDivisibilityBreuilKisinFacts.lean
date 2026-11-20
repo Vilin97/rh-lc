@@ -28,7 +28,7 @@ theorem dvd_E : ((l : ℕ) : Ainf l) ∣ bk.ev bk.E - bk.ev X ^ bk.Ep.natDegree 
       rw [← Polynomial.coeToPowerSeries.ringHom_apply, map_sum]
     simp
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [this, map_add, map_pow, add_sub_cancel_left, map_sum]
+    rw [this, map_add (f := _), map_pow, add_sub_cancel_left, map_sum]
   refine Finset.dvd_sum fun i hi => ?_
   obtain ⟨d, hd⟩ := bk.dvd_coeff i (Finset.mem_range.1 hi)
   rw [hd, map_mul, map_mul, map_mul, map_natCast, map_natCast, mul_assoc]
@@ -111,7 +111,7 @@ theorem mem_pow (n : ℕ) (y : Ainf l)
   have hb : ((l : ℕ) : Ainf l) ∣ b := by
     rw [dvd_iff]
     have := congrArg (WittVector.constantCoeff (p := l) (R := OCb l)) huv
-    simp only [map_add, map_mul, map_pow, cc_l, zero_pow (Nat.succ_ne_zero n), mul_zero, zero_mul,
+    simp only [map_add (f := _), map_mul, map_pow, cc_l, zero_pow (Nat.succ_ne_zero n), mul_zero, zero_mul,
       zero_add] at this
     exact (mul_eq_zero.1 this).resolve_right (pow_ne_zero _ (cc_E_ne bk))
   obtain ⟨b', rfl⟩ := hb

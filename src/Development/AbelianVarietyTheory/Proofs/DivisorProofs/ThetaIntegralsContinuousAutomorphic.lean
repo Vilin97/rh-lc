@@ -32,7 +32,7 @@ theorem continuous_I_of_weil (hKP : KP) {n d : ℕ} {X : Spc F E n} {W : Spc F E
     (IsUWeilPair.isUSplitting hP.weil).pres x Ψ hΨ
   have thAdd : ∀ Ψ₁ ∈ schA F (Fin n × Fin d), ∀ Ψ₂ ∈ schA F (Fin n × Fin d), ∀ g h,
       theta om (Ψ₁ + Ψ₂) g h = theta om Ψ₁ g h + theta om Ψ₂ g h := fun Ψ₁ h₁ Ψ₂ h₂ g h => by
-    simp only [theta, map_add]
+    simp only [theta, map_add (f := _)]
     exact thetaSum_add F (pres _ Ψ₁ h₁) (pres _ Ψ₂ h₂)
   have thSmul : ∀ (z : ℂ) Ψ g h, theta om (z • Ψ) g h = z * theta om Ψ g h := fun z Ψ g h => by
     simp only [theta, map_smul]

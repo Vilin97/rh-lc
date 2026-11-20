@@ -108,7 +108,7 @@ theorem vanishFrom_adj : Quoted → ∀ (K : Type) [Field K] [NumberField K] (G 
       (by
         rw [cls_pull (G.isLB_adj j) π]
         erw [cls_pull G.K.isLB π, cls_pull hNnef.isLB π]
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         erw [cls_tens (isLB_tens G.K.isLB G.isLBA) (Twist.isLB_lbZPow G.isLB j), cls_tens G.K.isLB G.isLBA,
           cls_tens G.isLBA (isLB_lbPow G.isLB j)]

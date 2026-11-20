@@ -32,7 +32,7 @@ theorem residue_onto (c : Fin r) :
       add_mem' := by
         rintro φ ψ ⟨y, hy, o, ho, hφ⟩ ⟨y', hy', o', ho', hψ⟩
         refine ⟨y + y', Λ.add_mem hy hy', o + o', fun i => ?_, fun i => ?_⟩
-        · simp [map_add, ho, ho']
+        · simp [map_add (f := _), ho, ho']
         · simp [hφ, hψ]
       smul_mem' := by
         rintro κ φ ⟨y, hy, o, ho, hφ⟩

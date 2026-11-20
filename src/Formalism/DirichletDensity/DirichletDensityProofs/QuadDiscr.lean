@@ -47,9 +47,9 @@ theorem quadDiscr_ne_one (K : Type) [Field K] [NumberField K] (a : ℤ) (x : K)
   have htr1 : Algebra.trace ℚ K 1 = 2 := by
     rw [show (1 : K) = algebraMap ℚ K 1 by simp, htrq]; norm_num
   have htrω : Algebra.trace ℚ K ω = 1 := by
-    rw [hω1, map_add, htrq, htrlin, htrx]; norm_num
+    rw [hω1, map_add (f := _), htrq, htrlin, htrx]; norm_num
   have htrωω : Algebra.trace ℚ K (ω * ω) = (1 + a) / 2 := by
-    rw [hω2, map_add, htrq, htrlin, htrx]; ring
+    rw [hω2, map_add (f := _), htrq, htrlin, htrx]; ring
   have hdisc : Algebra.discr ℚ ![(1 : K), ω] = a := by
     rw [Algebra.discr_def, Matrix.det_fin_two]
     simp only [Algebra.traceMatrix_apply, Algebra.traceForm_apply, Matrix.cons_val_zero,

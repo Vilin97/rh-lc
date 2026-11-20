@@ -75,7 +75,7 @@ theorem UpperTheory.V.AlgRepEndIrreducible.alphaAbs :
   obtain ⟨T, hT⟩ := telML (Matrix (Fin n) (Fin n) ℂ) M n (fun i => sh A (arg i)) (fun i => sh (-B) (arg i))
   let α : (Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] M) →ₗ[ℂ] M :=
     { toFun := fun f => eps (T f)
-      map_add' := fun u v => by rw [map_add]; exact (epsL n).map_add _ _
+      map_add' := fun u v => by rw [map_add (f := _)]; exact (epsL n).map_add _ _
       map_smul' := fun c u => by rw [map_smul]; exact (epsL n).map_smul _ _ }
   have hα : ∀ f, α f = eps (T f) := fun _ => rfl
   refine ⟨α, fun m f hf => ?_, fun κ g g' hg hA hB f f' hf => ?_, fun D y hA hB f f' hf => ?_⟩

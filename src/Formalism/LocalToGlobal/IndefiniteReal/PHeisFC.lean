@@ -51,7 +51,7 @@ def Phi (V W : HSp D) (x : WA V W) : Fin V.rank → Fin W.rank → Fin (nE D) �
   fun i j => cE D.host.F D.host.E (x i j)
 
 theorem Phi_add (V W : HSp D) (x y : WA V W) (i j k) : Phi V W (x + y) i j k = Phi V W x i j k + Phi V W y i j k := by
-  simp only [Phi, Matrix.add_apply, map_add, Pi.add_apply]
+  simp only [Phi, Matrix.add_apply, map_add (f := _), Pi.add_apply]
 
 theorem Phi_rat (V W : HSp D) (e : Matrix (Fin V.rank) (Fin W.rank) D.host.E) (i j k) :
     Phi V W (e.map (incA D)) i j k = algebraMap D.host.F (AF D.host.F) ((Module.finBasis D.host.F D.host.E).repr (e i j) k) := by

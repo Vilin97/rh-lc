@@ -187,7 +187,7 @@ theorem levelPt_of_rep : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [Nu
     obtain ⟨s₀, rfl, -⟩ := ((ArcThetaSpaces.sections_theta hL hL2 E H D l c O β b a Λ).1 k α hk).2 th hth
     obtain ⟨t, ht⟩ := exists_isPhiTranslate hG toF_surjective_self q₁ hv₀ (Λ.ε α) s₀
     obtain ⟨t', h₁, h₂⟩ := exists_heq_constFam hG hW F hk
-      (show Λ.ε α + q₁.y = Λ.ε (α + la.y) by rw [hy₁, map_add]) t
+      (show Λ.ε α + q₁.y = Λ.ε (α + la.y) by rw [hy₁, map_add (f := _)]) t
     obtain ⟨σ, g, e, a₁, a₂, a₃⟩ := exists_integral hL hL2 hW hΦ hi hk α s₀
     obtain ⟨σ', g', e', b₁, b₂, b₃⟩ := exists_integral hL hL2 hW hΦ hi hk (α + la.y) t'
     refine ⟨σ, σ', g, g', _, _, e, κ * toF (R := ℂ⟦X⟧) F PowerSeries.X ^ (a.be q₁.y (Λ.ε α) / k) * e', a₁, b₁, a₂,

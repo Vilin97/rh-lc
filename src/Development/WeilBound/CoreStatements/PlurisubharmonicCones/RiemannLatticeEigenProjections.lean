@@ -19,7 +19,7 @@ theorem riemann_lattice_eigen_projections : ∀ (E : Type) [Field E] [NumberFiel
     exact LevelTowerAlt.proj_mem _ _ _
   · rw [LevelTowerAlt.eigComp_eq]
     exact LevelTowerAlt.proj_eig_self hx
-  · simp only [LevelTowerAlt.eigComp_eq, map_add, map_smul]
+  · simp only [LevelTowerAlt.eigComp_eq, map_add (f := _), map_smul]
   · simp only [LevelTowerAlt.eigComp_eq]
     exact LevelTowerAlt.proj_act _ _ _ _
   · simp only [LevelTowerAlt.eigComp_eq]

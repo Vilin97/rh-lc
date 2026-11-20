@@ -135,7 +135,7 @@ private theorem rep_retr (σ : Representation ℂ Γ X) (hσ : σ.IsIrreducible)
           ⟨f.1, fun g => LinearMap.ext (f.2 g)⟩) ⟨v, rfl⟩
       · simp
       · intro a b ha hb
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem ha hb)
   obtain ⟨T, h2⟩ := key x hx
   let T' := (Representation.IntertwiningMap.equivLinearMapAsModule τ σ).symm T
@@ -252,7 +252,7 @@ private theorem diag_of_wd (hl : ((l : ℕ) : 𝓞 F) ∉ w.asIdeal) (ι : Qbar 
     rw [Matrix.charpoly_fin_two, hd g hg] at h1
     apply ι.injective
     simp at h1
-    simp only [map_add, map_one]
+    simp only [map_add (f := _), map_one]
     linear_combination -h1
   obtain ⟨s₀, hs₀, h0⟩ := SetLike.not_le_iff_exists.1 hr
   have h0' : (ξ s₀ : Qbar l) ≠ 1 := fun e => h0 (Units.ext e)

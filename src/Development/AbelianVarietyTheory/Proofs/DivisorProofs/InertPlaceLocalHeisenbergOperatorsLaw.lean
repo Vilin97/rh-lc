@@ -15,7 +15,7 @@ theorem darboux_rho_rho {R : Type} [CommRing R] [Invertible (2 : R)] {W : Type} 
     {B : W → W → R} {κ : Type} [Fintype κ] (d : Darboux B κ) (ψ : AddChar R ℂ) (w w' : W) (Φ : (κ → R) → ℂ) :
     d.rho ψ w (d.rho ψ w' Φ) = ψ (⅟(2 : R) * B w w') • d.rho ψ (w + w') Φ := by
   funext x
-  simp only [Darboux.rho, schr, Pi.smul_apply, smul_eq_mul, map_add, Prod.fst_add, Prod.snd_add, ← mul_assoc,
+  simp only [Darboux.rho, schr, Pi.smul_apply, smul_eq_mul, map_add (f := _), Prod.fst_add, Prod.snd_add, ← mul_assoc,
     ← AddChar.map_add_eq_mul, add_assoc]
   congr 2
   rw [d.form]
@@ -80,7 +80,7 @@ theorem rho_law : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
     have e2 := hA y m
     have e3 := hA (x + y) m
     have hl := darboux_rho_rho G.M'.co B.ψ (κ x) (κ y) (tens (evFin F v) (m : (Fin a' × Fin (a + a') → Fv F v) → ℂ) R)
-    rw [e2, e1, ← map_add, e3, ← hEq x y] at hl
+    rw [e2, e1, ← map_add (f := _), e3, ← hEq x y] at hl
     rw [Module.End.mul_apply, hl, LinearMap.smul_apply, Submodule.coe_smul]
     funext z
     simp only [tens, Pi.smul_apply, smul_eq_mul, mul_assoc]

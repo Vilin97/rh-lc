@@ -34,7 +34,7 @@ theorem coboundary_cols (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K : FinExt l)
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul, smul_smul]
     | add y z hy hz =>
-      rw [map_add, map_add, hy, hz, ← Matrix.mulVec_add]
+      rw [map_add (f := _), map_add (f := _), hy, hz, ← Matrix.mulVec_add]
       congr 1
   refine ⟨Φ b, fun g => ?_⟩
   have := congrArg Φ (h g)

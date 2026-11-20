@@ -81,7 +81,7 @@ theorem isOb2_natural : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Id
     (L₂.p (G.obj T')) (L₂.semi _) (L₂.surj _) (L₂.ker _) (σ₂ _) (hσ₂ _)).2.2.2 (κ T T' a (w.1 _))
     ((hκ T T' a).mem _)
   have kadd : ∀ {X : C₂} (y y' : R₁ ⊗[R₀] F₂.obj X), α.KerQ y → α.KerQ y' → α.KerQ (y + y') :=
-    fun y y' h h' ↦ by unfold Aug.KerQ at *; rw [map_add, h, h', add_zero]
+    fun y y' h h' ↦ by unfold Aug.KerQ at *; rw [map_add (f := _), h, h', add_zero]
   have kneg : ∀ {X : C₂} (y : R₁ ⊗[R₀] F₂.obj X), α.KerQ y → α.KerQ (-y) :=
     fun y h ↦ by unfold Aug.KerQ at *; rw [map_neg, h, neg_zero]
   have ksub : ∀ {X : C₂} (y y' : R₁ ⊗[R₀] F₂.obj X), α.KerQ y → α.KerQ y' → α.KerQ (y - y') :=
@@ -107,7 +107,7 @@ theorem isOb2_natural : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Id
     rw [map_neg]; exact kneg _ (nb.2 _ (hgK _ _ _))
   · change σ₂ (G.obj T'') ((_ : R₁ ⊗[R₀] F₂.obj (G.obj T'')) -
       (_ - z₂.1 (G.obj T) (G.obj T') (G.obj T'') (G.map a) (G.map b))) = 0
-    simp only [map_sub, map_add, map_neg]
+    simp only [map_sub, map_add (f := _), map_neg]
     rw [← nb.1, ← nl.1, hg, hg, hg, (hz _ _ _ _ _).2, (hz₂ _ _ _ _ _).2, ← hw, w.2 (n.G.map a)]
     linear_combination key T T' T'' a b (w.1 _)
 

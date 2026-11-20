@@ -180,13 +180,13 @@ theorem exists_phiPlus_eq_pow_iotaPlus_sub_mem {m n : ℕ} (hnm : n ≤ m) (w : 
     refine ⟨y + periodTPlus hε ^ n * z, ?_, ?_⟩
     · have hpm : (p : (BCrisPlus ℂ_[p] p)) ^ m = (p : (BCrisPlus ℂ_[p] p)) ^ n * (p : (BCrisPlus ℂ_[p] p)) ^ (m - n) := by
         rw [← pow_add, Nat.add_sub_cancel' (by omega)]
-      rw [map_add, map_mul, map_pow, hy, hz, phiPlus_periodTPlus, mul_pow, hpm]
+      rw [map_add (f := _), map_mul, map_pow, hy, hz, phiPlus_periodTPlus, mul_pow, hpm]
       ring
-    · have h0 : θdR (d + iotaPlus ℂ_[p] p z) = 0 := by rw [map_add, hz', add_neg_cancel]
+    · have h0 : θdR (d + iotaPlus ℂ_[p] p z) = 0 := by rw [map_add (f := _), hz', add_neg_cancel]
       obtain ⟨e, he⟩ := Ideal.mem_span_singleton'.1 (mem_span_fontaineT_of_theta_eq_zero hε hζ h0)
       rw [Ideal.mem_span_singleton']
       refine ⟨e, ?_⟩
-      rw [map_add, map_mul, map_pow, iotaPlus_periodTPlus, add_sub_right_comm, ← hd, pow_succ]
+      rw [map_add (f := _), map_mul, map_pow, iotaPlus_periodTPlus, add_sub_right_comm, ← hd, pow_succ]
       linear_combination (fontaineT ε hε ^ n) * he
 
 end Plus

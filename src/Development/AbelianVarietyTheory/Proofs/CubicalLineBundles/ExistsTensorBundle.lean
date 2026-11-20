@@ -23,10 +23,10 @@ def gramForm (β : V →+ V →+ U) (p : I → W →ₗ[O] V) (g : I → I → O
 variable {β : V →+ V →+ U} {p : I → W →ₗ[O] V} {g : I → I → O} {br : O ≃+* O}
 
 theorem gramForm_add_left (x y z : W) : gramForm β p g (x + y) z = gramForm β p g x z + gramForm β p g y z := by
-  simp only [gramForm, map_add, smul_add, AddMonoidHom.add_apply, Finset.sum_add_distrib]
+  simp only [gramForm, map_add (f := _), smul_add, AddMonoidHom.add_apply, Finset.sum_add_distrib]
 
 theorem gramForm_add_right (x y z : W) : gramForm β p g x (y + z) = gramForm β p g x y + gramForm β p g x z := by
-  simp only [gramForm, map_add, Finset.sum_add_distrib]
+  simp only [gramForm, map_add (f := _), Finset.sum_add_distrib]
 
 theorem gramForm_zero (y : W) : gramForm β p g 0 y = 0 := by
   simp [gramForm]

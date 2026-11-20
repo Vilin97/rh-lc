@@ -251,7 +251,7 @@ def off (a : AF F) : AF F := a - atPlace v (evFin F v a)
 
 theorem ev_off (a : AF F) : evFin F v (off v a) = 0 := by simp [off, evFin_atPlace]
 
-theorem off_add (a b : AF F) : off v (a + b) = off v a + off v b := by simp only [off, map_add]; ring
+theorem off_add (a b : AF F) : off v (a + b) = off v a + off v b := by simp only [off, map_add (f := _)]; ring
 
 theorem off_mul (a b : AF F) : off v (a * b) = a * off v b := by
   rw [off, off, mul_sub, mul_comm a (atPlace v _), atPlace_mul_right, map_mul, mul_comm (evFin F v a)]
@@ -319,7 +319,7 @@ theorem indep_pure (f : SInf F κ) (φ : ∀ u : HeightOneSpectrum (𝓞 F), (κ
     by_cases h : u = v
     · subst h; simp
     · refine congrArg _ (funext fun i => ?_)
-      rw [Pi.add_apply, map_add]
+      rw [Pi.add_apply, map_add (f := _)]
       exact add_eq_left.2 (evalV_singleFin_ne h _)
 
 open Classical in
@@ -363,13 +363,13 @@ theorem schr_tens (ψ : AddChar (AF F) ℂ) (w : (κ → AF F) × (κ → AF F))
       ψ (x ⬝ᵥ (offP v w).2 + ⅟(2 : AF F) * ((offP v w).1 ⬝ᵥ (offP v w).2)) := by
     rw [psv_apply, ← AddChar.map_add_eq_mul, ← off_add_at v (x ⬝ᵥ w.2 + _), add_comm (off v _)]
     congr 2
-    · rw [map_add, map_mul, ev_dot, ev_dot]; rfl
+    · rw [map_add (f := _), map_mul, ev_dot, ev_dot]; rfl
     · rw [off_add, off_mul, off_dot, ← off_off v (w.1 ⬝ᵥ w.2), off_dot v w.1 w.2, dotProduct_comm w.1, off_dot,
         dotProduct_comm (fun i => off v (w.2 i))]
       rfl
   simp only [schr, tens]
   rw [e1, e2]
-  simp only [Pi.add_apply, map_add]
+  simp only [Pi.add_apply, map_add (f := _)]
   show _ = _ * φ (fun i => evFin F v (x i) + evFin F v (w.1 i)) * _
   ring
 
@@ -428,7 +428,7 @@ theorem piW_inc (t : E →ₐ[F] Fv F v) (x : E) : piW t (inclR (F := F) (AF F) 
 theorem piW_cA (t : E →ₐ[F] Fv F v) (z : AE F E) : piW t (cA σ z) = piW (t.comp σ) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 theorem trace_cm (h : IsCMExt F E σ) (x : E) : algebraMap F E (Algebra.trace F E x) = x + σ x := by
@@ -440,7 +440,7 @@ theorem trace_cm (h : IsCMExt F E σ) (x : E) : algebraMap F E (Algebra.trace F 
     simpa using eq_or_eq_comp_conj h τ τ'
   rw [h2, Finset.sum_pair (comp_conj_ne h τ).symm] at h1
   apply (algebraMap E (AlgebraicClosure E)).injective
-  rw [← IsScalarTower.algebraMap_apply, h1, map_add]
+  rw [← IsScalarTower.algebraMap_apply, h1, map_add (f := _)]
   rfl
 
 theorem trace_tmul {R : Type} [CommRing R] [Algebra F R] (r : R) (x : E) :
@@ -454,9 +454,9 @@ theorem ev_trace (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (z : AE F E) :
     evFin F v (Algebra.trace (AF F) (AE F E) z) = piW t z + piW (t.comp σ) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero, add_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]; ring
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]; ring
   | tmul a x =>
-    rw [trace_tmul, map_mul, AlgHom.commutes, piW_tmul, piW_tmul, ← t.commutes, trace_cm h, map_add, mul_add]
+    rw [trace_tmul, map_mul, AlgHom.commutes, piW_tmul, piW_tmul, ← t.commutes, trace_cm h, map_add (f := _), mul_add]
     rfl
 
 variable (v) in

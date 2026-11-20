@@ -88,14 +88,14 @@ theorem yy_hom : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8)
       have hpp : QkPt.Equiv _ _ p p' := (f₃ p p').1 (((f₁ _ _).1 hq).symm.trans ((f₁ _ _).1 hq'))
       obtain ⟨z, hz, -⟩ := (equiv_iff hB _ _).1 hpp
       have e' : mu' = mu + (X₁.S.r * X₁.S.N) • 𝔪.e₈.symm z := 𝔪.e₈.injective (by
-        rw [map_add, map_nsmul, AddEquiv.apply_symm_apply, ← hpy, ← hpy', hz])
+        rw [map_add (f := _), map_nsmul, AddEquiv.apply_symm_apply, ← hpy, ← hpy', hz])
       intro v
       exact ⟨𝔪.e₈.symm z v, by rw [e']; rfl⟩
     · intro hc
       choose w hw using hc
       refine ⟨qkShift hB p (𝔪.e₈ w), ?_, (f₁ _ _).2 (((f₁ _ _).1 hq).trans ((f₃ _ _).2 (equiv_qkShift hB p _)))⟩
       show p.y + (X₁.S.r * X₁.S.N) • 𝔪.e₈ w = 𝔪.e₈ mu'
-      rw [hpy, ← map_nsmul, ← map_add]
+      rw [hpy, ← map_nsmul, ← map_add (f := _)]
       congr 1
       funext v
       exact (hw v).symm
@@ -103,7 +103,7 @@ theorem yy_hom : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8)
     obtain ⟨p', hpy', hq'⟩ := (yyI a' mu').1 h'
     refine (yyI _ _).2 ⟨qkAdd hB p p', ?_, ?_⟩
     · show p.y + p'.y = 𝔪.e₈ (mu + mu')
-      rw [map_add, hpy, hpy']
+      rw [map_add (f := _), hpy, hpy']
     · rw [f₁, f₄ _ _ _ (qkAdd_qkAdd hB p p'), ← (f₁ _ _).1 hq, ← (f₁ _ _).1 hq', xadd]
 
 end GlobalTheory.Poinc.Sep.Labels

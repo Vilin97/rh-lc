@@ -191,7 +191,7 @@ theorem halfForm_eq (β : ModuliIntegralCharts.SymB cj Y) (c c' : 𝓞 E) (hc : 
   have hb := β.2.2 c c' hc y y
   have h2 : (β : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ) ((c + c') • y) y =
       (β : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ) (c • y) y + (β : Y →ₗ[ℤ] Y →ₗ[ℤ] ℝ) (c' • y) y := by
-    rw [add_smul, map_add, LinearMap.add_apply]
+    rw [add_smul, map_add (f := _), LinearMap.add_apply]
   rw [h1, one_smul, hs (c' • y) y, ← hb] at h2
   linarith
 
@@ -260,7 +260,7 @@ theorem halfForm_int_host (D : D7) {Y : Type} [AddCommGroup Y] [Module (𝓞 D.h
   let c : 𝓞 D.host.E := ⟨(1 + s) / 2, hint⟩
   have hc : ((1 - c : 𝓞 D.host.E) : D.host.E) = (fun x : D.host.E => D.host.conj x) (c : D.host.E) := by
     show (1 : D.host.E) - (1 + s) / 2 = D.host.conj ((1 + s) / 2)
-    rw [map_div₀, map_add, map_one, hcs, map_ofNat]
+    rw [map_div₀, map_add (f := _), map_one, hcs, map_ofNat]
     ring
   exact halfForm_int β c (1 - c) hc (add_sub_cancel c 1) hβ y
 

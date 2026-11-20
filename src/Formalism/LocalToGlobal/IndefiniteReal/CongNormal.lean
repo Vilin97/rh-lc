@@ -20,7 +20,7 @@ def CongNormal : Prop :=
 def fixN (ρ : Formalism.AUTREP.GAf L n →* Module.End ℂ A) (N : ℕ) : Submodule ℂ A where
   carrier := {a | ∀ κ, Formalism.L2.NG.Cong L n N κ → ρ κ a = a}
   zero_mem' := fun κ _ => map_zero _
-  add_mem' := fun ha hb κ hκ => by rw [map_add, ha κ hκ, hb κ hκ]
+  add_mem' := fun ha hb κ hκ => by rw [map_add (f := _), ha κ hκ, hb κ hκ]
   smul_mem' := fun c a ha κ hκ => by rw [map_smul, ha κ hκ]
 
 structure UAdm (ρ : Formalism.AUTREP.GAf L n →* Module.End ℂ A) (B : A →ₗ⋆[ℂ] A →ₗ[ℂ] ℂ) : Prop where

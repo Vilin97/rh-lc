@@ -22,7 +22,7 @@ theorem isReduced_tensor_of_forall_isMaximal {k R B : Type} [Field k] [CommRing 
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a z => simp [Algebra.TensorProduct.basis_repr_tmul]
-    | add y z hy hz => simp [map_add, hy, hz]
+    | add y z hy hz => simp [map_add (f := _), hy, hz]
   constructor
   intro x hx
   apply (Algebra.TensorProduct.basis R b).repr.injective

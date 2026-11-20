@@ -24,7 +24,7 @@ private theorem padicInt_hom_ext (f g : ℤ_[l] →+* Per.Ainf l) (z : ℤ_[l]) 
   refine ⟨f w - g w, ?_⟩
   have hf := congrArg f hz
   have hg := congrArg g hz
-  simp only [map_add, map_mul, map_pow, map_natCast] at hf hg
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast] at hf hg
   rw [hf, hg]
   ring
 

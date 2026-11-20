@@ -193,13 +193,13 @@ private lemma le_sup_map_dual_latIn_perp {h : V →ₗ⋆[K] V →ₗ[K] K} (hs 
   · rw [_root_.Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
     intro y hy
     have hyL := hL _ (mem_latIn_iff.1 hy) _ hx
-    rw [map_add, (_root_.GlobalTheory.Mass.Witt.mem_perp h W w).1 hw _ y.2, add_zero] at hyL
+    rw [map_add (f := _), (_root_.GlobalTheory.Mass.Witt.mem_perp h W w).1 hw _ y.2, add_zero] at hyL
     rw [hRes_apply]
     exact hyL
   · rw [_root_.Formalism.HermitianLatticesTheory.dualBasic_mem_dual]
     intro y hy
     have hyL := hL _ (mem_latIn_iff.1 hy) _ hx
-    rw [map_add, apply_eq_zero_of_mem_perp hs hu y.2, zero_add] at hyL
+    rw [map_add (f := _), apply_eq_zero_of_mem_perp hs hu y.2, zero_add] at hyL
     rw [hRes_apply]
     exact hyL
 

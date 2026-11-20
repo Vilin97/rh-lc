@@ -57,14 +57,14 @@ theorem sig_smul (ρ : Representation LL G V) (g : G) (b : B) (w : B ⊗[Qp] V) 
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul c v => simp [sig_tmul, TensorProduct.smul_tmul']
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem comm_sig (ρ : Representation LL G V) (g : G) (w : B ⊗[Qp] V) :
     TensorProduct.comm Qp B V (sig PD ρ g w) = actVB PD ρ g (TensorProduct.comm Qp B V w) := by
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul c v => simp [sig_tmul, actVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mem_DcrisK₀ (ρ : Representation LL G V) (w : B ⊗[Qp] V) :
     w ∈ DcrisK₀ PD ρ ↔ ∀ g, sig PD ρ g w = w := by
@@ -236,7 +236,7 @@ theorem baseChange_mem {ρ : Representation LL G V} {ρ' : Representation LL G V
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [sig_tmul, hf g]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   rw [mem_DcrisK₀] at hx ⊢
   intro g
   rw [← hm, hx]
@@ -294,13 +294,13 @@ theorem tensorCrys (hf : FracInv PD) (hu : LineUnit PD) : TensorCrys PD LL := by
     intro x y
     induction x using cmp_ind PD hc with
     | h0 => simp
-    | hadd x x' hx hx' => rw [add_tmul, map_add, map_add]; exact S.add_mem hx hx'
+    | hadd x x' hx hx' => rw [add_tmul, map_add (f := _), map_add (f := _)]; exact S.add_mem hx hx'
     | hb b d =>
       rw [prod_mB_left, hcm]
       refine S.smul_mem _ ?_
       induction y using cmp_ind PD hc' with
       | h0 => simp
-      | hadd x x' hx hx' => rw [tmul_add, map_add, map_add]; exact S.add_mem hx hx'
+      | hadd x x' hx hx' => rw [tmul_add, map_add (f := _), map_add (f := _)]; exact S.add_mem hx hx'
       | hb b' d' =>
         rw [prod_mB_right, hcm]
         refine S.smul_mem _ (Submodule.subset_span ?_)
@@ -357,11 +357,11 @@ theorem dualCrys (hf : FracInv PD) (hu : LineUnit PD) : DualCrys PD LL := by
     intro g x y
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add a a' ha ha' => simp only [map_add, LinearMap.add_apply, ha, ha']
+    | add a a' ha ha' => simp only [map_add (f := _), LinearMap.add_apply, ha, ha']
     | tmul b f =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add a a' ha ha' => simp only [map_add, ha, ha']
+      | add a a' ha ha' => simp only [map_add (f := _), ha, ha']
       | tmul c v =>
         rw [sig_tmul, sig_tmul, hΦ, hΦ, map_mul, map_mul, IsScalarTower.algebraMap_apply Qp K₀ B (lam (f v)),
           AlgEquiv.commutes, ← IsScalarTower.algebraMap_apply]
@@ -393,7 +393,7 @@ theorem tensorB_eq (f : V →ₗ[LL] V') (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [tensorB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [IsDomain B] [FiniteDimensional Qp LL] in
 variable {LL} in
@@ -417,7 +417,7 @@ theorem left_exact {V₀ : Type} [AddCommGroup V₀] [Module LL V₀] [Module Qp
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVB, hi g]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   refine ⟨fun x y h => Subtype.ext (hinj ?_), fun x => ⟨fun h => ?_, ?_⟩⟩
   · rw [← hci, ← hci, h]
   · obtain ⟨y, hy⟩ := (hex x).1 (by rw [← hcp, h]; rfl)
@@ -503,14 +503,14 @@ theorem letter_le (ρ : Representation LL G V) [Module.Finite LL ↥(Dcris PD ρ
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVB, φVB, PD.φ_comm]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have h2 : ∀ (c : K₀) (x : V ⊗[Qp] B), φVB PD (LL := LL) (mB LL (algebraMap K₀ B c) x) =
       mB LL (algebraMap K₀ B (PD.σ c)) (φVB PD (LL := LL) x) := by
     intro c x
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [mB, φVB, PD.φ_K₀]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have h3 : ∀ x ∈ DcrisL PD ρ τ', φVB PD (LL := LL) x ∈ DcrisL PD ρ τ := by
     intro x hx
     rw [mem_DcrisL, mem_Dcris] at hx ⊢
@@ -650,14 +650,14 @@ theorem letterDim (hf : FracInv PD) : LetterDim PD LL := by
     exact le_antisymm (hle n _ _ hn) (hle n' _ _ hn')
   rw [Nat.card_eq_fintype_card] at hc
   have hs := finrank_eq_sum_letters hc (fun c => mB LL (algebraMap K₀ B c))
-    (fun a b x => by rw [map_add, mB_add]) (fun a b x => by rw [map_mul, mB_mul])
+    (fun a b x => by rw [map_add (f := _), mB_add]) (fun a b x => by rw [map_mul, mB_mul])
     (fun q (x : V ⊗[Qp] B) => by
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul v b =>
         rw [← IsScalarTower.algebraMap_apply, algebraMap_smul, ← tmul_smul, Algebra.smul_def]
         rfl
-      | add a b ha hb => simp only [map_add, smul_add, ha, hb])
+      | add a b ha hb => simp only [map_add (f := _), smul_add, ha, hb])
     (Dcris PD ρ) (fun a x hx => (mK PD ρ a ⟨x, hx⟩).2) (DcrisL PD ρ) (mem_DcrisL PD ρ)
   simp only [heq, Finset.sum_const, Finset.card_univ, smul_eq_mul, hc] at hs
   unfold IsCrys at h

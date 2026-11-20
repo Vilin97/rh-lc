@@ -47,7 +47,7 @@ theorem coordEquiv_equivariant (ρ : G H.E N.Om →* GL (Fin R.r) (N.O i)) (g : 
     coordEquiv N i (coefRep (Glob.T2 N i ρ) (Kf N i) g x) = (matT N i ρ g).mulVec (coordEquiv N i x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, Matrix.mulVec_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, Matrix.mulVec_add]
   | tmul f c =>
     have e1 : coefRep (Glob.T2 N i ρ) (Kf N i) g (f ⊗ₜ c) = (Glob.T2 N i ρ g f) ⊗ₜ c := rfl
     rw [e1, coordEquiv_tmul, coordEquiv_tmul]

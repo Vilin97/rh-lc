@@ -70,7 +70,7 @@ theorem hform_add_left {N : ℕ} (σ : E →+* E) (J : Matrix (Fin N) (Fin N) E)
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
-  simp only [Pi.add_apply, map_add]
+  simp only [Pi.add_apply, map_add (f := _)]
   ring
 
 theorem hform_zero_left {N : ℕ} (σ : E →+* E) (J : Matrix (Fin N) (Fin N) E) (y : Fin N → E) :

@@ -256,7 +256,7 @@ theorem isom_model {V : HSp D} {ι : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank →
     ((Dw.EF x y : ℤ) : ℚ) = Algebra.trace ℚ D.host.E (-(-D.host.xi0) * herm (-V.gramᵀ) (ι x) (ι y)) := by
   have halt : Dw.EF x y = -Dw.EF y x := by
     have := Dw.alt (x + y)
-    simp only [map_add, LinearMap.add_apply, Dw.alt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, Dw.alt] at this
     linarith
   rw [halt, Int.cast_neg, h.isom, hT_coord, neg_neg, mul_neg, map_neg, neg_neg]
 

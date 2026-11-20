@@ -141,7 +141,7 @@ theorem card_phi_succ (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) {𝔭
       { toFun := fun E => ⟨E.1 - E0, by
           rw [AddMonoidHom.mem_ker, map_sub, hE0, hL, E.2, sub_self]⟩
         invFun := fun K0 => ⟨K0.1 + E0, by
-          rw [← hL, map_add, AddMonoidHom.mem_ker.mp K0.2, hE0, zero_add]⟩
+          rw [← hL, map_add (f := _), AddMonoidHom.mem_ker.mp K0.2, hE0, zero_add]⟩
         left_inv := fun E => Subtype.ext (sub_add_cancel _ _)
         right_inv := fun K0 => Subtype.ext (add_sub_cancel_right _ _) }
 

@@ -45,7 +45,7 @@ theorem exists_clear [Fintype K] [∀ k, Fintype (ι k)] [Fintype K'] [∀ k, Fi
     obtain ⟨b₁, hb₁, F₁, e₁⟩ := hf
     obtain ⟨b₂, hb₂, F₂, e₂⟩ := hg
     refine ⟨b₁ * b₂, by rw [map_mul]; exact mul_ne_zero hb₁ hb₂, C b₂ * F₁ + C b₁ * F₂, ?_⟩
-    rw [map_add, map_mul, map_mul, map_mul, map_mul, MvPolynomial.map_C, MvPolynomial.map_C, ← e₁, ← e₂]
+    rw [map_add (f := _), map_mul, map_mul, map_mul, map_mul, MvPolynomial.map_C, MvPolynomial.map_C, ← e₁, ← e₂]
     simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
     ring
 
@@ -73,7 +73,7 @@ theorem liftZ_component [Fintype K'] [∀ k, Fintype (ι' k)] [DecidableEq K'] {
     weightedHomogeneousComponent (cycBlockWt k.1) n (liftZ κ v F) =
       liftZ κ v (weightedHomogeneousComponent (cycBlockWt k) n F) := by
   induction F using MvPolynomial.induction_on' with
-  | add F G hF hG => simp only [map_add, hF, hG]
+  | add F G hF hG => simp only [map_add (f := _), hF, hG]
   | monomial m a =>
     have hj : ∀ q : Σ k : FibreBlock κ, ι' k.1,
         cycBlockWt (ι := ι') k.1 ⟨q.1.1, q.2⟩ = cycBlockWt (ι := fun k : FibreBlock κ => ι' k.1) k q := by

@@ -221,7 +221,7 @@ theorem chrW_mul {χ : Chr F E} (hr : ResEtaPow (Units.map (algebraMap F (AF F))
   rw [← chi_at hσ τ χ (x := Units.map (algebraMap (AF F) (AE F E) : AF F →* AE F E) (Units.map j a)) ?_ (e _) (e _),
     hr.triv_of_even (by simp), Circle.coe_one]
   change At _ (algebraMap (AF F) (AE F E) (1 + atPlace v (a.1 - 1)) - 1)
-  rw [map_add, map_one, add_sub_cancel_left]
+  rw [map_add (f := _), map_one, add_sub_cancel_left]
   exact at_tensAt v ((a.1 - 1) ⊗ₜ[F] 1)
 
 theorem selfDual {B : Base F E} {r s : ℕ} (hY : Y.IsHerm σ B r s) (hd : ((1 : E) • Y.Jᵀ).det ≠ 0) :

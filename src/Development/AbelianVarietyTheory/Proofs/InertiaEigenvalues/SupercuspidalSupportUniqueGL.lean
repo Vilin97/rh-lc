@@ -78,7 +78,7 @@ theorem isSubquotient_of_span {σ : Representation ℂ G W} {ρ : Representation
       LinearMap.ext fun r => by
         obtain ⟨s, hs, t, ht, e⟩ := Submodule.mem_sup.1 (show ι r ∈ S.toSubmodule ⊔ T.toSubmodule from r.2)
         show l (ι (ρ g r)) = σ g (l (ι r))
-        rw [ι.isIntertwining, ← e, map_add, hl' ⟨s, hs⟩ t ht, ← f.isIntertwining]
+        rw [ι.isIntertwining, ← e, map_add (f := _), hl' ⟨s, hs⟩ t ht, ← f.isIntertwining]
         exact hl' (S.toRepresentation g ⟨s, hs⟩) _ (T.apply_mem_toSubmodule g ht)⟩
     have hF : F = 0 := (Representation.IsIrreducible.surjective_or_eq_zero F).resolve_left fun h => hn ⟨R, F, h⟩
     intro s hs
@@ -341,7 +341,7 @@ theorem exists_scalar_multiProd {h N : ℕ} {d : Fin h → ℕ} (e : (Σ a, Fin 
   have h2 : ∀ y, piTensor σ g y = (∏ a, (ω a z : ℂ)) • y := by
     intro y
     induction y using PiTensorProduct.induction_on with
-    | add x y hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | smul_tprod c y =>
       rw [map_smul, smul_comm, piTensor_tprod, ← MultilinearMap.map_smul_univ]
       congr 2

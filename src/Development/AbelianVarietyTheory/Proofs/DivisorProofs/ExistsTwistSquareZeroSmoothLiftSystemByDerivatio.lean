@@ -22,10 +22,10 @@ def twistHom {B B₀ B' : Type} [CommRing B] [Algebra R B] [CommRing B₀] [Alge
   map_one' := by simp
   map_mul' b c := by
     have h := mul_eq_zero_of_mem_map hI (hmem (D R₀ B₀ (p b))) (hmem (D R₀ B₀ (p c)))
-    simp only [map_mul, Derivation.leibniz, map_add, hsm]
+    simp only [map_mul, Derivation.leibniz, map_add (f := _), hsm]
     linear_combination -h
   map_zero' := by simp
-  map_add' b c := by simp only [map_add]; abel
+  map_add' b c := by simp only [map_add (f := _)]; abel
   commutes' r := by
     simp only [SemiHom.map_algebraMap hp, Derivation.map_algebraMap, map_zero, add_zero, AlgHom.commutes]
 
@@ -49,7 +49,7 @@ def twistF : AffOp X₀ ⥤ CommAlgCat.{0} R where
       mp S.F b (mp S.F a c + θ U V a (D R₀ _ (S.p U c))) +
         θ V W b (D R₀ _ (S.p V (mp S.F a c + θ U V a (D R₀ _ (S.p U c)))))
     have h0 : S.p V (θ U V a (D R₀ _ (S.p U c))) = 0 := (S.ker V _).2 (hmem U V a _)
-    rw [map_add (S.p V), h0, add_zero, hcomp, mp_comp, map_add]
+    rw [map_add (S.p V), h0, add_zero, hcomp, mp_comp, map_add (f := _)]
     abel)
 
 def twistSys : Sys I π s₀ where
@@ -58,7 +58,7 @@ def twistSys : Sys I π s₀ where
   semi := S.semi
   nat {U V} a b := by
     change S.p V (mp S.F a b + θ U V a (D R₀ _ (S.p U b))) = _
-    rw [map_add, (S.ker V _).2 (hmem U V a _), add_zero]
+    rw [map_add (f := _), (S.ker V _).2 (hmem U V a _), add_zero]
     exact S.nat a b
   surj := S.surj
   ker := S.ker
@@ -94,7 +94,7 @@ theorem exists_twist : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Ide
     intro U V W a b
     let ψ : Ω[Sec s₀ U.unop.1⁄R₀] →+ S.F.obj W :=
       AddMonoidHom.mk' (fun x ↦ mp S.F b (θ U V a x) + θ V W b (p1 (OAff s₀) a x)) (fun x y ↦ by
-        simp only [map_add]; abel)
+        simp only [map_add (f := _)]; abel)
     have e : ψ = θ U W (a ≫ b) := by
       refine huniq U W (a ≫ b) ψ ⟨fun c x ↦ ?_, fun x ↦ ?_, fun w ↦ ?_⟩
       · show mp S.F b (θ U V a (S.p U c • x)) + θ V W b (p1 (OAff s₀) a (S.p U c • x)) =

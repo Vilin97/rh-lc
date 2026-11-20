@@ -268,7 +268,7 @@ theorem apply_eq_zero {g g' : ℕ} {M : Type} (ty : Fin g → (E →+* ℂ)) (ty
     | add u w _ _ hu hw =>
       have : (fun j => ty j a * (u + w) j) = (fun j => ty j a * u j) + fun j => ty j a * w j := by
         funext j; simp [mul_add]
-      rw [this, map_add, map_add, Pi.add_apply, Pi.add_apply, hu, hw, mul_add]
+      rw [this, map_add (f := _), map_add (f := _), Pi.add_apply, Pi.add_apply, hu, hw, mul_add]
     | smul s w _ hw =>
       have : (fun j => ty j a * (s • w) j) = (s : ℂ) • fun j => ty j a * w j := by
         funext j; simp; ring
@@ -378,7 +378,7 @@ theorem exists_cmLat (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) {
           funext k; simp; ring
       have h6 := congrArg L h5
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_nsmul, hLv, map_add, map_smul, hL, smul_zero, zero_add, map_sum] at h6
+        rw [map_nsmul, hLv, map_add (f := _), map_smul, hL, smul_zero, zero_add, map_sum] at h6
       refine h6.trans (Finset.sum_congr rfl fun j _ => ?_)
       rw [map_nsmul, map_nsmul, hf]
       simp only [LinearEquiv.apply_symm_apply]
@@ -463,7 +463,7 @@ theorem exists_cmLat_abelianPart : ∀ (E : Type) [Field E] [NumberField E] [IsC
     have hper := Uw.period k ⟨_, hs⟩
     have key := apply_eq_zero _ tyB π (Uw.Pm k ⟨_, hs⟩) hper.2.2.2.1 (fun b m j => by
       rw [← funext (hper.1 b m), hπ, hπ, map_smul, AnArc.La.smul_y, AnArc.La.smul_l, A.ct_smul, AnArc.coe_FLam,
-        ← map_add, hB.1]) i (Uw.Pm k ⟨_, hs⟩ a) (Uw.Pm k ⟨_, hs⟩ t) (by simp [hπ, hty, htl]) c' (fun j hj => by
+        ← map_add (f := _), hB.1]) i (Uw.Pm k ⟨_, hs⟩ a) (Uw.Pm k ⟨_, hs⟩ t) (by simp [hπ, hty, htl]) c' (fun j hj => by
       rw [Uw.Pm_eq, Uw.Pm_eq, ht, perFr_flow _ hξ.2.1 hb1 _ _ ha, perFr_flow _ hξ.2.1 hb1 _ _ hξ.2.1, hj, hc'])
     rw [hπ, hy a ha, map_zero, zero_add, ← hL] at key
     exact key

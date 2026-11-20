@@ -96,11 +96,11 @@ theorem exists_lift {θ : InfFam D} {W : HSp D} {S : D.what₂.Tau → SPar} {M 
     ∃ φ : B →ₗ[ℂ] A, ∀ y (u : ∀ τ, lowT M τ), e (φ y) (fun τ => (u τ : M.sm τ)) = L y (PiTensorProduct.tprod ℂ u) := by
   let L₁ : A →ₗ[ℂ] ((∀ τ, lowT M τ) → GA D W → ℂ) :=
     { toFun := fun t u => e t (fun τ => (u τ : M.sm τ))
-      map_add' := fun a b => by rw [map_add]; rfl
+      map_add' := fun a b => by rw [map_add (f := _)]; rfl
       map_smul' := fun a b => by rw [map_smul]; rfl }
   let L₂ : B →ₗ[ℂ] ((∀ τ, lowT M τ) → GA D W → ℂ) :=
     { toFun := fun y u => L y (PiTensorProduct.tprod ℂ u)
-      map_add' := fun a b => by rw [map_add]; rfl
+      map_add' := fun a b => by rw [map_add (f := _)]; rfl
       map_smul' := fun a b => by rw [map_smul]; rfl }
   obtain ⟨φ, hφ⟩ := exists_factor L₁ L₂ j hj fun x => (h x).imp fun t ht =>
     funext fun u => eq_on_low h1 h2 (he t) (hL (j x)) v hv ht u

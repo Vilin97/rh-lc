@@ -456,7 +456,7 @@ theorem stepChar_of (hT : QdetTens) (hC : CayleyHam) : StepChar := by
     refine PolyFn.pow (PolyFn.sub (polyFn_qdet _) ?_) _
     unfold capP
     refine PolyFn.algProd _ fun t => ?_
-    simp only [map_add, map_sub]
+    simp only [map_add (f := _), map_sub]
     exact (PolyFn.alg.sub (PolyFn.const _)).add (PolyFn.const _)
   have hF : ∀ u, u ≠ -a → F u = 0 := by
     intro u hu

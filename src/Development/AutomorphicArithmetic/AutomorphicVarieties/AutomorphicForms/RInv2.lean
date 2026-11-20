@@ -205,7 +205,7 @@ theorem isCuspidal_invT {φ : GA E a → ℂ} (hl : ∀ γ g, φ (ratGL E a γ *
     hF.image_of_equiv em.toEquiv
       (MeasurePreserving.symm em ⟨em.measurable, rfl⟩).quasiMeasurePreserving er fun y x => by
         change e (e.symm y.1 + x) = y.1 + e x
-        rw [map_add, e.apply_symm_apply]
+        rw [map_add (f := _), e.apply_symm_apply]
   have key := h (a - r) (by omega) (by omega) _ _ hμ' hF' (revGL a (Ad E) * invT a (Ad E) g)
   rw [setIntegral_map_equiv, Set.preimage_image_eq _ em.injective] at key
   rw [← key]

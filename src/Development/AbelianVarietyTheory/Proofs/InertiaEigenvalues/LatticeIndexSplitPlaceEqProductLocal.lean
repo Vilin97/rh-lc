@@ -166,11 +166,11 @@ theorem coords_surj (he : IsSplitIdem D e) (hπ : Chart e v π) (hβ : Frame W e
     · rw [hy₂, hxb]; exact hb j
   · change (β⁻¹).1 *ᵥ (fun k => π (e * y₁ k + cA D e * y₂ k)) = a
     have : (fun k => π (e * y₁ k + cA D e * y₂ k)) = fun k => π (y₁ k) := funext fun k => by
-      simp [map_add, map_mul, h1, h0]
+      simp [map_add (f := _), map_mul, h1, h0]
     rw [this, hAa]
   · change (fun i => π (cA D (e * y₁ i + cA D e * y₂ i))) ᵥ* (G * β.1) = b
     have : (fun i => π (cA D (e * y₁ i + cA D e * y₂ i))) = fun k => π (cA D (y₂ k)) := funext fun k => by
-      simp [map_add, map_mul, h1, h0, hcc]
+      simp [map_add (f := _), map_mul, h1, h0, hcc]
     rw [this, hy₂, hxb]
 
 end GlobalTheory.SplitIndexLocal

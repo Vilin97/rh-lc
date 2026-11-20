@@ -144,7 +144,7 @@ theorem coeff_aeval_smul_X [Fintype σ] (t : σ → ℂ) (Q : MvPolynomial σ �
     by_cases e : m = n
     · subst e; simp [mul_comm]
     · simp [e, Ne.symm e]
-  | add P Q hP hQ => simp only [map_add, hP, hQ, MvPolynomial.coeff_add, mul_add]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ, MvPolynomial.coeff_add, mul_add]
 
 theorem polyDeriv_barP_exp [Fintype σ] [DecidableEq σ] (P : MvPolynomial σ ℂ) (u : σ → W)
     (π : σ → W →L[ℂ] ℂ) (hπ : ∀ s s', π s (u s') = if s = s' then 1 else 0) (t : σ → ℝ) (C : ℝ) :

@@ -15,11 +15,11 @@ theorem kg_form_rTensor (hB : ∀ φ ψ v w, B (φ ⊗ₜ v) (ψ ⊗ₜ w) = H �
     B (A.rTensor _ x) y + B x (A.rTensor _ y) = s * B x y := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply]; linear_combination hx + hx'
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply]; linear_combination hx + hx'
   | tmul φ v =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add]; linear_combination hy + hy'
+    | add y y' hy hy' => simp only [map_add (f := _)]; linear_combination hy + hy'
     | tmul ψ w =>
       simp only [LinearMap.rTensor_tmul, hB]
       linear_combination (star w ⬝ᵥ v) * hA ψ φ
@@ -29,11 +29,11 @@ theorem kg_form_lTensor (hB : ∀ φ ψ v w, B (φ ⊗ₜ v) (ψ ⊗ₜ w) = H �
     B ((Matrix.toLin' D).lTensor V x) y = B x ((Matrix.toLin' D).lTensor V y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul φ v =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul ψ w =>
       simp only [LinearMap.lTensor_tmul, hB, Matrix.toLin'_apply]
       rw [Matrix.star_mulVec, hD, ← Matrix.dotProduct_mulVec]

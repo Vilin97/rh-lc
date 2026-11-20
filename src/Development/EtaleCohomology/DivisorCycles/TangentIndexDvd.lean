@@ -22,7 +22,7 @@ theorem dAt_mul (f g : MP C N) (x Y : Mat C N) :
   rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun p _ => ?_
   rw [Derivation.leibniz]
-  simp only [ev, smul_eq_mul, map_add, map_mul]
+  simp only [ev, smul_eq_mul, map_add (f := _), map_mul]
   ring
 
 theorem mem_img {Γ : Type} [Group Γ] (ρ : Γ →* GL (Fin N) C) (U : Subgroup Γ) (x : Mat C N) :

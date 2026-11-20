@@ -170,7 +170,7 @@ theorem dbarAdj_gauge {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [Fin
     rw [d10_comp_continuousLinearMap s (reframe τ γ) P _ hRc hsR,
       d10_comp_of_differentiableAt (fun Q => (Real.log (h Q) : ℂ)) (reframe τ γ) P _ hRc hlog, hRv, d10_finset_sum', d10_sum_smul_vert]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [pointDifference, map_sum, map_add, map_smul, Finset.sum_smul, smul_add,
+      simp only [pointDifference, map_sum, map_add (f := _), map_smul, Finset.sum_smul, smul_add,
       Finset.sum_add_distrib, smul_smul, gauge, smul_eq_mul]
   have contrΦ : ∀ (c : Fin g) (w : Ext (n + n + g)), contr (dzb n c) (frameAt n τ γ P.1 w) =
       ∑ d, star ((den γ (τ P.1))⁻¹ c d) • frameAt n τ γ P.1 (contr (dzb n d) w) :=

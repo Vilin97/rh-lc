@@ -35,7 +35,7 @@ theorem cechZero_of_hypZero_of_closed_map : ∀ {ι : Type} [LinearOrder ι] {E 
   let Ψ : (Finset ι → E) →+ (Finset ι → E) := AddMonoidHom.mk' (fun c => cup Φ c) (by
     intro c c'
     funext u
-    simp only [cup, Pi.add_apply, map_add, Finset.sum_add_distrib])
+    simp only [cup, Pi.add_apply, map_add (f := _), Finset.sum_add_distrib])
   have hΨ : ∀ c, Ψ c = cup Φ c := fun c => rfl
   let γ : Finset ι → E → E := fun s x => if h : s.Nonempty then Φ x {s.max' h} else 0
   refine cechZero_of_hypZero_filtered d N T Ψ γ hdd hN hT hd ?_ ?_ ?_ ?_ a b hH

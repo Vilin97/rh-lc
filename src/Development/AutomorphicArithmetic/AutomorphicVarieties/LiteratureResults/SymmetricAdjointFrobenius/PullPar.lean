@@ -87,7 +87,7 @@ include hs
 private theorem pFin_ext (x : Ad E) : pFin E (s x) = finMap σ (pFin E x) := by
   have hf : Continuous ((pFin E).comp s) := continuous_snd.comp hs.1
   have h1 : ∀ x, pFin E (s x) = pFin E (s (zf (pFin E x))) := fun x => by
-    conv_lhs => rw [split x, map_add, map_add]
+    conv_lhs => rw [split x, map_add (f := _), map_add (f := _)]
     rw [show pFin E (s (TR.sInf E _)) = 0 from fin_kill _ hf _, zero_add]
   rw [h1]
   refine congrFun ((GroundTheory.Automorphic.AdelicGLn.denseRange_algebraMap_finiteAdeleRing E).equalizer
@@ -100,7 +100,7 @@ private theorem pInf_ext (x : Ad E) (w : InfinitePlace E) :
   let f : Ad E →+* ℝ := (Pi.evalRingHom (fun _ => ℝ) w).comp ((TR.pInf E).comp s)
   have hf : Continuous f := (continuous_apply w).comp (continuous_pInf.comp hs.1)
   have h1 : ∀ x, f x = f (TR.sInf E (TR.pInf E x)) := fun x => by
-    conv_lhs => rw [split x, map_add, inf_kill f hf, add_zero]
+    conv_lhs => rw [split x, map_add (f := _), inf_kill f hf, add_zero]
   let g : TR.Rinf E →+* ℝ :=
     { toFun := fun t => f (TR.sInf E t)
       map_one' := by
@@ -109,7 +109,7 @@ private theorem pInf_ext (x : Ad E) (w : InfinitePlace E) :
         exact this.symm
       map_mul' := fun a b => by rw [map_mul, map_mul]
       map_zero' := by rw [map_zero, map_zero]
-      map_add' := fun a b => by rw [map_add, map_add] }
+      map_add' := fun a b => by rw [map_add (f := _), map_add (f := _)] }
   obtain ⟨v, hv⟩ := ringHom_pi g
   have h2 : ∀ x, TR.pInf E (s x) w = TR.pInf E x v := fun x => (h1 x).trans (hv _)
   have h3 : v = w.comap (σ : E →+* E) := by

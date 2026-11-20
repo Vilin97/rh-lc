@@ -181,14 +181,14 @@ theorem symp_add_left (σ : E →ₐ[F] E) {n d : ℕ} (ξ : AE F E) (JA : Matri
     GlobalTheory.WeilM.symp (R := AF F) (cA σ) ξ JA JB (x + x') y =
       GlobalTheory.WeilM.symp (R := AF F) (cA σ) ξ JA JB x y + GlobalTheory.WeilM.symp (R := AF F) (cA σ) ξ JA JB x' y := by
   unfold GlobalTheory.WeilM.symp GlobalTheory.WeilM.hTens
-  simp only [Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add]
+  simp only [Matrix.add_apply, add_mul, Finset.sum_add_distrib, mul_add, map_add (f := _)]
 
 theorem symp_add_right (σ : E →ₐ[F] E) {n d : ℕ} (ξ : AE F E) (JA : Matrix (Fin n) (Fin n) (AE F E))
     (JB : Matrix (Fin d) (Fin d) (AE F E)) (x y y' : Matrix (Fin n) (Fin d) (AE F E)) :
     GlobalTheory.WeilM.symp (R := AF F) (cA σ) ξ JA JB x (y + y') =
       GlobalTheory.WeilM.symp (R := AF F) (cA σ) ξ JA JB x y + GlobalTheory.WeilM.symp (R := AF F) (cA σ) ξ JA JB x y' := by
   unfold GlobalTheory.WeilM.symp GlobalTheory.WeilM.hTens
-  simp only [Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem symp_zero_left (σ : E →ₐ[F] E) {n d : ℕ} (ξ : AE F E) (JA : Matrix (Fin n) (Fin n) (AE F E))
     (JB : Matrix (Fin d) (Fin d) (AE F E)) (y : Matrix (Fin n) (Fin d) (AE F E)) :

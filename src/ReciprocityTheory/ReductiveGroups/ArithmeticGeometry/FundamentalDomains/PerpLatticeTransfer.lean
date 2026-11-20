@@ -137,7 +137,7 @@ private lemma herm_add_left_of_matrix (G : Matrix (Fin r) (Fin r) E) (x y z : Fi
 private lemma herm_add_right_of_matrix (G : Matrix (Fin r) (Fin r) E) (x y z : Fin r → E) :
     herm G x (y + z) = herm G x y + herm G x z := by
   unfold herm cc
-  simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 private lemma herm_smul_left_of_matrix (G : Matrix (Fin r) (Fin r) E) (e : E) (x y : Fin r → E) :
     herm G (e • x) y = e * herm G x y := by

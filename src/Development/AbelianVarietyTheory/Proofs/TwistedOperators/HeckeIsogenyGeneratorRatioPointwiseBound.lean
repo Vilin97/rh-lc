@@ -31,7 +31,7 @@ theorem norm_le_of_valueId {g n : ℕ} (Hm Hm' : Matrix (Fin g) (Fin g) ℂ) (hH
     intro m
     have e1 : hermForm Hm ((p : ℂ) • w + (p : ℂ) • wm m) ((p : ℂ) • w + (p : ℂ) • wm m) =
         hermForm Hm' (h w + h (wm m)) (h w + h (wm m)) := by
-      rw [← map_add, hHH, ← smul_add, GlobalTheory.UnitFrameGen.hermForm_smul_left,
+      rw [← map_add (f := _), hHH, ← smul_add, GlobalTheory.UnitFrameGen.hermForm_smul_left,
         GlobalTheory.UnitFrameGen.hermForm_smul_right, hs]
       ring
     rw [e1, hfa m, GlobalTheory.UnitFrameGen.hermForm_add_left, GlobalTheory.UnitFrameGen.hermForm_add_right,

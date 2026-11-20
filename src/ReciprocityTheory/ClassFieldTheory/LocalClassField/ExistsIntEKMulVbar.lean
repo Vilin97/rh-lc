@@ -70,7 +70,7 @@ def vOn : multOf p K →+ ℤ where
     rw [vOnFun_spec]; simp
   map_add' x y := by
     apply Int.cast_injective (α := ℝ)
-    rw [Int.cast_add, vOnFun_spec, vOnFun_spec, vOnFun_spec, AddSubgroup.coe_add, map_add, mul_add]
+    rw [Int.cast_add, vOnFun_spec, vOnFun_spec, vOnFun_spec, AddSubgroup.coe_add, map_add (f := _), mul_add]
 
 theorem vOn_spec (x : multOf p K) : (vOn p K x : ℝ) = eK p K * vbar p x.1 := vOnFun_spec p K x
 

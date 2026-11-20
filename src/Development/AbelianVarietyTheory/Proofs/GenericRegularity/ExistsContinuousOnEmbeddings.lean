@@ -156,7 +156,7 @@ theorem exists_continuousOn_embeddings (K : Type) [Field K] [CharZero K] (σ : T
     have hmon : (minpoly F pb.gen).Monic := minpoly.monic pb.isIntegral_gen
     conv_rhs => rw [hmon.as_sum, pb.natDegree_minpoly]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
+      rw [Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
       Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
       Finset.sum_range]
     simp [cf, hτ]

@@ -56,7 +56,7 @@ theorem sympW : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G : GridD
   unfold symp symplO
   rw [hA, hB1, hB2]
   conv_rhs => arg 2; rw [← GlobalTheory.DualPairCheck.trace_cA]
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
   have hg : (((-((spW G i j).gram.map (incA D))).map (cA D))ᵀ) = -((spW G i j).gram.map (incA D)) := by
     rw [Matrix.map_neg _ (map_neg _), transpose_neg, gram_conj_transpose]

@@ -60,7 +60,7 @@ theorem l2form : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField
     have i1 := (wc Φ (hDS hΦ)).1 h
     have i2 := (wc Ψ (hDS hΨ)).1 h
     have e : ∀ g, theta om (Φ + c • Ψ) g h = theta om Φ g h + c * theta om Ψ g h := fun g => by
-      simp only [theta, map_add, map_smul]
+      simp only [theta, map_add (f := _), map_smul]
       rw [thetaSum_add F (pres _ Φ (hDS hΦ)) ((schA F _).smul_mem c (pres _ Ψ (hDS hΨ))), thetaSum_smul]
     simp only [Model.I, e, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     rw [integral_add i1 (i2.const_mul c), integral_const_mul]

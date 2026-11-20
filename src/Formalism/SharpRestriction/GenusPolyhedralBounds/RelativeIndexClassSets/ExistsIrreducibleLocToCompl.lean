@@ -200,7 +200,7 @@ theorem loc_span (s : Set X.Forms) :
       exact Submodule.subset_span ⟨x, hx, rfl⟩
     · simp
     · intro x y _ _ hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
     · intro a x _ hx
       rw [bc_smul_int]
@@ -317,7 +317,7 @@ def toWl : B.Mlat j ka →ₛₗ[algebraMap (𝓞 B.KO) (X.Ol la)] ↥(T0.MW X k
   map_add' F G := by
     apply Subtype.ext; apply Subtype.ext
     show X.bc la (X.inc ka ((F + G : B.Mlat j ka) : B.Cusp j ka)) = X.bc la (X.inc ka F) + X.bc la (X.inc ka G)
-    rw [Submodule.coe_add, map_add, map_add]
+    rw [Submodule.coe_add, map_add (f := _), map_add (f := _)]
   map_smul' a F := by
     apply Subtype.ext; apply Subtype.ext
     show X.bc la (X.inc ka ((a • F : B.Mlat j ka) : B.Cusp j ka)) =

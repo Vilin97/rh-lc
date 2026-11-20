@@ -143,7 +143,7 @@ theorem side_one {La : Ix r s → ℚ} {T : Type} [AddCommGroup T] [Module ℂ T
   set lam : ℂ := ∑ _w : Unit, ∑ a, hD a * (La a : ℂ)
   have e2 : (∏ j, p j).eval (c0 : ℂ) • u - ∑ i, c i • φ i (ι f) = ∑ i, φ i (z i) := by
     rw [e1, ← Finset.sum_sub_distrib]
-    exact Finset.sum_congr rfl fun i _ => by rw [← hyz i, ← hc i, map_add, map_smul, add_sub_cancel_left]
+    exact Finset.sum_congr rfl fun i _ => by rw [← hyz i, ← hc i, map_add (f := _), map_smul, add_sub_cancel_left]
   have e3 : ∑ i, φ i (z i) = 0 := by
     refine low_eig (T := one act' (dg Unit hD)) (lam := lam)
       (Submodule.sum_mem _ fun i _ => low_map (φ i) (fun v => hφ i _ v) (hz i)) ?_

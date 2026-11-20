@@ -258,7 +258,7 @@ theorem IsExp.one {m : ℕ} : IsExp K (1 : PS V m d) 0 := ⟨map_zero _, by rw [
 omit [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V] [CharZero V] in
 theorem IsExp.mul {m : ℕ} {u v : PS V m d} {f g : PS K m d} (hu : IsExp K u f) (hv : IsExp K v g) :
     IsExp K (u * v) (f + g) :=
-  ⟨by rw [map_add, hu.1, hv.1, add_zero], by
+  ⟨by rw [map_add (f := _), hu.1, hv.1, add_zero], by
     rw [gt_expS_add f g hu.1 hv.1, ← hu.2, ← hv.2]; exact map_mul _ _ _⟩
 
 omit [IsDomain V] [IsDiscreteValuationRing V] [IsAdicComplete (maximalIdeal V) V] [CharZero V] in
@@ -343,14 +343,14 @@ theorem exp_theta (hh : B.IsCanonGauge K h) {Θ : PS V 3 d} (hΘ : IsTheta B K h
       - lg (B.hL K h w0) (uP B 0 + uP B 2) - lg (B.hL K h w0) (uP B 1 + uP B 2) + lg (B.hL K h w0) (uP B 0)
       + lg (B.hL K h w0) (uP B 1) + lg (B.hL K h w0) (uP B 2)) := by
     constructor
-    · simp only [map_add, map_sub, cc_lg H0 (p _), cc_lg H0 (gp_add (p _) (p _)),
+    · simp only [map_add (f := _), map_sub, cc_lg H0 (p _), cc_lg H0 (gp_add (p _) (p _)),
         cc_lg H0 (gp_add (gp_add (p _) (p _)) (p _)), sub_zero, add_zero]
     · have e : ∀ j : Fin 3, mp K (uP B j).val = pt K d j := fun j => mp_pt K j
       simp only [lg, mp_add (p _) (p _), mp_add (gp_add (p _) (p _)) (p _), e]
       exact hΘ
   have ha : ∀ j, GP (![x, y, z] j).val := by intro j; fin_cases j; exacts [hx, hy, hz]
   have := base.ev ![x, y, z] ha
-  simp only [map_add, map_sub, evK_lg _ _ ha (p _), evK_lg _ _ ha (gp_add (p _) (p _)),
+  simp only [map_add (f := _), map_sub, evK_lg _ _ ha (p _), evK_lg _ _ ha (gp_add (p _) (p _)),
     evK_lg _ _ ha (gp_add (gp_add (p _) (p _)) (p _)), sL_uP] at this
   exact this
 
@@ -444,7 +444,7 @@ theorem kappa_cube {Θ : PS V 3 d} (hΘ : IsTheta B K h w0 Θ) {n : ℕ} {mu : M
     simp only [q, a, sL_uP, Equiv.symm_apply_apply]
   have := congrArg (evS a) e
   simp only [map_mul, map_prod, map_pow, evS_comp3] at this
-  simp only [evS_comp, map_add, sL_mv, s] at this
+  simp only [evS_comp, map_add (f := _), sL_mv, s] at this
   exact this
 
 end Logs
@@ -484,7 +484,7 @@ theorem GlobalTheory.PlaceInt.prod_trUnit_mul_shift_kappa : ∀ (V : Type) [Comm
     | succ k ih =>
       intro f
       rw [Function.iterate_succ_apply, ih]
-      simp only [ψ, evS_comp, map_add, sL_uP, ca, Nat.cast_succ, add_smul, one_smul, add_assoc]
+      simp only [ψ, evS_comp, map_add (f := _), sL_uP, ca, Nat.cast_succ, add_smul, one_smul, add_assoc]
   haveI : IsDomain (PS V n d) := NoZeroDivisors.to_isDomain _
   haveI : CharZero (PS V n d) := (MvPowerSeries.C : V →+* PS V n d).charZero_iff (MvPowerSeries.C_injective) |>.1 inferInstance
   have goal := core ψ (evS fun _ => (0 : SP B n)) (evS a) (evS fun b => (-1 : O) • a b)
@@ -492,8 +492,8 @@ theorem GlobalTheory.PlaceInt.prod_trUnit_mul_shift_kappa : ∀ (V : Type) [Comm
     (fun f => by simp only [ψ, evS_comp, map_zero]) (fun f => by simp only [ψ, evS_comp, ca])
     (fun f => by simp only [evS_comp, map_zero]) (fun f => by simp only [evS_comp, ca])
     (fun f => by simp only [evS_comp, map_zero])
-    (fun f => by simp only [ψ, evS_comp, map_add, sL_uP, ca, zero_add])
-    (fun f => by simp only [ψ, evS_comp, map_add, sL_uP, ca, hneg])
+    (fun f => by simp only [ψ, evS_comp, map_add (f := _), sL_uP, ca, zero_add])
+    (fun f => by simp only [ψ, evS_comp, map_add (f := _), sL_uP, ca, hneg])
     (by
       have e := kappa_zero hi hh hκ (m := n)
       rw [evS_zero] at e
@@ -515,12 +515,12 @@ theorem GlobalTheory.PlaceInt.prod_trUnit_mul_shift_kappa : ∀ (V : Type) [Comm
         congr 1
         funext j; fin_cases j; rfl
       rw [e]
-      simp only [ψ, evS_comp1, map_add, sL_uP, sL_cS]
+      simp only [ψ, evS_comp1, map_add (f := _), sL_uP, sL_cS]
       rfl)
     (by
       have e := kappa_cube hi hh hΘ hκ (uP B) a a
       simp only [hk0, theta_zero hi hh hΘ, Finset.prod_const_one, _root_.mul_one, evS_uP] at e
-      simp only [ψ, evS_comp, map_add, sL_uP, ca]
+      simp only [ψ, evS_comp, map_add (f := _), sL_uP, ca]
       exact e)
     (by
       simp only [map_prod, ψ, evS_comp1, sL_uP, ← Finset.prod_mul_distrib]
@@ -530,7 +530,7 @@ theorem GlobalTheory.PlaceInt.prod_trUnit_mul_shift_kappa : ∀ (V : Type) [Comm
         simp only [smallPointSubstitution_single_eq_constTerms, smallPointSubstitution_triple_eq_constTerms]
         exact (hu b).mul
       have := congrArg (evS ![uP B b, a b]) e
-      simp only [map_mul, map_pow, evS_comp1, evS_comp3, map_add, sL_uP, sL_cS, evS_C] at this
+      simp only [map_mul, map_pow, evS_comp1, evS_comp3, map_add (f := _), sL_uP, sL_cS, evS_C] at this
       rw [evS_zero1]
       exact this)
     (by

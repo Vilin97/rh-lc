@@ -50,7 +50,7 @@ theorem jetRing_local_nil : ∀ (I : Type) [Fintype I] (n : ℕ) (J : JetRing �
   refine IsLocalRing.of_nonunits_add fun a b ha hb ↦ ?_
   intro hab
   have h1 := hab.map J.π
-  rw [map_add, key a ha, key b hb, add_zero] at h1
+  rw [map_add (f := _), key a ha, key b hb, add_zero] at h1
   exact not_isUnit_zero h1
 
 theorem exists_smooth_modulus_point : GlobalTheory.Published.DelignePappasModel → ∀ (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (𝔠 : FracId F)

@@ -41,7 +41,7 @@ def globLat (g : GL n 𝒜) (Λ : Submodule (𝓞 E) (n → E)) : Submodule (�
     latS (F := F) (FiniteAdeleRing (𝓞 F) F) 𝒮 Λ}
   add_mem' := by
     intro x y hx hy
-    simp only [Set.mem_setOf_eq, Pi.add_apply, map_add] at *
+    simp only [Set.mem_setOf_eq, Pi.add_apply, map_add (f := _)] at *
     rw [show (fun i => ιA (x i) + ιA (y i)) = (fun i => ιA (x i)) + (fun i => ιA (y i)) from rfl,
       mulVec_add]
     exact add_mem hx hy

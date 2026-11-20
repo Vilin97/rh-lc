@@ -23,7 +23,7 @@ theorem continuous_functional_dwAct (n : ℕ) (f : MvPolynomial (Fin n × Fin n)
       rw [← MvPolynomial.algebraMap_eq, AlgHom.commutes]
     simp_rw [e]
     exact continuous_const
-  | add p q hp hq => intro ψ; simp only [map_add]; exact (hp ψ).add (hq ψ)
+  | add p q hp hq => intro ψ; simp only [map_add (f := _)]; exact (hp ψ).add (hq ψ)
   | mul_X p v hp =>
     intro ψ
     have e : ∀ g : GL (Fin n) ℂ, ψ (Formalism.UG.dwAct ℂ n n g (p * X v)) =
@@ -99,7 +99,7 @@ theorem finite_continuous_wtOp : ∀ (n : ℕ) (ι : Type) [Fintype ι] [Decidab
     refine Continuous.mul (continuous_finset_prod _ fun τ _ => ?_) continuous_const
     exact (continuous_dual_dualWeylRep n _ (x τ) ((b τ).coord (p τ))).comp (continuous_apply τ)
   | add a a' ha ha' =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact ha.add ha'
 
 end GlobalTheory.WtCont

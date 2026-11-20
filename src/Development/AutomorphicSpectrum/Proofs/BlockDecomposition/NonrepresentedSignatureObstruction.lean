@@ -153,7 +153,7 @@ theorem eq_or_conj_of_restrict {F E : Type} [Field F] [NumberField F] [Field E] 
   · left
     ext x
     obtain ⟨u, v, hu, hv, rfl⟩ := hdec x
-    simp only [map_add, map_mul, hfix u hu, hfix v hv, sub_eq_zero.1 h3]
+    simp only [map_add (f := _), map_mul, hfix u hu, hfix v hv, sub_eq_zero.1 h3]
   · right
     have hθ' : τ' θ = starRingEnd ℂ (τ θ) := by
       rw [← hst, hθ, map_neg]
@@ -161,7 +161,7 @@ theorem eq_or_conj_of_restrict {F E : Type} [Field F] [NumberField F] [Field E] 
     have hc : ∀ w : E, star w = w → starRingEnd ℂ (τ w) = τ w := fun w hw => by rw [← hst, hw]
     ext x
     obtain ⟨u, v, hu, hv, rfl⟩ := hdec x
-    simp only [RingHom.comp_apply, map_add, map_mul, hfix u hu, hfix v hv, hc u hu, hc v hv, hθ']
+    simp only [RingHom.comp_apply, map_add (f := _), map_mul, hfix u hu, hfix v hv, hc u hu, hc v hv, hθ']
 
 theorem frame_of_congr {E : Type} [Field E] [StarRing E] {m t k n : ℕ} (G P : Matrix (Fin m) (Fin m) E)
     (hP : P.det ≠ 0) (e : Fin m ≃ Fin t ⊕ ((Fin k ⊕ Fin k) ⊕ Fin n)) (B : Matrix (Fin t) (Fin t) E)

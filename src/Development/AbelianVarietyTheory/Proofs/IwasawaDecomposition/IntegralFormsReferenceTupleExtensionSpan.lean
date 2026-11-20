@@ -52,7 +52,7 @@ theorem exists_coord_of_mem_bcPol (φ : K →+* K') {σ : Type} (F : K' →+ K) 
     obtain ⟨q, hq, e⟩ := hx a
     obtain ⟨q', hq', e'⟩ := hy a
     exact ⟨q + q', N.add_mem hq hq', fun m => by
-      rw [MvPolynomial.coeff_add, MvPolynomial.coeff_add, mul_add, map_add, e, e']⟩
+      rw [MvPolynomial.coeff_add, MvPolynomial.coeff_add, mul_add, map_add (f := _), e, e']⟩
   | smul r x _ hx =>
     intro a
     obtain ⟨q, hq, e⟩ := hx (a * r)
@@ -102,7 +102,7 @@ theorem integral_span_of_values (φ : K →+* K') {σ C M M' : Type} [AddCommGro
       rw [hev]
       exact bc_map_mem φ (hy c)
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul r x _ hx =>
       rw [← algebraMap_smul K' r x, map_smul, algebraMap_smul]
       exact Submodule.smul_mem _ _ hx

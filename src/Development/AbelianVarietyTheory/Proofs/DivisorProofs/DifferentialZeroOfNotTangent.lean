@@ -84,7 +84,7 @@ theorem eq_zero_of_isDiff_of_not_isTangent : ∀ (F : Type) [Field F] [NumberFie
     by_cases hf : TangentOrigin.evalPt (spMap TangentOrigin.fstC ≫ v.left) W hx' f =
         TangentOrigin.evalPt (u.ex 0).left W h0' f
     · have k2 := key (f + h)
-      rw [map_add, map_add, hf, add_sub_add_left_eq_sub] at k2
+      rw [map_add (f := _), map_add (f := _), hf, add_sub_add_left_eq_sub] at k2
       have e := (mul_eq_zero.1 k2).resolve_left (sub_ne_zero.2 hh)
       rwa [map_add, TrivSqZeroExt.snd_add, hdh, add_zero] at e
     · exact (mul_eq_zero.1 (key f)).resolve_left (sub_ne_zero.2 hf)

@@ -50,7 +50,7 @@ theorem dchi_single {μ : HChar E} {e : InfinitePlace E → ℤ} (h : IsMu μ e)
   have h2 := expo_conj h v
   simp only [expo, atEmb_conj, atEmb_emb, map_one, Complex.conj_I, Pi.single_neg, map_neg] at h1 h2
   have hd1 : dchi μ (Pi.single v 1) = 0 := by linear_combination h1 + h2
-  rw [← atEmb_emb, atEmb_eq, map_add, map_smul, map_smul, atEmb_emb, atEmb_emb, hd1]
+  rw [← atEmb_emb, atEmb_eq, map_add (f := _), map_smul, map_smul, atEmb_emb, atEmb_emb, hd1]
   rw [smul_zero, zero_add, Complex.real_smul]
 
 theorem dchi_neg_star {μ : HChar E} {e : InfinitePlace E → ℤ} (h : IsMu μ e) (z : Cinf E) :

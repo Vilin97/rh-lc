@@ -72,7 +72,7 @@ theorem allStart_of_proj (Y : FBChart C V O dd) (p : PairData Y d I) (hP : ProjS
     have e1 : Y.lg j = MvPowerSeries.X ((0 : Fin 1), j) + (Y.lg j - MvPowerSeries.X ((0 : Fin 1), j)) := by ring
     have h0 := AllStart.coeff_one_subst (Y.lg j - MvPowerSeries.X ((0 : Fin 1), j))
       (fun μ hμ => by rw [map_sub, Y.lg_lin j μ hμ, sub_self]) P hP0
-    rw [e1, MvPowerSeries.subst_add hPS, MvPowerSeries.subst_X hPS, map_add, h0, add_zero]
+    rw [e1, MvPowerSeries.subst_add hPS, MvPowerSeries.subst_X hPS, map_add (f := _), h0, add_zero]
     simp [P, MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_X]
   have hv : linAct (e g) v = v := by
     show linAct (e g) (∑ c, w c • p.u g c) = ∑ c, w c • p.u g c

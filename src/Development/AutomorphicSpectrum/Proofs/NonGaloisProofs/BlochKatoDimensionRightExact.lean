@@ -86,14 +86,14 @@ lemma φVB_actVB' (g : G) (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul v b => rw [actVB_tmul', φVB_tmul', φVB_tmul', actVB_tmul', PD.φ_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 lemma ιV_actVB' (g : G) (x : V ⊗[Qp] B) :
     ιV PD (LL := LL) (V := V) (actVB PD ρ g x) = actVdR PD ρ g (ιV PD (LL := LL) (V := V) x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul v b => rw [actVB_tmul', ιV_tmul', ιV_tmul', actVdR_tmul', PD.ι_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 lemma actVB_mul' (g h : G) (x : V ⊗[Qp] B) :
     actVB PD ρ (g * h) x = actVB PD ρ g (actVB PD ρ h x) := by
@@ -102,7 +102,7 @@ lemma actVB_mul' (g h : G) (x : V ⊗[Qp] B) :
   | tmul v b =>
     rw [actVB_tmul', actVB_tmul', actVB_tmul', map_mul, map_mul]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 lemma actVdR_mem_FilV' (g : G) (a : ℤ) (y : V ⊗[Qp] BdR)
     (hy : y ∈ FilV PD (LL := LL) (V := V) a) :
@@ -113,7 +113,7 @@ lemma actVdR_mem_FilV' (g : G) (a : ℤ) (y : V ⊗[Qp] BdR)
   | tmul v b =>
     exact ⟨ρ g v ⊗ₜ[Qp] ⟨PD.actdR g b.1, PD.Fil_G g a _ b.2⟩, rfl⟩
   | add x y hx hy =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact Submodule.add_mem _ hx hy
 
 include PD in
@@ -195,7 +195,7 @@ theorem tensor_onto
       obtain ⟨x, hx⟩ := hu
       obtain ⟨x', hx'⟩ := hu'
       refine ⟨x + x', ?_⟩
-      rw [map_add, ← hx, ← hx']
+      rw [map_add (f := _), ← hx, ← hx']
       abel
   have hB : ∀ w : V ⊗[Qp] BdR, ∃ x : V ⊗[Qp] B, φVB PD (LL := LL) (V := V) x = x ∧
       ιV PD (LL := LL) (V := V) x - w ∈ FilV PD (LL := LL) (V := V) 0 := by
@@ -210,17 +210,17 @@ theorem tensor_onto
     | add w w' hw hw' =>
       obtain ⟨x, hx, hy⟩ := hw
       obtain ⟨x', hx', hy'⟩ := hw'
-      refine ⟨x + x', by rw [map_add, hx, hx'], ?_⟩
+      refine ⟨x + x', by rw [map_add (f := _), hx, hx'], ?_⟩
       have := Submodule.add_mem _ hy hy'
-      rw [map_add]
+      rw [map_add (f := _)]
       convert this using 1
       abel
   obtain ⟨x₀, hx₀⟩ := hA u
   obtain ⟨x₁, hx₁, hy⟩ := hB (w - ιV PD (LL := LL) (V := V) x₀)
   refine ⟨x₀ + x₁, _, hy, ?_, ?_⟩
-  · rw [map_add, hx₁, ← hx₀]
+  · rw [map_add (f := _), hx₁, ← hx₀]
     abel
-  · rw [map_add]
+  · rw [map_add (f := _)]
     abel
 
 end General
@@ -283,7 +283,7 @@ theorem map_φVB (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [φVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_ιV (x : V ⊗[Qp] B) :
     AlgebraTensorModule.map f (LinearMap.id : BdR →ₗ[Qp] BdR) (ιV PD (LL := LL) x) =
@@ -291,7 +291,7 @@ theorem map_ιV (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [ιV]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_mem_FilV {a : ℤ} {y : V ⊗[Qp] BdR} (hy : y ∈ FilV PD (LL := LL) (V := V) a) :
     AlgebraTensorModule.map f (LinearMap.id : BdR →ₗ[Qp] BdR) y ∈ FilV PD (LL := LL) (V := V') a := by
@@ -300,7 +300,7 @@ theorem map_mem_FilV {a : ℤ} {y : V ⊗[Qp] BdR} (hy : y ∈ FilV PD (LL := LL
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem map_actVB {ρ : Representation LL G V} {ρ' : Representation LL G V'}
     (hf : ∀ g x, f (ρ g x) = ρ' g (f x)) (g : G) (x : V ⊗[Qp] B) :
@@ -309,7 +309,7 @@ theorem map_actVB {ρ : Representation LL G V} {ρ' : Representation LL G V'}
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB, hf]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 include PD in
 theorem tmul_one_injective {v w : V} (h : v ⊗ₜ[Qp] (1 : B) = w ⊗ₜ[Qp] (1 : B)) : v = w := by
@@ -384,14 +384,14 @@ theorem ιV_actVB (g : G) (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB, actVdR, ιV, PD.ι_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem φVB_actVB (g : G) (x : V ⊗[Qp] B) :
     φVB PD (LL := LL) (actVB PD ρ g x) = actVB PD ρ g (φVB PD (LL := LL) x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB, φVB, PD.φ_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem ker_cob : LinearMap.ker (cob ρ) = H0V ρ := by
   ext v
@@ -406,10 +406,10 @@ def Triples : Submodule LL ((G → V) × (V ⊗[Qp] B) × (V ⊗[Qp] BdR)) where
   add_mem' := by
     rintro a b ⟨h1, h2, h3, h4⟩ ⟨k1, k2, k3, k4⟩
     refine ⟨Submodule.add_mem _ h1 k1, fun g => ?_, Submodule.add_mem _ h3 k3, ?_⟩
-    · simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, add_tmul, h2, k2, map_add]
+    · simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, add_tmul, h2, k2, map_add (f := _)]
       abel
     · have := Submodule.add_mem _ h4 k4
-      simp only [Prod.fst_add, Prod.snd_add, map_add]
+      simp only [Prod.fst_add, Prod.snd_add, map_add (f := _)]
       convert this using 1
       abel
   smul_mem' := by

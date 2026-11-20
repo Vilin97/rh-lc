@@ -170,7 +170,7 @@ private theorem sub_C_constantCoeff_mem_span_X {σ : Type u} {A : Type u} [CommR
     have hadd : q + r - MvPolynomial.C (MvPolynomial.constantCoeff (q + r)) =
         (q - MvPolynomial.C (MvPolynomial.constantCoeff q)) +
           (r - MvPolynomial.C (MvPolynomial.constantCoeff r)) := by
-      simp only [map_add]
+      simp only [map_add (f := _)]
       ring
     rw [hadd]
     exact Ideal.add_mem _ hq hr

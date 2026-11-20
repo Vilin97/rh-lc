@@ -65,7 +65,7 @@ theorem inv_val_mem_adjoin {R : Type} [CommRing R] {m : ℕ} (g : GL (Fin m) R) 
   obtain ⟨u, hu⟩ := hu
   have h1 : Polynomial.aeval A p.divX * A = -algebraMap R _ (p.coeff 0) := by
     rw [← hdec] at hCH
-    simp only [map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C] at hCH
+    simp only [map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C] at hCH
     exact eq_neg_of_add_eq_zero_left hCH
   have key : ((-(↑u⁻¹ : R)) • Polynomial.aeval A p.divX) * A = 1 := by
     rw [smul_mul_assoc, h1, Algebra.algebraMap_eq_smul_one, ← hu, neg_smul_neg, smul_smul,

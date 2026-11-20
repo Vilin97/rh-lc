@@ -42,7 +42,7 @@ private noncomputable def formL {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field L]
     (Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ) →ₗ[ℂ]
       Module.Dual ℂ (⨂[ℂ] e : Emb l (fun v : V.frame.Vl => s.w v.1), nablaSq ℂ n (lam e.res)) →ₗ[ℂ] (UA L n → ℂ) :=
   LinearMap.mk₂ ℂ (toForm ι e)
-    (fun F F' ℓ => funext fun g => by simp only [toForm, Pi.add_apply, map_add])
+    (fun F F' ℓ => funext fun g => by simp only [toForm, Pi.add_apply, map_add (f := _)])
     (fun a F ℓ => funext fun g => by simp only [toForm, Pi.smul_apply, map_smul])
     (fun F ℓ ℓ' => rfl) (fun a F ℓ => rfl)
 

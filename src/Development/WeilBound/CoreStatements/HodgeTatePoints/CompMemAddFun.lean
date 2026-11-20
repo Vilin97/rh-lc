@@ -23,7 +23,7 @@ lemma comp_mem_addFun (p : ℕ) (e : X ≃+ Y) {f : Y → C} (hf : f ∈ addFun 
   have h : ∀ a b : Y, f (a + b) - f a - f b ∈ pInt R p := hf
   show ∀ a b : X, f (e (a + b)) - f (e a) - f (e b) ∈ pInt R p
   intro a b
-  rw [map_add]
+  rw [map_add (f := _)]
   exact h (e a) (e b)
 
 private theorem map_pbE_eq_of_addEquiv (e : X ≃+ Y) (SX : Submodule R (X → C)) (SY : Submodule R (Y → C))

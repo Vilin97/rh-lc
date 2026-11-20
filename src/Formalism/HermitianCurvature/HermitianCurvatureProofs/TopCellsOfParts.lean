@@ -183,7 +183,7 @@ def gA {p s : ℕ} (T : G.Mat (p + s)) : G.Mat s →ᴬ[ℝ] G.Mat (p + s) where
   linear := iotaL p s
   map_vadd' x v := by
     show T + iotaL p s (v + x) = iotaL p s v + (T + iotaL p s x)
-    rw [map_add]; abel
+    rw [map_add (f := _)]; abel
   cont := continuous_const.add (iotaC p s).continuous
 
 def Lc {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V] (c : ℂ) : V →L[ℝ] V :=

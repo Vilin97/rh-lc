@@ -106,7 +106,7 @@ theorem GlobalTheory.LinSchur.eq_smul_of_commute : ∀ {k : Type} [Field k] [Val
       funext Z
       simp only [cind, Pi.smul_apply, smul_eq_mul]
       split_ifs with hZ
-      · rw [mul_one, mul_one, show l Z = l (Z - y) + l y by rw [← map_add, sub_add_cancel],
+      · rw [mul_one, mul_one, show l Z = l (Z - y) + l y by rw [← map_add (f := _), sub_add_cancel],
           AddChar.map_add_eq_mul, hl1 _ hZ, one_mul]
       · simp
     have e2 : Mu l x = ψ0 (l y) • x := inj _ m1 _ (V.smul_mem _ hx) e1
@@ -114,7 +114,7 @@ theorem GlobalTheory.LinSchur.eq_smul_of_commute : ∀ {k : Type} [Field k] [Val
     rw [e2, hsmul x hx] at e3
     simp only [Pi.smul_apply, smul_eq_mul] at e3
     have hYy : ψ0 (l Y) = ψ0 (l (Y - y)) * ψ0 (l y) := by
-      rw [← AddChar.map_add_eq_mul, ← map_add, sub_add_cancel]
+      rw [← AddChar.map_add_eq_mul, ← map_add (f := _), sub_add_cancel]
     rw [hYy] at e3
     have e4 : ψ0 (l y) * (1 - ψ0 (l (Y - y))) * ι₂ x Y = 0 := by linear_combination e3
     rcases mul_eq_zero.mp e4 with h | h

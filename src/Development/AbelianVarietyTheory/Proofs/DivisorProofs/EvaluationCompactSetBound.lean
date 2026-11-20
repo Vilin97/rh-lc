@@ -73,7 +73,7 @@ theorem adelic_char_denom {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF
   have hev : ∀ v : Pl F, evFin F v x = algebraMap F (Fv F v) ξ + (m : Fv F v) * evFin F v A := fun v => by
     have e1 : evFin F v x = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v x.2 := rfl
     have e2 : evFin F v A = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v a := rfl
-    rw [e1, e2, hxa, map_add, map_nsmul, AlgHom.commutes, nsmul_eq_mul]
+    rw [e1, e2, hxa, map_add (f := _), map_nsmul, AlgHom.commutes, nsmul_eq_mul]
   have hsplit : ∀ t : AF F, t.1 = 0 → x * t = algebraMap F (AF F) ξ * t + (m : AF F) * A * t := fun t ht => by
     refine Prod.ext ?_ ?_
     · change x.1 * t.1 = (algebraMap F (AF F) ξ).1 * t.1 + ((m : AF F) * A).1 * t.1

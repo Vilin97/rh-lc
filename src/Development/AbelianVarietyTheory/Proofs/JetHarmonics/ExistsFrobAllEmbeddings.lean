@@ -17,7 +17,7 @@ def frobKer {R C : Type} [CommRing R] [Field C] (V : VF C) (f : R →+* C) (hf :
   carrier := {x | V.MM (f x)}
   add_mem' := fun {a b} ha hb => by
     show 0 < V.v (f (a + b))
-    rw [map_add]
+    rw [map_add (f := _)]
     exact V.v.map_lt_add ha hb
   zero_mem' := by
     show 0 < V.v (f 0)

@@ -51,7 +51,7 @@ theorem step (hN : ∀ a : Fin r, g (f a.castSucc) - f a.castSucc ∈ As (E := E
     exact As_mono f (Nat.lt_succ_iff.mp hi) this
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add, add_sub_add_comm]; exact Submodule.add_mem _ hx hy
+    rw [map_add (f := _), add_sub_add_comm]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     rw [map_smul, ← smul_sub]; exact Submodule.smul_mem _ a hx
 

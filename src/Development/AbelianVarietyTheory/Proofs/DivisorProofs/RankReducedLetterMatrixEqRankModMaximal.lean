@@ -241,7 +241,7 @@ theorem exists_unit_tie (T : LocLat G Qp LL O) (hT : IsCrys PD T.ρ) {n : ℕ}
     rw [E.jD_smul]
     exact Submodule.smul_mem _ _ hy
   · intro y z hy hz
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hy hz
 
 include E in

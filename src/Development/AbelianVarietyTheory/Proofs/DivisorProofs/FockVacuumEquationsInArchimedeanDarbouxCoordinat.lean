@@ -86,7 +86,7 @@ theorem mkD_mulP (d : Darboux B κ) (u : AF F)
 
 theorem mkD_add (d : Darboux B κ) (y y' : (κ → mixedEmbedding.mixedSpace F) × (κ → mixedEmbedding.mixedSpace F)) :
     mkD d (y + y') = mkD d y + mkD d y' := by
-  rw [mkD, mkD, mkD, ← map_add]
+  rw [mkD, mkD, mkD, ← map_add (f := _)]
   congr 1
   refine Prod.ext (funext fun i => ?_) (funext fun i => ?_)
   · exact infAd_add (y.1 i) (y'.1 i)

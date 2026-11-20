@@ -72,7 +72,7 @@ theorem proj_conj {L : Type} [Field L] [NumberField L] [IsCMField L]
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [SplitPlace.proj, conjAL, Algebra.TensorProduct.map_tmul]
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
 
 theorem loc_conj_apply {L : Type} [Field L] [NumberField L] [IsCMField L]
     (v : HeightOneSpectrum (𝓞 (maximalRealSubfield L)))

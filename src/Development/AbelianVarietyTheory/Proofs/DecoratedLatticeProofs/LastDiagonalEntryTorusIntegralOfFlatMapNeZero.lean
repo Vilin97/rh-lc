@@ -144,7 +144,7 @@ variable {D : D7}
 
 theorem symplO_add_right' (S T : HSp D) (x y y' : WO S T) :
     symplO S T x (y + y') = symplO S T x y + symplO S T x y' := by
-  simp only [symplO, hO, Matrix.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [symplO, hO, Matrix.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 theorem half_smul_mem {S T : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LT : Set (Fin T.rank → D.host.E)}
     {v : Pl D} (h2 : (2 : 𝓞 D.host.F) ∉ v.asIdeal) {u : WO S T} (hu : u ∈ latO S T LS LT (· = v)) :
@@ -190,7 +190,7 @@ theorem exists_idemAt (D : D7) (v : Pl D) : ∃ e : AE D, e ∈ intAt D (· = v)
   congr 1
   refine Prod.ext (add_zero _) ?_
   show _ * _ + _ * _ = _
-  rw [← mul_add, ← map_add, show (2 : D.host.F)⁻¹ + 2⁻¹ = 1 by norm_num, map_one, mul_one]
+  rw [← mul_add, ← map_add (f := _), show (2 : D.host.F)⁻¹ + 2⁻¹ = 1 by norm_num, map_one, mul_one]
   all_goals rfl
 
 theorem fix_char {ψ : AddChar (AF D.host.F) ℂ} {ρ : ℕ} {B : BesLev D ρ} {J : JacLev D ρ} (s : StepBF ψ B J)
@@ -266,7 +266,7 @@ theorem chi_add (ψ : AddChar (AF D.host.F) ℂ) {T T₀ : HSp D} {ρ : ℕ} (d 
     (y : Mx D S.rank ρ) (t : Matrix (Fin ρ) (Fin ρ) (AE D)) (ξ₁ ξ₂ : Mx D ρ S.rank) :
     ψ (symplO S T (d.incAdj S y) (d.incX S (t ⬝ (ξ₁ + ξ₂)))) =
       ψ (symplO S T (d.incAdj S y) (d.incX S (t ⬝ ξ₁))) * ψ (symplO S T (d.incAdj S y) (d.incX S (t ⬝ ξ₂))) := by
-  rw [Matrix.mul_add, map_add, symplO_add_right', AddChar.map_add_eq_mul]
+  rw [Matrix.mul_add, map_add (f := _), symplO_add_right', AddChar.map_add_eq_mul]
 
 end GlobalTheory.FinPl.LastDiag
 

@@ -12,7 +12,7 @@ theorem eq_X_mul_shift_add {σ O : Type} [CommRing O] (i : σ) (f : MvPowerSerie
     f = MvPowerSeries.X i * shift i f + free i f := by
   classical
   ext m
-  rw [map_add, MvPowerSeries.X_def, MvPowerSeries.coeff_monomial_mul]
+  rw [map_add (f := _), MvPowerSeries.X_def, MvPowerSeries.coeff_monomial_mul]
   by_cases h : m i = 0
   · have h1 : ¬ Finsupp.single i 1 ≤ m := by
       rw [Finsupp.single_le_iff]; omega

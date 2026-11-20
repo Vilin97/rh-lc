@@ -169,7 +169,7 @@ theorem toG_gaStar (he : Function.Injective e) (hl : IsLt (mv e lt)) (h : IsTyp 
     toG c φ lt (gaStar c (ga.map (IsCMField.complexConj D.host.E)) P) = PhaseMap.sub pW U (toG c φ lt P) := by
   induction P using MvPolynomial.induction_on with
   | C a => rw [MvPolynomial.algHom_C, MvPolynomial.algebraMap_eq, toG_C, MvPolynomial.algHom_C, MvPolynomial.algebraMap_eq]
-  | add P Q hP hQ => simp only [map_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
   | mul_X P ℓ hP =>
     simp only [map_mul, hP]
     congr 1

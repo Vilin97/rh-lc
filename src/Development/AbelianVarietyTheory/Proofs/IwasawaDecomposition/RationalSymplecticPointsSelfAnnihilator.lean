@@ -124,7 +124,7 @@ theorem adele_rat {ψ : AddChar (AF F) ℂ} (hψ : IsCharAF F ψ) (hv : ∀ v, �
     change 0 = fstA F (a - algebraMap F _ x - algebraMap F _ d) * _
     rw [h7, zero_mul]
   refine ⟨x + d, ?_⟩
-  rw [map_add, ← sub_eq_zero, ← sub_sub]
+  rw [map_add (f := _), ← sub_eq_zero, ← sub_sub]
   exact Prod.ext h7 h8
 
 end Scalar
@@ -141,7 +141,7 @@ theorem tensor_rat {F E : Type} [Field F] [CharZero F] [Field E] [Algebra F E] [
     induction z using TensorProduct.induction_on with
     | zero => simp
     | add x y hx hy =>
-      simp only [mul_add, map_add, TensorProduct.add_tmul, Finset.sum_add_distrib]
+      simp only [mul_add, map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib]
       rw [← hx, ← hy]
     | tmul a e =>
       conv_lhs => rw [← b.traceDual.sum_repr e, TensorProduct.tmul_sum]
@@ -207,7 +207,7 @@ theorem ratL_annihilator : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdC
   · intro h
     obtain ⟨θ, hθ⟩ := hψ.2.1
     let L : Ainf D.host.F →+ ℂ := AddMonoidHom.mk' (fun x => ∑ ρ, θ ρ (x ⊗ₜ[D.host.F] (1 : D.host.E))) fun a b => by
-      simp only [map_add, TensorProduct.add_tmul, Finset.sum_add_distrib]
+      simp only [map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib]
     have hrat := adele_rat hψ.1 (GlobalTheory.StdCharLocal.psiV_ne_one D ψ hψ) L
       (continuous_finset_sum _ fun ρ _ => (hθ ρ).2)
       (fun x => by

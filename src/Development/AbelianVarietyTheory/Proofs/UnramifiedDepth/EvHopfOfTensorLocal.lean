@@ -122,7 +122,7 @@ private theorem tensor_evAll_mem_tensorSpan (C : Type) [Field C] [Algebra Tw.O.c
     obtain ⟨G', hG', h0', h1'⟩ := hy
     refine ⟨G + G', add_mem hG hG', fun t t' h => by simp [h0 t t' h, h0' t t' h],
       fun t t' φ hφ φ' hφ' e e' => ?_⟩
-    simp only [Pi.add_apply, h1 t t' φ hφ φ' hφ' e e', h1' t t' φ hφ φ' hφ' e e', map_add]
+    simp only [Pi.add_apply, h1 t t' φ hφ φ' hφ' e e', h1' t t' φ hφ φ' hφ' e e', map_add (f := _)]
 
 open TensorProduct IsLocalRing Matrix in
 set_option linter.style.haveILetI false in
@@ -275,7 +275,7 @@ private theorem exists_tensorSpan_eq_evAll_add (hTL : _root_.GlobalTheory.EvHopf
   congr 1
   refine retraction_apply_eq_ptMap D (t + t') i ((Φ φ hφ φ' hφ').comp ψ) ?_ ?_ a
   · rw [lHom_comp_assoc, hψ₁, hΦs]
-  · rw [_root_.ReciprocityTheory.PGsh.BX.map_comp, hψ₂, map_add, ← _root_.ReciprocityTheory.PGsh.BX.map_comp, ← _root_.ReciprocityTheory.PGsh.BX.map_comp, hΦL, hΦR, e, e',
+  · rw [_root_.ReciprocityTheory.PGsh.BX.map_comp, hψ₂, map_add (f := _), ← _root_.ReciprocityTheory.PGsh.BX.map_comp, ← _root_.ReciprocityTheory.PGsh.BX.map_comp, hΦL, hΦR, e, e',
       ptOf_add_unramified_depth]
 
 open TensorProduct IsLocalRing Matrix in
@@ -350,7 +350,7 @@ theorem _root_.GlobalTheory.EvHopf.evHopf_of_tensorLocal :
       rw [hsum]
       exact Submodule.sum_mem _ fun jk _ => hG jk.1 jk.2
     | zero => rw [map_zero]; exact zero_mem _
-    | add f f' _ _ hf hf' => rw [map_add]; exact add_mem hf hf'
+    | add f f' _ _ hf hf' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hf'
     | smul r f _ hf => rw [map_smul]; exact Submodule.smul_mem _ r hf
   · unfold _root_.ReciprocityTheory.PGsh.Be2.Dat.evImg at hf ⊢
     induction hf using Submodule.span_induction with

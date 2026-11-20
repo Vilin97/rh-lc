@@ -100,7 +100,7 @@ theorem fibre_quotient_holds : FibQ k := by
     { toFun := fun h => η (F0 h)
       map_add' := fun h h' => by
         rw [K0 (h + h') (F0 h + F0 h') (Submodule.add_mem _ (hF0 h) (hF0 h')) fun p hp => by
-          rw [Pi.add_apply, hF0e h p hp, hF0e h' p hp, Submodule.coe_add, psi_add, Pi.add_apply], map_add]
+          rw [Pi.add_apply, hF0e h p hp, hF0e h' p hp, Submodule.coe_add, psi_add, Pi.add_apply], map_add (f := _)]
       map_smul' := fun c h => by
         rw [K0 (c • h) (c • F0 h) (Submodule.smul_mem _ c (hF0 h)) fun p hp => by
           rw [Pi.smul_apply, hF0e h p hp, Submodule.coe_smul, psi_smul, Pi.smul_apply], map_smul]

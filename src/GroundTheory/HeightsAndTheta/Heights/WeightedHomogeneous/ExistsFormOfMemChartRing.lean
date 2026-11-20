@@ -57,7 +57,7 @@ theorem exists_form_of_mem_chartRing (P : ArithVariety n) (c : (k : ι) → Fin 
     · refine (hF.mul (isWeightedHomogeneous_chartMonomial c e')).add ?_
       rw [add_comm e e']
       exact hF'.mul (isWeightedHomogeneous_chartMonomial c e)
-    · rw [chartMonomial_add, map_add, map_mul, map_mul, map_mul, ← hxF, ← hyF]
+    · rw [chartMonomial_add, map_add (f := _), map_mul, map_mul, map_mul, ← hxF, ← hyF]
       ring
   | neg x _ ih =>
     obtain ⟨F, e, hF, hxF⟩ := ih

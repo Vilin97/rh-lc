@@ -247,7 +247,7 @@ theorem eval_scaleS {τ : Type} (k : ℕ) (Q : MvPolynomial (Option τ) ℝ) (la
     eval (fun o : Option τ => o.elim s lam) (scaleS k Q) = eval (fun o : Option τ => o.elim (s / k) lam) Q := by
   induction Q using MvPolynomial.induction_on with
   | C a => simp [scaleS]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p o hp =>
     simp only [map_mul, hp, eval_X]
     congr 1

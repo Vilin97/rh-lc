@@ -103,7 +103,7 @@ theorem isometric_case (p q : ℕ) (T : GrpData p q)
     have hc2 : ∀ w, j₂ (c w) = π₂.π k (j₂ w) := fun w => (hc w).2.symm
     let cl : E →ₗ[ℂ] E :=
       { toFun := c
-        map_add' := fun x y => j₂.injective (by simp only [map_add, hc2])
+        map_add' := fun x y => j₂.injective (by simp only [map_add (f := _), hc2])
         map_smul' := fun a x => j₂.injective (by simp only [map_smul, hc2, RingHom.id_apply]) }
     have hcn : ∀ w, ‖cl w‖ = ‖w‖ := fun w => by
       have e1 := j₂.norm_map (c w)

@@ -35,7 +35,7 @@ theorem eInf_smul_eq_zero (y : AE F E) (hy : Algebra.TensorProduct.map (fstA F) 
       · show (0 : Af F) * a.2 = 0
         exact zero_mul _
     | add x y hx hy =>
-      rw [smul_add, hx, hy, map_add, map_add]
+      rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
       try rfl
   rw [key, hy, map_zero]
   try rfl
@@ -83,7 +83,7 @@ theorem exists_open_fix (hKP : GlobalTheory.ThK.KP) (F E : Type) [Field F] [Numb
     obtain ⟨U, hU, h⟩ := hx
     obtain ⟨V, hV, h'⟩ := hy
     refine ⟨U ⊓ V, by rw [Subgroup.coe_inf]; exact hU.inter hV, fun k hk hkf => ?_⟩
-    rw [map_add, h k hk.1 hkf, h' k hk.2 hkf]
+    rw [map_add (f := _), h k hk.1 hkf, h' k hk.2 hkf]
   | smul c x _ hx =>
     obtain ⟨U, hU, h⟩ := hx
     exact ⟨U, hU, fun k hk hkf => by rw [map_smul, h k hk hkf]⟩
@@ -120,7 +120,7 @@ theorem polData_locFin : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Num
     induction hx using Submodule.span_induction with
     | mem y hy => exact hU' y hy k hk hkf
     | zero => exact map_zero _
-    | add y z _ _ hy hz => rw [map_add, hy, hz]
+    | add y z _ _ hy hz => rw [map_add (f := _), hy, hz]
     | smul c y _ hy => rw [map_smul, hy]
 
   obtain ⟨C, hCK, hCfin, hcover⟩ := hKc.elim_finite_subcover_image

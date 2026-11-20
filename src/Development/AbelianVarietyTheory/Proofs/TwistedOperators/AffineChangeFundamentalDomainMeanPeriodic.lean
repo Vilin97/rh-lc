@@ -39,7 +39,7 @@ theorem affine_fundamentalDomain_mean :
   have hF2 : IsAddFundamentalDomain Λ₁ (e ⁻¹' Fd') volume :=
     hF'.preimage_of_equiv hq hε fun a z => by
       change L (L.symm (a : Fin g → ℂ) + z) + c = (a : Fin g → ℂ) + (L z + c)
-      rw [map_add, L.apply_symm_apply, add_assoc]
+      rw [map_add (f := _), L.apply_symm_apply, add_assoc]
   have i2 : ∫ z in e ⁻¹' Fd', f (e z) = k * ∫ z in Fd', f z := by
     have := setIntegral_map_equiv (μ := volume) e f Fd'
     rw [hmap, Measure.restrict_smul, integral_smul_measure, ENNReal.toReal_ofReal hc.le, smul_eq_mul] at this

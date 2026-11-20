@@ -122,7 +122,7 @@ theorem expR_add {n : ℕ} (f g : PS k n d) : expR (f + g) = expR f * expR g := 
   unfold expR
   rw [← gt_expS_add _ _ (by simp) (by simp)]
   congr 1
-  simp only [map_add]
+  simp only [map_add (f := _)]
   ring
 
 theorem expR_zero {n : ℕ} : expR (0 : PS k n d) = 1 := by
@@ -348,9 +348,9 @@ theorem exists_regauge : ∀ (k : Type) [CommRing k] [Algebra ℚ k] (d : ℕ) (
     fun ha hb => gt_const_ev _ (pair_points_zero_constant ha hb) h hc
   refine ⟨regauge B h h0 h1, rfl, rfl, ?_, ?_, ?_, fun a => ?_⟩
   · refine eq_mul_expS _ _ _ ?_ (by ring)
-    simp (maxDischargeDepth := 4) only [map_sub, map_add, hcc, gp_pt, gp_add, add_zero, sub_zero]
+    simp (maxDischargeDepth := 4) only [map_sub, map_add (f := _), hcc, gp_pt, gp_add, add_zero, sub_zero]
   · refine eq_mul_expS _ _ _ ?_ (by ring)
-    simp (maxDischargeDepth := 4) only [map_sub, map_add, hcc, gp_pt, gp_add, add_zero, sub_zero]
+    simp (maxDischargeDepth := 4) only [map_sub, map_add (f := _), hcc, gp_pt, gp_add, add_zero, sub_zero]
   · refine eq_mul_expS _ _ _ ?_ (by rw [ev_pt_two]; ring)
     simp (maxDischargeDepth := 4) only [map_sub, hcc, hc, gp_pt, sub_zero]
   · refine eq_mul_expS _ _ _ ?_ (by ring)

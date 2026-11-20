@@ -95,7 +95,7 @@ theorem projective_tensor_of_fibre_projective :
         | zero => rw [zero_smul, map_zero, map_zero, zero_smul]
         | tmul c b =>
           rw [hτtmul, tensorModOf_tmul, tensorModOf_tmul, f.map_smulₛₗ, hcomm]
-        | add x y hx hy => rw [add_smul, map_add, hx, hy, map_add, add_smul] }
+        | add x y hx hy => rw [add_smul, map_add (f := _), hx, hy, map_add (f := _), add_smul] }
   have hfR : Function.Surjective fR := hf
   haveI : Module.Finite (C ⊗[ℤ] B) H := Module.Finite.of_restrictScalars_finite C (C ⊗[ℤ] B) H
   haveI : Module.Finite (C ⊗[ℤ] B) V := Module.Finite.of_surjective fR hfR
@@ -148,7 +148,7 @@ theorem projective_tensor_of_fibre_projective :
   let φ : Q →ₗ[C ⊗[ℤ] B] V :=
     { toFun := fun q => pb (fun i => τ ((q : Fin n → C ⊗[ℤ] B) i))
       map_add' := fun x y => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
       map_smul' := fun r x => by
         show pb _ = τ r • pb _

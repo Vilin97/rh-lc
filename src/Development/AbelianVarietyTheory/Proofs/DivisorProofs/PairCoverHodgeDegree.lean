@@ -138,7 +138,7 @@ theorem blk_of_cols {S K : Type} [CommRing S] [Field K] (ι : S →+* K) (hι : 
   · have k₁ := key _ (.inr ⟨k, h1, rfl⟩)
     have e : ∀ l, ι (M.mulVec (fun c => A c i + A c k) l) = ι (M.mulVec (fun c => A c i) l) + ι ((M * A) l k) :=
       fun l => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         exact congrArg ι (congrFun (M.mulVec_add (fun c => A c i) fun c => A c k) l)
     rcases h2.eq_or_lt with rfl | h2
     · exact left_eq_add.1 (k₀.2.trans (k₁.2.symm.trans (e _))) |>.symm ▸ rfl
@@ -521,10 +521,10 @@ theorem lg_line_eq : GlobalTheory.CovTop.Hypotheses2 → GlobalTheory.CovHt.Hypo
           rfl
         have g₂ : (fl.ι i.succ).app W (t i + (g ≫ fl.step i).app W (t l)) =
             (fl.ι i.succ).app W (t i) + (fl.ι l.succ).app W (t l) := by
-          rw [map_add, QCoh.app_app, Category.assoc, fl.step_ι, hg]
+          rw [map_add (f := _), QCoh.app_app, Category.assoc, fl.step_ι, hg]
         have g₃ := hs (fun _ => ck i) V f hf W (hW i) hWV (t i + (g ≫ fl.step i).app W (t l))
-          (by rw [map_add, g₁, add_zero]; exact ht i) hgW hgV
-        rw [g₂, map_add] at g₃
+          (by rw [map_add (f := _), g₁, add_zero]; exact ht i) hgW hgV
+        rw [g₂, map_add (f := _)] at g₃
         exact g₃) hp e z hy yt hyt hyW
   have hri : (r fun _ => ck i) = r ch := congrArg _ (_root_.funext fun _ => hck)
   rw [Nat.cast_one, one_mul, ← hri]

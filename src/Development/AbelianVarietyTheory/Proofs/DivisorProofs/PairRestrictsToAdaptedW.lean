@@ -33,7 +33,7 @@ theorem exists_ratCoord {α β κ : Type} (e : Matrix α β (AE F E) ≃ₗ[AF F
   have hadd : ∀ x x' : Matrix α β E, incM F (x + x') = incM F x + incM F x' := by
     intro x x'
     ext i j
-    simp [incM, Matrix.map_apply, map_add]
+    simp [incM, Matrix.map_apply, map_add (f := _)]
   have hsmul : ∀ (c : F) (x : Matrix α β E), incM F (c • x) = algebraMap F (AF F) c • incM F x := by
     intro c x
     ext i j
@@ -46,7 +46,7 @@ theorem exists_ratCoord {α β κ : Type} (e : Matrix α β (AE F E) ≃ₗ[AF F
   refine ⟨{ toFun := w, map_add' := ?_, map_smul' := ?_ }, ?_, hg⟩
   · intro x x'
     apply hinj
-    rw [hat_add, hg, hg, hg, hadd, map_add]
+    rw [hat_add, hg, hg, hg, hadd, map_add (f := _)]
   · intro c x
     apply hinj
     rw [RingHom.id_apply, hat_smul, hg, hg, hsmul, LinearEquiv.map_smul]
@@ -165,7 +165,7 @@ theorem isotropic {σ : E →ₐ[F] E} {B : Base F E} {d d₁ : ℕ} {W : Spc F 
   have h5 := dd₁.form z z'
   rw [hz, hz', zero_dotProduct, zero_dotProduct, sub_zero, symp] at h5
   rw [symp, hTens_restrict_left _ _ _ _ _ hA, h5] at h4
-  simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   linear_combination -h1 - h2 + h3 - h4
 
 theorem eq_zero_of_sum {σ : E →ₐ[F] E} {B : Base F E} {d d₁ : ℕ} {W : Spc F E d} {W₁ : Spc F E d₁} {H' : Plane E d d₁}

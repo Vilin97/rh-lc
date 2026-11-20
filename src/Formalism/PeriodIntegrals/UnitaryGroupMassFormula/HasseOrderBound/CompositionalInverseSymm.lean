@@ -34,7 +34,7 @@ theorem taySec : tayLc X la w (s0 X la w) =
   ext γ
   rw [Finsupp.sum_fintype _ _ (by intro p; simp)]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, Finsupp.coe_equivFunOnFinite_symm, MvPowerSeries.coeff_C_mul,
+    simp only [map_add (f := _), map_sum, Finsupp.coe_equivFunOnFinite_symm, MvPowerSeries.coeff_C_mul,
     MvPowerSeries.coeff_X, MvPowerSeries.coeff_C]
   rw [← hasse_apply]
   have hne : ∀ p : Idx D j N, (0 : Idx D j N →₀ ℕ) ≠ Finsupp.single p 1 := fun p h => by

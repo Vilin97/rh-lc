@@ -54,7 +54,7 @@ def nonnegSubring {F K : Type} [Field F] [Field K] (v : AddValuation F (WithTop 
   one_mem' := by simp
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact v.map_le_add ha hb
   zero_mem' := by simp
   neg_mem' := by

@@ -26,9 +26,9 @@ def imKer [IsTopologicalAddGroup M] (S : AddSubgroup M) (P : M →+ M) (hPc : Co
     have h2 : P p.2.1 = 0 := p.2.2
     refine Prod.ext (Subtype.ext ?_) (Subtype.ext ?_)
     · change P (p.1.1 + p.2.1) = p.1.1
-      rw [map_add, hPs _ p.1.2, h2, add_zero]
+      rw [map_add (f := _), hPs _ p.1.2, h2, add_zero]
     · change (p.1.1 + p.2.1) - P (p.1.1 + p.2.1) = p.2.1
-      rw [map_add, hPs _ p.1.2, h2, add_zero, add_sub_cancel_left]
+      rw [map_add (f := _), hPs _ p.1.2, h2, add_zero, add_sub_cancel_left]
   right_inv x := by
     change P x + (x - P x) = x
     abel
@@ -63,7 +63,7 @@ theorem char_restr [IsTopologicalAddGroup M] [LocallyCompactSpace M] [SecondCoun
     have hl : Ψ.symm (Ψ p) = p := Ψ.left_inv p
     rw [hl]
     change U p.1.1 + p.2.1 = U (p.1.1 + p.2.1)
-    rw [map_add, hfix _ p.2.2]
+    rw [map_add (f := _), hfix _ p.2.2]
   rw [← e, GlobalTheory.ModuLR.addEquivAddHaarChar_transport Ψ, GlobalTheory.T.addEquivAddHaarChar_prodCongr, addEquivAddHaarChar_refl, mul_one]
 
 end Abstract

@@ -330,7 +330,7 @@ theorem sp_eval_colSub (β : ι → Matrix (Fin a) (Fin a) ℂ) (x : ι → Matr
     eval (pt x) (colSub β P) = eval (pt (fun τ => x τ * β τ)) P := by
   induction P using MvPolynomial.induction_on with
   | C c => simp [colSub]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p v hp =>
     rw [map_mul, map_mul, hp, map_mul]
     congr 1

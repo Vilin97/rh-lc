@@ -124,7 +124,7 @@ theorem exists_rational_eig (j : V →ₛₗ[σ] W)
       rw [← hint]
       exact Submodule.subset_span ⟨_, hG i x hx, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
   let op' : I → Module.End K Gd := fun i => (op i).restrict (hG i)
   let opC' : I → Module.End ℂ Wg := fun i => (opC i).restrict (hGC i)

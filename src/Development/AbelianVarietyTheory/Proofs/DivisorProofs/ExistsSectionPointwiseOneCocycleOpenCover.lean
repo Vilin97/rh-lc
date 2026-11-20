@@ -74,7 +74,7 @@ theorem GlobalTheory.PtExt.CocSec.exists_section : ∀ (R : Type) [CommRing R] (
     (fun a E _ _ E' _ _ ψ θ ha ↦ by
       have h1 := hk a E E' ψ θ ha
       have h2 := he1 a E E' ψ θ ha
-      simp only [map_add]
+      simp only [map_add (f := _)]
       linear_combination h1 + h2)
     (fun a b E _ _ ψ ha hb ↦ by
       have h := he2 a b E ψ ha hb

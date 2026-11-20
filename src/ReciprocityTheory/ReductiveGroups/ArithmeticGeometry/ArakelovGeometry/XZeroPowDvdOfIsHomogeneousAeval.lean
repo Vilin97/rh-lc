@@ -163,7 +163,7 @@ theorem homog_of_chart (x : κ → Ω) (e : Fin (D + 1) → κ) (l : Fin (D + 1)
     refine ⟨max N1 N2, fun N hN => ?_⟩
     obtain ⟨H1, hH1, e1⟩ := h1 N (le_of_max_le_left hN)
     obtain ⟨H2, hH2, e2⟩ := h2 N (le_of_max_le_right hN)
-    exact ⟨H1 + H2, hH1.add hH2, by rw [map_add, mul_add, e1, e2, map_add]⟩
+    exact ⟨H1 + H2, hH1.add hH2, by rw [map_add (f := _), mul_add, e1, e2, map_add (f := _)]⟩
   · rename_i p k hp
     obtain ⟨N1, h1⟩ := hp
     refine ⟨N1 + 1, fun N hN => ?_⟩

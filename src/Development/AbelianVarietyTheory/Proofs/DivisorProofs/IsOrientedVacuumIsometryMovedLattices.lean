@@ -103,7 +103,7 @@ theorem heisO_trH (IS : IsoMat S S') (IT : IsoMat T T') (ψ : AddChar (AF D.host
     heisO ψ S' T' (homMap IS IT u) (trH IS IT f) = trH IS IT (heisO ψ S T u f) := by
   funext w
   obtain ⟨w, rfl⟩ := (homMap IS IT).surjective w
-  simp only [heisO, trH, ← map_add, AddEquiv.symm_apply_apply, symplOH_homMap]
+  simp only [heisO, trH, ← map_add (f := _), AddEquiv.symm_apply_apply, symplOH_homMap]
 
 theorem isThetaFunO_trH (IS : IsoMat S S') (IT : IsoMat T T') {ψ : AddChar (AF D.host.F) ℂ} {f : WO S T → ℂ}
     (hf : IsThetaFunO ψ S T f) : IsThetaFunO ψ S' T' (trH IS IT f) := by
@@ -113,7 +113,7 @@ theorem isThetaFunO_trH (IS : IsoMat S S') (IT : IsoMat T T') {ψ : AddChar (AF 
       have := homMap_ratW IS.symm IT.symm γ
       rw [← homMap_symm_apply] at this
       exact ((homMap IS IT).symm_apply_eq.1 this)
-    rw [e, ← map_add, symplOH_homMap]
+    rw [e, ← map_add (f := _), symplOH_homMap]
     simp only [trH, AddEquiv.symm_apply_apply]
     exact hf.quasi _ _
   · obtain ⟨U, hU, e⟩ := hf.level

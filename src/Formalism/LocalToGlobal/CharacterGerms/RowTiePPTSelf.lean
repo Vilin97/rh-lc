@@ -99,7 +99,7 @@ theorem ptSelf_of (hEx : PTExSelfSt) (hAvg : PTAvgSelfSt) (hStab : HStabSelfSt) 
     intro q
     have h2 := congrArg (PowerSeries.coeff 1) (hq q)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [c1, map_add, map_sub, map_sum,
+      rw [c1, map_add (f := _), map_sub, map_sum,
       coeff_alongCv_low le_rfl hγ0 (RawChart.constantCoeff_sg (Y.rawSelf p) (fun e he => FBChart.rawSelf_axis0 (Y := Y) (p := p) e he) _)] at h2
     simp only [hγ1] at h2
     have hA : ∑ i, MvPowerSeries.coeff (Finsupp.single i 1) ((Y.rawSelf p).sg ((Y.rawSelf p).u (1 - g) q)) *

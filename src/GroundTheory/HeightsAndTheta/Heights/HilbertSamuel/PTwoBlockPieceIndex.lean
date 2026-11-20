@@ -54,7 +54,7 @@ theorem aeval_i2comp (y : (Σ k, ι k) → Ω) (m : K → ℕ) (q : MRing ι) :
     by_cases h : (fun k => ∑ i, μ ⟨k, i⟩) = m
     · rw [if_pos h, if_pos (by rw [h]), mul_one]
     · rw [if_neg h, if_neg (fun h' => h (Finsupp.equivFunOnFinite.symm.injective h')), mul_zero, map_zero]
-  | add p q hp hq => rw [i2comp_add, map_add, hp, hq, map_add, MvPolynomial.coeff_add]
+  | add p q hp hq => rw [i2comp_add, map_add (f := _), hp, hq, map_add (f := _), MvPolynomial.coeff_add]
 
 theorem aeval_i2comp_of_mem (y : (Σ k, ι k) → Ω) {p : MRing ι} (hp : p ∈ mCoordIdeal y) (m : K → ℕ) :
     aeval y (i2comp m p) = 0 := by
@@ -110,7 +110,7 @@ theorem map_piece [DecidableEq K] (y : (Σ k, ι k) → Ω) {g : MRing ι} {e : 
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [i2comp_mul_right (hgX j), if_pos le_add_self, add_tsub_cancel_right]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [AlgHom.toLinearMap_apply, ← i2comp_self hf, e1, map_add, aeval_i2comp_of_mem y hp, zero_add, map_sum]
+      rw [AlgHom.toLinearMap_apply, ← i2comp_self hf, e1, map_add (f := _), aeval_i2comp_of_mem y hp, zero_add, map_sum]
     refine Submodule.sum_mem _ fun j _ => ?_
     refine ⟨y ⟨k, j⟩ * aeval y (i2comp m (c j)), Submodule.mul_mem_mul (Submodule.subset_span ⟨j, rfl⟩)
       ⟨_, (mem_mHom_iff _ _).mpr (isMultiHomog_i2comp _ _), rfl⟩, ?_⟩

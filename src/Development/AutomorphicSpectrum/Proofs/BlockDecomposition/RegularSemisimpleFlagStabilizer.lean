@@ -47,7 +47,7 @@ theorem exists_poly_proj {V : Type} [AddCommGroup V] [Module E V] [FiniteDimensi
     rw [map_mul, Module.End.mul_apply, hzW₁ x hx, map_zero]
   refine ⟨v * b, fun x => ?_, h1⟩
   obtain ⟨w, hw, w₁, hw₁, rfl⟩ := Submodule.mem_sup.mp (hc.sup_eq_top ▸ Submodule.mem_top (x := x))
-  rw [map_add, h1 w hw, h0 w₁ hw₁, add_zero]
+  rw [map_add (f := _), h1 w hw, h0 w₁ hw₁, add_zero]
   exact hw
 
 theorem exists_poly_proj_matrix {ι : Type} [Fintype ι] [DecidableEq ι]

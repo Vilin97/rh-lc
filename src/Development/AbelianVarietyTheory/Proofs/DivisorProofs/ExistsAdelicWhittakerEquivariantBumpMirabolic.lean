@@ -69,7 +69,7 @@ theorem continuous_finGL_bump : Continuous (finGL E n) := by
 variable [IsTotallyComplex E]
 
 theorem psiInf_add (a b : Cinf E) : psiInf (a + b) = psiInf a * psiInf b := by
-  simp [psiInf, map_add, AddChar.map_add_eq_mul]
+  simp [psiInf, map_add (f := _), AddChar.map_add_eq_mul]
 
 theorem bumpInf_mul (f : Lie E n → ℝ) (u : GL (Fin n) (Cinf E)) (hu : u ∈ GlobalTheory.SmGL.unipB (Cinf E) (Fin n))
     (x : Lie E n) :

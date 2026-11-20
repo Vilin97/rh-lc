@@ -60,7 +60,7 @@ private theorem torsion_of_vec (t : A) (c : A →+* C) (ht : IsUnit (c t))
   have hψ₁ : ∀ q w x, ψ₁ (q ⊗ₜ[R] w) x = (q • x) ⊗ₜ[A] ((1 : A) ⊗ₜ[R] w) := fun _ _ _ => rfl
   let ψ : (F ⊗[R] T) ⊗[F] C →+ P := TensorProduct.liftAddHom ψ₁ (fun f m x => by
     induction m with
-    | add m m' hm hm' => simp only [smul_add, map_add, AddMonoidHom.add_apply, hm, hm']
+    | add m m' hm hm' => simp only [smul_add, map_add (f := _), AddMonoidHom.add_apply, hm, hm']
     | tmul q w =>
       rw [TensorProduct.smul_tmul', hψ₁, hψ₁, smul_eq_mul, mul_comm, mul_smul])
   have hψ : ∀ q w x, ψ ((q ⊗ₜ[R] w) ⊗ₜ[F] x) = (q • x) ⊗ₜ[A] ((1 : A) ⊗ₜ[R] w) := fun _ _ _ => rfl
@@ -89,7 +89,7 @@ private theorem apply_tensor (h : T →+ N) (hh : ∀ (s : R) (w : T), h (s • 
     (v : ι → T) (a : ι → A) (s : A) (hs : s • ∑ k, (a k ⊗ₜ[R] v k : A ⊗[R] T) = 0) :
     s • ∑ k, a k • h (v k) = 0 := by
   let B : A →+ T →+ N := AddMonoidHom.mk' (fun x => AddMonoidHom.mk' (fun w => x • h w)
-      (fun w w' => by rw [map_add, smul_add]))
+      (fun w w' => by rw [map_add (f := _), smul_add]))
       (fun x y => by ext w; simp [add_smul])
   have hB : ∀ x w, B x w = x • h w := fun _ _ => rfl
   let φ : A ⊗[R] T →+ N := TensorProduct.liftAddHom B (fun r x w => by
@@ -97,7 +97,7 @@ private theorem apply_tensor (h : T →+ N) (hh : ∀ (s : R) (w : T), h (s • 
   have hφ : ∀ x w, φ (x ⊗ₜ[R] w) = x • h w := fun _ _ => rfl
   have hφs : ∀ (b : A) (y : A ⊗[R] T), φ (b • y) = b • φ y := fun b y => by
     induction y with
-    | add y y' hy hy' => simp only [smul_add, map_add, hy, hy']
+    | add y y' hy hy' => simp only [smul_add, map_add (f := _), hy, hy']
     | tmul x w => rw [TensorProduct.smul_tmul', hφ, hφ, smul_eq_mul, mul_smul]
   have := congrArg φ hs
   set_option synthInstance.maxHeartbeats 100000 in

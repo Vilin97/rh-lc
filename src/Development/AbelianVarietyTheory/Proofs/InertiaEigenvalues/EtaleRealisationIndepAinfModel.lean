@@ -40,7 +40,7 @@ theorem semiBC_comp {A B C M N P : Type} [CommRing A] [CommRing B] [CommRing C]
       { toFun := fun y => (w' (v y) : Q)
         map_add' := fun y z => by
           change w' (v (y + z)) = w' (v y) + w' (v z)
-          rw [map_add, map_add]
+          rw [map_add (f := _), map_add (f := _)]
         map_smul' := fun b y => by
           change w' (v (b • y)) = g b • w' (v y)
           rw [v.map_smulₛₗ, w'.map_smul] }
@@ -88,7 +88,7 @@ def jOfModel {M : FCrys l ↥(OL K)} {P P' : Obj l ↥(OL K)} {e : P.A ≃+* Ain
     (j' : M.M P' →ₛₗ[(inclW l).comp e'.toRingHom] (WCb l ⊗[ℤ_[l]] T)) :
     M.M P →ₛₗ[(inclW l).comp e.toRingHom] (WCb l ⊗[ℤ_[l]] T) where
   toFun x := j' (M.tr c x)
-  map_add' x y := by rw [map_add, map_add]
+  map_add' x y := by rw [map_add (f := _), map_add (f := _)]
   map_smul' a x := by
     rw [LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ]
     change inclW l (e' (c.f a)) • _ = inclW l (e a) • _

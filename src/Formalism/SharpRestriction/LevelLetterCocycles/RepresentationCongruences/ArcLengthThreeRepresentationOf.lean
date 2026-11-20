@@ -38,7 +38,7 @@ variable [FiniteDimensional Qp LL] (W : LocWach PD LL O v n)
 theorem Pp_φ (T : LocLat G Qp LL O) (c : ZMod n) (j : ℕ) :
     ∀ y ∈ Pp W T c j, W.φD T y ∈ Pp W T c (j + 1) := by
   refine Formalism.MainNotions.UnusedSlot80.Relay2.Pp_ind W T c j _ (by rw [map_zero]; exact (Pp W T c (j + 1)).zero_mem)
-    (fun x y hx hy => by rw [map_add]; exact (Pp W T c (j + 1)).add_mem hx hy)
+    (fun x y hx hy => by rw [map_add (f := _)]; exact (Pp W T c (j + 1)).add_mem hx hy)
     (fun x hx => by rw [map_neg]; exact (Pp W T c (j + 1)).neg_mem hx) ?_
   intro a ha x hx
   have e : W.φD T (((W.φD T) ^ j) x) = ((W.φD T) ^ (j + 1)) x := by

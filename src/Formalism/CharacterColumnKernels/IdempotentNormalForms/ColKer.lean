@@ -51,7 +51,7 @@ lemma map_colGenJ (ψ : ColFreeJ A r χ E ι j →ₗ[A] M) (y : Ymod r χ E) (l
       c₀ • ψ (fSig0 l) := by
   rw [colGenJ_decomp]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_smul]
+    simp only [map_add (f := _), map_sum, map_smul]
 
 lemma map_sigRel (ψ : ColFreeJ A r χ E ι j →ₗ[A] M) (l : ι) (a : Fin (j l)) (t : A) :
     ψ (colGenJ 0 l 0 (Pi.single a t) 0) = t • ψ (fSig l a) := by
@@ -79,7 +79,7 @@ lemma eq_zero_of_gens [Fintype ι] {e₁ : A} {δ : T'} {D : ι → Subgroup G}
     have : ψ z = 0 := by
       have h0 : ψ ((0 : Ymod r χ E), 0) = 0 := map_zero ψ
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [free_decomp z, map_add, map_sum]
+        rw [free_decomp z, map_add (f := _), map_sum]
       refine (congrArg₂ (· + ·) (hY z.1) (Finset.sum_eq_zero fun l _ => ?_)).trans (add_zero 0)
       rw [map_colGenJ]
       have h1 : ψ (fNu l) = 0 := hν l

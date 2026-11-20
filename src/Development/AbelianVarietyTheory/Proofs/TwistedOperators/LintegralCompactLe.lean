@@ -122,7 +122,7 @@ theorem lintegral_real_le {G : Type} [AddCommGroup G] [TopologicalSpace G] [IsTo
     rw [hν A hA, hν _ (measurable_const_add t hA), ← measure_preimage_add μ (ι t) (π ⁻¹' A ∩ V)]
     congr 1
     ext w
-    simp only [V, Set.mem_inter_iff, Set.mem_preimage, Set.mem_ofPred_eq, map_add, hπι, add_sub_add_left_eq_sub]
+    simp only [V, Set.mem_inter_iff, Set.mem_preimage, Set.mem_ofPred_eq, map_add (f := _), hπι, add_sub_add_left_eq_sub]
   obtain ⟨c, hc⟩ : ∃ c : NNReal, ν = c • volume := ⟨_, Measure.isAddLeftInvariant_eq_smul ν volume⟩
   have hc0 : c ≠ 0 := by
     rintro rfl
@@ -247,7 +247,7 @@ def dvL (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) (S T : HSp D) :
   LinearMap.mk₂ ℝ (fun u f => ⟨dv θ σ S T u f.1, theta_dv h hψ u f.2⟩)
     (fun u v f => Subtype.ext (funext fun w => by
       show dv θ σ S T (u + v) f.1 w = dv θ σ S T u f.1 w + dv θ σ S T v f.1 w
-      rw [dv_apply h _ f.2, dv_apply h _ f.2, dv_apply h _ f.2, map_add, map_add]
+      rw [dv_apply h _ f.2, dv_apply h _ f.2, dv_apply h _ f.2, map_add (f := _), map_add (f := _)]
       push_cast
       ring))
     (fun c u f => Subtype.ext (funext fun w => by

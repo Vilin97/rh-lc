@@ -47,5 +47,5 @@ theorem UpperTheory.eq_zero_of_splitIdempotent_eval_place_eq_zero :
       rw [TensorProduct.map_tmul]
       congr 1
       exact Prod.ext (zero_mul x.1) rfl
-    | add x y hx hy => rw [mul_add, hx, hy, map_add, map_add]
+    | add x y hx hy => rw [mul_add, hx, hy, map_add (f := _), map_add (f := _)]
   rw [h2, h5, h4, map_zero]

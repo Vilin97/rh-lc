@@ -63,7 +63,7 @@ theorem fixed_AE (hadj : Algebra.adjoin D.host.F {D.host.sqrtMinusD} = ⊤) {z :
   have hcu : cA D (incA D D.host.sqrtMinusD) = -incA D D.host.sqrtMinusD := by rw [cA_incA, star_sqrt, map_neg]
   have hcp : ∀ x : AF D.host.F, cA D (algebraMap (AF D.host.F) (AE D) x) = algebraMap (AF D.host.F) (AE D) x :=
     cA_alg
-  rw [map_add, map_mul, hcp, hcp, hcu] at hz
+  rw [map_add (f := _), map_mul, hcp, hcp, hcu] at hz
   have h0 : (2 : AE D) * (algebraMap (AF D.host.F) (AE D) q * incA D D.host.sqrtMinusD) = 0 := by
     linear_combination -hz
   rw [two_mul_eq_zero h0, add_zero]
@@ -75,7 +75,7 @@ theorem adjoin_top_of (b : D.host.E) (t N : D.host.F)
     (hb : star b ≠ b) : Algebra.adjoin D.host.F {b} = ⊤ := by
   have hbi : IsIntegral D.host.F b := Algebra.IsIntegral.isIntegral b
   have hq : aeval b (X ^ 2 - C t * X + C N : D.host.F[X]) = 0 := by
-    simp only [map_add, map_sub, map_mul, map_pow, aeval_X, aeval_C, ht, hN]
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, aeval_X, aeval_C, ht, hN]
     ring
   have hqm : (X ^ 2 - C t * X + C N : D.host.F[X]).Monic := by monicity!
   have hqd : (X ^ 2 - C t * X + C N : D.host.F[X]).natDegree = 2 := by compute_degree!
@@ -134,11 +134,11 @@ theorem approx_int (v : HeightOneSpectrum (𝓞 D.host.F)) (ι : D.host.E →ₐ
     obtain ⟨a, ha1, ha2⟩ := hx
     obtain ⟨b, hb1, hb2⟩ := hy
     refine ⟨a + b, ?_, ?_⟩
-    · rw [show ((a + b : 𝓞 D.host.E) : D.host.E) = (a : D.host.E) + (b : D.host.E) from rfl, map_add, map_add,
+    · rw [show ((a + b : 𝓞 D.host.E) : D.host.E) = (a : D.host.E) + (b : D.host.E) from rfl, map_add (f := _), map_add (f := _),
         show compV v ι x + compV v ι y - (ι (a : D.host.E) + ι (b : D.host.E)) =
         (compV v ι x - ι (a : D.host.E)) + (compV v ι y - ι (b : D.host.E)) by ring]
       exact lt_of_le_of_lt (Valuation.map_add _ _ _) (max_lt ha1 hb1)
-    · rw [show ((a + b : 𝓞 D.host.E) : D.host.E) = (a : D.host.E) + (b : D.host.E) from rfl, map_add, map_add,
+    · rw [show ((a + b : 𝓞 D.host.E) : D.host.E) = (a : D.host.E) + (b : D.host.E) from rfl, map_add (f := _), map_add (f := _),
         star_add, map_add, show compV v ι (cF D x) + compV v ι (cF D y) -
         (ι (star (a : D.host.E)) + ι (star (b : D.host.E))) = (compV v ι (cF D x) - ι (star (a : D.host.E))) +
         (compV v ι (cF D y) - ι (star (b : D.host.E))) by ring]
@@ -235,7 +235,7 @@ theorem idemAt_split {P : HeightOneSpectrum (𝓞 D.host.E)} {e : AE D} (he : Fo
         _ = e * phiE w (algebraMap D.host.F (w.adicCompletion D.host.F) f * 1) := by
           rw [mul_assoc, mul_comm (phiE w 1), phiE_smul]
         _ = _ := by rw [mul_one]
-    | add x y _ _ hx hy => rw [map_add, mul_add, hx, hy, map_add, phiE_add, mul_add]
+    | add x y _ _ hx hy => rw [map_add (f := _), mul_add, hx, hy, map_add (f := _), phiE_add, mul_add]
     | mul x y _ _ hx hy =>
       calc e * incA D (x * y) = (e * incA D x) * incA D y := by rw [map_mul, mul_assoc]
         _ = (e * phiE w (ι x)) * incA D y := by rw [hx]
@@ -257,7 +257,7 @@ theorem idemAt_split {P : HeightOneSpectrum (𝓞 D.host.E)} {e : AE D} (he : Fo
     · linear_combination h0
   have hkc : compV w ι (finPart D (cA D e)) = 0 := by
     have := congrArg (fun x => compV w ι (finPart D x)) hs
-    simp only [map_add, compV_phiE, hk] at this
+    simp only [map_add (f := _), compV_phiE, hk] at this
     linear_combination this
   have hP_iff : ∀ x : 𝓞 D.host.E, x ≠ 0 → (x ∈ P.asIdeal ↔ Valued.v (ι (x : D.host.E)) < 1) := by
     intro x hx0

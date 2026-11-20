@@ -29,7 +29,7 @@ lemma tau_mul_left (w a : E) (r : E ⊗[F] Af F) :
   | zero => simp
   | tmul x y =>
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, tau_tmul, tau_tmul, mul_assoc]
-  | add x y hx hy => rw [mul_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [mul_add, map_add (f := _), map_add (f := _), hx, hy]
 
 lemma tau_mul_right (w : E) (b : Af F) (r : E ⊗[F] Af F) :
     tau w (((1 : E) ⊗ₜ[F] b) * r) = b * tau w r := by
@@ -37,7 +37,7 @@ lemma tau_mul_right (w : E) (b : Af F) (r : E ⊗[F] Af F) :
   | zero => simp
   | tmul x y =>
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, tau_tmul, tau_tmul, mul_smul_comm]
-  | add x y hx hy => rw [mul_add, map_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [mul_add, map_add (f := _), map_add (f := _), hx, hy, mul_add]
 
 lemma tau_incl (w e : E) :
     tau w (Formalism.UG.inclE (F := F) (Af F) e) = algebraMap F (Af F) (Algebra.trace F E (w * e)) := by
@@ -127,7 +127,7 @@ lemma mem_tSet (r : E ⊗[F] Af F) (hr : r ∈ IntAf F E) : r ∈ tSet F E := by
     intro s hs
     show ∀ w ∈ dualSet F E, tau w _ ∈ Formalism.UG.intAd F
     intro w hw
-    rw [add_mul, map_add]
+    rw [add_mul, map_add (f := _)]
     exact add_mem ((show ∀ w ∈ dualSet F E, tau w (x * s) ∈ Formalism.UG.intAd F from hx s hs) w hw)
       ((show ∀ w ∈ dualSet F E, tau w (y * s) ∈ Formalism.UG.intAd F from hy s hs) w hw)
   | neg x _ hx =>

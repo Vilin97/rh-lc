@@ -60,13 +60,13 @@ theorem fderiv_first (D : E5 →L[ℝ] ℂ) (v : M23) : D (v, 0) = ∑ r, ∑ c,
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
   refine Finset.sum_congr rfl fun c _ => ?_
-  rw [map_add, map_smul, map_smul, Complex.real_smul, Complex.real_smul]
+  rw [map_add (f := _), map_smul, map_smul, Complex.real_smul, Complex.real_smul]
   exact wirt_term _ _ _ _ _ rfl rfl
 
 theorem reorder (Y : Fin 2 → Fin 3 → ℂ) (a : Fin 3 → Fin 3 → ℂ) (u w : Fin 2 → Fin 3 → ℂ) :
     ∑ r, ∑ c, ((∑ i, Y r i * a i c) * u r c + (starRingEnd ℂ) (∑ i, Y r i * a i c) * w r c) =
       ∑ i, ∑ j, (a i j * ∑ r, Y r i * u r j + (starRingEnd ℂ) (a i j) * ∑ r, (starRingEnd ℂ) (Y r i) * w r j) := by
-  simp only [Fin.sum_univ_two, Fin.sum_univ_three, map_add, map_mul]
+  simp only [Fin.sum_univ_two, Fin.sum_univ_three, map_add (f := _), map_mul]
   ring
 
 theorem wirtinger (Q : Sw) {M : complexMatrix3} (hM : (Matrix.of M).det ≠ 0) (Z : M23) (q : Fin 2 → ℂ) (m : complexMatrix3) :

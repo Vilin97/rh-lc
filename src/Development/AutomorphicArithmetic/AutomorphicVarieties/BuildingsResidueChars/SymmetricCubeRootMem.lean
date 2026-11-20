@@ -17,7 +17,7 @@ theorem UpperTheory.symmetric_cube_root_mem :
   rw [IntermediateField.mem_fixingSubgroup_iff] at hσ
   have hrel' : c + d * σ x = (a + b * σ x) * σ x := by
     have h := congrArg σ hrel
-    simpa only [map_add, map_mul, hσ a ha, hσ b hb, hσ c hc, hσ d hd] using h
+    simpa only [map_add (f := _), map_mul, hσ a ha, hσ b hb, hσ c hc, hσ d hd] using h
   by_contra hne
   have hyn : ‖σ x‖ ≤ 1 := by rw [hn]; exact hx
   have key : (σ x - x) * (b * (x + σ x) - (d - a)) = 0 := by linear_combination hrel - hrel'

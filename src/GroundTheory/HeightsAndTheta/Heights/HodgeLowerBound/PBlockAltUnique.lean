@@ -254,7 +254,7 @@ theorem blockInt_monomial (b : Ψ × Fin N →₀ ℕ) (a : ℚ) :
 
 theorem blockInt_add (P Q : RootPoly Ψ N) :
     blockInt Ψ N j (P + Q) = blockInt Ψ N j P + blockInt Ψ N j Q := by
-  simp only [blockInt, map_add, smul_add, Finset.sum_add_distrib, MvPolynomial.coeff_add]
+  simp only [blockInt, map_add (f := _), smul_add, Finset.sum_add_distrib, MvPolynomial.coeff_add]
 
 theorem monomial_case (hj : j ≤ N) (L : RootPoly Ψ N →ₗ[ℚ] ℚ)
     (hL : ∀ w, IsBlockPerm Ψ N j w → ∀ P, L (rename (weylAct Ψ N w) P) = weylSign Ψ N w * L P)
@@ -305,6 +305,6 @@ theorem BlockAltUnique.proof : BlockAltUnique.Statement := by
     rw [hb, e, map_smul, smul_eq_mul, monomial_case Ψ N j hj L hL hdeg u]
     ring
   | add p q hp hq =>
-    rw [map_add, blockInt_add, hp, hq, mul_add]
+    rw [map_add (f := _), blockInt_add, hp, hq, mul_add]
 
 end GroundTheory.Heights₂.Heights.LowerBoundFree

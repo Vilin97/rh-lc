@@ -44,7 +44,7 @@ theorem isIndEtale_of_etale_of_isIndEtale : ∀ (A W O : Type) [CommRing A] [Com
       have h2 : ((1 : W) ⊗ₜ[A] (algebraMap W O w * o) : W ⊗[A] O) =
           ((1 : W) ⊗ₜ[A] algebraMap W O w) * ((1 : W) ⊗ₜ[A] o) := by simp
       linear_combination e * h1 - e * h2 - ((1 : W) ⊗ₜ[A] o) * he1 w
-    | add x y hx hy => rw [mul_add, hx, hy, map_add, TensorProduct.tmul_add, mul_add]
+    | add x y hx hy => rw [mul_add, hx, hy, map_add (f := _), TensorProduct.tmul_add, mul_add]
   have hidem : IsIdempotentElem e := by
     show e * e = e
     rw [hkey e, hμe, Algebra.TensorProduct.one_def.symm, mul_one]

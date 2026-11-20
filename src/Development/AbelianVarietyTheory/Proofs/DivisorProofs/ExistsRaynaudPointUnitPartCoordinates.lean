@@ -164,7 +164,7 @@ theorem exp_id {m : ℕ} (gam : Fin m → LinearMap.BilinForm ℤ Q.X) (n : Q.X 
   have h5 := hn (a + b) i
   have h6 := hn (a + c) i
   have h7 := hn (b + c) i
-  simp only [map_add, LinearMap.add_apply] at h1 h5 h6 h7
+  simp only [map_add (f := _), LinearMap.add_apply] at h1 h5 h6 h7
   omega
 
 end GlobalTheory.UnitPartPt

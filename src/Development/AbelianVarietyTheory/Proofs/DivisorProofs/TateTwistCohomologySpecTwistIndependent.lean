@@ -111,7 +111,7 @@ noncomputable def twistEquiv {q : ℕ} [NeZero q] {X : Scheme.{0}} (ζ : Prim q 
       invFun := fun b => (cup q (rootClass (i - j) ζ) b).cast (zero_add n) (by ring)
       left_inv := fun a => cup_cup_of_unit hX _ _ (by ring) (key _ _ (by ring)) a _ _ _ _
       right_inv := fun b => cup_cup_of_unit hX _ _ (by ring) (key _ _ (by ring)) b _ _ _ _
-      map_add' := fun a b => by simp only [map_add, cast_add] }
+      map_add' := fun a b => by simp only [map_add (f := _), cast_add] }
 
 end GlobalTheory.EtC.Untwist
 

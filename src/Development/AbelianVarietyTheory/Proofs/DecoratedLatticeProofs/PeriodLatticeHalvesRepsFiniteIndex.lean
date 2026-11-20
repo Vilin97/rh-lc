@@ -23,10 +23,10 @@ section General
 variable {V : Type} [AddCommGroup V] [Module ℂ V] [Module ℝ V] [IsScalarTower ℝ ℂ V] [FiniteDimensional ℝ V]
 
 theorem altE_add_left' (H : Sesq V) (x y z : V) : altE H (x + y) z = altE H x z + altE H y z := by
-  simp [altE, map_add]
+  simp [altE, map_add (f := _)]
 
 theorem altE_add_right' (H : Sesq V) (x y z : V) : altE H x (y + z) = altE H x y + altE H x z := by
-  simp [altE, map_add]
+  simp [altE, map_add (f := _)]
 
 theorem real_smul_eq (r : ℝ) (x : V) : r • x = (r : ℂ) • x := by
   rw [← algebraMap_smul ℂ r x]; rfl

@@ -52,7 +52,7 @@ theorem const_of_wirt (P : M.Par) (hTT : 0 < P.TT) {f : ℂ → ℂ}
     refine ContinuousLinearMap.ext fun w => ?_
     have hw : w = w.re • (1 : ℂ) + w.im • Complex.I := by
       apply Complex.ext <;> simp
-    rw [ContinuousLinearMap.zero_apply, hw, map_add, map_smul, map_smul, e1, e2]
+    rw [ContinuousLinearMap.zero_apply, hw, map_add (f := _), map_smul, map_smul, e1, e2]
     simp
   refine ⟨f (((Real.sqrt P.TT + 1 : ℝ)) : ℂ), fun ζ hζ => ?_⟩
   exact hopen.is_const_of_fderiv_eq_zero (ann_preconn P hTT) hdiff hzero hζ (ann_pt P hTT)

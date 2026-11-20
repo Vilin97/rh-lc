@@ -16,4 +16,4 @@ theorem UpperTheory.V.Z.Sym.Dict.Br.rhoGlob :
       = P.φ v w h (cv v x.re) + P.φ v w h (cv v x.im) * P.rt w := rfl
   rw [lhs, P.φ_alg, P.φ_alg, Pre.rt]
   conv_rhs => rw [hx]
-  rw [map_add, map_mul, P.e_alg, P.e_alg, map_add, map_mul]
+  rw [map_add (f := _), map_mul, P.e_alg, P.e_alg, map_add (f := _), map_mul]

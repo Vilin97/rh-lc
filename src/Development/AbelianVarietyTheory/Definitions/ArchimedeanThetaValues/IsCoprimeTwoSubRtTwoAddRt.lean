@@ -32,7 +32,7 @@ theorem conj_embedding_rt (H : Host E) (τ : E →+* ℂ) :
 
 @[simp] theorem cmHost_bar_halfIntegerGenerator (H : Host E) : H.bar H.w0 = 1 - H.w0 := by
   have h := congrArg H.bar H.two_weight_eq_one_add_root
-  rw [map_mul, map_add, bar_rt, map_one, map_ofNat] at h
+  rw [map_mul, map_add (f := _), bar_rt, map_one, map_ofNat] at h
   apply mul_left_cancel₀ (two_ne_zero : (2 : 𝓞 E) ≠ 0)
   rw [h, mul_sub, H.two_weight_eq_one_add_root]; ring
 

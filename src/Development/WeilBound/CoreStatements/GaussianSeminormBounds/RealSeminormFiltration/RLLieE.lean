@@ -114,9 +114,9 @@ theorem vec_ext {w w' : l ⊕ l → ℝ} (h1 : pPart w = pPart w') (h2 : qPart w
 
 theorem vec_add (w w') : c.vec (w + w') = c.vec w + c.vec w' := by
   refine vec_ext ?_ ?_
-  · rw [pPart_add, pPart_vec, pPart_vec, pPart_vec, ← map_add]
+  · rw [pPart_add, pPart_vec, pPart_vec, pPart_vec, ← map_add (f := _)]
     exact congrArg c.e1 (funext fun i => Fock.evI_add _ _)
-  · rw [qPart_add, qPart_vec, qPart_vec, qPart_vec, ← map_add]
+  · rw [qPart_add, qPart_vec, qPart_vec, qPart_vec, ← map_add (f := _)]
     exact congrArg c.e2 (funext fun i => Fock.evI_add _ _)
 
 theorem vec_smul (t : ℝ) (w) : c.vec (realAd F t • w) = t • c.vec w := by

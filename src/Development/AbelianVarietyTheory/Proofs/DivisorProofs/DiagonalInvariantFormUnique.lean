@@ -93,7 +93,7 @@ theorem GlobalTheory.DiagUniq.eq_smul_lDiag : ∀ (F : Type) [Field F] [NumberFi
       rw [hH']
       exact Submodule.subset_span ⟨A f, B g, hBs g hg, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
   have hHo : ∀ Φ ∈ schA F (κ ⊕ κ), ∃ Ψ ∈ schA F (κ ⊕ κ), H Ψ = Φ := by
     intro Φ hΦ
@@ -121,7 +121,7 @@ theorem GlobalTheory.DiagUniq.eq_smul_lDiag : ∀ (F : Type) [Field F] [NumberFi
       have e2 : (piF ∘ (0 : κ ⊕ κ → AF F)) = 0 := funext fun _ => map_zero _
       rw [e1, e2]; ring
     | zero => rw [map_zero, map_zero]; simp
-    | add x y _ _ hx hy => rw [map_add, map_add, hx, hy, Pi.add_apply]; ring
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, Pi.add_apply]; ring
     | smul c x _ hx => rw [map_smul, map_smul, hx, Pi.smul_apply, smul_eq_mul, smul_eq_mul]; ring
   have hHi : ∀ z : κ ⊕ κ → AF F, ∃ x y : κ → AF F, ∀ Ψ ∈ schA F (κ ⊕ κ),
       H (fun u => ψ (u ⬝ᵥ z) * Ψ u) = schr ψ (Sum.elim x x, Sum.elim y (-y)) (H Ψ) := by
@@ -143,9 +143,9 @@ theorem GlobalTheory.DiagUniq.eq_smul_lDiag : ∀ (F : Type) [Field F] [NumberFi
       rw [e1, hH', hH', hB g hg]
       funext u
       have hx1 : piI ∘ (u + Sum.elim x x) = piI ∘ u + Sum.elim x₀ x₀ := funext fun i => by
-        cases i <;> simp [hx, map_add, piI_mk]
+        cases i <;> simp [hx, map_add (f := _), piI_mk]
       have hx2 : piF ∘ (u + Sum.elim x x) = piF ∘ u + Sum.elim x₁ x₁ := funext fun i => by
-        cases i <;> simp [hx, map_add, piF_mk]
+        cases i <;> simp [hx, map_add (f := _), piF_mk]
       have hy1 : piI ∘ Sum.elim y (-y) = Sum.elim y₀ (-y₀) := funext fun i => by
         cases i <;> simp [hy, map_neg, piI_mk]
       have hy2 : piF ∘ Sum.elim y (-y) = Sum.elim y₁ (-y₁) := funext fun i => by
@@ -164,7 +164,7 @@ theorem GlobalTheory.DiagUniq.eq_smul_lDiag : ∀ (F : Type) [Field F] [NumberFi
     | add a b _ _ ha hb =>
       have e0 : (fun u => ψ (u ⬝ᵥ z) * (a + b) u) = (fun u => ψ (u ⬝ᵥ z) * a u) + (fun u => ψ (u ⬝ᵥ z) * b u) :=
         funext fun u => mul_add _ _ _
-      rw [e0, map_add, map_add, ha, hb, schr_add]
+      rw [e0, map_add (f := _), map_add (f := _), ha, hb, schr_add]
     | smul c a _ ha =>
       have e0 : (fun u => ψ (u ⬝ᵥ z) * (c • a) u) = c • (fun u => ψ (u ⬝ᵥ z) * a u) := by
         funext u; simp only [Pi.smul_apply, smul_eq_mul]; ring

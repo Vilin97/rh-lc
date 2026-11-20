@@ -16,7 +16,7 @@ theorem dot_add_right (ξ : ι → E) (x y : ι → Ad E) : dot ξ (x + y) = dot
   simp only [dot, Pi.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem dot_add_left (ξ η : ι → E) (x : ι → Ad E) : dot (ξ + η) x = dot ξ x + dot η x := by
-  simp only [dot, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [dot, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem dot_zero_left (x : ι → Ad E) : dot (0 : ι → E) x = 0 := by
   simp [dot]

@@ -336,7 +336,7 @@ theorem transl_sq {t : ℂ} (ht : GL3Theta.Tors1 2 g.abelian₂ t) : ∃ H : Pow
       have n2 : ‖κ * PowerSeries.coeff 1 (τ ^ 2)‖ < 1 := by
         rw [norm_mul]
         nlinarith [a1.sq 1, norm_nonneg κ, norm_nonneg (PowerSeries.coeff 1 (τ ^ 2))]
-      rw [map_add, PowerSeries.coeff_C_mul, PowerSeries.coeff_C_mul, PowerSeries.coeff_succ_X_mul,
+      rw [map_add (f := _), PowerSeries.coeff_C_mul, PowerSeries.coeff_C_mul, PowerSeries.coeff_succ_X_mul,
         PowerSeries.coeff_zero_eq_constantCoeff_apply,
         IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm (by rw [n1]; exact n2.ne'), n1]
       exact max_eq_left n2.le

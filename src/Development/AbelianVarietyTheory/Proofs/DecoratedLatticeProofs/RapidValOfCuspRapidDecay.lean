@@ -26,7 +26,7 @@ theorem rapidVal_of_cuspRapidDecay : GlobalTheory.Published.CuspRapidDecay â†’ â
     rw [h2]
     exact GlobalTheory.Grow.RapidDec.smul r h1
   | add x y hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hx.add hy
 
 end GlobalTheory.SeeSaw

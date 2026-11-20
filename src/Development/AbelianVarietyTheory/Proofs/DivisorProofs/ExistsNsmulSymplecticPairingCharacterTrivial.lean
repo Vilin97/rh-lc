@@ -96,7 +96,7 @@ theorem finIncl_finPart {a : AE D} (h : infPart D a = 0) : finIncl D (finPart D 
     intro a
     induction a using TensorProduct.induction_on with
     | zero => simp only [smul_zero, map_zero]
-    | add a b ha hb => rw [smul_add, ha, hb, RingHom.map_add, map_add]
+    | add a b ha hb => rw [smul_add, ha, hb, RingHom.map_add (f := _), map_add (f := _)]
     | tmul a x =>
       rw [TensorProduct.smul_tmul']
       have : (1 - GlobalTheory.FinTranslate.eInf D) • a =

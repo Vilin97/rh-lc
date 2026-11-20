@@ -38,7 +38,7 @@ private lemma charpoly_separable_of_isGen {F E : Type} [NontriviallyNormedField 
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul c k => simp [e, f, IsBaseChange.equiv_tmul, mul_smul_comm]
-    | add w₁ w₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+    | add w₁ w₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
   have h3 : e.conj ((LinearMap.mul F A.K τ).baseChange E) = f := by
     apply LinearMap.ext
     intro y
@@ -74,7 +74,7 @@ private lemma map_mul_of_commute_generator {F E : Type} [NontriviallyNormedField
       intro w
       rw [← IsScalarTower.algebraMap_apply, ← Algebra.smul_def, ← Algebra.smul_def,
         ← algebraMap_smul E c w, ← algebraMap_smul E c (φ w), map_smul]
-    | add k₁ k₂ _ _ h₁ h₂ => intro w; rw [map_add, add_mul, map_add, h₁, h₂, add_mul]
+    | add k₁ k₂ _ _ h₁ h₂ => intro w; rw [map_add (f := _), add_mul, map_add (f := _), h₁, h₂, add_mul]
     | mul k₁ k₂ _ _ h₁ h₂ => intro w; rw [RingHom.map_mul, mul_assoc, h₁, h₂, ← mul_assoc]
   intro y
   obtain ⟨u, rfl⟩ := (A.push).out.equiv.surjective y
@@ -85,7 +85,7 @@ private lemma map_mul_of_commute_generator {F E : Type} [NontriviallyNormedField
     rw [IsBaseChange.equiv_tmul, smul_mul_assoc, map_smul, smul_mul_assoc]
     simp only [AlgHom.toLinearMap_apply, IsScalarTower.coe_toAlgHom']
     rw [hK]
-  | add u₁ u₂ h₁ h₂ => intro w; rw [map_add, add_mul, map_add, h₁, h₂, add_mul]
+  | add u₁ u₂ h₁ h₂ => intro w; rw [map_add (f := _), add_mul, map_add (f := _), h₁, h₂, add_mul]
 
 open Matrix MeasureTheory Filter Topology in
 private lemma adjoin_eq_whole_of_isGen {F E : Type} [NontriviallyNormedField F]

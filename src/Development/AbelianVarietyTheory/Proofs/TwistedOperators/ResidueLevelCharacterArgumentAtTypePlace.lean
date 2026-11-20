@@ -38,7 +38,7 @@ theorem resOf_one : resOf π (1 : A) = 1 := by
   rw [resOf_of_mem π (one_mem S)]; exact map_one π
 
 theorem resOf_add {x y : A} (hx : x ∈ S) (hy : y ∈ S) : resOf π (x + y) = resOf π x + resOf π y := by
-  rw [resOf_of_mem π hx, resOf_of_mem π hy, resOf_of_mem π (add_mem hx hy), ← map_add]; rfl
+  rw [resOf_of_mem π hx, resOf_of_mem π hy, resOf_of_mem π (add_mem hx hy), ← map_add (f := _)]; rfl
 
 theorem resOf_mul {x y : A} (hx : x ∈ S) (hy : y ∈ S) : resOf π (x * y) = resOf π x * resOf π y := by
   rw [resOf_of_mem π hx, resOf_of_mem π hy, resOf_of_mem π (mul_mem hx hy), ← map_mul]; rfl

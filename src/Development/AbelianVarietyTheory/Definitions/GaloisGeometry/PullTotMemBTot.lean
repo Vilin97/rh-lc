@@ -237,7 +237,7 @@ theorem pullTot_apply {n : ℕ} (c : Tot F n) (b : Bidegree n) :
 theorem dTot_pullTot {n : ℕ} (c : Tot F n) :
     dTot F' n (pullTot m n c) = pullTot m (n + 1) (dTot F n c) := by
   funext ⟨(a, q), h⟩
-  rw [pullTot_apply, dTot_apply, dTot_apply, map_add]
+  rw [pullTot_apply, dTot_apply, dTot_apply, map_add (f := _)]
   congr 1
   · rcases a with _ | a
     · exact (map_zero _).symm

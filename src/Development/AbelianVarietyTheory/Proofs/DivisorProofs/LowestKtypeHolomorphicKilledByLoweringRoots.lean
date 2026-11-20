@@ -288,7 +288,7 @@ lemma exists_fin_stable (lam : Fin n → ℝ) {v : H} (hv : v ∈ lowKSub ε lam
   · rintro x y ⟨W, h1, h2, h3, h4⟩ ⟨W', h1', h2', h3', h4'⟩
     refine ⟨W ⊔ W', inferInstance, fun g hg w hw => ?_, sup_le h3 h3', Submodule.add_mem_sup h4 h4'⟩
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hw
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (h2 g hg a ha) (h2' g hg b hb)
 
 lemma cdom_of_inner_ne (hσ : IsURepOn (UJset ε) σ) (lam : Fin n → ℝ) {ν : Fin n → ℝ} {y : H}

@@ -32,7 +32,7 @@ def fibre {VY VT : Type u} [AddCommGroup VY] [Module O VY] [AddCommGroup VT] [Mo
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
     refine ⟨Y.add_mem ha hb, ?_⟩
     have : (⟨(a + b).1, Y.add_mem ha hb⟩ : Y) = ⟨a.1, ha⟩ + ⟨b.1, hb⟩ := rfl
-    rw [this, map_add, ha', hb']; rfl
+    rw [this, map_add (f := _), ha', hb']; rfl
   zero_mem' := ⟨Y.zero_mem, by
     have : (⟨(0 : VY × VT).1, Y.zero_mem⟩ : Y) = 0 := rfl
     rw [this, map_zero]; rfl⟩
@@ -47,7 +47,7 @@ def dualLat {V V' : Type u} [AddCommGroup V] [Module O V] [AddCommGroup V'] [Mod
   carrier := {f | ∀ x ∈ T, b x f ∈ (1 : Submodule O (FractionRing O))}
   add_mem' := by
     intro f g hf hg x hx
-    rw [map_add]; exact Submodule.add_mem _ (hf x hx) (hg x hx)
+    rw [map_add (f := _)]; exact Submodule.add_mem _ (hf x hx) (hg x hx)
   zero_mem' := by
     intro x _
     rw [map_zero]; exact Submodule.zero_mem _
@@ -66,7 +66,7 @@ def fibreDual {VY VT VY' VT' : Type u} [AddCommGroup VY] [Module O VY] [AddCommG
     rintro p r ⟨hp, hp'⟩ ⟨hr, hr'⟩
     refine ⟨Submodule.add_mem _ hp hr, fun y x h => ?_⟩
     have : bY y (p + r).2 - bT x (p + r).1 = (bY y p.2 - bT x p.1) + (bY y r.2 - bT x r.1) := by
-      simp only [Prod.snd_add, Prod.fst_add, map_add]; ring
+      simp only [Prod.snd_add, Prod.fst_add, map_add (f := _)]; ring
     rw [this]; exact Submodule.add_mem _ (hp' y x h) (hr' y x h)
   zero_mem' := ⟨Submodule.zero_mem _, fun y x _ => by
     simp only [Prod.snd_zero, Prod.fst_zero, map_zero, sub_zero]; exact Submodule.zero_mem _⟩

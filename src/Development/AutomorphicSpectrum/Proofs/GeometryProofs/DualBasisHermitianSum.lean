@@ -66,7 +66,7 @@ theorem kappa_form {ε : ℤˣ} {h : D.La → D.La → OK H} {σ : E →+* ℂ} 
         (∑ τ : E →ₐ[ℚ] ℂ, τ (sesq D X Y)) * σ (H.w0 : E) := by
     rw [Finset.sum_mul, ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun τ _ => by ring
-  rw [e1, map_add, map_mul, map_intCast, map_intCast, hκ, hs]
+  rw [e1, map_add (f := _), map_mul, map_intCast, map_intCast, hκ, hs]
   push_cast
   rw [t1, t0]
   ring
@@ -115,7 +115,7 @@ theorem sigma_component : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
       exact if_pos (RingHom.ext fun _ => rfl)
     have h2 : σ (H.rt : E) = 2 * σ (H.w0 : E) - 1 := by
       have h3 := congrArg (fun a : 𝓞 E => σ (algebraMap (𝓞 E) E a)) H.two_weight_eq_one_add_root
-      simp only [map_mul, map_add, map_one, map_ofNat] at h3
+      simp only [map_mul, map_add (f := _), map_one, map_ofNat] at h3
       rw [RingOfIntegers.coe_eq_algebraMap, RingOfIntegers.coe_eq_algebraMap]
       linear_combination -h3
     rw [h1, map_one, map_mul, h2]

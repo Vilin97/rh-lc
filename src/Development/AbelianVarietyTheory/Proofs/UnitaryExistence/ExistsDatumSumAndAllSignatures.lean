@@ -62,7 +62,7 @@ theorem sumForm_bijective {L M : Type} [AddCommGroup L] [AddCommGroup M] (B : Li
     obtain ⟨y, hy⟩ := hC.2 (φ ∘ₗ LinearMap.inr ℤ L M)
     refine ⟨(x, y), LinearMap.ext fun z => ?_⟩
     rw [sumForm_apply, hx, hy]
-    simp [← map_add]
+    simp [← map_add (f := _)]
 
 theorem sumForm_baseChange {L M : Type} [AddCommGroup L] [AddCommGroup M] (B : LinearMap.BilinForm ℤ L)
     (C : LinearMap.BilinForm ℤ M) (x y : ℝ ⊗[ℤ] (L × M)) :
@@ -71,11 +71,11 @@ theorem sumForm_baseChange {L M : Type} [AddCommGroup L] [AddCommGroup M] (B : L
       C.baseChange ℝ (TensorProduct.prodRight ℤ ℝ ℝ L M x).2 (TensorProduct.prodRight ℤ ℝ ℝ L M y).2 := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, Prod.fst_add, Prod.snd_add, ha, hb]; ring
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, Prod.fst_add, Prod.snd_add, ha, hb]; ring
   | tmul r u =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, Prod.fst_add, Prod.snd_add, ha, hb]; ring
+    | add a b ha hb => simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, ha, hb]; ring
     | tmul s v => simp [sumForm_apply, add_smul, add_mul]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
@@ -136,7 +136,7 @@ def sumDatum (D D' : Datum H) : Datum H where
         intro x
         induction x using TensorProduct.induction_on with
         | zero => simp
-        | add a b ha hb => simp only [map_add, ha, hb]
+        | add a b ha hb => simp only [map_add (f := _), ha, hb]
         | tmul r u =>
           have : r ⊗ₜ[ℤ] u = r • ((1 : ℝ) ⊗ₜ[ℤ] u) := by simp [TensorProduct.smul_tmul']
           rw [this, map_smul, map_smul, hA]

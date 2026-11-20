@@ -27,7 +27,7 @@ theorem conjStable_mul (A B : FI E) (hA : ConjStable E A) (hB : ConjStable E B) 
   refine FractionalIdeal.mul_induction_on (C := fun x => complexConj E x ∈ A * B) hx
     (fun i hi j hj => ?_) (fun x y hx hy => ?_)
   · rw [map_mul]; exact FractionalIdeal.mul_mem_mul (hA i hi) (hB j hj)
-  · rw [map_add]; exact (A * B).coeToSubmodule.add_mem hx hy
+  · rw [map_add (f := _)]; exact (A * B).coeToSubmodule.add_mem hx hy
 
 theorem conjStable_inv (A : FI E) (hA0 : A ≠ 0) (hA : ConjStable E A) : ConjStable E A⁻¹ := by
   intro x hx
@@ -471,7 +471,7 @@ theorem dualSubset (h1 : Formalism.FourierDecayAlt.L.DualLatticeInclusion) (h2 :
       exact ⟨_, (dd E ^ ν : FI E).coeToSubmodule.add_mem hi hεi, by rw [zpow_one]⟩
     · have : (g : E) * (i + ε * complexConj E i)
           - (-1) ^ s * complexConj E ((g : E) * (i + ε * complexConj E i)) = 0 := by
-        rw [← hε, map_mul, map_add, map_mul, hεc, complexConj_apply_apply, map_natCast]
+        rw [← hε, map_mul, map_add (f := _), map_mul, hεc, complexConj_apply_apply, map_natCast]
         linear_combination (-(g : E) * i) * hεε
       rw [this]; exact (idl E g 2 ν).coeToSubmodule.zero_mem
   have := hl _ ht
@@ -483,7 +483,7 @@ theorem dualSubset (h1 : Formalism.FourierDecayAlt.L.DualLatticeInclusion) (h2 :
     rw [← trace_conj]
     congr 1
     rw [map_mul, map_mul, hεc, complexConj_apply_apply]; ring
-  rw [e1, map_add, e2, ← map_add] at this
+  rw [e1, map_add (f := _), e2, ← map_add (f := _)] at this
   convert this using 2
   rw [pow_succ, ← hε]; ring
 

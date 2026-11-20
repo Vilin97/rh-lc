@@ -143,7 +143,7 @@ theorem deriv_aeval_mv {K L : Type*} [Field K] [Field L] [Algebra K L] {d : ℕ}
   next a =>
     simp [MvPolynomial.aeval_C, MvPolynomial.pderiv_C]
   next p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   next p i hp =>
     simp only [map_mul, Derivation.leibniz, hp, MvPolynomial.aeval_X, hD, smul_eq_mul,
       MvPolynomial.pderiv_X, map_add]

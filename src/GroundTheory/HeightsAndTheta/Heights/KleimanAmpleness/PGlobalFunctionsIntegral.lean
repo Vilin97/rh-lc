@@ -51,7 +51,7 @@ theorem GlobalFunctionsIntegral.proof : GlobalFunctionsIntegral.Statement := by
     have hsplit : m' + Finsupp.single i (e i) = m :=
       tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr hi)
     have hdeg : m'.degree + e i = E := by
-      rw [← hmE, ← hsplit, map_add, Finsupp.degree_single]
+      rw [← hmE, ← hsplit, map_add (f := _), Finsupp.degree_single]
     refine ⟨monomial m' (AddMonoidAlgebra.coeff g m) * f i, ?_, ?_⟩
     · refine (mem_homogeneousSubmodule _ _).mpr ?_
       rw [← hdeg]

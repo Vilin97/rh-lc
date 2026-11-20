@@ -38,7 +38,7 @@ theorem lie_of_glRel {A : Type} [Ring A] [Algebra ℂ A] {N : ℕ} (Q : Matrix (
   · simp
   · intro p q hp hq
     have e : (p + q) * Y - Y * (p + q) = (p * Y - Y * p) + (q * Y - Y * q) := by noncomm_ring
-    rw [e, map_add, map_add, ← hp, ← hq]
+    rw [e, map_add (f := _), map_add (f := _), ← hp, ← hq]
     noncomm_ring
   · intro i j x
     refine Matrix.induction_on' Y ?_ ?_ ?_
@@ -47,7 +47,7 @@ theorem lie_of_glRel {A : Type} [Ring A] [Algebra ℂ A] {N : ℕ} (Q : Matrix (
       have e : Matrix.single i j x * (p + q) - (p + q) * Matrix.single i j x =
           (Matrix.single i j x * p - p * Matrix.single i j x) + (Matrix.single i j x * q - q * Matrix.single i j x) := by
         noncomm_ring
-      rw [e, map_add, map_add, ← hp, ← hq]
+      rw [e, map_add (f := _), map_add (f := _), ← hp, ← hq]
       noncomm_ring
     · intro k l y
       have hx : Matrix.single i j x = x • Matrix.single i j (1 : ℂ) := by rw [Matrix.smul_single, smul_eq_mul, mul_one]

@@ -14,7 +14,7 @@ theorem lid_lTensor_unit {R A B : Type} [CommRing R] [AddCommGroup A] [AddCommGr
     TensorProduct.lid R B (f.lTensor R u) = f (TensorProduct.lid R A u) := by
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul r a => simp
 
 theorem d0_one {R C : Type} [CommRing R] [Category.{0} C] (F : C ⥤ CommAlgCat.{0} R) :

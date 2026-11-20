@@ -16,7 +16,7 @@ lemma p_eq_pow (B : Base O A) (s : ℕ) : B.p s = (B.φ ^ s) B.q := by
     rw [pow_succ', AlgHom.mul_apply, Function.iterate_succ_apply', ih]
 
 lemma p_eq (B : Base O A) (s : ℕ) : B.p s = (B.φ ^ s) B.X + (B.ℓ : A) := by
-  rw [p_eq_pow, Base.q, map_add, map_natCast]
+  rw [p_eq_pow, Base.q, map_add (f := _), map_natCast]
 
 end Formalism.WachCohomologyFacts.PPs
 

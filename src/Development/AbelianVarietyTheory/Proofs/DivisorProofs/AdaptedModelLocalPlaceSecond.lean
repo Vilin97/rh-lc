@@ -43,7 +43,7 @@ private theorem fA_add_left (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (
 
 private theorem fA_add_right (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (a b b' : Fin d → AE F E) :
     fA σ J a (b + b') = fA σ J a b + fA σ J a b' := by
-  simp only [fA, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [fA, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 private theorem fA_smul_left (σ : E →ₐ[F] E) {d : ℕ} (J : Matrix (Fin d) (Fin d) E) (c : AE F E)
     (a b : Fin d → AE F E) : fA σ J (c • a) b = c * fA σ J a b := by
@@ -207,7 +207,7 @@ theorem _root_.GlobalTheory.T.adapted_model_local_place_second : ∀ (F E : Type
       fun yv hyv => ?_
     have h := hw (Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ (incM F U' *ᵥ yv))) (Or.inr ⟨_, rfl⟩)
       (at_vecMulVec_right _ (at_mulVec_right _ (at_mulVec_right _ hyv)))
-    rw [← map_add, locCo_form M.co v, symp, hTens_swap, Matrix.transpose_vecMulVec,
+    rw [← map_add (f := _), locCo_form M.co v, symp, hTens_swap, Matrix.transpose_vecMulVec,
       hTens_left σ W.J X.J H.x tx hx] at h
     have e1 : (Matrix.vecMulVec a₀ (incV F H'.x) + z * (incM F H'.ι)ᵀ)ᵀ *ᵥ incV F tx =
         (a₀ ⬝ᵥ incV F tx) • incV F H'.x + incM F H'.ι *ᵥ (zᵀ *ᵥ incV F tx) := by

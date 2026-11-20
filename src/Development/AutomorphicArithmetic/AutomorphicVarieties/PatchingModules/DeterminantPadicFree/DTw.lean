@@ -60,13 +60,13 @@ theorem UpperTheory.V.Pa.Det.der :
         exact hgen g hg h hh
       | zero => simp
       | add y1 y2 _ _ h1 h2 =>
-        simp only [Matrix.mul_add, map_add, h1, h2]
+        simp only [Matrix.mul_add, map_add (f := _), h1, h2]
         abel
       | smul a y _ h1 =>
         simp only [Matrix.mul_smul, map_smul, h1, smul_add]
     | zero => simp
     | add x1 x2 _ _ h1 h2 =>
-      simp only [Matrix.add_mul, map_add, h1, h2]
+      simp only [Matrix.add_mul, map_add (f := _), h1, h2]
       abel
     | smul a x _ h1 =>
       simp only [Matrix.smul_mul, map_smul, h1, smul_add]

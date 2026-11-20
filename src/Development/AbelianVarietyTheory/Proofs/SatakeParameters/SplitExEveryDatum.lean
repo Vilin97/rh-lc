@@ -159,7 +159,7 @@ theorem exists_splitPlace (v : PlE D.host) (x0 : 𝓞 D.host.E) (hx0 : x0 ∈ v.
     ∃ s : SplitPlace D.host.E, s.v = belowE v := by
   classical
   set v₀ := belowE v
-  obtain ⟨a, ha⟩ := fixed_of_cO (x := x0 + cO x0) (by rw [map_add, cO_cO, add_comm])
+  obtain ⟨a, ha⟩ := fixed_of_cO (x := x0 + cO x0) (by rw [map_add (f := _), cO_cO, add_comm])
   obtain ⟨b, hb⟩ := fixed_of_cO (x := x0 * cO x0) (by rw [map_mul, cO_cO, mul_comm])
   have hbv : b ∈ v₀.asIdeal := by
     show algebraMap _ _ b ∈ v.asIdeal

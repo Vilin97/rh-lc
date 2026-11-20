@@ -62,7 +62,7 @@ theorem isCompact_latW (W : Spc F E d) (hW : W.L.FG) (v : Pl F) : IsCompact (lat
       rw [← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun j _ => funext fun i => ?_
       have : ((a + b) j : Fv F v) = a j + b j := rfl
-      rw [this, map_add, add_smul]; rfl
+      rw [this, map_add (f := _), add_smul]; rfl
   have hf : Continuous f := by
     change Continuous fun a : Fin m → v.adicCompletionIntegers F =>
       ∑ j, fun i => atPlace v (a j : Fv F v) • inclR (F := F) (AF F) (s j i)
@@ -107,7 +107,7 @@ theorem kc_bound (W : Spc F E d) (hW : W.L.IsLattice E) (v : Pl F) (x : Fin d �
     refine ⟨C + C', hC.add hC', fun M hM => ?_⟩
     have : (fun i => atPlace v 1 • inclR (F := F) (AF F) ((y + z) i)) =
         (fun i => atPlace v 1 • inclR (F := F) (AF F) (y i)) + fun i => atPlace v 1 • inclR (F := F) (AF F) (z i) :=
-      funext fun i => by rw [Pi.add_apply, map_add, smul_add]; rfl
+      funext fun i => by rw [Pi.add_apply, map_add (f := _), smul_add]; rfl
     rw [this, Matrix.mulVec_add]
     exact Set.add_mem_add (h M hM) (h' M hM)
   | smul c y _ hy =>

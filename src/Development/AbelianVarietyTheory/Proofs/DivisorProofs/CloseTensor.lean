@@ -31,7 +31,7 @@ theorem baseChange_tensor_holomorphic_closeness {I : Type} [Fintype I] {g : ℕ}
           rw [Algebra.TensorProduct.tmul_mul_tmul, _root_.mul_one, _root_.one_mul]
         rw [e1, map_mul, map_mul, hφd, hφ]
         rfl
-      | add x y hx hy => rw [map_add, map_add, hx, hy]
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     subst e
     exact Relation.ReflTransGen.refl
   | head hs _ ih =>

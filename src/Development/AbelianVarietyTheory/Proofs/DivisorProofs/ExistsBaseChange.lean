@@ -58,8 +58,8 @@ theorem exists_baseChange {G Γ W W' K M : Type} [Group G] [Group Γ] [NormedAdd
   obtain ⟨j, hj⟩ := GlobalTheory.HilbertModel.exists_lift_fun σ hH (fun x h => c₁ (v x h))
     (fun a b => by
       funext h
-      have : v (a + b) h = v a h + v b h := hinj (by rw [map_add, ← hv, ← hv, ← hv, map_add]; rfl)
-      rw [this, map_add]; rfl)
+      have : v (a + b) h = v a h + v b h := hinj (by rw [map_add (f := _), ← hv, ← hv, ← hv, map_add (f := _)]; rfl)
+      rw [this, map_add (f := _)]; rfl)
     (fun c a => by
       funext h
       have : v (c • a) h = c • v a h := hinj (by rw [map_smulₛₗ, ← hv, ← hv, map_smulₛₗ]; rfl)

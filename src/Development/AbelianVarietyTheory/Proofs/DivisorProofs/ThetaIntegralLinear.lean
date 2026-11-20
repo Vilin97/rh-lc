@@ -35,7 +35,7 @@ theorem thetaIntegral_linear_So : GlobalTheory.ThK.KP → ∀ (F E : Type) [Fiel
   funext h
   have e : ∀ g, theta om' (c • Φ + Ψ) g h = c * theta om' Φ g h + theta om' Ψ g h := fun g => by
     have e1 : theta om' (c • Φ + Ψ) g h = theta om' (c • Φ) g h + theta om' Ψ g h := by
-      simp only [theta, map_add]
+      simp only [theta, map_add (f := _)]
       exact GlobalTheory.WeilM.thetaSum_add F (pres _ (c • Φ) hcΦS) (pres _ Ψ hΨS)
     have e2 : theta om' (c • Φ) g h = c * theta om' Φ g h := by
       simp only [theta, map_smul]

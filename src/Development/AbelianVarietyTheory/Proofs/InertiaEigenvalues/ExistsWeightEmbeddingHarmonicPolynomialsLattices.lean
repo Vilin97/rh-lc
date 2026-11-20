@@ -48,7 +48,7 @@ def cfn {n : ℕ} (lam : D.what₂.Tau → DomWeight n) : VV ℂ lam →ₗ[ℂ]
   toFun F := coefFn (RingHom.id ℂ) lam (F : Pol ℂ D.what₂.Tau n)
   map_add' F G := by
     funext x
-    simp only [coefFn, Submodule.coe_add, map_add, Pi.add_apply, mul_add]
+    simp only [coefFn, Submodule.coe_add, map_add (f := _), Pi.add_apply, mul_add]
   map_smul' c F := by
     funext x
     simp only [coefFn, Submodule.coe_smul, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.eval₂Hom_C, RingHom.id_apply,
@@ -236,7 +236,7 @@ theorem exists_wtMap : ∀ (D : D7) (S T : HSp D) (B : GlobalTheory.ExportSeries
     | add φ₁ φ₂ _ _ h₁ h₂ =>
       obtain ⟨w₁, rfl⟩ := h₁
       obtain ⟨w₂, rfl⟩ := h₂
-      exact ⟨w₁ + w₂, by rw [map_add, map_add]⟩
+      exact ⟨w₁ + w₂, by rw [map_add (f := _), map_add (f := _)]⟩
     | smul o φ _ h₁ =>
       obtain ⟨w₁, rfl⟩ := h₁
       obtain ⟨_, r, rfl⟩ := o
@@ -258,7 +258,7 @@ theorem exists_wtMap : ∀ (D : D7) (S T : HSp D) (B : GlobalTheory.ExportSeries
       obtain ⟨c₁, hc₁, h₁⟩ := h₁ r
       obtain ⟨c₂, hc₂, h₂⟩ := h₂ r
       refine ⟨c₂ * c₁, mul_ne_zero hc₂ hc₁, ?_⟩
-      rw [map_add, smul_add, map_mul (algebraMap R (FractionRing R)) c₂ c₁, mul_assoc, map_mul e, ← smul_smul]
+      rw [map_add (f := _), smul_add, map_mul (algebraMap R (FractionRing R)) c₂ c₁, mul_assoc, map_mul e, ← smul_smul]
       refine add_mem (hsmul c₂ h₁) ?_
       rw [← map_mul e, ← mul_assoc, ← map_mul (algebraMap R (FractionRing R)), mul_comm c₂ c₁,
         map_mul (algebraMap R (FractionRing R)), mul_assoc, map_mul e, ← smul_smul]
@@ -282,7 +282,7 @@ theorem exists_wtMap : ∀ (D : D7) (S T : HSp D) (B : GlobalTheory.ExportSeries
       induction hG using Submodule.span_induction with
       | mem F hF => exact hQbase F hF
       | zero => rw [map_zero]; exact hQ0
-      | add _ _ _ _ h₁ h₂ => rw [map_add]; exact hQadd _ _ h₁ h₂
+      | add _ _ _ _ h₁ h₂ => rw [map_add (f := _)]; exact hQadd _ _ h₁ h₂
       | smul k _ _ h₁ => rw [LinearMap.map_smulₛₗ]; exact hQsmul _ _ h₁
     have hlat := Formalism.L2.DIV.nabAtr_isLattice (labLL0 D) B.w.lam (B.latAt h) hL
     have hg : ∀ i, Q (mapK s B.w.lam (bVV (↥D.LL0) B.w.lam i)) := fun i =>

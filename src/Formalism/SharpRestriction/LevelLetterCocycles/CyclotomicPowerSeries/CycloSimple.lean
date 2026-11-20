@@ -9,7 +9,7 @@ open PowerSeries IsLocalRing
 private theorem constantCoeff_aeval_eq_aeval_constantCoeff {S : Type} [CommRing S] (Q : Polynomial S) (y : PowerSeries S) :
     constantCoeff (Polynomial.aeval y Q) = Polynomial.aeval (constantCoeff y) Q := by
   induction Q using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | monomial n a =>
     simp only [Polynomial.aeval_monomial, map_mul, map_pow, Algebra.algebraMap_self, RingHom.id_apply]
     congr 1
@@ -32,7 +32,7 @@ theorem cycloSimple : CycloSimpleStatement := by
   obtain ⟨a, b, hab⟩ := hsep
   have hu : IsUnit (Polynomial.aeval ζ (Polynomial.derivative Φ)) := by
     have h := congrArg (Polynomial.aeval ζ) hab
-    simp only [map_add, map_mul, map_one, hζ, mul_zero, zero_add] at h
+    simp only [map_add (f := _), map_mul, map_one, hζ, mul_zero, zero_add] at h
     exact ⟨⟨_, _, (mul_comm _ _).trans h, h⟩, rfl⟩
   set y : PowerSeries S := C ζ * E with hy
   have hy0 : constantCoeff y = ζ := by simp [hy, hE0]

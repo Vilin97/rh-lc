@@ -210,7 +210,7 @@ theorem monV_eq_zero_of_isCrys (hV : IsPst P ρ) (hc : IsCrys (P.PD K) ρ) (x : 
     (mem_closure_of_isCrys P ρ hV hc x hx)
   · rintro _ ⟨c, s, hs, rfl⟩
     rw [← End.mul_apply, monV_mulV, End.mul_apply, ((hk s).mpr hs).2, map_zero]
-  · intro y z _ _ hy hz; rw [map_add, hy, hz, add_zero]
+  · intro y z _ _ hy hz; rw [map_add (f := _), hy, hz, add_zero]
   · intro y _ hy; rw [map_neg, hy, neg_zero]
 
 theorem ineTriv_of_isCrys (hV : IsPst P ρ) (hc : IsCrys (P.PD K) ρ) : IneTriv P ρ := by
@@ -222,7 +222,7 @@ theorem ineTriv_of_isCrys (hV : IsPst P ρ) (hc : IsCrys (P.PD K) ρ) : IneTriv 
   · rintro _ ⟨c, s, hs, rfl⟩
     rw [← End.mul_apply, stRep_mulV P ρ g c c ((IntermediateField.mem_fixingSubgroup_iff _ _).mp hg _ c.2),
       End.mul_apply, (mem_Dst P ρ).mp ((hk s).mpr hs).1 g]
-  · intro y z _ _ hy hz; rw [map_add, hy, hz]
+  · intro y z _ _ hy hz; rw [map_add (f := _), hy, hz]
   · intro y _ hy; rw [map_neg, hy]
 
 omit [FiniteDimensional ↥LL.1 V] in
@@ -284,7 +284,7 @@ theorem actD_eq_one_of_wdMk (g : ↥(GK K)) (h : ∀ x, wdMk P ι ρ (actD P ρ 
   have hc : phiD P ρ ^ n * actD P ρ g = actD P ρ g * phiD P ρ ^ n :=
     Commute.pow_left (phiD_actD P ρ g) n
   have h1 := wdMk_add P ι ρ ((phiD P ρ ^ n) (actD P ρ g x - x)) ((phiD P ρ ^ n) x)
-  rw [← map_add, sub_add_cancel, ← End.mul_apply, hc, End.mul_apply, h] at h1
+  rw [← map_add (f := _), sub_add_cancel, ← End.mul_apply, hc, End.mul_apply, h] at h1
   exact left_eq_add.mp (h1.trans (add_comm _ _))
 
 end Rep

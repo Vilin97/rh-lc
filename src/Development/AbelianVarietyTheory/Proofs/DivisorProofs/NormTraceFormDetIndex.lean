@@ -19,7 +19,7 @@ def skewSub (G : Matrix (Fin r) (Fin r) E) : Submodule (maximalRealSubfield E) (
     refine ⟨by rw [trace_add, hX.1, hY.1, add_zero], fun u w => ?_⟩
     have h1 := hX.2 u w
     have h2 := hY.2 u w
-    simp only [herm, cc, add_mulVec, Pi.add_apply, map_add, add_mul, mul_add, Finset.sum_add_distrib] at h1 h2 ⊢
+    simp only [herm, cc, add_mulVec, Pi.add_apply, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib] at h1 h2 ⊢
     linear_combination h1 + h2
   smul_mem' c X hX := by
     have hc : IsCMField.complexConj E (c : E) = c := IsCMField.complexConj_apply_eq_self E c

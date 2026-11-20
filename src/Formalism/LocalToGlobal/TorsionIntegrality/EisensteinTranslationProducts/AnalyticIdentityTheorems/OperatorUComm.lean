@@ -25,7 +25,7 @@ lemma herm_add_left (L : PeriodPair) (x y w : ℂ) :
 
 lemma herm_add_right (L : PeriodPair) (w x y : ℂ) :
     herm L w (x + y) = herm L w x + herm L w y := by
-  simp only [Formalism.L2.Th1.F.herm, map_add]
+  simp only [Formalism.L2.Th1.F.herm, map_add (f := _)]
   ring
 
 lemma altE_swap (L : PeriodPair) (x y : ℂ) : altE L y x = -altE L x y := by

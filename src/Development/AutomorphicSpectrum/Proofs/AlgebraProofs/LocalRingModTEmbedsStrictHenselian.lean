@@ -102,7 +102,7 @@ theorem exists_basis_split_of_exact_of_fg_valuationRing :
     have h2 : ∑ j, g (Sum.inr j) • u j = 0 := by
       have h7 := congrArg al hg
       set_option synthInstance.maxHeartbeats 100000 in
-        simpa [map_add, map_sum, map_smul, h1, hta'] using h7
+        simpa [map_add (f := _), map_sum, map_smul, h1, hta'] using h7
     have h3 : ∀ j, g (Sum.inr j) = 0 :=
       Fintype.linearIndependent_iff.mp hu (fun j => g (Sum.inr j)) h2
     have h4 : ∑ i, g (Sum.inl i) • b (w i) = 0 := by

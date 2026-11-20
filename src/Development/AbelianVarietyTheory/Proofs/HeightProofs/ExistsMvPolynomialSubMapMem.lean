@@ -56,7 +56,7 @@ theorem exists_mvPolynomial_sub_map_mem {σ R S : Type} [CommRing R] [CommRing S
     refine ⟨a + b, ?_⟩
     have := Ideal.add_mem _ ha hb
     convert this using 1
-    rw [map_add]; ring
+    rw [map_add (f := _)]; ring
   | mul_X p n hp =>
     obtain ⟨a, ha⟩ := hp
     refine ⟨a * MvPolynomial.X n, ?_⟩

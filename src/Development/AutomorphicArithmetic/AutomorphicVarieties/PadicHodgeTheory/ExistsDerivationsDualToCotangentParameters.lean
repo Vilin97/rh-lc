@@ -33,7 +33,7 @@ theorem UpperTheory.exists_derivations_dual_to_cotangent_parameters :
         + (x a • b + x b • a) := by
       simp only [Algebra.smul_def, map_mul]
       ring
-    rw [h2, map_add, hπN _ (N.sub_mem h1 (N.smul_mem _ h1N))]
+    rw [h2, map_add (f := _), hπN _ (N.sub_mem h1 (N.smul_mem _ h1N))]
     simp
   have hker : ∀ a, x a = 0 → π a = 0 → ∃ e : O, e ≠ 0 ∧ e • a ∈ J := by
     intro a ha h
@@ -89,7 +89,7 @@ theorem UpperTheory.exists_derivations_dual_to_cotangent_parameters :
     simp [b, b0, t]
   refine ⟨n, fun i => ((b.coord i).restrictScalars O) ∘ₗ π, t, 1, one_ne_zero, ?_, ?_, ?_, ?_, ?_⟩
   · intro i u v
-    rw [LinearMap.comp_apply, hder, map_add, map_smul, map_smul, Algebra.smul_def, Algebra.smul_def]
+    rw [LinearMap.comp_apply, hder, map_add (f := _), map_smul, map_smul, Algebra.smul_def, Algebra.smul_def]
     rfl
   · intro i u hu
     simp [hπN u (hJN u (Submodule.mem_sup_right hu))]

@@ -152,10 +152,10 @@ theorem isPrimitive_of_value (k : ℕ) (ζ : Qbar l) (h2 : l ≠ 2) (hk : 1 ≤ 
     rw [MonoidHom.mem_ker]
     ext
     have := congrArg (ZMod.castHom hd2 (ZMod χ.conductor)) h1
-    rw [map_pow, map_add, map_one, map_natCast] at this
+    rw [map_pow, map_add (f := _), map_one, map_natCast] at this
     rw [ZMod.unitsMap_def, Units.coe_map, Units.val_pow_eq_pow_val, hu, Units.val_one]
     show ZMod.castHom hd (ZMod χ.conductor) _ = 1
-    rw [map_pow, map_add, map_one, map_natCast]
+    rw [map_pow, map_add (f := _), map_one, map_natCast]
     exact this
   have h3 := hker hmem
   rw [MonoidHom.mem_ker] at h3
@@ -182,7 +182,7 @@ theorem exists_primitive_inComp : ∀ (l : ℕ) [Fact l.Prime] (φ : DirichletCh
       ZMod.castHom hd (ZMod l) (b : ZMod (l ^ (k + 1))) := fun b => rfl
   have hu1 : ZMod.unitsMap hd u = 1 := by
     ext
-    rw [hred, hu, map_add, map_one, map_natCast, ZMod.natCast_self, add_zero, Units.val_one]
+    rw [hred, hu, map_add (f := _), map_one, map_natCast, ZMod.natCast_self, add_zero, Units.val_one]
   let f : (ZMod (l ^ (k + 1)))ˣ →* (Qbar l)ˣ := ((ω ^ e * MulChar.toUnitHom φ).comp (ZMod.unitsMap hd)) * χ₂
   have hf : ∀ b, (f b : Qbar l) = (ω (ZMod.unitsMap hd b) : Qbar l) ^ e *
       φ ((ZMod.unitsMap hd b : (ZMod l)ˣ) : ZMod l) * χ₂ b := fun b => by

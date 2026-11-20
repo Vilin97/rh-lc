@@ -144,7 +144,7 @@ theorem exists_eq_p_mul_of_sub_eq {R G : Type*} [CommRing R] [Algebra ℚ_[p] R]
   have hμ : ∀ σ, g σ μ = μ := by
     intro σ
     have hgy : g σ y = y + A (c σ) * t := by rw [← hy σ]; ring
-    rw [hμdef, map_sub, map_mul, map_natCast, hgf, hgy, map_add, map_mul, hf, ht]
+    rw [hμdef, map_sub, map_mul, map_natCast, hgf, hgy, map_add (f := _), map_mul, hf, ht]
     ring
   obtain ⟨n, d, hd, hnd⟩ := hper μ hμ
   have hit : ∀ m x, f^[m] x = (f ^ m) x := fun m x => by rw [RingHom.coe_pow]
@@ -188,7 +188,7 @@ theorem exists_eq_p_mul_of_sub_eq {R G : Type*} [CommRing R] [Algebra ℚ_[p] R]
     linear_combination hfT - ha
   · rw [map_sub, hga, hT, map_mul, hg, hgit]
     have hgy : g σ y = y + A (c σ) * t := by rw [← hy σ]; ring
-    rw [hgy, map_add, map_mul, hfA, hft]
+    rw [hgy, map_add (f := _), map_mul, hfA, hft]
     linear_combination (A (c σ) * t) * hsp
 
 section Span
@@ -472,7 +472,7 @@ theorem false_of_kummerC_eq [FiniteDimensional ℚ_[p] K] {ε : 𝒪♭} (hε : 
         rw [← ZMod.natCast_eq_natCast_iff', hS]
         have h := congrArg (PadicInt.toZModPow m) (HZ σ)
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [map_add, map_mul, map_pow, map_natCast, map_sum] at h
+          simp only [map_add (f := _), map_mul, map_pow, map_natCast, map_sum] at h
         push_cast
         simp only [hcm, hχm, hκm, hA, hB, ZMod.natCast_val, ZMod.cast_id', id]
         rw [h, Finset.sum_congr rfl fun i _ => mul_comm ((PadicInt.toZModPow m) (κ i σ)) _]

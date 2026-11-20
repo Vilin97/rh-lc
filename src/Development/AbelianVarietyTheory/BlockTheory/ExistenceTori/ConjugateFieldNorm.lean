@@ -268,7 +268,7 @@ theorem nrm_le_one_iff {j : R.J} {la : HeightOneSpectrum (𝓞 Q.c.F)} (y : Q.Pt
 
 def adelFn (j : R.J) (σ : Q.c.F →+* ℂ) (hσ : GoodEmb Q.c σ) : Q.Rules j →ₛₗ[σ] (GA F (Q.V j) → ℂ) where
   toFun f g := Q.mu j σ hσ g * rdU (Q.U j σ) f (Q.dict j σ hσ g).1 (Q.dict j σ hσ g).2
-  map_add' f f' := by funext g; rw [map_add]; exact mul_add _ _ _
+  map_add' f f' := by funext g; rw [map_add (f := _)]; exact mul_add _ _ _
   map_smul' a f := by funext g; rw [map_smulₛₗ]; exact mul_left_comm _ _ _
 
 def adel0 (j : R.J) : Q.Rules j →ₛₗ[Q.sg0] (GA F (Q.V j) → ℂ) := Q.adelFn j Q.sg0 Q.base_embedding_good

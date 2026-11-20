@@ -18,7 +18,7 @@ theorem exists_poly_rowAct_coef (n k : ℕ) (f : MvPolynomial (Fin n × Fin k) �
   | add p q hp hq =>
     obtain ⟨P, hP⟩ := hp l
     obtain ⟨Q, hQ⟩ := hq l
-    exact ⟨P + Q, fun g => by simp only [map_add, hP, hQ]⟩
+    exact ⟨P + Q, fun g => by simp only [map_add (f := _), hP, hQ]⟩
   | mul_X p v hp =>
     choose P hP using fun b : Fin n => hp (l ∘ₗ LinearMap.mulRight ℂ (X (b, v.2)))
     refine ⟨∑ b, X (v.1, b) * P b, fun g => ?_⟩

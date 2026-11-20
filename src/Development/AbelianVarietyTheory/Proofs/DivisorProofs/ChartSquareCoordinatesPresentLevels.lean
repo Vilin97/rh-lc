@@ -22,7 +22,7 @@ theorem chart_square_presents : ∀ (p : ℕ) (k : Type) [CommRing k] (d : ℕ) 
         (G.res n : G.A (n + 1) →ₐ[k] G.A n)
     have hr : ∀ n t, r n t = pullbackTwo (G.res n) t := fun n t => by
       induction t with
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a b => rfl
     refine GlobalTheory.T.existsUnique_powerSeries_of_compatible_system k (Fin d ⊕ Fin d) (fun n => G.A n ⊗[k] G.A n) c.x₂ c.nil₂ r
       (fun n i => ?_) ⟨fun n => (ht n).1, fun N => ?_⟩ z (fun n => by rw [hr]; exact hz n)

@@ -333,7 +333,7 @@ theorem sum_add_cc {Ψ : Finset (E →+* ℂ)} (hΨ : IsType Ψ) (w : E) :
       simp
   rw [h3, ← Finset.sum_add_sum_compl Ψ, h4] at h2
   rw [Finset.sum_coe_sort Ψ (fun τ => τ (w + cc w))]
-  simp only [map_add, Finset.sum_add_distrib]
+  simp only [map_add (f := _), Finset.sum_add_distrib]
   exact h2.symm
 
 noncomputable def sym (a b : Fin N → E) : Matrix (Fin N) (Fin N) E :=
@@ -509,7 +509,7 @@ theorem count_int {M q : ℕ} {P : Ideal (𝓞 E)} (hP : GoodPrime M q P) {Λ : 
 noncomputable def pairChar (u : X →ₗ[𝓞 E] (Fin n → E)) (b : 𝓞 E) (η : X) : AddChar X ℂ where
   toFun := fun ξ => eT (herm 1 (u η) (u (b • ξ)))
   map_zero_eq_one' := eT_int (Int'.symm (by rw [smul_zero, map_zero]; exact int_zero _))
-  map_add_eq_mul' := fun ξ ξ' => by rw [smul_add, map_add, herm_ar, eT_add]
+  map_add_eq_mul' := fun ξ ξ' => by rw [smul_add, map_add (f := _), herm_ar, eT_add]
 
 theorem pairChar_spec {M q : ℕ} {P : Ideal (𝓞 E)} (hP : GoodPrime M q P) {Λ : Lt E n}
     (hS : SD Λ) {b : 𝓞 E} (hb : b ∈ conjI P) (u : X →ₗ[𝓞 E] (Fin n → E))

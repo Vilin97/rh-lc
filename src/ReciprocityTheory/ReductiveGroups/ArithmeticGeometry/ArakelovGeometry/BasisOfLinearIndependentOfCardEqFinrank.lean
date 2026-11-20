@@ -64,7 +64,7 @@ private theorem gens_lemma_2 [Fintype κ] (x : κ → Ω) (e : Fin (D + 1) → �
            exact IntermediateField.algebraMap_mem _ a)
         | simpa using IntermediateField.algebraMap_mem (fnField (x ∘ e)) a
     next p1 p2 h1 h2 =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem h1 h2
     next p1 k h1 =>
       rw [map_mul, map_mul]
@@ -570,7 +570,7 @@ theorem coord_div_isIntegral (x : κ → Ω) (e : Fin (D + 1) → κ) (h : IsPro
       rw [MvPolynomial.aeval_C, eq_intCast, map_intCast]
       exact intCast_mem R a
     next p1 p2 h1 h2 =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem h1 h2
     next p1 k h1 =>
       rw [map_mul, map_mul]

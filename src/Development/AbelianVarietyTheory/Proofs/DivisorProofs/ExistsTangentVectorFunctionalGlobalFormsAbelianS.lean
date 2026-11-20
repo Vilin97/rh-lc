@@ -175,7 +175,7 @@ theorem exists_eq_comp {K : Type} [Field K] {L G : Type} {F : Type 1} [AddCommGr
   let T : L →ₗ[K] Module.Dual K G :=
     { toFun := t
       map_add' := fun v w ↦ ext fun f ↦ by
-        rw [LinearMap.add_apply, ht, ht, ht, map_add, LinearMap.add_apply]
+        rw [LinearMap.add_apply, ht, ht, ht, map_add (f := _), LinearMap.add_apply]
       map_smul' := fun r v ↦ ext fun f ↦ by
         rw [LinearMap.smul_apply, ht, ht, map_smul, LinearMap.smul_apply, RingHom.id_apply] }
   have hinj : Function.Injective T := fun v w h ↦ hl (LinearMap.ext fun f ↦

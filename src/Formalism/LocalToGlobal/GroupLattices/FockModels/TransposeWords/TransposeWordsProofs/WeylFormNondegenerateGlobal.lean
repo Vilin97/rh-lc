@@ -117,7 +117,7 @@ theorem weylPair_of (hB : FockRBilin) (hA : FockRWordAdj) (hH : FockPairingHighe
   | add x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by rw [map_add, tsc_add_left hB, ha, hb, map_add, add_mul]⟩
+    exact ⟨a + b, by rw [map_add (f := _), tsc_add_left hB, ha, hb, map_add (f := _), add_mul]⟩
   | smul a x _ hx =>
     obtain ⟨z, hz⟩ := hx
     exact ⟨a * z, by rw [tsc_map_smul, tsc_smul_left hB, hz, map_mul, mul_assoc]⟩

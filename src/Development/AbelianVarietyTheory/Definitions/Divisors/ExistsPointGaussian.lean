@@ -84,7 +84,7 @@ theorem pairV_proj (i : J) (x : P.V) {y : P.V} (hy : y ∈ P.eigV ((σ i).comp (
     intro t
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add s t hs ht => simp only [map_add, LinearMap.add_apply, hs, ht, Pi.add_apply, add_mul]
+    | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, hs, ht, Pi.add_apply, add_mul]
     | tmul c a =>
       rw [tensorAction_tmul, map_smul, LinearMap.smul_apply, P.pairV_act,
         mem_eigenSub.1 hy (star a), map_smul, splitMap_tmul]
@@ -105,7 +105,7 @@ theorem mem_latTSub_iff (i : J) {y : P.V} (hy : y ∈ P.eigV ((σ i).comp (starR
     | add x x' hx hx' =>
       obtain ⟨c, hc⟩ := hx
       obtain ⟨d, hd⟩ := hx'
-      exact ⟨c + d, by rw [map_add, map_add, map_add, LinearMap.add_apply, hc, hd]⟩
+      exact ⟨c + d, by rw [map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply, hc, hd]⟩
     | tmul c s =>
       obtain ⟨d, hd⟩ := (P.mem_latT_iff y).1 hT s
       refine ⟨-(c * d), ?_⟩
@@ -129,7 +129,7 @@ theorem pairV_bLie_eq_zero (x : LieG P.Gt) {w : P.V} (hw : w ∈ P.W) : P.pairV 
     intro w
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul c t =>
       have : (c ⊗ₜ t : P.V) = c • (1 : C) ⊗ₜ t := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
@@ -195,7 +195,7 @@ theorem exists_point_gaussian : ∃ (_ : Fact ¬IsUnit ((2 : ℕ) : 𝓞_ℂ_[2]
       hom := fun a => m.hom _
       map_one := by rw [map_one, m.map_one]
       map_mul := fun a b => by rw [map_mul, m.map_mul]
-      map_add := fun a b => by rw [map_add, m.map_add]
+      map_add := fun a b => by rw [map_add (f := _), m.map_add (f := _)]
       rosati := fun a => by rw [gaussMat_star]; exact m.rosati _ }
   obtain ⟨o', -⟩ := exists_oAct_polPull (spMap (padicIntHom 2)) _ og
   obtain ⟨ε⟩ : Nonempty (Eps 2 ℂ_[2]) := inferInstance

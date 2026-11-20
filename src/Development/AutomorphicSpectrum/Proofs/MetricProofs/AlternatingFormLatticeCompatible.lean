@@ -75,7 +75,7 @@ theorem latEmb_relIndex_dual_ne_zero : ∀ (E : Type) [Field E] [NumberField E] 
       intro a b
       have : ((n (a + b) : ℤ) : ℚ) = ((n a + n b : ℤ) : ℚ) := by
         push_cast
-        rw [hn, hn, hn, map_add, map_add, LinearMap.add_apply, mul_add]
+        rw [hn, hn, hn, map_add (f := _), map_add (f := _), LinearMap.add_apply, mul_add]
       exact_mod_cast this
     let φ : Λ →ₗ[ℤ] ℤ := (AddMonoidHom.mk' n hadd).toIntLinearMap
     obtain ⟨z, hz⟩ := hform.2 φ
@@ -84,7 +84,7 @@ theorem latEmb_relIndex_dual_ne_zero : ∀ (E : Type) [Field E] [NumberField E] 
       intro x
       have h1 : B (e x) (e z) = -((n x : ℤ) : ℚ) := by
         rw [hskew, hB, hzx]
-      rw [map_add, map_nsmul, h1, hn, nsmul_eq_mul]
+      rw [map_add (f := _), map_nsmul, h1, hn, nsmul_eq_mul]
       ring
     have h1 : ∀ v, B v ((m * H.d) • y + e z) = 0 := by
       intro v

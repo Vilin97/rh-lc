@@ -246,7 +246,7 @@ private theorem shaInj_gen {O Γ H W X : Type} [CommRing O] [IsDomain O] [IsLoca
     intro u v hu hv y
     obtain ⟨yu, rfl⟩ := hgen u hu
     obtain ⟨yv, rfl⟩ := hgen v hv
-    rw [smul_smul, ← add_smul, hφ, hφ, hφ, map_add, map_mul]
+    rw [smul_smul, ← add_smul, hφ, hφ, hφ, map_add (f := _), map_mul]
   have hφinj : ∀ u : W, b • u = 0 → φ u = 0 → u = 0 := by
     intro u hu h
     obtain ⟨y, rfl⟩ := hgen u hu
@@ -264,7 +264,7 @@ private theorem shaInj_gen {O Γ H W X : Type} [CommRing O] [IsDomain O] [IsLoca
     funext g
     have e := hφadd _ _ (htor x g) (htor y g) 1
     rw [one_smul, map_one, one_mul] at e
-    simp only [Submodule.coe_add, map_add, Pi.add_apply]
+    simp only [Submodule.coe_add, map_add (f := _), Pi.add_apply]
     rw [e, shaInj_mat_add]
   · rw [injective_iff_map_eq_zero]
     intro x hx

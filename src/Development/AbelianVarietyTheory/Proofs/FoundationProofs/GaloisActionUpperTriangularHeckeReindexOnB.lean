@@ -67,7 +67,7 @@ theorem eval_eq_zero_of_mem {ε : Ω →+* ℂ} (X : Tower Ω ε) (l : ℕ) [Fac
     rw [← hz, ← Submodule.Quotient.mk_smul, Submodule.Quotient.mk_eq_zero]
     exact Submodule.smul_mem_smul hr Submodule.mem_top
   · intro x y hx hy
-    rw [map_add, map_add, hx, hy, add_zero]
+    rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 omit [IsAlgClosure ℚ Ω] in
 
@@ -83,7 +83,7 @@ theorem act_upper_add {ε : Ω →+* ℂ} (X : Tower Ω ε) {N l w : ℕ} [Fact 
     induction hb using Submodule.span_induction with
     | mem x hx => exact hx.2 γ hγ
     | zero => exact map_zero _
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | smul c x _ hx => rw [map_smul, hx]
   have hm : (!![1, a + t * q; 0, (q : ℤ)] : Matrix (Fin 2) (Fin 2) ℤ) =
       (γ : Matrix (Fin 2) (Fin 2) ℤ) * !![1, a; 0, (q : ℤ)] := by

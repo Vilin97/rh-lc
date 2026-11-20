@@ -18,7 +18,7 @@ theorem exists_crd_of_mem_unipRad : ∀ (F E : Type) [Field F] [NumberField F] [
   have hs : ∀ a : AF F ⊗[F] E, s (s a) = a := fun a => by
     induction a using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (sigma_sigma hF.cm x)
   have cc : ∀ {a b : ℕ} (X : Matrix (Fin a) (Fin b) (AF F ⊗[F] E)), cT s (cT s X) = X :=
     fun X => Matrix.ext fun i k => hs _

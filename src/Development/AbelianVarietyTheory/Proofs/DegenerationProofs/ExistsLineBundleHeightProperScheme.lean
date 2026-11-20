@@ -100,7 +100,7 @@ theorem centre_finite (Pl : Places k K) (B : Over (Sp k)) [IsProper B.hom]
     induction ha using Algebra.adjoin_induction with
     | mem a h => exact hn a h
     | algebraMap r => exact (congrArg (fun q => q.hom r) hc) ▸ Pl.const i r
-    | add a a' _ _ h h' => rw [map_add]; exact add_mem h h'
+    | add a a' _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
     | mul a a' _ _ h h' => rw [map_mul]; exact mul_mem h h'
   have e : b i = Spec.map (CommRingCat.ofHom (ψ.hom.codRestrict (Pl.O i) hall)) ≫ hV.fromSpec := by
     refine ext_unique _ B ?_

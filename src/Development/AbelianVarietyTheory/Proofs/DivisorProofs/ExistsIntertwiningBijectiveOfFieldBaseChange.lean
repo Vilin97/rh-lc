@@ -57,7 +57,7 @@ theorem IsExtension.exists_basis {a : V →ₛₗ[algebraMap K F] V'} (h : IsExt
     induction hx using Submodule.span_induction with
     | mem y hy => obtain ⟨i, rfl⟩ := hy; exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     | smul d y _ hy => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
   exact ⟨Module.Basis.mk li sp, fun i => by simp⟩
 
@@ -91,7 +91,7 @@ theorem exists_intertwining_bijective_of_extension (K F : Type) [Field K] [Field
   obtain ⟨Λ, hΛ⟩ := hW.coord ℓ
   let E : V →ₗ[K] W :=
     { toFun := fun x => Λ (E' (iV x))
-      map_add' := fun x y => by simp only [map_add]
+      map_add' := fun x y => by simp only [map_add (f := _)]
       map_smul' := fun k x => by
         rw [map_smulₛₗ, map_smul, hΛ.map_algebraMap_smul hW.span]; rfl }
   have hM : LinearMap.toMatrix v w E = (LinearMap.toMatrix v' w' E').map ℓ := by

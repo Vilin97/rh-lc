@@ -55,7 +55,7 @@ private theorem UpperTheory.ConvolutionTheory.Tf.rightAction_integral_derivative
   | add a b ha hb =>
     obtain ⟨ha1, ha2⟩ := ha κ hκ
     obtain ⟨hb1, hb2⟩ := hb κ hκ
-    simp only [map_add, LinearMap.add_apply, Submodule.coe_add]
+    simp only [map_add (f := _), LinearMap.add_apply, Submodule.coe_add]
     refine ⟨ha1.add hb1, ?_⟩
     rw [ha2, hb2]
     funext g

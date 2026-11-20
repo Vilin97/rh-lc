@@ -61,7 +61,7 @@ lemma wlocal_eval_rowGen {r n : ℕ} (a b : Fin r) (c : R) (f : MvPolynomial (Fi
   · intro x
     simp [rowGen, rowAct, Polynomial.algebraMap_apply, MvPolynomial.algebraMap_eq]
   · intro p q hp hq
-    rw [map_add, map_add, Polynomial.eval_add, hp, hq]
+    rw [map_add (f := _), map_add (f := _), Polynomial.eval_add, hp, hq]
   · intro p v hp
     rw [map_mul, map_mul, Polynomial.eval_mul, hp]
     congr 1
@@ -98,7 +98,7 @@ private lemma coeff_rowGen_mem_weyl {r n : ℕ} (hn : n ≤ r) (ν : Fin n → �
     exact Submodule.subset_span ⟨(a, b, k) :: w, rfl⟩
   · simp
   · intro x y _ _ hx hy
-    rw [map_add, Polynomial.coeff_add]
+    rw [map_add (f := _), Polynomial.coeff_add]
     exact Submodule.add_mem _ hx hy
   · intro m x _ hx
     rw [map_smul, Polynomial.coeff_smul]
@@ -439,7 +439,7 @@ lemma wlocal_map_weyl (φ : R →+* S) {r n : ℕ} (hn : n ≤ r) (ν : Fin n �
   · rw [map_zero]
     exact Submodule.zero_mem _
   · intro x y _ _ hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   · intro m x _ hx
     rw [wlocal_map_smul]
@@ -508,7 +508,7 @@ lemma wlocal_loc (P : Ideal R) [P.IsPrime] {r n : ℕ} (hn : n ≤ r) (ν : Fin 
       obtain ⟨s2, hs2, z2, hz2, e2⟩ := h2
       refine ⟨s1 * s2, P.primeCompl.mul_mem hs1 hs2, s2 • z1 + s1 • z2,
         Submodule.add_mem _ (Submodule.smul_mem _ _ hz1) (Submodule.smul_mem _ _ hz2), ?_⟩
-      rw [map_add, wlocal_map_smul, wlocal_map_smul, ← e1, ← e2]
+      rw [map_add (f := _), wlocal_map_smul, wlocal_map_smul, ← e1, ← e2]
       simp only [MvPolynomial.smul_eq_C_mul, map_mul]
       ring
     · intro a y' _ h

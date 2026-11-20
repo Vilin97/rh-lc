@@ -27,7 +27,7 @@ theorem height_ge_of_X_sub_C_mem : ∀ {F : Type} [Field F] (m : ℕ) (c : Fin m
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => rw [map_add, hp, hq, map_add, map_add, map_add]
+    | add p q hp hq => rw [map_add (f := _), hp, hq, map_add (f := _), map_add (f := _), map_add (f := _)]
     | mul_X p i hp =>
       have hi : Ideal.Quotient.mk P (MvPolynomial.X i) = Ideal.Quotient.mk P (MvPolynomial.C (c i)) :=
         Ideal.Quotient.eq.2 (hP i)

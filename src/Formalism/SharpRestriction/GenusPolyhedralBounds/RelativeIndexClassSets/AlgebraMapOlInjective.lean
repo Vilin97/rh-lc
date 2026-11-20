@@ -139,7 +139,7 @@ theorem Vw_eq_span_image (u : WeightFamilies.Wt D j) {s : Set (B.Cusp j u)} (hs 
   induction hF using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => simp only [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => simp only [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => simp only [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     simp only [map_smul, emb_smul]
     rw [← algebraMap_smul (Kp X la N) (algebraMap B.KO (X.Kl la) a)]

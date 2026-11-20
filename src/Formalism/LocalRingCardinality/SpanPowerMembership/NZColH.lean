@@ -26,7 +26,7 @@ variable {ι} {LL : Type} [Field LL] [NumberField LL] [StarRing LL] (σ : LL →
 
 def jE : (ι → LL) →ₛₗ[σ] MuN ι where
   toFun x := (eE ι).symm (slK σ x)
-  map_add' x y := by rw [map_add, map_add]
+  map_add' x y := by rw [map_add (f := _), map_add (f := _)]
   map_smul' c x := by rw [LinearMap.map_smulₛₗ, map_smul]
 
 theorem eE_jE (x : ι → LL) : eE ι (jE σ x) = slK σ x := (eE ι).apply_symm_apply _

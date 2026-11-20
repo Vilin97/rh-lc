@@ -249,7 +249,7 @@ theorem exists_test (hc : Continuous ψ) (hn : ∀ x, ‖ψ x‖ = 1) (h1 : ψ �
       funext t
       rw [← ext_j f (t + t₁)]
       have e3 := hiso _ (hσ t) _ (hσ t₁)
-      simp only [hg, schr, map_add, ← mul_assoc, ← AddChar.map_add_eq_mul, add_dotProduct, dotProduct_add] at e3 ⊢
+      simp only [hg, schr, map_add (f := _), ← mul_assoc, ← AddChar.map_add_eq_mul, add_dotProduct, dotProduct_add] at e3 ⊢
       congr 2
       have h2 : ⅟(2 : k) * 2 = 1 := invOf_mul_self _
       linear_combination ⅟(2 : k) * e3 - (j t ⬝ᵥ σ t₁) * h2

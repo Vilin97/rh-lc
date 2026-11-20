@@ -18,7 +18,7 @@ private def slS (l : ℕ) [Fact l.Prime] : Subring (Bcr l) where
     rw [map_one]; exact ((PP l).PD (botExt l)).one_mem
   add_mem' := fun {a b} ha hb => by
     change (PP l).ιB (a + b) ∈ ((PP l).PD (botExt l)).Fil 0
-    rw [map_add]; exact Submodule.add_mem _ ha hb
+    rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   zero_mem' := by
     change (PP l).ιB 0 ∈ ((PP l).PD (botExt l)).Fil 0
     rw [map_zero]; exact Submodule.zero_mem _

@@ -186,7 +186,7 @@ theorem span_image_span (i : A →ₛₗ[σ] B) (S : Set A) :
   induction hx using Submodule.span_induction with
   | mem x hx => exact subset_span ⟨x, hx, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul r x _ hx => rw [LinearMap.map_smulₛₗ]; exact smul_mem _ _ hx
 
 variable [IsDomain R] [IsDiscreteValuationRing R] [Module.Free R A] [Module.Finite R A]

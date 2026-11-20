@@ -18,7 +18,7 @@ theorem map_conj {F E R R' : Type} [Field F] [Field E] [Algebra F E] [CommRing R
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {D : D7} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ)}
 

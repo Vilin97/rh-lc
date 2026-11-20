@@ -195,7 +195,7 @@ theorem Embeds.box [IsAffine B] {π : Y ⟶ B} {π' : Y' ⟶ B}
       obtain rfl : ρ i ≫ π = π' := hw.1 i
       exact (congrArg (fun q => q.hom c)
         (Scheme.Hom.appLE_comp_appLE (ρ i) π ⊤ _ _ le_top (le' i))).symm
-    | add p q hp hq => rw [map_add, map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _)]; exact add_mem hp hq
     | mul_X p m hp =>
       rw [map_mul, map_mul]
       refine mul_mem hp ⟨MvPolynomial.X (Function.update a i m), ?_⟩

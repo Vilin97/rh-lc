@@ -36,7 +36,7 @@ theorem c_mem_of_mem_map (TB : TopBasis s I ι) (L : Ideal S) (x : A) (hx : x �
     TB.c i x ∈ L := by
   let J : Ideal A :=
     { carrier := {y | ∀ a : A, ∀ i, TB.c i (a * y) ∈ L}
-      add_mem' := fun {y z} hy hz a i => by rw [mul_add, map_add]; exact L.add_mem (hy a i) (hz a i)
+      add_mem' := fun {y z} hy hz a i => by rw [mul_add, map_add (f := _)]; exact L.add_mem (hy a i) (hz a i)
       zero_mem' := fun a i => by rw [mul_zero, map_zero]; exact L.zero_mem
       smul_mem' := fun b y hy a i => by rw [smul_eq_mul, ← mul_assoc]; exact hy (a * b) i }
   have hle : L.map s ≤ J := Ideal.map_le_iff_le_comap.2 fun y hy a i => by

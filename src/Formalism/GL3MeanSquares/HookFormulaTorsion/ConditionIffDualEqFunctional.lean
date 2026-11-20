@@ -199,7 +199,7 @@ private lemma condition_iff_dual_eq_functional {n m : ℕ} (fL : (Fin n → F) �
     have := h1 _ hk
     rw [functional_with_scalar_apply]
     simp only [LinearMap.comp_apply, LinearMap.dualMap_apply, dot_product_dual_apply]
-    rw [hd, map_add, map_add, map_smul, map_smul, dotProduct_add, dotProduct_add,
+    rw [hd, map_add (f := _), map_add (f := _), map_smul, map_smul, dotProduct_add, dotProduct_add,
       dotProduct_smul, dotProduct_smul, this, h2, h3]
     simp [mul_comm]
   · intro h
@@ -336,7 +336,7 @@ theorem fourier_jacobi_count : CharacterSumCancellation := by
       have h3 := h1 _ hk
       have hd : ((v, 0) : (Fin n → F) × F) = (v - fL v • e, 0) + fL v • (e, (0 : F)) := by
         ext <;> simp
-      rw [hLf, hd, map_add, map_smul, dotProduct_add, dotProduct_smul, h3, h2]
+      rw [hLf, hd, map_add (f := _), map_smul, dotProduct_add, dotProduct_smul, h3, h2]
       simp
   have hL : ∑ c : F, ψ c * (fjCount fL e x' c : ℂ) =
       ∑ fW : Fin (n + g) → F, if A fW then ψ (fW ⬝ᵥ x' (0, 1)) else 0 := by

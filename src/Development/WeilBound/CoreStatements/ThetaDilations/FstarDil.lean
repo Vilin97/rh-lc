@@ -70,7 +70,7 @@ theorem ei_inv : ∀ (F : Type) [Field F] [NumberField F] [MeasurableSpace (A F)
     congr 1
     · simp [opU, qf]
     · refine tsum_congr fun b' => ?_
-      simp only [eiTerm, fstar, opU, Equiv.coe_addLeft, map_add, Complex.ofReal_add, add_assoc, ← mul_assoc,
+      simp only [eiTerm, fstar, opU, Equiv.coe_addLeft, map_add (f := _), Complex.ofReal_add, add_assoc, ← mul_assoc,
         ← AddChar.map_add_eq_mul, add_mul, add_comm (algebraMap F (A F) b * _)]
   · rw [eis, eis, ← (Equiv.mulLeft₀ (a ^ 2) (pow_ne_zero 2 ha)).tsum_eq]
     congr 1

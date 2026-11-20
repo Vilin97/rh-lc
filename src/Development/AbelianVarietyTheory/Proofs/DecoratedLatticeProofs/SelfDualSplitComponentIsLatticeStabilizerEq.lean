@@ -32,7 +32,7 @@ theorem mul_mem_intAE {x y : Af D.host.F ⊗[D.host.F] D.host.E} (hx : x ∈ int
 theorem finPart_cA (x : AE D) : finPart D (cA D x) = sigR (Af D.host.F) D.sp.cm.sig (finPart D x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [RingHom.map_zero]
-  | add x y hx hy => simp only [RingHom.map_add, hx, hy]
+  | add x y hx hy => simp only [RingHom.map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 theorem sigR_mem_intAE {z : Af D.host.F ⊗[D.host.F] D.host.E} (hz : z ∈ intAE D) :
@@ -43,7 +43,7 @@ theorem sigR_mem_intAE {z : Af D.host.F ⊗[D.host.F] D.host.E} (hz : z ∈ intA
     exact AddSubgroup.subset_closure ⟨a, ha, ⟨D.sp.cm.sig (o : D.host.E),
       (show IsIntegral ℤ (o : D.host.E) from o.2).map (D.sp.cm.sig : D.host.E →+* D.host.E).toIntAlgHom⟩, rfl⟩
   | zero => rw [RingHom.map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [RingHom.map_neg]; exact neg_mem hx
 
 theorem cA_int_iff (a : AE D) : finPart D (cA D a) ∈ intAE D ↔ finPart D a ∈ intAE D := by
@@ -81,7 +81,7 @@ theorem pairing_int (hL : IsSelfDualC S L) {P : Pl D → Prop} {s : Fin S.rank �
   | add x y _ _ hx hy =>
     have h : pairing S s (x + y) = pairing S s x + pairing S s y := by
       simp only [pairing, Pi.add_apply, mul_add, Finset.sum_add_distrib]
-    rw [h, RingHom.map_add]; exact add_mem hx hy
+    rw [h, RingHom.map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx =>
     have h : pairing S s (-x) = -pairing S s x := by
       simp only [pairing, Pi.neg_apply, mul_neg, Finset.sum_neg_distrib]
@@ -111,7 +111,7 @@ theorem int_mul_mem {v : Pl D} {a : AE D} (ha : a ∈ intAt D (· = v)) {x : Fin
       rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
       rfl
     | zero => simp only [AddMonoidHom.map_zero, zero_mul]; exact zero_mem _
-    | add a b _ _ ha hb => simp only [AddMonoidHom.map_add, add_mul]; exact add_mem ha hb
+    | add a b _ _ ha hb => simp only [AddMonoidHom.map_add (f := _), add_mul]; exact add_mem ha hb
     | neg a _ ha => simp only [AddMonoidHom.map_neg, neg_mul]; exact neg_mem ha
   have h := key _ ha.2
   rwa [GlobalTheory.LatAlmostStd.plc_finPart, GlobalTheory.LatAlmostStd.smul_eq_of_mem_idAt ha.1] at h
@@ -234,7 +234,7 @@ theorem mt_csec (h : GA D S) (z : Fin S.rank → k) :
 
 theorem csec_mem_idAt (c : k) : cA D (p.sec c) ∈ idAt D (· = p.v) := by
   rw [idem_iff]
-  have h : (p.e + cA D p.e) = cA D (p.e + cA D p.e) := by rw [RingHom.map_add, cA_cA, add_comm]
+  have h : (p.e + cA D p.e) = cA D (p.e + cA D p.e) := by rw [RingHom.map_add (f := _), cA_cA, add_comm]
   rw [h, ← RingHom.map_mul, (idem_iff p _).1 (sec_mem_idAt p c)]
 
 theorem pairing_sec (s : Fin S.rank → D.host.E) (u : Fin S.rank → k) :

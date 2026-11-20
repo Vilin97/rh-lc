@@ -42,7 +42,7 @@ theorem charp_vanishing_liftable : ∀ (p : ℕ) [Fact p.Prime] (Y X : Scheme.{0
     (pull_isLB hM _) hA' r b hr hb ?_ q hq
   have e2 := congrArg (CechPic.pull (U c).ι) heq
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_nsmul, map_add, map_sum] at e2
+    simp only [map_nsmul, map_add (f := _), map_sum] at e2
   rw [cls_pull hM (U c).ι, hK, cls_pull hA.isLB (U c).ι, e2]
   congr 2
   refine Finset.sum_congr rfl (fun i _ => ?_)

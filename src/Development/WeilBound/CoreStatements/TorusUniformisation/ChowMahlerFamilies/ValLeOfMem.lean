@@ -94,7 +94,7 @@ theorem slice {N : Type} {M : Submodule R (N → C)} (hM : M ≤ intFun R N) {Q 
     refine ⟨f + f', M.add_mem hf hf', fun x => ?_⟩
     obtain ⟨h1, r, e1, e2⟩ := ha x
     obtain ⟨h1', r', e1', e2'⟩ := hb x
-    exact ⟨M.add_mem h1 h1', r + r', by simp [e1, e1'], by rw [map_add, ← e2, ← e2', ← map_add]; rfl⟩
+    exact ⟨M.add_mem h1 h1', r + r', by simp [e1, e1'], by rw [map_add (f := _), ← e2, ← e2', ← map_add (f := _)]; rfl⟩
   | smul a b _ hb =>
     obtain ⟨f, hf, hb⟩ := hb
     refine ⟨a • f, M.smul_mem a hf, fun x => ?_⟩

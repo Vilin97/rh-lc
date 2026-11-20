@@ -84,7 +84,7 @@ theorem unfoldCore_k (B : Base F E) (hB : _root_.UpperTheory.TP.W.GoodK σ B) (h
   have hχc : Continuous χ₀ :=
     hB.std.1.comp ((htr.comp (continuous_const.matrix_mul continuous_subtype_val)).neg)
   have hχadd : ∀ β β', χ₀ (β + β') = χ₀ β * χ₀ β' := fun β β' => by
-    simp only [χ₀, AddSubgroup.coe_add, Matrix.mul_add, Matrix.trace_add, map_add, neg_add]
+    simp only [χ₀, AddSubgroup.coe_add, Matrix.mul_add, Matrix.trace_add, map_add (f := _), neg_add]
     exact AddChar.map_add_eq_mul _ _ _
   have hχΛ : ∀ ν : nF σ Y b, χ₀ (ν : nA σ Y b) = 1 := fun ν => by
     simp only [χ₀, AddChar.map_neg_eq_inv, psi_rat hB.std T ν, inv_one]

@@ -150,7 +150,7 @@ theorem main {p : ℕ} [Fact p.Prime] (A : ValuationSubring Ω) (hp : A.valuatio
   have hadd : ∀ g h : A.decompositionSubgroup F, χ' (g * h) = χ' g + χ' h := by
     intro g h
     refine PadicInt.ext_of_toZModPow.mp fun n => ?_
-    rw [key (g * h) n _ ((hE g n).mul (hE h n)), map_add, hχ' g n, hχ' h n, Nat.cast_add]
+    rw [key (g * h) n _ ((hE g n).mul (hE h n)), map_add (f := _), hχ' g n, hχ' h n, Nat.cast_add]
   have hine : ∀ g : A.decompositionSubgroup F, (g : Ω ≃ₐ[F] Ω) ∈ Ine (F := F) A → χ' g = 0 := by
     intro g hg
     refine PadicInt.ext_of_toZModPow.mp fun n => ?_

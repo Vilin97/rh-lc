@@ -37,7 +37,7 @@ theorem invertible_ideal_eq_of_not_le_maximal_mul (A : Type) [CommRing A] (I N :
       | tmul f x =>
         rw [contractLeft_apply, ideal_dual_symm I f x ⟨n, hNI hn⟩]
         exact Ideal.mul_mem_mul (hcm (key f ⟨n, hNI hn⟩ hn)) x.2
-      | add s u hs hu => rw [map_add, add_mul]; exact Ideal.add_mem _ hs hu
+      | add s u hs hu => rw [map_add (f := _), add_mul]; exact Ideal.add_mem _ hs hu
     simpa [ht] using hall t
   apply le_antisymm hNI
   intro y hy

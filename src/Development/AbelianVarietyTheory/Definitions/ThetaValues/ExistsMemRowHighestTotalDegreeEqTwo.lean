@@ -130,7 +130,7 @@ theorem eval_rowAdd [DecidableEq T] (z : Var T p q κ → R) (t : T) (r r' : Fin
       eval (fun v => z v + if v.1 = t ∧ v.2.1 = r' then s * z (t, r, v.2.2) else 0) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [algHom_C]
-  | add P Q hP hQ => simp only [map_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
   | mul_X P v hP =>
     obtain ⟨t', r'', k⟩ := v
     rw [map_mul, map_mul, map_mul, hP, rowAdd_X, eval_X]
@@ -141,7 +141,7 @@ theorem map_rowAdd (f : R →+* S) (t : T) (r r' : Fin p ⊕ Fin q) (s : R) (P :
   classical
   induction P using MvPolynomial.induction_on with
   | C a => simp [algHom_C]
-  | add P Q hP hQ => simp only [map_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
   | mul_X P v hP =>
     obtain ⟨t', r'', k⟩ := v
     rw [map_mul, map_mul, map_mul, map_mul, hP, map_X, rowAdd_X, rowAdd_X]
@@ -156,7 +156,7 @@ theorem rowAdd_colSubst [Fintype κ'] (A : T → Matrix κ κ' R) (B : T → Mat
   rw [AlgHom.comp_apply, AlgHom.comp_apply]
   by_cases e : t' = t ∧ r'' = r'
   · obtain ⟨rfl, rfl⟩ := e
-    rw [rowAdd_X_self, map_add, map_mul, algHom_C, algebraMap_eq]
+    rw [rowAdd_X_self, map_add (f := _), map_mul, algHom_C, algebraMap_eq]
     rcases r with a | a <;> rcases r'' with b | b
     · rw [colSubst_X_xVar, colSubst_X_xVar]; exact rowAdd_rowForm_self _ _ _ _ _
     · simp at h
@@ -251,7 +251,7 @@ theorem rowAdd_eq_self_of_forall_int [IsDomain R] [CharZero R] {t : T} {r r' : F
   have hΦ (s : R) (Q : Poly R T p q κ) : (Φ Q).eval (C s) = rowAdd t r r' s Q := by
     induction Q using MvPolynomial.induction_on with
     | C a => simp [Φ, algHom_C]
-    | add P Q hP hQ => simp only [map_add, Polynomial.eval_add, hP, hQ]
+    | add P Q hP hQ => simp only [map_add (f := _), Polynomial.eval_add, hP, hQ]
     | mul_X P v hP =>
       obtain ⟨t', r'', k⟩ := v
       rw [map_mul, map_mul, Polynomial.eval_mul, hP, rowAdd_X]

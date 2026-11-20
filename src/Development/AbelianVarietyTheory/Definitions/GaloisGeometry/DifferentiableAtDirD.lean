@@ -58,7 +58,7 @@ theorem HasDeg.zero (k : ℕ) : HasDeg k (0 : Alt n) := fun S h => by simp at h
 
 theorem HasDeg.add {k : ℕ} {α β : Alt n} (hα : HasDeg k α) (hβ : HasDeg k β) : HasDeg k (α + β) := by
   rw [hasDeg_iff_scale] at hα hβ ⊢
-  rw [map_add, hα, hβ, smul_add]
+  rw [map_add (f := _), hα, hβ, smul_add]
 
 theorem HasDeg.smul {k : ℕ} {α : Alt n} (c : ℂ) (hα : HasDeg k α) : HasDeg k (c • α) := by
   rw [hasDeg_iff_scale] at hα ⊢
@@ -181,7 +181,7 @@ theorem ι_mul_eq (u : Fin n ⊕ Fin n → ℂ) (α : Alt n) :
   | algebraMap r => rw [AlgHom.commutes, Algebra.commutes]
   | ι x => rw [par_ι, neg_mul]; exact eq_neg_of_add_eq_zero_left (ExteriorAlgebra.ι_add_mul_swap u x)
   | mul a b ha hb => rw [← mul_assoc, ha, mul_assoc, hb, map_mul, mul_assoc]
-  | add a b ha hb => rw [mul_add, ha, hb, map_add, add_mul]
+  | add a b ha hb => rw [mul_add, ha, hb, map_add (f := _), add_mul]
 
 theorem HasDeg.mul_comm {k l : ℕ} {α β : Alt n} (hα : HasDeg k α) (hβ : HasDeg l β) :
     α * β = (-1 : ℂ) ^ (k * l) • (β * α) := by
@@ -486,16 +486,16 @@ theorem dExt_apply (α : A.Fld) (x : A.Pt) :
 theorem dExt_parFld {α : A.Fld} (hα : A.IsForm α) : A.dExt (A.parFld α) = -A.parFld (A.dExt α) := by
   funext x
   have h := loc_linear (par n).toLinearMap α x.1.1
-  rw [dExt_apply, show A.loc (A.parFld α) x.1.1 = _ from h, Pi.neg_apply, parFld_apply, dExt_apply, map_add, neg_add]
+  rw [dExt_apply, show A.loc (A.parFld α) x.1.1 = _ from h, Pi.neg_apply, parFld_apply, dExt_apply, map_add (f := _), neg_add]
   exact congrArg₂ _ (opAt_par _ (A.loc_diffAt hα x)) (opAt_par _ (A.loc_diffAt hα x))
 
 theorem degFld_dExt {α : A.Fld} (hα : A.IsForm α) (k : ℕ) :
     A.degFld (k + 1) (A.dExt α) = A.dExt (A.degFld k α) ∧ A.degFld 0 (A.dExt α) = 0 := by
   refine ⟨funext fun x => ?_, funext fun x => ?_⟩
   · have h := loc_linear (degPart n k) α x.1.1
-    rw [dExt_apply, show A.loc (A.degFld k α) x.1.1 = _ from h, degFld_apply, dExt_apply, map_add,
+    rw [dExt_apply, show A.loc (A.degFld k α) x.1.1 = _ from h, degFld_apply, dExt_apply, map_add (f := _),
       (degPart_opAt _ k (A.loc_diffAt hα x)).1, (degPart_opAt _ k (A.loc_diffAt hα x)).1]
-  · rw [degFld_apply, dExt_apply, map_add, (degPart_opAt _ k (A.loc_diffAt hα x)).2,
+  · rw [degFld_apply, dExt_apply, map_add (f := _), (degPart_opAt _ k (A.loc_diffAt hα x)).2,
       (degPart_opAt _ k (A.loc_diffAt hα x)).2, add_zero, Pi.zero_apply]
 
 variable (A) in

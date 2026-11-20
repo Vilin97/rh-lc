@@ -157,7 +157,7 @@ theorem Phi_snd (x : NF α₁) : ((Phi hu ψ hψl x : NF α₂) : C₂ × E).2 =
 theorem Phi_add (x y : NF α₁) : Phi hu ψ hψl (x + y) = Phi hu ψ hψl x + Phi hu ψ hψl y := by
   refine uniq_N (β₂ := β₂) (hb₂ := hb₂) hu ?_ ?_
   · first
-      | (simp only [Phi_mk, Submodule.Quotient.mk_add, map_add]; done)
+      | (simp only [Phi_mk, Submodule.Quotient.mk_add, map_add (f := _)]; done)
       | (simp [Phi_mk]; done)
   · first
       | (simp only [Phi_snd, Submodule.coe_add, Prod.snd_add]; done)

@@ -34,7 +34,7 @@ theorem mem_O_of_comp (g : SplitG M.L) {x : E} (h1 : (g.e x).1 ∈ 𝒪[F]) (h2 
   rw [M.L.O_def]
   have hx : x = ((g.e x).1 : F) • g.e.symm (1, 0) + ((g.e x).2 : F) • g.e.symm (0, 1) := by
     apply g.e.injective
-    simp only [map_add, map_smul, AlgEquiv.apply_symm_apply, Prod.smul_mk, smul_eq_mul, mul_one, mul_zero,
+    simp only [map_add (f := _), map_smul, AlgEquiv.apply_symm_apply, Prod.smul_mk, smul_eq_mul, mul_one, mul_zero,
       Prod.mk_add_mk, add_zero, zero_add]
   have hid : ∀ y : F × F, y * y = y → IsIntegral 𝒪[F] (g.e.symm y) := by
     intro y hy

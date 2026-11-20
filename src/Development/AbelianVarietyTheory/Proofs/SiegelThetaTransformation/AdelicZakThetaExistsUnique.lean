@@ -73,7 +73,7 @@ theorem exists_extension {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ 
     have h3 : w + u - c w ∈ O := by
       rw [add_sub_right_comm]; exact O.add_mem (hcO w) hu
     show ψ (symplOH S T w u) * f (w + u) = ψ (-symplOH S T (c w) w) * F (p (w - c w))
-    rw [key _ (hc w) _ h3, add_sub_right_comm, map_add, h1, add_zero, ← mul_assoc, ← AddChar.map_add_eq_mul,
+    rw [key _ (hc w) _ h3, add_sub_right_comm, map_add (f := _), h1, add_zero, ← mul_assoc, ← AddChar.map_add_eq_mul,
       ← one_mul (ψ (-symplOH S T (c w) w)), ← h2 _ (hcO w), ← AddChar.map_add_eq_mul, sym_sub_left,
       symplOH_add_right]
     congr 2

@@ -18,7 +18,7 @@ theorem euc_coords {V W : Type} [AddCommGroup V] [TopologicalSpace V] [Measurabl
   set R := (stdOrthonormalBasis ℝ W).repr with hR
   refine ⟨e.trans R.toHomeomorph, fun x y => ?_, ?_⟩
   · show R (e (x + y)) = R (e x) + R (e y)
-    rw [he, map_add]
+    rw [he, map_add (f := _)]
   · have e1 : ((e.trans R.toHomeomorph : V ≃ₜ _) : V → _) = R ∘ e := rfl
     rw [e1, ← Measure.map_map R.continuous.measurable e.continuous.measurable, h, Measure.map_smul,
       R.measurePreserving.map_eq]

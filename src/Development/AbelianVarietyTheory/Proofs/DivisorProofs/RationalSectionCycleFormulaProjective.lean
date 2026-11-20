@@ -51,7 +51,7 @@ theorem GlobalTheory.ratSec_cycle_formula : ∀ (κ : Type) [Field κ] (X : Sche
     (d := n + 1) (by rw [QCoh.suppDim_structureModule]; exact hn)
   have hc : CechPic.cls (toLB (D + E)) (isLB_toLB (D + E)) =
       CechPic.cls M hM + CechPic.cls (toLB E) (isLB_toLB E) := by
-    rw [← toPic_apply, ← toPic_apply, map_add, (presents_divOfRatSec hM hr).toPic_eq]
+    rw [← toPic_apply, ← toPic_apply, map_add (f := _), (presents_divOfRatSec hM hr).toPic_eq]
   have ha := hv.interNum_cons_of_cls_eq_add le_rfl hP (isLB_toLB (D + E)) hM (isLB_toLB E) hc
   rw [key _ hDE, key _ hE] at ha
   have hfin : ∀ F : CartierDiv X, Function.HasFiniteSupport

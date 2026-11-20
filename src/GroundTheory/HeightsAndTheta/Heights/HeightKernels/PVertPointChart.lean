@@ -125,7 +125,7 @@ theorem chartPrime_add (y : (Σ _ : Unit, T) → K') {t : T} {W : Ideal (MRing (
   have h3 : X ⟨(), t⟩ ^ e * g + X ⟨(), t⟩ ^ d * g' ∈ W :=
     W.add_mem (W.mul_mem_left _ hgW) (W.mul_mem_left _ hg'W)
   have h4 : (r + r') * y ⟨(), t⟩ ^ (d + e) = aeval y (X ⟨(), t⟩ ^ e * g + X ⟨(), t⟩ ^ d * g') := by
-    simp only [map_add, map_mul, map_pow, aeval_X]
+    simp only [map_add (f := _), map_mul, map_pow, aeval_X]
     linear_combination (y ⟨(), t⟩ ^ e) * hd + (y ⟨(), t⟩ ^ d) * he
   exact ⟨d + e, _, h2, h3, h4⟩
 

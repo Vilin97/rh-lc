@@ -241,7 +241,7 @@ theorem pr_iff {A B : HSp D} {c : ℕ} {ε : D.host.E} {d : HermitianOrthogonalE
     have pn : ∀ w : P, phi (hb w) (hab w) β' w.1 n = Y w * v w * (Y w)⁻¹ := fun w =>
       (congrArg (frameGL (hab w)) (hz w _ (hn w))).trans ((frameGL (hab w)).apply_symm_apply _)
     have e0 : infPart D (e + cA D e) = 0 := by
-      rw [RingHom.map_add, (GlobalTheory.FunObj.Comparison₂.cpt_idemSum he).1, GlobalTheory.PlaceDatum.infPart_cA (GlobalTheory.FunObj.Comparison₂.cpt_idemSum he).1, add_zero]
+      rw [RingHom.map_add (f := _), (GlobalTheory.FunObj.Comparison₂.cpt_idemSum he).1, GlobalTheory.PlaceDatum.infPart_cA (GlobalTheory.FunObj.Comparison₂.cpt_idemSum he).1, add_zero]
     refine ⟨n, mem_of_phi hS hc he hF ha hb hab hns fun w => pn w ▸ (hYp w).2.1 _ (hv w),
       Subgroup.mem_inf.2 ⟨(GfC B).mul_mem ((GfC B).mul_mem ((GfC B).inv_mem hx)
         ((GfC B).mul_mem (GlobalTheory.WeilProduct.mem_GfC_of_supp e0 hns) (hS.2.2 g hg))) hx, ?_⟩⟩

@@ -111,7 +111,7 @@ theorem pairing_eq_zero_of_kills_lowRank : GlobalTheory.ThK.KP → ∀ (k : Type
         have hyS : y ∈ SB (Matrix (Fin l) (Fin d) k) :=
           Submodule.span_le.mpr (fun g hg => hg.1) hy
         have : (⟨x + y, hg⟩ : SB (Matrix (Fin l) (Fin d) k)) = ⟨x, hxS⟩ + ⟨y, hyS⟩ := rfl
-        rw [this, map_add, px hxS, py hyS, add_zero])
+        rw [this, map_add (f := _), px hxS, py hyS, add_zero])
       (fun c x hx px hg => by
         have hxS : x ∈ SB (Matrix (Fin l) (Fin d) k) :=
           Submodule.span_le.mpr (fun g hg => hg.1) hx

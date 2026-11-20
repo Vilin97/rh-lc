@@ -112,7 +112,7 @@ theorem exists_semichar_value : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S
     (fun x => by
       funext i j
       show incA D (b : D.host.E) * x i j + incA D (star (b : D.host.E)) * x i j = x i j
-      rw [← add_mul, ← RingHom.map_add, hb, RingHom.map_one, one_mul])
+      rw [← add_mul, ← RingHom.map_add (f := _), hb, RingHom.map_one, one_mul])
     (f7 _) (GlobalTheory.SemiChar.latO_mul_int S T _ _ _ b)
   refine ⟨χ, ⟨fun u hu => ?_, fun e he u hu hh => ?_⟩, c7⟩
   · funext x; exact c5 u hu x

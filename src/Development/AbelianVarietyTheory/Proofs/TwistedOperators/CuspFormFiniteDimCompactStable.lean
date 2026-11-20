@@ -211,13 +211,13 @@ theorem exists_form_cuspSub (hP : GlobalTheory.Published.CuspRapidDecay) (hθ : 
   let B : (GA D V → ℂ) → (GA D V → ℂ) → ℂ := fun x y => ∫ g in 𝓕, star (P x g) * P y g ∂μ
   let b : (GA D V → ℂ) →ₗ⋆[ℂ] (GA D V → ℂ) →ₗ[ℂ] ℂ := LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) B
     (fun x x' y => by
-      simp only [B, map_add, Pi.add_apply, star_add, add_mul]
+      simp only [B, map_add (f := _), Pi.add_apply, star_add, add_mul]
       exact integral_add (hPI x y) (hPI x' y))
     (fun c x y => by
       simp only [B, map_smul, Pi.smul_apply, smul_eq_mul, star_mul', starRingEnd_apply, mul_assoc]
       exact integral_const_mul _ _)
     (fun x y y' => by
-      simp only [B, map_add, Pi.add_apply, mul_add]
+      simp only [B, map_add (f := _), Pi.add_apply, mul_add]
       exact integral_add (hPI x y) (hPI x y'))
     (fun c x y => by
       simp only [B, map_smul, Pi.smul_apply, smul_eq_mul, RingHom.id_apply]

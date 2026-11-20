@@ -33,7 +33,7 @@ private def Cj.pull {γ : ℂ ≃+* ℂ} {π : Representation ℂ G V} {π' : Re
   ⟨{ carrier := {v | f v ∈ S.toSubmodule}
      add_mem' := fun {a b} ha hb => by
        show f (a + b) ∈ S.toSubmodule
-       rw [map_add]; exact add_mem ha hb
+       rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
      zero_mem' := by
        show f 0 ∈ S.toSubmodule
        rw [map_zero]; exact zero_mem _
@@ -63,7 +63,7 @@ private theorem cosocle_conj {γ : ℂ ≃+* ℂ} {π : Representation ℂ G V} 
   obtain ⟨-, p, hp, hS⟩ := h
   let q : π'.IntertwiningMap σ' :=
     { toFun := fun v => f (p (F.symm v))
-      map_add' := fun a b => by simp only [map_add]
+      map_add' := fun a b => by simp only [map_add (f := _)]
       map_smul' := fun c a => by rw [hF.symm.1, map_smul, hf.1]; simp
       isIntertwining' := fun g => LinearMap.ext fun v => by
         show f (p (F.symm (π' g v))) = σ' g (f (p (F.symm v)))
@@ -325,7 +325,7 @@ private theorem type_conj (γ : ℂ ≃+* ℂ) (b : WDRep h (Fin n → ℂ)) (B 
       map_add' := fun u v => funext fun i => by
         have : (fun j => γ.symm ((u + v) j)) = (fun j => γ.symm (u j)) + fun j => γ.symm (v j) :=
           funext fun j => map_add _ _ _
-        rw [this, LinearEquiv.map_add]
+        rw [this, LinearEquiv.map_add (f := _)]
         exact map_add γ _ _
       map_smul' := fun c v => funext fun i => by
         have : (fun j => γ.symm ((c • v) j)) = γ.symm c • fun j => γ.symm (v j) := funext fun j => map_mul _ _ _

@@ -107,7 +107,7 @@ theorem exists_partner_rep (Λ : Submodule (𝓞 E) S.V) (F : LFlag S r T)
         have := Submodule.add_mem_sup h1 h2
         simpa using this, (orth S (Xsp F)).smul_mem a (z_mem_orth F)⟩
     refine ⟨o, ?_⟩
-    simp [map_add, hφ0 y hy, hφz, ho]
+    simp [map_add (f := _), hφ0 y hy, hφz, ho]
   choose ψ hψ using hint
   let ψ' : M0 →ₗ[𝓞 E] 𝓞 E :=
     { toFun := ψ

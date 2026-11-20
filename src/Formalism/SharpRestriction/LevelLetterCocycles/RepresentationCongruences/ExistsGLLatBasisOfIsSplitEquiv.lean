@@ -64,7 +64,7 @@ theorem lt_unique (l : ℕ) [hp : Fact l.Prime]
       φ₀ (γ₁ X) = (1 + γ₁ X) ^ l - 1 := by
     intro γ₁ hγ
     rw [hγ, hφ₀]
-    simp only [map_sub, map_pow, map_add, map_one]
+    simp only [map_sub, map_pow, map_add (f := _), map_one]
   by_contra hne
   have hd : γ X - γ' X ≠ 0 := sub_ne_zero.mpr hne
   obtain ⟨S, hS, hSe⟩ := exists_S l (γ X) (γ' X) h0 h0'

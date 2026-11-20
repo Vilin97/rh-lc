@@ -12,7 +12,7 @@ theorem curvature_term_algebra : ∀ {n : Type} [Fintype n] {P₀ P : Matrix n n
   have h1 := hX (θ₀ *ᵥ v)
   have h2 : form (((1 - σ : ℝ) : ℂ) • P₀ + (σ : ℂ) • P) (θ₀ *ᵥ v) ((θs - θ₀) *ᵥ v) =
       starRingEnd ℂ (form (((1 - σ : ℝ) : ℂ) • P₀ + (σ : ℂ) • P) ((θs - θ₀) *ᵥ v) (θ₀ *ᵥ v)) := by
-    simp only [form_add, form_smul, map_add, map_mul, Complex.conj_ofReal, conj_form hP₀, conj_form hP]
+    simp only [form_add, form_smul, map_add (f := _), map_mul, Complex.conj_ofReal, conj_form hP₀, conj_form hP]
   rw [eθs, eθ]
   generalize θ₀ *ᵥ v = a at *
   generalize (θs - θ₀) *ᵥ v = X at *
@@ -21,7 +21,7 @@ theorem curvature_term_algebra : ∀ {n : Type} [Fintype n] {P₀ P : Matrix n n
   have h3 : ∀ z : ℂ, (2 : ℂ) * (z.re : ℂ) = z + starRingEnd ℂ z := fun z => by
     rw [Complex.add_conj]; push_cast; ring
   rw [h2, h1, h3]
-  simp only [form_add, form_smul, map_add, map_sub, map_mul, Complex.conj_ofReal, conj_form hP₀,
+  simp only [form_add, form_smul, map_add (f := _), map_sub, map_mul, Complex.conj_ofReal, conj_form hP₀,
     conj_form hP, Complex.conj_conj, form_sub_right]
   ring
 

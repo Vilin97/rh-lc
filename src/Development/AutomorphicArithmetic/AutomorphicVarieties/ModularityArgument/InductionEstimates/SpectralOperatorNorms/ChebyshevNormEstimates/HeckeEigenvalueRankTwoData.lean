@@ -29,7 +29,7 @@ private theorem esymm_coeff (s : Multiset ℂ) (n : ℕ) :
 
 private theorem esymm_two (s t : Multiset ℂ) (j : ℕ) :
     ∑ a ∈ Finset.piAntidiag (Finset.univ : Finset (Fin 2)) j, s.esymm (a 0) * t.esymm (a 1) = (s + t).esymm j := by
-  rw [← esymm_coeff (s + t), Multiset.map_add, Multiset.prod_add, Polynomial.coeff_mul]
+  rw [← esymm_coeff (s + t), Multiset.map_add (f := _), Multiset.prod_add, Polynomial.coeff_mul]
   simp only [esymm_coeff]
   refine Finset.sum_nbij' (fun a => (a 0, a 1)) (fun p => ![p.1, p.2]) ?_ ?_ ?_ ?_ ?_
   · intro a ha

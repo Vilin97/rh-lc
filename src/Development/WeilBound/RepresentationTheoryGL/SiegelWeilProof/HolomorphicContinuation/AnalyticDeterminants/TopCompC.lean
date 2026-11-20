@@ -32,7 +32,7 @@ def conjL (g : M2 n) (P Q R S : Matrix (Fin n) (Fin n) ℂ →L[ℂ] Matrix (Fin
   LinearMap.toContinuousLinearMap
     { toFun := fun x => g * (Cm n * fromBlocks (P x) (Q x) (R x) (S x) * CmI n)
       map_add' := fun x y => by
-        simp only [map_add, ← fromBlocks_add, Matrix.mul_add, Matrix.add_mul]
+        simp only [map_add (f := _), ← fromBlocks_add, Matrix.mul_add, Matrix.add_mul]
       map_smul' := fun c x => by
         simp only [map_smul, RingHom.id_apply, ← fromBlocks_smul, Matrix.mul_smul, Matrix.smul_mul] }
 

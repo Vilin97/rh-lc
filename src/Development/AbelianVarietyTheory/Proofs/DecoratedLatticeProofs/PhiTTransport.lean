@@ -119,9 +119,9 @@ omit [StarRing E] in
 theorem Good.congr {P : HeightOneSpectrum (𝓞 E)} {ia : Fin a} {ib : Fin b} {X Y : Matrix (Fin b) (Fin a) (AfE F E)}
     (h : Good P ia ib X) (hXY : ∀ r s, Valued.v (adAt F P (Y r s - X r s)) < 1) : Good P ia ib Y := by
   refine ⟨fun r s => ?_, fun s => ?_⟩
-  · rw [← sub_add_cancel (Y r s) (X r s), map_add]
+  · rw [← sub_add_cancel (Y r s) (X r s), map_add (f := _)]
     exact Valuation.map_add_le _ (hXY r s).le (h.1 r s)
-  · rw [← sub_add_sub_cancel (Y ib s) (X ib s), map_add]
+  · rw [← sub_add_sub_cancel (Y ib s) (X ib s), map_add (f := _)]
     exact Valuation.map_add_lt _ (hXY ib s) (h.2 s)
 
 variable {ST SG Q SG' Q' : Finset (HeightOneSpectrum (𝓞 E))}
@@ -136,7 +136,7 @@ theorem cond_iff {g : GL (Fin a) (AfE F E)} {g' : GL (Fin b) (AfE F E)} {p : Dec
     refine ⟨fun r s => ?_, fun s => ?_⟩
     · refine row_of_lat hg.lat (fun t => Valued.v (adAt F P.1 t) ≤ 1) (by simp) (fun t t' ht ht' => ?_) (fun c hc t ht => ?_)
         ((((g'⁻¹ : GL (Fin b) (AfE F E)) : Matrix (Fin b) (Fin b) (AfE F E)) * adMat F x) r) (fun z hz => ?_) s
-      · rw [map_add]
+      · rw [map_add (f := _)]
         exact Valuation.map_add_le _ ht ht'
       · rw [map_mul, map_mul]
         exact mul_le_one' (hint c hc) ht
@@ -153,7 +153,7 @@ theorem cond_iff {g : GL (Fin a) (AfE F E)} {g' : GL (Fin b) (AfE F E)} {p : Dec
           rfl
         rw [e] at h2
         exact h2
-      · rw [map_add]
+      · rw [map_add (f := _)]
         exact Valuation.map_add_lt _ ht ht'
       · rw [map_mul, map_mul]
         exact lt_of_le_of_lt (mul_le_of_le_one_left' (hint c hc)) ht

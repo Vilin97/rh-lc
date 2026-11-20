@@ -163,7 +163,7 @@ theorem exists_integral_theta_nonzero_on_components : Formalism.MainNotions.Modu
   obtain ⟨th, hth, hρ, hsup⟩ := exists_mem_Mlat_ne_zero (recPJ h j hj) hinj EX w hInt _ Fc hmem
     (400 * Zb D large₂ * w.size) hb hsupF T.σ₀
     (fun c G => rdU (T.U j T.σ₀) (G : T.R j) (e.symm c) (x' (e.symm c)))
-    (fun c G G' => by simp [map_add])
+    (fun c G G' => by simp [map_add (f := _)])
     (fun c a G => by simp [map_smulₛₗ])
     (fun c => hne (e.symm c))
   refine ⟨th, hth, ?_, fun σ => (hsup σ).trans (le_of_eq (by ring))⟩

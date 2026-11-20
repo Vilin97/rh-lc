@@ -92,7 +92,7 @@ theorem gammaRes_smul_sub_eq_zero {V : X.Opens} {i : L.ι} (h : V ≤ L.U i) {p 
 
 def formSecAdd (n : ℤ) : polyGrading ι R n →+ LB.Sec (lbZPow L n) :=
   AddMonoidHom.mk' (fun p => Twist.formSec x p.2) fun p q => zglobal_ext fun i => by
-    simp only [zfun_add, zfun_formSec, Submodule.coe_add, map_add]
+    simp only [zfun_add, zfun_formSec, Submodule.coe_add, map_add (f := _)]
 
 theorem formSec_one (h : (1 : MvPolynomial ι R) ∈ polyGrading ι R 0) :
     Twist.formSec x h = zone L :=
@@ -130,7 +130,7 @@ theorem polyToSecRing_bijective (h : ∀ n, Function.Bijective (formSecAdd R x n
       DirectSum.decompose (polyGrading ι R) := funext fun p => by
     induction p using Decomposition.inductionOn (polyGrading ι R) with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb, Function.comp_apply, decompose_add]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, Function.comp_apply, decompose_add]
     | homogeneous a =>
       rw [polyToSecRing_of_mem R x a.2, Function.comp_apply, decompose_coe]
       exact (DirectSum.map_of (β := RingPiece L) (formSecAdd R x) _ a).symm
@@ -175,7 +175,7 @@ theorem chartEval_coord (i : Fin (N + 1)) {U : (PSpace R N).Opens} (h : U ≤ ch
     chartEval (L := O1 R N) R (ProjSpace.coord R N) i h p = aeval (ratioOn U i h) p := by
   induction p using MvPolynomial.induction_on with
   | C r => exact (chartEval_C _ _ _ _ r).trans ((resG_algebraMap _ r).trans (algHom_C _ r).symm)
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p j hp =>
     rw [map_mul, map_mul, hp, aeval_X]
     exact congrArg (_ * ·) (chartEval_X _ _ _ _ j)

@@ -101,7 +101,7 @@ theorem beta_smul (hp : IsPullback pr s₁ s₀ (spMap (algebraMap R₀ R₁))) 
   | zero => simp
   | tmul a b =>
     rw [TensorProduct.smul_tmul', smul_eq_mul, beta_tmul, beta_tmul, map_mul, _root_.mul_assoc, Algebra.smul_def]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem beta_nat (hp : IsPullback pr s₁ s₀ (spMap (algebraMap R₀ R₁))) {U V : AffOp X₀} (a : U ⟶ V)
     (x : (ext R₁ (OAff s₀)).obj U) :
@@ -122,7 +122,7 @@ theorem beta_nat (hp : IsPullback pr s₁ s₀ (spMap (algebraMap R₀ R₁))) {
     congr 1
     all_goals first | exact ((Sec.res s₁ _).commutes r).symm | exact hn
   | add x y hx hy =>
-    simp only [map_add, hx, hy]
+    simp only [map_add (f := _), hx, hy]
     exact (map_add _ _ _).symm
 
 def fwd (hp : IsPullback pr s₁ s₀ (spMap (algebraMap R₀ R₁))) :

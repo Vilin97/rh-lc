@@ -64,7 +64,7 @@ theorem exp_neg_log_one_var (K : Type*) [Field K] [CharZero K] :
     | zero => simp [add_mul]
     | succ n => simp [add_mul, coeff_succ_X_mul, coeff_one, pow_succ]
   refine derivative.ext ?_ ?_
-  · rw [Derivation.leibniz, derivative_subst hs, derivative_exp, map_neg, derivative_one, map_add,
+  · rw [Derivation.leibniz, derivative_subst hs, derivative_exp, map_neg, derivative_one, map_add (f := _),
       derivative_one, derivative_X]
     simp only [smul_eq_mul]
     linear_combination (-(exp K).subst (-log K)) * e
@@ -87,7 +87,7 @@ theorem expMv_neg_logMv_mul : ∀ (p : ℕ) [Fact p.Prime] (σ : Type) (F : MvPo
   have e := congrArg (substAlgHom (R := ℂ_[p]) hs) (exp_neg_log_one_var ℂ_[p])
   have en : subst (F - 1) (-log ℂ_[p]) = -GL3Theta.logMv F := by
     rw [logMv_eq_subst hF, ← coe_substAlgHom hs, map_neg]
-  rw [map_mul, map_add, map_one, substAlgHom_X, coe_substAlgHom, subst_comp_subst_apply hl hs,
+  rw [map_mul, map_add (f := _), map_one, substAlgHom_X, coe_substAlgHom, subst_comp_subst_apply hl hs,
     en, add_sub_cancel] at e
   rw [expMv_eq_subst (by rw [map_neg, h0, neg_zero])]
   exact e

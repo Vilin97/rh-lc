@@ -91,7 +91,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.jEx :
   · intro x hx i k
     have : (j x i k).2 v = x i k := by
       have h1 : cp v (j x i k) = x i k := by
-        rw [hent, map_add, (sgLaws K v).2.2.1]
+        rw [hent, map_add (f := _), (sgLaws K v).2.2.1]
         fin_cases i <;> fin_cases k <;> simp
       exact h1
     rw [this]

@@ -53,7 +53,7 @@ theorem u_res (w : Z2 F) {i j : κ} {t x : (NE κ)ᵒᵖ} (hi : i ∈ sub t) (hj
 
 theorem V_res (w : Z2 F) {i j k : κ} {t x : (NE κ)ᵒᵖ} (hi : i ∈ sub t) (hj : j ∈ sub t) (hk : k ∈ sub t)
     (φ : t ⟶ x) : mp F φ (V w.1 i j k t) = V w.1 i j k x := by
-  simp only [V, map_add, map_sub, u_res w hi hj φ, u_res w hi hk φ, u_res w hj hk φ]
+  simp only [V, map_add (f := _), map_sub, u_res w hi hj φ, u_res w hi hk φ, u_res w hj hk φ]
   ring
 
 theorem pt_hom (a : (NE κ)ᵒᵖ) : sub (pt (mn a)) ⊆ sub a := Finset.singleton_subset_iff.2 (mn_mem a)

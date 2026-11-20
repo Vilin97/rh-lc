@@ -115,7 +115,7 @@ theorem exists_succ (D : Datum H) (Z : Submodule (𝓞 E) D.La) (hZ : IsIsoSat D
       rw [← map_smul, hE, Submodule.coe_smul, mul_smul, D.adj, bar_bar] at h
       exact h
     rw [hg, hg]
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [e1, e2, e3, ef_swap, e2]
     simp)
   refine ⟨Z', h1, ?_⟩

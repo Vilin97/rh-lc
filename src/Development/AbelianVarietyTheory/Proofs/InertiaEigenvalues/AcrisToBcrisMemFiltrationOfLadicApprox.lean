@@ -39,7 +39,7 @@ theorem crd_mem_of_mem_filO (C : GlobalTheory.MemLoc.Core l) {n : ℤ} {w : OB l
     rw [crd_tmul]
     exact ι_smul_mem_FilD C _ hβ
   | zero => rw [map_zero, map_zero]; exact zero_mem _
-  | add w w' _ _ h h' => rw [map_add, map_add]; exact add_mem (h i) (h' i)
+  | add w w' _ _ h h' => rw [map_add (f := _), map_add (f := _)]; exact add_mem (h i) (h' i)
   | smul o w _ h =>
     set_option synthInstance.maxHeartbeats 100000 in
       rw [crd_smul_eq, map_sum]
@@ -58,7 +58,7 @@ theorem toOB_mem_filO_of_approx (l : ℕ) [Fact l.Prime] (O : Type) [CommRing O]
     refine j_mem_FilP_of_approx C m _ fun r => ?_
     obtain ⟨y, z, hxyz, hy⟩ := h r
     refine ⟨crd b i y, crd b i z, ?_, ?_⟩
-    · rw [hxyz, map_add]
+    · rw [hxyz, map_add (f := _)]
       congr 1
       rw [show (l : OCr l O) ^ r = ((l ^ r : ℕ) : OCr l O) by push_cast; rfl, crd_natCast_mul]
       push_cast; rfl

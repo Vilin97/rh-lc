@@ -94,7 +94,7 @@ def Fam (ε : Fin n → Bool) (ρ : Mx n → (E →L[ℂ] E)) : Submodule ℂ (L
       v (l₁ ++ (a • X + Y) :: l₂) = (a : ℂ) • v (l₁ ++ X :: l₂) + v (l₁ ++ Y :: l₂)) ∧
     ∀ (l₁ l₂ : List (lie (Jm ε))) (X Y Z : lie (Jm ε)), (Z : Mx n) = X * Y - Y * X →
       v (l₁ ++ X :: Y :: l₂) - v (l₁ ++ Y :: X :: l₂) = v (l₁ ++ Z :: l₂)}
-  add_mem' := fun {v w} hv hw => ⟨fun l X => by simpa only [Pi.add_apply, map_add] using (hv.1 l X).fun_add (hw.1 l X),
+  add_mem' := fun {v w} hv hw => ⟨fun l X => by simpa only [Pi.add_apply, map_add (f := _)] using (hv.1 l X).fun_add (hw.1 l X),
     fun l₁ l₂ a X Y => by simp only [Pi.add_apply, hv.2.1, hw.2.1, smul_add]; abel,
     fun l₁ l₂ X Y Z h => by
       simp only [Pi.add_apply, ← hv.2.2 l₁ l₂ X Y Z h, ← hw.2.2 l₁ l₂ X Y Z h]; abel⟩
@@ -285,7 +285,7 @@ theorem sobFun_of_sobCont {ℓ : H →ₗ[ℂ] ℂ} (h : Sobolev₂ (lieSet ε) 
 theorem SobFun.translate (hσ : IsURepOn (UJset ε) σ) {ξ : H → ℂ} (h : SobFun ε σ ξ) {g : Mx n} (hg : g ∈ UJset ε) :
     SobFun ε σ fun w => ξ (σ g w) := by
   obtain ⟨h1, h2, S, C, hS, hC⟩ := h
-  refine ⟨fun x y hx hy => by beta_reduce; rw [map_add, h1 _ _ (hx.translate hσ hg) (hy.translate hσ hg)],
+  refine ⟨fun x y hx hy => by beta_reduce; rw [map_add (f := _), h1 _ _ (hx.translate hσ hg) (hy.translate hσ hg)],
     fun c x hx => by beta_reduce; rw [map_smul, h2 _ _ (hx.translate hσ hg)], S.map fun l => l.map fun X => g⁻¹ * X * g, C, ?_,
     fun w hw => by rw [← sobNorm_translate hσ hg hw hS]; exact hC _ (hw.translate hσ hg)⟩
   intro l hl X hX

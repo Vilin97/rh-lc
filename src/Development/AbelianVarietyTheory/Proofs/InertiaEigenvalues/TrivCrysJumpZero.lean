@@ -29,7 +29,7 @@ theorem sum_crd (x : V ⊗[F] N) : ∑ i, b i ⊗ₜ[F] crd b i N x = x := by
     simp only [crd_tmul, ← TensorProduct.smul_tmul, ← TensorProduct.sum_tmul, Basis.coord_apply,
       b.sum_repr]
   | add x y hx hy =>
-    simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib, hx, hy]
+    simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib, hx, hy]
 
 theorem eq_zero_of_crd (x : V ⊗[F] N) (h : ∀ i, crd b i N x = 0) : x = 0 := by
   rw [← sum_crd b x]; simp [h]
@@ -41,7 +41,7 @@ theorem crd_map (h : V →ₗ[LL] V) (hh : ∀ v, h v = v) (f : N →ₗ[F] N') 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v n => simp [crd_tmul, hh]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Coord
 
@@ -158,7 +158,7 @@ theorem Dcris_eq_range [Module.Finite Qp V] (hρ : ∀ g x, ρ g x = x) :
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v c => simp [jK₀, actVB, hρ]
-    | add y z hy hz => rw [map_add, map_add, hy, hz]
+    | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
 
 theorem finrank_tensor [FiniteDimensional LL V] [FiniteDimensional Qp K₀] :
     finrank LL (V ⊗[Qp] K₀) = finrank LL V * finrank Qp K₀ := by

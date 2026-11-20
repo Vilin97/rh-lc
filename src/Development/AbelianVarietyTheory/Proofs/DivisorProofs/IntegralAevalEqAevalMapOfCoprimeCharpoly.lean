@@ -70,7 +70,7 @@ theorem exists_eq_uniformizer_smul {O K : Type} [CommRing O] [IsDomain O] [IsDis
   have hP0 : aeval γ P₀ = 0 := by
     rw [← aeval_map_algebraMap K, ← hγ, aeval_self_charpoly]
   have hfe : f = P₀ * q + h * C π := by rw [hh]; ring
-  rw [hfe, map_add, map_mul, map_mul, hP0, zero_mul, zero_add, aeval_C, ← Algebra.commutes,
+  rw [hfe, map_add (f := _), map_mul, map_mul, hP0, zero_mul, zero_add, aeval_C, ← Algebra.commutes,
     ← Algebra.smul_def]
 
 theorem isIntegral_aeval_eq_aeval_map : ∀ {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Field K] [Algebra O K]

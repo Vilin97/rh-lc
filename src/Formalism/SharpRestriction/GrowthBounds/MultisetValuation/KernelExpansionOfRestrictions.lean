@@ -90,7 +90,7 @@ theorem atPi_mul {σ R : Type} [CommRing R] (vp : R) (f g : MvPowerSeries σ R) 
   refine Finset.sum_congr rfl fun x hx => ?_
   have hx' : x.1 + x.2 = n := Finset.HasAntidiagonal.mem_antidiagonal.1 hx
   show _ = (vp ^ x.1.degree * MvPowerSeries.coeff x.1 f) * (vp ^ x.2.degree * MvPowerSeries.coeff x.2 g)
-  rw [← hx', map_add, pow_add]
+  rw [← hx', map_add (f := _), pow_add]
   ring
 
 theorem exp_change {ι : Type} (K' : Type) [Field K'] [Algebra (K0 p) K'] (c : K') (hh hh' G : MvPowerSeries ι K')
@@ -102,7 +102,7 @@ theorem exp_change {ι : Type} (K' : Type) [Field K'] [Algebra (K0 p) K'] (c : K
   have hp0 := pK'_ne p K'
   have hG : MvPowerSeries.constantCoeff G = 0 := by
     have := congrArg MvPowerSeries.constantCoeff hE
-    rw [map_add, map_mul, h0, h0', zero_add, MvPowerSeries.constantCoeff_C] at this
+    rw [map_add (f := _), map_mul, h0, h0', zero_add, MvPowerSeries.constantCoeff_C] at this
     rcases mul_eq_zero.1 this.symm with h | h
     · exact absurd h hp0
     · exact h

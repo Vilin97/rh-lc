@@ -60,7 +60,7 @@ theorem acris_disc_ext : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K)
     intro r
     obtain ⟨s, z, rfl⟩ := (acris_basic l).2.2.1 x r
     have hs := h0 s
-    rw [map_add, map_add, map_mul, map_mul, map_pow, map_pow, map_natCast, map_natCast, hs, add_sub_add_left_eq_sub,
+    rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, map_natCast, map_natCast, hs, add_sub_add_left_eq_sub,
       ← mul_sub]
     have hw : ‖γ z - γ' z‖ ≤ 2 := (norm_sub_le _ _).trans (by linarith [hγ z, hγ' z])
     refine (norm_pow_mul_le l bk (γ z - γ' z) r).trans ?_

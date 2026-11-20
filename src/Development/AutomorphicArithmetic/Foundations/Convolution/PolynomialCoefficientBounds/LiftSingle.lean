@@ -64,7 +64,7 @@ theorem UpperTheory.ConvolutionTheory.FX.rearrange :
       simp only [fun k => (UpperTheory.ConvolutionTheory.FX.piece_add ι k).2.1, map_zero, zero_smul]
       exact hasSum_zero
     | add f g hf hg =>
-      simp only [fun k => (UpperTheory.ConvolutionTheory.FX.piece_add ι k).1 f g, map_add, add_smul]
+      simp only [fun k => (UpperTheory.ConvolutionTheory.FX.piece_add ι k).1 f g, map_add (f := _), add_smul]
       exact hf.add hg
     | single v p =>
       set c : ℂ := ∑ i, (v i : ℂ) * b.Λ i with hc
@@ -79,7 +79,7 @@ theorem UpperTheory.ConvolutionTheory.FX.rearrange :
           aeval ξ q := fun q => by
         induction q using MvPolynomial.induction_on with
         | C a => simp [AddMonoidAlgebra.coe_algebraMap, lift_single]
-        | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+        | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
         | mul_X p j hp =>
           rw [map_mul, map_mul, map_mul, hp, aeval_X, aeval_X, lift_single]
           simp [hξ, lin, Algebra.smul_def]

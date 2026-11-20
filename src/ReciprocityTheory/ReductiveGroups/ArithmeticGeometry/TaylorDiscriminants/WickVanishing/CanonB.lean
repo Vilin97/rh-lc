@@ -114,14 +114,14 @@ theorem gauge_add {O : Type} [CommRing O] [StarRing O] [Module.Free ℤ O] [Modu
     (E2 H₁ (gen 2) (gen 0) + E2 H₁ (gen 2) (gen 1) - E2 H₁ (gen 2) (gen 0 + gen 1))
   have eb : ∀ {n} (v w x : Q k d n), E3 b v w x = E3 q x v w - (E2 H₁ x v + E2 H₁ x w - E2 H₁ x (v + w)) := fun v w x => by
     show sb _ _ = _
-    simp only [b, map_sub, map_add, formalPointSubstitutionSeries_valueAtThreePoints, formalPointSubstitutionSeries_valueAtTwoPoints, sq_gen]; rfl
+    simp only [b, map_sub, map_add (f := _), formalPointSubstitutionSeries_valueAtThreePoints, formalPointSubstitutionSeries_valueAtTwoPoints, sq_gen]; rfl
   obtain ⟨H₂, h₂, z₂, n₂⟩ := split b (fun y w => by rw [eb, q1, z₁, zero_add, zero_add]; ring)
     (fun x y w => by rw [eb, eb, qs, add_comm x y]; ring)
     (fun x y t w => by rw [eb, eb, eb, eb, add_assoc x]; linear_combination qc w x y t)
   let D : PS k 3 d := E2 H₂ (gen 2) (gen 0) + E2 H₂ (gen 2) (gen 1) - E2 H₂ (gen 2) (gen 0 + gen 1)
   have eD : ∀ {n} (x y v : Q k d n), E3 D x y v = E2 H₂ v x + E2 H₂ v y - E2 H₂ v (x + y) := fun x y v => by
     show sb _ _ = _
-    simp only [D, map_sub, map_add, formalPointSubstitutionSeries_valueAtTwoPoints, sq_gen]; rfl
+    simp only [D, map_sub, map_add (f := _), formalPointSubstitutionSeries_valueAtTwoPoints, sq_gen]; rfl
   have D0 : D = 0 := zero_of_add D (fun x y v w => by
       have c₁ := h₂ v w x; have c₂ := h₂ v w y; have c₃ := h₂ v w (x + y)
       rw [eb] at c₁ c₂ c₃
@@ -129,7 +129,7 @@ theorem gauge_add {O : Type} [CommRing O] [StarRing O] [Module.Free ℤ O] [Modu
       linear_combination c₁ + c₂ - c₃ + int x y v w - h₁ x y v - h₁ x y w + h₁ x y (v + w)) fun c x y => by
     have d₀ := dir_ne (k := k) (d := d) (show (0 : Fin 3) ≠ 2 by decide)
     have d₁ := dir_ne (k := k) (d := d) (show (1 : Fin 3) ≠ 2 by decide)
-    rw [map_sub, map_add, pderiv_eval_two (dir_same 2) d₀, pderiv_eval_two (dir_same 2) d₁, pderiv_eval_two (dir_same 2) (d₀.add d₁)]
+    rw [map_sub, map_add (f := _), pderiv_eval_two (dir_same 2) d₀, pderiv_eval_two (dir_same 2) d₁, pderiv_eval_two (dir_same 2) (d₀.add d₁)]
     simp [E3, n₂]
   have ad₂ : ∀ {n} (x y v : Q k d n), E2 H₂ v (x + y) = E2 H₂ v x + E2 H₂ v y := fun x y v => by
     have := eD x y v
@@ -320,7 +320,7 @@ theorem sum_eq_of_exp (a b : List (PS k n d)) (ha : ∀ x ∈ a, constantCoeff x
     | cons x a ih =>
       obtain ⟨c, e⟩ := ih fun y hy => ha y (List.mem_cons_of_mem _ hy)
       have hx := ha x List.mem_cons_self
-      exact ⟨by rw [List.sum_cons, map_add, hx, c, add_zero], by
+      exact ⟨by rw [List.sum_cons, map_add (f := _), hx, c, add_zero], by
         rw [List.sum_cons, WickVanishing.gt_expS_add _ _ hx c, e]; rfl⟩
   exact WickVanishing.exp_inj (key a ha).1 (key b hb).1 ((key a ha).2.trans (h.trans (key b hb).2.symm))
 

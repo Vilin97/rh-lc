@@ -180,7 +180,7 @@ theorem eqOn_schA_of_pure {B : Base F E} (M : Model σ X W) (hM : M.IsGood B.ψ)
     rw [h1, h2]
     rfl
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | smul a x _ hx => rw [map_smul, map_smul, hx]
 
 end GlobalTheory.ThK.EvUniqB

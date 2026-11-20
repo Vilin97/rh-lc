@@ -179,7 +179,7 @@ def fibreEquivComplex {U : X.Opens} (hp : p ∈ U) {e : ((preMod X).obj L).obj (
     (he : IsBasisOn ((preMod X).obj L) U e) : fibreAt L p φ ≃ₗ[ℂ] ℂ where
   toFun s := (Via.ofComplex φ).symm (fibreEquiv φ hp he s)
   invFun c := (fibreEquiv φ hp he).symm (Via.ofComplex φ c)
-  map_add' a b := by rw [map_add, map_add]
+  map_add' a b := by rw [map_add (f := _), map_add (f := _)]
   map_smul' c s := by
     rw [complex_smul_def, LinearEquiv.map_smul, smul_eq_mul, map_mul, RingEquiv.symm_apply_apply]
     rfl

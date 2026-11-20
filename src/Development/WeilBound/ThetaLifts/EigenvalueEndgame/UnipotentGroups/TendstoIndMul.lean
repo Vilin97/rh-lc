@@ -71,7 +71,7 @@ theorem idm_sq (v : Pl F) : idm v * idm v = idm v := Prod.ext (mul_zero _) (ind_
 theorem eps_cons (S : Finset (Pl F)) (v : Pl F) (hv : v ∉ S) : eps (S.cons v hv) = eps S + idm v ∧ eps S * idm v = 0 := by
   refine ⟨Prod.ext (add_zero _).symm (fin_ext fun u => ?_), Prod.ext (mul_zero _) (fin_ext fun u => ?_)⟩
   · change Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F u (ind _) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F u (ind S + ind {v})
-    rw [map_add, ev_ind, ev_ind, ev_ind]
+    rw [map_add (f := _), ev_ind, ev_ind, ev_ind]
     by_cases h : u = v
     · simp [h, hv]
     · have hm : u ∈ S.cons v hv ↔ u ∈ S := Finset.mem_cons.trans (or_iff_right h)
@@ -108,7 +108,7 @@ def piece (a : AF F) (ha : a * a = a) (g : UA σ J) : UA σ J :=
     by rw [mix_mul ha, mat_inv_mul, sub_self, smul_zero, add_zero]⟩, by
     change (1 + a • (mat g - 1))ᵀ * incM F J * (cA σ).mapMatrix (1 + a • (mat g - 1)) = incM F J
     have h := mat_unit g
-    rw [map_add, map_smul, map_sub, map_one, AlgHom.mapMatrix_apply, Matrix.transpose_add, Matrix.transpose_smul,
+    rw [map_add (f := _), map_smul, map_sub, map_one, AlgHom.mapMatrix_apply, Matrix.transpose_add, Matrix.transpose_smul,
       Matrix.transpose_sub, Matrix.transpose_one]
     generalize (mat g).map (cA σ) = y at h ⊢
     generalize (mat g)ᵀ = x at h ⊢
@@ -143,10 +143,10 @@ theorem piInf_piece (S : Finset (Pl F)) (g : UA σ J) {w : InfinitePlace F} (τ 
     | zero => rw [smul_zero]
     | tmul a x =>
       exact congrArg (fun b => GlobalTheory.AutFunCompare.evW w b ⊗ₜ[F] x) (one_mul a.1)
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   ext i j
   change piInf τ ((1 : Matrix _ _ _) i j + eps S • (mat g i j - (1 : Matrix _ _ _) i j)) = piInf τ (mat g i j)
-  rw [map_add, piInf, RingHom.comp_apply, RingHom.comp_apply, h, ← map_add, ← map_add, add_sub_cancel, RingHom.comp_apply]
+  rw [map_add (f := _), piInf, RingHom.comp_apply, RingHom.comp_apply, h, ← map_add (f := _), ← map_add (f := _), add_sub_cancel, RingHom.comp_apply]
 
 theorem piece_prod {W : Spc F E d} (g : UA σ W.J) (S : Finset (Pl F)) : ∃ l : List (UA σ W.J),
     (∀ h ∈ l, ∃ v, h ∈ UAt σ W (evFin F v)) ∧ piece (eps S) (eps_sq S) g = piece (eps ∅) (eps_sq ∅) g * l.prod := by
@@ -183,7 +183,7 @@ theorem level_sch (hL : PositivityTheory.ThKEst.Level) {n : ℕ} {X : Spc F E n}
     obtain ⟨U, hU, h⟩ := hL F E σ B n d X W M χX χW om r s r' s' hp g hg
     exact mem_of_superset hU fun u hu k => h u hu k f
   | zero => exact Eventually.of_forall fun _ _ => map_zero _
-  | add x y _ _ hx hy => filter_upwards [hx, hy] with u h1 h2 k using by rw [map_add, h1 k, h2 k]
+  | add x y _ _ hx hy => filter_upwards [hx, hy] with u h1 h2 k using by rw [map_add (f := _), h1 k, h2 k]
   | smul a x _ hx => filter_upwards [hx] with u h1 k using by rw [map_smul, h1 k]
 
 theorem decomp_of (hL : PositivityTheory.ThKEst.Level) : Decomp := by

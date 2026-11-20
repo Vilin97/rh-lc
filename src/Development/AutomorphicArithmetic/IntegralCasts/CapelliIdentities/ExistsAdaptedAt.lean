@@ -143,7 +143,7 @@ private theorem per_single (C : LatEmb F) (R : RiemLat E g Λ) (τ : Ψ) (a : �
     R.B a (C.perExt R (Pi.single τ y)) =
       (F.σ τ a).re • C.perExt R (Pi.single τ y) +
         (F.σ τ a).im • C.perExt R (Pi.single τ (Complex.I • y)) := by
-  rw [← per_act, ← map_smul, ← map_smul, ← map_add]
+  rw [← per_act, ← map_smul, ← map_smul, ← map_add (f := _)]
   congr 1
   funext τ'
   by_cases h : τ' = τ

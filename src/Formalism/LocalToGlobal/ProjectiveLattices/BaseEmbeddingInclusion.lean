@@ -16,11 +16,11 @@ variable {K L : Type} [Field K] [Field L] [Algebra K L] {M : Type} [AddCommGroup
 def extJ (σ : L →+* ℂ) (jK : M →ₛₗ[σ.comp (algebraMap K L)] W) : L ⊗[K] M →ₛₗ[σ] W :=
   letI : Module K W := Module.compHom W (σ.comp (algebraMap K L))
   let B : L →ₗ[K] M →ₗ[K] W := LinearMap.mk₂ K (fun a m => σ a • jK m)
-    (fun a a' m => by rw [map_add, add_smul])
+    (fun a a' m => by rw [map_add (f := _), add_smul])
     (fun k a m => by
       show σ (k • a) • jK m = (σ (algebraMap K L k)) • (σ a • jK m)
       rw [Algebra.smul_def, map_mul, mul_smul])
-    (fun a m m' => by rw [map_add, smul_add])
+    (fun a m m' => by rw [map_add (f := _), smul_add])
     (fun k a m => by
       show σ a • jK (k • m) = (σ (algebraMap K L k)) • (σ a • jK m)
       rw [map_smulₛₗ, RingHom.comp_apply, smul_comm])
@@ -33,7 +33,7 @@ def extJ (σ : L →+* ℂ) (jK : M →ₛₗ[σ.comp (algebraMap K L)] W) : L �
         rw [TensorProduct.smul_tmul', TensorProduct.lift.tmul, TensorProduct.lift.tmul]
         show σ (a • b) • jK m = σ a • (σ b • jK m)
         rw [smul_eq_mul, map_mul, mul_smul]
-      | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add] }
+      | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add] }
 
 def incl : M →ₗ[K] L ⊗[K] M := TensorProduct.mk K L M 1
 
@@ -76,7 +76,7 @@ def formsLOf (Comp : (LL →+* ℂ) → Type) (X : ∀ σ, Comp σ → Data E r)
   nrm lp y w := nrmC lp y ((LinearEquiv.ofInjective _ incl_injective).symm w)
   nrm_nonneg lp y w := h0 lp y _
   nrm_zero lp y := by rw [map_zero]; exact hz lp y
-  nrm_add lp y w w' := by rw [map_add]; exact ha lp y _ _
+  nrm_add lp y w w' := by rw [map_add (f := _)]; exact ha lp y _ _
   nrm_smul lp y x w := by rw [map_smul]; exact hs lp y x _
   towKs := inferInstance
   ρ := rhoOf LL ρC

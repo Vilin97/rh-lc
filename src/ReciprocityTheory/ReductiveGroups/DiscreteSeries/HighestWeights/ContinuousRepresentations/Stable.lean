@@ -119,7 +119,7 @@ theorem KRep.dτ_stable_of_stable {ε : Fin n → Bool} (R : KRep ε)
         (-Complex.I / 2) • (Complex.I • (Matrix.single a b (1 : ℂ) + Matrix.single b a 1)) := by
     rw [smul_smul, hI]
     module
-  rw [hdec, map_add, map_smul, map_smul, _root_.add_apply,
+  rw [hdec, map_add (f := _), map_smul, map_smul, _root_.add_apply,
     _root_.smul_apply, _root_.smul_apply]
   exact W.add_mem (W.smul_mem _ (hK _ hX1 v hv)) (W.smul_mem _ (hK _ hX2 v hv))
 

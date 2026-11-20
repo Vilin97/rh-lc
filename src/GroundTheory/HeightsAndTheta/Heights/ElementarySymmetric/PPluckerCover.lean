@@ -23,7 +23,7 @@ theorem wedge_eq (e : Module.Basis (Fin 2) Ω E) (ψ ψ' : E →ₗ[Ω] Ω) (u w
     have h := e.sum_repr v
     rw [Fin.sum_univ_two] at h
     calc χ v = χ (e.repr v 0 • e 0 + e.repr v 1 • e 1) := by rw [h]
-      _ = _ := by simp only [map_add, map_smul, smul_eq_mul]
+      _ = _ := by simp only [map_add (f := _), map_smul, smul_eq_mul]
   rw [hv u ψ, hv u ψ', hv w ψ, hv w ψ']
   unfold T.detE
   ring
@@ -141,7 +141,7 @@ theorem frame_bound (B : ChartBundle ℤ x r E) {K : ℕ} (f c : Fin K → Ω) (
       exact pow_mul_mem_of_le x i (hf l) (hmg p q) (h1.trans h2)
     | zero => simp
     | add y z _ _ hy hz =>
-      rw [map_add, Finsupp.add_apply, mul_add]
+      rw [map_add (f := _), Finsupp.add_apply, mul_add]
       exact add_mem hy hz
     | smul a y _ hy =>
       rw [Subalgebra.smul_def, map_smul, Finsupp.smul_apply, smul_eq_mul, mul_left_comm]
@@ -270,7 +270,7 @@ theorem homogenize (i : S.ι) (hx : S.x i ≠ 0) {a : S.Ω} (ha : a ∈ chartRin
       refine IsWeightedHomogeneous.add (h1.mul (Xpow_homog S i d2)) ?_
       rw [add_comm]
       exact h2.mul (Xpow_homog S i d1)
-    · rw [map_add, map_mul, map_mul, aeval_Xpow, aeval_Xpow, e1, e2, ← map_mul, ← map_mul, ← map_add]
+    · rw [map_add (f := _), map_mul, map_mul, aeval_Xpow, aeval_Xpow, e1, e2, ← map_mul, ← map_mul, ← map_add (f := _)]
       congr 1
       ring
   | mul y z _ _ hy hz =>

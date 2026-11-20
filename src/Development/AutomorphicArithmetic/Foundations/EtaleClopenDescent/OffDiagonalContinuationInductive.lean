@@ -98,7 +98,7 @@ theorem Sys.five [IsFiltered J] {S₁ S₂ S₃ S₄ S₅ : Sys.{u} J} (h₁ : S
     obtain ⟨w, hw⟩ := (e₃ _).1 h6
     obtain ⟨j₂, w₂, rfl⟩ := s₂ w
     refine ⟨IsFiltered.max k j₂, S₃.ρ (IsFiltered.leftToMax k j₂) y₃ + h₂.a _ (S₂.ρ (IsFiltered.rightToMax k j₂) w₂), ?_⟩
-    rw [map_add, S₃.ι_ρ, ← h₂.b_ι, S₂.ι_ρ, hw]
+    rw [map_add (f := _), S₃.ι_ρ, ← h₂.b_ι, S₂.ι_ρ, hw]
     abel
   · intro j y hy
     have h4 : S₄.ι j (h₃.a j y) = 0 := by rw [← h₃.b_ι, hy, map_zero]

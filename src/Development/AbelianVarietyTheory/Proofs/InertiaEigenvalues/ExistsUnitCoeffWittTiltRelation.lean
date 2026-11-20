@@ -24,7 +24,7 @@ theorem exists_bound {l : ℕ} [Fact l.Prime] {O K : Type} [CommRing O] [Algebra
   let m : Ideal O :=
     { carrier := {c | ‖algebraMap O K c‖ < 1}
       add_mem' := fun {x y} hx hy => by
-        simp only [Set.mem_setOf_eq, map_add] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at *
         exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt hx hy)
       zero_mem' := by simp
       smul_mem' := fun r x hx => by
@@ -45,7 +45,7 @@ theorem exists_bound {l : ℕ} [Fact l.Prime] {O K : Type} [CommRing O] [Algebra
         exact_mod_cast Finset.le_sup (f := fun g => ‖algebraMap O K g‖₊) hx
       | zero => simp
       | add x y _ _ hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
       | smul r x _ hx =>
         rw [smul_eq_mul, map_mul, norm_mul]

@@ -74,7 +74,7 @@ theorem hostIn_key (hG : MQGalois) (q : Fin 3 → ℕ) (hq : Hyp3 q)
   have hσW : σ • W - W = -A := by
     apply RingOfIntegers.coe_injective
     show σ (W : E) - (W : E) = -(A : E)
-    rw [hWcoe, hAcoe, hωdef, map_div₀, map_add, map_one, hσα]
+    rw [hWcoe, hAcoe, hωdef, map_div₀, map_add (f := _), map_one, hσα]
     have h2 : σ (2 : E) = 2 := map_ofNat σ 2
     rw [h2]
     ring

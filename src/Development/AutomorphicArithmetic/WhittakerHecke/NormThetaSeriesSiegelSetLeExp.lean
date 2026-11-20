@@ -76,7 +76,7 @@ private theorem Yv_swap (q : ℚ) (hq : q ≠ 0) (b : A ℚ) (a a' : (A ℚ)ˣ) 
 private theorem re_mul (x y : A ℚ) : re (x * y) = re x * re y := by
   simp [re, map_mul]
 private theorem re_add (x y : A ℚ) : re (x + y) = re x + re y := by
-  simp [re, map_add]
+  simp [re, map_add (f := _)]
 private theorem re_rat (q : ℚ) : re (rt q) = (q : ℝ) := by
   refine (InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe (IsTotallyReal.isReal Rat.infinitePlace) (WithAbs.toAbs _ q)).trans ?_
   simp

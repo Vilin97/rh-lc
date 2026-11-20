@@ -59,7 +59,7 @@ private theorem exists_int_basis {l : ℕ} [Fact l.Prime] {G : Type} [Group G] [
       obtain ⟨⟨h, j⟩, rfl⟩ := hx
       exact Submodule.subset_span ⟨(g * h, j), by simp⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Λ.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Λ.add_mem hx hy
     | smul a x _ hx => rw [LinearMap.map_smul_of_tower]; exact Λ.smul_mem a hx
   refine ⟨_, b.extendOfIsLattice ℚ_[l], fun g i j => ?_⟩
   have h1 : ρ g (b.extendOfIsLattice ℚ_[l] j) =

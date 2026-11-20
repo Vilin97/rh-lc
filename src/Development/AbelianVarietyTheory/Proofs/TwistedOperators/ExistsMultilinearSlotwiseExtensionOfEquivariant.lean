@@ -100,7 +100,7 @@ theorem invariant_insert (A B : ∀ τ, Submodule ℂ (H τ)) (hAB : ∀ τ, A �
     intro L₁ L₂ h₁ h₂ b hb
     have h₁₂ : ∀ r ∈ Rk τ₀, ∀ x ∈ A τ₀, (L₁ + L₂) (r.1 x) = r.2 ((L₁ + L₂) x) := by
       intro r hr x hx
-      simp only [LinearMap.add_apply, map_add, h₁ r hr x hx, h₂ r hr x hx]
+      simp only [LinearMap.add_apply, map_add (f := _), h₁ r hr x hx, h₂ r hr x hx]
     have := huniq τ₀ (Ext (L₁ + L₂) - Ext L₁ - Ext L₂)
       (sub_mem (sub_mem (hExtC _ h₁₂) (hExtC _ h₁)) (hExtC _ h₂))
       (by
@@ -155,8 +155,8 @@ theorem invariant_insert (A B : ∀ τ, Submodule ℂ (H τ)) (hAB : ∀ τ, A �
       intro v i x y
       by_cases hi : i = τ₀
       · subst hi
-        rw [h0position, h0position, h0position, map_add, map_add]
-      · rw [hiposition i hi, hiposition i hi, hiposition i hi, map_add, toLinearMap_update_add T hi,
+        rw [h0position, h0position, h0position, map_add (f := _), map_add (f := _)]
+      · rw [hiposition i hi, hiposition i hi, hiposition i hi, map_add (f := _), toLinearMap_update_add T hi,
           ExtAdd _ _ (hgU v i x) (hgU v i y) _ (hRB _)])
     (by
       intro v i c x

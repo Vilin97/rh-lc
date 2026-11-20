@@ -71,13 +71,13 @@ theorem constrOf_props (j : (Fin n → K) →ₛₗ[σ] V) (hli : LinearIndepend
   have hR : LinearMap.range J = S := by rw [hJ, constrOf_range, hspan]
   have mem : ∀ v, J v ∈ C := fun v => hSC (hR ▸ LinearMap.mem_range_self J v)
   have add1 : ∀ v₁ v₂ v', ip (J (v₁ + v₂)) (J v') = ip (J v₁) (J v') + ip (J v₂) (J v') := fun v₁ v₂ v' => by
-    rw [map_add]; exact hC.add ⟨_, mem v₁⟩ ⟨_, mem v₂⟩ ⟨_, mem v'⟩
+    rw [map_add (f := _)]; exact hC.add ⟨_, mem v₁⟩ ⟨_, mem v₂⟩ ⟨_, mem v'⟩
   have smul1 : ∀ (c : ℂ) v v', ip (J (c • v)) (J v') = starRingEnd ℂ c * ip (J v) (J v') := fun c v v' => by
     rw [map_smul]; exact hC.smul c ⟨_, mem v⟩ ⟨_, mem v'⟩
   have herm : ∀ v v', ip (J v) (J v') = starRingEnd ℂ (ip (J v') (J v)) := fun v v' =>
     (hC.herm ⟨_, mem v'⟩ ⟨_, mem v⟩).symm
   have add2 : ∀ v v₁ v₂, ip (J v) (J (v₁ + v₂)) = ip (J v) (J v₁) + ip (J v) (J v₂) := fun v v₁ v₂ => by
-    rw [herm, add1, map_add, ← herm, ← herm]
+    rw [herm, add1, map_add (f := _), ← herm, ← herm]
   have smul2 : ∀ (c : ℂ) v v', ip (J v) (J (c • v')) = c * ip (J v) (J v') := fun c v v' => by
     rw [herm, smul1, map_mul, Complex.conj_conj, ← herm]
   let B : V →ₗ⋆[ℂ] V →ₗ[ℂ] ℂ := LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (fun v v' => ip (J v) (J v'))

@@ -9,7 +9,7 @@ variable {O : Type*} [CommRing O] [IsLocalRing O] [IsAdicComplete (IsLocalRing.m
 def T (O : Type*) [CommRing O] [IsLocalRing O] (N : ℕ) : Ideal O⟦X⟧ where
   carrier := {x | ∀ m, coeff m x ∈ (IsLocalRing.maximalIdeal O) ^ (N - m)}
   add_mem' {a b} ha hb m := by
-    simpa only [map_add] using Ideal.add_mem _ (ha m) (hb m)
+    simpa only [map_add (f := _)] using Ideal.add_mem _ (ha m) (hb m)
   zero_mem' m := by simp
   smul_mem' c x hx m := by
     rw [smul_eq_mul, coeff_mul]
@@ -140,7 +140,7 @@ theorem subst_eq (hg : constantCoeff g ∈ IsLocalRing.maximalIdeal O) (f y : O�
 private theorem truncEval_add (N : ℕ) (f f' : O⟦X⟧) :
     S g N (f + f') = S g N f + S g N f' := by
   have h : trunc N (f + f') = trunc N f + trunc N f' := map_add (trunc N) f f'
-  simp only [S, h, map_add]
+  simp only [S, h, map_add (f := _)]
 
 theorem subst_add (hg : constantCoeff g ∈ IsLocalRing.maximalIdeal O) (f f' : O⟦X⟧) :
     subst hg (f + f') = subst hg f + subst hg f' := by

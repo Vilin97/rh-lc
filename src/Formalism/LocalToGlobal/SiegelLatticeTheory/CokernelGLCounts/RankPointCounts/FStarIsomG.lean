@@ -128,7 +128,7 @@ private theorem hT_isoG_of_gram_eq {ι : Type*} [Fintype ι] [DecidableEq ι] (u
   have B2 := (o1 _ (hlin u (pc u y) hu)).2
   conv_rhs => rw [ex, ey]
   rw [gx, gy]
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   rw [A1, A2, B1, B2, hgram u', hgram u, hG]
 
 theorem isom_ext {ι : Type*} [Fintype ι] [DecidableEq ι] (u u' : ι → S.V) (hG : gram S u' u' = gram S u u)

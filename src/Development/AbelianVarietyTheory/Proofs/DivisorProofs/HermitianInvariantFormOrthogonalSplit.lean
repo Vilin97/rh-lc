@@ -48,7 +48,7 @@ theorem exists_minimal_simple_mod_radical : ∀ {V G : Type} [AddCommGroup V] [M
     rw [hconj 0 D.zero_mem y hy, hzl y hy, map_zero]
   have haddr : ∀ x ∈ D, ∀ y ∈ D, ∀ z ∈ D, B z (x + y) = B z x + B z y := by
     intro x hx y hy z hz
-    rw [hconj _ (D.add_mem hx hy) z hz, hadd x hx y hy z hz, map_add, ← hconj x hx z hz, ← hconj y hy z hz]
+    rw [hconj _ (D.add_mem hx hy) z hz, hadd x hx y hy z hz, map_add (f := _), ← hconj x hx z hz, ← hconj y hy z hz]
   have hsub : ∀ x ∈ D, ∀ y ∈ D, ∀ z ∈ D, B (x - y) z = B x z - B y z := by
     intro x hx y hy z hz
     have h := hadd x hx ((-1 : ℂ) • y) (D.smul_mem _ hy) z hz
@@ -90,7 +90,7 @@ theorem exists_minimal_simple_mod_radical : ∀ {V G : Type} [AddCommGroup V] [M
     | add f g _ _ ihf ihg =>
       obtain ⟨x, hx, hxf, rfl⟩ := ihf
       obtain ⟨w, hw, hwf, rfl⟩ := ihg
-      exact ⟨x + w, Z.add_mem hx hw, fun k hk => by rw [map_add, hxf k hk, hwf k hk],
+      exact ⟨x + w, Z.add_mem hx hw, fun k hk => by rw [map_add (f := _), hxf k hk, hwf k hk],
         funext fun i => hadd x (hZD hx) w (hZD hw) i (hsD' i)⟩
     | smul c f _ ih =>
       obtain ⟨x, hx, hxf, rfl⟩ := ih

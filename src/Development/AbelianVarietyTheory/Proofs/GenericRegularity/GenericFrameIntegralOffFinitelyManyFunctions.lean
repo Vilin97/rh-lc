@@ -241,7 +241,7 @@ theorem exists_finset_of_lift (hT : Out.SecTwistSt) (hbc : FrBC Xo c) {Y : Model
       have e : (ψ.toRingHom.comp f) (algebraMap (𝓞 c.F) _ o) = io (algebraMap (𝓞 c.F) c.F o) :=
         (congrArg ψ (RingHom.congr_fun hfα o)).trans (ψ.commutes _)
       rw [e]; exact int_mem_range io o
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   choose u₀ hu₀ using fun τ j i => hin (u τ j i) (by
     simp only [S₀, Finset.mem_union, Finset.mem_biUnion]

@@ -156,7 +156,7 @@ theorem thetaV_sigR (v : InfinitePlace I.F) (x : Formalism.MainNotions.GlobalThe
     rw [hs, thetaV_tmul, thetaV_tmul, map_mul, hreal]
     congr 1
     exact I.cm.cmUnram.2.1 (I.φ v) y
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem ofHAInf_rat (h : HAd I) (γ : GL (Fin I.n) I.E)
     (hγ : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.HA.mat (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF I.F) I.cm.sig I.J h =
@@ -243,7 +243,7 @@ private theorem tauF_sigR_comm (x : Formalism.MainNotions.GlobalTheoryTheory.Gen
         a ⊗ₜ[I.F] I.cm.sig y := rfl
     rw [hs, tauF_tmul, tauF_tmul]
     rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem ofHAFin_mem (h : HAd I) :
     Formalism.UG.cT (Formalism.UG.sigR I.cm.sig (Formalism.MainNotions.S.Af I.F)) (ofHAFin I h) *

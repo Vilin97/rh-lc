@@ -15,7 +15,7 @@ theorem GlobalTheory.CmpG.comparison : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [
   set w : F.B := 1 - F.τ * c with hwdef
   have hwu : w * u = 1 := by rw [hue, hwdef]; linear_combination (-(c * c)) * F.τ_sq
   have hτ0 : F.θ F.τ = 0 := GlobalTheory.WinLift.theta_tau F hv hε
-  have hθu : F.θ u = 1 := by rw [hue, map_add, map_one, map_mul, hτ0, zero_mul, add_zero]
+  have hθu : F.θ u = 1 := by rw [hue, map_add (f := _), map_one, map_mul, hτ0, zero_mul, add_zero]
   have hθw : F.θ w = 1 := by rw [hwdef, map_sub, map_one, map_mul, hτ0, zero_mul, sub_zero]
   have hwU : IsUnit w := ⟨⟨w, u, hwu, by rw [mul_comm]; exact hwu⟩, rfl⟩
   set P := blk d k (p : F.B) 1 with hP

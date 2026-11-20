@@ -128,7 +128,7 @@ theorem wa_denom (p : ℕ) (hp : p.Prime) {n : ℕ} (M₁ M₂ : Submodule (𝓞
     have ha0 : Ideal.Quotient.mk I a = 0 := Ideal.Quotient.eq_zero_iff_mem.2 haI
     have h1' : Ideal.Quotient.mk I c * (p : 𝓞 E ⧸ I) = 1 := by
       have := congrArg (Ideal.Quotient.mk I) hca
-      rw [map_add, map_mul, ha0, add_zero, map_one, map_natCast] at this
+      rw [map_add (f := _), map_mul, ha0, add_zero, map_one, map_natCast] at this
       exact this
     have hx0 : x = 0 := by
       calc x = (Ideal.Quotient.mk I c * (p : 𝓞 E ⧸ I)) * x := by rw [h1', one_mul]

@@ -87,7 +87,7 @@ theorem theta_add (hT : IsTriple B G X om om') {Φ Ψ} (hΦ : Φ ∈ GlobalTheor
     (hΨ : Ψ ∈ GlobalTheory.WeilM.schA F (Fin a' × Fin (a + a'))) (g h) :
     theta om' (Φ + Ψ) g h = theta om' Φ g h + theta om' Ψ g h := by
   have hs := GlobalTheory.WeilM.IsUWeilPair.isUSplitting hT.weil'
-  simp only [theta, map_add]
+  simp only [theta, map_add (f := _)]
   exact GlobalTheory.WeilM.thetaSum_add F (hs.pres _ _ hΦ) (hs.pres _ _ hΨ)
 
 theorem theta_smul (c : ℂ) (Φ) (g h) : theta om' (c • Φ) g h = c * theta om' Φ g h := by
@@ -119,7 +119,7 @@ theorem exists_der_pol (hKP : GlobalTheory.ThK.KP) (hT : IsTriple B G X om om') 
     obtain ⟨x₁, hx₁, px, ex⟩ := ihx
     obtain ⟨y₁, hy₁, py, ey⟩ := ihy
     refine ⟨x₁ + y₁, add_mem hx₁ hy₁, fun z => ?_, fun g h => ?_⟩
-    · simp only [map_add, Pi.add_apply]
+    · simp only [map_add (f := _), Pi.add_apply]
       exact (px z).add (py z)
     · rw [theta_add hT (hle hx₁) (hle hy₁)]
       simp only [theta_add hT (hle hx) (hle hy)]
@@ -170,7 +170,7 @@ theorem exists_der_so (hKP : GlobalTheory.ThK.KP) (hT : IsTriple B G X om om') {
     obtain ⟨x₁, hx₁, px⟩ := ihx
     obtain ⟨y₁, hy₁, py⟩ := ihy
     refine ⟨x₁ + y₁, add_mem hx₁ hy₁, fun z => ?_⟩
-    simp only [map_add, Pi.add_apply]
+    simp only [map_add (f := _), Pi.add_apply]
     exact (px z).add (py z)
   | smul c x hx ihx =>
     obtain ⟨x₁, hx₁, px⟩ := ihx

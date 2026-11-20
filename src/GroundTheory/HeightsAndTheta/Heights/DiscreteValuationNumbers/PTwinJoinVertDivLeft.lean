@@ -35,7 +35,7 @@ theorem mcMap_rename_assocVar (R : Type) [CommRing R] {Ω : Type} [Field Ω] [Al
       rename (Sum.map id Sum.inl) (mcMap R (joinCoord x z) h) := by
   induction h using MvPolynomial.induction_on with
   | C a => simp [mcMap, MvPolynomial.algebraMap_eq]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp =>
     simp only [map_mul, rename_X, hp]
     congr 1
@@ -87,7 +87,7 @@ theorem isMultiHomog_rename_assocVar' [DecidableEq K] [DecidableEq K'] [Decidabl
   unfold IsMultiHomog at hf ⊢
   induction hf using IsWeightedHomogeneous.induction_on with
   | zero => simpa using isWeightedHomogeneous_zero R _ _
-  | add p q hp hq ihp ihq => simpa [map_add] using ihp.add ihq
+  | add p q hp hq ihp ihq => simpa [map_add (f := _)] using ihp.add ihq
   | monomial d r hr =>
     rw [rename_monomial]
     apply isWeightedHomogeneous_monomial
@@ -133,7 +133,7 @@ theorem rename_weightedHomogeneousComponent [DecidableEq K] [DecidableEq K'] [De
         · exact congrFun e (.inr (.inl k))
       rw [IsWeightedHomogeneous.weightedHomogeneousComponent_ne c hm hc,
         IsWeightedHomogeneous.weightedHomogeneousComponent_ne _ hj hc', map_zero]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem comap_isMultiProjPrime {R : Type} [CommRing R]
     {Q : Ideal (MvPolynomial (Σ k : K ⊕ (K' ⊕ K₂), Sum.elim ι (Sum.elim ι' ι₂) k) R)}

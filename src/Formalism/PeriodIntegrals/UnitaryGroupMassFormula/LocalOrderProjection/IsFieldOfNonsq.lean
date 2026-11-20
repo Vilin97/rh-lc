@@ -27,7 +27,7 @@ theorem isField_of_nonsq [CharZero F] (L : LocE F E) (θ : E) (hc : L.cj θ = -�
     obtain ⟨t, c, -, -, hdec⟩ := SlopeTestRemainingChoices.decomp L θ hc D hD x
     have hcjx : algebraMap F E (2 * D) * L.cj x = algebraMap F E (D * t) - algebraMap F E c * θ := by
       have h := congrArg L.cj hdec
-      simp only [map_add, map_mul, AlgEquiv.commutes, hc] at h
+      simp only [map_add (f := _), map_mul, AlgEquiv.commutes, hc] at h
       simp only [map_mul]
       linear_combination h
     have hprod : (algebraMap F E (D * t)) ^ 2 - (algebraMap F E c) ^ 2 * algebraMap F E D = 0 := by

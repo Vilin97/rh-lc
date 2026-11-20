@@ -313,7 +313,7 @@ theorem lawDeriv : LawDeriv := by
   · have h0 : lam (0 : M2 n) = 0 := by simpa using lam_smul 0 (0 : M2 n)
     rw [zero_mul, map_zero, h0, zero_mul]
   · intro a b _ _ ha hb
-    rw [add_mul, map_add, ha, hb, lam_add, add_mul]
+    rw [add_mul, map_add (f := _), ha, hb, lam_add, add_mul]
   · intro a b _ hb
     rw [smul_mul_assoc, map_smul, hb, lam_smul, smul_eq_mul, mul_assoc]
 

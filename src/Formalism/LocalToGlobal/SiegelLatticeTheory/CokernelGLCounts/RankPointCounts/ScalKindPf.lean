@@ -231,14 +231,14 @@ theorem zeta_core (k : ℕ) (F : LFlag S r T) (F' F'' : LFlag S r T') (β : S.V 
     have hAv : A' *ᵥ v = b := by
       rw [hvdef, Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ (isUnit_iff_ne_zero.2 hA), Matrix.one_mulVec]
     have hvz : ∀ i, S.hT (F.fl.fvec i) ((1 : E) • F.fl.z + wv F' v) = 0 := fun i => by
-      rw [one_smul, map_add, hermitian_frame_z, hT_wv, hAv]
+      rw [one_smul, map_add (f := _), hermitian_frame_z, hT_wv, hAv]
       by_cases hi : i = Fin.last r
       · subst hi; simp [hb]
       · simp [hb, hi, Pi.single_eq_of_ne hi]
     obtain ⟨v'', hl'', hv''⟩ := transfer 1 v hvz
     have hA''v : A'' *ᵥ v'' = b := funext fun i => by
       have := hv'' i
-      rw [one_smul, map_add, hermitian_frame_z, hT_wv] at this
+      rw [one_smul, map_add (f := _), hermitian_frame_z, hT_wv] at this
       by_cases hi : i = Fin.last r
       · subst hi
         rw [if_pos rfl] at this

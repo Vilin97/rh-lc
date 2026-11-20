@@ -45,7 +45,7 @@ theorem exists_basis {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) :
     have hσs : ∀ (c : F) (z : E), σ (c • z) = c • σ z := fun c z => by
       rw [Algebra.smul_def, Algebra.smul_def, map_mul, AlgHom.commutes]
     have h' := congrArg σ hst
-    simp only [map_add, hσs, map_one, hσδ, map_zero, smul_neg] at h'
+    simp only [map_add (f := _), hσs, map_one, hσδ, map_zero, smul_neg] at h'
     have hs2 : (s + s) • (1 : E) = 0 := by
       rw [add_smul]
       linear_combination hst + h'
@@ -91,7 +91,7 @@ theorem fixed_eq {σ : E →ₐ[F] E} (hσ : IsCMExt F E σ) {y : R ⊗[F] E} (h
     simp [hB, Algebra.TensorProduct.basis_repr_tmul]
   have hc : c1 = 0 := by
     have := congrArg (fun z => B.repr z 1) hz
-    simp only [map_add, Finsupp.add_apply, hr, map_zero, Finsupp.zero_apply] at this
+    simp only [map_add (f := _), Finsupp.add_apply, hr, map_zero, Finsupp.zero_apply] at this
     rw [← half_add (F := F) R c1, this, mul_zero]
   exact ⟨c0, by rw [hy', hc]; simp⟩
 

@@ -153,7 +153,7 @@ theorem image_le_of_type {V₀ : Type} [AddCommGroup V₀] [Module K V₀] {σ :
     { carrier := {y | ∃ y₀ ∈ Z₀, ι₀ y₀ = ι y}
       add_mem' := by
         rintro a b ⟨a₀, ha, ha'⟩ ⟨b₀, hb, hb'⟩
-        exact ⟨a₀ + b₀, Z₀.add_mem ha hb, by rw [map_add, map_add, ha', hb']⟩
+        exact ⟨a₀ + b₀, Z₀.add_mem ha hb, by rw [map_add (f := _), map_add (f := _), ha', hb']⟩
       zero_mem' := ⟨0, Z₀.zero_mem, by simp⟩
       smul_mem' := by
         rintro c a ⟨a₀, ha, ha'⟩

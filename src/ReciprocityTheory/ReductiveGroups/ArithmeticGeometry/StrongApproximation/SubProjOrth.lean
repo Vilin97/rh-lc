@@ -24,7 +24,7 @@ theorem hf_sum_right {α : Type*} (s : Finset α) (v : α → ι → K) (x : ι 
   | empty => simp [hf]
   | insert i s hi ih =>
     rw [Finset.sum_insert hi, Finset.sum_insert hi, ← ih]
-    simp only [hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem nondeg (hdet : IsUnit J.det) {x : ι → K} (h : ∀ z, hf σ J x z = 0) : x = 0 := by
   have hv : Matrix.vecMul x J = 0 := by
@@ -139,7 +139,7 @@ theorem polar {p p' : ι → K} (hp : hf σ J p p = 0) (hp' : hf σ J p' p' = 0)
     simp only [hf, Pi.add_apply, add_mul, Finset.sum_add_distrib]
   have hadd2 : ∀ x y z, hf σ J x (y + z) = hf σ J x y + hf σ J x z := by
     intro x y z
-    simp only [hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   have hsm1 : ∀ (c : K) x y, hf σ J (c • x) y = c * hf σ J x y := by
     intro c x y
     simp only [hf, Pi.smul_apply, smul_eq_mul, Finset.mul_sum]
@@ -166,7 +166,7 @@ theorem OFam.extend {r : ℕ} (F : OFam σ J e f r) (hns : ¬ F.Spans) :
     simp only [hf, Pi.add_apply, add_mul, Finset.sum_add_distrib]
   have hadd2 : ∀ x y z, hf σ J x (y + z) = hf σ J x y + hf σ J x z := by
     intro x y z
-    simp only [hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   have hsub2 : ∀ x y z, hf σ J x (y - z) = hf σ J x y - hf σ J x z := by
     intro x y z
     simp only [hf, Pi.sub_apply, map_sub, mul_sub, Finset.sum_sub_distrib]
@@ -271,7 +271,7 @@ theorem OFam.card_le [Nontrivial K] {r : ℕ} (F : OFam σ J e f r) : r + 2 ≤ 
     simp only [hf, Pi.add_apply, add_mul, Finset.sum_add_distrib]
   have hadd2 : ∀ x y z, hf σ J x (y + z) = hf σ J x y + hf σ J x z := by
     intro x y z
-    simp only [hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   have hsub2 : ∀ x y z, hf σ J x (y - z) = hf σ J x y - hf σ J x z := by
     intro x y z
     simp only [hf, Pi.sub_apply, map_sub, mul_sub, Finset.sum_sub_distrib]

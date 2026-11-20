@@ -79,12 +79,12 @@ def RowTestModel (R : RealDat D A Ks) : Prop :=
 
 def twFun (s : Bool) {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] (f : E →ₗ[ℂ] ℂ) : Tw s E →ₗ[ℂ] ℂ where
   toFun x := cj s (f (Tw.out x))
-  map_add' x y := by rw [Tw.out_add, map_add, map_add]
+  map_add' x y := by rw [Tw.out_add, map_add (f := _), map_add (f := _)]
   map_smul' z x := by rw [Tw.out_smul, map_smul, smul_eq_mul, map_mul, cj_cj]; rfl
 
 def untwFun (s : Bool) {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℂ E] (f : Tw s E →ₗ[ℂ] ℂ) : E →ₗ[ℂ] ℂ where
   toFun x := cj s (f (Tw.mkL s E x))
-  map_add' x y := by rw [map_add, map_add, map_add]
+  map_add' x y := by rw [map_add (f := _), map_add (f := _), map_add (f := _)]
   map_smul' z x := by rw [map_smulₛₗ, map_smul, smul_eq_mul, map_mul, cj_cj]; rfl
 
 theorem test_tw_iff {K E : Type} [Field K] [NormedAddCommGroup E] [InnerProductSpace ℂ E] (s : Bool) {σ σ' : K →+* ℂ}

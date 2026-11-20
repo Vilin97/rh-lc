@@ -46,7 +46,7 @@ theorem linInd_one (h : IsCMExt F E σ) {θ : E} (hθ : σ θ ≠ θ) :
   intro s t hst
   have h1 : s • (1 : E) + t • σ θ = 0 := by
     have := congrArg σ hst
-    simp only [Algebra.smul_def, map_add, map_mul, AlgHom.commutes, map_one, map_zero] at this ⊢
+    simp only [Algebra.smul_def, map_add (f := _), map_mul, AlgHom.commutes, map_one, map_zero] at this ⊢
     exact this
   have h2 : t • (σ θ - θ) = 0 := by
     rw [smul_sub, sub_eq_zero]
@@ -177,7 +177,7 @@ theorem exists_isCoord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
         basisOne_zero, basisOne_one, TensorProduct.smul_tmul', TensorProduct.smul_tmul']
       simp
     funext w
-    conv_rhs => rw [hy, map_add, Pi.add_apply, hΘ, hΘ, map_one, mul_one]
+    conv_rhs => rw [hy, map_add (f := _), Pi.add_apply, hΘ, hΘ, map_one, mul_one]
     rfl
   have hbij : Function.Bijective Θ := by
     have : (Θ : Ainf F ⊗[F] E → _) = H := funext fun y => (hH y).symm
@@ -196,7 +196,7 @@ theorem exists_isCoord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
       have : sigR (Ainf F) σ (a ⊗ₜ[F] x) = a ⊗ₜ[F] σ x := by simp [sigR]
       rw [this, hΘ, hΘ, h.2.2.2, map_mul, Complex.conj_ofReal]
       rfl
-    | add y y' hy hy' => simp only [map_add, Pi.add_apply, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), Pi.add_apply, hy, hy']
   · intro x w
     simp only [RingEquiv.ofBijective_apply]
     rw [hΘ, map_one]
@@ -207,13 +207,13 @@ theorem exists_isCoord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     | zero => simp
     | tmul a x =>
       have h1 : τ w x + conj (τ w x) = ((ρ w (Algebra.trace F E x) : ℝ) : ℂ) := by
-        rw [hρ, ← hτ, ← GlobalTheory.GaussMean.OneVec.add_sigma h, map_add, h.2.2.2]
+        rw [hρ, ← hτ, ← GlobalTheory.GaussMean.OneVec.add_sigma h, map_add (f := _), h.2.2.2]
         rfl
       rw [GlobalTheory.GaussMean.OneVec.trace_tmul, map_mul, Pi.mul_apply, hx, hΘ, map_mul, Complex.conj_ofReal,
         Complex.ofReal_mul, ← h1]
       ring
     | add y y' hy hy' =>
-      simp only [map_add, Pi.add_apply, Complex.ofReal_add, hy, hy']
+      simp only [map_add (f := _), Pi.add_apply, Complex.ofReal_add, hy, hy']
       ring
 
 end GlobalTheory.CompanionTheory.SiegelND.Integ.Arch

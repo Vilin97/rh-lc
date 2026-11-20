@@ -312,7 +312,7 @@ theorem thURel_of_tie {ρ : Setup X} (hρ : ρ.Good) {Y : NExp D.R D.host D.what
         (E' c * (((((ρ.B i J b).mu x : Circle) : ℂ) ^ n)⁻¹ * (q ^ (n * ((Links.Vc D J).rank / 2)))⁻¹ *
           ∑ γ ∈ R n, Ξ' c (g * γ)))) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, PqF_tmul, map_add, map_smulₛₗ, rdK_tmul, Finset.sum_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+      simp only [map_sum, PqF_tmul, map_add (f := _), map_smulₛₗ, rdK_tmul, Finset.sum_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [hx2]
     congr 1

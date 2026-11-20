@@ -41,7 +41,7 @@ theorem eventually_extends {V C : Type} [CommRing V] [IsLocalRing V] [CommRing C
       rw [← valR_eq]
       exact ⟨a, (valR_constFn_of_over q σ x hxq U hxU a).symm⟩
     | add f g _ _ hf hg =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hf hg
     | mul f g _ _ hf hg =>
       rw [map_mul]

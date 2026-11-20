@@ -97,7 +97,7 @@ theorem applyAt0_rename (φ : Lt ↪ Lt') (T : MvPowerSeries (Lt × Fin N0 × Fi
       show Finsupp.mapDomain (xzMap φ) μ = Finsupp.embDomain (xzEmb φ) μ from
         (Finsupp.embDomain_eq_mapDomain (xzEmb φ) μ).symm]
     exact applyTerm_rename l φ T μ c
-  | add P Q hP hQ => rw [map_add, applyAt0_add, applyAt0_add, hP, hQ, map_add]
+  | add P Q hP hQ => rw [map_add (f := _), applyAt0_add, applyAt0_add, hP, hQ, map_add (f := _)]
 
 end Rename₂
 

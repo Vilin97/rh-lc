@@ -297,7 +297,7 @@ theorem span_image_span (S : Set E) :
   induction hx using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul b x _ hx => rw [map_smul_int]; exact Submodule.smul_mem _ _ hx
 
 theorem span_image_smul (𝔞 : Ideal (𝓞 E)) (N : Submodule (𝓞 E) E) :
@@ -312,7 +312,7 @@ theorem span_image_smul (𝔞 : Ideal (𝓞 E)) (N : Submodule (𝓞 E) E) :
       rw [Algebra.smul_def, map_mul]
       exact Submodule.mul_mem_mul (Submodule.subset_span ⟨a, ha, rfl⟩) (Submodule.subset_span ⟨y, hy, rfl⟩)
     · intro x y hx hy
-      rw [map_add]; exact Submodule.add_mem _ hx hy
+      rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   · rw [Submodule.span_mul_span]
     apply Submodule.span_mono
     rintro _ ⟨_, ⟨a, ha, rfl⟩, _, ⟨y, hy, rfl⟩, rfl⟩

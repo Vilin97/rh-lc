@@ -56,7 +56,7 @@ theorem hom_res_sub {F F' : Type} [Monoid F] [Monoid F'] (ψ : F →* F') {X : R
 
 theorem ρ_add_sub_of_invariant {F : Type} [Monoid F] (B : Rep.{0} k F) (g : F) {A M : B} (hA : B.ρ g A = A) :
     B.ρ g (A + M) - (A + M) = B.ρ g M - M := by
-  rw [map_add, hA]
+  rw [map_add (f := _), hA]
   abel
 
 theorem comp_hom_apply' {F : Type} [Monoid F] {A B C : Rep.{0} k F} (f : A ⟶ B) (g : B ⟶ C) (x : A) :
@@ -139,7 +139,7 @@ theorem dataCycle_congr {x x' : (cochainsComplex U).X 1} {y y' : ∀ v, Ωᵥ v}
 
 theorem d_add_eq_zero {x x' : (cochainsComplex U).X 1} (hx : ((cochainsComplex U).d 1 2).hom x = 0)
     (hx' : ((cochainsComplex U).d 1 2).hom x' = 0) : ((cochainsComplex U).d 1 2).hom (x + x') = 0 := by
-  rw [map_add, hx, hx', add_zero]
+  rw [map_add (f := _), hx, hx', add_zero]
 
 omit [∀ v, IsTopologicalGroup (H v)] [∀ v, IsDiscreteRep (Ωᵥ v)] in
 theorem hy_add {x x' : (cochainsComplex U).X 1} {y y' : ∀ v, Ωᵥ v}
@@ -147,7 +147,7 @@ theorem hy_add {x x' : (cochainsComplex U).X 1} {y y' : ∀ v, Ωᵥ v}
     (hy' : ∀ v (σ : H v), (l v).hom (j.hom (cochainOf U x' ![(φ v).toMonoidHom σ])) = (Ωᵥ v).ρ σ (y' v) - y' v) :
     ∀ v (σ : H v), (l v).hom (j.hom (cochainOf U (x + x') ![(φ v).toMonoidHom σ])) =
       (Ωᵥ v).ρ σ ((y + y') v) - (y + y') v := fun v σ => by
-  rw [cochainOf_add, Pi.add_apply, map_add, map_add, hy v σ, hy' v σ, Pi.add_apply, map_add]
+  rw [cochainOf_add, Pi.add_apply, map_add (f := _), map_add (f := _), hy v σ, hy' v σ, Pi.add_apply, map_add (f := _)]
   abel
 
 theorem dataCycle_add (x x' : (cochainsComplex U).X 1) (y y' : ∀ v, Ωᵥ v)
@@ -160,7 +160,7 @@ theorem dataCycle_add (x x' : (cochainsComplex U).X 1) (y y' : ∀ v, Ωᵥ v)
     dataCycle φ j Ωᵥ l (x + x') (y + y') hxx' hyy' =
       dataCycle φ j Ωᵥ l x y hx hy + dataCycle φ j Ωᵥ l x' y' hx' hy' := by
   apply (ModuleCat.mono_iff_injective ((compactCochains φ U Ωᵥ _).iCycles 1)).1 inferInstance
-  rw [map_add, iCycles_dataCycle, iCycles_dataCycle, iCycles_dataCycle, dataCochain_add]
+  rw [map_add (f := _), iCycles_dataCycle, iCycles_dataCycle, iCycles_dataCycle, dataCochain_add]
 
 theorem dataCycle_zero (hx : ((cochainsComplex U).d 1 2).hom 0 = 0)
     (hy : ∀ v (σ : H v), (l v).hom (j.hom (cochainOf U (0 : (cochainsComplex U).X 1) ![(φ v).toMonoidHom σ])) =

@@ -49,7 +49,7 @@ theorem cas_shift (S : Finset P) (s : ℂ) (f : TV n ℂ P) :
 
 def colAnti {C : Type} (col : P → C) : Submodule ℂ (TV n ℂ P) where
   carrier := {f | ∀ p p', col p = col p' → p ≠ p' → pm (Equiv.swap p p') f = -f}
-  add_mem' := fun {f g} hf hg p p' h1 h2 => by rw [map_add, hf p p' h1 h2, hg p p' h1 h2, neg_add]
+  add_mem' := fun {f g} hf hg p p' h1 h2 => by rw [map_add (f := _), hf p p' h1 h2, hg p p' h1 h2, neg_add]
   zero_mem' := fun p p' _ _ => by simp
   smul_mem' := fun c f hf p p' h1 h2 => by rw [map_smul, hf p p' h1 h2, smul_neg]
 

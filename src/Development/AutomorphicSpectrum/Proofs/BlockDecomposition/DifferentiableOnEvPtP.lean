@@ -27,7 +27,7 @@ theorem differentiableOn_eval₂_ratio (N : ℕ) (c : Fin (N + 1))
     simp only [MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_C]
     exact differentiableOn_const _
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p j hp =>
     simp only [map_mul, MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_X] at hp ⊢

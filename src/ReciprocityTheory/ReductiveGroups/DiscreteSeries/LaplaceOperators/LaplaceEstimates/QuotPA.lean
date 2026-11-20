@@ -20,7 +20,7 @@ def tL (ε : Fin (2 * r + k + 1) → Bool) (σ : Mat k r → (H →L[ℂ] H)) (x
   toFun f := tMap ε σ x₁ x₀ w (fun c => ((f c : D) : H))
   map_add' f f' := by
     funext g
-    simp only [tMap, coefX, Pi.add_apply, Submodule.coe_add, map_add, inner_add_right, mul_add,
+    simp only [tMap, coefX, Pi.add_apply, Submodule.coe_add, map_add (f := _), inner_add_right, mul_add,
       Finset.sum_add_distrib]
   map_smul' a f := by
     funext g

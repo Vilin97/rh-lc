@@ -73,7 +73,7 @@ theorem exists_conj_multilinear {D : D7} (X : Formalism.L2.SG.HidaSetting.HidaSe
     simp only [hC]
     exact (c τ).continuous.comp (continuous_apply τ)
   let Ψ₀ : MultilinearMap ℂ M.H (L2X X) := MultilinearMap.mk' (fun y => conjL (muX X) (Φ (m (C y))))
-    (fun y τ a b => by rw [hCu, hCu, hCu, map_add, m.map_update_add, map_add, map_add])
+    (fun y τ a b => by rw [hCu, hCu, hCu, map_add (f := _), m.map_update_add, map_add (f := _), map_add (f := _)])
     (fun y τ a b => by
       rw [hCu, hCu, LinearIsometryEquiv.map_smulₛₗ, m.map_update_smul, map_smul, LinearIsometryEquiv.map_smulₛₗ,
         starRingEnd_self_apply])

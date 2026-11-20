@@ -138,7 +138,7 @@ theorem exists_aniso (σ : K →+* K) (hσ : ∀ a, σ (σ a) = a) (J : Matrix n
   set B : (n → K) → (n → K) → K := fun u v => rowJ σ J u ⬝ᵥ v with hB
   have hadd : ∀ u v, hsq σ J (u + v) = hsq σ J u + hsq σ J v + B u v + B v u := by
     intro u v
-    simp only [hsq, hB, rowJ, Pi.add_apply, map_add]
+    simp only [hsq, hB, rowJ, Pi.add_apply, map_add (f := _)]
     rw [show (fun i => σ (u i) + σ (v i)) = (fun i => σ (u i)) + (fun i => σ (v i)) from rfl, add_vecMul,
       add_dotProduct, dotProduct_add, dotProduct_add]
     ring

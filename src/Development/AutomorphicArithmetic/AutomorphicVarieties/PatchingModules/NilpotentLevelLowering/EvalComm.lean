@@ -41,7 +41,7 @@ theorem UpperTheory.V.Pa.Lev.thEx :
   exact ⟨{ Θ1 := Θ1, h1 := h1, Θw := Θw, hw := hw, act1 := a1
            act_uVariable_eq_pow := fun j i => ha1 (.inl (j, i))
            act_yVariable := fun j i => by
-             rw [map_add, map_one, ha1]
+             rw [map_add (f := _), map_one, ha1]
              exact add_sub_cancel _ _
            actw := aw
            actw_u := fun j i => haw (j, i) }⟩

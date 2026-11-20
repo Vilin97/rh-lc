@@ -43,7 +43,7 @@ theorem hermAt_add_left (S : HSp D) (x x' y : Fin S.rank → AE D) :
   simp only [hermAt, Pi.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem add_mem_intAt {P : Pl D → Prop} {a b : AE D} (ha : a ∈ intAt D P) (hb : b ∈ intAt D P) : a + b ∈ intAt D P :=
-  ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add]; exact add_mem ha.2 hb.2⟩
+  ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add (f := _)]; exact add_mem ha.2 hb.2⟩
 
 theorem proj_selfAdj {S A L : HSp D} (o : OrthDec S A L) :
     adj (o.jB ⬝ o.pB) ⬝ gA S = gA S ⬝ (o.jB ⬝ o.pB) := by

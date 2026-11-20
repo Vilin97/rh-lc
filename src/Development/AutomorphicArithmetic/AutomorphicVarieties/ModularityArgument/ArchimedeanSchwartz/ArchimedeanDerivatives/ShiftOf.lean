@@ -149,7 +149,7 @@ private theorem linPoly_sum {ι : Type} (s : Finset ι) (m : ι → Multiset ℂ
   refine Finset.induction_on s (by simp [linPoly]) ?_
   intro a s ha ih
   rw [Finset.sum_insert ha, Finset.prod_insert ha, ← ih]
-  simp [linPoly, Multiset.map_add, Multiset.prod_add]
+  simp [linPoly, Multiset.map_add (f := _), Multiset.prod_add]
 
 private theorem wt_one [IsTotallyComplex K] (u : ℂ) {x : Lie K n} (hx : x ∈ invSet K n) :
     wt u (fun _ => 1) x = ((nrm x : ℝ) : ℂ) ^ (u - 1) := by

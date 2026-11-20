@@ -66,7 +66,7 @@ theorem skew_of_scaledRestr [IsFractionRing R K] {D : R} {N : Module.End K (K �
     (hM : IsScaledRestr D N M) (B : LinearMap.BilinForm R H)
     (hs : ∀ x y, B.baseChange K (N x) y + B.baseChange K x (N y) = 0) (u v : H) : B (M u) v + B u (M v) = 0 := by
   apply IsFractionRing.injective R K
-  rw [map_add, map_zero, ← bilin_inK, ← bilin_inK, hM, hM, LinearMap.map_smul₂, LinearMap.map_smul, ← smul_add, hs, smul_zero]
+  rw [map_add (f := _), map_zero, ← bilin_inK, ← bilin_inK, hM, hM, LinearMap.map_smul₂, LinearMap.map_smul, ← smul_add, hs, smul_zero]
 
 theorem orth_of_scaledRestr [IsFractionRing R K] {D : R} {N N' : Module.End K (K ⊗[R] H)} {M M' : Module.End R H}
     (hM : IsScaledRestr D N M) (hM' : IsScaledRestr D N' M') (B : LinearMap.BilinForm R H)

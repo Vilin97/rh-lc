@@ -122,7 +122,7 @@ theorem X_sub_C_dvd_sub_C (φ : A⟦X⟧ →ₐ[A] A) (f : A⟦X⟧) : X - C (φ
     intro n
     have h := (mk fun i => coeff (i + n) f).eq_X_mul_shift_add_const
     have hC : ∀ a, φ (C a) = a := fun a => φ.commutes a
-    rw [h, map_add, map_mul, hC]
+    rw [h, map_add (f := _), map_mul, hC]
     simp [add_assoc, add_comm 1 n]
   refine ⟨mk fun n => φ (mk fun i => coeff (i + (n + 1)) f), ?_⟩
   ext n
@@ -187,7 +187,7 @@ theorem mem_pow_comap_constantCoeff_iff (n : ℕ) (f : A⟦X⟧) :
         have h3 := Ideal.mul_mem_mul h1 h2
         rw [← pow_add] at h3
         exact Ideal.pow_le_pow_right (by omega) h3
-      · rw [map_add]; exact add_mem (ha i) (hb i)
+      · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha i) (hb i)
   · intro h
     have hX : (X : A⟦X⟧) ∈ I.comap (constantCoeff (R := A)) := by simp
     rw [f.eq_X_pow_mul_shift_add_trunc n]
@@ -244,7 +244,7 @@ theorem map_comap_constantCoeff_le {S : Type*} [CommRing S] [Algebra A S] (J : I
     (I.comap (constantCoeff (R := A))).map φ ≤ J := by
   rw [Ideal.map_le_iff_le_comap]
   intro f hf
-  rw [Ideal.mem_comap, f.eq_X_mul_shift_add_const, map_add, map_mul]
+  rw [Ideal.mem_comap, f.eq_X_mul_shift_add_const, map_add (f := _), map_mul]
   refine add_mem (Ideal.mul_mem_right _ _ hX) ?_
   have : φ (C (constantCoeff f)) = algebraMap A S (constantCoeff f) := φ.commutes _
   rw [this]

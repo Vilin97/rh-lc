@@ -47,7 +47,7 @@ theorem baseChange_eq_zero_of_ring {O : Type} [CommRing O] {K : Type} [Field K] 
   | tmul k x =>
     rw [LinearMap.baseChange_tmul, LinearMap.zero_apply, ← mul_one (e x), ← smul_eq_mul,
       TensorProduct.tmul_smul, smul_eq_zero_of_algebraMap_eq_zero (he x)]
-  | add x y hx hy => simp only [map_add, hx, hy, LinearMap.zero_apply, add_zero]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, LinearMap.zero_apply, add_zero]
 
 theorem baseChange_eq_zero_of_pi {O : Type} [CommRing O] {K : Type} [Field K] [Algebra O K]
     {M : Type} [AddCommGroup M] [Module O M] {n : ℕ} (e : M →ₗ[O] (Fin n → O))
@@ -60,7 +60,7 @@ theorem baseChange_eq_zero_of_pi {O : Type} [CommRing O] {K : Type} [Field K] [A
       TensorProduct.tmul_sum]
     exact Finset.sum_eq_zero fun i _ => by
       rw [TensorProduct.tmul_smul, smul_eq_zero_of_algebraMap_eq_zero (he x i)]
-  | add x y hx hy => simp only [map_add, hx, hy, LinearMap.zero_apply, add_zero]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, LinearMap.zero_apply, add_zero]
 
 end GlobalTheory.FirstBetti
 

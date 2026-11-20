@@ -100,7 +100,7 @@ def _root_.GroundTheory.PAdicHodge.Laurent.polySeq (p : K[X]) : ℤ → K :=
 theorem coeff_aeval_alt (p : K[X]) : (aeval (T : AnnulusRing K I) p).coeff = polySeq p := by
   induction p using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, coeff_add, hp, hq]
+    rw [map_add (f := _), coeff_add, hp, hq]
     funext n; simp only [Pi.add_apply, polySeq, coeff_add]; split_ifs <;> simp
   | monomial n c =>
     rw [aeval_monomial, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul, coeff_smul,

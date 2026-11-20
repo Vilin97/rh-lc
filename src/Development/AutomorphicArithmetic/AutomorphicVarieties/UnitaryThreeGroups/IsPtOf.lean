@@ -44,7 +44,7 @@ private theorem ipo_rho {f : R →ₐ[O] K} (hf : IsLocPt f) :
       exact_mod_cast this
     | zero => simp
     | add x y hx hy ihx ihy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ihx ihy)
     | smul a x hx ihx =>
       rw [smul_eq_mul]
@@ -69,7 +69,7 @@ private theorem ipo_pow {f : R →ₐ[O] K} (hf : IsLocPt f) {ε : ℝ} (hε : 0
         rw [map_mul, norm_mul, pow_succ]
         exact mul_le_mul (ih a ha) (hρ b hb) (norm_nonneg _) (pow_nonneg hρ0 _)
       · intro x y hx hy
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one hε hρ1
   refine ⟨n + 1, fun z hz => (key n z hz).trans_lt ?_⟩

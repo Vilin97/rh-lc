@@ -54,7 +54,7 @@ theorem cc_psubst {ι : Type} {U : MvPowerSeries ι K} (hU : MvPowerSeries.const
   have hU' := PowerSeries.HasSubst.of_constantCoeff_zero hU
   have hgc : PowerSeries.constantCoeff (g - PowerSeries.C c) = 0 := by simp [hg]
   have e : g = PowerSeries.C c + (g - PowerSeries.C c) := by ring
-  rw [e, PowerSeries.subst_add hU', PowerSeries.subst_C, map_add,
+  rw [e, PowerSeries.subst_add hU', PowerSeries.subst_C, map_add (f := _),
     PowerSeries.constantCoeff_subst_eq_zero hU _ hgc]
   simp
 

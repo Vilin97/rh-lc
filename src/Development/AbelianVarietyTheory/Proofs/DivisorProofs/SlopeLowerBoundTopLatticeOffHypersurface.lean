@@ -74,14 +74,14 @@ theorem eval_spec {F E : Type} [Field F] [Field E] [Algebra F E] {D N : ℕ} (s 
     | cast i => simp [join_castSucc]
   induction f using MvPolynomial.induction_on with
   | C a => simp [spec]
-  | add p q hp hq => simp only [spec, map_add] at *; rw [hp, hq]
+  | add p q hp hq => simp only [spec, map_add (f := _)] at *; rw [hp, hq]
   | mul_X p q hp => simp only [spec, map_mul, aeval_X] at *; rw [hp, hj]
 
 theorem algebraMap_eval {F E σ : Type} [Field F] [Field E] [Algebra F E] (x : σ → F) (p : MvPolynomial σ F) :
     algebraMap F E (eval x p) = aeval (fun i => algebraMap F E (x i)) p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp [map_add, hp, hq]
+  | add p q hp hq => simp [map_add (f := _), hp, hq]
   | mul_X p q hp => simp [map_mul, hp]
 
 theorem sum_three {d : ℕ} (P Q : Fin d → Prop) [DecidablePred P] [DecidablePred Q] (hPQ : ∀ k, P k → ¬ Q k)

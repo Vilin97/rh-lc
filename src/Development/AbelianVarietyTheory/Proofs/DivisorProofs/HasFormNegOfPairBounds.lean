@@ -50,7 +50,7 @@ theorem rename_omE (l l' : Ln p q r s) (f : Pol p q r s) :
   have hc := congrArg (fun T : Module.End ℂ (Pol p q s r) => T (rename (swapLn p q r s) f))
     (GlobalTheory.FockCasimir.lowB_mul_raiB (swapLn p q r s l) (swapLn p q r s l'))
   simp only [Module.End.mul_apply, LinearMap.add_apply] at hc
-  simp only [omE, LinearMap.add_apply, Module.End.mul_apply, map_add, rename_raiB, rename_lowB,
+  simp only [omE, LinearMap.add_apply, Module.End.mul_apply, map_add (f := _), rename_raiB, rename_lowB,
     LinearMap.map_smul, hc]
   by_cases h : l = l'
   · subst h

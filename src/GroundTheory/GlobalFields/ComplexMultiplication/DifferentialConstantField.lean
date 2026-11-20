@@ -42,7 +42,7 @@ theorem exists_eq_add_mul_genY (c : E.toAffine.FunctionField) :
     (q.coeff 0).2, (q.coeff 1).2, ?_⟩
   change aeval (genY E) p = _
   rw [hval, eq_X_add_C_of_natDegree_le_one hq]
-  simp only [map_add, map_mul, aeval_C, aeval_X, coeff_add, coeff_C_mul_X, coeff_C]
+  simp only [map_add (f := _), map_mul, aeval_C, aeval_X, coeff_add, coeff_C_mul_X, coeff_C]
   simp
   ring
 
@@ -60,11 +60,11 @@ theorem exists_algebraMap_eq_of_bcEmb {c : E.toAffine.FunctionField} {a : F'}
     | algebraMap x =>
       rw [AlgHom.commutes, IsScalarTower.algebraMap_apply F F' K']
       exact IntermediateField.algebraMap_mem _ _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | inv x _ hx => rw [map_inv₀]; exact inv_mem hx
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   obtain ⟨r, s, hr, hs, rfl⟩ := exists_eq_add_mul_genY E c
-  rw [map_add, map_mul, bcEmb_genY] at h
+  rw [map_add (f := _), map_mul, bcEmb_genY] at h
   have hs0 : bcEmb (F' := F') E s = 0 := by
     by_contra hne
     apply genY_not_mem (E.baseChange F')
@@ -133,7 +133,7 @@ theorem isogenyPullback_eq_invConst_smul (φ : Isogeny E E') :
 theorem invConst_add {φ ψ χ : Isogeny E E'} (h : χ.1 = φ.1 + ψ.1) :
     invConst χ = invConst φ + invConst ψ :=
   (algebraMap F E.toAffine.FunctionField).injective (by
-    rw [map_add, algebraMap_invConst, algebraMap_invConst, algebraMap_invConst, isogCoeff_add h])
+    rw [map_add (f := _), algebraMap_invConst, algebraMap_invConst, algebraMap_invConst, isogCoeff_add h])
 
 variable (E) in
 

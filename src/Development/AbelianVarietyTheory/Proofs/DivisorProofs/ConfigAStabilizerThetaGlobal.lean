@@ -141,13 +141,13 @@ theorem schr_pureA (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (w : (κ → AF F)
     congr 1
     · have e1 : evI F (mk (p1 (x ⬝ᵥ w.2 + h)) 0) = y ⬝ᵥ c + qA h := by
         change qA (x ⬝ᵥ w.2 + h) = _
-        rw [map_add, RingHom.map_dotProduct]
+        rw [map_add (f := _), RingHom.map_dotProduct]
         rfl
-      rw [e1, map_add, eChar_apply, ContinuousLinearMap.neg_apply, trL_apply]
+      rw [e1, map_add (f := _), eChar_apply, ContinuousLinearMap.neg_apply, trL_apply]
       congr 1
       push_cast
       ring
-    · rw [map_add, RingHom.map_dotProduct]
+    · rw [map_add (f := _), RingHom.map_dotProduct]
       rfl
   change ψ (x ⬝ᵥ w.2 + h) * (f (fun i => qA ((x + w.1) i)) * g (fun i => p2 ((x + w.1) i))) =
     archS f c t k y * (finChar ψ (z ⬝ᵥ d + p2 h) * g (z + s))
@@ -158,7 +158,7 @@ theorem exists_trL_bound : ∃ c : ℝ, 0 ≤ c ∧ ∀ y : κ → mixedEmbeddin
   let T : (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ :=
     { toFun := trL
       map_add' := fun a b => ContinuousLinearMap.ext fun y => by
-        simp only [ContinuousLinearMap.add_apply, trL_apply, dotProduct_add, map_add]
+        simp only [ContinuousLinearMap.add_apply, trL_apply, dotProduct_add, map_add (f := _)]
       map_smul' := fun r a => ContinuousLinearMap.ext fun y => by
         simp only [ContinuousLinearMap.smul_apply, trL_apply, dotProduct_smul, map_smul, RingHom.id_apply] }
   exact ⟨‖LinearMap.toContinuousLinearMap T‖, norm_nonneg _, fun y => (LinearMap.toContinuousLinearMap T).le_opNorm y⟩
@@ -296,7 +296,7 @@ theorem slice_decay {κ₁ ι T : Type} [Fintype κ₁] [Fintype ι] (ψ : AddCh
             exact pureA_add _ _ _
           rw [hLs, h1]
           change e (schrL ψ s _) = 0
-          rw [map_add, map_add]
+          rw [map_add (f := _), map_add (f := _)]
           change e (schr ψ s _) + e (schr ψ s _) = 0
           rw [schr_comm, map_smul, hinv _ _ _ (schr_mem_schA ψ hψ s _ hΦ), hω, ha, neg_one_smul, neg_add_cancel]
         rw [Seminorm.comp_apply]

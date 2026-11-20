@@ -148,7 +148,7 @@ private theorem main {S : Type} [Fintype S] [DecidableEq S] {G : S → Type} [�
             ∑ b, c u k (i u) b • ρ (Pi.mulSingle u (k : G u)) (F (Function.update i u b)) = F i}
           add_mem' := by
             intro F F' hF hF' v hv k i
-            simp only [Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib]
+            simp only [Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
             rw [hF v hv k i, hF' v hv k i]
           zero_mem' := by intro v hv k i; simp
           smul_mem' := by

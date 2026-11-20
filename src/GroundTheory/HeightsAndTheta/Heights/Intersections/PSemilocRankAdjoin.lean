@@ -72,7 +72,7 @@ theorem SemilocRankAdjoin.chain (hT : ChartScalingIndep.Statement) {K : Type} [F
           rw [aeval_C, ← IsScalarTower.algebraMap_apply, algebraMap_int_eq, eq_intCast]
           exact intCast_mem _ a
         | add f g hf hg =>
-          rw [map_add, map_add]
+          rw [map_add (f := _), map_add (f := _)]
           exact add_mem hf hg
         | mul_X f q hf =>
           rw [map_mul, map_mul, aeval_X, ← G.compat]

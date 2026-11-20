@@ -56,7 +56,7 @@ theorem UpperTheory.Gal.crystallineComparison.Mod.kerU_of :
   have ρmul : ∀ a a', ρ (a * a') = ρ a ≫ ρ a' := fun a a' => by
     simp only [ρ]; rw [mul_comm, map_mul, o.act.mul]
   have ρadd : ∀ a a', ρ (a + a') = ρ a * ρ a' := fun a a' => by
-    simp only [ρ]; rw [map_add, o.act.add]
+    simp only [ρ]; rw [map_add (f := _), o.act.add]
   have ρ0 : ρ 0 = 1 := by
     have := ρadd 0 0
     rw [add_zero] at this

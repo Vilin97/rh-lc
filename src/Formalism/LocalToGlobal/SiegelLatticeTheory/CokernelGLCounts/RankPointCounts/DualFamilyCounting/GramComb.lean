@@ -126,12 +126,12 @@ theorem hf_pv (a a' : Fin (r + 1)) :
   induction a using Fin.lastCases with
   | last =>
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [pv, Fin.snoc_last, map_add, map_sum, map_smul, smul_eq_mul, hsw0 S (h.ez _), mul_zero,
+      simp only [pv, Fin.snoc_last, map_add (f := _), map_sum, map_smul, smul_eq_mul, hsw0 S (h.ez _), mul_zero,
       Finset.sum_const_zero, add_zero, hwz, hz_gv h hN]
     simp [eq_comm]
   | cast a =>
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [pv, Fin.snoc_castSucc, map_add, map_sum, map_smul, smul_eq_mul, h.ee, mul_zero,
+      simp only [pv, Fin.snoc_castSucc, map_add (f := _), map_sum, map_smul, smul_eq_mul, h.ee, mul_zero,
       Finset.sum_const_zero, add_zero, hwe, he_gv h hN]
     simp [eq_comm]
 
@@ -151,7 +151,7 @@ theorem hpv_pv (ht : S.hT w0 w0 = tv N N' Z) (a a' : Fin (r + 1)) :
       ∑ d, star (Psi N' Z d a) * S.hT (e d) (gv y z N a') +
       star (if a = Fin.last r then (1 : E) else 0) * (if a' = Fin.last r then (1 : E) else 0) * S.hT w0 w0 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [pv, map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, map_smul,
+      simp only [pv, map_add (f := _), LinearMap.add_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ, map_smul,
       LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, h.ee, mul_zero, Finset.sum_const_zero, hgw, hwg,
       hwe, hwe', add_zero, zero_add]
     ring

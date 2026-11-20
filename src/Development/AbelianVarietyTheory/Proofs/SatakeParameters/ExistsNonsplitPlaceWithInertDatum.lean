@@ -50,7 +50,7 @@ theorem mem_tensInt_iff {F E : Type} [Field F] [NumberField F] [Field E] [Number
         rw [e1]
         exact mul_mem (Subring.subset_closure (Or.inl ⟨⟨(z : E), z, rfl⟩, rfl⟩))
           (Subring.subset_closure (Or.inr ⟨⟨a, ha⟩, rfl⟩)))
-      (by simp) (fun y z hy hz => by rw [map_add]; exact add_mem hy hz)
+      (by simp) (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz)
       (fun y hy => by rw [map_neg]; exact neg_mem hy) hx
     simpa using h
 
@@ -103,7 +103,7 @@ theorem exists_inertDatum : ∀ (D : D7) (n : ℕ) (v : HeightOneSpectrum (𝓞 
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · intro x
     rw [mem_tensInt_iff, GlobalTheory.LFun.InertChart.mem_intLoc_iff hw hunder, hO]
     exact Iff.rfl

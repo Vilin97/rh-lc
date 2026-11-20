@@ -149,7 +149,7 @@ def Leibniz.kerSubring {ev : R →+* K} {δ : R →+ K} (h : Leibniz ev δ) : Su
     exact left_eq_add.1 this
   add_mem' {a b} (ha : δ a = 0) (hb : δ b = 0) := by
     change δ (a + b) = 0
-    rw [map_add, ha, hb, add_zero]
+    rw [map_add (f := _), ha, hb, add_zero]
   zero_mem' := map_zero δ
   neg_mem' {a} (ha : δ a = 0) := by
     change δ (-a) = 0

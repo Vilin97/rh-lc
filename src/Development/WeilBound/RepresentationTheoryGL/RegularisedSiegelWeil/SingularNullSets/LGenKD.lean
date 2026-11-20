@@ -65,7 +65,7 @@ theorem local_choice (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) (hσ1 : �
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul p q => simp [sigR, hσ]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
   set s := sR v σ with hs
   have hss : ∀ y, s (s y) = y := by
     intro y

@@ -31,7 +31,7 @@ private lemma UpperTheory.eval_zero_pderiv {R : Type} [CommRing R] {n : ℕ} (j 
             exact hk
       · rfl
   | add p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
+    rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]
 
 theorem UpperTheory.exists_zero_of_linear_form_jacobian_henselian :
     ∀ (A E : Type) [CommRing A] [HenselianLocalRing A] [CommRing E] [Algebra A E] (n : ℕ) (Φ : MvPolynomial (Fin n) E) (L : E →ₗ[A] (Fin n → A)),
@@ -51,7 +51,7 @@ theorem UpperTheory.exists_zero_of_linear_form_jacobian_henselian :
   have hGadd : ∀ i p q, G i (p + q) = G i p + G i q := by
     intro i p q
     ext d
-    rw [MvPolynomial.coeff_add, hG, hG, hG, MvPolynomial.coeff_add, map_add, Pi.add_apply]
+    rw [MvPolynomial.coeff_add, hG, hG, hG, MvPolynomial.coeff_add, map_add (f := _), Pi.add_apply]
   have key : ∀ i (x : Fin n → A) (P : MvPolynomial (Fin n) E),
       MvPolynomial.eval x (G i P) = L (MvPolynomial.eval (fun j => algebraMap A E (x j)) P) i := by
     intro i x P
@@ -67,7 +67,7 @@ theorem UpperTheory.exists_zero_of_linear_form_jacobian_henselian :
       rw [hp, ← Algebra.commutes, ← Algebra.smul_def, map_smul]
       simp [mul_comm]
     | add p q hp hq =>
-      rw [hGadd, map_add, map_add, map_add, Pi.add_apply, hp, hq]
+      rw [hGadd, map_add (f := _), map_add (f := _), map_add (f := _), Pi.add_apply, hp, hq]
   let F : Fin n → MvPolynomial (Fin n) A := fun i => G i Φ
   have hF0 : ∀ i, MvPolynomial.eval 0 (F i) ∈ maximalIdeal A := by
     intro i

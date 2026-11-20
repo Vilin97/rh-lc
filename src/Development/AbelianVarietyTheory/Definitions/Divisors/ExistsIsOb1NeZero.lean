@@ -78,7 +78,7 @@ theorem exists_isSig (α : Aug I π R₁) {B B₀ : Type} [CommRing B] [Algebra 
     exact mul_eq_zero_of_mem (map_sq hI B) (Ideal.mem_map_of_mem _ (α.mem y)) h0
   have e := Function.surjInv_eq surj
   let f : R₁ →+ B₀ →+ B := AddMonoidHom.mk' (fun y ↦ AddMonoidHom.mk' (fun b ↦ α.k y • Function.surjInv surj b)
-    fun b b' ↦ by rw [← smul_add]; exact key _ _ _ (by rw [map_add, e, e, e])) fun y y' ↦ by
+    fun b b' ↦ by rw [← smul_add]; exact key _ _ _ (by rw [map_add (f := _), e, e, e])) fun y y' ↦ by
       ext b; simp [add_smul]
   refine ⟨TensorProduct.liftAddHom f fun r y b ↦ ?_, fun y b ↦ ?_⟩
   · obtain ⟨r, rfl⟩ := hs r
@@ -114,7 +114,7 @@ variable {R R₀ : Type} [CommRing R] [CommRing R₀] {I : Ideal R} {π : R →+
 def sec (α : Aug I π R₁) : I →+ R₁ := AddMonoidHom.mk' (fun i ↦ (α.surj i.1 i.2).choose) fun i j ↦ by
   have h := fun i : I ↦ (α.surj i.1 i.2).choose_spec
   rw [← sub_eq_zero]
-  exact α.inj _ (by simp only [map_sub, map_add, (h _).1]; ring) (by simp only [map_sub, map_add, (h _).2]; simp)
+  exact α.inj _ (by simp only [map_sub, map_add (f := _), (h _).1]; ring) (by simp only [map_sub, map_add (f := _), (h _).2]; simp)
 
 theorem q_sec (α : Aug I π R₁) (i : I) : α.q (sec α i) = 0 := (α.surj i.1 i.2).choose_spec.1
 
@@ -128,7 +128,7 @@ theorem sig_inj (α : Aug I π R₁) {B B₀ : Type} [CommRing B] [Algebra R B] 
     [Algebra R₀ B₀] (p : B →+* B₀) (semi : SemiHom π p) (surj : Function.Surjective p) {σ : R₁ ⊗[R₀] B₀ →+ B}
     (hσ : α.IsSig p σ) {y : R₁ ⊗[R₀] B₀} (hy : α.KerQ y) (h0 : σ y = 0) : y = 0 := by
   let f : I →+ B →+ R₁ ⊗[R₀] B₀ := AddMonoidHom.mk' (fun i ↦ AddMonoidHom.mk' (fun b ↦ sec α i ⊗ₜ p b)
-    fun b b' ↦ by rw [map_add, TensorProduct.tmul_add]) fun i j ↦ by
+    fun b b' ↦ by rw [map_add (f := _), TensorProduct.tmul_add]) fun i j ↦ by
       ext b; simp [TensorProduct.add_tmul]
   let τ : I ⊗[R] B →+ R₁ ⊗[R₀] B₀ := TensorProduct.liftAddHom f fun r i b ↦ by
     change sec α (r • i) ⊗ₜ p b = sec α i ⊗ₜ p (r • b)
@@ -138,7 +138,7 @@ theorem sig_inj (α : Aug I π R₁) {B B₀ : Type} [CommRing B] [Algebra R B] 
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul i b => rw [hτ, hσ, k_sec]; simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have h2 : ∀ y : R₁ ⊗[R₀] B₀, ∃ t, τ t = y - Algebra.TensorProduct.map (Algebra.ofId R₀ R₁) (AlgHom.id R₀ B₀)
       (Algebra.TensorProduct.map α.q (AlgHom.id R₀ B₀) y) := fun y ↦ by
     induction y using TensorProduct.induction_on with
@@ -154,7 +154,7 @@ theorem sig_inj (α : Aug I π R₁) {B B₀ : Type} [CommRing B] [Algebra R B] 
     | add x y hx hy =>
       obtain ⟨t, ht⟩ := hx
       obtain ⟨t', ht'⟩ := hy
-      exact ⟨t + t', by simp only [map_add, ht, ht']; ring⟩
+      exact ⟨t + t', by simp only [map_add (f := _), ht, ht']; ring⟩
   obtain ⟨t, ht⟩ := h2 y
   rw [show Algebra.TensorProduct.map α.q (AlgHom.id R₀ B₀) y = 0 from hy, map_zero, sub_zero] at ht
   subst ht
@@ -169,7 +169,7 @@ theorem sig_unique (α : Aug I π R₁) {B B₀ : Type} [CommRing B] [Algebra R 
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => obtain ⟨b, rfl⟩ := surj b; rw [hσ, hσ']
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem theta_unique {B B₀ B' : Type} [CommRing B] [Algebra R B] [CommRing B₀] [Algebra R₀ B₀] [CommRing B']
     [Algebra R B'] {p : B →+* B₀} (surj : Function.Surjective p) {α β : B →ₐ[R] B'} {θ θ' : Ω[B₀⁄R₀] →+ B'}
@@ -180,7 +180,7 @@ theorem theta_unique {B B₀ B' : Type} [CommRing B] [Algebra R B] [CommRing B�
     obtain ⟨c, rfl⟩ := surj c
     rw [h.smul, h'.smul, h.der, h'.der]
   | h0 => simp
-  | ha x y hx hy => simp only [map_add, hx, hy]
+  | ha x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {C C' : Type} [Category.{0} C] [Category.{0} C'] {F : C ⥤ CommAlgCat.{0} R₀} {F' : C' ⥤ CommAlgCat.{0} R₀}
 
@@ -234,7 +234,7 @@ theorem sh_apply (i : I) (b : R[X]) : sh i b = b + (i : R) • derivative b := b
   have h : (C (i : R) : R[X]) * C (i : R) = 0 := by rw [← C_mul, mul_eq_zero_of_mem hI i.2 i.2, C_0]
   induction b using Polynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq, smul_add]; ring
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, smul_add]; ring
   | monomial n a ih =>
     rw [pow_succ, ← _root_.mul_assoc, map_mul, ih, derivative_mul (f := C a * X ^ n), aeval_X, derivative_X, smul_eq_C_mul, smul_eq_C_mul]
     linear_combination (derivative (C a * X ^ n)) * h
@@ -273,7 +273,7 @@ theorem not_isFun {i : I} (hi : i ≠ 0) : ¬ (shPre (C := Discrete PUnit.{1}) h
 
 def th (α : Aug I π R₁) (σ : R₁ ⊗[R₀] R₀[X] →+ R[X]) (i : I) : Ω[R₀[X]⁄R₀] →+ R[X] :=
   AddMonoidHom.mk' (fun w ↦ σ (sec α i ⊗ₜ polynomialEquiv R₀ w)) fun _ _ ↦ by
-    rw [map_add, TensorProduct.tmul_add, map_add]
+    rw [map_add (f := _), TensorProduct.tmul_add, map_add (f := _)]
 
 include hI hs in
 theorem isTheta_th (α : Aug I π R₁) {σ : R₁ ⊗[R₀] R₀[X] →+ R[X]} (hσ : α.IsSig (mapRingHom π) σ) (i j : I) :
@@ -306,7 +306,7 @@ theorem exists_isOb2 (c : ∀ T T' : C, (T ⟶ T') → I) (α : Aug I π R₁) :
   let z : Z2 (ext R₁ (lineF R₀ C)) := ⟨fun T T' T'' a b ↦ sec α (c _ _ a + c _ _ b - c _ _ (a ≫ b)) ⊗ₜ 1,
     fun T T' T'' T''' a b d ↦ by
       change extHom R₁ (AlgHom.id R₀ R₀[X]) _ + _ = _
-      simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, ← TensorProduct.add_tmul, ← map_add, Category.assoc]
+      simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, ← TensorProduct.add_tmul, ← map_add (f := _), Category.assoc]
       congr 2; abel⟩
   refine ⟨_, fun T T' T'' a b ↦ th α σ (c _ _ a + c _ _ b - c _ _ (a ≫ b)), fun _ ↦ σ, z, fun T T' T'' a b ↦ ?_,
     fun _ ↦ hσ, rfl, fun T T' T'' a b ↦ ⟨?_, ?_⟩⟩
@@ -331,7 +331,7 @@ theorem exists_isOb1_ne_zero {i : I} (hi : i ≠ 0) (α : Aug I π R₁) :
   let z : Z1 (ext R₁ (lineF R₀ (SingleObj (Multiplicative I)))) := ⟨fun T T' a ↦ sec α (c _ _ a) ⊗ₜ 1,
     fun T T' T'' a b ↦ by
       change _ = extHom R₁ (AlgHom.id R₀ R₀[X]) _ + _
-      simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, ← TensorProduct.add_tmul, ← map_add, hc]⟩
+      simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, ← TensorProduct.add_tmul, ← map_add (f := _), hc]⟩
   refine ⟨shPre hs hk fun _ _ _ ↦ 0, shPre hs hk c, fun _ ↦ AlgHom.id R R[X], H1.mk _ z,
     (shPre_isFun_iff hs hk _).2 fun _ _ _ _ _ ↦ (add_zero _).symm, (shPre_isFun_iff hs hk _).2 hc, fun _ _ ↦ rfl,
     ⟨fun T T' a ↦ th α σ (c _ _ a - 0), fun _ ↦ σ, z, fun T T' a ↦ isTheta_th hI hs α hσ _ 0, fun _ ↦ hσ, rfl,

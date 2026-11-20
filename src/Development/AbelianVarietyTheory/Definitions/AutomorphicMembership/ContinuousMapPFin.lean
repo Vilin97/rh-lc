@@ -168,7 +168,7 @@ instance (W : Wt E n) : FiniteDimensional ℂ W.Sp :=
 def algForms (W : Wt E n) : Submodule ℂ (W.Sp →ₗ[ℂ] (UA E n → ℂ)) where
   carrier := {f | (∀ v, f v ∈ autU E n) ∧ ∀ (x : infU E n) v, f (W.rep x v) = RU E n x (f v)}
   add_mem' ha hb := ⟨fun v => add_mem (ha.1 v) (hb.1 v), fun x v => by
-    rw [LinearMap.add_apply, LinearMap.add_apply, ha.2, hb.2, map_add]⟩
+    rw [LinearMap.add_apply, LinearMap.add_apply, ha.2, hb.2, map_add (f := _)]⟩
   zero_mem' := ⟨fun _ => zero_mem _, fun _ _ => rfl⟩
   smul_mem' c _ ha := ⟨fun v => Submodule.smul_mem _ c (ha.1 v), fun x v => by
     rw [LinearMap.smul_apply, LinearMap.smul_apply, ha.2, map_smul]⟩

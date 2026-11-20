@@ -44,7 +44,7 @@ theorem one_term_at (D : D7) (Y : ShimX D.what₂.Tau) (h3 : DeRhamMinusHodgeTat
       map_mul, map_mul]
     change tagDR _ _ (pk D _ τ k) * _ - tagHT _ _ (pk D _ τ k) * _ = _
     ring
-  rw [key, map_add, map_smul, e1, e2, add_zero]
+  rw [key, map_add (f := _), map_smul, e1, e2, add_zero]
   have e3 : Y.chern (chLie Y.j (k - 1) (Sum.inl τ) * Q) =
       (Nat.factorial (k - 1) : ℝ)⁻¹ * Y.chern (pLow Y.j τ (k - 1) * Q) := by
     rw [← smul_eq_mul (Nat.factorial (k - 1) : ℝ)⁻¹, ← map_smul, smul_eq_C_mul, ← mul_assoc]

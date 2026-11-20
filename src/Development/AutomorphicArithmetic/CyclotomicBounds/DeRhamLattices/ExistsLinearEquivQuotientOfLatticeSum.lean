@@ -19,7 +19,7 @@ theorem _root_.UpperTheory.KN.exists_linearEquiv_quotient_of_lattice_sum :
     constructor
     · rintro ⟨a', ha', b, hb, hy⟩
       refine ⟨a' + a, by simp [ha'], b, hb, ?_⟩
-      rw [map_add, add_right_comm, ← hy, sub_add_cancel]
+      rw [map_add (f := _), add_right_comm, ← hy, sub_add_cancel]
     · rintro ⟨a', ha', b, hb, hy⟩
       refine ⟨a' - a, by simp [ha'], b, hb, ?_⟩
       rw [map_sub, hy]

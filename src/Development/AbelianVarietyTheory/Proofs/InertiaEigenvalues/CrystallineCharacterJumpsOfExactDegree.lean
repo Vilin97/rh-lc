@@ -29,7 +29,7 @@ theorem ιV_act (g : G) (w : V ⊗[Qp] B) :
   | zero => simp
   | tmul v b =>
     simp [ιV, actVB, actVdR, AlgebraTensorModule.map_tmul, PD.ι_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem ιV_mem_DdR {w : V ⊗[Qp] B} (hw : w ∈ Dcris PD ρ) :
     ιV PD (LL := LL) (V := V) w ∈ DdR PD ρ := by
@@ -45,7 +45,7 @@ theorem ιV_mul (a : K₀) (w : V ⊗[Qp] B) :
   | zero => simp
   | tmul v b =>
     simp [ιV, mulVB, mulVdR, AlgebraTensorModule.map_tmul, ← IsScalarTower.algebraMap_apply]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem ιV_mem_DdRE (hs : Function.Surjective (algebraMap K₀ K)) (τ : K →ₐ[Qp] LL)
     {w : V ⊗[Qp] B} (hw : w ∈ DcrisL PD ρ (τ.comp (IsScalarTower.toAlgHom Qp K₀ K))) :
@@ -69,7 +69,7 @@ theorem FilV_succ_le (a : ℤ) :
   | zero => simp
   | tmul v s =>
     exact ⟨v ⊗ₜ ⟨(s : BdR), PD.Fil_anti a s.2⟩, by simp [AlgebraTensorModule.map_tmul]⟩
-  | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
 
 theorem FilV_anti : Antitone fun a : ℤ => FilV PD (LL := LL) (V := V) a :=
   antitone_int_of_succ_le (FilV_succ_le PD)

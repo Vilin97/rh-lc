@@ -116,7 +116,7 @@ theorem core {O A : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] 
         obtain ⟨c, hc, h1⟩ := hx
         obtain ⟨c', hc', h2⟩ := hy
         refine ⟨c + c', C.add_mem hc hc', ?_⟩
-        rw [map_add, add_sub_add_comm]
+        rw [map_add (f := _), add_sub_add_comm]
         exact (v ζ).map_add_lt h1 h2
       | neg x _ hx =>
         obtain ⟨c, hc, h1⟩ := hx
@@ -267,8 +267,8 @@ def liftable (hU : IsUnif (OsK (xplus X E hM) la G.w) (unifO (xplus X E hM) la G
     rintro a b ⟨f, d, hd, he, r, hr, hf⟩ ⟨f', d', hd', he', r', hr', hf'⟩
     refine ⟨f * d' + d * f', d * d', fun ζ => ?_, ?_, r + r', (RGL hs).add_mem hr hr', ?_⟩
     · rw [Subalgebra.coe_mul, map_mul]; exact mul_ne_zero (hd ζ) (hd' ζ)
-    · rw [map_add, map_mul, map_mul, map_mul, he, he']; ring
-    · rw [Subalgebra.coe_add, Subalgebra.coe_mul, Subalgebra.coe_mul, Subalgebra.coe_mul, map_add, map_mul, map_mul,
+    · rw [map_add (f := _), map_mul, map_mul, map_mul, he, he']; ring
+    · rw [Subalgebra.coe_add, Subalgebra.coe_mul, Subalgebra.coe_mul, Subalgebra.coe_mul, map_add (f := _), map_mul, map_mul,
         map_mul, hf, hf']; ring
   algebraMap_mem' o := by
     refine ⟨algebraMap (Kp (xplus X E hM) la G.N) _ (algebraMap (Op (xplus X E hM) la G.N) (Kp (xplus X E hM) la G.N) o), 1, fun ζ => ?_, ?_, _,
@@ -452,7 +452,7 @@ theorem phiPt_mem (S : Subfield h.T.Fr) (hK : ∀ c, h.ev (algebraMap (Kp (xplus
       rw [e, e', pow_succ', mul_div_mul_left _ _ hk] at h1
       exact h1 ▸ hΩ _
     | zero => rw [map_zero, zero_div]; exact S.zero_mem
-    | add a b _ _ ha hb => rw [map_add, add_div]; exact S.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _), add_div]; exact S.add_mem ha hb
     | smul c a _ ha => rw [Algebra.smul_def, map_mul, mul_div_assoc]; exact S.mul_mem (hK c) ha
   have e : h.ev g * (h.ev (Formalism.MainNotions.Gaps.EtaleWeightGaps.sec (xplus X E hM) la G.w 0))⁻¹ ^ k = h.ev g / w₀ ^ k * (h.ev (Formalism.MainNotions.Gaps.EtaleWeightGaps.sec (xplus X E hM) la G.w 0) / w₀)⁻¹ ^ k := by
     rw [inv_div, div_pow, inv_pow, div_mul_div_cancel₀ (pow_ne_zero k hk), div_eq_mul_inv]

@@ -29,7 +29,7 @@ theorem exists_invAlg_adjoinRoot : ∀ (E : Type) [Field E] [NumberField E] [IsC
   set v : A := -(aeval r (divX Q')) * algebraMap K.E A (Q'.coeff 0)⁻¹ with hv
   have hrv : r * v = 1 := by
     have h1 := congrArg (aeval r) (X_mul_divX_add Q')
-    rw [map_add, map_mul, aeval_X, aeval_C, hr0] at h1
+    rw [map_add (f := _), map_mul, aeval_X, aeval_C, hr0] at h1
     have h2 : algebraMap K.E A (Q'.coeff 0) * algebraMap K.E A (Q'.coeff 0)⁻¹ = 1 := by
       rw [← map_mul, mul_inv_cancel₀ hQ'0, map_one]
     linear_combination (-(algebraMap K.E A (Q'.coeff 0)⁻¹)) * h1 + h2

@@ -40,7 +40,7 @@ theorem exists_cm_adele_split : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
     show GlobalTheory.ArchFinSplit.finPart F E (cA σ z) = Formalism.UG.sigR σ _ (GlobalTheory.ArchFinSplit.finPart F E z)
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a x => rfl
   · have h1 : u.1 = 0 := (InfiniteAdeleRing.ringEquiv_mixedSpace F).map_eq_zero_iff.1 hu
     apply Φ.injective

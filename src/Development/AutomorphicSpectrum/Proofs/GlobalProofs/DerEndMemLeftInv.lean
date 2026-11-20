@@ -222,7 +222,7 @@ def pairAlg (L : W →ₗ[ℂ] Q) : Subalgebra ℂ (Module.End ℂ W × Module.E
     rw [ha, hb]
   add_mem' {a b} ha hb F := by
     change L (a.1 F + b.1 F) = a.2 (L F) + b.2 (L F)
-    rw [map_add, ha, hb]
+    rw [map_add (f := _), ha, hb]
   algebraMap_mem' c F := by
     change L (c • F) = c • L F
     rw [map_smul]

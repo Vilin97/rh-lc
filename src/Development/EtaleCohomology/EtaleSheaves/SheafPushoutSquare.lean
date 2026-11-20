@@ -41,21 +41,21 @@ theorem LeafSheafPush_pf : LeafSheafPush := by
     obtain ⟨x, y, hxy⟩ := hP V k hk
     refine ⟨((pushout.inl a b).app _).hom x + ((pushout.inr a b).app _).hom y, ?_⟩
     change (φ.app _).hom _ = _
-    rw [map_add, hinl, hinr]
+    rw [map_add (f := _), hinl, hinr]
     exact hxy
   have hi : Presheaf.IsLocallyInjective Scheme.etaleTopology.{0} φ := by
     constructor
     intro T u v huv
     obtain ⟨x, y, hxy⟩ := pushout_elem a b T (u - v)
     have h0 : (c.app T).hom x + (d.app T).hom y = 0 := by
-      rw [← hinl, ← hinr, ← map_add, hxy, map_sub]
+      rw [← hinl, ← hinr, ← map_add (f := _), hxy, map_sub]
       exact sub_eq_zero.2 huv
     obtain ⟨S, hS, hP⟩ := hker T.unop x y h0
     refine Scheme.etaleTopology.superset_covering ?_ hS
     intro V k hk
     obtain ⟨w', hw1, hw2⟩ := hP V k hk
     change ((pushout a b).map k.op).hom u = ((pushout a b).map k.op).hom v
-    rw [← sub_eq_zero, ← map_sub, ← hxy, map_add]
+    rw [← sub_eq_zero, ← map_sub, ← hxy, map_add (f := _)]
     have n1 : ((pushout a b).map k.op).hom (((pushout.inl a b).app T).hom x) =
         ((pushout.inl a b).app _).hom ((MB.map k.op).hom x) := by
       change ((pushout.inl a b).app T ≫ (pushout a b).map k.op).hom x = _

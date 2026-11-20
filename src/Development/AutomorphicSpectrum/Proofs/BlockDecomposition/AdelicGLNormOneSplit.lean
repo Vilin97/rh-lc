@@ -32,7 +32,7 @@ theorem pInf_expIdele (t : ℝ) (w : InfinitePlace E) :
     pInf E (expIdele E t : Ad E) w = Complex.exp t := by
   have h : ∀ x, pInf E (sInf E x) = x := fun x => (infEq E).symm_apply_apply x
   change pInf E (1 - sInf E 1 + sInf E _) w = _
-  simp only [map_add, map_sub, map_one, h, sub_self, zero_add]
+  simp only [map_add (f := _), map_sub, map_one, h, sub_self, zero_add]
   rfl
 
 theorem pFin_expIdele (t : ℝ) : pFin E (expIdele E t : Ad E) = 1 := by

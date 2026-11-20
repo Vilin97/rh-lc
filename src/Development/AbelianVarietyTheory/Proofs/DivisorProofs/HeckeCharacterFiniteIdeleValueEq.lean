@@ -48,7 +48,7 @@ theorem toFinE_eq_adEquiv (D : D7) (y : Formalism.MainNotions.StandardLatticesGL
     refine ⟨f r - r, sub_mem (hint r hr) hr, ?_⟩
     rw [nsmul_eq_mul]
     change f y - y = (N : Formalism.MainNotions.StandardLatticesGL3.AE D) * (f r - r)
-    rw [e, map_add, map_mul, map_natCast, hinc]
+    rw [e, map_add (f := _), map_mul, map_natCast, hinc]
     ring
   rw [← hf, sub_eq_zero.1 h0]
 

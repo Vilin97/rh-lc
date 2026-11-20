@@ -38,7 +38,7 @@ theorem finAdEquiv_smul (a : FiniteAdeleRing (𝓞 F) F) (y : FiniteAdeleRing (�
     rw [TensorProduct.smul_tmul', smul_eq_mul]
     change GlobalTheory.LFun.toFinAd F E ((a * b) ⊗ₜ[F] x) = GlobalTheory.AdeleBaseChange.adMap F E a * GlobalTheory.LFun.toFinAd F E (b ⊗ₜ[F] x)
     rw [GlobalTheory.LFun.toFinAd_tmul, GlobalTheory.LFun.toFinAd_tmul, map_mul, mul_assoc]
-  | add y z hy hz => rw [smul_add, map_add, map_add, hy, hz, mul_add]
+  | add y z hy hz => rw [smul_add, map_add (f := _), map_add (f := _), hy, hz, mul_add]
 
 theorem continuous_finAdEquiv : Continuous (GlobalTheory.LFun.finAdEquiv F E) := by
   haveI : IsModuleTopology (FiniteAdeleRing (𝓞 F) F) (FiniteAdeleRing (𝓞 F) F ⊗[F] E) := ⟨rfl⟩
@@ -86,7 +86,7 @@ theorem finAdEquiv_sigR (y : FiniteAdeleRing (𝓞 F₀) F₀ ⊗[F₀] E) :
       conjFin (IsCMField.complexConj E).toRingEquiv (GlobalTheory.LFun.toFinAd F₀ E (a ⊗ₜ[F₀] x))
     rw [GlobalTheory.LFun.toFinAd_tmul, GlobalTheory.LFun.toFinAd_tmul, map_mul, conjFin_adMap, conjFin_algebraMap]
     rfl
-  | add y z hy hz => rw [map_add, map_add, map_add, hy, hz, map_add]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), map_add (f := _), hy, hz, map_add (f := _)]
 
 theorem finGL_mem_UA {n : ℕ} (x : GL (Fin n) (FiniteAdeleRing (𝓞 E) E))
     (hx : Formalism.UG.cT (conjFin (IsCMField.complexConj E).toRingEquiv) x.val * x.val = 1) : finGL E n x ∈ UA E n := by

@@ -109,7 +109,7 @@ theorem blEmb : BlowUpEmbedding := by
     rw [coe_eval₂Hom, eval₂_C]
     exact Subring.subset_closure (Or.inl ⟨r, rfl⟩)
   | add p q hp hq =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hp hq
   | mul_X p l hp =>
     rw [map_mul, coe_eval₂Hom, eval₂_X]

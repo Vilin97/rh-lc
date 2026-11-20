@@ -75,7 +75,7 @@ include hμ in
 theorem formP_add_right_of_mem_squareIntegrable {u v1 v2 : RadSp k r z z' π π'} (hu : u ∈ squareIntegrableSmoothSubmoduleGL k r z z' π π' μ hμ)
     (h1 : v1 ∈ squareIntegrableSmoothSubmoduleGL k r z z' π π' μ hμ) (h2 : v2 ∈ squareIntegrableSmoothSubmoduleGL k r z z' π π' μ hμ) :
     LocFacts₂ μ 0 u (v1 + v2) c = LocFacts₂ μ 0 u v1 c + LocFacts₂ μ 0 u v2 c := by
-  rw [formP_swap_eq_conj, formP_add_left_of_mem_squareIntegrable μ hμ c h1 h2 hu, map_add, ← formP_swap_eq_conj, ← formP_swap_eq_conj]
+  rw [formP_swap_eq_conj, formP_add_left_of_mem_squareIntegrable μ hμ c h1 h2 hu, map_add (f := _), ← formP_swap_eq_conj, ← formP_swap_eq_conj]
 
 theorem formP_smul_right_eq_conj_mul (u v : RadSp k r z z' π π') (a : ℂ) :
     LocFacts₂ μ 0 u (a • v) c = conj a * LocFacts₂ μ 0 u v c := by
@@ -248,7 +248,7 @@ theorem clsDecayW (hR : RadDecay) (S : Type) [Fintype S] [DecidableEq S] (P : M.
     obtain ⟨C1, hC1⟩ := ihx hx
     obtain ⟨C2, hC2⟩ := ihy hy
     refine ⟨C1 + C2, fun s Wv hWv => ?_⟩
-    rw [map_add, formP_add_left_of_mem_squareIntegrable μ hμ c (hWJ s Wv hWv x hx) (hWJ s Wv hWv y hy) (hL2 hΨ), add_mul]
+    rw [map_add (f := _), formP_add_left_of_mem_squareIntegrable μ hμ c (hWJ s Wv hWv x hx) (hWJ s Wv hWv y hy) (hL2 hΨ), add_mul]
     exact (norm_add_le _ _).trans (add_le_add (hC1 s Wv hWv) (hC2 s Wv hWv))
   | smul a x hx ihx =>
     obtain ⟨C1, hC1⟩ := ihx hx

@@ -26,7 +26,7 @@ theorem compAt_conjAL (z : AL L) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem compAt_mem_tensInt {z : AL L} (hz : z ∈ ALint L) :
     compAt L v z ∈ tensInt (F := maximalRealSubfield L) (v.adicCompletion (maximalRealSubfield L))

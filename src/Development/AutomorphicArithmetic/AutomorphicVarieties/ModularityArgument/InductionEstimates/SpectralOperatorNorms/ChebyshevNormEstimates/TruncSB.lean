@@ -20,7 +20,7 @@ private theorem deg_le {ι : Type} {d : ℕ} {p : MvPolynomial ι ℂ} (h : p.to
 
 private theorem deg_exp {ι : Type} {d : ℕ} {α : ι →₀ ℕ} (h : α.degree ≤ d) :
     (Finsupp.single none (d - α.degree) + α.mapDomain some : Option ι →₀ ℕ).degree = d := by
-  rw [map_add, Finsupp.degree_single, Finsupp.degree_mapDomain]
+  rw [map_add (f := _), Finsupp.degree_single, Finsupp.degree_mapDomain]
   omega
 
 private theorem trunc_eq {K : Type} [Field K] [NumberField K] {n : ℕ} (d : ℕ)
@@ -44,7 +44,7 @@ private theorem mon_norm {σ : Type} {H : Type} [NormedAddCommGroup H] [NormedSp
   | add a b ha hb =>
     have : (monomial (a + b) 1 : MvPolynomial σ ℂ) = monomial a 1 * monomial b 1 := by
       rw [monomial_mul, one_mul]
-    rw [this, map_mul, map_add, pow_add]
+    rw [this, map_mul, map_add (f := _), pow_add]
     exact (norm_mul_le _ _).trans (mul_le_mul ha hb (norm_nonneg _) (by positivity))
   | single i e =>
     rw [← X_pow_eq_monomial, map_pow, Finsupp.degree_single]

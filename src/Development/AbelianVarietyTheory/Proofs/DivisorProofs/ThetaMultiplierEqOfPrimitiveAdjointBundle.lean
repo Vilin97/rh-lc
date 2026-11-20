@@ -125,7 +125,7 @@ theorem polyAct_X : (polyAct f).act xO = f := by
   exact (congrArg (fun u : endRing G => evId u.1) e).trans (Category.id_comp f)
 
 def addOf (o : RingAct G PolyO) : PolyO →+ Additive (G ⟶ G) :=
-  AddMonoidHom.mk' (fun a => Additive.ofMul (o.act a)) fun a b => by rw [o.map_add]; rfl
+  AddMonoidHom.mk' (fun a => Additive.ofMul (o.act a)) fun a b => by rw [o.map_add (f := _)]; rfl
 
 theorem polyAct_star {f' : G ⟶ G} (h : f * f' = 𝟙 G) : (polyAct f).act (star xO) = f' := by
   have e := map_sub (addOf (polyAct f)) 1 xO
@@ -169,7 +169,7 @@ theorem adjCls_all {L : LB G.left} (hL : L.IsLB) (hΘ : ∃ t : LB.Gen (Theta G 
         rw [star_one, o.map_one, Category.comp_id, Category.comp_id]
       add_mem' := fun {a b} ha hb T x z => by
         show lam _ x (z ≫ o.act (star (a + b))) = lam _ (x ≫ o.act (a + b)) z
-        rw [star_add, o.map_add, o.map_add]
+        rw [star_add, o.map_add (f := _), o.map_add (f := _)]
         show lam _ x (z ≫ (o.act (star a) * o.act (star b))) = lam _ (x ≫ (o.act a * o.act b)) z
         rw [MonObj.comp_mul, MonObj.comp_mul, lam_mul_right' hL hΘ, lam_mul_left hL hΘ, ha, hb]
       zero_mem' := fun T x z => by

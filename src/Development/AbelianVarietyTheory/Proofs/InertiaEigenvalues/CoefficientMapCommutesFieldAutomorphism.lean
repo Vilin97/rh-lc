@@ -27,7 +27,7 @@ theorem gaStar_map (hj : ∀ σ x, j (embF c σ x) = embF c σ x) (ga : Matrix (
     Formalism.L2.Pj.gaStar c ga (map j P) = map j (Formalism.L2.Pj.gaStar c ga P) := by
   induction P using MvPolynomial.induction_on with
   | C x => rw [map_C, Formalism.L2.Pj.gaStar, aeval_C, aeval_C, algebraMap_eq, map_C]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1
@@ -93,7 +93,7 @@ theorem exists_stable (hj : ∀ σ x, j (embF c σ x) = embF c σ x) {Ix : Type}
       smul_mem' := fun s v hv => ?_ }, ?_, fun ga hga v hv => ?_, fun v hv v' hv' => ?_⟩
   · have e1 : up (v + w) = up v + up w := Subtype.ext (map_add (map j) _ _)
     show io (up (v + w)) = _
-    rw [e1, map_add, map_add, map_add, show io (up v) = _ from hv, show io (up w) = _ from hw']
+    rw [e1, map_add (f := _), map_add (f := _), map_add (f := _), show io (up v) = _ from hv, show io (up w) = _ from hw']
   · have e1 : up 0 = 0 := Subtype.ext (map_zero (map j))
     show io (up 0) = _
     rw [e1, map_zero, map_zero]
@@ -122,7 +122,7 @@ theorem eq_top_of_span {K X M : Type} [Field K] [AddCommGroup X] [Module K X] [F
   obtain ⟨f, hf0, hf⟩ := N.exists_le_ker_of_lt_top (lt_top_iff_ne_top.2 hne)
   obtain ⟨B, hB⟩ := GlobalTheory.AdTh.PhaseMap.exists_ext (N := ℂ) c0 hli
     { toFun := fun v => σ (f v)
-      map_add' := fun v w => by rw [map_add, map_add]
+      map_add' := fun v w => by rw [map_add (f := _), map_add (f := _)]
       map_smul' := fun s v => by rw [map_smul, smul_eq_mul, map_mul, smul_eq_mul] }
   replace hB : ∀ v, B (c0 v) = σ (f v) := hB
   have h1 : Submodule.span ℂ (c0 '' (N : Set X)) ≤ LinearMap.ker B := by

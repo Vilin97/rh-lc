@@ -63,7 +63,7 @@ theorem per_sub_smul (Γ : Subgroup SL(2, ℤ)) (w : ℕ) (f g : ℍ → ℂ) (h
   rw [this, sub_eq_add_neg, ← _root_.neg_smul, ← (GlobalTheory.HeckeFamilyMatrices.cj_mem_Z1_cj_mem_B1_per_smul Γ w).2.2]
   funext γ
   simp only [per, Pi.add_apply]
-  rw [eichler_add_of_cont w f _ hf (hg.const_smul (-a)), map_add]
+  rw [eichler_add_of_cont w f _ hf (hg.const_smul (-a)), map_add (f := _)]
 
 theorem cj_sub {Γ : Type} (x y : Γ → ℂ[X]) : cj (x - y) = cj x - cj y := by
   funext γ; simp [cj]

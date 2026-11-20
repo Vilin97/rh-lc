@@ -105,7 +105,7 @@ theorem snd_dualLift (c : Fin g → ℂ) (a : J1 g) :
       fun c' => (Chart.dualLift c').commutes r
     simp [e, TrivSqZeroExt.algebraMap_eq_inl']
   | add p q hp hq =>
-    simp only [map_add, TrivSqZeroExt.snd_add, hp, hq, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), TrivSqZeroExt.snd_add, hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p j hp =>
     have e : ∀ c' : Fin g → ℂ, (Chart.dualLift c' (Ideal.Quotient.mk _ (p * MvPolynomial.X j))).snd =
         Chart.jetAug ℂ (Fin g) 1 (Ideal.Quotient.mk _ p) * c' j := by

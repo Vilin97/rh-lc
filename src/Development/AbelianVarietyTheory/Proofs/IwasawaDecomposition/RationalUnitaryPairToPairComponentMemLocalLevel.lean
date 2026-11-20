@@ -25,7 +25,7 @@ theorem span_fun {A R M n : Type} [CommRing A] [CommRing R] [Algebra R A] [AddCo
     simp only [Matrix.mulVec_add]
     refine ⟨add_mem a1 b1, add_mem a2 b2, ?_⟩
     have := congrArg₂ (· + ·) ha hb
-    simp only [← map_add] at this
+    simp only [← map_add (f := _)] at this
     exact this
   | smul a b _ hb =>
     obtain ⟨b1, b2, hb⟩ := hb

@@ -163,7 +163,7 @@ theorem alg_unit (he : e * e = 0) (inj : ∀ a b a' b', r a + e * r b = r a' + e
   obtain ⟨a, b, rfl⟩ := sur F
   obtain ⟨a', b', rfl⟩ := sur F'
   have h := (inj (a * a') (a * b' + b * a') 1 0 (by
-    simp only [map_mul, map_add, map_one, map_zero]
+    simp only [map_mul, map_add (f := _), map_one, map_zero]
     linear_combination hF' - (r b * r b') * he)).1
   refine ⟨a, a' * b, IsUnit.of_mul_eq_one _ h, ?_⟩
   rw [← _root_.mul_assoc, h, _root_.one_mul]
@@ -173,7 +173,7 @@ theorem alg_dlog (he : e * e = 0) (inj : ∀ a b a' b', r a + e * r b = r a' + e
     (h : (r a + e * r (a * β)) * r G * (r H + e * r (H * φ)) =
       (r G + e * r (G * c)) * r H * (r a' + e * r (a' * β'))) : β + φ = c + β' := by
   obtain ⟨h₁, h₂⟩ := inj (a * G * H) (a * G * H * (β + φ)) (a' * G * H) (a' * G * H * (c + β')) (by
-    simp only [map_mul, map_add] at h ⊢
+    simp only [map_mul, map_add (f := _)] at h ⊢
     linear_combination h - (r a * r β * r G * r H * r φ - r G * r c * r H * r a' * r β') * he)
   rw [← h₁] at h₂
   exact ((ha.mul hG).mul hH).mul_left_cancel h₂

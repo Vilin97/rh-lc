@@ -26,7 +26,7 @@ noncomputable def AdLie (g : G) : h.lieSubalgebra →ₗ⁅ℝ⁆ h.lieSubalgebr
   map_add' X Y := by
     apply Subtype.ext
     show ((h.Ad g (h.ofLie X + h.ofLie Y) : 𝔤) : 𝔸) = _
-    rw [map_add]; rfl
+    rw [map_add (f := _)]; rfl
   map_smul' r X := by
     apply Subtype.ext
     show ((h.Ad g (r • h.ofLie X) : 𝔤) : 𝔸) = _
@@ -191,7 +191,7 @@ theorem finiteDimensional_zkSpan (f : h.smoothFuns (F := F))
       rw [zSpan, Submodule.span_le]
       rintro _ ⟨z, hz, rfl⟩
       dsimp only
-      rw [SetLike.mem_coe, map_add]
+      rw [SetLike.mem_coe, map_add (f := _)]
       exact Submodule.add_mem_sup (Submodule.subset_span ⟨z, hz, rfl⟩)
         (Submodule.subset_span ⟨z, hz, rfl⟩)
     | smul c x _ hx =>
@@ -230,7 +230,7 @@ theorem rightUAction_mem_zkSpan (f : h.smoothFuns (F := F))
     rw [← Module.End.mul_apply, ← map_mul]
     exact Submodule.subset_span ⟨(⟨z * z', Subalgebra.mul_mem _ hz z'.2⟩, k), rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem rightTranslate_mem_zkSpan (f : h.smoothFuns (F := F)) (k' : K)
@@ -245,7 +245,7 @@ theorem rightTranslate_mem_zkSpan (f : h.smoothFuns (F := F)) (k' : K)
     rw [e, ← Module.End.mul_apply (h.rightTranslateEnd (k' : G)), rightTranslateEnd_mul]
     exact Submodule.subset_span ⟨(⟨_, h.AdU_mem_centerU (k' : G) z.2⟩, k' * k), rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem rightDeriv_mem_of_isKStable {V : Submodule ℂ (h.smoothFuns (F := F))}

@@ -59,7 +59,7 @@ theorem map_eq_charpoly_vmap : ∀ (K : Type) [Field K] (l : ℕ) [Fact l.Prime]
       intro G
       induction G using Polynomial.induction_on with
       | C a => simp
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
       | monomial n a _ => simp only [map_mul, map_pow, Polynomial.aeval_C, Polynomial.aeval_X, algebraMap_int_eq, eq_intCast, map_intCast]
     rw [hψ, hev F]
     have h3 : ψ (Polynomial.aeval f F) = (tend l A (Polynomial.aeval f F)).baseChange ℚ_[l] := rfl

@@ -81,7 +81,7 @@ private theorem norm_int {E : Type} [Field E] [NumberField E] [IsCMField E] {d :
   have hc := conj_alt_bis hd hx
   have hq : ((y * y' : 𝓞 E) : E) = algebraMap ℚ E (s ^ 2 + d * t ^ 2) := by
     have h1 : (y' : E) = (s : E) - t * x := by
-      rw [hy', hst, map_add, map_mul, hc]
+      rw [hy', hst, map_add (f := _), map_mul, hc]
       simp [sub_eq_add_neg]
     change (y : E) * (y' : E) = _
     rw [h1, hst, eq_ratCast]
@@ -116,7 +116,7 @@ theorem UpperTheory.Gal.Int.Div.sameOr_of :
     obtain ⟨s, t, hst⟩ := adjoin_form hd hx _ hy
     have hxK : x ∈ IntermediateField.adjoin ℚ {x} := IntermediateField.mem_adjoin_simple_self ℚ x
     have h1 : ((c y : 𝓞 E) : E) = (s : E) + ((-t : ℚ) : E) * x := by
-      rw [hcE, hst, map_add, map_mul, conj_alt_bis hd hx]
+      rw [hcE, hst, map_add (f := _), map_mul, conj_alt_bis hd hx]
       simp
     rw [h1]
     exact add_mem (SubfieldClass.ratCast_mem _ s) (mul_mem (SubfieldClass.ratCast_mem _ _) hxK)

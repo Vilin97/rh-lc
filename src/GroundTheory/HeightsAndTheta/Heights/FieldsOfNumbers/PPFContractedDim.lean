@@ -81,7 +81,7 @@ theorem coeff_killBlocks (T : Finset K) (q : MRing ι F) (d : (Σ k, ι k) →�
       simp
     · simp [hd]
   | add p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
+    rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
     split_ifs <;> simp
 
 theorem weight_apply_eq_zero_iff (d : (Σ k, ι k) →₀ ℕ) (k : K) :

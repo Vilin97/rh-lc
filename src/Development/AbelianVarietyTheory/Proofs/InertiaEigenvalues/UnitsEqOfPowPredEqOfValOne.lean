@@ -32,7 +32,7 @@ def posValIdeal {l : ℕ} [Fact l.Prime] (P : LocPrime l) (LL : FinExt l) : Idea
   zero_mem' := by simp
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_ofPred_eq, map_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
     exact (P.v LL).map_lt_add ha hb
   smul_mem' := by
     intro c x hx

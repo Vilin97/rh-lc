@@ -18,7 +18,7 @@ private theorem mb_comp {O O' R R' R'' : Type} [CommRing O] [CommRing O'] [Algeb
   induction Til.coeff O O' R k a using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem mb_sp (O O' : Type) [CommRing O] [CommRing O'] [Algebra O O'] [Module.Finite O O'] [Module.Free O O']
     (B : Type) [CommRing B] [Algebra O B] (q n : ℕ) (P : Fin q → Polynomial B) (ut : Fin q → Fin n → B)
@@ -42,7 +42,7 @@ private theorem mb_quot {R R' M M' : Type} [CommRing R] [CommRing R'] [AddCommGr
         (fun x y hx hy => ?_)
       · rw [hν]
         exact Submodule.smul_mem_smul (hI ▸ Ideal.mem_map_of_mem _ ha) trivial
-      · rw [map_add]
+      · rw [map_add (f := _)]
         exact Submodule.add_mem _ hx hy
     · intro y hy
       refine Submodule.smul_induction_on

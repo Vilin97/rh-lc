@@ -31,7 +31,7 @@ theorem StableDvd.isIntegrallyClosed {A : Type*} [CommRing A] [IsDomain A] (h : 
         intro r r' hr hr' z hz
         obtain ⟨s, hs⟩ := hr z hz
         obtain ⟨s', hs'⟩ := hr' z hz
-        exact ⟨s + s', by rw [map_add, hs, hs', add_smul]⟩
+        exact ⟨s + s', by rw [map_add (f := _), hs, hs', add_smul]⟩
       smul_mem' := by
         intro c r hr z hz
         obtain ⟨s, hs⟩ := hr z hz

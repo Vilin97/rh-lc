@@ -234,7 +234,7 @@ theorem exists_back : ∀ (G W V : Type) [Group G] [TopologicalSpace G] [IsTopol
   have hadd : ∀ v v' g, F (v + v') g = F v g + F v' g := by
     intro v v' g
     show B (ρ g⁻¹ (v + v')) (p w) • π g w = B (ρ g⁻¹ v) (p w) • π g w + B (ρ g⁻¹ v') (p w) • π g w
-    rw [map_add, map_add, LinearMap.add_apply, add_smul]
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, add_smul]
   have hsmul : ∀ (a : ℂ) v g, F (a • v) g = a • F v g := by
     intro a v g
     show B (ρ g⁻¹ (a • v)) (p w) • π g w = a • (B (ρ g⁻¹ v) (p w) • π g w)

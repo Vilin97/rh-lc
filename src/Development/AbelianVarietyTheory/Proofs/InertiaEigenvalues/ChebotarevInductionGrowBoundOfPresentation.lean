@@ -195,7 +195,7 @@ theorem toLam_genPoly [Fintype ι] (g : Del X i M ι) :
     simp only [toAdd_pow, toAdd_ofAdd, Finset.sum_apply, Pi.smul_apply, Pi.single_apply, smul_ite, smul_zero,
       Finset.sum_ite_eq, Finset.mem_univ, if_true, nsmul_one, ZMod.natCast_zmod_val]
   conv_rhs => rw [h1]
-  simp only [genPoly, toLam, map_sub, map_prod, map_pow, map_add, map_one, MvPolynomial.aeval_X, sub_add_cancel]
+  simp only [genPoly, toLam, map_sub, map_prod, map_pow, map_add (f := _), map_one, MvPolynomial.aeval_X, sub_add_cancel]
 
 theorem genPoly_coeff_zero [Fintype ι] (g : Del X i M ι) : (genPoly X i M g).coeff 0 = 0 := by
   rw [← MvPolynomial.constantCoeff_eq]
@@ -213,7 +213,7 @@ theorem genPoly_coeff_single [Fintype ι] (g : Del X i M ι) (q : ι) :
     induction s using Finset.induction_on with
     | empty => simp
     | insert b s hb ih =>
-      rw [Finset.prod_insert hb, Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, ih]
+      rw [Finset.prod_insert hb, Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, ih]
       by_cases hq : b = q
       · subst hq
         simp [hb, -ZMod.natCast_val]
@@ -232,7 +232,7 @@ def lowIdeal {O : Type} [CommRing O] {ι : Type} (I : Ideal O) (K : Set ι) (c :
     classical
     rw [smul_eq_mul, MvPolynomial.coeff_mul]
     refine I.sum_mem fun p hp => I.mul_mem_left _ (hF _ ?_ fun j hj => ?_)
-    · rw [← Finset.HasAntidiagonal.mem_antidiagonal.1 hp, map_add] at h1
+    · rw [← Finset.HasAntidiagonal.mem_antidiagonal.1 hp, map_add (f := _)] at h1
       omega
     · have := h2 j hj
       rw [← Finset.HasAntidiagonal.mem_antidiagonal.1 hp, Finsupp.add_apply] at this

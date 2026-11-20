@@ -198,9 +198,9 @@ theorem exists_embedding {V : Type} [AddCommGroup V] [Module ℂ V] {ψ : AddCha
       · rw [map_zero, map_zero]; exact map_zero T
       · rw [map_zero, map_zero, ← map_zero T]; congr 1; funext t; simp
     | add f g _ _ hf hg =>
-      refine ⟨by rw [map_add]; exact P.add_mem hf.1 hg.1, fun x => ?_, fun y => ?_⟩
-      · rw [map_add, map_add, ← hf.2.1 x, ← hg.2.1 x, ← map_add]; rfl
-      · rw [map_add, map_add, ← hf.2.2 y, ← hg.2.2 y, ← map_add]; congr 1; funext t; simp [mul_add]
+      refine ⟨by rw [map_add (f := _)]; exact P.add_mem hf.1 hg.1, fun x => ?_, fun y => ?_⟩
+      · rw [map_add (f := _), map_add (f := _), ← hf.2.1 x, ← hg.2.1 x, ← map_add (f := _)]; rfl
+      · rw [map_add (f := _), map_add (f := _), ← hf.2.2 y, ← hg.2.2 y, ← map_add (f := _)]; congr 1; funext t; simp [mul_add]
     | smul c f _ hf =>
       refine ⟨by rw [map_smul]; exact P.smul_mem c hf.1, fun x => ?_, fun y => ?_⟩
       · rw [map_smul, map_smul, ← hf.2.1 x, ← map_smul]; rfl

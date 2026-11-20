@@ -18,7 +18,7 @@ def pairW (I : (GL (Fin m) k → ℂ) →ₗ[ℂ] ℂ) (W : GL (Fin m) k → ℂ
   toFun := whittakerPairingValue I W
   map_add' a b := by
     simp only [whittakerPairingValue]
-    rw [← map_add]; congr 1; funext g
+    rw [← map_add (f := _)]; congr 1; funext g
     simp only [Submodule.coe_add, Pi.add_apply]; ring
   map_smul' c a := by
     simp only [whittakerPairingValue, RingHom.id_apply]

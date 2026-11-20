@@ -22,7 +22,7 @@ def fix : Submodule R M where
   zero_mem' := fun σ _ => map_zero _
   add_mem' := fun {a b} ha hb σ hσ => by
     show ρ σ (a + b) = a + b
-    rw [map_add, ha σ hσ, hb σ hσ]
+    rw [map_add (f := _), ha σ hσ, hb σ hσ]
   smul_mem' := fun c m hm σ hσ => by
     show ρ σ (c • m) = c • m
     rw [map_smul, hm σ hσ]

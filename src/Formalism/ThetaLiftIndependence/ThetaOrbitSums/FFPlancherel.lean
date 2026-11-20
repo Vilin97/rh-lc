@@ -31,7 +31,7 @@ theorem charSum {𝔽 U : Type} [Field 𝔽] [AddCommGroup U] [Module 𝔽 U] [F
         _ = (∑ e : U, ψ (g e)) * ψ a := by
             rw [Finset.sum_mul]
             refine Finset.sum_congr rfl fun e _ => ?_
-            rw [map_add, AddChar.map_add_eq_mul, hge0]
+            rw [map_add (f := _), AddChar.map_add_eq_mul, hge0]
     have h1 : (∑ e : U, ψ (g e)) * (ψ a - 1) = 0 := by
       rw [mul_sub, mul_one, ← hshift, sub_self]
     rcases mul_eq_zero.mp h1 with h | h

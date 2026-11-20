@@ -54,7 +54,7 @@ theorem sum_single_apply (R₀ R : E.toAffine.Point) :
       exact hT (Subtype.ext (show (T : E.toAffine.Point) = R - R₀ by rw [← e]; abel))
     · intro h; exact absurd (Finset.mem_univ _) h
   · refine Finset.sum_eq_zero fun T _ => if_neg fun e => h ?_
-    rw [← e, ← pointHom_apply, ← pointHom_apply, map_add, T.2, add_zero]
+    rw [← e, ← pointHom_apply, ← pointHom_apply, map_add (f := _), T.2, add_zero]
 
 theorem sum_single_zero_apply (R : E.toAffine.Point) :
     (∑ T : φ.pointHom.ker, Finsupp.single (T : E.toAffine.Point) (1 : ℤ)) R =
@@ -166,7 +166,7 @@ theorem homPt_eq_of (Q : isogHom E E') {R : E.toAffine.Point} {c : E'.toAffine.P
 theorem homPt_add (Q₁ Q₂ : isogHom E E') : homPt (Q₁ + Q₂) = homPt Q₁ + homPt Q₂ := by
   ext R
   apply homPt_eq_of
-  rw [AddSubgroup.coe_add, map_add, map_translate_hom, map_translate_hom, AddMonoidHom.add_apply,
+  rw [AddSubgroup.coe_add, map_add (f := _), map_translate_hom, map_translate_hom, AddMonoidHom.add_apply,
     map_add]
   abel
 
@@ -249,7 +249,7 @@ theorem homDualFun_add (Q₁ Q₂ : isogHom E E') :
     fun Q S hS => by rw [← map_nsmul, hS, map_zero]
   rw [show homPt (homDualFun (Q₁ + Q₂) - (homDualFun Q₁ + homDualFun Q₂)) =
       homPt (homDualFun (Q₁ + Q₂)) - homPt (homDualFun Q₁) - homPt (homDualFun Q₂) by
-    rw [← homPointHom_apply, map_sub, map_add, homPointHom_apply, homPointHom_apply,
+    rw [← homPointHom_apply, map_sub, map_add (f := _), homPointHom_apply, homPointHom_apply,
       homPointHom_apply]; abel]
   apply eq_zero_of_forall_weilPairing_eq_one hn (by
     simp only [AddMonoidHom.sub_apply, nsmul_sub, htor, sub_zero])

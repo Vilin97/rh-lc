@@ -19,7 +19,7 @@ def perp (D : Datum H) (Z : Submodule (𝓞 E) D.La) : Submodule (𝓞 E) D.La w
   add_mem' := by
     intro x y hx hy z hz
     show D.EF (x + y) z = 0
-    rw [map_add, LinearMap.add_apply, hx z hz, hy z hz, add_zero]
+    rw [map_add (f := _), LinearMap.add_apply, hx z hz, hy z hz, add_zero]
   smul_mem' := by
     intro a x hx z hz
     show D.EF (a • x) z = 0

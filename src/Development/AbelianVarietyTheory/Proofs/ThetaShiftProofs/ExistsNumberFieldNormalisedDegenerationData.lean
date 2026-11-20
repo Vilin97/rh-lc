@@ -241,7 +241,7 @@ theorem bimult_defect (hG : GlobalFnsSt) (hφ : Function.Injective φ) (hD : IsP
       ((val_mul hJ _ _ _).symm.trans ((hr y J hJ).trans (congrArg₂ (· * ·) rfl (val_mul hJ _ _ _))))
     refine Eq.trans ?_ (val_cub D.cub κ hJ (cP D _ (hD.xe a)) (cP D _ (hD.xe a')) (cP D _ (hD.xe b))).symm
     rw [comp_cP, comp_cP, comp_cP]
-  rw [← βc, ← βc, ← βc, cub, ← map_add, vτ, vτ, vτ, cPoint_add] at key
+  rw [← βc, ← βc, ← βc, cub, ← map_add (f := _), vτ, vτ, vτ, cPoint_add] at key
   show τ' (a + a') b * _ = _ * (τ' a b * τ' a' b)
   apply Additive.ofMul.injective
   have e' := congrArg Additive.ofMul key

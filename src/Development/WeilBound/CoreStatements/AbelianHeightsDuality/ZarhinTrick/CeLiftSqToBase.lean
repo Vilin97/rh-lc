@@ -123,7 +123,7 @@ theorem ceLam_zb_pt (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) {P : LB (A
   let Λ : Pic ((Over.pullback s).obj (G4 (A ⊗ B))).left →+ Pic Y.left :=
     AddMonoidHom.mk' (fun c => lam c a u) (fun c c' => by
       unfold lam
-      simp only [map_add]
+      simp only [map_add (f := _)]
       abel)
   have hΛ : ∀ c, lam c a u = Λ c := fun _ => rfl
   have hΛ' : ∀ c, Λ c = lam c a u := fun _ => rfl
@@ -178,7 +178,7 @@ theorem ceLam_zb_pt (hA : IsAbelianScheme A) (hB : IsAbelianScheme B) {P : LB (A
   have hφ2 : ∀ i, phiL mu s (2, i) = (pM mu s i).left := fun _ => rfl
   have hφ3 : ∀ i, phiL mu s (3, i) = ((pM mu s i)⁻¹).left := fun _ => rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hΛ, hcls, map_add, map_sum, map_sum]
+    rw [hΛ, hcls, map_add (f := _), map_sum, map_sum]
   simp only [map_zsmul, one_smul]
   simp only [hΛ']
   rw [Fintype.sum_prod_type, Fintype.sum_prod_type, Fin.sum_univ_four]
@@ -479,9 +479,9 @@ theorem two_cls_eMap {Ω : Type} [Field Ω] [IsAlgClosed Ω] (hA : IsAbelianSche
       rw [GrpObj.comp_inv, Category.comp_id, toBase_inv, ← toBase_map, Category.id_comp]
     exact toBase_injective s _ (L1.trans R1.symm)
   have symC1 : pull ((𝟙 ((Over.pullback s).obj (G4 (A ⊗ B))))⁻¹).left (cls _ h₁') = cls _ h₁' := by
-    rw [hc1, ← pull_comp, ← Over.comp_left, hvM, Over.comp_left, pull_comp, hzb, map_add, symL, symP]
+    rw [hc1, ← pull_comp, ← Over.comp_left, hvM, Over.comp_left, pull_comp, hzb, map_add (f := _), symL, symP]
   have oneEq : pull (1 : (Over.pullback s).obj (G4 (A ⊗ B)) ⟶ (Over.pullback s).obj (G4 (A ⊗ B))).left (cls _ h₁') = pull (1 : (Over.pullback s).obj (G4 (A ⊗ B)) ⟶ (Over.pullback s).obj (G4 (A ⊗ B))).left (cls _ h₂') := by
-    rw [hc1, ← pull_comp, ← Over.comp_left, hMone, hzb, map_add, oneP, add_zero, hLsum]
+    rw [hc1, ← pull_comp, ← Over.comp_left, hMone, hzb, map_add (f := _), oneP, add_zero, hLsum]
   have lamEq : lam (cls _ h₁') (𝟙 _) (𝟙 ((Over.pullback s).obj (G4 (A ⊗ B))))⁻¹ = lam (cls _ h₂') (𝟙 _) (𝟙 ((Over.pullback s).obj (G4 (A ⊗ B))))⁻¹ := by
     rw [hc1, lam_pull_eq_lam_comp_of_hom _ hMmul hMone, ceLam_zb_pt hA hB hD hD' l mu α s L hL e, toBase_map, toBase_map,
       ceZcPair_eMap hD hD' l mu α m hm h₂ hα (fun x y => ceEvc_sym hA hD.isLB l s L hL e x y), hLsum,

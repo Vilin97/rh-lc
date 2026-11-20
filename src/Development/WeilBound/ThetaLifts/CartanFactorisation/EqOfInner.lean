@@ -67,7 +67,7 @@ structure Impl (s : (l ⊕ l → ℝ) → (l ⊕ l → ℝ)) (S : Sch l →ₗ[�
 theorem Impl.inner {s} {S : Sch l →ₗ[ℂ] Sch l} (h : Impl s S) (f g : Sch l) :
     inner ℂ ((S f).toLp 2 volume) ((S g).toLp 2 volume) = inner ℂ (f.toLp 2 volume) (g.toLp 2 volume) := by
   have e : ∀ (u v : Sch l) (c : ℂ), u.toLp 2 volume + c • v.toLp 2 volume = (u + c • v).toLp 2 volume := fun u v c => by
-    simp only [← schwartzToL2_apply, map_add, map_smul]
+    simp only [← schwartzToL2_apply, map_add (f := _), map_smul]
   have e' : ∀ (u v : Sch l) (c : ℂ), u.toLp 2 volume - c • v.toLp 2 volume = (u - c • v).toLp 2 volume := fun u v c => by
     simp only [← schwartzToL2_apply, map_sub, map_smul]
   have e1 := e (S f) (S g) 1
@@ -75,7 +75,7 @@ theorem Impl.inner {s} {S : Sch l →ₗ[ℂ] Sch l} (h : Impl s S) (f g : Sch l
   have e3 := e f g 1
   have e4 := e' f g 1
   simp only [one_smul] at e1 e2 e3 e4
-  rw [inner_eq_sum_norm_sq_div_four, inner_eq_sum_norm_sq_div_four, e1, e2, e3, e4, e, e, e', e', ← map_add, ← map_sub,
+  rw [inner_eq_sum_norm_sq_div_four, inner_eq_sum_norm_sq_div_four, e1, e2, e3, e4, e, e, e', e', ← map_add (f := _), ← map_sub,
     ← map_smul, ← map_add, ← map_sub, h.norm, h.norm, h.norm, h.norm]
 
 theorem exists_rho (w : l ⊕ l → ℝ) (f : Sch l) : ∃ g : Sch l, ⇑g = rhoFun w f := by

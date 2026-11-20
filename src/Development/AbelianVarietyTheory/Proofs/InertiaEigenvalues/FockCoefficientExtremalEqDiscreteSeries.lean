@@ -189,7 +189,7 @@ theorem killed_of_harmonic (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFa
   have a2 := ((hY φ hφ).2.2.2 (h, g) w).deriv
   simp only [Prod.mk_mul_mk, mul_one] at a1 a2
   have a3 := congrFun (congrArg (om (h, g)) key) w
-  rw [LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul, map_zero] at a3
+  rw [LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul, map_zero] at a3
   simp only [Pi.add_apply, Pi.smul_apply, Rder]
   rw [a1, a2]
   exact a3
@@ -206,7 +206,7 @@ def killedSub (hom : IsWeilDatumO ψ S T χS χT om) (hθ : IsInfFam θ) (M : DS
     funext g
     have a' := congrFun a g
     have b' := congrFun b g
-    simp only [map_add, Pi.add_apply, Pi.zero_apply] at a' b' ⊢
+    simp only [map_add (f := _), Pi.add_apply, Pi.zero_apply] at a' b' ⊢
     rw [a', b', add_zero]
   zero_mem' := by
     intro τ Z _ h w
@@ -298,7 +298,7 @@ theorem holAd_coef (hom : IsWeilDatumO ψ S T χS χT om) (hcv : IsCovolOne (rat
     { toFun := fun e g => thetaIP μ 𝓕 a (om (1, g) (pt (io e w)))
       map_add' := fun e e' => by
         funext g
-        simp only [map_add, LinearMap.add_apply, Pi.add_apply]
+        simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply]
         exact thetaInner_add_right hom hcv ha (hom.om_pres _ _ (hpt _)) (hom.om_pres _ _ (hpt _))
       map_smul' := fun r e => by
         funext g

@@ -14,7 +14,7 @@ theorem inner_monomial_left (hι : IsFockIP ι) (α : σ →₀ ℕ) (Q : MvPoly
     inner ℂ (ι (monomial α 1)) (ι Q) =
       AddMonoidAlgebra.coeff Q α * α.prod (fun _ k => (k.factorial : ℂ)) := by
   induction Q using MvPolynomial.induction_on' with
-  | add Q Q' h h' => simp only [map_add, inner_add_right, h, h', MvPolynomial.coeff_add, add_mul]
+  | add Q Q' h h' => simp only [map_add (f := _), inner_add_right, h, h', MvPolynomial.coeff_add, add_mul]
   | monomial β b =>
     have hm : (monomial β b : MvPolynomial σ ℂ) = b • monomial β 1 := by
       rw [smul_monomial]; simp

@@ -33,7 +33,7 @@ theorem pow_pull [Finite T] {B : Subalgebra R (T → R)} (hB : IsHopfOrder B) {f
         rw [map_zero]
         exact B.zero_mem
       | add x y _ _ hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact B.add_mem hx hy
       | smul r x _ hx =>
         rw [map_smul]
@@ -101,7 +101,7 @@ private theorem translate_mem_of_isHopfOrder' {U : Type} [CommGroup U] {A : Suba
       rw [map_zero]
       exact A.zero_mem
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact A.add_mem hx hy
     | smul r x _ hx =>
       rw [map_smul]

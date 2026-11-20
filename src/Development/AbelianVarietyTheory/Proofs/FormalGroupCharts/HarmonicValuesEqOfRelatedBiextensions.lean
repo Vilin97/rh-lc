@@ -164,7 +164,7 @@ theorem jeq_main [Algebra ℚ k] {n : ℕ} (m q : ℕ) (φ φi a : Pt k 1 d) (hi
       ∑ b : Fin n, ev ![pt k (n := n) d b, comp1 a' (pt k (n := n) d b)] (h0 + lam) :=
     Finset.sum_congr rfl fun b _ => by rw [gt_ev_add _ (hL b), add_comm]
   rw [hsum]
-  refine ((GlobalTheory.T.jetEq_formalExp_iff_and_exists_log k n d m).1 _ _ (cS' _ hL h' hh') (cS' _ hL _ (by rw [map_add, hh0, hl, add_zero]))).1 ?_
+  refine ((GlobalTheory.T.jetEq_formalExp_iff_and_exists_log k n d m).1 _ _ (cS' _ hL h' hh') (cS' _ hL _ (by rw [map_add (f := _), hh0, hl, add_zero]))).1 ?_
   exact jeq_smul _ (jeq_sum _ fun b => (GlobalTheory.T.mvPowerSeriesJetEq_calculus k m).2.2.2.1 d 2 n _ _ _ _ (hL b) (hL b)
     (fun _ _ => JEq.refl _ _) hj)
 
@@ -211,7 +211,7 @@ theorem exists_nabValN_eq : ∀ (R : Type) [CommRing R] (d : ℕ) (O : Type) [Co
     intro e he
     have := hgg e he
     rw [map_sub, map_sub] at this
-    rw [map_sub, map_add, ← this]
+    rw [map_sub, map_add (f := _), ← this]
     change _ - (_ - MvPowerSeries.coeff e (ev ![comp1 (mapPt (algebraMap R k) φ) (pt k (n := 2) d 0),
       comp1 (mapPt (algebraMap R k) φ) (pt k (n := 2) d 1)] h) - _) = _
     ring

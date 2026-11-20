@@ -170,7 +170,7 @@ theorem psum_root {T : Type} [Fintype T] {N j : ℕ} (hj : j ≤ N) (r : T → F
 theorem degLB_pull_dual {k : Type} [Field k] {C X : Scheme.{0}} [Algebra k Γ(C, ⊤)] [IsIntegral C] (hC : IsProjCurve k C)
     (f : C ⟶ X) {L : LB X} (hL : L.IsLB) : degLB k ((CechPic.dual L).pull f) = -degLB k (L.pull f) := by
   have e := congrArg (fun x => hC.degPic (CechPic.pull f x)) (CechPic.cls_dual_add hL)
-  simp only [map_add, map_zero] at e
+  simp only [map_add (f := _), map_zero] at e
   exact eq_neg_of_add_eq_zero_left e
 
 end GlobalTheory.CurveRootGeometry

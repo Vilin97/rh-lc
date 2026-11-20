@@ -42,7 +42,7 @@ theorem zeroth_cohomology_ideal_transfer : ∀ {X Z : Scheme.{0}} (φ : Z ⟶ X)
         (Sheaf.H.equiv₀ (modulesAb (G.restrict (φ ⁻¹ᵁ V).ι)) isTerminalTop x :
           Γ(G, (φ ⁻¹ᵁ V).ι ''ᵁ ⊤))
       map_add' := fun x y => by
-        rw [map_add]
+        rw [map_add (f := _)]
         exact map_add _ _ _
       map_smul' := fun b x => by
         rw [H.smul_def, ← Sheaf.H.equiv₀_naturality]
@@ -55,7 +55,7 @@ theorem zeroth_cohomology_ideal_transfer : ∀ {X Z : Scheme.{0}} (φ : Z ⟶ X)
     rw [map_smul]
     exact Submodule.smul_mem_smul hb Submodule.mem_top
   · show L (y + y') ∈ _
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hy hy'
 
 theorem mem_formalK_of_factor {B : Type} [CommRing B] [IsNoetherianRing B] (J : Ideal B)

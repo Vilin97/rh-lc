@@ -128,7 +128,7 @@ theorem main : ∀ (g n : ℕ) (F : SFam g n (zetaAway n)) (W : Matrix (Fin 8) (
   obtain ⟨v, hv⟩ := exists_shortest τ.q τ.pos X₁.S.N α₀
   have hne : α₀ + X₁.S.N • v ≠ 0 := fun h0 => hnd ⟨-(j (e v) 0), by
     have h1 := congrFun (congrArg (fun t => j (e t)) h0) 0
-    simp only [α₀, map_add, map_nsmul, AddEquiv.apply_symm_apply, map_zero, Pi.add_apply, Pi.single_eq_same,
+    simp only [α₀, map_add (f := _), map_nsmul, AddEquiv.apply_symm_apply, map_zero, Pi.add_apply, Pi.single_eq_same,
       Pi.smul_apply, Pi.zero_apply] at h1
     rw [smul_neg]
     exact eq_neg_of_add_eq_zero_left h1⟩

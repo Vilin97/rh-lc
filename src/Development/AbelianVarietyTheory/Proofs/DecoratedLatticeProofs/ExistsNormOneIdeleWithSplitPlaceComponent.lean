@@ -49,10 +49,10 @@ theorem exists_normOneAt_pr (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topo
   have hucs : ∀ x : k, u * cA D (p.sec x) = 0 := by intro x; rw [← hcf' x, ← mul_assoc, huf, zero_mul]
   have huu : u * u = u := by nth_rewrite 2 [hu]; rw [mul_sub, mul_one, huf, sub_zero]
   have hcu : cA D u = u := by
-    rw [hu, hfdef, map_sub, map_one, map_add, hcc, add_comm]
+    rw [hu, hfdef, map_sub, map_one, map_add (f := _), hcc, add_comm]
   refine ⟨u + p.sec c₀ + cA D (p.sec c₀⁻¹), ⟨?_, ?_⟩, ?_⟩
   · have hconj : cA D (u + p.sec c₀ + cA D (p.sec c₀⁻¹)) = u + cA D (p.sec c₀) + p.sec c₀⁻¹ := by
-      rw [map_add, map_add, hcu, hcc]
+      rw [map_add (f := _), map_add (f := _), hcu, hcc]
     show _ * cA D _ = 1
     rw [hconj]
     have e1 : p.sec c₀ * p.sec c₀⁻¹ = p.e := by rw [← sec_mul p, mul_inv_cancel₀ hc₀, he1]
@@ -71,7 +71,7 @@ theorem exists_normOneAt_pr (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topo
   · have : u + p.sec c₀ + cA D (p.sec c₀⁻¹) - 1 = -f + p.sec c₀ + cA D (p.sec c₀⁻¹) := by rw [hu]; ring
     rw [this]
     refine add_mem (add_mem (neg_mem hfm) (sec_mem_idAt p _)) (csec_mem_idAt (p := p) _)
-  · rw [map_add, map_add, hprc, add_zero, hu, hfdef, map_sub, map_one, map_add, ← he1, hprc, p.pr_sec, p.pr_sec]
+  · rw [map_add (f := _), map_add (f := _), hprc, add_zero, hu, hfdef, map_sub, map_one, map_add (f := _), ← he1, hprc, p.pr_sec, p.pr_sec]
     ring
 
 end GlobalTheory.Core.Mi.LatMatch

@@ -253,6 +253,6 @@ theorem capDeg_vp_vPullQ : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteV
     simp only [smul_eq_mul]
     ring
   | add a b ha hb =>
-    simp only [map_add, LinearMap.add_apply, ha, hb, mul_add]
+    simp only [map_add (f := _), LinearMap.add_apply, ha, hb, mul_add]
 
 end GlobalTheory.VertDegProj

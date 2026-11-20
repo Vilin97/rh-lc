@@ -28,7 +28,7 @@ theorem isIntegral_coeff_of_shifted_prod {ι : Type} [DecidableEq ι] {A : Type}
       intro t
       rw [hQ, eval_prod]
       refine Finset.prod_congr rfl fun i _ => ?_
-      simp [eval_comp, map_add]
+      simp [eval_comp, map_add (f := _)]
     have key := GlobalTheory.T.monic_factor_coefficients_integral A (P a) Q (c a) 0 (hm a (Finset.mem_insert_self a s)) hQm (fun u => by
       rw [add_zero, hQe]
       have := h u
@@ -224,7 +224,7 @@ theorem monic_relations_along_block : ∀ (W Q : Type) [AddCommGroup W] [Module 
   let I : Submodule ℂ W :=
     { carrier := {F | ∀ x ∈ Sm, L (x F) = 0}
       add_mem' := fun {a b} ha hb x hx => by
-        rw [map_add, map_add, ha x hx, hb x hx, add_zero]
+        rw [map_add (f := _), map_add (f := _), ha x hx, hb x hx, add_zero]
       zero_mem' := fun x _ => by simp
       smul_mem' := fun r a ha x hx => by
         rw [map_smul, map_smul, ha x hx, smul_zero] }

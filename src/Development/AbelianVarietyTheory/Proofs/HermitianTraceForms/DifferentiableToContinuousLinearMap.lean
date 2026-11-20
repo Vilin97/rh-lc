@@ -96,7 +96,7 @@ variable {h}
 theorem form_apply_right (hh : ∀ u v, h v u = star (h u v)) (b : R) (u v : M) :
     h u (isoTransvection h x hx b v) = h u v + star b * h u x * h x v := by
   have : h x v = star (h v x) := hh v x
-  simp only [apply, map_add, LinearMap.map_smulₛₗ, starRingEnd_apply, star_mul', smul_eq_mul, this]
+  simp only [apply, map_add (f := _), LinearMap.map_smulₛₗ, starRingEnd_apply, star_mul', smul_eq_mul, this]
   ring
 
 theorem form_apply_apply (hh : ∀ u v, h v u = star (h u v)) (b : R) (u v : M) :

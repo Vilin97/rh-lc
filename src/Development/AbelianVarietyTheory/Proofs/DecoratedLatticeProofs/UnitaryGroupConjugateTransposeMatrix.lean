@@ -47,7 +47,7 @@ theorem mem_integral_adelic_lattice_iff (z : GlobalTheory.AdLat.RA F E) :
       refine mul_mem (Subring.subset_closure (Or.inl ⟨⟨_, x', rfl⟩, rfl⟩))
         (Subring.subset_closure (Or.inr ⟨⟨a, ha⟩, rfl⟩))
     | zero => rw [map_zero]; exact zero_mem _
-    | add u u' _ _ hu hu' => rw [map_add]; exact add_mem hu hu'
+    | add u u' _ _ hu hu' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hu'
     | neg u _ hu => rw [map_neg]; exact neg_mem hu
   · intro hz
     have key : ∀ s ∈ Formalism.L2.Herm.intAf F E, ∃ t ∈ GlobalTheory.AdLat.hat1 F

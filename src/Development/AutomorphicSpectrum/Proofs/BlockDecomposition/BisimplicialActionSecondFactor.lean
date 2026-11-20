@@ -121,11 +121,11 @@ variable (F)
 
 theorem cup1_add_left {n : ℕ} (y y' : Cn F 1) (z : Cn F n) :
     cup1 F (y + y') z = cup1 F y z + cup1 F y' z := by
-  simp only [cup1, map_add, add_mul]
+  simp only [cup1, map_add (f := _), add_mul]
 
 theorem cup1_add_right {n : ℕ} (y : Cn F 1) (z z' : Cn F n) :
     cup1 F y (z + z') = cup1 F y z + cup1 F y z' := by
-  simp only [cup1, map_add, mul_add]
+  simp only [cup1, map_add (f := _), mul_add]
 
 theorem cup1_zero {n : ℕ} (y : Cn F 1) : cup1 F y (0 : Cn F n) = 0 := by
   simp only [cup1, map_zero, mul_zero]
@@ -157,7 +157,7 @@ theorem map_left_eq {A B T : C} (f : A ⟶ B) (t : F.obj A ⊗[R] F.obj T) :
     TensorProduct.map (mp F f).toLinearMap LinearMap.id t =
       mp (box F) (lh f T) t := by
   induction t with
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a b =>
     refine (TensorProduct.map_tmul _ _ _ _).trans ?_
     exact (congrArg (fun y ↦ mp F f a ⊗ₜ[R] y) (mp_id F T b)).symm
@@ -166,7 +166,7 @@ theorem map_right_eq {A B T : C} (f : A ⟶ B) (t : F.obj T ⊗[R] F.obj A) :
     TensorProduct.map LinearMap.id (mp F f).toLinearMap t =
       mp (box F) (rh T f) t := by
   induction t with
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a b =>
     refine (TensorProduct.map_tmul _ _ _ _).trans ?_
     exact (congrArg (fun y ↦ y ⊗ₜ[R] mp F f b) (mp_id F T a)).symm

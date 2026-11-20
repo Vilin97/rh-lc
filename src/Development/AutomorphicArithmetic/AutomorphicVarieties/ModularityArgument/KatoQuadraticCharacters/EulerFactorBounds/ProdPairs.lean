@@ -47,7 +47,7 @@ private theorem prod_fib {G : Type} [CommMonoid G] (p M : ℕ) [NeZero p] [NeZer
     rw [hS]
     funext i
     show ZMod.castHom (dvd_mul_left M p) (ZMod M) (up p M x i + tp p M t i) = ((p : ZMod M) • x) i
-    rw [map_add, dn_up, htp, add_zero]
+    rw [map_add (f := _), dn_up, htp, add_zero]
   · intro t _ t' _ h
     funext i
     have hi := add_left_cancel (congrFun h i)

@@ -24,7 +24,7 @@ private theorem ordGe_add' {f g : MvPowerSeries (Fin M) C} {w : ℝ}
     (hf : _root_.ReciprocityTheory.PGsh.OrdGe v ρ f w) (hg : _root_.ReciprocityTheory.PGsh.OrdGe v ρ g w) : _root_.ReciprocityTheory.PGsh.OrdGe v ρ (f + g) w := by
   rw [ordGe_iff_forall_le_valuation_coeff] at *
   intro α
-  rw [map_add]
+  rw [map_add (f := _)]
   exact le_trans (le_min (hf α) (hg α)) (v.map_add _ _)
 
 open MvPowerSeries in

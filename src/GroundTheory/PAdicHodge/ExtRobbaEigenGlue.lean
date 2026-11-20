@@ -24,7 +24,7 @@ def upperPart (b : T.B) : T.B :=
     IsLocalization.Away.invSelf T.π ^ T.den b
 
 theorem lowerPart_add_upperPart (b : T.B) : T.lowerPart b + T.upperPart b = b := by
-  rw [lowerPart, upperPart, ← add_mul, ← map_add, add_sub_cancel, ← T.eq_num_mul]
+  rw [lowerPart, upperPart, ← add_mul, ← map_add (f := _), add_sub_cancel, ← T.eq_num_mul]
 
 theorem coeffB_lowerPart (b : T.B) (n : ℤ) :
     T.coeffB (T.lowerPart b) n = if n < 0 then T.coeffB b n else 0 := by

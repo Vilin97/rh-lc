@@ -8,7 +8,7 @@ private theorem UpperTheory.V.AlgebraTools.aeval_mulVec_eigen {k ι : Type} [Com
     (aeval M q) *ᵥ v = q.eval t • v := by
   induction q using Polynomial.induction_on with
   | C c => simp [Algebra.algebraMap_eq_smul_one, Matrix.smul_mulVec]
-  | add p q hp hq => rw [map_add, Matrix.add_mulVec, hp, hq, eval_add, add_smul]
+  | add p q hp hq => rw [map_add (f := _), Matrix.add_mulVec, hp, hq, eval_add, add_smul]
   | monomial n c h =>
     rw [pow_succ, ← mul_assoc, map_mul, aeval_X, ← Matrix.mulVec_mulVec, hv, Matrix.mulVec_smul, h,
       eval_mul (q := X), eval_X, smul_smul, mul_comm]

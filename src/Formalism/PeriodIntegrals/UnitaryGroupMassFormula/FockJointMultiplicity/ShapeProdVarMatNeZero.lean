@@ -84,9 +84,9 @@ private theorem pderiv_pderiv_comm_of_complex {σ : Type*} (i j : σ) (P : MvPol
   next a =>
     simp only [MvPolynomial.pderiv_C, map_zero]
   next P Q hP hQ =>
-    simp only [map_add, hP, hQ]
+    simp only [map_add (f := _), hP, hQ]
   next P n hP =>
-    simp only [Derivation.leibniz, map_add, smul_eq_mul, MvPolynomial.pderiv_X, Pi.single_apply]
+    simp only [Derivation.leibniz, map_add (f := _), smul_eq_mul, MvPolynomial.pderiv_X, Pi.single_apply]
     split_ifs <;>
       simp only [Derivation.map_one_eq_zero, map_zero, mul_zero, zero_mul, add_zero, zero_add,
         mul_one, one_mul, hP] <;> ring

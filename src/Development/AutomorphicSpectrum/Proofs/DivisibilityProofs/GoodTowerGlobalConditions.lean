@@ -45,7 +45,7 @@ theorem mCoordIdeal_map {K : Type} [Fintype K] {J : K → Type} [∀ k, Fintype 
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [mConeMap]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p n hp => simp only [map_mul, hp]; simp [mConeMap]
   ext f
   show mConeMap _ f = 0 ↔ mConeMap _ f = 0

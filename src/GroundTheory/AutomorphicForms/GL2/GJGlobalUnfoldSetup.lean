@@ -36,7 +36,7 @@ theorem measurePreserving_of_mapsTo_lattice {V : Type*} [AddCommGroup V] [Topolo
         exact Subtype.ext this
       · exact Subtype.ext (φ.symm_apply_apply _)
     · intro ξ x
-      simp [AddSubgroup.vadd_def, map_add]
+      simp [AddSubgroup.vadd_def, map_add (f := _)]
   have hmeas : ν (φ ⁻¹' D) = ν D := hfd.measure_eq hD
   have hc : (c : ℝ≥0∞) * ν D = 1 * ν D := by
     have := congrArg (fun m : Measure V => m D) heq

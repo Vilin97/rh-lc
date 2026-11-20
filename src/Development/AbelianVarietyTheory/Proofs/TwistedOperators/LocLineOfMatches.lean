@@ -70,7 +70,7 @@ theorem locW_of_semiW {M : DSModel V S} {M' : DSModel W S'} {τ : D.what₂.Tau}
   · intro Y hY Q y y' hy
     have e : tgtOp M M' τ aS Y (j Q) =
         j (locT (M.ε τ) (M'.ε τ) (M'.fr τ * Y * (M'.fr τ)⁻¹) Q + ((aS : ℂ) * Y.trace) • Q) := by
-      rw [map_add, map_smul, ← hT]
+      rw [map_add (f := _), map_smul, ← hT]
       simp [tgtOp]
     simp only [LinearMap.comp_apply]
     rw [← e]

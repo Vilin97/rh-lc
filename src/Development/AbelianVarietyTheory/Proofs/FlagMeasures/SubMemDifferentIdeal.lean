@@ -44,7 +44,7 @@ private lemma sub_mem_differentIdeal_of_eq_star (h : _root_.Formalism.BasicNotio
   have hpdeg : p.natDegree = 2 := by rw [hp_def]; compute_degree!
   have hpm : p.Monic := by rw [hp_def]; monicity!
   have hroot : aeval θ p = 0 := by
-    simp only [hp_def, map_add, map_sub, map_mul, map_pow, aeval_X, aeval_C, hs, hn]
+    simp only [hp_def, map_add (f := _), map_sub, map_mul, map_pow, aeval_X, aeval_C, hs, hn]
     ring
   have hint : IsIntegral (𝓞 F) θ := Algebra.IsIntegral.isIntegral θ
   have hdvd := minpoly.isIntegrallyClosed_dvd hint hroot

@@ -51,7 +51,7 @@ theorem eig_localization {R R' O L L' : Type} [CommRing R] [CommRing R'] [Algebr
       obtain ⟨k, hk⟩ := Finset.dvd_prod_of_mem r (Finset.mem_coe.1 hb)
       rw [smul_comm b, smul_comm (χ b), ← sub_eq_zero, ← smul_sub, hk, _root_.mul_comm, mul_smul, h1, smul_zero]
     | zero => simp
-    | add b b' _ _ e e' => rw [add_smul, e, e', map_add, add_smul]
+    | add b b' _ _ e e' => rw [add_smul, e, e', map_add (f := _), add_smul]
     | smul k b _ e => rw [smul_assoc, e, map_zsmul, smul_assoc]
   have h2 := congrArg f hc
   set_option synthInstance.maxHeartbeats 100000 in

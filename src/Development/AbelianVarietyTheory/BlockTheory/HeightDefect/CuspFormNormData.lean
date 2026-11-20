@@ -410,7 +410,7 @@ def lineRecord (D : D7) : FormsRecord D where
     · exact ⟨vAdd y f, by rw [← WithTop.coe_injective h]; simp⟩⟩
   sup σ f := ‖σ f‖
   sup_smul σ a f := by simp
-  sup_add σ f g := by rw [map_add]; exact norm_add_le _ _
+  sup_add σ f g := by rw [map_add (f := _)]; exact norm_add_le _ _
   sup_mul σ f g := by simp
   sup_mul_self σ f := by simp [sq]
   sup_conj σ f := by simp

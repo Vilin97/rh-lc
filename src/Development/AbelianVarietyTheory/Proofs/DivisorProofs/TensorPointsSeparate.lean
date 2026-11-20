@@ -63,7 +63,7 @@ theorem tensor_eq_zero_of_points_separate :
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [P, e, TensorProduct.piLeft]
-    | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
   apply hinj
   apply P.injective
   funext ψ

@@ -42,9 +42,9 @@ private theorem fix_iff {K Ω : Type} [Field K] [NumberField K] [Field Ω] [Char
     obtain ⟨a, b, hab⟩ := hmem
     rw [Rat.smul_def, Rat.smul_def, mul_one] at hab
     have hg : g x * g x = a + b * g x := by
-      rw [← map_mul, ← hab, map_add, map_mul, map_ratCast, map_ratCast]
+      rw [← map_mul, ← hab, map_add (f := _), map_mul, map_ratCast, map_ratCast]
     have hf : f x * f x = a + b * f x := by
-      rw [← map_mul, ← hab, map_add, map_mul, map_ratCast, map_ratCast]
+      rw [← map_mul, ← hab, map_add (f := _), map_mul, map_ratCast, map_ratCast]
     have hprod : (g x - f x) * (g x - ((b : Ω) - f x)) = 0 := by
       linear_combination hg - hf
     rcases mul_eq_zero.mp hprod with h1 | h1

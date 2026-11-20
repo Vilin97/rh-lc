@@ -101,7 +101,7 @@ theorem kU_add {V : Type} [CommRing V] [IsDomain V] {r : ℕ} {I : Type} [Fintyp
     (ε : I → LinearMap.BilinForm ℤ (Fin r → ℤ)) (F : Type) [Field F] [Algebra (FractionRing V) F]
     (x x' a : Fin r → ℤ) : kU s hs ε F (x + x') a = kU s hs ε F x a * kU s hs ε F x' a := by
   apply Units.ext
-  simp only [kU, Units.val_mk0, Units.val_mul, map_add, LinearMap.add_apply, ← Finset.prod_mul_distrib]
+  simp only [kU, Units.val_mk0, Units.val_mul, map_add (f := _), LinearMap.add_apply, ← Finset.prod_mul_distrib]
   refine Finset.prod_congr rfl fun i _ => zpow_add₀ ((map_ne_zero _).2
       ((map_ne_zero_iff _ (IsFractionRing.injective V (FractionRing V))).2 (hs i))) _ _
 

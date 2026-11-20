@@ -113,7 +113,7 @@ private theorem abstract_hilbert90 (σ : R ≃ₐ[k] R) (q : ℕ) (hσ : IsGal �
     obtain ⟨u, rfl⟩ := (mem_lifts _).1 hu
     obtain ⟨w, rfl⟩ := (mem_lifts _).1 hw
     refine ⟨u, w, map_injective _ O.subtype_injective ?_⟩
-    rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, ← derivative_map, ← hcp, huw, Polynomial.map_one]
+    rw [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, ← derivative_map, ← hcp, huw, Polynomial.map_one]
   have hsg : ∀ (m : ℕ) (g : GL (Fin n) S), Matrix.GeneralLinearGroup.map S.subtype (sg (s ^ m) g) =
       sg (σ ^ m) (Matrix.GeneralLinearGroup.map S.subtype g) := fun m g => by
     ext a b
@@ -228,7 +228,7 @@ private theorem galFin_eq (σ : E ≃ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) 
     · exact (sigLoc_algebraMap σ v a).symm
     · exact ((sigLoc σ v).commutes b).symm
   | add a b ha hb =>
-    rw [map_add, map_add, map_add, map_add, ha, hb]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 private theorem ev_elt (t : F) : ∀ᶠ v : HeightOneSpectrum (𝓞 F) in Filter.cofinite,
     algebraMap F (v.adicCompletion F) t ∈ 𝒪[v.adicCompletion F] := by
@@ -337,7 +337,7 @@ theorem UpperTheory.ConvolutionTheory.G.firstCohomologyBound_of_boundaryBound :
         simp only [sigLoc_pow, ← map_mul, ← map_sum, hxy j hj]
       split_ifs <;> simp⟩ _ _
     (intGL_map _ _ δ hδ hδ') (intGL_map _ _ γ hγ hγ') ⟨_, _, hu, hw, by
-      rw [cp_map, derivative_map, ← Polynomial.map_mul, ← Polynomial.map_mul, ← Polynomial.map_add, huw,
+      rw [cp_map, derivative_map, ← Polynomial.map_mul, ← Polynomial.map_mul, ← Polynomial.map_add (f := _), huw,
         Polynomial.map_one]⟩ (nm_loc σ v δ γ hN) z
   rw [sgConj] at key
   rw [e1, e2, e3, e4]

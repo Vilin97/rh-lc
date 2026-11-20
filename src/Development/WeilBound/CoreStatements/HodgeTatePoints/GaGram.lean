@@ -32,7 +32,7 @@ theorem exists_left_inv {B : Type} [CommRing B] {n : ℕ} (φ : ZMod n →+* B) 
   let Λ : (Fin N → 𝓞 E) → (Fin N → 𝓞 E) → B := fun x y => ∑ k, cc k * φ (e (b k • x) y)
   have Λadd : ∀ x x' y, Λ (x + x') y = Λ x y + Λ x' y := by
     intro x x' y
-    simp only [Λ, smul_add, map_add, AddMonoidHom.add_apply, mul_add, Finset.sum_add_distrib]
+    simp only [Λ, smul_add, map_add (f := _), AddMonoidHom.add_apply, mul_add, Finset.sum_add_distrib]
   have Λsmul : ∀ (a : 𝓞 E) x y, Λ (a • x) y = s a * Λ x y := by
     intro a x y
     have h1 : ∀ k, b k • a • x = ∑ l, (b.repr (a * b k) l) • (b l • x) := by
@@ -70,7 +70,7 @@ theorem exists_left_inv {B : Type} [CommRing B] {n : ℕ} (φ : ZMod n →+* B) 
   let f : Fin N × Module.Free.ChooseBasisIndex ℤ (𝓞 E) → (Fin N → 𝓞 E) →+ ZMod n := fun q =>
     AddMonoidHom.mk' (fun y => ((b.repr (c (y q.1)) q.2 : ℤ) : ZMod n)) (by
       intro y y'
-      simp only [Pi.add_apply, map_add, Finsupp.add_apply, Int.cast_add])
+      simp only [Pi.add_apply, map_add (f := _), Finsupp.add_apply, Int.cast_add])
   choose x hx using fun q => surj (f q)
   have hΛx : ∀ j₀ l j, Λ (x (j₀, l)) (Pi.single j 1) = if j₀ = j then cc l else 0 := by
     intro j₀ l j

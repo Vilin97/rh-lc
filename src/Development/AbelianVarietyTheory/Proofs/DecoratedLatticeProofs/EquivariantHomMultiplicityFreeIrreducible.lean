@@ -16,7 +16,7 @@ theorem tensor_eq_of_coord_contract {A B ι : Type} [AddCommGroup A] [Module ℂ
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul v w => simp
-    | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   apply (TensorProduct.equivFinsuppOfBasisRight b).injective
   ext i
   rw [key, key, h]
@@ -28,7 +28,7 @@ theorem contract_map_left {A B : Type} [AddCommGroup A] [Module ℂ A]
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v w => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem intertwining_eq_zero_of_isEmpty {G V A : Type} [Group G] [AddCommGroup V] [Module ℂ V]
     [AddCommGroup A] [Module ℂ A] (ρ : Representation ℂ G V) (α : Representation ℂ G A)

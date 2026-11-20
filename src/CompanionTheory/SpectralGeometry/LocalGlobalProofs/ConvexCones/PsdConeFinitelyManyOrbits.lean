@@ -70,7 +70,7 @@ theorem exists_vorFun_cells : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [
         ring
       rw [h2, redV_add_smul]
       exact hFred j y _ (ha0F y)
-    simpa only [map_add] using ha0 y _ hb
+    simpa only [map_add (f := _)] using ha0 y _ hb
   obtain ⟨c', hc', hBc⟩ := hγc j d hcon
   exact ⟨e, _, γ j d, c', hγ j d, fun i => Set.mem_iUnion.2 ⟨j, Set.mem_iUnion.2 ⟨d, i, rfl⟩⟩, hc', hBc⟩
 

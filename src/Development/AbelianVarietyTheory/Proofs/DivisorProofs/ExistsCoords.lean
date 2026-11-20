@@ -56,12 +56,12 @@ theorem crys_ext (hA : IsAbelianScheme A₀) {d d' : Crys (epsDP k) (GlobalTheor
   obtain ⟨z, rfl⟩ := (isBC_constMor hA).2 c'
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x c => rw [liftSemi_tmul, map_smul, map_smul, h c]
 
 def coordOf (g : DualNumber k →ₗ[k] k) (d : Crys (epsDP k) (GlobalTheory.DeRham.epsRed k) A₀) : HdR A₀ where
   toFun c := g (d ((constMor A₀).pull c))
-  map_add' a b := by rw [map_add, map_add, map_add]
+  map_add' a b := by rw [map_add (f := _), map_add (f := _), map_add (f := _)]
   map_smul' r a := by
     rw [map_smulₛₗ, map_smul, smul_eq_mul, ← Algebra.smul_def, map_smul]
     rfl

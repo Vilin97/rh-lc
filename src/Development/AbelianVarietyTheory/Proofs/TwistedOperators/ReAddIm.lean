@@ -89,7 +89,7 @@ variable {a b j}
 
 theorem cx_gen (h : Eqv a b j) (Z : Mat r s) (i : I) (P : W) : cx b Z (j i P) = j i (a Z P) := by
   conv_rhs => rw [← re_add_im Z]
-  simp only [cx, map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, h i _ (realPart_mem_unitaryLieAlgebra Z), h i _ (imaginaryPart_mem_unitaryLieAlgebra Z)]
+  simp only [cx, map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, h i _ (realPart_mem_unitaryLieAlgebra Z), h i _ (imaginaryPart_mem_unitaryLieAlgebra Z)]
 
 theorem stab (f : Module.End ℂ U) (Z : Mat r s) (hf : ∀ i P, f (j i P) = j i (a Z P)) :
     ∀ y ∈ Sp j, f y ∈ Sp j := by
@@ -109,7 +109,7 @@ theorem op_gen (h : Eqv a b j) (Z : Mat r s) (i : I) (P : W) : op h Z (jS j i P)
 def act (h : Eqv a b j) : Mat r s →ₗ[ℂ] Module.End ℂ (Sp j) where
   toFun := op h
   map_add' X Y := ext_gen j _ _ fun i P => by
-    simp only [LinearMap.add_apply, op_gen, map_add]
+    simp only [LinearMap.add_apply, op_gen, map_add (f := _)]
   map_smul' c X := ext_gen j _ _ fun i P => by
     simp only [LinearMap.smul_apply, op_gen, map_smul, RingHom.id_apply]
 
@@ -126,7 +126,7 @@ def finPart {V : Type} [AddCommGroup V] [Module ℂ V] (c : Mat r s →ₗ[ℂ] 
     rintro x y ⟨F, hF, hx, kF⟩ ⟨G, hG, hy, kG⟩
     refine ⟨F ⊔ G, inferInstance, Submodule.add_mem_sup hx hy, fun X hX w hw => ?_⟩
     obtain ⟨u, hu, v, hv, rfl⟩ := Submodule.mem_sup.1 hw
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (kF X hX u hu) (kG X hX v hv)
   smul_mem' := by
     rintro t x ⟨F, hF, hx, kF⟩

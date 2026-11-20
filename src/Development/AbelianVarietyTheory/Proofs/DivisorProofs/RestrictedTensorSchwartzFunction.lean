@@ -61,7 +61,7 @@ theorem thetaIntegral_fin : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [
   · have e : ∀ x, theta om (pure f (Function.update φ v (p + q))) x h =
         theta om (pure f (Function.update φ v p)) x h + theta om (pure f (Function.update φ v q)) x h := by
       intro x
-      simp only [theta, hadd, map_add]
+      simp only [theta, hadd, map_add (f := _)]
       exact thetaSum_add F (hp.weil.isUSplitting.pres _ _ (hmem p hp₀)) (hp.weil.isUSplitting.pres _ _ (hmem q hq))
     simp only [Model.I, e]
     exact integral_add (hconv _ (hmem p hp₀) h) (hconv _ (hmem q hq) h)

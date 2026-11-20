@@ -153,7 +153,7 @@ def colLin {R : Ranks} {ι : Type} [Fintype ι] {hc : ι → HCParam R} (C : Col
     | zero => rfl
     | succ n ih =>
       funext j
-      simp only [Formalism.ThetaLiftIndependence.chainOpM, Formalism.ThetaLiftIndependence.kerOpM, ih, Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib]
+      simp only [Formalism.ThetaLiftIndependence.chainOpM, Formalism.ThetaLiftIndependence.kerOpM, ih, Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
   map_smul' a φ := by
     unfold ColumnChain.col
     generalize R.m = n

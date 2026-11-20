@@ -19,7 +19,7 @@ def liftSub {X : Scheme.{0}} {P : X.Modules} {S : ℕ → Subobject P} (hS : ∀
     (lvl S e).arrow.app V x = t ∧ (grπ hS e).app V x ∈ W}
   add_mem' := by
     rintro _ _ ⟨x, rfl, hx⟩ ⟨y, rfl, hy⟩
-    exact ⟨x + y, map_add _ _ _, by rw [map_add]; exact W.add_mem hx hy⟩
+    exact ⟨x + y, map_add _ _ _, by rw [map_add (f := _)]; exact W.add_mem hx hy⟩
   zero_mem' := ⟨0, map_zero _, by rw [map_zero]; exact W.zero_mem⟩
   smul_mem' := by
     rintro c _ ⟨x, rfl, hx⟩
@@ -107,13 +107,13 @@ theorem span_grT_eq_top {A : Type} [CommRing A] [IsNoetherianRing A] (I : Ideal 
   obtain ⟨x', hx't, hx'W⟩ := hle ht
   have hdec : x = (incl (anti hS) (e + 1)).app (U : X.Opens) y + x' := by
     apply injective_app_of_mono (lvl S (e + 1)).arrow (U : X.Opens)
-    rw [map_add, hx't, hxy]
+    rw [map_add (f := _), hx't, hxy]
     exact congrArg (· + t) (incl_arrow_app (anti hS) (e + 1) (U : X.Opens) y).symm
   have hz : ∀ z : Γ((lvl S (e + 1 + 1) : X.Modules), (U : X.Opens)),
       (grπ (anti hS) (e + 1)).app (U : X.Opens)
         ((incl (anti hS) (e + 1)).app (U : X.Opens) z + x') =
       (grπ (anti hS) (e + 1)).app (U : X.Opens) x' := fun z => by
-    rw [map_add, incl_grπ_app, zero_add]
+    rw [map_add (f := _), incl_grπ_app, zero_add]
   rw [hdec]
   exact Eq.mpr (congrArg (· ∈ W) (hz y)) hx'W
 

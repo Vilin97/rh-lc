@@ -131,7 +131,7 @@ theorem countable_dualAt (L : Submodule ℤ (VecInf E j)) (hL : Submodule.span �
     | add y y' _ _ h1 h2 =>
       obtain ⟨a, ha⟩ := h1
       obtain ⟨c, hc⟩ := h2
-      exact ⟨a + c, by rw [map_add, ha, hc]; push_cast; ring⟩
+      exact ⟨a + c, by rw [map_add (f := _), ha, hc]; push_cast; ring⟩
     | smul n y _ h1 =>
       obtain ⟨a, ha⟩ := h1
       exact ⟨n * a, by rw [map_zsmul, ha, zsmul_eq_mul]; push_cast; ring⟩

@@ -28,7 +28,7 @@ theorem kugaGlue_holds : KugaGlue := by
     have h1 := kg_form_rTensor Hf B hB3 (lieOp π (toL X.1)) (σ * kgT (toL X.1)) (fun φ ψ => hHl _ φ ψ) x y
     have hs := hreal (toL X.1)
     rw [LinearMap.comp_apply, show kgH X = toL X.1 from rfl, kgA_apply]
-    simp only [LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add, map_smul,
+    simp only [LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add (f := _), map_smul,
       LinearMap.map_smulₛₗ, smul_eq_mul, map_mul, map_neg, Complex.conj_ofReal, map_div₀, map_ofNat, hs]
     linear_combination h1
   have hherm : ∀ (X : Herm E a) (x y : π.V ⊗[ℂ] (Fin Ξ.d → ℂ)),
@@ -39,7 +39,7 @@ theorem kugaGlue_holds : KugaGlue := by
     have h2 := kg_form_lTensor Hf B hB3 _ hD x y
     have hs := hreal (toL X.1)
     rw [LinearMap.comp_apply, show kgH X = toL X.1 from rfl, kgR_apply]
-    simp only [LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add, map_smul,
+    simp only [LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add (f := _), map_smul,
       LinearMap.map_smulₛₗ, smul_eq_mul, map_mul, map_neg, Complex.conj_ofReal, map_div₀, map_ofNat, hs]
     linear_combination h2
 

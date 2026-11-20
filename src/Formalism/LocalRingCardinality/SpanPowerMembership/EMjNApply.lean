@@ -29,7 +29,7 @@ def eMjN : M.V →+ (C.Ok (E.twI w) 1) ⊗[C.O (E.twI w)] (I.ix j → FractionRi
   map_add' x y := by
     have : crd D C I E M w j eI (x + y) = crd D C I E M w j eI x + crd D C I E M w j eI y :=
       funext fun a => by simp [crd]
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
 
 theorem eMjN_apply (x : M.V) : eMjN D C I E M w j eI x = vE D C I E w j (crd D C I E M w j eI x) := rfl
 
@@ -93,7 +93,7 @@ theorem eMjN_span (hM : M.L = Submodule.span (𝓞 D.what₂.LL) (Set.range M.b)
       rw [eMjN_b D C I E M w j eI hb]
       exact Submodule.subset_span ⟨a', rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul c x _ hx =>
       obtain ⟨r, hr⟩ := exists_int D C E w c
       rw [← algebraMap_smul D.what₂.LL c x]

@@ -82,7 +82,7 @@ def inAfHom (D : Datum p) : D.La →+ AfP p ⊗[ℚ] VQ D :=
 theorem inAf_eq (D : Datum p) (x : D.La) : inAf D x = inAfHom D x := rfl
 
 theorem inAf_add (D : Datum p) (x y : D.La) : inAf D (x + y) = inAf D x + inAf D y := by
-  simp only [inAf_eq, map_add]
+  simp only [inAf_eq, map_add (f := _)]
 
 theorem inAf_nsmul (D : Datum p) (n : ℕ) (x : D.La) : inAf D (n • x) = n • inAf D x := by
   simp only [inAf_eq, map_nsmul]
@@ -142,7 +142,7 @@ theorem bc_mem (D : Datum p) (b : D.O) {v : AfP p ⊗[ℚ] VQ D} (hv : v ∈ LaH
     refine AddSubgroup.subset_closure ⟨a, b • x, ha, ?_⟩
     simp only [actQ, LinearMap.baseChange_tmul]; rfl
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem form_inAf (D : Datum p) (x y : D.La) : formAf D (inAf D x) (inAf D y) = (D.EF x y : AfP p) := by
@@ -164,13 +164,13 @@ theorem congOne_of (D : Datum p) (f : Module.End (AfP p) (AfP p ⊗[ℚ] VQ D)) 
   | add x y _ _ hx hy =>
     obtain ⟨w, hw, e⟩ := hx
     obtain ⟨w', hw', e'⟩ := hy
-    exact ⟨w + w', add_mem hw hw', by rw [map_add, e, e', smul_add]; abel⟩
+    exact ⟨w + w', add_mem hw hw', by rw [map_add (f := _), e, e', smul_add]; abel⟩
   | neg x _ hx =>
     obtain ⟨w, hw, e⟩ := hx
     exact ⟨-w, neg_mem hw, by rw [map_neg, e, smul_neg, neg_add]⟩
 
 theorem isInt_add {a b : AfP p} (ha : IsIntAf a) (hb : IsIntAf b) : IsIntAf (a + b) := fun v => by
-  rw [map_add]; exact add_mem (ha v) (hb v)
+  rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
 
 theorem isInt_sub {a b : AfP p} (ha : IsIntAf a) (hb : IsIntAf b) : IsIntAf (a - b) := fun v => by
   rw [map_sub]; exact sub_mem (ha v) (hb v)
@@ -200,7 +200,7 @@ theorem exists_mem_KN (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L 
       obtain ⟨w', hw', e'⟩ := hk₀ n hn hc (f₁ n x)
       obtain ⟨z, hz⟩ := hf n hn hc x
       refine ⟨inAf D z + w' + k₀ w, add_mem (add_mem (inAf_mem D z) hw') (hk₀L w hw), ?_⟩
-      rw [Module.End.mul_apply, e, map_add, e', hz, inAf_add, inAf_nsmul, map_nsmul]
+      rw [Module.End.mul_apply, e, map_add (f := _), e', hz, inAf_add, inAf_nsmul, map_nsmul]
       simp only [smul_add]; abel
     rw [Module.End.one_apply]; exact sub_eq_zero.1 this
   have e01 : h₀ * h₁ = 1 := inv_of t.g g' h₀ h₁ h₀L h₀c h₁c hgg'
@@ -215,7 +215,7 @@ theorem exists_mem_KN (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L 
       obtain ⟨z, hz⟩ := t.lin n hn hc b x
       refine ⟨inAf D z + w - (actQ D b).baseChange (AfP p) w',
         sub_mem (add_mem (inAf_mem D z) hw) (bc_mem D b hw'), ?_⟩
-      rw [Module.End.mul_apply, Module.End.mul_apply, bc_inAf, e, hz, e', map_add, bc_inAf, map_nsmul, inAf_add,
+      rw [Module.End.mul_apply, Module.End.mul_apply, bc_inAf, e, hz, e', map_add (f := _), bc_inAf, map_nsmul, inAf_add,
         inAf_nsmul]
       simp only [smul_add, smul_sub]; abel
     exact sub_eq_zero.1 this
@@ -249,7 +249,7 @@ theorem exists_mem_KN (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup p) (L 
       · have hk' := congrArg (Int.cast : ℤ → AfP p) hk
         push_cast at hk'
         rw [e, e', eβ]
-        simp only [map_add, LinearMap.add_apply, map_nsmul, LinearMap.smul_apply, form_inAf, nsmul_eq_mul]
+        simp only [map_add (f := _), LinearMap.add_apply, map_nsmul, LinearMap.smul_apply, form_inAf, nsmul_eq_mul]
         push_cast
         linear_combination hk'
     exact sub_eq_zero.1 this

@@ -957,7 +957,7 @@ theorem frSR.mono {Γ Γ' : Finset ℂ} {f : ℂ → V} (h : frSR Γ f) (hs : Γ
 theorem frSR.add {Γ : Finset ℂ} {f g : ℂ → V} (h : frSR Γ f) (h' : frSR Γ g) : frSR Γ (fun Y => f Y + g Y) := by
   obtain ⟨N, hN⟩ := h
   obtain ⟨N', hN'⟩ := h'
-  exact ⟨N + N', fun Y hY => by rw [smul_add, hN Y hY, hN' Y hY, map_add]⟩
+  exact ⟨N + N', fun Y hY => by rw [smul_add, hN Y hY, hN' Y hY, map_add (f := _)]⟩
 
 theorem frSR.mulL {Γ : Finset ℂ} {f : ℂ → V} (a : V) (h : frSR Γ f) : frSR Γ (fun Y => a * f Y) := by
   obtain ⟨N, hN⟩ := h
@@ -1522,7 +1522,7 @@ def taLv (δ : D.host.E) (L : LatticeDataWithDual D) (i : ℕ) : AddSubgroup D.h
     intro a b ha hb c hc
     obtain ⟨z, hz⟩ := ha c hc
     obtain ⟨w, hw⟩ := hb c hc
-    exact ⟨z + w, by rw [add_mul, add_div, map_add, hz, hw]; push_cast; ring⟩
+    exact ⟨z + w, by rw [add_mul, add_div, map_add (f := _), hz, hw]; push_cast; ring⟩
   neg_mem' := by
     intro a ha c hc
     obtain ⟨z, hz⟩ := ha c hc
@@ -1563,7 +1563,7 @@ theorem ta_dual_ne (δ : D.host.E) (hδ : δ ≠ 0) (M : Submodule ℤ D.host.E)
   | add a b _ _ ha hb =>
     obtain ⟨z, hz⟩ := ha
     obtain ⟨w, hw⟩ := hb
-    exact ⟨z + w, by rw [map_add, smul_add, hz, hw]; push_cast; ring⟩
+    exact ⟨z + w, by rw [map_add (f := _), smul_add, hz, hw]; push_cast; ring⟩
   | smul n a _ ha =>
     obtain ⟨z, hz⟩ := ha
     refine ⟨n * z, ?_⟩

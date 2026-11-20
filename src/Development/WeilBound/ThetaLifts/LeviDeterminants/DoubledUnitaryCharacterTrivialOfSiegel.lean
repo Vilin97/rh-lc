@@ -41,7 +41,7 @@ theorem split_conj (s : A ≃ₐ[F] R₁ × R₂) (σ : E →ₐ[F] E) (x : A �
     rw [Algebra.TensorProduct.map_tmul, split_tmul, split_tmul]
     rfl
   | add x y hx hy =>
-    rw [map_add, map_add, hx, hy, map_add]
+    rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
     simp
 
 end Split
@@ -135,10 +135,10 @@ def splitS (S : Finset (HeightOneSpectrum (𝓞 F))) : AF F ≃ₐ[F] RS F S × 
       Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mem_span_singleton_self _)
     refine ⟨eps S * a + (1 - eps S) * b, Prod.ext ?_ ?_⟩
     · change toRS S _ = toRS S a
-      rw [map_add, map_mul, map_mul, map_sub, map_one, toRS_eps]
+      rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, toRS_eps]
       ring
     · change Ideal.Quotient.mk (Ideal.span {eps S}) _ = Ideal.Quotient.mk (Ideal.span {eps S}) b
-      rw [map_add, map_mul, map_mul, map_sub, map_one, h0]
+      rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, h0]
       ring⟩
 
 theorem splitS_eps (S : Finset (HeightOneSpectrum (𝓞 F))) : (splitS S (eps S)).2 = 0 :=
@@ -170,7 +170,7 @@ theorem triv_piece (hσ : IsCMExt F E σ) {β : Type} [Fintype β] [DecidableEq 
   · induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [hi]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   · obtain ⟨y, hy⟩ := hg i j
     change (split E (splitS S) ((g.1.1 - 1 : Matrix _ _ (AE F E)) i j)).2 = 0
     have e : algebraMap (AF F) (AE F E) (eps S) = eps S ⊗ₜ[F] (1 : E) := rfl

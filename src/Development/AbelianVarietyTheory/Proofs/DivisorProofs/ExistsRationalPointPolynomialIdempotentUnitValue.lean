@@ -60,11 +60,11 @@ theorem eps_eq_sum (S : Finset (HeightOneSpectrum (𝓞 F))) :
   have hext : ∀ a b : AF F, fstA F a = fstA F b → sndA F a = sndA F b → a = b := fun a b h1 h2 => Prod.ext h1 h2
   refine hext _ _ ?_ (fin_ext fun u => ?_)
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_add, map_sum]
+    · rw [map_add (f := _), map_sum]
     change (1 : Ainf F) = 1 + ∑ v ∈ S, (0 : Ainf F)
     rw [Finset.sum_const_zero, add_zero]
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_add, map_sum, map_add, map_sum]
+    · rw [map_add (f := _), map_sum, map_add (f := _), map_sum]
     change evalV F u (ind S) = evalV F u 0 + ∑ v ∈ S, evalV F u (ind {v})
     simp_rw [ev_ind, Finset.mem_singleton, map_zero, zero_add]
     rw [Finset.sum_ite_eq]
@@ -98,7 +98,7 @@ theorem finite_maximal_not_mem_eps (S : Finset (HeightOneSpectrum (𝓞 F))) :
   simp only [Set.mem_union, Set.mem_setOf_eq, Set.mem_iUnion, not_or, not_and, not_not, not_exists] at hn
   apply hem
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [eps_eq_sum, map_add, map_sum]
+    rw [eps_eq_sum, map_add (f := _), map_sum]
   exact m.add_mem (hn.1 hm) (m.sum_mem fun v hv => hn.2 v hv hm)
 
 end GlobalTheory.DenseAvoid

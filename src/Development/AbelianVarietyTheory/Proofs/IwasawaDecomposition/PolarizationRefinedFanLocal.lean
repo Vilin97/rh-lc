@@ -45,7 +45,7 @@ theorem orders {X : Type} [AddCommGroup X] {ι : Type} [Fintype ι] (b : Module.
     have h2 := hn y
     have h3 := hn z
     have h4 := hs y z
-    simp only [map_add, LinearMap.add_apply] at h1
+    simp only [map_add (f := _), LinearMap.add_apply] at h1
     linarith
   refine ⟨∑ i, ∑ j, ((n (b i) + n (b j)) * (a i j).toNat + n (b i + b j) * (-a i j).toNat),
     ∑ i, ∑ j, (n (b i + b j) * (a i j).toNat + (n (b i) + n (b j)) * (-a i j).toNat), ?_, ?_, ?_⟩

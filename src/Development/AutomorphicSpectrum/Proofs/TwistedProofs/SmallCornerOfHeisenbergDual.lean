@@ -23,7 +23,7 @@ theorem st_mul (σ : L →+* L) (A B : Matrix (Fin N) (Fin N) L) : st σ (A * B)
 
 theorem st_add (σ : L →+* L) (A B : Matrix (Fin N) (Fin N) L) : st σ (A + B) = st σ A + st σ B := by
   ext i j
-  simp [st, map_add]
+  simp [st, map_add (f := _)]
 
 theorem st_one (σ : L →+* L) : st σ (1 : Matrix (Fin N) (Fin N) L) = 1 := by
   ext i j
@@ -218,7 +218,7 @@ theorem smallCorner_of_heis : Heis → Dual → SmallCorner := by
     rw [hb]
     simp [dotProduct, Finset.sum_neg_distrib]
   have hc : (w + xx * τ) + σ (w + xx * τ) = -∑ j, r j * σ (r j.rev) := by
-    rw [← hsum, map_add, map_mul, hσxx]
+    rw [← hsum, map_add (f := _), map_mul, hσxx]
     have hrb : r ⬝ᵥ b = xx + w + σ w := by rw [hxx]; ring
     rw [hrb]
     linear_combination xx * hτ1

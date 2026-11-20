@@ -93,7 +93,7 @@ theorem map_sigR {R R' : Type} [CommRing R] [CommRing R'] [Algebra F R] [Algebra
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [sigR]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 def pI : AF F ⊗[F] E →ₐ[F] Ainf F ⊗[F] E := Algebra.TensorProduct.map (fstA F) (AlgHom.id F E)
 

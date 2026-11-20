@@ -71,7 +71,7 @@ private theorem int_rep {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteValuat
     rw [← IsLocalRing.residue_eq_zero_iff]
     simp only [P, Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X, Polynomial.eval_C]
     rw [hc]
-    simp only [map_sub, map_pow, map_add, map_mul]
+    simp only [map_sub, map_pow, map_add (f := _), map_mul]
     linear_combination hab
   have hd : P.derivative.eval x0 = 2 * x0 := by
     simp only [P, Polynomial.derivative_sub, Polynomial.derivative_X_pow, Polynomial.derivative_C, sub_zero,
@@ -201,7 +201,7 @@ private theorem choice {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteValuati
     · show s0⁻¹ * algebraMap O K (s * a2) = s0⁻¹ * (algebraMap O K a2 * algebraMap O K s)
       rw [map_mul, mul_comm (algebraMap O K s)]
     · rw [hT, IsUnit.unit_spec]
-      simp only [map_add, map_mul, map_pow, map_ofNat]
+      simp only [map_add (f := _), map_mul, map_pow, map_ofNat]
       ring
   · have hm1 : (u0 : O) - 1 ^ 2 ∈ IsLocalRing.maximalIdeal O := by
       rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
@@ -240,8 +240,8 @@ private theorem choice {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteValuati
         linear_combination (ci ^ 2 * h2i ^ 2 * (1 + ε * s ^ 2) ^ 2) * hc
           - ((c * ci + 1) * h2i ^ 2 * (1 + ε * s ^ 2) ^ 2) * hci - ((ε * s ^ 2) * (2 * h2i + 1)) * h2
       have k2 := congrArg (algebraMap O K) k1
-      simp only [map_sub, map_add, map_mul, map_pow, map_neg, map_one] at k2
-      simp only [map_sub, map_add, map_mul, map_pow, map_neg, map_one]
+      simp only [map_sub, map_add (f := _), map_mul, map_pow, map_neg, map_one] at k2
+      simp only [map_sub, map_add (f := _), map_mul, map_pow, map_neg, map_one]
       linear_combination k2
     · rw [hL.2.2.2 _ _ hΔ0 hsq, hL.2.2.2 _ _ hΔ0 hsq]
     · show s0⁻¹ * algebraMap O K (ci * h2i * (1 + ε * s ^ 2))
@@ -256,8 +256,8 @@ private theorem choice {O K : Type} [CommRing O] [IsDomain O] [IsDiscreteValuati
           + ((1 + ε * s ^ 2) - (1 + 2 * (ε * s ^ 2)) * ((1 + ε * s ^ 2) * u1i)) * h2
           - (1 + 2 * (ε * s ^ 2)) * h1i
       have k2 := congrArg (algebraMap O K) k1
-      simp only [map_add, map_mul, map_pow, map_zero, map_ofNat, map_one] at k2
-      simp only [map_add, map_mul, map_pow, map_zero, map_ofNat, map_one]
+      simp only [map_add (f := _), map_mul, map_pow, map_zero, map_ofNat, map_one] at k2
+      simp only [map_add (f := _), map_mul, map_pow, map_zero, map_ofNat, map_one]
       linear_combination k2
 
 private theorem root_tr {K : Type} [Field K] {τ : K} {u : Etau K τ} (hu : u ^ 2 = -ω) (hn : QuadraticAlgebra.norm u = 1) :
@@ -442,7 +442,7 @@ theorem UpperTheory.V.Z.Sym.Loc.kapM :
   have htr : QuadraticAlgebra.trace (⟨algebraMap O K xr, algebraMap O K yr⟩ : Etau K τ)
       = algebraMap O K (2 * xr + ((ε : O) * s ^ 2 - 2) * yr) := by
     show 2 * algebraMap O K xr + τ * algebraMap O K yr = _
-    rw [map_add, map_mul, map_mul, hτ0, map_ofNat]
+    rw [map_add (f := _), map_mul, map_mul, hτ0, map_ofNat]
   have ht2 := root_tr hu2 hnorm
   have ht0u : IsUnit (2 * xr + ((ε : O) * s ^ 2 - 2) * yr) := by
     have h5 : (2 * xr + ((ε : O) * s ^ 2 - 2) * yr) ^ 2 = u0 := by

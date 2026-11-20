@@ -28,7 +28,7 @@ variable {I N}
 theorem phi_add (d : ℕ) (p q : MvPolynomial (Fin (N + 1)) (reesAlgebra I)) :
     phi I N d (p + q) = phi I N d p + phi I N d q := by
   unfold GlobalTheory.CompanionTheory.GE.Lift.phi
-  rw [map_add, Polynomial.coeff_add]
+  rw [map_add (f := _), Polynomial.coeff_add]
 
 theorem phi_sub (d : ℕ) (p q : MvPolynomial (Fin (N + 1)) (reesAlgebra I)) :
     phi I N d (p - q) = phi I N d p - phi I N d q := by

@@ -142,7 +142,7 @@ theorem zhat_move {Λ : Submodule (𝓞 E) S.V} {T : E} (F : LFlag S r T) {n : S
   have key : ∀ c, S.hT (n.symm (frame F a)) (f c) = S.hT (n.symm (frame F a)) (f' c) := by
     intro c
     have e1 : n.symm (frame F a) = frame F a + (n.symm (frame F a) - frame F a) := by abel
-    rw [e1, map_add, LinearMap.add_apply, LinearMap.add_apply, h a c, hspan _ (hw a) c]
+    rw [e1, map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, h a c, hspan _ (hw a) c]
   calc S.hT (frame F a) (n (rAct β f b))
       = S.hT (n (n.symm (frame F a))) (n (rAct β f b)) := by rw [n.apply_symm_apply]
     _ = S.hT (n.symm (frame F a)) (rAct β f b) := Saturated.isom_apply hn.1.1 _ _
@@ -239,7 +239,7 @@ theorem flagStabilizer_conj_mem {T : D.host.E} {F0 : FlagG (VS D) D.R.rS T} {Λ 
     intro x hx hw
     have hnx : k (n x) = n x := by
       have e1 : n x = x + (n x - x) := by abel
-      rw [e1, map_add, hx, hfix _ hw]
+      rw [e1, map_add (f := _), hx, hfix _ hw]
     show n.symm (k (n x)) = x
     rw [hnx]
     exact n.symm_apply_apply x

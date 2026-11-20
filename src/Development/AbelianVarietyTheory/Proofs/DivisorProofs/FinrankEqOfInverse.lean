@@ -188,7 +188,7 @@ theorem eigPart_P (hPI : P * I = 1) (hIP : I * P = ρ e) (hact : ∀ x, ρ' (π 
   obtain ⟨h1, h2⟩ := hy
   refine ⟨eig_P C hIP hact hπ (pi_e hker) τ h1, ?_⟩
   obtain ⟨a, ⟨t, ht, rfl⟩, b, hb, rfl⟩ := Submodule.mem_sup.1 h2
-  rw [map_add, toLin_incl]
+  rw [map_add (f := _), toLin_incl]
   exact Submodule.add_mem_sup ⟨_, hL t ht, rfl⟩ (sup_P C hPI hIP hact hπ hker hinj he2 τ hb)
 
 theorem eigPart_I (hPI : P * I = 1) (hIP : I * P = ρ e)
@@ -200,7 +200,7 @@ theorem eigPart_I (hPI : P * I = 1) (hIP : I * P = ρ e)
   obtain ⟨h1, h2⟩ := hy
   refine ⟨eig_I C hPI hIP hcomm hact τ h1, ?_⟩
   obtain ⟨a, ⟨t, ht, rfl⟩, b, hb, rfl⟩ := Submodule.mem_sup.1 h2
-  rw [map_add, toLin_incl]
+  rw [map_add (f := _), toLin_incl]
   exact Submodule.add_mem_sup ⟨_, hL t ht, rfl⟩ (sup_I C hPI hIP hcomm hact hπ τ hb)
 
 theorem basis_transport (f : (Fin h → C) →ₗ[C] (Fin h' → C)) (g : (Fin h' → C) →ₗ[C] (Fin h → C))

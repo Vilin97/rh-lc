@@ -40,7 +40,7 @@ theorem dualL_fg {n : ℕ} (τ : E →+* E) (J : Matrix (Fin n) (Fin n) E) (hJ :
       | zero => simp [hform]
       | add x x' _ _ hx hx' =>
         have e : hform τ J (x + x') y = hform τ J x y + hform τ J x' y := by
-          simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+          simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
         rw [e, hx, hx', add_zero]
       | smul c x _ hx => rw [GlobalTheory.LevelHecke.DualConj.hform_smul_left, hx, mul_zero]
     have hJy : J *ᵥ y = 0 := by

@@ -119,12 +119,12 @@ theorem exists_local_iso_scalar_of_reG : _root_.GlobalTheory.FunPr.ThetaLocalInp
     rw [one_smul, one_smul] at hsum
     simp only [LinearMap.sub_apply, LinearMap.smul_apply, Module.End.one_apply] at hy
     have e : Rf.p v (φ + c • χ) = T (Rf.p v χ) := by
-      rw [map_add, map_smul, ← hy]; abel
+      rw [map_add (f := _), map_smul, ← hy]; abel
     have := comm h hh χ hχ χ₁ hχ₁ hc (φ + c • χ) (add_mem hφ ((SB (Fin a × Fin (a + a') → Fv F v)).smul_mem c hχ)) (φ₁ + c • χ₁)
       (add_mem hφ₁ ((SB (Fin a × Fin (a + a') → Fv F v)).smul_mem c hχ₁)) hsum e
     refine ⟨Rf.p v χ₁, ?_⟩
     simp only [LinearMap.sub_apply, LinearMap.smul_apply, Module.End.one_apply]
-    rw [← this, map_add, map_smul]; abel
+    rw [← this, map_add (f := _), map_smul]; abel
   obtain ⟨l, hl⟩ := scalar_of_irred (fun N => ∀ h ∈ UAt σ G.W (evFin F v), ∀ φ ∈ SB (Fin a × Fin (a + a') → Fv F v),
       ∀ φ₁ ∈ SB (Fin a × Fin (a + a') → Fv F v), Acts (evFin F v) (om (1, h)) φ φ₁ → Rf.p v φ ∈ N → Rf.p v φ₁ ∈ N)
     hrank (hf.irred v) T hker hran

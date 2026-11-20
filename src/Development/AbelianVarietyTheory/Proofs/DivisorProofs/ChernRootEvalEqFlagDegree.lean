@@ -39,7 +39,7 @@ theorem coeff_mul_of_isHomogeneous {σ : Type} (P A : MvPolynomial σ ℝ) (d : 
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hab
     have hb : AddMonoidAlgebra.coeff A b = 0 := by
       refine hA.coeff_eq_zero fun h1 => ?_
-      have h2 : a.degree + b.degree = d.degree := by rw [← hab, map_add]
+      have h2 : a.degree + b.degree = d.degree := by rw [← hab, map_add (f := _)]
       have ha : a = 0 := (Finsupp.degree_eq_zero_iff a).1 (by omega)
       apply hne
       subst ha

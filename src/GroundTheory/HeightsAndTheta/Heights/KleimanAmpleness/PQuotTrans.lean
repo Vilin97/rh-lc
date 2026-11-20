@@ -111,7 +111,7 @@ theorem subsingleton_H_one_of_exact {A B C : Cell U → Type v}
     exact hinj J.1 ((congrFun h2 J).trans (map_zero (ι J.1)).symm)
   obtain ⟨v, hv⟩ := hA g hdg
   refine ⟨w + Cech.mapC (R := R) (G := A) (G' := B) ι 0 v, ?_⟩
-  rw [map_add, ← hιd, hv, hg', add_sub_cancel]
+  rw [map_add (f := _), ← hιd, hv, hg', add_sub_cancel]
 
 end CechFacts
 

@@ -50,7 +50,7 @@ theorem coeff_mConeMapQ (y : (Σ k, ι k) → Ω) (f : MvPolynomial (Σ k, ι k)
     by_cases h : n = Finsupp.weight (NumbersDVR.blockWeight ι) m
     · rw [if_pos h, if_pos (by rw [h])]
     · rw [if_neg h, if_neg (fun h' => h (Finsupp.equivFunOnFinite.symm.injective h').symm), map_zero]
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, map_add (f := _), map_add (f := _)]
 
 omit [DecidableEq K] [CharZero Ω] in
 
@@ -101,7 +101,7 @@ theorem proof : PullConeDegree.Statement := by
   have hψg : mConeMapQ y g =
       ∑ j, mConeMapQ y (b j) * monomial (Finsupp.equivFunOnFinite.symm e) (aeval y (L j)) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← huv, map_add, RingHom.mem_ker.mp hu, zero_add, ← hb, map_sum]
+      rw [← huv, map_add (f := _), RingHom.mem_ker.mp hu, zero_add, ← hb, map_sum]
     simp only [map_mul, hmapL]
 
   refine ⟨fun j => weightedHomogeneousComponent (NumbersDVR.blockWeight ι) (d - e) (b j),

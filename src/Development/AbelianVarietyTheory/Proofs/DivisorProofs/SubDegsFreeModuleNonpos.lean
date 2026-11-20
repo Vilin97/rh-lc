@@ -93,7 +93,7 @@ theorem tensorAct_comm {O : Type} [CommRing O] {F F' : C.Modules} {ρ : O →+* 
     act (tensorAct k ρ) x ≫ φ = φ ≫ act (tensorAct k ρ') x := by
   induction x with
   | tmul c a => rw [act_tensorAct_tmul, act_tensorAct_tmul, Linear.smul_comp, Linear.comp_smul, h a]
-  | add x y hx hy => simp only [act, map_add] at *; rw [Preadditive.add_comp, Preadditive.comp_add, hx, hy]
+  | add x y hx hy => simp only [act, map_add (f := _)] at *; rw [Preadditive.add_comp, Preadditive.comp_add, hx, hy]
 
 theorem proj_eigenMap {O ι : Type} [CommRing O] [DecidableEq ι] {τ : ι → (O →+* k)} (hτ : IsSplitBy τ)
     {F F' : C.Modules} {ρ : O →+* End F} {ρ' : O →+* End F'} {φ : F ⟶ F'} (h : IsEquivariant ρ ρ' φ)

@@ -96,7 +96,7 @@ theorem decomp (h : Good Q) {S : AdjoinRoot Q} (hS : S ≠ 0) (hσS : sig Q h S 
     ∃ a b : Kf Q h, z = (a : AdjoinRoot Q) + S * (b : AdjoinRoot Q) := by
   have h2 : (2 : AdjoinRoot Q) ≠ 0 := two_ne_zero
   refine ⟨⟨(z + sig Q h z) / 2, ?_⟩, ⟨(z - sig Q h z) / (2 * S), ?_⟩, ?_⟩
-  · rw [mem_Kf, map_div₀, map_add, sig_sig, map_ofNat]
+  · rw [mem_Kf, map_div₀, map_add (f := _), sig_sig, map_ofNat]
     ring
   · rw [mem_Kf, map_div₀, map_sub, map_mul, sig_sig, map_ofNat, hσS]
     field_simp

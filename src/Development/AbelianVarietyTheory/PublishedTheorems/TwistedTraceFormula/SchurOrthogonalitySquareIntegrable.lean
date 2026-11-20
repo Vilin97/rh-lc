@@ -65,7 +65,7 @@ def coefGraph (μ : Measure G) (π : G → (H →L[ℂ] H)) (w : H) :
     intro a b ha hb
     change ((a.snd + b.snd : Lp ℂ 2 μ) : G → ℂ) =ᵐ[μ] fun g => ⟪w, π g (a.fst + b.fst)⟫_ℂ
     filter_upwards [Lp.coeFn_add a.snd b.snd, ha, hb] with g h1 h2 h3
-    rw [h1, Pi.add_apply, h2, h3, map_add, inner_add_right]
+    rw [h1, Pi.add_apply, h2, h3, map_add (f := _), inner_add_right]
   smul_mem' := by
     intro c a ha
     change ((c • a.snd : Lp ℂ 2 μ) : G → ℂ) =ᵐ[μ] fun g => ⟪w, π g (c • a.fst)⟫_ℂ

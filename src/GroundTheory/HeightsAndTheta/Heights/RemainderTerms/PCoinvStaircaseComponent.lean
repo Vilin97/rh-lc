@@ -28,8 +28,8 @@ theorem CoinvStaircaseComponent.proof (h1 : CoinvStaircaseDegree.Statement) :
   | add x y _ _ hx hy =>
     obtain ⟨hx1, cx, hx2⟩ := hx
     obtain ⟨hy1, cy, hy2⟩ := hy
-    refine ⟨fun d hd => by rw [map_add, hx1 d hd, hy1 d hd, add_zero], cx + cy, ?_⟩
-    rw [map_add, hx2, hy2, C_add, add_mul]
+    refine ⟨fun d hd => by rw [map_add (f := _), hx1 d hd, hy1 d hd, add_zero], cx + cy, ?_⟩
+    rw [map_add (f := _), hx2, hy2, C_add, add_mul]
   | smul a x _ hx =>
     obtain ⟨hx1, cx, hx2⟩ := hx
     refine ⟨fun d hd => by rw [map_smul, hx1 d hd, smul_zero], a * cx, ?_⟩

@@ -73,7 +73,7 @@ theorem eigen_of_norm_le {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)}
   have hyx : y = y0 + x := funext hsum
   have hadd : twAct act χ u U g y = twAct act χ u U g y0 + twAct act χ u U g x := by
     have e : (fun a => act g (y a)) = (fun a => act g (y0 a)) + fun a => act g (x a) := by
-      funext a; rw [hsum a, map_add]; rfl
+      funext a; rw [hsum a, map_add (f := _)]; rfl
     simp only [twAct]
     rw [e, Matrix.mulVec_add, smul_add]
   have hc : chiC χ u g ∈ intC (Ks K m) := ⟨chiC_mem_inC χ u g _, (norm_chiC hχ u g).le⟩

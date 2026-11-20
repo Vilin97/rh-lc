@@ -40,7 +40,7 @@ theorem zz_split (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (T T' : F) :
   simp only [Matrix.add_apply, Matrix.of_apply, cor]
   split_ifs
   · have h0 : g.e.symm (-T / (g.q : F), T' / (g.q : F)) + g.e.symm (T / (g.q : F), -T' / (g.q : F)) = 0 := by
-      rw [← map_add, Prod.mk_add_mk]
+      rw [← map_add (f := _), Prod.mk_add_mk]
       have e : (-T / (g.q : F) + T / (g.q : F), T' / (g.q : F) + -T' / (g.q : F)) = (0 : F × F) :=
         Prod.ext (by simp [neg_div]) (by simp [neg_div])
       rw [e, map_zero]

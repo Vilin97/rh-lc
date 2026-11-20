@@ -57,9 +57,9 @@ theorem exists_denom : ∃ D : ℕ, 1 ≤ D ∧ ∀ o : 𝓞 I.E, ∀ j : Fin 2,
     obtain ⟨r, hr⟩ := hx j
     obtain ⟨r', hr'⟩ := hy' j
     refine ⟨r + r', ?_⟩
-    rw [map_add, ← hr, ← hr']
+    rw [map_add (f := _), ← hr, ← hr']
     push_cast
-    rw [map_add, Finsupp.add_apply, mul_add]
+    rw [map_add (f := _), Finsupp.add_apply, mul_add]
   | smul a x _ hx =>
     intro j
     obtain ⟨r, hr⟩ := hx j

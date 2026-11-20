@@ -55,7 +55,7 @@ theorem map_pr_eq_one {D : D7} {k k' : Type} [Field k] [ValuativeRel k] [Topolog
   rw [Matrix.map_apply]
   have h2 : mt V g a b = (mt V g - 1) a b + (1 : Matrix (Fin V.rank) (Fin V.rank) (AE D)) a b := by
     rw [Matrix.sub_apply, sub_add_cancel]
-  rw [h2, map_add, ← hg a b, map_mul, hpr, zero_mul, zero_add]
+  rw [h2, map_add (f := _), ← hg a b, map_mul, hpr, zero_mul, zero_add]
   by_cases hab : a = b <;> simp [Matrix.one_apply, hab]
 
 theorem locHom_eq_one {D : D7} {k k' : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]

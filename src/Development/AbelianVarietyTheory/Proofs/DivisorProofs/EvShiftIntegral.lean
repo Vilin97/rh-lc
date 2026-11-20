@@ -65,7 +65,7 @@ theorem ev_shift_integral : ∀ {F E : Type} [Field F] [NumberField F] [Field E]
     intro f hf g hg
     obtain ⟨φf, hφf, rfl⟩ := hι.bij.surjOn hf
     obtain ⟨φg, hφg, rfl⟩ := hι.bij.surjOn hg
-    rw [← map_add, hΛ _ (add_mem hφf hφg), hΛ _ hφf, hΛ _ hφg, map_add, map_add]
+    rw [← map_add (f := _), hΛ _ (add_mem hφf hφg), hΛ _ hφf, hΛ _ hφg, map_add (f := _), map_add (f := _)]
     rfl
   have hsmul : ∀ z : ℂ, ∀ f ∈ SB (Matrix (Fin (b + 2)) (Fin (a + (b + 2))) (Fv F B.v₁)), Λ (z • f) = z * Λ f := by
     intro z f hf

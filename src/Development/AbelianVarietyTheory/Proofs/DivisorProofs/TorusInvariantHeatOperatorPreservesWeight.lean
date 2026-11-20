@@ -22,7 +22,7 @@ theorem valR_eq' {A : Type} [CommRing A] {X : Scheme.{0}} (x : Sp A ⟶ X) (U : 
 
 theorem valR_add' {A : Type} [CommRing A] {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U)
     (f g : Γ(X, U)) : valR x U (f + g) = valR x U f + valR x U g := by
-  simp only [valR_eq' x U h, map_add]
+  simp only [valR_eq' x U h, map_add (f := _)]
 
 theorem valR_sub' {A : Type} [CommRing A] {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (h : ⊤ ≤ x ⁻¹ᵁ U)
     (f g : Γ(X, U)) : valR x U (f - g) = valR x U f - valR x U g := by

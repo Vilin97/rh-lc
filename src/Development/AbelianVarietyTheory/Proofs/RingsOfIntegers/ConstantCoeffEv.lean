@@ -23,7 +23,7 @@ theorem constantCoeff_ev {a : Fin m → Pt k n d} (ha : ∀ j i, constantCoeff (
   have h0 : constantCoeff (f - C (constantCoeff f)) = 0 := by simp
   unfold ev
   conv_lhs => rw [hsplit]
-  rw [subst_add hs, map_add, constantCoeff_subst_eq_zero hs (fun q => ha q.1 q.2) h0, add_zero]
+  rw [subst_add hs, map_add (f := _), constantCoeff_subst_eq_zero hs (fun q => ha q.1 q.2) h0, add_zero]
   simp
 
 theorem ev_ev {a : Fin m → Pt k n d} (ha : ∀ j i, constantCoeff (a j i) = 0)
@@ -71,7 +71,7 @@ private theorem pderiv_subst_coe_mvPolynomial_eq_sum {σ τ : Type} [Fintype σ]
     intro r _
     rw [pderiv_C, ← substAlgHom_apply hA, map_zero, zero_mul]
   | add f g hf hg =>
-    simp only [MvPolynomial.coe_add, subst_add hA, map_add, hf, hg, add_mul, Finset.sum_add_distrib]
+    simp only [MvPolynomial.coe_add, subst_add hA, map_add (f := _), hf, hg, add_mul, Finset.sum_add_distrib]
   | mul_X f r0 hf =>
     rw [MvPolynomial.coe_mul, MvPolynomial.coe_X]
     simp only [← substAlgHom_apply hA] at hf ⊢
@@ -81,7 +81,7 @@ private theorem pderiv_subst_coe_mvPolynomial_eq_sum {σ τ : Type} [Fintype σ]
       · subst hr
         rw [pderiv_X_self, map_one]
       · rw [pderiv_X_of_ne (Ne.symm hr), map_zero]
-    simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul, substAlgHom_X, hX, hf, mul_ite,
+    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, substAlgHom_X, hX, hf, mul_ite,
       mul_one, mul_zero, add_mul, Finset.sum_add_distrib, ite_mul, zero_mul, Finset.sum_ite_eq',
       Finset.mem_univ, if_true, Finset.mul_sum, mul_assoc]
 
@@ -97,7 +97,7 @@ private theorem pderiv_subst_eq_sum_of_constantCoeff_eq_zero {σ τ : Type} [Fin
     apply coeff_subst_congr_lemma hA
     intro z hz
     rw [MvPolynomial.coeff_coe, coeff_truncTotal]
-    rw [map_add, Finsupp.degree_single] at hz
+    rw [map_add (f := _), Finsupp.degree_single] at hz
     omega
   rw [coeff_pderiv, h1, ← coeff_pderiv, pderiv_subst_coe_mvPolynomial_eq_sum hS]
   set_option synthInstance.maxHeartbeats 100000 in
@@ -108,10 +108,10 @@ private theorem pderiv_subst_eq_sum_of_constantCoeff_eq_zero {σ τ : Type} [Fin
   intro z hz
   have hxy := Finset.HasAntidiagonal.mem_antidiagonal.mp hy
   have h2 : y.1.degree ≤ x.degree := by
-    rw [← hxy, map_add]
+    rw [← hxy, map_add (f := _)]
     omega
   rw [coeff_pderiv, coeff_pderiv, MvPolynomial.coeff_coe, coeff_truncTotal]
-  rw [map_add, Finsupp.degree_single]
+  rw [map_add (f := _), Finsupp.degree_single]
   omega
 
 theorem pderiv_ev {a : Fin m → Pt k n d} (ha : ∀ j i, constantCoeff (a j i) = 0)

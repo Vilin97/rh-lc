@@ -243,7 +243,7 @@ theorem mem_baseChange_iInf_ker [Finite ι] (φ : ι → V →ₗ[K] V) {x : A �
     | zero => simp
     | add y z hy hz =>
       have := add_mem hy hz
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       convert this using 1
       abel
     | tmul a v =>
@@ -319,7 +319,7 @@ theorem injective_rd (Z : CellTie hρ Y rd) : Function.Injective rd := by
     rw [Z.thU_eq ∅ 0 d hQ (fun _ => x) fun a => by rw [hx, Z.th_eq, ρ.xi_of_empty i j b Y (by simp)], grpSum,
       Finset.sum_eq_single 0 (fun a _ h => absurd (funext fun P => isEmptyElim P) h)
         (fun h => absurd (@Finset.mem_univ _ (_) _) h), map_zero, coefAt_tmul_single, if_pos rfl]
-  have h1 := key (Y.th i _ b d + f) (by rw [map_add, hf, add_zero])
+  have h1 := key (Y.th i _ b d + f) (by rw [map_add (f := _), hf, add_zero])
   rw [key _ rfl] at h1
   exact left_eq_add.1 h1
 
@@ -374,7 +374,7 @@ theorem mem_baseChange_of_hasType (Z : CellTie hρ Y rd) (hA : ActRead rd) {k : 
       rdK rd hρ k y (g * κ) - ρ.e i b (Y.psiU i b u : (FractionRing (X.O i))ˣ) * rdK rd hρ k y g := fun y => by
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y z hy hz => simp only [map_add, Pi.add_apply, hy, hz]; ring
+    | add y z hy hz => simp only [map_add (f := _), Pi.add_apply, hy, hz]; ring
     | tmul a f =>
       rw [LinearMap.lTensor_tmul, rdK_tmul, rdK_tmul]
       change ρ.eOk i b k a * rd (Y.actG i _ b u f - ((Y.psiU i b u : (FractionRing (X.O i))ˣ) : FractionRing (X.O i)) • f) g =

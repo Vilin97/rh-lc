@@ -46,7 +46,7 @@ theorem nonempty_equiv_of_conj {π : Representation ℂ G V} {σ : Representatio
   have hinv : ∀ g w, inv (σ g w) = π g (inv w) := fun g w => hφ.1 (by rw [hc, h1, h1])
   let L : W →ₗ[ℂ] U :=
     { toFun := fun w => ψ (inv w)
-      map_add' := fun a b => by simp only [map_add]
+      map_add' := fun a b => by simp only [map_add (f := _)]
       map_smul' := fun c a => by
         simp only [map_smulₛₗ, RingHom.id_apply]
         simp }

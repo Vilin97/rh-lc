@@ -63,7 +63,7 @@ theorem exists_homog {S : Type*} [CommRing S] (χ : MRing ι →+* S) (c : ∀ k
       isMultiHomog_add' (isMultiHomog_mul h₁ (isMultiHomog_coordProd c n₂)) ?_, ?_⟩
     · rw [add_comm n₁]
       exact isMultiHomog_mul h₂ (isMultiHomog_coordProd c n₁)
-    · rw [map_add, map_mul, map_mul, hχp, hχp, mul_one, mul_one, e₁, e₂, map_add]
+    · rw [map_add (f := _), map_mul, map_mul, hχp, hχp, mul_one, mul_one, e₁, e₂, map_add (f := _)]
   | mul_X p i hp =>
     obtain ⟨n, G, h, e⟩ := hp
     exact ⟨n + Pi.single i.1 1, G * X i, isMultiHomog_mul h (isMultiHomog_X i.1 i.2), by
@@ -90,7 +90,7 @@ theorem exists_homog_mem {S : Type*} [CommRing S] (χ : MRing ι →+* S) (c : �
       isMultiHomog_add' (isMultiHomog_mul h₁ (isMultiHomog_coordProd c n₂)) ?_, ?_⟩
     · rw [add_comm n₁]
       exact isMultiHomog_mul h₂ (isMultiHomog_coordProd c n₁)
-    · rw [map_add, map_mul, map_mul, hχp, hχp, mul_one, mul_one, e₁, e₂, map_add]
+    · rw [map_add (f := _), map_mul, map_mul, hχp, hχp, mul_one, mul_one, e₁, e₂, map_add (f := _)]
   | smul a x _ hx =>
     obtain ⟨n, G, hG, h, e⟩ := hx
     obtain ⟨m, A, hA, eA⟩ := exists_homog χ c hχ a
@@ -264,7 +264,7 @@ theorem CurveVertPointResidue.proof (hC : CurveClosedPointChart.Statement) :
         eq_intCast ((Ideal.Quotient.mk J).comp C) a]
       exact intCast_mem _ a
     | add p q hp hq =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul]
@@ -279,7 +279,7 @@ theorem CurveVertPointResidue.proof (hC : CurveClosedPointChart.Statement) :
       obtain ⟨w, hw, z, hz, rfl⟩ := Submodule.mem_sup.mp hb
       obtain ⟨n, G, hGW, hG, hφG⟩ := exists_homog_mem φ c hφc hWmh hw
       have h1 : (b : Ω) = aeval y G * (∏ k, y ⟨k, c k⟩ ^ n k)⁻¹ := by
-        rw [← hφform G n hG, hφG, ← hf, map_add, hspan hz, add_zero]
+        rw [← hφform G n hG, hφG, ← hf, map_add (f := _), hspan hz, add_zero]
       refine Ideal.subset_span ⟨n, G, ∏ k, (X ⟨k, c k⟩ : MRing ι) ^ n k, hG, isMultiHomog_coordProd c n, hGW,
         coordProd_not_mem hWp c hcW n, ?_⟩
       rw [h1, haevalD, mul_assoc, inv_mul_cancel₀ (hD n), mul_one]
@@ -299,7 +299,7 @@ theorem CurveVertPointResidue.proof (hC : CurveClosedPointChart.Statement) :
         intro hJh
         obtain ⟨w, hw, z, hz, hwz⟩ := Submodule.mem_sup.mp hJh
         obtain ⟨n', G, hGW, hG, hφG⟩ := exists_homog_mem φ c hφc hWmh hw
-        have e1 : φ G = φ h := by rw [hφG, ← hwz, map_add, hspan hz, add_zero]
+        have e1 : φ G = φ h := by rw [hφG, ← hwz, map_add (f := _), hspan hz, add_zero]
         have hmem : G * ∏ k, (X ⟨k, c k⟩ : MRing ι) ^ n k - h * ∏ k, (X ⟨k, c k⟩ : MRing ι) ^ n' k ∈
             mCoordIdeal y := by
           refine LowerBoundFree.mem_mCoordIdeal_of_aeval_eq_zero y (d := n' + n)

@@ -61,7 +61,7 @@ def R (M : Model F E) : Subring E :=
 def trR (M : Model F E) (g : SplitG M.L) : E →+ F where
   toFun x := ((g.e x).1 - (g.e x).2) / (g.q : F)
   map_zero' := by simp
-  map_add' x y := by simp only [map_add, Prod.fst_add, Prod.snd_add]; ring
+  map_add' x y := by simp only [map_add (f := _), Prod.fst_add, Prod.snd_add]; ring
 
 def psiR (M : Model F E) : AddChar E ℂ :=
   match M.split with

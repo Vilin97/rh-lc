@@ -93,7 +93,7 @@ theorem exists_adjoint {Ω Ω' : Type} [Field Ω] [Field Ω'] {V V' : Type} [Add
   have hv' : ∀ k, v' k = j (v k) := fun k => by simp [v']
   let jd : Module.Dual Ω V →+ Module.Dual Ω' V' := AddMonoidHom.mk' (fun w => v'.constr Ω' fun k => i (w (v k)))
     (fun a b => by
-      rw [← map_add]
+      rw [← map_add (f := _)]
       congr 1
       funext k
       simp)

@@ -154,7 +154,7 @@ theorem projective_line_places_all_valuations (W : ValuationSubring (RatFunc k))
             rw [map_mul, map_mul]
             exact lt_of_le_of_lt (mul_le_of_le_one_left' (hp y)) (lt_of_le_of_ne (hp d) hne)
           have h2 := W.valuation.map_add_lt h1 (hq i hi)
-          rw [← map_add, e, map_one, map_one] at h2
+          rw [← map_add (f := _), e, map_one, map_one] at h2
           exact lt_irrefl _ h2
         have h3 := hp n
         rw [← h, map_mul, hd, mul_one] at h3

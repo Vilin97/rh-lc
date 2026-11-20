@@ -16,7 +16,7 @@ def coeffIdeal {σ : Type} (I : Ideal R) : Ideal (MvPowerSeries σ R) where
   carrier := {g | ∀ mo, coeff mo g ∈ I}
   add_mem' := by
     intro a b ha hb mo
-    rw [map_add]
+    rw [map_add (f := _)]
     exact I.add_mem (ha mo) (hb mo)
   zero_mem' := by
     intro mo

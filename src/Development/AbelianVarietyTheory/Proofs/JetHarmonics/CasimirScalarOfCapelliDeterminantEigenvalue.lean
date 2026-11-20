@@ -171,7 +171,7 @@ theorem cas_of_capelli : ∀ (M : Type) [AddCommGroup M] [Module ℂ M] (n : ℕ
           ext w; simpa using h Y w
         have h2 := congrArg φ ((hR _).symm.trans h1)
         set_option synthInstance.maxHeartbeats 100000 in
-          simp only [map_add, map_sum, map_smul, smul_eq_mul, add_sub_assoc] at h2
+          simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, add_sub_assoc] at h2
         exact h2)
   have e1 : ∑ i, E i i = (∑ l, (mu l : ℂ)) • (1 : Module.End ℂ M) := by
     rw [← sub_eq_zero, ← Module.forall_dual_apply_eq_zero_iff ℂ]

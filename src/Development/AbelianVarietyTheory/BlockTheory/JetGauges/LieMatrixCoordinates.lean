@@ -105,7 +105,7 @@ def lieTau {F : FGLaw T d} (α : Germ.OAct (𝓞 E) F) (io : T →+* O) (τ : E 
   zero_mem' := by intro a i; simp
   add_mem' := by
     intro u u' hu hu' a i
-    simp only [Matrix.mulVec_add, Pi.add_apply, map_add, hu a i, hu' a i, mul_add]
+    simp only [Matrix.mulVec_add, Pi.add_apply, map_add (f := _), hu a i, hu' a i, mul_add]
   smul_mem' := by
     intro c u hu a i
     simp only [Matrix.mulVec_smul, Pi.smul_apply, smul_eq_mul, map_mul, hu a i]

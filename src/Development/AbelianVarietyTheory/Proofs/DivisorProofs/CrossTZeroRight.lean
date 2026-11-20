@@ -133,7 +133,7 @@ theorem evT_add {X : SimplicialObject Spc} {L : Cx R} {t : ℤ} (γ γ' : Cochai
 theorem crossT_add_left (α' : Cochain ((chains R).obj E) I n) :
     crossT V ℓ μ hk (α + α') z = crossT V ℓ μ hk α z + crossT V ℓ μ hk α' z :=
   evT_ext _ _ fun a b s h U y => by
-    rw [evT_add, evT_crossT, evT_crossT, evT_crossT, ev_add, map_add, LinearMap.add_apply, smul_add]
+    rw [evT_add, evT_crossT, evT_crossT, evT_crossT, ev_add, map_add (f := _), LinearMap.add_apply, smul_add]
 
 theorem evT_zero {X : SimplicialObject Spc} {L : Cx R} {t : ℤ} (a b : ℕ) (s : ℤ)
     (h : -((a + b : ℕ) : ℤ) + t = s) (U : Scheme.{0}) (y : BSx X a b U) :

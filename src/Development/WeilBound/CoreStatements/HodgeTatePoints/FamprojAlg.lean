@@ -366,7 +366,7 @@ theorem factor_omHT (m : Ideal A) [hm : m.IsPrime] (hp : (p : A) ∉ m) (σ : E 
     unfold HTChart.om' at hx ⊢
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hx
     clear hx
-    rw [map_add]
+    rw [map_add (f := _)]
     apply Submodule.add_mem
     · induction hy using Submodule.span_induction with
       | mem w hw =>
@@ -383,7 +383,7 @@ theorem factor_omHT (m : Ideal A) [hm : m.IsPrime] (hp : (p : A) ∉ m) (σ : E 
           simp only [LinearMap.smul_apply, LinearMap.id_apply, ← Nat.cast_pow, Nat.cast_smul_eq_nsmul]
       | zero => simp
       | add u v _ _ hu hv =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hu hv
       | smul c u _ hu =>
         rw [LinearMap.map_smul_of_tower]

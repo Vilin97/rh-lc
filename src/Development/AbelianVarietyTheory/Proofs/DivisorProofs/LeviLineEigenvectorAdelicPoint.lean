@@ -71,9 +71,9 @@ theorem line_mulVec_eq_smul : ∀ (F E : Type) [Field F] [NumberField F] [Field 
       · rw [h1 u hu, map_zero]) fun v => by rw [h2 v, map_zero]
   obtain ⟨e, he⟩ := (GlobalTheory.AdelicU.infEmb_bijective hσ τ).2 (c - 1)
   refine ⟨1 + extZeroArch w e, funext fun i => sub_eq_zero.1 (key _ (fun u hu => ?_) (fun v' => ?_) ?_)⟩
-  · rw [map_sub, RingHom.map_mulVec, hinf_ne u hu, Matrix.one_mulVec, Pi.smul_apply, smul_eq_mul, map_mul, map_add,
+  · rw [map_sub, RingHom.map_mulVec, hinf_ne u hu, Matrix.one_mulVec, Pi.smul_apply, smul_eq_mul, map_mul, map_add (f := _),
       compInf_extZeroArch_ne hu e, map_one, add_zero, one_mul, Function.comp_apply, sub_self]
-  · rw [map_sub, RingHom.map_mulVec, hfin v', Matrix.one_mulVec, Pi.smul_apply, smul_eq_mul, map_mul, map_add,
+  · rw [map_sub, RingHom.map_mulVec, hfin v', Matrix.one_mulVec, Pi.smul_apply, smul_eq_mul, map_mul, map_add (f := _),
       compFin_extZeroArch w v' e, map_one, add_zero, one_mul, Function.comp_apply, sub_self]
   · have hΦe : Φ (extZeroArch w e) = c - 1 := by
       change infEmb τ (compInf F E w (extZeroArch w e)) = c - 1

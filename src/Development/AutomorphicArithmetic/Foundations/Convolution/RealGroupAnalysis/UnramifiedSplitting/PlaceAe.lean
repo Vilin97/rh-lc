@@ -186,7 +186,7 @@ private theorem inert_of (he : w.asIdeal.ramificationIdx (𝓞 F) = 1) (h2 : Val
   haveI : Module.Finite (Kv v) (Kv w) := Module.finite_of_finrank_pos (by omega)
   let L : (Kv v × Kv v) →ₗ[Kv v] Kv w :=
     { toFun := fun p => ι p.1 + ι p.2 * θw
-      map_add' := fun p q => by simp only [Prod.fst_add, Prod.snd_add, map_add]; ring
+      map_add' := fun p q => by simp only [Prod.fst_add, Prod.snd_add, map_add (f := _)]; ring
       map_smul' := fun c p => by
         change ι (c * p.1) + ι (c * p.2) * θw = c • (ι p.1 + ι p.2 * θw)
         rw [Algebra.smul_def, algebraMap_completion_eq, map_mul, map_mul]
@@ -219,7 +219,7 @@ private theorem inert_of (he : w.asIdeal.ramificationIdx (𝓞 F) = 1) (h2 : Val
   · intro ϖ hϖ
     let ϖ' : (Kv w)ˣ := Units.map (ι : Kv v →* Kv w) ϖ
     have hco : ((idl w ϖ' : (A E)ˣ) : A E) = adeleMap F E ((idl v ϖ : (A F)ˣ) : A F) := by
-      rw [hidl, hidl', map_add, map_one, adeleMap_sg v w hu, map_sub, map_one]
+      rw [hidl, hidl', map_add (f := _), map_one, adeleMap_sg v w hu, map_sub, map_one]
       rfl
     refine ⟨ϖ', ?_, ?_, ?_⟩
     · change Valued.v (ι (ϖ : Kv v)) = _

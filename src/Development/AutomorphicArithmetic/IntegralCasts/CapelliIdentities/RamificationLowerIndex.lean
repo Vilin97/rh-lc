@@ -53,7 +53,7 @@ private lemma exists_generator {R S : Type*} [CommRing R] [CommRing S] [Algebra 
   have hϖ0 : ϖ ≠ 0 := hϖ.ne_zero
   have hex : ∃ x : S, residue S x = g ∧ ¬ ϖ ^ 2 ∣ x ^ q - x := by
     by_cases h : ϖ ^ 2 ∣ x₀ ^ q - x₀
-    · refine ⟨x₀ + ϖ, by rw [map_add, hx₀, (hres ϖ).2 dvd_rfl, add_zero], fun h' => ?_⟩
+    · refine ⟨x₀ + ϖ, by rw [map_add (f := _), hx₀, (hres ϖ).2 dvd_rfl, add_zero], fun h' => ?_⟩
       obtain ⟨k, hk⟩ := (X ^ q : S[X]).binomExpansion x₀ ϖ
       simp only [eval_pow, eval_X, derivative_X_pow, eval_mul, eval_C] at hk
       obtain ⟨c, hc⟩ := hqd

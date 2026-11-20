@@ -82,8 +82,8 @@ theorem exists_isOb1 : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Ide
       have h2 := sn.2 _ (hzq T T' a)
       have h3 := hzq T' T'' b
       unfold Aug.KerQ at h1 h2 h3 ⊢
-      rw [map_sub, map_add, h1, h2, h3]; simp
-    · rw [map_sub, map_add, ← sn.1, hzs, hzs, hzs, hcomp, w.2 (n.G.map a)]
+      rw [map_sub, map_add (f := _), h1, h2, h3]; simp
+    · rw [map_sub, map_add (f := _), ← sn.1, hzs, hzs, hzs, hcomp, w.2 (n.G.map a)]
       simp⟩
   exact ⟨H1.mk _ zc, κ, σ, zc, hκ, hσ, rfl, fun T T' a ↦ ⟨hzq T T' a, hzs T T' a⟩⟩
 

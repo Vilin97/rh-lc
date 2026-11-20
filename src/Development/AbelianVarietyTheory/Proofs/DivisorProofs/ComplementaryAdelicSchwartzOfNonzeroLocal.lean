@@ -22,7 +22,7 @@ def shiftFin (v : Pl F) {κ : Type} (x₀ : κ → Fv F v) (y : κ → Af F) : �
 
 theorem evalV_shiftFin (v : Pl F) {κ : Type} (x₀ : κ → Fv F v) (y : κ → Af F) (i : κ) :
     evalV F v (shiftFin v x₀ y i) = x₀ i := by
-  simp only [shiftFin, map_add, map_sub, evalV_singleFin_self]
+  simp only [shiftFin, map_add (f := _), map_sub, evalV_singleFin_self]
   abel
 
 theorem shiftFin_back (v : Pl F) {κ : Type} (x₀ : κ → Fv F v) (y : κ → Af F) :

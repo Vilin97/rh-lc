@@ -367,7 +367,7 @@ theorem heisO_trW (ψ : AddChar (AF D.host.F) ℂ) (u : WO S V) (f : WO S V → 
     heisO ψ S V' (I.phi S u) (I.trW S f) = I.trW S (heisO ψ S V u f) := by
   funext w
   obtain ⟨w, rfl⟩ := (I.phi S).surjective w
-  simp only [heisO, trW, ← map_add, AddEquiv.symm_apply_apply, symplOH_phi]
+  simp only [heisO, trW, ← map_add (f := _), AddEquiv.symm_apply_apply, symplOH_phi]
 
 theorem actO_phi (g : GA D S) (h : GA D V) (x : WO S V) :
     I.phi S (actO S V g h x) = actO S V' g (I.kap h) (I.phi S x) :=

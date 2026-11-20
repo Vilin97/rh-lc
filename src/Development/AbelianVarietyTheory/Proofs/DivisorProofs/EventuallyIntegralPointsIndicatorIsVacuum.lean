@@ -115,14 +115,14 @@ theorem acts_indicator {κ : Type} [Fintype κ] (ψ : AddChar (AF F) ℂ) (v : H
   rw [hr.1 x w.1 hw1]
   by_cases hx : ∀ k, evFin F v (x k) ∈ v.adicCompletionIntegers F
   · have hx' : (fun i => evFin F v ((x + w.1) i)) ∈ {x : κ → Fv F v | ∀ k, x k ∈ v.adicCompletionIntegers F} :=
-      fun k => by simp only [Pi.add_apply, map_add]; exact add_mem (hx k) (hw k).2.1
+      fun k => by simp only [Pi.add_apply, map_add (f := _)]; exact add_mem (hx k) (hw k).2.1
     rw [Set.indicator_of_mem hx', Set.indicator_of_mem (show (fun i => evFin F v (x i)) ∈
       {x : κ → Fv F v | ∀ k, x k ∈ v.adicCompletionIntegers F} from hx)]
     have hA : At (evFin F v) (x ⬝ᵥ w.2 + ⅟(2 : AF F) * (w.1 ⬝ᵥ w.2)) :=
       hAtAdd (hAtSum _ fun i => hAt (hw i).2.2.1 _) (hAt (hAtSum _ fun i => hAt (hw i).2.2.1 _) _)
     have hI : evFin F v (x ⬝ᵥ w.2 + ⅟(2 : AF F) * (w.1 ⬝ᵥ w.2)) ∈ v.adicCompletionIntegers F := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [dotProduct, map_add, map_mul, map_sum, h2']
+        simp only [dotProduct, map_add (f := _), map_mul, map_sum, h2']
       exact add_mem (sum_mem fun i _ => mul_mem (hx i) (hw i).2.2.2)
         (mul_mem h2 (sum_mem fun i _ => mul_mem (hw i).2.1 (hw i).2.2.2))
     rw [hpsi1 _ hA hI, one_mul]

@@ -93,7 +93,7 @@ theorem prod_map_toMultiset {M : Type*} [CommMonoid M] {α : Type*} (g : α → 
   refine Finsupp.induction s ?_ ?_
   · simp
   · intro a n f _ _ ih
-    rw [map_add, Multiset.map_add, Multiset.prod_add, ih,
+    rw [map_add (f := _), Multiset.map_add (f := _), Multiset.prod_add, ih,
       Finsupp.prod_add_index' (fun _ => pow_zero _) (fun _ _ _ => pow_add _ _ _),
       Finsupp.toMultiset_single, Multiset.map_nsmul, Multiset.prod_nsmul, Multiset.map_singleton,
       Multiset.prod_singleton]
@@ -185,7 +185,7 @@ theorem phiL_main (hk : Steps k) (h2 : UniTri) :
         show toR (Finsupp.linearCombination ℤ f (Finsupp.domCongr e (Finsupp.single s a))) = _
         rw [Finsupp.domCongr_apply, Finsupp.equivMapDomain_single, Finsupp.linearCombination_single, map_zsmul]
       rw [h1, hmono, phiOf, MvPolynomial.coe_eval₂Hom, MvPolynomial.eval₂_monomial, eq_intCast, ← zsmul_eq_mul]
-    · rw [map_add, map_add, hp, hq]
+    · rw [map_add (f := _), map_add (f := _), hp, hq]
   have hphiG : ⇑(phiOf Lseg) = ⇑G := funext hG
   refine ⟨Lseg, hLseg, hphiG ▸ hGbij, fun 𝔫 x hx => ?_, hprod⟩
   obtain ⟨a, ha, hLa⟩ := hinv 𝔫

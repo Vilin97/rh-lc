@@ -125,7 +125,7 @@ def valAt (j : Fin D.R.m) (z : FrC YS iC b ((j : ℕ) + 1)) : NX.Fm S i ((j : �
     { toFun := fun a =>
         { toFun := fun x => iC a * valC z (cuspOf YS fw j x : T0.R ((j : ℕ) + 1))
           map_zero' := by rw [map_zero]; exact (congrArg _ (valC_zero z)).trans (mul_zero _)
-          map_add' := fun x y => by rw [map_add, ← mul_add]; exact congrArg _ (valC_add z _ _) }
+          map_add' := fun x y => by rw [map_add (f := _), ← mul_add]; exact congrArg _ (valC_add z _ _) }
       map_zero' := by ext x; exact (congrArg (· * _) (map_zero iC)).trans (zero_mul _)
       map_add' := fun a a' => by ext x; exact (congrArg (· * _) (map_add iC a a')).trans (add_mul _ _ _) }
     fun c a x => by

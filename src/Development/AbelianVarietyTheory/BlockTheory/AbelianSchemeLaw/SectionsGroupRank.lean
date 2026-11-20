@@ -77,7 +77,7 @@ theorem map_liftFun {W W' : (T ⊗ A).left.Opens} (e : W' ≤ W) (r : Γ(T.left,
 instance : Zero (Secs A L a T) := ⟨⟨fun _ => 0, fun _ _ => by simp⟩⟩
 instance : Add (Secs A L a T) :=
   ⟨fun s t => ⟨fun j => s.f j + t.f j, fun i j => by
-    rw [map_add, map_add, s.compat i j, t.compat i j, mul_add]⟩⟩
+    rw [map_add (f := _), map_add (f := _), s.compat i j, t.compat i j, mul_add]⟩⟩
 instance : Neg (Secs A L a T) :=
   ⟨fun s => ⟨fun j => - s.f j, fun i j => by rw [map_neg, map_neg, s.compat i j, mul_neg]⟩⟩
 instance : SMul Γ(T.left, ⊤) (Secs A L a T) :=
@@ -106,7 +106,7 @@ instance : Module Γ(T.left, ⊤) (Secs A L a T) where
   smul_zero r := Secs.ext fun j => mul_zero _
   smul_add r s t := Secs.ext fun j => mul_add _ _ _
   add_smul r r' s := Secs.ext fun j => by
-    rw [add_f, smul_f, smul_f, smul_f, liftFun_eq, liftFun_eq, liftFun_eq, map_add, add_mul]
+    rw [add_f, smul_f, smul_f, smul_f, liftFun_eq, liftFun_eq, liftFun_eq, map_add (f := _), add_mul]
   zero_smul s := Secs.ext fun j => by rw [smul_f, liftFun_eq, map_zero, zero_mul, zero_f]
 
 theorem appLE_liftFun {T' : Over S} (H : T' ⊗ A ⟶ T ⊗ A) (u : T' ⟶ T)
@@ -157,7 +157,7 @@ theorem twist_comb {R R' C : Type} [CommRing R] [CommRing R'] [CommRing C] (F : 
     (hr : F r' = G r) :
     F 0 = c * G 0 ∧ F (x' + y') = c * G (x + y) ∧ F (r' * x') = c * G (r * x) := by
   refine ⟨by simp, ?_, ?_⟩
-  · rw [map_add, map_add, hx, hy, mul_add]
+  · rw [map_add (f := _), map_add (f := _), hx, hy, mul_add]
   · rw [map_mul, map_mul, hx, hr, mul_left_comm]
 
 theorem isActOf_comb (θ : ThetaGrp A L a T) {s t s' t' : Secs A L a T} (hs : IsActOf A L a θ s s')

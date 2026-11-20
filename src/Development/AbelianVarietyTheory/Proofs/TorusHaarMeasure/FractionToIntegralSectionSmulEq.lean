@@ -25,7 +25,7 @@ variable {K Fr : Type} [Field K] [CommRing Fr] [Algebra K Fr] (J : Ideal Fr)
 
 theorem map_mem_of_mem_sup {c : ι} {f : Fr} (hf : f ∈ J ⊔ RingHom.ker (φ c)) : φ c f ∈ Ideal.map (φ c) J := by
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hf
-  rw [map_add, (RingHom.mem_ker).1 hb, add_zero]
+  rw [map_add (f := _), (RingHom.mem_ker).1 hb, add_zero]
   exact Ideal.mem_map_of_mem _ ha
 
 theorem exists_sub_mem {c : ι}
@@ -140,7 +140,7 @@ theorem lwZ_mem (Ω : Type) [CommRing Ω] [Algebra B.KO Ω] (gF : X.Forms →ₐ
   · have e : ((r • n : ↥(HK X la G.w wF)) : Lw X la G.w) = (r : Lw X la G.w) * (n : Lw X la G.w) := rfl
     rw [e, map_mul]
     exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem (phiZ X la G.N Ω gF G.w) hr)
-  · rw [Submodule.coe_add, map_add]
+  · rw [Submodule.coe_add, map_add (f := _)]
     exact Ideal.add_mem _ hx hy
 
 set_option maxHeartbeats 1000000 in

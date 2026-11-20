@@ -255,7 +255,7 @@ theorem isSS_coeff_fun (m : Multiset ℂ) (hm : m.Nodup) (r s : ℕ) (_hrs : Mul
     rw [← sub_eq_zero]
     refine eq_zero_of_eval_algebraMap _ fun u => ?_
     rw [eval_sub, eval_mul, eval_comp, eval_comp, eval_map, eval₂_at_apply, hval]
-    simp only [eval_add, eval_X, eval_C, ← map_add]
+    simp only [eval_add, eval_X, eval_C, ← map_add (f := _)]
     rw [hPe, hQe, sub_eq_zero]
     apply Subtype.ext
     have hv : ∀ x y : Algebra.adjoin ℂ S, ((x * y : Algebra.adjoin ℂ S) : A) = (x : A) * y := fun x y => rfl

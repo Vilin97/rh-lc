@@ -120,7 +120,7 @@ theorem van_pderiv_mvExp {τ : Type} {T : Set τ} {H : MvPowerSeries τ C} (hH :
     · intro h
       exfalso
       apply h
-      rw [Finset.mem_range, map_add, Finsupp.degree_single]
+      rw [Finset.mem_range, map_add (f := _), Finsupp.degree_single]
       omega
   rw [this, sub_self, zero_mul]
 
@@ -238,7 +238,7 @@ theorem lg_const {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) (i : κ) : co
 theorem sum_const {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {τ : Type} {a b : κ → MvPowerSeries τ C}
     (ha : ∀ s, constantCoeff (a s) = 0) (hb : ∀ s, constantCoeff (b s) = 0) (x : κ) :
     constantCoeff (subst a (X.lg x) + subst b (X.lg x)) = 0 := by
-  rw [map_add, constantCoeff_subst_zero ha (lg_const h x), constantCoeff_subst_zero hb (lg_const h x), add_zero]
+  rw [map_add (f := _), constantCoeff_subst_zero ha (lg_const h x), constantCoeff_subst_zero hb (lg_const h x), add_zero]
 
 theorem formalAdd_const {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {τ : Type} {a b : κ → MvPowerSeries τ C}
     (ha : ∀ s, constantCoeff (a s) = 0) (hb : ∀ s, constantCoeff (b s) = 0) (x : κ) :
@@ -311,7 +311,7 @@ theorem intS_cocycle {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {τ : Typ
   have hH : Van {p : Fin 3 × κ | p.1 = 2} (hAt X (gp C κ (0 : Fin 3)) (gp C κ 2) + hAt X (gp C κ 1) (gp C κ 2) -
       hAt X (addP X (gp C κ 0) (gp C κ 1)) (gp C κ 2)) := by
     intro ν hν
-    rw [map_sub, map_add, hvan _ (gp_const 0) ν hν, hvan _ (gp_const 1) ν hν, hvan _ hAc ν hν]
+    rw [map_sub, map_add (f := _), hvan _ (gp_const 0) ν hν, hvan _ (gp_const 1) ν hν, hvan _ hAc ν hν]
     simp
   have key : ∀ i, IntS V
       (subst (fun p : Fin 2 × κ => if p.1 = 0 then a p.2 else 0) (pderiv C ((1 : Fin 2), i) X.h) +
@@ -324,12 +324,12 @@ theorem intS_cocycle {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {τ : Typ
       pderiv_X_of_ne (by simp)
     have dA : ∀ x, pderiv C ((2 : Fin 3), i) (addP X (gp C κ (0 : Fin 3)) (gp C κ 1) x) = 0 := fun x =>
       pderiv_subst_eq_zero (sum_const h (gp_const 0) (gp_const 1)) (fun y => by
-        rw [map_add, pderiv_subst_eq_zero (gp_const 0) d0, pderiv_subst_eq_zero (gp_const 1) d1, add_zero]) _
+        rw [map_add (f := _), pderiv_subst_eq_zero (gp_const 0) d0, pderiv_subst_eq_zero (gp_const 1) d1, add_zero]) _
     have h1 := intS_subst hc hci (intS_pderiv h.ph1 ((2 : Fin 3), i))
     have h2 := subst_eq_zero_of_van hc (fun s (hs : s.1 = 2) => by
       rw [show s = (2, s.2) from Prod.ext hs rfl]; exact hc2 _) (van_pderiv_mvExp hH ((2 : Fin 3), i))
     rw [subst_sub hS, sub_eq_zero] at h2
-    rw [h2, map_sub, map_add, subst_sub hS, subst_add hS, subst_pderiv_hAt X (gp_const 0) i d0 hc hc2,
+    rw [h2, map_sub, map_add (f := _), subst_sub hS, subst_add hS, subst_pderiv_hAt X (gp_const 0) i d0 hc hc2,
       subst_pderiv_hAt X (gp_const 1) i d1 hc hc2, subst_pderiv_hAt X hAc i dA hc hc2] at h1
     simpa only [s0, s1, sA] using h1
   rw [subst_sg X v (formalAdd_const h ha hb), subst_sg X v ha, subst_sg X v hb]
@@ -337,7 +337,7 @@ theorem intS_cocycle {X : RawChart C d I κ} {V : VF C} (h : RLaw X V) {τ : Typ
   have := VF.Ge.sum (s := Finset.univ) fun i _ => (hv i).mul_int (key i μ)
   convert this using 1
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sub, map_add, map_neg, map_sum, coeff_smul, mul_sub, mul_add, Finset.sum_sub_distrib,
+    simp only [map_sub, map_add (f := _), map_neg, map_sum, coeff_smul, mul_sub, mul_add, Finset.sum_sub_distrib,
     Finset.sum_add_distrib]
   ring
 

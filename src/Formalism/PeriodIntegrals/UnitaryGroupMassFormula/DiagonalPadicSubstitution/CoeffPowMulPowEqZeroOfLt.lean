@@ -138,11 +138,11 @@ theorem expMv_add {x y : MvPowerSeries σ ℂ_[p]} (hx : constantCoeff x = 0)
     (hy : constantCoeff y = 0) : expMv (x + y) = expMv x * expMv y := by
   ext α
   have hN : Finsupp.degree α < Finsupp.degree α + 1 := Nat.lt_succ_self _
-  have hxy : constantCoeff (x + y) = 0 := by rw [map_add, hx, hy, add_zero]
+  have hxy : constantCoeff (x + y) = 0 := by rw [map_add (f := _), hx, hy, add_zero]
   rw [coeff_expMv_eq_expT hxy hN, coeff_expT_add hx hy hN, coeff_mul, coeff_mul]
   refine Finset.sum_congr rfl fun βγ hβγ => ?_
   have hd : Finsupp.degree α = Finsupp.degree βγ.1 + Finsupp.degree βγ.2 := by
-    rw [← map_add, Finset.HasAntidiagonal.mem_antidiagonal.1 hβγ]
+    rw [← map_add (f := _), Finset.HasAntidiagonal.mem_antidiagonal.1 hβγ]
   rw [coeff_expMv_eq_expT (N := Finsupp.degree α + 1) hx (by omega),
     coeff_expMv_eq_expT (N := Finsupp.degree α + 1) hy (by omega)]
 
@@ -182,13 +182,13 @@ theorem simeq_symm {f g : MvPowerSeries σ ℂ_[p]} (h : Simeq f g) : Simeq g f 
 theorem simeq_add {f g f' g' : MvPowerSeries σ ℂ_[p]} (h : Simeq f g) (h' : Simeq f' g') :
     Simeq (f + f') (g + g') := by
   have e : f + f' - (g + g') = (f - g) + (f' - g') := add_sub_add_comm f f' g g'
-  refine ⟨by rw [e, map_add, h.1, h'.1, add_zero], ?_⟩
+  refine ⟨by rw [e, map_add (f := _), h.1, h'.1, add_zero], ?_⟩
   rw [e, expMv_add h.1 h'.1]; exact integral_mul h.2 h'.2
 
 theorem simeq_trans {f g h : MvPowerSeries σ ℂ_[p]} (h1 : Simeq f g) (h2 : Simeq g h) :
     Simeq f h := by
   have e : f - h = (f - g) + (g - h) := (sub_add_sub_cancel f g h).symm
-  refine ⟨by rw [e, map_add, h1.1, h2.1, add_zero], ?_⟩
+  refine ⟨by rw [e, map_add (f := _), h1.1, h2.1, add_zero], ?_⟩
   rw [e, expMv_add h1.1 h2.1]; exact integral_mul h1.2 h2.2
 
 theorem simeq_equivalence_additive : S0 := fun _ _ _ f _ _ _ _ =>

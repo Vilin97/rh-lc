@@ -69,7 +69,7 @@ theorem surjective_of_mod_p {ι : Type*} (T : (ι → 𝕎 k) →+ (ι → 𝕎 
       have h' : zs n - T (X (zs n)) = (p : 𝕎 k) • Y (zs n) := by
         rw [sub_eq_iff_eq_add']
         exact hXY (zs n)
-      rw [e1, map_add, hTpow, ← sub_sub, ih, ← smul_sub, h', smul_smul, ← pow_succ, e2]
+      rw [e1, map_add (f := _), hTpow, ← sub_sub, ih, ← smul_sub, h', smul_smul, ← pow_succ, e2]
   have hstep : ∀ i n, s (n + 1) i - s n i ∈ Ideal.span {(p : 𝕎 k) ^ n} := by
     intro i n
     have e1 : s (n + 1) = s n + (p : 𝕎 k) ^ n • X (zs n) := Finset.sum_range_succ _ _
@@ -88,7 +88,7 @@ theorem surjective_of_mod_p {ι : Type*} (T : (ι → 𝕎 k) →+ (ι → 𝕎 
   apply eq_zero_of_forall_mem
   intro n
   have : z - T L = (p : 𝕎 k) ^ n • (zs n - T (fun i => u n i)) := by
-    rw [show L = s n + (L - s n) by abel, map_add, ← sub_sub, hA, hLs, hTpow, smul_sub]
+    rw [show L = s n + (L - s n) by abel, map_add (f := _), ← sub_sub, hA, hLs, hTpow, smul_sub]
   rw [← Pi.sub_apply, this, Pi.smul_apply, smul_eq_mul]
   exact Ideal.mem_span_singleton.mpr (dvd_mul_right _ _)
 

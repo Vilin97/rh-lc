@@ -87,7 +87,7 @@ def transport {G : Over S} [GrpObj G] {x : Sp R ⟶ S} {E E' : Type} [AddCommGro
   onto v hv := by
     obtain ⟨e, he⟩ := M.onto v hv
     exact ⟨f.symm e, by simpa using he⟩
-  add e e' := by simp only [map_add]; exact M.add _ _
+  add e e' := by simp only [map_add (f := _)]; exact M.add _ _
   smul c e := by simp only [map_smul]; exact M.smul _ _
 
 open GroundTheory.Heights₂.Heights in

@@ -193,7 +193,7 @@ theorem totalD_total (X : ∀ s, A.obj s) (t : Finset κ) :
 
 def term (p : ℕ) : Cube.Term A p →ₛₗ[σ] Cube.Term B p where
   toFun x t := P.total (Cube.extend A p x) t.1
-  map_add' x y := funext fun t => by rw [map_add, map_add]; rfl
+  map_add' x y := funext fun t => by rw [map_add (f := _), map_add (f := _)]; rfl
   map_smul' r x := funext fun t => by rw [map_smul, map_smulₛₗ]; rfl
 
 theorem term_of_card {p : ℕ} (x : Cube.Term A p) (t : {s : Finset κ // s.card = p})

@@ -46,7 +46,7 @@ theorem contr_mulSingle (ρ : ∀ a, Representation ℂ (Γ a) (X a)) (l : ∀ a
     (g : Γ j) (y : PiTensorProduct ℂ X) :
     contr l j (piTensor ρ (Pi.mulSingle j g) y) = ρ j g (contr l j y) := by
   induction y using PiTensorProduct.induction_on with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | smul_tprod c x =>
     simp only [map_smul, piTensor_tprod, contr_tprod, Pi.mulSingle_eq_same]
     congr 2

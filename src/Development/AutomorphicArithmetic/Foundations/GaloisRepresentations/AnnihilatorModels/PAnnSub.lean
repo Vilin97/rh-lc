@@ -15,7 +15,7 @@ private theorem algebraTensorModule_map_map_id_right_comm_of_comm {F L U V B : T
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [h]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 set_option maxHeartbeats 800000 in
 theorem UpperTheory.Gal.crystallineComparison.annSub_of :
@@ -30,7 +30,7 @@ theorem UpperTheory.Gal.crystallineComparison.annSub_of :
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [M]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [h1]
     exact Module.Flat.rTensor_preserves_injective_linearMap (i.restrictScalars F) hi
   have hpow : ∀ k, ∀ b, (LinearMap.id : B →ₗ[F] B) ((ψ ^ k) b) = (ψ ^ k) ((LinearMap.id : B →ₗ[F] B) b) :=

@@ -43,7 +43,7 @@ theorem adapt_map_xflag {T : D.host.E} {g : GV D} {A B : LFlag (VS D) D.R.rS T} 
     have h3 := xflag_mono B (le_of_lt ha') h1
     simpa using add_mem h3 h2
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem adapt_mul {T : D.host.E} {g h : GV D} {A B C : LFlag (VS D) D.R.rS T} (hg : Adapt g B C)
@@ -68,7 +68,7 @@ theorem adapt_of_nlam {T : D.host.E} {Λ : LV D} {F : LFlag (VS D) D.R.rS T} {n 
       induction hx using Submodule.span_induction with
       | mem y hy => obtain ⟨a, rfl⟩ := hy; exact F.fl.z_orth a
       | zero => simp
-      | add x y _ _ hx hy => simp [map_add, hx, hy]
+      | add x y _ _ hx hy => simp [map_add (f := _), hx, hy]
       | smul c x _ hx => simp [hx]
     have hX : Xsp F ≤ Xflag F D.R.rS :=
       Submodule.span_mono fun _ ⟨i, h⟩ => ⟨i, i.2, h⟩

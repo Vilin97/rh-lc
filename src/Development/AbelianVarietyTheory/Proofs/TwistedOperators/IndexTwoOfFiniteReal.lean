@@ -332,7 +332,7 @@ theorem baseChangeAt (F E K L A : Type) [Field F] [CharZero F] [Field E] [Field 
     have hbot : (⊤ : Subalgebra K L) ≤ ⊥ := by
       rw [← hgen, Algebra.adjoin_le_iff]
       rintro _ ⟨y, rfl⟩
-      rw [← e.sum_repr y, Fin.sum_univ_two, h0, map_add, Algebra.smul_def, Algebra.smul_def,
+      rw [← e.sum_repr y, Fin.sum_univ_two, h0, map_add (f := _), Algebra.smul_def, Algebra.smul_def,
         map_mul, map_mul, map_one, ← hc, ← IsScalarTower.algebraMap_apply,
         ← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply F K L,
         IsScalarTower.algebraMap_apply F K L]

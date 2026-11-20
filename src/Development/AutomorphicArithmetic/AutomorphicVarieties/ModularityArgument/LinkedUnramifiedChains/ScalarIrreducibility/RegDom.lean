@@ -140,7 +140,7 @@ private theorem rank_ge [Algebra O T] [IsScalarTower O A T] [IsNoetherianRing T]
     rw [hι]
   let Dl : (CotangentSpace T →ₗ[ResidueField T] K) → (A →ₗ[O] K) := fun φ =>
     { toFun := fun x => φ (r (algebraMap A T x))
-      map_add' := fun x y => by simp only [map_add]
+      map_add' := fun x y => by simp only [map_add (f := _)]
       map_smul' := fun a x => by
         have h1 : algebraMap A T (a • x) = a • algebraMap A T x :=
           map_smul (IsScalarTower.toAlgHom O A T) a x
@@ -149,7 +149,7 @@ private theorem rank_ge [Algebra O T] [IsScalarTower O A T] [IsNoetherianRing T]
         rw [h1, r.map_smul, h2, hact, AlgHom.commutes, Algebra.smul_def, RingHom.id_apply] }
   have hDl : ∀ φ, Dl φ ∈ PtDer ξ K := fun φ f g => by
     show φ (r (algebraMap A T (f * g))) = ξ f • φ (r (algebraMap A T g)) + ξ g • φ (r (algebraMap A T f))
-    rw [map_mul, r.leibniz, map_add, hact, hact]
+    rw [map_mul, r.leibniz, map_add (f := _), hact, hact]
     rfl
   let Ψ : (CotangentSpace T →ₗ[ResidueField T] K) →ₗ[K] PtDer ξ K :=
     { toFun := fun φ => ⟨Dl φ, hDl φ⟩

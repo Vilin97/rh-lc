@@ -19,7 +19,7 @@ theorem span_range_eq_top_of_liftSemi {R R' : Type} [CommRing R] [CommRing R'] [
   obtain ⟨z, rfl⟩ := h c
   induction z with
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y hx hy => rw [map_add]; exact add_mem (hx trivial) (hy trivial)
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx trivial) (hy trivial)
   | tmul x c => rw [liftSemi_tmul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨c, rfl⟩)
 
 theorem liftSemi_comp_eq {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R'] {M M' M'' : Type*}
@@ -29,7 +29,7 @@ theorem liftSemi_comp_eq {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R']
   funext z
   induction z with
   | zero => simp
-  | add x y hx hy => simp only [Function.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
+  | add x y hx hy => simp only [Function.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
   | tmul x c => simp only [Function.comp_apply, liftSemi_tmul, map_smul, e]
 
 theorem isBC_augmented : GlobalTheory.Published.AbelianDeRham.BaseChange → GlobalTheory.Published.AbelianDeRham.Rigid → ∀ (A₀ : Over (Sp ℂ)) [GrpObj A₀] (g : ℕ), IsAbelianScheme A₀ → SmoothOfRelativeDimension g A₀.hom → ∀ (D : Type) [CommRing D] [Algebra ℂ D] (π : D →+* ℂ) (κ : DividedPowers (RingHom.ker π)), IsNilDP κ → (∀ a : ℂ, π (algebraMap ℂ D a) = a) → ∀ (k : GrpMor (dp0 ℂ) (𝟙 _) A₀ κ (spMap π) A₀ (algebraMap ℂ D) (𝟙 _) (Over.Hom.left (𝟙 A₀))), k.IsBC ∧ Submodule.span D (Set.range k.pull) = ⊤ := by

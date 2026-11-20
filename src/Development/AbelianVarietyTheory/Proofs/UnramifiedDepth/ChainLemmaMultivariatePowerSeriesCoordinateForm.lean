@@ -21,7 +21,7 @@ theorem ord_zero (w : ℝ) : OrdGe v ρ (0 : MvPowerSeries (Fin M) C) w := fun �
 
 theorem ord_add {g g' : MvPowerSeries (Fin M) C} {w : ℝ} (h : OrdGe v ρ g w)
     (h' : OrdGe v ρ g' w) : OrdGe v ρ (g + g') w := fun α => by
-  rw [map_add]
+  rw [map_add (f := _)]
   exact le_trans (le_min (h α) (h' α)) (v.map_add _ _)
 
 theorem ord_neg {g : MvPowerSeries (Fin M) C} {w : ℝ} (h : OrdGe v ρ g w) :
@@ -143,7 +143,7 @@ theorem ord_of_step {d l : ℕ} (hl : 2 ≤ l) (al : Fin d → ℕ → Fin d →
         · simp
       have h2 := step (fun c => μ c + ν c) h1 D e α
       have h3 : ∀ c, constantCoeff (μ c + ν c) = 0 := fun c => by
-        rw [map_add, hμ, zero_add, ← coeff_zero_eq_constantCoeff_apply, hν]
+        rw [map_add (f := _), hμ, zero_add, ← coeff_zero_eq_constantCoeff_apply, hν]
         split_ifs
         · rw [coeff_zero_eq_constantCoeff_apply, map_sub, ht, hμ, sub_self]
         · rfl
@@ -151,7 +151,7 @@ theorem ord_of_step {d l : ℕ} (hl : 2 ≤ l) (al : Fin d → ℕ → Fin d →
         fun c n => by
           refine coeff_pow_congr (h3 c) (ht c) ?_ (fun β hβ => ?_) α hα
           · exact le_trans hl (Nat.le_self_pow (by omega) l)
-          · rw [map_add, hν, if_pos hβ, map_sub]; ring
+          · rw [map_add (f := _), hν, if_pos hβ, map_sub]; ring
       have h5 := coeff_lgSum hl al t ht e α (D + 2 + 1) (by omega)
       rw [hz, Finset.sum_range_succ'] at h5
       simp only [h0, pow_zero, pow_one, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq',

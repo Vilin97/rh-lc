@@ -25,7 +25,7 @@ theorem ech_zero : ech 0 = 1 := by simp [ech]
 theorem sch_add {Y : Type} [AddCommGroup Y] [Module ℝ Y] (β : LinearMap.BilinForm ℝ Y) (a b a' b' : Y)
     (h : β a b' = β a' b) (f : Y → ℂ) : sch β (a + a') (b + b') f = sch β a b (sch β a' b' f) := by
   funext x
-  simp only [sch, map_add, LinearMap.add_apply]
+  simp only [sch, map_add (f := _), LinearMap.add_apply]
   rw [show x + (a + a') = x + a + a' by abel, ← mul_assoc, ← ech_add]
   congr 2
   rw [h]; ring
@@ -106,9 +106,9 @@ theorem GlobalTheory.ArchSch.infRel_proportional : GlobalTheory.FunPr.Hypotheses
     have hsplit : ⇑g = sch (trP F _) (arch F (M.co.e u).1) (arch F (M.co.e u).2)
         (sch (trP F _) (arch F (M.co.e (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ)).1) (arch F (M.co.e (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ)).2) ⇑f) := by
       have e1 : arch F (M.co.e (u + (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ))).1 = arch F (M.co.e u).1 + arch F (M.co.e (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ)).1 := by
-        rw [map_add, Prod.fst_add, arch_add]
+        rw [map_add (f := _), Prod.fst_add, arch_add]
       have e2 : arch F (M.co.e (u + (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ))).2 = arch F (M.co.e u).2 + arch F (M.co.e (incM F (1 : Matrix (Fin n) (Fin n) E) * z * (incM F H'.ι)ᵀ)).2 := by
-        rw [map_add, Prod.snd_add, arch_add]
+        rw [map_add (f := _), Prod.snd_add, arch_add]
       rw [hg]
       dsimp only
       rw [e1, e2, sch_add _ _ _ _ _ (hiso _ mu _ mz)]

@@ -58,7 +58,7 @@ theorem aut_eq_one_of_fix {F E : Type} [Field F] [Field E] [Algebra F E] (S : Se
   | algebraMap c => exact ρ.commutes c
   | add x y hx hy ihx ihy =>
     change ρ (⟨x, hx⟩ + ⟨y, hy⟩) = ⟨x, hx⟩ + ⟨y, hy⟩
-    rw [map_add, ihx, ihy]
+    rw [map_add (f := _), ihx, ihy]
   | inv x hx ihx =>
     change ρ (⟨x, hx⟩⁻¹) = ⟨x, hx⟩⁻¹
     rw [map_inv₀, ihx]
@@ -92,7 +92,7 @@ variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ}
 def levSub (X : Tower Ω ε) (M : ℕ) : IntermediateField Ω X.K where
   carrier := {f | Lev X M f}
   mul_mem' := fun ha hb γ hγ => by rw [map_mul, ha γ hγ, hb γ hγ]
-  add_mem' := fun ha hb γ hγ => by rw [map_add, ha γ hγ, hb γ hγ]
+  add_mem' := fun ha hb γ hγ => by rw [map_add (f := _), ha γ hγ, hb γ hγ]
   algebraMap_mem' := fun c γ _ => AlgEquiv.commutes _ c
   inv_mem' := fun x hx γ hγ => by rw [map_inv₀, hx γ hγ]
 

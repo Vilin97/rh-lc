@@ -211,7 +211,7 @@ theorem acts_lin (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.P
       a • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v) φ₁ R + b • GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v) ψ₁ R := by
     funext x; simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
   have key : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v) χ R = GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v) (a • φ₁ + b • ψ₁) R := by
-    rw [← hχ R (hR _ hs), e, map_add, map_smul, map_smul, h₁ R (hR φ hφ), h₂ R (hR ψ hψ), e']
+    rw [← hχ R (hR _ hs), e, map_add (f := _), map_smul, map_smul, h₁ R (hR φ hφ), h₂ R (hR ψ hψ), e']
   have hχe : χ = a • φ₁ + b • ψ₁ := by
     funext t
     have hz : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.At (evFin F v) (fun i => GlobalTheory.LatVac.liftV v (t i)) := by
@@ -312,7 +312,7 @@ theorem acts_pure (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.
       funext w
       by_cases hwv : w = v
       · subst hwv; simp [Function.update_self]
-      · simp only [Function.update_of_ne hwv, Pi.add_apply, map_add, evFin_of_at hwv (hzi _), add_zero]
+      · simp only [Function.update_of_ne hwv, Pi.add_apply, map_add (f := _), evFin_of_at hwv (hzi _), add_zero]
   rw [e0, h r hrest]
   funext x
   rw [pure_split v f φ (Function.update φ v φ₁) x (hfin x) fun w hw => Function.update_of_ne hw _ _,

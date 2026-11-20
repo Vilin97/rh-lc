@@ -16,7 +16,7 @@ section S1
 variable {D : Formalism.BasicNotions.D7} {M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep} (L : LocSp D M) (p : PlF D)
 
 theorem local_form_add_right (x y y' : L.V p) : (L.H p).h x (y + y') = (L.H p).h x y + (L.H p).h x y' := by
-  rw [(L.H p).h_herm (y + y') x, (L.H p).h_add_left, map_add, ← (L.H p).h_herm y x,
+  rw [(L.H p).h_herm (y + y') x, (L.H p).h_add_left, map_add (f := _), ← (L.H p).h_herm y x,
     ← (L.H p).h_herm y' x]
 
 theorem local_form_smul_right (x y : L.V p) (a : (D.s.atP p).Ep) :
@@ -98,7 +98,7 @@ theorem local_self_dual_holds : LocSelfDual := by
         induction hx using Submodule.span_induction with
         | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
         | zero => simp
-        | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+        | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
         | smul o y _ hy =>
           obtain ⟨c, hc, he⟩ := base_change_smul_integral L p (hA p) o y
           rw [he]
@@ -113,7 +113,7 @@ theorem local_self_dual_holds : LocSelfDual := by
     induction hv using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span (Submodule.subset_span ⟨y, hy, rfl⟩)
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     | smul a y _ hy => rw [L.bc_smul p]; exact Submodule.smul_mem _ _ hy
   ·
     exact local_form_integral_on_lattice L p _ hcjO hint hx hy

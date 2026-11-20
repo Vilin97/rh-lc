@@ -182,7 +182,7 @@ theorem infChar_sub_eq_of_line : GlobalTheory.Published.LanglandsClassification 
       ℓ ((A (u • X + v • X') (w : kFinVec ε I.ρ) : kFinVec ε I.ρ) : I.H) =
         u * ℓ (dRep I.ρ X ((w : kFinVec ε I.ρ) : I.H)) + v * ℓ (dRep I.ρ X' ((w : kFinVec ε I.ρ) : I.H)) := by
     intro X X' u v w hX hX'
-    rw [map_add, map_smul, map_smul, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.smul_apply,
+    rw [map_add (f := _), map_smul, map_smul, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.smul_apply,
       Submodule.coe_add, Submodule.coe_smul, Submodule.coe_smul, map_add, map_smul, map_smul, hA1 X hX, hA1 X' hX',
       smul_eq_mul, smul_eq_mul]
   have hoffp : ∀ b, b ≠ p → ∀ v : Y, ℓ' (E' p b v) = 0 := fun b hb v => by

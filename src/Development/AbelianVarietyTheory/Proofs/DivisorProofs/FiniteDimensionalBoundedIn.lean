@@ -24,7 +24,7 @@ def boundedIn {n : ℕ} (b : Module.Basis (Fin n) k[X] A) (D : Ideal A) (d : ℕ
   carrier := {f | f ∈ D ∧ ∀ i, (b.repr f i).natDegree ≤ d}
   zero_mem' := ⟨D.zero_mem, fun i => by simp⟩
   add_mem' := fun {f g} hf hg => ⟨D.add_mem hf.1 hg.1, fun i => by
-    rw [map_add, Finsupp.add_apply]
+    rw [map_add (f := _), Finsupp.add_apply]
     exact (natDegree_add_le _ _).trans (max_le (hf.2 i) (hg.2 i))⟩
   smul_mem' := fun c f hf => ⟨by rw [Algebra.smul_def]; exact D.mul_mem_left _ hf.1, fun i => by
     rw [repr_smul_const]

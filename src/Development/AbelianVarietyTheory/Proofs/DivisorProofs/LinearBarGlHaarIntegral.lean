@@ -134,7 +134,7 @@ theorem integral_omB_augAt_eq_zero : GlobalTheory.ThK.KP → ∀ (F E : Type) [F
       refine ⟨add_mem hy.1 hz.1, ?_⟩
       have e2 : ∀ g : GL (Fin a') (Fv F B.v₁), omB (chrW (X.α / X.β) B.τ₁) (chrW X.α B.τ₁) g 1 (ι (y + z)) Y =
           omB (chrW (X.α / X.β) B.τ₁) (chrW X.α B.τ₁) g 1 (ι y) Y + omB (chrW (X.α / X.β) B.τ₁) (chrW X.α B.τ₁) g 1 (ι z) Y :=
-        fun g => by simp only [map_add, omB, Pi.add_apply]; ring
+        fun g => by simp only [map_add (f := _), omB, Pi.add_apply]; ring
       simp_rw [e2]
       rw [integral_add (integrable_omB _ _ hν hd hZ (hι.bij.mapsTo hy.1) μ)
         (integrable_omB _ _ hν hd hZ (hι.bij.mapsTo hz.1) μ), hy.2, hz.2, add_zero]

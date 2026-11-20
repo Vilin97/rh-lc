@@ -160,7 +160,7 @@ theorem mem_iSup_eig_iff (hv : v.Integers O) {Λ : Type} [CommRing Λ] [Finite (
     induction hx using Submodule.iSup_induction' with
     | mem σ x hx => exact (mem_eig_iff_support v hv ρ Φ hΦ σ.1 x).1 hx τ σ.2.symm
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, Pi.add_apply, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), Pi.add_apply, hx, hy, add_zero]
   · intro hx
     letI := Fintype.ofFinite (Λ →+* O)
     have e : x = ∑ σ, Φ.symm (Pi.single σ (Φ x σ)) := by
@@ -207,7 +207,7 @@ theorem mem_eigPart_iff (hv : v.Integers O) {Λ : Type} [CommRing Λ] [Finite (�
   refine and_congr Iff.rfl ⟨?_, ?_⟩
   · rintro ⟨_, ⟨t, ht, rfl⟩, r, hr, rfl⟩
     rw [Submodule.restrictScalars_mem, mem_iSup_eig_iff v hv ρ Φ hΦ] at hr
-    exact ⟨t, ht, by rw [map_add, Pi.add_apply, hr, add_zero]⟩
+    exact ⟨t, ht, by rw [map_add (f := _), Pi.add_apply, hr, add_zero]⟩
   · rintro ⟨t, ht, e⟩
     refine ⟨_, ⟨t, ht, rfl⟩, x - incl C h t, ?_, by abel⟩
     rw [Submodule.restrictScalars_mem, mem_iSup_eig_iff v hv ρ Φ hΦ, map_sub, Pi.sub_apply, e,

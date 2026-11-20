@@ -221,9 +221,9 @@ theorem heis_trans_char : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [
       (GlobalTheory.LatVac.locCo M.co v u₂).1 ⬝ᵥ (GlobalTheory.LatVac.locCo M.co v u₁).2)) = 1 := by
     rw [← neg_sub, mul_neg, AddChar.map_neg_eq_inv, hphase, inv_one]
   have h21 : φ₁ = GlobalTheory.WeilM.schr ψv (GlobalTheory.LatVac.locCo M.co v u₂) (GlobalTheory.WeilM.schr ψv (GlobalTheory.LatVac.locCo M.co v u₁) φ) := by
-    rw [schr_schr _ _ _ _ hphase, ← map_add, add_comm, hsum, hφ₁eq]
+    rw [schr_schr _ _ _ _ hphase, ← map_add (f := _), add_comm, hsum, hφ₁eq]
   have h12 : φ₁ = GlobalTheory.WeilM.schr ψv (GlobalTheory.LatVac.locCo M.co v u₁) (GlobalTheory.WeilM.schr ψv (GlobalTheory.LatVac.locCo M.co v u₂) φ) := by
-    rw [schr_schr _ _ _ _ hphase', ← map_add, hsum, hφ₁eq]
+    rw [schr_schr _ _ _ _ hphase', ← map_add (f := _), hsum, hφ₁eq]
 
   have hA : IsUnit (X.J.map t).det := by
     rw [show (X.J.map t).det = (t : E →+* Fv F v) X.J.det from (RingHom.map_det _ _).symm]

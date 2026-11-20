@@ -47,19 +47,19 @@ theorem cechFG_of_transfer {Z Z' : Scheme.{0}} {J : Type} (W : J → Z.Opens) (W
   · intro k i i' i''
     apply h3 i i' i''
     have := he' k i i' i''
-    rw [map_add, ha, hb, hc, hg, hg, hg]
+    rw [map_add (f := _), ha, hb, hc, hg, hg, hg]
     exact this
   · intro c hcoc
     obtain ⟨r, h', hh⟩ := hc' (fun i i' => φ2 i i' (c i i')) (by
       intro i i' i''
       have := congrArg (φ3 i i' i'') (hcoc i i' i'')
-      rw [map_add, ha, hb, hc] at this
+      rw [map_add (f := _), ha, hb, hc] at this
       exact this)
     choose h hh1 using fun i => h1 i (h' i)
     refine ⟨r, h, fun i i' => (h2 i i').1 ?_⟩
     have e1 := hh i i'
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sub, map_sum, hl, hr, hh1, hh1]
+      rw [map_add (f := _), map_sub, map_sum, hl, hr, hh1, hh1]
     simp only [map_mul, hact, hg]
     exact e1
 

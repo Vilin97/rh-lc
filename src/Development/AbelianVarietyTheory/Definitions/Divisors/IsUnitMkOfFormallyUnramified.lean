@@ -40,7 +40,7 @@ theorem isUnit_mk_of_formallyUnramified {k A : Type*} [CommRing k] [CommRing A] 
       exact Submodule.subset_span ⟨j, rfl⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add, TensorProduct.tmul_add]
+      rw [map_add (f := _), TensorProduct.tmul_add]
       exact S.add_mem hx hy
     | smul a x hx' hx =>
       rw [smul_eq_mul, Derivation.leibniz, TensorProduct.tmul_add, TensorProduct.tmul_smul,
@@ -192,7 +192,7 @@ theorem coeff_unique (hω : IsFrame ω) (h : V ≤ U) {η : FormsOn p D V} {c c'
 def coeff (hω : IsFrame ω) (h : V ≤ U) : FormsOn p D V →ₗ[Γ(Y, V)] Γ(Y, V) where
   toFun η := (hω.exists_coeff h η).choose
   map_add' η η' := hω.coeff_unique h (hω.exists_coeff h _).choose_spec fun W hW e => by
-    rw [map_add, map_add, add_smul, ← (hω.exists_coeff h η).choose_spec W hW e,
+    rw [map_add (f := _), map_add (f := _), add_smul, ← (hω.exists_coeff h η).choose_spec W hW e,
       ← (hω.exists_coeff h η').choose_spec W hW e]
   map_smul' a η := hω.coeff_unique h (hω.exists_coeff h _).choose_spec fun W hW e => by
     rw [resForm_smul, RingHom.id_apply, smul_eq_mul, map_mul, mul_smul,
@@ -370,7 +370,7 @@ def toSec (V : Y.Opens) : FormsOn p D V →ₗ[Γ(Y, V)] Γ(toMod K.bundle, V) w
     simp only [resG_coeff, resForm_resForm]
     exact K.coeff_change i j _ _ _
   map_add' η η' := sec_ext fun i => by
-    simp only [coord_mkSec, coord_add, map_add]
+    simp only [coord_mkSec, coord_add, map_add (f := _)]
     rfl
   map_smul' a η := sec_ext fun i => by
     simp only [coord_mkSec, coord_smul, resForm_smul, map_smul, smul_eq_mul, RingHom.id_apply]
@@ -913,7 +913,7 @@ private theorem dFun_polyFn_eq_sum_pderiv (g : MvPolynomial (Fin D) k) :
     simp only [pderiv_C, map_zero, zero_smul, Finset.sum_const_zero]
     exact (KaehlerDifferential.D k _).map_algebraMap c
   | add p q hp hq =>
-    simp only [map_add, hp, hq, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hp, hq, add_smul, Finset.sum_add_distrib]
   | mul_X p i hp =>
     have hl : dFun (algX (affStr k D) ⊤) (polyFn (p * X i)) =
         polyFn p • dFun (algX (affStr k D) ⊤) (polyFn (X i)) +
@@ -921,7 +921,7 @@ private theorem dFun_polyFn_eq_sum_pderiv (g : MvPolynomial (Fin D) k) :
       rw [map_mul]
       exact (KaehlerDifferential.D k _).leibniz _ _
     rw [hl, hp, Finset.smul_sum]
-    simp only [Derivation.leibniz, pderiv_X, smul_eq_mul, map_add, map_mul, add_smul, mul_smul,
+    simp only [Derivation.leibniz, pderiv_X, smul_eq_mul, map_add (f := _), map_mul, add_smul, mul_smul,
       Finset.sum_add_distrib]
     congr 1
     simp [Pi.single_apply]

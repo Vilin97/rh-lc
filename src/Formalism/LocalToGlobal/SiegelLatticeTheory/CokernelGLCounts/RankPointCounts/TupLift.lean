@@ -26,7 +26,7 @@ theorem frame_li {T : E} (F : LFlag S r T) (hT : T ≠ 0) : LinearIndependent E 
       obtain ⟨a, rfl⟩ := hy
       exact F.fl.z_orth a
     | zero => simp
-    | add x y _ _ hx hy => simp [map_add, hx, hy]
+    | add x y _ _ hx hy => simp [map_add (f := _), hx, hy]
     | smul c x _ hx => simp [hx]
   have := h0 _ hz
   rw [F.fl.z_norm] at this

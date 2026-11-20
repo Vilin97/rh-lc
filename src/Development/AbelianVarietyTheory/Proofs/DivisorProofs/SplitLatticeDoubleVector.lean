@@ -98,7 +98,7 @@ theorem exists_conj_diag : ∀ {F E : Type} [Field F] [NumberField F] [Field E] 
   have hb : cA σ θ * cA σ θ = cA σ θ := by rw [← map_mul, ha]
   have hcb : cA σ (cA σ θ) = θ := by
     have h := congrArg (cA σ) hsum
-    rw [map_add, AlgHom.commutes, ← hsum] at h
+    rw [map_add (f := _), AlgHom.commutes, ← hsum] at h
     linear_combination h
   have hw2 := swapM_mul_self (d := d) ha hb hab
   have hU : (swapM d θ (cA σ θ))ᵀ * dbl (incM F V.J) * (swapM d θ (cA σ θ)).map (cA σ) = dbl (incM F V.J) := by

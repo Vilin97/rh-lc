@@ -16,7 +16,7 @@ theorem incU_apply_eq_lTensor (F : Type*) [Field F] [Algebra K F] (U : Submodule
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a u => simp [incU]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem baseSpan_eq_range (F : Type*) [Field F] [Algebra K F] (U : Submodule K V) :
     baseSpan F U = LinearMap.range (incU F U) := by
@@ -32,7 +32,7 @@ theorem baseSpan_eq_range (F : Type*) [Field F] [Algebra K F] (U : Submodule K V
         simp [incU, TensorProduct.smul_tmul']
       rw [this]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨u, u.2, rfl⟩)
-    | add y z hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 theorem mem_baseSpan_iff (F : Type*) [Field F] [Algebra K F] (U : Submodule K V)
     (x : F ⊗[K] V) : x ∈ baseSpan F U ↔ LinearMap.lTensor F U.mkQ x = 0 := by
@@ -59,7 +59,7 @@ theorem lTensor_mkQ_inclT (K₁ : IntermediateField K Ω) (U : Submodule K V) (x
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a v => simp [inclT_tmul', fldIncl]
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem mem_baseSpan_of_inclT (K₁ : IntermediateField K Ω) (U : Submodule K V) (x : K₁ ⊗[K] V)
     (h : inclT K₁ V x ∈ baseSpan Ω U) : x ∈ baseSpan K₁ U := by
@@ -95,7 +95,7 @@ theorem definedOver_iff (c : Module.Dual Ω (Ω ⊗[K] V)) (K' : IntermediateFie
     | add y z hy hz =>
       obtain ⟨a, ha⟩ := hy
       obtain ⟨b, hb⟩ := hz
-      exact ⟨a + b, by rw [map_add, map_add, map_add, ha, hb]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]⟩
 
 theorem DefinedOver.mono {c : Module.Dual Ω (Ω ⊗[K] V)} {K' K₁ : IntermediateField K Ω}
     (h : DefinedOver c K') (hle : K' ≤ K₁) : DefinedOver c K₁ := by

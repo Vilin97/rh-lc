@@ -77,7 +77,7 @@ theorem eig_lpChar (x y : WD h) (φ : Weil h) (hy : y.lpDim = 1) (c : ℂ) (hc :
       induction t using TensorProduct.induction_on with
       | zero => simp
       | tmul x y => simp [e, smul_smul, mul_comm]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [← LinearEquiv.charpoly_conj e, he, roots_charpoly_smul]
 
 end GlobalTheory.RowTie.EigTwist

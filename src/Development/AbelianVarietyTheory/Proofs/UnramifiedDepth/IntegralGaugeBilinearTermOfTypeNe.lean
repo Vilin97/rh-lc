@@ -95,7 +95,7 @@ theorem eq_bexp {κ : Type} (e : Fin 2 × κ →₀ ℕ) (he : e.degree < 3) {a 
     · rw [← h2]; omega
     · omega
   have hsum : bexp a b + (e - bexp a b) = e := add_tsub_cancel_of_le hle
-  have hd : (bexp a b).degree + (e - bexp a b).degree = e.degree := by rw [← map_add, hsum]
+  have hd : (bexp a b).degree + (e - bexp a b).degree = e.degree := by rw [← map_add (f := _), hsum]
   rw [bexp_degree] at hd
   have h0 : (e - bexp a b).degree = 0 := by omega
   rw [Finsupp.degree_eq_zero_iff] at h0

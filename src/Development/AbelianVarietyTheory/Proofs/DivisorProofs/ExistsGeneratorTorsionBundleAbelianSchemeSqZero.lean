@@ -136,7 +136,7 @@ theorem eq_zero_of_sqZero_baseChange_nsmul : ∀ (k : ℕ) (R R₀ : Type) [Comm
   have ht : ∀ a, IsUnit (t a) := fun a =>
     IsUnit.of_mul_eq_one (1 - n a * Hh a) (by linear_combination (-(Hh a * Hh a)) * hn2 a)
   have hti : ∀ a, (i.app (D.U a)).hom (t a) = 1 := fun a => by
-    simp only [t, map_add, map_one, map_mul, hn0 a, zero_mul, add_zero]
+    simp only [t, map_add (f := _), map_one, map_mul, hn0 a, zero_mul, add_zero]
   refine (cls_eq_zero_iff hD).2 ⟨⟨fun a => (ht a).unit⟩, fun a b => ?_⟩
   apply Units.ext
   let ρa := (X.presheaf.map (homOfLE (inf_le_left : D.U a ⊓ D.U b ≤ D.U a)).op).hom
@@ -158,8 +158,8 @@ theorem eq_zero_of_sqZero_baseChange_nsmul : ∀ (k : ℕ) (R R₀ : Type) [Comm
   have hNb : ρb (n b) = ρb (σ' b).val - 1 := by simp only [n, map_sub, map_one]
   have hNa2 : ρa (n a) * ρa (n a) = 0 := by rw [← map_mul, hn2 a, map_zero]
   have hNb2 : ρb (n b) * ρb (n b) = 0 := by rw [← map_mul, hn2 b, map_zero]
-  have hTa : ρa (t a) = 1 + ρa (n a) * Hc := by simp only [t, map_add, map_one, map_mul, hHa]
-  have hTb : ρb (t b) = 1 + ρb (n b) * Hc := by simp only [t, map_add, map_one, map_mul, hHb]
+  have hTa : ρa (t a) = 1 + ρa (n a) * Hc := by simp only [t, map_add (f := _), map_one, map_mul, hHa]
+  have hTb : ρb (t b) = 1 + ρb (n b) * Hc := by simp only [t, map_add (f := _), map_one, map_mul, hHb]
   have hG1 : (i.app (D.U a ⊓ D.U b)).hom (D.g a b).val = 1 := congrArg Units.val (hD1 a b)
   have hM0 : (i.app (D.U a ⊓ D.U b)).hom (ρa (t a) - (D.g a b).val * ρb (t b)) = 0 := by
     rw [map_sub, map_mul, app_restrict, app_restrict, hti a, hti b, hG1, map_one, map_one,

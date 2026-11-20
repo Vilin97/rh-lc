@@ -16,7 +16,7 @@ def addCls (A : Over S) [GrpObj A] (T : Over S) : AddSubgroup (Pic (A ⊗ T).lef
   carrier := {c | ∀ (Y : Over S) (a a' : Y ⟶ A) (t : Y ⟶ T),
     CechPic.pull (lift (a * a') t).left c = CechPic.pull (lift a t).left c + CechPic.pull (lift a' t).left c}
   add_mem' {c d} hc hd Y a a' t := by
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [hc Y a a' t, hd Y a a' t]
     abel
   zero_mem' Y a a' t := by simp only [map_zero, add_zero]
@@ -120,7 +120,7 @@ theorem rep_isDual : ∀ (S : Scheme.{0}) (A B : Over S) [GrpObj A] (P : LB (A �
     have hμ : ptCls h (B ⊗ B) μ[B] = ptCls h _ (fst B B) + ptCls h _ (snd B B) :=
       Equiv.ofBijective_apply_symm_apply (ptCls h (B ⊗ B)) (ptCls_bij h _) _
     intro Y x y
-    rw [Hom.mul_def, ptCls_comp, hμ, map_add, ← ptCls_comp, ← ptCls_comp, lift_fst, lift_snd]
+    rw [Hom.mul_def, ptCls_comp, hμ, map_add (f := _), ← ptCls_comp, ← ptCls_comp, lift_fst, lift_snd]
   have hone : ∀ (Y : Over S), ptCls h Y (1 : Y ⟶ B) = 0 := by
     have hη : ptCls h (𝟙_ (Over S)) η[B] = 0 :=
       Equiv.ofBijective_apply_symm_apply (ptCls h _) (ptCls_bij h _) 0

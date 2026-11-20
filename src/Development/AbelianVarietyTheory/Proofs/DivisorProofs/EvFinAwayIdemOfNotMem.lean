@@ -72,7 +72,7 @@ def idemPt (e : AF F) (he : e * e = e) : UA σ Q →* UA σ Q where
     have hg : (mat g)ᵀ * incM F Q * (mat g).map (cA σ) = incM F Q := g.2
     have h1 : (idemMat e (mat g)).map (cA σ) = e • (mat g).map (cA σ) + (1 - e) • 1 := by
       ext i j
-      simp only [idemMat, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add, map_smul, Matrix.one_apply,
+      simp only [idemMat, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _), map_smul, Matrix.one_apply,
         apply_ite (cA σ), map_one, map_zero]
     show (idemMat e (mat g))ᵀ * incM F Q * (idemMat e (mat g)).map (cA σ) = incM F Q
     rw [h1, idemMat, Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_smul, Matrix.transpose_one,

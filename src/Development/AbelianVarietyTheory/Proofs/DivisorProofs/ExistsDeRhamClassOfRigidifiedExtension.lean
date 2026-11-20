@@ -39,7 +39,7 @@ theorem pullTwo_mulBy_pow_self (p : ℕ) (R : Type) [CommRing R] (G : PDivGroup 
     rw [ha, hb]
     simp [Algebra.algebraMap_eq_smul_one, Algebra.TensorProduct.one_def, TensorProduct.smul_tmul', smul_smul,
       TensorProduct.tmul_smul, mul_comm]
-  | add x y hx hy => rw [map_add, hx, hy, map_add, add_smul]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _), add_smul]
 
 theorem exists_isCan_rigToExt_eq : ∀ (p : ℕ) [Fact p.Prime] (R : Type) [CommRing R] (N : ℕ), (p : R) ^ N = 0 →
     ∀ (A : Over (Sp R)) [GrpObj A], IsAbelianScheme A → AllPrim (dp0 R) (𝟙 _) A →

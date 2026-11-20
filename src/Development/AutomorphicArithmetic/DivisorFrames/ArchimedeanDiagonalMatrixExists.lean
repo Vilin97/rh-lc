@@ -134,7 +134,7 @@ private theorem slope_lin (hP : GlobalTheory.FunPr.Hypotheses₂) {V : Type} [No
     (fun h x => hTc (B h) (C.symm x))
   refine ⟨c, fun f => ?_⟩
   have h := (B.continuous.tendsto _).comp (hc (Bi f))
-  rw [map_add, map_smul, hBBi, hZG] at h
+  rw [map_add (f := _), map_smul, hBBi, hZG] at h
   refine h.congr fun t => ?_
   simp only [Function.comp_apply, ← Complex.coe_smul, map_smul, map_sub, hS, hBBi]
 
@@ -197,7 +197,7 @@ private theorem orbit_lin (hP : GlobalTheory.FunPr.Hypotheses₂) (M : Model σ 
     intro c f; funext x; simp [tens, mul_assoc]
   let T : ℝ → SInf F (Fin n × Fin d) →ₗ[ℂ] SInf F (Fin n × Fin d) := fun t =>
     { toFun := S t
-      map_add' := fun f g => hinj _ _ (by rw [← key, tadd, map_add, key, key, tadd])
+      map_add' := fun f g => hinj _ _ (by rw [← key, tadd, map_add (f := _), key, key, tadd])
       map_smul' := fun c f => hinj _ _ (by rw [← key, tsmul, map_smul, key, RingHom.id_apply, tsmul]) }
   have hT : ∀ t f, T t f = S t f := fun t f => rfl
   have hT0 : ∀ f, T 0 f = f := fun f => hinj _ _ (by rw [hT, ← key, hδ0, map_one, Module.End.one_apply])
@@ -272,7 +272,7 @@ private theorem amap_lin (hcm : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, E
       ((Fin n × Fin d → mixedEmbedding.mixedSpace F) × (Fin n × Fin d → mixedEmbedding.mixedSpace F))) := fun m =>
     { toFun := fun v => Coord.coordI M (m * GlobalTheory.ArchFam.wv M v)
       map_add' := fun v v' => by
-        simp only [GlobalTheory.ArchFam.wv, Prod.fst_add, Prod.snd_add, Coord.lift_add, ← Prod.mk_add_mk, map_add,
+        simp only [GlobalTheory.ArchFam.wv, Prod.fst_add, Prod.snd_add, Coord.lift_add, ← Prod.mk_add_mk, map_add (f := _),
           Matrix.mul_add, Coord.coordI_add]
       map_smul' := fun c v => by
         simp only [GlobalTheory.ArchFam.wv, Prod.smul_fst, Prod.smul_snd, Coord.lift_smul, ← Prod.smul_mk, map_smul,
@@ -337,7 +337,7 @@ private theorem vac_lin (hP : GlobalTheory.FunPr.Hypotheses₂) {B : Base F E} {
     { toFun := fun Y => atPl (V := fun _ : InfinitePlace F => Formalism.BasicNotions.TH.Pol r' s' r s) w
         (fockAct2 r' s' r s Y + (c w * Y.trace) • 1)
       map_add' := fun Y Y' => by
-        rw [← atPl_add, map_add, Matrix.trace_add, mul_add, add_smul, add_add_add_comm]
+        rw [← atPl_add, map_add (f := _), Matrix.trace_add, mul_add, add_smul, add_add_add_comm]
       map_smul' := fun r Y => by
         rw [RingHom.id_apply, ← atPl_smul, map_smul, Matrix.trace_smul,
           smul_add, smul_smul, smul_eq_mul, mul_left_comm] }
@@ -439,7 +439,7 @@ private theorem lift_lin (F : Type) [Field F] [NumberField F] (κ : Type) [Finty
   let P := Submodule.linearProjOfIsCompl (schA F κ) q hq
   let S : (κ → Af F) → ((κ → AF F) → ℂ) →ₗ[ℂ] SInf F κ := fun y =>
     { toFun := fun Φ => sl y (P Φ) (P Φ).2
-      map_add' := fun Φ Ψ => by ext x; simp only [SchwartzMap.add_apply, hsl, map_add]; rfl
+      map_add' := fun Φ Ψ => by ext x; simp only [SchwartzMap.add_apply, hsl, map_add (f := _)]; rfl
       map_smul' := fun c Φ => by ext x; simp only [SchwartzMap.smul_apply, hsl, map_smul]; rfl }
   refine ⟨{ toFun := fun δ =>
               { toFun := fun Φ x => δ (S (fun i => (x i).2) Φ) (locV x)
@@ -487,7 +487,7 @@ theorem UpperTheory.archimedean_diagonal_matrix_exists :
     intro δ Φ hΦ
     induction hΦ using Submodule.span_induction with
     | zero => rw [map_zero]; exact zero_mem _
-    | add Φ Ψ _ _ h₁ h₂ => rw [map_add]; exact add_mem h₁ h₂
+    | add Φ Ψ _ _ h₁ h₂ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
     | smul c Φ _ h₁ => rw [map_smul]; exact Submodule.smul_mem _ _ h₁
     | mem Φ hΦ =>
       obtain ⟨f, φ, hφ, rfl⟩ := hΦ
@@ -518,7 +518,7 @@ theorem UpperTheory.archimedean_diagonal_matrix_exists :
     induction hΦ using Submodule.span_induction with
     | zero => simpa using hasDerivAt_const (0 : ℝ) (0 : ℂ)
     | add Φ₁ Φ₂ _ _ h₁ h₂ =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact h₁.add h₂
     | smul r Φ₁ _ h₁ =>
       simp only [map_smul, smul_eq_mul]

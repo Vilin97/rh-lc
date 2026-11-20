@@ -58,7 +58,7 @@ theorem exists_cong {c : Ideal (OF E)} (v : HeightOneSpectrum (OF E)) (n : ℕ) 
     exact h1 hb
   have h2 := val_int_le P n b hb'
   have h3 := hx P hP
-  rw [map_add] at h3
+  rw [map_add (f := _)] at h3
   have h4 : algebraMap E (Af E) (algebraMap (OF E) E a) P - z P =
       ((algebraMap E (Af E) (algebraMap (OF E) E a) + algebraMap E (Af E) (algebraMap (𝓞 E) E b)) P - z P) -
         algebraMap E (Af E) (algebraMap (𝓞 E) E b) P := by

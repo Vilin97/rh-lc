@@ -25,7 +25,7 @@ theorem mConeMap_form (y : (Σ k, ι k) → Ω) {g : MRing ι} {d : K → ℕ} (
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => rw [eval₂_C]; simp
-    | add f f' h h' => rw [eval₂_add, h, h', map_add, map_add]
+    | add f f' h h' => rw [eval₂_add, h, h', map_add (f := _), map_add (f := _)]
     | mul_X f p h => rw [eval₂_mul, h, eval₂_X, map_mul, map_mul, aeval_X]
   rw [← h2]
   refine Eq.trans ?_ (h.trans ?_)

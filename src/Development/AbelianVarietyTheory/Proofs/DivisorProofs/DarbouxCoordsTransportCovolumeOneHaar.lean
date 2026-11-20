@@ -60,7 +60,7 @@ theorem transport_covol_one : ∀ (D : D7) (S T : HSp D) (κ : Type) [Fintype κ
     refine hF.image_of_equiv m.toEquiv (m.measurePreserving_symm ν).quasiMeasurePreserving r ?_
     intro g x
     change e (e.symm (g : (κ → AF D.host.F) × (κ → AF D.host.F)) + x) = (g : (κ → AF D.host.F) × (κ → AF D.host.F)) + e x
-    rw [map_add, LinearEquiv.apply_symm_apply]
+    rw [map_add (f := _), LinearEquiv.apply_symm_apply]
   · rw [MeasurableEquiv.map_apply, Set.preimage_image_eq _ m.injective, h1]
   · intro g
     rw [m.measurableEmbedding.setIntegral_map, Set.preimage_image_eq _ m.injective]

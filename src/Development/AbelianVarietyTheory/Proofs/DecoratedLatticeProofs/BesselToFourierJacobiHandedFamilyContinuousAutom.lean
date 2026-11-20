@@ -58,7 +58,7 @@ theorem handBF_isQuasiFam : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (ρ : 
       have hq := (hF (B.o.emb (h₀, 1), h)).quasi δ ((B.o.resS J.W₀).symm (0, l.κ J.W₀ w))
       have hδ' : rat δ = (B.o.resS J.W₀).symm (0, l.κ J.W₀ (ratW L' J.W₀ γ)) := hδ
       rw [ratW_eq, hδ', hs, neg_neg] at hq
-      rw [e, map_add, hq]
+      rw [e, map_add (f := _), hq]
     simp only [handBF, key]
     simp_rw [mul_left_comm (φ _) (ψ _)]
     rw [integral_const_mul, star_mul', star_psi_eq s.weil₀.std]

@@ -55,7 +55,7 @@ theorem QQ.map {l : O} (f : PowerSeries O →ₐ[O] PowerSeries O) {x : PowerSer
       | exact f.commutes l
       | simpa [PowerSeries.algebraMap_eq] using f.commutes l
   refine ⟨w, b + f a, hw, ?_⟩
-  rw [map_add, map_mul, map_mul, map_pow, hC, hwb]
+  rw [map_add (f := _), map_mul, map_mul, map_pow, hC, hwb]
   ring
 
 theorem QQ_φX {B : Base O} (h3 : B.E3) (h1 : 1 ≤ B.ℓ) : QQ (B.ℓ : O) (B.φ X) B.ℓ := by
@@ -86,7 +86,7 @@ theorem p_eq (B : Base O) (s : ℕ) : B.p s = (⇑B.φ)^[s] X + C (B.ℓ : O) :=
   induction s with
   | zero => simp
   | succ s ih =>
-    rw [Function.iterate_succ_apply', ih, Function.iterate_succ_apply', map_add, hC]
+    rw [Function.iterate_succ_apply', ih, Function.iterate_succ_apply', map_add (f := _), hC]
 
 theorem QQ_p {B : Base O} (h3 : B.E3) (h1 : 1 ≤ B.ℓ) (s : ℕ) :
     QQ (B.ℓ : O) (B.p s) (B.ℓ ^ s) := by
@@ -111,13 +111,13 @@ theorem prep [IsLocalRing O] {l : O} (hl : ¬ IsUnit l) [IsAdicComplete (Ideal.s
   have hl0 : Ideal.Quotient.mk (Ideal.span {l}) l = 0 :=
     Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mem_span_singleton_self l)
   have hmap : g.map (Ideal.Quotient.mk (Ideal.span {l})) = X ^ d := by
-    rw [hg, map_add, map_mul, map_pow, map_X, map_C, hl0, map_zero, zero_mul, add_zero]
+    rw [hg, map_add (f := _), map_mul, map_pow, map_X, map_C, hl0, map_zero, zero_mul, add_zero]
   have hord : (g.map (Ideal.Quotient.mk (Ideal.span {l}))).order.toNat = d := by
     rw [hmap, order_X_pow]
     rfl
   have H : g.IsWeierstrassDivisorAt (Ideal.span {l}) := by
     unfold IsWeierstrassDivisorAt
-    rw [hord, hg, map_add, coeff_X_pow_self, coeff_C_mul]
+    rw [hord, hg, map_add (f := _), coeff_X_pow_self, coeff_C_mul]
     exact isUnit_one_add hl _
   have hdv := H.isWeierstrassDivisionAt_div_mod (X ^ d)
   set q := H.div (X ^ d)
@@ -140,7 +140,7 @@ theorem prep [IsLocalRing O] {l : O} (hl : ¬ IsUnit l) [IsAdicComplete (Ideal.s
       have := hm.coeff_natDegree
       rwa [hnd] at this
     have h3 := congrArg (coeff d) hE
-    rw [Polynomial.coeff_coe, hcd, hg, add_mul, map_add,
+    rw [Polynomial.coeff_coe, hcd, hg, add_mul, map_add (f := _),
       coeff_X_pow_mul', if_pos le_rfl, Nat.sub_self, mul_assoc, coeff_C_mul,
       coeff_zero_eq_constantCoeff_apply] at h3
     have h4 : constantCoeff q = 1 + l * (-(coeff d (vi * a * q))) := by
@@ -517,7 +517,7 @@ theorem γ_sub_X (h4 : B.E4) (a : PowerSeries O) : ∃ c : PowerSeries O, B.γ a
   have key : B.γ a - a = B.γ (C (PowerSeries.constantCoeff a) + X * a') -
       (C (PowerSeries.constantCoeff a) + X * a') := by
     rw [← ha]
-  rw [key, map_add, map_mul, hC, he]
+  rw [key, map_add (f := _), map_mul, hC, he]
   ring
 
 def GU (B : Base O) (x : PowerSeries O) : Prop := ∃ t : PowerSeries O, B.γ x = x * (1 + X * t)
@@ -592,7 +592,7 @@ theorem γ_pull_sub (L : Lat B n V) (h3 : B.E3) (h4 : B.E4) (h9 : L.P9) (i : ZMo
     exact hsmX _ ((L.pull i k).smul_mem d (Submodule.subset_span ⟨w, hw, rfl⟩))
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add, show L.γ (i + (k : ZMod n)) x + L.γ (i + (k : ZMod n)) y - (x + y) =
+    rw [map_add (f := _), show L.γ (i + (k : ZMod n)) x + L.γ (i + (k : ZMod n)) y - (x + y) =
       (L.γ (i + (k : ZMod n)) x - x) + (L.γ (i + (k : ZMod n)) y - y) by abel]
     exact (sm X (L.pull i k)).add_mem hx hy
   | smul a x hxs hx =>

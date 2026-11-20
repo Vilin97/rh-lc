@@ -34,7 +34,7 @@ theorem exists_lift_ringOfIntegers {E : Type} [Field E] [NumberField E] {V K : T
             map_one' := hinj (by rw [hf, map_one, map_one])
             map_mul' := fun a b => hinj (by rw [map_mul, hf, hf, hf, map_mul])
             map_zero' := hinj (by rw [hf, map_zero, map_zero])
-            map_add' := fun a b => hinj (by rw [map_add, hf, hf, hf, map_add]) }, hf⟩
+            map_add' := fun a b => hinj (by rw [map_add (f := _), hf, hf, hf, map_add (f := _)]) }, hf⟩
 
 theorem exists_dual_of_extends {V : Type} [CommRing V] {d r : ℕ} (u : Fin r → Fin d → V)
     (w : Fin d → Fin d → V) (emb : Fin r ↪ Fin d) (hw : ∀ i, w (emb i) = u i)

@@ -164,7 +164,7 @@ theorem D_single (hs : ∀ (r : ℝ) X, D ((r : ℂ) • X) = (r : ℂ) • D X)
     rw [Matrix.smul_single, Matrix.smul_single, Matrix.smul_single, ← Matrix.single_add]
     congr 1
     apply Complex.ext <;> simp
-  rw [e, map_add, hs, hs]
+  rw [e, map_add (f := _), hs, hs]
   simp only [Tc, TX, eps, if_true, Bool.false_eq_true, if_false]
   have hz : z = (z.re : ℂ) + (z.im : ℂ) * Complex.I := (Complex.re_add_im z).symm
   have hc : conj z = (z.re : ℂ) - (z.im : ℂ) * Complex.I := by

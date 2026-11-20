@@ -16,7 +16,7 @@ theorem form_smul_right {E : Type} [CommRing E] (σ : E →+* E) {n : ℕ} (J : 
 
 theorem form_add_right {E : Type} [CommRing E] (σ : E →+* E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (x y z : Fin n → E) : form σ J x (y + z) = form σ J x y + form σ J x z := by
-  simp only [form, dotProduct, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [form, dotProduct, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem form_zero_right {E : Type} [CommRing E] (σ : E →+* E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E)
     (x : Fin n → E) : form σ J x 0 = 0 := by

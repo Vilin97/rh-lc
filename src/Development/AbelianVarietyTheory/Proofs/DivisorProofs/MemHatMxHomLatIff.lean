@@ -255,7 +255,7 @@ theorem mem_hatMx_iff (D : D7) {m n : ℕ} (M : Submodule (𝓞 D.host.E) (Matri
       rw [Matrix.map_zero _ (RingHom.map_zero _)]; exact zero_mem _
     | add a b _ _ ha hb =>
       refine ⟨fun i j => ?_, ?_⟩
-      · rw [Matrix.add_apply, RingHom.map_add, ha.1, hb.1, add_zero]
+      · rw [Matrix.add_apply, RingHom.map_add (f := _), ha.1, hb.1, add_zero]
       · rw [Matrix.map_add _ (RingHom.map_add _)]; exact add_mem ha.2 hb.2
     | neg a _ ha =>
       refine ⟨fun i j => ?_, ?_⟩

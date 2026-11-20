@@ -29,6 +29,6 @@ theorem main : ∀ D : D7, SumRepresentations.tie0 D → ∀ (i : D.nd.Loc) (a b
       intro w' h'
       rw [inducesW_unique hτ h']
       exact ⟨(hw w hl).1, (hw' w hl).1⟩
-    rw [hj τ key, Multiset.map_add, (hw w hl).2 τ hτ, (hw' w hl).2 τ hτ]
+    rw [hj τ key, Multiset.map_add (f := _), (hw w hl).2 τ hτ, (hw' w hl).2 τ hτ]
 
 end GlobalTheory.GalSum

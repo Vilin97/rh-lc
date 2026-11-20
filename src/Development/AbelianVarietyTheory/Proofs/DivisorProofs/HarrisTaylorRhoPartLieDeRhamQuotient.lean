@@ -34,7 +34,7 @@ theorem two_rho_sub_ne_zero (b : GlobalTheory.UPel.HT.Base D R) (β : R →+* k)
     rw [map_intCast] at this
     exact this.ne_zero
   have hr := congrArg β b.ρ_root
-  simp only [map_add, map_sub, map_pow, map_mul, map_intCast, map_zero] at hr
+  simp only [map_add (f := _), map_sub, map_pow, map_mul, map_intCast, map_zero] at hr
   intro h0
   apply hk
   have : (β b.ρ - ((D.tr : k) - β b.ρ)) ^ 2 = ((D.tr ^ 2 - 4 * D.nm : ℤ) : k) := by
@@ -44,7 +44,7 @@ theorem two_rho_sub_ne_zero (b : GlobalTheory.UPel.HT.Base D R) (β : R →+* k)
 theorem nm_eq_mul (b : GlobalTheory.UPel.HT.Base D R) (β : R →+* k) :
     (D.nm : k) = β b.ρ * ((D.tr : k) - β b.ρ) := by
   have hr := congrArg β b.ρ_root
-  simp only [map_add, map_sub, map_pow, map_mul, map_intCast, map_zero] at hr
+  simp only [map_add (f := _), map_sub, map_pow, map_mul, map_intCast, map_zero] at hr
   linear_combination hr
 
 theorem exists_sep (b : GlobalTheory.UPel.HT.Base D R) (β : R →+* k) {i j : Fin D.a} (hij : i ≠ j) :

@@ -26,7 +26,7 @@ theorem GlobalTheory.PMon.cocycle_rat_coords : ∀ (l : ℕ) [Fact l.Prime] (n :
           (fun x : n × Fin r => fr l x.2 (c h x.1)) := by
     funext ⟨i, m⟩
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hc, Pi.add_apply, map_add, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+      simp only [hc, Pi.add_apply, map_add (f := _), Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
       Matrix.blockDiagonal_apply, Matrix.map_apply, map_sum, map_mul]
     congr 1
     refine Finset.sum_congr rfl fun j _ => ?_

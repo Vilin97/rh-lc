@@ -46,7 +46,7 @@ theorem cup_add_cup_swap {R : Type} [CommRing R] {C : Type*} [Category C] (F : C
     (a b : CatCoh.H1 F) : cup F a b + cup F b a = 0 := by
   obtain ⟨a, rfl⟩ := GlobalTheory.CatCoh.H1.mk_surjective F a
   obtain ⟨b, rfl⟩ := GlobalTheory.CatCoh.H1.mk_surjective F b
-  rw [GlobalTheory.CatCoh.cup_mk, GlobalTheory.CatCoh.cup_mk, ← map_add]
+  rw [GlobalTheory.CatCoh.cup_mk, GlobalTheory.CatCoh.cup_mk, ← map_add (f := _)]
   refine GlobalTheory.CatCoh.H2.mk_eq_zero.2 ⟨fun T T' φ ↦ -(a.1 T T' φ * b.1 T T' φ), ?_⟩
   funext T T' T'' φ ψ
   simp only [GlobalTheory.CatCoh.d1_apply, Submodule.coe_add, Pi.add_apply, GlobalTheory.CatCoh.cupZ_apply, GlobalTheory.CatCoh.Z1.comp a,
@@ -59,7 +59,7 @@ theorem cup_self_eq_zero_of_prim {R : Type} [CommRing R] (A : Over (Sp R)) [GrpO
     ((GlobalTheory.T.structureSheafCohomology_pullback_comp_cup_id).2.1 _ _ _ _ _ _ _ _ (ovw f)).1 x x
   apply hN
   rw [key, key, key, hP x]
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   have := cup_add_cup_swap (OAff (A ⊗ A).hom) (pO1 (fst A A) x) (pO1 (snd A A) x)
   linear_combination (norm := module) this
 

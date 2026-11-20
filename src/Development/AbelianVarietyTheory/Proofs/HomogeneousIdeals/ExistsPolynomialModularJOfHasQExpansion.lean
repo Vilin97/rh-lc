@@ -63,7 +63,7 @@ lemma qExpansion_E₄ : qExpansion 1 E₄ =
     PowerSeries.map (Int.castRingHom ℂ) (1 + 240 * PowerSeries.mk fun n ↦ (σ 3 n : ℤ)) := by
   ext m
   rw [EisensteinSeries.E_qExpansion_coeff _ ⟨2, rfl⟩, show bernoulli 4 = -1 / 30 by decide +kernel]
-  rw [coeff_map, show (240 : ℤ⟦X⟧) = C 240 from rfl, map_add, coeff_C_mul, coeff_one]
+  rw [coeff_map, show (240 : ℤ⟦X⟧) = C 240 from rfl, map_add (f := _), coeff_C_mul, coeff_one]
   split_ifs with hm
   · simp [hm]
   · simp; norm_num

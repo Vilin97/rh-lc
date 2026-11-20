@@ -133,7 +133,7 @@ theorem knBound_I0star {A₁ A₂ A₃ A₄ A₆ : 𝒪} (h1 : W.a₁ = π * A�
     obtain ⟨x, y, h, rfl, e, ⟨X, rfl⟩, dy⟩ := exists_of_notMem_E0Set K W hπ d3 d4 d6 hP
     refine ⟨residue 𝒪 X, mem_cubicRoots one_ne_zero ?_, π * X, y, X, h, rfl, rfl, dy, rfl⟩
     have := (dvd_iff_residue_eq_zero hπ).1 (pi_sq_dvd_y_of_double_root W hπ h1 h2 h3 h4 h6 e rfl dy).2
-    simp only [map_add, map_mul, map_pow] at this
+    simp only [map_add (f := _), map_mul, map_pow] at this
     linear_combination this
   · rintro P Q c hP hQ ⟨x, y, X, h, rfl, rfl, dy, rfl⟩ ⟨x', y', X', h', rfl, rfl, dy', hc⟩
     by_contra hPQ
@@ -182,7 +182,7 @@ theorem knBound_IVstar (h1 : π ∣ W.a₁) (h2 : π ^ 2 ∣ W.a₂) {A₃ A₆ 
     obtain ⟨-, Y, rfl, hQ⟩ := star_point W hπ h1 h2 h3 h4 h6 e dx dy
     refine ⟨residue 𝒪 Y, mem_quadRoots one_ne_zero ?_, x, π ^ 2 * Y, Y, h, rfl, dx, rfl, rfl⟩
     have := (dvd_iff_residue_eq_zero hπ).1 hQ
-    simp only [map_sub, map_add, map_mul, map_pow] at this
+    simp only [map_sub, map_add (f := _), map_mul, map_pow] at this
     linear_combination this
   · rintro P Q c hP hQ ⟨x, y, Y, h, rfl, dx, rfl, rfl⟩ ⟨x', y', Y', h', rfl, dx', rfl, hc⟩
     by_contra hPQ

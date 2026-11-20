@@ -164,7 +164,7 @@ theorem trAct_single_scalar (lam : ι → DomWeight n) (τ : ι) (t : Kˣ) (F : 
       · rw [if_neg hs, Pi.mulSingle_eq_of_ne hs, Units.val_one, rowAct_one_tr, one_smul]
     rw [Finset.prod_congr rfl fun s _ => hfac s, Finset.prod_smul, Finset.prod_ite_eq' Finset.univ τ, if_pos (Finset.mem_univ τ)]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul a x _ hx => rw [map_smul, hx, smul_comm]
 
 theorem detTwK_single_scalar (lam : ι → DomWeight n) (τ : ι) (t : Kˣ) :

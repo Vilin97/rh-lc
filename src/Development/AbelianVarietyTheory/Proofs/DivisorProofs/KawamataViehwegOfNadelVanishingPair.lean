@@ -55,7 +55,7 @@ theorem subsingleton_coh_twist (hN : GlobalTheory.Published.NefNumerics) (hV : G
     exact (cls_eq_iff _ _).2 ⟨w, hw⟩
   obtain ⟨i⟩ := nonempty_twist_iso_of_cls_eq (GlobalTheory.structureModule X) (isLB_tens K.isLB hNl)
     (LB.isLB_pull hT ψ) (by
-      rw [cls_tens K.isLB hNl, cls_pull hT, cls_tens C.isLB hL₁, map_add, eK, ec,
+      rw [cls_tens K.isLB hNl, cls_pull hT, cls_tens C.isLB hL₁, map_add (f := _), eK, ec,
         cls_pull C.isLB, cls_pull hL₁])
   exact (cohOn.mapIso Γ(X, ⊤) ⊤ q i).toEquiv.subsingleton_congr.2 v
 

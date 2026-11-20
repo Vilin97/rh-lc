@@ -86,9 +86,9 @@ theorem _root_.GlobalTheory.exists_herm_coord_of_datum :
   have hsmul : ∀ (b : 𝓞 E) x y, h0 (b • x) y = b * h0 x y := fun b x y => huniq _ _ fun a => by
     rw [hh0, ← mul_assoc, ← map_mul, hh0, smul_smul]
   have hadd : ∀ x x' y, h0 (x + x') y = h0 x y + h0 x' y := fun x x' y => huniq _ _ fun a => by
-    rw [hh0, mul_add, map_add, hh0, hh0]; simp [smul_add]
+    rw [hh0, mul_add, map_add (f := _), hh0, hh0]; simp [smul_add]
   have hadd' : ∀ x y y', h0 x (y + y') = h0 x y + h0 x y' := fun x y y' => huniq _ _ fun a => by
-    rw [mul_add, map_add, hh0, hh0, hh0, map_add, Int.cast_add]
+    rw [mul_add, map_add (f := _), hh0, hh0, hh0, map_add (f := _), Int.cast_add]
   let σ : E ≃ₐ[ℚ] E := (IsCMField.complexConj E).restrictScalars ℚ
   have hσ : ∀ e, σ e = _root_.ReciprocityTheory.ChartRestriction.G.FD.cc e := fun e => rfl
   have hσσ : ∀ e, σ (σ e) = e := fun e => by simp [σ]
@@ -98,7 +98,7 @@ theorem _root_.GlobalTheory.exists_herm_coord_of_datum :
     Algebra.trace_eq_of_algEquiv σ e
   have hanti : ∀ u v, D.EF u v = - D.EF v u := fun u v => by
     have h := D.alt (u + v)
-    simp only [map_add, LinearMap.add_apply, D.alt u, D.alt v] at h
+    simp only [map_add (f := _), LinearMap.add_apply, D.alt u, D.alt v] at h
     omega
   have hsmul' : ∀ (b : 𝓞 E) x y, h0 x (b • y) = σ b * h0 x y := fun b x y => huniq _ _ fun a => by
     rw [hh0, ← hbb b, ← D.adj, smul_smul, ← hh0, hbb]

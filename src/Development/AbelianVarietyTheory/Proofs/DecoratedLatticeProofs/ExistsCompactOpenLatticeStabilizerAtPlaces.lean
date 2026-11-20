@@ -84,8 +84,8 @@ theorem exists_latticeCompletion_cut_to_places_finiteReal (S : HSp D) (L : Lat S
     | add z z' _ _ h h' =>
       obtain ⟨y, hy, h1, h2⟩ := h
       obtain ⟨y', hy', h1', h2'⟩ := h'
-      exact ⟨y + y', add_mem hy hy', fun i => by rw [Pi.add_apply, (infPart D).map_add, h1, h1', add_zero],
-        fun i => by rw [Pi.add_apply, (finPart D).map_add, h2, h2', Pi.add_apply, mul_add]⟩
+      exact ⟨y + y', add_mem hy hy', fun i => by rw [Pi.add_apply, (infPart D).map_add (f := _), h1, h1', add_zero],
+        fun i => by rw [Pi.add_apply, (finPart D).map_add (f := _), h2, h2', Pi.add_apply, mul_add]⟩
     | neg z _ h =>
       obtain ⟨y, hy, h1, h2⟩ := h
       refine ⟨-y, neg_mem hy, fun i => ?_, fun i => ?_⟩
@@ -180,7 +180,7 @@ theorem compAt_eq (v : Pl D) (a : AE D) : compAt D v a = GlobalTheory.AdelicU.co
   induction a using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero]
   | tmul x c => rfl
-  | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy]
 
 theorem map_eq_one_iff {R R' : Type} [CommRing R] [CommRing R'] {n : ℕ} (f : R →+* R') (M : Matrix (Fin n) (Fin n) R) :
     M.map f = 1 ↔ ∀ i j, f ((M - 1) i j) = 0 := by

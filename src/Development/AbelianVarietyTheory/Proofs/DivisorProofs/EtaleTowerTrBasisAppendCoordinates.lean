@@ -62,7 +62,7 @@ theorem exists_derivation {L P : Type} [Field L] [CommRing P] [Algebra P L] [Alg
     rw [← hp, hφ2, hp']
   let D : Derivation ℂ L L := Derivation.mk'
     { toFun := fun l => (φ l).snd
-      map_add' := fun a c => by simp only [map_add, TrivSqZeroExt.snd_add]
+      map_add' := fun a c => by simp only [map_add (f := _), TrivSqZeroExt.snd_add]
       map_smul' := fun a l => by
         simp only [RingHom.id_apply, Algebra.smul_def a l, map_mul, TrivSqZeroExt.snd_mul,
           hφ1, hφc, smul_zero, add_zero, smul_eq_mul]
@@ -213,7 +213,7 @@ theorem trBasis_append : ∀ {K L : Type} [Field K] [Field L] (cK : ℂ →+* K)
       haveI : IsScalarTower ℂ K L := IsScalarTower.of_algebraMap_eq fun a => (hcst a).symm
       let D' : Derivation ℂ K L := Derivation.mk'
         { toFun := fun a => D (ι' a)
-          map_add' := fun a c => by simp only [map_add]
+          map_add' := fun a c => by simp only [map_add (f := _)]
           map_smul' := fun a c => by
             simp only [RingHom.id_apply]
             rw [Algebra.smul_def, map_mul,
@@ -234,7 +234,7 @@ theorem trBasis_append : ∀ {K L : Type} [Field K] [Field L] (cK : ℂ →+* K)
     refine derivation_eq_zero (P := P) D fun p => ?_
     induction p using MvPolynomial.induction_on with
     | C a => rw [hPC, ← hι']; exact hK _
-    | add p q hp hq => rw [map_add, map_add, hp, hq, add_zero]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, add_zero]
     | mul_X p i hp => rw [map_mul, Derivation.leibniz, hp, hPX, h1, smul_zero, smul_zero, add_zero]
   have hspan : Submodule.span L (Set.range fun m => KaehlerDifferential.D ℂ L (y m)) = ⊤ := by
     by_contra hne

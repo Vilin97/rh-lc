@@ -28,7 +28,7 @@ def fixSub {Ω : Type} [Field Ω] [Algebra ℚ Ω] (A : ValuationSubring Ω) : S
   carrier := {x | x ∈ A ∧ ∀ s ∈ Ine (F := ℚ) A, s x = x}
   mul_mem' := fun ha hb => ⟨A.mul_mem _ _ ha.1 hb.1, fun s hs => by rw [map_mul, ha.2 s hs, hb.2 s hs]⟩
   one_mem' := ⟨A.one_mem, fun s _ => map_one s⟩
-  add_mem' := fun ha hb => ⟨A.add_mem _ _ ha.1 hb.1, fun s hs => by rw [map_add, ha.2 s hs, hb.2 s hs]⟩
+  add_mem' := fun ha hb => ⟨A.add_mem _ _ ha.1 hb.1, fun s hs => by rw [map_add (f := _), ha.2 s hs, hb.2 s hs]⟩
   zero_mem' := ⟨A.zero_mem, fun s _ => map_zero s⟩
   neg_mem' := fun ha => ⟨A.neg_mem _ ha.1, fun s hs => by rw [map_neg, ha.2 s hs]⟩
 

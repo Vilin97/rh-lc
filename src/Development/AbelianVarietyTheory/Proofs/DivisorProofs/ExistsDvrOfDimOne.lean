@@ -31,7 +31,7 @@ theorem fg_of_mem {A B : Type} [CommRing A] [IsNoetherianRing A] [CommRing B] [I
     obtain ⟨s, hs⟩ := Ideal.mem_span_singleton.1 h3
     obtain ⟨b, hb⟩ := Ideal.mem_span_singleton.1 (Ideal.mem_comap.1 hr')
     refine ⟨b, s, ?_⟩
-    rw [← hb, hα, ← map_mul, ← hs, ← map_add]
+    rw [← hb, hα, ← map_mul, ← hs, ← map_add (f := _)]
     congr 1; ring
   have down : ∀ (x : B) (j : ℕ),
       (∃ (b : B) (r : A), α ^ (l + j) * x = α ^ (l + j + 1) * b + algebraMap A B r) →
@@ -61,7 +61,7 @@ theorem fg_of_mem {A B : Type} [CommRing A] [IsNoetherianRing A] [CommRing B] [I
     obtain ⟨b, r, h⟩ := claim x
     refine Submodule.mem_span_singleton.2 ⟨r, ?_⟩
     have : φ x = Ideal.Quotient.mk Q (α ^ l * x) := rfl
-    rw [this, h, map_add, Ideal.Quotient.eq_zero_iff_mem.2
+    rw [this, h, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2
       (Ideal.mem_span_singleton.2 (dvd_mul_right _ _)), zero_add, Algebra.smul_def, mul_one]
     rfl
   · have : (J : Submodule B B) ⊓ LinearMap.ker φ = Ideal.span {α} := by
@@ -325,7 +325,7 @@ theorem exists_chart (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [IsNoe
       rcases hx with ((rfl | ⟨i, rfl⟩) | ⟨i, rfl⟩) | ⟨i, rfl⟩
       exacts [⟨_, hφτ.symm⟩, hu' i, hw' i, hz' i]
     | algebraMap r => exact ⟨_, (hφr r).symm⟩
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   have mτ : τ ∈ A := Algebra.subset_adjoin (Or.inl (Or.inl (Or.inl rfl)))
   have mu : ∀ i, u i ∈ A := fun i => Algebra.subset_adjoin (Or.inl (Or.inl (Or.inr ⟨i, rfl⟩)))

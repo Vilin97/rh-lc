@@ -73,12 +73,12 @@ theorem cg_of_coeff {f g : MvPowerSeries ι K}
   have hYc : ∀ n, MvPowerSeries.coeff n Y = y n := fun _ => rfl
   refine ⟨Y, fun n => by rw [hYc]; exact hy n, ?_⟩
   ext n
-  rw [map_add, MvPowerSeries.coeff_C_mul, he n, hYc]
+  rw [map_add (f := _), MvPowerSeries.coeff_C_mul, he n, hYc]
 
 theorem cg_coeff {f g : MvPowerSeries ι K} (h : Cg R pp f g) (n : ι →₀ ℕ) :
     ∃ y ∈ R, MvPowerSeries.coeff n f = MvPowerSeries.coeff n g + pp * y := by
   obtain ⟨Y, hY, e⟩ := h
-  exact ⟨_, hY n, by rw [e, map_add, MvPowerSeries.coeff_C_mul]⟩
+  exact ⟨_, hY n, by rw [e, map_add (f := _), MvPowerSeries.coeff_C_mul]⟩
 
 end CgCalc
 

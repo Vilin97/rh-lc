@@ -169,7 +169,7 @@ theorem level_prime_ne_type_prime (A : AtTTied u) (j : Fin 2) : (D.mem u).A.T ‚â
     linear_combination -this
   have hcpi : D.host.conj ((A.piU : ùìû D.host.E) : D.host.E) =
       1 + D.host.conj (r : D.host.E) * (N : D.host.E) := by
-    rw [hpi, map_add, map_one, map_mul, map_natCast]
+    rw [hpi, map_add (f := _), map_one, map_mul, map_natCast]
   have hNM : (N : D.host.E) = (D.host.g j : D.host.E) * (M : D.host.E) := by
     rw [hM]; push_cast; ring
   have h0 := A.piU_norm

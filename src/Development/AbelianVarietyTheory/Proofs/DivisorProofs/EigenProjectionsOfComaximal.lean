@@ -39,7 +39,7 @@ theorem eigenProjections_of_comaximal :
       change Θ (r ⊗ₜ 1) (Θ (1 ⊗ₜ c) m) = Θ (r ⊗ₜ 1) (Θ (t l c ⊗ₜ 1) m)
       rw [hm c]
     | add x y hx hy =>
-      rw [map_add, map_add, TensorProduct.add_tmul, map_add]
+      rw [map_add (f := _), map_add (f := _), TensorProduct.add_tmul, map_add (f := _)]
       change Θ x m + Θ y m = Θ (χ l x ⊗ₜ 1) m + Θ (χ l y ⊗ₜ 1) m
       rw [hx, hy]
   rw [key, map_prod]

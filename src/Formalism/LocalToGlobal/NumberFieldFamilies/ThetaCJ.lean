@@ -83,7 +83,7 @@ theorem alg_trace_gen {F E R : Type} [Field F] [Field E] [Algebra F E] [FiniteDi
     algebraMap R (R ⊗[F] E) (Algebra.trace R (R ⊗[F] E) z) = z + sigR R σ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, add_add_add_comm]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), add_add_add_comm]
   | tmul a e =>
     have h4 : (a ⊗ₜ[F] e : R ⊗[F] E) = a • inclR R e := by
       show _ = a • ((1 : R) ⊗ₜ[F] e)
@@ -182,7 +182,7 @@ theorem alg_trace (z : AE D) : algebraMap (AF D.host.F) (AE D) (Algebra.trace (A
   have h1 : Algebra.trace D.host.F D.host.E (star e) = Algebra.trace D.host.F D.host.E e :=
     Algebra.trace_eq_of_algEquiv (AlgEquiv.ofBijective D.sp.cm.sig star_involutive.bijective) e
   have h2 := congrArg (Algebra.trace D.host.F D.host.E) ht
-  rw [Algebra.trace_algebraMap, D.sp.cm.deg2, LinearMap.map_add, h1, two_smul, ← two_mul, ← two_mul] at h2
+  rw [Algebra.trace_algebraMap, D.sp.cm.deg2, LinearMap.map_add (f := _), h1, two_smul, ← two_mul, ← two_mul] at h2
   rw [← mul_left_cancel₀ two_ne_zero h2]
   exact ht
 
@@ -267,7 +267,7 @@ theorem fock_val (s : GA D V) (t : GA D W) (τ : D.what₂.Tau) (x : WA V W) : v
   rw [one_smul, RingHom.map_one, one_mul] at e
   show (cmpAt D τ (algebraMap (AF D.host.F) (AE D) (sympl V W (fockJ s t x) x))).re = _
   unfold sympl
-  rw [alg_trace, RingHom.map_add, cmpAt_cA, fockJ_apply, e, RingHom.map_mul, RingHom.map_mul, cmpAt_incA, iE_cmp]
+  rw [alg_trace, RingHom.map_add (f := _), cmpAt_cA, fockJ_apply, e, RingHom.map_mul, RingHom.map_mul, cmpAt_incA, iE_cmp]
   simp only [Complex.add_re, Complex.conj_re, Complex.mul_re, Complex.mul_im, Complex.I_re, Complex.I_im, realPlace_imaginaryGenerator_re_eq_zero]
   ring
 

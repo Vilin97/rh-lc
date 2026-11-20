@@ -66,7 +66,7 @@ theorem mulBy_add (hd : Data l ex ph) {a : MvPowerSeries σ ℂ_[p]} (ha : MvPow
     rw [map_mul, cc_lg hd ha, mul_zero]
   have h2 : MvPowerSeries.constantCoeff (MvPowerSeries.C e' * lg l a) = 0 := by
     rw [map_mul, cc_lg hd ha, mul_zero]
-  rw [lg_pt hd h1, lg_pt hd h2, map_add, add_mul]
+  rw [lg_pt hd h1, lg_pt hd h2, map_add (f := _), add_mul]
 
 theorem good_zero : Good (0 : MvPowerSeries σ ℂ_[p]) := by
   exact ⟨map_zero _, fun n => by simp [IsIntP]⟩

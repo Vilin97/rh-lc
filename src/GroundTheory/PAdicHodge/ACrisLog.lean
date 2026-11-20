@@ -357,7 +357,7 @@ theorem log_pow_mem {x : AInf K p} (hx : x ∈ RingHom.ker θ) {c : ACrisZero K 
   have hsplit' : ∀ n, algebraMap (ACrisZero K p) (ACris K p) (a0 n) +
       algebraMap (ACrisZero K p) (ACris K p) (p : ACrisZero K p) *
         algebraMap (ACrisZero K p) (ACris K p) (b0 n) = logTerm hx n := fun n => by
-    rw [logTerm, ← hsplit n, map_add, map_mul]
+    rw [logTerm, ← hsplit n, map_add (f := _), map_mul]
   have ha'sum : IsAdicSum 𝔭 (fun n => algebraMap (ACrisZero K p) (ACris K p) (a0 n))
       (∑ n ∈ Finset.range p, algebraMap (ACrisZero K p) (ACris K p) (a0 n)) :=
     isAdicSum_of_eq_zero fun n hn => by simp [a0, not_lt.2 hn]
@@ -374,7 +374,7 @@ theorem log_pow_mem {x : AInf K p} (hx : x ∈ RingHom.ker θ) {c : ACrisZero K 
     rw [hw n hn', map_mul]
   have hp0 : Ideal.Quotient.mk 𝔭 (algebraMap (ACrisZero K p) (ACris K p) (p : ACrisZero K p)) = 0 :=
     Ideal.Quotient.eq_zero_iff_mem.2 algebraMap_p_mem
-  rw [← Ideal.Quotient.eq_zero_iff_mem, map_pow, ht, hfin, map_add, map_mul (Ideal.Quotient.mk 𝔭)
+  rw [← Ideal.Quotient.eq_zero_iff_mem, map_pow, ht, hfin, map_add (f := _), map_mul (Ideal.Quotient.mk 𝔭)
     (algebraMap (ACrisZero K p) (ACris K p) (p : ACrisZero K p)), hp0, zero_mul, add_zero, map_mul,
     mul_pow, ← map_pow, ← map_pow, hc, map_mul, map_mul, hp0, zero_mul, zero_mul]
 

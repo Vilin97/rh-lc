@@ -90,7 +90,7 @@ theorem ConeAvoidsOpen.proof : ConeAvoidsOpen.Statement := by
     intro A m' m
     show eval _ (P m' m) = _
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [P, T, linPoly, map_add, map_sum, map_mul, eval_C, eval_X, MvPolynomial.coeff_add, coeff_sum,
+      simp only [P, T, linPoly, map_add (f := _), map_sum, map_mul, eval_C, eval_X, MvPolynomial.coeff_add, coeff_sum,
       Finset.mul_sum]
     congr 1
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_

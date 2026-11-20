@@ -22,10 +22,10 @@ theorem root_step {A : Type} [CommRing A] (φ : A →+* A) (hφ : Function.Injec
   induction n with
   | zero =>
     apply hφ
-    rw [map_add, map_mul, map_pow, hc, hω, h0]
+    rw [map_add (f := _), map_mul, map_pow, hc, hω, h0]
   | succ n ih =>
     apply hφ
-    rw [map_add, map_mul, map_pow, hc, hω, hω, ih]
+    rw [map_add (f := _), map_mul, map_pow, hc, hω, hω, ih]
 
 theorem pow_pow_eq {R : Type} [Monoid R] (q : ℕ) (r : ℕ → R) (h : ∀ n, r (n + 1) ^ q = r n) :
     ∀ n, r n ^ (q ^ n) = r 0 := by

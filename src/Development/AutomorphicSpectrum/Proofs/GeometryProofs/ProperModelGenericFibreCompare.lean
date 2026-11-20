@@ -152,7 +152,7 @@ theorem descent_core {K Ω C : Type} [Field K] [Field Ω] [Algebra K Ω] [Field 
       exact mul_mem ha (hK p _)
     | zero => simp [zero_mem]
     | add u v _ _ hu hv =>
-      rw [map_add, Finsupp.add_apply]
+      rw [map_add (f := _), Finsupp.add_apply]
       exact add_mem hu hv
   have hτ0 : τ ≠ 0 := fun h => one_ne_zero (by rw [← hτυ, h, zero_mul] : (1 : Ω ⊗[K] C) = 0)
   have hυ0 : υ ≠ 0 := fun h => one_ne_zero (by rw [← hτυ, h, mul_zero] : (1 : Ω ⊗[K] C) = 0)
@@ -240,7 +240,7 @@ theorem tensor_inj {O K Ω C B : Type} [CommRing O] [IsDomain O] [Field K] [Alge
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul b c => rw [hι]; rfl
-    | add u v hu hv => rw [map_add, map_add, hu, hv, map_add]
+    | add u v hu hv => rw [map_add (f := _), map_add (f := _), hu, hv, map_add (f := _)]
   intro a b hab
   have h := congrArg e hab
   rw [hE, hE] at h
@@ -380,7 +380,7 @@ theorem chart (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of
       rw [hι, hφ, show E (b ⊗ₜ[O] c) = _ from eTens_tmul s s' f hpb W hW b c, map_mul,
         val_pull hdom W W' inf_le_left hne hne', val_algX h2]
       rfl
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
   have hφs : ∀ (a : Ω) (z : Ω ⊗[K] C), φ (a • z) = i a * φ z := by
     intro a z
     rw [Algebra.smul_def, map_mul, Algebra.TensorProduct.algebraMap_apply, hφ]
@@ -393,7 +393,7 @@ theorem chart (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of
     | tmul b c =>
       refine AddSubmonoid.subset_closure ⟨val ξ W hne b, c, fun p hp => ?_, hι b c⟩
       exact ⟨_, genMap_germ ξ W p hp b⟩
-    | add u v hu hv => rw [map_add]; exact add_mem hu hv
+    | add u v hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
   refine ⟨fun q' hq => hspec q' ((hmemW' q').2 hq), ?_, fun a' ha' => ?_⟩
   · have key : ∀ x : Ω ⊗[K] C, ∃ b : Γ(X, W), val ξ W hne b ≠ 0 ∧ ∃ z, ι z = val ξ W hne b • x := by
       intro x
@@ -412,7 +412,7 @@ theorem chart (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : Spec (CommRingCat.of
           intro b z
           rw [map_mul, hι, Algebra.smul_def, Algebra.TensorProduct.algebraMap_apply]
           rfl
-        rw [map_add, hb, hb, e₁, e₂, map_mul, smul_add, smul_smul, smul_smul, mul_comm (val ξ W hne b₁)]
+        rw [map_add (f := _), hb, hb, e₁, e₂, map_mul, smul_add, smul_smul, smul_smul, mul_comm (val ξ W hne b₁)]
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     obtain ⟨b, hb, z, hz⟩ := key x

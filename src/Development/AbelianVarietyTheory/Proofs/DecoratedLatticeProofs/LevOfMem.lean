@@ -44,7 +44,7 @@ theorem valMove : ∀ D : D7, ValMove D := by
       funext g
       have hx' := congrFun hx g
       have hy' := congrFun hy g
-      simp only [rTrans, map_add, Pi.add_apply, Pi.smul_apply, smul_eq_mul] at hx' hy' ⊢
+      simp only [rTrans, map_add (f := _), Pi.add_apply, Pi.smul_apply, smul_eq_mul] at hx' hy' ⊢
       rw [hx', hy', mul_add]
   · intro a ha v
     obtain ⟨σ, hσ⟩ := GlobalTheory.T.realTranslation_cuspFormMaps_eq_smooth_linear_map D θ V S M hθ a ha

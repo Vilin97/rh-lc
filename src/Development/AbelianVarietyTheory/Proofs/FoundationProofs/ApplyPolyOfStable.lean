@@ -103,7 +103,7 @@ variable {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ}
 def chiPart (X : Tower Ω ε) (N w : ℕ) (χ : ℕ → ℤ_[l]) : Submodule ℤ_[l] (X.Fn l) where
   carrier := {b | InChi X N w χ b}
   zero_mem' := ⟨Submodule.zero_mem _, fun d _ => by simp⟩
-  add_mem' := fun ha hb => ⟨Submodule.add_mem _ ha.1 hb.1, fun d hd => by rw [map_add, ha.2 d hd, hb.2 d hd, smul_add]⟩
+  add_mem' := fun ha hb => ⟨Submodule.add_mem _ ha.1 hb.1, fun d hd => by rw [map_add (f := _), ha.2 d hd, hb.2 d hd, smul_add]⟩
   smul_mem' := fun r _ ha => ⟨Submodule.smul_mem _ r ha.1, fun d hd => by rw [map_smul, ha.2 d hd, smul_comm]⟩
 
 theorem apply_poly_of_stable (X : Tower Ω ε) (N : ℕ) (B' : Submodule ℤ_[l] (X.Fn l))
@@ -126,7 +126,7 @@ theorem apply_poly_of_stable (X : Tower Ω ε) (N : ℕ) (B' : Submodule ℤ_[l]
       simp only [Tower.opV, LinearMap.baseChange_tmul, Submodule.subtype_apply]
       rw [e, e (b : X.Fn l), map_smul, map_smul, hL T hT b b.2, smul_comm]
     | add y z hy hz =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact ⟨Submodule.add_mem _ hy.1 hz.1, by rw [hy.2, hz.2, smul_add]⟩
   have h := SSAdm.lift_sub_smul_mem (A := {T | GlobalTheory.KZ.admitted N l T}) (f := X.opV N l (Qbar l)) (lam := ev)
     (W := LinearMap.range (LinearMap.baseChange (Qbar l) B'.subtype) ⊓ LinearMap.ker L)
@@ -148,7 +148,7 @@ theorem act_sgD_one (X : Tower Ω ε) {N w : ℕ} (hN : N ≠ 0) {b : X.Fn l} (h
   induction hb using Submodule.span_induction with
   | mem x hx => exact hx.2 _ hγ
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul a x _ hx => rw [map_smul, hx]
 
 theorem mem_Ine_of_restrict {A : ValuationSubring Ω} {j : Ω →+* Qbar l} (hj : ∀ x, x ∈ A ↔ ‖j x‖ ≤ 1)

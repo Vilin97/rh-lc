@@ -78,7 +78,7 @@ theorem exists_proj (ρ : Representation ℂ H W) (B : W →ₗ⋆[ℂ] W →ₗ
   let P : W →ₗ[ℂ] W :=
     { toFun := f
       map_add' := fun a b => huniq _ _ (add_mem (hf1 a) (hf1 b)) (fun z hz => by
-        rw [show a + b - (f a + f b) = (a - f a) + (b - f b) by abel, map_add, hf2 a z hz,
+        rw [show a + b - (f a + f b) = (a - f a) + (b - f b) by abel, map_add (f := _), hf2 a z hz,
           hf2 b z hz, add_zero])
       map_smul' := fun c a => by
         simp only [RingHom.id_apply]

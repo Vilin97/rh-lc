@@ -169,7 +169,7 @@ theorem half_root {A : Type} [CommRing A] [Algebra F A] (c : E ≃ₐ[F] E) (u x
     rwa [map_ofNat] at this
   apply h2.mul_left_cancel
   have := congrArg (sg A c) hx
-  rw [map_mul, map_ofNat, map_add, map_one] at this
+  rw [map_mul, map_ofNat, map_add (f := _), map_one] at this
   linear_combination hx - u * this - hu
 
 theorem finite_root (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hc : c ≠ 1)
@@ -219,7 +219,7 @@ theorem finite_root (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hc : c �
     linear_combination (x₁ - 1) * hef'
   refine ⟨_, _, hxy, ?_, ⟨_, hp, by rw [nsmul_eq_mul]; exact hx⟩,
     -((e' * y' + (1 - e') * y₁) * (e' * z + f' * (x₁ - 1))), ?_, ?_⟩
-  · rw [map_add, map_mul, map_mul, map_sub, map_one, hse]
+  · rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, hse]
     linear_combination e' * hr₀ + (1 - e') * hr₁
   · exact neg_mem (mul_mem (add_mem (mul_mem heO hy₀O) (mul_mem (sub_mem (one_mem _) heO) hy₁')) hp)
   · rw [nsmul_eq_mul]
@@ -335,7 +335,7 @@ theorem map_sg {A B : Type} [CommRing A] [Algebra F A] [CommRing B] [Algebra F B
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [sg]
-  | add x y h1 h2 => simp only [map_add, h1, h2]
+  | add x y h1 h2 => simp only [map_add (f := _), h1, h2]
 
 theorem exists_root_near : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (c : E ≃ₐ[F] E), Module.finrank F E = 2 → c ≠ 1 → (∀ P : Ideal (𝓞 E), P.IsMaximal → ∃ t s : 𝓞 E, (s : E) = c (t : E) ∧ t - s ∉ P) → letI : TopologicalSpace (AdeleRing (𝓞 F) F ⊗[F] E) := moduleTopology (AdeleRing (𝓞 F) F) (AdeleRing (𝓞 F) F ⊗[F] E); ∀ W ∈ 𝓝 (1 : (AdeleRing (𝓞 F) F ⊗[F] E)ˣ), ∃ N ∈ 𝓝 (1 : (AdeleRing (𝓞 F) F ⊗[F] E)ˣ), ∀ u ∈ N, (u : AdeleRing (𝓞 F) F ⊗[F] E) * sg (AdeleRing (𝓞 F) F) c u = 1 → ∃ x ∈ W, (x : AdeleRing (𝓞 F) F ⊗[F] E) = u * sg (AdeleRing (𝓞 F) F) c x := by
   intro F E _ _ _ _ _ c h2 hc hP

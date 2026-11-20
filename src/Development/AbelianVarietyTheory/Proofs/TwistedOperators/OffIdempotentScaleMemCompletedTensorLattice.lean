@@ -159,7 +159,7 @@ theorem partAt_off_mem : ∀ (D : D7) (S T : HSp D) (e : AE D) (SS : Finset (For
       rw [e1]
       exact GlobalTheory.LiftLevel.smul_mem_hatA_of_int hA hint (fin_smul_mem hMN hi' hu)
     · intro x y hx hy
-      rw [map_add, mul_add, add_smul]
+      rw [map_add (f := _), mul_add, add_smul]
       exact add_mem hx hy
   rw [map_one, mul_one] at key
   rw [GlobalTheory.LiftLevel.partAt_eq_smul]

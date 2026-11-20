@@ -432,7 +432,7 @@ theorem rep_tensor (hstr : algebraMap O Γ(X, V) = strV q V)
       rw [hφ, t, map_mul, map_mul, ← hg, ← h1]
       change (φ₂.comp y.1.1) _ * (φ₂.comp g) f = _
       rw [a, ← e]
-    · simp only [RingHom.comp_apply, map_add] at hu hv ⊢
+    · simp only [RingHom.comp_apply, map_add (f := _)] at hu hv ⊢
       rw [hu, hv]
 
 end Rep

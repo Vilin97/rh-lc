@@ -83,7 +83,7 @@ private lemma hTens_add_add (JA : Matrix α α A) (JB : Matrix β β A)
       _root_.GlobalTheory.WeilM.hTens c JA JB x x + _root_.GlobalTheory.WeilM.hTens c JA JB x y +
         _root_.GlobalTheory.WeilM.hTens c JA JB y x + _root_.GlobalTheory.WeilM.hTens c JA JB y y := by
   unfold _root_.GlobalTheory.WeilM.hTens
-  simp only [Matrix.add_apply, map_add, add_mul, mul_add, Finset.sum_add_distrib]
+  simp only [Matrix.add_apply, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib]
   ring
 
 set_option autoImplicit false in
@@ -122,7 +122,7 @@ private lemma addChar_symp_add_add (hc : ∀ z, c (c z) = z) {JA : Matrix α α 
         (Algebra.trace R A (ξ * _root_.GlobalTheory.WeilM.hTens c JA JB x y) +
           Algebra.trace R A (-1 * _root_.GlobalTheory.WeilM.hTens c JA JB x y)) := by
     rw [hTens_add_add, hswap]
-    simp only [mul_add, map_add, mul_neg, map_neg]
+    simp only [mul_add, map_add (f := _), mul_neg, map_neg]
     rw [hconj]
     linear_combination (Algebra.trace R A (ξ * _root_.GlobalTheory.WeilM.hTens c JA JB x y) -
       Algebra.trace R A (_root_.GlobalTheory.WeilM.hTens c JA JB x y)) * hh + (h - 1) * hm1

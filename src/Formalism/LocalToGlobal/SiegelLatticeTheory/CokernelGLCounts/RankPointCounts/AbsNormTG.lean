@@ -66,7 +66,7 @@ theorem yv_orth_X {T T' : D.host.E} (F : FlagG (VS D) D.R.rS T) (F' : FlagG (VS 
     simp only [Matrix.smul_apply, Matrix.one_apply, Fin.castSucc_ne_last, if_false, smul_zero] at hm
     unfold NormalVectorPairings.yv NormalVectorPairings.omp
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_smul, map_smul, F.z_orth a, smul_zero, add_zero, map_sum]
+      rw [map_add (f := _), map_smul, map_smul, F.z_orth a, smul_zero, add_zero, map_sum]
     simp only [map_smul, smul_eq_mul, hz]
     rw [show ∑ b, (Zhat F F').adjugate b (Fin.last D.R.rS) * Zhat F F' a.castSucc b =
         ∑ b, Zhat F F' a.castSucc b * (Zhat F F').adjugate b (Fin.last D.R.rS) from

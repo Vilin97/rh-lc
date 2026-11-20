@@ -35,7 +35,7 @@ private theorem semilinear_apply_mem_span_image_basis {K L V W κ : Type*} [Fiel
     exact Submodule.subset_span ⟨i, rfl⟩
   | zero => simp
   | add y z _ _ hy hz =>
-    rw [map_add]; exact add_mem hy hz
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | smul r y _ hy =>
     rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
 

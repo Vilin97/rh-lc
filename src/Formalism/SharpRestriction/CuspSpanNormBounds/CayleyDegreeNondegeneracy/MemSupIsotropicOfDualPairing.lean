@@ -166,7 +166,7 @@ theorem mem_sup_isotropic_of_dual_pairing (hΛ : Submodule.IsFullLattice D.host.
       rw [ho b]
       field_simp
     have e : l = (l - l') + l' := by abel
-    rw [e, map_add, LinearMap.add_apply]
+    rw [e, map_add (f := _), LinearMap.add_apply]
     refine Submodule.add_mem _ (hy _ hm) ?_
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hl', map_sum, LinearMap.sum_apply]

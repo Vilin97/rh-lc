@@ -24,7 +24,7 @@ theorem Primes.Ok.T_modEq (hPr : Pr.Ok) (u : Pr.Word) : Pr.T u ≡ 1 [MOD Pr.con
     rw [← hy]
     ring
   have h2 : X.conjO (Pr.piT u) = 1 + ((Pr.cond * (Pr.g 0 * Pr.g 1) ^ 2 : ℕ) : 𝓞 X.E) * X.conjO y := by
-    rw [h1, map_add, map_one, map_mul, map_natCast]
+    rw [h1, map_add (f := _), map_one, map_mul, map_natCast]
   have h3 : ((Pr.cond * (Pr.g 0 * Pr.g 1) ^ 2 : ℕ) : 𝓞 X.E) ∣ ((((Pr.T u : ℕ) : ℤ) - 1 : ℤ) : 𝓞 X.E) := by
     refine ⟨y + X.conjO y + ((Pr.cond * (Pr.g 0 * Pr.g 1) ^ 2 : ℕ) : 𝓞 X.E) * (y * X.conjO y), ?_⟩
     rw [Int.cast_sub, Int.cast_one, Int.cast_natCast, ← hPr.piT_norm u, h2]

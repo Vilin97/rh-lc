@@ -165,7 +165,7 @@ theorem exponent_ext (h : IsConj cj) {e e' : Exponent E Y}
     have expand : ∀ (f : Exponent E Y) (c : 𝓞 E), f.form (y + c • y') (y + c • y') =
         f.form y y + c * bar E c * f.form y' y' + bar E c * f.form y y' + c * bar E (f.form y y') := by
       intro f c
-      simp only [map_add, AddMonoidHom.add_apply, f.smul_left, f.smul_right]
+      simp only [map_add (f := _), AddMonoidHom.add_apply, f.smul_left, f.smul_right]
       rw [f.hermitian y y']
       ring
     have E1 := (expand e 1).symm.trans ((hself _).trans (expand e' 1))

@@ -31,7 +31,7 @@ theorem isLocalization_of_le_closure {Ω : Type} [Field Ω] {n : ℕ} (h0 : (n :
       obtain ⟨m, a, ha⟩ := hx
       obtain ⟨k, b, hb⟩ := hy
       refine ⟨m + k, a * n ^ k + b * n ^ m, ?_⟩
-      simp only [map_add, map_mul, map_pow, map_natCast]
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast]
       push_cast
       rw [← ha, ← hb]; ring
     | neg x _ hx =>

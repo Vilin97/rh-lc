@@ -17,7 +17,7 @@ theorem dual_eq_smul_of_forall_dvd :
   refine ⟨{ toFun := c, map_add' := ?_, map_smul' := ?_ }, ?_⟩
   · intro x y
     apply cancel
-    rw [mul_add, ← hc, ← hc, ← hc, map_add]
+    rw [mul_add, ← hc, ← hc, ← hc, map_add (f := _)]
   · intro r x
     apply cancel
     simp only [RingHom.id_apply, smul_eq_mul]

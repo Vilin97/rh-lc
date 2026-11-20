@@ -146,7 +146,7 @@ theorem exists_proj [IsDomain R] [ValuationRing R] [IsFractionRing R C]
     simp
   have : E f = ((⟨f, hf⟩ - s (P.mkQ ⟨f, hf⟩) : A) : X → C) := by
     conv_lhs => rw [hsplit]
-    rw [map_add, hEW _ (hdec _), hEW' _ (hSW' _), add_zero]
+    rw [map_add (f := _), hEW _ (hdec _), hEW' _ (hSW' _), add_zero]
   rw [this]
   exact ⟨Subtype.prop _, hdec _⟩
 

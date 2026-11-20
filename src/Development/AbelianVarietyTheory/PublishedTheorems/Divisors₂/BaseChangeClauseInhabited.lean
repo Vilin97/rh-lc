@@ -35,17 +35,17 @@ def muSemi (O O' : Type) [CommRing O] [CommRing O'] [Algebra O O'] (X : Type) [A
   smul_map r a := by
     induction a using AddMonoidAlgebra.induction_linear with
     | zero => simp
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
     | single k c => simp [Algebra.smul_def, -algebraMap_smul]
   counit_map a := by
     induction a using AddMonoidAlgebra.induction_linear with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | single k c => simp
   comul_map a := by
     induction a using AddMonoidAlgebra.induction_linear with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | single k c => simp
 
 theorem exists_muCompare (O O' : Type) [CommRing O] [CommRing O'] [Algebra O O'] :
@@ -57,7 +57,7 @@ theorem exists_muCompare (O O' : Type) [CommRing O] [CommRing O'] [Algebra O O']
     ⟨fun n => muSemi O O' _, fun n a => by
       induction a using AddMonoidAlgebra.induction_linear with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | single k c =>
         have e : (AddMonoidAlgebra.single k c : AddMonoidAlgebra O (ZMod (p ^ (n + 1)))) =
             c • PDiv.muT O _ ^ k.val := by

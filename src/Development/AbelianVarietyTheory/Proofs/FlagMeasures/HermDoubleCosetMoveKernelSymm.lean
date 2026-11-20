@@ -48,7 +48,7 @@ theorem sOf_flip [CharZero F] (w : S.MW) (hs : S.sOf w + L.cj (S.sOf w) = S.h w.
   have h1 : S.h (-w.2.1) (-w.2.1) = S.h w.2.1 w.2.1 := by
     simp [Frames.h, hf]
   have h2 : algebraMap F E 2⁻¹ + algebraMap F E 2⁻¹ = 1 := by
-    rw [← map_add, ← map_one (algebraMap F E)]
+    rw [← map_add (f := _), ← map_one (algebraMap F E)]
     congr 1
     norm_num
   have h3 : L.cj (S.sOf w) = S.h w.2.1 w.2.1 - S.sOf w := by

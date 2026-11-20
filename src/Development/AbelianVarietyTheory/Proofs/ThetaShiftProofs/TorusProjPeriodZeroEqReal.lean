@@ -139,19 +139,19 @@ theorem EF_bijective : Function.Bijective A.EF := by
       simpa [EF_apply] using this
   · intro φ
     let φ₁ : A.X →+ ℤ := AddMonoidHom.mk' (fun y => φ (La.mk y 0 0)) fun y y' => by
-      rw [← map_add]; congr 1; ext <;> simp
+      rw [← map_add (f := _)]; congr 1; ext <;> simp
     let φ₂ : Module.Dual ℤ (Module.Dual ℤ A.X) :=
       (AddMonoidHom.mk' (fun n : Module.Dual ℤ A.X => φ (La.mk 0 n.toAddMonoidHom 0)) fun n n' => by
-        rw [← map_add]; congr 1; ext <;> simp).toIntLinearMap
+        rw [← map_add (f := _)]; congr 1; ext <;> simp).toIntLinearMap
     let φ₃ : Module.Dual ℤ A.abelian₂ :=
       (AddMonoidHom.mk' (fun l : A.abelian₂ => φ (La.mk 0 0 l)) fun n n' => by
-        rw [← map_add]; congr 1; ext <;> simp).toIntLinearMap
+        rw [← map_add (f := _)]; congr 1; ext <;> simp).toIntLinearMap
     obtain ⟨y, hy⟩ := (Module.evalEquiv ℤ A.X).surjective φ₂
     obtain ⟨l, hl⟩ := A.Ef_bij.2 φ₃
     refine ⟨La.mk y (-φ₁) l, LinearMap.ext fun v => ?_⟩
     have h2 : v.n y = φ (La.mk 0 v.n 0) := congrArg (fun f => f v.n.toIntLinearMap) hy
     have h3 : A.Ef l v.l = φ (La.mk 0 0 v.l) := congrArg (fun f => f v.l) hl
-    conv_rhs => rw [La.eq_add_parts v, map_add, map_add]
+    conv_rhs => rw [La.eq_add_parts v, map_add (f := _), map_add (f := _)]
     rw [EF_apply, La.mk_y, La.mk_n, La.mk_l, h2, h3]
     simp [φ₁]; ring
 
@@ -169,7 +169,7 @@ def kappa : (Fin A.gB → ℂ) →ₗ[ℂ] (A.X →+ ℂ) where
   toFun z :=
     { toFun := fun x => A.H z (A.ct x) / (2 * Complex.I)
       map_zero' := by simp
-      map_add' := fun x x' => by rw [map_add, H_add_right, add_div] }
+      map_add' := fun x x' => by rw [map_add (f := _), H_add_right, add_div] }
   map_add' z z' := AddMonoidHom.ext fun x => by
     show A.H (z + z') _ / _ = _ / _ + _ / _
     rw [H_add_left, add_div]
@@ -188,9 +188,9 @@ theorem torusProj_apply (v : A.V) (x : A.X) :
 
 def Bw (w : ℂ) : A.X →+ A.X →+ ℝ :=
   AddMonoidHom.mk' (fun y => AddMonoidHom.mk' (fun x => (A.T y x + w * A.be y x + A.kappa (A.ct y) x).im)
-    fun x x' => by simp only [map_add, ← Complex.add_im]; push_cast; ring_nf)
+    fun x x' => by simp only [map_add (f := _), ← Complex.add_im]; push_cast; ring_nf)
     fun y y' => AddMonoidHom.ext fun x => by
-      simp only [map_add, AddMonoidHom.add_apply, LinearMap.add_apply, AddMonoidHom.mk'_apply, ← Complex.add_im]
+      simp only [map_add (f := _), AddMonoidHom.add_apply, LinearMap.add_apply, AddMonoidHom.mk'_apply, ← Complex.add_im]
       push_cast; ring_nf
 
 theorem Bw_apply (w : ℂ) (y x : A.X) : A.Bw w y x = (A.T y x + w * A.be y x + A.kappa (A.ct y) x).im := rfl
@@ -278,9 +278,9 @@ open Classical in
 def dualForm (w : ℂ) : (A.X →+ ℂ) →ₗ[ℂ] (A.X →+ ℂ) →ₗ⋆[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ)
     (fun r r' => A.coord r ⬝ᵥ ((A.BwMat w)⁻¹.map Complex.ofReal) *ᵥ star (A.coord r'))
-    (fun _ _ _ => by rw [map_add, add_dotProduct])
+    (fun _ _ _ => by rw [map_add (f := _), add_dotProduct])
     (fun _ _ _ => by rw [map_smul, smul_dotProduct]; rfl)
-    (fun _ _ _ => by rw [map_add, star_add, mulVec_add, dotProduct_add])
+    (fun _ _ _ => by rw [map_add (f := _), star_add, mulVec_add, dotProduct_add])
     (fun _ _ _ => by rw [map_smul, star_smul, mulVec_smul, dotProduct_smul]; rfl)
 
 open Classical in
@@ -350,10 +350,10 @@ theorem dualForm_im_of_real (w : ℂ) {r r' : A.X →+ ℂ} (hr : ∀ x, (r x).i
 def Hw (w : ℂ) : A.V →ₗ[ℂ] A.V →ₗ⋆[ℂ] ℂ :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ)
     (fun v v' => A.H v.2 v'.2 + A.dualForm w (A.torusProj v) (A.torusProj v'))
-    (fun _ _ _ => by simp only [Prod.snd_add, H_add_left, map_add, LinearMap.add_apply]; ring)
+    (fun _ _ _ => by simp only [Prod.snd_add, H_add_left, map_add (f := _), LinearMap.add_apply]; ring)
     (fun _ _ _ => by
       simp only [Prod.smul_snd, H_smul_left, map_smul, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply]; ring)
-    (fun _ _ _ => by simp only [Prod.snd_add, H_add_right, map_add]; ring)
+    (fun _ _ _ => by simp only [Prod.snd_add, H_add_right, map_add (f := _)]; ring)
     (fun _ _ _ => by
       simp only [Prod.smul_snd, H_smul_right, map_smul, LinearMap.map_smulₛₗ, smul_eq_mul]; ring)
 
@@ -361,7 +361,7 @@ theorem Hw_apply (w : ℂ) (v v' : A.V) :
     A.Hw w v v' = A.H v.2 v'.2 + A.dualForm w (A.torusProj v) (A.torusProj v') := rfl
 
 theorem Hw_conj (w : ℂ) (v v' : A.V) : starRingEnd ℂ (A.Hw w v v') = A.Hw w v' v := by
-  rw [Hw_apply, Hw_apply, map_add, H_conj, dualForm_conj]
+  rw [Hw_apply, Hw_apply, map_add (f := _), H_conj, dualForm_conj]
 
 theorem Hw_pos {w : ℂ} (hw : (A.BwMat w).PosDef) {v : A.V} (hv : v ≠ 0) : 0 < (A.Hw w v v).re := by
   rw [Hw_apply, Complex.add_re]
@@ -411,8 +411,8 @@ theorem Hw_actV {w : ℂ} (hw : (A.BwMat w).PosDef) (a : O) (v v' : A.V) :
       rw [← Pw_smul, ← Pw_smul, A.im_Hw_Pw hw, A.im_Hw_Pw hw, EF_smul]
     | zero_left => simp
     | zero_right => simp
-    | add_left x y z _ _ _ h h' => simp only [map_add, LinearMap.add_apply, Complex.add_im, h, h']
-    | add_right x y z _ _ _ h h' => simp only [map_add, Complex.add_im, h, h']
+    | add_left x y z _ _ _ h h' => simp only [map_add (f := _), LinearMap.add_apply, Complex.add_im, h, h']
+    | add_right x y z _ _ _ h h' => simp only [map_add (f := _), Complex.add_im, h, h']
     | smul_left r x y _ _ h =>
       rw [← algebraMap_smul ℂ r x]
       simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, Complex.coe_algebraMap, Complex.im_ofReal_mul, h]

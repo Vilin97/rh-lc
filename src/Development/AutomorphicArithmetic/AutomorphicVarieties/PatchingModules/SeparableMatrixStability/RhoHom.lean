@@ -9,7 +9,7 @@ variable {Γ R : Type} [TopologicalSpace Γ] [CommRing R] {I : Ideal R}
 private theorem ac_const (c : R) : AdicCont I fun _ : Γ => c := fun _ => IsLocallyConstant.const _
 
 private theorem ac_add {f g : Γ → R} (hf : AdicCont I f) (hg : AdicCont I g) : AdicCont I fun a => f a + g a := fun N => by
-  simpa only [map_add] using (hf N).comp₂ (hg N) (· + ·)
+  simpa only [map_add (f := _)] using (hf N).comp₂ (hg N) (· + ·)
 
 private theorem ac_mul {f g : Γ → R} (hf : AdicCont I f) (hg : AdicCont I g) : AdicCont I fun a => f a * g a := fun N => by
   simpa only [map_mul] using (hf N).comp₂ (hg N) (· * ·)

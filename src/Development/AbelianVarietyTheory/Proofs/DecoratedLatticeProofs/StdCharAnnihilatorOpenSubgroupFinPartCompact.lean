@@ -53,7 +53,7 @@ theorem infPart_latL {u : WO (line D) (line D)} (hu : u ∈ latL D) : infPart D 
     show (0 : Ainf D.host.F) ⊗ₜ[D.host.F] _ = 0
     exact TensorProduct.zero_tmul _ _
   | zero => simp
-  | add x y _ _ hx hy => rw [Matrix.add_apply, RingHom.map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [Matrix.add_apply, RingHom.map_add (f := _), hx, hy, add_zero]
   | neg x _ hx => rw [Matrix.neg_apply, RingHom.map_neg, hx, neg_zero]
 
 theorem infPart_r (a : Af D.host.F) : infPart D (algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 a)) = 0 := by

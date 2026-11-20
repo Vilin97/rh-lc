@@ -72,7 +72,7 @@ theorem exists_finite_point_rat {X : Scheme.{0}} (s : X ⟶ Sp ℚ) [LocallyOfFi
     induction hb using Algebra.adjoin_induction with
     | mem x hx => exact hS ⟨x, hx, rfl⟩
     | algebraMap c => exact hc c
-    | add a b _ _ ha hb => rw [map_add]; exact K.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact K.add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact K.mul_mem ha hb
   let φK : Γ(X, U) →+* K := φ.hom.codRestrict K hmem
   refine ⟨K, hK, spMap φK ≫ hU.fromSpec, ?_⟩

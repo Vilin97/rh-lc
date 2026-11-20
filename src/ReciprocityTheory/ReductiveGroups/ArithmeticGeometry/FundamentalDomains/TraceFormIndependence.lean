@@ -65,7 +65,7 @@ lemma efr_add_right (X : Data E r) (v w w' : X.Ψ → Fin r → ℂ) :
   unfold efr
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  simp only [hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib, Complex.add_re]
+  simp only [hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib, Complex.add_re]
 
 lemma efr_sub_right (X : Data E r) (v w w' : X.Ψ → Fin r → ℂ) :
     efr X v (w - w') = efr X v w - efr X v w' := by

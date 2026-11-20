@@ -44,8 +44,8 @@ theorem second_diff {E : Type} [Field E] [NumberField E] [IsCMField E] (H : Host
     β (e (a + b)) (H.w0 • e (a + b)) = β (e a) (e b) + β (e a) (H.w0 • e a) + β (e b) (H.w0 • e b) := by
   have h1 : β (e b) (H.w0 • e a) = β (e a) (H.bar H.w0 • e b) := (hβ.1 _ _).trans (hβ.2 _ _ _)
   have h2 : β (e a) (H.w0 • e b) + β (e a) (H.bar H.w0 • e b) = β (e a) (e b) := by
-    rw [← map_add, ← add_smul, ReciprocityTheory.ChartRestriction.G.PullbackSections.CVA.cmHostUnit_add_conj_eq_one, one_smul]
-  simp only [map_add, smul_add, LinearMap.add_apply]
+    rw [← map_add (f := _), ← add_smul, ReciprocityTheory.ChartRestriction.G.PullbackSections.CVA.cmHostUnit_add_conj_eq_one, one_smul]
+  simp only [map_add (f := _), smul_add, LinearMap.add_apply]
   rw [h1]
   linarith
 

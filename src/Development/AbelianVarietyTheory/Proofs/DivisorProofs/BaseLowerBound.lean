@@ -147,7 +147,7 @@ theorem baseLat_le_realBase {ρ : Setup D.ntw} {hρ : ρ.Good} {ν : ℂ} {rd : 
       obtain ⟨g1, e1, m1⟩ := h1
       obtain ⟨g2, e2, m2⟩ := h2
       refine ⟨g1 + g2, ?_, by rw [TensorProduct.tmul_add]; exact add_mem m1 m2⟩
-      rw [map_add, e1, e2]
+      rw [map_add (f := _), e1, e2]
       exact (map_add _ _ _).symm
     | smul a Q _ h1 =>
       obtain ⟨g1, e1, m1⟩ := h1

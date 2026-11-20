@@ -21,7 +21,7 @@ theorem prF_incF {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] 
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add s t hs ht => rw [map_add, map_add, hs, ht]
+  | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht]
 
 def inrA {F : Type} [Field F] [NumberField F] (a : Af F) : AF F := LinearMap.inr F (Ainf F) (Af F) a
 

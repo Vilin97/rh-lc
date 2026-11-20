@@ -25,7 +25,7 @@ theorem cA_smul (c : AF D.host.F) (a : AE D) : cA D (c • a) = c • cA D a := 
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => rfl
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem trace_star (x : D.host.E) :
     Algebra.trace D.host.F D.host.E (star x) = Algebra.trace D.host.F D.host.E x :=
@@ -61,7 +61,7 @@ theorem skew_perfect : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar 
     have e3 : algebraMap D.host.F (AF D.host.F) (1 / 2) * Algebra.trace (AF D.host.F) (AE D)
         ((rat M : Mx D ρ ρ) ⬝ (t • (rat (A - Aᴴ) : Mx D ρ ρ))).trace =
         t * algebraMap D.host.F (AF D.host.F) (Algebra.trace D.host.F D.host.E (M * A).trace) := by
-      rw [e2, map_smul, trace_incA, e1, map_add, trace_star, smul_eq_mul, mul_left_comm, ← map_mul]
+      rw [e2, map_smul, trace_incA, e1, map_add (f := _), trace_star, smul_eq_mul, mul_left_comm, ← map_mul]
       congr 2
       ring
     rw [← e3]

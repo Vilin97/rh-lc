@@ -12,7 +12,7 @@ open PI.HermLatFin
 variable {E : Type} [Field E] {M : ℕ} (σ : E →+* E) (J : Matrix (Fin M) (Fin M) E)
 
 theorem herm_add_left (x x' y : Fin M → E) : herm σ J (x + x') y = herm σ J x y + herm σ J x' y := by
-  simp only [herm, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [herm, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem herm_add_right (x y y' : Fin M → E) : herm σ J x (y + y') = herm σ J x y + herm σ J x y' := by
   simp only [herm, Pi.add_apply, mul_add, Finset.sum_add_distrib]

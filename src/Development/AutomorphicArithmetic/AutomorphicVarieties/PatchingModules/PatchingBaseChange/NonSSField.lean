@@ -36,7 +36,7 @@ private theorem fin_quot {R κ G : Type} [CommRing R] [Field κ] [Group G] (I : 
     rw [← map_smul, MonoidAlgebra.smul_single, smul_eq_mul, mul_one]
   induction y using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | single g k =>
     rw [key]
     refine Submodule.smul_mem _ _ ?_

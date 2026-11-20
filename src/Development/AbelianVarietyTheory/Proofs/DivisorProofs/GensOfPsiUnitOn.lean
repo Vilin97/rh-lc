@@ -71,7 +71,7 @@ theorem diag_eq_two_mul {O : Type} [CommRing O] [StarRing O] {X : Type} [AddComm
     {β : LinearMap.BilinForm ℤ X} (hβ : β ∈ GlobalTheory.PolFan.balForms (star : O → O) X) {w0 : O}
     (hw : w0 + star w0 = 1) (y : X) : β y y = 2 * β y (w0 • y) := by
   have h1 : β y y = β y (w0 • y) + β y (star w0 • y) := by
-    rw [← map_add, ← add_smul, hw, one_smul]
+    rw [← map_add (f := _), ← add_smul, hw, one_smul]
   have h2 : β y (star w0 • y) = β y (w0 • y) := by
     rw [← hβ.2 w0 y y, hβ.1]
   rw [h1, h2]; ring
@@ -106,7 +106,7 @@ theorem finite_sublevel {X : Type} [AddCommGroup X] [Module.Free ℤ X] [Module.
   have hx' : β x x ≤ C := hx
   have e1 := hnn (b j + x)
   have e2 := hnn (b j - x)
-  simp only [map_add, map_sub, LinearMap.add_apply, LinearMap.sub_apply, hs x (b j)] at e1 e2
+  simp only [map_add (f := _), map_sub, LinearMap.add_apply, LinearMap.sub_apply, hs x (b j)] at e1 e2
   simp only [Set.mem_Icc, F]
   constructor <;> nlinarith [hnn x]
 
@@ -268,7 +268,7 @@ theorem main (W R : Type) [CommRing W] [IsDomain W] [CommRing R] [IsDomain R] [I
     · exact GlobalTheory.PolFan.pull_mem _ (hδ i)
     · exact GlobalTheory.PolFan.pull_mem _ (hε j)
   have hs : GlobalTheory.TauTwist.IsScalarForm O (fun a b : D'.X => ∏ k, v k ^ β k a b) :=
-    ⟨fun y x x' => by simp only [map_add, zpow_add, Finset.prod_mul_distrib],
+    ⟨fun y x x' => by simp only [map_add (f := _), zpow_add, Finset.prod_mul_distrib],
       fun y x => by simp only [(hβ _).1 y x],
       fun a y x => by simp only [(hβ _).2 a y x]⟩
   refine ⟨D', hD, iM, e, fun y => rfl, ?_⟩

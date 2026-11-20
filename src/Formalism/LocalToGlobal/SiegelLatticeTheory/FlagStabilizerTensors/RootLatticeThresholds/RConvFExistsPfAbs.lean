@@ -42,7 +42,7 @@ def wkForm {U : α → (E →L[ℂ] E)} (hU : ∀ g z, ‖U g z‖ ≤ ‖z‖)
         rw [← integral_const_mul]
         congr 1; funext g; ring)
       (fun x y₁ y₂ => by
-        simp only [map_add, inner_add_right, mul_add]
+        simp only [map_add (f := _), inner_add_right, mul_add]
         exact integral_add (wk_integrable hU hm hf x y₁) (wk_integrable hU hm hf x y₂))
       (fun c x y => by
         simp only [map_smul, inner_smul_right, smul_eq_mul, RingHom.id_apply]

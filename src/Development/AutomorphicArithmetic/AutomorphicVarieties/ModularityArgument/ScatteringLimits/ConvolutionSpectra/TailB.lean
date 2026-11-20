@@ -57,7 +57,7 @@ theorem UpperTheory.V.Z.IntegralApplyAeEq.tailB :
     have h5 : cut V (Ioi a) g = cut V (Ioi a) (M.J.symm (M.J' (cut W (Iic (2 * M.T₀ - a)) p))) := by
       rw [hg]
       conv_lhs => rw [h3]
-      rw [map_add, map_add, map_add, h4, add_zero]
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), h4, add_zero]
     rw [h5]
     refine ((cutLaws (V := V) (Ioi a) (Ioi a) measurableSet_Ioi measurableSet_Ioi).2.2.2.2.2.1 _).trans_eq ?_
     rw [M.J.symm.norm_map, M.J'.norm_map]

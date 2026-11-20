@@ -33,7 +33,7 @@ theorem sturm_sum_coef_zero : ∀ (k L N : ℕ), 0 < L → N ∣ L → ∃ B : �
     induction s using Finset.induction_on with
     | empty => rw [Finset.sum_empty, Finset.sum_empty, ModularForm.coe_zero, qExpansion_zero, map_zero]
     | insert e s he ih =>
-      rw [Finset.sum_insert he, ModularForm.coe_add, ModularForm.qExpansion_add one_pos hΓ, map_add, ih, hc, Finset.sum_insert he]
+      rw [Finset.sum_insert he, ModularForm.coe_add, ModularForm.qExpansion_add one_pos hΓ, map_add (f := _), ih, hc, Finset.sum_insert he]
   have h0 : ∑ ε, f ε = 0 := hm _ fun n hn => by
     rw [hsum]
     simpa [Finset.sum_apply] using hz n hn

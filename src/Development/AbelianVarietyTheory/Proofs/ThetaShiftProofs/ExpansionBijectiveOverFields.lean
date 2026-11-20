@@ -285,7 +285,7 @@ theorem expandsG_lin (k : ℕ) (c : F) {v v' : GroupSec U F k} {s s' : Fam D.toP
     · rw [Fin.append_right]; exact hx' i
   · rw [Fin.sum_univ_add, e₁, e₁', Finset.smul_sum]
     simp only [Fin.append_left, Fin.append_right, smul_smul]
-  · rw [Fin.sum_univ_add, map_add, map_smul, e₂, e₂', Finset.smul_sum]
+  · rw [Fin.sum_univ_add, map_add (f := _), map_smul, e₂, e₂', Finset.smul_sum]
     simp only [Fin.append_left, Fin.append_right, smul_smul]
 
 variable {k : ℕ} {w : LB.Iso (A.L.pull U.gen.hom.left) (U.LG.L.pull (pullback.fst G.hom (jK R)))}

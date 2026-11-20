@@ -181,7 +181,7 @@ theorem natCase (l ex ph : PowerSeries ℂ_[p]) (hex : PowerSeries.constantCoeff
       have H2 := trans' H (add' hN (rfl' (be l ex ph (Xv 0) (Xv 1))))
       have e : MvPowerSeries.C (n : ℂ_[p]) * be l ex ph (Xv 0) (Xv 1) + be l ex ph (Xv 0) (Xv 1) =
           (MvPowerSeries.C ((n + 1 : ℕ) : ℂ_[p]) * be l ex ph (Xv 0) (Xv 1) : MvPowerSeries (Fin 2) ℂ_[p]) := by
-        rw [Nat.cast_succ, map_add, map_one, add_mul, one_mul]
+        rw [Nat.cast_succ, map_add (f := _), map_one, add_mul, one_mul]
       rw [e] at H2
       exact H2
 

@@ -221,7 +221,7 @@ theorem mem_omega_iff (g : LieG G → O) :
     refine ⟨fun x y h => ?_, fun a x h => ?_⟩
     · obtain ⟨v, rfl⟩ := (lieEquiv G).surjective x
       obtain ⟨w, rfl⟩ := (lieEquiv G).surjective y
-      rw [hF, hF, ← map_add, ← hF]
+      rw [hF, hF, ← map_add (f := _), ← hF]
       exact congrArg g (Subtype.ext (lieEquiv_add v w).symm)
     · obtain ⟨v, rfl⟩ := (lieEquiv G).surjective x
       rw [hF, ← smul_eq_mul, ← map_smul, ← hF]

@@ -232,7 +232,7 @@ theorem phi_mem (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (i : ZMod n) (x
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [actVB, φVB, PD.φ_comm]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have a2 : ∀ (c : K₀) (y : T.V ⊗[Qp] B),
       mulVB (K₀ := K₀) (B := B) (V := T.V) (LL := LL) (PD.σ c) (φVB PD (LL := LL) (V := T.V) y) =
       φVB PD (LL := LL) (V := T.V) (mulVB (K₀ := K₀) (B := B) (V := T.V) (LL := LL) c y) := by
@@ -240,7 +240,7 @@ theorem phi_mem (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) (i : ZMod n) (x
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [mulVB, φVB, PD.φ_K₀]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   refine ⟨fun g => by rw [a1, h1], fun c => ?_⟩
   obtain ⟨c, rfl⟩ := PD.σ_bij.2 c
   have h3 := DFunLike.congr_fun (W.emb_σ (i - 1)) c
@@ -257,7 +257,7 @@ theorem lev_q_ne (W : LocWach PD LL O v n) (i : ZMod n) (ζ : LL)
     funext a
     simpa [letπ, LocWach.q] using W.q₀_def
   have h4 := congrArg (W.lev i ζ) h3
-  rw [map_mul, h, mul_zero, map_sub, map_pow, map_add, map_one, h2] at h4
+  rw [map_mul, h, mul_zero, map_sub, map_pow, map_add (f := _), map_one, h2] at h4
   have h5 := congrArg (fun f => PowerSeries.constantCoeff (PowerSeries.derivative LL f)) h4
   simp [Derivation.leibniz_pow, h0, h1, hz, p_ne W] at h5
 
@@ -312,7 +312,7 @@ theorem pow_mem (W : LocWach PD LL O v n) (T : LocLat G Qp LL O) {M : Type} [Add
     { carrier := {x | e x ∈ Λ}
       zero_mem' := by simp
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add] at ha hb ⊢
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at ha hb ⊢
         exact Λ.add_mem ha hb
       smul_mem' := fun a x hx => hs a x hx }
   let U' : Submodule (LetA O n) (W.DD T) := U.map (W.N T).subtype

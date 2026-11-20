@@ -149,7 +149,7 @@ theorem κ_shear (κ : K ≃+* (W → ℂ)) (w v : W) (a : Fin n) (t : Fin n →
     κ (shearK a (sig κ w a t) X a i) v = κ (X a i) v +
       ∑ b, (if b = a then 0 else if v = w then t b else 0) * κ (X b i) v := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [shearK_self, map_add, map_sum, Pi.add_apply, Finset.sum_apply]
+    rw [shearK_self, map_add (f := _), map_sum, Pi.add_apply, Finset.sum_apply]
   congr 1
   refine Finset.sum_congr rfl fun b _ => ?_
   rw [map_mul, Pi.mul_apply, κ_sig]

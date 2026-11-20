@@ -35,7 +35,7 @@ theorem thetaTranslation_comp_eq_cocycle_mul (Λ : AddSubgroup ℂ) (x y : ℂ) 
   rw [mul_assoc, ← Complex.exp_add, mul_left_comm, ← Complex.exp_add, add_assoc]
   congr 2
   have h := Complex.sub_conj (y * (starRingEnd ℂ) (x / 2))
-  simp only [map_mul, Complex.conj_conj, map_div₀, map_ofNat, map_add] at h ⊢
+  simp only [map_mul, Complex.conj_conj, map_div₀, map_ofNat, map_add (f := _)] at h ⊢
   push_cast at h ⊢
   simp only [div_eq_mul_inv, mul_inv] at h ⊢
   linear_combination (Real.pi : ℂ) * (area Λ : ℂ)⁻¹ * h
@@ -108,7 +108,7 @@ theorem OddLaw.doubleTranslate_shift_lattice_mod_two_mul {Λ : AddSubgroup ℂ} 
     have a2 := riemannFormImag_real_smul_right Λ m t μ
     push_cast at a1 a2
     rw [a1, ← a2, show (x + 2 * m * μ) / 2 = x / 2 + m * μ by ring]
-    simp only [gl3FieldFirst, map_add, mul_add, Complex.add_im, add_div]
+    simp only [gl3FieldFirst, map_add (f := _), mul_add, Complex.add_im, add_div]
   rw [hω, f1, h.ee_eq_one hμ (Λ.add_mem hx ht)] at e1
   rw [thetaTranslation_comp_eq_cocycle_mul, thetaTranslation_comp_eq_cocycle_mul, f2, ee_add, h.ee_eq_one ht hμ, e1, add_right_comm]
   simp only [one_mul, mul_one]
@@ -258,7 +258,7 @@ theorem U_prod (c : Fin r → ℂ) (g : Fin r → ℂ → ℂ) :
     U D T (∑ j, c j • embV D T (b j)) (fun z => ∏ j, g j (coordL T b j z)) =
       fun z => ∏ j, U1 T.abelian₂ (c j) (g j) (coordL T b j z) := by
   funext z
-  simp only [U, U1, Hf_sum, coordB_sum hT, Finset.prod_mul_distrib, ← Complex.exp_sum, map_add]
+  simp only [U, U1, Hf_sum, coordB_sum hT, Finset.prod_mul_distrib, ← Complex.exp_sum, map_add (f := _)]
   congr 1
   · refine Finset.prod_congr rfl fun j _ => ?_
     rw [show coordL T b j (∑ j, c j • embV D T (b j)) = c j from coordB_sum hT c j]

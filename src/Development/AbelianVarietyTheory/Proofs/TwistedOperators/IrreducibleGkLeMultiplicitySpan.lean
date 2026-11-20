@@ -202,7 +202,7 @@ theorem local_sum_gen : GlobalTheory.FunPr.Hypotheses₂ → ∀ {D : D7} (θ : 
         have h := (Classical.choose_spec (hder X.1 X.2 a)).add (Classical.choose_spec (hder X.1 X.2 b))
         have e : (fun t : ℝ => M.rep τ (NormedSpace.exp (t • X.1)) ((a + b : P) : M.H τ)) =
             fun t => M.rep τ (NormedSpace.exp (t • X.1)) (a : M.H τ) + M.rep τ (NormedSpace.exp (t • X.1)) (b : M.H τ) :=
-          funext fun t => by rw [Submodule.coe_add, map_add]
+          funext fun t => by rw [Submodule.coe_add, map_add (f := _)]
         rw [e, Submodule.coe_add]
         exact h
       map_smul' := fun c a => by
@@ -473,7 +473,7 @@ def glue (τ : D.what₂.Tau) (T : GlobalTheory.IndefiniteRowSideFullHecke.Finit
     obtain rfl : inst = (fun a b => Classical.propDecidable (a = b)) := Subsingleton.elim _ _
     by_cases h : i = τ
     · subst h
-      simp only [Function.update_self, Function.update_idem, map_add, MultilinearMap.add_apply]
+      simp only [Function.update_self, Function.update_idem, map_add (f := _), MultilinearMap.add_apply]
     · simp only [Function.update_of_ne (Ne.symm h), Function.update_comm h]
       exact (T (u τ)).map_update_add _ i a b
   map_update_smul' := by

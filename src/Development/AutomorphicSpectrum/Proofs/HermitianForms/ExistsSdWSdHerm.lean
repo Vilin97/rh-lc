@@ -158,13 +158,13 @@ variable {F E : Type} [Field F] [Field E] [Algebra F E]
 theorem sigR_smul (c : R) (z : R ⊗[F] E) : sigR R σ (c • z) = c • sigR R σ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [smul_add, map_add, ha, hb]
+  | add a b ha hb => simp only [smul_add, map_add (f := _), ha, hb]
   | tmul a e => rfl
 
 theorem sigR_sigR (hσ : ∀ x, σ (σ x) = x) (z : R ⊗[F] E) : sigR R σ (sigR R σ z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e =>
     show a ⊗ₜ[F] σ (σ e) = _
     rw [hσ]
@@ -190,7 +190,7 @@ theorem trace_nondeg [FiniteDimensional F E] [Algebra.IsSeparable F E] (z : R �
     intro k z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy, add_mul]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy, add_mul]
     | tmul a e =>
       rw [Algebra.TensorProduct.tmul_mul_tmul, trace_tmul, Algebra.TensorProduct.basis_repr_tmul]
       simp [b', LinearMap.BilinForm.dualBasis_repr_apply, Algebra.traceForm_apply]
@@ -201,7 +201,7 @@ theorem trace_sigR [FiniteDimensional F E] (z : R ⊗[F] E) :
     Algebra.trace R (R ⊗[F] E) (sigR R σ z) = Algebra.trace R (R ⊗[F] E) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e =>
     show Algebra.trace R (R ⊗[F] E) (a ⊗ₜ[F] σ e) = _
     rw [trace_tmul, trace_tmul]
@@ -300,7 +300,7 @@ theorem pairHerm_nondeg [FiniteDimensional F E] [Algebra.IsSeparable F E] [CharZ
   refine trace_nondeg R _ fun w => ?_
   have hT : (Matrix.single b a w + Matrix.single a b (sigR R σ w)) ∈ HermR R σ n := by
     intro i j
-    simp only [Matrix.add_apply, Matrix.single_apply, map_add, apply_ite (sigR R σ), map_zero,
+    simp only [Matrix.add_apply, Matrix.single_apply, map_add (f := _), apply_ite (sigR R σ), map_zero,
       sigR_sigR R σ hσ]
     rw [add_comm]
     simp only [and_comm]
@@ -311,7 +311,7 @@ theorem pairHerm_nondeg [FiniteDimensional F E] [Algebra.IsSeparable F E] [CharZ
     rw [map_mul, S.2 b a]
     simp [Matrix.single_apply, mul_add, Finset.sum_add_distrib, ite_and]
   simp only [pairHerm] at h1
-  rw [h2, map_add, trace_sigR, ← two_mul, ← mul_assoc] at h1
+  rw [h2, map_add (f := _), trace_sigR, ← two_mul, ← mul_assoc] at h1
   have h3 : algebraMap F R (1 / 2) * 2 = 1 := by
     rw [← map_ofNat (algebraMap F R) 2, ← map_mul]; simp
   rwa [h3, one_mul] at h1

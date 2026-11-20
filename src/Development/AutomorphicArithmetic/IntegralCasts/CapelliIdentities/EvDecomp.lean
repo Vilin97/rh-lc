@@ -40,7 +40,7 @@ theorem UpperTheory.Reformulated.B.Qf39.ev_decomp :
   refine ⟨h, ?_, fun i => ?_⟩
   · ext m
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, MvPowerSeries.coeff_C]
+      rw [map_add (f := _), map_sum, MvPowerSeries.coeff_C]
     simp only [hX]
     by_cases hm : m = 0
     · subst hm

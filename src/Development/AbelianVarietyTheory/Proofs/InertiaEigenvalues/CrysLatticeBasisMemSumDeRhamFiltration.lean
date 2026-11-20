@@ -58,7 +58,7 @@ theorem coord_mulLeft {d : ℕ} (e : Module.Basis (Fin d) ℚ_[l] V) (r : Fin d)
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v y => simp [coord_tmul, mul_smul_comm]
-  | add x y hx hy => simp only [map_add, hx, hy, mul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
 
 theorem coord_mem {d : ℕ} (e : Module.Basis (Fin d) ℚ_[l] V) (r : Fin d) (F : Submodule ℚ_[l] B)
     (x : V ⊗[ℚ_[l]] B)
@@ -68,7 +68,7 @@ theorem coord_mem {d : ℕ} (e : Module.Basis (Fin d) ℚ_[l] V) (r : Fin d) (F 
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul v y => simpa [coord_tmul] using F.smul_mem (e.repr v r) y.2
-  | add x y hx hy => simpa only [map_add] using F.add_mem hx hy
+  | add x y hx hy => simpa only [map_add (f := _)] using F.add_mem hx hy
 
 theorem coord_map {d : ℕ} (e : Module.Basis (Fin d) ℚ_[l] V) (s : Fin d) (f : V →ₗ[ℚ_[l]] V)
     (τ : B →ₗ[ℚ_[l]] B) (x : V ⊗[ℚ_[l]] B) :
@@ -80,7 +80,7 @@ theorem coord_map {d : ℕ} (e : Module.Basis (Fin d) ℚ_[l] V) (s : Fin d) (f 
     simp only [AlgebraTensorModule.map_tmul, coord_tmul, map_smul, smul_smul]
     rw [← Finset.sum_smul, ← LinearMap.toMatrix_mulVec_repr e e f v]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add, Finset.sum_add_distrib]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add, Finset.sum_add_distrib]
 
 end GlobalTheory.CrysCoordDR
 

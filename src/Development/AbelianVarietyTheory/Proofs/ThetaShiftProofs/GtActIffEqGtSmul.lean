@@ -262,7 +262,7 @@ theorem add_gtSmul (a a' : O) (g : GtPtF D F) : gtSmul hG oa (a + a') g = gtSmul
   have := oa.onB.hom a
   have := oa.onB.hom (star a)
   refine (isAdd_iff_eq _ _ _).1 ((isAdd_iff_val _ _ _).2 ⟨?_, fun χ y J hJ => ?_⟩)
-  · rw [gtSmul_b, gtSmul_b, gtSmul_b, oa.onB.map_add]; exact MonObj.comp_mul _ _ _
+  · rw [gtSmul_b, gtSmul_b, gtSmul_b, oa.onB.map_add (f := _)]; exact MonObj.comp_mul _ _ _
   · have e₁ := congrArg Additive.ofMul (IsRos.val_sum hG D.P.isAb D.cub
       (by rw [star_add]; exact oa.onB.map_add _ _) (oa.onB.map_add a a')
       (rosGen_isRos hG oa (a + a')) (rosGen_isRos hG oa a) (rosGen_isRos hG oa a') hJ (cP D _ χ) g.b)

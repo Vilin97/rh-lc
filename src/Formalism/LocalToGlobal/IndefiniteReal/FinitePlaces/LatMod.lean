@@ -37,7 +37,7 @@ theorem mul_gen (a : AE D) (α : Af D.host.F) (m : D.host.E) :
   | tmul x z =>
     rw [Algebra.TensorProduct.tmul_mul_tmul, mul_pairA, finPart_tmul, Algebra.TensorProduct.tmul_mul_tmul, mul_one,
       jF_tmul, Algebra.TensorProduct.tmul_mul_tmul, mul_one]
-  | add x y hx hy => rw [add_mul, hx, hy, map_add, add_mul, map_add, add_mul]
+  | add x y hx hy => rw [add_mul, hx, hy, map_add (f := _), add_mul, map_add (f := _), add_mul]
 
 theorem gen_mem (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank → D.host.E))
     (ΛT : Submodule (𝓞 D.host.E) (Fin T.rank → D.host.E)) {α : Af D.host.F} (hα : α ∈ intAf D.host.F)
@@ -78,7 +78,7 @@ theorem jF_gen_mem (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fin S.rank �
         ((1 : AF D.host.F) ⊗ₜ[D.host.F] (c * t i * ∑ k, star (s k) * S.gram k j)) : WO S T) =
         (Matrix.of fun i j => jF D x * ((1 : AF D.host.F) ⊗ₜ[D.host.F] (c * t i * ∑ k, star (s k) * S.gram k j))) +
         (Matrix.of fun i j => jF D y * ((1 : AF D.host.F) ⊗ₜ[D.host.F] (c * t i * ∑ k, star (s k) * S.gram k j))) := by
-      ext i j; rw [Matrix.add_apply, Matrix.of_apply, Matrix.of_apply, Matrix.of_apply, map_add, add_mul]
+      ext i j; rw [Matrix.add_apply, Matrix.of_apply, Matrix.of_apply, Matrix.of_apply, map_add (f := _), add_mul]
     rw [hm]; exact add_mem hx hy
   | neg x _ hx =>
     have hm : (Matrix.of fun i j => jF D (-x) *

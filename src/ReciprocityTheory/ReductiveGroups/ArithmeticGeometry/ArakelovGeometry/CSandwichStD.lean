@@ -234,7 +234,7 @@ theorem crd_span {x : Ix κ → Ω} {n r : ℕ} {b : Fin r → MvPolynomial (Ix 
     | add y₁ y₂ h₁ h₂ ih₁ ih₂ =>
       have : (⟨y₁ + y₂, hsub (Submodule.add_mem _ h₁ h₂)⟩ : sec ℤ x n) =
           ⟨y₁, hsub h₁⟩ + ⟨y₂, hsub h₂⟩ := rfl
-      rw [this, map_add]; exact Submodule.add_mem _ ih₁ ih₂
+      rw [this, map_add (f := _)]; exact Submodule.add_mem _ ih₁ ih₂
     | smul a y h ih =>
       have : (⟨a • y, hsub (Submodule.smul_mem _ a h)⟩ : sec ℤ x n) = a • ⟨y, hsub h⟩ := rfl
       rw [this, map_smul]; exact Submodule.smul_mem _ _ ih

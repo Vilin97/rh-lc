@@ -50,7 +50,7 @@ theorem isLocalRing : IsLocalRing O := by
   have h1 := lt_of_le_of_ne (norm_algebraMap_le (K := K) x) h.1
   have h2 := lt_of_le_of_ne (norm_algebraMap_le (K := K) (1 - x)) h.2
   have h3 := IsUltrametricDist.norm_add_le_max (algebraMap O K x) (algebraMap O K (1 - x))
-  rw [← map_add, add_sub_cancel, map_one, norm_one] at h3
+  rw [← map_add (f := _), add_sub_cancel, map_one, norm_one] at h3
   exact absurd (h3.trans_lt (max_lt h1 h2)) (lt_irrefl _)
 
 omit [IsUltrametricDist K] in

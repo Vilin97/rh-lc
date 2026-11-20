@@ -329,7 +329,7 @@ private theorem key_twist [IsTotallyComplex K] [IsTotallyComplex M] (h2 : Module
     rw [f_one h2 hne.symm hw'.symm, pow_one, hw'] at v2
     refine Or.inl ⟨hN, w', hne, hw', _, _, hB.twist u1, hB'.twist u2, ?_⟩
     have hP := hBP.twist hu
-    rw [Multiset.map_add] at hP
+    rw [Multiset.map_add (f := _)] at hP
     rwa [v1, v2]
   · obtain ⟨u1, v1⟩ := hξ w hu
     have hf : (w.under (𝓞 K)).asIdeal.inertiaDeg' w.asIdeal = 2 :=
@@ -343,7 +343,7 @@ private theorem key_twist [IsTotallyComplex K] [IsTotallyComplex M] (h2 : Module
       convert h using 2
       simp [mul_pow]
     · have h := hBP.twist hu
-      simpa [Multiset.map_add, Multiset.map_map, Function.comp_def] using h
+      simpa [Multiset.map_add (f := _), Multiset.map_map, Function.comp_def] using h
 
 private theorem core [IsTotallyComplex K] [IsTotallyComplex M] (hOps : PairGOps) (hCross : CrossG) (hSide : SideG)
     (h2 : Module.finrank K M = 2) (P : CuspSub K (2 * 2)) (π : CuspSub M 2) (S : Finset (HeightOneSpectrum (𝓞 K)))
@@ -400,12 +400,12 @@ private theorem core [IsTotallyComplex K] [IsTotallyComplex M] (hOps : PairGOps)
       · left
         refine ⟨hN, w', hne, hu, ?_⟩
         have s3 := satM w' fun h => hw' (hu ▸ (memSM w').1 h)
-        rw [cx, cx, cx, sat_unique P s1 h4, sat_unique π s2 h1, sat_unique π s3 h3, Multiset.map_add]
+        rw [cx, cx, cx, sat_unique P s1 h4, sat_unique π s2 h1, sat_unique π s3 h3, Multiset.map_add (f := _)]
       · right
         refine ⟨hN, B'.map fun b : ℂˣ => (b : ℂ), ?_, ?_⟩
         · rw [cx, sat_unique π s2 h1, Multiset.map_map, Multiset.map_map]
           exact Multiset.map_congr rfl fun b _ => by simp
-        · rw [cx, sat_unique P s1 h4, h3, Multiset.map_add, Multiset.map_map, Multiset.map_map]
+        · rw [cx, sat_unique P s1 h4, h3, Multiset.map_add (f := _), Multiset.map_map, Multiset.map_map]
           congr 1)
   have pM' := hOps.2.2.1 _ _ _ _ _ _ _ c pM (fun s hs => ((hc s).1 hs).symm) (fun s hs => ((hc s).2 hs).symm)
   have e := hCross _ _ _ _ _ _ _ (by exact_mod_cast hq) hβ hβ' hQ0 hQ0' pK pM'

@@ -54,7 +54,7 @@ theorem coeff_aeval_scale {K σ : Type} [Field K] [Fintype σ] (c : σ → K) (F
     split_ifs with h
     · subst h; ring
     · simp
-  | add p q hp hq => simp only [map_add, MvPolynomial.coeff_add, hp, hq, add_mul]
+  | add p q hp hq => simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq, add_mul]
 
 theorem substGauss : SubstGauss := by
   intro R K _ _ _ B _ m P U c hP hcU μ

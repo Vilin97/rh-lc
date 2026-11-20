@@ -129,7 +129,7 @@ def lagr (Cy : Matrix (Fin d) (Fin m) (AE F E)) :
   zero_mem' := ⟨0, by rw [Matrix.zero_mul, map_zero]⟩
   add_mem' := by
     rintro _ _ ⟨z, rfl⟩ ⟨z', rfl⟩
-    exact ⟨z + z', by rw [Matrix.add_mul, map_add]⟩
+    exact ⟨z + z', by rw [Matrix.add_mul, map_add (f := _)]⟩
   smul_mem' := by
     rintro a _ ⟨z, rfl⟩
     exact ⟨liftV v a • z, by rw [Matrix.smul_mul, GlobalTheory.LatOpenCpt.locCo_smul, evFin_liftV]⟩

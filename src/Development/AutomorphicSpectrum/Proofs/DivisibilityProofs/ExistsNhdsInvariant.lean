@@ -155,7 +155,7 @@ def opL (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (A :
   map_add' Ψ Ψ' := by
     funext x
     change A ((fun y => Ψ (repl v x y)) + fun y => Ψ' (repl v x y)) _ = _
-    rw [map_add]
+    rw [map_add (f := _)]
     rfl
   map_smul' c Ψ := by
     funext x
@@ -252,7 +252,7 @@ theorem pure_repl
     congr 1
     funext i
     change Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F w ((x i).2 - GlobalTheory.AdelicU.singleFin v _ + GlobalTheory.AdelicU.singleFin v _) = _
-    rw [map_add, map_sub, GlobalTheory.AdelicU.evalV_singleFin_ne h, GlobalTheory.AdelicU.evalV_singleFin_ne h]
+    rw [map_add (f := _), map_sub, GlobalTheory.AdelicU.evalV_singleFin_ne h, GlobalTheory.AdelicU.evalV_singleFin_ne h]
     simp
     rfl
 

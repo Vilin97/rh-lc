@@ -109,12 +109,12 @@ theorem nuBridge : NuBridge := by
   have thH_add : ∀ S T, thH (S + T) = thH S + thH T := by
     intro S T
     funext v i j
-    simp [thH, Matrix.map_apply, map_add]
+    simp [thH, Matrix.map_apply, map_add (f := _)]
   have TcF_add : ∀ S T, TcF (S + T) = TcF S + TcF T := by
     intro S T
     have e : (⟨_, memK (S + T)⟩ : Kr) = ⟨_, memK S⟩ + ⟨_, memK T⟩ := Subtype.ext (by
       show (reimVE : _ ≃ₗ[ℝ] _) (thH (S + T)) = (reimVE : _ ≃ₗ[ℝ] _) (thH S) + (reimVE : _ ≃ₗ[ℝ] _) (thH T)
-      rw [thH_add, map_add])
+      rw [thH_add, map_add (f := _)])
     exact (congrArg bK.repr e).trans (map_add bK.repr _ _)
   have hθc : ∀ v i j, Continuous fun S : HmI X => PI.AprimeInfU.thetaInf X v (S.1 i j) :=
     fun v i j => (continuous_thetaInf X v).comp (continuous_subtype_val.matrix_elem i j)
@@ -148,7 +148,7 @@ theorem nuBridge : NuBridge := by
     have hSm : Sm ∈ HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R.rS) := by
       show ∀ a b, sigR (Ainf X.B.I.F) X.B.I.cm.sig (Sm b a) = Sm a b
       intro a b
-      simp only [Sm, h2, map_mul, map_add, sigR_invP _ _ (sig_invI X), sigR_alg]
+      simp only [Sm, h2, map_mul, map_add (f := _), sigR_invP _ _ (sig_invI X), sigR_alg]
       ring
     refine ⟨⟨Sm, hSm⟩, ?_⟩
     have e : thH ⟨Sm, hSm⟩ = M := by
@@ -156,7 +156,7 @@ theorem nuBridge : NuBridge := by
       have hMh : conj (M v b a) = M v a b := by
         have := congrFun (congrFun (hM v) a) b
         simpa [Matrix.conjTranspose_apply] using this
-      simp only [thH, Matrix.map_apply, Sm, h2, map_mul, map_add, NuB.theta_alg, NuB.theta_sigR, hy, hMh,
+      simp only [thH, Matrix.map_apply, Sm, h2, map_mul, map_add (f := _), NuB.theta_alg, NuB.theta_sigR, hy, hMh,
         half_emb]
       ring
     show bK.repr _ = s

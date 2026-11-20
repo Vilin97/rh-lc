@@ -13,7 +13,7 @@ def zhatSubring : Subring (∀ n : ℕ+, ZMod n) where
   carrier := {f | ∀ (m n : ℕ+) (h : (m : ℕ) ∣ n), ZMod.castHom h (ZMod m) (f n) = f m}
   mul_mem' {a b} ha hb m n h := by rw [Pi.mul_apply, map_mul, ha m n h, hb m n h, Pi.mul_apply]
   one_mem' m n h := by rw [Pi.one_apply, map_one, Pi.one_apply]
-  add_mem' {a b} ha hb m n h := by rw [Pi.add_apply, map_add, ha m n h, hb m n h, Pi.add_apply]
+  add_mem' {a b} ha hb m n h := by rw [Pi.add_apply, map_add (f := _), ha m n h, hb m n h, Pi.add_apply]
   zero_mem' m n h := by rw [Pi.zero_apply, map_zero, Pi.zero_apply]
   neg_mem' {a} ha m n h := by rw [Pi.neg_apply, map_neg, ha m n h, Pi.neg_apply]
 

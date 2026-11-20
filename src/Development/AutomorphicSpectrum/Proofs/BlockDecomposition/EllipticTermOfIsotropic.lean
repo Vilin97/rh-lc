@@ -78,7 +78,7 @@ theorem iso_bot_C {n : ℕ} (G B Bi : Matrix (Fin n) (Fin n) ℂ) (hB : B * Bi =
     induction f using Polynomial.induction_on' with
     | add p q hp hq =>
       intro y
-      rw [map_add, Matrix.add_mulVec, hladd, hp, hq, Polynomial.eval_add, add_mul]
+      rw [map_add (f := _), Matrix.add_mulVec, hladd, hp, hq, Polynomial.eval_add, add_mul]
     | monomial k a =>
       induction k with
       | zero =>

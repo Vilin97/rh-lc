@@ -213,7 +213,7 @@ theorem bridge (K : Type) [Field K] (B D : Type) [CommRing B] [HopfAlgebra K B] 
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul b d =>
       rw [hΦY]
       obtain ⟨S, hS⟩ := TensorProduct.exists_finset (Coalgebra.comul (R := K) b)
@@ -229,7 +229,7 @@ theorem bridge (K : Type) [Field K] (B D : Type) [CommRing B] [HopfAlgebra K B] 
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul b d =>
       rw [hΦY, TensorProduct.comm_tmul, Algebra.TensorProduct.map_tmul]
       simp only [Θ, AlgHom.id_apply, Algebra.TensorProduct.includeLeft_apply,
@@ -241,7 +241,7 @@ theorem bridge (K : Type) [Field K] (B D : Type) [CommRing B] [HopfAlgebra K B] 
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul b d =>
       conv_lhs => rw [hsnd]
       rw [hΦY, TensorProduct.comm_tmul, Algebra.TensorProduct.map_tmul]

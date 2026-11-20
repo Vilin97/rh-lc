@@ -31,7 +31,7 @@ theorem aeval_eq_zero_of_diag [Module.Free O Q] (hinj : Function.Injective (alge
     intro p s
     induction p using Polynomial.induction_on with
     | C a => simp [Algebra.algebraMap_eq_smul_one, LinearMap.baseChange_smul]
-    | add p q hp hq => simp only [map_add, LinearMap.baseChange_add, LinearMap.add_apply, hp, hq, add_smul]
+    | add p q hp hq => simp only [map_add (f := _), LinearMap.baseChange_add, LinearMap.add_apply, hp, hq, add_smul]
     | monomial k a ih =>
       rw [pow_succ, ← mul_assoc, map_mul _ _ Polynomial.X, map_mul _ _ Polynomial.X, Polynomial.aeval_X,
         Polynomial.aeval_X, LinearMap.baseChange_mul, Module.End.mul_apply, he, map_smul, ih, smul_smul, mul_comm]
@@ -49,7 +49,7 @@ theorem aeval_comm {Q' : Type} [AddCommGroup Q'] [Module O Q'] (π : Q →ₗ[O]
     π (Polynomial.aeval f p x) = Polynomial.aeval f' p (π x) := by
   induction p using Polynomial.induction_on generalizing x with
   | C a => simp
-  | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial k a ih =>
     rw [pow_succ, ← mul_assoc, map_mul _ _ Polynomial.X, map_mul _ _ Polynomial.X, Polynomial.aeval_X,
       Polynomial.aeval_X, Module.End.mul_apply, Module.End.mul_apply, ih, h]

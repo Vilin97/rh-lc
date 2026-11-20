@@ -27,8 +27,8 @@ variable {F Q} {Q' : Type} [CommRing Q'] [Algebra k Q'] {y a : F.G0 → Q}
 theorem Low.map (h : F.Low Q y a) (φ : Q →ₐ[k] Q') : F.Low Q' (fun g => φ (y g)) (fun g => φ (a g)) where
   lcy := h.lcy.comp φ
   lca := h.lca.comp φ
-  muly g g' := by simp only [h.muly, map_add, map_smul]
-  mula g g' := by simp only [h.mula, map_add, map_smul, map_mul]
+  muly g g' := by simp only [h.muly, map_add (f := _), map_smul]
+  mula g g' := by simp only [h.mula, map_add (f := _), map_smul, map_mul]
   pol g := by simp only [h.pol]
   nor := congrArg φ h.nor
   loc v := by

@@ -51,7 +51,7 @@ theorem UpperTheory.WildA.moveTop :
     { toFun := fun Q => kerFin W (GlobalTheory.ChiGrid.Pair.top t' j) (fockIn W N.frC (GlobalTheory.ChiGrid.Pair.top t' j) (Z.vec d) Q)
         (x * N.u _) (y * N.u _)
       map_add' := fun P Q => by
-        simp only [kerFin, GridData.Weil.ker, thetaKO, map_add, Pi.add_apply]
+        simp only [kerFin, GridData.Weil.ker, thetaKO, map_add (f := _), Pi.add_apply]
       map_smul' := fun c Q => by
         simp only [kerFin, GridData.Weil.ker, thetaKO, map_smul, Pi.smul_apply, RingHom.id_apply] }
   have key := UpperTheory.WildA.realTop (W := W) N hL t' j hj a b ha hb e₁ e₂ he₁ he₂ ℓ k hk k' hk'

@@ -46,7 +46,7 @@ private lemma serNat_aeval {R₀ κ : Type} [CommRing R₀] [Fintype κ] [Decida
       q (Finsupp.equivFunOnFinite.symm fun i => (e i : ℕ))) * ∏ i, a i ^ (e i : ℕ) := by
   induction q using MvPolynomial.induction_on' with
   | add p q hp hq =>
-    simp only [map_add, MvPolynomial.coeff_add, add_mul, Finset.sum_add_distrib, hp, hq]
+    simp only [map_add (f := _), MvPolynomial.coeff_add, add_mul, Finset.sum_add_distrib, hp, hq]
   | monomial m r =>
     rw [MvPolynomial.aeval_monomial, Finsupp.prod_fintype _ _ (fun i => pow_zero _)]
     by_cases hm : ∀ j, m j < N

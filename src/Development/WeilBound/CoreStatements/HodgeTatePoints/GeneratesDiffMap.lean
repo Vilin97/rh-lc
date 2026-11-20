@@ -135,8 +135,8 @@ theorem generatesDiff_map (hAK : Function.Injective (algebraMap A K)) {σ : E �
       | add y z _ _ hy hz =>
         obtain ⟨a, ha, ha'⟩ := hy
         obtain ⟨b, hb, hb'⟩ := hz
-        exact ⟨a + b, by rw [map_add, ha, hb], by
-          rw [map_add, map_add]; exact Submodule.add_mem _ ha' hb'⟩
+        exact ⟨a + b, by rw [map_add (f := _), ha, hb], by
+          rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ ha' hb'⟩
       | smul r y _ hy =>
         obtain ⟨a, ha, ha'⟩ := hy
         exact ⟨r * a, by rw [map_mul, ha, Algebra.smul_def], by

@@ -90,7 +90,7 @@ theorem GlobalTheory.HeckeFamilyMatrices.ul_semisimple : ∀ (N l k : ℕ), 5 �
   obtain ⟨A, B, hAB⟩ := hcop
   have key : aeval U A (aeval U ((X - C α) ^ n) ⇑f) + aeval U B (aeval U (X ^ 2 - C c) ⇑f) = ⇑f := by
     have := congrArg (fun p => aeval U p ⇑f) hAB
-    simpa only [map_add, map_mul, map_one, LinearMap.add_apply, Module.End.mul_apply,
+    simpa only [map_add (f := _), map_mul, map_one, LinearMap.add_apply, Module.End.mul_apply,
       Module.End.one_apply] using this
   have h1 : aeval U ((X - C α) ^ n) ⇑f = 0 := by
     rw [map_pow, map_sub, aeval_X, aeval_C, Module.End.pow_apply]

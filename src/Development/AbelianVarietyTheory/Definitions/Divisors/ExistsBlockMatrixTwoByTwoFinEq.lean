@@ -229,7 +229,7 @@ theorem sigR_map (φ : R →ₐ[F] R') (y : R ⊗[F] E) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {R σ} in
 

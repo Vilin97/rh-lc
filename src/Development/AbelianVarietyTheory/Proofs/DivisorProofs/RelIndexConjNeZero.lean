@@ -74,7 +74,7 @@ theorem relIndex_conj_ne_zero {G V : Type} [Group G] [AddCommGroup V] (ρ : G �
       rw [smul_sub, smul_sub, ← map_nsmul, e, mul_smul, sub_self]
     have e3 : ρ h (ρ g z) = ρ g z + n • y := by rw [← e2]; abel
     have e4 : ρ g⁻¹ (ρ g z) = z := by rw [← hρ, inv_mul_cancel, hρ1]
-    rw [hρ, hρ, e3, map_add, map_nsmul, e4]
+    rw [hρ, hρ, e3, map_add (f := _), map_nsmul, e4]
     exact L.add_mem hz (hg y hy).2
   have hcong : ∀ h ∈ K, (∀ z ∈ L, ∃ y ∈ L, ρ h z - z = (n * n) • y) → g⁻¹ * h * g ∈ K := by
     intro h hh hc
@@ -114,7 +114,7 @@ theorem relIndex_conj_ne_zero {G V : Type} [Group G] [AddCommGroup V] (ρ : G �
       calc ρ k2 z - ρ k1 z = (ρ k2 z - z) - (ρ k1 z - z) := by abel
         _ = ρ k2 (π z) - ρ k1 (π z) := by rw [hπ k2 z, hπ k1 z]; abel
         _ = _ := by
-          rw [hz', map_add, map_add, map_nsmul, map_nsmul, smul_add, smul_sub]
+          rw [hz', map_add (f := _), map_add (f := _), map_nsmul, map_nsmul, smul_add, smul_sub]
           simp only at e'
           rw [← e']; abel
     refine ⟨ρ (k1 : G)⁻¹ (y' + (ρ k2 y - ρ k1 y)),

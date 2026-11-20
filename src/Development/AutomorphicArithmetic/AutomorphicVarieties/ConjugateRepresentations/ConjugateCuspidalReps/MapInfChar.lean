@@ -136,10 +136,10 @@ private theorem conj_fun (σ : ℂ ≃+* ℂ) {f : GL (Fin a) (Cinf E) → ℂ} 
     obtain ⟨Φ, hΦ, e1, r1, d1⟩ := h1
     obtain ⟨Ψ, hΨ, e2, r2, d2⟩ := h2
     refine ⟨Φ + Ψ, hΦ.add hΨ, fun y => by rw [Pi.add_apply, Pi.add_apply, e1, e2], ?_, fun τ i j => ?_⟩
-    · simp only [Pi.add_apply, map_add]
+    · simp only [Pi.add_apply, map_add (f := _)]
       exact (regFun E a).add_mem r1 r2
-    · simp only [Pi.add_apply, map_add]
-      rw [eF_add hf hg, map_add, ← d1, ← d2]
+    · simp only [Pi.add_apply, map_add (f := _)]
+      rw [eF_add hf hg, map_add (f := _), ← d1, ← d2]
       exact eF_add r1 r2 _ i j
   | mul f g hf hg h1 h2 =>
     obtain ⟨Φ, hΦ, e1, r1, d1⟩ := h1
@@ -148,7 +148,7 @@ private theorem conj_fun (σ : ℂ ≃+* ℂ) {f : GL (Fin a) (Cinf E) → ℂ} 
     · simp only [Pi.mul_apply, map_mul]
       exact (regFun E a).mul_mem r1 r2
     · simp only [Pi.mul_apply, map_mul]
-      rw [eF_mul hf hg, map_add, map_mul, map_mul, ← d1, ← d2, ← e1, ← e2]
+      rw [eF_mul hf hg, map_add (f := _), map_mul, map_mul, ← d1, ← d2, ← e1, ← e2]
       simp only [← one]
       exact eF_mul r1 r2 _ i j
 

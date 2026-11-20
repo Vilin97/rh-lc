@@ -120,7 +120,7 @@ variable {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype κ]
 def trL (c : κ → mixedEmbedding.mixedSpace F) : (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap
     { toFun := fun y => Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (y ⬝ᵥ c)
-      map_add' := fun y y' => by rw [add_dotProduct, map_add]
+      map_add' := fun y y' => by rw [add_dotProduct, map_add (f := _)]
       map_smul' := fun r y => by rw [smul_dotProduct, map_smul]; rfl }
 
 theorem trL_apply (c y : κ → mixedEmbedding.mixedSpace F) :
@@ -193,7 +193,7 @@ theorem rho_pureA [Invertible (2 : AF F)] {W : Type} [AddCommGroup W] [Module (A
     funext i
     rw [sub_neg_eq_add]
     change evH F (x i + realAd F t * a i) = evH F (x i) + t • evH F (a i)
-    rw [map_add, map_mul, evH_realAd, Algebra.smul_def]
+    rw [map_add (f := _), map_mul, evH_realAd, Algebra.smul_def]
   set A := x ⬝ᵥ (realAd F t • d.e u).2 + ⅟(2 : AF F) * ((realAd F t • d.e u).1 ⬝ᵥ (realAd F t • d.e u).2) with hAdef
   have hA : A = realAd F t * (x ⬝ᵥ b + ⅟(2 : AF F) * (realAd F t * (a ⬝ᵥ b))) := by
     rw [hAdef]
@@ -213,10 +213,10 @@ theorem rho_pureA [Invertible (2 : AF F)] {W : Type} [AddCommGroup W] [Module (A
     have e1 : evI F A = algebraMap ℝ (mixedEmbedding.mixedSpace F) t * ((⇑(evH F) ∘ x) ⬝ᵥ (⇑(evH F) ∘ b) +
         algebraMap ℝ (mixedEmbedding.mixedSpace F) (1 / 2) *
           (algebraMap ℝ (mixedEmbedding.mixedSpace F) t * ((⇑(evH F) ∘ a) ⬝ᵥ (⇑(evH F) ∘ b)))) := by
-      rw [← evH_apply, hA, map_mul, map_add, map_mul, map_mul, evH_realAd, RingHom.map_dotProduct,
+      rw [← evH_apply, hA, map_mul, map_add (f := _), map_mul, map_mul, evH_realAd, RingHom.map_dotProduct,
         RingHom.map_dotProduct, evH_invOf_two]
     rw [e1, trL_apply]
-    simp only [← Algebra.smul_def, map_add, map_smul, smul_eq_mul]
+    simp only [← Algebra.smul_def, map_add (f := _), map_smul, smul_eq_mul]
     change t * (Algebra.trace ℝ (mixedEmbedding.mixedSpace F) ((fun i => evH F (x i)) ⬝ᵥ Y) +
       1 / 2 * (t * Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (X1 ⬝ᵥ Y))) =
       t * Algebra.trace ℝ (mixedEmbedding.mixedSpace F) ((fun i => evH F (x i)) ⬝ᵥ Y) +

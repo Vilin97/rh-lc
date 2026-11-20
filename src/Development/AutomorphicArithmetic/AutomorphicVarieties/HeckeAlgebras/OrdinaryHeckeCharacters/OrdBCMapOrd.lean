@@ -23,7 +23,7 @@ private theorem ordBC_abs {A B O O' P : Type} [CommRing A] [CommRing B] [IsLocal
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul b f =>
       have : E f = ∑ p, ev p f • w p := hψ f
       simp only [L, R, LinearMap.liftBaseChange_tmul, map_smul, LinearMap.sum_apply, LinearMap.smulRight_apply, hev,

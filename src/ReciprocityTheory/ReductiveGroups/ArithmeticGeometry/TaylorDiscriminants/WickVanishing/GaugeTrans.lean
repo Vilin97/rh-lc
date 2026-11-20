@@ -412,7 +412,7 @@ private theorem gt_ev2_lemma {k : Type} [CommRing k] {d m n : ℕ} (V : Fin m �
 private theorem gt_cc3_lemma {k : Type} [CommRing k] {d n : ℕ} (f : PS k 2 d) (hf : constantCoeff f = 0)
     (V1 V2 V3 : Fin 2 → Pt k n d) (h1 : ∀ j, GP (V1 j)) (h2 : ∀ j, GP (V2 j)) (h3 : ∀ j, GP (V3 j)) :
     constantCoeff (ev V1 f + ev V2 f - ev V3 f) = 0 := by
-  rw [map_sub, map_add, gt_const_ev V1 h1 f hf, gt_const_ev V2 h2 f hf, gt_const_ev V3 h3 f hf]
+  rw [map_sub, map_add (f := _), gt_const_ev V1 h1 f hf, gt_const_ev V2 h2 f hf, gt_const_ev V3 h3 f hf]
   all_goals simp
 
 private theorem gt_cc2_lemma {k : Type} [CommRing k] {d n : ℕ} (f : PS k 2 d) (hf : constantCoeff f = 0)

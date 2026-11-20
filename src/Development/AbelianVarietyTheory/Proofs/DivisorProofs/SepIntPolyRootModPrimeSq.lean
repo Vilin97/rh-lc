@@ -23,7 +23,7 @@ theorem int_bezout_derivative_of_separable (f : ℤ[X])
     have e2 : B.map (Int.castRingHom ℚ) = ((c2 : ℤ) : ℚ) • b := by
       rw [show Int.castRingHom ℚ = algebraMap ℤ ℚ from rfl, hc2]
       exact (Int.cast_smul_eq_zsmul ℚ _ _).symm
-    simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_smul, Polynomial.map_C,
+    simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_smul, Polynomial.map_C,
       ← Polynomial.derivative_map, e1, e2]
     rw [smul_eq_C_mul, smul_eq_C_mul, smul_eq_C_mul, smul_eq_C_mul]
     calc _ = C (((c1 : ℤ) : ℚ) * ((c2 : ℤ) : ℚ)) *

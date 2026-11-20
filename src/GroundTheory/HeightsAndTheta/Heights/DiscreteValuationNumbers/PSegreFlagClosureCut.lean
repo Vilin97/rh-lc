@@ -114,7 +114,7 @@ theorem SegreFlagClosureCut.proof (hC3 : CutByEffectiveDivisor.Statement.{0})
         refine Finset.sum_congr rfl fun i _ => ?_
         ring
       rw [e1, ← hBs₀.expansion]
-      simp only [hy', map_mul, map_add, rename_X]
+      simp only [hy', map_mul, map_add (f := _), rename_X]
       ring
     · simp only [Pi.add_apply, hE1, hE2, Nat.add_sub_cancel]
       refine IsHomogeneous.add (IsHomogeneous.add ?_ ?_) ?_

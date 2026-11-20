@@ -50,7 +50,7 @@ def cyc (lev : Fin n → ℕ) (E : Fin n → Fin n → Module.End ℂ V) (j : �
   carrier := {x | SuppIn (inU lev) x ∧ Deg j x ∧ bd (allT n) E x = 0}
   add_mem' := by
     rintro x y ⟨h1, h2, h3⟩ ⟨g1, g2, g3⟩
-    refine ⟨fun A hA i hi => ?_, fun A hA => ?_, by rw [map_add, h3, g3, add_zero]⟩
+    refine ⟨fun A hA i hi => ?_, fun A hA => ?_, by rw [map_add (f := _), h3, g3, add_zero]⟩
     · by_cases hx : x A = 0
       · have hy : y A ≠ 0 := fun hy => hA (by simp [hx, hy])
         exact g1 A hy i hi

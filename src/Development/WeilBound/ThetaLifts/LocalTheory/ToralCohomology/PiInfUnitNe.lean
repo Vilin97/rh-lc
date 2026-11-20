@@ -72,7 +72,7 @@ theorem ker_stable {ι V : Type} [AddCommGroup V] [Module ℂ V] {r s : ℕ} (L 
     (N N' : Submodule ℂ V) (h : ∀ Y, (∀ w, Y w ∈ upq r s) → ∀ x ∈ N, L Y x ∈ N') (Y) : ∀ x ∈ N, L Y x ∈ N' := by
   choose Y₁ h₁ Y₂ h₂ e using fun w => upq_split (Y w)
   intro x hx
-  rw [show Y = Y₁ + Complex.I • Y₂ from funext e, map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply]
+  rw [show Y = Y₁ + Complex.I • Y₂ from funext e, map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply]
   exact add_mem (h _ h₁ x hx) (N'.smul_mem _ (h _ h₂ x hx))
 
 theorem exists_act {A V M : Type} [AddCommGroup A] [Module ℂ A] [AddCommGroup V] [Module ℂ V] [AddCommGroup M] [Module ℂ M]

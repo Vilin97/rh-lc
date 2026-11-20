@@ -181,7 +181,7 @@ theorem latAt_of_isLab (X₁ : Setup F W i) (ε₁ : Matrix (Fin 8) (Fin 8) ℤ 
     rw [← hχ]
     refine QuotientAddGroup.eq.2 ⟨j.symm v, j.injective ?_⟩
     simp only [nsmulAddMonoidHom_apply] at hv ⊢
-    rw [map_nsmul, j.apply_symm_apply, hv, map_add, map_neg, j.apply_symm_apply]
+    rw [map_nsmul, j.apply_symm_apply, hv, map_add (f := _), map_neg, j.apply_symm_apply]
   have hker : l.yy.ker = H := by
     rw [← hH]
     ext b

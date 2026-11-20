@@ -259,7 +259,7 @@ private theorem spans_setOf_q_le_ten_mul_of_covering {L : Type} [Field L] [Numbe
     have hpar : qR h (toR v) + qR h (t • z + (t • z - toR v)) =
         2 * (t * t * R) + 2 * qR h (t • z - toR v) := by
       rw [← thB_self, ← thB_self, ← thB_self, hRdef]
-      simp only [map_sub, map_add, map_smul, LinearMap.sub_apply, LinearMap.add_apply,
+      simp only [map_sub, map_add (f := _), map_smul, LinearMap.sub_apply, LinearMap.add_apply,
         LinearMap.smul_apply, smul_eq_mul]
       ring
     have := qR_nonneg_of_mem_pos hh (t • z + (t • z - toR v))

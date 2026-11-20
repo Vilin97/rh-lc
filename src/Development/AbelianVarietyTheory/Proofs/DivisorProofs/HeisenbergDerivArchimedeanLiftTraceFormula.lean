@@ -110,11 +110,11 @@ theorem heisD_liftI : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
       ⅟(2 : AF F) * ((fun i => infAd F (t • ζ.1 i)) ⬝ᵥ (fun i => infAd F (t • ζ.2 i))) with hP
     have hAt : At (evI F) P := by
       apply at_of_snd
-      rw [← sndr_apply, hP, map_add, map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct]
+      rw [← sndr_apply, hP, map_add (f := _), map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct]
       simp [dotProduct, Function.comp_def, sndr_infAd]
     rw [hψ.2.2 P hAt, ← evIr_apply]
     congr 3
-    rw [hP, map_add, map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct]
+    rw [hP, map_add (f := _), map_mul, RingHom.map_dotProduct, RingHom.map_dotProduct]
     simp only [Function.comp_def, evIr_infAd, dotProduct]
     have e1 : (∑ i, evIr (x i) * (t • ζ.2 i)) = t • ∑ i, arch F x i * ζ.2 i := by
       rw [Finset.smul_sum]
@@ -126,7 +126,7 @@ theorem heisD_liftI : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
         rw [Finset.smul_sum]
         exact Finset.sum_congr rfl fun i _ => by rw [smul_mul_smul_comm, sq]]
       exact mul_smul_comm _ _ _
-    rw [e1, e2, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
+    rw [e1, e2, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul]
   have hg : HasDerivAt (fun t : ℝ => Complex.exp (-(2 * Real.pi * Complex.I) * ((t * L + t ^ 2 * c0 : ℝ) : ℂ)))
       (-(2 * Real.pi * Complex.I) * (L : ℂ)) 0 := by
     have h1 : HasDerivAt (fun t : ℝ => t * L + t ^ 2 * c0) L 0 := by

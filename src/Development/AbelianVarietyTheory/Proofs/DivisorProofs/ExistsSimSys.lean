@@ -50,7 +50,7 @@ theorem exists_lift (I₁ I₂ : TateIsoO D k Q act e) (n : ℕ) :
     simp only [g, Module.Basis.constr_basis, hf]
   | zero =>
     rw [map_zero, (I₁.ker n hn hc 0).2 ⟨0, (smul_zero _).symm⟩, (I₂.ker n hn hc 0).2 ⟨0, (smul_zero _).symm⟩]
-  | add x y _ _ hx hy => rw [map_add, I₁.add, I₂.add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), I₁.add, I₂.add, hx, hy]
   | smul c x _ hx => rw [map_zsmul, ev_zsmul, ev_zsmul, hx]
 
 theorem exists_mult (I₁ I₂ : TateIsoO D k Q act e) (n : ℕ) :
@@ -126,7 +126,7 @@ theorem exists_simSys : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (N M₁ : ℕ
       obtain ⟨a, ha⟩ := (utow n 2 hn two_pos hc2).dvd
       obtain ⟨c, hcc⟩ := h
       rw [hz, hw] at hcc
-      simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul] at hcc
+      simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul] at hcc
       push_cast at hcc
       refine ⟨c - D.EF (g n x) w - D.EF z (g n y) - n * D.EF z w - a * D.EF x y, ?_⟩
       have h2 : (2 : ℤ) ≠ 0 := two_ne_zero

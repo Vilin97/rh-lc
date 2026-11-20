@@ -108,7 +108,7 @@ def thR (hω : IsWeilDatumO ψ V W χV χW ω) (h1 : μ 𝓕 = 1) {M : DSModel W
   map_update_add' m ρ x y := by
     funext g
     simp only [Pi.add_apply]
-    rw [J.map_update_add, map_add]
+    rw [J.map_update_add, map_add (f := _)]
     exact thetaInner_add_right hω.std h1 hf (hω.om_pres _ _ (hJ _)) (hω.om_pres _ _ (hJ _))
   map_update_smul' m ρ a x := by
     funext g

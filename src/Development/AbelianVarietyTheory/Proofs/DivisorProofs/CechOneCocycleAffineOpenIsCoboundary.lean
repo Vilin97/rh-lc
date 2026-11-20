@@ -21,8 +21,8 @@ theorem cech_one_cocycle_split : ∀ (X : Scheme.{0}) (U : X.Opens), IsAffineOpe
       have h : rs X inf_le_left (f a b) + rs X (le_inf (inf_le_left.trans inf_le_right) inf_le_right) (f b d) =
         rs X (le_inf (inf_le_left.trans inf_le_left) inf_le_right : W a ⊓ W b ⊓ W d ≤ W a ⊓ W d) (f a d) := hf a b d
       have h := congrArg (rs X (le_inf (le_inf ha hb) hd)) h
-      simp only [map_add, rs_rs] at h
-      rw [map_add, GlobalTheory.AbLaw.SecOn.chart_restrict hM PUnit.unit le_top,
+      simp only [map_add (f := _), rs_rs] at h
+      rw [map_add (f := _), GlobalTheory.AbLaw.SecOn.chart_restrict hM PUnit.unit le_top,
         GlobalTheory.AbLaw.SecOn.chart_restrict hM PUnit.unit le_top,
         GlobalTheory.AbLaw.SecOn.chart_restrict hM PUnit.unit le_top]
       simpa only [LinearEquiv.apply_symm_apply] using h)

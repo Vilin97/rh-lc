@@ -43,7 +43,7 @@ theorem conj_halfIntegralGenerator (H : ReciprocityTheory.ChartRestriction.G.Geo
     exact this
   have h3 : (2 : E) * IsCMField.complexConj E (H.w0 : E) = 1 - (H.rt : E) := by
     have := congrArg (IsCMField.complexConj E) h2
-    rw [map_mul, map_add, map_one, complexConj_rt] at this
+    rw [map_mul, map_add (f := _), map_one, complexConj_rt] at this
     have h22 : IsCMField.complexConj E (2 : E) = 2 := map_ofNat _ 2
     rw [h22] at this
     rw [this]; ring

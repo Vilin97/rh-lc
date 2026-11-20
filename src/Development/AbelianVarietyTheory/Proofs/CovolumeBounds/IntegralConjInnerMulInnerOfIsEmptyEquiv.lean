@@ -280,7 +280,7 @@ variable {K : Type*} [Group K] [TopologicalSpace K] [IsTopologicalGroup K] [Comp
   add_left u u' v := by
     have hi : ∀ z : V, Integrable (fun k => ⟪e (ρ k z), e (ρ k v)⟫_𝕜) (haarProb K) := fun z =>
       integrable_of_continuous_of_compactSpace _ ((hc z).inner (hc v))
-    simp only [map_add, inner_add_left]
+    simp only [map_add (f := _), inner_add_left]
     exact integral_add (hi u) (hi u')
   smul_left u v r := by
     simp only [map_smul, inner_smul_left, integral_const_mul]

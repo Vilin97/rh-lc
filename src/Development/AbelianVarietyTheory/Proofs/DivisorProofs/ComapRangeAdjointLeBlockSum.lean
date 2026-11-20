@@ -82,7 +82,7 @@ theorem comap_eigSum_le {I : Type} [FiniteDimensional K V] [FiniteDimensional �
     ((Col.isCompl_eigSum hc hs C).sup_eq_top ▸ (Submodule.mem_top : v ∈ (⊤ : Submodule K V)))
   have h3 : j c ∈ Col.eigSum U fun y => CC y ∨ ∃ x, C x ∧ y = fun i => σ (x i) := by
     rw [Col.eigSum_or]
-    have : j c = j (a + c) - j a := by rw [map_add]; abel
+    have : j c = j (a + c) - j a := by rw [map_add (f := _)]; abel
     rw [this]
     exact Submodule.sub_mem _ (Submodule.mem_sup_left hv) (Submodule.mem_sup_right (h2 _ ha))
   have h4 : Disjoint (Col.eigSum U fun y => CC y ∨ ∃ x, C x ∧ y = fun i => σ (x i))

@@ -60,7 +60,7 @@ theorem span_wInf (lam : InfinitePlace E → DomWeight n) :
     change cEmb v.embedding x = _ at h1
     change GlobalTheory.Branching.sqRep ℂ n (lam v) (cEmb v.embedding x) = GlobalTheory.Branching.sqRep ℂ n (lam v) _
     rw [h1]
-  | add a b ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
 
 end GlobalTheory.BCT.TrKer
 

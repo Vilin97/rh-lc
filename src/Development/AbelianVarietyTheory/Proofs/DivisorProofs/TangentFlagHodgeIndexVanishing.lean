@@ -33,7 +33,7 @@ theorem exists_mem_Fil_corr (P : AbelianDeRham) {T : Type} [CommRing T] [Algebra
   haveI : Module.Projective T (primDR C) := (P.1.prim hC gC).2.1
   let l : primDR C →ₗ[T] R :=
     { toFun c := f ((bcMor h).pull c)
-      map_add' := fun a b => by rw [map_add, map_add]
+      map_add' := fun a b => by rw [map_add (f := _), map_add (f := _)]
       map_smul' := fun a b => by rw [LinearMap.map_smulₛₗ, map_smul, smul_eq_mul, RingHom.id_apply, Algebra.smul_def] }
   obtain ⟨d₀, hd₀⟩ := Module.projective_lifting_property (Algebra.linearMap T R) l su
   have e₀ : ∀ c, algebraMap T R (d₀ c) = f ((bcMor h).pull c) := fun c => LinearMap.congr_fun hd₀ c
@@ -45,7 +45,7 @@ theorem exists_mem_Fil_corr (P : AbelianDeRham) {T : Type} [CommRing T] [Algebra
   have p1 : ∀ c, c - p c ∈ PrimitiveSubmodule C := fun c => by
     obtain ⟨a, b, rfl, -⟩ := Submodule.existsUnique_add_of_isCompl hN c
     have e : p b = b := congrArg N.subtype (Submodule.linearProjOfIsCompl_apply_left hN.symm b)
-    rw [map_add, p0 a a.2, e, zero_add, add_sub_cancel_right]
+    rw [map_add (f := _), p0 a a.2, e, zero_add, add_sub_cancel_right]
     exact a.2
   refine ⟨d₀ ∘ₗ p, (Submodule.mem_dualAnnihilator _).2 fun c hc => ?_, fun c => ?_⟩
   · rw [LinearMap.comp_apply, p0 c hc, map_zero]
@@ -98,7 +98,7 @@ theorem exists_isFilLift_dir (P : AbelianDeRham) {ι : Type} [Fintype ι] {C : O
     exact ((congrArg f k2).trans (ed e)).symm
   let gs : ι → HdR A := fun k =>
     { toFun c := (D (cst.pull c)).snd k
-      map_add' := fun a b => by rw [LinearMap.map_add, LinearMap.map_add]; rfl
+      map_add' := fun a b => by rw [LinearMap.map_add (f := _), LinearMap.map_add (f := _)]; rfl
       map_smul' := fun a b => by
         rw [LinearMap.map_smulₛₗ, map_smul]
         simp [TrivSqZeroExt.algebraMap_eq_inl] }

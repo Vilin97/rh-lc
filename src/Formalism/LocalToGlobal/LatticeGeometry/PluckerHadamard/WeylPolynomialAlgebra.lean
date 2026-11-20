@@ -170,7 +170,7 @@ theorem linRoot_nuT (t : Ψ × Fin N × Fin N) : Formalism.DegreeFormula.linRoot
 theorem linRoot_add (l1 l2 : Ψ → Fin N → ℝ) :
     Formalism.DegreeFormula.linRoot (l1 + l2) = Formalism.DegreeFormula.linRoot l1 + Formalism.DegreeFormula.linRoot l2 := by
   unfold Formalism.DegreeFormula.linRoot
-  simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib, neg_add]
+  simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, neg_add]
 
 theorem linRoot_sum {α : Type*} (s : Finset α) (l : α → Ψ → Fin N → ℝ) :
     Formalism.DegreeFormula.linRoot (∑ a ∈ s, l a) = ∑ a ∈ s, Formalism.DegreeFormula.linRoot (l a) := by

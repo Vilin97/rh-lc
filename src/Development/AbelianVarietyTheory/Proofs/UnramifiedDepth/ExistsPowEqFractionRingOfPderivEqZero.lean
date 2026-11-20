@@ -52,7 +52,7 @@ theorem derivation_mem_pow_smul_top {R A M : Type} [CommRing R] [CommRing A] [Al
       rw [pow_succ', ← smul_eq_mul, Submodule.smul_assoc]
       exact Submodule.smul_mem_smul hy (ih x hx)
     · intro x y hx hy
-      rw [map_add]; exact add_mem hx hy
+      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 theorem derivation_algebraMap_perfect {k K : Type} [Field k] [PerfectField k] (p : ℕ)
     [Fact p.Prime] [CharP k p] [Field K] [Algebra k K] (D : Derivation ℤ K K) (c : k) :
@@ -70,7 +70,7 @@ theorem derivation_eq_zero_of_kaehler {k A K : Type} [Field k] [PerfectField k] 
     D (algebraMap A K f) = 0 := by
   let L : A →ₗ[k] K :=
     { toFun := fun a => D (algebraMap A K a)
-      map_add' := fun a b => by rw [map_add, map_add]
+      map_add' := fun a b => by rw [map_add (f := _), map_add (f := _)]
       map_smul' := fun c a => by
         rw [Algebra.smul_def, map_mul, Derivation.leibniz,
           ← IsScalarTower.algebraMap_apply, derivation_algebraMap_perfect p D c, smul_zero,

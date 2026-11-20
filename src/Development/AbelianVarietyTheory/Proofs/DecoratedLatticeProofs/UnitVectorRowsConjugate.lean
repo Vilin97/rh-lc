@@ -36,7 +36,7 @@ theorem tprod_eq_smul_of_prod_inner {ι : Type} [Fintype ι] {E : ι → Type*} 
     | smul_tprod r x =>
       rw [hw, map_smul, LinearMap.smul_apply, map_sub, map_smulₛₗ, ipT_tprod, ipT_tprod, h x]
       simp
-    | add x y hx hy => rw [map_add, LinearMap.add_apply, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), LinearMap.add_apply, hx, hy, add_zero]
   by_contra hne
   have := ipT_pos w (sub_ne_zero.2 hne)
   rw [hy w] at this

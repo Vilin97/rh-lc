@@ -24,7 +24,7 @@ def locAt (Ω : Type) [Field Ω] [Algebra R Ω] (𝔮 : Ideal R) [h : 𝔮.IsPri
   add_mem' := by
     rintro a b ⟨u, v, hv, e⟩ ⟨u', v', hv', e'⟩
     refine ⟨u * v' + u' * v, v * v', fun hh => (h.mem_or_mem hh).elim hv hv', ?_⟩
-    rw [map_add, map_mul, map_mul, map_mul, ← e, ← e']; ring
+    rw [map_add (f := _), map_mul, map_mul, map_mul, ← e, ← e']; ring
   algebraMap_mem' := fun r => ⟨r, 1, (Ideal.ne_top_iff_one 𝔮).1 h.ne_top, by simp⟩
 
 theorem inv_mem (hinj : Function.Injective (algebraMap R Ω)) (𝔮 : Ideal R) [h : 𝔮.IsPrime] {v : R} (hv : v ∉ 𝔮) :

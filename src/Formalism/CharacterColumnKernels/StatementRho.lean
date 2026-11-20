@@ -13,7 +13,7 @@ variable {O : Type*} [CommRing O] {G : Type*} [Group G] {M : Type*} [AddCommGrou
 def coZ1s (ρ : Representation O G M) : Submodule O (G → M) where
   carrier := {c | ∀ g h, c (g * h) = c g + ρ g (c h)}
   add_mem' {a b} ha hb g h := by
-    simp only [Pi.add_apply, ha g h, hb g h, map_add]; abel
+    simp only [Pi.add_apply, ha g h, hb g h, map_add (f := _)]; abel
   zero_mem' g h := by simp
   smul_mem' r c hc g h := by
     simp only [Pi.smul_apply, hc g h, smul_add, map_smul]

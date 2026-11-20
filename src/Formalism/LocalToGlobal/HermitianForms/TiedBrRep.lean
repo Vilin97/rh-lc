@@ -19,7 +19,7 @@ theorem eval_blkRow (K : ι → Matrix (Fin n) (Fin n) ℂ) (x : ι × Fin n × 
   unfold blkRow
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp => simp only [map_mul, hp, aeval_X, map_sum, eval_C, eval_X]
 
 theorem blkRow_rename (K : ι → Matrix (Fin n) (Fin n) ℂ) (τ : ι) (f : MvPolynomial (Fin n × Fin n) ℂ) :
@@ -43,7 +43,7 @@ theorem blkRow_mem (K : ι → Matrix (Fin n) (Fin n) ℂ) (lam : ι → DomWeig
     rw [map_prod]
     exact Finset.prod_congr rfl fun τ _ => blkRow_rename K τ (f τ)
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 theorem fnOf_change (G : ι → Matrix (Fin n) (Fin n) ℂ) (s : ι → ℤ) (M M' : ι → Matrix (Fin n) (Fin n) ℂ)

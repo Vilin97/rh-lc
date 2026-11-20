@@ -33,7 +33,7 @@ theorem val_add_le {c : ℕ} {ϖ x y : k}
 theorem red_add {ϖ : k} (h0 : ϖ ≠ 0) {c : ℕ} {x y : k}
     (hx : valuation k x ≤ valuation k (ϖ ^ c)) (hy : valuation k y ≤ valuation k (ϖ ^ c)) :
     red ϖ c (x + y) = red ϖ c x + red ϖ c y := by
-  rw [red_of_le h0 hx, red_of_le h0 hy, red_of_le h0 (val_add_le hx hy), ← map_add]
+  rw [red_of_le h0 hx, red_of_le h0 hy, red_of_le h0 (val_add_le hx hy), ← map_add (f := _)]
   congr 1
   apply Subtype.ext
   simp [add_mul]

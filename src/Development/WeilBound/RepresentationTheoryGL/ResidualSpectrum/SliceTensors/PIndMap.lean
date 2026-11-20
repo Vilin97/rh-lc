@@ -47,7 +47,7 @@ theorem indMap_holds : IndMap := by
     { toFun := fun φ => ⟨ind f₁ f₂ (T φ.1).1, ind_mem_Sm H (hI _ φ.2) (hK _ φ.2)⟩
       map_add' := fun φ ψ => Subtype.ext (by
         change ind f₁ f₂ (T (φ.1 + ψ.1)).1 = ind f₁ f₂ (T φ.1).1 + ind f₁ f₂ (T ψ.1).1
-        rw [map_add, Submodule.coe_add, map_add])
+        rw [map_add (f := _), Submodule.coe_add, map_add (f := _)])
       map_smul' := fun c φ => Subtype.ext (by
         change ind f₁ f₂ (T (c • φ.1)).1 = c • ind f₁ f₂ (T φ.1).1
         rw [map_smul, Submodule.coe_smul, map_smul]) }

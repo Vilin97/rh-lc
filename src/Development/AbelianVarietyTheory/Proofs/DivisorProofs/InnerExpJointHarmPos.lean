@@ -72,7 +72,7 @@ theorem intertwine (h0 : u 0 = ι) (han : ∀ P, AnalyticOnNhd ℝ (fun t => u t
       have := LinearMap.congr_fun hB P
       simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.smul_apply] at this
       rw [← this]; abel
-    rw [e, map_add, map_smul, inner_add_right, inner_smul_right]
+    rw [e, map_add (f := _), map_smul, inner_add_right, inner_smul_right]
     push_cast
     ring
   · simp [h0, hadj]
@@ -98,7 +98,7 @@ theorem odd_coeff (h0 : u 0 = ι) (han : ∀ P, AnalyticOnNhd ℝ (fun t => u t 
     have : (2 * ν : ℂ) • (S - K) = (-2 * ν : ℂ) • K - (-2 * ν : ℂ) • S := by module
     rw [this, mul_sub, sub_mul, ← hS, ← hK]; abel)
     (fun x y => by simp [aS, aK]) Q P t
-  simp only [LinearMap.add_apply, LinearMap.sub_apply, LinearMap.neg_apply, map_add, map_sub,
+  simp only [LinearMap.add_apply, LinearMap.sub_apply, LinearMap.neg_apply, map_add (f := _), map_sub,
     map_neg, inner_add_left, inner_add_right, inner_sub_left, inner_sub_right, inner_neg_left,
     ← hQ, ← hP, neg_zero, zero_mul, Real.exp_zero, Complex.ofReal_one, one_mul] at e1 e2 e3
   have hc : (1 + Real.cosh (2 * ν * t)) ≠ 0 := by

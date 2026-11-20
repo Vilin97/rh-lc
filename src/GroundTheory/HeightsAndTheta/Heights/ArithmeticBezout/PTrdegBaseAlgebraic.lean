@@ -48,7 +48,7 @@ theorem TrdegBaseAlgebraic.proof : TrdegBaseAlgebraic.Statement := by
       rw [this]
       exact C.algebraMap_mem _
     | add r s _ _ hr hs =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact C.add_mem hr hs
     | mul r s _ _ hr hs =>
       rw [map_mul]

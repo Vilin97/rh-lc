@@ -115,7 +115,7 @@ lemma t_res {V W : Y.Opens} (hV : V ≤ ι.opensRange) (h : W ≤ V) (s : Γ(F, 
 lemma t_add {V : Y.Opens} (hV : V ≤ ι.opensRange) (a b : Γ(F, V)) :
     t V hV (a + b) = t V hV a + t V hV b := by
   apply hinj V hV
-  rw [map_add, ht, ht, ht, map_add, map_add]
+  rw [map_add (f := _), ht, ht, ht, map_add (f := _), map_add (f := _)]
 
 lemma t_zero {V : Y.Opens} (hV : V ≤ ι.opensRange) : t V hV 0 = 0 := by
   apply hinj V hV

@@ -56,7 +56,7 @@ theorem exists_stepData (h : IsCMExt F E σ) {M : ℕ} {J : Matrix (Fin (M + 1))
     obtain ⟨t, p, hp, -⟩ := exists_proj (σ : E →+* E) J (x 0) hx.isUnit (LinearMap.ker φ) fun _ => Iff.rfl
     have h5 : ∀ z, Formalism.UG.hform (σ : E →+* E) J z y = 0 := fun z => by
       have : hfLin (σ : E →+* E) J y z = 0 := by
-        rw [hp z, map_add, map_smul, h3, h4, smul_zero, add_zero]
+        rw [hp z, map_add (f := _), map_smul, h3, h4, smul_zero, add_zero]
       exact (herm _ _).symm.trans ((congrArg _ this).trans (map_zero _))
     have h6 : J *ᵥ (y : Fin (M + 1) → E) = 0 := funext fun i => by
       have := h5 (Pi.single i 1)

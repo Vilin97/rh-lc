@@ -156,7 +156,7 @@ theorem exists_betaB_mul_eq [hVp : V.IsPrime] (hε : Function.Surjective ε)
       add_mem' := by
         rintro _ _ ⟨F₁, t₁, h₁, e₁⟩ ⟨F₂, t₂, h₂, e₂⟩
         refine ⟨F₁ * t₂ + F₂ * t₁, t₁ * t₂, fun h ↦ (hVp.mem_or_mem h).elim h₁ h₂, ?_⟩
-        rw [map_add, map_mul, map_mul, map_mul, ← e₁, ← e₂]
+        rw [map_add (f := _), map_mul, map_mul, map_mul, ← e₁, ← e₂]
         ring
       zero_mem' := ⟨0, 1, h1, by simp⟩
       neg_mem' := by
@@ -186,7 +186,7 @@ theorem exists_betaB_mul_eq [hVp : V.IsPrime] (hε : Function.Surjective ε)
       rw [eq_intCast C z, map_intCast, map_intCast]
       exact intCast_mem S z
     | add p q hp hq =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact S.add_mem hp hq
     | mul_X p q hp =>
       rw [map_mul, map_mul]
@@ -198,7 +198,7 @@ theorem exists_betaB_mul_eq [hVp : V.IsPrime] (hε : Function.Surjective ε)
       obtain ⟨F, rfl⟩ := hε o
       exact hρ F
     | add p q hp hq =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact S.add_mem hp hq
     | mul_X p k hp =>
       rw [map_mul]

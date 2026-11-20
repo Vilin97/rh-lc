@@ -34,7 +34,7 @@ theorem theta_add {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (om : Rep σ X W)
     {Φ₁ Φ₂ : (Fin n × Fin d → AF F) → ℂ} (h₁ : Φ₁ ∈ schA F (Fin n × Fin d)) (h₂ : Φ₂ ∈ schA F (Fin n × Fin d))
     (g : UA σ X.J) (h : UA σ W.J) : theta om (Φ₁ + Φ₂) g h = theta om Φ₁ g h + theta om Φ₂ g h := by
   unfold theta thetaSum
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (summable_of_mem_schA F (hpres _ _ h₁)).tsum_add (summable_of_mem_schA F (hpres _ _ h₂))
 
 theorem theta_smul {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (om : Rep σ X W) (c : ℂ)

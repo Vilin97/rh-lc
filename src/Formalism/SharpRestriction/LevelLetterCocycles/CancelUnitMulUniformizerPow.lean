@@ -334,7 +334,7 @@ theorem e_tf [NeZero n] [IsDomain O] (hinj : Function.Injective (algebraMap O LL
     | add t₁ t₂ h₁ h₂ =>
       obtain ⟨ζ₁, h₁⟩ := h₁
       obtain ⟨ζ₂, h₂⟩ := h₂
-      exact ⟨ζ₁ + ζ₂, by rw [map_add, h₁, h₂, add_smul]⟩
+      exact ⟨ζ₁ + ζ₂, by rw [map_add (f := _), h₁, h₂, add_smul]⟩
   haveI : Nontrivial W.EE := W.EE_inj.nontrivial
   obtain ⟨hfree, hrank⟩ := W.DD_free W.one
   rw [finrank_one_lat W hinj] at hrank
@@ -387,8 +387,8 @@ theorem pp_pull [NeZero n] [IsDomain O] (hinj : Function.Injective (algebraMap O
       (W.φA ^ e') g • u - θ • ((W.φD Y) ^ e') y = W.map ι v := by
     refine Relay2.Pp_ind W Y c e' _ ⟨0, 0, (Pp W T₂ c e').zero_mem, by simp, by simp⟩ ?_ ?_ ?_
     · rintro u₁ u₂ ⟨θ₁, v₁, hv₁, h₁, e₁⟩ ⟨θ₂, v₂, hv₂, h₂, e₂⟩
-      refine ⟨θ₁ + θ₂, v₁ + v₂, (Pp W T₂ c e').add_mem hv₁ hv₂, by rw [map_add, h₁, h₂, add_smul], ?_⟩
-      rw [map_add, ← e₁, ← e₂, smul_add, add_smul]
+      refine ⟨θ₁ + θ₂, v₁ + v₂, (Pp W T₂ c e').add_mem hv₁ hv₂, by rw [map_add (f := _), h₁, h₂, add_smul], ?_⟩
+      rw [map_add (f := _), ← e₁, ← e₂, smul_add, add_smul]
       abel
     · rintro u ⟨θ, v, hv, h, e₁⟩
       refine ⟨-θ, -v, (Pp W T₂ c e').neg_mem hv, by rw [map_neg, h, neg_smul], ?_⟩

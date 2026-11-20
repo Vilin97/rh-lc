@@ -82,7 +82,7 @@ theorem first_cohomology_vanishes_descent (f : Y ⟶ X) (M : LB X) (G : Type) [G
     (fun a b => pb f (pre_inf f (V a) (V b)) (φ a b)) (fun a b d => by
       have h := congrArg (pb f (U := V a ⊓ V b ⊓ V d) (W := f ⁻¹ᵁ V a ⊓ f ⁻¹ᵁ V b ⊓ f ⁻¹ᵁ V d)
         ((inf_le_inf_right _ (pre_inf f _ _)).trans (pre_inf f _ _))) (hφ a b d)
-      simp only [map_add, map_mul, pb_rs] at h
+      simp only [map_add (f := _), map_mul, pb_rs] at h
       simp only [rs_pb, rs_pull_g]
       exact h)
   have hχ : ∀ a, ∃ χ : Γ(X, V a), pb f le_rfl χ = ∑ y, pb (τ y) (inv y (V a)) (ψ a) := fun a => by

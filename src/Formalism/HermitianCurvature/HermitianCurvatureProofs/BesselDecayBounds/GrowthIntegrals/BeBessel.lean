@@ -32,7 +32,7 @@ theorem bessel_on (z : Fin (2 * r + k + 1) → ℂ) (c : ℂ) (π : Mx k r → (
       congr 1
       funext p
       unfold beF
-      rw [map_add, inner_add_right, add_mul, add_smul]
+      rw [map_add (f := _), inner_add_right, add_mul, add_smul]
     rw [e]
     rfl
   · show be z c π μW μN σ (a • w) v ξ = a • be z c π μW μN σ w v ξ

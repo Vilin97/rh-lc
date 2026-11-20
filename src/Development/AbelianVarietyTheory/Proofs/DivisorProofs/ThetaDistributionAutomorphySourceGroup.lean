@@ -355,7 +355,7 @@ theorem swap_inf {θ : InfFam D} (hθ : IsInfFam θ) {om : GA D S × GA D T →*
         have h2 : (cplxO (sS τ)ᵀ (sT τ)ᵀ z)ᵀ = cplxO (sT τ) (sS τ) zᵀ := by
           rw [cplxO, cplxO, Matrix.transpose_smul, Matrix.transpose_mul, Matrix.transpose_mul, Matrix.transpose_transpose,
             Matrix.transpose_transpose, Matrix.mul_assoc]
-        rw [annih, map_add, map_smul, map_zero] at h1
+        rw [annih, map_add (f := _), map_smul, map_zero] at h1
         rw [annih, dRho_tr ψ S T ΛS ΛT hS hT hθ, dRho_tr ψ S T ΛS ΛT hS hT hθ, h2]
         exact h1)
     rw [swapOm_apply, this, map_smul, trF_trF]

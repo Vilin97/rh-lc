@@ -68,7 +68,7 @@ theorem rd_eOp {D : D7} {c : NChoice D} {w : D.what₂.places.Pl} (ht : NChTie D
     intro t
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add u v hu hv => rw [map_add, hu, hv, ← Finset.sum_add_distrib]; simp only [map_add, smul_add]
+    | add u v hu hv => rw [map_add (f := _), hu, hv, ← Finset.sum_add_distrib]; simp only [map_add (f := _), smul_add]
     | tmul a m =>
       have h1 : GlobalTheory.IndefiniteRowSideFullHecke.ToricLatticeDenominators.eExt D.nexp (c.twI w) j (c.sd w) (c.Oe w) (a ⊗ₜ m) =
           a ⊗ₜ[D.ntw.O (c.twI w)] GlobalTheory.IndefiniteRowSideFullHecke.ToricLatticeDenominators.eOp D.nexp (c.twI w) j (c.sd w) m := rfl

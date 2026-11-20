@@ -110,7 +110,7 @@ theorem delta_exists : ∀ (R : Ranks) (H : Formalism.BasicNotions.Host R) (p : 
         obtain ⟨s, t, hst⟩ : IsCoprime ((a : ℕ) : 𝓞 H.E) ((p : ℕ) : 𝓞 H.E) := Nat.Coprime.cast ha
         have h0 : Ideal.Quotient.mk w.asIdeal ((p : ℕ) : 𝓞 H.E) = 0 := Ideal.Quotient.eq_zero_iff_mem.2 (hov w hw)
         have h1 := congrArg (Ideal.Quotient.mk w.asIdeal) hst
-        rw [map_add, map_mul, map_mul, h0, mul_zero, add_zero, map_one] at h1
+        rw [map_add (f := _), map_mul, map_mul, h0, mul_zero, add_zero, map_one] at h1
         exact IsUnit.of_mul_eq_one_right _ h1
       exact ⟨hu.unit, hu.unit_spec, hθ1 w (hov w hw) a ha _ hu.unit_spec⟩)
   obtain ⟨χ, -, ht, hi, htame, hunr, -, hord⟩ :=

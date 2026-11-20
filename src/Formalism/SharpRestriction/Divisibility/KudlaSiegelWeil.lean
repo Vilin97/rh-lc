@@ -155,7 +155,7 @@ private theorem exists_sqrt_two_E {φ : Formalism.HC.Frame} (H : Formalism.HC.Ho
     have h3 : τ (H.cycZeta ^ k) = H.cycZeta ^ k ∨ τ (H.cycZeta ^ k) = (H.cycZeta ^ k)⁻¹ :=
       fix_or_inv H (τ.restrictScalars ℚ) (fun x => τ.commutes x) _ hζ.pow_eq_one
     generalize H.cycZeta ^ k = z at h3 ⊢
-    rw [thP, map_add, map_inv₀, map_pow]
+    rw [thP, map_add (f := _), map_inv₀, map_pow]
     rcases h3 with h | h
     · rw [h]
     · rw [h, inv_pow, inv_inv, add_comm])
@@ -343,7 +343,7 @@ theorem not_fixed_splitK (D : D7) (w : FinE D) (p : ℕ) (hpp : p.Prime) (hp2 : 
   have hswap : ∀ y, y ∈ w.asIdeal → sgO D y ∈ w.asIdeal := by
     intro y hy; rw [← hfix] at hy; exact hy
   have hσ1 : sgO D ((x : 𝓞 D.host.E) + β) = (x : 𝓞 D.host.E) - β := by
-    rw [map_add, map_intCast, hσβ]; ring
+    rw [map_add (f := _), map_intCast, hσβ]; ring
   have hσ2 : sgO D ((x : 𝓞 D.host.E) - β) = (x : 𝓞 D.host.E) + β := by
     rw [map_sub, map_intCast, hσβ]; ring
   have hboth : (x : 𝓞 D.host.E) + β ∈ w.asIdeal ∧ (x : 𝓞 D.host.E) - β ∈ w.asIdeal := by

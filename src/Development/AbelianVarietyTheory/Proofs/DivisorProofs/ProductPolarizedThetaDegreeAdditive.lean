@@ -140,7 +140,7 @@ theorem form_add (π₁ : P.A ⟶ P₁.A) (π₂ : P.A ⟶ P₂.A) [IsMonHom π�
       (a : dUnit P₁.A k₁ f = resM _ le s) (b : dUnit P₂.A k₂ g = resM _ le t) :
       resM _ le ((omegaMap π₁).app V s + (omegaMap π₂).app V t) =
         dUnit P.A kW (π₁.left.appLE W₁ W inf_le_left f + π₂.left.appLE W₂ W inf_le_right g) := by
-    rw [map_add, map_add, ← Twist.app_resM, ← Twist.app_resM, ← a, ← b,
+    rw [map_add (f := _), map_add (f := _), ← Twist.app_resM, ← Twist.app_resM, ← a, ← b,
       LieVB.omegaMap_dUnit π₁ k₁ kW inf_le_left, LieVB.omegaMap_dUnit π₂ k₂ kW inf_le_right]
   obtain ⟨d⟩ := (H σ y).1
   obtain ⟨d₁⟩ := (H₁ σ y).1

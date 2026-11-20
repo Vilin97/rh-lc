@@ -56,7 +56,7 @@ theorem evalK_apply (ε : Fin n → Bool) (Q : MvPolynomial (Fin n × Fin n) ℂ
     evalK ε Q x = MvPolynomial.aeval (fun p : Fin n × Fin n => toMK x p.1 p.2) Q := by
   induction Q using MvPolynomial.induction_on
   next a => simp [evalK]
-  next p q hp hq => rw [map_add, map_add, Pi.add_apply, hp, hq]
+  next p q hp hq => rw [map_add (f := _), map_add (f := _), Pi.add_apply, hp, hq]
   next p i hp =>
     rw [map_mul, map_mul, Pi.mul_apply, hp]
     simp [evalK]
@@ -143,7 +143,7 @@ theorem differentiable_aeval_entries (Q : MvPolynomial (Fin n × Fin n) ℂ) :
   induction Q using MvPolynomial.induction_on
   next a => simp
   next p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   next p i hp =>
     have hX : Differentiable ℂ (fun M : Matrix (Fin n) (Fin n) ℂ => M i.1 i.2) := by

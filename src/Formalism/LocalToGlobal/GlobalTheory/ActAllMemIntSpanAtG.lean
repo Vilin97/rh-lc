@@ -99,7 +99,7 @@ private theorem map_subtype_mem_wO_of_mem_weyl {n : ℕ} (ν : Fin n → ℕ) (p
     rw [map_zero]
     exact Submodule.zero_mem _
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   | smul c x _ hx =>
     have h := Submodule.smul_mem (wO O n ν) c hx
@@ -141,7 +141,7 @@ theorem wO_stable [IsLocalRing O] {n : ℕ} (ν : Fin n → ℕ) (g : Matrix (Fi
     rw [map_zero]
     exact Submodule.zero_mem _
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   | smul c x _ hx =>
     rw [Subring.smul_def, map_smul]
@@ -214,7 +214,7 @@ theorem ten_mem {F : Tau → MvPolynomial (Fin n × Fin n) LL}
       rw [map_zero]
       exact Submodule.zero_mem _
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
     | smul c x _ hx =>
       rw [Subring.smul_def, map_smul]
@@ -283,7 +283,7 @@ theorem actAll_mem_intSpanAtG (k : Tau → Matrix (Fin n) (Fin n) (intW Pl w))
     exact zero_mem _
   | add x y _ _ hx hy =>
     unfold Formalism.MainNotions.flipTwoThree.actAll at hx hy ⊢
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     exact add_mem hx hy
   | neg x _ hx =>
     unfold Formalism.MainNotions.flipTwoThree.actAll at hx ⊢

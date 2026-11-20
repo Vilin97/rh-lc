@@ -44,7 +44,7 @@ theorem xe_position_ne {i i' : Fin j} (h : i' ≠ i) (χ : D.X) : pD.xe (interse
   rw [xe_position, Pi.single_eq_of_ne h]
 
 theorem position_add (i : Fin j) (χ χ' : D.X) : intersection_update_fsHerm_neg_one pD i (χ + χ') = intersection_update_fsHerm_neg_one pD i χ + intersection_update_fsHerm_neg_one pD i χ' := by
-  rw [intersection_update_fsHerm_neg_one, Pi.single_add, map_add]; rfl
+  rw [intersection_update_fsHerm_neg_one, Pi.single_add, map_add (f := _)]; rfl
 
 theorem position_zero (i : Fin j) : intersection_update_fsHerm_neg_one pD i 0 = 0 := by
   rw [intersection_update_fsHerm_neg_one, Pi.single_zero, map_zero]

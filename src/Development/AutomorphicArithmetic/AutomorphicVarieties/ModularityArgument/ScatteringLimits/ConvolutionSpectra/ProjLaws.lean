@@ -27,7 +27,7 @@ private theorem one' (s t : Set ℝ) (hs : MeasurableSet s) (ht : MeasurableSet 
     rw [P_app, M.J.norm_map, one_mul]
     exact (c4 _).trans_eq (M.J.symm.norm_map h)
   · ext h
-    simp only [P_app, c3 hd, ContinuousLinearMap.add_apply, map_add]
+    simp only [P_app, c3 hd, ContinuousLinearMap.add_apply, map_add (f := _)]
   · ext h
     obtain ⟨u, rfl⟩ := M.J.surjective h
     simp only [ContinuousLinearMap.comp_apply, P_app, M.J.symm_apply_apply, M.hJ]

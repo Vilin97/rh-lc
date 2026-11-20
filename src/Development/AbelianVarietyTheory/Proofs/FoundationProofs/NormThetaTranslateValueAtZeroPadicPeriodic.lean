@@ -68,7 +68,7 @@ theorem cval_norm_periodic : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (cc : Ideal (
       hE, ← Complex.exp_add, mul_assoc (ψ * s t), ← Complex.exp_add]
     congr 1
     congr 1
-    simp only [map_add]
+    simp only [map_add (f := _)]
     ring
   have hroot : (ψ * E) ^ (2 * m) = 1 := by
     have hψ2 : ψ ^ 2 = 1 := by rw [hψ]; split_ifs <;> norm_num

@@ -257,7 +257,7 @@ theorem exists_famUp (hF : Compat φ F) {k : ℕ} (s' : Fam D' F k) :
   refine ⟨⟨s, fun mu β => ?_⟩, hs'⟩
   obtain ⟨mu, rfl⟩ := hD.xe.surjective mu
   obtain ⟨α, rfl⟩ := hD.xe.surjective β
-  have e₁ : hD.xe (α + k • mu) = hD.xe α + k • hD.xe mu := by rw [map_add, map_nsmul]
+  have e₁ : hD.xe (α + k • mu) = hD.xe α + k • hD.xe mu := by rw [map_add (f := _), map_nsmul]
   refine secRel_up hκ hF rfl e₁ ((cPoint_proj hD (T := TF (R := R) F) (T' := TF (R := R') F) (𝟙 _)
     (hF.base.trans (Category.id_comp _).symm) mu).trans (Category.id_comp _)) (trF_eq D' F mu) (trF_eq D F _)
     (hs' _ _ rfl) (hs' _ _ e₁) (fun y J J' hJ hJ' => ?_) (s'.fe mu α)
@@ -312,7 +312,7 @@ theorem phiRel_up (hF : Compat φ F) {k : ℕ} {p : QkPt D F k} {p' : QkPt D' F 
     (ht : ∀ α β, hD.xe α = β → SecUp hD κ (t'.s α) (t.s β)) (H : PhiRel D' F k p' w' s' t') : PhiRel D F k p w s t := by
   intro β
   obtain ⟨α, rfl⟩ := hD.xe.surjective β
-  have e₁ : hD.xe (α + p'.y) = hD.xe α + p.y := by rw [map_add, hy, AddEquiv.apply_symm_apply]
+  have e₁ : hD.xe (α + p'.y) = hD.xe α + p.y := by rw [map_add (f := _), hy, AddEquiv.apply_symm_apply]
   refine secRel_up hκ hF rfl e₁ hg.1 rfl rfl (hs _ _ rfl) (ht _ _ e₁) (fun y J J' hJ hJ' => ?_) (H α)
   have b := pullGt_val hD hg α (𝟙 _) hJ hJ'
   simp only [Category.id_comp] at b

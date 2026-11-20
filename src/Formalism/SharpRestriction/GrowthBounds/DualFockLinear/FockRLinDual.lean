@@ -52,10 +52,10 @@ theorem Lin_chain (N : S → Matrix (Fin k) (Fin k) R) (s : S) (b : Fin k) (h : 
     have h1 : Lin N (C r) = C r := (Lin N).commutes r
     simp [h1]
   | add p q hp hq =>
-    simp only [map_add, hp, hq, smul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hp, hq, smul_add, Finset.sum_add_distrib]
   | mul_X p v hp =>
     rw [map_mul, Derivation.leibniz, hp, hX v]
-    simp only [Derivation.leibniz, map_add, map_mul, smul_add, Finset.sum_add_distrib, smul_eq_mul,
+    simp only [Derivation.leibniz, map_add (f := _), map_mul, smul_add, Finset.sum_add_distrib, smul_eq_mul,
       Finset.mul_sum, Finset.smul_sum]
     congr 1
     · refine Finset.sum_congr rfl fun a _ => ?_
@@ -74,7 +74,7 @@ theorem fockR_Lin (N : S → Matrix (Fin k) (Fin k) R) (P : MvPolynomial (S × F
     rw [h1, C_apply, tsact_monomial_left, tsact_monomial_left, Lin_coeff_zero]
   | add p q hp hq =>
     intro Q
-    rw [map_add, tsact_add_left, tsact_add_left, hp, hq]
+    rw [map_add (f := _), tsact_add_left, tsact_add_left, hp, hq]
   | mul_X p v hp =>
     intro Q
     rw [map_mul, Lin_X, Finset.mul_sum, tsact_sum_left, tsact_X_mul, Lin_chain, tsact_sum_right]

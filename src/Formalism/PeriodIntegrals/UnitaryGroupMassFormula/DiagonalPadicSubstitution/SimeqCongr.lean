@@ -167,7 +167,7 @@ theorem beDiagZp_of (h0 : S0) (h1 : S1) (h2 : SubstOps) (h3 : Ident) (h4 : Cont)
         have H2 := trans' H (add' hN (rfl' (be l ex ph (Xv ()) (Xv ()))))
         have e : MvPowerSeries.C (n : ℂ_[p]) * be l ex ph (Xv ()) (Xv ()) + be l ex ph (Xv ()) (Xv ()) =
             (MvPowerSeries.C ((n + 1 : ℕ) : ℂ_[p]) * be l ex ph (Xv ()) (Xv ()) : MvPowerSeries Unit ℂ_[p]) := by
-          rw [Nat.cast_succ, map_add, map_one, add_mul, one_mul]
+          rw [Nat.cast_succ, map_add (f := _), map_one, add_mul, one_mul]
         rw [e] at H2
         exact H2
   have K4 := h4 p l ex ph hex hl0 (fun n => (K3 n).2)

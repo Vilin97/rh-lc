@@ -84,7 +84,7 @@ private theorem exists_includeLeft_eq_pow_expChar_pow (O R K : Type) [CommRing O
     obtain ⟨n1, r1, h1⟩ := ha
     obtain ⟨n2, r2, h2⟩ := hb
     refine ⟨n1 + n2, r1 ^ q ^ n2 + r2 ^ q ^ n1, ?_⟩
-    rw [map_add, map_pow, map_pow, h1, h2, ← pow_mul, ← pow_mul, ← pow_add, ← pow_add,
+    rw [map_add (f := _), map_pow, map_pow, h1, h2, ← pow_mul, ← pow_mul, ← pow_add, ← pow_add,
       add_comm n2 n1, add_pow_expChar_pow]
 
 theorem UpperTheory.existsUnique_idempotent_lift_tensor_field_strictHenselian :
@@ -134,7 +134,7 @@ theorem UpperTheory.existsUnique_idempotent_lift_tensor_field_strictHenselian :
     have hz2 : z * z = z := hz
     have he2 : e' * e' = e' := he'
     have hf0 : (Algebra.TensorProduct.includeLeftRingHom : R →+* R ⊗[O] K) (y + z - 2 * y * z) = 0 := by
-      rw [map_sub, map_add, map_mul, map_mul, hyc, hzc, map_ofNat]
+      rw [map_sub, map_add (f := _), map_mul, map_mul, hyc, hzc, map_ofNat]
       linear_combination (-2 : R ⊗[O] K) * he2
     have hfj : ∀ Q : Ideal R, Q.IsMaximal → y + z - 2 * y * z ∈ Q := hjac _ hf0
     have hmem : y + z - 2 * y * z ∈ Ideal.jacobson (⊥ : Ideal R) :=

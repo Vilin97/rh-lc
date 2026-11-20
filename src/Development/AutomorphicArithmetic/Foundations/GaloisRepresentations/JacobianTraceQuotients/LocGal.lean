@@ -131,7 +131,7 @@ private theorem galFin_eq (σ : E ≃ₐ[F] E) {v : Pl F} (w : PlacesOver E v) (
       galEquiv_algebraMap]
     rfl
   | add a b ha hb =>
-    simp only [map_add, Pi.add_apply] at ha hb ⊢
+    simp only [map_add (f := _), Pi.add_apply] at ha hb ⊢
     rw [ha, hb]
 
 end Global

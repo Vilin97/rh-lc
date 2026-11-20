@@ -926,7 +926,7 @@ theorem levi_borel_le_compact : leviOne e2 W2 ≤ KG e2 := by
   have e2 : g 1 1 = g 0 0 := by linear_combination c0 - c1 - e1
   rw [e1] at j0 j1
   rw [e2] at j1
-  rw [c0, map_add] at h2
+  rw [c0, map_add (f := _)] at h2
   have e3 : starRingEnd ℂ (g 0 1) * c = 0 := by rw [c0]; linear_combination (h2 - j0 - j1) / 2
   have e4 : g 0 1 = 0 := by
     rcases mul_eq_zero.1 e3 with h | h

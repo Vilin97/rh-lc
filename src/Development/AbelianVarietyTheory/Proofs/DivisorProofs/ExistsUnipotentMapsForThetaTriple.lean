@@ -59,7 +59,7 @@ theorem at_lift2 (p q : Fv F v) : GlobalTheory.IndefiniteRowSideFullHecke.WeilTe
 
 theorem lift2_add (p q p' q' : Fv F v) : lift2 h τ (p + p') (q + q') = lift2 h τ p q + lift2 h τ p' q' := by
   unfold lift2
-  rw [← map_add, ← map_add, Prod.mk_add_mk]
+  rw [← map_add (f := _), ← map_add (f := _), Prod.mk_add_mk]
 
 theorem lift2_zero : lift2 h τ 0 0 = 0 := by
   unfold lift2
@@ -101,7 +101,7 @@ theorem piW_cA' {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem piW_inclR' {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F} (τ : E →ₐ[F] Fv F v) (e : E) :

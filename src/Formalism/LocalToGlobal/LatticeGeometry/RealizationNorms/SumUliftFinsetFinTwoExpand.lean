@@ -213,7 +213,7 @@ theorem zdual_eq_yv (Xf : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ) (hXf :
   classical
   set Rz := Formalism.HermitianLatticesTheory.realize (Pi.basisFun K (Fin n)) Xf with hRz
   let φ : (Fin n → K) →+ ℝ := AddMonoidHom.mk' (fun x => inner ℝ (Rz x) y)
-    (fun a b => by simp only [map_add, inner_add_left])
+    (fun a b => by simp only [map_add (f := _), inner_add_left])
   have hφ : ∀ x, φ x = inner ℝ (Rz x) y := fun x => rfl
   have hint : ∀ x ∈ X, ∃ k : ℤ, φ x = k := fun x hx => hy (Rz x) ((mem_Mz Xf X _).2 ⟨x, hx, rfl⟩)
   have hrat : ∀ v, ∃ q : ℚ, (q : ℝ) = φ v := by
@@ -229,7 +229,7 @@ theorem zdual_eq_yv (Xf : InfinitePlace K → Matrix (Fin n) (Fin n) ℂ) (hXf :
   choose ψ0 hψ0 using hrat
   let ψa : (Fin n → K) →+ ℚ := AddMonoidHom.mk' ψ0 (fun a b => by
     have h := hψ0 (a + b)
-    rw [map_add, ← hψ0 a, ← hψ0 b] at h
+    rw [map_add (f := _), ← hψ0 a, ← hψ0 b] at h
     exact_mod_cast h)
   let ψ : (Fin n → K) →ₗ[ℚ] ℚ := ψa.toRatLinearMap
   have hψ : ∀ v, (ψ v : ℝ) = φ v := fun v => hψ0 v

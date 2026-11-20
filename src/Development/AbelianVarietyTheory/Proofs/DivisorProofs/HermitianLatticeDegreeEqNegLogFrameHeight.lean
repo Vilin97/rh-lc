@@ -21,10 +21,10 @@ theorem form_eq_of_re_diag {K V : Type} [Field K] [AddCommGroup V] [Module K V] 
     (hd : ∀ x, (F x x).re = (G x x).re) (ha : ∃ a : K, (σ a).im ≠ 0) (x y : V) : F x y = G x y := by
   have hFl : ∀ x x' y, F (x + x') y = F x y + F x' y := by
     intro x x' y
-    rw [← hFc y (x + x'), hFa, map_add, hFc, hFc]
+    rw [← hFc y (x + x'), hFa, map_add (f := _), hFc, hFc]
   have hGl : ∀ x x' y, G (x + x') y = G x y + G x' y := by
     intro x x' y
-    rw [← hGc y (x + x'), hGa, map_add, hGc, hGc]
+    rw [← hGc y (x + x'), hGa, map_add (f := _), hGc, hGc]
   have hre : ∀ x y, (F x y).re = (G x y).re := by
     intro x y
     have h1 := hd (x + y)

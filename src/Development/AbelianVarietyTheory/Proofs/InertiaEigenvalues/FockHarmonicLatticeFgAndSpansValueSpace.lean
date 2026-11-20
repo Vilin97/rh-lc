@@ -56,7 +56,7 @@ def cf (lam : D.what₂.Tau → DomWeight n) : VV ℂ lam →ₗ[ℂ] (GLR D n �
   toFun F := coefFn (RingHom.id ℂ) lam (F : Pol ℂ D.what₂.Tau n)
   map_add' F G := by
     funext x
-    simp only [coefFn, Submodule.coe_add, map_add, Pi.add_apply, mul_add]
+    simp only [coefFn, Submodule.coe_add, map_add (f := _), Pi.add_apply, mul_add]
   map_smul' c F := by
     funext x
     simp only [coefFn, Submodule.coe_smul, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.eval₂Hom_C, RingHom.id_apply,
@@ -86,7 +86,7 @@ theorem coefLatFn_fg (hc : IsCoefRing σ emb O) (lam : D.what₂.Tau → DomWeig
     induction hF using Submodule.span_induction with
     | mem F h => exact Submodule.subset_span ⟨F, h, rfl⟩
     | zero => rw [map_zero, map_zero]; exact zero_mem _
-    | add _ _ _ _ h1 h2 => rw [map_add, map_add]; exact add_mem h1 h2
+    | add _ _ _ _ h1 h2 => rw [map_add (f := _), map_add (f := _)]; exact add_mem h1 h2
     | smul a F _ h1 =>
       rw [← algebraMap_smul K a F, LinearMap.map_smulₛₗ, map_smul]
       exact Submodule.smul_mem _ (⟨σ a, hc.int a⟩ : O) h1
@@ -108,7 +108,7 @@ theorem span_coefLatFn (lam : D.what₂.Tau → DomWeight n)
       induction hG using Submodule.span_induction with
       | mem F h => exact Submodule.subset_span ⟨F, h, (coefFn_eq σ lam F).symm⟩
       | zero => rw [map_zero, map_zero]; exact zero_mem _
-      | add _ _ _ _ h1 h2 => rw [map_add, map_add]; exact add_mem h1 h2
+      | add _ _ _ _ h1 h2 => rw [map_add (f := _), map_add (f := _)]; exact add_mem h1 h2
       | smul a F _ h1 =>
         rw [LinearMap.map_smulₛₗ, map_smul]
         exact Submodule.smul_mem _ _ h1

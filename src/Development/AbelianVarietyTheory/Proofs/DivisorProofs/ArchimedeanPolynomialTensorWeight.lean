@@ -262,7 +262,7 @@ theorem kstab : GlobalTheory.RealLift.ActsLaws → GlobalTheory.RealLift.LineEx 
   have s2 : Y2ᴴ = -Y2 := by
     rw [hY2, Matrix.conjTranspose_smul, Matrix.conjTranspose_add, Matrix.conjTranspose_conjTranspose]
     rw [show star (1 / (2 * Complex.I)) = -(1 / (2 * Complex.I)) by simp, neg_smul, add_comm]
-  rw [hZ', map_add, map_smul, atPl_add', atPl_smul', LinearMap.add_apply, LinearMap.smul_apply]
+  rw [hZ', map_add (f := _), map_smul, atPl_add', atPl_smul', LinearMap.add_apply, LinearMap.smul_apply]
   exact N.add_mem (key Y1 k1 s1 T hT) (N.smul_mem _ (key Y2 k2 s2 T hT))
 
 end GlobalTheory.FockKStab

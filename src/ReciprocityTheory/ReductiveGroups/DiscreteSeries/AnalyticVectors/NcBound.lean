@@ -39,7 +39,7 @@ theorem re_inner_casimir_eq (ε : Fin n → Bool) {E : Fin n → Fin n → Modul
     RCLike.re (inner ℂ (casimir E x) x) = RCLike.re (inner ℂ (casimirK ε E x) x) -
       ∑ a, ∑ b ∈ univ.filter (fun b => ε a ≠ ε b), ‖E a b x‖ ^ 2 := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [casimir_apply_eq_casimirK_add ε E x, inner_add_left, map_add, sum_inner, map_sum]
+    rw [casimir_apply_eq_casimirK_add ε E x, inner_add_left, map_add (f := _), sum_inner, map_sum]
   have key : ∀ a, RCLike.re (inner ℂ (∑ b ∈ univ.filter (fun b => ε a ≠ ε b), E a b (E b a x)) x) =
       -∑ b ∈ univ.filter (fun b => ε a ≠ ε b), ‖E b a x‖ ^ 2 := by
     intro a

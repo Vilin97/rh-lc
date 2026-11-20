@@ -43,7 +43,7 @@ variable {V : Type*} [AddCommGroup V] [Module F V] (ρ : Representation F G V)
 
 def DBK : Submodule K (B ⊗[F] V) where
   carrier := {x | ∀ g : G, baseChangeRep B ρ g x = x}
-  add_mem' {x y} hx hy g := by rw [map_add, hx g, hy g]
+  add_mem' {x y} hx hy g := by rw [map_add (f := _), hx g, hy g]
   zero_mem' g := map_zero _
   smul_mem' k x hx g := by
     change baseChangeRep B ρ g (k • x) = k • x

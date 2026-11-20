@@ -127,7 +127,7 @@ theorem card_coker [IsNonarchimedeanLocalField F] [CharZero F] (L : LocE F E) {�
     intro a b h
     rw [Algebra.smul_def, Algebra.smul_def, mul_one] at h
     have h' := congrArg c h
-    rw [map_add, map_mul, hbase, hbase, map_zero] at h'
+    rw [map_add (f := _), map_mul, hbase, hbase, map_zero] at h'
     have hb : algebraMap 𝒪[F] L.O b = 0 :=
       hu.mul_left_eq_zero.1 (by linear_combination h - h')
     have ha : algebraMap 𝒪[F] L.O a = 0 := by rw [hb] at h; simpa using h

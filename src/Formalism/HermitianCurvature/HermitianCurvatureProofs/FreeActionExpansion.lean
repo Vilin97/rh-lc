@@ -223,7 +223,7 @@ theorem expand (ρ : Rep A V) (QQ : ℂ → M2 A) (f : A) (s : ℂ) (w : List (L
       have hX'1 : X' (Function.update u l.intersection_update_fsHerm_neg_one 1) = 0 := hX' _ (by simp)
       simp only [Pi.smul_apply, hX'1, smul_zero, map_zero, add_zero, Function.update_self,
         Function.update_idem, update_zero_of _ u hu, hu, if_true, hCdef]
-      simp only [show ((1 : Fin 2) = 0) = False from by decide, if_false, Pi.add_apply, Pi.smul_apply, map_add, map_neg,
+      simp only [show ((1 : Fin 2) = 0) = False from by decide, if_false, Pi.add_apply, Pi.smul_apply, map_add (f := _), map_neg,
         map_smul, LinearMap.add_apply, LinearMap.neg_apply, LinearMap.smul_apply, smul_eq_mul]
       ring
     · rw [if_neg hu, if_neg hu, if_neg hu, sub_zero]

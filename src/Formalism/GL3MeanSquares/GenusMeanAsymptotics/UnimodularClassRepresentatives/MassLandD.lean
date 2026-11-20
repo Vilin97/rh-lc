@@ -138,7 +138,7 @@ def ιK : K →ₐ[cmF K] KEd d (skewSq w hw) where
         algebraMap (cmF K) (KEd d (skewSq w hw)) (skewSq w hw) :=
       QuadAdj.root_mul_root (algebraMap (cmF K) (Ed d) (skewSq w hw))
     rw [reF_mul w hw0' hw, imF_mul w hw0' hw]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     linear_combination (-(algebraMap (cmF K) (KEd d (skewSq w hw)) (imF w hw x) *
       algebraMap (cmF K) (KEd d (skewSq w hw)) (imF w hw y))) * hr
   map_zero' := by
@@ -153,7 +153,7 @@ def ιK : K →ₐ[cmF K] KEd d (skewSq w hw) where
         algebraMap (cmF K) (KEd d (skewSq w hw)) (imF w hw x) * AdjoinRoot.root _) +
       (algebraMap (cmF K) (KEd d (skewSq w hw)) (reF y) +
         algebraMap (cmF K) (KEd d (skewSq w hw)) (imF w hw y) * AdjoinRoot.root _)
-    rw [reF_add, imF_add, map_add, map_add]
+    rw [reF_add, imF_add, map_add (f := _), map_add (f := _)]
     ring
   commutes' r := by
     show algebraMap (cmF K) (KEd d (skewSq w hw)) (reF (r : K)) +
@@ -172,7 +172,7 @@ theorem gal_KEd_algebraMap (τ : KEd d (skewSq w hw) ≃ₐ[Ed d] KEd d (skewSq 
 theorem gal_KEd_ιK_of_neg (τ : KEd d (skewSq w hw) ≃ₐ[Ed d] KEd d (skewSq w hw))
     (h : τ (AdjoinRoot.root (polKE d (skewSq w hw))) = -AdjoinRoot.root (polKE d (skewSq w hw)))
     (x : K) : τ (ιK w hw d x) = ιK w hw d (star x) := by
-  rw [ιK_apply, ιK_apply, map_add, map_mul, gal_KEd_algebraMap, gal_KEd_algebraMap, h, reF_star,
+  rw [ιK_apply, ιK_apply, map_add (f := _), map_mul, gal_KEd_algebraMap, gal_KEd_algebraMap, h, reF_star,
     imF_star, map_neg]
   ring
 
@@ -181,7 +181,7 @@ theorem gal_KEd_ιK (τ : KEd d (skewSq w hw) ≃ₐ[Ed d] KEd d (skewSq w hw)) 
   rcases QuadAdj.gal_root (algebraMap (cmF K) (Ed d) (skewSq w hw)) τ with h | h
   · left
     intro x
-    rw [ιK_apply, map_add, map_mul, gal_KEd_algebraMap, gal_KEd_algebraMap, h]
+    rw [ιK_apply, map_add (f := _), map_mul, gal_KEd_algebraMap, gal_KEd_algebraMap, h]
   · right
     exact gal_KEd_ιK_of_neg w hw d τ h
 

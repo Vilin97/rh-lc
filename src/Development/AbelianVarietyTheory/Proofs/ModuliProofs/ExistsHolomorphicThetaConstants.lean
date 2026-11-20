@@ -49,7 +49,7 @@ theorem lattice_properties (P : Out.PolAV (Sp ℂ)) {La : Type} [AddCommGroup La
   · have : ⇑Ef = e.dualMap ∘ E ∘ e := funext fun x => LinearMap.ext fun y => (hEe x y).symm
     rw [this]
     exact e.dualMap.bijective.comp (hb.comp e.bijective)
-  · rw [← hχ _ _ (he (x + y)), ← hχ _ _ (he x), ← hχ _ _ (he y), map_add, h₂, hEe]
+  · rw [← hχ _ _ (he (x + y)), ← hχ _ _ (he x), ← hχ _ _ (he y), map_add (f := _), h₂, hEe]
 
 theorem exists_holomorphic_thetaConstants : ∀ (o : Type) [CommRing o] (g N' : ℕ) [NeZero N'] (J : Type) (b : TBase o (N' ^ 2)) (em : o →+* ℂ) (Ef : LinearMap.BilinForm ℤ (Lat g)) (τ : J → (Lat g →ₗ[ℤ] Lat g)) (χ : Lat g → ℂ) (tl : Lab g (N' ^ 2) → Lat g) (d : ℕ) (U : Set (Fin d → ℂ)) (P : (Fin d → ℂ) → (Lat g →+ (Fin g → ℂ))), Odd N' → IsOpen U → (∀ l, DifferentiableOn ℂ (fun z => P z l) U) → (∀ z ∈ U, ∃ t : TObj g (N' ^ 2) J b (spMap em), IsTorusOf Ef χ tl τ (P z) (toTh t)) → ∃ θ : (Fin d → ℂ) → Ix g (N' ^ 2) → ℂ, (∀ a, DifferentiableOn ℂ (fun z => θ z a) U) ∧ ∀ z ∈ U, ∀ t : TObj g (N' ^ 2) J b (spMap em), IsTorusOf Ef χ tl τ (P z) (toTh t) → t.HasTh (𝟙 _) (θ z) := by
   intro o _ g N' _ J b em Ef τ χ tl d U P hN hU hP hex

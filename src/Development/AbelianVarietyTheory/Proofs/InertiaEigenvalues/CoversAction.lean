@@ -38,7 +38,7 @@ theorem toOC_constA (a : ℕ) [NeZero a] (LL : FinExt l) [HasUnr a LL] (c : ZMod
   | tmul o w =>
     rw [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, toOC_tmul, splitHom_tmul, emb_zero, map_mul,
       intToOC_thetaW]
-  | add y y' h h' => simp only [map_add, Pi.add_apply, h, h']
+  | add y y' h h' => simp only [map_add (f := _), Pi.add_apply, h, h']
 
 theorem iTot_const {O K : Type} [CommRing O] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O]
     [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K] {a e : ℕ} [NeZero a]

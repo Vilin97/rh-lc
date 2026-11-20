@@ -63,7 +63,7 @@ theorem PPSet_add {F G : ZMod a → K⟦X⟧⟦X⟧} (hF : F ∈ PPSet t K e) (h
   obtain ⟨w, hw, hF⟩ := hF
   obtain ⟨w', hw', hG⟩ := hG
   refine ⟨w + w', LTo0_add hw hw', fun τ i n => ?_⟩
-  simp only [Pi.add_apply, map_add, mul_add, hF, hG]
+  simp only [Pi.add_apply, map_add (f := _), mul_add, hF, hG]
 
 theorem PPSet_neg {F : ZMod a → K⟦X⟧⟦X⟧} (hF : F ∈ PPSet t K e) : -F ∈ PPSet t K e := by
   obtain ⟨w, hw, hF⟩ := hF

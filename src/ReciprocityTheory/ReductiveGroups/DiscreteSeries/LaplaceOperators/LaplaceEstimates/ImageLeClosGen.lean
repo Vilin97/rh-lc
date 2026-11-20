@@ -77,7 +77,7 @@ theorem dS_comm (hσ : IsURepOn (UJset ε) σ) (P : H →L[ℂ] H)
 theorem smE_comm (hσ : IsURepOn (UJset ε) σ) (P : H →L[ℂ] H)
     (hP : ∀ g ∈ UJset ε, ∀ v : H, P (σ g v) = σ g (P v)) (v : smD ε σ) (hPv : P v ∈ smD ε σ)
     (a b : Fin n) : ((smE ε σ a b ⟨P v, hPv⟩ : smD ε σ) : H) = P ((smE ε σ a b v : smD ε σ) : H) := by
-  rw [smE_apply hσ, smE_apply hσ, map_add, map_smul]
+  rw [smE_apply hσ, smE_apply hσ, map_add (f := _), map_smul]
   congr 1
   · exact dS_comm hσ P hP (SmDerA.inG_cpart1 ε _) v
   · congr 1
@@ -236,7 +236,7 @@ theorem quot_generic {Y : Type*} [AddCommGroup Y] [Module ℂ Y] (A : Fin n → 
       refine ⟨q, Submodule.mem_map_of_mem hq, ?_⟩
       have hk0 : φ (k : Y) = 0 := hk
       have := congrArg (fun t : Y0 => φ (t : Y)) hqk
-      simp only [Submodule.coe_add, map_add, hk0, zero_add] at this
+      simp only [Submodule.coe_add, map_add (f := _), hk0, zero_add] at this
       exact this.symm
     · rintro ⟨_, ⟨q, -, rfl⟩, rfl⟩
       exact (Submodule.mem_inf.1 q.2).2

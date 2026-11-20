@@ -139,7 +139,7 @@ theorem applyAt0_add (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l]) (P Q 
   rw [applyAt0_eq_sum_of_subset l Th _ _ MvPolynomial.support_add, applyAt0_eq_sum_of_subset l Th _ _ h1,
     applyAt0_eq_sum_of_subset l Th _ _ h2, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun μ _ => ?_
-  simp only [applyTerm, MvPolynomial.coeff_add, Int.cast_add, add_mul, map_add]
+  simp only [applyTerm, MvPolynomial.coeff_add, Int.cast_add, add_mul, map_add (f := _)]
 
 def applyHom (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l]) :
     MvPolynomial (XZ Lt N0 N1) ℤ →+ MvPolynomial (Lt × ℕ × Fin N0) ℂ_[l] where

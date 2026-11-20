@@ -45,7 +45,7 @@ theorem levPt_eq (F : FamilyUnif Xo σ ty) (i : Fin F.n) {Pm : (F.Di i).La →+ 
     change (Pi.single m 1 : Fin g' → ℂ) (π j) = _
     simp only [Pi.single_apply, Equiv.eq_symm_apply]
   have E : (fun z => ex (ρ z)) = F.ex i Pm :=
-    GlobalTheory.AnUniq.exp_eq (fun z w => by rw [map_add, b1]) (F.ex_add _ _ hper)
+    GlobalTheory.AnUniq.exp_eq (fun z w => by rw [map_add (f := _), b1]) (F.ex_add _ _ hper)
       (HolHom.isHolTo_of_holAt isOpen_univ fun z _ =>
         (HolHom.holAt_of_isHolTo b2 (Set.mem_univ (ρ z))).precomp ρ.differentiableAt) (isHolTo_ex F _ hper)
       u (fun m => isDerivAt0_comp b2 ρ (by rw [hρ]; exact b3 m)) b4

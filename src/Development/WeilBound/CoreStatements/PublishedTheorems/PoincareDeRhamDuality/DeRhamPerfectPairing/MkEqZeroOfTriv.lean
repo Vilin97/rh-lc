@@ -38,7 +38,7 @@ theorem exists_bundle (z : Z1 (FP s)) (π : Y ⟶ X) {η : Γ(Y, ⊤)} (hη : η
   have hy' : Inn (y ≫ π) U.1 := hy
   change 1 + valR (spMap ρ ≫ y) ⊤ η * gam z U B' ((spMap ρ ≫ y) ≫ π) =
     ρ (1 + valR y ⊤ η * gam z U B (y ≫ π)) * (1 + ρ (valR y ⊤ η) * cv z ρ (y ≫ π))
-  rw [Category.assoc, gam_map z U ρ hy', valR_spMap_comp _ _ _ (le_preimage_top y), map_add, map_mul, map_one]
+  rw [Category.assoc, gam_map z U ρ hy', valR_spMap_comp _ _ _ (le_preimage_top y), map_add (f := _), map_mul, map_one]
   linear_combination -(ρ (gam z U B (y ≫ π)) * cv z ρ (y ≫ π)) * map_val_sq ρ y hη
 
 theorem rel_of_mk_eq {z z' : Z1 (FP s)} (h : H1.mk _ z = H1.mk _ z') (π : Y ⟶ X) {η : Γ(Y, ⊤)} (hη : η * η = 0)
@@ -47,7 +47,7 @@ theorem rel_of_mk_eq {z z' : Z1 (FP s)} (h : H1.mk _ z = H1.mk _ z') (π : Y ⟶
   refine hN.twist (fun B _ y ↦ oneAdd (valR y ⊤ η) (g B (y ≫ π)) (val_sq y hη)) fun B B' _ _ ρ y ↦ ?_
   change (1 + ρ (valR y ⊤ η) * cv z ρ (y ≫ π)) * ρ (1 + valR y ⊤ η * g B (y ≫ π)) =
     (1 + ρ (valR y ⊤ η) * cv z' ρ (y ≫ π)) * (1 + valR (spMap ρ ≫ y) ⊤ η * g B' ((spMap ρ ≫ y) ≫ π))
-  rw [Category.assoc, hg, valR_spMap_comp _ _ _ (le_preimage_top y), map_add, map_mul, map_one]
+  rw [Category.assoc, hg, valR_spMap_comp _ _ _ (le_preimage_top y), map_add (f := _), map_mul, map_one]
   linear_combination ((cv z' ρ (y ≫ π) + (g B' (spMap ρ ≫ y ≫ π) - ρ (g B (y ≫ π)))) * ρ (g B (y ≫ π)) -
     cv z' ρ (y ≫ π) * g B' (spMap ρ ≫ y ≫ π)) * map_val_sq ρ y hη
 
@@ -160,7 +160,7 @@ theorem exists_isE : ∃ E : ETy, IsE @E := by
         1 + ρ (valR y ⊤ η) * cv (z + z') ρ (y ≫ π)
       rw [cv_add]
       linear_combination (cv z ρ (y ≫ π) * cv z' ρ (y ≫ π)) * map_val_sq ρ y hη
-    rw [← map_add, Ecl_eq _ π hη hN r, Ecl_eq _ π hη hN' r', Ecl_eq _ π hη (LB.isLB_div hN hN') rd,
+    rw [← map_add (f := _), Ecl_eq _ π hη hN r, Ecl_eq _ π hη hN' r', Ecl_eq _ π hη (LB.isLB_div hN hN') rd,
       cls_div hN hN', sub_add_cancel]
   · intro R _ X s c r Y π η hη η' hη' e
     obtain ⟨z, rfl⟩ := H1.mk_surjective _ c

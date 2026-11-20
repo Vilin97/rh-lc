@@ -100,9 +100,9 @@ theorem exists_log_flat_pow_Bst : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (b
     have h2 : P.actQ (g : GQ l) (T.eB.symm bx) = T.eB.symm bx +
         (((bk.Ep.natDegree : ℤ_[l]) * cπ g - kummer P g : ℤ_[l]) : ℚ_[l]) • P.tB := by
       apply T.eB.injective
-      rw [T.actB, RingEquiv.apply_symm_apply, h1, map_add, RingEquiv.apply_symm_apply, Algebra.smul_def, map_mul,
+      rw [T.actB, RingEquiv.apply_symm_apply, h1, map_add (f := _), RingEquiv.apply_symm_apply, Algebra.smul_def, map_mul,
         T.zB, hF.t]
-    rw [map_add, actSt_X, actSt_C, h2, Polynomial.C_add]
+    rw [map_add (f := _), actSt_X, actSt_C, h2, Polynomial.C_add]
     have key : ((kummer P (g : GQ l) : ℤ_[l]) : ℚ_[l]) • P.tB +
         (((bk.Ep.natDegree : ℤ_[l]) * cπ g - kummer P g : ℤ_[l]) : ℚ_[l]) • P.tB =
         (((bk.Ep.natDegree : ℤ_[l]) * cπ g : ℤ_[l]) : ℚ_[l]) • P.tB := by
@@ -112,7 +112,7 @@ theorem exists_log_flat_pow_Bst : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (b
   · have h2 : P.φB (T.eB.symm bx) = (l : P.R.B) * T.eB.symm bx := by
       apply T.eB.injective
       rw [T.frob, RingEquiv.apply_symm_apply, hφ, map_mul, map_natCast, RingEquiv.apply_symm_apply]
-    rw [map_add, phiSt_X, phiSt_C, h2, mul_add, Polynomial.C_mul, map_natCast]
+    rw [map_add (f := _), phiSt_X, phiSt_C, h2, mul_add, Polynomial.C_mul, map_natCast]
 
 end GlobalTheory.LogFlat
 

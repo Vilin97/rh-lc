@@ -50,7 +50,7 @@ theorem lam_self (laws : Out.Laws) {S : Scheme.{0}} [IsLocallyNoetherian S] (P :
     rw [Hom.one_def, Over.comp_left, pull_comp]
     exact (congrArg _ h₀).trans (map_zero _)
   have h₃ := congrArg (pull x.left) h₂
-  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, map_add, map_zsmul, ← pull_comp, Category.comp_id,
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, map_add (f := _), map_zsmul, ← pull_comp, Category.comp_id,
     ← Over.comp_left, Out.mulA, MonObj.comp_pow, map_zero, pow_two, MonObj.comp_mul] at h₃
   rw [lam, h₁, add_zero, ← sub_eq_zero, ← neg_eq_zero, ← h₃]
   push_cast

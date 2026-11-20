@@ -72,7 +72,7 @@ theorem exists_idempotent {O : Type} [CommRing O] [IsLocalRing O] {A : Type} [Co
       h = ((r.filter fun x => ¬ IsLocalRing.residue O x = ρ).map fun x => X - C x).prod :=
     ⟨_, rfl⟩
   have hgh : g * h = (r.map fun x => X - C x).prod := by
-    rw [hg, hh, ← Multiset.prod_add, ← Multiset.map_add, Multiset.filter_add_not]
+    rw [hg, hh, ← Multiset.prod_add, ← Multiset.map_add (f := _), Multiset.filter_add_not]
   have hcop : IsCoprime g h := by
     rw [hg]
     apply isCoprime_multiset_prod_left
@@ -101,7 +101,7 @@ theorem exists_idempotent {O : Type} [CommRing O] [IsLocalRing O] {A : Type} [Co
     obtain ⟨x, hx, hcx⟩ := exists_mem_eq c hr
     rw [IsLocalRing.ResidueField.algebraMap_eq] at hcx
     have h1 := congrArg (aeval (c a)) huw
-    rw [map_add, map_mul, map_mul, map_one] at h1
+    rw [map_add (f := _), map_mul, map_mul, map_one] at h1
     by_cases hρ : IsLocalRing.residue O x = ρ
     · have hg0 : aeval (c a) g = 0 := by
         rw [hg, map_multiset_prod, Multiset.map_map]

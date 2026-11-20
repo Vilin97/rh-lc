@@ -52,7 +52,7 @@ private theorem exT {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
     apply Subtype.ext
     apply Subtype.ext
     show (t (a + b)).1.1 = (t a).1.1 + (t b).1.1
-    rw [ht, ht, ht, ← hP, ← hP, ← hP, map_add]
+    rw [ht, ht, ht, ← hP, ← hP, ← hP, map_add (f := _)]
     funext X
     simp [ten, mul_add]
   · intro c a

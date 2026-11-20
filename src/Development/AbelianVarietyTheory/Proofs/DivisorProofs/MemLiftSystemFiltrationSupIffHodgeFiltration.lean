@@ -74,7 +74,7 @@ theorem Sys.mem_K_sup_iff : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I 
   · intro h
     obtain ⟨k, hk', i, hi, rfl⟩ := Submodule.mem_sup.1 h
     have h0 : S.r hI k = 0 := hk'
-    rw [map_add, h0, zero_add]
+    rw [map_add (f := _), h0, zero_add]
     refine (key i).1 ?_
     rw [(hBC.2 i).2 hi]
     exact Submodule.zero_mem _

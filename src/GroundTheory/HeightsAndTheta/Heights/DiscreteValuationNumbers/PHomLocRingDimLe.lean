@@ -100,7 +100,7 @@ theorem zero_mem_primeSet (q : Ideal (homLocRing P W)) : (0 : MRing ι R) ∈ pr
 theorem add_mem_primeSet {q : Ideal (homLocRing P W)} {x y : MRing ι R} (hx : x ∈ primeSet P W q)
     (hy : y ∈ primeSet P W q) : x + y ∈ primeSet P W q := by
   intro b g hg hgW
-  rw [map_add, frac_add, add_div]
+  rw [map_add (f := _), frac_add, add_div]
   exact valIn_add (hx b g hg hgW) (hy b g hg hgW)
 
 theorem form_mul_mem_primeSet [Fintype K] (hPW : P ≤ W) (hW : W.IsPrime) (hrel : IsRelevant W)

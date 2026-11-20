@@ -25,7 +25,7 @@ theorem cK_map {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra F
   induction y with
   | add x y hx hy =>
     simp only [cK] at hx hy ⊢
-    simp [map_add, hx, hy]
+    simp [map_add (f := _), hx, hy]
   | tmul r e =>
     simp [cK, Algebra.TensorProduct.basis_repr_tmul, Algebra.smul_def]
 

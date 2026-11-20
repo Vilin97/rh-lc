@@ -49,7 +49,7 @@ theorem lineAt_exists (D : D7) : LineAtExists D := by
       map_add' := fun s t => by
         funext i j
         show σ (ray τ (z i j) (s + t)) = σ (ray τ (z i j) s) + σ (ray τ (z i j) t)
-        rw [(ray τ (z i j)).map_add, σ.map_add] }
+        rw [(ray τ (z i j)).map_add (f := _), σ.map_add (f := _)] }
   refine ⟨L, ?_, fun t => ?_, fun t τ' => ?_⟩
   · exact continuous_pi fun i => continuous_pi fun j => hσ.cont.comp (continuous_ray τ (z i j))
   · funext i j

@@ -131,7 +131,7 @@ theorem local_frame (k K : Type) [Field k] [Field K] [Algebra k K] (B : Subalgeb
   | add x y _ _ hx hy =>
     obtain ⟨c₁, h₁⟩ := hx
     obtain ⟨c₂, h₂⟩ := hy
-    exact ⟨c₁ + c₂, by rw [map_add, mul_add, h₁, h₂]; push_cast; ring⟩
+    exact ⟨c₁ + c₂, by rw [map_add (f := _), mul_add, h₁, h₂]; push_cast; ring⟩
   | smul a x _ hx =>
     obtain ⟨c, h⟩ := hx
     refine ⟨algebraMap k B a * c, ?_⟩
@@ -220,7 +220,7 @@ theorem complementary_eq_topForms : ∀ (k F K : Type) [Field k] [CharZero k] [F
       { carrier := {c | ∃ y ∈ omB k K B d, τ y = (c : K) * z}
         add_mem' := by
           rintro c₁ c₂ ⟨y₁, hy₁, h₁⟩ ⟨y₂, hy₂, h₂⟩
-          exact ⟨y₁ + y₂, add_mem hy₁ hy₂, by rw [map_add, h₁, h₂]; push_cast; ring⟩
+          exact ⟨y₁ + y₂, add_mem hy₁ hy₂, by rw [map_add (f := _), h₁, h₂]; push_cast; ring⟩
         zero_mem' := ⟨0, zero_mem _, by simp⟩
         smul_mem' := by
           rintro c c' ⟨y, hy, h⟩

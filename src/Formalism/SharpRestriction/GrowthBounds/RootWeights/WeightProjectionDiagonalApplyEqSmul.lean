@@ -62,7 +62,7 @@ theorem weightProjection_diagonal_apply_eq_smul [CharZero K] (E : GLOps n K V) (
       rfl
     · rw [hπ.2 mu hmu y hy, smul_zero, smul_zero]
   · simp
-  · simp only [map_add, hy, hw, smul_add]
+  · simp only [map_add (f := _), hy, hw, smul_add]
 
 theorem homRepresentation_isRep [CharZero K] [FiniteDimensional K V] [FiniteDimensional K V'] (E : GLOps n K V)
     (E' : GLOps n K V') (hE : IsGLRep E) (hE' : IsGLRep E') : IsGLRep (homRepresentation E E') := by

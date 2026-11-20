@@ -69,7 +69,7 @@ private theorem spanForms_le_of_mem_closure_smul {K : Type} [Field K] (M : Set K
         | zero => intro c _; simp
         | add w1 w2 _ _ h1 h2 =>
           intro c hc
-          rw [map_add, add_mul, smul_add]
+          rw [map_add (f := _), add_mul, smul_add]
           exact add_mem (h1 c hc) (h2 c hc)
         | neg w _ h1 =>
           intro c hc

@@ -48,7 +48,7 @@ theorem actD_iotaL (hinj : Function.Injective (algebraMap O LL)) {G : Type} [Gro
       iotaL hinj (twistM N θ) N lam a (tableLineDegreeTwo.actTw (stdLatG hinj (twistM N θ)) ↥(Xq LL lam a) χ g y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add u v hu hv => simp only [map_add, hu, hv]
+  | add u v hu hv => simp only [map_add (f := _), hu, hv]
   | tmul t x =>
     obtain ⟨s, hs⟩ := Submodule.Quotient.mk_surjective _ (x : LL ⧸ intO (O := O) LL)
     rw [tableLineDegreeTwo.actTw, LinearMap.smul_apply, LinearMap.rTensor_tmul, map_smul, iotaL_tmul hinj _ N lam a _ x s hs,
@@ -78,7 +78,7 @@ theorem readW_gen (PD : PeriodData G Qp K₀ K B BdR) (hinj : Function.Injective
           (iotaL hinj (twistM N θ) N lam a m) := by
     funext g
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hz g, map_add, map_sum, map_sub, ← actD_iotaL hinj N θ χ hχ lam a g m]
+      rw [hz g, map_add (f := _), map_sum, map_sub, ← actD_iotaL hinj N θ χ hχ lam a g m]
     simp only [Pi.add_apply, Finset.sum_apply, LinearMap.pi_apply, LinearMap.sub_apply, LinearMap.id_apply]
     congr 1
     refine Finset.sum_congr rfl fun j _ => ?_

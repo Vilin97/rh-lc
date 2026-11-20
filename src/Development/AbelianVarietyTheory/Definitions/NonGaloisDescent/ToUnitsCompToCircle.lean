@@ -74,7 +74,7 @@ variable {D : D7}
 
 theorem map_loc {M N : Type} [CommRing M] [CommRing N] (f : M →+* N) (e a : M) :
     f (1 + e * (a - 1)) = 1 + f e * (f a - 1) := by
-  rw [map_add, map_mul, map_sub, map_one]
+  rw [map_add (f := _), map_mul, map_sub, map_one]
 
 structure IsLocUnit (PP : Pl D.host.E) (u : (kP PP)ˣ) (x : (AE D)ˣ) : Prop where
   off : (1 - idemAt PP) * (x : AE D) = 1 - idemAt PP
@@ -120,7 +120,7 @@ theorem exists_isLocUnit {PP : Pl D.host.E} (h : Formalism.L2.NTheta.IsIdemAt (i
     rw [map_loc, hinf, zero_mul, add_zero]
   · change finPart D (1 + idemAt PP * (b' - 1)) ∈ intAE D
     have e1 : finPart D (1 + idemAt PP * (b' - 1)) = finPart D (1 - idemAt PP) + finPart D (idemAt PP * b') := by
-      rw [← RingHom.map_add]
+      rw [← RingHom.map_add (f := _)]
       congr 1
       ring
     rw [e1]

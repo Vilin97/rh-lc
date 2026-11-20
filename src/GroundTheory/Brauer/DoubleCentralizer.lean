@@ -109,7 +109,7 @@ noncomputable def mulRight (c : Subalgebra.centralizer K (B : Set A)) :
       rw [bimoduleHom_tmul, bimoduleHom_tmul, mul_assoc, mul_assoc, mul_assoc, mul_assoc]
       congr 2
       exact (Subalgebra.mem_centralizer_iff K).mp c.2 _ b.unop.2
-    | add r s hr hs => simp only [map_add, LinearMap.add_apply, add_mul, hr, hs]
+    | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, add_mul, hr, hs]
 
 theorem mulRight_val (c : Subalgebra.centralizer K (B : Set A)) (x : Twist B.val) :
     (mulRight B c x).val = x.val * c := rfl

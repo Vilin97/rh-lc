@@ -15,7 +15,7 @@ theorem UpperTheory.Reformulated.B.Qk66.aeval_comm :
     simp [Module.algebraMap_end_apply]
   | add p q hp hq =>
     intro y
-    simp only [map_add, LinearMap.add_apply, hp, hq]
+    simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial n a ih =>
     intro y
     rw [pow_succ, ← mul_assoc, map_mul (Polynomial.aeval A), map_mul (Polynomial.aeval A'),

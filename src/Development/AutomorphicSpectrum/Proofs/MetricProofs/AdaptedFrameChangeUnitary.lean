@@ -88,13 +88,13 @@ theorem perExt_injective : Function.Injective (C.perExt R) := by
 open Classical in
 theorem pPart_add (τ : Ψ) (y y' : Fin (j + j') → ℂ) :
     C.pPart R τ (y + y') = C.pPart R τ y + C.pPart R τ y' := by
-  simp only [LatEmb.pPart, smul_add, Pi.single_add, map_add]
+  simp only [LatEmb.pPart, smul_add, Pi.single_add, map_add (f := _)]
   module
 
 open Classical in
 theorem pBar_add (τ : Ψ) (y y' : Fin (j + j') → ℂ) :
     C.pBar R τ (y + y') = C.pBar R τ y + C.pBar R τ y' := by
-  simp only [LatEmb.pBar, smul_add, Pi.single_add, map_add]
+  simp only [LatEmb.pBar, smul_add, Pi.single_add, map_add (f := _)]
   module
 
 open Classical in

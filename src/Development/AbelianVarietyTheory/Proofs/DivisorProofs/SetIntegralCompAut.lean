@@ -35,7 +35,7 @@ theorem setIntegral_comp_aut {G : Type} [AddCommGroup G] [TopologicalSpace G] [I
       exact ⟨⟨e.symm a, hΓ' _ a.2⟩, Subtype.ext (e.apply_symm_apply _)⟩
     · intro γ x
       show e.symm (e γ + x) = γ + e.symm x
-      rw [map_add, e.symm_apply_apply]
+      rw [map_add (f := _), e.symm_apply_apply]
   obtain ⟨c, hc⟩ : ∃ c : NNReal, ν.map e = c • ν := ⟨_, Measure.isAddLeftInvariant_eq_smul _ ν⟩
   have hac : ν.map e ≪ ν := hc ▸ Measure.smul_absolutelyContinuous
   have hF' : IsAddFundamentalDomain Γ 𝓕 (ν.map e) := h𝓕.mono hac

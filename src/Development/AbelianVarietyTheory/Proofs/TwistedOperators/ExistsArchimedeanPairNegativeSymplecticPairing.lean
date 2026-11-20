@@ -33,7 +33,7 @@ theorem piInf_cA (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : EmbOver E w) (
   | tmul a e =>
     have hz : cA σ (a ⊗ₜ[F] e) = a ⊗ₜ[F] σ e := by simp [cA]
     rw [hz, piInf_tmul, piInf_tmul, star_mul', star_extensionEmbedding_eq h, hconj]
-  | add x y hx hy => simp only [map_add, hx, hy, star_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, star_add]
 
 private theorem trace_pi_real_eq_sum {ι : Type} [Fintype ι] [DecidableEq ι] (f : ι → ℝ) :
     Algebra.trace ℝ (ι → ℝ) f = ∑ i, f i := by
@@ -68,7 +68,7 @@ theorem trace_evI_trace (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbO
   refine Finset.sum_congr rfl fun w _ => ?_
   set t := Algebra.trace (AF F) (AE F E) z with ht
   have key : piInf (τ w) (algebraMap (AF F) (AE F E) t) = piInf (τ w) z + star (piInf (τ w) z) := by
-    rw [ht, ← GlobalTheory.GaussMean.OneVec.add_sigR (AF F) h z, map_add, ← piInf_cA h]
+    rw [ht, ← GlobalTheory.GaussMean.OneVec.add_sigR (AF F) h z, map_add (f := _), ← piInf_cA h]
     congr 2
   have hal : piInf (τ w) (algebraMap (AF F) (AE F E) t) =
       InfinitePlace.Completion.extensionEmbedding w (t.1 w) := by

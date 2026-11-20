@@ -42,7 +42,7 @@ theorem wStable_sup {B : Base F E} {om : Rep σ Y W} {D N₁ N₂ : Submodule �
     GlobalTheory.ThetaFac.WStable B om D (N₁ ⊔ N₂) := by
   refine ⟨fun v h hh Φ hΦ => ?_, fun γ hγ Φ hΦ Φ₁ hΦ₁ hd => ?_, fun k hk Φ hΦ => ?_⟩
   · obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hΦ
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (h₁.fin v h hh y hy) (h₂.fin v h hh z hz)
   · obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hΦ
     obtain ⟨y₁, hy₁D, hy₁⟩ := hD γ hγ y (l₁ hy)
@@ -53,14 +53,14 @@ theorem wStable_sup {B : Base F E} {om : Rep σ Y W} {D N₁ N₂ : Submodule �
         have hf : (fun t : ℝ => om (1, γ (Multiplicative.ofAdd t)) (y + z) x) =
             fun t : ℝ => om (1, γ (Multiplicative.ofAdd t)) y x + om (1, γ (Multiplicative.ofAdd t)) z x := by
           funext t
-          rw [map_add, Pi.add_apply]
+          rw [map_add (f := _), Pi.add_apply]
         rw [hf]
         exact (hy₁ x).add (hz₁ x)
       exact (hd x).unique h2
     rw [e]
     exact Submodule.add_mem_sup (h₁.lie γ hγ y hy y₁ hy₁D hy₁) (h₂.lie γ hγ z hz z₁ hz₁D hz₁)
   · obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hΦ
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (h₁.cpt k hk y hy) (h₂.cpt k hk z hz)
 
 theorem wStable_sSup {B : Base F E} {om : Rep σ Y W} {D : Submodule ℂ (Fn F n d)} {c : Set (Submodule ℂ (Fn F n d))}

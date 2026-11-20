@@ -99,7 +99,7 @@ theorem discr_jacobian_of_points :
         have h2 : e a (MvPowerSeries.C (MvPowerSeries.constantCoeff (F i)))
             = MvPowerSeries.constantCoeff (F i) := (e a).commutes _
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [hF, map_add, h2, map_sum] at h1
+          rw [hF, map_add (f := _), h2, map_sum] at h1
         rw [eq_neg_of_add_eq_zero_left h1.symm]
         refine neg_mem (Ideal.sum_mem _ fun j _ => ?_)
         rw [map_mul]

@@ -38,7 +38,7 @@ theorem evI_mul (a b : AF F) : evI F (a * b) = evI F a * evI F b :=
 
 theorem incI_add (x y : mixedEmbedding.mixedSpace F) : incI (x + y) = incI x + incI y := by
   show (⟨_, 0⟩ : Ainf F × Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) = ⟨_, 0 + 0⟩
-  rw [map_add, add_zero]
+  rw [map_add (f := _), add_zero]
   rfl
 
 theorem incI_smul (c : ℝ) (x : mixedEmbedding.mixedSpace F) : incI (c • x) = realAd F c * incI x := by
@@ -76,7 +76,7 @@ theorem archCo_lift (d : GlobalTheory.WeilM.Darboux B κ) (w : Vs κ) : GlobalTh
 
 theorem archCo_add (d : GlobalTheory.WeilM.Darboux B κ) (x y : W) :
     GlobalTheory.HeisOrbit.archCo d (x + y) = GlobalTheory.HeisOrbit.archCo d x + GlobalTheory.HeisOrbit.archCo d y := by
-  simp only [GlobalTheory.HeisOrbit.archCo, map_add]
+  simp only [GlobalTheory.HeisOrbit.archCo, map_add (f := _)]
   ext i <;> simp [evI_add]
 
 theorem archCo_smul (d : GlobalTheory.WeilM.Darboux B κ) (c : ℝ) (x : W) :
@@ -85,7 +85,7 @@ theorem archCo_smul (d : GlobalTheory.WeilM.Darboux B κ) (c : ℝ) (x : W) :
   ext i <;> simp [evI_mul, evI_realAd, Algebra.smul_def]
 
 theorem lift_add (d : GlobalTheory.WeilM.Darboux B κ) (w w' : Vs κ) : lift d (w + w') = lift d w + lift d w' := by
-  simp only [lift, ← map_add]
+  simp only [lift, ← map_add (f := _)]
   congr 1
   ext i <;> simp [incI_add]
 

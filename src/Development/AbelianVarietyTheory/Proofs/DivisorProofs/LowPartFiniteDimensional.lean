@@ -31,7 +31,7 @@ def dHdir (f : SInf F κ) :
   toFun v := dH v.1 v.2 ⇑f
   map_add' v w := by
     funext x
-    simp only [dH, Prod.fst_add, Prod.snd_add, map_add, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+    simp only [dH, Prod.fst_add, Prod.snd_add, map_add (f := _), Pi.add_apply, mul_add, Finset.sum_add_distrib]
     push_cast
     ring
   map_smul' r v := by

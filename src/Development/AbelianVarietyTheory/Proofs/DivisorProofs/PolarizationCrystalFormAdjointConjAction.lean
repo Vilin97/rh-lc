@@ -231,7 +231,7 @@ theorem adjoint_of_lbIso (P : GlobalTheory.Published.AbelianDeRham.Free) {R : Ty
   have v₁ : ∀ c : primDR A, primPull (dp0 R) (𝟙 _) (𝟙 A) c = c := fun c ↦
     Subtype.ext (IsMor.pullCohomologyOne_id _ _)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_add, hΛ, LinearMap.comp_apply, LinearEquiv.coe_coe, pullOver_pullOver,
+    simp only [map_sum, map_add (f := _), hΛ, LinearMap.comp_apply, LinearEquiv.coe_coe, pullOver_pullOver,
     lift_fst_assoc, lift_snd_assoc, lift_fst, lift_snd, Category.id_comp, MonObj.one_comp, pullOver_one,
     map_zero, v, v₁, mul_zero, zero_mul, sub_zero, zero_sub] at e
   simp only [wedgeForm_apply, push_apply, sub_eq_add_neg]

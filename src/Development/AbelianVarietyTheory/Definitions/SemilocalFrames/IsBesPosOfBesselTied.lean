@@ -247,7 +247,7 @@ theorem cA_hA (A : HSp D) (a a' : Fin A.rank → AE D) : cA D (hA A a a') = hA A
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
 theorem cenCo_add (L : HSp D) (c : D.host.E) (t t' : AE D) : cenCo L c (t + t') = cenCo L c t + cenCo L c t' := by
-  simp only [cenCo, mul_add, map_add]
+  simp only [cenCo, mul_add, map_add (f := _)]
 
 theorem cenCo_zero (L : HSp D) (c : D.host.E) : cenCo L c 0 = 0 := by
   simp only [cenCo, mul_zero, map_zero]
@@ -428,7 +428,7 @@ theorem probPair_change {A B V W : HSp D} (κ : WA A B ≃+ WA V W) (h1 : Contin
     refine IsAddFundamentalDomain.preimage_of_equiv (G := ratL V W) (H := ratL A B) hF hmp.quasiMeasurePreserving hf ?_
     intro y x
     change κ (κ.symm y + x) = y + κ x
-    rw [map_add, κ.apply_symm_apply]
+    rw [map_add (f := _), κ.apply_symm_apply]
   · exact (hmp.measure_preimage_emb e.measurableEmbedding 𝓕).trans hv
 
 theorem isPureAt_iff {A B V W : HSp D} {κ : WA A B ≃+ WA V W} {σ} (hκ : IsChange κ σ) (ψ : AddChar (AF D.host.F) ℂ)
@@ -445,7 +445,7 @@ theorem isPureAt_iff {A B V W : HSp D} {κ : WA A B ≃+ WA V W} {σ} (hκ : IsC
     refine forall_congr' fun x => ?_
     rw [κ.surjective.forall]
     refine forall_congr' fun y => ?_
-    rw [← hs, ← hs, κ.injective.eq_iff, κ.map_eq_zero_iff, ← h, ← h, ← h, ← h, map_add, map_zero]
+    rw [← hs, ← hs, κ.injective.eq_iff, κ.map_eq_zero_iff, ← h, ← h, ← h, ← h, map_add (f := _), map_zero]
   have hw : ∀ u w, Heisenberg₂ ψ V W (κ u) f (κ w) * star (f (κ w)) = IndefiniteRowSideFullHecke.HeisenbergWeilMatrices.rho ψ u (f ∘ κ) w * star ((f ∘ κ) w) :=
     fun u w => congrArg (· * star (f (κ w))) (congrFun (WeilTieCompare.heis_change hκ ψ u f) w)
   refine and_congr (iff_of_true (WeilTieCompare.exists_probPair V W) (WeilTieCompare.exists_probPair A B))

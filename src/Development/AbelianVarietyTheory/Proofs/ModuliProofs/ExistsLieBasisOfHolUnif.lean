@@ -79,7 +79,7 @@ theorem isDiff_add {w w' : Fin g → ℂ} {v v' : epsR ℂ ⟶ A} (hv : IsTan (R
   have h1 : ⊤ ≤ (1 : Chart.sp (R₀ := ℂ) ℂ ⟶ A).left ⁻¹ᵁ U := by
     rw [← hv]
     exact fun p _ => h (Set.mem_univ _)
-  rw [map_add, ← hd U h f, ← hd' U h' f]
+  rw [map_add (f := _), ← hd U h f, ← hd' U h' f]
   exact snd_evalPt_mul hv hv' U h1 h h' h'' f
 
 theorem isDiff_smul {w : Fin g → ℂ} {v : epsR ℂ ⟶ A} (hv : IsTan (R := ℂ) (G := A) v) (hd : u.IsDiff w v) (c : ℂ) :

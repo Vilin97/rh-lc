@@ -120,7 +120,7 @@ theorem char_eq_proj_nsmul_of_gsDecomp {ℓ : ℕ} (hℓ : ℓ.Prime) (b : ℕ)
       exact (val_intCast_nsmul_eq_zsmul (n := ℓ ^ b) hc k).symm)
     (fun g hg h hh => by
       show χ (Additive.ofMul (g * h)) = _
-      rw [ofMul_mul, map_add, hB h (gsDecomp_eq_one_of_unramifiedDegree_eq_one K S ιs v h hh), add_zero,
+      rw [ofMul_mul, map_add (f := _), hB h (gsDecomp_eq_one_of_unramifiedDegree_eq_one K S ιs v h hh), add_zero,
         map_mul, hh, mul_one]
       exact hg)
   have hg : g ∈ {g | χ (Additive.ofMul g) = (ProfiniteInteger.proj ⟨ℓ ^ b, pow_pos hℓ.pos b⟩

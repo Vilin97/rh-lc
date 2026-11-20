@@ -12,10 +12,10 @@ namespace SemicharacterExponentialLemmas
 variable {V : Type} [AddCommGroup V] [Module ℂ V]
 
 theorem altE_add_left (H : Sesq V) (x y z : V) : altE H (x + y) z = altE H x z + altE H y z := by
-  simp only [altE, map_add, LinearMap.add_apply, Complex.add_im]
+  simp only [altE, map_add (f := _), LinearMap.add_apply, Complex.add_im]
 
 theorem altE_add_right (H : Sesq V) (x y z : V) : altE H x (y + z) = altE H x y + altE H x z := by
-  simp only [altE, map_add, Complex.add_im]
+  simp only [altE, map_add (f := _), Complex.add_im]
 
 theorem altE_neg_right (H : Sesq V) (x y : V) : altE H x (-y) = -altE H x y := by
   simp only [altE, map_neg, Complex.neg_im]

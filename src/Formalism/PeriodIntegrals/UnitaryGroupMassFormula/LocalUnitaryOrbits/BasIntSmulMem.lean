@@ -16,7 +16,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem basRatV_add (x y : Fin n → E) :
     ratV (F := F) (Fv F v) (x + y) = ratV (F := F) (Fv F v) x + ratV (F := F) (Fv F v) y := by
   funext i
-  simp [ratV, map_add]
+  simp [ratV, map_add (f := _)]
 
 theorem basRatV_zsmul (c : ℤ) (x : Fin n → E) :
     ratV (F := F) (Fv F v) (c • x) = c • ratV (F := F) (Fv F v) x := by

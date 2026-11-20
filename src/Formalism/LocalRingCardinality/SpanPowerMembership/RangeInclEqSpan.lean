@@ -308,13 +308,13 @@ def toThN : NTh R H what₂ LL0 N (C.toTwN I) (C.toExpN I) where
     C.iC i (algebraMap (C.O i) (FractionRing (C.O i)) (MvPolynomial.constantCoeff P))
   thV_add (i : C.Tw) j (φ φ' : (I.ix j → 𝓞 H.E) → FractionRing (C.O i)) P y := by
     show C.iC i (φ _ + φ' _) * _ = _
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
   thV_smul (i : C.Tw) j a (φ : (I.ix j → 𝓞 H.E) → FractionRing (C.O i)) P y := by
     show C.iC i (a * φ _) * _ = _
     rw [map_mul, mul_assoc]
   thV_addP (i : C.Tw) j φ (P P' : MvPolynomial Empty (C.O i)) y := by
     show _ * C.iC i (algebraMap _ _ (MvPolynomial.constantCoeff (P + P'))) = _
-    rw [map_add, map_add, map_add, mul_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), mul_add]
   thV_smulP (i : C.Tw) j (c : C.O i) φ (P : MvPolynomial Empty (C.O i)) y := by
     show _ * C.iC i (algebraMap _ _ (MvPolynomial.constantCoeff (c • P))) = _
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.constantCoeff_C, map_mul, map_mul]

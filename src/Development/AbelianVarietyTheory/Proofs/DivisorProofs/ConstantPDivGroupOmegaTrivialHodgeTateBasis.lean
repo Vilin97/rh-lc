@@ -77,7 +77,7 @@ theorem hodgeTate_smul_val {p : ℕ} [Fact p.Prime] {O : Type} [CommRing O] (G :
     rfl
   have e1 : a • t = (digit n a : ℤ_[p]) • t + (p : ℤ_[p]) ^ n • (c • t) := by
     rw [← mul_smul, ← add_smul, ← ha]
-  rw [e1, map_add]
+  rw [e1, map_add (f := _)]
   change (hodgeTate G _).1 n + (hodgeTate G _).1 n = _
   rw [h2, add_zero, h3]
 
@@ -200,7 +200,7 @@ theorem level_indep (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C
     obtain ⟨t, rfl⟩ := G.pt_surjective C n x
     obtain ⟨s, rfl⟩ := G.pt_surjective C n y
     change a ((t + s).pt n) = _
-    rw [ha, ha, ha, map_add]
+    rw [ha, ha, ha, map_add (f := _)]
   let M : CartierDual O (G.A n) →ₗ[O] CartierDual O (G.A n) →ₗ[O] Q :=
     (LinearMap.lsmul O Q).compl₁₂ (counitAlgHom O (CartierDual O (G.A n))).toLinearMap D
   have key : (LinearMap.mul O (CartierDual O (G.A n))).compr₂ D = M + M.flip :=

@@ -151,7 +151,7 @@ theorem marked_isometry_half {D : D7} (V : HSp D) {H : ReciprocityTheory.ChartRe
         funext i
         exact TensorProduct.tmul_sub _ _ _)
     refine ⟨φ'.symm ⟨w, (hmem' w).2 (hw ▸ hz)⟩, φ'.injective (Subtype.ext ?_)⟩
-    rw [hgam, sub_eq_iff_eq_add'.1 e', map_add, map_nsmul, LinearEquiv.apply_symm_apply]
+    rw [hgam, sub_eq_iff_eq_add'.1 e', map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply]
     rfl
 
 section Dict

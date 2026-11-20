@@ -32,7 +32,7 @@ def locRing (ℓ : Nat.Primes) : Subring E where
     · rcases (Nat.Prime.dvd_mul ℓ.2).1 h with h | h
       exacts [hn h, hm h]
     · rw [Nat.cast_mul, show (((m : 𝓞 E) * a + (n : 𝓞 E) * b : 𝓞 E) : E) = (m : E) * (a : E) + (n : E) * (b : E) by
-        simp [map_add, map_mul (algebraMap (𝓞 E) E)], ← ha, ← hb]
+        simp [map_add (f := _), map_mul (algebraMap (𝓞 E) E)], ← ha, ← hb]
       ring
   zero_mem' := ⟨1, 0, by simpa using ℓ.2.one_lt.ne', by simp⟩
   neg_mem' := by

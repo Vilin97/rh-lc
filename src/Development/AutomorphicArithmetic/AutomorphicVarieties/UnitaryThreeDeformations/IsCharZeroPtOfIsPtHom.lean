@@ -59,7 +59,7 @@ private theorem exists_dvr {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [Alg
       exact hB _ (Or.inr ⟨x, hx, rfl⟩)
         ((Algebra.IsIntegral.isIntegral x).map (IsScalarTower.toAlgHom ℤ_[l] O (PadicAlgCl l)))
     | zero => simpa using B.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact B.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact B.add_mem hx hy
     | smul c x _ hx => rw [Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply]; exact B.mul_mem (B.algebraMap_mem c) hx
   let A : Subalgebra O (PadicAlgCl l) := { B.toSubsemiring with algebraMap_mem' := hO }
   have d1 : IsDiscreteValuationRing B := IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing e
@@ -84,7 +84,7 @@ private theorem exists_co {O A : Type} [CommRing O] [IsLocalRing O] [IsNoetheria
         rintro x y ⟨a, ha⟩ ⟨b, hb⟩
         refine ⟨a + b, ?_⟩
         have : x + y - algebraMap O A (a + b) = (x - algebraMap O A a) + (y - algebraMap O A b) := by
-          rw [map_add]; ring
+          rw [map_add (f := _)]; ring
         rw [this]
         exact add_mem ha hb
       algebraMap_mem' := fun a => ⟨a, by simp⟩ }
@@ -195,7 +195,7 @@ private theorem ev_eq {O R K : Type} [CommRing O] [CommRing R] [Algebra O R] [No
         rw [MvPowerSeries.monomial_mul_monomial, one_mul]
       have : (⟨_, hP (mono_mem W.wt (a + b))⟩ : P) = ⟨_, hP (mono_mem W.wt a)⟩ * ⟨_, hP (mono_mem W.wt b)⟩ :=
         Subtype.ext e
-      rw [this, e, map_mul, map_mul, ha, hb, map_add, _root_.zpow_add, Units.val_mul]
+      rw [this, e, map_mul, map_mul, ha, hb, map_add (f := _), _root_.zpow_add, Units.val_mul]
       ring
     | single i k =>
       have : (⟨_, hP (mono_mem W.wt (Finsupp.single i k))⟩ : P) = ⟨_, hP (X_mem_wtPart O W.wt i)⟩ ^ k :=
@@ -244,7 +244,7 @@ private theorem ev_eq {O R K : Type} [CommRing O] [CommRing R] [Algebra O R] [No
         have he3 : Φ f - ψ ⟨f, hP hf⟩ =
             ∑ m ∈ μ, (Φ (b m) - ψ ⟨_, hP (hb m)⟩) * Φ (MvPowerSeries.monomial m 1) := by
           set_option synthInstance.maxHeartbeats 100000 in
-            rw [he2, congrArg Φ he', map_add, map_add, AlgHom.commutes, AlgHom.commutes, add_sub_add_left_eq_sub,
+            rw [he2, congrArg Φ he', map_add (f := _), map_add (f := _), AlgHom.commutes, AlgHom.commutes, add_sub_add_left_eq_sub,
             map_sum, map_sum, ← Finset.sum_sub_distrib]
           refine Finset.sum_congr rfl fun m hm => ?_
           rw [map_mul, map_mul, sub_mul, hmono m, congrArg (t ^ ·) (hμ hm).2]

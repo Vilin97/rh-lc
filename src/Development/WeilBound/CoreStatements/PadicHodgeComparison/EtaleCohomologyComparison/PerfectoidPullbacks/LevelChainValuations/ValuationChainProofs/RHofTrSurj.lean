@@ -35,7 +35,7 @@ theorem acris_zero_surjective : Function.Surjective (PAlg.base l).cris0 := by
   | add x y hx hy ihx ihy =>
     obtain ⟨a, ha⟩ := ihx
     obtain ⟨b, hb⟩ := ihy
-    exact ⟨a + b, by rw [map_add, ha, hb]; rfl⟩
+    exact ⟨a + b, by rw [map_add (f := _), ha, hb]; rfl⟩
   | mul x y hx hy ihx ihy =>
     obtain ⟨a, ha⟩ := ihx
     obtain ⟨b, hb⟩ := ihy

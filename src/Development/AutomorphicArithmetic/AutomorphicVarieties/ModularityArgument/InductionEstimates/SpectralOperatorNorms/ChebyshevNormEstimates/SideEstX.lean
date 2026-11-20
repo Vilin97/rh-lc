@@ -116,7 +116,7 @@ private theorem tr_bd {E : Type} [Field E] [NumberField E] {μ : Measure (normOn
         ((eigP 𝔣.a₀ x ∘L a ∘L symb 𝔣.βg 0 : Eu 𝔣.d' →L[ℂ] Eu 𝔣.d') : Eu 𝔣.d' →ₗ[ℂ] Eu 𝔣.d') ∘ₗ
         (𝔣.s.toLinearEquiv : Eu 𝔣.d →ₗ[ℂ] Eu 𝔣.d'))
       map_add' := fun a b => by
-        rw [← map_add]; congr 1; ext v; simp
+        rw [← map_add (f := _)]; congr 1; ext v; simp
       map_smul' := fun c a => by
         rw [RingHom.id_apply, ← map_smul]; congr 1; ext v; simp }
   refine ⟨‖LinearMap.toContinuousLinearMap Ψ‖, norm_nonneg _, fun j => ?_⟩

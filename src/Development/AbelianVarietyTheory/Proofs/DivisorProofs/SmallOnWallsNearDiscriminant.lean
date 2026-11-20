@@ -122,7 +122,7 @@ theorem vanNear_all {j : ℕ} (hj : 1 ≤ j) (hjN : j < N) {P : Pol ι N} (hP : 
 noncomputable def antiSub (ι : Type) [Fintype ι] [DecidableEq ι] (N j n : ℕ) : Submodule ℝ (Pol ι N) where
   carrier := {P | P.IsHomogeneous n ∧ AntiL j P}
   add_mem' := fun {P Q} hP hQ => ⟨hP.1.add hQ.1, fun τ a b h1 h2 => by
-    rw [map_add, hP.2 τ a b h1 h2, hQ.2 τ a b h1 h2, neg_add]⟩
+    rw [map_add (f := _), hP.2 τ a b h1 h2, hQ.2 τ a b h1 h2, neg_add]⟩
   zero_mem' := ⟨isHomogeneous_zero _ _ _, fun τ a b _ _ => by simp⟩
   smul_mem' := fun c P hP => ⟨(homogeneousSubmodule (ι × Fin N) ℝ n).smul_mem c hP.1,
     fun τ a b h1 h2 => by rw [map_smul, hP.2 τ a b h1 h2, smul_neg]⟩

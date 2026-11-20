@@ -32,7 +32,7 @@ theorem typeChar_apply (e : (Σ a, m a) ≃ n) (θ : α → 𝓀[k]ˣ →* ℂˣ
 
 def typeSp (π : Representation ℂ (GL n k) V) (e : (Σ a, m a) ≃ n) (θ : α → 𝓀[k]ˣ →* ℂˣ) : Submodule ℂ V where
   carrier := {v | ∀ g : parahoric k e, π g v = (typeChar e θ g : ℂ) • v}
-  add_mem' := fun {a b} ha hb g => by rw [map_add, ha g, hb g, smul_add]
+  add_mem' := fun {a b} ha hb g => by rw [map_add (f := _), ha g, hb g, smul_add]
   zero_mem' := fun g => by simp
   smul_mem' := fun c v hv g => by rw [map_smul, hv g, smul_comm]
 

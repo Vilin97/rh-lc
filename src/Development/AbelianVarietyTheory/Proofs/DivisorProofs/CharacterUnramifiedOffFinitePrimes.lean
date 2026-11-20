@@ -71,7 +71,7 @@ theorem unr_off : ∀ (D : D7) (c : (AE D)ˣ →* Circle), Continuous c →
     intAE_mul hg (sub_mem h1 intAE_one), ?_⟩
   · have h0 := infPart_idem he.1
     have := congrArg (infPart D) hx
-    simp only [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, h0, zero_mul, zero_add, sub_zero] at this
+    simp only [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, h0, zero_mul, zero_add, sub_zero] at this
     exact this.symm
   · have := congrArg (finPart D) key
     simp only [RingHom.map_sub, RingHom.map_one, RingHom.map_mul, map_natCast] at this

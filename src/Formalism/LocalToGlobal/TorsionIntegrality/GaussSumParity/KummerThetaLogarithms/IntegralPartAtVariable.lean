@@ -119,7 +119,7 @@ theorem inS_add (hU : UnrOK K l σ) (hF : IsLawOfLog l F) (hF1 : F1 F be0) {α �
   have hG := integral_part_at_variable hU.1 σ (0 : Fin 2)
   have hH := integral_part_at_variable hU.1 σ (1 : Fin 2)
   refine ⟨(IsUltrametricDist.norm_add_le_max _ _).trans (max_le hα.1 hβ.1), ?_, ?_⟩
-  · rw [map_add, map_add, hα.2.1, hβ.2.1]
+  · rw [map_add (f := _), map_add (f := _), hα.2.1, hβ.2.1]
   · rw [map_add σ, map_add C, map_add C, add_mul, add_mul]
     refine sim_trans (hadd1 _ _ _ (hmul α _ hα.1 hα.2.1 hG) (hmul β _ hβ.1 hβ.2.1 hG) hH) ?_
     refine sim_trans (sim_add hα.2.2 hβ.2.2) (sim_symm ?_)

@@ -72,7 +72,7 @@ theorem d1_apply (y z : D) : W.d1 y z = (W.γ y - y) - (W.φ z - z) := rfl
 theorem diffOne_zero : W.d1 0 0 = 0 := by simp [d1]
 
 theorem diffOne_add (y z y' z' : D) : W.d1 (y + y') (z + z') = W.d1 y z + W.d1 y' z' := by
-  simp only [d1, map_add]; abel
+  simp only [d1, map_add (f := _)]; abel
 
 theorem diffOne_smul_of_tower (c : O) (y z : D) : W.d1 (c • y) (c • z) = c • W.d1 y z := by
   simp only [d1, map_smul, smul_sub]
@@ -117,7 +117,7 @@ theorem isCob1_zero : W.IsCob1 0 0 := ⟨0, W.N.zero_mem, by simp, by simp⟩
 theorem isCob1_add {y z y' z' : D} (h : W.IsCob1 y z) (h' : W.IsCob1 y' z') :
     W.IsCob1 (y + y') (z + z') := by
   obtain ⟨x, hx, rfl, rfl⟩ := h; obtain ⟨x', hx', rfl, rfl⟩ := h'
-  refine ⟨x + x', W.N.add_mem hx hx', ?_, ?_⟩ <;> simp only [map_add] <;> abel
+  refine ⟨x + x', W.N.add_mem hx hx', ?_, ?_⟩ <;> simp only [map_add (f := _)] <;> abel
 
 theorem isCob1_smulO (c : O) {y z : D} (h : W.IsCob1 y z) : W.IsCob1 (c • y) (c • z) := by
   obtain ⟨x, hx, rfl, rfl⟩ := h

@@ -34,7 +34,7 @@ theorem scaleS_monomial (m : σ →₀ ℕ) :
   | add f g hf hg =>
     have : (monomial (f + g) (1 : R)) = monomial f 1 * monomial g 1 := by
       rw [monomial_mul, one_mul]
-    rw [this, map_mul, hf, hg, map_add, pow_add, map_mul]
+    rw [this, map_mul, hf, hg, map_add (f := _), pow_add, map_mul]
     ring
   | single v k =>
     rw [← MvPolynomial.X_pow_eq_monomial, map_pow]

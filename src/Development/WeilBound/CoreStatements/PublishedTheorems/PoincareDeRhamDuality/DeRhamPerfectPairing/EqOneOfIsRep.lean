@@ -146,7 +146,7 @@ theorem pt_transl [IsCommMonObj A] (v : epsR K ⟶ A) (P : Pt (epsR K ⊗ A).hom
         (RingHom.congr_fun (fstHomPt_comp P) k).symm
       have h2 : c = algebraMap K _ c.fst + algebraMap K _ c.snd * DualNumber.eps := by
         ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
-      conv_rhs => rw [h2, map_add, map_mul, ← h1, ← h1]
+      conv_rhs => rw [h2, map_add (f := _), map_mul, ← h1, ← h1]
       simp [evEps, dualMap, Algebra.smul_def, TrivSqZeroExt.algebraMap_eq_inl]
   let y : Over.mk (spMap (algebraMap K P.B)) ⟶ epsR K ⊗ A := Over.homMk P.x P.w
   let j : Over.mk (spMap (algebraMap K P.B)) ⟶

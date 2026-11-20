@@ -170,7 +170,7 @@ theorem thetaTranslation_canonicalOddTheta_lattice : ∀ ω ∈ Λ, ∀ z,
   have hn : ((‖a‖ ^ 2 * τ.im : ℝ) : ℂ) = a * (starRingEnd ℂ) a * τ.im := by
     rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]; push_cast; rfl
   rw [hn]
-  simp only [map_mul, map_add, map_intCast, hc]
+  simp only [map_mul, map_add (f := _), map_intCast, hc]
   push_cast
   field_simp
   ring

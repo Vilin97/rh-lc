@@ -26,7 +26,7 @@ theorem finprod_add_of_at {F : Type} [Field F] [NumberField F] {κ : Type} [Fint
     have := congrArg (evFin F v) (congrFun (hz u hu) i)
     simpa [h1] using this
   refine finprod_congr fun v => congrArg (φ v) (funext fun i => ?_)
-  rw [Pi.add_apply, map_add, h2 v i, add_zero]
+  rw [Pi.add_apply, map_add (f := _), h2 v i, add_zero]
 
 theorem hasDerivAt_theta_pure (hP : GlobalTheory.FunPr.Hypotheses₂) {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ} {Y : Spc F E n} {W : Spc F E d} (M : Model σ Y W) (ψ : AddChar (AF F) ℂ)

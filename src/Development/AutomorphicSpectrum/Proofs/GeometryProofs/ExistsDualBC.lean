@@ -51,13 +51,13 @@ theorem clear_denom [Module.Finite A L₀] (hinj : Function.Injective (algebraMa
     | add c d _ _ hc hd =>
       obtain ⟨a, ha⟩ := hc
       obtain ⟨a', ha'⟩ := hd
-      exact ⟨a + a', by rw [map_add, map_add, ha, ha', mul_add]⟩
+      exact ⟨a + a', by rw [map_add (f := _), map_add (f := _), ha, ha', mul_add]⟩
     | smul r c _ hc =>
       obtain ⟨a, ha⟩ := hc
       exact ⟨r * a, by rw [map_mul, map_smul, ha, Algebra.smul_def]; ring⟩
   choose w₀ hw₀ using hall
   refine ⟨u, ⟨⟨w₀, fun a b => hinj ?_⟩, fun r a => hinj ?_⟩, h1, h2, hw₀⟩
-  · rw [map_add, hw₀, hw₀, hw₀, map_add, mul_add]
+  · rw [map_add (f := _), hw₀, hw₀, hw₀, map_add (f := _), mul_add]
   · show algebraMap A Ω (w₀ (r • a)) = algebraMap A Ω (r * w₀ a)
     rw [map_mul, hw₀, hw₀, map_smul, Algebra.smul_def]; ring
 

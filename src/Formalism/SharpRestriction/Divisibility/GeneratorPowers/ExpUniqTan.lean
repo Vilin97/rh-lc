@@ -25,7 +25,7 @@ private theorem sub_C_mem_lemma {κ : Type} (r : MvPolynomial κ R) : r - C (con
     simp
   · intro p q hp hq
     have e : p + q - C (constantCoeff (p + q)) = (p - C (constantCoeff p)) + (q - C (constantCoeff q)) := by
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       ring
     rw [e]
     exact add_mem hp hq
@@ -44,7 +44,7 @@ private theorem aug_mk_lemma_2 {κ : Type} (r : MvPolynomial κ R) :
   · intro a
     simp
   · intro p q hp hq
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   · intro p i _
     simp
 

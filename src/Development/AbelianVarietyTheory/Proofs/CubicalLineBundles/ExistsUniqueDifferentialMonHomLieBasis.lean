@@ -58,7 +58,7 @@ theorem existsUnique_isDiffOf : ∀ (K : Type) [Field K] [NumberField K] (P : Ou
       exact hcoord _ _ _ (hN u c hu) (hd u c hu)
     · simp
     · intro x y _ _ hx hy
-      rw [map_add, map_add, hx, hy]
+      rw [map_add (f := _), map_add (f := _), hx, hy]
     · intro r x _ hx
       rw [← algebraMap_smul K r x, map_smul, map_smul, hx]
   refine ⟨⟨M, hd, huniq⟩, f₀, hf₀, e, fun N hN => ?_⟩

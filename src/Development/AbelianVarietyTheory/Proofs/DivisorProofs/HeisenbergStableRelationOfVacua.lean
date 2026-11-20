@@ -127,7 +127,7 @@ theorem rel_of_vac : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
           GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F (pl w)) χ r)
         map_add' := fun a b => Prod.ext (funext fun u => by
             by_cases hu : u ∈ (H : Set _)
-            · simp only [Set.indicator_of_mem hu, map_add, Pi.add_apply, Prod.fst_add, add_mul]
+            · simp only [Set.indicator_of_mem hu, map_add (f := _), Pi.add_apply, Prod.fst_add, add_mul]
             · simp only [Set.indicator_of_notMem hu, Prod.fst_add, Pi.add_apply, add_zero])
           (funext fun _ => add_mul _ _ _)
         map_smul' := fun c a => Prod.ext (funext fun u => by
@@ -207,7 +207,7 @@ theorem rel_of_vac : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
       intro p χ hχ
       obtain ⟨u, hu, rfl⟩ := exists_at_locCo M.co (pl w) p
       obtain ⟨x, hx, y, hy, rfl⟩ := hdec w hwP u hu
-      rw [map_add]
+      rw [map_add (f := _)]
       exact schr_add_mem _ N _ _ (hstA x hx) (hstA' y hy) χ hχ
     have hN : N = GlobalTheory.WeilM.SB _ :=
       GlobalTheory.T.schroedinger_irreducible_finitePlaceCompletion (pl w) (GlobalTheory.LatVac.psiAt ψ (pl w)) (GlobalTheory.SchrSB.continuous_psiAt ψ hstd.1 _)

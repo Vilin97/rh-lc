@@ -75,7 +75,7 @@ private lemma exists_chi {A : Type} [CommRing A] [Nontrivial A] (g : A[X]) (N m 
     exact lt_of_le_of_lt Polynomial.degree_le_natDegree
       (by exact_mod_cast lt_of_le_of_lt hpdeg hlt)
   · intro S _ _ x hx
-    rw [Polynomial.map_add, hp S x hx, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sub,
+    rw [Polynomial.map_add (f := _), hp S x hx, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sub,
       Polynomial.map_pow, Polynomial.map_X, add_sub_cancel, hΦ, Polynomial.map_prod]
     refine Finset.prod_congr rfl (fun J _ => ?_)
     rw [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C, AlgHom.toRingHom_eq_coe,

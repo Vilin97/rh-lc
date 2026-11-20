@@ -280,7 +280,7 @@ theorem saturated : ∀ (O K : Type) [CommRing O] [IsDedekindDomain O] [Field K]
       exists_quot_at hO G GK φ hG h X i MT hMT M (io δ) δ (hL δ) a ha y hδ.symm P hP χ
     choose r hr using hdiv
     let δ' : X →+ O := AddMonoidHom.mk' r fun p q =>
-      mul_left_cancel₀ ha (by rw [_root_.mul_add, ← hr, ← hr, ← hr, map_add])
+      mul_left_cancel₀ ha (by rw [_root_.mul_add, ← hr, ← hr, ← hr, map_add (f := _)])
     have e₁ : a • δ' = δ := by
       ext χ
       exact (hr χ).symm

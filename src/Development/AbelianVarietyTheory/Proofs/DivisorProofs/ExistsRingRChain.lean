@@ -199,7 +199,7 @@ theorem projective_tensor {M : Type} [AddCommGroup M] [Module A M] (d : A) (e : 
   · simpa [TensorProduct.smul_tmul'] using congrArg (Algebra.TensorProduct.lmul' A) h
   · induction t using TensorProduct.induction_on with
     | zero => exact ⟨0, map_zero _⟩
-    | add s t hs ht => exact hs.elim fun a ha => ht.elim fun b hb => ⟨a + b, by rw [map_add, ha, hb]⟩
+    | add s t hs ht => exact hs.elim fun a ha => ht.elim fun b hb => ⟨a + b, by rw [map_add (f := _), ha, hb]⟩
     | tmul b x =>
       obtain ⟨s, rfl⟩ := Ideal.Quotient.mk_surjective x
       refine ⟨s • b, ?_⟩

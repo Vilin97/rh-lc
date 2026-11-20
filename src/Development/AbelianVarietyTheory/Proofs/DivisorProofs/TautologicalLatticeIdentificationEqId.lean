@@ -23,7 +23,7 @@ theorem lattice_iso_eq_of_tautPts : ∀ {o W : Type} [CommRing o] [CommRing W] [
   have hcong : ∀ a, GlobalTheory.Poinc.CongMod n (ga a) a := by
     intro a
     obtain ⟨p₁, p₂, hy₁, -, hy₂, -, p', hp', -, z, hz, -⟩ := hpts a
-    have h : e₂ p₂.y = e₂ (φ p₁.y) + n • e₂ z := by rw [hz, map_add, hp', map_nsmul]
+    have h : e₂ p₂.y = e₂ (φ p₁.y) + n • e₂ z := by rw [hz, map_add (f := _), hp', map_nsmul]
     rw [hy₂, hy₁, AddEquiv.apply_symm_apply] at h
     refine ⟨-(e₂ z), ?_⟩
     rw [smul_neg, eq_add_neg_iff_add_eq, hga]

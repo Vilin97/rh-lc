@@ -64,7 +64,7 @@ theorem exists_coords_of_frame {A κ : Type} [CommRing A] [CommRing κ] {n : ℕ
         have e : (⟨(B *ᵥ ((y + z : L) : Fin n → A)) i, hmem (y + z) i⟩ : R) =
             ⟨_, hmem y i⟩ + ⟨_, hmem z i⟩ := Subtype.ext (by simp [Matrix.mulVec_add])
         simp only [Pi.add_apply]
-        rw [e, map_add]
+        rw [e, map_add (f := _)]
       map_smul' := by
         intro a y
         funext i
@@ -118,7 +118,7 @@ theorem exists_coords_of_frame {A κ : Type} [CommRing A] [CommRing κ] {n : ℕ
             rw [Matrix.mulVec_add, Pi.add_apply]
           refine ⟨e ▸ R.add_mem h1 h2, ?_⟩
           have e3 : (⟨(B *ᵥ (u + v)) i, e ▸ R.add_mem h1 h2⟩ : R) = ⟨_, h1⟩ + ⟨_, h2⟩ := Subtype.ext e
-          rw [e3, map_add, e1, e2, add_zero]
+          rw [e3, map_add (f := _), e1, e2, add_zero]
       funext i
       obtain ⟨_, h⟩ := key i
       rw [hc]

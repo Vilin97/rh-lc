@@ -587,10 +587,10 @@ theorem det_form_bound_field : Formalism.HermitianLatticeCounting.S6.DetBBoundK 
     have hpar : ∀ x : U, (σ (h (x - η x) (x - η x))).re ≤ 4 * (σ (h x x)).re := by
       intro x
       have e : h (x - η x) (x - η x) + h (x + η x) (x + η x) = 4 * h x x := by
-        simp only [map_sub, map_add, LinearMap.sub_apply, LinearMap.add_apply, hη]
+        simp only [map_sub, map_add (f := _), LinearMap.sub_apply, LinearMap.add_apply, hη]
         ring
       have h1 : (σ (h (x - η x) (x - η x) + h (x + η x) (x + η x))).re = (σ (4 * h x x)).re := by rw [e]
-      rw [σ.map_add, σ.map_mul, Complex.add_re] at h1
+      rw [σ.map_add (f := _), σ.map_mul, Complex.add_re] at h1
       have h2 : (σ 4 * σ (h x x)).re = 4 * (σ (h x x)).re := by
         have : σ 4 = ((4:ℝ) : ℂ) := by
           rw [map_ofNat]; norm_num

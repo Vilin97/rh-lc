@@ -54,7 +54,7 @@ theorem exists_fns (hU : Rl.toRealDat.LUnif) (hW : Rl.toRealDat.models_HW) (hv :
   classical
   let L : (Rl.HW j (sg0 D A3.A)).H →ₗ[ℂ] (GA D (Wc D j) → ℂ) :=
     { toFun := fun x => (Rl.HW j (sg0 D A3.A)).e x (v₀ j _)
-      map_add' := fun x y => by rw [map_add]; rfl
+      map_add' := fun x y => by rw [map_add (f := _)]; rfl
       map_smul' := fun c x => by rw [map_smul]; rfl }
   have hL : LinearMap.ker L = ⊥ :=
     LinearMap.ker_eq_bot.2 fun x y h => GlobalTheory.LiftScalarCompare.eval_inj hW hv h
@@ -98,7 +98,7 @@ theorem exists_coords {m : ℕ} {φ : Fin m → (GA D (Wc D j) → ℂ)}
     | add x y hx hy =>
       obtain ⟨A, hA⟩ := hx
       obtain ⟨A', hA'⟩ := hy
-      exact ⟨A + A', fun ρ hρ => by rw [map_add, hA, hA', ← Finset.sum_add_distrib]; simp [add_smul]⟩
+      exact ⟨A + A', fun ρ hρ => by rw [map_add (f := _), hA, hA', ← Finset.sum_add_distrib]; simp [add_smul]⟩
     | tmul c g =>
       obtain ⟨r, hr⟩ := hφ g
       refine ⟨fun a => (show FractionRing (D.ntw.O i) from c) * sideEmb D.ntw i b (r a), fun ρ hρ => ?_⟩
@@ -110,7 +110,7 @@ theorem exists_coords {m : ℕ} {φ : Fin m → (GA D (Wc D j) → ℂ)}
   | add x y hx hy =>
     obtain ⟨A, hA⟩ := hx
     obtain ⟨A', hA'⟩ := hy
-    exact ⟨A + A', fun ρ hρ ν => by rw [map_add, hA, hA', ← smul_add, ← Finset.sum_add_distrib]; simp [add_smul]⟩
+    exact ⟨A + A', fun ρ hρ ν => by rw [map_add (f := _), hA, hA', ← smul_add, ← Finset.sum_add_distrib]; simp [add_smul]⟩
   | tmul c f =>
     obtain ⟨A, hA⟩ := key (YS.eF i _ b (Nat.le_add_left _ _) j.2 f)
     refine ⟨fun a => algebraMap _ _ c * fracIncl i k (A a), fun ρ hρ ν => ?_⟩
@@ -205,7 +205,7 @@ end Coord
 theorem mem_GfC_of_suppAt {D : D7} {V : TH.HSp D} {Q : Finset (Pl D.host.E)} (hQ : SplitSet Q) {g : GA D V}
     (hg : SuppAt (idem Q) V g) : g ∈ GfC V := by
   have h0 := GlobalTheory.PlaceVec.idemSum_infPart hQ.isIdemSum
-  have hf : infPart D (idem Q + cA D (idem Q)) = 0 := by rw [map_add, h0, GlobalTheory.PlaceVec.infPart_cA h0, add_zero]
+  have hf : infPart D (idem Q + cA D (idem Q)) = 0 := by rw [map_add (f := _), h0, GlobalTheory.PlaceVec.infPart_cA h0, add_zero]
   refine Units.ext (Matrix.ext fun a c => ?_)
   have h := congrArg (infPart D) (hg a c)
   rw [map_mul, hf, zero_mul, Matrix.sub_apply, map_sub, eq_comm, sub_eq_zero] at h
@@ -268,7 +268,7 @@ theorem twLat_le (hU : p.R.toRealDat.LUnif) (hW : p.R.toRealDat.models_HW) (hv :
           GlobalTheory.IndefiniteRowSideFullHecke.ToricLatticeDenominators.incl D.nexp (ex.nch.twI w) ((j : ℕ) + 1) (ex.nch.sd w) (ex.nch.Oe w) (ex.nch.k' w) y := fun o y => by
     induction y using TensorProduct.induction_on with
     | zero => rw [smul_zero, map_zero, smul_zero]
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
     | tmul a f =>
       rw [TensorProduct.smul_tmul', GlobalTheory.IndefiniteRowSideFullHecke.ToricLatticeDenominators.incl, LinearMap.rTensor_tmul, LinearMap.rTensor_tmul, TensorProduct.smul_tmul']
       congr 1
@@ -303,7 +303,7 @@ theorem twLat_le (hU : p.R.toRealDat.LUnif) (hW : p.R.toRealDat.models_HW) (hv :
     | add P₁ P₂ _ _ h1 h2 =>
       obtain ⟨g1, e1, m1⟩ := h1
       obtain ⟨g2, e2, m2⟩ := h2
-      exact ⟨g1 + g2, by rw [map_add, map_add, e1, e2], by rw [map_add]; exact add_mem m1 m2⟩
+      exact ⟨g1 + g2, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), e1, e2], by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem m1 m2⟩
     | smul a P₁ _ h1 =>
       obtain ⟨g1, e1, m1⟩ := h1
       obtain ⟨o, ho⟩ := a.2

@@ -98,7 +98,7 @@ theorem fg_of_int {E V : Type} [Field E] [NumberField E] [StarRing E] [AddCommGr
       exact congrFun hy ⟨l, hl⟩
     · simp
     · intro a c _ _ ha hc
-      rw [map_add, LinearMap.add_apply, ha, hc, add_zero]
+      rw [map_add (f := _), LinearMap.add_apply, ha, hc, add_zero]
     · intro e a _ ha
       rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, ha, smul_zero]
   apply Submodule.fg_of_fg_map_injective Φ hΦ
@@ -209,12 +209,12 @@ theorem stabY_finite : ∀ (D : D7) (Z : LocDat D) (FP : ∀ p : PlF D, LocNG.FP
     induction hwΘ using Submodule.span_induction with
     | mem w hw =>
       obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hl1
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       refine add_mem (hint w hw a ha.1 ha.2) ?_
       rw [(memW w).1 hw.1 b hb.2]
       exact zero_mem _
     | zero => rw [map_zero]; exact zero_mem _
-    | add a c _ _ ha hc => rw [map_add]; exact add_mem ha hc
+    | add a c _ _ ha hc => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hc
     | smul o a _ ha =>
       rw [← algebraMap_smul D.host.E o a, map_smul, smul_eq_mul]
       exact Submodule.mul_mem_mul (Submodule.mem_one.2 ⟨o, rfl⟩) ha |> fun h => by simpa using h

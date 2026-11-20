@@ -93,7 +93,7 @@ theorem fockGL_mem_harm (w : Weight D n) (B u : GLR D n) {P : PolF D m n} (h : P
     beta_reduce
     rw [MonoidHom.map_mul, Module.End.mul_apply]
   | zero => rw [LinearMap.map_zero]; exact zero_mem _
-  | add _ _ _ _ h1 h2 => rw [LinearMap.map_add]; exact add_mem h1 h2
+  | add _ _ _ _ h1 h2 => rw [LinearMap.map_add (f := _)]; exact add_mem h1 h2
   | smul c _ _ h1 => rw [LinearMap.map_smul]; exact Submodule.smul_mem _ c h1
 
 def fockPt (p : D.what₂.Tau → ℕ) (y : GLR D n) (v : FVar D m n) : ℂ :=

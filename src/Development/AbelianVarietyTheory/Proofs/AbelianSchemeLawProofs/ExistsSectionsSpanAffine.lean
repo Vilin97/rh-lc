@@ -282,7 +282,7 @@ theorem map_mem_span {R R' M M' : Type} [CommRing R] [CommRing R'] [AddCommGroup
   induction hs using Submodule.span_induction with
   | mem x hx => obtain ⟨i, rfl⟩ := hx; exact Submodule.subset_span ⟨i, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul r x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 theorem pow_smul_mem_of {R R' M M' : Type} [CommRing R] [CommRing R'] [AddCommGroup M]
@@ -299,7 +299,7 @@ theorem pow_smul_mem_of {R R' M M' : Type} [CommRing R] [CommRing R'] [AddCommGr
       obtain ⟨m, u, hu, eu⟩ := hx
       obtain ⟨n, v, hv, ev⟩ := hy
       refine ⟨m + n, r ^ n • u + r ^ m • v, W.add_mem (W.smul_mem _ hu) (W.smul_mem _ hv), ?_⟩
-      rw [map_add, map_smulₛₗ, map_smulₛₗ, eu, ev, map_pow, map_pow, smul_smul, smul_smul,
+      rw [map_add (f := _), map_smulₛₗ, map_smulₛₗ, eu, ev, map_pow, map_pow, smul_smul, smul_smul,
         ← pow_add, ← pow_add, add_comm n m, smul_add]
     | smul c x _ hx =>
       obtain ⟨m, u, hu, eu⟩ := hx

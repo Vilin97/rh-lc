@@ -225,7 +225,7 @@ theorem starLoc_periodic : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   refine MeasureTheory.integral_congr_ae (Filter.Eventually.of_forall fun X => ?_)
   by_cases hX : X ∈ tsupport Q
   · have hsplit : ph (b + u) X = ph b X + ph u X := by
-      simp only [ph, AddSubgroup.coe_add, add_mul, Matrix.trace_add, map_add, mul_add]
+      simp only [ph, AddSubgroup.coe_add, add_mul, Matrix.trace_add, map_add (f := _), mul_add]
     have hm : ph u X ∈ V := hWW u (hUW (SetLike.mem_coe.2 hu)) X hX
     have h1 : psiFin F ψ (ph u X) = 1 := hV (ph u X) hm
     change Q X * psiFin F ψ (ph (b + u) X) = Q X * psiFin F ψ (ph b X)

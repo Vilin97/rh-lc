@@ -60,7 +60,7 @@ theorem orbit [FiniteDimensional ℂ V] (h : PosH φ) {ι : Type} (T : ι → Mo
       Submodule.projectionOnto_apply_left hc ⟨m, hm⟩
     have e2 : Submodule.projectionOnto M (h.perp M) hc u = 0 :=
       Submodule.projectionOnto_apply_right hc ⟨u, hu⟩
-    simp only [P, LinearMap.comp_apply, map_add, e1, e2]
+    simp only [P, LinearMap.comp_apply, map_add (f := _), e1, e2]
     simp
   have hdec : ∀ y : V, ∃ m ∈ M, ∃ u ∈ h.perp M, y = m + u := by
     intro y

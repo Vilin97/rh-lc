@@ -31,7 +31,7 @@ def slice2 {X : Type} (E : (X → C) →ₗ[C] (X → C)) : (X × X → C) →�
       rfl
     show E (fun a => E (fun b => (F + G) (a, b)) p.2) p.1 =
       E (fun a => E (fun b => F (a, b)) p.2) p.1 + E (fun a => E (fun b => G (a, b)) p.2) p.1
-    rw [h2, map_add]
+    rw [h2, map_add (f := _)]
     rfl
   map_smul' c F := by
     funext p
@@ -75,7 +75,7 @@ theorem slice2_mem {X : Type} (E : (X → C) →ₗ[C] (X → C)) (M M' : Submod
     rw [slice2_tmul]
     exact Submodule.subset_span ⟨E g, hM g hg, E h, hM h hh, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add F G _ _ hF hG => rw [map_add]; exact Submodule.add_mem _ hF hG
+  | add F G _ _ hF hG => rw [map_add (f := _)]; exact Submodule.add_mem _ hF hG
   | smul r F _ hF =>
     rw [← algebraMap_smul C r F, map_smul, algebraMap_smul]
     exact Submodule.smul_mem _ r hF

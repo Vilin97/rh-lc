@@ -27,7 +27,7 @@ theorem evEx_of_range {K C H X : Type} [Field K] [AddCommGroup C] [Module K C] [
     (h : ∀ f, φ f ∈ LinearMap.range ev) : EvEx σ ev φ := by
   choose x hx using h
   refine ⟨⟨⟨x, fun f f' => hinj ?_⟩, fun a f => hinj ?_⟩, hx⟩
-  · rw [map_add, hx, hx, hx, map_add]
+  · rw [map_add (f := _), hx, hx, hx, map_add (f := _)]
   · exact (hx _).trans (by rw [φ.map_smulₛₗ, map_smul, hx])
 
 theorem phiC_eq {D : D7} (T : CoreJ D) {j : ℕ} {σ : T.Q.c.F →+* ℂ} {W : HSp D} (hV : T.V j σ = W)

@@ -55,7 +55,7 @@ theorem UpperTheory.V.AlgebraTools.zhatFin :
       | zero => simpa using hx
       | succ n ih =>
         intro u hu
-        rw [pow_succ', Equiv.Perm.mul_apply, hT, map_add, hm u hu, ← hmul]
+        rw [pow_succ', Equiv.Perm.mul_apply, hT, map_add (f := _), hm u hu, ← hmul]
         have : u * φ = φ * (φ⁻¹ * u * φ⁻¹⁻¹) := by group
         rw [this, hmul, ih _ (hI.conj_mem u hu φ⁻¹)]
     have hΘF : ∀ g x, (∀ u ∈ I, ρ u x = x) → ∀ u ∈ I, ρ u (Θ g x) = Θ g x := fun g x hx => hTF _ x hx
@@ -64,7 +64,7 @@ theorem UpperTheory.V.AlgebraTools.zhatFin :
       { carrier := {g | ∀ x, (∀ u ∈ I, ρ u x = x) → Θ g x = Θ g 0 + ρ g x}
         one_mem' := fun x _ => by simp [hΘI 1 I.one_mem]
         mul_mem' := fun {g h} hg hh x hx => by
-          rw [hΘmul, hΘmul, hg _ (hΘF h x hx), hg _ (hΘF h 0 h0), hh x hx, map_add, hmul, add_assoc]
+          rw [hΘmul, hΘmul, hg _ (hΘF h x hx), hg _ (hΘF h 0 h0), hh x hx, map_add (f := _), hmul, add_assoc]
         inv_mem' := fun {g} hg x hx => by
           have e1 := hg _ (hΘF g⁻¹ x hx)
           have e2 := hg _ (hΘF g⁻¹ 0 h0)

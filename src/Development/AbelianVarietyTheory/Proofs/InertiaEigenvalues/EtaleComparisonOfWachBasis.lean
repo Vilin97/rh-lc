@@ -18,7 +18,7 @@ theorem map_incl_smul {O R R' M : Type} [CommRing O] [CommRing R] [CommRing R'] 
       f a • TensorProduct.map f.toLinearMap (LinearMap.id : M →ₗ[O] M) y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [smul_add, map_add, hx, hx']
+  | add x x' hx hx' => simp only [smul_add, map_add (f := _), hx, hx']
   | tmul r u => simp [TensorProduct.smul_tmul']
 
 section Generic
@@ -62,7 +62,7 @@ theorem p5inf_of_sand (T : LocLat G Qp LL O) (c : RW) (m : ℕ) (hc : c = inclR 
   · obtain ⟨y, rfl⟩ := hz
     induction y using TensorProduct.induction_on with
     | zero => rw [map_zero, smul_zero]; exact zero_mem _
-    | add x x' hx hx' => rw [map_add, smul_add]; exact add_mem hx hx'
+    | add x x' hx hx' => rw [map_add (f := _), smul_add]; exact add_mem hx hx'
     | tmul r t =>
       have e : inclR (E.io W.X) ^ m • TensorProduct.map inclR.toLinearMap LinearMap.id (r ⊗ₜ[O] t) =
           inclR r • ((inclR (E.io W.X) ^ m) ⊗ₜ[O] t : TW RW T) := by

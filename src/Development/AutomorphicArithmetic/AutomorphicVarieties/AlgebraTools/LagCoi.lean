@@ -35,7 +35,7 @@ theorem UpperTheory.V.AlgebraTools.lag_coi :
       rw [mul_comm, ← hg]
       ring
     conv_lhs => rw [hq']
-    rw [map_add, map_mul, add_mul, mul_assoc, hroot, mul_zero, zero_add, aeval_C, Algebra.smul_def]
+    rw [map_add (f := _), map_mul, add_mul, mul_assoc, hroot, mul_zero, zero_add, aeval_C, Algebra.smul_def]
   have hP : ∀ i, P * lag a P i = a i • lag a P i := by
     intro i
     have := hq X i
@@ -45,7 +45,7 @@ theorem UpperTheory.V.AlgebraTools.lag_coi :
     rw [hL]
     generalize L i = f
     induction f using Polynomial.induction_on' with
-    | add p q hp hq => rw [map_add]; exact hp.add_right hq
+    | add p q hp hq => rw [map_add (f := _)]; exact hp.add_right hq
     | monomial n c =>
       rw [aeval_monomial]
       exact Commute.mul_right (show Commute y (algebraMap R E c) from (Algebra.commutes c y).symm)

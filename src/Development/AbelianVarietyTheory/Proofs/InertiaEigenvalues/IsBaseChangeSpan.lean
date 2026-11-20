@@ -21,7 +21,7 @@ theorem range_of_approx {E E' R : Type} [CommRing E] [CommRing E'] [CommRing R] 
     | zero => simp [S]
     | succ k ih =>
       rw [ih, hyz (z^[k] x), Function.iterate_succ_apply']
-      simp only [S, Finset.sum_range_succ, map_add, map_mul, map_pow, map_natCast]
+      simp only [S, Finset.sum_range_succ, map_add (f := _), map_mul, map_pow, map_natCast]
       ring
   have hmem : ∀ (k : ℕ) (a : E'), a ∈ (Ideal.span {(p : E')} ^ k • ⊤ : Submodule E' E') ↔ (p : E') ^ k ∣ a := by
     intro k a
@@ -51,7 +51,7 @@ theorem series_ext {O R : Type} [CommRing O] [CommRing R] [Algebra O R] (f g : P
   | zero => simp
   | succ k ih =>
     have hC : ∀ (u : PowerSeries O →ₐ[O] R) c, u (PowerSeries.C c) = algebraMap O R c := fun u c => u.commutes c
-    rw [PowerSeries.eq_X_mul_shift_add_const a, map_add, map_add, map_mul, map_mul, hf, hg, hC, hC,
+    rw [PowerSeries.eq_X_mul_shift_add_const a, map_add (f := _), map_add (f := _), map_mul, map_mul, hf, hg, hC, hC,
       add_sub_add_right_eq_sub, ← mul_sub, pow_succ']
     exact mul_dvd_mul_left _ (ih _)
 
@@ -72,7 +72,7 @@ theorem map_id_smul {O R M M' : Type} [CommRing O] [CommRing R] [Algebra O R] [A
     TensorProduct.map (LinearMap.id : R →ₗ[O] R) e (r • x) = r • TensorProduct.map LinearMap.id e x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [smul_add, map_add, hx, hx']
+  | add x x' hx hx' => simp only [smul_add, map_add (f := _), hx, hx']
   | tmul r' u => simp [TensorProduct.smul_tmul']
 
 theorem map_id_comm {O R M M' : Type} [CommRing O] [CommRing R] [Algebra O R] [AddCommGroup M] [Module O M]
@@ -82,7 +82,7 @@ theorem map_id_comm {O R M M' : Type} [CommRing O] [CommRing R] [Algebra O R] [A
       TensorProduct.map f a' (TensorProduct.map LinearMap.id e x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
   | tmul r' u => simp [h]
 
 theorem map_id_symm {O R M M' : Type} [CommRing O] [CommRing R] [Algebra O R] [AddCommGroup M] [Module O M]
@@ -91,7 +91,7 @@ theorem map_id_symm {O R M M' : Type} [CommRing O] [CommRing R] [Algebra O R] [A
       (TensorProduct.map LinearMap.id e.toLinearMap x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
   | tmul r' u => simp
 
 theorem mem_GK_of_chi {l : ℕ} [Fact l.Prime] (P : LocPrime l) {K K' : FinExt l} {s : ℕ} (h' : K'.1 ≤ Ks K' s)
@@ -347,7 +347,7 @@ theorem N_eq (T : LocLat G Qp LL O) (T' : LocLat G' Qp LL O) (e : ↥T'.L.T ≃�
       | add z z' _ _ h1 h2 =>
         obtain ⟨w, hw, e1⟩ := h1
         obtain ⟨w', hw', e2⟩ := h2
-        exact ⟨w + w', add_mem hw hw', by rw [map_add, map_add, e1, e2]⟩
+        exact ⟨w + w', add_mem hw hw', by rw [map_add (f := _), map_add (f := _), e1, e2]⟩
       | smul a z _ h1 =>
         obtain ⟨w, hw, e1⟩ := h1
         exact ⟨θ a • w, Submodule.smul_mem _ _ hw, by rw [JA, jD_smulA, hθ, e1]⟩

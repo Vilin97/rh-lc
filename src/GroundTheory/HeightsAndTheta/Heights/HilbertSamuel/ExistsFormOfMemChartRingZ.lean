@@ -111,7 +111,7 @@ theorem exists_form_of_mem_chartRingZ {Ω : Type} [Field Ω] {y : (Σ k, ι k) �
     · refine mh_add (mh_mul hG1 (mh_coordProd c d2)) ?_
       rw [add_comm d1 d2]
       exact mh_mul hG2 (mh_coordProd c d1)
-    · rw [coordProd_add, map_add, map_mul, map_mul, map_mul, e1, e2]
+    · rw [coordProd_add, map_add (f := _), map_mul, map_mul, map_mul, e1, e2]
       ring
   | mul s t _ _ hs ht =>
     obtain ⟨d1, G1, hG1, e1⟩ := hs

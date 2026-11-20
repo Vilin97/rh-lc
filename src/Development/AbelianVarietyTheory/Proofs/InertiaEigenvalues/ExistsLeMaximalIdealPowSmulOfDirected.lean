@@ -89,7 +89,7 @@ private theorem mem_of_forall_mem_sup_maximalIdeal_pow_smul (B M : Type) [CommRi
       exact Submodule.smul_mono le_rfl le_top
     have hzq := hmap (Submodule.mem_map_of_mem hz)
     have hy0 : K.mkQ y = 0 := (Submodule.Quotient.mk_eq_zero K).mpr hy
-    rw [map_add, hy0, zero_add]
+    rw [map_add (f := _), hy0, zero_add]
     exact hzq
   rw [hbot, Submodule.mem_bot] at hx
   exact (Submodule.Quotient.mk_eq_zero K).mp hx

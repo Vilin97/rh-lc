@@ -26,7 +26,7 @@ private noncomputable def ell : (Fin 4 → TR.Rinf F) →L[ℝ] (Fin 4 → mixed
       map_add' := fun x y => by
         have : (fun i => TR.sInf F ((x + y) i)) = (fun i => TR.sInf F (x i)) + fun i => TR.sInf F (y i) := by
           funext i
-          simp only [Pi.add_apply, map_add]
+          simp only [Pi.add_apply, map_add (f := _)]
         rw [this, infPart_add] }
     (continuous_pi fun i => (homeomorphMixedSpace F).continuous.comp
       ((TR.continuous_infEq F).comp (continuous_apply i)))

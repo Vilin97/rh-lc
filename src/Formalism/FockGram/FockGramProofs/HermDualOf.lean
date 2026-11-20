@@ -26,7 +26,7 @@ private theorem mem_hdual_span_iff_forall_pairing_mem_range {S K V ι : Type} [C
     | add y z _ _ hy hz =>
       obtain ⟨p, hp⟩ := hy
       obtain ⟨q, hq⟩ := hz
-      exact ⟨p + q, by rw [map_add, hp, hq, map_add, LinearMap.add_apply]⟩
+      exact ⟨p + q, by rw [map_add (f := _), hp, hq, map_add (f := _), LinearMap.add_apply]⟩
     | smul s y _ hy =>
       obtain ⟨p, hp⟩ := hy
       obtain ⟨t, ht⟩ := hstar s

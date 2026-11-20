@@ -90,7 +90,7 @@ theorem w_coker {R V : Type} [CommRing R] [IsDomain R] [AddCommGroup V] [Module 
     obtain ⟨y, hy, hyy⟩ := hN a z hz
     have e : γ ((ϖ ^ a) z) = (ϖ ^ a) (c ^ a • z + ϖ y) := by
       have e0 : (ϖ ^ a) (ϖ y) = (ϖ ^ (a + 1)) y := by rw [pow_succ, Module.End.mul_apply]
-      rw [map_add, map_smul, e0, ← hyy]; abel
+      rw [map_add (f := _), map_smul, e0, ← hyy]; abel
     show γ ((ϖ ^ a) z) ∈ W
     rw [e]
     exact ⟨_, N'.add_mem (N'.smul_mem _ hz) (hst y hy), rfl⟩

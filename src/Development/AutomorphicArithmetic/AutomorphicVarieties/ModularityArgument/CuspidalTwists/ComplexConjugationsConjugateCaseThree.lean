@@ -318,7 +318,7 @@ private theorem imag_quadratic_field_unique (p : ℕ) (hp : 0 < p) (K : Type) [F
   have hs : ((X ^ 2 + C (p : ℚ) : ℚ[X]).map (algebraMap ℚ K)).Splits := by
     have : (X ^ 2 + C (p : ℚ) : ℚ[X]).map (algebraMap ℚ K) = (X - C δ) * (X - C (-δ)) := by
       have h1 : (C (p : K) : K[X]) = -(C δ) ^ 2 := by rw [← C_pow, hδ, C_neg, neg_neg]
-      simp only [Polynomial.map_add, Polynomial.map_pow, map_X, map_C, map_natCast (algebraMap ℚ K), h1, C_neg]
+      simp only [Polynomial.map_add (f := _), Polynomial.map_pow, map_X, map_C, map_natCast (algebraMap ℚ K), h1, C_neg]
       ring
     rw [this]
     exact (Splits.X_sub_C _).mul (Splits.X_sub_C _)

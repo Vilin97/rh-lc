@@ -560,7 +560,7 @@ theorem span_inv_eq_ellT {M : IntermediateField ℚ ℂ} [NumberField M] (hM : �
       intro n z hz
       induction hz using Submodule.pow_induction_on_left' with
       | algebraMap r => simpa using map_isIntegral_int ψ r.isIntegral_coe
-      | add _ _ _ _ _ h1 h2 => simpa only [map_add, mul_add] using h1.add h2
+      | add _ _ _ _ _ h1 h2 => simpa only [map_add (f := _), mul_add] using h1.add h2
       | mem_mul m hm i z _ hz =>
         convert (hx m hm).mul hz using 1
         · rfl

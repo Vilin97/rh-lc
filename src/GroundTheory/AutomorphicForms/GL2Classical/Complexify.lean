@@ -77,7 +77,7 @@ def realOpGL2 (A : Matrix (Fin 2) (Fin 2) ℝ) : Module.End ℂ (archSmooth ℚ 
 
 theorem realOpGL2_add (A B : Matrix (Fin 2) (Fin 2) ℝ) :
     realOpGL2 (A + B) = realOpGL2 A + realOpGL2 B := by
-  simp only [realOpGL2, lieOfRealMat_add, map_add]
+  simp only [realOpGL2, lieOfRealMat_add, map_add (f := _)]
 
 theorem realOpGL2_zero : realOpGL2 0 = 0 := by
   simp [realOpGL2, lieOfRealMat_zero]
@@ -191,7 +191,7 @@ def gl2ArchRep : HarishChandra.U 2 →ₐ[ℂ] Module.End ℂ (archSmooth ℚ 2)
 def gl2ComplexifyLie : (isExpLieAlgebra ℚ 2).lieSubalgebra →ₗ⁅ℝ⁆ HarishChandra.U 2 where
   toFun X := UniversalEnvelopingAlgebra.ι ℂ ((lieRealMat X).map (↑))
   map_add' X Y := by
-    rw [lieRealMat_add, Matrix.map_add _ Complex.ofReal_add, map_add]
+    rw [lieRealMat_add, Matrix.map_add _ Complex.ofReal_add, map_add (f := _)]
   map_smul' r X := by
     rw [lieRealMat_smul, RingHom.id_apply]
     have : (r • lieRealMat X).map ((↑) : ℝ → ℂ) = (r : ℂ) • (lieRealMat X).map (↑) := by
@@ -224,7 +224,7 @@ theorem gl2ArchRep_gl2Complexify (u : UEnv ℚ 2) : gl2ArchRep (gl2Complexify u)
   | hι X =>
     rw [gl2Complexify_ι, gl2ArchRep_ι, complexOpGL2_map_ofReal, realOpGL2, lieOfRealMat_lieRealMat]
   | hmul a b ha hb => rw [map_mul, map_mul, ha, hb, map_mul]
-  | hadd a b ha hb => rw [map_add, map_add, ha, hb, map_add]
+  | hadd a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _)]
 
 theorem ι_eq_gl2Complexify_add (B : HarishChandra.gl 2) :
     UniversalEnvelopingAlgebra.ι ℂ B =

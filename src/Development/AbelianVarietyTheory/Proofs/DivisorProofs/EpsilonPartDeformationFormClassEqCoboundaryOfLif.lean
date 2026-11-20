@@ -29,7 +29,7 @@ theorem exists_of_pull1_eq (h₁ : IsMor κ₁ s₁ κ' s' σ₁ p₁) (h₂ : I
       G T' - φ.φ (G T) = pv h₁ f φ - (pv h₂ g φ + algebraMap R' T'.B r * pv h₂ b φ) := by
   have e' : H1.mk (O κ' s') (h₁.coef.pullbackOneCocycle f) =
       H1.mk (O κ' s') (h₂.coef.pullbackOneCocycle g + r • h₂.coef.pullbackOneCocycle b) := by
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
     exact e
   obtain ⟨G, hG⟩ := H1.mk_eq_mk.1 e'
   refine ⟨G, fun T T' φ ↦ ?_⟩
@@ -125,7 +125,7 @@ theorem eps_part_eq_coboundary (K : Type) [Field K] (A : Over (Sp K)) [GrpObj A]
   rw [pv_lift h ω' φ hy hy' e, pv_const, pv_const] at k
   have k2 := congrArg TrivSqZeroExt.snd k
   simp [dualMap] at k2
-  simp only [map_add, map_sub, map_neg]
+  simp only [map_add (f := _), map_sub, map_neg]
   linear_combination k2
 
 end GlobalTheory.CechKS.LiftTriv

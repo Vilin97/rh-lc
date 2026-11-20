@@ -142,7 +142,7 @@ theorem majLattice_exists_d (b : Basis ι K V) (L : Submodule (𝓞 K) V) (hfg :
   | zero => intro i; simpa using isIntegral_zero
   | add x y _ _ hx hy =>
     intro i
-    simp only [map_add, Finsupp.add_apply, mul_add]
+    simp only [map_add (f := _), Finsupp.add_apply, mul_add]
     exact (hx i).add (hy i)
   | smul r x _ hx =>
     intro i

@@ -215,13 +215,13 @@ theorem qk_surjective (k : ℕ) [NeZero k] : Function.Surjective (d.qk k) := by
     TorusExt.isIota_unique h₂ (hy ▸ d.iota (AnArc.La.mk y 0 0))
   obtain ⟨la, hla, e⟩ := (d.ex₀_eq_iff _ _).1 (e1.trans e2)
   refine ⟨la + AnArc.La.mk y 0 0, TorusExt.qk_ext (by simp [hla, hy]) ?_⟩
-  rw [qk_g, map_add, ← e, sub_add_cancel, ← Nat.cast_smul_eq_nsmul ℂ,
+  rw [qk_g, map_add (f := _), ← e, sub_add_cancel, ← Nat.cast_smul_eq_nsmul ℂ,
     inv_smul_smul₀ (Nat.cast_ne_zero.2 (NeZero.ne k)), hv]
 
 theorem qk_equiv_add (k : ℕ) [NeZero k] (la la' : d.A.La) :
     Out.QkPt.Equiv D₀ ℂ (d.qk k la) (d.qk k (la + k • la')) := by
   refine ⟨d.eX la'.y, by simp, _, d.iota la', ?_⟩
-  rw [qk_g, qk_g, map_add, map_nsmul, smul_add, ← Nat.cast_smul_eq_nsmul ℂ,
+  rw [qk_g, qk_g, map_add (f := _), map_nsmul, smul_add, ← Nat.cast_smul_eq_nsmul ℂ,
     inv_smul_smul₀ (Nat.cast_ne_zero.2 (NeZero.ne k))]
   exact d.add _ _
 
@@ -234,7 +234,7 @@ theorem qk_equiv_iff (k : ℕ) [NeZero k] (la la' : d.A.La) :
   have hk : (k : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (NeZero.ne k)
   have hy : la'.y = la.y + k • y := d.eX.injective (by simpa using hz)
   have e' : d.A.P0 (la' - (la + k • (AnArc.La.mk y 0 0 + n))) = 0 := by
-    rw [map_sub, map_add, map_nsmul, map_add, ← e, ← Nat.cast_smul_eq_nsmul ℂ]
+    rw [map_sub, map_add (f := _), map_nsmul, map_add (f := _), ← e, ← Nat.cast_smul_eq_nsmul ℂ]
     simp only [smul_add, smul_sub, smul_inv_smul₀ hk]
     abel
   refine ⟨AnArc.La.mk y 0 0 + n, sub_eq_zero.1 ?_⟩

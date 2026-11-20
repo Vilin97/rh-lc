@@ -24,7 +24,7 @@ theorem clm_eq_zero_of_orbit {n : ℕ} {ε : Fin n → Bool} {H : Type} [NormedA
     (L : H →L[ℂ] ℂ) {v : H} (hv : v ≠ 0) (h : ∀ g ∈ UJset ε, L (σ g v) = 0) (w : H) : L w = 0 := by
   let S : Submodule ℂ H :=
     { carrier := {x | ∀ g ∈ UJset ε, L (σ g x) = 0}
-      add_mem' := fun ha hb g hg => by rw [map_add, map_add, ha g hg, hb g hg, add_zero]
+      add_mem' := fun ha hb g hg => by rw [map_add (f := _), map_add (f := _), ha g hg, hb g hg, add_zero]
       zero_mem' := fun g _ => by rw [map_zero, map_zero]
       smul_mem' := fun c x ha g hg => by rw [map_smul, map_smul, ha g hg, smul_zero] }
   have hc : IsClosed (S : Set H) := by

@@ -85,7 +85,7 @@ theorem lift_pot (N l w : ℕ) (hN : 5 ≤ N) (hl : l.Prime) (hlN : ¬ l ∣ N) 
     intro F hF
     obtain ⟨h1, h2⟩ := hx F hF
     obtain ⟨h3, h4⟩ := hy F hF
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     exact ⟨(Betti.potSub ℂ w (Gam N l)).add_mem h1 h3, by rw [hadd, h2, h4]⟩
   | mul x y _ _ hx hy =>
     intro F hF

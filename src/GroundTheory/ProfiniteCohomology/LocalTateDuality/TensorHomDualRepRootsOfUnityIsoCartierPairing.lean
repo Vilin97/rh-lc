@@ -93,7 +93,7 @@ theorem tensorHom_dualRepRootsOfUnityIso_cartierPairing (M : Rep (ULift.{0} ℤ)
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a f => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem localDualityPairing_cohomologyMap (M : Rep (ULift.{0} ℤ) Gal(Ksep/K)) [IsDiscreteRep M]
     [Finite M] {n : ℕ} (hn : (n : K) ≠ 0) (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h : r + s = 2)

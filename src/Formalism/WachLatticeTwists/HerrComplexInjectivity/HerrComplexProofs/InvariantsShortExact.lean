@@ -34,7 +34,7 @@ theorem inv_hom {O A A₀ : Type} [CommRing O] [CommRing A] [Algebra O A] [CommR
   · intro a b
     apply J₂.j_inj
     funext i
-    rw [map_add, Pi.add_apply, hf', hf', hf', map_add, Pi.add_apply, map_add]
+    rw [map_add (f := _), Pi.add_apply, hf', hf', hf', map_add (f := _), Pi.add_apply, map_add (f := _)]
   · intro a x
     apply J₂.j_inj
     funext i

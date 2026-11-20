@@ -52,7 +52,7 @@ theorem thetaBasic : ThetaBasic := by
     unfold thetaL
     rw [← (thetaBasic_eqv g L).tsum_eq]
     refine tsum_congr fun x => ?_
-    rw [thetaBasic_eqv_apply, ← map_add, hg']
+    rw [thetaBasic_eqv_apply, ← map_add (f := _), hg']
   · intro hev hdual
     unfold thetaL
     rw [← tsum_mul_left]
@@ -62,7 +62,7 @@ theorem thetaBasic : ThetaBasic := by
     have h1 : h (x : V) γ = star (h γ x) := (hh.eq γ x).symm
     have hx : Algebra.trace ℚ K (h (γ + x) (γ + x)) =
         Algebra.trace ℚ K (h γ γ) + 2 * ((n : ℚ) + m) := by
-      simp only [map_add, LinearMap.add_apply, h1, thetaBasic_trace_star, hn, hm]
+      simp only [map_add (f := _), LinearMap.add_apply, h1, thetaBasic_trace_star, hn, hm]
       ring
     rw [hx, ← Complex.exp_add]
     set T0 : ℂ := ((Algebra.trace ℚ K (h γ γ) : ℚ) : ℂ)
@@ -77,7 +77,7 @@ theorem thetaBasic : ThetaBasic := by
     unfold thetaN
     rw [← (Equiv.piCongrRight fun _ : Fin n => thetaBasic_eqv g L).tsum_eq]
     refine tsum_congr fun x => ?_
-    simp only [Equiv.piCongrRight_apply, Pi.map_apply, thetaBasic_eqv_apply, ← map_add, hg']
+    simp only [Equiv.piCongrRight_apply, Pi.map_apply, thetaBasic_eqv_apply, ← map_add (f := _), hg']
   · intro T
     unfold thetaN thetaL
     rw [← (Equiv.funUnique (Fin 1) L).symm.tsum_eq]

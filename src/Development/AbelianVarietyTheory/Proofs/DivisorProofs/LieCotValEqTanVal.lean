@@ -23,7 +23,7 @@ def sqToEps {M S : Type} [AddCommGroup M] [Module R M] [Module Rᵐᵒᵖ M] [Is
   map_mul' a b := TrivSqZeroExt.ext (map_mul (algebraMap R S) _ _) (by
     change k (a.fst • b.snd + MulOpposite.op b.fst • a.snd) =
       algebraMap R S a.fst * k b.snd + k a.snd * algebraMap R S b.fst
-    rw [op_smul_eq_smul, map_add, map_smul, map_smul, Algebra.smul_def, Algebra.smul_def,
+    rw [op_smul_eq_smul, map_add (f := _), map_smul, map_smul, Algebra.smul_def, Algebra.smul_def,
       mul_comm (k a.snd)])
   map_zero' := TrivSqZeroExt.ext (map_zero (algebraMap R S)) (map_zero k)
   map_add' a b := TrivSqZeroExt.ext (map_add (algebraMap R S) _ _) (map_add k _ _)

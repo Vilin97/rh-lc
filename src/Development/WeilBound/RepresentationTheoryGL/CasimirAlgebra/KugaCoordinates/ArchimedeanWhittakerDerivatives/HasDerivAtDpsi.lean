@@ -22,7 +22,7 @@ theorem hasDerivAt_dpsi {ψ : AddChar (Ad E) ℂ} (hψ : StdPsi ψ) (Z : Cinf E)
   obtain ⟨c, hc⟩ := hasDerivAt_of_mulHom (fun t : ℝ => ψ (sInf E (t • Z)))
     (hψ.cont.comp (continuous_sInf'.comp (continuous_id.smul continuous_const)))
     (by simp only [zero_smul, map_zero, AddChar.map_zero_eq_one])
-    (fun s t => by simp only [add_smul, map_add, AddChar.map_add_eq_mul])
+    (fun s t => by simp only [add_smul, map_add (f := _), AddChar.map_add_eq_mul])
   have h := hc 0
   simp only [zero_smul, map_zero, AddChar.map_zero_eq_one, mul_one] at h
   rw [dpsi, h.deriv]
@@ -86,7 +86,7 @@ theorem whitLie_holds : WhitLie := by
       have hβ0 : β p q ≠ 0 := (hu.map (coord τ)).ne_zero
       exact wirtinger_ne_zero (fun z => ψ (sInf E (atEmb τ z)))
         (hψ.cont.comp (continuous_sInf'.comp (continuous_atEmb τ)))
-        (fun z w => by simp only [atEmb_add, map_add, AddChar.map_add_eq_mul]) (fun z => hψ.norm _)
+        (fun z w => by simp only [atEmb_add, map_add (f := _), AddChar.map_add_eq_mul]) (fun z => hψ.norm _)
         (psi_nontriv hψ τ) (fun z => dpsi ψ (atEmb τ z))
         (fun z => by simpa only [atEmb_real_mul] using hasDerivAt_dpsi hψ (atEmb τ z)) _ hβ0
     · beta_reduce

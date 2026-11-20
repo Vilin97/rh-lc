@@ -94,7 +94,7 @@ theorem core (h : V →ₗ⋆[E] V →ₗ[E] E) (hs : h.IsSymm) (hnd : h.Nondege
   let ψ : Fin r → (Λ →ₗ[𝓞 E] E) := fun a =>
     { toFun := fun y => φ a (ρ y : V)
       map_add' := fun y₁ y₂ => by
-        rw [map_add, Submodule.coe_add, hφadd a _ (hρX y₁) _ (hρX y₂)]
+        rw [map_add (f := _), Submodule.coe_add, hφadd a _ (hρX y₁) _ (hρX y₂)]
       map_smul' := fun o y => by
         rw [map_smul, Submodule.coe_smul, ← algebraMap_smul E o, hφsmul a _ _ (hρX y),
           RingHom.id_apply, Algebra.smul_def] }
@@ -168,7 +168,7 @@ theorem core (h : V →ₗ⋆[E] V →ₗ[E] E) (hs : h.IsSymm) (hnd : h.Nondege
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum, map_sub] at hk
     simp only [hr] at hk
-    rw [map_add, LinearMap.add_apply, LinearMap.map_sum₂]
+    rw [map_add (f := _), LinearMap.add_apply, LinearMap.map_sum₂]
     simp only [hl]
     have e1 : h v (e' a) = h v (e a) - ∑ b, h (w b) (e' a) * h v (e b) := by rw [hk]; ring
     rw [e1, ← hsy]
@@ -202,11 +202,11 @@ theorem core (h : V →ₗ⋆[E] V →ₗ[E] E) (hs : h.IsSymm) (hnd : h.Nondege
         exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => by simp only [G]; ring
       rw [hP, hP']
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+        simp only [map_add (f := _), LinearMap.add_apply, map_sum, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
         LinearMap.smul_apply, smul_eq_mul, starRingEnd_apply, e1, RingHom.id_apply, mul_add]
       rw [Finset.sum_add_distrib, hdbl]
       ring
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [hBB, hPB, hBP, hPP]
     have := alg_identity (fun a => h (e a) v) (fun a => h (e a) v') (fun a => h (w a) v)
       (fun a => h (w a) v') G s hsG

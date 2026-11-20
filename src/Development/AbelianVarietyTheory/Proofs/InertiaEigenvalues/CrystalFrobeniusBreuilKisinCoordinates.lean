@@ -54,10 +54,10 @@ theorem frac_formula {A M B : Type} [CommRing A] [AddCommGroup M] [Module A M] [
       obtain ⟨m, j, hm, em⟩ := hy
       refine ⟨d ^ j • n + d ^ k • m, k + j, ?_, ?_⟩
       · unfold IsFrac at hn hm ⊢
-        rw [map_add, hn, hm, LocalizedModule.mk_add_mk]
+        rw [map_add (f := _), hn, hm, LocalizedModule.mk_add_mk]
         congr 1
         exact Subtype.ext (pow_add d k j).symm
-      · rw [map_add, hlam, hlam, en, em, map_add, map_pow, map_pow]; ring
+      · rw [map_add (f := _), hlam, hlam, en, em, map_add (f := _), map_pow, map_pow]; ring
     | smul r x _ hx =>
       obtain ⟨n, k, hn, en⟩ := hx
       refine ⟨φ r • n, k, ?_, ?_⟩
@@ -87,7 +87,7 @@ theorem coe_toAc_eis (τ : ZMod a) : (toAc t K (eis l a e) τ : K⟦X⟧) = E K 
   have hX : toAc t K X = fun _ => uIn (A O K) :=
     funext fun τ => Subtype.ext ((congrArg (PowerSeries.map _) (PowerSeries.map_X _)).trans
       (PowerSeries.map_X _))
-  rw [eis, map_add, map_pow, hX, map_natCast]
+  rw [eis, map_add (f := _), map_pow, hX, map_natCast]
   simp [E]
 
 end Maps

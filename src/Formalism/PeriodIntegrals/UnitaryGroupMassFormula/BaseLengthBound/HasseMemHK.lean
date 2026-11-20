@@ -53,7 +53,7 @@ def dH (β : Idx D j G.N →₀ ℕ) : ↥(HK X la G.w wF) →+ SectionSheafQuot
     apply Subtype.ext
     exact (hasse X la G.w β).map_zero
   map_add' x y := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     apply Subtype.ext
     exact (hasse X la G.w β).map_add _ _
@@ -101,7 +101,7 @@ theorem vals_eq_U (hTH : TaylorHasse) (k : ℕ) (x : ↥(HK X la G.w wF)) (cf : 
 
 def psi (hHS : HasseSmul) (k : ℕ) : ↥(JKo G la k) →ₗ[Op X la G.N] Vg G la where
   toFun x := vals G la k x
-  map_add' x y := by rw [Submodule.coe_add, map_add]
+  map_add' x y := by rw [Submodule.coe_add, map_add (f := _)]
   map_smul' o x := by
     funext p
     rw [RingHom.id_apply, Pi.smul_apply, vals_apply, vals_apply]

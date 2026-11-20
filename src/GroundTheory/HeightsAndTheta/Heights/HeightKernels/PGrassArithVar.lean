@@ -86,7 +86,7 @@ theorem GrassArithVar.proof (h : CoordConeArithVar.Statement) : GrassArithVar.St
     | C c =>
       rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
       exact IntermediateField.algebraMap_mem _ c
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul]
       exact mul_mem hp (IntermediateField.subset_adjoin _ _ ⟨e.symm i, by simp [t, φ]⟩)

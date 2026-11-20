@@ -37,7 +37,7 @@ def graphLat {Ω V V' : Type} [Field Ω] [AddCommGroup V] [Module Ω V] [AddComm
       simpa [smul_add] using this
     · have := B.add_mem h2 h4
       convert this using 1
-      simp only [Prod.snd_add, Prod.fst_add, map_add]
+      simp only [Prod.snd_add, Prod.fst_add, map_add (f := _)]
       abel
   neg_mem' := by
     rintro p ⟨h1, h2⟩

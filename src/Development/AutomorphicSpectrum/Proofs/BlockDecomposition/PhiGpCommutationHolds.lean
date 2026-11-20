@@ -55,7 +55,7 @@ theorem coinv_cInd (H U : Subgroup G) (hUH : U ≤ H) (hUn : U.Normal) (θ : U �
       map_add' := fun a b => hext _ _ fun x => by
         rw [hT]
         show _ = (T a).1.1.1 x + (T b).1.1.1 x
-        rw [hT, hT, ← map_add]
+        rw [hT, hT, ← map_add (f := _)]
         rfl
       map_smul' := fun c a => hext _ _ fun x => by
         rw [hT]
@@ -135,7 +135,7 @@ theorem phiMinus_prodGP (ψ : AddChar k Circle) (hψ1 : ψ ≠ 1) {m j : ℕ}
     intro h hh w
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul v w =>
       have e := GlobalTheory.T.parabolic_proj_embedding_compat k m j h hh
       show q (extTensor a b (gpProj k m (j + 1) ⟨_, hh⟩) (v ⊗ₜ w)) =
@@ -155,7 +155,7 @@ theorem phiMinus_prodGP (ψ : AddChar k Circle) (hψ1 : ψ ≠ 1) {m j : ℕ}
       induction t using TensorProduct.induction_on with
       | zero => simp
       | add x y hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hx hy
       | tmul v x =>
         obtain ⟨x, hx⟩ := x
@@ -181,7 +181,7 @@ theorem phiMinus_prodGP (ψ : AddChar k Circle) (hψ1 : ψ ≠ 1) {m j : ℕ}
     · intro hw
       induction hw using Submodule.span_induction with
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
       | smul c x _ hx => rw [map_smul, hx, smul_zero]
       | mem x hx =>
         obtain ⟨u, y, rfl⟩ := hx
@@ -190,10 +190,10 @@ theorem phiMinus_prodGP (ψ : AddChar k Circle) (hψ1 : ψ ≠ 1) {m j : ℕ}
         | zero => simp
         | add x y hx hy =>
           have := congrArg₂ (· + ·) hx hy
-          simp only [add_zero, ← map_add] at this
+          simp only [add_zero, ← map_add (f := _)] at this
           rw [← this]
           congr 1
-          simp only [map_add, smul_add]
+          simp only [map_add (f := _), smul_add]
           abel
         | tmul v w =>
           show q (extTensor a b (gpProj k m (j + 1) ⟨u, hUH u.2⟩) (v ⊗ₜ w) - _) = 0
@@ -265,7 +265,7 @@ theorem tw_rep {m j : ℕ} {V W : Type} [AddCommGroup V] [Module ℂ V] [AddComm
   refine MonoidHom.ext fun h => LinearMap.ext fun x => ?_
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v w =>
     show (dpowM (m + j) r (h : Mir k (m + j)) : ℂ) • extTensor a c (gpProj k m j h) (v ⊗ₜ w) =
       extTensor (twist a (dpow m r)) (twist c (dpowM j r)) (gpProj k m j h) (v ⊗ₜ w)

@@ -39,7 +39,7 @@ theorem φA_π (R : WSer Γ) : letφ (n := n) R.φ₀ letπ = letπ * (fun _ => 
   exact R.φ₀_X
 
 theorem φA_one_add_π (R : WSer Γ) : letφ (n := n) R.φ₀ (1 + letπ) = (1 + letπ) ^ PD.p := by
-  rw [map_add, map_one, φA_π]
+  rw [map_add (f := _), map_one, φA_π]
   funext i
   have := R.q₀_def
   simp only [Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.one_apply, letπ]
@@ -57,13 +57,13 @@ theorem frobenius_inclusion_X_eq_mul_Q (I : WIo R RA RW inclR φR gR πA)
     φR (inclR ((1 + πA) ^ (PD.p ^ (s - 1)) - 1)) =
       inclR ((1 + πA) ^ (PD.p ^ (s - 1)) - 1) * inclR (I.io R.Q) := by
   have hX : (letφ (n := n) R.φ₀ ^ (s - 1)) letπ = (1 + letπ) ^ (PD.p ^ (s - 1)) - 1 := by
-    rw [← φA_pow_one_add_π R, map_add, map_one]; ring
+    rw [← φA_pow_one_add_π R, map_add (f := _), map_one]; ring
   have hXQ : (letφ (n := n) R.φ₀ ^ (s - 1)) letπ * R.Q =
       ((1 + letπ) ^ PD.p) ^ (PD.p ^ (s - 1)) - 1 := by
     rw [WSer.Q, ← map_mul, ← φA_π, ← pow_mul, mul_comm PD.p, pow_mul,
       ← φA_pow_one_add_π R, ← map_pow, ← φA_one_add_π R, map_add, map_one, map_add, map_one]
     ring
-  have hπ : I.io (1 + letπ) = 1 + πA := by rw [map_add, map_one, I.io_π]
+  have hπ : I.io (1 + letπ) = 1 + πA := by rw [map_add (f := _), map_one, I.io_π]
   have h1 : (1 + πA) ^ (PD.p ^ (s - 1)) - 1 = I.io ((letφ (n := n) R.φ₀ ^ (s - 1)) letπ) := by
     rw [hX, map_sub, map_pow, map_one, hπ]
   conv_rhs => rw [h1, ← map_mul, ← map_mul, hXQ]
@@ -121,7 +121,7 @@ theorem sand_of {E : WEt I} (Mo : WN E zl)
       rw [E.jD_smul]
       exact Submodule.smul_mem _ _ hz
     · intro z z' hz hz'
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hz hz'
   have hli : LinearIndependent RW fun i => E.jD T (b i : E.DD T) := by
     have hs := hsp

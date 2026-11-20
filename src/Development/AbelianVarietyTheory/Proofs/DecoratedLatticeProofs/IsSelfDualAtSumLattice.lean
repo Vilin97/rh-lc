@@ -60,7 +60,7 @@ theorem rows_form (φ : A →+* B) {u : A} (h : σ u = u) (hu : φ (2 * (u * u))
     module
   rw [h2, h3]
   ext i j
-  simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul φ (2 * (u * u)), hu, one_mul]
+  simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul φ (2 * (u * u)), hu, one_mul]
 
 theorem cols_gram (φ : A →+* B) {s : A} (h : σ s = s) (hs : φ (2 * (s * s)) = 1) {x y : Matrix n k A} {z : Matrix n m A}
     {G : Matrix n n A} (xx : cT σ x ⬝ (G ⬝ x) = 0) (xy : cT σ x ⬝ (G ⬝ y) = 1) (yx : cT σ y ⬝ (G ⬝ x) = 1)
@@ -101,7 +101,7 @@ theorem compInf_cA (w : InfinitePlace D.host.F) (x : AE D) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [compInf, sigR]
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingHom.map_add, ha, hb]
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
 
 theorem compInf_incA (w : InfinitePlace D.host.F) (x : D.host.E) :
     compInf D.host.F D.host.E w (incA D x) = inclR w.Completion x := by

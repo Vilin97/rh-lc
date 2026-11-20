@@ -107,7 +107,7 @@ theorem pureA_bound {κ : Type} [Fintype κ] (f : SchwartzMap (κ → mixedEmbed
     congr 2
     funext i
     show InfiniteAdeleRing.ringEquiv_mixedSpace F ((algebraMap F (AdeleRing (𝓞 F) F) (ξ i)).1 + (z i).1) = _
-    rw [map_add, mixed_algebraMap_fst]
+    rw [map_add (f := _), mixed_algebraMap_fst]
     rfl
   rw [hsplit, norm_mul]
   by_cases hg0 : g ((fun i => algebraMap F (FiniteAdeleRing (𝓞 F) F) (ξ i)) + zf z) = 0

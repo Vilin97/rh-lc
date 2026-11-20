@@ -21,7 +21,7 @@ theorem exists_semi_lift [AddCommGroup V] [Module ℂ V] (e : V →ₗ[ℂ] W) (
     (hg : ∀ u, g u ∈ LinearMap.range e) : ∃ j : U →ₛₗ[σ] V, ∀ u, e (j u) = g u := by
   choose j hj using hg
   refine ⟨{ toFun := j, map_add' := fun x y => he ?_, map_smul' := fun a x => he ?_ }, hj⟩
-  · rw [map_add, hj, hj, hj, map_add]
+  · rw [map_add (f := _), hj, hj, hj, map_add (f := _)]
   · rw [map_smul, hj, hj, map_smulₛₗ]
 
 theorem exists_equiv_of_range_eq [AddCommGroup V] [Module K V] (f : U →ₛₗ[σ] W) (g : V →ₛₗ[σ] W)
@@ -33,7 +33,7 @@ theorem exists_equiv_of_range_eq [AddCommGroup V] [Module K V] (f : U →ₛₗ[
   choose j hj using h1
   let jl : U →ₗ[K] V :=
     { toFun := j
-      map_add' := fun x y => hg (by rw [map_add, hj, hj, hj, map_add])
+      map_add' := fun x y => hg (by rw [map_add (f := _), hj, hj, hj, map_add (f := _)])
       map_smul' := fun a x => hg (by rw [RingHom.id_apply, map_smulₛₗ, hj, hj, map_smulₛₗ]) }
   refine ⟨LinearEquiv.ofBijective jl ⟨fun x y hxy => hf ?_, fun v => ?_⟩, hj⟩
   · rw [← hj, ← hj]; exact congrArg g hxy
@@ -108,7 +108,7 @@ theorem majAt_eq_of_normAt [IsTotallyComplex K] {V ι W κ : Type} [AddCommGroup
       (v.embedding a * Formalism.HermitianLatticesTheory.majAt b X v x y).re := fun a => by
     have h1 := majAt_expand b X v a x y
     have h2 := majAt_expand b' X' v a (e x) (e y)
-    rw [← map_smul, ← map_add, h, h, h] at h2
+    rw [← map_smul, ← map_add (f := _), h, h, h] at h2
     linarith
   obtain ⟨a, ha⟩ : ∃ a : K, (v.embedding a).im ≠ 0 := by
     by_contra hn

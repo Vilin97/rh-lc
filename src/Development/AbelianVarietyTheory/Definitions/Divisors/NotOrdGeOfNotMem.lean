@@ -57,7 +57,7 @@ theorem OrdGe.add {T : Trait F} {ξ : Sp T.V ⟶ M.Z} {x y : Ω} {a : ℕ} (hx :
   have hsp : ∀ v, (jK T.V ≫ ξ) v ⤳ (jK T.V ≫ ξ) (IsLocalRing.closedPoint (FractionRing T.V)) := fun v => by
     rw [Subsingleton.elim v (IsLocalRing.closedPoint (FractionRing T.V))]
   refine ⟨Subalgebra.add_mem _ hx0 hy0, w + w', ?_⟩
-  rw [RatModel.val_add hsp hx0 hy0, hw, hw', ← map_add, mul_add]
+  rw [RatModel.val_add hsp hx0 hy0, hw, hw', ← map_add (f := _), mul_add]
 
 theorem OrdGe.mul {T : Trait F} {ξ : Sp T.V ⟶ M.Z} {x y : Ω} {a b : ℕ} (hx : OrdGe M T ξ x a) (hy : OrdGe M T ξ y b) :
     OrdGe M T ξ (x * y) (a + b) := by

@@ -42,7 +42,7 @@ theorem finPart_liftFin (y : Af D.host.F ⊗[D.host.F] D.host.E) :
     finPart D (GlobalTheory.LatticeStable.liftFin D y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul a m => rfl
 
 theorem toEAf_apply (w : Formalism.L2.Theta.AE D) :
@@ -81,7 +81,7 @@ theorem exists_integralCombination_of_mem_completedLattice {n : ℕ} (B : Submod
     · refine Fin.addCases (fun q => ?_) (fun q => ?_) p
       · rw [Fin.append_left]; exact hb q
       · rw [Fin.append_right]; exact hb' q
-    · rw [Fin.sum_univ_add, map_add, Pi.add_apply, he i, he' i]
+    · rw [Fin.sum_univ_add, map_add (f := _), Pi.add_apply, he i, he' i]
       simp only [Fin.append_left, Fin.append_right]
   | smul r x _ hx =>
     obtain ⟨m, β, b, hβ, hb, he⟩ := hx

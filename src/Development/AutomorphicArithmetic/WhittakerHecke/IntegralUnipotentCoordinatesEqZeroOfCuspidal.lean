@@ -39,7 +39,7 @@ theorem UpperTheory.integral_unipotentCoordinates_eq_zero_of_cuspidal :
       (MeasurePreserving.symm m ⟨m.measurable, rfl⟩).quasiMeasurePreserving (latE' D).symm
       fun y x => by
         change β (D.coE y.1 + x) = y.1 + β x
-        rw [map_add]
+        rw [map_add (f := _)]
         congr 1
         exact D.coE.symm_apply_apply y.1
   have hF' : IsAddFundamentalDomain (AdeleRing.principalSubgroup (𝓞 E) E) (m '' FS2 ℚ) (adeleMeasure E) :=

@@ -205,7 +205,7 @@ theorem UpperTheory.V.Base.h2Zl :
     | succ n ih =>
       rw [pow_succ', mul_assoc, hCeq, hCeq, map_mul, Module.End.mul_apply]
       have hc := hcoc (Multiplicative.ofAdd 1) (Multiplicative.ofAdd 1 ^ n) h
-      rw [← ih, map_add, map_sub] at hc
+      rw [← ih, map_add (f := _), map_sub] at hc
       rw [← sub_eq_zero]
       convert hc using 1
       abel

@@ -54,7 +54,7 @@ theorem hasse_frac_succ_mem {u : WeightFamilies.Wt D j} {m : ℕ} {g : Rp X la N
       apply ne_of_mem_erase hq'
       exact Prod.ext h (by rw [← h12, h, zero_add])
     have hlt : Finsupp.degree q.2 < n := by
-      rw [← hn, ← h12, map_add]
+      rw [← hn, ← h12, map_add (f := _)]
       have : Finsupp.degree q.1 ≠ 0 := fun h => hne ((Finsupp.degree_eq_zero_iff _).1 h)
       omega
     have h2 := ih _ hlt q.2 rfl
@@ -90,7 +90,7 @@ def Low (n : ℕ) (z : M.Λ) : Prop := ∀ β : Idx D j G.N →₀ ℕ, M.hd β 
 theorem low_zero_left (z : M.Λ) : M.Low 0 z := fun β => by simp
 
 theorem low_add {n : ℕ} {z z' : M.Λ} (hz : M.Low n z) (hz' : M.Low n z') : M.Low n (z + z') := fun β => by
-  rw [map_add]; exact Ideal.add_mem _ (hz β) (hz' β)
+  rw [map_add (f := _)]; exact Ideal.add_mem _ (hz β) (hz' β)
 
 theorem low_mul {n m : ℕ} {z z' : M.Λ} (hz : M.Low n z) (hz' : M.Low m z') : M.Low (n + m) (z * z') := fun β => by
   rw [M.hd_mul]
@@ -99,7 +99,7 @@ theorem low_mul {n m : ℕ} {z z' : M.Λ} (hz : M.Low n z) (hz' : M.Low m z') : 
   have h := Ideal.mul_mem_mul (hz q.1) (hz' q.2)
   rw [← pow_add] at h
   refine Ideal.pow_le_pow_right ?_ h
-  rw [← h12, map_add]
+  rw [← h12, map_add (f := _)]
   omega
 
 theorem low_gen (i : Fin (WeightFamilies.dimY D j)) :
@@ -140,7 +140,7 @@ theorem ev_I (ζ : PtsG G la) {z : M.Λ} (hz : z ∈ M.I) : M.ev ζ z = 0 := by
     rw [M.ev_ι]
     exact (hs ζ).lift_Jid (sfr_succ_mem_Jid (xplus X E hM) la G.w i)
   | zero => exact map_zero _
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul a x _ hx => rw [smul_eq_mul, map_mul, hx, mul_zero]
 
 theorem hd_mul_e' (β : Idx D j G.N →₀ ℕ) (r : M.Λ) : M.hd β (r * M.e') = M.hd β r * M.e' := by

@@ -36,7 +36,7 @@ theorem filV_sep {V : Type} [AddCommGroup V] [Module LL V] [Module Qp V] [IsScal
       exact ((PD.Fil a).restrictScalars Qp).smul_mem _ f.2
     | add x y hx hy =>
       intro j
-      rw [map_add, map_add, Finsupp.add_apply]
+      rw [map_add (f := _), map_add (f := _), Finsupp.add_apply]
       exact (PD.Fil a).add_mem (hx j) (hy j)
   have h0 : E z = 0 := by
     ext j

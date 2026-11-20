@@ -68,11 +68,11 @@ theorem val_cutIdele (S : Finset (HeightOneSpectrum (𝓞 F))) (x : (AF F ⊗[F]
     (cutIdele S x).1 = algebraMap (AF F) (AF F ⊗[F] E) (eps S) * (x.1 - 1) + 1 := by
   refine adele_ext (fun w => ?_) fun v => ?_
   · have h : compInf F E w (algebraMap (AF F) (AF F ⊗[F] E) (eps S)) = 1 := rfl
-    rw [map_add, map_mul, map_sub, h, map_one, one_mul, sub_add_cancel]
+    rw [map_add (f := _), map_mul, map_sub, h, map_one, one_mul, sub_add_cancel]
     exact congrArg Units.val (unitInf_cutIdele S x w)
   · have h : compFin F E v (algebraMap (AF F) (AF F ⊗[F] E) (eps S)) =
         Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (GlobalTheory.LocalGlobalChar.ind S) ⊗ₜ[F] (1 : E) := rfl
-    rw [map_add, map_mul, map_sub, h, map_one, ev_ind]
+    rw [map_add (f := _), map_mul, map_sub, h, map_one, ev_ind]
     split_ifs with hv
     · rw [← Algebra.TensorProduct.one_def, one_mul, sub_add_cancel]
       exact congrArg Units.val (unitFin_cutIdele_of_mem x hv)

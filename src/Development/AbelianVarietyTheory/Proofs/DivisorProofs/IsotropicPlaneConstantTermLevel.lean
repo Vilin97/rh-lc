@@ -54,7 +54,7 @@ private theorem levi_fin (hσ : ∀ x, σ (σ x) = x) {n n₁ : ℕ} {H : Plane 
       Matrix.map_one _ (map_zero _) (map_one _), sub_self, Matrix.zero_mulVec]
   rw [Matrix.one_mulVec, hs]
   funext i
-  rw [← RingHom.map_mulVec, hv, Pi.add_apply, map_add, RingHom.map_mulVec, hz, Matrix.mulVec_zero, Pi.zero_apply,
+  rw [← RingHom.map_mulVec, hv, Pi.add_apply, map_add (f := _), RingHom.map_mulVec, hz, Matrix.mulVec_zero, Pi.zero_apply,
     add_zero]
   rfl
 

@@ -56,7 +56,7 @@ theorem exists_good_multiple : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
     exact ((Nat.Prime.coprime_iff_not_dvd hdp).2 (Nat.not_dvd_ordCompl hdp hM0)).symm
   set α : 𝓞 E := (a : 𝓞 E) + H.rt with hα
   have hαb : H.bar α = (a : 𝓞 E) - H.rt := by
-    rw [hα, map_add, map_natCast, GlobalTheory.HostModel.bar_rt, sub_eq_add_neg]
+    rw [hα, map_add (f := _), map_natCast, GlobalTheory.HostModel.bar_rt, sub_eq_add_neg]
   have hnorm : α * ((a : 𝓞 E) - H.rt) = (N : 𝓞 E) := GlobalTheory.LevelAllPrimes.add_rt_mul_sub_rt H a
   have hαα : IsCoprime α ((a : 𝓞 E) - H.rt) := GlobalTheory.LevelAllPrimes.isCoprime_add_rt_sub_rt H hcd hNodd
   have hαmem : α ∈ Algebra.adjoin ℤ {H.w0} := add_mem (natCast_mem _ a) (GlobalTheory.HostModel.rt_mem_adjoin H)

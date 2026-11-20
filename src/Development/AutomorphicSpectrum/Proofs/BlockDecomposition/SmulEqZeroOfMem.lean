@@ -102,7 +102,7 @@ def lam (H : TowerAx ρ res p mm) (l : Fin g) (e : ℕ) (t : ℤ) (S : Finset ι
   map_add' a b := by
     obtain ⟨a, rfl⟩ := H.surj (e + 1) t S hS a
     obtain ⟨b, rfl⟩ := H.surj (e + 1) t S hS b
-    rw [← map_add, H.rho_smul_surjInv l hS, H.rho_smul_surjInv l hS, H.rho_smul_surjInv l hS,
+    rw [← map_add (f := _), H.rho_smul_surjInv l hS, H.rho_smul_surjInv l hS, H.rho_smul_surjInv l hS,
       smul_add]
   map_smul' r a := by
     obtain ⟨a, rfl⟩ := H.surj (e + 1) t S hS a

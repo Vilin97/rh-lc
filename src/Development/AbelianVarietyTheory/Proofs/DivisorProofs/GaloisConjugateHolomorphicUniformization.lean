@@ -50,7 +50,7 @@ theorem exists_conj_holUnif_tangent : GlobalTheory.Published.PeriodComparison �
     simp [mul_left_comm]
   let φl : (Fin (Module.finrank ℚ F) → ℂ) →ₗ[ℂ] (Fin (Module.finrank ℚ F) → ℂ) :=
     { toFun := fun w' => T (ψ w')
-      map_add' := fun a b => by simp only [hψa, map_add]
+      map_add' := fun a b => by simp only [hψa, map_add (f := _)]
       map_smul' := fun a b => by
         simp only [hψs, map_smulₛₗ, RingHom.id_apply]
         congr 1

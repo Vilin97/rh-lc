@@ -46,7 +46,7 @@ theorem cmField_host_element_add_conj_eq_one {E : Type} [Field E] [NumberField E
     simpa [map_ofNat] using this
   have h2 : 2 * cc (H.w0 : E) = 1 + cc (H.rt : E) := by
     have := congrArg (IsCMField.complexConj E) h1
-    rw [map_mul, map_add, map_one, map_ofNat] at this
+    rw [map_mul, map_add (f := _), map_one, map_ofNat] at this
     exact this
   rw [conj_rt] at h2
   have : (2 : E) * ((H.w0 : E) + cc (H.w0 : E)) = 2 * 1 := by linear_combination h1 + h2
@@ -63,7 +63,7 @@ theorem trace_even_real_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     obtain ⟨n, hn⟩ := h (s + cc s) hm (by rw [hadd, hcc, add_comm])
     refine ⟨n, ?_⟩
     have e : x * cc s = cc (x * s) := by rw [hmul, hx]
-    rw [mul_add, map_add, e, trace_conj] at hn
+    rw [mul_add, map_add (f := _), e, trace_conj] at hn
     linarith
   · intro h s hs hcs
     have hm : (H.w0 : E) * s ∈ I := Submodule.smul_mem (I : Submodule (𝓞 E) E) H.w0 hs
@@ -72,7 +72,7 @@ theorem trace_even_real_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     have e : x * s = x * ((H.w0 : E) * s) + cc (x * ((H.w0 : E) * s)) := by
       rw [hmul, hmul, hx, hcs]
       linear_combination (-(x * s)) * cmField_host_element_add_conj_eq_one H
-    rw [e, map_add, trace_conj, hn]
+    rw [e, map_add (f := _), trace_conj, hn]
     ring
 
 end GlobalTheory.DiagDifferent

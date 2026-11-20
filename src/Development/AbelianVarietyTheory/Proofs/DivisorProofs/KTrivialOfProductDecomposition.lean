@@ -14,7 +14,7 @@ namespace GlobalTheory.KTrivProduct
 
 theorem lam_add {S : Scheme.{0}} {G T : Over S} [GrpObj G] (c d : Pic G.left) (x y : T ⟶ G) :
     lam (c + d) x y = lam c x y + lam d x y := by
-  simp only [lam, map_add]
+  simp only [lam, map_add (f := _)]
   abel
 
 theorem memK_comp {T : Scheme.{0}} {C B₁ B₂ : Over T} [GrpObj C] [GrpObj B₁] [GrpObj B₂]
@@ -25,7 +25,7 @@ theorem memK_comp {T : Scheme.{0}} {C B₁ B₂ : Over T} [GrpObj C] [GrpObj B�
   rw [PolCompare.memK_iff_cls C hL, e, lam_add, CechPic.lam_pull, CechPic.lam_pull] at hx
   rw [PolCompare.memK_iff_cls B₁ hL₁]
   have H := congrArg (pull (lift (fst U B₁) (snd U B₁ ≫ i) : U ⊗ B₁ ⟶ U ⊗ C).left) hx
-  rw [map_add, CechPic.pull_lam, CechPic.pull_lam, map_zero] at H
+  rw [map_add (f := _), CechPic.pull_lam, CechPic.pull_lam, map_zero] at H
   simp only [Category.assoc, lift_fst_assoc, lift_snd_assoc, h₁, h₂, Category.comp_id, MonObj.comp_one,
     CechPic.lam_one_right, add_zero] at H
   exact H

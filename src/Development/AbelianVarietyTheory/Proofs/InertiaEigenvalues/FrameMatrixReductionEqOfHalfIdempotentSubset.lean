@@ -18,7 +18,7 @@ theorem toEAf_cA_sig (a : AE D) :
     toEAf D (cA D a) = Formalism.UG.sigR D.sp.cm.sig (Af D.host.F) (toEAf D a) := by
   induction a using TensorProduct.induction_on with
   | zero => simp only [RingHom.map_zero]
-  | add a b ha hb => simp only [RingHom.map_add, ha, hb]
+  | add a b ha hb => simp only [RingHom.map_add (f := _), ha, hb]
   | tmul y e => rfl
 
 theorem int_idemAt {P : Finset (Pl D.host.E)} (h : SplitSet P) {PP : Pl D.host.E} (hPP : PP ∈ P) :
@@ -90,7 +90,7 @@ theorem redM_drop : ∀ {D : D7} {S T : HSp D} (βS : GL (Fin S.rank) (EAf D)) (
   constructor
   · intro PP hPP
     have e1 := frMapAdj_smul_eq βS βT (halfIdem Pg Qb + idem (Qa \ Qb)) x
-    rw [hxx, map_add, map_add, add_smul] at e1
+    rw [hxx, map_add (f := _), map_add (f := _), add_smul] at e1
     have e2 : frMapAdj S T βS βT (halfIdem Pg Qb • x) =
         frMapAdj S T βS βT x - toEAf D (cA D (idem (Qa \ Qb))) • frMapAdj S T βS βT x := by
       rw [frMapAdj_smul_eq]
@@ -108,7 +108,7 @@ theorem redM_drop : ∀ {D : D7} {S T : HSp D} (βS : GL (Fin S.rank) (EAf D)) (
     rw [e2, redM_sub_smul PP h1 hint hz]
   · intro PP hPP
     have e1 := frMapO_smul_eq βS βT (halfIdem Pg Qb + idem (Qa \ Qb)) x
-    rw [hxx, map_add, add_smul] at e1
+    rw [hxx, map_add (f := _), add_smul] at e1
     have e2 : frMapO S T βS βT (halfIdem Pg Qb • x) =
         frMapO S T βS βT x - toEAf D (idem (Qa \ Qb)) • frMapO S T βS βT x := by
       rw [frMapO_smul_eq]

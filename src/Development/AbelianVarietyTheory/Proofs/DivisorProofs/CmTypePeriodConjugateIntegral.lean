@@ -39,7 +39,7 @@ theorem ext_of_eigLat [IsDomain O] [IsFractionRing O K] (ρ : orderC c →+* Mod
     induction hy using Submodule.iSup_induction' with
     | mem σ y hy => exact hST σ y hy
     | zero => simp
-    | add y z _ _ hy hz => simp [map_add, hy, hz]
+    | add y z _ _ hy hz => simp [map_add (f := _), hy, hz]
   have hH : ∀ h : H, S (inK K H h) = T (inK K H h) := by
     intro h
     have h1 : inK (O := O) K H (D • h) = algebraMap O K D • inK (O := O) K H h := by
@@ -53,7 +53,7 @@ theorem ext_of_eigLat [IsDomain O] [IsFractionRing O K] (ρ : orderC c →+* Mod
   | tmul k h =>
     have : k ⊗ₜ[O] h = k • inK K H h := by simp [inK, TensorProduct.smul_tmul']
     rw [this, map_smul, map_smul, hH]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem lower_mem_eigK_bar {I : Type} {φ : I → E →+* K} {ρ : orderC c →+* Module.End O H} {e f : I → H}
     (hG : IsGens φ ρ e f) {i : I} {N : Module.End K (K ⊗[O] H)} (hN : IsLower ρ (φ i) (e i) (f i) N) {y : H}

@@ -33,7 +33,7 @@ theorem hasConstTerm_thetaSum_schr_lin : ∀ (F E : Type) [Field F] [NumberField
   let S : Set (κ → F) := Set.range emb
   let cst : (κ → F) → (κ → AF F) := fun ξ i => algebraMap F (AF F) (ξ i)
   let lin : (κ → F) → (Fin d → AE F E) →+ AF F := fun ξ =>
-    AddMonoidHom.mk' (fun z => cst ξ ⬝ᵥ q z) (fun a b => by simp [map_add, dotProduct_add])
+    AddMonoidHom.mk' (fun z => cst ξ ⬝ᵥ q z) (fun a b => by simp [map_add (f := _), dotProduct_add])
   let χ : ↥Sᶜ → AddChar (Fin d → AE F E) ℂ := fun ξ => ψ.compAddMonoidHom (lin ξ.1)
   have hχ : ∀ ξ z, χ ξ z = ψ (cst ξ.1 ⬝ᵥ q z) := fun _ _ => rfl
   let a : ↥Sᶜ → ℂ := fun ξ => Φ (cst ξ.1)

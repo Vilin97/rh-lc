@@ -284,11 +284,11 @@ theorem exists_idems (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) (v : HeightOneS
     let e₁ : Fv F v ⊗[F] E := (2⁻¹ : Fv F v) • (1 + c⁻¹ • θ)
     let e₂ : Fv F v ⊗[F] E := (2⁻¹ : Fv F v) • (1 - c⁻¹ • θ)
     have v11 : ψ₁ e₁ = 1 := by
-      simp only [e₁, map_smul, map_add, map_one, p1, smul_eq_mul]
+      simp only [e₁, map_smul, map_add (f := _), map_one, p1, smul_eq_mul]
       field_simp
       norm_num
     have v12 : ψ₂ e₁ = 0 := by
-      simp only [e₁, map_smul, map_add, map_one, p2, smul_eq_mul]
+      simp only [e₁, map_smul, map_add (f := _), map_one, p2, smul_eq_mul]
       field_simp
       norm_num
     have v21 : ψ₁ e₂ = 0 := by

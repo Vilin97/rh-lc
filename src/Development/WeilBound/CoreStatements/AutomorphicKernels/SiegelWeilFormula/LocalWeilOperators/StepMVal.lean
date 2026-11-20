@@ -45,9 +45,9 @@ theorem det_uW (t : GL (Fin d.n) (AE F E)) (a : Matrix (Fin d.n) (Fin d.n) ℂ) 
   obtain ⟨-, hs2, hs3, -, -⟩ := (Place.exists_sec d.cm d.B.emb).choose_spec
   apply PositivityTheory.ThKG.Tow.Levi.ad_ext d.cm d.B.emb
   · intro w'
-    rw [piInf_det (d := d) w t a ht ho w', SD.uW, map_add, hs2, Place.piInf_finOne, add_zero]
+    rw [piInf_det (d := d) w t a ht ho w', SD.uW, map_add (f := _), hs2, Place.piInf_finOne, add_zero]
   · intro v
-    rw [compFin_det (d := d) t hf v, SD.uW, map_add, ← Place.compFin_finOne v, hs3, map_zero, zero_add,
+    rw [compFin_det (d := d) t hf v, SD.uW, map_add (f := _), ← Place.compFin_finOne v, hs3, map_zero, zero_add,
       Place.compFin_finOne, map_one]
 
 theorem chi_det (t : GL (Fin d.n) (AE F E)) (a : Matrix (Fin d.n) (Fin d.n) ℂ) (ht : d.cw w t.1 = a)

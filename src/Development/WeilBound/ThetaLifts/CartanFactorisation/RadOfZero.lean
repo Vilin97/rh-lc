@@ -63,7 +63,7 @@ theorem absUnit : AbsUnit := by
       re_inner_nonneg := fun x => by obtain ⟨x, rfl⟩ := sj x; rw [hb]; exact hp x
       add_left := fun x y z => by
         obtain ⟨x, rfl⟩ := sj x; obtain ⟨y, rfl⟩ := sj y; obtain ⟨z, rfl⟩ := sj z
-        rw [← map_add, hb, hb, hb]; simp
+        rw [← map_add (f := _), hb, hb, hb]; simp
       smul_left := fun x y r => by
         obtain ⟨x, rfl⟩ := sj x; obtain ⟨y, rfl⟩ := sj y
         rw [← map_smul, hb, hb]; simp
@@ -97,7 +97,7 @@ theorem absUnit : AbsUnit := by
       refine Submodule.finiteDimensional_of_le (S₂ := (Submodule.span ℂ (t : Set Q)).map (mkR β)) (Submodule.span_le.2 ?_)
       rintro _ ⟨k, rfl⟩
       obtain ⟨y, hy, z, hz, e⟩ := Submodule.mem_sup.1 (ht k)
-      exact ⟨y, hy, by show _ = κ' k _; rw [hκ', ← e, map_add, hA₀ z hz, add_zero]⟩
+      exact ⟨y, hy, by show _ = κ' k _; rw [hκ', ← e, map_add (f := _), hA₀ z hz, add_zero]⟩
     have := hf (mkR β f)
     let W := orb κ' (mkR β f)
     let bs : W ≃ₗ[ℂ] (Fin (Module.finrank ℂ W) → ℂ) := (Module.finBasis ℂ W).equivFun
@@ -115,7 +115,7 @@ theorem absUnit : AbsUnit := by
         induction hw using Submodule.span_induction with
         | mem y h => obtain ⟨k', rfl⟩ := h; simp only [hκ', hfix]
         | zero => simp
-        | add a b _ _ ha hb => rw [map_add, ha, hb]
+        | add a b _ _ ha hb => rw [map_add (f := _), ha, hb]
         | smul c a _ ha => rw [map_smul, ha]
       have : r k (bs.symm y) = bs.symm y := Subtype.ext (h1 _ (bs.symm y).2)
       show bs (r k (bs.symm y)) = y

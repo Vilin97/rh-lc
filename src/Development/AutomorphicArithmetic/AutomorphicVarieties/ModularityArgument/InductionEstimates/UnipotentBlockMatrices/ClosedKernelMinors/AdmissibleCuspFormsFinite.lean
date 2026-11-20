@@ -45,7 +45,7 @@ private theorem admissible_finite_window {R M : Type*} [Ring R] [AddCommGroup M]
       obtain ⟨p, hp, hx⟩ := hx
       obtain ⟨q, hq, hy⟩ := hy
       obtain ⟨a, b⟩ := g2 p q x y hp hq hx hy
-      exact ⟨p * q, gm p q hp hq, by rw [map_add, a, b, add_zero]⟩
+      exact ⟨p * q, gm p q hp hq, by rw [map_add (f := _), a, b, add_zero]⟩
   have h2 : ∃ q, G q ∧ ∀ t ∈ T, q t = 0 := by
     induction T using Finset.induction_on with
     | empty => exact ⟨1, g1, by simp⟩
@@ -156,7 +156,7 @@ private theorem admissible_cusp_forms_finite {K : Type} [Field K] [NumberField K
       | add a b ha hb =>
         obtain ⟨l, hl⟩ := ha
         obtain ⟨l', hl'⟩ := hb
-        exact ⟨l + l', fun Ψ g => by rw [map_add, LinearMap.add_apply, LinearMap.add_apply, ← hl, ← hl']; rfl⟩
+        exact ⟨l + l', fun Ψ g => by rw [map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, ← hl, ← hl']; rfl⟩
       | smul c a ha =>
         obtain ⟨l, hl⟩ := ha
         exact ⟨c • l, fun Ψ g => by rw [map_smul, LinearMap.smul_apply, LinearMap.smul_apply, ← hl]; rfl⟩

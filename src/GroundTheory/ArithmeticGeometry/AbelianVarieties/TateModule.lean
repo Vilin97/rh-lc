@@ -312,7 +312,7 @@ theorem exists_independent_torsion_prime (hℓF : (ℓ : F) ≠ 0) :
     ext <;> simp
   have h' : e.symm ((a : ZMod ℓ), (b : ZMod ℓ)) = 0 := by
     apply Subtype.ext
-    rw [hab, map_add, map_nsmul, map_nsmul]
+    rw [hab, map_add (f := _), map_nsmul, map_nsmul]
     simpa using h
   have h'' := congrArg e h'
   rw [AddEquiv.apply_symm_apply, map_zero] at h''

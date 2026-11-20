@@ -95,7 +95,7 @@ theorem exists_arcIn_of_unif {V : ValuationSubring c.F} (Y : Model Xo c V.subtyp
   have two : ∀ y, 2 * Q y = be y y := DVR.QForm.two_Q_eq hϖ P.D hQ
   have bdvd : ∀ y x, (2 * l.M' : ℤ) ∣ be y x := fun y x => dvd_sub (dvd_sub (dvd _) (dvd _)) (dvd _)
   have half : ∀ y, be y (H.w0 • y) = Q y := fun y => by
-    have e₁ : be y (H.w0 • y) + be y (star H.w0 • y) = be y y := by rw [← map_add, ← add_smul, hw, one_smul]
+    have e₁ : be y (H.w0 • y) + be y (star H.w0 • y) = be y y := by rw [← map_add (f := _), ← add_smul, hw, one_smul]
     rw [← bal, symm (H.w0 • y), ← two] at e₁
     omega
   let u : (FractionRing T.V)ˣ := Units.mk0 (algebraMap T.V _ ϖ)

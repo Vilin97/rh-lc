@@ -45,7 +45,7 @@ theorem closure_hart : ∀ (A R : Type) [CommRing A] [IsDomain A] [CommRing R] [
         intro d₁ d₂ h₁ h₂ z hz
         obtain ⟨r₁, e₁⟩ := h₁ z hz
         obtain ⟨r₂, e₂⟩ := h₂ z hz
-        exact ⟨r₁ + r₂, by rw [map_add, e₁, e₂, add_mul, map_add]⟩
+        exact ⟨r₁ + r₂, by rw [map_add (f := _), e₁, e₂, add_mul, map_add (f := _)]⟩
       zero_mem' := by
         intro z _
         exact ⟨0, by simp⟩

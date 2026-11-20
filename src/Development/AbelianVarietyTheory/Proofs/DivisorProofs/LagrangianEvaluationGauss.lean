@@ -72,7 +72,7 @@ theorem rho_trace [IsTotallyReal F] {σ : E →ₐ[F] E} (hCM : IsCMExt F E σ) 
   have h1 : z + cA σ z = algebraMap (AF F) (AE F E) (Algebra.trace (AF F) (AE F E) z) :=
     GlobalTheory.GaussMean.OneVec.add_sigR (AF F) hCM z
   have h2 := congrArg (fun y => (piInf τ y).re) h1
-  simp only [map_add, piInf_cA hCM, piInf_algebraMap, Complex.ofReal_re, Complex.add_re] at h2
+  simp only [map_add (f := _), piInf_cA hCM, piInf_algebraMap, Complex.ofReal_re, Complex.add_re] at h2
   rw [← h2]
   simp [two_mul]
 
@@ -81,7 +81,7 @@ def phi [IsTotallyReal F] (h2 : Module.finrank F E = 2) {n : ℕ} {w : InfiniteP
   toFun t i := ∑ r, ((rho w (t (i, r)) : ℝ) : ℂ) * piInf τ (tb F E h2 r)
   map_add' t t' := by
     funext i
-    simp only [Pi.add_apply, map_add, Complex.ofReal_add, add_mul, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), Complex.ofReal_add, add_mul, Finset.sum_add_distrib]
   map_smul' c t := by
     funext i
     simp only [Pi.smul_apply, map_smul, smul_eq_mul, Complex.ofReal_mul, RingHom.id_apply, Complex.real_smul,

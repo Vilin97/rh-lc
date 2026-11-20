@@ -268,7 +268,7 @@ theorem IsRightAct.unique (hCM : IsCMExt F E σ) (hC : IsFrame (herm J (τ w)) C
     exact LinearMap.ext fun f => Subtype.ext ((ha γ hγ X h f).unique (hb γ hγ X h f))
   refine LinearMap.ext fun Z => ?_
   obtain ⟨X, hX, Y, hY, rfl⟩ := exists_upq_add Z
-  rw [map_add, map_add, map_smul, map_smul, key X hX, key Y hY]
+  rw [map_add (f := _), map_add (f := _), map_smul, map_smul, key X hX, key Y hY]
 
 theorem exists_isGKAt_range (hCM : IsCMExt F E σ) (hC : IsFrame (herm J (τ w)) C) (M : GKMod R S)
     (φ : M.V →ₗ[ℂ] (UA σ J → ℂ))
@@ -280,13 +280,13 @@ theorem exists_isGKAt_range (hCM : IsCMExt F E σ) (hC : IsFrame (herm J (τ w))
       refine (hφ γ hγ X h v).unique fun g => ?_
       rw [hv]; exact hasDerivAt_const _ _
     obtain ⟨X, hX, Y, hY, rfl⟩ := exists_upq_add Z
-    rw [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul, key X hX, key Y hY, smul_zero,
+    rw [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul, key X hX, key Y hY, smul_zero,
       add_zero]
   have hs := φ.surjective_rangeRestrict
   obtain ⟨s, hs'⟩ := φ.rangeRestrict.exists_rightInverse_of_surjective φ.range_rangeRestrict
   let act : Mat R S →ₗ[ℂ] Module.End ℂ (LinearMap.range φ) :=
     { toFun := fun X => φ.rangeRestrict ∘ₗ M.act X ∘ₗ s
-      map_add' := fun X Y => by rw [map_add, LinearMap.add_comp, LinearMap.comp_add]
+      map_add' := fun X Y => by rw [map_add (f := _), LinearMap.add_comp, LinearMap.comp_add]
       map_smul' := fun c X => by rw [map_smul, LinearMap.smul_comp, LinearMap.comp_smul]; rfl }
   have heq : ∀ X v, act X (φ.rangeRestrict v) = φ.rangeRestrict (M.act X v) := fun X v => by
     have h0 : φ (s (φ.rangeRestrict v) - v) = 0 := by

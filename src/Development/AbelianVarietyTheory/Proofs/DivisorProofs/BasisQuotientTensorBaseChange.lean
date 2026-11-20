@@ -20,7 +20,7 @@ theorem quotient_basis_baseChange (A B C R : Type) [CommRing A] [CommRing B] [Al
   have mkC : ∀ (c : C) (x : C ⊗[A] B), Ideal.Quotient.mk J (c • x) = c • Ideal.Quotient.mk J x :=
     fun c x => map_smul (Ideal.Quotient.mkₐ C J) c x
   have Φ_add : ∀ x y, Φ (x + y) = Φ x + Φ y := by
-    intro x y; funext k; simp [Φ, map_add]
+    intro x y; funext k; simp [Φ, map_add (f := _)]
   have Φ_zero : Φ 0 = 0 := by funext k; simp [Φ]
   have Φ_smul : ∀ (c : C) x, Φ (c • x) = ψ c • Φ x := by
     intro c x; funext k
@@ -52,7 +52,7 @@ theorem quotient_basis_baseChange (A B C R : Type) [CommRing A] [CommRing B] [Al
       have : c ⊗ₜ[A] b = c • ((1 : C) ⊗ₜ[A] b) := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
       rw [this, Φ_smul]; rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy, Φ_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, Φ_add]
   have f_smul : ∀ (c : C) (y : C ⊗[A] B), f (c • y) = ψ c • f y := by
     intro c y
     induction y using TensorProduct.induction_on with
@@ -60,13 +60,13 @@ theorem quotient_basis_baseChange (A B C R : Type) [CommRing A] [CommRing B] [Al
     | tmul c' b =>
       rw [TensorProduct.smul_tmul', hf, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul,
         TensorProduct.smul_tmul', smul_eq_mul, smul_eq_mul, map_mul]
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
   have f_one : ∀ b : B, f ((1 : C) ⊗ₜ[A] b) = (1 : R) ⊗ₜ[A] b := by
     intro b; rw [hf, Algebra.TensorProduct.map_tmul, map_one]; rfl
   have kill : ∀ y ∈ J', ℓ y = 0 := by
     let K : Ideal (R ⊗[A] B) :=
       { carrier := {y | ∀ a, ℓ (a * y) = 0}
-        add_mem' := fun {x y} hx hy a => by rw [mul_add, map_add, hx a, hy a, add_zero]
+        add_mem' := fun {x y} hx hy a => by rw [mul_add, map_add (f := _), hx a, hy a, add_zero]
         zero_mem' := fun a => by simp
         smul_mem' := fun c {x} hx a => by
           show ℓ (a * (c * x)) = 0
@@ -80,7 +80,7 @@ theorem quotient_basis_baseChange (A B C R : Type) [CommRing A] [CommRing B] [Al
         have : (s ⊗ₜ[A] b) * f j = s • f (((1 : C) ⊗ₜ[A] b) * j) := by
           rw [map_mul, f_one, ← smul_mul_assoc, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
         rw [this, map_smul, key, Φ_J _ (J.mul_mem_left _ hj), smul_zero]
-      | add x y hx hy => rw [add_mul, map_add, hx, hy, add_zero]
+      | add x y hx hy => rw [add_mul, map_add (f := _), hx, hy, add_zero]
     intro y hy
     have := hJK hy 1
     simpa using this
@@ -119,7 +119,7 @@ theorem quotient_basis_baseChange (A B C R : Type) [CommRing A] [CommRing B] [Al
           rw [map_sub, map_sum] at this
         simpa only [f_smul, f_one] using this
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [← sub_add_cancel (f x) (∑ k, ψ (c k) • ((1 : R) ⊗ₜ[A] v k)), map_add,
+        rw [← sub_add_cancel (f x) (∑ k, ψ (c k) • ((1 : R) ⊗ₜ[A] v k)), map_add (f := _),
         Ideal.Quotient.eq_zero_iff_mem.mpr hmem', zero_add, map_sum]
       refine Submodule.sum_mem _ (fun k _ => ?_)
       rw [mkR]
@@ -131,6 +131,6 @@ theorem quotient_basis_baseChange (A B C R : Type) [CommRing A] [CommRing B] [Al
         rw [f_one, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
       rw [this, mkR]
       exact Submodule.smul_mem _ _ (hbase _)
-    | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
 
 end GlobalTheory

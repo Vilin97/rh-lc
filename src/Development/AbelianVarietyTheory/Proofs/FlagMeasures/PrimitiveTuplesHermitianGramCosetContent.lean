@@ -352,7 +352,7 @@ theorem one_add_unit [IsNonarchimedeanLocalField F] [CharZero F] (ϖ : 𝒪[F]) 
     exact this.resolve_left hnu
   obtain ⟨v, hv⟩ := hun.exists_right_inv
   have hv' := congrArg (fun x : 𝒪[F] => algebraMap F E (x : F)) hv
-  simp only [Subring.coe_mul, Subring.coe_add, Subring.coe_one, map_mul, map_add, map_one,
+  simp only [Subring.coe_mul, Subring.coe_add, Subring.coe_one, map_mul, map_add (f := _), map_one,
     SubmonoidClass.coe_pow] at hv'
   have hp : algebraMap F E ((ϖ : F) ^ j) ∈ L.O := (h5 _).2 (ϖ ^ j).2
   refine ⟨(1 + algebraMap F E ((ϖ : F) ^ j) * L.cj c) * algebraMap F E v,

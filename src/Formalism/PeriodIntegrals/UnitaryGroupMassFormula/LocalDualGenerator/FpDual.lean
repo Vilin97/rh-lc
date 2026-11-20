@@ -102,7 +102,7 @@ private theorem small_lemma_5 (hcont : Continuous (algebraMap ℚ_[l] K)) (y : K
   exact Filter.eventually_atTop.1 (h2.eventually_mem h3)
 
 private theorem P_add_mem {x y : K} (hx : P l x) (hy : P l y) : P l (x + y) := fun b => by
-  rw [add_mul, map_add]
+  rw [add_mul, map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hx b) (hy b))
 
 private theorem mul_mem_dual₂ {x : K} (hx : P l x) (c : 𝒪[K]) : P l (x * c) := fun b => by

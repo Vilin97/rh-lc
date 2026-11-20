@@ -32,7 +32,7 @@ theorem exists_basis_mod_sq {A : Type} [CommRing A] [Algebra ℂ A] (e : A →+*
     exact he c
   let φ : A →ₗ[ℂ] ℂ ⊗[A] Ω[A⁄ℂ] :=
     { toFun := fun a => (1 : ℂ) ⊗ₜ[A] D ℂ A a
-      map_add' := fun a b => by rw [map_add, TensorProduct.tmul_add]
+      map_add' := fun a b => by rw [map_add (f := _), TensorProduct.tmul_add]
       map_smul' := fun c a => by rw [(D ℂ A).map_smul c a, key]; rfl }
   have hφ : ∀ x : RingHom.ker (algebraMap A ℂ), φ x =
       kerCotangentToTensor ℂ A ℂ ((RingHom.ker (algebraMap A ℂ)).toCotangent x) :=

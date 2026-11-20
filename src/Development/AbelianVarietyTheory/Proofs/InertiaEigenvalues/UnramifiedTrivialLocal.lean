@@ -27,7 +27,7 @@ theorem unramifiedCocycles_le_blochKatoFinite_trivial {l : ℕ} [Fact l.Prime] {
       P.actQ g b - b = algebraMap ℚ_[l] _ (v.coord i (c g)) := fun i =>
     GlobalTheory.UnramifiedCrys.exists_rat AI T K (fun g => v.coord i (c g))
       ((v.coord i).continuous_of_finiteDimensional.comp hcont)
-      (fun g h => by rw [hadd, map_add]; rfl) (fun g hg => by rw [hI g hg, map_zero])
+      (fun g h => by rw [hadd, map_add (f := _)]; rfl) (fun g hg => by rw [hI g hg, map_zero])
   choose b hb using hex
   refine ⟨∑ i, v i ⊗ₜ[ℚ_[l]] b i, fun g => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
@@ -50,7 +50,7 @@ theorem Z1ur_ne_bot {l : ℕ} [Fact l.Prime] (K LL : FinExt l) :
     (Algebra.linearMap ℚ_[l] ↥LL.1).continuous_of_finiteDimensional.comp hδc
   have hmem : c ∈ Z1ur (1 : Representation ↥LL.1 ↥(GK K) ↥LL.1) (IK K) := by
     refine ⟨⟨hcc, fun g h => ?_⟩, 0, fun g hg => ?_⟩
-    · simp [c, hδa, map_add]
+    · simp [c, hδa, map_add (f := _)]
     · simp [c, hδI g hg]
   intro h
   rw [h] at hmem

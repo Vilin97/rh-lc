@@ -31,7 +31,7 @@ def IsSq.lin (hs : IsSq σ h) (x : V) : V →ₗ[K] K where
 theorem IsSq.lin_apply (hs : IsSq σ h) (x y : V) : hs.lin x y = h x y := rfl
 
 theorem IsSq.add_left (hs : IsSq σ h) (x y z : V) : h (x + y) z = h x z + h y z := by
-  rw [hs.herm z (x + y), hs.add_right, map_add, ← hs.herm z x, ← hs.herm z y]
+  rw [hs.herm z (x + y), hs.add_right, map_add (f := _), ← hs.herm z x, ← hs.herm z y]
 
 theorem IsSq.smul_left (hs : IsSq σ h) (c : K) (x y : V) : h (c • x) y = σ c * h x y := by
   rw [hs.herm y (c • x), hs.smul_right, map_mul, ← hs.herm y x]

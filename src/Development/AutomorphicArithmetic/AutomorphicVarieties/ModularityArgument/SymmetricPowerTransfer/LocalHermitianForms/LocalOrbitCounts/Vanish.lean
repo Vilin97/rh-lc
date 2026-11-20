@@ -565,7 +565,7 @@ theorem UpperTheory.V.Z.Sym.Loc.vanish :
   have hτO : τ ∈ (algebraMap O K).range := by
     obtain ⟨o, ho⟩ := IsIntegrallyClosed.isIntegral_iff.1 hint
     refine ⟨o + 2, ?_⟩
-    rw [map_add, ho, map_ofNat]
+    rw [map_add (f := _), ho, map_ofNat]
     ring
   have hω1 : (ofE Δ ω : EL Δ τ) = ⟨0, 1⟩ := by
     ext <;> simp [ofE]

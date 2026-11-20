@@ -66,7 +66,7 @@ private theorem temp (p : MvPolynomial (Fin 2) ℂ) :
   induction p using MvPolynomial.induction_on with
   | C a => simpa using Function.HasTemperateGrowth.const a
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p k hp =>
     simp only [map_mul, MvPolynomial.eval_X]

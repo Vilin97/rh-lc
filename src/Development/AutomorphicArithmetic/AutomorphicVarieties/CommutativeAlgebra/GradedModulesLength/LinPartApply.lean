@@ -30,7 +30,7 @@ private theorem rk_fin [IsNoetherianRing O] (𝒜 : ℤ → Submodule O A) [Grad
     | mem s hs => exact Submodule.subset_span ⟨s, hs, rfl⟩
     | zero => simp
     | add a b _ _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem ha hb
     | smul a b hb ih =>
       have hbA : b ∈ 𝒜 j := by
@@ -85,7 +85,7 @@ private theorem linPart_sat {τ : Type} {𝒜 : ℤ → Submodule O A} {x : A �
         _ ≤ (φ a).order + (φ b).order := add_le_add hA hB
         _ ≤ ((φ a) * (φ b)).order := MvPowerSeries.le_order_mul
     · intro a b ha hb
-      rw [map_add, ha, hb, add_zero]
+      rw [map_add (f := _), ha, hb, add_zero]
   have h0 := hker _ hcf
   rw [map_smul, Algebra.smul_def, mul_eq_zero] at h0
   rcases h0 with h0 | h0

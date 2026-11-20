@@ -23,7 +23,7 @@ def HwInStable : Prop :=
 def mtwPerp (lam : ι → DomWeight n) (S : Submodule ℂ (VV ℂ lam)) : Submodule ℂ (VV ℂ lam) where
   carrier := {x | ∀ y ∈ S, pairBK lam x y = 0}
   add_mem' {a b} ha hb y hy := by
-    rw [map_add, LinearMap.add_apply, ha y hy, hb y hy, add_zero]
+    rw [map_add (f := _), LinearMap.add_apply, ha y hy, hb y hy, add_zero]
   zero_mem' y _ := by rw [map_zero, LinearMap.zero_apply]
   smul_mem' c x hx y hy := by rw [map_smul, LinearMap.smul_apply, hx y hy, smul_zero]
 

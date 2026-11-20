@@ -109,7 +109,7 @@ theorem lintegral_evalV_mul_shiftInvariant : ∀ (F : Type) [Field F] [NumberFie
     hcont.measurable ?_ _ hOc.measurableSet ?_ hO K hK (fun y t => hKinv y t) g hg
   · intro y t
     funext i
-    simp only [Pi.add_apply, map_add, evalV_singleFin_self]
+    simp only [Pi.add_apply, map_add (f := _), evalV_singleFin_self]
   · intro x
     simp only [Set.mem_setOf_eq, Pi.neg_apply, neg_mem_iff]
 

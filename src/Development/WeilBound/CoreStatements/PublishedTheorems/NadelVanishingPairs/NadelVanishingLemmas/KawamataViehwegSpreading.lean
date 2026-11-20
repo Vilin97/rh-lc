@@ -82,7 +82,7 @@ theorem vanishing_charZero_fibre_of_finiteType : ∀ (R k : Type) [CommRing R] [
         (cls ((L i).pull (pullback.fst f (spMap χ))) (LB.isLB_pull (h.isLB i) _)) + cls (A.pull ρ) hAρ := by
     have e := congrArg (pull ρ) hrel
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_nsmul, map_sum] at e
+      simp only [map_add (f := _), map_nsmul, map_sum] at e
     have eK : cls K₁.bundle K₁.isLB = pull ρ (cls K.bundle K.isLB) := cls_pull K.isLB ρ K₁.isLB
     rw [cls_pull hM ρ, eK, cls_pull hA ρ]
     convert e using 4

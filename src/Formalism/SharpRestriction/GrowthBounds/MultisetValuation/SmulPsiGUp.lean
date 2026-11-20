@@ -190,7 +190,7 @@ theorem core (p n' : ℕ) (h : Res (p : W) F) (hq : Nat.card F = p ^ n') (N g i 
   choose T hT using hex
   let Tl : (Fin N → W) →ₗ[W] (Fin (N + g) → W) :=
     { toFun := T
-      map_add' := fun a b => injB (by rw [map_add, hT, hT, hT, map_add, Matrix.mulVec_add])
+      map_add' := fun a b => injB (by rw [map_add (f := _), hT, hT, hT, map_add (f := _), Matrix.mulVec_add])
       map_smul' := fun c a => injB (by
         rw [RingHom.id_apply, map_smul, hT, hT, map_smul, Matrix.mulVec_smul]) }
   let Mf : Matrix (Fin (N + g)) (Fin N) F :=

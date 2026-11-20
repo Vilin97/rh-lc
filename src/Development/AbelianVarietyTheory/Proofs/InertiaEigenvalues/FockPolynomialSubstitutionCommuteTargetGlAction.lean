@@ -85,9 +85,9 @@ theorem chain (p : D.what₂.Tau → ℕ) (g : GLR D n) (τ : D.what₂.Tau) (i 
   induction P using MvPolynomial.induction_on with
   | C a => simp [pderiv_C]
   | add P Q hP hQ =>
-    simp only [map_add, hP, hQ, smul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hP, hQ, smul_add, Finset.sum_add_distrib]
   | mul_X P u ih =>
-    simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul, smul_add, Finset.sum_add_distrib]
+    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, smul_add, Finset.sum_add_distrib]
     rw [ih, chain_X p g τ i c C' hC u, Finset.mul_sum, Finset.mul_sum]
     simp only [mul_smul_comm]
 

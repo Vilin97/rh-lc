@@ -23,7 +23,7 @@ theorem repr_map {R R' : Type} [CommRing R] [CommRing R'] [Algebra F R] [Algebra
     rw [Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.basis_repr_tmul, Algebra.TensorProduct.basis_repr_tmul]
     simp [Finsupp.smul_apply, Finsupp.mapRange_apply, map_mul, AlgHom.commutes]
   | add x y hx hy =>
-    simp only [map_add, Finsupp.add_apply, hx, hy]
+    simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 end Basis
 

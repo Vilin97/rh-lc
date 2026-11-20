@@ -21,7 +21,7 @@ theorem exists_denom {O R K : Type} [CommRing O] [IsDomain O] [CommRing R] [Comm
   by_contra hne
   let I : Ideal R :=
     { carrier := {a | ∃ b, ι a * h = ι b}
-      add_mem' := fun ⟨b, hb⟩ ⟨c, hc⟩ => ⟨b + c, by rw [map_add, add_mul, hb, hc, map_add]⟩
+      add_mem' := fun ⟨b, hb⟩ ⟨c, hc⟩ => ⟨b + c, by rw [map_add (f := _), add_mul, hb, hc, map_add (f := _)]⟩
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := fun c _ ⟨b, hb⟩ => ⟨c * b, by rw [smul_eq_mul, map_mul, mul_assoc, hb, map_mul]⟩ }
   obtain ⟨P, hP, hIP, hd⟩ := Ideal.exists_le_prime_disjoint I ((nonZeroDivisors O).map ρ)

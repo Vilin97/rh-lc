@@ -18,7 +18,7 @@ theorem compInf_extZeroArch_self (w : InfinitePlace F) (e : w.Completion ⊗[F] 
   classical
   induction e using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   | tmul a x =>
     change (GlobalTheory.AutFunCompare.evW w (GlobalTheory.AutFunCompare.sgW w a)) ⊗ₜ[F] x = a ⊗ₜ[F] x
     simp only [GlobalTheory.AutFunCompare.evW, GlobalTheory.AutFunCompare.sgW]
@@ -29,7 +29,7 @@ theorem compInf_extZeroArch_ne {w u : InfinitePlace F} (h : u ≠ w) (e : w.Comp
   classical
   induction e using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb, add_zero]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, add_zero]
   | tmul a x =>
     change (GlobalTheory.AutFunCompare.evW u (GlobalTheory.AutFunCompare.sgW w a)) ⊗ₜ[F] x = 0
     simp only [GlobalTheory.AutFunCompare.evW, GlobalTheory.AutFunCompare.sgW]
@@ -39,7 +39,7 @@ theorem compFin_extZeroArch (w : InfinitePlace F) (v : IsDedekindDomain.HeightOn
     (e : w.Completion ⊗[F] E) : compFin F E v (extZeroArch w e) = 0 := by
   induction e using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb, add_zero]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, add_zero]
   | tmul a x =>
     change (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v 0) ⊗ₜ[F] x = 0
     simp

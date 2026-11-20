@@ -48,7 +48,7 @@ private theorem h_fe_lemma_8 (D : Dat A n r) (H : D.Hyp) (a b : Fin r) :
 
 private theorem h_add_left_lemma_9 (D : Dat A n r) (H : D.Hyp) (x x' y : n → A) :
     D.h (x + x') y = D.h x y + D.h x' y := by
-  rw [h_swap_lemma_7 D H, h_add_lemma_4, map_add, ← h_swap_lemma_7 D H, ← h_swap_lemma_7 D H]
+  rw [h_swap_lemma_7 D H, h_add_lemma_4, map_add (f := _), ← h_swap_lemma_7 D H, ← h_swap_lemma_7 D H]
 
 private theorem h_sum_left_lemma_10 (D : Dat A n r) (H : D.Hyp) (t : Fin r → A) (w : Fin r → n → A)
     (y : n → A) : D.h (∑ a, t a • w a) y = ∑ a, D.σA (t a) * D.h (w a) y := by

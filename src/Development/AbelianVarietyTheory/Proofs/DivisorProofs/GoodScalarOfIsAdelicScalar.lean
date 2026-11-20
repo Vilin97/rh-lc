@@ -89,7 +89,7 @@ def prin : Submodule ℂ (AdelicScalarSectionLift.Sec O) where
     rw [LinearMap.map_zero]
     exact (mul_zero _).symm
   add_mem' := fun {S S'} hS hS' k hk h => by
-    rw [LinearMap.map_add]
+    rw [LinearMap.map_add (f := _)]
     exact (congrArg₂ (· + ·) (hS k hk h) (hS' k hk h)).trans (mul_add _ _ _).symm
   smul_mem' := fun a S hS k hk h => by
     rw [LinearMap.map_smul]

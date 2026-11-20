@@ -31,7 +31,7 @@ theorem aeval_weightedHomogeneousComponent_of_weights (w : σ → M) (ω : τ �
     · rw [(isWeightedHomogeneous_monomial w d c
         (m := Finsupp.weight w d) rfl).weightedHomogeneousComponent_ne m
         (Ne.symm hdm), hmon.weightedHomogeneousComponent_ne m (Ne.symm hdm), map_zero]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem isWeightedHomogeneous_aeval_of_weights {w : σ → M} {ω : τ → M} {e : σ → MvPolynomial τ R}
     (he : ∀ v, IsWeightedHomogeneous ω (e v) (w v)) {p : MvPolynomial σ R} {a : M}
@@ -69,7 +69,7 @@ theorem weightedHomogeneousComponent_mul_of_left {M : Type*} [AddCancelCommMonoi
       refine hcd.weightedHomogeneousComponent_ne _ fun h => hdm ?_
       rw [add_comm m] at h
       exact (add_right_cancel h).symm
-  | add p q hp hq => simp only [mul_add, map_add, hp, hq]
+  | add p q hp hq => simp only [mul_add, map_add (f := _), hp, hq]
 
 end Graded
 

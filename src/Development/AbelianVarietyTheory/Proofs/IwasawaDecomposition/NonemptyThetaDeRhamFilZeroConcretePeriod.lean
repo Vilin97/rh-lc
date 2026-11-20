@@ -75,7 +75,7 @@ theorem nonempty_thetaL : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : Lo
   · rw [map_one, ← map_one (algebraMap (Per.BdRp l) (Per.BdR l)), thetaExt_alg, map_one]
   · obtain ⟨u, hu⟩ := hex x hx
     obtain ⟨v, hv⟩ := hex y hy
-    rw [map_add, hu, hv, ← map_add, thetaExt_alg, thetaExt_alg, thetaExt_alg, map_add]
+    rw [map_add (f := _), hu, hv, ← map_add (f := _), thetaExt_alg, thetaExt_alg, thetaExt_alg, map_add (f := _)]
   · obtain ⟨u, hu⟩ := hex x hx
     obtain ⟨v, hv⟩ := hex y hy
     rw [map_mul, hu, hv, ← map_mul, thetaExt_alg, thetaExt_alg, thetaExt_alg, map_mul]

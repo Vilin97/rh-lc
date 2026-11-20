@@ -31,7 +31,7 @@ theorem form_eq_zero {X I : Type} [AddCommGroup X] (B : LinearMap.BilinForm ℤ 
   have h1 : ∀ i j, B (b i) (b i) + 2 * B (b i) (b j) + B (b j) (b j) = 0 := by
     intro i j
     have := h i j
-    simp only [map_add, LinearMap.add_apply] at this
+    simp only [map_add (f := _), LinearMap.add_apply] at this
     rw [hB (b j) (b i)] at this
     linarith
   have h2 : ∀ i, B (b i) (b i) = 0 := fun i => by have := h1 i i; linarith

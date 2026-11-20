@@ -31,14 +31,14 @@ def coindPairing :
       (fun f f' g => Subtype.ext (funext fun y => by
         change μ.hom ((f.1 y + f'.1 y) ⊗ₜ[k] g.1 y) =
           μ.hom (f.1 y ⊗ₜ[k] g.1 y) + μ.hom (f'.1 y ⊗ₜ[k] g.1 y)
-        rw [add_tmul, map_add]))
+        rw [add_tmul, map_add (f := _)]))
       (fun c f g => Subtype.ext (funext fun y => by
         change μ.hom ((c • f.1 y) ⊗ₜ[k] g.1 y) = c • μ.hom (f.1 y ⊗ₜ[k] g.1 y)
         rw [← smul_tmul', map_smul]))
       (fun f g g' => Subtype.ext (funext fun y => by
         change μ.hom (f.1 y ⊗ₜ[k] (g.1 y + g'.1 y)) =
           μ.hom (f.1 y ⊗ₜ[k] g.1 y) + μ.hom (f.1 y ⊗ₜ[k] g'.1 y)
-        rw [tmul_add, map_add]))
+        rw [tmul_add, map_add (f := _)]))
       (fun c f g => Subtype.ext (funext fun y => by
         change μ.hom (f.1 y ⊗ₜ[k] (c • g.1 y)) = c • μ.hom (f.1 y ⊗ₜ[k] g.1 y)
         rw [tmul_smul, map_smul]))),
@@ -265,7 +265,7 @@ theorem neg_conjHomotopyFun_coindPairing_apply (ι : H →* G) (x : G) {r s m : 
   rw [← hom_conjHomotopyFun, conjHomotopyFun_cupCochain, cupCochain_neg_left, cupCochain_neg_right,
     map_neg, map_neg, smul_neg, ← neg_add]
   congr 1
-  rw [Pi.add_apply, Pi.smul_apply, map_add, map_smul]
+  rw [Pi.add_apply, Pi.smul_apply, map_add (f := _), map_smul]
   simp only [Submodule.coe_add, Submodule.coe_smul, Pi.add_apply, Pi.smul_apply]
   congr 1
   · rw [coindPairing_cupCochain_comp_apply]

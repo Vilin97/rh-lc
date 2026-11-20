@@ -85,7 +85,7 @@ variable (L : LB X)
 def secGroup (V : X.Opens) : AddSubgroup (∀ i, Γ(X, V ⊓ L.U i)) where
   carrier := secOn L V
   add_mem' := fun {s t} hs ht i j => by
-    simp only [Pi.add_apply, map_add, hs i j, ht i j, mul_add]
+    simp only [Pi.add_apply, map_add (f := _), hs i j, ht i j, mul_add]
   zero_mem' := fun i j => by simp only [Pi.zero_apply, map_zero, mul_zero]
   neg_mem' := fun {s} hs i j => by simp only [Pi.neg_apply, map_neg, hs i j, mul_neg]
 
@@ -110,7 +110,7 @@ instance secGroupModule (V : X.Opens) : Module Γ(X, V) (secGroup L V) where
   smul_add a s t := Subtype.ext <| funext fun i => mul_add _ _ _
   add_smul a b s := Subtype.ext <| funext fun i => by
     change resG X _ (a + b) * s.1 i = resG X _ a * s.1 i + resG X _ b * s.1 i
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
   zero_smul s := Subtype.ext <| funext fun i => by
     change resG X _ 0 * s.1 i = 0
     rw [map_zero, zero_mul]
@@ -277,7 +277,7 @@ instance secModuleTop : Module Γ(X, ⊤) (LB.Sec L) where
   mul_smul a b s := SecOps.sec_ext fun i => by rw [smul_f, smul_f, smul_f, map_mul, mul_assoc]
   smul_zero a := SecOps.sec_ext fun i => by rw [smul_f, zero_f, mul_zero]
   smul_add a s t := SecOps.sec_ext fun i => by simp only [smul_f, add_f, mul_add]
-  add_smul a b s := SecOps.sec_ext fun i => by simp only [smul_f, add_f, map_add, add_mul]
+  add_smul a b s := SecOps.sec_ext fun i => by simp only [smul_f, add_f, map_add (f := _), add_mul]
   zero_smul s := SecOps.sec_ext fun i => by rw [smul_f, map_zero, zero_mul, zero_f]
 
 theorem sec_rel (s : LB.Sec L) (i j : L.ι) {W : X.Opens} (hi : W ≤ L.U i) (hj : W ≤ L.U j)
@@ -542,7 +542,7 @@ def mulLinear (hL : L.IsLB) (hM : M.IsLB) (w : LB.Sec (LB.div M L)) (V : X.Opens
     Γ(toMod L, V) →ₗ[Γ(X, V)] Γ(toMod M, V) where
   toFun := mulFun hL hM w
   map_add' s t := sec_ext_of_cover hL.cover fun p q => by
-    simp only [coord_add, map_add, coord_mulFun', mul_add]
+    simp only [coord_add, map_add (f := _), coord_mulFun', mul_add]
   map_smul' a s := sec_ext_of_cover hL.cover fun p q => by
     simp only [coord_smul, map_mul, coord_mulFun', resG_resG, RingHom.id_apply]
     ring

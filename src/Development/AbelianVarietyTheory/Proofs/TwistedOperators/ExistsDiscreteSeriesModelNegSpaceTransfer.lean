@@ -254,7 +254,7 @@ theorem exists_negModel_transfer : ∀ {D : D7} {V : HSp D} {S : D.what₂.Tau �
     show ω (1, atTau θ W τ h) (pt φ) = ω (GlobalTheory.Grid.ofSgn true V 1, atTau θ W τ h) (pt φ)
     rw [map_one]
   · intro τ X hX φ φ' v v' hd hv
-    rw [hIt, hIt, ← map_add, h₁.invg τ X hX φ φ' v v' ?_ hv, map_zero]
+    rw [hIt, hIt, ← map_add (f := _), h₁.invg τ X hX φ φ' v v' ?_ hv, map_zero]
     intro z
     have h3 : (fun t : ℝ => (GlobalTheory.Grid.WRep.toSgn true ω) (1, oneP θ W τ X t) (pt φ) z) =
         fun t : ℝ => ω (1, oneP θ W τ X t) (pt φ) z := by

@@ -129,7 +129,7 @@ theorem contDiff_integral_of_compact (hu : IsSmoothRealFam u) (hKc : IsCompact K
     have e : (fun t => ∫ y, conj ((f + f') (y⁻¹ * g * u t)) * φ y ∂ν) =
         fun t => (∫ y, conj (f (y⁻¹ * g * u t)) * φ y ∂ν) + ∫ y, conj (f' (y⁻¹ * g * u t)) * φ y ∂ν :=
       funext fun t => by
-        simp only [Pi.add_apply, map_add, add_mul]
+        simp only [Pi.add_apply, map_add (f := _), add_mul]
         exact integral_add (integrable_conj_mul_of_mem hφ hf g _) (integrable_conj_mul_of_mem hφ hf' g _)
     rw [e]
     exact h.add h'

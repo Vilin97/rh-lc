@@ -120,7 +120,7 @@ theorem GlobalTheory.RowsOrb.ub_equiv_model : ∀ (D : D7) (X : HidaSetting D) (
     refine p_symm_zero (VS D) (hT_span_left X (fun a => (X.zu_orth u a).1) (corr_mem X W w))
   let g : W →ₗ[D.host.E] GlobalTheory.RowsOrb.Ub X u :=
     { toFun := fun w => ⟨⟨(w : (VS D).V) - corr X W w, hmWb w⟩, hmUb w⟩
-      map_add' := fun x y => by ext; simp only [Submodule.coe_add, map_add]; abel
+      map_add' := fun x y => by ext; simp only [Submodule.coe_add, map_add (f := _)]; abel
       map_smul' := fun c x => by ext; simp [smul_sub] }
   have hg : ∀ w, (((g w : GlobalTheory.RowsOrb.Wb X)) : (VS D).V) = (w : (VS D).V) - corr X W w := fun _ => rfl
   have hinj : Function.Injective g := by

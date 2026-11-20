@@ -76,7 +76,7 @@ theorem continuous_sigRP [FiniteDimensional F E] [TopologicalSpace R] [IsTopolog
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => simp [sigR]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have : (sigR R σ : R ⊗[F] E → R ⊗[F] E) = (σ.toLinearMap.baseChange R) := funext h
   rw [this]
   exact IsModuleTopology.continuous_of_linearMap _

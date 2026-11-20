@@ -34,7 +34,7 @@ theorem exists_isometry_agreeing {E : Type} [Field E] [NumberField E] [IsCMField
   refine Submodule.smul_induction_on ha (fun r hr y _ => ?_) fun y z hy hz => ?_
   · rw [map_smul, map_smul, ← smul_sub]
     exact GlobalTheory.LevelIsometry.modN_smul_of_mem_smul Dw l hr (key y)
-  · rw [map_add, map_add, add_sub_add_comm]
+  · rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
     exact GlobalTheory.SimAlg.modN_add hy hz
 
 theorem add_sub_eq_nsmul {A : Type} [AddCommGroup A] (N : ℕ) (x e w : A) :
@@ -60,7 +60,7 @@ theorem exists_unitary_inducing : ∀ (D : D7) (H : ReciprocityTheory.ChartRestr
     (GlobalTheory.Member.LatMove.mem_lat_iff V 1 _).1 (hι.emb.2 ▸ LinearMap.mem_range_self ι c)
   refine ⟨finVec V (ι c) + w, add_mem hm hw, ?_⟩
   have h2 : finVec V (ι (s.f l.M a)) = finVec V (ι (g a)) + l.M • finVec V (ι c) := by
-    rw [sub_eq_iff_eq_add'.1 hc', map_add, map_nsmul]
+    rw [sub_eq_iff_eq_add'.1 hc', map_add (f := _), map_nsmul]
     funext i
     simp only [finVec, Pi.add_apply, Pi.smul_apply, TensorProduct.tmul_add]
     congr 1

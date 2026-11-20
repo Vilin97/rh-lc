@@ -98,7 +98,7 @@ theorem axesMap_baseChange_injective (R : Type) [CommRing R] [IsNoetherianRing R
       rw [this, map_smul, map_smul, map_smul, LinearMap.baseChange_tmul, map_smul, heS, heA]
       congr 1
       exact pO1_bc f f' pr pr' hpb.w hpb'.w hc c
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   obtain ⟨-, -, -, -, hax⟩ := GlobalTheory.T.structureSheafCohomology_abelianVariety_algClosed K B g hB hBg
   intro z z' hzz
   rw [← sub_eq_zero] at hzz ⊢

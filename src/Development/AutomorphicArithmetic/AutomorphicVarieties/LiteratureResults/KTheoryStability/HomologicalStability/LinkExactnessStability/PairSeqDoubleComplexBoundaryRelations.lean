@@ -25,7 +25,7 @@ theorem hbd_mapDomain (V W : Type) (w : List W) (c : List V →₀ ℤ) :
     hbd V W (Finsupp.mapDomain (fun x => (x, w)) c) = Finsupp.mapDomain (fun x => (x, w)) (bd V c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [Finsupp.mapDomain_add, map_add, hf, hg, map_add, Finsupp.mapDomain_add]
+  | add f g hf hg => rw [Finsupp.mapDomain_add, map_add (f := _), hf, hg, map_add (f := _), Finsupp.mapDomain_add]
   | single l r =>
     rw [Finsupp.mapDomain_single, single_eq_smul, map_zsmul, single_eq_smul l r, map_zsmul,
       Finsupp.mapDomain_smul]
@@ -35,7 +35,7 @@ theorem vbd_mapDomain (V W : Type) (x : List V) (c : List W →₀ ℤ) :
     vbd V W (Finsupp.mapDomain (fun w => (x, w)) c) = Finsupp.mapDomain (fun w => (x, w)) (bd W c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [Finsupp.mapDomain_add, map_add, hf, hg, map_add, Finsupp.mapDomain_add]
+  | add f g hf hg => rw [Finsupp.mapDomain_add, map_add (f := _), hf, hg, map_add (f := _), Finsupp.mapDomain_add]
   | single l r =>
     rw [Finsupp.mapDomain_single, single_eq_smul, map_zsmul, single_eq_smul l r, map_zsmul,
       Finsupp.mapDomain_smul]

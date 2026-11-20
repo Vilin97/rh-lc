@@ -116,7 +116,7 @@ theorem exists_lieFunctional : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [IsC
     { toFun := fun e => ψ (σ e)
       map_add' := fun e e' => by
         have : σ (e + e') = σ e + σ e' := hgi (by simp [hσ])
-        rw [this, map_add]
+        rw [this, map_add (f := _)]
       map_smul' := fun s e => by
         have : σ (s • e) = s * σ e := hgi (by
           rw [hσ, map_mul, hσ]

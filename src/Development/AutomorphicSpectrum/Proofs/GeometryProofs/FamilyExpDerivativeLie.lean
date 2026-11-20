@@ -105,7 +105,7 @@ theorem isDerivAt0_pt {R : Type} [CommRing R] {G : Over (Sp R)} [GrpObj G] [IsCo
           ∑ a ∈ s, u a • (Pi.single a 1 : Fin g → R)) c)) =
           (fun d => ψ b ((u a • (Pi.single a 1 : Fin g → R)) d)) +
             (fun c => ψ b ((∑ a ∈ s, u a • (Pi.single a 1 : Fin g → R)) c)) := by
-        funext c; simp only [Pi.add_apply, map_add]
+        funext c; simp only [Pi.add_apply, map_add (f := _)]
       rw [h3]
       exact h1
   have hu : ∑ a, u a • (Pi.single a 1 : Fin g → R) = u := by

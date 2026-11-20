@@ -36,7 +36,7 @@ variable [IsTopologicalRing R] [FiniteDimensional F E] [LocallyCompactSpace R] [
 instance isTopologicalRing_ER : IsTopologicalRing (E ⊗[F] R) where
   continuous_add := by
     refine continuous_induced_rng.2 ?_
-    simp only [Function.comp_def, map_add]
+    simp only [Function.comp_def, map_add (f := _)]
     exact ((continuous_cm F E R).comp continuous_fst).add ((continuous_cm F E R).comp continuous_snd)
   continuous_mul := by
     refine continuous_induced_rng.2 ?_
@@ -86,7 +86,7 @@ def PsiInt : Set (E ⊗[F] v.adicCompletion F) :=
 theorem sigR_mem (σ : E →ₐ[F] E) {x : E ⊗[F] v.adicCompletion F} (hx : x ∈ oE v) :
     PI.UnitaryApproxDefs.sigR σ (v.adicCompletion F) x ∈ oE v := by
   refine Subring.closure_induction (p := fun x _ => PI.UnitaryApproxDefs.sigR σ (v.adicCompletion F) x ∈ oE v)
-    (fun x hx => ?_) (by simp) (by simp) (fun x y _ _ hx hy => by rw [map_add]; exact add_mem hx hy)
+    (fun x hx => ?_) (by simp) (by simp) (fun x y _ _ hx hy => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy)
     (fun x _ hx => by rw [map_neg]; exact neg_mem hx) (fun x y _ _ hx hy => by rw [map_mul]; exact mul_mem hx hy) hx
   rcases hx with ⟨⟨e, ⟨y, rfl⟩⟩, rfl⟩ | ⟨⟨r, hr⟩, rfl⟩
   · refine Subring.subset_closure (Or.inl ⟨⟨σ (algebraMap (𝓞 E) E y), ?_⟩, ?_⟩)

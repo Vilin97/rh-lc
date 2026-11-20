@@ -38,7 +38,7 @@ theorem inRCone_of_add : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [CharZ
   have hNr : (0 : ℝ) < N := by exact_mod_cast hN
   have hN'r : (0 : ℝ) < N' := by exact_mod_cast hN'
   have e0 := apply_eq_of_inRCone hγ.linear h1 hγs
-  rw [map_add, Int.cast_add, hadd, mul_add] at e0
+  rw [map_add (f := _), Int.cast_add, hadd, mul_add] at e0
   have eβ : (N : ℝ) * ψ.evalZ β = ℓ β := by linarith [h2 β hβ hβp, h2 x hx hxp]
   have ex : (N : ℝ) * ψ.evalZ x = ℓ x := by linarith [h2 β hβ hβp, h2 x hx hxp]
   have hγβ : InRCone γ β := by

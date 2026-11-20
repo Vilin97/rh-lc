@@ -44,7 +44,7 @@ theorem witt_ring_structure : PI.WfRing := by
   delta PI.CoefWf PI.InWf at hf hg ⊢
   have hq : (p : ℂ_[p]) ∈ PI.Wp p := natCast_mem (PI.Wp p) p
   refine ⟨fun n => ?_, fun n => ?_, fun n => ?_, fun c hc n => ?_⟩
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact exists_pow_mul_add_mem_subring _ _ hq (hf n) (hg n)
   · rw [map_sub]
     exact exists_pow_mul_sub_mem_subring _ _ hq (hf n) (hg n)

@@ -111,7 +111,7 @@ theorem exists_extension : GlobalTheory.LN.HomExtSt → Out.Laws → Out.Laws2 �
   have hinj : Function.Injective (pushHom hψ (𝟙_ (Over (Sp V)))) := fun a b h =>
     Over.OverMorphism.ext (hψ.1.hom_ext (congrArg (fun q => q.left) h) (by rw [Over.w, Over.w]))
   have hadd : ∀ a b, lv (a + b) = lv a * lv b := fun a b => hinj (by
-    rw [map_mul, hpush, hpush, hpush, map_add, c.lev_add, MonObj.comp_mul])
+    rw [map_mul, hpush, hpush, hpush, map_add (f := _), c.lev_add, MonObj.comp_mul])
   have hker : ∀ a, lv (N • a) = 1 := fun a => by
     have h0 : lv 0 = 1 := by simpa using hadd 0 0
     have hk : ∀ k : ℕ, lv (k • a) = lv a ^ k := fun k => by

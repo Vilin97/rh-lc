@@ -17,7 +17,7 @@ theorem asm_add (rho : TL J nL r × Fin (r + K) → ℕ) (A B : MvPolynomial (TL
     (N : MvPolynomial (TL J nL r × Fin K) (KK O)) :
     asm Fr p O hk nL rho (A + B) N = asm Fr p O hk nL rho A N + asm Fr p O hk nL rho B N := by
   unfold asm
-  rw [map_add]; ring
+  rw [map_add (f := _)]; ring
 
 theorem asm_coefGe (rho : TL J nL r × Fin (r + K) → ℕ) {A : MvPolynomial (TL J nL r × Fin r) (KK O)}
     {N : MvPolynomial (TL J nL r × Fin K) (KK O)} {t : ℝ} (hA : CoefGe p A t) (hN : CoefGe p N 0) :
@@ -98,7 +98,7 @@ theorem value_core {p : ℕ} [hpF : Fact p.Prime] {O : Type} [CommRing O] [IsDom
       k0 * Dt.Bform F2 (Dt.ph (Gp + R)) +
         ((fock G (asm F p O hk Dt.nL rho (Dt.ph (Gp + R)) N0) - k0 * Dt.Bform F2 (Dt.ph (Gp + R))) -
           fock G (asm F p O hk Dt.nL rho (Dt.ph R) N0)) := by
-    rw [map_add, asm_add, fock_add_right]; ring
+    rw [map_add (f := _), asm_add, fock_add_right]; ring
   have hκ0 : (0 : ℝ) ≤ (kapFl p (m + 1) d : ℝ) := Nat.cast_nonneg _
   have herr : geQ (vK p ((fock G (asm F p O hk Dt.nL rho (Dt.ph (Gp + R)) N0) - k0 * Dt.Bform F2 (Dt.ph (Gp + R))) -
           fock G (asm F p O hk Dt.nL rho (Dt.ph R) N0)))

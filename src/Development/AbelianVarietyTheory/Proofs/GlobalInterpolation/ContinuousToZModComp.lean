@@ -287,7 +287,7 @@ theorem pairN_nat {D : D7} {N N' r : ℕ} (Ω : ℂ_[p]) (b : Fin r → Matrix (
     TaylorLogMetric.pairN D lam Ω b y (fun i => (c i : ℤ_[p])) =
       Ω⁻¹ * TaylorLogMetric.lamC lam (D.host.φ₀ ((TaylorLogMetric.hYY D y (∑ i, (c i : D.host.E) • b i) : D.host.K) : D.host.E)) := by
   let f : Matrix (Fin N') (Fin N) D.host.E →+ D.host.K := AddMonoidHom.mk' (TaylorLogMetric.hYY D y) fun u v => by
-    simp only [TaylorLogMetric.hYY, Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+    simp only [TaylorLogMetric.hYY, Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
   have h : TaylorLogMetric.hYY D y (∑ i, (c i : D.host.E) • b i) = ∑ i, (c i : D.host.K) * TaylorLogMetric.hYY D y (b i) := by
     change f _ = ∑ i, (c i : D.host.K) * f (b i)
     set_option synthInstance.maxHeartbeats 100000 in

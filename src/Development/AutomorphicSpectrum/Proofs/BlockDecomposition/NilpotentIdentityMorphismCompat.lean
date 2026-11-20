@@ -97,7 +97,7 @@ theorem sqC_add (f : SMor Φ Φ' σ) {a b : IdF Φ.A} {a' b' : IdF Φ'.A} (c c' 
   refine Subtype.ext ?_
   change Ideal.Quotient.mk _ (algebraMap R' _ (c + c') * f.ρ T y) =
     Ideal.Quotient.mk _ (algebraMap R' _ c * f.ρ T y) + Ideal.Quotient.mk _ (algebraMap R' _ c' * f.ρ T y)
-  rw [map_add, add_mul, map_add]
+  rw [map_add (f := _), add_mul, map_add (f := _)]
 
 theorem sq_val (f : SMor Φ Φ' σ) {a b : IdF Φ.A} {a' b' : IdF Φ'.A} (ha : f.Le a a') (hb : f.Le b b') (T : C')
     (v : sqM a b (f.G.obj T)) :

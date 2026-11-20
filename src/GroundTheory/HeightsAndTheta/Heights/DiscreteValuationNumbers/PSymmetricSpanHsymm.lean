@@ -82,7 +82,7 @@ theorem exists_hsymmPart_of_mem_closure {x : MvPolynomial σ ℤ}
     · rcases Multiset.mem_add.mp hi with h | h
       exacts [μ.parts_pos h, ν.parts_pos h]
     · rw [Multiset.sum_add, μ.parts_sum, ν.parts_sum]
-    · simp only [hsymmPart, Multiset.map_add, Multiset.prod_add]
+    · simp only [hsymmPart, Multiset.map_add (f := _), Multiset.prod_add]
 
 theorem proof : SymmetricSpanHsymm.Statement := by
   intro N m G hG hsym
@@ -95,7 +95,7 @@ theorem proof : SymmetricSpanHsymm.Statement := by
     clear hp hG'
     induction p using MvPolynomial.induction_on with
     | C r => rw [aeval_C]; exact Subalgebra.algebraMap_mem _ r
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p i hp => rw [map_mul, aeval_X]; exact mul_mem hp (esymm_mem_adjoin _)
   have hspan : G ∈ Submodule.span ℤ
       (Submonoid.closure (Set.range (hsymm (Fin N) ℤ)) : Set (MvPolynomial (Fin N) ℤ)) := by

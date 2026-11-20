@@ -146,11 +146,11 @@ private theorem bc_anti {R A M : Type} [CommRing R] [CommRing A] [AddCommGroup M
     B.baseChange A x y = -B.baseChange A y x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]; ring
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]; ring
   | tmul a m =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add c d hc hd => simp only [map_add, LinearMap.add_apply, hc, hd]; ring
+    | add c d hc hd => simp only [map_add (f := _), LinearMap.add_apply, hc, hd]; ring
     | tmul a' m' =>
       rw [LinearMap.BilinForm.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul, h m m', neg_smul,
         mul_comm]
@@ -160,7 +160,7 @@ private theorem E_anti {p : ℕ} [Fact p.Prime] (D : Datum p) (x y : ℝ ⊗[ℚ
   have h0 : ∀ x y, D.EF x y = -D.EF y x := by
     intro x y
     have := D.alt (x + y)
-    simp only [map_add, LinearMap.add_apply, D.alt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, D.alt] at this
     linarith
   exact bc_anti _ (bc_anti _ h0) x y
 
@@ -170,16 +170,16 @@ private theorem E_adj {p : ℕ} [Fact p.Prime] {D : Datum p} {G : HTGroup p} (L 
       (D.EF.baseChange ℚ).baseChange ℝ x (actOn L.rep ℝ (starT G.star ℝ b).unop y) := by
   induction b using TensorProduct.induction_on with
   | zero => simp
-  | add b b' h h' => simp only [map_add, LinearMap.add_apply, MulOpposite.unop_add, h, h']
+  | add b b' h h' => simp only [map_add (f := _), LinearMap.add_apply, MulOpposite.unop_add, h, h']
   | tmul r c =>
     rw [starT_tmul]
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x x' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+    | add x x' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
     | tmul s v =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add y y' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+      | add y y' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
       | tmul t w =>
         have h := L.adj c v w
         rw [show sh G c = (G.star c).unop from rfl] at h

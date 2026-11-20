@@ -182,7 +182,7 @@ def cls {X : Scheme.{0}} (U : X.Opens) : Cl.Zc (KK q i) U n →+ Hs q (opn U) n 
     apply Subtype.ext
     show clsV hD hP hB q n i U (a + b) = clsV hD hP hB q n i U a + clsV hD hP hB q n i U b
     unfold clsV
-    rw [Mz_add hE hP q n i a b, clD_add hD q n i _ _ _ (Mz_coc hE hP q n i a) (Mz_coc hE hP q n i b), map_add])
+    rw [Mz_add hE hP q n i a b, clD_add hD q n i _ _ _ (Mz_coc hE hP q n i a) (Mz_coc hE hP q n i b), map_add (f := _)])
 
 theorem cls_surj {X : Scheme.{0}} (U : X.Opens) : Function.Surjective (cls hD hE hP hB q n i U) := by
   intro x

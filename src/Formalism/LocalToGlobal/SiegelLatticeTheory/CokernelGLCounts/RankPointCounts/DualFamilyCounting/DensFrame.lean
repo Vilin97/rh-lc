@@ -40,7 +40,7 @@ theorem localLattice_span₂ (hA : ∀ p, Agree δ M p) (L : LocSp D M) (p : PlF
     · rw [map_zero]
       exact zero_mem _
     · intro y z _ _ hy hz
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hy hz
     · intro o y _ hy
       rw [bc_smulO]
@@ -53,7 +53,7 @@ theorem localLattice_sup (L : LocSp D M) (p : PlF D) (A B : Submodule (𝓞 D.ho
   · rw [lattice₂, Submodule.span_le]
     rintro _ ⟨x, hx, rfl⟩
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem (Submodule.mem_sup_left (Submodule.subset_span ⟨a, ha, rfl⟩))
       (Submodule.mem_sup_right (Submodule.subset_span ⟨b, hb, rfl⟩))
   · exact sup_le (Submodule.span_mono (Set.image_mono (SetLike.coe_subset_coe.2 (le_sup_left : A ≤ A ⊔ B))))
@@ -701,7 +701,7 @@ theorem ga_det_ne {T T' : D.host.E} (F0 : FlagG (VS D) D.R.rS T) (F' : LFlag (VS
       · exact hperp (Sum.inl a)
       · exact hperp (Sum.inr a)
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add, LinearMap.add_apply, hy, hz, add_zero]
+    | add y z _ _ hy hz => rw [map_add (f := _), LinearMap.add_apply, hy, hz, add_zero]
     | smul s y _ hy => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, hy, smul_zero]
   have hw0 : w = 0 := by
     have := hC.disjoint

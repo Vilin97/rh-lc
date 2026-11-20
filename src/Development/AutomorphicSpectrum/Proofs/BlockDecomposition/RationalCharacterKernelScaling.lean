@@ -32,7 +32,7 @@ theorem trace_tmul_eq {F E : Type} [Field F] [Field E] [Algebra F E] [FiniteDime
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul s y => simp [LinearMap.baseChange_tmul, Algebra.TensorProduct.tmul_mul_tmul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [h1, map_smul, Algebra.trace_apply, h2, LinearMap.trace_baseChange, Algebra.trace_apply]
   simp
 

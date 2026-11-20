@@ -210,7 +210,7 @@ theorem hasSupport_of_monomial {Z : ∀ Δ : Segment k, IrrCl (GL (Fin (Δ.len *
     have key : Ψ.symm (pc Ψ (∑ Δ ∈ m.support, m Δ • Δ.ms)) y =
         Ψ.symm (MvPolynomial.monomial m 1) y +
           Ψ.symm (pc Ψ (∑ Δ ∈ m.support, m Δ • Δ.ms) - MvPolynomial.monomial m 1) y := by
-      rw [← Finsupp.add_apply, ← map_add, add_sub_cancel]
+      rw [← Finsupp.add_apply, ← map_add (f := _), add_sub_cancel]
     have ha : 0 ≤ Ψ.symm (MvPolynomial.monomial m 1) y := by rw [hmono]; exact h1 y
     have hb : 0 ≤ Ψ.symm (pc Ψ (∑ Δ ∈ m.support, m Δ • Δ.ms) - MvPolynomial.monomial m 1) y := by
       rw [hmono, hpc]; exact h2 y

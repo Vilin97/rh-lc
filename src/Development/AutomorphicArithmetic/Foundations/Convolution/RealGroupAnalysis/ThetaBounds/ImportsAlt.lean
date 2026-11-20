@@ -19,7 +19,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.lin :
         f.1 (gl g * dM (nu F h)) * Th (W.Om g (W.L h φ)).1 +
           f.1 (gl g * dM (nu F h)) * Th (W.Om g (W.L h φ')).1 := by
       intro g
-      rw [map_add, map_add, hadd, mul_add]
+      rw [map_add (f := _), map_add (f := _), hadd, mul_add]
     simp only [lift, e, Pi.add_apply]
     exact integral_add (hc f hf φ hφ h).1 (hc f hf φ' hφ' h).1
   · intro f c φ

@@ -181,7 +181,7 @@ theorem trdeg_eq {σ O O' : Type} [CommRing O] [IsDomain O] [CommRing O'] [IsDom
           (IsScalarTower.toAlgHom O O' (MvPolynomial σ O' ⧸ P'))
       exact h1.extendScalars hOS
     | add p q hp hq =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact hp.add hq
     | mul_X p i hp =>
       rw [map_mul]
@@ -213,7 +213,7 @@ theorem pointConeMap_map (h : MvPolynomial (Σ k, J k) O) :
   | C a =>
     simp only [pointConeMap, map_C, aeval_C, MvPolynomial.algebraMap_apply]
     rw [← IsScalarTower.algebraMap_apply O O' Ω', ← IsScalarTower.algebraMap_apply O Ω Ω']
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp]
     simp [pointConeMap]

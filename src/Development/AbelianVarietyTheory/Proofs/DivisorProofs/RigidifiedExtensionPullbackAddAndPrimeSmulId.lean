@@ -35,7 +35,7 @@ theorem restrZeroZero_assoc (u : A ⊗[R] A) (b : A) :
     restrZeroZero R A (TensorProduct.assoc R A A A (u ⊗ₜ b)) =
       counit (R := R) (restrZeroLeft R A u) • b := by
   induction u with
-  | add x y hx hy => simp only [add_tmul, map_add, hx, hy, add_smul]
+  | add x y hx hy => simp only [add_tmul, map_add (f := _), hx, hy, add_smul]
   | tmul x y =>
     rw [TensorProduct.assoc_tmul, restrZeroZero_tmul, restrZeroLeft_tmul, restrZeroLeft_tmul,
       map_smul, smul_eq_mul, mul_smul]
@@ -48,10 +48,10 @@ theorem restrZeroLeft_of_cobTwo_eq_zero {c : A ⊗[R] A} (hc : cobTwo R A c = 0)
       algebraMap R A (TensorProduct.lid R R (TensorProduct.map (counit (R := R) (A := A))
         (counit (R := R) (A := A)) t)) := fun t => by
     induction t with
-    | add x y hx hy => simp only [map_add, hx, hy]; abel
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]; abel
     | tmul a b =>
       rw [cobTwo_apply]
-      simp only [map_sub, map_add, LinearMap.rTensor_tmul, LinearMap.lTensor_tmul, LinearMap.flip_apply,
+      simp only [map_sub, map_add (f := _), LinearMap.rTensor_tmul, LinearMap.lTensor_tmul, LinearMap.flip_apply,
         TensorProduct.mk_apply, restrZeroZero_assoc, restrZeroZero_tmul, restrZeroLeft_comul,
         restrZeroLeft_tmul, Bialgebra.counit_one, one_smul, TensorProduct.map_tmul,
         TensorProduct.lid_tmul, smul_eq_mul, Algebra.algebraMap_eq_smul_one, mul_smul]
@@ -71,7 +71,7 @@ theorem dUnit_mul'_map (f g : A →ₐc[R] B) (t : A ⊗[R] A) :
       cotMap g (dUnit R (restrZeroLeft R A t)) +
         cotMap f (dUnit R (restrZeroLeft R A (TensorProduct.comm R A A t))) := by
   induction t with
-  | add x y hx hy => simp only [map_add, hx, hy]; abel
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]; abel
   | tmul a b =>
     have e1 : dUnit R (counit (R := R) a • b) = counit (R := R) a • dUnit R b :=
       map_smul (AugCot.d _) _ _
@@ -104,7 +104,7 @@ theorem rigExtMap_add (f g : G ⟶ H) : rigExtMap (f + g) = rigExtMap f + rigExt
     rw [← (c.2 n).2]
     generalize c.1 (n + 1) = t
     induction t with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul x y => simp [res_app]⟩
   have hB : G.dFun B = 0 :=
     Subtype.ext (funext fun n => dUnit_mul'_map_of_mem (f.app n) (g.app n) (c.2 n).1)
@@ -112,7 +112,7 @@ theorem rigExtMap_add (f g : G ⟶ H) : rigExtMap (f + g) = rigExtMap f + rigExt
     Subtype.ext (funext fun n => T.bialgebraPullbackTwo_convMul_symmetricCocycle (f.app n) (g.app n) (c.1 n) (c.2 n).1)
   change G.rigMk (cocyclesMap (f + g) c, omegaMap G H (f + g) w) =
     G.rigMk (cocyclesMap f c, omegaMap G H f w) + G.rigMk (cocyclesMap g c, omegaMap G H g w)
-  rw [← map_add, Prod.mk_add_mk, map_add (omegaMap G H) f g, LinearMap.add_apply, hc]
+  rw [← map_add (f := _), Prod.mk_add_mk, map_add (omegaMap G H) f g, LinearMap.add_apply, hc]
   refine (Submodule.Quotient.eq _).2 ⟨B, Prod.ext ?_ ?_⟩
   · show G.cob B = _
     simp

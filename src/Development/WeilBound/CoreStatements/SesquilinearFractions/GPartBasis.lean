@@ -124,7 +124,7 @@ theorem type_part_linear_independent (H : Host E) (D : Datum H) {g : ℕ} (ty : 
         rw [hT, hz b]
         exact S.zero_mem
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, map_add]; exact S.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _)]; exact S.add_mem hx hy
     | smul s x _ hx => rw [hsmul]; exact S.smul_mem _ hx
   have hall : ∀ v : D.La, T (P v) ∈ S := by
     intro v
@@ -143,7 +143,7 @@ theorem type_part_linear_independent (H : Host E) (D : Datum H) {g : ℕ} (ty : 
     induction hw using Submodule.span_induction with
     | mem x hx => obtain ⟨v, rfl⟩ := hx; exact hall v
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact S.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact S.add_mem hx hy
     | smul r x _ hx =>
       have : T (r • x) = (r : ℂ) • T x := by
         rw [← map_smul]

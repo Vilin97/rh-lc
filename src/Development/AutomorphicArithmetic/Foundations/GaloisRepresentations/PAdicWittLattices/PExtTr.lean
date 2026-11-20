@@ -15,4 +15,4 @@ theorem UpperTheory.Gal.G3.pExtTr :
     simp only [LinearMap.baseChange_tmul]
     rw [h W r c hc J σ hσ hs y, TensorProduct.tmul_sum]
   | add x y hx hy =>
-    simp only [map_add, hx, hy, ← Finset.sum_add_distrib]
+    simp only [map_add (f := _), hx, hy, ← Finset.sum_add_distrib]

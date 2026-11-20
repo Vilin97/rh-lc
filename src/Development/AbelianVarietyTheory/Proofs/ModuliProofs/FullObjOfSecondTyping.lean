@@ -349,7 +349,7 @@ theorem exists_sigma (l : Level H) {N : ℕ} (h : l.A = N) (n : ℕ) (hz : zeta 
     simp [baseKA, h2, oW, w0C]
   refine ⟨RingEquiv.ofRingHom τ τ' (RingHom.ext fun x => hinj (by simp [hτ, hτ']))
     (RingHom.ext fun x => hinj (by simp [hτ, hτ'])), i, RingHom.ext hτ, hinj ((hτ _).trans ?_), hinj ((hτ _).trans ?_)⟩
-  · rw [hw, map_div₀, map_add, map_one, map_ofNat]
+  · rw [hw, map_div₀, map_add (f := _), map_one, map_ofNat]
     exact congrArg (fun x => (1 + x) / 2) hσ
   · rw [map_pow, hζ]
     exact hi.symm

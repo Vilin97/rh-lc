@@ -89,7 +89,7 @@ theorem grass_top : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : 
         · exact hJk τ k a hk
         · exact hrel τ k a hk
       · intro a; simp
-      · intro x y _ _ hx hy a; rw [add_mul, map_add, hx, hy, add_zero]
+      · intro x y _ _ hx hy a; rw [add_mul, map_add (f := _), hx, hy, add_zero]
       · intro b x _ hx a; rw [smul_eq_mul, mul_comm b x, mul_assoc]; exact hx _
     simpa using key 1
   have hker : ∀ Q, chernRoots Dw.mult Q = 0 → L Q = 0 := by

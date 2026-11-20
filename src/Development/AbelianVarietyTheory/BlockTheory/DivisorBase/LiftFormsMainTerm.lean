@@ -112,7 +112,7 @@ def defForms {V : HSp D} (c : CoefA V) (β : GL (Fin V.rank) (Lev.EAf D)) (L : L
     rintro f g ⟨f1, f2, f3⟩ ⟨g1, g2, g3⟩
     refine ⟨fun γ hγ h => ?_, fun u hu h => ?_, fun κ hκ h => ?_⟩
     · simp only [Pi.add_apply, f1 γ hγ, g1 γ hγ]
-    · simp only [Pi.add_apply, f2 u hu, g2 u hu, map_add]
+    · simp only [Pi.add_apply, f2 u hu, g2 u hu, map_add (f := _)]
     · simp only [Pi.add_apply, f3 κ hκ, g3 κ hκ, smul_add]
   zero_mem' := ⟨fun _ _ _ => rfl, fun _ _ _ => by simp, fun _ _ _ => by simp⟩
   smul_mem' := by

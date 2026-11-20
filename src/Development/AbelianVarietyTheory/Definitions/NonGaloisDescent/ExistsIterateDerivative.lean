@@ -391,7 +391,7 @@ theorem act_smul (s : GQ l) (g : G) (r : OW l O) (v : ι → OW l O) :
   | zero => simp only [smul_zero, map_zero]
   | tmul w x =>
     simp only [TWact, smul_tmul', TensorProduct.map_tmul, AlgHom.toLinearMap_apply, smul_eq_mul, map_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem act_phiW (s : GQ l) (g : G) (v : ι → OW l O) :
     I.act s g (phiW t ϖ P v) = phiW t ϖ P (I.act s g v) := by
@@ -402,7 +402,7 @@ theorem act_phiW (s : GQ l) (g : G) (v : ι → OW l O) :
   | tmul w x =>
     simp only [TWact, TWmap, TensorProduct.map_tmul, AlgHom.toLinearMap_apply, LinearMap.id_apply,
       galOW_frobOW]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem act_mul (s s' : GQ l) (g g' : G) (v : ι → OW l O) :
     I.act (s * s') (g * g') v = I.act s g (I.act s' g' v) := by
@@ -413,7 +413,7 @@ theorem act_mul (s s' : GQ l) (g g' : G) (v : ι → OW l O) :
   | tmul w x =>
     simp only [TWact, TensorProduct.map_tmul, AlgHom.toLinearMap_apply, galOW_mul]
     exact congrArg _ (Subtype.ext (LinearMap.congr_fun (map_mul T.ρ g g') x))
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def IsLMat (s : GQ l) (g : G) (Γ : Matrix ι ι (OA l O)) : Prop :=
   ∀ c : ι → OA l O, I.act s g (inclL t ϖ P c) = inclL t ϖ P (Γ *ᵥ fun i => galOA O s (c i))
@@ -483,7 +483,7 @@ def kappa (T : LocLat G ℚ_[l] K O) :
   TensorProduct.liftAddHom
     { toFun := fun w => (TensorProduct.mk O (OW l O) ↥T.L.T ((1 : O) ⊗ₜ w)).toAddMonoidHom
       map_zero' := by rw [tmul_zero, map_zero]; rfl
-      map_add' := fun w w' => by rw [tmul_add, map_add]; rfl }
+      map_add' := fun w w' => by rw [tmul_add, map_add (f := _)]; rfl }
     fun z w x => by
       change ((1 : O) ⊗ₜ[ℤ_[l]] (z • w)) ⊗ₜ[O] x = ((1 : O) ⊗ₜ[ℤ_[l]] w) ⊗ₜ[O] (algebraMap ℤ_[l] O z • x)
       rw [tmul_smul, ← algebraMap_smul O z, smul_tmul]
@@ -509,7 +509,7 @@ theorem kappa_bijective (T : LocLat G ℚ_[l] K O) :
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul w x => exact congrArg (fun y : ↥T.L.T => w ⊗ₜ[ℤ_[l]] y) (one_smul O x)
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   exact ⟨Function.LeftInverse.injective h, fun y => ⟨E y, E.injective (h _)⟩⟩
 
 end Lat
@@ -583,7 +583,7 @@ theorem map_smul {T : Lat a O K ϖ} (hT : C T) (c : O) :
   | tmul w x =>
     rw [← tmul_smul]
     exact congrArg (fun y : ↥T.L.T => w ⊗ₜ[O] y) (Subtype.ext (algebraMap_smul K c (x : T.V)).symm)
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem map_id {T : Lat a O K ϖ} (hT : C T) : F.map hT hT (latId T) = BK.Hom.scalar _ 1 := by
   refine (F.isMapOf hT hT _).unique fun v => ?_
@@ -591,7 +591,7 @@ theorem map_id {T : Lat a O K ϖ} (hT : C T) : F.map hT hT (latId T) = BK.Hom.sc
   induction (F.obj T hT).I.j v using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul w x => rfl
-  | add x y hx hy => rw [map_add, ← hx, ← hy]
+  | add x y hx hy => rw [map_add (f := _), ← hx, ← hy]
 
 theorem map_comp {T T' T'' : Lat a O K ϖ} (hT : C T) (hT' : C T') (hT'' : C T'') (g : LatHom T'.L T''.L)
     (f : LatHom T.L T'.L) : F.map hT hT'' (latComp g f) = (F.map hT' hT'' g).comp (F.map hT hT' f) := by
@@ -600,7 +600,7 @@ theorem map_comp {T T' T'' : Lat a O K ϖ} (hT : C T) (hT' : C T') (hT'' : C T''
   induction (F.obj T hT).I.j v using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul w x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end BKFunctor
 
@@ -620,7 +620,7 @@ variable {P : PhiMod O K l e a ι} {Q : PhiMod O K l e a κ} (D : Conn P)
 
 def N : Module.End K (Vec K a ι) where
   toFun v := (X : K⟦X⟧) • D.nabla v
-  map_add' v w := by rw [map_add, smul_add]
+  map_add' v w := by rw [map_add (f := _), smul_add]
   map_smul' c v := by rw [map_smul, smul_comm]; rfl
 
 def desc (i : ℕ) : Module.End K (Vec K a ι) := Polynomial.aeval D.N (descPochhammer K i)
@@ -768,7 +768,7 @@ theorem exists_iterate_derivative {f : K⟦X⟧} (hf : f ∈ S O K e) (r : ℕ) 
       obtain ⟨p', h', h1, h2, h3⟩ := ih
       refine ⟨PowerSeries.derivative K p', _, fun n hn => ?_, derivative_mem_S h2, ?_⟩
       · rw [coeff_derivative, h1 _ (by omega), zero_mul]
-      · rw [Function.iterate_succ_apply', h3, map_add, ← Nat.cast_pow, ← nsmul_eq_mul, map_nsmul, nsmul_eq_mul]
+      · rw [Function.iterate_succ_apply', h3, map_add (f := _), ← Nat.cast_pow, ← nsmul_eq_mul, map_nsmul, nsmul_eq_mul]
   refine ⟨N, fun i hi => ?_⟩
   obtain ⟨p', h', h1, h2, h3⟩ := key i (∑ n ∈ Finset.range N, monomial n (coeff n f)) h (fun n hn => by
     simp [coeff_monomial, hn]) hh

@@ -94,7 +94,7 @@ theorem intAt : IntAt := by
   rw [Finset.mul_sum]
   refine Finset.sum_induction _ (fun x => ∃ y : O, x = algebraMap O (KK O) (w ^ i * y)) ?_ ⟨0, by simp⟩ ?_
   · rintro _ _ ⟨y, rfl⟩ ⟨y', rfl⟩
-    exact ⟨y + y', by rw [← map_add]; congr 1; ring⟩
+    exact ⟨y + y', by rw [← map_add (f := _)]; congr 1; ring⟩
   · intro μ hμ
     obtain ⟨c, hc⟩ := hPi μ
     obtain ⟨c', hc'⟩ := hQ μ

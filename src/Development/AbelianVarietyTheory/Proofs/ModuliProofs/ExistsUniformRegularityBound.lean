@@ -37,7 +37,7 @@ theorem comp_zero_mul {h : MvPolynomial σ K} (hh : h.IsHomogeneous 1)
   | monomial d c =>
     have h1 := isHomogeneous_monomial (d := d) c rfl
     rw [homogeneousComponent_of_mem (hh.mul h1), if_neg (by omega)]
-  | add p q hp hq => rw [mul_add, map_add, hp, hq, add_zero]
+  | add p q hp hq => rw [mul_add, map_add (f := _), hp, hq, add_zero]
 
 theorem mem_sup_span {I : Ideal (MvPolynomial σ K)} {h F : MvPolynomial σ K} :
     F ∈ I ⊔ Ideal.span {h} ↔ ∃ A ∈ I, ∃ B, F = A + h * B := by
@@ -87,7 +87,7 @@ theorem hom_sup_span {I : Ideal (MvPolynomial σ K)}
     ∀ F ∈ I ⊔ Ideal.span {h}, ∀ e, homogeneousComponent e F ∈ I ⊔ Ideal.span {h} := by
   intro F hF e
   obtain ⟨A, hA, B, rfl⟩ := mem_sup_span.1 hF
-  rw [map_add]
+  rw [map_add (f := _)]
   cases e with
   | zero => exact mem_sup_span.2 ⟨_, hI A hA 0, 0, by rw [comp_zero_mul hh, mul_zero]⟩
   | succ e => exact mem_sup_span.2 ⟨_, hI A hA _, _, by rw [comp_succ_mul hh]⟩
@@ -108,7 +108,7 @@ theorem finrank_section [Finite σ] {I : Ideal (MvPolynomial σ K)}
     · rintro F ⟨hF1, hF2⟩
       obtain ⟨A, hA, B, hAB⟩ := mem_sup_span.1 hF2
       have : F = homogeneousComponent (e + 1) A + h * homogeneousComponent e B := by
-        rw [← comp_succ_mul hh, ← map_add, ← hAB, homogeneousComponent_eq_self hF1]
+        rw [← comp_succ_mul hh, ← map_add (f := _), ← hAB, homogeneousComponent_eq_self hF1]
       rw [this]
       exact Submodule.add_mem_sup ⟨homogeneousComponent_isHomogeneous _ _, hI A hA _⟩
         ⟨_, homogeneousComponent_isHomogeneous _ _, rfl⟩
@@ -148,7 +148,7 @@ theorem gen_of_section {I : Ideal (MvPolynomial σ K)}
     rintro G ⟨hG, hGe⟩
     obtain ⟨A, hA, B, hAB⟩ := mem_sup_span.1 hG
     have : G = homogeneousComponent e A + homogeneousComponent e (h * B) := by
-      rw [← map_add, ← hAB, homogeneousComponent_eq_self hGe]
+      rw [← map_add (f := _), ← hAB, homogeneousComponent_eq_self hGe]
     rw [this]
     refine Submodule.add_mem_sup
       (Ideal.subset_span ⟨hI A hA _, homogeneousComponent_isHomogeneous _ _⟩) ?_
@@ -159,7 +159,7 @@ theorem gen_of_section {I : Ideal (MvPolynomial σ K)}
   have hAI : A ∈ I := (Ideal.span_le.2 fun G hG => hG.1 : genIn I e ≤ I) hA
   have hB : B ∈ I := hreg B (by simpa [hAB] using I.sub_mem hF hAI)
   have : F = homogeneousComponent (e + 1) A + h * homogeneousComponent e B := by
-    rw [← comp_succ_mul hh, ← map_add, ← hAB, homogeneousComponent_eq_self hFe]
+    rw [← comp_succ_mul hh, ← map_add (f := _), ← hAB, homogeneousComponent_eq_self hFe]
   rw [this]
   exact Ideal.add_mem _ (hom_genIn I e A hA _) (Ideal.mul_mem_left _ _
     (Ideal.subset_span ⟨hI B hB _, homogeneousComponent_isHomogeneous _ _⟩))
@@ -183,7 +183,7 @@ theorem eventually_mem_of_X_mul [Finite σ] {J L : Ideal (MvPolynomial σ K)}
     | C a => simp
     | add p q hp hq =>
       convert J.add_mem hp hq using 1
-      simp only [MvPolynomial.coeff_add, map_add]; ring
+      simp only [MvPolynomial.coeff_add, map_add (f := _)]; ring
     | mul_X p i _ =>
       have : AddMonoidAlgebra.coeff (p * X i) 0 = 0 := by
         have := map_mul (constantCoeff (σ := σ) (R := K)) p (X i)

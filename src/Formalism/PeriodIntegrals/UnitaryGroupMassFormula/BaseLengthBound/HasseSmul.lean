@@ -34,7 +34,7 @@ theorem hasseSmul_holds : HasseSmul := by
     have h1 : q.1 ≠ 0 := fun h0 => hne (Prod.ext h0 (by rw [← hq, h0, zero_add]))
     have h2 : (q.2.sum fun _ n => n) < k := by
       rw [sumN_eq] at hβ ⊢
-      rw [← hq, map_add] at hβ
+      rw [← hq, map_add (f := _)] at hβ
       have : Finsupp.degree q.1 ≠ 0 := fun h0 => h1 ((Finsupp.degree_eq_zero_iff _).1 h0)
       omega
     rw [hasseVan_holds G la k x hx q.2 h2 (hmem q.2), smul_zero]

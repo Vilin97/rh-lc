@@ -215,7 +215,7 @@ lemma ev_cub_small (h : M.Ok) {p : ℂ} (hp : M.Small p) :
     have hY := one_lt_norm_y_of_small_of_not_mem h hp hL
     have hy' : M.ι (M.y p) ≠ 0 := fun e => by rw [e, norm_zero] at hY; linarith
     have E := congrArg M.ι (UW.equation M h hL)
-    simp only [map_add, map_mul, map_pow, RingEquiv.apply_symm_apply] at E
+    simp only [map_add (f := _), map_mul, map_pow, RingEquiv.apply_symm_apply] at E
     simp only [map_div₀, map_neg, map_one]
     field_simp
     linear_combination (-1 : ℂ_[q]) * E

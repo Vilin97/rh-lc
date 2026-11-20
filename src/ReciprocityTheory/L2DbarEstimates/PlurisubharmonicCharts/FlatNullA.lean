@@ -92,7 +92,7 @@ theorem fn_eq_zero_of_eval {v0 : V n}
       simp only [MvPolynomial.eval_C]
       exact differentiable_const a
     next p q hp hq =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact hp.add hq
     next p i hp =>
       simp only [map_mul, MvPolynomial.eval_X]

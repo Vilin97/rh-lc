@@ -60,7 +60,7 @@ theorem coeff_aeval {S : Type*} [CommRing S] [Algebra ℤ S] [Algebra ℤ (Polyn
     by_cases h : n = ∑ i, u ⟨(), i⟩
     · rw [if_pos h, comp, h, hw.weightedHomogeneousComponent_same]
     · rw [if_neg h, comp, hw.weightedHomogeneousComponent_ne _ (fun e => h (congrFun e ())), map_zero]
-  | add p q hp hq => rw [map_add, Polynomial.coeff_add, hp, hq, comp, comp, comp, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), Polynomial.coeff_add, hp, hq, comp, comp, comp, map_add (f := _), map_add (f := _)]
 
 end VerticalPointNagata
 
@@ -252,7 +252,7 @@ theorem VertPointNagata.proof (hCh : VertPointChart.Statement) : VertPointNagata
         (fun p q hp hq => ?_) (fun n c ih => ?_)
       · obtain ⟨x, hx⟩ := hp
         obtain ⟨x', hx'⟩ := hq
-        exact ⟨x + x', by rw [map_add, hx, hx', map_add]⟩
+        exact ⟨x + x', by rw [map_add (f := _), hx, hx', map_add (f := _)]⟩
       · obtain ⟨x, hx⟩ := ih
         obtain ⟨x', hx'⟩ := hXim
         exact ⟨x * x', by rw [map_mul, hx, hx', ← map_mul, pow_succ, mul_assoc]⟩

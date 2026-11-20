@@ -47,7 +47,7 @@ theorem lap_eq_rot (u : ℂ → ℝ) (z : ℂ) (θ : ℝ) :
     Δ u z = fderiv ℝ (fderiv ℝ u) z (ee θ) (ee θ)
       + fderiv ℝ (fderiv ℝ u) z (Complex.I * ee θ) (Complex.I * ee θ) := by
   rw [laplacian_eq_fderiv_fderiv, iee_smul, ee_smul]
-  simp only [map_add, map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply,
+  simp only [map_add (f := _), map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.coe_smul', Pi.smul_apply,
     smul_eq_mul]
   have hsc := Real.sin_sq_add_cos_sq θ
   set H := fderiv ℝ (fderiv ℝ u) z

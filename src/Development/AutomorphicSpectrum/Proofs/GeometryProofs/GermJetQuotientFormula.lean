@@ -27,7 +27,7 @@ theorem aeval_firstOrder {B A : Type} [CommRing B] [Algebra k B] [CommRing A] [A
   induction P using MvPolynomial.induction_on with
   | C a => simp
   | add P Q hP hQ =>
-    simp only [map_add, hP, hQ, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hP, hQ, mul_add, Finset.sum_add_distrib]
     ring
   | mul_X P q hP =>
     obtain ⟨a, j⟩ := q
@@ -38,7 +38,7 @@ theorem aeval_firstOrder {B A : Type} [CommRing B] [Algebra k B] [CommRing A] [A
           if j = i then τ (θ P) else 0 := by
         intro i
         have hX : θ (MvPolynomial.X ((0 : Fin 2), j)) = 0 := by simp [hθ]
-        rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, hX, zero_mul, add_zero,
+        rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, hX, zero_mul, add_zero,
           MvPolynomial.pderiv_X]
         by_cases hij : j = i
         · subst hij; simp

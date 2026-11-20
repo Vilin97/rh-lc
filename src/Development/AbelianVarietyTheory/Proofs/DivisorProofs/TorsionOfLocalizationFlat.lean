@@ -24,7 +24,7 @@ theorem kernel_rTensor_subtype_powers_torsion (A : Type) [CommRing A] (f : A) (M
       induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [e]
-      | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
     rw [key, h0, map_zero]
   obtain ⟨c, hc⟩ := (IsLocalizedModule.eq_zero_iff S (AlgebraTensorModule.rTensor A I g)).mp h1
   obtain ⟨k, hk⟩ := c.2

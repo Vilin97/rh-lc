@@ -175,7 +175,7 @@ theorem resFunctor_map_naturality {K : Type u} [Group K] (ψ : K →* G)
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a b => exact congrArg (fun F => F.hom (a ⊗ₜ[k] b : (X' ⊗ Y : Rep k G))) hν
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable {A A' B B' C : Rep.{u} k G} [IsDiscreteRep A] [IsDiscreteRep A'] [IsDiscreteRep B]
   [IsDiscreteRep B'] [IsDiscreteRep C]
@@ -242,7 +242,7 @@ theorem tensorHom_dualEvalPairing {A B : Rep.{u} k G} (f : A ⟶ B) :
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a b => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem compactDualityMap_cohomologyMap {A B : Rep.{u} k G} [IsDiscreteRep A] [IsDiscreteRep B]
     [IsDiscreteRep (dualRep D A)] [IsDiscreteRep (dualRep D B)] (f : A ⟶ B)

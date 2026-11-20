@@ -55,7 +55,7 @@ theorem exists_local_lift : ∀ (N n : ℕ) (hn : n ≤ N) (ν : Fin N → ℕ) 
   let cj : MvPolynomial (Fin N × Fin n) ℂ →+* MvPolynomial (Fin N × Fin n) ℂ :=
     MvPolynomial.map (starRingEnd ℂ)
   refine ⟨{ toFun := fun P => LinearMap.adjoint (I₀ (cj P)),
-            map_add' := fun P Q => by simp only [map_add]
+            map_add' := fun P Q => by simp only [map_add (f := _)]
             map_smul' := fun c P => by
               simp only [cj, map_star_smul, map_smul, LinearEquiv.map_smulₛₗ, RingHom.id_apply]
               simp }, fun h0 => hI₀0 ?_, fun h hh g hg P v => ?_⟩
